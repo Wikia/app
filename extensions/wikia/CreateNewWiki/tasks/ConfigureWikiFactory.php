@@ -70,7 +70,6 @@ class ConfigureWikiFactory extends Task {
 			'wgLanguageCode' => $language,
 			'wgServer' => rtrim( $url, "/" ),
 			'wgEnableSectionEdit' => true,
-			'wgEnableSwiftFileBackend' => true,
 			'wgOasisLoadCommonCSS' => true,
 			'wgEnablePortableInfoboxEuropaTheme' => true
 		];
@@ -82,7 +81,6 @@ class ConfigureWikiFactory extends Task {
 		}
 
 		wfGetLBFactory()->sectionsByDB[$dbName] = $wikiFactoryVariables['wgDBcluster'] = \F::app()->wg->CreateDatabaseActiveCluster;
-
 
 		return $wikiFactoryVariables;
 	}

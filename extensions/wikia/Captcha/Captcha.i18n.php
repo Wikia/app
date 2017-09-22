@@ -1,11 +1,4 @@
 <?php
-/**
- * Internationalisation file for the ConfirmEdit extension.
- *
- * @file
- * @ingroup Extensions
- */
-
 $messages = array();
 
 $messages['en'] = array(
@@ -22,17 +15,7 @@ To help protect against automated spam, please solve the simple sum below and en
 	'captcha-disabledinapi' => 'This action requires a captcha, so it cannot be performed through the API.',
 	'captchahelp-title' => 'CAPTCHA help',
 	'captchahelp-cookies-needed' => 'You will need to have cookies enabled in your browser for this to work.',
-	'captchahelp-text' => "Web sites that accept postings from the public, like this wiki, are often abused by spammers who use automated tools to post their links to many sites.
-While these spam links can be removed, they are a significant nuisance.
-
-Sometimes, especially when adding new web links to a page, the wiki may show you an image of colored or distorted text and ask you to type the words shown.
-Since this is a task that's hard to automate, it will allow most real humans to make their posts while stopping most spammers and other robotic attackers.
-
-Unfortunately this may inconvenience users with limited vision or using text-based or speech-based browsers.
-At the moment we do not have an audio alternative available.
-Please contact the  [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for assistance if this is unexpectedly preventing you from making legitimate posts.
-
-Hit the 'back' button in your browser to return to the page editor.",
+	'captchahelp-text' => "This is used to protect the site from spam.  If you have limited vision or are using a browser that can't show the image please [[Special:Contact|contact Wikia]] for assistance.",
 	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntax is as follows:
 #   * Everything from a "#" character to the end of the line is a comment
@@ -50,18 +33,6 @@ Hit the 'back' button in your browser to return to the page editor.",
 	'captcha-recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
 );
 
-/** Message documentation (Message documentation)
- * @author Aotake
- * @author Hamilton Abreu
- * @author MF-Warburg
- * @author Meithal
- * @author Meno25
- * @author Purodha
- * @author Siebrand
- * @author The Evil IP address
- * @author Toliño
- * @author Umherirrender
- */
 $messages['qqq'] = array(
 	'captcha-edit' => 'This message will be shown when editing if the wiki requires solving a captcha for editing.
 See also
@@ -90,11 +61,6 @@ See also
 	'right-skipcaptcha' => '{{doc-right|skipcaptcha}}',
 );
 
-/** Afrikaans (Afrikaans)
- * @author BrokenArrow
- * @author Naudefj
- * @author පසිඳු කාවින්ද
- */
 $messages['af'] = array(
 	'captcha-edit' => 'U wysiging bevat nuwe webskakels. Neem kennis dat blote reklame van u werf, produk of besigheid as vandalisme beskou kan word. As beskerming teen outomatiese gemorsbydraes, sal u die woorde wat onder verskyn in die prentjie moet intik: <br />([[Special:Captcha/help|Wat is hierdie?]])',
 	'captcha-desc' => 'Eenvoudige implementasie van captcha',
@@ -118,9 +84,6 @@ Gebruik die \"terug\"-knoppie van u blaaier om na die vorige blad terug te keer.
 	'right-skipcaptcha' => 'Captcha-handelinge uitvoer sonder om die captcha te hoef oplos',
 );
 
-/** Gheg Albanian (Gegë)
- * @author Mdupont
- */
 $messages['aln'] = array(
 	'captcha-edit' => 'Për të redaktuar këtë faqe, ju lutem zgjidh shuma e thjeshtë më poshtë dhe të hyjë në përgjigjen në kuti ([[Special:Captcha/help|më shumë informacion]]):',
 	'captcha-desc' => 'captcha Simple zbatimin e',
@@ -143,9 +106,6 @@ $messages['aln'] = array(
 	'right-skipcaptcha' => 'captcha Kryerja e veprimeve të shkaktuar pa pasur nevojë të shkojë nëpër captcha',
 );
 
-/** Amharic (አማርኛ)
- * @author Codex Sinaiticus
- */
 $messages['am'] = array(
 	'captcha-edit' => 'ይህንን ድርሰት ለማረም፣ እባክዎን የሚቀጥለውን ቀላል የመደመር ጥያቄ መልስ ሳጥን ውስጥ ይጻፉ። ([[Special:Captcha/help|ተጨማሪ መረጃ]])',
 	'captcha-createaccount' => 'ያልተፈለገ የመኪናነት አባልነት ለመከላከል፥ አባል ለመሆን በዚህ ምስል የታዩት እንግሊዝኛ ቃላት ወይም ቁጥር መልስ በትክክል መጻፍ ግዴታ ነው። ([[Special:Captcha/help|ይህ ምንድነው?]]):',
@@ -159,9 +119,6 @@ $messages['am'] = array(
 አሁን ( <= 'back' ) በbrowserዎ ላይ ይጫኑ።",
 );
 
-/** Aragonese (Aragonés)
- * @author Juanpabl
- */
 $messages['an'] = array(
 	'captcha-edit' => 'Ta editar ista pachina, faiga por favor a suma simpla que apareixe contino y escriba a solución en a caixa ([[Special:Captcha/help|más información]]):',
 	'captcha-desc' => 'Implementación de CAPTCHA ta protecher contra o spam y dovinanza de claus.',
@@ -190,15 +147,6 @@ Punche o botón 'enta zaga' d'o suyo navegador ta tornar ta l'editor de pachinas
 	'right-skipcaptcha' => 'Fer accions que requieren o captcha sin fer servir o captcha',
 );
 
-/** Arabic (العربية)
- * @author Aiman titi
- * @author Alnokta
- * @author Loya
- * @author Meno25
- * @author Mido
- * @author OsamaK
- * @author Samer
- */
 $messages['ar'] = array(
 	'captcha-edit' => 'لتعديل هذه الصفحة، من فضلك قم بحل المسألة الرياضية البسيطة بالأسفل وأدخل الإجابة في الصندوق ([[Special:Captcha/help|مزيد من المعلومات]]):',
 	'captcha-desc' => 'يوفر تقنيات كابتشا للحماية ضد السبام وتخمين كلمات السر',
@@ -233,11 +181,6 @@ $messages['ar'] = array(
 	'right-skipcaptcha' => 'أداء أفعال تستوجب تنفيذ كابتشا دون المرور بها',
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Ghaly
- * @author Meno25
- * @author Ramsis II
- */
 $messages['arz'] = array(
 	'captcha-edit' => 'علشان تعدل فى الصفحة دى، لو سمحت تحل المسالة الرياضية البسيطة اللى تحت  و اكتب الاجاية فى الصندوء ([[Special:Captcha/help|معلومات اكتر]]):',
 	'captcha-desc' => 'تطبيق بسيط لـ كابتشا',
@@ -268,10 +211,6 @@ $messages['arz'] = array(
 	'right-skipcaptcha' => 'عمل حاجات بتنشط الكابتشا من غير ما تضطر تمر بالكابتشا',
 );
 
-/** Assamese (অসমীয়া)
- * @author Chaipau
- * @author Rajuonline
- */
 $messages['as'] = array(
 	'captcha-edit' => 'এই পৃষ্ঠাটো সম্পাদনা কৰিবলৈ তলৰ সহজ অংকটো কৰি উত্তৰতো বাকছৰ ভিতৰত লিখক
 ([[Special:Captcha/help|অধিক তথ্য]]):',
@@ -299,10 +238,6 @@ $messages['as'] = array(
 পৃষ্ঠা সম্পাদনালৈ ঘুৰি যাবলৈ আপোনাৰ ব্ৰাউজাৰৰ 'back' বুটামত টিপা মাৰক।",
 );
 
-/** Asturian (Asturianu)
- * @author Esbardu
- * @author Xuacu
- */
 $messages['ast'] = array(
 	'captcha-edit' => "Pa editar esta páxina, por favor resuelvi la suma simple d'embaxo y pon la rempuesta nel caxellu ([[Special:Captcha/help|más información]]):",
 	'captcha-desc' => "Ufre téuniques de CAPTCHA pa protexese escontra'l spam y descubrimientu de contraseñes",
@@ -333,16 +268,10 @@ Calca nel botón 'atrás' del to navegador pa volver a la páxina d'edición.",
 	'right-skipcaptcha' => 'Facer les acciones que requieren captcha ensin tener que lu introducir',
 );
 
-/** Azerbaijani (Azərbaycanca)
- * @author Vugar 1981
- */
 $messages['az'] = array(
 	'captchahelp-title' => 'CAPTCHA kömək',
 );
 
-/** Bashkir (Башҡортса)
- * @author Assele
- */
 $messages['ba'] = array(
 	'captcha-edit' => 'Был битте мөхәррирләү өсөн, зинһар, ябай мәсьәләне сисегеҙ һәм яуабын түбәндәге юлға керетегеҙ ([[Special:Captcha/help|тулыраҡ мәғлүмәт]]):',
 	'captcha-desc' => 'Спамдан һәм паролде яратыуҙан һаҡлау өсөн CAPTCHA ысулдары менән тәьмин итә',
@@ -375,9 +304,6 @@ $messages['ba'] = array(
 	'right-skipcaptcha' => 'Captcha тикшереүен талап иткән ғәмәлдәрҙе тикшереүһеҙ башҡарыу',
 );
 
-/** Southern Balochi (بلوچی مکرانی)
- * @author Mostafadaneshvar
- */
 $messages['bcc'] = array(
 	'captcha-edit' => 'به اصلاح کتن ای صفحه،لطفا ای جمع ساده حل کنیت و جوابء جهلا وارد کنیت ([[Special:Captcha/help|گیشتر اطلاعات]]):',
 	'captcha-desc' => ' کاربرد ساده captcha',
@@ -407,18 +333,11 @@ $messages['bcc'] = array(
 	'right-skipcaptcha' => 'اجرای کاران کپچا بی شی که چه طریق کپچا بروت',
 );
 
-/** Bikol Central (Bikol Central)
- * @author Filipinayzd
- */
 $messages['bcl'] = array(
 	'captcha-create' => 'Tangarig maggibo an pahina, paki simbagan an simpleng suma sa ibaba asin ikaag an simbag sa laog kan kahon ([[Special:Captcha/help|more info]]):',
 	'captchahelp-title' => 'Tabang sa Captcha',
 );
 
-/** Belarusian (Беларуская)
- * @author Yury Tarasievich
- * @author Хомелка
- */
 $messages['be'] = array(
 	'captcha-edit' => 'Для змянення гэтай старонцы, калі ласка, вырашыце простую суму ніжэй і ўвядзіце адказ у поле ([[Special:Captcha/help|more info]]):',
 	'captcha-desc' => 'Вырашэнне простай каптчы',
@@ -432,12 +351,6 @@ $messages['be'] = array(
   #</pre> <!-- радок абавязкова пакінуць як ёсць (у т.л., з прагалам у пачатку) -->',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- * @author Red Winged Duck
- * @author Wizardist
- */
 $messages['be-tarask'] = array(
 	'captcha-edit' => 'Каб рэдагаваць гэтую старонку, калі ласка, знайдзіце простую суму і ўвядзіце адказ у поле ([[Special:Captcha/help|падрабязнасьці]]):',
 	'captcha-desc' => 'Дадае мэтад CAPTCHA для абароны супраць спаму і падбору пароляў',
@@ -472,10 +385,6 @@ $messages['be-tarask'] = array(
 	'right-skipcaptcha' => 'выкананьне дзеяньняў без праверкі CAPTCHA, дзе яна патрабуецца',
 );
 
-/** Bulgarian (Български)
- * @author DCLXVI
- * @author Spiritia
- */
 $messages['bg'] = array(
 	'captcha-edit' => 'Редактирането на тази статия изисква потребителите да въведат отговора на задачата по-долу в текстовата кутия ([[Special:Captcha/help|повече информация]]):',
 	'captcha-desc' => 'Предоставя опростена captcha технология като защита срещу спам и налучкване на пароли',
@@ -497,12 +406,6 @@ $messages['bg'] = array(
 Натиснете бутона 'back' на вашия браузър, за да се върнете към редактора на страници.",
 );
 
-/** Bengali (বাংলা)
- * @author Bellayet
- * @author Prometheus.pyrphoros
- * @author Usarker
- * @author Zaheen
- */
 $messages['bn'] = array(
 	'captcha-edit' => 'এই নিবন্ধটি সম্পাদনা করতে দয়া করে নিচের সহজ যোগটি সমাধান করুন এবং ফলাফলটি বাক্সটিতে প্রবেশ করান ([[Special:Captcha/help|আরও তথ্য]]):',
 	'captcha-desc' => 'সরল ক্যাপচা বাস্তবায়ন',
@@ -531,12 +434,6 @@ $messages['bn'] = array(
 	'right-skipcaptcha' => 'ক্যাপচাতে না গিয়ে ক্যাপচা ট্রিগারিং এর কাজ করুন',
 );
 
-/** Breton (Brezhoneg)
- * @author BrokenArrow
- * @author Fulup
- * @author VIGNERON
- * @author Y-M D
- */
 $messages['br'] = array(
 	'captcha-edit' => "A-raok gellout kemmañ ar bajenn-mañ e c'houlenner ouzhoc'h respont d'ar jedadenn eeun a-is ha lakaat an disoc'h er vaezienn ([[Special:Captcha/help|Petra eo se?]])",
 	'captcha-desc' => 'Pourchas a ra teknikoù CAPTCHA evit en em wareziñ diouzh ar strob hag an diskuliañ gerioù-tremen',
@@ -568,10 +465,6 @@ Pouezit war bouton 'kent' ho merdeer evit distreiñ d'ar bajenn gemmañ.",
 	'right-skipcaptcha' => 'Lañsañ a ra an oberoù captcha hep bezañ rediet da dremen drezañ',
 );
 
-/** Bosnian (Bosanski)
- * @author BrokenArrow
- * @author CERminator
- */
 $messages['bs'] = array(
 	'captcha-edit' => 'Vaša izmjena uključuje nove URL linkove; kao zaštita od automatizovanog vandalizma, moraćete da izračunate zadatak ispod i upišete odgovor u prozor:
 ([[Special:Captcha/help|Šta je ovo?]]):',
@@ -607,13 +500,6 @@ Kliknite 'nazad' ('back') dugme vašeg preglednika da se vratite na polje za uno
 	'right-skipcaptcha' => 'Korištenje akcija nakon captcha bez potrebe prolaska kroz captcha proces',
 );
 
-/** Catalan (Català)
- * @author El libre
- * @author Paucabot
- * @author SMP
- * @author Ssola
- * @author Toniher
- */
 $messages['ca'] = array(
 	'captcha-edit' => 'Per a poder modificar aquesta pàgina cal que resolgueu aquesta simple suma i introduïu el resultat en el quadre ([[Special:Captcha/help|més informació]]):',
 	'captcha-desc' => "Proporciona tècniques CAPTCHA per a protegir contra la publicitat no desitjada i l'obtenció de contrasenyes",
@@ -644,27 +530,20 @@ Cliqueu el botó de retrocedir del vostre navegador per a tornar al formulari.",
 	'right-skipcaptcha' => 'Fer les accions que requereixen de captcha sense haver-lo de passar',
 );
 
-/** Min Dong Chinese (Mìng-dĕ̤ng-ngṳ̄) */
 $messages['cdo'] = array(
 	'captcha-edit' => "Nṳ̄ gă-tiĕng lāu sĭng gì nguôi-buô lièng-giék. Ôi lāu ê̤ṳ-huòng ô tiàng-sê̤ṳ cê̤ṳ-dông huák-buó bóng-só̤ séng-sék (''spam''), kī-dâe̤ng nṳ̄ gié-sáung â-dā̤ gāng-dăng gì gă-huák, gái ciŏng dák-áng siā diē gáh-gáh diē-sié ([[Special:Captcha/help|gáing sâ̤ séng-sék]]):",
 	'captchahelp-title' => 'Captcha bŏng-cô',
-	'captchahelp-text' => "Chiông wiki dēng kăi-huóng gì uōng-câng sèu-sèu ké̤ṳk bóng-só̤ séng-sék huák-buó-nè̤ng (\\'\\'spammer\\'\\') páh-chā: ĭ-gáuk-nè̤ng kĕk cê̤ṳ-dông-huá gì gă-sĭ táik bóng-só̤ guōng-gó̤ lièng gáu ĭ gì uōng-câng. Chŭi-iòng cī piĕ bóng-só̤ séng-sék â̤ dù lâi gì, dáng-sê iâ cêng-go̤ tō̤-iéng.
+	'captchahelp-text' => "Chiông wiki dēng kăi-huóng gì uōng-câng sèu-sèu ké̤ṳk bóng-só̤ séng-sék huák-buó-nè̤ng (''spammer'') páh-chā: ĭ-gáuk-nè̤ng kĕk cê̤ṳ-dông-huá gì gă-sĭ táik bóng-só̤ guōng-gó̤ lièng gáu ĭ gì uōng-câng. Chŭi-iòng cī piĕ bóng-só̤ séng-sék â̤ dù lâi gì, dáng-sê iâ cêng-go̤ tō̤-iéng.
 
 Ô sèng-hâiu, dĕk-biék sê găk nṳ̄ gă-tiĕng sĭng gì nguôi-buô lièng-giék gáu wiki gì sèng-hâiu, wiki â̤ hiēng-sê sáik-ké gáuk-iông hĕ̤k-ciā sê hìng-câung ô gāi-biéng gì ùng-cê dù-chiông, giéu nṳ̄ páh diē nṳ̄ sū káng giéng gì cê hĕ̤k sṳ̀ (hô̤ lō̤ \"captcha\"). Ĭng-ôi gĭ-ké-nè̤ng mâ̤ chiàng ciā êng-ô, gó-chṳ̄ cêu â̤ huòng-cī duâi-buô-hông iù gĭ-ké-nè̤ng huák-buó bóng-só̤ séng-sék (bók-guó, cĭng nè̤ng huák-buó  bóng-só̤ séng-sék, ciā huŏng-huák huòng mâ̤ lì).
 
-Cĭng mì-hâng, dó̤i hī piĕ mĕ̤k-ciŭ mâ̤ hō̤, hĕ̤k-ciā sê sāi-ê̤ṳng gĭ-ṳ̀ ùng-buōng (\\'\\'text-based\\'\\') hĕ̤k gĭ-ṳ̀ siăng-ĭng (\\'\\'speech-based\\'\\') gì báuk-lāng-ké (\\'\\'browser\\'\\') gì ê̤ṳng-hô lì gōng, cūng-kuāng cĭng mâ̤ lê-biêng. Cī òng, nàng-gă gó mò̤ 1 cṳ̄ng gá hō̤ gì huŏng-huák. Nâ sê gōng, cuòi īng-hiōng nṳ̄ ciáng-siòng piĕng-cĭk, chiāng nṳ̄ lièng-hiê guāng-lī-uòng.
+Cĭng mì-hâng, dó̤i hī piĕ mĕ̤k-ciŭ mâ̤ hō̤, hĕ̤k-ciā sê sāi-ê̤ṳng gĭ-ṳ̀ ùng-buōng (''text-based'') hĕ̤k gĭ-ṳ̀ siăng-ĭng (''speech-based'') gì báuk-lāng-ké (''browser'') gì ê̤ṳng-hô lì gōng, cūng-kuāng cĭng mâ̤ lê-biêng. Cī òng, nàng-gă gó mò̤ 1 cṳ̄ng gá hō̤ gì huŏng-huák. Nâ sê gōng, cuòi īng-hiōng nṳ̄ ciáng-siòng piĕng-cĭk, chiāng nṳ̄ lièng-hiê guāng-lī-uòng.
 
 Ôi lāu captcha gì ciáng-siòng gĕ̤ng-cáuk, nṳ̄ diŏh páh kŭi báuk-lāng-ké gì cookie.
 
-Buóh diōng kó̤ piĕng-cĭk hiĕk-miêng, áik \"diōng kó̤ sèng 1 hiĕk\" (\\'\\'back\\'\\').",
+Buóh diōng kó̤ piĕng-cĭk hiĕk-miêng, áik \"diōng kó̤ sèng 1 hiĕk\" (''back'').",
 );
 
-/** Czech (Česky)
- * @author Danny B.
- * @author Li-sung
- * @author Matěj Grabovský
- * @author Mormegil
- */
 $messages['cs'] = array(
 	'captcha-edit' => 'Abyste mohli editovat tuto stránku, musíte vyřešit následující jednoduchý součet a napsat výsledek. ([[Special:Captcha/help|Co tohle znamená?]])',
 	'captcha-desc' => 'Poskytuje techniky CAPTCHA pro ochranu před spamem a hádáním hesel',
@@ -694,9 +573,6 @@ Pro návrat na předchozí stránku stiskněte ve svém prohlížeči tlačítko
 	'right-skipcaptcha' => 'Vykonávání akcí spojených s CAPTCHA bez nutnosti jejího řešení',
 );
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- */
 $messages['cy'] = array(
 	'captcha-edit' => "Er mwyn gallu golygu'r dudalen, gwnewch y swm isod a gosodwch y canlyniad yn y blwch ([[Special:Captcha/help|rhagor o wybodaeth]]):",
 	'captcha-desc' => 'Yn gweithredu technegau CAPTCHA i arbed rhag sbam a dyfalu cyfrineiriau',
@@ -730,11 +606,6 @@ Gwasgwch botwm 'nôl' eich porwr er mwyn dychwelyd at y dudalen golygu.",
 	'right-skipcaptcha' => "Gwneud rhyw weithred, sy'n arfer deffro meddalwedd y captcha, heb ei ddeffro.",
 );
 
-/** Danish (Dansk)
- * @author Aputtu
- * @author Byrial
- * @author Peter Alberti
- */
 $messages['da'] = array(
 	'captcha-edit' => 'For at redigere denne side, skal du give svaret på regnestykket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
 	'captcha-desc' => 'Giver CAPTCHA-teknikker til at beskytte mod spam og gætning af adgangskoder',
@@ -763,58 +634,47 @@ Tryk på 'tilbage'-knappen i din browser for at returnere til redigeringssiden."
 	'right-skipcaptcha' => 'Udføre handlinger som normalt kræver "captcha"-bekræftelse uden at bruge "captcha"',
 );
 
-/** German (Deutsch)
- * @author Imre
- * @author Kghbln
- * @author Metalhead64
- * @author MichaelFrey
- * @author Raimond Spekking
- * @author The Evil IP address
- * @author Umherirrender
- */
 $messages['de'] = array(
 	'captcha-edit' => 'Zur Bearbeitung der Seite löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein [[Special:Captcha/help|(Fragen oder Probleme?)]].',
 	'captcha-desc' => 'Ermöglicht verschiedene CAPTCHA-Techniken zum Schutz vor Spam und dem Erraten von Passwörtern',
 	'captcha-addurl' => 'Deine Bearbeitung enthält neue externe Links.
-Zum Schutz vor automatisiertem Spamming löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein. Klicke dann erneut auf „Seite speichern“ [[Special:Captcha/help|(Fragen oder Probleme?)]].',
-	'captcha-badlogin' => 'Zum Schutz vor einer Kompromittierung deines Benutzerkontos löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein [[Special:Captcha/help|(Fragen oder Probleme?)]]:',
-	'captcha-createaccount' => 'Zum Schutz vor automatischen Kontenerstellungen, löse die Rechenaufgabe und trage das Ergebnis in das Feld ein([[Special:Captcha/help|Fragen oder Probleme?]]):',
+Zum Schutz vor automatisiertem Spamming löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein. [[Special:Captcha/help|(Fragen oder Probleme?)]]',
+	'captcha-badlogin' => 'Zum Schutz vor einer Kompromittierung deines Benutzerkontos löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein. [[Special:Captcha/help|(Fragen oder Probleme?)]]',
+	'captcha-createaccount' => 'Zum Schutz vor automatischen Kontoerstellungen löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein. [[Special:Captcha/help|(Fragen oder Probleme?)]]',
 	'captcha-createaccount-fail' => 'Falscher oder fehlender Bestätigungscode!',
-	'captcha-create' => 'Zur Erstellung der Seite löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein [[Special:Captcha/help|(Fragen oder Probleme?)]].',
-	'captcha-sendemail' => 'Um gegen automatischen Spam vorzugehen, löse bitte die einfache Rechenaufgabe und gib die Antwort unten in das Feld ein ([[Special:Captcha/help|mehr Informationen]]):',
-	'captcha-sendemail-fail' => 'Falscher oder fehlender Bestätigungscode.',
+	'captcha-create' => 'Zur Erstellung der Seite löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein. [[Special:Captcha/help|(Fragen oder Probleme?)]]',
+	'captcha-sendemail' => 'Zum Schutz vor automatisiertem Spam löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein. [[Special:Captcha/help|(Fragen oder Probleme?)]]',
+	'captcha-sendemail-fail' => 'Fehlerhafter oder unvollständiger Bestätigungscode.',
 	'captcha-disabledinapi' => 'Diese Aktion benötigt ein CAPTCHA. Sie kann nicht über die API ausgeführt werden.',
 	'captchahelp-title' => 'CAPTCHA-Hilfe',
-	'captchahelp-cookies-needed' => "'''Wichtiger Hinweis:''' Es müssen Cookies im Browser erlaubt sein.",
-	'captchahelp-text' => 'Dieses Projekt ist ein offenes Wiki. Das bedeutet, dass praktisch jeder Beiträge einstellen kann. Solche Projekte sind daher häufiges Ziel von Spammern, die spezielle Programme benutzen, um automatisierte Weblinks in anderen Internetseiten zu platzieren. Da diese unerwünschten Links einzeln wieder entfernt werden müssen, können sie die Arbeit an diesem Projekt enorm beeinträchtigen.
-
-Um zu verhindern, dass so genannte „Spam-“ oder „Vandal-Bots“ automatisch externe Links einfügen oder zahllose neue Benutzerkonten für spätere Spam- oder Vandalismusattacken registrieren können, verwendet Wikia sogenannte „Captchas“ (kleine Aufgaben, die für Menschen gut, für Bots aber nur schwer lösbar sind).
-
-Leider bereitet diese Methode für einige Benutzer Unannehmlichkeiten, besonders für solche mit eingeschränktem Sehvermögen, textbasierten Browsern oder Browsern mit Sprachsteuerung. Momentan ist leider keine Audioversion verfügbar. Bei Problemen kannst Du [[{{ns:special}}:Contact|Kontakt zu Wikia]] aufnehmen.
-
-Bitte den "Zurück" Button in deinem Browser verwenden um zum Editor zurückzukehren. ',
+	'captchahelp-cookies-needed' => 'Wichtiger Hinweis: Es müssen Cookies im Browser erlaubt sein.',
+	'captchahelp-text' => 'Dies dient dazu, unsere Plattform vor Spam zu schützen. Falls dein Sehvermögen eingeschränkt ist oder dein Browser das Bild nicht anzeigen kann, [[{{ns:special}}:Contact|schreib uns eine Nachricht]]. Wir helfen dir gerne weiter.',
 	'captcha-addurl-whitelist' => ' #<!-- Diese Zeile darf nicht verändert werden! --> <pre>
 #  Syntax:
 #   * Alles von einem #-Zeichen bis zum Ende der Zeile ist ein Kommentar
-#   * Jede nicht-leere Zeile ist ein Regex-Fragment, das gegenüber den Hostnamen einer URL geprüft wird
+#   * Jede nicht-leere Zeile ist ein Regex-Fragment, das nur Hostnamen innerhalb von URLs entspricht
  #</pre> <!-- Diese Zeile darf nicht verändert werden! -->',
 	'right-skipcaptcha' => 'Überspringen der CAPTCHA-Eingabe',
 	'captcha-input-placeholder' => 'Text eingeben',
-	'captcha-recaptcha-desc' => 'reCAPTCHA-Modul für die Erweiterung „Confirm Edit“',
-	'captcha-recaptcha-edit' => 'Zum Schutz vor automatisiertem Spam, gib bitte die beiden folgenden Wörter in das untenstehende Feld ein:',
-	'captcha-recaptcha-addurl' => 'Deine Bearbeitung enthält neue externe Links. Zum Schutz vor automatisiertem Spam gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
-	'captcha-recaptcha-badpass' => 'Zum Schutz gegen automatisiertes Knacken von Passwörtern, gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
-	'captcha-recaptcha-createaccount' => 'Zum Schutz gegen die automatisierte Erstellung von Benutzerkonten bitten wir dich, die folgenden beiden Wörter in das untenstehende Feld einzugeben:',
-	'captcha-recaptcha-createaccount-fail' => 'Fehlerhafte oder fehlende reCAPTCHA Antwort.',
-	'captcha-recaptcha-create' => 'Zum Schutz gegen automatisierte Erstellung von Seiten gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
+	'captcha-recaptcha-desc' => 'reCAPTCHA-Modul für die Bestätigung von Bearbeitungen',
+	'captcha-recaptcha-edit' => 'Zum Schutz vor automatisiertem Spam gib bitte die folgenden Wörter in das untenstehende Feld ein:',
+	'captcha-recaptcha-addurl' => 'Deine Bearbeitung enthält neue externe Links. Zum Schutz vor automatisiertem Spam gib bitte die folgenden Wörter in das untenstehende Feld ein:',
+	'captcha-recaptcha-badpass' => 'Zum Schutz gegen automatisiertes Knacken von Passwörtern gib bitte die folgenden Wörter in das untenstehende Feld ein:',
+	'captcha-recaptcha-createaccount' => 'Zum Schutz gegen die automatisierte Erstellung von Benutzerkonten gib bitte die folgenden Wörter in das untenstehende Feld ein:',
+	'captcha-recaptcha-createaccount-fail' => 'Fehlerhafte oder unvollständige reCAPTCHA-Eingabe.',
+	'captcha-recaptcha-create' => 'Zum Schutz gegen das automatisierte Erstellen von Seiten gib bitte die folgenden Wörter in das untenstehende Feld ein:',
 	'captcha-recaptcha-misconfigured' => 'ReCaptcha ist nicht korrekt konfiguriert',
+	'captcha-no-image' => 'Es wurde kein Captcha-Bild gefunden',
+	'recaptcha-desc' => 'reCAPTCHA-Modul für die Erweiterung „Confirm Edit“',
+	'recaptcha-edit' => 'Zum Schutz vor automatisiertem Spam, gib bitte die beiden folgenden Wörter in das untenstehende Feld ein:',
+	'recaptcha-addurl' => 'Deine Bearbeitung enthält neue externe Links. Zum Schutz vor automatisiertem Spam gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
+	'recaptcha-badpass' => 'Zum Schutz gegen automatisiertes Knacken von Passwörtern, gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
+	'recaptcha-createaccount' => 'Zum Schutz gegen die automatisierte Erstellung von Benutzerkonten bitten wir dich, die folgenden beiden Wörter in das untenstehende Feld einzugeben:',
+	'recaptcha-createaccount-fail' => 'Fehlerhafte oder fehlende reCAPTCHA Antwort.',
+	'recaptcha-create' => 'Zum Schutz gegen automatisierte Erstellung von Seiten gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
+	'recaptcha-misconfigured' => 'ReCaptcha ist nicht korrekt konfiguriert',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author Imre
- * @author Raimond Spekking
- * @author The Evil IP address
- */
 $messages['de-formal'] = array(
 	'captcha-edit' => 'Zur Bearbeitung der Seite lösen Sie die nachfolgende Rechenaufgabe und tragen Sie das Ergebnis in das Feld unten ein [[Special:Captcha/help|(Fragen oder Probleme?)]].',
 	'captcha-addurl' => 'Ihre Bearbeitung enthält neue externe Links.
@@ -836,11 +696,6 @@ Bitte kontaktieren Sie einen [[{{MediaWiki:Grouppage-sysop}}|Administratoren]] f
 Der „Zurück“-Knopf des Browsers führt zurück zum Bearbeitungsfenster.',
 );
 
-/** Zazaki (Zazaki)
- * @author Aspar
- * @author Erdemaslancan
- * @author Xoser
- */
 $messages['diq'] = array(
 	'captcha-edit' => 'Qe ena pel vurnayîşî, ma rica keno cewabê problemî qutiyê ke cor de zerre ey ra binuse ([[Special:Captcha/help|enformasyonê bînî]]):',
 	'captcha-desc' => 'Rehat CAPTCHA teknoloci u  dezgina parola-ezayan',
@@ -875,9 +730,6 @@ Browser xo de goceke 'back' rê klik bike şo pela editorî.",
 	'right-skipcaptcha' => 'Herekatanê captcha trigger perform bike ke ti ser captcha meşo',
 );
 
-/** Lower Sorbian (Dolnoserbski)
- * @author Michawiki
- */
 $messages['dsb'] = array(
 	'captcha-edit' => 'Aby wobźěłował toś ten bok, rozwěž pšosym slědujucy jadnory liceński nadawk a zapódaj wuslědk do kašćika ([[Special:Captcha/help|Dalšne info]]):',
 	'captcha-desc' => 'Staja techniki CAPTCHA za šćit pśeśiwo spamoju a wugódanjoju gronidłow k dispoziciji',
@@ -911,24 +763,10 @@ Klikni na tłocašk "Slědk" we swójom wobglědowaku, aby wróśił k bokowemu 
 	'right-skipcaptcha' => 'Akcije wugbaś, kótarež zapušćiju captcha, mimo až se nadawk captcha rozwěžo.',
 );
 
-/** Ewe (Eʋegbe)
- * @author Natsubee
- */
 $messages['ee'] = array(
 	'captcha-edit' => 'Ne enye wò didi bena yea ɖɔ axa sia ɖo la, mía ve nuwò be na bu akɔnta si le nuŋɔŋlɔ sia gɔme, eye na ŋlɔ nusi wòkpɔ ɖe go sia me ([[Special:Captcha/help|gbeƒãɖeɖe]]):',
 );
 
-/** Greek (Ελληνικά)
- * @author Badseed
- * @author Consta
- * @author Dada
- * @author Geraki
- * @author Glavkos
- * @author Kiriakos
- * @author Omnipaedista
- * @author ZaDiak
- * @author Περίεργος
- */
 $messages['el'] = array(
 	'captcha-edit' => 'Για να επεξεργαστείτε αυτή την σελίδα, παρακαλούμε λύστε την παρακάτω πρόσθεση και απαντήστε στο πλαίσιο ([[Special:Captcha/help|πληροφορίες]]):',
 	'captcha-desc' => 'Παρέχει τεχνικές CAPTCHA για την προστασία από spam και προσπάθειες σπασίματος  κωδικών πρόσβασης',
@@ -959,9 +797,6 @@ $messages['el'] = array(
 	'right-skipcaptcha' => 'Πραγματοποίηση ενεργειών που ενεργοποιούν captcha χωρίς να χρειάζεται πέρασμα από το captcha',
 );
 
-/** Canadian English (Canadian English)
- * @author Techman224
- */
 $messages['en-ca'] = array(
 	'captchahelp-text' => "Web sites that accept postings from the public, like this wiki, are often abused by spammers who use automated tools to post their links to many sites.
 While these spam links can be removed, they are a significant nuisance.
@@ -976,9 +811,6 @@ Please contact the  [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for as
 Hit the 'back' button in your browser to return to the page editor.",
 );
 
-/** British English (British English)
- * @author Lcawte
- */
 $messages['en-gb'] = array(
 	'captchahelp-text' => "Web sites that accept postings from the public, like this wiki, are often abused by spammers who use automated tools to post their links to many sites.
 While these spam links can be removed, they are a significant nuisance.
@@ -993,11 +825,6 @@ Please contact the  [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for as
 Hit the 'back' button in your browser to return to the page editor.",
 );
 
-/** Esperanto (Esperanto)
- * @author Castelobranco
- * @author Petrus Adamus
- * @author Yekrats
- */
 $messages['eo'] = array(
 	'captcha-edit' => 'Por redakti ĉi tiun paĝon, bonvolu solvi la simplan sumon jenan kaj enigi la respondon en la skatolo ([[Special:Captcha/help|plua informo]]):',
 	'captcha-desc' => 'Disponigas ilojn de Captcha por kontraŭigi spamaĵojn kaj pasvorto-divenadon',
@@ -1032,45 +859,34 @@ Klaku la 'reiru' butonon en via retumilo por reiri al la paĝo-redaktilo.",
 	'right-skipcaptcha' => "Faru ''captcha''-spronantaj agoj sen farante la ''captcha''-on",
 );
 
-/** Spanish (Español)
- * @author Crazymadlover
- * @author Drini
- * @author Icvav
- * @author Jatrobat
- * @author Lin linao
- * @author Locos epraix
- * @author Muro de Aguas
- * @author Pertile
- * @author Sanbec
- */
 $messages['es'] = array(
 	'captcha-edit' => 'Para editar esta página, es necesario que resuelvas esta simple suma que se muestra abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
 	'captcha-desc' => 'Proporciona técnicas CAPTCHA para protección contra spam y adivinación de contraseñas.',
-	'captcha-addurl' => 'Tu edición incluye nuevos enlaces externos.
-Como medida de protección contra el spam automatizado, es necesario que resuelvas esta sencilla suma de abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
-	'captcha-badlogin' => 'Como medida de protección contra los programas de crackeo de contraseñas, es necesario que resuelvas esta simple suma de abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
-	'captcha-createaccount' => 'Como medida de protección contra la creación automática de cuentas, es necesario que resuelvas esta simple suma de abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
+	'captcha-addurl' => 'Tu edición incluye nuevos enlaces externos. 
+Como medida de protección contra el spam automatizado, es necesario que resuelvas esta simple suma que se muestra abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
+	'captcha-badlogin' => 'Como medida de protección contra los programas de crackeo de contraseñas, es necesario que resuelvas esta simple suma que se muestra abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
+	'captcha-createaccount' => 'Como medida de protección contra la creación automática de cuentas, es necesario que resuelvas esta simple suma que se muestra abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
 	'captcha-createaccount-fail' => 'Falta el código de confirmación, o éste es incorrecto.',
-	'captcha-create' => 'Para crear la página, es necesario que resuelvas esta simple suma de abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
-	'captcha-sendemail' => 'Como medida de protección contra el spam automatizado, es necesario que resuelvas esta simple suma de abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
+	'captcha-create' => 'Para crear la página, es necesario que resuelvas esta simple suma que se muestra abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
+	'captcha-sendemail' => 'Como medida de protección contra el spam automatizado, es necesario que resuelvas esta simple suma que se muestra abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
 	'captcha-sendemail-fail' => 'Falta el código de confirmación, o éste es incorrecto.',
 	'captcha-disabledinapi' => 'Esta acción requiere un código CAPTCHA, por lo que no puede completarse a través de la API.',
 	'captchahelp-title' => 'Ayuda sobre el CAPTCHA',
 	'captchahelp-cookies-needed' => 'Necesitarás tener activadas las cookies en tu navegador para que funcione.',
-	'captchahelp-text' => 'Los sitios web que aceptan contribuciones del público, como esta wikia, son a menudo objeto de abusos por spammers que utilizan programas para incluir automáticamente sus enlaces a varios sitios web.
-Si bien estos enlaces pueden quitarse, son una gran molestia.
+	'captchahelp-text' => 'Los sitios web que aceptan contribuciones del público, como este wiki, son a menudo objeto de abusos por spammers que utilizan programas para incluir automáticamente sus enlaces a varios sitios web. 
+Si bien estos enlaces pueden quitarse, son una gran molestia. 
 
-En algunas ocasiones, especialmente cuando añadas nuevos enlaces a una página, la wikia te mostrará una imagen de texto coloreado o distorsionado y te pedirá que escribas las palabras que muestra.
-Dado que esta es una tarea difícil de automatizar, permite a la mayoría de las personas enviar sus textos, a la vez que detiene a la mayoría de los spammers y otros robots de ataque.
+En algunas ocasiones, especialmente cuando añadas nuevos enlaces a una página, el wiki te mostrará una imagen de texto coloreado o distorsionado y te pedirá que escribas las palabras que muestra. 
+Dado que esta es una tarea difícil de automatizar, permite a la mayoría de las personas enviar sus textos, a la vez que detiene a la mayoría de los spammers y otros robots de ataque. 
 
-Desafortunadamente, la medida puede ser un inconveniente para usuarios con visión limitada o aquellos que utilizan navegadores de texto o de voz. Por el momento, no tenemos una alternativa sonora disponible.
+Desafortunadamente, la medida puede ser un inconveniente para usuarios con visión limitada o aquellos que utilizan navegadores de texto o de voz. Por el momento, no tenemos una alternativa sonora disponible. 
 Por favor, contacta con los [[{{MediaWiki:Grouppage-sysop}}|administradores del sitio]] si necesitas asistencia o si está entorpeciendo la publicación de ediciones legítimas.
 
 Haz clic en el botón "atrás" de tu navegador para volver a la página del editor.',
-	'captcha-addurl-whitelist' => ' #<!-- deje esta línea exactamente como está --> <pre>
-# La sintaxis es la siguiente:
-# * Todo desde un caracter "#" hasta el final de la línea es un comentario
-# * Toda línea que no esté en blanco es un fragmento de expresión regular que se comparará con las URLs
+	'captcha-addurl-whitelist' => ' #<!-- deje esta línea exactamente como está --> <pre> 
+# La sintaxis es la siguiente: 
+# * Todo desde un caracter "#" hasta el final de la línea es un comentario 
+# * Toda línea que no esté en blanco es un fragmento de expresión regular que se comparará con las URLs 
  #</pre> <!-- deje esta línea exactamente como está -->',
 	'right-skipcaptcha' => 'Realiza acciones que disparan la protección CAPTCHA sin tener que escribir el código.',
 	'captcha-input-placeholder' => 'Introduce el texto aquí',
@@ -1082,13 +898,17 @@ Haz clic en el botón "atrás" de tu navegador para volver a la página del edit
 	'captcha-recaptcha-createaccount-fail' => 'Falta la respuesta reCAPTCHA, o ésta es incorrecta.',
 	'captcha-recaptcha-create' => 'Como medida de protección contra la creación automática de páginas, es necesario que completes la siguiente prueba:',
 	'captcha-recaptcha-misconfigured' => 'ReCAPTCHA no está configurado correctamente',
+	'captcha-no-image' => 'No se pudo encontrar la imagen CAPTCHA',
+	'recaptcha-desc' => 'Módulo reCAPTCHA para confirmar la edición',
+	'recaptcha-edit' => 'Como medida de protección contra el spam automatizado en las ediciones, es necesario que completes la siguiente prueba:',
+	'recaptcha-addurl' => 'Tu edición incluye enlaces externos. Como medida de protección contra el spam automatizado, es necesario que completes la siguiente prueba:',
+	'recaptcha-badpass' => 'Como medida de protección contra los programas de crackeo de contraseñas, es necesario que completes la siguiente prueba:',
+	'recaptcha-createaccount' => 'Como medida de protección contra la creación automática de cuentas, es necesario que completes la siguiente prueba:',
+	'recaptcha-createaccount-fail' => 'Falta la respuesta reCAPTCHA, o ésta es incorrecta.',
+	'recaptcha-create' => 'Como medida de protección contra la creación automática de páginas, es necesario que completes la siguiente prueba:',
+	'recaptcha-misconfigured' => 'ReCAPTCHA no está configurado correctamente',
 );
 
-/** Estonian (Eesti)
- * @author BrokenArrow
- * @author Jaan513
- * @author Pikne
- */
 $messages['et'] = array(
 	'captcha-edit' => 'Selle lehekülje muutmiseks lahenda palun lihtne tehe ja sisesta vastus kasti ([[Special:Captcha/help|lisateave]]).',
 	'captcha-desc' => 'Pakub robotilõksu abil kaitset rämpspostituste ja paroolide äraarvamise vastu.',
@@ -1120,12 +940,6 @@ Konto registreerimise lehele või redigeerimisaknasse tagasi jõudmiseks klõpsa
 	'right-skipcaptcha' => 'Sooritada robotilõksu vallapäästvaid toiminguid testi läbimata',
 );
 
-/** Basque (Euskara)
- * @author An13sa
- * @author BrokenArrow
- * @author Kobazulo
- * @author Pi
- */
 $messages['eu'] = array(
 	'captcha-edit' => 'Orrialde hau editatzeko, mesedez, beheko batuketa erraz hau ebatzi eta erantzuna kutxan idatzi ([[Special:Captcha/help|argibide gehiago]]):',
 	'captcha-desc' => 'CAPTCHA teknika erabiltzen ditu spamaren aurkako babeserako',
@@ -1145,12 +959,6 @@ Zoritxarrez, ikusmen mugatua edo testu bidezko nabigatzaileak erabiltzen dituzte
 Zure nabigatzaileko 'atzera' lotura erabili aldaketen orrialdera itzultzeko.",
 );
 
-/** Persian (فارسی)
- * @author Ebraminio
- * @author Huji
- * @author Mjbmr
- * @author Wayiran
- */
 $messages['fa'] = array(
 	'captcha-edit' => 'برای ویرایش این مقاله، لطفاً حاصل جمع زیر را حساب کنید و نتیجه را در جعبه وارد کنید ([[Special:Captcha/help|اطلاعات بیشتر]]):',
 	'captcha-desc' => 'روش‌های مبتنی بر CAPTCHA برای مقابله با هرزنگاری و کشف گذرواژه فراهم می‌کند',
@@ -1164,16 +972,10 @@ $messages['fa'] = array(
 	'captcha-disabledinapi' => 'این اقدام به کپچا نیاز دارد، بنابراین نمی‌تواند از طریق API انجام شود.',
 	'captchahelp-title' => 'راهنمای Captcha',
 	'captchahelp-cookies-needed' => 'برای کار کردن آن، شما باید کوکی‌های مرورگرتان را فعال کنید.',
-	'captchahelp-text' => 'تارنماهایی مثل این ویکی که به عموم اجازهٔ نوشتن مطلب می‌دهند، غالباً مورد سوءاستفادهٔ هرزفرستندگانی می‌شوند که با ابزارهای خودکار پیوندهای بیرونی به تارنماهای موردنظرشان وارد می‌کنند.
-اگر چه این پیوندهای هرز و تبلیغاتی را می‌توان دستی حذف کرد، ولی به هر حال باعث اعصاب‌خردی زیادی می‌شوند.
+	'captchahelp-text' => 'وبگاه‌هایی مثل این ویکی که به عموم اجازهٔ نوشتن مطلب می‌دهند، غالباً مورد سوءاستفادهٔ هرزفرستندگانی می‌شوند که با ابزارهای خودکار پیوندهای بیرونی به وبگاه‌های موردنظرشان وارد می‌کنند. این پیوندهای هرز و تبلیغاتی را می‌توان دستی حذف کرد، ولی به هر حال باعث اعصاب‌خردی زیادی می‌شوند.
 
-گاهی اوقات، خصوصاً هنگامی که پیوندهای بیرونی جدیدی به صفحه اضافه می‌شود، ویکی ممکن است به شما تصویری رنگی و کج‌وکوله از متنی نشان بدهد و از شما بخواهد که کلمه‌های نشان‌داده‌شده را تایپ کنید.
-از آنجا که خودکارسازی این کار دشوار است، انسانهای واقعی می‌توانند پیوندهاشان را وارد کنند ولی برنامه‌های خودکار تبلیغاتی از خرابکاری باز خواهند ماند.
-
-متأسفانه این امر ممکن است باعث مزاحمت برای کاربرانی شود که چشمشان ضعیف است یا از مرورگرهای متنی یا گفتاری استفاده می‌کنند.
-در حال حاضر ما جایگزین صوتی‌ای برای این کار نداریم. لطفاً اگر برای واردساختن پیوندهای مشروع دچار مشکل شده‌اید با [[{{MediaWiki:Grouppage-sysop}}|مدیران این تارنما]] تماس بگیرید.
-
-دکمهٔ «بازگشت» را در مرورگر خود فشار دهید تا به صفحهٔ ویرایش بازگردید.',
+گاهی اوقات، خصوصاً هنگامی که پیوندهای بیرونی جدیدی به صفحه اضافه می‌شود، ویکی ممکن است به شما تصویری رنگی و کج‌وکوله از متنی نشان بدهد و از شما بخواهد که کلمه‌های نشان‌داده‌شده را تایپ کنید. از آنجا که خودکارسازی این کار دشوار است، انسانهای واقعی می‌توانند پیوندهاشان را وارد کنند ولی برنامه‌های خودکار تبلیغاتی از خرابکاری باز خواهند ماند.
+متأسفانه این امر ممکن است باعث مزاحمت برای کاربرانی شود که چشمشان ضعیف است یا از مرورگرهای متنی یا گفتاری استفاده می‌کنند. در حال حاضر ما جایگزین صوتی‌ای برای این کار نداریم. لطفاً اگر برای واردساختن پیوندهای مشروع دچار مشکل شده‌اید با ویکیا از طریق [[Special:Contact|فرم تماس]]  تماس بگیرید.',
 	'captcha-addurl-whitelist' => ' #<!-- این سطر را همان‌گونه که هست رها کنید --> <pre>
 # قواعد به این شکل است:
 #  * همه‌چیز از «#» تا آخر سطر یک توضیح در نظر گرفته می‌شود.
@@ -1182,13 +984,6 @@ $messages['fa'] = array(
 	'right-skipcaptcha' => 'انجام کارهایی که CAPTCHA را فعال می‌کنند بدون نیاز به گذر از CAPTCHA',
 );
 
-/** Finnish (Suomi)
- * @author Agony
- * @author Centerlink
- * @author Crt
- * @author Nike
- * @author Varusmies
- */
 $messages['fi'] = array(
 	'captcha-edit' => 'Muokataksesi tätä sivua, ratkaise alapuolella oleva yksinkertainen teksti ja syötä vastaus laatikkoon ([[Toiminnot:CAPTCHA/ohje|lisätietoa]]):',
 	'captcha-desc' => 'Takaa CAPTCHA-tekniikoita suojautumaan roskaposteilta ja salasanan kalasteluviesteiltä',
@@ -1227,12 +1022,17 @@ Paina selaimesi 'taaksepäin'-painiketta palataksesi muokkaimeen.",
 	'captcha-recaptcha-createaccount-fail' => 'Väärä tai puuttuva reCAPTCHA-vastaus.',
 	'captcha-recaptcha-create' => 'Auttaaksesi suojautumaan automaattisia roskaposteja vastaan, suorita alla oleva testi:',
 	'captcha-recaptcha-misconfigured' => 'ReCAPTCHA ei ole määritelty oikein',
+	'captcha-no-image' => 'CAPTCHA-kuvaa ei löytynyt',
+	'recaptcha-desc' => 'reCAPTCHA-moduuli muokkauksen vahvistamiseen',
+	'recaptcha-edit' => 'Suojautuksesi automatisoituja muokkausroskapoteja vastaan, suorita alla oleva testi:',
+	'recaptcha-addurl' => 'Muokkauksesi saattaa sisältää uusia ulkoisia linkkejä. Suojautuksesi automatisoituja roskapoteja vastaan, suorita alla oleva testi:',
+	'recaptcha-badpass' => 'Suojautuaksesi automatisoiduilta salasanan kalasteluviesteiltä, suorita alla oleva testi:',
+	'recaptcha-createaccount' => 'Suojautuaksesi automatisoidulta käyttäjätilin luomiselta, suorita alla oleva testi:',
+	'recaptcha-createaccount-fail' => 'Väärä tai puuttuva reCAPTCHA-vastaus.',
+	'recaptcha-create' => 'Auttaaksesi suojautumaan automaattisia roskaposteja vastaan, suorita alla oleva testi:',
+	'recaptcha-misconfigured' => 'ReCAPTCHA ei ole määritelty oikein',
 );
 
-/** Faroese (Føroyskt)
- * @author EileenSanda
- * @author Spacebirdy
- */
 $messages['fo'] = array(
 	'captcha-createaccount' => 'Sum ein vernd ímóti sjálvvirknum spam, er neyðugt hjá tær at skriva inn tey orð, sum koma fyri á myndini fyri at stovna eina kontu: <br />([[Special:Captcha/help|Hvat er hetta?]])',
 	'captcha-createaccount-fail' => 'Skeiv ella manglandi váttanar loyniorð.',
@@ -1244,19 +1044,6 @@ $messages['fo'] = array(
 	'captchahelp-cookies-needed' => 'Tín kagi (brovsari) má góðtaka cookies, fyri at hetta kann virka.',
 );
 
-/** French (Français)
- * @author Crochet.david
- * @author Grondin
- * @author IAlex
- * @author Meithal
- * @author PieRRoMaN
- * @author Seb35
- * @author Sherbrooke
- * @author Urhixidur
- * @author Verdy p
- * @author Wyz
- * @author Zetud
- */
 $messages['fr'] = array(
 	'captcha-edit' => "Pour modifier cette page, veuillez résoudre l'opération simple ci-dessous et inscrivez le résultat dans la zone de texte ([[Special:Captcha/help|plus d'informations]]) :",
 	'captcha-desc' => 'Fournit des techniques CAPTCHA pour protéger contre le spam et la découverte des mots de passe par tâtonnements',
@@ -1270,9 +1057,9 @@ $messages['fr'] = array(
 	'captcha-disabledinapi' => "Cette action nécessite un captcha, elle ne peut pas dont pas être effectuée via l'API.",
 	'captchahelp-title' => 'Aide sur CAPTCHA',
 	'captchahelp-cookies-needed' => "Vous aurez besoin d'autoriser votre navigateur à conserver les cookies pour que cela fonctionne.",
-	'captchahelp-text' => "Les sites Web qui acceptent des contributions du public, tels que ce wikia, sont souvent victimes de spammeurs qui utilisent des outils automatisés pour placer de nombreux liens vers différents sites. Même si cette pollution peut être retirée, elle n'en reste pas moins irritante.
+	'captchahelp-text' => "Les sites Web qui acceptent des contributions du public, tels que ce wiki, sont souvent victimes de spammeurs qui utilisent des outils automatisés pour placer de nombreux liens vers différents sites. Même si cette pollution peut être retirée, elle n'en reste pas moins irritante.
 
-Parfois, particulièrement lors de l'ajout de nouveaux liens externes dans une page, le wikia peut vous montrer une image d'un texte embrouillé, déformé ou coloré et vous demander de saisir les mots indiqués. Cette tâche étant difficile à accomplir de façon automatisée, cela permet à la plupart des humains de réaliser leurs contributions tout en stoppant la plupart des spammeurs et autres attaquants robotisés.
+Parfois, particulièrement lors de l'ajout de nouveaux liens externes dans une page, le wiki peut vous montrer une image d'un texte embrouillé, déformé ou coloré et vous demander de saisir les mots indiqués. Cette tâche étant difficile à accomplir de façon automatisée, cela permet à la plupart des humains de réaliser leurs contributions tout en stoppant la plupart des spammeurs et autres attaquants robotisés.
 
 Malheureusement, cette solution peut gêner les utilisateurs malvoyants ou qui utilisent un navigateur en texte seul ou vocal. Nous ne disposons pas d'alternative audio pour l'instant. Veuillez contacter [[{{MediaWiki:Grouppage-sysop}}|les administrateurs du site]] si cela vous empêche contre toutes attentes de faire des contributions légitimes.
 
@@ -1292,11 +1079,17 @@ Cliquez sur le bouton « Précédent » de votre navigateur pour revenir à la p
 	'captcha-recaptcha-createaccount-fail' => 'Réponse reCAPTCHA incorrecte ou manquante.',
 	'captcha-recaptcha-create' => 'Afin de nous aider à empêcher la création de pages par des outils automatisés, veuillez accomplir le défi ci-dessous :',
 	'captcha-recaptcha-misconfigured' => "ReCaptcha n'est pas configuré correctement",
+	'captcha-no-image' => 'Aucune image captcha trouvée',
+	'recaptcha-desc' => 'Module reCAPTCHA pour confirmer les modifications',
+	'recaptcha-edit' => 'Afin de nous aider à empêcher les modifications de type spam par des outils automatisés, veuillez accomplir le défi ci-dessous :',
+	'recaptcha-addurl' => 'Votre modification inclut de nouveaux liens externes. Pour nous aider à empêcher le spam par des outils automatisés, veuillez accomplir le défi ci-dessous :',
+	'recaptcha-badpass' => 'Afin de nous aider à empêcher le cassage des mots de passe par des outils automatisés, veuillez accomplir le défi ci-dessous :',
+	'recaptcha-createaccount' => 'Afin de nous aider à empêcher la création de comptes par des outils automatisés, veuillez accomplir le défi ci-dessous :',
+	'recaptcha-createaccount-fail' => 'Réponse reCAPTCHA incorrecte ou manquante.',
+	'recaptcha-create' => 'Afin de nous aider à empêcher la création de pages par des outils automatisés, veuillez accomplir le défi ci-dessous :',
+	'recaptcha-misconfigured' => "ReCaptcha n'est pas configuré correctement",
 );
 
-/** Franco-Provençal (Arpetan)
- * @author ChrisPtDe
- */
 $messages['frp'] = array(
 	'captcha-edit' => 'Por changiér ceta pâge, volyéd calcular l’opèracion simpla ce-desot et pués nen buchiér lo rèsultat dens la bouèta ([[Special:Captcha/help|més d’enformacions]]) :',
 	'captcha-desc' => 'Semond des tècniques CAPTCHA por protègiér contre lo spame et la dècuvèrta des contresegnos per un mouél de tentatives.',
@@ -1330,9 +1123,6 @@ Clicâd sur lo boton « Devant » de voutron navigator por tornar a la bouèta d
 	'right-skipcaptcha' => 'Rèalisar des accions que dècllenchont un captch·a sen avêr a passar ceti',
 );
 
-/** Friulian (Furlan)
- * @author Klenje
- */
 $messages['fur'] = array(
 	'captcha-edit' => 'Par cambiâ cheste pagjine, tu âs di risolvi cheste facile some e inserî la rispueste inte casele ([[Special:Captcha/help|altris informazions]]):',
 	'captcha-addurl' => 'Il to cambiament al inclût gnûfs leams esternis.
@@ -1342,9 +1132,6 @@ Par judânus cuintri la creazion automatiche di spam, tu âs di risolvi cheste f
 	'captcha-create' => 'Par creâ cheste pagjine, tu âs di risolvi cheste facile some e inserî la rispueste inte casele ([[Special:Captcha/help|altris informazions]]):',
 );
 
-/** Western Frisian (Frysk)
- * @author Snakesteuben
- */
 $messages['fy'] = array(
 	'captcha-addurl' => 'Jo hawwe keppelings om utens oanpast/taheakke. As ekstra beskerming tsjin automatysk oanmakke reklame (SPAM) wurdt jo frege it antwurd op de ûndersteande som te jaan ([[Special:Captcha/help|meer ynformaasje]]):',
 	'captcha-createaccount' => 'As beskerming tsjin it automatysk oanmeitsjen fan meidochnammen wurdt jo frege it antwurd op de ûndersteande som te jaan ([[Special:Captcha/help|meer ynformaasje]]):',
@@ -1360,9 +1147,6 @@ In probleem dêr't noch gjin oplossing foar is it dat it in tûkelteam is foar m
 Gean tebek mei de tebek-knop fan jo blêder.",
 );
 
-/** Irish (Gaeilge)
- * @author Alison
- */
 $messages['ga'] = array(
 	'captcha-edit' => 'Tá naisc URL nua san athrú seo atá tú ar tí a dhéanamh; mar chosaint in éadan turscair uathoibrithe, caithfidh tú an suim shimplí a réitigh agus a ionchur: <br />([[Special:Captcha/help|Céard é seo?]])',
 	'captcha-addurl' => 'Tá naisc URL nua san athrú seo atá tú ar tí a dhéanamh; mar chosaint in éadan turscair uathoibrithe, caithfidh tú na focail san íomhá seo a ionchur: <br />([[Special:Captcha/help|Céard é seo?]])',
@@ -1372,11 +1156,6 @@ $messages['ga'] = array(
 	'captchahelp-title' => 'Cabhair maidir le Captcha',
 );
 
-/** Galician (Galego)
- * @author Alma
- * @author Toliño
- * @author Xosé
- */
 $messages['gl'] = array(
 	'captcha-edit' => 'Para editar esta páxina, resolva a suma que aparece a continuación e introduza a resposta na caixa ([[Special:Captcha/help|máis información]]):',
 	'captcha-desc' => 'Proporciona CAPTCHA como protección fronte ao spam e ao descubrimento de contrasinais',
@@ -1410,17 +1189,10 @@ Prema no botón "Atrás" do seu navegador para volver á páxina de edición.',
 	'right-skipcaptcha' => 'Levar a cabo as accións que requiren captcha sen ter que introducilo',
 );
 
-/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
- * @author Omnipaedista
- */
 $messages['grc'] = array(
 	'captchahelp-title' => 'Βοήθεια περὶ τοῦ captcha',
 );
 
-/** Swiss German (Alemannisch)
- * @author Als-Holder
- * @author Melancholie
- */
 $messages['gsw'] = array(
 	'captcha-edit' => 'Zum d Syte bearbeite lees die Rächenufgab un trag s Ergebnis in s Fäld unten yy. [[Special:Captcha/help|(Frogen oder Probläm?)]]',
 	'captcha-desc' => 'Stellt CAPTCHA-Tächnike zum Schutz vor Spam un em Rote vu Passwerter z Verfiegig',
@@ -1453,12 +1225,6 @@ Ins Bearbeitigsfänschter chunnt mer derno eifach wider mit em „Zruck“-Chnop
 	'right-skipcaptcha' => 'Iberspringe vu dr Captcha-Yygab',
 );
 
-/** Gujarati (ગુજરાતી)
- * @author Ashok modhvadia
- * @author Dsvyas
- * @author KartikMistry
- * @author Sushant savla
- */
 $messages['gu'] = array(
 	'captcha-edit' => 'આ લેખમાં ફેરફાર કરવા માટે નીચે આપેલા સરળ દાખલાનો જવાબ તેની બાજુના ખાનામાં લખો ([[Special:Captcha/help|more info]]):',
 	'captcha-desc' => '',
@@ -1488,12 +1254,6 @@ $messages['gu'] = array(
 	'right-skipcaptcha' => 'કૈપ્ચા માધ્યમમાં ગયા વિના કૈપ્ચા કાર્યાન્વયન ક્રિયા અમલમાં મુકો',
 );
 
-/** Hebrew (עברית)
- * @author Amire80
- * @author Rotem Liss
- * @author Rotemliss
- * @author YaronSh
- */
 $messages['he'] = array(
 	'captcha-edit' => 'כדי לערוך את הדף, אנא פתרו את תרגיל החיבור הפשוט שלהלן והקלידו את התשובה בתיבה ([[Special:Captcha/help|מידע נוסף]]):',
 	'captcha-desc' => 'מתן טכניקות CAPTCHA להגנה נגד זיבול וניחוש ססמאות',
@@ -1526,12 +1286,6 @@ $messages['he'] = array(
 	'right-skipcaptcha' => 'ביצוע פעולות הדורשות פתרון CAPTCHA ללא צורך בפתרונו',
 );
 
-/** Hindi (हिन्दी)
- * @author Ansumang
- * @author Kaustubh
- * @author Shyam
- * @author आलोक
- */
 $messages['hi'] = array(
 	'captcha-edit' => 'यह पन्ना संपादित करने के लिये, नीचे दिये हुए आसान राशि का जवाब दिये हुए टेक्स्टबॉक्समें लिखें ([[Special:Captcha/help|अधिक ज़ानकारी]]):',
 	'captcha-desc' => 'आसानसे कॅपचा (captcha) का इस्तेमाल',
@@ -1562,13 +1316,6 @@ $messages['hi'] = array(
 	'right-skipcaptcha' => 'Captcha में जाये बिना Captcha का इस्तेमाल करने के लिये मजबूर करें',
 );
 
-/** Croatian (Hrvatski)
- * @author Dalibor Bosits
- * @author Dnik
- * @author Ex13
- * @author Herr Mlinka
- * @author SpeedyGonsales
- */
 $messages['hr'] = array(
 	'captcha-edit' => 'Da uredite ovu stranicu, molimo riješite jednostavno zbrajanje ispod i unesite rezultat u rubriku ([[Special:Captcha/help|više informacija]]):',
 	'captcha-desc' => 'Pruža CAPTCHA tehnike za zaštitu od neželjene pošte (spam-a) i pogađanja zaporke',
@@ -1601,9 +1348,6 @@ Pritisnite u svom pregledniku 'nazad' kako bi se vratili na uređivač stranice.
 	'right-skipcaptcha' => 'Izvođenje akcija koje pokreću captcha bez prolaženja kroz captcha sustav',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
- * @author Michawiki
- */
 $messages['hsb'] = array(
 	'captcha-edit' => 'Zo by stronu wobdźěłał, rozrisaj prošu slědowacy ličenski nadawk a zapodaj wuslědk do kašćika ([[Special:Captcha/help|Dalše informacije]]):',
 	'captcha-desc' => 'Staja CAPTCHA-techniki za škit přećiwo spamej a zhódowanju hesłow k dispoziciji',
@@ -1635,10 +1379,6 @@ Klikń na tłócatko "Wróćo" w swojim wobhladowaku, zo by so k editorej wróć
 	'right-skipcaptcha' => 'Captcha přeskočić',
 );
 
-/** Haitian (Kreyòl ayisyen)
- * @author Boukman
- * @author Masterches
- */
 $messages['ht'] = array(
 	'captcha-edit' => 'Pou ou kapab modifye paj sa, nou mande w kalkile ti adisyon fasil sa epitou mete rezilta, repons ou an nan bwat ki bò kote l ([[Special:Captcha/help|konnen plis sou fonksyon sa]]):',
 	'captcha-desc' => 'Yon enplemantasyon captcha senp',
@@ -1648,10 +1388,6 @@ Pou ede nou pwoteje sistèm an kont pouryèl, tanpri, fè ti adisyon fasil sa ep
 	'captcha-createaccount' => 'Pou ede nou lite kont kreyasyon kont otomatik yo, souple rezoud ti adisyon sa epi mete nan bwat an repons ou an ([[Special:Captcha/help|konnen plis sou fonksyon sa]]):',
 );
 
-/** Hungarian (Magyar)
- * @author Dani
- * @author Glanthor Reviol
- */
 $messages['hu'] = array(
 	'captcha-edit' => 'A lap szerkesztéséhez meg kell, hogy kérjünk, írd be a lenti dobozba az alábbi egyszerű összeadás eredményét ([[Special:Captcha/help|segítség]]):',
 	'captcha-desc' => 'CAPTCHA-technológiák a spamek és a jelszókitalálási technikák ellen',
@@ -1680,9 +1416,6 @@ Ha a captcha megoldása helyett inkább visszatérnél a szöveg szerkesztéséh
 	'right-skipcaptcha' => 'captcha átugrása',
 );
 
-/** Interlingua (Interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'captcha-edit' => 'Pro modificar iste pagina, per favor resolve le simple summa hic infra e entra le responsa in le quadro ([[Special:Captcha/help|plus info]]):',
 	'captcha-desc' => 'Forni technicas CAPTCHA de protection contra spam e discoperta de contrasignos',
@@ -1716,12 +1449,6 @@ Clicca le button 'retro' in tu navigator pro retornar al pagina de modification.
 	'right-skipcaptcha' => 'Executar le actiones que activarea le captcha sin deber passar per le captcha',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Borgx
- * @author IvanLanin
- * @author Iwan Novirion
- * @author Rex
- */
 $messages['id'] = array(
 	'captcha-edit' => 'Untuk menyunting halaman ini, harap pecahkan penjumlahan sederhana di bawah ini dan masukkan jawaban di kotak yang tersedia ([[Special:Captcha/help|info lengkap]]):',
 	'captcha-desc' => 'Menyediakan teknik captcha untuk melindungi terhadap spam dan penebakan sandi',
@@ -1756,9 +1483,6 @@ Tekan tombol 'back' di penjelajah web Anda untuk kembali ke halaman penyuntingan
 	'right-skipcaptcha' => 'Melakukan tindakan pemicu captcha tanpa melalui Captcha',
 );
 
-/** Iloko (Ilokano)
- * @author Lam-ang
- */
 $messages['ilo'] = array(
 	'captcha-edit' => 'Tapno maurnos daytoy a panid, pangaasim a sulbaren ti nalaka a dagup dita baba ken ikabil ti sungbat mo dita kahon ([[Special:Captcha/help|adu pay a pakaammo]]):',
 	'captcha-desc' => 'Ikkan na kadagiti CAPTCHA a pamay-ay tapno masalakniban kadagiti spam ken agpugpugto ti kontrasenias',
@@ -1792,10 +1516,6 @@ Peslen ti 'agsubli' a buton dita pagbasabasam (browser) ti agsubli idiay panid t
 	'right-skipcaptcha' => 'Pakabaelan ti agkalbit ti CAPTCHA kadagiti aramid a saan a mapan ti CAPTCHA.',
 );
 
-/** Icelandic (Íslenska)
- * @author S.Örvarr.S
- * @author Snævar
- */
 $messages['is'] = array(
 	'captcha-edit' => 'Til að breyta þessari síðu, gjörðu svo vel og finndu summuna að neðan og skrifaðu svarið í
 kassann ([[Special:Captcha/help|frekari upplýsinngar]]):',
@@ -1818,11 +1538,6 @@ Vinsamlegast hafðu samband við [[{{MediaWiki:Grouppage-sysop}}|stjórnanda sí
 Notaðu „til-baka“-hnapp vafrans til að breyta síðunni.',
 );
 
-/** Italian (Italiano)
- * @author Beta16
- * @author BrokenArrow
- * @author Darth Kule
- */
 $messages['it'] = array(
 	'captcha-edit' => 'Per modificare questa pagina, risolvi la semplice somma qui sotto e inserisci la risposta nella casella  ([[Special:Captcha/help|maggiori informazioni]]):',
 	'captcha-desc' => 'Fornisce tecniche CAPTCHA di protezione contro spam e tentativi per indovinare le password',
@@ -1831,21 +1546,17 @@ Per aiutarci a prevenire spam automatici, risolvi per favore la semplice somma q
 	'captcha-badlogin' => 'Per aiutarci a prevenire la violazione automatica di password, risolvi per favore la semplice somma qui sotto e inserisci la risposta nella casella ([[Special:Captcha/help|maggiori informazioni]]):',
 	'captcha-createaccount' => 'Per aiutarci a prevenire la creazione automatica di account, risolvi per favore la semplice somma qui sotto e inserisci la risposta nella casella ([[Special:Captcha/help|maggiori informazioni]]):',
 	'captcha-createaccount-fail' => 'Codice di conferma non corretto o mancante.',
-	'captcha-create' => 'Per creare una pagina, risolvi per favore la semplice somma qui sotto e inserisci la risposta nella casella ([[Special:Captcha/help|maggiori informazioni]]):',
+	'captcha-create' => 'Per creare la pagina, risolvi per favore la semplice somma qui sotto e inserisci la risposta nella casella ([[Special:Captcha/help|maggiori informazioni]]):',
 	'captcha-sendemail' => 'Per aiutarci a prevenire spam automatico, risolvi per favore la semplice somma qui sotto e inserisci la risposta nella casella ([[Special:Captcha/help|maggiori informazioni]]):',
 	'captcha-sendemail-fail' => 'Codice di conferma non corretto o mancante.',
 	'captcha-disabledinapi' => "Questa azione richiede un captcha, quindi non può essere eseguita tramite l'API.",
 	'captchahelp-title' => 'Aiuto CAPTCHA',
 	'captchahelp-cookies-needed' => 'Devi avere i cookies abilitati nel tuo browser per far sì che questo funzioni.',
-	'captchahelp-text' => "Siti web che permetto al pubblico di postare, come questa wiki, sono spesso abusati da spammer che usando strumenti automatici postano i lori link a vari siti.
-Sebbene questi link spam possano essere rimossi, sono una seccatura non trascurabile.
+	'captchahelp-text' => "I siti web che permettono al pubblico di postare, come questa wiki, sono spesso abusati da spammer che usando strumenti automatici per postare link a vari siti esterni. Sebbene questi link spam possano essere rimossi, costituiscono una seccatura non trascurabile.
 
-Qualche volta, in particolare quando si aggiungono nuovi link a siti nelle pagine, ti potrebbe essere mostrata un'immagine di un testo distorto o colorato chiedendoti di inserire la parola mostrata.
-Dal momento che si tratta di un compito difficile da automatizzare, ciò consentirà alla maggior parte degli utenti umani di effettuare le loro modfiche mentre fermerò la maggior parte degli spammer e altri attacchi automatici.
+Qualche volta, in particolare quando si aggiungono nuovi link a siti esterni nelle pagine, ti potrebbe essere mostrata un'immagine di un testo distorto o colorato con la richiesta di inserire la parola mostrata. Dal momento che si tratta di un compito difficile da automatizzare con un bot, ciò consentirà alla maggior parte degli utenti umani di effettuare le loro modifiche mentre fermerò la maggior parte degli spammer e altri attacchi automatici.
 
-Sfortunatamente ciò potrebbe creare inconvenienze ad utenti con vista limitata o che usano browser testuali o vocali.
-Al momento non abbiamo un'alternativa audio disponibile.
-Per favore, contatta [[{{MediaWiki:Grouppage-sysop}}|gli amministratori]] per assistenza se ciò ti impedisce eccezionalmente di eseguire modifiche legittime.
+Sfortunatamente ciò potrebbe creare inconvenienze ad utenti con vista limitata o che usano browser testuali o vocali. Al momento non abbiamo un'alternativa audio disponibile. Per favore, contatta [[Special:ListUsers/sysop|gli amministratori]] per assistenza se ciò ti impedisce di eseguire modifiche legittime.
 
 Premi il pulsante \"indietro\" nel tuo browser per tornare all'editor della pagina.",
 	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
@@ -1863,64 +1574,61 @@ Premi il pulsante \"indietro\" nel tuo browser per tornare all'editor della pagi
 	'captcha-recaptcha-createaccount-fail' => 'Risposta reCAPTCHA incorretta o mancante.',
 	'captcha-recaptcha-create' => 'Per aiutarci a prevenire la creazione automatica di pagine, completa per favore la sfida qui sotto:',
 	'captcha-recaptcha-misconfigured' => 'reCAPTCHA non è configurato correttamente',
+	'captcha-no-image' => 'Non è stata trovata nessuna immagine CAPTCHA',
+	'recaptcha-desc' => 'Modulo reCAPTCHA per confermare la modifica',
+	'recaptcha-edit' => 'Per aiutarci a prevenire modifiche spam automatiche, completa per favore la sfida qui sotto:',
+	'recaptcha-addurl' => 'La tua modifica include nuovi link esterni. Per aiutarci a prevenire spam automatici, completa per favore la sfida qui sotto:',
+	'recaptcha-badpass' => 'Per aiutarci a prevenire violazioni automatiche di password, completa per favore la sfida qui sotto:',
+	'recaptcha-createaccount' => 'Per aiutarci a prevenire la creazione automatica di account, completa per favore la sfida qui sotto:',
+	'recaptcha-createaccount-fail' => 'Risposta reCAPTCHA incorretta o mancante.',
+	'recaptcha-create' => 'Per aiutarci a prevenire la creazione automatica di pagine, completa per favore la sfida qui sotto:',
+	'recaptcha-misconfigured' => 'reCAPTCHA non è configurato correttamente',
 );
 
-/** Japanese (日本語)
- * @author Aotake
- * @author Fryed-peach
- * @author Hosiryuhosi
- * @author JtFuruhata
- * @author Shirayuki
- * @author Whym
- */
 $messages['ja'] = array(
-	'captcha-edit' => 'このページを編集するには、下の簡単な計算を解いて答えをボックスに入力してください（[[Special:Captcha/help|詳細情報]]）:',
-	'captcha-desc' => 'スパムやパスワード推測を防止するためのCAPTCHA（画像認証）技術を提供します',
+	'captcha-edit' => 'このページを編集するには、以下の計算を解いて答えをボックスに入力してください（[[Special:Captcha/help|詳細情報]]）:',
+	'captcha-desc' => 'スパムやパスワード推測を防止するためのキャプチャ（画像認証）技術を提供します',
 	'captcha-addurl' => '編集内容に新しい外部リンクが含まれています。
-自動化されたスパムを防止するため、下の簡単な計算を解いて答えをボックスに入力してください
+自動化されたスパムを防止するため、以下の計算を解いて答えをボックスに入力してください
 （[[Special:Captcha/help|詳細情報]]）:',
-	'captcha-badlogin' => '自動化されたパスワードの解析を防止するため、下の簡単な計算を解いて答えをボックスに入力してください
+	'captcha-badlogin' => '自動化されたパスワードの解析を防止するため、以下の計算を解いて答えをボックスに入力してください
 （[[Special:Captcha/help|詳細情報]]）:',
-	'captcha-createaccount' => '自動化されたアカウントの作成を防止するため、下の簡単な計算を解いて答えをボックスに入力してください
+	'captcha-createaccount' => '自動化されたアカウントの作成を防止するため、以下の計算を解いて答えをボックスに入力してください
 （[[Special:Captcha/help|詳細情報]]）:',
-	'captcha-createaccount-fail' => '認証コードが間違っているか入力されていません。',
-	'captcha-create' => 'ページを作成するには、下の簡単な計算を解いて答えをボックスに入力してください（[[Special:Captcha/help|詳細情報]]）:',
-	'captcha-sendemail' => '自動化されたスパムを防止するため、下の簡単な計算を解いて答えをボックスに入力してください（[[Special:Captcha/help|詳細情報]]）:',
-	'captcha-sendemail-fail' => '認証コードが間違っているか入力されていません。',
+	'captcha-createaccount-fail' => '認証コードが間違っているか、入力されていません。',
+	'captcha-create' => 'ページを作成するには、以下の計算を解いて答えをボックスに入力してください（[[Special:Captcha/help|詳細情報]]）:',
+	'captcha-sendemail' => '自動化されたスパムを防止するため、以下の計算を解いて答えをボックスに入力してください（[[Special:Captcha/help|詳細情報]]）:',
+	'captcha-sendemail-fail' => '認証コードが間違っているか、入力されていません。',
 	'captcha-disabledinapi' => 'APIからの操作を防ぐため、この操作には画像認証が必要です。',
-	'captchahelp-title' => 'CAPTCHAのヘルプ',
+	'captchahelp-title' => 'キャプチャののヘルプ',
 	'captchahelp-cookies-needed' => '実行するには、ブラウザのCookieを有効にする必要があります。',
-	'captchahelp-text' => 'このウィキのように一般ユーザーが投稿できるウェブサイトは、自動化ツールを使用してさまざまなサイトにリンクを投稿するスパム送信者の攻撃を受けることがよくあります。
-このようなスパムのリンクは削除可能ですが、著しい迷惑行為であることに変わりありません。
-
-新しいウェブリンクをページに追加する際などには、色付きの文字列や歪んだ文字列の画像が表示され、その文字列の入力を求められることがあります。
-この操作は自動化することが難しいため、本当に人であれば投稿を行えることあでき、一方でスパムやロボットからの攻撃を阻止することができます。
-
-視覚に障害のある方やテキストベースまたは音声ベースのブラウザをお使いの方にはご不便をおかけいたしますが、現時点では、音声による代替方法はご用意していません。
-画像認証が原因で正当な投稿を行えない場合は、[[{{MediaWiki:Grouppage-sysop}}|サイト管理者]] にご連絡ください。
-
-ブラウザの戻るボタンをクリックすると、ページの編集画面に戻ります。',
+	'captchahelp-text' => 'これはサイトをスパムから保護するために使用します。 画像が途切れていたり、ご使用中のブラウザで画像が表示されない際には、お手数ですが[[Special:Contact|お問い合わせ]] ください。',
 	'captcha-addurl-whitelist' => ' #<!-- この行は変更しないでください --> <pre>
 # 構文は次のとおりです:
 #   * 「#」の文字から行の末尾までのすべてがコメントです
 #   * 空白以外の行はすべて、URL内のホストのみとマッチする正規表現のフラグメントです
  #</pre> <!-- この行は変更しないでください -->',
-	'right-skipcaptcha' => 'CAPTCHAを行わずにCAPTCHAを起こす操作を実行します',
+	'right-skipcaptcha' => 'キャプチャを行わずにキャプチャを起こす操作を実行します',
 	'captcha-input-placeholder' => 'ここにテキストを入力してください',
-	'captcha-recaptcha-desc' => '編集の確認用reCAPTCHAモジュール',
-	'captcha-recaptcha-edit' => '自動化された編集スパムを防止するため、下の画像認証を行ってください:',
-	'captcha-recaptcha-addurl' => '編集内容に新しい外部リンクが含まれています。自動化されたスパムを防止するため、下の画像認証を行ってください:',
-	'captcha-recaptcha-badpass' => '自動化されたパスワードの解読を防止するため、下の画像認証を行ってください:',
-	'captcha-recaptcha-createaccount' => '自動化されたアカウントの作成を防止するため、下の画像認証を行ってください:',
-	'captcha-recaptcha-createaccount-fail' => 'reCAPTCHAの回答が間違っているか入力されていません。',
-	'captcha-recaptcha-create' => '自動化されたページの作成を防止するため、下の画像認証を行ってください:',
-	'captcha-recaptcha-misconfigured' => 'reCaptchaが正しく構成されていません',
+	'captcha-recaptcha-desc' => '編集の確認用リキャプチャモジュール',
+	'captcha-recaptcha-edit' => '自動化された編集スパムを防止するため、以下の認証を行ってください:',
+	'captcha-recaptcha-addurl' => '編集内容に新しい外部リンクが含まれています。自動化されたスパムを防止するため、以下の認証を行ってください:',
+	'captcha-recaptcha-badpass' => '自動化されたパスワードの解読を防止するため、以下の認証を行ってください:',
+	'captcha-recaptcha-createaccount' => '自動化されたアカウントの作成を防止するため、以下の認証を行ってください:',
+	'captcha-recaptcha-createaccount-fail' => 'リキャプチャの回答が間違っているか、入力されていません。',
+	'captcha-recaptcha-create' => '自動化されたページの作成を防止するため、以下の認証を行ってください:',
+	'captcha-recaptcha-misconfigured' => 'リキャプチャが正しく構成されていません',
+	'captcha-no-image' => '画像認証用の画像が見つかりませんでした',
+	'recaptcha-desc' => '編集の確認用reCAPTCHAモジュール',
+	'recaptcha-edit' => '自動化された編集スパムを防止するため、下の画像認証を行ってください:',
+	'recaptcha-addurl' => '編集内容に新しい外部リンクが含まれています。自動化されたスパムを防止するため、下の画像認証を行ってください:',
+	'recaptcha-badpass' => '自動化されたパスワードの解読を防止するため、下の画像認証を行ってください:',
+	'recaptcha-createaccount' => '自動化されたアカウントの作成を防止するため、下の画像認証を行ってください:',
+	'recaptcha-createaccount-fail' => 'reCAPTCHAの回答が間違っているか入力されていません。',
+	'recaptcha-create' => '自動化されたページの作成を防止するため、下の画像認証を行ってください:',
+	'recaptcha-misconfigured' => 'reCaptchaが正しく構成されていません',
 );
 
-/** Jutish (Jysk)
- * @author Huslåke
- * @author Ælsån
- */
 $messages['jut'] = array(
 	'captcha-edit' => 'For at redigere denne side, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
 	'captcha-desc' => 'Semple captcha implementåsje',
@@ -1945,10 +1653,6 @@ Tryk på 'tilbage'-knappen i din browser for at returnere til redigeringssiden."
   #</pre> <!-- Undlad at rette denne linie -->',
 );
 
-/** Javanese (Basa Jawa)
- * @author Meursault2004
- * @author Pras
- */
 $messages['jv'] = array(
 	'captcha-edit' => 'Kanggo nyunting kaca iki, mangga pecahna tambah-tambahan ing ngisor iki lan lebokna wangsulané ing kothak cedaké ([[Special:Captcha/help|info sabanjuré]]):',
 	'captcha-desc' => 'Implementasi prasaja captcha',
@@ -1976,10 +1680,6 @@ Pencèten tombol 'back' ing panjlajah wèb panjenengan kanggo bali menyang kaca 
 	'right-skipcaptcha' => 'Nglakokaké aksi-aksi sing murupaké captcha tanpa kudu ngliwati captcha',
 );
 
-/** Georgian (ქართული)
- * @author David1010
- * @author ITshnik
- */
 $messages['ka'] = array(
 	'captcha-edit' => 'ამ გვერდის რედაქტირებისათვის, გთხოვთ, ამოხსნათ ქვემოთ მოცემული მარტივი მაგალითი და პასუხი შეიყვანოთ ყუთში ([[Special:Captcha/help|მეტი ინფორმაცია]]):',
 	'captcha-desc' => 'უზრუნველყოფს CAPTCHA-ს მეთოდების გამოყენებას სპამისა და პაროლის გამოცნობისაგან დასაცავად',
@@ -2013,14 +1713,10 @@ $messages['ka'] = array(
 	'right-skipcaptcha' => 'CAPTCHA-შემოწმების მოთხოვნილი მოქმედებების შესრულება CAPTCHA-ს გავლის გარეშე',
 );
 
-/** Kara-Kalpak (Qaraqalpaqsha)
- * @author Atabek
- */
 $messages['kaa'] = array(
 	'captcha-createaccount-fail' => "Tastıyıqlawshı kodın'ız nadurıs yamasa jazılmag'an",
 );
 
-/** Kazakh (Arabic script) (‫قازاقشا (تٴوتە)‬) */
 $messages['kk-arab'] = array(
 	'captcha-edit' => 'بۇل بەتتٸ ٶڭدەۋ ٷشٸن, تٶمەندەگٸ قوسىندىلاۋدى شەشٸڭٸز دە, نٵتيجەسٸن
 اۋماققا ەنگٸزٸڭٸز ([[{{ns:special}}:Captcha/help|كٶبٸرەك اقپارات]]):',
@@ -2046,7 +1742,6 @@ $messages['kk-arab'] = array(
 بەت ٶڭدەۋٸنە قايتۋ بارۋ ٷشٸن «ارتقا» دەگەن تٷيمەسٸن باسىڭىز.',
 );
 
-/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬) */
 $messages['kk-cyrl'] = array(
 	'captcha-edit' => 'Бұл бетті өңдеу үшін, төмендегі қосындылауды шешіңіз де, нәтижесін
 аумаққа енгізіңіз ([[{{ns:special}}:Captcha/help|көбірек ақпарат]]):',
@@ -2072,7 +1767,6 @@ $messages['kk-cyrl'] = array(
 Бет өңдеуіне қайту бару үшін «Артқа» деген түймесін басыңыз.',
 );
 
-/** Kazakh (Latin script) (‪Qazaqşa (latın)‬) */
 $messages['kk-latn'] = array(
 	'captcha-edit' => 'Bul betti öñdew üşin, tömendegi qosındılawdı şeşiñiz de, nätïjesin
 awmaqqa engiziñiz ([[{{ns:special}}:Captcha/help|köbirek aqparat]]):',
@@ -2098,11 +1792,6 @@ Bul jumıstı istew üşin şolğışıñızda «cookies» degendi endirw qajet.
 Bet öñdewine qaýtw barw üşin «Artqa» degen tüýmesin basıñız.',
 );
 
-/** Khmer (ភាសាខ្មែរ)
- * @author Lovekhmer
- * @author Thearith
- * @author គីមស៊្រុន
- */
 $messages['km'] = array(
 	'captcha-edit' => 'ដើម្បីកែប្រែ​ទំព័រនេះ សូមដោះស្រាយ​ប្រមាណវិធីបូក​ខាងក្រោម​នេះរួច​បញ្ជូលចម្លើយ​ទៅក្នុង​ប្រអប់សិន([[Special:Captcha/help|ព័ត៌មាន​បន្ថែម]])៖',
 	'captcha-desc' => 'ផ្ដល់បច្ចេកទេស CAPTCHA ដើម្បីការពារពីស្ប៉ាមនិងការការទាយពាក្យសំងាត់',
@@ -2114,12 +1803,6 @@ $messages['km'] = array(
 	'captchahelp-title' => 'ជំនួយអំពី Captcha',
 );
 
-/** Korean (한국어)
- * @author IRTC1015
- * @author Klutzy
- * @author Kwj2772
- * @author ToePeu
- */
 $messages['ko'] = array(
 	'captcha-edit' => '이 문서를 편집하려면 아래의 간단한 문제를 풀고 답을 적어주세요 ([[Special:Captcha/help|자세한 정보]]):',
 	'captcha-desc' => '스팸과 암호 추측을 방지하기 위해 캡차 기술을 제공합니다',
@@ -2156,11 +1839,17 @@ $messages['ko'] = array(
 	'captcha-recaptcha-createaccount-fail' => '잘못된, 혹은 누락된 리캡차 답변입니다.',
 	'captcha-recaptcha-create' => '자동 문서 생성을 방지하기 위해 먼저 아래 질문을 완료해 주세요:',
 	'captcha-recaptcha-misconfigured' => '리캡차가 정상적으로 설정되어 있지 않습니다',
+	'captcha-no-image' => '캡차 이미지를 찾을 수 없습니다',
+	'recaptcha-desc' => '편집 확인을 위한 리캡차 모듈',
+	'recaptcha-edit' => '자동 스팸을 방지하기 위해 먼저 아래 질문을 완료해 주세요:',
+	'recaptcha-addurl' => '귀하의 편집에 새 외부 링크가 포함되어 있습니다. 자동 스팸을 방지하기 위해 먼저 아래 질문을 완료해 주세요:',
+	'recaptcha-badpass' => '자동 비밀번호 크래킹을 방지하기 위해 먼저 아래 질문을 완료해 주세요:',
+	'recaptcha-createaccount' => '자동 계정 생성을 방지하기 위해 먼저 아래 질문을 완료해 주세요:',
+	'recaptcha-createaccount-fail' => '잘못된, 혹은 누락된 리캡차 답변입니다.',
+	'recaptcha-create' => '자동 문서 생성을 방지하기 위해 먼저 아래 질문을 완료해 주세요:',
+	'recaptcha-misconfigured' => '리캡차가 정상적으로 설정되어 있지 않습니다',
 );
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = array(
 	'captcha-edit' => 'Öm de Sigg ze ändere, don di Zahle onge zosamme zälle un don de Antwoot en dat Käßje endraare. ([[Special:Captcha/help|Verklierung]])',
 	'captcha-desc' => 'Brängk en „Kaptscha“ en et Wiki, öm jääje SPAM un jäje et Paßwööter-Dorschprobeere ze schöze.',
@@ -2208,9 +1897,6 @@ Jetz kanns De met Dingem Brauser singem „Zeröck“-Knopp wigger maache, wo De
 	'right-skipcaptcha' => 'De Opforderung fum Kaptscha överjonn',
 );
 
-/** Latin (Latina)
- * @author UV
- */
 $messages['la'] = array(
 	'captcha-edit' => 'Ad hanc paginam recensendum, necesse est tibi solvere calculationem subter et responsum in capsam inscribere ([[Special:Captcha/help|Quidst illud?]]):',
 	'captcha-addurl' => 'Emendatione tua insunt nexus externi; ut spam automaticum vitemus, necesse est tibi solvere calculationem subter et responsum in capsam inscribere ([[Special:Captcha/help|Quidst illud?]]):',
@@ -2221,10 +1907,6 @@ $messages['la'] = array(
 	'captchahelp-title' => 'Captcha auxilium',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Les Meloures
- * @author Robby
- */
 $messages['lb'] = array(
 	'captcha-edit' => "Fir dës Säit z'änneren, léist w.e.g. dës Rechenaufgab a gitt d'Resultat an d'Këscht ënnendrënner an ([[Special:Captcha/help|méi Informatiounen]]):",
 	'captcha-desc' => 'Stellt Captcha-Techniken zur Verfügung fir géint Spam an Errode vu Passwierder ze schützen',
@@ -2255,10 +1937,6 @@ Dréckt op den 'Zréck' Knäppche vun ärem Browser fir an d'Beaarbechtungsfëns
 	'right-skipcaptcha' => 'Aktiounen déi eng Captcha-Aktioun verlaangen ausféieren, ouni dës maachen ze mussen',
 );
 
-/** Limburgish (Limburgs)
- * @author Matthias
- * @author Ooswesthoesbes
- */
 $messages['li'] = array(
 	'captcha-edit' => "Geer wil dees pazjena bewerke. Veur estebleef 't antjwaord op de óngerstäönde einvawdife som in 't inveurvenster in ([[Special:Captcha/help|mieë informatie]]):",
 	'captcha-desc' => "Bied CAPTCHA-technieke óm besjörming te beje taenge spam en 't raoje van wachweurd.",
@@ -2287,7 +1965,6 @@ Klik óppe 'trök'-knoep in uw browser om terug te gaan naar het tekstbewerkings
 	'right-skipcaptcha' => 'Captchahandelinge oetveure zonder captcha te hove oplosse',
 );
 
-/** Lao (ລາວ) */
 $messages['lo'] = array(
 	'captcha-edit' => 'ການດັດແກ້ ຂອງ ທ່ານ ມີລິ້ງູຄ໌ພາຍນອກ. ເພື່ອ ເປັນການຊ່ອຍປ້ອງກັນ ສະແປມອັດຕະໂນມັດ, ກະລຸນາແກ້ເລກບວກ ງ່າຍໆຂ້າງລຸ່ມນີ້ ແລ້ວ ພິມຄຳຕອບໃສ່ໃນ ກັບ ([[Special:Captcha/help|more info]]):',
 	'captcha-addurl' => 'ການດັດແກ້ຂອງທ່ານ ມີ ການກາງລິ້ງຄ໌ຫາພາຍນອກ. ເພື່ອເປັນການຊ່ອຍປ້ອງກັນ ສະແປມອັດຕະໂນມັດ ກະລຸນາ ແກ້ເລກບວກງ່າຍໆຂ້າງລຸ່ມນີ້ ແລ້ວ ພິມຜົນບວກ ໃສ່ ກັບ ([[Special:Captcha/help|ຂໍ້ມູນເພີ່ມເຕີມ]]):',
@@ -2296,12 +1973,6 @@ $messages['lo'] = array(
 	'captcha-create' => 'ກະລຸນາ ແກ້ເລກບວກງ່າຍໆລຸ່ມນີ້ ແລະ ພິມຜົນບວກໃສ່ໃນກັບ ເພື່ອ ສ້າງໜ້ານີ້ ([[Special:Captcha/help|ຂໍ້ມູນເພີ່ມເຕີມ]]):',
 );
 
-/** Lithuanian (Lietuvių)
- * @author Eitvys200
- * @author Garas
- * @author Homo
- * @author Matasg
- */
 $messages['lt'] = array(
 	'captcha-edit' => 'Kad redaguotumėte šį straipsnį, apskaičiuokite šią paprastą sumą ir įveskite atsakymą į laukelį ([[Special:Captcha/help|daugiau informacijos]]):',
 	'captcha-createaccount-fail' => 'Blogas arba nerastas patvirtinimo kodas.',
@@ -2309,11 +1980,6 @@ $messages['lt'] = array(
 	'captchahelp-cookies-needed' => 'Jums reikia būti įjungus sausainėlius savo naršyklėje kad tai veiktu',
 );
 
-/** Latvian (Latviešu)
- * @author BrokenArrow
- * @author Marozols
- * @author Yyy
- */
 $messages['lv'] = array(
 	'captcha-edit' => 'Lai izmainītu šo lapu, atrisini šo vienādojumu un iegūto skaitli ieraksti šajā lodziņā: <br />([[Special:Captcha/help|Kāpēc tā?]])',
 	'captcha-addurl' => 'Tavas izmaiņas ietver jaunu URL saiti. Lai pasargātos no automātiskas mēstuļošanas, Tev ir jāieraksta te redzamā vienādojuma rezultāts: <br />([[Special:Captcha/help|Kāpēc tā?]])',
@@ -2332,17 +1998,10 @@ Diemžēl tas var apgrūtināt lietotājus, kuriem ir redzes traucējumi vai kur
 Spied pārlūka pogu \"Atpakaļ\" (''Back''), lai atgrieztos iepriekšējā lapā.",
 );
 
-/** Malagasy (Malagasy)
- * @author Jagwar
- */
 $messages['mg'] = array(
 	'right-skipcaptcha' => 'Manao tao mampisy ny captcha fa tsy mila mameno azy',
 );
 
-/** Macedonian (Македонски)
- * @author Bjankuloski06
- * @author Brest
- */
 $messages['mk'] = array(
 	'captcha-edit' => 'За да ја уредите оваа страница потребно е да го најдете решението на едноставната задача поставена подолу и одговорот да го внесете во соодветното поле за одговор([[Special:Captcha/help|повеќе информации]]):',
 	'captcha-desc' => 'Овозможува техники од CAPTCHA за заштита од спам и погодување на лозинки',
@@ -2376,10 +2035,6 @@ $messages['mk'] = array(
 	'right-skipcaptcha' => 'Изведување на акции кои повикуваат captcha без да одат преку captcha системот',
 );
 
-/** Malayalam (മലയാളം)
- * @author Praveenp
- * @author Shijualex
- */
 $messages['ml'] = array(
 	'captcha-edit' => 'ഈ താൾ തിരുത്തുവാൻ, ദയവായി താഴെ കൊടുത്തിരിക്കുന്ന ലഘു ഗണിത ക്രിയ ചെയ്ത് അതിന്റെ ഉത്തരം താഴെയുള്ള പെട്ടിയിൽ ടൈപ്പു ചെയ്യുക ([[Special:Captcha/help|കൂടുതൽ വിവരങ്ങൾ]]):',
 	'captcha-desc' => 'പാഴെഴുത്ത് ഉൾപ്പെടുത്തലിനും രഹസ്യവാക്ക് ഊഹിക്കലിനുമെതിരെ സംരക്ഷണം തരുന്ന കാപ്ച സംവിധാനം നൽകുന്നു',
@@ -2414,9 +2069,6 @@ $messages['ml'] = array(
 	'right-skipcaptcha' => 'കാപ്ച ഉപയോഗിക്കേണ്ട പ്രവൃത്തികൾ കാപ്ചയിലൂടെ കടന്നു പോകാതെ തന്നെ ചെയ്യാൻ കഴിയുക',
 );
 
-/** Mongolian (Монгол)
- * @author Chinneeb
- */
 $messages['mn'] = array(
 	'captcha-createaccount' => 'Автоматаар хэрэглэгчийн бүртгэл үүсгэхээс сэргийлэхийн тулд дараах хялбар нийлбэрийг бодож хайрцагт хариуг нь оруулна уу
 ([[Special:Captcha/help|дэлгэрэнгүй мэдээлэл]]):',
@@ -2436,11 +2088,6 @@ $messages['mn'] = array(
 Хуудасны засварлагч руу буцахын тулд вэб хөтөчийнхөө "буцаах" товч дээр дарна уу.',
 );
 
-/** Marathi (मराठी)
- * @author Kaustubh
- * @author Mahitgar
- * @author V.narsikar
- */
 $messages['mr'] = array(
 	'captcha-edit' => 'हे पान संपादित करण्यासाठी, खाली दिलेले सोपे गणित सोडवून त्याचे उत्तर दिलेल्या पृष्ठपेटी मध्ये लिहा ([[Special:Captcha/help|अधिक माहिती]]):',
 	'captcha-desc' => 'उत्पात आणि परवलीच्या शब्दांच्या चोरी पासून सूरक्षीत ठेवणाऱ्या ओळखपटवा-पद्धती CAPTCHA techniques पुरवते.',
@@ -2473,11 +2120,6 @@ $messages['mr'] = array(
 	'right-skipcaptcha' => 'कॅपचा मध्ये न जाता कॅपचाचा वापर करणार्‍या क्रिया करा',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- * @author Aurora
- * @author Aviator
- */
 $messages['ms'] = array(
 	'captcha-edit' => 'Untuk menyunting laman ini, sila selesaikan kira-kira di bawah dan masukkan jawapannya dalam kotak yang disediakan ([[Special:Captcha/help|maklumat lanjut]]):',
 	'captcha-desc' => 'Menyediakan teknik CAPTCHA untuk melindungi daripada spam dan teka kata laluan',
@@ -2510,26 +2152,16 @@ Sila tekan butang 'back' di pelayar web anda untuk kembali ke laman suntingan.",
 	'right-skipcaptcha' => 'Melepasi pemeriksaan CAPTCHA',
 );
 
-/** Nahuatl (Nāhuatl)
- * @author Fluence
- */
 $messages['nah'] = array(
 	'captchahelp-title' => 'Captchatechcopa tēpalēhuiliztli',
 );
 
-/** Min Nan Chinese (Bân-lâm-gú) */
 $messages['nan'] = array(
 	'captcha-createaccount' => 'Ūi beh ī-hông lâng iōng ke-si chū-tōng chù-chheh koh tah kóng-kò, chhiáⁿ lí kā chhut-hiān tī ang-á lāi-bīn ê jī phah 1 piàn (thang chèng-bêng lí m̄ sī ki-khì-lâng): <br />
 ([[Special:Captcha/help|Che sī siáⁿ-hòe?]])',
 	'captcha-createaccount-fail' => 'Khak-jīn-bé chhò-gō· iah-sī làu-kau.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Jon Harald Søby
- * @author Laaknor
- * @author Nghtwlkr
- */
 $messages['nb'] = array(
 	'captcha-edit' => 'Skriv inn summen nedenfor i boksen for å kunne redigere denne siden ([[Special:Captcha/help|mer informasjon]]):',
 	'captcha-desc' => 'Gir tilgang til CAPTCHA-teknikker for å beskytte mot søppl og passordgjetting',
@@ -2558,9 +2190,6 @@ Trykk på 'tilbake'-knappen for å komme tilbake til redigeringssiden.",
 	'right-skipcaptcha' => 'Utføre handlinger som normalt krever «captcha»-bekreftelse uten å bruke «captcha»',
 );
 
-/** Low German (Plattdüütsch)
- * @author Slomox
- */
 $messages['nds'] = array(
 	'captcha-edit' => 'Disse Siet to ännern, musst du disse lütte Rekenopgaav lösen un dat Resultat in dat Feld ingeven ([[Special:Captcha/help|mehr dorto]]):',
 	'captcha-desc' => 'Eenfach Captcha',
@@ -2596,9 +2225,6 @@ Mit den „Trüch“-Knopp vun dien Browser kummst du trüch na dat Ännerfinste
 	'right-skipcaptcha' => 'Överspringen vun Captchas',
 );
 
-/** Nedersaksisch (Nedersaksisch)
- * @author Servien
- */
 $messages['nds-nl'] = array(
 	'captcha-edit' => "Um disse pagina te bewarken, mö'j eers t antwoord op disse eenvoudige somme invullen ([[Special:Captcha/help|meer informasie]]):",
 	'captcha-desc' => 'Eenvoudige invoering van captcha',
@@ -2625,42 +2251,38 @@ Soms a'j nieje verwiezingen bie n pagina derop zetten, wö'j evreugen um iets ov
   #</pre> <!-- laot disse regel zo as t is -->',
 );
 
-/** Dutch (Nederlands)
- * @author SPQRobin
- * @author Siebrand
- */
 $messages['nl'] = array(
-	'captcha-edit' => 'To edit this page, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-desc' => 'Provides CAPTCHA techniques to protect against spam and password-guessing',
-	'captcha-addurl' => 'Your edit includes new external links.
-To help protect against automated spam, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-badlogin' => 'To help protect against automated password cracking, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-createaccount' => 'To help protect against automated account creation, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-createaccount-fail' => 'Incorrect or missing confirmation code.',
-	'captcha-create' => 'To create the page, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-sendemail' => 'To help protect against automated spamming, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-sendemail-fail' => 'Incorrect or missing confirmation code.',
-	'captcha-disabledinapi' => 'This action requires a captcha, so it cannot be performed through the API.',
-	'captchahelp-title' => 'CAPTCHA help',
-	'captchahelp-cookies-needed' => 'You will need to have cookies enabled in your browser for this to work.',
-	'captchahelp-text' => "Web sites that accept postings from the public, like this wiki, are often abused by spammers who use automated tools to post their links to many sites.
-While these spam links can be removed, they are a significant nuisance.
+	'captcha-edit' => 'Als je deze pagina wilt bewerken, los dan de eenvoudige som hieronder op, en typ her antwoord in het vak ([[Special:Captcha/help|meer info]]):',
+	'captcha-desc' => 'Levert CAPTCHA technieken om te beschermen tegen spam en het raden van wachtwoorden',
+	'captcha-addurl' => 'Je bewerking bevat nieuwe externe links.
+Om te beschermen tegen automatische spam, los de simpele som hieronder op en voer het antwoord in in het vak ([[Special:Captcha/help|meer info]]):',
+	'captcha-badlogin' => 'Om te beschermen tegen het geautomatiseerde kraken van wachtwoorden, los de simpele som hieronder op en typ het antwoord in het vak ([[Special:Captcha/help|more info]]):',
+	'captcha-createaccount' => 'Om te beschermen tegen automatisch gecreëerde accounts, los de simpele som hieronder op en typ het antwoord in het vak ([[Special:Captcha/help|more info]]):',
+	'captcha-createaccount-fail' => 'Onjuiste of ontbrekende bevestigingscode.',
+	'captcha-create' => 'Als je deze pagina wilt maken, los dan de eenvoudige som hieronder op, en typ het antwoord in het vak ([[Special:Captcha/help|more info]]):',
+	'captcha-sendemail' => 'Om te beschermen tegen geautomatiseerde spam, los de simpele som hieronder op en typ het antwoord in het vak ([[Special:Captcha/help|more info]]):',
+	'captcha-sendemail-fail' => 'Onjuiste of ontbrekende bevestigingscode.',
+	'captcha-disabledinapi' => 'Deze actie vereist een captcha, en kan dus niet uitgevoerd worden via de API.',
+	'captchahelp-title' => 'CAPTCHA hulp',
+	'captchahelp-cookies-needed' => 'U moet cookies ingeschakeld hebben in uw browser om dit te laten werken.',
+	'captchahelp-text' => "Websites die berichten van het publiek accepteren, zoals deze wiki, worden vaak misbruikt door spammers die geautomatiseerde middelen gebruiken om links naar hun sites te plaatsen.
+Hoewel deze spam links verwijderd kunnen worden, zijn ze een aanzienlijke last.
 
-Sometimes, especially when adding new web links to a page, the wiki may show you an image of colored or distorted text and ask you to type the words shown.
-Since this is a task that's hard to automate, it will allow most real humans to make their posts while stopping most spammers and other robotic attackers.
+Soms, voornamelijk wanneer nieuwe weblinks op een pagina geplaatst worden, kan de wiki een afbeelding van een gekleurde of vervormde tekst, en vragen de getoonde woorden in te typen.
+Doordat deze taak moeilijk te automatiseren is, staat het de meeste echte mensen toe hun bewerking te voltooien terwijl de meeste spammers en andere geautomatiseerde aanvallers stopt.
 
-Unfortunately this may inconvenience users with limited vision or using text-based or speech-based browsers.
-At the moment we do not have an audio alternative available.
-Please contact the  [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for assistance if this is unexpectedly preventing you from making legitimate posts.
+Helaas kan dit ongemak brengen voor gebruikers met beperkt zicht of gebruikers van tekst- of spraak-gebaseerde browsers.
+Op het moment hebben we geen audio alternatief beschikbaar.
+Neem contact op met de [[{{MediaWiki:Grouppage-sysop}}|site beheerders]] voor hulp als dit je onverwachts verhindert van het maken van legitieme bewerkingen.
 
-Hit the 'back' button in your browser to return to the page editor.",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
-# Syntax is as follows:
-#   * Everything from a "#" character to the end of the line is a comment
-#   * Every non-blank line is a regex fragment which will only match hosts inside URLs
- #</pre> <!-- leave this line exactly as it is -->',
-	'right-skipcaptcha' => 'Perform CAPTCHA-triggering actions without having to go through the CAPTCHA',
-	'captcha-input-placeholder' => 'Enter text here',
+Klik op de 'terg' knop in uw browser om terug te keren naar de pagina editor.",
+	'captcha-addurl-whitelist' => ' #<!-- laat deze regel precies zoals het is --> <pre>
+# De syntaxis is als volgt:
+# * Alles vanaf "#" tot aan het einde van de regel is commentaar
+# * Elke niet-lege regel is een regex fragment die enkel matcht met hosts in URL\'s
+ #</pre><!-- laat deze regel precies zoals het is -->',
+	'right-skipcaptcha' => 'CAPTCHA-vereisende acties uitvoeren zonder de CAPTCHA in te hoeven voeren',
+	'captcha-input-placeholder' => 'hier tekst invoeren',
 	'captcha-recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 	'captcha-recaptcha-edit' => 'To help protect against automated edit spam, please complete the challenge below:',
 	'captcha-recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please complete the challenge below:',
@@ -2669,14 +2291,17 @@ Hit the 'back' button in your browser to return to the page editor.",
 	'captcha-recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
 	'captcha-recaptcha-create' => 'To help protect against automated page creation, please complete the challenge below:',
 	'captcha-recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'captcha-no-image' => 'Captcha afbeelding kon niet worden gevonden',
+	'recaptcha-desc' => 'reCAPTHCHA module voor Bevestig Bewerking',
+	'recaptcha-edit' => 'Om te beschermen tegen geautomatiseerde bewerking spam, voer de uitdaging hieronder uit:',
+	'recaptcha-addurl' => 'Je bewerking bevat nieuwe externe links. Om te beschermen tegen automatische spam, voer de uitdaging hieronder uit:',
+	'recaptcha-badpass' => 'Om te beschermen tegen het geautomatiseerde kraken van wachtwoorden, voer de uitdaging hieronder uit:',
+	'recaptcha-createaccount' => 'Om te beschermen tegen automatisch gecreëerde accounts, voer de uitdaging hieronder uit:',
+	'recaptcha-createaccount-fail' => 'Onjuist of ontbrekend reCAPTCHA antwoord.',
+	'recaptcha-create' => "Om te beschermen tegen automatisch gecreëerde pagina's, voer de uitdaging hieronder uit:",
+	'recaptcha-misconfigured' => 'ReCaptcha is niet correct geconfigureerd',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
- * @author Eirik
- * @author Frokor
- * @author Harald Khan
- * @author Nghtwlkr
- */
 $messages['nn'] = array(
 	'captcha-edit' => 'For å endre denne sida, ver venleg og løys det enkle reknestykket nedanfor og skriv svaret i ruta ([[Special:Captcha/help|meir informasjon]]):',
 	'captcha-desc' => 'Enkel implementering av captcha-system.',
@@ -2704,9 +2329,6 @@ Trykk på «attende»-knappen for å kome tilbake til endringssida.',
 	'right-skipcaptcha' => 'Utføre handlingar som normalt krever «captcha»-stadfesting utan å bruke «captcha»',
 );
 
-/** Occitan (Occitan)
- * @author Cedric31
- */
 $messages['oc'] = array(
 	'captcha-edit' => "Per modificar aquesta pagina, vos cal efectuar lo calcul çaijós e n'inscriure lo resultat dins lo camp ([[Special:Captcha/help|Mai d’entresenhas]]) :",
 	'captcha-desc' => 'Implementacion captcha simpla',
@@ -2733,9 +2355,6 @@ Clicatz sul boton « Precedent » de vòstre navigador per tornar a la pagina de
 	'right-skipcaptcha' => "Acomplís lo desenclavament de las accions de captcha sens dever passar per l'intermediari aqueste darrièr",
 );
 
-/** Oriya (ଓଡ଼ିଆ)
- * @author Psubhashish
- */
 $messages['or'] = array(
 	'captcha-edit' => 'ଏହି ପୃଷ୍ଠାଟିକୁ ବଦଳାଇବା ନିମନ୍ତେ, ତଳେ ଥିବା ସହଜ ଅଙ୍କଟିର ସମାଧାନ କରନ୍ତୁ ଓ ଘରଟିରେ ଫଳାଫଳ ଦିଅନ୍ତୁ ([[Special:Captcha/help|ଅଧିକ ଜାଣନ୍ତୁ]]):',
 	'captcha-desc' => 'CAPTCHA କାରିଗରି ଉପାୟରେ ସ୍ପାମ ଓ ପାସବାର୍ଡ଼ ରକ୍ଷା କରିଥାଏ ।',
@@ -2769,7 +2388,6 @@ $messages['or'] = array(
 	'right-skipcaptcha' => 'CAPTCHA ଭିତରେ ନଯାଇ CAPTCHA ଦେଇ ସଞ୍ଚାଳିତ କାମ କରିବେ',
 );
 
-/** Pampanga (Kapampangan) */
 $messages['pam'] = array(
 	'captcha-createaccount' => 'Bang ala na kabud laltong account, pakipakibatan me ing papacuenta ra king lalam at ibili me ing pakibat ketang cahun ([[Special:Captcha/help|more info]]):',
 	'captcha-createaccount-fail' => 'E ustu o ala yu ing confirmation code.',
@@ -2784,65 +2402,50 @@ Mangaylangan kang manyalanging cookie king kekang paglibut (browser) para king o
 Timid me ing 'back' button king kekang browser bang mibalik ketang panaliling bulung (page editor).",
 );
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = array(
 	'captchahelp-title' => 'Captcha-Hilf',
 );
 
-/** Polish (Polski)
- * @author Derbeth
- * @author Leinad
- * @author Sp5uhe
- */
 $messages['pl'] = array(
-	'captcha-edit' => 'Aby edytować tą stronę wykonaj proste działanie matematyczne i wpisz wynik w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
+	'captcha-edit' => 'Aby edytować tę stronę, wykonaj proste działanie matematyczne i wpisz wynik w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
 	'captcha-desc' => 'Dodaje CAPTCHA – zabezpieczenie przed spamującymi automatami oraz odgadywaniem haseł',
-	'captcha-addurl' => 'Dodałeś nowe linki zewnętrzne. Ze względu na ochronę przed zautomatyzowanym spamem musisz wykonać proste działanie matematyczne i wpisać wynik w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
+	'captcha-addurl' => 'Dodano nowe linki zewnętrzne. Ze względu na ochronę przed zautomatyzowanym spamem musisz wykonać proste działanie matematyczne i wpisać wynik w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
 	'captcha-badlogin' => 'Aby pomóc w ochronie przed nadmiernym wpisywaniem hasła, proszę rozwiązać poniższe zadanie matematyczne i wprowadzić odpowiedź w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
-	'captcha-createaccount' => 'Aby pomóc w ochronie przed tworzeniem zautomatyzowanych kont, proszę rozwiązać poniższe zadanie matematyczne i wprowadzić odpowiedź w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
+	'captcha-createaccount' => 'Aby pomóc w ochronie przed zautomatyzowanym tworzeniem kont, proszę rozwiązać poniższe zadanie matematyczne i wprowadzić odpowiedź w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
 	'captcha-createaccount-fail' => 'Nieprawidłowy kod lub brak kodu potwierdzającego.',
-	'captcha-create' => 'Aby utworzyć stronę wykonaj proste działanie matematyczne i wpisz wynik w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
+	'captcha-create' => 'Aby utworzyć stronę, wykonaj proste działanie matematyczne i wpisz wynik w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
 	'captcha-sendemail' => 'Aby pomóc w ochronie przed zautomatyzowanym spamem, proszę rozwiązać poniższe zadanie matematyczne i wprowadzić odpowiedź w odpowiednie pole ([[Special:Captcha/help|więcej informacji]]):',
 	'captcha-sendemail-fail' => 'Nieprawidłowy kod lub brak kodu potwierdzającego.',
-	'captcha-disabledinapi' => 'Ta akcja wymaga rozwiązania captcha, więc nie może być wykonywana za pośrednictwem interfejsu API.',
+	'captcha-disabledinapi' => 'Ta akcja wymaga rozwiązania captcha, więc nie może być wykonywana za pośrednictwem API.',
 	'captchahelp-title' => 'Pomoc CAPTCHA',
 	'captchahelp-cookies-needed' => 'Musisz mieć włączone ciasteczka (cookies) w swojej przeglądarce, aby ta opcja działała.',
-	'captchahelp-text' => 'Strony internetowe akceptujące edycje dokonywane przez każdego, tak jak ta wiki, są często atakowane przez spamerów, którzy używają automatycznych narzędzi, aby dodawać linki prowadzące do ich stron.
-Chociaż te linki mogą zostać usunięte, jest to uciążliwe.
-
-Czasami, zwłaszcza przy dodawaniu nowych linków do strony albo przy rejestracji, wiki może pokazać obrazek z kolorowym lub zniekształconym tekstem i poprosić Cię o przepisanie zamieszczonego na nim wyrazu.
-Ponieważ są to zadania trudne do zautomatyzowania, takie zabezpieczenia umożliwia ludziom dokonywania edycji, jednocześnie skutecznie powstrzymując większość spamerów i inne automatyczne ataki.
-
-Niestety, może być to niewygodne dla użytkowników z wadą wzroku lub używających przeglądarek tekstowych lub głosowych.
-Obecnie nie mamy alternatywnego rozwiązania audio.
-Skontaktuj się z [[{{MediaWiki:Grouppage-sysop}}|administratorami strony]] by uzyskać pomoc, jeśli nie możesz z tego powodu dokonywać uprawnionych edycji.
-
-Wciśnij przycisk „wstecz” w przeglądarce by powrócić do edycji strony.',
+	'captchahelp-text' => 'CAPTCHA pozwala na ochronę strony przed spamem. Jeśli masz wadę wzroku lub używasz przeglądarki, która nie może wyświetlić obrazu, [[Special:Contact/general|skontaktuj się z Fandomem]].',
 	'captcha-addurl-whitelist' => ' #<!-- nie modyfikuj tej linii --> <pre>
 # Składnia jest następująca:
 #   * Linie zaczynające się od znaku „#” są komentarzami
 #   * Każda linia, która nie jest pusta, jest wyrażeniem regularnym, które ma pasować do adresu serwera (fragmentu URL)
   #</pre> <!-- nie modyfikuj tej linii -->',
-	'right-skipcaptcha' => 'Dostęp do czynności zabezpieczonych pytaniem o treść obrazka lub rozwiązanie zadania, z pominięciem tego zabezpieczenia
-',
+	'right-skipcaptcha' => 'Dostęp do czynności zabezpieczonych pytaniem o treść obrazka lub rozwiązanie zadania, z pominięciem tego zabezpieczenia',
 	'captcha-input-placeholder' => 'Wpisz tekst tutaj',
 	'captcha-recaptcha-desc' => 'Moduł reCAPTCHA do potwierdzenia edycji',
 	'captcha-recaptcha-edit' => 'Aby pomóc w ochronie przed zautomatyzowanym spamem, proszę uzupełnić odpowiednie pola:',
-	'captcha-recaptcha-addurl' => 'Dodałeś nowe linki zewnętrzne. Ze względu na ochronę przed zautomatyzowanym spamem, proszę uzupełnić odpowiednie pola:',
+	'captcha-recaptcha-addurl' => 'Dodano nowe linki zewnętrzne. Ze względu na ochronę przed zautomatyzowanym spamem, proszę uzupełnić odpowiednie pola:',
 	'captcha-recaptcha-badpass' => 'Aby pomóc w ochronie przed nadmiernym wpisywaniem hasła, proszę uzupełnić odpowiednie pola:',
-	'captcha-recaptcha-createaccount' => 'Aby pomóc w ochronie przed tworzeniem zautomatyzowanych kont, proszę uzupełnić odpowiednie pola:',
+	'captcha-recaptcha-createaccount' => 'Aby pomóc w ochronie przed zautomatyzowanym tworzeniem kont, proszę uzupełnić odpowiednie pola:',
 	'captcha-recaptcha-createaccount-fail' => 'Nieprawidłowa lub brakująca odpowiedź reCAPTCHA.',
-	'captcha-recaptcha-create' => 'Aby pomóc w ochronie przed tworzeniem zautomatyzowanych stron, proszę uzupełnić odpowiednie pola:',
-	'captcha-recaptcha-misconfigured' => 'ReCaptcha nie jest poprawnie skonfigurowana',
+	'captcha-recaptcha-create' => 'Aby pomóc w ochronie przed zautomatyzowanym tworzeniem stron, proszę uzupełnić odpowiednie pola:',
+	'captcha-recaptcha-misconfigured' => 'ReCaptcha nie jest poprawnie skonfigurowane',
+	'captcha-no-image' => 'Nie znaleziono obrazu z captcha',
+	'recaptcha-desc' => 'Moduł reCAPTCHA do potwierdzenia edycji',
+	'recaptcha-edit' => 'Aby pomóc w ochronie przed zautomatyzowanym spamem, proszę uzupełnić odpowiednie pola:',
+	'recaptcha-addurl' => 'Dodałeś nowe linki zewnętrzne. Ze względu na ochronę przed zautomatyzowanym spamem, proszę uzupełnić odpowiednie pola:',
+	'recaptcha-badpass' => 'Aby pomóc w ochronie przed nadmiernym wpisywaniem hasła, proszę uzupełnić odpowiednie pola:',
+	'recaptcha-createaccount' => 'Aby pomóc w ochronie przed tworzeniem zautomatyzowanych kont, proszę uzupełnić odpowiednie pola:',
+	'recaptcha-createaccount-fail' => 'Nieprawidłowa lub brakująca odpowiedź reCAPTCHA.',
+	'recaptcha-create' => 'Aby pomóc w ochronie przed tworzeniem zautomatyzowanych stron, proszę uzupełnić odpowiednie pola:',
+	'recaptcha-misconfigured' => 'ReCaptcha nie jest poprawnie skonfigurowana',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Bèrto 'd Sèra
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'captcha-edit' => "Për fe-ie dle modìfiche ansima a st'artìcol-sì, për piasì ch'a fasa ël total ambelessì sota
 e ch'a buta l'arzulta ant ël quadrèt ([[Special:Captcha/help|për savejne dë pì]]):",
@@ -2874,9 +2477,6 @@ Ch'a-i bata ansima al boton 'andré' ant sò navigator për torné andré a l'ed
 	'right-skipcaptcha' => "A fà j'assion che a ativo la captcha sensa avèj da passé da la captcha",
 );
 
-/** Western Punjabi (پنجابی)
- * @author Khalid Mahmood
- */
 $messages['pnb'] = array(
 	'captcha-edit' => 'اس صفحے نوں تبدیل کرن واسطے، مہربانی کر کے اے سادہ جۓ سوال نوں حل کر کے ڈبے چ جواب لکھ دیو ([[Special:Captcha/help|مزید جانکاری]]):',
 	'captcha-desc' => 'کیپچا ول سپام تے کنجی اندازے توں بچن لئی دیندا اے۔',
@@ -2907,24 +2507,16 @@ $messages['pnb'] = array(
 	'right-skipcaptcha' => 'کیپچا ٹورن والے کم کیپچا چوں گۓ بنا کرو۔',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'captcha-create' => 'ددې لپاره چې نوی ليکنه ترسره کړی، لطفاً د همدغه ساده شمېرو ځواب په ورکړ شوي چوکاټ کې وليکی ([[Special:Captcha/help|نور مالومات]]):',
 	'captchahelp-title' => 'CAPTCHA لارښود',
 	'captchahelp-cookies-needed' => 'ددې کړنې د ترسره کېدلو لپاره تاسو ته پکار ده چې د خپل کتنمل (browser) کوکيز (cookies) چارن کړی.',
 );
 
-/** Portuguese (Português)
- * @author 555
- * @author Hamilton Abreu
- * @author Malafaya
- */
 $messages['pt'] = array(
 	'captcha-edit' => 'Para editar esta página, por favor resolva a adição simples abaixo e digite a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
 	'captcha-desc' => 'Fornece técnicas CAPTCHA para proteger contra spam e adivinhação de senha',
-	'captcha-addurl' => 'A sua edição inclui novos links externos.
+	'captcha-addurl' => 'A sua edição inclui novos links externos. 
 Para ajudar a proteção contra spam automático, por favor, resolva a adição simples abaixo e digite a sua resposta na caixa ([[Special:Captcha/help | mais informações]]):',
 	'captcha-badlogin' => 'Para ajudar a proteção contra quebra automática de senha, por favor, resolver a simples adição abaixo e digite a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
 	'captcha-createaccount' => 'Para ajudar a proteção contra criação de contas automáticas, por favor, resolva a simples adição e digite a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
@@ -2935,51 +2527,6 @@ Para ajudar a proteção contra spam automático, por favor, resolva a adição 
 	'captcha-disabledinapi' => 'Esta ação requer um captcha, então isso não pode ser executado por meio do API.',
 	'captchahelp-title' => 'Ajuda CAPTCHA',
 	'captchahelp-cookies-needed' => 'Você precisará ter os cookies ativados em seu navegador para que isto funcione.',
-	'captchahelp-text' => "Websites que aceitam postagens do público, como esta wikia, geralmente são usados por spammers que usam ferramentas automatizadas para postar os seus links em muitos sites. Embora esses links possam ser removidos, eles causam bastante incômodo.
-
-Às vezes, especialmente quando novos links são adicionados à página, esta wikia pode lhe mostrar uma imagem de um texto colorido ou distorcido e pedir para que você digite as palavras mostradas. Já que esta é uma tarefa difícil de ser automatizada, ela permitirá que a maioria dos humanos escrevam as suas postagem ao mesmo tempo que para a maioria dos spammers e outros invasores robotizados.
-
-Infelizmente, isso pode causar algumas inconveniências para alguns usuários com visão limitada ou usando navegadores baseados em textos ou discurso.
-No momento, nós não temos uma alternativa de áudio disponível.
-Por favor, contate os [[{{MediaWiki:Grouppage-sysop}}|administradores do site]] para maior assistência, se isso está prevenindo que você escreva posts legítimos.
-
-Clique no botão 'voltar' no seu navegador para retornar ao editor da página.",
-	'captcha-addurl-whitelist' => ' #<!-- deixe essa frase exatamente como está--> <pre>
-# Segue a sintaxe:
-#   * Tudo que vai de um caracter "#" até o final da linha é um comentário
-#   * Todas as linhas que não estão vazias é um fragmento de regex que corresponderá somente a hosts dentro de URLs
- #</pre> <!-- deixe esta frase exatamente como está -->',
-	'right-skipcaptcha' => 'Execute ações que geram CAPTCHA sem ter que usar o CAPTCHA',
-	'captcha-input-placeholder' => 'Entre o texto aqui',
-	'captcha-recaptcha-desc' => 'Módulo reCAPTCHA para Confirmação de Edições',
-	'captcha-recaptcha-edit' => 'Para ajudar a proteção contra spam automático, por favor, complete o desafio abaixo:',
-	'captcha-recaptcha-addurl' => 'Sua edição inclui novos links externos. Para ajudar a proteger contra spam automatizado, por favor, complete o desafio abaixo:',
-	'captcha-recaptcha-badpass' => 'Para ajudar a proteger contra quebra de senha automática, por favor, complete o desafio abaixo:',
-	'captcha-recaptcha-createaccount' => 'Para ajudar a proteção contra criação automática de contas, por favor, complete o desafio abaixo:',
-	'captcha-recaptcha-createaccount-fail' => 'Resposta reCAPTCHA incorreta ou faltando.',
-	'captcha-recaptcha-create' => 'Para ajudar a proteção contra criação automática de páginas, por favor, complete o desafio abaixo:',
-	'captcha-recaptcha-misconfigured' => 'ReCaptcha não está configurado corretamente',
-);
-
-/** Brazilian Portuguese (Português do Brasil)
- * @author Eduardo.mps
- * @author Giro720
- * @author Jesielt
- */
-$messages['pt-br'] = array(
-	'captcha-edit' => 'Para editar esta página será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-desc' => 'Fornece técnicas captcha para proteção contra spam e tentativas de obtenção de senhas',
-	'captcha-addurl' => 'Sua edição inclui novas ligações externas.
-Para prevenção contra sistemas automatizados que inserem spam, será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-badlogin' => 'Como prevenção contra sistemas automatizados de pesquisa e descoberta de senhas, será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-createaccount' => 'Como prevenção contra sistemas automatizados de criação de contas, por favor resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|O que é isto?]]):',
-	'captcha-createaccount-fail' => 'Código de confirmação incorreto ou não preenchido.',
-	'captcha-create' => 'Para criar a página, por favor resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-sendemail' => "Para ajudar a prevenir o ''spam'' automatizado, por favor, resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):",
-	'captcha-sendemail-fail' => 'Código de confirmação incorreto ou não preenchido.',
-	'captcha-disabledinapi' => 'Esta operação necessita de captcha, por isso não pode ser realizada através da API.',
-	'captchahelp-title' => 'Ajuda com o Captcha',
-	'captchahelp-cookies-needed' => 'Você precisa ter cookies habilitados em seu navegador para que possa funcionar',
 	'captchahelp-text' => "Sites abertos a inserções públicas, como é o caso desta wiki, são vulneráveis a spammers que utilizam ferramentas automatizadas para inserir seus links em diversos locais.
 Remover tais ligações posteriormente pode ser um incômodo significativo.
 
@@ -2996,23 +2543,31 @@ Pressione o botão 'voltar' de seu navegador para retornar à página de ediçã
 #  * Tudo desde o caractere "#" até ao fim da linha é um comentário
 #  * Qualquer linha não vazia é um fragmento de regex que irá apenas verificar o servidor dentro das URLs
   #</pre> <!-- deixe este linha exatamente como está -->',
-	'right-skipcaptcha' => 'Executar ações disparadoras de captcha sem ter que passar pelo captcha',
+	'right-skipcaptcha' => 'Execute ações que geram CAPTCHA sem ter que usar o CAPTCHA',
+	'captcha-input-placeholder' => 'Digite o texto aqui',
+	'captcha-recaptcha-desc' => 'Módulo reCAPTCHA para Confirmação de Edições',
+	'captcha-recaptcha-edit' => 'Para ajudar a proteção contra spam automático, por favor, complete o desafio abaixo:',
+	'captcha-recaptcha-addurl' => 'Sua edição inclui novos links externos. Para ajudar a proteger contra spam automatizado, por favor, complete o desafio abaixo:',
+	'captcha-recaptcha-badpass' => 'Para ajudar a proteger contra quebra de senha automática, por favor, complete o desafio abaixo:',
+	'captcha-recaptcha-createaccount' => 'Para ajudar a proteção contra criação automática de contas, por favor, complete o desafio abaixo:',
+	'captcha-recaptcha-createaccount-fail' => 'Resposta reCAPTCHA incorreta ou faltando.',
+	'captcha-recaptcha-create' => 'Para ajudar a proteção contra criação automática de páginas, por favor, complete o desafio abaixo:',
+	'captcha-recaptcha-misconfigured' => 'ReCaptcha não está configurado corretamente',
+	'captcha-no-image' => 'Nenhuma imagem captcha pôde ser encontrada',
+	'recaptcha-desc' => 'Módulo reCAPTCHA para Confirmação de Edições',
+	'recaptcha-edit' => 'Para ajudar a proteção contra spam automático, por favor, complete o desafio abaixo:',
+	'recaptcha-addurl' => 'Sua edição inclui novos links externos. Para ajudar a proteger contra spam automatizado, por favor, complete o desafio abaixo:',
+	'recaptcha-badpass' => 'Para ajudar a proteger contra quebra de senha automática, por favor, complete o desafio abaixo:',
+	'recaptcha-createaccount' => 'Para ajudar a proteção contra criação automática de contas, por favor, complete o desafio abaixo:',
+	'recaptcha-createaccount-fail' => 'Resposta reCAPTCHA incorreta ou faltando.',
+	'recaptcha-create' => 'Para ajudar a proteção contra criação automática de páginas, por favor, complete o desafio abaixo:',
+	'recaptcha-misconfigured' => 'ReCaptcha não está configurado corretamente',
 );
 
-/** Quechua (Runa Simi)
- * @author AlimanRuna
- */
 $messages['qu'] = array(
 	'captchahelp-title' => 'Captcha nisqamanta yanapay',
 );
 
-/** Romanian (Română)
- * @author BrokenArrow
- * @author Firilacroco
- * @author KlaudiuMihaila
- * @author Mihai
- * @author Minisarm
- */
 $messages['ro'] = array(
 	'captcha-edit' => 'Editarea include legături externe noi. Pentru a evita spam-ul automat, vă rugăm să rezolvați adunarea de mai jos și introduceți rezultatul în căsuță ([[Special:Captcha/help|detalii]]):',
 	'captcha-desc' => 'Oferă implementare de tip CAPTCHA împotriva spamului și încercărilor de aflare a parolelor',
@@ -3042,10 +2597,6 @@ Apasă butonul „Înapoi” al browserului pentru a te reîntoarce la pagina de
 	'right-skipcaptcha' => 'Efectuează acțiuni care necesită completarea unui cod CAPTCHA fără a fi nevoie să facă acest lucru',
 );
 
-/** Tarandíne (Tarandíne)
- * @author Joetaras
- * @author Reder
- */
 $messages['roa-tara'] = array(
 	'captcha-edit' => "Pe cangià sta pàgene, pe piacere fa sta somma facile facile aqquà sotte e mitte 'a resposte jndr'à sckatele ([[Special:Captcha/help|maggiore 'mbormaziune]]):",
 	'captcha-addurl' => "'U cangiamende tue inglude de le collegaminde esterne.
@@ -3065,22 +2616,16 @@ Pe aiutà a proteggere condre a 'u spam automateche, pe piacere respunne a 'a do
  #</pre> <!-- leave this line exactly as it is -->",
 );
 
-/** Russian (Русский)
- * @author Ahonc
- * @author Aleksandrit
- * @author Kalan
- * @author Александр Сигачёв
- */
 $messages['ru'] = array(
-	'captcha-edit' => 'Чтобы отредактировать эту страницу, пожалуйста, решите простое уравнение и введите ответ в поле ([[Служебная:Captcha/help|подробнее]]):',
+	'captcha-edit' => 'Чтобы отредактировать эту страницу, пожалуйста, решите простое уравнение и введите ответ в поле ([[Special:Captcha/help|подробнее]]):',
 	'captcha-desc' => 'Для защиты от спама и подбора пароля используется CAPTCHA',
 	'captcha-addurl' => 'Ваша правка содержит ссылки на внешние сайты.
-Чтобы предотвратить автоматизированный спам, пожалуйста, решите простое уравнение и введите ответ в поле ([[Служебная:Captcha/help|подробнее]]):',
-	'captcha-badlogin' => 'Чтобы предотвратить автоматический подбор пароля, пожалуйста, решите простое уравнение и введите ответ в поле ([[Служебная:Captcha/help|подробнее]]):',
-	'captcha-createaccount' => 'Чтобы предотвратить автоматическое создание аккаунта, пожалуйста, решите простое уравнение и введите ответ в поле ([[Служебная:Captcha/help|подробнее]]):',
+Чтобы предотвратить автоматизированный спам, пожалуйста, решите простое уравнение и введите ответ в поле ([[Special:Captcha/help|подробнее]]):',
+	'captcha-badlogin' => 'Чтобы предотвратить автоматический подбор пароля, пожалуйста, решите простое уравнение и введите ответ в поле ([[Special:Captcha/help|подробнее]]):',
+	'captcha-createaccount' => 'Чтобы предотвратить автоматическое создание аккаунта, пожалуйста, решите простое уравнение и введите ответ в поле ([[Special:Captcha/help|подробнее]]):',
 	'captcha-createaccount-fail' => 'Код подтверждения неверный или отсутствует.',
-	'captcha-create' => 'Чтобы создать страницу, пожалуйста, решите простое уравнение и введите ответ в поле ([[Служебная:Captcha/help|подробнее]]):',
-	'captcha-sendemail' => 'Чтобы предотвратить автоматизированный спам, пожалуйста, решите простое уравнение и введите ответ в поле ([[Служебная:Captcha/help|подробнее]]):',
+	'captcha-create' => 'Чтобы создать страницу, пожалуйста, решите простое уравнение и введите ответ в поле ([[Special:Captcha/help|подробнее]]):',
+	'captcha-sendemail' => 'Чтобы предотвратить автоматизированный спам, пожалуйста, решите простое уравнение и введите ответ в поле ([[Special:Captcha/help|подробнее]]):',
 	'captcha-sendemail-fail' => 'Код подтверждения неверный или отсутствует.',
 	'captcha-disabledinapi' => 'Это действие требует ввода CAPTCHA, поэтому его нельзя выполнить через API.',
 	'captchahelp-title' => 'Справка о CAPTCHA',
@@ -3100,18 +2645,24 @@ $messages['ru'] = array(
 	'right-skipcaptcha' => 'Позволяет выполнять действия, для которых требуется ввод CAPTCHA, без этого ввода',
 	'captcha-input-placeholder' => 'Введите текст сюда',
 	'captcha-recaptcha-desc' => 'Модуль reCAPTCHA для подтверждения правки',
-	'captcha-recaptcha-edit' => 'Для защиты от автоматизированного спама, пожалуйста, выполните следующее задание:',
+	'captcha-recaptcha-edit' => 'Для защиты от автоматизированного спама выполните следующее задание:',
 	'captcha-recaptcha-addurl' => 'Ваша правка содержит ссылки на внешние сайты. Для защиты от автоматизированного спама, пожалуйста, выполните следующее задание:',
-	'captcha-recaptcha-badpass' => 'Для защиты от автоматического подбора пароля, пожалуйста, выполните следующее задание:',
-	'captcha-recaptcha-createaccount' => 'Для защиты от автоматического создания аккаунта, пожалуйста, выполните следующее задание:',
+	'captcha-recaptcha-badpass' => 'Для защиты от автоматического подбора пароля выполните следующее задание:',
+	'captcha-recaptcha-createaccount' => 'Для защиты от автоматического создания аккаунта выполните следующее задание:',
 	'captcha-recaptcha-createaccount-fail' => 'Ответ неправильный или отсутствует.',
-	'captcha-recaptcha-create' => 'Для защиты от автоматического создания страницы, пожалуйста, выполните следующее задание:',
+	'captcha-recaptcha-create' => 'Для защиты от автоматического создания страницы выполните следующее задание:',
 	'captcha-recaptcha-misconfigured' => 'Неправильная настройка ReCaptcha',
+	'captcha-no-image' => 'Изображение не найдено',
+	'recaptcha-desc' => 'Модуль reCAPTCHA для подтверждения правки',
+	'recaptcha-edit' => 'Для защиты от автоматизированного спама, пожалуйста, выполните следующее задание:',
+	'recaptcha-addurl' => 'Ваша правка содержит ссылки на внешние сайты. Для защиты от автоматизированного спама, пожалуйста, выполните следующее задание:',
+	'recaptcha-badpass' => 'Для защиты от автоматического подбора пароля, пожалуйста, выполните следующее задание:',
+	'recaptcha-createaccount' => 'Для защиты от автоматического создания аккаунта, пожалуйста, выполните следующее задание:',
+	'recaptcha-createaccount-fail' => 'Ответ неправильный или отсутствует.',
+	'recaptcha-create' => 'Для защиты от автоматического создания страницы, пожалуйста, выполните следующее задание:',
+	'recaptcha-misconfigured' => 'Неправильная настройка ReCaptcha',
 );
 
-/** Rusyn (Русиньскый)
- * @author Gazeb
- */
 $messages['rue'] = array(
 	'captcha-edit' => 'Жебысьте могли едітовати тоту сторінку, мусите вырїшыти наступну просту суму і написати резултат. ([[Special:Captcha/help|Што тото значіть?]])',
 	'captcha-desc' => 'Забезпечує техніку CAPTCHA про охрану перед спамом і гаданём гесел',
@@ -3140,9 +2691,6 @@ $messages['rue'] = array(
 	'right-skipcaptcha' => 'Выконованя дїй споєных з CAPTCHA без потребы їх рїшіня',
 );
 
-/** Sakha (Саха тыла)
- * @author HalanTul
- */
 $messages['sah'] = array(
 	'captcha-edit' => 'Сирэйи уларытыаххын баҕардаххына, манна баар примеры суоттаа уонна эппиэтин аналлаах сиргэ суруй ([[Special:Captcha/help|сиһилии]]):',
 	'captcha-desc' => 'CAPTCHA көмөтүнэн спаамтан уонна киирии тылы уорууттан көмүскэли хааччыйар',
@@ -3178,10 +2726,6 @@ $messages['sah'] = array(
 	'right-skipcaptcha' => 'CAPTCHA-бэрэбиэркэни ааһыахтаах дьайыылары CAPTCHA-та суох толоруу',
 );
 
-/** Sicilian (Sicilianu)
- * @author Melos
- * @author Santu
- */
 $messages['scn'] = array(
 	'captcha-edit' => 'Pi mudificaru la pàggina è nicissàriu arisòrviri lu sèmprici càlculu prisintati di sècutu e nziriri lu risurtatu nnâ casedda
 ([[Special:Captcha/help|chiossai nfurmazzioni]]):',
@@ -3209,19 +2753,10 @@ Fari clic supra ô buttuni 'back' dû browser pi turnari a la pàggina di mudìf
 	'right-skipcaptcha' => "Fà l'azzioni ca attivàssiru lu captcha senza passari pi lu captcha",
 );
 
-/** Scots (Scots)
- * @author OchAyeTheNoo
- */
 $messages['sco'] = array(
 	'captcha-edit' => 'Tae edit this airticle, please dae the eisy sum ablo an put the answer in the box ([[Special:Captcha/help|mair info]])',
 );
 
-/** Sinhala (සිංහල)
- * @author Budhajeewa
- * @author Singhalawap
- * @author නන්දිමිතුරු
- * @author පසිඳු කාවින්ද
- */
 $messages['si'] = array(
 	'captcha-edit' => 'මෙම පිටුව සංස්කරණය කිරීමට, කරුණාකර පහත දැක්වෙන සරල එකතුකිරීම විසඳා පිලිතුර කොටුවේ ඇතුලත් කරන්න ([[Special:Captcha/help|වැඩි විස්තර]]):',
 	'captcha-desc' => 'ස්පෑම් සහ මුරපද-අනුමාන වලන් ආරක්ෂාව සදහා කැප්චා තාක්ෂණය සපයනු ලැබේ',
@@ -3255,9 +2790,6 @@ $messages['si'] = array(
 	'right-skipcaptcha' => 'captcha පරික්ෂා කීරීම සිදුකිරීමෙන් වැලකෙමින් captcha පූරනකාරක ක්‍රියාවලීන් සිදුකරන්න',
 );
 
-/** Slovak (Slovenčina)
- * @author Helix84
- */
 $messages['sk'] = array(
 	'captcha-edit' => 'Aby ste mohli upravovať túto stránku, vyriešte prosím tento jednoduchý súčet a napíšte výsledok do poľa ([[Special:Captcha/help|viac informácií]]):',
 	'captcha-desc' => 'Poskytuje techniky captcha na ochranu pred spamom a hádaním hesla',
@@ -3287,10 +2819,6 @@ Stlačením tlačidla „späť“ vo vašom prehliadači sa vrátite do editora
 	'right-skipcaptcha' => 'Vykonávať činnosti spúšťajúce captcha bez toho, aby bolo potrebné vyriešiť captcha',
 );
 
-/** Slovenian (Slovenščina)
- * @author BrokenArrow
- * @author Dbc334
- */
 $messages['sl'] = array(
 	'captcha-edit' => 'Če želite urejati stran, prosimo izračunajte preprost seštevek spodaj in odgovor vpišite v polje ([[Special:Captcha/help|več informacij]]):',
 	'captcha-desc' => 'Nudi pristope CAPTCHA za zaščito proti smetju in ugibanju gesel',
@@ -3324,12 +2852,6 @@ Za vrnitev v urejevalnik izberite gumb »nazaj« v vašem brskalniku.',
 	'right-skipcaptcha' => 'Izvaja dejanja, ki sprožijo preverjanje captcha, brez da bi moral opraviti preverjanje',
 );
 
-/** Albanian (Shqip)
- * @author BrokenArrow
- * @author Dori
- * @author Mikullovci11
- * @author Olsi
- */
 $messages['sq'] = array(
 	'captcha-edit' => 'Për të redaktuar këtë faqe ju lutem zgjidhni shumën e mëposhtme dhe vendosni përgjigjen në kuti ([[Special:Captcha/help|më shumë informacion]]):',
 	'captcha-desc' => 'Siguron teknika CAPTCHA për të mbrojtur kundër spam',
@@ -3359,10 +2881,6 @@ Shtypni butonin "prapa" ("back") të shfletuesit tuaj për tu kthyer tek faqja e
 	'right-skipcaptcha' => 'Kryen veprime CAPTCHA-triggering pa pasur nevojë të shkojë nëpërmjet CAPTCHA',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
- * @author Millosh
- * @author Rancher
- */
 $messages['sr-ec'] = array(
 	'captcha-edit' => 'За измену ове стране, реши једноставан збри испод и унеси одговор у кутију ([[Special:Captcha/help|детаљније]]):',
 	'captcha-desc' => 'Пружа заштиту против непожељних порука у виду потврдног кода',
@@ -3379,9 +2897,6 @@ $messages['sr-ec'] = array(
 	'right-skipcaptcha' => 'прескакање радњи које захтевају унос потврдног кода',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
- * @author Michaello
- */
 $messages['sr-el'] = array(
 	'captcha-edit' => 'Za izmenu ove strane, reši jednostavan zbri ispod i unesi odgovor u kutiju ([[Special:Captcha/help|detaljnije]]):',
 	'captcha-desc' => 'Pruža zaštitu protiv nepoželjnih poruka u vidu potvrdnog koda',
@@ -3396,9 +2911,6 @@ $messages['sr-el'] = array(
 	'right-skipcaptcha' => 'Izvedi akcije kapče bez potrebe da se prođe kroz kapču.',
 );
 
-/** Seeltersk (Seeltersk)
- * @author Pyt
- */
 $messages['stq'] = array(
 	'captcha-edit' => 'Tou Beoarbaidenge fon ju Siede löös ätterfoulgjende Reekenapgoawe un dräch dät Resultoat in dät Fäild hierunner ien [[Special:Captcha/help|(Froagen of Probleme?)]]:',
 	'captcha-desc' => 'Eenfache Captcha-Implementierenge',
@@ -3427,10 +2939,6 @@ Klik ap dän 'Tourääch'-Knoop in jou Browser uum ätter dän Sieden-Editor tou
 	'right-skipcaptcha' => 'Uurspringen fon ju Captcha-Iengoawe',
 );
 
-/** Sundanese (Basa Sunda)
- * @author Irwangatot
- * @author Kandar
- */
 $messages['su'] = array(
 	'captcha-edit' => 'Pikeun ngédit artikel ieu, mangga eusian itungan di handap ([[Special:Captcha/help|émbaran lengkep]]):',
 	'captcha-desc' => 'Implementasi basajan captcha',
@@ -3453,14 +2961,6 @@ Hit the 'back' button in your browser to return to the page editor.",
 	'right-skipcaptcha' => 'Ngalakonan pamicu captcha tanpa ngaliwatan Captcha',
 );
 
-/** Swedish (Svenska)
- * @author Ainali
- * @author Boivie
- * @author Lejonel
- * @author M.M.S.
- * @author MagnusA
- * @author Per
- */
 $messages['sv'] = array(
 	'captcha-edit' => 'För att redigera den här sidan måste du först skriva svaret på följande
 räkneuppgift i rutan ([[Special:Captcha/help|mer information]]):',
@@ -3498,10 +2998,6 @@ Tryck på bakåtknappen i din webbläsare för att gå tillbaks till sidredigeri
 	'right-skipcaptcha' => 'Utföra handlingar som normalt kräver "captcha"-bekräftning utan att använda "captcha"',
 );
 
-/** Tamil (தமிழ்)
- * @author Shanmugamp7
- * @author செல்வா
- */
 $messages['ta'] = array(
 	'captcha-createaccount-fail' => 'தவறான அல்லது குறையுடைய உறுதிப்படுத்தல் குறியீடு.',
 	'captcha-sendemail-fail' => 'தவறான அல்லது குறையுடைய உறுதிப்படுத்தல் குறியீடு.',
@@ -3509,12 +3005,6 @@ $messages['ta'] = array(
 	'captchahelp-title' => 'CAPTCHA உதவி',
 );
 
-/** Telugu (తెలుగు)
- * @author Chaduvari
- * @author Kiranmayee
- * @author Mpradeep
- * @author Veeven
- */
 $messages['te'] = array(
 	'captcha-edit' => 'ఈ పేజీని సరిదిద్దడానికి, కింది ఇచ్చిన చిన్న లెక్కని చేసి జవాబుని పక్కనున్న పెట్టెలో టైపు చెయ్యండి ([[ప్రత్యేక:Captcha/help|మరింత సమాచారం]]):',
 	'captcha-desc' => 'సరళమైన అమకవేప అమలు',
@@ -3541,9 +3031,6 @@ $messages['te'] = array(
 	'right-skipcaptcha' => 'ఆమకవేప ద్వారా పోకుండానే దాని ట్రిగ్గరు చర్యలను అమలు చెయ్యి',
 );
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
- * @author Ibrahim
- */
 $messages['tg-cyrl'] = array(
 	'captcha-edit' => 'Барои вироиши ин мақола, лутфан ҳосили ҷамъи зеринро ҳисоб кунед ва натиҷаро дар ҷаъба ворид кунед ([[Special:Captcha/help|иттилооти бештар]]):',
 	'captcha-desc' => 'Татбиқи соддаи CAPTCHA',
@@ -3568,9 +3055,6 @@ $messages['tg-cyrl'] = array(
   #</pre> <!-- ин сатрро ҳамон гуна, ки ҳаст раҳо кунед-->',
 );
 
-/** Tajik (Latin script) (tojikī)
- * @author Liangent
- */
 $messages['tg-latn'] = array(
 	'captcha-edit' => "Baroi viroişi in maqola, lutfan hosili çam'i zerinro hisob kuned va natiçaro dar ça'ba vorid kuned ([[Special:Captcha/help|ittilooti beştar]]):",
 	'captcha-desc' => 'Tatbiqi soddai CAPTCHA',
@@ -3595,9 +3079,6 @@ Dar murugaraton tugmai 'bozgaşt'-ro bo paxş kardan ba sahifai viroişgar barga
   #</pre> <!-- in satrro hamon guna, ki hast raho kuned-->',
 );
 
-/** Thai (ไทย)
- * @author Passawuth
- */
 $messages['th'] = array(
 	'captcha-edit' => 'เพื่อที่จะแก้ไขหน้านี้ กรุณาตอบโจทย์ปัญหาทางคณิตศาสตร์ข้างล่าง และใส่คำตอบลงในกล่อง ([[Special:Captcha/help|รายละเอียดเพิ่มเติม]]) :',
 	'captcha-addurl' => 'การแก้ไขของคุณมีลิงก์็ไปยังเว็บไซต์ภายนอกด้วย
@@ -3611,9 +3092,6 @@ $messages['th'] = array(
 	'captchahelp-cookies-needed' => 'คุณต้องอนุญาตคุกกี้บนเว็บบราวเซอร์ของคุณ เพื่อที่คุณจะสามารถล็อกอินได้',
 );
 
-/** Turkmen (Türkmençe)
- * @author Hanberke
- */
 $messages['tk'] = array(
 	'captcha-edit' => 'Bu sahypany redaktirlemek üçin, aşakdaky meselni çözüň we jogaby gutynyň içine ýazyň ([[Special:Captcha/help|jikme-jik]]):',
 	'captcha-desc' => 'Ýönekeý captcha ama aşyrylyşy',
@@ -3630,9 +3108,6 @@ Awtomatik spamdan goranmak üçin, aşakdaky ýönekeý soraga jogap beriň we j
 	'captchahelp-cookies-needed' => 'Munuň işlemegi üçin brauzeriňiziň kukileri kabul etmegi gerek.',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'captcha-edit' => 'Para magawaan ng pagbabago ang pahinang ito, pakisagot lamang ang payak na pagtutuos na nasa ibaba at ipasok ang sagot sa loob ng kahon ([[Special:Captcha/help|mas marami pang kabatiran]]):',
 	'captcha-desc' => 'Nagbibigay ng mga pamamaraan ng CAPTCHA upang maisanggalang laban sa mga basurang e-liham at panghuhula ng hudyat',
@@ -3666,10 +3141,6 @@ Pindutin ang pindutang 'bumalik' sa iyong pantingin-tingin upang makabalik sa pa
 	'right-skipcaptcha' => "Gawin ang mga galaw na nakapagsasanhi ng pagsusuring ''captcha'' na hindi kinakailangang dumaan sa ''captcha''",
 );
 
-/** Turkish (Türkçe)
- * @author Joseph
- * @author Runningfridgesrule
- */
 $messages['tr'] = array(
 	'captcha-edit' => 'Bu sayfayı değiştirebilmek için lütfen aşağıdaki basit soruyu cevaplayın ve cevabı kutunun içine yazın ([[Special:Captcha/help|ayrıntılı bilgiler]]):',
 	'captcha-desc' => 'Basit captcha uygulaması',
@@ -3699,13 +3170,6 @@ Sayfa düzenleyiciye dönmek için tarayıcınızın 'geri' tuşuna basınız.",
 	'right-skipcaptcha' => "Captcha ile tetiklenen hareketleri, captcha'yı geçme zorunluluğu olmadan yap",
 );
 
-/** Ukrainian (Українська)
- * @author Ahonc
- * @author Alex Khimich
- * @author NickK
- * @author Riwnodennyk
- * @author Тест
- */
 $messages['uk'] = array(
 	'captcha-edit' => 'Щоб відредагувати цю сторінку, будь ласка, виконайте просту арифметичну дію і введіть відповідь у текстове поле ([[Special:Captcha/help|докладніше]]):',
 	'captcha-desc' => 'Забезпечує методи CAPTCHA для захисту від спаму і підбору пароля',
@@ -3737,9 +3201,6 @@ $messages['uk'] = array(
 	'right-skipcaptcha' => 'Виконання дій, що вимагають CAPTCHA-перевірки, без проходження CAPTCHA',
 );
 
-/** Vèneto (Vèneto)
- * @author Candalua
- */
 $messages['vec'] = array(
 	'captcha-edit' => 'Par modificar la pagina te ghè da risòlvar sto senplice calcolo presentà de seguito e inserir el risultato ne la casela
 ([[Special:Captcha/help|magiori informazion]]):',
@@ -3769,42 +3230,38 @@ Struca el boton \"Indrìo\" del to browser par tornar a la pagina de modifica.",
 	'right-skipcaptcha' => 'Esegui le funsion de triggering del captcha sensa passar par el captcha',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Minh Nguyen
- * @author Vinhtantran
- */
 $messages['vi'] = array(
-	'captcha-edit' => 'To edit this page, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-desc' => 'Provides CAPTCHA techniques to protect against spam and password-guessing',
-	'captcha-addurl' => 'Your edit includes new external links.
-To help protect against automated spam, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-badlogin' => 'To help protect against automated password cracking, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-createaccount' => 'To help protect against automated account creation, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-createaccount-fail' => 'Incorrect or missing confirmation code.',
-	'captcha-create' => 'To create the page, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-sendemail' => 'To help protect against automated spamming, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-sendemail-fail' => 'Incorrect or missing confirmation code.',
-	'captcha-disabledinapi' => 'This action requires a captcha, so it cannot be performed through the API.',
-	'captchahelp-title' => 'CAPTCHA help',
-	'captchahelp-cookies-needed' => 'You will need to have cookies enabled in your browser for this to work.',
-	'captchahelp-text' => "Web sites that accept postings from the public, like this wiki, are often abused by spammers who use automated tools to post their links to many sites.
-While these spam links can be removed, they are a significant nuisance.
+	'captcha-edit' => 'Để sửa đổi trang này, xin vui lòng giải quyết phép tổng đơn giản dưới đây và nhập câu trả lời trong hộp ([[Special:Captcha/help|thông tin thêm]]):',
+	'captcha-desc' => 'Cung cấp kỹ thuật CAPTCHA để bảo vệ chống thư rác và đoán mật khẩu',
+	'captcha-addurl' => 'Sửa đổi của bạn có chứa các liên kết ngoài mới.
+Để giúp bảo vệ chống lại thư rác tự động, xin vui lòng giải quyết phép tổng đơn giản dưới đây và nhập câu trả lời trong hộp ([[Special:Captcha/help|thông tin thêm]]):',
+	'captcha-badlogin' => 'Để giúp bảo vệ chống lại bẻ khóa mật khẩu tự động, xin vui lòng giải quyết phép tổng đơn giản dưới đây và nhập câu trả lời trong hộp ([[Special:Captcha/help|thông tin thêm]]):',
+	'captcha-createaccount' => 'Để giúp bảo vệ chống lại bẻ khóa mật khẩu tự động, xin vui lòng giải quyết phép tổng đơn giản dưới đây và nhập câu trả lời trong hộp ([[Special:Captcha/help|thông tin thêm]]):',
+	'captcha-createaccount-fail' => 'Mã xác nhận không chính xác hoặc thiếu.',
+	'captcha-create' => 'Để sửa đổi trang này, xin vui lòng giải quyết phép tổng đơn giản dưới đây và nhập câu trả lời trong hộp ([[Special:Captcha/help|thông tin thêm]]):',
+	'captcha-sendemail' => 'Để giúp bảo vệ chống lại bẻ khóa mật khẩu tự động, xin vui lòng giải quyết phép tổng đơn giản dưới đây và nhập câu trả lời trong hộp ([[Special:Captcha/help|thông tin thêm]]):',
+	'captcha-sendemail-fail' => 'Mã xác nhận không chính xác hoặc thiếu.',
+	'captcha-disabledinapi' => 'Hành động này đòi hỏi một captcha, do đó nó không thể được thực hiện thông qua API.',
+	'captchahelp-title' => 'Trợ giúp CAPTCHA',
+	'captchahelp-cookies-needed' => 'Bạn sẽ cần phải bật cookie trong trình duyệt của mình để làm việc này.',
+	'captchahelp-text' => "Các trang web chấp nhận các bài đăng từ công chúng như wikia này thường bị lạm dụng bởi những spammer qua việc sử dụng những công cụ tự động để đăng liên kết của họ đến nhiều trang web khác.
+Mặc dù các liên kết thư rác có thể được gỡ bỏ, nhưng họ vẫn là một mối phiền toái đáng kể.
 
-Sometimes, especially when adding new web links to a page, the wiki may show you an image of colored or distorted text and ask you to type the words shown.
-Since this is a task that's hard to automate, it will allow most real humans to make their posts while stopping most spammers and other robotic attackers.
+Đôi khi, đặc biệt là khi thêm các liên kết web mới cho một trang, các wikia có thể hiển thị cho bạn một hình ảnh có màu hoặc văn bản vặn vẹo và yêu cầu bạn gõ các từ được hiển thị.
+Vì đây là một nhiệm vụ khó có thể được tự động hóa, nó sẽ cho phép hầu hết người thật biên tập bài viết của họ, trong khi ngăn chặn hầu hết các spammer và các loại robot tự động khác.
 
-Unfortunately this may inconvenience users with limited vision or using text-based or speech-based browsers.
-At the moment we do not have an audio alternative available.
-Please contact the  [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for assistance if this is unexpectedly preventing you from making legitimate posts.
+Thật không may điều này có thể gây bất tiện cho người sử dụng với tầm nhìn hạn chế hoặc sử dụng các trình duyệt dựa trên văn bản hoặc lời nói.
+Tại thời điểm này chúng tôi không có thay thế âm thanh nào.
+Hãy liên hệ với [[{{MediaWiki:Grouppage-sysop}}|các bảo quản viên]] để được hỗ trợ nếu điều này vô tình ngăn cản bạn biên tập bài viết một cách chính đáng.
 
-Hit the 'back' button in your browser to return to the page editor.",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
-# Syntax is as follows:
-#   * Everything from a "#" character to the end of the line is a comment
-#   * Every non-blank line is a regex fragment which will only match hosts inside URLs
- #</pre> <!-- leave this line exactly as it is -->',
-	'right-skipcaptcha' => 'Perform CAPTCHA-triggering actions without having to go through the CAPTCHA',
-	'captcha-input-placeholder' => 'Enter text here',
+Nhấn nút 'trở lại' trong trình duyệt của bạn để trở về trang soạn thảo.",
+	'captcha-addurl-whitelist' => ' #<!-- để dòng này đúng hiện trạng như thế này --> <pre>
+# Cú pháp như sau:
+# * Bất cứ gì khởi đầu từ kí tự "#" cho đến cuối dòng là một bình luận
+# * Bất cứ mọi dòng không trống là một mảnh biểu thức mà sẽ chỉ phù hợp với các máy bên trong URL
+ #</pre> <!-- để dòng này đúng hiện trạng như thế này -->',
+	'right-skipcaptcha' => 'Thực hiện hành động CAPTCHA kích hoạt mà không cần phải đi qua CAPTCHA',
+	'captcha-input-placeholder' => 'Nhập văn bản ở đây',
 	'captcha-recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 	'captcha-recaptcha-edit' => 'To help protect against automated edit spam, please complete the challenge below:',
 	'captcha-recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please complete the challenge below:',
@@ -3813,12 +3270,17 @@ Hit the 'back' button in your browser to return to the page editor.",
 	'captcha-recaptcha-createaccount-fail' => 'Incorrect or missing reCAPTCHA answer.',
 	'captcha-recaptcha-create' => 'To help protect against automated page creation, please complete the challenge below:',
 	'captcha-recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
+	'captcha-no-image' => 'Không có hình ảnh captcha nào được tìm thấy',
+	'recaptcha-desc' => 'Mô-đun reCAPTCHA dành cho Xác nhận sửa đổi',
+	'recaptcha-edit' => 'Để giúp bảo vệ chống lại thư rác tự động sửa đổi, xin vui lòng hoàn thành những thử thách dưới đây:',
+	'recaptcha-addurl' => 'Sửa đổi của bạn có chứa các liên kết ngoài mới. Để giúp bảo vệ chống lại thư rác tự động, xin vui lòng hoàn thành những thử thách dưới đây:',
+	'recaptcha-badpass' => 'Để giúp bảo vệ chống lại bẻ khóa mật khẩu tự động, xin vui lòng hoàn thành những thử thách dưới đây:',
+	'recaptcha-createaccount' => 'Để giúp bảo vệ chống lại việc tạo tài khoản tự động, xin vui lòng hoàn thành những thử thách dưới đây:',
+	'recaptcha-createaccount-fail' => 'Câu trả lời không chính xác hoặc thiếu reCAPTCHA.',
+	'recaptcha-create' => 'Để giúp bảo vệ chống lại việc tạo tài khoản tự động, xin vui lòng hoàn thành những thử thách dưới đây:',
+	'recaptcha-misconfigured' => 'ReCaptcha không được cấu hình đúng',
 );
 
-/** Volapük (Volapük)
- * @author Malafaya
- * @author Smeira
- */
 $messages['vo'] = array(
 	'captcha-edit' => 'Ad redakön yegedi at, dunolös, begö! saedami dono e penolös saedoti in bokil ([[Special:Captcha/help|nüns pluik]]):',
 	'captcha-addurl' => 'Redakam olik keninükon yümis plödik nulik. Ad jelön siti ta peneds itjäfidik, dunolös, begö! saedami sököl, e penolös saedoti in bokil ([[Special:Captcha/help|nüns pluik]]):',
@@ -3835,9 +3297,6 @@ $messages['vo'] = array(
   #</pre> <!-- leave this line exactly as it is -->',
 );
 
-/** Walloon (Walon)
- * @author BrokenArrow
- */
 $messages['wa'] = array(
 	'captcha-edit' => "Dins vos candjmints i gn a des novelès hårdêyes (URL); po s' mete a houte des robots di spam, nos vs dimandans d' acertiner ki vos estoz bén ene djin, po çoula, tapez les mots k' aparexhèt dins l' imådje chal pa dzo:<br />([[{{ns:special}}:Captcha/help|Pocwè fjhans ns çoula?]])",
 	'captcha-addurl' => "Dins vos candjmints i gn a des novelès hårdêyes (URL); po s' mete a houte des robots di spam, nos vs dimandans d' acertiner ki vos estoz bén ene djin, po çoula, tapez les mots k' aparexhèt dins l' imådje chal pa dzo:<br />([[{{ns:special}}:Captcha/help|Pocwè fjhans ns çoula?]])",
@@ -3855,9 +3314,6 @@ Målureuzmint çoula apoite eto des målåjhminces po les cis k' ont des problin
 Clitchîz sol boton «En erî» di vosse betchteu waibe po rivni al pådje di dvant.",
 );
 
-/** Yiddish (ייִדיש)
- * @author פוילישער
- */
 $messages['yi'] = array(
 	'captcha-addurl' => 'אײַער רעדאַקטירונג אַנטהאַלט נײַע דרויסנדיקע לינקען.
 כדי צו העלפֿן שיצן קעגן אויטאמזירטן ספאַם, זײַט אַזוי גוט און לייזט דאָס פשוטע רעטעניש אונטן און קלאַפט אײַן דעם ענטפֿער אינעם קעסטל ([[Special:Captcha/help|נאך אינפֿארמאַציע]]):',
@@ -3867,15 +3323,11 @@ $messages['yi'] = array(
 	'captchahelp-title' => 'CAPTCHA הילף',
 );
 
-/** Yoruba (Yorùbá)
- * @author Demmy
- */
 $messages['yo'] = array(
 	'captchahelp-title' => 'Ìrànwọ́ Captcha',
 	'captchahelp-cookies-needed' => 'Ẹ gbọ́jọ̀ gba cookies láyé nínú agbétàkùn yín kí èyí ó tó ṣiṣẹ́.',
 );
 
-/** Cantonese (粵語) */
 $messages['yue'] = array(
 	'captcha-edit' => '要編輯呢一篇文，請答出一個簡單嘅加數和，跟住響個盒度打入 ([[Special:Captcha/help|更多資料]]):',
 	'captcha-desc' => '簡單嘅 captcha 實行',
@@ -3901,12 +3353,6 @@ $messages['yue'] = array(
 	'right-skipcaptcha' => '執行captcha引發嘅動作時唔需要經過captcha',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
- * @author Bencmq
- * @author Hzy980512
- * @author Liangent
- * @author PhiLiP
- */
 $messages['zh-hans'] = array(
 	'captcha-edit' => '要编辑这个页面，请回答以下简单的计算并在格子中输入答案（([[Special:Captcha/help|进一步了解]])：',
 	'captcha-desc' => '提供验证码技术来防止垃圾讯息和密码猜测',
@@ -3920,12 +3366,9 @@ $messages['zh-hans'] = array(
 	'captcha-disabledinapi' => '此操作需要验证码，所以无法通过 API 执行。',
 	'captchahelp-title' => '验证码帮助',
 	'captchahelp-cookies-needed' => '你需要在浏览器中启用 cookie以进行这个操作。',
-	'captchahelp-text' => '像本站一样的，对公众开放编辑的站点经常被垃圾链接骚扰。那些人使用自动化垃圾程序将他们的链接张贴到很多站点。虽然这些链接可以被清除，但是这会令人十分困扰。
-有时，特别是当给一个页面添加新的网页链接时，本站可能会让你看一幅有颜色或扭曲文字的图像，并且要你输入所显示的文字。因为这是难以自动完成的，它能够让真人用户能保存他们的编辑，同时阻止大多数的发送垃圾邮件者和其他机器人的攻击。
-令人遗憾是，这可能会使得视力不好，或者使用纯文字或声音的浏览器用户感到不便。而目前我们还没有提供声音形式的验证码。如果这阻碍了你进行正常的编辑，请和 [[{{MediaWiki:Grouppage-sysop}}|管理员]]联系获得帮助。
-点击你浏览器中的“后退”按钮返回页面编辑画面。',
+	'captchahelp-text' => '这用来保护网站免于垃圾讯息骚扰。如果你有视力问题或浏览器无法显示图片, 请 [[Special:Contact|联系Fandom]]寻求协助。',
 	'captcha-addurl-whitelist' => ' #<!-- 不要更改本行的內容 --> <pre>
-# 语法像下面这样:
+# 语法像下面这样: 
 # * 所有在 "#" 字符后的内容全部是注释
 # * 所有非空白行是一个正则表达式，只会对URL中的内容进行匹配
  #</pre> <!-- 不要更改本行的內容 -->',
@@ -3939,44 +3382,18 @@ $messages['zh-hans'] = array(
 	'captcha-recaptcha-createaccount-fail' => '验证码答案不正确或未填写。',
 	'captcha-recaptcha-create' => '为了协助防止自动页面创建，请完成以下的问题：',
 	'captcha-recaptcha-misconfigured' => '验证码未正确放置',
+	'captcha-no-image' => '找不到验证码图片',
+	'recaptcha-desc' => '用来确认编辑的验证码模组',
+	'recaptcha-edit' => '为了帮助防止自动编辑垃圾信息，请完成以下的问题：',
+	'recaptcha-addurl' => '您的编辑包括新的外部连结。为了避免自动编辑的垃圾讯息，请完成以下问题：',
+	'recaptcha-badpass' => '为了防止自动密码破解，请完成以下的问题：',
+	'recaptcha-createaccount' => '为了防止自动帐户创建，请完成以下的问题：',
+	'recaptcha-createaccount-fail' => '验证码答案不正确或未填写。',
+	'recaptcha-create' => '为了协助防止自动页面创建，请完成以下的问题：',
+	'recaptcha-misconfigured' => '验证码未正确放置',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
- * @author Horacewai2
- * @author Hydra
- * @author Liangent
- * @author Mark85296341
- * @author Waihorace
- */
 $messages['zh-hant'] = array(
-	'captcha-edit' => '要編輯這篇文章，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
-	'captcha-desc' => '通過驗證碼技術來阻止垃圾郵件和密碼猜解',
-	'captcha-addurl' => '你編輯的內容中含有一個新的URL連結；為了免受自動垃圾程式的侵擾，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
-	'captcha-badlogin' => '為了防止程式自動破解密碼，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
-	'captcha-createaccount' => '為了防止程式自動註冊，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
-	'captcha-createaccount-fail' => '驗證碼錯誤或遺失。',
-	'captcha-create' => '要建立頁面，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
-	'captcha-sendemail' => '為了防止程式進行破壞，請答出一個簡單的計算，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
-	'captcha-sendemail-fail' => '驗證碼錯誤或遺失。',
-	'captcha-disabledinapi' => '這個要求需要經過Captcha驗證，故無法透過API使用。',
-	'captchahelp-title' => 'Captcha 說明',
-	'captchahelp-cookies-needed' => '您需要開啟瀏覽器上的cookies方可使用這個工具。',
-	'captchahelp-text' => '像本站一樣，對公眾開放編輯的網站經常被垃圾連結騷擾。那些人使用自動化垃圾程式將他們的連結張貼到很多網站。雖然這些連結可以被清除，但是這些東西確實令人十分討厭。
-
-有時，特別是當給一個頁面添加新的網頁連結時，本站會讓你看一幅有顏色的或者有變形文字的圖像，並且要你輸入所顯示的文字。因為這是難以自動完成的一項任務，它將允許人儲存他們的編輯，同時阻止大多數發送垃圾郵件者和其他機器人的攻擊。
-
-令人遺憾是，這會使得視力不好的人，或者使用基於文字或者基於聲音的瀏覽器的使用者感到不便。而目前我們還沒有提供的音訊的選擇。如果這正好阻止你進行正常的編輯，請和[[{{MediaWiki:Grouppage-sysop}}|站點管理員]]聯繫取得幫助。
-
-點擊瀏覽器中的「後退」按鈕返回你所編輯的頁面。',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
-# 語法像下面這樣:
-#   * 所有由 "#" 字元之後嘅字元至行尾是註解
-#   * 所有非空白行是一個regex部份，只是跟在裡面的URL主機相符
- #</pre> <!-- leave this line exactly as it is -->',
-	'right-skipcaptcha' => '執行captcha引發的動作時不需要經過captcha',
-);
-
-$messages['zh-tw'] = array(
 	'captcha-edit' => '要編輯這個頁面，請回答以下簡單的計算並在格子中輸入答案（([[Special:Captcha/help|進一步了解]])：',
 	'captcha-desc' => '提供驗證碼技術來防止垃圾訊息和密碼猜測',
 	'captcha-addurl' => '您的編輯包括新的外部連結。為了防止自動廣告訊息，請回答以下簡單的計算並在格子中輸入答案（ ([[Special:Captcha/help|進一步了解]])：',
@@ -3989,23 +3406,29 @@ $messages['zh-tw'] = array(
 	'captcha-disabledinapi' => '此操作需要驗證碼，因此無法通過 API 執行。',
 	'captchahelp-title' => '驗證碼説明',
 	'captchahelp-cookies-needed' => '你需要在瀏覽器中啟用 cookie以進行這個操作。',
-	'captchahelp-text' => '像本站一樣的，對公眾開放編輯的網站經常被垃圾鏈接騷擾。這些人使用自動化垃圾程序將他們的鏈接張貼到很多網站。雖然這些鏈接可以被清除，但是這會令人十分困擾。
-有時，特別是當給一個頁面添加新的網頁鏈接時，本站可能會讓你看一幅有顏色或扭曲文字的圖像，並且要你輸入所顯示的文字。因為這是難以自動完成的，它能夠讓真人用戶能保存他們的編輯，同時阻止大多數發送垃圾郵件者和其他機器人的攻擊。
-令人遺憾是，這可能會使得視力不好，或者使用純文字或聲音的瀏覽器用戶感到不便。而目前我們還沒有提供聲音形式的驗證碼。如果這阻礙了你進行正常的編輯，請和 [[{{MediaWiki:Grouppage-sysop}}|管理員]]聯繫獲得幫助。
-點擊你瀏覽器中的“後退”按鈕返回頁面編輯畫面。',
+	'captchahelp-text' => '這是用來保護網站免於垃圾訊息的。如果你有視力上的問題或瀏覽器無法顯示圖片，請[[Special:Contact|聯繫Fandom]]尋求協助。',
 	'captcha-addurl-whitelist' => ' #<!-- 不要更改本行的內容 --> <pre>
-# 語法像下面這樣:
-# * 所有在 "#" 字符後的內容全部是注釋
-# * 所有非空白行是一個正規表示式，只會對網址中的內容進行匹配 #
+# 語法像下面這樣: 
+# * 所有在 "#" 字符後的該行內容全部是注釋
+# * 所有非空白行是一個正規表示式，只會搭配網址中的內容 #
  #</pre> <!-- 不要更改本行的內容 -->',
 	'right-skipcaptcha' => '進行會觸發驗證碼的操作時無需通過驗證碼',
 	'captcha-input-placeholder' => '在此處輸入文字',
+	'captcha-no-image' => '找不到驗證碼圖片',
+	'recaptcha-desc' => '用來確認編輯的驗證碼模組',
+	'recaptcha-edit' => '為了幫助防止自動编辑垃圾訊息，請完成以下的問題：',
+	'recaptcha-addurl' => '您的編輯包括新的外部連結。為了避免自動編輯的垃圾訊息，請完成以下問題：',
+	'recaptcha-badpass' => '為了防止自動密碼破解，請完成以下的問題：',
+	'recaptcha-createaccount' => '為了防止自動帳戶創建，請完成以下的問題：',
+	'recaptcha-createaccount-fail' => '驗證碼答案不正確或未填寫。',
+	'recaptcha-create' => '為了協助防止自動頁面創建，請完成以下的問題：',
+	'recaptcha-misconfigured' => '驗證碼未正確放置',
 	'captcha-recaptcha-desc' => '用來確認編輯的驗證碼模組',
 	'captcha-recaptcha-edit' => '為了幫助防止自動编辑垃圾訊息，請完成以下的問題：',
-	'captcha-recaptcha-addurl' => '您的編輯包括新的外部連結。為了避免自動編輯的垃圾訊息，請完成以下問題：',
+	'captcha-recaptcha-addurl' => '您的編輯包括新的外部連結。為了避免自動編輯的垃圾訊息，請回答以下問題：',
 	'captcha-recaptcha-badpass' => '為了防止自動密碼破解，請完成以下的問題：',
 	'captcha-recaptcha-createaccount' => '為了防止自動帳戶創建，請完成以下的問題：',
-	'captcha-recaptcha-createaccount-fail' => '驗證碼答案不正確或未填寫。',
+	'captcha-recaptcha-createaccount-fail' => '不正確的或未填寫 reCAPTCHA 答案。',
 	'captcha-recaptcha-create' => '為了協助防止自動頁面創建，請完成以下的問題：',
 	'captcha-recaptcha-misconfigured' => '驗證碼未正確放置',
 );

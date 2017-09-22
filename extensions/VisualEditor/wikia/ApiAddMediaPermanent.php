@@ -60,7 +60,7 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 
 	private function executeWikiaVideo() {
 		$title = Title::newFromText( $this->mParams['title'], NS_FILE );
-		wfRunHooks( 'AddPremiumVideo', array( $title ) );
+		Hooks::run( 'AddPremiumVideo', array( $title ) );
 		return array(
 			'title' => $title->getText()
 		);

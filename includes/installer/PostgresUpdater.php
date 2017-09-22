@@ -117,8 +117,6 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'user_newtalk',  'user_last_timestamp',  'TIMESTAMPTZ' ),
 			array( 'addPgField', 'logging',       'log_user_text',        "TEXT NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'logging',       'log_page',             'INTEGER' ),
-			array( 'addPgField', 'interwiki',     'iw_api',               "TEXT NOT NULL DEFAULT ''"),
-			array( 'addPgField', 'interwiki',     'iw_wikiid',            "TEXT NOT NULL DEFAULT ''"),
 			array( 'addPgField', 'revision',      'rev_sha1',             "TEXT NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'archive',       'ar_sha1',              "TEXT NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'uploadstash',   'us_chunk_inx',         "INTEGER NULL" ),
@@ -231,6 +229,11 @@ class PostgresUpdater extends DatabaseUpdater {
 
 			# end
 			array( 'tsearchFixes' ),
+
+			// SUS-2651
+			array( 'dropTable', 'hitcounter' ),
+			array( 'dropField', 'site_stats', 'ss_total_views', 'patch-drop-ss_total_views.sql' ),
+			array( 'dropField', 'page', 'page_counter', 'patch-drop-page_counter.sql' ),
 		);
 	}
 

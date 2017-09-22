@@ -1,21 +1,62 @@
 <?php
 
 class ARecoveryModule {
-	const ASSET_GROUP_ARECOVERY_LOCK = 'arecovery_lock_scss';
-
 	/**
-	 * Checks whether recovery is enabled (on current wiki)
+	 * Checks whether PageFair recovery is enabled (on current wiki)
 	 *
 	 * @return bool
 	 */
-	public static function isEnabled() {
-		global $wgEnableUsingSourcePointProxyForCSS;
+	public static function isPageFairRecoveryEnabled() {
+		global $wgAdDriverEnablePageFairRecovery;
 
-		return !empty( $wgEnableUsingSourcePointProxyForCSS );
+		return static::isRecoverablePage() && $wgAdDriverEnablePageFairRecovery === true;
 	}
 
-	public static function isLockEnabled() {
-		$user = F::app()->wg->User;
-		return self::isEnabled() && ( $user && !$user->isLoggedIn() );
+	/**
+	 * Checks whether SourcePoint recovery is enabled (on current wiki)
+	 *
+	 * @return bool
+	 */
+	public static function isSourcePointRecoveryEnabled() {
+		global $wgAdDriverEnableSourcePointRecovery;
+
+		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointRecovery;
+	}
+
+	/**
+	 * Checks whether InstartLogic recovery is enabled
+	 *
+	 * @return bool
+	 */
+	public static function isInstartLogicRecoveryEnabled() {
+		global $wgAdDriverEnableInstartLogicRecovery;
+
+		return static::isRecoverablePage() && $wgAdDriverEnableInstartLogicRecovery;
+	}
+
+	/**
+	 * Checks whether SourcePoint MMS is enabled (on current wiki)
+	 *
+	 * @return bool
+	 */
+	public static function isSourcePointMessagingEnabled() {
+		global $wgAdDriverEnableSourcePointMMS, $wgAdDriverEnableSourcePointRecovery;
+
+		return static::isRecoverablePage() && $wgAdDriverEnableSourcePointMMS && !$wgAdDriverEnableSourcePointRecovery;
+	}
+
+	/**
+	 * Checks whether should load SourcePoint bootstrap
+	 *
+	 * @return bool
+	 */
+	public static function shouldLoadSourcePointBootstrap() {
+		return self::isSourcePointRecoveryEnabled() || self::isSourcePointMessagingEnabled();
+	}
+
+	public static function isRecoverablePage() {
+		global $wgUser;
+
+		return $wgUser->isAnon() && F::app()->checkSkin( [ 'oasis' ] );
 	}
 }

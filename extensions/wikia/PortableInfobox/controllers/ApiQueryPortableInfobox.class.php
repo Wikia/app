@@ -23,20 +23,36 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 
 			if ( is_array( $parsedInfoboxes ) && count( $parsedInfoboxes ) ) {
 				$inf = [ ];
+
 				foreach ( array_keys( $parsedInfoboxes ) as $k => $v ) {
 					$inf[ $k ] = [ ];
 				}
+
 				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
 				$pageSet->getResult()->addValue( [ 'query', 'pages', $id ], 'infoboxes', $inf );
-				foreach ( $parsedInfoboxes as $count => $infobox ) {
-					$sl = isset( $infobox[ 'sourcelabels' ] ) ?
-						$infobox[ 'sourcelabels' ] :
-						$this->sourceLabelsFallback( $infobox, $articleTitle );
 
+				foreach ( $parsedInfoboxes as $count => $infobox ) {
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
-					$pageSet->getResult()->setIndexedTagName( $sl, "sourcelabels" );
+
 					$pageSet->getResult()->addValue(
-						[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcelabels', $sl
+						[ 'query', 'pages', $id, 'infoboxes', $count ],
+						'parser_tag_version',
+						$infobox['parser_tag_version']
+					);
+
+					$metadata = $infobox['metadata'];
+
+					$pageSet->getResult()->addValue(
+						[ 'query', 'pages', $id, 'infoboxes', $count ], 'metadata', $metadata
+					);
+					$pageSet->getResult()->setIndexedTagName_internal(
+						[ 'query', 'pages', $id, 'infoboxes', $count, 'metadata' ],
+						'metadata'
+					);
+					$this->setIndexedTagNamesForGroupMetadata(
+						$metadata,
+						[ 'query', 'pages', $id, 'infoboxes', $count, 'metadata' ],
+						$pageSet->getResult()
 					);
 				}
 			}
@@ -44,24 +60,20 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 	}
 
 	/**
-	 * We still have old infobox sources in page properties, so we need this fallback.
-	 * Monitor kibana and remove it after logs stop appear
+	 * XML format requires all indexed arrays to have _element defined
+	 * This method adds it recursively for all groups
 	 *
-	 * @param $infobox
-	 * @param $title
-	 * @return array
+	 * @param array $metadata
+	 * @param array $rootPath
+	 * @param ApiResult $result
 	 */
-	private function sourceLabelsFallback( $infobox, $title ) {
-		global $wgCityId;
-
-		Wikia\Logger\WikiaLogger::instance()->info( 'Portable Infobox ApiQuery sourcelabels fallback' );
-
-		$task = new Wikia\Tasks\Tasks\RefreshLinksForTitleTask();
-		$task->title( $title );
-		$task->call( 'refresh' );
-		$task->wikiId( $wgCityId );
-		$task->queue();
-
-		return $infobox[ 'sources' ] ? array_fill_keys( $infobox[ 'sources' ], '' ) : [ ];
+	private function setIndexedTagNamesForGroupMetadata( array $metadata, array $rootPath, ApiResult $result ) {
+		foreach ( $metadata as $nodeCount => $node ) {
+			if ( $node['type'] === 'group' ) {
+				$path = array_merge( $rootPath, [ $nodeCount, 'metadata' ] );
+				$result->setIndexedTagName_internal( $path, 'metadata' );
+				$this->setIndexedTagNamesForGroupMetadata( $node[ 'metadata' ], $path, $result );
+			}
+		}
 	}
 }

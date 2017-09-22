@@ -25,6 +25,11 @@ class ImportStarter extends Maintenance {
 	const ERR_SQL_IMPORT_FAILED = 3;
 	const ERR_RUN_UPDATES_FAILED = 4;
 
+	public function __construct() {
+		parent::__construct();
+		$this->addOption( 'vertical', 'Wiki Vertical ID', true, true, false );
+	}
+
 	/**
 	 * Get the stream with starter dump
 	 *
@@ -158,7 +163,8 @@ class ImportStarter extends Maintenance {
 		/* @var Language $wgContLang */
 		global $wgContLang, $wgCityId, $wgDBname;
 		$language = $wgContLang->getCode();
-		$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguage( $language );
+		$vertical = $this->getOption( 'vertical', 0 );
+		$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguageAndVertical( $language, $vertical );
 
 		// set up the logger to work similar to the one in CreateWiki class
 		$this->logger = Wikia\Logger\WikiaLogger::instance();

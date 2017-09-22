@@ -1,0 +1,560 @@
+.wds-global-navigation {
+	$border-top-width: 6px;
+	$logo-width: 230px;
+	$nav-height: $wds-global-navigation-height - $border-top-width;
+	$nav-background-color: $wds-color-white;
+	$search-input-padding: 3px 4px;
+	$notification-counter-size: 18px;
+
+	$search-transition-duration: 200ms;
+	$search-buttons-transition-duration: 50ms;
+	$search-buttons-transition-delay: $search-transition-duration - $search-buttons-transition-duration;
+
+	// this should be moved to _colors in the future as that color is from the new palette of Fandom colors
+	$new-fandom-logo-color: #00d6d6;
+
+	@mixin visible-search-input {
+		&__search-input {
+			// transitioned property: padding;
+			padding: $search-input-padding;
+			position: relative;
+			top: auto;
+		}
+	}
+
+	@mixin search-label-icon-default-hover-color {
+		&__search-label-icon:hover {
+			color: $wds-color-dark-blue-gray;
+		}
+	}
+
+	@mixin search-input-default-placeholder-color {
+		&__search-input::placeholder {
+			color: $wds-color-dark-blue-gray;
+		}
+	}
+
+	background-color: $nav-background-color;
+	border-image: linear-gradient(to right, $wds-color-dark-blue-gray 40%, $wds-color-slate-gray 40%) 1 0 0;
+	border-top: $border-top-width solid $wds-color-slate-gray;
+	border-width: $border-top-width 0 0;
+	box-shadow: 0 1px 0 0 $wds-color-faint-gray;
+	position: relative;
+
+	&__dropdown-toggle {
+		align-items: center;
+		display: flex;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
+		height: $nav-height;
+		justify-content: center;
+	}
+
+	&__dropdown-content {
+		border-top: 1px solid $wds-color-light-c4;
+		color: $wds-color-dark-blue-gray;
+		min-width: 190px;
+	}
+
+	&__content-bar {
+		display: flex;
+		height: $nav-height;
+		margin: 0 auto;
+		position: relative;
+		width: 768px;
+		z-index: 1;
+	}
+
+	&__account-menu,
+	&__link,
+	&__logo,
+	&__notifications-menu,
+	&__search,
+	&__start-a-wiki,
+	&__user-menu,
+	&__wikis-menu {
+		align-items: center;
+		background-color: $nav-background-color;
+		border-top: $border-top-width solid $wds-color-slate-gray;
+		color: $wds-color-dark-blue-gray;
+		display: flex;
+		font-size: $wds-typescale-size-minus-1;
+		height: $nav-height;
+		justify-content: center;
+		margin-top: -$border-top-width;
+		padding: 0 8px;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	&__account-menu,
+	&__link,
+	&__notifications-menu,
+	&__user-menu,
+	&__wikis-menu {
+		transition-duration: $search-transition-duration;
+		transition-property: background-color, border-color, color;
+
+		&:hover {
+			color: $wds-color-link;
+		}
+
+		&:active,
+		&.wds-is-active,
+		&:hover {
+			background-color: $wds-color-slate-gray;
+			border-color: darken($wds-color-slate-gray, 20%);
+			color: $wds-color-white;
+		}
+	}
+
+	&__logo {
+		border-top: $border-top-width solid $wds-color-dark-blue-gray;
+	}
+
+	&__logo-fandom {
+		// For backwards compatibility after splitting logo and tagline
+		height: 100%;
+		padding-bottom: 4px;
+		width: 230px;
+	}
+
+	&__logo-image {
+		height: 100%;
+
+		// 'wds' is doubled because second part is name of the asset that we style.
+		&.wds-is-wds-company-logo-fandom {
+			fill: $wds-color-dark-blue-gray;
+			padding-bottom: 4px;
+			width: 120px;
+		}
+
+		&.wds-is-wds-company-logo-powered-by-wikia {
+			// borders and height set for fandom logo swap in May 2017
+			// horizontal bars are only displayed on desktop global nav
+			border-bottom: 2px solid $new-fandom-logo-color;
+			border-top: 2px solid $new-fandom-logo-color;
+			height: 10px;
+			padding: 1px 0;
+			margin: 0 1px 3px 11px;
+			width: 98px;
+			// hack fix for Safari 9
+			zoom: 1.0000001;
+		}
+
+		&.wds-is-wds-company-logo-wikia-org {
+			width: 105px;
+		}
+	}
+
+	&__links-and-search {
+		display: flex;
+		flex: 4 1 auto;
+	}
+
+	&__link,
+	&__wikis-menu {
+		transition-duration: $search-transition-duration;
+		transition-property: background-color, color, flex, font-size, padding;
+	}
+
+	&__link {
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
+
+		&.wds-is-games {
+			border-color: $wds-color-games;
+
+			&:active,
+			&.wds-is-active {
+				background-color: $wds-color-games;
+				border-color: darken($wds-color-games, 10%);
+			}
+		}
+
+		&.wds-is-movies {
+			border-color: $wds-color-movies;
+
+			&:active,
+			&.wds-is-active {
+				background-color: $wds-color-movies;
+				border-color: darken($wds-color-movies, 10%);
+			}
+		}
+
+		&.wds-is-tv {
+			border-color: $wds-color-tv;
+
+			&:active,
+			&.wds-is-active {
+				background-color: $wds-color-tv;
+				border-color: darken($wds-color-tv, 10%);
+			}
+		}
+	}
+
+	&__wikis-menu {
+		flex: 0 1 auto;
+	}
+
+	&__search {
+		flex: 0 1 auto;
+		transition: flex $search-transition-duration;
+	}
+
+	&__search-input-wrapper {
+		border: solid transparent;
+		border-width: 0 0 1px;
+		display: flex;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
+		height: 28px;
+		transition: border-bottom-color $search-transition-duration;
+
+		// Strenghten selector to hide dropdown's arrow
+		&.wds-dropdown {
+			&::after,
+			&::before {
+				display: none;
+			}
+		}
+
+		// Override default dropdowns behaviour which open on hover
+		&:hover:not(.wds-is-active) {
+			.wds-dropdown__content {
+				display: none;
+			}
+		}
+	}
+
+	&__search-label {
+		align-items: center;
+		background-color: $wds-color-white;
+		display: flex;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
+		position: relative;
+		z-index: 2;
+	}
+
+	&__search-label-icon {
+		cursor: pointer;
+		transition: color $search-transition-duration;
+		z-index: 1;
+
+		&:hover {
+			color: $wds-color-link;
+		}
+	}
+
+	&__search-input {
+		-webkit-appearance: none;
+		border: 0;
+		box-sizing: border-box;
+		color: $wds-color-dark-gray;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
+		font-size: $wds-typescale-size-minus-1;
+		// iPad Safari needs the height below to be set
+		height: 100%;
+		left: 0;
+		max-width: 100%;
+		padding: $search-input-padding;
+		padding-left: 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transition: padding $search-transition-duration;
+		width: 100%;
+
+		&::-webkit-search-decoration,
+		&::-webkit-search-cancel-button {
+			display: none;
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		&::placeholder {
+			color: transparent;
+			opacity: 1;
+			transition: color $search-transition-duration;
+		}
+
+		&::-ms-clear {
+			display: none;
+		}
+	}
+
+	&__search-close {
+		// Safari fix for bleeding search suggestions shadow
+		margin: 0;
+		max-width: 0;
+		opacity: 0;
+		padding: 0;
+		transition-duration: $search-buttons-transition-duration;
+		transition-property: max-width, opacity, padding;
+		z-index: 2;
+	}
+
+	&__search-close-icon {
+		color: $wds-color-light-gray;
+		display: block;
+	}
+
+	&__search-submit {
+		border-width: 0;
+		max-width: 0;
+		overflow: hidden;
+		padding: 0;
+		transition-duration: $search-buttons-transition-duration;
+		transition-property: max-width, padding;
+		z-index: 2;
+	}
+
+	&__search-submit-icon {
+		display: block;
+		transform: rotate(180deg);
+	}
+
+	&__search-suggestions {
+		border-top: 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		left: 0;
+		right: 0;
+		top: calc(100% + 1px);
+		transform: none;
+	}
+
+	&__account-menu-caption {
+		display: none;
+		margin-left: 5px;
+	}
+
+	&__account-menu-dropdown-caption {
+		font-size: $wds-typescale-size-minus-2;
+		padding-bottom: 10px;
+		text-align: center;
+	}
+
+	&__notifications-menu {
+		padding-right: 0;
+		position: relative;
+		width: 50px;
+	}
+
+	&__notifications-menu-counter {
+		align-items: center;
+		background-color: $wds-color-link;
+		border: 1px solid $wds-color-white;
+		border-radius: $notification-counter-size / 2;
+		box-sizing: border-box;
+		color: $wds-color-white;
+		display: flex;
+		font-size: $wds-typescale-size-minus-3;
+		height: $notification-counter-size;
+		justify-content: center;
+		left: -1px;
+		min-width: $notification-counter-size;
+		padding: 0 4px;
+		position: absolute;
+		top: 8px;
+	}
+
+	// XW-2106 | enhance readability of Chinese Start a Wiki button in nav
+	html[lang^='zh'] &__start-a-wiki-button {
+		font-size: 12px;
+		font-weight: 400;
+		padding: 9px 12px 8px;
+	}
+
+	&__start-a-wiki-icon {
+		@include square(14px);
+
+		display: none;
+	}
+
+	&__partner-slot {
+		$slot-width: 80px;
+		$link-padding: 10px;
+
+		border-left: 1px solid $wds-color-blue-gray;
+		display: none;
+		height: 100%;
+		max-width: $slot-width;
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		// 1280px is a minimum for right slot to appear, on smaller screen there is no space for it
+		@media (min-width: 1280px) {
+			align-items: center;
+			display: flex;
+		}
+
+		&-link {
+			padding: $link-padding;
+		}
+
+		&-image {
+			max-width: $slot-width - 2 * $link-padding;
+			max-height: $nav-height - 2 * $link-padding;
+			vertical-align: middle;
+		}
+	}
+
+	&:not(.wds-search-is-active) .wds-global-navigation__search-suggestions {
+		display: none;
+	}
+
+	&.wds-search-is-always-visible .wds-global-navigation {
+		@include visible-search-input;
+		@include search-label-icon-default-hover-color;
+		@include search-input-default-placeholder-color;
+
+		&__link {
+			// Safari doesn't set default flex values if we use `flex: 0;`
+			// it requires us to put these values explicitly.
+			flex: 0 1 auto;
+		}
+
+		&__search {
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			//
+			// Safari doesn't size search properly if flex-basis is set to `auto`
+			flex: 1 1 0;
+		}
+
+		&__search-input-wrapper {
+			border-bottom-color: $wds-color-slate-gray;
+		}
+	}
+
+	&.wds-search-is-active .wds-global-navigation {
+		@include search-label-icon-default-hover-color;
+
+		&__link,
+		&__wikis-menu {
+			// transitioned properties: color, flex, font-size, padding;
+			color: transparent;
+			flex: 0 0 auto;
+			font-size: 0;
+			padding: 0;
+		}
+
+		&__wikis-menu .wds-icon {
+			display: none;
+		}
+
+		&__search {
+			// transitioned property: flex;
+			//
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			flex: 2 1 auto;
+		}
+
+		&__search-input-wrapper {
+			// transitioned property: border-bottom-color;
+			border-bottom-color: $wds-color-slate-gray;
+
+			&.wds-is-active {
+				border-bottom-color: $wds-color-link;
+			}
+		}
+
+		&__search-input::placeholder {
+			// transitioned property: color;
+			color: $wds-color-light-gray;
+		}
+
+		&__search-close {
+			// transitioned properties: max-width, opacity, padding;
+			max-width: 24px;
+			opacity: 1;
+			padding-right: 8px;
+			transition-delay: $search-buttons-transition-delay;
+		}
+
+		&__search-submit {
+			max-width: 100%;
+			padding: 5px 9px;
+			transition: background-color $wds-button-transition-duration, border-color $wds-button-transition-duration, color $wds-button-transition-duration, max-width $search-buttons-transition-duration $search-buttons-transition-delay, opacity $wds-button-transition-duration, padding $search-buttons-transition-duration $search-buttons-transition-delay;
+		}
+	}
+
+	.wds-user-is-logged-in {
+		.wds-global-navigation__start-a-wiki-caption {
+			display: none;
+		}
+
+		.wds-global-navigation__start-a-wiki-icon {
+			display: inline;
+		}
+	}
+
+	@media #{$wds-breakpoint-l-up} {
+		@include visible-search-input;
+		@include search-label-icon-default-hover-color;
+		@include search-input-default-placeholder-color;
+
+		&__content-bar {
+			width: 1004px;
+		}
+
+		&__wikis-menu {
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			flex: 1 1 auto;
+		}
+
+		&__search {
+			// Safari doesn't set default flex values if we use `flex: 2;`
+			// it requires us to put these values explicitly.
+			flex: 2 1 auto;
+		}
+
+		&__search-input-wrapper {
+			border-bottom: 1px solid $wds-color-slate-gray;
+		}
+
+		&__account-menu-caption,
+		&__start-a-wiki-caption {
+			display: inline;
+		}
+
+		&__start-a-wiki-icon {
+			display: none;
+		}
+
+		.wds-user-is-logged-in {
+			.wds-global-navigation__start-a-wiki-caption {
+				display: inline;
+			}
+
+			.wds-global-navigation__start-a-wiki-icon {
+				display: none;
+			}
+		}
+	}
+
+	@media #{$wds-breakpoint-xl-up} {
+		&__content-bar {
+			width: 1064px;
+		}
+	}
+
+	@media #{$wds-breakpoint-xxl-up} {
+		&__content-bar {
+			width: 1238px;
+		}
+	}
+}

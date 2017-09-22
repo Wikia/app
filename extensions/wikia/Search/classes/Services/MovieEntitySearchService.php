@@ -13,7 +13,7 @@ class MovieEntitySearchService extends EntitySearchService {
 	private static $HOSTS_BLACKLIST = [ 'uncyclopedia.wikia.com' ];
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de', 'es' ];
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$this->getBlacklist()->addBlacklistedHostsProvider(
 			BlacklistFilter::staticProvider( self::$HOSTS_BLACKLIST )
 		);
@@ -35,22 +35,35 @@ class MovieEntitySearchService extends EntitySearchService {
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
 		$select->createFilterQuery( 'lang' )->setQuery( '+(lang:' . $slang . ')' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
-			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::MOVIE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
+			$select->createFilterQuery( 'type' )->setQuery(
+				'+(article_type_s:' . static::MOVIE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)'
+			);
 		}
 
-		$dismax->setQueryFields( implode( ' ', [
-			'title_em^10',
-			'titleStrict',
-			$this->withLang( 'title', $slang ),
-			$this->withLang( 'redirect_titles_mv', $slang ),
-			static::EXACT_MATCH_FIELD . "^10",
-		] ) );
-		$dismax->setPhraseFields( implode( ' ', [
-			'titleStrict^8',
-			$this->withLang( 'title', $slang ) . '^2',
-			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
-			static::EXACT_MATCH_FIELD . "^10",
-		] ) );
+		$dismax->setQueryFields(
+			implode(
+				' ',
+				[
+					'title_em^10',
+					'titleStrict',
+					$this->withLang( 'title', $slang ),
+					$this->withLang( 'redirect_titles_mv', $slang ),
+					static::EXACT_MATCH_FIELD . "^10",
+				]
+			)
+		);
+		$dismax->setPhraseFields(
+			implode(
+				' ',
+				[
+					'titleStrict^8',
+					$this->withLang( 'title', $slang ) . '^2',
+					$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
+					static::EXACT_MATCH_FIELD . "^10",
+				]
+			)
+		);
+
 		return $select;
 	}
 
@@ -63,10 +76,13 @@ class MovieEntitySearchService extends EntitySearchService {
 					'title' => $item['title_' . $this->getLang()],
 					'url' => $this->replaceHostUrl( $item['url'] ),
 					'quality' => $item['article_quality_i'],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item['host'] . '/' . self::API_URL . $item['pageid'] ),
+					'contentUrl' => $this->replaceHostUrl(
+						'http://' . $item['host'] . '/' . self::API_URL . $item['pageid']
+					),
 				];
 			}
 		}
+
 		return null;
 	}
 
@@ -75,6 +91,7 @@ class MovieEntitySearchService extends EntitySearchService {
 		if ( $this->getQuality() !== null ) {
 			$result .= ' AND +(article_quality_i:[' . $this->getQuality() . ' TO *])';
 		}
+
 		return $result;
 	}
 }

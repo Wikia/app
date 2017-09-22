@@ -450,10 +450,15 @@ class ThrottledError extends ErrorPageError {
  */
 class UserBlockedError extends ErrorPageError {
 	public function __construct( Block $block ){
-		global $wgLang, $wgRequest;
+		global $wgLang, $wgRequest, $wgUser;
 
 		$blocker = $block->getBlocker();
-		if ( $blocker instanceof User ) { // local user
+		// Wikia change - begin
+		// SUS-288: Hide blocker's username if the block was made by staff/VSTF
+		if ( $block->shouldHideBlockerName() ) {
+			$link = $block->getGroupNameForHiddenBlocker();
+			// Wikia change - end
+		} elseif ( $blocker instanceof User ) { // local user
 			$blockerUserpage = $block->getBlocker()->getUserPage();
 			$link = "[[{$blockerUserpage->getPrefixedText()}|{$blockerUserpage->getText()}]]";
 		} else { // foreign user
@@ -557,13 +562,14 @@ class MWExceptionHandler {
 
 		$cmdLine = MWException::isCommandLine();
 
+		# Wikia change - begin
+		# @see PLATFORM-2008 - report non-MediawWiki exceptions to ELK
+		Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+			'exception' => $e,
+		] );
+		# Wikia change - end
+
 		if ( $e instanceof MWException ) {
-			# Wikia change - begin
-			# report MediawWiki exceptions to ELK
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - MediaWiki exception encountered', [
-				'exception' => $e,
-			] );
-			# Wikia change - end
 
 			try {
 				// Try and show the exception prettily, with the normal skin infrastructure
@@ -604,13 +610,6 @@ class MWExceptionHandler {
 			} else {
 				self::escapeEchoAndDie( $message );
 			}
-
-			# Wikia change - begin
-			# @see PLATFORM-2008 - report non-MediawWiki exceptions to ELK
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - unexpected non-MediaWiki exception encountered', [
-				'exception' => $e,
-			] );
-			# Wikia change - end
 		}
 	}
 

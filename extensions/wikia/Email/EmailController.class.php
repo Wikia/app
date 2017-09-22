@@ -10,7 +10,7 @@ abstract class EmailController extends \WikiaController {
 
 	const TRACKED_LANGUAGES = [ 'EN', 'PL', 'DE', 'ES', 'FR', 'IT', 'JA', 'NL', 'PT', 'RU', 'ZH' ];
 
-	const AVATAR_SIZE = 50;
+	const AVATAR_SIZE = 40;
 
 	/** CSS used for the main content section of each email. Used by getContent()
 	 * and intended to be overridden by child classes. */
@@ -221,14 +221,6 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * Whether to show a TM next to the tagline in this country
-	 * At some point we may want to return the symbol instead of a bool
-	 */
-	protected function getUseTrademark() {
-		return $this->targetLang == 'en';
-	}
-
-	/**
 	 * Returns the address for the recipient of this email
 	 *
 	 * @return \MailAddress
@@ -275,12 +267,11 @@ abstract class EmailController extends \WikiaController {
 			[
 				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages(),
+				'footerMobileApplicationMessages' => $this->getFooterMobileApplicationMessages(),
+				'badges' => $this->generateMobileApplicationsBadges(),
 				'marketingFooter' => $this->marketingFooter,
-				'tagline' => $this->getTagline(),
-				'useTrademark' => $this->getUseTrademark(),
-				'hubsMessages' => $this->getHubsMessages(),
-				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
+				'socialIcons' => SocialLinksGenerator::generate( $this->targetLang ),
 				'disableInit' => true,
 			]
 		);
@@ -387,52 +378,31 @@ abstract class EmailController extends \WikiaController {
 		];
 	}
 
-	/**
-	 * Tagline text that appears in the email footer
-	 * @return String
-	 */
-	protected function getTagline() {
-		return $this->getMessage( 'emailext-fans-tagline' )->text();
-	}
-
-	/**
-	 * Get localized strings for hubs names and their URLs
-	 * @return array
-	 * @throws \MWException
-	 */
-	protected function getHubsMessages() {
+	private function getFooterMobileApplicationMessages() {
 		return [
-			'tv' => $this->getMessage( 'oasis-label-wiki-vertical-id-1' )->text(),
-			'tvURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-1-link' )->text(),
-			'videoGames' => $this->getMessage( 'oasis-label-wiki-vertical-id-2' )->text(),
-			'videoGamesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-2-link' )->text(),
-			'books' => $this->getMessage( 'oasis-label-wiki-vertical-id-3' )->text(),
-			'booksURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-3-link' )->text(),
-			'comics' => $this->getMessage( 'oasis-label-wiki-vertical-id-4' )->text(),
-			'comicsURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-4-link' )->text(),
-			'lifestyle' => $this->getMessage( 'oasis-label-wiki-vertical-id-5' )->text(),
-			'lifestyleURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-5-link' )->text(),
-			'music' => $this->getMessage( 'oasis-label-wiki-vertical-id-6' )->text(),
-			'musicURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-6-link' )->text(),
-			'movies' => $this->getMessage( 'oasis-label-wiki-vertical-id-7' )->text(),
-			'moviesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-7-link' )->text(),
+			$this->getMessage( 'emailext-mobile-application-footer-1' )->text(),
+			$this->getMessage( 'emailext-mobile-application-footer-2' )->text()
 		];
 	}
 
-	/**
-	 * Get localized strings for social networks and their URLs
-	 * @return array
-	 * @throws \MWException
-	 */
-	protected function getSocialMessages() {
-		return [
-			'facebook' => $this->getMessage( 'oasis-social-facebook' )->text(),
-			'facebook-link' => $this->getMessage( 'oasis-social-facebook-link' )->text(),
-			'twitter' => $this->getMessage( 'oasis-social-twitter' )->text(),
-			'twitter-link' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
-			'youtube' => $this->getMessage( 'oasis-social-youtube' )->text(),
-			'youtube-link' => $this->getMessage( 'oasis-social-youtube-link' )->text(),
-		];
+	private function generateMobileApplicationsBadges() {
+		$linksGenerator = new MobileApplicationsLinksGenerator( $this->targetLang );
+		$mobileApplicationsLinks = $linksGenerator->generate( );
+		$hasMobileApplicationBadges = count( $mobileApplicationsLinks ) > 0;
+		$badges = null;
+
+		if ( $hasMobileApplicationBadges ) {
+			$badges = [];
+
+			foreach ( $mobileApplicationsLinks as $platform => $link ) {
+				$badges[$platform] = [
+					'link' => $link,
+					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, $platform ),
+				];
+			}
+		}
+
+		return $badges;
 	}
 
 	/**
@@ -441,10 +411,9 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getUnsubscribeLink() {
 		$params = [
-			'email' => $this->getTargetUserEmail(),
-			'timestamp' => time()
+			'email' => $this->getTargetUserEmail()
 		];
-		$params['token'] = wfGenerateUnsubToken( $params['email'], $params['timestamp'] );
+		$params['token'] = wfGenerateUnsubToken( $params['email'] );
 		$unsubscribeTitle = \GlobalTitle::newFromText( 'Unsubscribe', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID );
 		return $unsubscribeTitle->getFullURL( $params );
 	}
@@ -517,15 +486,13 @@ abstract class EmailController extends \WikiaController {
 			throw new Fatal( 'Required username has been left empty' );
 		}
 
-		// Allow an anonymous user to be specified
-		if ( $username == self::ANONYMOUS_USER_ID ) {
-			return \User::newFromId( 0 );
-		}
-
 		if ( $username instanceof \User ) {
 			$user = $username;
 		} else if ( is_object( $username ) ) {
 			throw new Fatal( 'Non-user object passed when user object or username expected' );
+		} else if ( $username == self::ANONYMOUS_USER_ID ) {
+			// Allow an anonymous user to be specified
+			return \User::newFromId( 0 );
 		} else {
 			$user = \User::newFromName( $username, $validate = false );
 		}
@@ -575,7 +542,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
-			throw new Fatal( 'Unable to create user object');
+			throw new Fatal( 'Unable to create user object' );
 		}
 	}
 
@@ -794,5 +761,60 @@ abstract class EmailController extends \WikiaController {
 			'targetLang' => $this->targetLang,
 			'result' => $result,
 		] );
+	}
+
+	/**
+	 * check user authentication key
+	 * @static
+	 * @access public
+	 * @param array $params
+	 * @returns null
+	 */
+	static public function verifyUserSecretKey( $url, $hash_algorithm = 'sha256' ) {
+		global $wgWikiaAuthTokenKeys;
+		wfProfileIn( __METHOD__ );
+
+		@list( $username, $signature, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
+
+		if ( empty( $username ) || empty( $signature ) || empty ( $public_key ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		# verification public key
+		if ( $wgWikiaAuthTokenKeys['public'] == $public_key ) {
+			$private_key = $wgWikiaAuthTokenKeys['private'];
+		} else {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$oUser = User::newFromName( $username );
+		if ( !is_object($oUser) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// verify params
+		$email = $oUser->getEmail();
+		$params = array(
+				'user'			=> (string) $username,
+				'token'			=> (string) wfGenerateUnsubToken( $email )
+		);
+
+		// message to hash
+		$message = serialize( $params );
+
+		// computed signature
+		$hash = hash_hmac( $hash_algorithm, $message, $private_key );
+
+		// compare values
+		if ( $hash != $signature ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $params;
 	}
 }

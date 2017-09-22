@@ -1,11 +1,16 @@
 <?php
+/** Internationalization file for /extensions/wikia/WikiaRecentChangesBlockHandler/WikiaRecentChangesBlockHandler extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'wikiarecentchangesblockhandler-desc' => 'WikiaRecentChangesBlockHandler',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wikiarecentchangesblockhandler-desc' => '{{desc}}',
-);
+];
+
+$messages['fr'] = [
+	'wikiarecentchangesblockhandler-desc' => '&nbsp;',
+];
+

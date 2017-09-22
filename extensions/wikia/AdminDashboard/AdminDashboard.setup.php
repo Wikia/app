@@ -32,11 +32,7 @@ $wgSpecialPages[ 'AdminDashboard'] = 'AdminDashboardSpecialPageController';
 
 // ResourceLoader module
 $wgResourceModules['ext.AdminDashboard'] = [
-	'scripts' => 'js/AdminDashboard.js',
-	'styles' => 'css/AdminDashboard.scss',
 	'messages' => [
 		'admindashboard-loading'
 	],
-	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'extensions/wikia',
 ];

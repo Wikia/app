@@ -20,7 +20,7 @@ define ('CLASS_PARSE_WHITELIST', '/class\s*?=\s*?"%s\s*?(%s)"/');
 
 // Register hooks
 $wgHooks['ParserAfterTidy'][] = 'wfParserWhiteList' ;
-function wfParserWhiteList ( &$out, &$text) { 
+function wfParserWhiteList( Parser $parser, string &$text ): bool {
 	$text = wfWhiteListRemoveNoFollowLinks($text);
 	return true;
 }

@@ -203,7 +203,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
-		wfRunHooks( 'WikiaRequestWasPosted' );
+		Hooks::run( 'WikiaRequestWasPosted' );
 
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
@@ -293,7 +293,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	 * @return mixed
 	 * @throws BadRequestException
 	 */
-	public function isValidWriteRequest( \User $user ) {
+	public function assertValidWriteRequest( \User $user ) {
 		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
 			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
 		}

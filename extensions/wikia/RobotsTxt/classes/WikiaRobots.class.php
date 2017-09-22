@@ -64,6 +64,7 @@ class WikiaRobots {
 		NS_SPECIAL,
 		NS_TEMPLATE,
 		NS_TEMPLATE_TALK,
+		NS_USER_TALK,
 	];
 
 	/**
@@ -72,7 +73,15 @@ class WikiaRobots {
 	 * @var array
 	 */
 	private $blockedPaths = [
-		'/d/u/', // User pages for discussions
+		// User pages for discussions
+		'/d/u/',
+
+		// Fandom old URLs
+		'/fandom?p=',
+
+		// logging for ad-recovery (ADEN-3930)
+		'/wikia.php?controller=ARecoveryEngineApi',
+		'/api/v1/ARecoveryEngine'
 	];
 
 	/**
@@ -112,8 +121,7 @@ class WikiaRobots {
 	 * @param PathBuilder $pathBuilder
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
-		global $wgAllowSpecialImagesInRobots,
-			   $wgRequest,
+		global $wgRequest,
 			   $wgRobotsTxtCustomRules,
 			   $wgWikiaEnvironment;
 
@@ -125,10 +133,6 @@ class WikiaRobots {
 			foreach ( (array) $wgRobotsTxtCustomRules['allowSpecialPage'] as $page ) {
 				$this->allowedSpecialPages[$page] = 'allow';
 			}
-		}
-
-		if ( !empty( $wgAllowSpecialImagesInRobots ) ) {
-			$this->allowedSpecialPages['Images'] = 'allow';
 		}
 
 		// TODO: reverse the logic
@@ -143,17 +147,22 @@ class WikiaRobots {
 	}
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
-		global $wgEnableSpecialSitemapExt, $wgRobotsTxtRemoveDeprecatedDirectives, $wgServer;
+		global $wgEnableSpecialSitemapExt,
+		       $wgEnableSitemapXmlExt,
+		       $wgRobotsTxtBlockedWiki,
+		       $wgSitemapXmlExposeInRobots,
+		       $wgServer;
 
-
-		if ( !$this->accessAllowed ) {
+		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
 			$robots->addDisallowedPaths( [ '/' ] );
 			return $robots;
 		}
 
 		// Sitemap
-		if ( !empty( $wgEnableSpecialSitemapExt ) ) {
+		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
+			$robots->setSitemap( $wgServer . '/sitemap-newsitemapxml-index.xml' );
+		} elseif ( !empty( $wgEnableSpecialSitemapExt ) ) {
 			$robots->setSitemap( $wgServer . '/sitemap-index.xml' );
 		}
 

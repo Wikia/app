@@ -108,7 +108,7 @@ class WikiFactoryPage extends SpecialPage {
 	 *
 	 * @param mixed $subpage:
 	 *
-	 * @return Database Row from city_list
+	 * @return mixed: database row from city_list
 	 */
 	private function getWikiData( $subpage ) {
 		global $wgRequest, $wgWikiaBaseDomain;
@@ -291,7 +291,7 @@ class WikiFactoryPage extends SpecialPage {
 					}
 					break;
 			}
-			wfRunHooks('WikiFactory::onPostChangesApplied', array($this->mWiki->city_id));
+			Hooks::run('WikiFactory::onPostChangesApplied', array($this->mWiki->city_id));
 		}
 		else {
 			/**

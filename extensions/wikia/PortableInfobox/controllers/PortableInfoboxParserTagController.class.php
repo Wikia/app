@@ -1,19 +1,23 @@
 <?php
 
-use Wikia\PortableInfobox\Parser\Nodes;
+use \Wikia\PortableInfobox\Parser\Nodes;
+use \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException;
+use \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator;
+use \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException;
+use \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
+	const PARSER_TAG_VERSION = 2;
 	const DEFAULT_THEME_NAME = 'wikia';
 	const DEFAULT_LAYOUT_NAME = 'default';
 	const INFOBOX_THEME_PREFIX = 'pi-theme-';
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
+	const ACCENT_COLOR = 'accent-color';
+	const ACCENT_COLOR_TEXT = 'accent-color-text';
 
 	private $markerNumber = 0;
-	private $supportedLayouts = [
-		'default',
-		'stacked'
-	];
+	private $infoboxParamsValidator = null;
 
 	protected $markers = [ ];
 	protected static $instance;
@@ -49,7 +53,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 *
 	 * @return string
 	 */
-	public static function replaceInfoboxMarkers( &$parser, &$text ) {
+	public static function replaceInfoboxMarkers( Parser $parser, &$text ) {
 		global $wgArticleAsJson;
 		// The replacements for ArticleAsJson are handled in PortableInfoboxHooks::onArticleAsJsonBeforeEncode
 		if ( !$wgArticleAsJson ) {
@@ -80,17 +84,21 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
 
-		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboxParamsValidator();
-		$infoboxParamsValidator->validateParams( $params );
+		$this->getParamsValidator()->validateParams( $params );
 
 		$data = $infoboxNode->getRenderData();
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $infoboxNode );
 
-		$theme = $this->getThemeWithDefault( $params, $frame );
+		$themeList = $this->getThemes( $params, $frame );
 		$layout = $this->getLayout( $params );
+		$accentColor = $this->getColor( self::ACCENT_COLOR, $params, $frame );
+		$accentColorText = $this->getColor( self::ACCENT_COLOR_TEXT, $params, $frame );
 
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout );
+		$renderService = \F::app()->checkSkin( 'wikiamobile' ) ?
+			new PortableInfoboxMobileRenderService() : new PortableInfoboxRenderService();
+		return $renderService->renderInfobox( $data, implode( ' ', $themeList ), $layout, $accentColor, $accentColorText );
+
 	}
 
 	/**
@@ -109,16 +117,16 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		try {
 			$renderedValue = $this->render( $markup, $parser, $frame, $params );
-		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
+		} catch ( UnimplementedNodeException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
-		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
+		} catch ( XmlMarkupParseErrorException $e ) {
 			return $this->handleXmlParseError( $e->getErrors(), $text );
-		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException $e ) {
+		} catch ( InvalidInfoboxParamsException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
-		$this->markers[ $marker ] = $renderedValue;
+		$this->markers[$marker] = $renderedValue;
 
 		return [ $marker, 'markerType' => 'nowiki' ];
 	}
@@ -130,7 +138,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 */
 	public function moveFirstMarkerToTop( &$text ) {
 		if ( !empty( $this->markers ) ) {
-			$firstMarker = array_keys( $this->markers )[0];
+			$firstMarker = array_keys( $this->markers )[ 0 ];
 
 			// Skip if the first marker is already at the top
 			if ( strpos( $text, $firstMarker ) !== 0 ) {
@@ -149,9 +157,23 @@ class PortableInfoboxParserTagController extends WikiaController {
 		// parser output stores this in page_props table, therefore we can reuse the data in data provider service
 		// (see: PortableInfoboxDataService.class.php)
 		if ( $raw ) {
-			$infoboxes = json_decode( $parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
-			$infoboxes[] = [ 'data' => $raw->getRenderData(), 'sourcelabels' => $raw->getSourceLabel() ];
-			$parserOutput->setProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME, json_encode( $infoboxes ) );
+			$infoboxes = json_decode(
+				$parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ),
+				true
+			);
+
+			// When you modify this structure, remember to bump the version
+			// Version is checked in PortableInfoboxDataService::load()
+			$infoboxes[] = [
+				'parser_tag_version' => self::PARSER_TAG_VERSION,
+				'data' => $raw->getRenderData(),
+				'metadata' => $raw->getMetadata()
+			];
+
+			$parserOutput->setProperty(
+				PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME,
+				json_encode( $infoboxes )
+			);
 		}
 	}
 
@@ -172,27 +194,70 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 
-	private function getThemeWithDefault( $params, PPFrame $frame ) {
-		$value = isset( $params[ 'theme-source' ] ) ? $frame->getArgument( $params[ 'theme-source' ] ) : false;
-		$themeName = $this->getThemeName( $params, $value );
+	private function getThemes( $params, PPFrame $frame ) {
+		$themes = [ ];
 
-		//make sure no whitespaces, prevents side effects
-		return Sanitizer::escapeClass( self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $themeName ) );
-	}
+		if ( isset( $params['theme'] ) ) {
+			$staticTheme = trim( $params['theme'] );
+			if ( !empty ( $staticTheme ) ) {
+				$themes[] = $staticTheme;
+			}
+		}
+		if ( !empty( $params['theme-source'] ) ) {
+			$variableTheme = trim( $frame->getArgument( $params['theme-source'] ) );
+			if ( !empty( $variableTheme ) ) {
+				$themes[] = $variableTheme;
+			}
+		}
 
-	private function getThemeName( $params, $value ) {
-		return !empty( $value ) ? $value :
-			// default logic
-			( isset( $params[ 'theme' ] ) ? $params[ 'theme' ] : self::DEFAULT_THEME_NAME );
+		// use default global theme if not present
+		$themes = !empty( $themes ) ? $themes : [ self::DEFAULT_THEME_NAME ];
+
+		return array_map( function ( $name ) {
+			return Sanitizer::escapeClass( self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $name ) );
+		}, $themes );
 	}
 
 	private function getLayout( $params ) {
 		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
-		if ( $layoutName && in_array( $layoutName, $this->supportedLayouts ) ) {
+		if ( $this->getParamsValidator()->validateLayout( $layoutName ) ) {
 			//make sure no whitespaces, prevents side effects
 			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
 		}
 
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
+	}
+
+	private function getColor( $colorParam, $params, PPFrame $frame ) {
+		$sourceParam = $colorParam . '-source';
+		$defaultParam = $colorParam . '-default';
+
+		$color = '';
+
+		if ( isset( $params[$sourceParam] ) && !empty( $frame->getArgument( $params[$sourceParam] ) ) ) {
+			$color = trim( $frame->getArgument( $params[$sourceParam] ) );
+			$color = $this->sanitizeColor( $color );
+		}
+
+		if ( empty( $color ) && isset( $params[$defaultParam] ) ) {
+			$color = trim( $params[$defaultParam] );
+			$color = $this->sanitizeColor( $color );
+		}
+
+		return $color;
+	}
+
+	private function sanitizeColor( $color ) {
+		$color = substr( $color, 0, 1 ) === '#' ? $color : '#' . $color;
+		$color = ( $this->getParamsValidator()->validateColorValue( $color ) ) ? $color : '';
+		return $color;
+	}
+
+	private function getParamsValidator() {
+		if ( empty( $this->infoboxParamsValidator ) ) {
+			$this->infoboxParamsValidator = new InfoboxParamsValidator();
+		}
+
+		return $this->infoboxParamsValidator;
 	}
 }

@@ -1,11 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.bottomLeaderboard', [
-	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.utils.domCalculator',
 	'wikia.document',
+	'wikia.domCalculator',
 	'wikia.log',
-	'wikia.window',
-], function (adHelper, dom, doc, log, win) {
+	'wikia.throttle',
+	'wikia.window'
+], function (doc, dom, log, throttle, win) {
 	'use strict';
 
 	var slotName = 'BOTTOM_LEADERBOARD',
@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 		pushed = false,
 		wikiaFooter = doc.getElementById('WikiaFooter'),
 
-		pushSlot = adHelper.throttle(function () {
+		pushSlot = throttle(function () {
 			var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
 				pushPos = dom.getTopOffset(wikiaFooter) - viewPortHeight - threshold;
 

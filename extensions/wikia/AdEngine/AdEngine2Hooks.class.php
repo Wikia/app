@@ -1,18 +1,16 @@
 <?php
+
 /**
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
+	const ASSET_GROUP_ADENGINE_A9 = 'adengine2_a9_js';
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
-	const ASSET_GROUP_ADENGINE_GCS = 'adengine2_gcs_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
-	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_prebid_js';
-	const ASSET_GROUP_ADENGINE_REVCONTENT = 'adengine2_revcontent_js';
+	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_pr3b1d_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
-	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
-	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_ADENGINE_TOP = 'adengine2_top_js';
 
 	/**
 	 * Handle URL parameters and set proper global variables early enough
@@ -35,47 +33,83 @@ class AdEngine2Hooks {
 	 *
 	 * @return bool
 	 */
-	public static function onInstantGlobalsGetVariables( array &$vars )
-	{
-		$vars[] = 'wgAdDriverAdsRecoveryMessageCountries';
+	public static function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverAdMixCountries';
+		$vars[] = 'wgAdDriverAbTestIdTargeting';
+		$vars[] = 'wgAdDriverAolBidderCountries';
+		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
+		$vars[] = 'wgAdDriverAppNexusBidderCountries';
+		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
+		$vars[] = 'wgAdDriverA9BidderCountries';
+		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
+		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverEvolve2Countries';
-		$vars[] = 'wgAdDriverGoogleConsumerSurveysCountries';
+		$vars[] = 'wgAdDriverFVMidrollCountries';
+		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
-		$vars[] = 'wgAdDriverIncontentLeaderboardSlotCountries';
-		$vars[] = 'wgAdDriverIncontentLeaderboardOutOfPageSlotCountries';
+		$vars[] = 'wgAdDriverHiViLeaderboardRabbitCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
+		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
+		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
-		$vars[] = 'wgAdDriverOpenXBidderCountries';
-		$vars[] = 'wgAdDriverPrebidBidderCountries';
-		$vars[] = 'wgAdDriverAppNexusBidderCountries';
-		$vars[] = 'wgAdDriverOpenXBidderCountriesRemnant';
+		$vars[] = 'wgAdDriverKILOCountries';
+		$vars[] = 'wgAdDriverLBScrollExperimentCountires';
+		$vars[] = 'wgAdDriverLBScrollExperimentBucket';
+		$vars[] = 'wgAdDriverMEGACountries';
+		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverNetzAthletenCountries';
+		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
+		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
-		$vars[] = 'wgAdDriverRevcontentCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
+		$vars[] = 'wgAdDriverPrebidBidderCountries';
+		$vars[] = 'wgAdDriverPremiumAdLayoutCountries';
+		$vars[] = 'wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries';
+		$vars[] = 'wgAdDriverPremiumAdLayoutAppNexusTagsCountries';
+		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
+		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
-		$vars[] = 'wgAdDriverScrollHandlerConfig';
-		$vars[] = 'wgAdDriverScrollHandlerCountries';
+		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
-		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
-		$vars[] = 'wgAdDriverTaboolaConfig';
+		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
-		$vars[] = 'wgAdDriverYavliCountries';
+		$vars[] = 'wgAdDriverVelesBidderCountries';
+		$vars[] = 'wgAdDriverVelesBidderConfig';
+		$vars[] = 'wgAdDriverVelesVastLoggerCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
+		$vars[] = 'wgPorvataVastLoggerConfig';
 
 		/**
 		 * Disaster Recovery
-		 * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+		 * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
-		$vars[] = 'wgSitewideDisableMonetizationService';
-		$vars[] = 'wgSitewideDisableSevenOneMedia'; // TODO: ADEN-3314
+
+		return true;
+	}
+
+	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
 
 		return true;
 	}
@@ -90,6 +124,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
 		global $wgTitle;
+
 		$skin = RequestContext::getMain()->getSkin();
 		$skinName = $skin->getSkinName();
 
@@ -98,17 +133,20 @@ class AdEngine2Hooks {
 		$vars['ads'] = [
 			'context' => $adContext,
 			'runtime' => [
-				'sp' => []
+				'disableBtf' => false,
 			],
 		];
 
 		// Legacy vars:
-		$vars['adslots2'] = [];                  // Queue for ads registration
-		$vars['adDriverLastDARTCallNoAds'] = []; // Used to hop by DART ads
-		$vars['adDriver2ForcedStatus'] = [];     // 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+		// Queue for ads registration
+		$vars['adslots2'] = [ ];
+		// Used to hop by DART ads
+		$vars['adDriverLastDARTCallNoAds'] = [ ];
+		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+		$vars['adDriver2ForcedStatus'] = [ ];
 
 		// GA vars
-		$vars['wgGaHasAds'] = isset( $adContext['opts']['showAds'] );
+		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
 
 		return true;
 	}
@@ -121,25 +159,7 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-
-		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTaboola, $wgAdDriverUseRevcontent;
-		$isArticle = WikiaPageType::getPageType() === 'article';
-
-		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
-
-		if ( $wgAdDriverUseGoogleConsumerSurveys && $isArticle ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_GCS;
-		}
-
-		if ( $wgAdDriverUseTaboola && $isArticle ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_TABOOLA;
-		}
-
-		if ( $wgAdDriverUseRevcontent && $isArticle ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_REVCONTENT;
-		}
-
-		$jsAssets[] = 'adengine2_interactive_maps_js';
+		$jsAssets[] = static::ASSET_GROUP_ADENGINE_DESKTOP;
 
 		return true;
 	}
@@ -154,22 +174,22 @@ class AdEngine2Hooks {
 	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
 
 		// Tracking should be available very early, so we can track how lookup calls perform
-		$jsAssets[] = self::ASSET_GROUP_ADENGINE_TRACKING;
+		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TOP;
 
 		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
+			$jsAssets[] = static::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
+		}
+
+		if ( AnalyticsProviderA9::isEnabled() ) {
+			$jsAssets[] = static::ASSET_GROUP_ADENGINE_A9;
 		}
 
 		if ( AnalyticsProviderPrebid::isEnabled() ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_PREBID;
-		}
-
-		if ( AnalyticsProviderOpenXBidder::isEnabled() ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_OPENX_BIDDER;
+			$jsAssets[] = static::ASSET_GROUP_ADENGINE_PREBID;
 		}
 
 		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
+			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
 		}
 
 		return true;
@@ -192,7 +212,6 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.document';
 		$scriptModules[] = 'wikia.geo';
 		$scriptModules[] = 'wikia.instantGlobals';
-		$scriptModules[] = 'wikia.localStorage';
 		$scriptModules[] = 'wikia.location';
 		$scriptModules[] = 'wikia.log';
 		$scriptModules[] = 'wikia.querystring';
@@ -211,35 +230,11 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaMobileAssetsPackages( array &$jsStaticPackages, array &$jsExtensionPackages, array &$scssPackages ) {
-
-		global $wgAdDriverUseTaboola;
-
-		$coreGroupIndex = array_search( self::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
+		$coreGroupIndex = array_search( static::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
 
 		if ( $coreGroupIndex === false ) {
 			// Do nothing. ASSET_GROUP_ADENGINE_MOBILE must be present for ads to work
 			return true;
-		}
-
-		if ( $wgAdDriverUseTaboola === true ) {
-			array_splice( $jsStaticPackages, $coreGroupIndex, 0, self::ASSET_GROUP_ADENGINE_TABOOLA );
-		}
-
-		return true;
-	}
-
-	public static function onSkinAfterContent( &$text ) {
-		global $wgTitle, $wgAdDriverUseTaboola;
-
-		if ( !$wgAdDriverUseTaboola ) {
-			return true;
-		}
-
-		$skin = RequestContext::getMain()->getSkin()->getSkinName();
-
-		// File pages handle their own rendering of related pages wrapper
-		if ( ( $skin === 'oasis' ) && $wgTitle->getNamespace() !== NS_FILE ) {
-			$text = $text . F::app()->renderView( 'AdEmptyContainer', 'Index', ['slotName' => 'NATIVE_TABOOLA_ARTICLE'] );
 		}
 
 		return true;

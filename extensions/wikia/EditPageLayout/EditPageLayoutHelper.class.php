@@ -21,6 +21,9 @@ class EditPageLayoutHelper {
 
 	static private $instance;
 
+	/** SUS-1885: languages where syntax highlighting is disabled due to Ace Editor incompatibility */
+	const SYNTAX_HIGHLIGHT_DISABLED_LANGUAGES = [ 'zh' ];
+
 	private function __construct() {
 		$this->app = F::app();
 		$this->out = $this->app->wg->Out;
@@ -50,7 +53,7 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage( Article $editedArticle, $fullScreen = true, $class = false ) {
-		global $wgHooks, $wgInfoboxPreviewURL, $wgEditPreviewMercuryUrl;
+		global $wgHooks, $wgEditPreviewMercuryUrl;
 
 		wfProfileIn( __METHOD__ );
 
@@ -130,9 +133,6 @@ class EditPageLayoutHelper {
 		// copyright warning for notifications (BugId:7951)
 		$this->addJsVariable( 'wgCopywarn', $this->editPage->getCopyrightNotice() );
 
-		// infobox preview url
-		$this->addJsVariable( 'wgInfoboxPreviewURL', $wgInfoboxPreviewURL );
-
 		// extra hooks for edit page
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';
 		$wgHooks['SkinGetPageClasses'][] = 'EditPageLayoutHooks::onSkinGetPageClasses';
@@ -157,7 +157,10 @@ class EditPageLayoutHelper {
 		// on edit page so it will make proper list of modules
 		$action = $this->request->setVal( 'action',null );
 		$diff = $this->request->setVal( 'diff',null );
-		$railModuleList = (new BodyController)->getRailModuleList();
+
+		$bodyController = new BodyController();
+		$bodyController->setContext( RequestContext::getMain() );
+		$railModuleList = $bodyController->getRailModuleList();
 		$this->request->setVal( 'action',$action );
 		$this->request->setVal( 'diff',$diff );
 
@@ -201,10 +204,15 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting, $wgUser;
+		global $wgEnableEditorSyntaxHighlighting, $wgLanguageCode;
 
+		if ( !$wgEnableEditorSyntaxHighlighting ||
+			 in_array( $wgLanguageCode, static::SYNTAX_HIGHLIGHT_DISABLED_LANGUAGES ) ) {
+			return false;
+		}
+
+		global $wgUser;
 		return self::isCodePage( $articleTitle )
-			&& $wgEnableEditorSyntaxHighlighting
 			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
@@ -328,7 +336,6 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 			'extensions/wikia/EditPageLayout/js/editor/Modules.js',
 			// >> Wikia specific editor plugins
-			'extensions/wikia/EditPageLayout/js/plugins/EditorSurvey.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
 			'extensions/wikia/EditPageLayout/js/plugins/PageControls.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Autoresizer.js',
@@ -336,6 +343,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
+			'extensions/wikia/EditPageLayout/js/plugins/FlowTracking.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',

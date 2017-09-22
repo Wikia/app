@@ -3,11 +3,11 @@
 namespace Wikia\Service\User\Preferences;
 
 use Doctrine\Common\Cache\VoidCache;
+use PHPUnit\Framework\TestCase;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
-use PHPUnit_Framework_TestCase;
 
-class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
+class UserPreferencesIntegrationTest extends TestCase {
 	/**
 	 * @var string
 	 */

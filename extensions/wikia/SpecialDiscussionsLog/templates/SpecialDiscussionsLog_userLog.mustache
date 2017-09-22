@@ -16,6 +16,7 @@
 				<th>{{languageHeader}}</th>
 				<th>{{userAgentHeader}}</th>
 				<th>{{siteHeader}}</th>
+				<th>{{userActionHeader}}</th>
 				<th>{{timestampHeader}}</th>
 			</tr>
 			</thead>
@@ -26,7 +27,8 @@
 					<td><a href="{{locationUrl}}" class="location">{{moreInfoMsg}}</a></td>
 					<td>{{language}}</td>
 					<td class="useragent">{{userAgent}}</td>
-					<td>{{site}}</td>
+					<td><a href="{{siteUrl}}">{{site}}</a></td>
+					<td>{{userAction}}</td>
 					<td>{{timestamp}}</td>
 				</tr>
 			{{/userLogRecords}}

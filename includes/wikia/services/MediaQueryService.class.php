@@ -5,7 +5,7 @@ use \Wikia\Cache\AsyncCache;
 /**
  * This service provides methods for querying for media
  */
-class MediaQueryService extends WikiaService {
+class MediaQueryService extends WikiaModel {
 
 	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';
@@ -13,6 +13,11 @@ class MediaQueryService extends WikiaService {
 	const SORT_RECENT_FIRST   = 'recent';
 	const SORT_POPULAR_FIRST  = 'popular';
 	const SORT_TRENDING_FIRST = 'trend';
+	/**
+	 * @var string SORT_TRENDING_FIRST_LEGACY
+	 * Legacy sorting option used by requests from Game Guides apps
+	 */
+	const SORT_TRENDING_FIRST_LEGACY = 'trending';
 
 	const DB_RECENT_COLUMN    = 'added_at';
 	const DB_POPULAR_COLUMN   = 'views_total';
@@ -186,7 +191,7 @@ class MediaQueryService extends WikiaService {
 	 * @param $changed
 	 * @return bool
 	 */
-	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
+	public static function onArticleEditUpdates( WikiPage $article, $editInfo, $changed ): bool {
 		// article links are updated, so we invalidate the cache
 		$title = $article->getTitle();
 		$mqs = new self( );
@@ -216,7 +221,9 @@ class MediaQueryService extends WikiaService {
 	private function getMediaDataFromCache( Title $media, $length = 256 ) {
 		wfProfileIn(__METHOD__);
 
-		if ( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
+		$cacheKey = $media->getDBkey() . ':' . $length;
+
+		if ( !isset($this->mediaCache[ $cacheKey ] ) ) {
 			$file = wfFindFile( $media );
 			if ( !empty( $file ) && $file->canRender() ) {
 				$articleService = new ArticleService( $media );
@@ -230,21 +237,21 @@ class MediaQueryService extends WikiaService {
 				else {
 					$videoHandler = false;
 				}
-				$this->mediaCache[ $media->getDBKey() ] = array(
+				$this->mediaCache[ $cacheKey ] = array(
 					'title' => $media->getText(),
-					'desc' => $articleService->getTextSnippet( $length ),
+					'desc' => ( $length > 0 ? $articleService->getTextSnippet( $length ) : '' ),
 					'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
 					'meta' => ( $videoHandler ? array_merge( $videoHandler->getVideoMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
 					'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false
 				));
 			}
 			else {
-				$this->mediaCache[ $media->getDBKey() ] = false;
+				$this->mediaCache[ $cacheKey ] = false;
 			}
 		}
 
 		wfProfileOut(__METHOD__);
-		return $this->mediaCache[ $media->getDBKey() ];
+		return $this->mediaCache[ $cacheKey ];
 	}
 
 	/**
@@ -425,12 +432,13 @@ class MediaQueryService extends WikiaService {
 				break;
 
 			case self::SORT_TRENDING_FIRST:
+			case self::SORT_TRENDING_FIRST_LEGACY:
 				$query->ORDER_BY( self::DB_TRENDING_COLUMN )->DESC();
 				break;
 
 			default:
 				throw new InvalidArgumentException( "\$sort was none of '" . self::SORT_RECENT_FIRST . "', '"
-					. self::SORT_POPULAR_FIRST . "', '" . self::SORT_TRENDING_FIRST . "'." );
+					. self::SORT_POPULAR_FIRST . "', '" . self::SORT_TRENDING_FIRST . "', '" . self::SORT_TRENDING_FIRST_LEGACY . "'." );
 				break;
 		}
 

@@ -34,6 +34,10 @@ foreach($traceEnv as $key => $val) {
 
 $command = "{$env}php {$script} --wiki_id={$wikiId} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy} --created_at={$createdAt}";
 
+// @todo (PLATFORM-2759): For a long-term fix, initialize the MW stack here, remove the shell_exec and execute the
+//                        TaskRunnerMaintenance directly. For now I'm removing the lines below as the composer autoload
+//                        fails to load some classes without MW and the whole script crashed on devboxes.
+/*
 // can't use globals here, this doesn't execute within mediawiki
 if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {
 	require_once( __DIR__ . '/../../../../lib/Wikia/autoload.php' );
@@ -44,5 +48,6 @@ if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {
 		'data' => $_POST,
 	] );
 }
+*/
 
 echo shell_exec( $command );

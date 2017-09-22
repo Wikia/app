@@ -38,10 +38,14 @@ class ScribeEventProducer {
 				$this->mEventType = self::UNDELETE_CATEGORY_INT;
 				break;
 		}
-
+		$geo = json_decode( RequestContext::getMain()->getRequest()->getCookie( 'Geo', '' ) );
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
-		$this->setIp( $this->app->wg->Request->getIP() );
+
+		$this->setIp( RequestContext::getMain()->getRequest()->getIP() );
+		$this->setGeoRegion( $geo->region );
+		$this->setGeoCountry( $geo->country );
+		$this->setGeoContinent( $geo->continent );
 		$this->setHostname( wfHostname() );
 		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );
@@ -49,7 +53,7 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 
-	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $oLocalFile = null ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -108,13 +112,6 @@ class ScribeEventProducer {
 		$this->setRevisionSize( $rev_size );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
-
-		if ( $oLocalFile instanceof File ) {
-			$this->setMediaType( $oLocalFile );
-			$this->setIsImageForReview( ImagesService::isLocalImage( $oTitle ) );
-		} else {
-			$this->setIsImageForReview( false );
-		}
 
 		$t = microtime(true);
 		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
@@ -259,6 +256,18 @@ class ScribeEventProducer {
 		return $this->buildEditPackage( $oPage, $oUser, $oRevision );
 	}
 
+	public function setGeoRegion ( $region ) {
+		$this->mParams['geoRegion'] = $region;
+	}
+
+	public function setGeoCountry ( $country ) {
+		$this->mParams['geoCountry'] = $country;
+	}
+
+	public function setGeoContinent ( $continent ) {
+		$this->mParams['geoContinent'] = $continent;
+	}
+
 	public function setCityId ( $city_id ) {
 		$this->mParams['cityId'] = $city_id;
 	}
@@ -323,28 +332,6 @@ class ScribeEventProducer {
 		$this->mParams['eventTS'] = $ts;
 	}
 
-	public function setMediaType ( $oLocalFile ) {
-		$mediaTypeCode = 0;
-		if ( $oLocalFile instanceof LocalFile ) {
-			$mediaType = $oLocalFile->getMediaType();
-
-			switch ( $mediaType ) {
-				case MEDIATYPE_BITMAP:     $mediaTypeCode = 1; break;
-				case MEDIATYPE_DRAWING:    $mediaTypeCode = 2; break;
-				case MEDIATYPE_AUDIO:      $mediaTypeCode = 3; break;
-				case MEDIATYPE_VIDEO:      $mediaTypeCode = 4; break;
-				case MEDIATYPE_MULTIMEDIA: $mediaTypeCode = 5; break;
-				case MEDIATYPE_OFFICE:     $mediaTypeCode = 6; break;
-				case MEDIATYPE_TEXT:       $mediaTypeCode = 7; break;
-				case MEDIATYPE_EXECUTABLE: $mediaTypeCode = 8; break;
-				case MEDIATYPE_ARCHIVE:    $mediaTypeCode = 9; break;
-				default:                   $mediaTypeCode = 1; break;
-			}
-		}
-
-		return $mediaTypeCode;
-	}
-
 	public function setImageLinks ( $image_links ) {
 		$this->mParams['imageLinks'] = $image_links;
 	}
@@ -383,14 +370,6 @@ class ScribeEventProducer {
 		// And when categories are updated:
 		//$this->mParams['categories'] = WikiFactory::getCategories( $this->app->wg->CityId );
 
-	}
-
-	public function setIsImageForReview( $bIsImageForReview = true ) {
-		$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
-	}
-
-	public function setImageApproved( $approved = false ) {
-		$this->mParams['imageApproved'] = intval( $approved );
 	}
 
 	/**

@@ -140,7 +140,7 @@ foreach($vars as $side=>$data)
 		$combined[ $item->cv_id ]['type'] = $var->cv_variable_type;
 		$combined[ $item->cv_id ][ '_' ] = true;
 
-		$val = unserialize($var->cv_value);
+		$val = unserialize( $var->cv_value, [ 'allowed_classes' => false ] );
 		switch($var->cv_variable_type)
 		{
 			case "string":  /*use as is*/ break;

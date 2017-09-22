@@ -27,10 +27,7 @@ define('ext.wikia.adEngine.provider.rubiconFastlane', [
 			'67': [320, 480]
 		},
 		slotMap = [
-			'HOME_TOP_LEADERBOARD',
-			'HOME_TOP_RIGHT_BOXAD',
 			'INCONTENT_BOXAD_1',
-			'INCONTENT_LEADERBOARD',
 			'LEFT_SKYSCRAPER_2',
 			'LEFT_SKYSCRAPER_3',
 			'PREFOOTER_LEFT_BOXAD',

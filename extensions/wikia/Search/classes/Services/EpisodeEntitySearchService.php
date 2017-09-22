@@ -22,10 +22,11 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 	public function setSeries( $series ) {
 		$this->series = $series;
+
 		return $this;
 	}
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -45,23 +46,35 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
-			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
+			$select->createFilterQuery( 'type' )->setQuery(
+				'+(article_type_s:' . static::EPISODE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)'
+			);
 		}
 
-		$dismax->setQueryFields( implode( ' ', [
-			'title_em^8',
-			'titleStrict',
-			$this->withLang( 'title', $slang ),
-			$this->withLang( 'redirect_titles_mv', $slang ),
-			static::EXACT_MATCH_FIELD . "^10",
-		] ) );
-		$dismax->setPhraseFields( implode( ' ', [
-			'title_em^8',
-			'titleStrict^8',
-			$this->withLang( 'title', $slang ) . '^2',
-			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
-			static::EXACT_MATCH_FIELD . "^10",
-		] ) );
+		$dismax->setQueryFields(
+			implode(
+				' ',
+				[
+					'title_em^8',
+					'titleStrict',
+					$this->withLang( 'title', $slang ),
+					$this->withLang( 'redirect_titles_mv', $slang ),
+					static::EXACT_MATCH_FIELD . "^10",
+				]
+			)
+		);
+		$dismax->setPhraseFields(
+			implode(
+				' ',
+				[
+					'title_em^8',
+					'titleStrict^8',
+					$this->withLang( 'title', $slang ) . '^2',
+					$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
+					static::EXACT_MATCH_FIELD . "^10",
+				]
+			)
+		);
 
 		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
 		$dismax->setPhraseSlop( static::DEFAULT_SLOP );
@@ -71,33 +84,37 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 	protected function consumeResponse( $response ) {
 		foreach ( $response as $item ) {
-			if ( $item[ 'score' ] > static::MINIMAL_ARTICLE_SCORE ) {
+			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
 				return [
-					'wikiId' => $item[ 'wid' ],
-					'articleId' => $item[ 'pageid' ],
-					'title' => $item[ 'title_' . $this->getLang() ],
-					'url' => $this->replaceHostUrl( $item[ 'url' ] ),
-					'quality' => $item[ 'article_quality_i' ],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
+					'wikiId' => $item['wid'],
+					'articleId' => $item['pageid'],
+					'title' => $item['title_' . $this->getLang()],
+					'url' => $this->replaceHostUrl( $item['url'] ),
+					'quality' => $item['article_quality_i'],
+					'contentUrl' => $this->replaceHostUrl(
+						'http://' . $item['host'] . '/' . self::API_URL . $item['pageid']
+					),
 				];
 			}
 		}
+
 		return null;
 	}
 
 	protected function createQuery( $query ) {
-		$options = [ ];
+		$options = [];
 		if ( $this->getQuality() !== null ) {
-			$options[ ] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
+			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
 		}
 		if ( $this->getWikiId() !== null ) {
-			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
+			$options[] = '+(wid:' . $this->getWikiId() . ')';
 		}
 		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
 		$seriesQuery = '';
 		if ( $this->getSeries() !== null ) {
 			$seriesQuery = ' (tv_series_mv_em:"' . $this->sanitizeQuery( $this->getSeries() ) . '"^0.1)';
 		}
+
 		return '+(("' . $query . '")' . $seriesQuery . ')' . $options;
 	}
 

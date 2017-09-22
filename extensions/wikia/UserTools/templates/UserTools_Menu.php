@@ -2,7 +2,7 @@
 <?php switch ($item['type']) { ?>
 <?php case 'follow': ?>
 <li class="overflow">
-	<a accesskey="w" id="<?= Sanitizer::encodeAttribute( $item['link-id'] ); ?>" href="<?= Sanitizer::encodeAttribute( $item['href'] ); ?>" data-name="<?= $item['tracker-name']; ?>"><?= htmlspecialchars( $item['caption'] ); ?></a>
+	<a accesskey="w" id="<?= Sanitizer::encodeAttribute( $item['link-id'] ); ?>" href="<?= Sanitizer::encodeAttribute( $item['href'] ); ?>" data-name="<?= Sanitizer::encodeAttribute( $item['tracker-name'] ); ?>"><?= htmlspecialchars( $item['caption'] ); ?></a>
 </li>
 <?php     break; ?>
 <?php case 'menu': ?>
@@ -28,11 +28,6 @@
 <li>
 	<img height="16" width="16" class="sprite gear" src="<?= $wg->BlankImgUrl; ?>">
 	<a class="tools-customize" href="#" data-name="customize"><?= wfMessage( 'user-tools-customize' )->escaped(); ?></a>
-</li>
-<?php     break; ?>
-<?php case 'devinfo': /* Temporary, BugId:5497; TODO: call getPerformanceStats in DevInfoUserCommand.php rather than here */ ?>
-<li class="loadtime">
-    <span><?= wfGetPerformanceStats(); ?></span>
 </li>
 <?php     break; ?>
 <?php case 'disabled': ?>

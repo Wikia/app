@@ -51,7 +51,12 @@
 	"sf_not_unique_error": "musí být jedinečný",
 	"sf_deletionlog": "Kniha smazaných stránek",
 	"sf_blank_namespace": "Hlavní",
-	"right-viewedittab": "Zobrazování záložky „Editovat“ na stránkách editovatelných pomocí formuláře",
+	"right-viewedittab": "Zobrazování záložky „{{int:edit}}“ na stránkách editovatelných pomocí formuláře",
 	"right-editrestrictedfields": "Editování polí formulářů s omezeným přístupem",
-	"right-createclass": "Zakládání nových sémantických tříd"
+	"right-createclass": "Zakládání nových sémantických tříd",
+	"sf-datepicker-close": "Zavřít",
+	"sf-datepicker-prev": "Předchozí",
+	"sf-datepicker-next": "Další",
+	"sf-datepicker-today": "Dnes",
+	"sf-regexp-wrongformat": "Chybný formát."
 }

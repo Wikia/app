@@ -17,7 +17,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
 	const ENTERTAINMENT_SLOTS_VAR_NAME = 'wgWikiaHomePageEntertainmentSlots';
 	const LIFESTYLE_SLOTS_VAR_NAME = 'wgWikiaHomePageLifestyleSlots';
-	const IS_WIKI_INCLUDED_IN_CORPORATE_FOOTER_DROPDOWN_VAR_NAME = 'wgIncludeWikiInCorporateFooterDropdown';
 	const SLOTS_IN_TOTAL = 17;
 
 	const SLOTS_BIG = 2;
@@ -804,24 +803,6 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getVisualizationWikisData() {
 		return $this->getVisualization()->getVisualizationWikisData();
-	}
-
-	public function getWikisIncludedInCorporateFooterDropdown() {
-		$wikiFactoryList = [];
-		$varId = WikiFactory::getVarIdByName( self::IS_WIKI_INCLUDED_IN_CORPORATE_FOOTER_DROPDOWN_VAR_NAME );
-		if( is_int( $varId ) ) {
-			$wikiFactoryList = WikiaDataAccess::cache(
-				wfMemcKey( 'wikis_included_in_corporate_footer_dropdown', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION ),
-				24 * 60 * 60,
-				function() use( $varId ) {
-					$list = WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true );
-					return $this->cleanWikisDataArray( $list );
-				},
-				WikiaDataAccess::REFRESH_CACHE
-			);
-		}
-
-		return $wikiFactoryList;
 	}
 
 	/**

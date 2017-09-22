@@ -606,7 +606,6 @@ abstract class Installer {
 		}
 		$status->value->insert( 'site_stats', array(
 			'ss_row_id' => 1,
-			'ss_total_views' => 0,
 			'ss_total_edits' => 0,
 			'ss_good_articles' => 0,
 			'ss_total_pages' => 0,
@@ -1472,7 +1471,7 @@ abstract class Installer {
 			$user->addToDatabase();
 
 			try {
-				$user->setPassword( $this->getVar( '_AdminPassword' ) );
+				$user->setPassword( $this->getVar( '_AdminPassword' ), false );
 			} catch( PasswordError $pwe ) {
 				return Status::newFatal( 'config-admin-error-password', $name, $pwe->getMessage() );
 			}

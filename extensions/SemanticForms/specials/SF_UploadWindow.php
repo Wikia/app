@@ -27,6 +27,7 @@ class SFUploadWindow extends UnlistedSpecialPage {
 	/** Misc variables **/
 	public $mRequest;			// The WebRequest or FauxRequest this form is supposed to handle
 	public $mSourceType;
+	/** @var UploadBase */
 	public $mUpload;
 	public $mLocalFile;
 	public $mUploadClicked;
@@ -121,11 +122,11 @@ class SFUploadWindow extends UnlistedSpecialPage {
 		}
 
 		# Check permissions
-                $user = $this->getUser();
-                $permissionRequired = UploadBase::isAllowed( $user );
-                if ( $permissionRequired !== true ) {
-                        throw new PermissionsError( $permissionRequired );
-                }
+		$user = $this->getUser();
+		$permissionRequired = UploadBase::isAllowed( $user );
+		if ( $permissionRequired !== true ) {
+			throw new PermissionsError( $permissionRequired );
+		}
 
 		# Check blocks
 		if ( $this->getUser()->isBlocked() ) {
@@ -150,7 +151,7 @@ class SFUploadWindow extends UnlistedSpecialPage {
 			$this->processUpload();
 		} else {
 			# Backwards compatibility hook
-			if( !wfRunHooks( 'UploadForm:initial', array( &$this ) ) ) {
+			if ( !Hooks::run( 'UploadForm:initial', [ $this ] ) ) {
 				wfDebug( "Hook 'UploadForm:initial' broke output of the upload form" );
 				return;
 			}
@@ -164,11 +165,9 @@ class SFUploadWindow extends UnlistedSpecialPage {
 	}
 
 	/**
-	 * Show the main upload form and optionally add the session key to the
-	 * output. This hides the source selection.
+	 * Show the main upload form.
 	 *
-	 * @param string $message HTML message to be shown at top of form
-	 * @param string $sessionKey Session key of the stashed upload
+	 * @param UploadForm $form
 	 */
 	protected function showUploadForm( $form ) {
 		# Add links if file was previously deleted
@@ -253,7 +252,7 @@ class SFUploadWindow extends UnlistedSpecialPage {
 	 * @param string $message HTML message to be passed to mainUploadForm
 	 */
 	protected function recoverableUploadError( $message ) {
-		$sessionKey = $this->mUpload->stashSession();
+		$sessionKey = $this->mUpload->stashFile()->getFileKey();
 		$message = '<h2>' . wfMessage( 'uploadwarning' )->escaped() . "</h2>\n" .
 			'<div class="error">' . $message . "</div>\n";
 		
@@ -267,7 +266,7 @@ class SFUploadWindow extends UnlistedSpecialPage {
 	 * @param array $warnings
 	 */
 	protected function uploadWarning( $warnings ) {
-		$sessionKey = $this->mUpload->stashSession();
+		$sessionKey = $this->mUpload->stashFile()->getFileKey();
 
 		$warningHtml = '<h2>' . wfMessage( 'uploadwarning' )->escaped() . "</h2>\n"
 			. '<ul class="warning">';
@@ -328,7 +327,7 @@ class SFUploadWindow extends UnlistedSpecialPage {
 		if ( !$status->isOK() )
 			return $this->showUploadForm( $this->getUploadForm( $this->getOutput()->parse( $status->getWikiText() ) ) );
 
-		if( !wfRunHooks( 'UploadForm:BeforeProcessing', array( &$this ) ) ) {
+		if ( !Hooks::run( 'UploadForm:BeforeProcessing', [ $this ] ) ) {
 			wfDebug( "Hook 'UploadForm:BeforeProcessing' broke processing the file.\n" );
 			// This code path is deprecated. If you want to break upload processing
 			// do so by hooking into the appropriate hooks in UploadBase::verifyUpload
@@ -429,7 +428,7 @@ END;
 		print $output;
 		$img = null; // @todo: added to avoid passing a ref to null - should this be defined somewhere?
 
-		wfRunHooks( 'SpecialUploadComplete', array( &$this ) );
+		Hooks::run( 'SpecialUploadComplete', [ $this ] );
 	}
 
 	/**
@@ -470,7 +469,7 @@ END;
 	 * state can get out of sync.
 	 */
 	protected function watchCheck() {
-		if ( $this->getUser()->getOption( 'watchdefault' ) ) {
+		if ( $this->getUser()->getGlobalPreference( 'watchdefault' ) ) {
 			// Watch all edits!
 			return true;
 		}
@@ -479,10 +478,10 @@ END;
 		if ( $local && $local->exists() ) {
 			// We're uploading a new version of an existing file.
 			// No creation, so don't watch it if we're not already.
-			return $local->getTitle()->userIsWatching();
+			return $this->getUser()->isWatched( $local->getTitle() );
 		} else {
 			// New page should get watched if that's our option.
-			return $this->getUser()->getOption( 'watchcreations' );
+			return $this->getUser()->getGlobalPreference( 'watchcreations' );
 		}
 	}
 
@@ -491,6 +490,7 @@ END;
 	 * Provides output to the user for a result of UploadBase::verifyUpload
 	 *
 	 * @param array $details Result of UploadBase::verifyUpload
+	 * @throws MWException
 	 */
 	protected function processVerificationError( $details ) {
 		global $wgFileExtensions;
@@ -513,6 +513,9 @@ END;
 				break;
 
 			/** Statuses that require reuploading **/
+			case UploadBase::FILE_TOO_LARGE:
+				$this->showUploadForm(  $this->getUploadForm( wfMessage( 'file-too-large' )->escaped() ) );
+				break;
 			case UploadBase::EMPTY_FILE:
 				$this->showUploadForm( $this->getUploadForm( wfMessage( 'emptyfile' )->escaped() ) );
 				break;
@@ -739,11 +742,13 @@ class SFUploadForm extends HTMLForm {
 	protected function getSourceSection() {
 		if ( $this->mSessionKey ) {
 			return array(
-				'wpSessionKey' => array(
+				'SessionKey' => array(
+					'id' => 'wpSessionKey',
 					'type' => 'hidden',
 					'default' => $this->mSessionKey,
 				),
-				'wpSourceType' => array(
+				'SourceType' => array(
+					'id' => 'wpSourceType',
 					'type' => 'hidden',
 					'default' => 'Stash',
 				),
@@ -783,7 +788,7 @@ class SFUploadForm extends HTMLForm {
 		if ( $canUploadByUrl ) {
 			global $wgMaxUploadSize;
 			$descriptor['UploadFileURL'] = array(
-				'class' => 'SFUploadSourceField',
+				'class' => 'UploadSourceField',
 				'section' => 'source',
 				'id' => 'wpUploadFileURL',
 				'label-message' => 'sourceurl',
@@ -795,6 +800,7 @@ class SFUploadForm extends HTMLForm {
 				'checked' => $selectedSourceType == 'url',
 			);
 		}
+		Hooks::run( 'UploadFormSourceDescriptors', array( &$descriptor, &$radio, $selectedSourceType ) );
 
 		$descriptor['Extensions'] = array(
 			'type' => 'info',
@@ -812,7 +818,7 @@ class SFUploadForm extends HTMLForm {
 	 * @return string HTML string containing the message
 	 */
 	protected function getExtensionsMessage() {
-		# Print a list of allowed file extensions, if so configured.  We ignore
+		# Print a list of allowed file extensions, if so configured. We ignore
 		# MIME type here, it's incomprehensible to most people and too long.
 		global $wgCheckFileExtensions, $wgStrictFileExtensions,
 		$wgFileExtensions, $wgFileBlacklist;
@@ -848,8 +854,8 @@ class SFUploadForm extends HTMLForm {
 	 * @return array Descriptor array
 	 */
 	protected function getDescriptionSection() {
-		$cols = intval( $this->getUser()->getOption( 'cols' ) );
-		if ( $this->getUser()->getOption( 'editwidth' ) ) {
+		$cols = intval( $this->getUser()->getGlobalPreference( 'cols' ) );
+		if ( $this->getUser()->getGlobalPreference( 'editwidth' ) ) {
 			$this->getOutput()->addInlineStyle( '#mw-htmlform-description { width: 100%; }' );
 		}
 
@@ -1002,29 +1008,32 @@ END;
 	}
 
 	/**
-	 * Add upload JS to OutputPage
-	 * 
-	 * @param bool $autofill Whether or not to autofill the destination
-	 * 	filename text box
+	 * Add upload JS to the OutputPage
 	 */
-	protected function addUploadJS( $autofill = true ) {
-		global $wgUseAjax, $wgAjaxUploadDestCheck, $wgAjaxLicensePreview;
-		global $wgStrictFileExtensions, $wgMaxUploadSize;
+	protected function addUploadJS() {
+		$config = $this->getConfig();
+
+		$useAjaxDestCheck = $config->get( 'UseAjax' ) && $config->get( 'AjaxUploadDestCheck' );
+		$useAjaxLicensePreview = $config->get( 'UseAjax' ) &&
+			$config->get( 'AjaxLicensePreview' ) && $config->get( 'EnableAPI' );
+		$this->mMaxUploadSize['*'] = UploadBase::getMaxUploadSize();
 
 		$scriptVars = array(
-			'wgAjaxUploadDestCheck' => $wgUseAjax && $wgAjaxUploadDestCheck,
-			'wgAjaxLicensePreview' => $wgUseAjax && $wgAjaxLicensePreview,
-			'wgUploadAutoFill' => (bool)$autofill &&
+			'wgAjaxUploadDestCheck' => $useAjaxDestCheck,
+			'wgAjaxLicensePreview' => $useAjaxLicensePreview,
+			'wgUploadAutoFill' => !$this->mForReUpload &&
 				// If we received mDestFile from the request, don't autofill
 				// the wpDestFile textbox
 				$this->mDestFile === '',
 			'wgUploadSourceIds' => $this->mSourceIds,
-			'wgStrictFileExtensions' => $wgStrictFileExtensions,
+			'wgCheckFileExtensions' => $config->get( 'CheckFileExtensions' ),
+			'wgStrictFileExtensions' => $config->get( 'StrictFileExtensions' ),
 			'wgCapitalizeUploads' => MWNamespace::isCapitalized( NS_FILE ),
-			'wgMaxUploadSize' => $wgMaxUploadSize,
+			'wgMaxUploadSize' => $this->mMaxUploadSize,
 		);
 
-		$this->getOutput()->addScript( Skin::makeVariablesScript( $scriptVars ) );
+		$out = $this->getOutput();
+		$out->addJsConfigVars( $scriptVars );
 	}
 
 	/**
@@ -1045,7 +1054,7 @@ class SFUploadSourceField extends HTMLTextField {
 	
 	function getLabelHtml( $cellAttributes = array() ) {
 		$id = "wpSourceType{$this->mParams['upload-type']}";
-		$label = Html::rawElement( 'label', array( 'for' => $id ), $this->mLabel  );
+		$label = Html::rawElement( 'label', array( 'for' => $id ), $this->mLabel );
 
 		if ( !empty( $this->mParams['radio'] ) ) {
 			$attribs = array(

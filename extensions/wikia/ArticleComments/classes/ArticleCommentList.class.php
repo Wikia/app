@@ -183,7 +183,7 @@ class ArticleCommentList {
 	 * @return array
 	 */
 	public function getCommentList( $master = true ) {
-		global $wgRequest, $wgMemc, $wgArticleCommentsEnableVoting;
+		global $wgRequest, $wgMemc;
 
 		$action = $wgRequest->getText( 'action', false );
         $title = $this->getTitle();
@@ -207,16 +207,6 @@ class ArticleCommentList {
 			$options = [ 'ORDER BY' => 'page_id DESC' ];
 			$join_conds = [ ];
 
-			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-				// add votes to the result set
-				$table[] = 'page_vote';
-				$vars[] = 'count(vote) as vote_cnt';
-				$options['GROUP BY'] = 'page_id, page_title';
-				$join_conds['page_vote'] = [ 'LEFT JOIN', 'page_id = article_id' ];
-
-				// a placeholder for 3 top voted answers
-				$top3 = [ ];
-			}
 			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options, $join_conds );
 
 			$helperArray = [ ];
@@ -232,25 +222,6 @@ class ArticleCommentList {
 					$helperArray[$p0] = $row->page_id;
 
 					$pages[$row->page_id]['level1'] = $row->page_id;
-
-					if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-						// check if the answer is in top 3
-						for ( $i = 0; $i < 3; $i++ ) {
-							if ( !isset( $top3[$i] ) ) {
-								$top3[$i] = [ 'id' => $row->page_id, 'votes' => $row->vote_cnt ];
-								break;
-							}
-							if ( $top3[$i]['votes'] > $row->vote_cnt ) {
-								continue;
-							}
-							if ( $top3[$i]['votes'] == $row->vote_cnt && $top3[$i]['id'] > $row->page_id ) {
-								continue;
-							}
-							$top3[$i + 1] = $top3[$i];
-							$top3[$i] = [ 'id' => $row->page_id, 'votes' => $row->vote_cnt ];
-							break;
-						}
-					}
 				}
 			}
 			// attach replies to comments
@@ -265,23 +236,6 @@ class ArticleCommentList {
 				// restored children or a child without restoring parent
 				// --nAndy
 				}
-			}
-
-			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-				// move 3 most voted answers to the top
-				$newPages = [ ];
-				for ( $i = 0; $i < 3; $i++ ) {
-					if ( isset( $top3[$i] ) ) {
-						$newPages[$top3[$i]['id']] = $pages[$top3[$i]['id']];
-						$pages[$top3[$i]['id']] = null;
-					}
-				}
-				foreach ( $pages as $id => $val ) {
-					if ( $val ) {
-						$newPages[$id] = $val;
-					}
-				}
-				$pages = $newPages;
 			}
 
 			$dbr->freeResult( $res );
@@ -505,34 +459,22 @@ class ArticleCommentList {
 			return '';
 		}
 
+		$block = $wgUser->mBlock;
+
 		list( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended, $isGlobal ) = [
 			User::whoIs( $wgUser->blockedBy() ),
 			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMessage( 'blockednoreason' )->text(),
 			$wgRequest->getIP(),
 			$wgUser->getBlockId(),
-			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
-			$wgUser->mBlock->mExpiry,
-			$wgUser->mBlock->mAddress,
+			$wgLang->timeanddate( wfTimestamp( TS_MW, $block->mTimestamp ), true ),
+			$block->mExpiry,
+			$block->mAddress,
 			$wgUser->mBlockedGlobally
 		];
 
 		// Hide username of blocker if this is a global block (see lines 2112-2129 of includes/Title.php)
-		if ( $isGlobal ) {
-			$blocker = User::newFromName( $blockerName );
-			if ( $blocker instanceof User ) {
-				// user groups to be displayed instead of user name
-				$groups = [
-					'staff',
-					'vstf',
-				];
-				$blockerGroups = $blocker->getEffectiveGroups();
-
-				foreach ( $groups as $group ) {
-					if ( in_array( $group, $blockerGroups ) ) {
-						$blockerLink = wfMessage( "group-$group" )->plain();
-					}
-				}
-			}
+		if ( $block->shouldHideBlockerName() ) {
+			$blockerLink = $block->getGroupNameForHiddenBlocker();
 		} else {
 			$blockerLink = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$blockerName}|{$blockerName}]]";
 		}
@@ -619,12 +561,9 @@ class ArticleCommentList {
 	 * @param string  $reason  -- deleting reason
 	 * @param integer $error   -- error msg
 	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return true -- because it's a hook
+	 * @return bool true -- because it's a hook
 	 */
-	static public function articleDelete( WikiPage &$wikiPage, &$user, &$reason, &$error ) {
+	static public function articleDelete( WikiPage $wikiPage, User $user, $reason, &$error ): bool {
 		$title = $wikiPage->getTitle();
 
 		if ( empty( self::$mArticlesToDelete ) ) {
@@ -674,7 +613,7 @@ class ArticleCommentList {
 	 *
 	 * @return boolean -- because it's a hook
 	 */
-	static public function articleDeleteComplete( WikiPage &$wikiPage, &$user, $reason, $id ) {
+	static public function articleDeleteComplete( WikiPage $wikiPage, User $user, $reason, $id ): bool {
 		global $wgOut, $wgRC2UDPEnabled, $wgMaxCommentsToDelete, $wgCityId, $wgUser, $wgEnableMultiDeleteExt;
 		$title = $wikiPage->getTitle();
 
@@ -772,36 +711,34 @@ class ArticleCommentList {
 	 *
 	 * @return boolean -- because it's a hook
 	 */
-	static public function undeleteComments( Title &$oTitle, $revision, $old_page_id ) {
+	static public function undeleteComments( Title $oTitle, $revision, $old_page_id ) {
 		global $wgRC2UDPEnabled;
 
-		if ( $oTitle instanceof Title ) {
-			$new_page_id = $oTitle->getArticleId();
-			$listing = ArticleCommentList::newFromTitle( $oTitle );
-			$pagesToRecover = $listing->getRemovedCommentPages( $oTitle );
-			if ( !empty( $pagesToRecover ) && is_array( $pagesToRecover ) ) {
-				$irc_backup = $wgRC2UDPEnabled;	// backup
-				$wgRC2UDPEnabled = false; // turn off
-				foreach ( $pagesToRecover as $page_id => $page_value ) {
-					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
-					if ( $oCommentTitle instanceof Title ) {
-						$archive = new PageArchive( $oCommentTitle );
-						$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $new_page_id )->escaped() );
+		$new_page_id = $oTitle->getArticleId();
+		$listing = ArticleCommentList::newFromTitle( $oTitle );
+		$pagesToRecover = $listing->getRemovedCommentPages( $oTitle );
+		if ( !empty( $pagesToRecover ) && is_array( $pagesToRecover ) ) {
+			$irc_backup = $wgRC2UDPEnabled;	// backup
+			$wgRC2UDPEnabled = false; // turn off
+			foreach ( $pagesToRecover as $page_id => $page_value ) {
+				$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
+				if ( $oCommentTitle instanceof Title ) {
+					$archive = new PageArchive( $oCommentTitle );
+					$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $new_page_id )->escaped() );
 
-						if ( !is_array( $ok ) ) {
-							Wikia\Logger\WikiaLogger::instance()->error(
-								__METHOD__ . ' - cannot restore comment',
-								[
-									'exception' => new Exception(),
-									'page_id' => (string) $page_id,
-									'page_title' => $page_value['title']
-								]
-							);
-						}
+					if ( !is_array( $ok ) ) {
+						Wikia\Logger\WikiaLogger::instance()->error(
+							__METHOD__ . ' - cannot restore comment',
+							[
+								'exception' => new Exception(),
+								'page_id' => (string) $page_id,
+								'page_title' => $page_value['title']
+							]
+						);
 					}
 				}
-				$wgRC2UDPEnabled = $irc_backup; // restore to whatever it was
 			}
+			$wgRC2UDPEnabled = $irc_backup; // restore to whatever it was
 		}
 
 		return true;
@@ -1055,7 +992,9 @@ class ArticleCommentList {
 	 *
 	 * @return bool
 	 */
-	static public function onConfirmEdit( &$SimpleCaptcha, &$editPage, $newtext, $section, $merged, &$result ) {
+	static public function onConfirmEdit(
+		$SimpleCaptcha, $editPage, $newtext, $section, $merged, &$result
+	): bool {
 		$title = $editPage->getArticle()->getTitle();
 		if ( MWNamespace::isTalk( $title->getNamespace() ) && ArticleComment::isTitleComment( $title ) ) {
 			$result = true;	// omit captcha

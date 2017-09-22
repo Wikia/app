@@ -130,7 +130,7 @@ class SpecialVideosHelper extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$mediaService = new MediaQueryService();
-		if ( $videoParams['sort'] == 'premium' ) {
+		if ( !empty( $videoParams['sort'] ) && $videoParams['sort'] == 'premium' ) {
 			$totalVideos = $mediaService->getTotalPremiumVideos();
 		} else if ( !empty( $videoParams['category'] ) ) {
 			$totalVideos = $mediaService->getTotalVideosByCategory( $videoParams['category'] );

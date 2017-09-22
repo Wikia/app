@@ -4,9 +4,6 @@
  * Class for interaction with MappingService objects.
  * 
  * @since 0.6.6
- * 
- * @file Maps_MappingServices.php
- * @ingroup Maps
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -19,7 +16,7 @@ final class MapsMappingServices {
 	 * 
 	 * @since 0.6.6
 	 * 
-	 * @var array of string
+	 * @var string[]
 	 */
 	protected static $registeredServices = array();
 	
@@ -33,7 +30,7 @@ final class MapsMappingServices {
 	 * 
 	 * @since 0.6.6
 	 * 
-	 * @var array of iMappingService
+	 * @var iMappingService[]
 	 */
 	protected static $services = array();
 	

@@ -14,13 +14,14 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				return mocks.context;
 			}
 		},
-		adLogicPageParams: {
-			getPageLevelParams: function () {
-				return {
-					s0: 'ent',
-					s1: '_muppet',
-					s2: 'home'
-				};
+		adUnitBuilder: {
+			build: function(slotName, src) {
+				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
+			}
+		},
+		extraUnitBuilder: {
+			build: function(slotName, src) {
+				return 'extra/' + src + '/' + slotName;
 			}
 		},
 		gptHelper: {
@@ -30,7 +31,14 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			}
 		},
 		lookups: {
-			extendSlotTargeting: noop
+			extendSlotTargeting: noop,
+			storeRealSlotPrices: noop
+		},
+		slotRegistry: {
+			getRefreshCount: function () {
+				return 2;
+			},
+			storeScrollY: noop
 		},
 		beforeSuccess: noop,
 		beforeCollapse: noop,
@@ -55,9 +63,10 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
-			mocks.adLogicPageParams,
 			mocks.btfBlocker,
 			mocks.gptHelper,
+			mocks.adUnitBuilder,
+			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups
 		);
@@ -100,6 +109,38 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		);
 	});
 
+	it('Build slot path based on page params width extra ad unit builder', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
+
+		var extra = {
+			getAdUnitBuilder: function () {
+				return mocks.extraUnitBuilder;
+			}
+		};
+
+		getProvider(extra).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
+			'extra/testSource/TOP_LEADERBOARD'
+		);
+	});
+
+	it('Build slot path based on page params width extra ad unit builder in function', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
+
+		var extra = {
+			getAdUnitBuilder: function () {
+				return mocks.extraUnitBuilder;
+			}
+		};
+
+		getProvider(extra).fillInSlot(createSlot('TOP_RIGHT_BOXAD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
+			'extra/testSource/TOP_RIGHT_BOXAD'
+		);
+	});
+
 	it('Call beforeSuccess on pushAd if is defined', function () {
 		spyOn(mocks, 'beforeSuccess');
 
@@ -128,5 +169,13 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.beforeHop).toHaveBeenCalled();
+	});
+
+	it('Push slot with refresh count key val', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
+
+		getProvider().fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].rv).toEqual('2');
 	});
 });

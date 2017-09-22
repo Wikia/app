@@ -43,6 +43,12 @@ $messages['ja'] = array(
 	'emailext-user-rights-changed-button-text' => '全概要を見る',
 );
 
+$messages['ko'] = array(
+	'emailext-user-rights-changed-button-text' => '전체 요약',
+	'emailext-user-rights-changed-subject-follower' => '{{SITENAME}}에서 $1 님의 사용자 권한이 변경되었습니다',
+	'emailext-user-rights-changed-subject' => '{{SITENAME}}에서 귀하의 사용자 권한이 변경되었습니다',
+);
+
 $messages['nl'] = array(
 	'emailext-user-rights-changed-subject' => 'Your user rights on {{SITENAME}} have been changed.',
 	'emailext-user-rights-changed-subject-follower' => 'The user rights for $1 on {{SITENAME}} have been changed.',
@@ -74,12 +80,6 @@ $messages['zh-hans'] = array(
 );
 
 $messages['zh-hant'] = array(
-	'emailext-user-rights-changed-subject' => '你在{{SITENAME}}網站的用戶權限已經被更改。',
-	'emailext-user-rights-changed-subject-follower' => '$1在{{SITENAME}}網站的用戶權限已經被更改。',
-	'emailext-user-rights-changed-button-text' => '全文摘要',
-);
-
-$messages['zh-tw'] = array(
 	'emailext-user-rights-changed-subject' => '你在{{SITENAME}}網站的用戶權限已經被更改。',
 	'emailext-user-rights-changed-subject-follower' => '$1在{{SITENAME}}網站的用戶權限已經被更改。',
 	'emailext-user-rights-changed-button-text' => '全文摘要',

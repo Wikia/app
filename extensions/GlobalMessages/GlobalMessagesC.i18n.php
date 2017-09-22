@@ -1,15 +1,9 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
-	'category_header' => 'Pages in category "$1"',
-	'category-media-header' => 'Media in category "$1"',
+	'category_header' => '<span style="font-size: 80%;">Pages in category "$1"</span>',
+	'category-media-header' => '<span style="font-size: 80%;">Media in category "$1"</span>',
 	'category-empty' => "''This category currently contains no pages or media.''",
 	'category-subcat-count' => '{{PLURAL:$2|This category has only the following subcategory.|This category has the following {{PLURAL:$1|subcategory|$1 subcategories}}, out of $2 total.}}',
 	'category-subcat-count-limited' => 'This category has the following {{PLURAL:$1|subcategory|$1 subcategories}}.',
@@ -38,10 +32,19 @@ $2',
 	'createaccounterror' => 'Could not create account: $1',
 	'cannotchangeemail' => 'Account e-mail addresses cannot be changed on this wiki.',
 	'createaccount-title' => 'Account creation for {{SITENAME}}',
-	'createaccount-text' => 'Someone created an account for your e-mail address on {{SITENAME}} ($4) named "$2", with password "$3".
-You should log in and change your password now.
+	'createaccount-text' => 'Hello,
 
-You may ignore this message, if this account was created in error.',
+An account has been created for you created on {{SITENAME}} with the username "$2" and password "$3". 
+
+Please log in at $4
+
+If you do not need this account, you can ignore this message or contact community@wikia.com with any questions.
+
+- Wikia Community Support
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'changeemail' => 'Change e-mail address',
 	'changeemail-header' => 'Change account e-mail address',
 	'changeemail-text' => 'Complete this form to change your e-mail address. You will need to enter your password to confirm this change.',
@@ -53,16 +56,12 @@ You may ignore this message, if this account was created in error.',
 	'changeemail-cancel' => 'Cancel',
 	'confirmedittext' => 'You must confirm your e-mail address before editing pages.
 Please set and validate your e-mail address through your [[Special:Preferences|user preferences]].',
-	'clearyourcache' => "'''Note:''' After saving, you may have to bypass your browser's cache to see the changes.
-* '''Firefox / Safari:''' Hold ''Shift'' while clicking ''Reload'', or press either ''Ctrl-F5'' or ''Ctrl-R'' (''⌘-R'' on a Mac)
-* '''Google Chrome:''' Press ''Ctrl-Shift-R'' (''⌘-Shift-R'' on a Mac)
-* '''Internet Explorer:''' Hold ''Ctrl'' while clicking ''Refresh'', or press ''Ctrl-F5''
-* '''Konqueror:''' Click ''Reload'' or press ''F5''
-* '''Opera:''' Clear the cache in ''Tools → Preferences''",
-	'copyrightwarning' => "Please note that all contributions to {{SITENAME}} are considered to be released under the $2 (see $1 for details).
-If you do not want your writing to be edited mercilessly and redistributed at will, then do not submit it here.<br />
-You are also promising us that you wrote this yourself, or copied it from a public domain or similar free resource.
-'''Do not submit copyrighted work without permission!'''",
+	'clearyourcache' => "'''Note:''' After saving, you may have to [[Help:Bypass your cache|bypass your browser's cache]] to see the changes.
+* '''Chrome''' - Windows: Hold the ''Ctrl'' key and press the ''F5'' key. OS X: Hold both the ''⌘ Cmd'' and ''⇧ Shift'' keys and press the ''R'' key.
+* '''Safari''' - Hold down the ''⇧ Shift'' key and click the ''Reload'' toolbar button.
+* '''Firefox''' - Windows: Hold the ''Ctrl'' key, and press ''F5''. OS X: Hold the ''⌘ Cmd'' and ''⇧ Shift'' keys, and then press ''R''.
+* '''Internet Explorer''' - Hold the ''Ctrl'' key, and press ''F5'' (or click the ''Refresh'' button).",
+	'copyrightwarning' => 'All contributions to {{SITENAME}} are considered to be released under the  $2 (see $1 for details).<br/>',
 	'copyrightwarning2' => "Please note that all contributions to {{SITENAME}} may be edited, altered, or removed by other contributors.
 If you do not want your writing to be edited mercilessly, then do not submit it here.<br />
 You are also promising us that you wrote this yourself, or copied it from a public domain or similar free resource (see $1 for details).
@@ -80,22 +79,19 @@ The reason given by $3 is ''$2''",
 	'changepassword' => 'Change password',
 	'columns' => 'Columns:',
 	'copyuploaddisabled' => 'Upload by URL disabled.',
-	'categories' => 'Categories',
+	'categories' => 'Categories list',
 	'categories-summary' => '',
-	'categoriespagetext' => 'The following {{PLURAL:$1|category contains|categories contain}} pages or media.
-[[Special:UnusedCategories|Unused categories]] are not shown here.
-Also see [[Special:WantedCategories|wanted categories]].',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
 	'categoriesfrom' => 'Display categories starting at:',
 	'changed' => 'changed',
 	'created' => 'created',
 	'confirm' => 'Confirm',
-	'confirmdeletetext' => 'You are about to delete a page along with all of its history.
-Please confirm that you intend to do this, that you understand the consequences, and that you are doing this in accordance with [[{{MediaWiki:Policy-url}}|the policy]].',
+	'confirmdeletetext' => 'You are about to delete a page along with all of its history. See also [[Help:Deletion]].',
 	'cantrollback' => 'Cannot revert edit;
 last contributor is only author of this page.',
 	'cannotundelete' => 'Undelete failed;
 someone else may have undeleted the page first.',
-	'contributions' => 'User contributions',
+	'contributions' => 'Contributions',
 	'contributions-title' => 'User contributions for $1',
 	'contribsub2' => 'For $1 ($2)',
 	'createaccountblock' => 'account creation blocked',
@@ -107,71 +103,7 @@ Since you do not have the hideuser right, you cannot see or edit the user's bloc
 	'cant-move-user-page' => 'You do not have permission to move user pages (apart from subpages).',
 	'cant-move-to-user-page' => 'You do not have permission to move a page to a user page (except to a user subpage).',
 	'cantmove-titleprotected' => 'You cannot move a page to this location, because the new title has been protected from creation',
-	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/
-/* See also: [[MediaWiki:Monobook.css]] */
-/* <pre> */
-
-/* Mark redirects in Special:Allpages and Special:Watchlist */
-.allpagesredirect { font-style: italic; }
-.watchlistredir { font-style: italic; }
-
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
-}
-.infobox td,
-.infobox th {
-   vertical-align: top;
-}
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-     border: 1px solid #aaa;
-     background-color: #f9f9f9; margin-top: 1em; padding: 12px;
-}
-.forumlist td.forum_edited a {
-     color: black; text-decoration: none
-}
-.forumlist td.forum_title a {
-     padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-     font-weight: bold; background: url(/images/4/4e/Forum_new.gif)
-     center left no-repeat; padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-     font-weight: normal; background: none; padding-left: 20px;
-}
-.forumlist th.forum_title {
-     padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos { color: #006500; }
-.mw-plusminus-neg { color: #8B0000; }
-/* </pre> */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Any JavaScript here will be loaded for all users on every page load. */',
 	'creditspage' => 'Page credits',
 	'confirmemail' => 'Confirm email address',
@@ -184,39 +116,53 @@ load the link in your browser to confirm that your email address is valid.',
 if you recently created your account, you may wish to wait a few minutes for it to arrive before trying to request a new code.',
 	'confirmemail_send' => 'Mail a confirmation code',
 	'confirmemail_sent' => 'Confirmation email sent.',
-	'confirmemail_oncreate' => 'A confirmation code was sent to your email address.
-This code is not required to log in, but you will need to provide it before enabling any email-based features in the wiki.',
+	'confirmemail_oncreate' => "A confirmation code was sent to your e-mail address.
+This code is not required to log in, but you will need to provide it before enabling any e-mail-based features in the wiki. If you do not receive the email, remember to check your spam and junk mail folders. Please allow (or ''whitelist'') emails from community@wikia.com to be received.",
 	'confirmemail_sendfailed' => '{{SITENAME}} could not send your confirmation mail.
 Please check your email address for invalid characters.
 
 Mailer returned: $1',
-	'confirmemail_invalid' => 'Invalid confirmation code.
-The code may have expired.',
+	'confirmemail_invalid' => '<center>Thanks for confirming your email, but your confirmation code has expired or is invalid.<br/>
+You will need to receive a new code to confirm your account.
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>Request new code via email</span>]]</span></center>  
+<br>',
 	'confirmemail_needlogin' => 'You need to $1 to confirm your email address.',
 	'confirmemail_success' => 'Your email address has been confirmed.
 You may now [[Special:UserLogin|log in]] and enjoy the wiki.',
-	'confirmemail_loggedin' => 'Your email address has now been confirmed.',
+	'confirmemail_loggedin' => "'''Your e-mail address has now been confirmed.'''
+
+Welcome!
+
+With thousands of communities on Wikia, there are many ways to have fun here. 
+
+Spend some time getting to know Wikia by [[w:c:help:Help:Contents|visiting our help wiki]], reading interesting and cool pages, writing content on your favorite subjects, or meeting other members of the community.
+
+The Wikia Community Team",
 	'confirmemail_error' => 'Something went wrong saving your confirmation.',
-	'confirmemail_subject' => 'Welcome to Wikia!',
-	'confirmemail_body' => 'Hi $2,
+	'confirmemail_subject' => 'Please confirm your Wikia account',
+	'confirmemail_body' => "Hi $2,
 
-Welcome to Wikia!
+Thanks for registering on Wikia!
 
-With thousands of communities on Wikia, there are many ways to have fun here. Spend some time getting to know Wikia by visiting the home page (www.wikia.com), taking a tutorial (<http://www.wikia.com/wiki/Help:Tutorial_1>), reading interesting and cool pages, writing content on your favorite subjects, or meeting other members of the community.
+Please take a minute to activate your new account: $3
+
+Ready to get started?
+
+Look at all of the recent activity of the community you just joined! Start contributing by leaving comments or editing pages.
+
+Watch the Wikia video at http://wikia.com/go and start exploring some of our favorite wikis in Gaming, Entertainment, and Lifestyles.
+
+Meet the Wikia community, learn about what's happening, and find help - all at Community Central.
+
+Have fun!
+
+- Wikia Community Support
 
 
-To fully activate your account, please confirm your email by clicking on the link below or pasting it into your browser.
-
-$3
-
-This confirmation link will expire in 7 days.
-
-(For your information, this username was created from the following address: $1)
-
-We look forward to seeing you on Wikia!
-The Wikia Community Team
-www.wikia.com
-',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences",
 	'confirmemail_body_changed' => 'Someone, probably you, from IP address $1,
 has changed the email address of the account "$2" to this address on {{SITENAME}}.
 
@@ -246,9 +192,9 @@ $5
 
 This confirmation code will expire at $4.',
 	'confirmemail_invalidated' => 'Email address confirmation canceled',
-	'confirmrecreate' => "User [[User:$1|$1]] ([[User talk:$1|talk]]) deleted this page after you started editing with reason:
+	'confirmrecreate' => "User [[User:$1|$1]] ([[User talk:$1|talk]]) deleted this article after you started editing it, with a reason of:
 : ''$2''
-Please confirm that you really want to recreate this page.",
+Please confirm that you really want to recreate this article.",
 	'confirmrecreate-noreason' => 'User [[User:$1|$1]] ([[User talk:$1|talk]]) deleted this page after you started editing.  Please confirm that you really want to recreate this page.',
 	'confirm_purge_button' => 'Yes, I am not a robot',
 	'confirm-purge-top' => 'Would you like to clear the cache for this page?',
@@ -314,13 +260,13 @@ Please confirm that you really want to recreate this page.",
 * http://green.wikia.com/|Green
 * http://starwars.wikia.com/|Star Wars
 * http://solarcooking.wikia.com/|Solar Cooking',
-	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com|Deutsch
-* http://it.wikia.com|Italiano
-* http://es.wikia.com|Espa&ntilde;ol
-* http://pl.wikia.com|Polski
-* http://fr.wikia.com|Français
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
 * Languages|More...',
-	'corporatepage-create-your-own-wiki' => 'Create your own wiki and find a community of people who all love what you love.',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
 	'corporatepage-create-button' => 'Create a wiki',
 	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
 	'corporatepage-more-link' => 'More Links',
@@ -355,8 +301,8 @@ Please confirm that you really want to recreate this page.",
 	'corporatepage-words-added' => 'words added in the last week',
 	'custom_info' => 'Custom themes can be built by selecting "Custom" above and then editing ',
 	'contris' => 'Contributions',
-	'createwiki' => 'Request a new wiki',
-	'createwikipagetitle' => 'Request a new wiki',
+	'createwiki' => 'Create a new wiki',
+	'createwikipagetitle' => 'Create a new wiki',
 	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
 	'createwikititle' => 'Title for the wiki',
 	'createwikiname' => 'Name for the wiki',
@@ -366,13 +312,13 @@ Please confirm that you really want to recreate this page.",
 	'createwikimailsub' => 'Request for a new Wikia',
 	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
 	'createwikilang' => 'Default language for this wiki',
-	'create_an_account' => 'Create an account',
-	'createpage' => 'Start new page',
+	'create_an_account' => 'Sign up',
+	'createpage' => 'Create a new page',
 	'choose_reason' => 'Choose reason',
 	'community' => 'Community',
 	'contris_s' => 'Contributions',
 	'cockpit_hide' => 'Hide cockpit',
-	'create-account-new' => 'Create your Wikia Account',
+	'create-account-new' => 'Create your FANDOM Account',
 );
 
 $messages['qqq'] = array(
@@ -482,6 +428,7 @@ $1 is a message from the e-mail delivery system.',
 	'confirm_purge_button' => '{{Identical|OK}}',
 	'comma-separator' => '{{optional}}',
 	'colon-separator' => "Optional message. Change it only if your language uses another character for ':' or it needs an extra space before the colon.",
+	'create-account-new' => 'Missing documentation',
 );
 
 $messages['ab'] = array(
@@ -3517,6 +3464,9 @@ $5
 	'compare-invalid-title' => 'Посоченото заглавие е невалидно',
 	'compare-title-not-exists' => 'Посоченото заглавие не съществува.',
 	'compare-revision-not-exists' => 'Посочената версия не съществува.',
+	'createwiki' => 'Създаване на уики',
+	'createwikipagetitle' => 'Заявка за ново уики',
+	'create_an_account' => 'Създаване на сметка',
 );
 
 $messages['bh'] = array(
@@ -4606,7 +4556,7 @@ $messages['ca'] = array(
 	'category-file-count-limited' => '{{PLURAL:$1|El següent fitxer és|Els següents $1 fitxers són}} dins la categoria actual.',
 	'cancel' => 'Anuŀla',
 	'create' => 'Crea',
-	'copyright' => "El contingut és disponible sota els termes d'una llicència $1",
+	'copyright' => 'El contingut està disponible sota $1',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'currentevents' => 'Actualitat',
 	'currentevents-url' => 'Project:Actualitat',
@@ -4781,6 +4731,13 @@ Confirmeu que realment voleu tornar-la a crear.",
 	'create_an_account' => 'crea un compte',
 	'createpage' => 'Comença un article nou',
 	'choose_reason' => 'Tria un motiu',
+	'corporatepage-footer-leftcolumn' => '* http://ca.wikia.com|Català
+* http://de.wikia.com|Deutsch
+* http://es.wikia.com|Espa&ntilde;ol
+* http://pl.wikia.com|Polski
+* http://fr.wikia.com|Français
+* Languages|Més...',
+	'contris_s' => 'Contribucions',
 );
 
 $messages['cbk-zam'] = array(
@@ -5912,6 +5869,7 @@ Cadarnhewch eich bod chi wir am ail-greu'r dudalen.",
 	'compare-invalid-title' => 'Ysgrifennwyd teitl annilys.',
 	'compare-title-not-exists' => "Nid yw'r teitl a enwyd ar gael.",
 	'compare-revision-not-exists' => "Nid yw'r diwygiad a enwyd ar gael.",
+	'contris_s' => 'Cyfraniadau',
 );
 
 $messages['da'] = array(
@@ -6100,8 +6058,8 @@ $messages['de'] = array(
 	'category-file-count-limited' => 'Folgende {{PLURAL:$1|Datei ist|$1 Dateien sind}} in dieser Kategorie enthalten:',
 	'cancel' => 'Abbrechen',
 	'create' => 'Erstellen',
-	'copyright' => 'Der Inhalt ist verfügbar unter der Lizenz $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'Lizenz: $1',
+	'copyrightpage' => 'w:c:de:Lizenz|Wikia:Lizenz',
 	'currentevents' => 'Aktuelle Ereignisse',
 	'currentevents-url' => 'Project:Aktuelle Ereignisse',
 	'collapsible-collapse' => 'Einklappen',
@@ -6109,43 +6067,40 @@ $messages['de'] = array(
 	'cannotdelete' => 'Die Seite oder Datei „$1“ kann nicht gelöscht werden.
 Möglicherweise wurde sie bereits von jemand anderem gelöscht.',
 	'cannotdelete-title' => 'Seite „$1“ kann nicht gelöscht werden',
-	'cascadeprotected' => 'Diese Seite ist zur Bearbeitung gesperrt. Sie ist in die {{PLURAL:$1|folgende Seite|folgenden Seiten}} eingebunden, die mittels der Kaskadensperroption geschützt {{PLURAL:$1|ist|sind}}:
+	'cascadeprotected' => 'Diese Seite ist vor Bearbeitung gesperrt. Sie ist in die {{PLURAL:$1|folgende Seite|folgenden Seiten}} eingebunden, die mittels der Kaskadensperroption geschützt {{PLURAL:$1|ist|sind}}:
 $2',
-	'customcssprotected' => 'Du hast nicht die Berechtigung, diese CSS enthaltende Seite zu bearbeiten, da sie die persönlichen Einstellungen eines anderen Benutzers enthält.',
-	'customjsprotected' => 'Du hast nicht die Berechtigung diese JavaScript enthaltende Seite zu bearbeiten, da sie die persönlichen Einstellungen eines anderen Benutzers enthält.',
+	'customcssprotected' => 'Du hast nicht die Berechtigung, diese CSS-Seite zu bearbeiten, da sie die persönlichen Einstellungen eines anderen Benutzers enthält.',
+	'customjsprotected' => 'Du hast nicht die Berechtigung, diese JavaScript-Seite zu bearbeiten, da sie die persönlichen Einstellungen eines anderen Benutzers enthält.',
 	'createaccount' => 'Benutzerkonto anlegen',
-	'createaccountmail' => 'Benutzerkonto anlegen (mit Passwortzusendung)',
+	'createaccountmail' => 'per E-Mail',
 	'createaccountreason' => 'Grund:',
 	'createaccounterror' => 'Benutzerkonto konnte nicht erstellt werden: $1',
 	'cannotchangeemail' => 'E-Mail-Adressen können in diesem Wiki nicht geändert werden.',
 	'createaccount-title' => 'Erstellung eines Benutzerkontos für {{SITENAME}}',
-	'createaccount-text' => 'Es wurde für dich ein Benutzerkonto „$2“ auf {{SITENAME}} ($4) erstellt. Das automatisch generierte Passwort für „$2“ ist „$3“. Du solltest dich nun anmelden und das Passwort ändern.
+	'createaccount-text' => 'Es wurde für dich ein Benutzerkonto „$2“ auf {{SITENAME}} erstellt. Das automatisch generierte Passwort für „$2“ lautet „$3“. Bitte melde dich hier an: $4
 
-Falls das Benutzerkonto irrtümlich angelegt wurde, kannst du diese Nachricht ignorieren.',
+Falls das Benutzerkonto irrtümlich angelegt wurde, kannst du diese Nachricht ignorieren oder dich bei Fragen an support@fandom.com wenden.',
 	'changeemail' => 'E-Mail-Adresse ändern',
 	'changeemail-header' => 'E-Mail-Adresse ändern',
 	'changeemail-text' => 'Fülle dieses Formular vollständig aus, um deine E-Mail-Adresse zu ändern. Du musst dein Passwort angeben, um diese Änderung zu bestätigen.',
-	'changeemail-no-info' => 'Du musst angemeldet sein, um direkt auf diese Seite zugreifen zu können.',
+	'changeemail-no-info' => 'Du musst dich anmelden, um auf diese Seite direkt zuzugreifen.',
 	'changeemail-oldemail' => 'Aktuelle E-Mail-Adresse:',
 	'changeemail-newemail' => 'Neue E-Mail-Adresse:',
-	'changeemail-none' => '(keine)',
+	'changeemail-none' => '(–)',
 	'changeemail-submit' => 'E-Mail-Adresse ändern',
 	'changeemail-cancel' => 'Abbrechen',
-	'confirmedittext' => 'Du musst deine E-Mail-Adresse erst bestätigen, bevor du Bearbeitungen durchführen kannst. Bitte ergänze und bestätige deine E-Mail in den [[Special:Preferences|Einstellungen]].',
-	'clearyourcache' => "'''Hinweis:''' Leere nach dem Speichern den Browser-Cache, um die Änderungen sehen zu können.
-* '''Firefox/Safari:''' ''Umschalttaste'' drücken und gleichzeitig ''Aktualisieren'' anklicken oder entweder ''Strg+F5'' oder ''Strg+R'' (''⌘+R'' auf dem Mac) drücken
-* '''Google Chrome:''' ''Umschalttaste+Strg+R'' (''⌘+Umschalttaste+R'' auf dem Mac) drücken
-* '''Internet Explorer:''' ''Strg+F5'' drücken oder ''Strg'' drücken und gleichzeitig ''Aktualisieren'' anklicken
-* '''Opera:''' ''Extras → Internetspuren löschen … → Individuelle Auswahl → Den kompletten Cache löschen''
-* '''Konqueror:''' ''Aktualisieren'' anklicken oder ''F5'' drücken",
-	'copyrightwarning' => "'''Bitte kopiere keine Webseiten, die nicht deine eigenen sind, benutze keine urheberrechtlich geschützten Werke ohne Erlaubnis des Urhebers!'''<br />
-Du gibst uns hiermit deine Zusage, dass du den Text '''selbst verfasst''' hast, dass der Text Allgemeingut '''(public domain)''' ist, oder dass der '''Urheber''' seine '''Zustimmung''' gegeben hat. Falls dieser Text bereits woanders veröffentlicht wurde, weise bitte auf der Diskussionsseite darauf hin.
-<i>Bitte beachte, dass alle {{SITENAME}}-Beiträge automatisch unter der „$2“ stehen (siehe $1 für Details). Falls du nicht möchtest, dass deine Arbeit hier von anderen verändert und verbreitet wird, dann drücke nicht auf „Seite speichern“.</i>",
+	'confirmedittext' => 'Du musst deine E-Mail-Adresse erst bestätigen, bevor du bearbeiten kannst. Bitte ergänze und bestätige deine E-Mail in den [[{{ns:special}}:Preferences|Einstellungen]].',
+	'clearyourcache' => "'''Hinweis - Leere nach dem Speichern den Browser-Cache, um die Änderungen sehen zu können:''' 
+*'''Chrome''' - Windows: ''Strg''-Taste gedrückt halten und ''F5''-Taste drücken. Mac: ''⌘''- und ⇧ ''Umschalttaste'' gleichzeitig gedrückt halten und ''R''-Taste drücken.
+*'''Safari''' - ⇧ ''Umschalttaste'' drücken und ''Aktualisieren'' klicken.
+*'''Firefox''' - Windows: ''Strg''-Taste gedrückt halten und ''F5''-Taste drücken. Mac: ''⌘''- und ⇧ ''Umschalttaste'' gleichzeitig gedrückt halten und ''R''-Taste drücken.
+*'''Internet Explorer''' - ''Strg''-Taste gedrückt halten und ''F5''-Taste drücken oder ''Aktualisieren'' anklicken.",
+	'copyrightwarning' => 'Alle Beiträge zu {{SITENAME}} werden unter der $2 veröffentlicht (siehe $1 für weitere Informationen).',
 	'copyrightwarning2' => "Bitte beachte, dass alle Beiträge zu {{SITENAME}} von anderen Mitwirkenden bearbeitet, geändert oder gelöscht werden können.
 Reiche hier keine Texte ein, falls du nicht willst, dass diese ohne Einschränkung geändert werden können.
 
 Du bestätigst hiermit auch, dass du diese Texte selbst geschrieben hast oder diese von einer gemeinfreien Quelle kopiert hast
-(siehe $1 für weitere Details). '''ÜBERTRAGE OHNE GENEHMIGUNG KEINE URHEBERRECHTLICH GESCHÜTZTEN INHALTE!'''",
+(siehe $1 für weitere Informationen). '''Übertrage ohne Genehmigung keine urheberrechtlich geschützten Inhalte!'''",
 	'cascadeprotectedwarning' => "'''Achtung:''' Diese Seite wurde so geschützt, dass sie nur durch Benutzer mit Administratorrechten bearbeitet werden kann. Sie ist in die {{PLURAL:$1|folgende Seite|folgenden Seiten}} eingebunden, die mittels der Kaskadensperroption geschützt {{PLURAL:$1|ist|sind}}:",
 	'cantcreateaccounttitle' => 'Das Benutzerkonto kann nicht erstellt werden',
 	'cantcreateaccount-text' => "Die Erstellung eines Benutzerkontos von der IP-Adresse '''($1)''' aus wurde durch [[User:$3|$3]] gesperrt.
@@ -6158,71 +6113,72 @@ Grund der Sperre: ''$2''",
 	'compareselectedversions' => 'Gewählte Versionen vergleichen',
 	'changepassword' => 'Passwort ändern',
 	'columns' => 'Spalten:',
-	'copyuploaddisabled' => 'Das Hochladen von URLs ist deaktiviert',
+	'copyuploaddisabled' => 'Das Hochladen über URLs ist deaktiviert.',
 	'categories' => 'Kategorien',
-	'categoriespagetext' => 'Folgende {{PLURAL:$1|Kategorie enthält|Kategorien enthalten}} Seiten oder Dateien.
-[[Special:UnusedCategories|Unbenutzte Kategorien]] werden hier nicht aufgeführt.
-Siehe auch die Liste der [[Special:WantedCategories|gewünschten Kategorien]].',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
 	'categoriesfrom' => 'Zeige Kategorien ab:',
 	'changed' => 'geändert',
-	'created' => 'erstellt',
+	'created' => 'erstellte',
 	'confirm' => 'Bestätigen',
-	'confirmdeletetext' => 'Du bist dabei, eine Seite mit allen zugehörigen älteren Versionen zu löschen. Bitte bestätige dazu, dass du dir der Konsequenzen bewusst bist, und dass du in Übereinstimmung mit den [[{{MediaWiki:Policy-url}}|Richtlinien]] handelst.',
+	'confirmdeletetext' => 'Du bist dabei, eine Seite oder Datei und alle zugehörigen älteren Versionen zu löschen. Mehr dazu unter [[w:c:de.community:Hilfe:Löschen|Hilfe:Löschen]].',
 	'cantrollback' => 'Die Änderung kann nicht zurückgesetzt werden, da es keine früheren Autoren gibt.',
-	'cannotundelete' => 'Wiederherstellung fehlgeschlagen; jemand anderes hat die Seite bereits wiederhergestellt.',
-	'contributions' => 'Benutzerbeiträge',
-	'contributions-title' => 'Benutzerbeiträge von „$1“',
+	'cannotundelete' => 'Wiederherstellung fehlgeschlagen; die Seite oder Datei wurde möglicherweise bereits wiederhergestellt.',
+	'contributions' => 'Beiträge',
+	'contributions-title' => 'Benutzerbeiträge von $1',
 	'contribsub2' => 'Von $1 ($2)',
 	'createaccountblock' => 'Erstellung von Benutzerkonten gesperrt',
 	'change-blocklink' => 'Sperre ändern',
 	'contribslink' => 'Beiträge',
-	'cant-block-while-blocked' => 'Du kannst keine anderen Benutzer sperren, während du selbst gesperrt bist.',
-	'cant-see-hidden-user' => 'Der Benutzer, den du versuchst zu sperren, wurde bereits gesperrt und verborgen. Da du das „hideuser“-Recht nicht hast, kannst du die Benutzersperre nicht sehen und nicht bearbeiten.',
-	'cant-move-user-page' => 'Du hast nicht die erforderliche Berechtigung, Benutzerhauptseiten verschieben zu können.',
+	'cant-block-while-blocked' => 'Du kannst keine anderen Benutzer sperren während du selbst gesperrt bist.',
+	'cant-see-hidden-user' => 'Der Benutzer, den du versuchst zu sperren, wurde bereits gesperrt und verborgen. Da du das Recht zum Nutzer Verbergen nicht hast, kannst du die Benutzersperre nicht sehen und nicht bearbeiten.',
+	'cant-move-user-page' => 'Du hast nicht die Berechtigung, Benutzerhauptseiten zu verschieben.',
 	'cant-move-to-user-page' => 'Du hast nicht die Berechtigung, Seiten auf eine Benutzerseite zu verschieben (mit Ausnahme von Benutzerunterseiten).',
-	'cantmove-titleprotected' => 'Die Verschiebung kann nicht durchgeführt werden, da der Zieltitel zur Erstellung gesperrt ist.',
-	'common.css' => '/* Das folgende CSS wird für alle Benutzeroberflächen geladen. */',
-	'common.js' => '/* Das folgende JavaScript wird für alle Benutzer geladen. */',
+	'cantmove-titleprotected' => 'Die Verschiebung kann nicht durchgeführt werden, da der Zieltitel vor Erstellung gesperrt ist.',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
+	'common.js' => '/* JavaScript hier wird für alle Benutzer für jede Seite geladen. */',
 	'creditspage' => 'Seiteninformationen',
-	'confirmemail' => 'E-Mail-Adresse bestätigen (Authentifizierung)',
+	'confirmemail' => 'E-Mail-Adresse bestätigen',
 	'confirmemail_noemail' => 'Du hast keine gültige E-Mail-Adresse in deinen [[Special:Preferences|persönlichen Einstellungen]] eingetragen.',
-	'confirmemail_text' => '{{SITENAME}} erfordert, dass du deine E-Mail-Adresse bestätigst (authentifizieren), bevor du die erweiterten E-Mail-Funktionen benutzen kannst. Klicke bitte auf die unten stehende, mit „Bestätigungscode zuschicken“ beschriftete Schaltfläche, damit eine automatisch erstellte E-Mail an die angegebene Adresse geschickt wird. Diese E-Mail enthält eine Web-Adresse mit einem Bestätigungscode. Indem du diese Webseite in deinem Webbrowser öffnest, bestätigst du, dass die angegebene E-Mail-Adresse korrekt und gültig ist.',
+	'confirmemail_text' => 'Dieses Wiki erfordert, dass du deine E-Mail-Adresse bestätigst, bevor du die E-Mail-Funktionen benutzen kannst. Durch einen Klick auf die Schaltfläche unten wird eine automatische E-Mail an dich gesendet. Diese E-Mail enthält einen Link mit einem Bestätigungscode. Bitte klicke auf diesen Link um zu bestätigen, dass deine E-Mail-Adresse tatsächlich korrekt und gültig ist.',
 	'confirmemail_pending' => 'Es wurde dir bereits ein Bestätigungscode per E-Mail zugeschickt.
-Wenn du dein Benutzerkonto erst vor kurzem erstellt hast, warte bitte noch ein paar Minuten auf die E-Mail, bevor du einen neuen Code anforderst.',
+Wenn du dein Benutzerkonto gerade erst erstellt hast, warte bitte noch ein paar Minuten auf die E-Mail, bevor du einen neuen Code anforderst.',
 	'confirmemail_send' => 'Bestätigungscode zuschicken',
 	'confirmemail_sent' => 'Bestätigungs-E-Mail wurde verschickt.',
-	'confirmemail_oncreate' => 'Ein Bestätigungs-Code wurde an deine E-Mail-Adresse gesandt. Dieser Code wird für die Anmeldung nicht benötigt, jedoch wird er zur Aktivierung der E-Mail-Funktionen innerhalb des Wikis gebraucht.',
+	'confirmemail_oncreate' => 'Ein Bestätigungs-Code wurde an deine E-Mail-Adresse gesandt. Dieser Code wird für die Anmeldung nicht benötigt, jedoch wird er zur Aktivierung der E-Mail-Funktionen innerhalb des Wikis gebraucht. Solltest du die E-Mail nicht erhalten, überprüfe deinen Spamordner.',
 	'confirmemail_sendfailed' => '{{SITENAME}} konnte die Bestätigungs-E-Mail nicht an dich versenden.
 Bitte prüfe die E-Mail-Adresse auf ungültige Zeichen.
 
 Rückmeldung des Mailservers: $1',
-	'confirmemail_invalid' => 'Ungültiger Bestätigungscode. Möglicherweise ist der Bestätigungszeitraum verstrichen. Versuche bitte, die Bestätigung zu wiederholen.',
+	'confirmemail_invalid' => 'Ungültiger Bestätigungscode. Möglicherweise ist der Bestätigungszeitraum verstrichen.
+
+Du kannst dir [[Special:ConfirmEmail|hier]] einen neuen Code zuschicken lassen.',
 	'confirmemail_needlogin' => 'Du musst dich $1, um deine E-Mail-Adresse zu bestätigen.',
-	'confirmemail_success' => 'Deine E-Mail-Adresse wurde erfolgreich bestätigt. Du kannst dich jetzt [[Special:UserLogin|anmelden]].',
+	'confirmemail_success' => 'Deine E-Mail-Adresse wurde erfolgreich bestätigt.',
 	'confirmemail_loggedin' => 'Deine E-Mail-Adresse wurde erfolgreich bestätigt.',
 	'confirmemail_error' => 'Es gab einen Fehler bei der Bestätigung deiner E-Mail-Adresse.',
-	'confirmemail_subject' => '[{{SITENAME}}] Bestätigung der E-Mail-Adresse',
+	'confirmemail_subject' => '[{{SITENAME}}] Bestätigung deiner E-Mail-Adresse',
 	'confirmemail_body' => 'Hallo,
 
-jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat das Benutzerkonto „$2“ in {{SITENAME}} registriert.
+dies ist eine automatisch erstellte Nachricht. 
 
-Um die E-Mail-Funktion von {{SITENAME}} (wieder) zu aktivieren und um zu bestätigen,
-dass dieses Benutzerkonto wirklich zu deiner E-Mail-Adresse und damit zu dir gehört, öffne bitte die folgende Web-Adresse:
+Jemand mit der IP-Adresse $1, wahrscheinlich Du selbst, hat eine Bestätigung dieser E-Mail-Adresse für das Benutzerkonto "$2" für {{SITENAME}} angefordert.
 
-$3
+Um die E-Mail-Funktion für {{SITENAME}} (wieder) zu aktivieren und um zu bestätigen, dass dieses Benutzerkonto wirklich zu Deiner E-Mail-Adresse und damit zu Dir gehört, öffne bitte folgenden Link in Deinem Browser: $3
 
-Sollte die vorstehende Adresse in deinem E-Mail-Programm über mehrere Zeilen gehen, musst du sie eventuell per Hand in die Adresszeile deines Web-Browsers einfügen.
+Sollte der vorstehende Link in Deinem E-Mail-Programm über mehrere Zeilen gehen, musst du ihn eventuell per Hand in die URL-Zeile des Browsers einfügen. 
 
-Wenn du das genannte Benutzerkonto *nicht* registriert hast, folge diesem Link, um den Bestätigungsprozess abzubrechen:
+Der Bestätigungscode ist bis zum folgenden Zeitpunkt gültig: $4
 
-$5
+Wenn diese E-Mail-Adresse *nicht* zu dem genannten Benutzerkonto gehört, folge diesem Link bitte *nicht*.
 
-Dieser Bestätigungscode ist gültig bis $6, $7 Uhr.',
+----
+
+{{SITENAME}}: {{fullurl:{{Mediawiki:mainpage}}}}',
 	'confirmemail_body_changed' => 'Jemand mit der IP-Adresse $1, wahrscheinlich du selbst,
 hat die E-Mail-Adresse des Benutzerkontos „$2“ zu dieser Adresse auf {{SITENAME}} geändert.
 
 Um zu bestätigen, dass dieses Benutzerkonto wirklich dir gehört
-und um die E-Mail-Features auf {{SITENAME}} zu reaktivieren, öffne diesen Link in deinem Browser:
+und um die E-Mail-Funktionen auf {{SITENAME}} zu reaktivieren, öffne diesen Link in deinem Browser:
 
 $3
 
@@ -6233,23 +6189,23 @@ $5
 
 Dieser Bestätigungscode ist gültig bis $4.',
 	'confirmemail_body_set' => 'Jemand mit der IP-Adresse $1, wahrscheinlich du selbst,
-hat die E-Mail-Adresse des Benutzerkontos „$2“ auf {{SITENAME}} zu dieser E-Mail-Adresse abgeändert.
+hat die E-Mail-Adresse des Benutzerkontos „$2“ zu dieser Adresse auf {{SITENAME}} geändert.
 
-Um zu bestätigen, dass dieses Benutzerkonto wirklich zu dir gehört
-und um die E-Mail-Funktionen auf {{SITENAME}} wieder zu aktivieren, öffne bitte den folgenden Link in deinem Browser:
+Um zu bestätigen, dass dieses Benutzerkonto wirklich dir gehört
+und um die E-Mail-Funktionen auf {{SITENAME}} zu reaktivieren, öffne diesen Link in deinem Browser:
 
 $3
 
-Falls das Konto *nicht* zu dir gehört, bitte den nachfolgenden Link öffnen,
-um die Bestätigung der E-Mail-Adresse abzubrechen:
+Falls das Konto *nicht* dir gehört, folge diesem Link,
+um die E-Mail-Adress-Bestätigung abzubrechen:
 
 $5
 
 Dieser Bestätigungscode ist gültig bis $4.',
-	'confirmemail_invalidated' => 'E-Mail-Adressbestätigung abbrechen',
-	'confirmrecreate' => "Benutzer [[User:$1|$1]] ([[User talk:$1|Diskussion]]) hat diese Seite gelöscht, nachdem du angefangen hast, sie zu bearbeiten. Die Begründung lautete:
-:''$2''
-Bitte bestätige, dass du diese Seite wirklich neu erstellen möchten.",
+	'confirmemail_invalidated' => 'E-Mail-Adressbestätigung abgebrochen',
+	'confirmrecreate' => "Benutzer [[{{ns:user}}:$1|$1]] ([[{{ns:user_talk}}:$1|Diskussion]]) hat diese Seite gelöscht, nachdem du angefangen hast, sie zu bearbeiten. Die Begründung lautete: ''$2''
+
+Bitte bestätige, dass du diese Seite tatsächlich neu anlegen möchtest.",
 	'confirmrecreate-noreason' => 'Benutzer [[User:$1|$1 ]] ([[User talk:$1|Diskussion]]) hat diese Seite gelöscht, nachdem du mit der Bearbeitung begonnen hast. Bitte bestätige, dass du die Seite wirklich erneut erstellen möchtest.',
 	'confirm_purge_button' => 'OK',
 	'confirm-purge-top' => 'Diese Seite aus dem Server-Cache löschen?',
@@ -6268,10 +6224,113 @@ Bitte bestätige, dass du diese Seite wirklich neu erstellen möchten.",
 	'compare-invalid-title' => 'Der angegebene Seitenname ist ungültig.',
 	'compare-title-not-exists' => 'Der angegebene Seitenname ist nicht vorhanden.',
 	'compare-revision-not-exists' => 'Die angegebene Version ist nicht vorhanden.',
-	'create_an_account' => 'Neues Benutzerkonto erstellen',
+	'create_an_account' => 'Registrieren',
 	'createpage' => 'Neue Seite anlegen',
 	'choose_reason' => 'Wähle einen Grund',
 	'community' => 'Community',
+	'create-account-new' => 'Benutzerkonto bei FANDOM erstellen',
+	'cockpit_hide' => 'Cockpit verstecken',
+	'corporatepage-company-info-headline' => 'Firmeninformationen',
+	'corporatepage-create-button' => 'Starte ein Wiki',
+	'corporatepage-create-your-own-wiki' => 'Erstelle dein eigenes Wiki und erschaffe eine Community mit Leuten, die dasselbe mögen wie du.',
+	'corporatepage-edits-made' => 'Bearbeitungen Heute',
+	'corporatepage-featured-wikis-headline' => 'Vorgestellte Wikis',
+	'corporatepage-find-a-wiki' => 'Nach einem Wiki suchen',
+	'corporatepage-go-to-wiki' => 'Gehe zu $1',
+	'corporatepage-watchlist' => 'Beobachtungsliste',
+	'contris' => 'Beiträge',
+	'contris_s' => 'Beiträge',
+	'createwikipagetitle' => 'Ein neues Wiki erstellen',
+	'custom_info' => 'Angepasste Schemata können erstellt werden, indem du oben "Angepasst" auswählst und dann editierst.',
+	'categories-summary' => '',
+	'comma-separator' => ',&#32;',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'More Links',
+	'corporatepage-in-the-know' => 'In the Know',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Hide Page',
+	'corporatepage-wikia-editors' => 'Bearbeiter',
+	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-update-fqr' => 'updated hourly',
+	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
+	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
+	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-pages-added' => 'pages created in the last hour',
+	'corporatepage-words-added' => 'words added in the last week',
+	'createwiki' => 'Ein neues Wiki erstellen',
+	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
+	'createwikititle' => 'Title for the wiki',
+	'createwikiname' => 'Name for the wiki',
+	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
+	'createwikidesc' => 'Description of the wiki',
+	'createwikiaddtnl' => 'Additional Information',
+	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'createwikilang' => 'Default language for this wiki',
 );
 
 $messages['de-formal'] = array(
@@ -7287,14 +7346,14 @@ $messages['es'] = array(
 	'cancel' => 'Cancelar',
 	'create' => 'Crear',
 	'copyright' => 'El contenido está disponible bajo los términos de la $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyrightpage' => 'w:c:es:Wikia:Licencia|Wikia:Licencia',
 	'currentevents' => 'Actualidad',
 	'currentevents-url' => 'Project:Actualidad',
 	'collapsible-collapse' => 'Ocultar',
 	'collapsible-expand' => 'Mostrar',
 	'cannotdelete' => 'La página o archivo «$1» no se pudo borrar.
 Puede que ya haya sido borrado por alguien más.',
-	'cannotdelete-title' => 'No se pudede borrar la página «$1»',
+	'cannotdelete-title' => 'No se puede borrar la página «$1»',
 	'cascadeprotected' => 'Esta página ha sido protegida para su edición, porque está incluida en {{PLURAL:$1|la siguiente página|las siguientes páginas}}, que están protegidas con la opción de «cascada»:
 $2',
 	'customcssprotected' => 'No tienes permiso para editar esta página CSS, porque contiene configuraciones personales de otro usuario.',
@@ -7303,107 +7362,133 @@ $2',
 	'createaccountmail' => 'por correo electrónico',
 	'createaccountreason' => 'Motivo:',
 	'createaccounterror' => 'No se pudo crear la cuenta: $1',
-	'cannotchangeemail' => 'Las direcciones de la correo electrónico de las cuentas de usuario no puedes cambiarse en esta wiki.',
+	'cannotchangeemail' => 'Las direcciones de correo electrónico de cuentas de usuario no pueden cambiarse en este wiki.',
 	'createaccount-title' => 'Creación de cuenta para {{SITENAME}}',
-	'createaccount-text' => 'Alguien creó en {{SITENAME}} ($4) una cuenta asociada a este correo electrónico con el nombre «$2».
-La contraseña asignada automáticamente es «$3». Por favor entra ahora y cambia tu contraseña.
+	'createaccount-text' => 'Hola,
 
-Puedes ignorar este mensaje si esta cuenta fue creada por error.',
-	'changeemail' => 'Cambiar la dirección de correo-e',
-	'changeemail-header' => 'Cambiar la dirección de correo-e de la cuenta',
+Alguien creó una cuenta de usuario para ti en {{SITENAME}} con el nombre "$2" y la contraseña "$3". 
+
+Por favor, inicia sesión en $4
+
+Si no necesitas esta cuenta, puedes ignorar este mensaje o contactar con nosotros a través de community@wikia.com por si tienes preguntas.
+
+- Equipo comunitario de FANDOM
+
+___________________________________________
+* Si necesitas ayuda o consejos, visita nuestra Comunidad Central http://comunidad.wikia.com
+* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de correos electrónicos desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
+	'changeemail' => 'Cambiar correo electrónico',
+	'changeemail-header' => 'Cambiar correo electrónico',
 	'changeemail-text' => 'Rellena este formulario para cambiar tu dirección de correo electrónico. Debes introducir la contraseña para confirmar este cambio.',
 	'changeemail-no-info' => 'Debes iniciar sesión para acceder directamente a esta página.',
-	'changeemail-oldemail' => 'Dirección de correo-e actual:',
-	'changeemail-newemail' => 'Nueva dirección de correo-e:',
-	'changeemail-none' => '(ninguna)',
-	'changeemail-submit' => 'Cambiar correo-e',
+	'changeemail-oldemail' => 'Correo electrónico actual:',
+	'changeemail-newemail' => 'Nuevo correo electrónico:',
+	'changeemail-none' => '(ninguno)',
+	'changeemail-submit' => 'Cambiar correo electrónico',
 	'changeemail-cancel' => 'Cancelar',
-	'confirmedittext' => 'Debes confirmar tu dirección electrónica antes de editar páginas. Por favor, establece y valida una dirección electrónica a través de tus [[Special:Preferences|preferencias de usuario]].',
+	'confirmedittext' => 'Debes confirmar tu dirección de correo electrónico antes de editar páginas. Por favor, establece y valida tu dirección de correo electrónico a través de tus [[Special:Preferences|preferencias de usuario]].',
 	'clearyourcache' => "'''Nota:''' después de guardar, quizás necesites refrescar la caché de tu navegador para ver los cambios.
-* '''Firefox / Safari:''' Mantén presionada ''Mayús'' mientras pulsas el botón ''Actualizar'', o presiona ''Ctrl+F5'' o ''Ctrl+R'' (''⌘+R'' en Mac)
 * '''Google Chrome:''' presiona ''Ctrl+Shift+R'' (''⌘+Mayús+R'' en Mac)
-* '''Internet Explorer:''' mantén presionada ''Ctrl'' mientras pulsas ''Actualizar'', o presiona ''Ctrl+F5''
+* '''Firefox / Safari:''' Mantén presionada ''Mayús'' mientras pulsas el botón ''Actualizar'', o presiona ''Ctrl+F5'' o ''Ctrl+R'' (''⌘+R'' en Mac)
+* '''Internet Explorer:''' mantén presionado ''Ctrl'' mientras pulsas ''Actualizar'', o presiona ''Ctrl+F5''
 * '''Konqueror:''' pulsa ''Recargar'' o presiona ''F5''
-* '''Opera:''' vacía la caché en ''Herramientas → Preferencias''",
-	'copyrightwarning' => "Por favor observa que todas las contribuciones a {{SITENAME}} se consideran hechas públicas bajo la $2 (véase $1 para más detalles). Si no deseas la modificación y distribución libre de tu obra, entonces no la pongas aquí.<br />También nos aseguras que tú escribiste esto y te pertenecen de los derechos de autor, o lo copiaste desde el dominio público u otra fuente libre. '''¡No uses escritos con copyright sin permiso!'''",
-	'copyrightwarning2' => "Por favor, ten en cuenta que todas las contribuciones a {{SITENAME}} pueden ser editadas, modificadas o eliminadas por otros colaboradores. Si no deseas que las modifiquen sin limitaciones y las distribuyan libremente, entonces no las pongas aquí.<br />También nos aseguras que tú escribiste esto y te pertenecen de los derechos de autor, o lo copiaste desde el dominio público u otra fuente libre. (véase $1 para más detalles).
-'''¡No uses escritos con copyright sin permiso!'''",
+* '''Opera:''' vacía la caché en ''Herramientas → Preferencias''.",
+	'copyrightwarning' => 'Todas las contribuciones a {{SITENAME}} se consideran publicadas bajo la  $2 (ver detalles en $1).',
+	'copyrightwarning2' => 'Por favor, ten en cuenta que todas las contribuciones a {{SITENAME}} pueden ser editadas, cambiadas o eliminadas por otros colaboradores. Si no deseas que los demás corrijan sin piedad lo que escribas y que sea distribuido libremente, entonces no lo ingreses aquí.<br/>También nos estás asegurando que tú mismo lo has escrito y que eres dueño de los derechos de autor, o que lo copiaste desde una fuente de dominio público o de otra fuente libre (véase $1 para detalles).<br /><strong>¡NO USES ESCRITOS CON DERECHOS DE AUTOR SIN PERMISO!</strong>',
 	'cascadeprotectedwarning' => "'''Aviso:''' Esta página está protegida, solo los administradores pueden editarla porque está incluida en  {{PLURAL:$1|la siguiente página protegida|las siguientes páginas protegidas}} en cascada:",
 	'cantcreateaccounttitle' => 'No se puede crear la cuenta',
-	'cantcreateaccount-text' => "La creación de cuentas desde esta dirección IP ('''$1''') ha sido bloqueada por [[User:$3|$3]].
+	'cantcreateaccount-text' => "La creación de cuentas para esta IP (<b>$1</b>) ha sido bloqueada por [[User:$3|$3]].
 
 El motivo dado por $3 es ''$2''",
 	'currentrev' => 'Revisión actual',
-	'currentrev-asof' => 'Última revisión de $1',
+	'currentrev-asof' => 'Última revisión del $1',
 	'currentrevisionlink' => 'Revisión actual',
 	'cur' => 'act',
-	'compareselectedversions' => 'Comparar versiones seleccionadas',
+	'compareselectedversions' => 'Comparar revisiones seleccionadas',
 	'changepassword' => 'Cambiar contraseña',
 	'columns' => 'Columnas:',
 	'copyuploaddisabled' => 'Carga por URL deshabilitada.',
 	'categories' => 'Categorías',
-	'categoriespagetext' => 'Las siguientes {{PLURAL:$1|categoría contiene|categorías contienen}} páginas o medios.
-No se muestran aquí las [[Special:UnusedCategories|categorías sin uso]].
-Véase también las [[Special:WantedCategories|categorías requeridas]].',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
 	'categoriesfrom' => 'Mostrar categorías que empiecen por:',
-	'changed' => 'modificada',
-	'created' => 'creada',
+	'changed' => 'cambiada',
+	'created' => 'ha creado',
 	'confirm' => 'Confirmar',
 	'confirmdeletetext' => 'Estás a punto de borrar una página en forma permanente, así como todo su historial.
-Por favor, confirma que realmente quieres hacer eso, que entiendes las
+Confirma que realmente quieres hacer eso, que entiendes las
 consecuencias, y que lo estás haciendo de acuerdo con [[{{MediaWiki:Policy-url}}|las políticas]].',
 	'cantrollback' => 'No se puede revertir la edición;
-el último colaborador es el único autor de esta página.',
+el último contribuyente es el único autor de esta página.',
 	'cannotundelete' => 'Ha fallado el deshacer el borrado;
 alguien más puede haber deshecho el borrado antes.',
-	'contributions' => 'Contribuciones del usuario',
+	'contributions' => 'Contribuciones',
 	'contributions-title' => 'Contribuciones {{GENDER:$1|del usuario|de la usuaria}} $1',
 	'contribsub2' => '$1 ($2)',
 	'createaccountblock' => 'creación de cuenta bloqueada',
 	'change-blocklink' => 'cambiar bloqueo',
 	'contribslink' => 'contribuciones',
 	'cant-block-while-blocked' => 'No puedes bloquear a otros usuarios mientras estás bloqueado.',
-	'cant-see-hidden-user' => 'El usuario que está intentando bloquear ya ha sido bloqueado y oculto. Puesto que usted no tiene el derecho hideuser, usted no puede ver o editar los bloqueos del usuario.',
-	'cant-move-user-page' => 'No tienes permiso para mover páginas de usuario (excepto subpáginas).',
-	'cant-move-to-user-page' => 'No tienes permiso para mover una página a una página de usuario (excepto a subpáginas de usuario).',
-	'cantmove-titleprotected' => 'No puedes mover la página a esta ubicación, porque el nuevo título ha sido protegido para evitar su creación.',
-	'common.css' => '/* Los estilos CSS definidos aquí aplicarán a todas las pieles (skins) */',
-	'common.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página */',
+	'cant-see-hidden-user' => 'El usuario que está intentando bloquear ya ha sido bloqueado y ocultado. Puesto que no tienes el derecho hideuser, no puedes ver o editar los bloqueos del usuario.',
+	'cant-move-user-page' => 'No tienes permiso para renombrar páginas de usuario (excepto subpáginas).',
+	'cant-move-to-user-page' => 'No tienes permiso para renombrar una página a una página de usuario (excepto a subpáginas de usuario).',
+	'cantmove-titleprotected' => 'No puedes renombrar la página a esta ubicación, porque el nuevo título ha sido protegido para evitar su creación.',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
+	'common.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página. */',
 	'creditspage' => 'Créditos de la página',
 	'confirmemail' => 'Confirmar dirección de correo electrónico',
 	'confirmemail_noemail' => 'No tienes una dirección de correo electrónico válida en tus [[Special:Preferences|preferencias de usuario]].',
-	'confirmemail_text' => '{{SITENAME}} requiere la validación de tu dirección de correo antes de usarlo. Pulsa el botón de abajo para enviar la confirmación.
-El correo incluirá un enlace con un código. Introdúcelo para confirmar la validez de tu dirección.',
-	'confirmemail_pending' => 'Ya se te ha enviado un código de confirmación; si creaste una cuenta recientemente, puede que tengas que esperar unos minutos para que te llegue antes de intentar pedir un nuevo código.',
-	'confirmemail_send' => 'Envíar el código de confimación.',
-	'confirmemail_sent' => 'Confirmación de correo enviada.',
-	'confirmemail_oncreate' => 'Se ha enviado un código de confirmación a tu dirección de correo electrónico.
-Este código no es necesario para iniciar sesión, pero necesitarás proporcionarlo antes de activar cualquier función basada en correo electrónico en el wiki.',
-	'confirmemail_sendfailed' => 'No fue posible enviar el correo de confirmación. Por favor, comprueba la validez de la dirección de correo.
+	'confirmemail_text' => '{{SITENAME}} requiere la validación de tu dirección de correo electrónico antes de usarlo. Pulsa el botón de abajo para enviar la confirmación.
+El correo electrónico incluirá un enlace con un código. Introdúcelo para confirmar la validez de tu dirección.',
+	'confirmemail_pending' => '<div class="error"> Ya te hemos enviado un código de confirmación por correo electrónico; si creaste una cuenta recientemente, puede que tengas que esperar unos minutos a que te llegue antes de intentar pedir un nuevo código.</div>',
+	'confirmemail_send' => 'Enviar el código de confimación',
+	'confirmemail_sent' => 'Confirmación de correo enviado.',
+	'confirmemail_oncreate' => 'Se ha enviado un código de confirmación a tu dirección de correo electrónico. Este código no es necesario para iniciar sesión, pero necesitarás ingresarlo antes de activar cualquier función basada en correo electrónico en el wiki. Si no has recibido el correo electrónico, recuerda revisar tus carpeta de spam. Por favor, permite correos electrónicos de community@wikia.com que sean recibidos.',
+	'confirmemail_sendfailed' => '{{SITENAME}} no pudo enviar el correo de confirmación. Por favor, comprueba que no haya caracteres inválidos en la dirección de correo electrónico que has ingresado. 
 
-El servidor indicó el error: $1',
-	'confirmemail_invalid' => 'Código de confirmación incorrecto. El código debe haber expirado.',
-	'confirmemail_needlogin' => 'Necesitas $1 para confirmar tu dirección electrónica.',
-	'confirmemail_success' => 'Su dirección de correo ha sido confirmada
-Ahora puedes [[Special:UserLogin|identificarte]] y colaborar en el wiki.',
-	'confirmemail_loggedin' => 'Tu dirección de correo electrónico ha sido confirmada.',
+El error del mensajero fue: $1',
+	'confirmemail_invalid' => '<center>Código de confirmación incorrecto. El código puede haber expirado.<br/>
+Tienes que recibir un nuevo código para confirmar tu cuenta.
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>Pedir un nuevo código por correo electrónico</span>]]</span></center>  
+<br>',
+	'confirmemail_needlogin' => 'Necesitas $1 para confirmar tu dirección de correo electrónico.',
+	'confirmemail_success' => 'Tu dirección de correo electrónico ha sido confirmada
+Ahora puedes [[Special:UserLogin|iniciar sesión]] y colaborar en el wiki.',
+	'confirmemail_loggedin' => "'''Tu dirección de correo electrónico ha sido confirmada.'''
+
+¡Bienvenido!
+
+Con miles de comunidades en Fandom, hay varias formas de divertirte.
+
+Pasa algún tiempo conociendo la plataforma, leyendo páginas interesantes, escribiendo contenido sobre tus temas favoritos o conociendo a otros miembros de la comunidad.
+
+El equipo comunitario de Fandom",
 	'confirmemail_error' => 'Algo salió mal al guardar su confirmación.',
-	'confirmemail_subject' => 'confirmación de la dirección de correo de {{SITENAME}}',
-	'confirmemail_body' => 'Alguien, probablemente usted mismo, ha registrado desde la dirección IP $1 la cuenta "$2" en {{SITENAME}}, utilizando esta dirección de correo.
+	'confirmemail_subject' => 'Por favor, confirma tu cuenta de Fandom',
+	'confirmemail_body' => 'Hola $2,
 
-Para confirmar que esta cuenta realmente le pertenece y activar el correo en {{SITENAME}}, siga este enlace:
+¡Te damos la bienvenida a Fandom!
 
-$3
+Por favor, tómate un minuto para activar tu nueva cuenta: $3
 
-Si la cuenta *no* es suya, siga este otro enlace para cancelar la confirmación de la dirección de correo:
+Y ahora, llegó el momento... ¡hora de empezar la aventura!
 
-$5
+Echa un vistazo a la actividad reciente de la comunidad en la que acabas de participar. Comienza a contribuir mejorando las páginas que ya hay o creando nuevas páginas.
 
-El código de confirmación expirará en $4.',
+Explora nuestras comunidades sobre videojuegos, entretenimiento o cualquier otro tema y diviértete descubriendo cosas nuevas.
+
+Descubre qué sucede en Fandom y conoce a otros usuarios en nuestra Comunidad Central.
+
+¡Diviértete!
+- Equipo comunitario de Fandom
+
+___________________________________________
+* Si necesitas ayuda o consejos, visita nuestra Comunidad Central http://comunidad.wikia.com
+* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de correos electrónicos desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'confirmemail_body_changed' => 'Alguien, probablemente tú,
-ha modificado la dirección de correo electrónico asociado a la cuenta "$2" hacia esta en {{SITENAME}}, desde la dirección IP $1.
+ha cambiado la dirección de correo electrónico asociada a la cuenta "$2" hacia esta en {{SITENAME}}, desde la dirección IP $1.
 
-Para confirmar que esta cuenta realmente te pertenece y reactivar las funciones de correo electrónico en {{SITENAME}}, abre este enlace en su navegador:
+Para confirmar que esta cuenta realmente te pertenece y reactivar las funciones de correo electrónico en {{SITENAME}}, abre este enlace en tu navegador:
 
 $3
 
@@ -7412,29 +7497,27 @@ Si la cuenta *no* te pertenece, sigue el siguiente enlace para cancelar la confi
 $5
 
 Este código de confirmación expirará el $4.',
-	'confirmemail_body_set' => 'Alguien, probablemente tu desde la dirección IP $1,
-ha cambiado la dirección de correo electrónico de la cuenta $2 a esta dirección en {{SITENAME}}.
+	'confirmemail_body_set' => 'Alguien, probablemente tú,
+ha cambiado la dirección de correo electrónico asociada a la cuenta "$2" hacia esta en {{SITENAME}}, desde la dirección IP $1.
 
-Para confirmar que esta cuenta realmente te pertenece y reactivar las capacidades del correo electrónico en {{SITENAME}}, abre este enlace en tu navegador:
+Para confirmar que esta cuenta realmente te pertenece y reactivar las funciones de correo electrónico en {{SITENAME}}, abre este enlace en tu navegador:
 
 $3
 
-Si la cuenta *no* te pertenece sigue entonces este otro enlace para cancelar la confirmación del correo electrónico:
+Si la cuenta *no* te pertenece, sigue el siguiente enlace para cancelar la confirmación:
 
 $5
 
-Este código de confirmación caducará el $4.',
+Este código de confirmación expirará el $4.',
 	'confirmemail_invalidated' => 'La confirmación de la dirección de correo electrónico ha sido cancelada',
-	'confirmrecreate' => "El usuario [[User:$1|$1]] ([[User talk:$1|disc.]]) borró esta página después de que comenzaste a editarla, por el motivo:
-: ''$2''
-Confirma que realmente quieres volver a crear esta página.",
+	'confirmrecreate' => "El usuario [[User:$1|$1]] ([[User talk:$1|discusión]]) borró este artículo después de que tú empezaras a editarlo y dio esta motivo: ''$2'' Por favor, confirma que realmente deseas crear de nuevo el artículo.",
 	'confirmrecreate-noreason' => 'El usuario [[User:$1|$1]] ([[User talk:$1|discusión]]) borró esta página después de que comenzaras a editarla. Por favor confirma que realmente quieres recrear esta página.',
-	'confirm_purge_button' => 'Aceptar',
-	'confirm-purge-top' => '¿Limpiar la caché de esta página?',
+	'confirm_purge_button' => 'Confirmar',
+	'confirm-purge-top' => '¿Quieres limpiar la caché de esta página?',
 	'confirm-purge-bottom' => 'Purgar una página limpia la caché y fuerza a que aparezca la versión más actual.',
-	'confirm-watch-button' => 'Aceptar',
+	'confirm-watch-button' => 'OK',
 	'confirm-watch-top' => '¿Añadir esta página a tu lista de seguimiento?',
-	'confirm-unwatch-button' => 'Aceptar',
+	'confirm-unwatch-button' => 'OK',
 	'confirm-unwatch-top' => '¿Quitar esta página de tu lista de seguimiento?',
 	'comma-separator' => ',&#32;',
 	'comparepages' => 'Comparar páginas',
@@ -7447,9 +7530,112 @@ Confirma que realmente quieres volver a crear esta página.",
 	'compare-invalid-title' => 'El título especificado es inválido.',
 	'compare-title-not-exists' => 'El título especificado no existe.',
 	'compare-revision-not-exists' => 'La revisión especificada no existe.',
-	'create_an_account' => 'Crea una cuenta',
-	'createpage' => 'Empieza un artículo nuevo',
-	'choose_reason' => 'Elegir la razón',
+	'create_an_account' => 'Crear una cuenta',
+	'createpage' => 'Crea una página',
+	'choose_reason' => 'Elegir el motivo',
+	'create-account-new' => 'Crea tu cuenta de FANDOM',
+	'cockpit_hide' => 'Ocultar cabina',
+	'community' => 'Comunidad',
+	'corporatepage-company-info-headline' => 'Información de la compañía',
+	'corporatepage-create-button' => 'Crear un wiki',
+	'corporatepage-create-your-own-wiki' => 'Crea tu propio wiki y encuentra una comunidad que comparta tus gustos.',
+	'corporatepage-edits-made' => 'ediciones hechas hoy',
+	'corporatepage-featured-wikis-headline' => 'Wikis destacados',
+	'corporatepage-find-a-wiki' => 'Encuentra un wiki',
+	'corporatepage-footer-bottom' => '* http://comunidad.wikia.com/wiki/Project:T%C3%A9rminos_de_uso|Términos de Uso
+* http://comunidad.wikia.com/wiki/Project:Pol%C3%ADtica_de_Privacidad|Políticas de Privacidad
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com|Deutsch
+* http://it.wikia.com|Italiano
+* http://comunidad.wikia.com|Espa&ntilde;ol
+* http://pl.wikia.com|Polski
+* http://fr.wikia.com|Français
+* Languages|Más...',
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/wikia.es|Hazte fan en Facebook|File:Icon.footer.facebook.32x32.png|new-window
+* https://twitter.com/es_wikia|Síguenos en Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia|Lee nuestro blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* http://comunidad.wikia.com/wiki/Sobre_nosotros|Acerca de Wikia
+* Hiring|Trabajo
+* Special:Contact|Contacto
+* Advertising|Publicidad
+* http://comunidad.wikia.com/wiki/Project:Prensa|Prensa
+* http://ayuda.wikia.com/|Ayuda',
+	'corporatepage-from' => 'de',
+	'corporatepage-global-nav-headline' => 'Navegación Global de Wikia',
+	'corporatepage-go-to-wiki' => 'Ir a $1',
+	'corporatepage-hide' => 'Ocultar Página',
+	'corporatepage-homepage-feature-headline' => 'Destacado en Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Bienvenidos a Wikia</h1>
+<h2>Colabora con personas con tus mismos gustos.</h2></div>
+<h2>¡Comienza hoy mismo!</h2>',
+	'corporatepage-in-the-know' => 'Noticias de Wikia',
+	'corporatepage-more-link' => 'Más Enlaces',
+	'corporatepage-pages-added' => 'páginas creadas en la última hora',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. Todos los derechos reservados',
+	'corporatepage-search-title' => 'Introduce los términos de la búsqueda para encontrar los wikis.',
+	'corporatepage-update-fqr' => 'actualizado cada hora',
+	'corporatepage-watchlist' => 'Lista de seguimiento',
+	'corporatepage-wikia-editors' => 'editores',
+	'corporatepage-wikia-hot-spots-desc' => 'Estas son las páginas más populares de la semana, ordenadas por el número de editores.',
+	'corporatepage-wikia-hot-spots' => 'Anuncios de Wikia',
+	'corporatepage-wikia-international' => 'Wikia Internacional',
+	'corporatepage-wikia-overview-headline' => 'Información General',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>La comunidad habla</h1>
+<h2>Echa un vistazo a las comunidades de Wikia</h2></hgroup>
+<p>Visita el <a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> y comparte tus pensamientos sobre la<a href='http://trueblood.wikia.com/wiki/Season_3'> 3era temporada</a> </p>
+<p>Haz una parada por el <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> y mira algunos de los vídeos que muestran algunas de las fechorías <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>del Libro de Naughty</a>.</p>
+<p>¡Come lo necesario para conseguir un cuerpo perfecto para este verano! ¡Visita <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> para ideas sobre recetas de cocina saludables!</p>",
+	'corporatepage-wikia-wide-stats-headline' => 'Estadísticas de toda Wikia',
+	'corporatepage-words-added' => 'palabras añadidas en la última semana',
+	'contris' => 'Contribuciones',
+	'contris_s' => 'Contribuciones',
+	'createwikipagetitle' => 'Crear un nuevo wiki',
+	'custom_info' => 'Los temas personalizados pueden ser creados seleccionando "Personalizado" más arriba y luego editandolo',
+	'categories-summary' => '',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'createwiki' => 'Crear un nuevo wiki',
+	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
+	'createwikititle' => 'Title for the wiki',
+	'createwikiname' => 'Name for the wiki',
+	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
+	'createwikidesc' => 'Description of the wiki',
+	'createwikiaddtnl' => 'Additional Information',
+	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'createwikilang' => 'Default language for this wiki',
 );
 
 $messages['et'] = array(
@@ -7882,7 +8068,7 @@ $messages['fa'] = array(
 	'cancel' => 'لغو',
 	'create' => 'ایجاد',
 	'copyright' => 'محتوا تحت اجازه‌نامهٔ $1 در دسترس است.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyrightpage' => 'w:Wikia:Licensing|ویکیا:حق تکثیر',
 	'currentevents' => 'رویدادهای کنونی',
 	'currentevents-url' => 'Project:رویدادهای کنونی',
 	'collapsible-collapse' => 'نهفتن',
@@ -7920,10 +8106,7 @@ $2',
 *'''اینترنت اکسپلورر:''' کلید ''Ctrl'' را نگه‌دارید و روی دکمهٔ ''Refresh'' کلیک‌ کنید، یا کلید‌های ''Ctrl-F5'' را با هم فشار دهید
 *'''کانکوئرر:''' روی دکمهٔ ''Reload'' کلیک کنید و یا کلید ''F5'' را فشار دهید
 *'''اپرا:''' حافظهٔ نهانی مرورگر را از طریق منوی ''Tools &rarr; Preferences'' پاک کنید",
-	'copyrightwarning' => "لطفاً توجه داشته باشید که فرض می‌شود کلیهٔ مشارکت‌های شما با {{SITENAME}} تحت «$2» منتشر می‌شوند (برای جزئیات بیشتر به $1 مراجعه کنید).
-اگر نمی‌خواهید نوشته‌هایتان بی‌رحمانه ویرایش شده و به دلخواه توزیع شود، اینجا نفرستیدشان.<br />
-همچنین شما دارید به ما قول می‌دهید که خودتان این را نوشته‌اید، یا آن را از یک منبع آزاد با مالکیت عمومی یا مشابه آن برداشته‌اید.
-'''کارهای دارای حق تکثیر (copyright) را بی‌اجازه نفرستید!'''",
+	'copyrightwarning' => 'لطفاً توجه داشته باشید که فرض می‌شود کلیهٔ مشارکت‌های شما با {{SITENAME}} تحت «$2» منتشر می‌شوند (برای جزئیات بیشتر به $1 مراجعه کنید).<br/>',
 	'copyrightwarning2' => "لطفاً توجه داشته باشید که فرض می‌شود کلیهٔ مشارکت‌های شما با {{SITENAME}} ممکن است توسط دیگر مشارکت‌کنندگان ویرایش شوند، تغییر یابند یا حذف شوند.
 اگر نمی‌خواهید نوشته‌هایتان بی‌رحمانه ویرایش شود، اینجا نفرستیدشان.<br />
 همچنین شما دارید به ما قول می‌دهید که خودتان این را نوشته‌اید، یا آن را از یک منبع آزاد با مالکیت عمومی یا مشابه آن برداشته‌اید (برای جزئیات بیشتر به $1 مراجعه کنید).
@@ -7966,7 +8149,23 @@ $2',
 	'cant-move-user-page' => 'شما اجازه ندارید صفحه‌های کاربری سرشاخه را انتقال دهید.',
 	'cant-move-to-user-page' => 'شما اجازه ندارید که یک صفحه را به یک صفحهٔ کاربر انتقال دهید (به استثنای زیر صفحه‌های کاربری).',
 	'cantmove-titleprotected' => 'شما نمی‌توانید صفحه را به این نشانی انتقال دهید، چرا که عنوان جدید در برابر ایجاد محافظت شده‌است',
-	'common.css' => '/* دستورات این بخش همهٔ کاربران را تحت تاثیر قرار می‌دهند. */',
+	'common.css' => '/* <pre><nowiki> */
+
+/** دستورات این بخش همهٔ کاربران را تحت تاثیر قرار می‌دهند. **/
+
+
+/* تغییر مسیرها را در ویژه:تمام صفحه‌ها و ویژه:پیگیری‌ها به صورت ایتالیک نمایش می‌دهد */
+.allpagesredirect {
+   font-style: italic;
+}
+.allpagesredirect:after {
+   color: #808080; content: " (redirect)"
+}
+.watchlistredir {
+   font-style: italic;
+}
+
+/* </pre></nowiki> */',
 	'creditspage' => 'اعتبارات این صفحه',
 	'confirmemail' => 'تأیید نشانی پست الکترونیکی',
 	'confirmemail_noemail' => 'شما در صفحهٔ [[Special:Preferences|ترجیحات کاربری]] خود نشانی پست الکترونیکی معتبری وارد نکرده‌اید.',
@@ -7980,27 +8179,40 @@ $2',
 نشانی پست الکترونیکی را از نظر وجود نویسه‌های نامعتبر بررسی کنید.
 
 پاسخ سامانه ارسال پست الکترونیکی: $1',
-	'confirmemail_invalid' => 'کد تأیید نامعتبر است. ممکن است که منقضی شده باشد.',
+	'confirmemail_invalid' => '<center>متشکر از تأییدکردن آدرس الکترونیکی خود، ولی کد تأیید شما منقضی شده یا نامعتبر می‌باشد.<br/>
+شما برای تأیید حساب کاربری خود نیاز به کد جدید دارید.  
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>کد تایید جدید را از طریق پست الکترونیکی درخواست کنید</span>]]</span></center>  
+<br>',
 	'confirmemail_needlogin' => 'برای تأیید نشانی پست الکترونیکی‌تان نیاز به $1 دارید.',
 	'confirmemail_success' => 'نشانی پست الکترونیکی شما تأیید شده‌است.
 
 اینک می‌توانید [[Special:UserLogin|به سامانه وارد شوید]] و از ویکی لذت ببرید.',
 	'confirmemail_loggedin' => 'نشانی پست الکترونیکی شما تأیید شد.',
 	'confirmemail_error' => 'هنگام ذخیرهٔ تأیید شما به مشکلی برخورده شد.',
-	'confirmemail_subject' => 'تأیید نشانی پست الکترونیکی شما {{SITENAME}}',
-	'confirmemail_body' => 'یک نفر، احتمالاً خود شما، از نشانی آی‌پی $1 حساب کاربری‌ای با نام «$2» و این نشانی پست الکترونیکی در {{SITENAME}} ایجاد کرده‌است.
+	'confirmemail_subject' => 'لطفا حساب کاربری ویکیای خود را تایید کنید',
+	'confirmemail_body' => 'سلام $2،
 
-برای تأیید این که این حساب واقعاً متعلق به شماست و نیز برای فعال‌سازی امکانات پست الکترونیک {{SITENAME}} پیوند زیر را در مرورگر اینترنت خود باز کنید:
+از ثبت‌نام شما در ویکیا متشکریم!
 
-$3
+لطفا یک دقیقه صرف فعال‌سازی حساب کاربری خود کنید: $3
 
-اگر شما این حساب کاربری را ثبت *نکرده‌اید*، لطفاً پیوند زیر را
-دنبال کنید تا تأیید نشانی پست الکترونیکی لغو شود:
+آماده‌اید برای شروع؟
 
-$5
+یک نگاهی به تمام فعالیت‌های اخیر جامعه‌ای که پیوسته‌اید بکنید! فعالیت خود را با گذاشتن پیغام و یا ویرایش صفحات آغاز کنید.
 
-این کدِ تأیید در تاریخ $4 منقضی خواهد شد.
-</div>',
+ویدیوی ویکیا را در http://wikia.com/go تماشا کنید و و شروع کنید به کاوش‌کردن در یکی از ویکی‌های مورد علاقۀ ما در بازی‌ها، سرگرمی‌ها، و شیوۀ زندگی.  
+
+با جامعۀ ویکیا دیدار داشته‌باشید، آنچه در حال اتفاق افتادن است را بیاموزید، و کمک پیدا کنید - همه را در ویکیای مرکزی.
+
+خوش باشید!
+
+- بخش پشتبانی جامعۀ ویکیا 
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}.
+* Click the following link to unsubscribe from all Wikia emails: $UNSUBSCRIBEURL',
 	'confirmemail_body_changed' => 'یک نفر، احتمالاً خود شما، از نشانی آی‌پی $1 نشانی پست الکترونیکی حساب «$2» در {{SITENAME}} را تغییر داده‌است.
 
 برای تأیید این که این حساب واقعاً به شما تعلق دارد و فعال کردن دوبارهٔ ویژگی پست الکترونیک در {{SITENAME}}، پیوند زیر را در مرورگرتان باز کنید:
@@ -8046,6 +8258,12 @@ $5
 	'compare-invalid-title' => 'عنوان تعیین‌شده نامعتبر است.',
 	'compare-title-not-exists' => 'عنوان مشخص شده وجود ندارد.',
 	'compare-revision-not-exists' => 'پالایهٔ مشخص شده وجود ندارد.',
+	'contris' => 'مشارکت‌ها',
+	'contris_s' => 'مشارکت‌ها',
+	'createpage' => 'ایجاد مقاله جدید',
+	'createwiki' => 'ایجاد ویکی جدید',
+	'createwikipagetitle' => 'ایجاد ویکی جدید',
+	'create_an_account' => 'ایجاد حساب کاربری',
 );
 
 $messages['ff'] = array(
@@ -8067,7 +8285,7 @@ $messages['fi'] = array(
 	'cancel' => 'Peruuta',
 	'create' => 'Luo sivu',
 	'copyright' => 'Sisältö on käytettävissä lisenssillä $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyrightpage' => 'w:c:fi:Suomen Wikia:Lisenssointi|Wikia:Lisenssointi',
 	'currentevents' => 'Ajankohtaista',
 	'currentevents-url' => 'Project:Ajankohtaista',
 	'collapsible-collapse' => 'Piilota',
@@ -8105,7 +8323,8 @@ Sinun ei tarvitse huomioida tätä viestiä, jos tunnus on luotu virheellisesti.
 * '''Internet Explorer:''' Napsauta ''Ctrl''-näppäin pohjassa ''Päivitä'' tai paina ''Ctrl-F5''
 * '''Konqueror''': Napsauta ''Päivitä'' tai paina ''F5''
 * '''Opera:''' Tyhjennä välimuisti: ''Tools→Preferences''",
-	'copyrightwarning' => "'''Muutoksesi astuvat voimaan välittömästi.''' Kaikki {{GRAMMAR:illative|{{SITENAME}}}} tehtävät tuotokset katsotaan julkaistuksi $2 -lisenssin mukaisesti ($1). Jos et halua, että kirjoitustasi muokataan armottomasti ja uudelleenkäytetään vapaasti, älä tallenna kirjoitustasi. Tallentamalla muutoksesi lupaat, että kirjoitit tekstisi itse, tai kopioit sen jostain vapaasta lähteestä. '''ÄLÄ KÄYTÄ TEKIJÄNOIKEUDEN ALAISTA MATERIAALIA ILMAN LUPAA!'''",
+	'copyrightwarning' => "Kaikki muokkaukset sivustoon {{SITENAME}} katsotaan julkaistuksi $2-lisenssin alaisena (katso $1 saadaksesi lisätietoa). Mikäli et halua, että sisältöäsi muokataan tai levitetään, älä julkaise sitä.<br />
+'''Ethän myöskään julkaise tekijänoikeussuojattua materiaalia luvattomasti!'''",
 	'copyrightwarning2' => "Huomaa, että kuka tahansa voi muokata, muuttaa ja poistaa kaikkia sivustolle tekemiäsi lisäyksiä ja muutoksia. Muokkaamalla sivustoa luovutat sivuston käyttäjille tämän oikeuden ja takaat, että lisäämäsi aineisto on joko itse kirjoittamaasi tai peräisin jostain vapaasta lähteestä. Lisätietoja sivulla $1. '''TEKIJÄNOIKEUDEN ALAISEN MATERIAALIN KÄYTTÄMINEN ILMAN LUPAA ON EHDOTTOMASTI KIELLETTYÄ!'''",
 	'cascadeprotectedwarning' => '<strong>Vain ylläpitäjät voivat muokata tätä sivua, koska se on sisällytetty alla {{PLURAL:$1|olevaan laajennetusti suojattuun sivuun|oleviin laajennetusti suojattuihin sivuihin}}</strong>:',
 	'cantcreateaccounttitle' => 'Tunnuksen luominen epäonnistui',
@@ -8142,7 +8361,15 @@ Katso myös [[Special:WantedCategories|halutut luokat]].',
 	'cant-move-user-page' => 'Sinulla ei ole lupaa siirtää käyttäjäsivuja (lukuun ottamatta alasivuja).',
 	'cant-move-to-user-page' => 'Sinulla ei ole lupaa siirtää sivuja käyttäjäsivuiksi (paitsi alasivuiksi).',
 	'cantmove-titleprotected' => 'Sivua ei voi siirtää tälle nimelle, koska tämän nimisen sivun luonti on estetty.',
-	'common.css' => '/* Tämä sivu sisältää koko sivustoa muuttavia tyylejä. */',
+	'common.css' => '/***** Tämä sivu sisältää koko sivustoa muuttavia tyylejä. *****/
+/* Katso myös: [[MediaWiki:Monobook.css]] */
+/* <pre> */
+
+/* Merkitse uudelleenohjaukset sivuilla Toiminnot:Kaikki sivut ja Toiminnot:Tarkkailulista */
+.allpagesredirect { font-style: italic; }
+.watchlistredir { font-style: italic; }
+
+/* </pre> */',
 	'common.js' => '/* Tämän sivun JavaScript-koodi liitetään jokaiseen sivulataukseen */',
 	'creditspage' => 'Sivun tekijäluettelo',
 	'confirmemail' => 'Varmenna sähköpostiosoite',
@@ -8219,8 +8446,14 @@ Varmista, että haluat luoda sivun uudelleen.",
 	'compare-title-not-exists' => 'Määrittämääsi otsikkoa ei ole.',
 	'compare-revision-not-exists' => 'Määrittämääsi muutosta ei ole olemassa.',
 	'create_an_account' => 'Luo tunnus',
-	'createpage' => 'Aloita uusi artikkeli',
+	'createpage' => 'Luo uusi artikkeli',
 	'choose_reason' => 'Valitse syy',
+	'cockpit_hide' => 'Piilota ohjaamo',
+	'community' => 'Yhteisö',
+	'contris' => 'Muokkaukset',
+	'contris_s' => 'Muokkaukset',
+	'createwiki' => 'Luo uusi wiki',
+	'custom_info' => 'Itsetehtyjä teemoja voi rakentaa valitsemalla "Custom" ylhäältä ja sitten muokkaamalla',
 );
 
 $messages['fiu-vro'] = array(
@@ -8513,8 +8746,8 @@ Hendan váttanarkoda fer úr gildi tann $4.',
 );
 
 $messages['fr'] = array(
-	'category_header' => 'Pages dans la catégorie « $1 »',
-	'category-media-header' => 'Fichiers multimédias dans la catégorie « $1 »',
+	'category_header' => '<span style="font-size: 80%;">Pages dans la catégorie « $1 »</span>',
+	'category-media-header' => '<span style="font-size: 80%;">Fichiers multimédias dans la catégorie « $1 »</span>',
 	'category-empty' => "''Cette catégorie ne contient aucune page, sous-catégorie ou fichier multimédia.''",
 	'category-subcat-count' => 'Cette catégorie comprend {{PLURAL:$2|la sous-catégorie|$2 sous-catégories, dont {{PLURAL:$1|celle|les $1}}}} ci-dessous.',
 	'category-subcat-count-limited' => 'Cette catégorie comprend {{PLURAL:$1|la sous-catégorie|les $1 sous-catégories}} ci-dessous.',
@@ -8524,8 +8757,8 @@ $messages['fr'] = array(
 	'category-file-count-limited' => '{{PLURAL:$1|Le fichier suivant figure|Les $1 fichiers suivants figurent}} dans la présente catégorie.',
 	'cancel' => 'Annuler',
 	'create' => 'Créer',
-	'copyright' => 'Contenu disponible sous $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'Sous licence $1.',
+	'copyrightpage' => 'homepage:fr:Licence|Wikia : Licence',
 	'currentevents' => 'Actualités',
 	'currentevents-url' => 'Project:Actualités',
 	'collapsible-collapse' => 'masquer',
@@ -8538,34 +8771,33 @@ $2',
 	'customcssprotected' => 'Vous n’avez pas la permission de modifier cette page de CSS, car elle contient les paramètres personnels d’un autre utilisateur.',
 	'customjsprotected' => "Vous n'avez pas la permission de modifier cette page de JavaScript, car elle contient les paramètres personnels d'un autre utilisateur.",
 	'createaccount' => 'Créer un compte',
-	'createaccountmail' => 'par courriel',
+	'createaccountmail' => 'par e-mail',
 	'createaccountreason' => 'Motif :',
 	'createaccounterror' => 'Impossible de créer le compte : $1',
-	'cannotchangeemail' => 'Les adresses de courriel des comptes ne peuvent pas être modifiées sur ce wiki.',
+	'cannotchangeemail' => 'Les adresses e-mail des comptes ne peuvent pas être modifiées sur ce wiki.',
 	'createaccount-title' => 'Création d’un compte pour {{SITENAME}}',
-	'createaccount-text' => 'Quelqu’un a créé un compte pour votre adresse de courriel sur {{SITENAME}} ($4) intitulé « $2 », avec le mot de passe « $3 ».
+	'createaccount-text' => 'Quelqu’un a créé un compte pour votre adresse e-mail sur {{SITENAME}} ($4), « $2 », avec le mot de passe « $3 ».
 Vous devriez ouvrir une session et modifier dès à présent votre mot de passe.
 
 Ignorez ce message si ce compte a été créé par erreur.',
-	'changeemail' => 'Changer l’adresse de courriel',
-	'changeemail-header' => 'Changer l’adresse de courriel du compte',
-	'changeemail-text' => 'Remplissez ce formulaire pour changer votre adresse de courriel. Vous devrez entrer votre mot de passe pour confirmer ce changement.',
-	'changeemail-no-info' => 'Vous devez être connecté pour pouvoir accéder directement à cette page.',
-	'changeemail-oldemail' => 'Adresse de courriel actuelle :',
-	'changeemail-newemail' => 'Nouvelle adresse de courriel :',
-	'changeemail-none' => '(aucune)',
-	'changeemail-submit' => 'Changer l’adresse de courriel',
+	'changeemail' => 'Changer l’adresse e-mail',
+	'changeemail-header' => 'Changer l’adresse e-mail du compte',
+	'changeemail-text' => 'Remplissez ce formulaire pour changer votre adresse e-mail. Vous devrez saisir votre mot de passe pour confirmer ce changement.',
+	'changeemail-no-info' => 'Vous devez être connecté pour avoir accès à cette page.',
+	'changeemail-oldemail' => 'Adresse e-mail actuelle :',
+	'changeemail-newemail' => 'Nouvelle adresse e-mail :',
+	'changeemail-none' => '(aucun)',
+	'changeemail-submit' => 'Changer l’adresse e-mail',
 	'changeemail-cancel' => 'Annuler',
-	'confirmedittext' => 'Vous devez confirmer votre adresse de courriel avant de modifier les pages.
-Veuillez entrer et valider votre adresse de courriel dans vos [[Special:Preferences|préférences]].',
-	'clearyourcache' => "'''Note :''' après avoir enregistré vos préférences, vous devrez forcer le rechargement complet du cache de votre navigateur pour voir les changements.
-* '''Firefox / Safari :''' Maintenez la touche ''Maj'' (''Shift'') en cliquant sur le bouton ''Actualiser'' ou pressez ''Ctrl-F5'' ou ''Ctrl-R'' (''⌘-R'' sur un Mac) ;
-* '''Google Chrome :''' Appuyez sur ''Ctrl-Maj-R'' (''⌘-Shift-R'' sur un Mac) ;
-* '''Internet Explorer :''' Maintenez la touche ''Ctrl'' en cliquant sur le bouton ''Actualiser'' ou pressez ''Ctrl-F5'' ;
-* '''Konqueror :''' Cliquez sur ''Actualiser'' ou pressez ''F5'' ;
-* '''Opera :''' Videz le cache dans ''Outils → Préférences''.",
-	'copyrightwarning' => "Toutes les contributions à {{SITENAME}} sont considérées comme publiées sous les termes de la $2 (voir $1 pour plus de détails). Si vous ne désirez pas que vos écrits soient modifiés et distribués à volonté, merci de ne pas les soumettre ici.<br />
-Vous nous promettez aussi que vous avez écrit ceci vous-même, ou que vous l’avez copié d’une source provenant du domaine public, ou d’une ressource libre. '''N’UTILISEZ PAS DE TRAVAUX SOUS DROIT D’AUTEUR SANS AUTORISATION EXPRESSE !'''",
+	'confirmedittext' => 'Vous devez confirmer votre adresse e-mail avant de modifier les pages.
+Veuillez saisir et valider votre adresse e-mail dans vos [[Special:Preferences|préférences]].',
+	'clearyourcache' => "'''Note :''' Après publication, il peut être nécessaire de [[w:fr:Aide:Cache|purger le cache]] pour voir les modifications.
+
+* '''Chrome''' - Windows : Maintenez la touche Ctrl enfoncée et appuyez sur la touche F5 ; OS X : Maintenez les touches Cmd (⌘) et Shift (⇧) enfoncées et appuyez sur la touche R.
+* '''Safari''' - Maintenez la touche Shift (⇧) enfoncée et cliquez sur le bouton « Recharger » de la barre d'outils.
+* '''Firefox''' - Windows : Maintenez la touche Ctrl enfoncée et appuyez sur la touche F5 ; OS X : Maintenez les touches Cmd (⌘) et Shift (⇧) enfoncées et appuyez sur la touche R.
+* '''Internet Explorer''' : Maintenez la touche Ctrl enfoncée et appuyez sur la touche F5 (ou cliquez sur le bouton « Actualiser »).",
+	'copyrightwarning' => 'Toutes les contributions à {{SITENAME}} sont considérées comme publiées sous les termes de la $2 (voir $1 pour plus de détails).<br/>',
 	'copyrightwarning2' => "Toutes les contributions à {{SITENAME}} peuvent être modifiées ou supprimées par d’autres utilisateurs. Si vous ne désirez pas que vos écrits soient modifiés et distribués à volonté, merci de ne pas les soumettre ici.<br />
 Vous nous promettez aussi que vous avez écrit ceci vous-même, ou que vous l’avez copié d’une source provenant du domaine public, ou d’une ressource libre. (voir $1 pour plus de détails).
 '''N’UTILISEZ PAS DE TRAVAUX SOUS DROIT D’AUTEUR SANS AUTORISATION EXPRESSE !'''",
@@ -8574,28 +8806,26 @@ Vous nous promettez aussi que vous avez écrit ceci vous-même, ou que vous l’
 	'cantcreateaccount-text' => "La création de compte depuis cette adresse IP (<b>$1</b>) a été bloquée par [[User:$3|$3]].
 
 La raison donnée était ''$2''.",
-	'currentrev' => 'Version actuelle',
+	'currentrev' => 'Voir la version courante',
 	'currentrev-asof' => 'Version actuelle en date du $1',
-	'currentrevisionlink' => 'Voir la version courante',
+	'currentrevisionlink' => 'Version actuelle',
 	'cur' => 'actu',
 	'compareselectedversions' => 'Comparer les versions sélectionnées',
-	'changepassword' => 'Changer de mot de passe',
+	'changepassword' => 'Changer le mot de passe',
 	'columns' => 'Colonnes :',
 	'copyuploaddisabled' => 'Import de fichier par URL désactivé.',
 	'categories' => 'Liste des catégories',
-	'categoriespagetext' => '{{PLURAL:$1|La catégorie suivante est utilisée|Les catégories suivantes sont utilisées}} par des pages ou fichiers.
-[[Special:UnusedCategories|Les catégories inutilisées]] ne sont pas affichées ici.
-Voyez aussi [[Special:WantedCategories|les catégories demandées]].',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
 	'categoriesfrom' => 'Afficher les catégories à partir de :',
 	'changed' => 'modifiée',
-	'created' => 'créée',
+	'created' => 'a créé',
 	'confirm' => 'Confirmer',
-	'confirmdeletetext' => 'Vous êtes sur le point de supprimer une page ou un fichier, ainsi que toutes ses versions antérieures historisées. Veuillez confirmer que c’est bien là ce que vous voulez faire, que vous en comprenez les conséquences et que vous faites ceci en accord avec les [[{{MediaWiki:Policy-url}}|règles internes]].',
+	'confirmdeletetext' => 'Vous êtes sur le point de supprimer une page avec tout son historique. Voir aussi [[w:c:communaute:Aide:Supprimer|Aide:Supprimer]].',
 	'cantrollback' => 'Impossible de révoquer la modification ;
 le dernier contributeur est le seul auteur de cette page.',
 	'cannotundelete' => 'La restauration a échoué ;
 un autre utilisateur a probablement déjà restauré la page.',
-	'contributions' => 'Contributions de l’utilisateur',
+	'contributions' => 'Contributions',
 	'contributions-title' => 'Liste des contributions de l’utilisateur $1',
 	'contribsub2' => 'Pour $1 ($2)',
 	'createaccountblock' => 'création de compte bloquée',
@@ -8606,53 +8836,58 @@ un autre utilisateur a probablement déjà restauré la page.',
 	'cant-move-user-page' => 'Vous n’avez pas la permission de renommer les pages principales d’utilisateurs (en dehors de leurs sous-pages).',
 	'cant-move-to-user-page' => 'Vous n’avez pas la permission de renommer une page vers une page utilisateur (à l’exception d’une sous-page).',
 	'cantmove-titleprotected' => 'Vous ne pouvez pas déplacer une page vers cet emplacement car la création de page avec ce nouveau titre a été protégée.',
-	'common.css' => '/* Le CSS placé ici sera appliqué à tous les habillages. */',
-	'common.js' => '/* Tout JavaScript ici sera chargé avec chaque page accédée par n’importe quel utilisateur. */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
+	'common.js' => '/* Tout JavaScript ici sera chargé pour chaque page visitée par n’importe quel utilisateur. */',
 	'creditspage' => 'Crédits de la page',
-	'confirmemail' => 'Confirmer l’adresse de courriel',
-	'confirmemail_noemail' => 'Vous n’avez pas défini une adresse de courriel valide dans vos [[Special:Preferences|préférences]].',
-	'confirmemail_text' => 'Ce wiki nécessite la vérification de votre adresse de courriel avant de pouvoir utiliser toute fonction de messagerie.
-Utilisez le bouton ci-dessous pour envoyer un courriel de confirmation à votre adresse.
-Le courriel inclura un lien comportant un code à usage unique et limité dans le temps ;
-chargez ce lien dans votre navigateur pour confirmer que votre adresse de courriel est valide.',
-	'confirmemail_pending' => 'Un code de confirmation vous a déjà été envoyé par courriel ;
-si vous venez de créer votre compte, veuillez attendre quelques minutes que le courriel arrive avant de demander un nouveau code.',
+	'confirmemail' => 'Confirmer l’adresse e-mail',
+	'confirmemail_noemail' => 'Vous n’avez pas défini une adresse e-mail valide dans vos [[Special:Preferences|préférences]].',
+	'confirmemail_text' => "Ce wiki nécessite la vérification de votre adresse e-mail avant de pouvoir utiliser toute fonction de messagerie.
+Utilisez le bouton ci-dessous pour envoyer un e-mail de confirmation à votre adresse.
+L'e-mail inclura un lien comportant un code à usage unique et limité dans le temps ;
+chargez ce lien dans votre navigateur pour confirmer que votre adresse e-mail est valide.",
+	'confirmemail_pending' => "Un code de confirmation vous a déjà été envoyé par e-mail ;
+si vous venez de créer votre compte, veuillez attendre quelques minutes que l'email arrive avant de demander un nouveau code.",
 	'confirmemail_send' => 'Envoyer un code de confirmation',
-	'confirmemail_sent' => 'Courriel de confirmation envoyé',
-	'confirmemail_oncreate' => 'Un code de confirmation a été envoyé à votre adresse de courriel.
-Ce code n’est pas requis pour vous identifier sur ce wiki, mais vous devrez le fournir pour activer toute fonction de messagerie.',
-	'confirmemail_sendfailed' => '{{SITENAME}} n’a pas pu vous envoyer le courriel de confirmation.
-Veuillez vérifiez que votre adresse de courriel ne comprend aucun caractère incorrect.
+	'confirmemail_sent' => 'E-mail de confirmation envoyé',
+	'confirmemail_oncreate' => "Un code de confirmation a été envoyé à votre adresse e-mail.
+Ce code n’est pas requis pour vous identifier sur ce wiki, mais vous devrez le fournir pour activer toute fonction de messagerie. Si vous ne recevez pas cet e-mail, n'oubliez pas de vérifier vos messages indésirables (spam). Veuillez autoriser les e-mails en provenance de community@wikia.com.",
+	'confirmemail_sendfailed' => "{{SITENAME}} n’a pas pu vous envoyer l'e-mail de confirmation.
+Veuillez vérifiez que votre adresse e-mail ne comprend aucun caractère incorrect.
 
-Le programme d’envoi de courriel a retourné l’indication suivante : $1',
+Le serveur de messagerie a retourné l’indication suivante : $1",
 	'confirmemail_invalid' => 'Code de confirmation incorrect.
-Celui-ci a peut-être expiré.',
-	'confirmemail_needlogin' => 'Vous devez vous $1 pour confirmer votre adresse de courriel.',
-	'confirmemail_success' => 'Votre adresse de courriel a été confirmée.
-Vous pouvez maintenant vous [[Special:UserLogin|{{MediaWiki:Loginreqlink}}]] et profiter du wiki.',
-	'confirmemail_loggedin' => 'Votre adresse de courriel est maintenant confirmée.',
+Celui-ci a peut-être expiré.
+
+Un nouveau code peut être envoyé via [[Special:ConfirmEmail|cette page]].',
+	'confirmemail_needlogin' => 'Vous devez vous $1 pour confirmer votre adresse e-mail.',
+	'confirmemail_success' => 'Votre adresse e-mail a été confirmée. Vous pouvez maintenant vous [[Special:UserLogin|connecter]] et profiter du wiki.',
+	'confirmemail_loggedin' => 'Votre adresse e-mail est maintenant confirmée.',
 	'confirmemail_error' => 'Un problème est survenu lors de l’enregistrement de votre confirmation.',
-	'confirmemail_subject' => 'Confirmation d’adresse de courriel pour {{SITENAME}}',
-	'confirmemail_body' => 'Quelqu’un, probablement vous, à partir de l’adresse IP $1,
-a enregistré un compte « $2 » avec cette adresse de courriel
-sur le site {{SITENAME}}.
+	'confirmemail_subject' => 'Veuillez confirmer votre compte Fandom',
+	'confirmemail_body' => "Bonjour $2,
 
-Pour confirmer que ce compte vous appartient vraiment et afin
-d’activer les fonctions de messagerie sur {{SITENAME}},
-veuillez suivre ce lien dans votre navigateur :
+Merci de vous êtes inscrit sur Fandom !
 
-$3
+Veuillez prendre une minute pour activer votre nouveau compte en confirmant votre adresse e-mail : $3.
 
-Si vous n’avez *pas* enregistré ce compte, n’ouvrez pas ce lien ;
-vous pouvez suivre l’autre lien ci-dessous pour annuler la
-confirmation de votre adresse courriel :
+Prêt à commencer ?
 
-$5
+Regardez l'activité récente de la communauté que vous venez de rejoindre ! Commencez à contribuer en laissant des commentaires ou en modifiant des pages.
 
-Ce code de confirmation expirera le $4.',
+Découvrez quelques wikis de jeux vidéo, divertissement et mode de vie sur http://fr.wikia.com/explore-fr.
+
+Rencontrez la communauté Fandom, restez informé des derniers événements et trouvez de l'aide, tout cela sur le Centre des communautés (http://communaute.wikia.com/wiki/Centre_des_communautés).
+
+Bonnes modifications !
+
+— L’équipe Fandom
+
+___________________________________________
+* Pour voir les derniers événements sur Fandom, rendez-vous sur http://communaute.wikia.com
+* Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.",
 	'confirmemail_body_changed' => 'Quelqu’un, probablement vous, à partir de l’adresse IP $1,
-a modifié l’adresse de courriel associée au compte « $2 » de {{SITENAME}}
-en cette adresse.
+a modifié l’adresse e-mail associée au compte « $2 » de {{SITENAME}}
+avec cette adresse.
 
 Pour confirmer que ce compte vous appartient vraiment et afin
 de réactiver les fonctions de messagerie sur {{SITENAME}},
@@ -8662,33 +8897,33 @@ $3
 
 Si ce compte ne vous appartient *pas*, n’ouvrez pas ce lien ;
 vous pouvez suivre l’autre lien ci-dessous pour annuler la
-confirmation de votre adresse courriel :
+confirmation de votre adresse e-mail :
 
 $5
 
 Ce code de confirmation expirera le $4.',
-	'confirmemail_body_set' => 'Quelqu’un, probablement vous, de l’adresse IP $1, a modifié l’adresse de courriel du compte « $2 » en celle-ci sur {{SITENAME}}.
+	'confirmemail_body_set' => "Quelqu’un, probablement vous, de l’adresse IP $1, a modifié l’adresse e-mail du compte « $2 » avec celle-ci sur {{SITENAME}}.
 
-Pour confirmer que ce compte vous appartient et réactiver les fonctions de courriel sur {{SITENAME}}, ouvrez ce lien dans votre navigateur Web :
+Pour confirmer que ce compte vous appartient et réactiver les fonctions d'e-mail sur {{SITENAME}}, ouvrez ce lien dans votre navigateur Web :
 
 $3
 
 Ce code de confirmation expirera le $4.
 
-Si le compte ne vous appartient PAS, suivez plutôt ce lien pour annuler la confirmation de l’adresse de courriel :
+Si le compte ne vous appartient PAS, suivez plutôt ce lien pour annuler la confirmation de l’adresse e-mail :
 
-$5',
-	'confirmemail_invalidated' => 'Confirmation de l’adresse courriel annulée',
-	'confirmrecreate' => "L’utilisateur [[User:$1|$1]] ([[User talk:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à l’éditer, pour le motif suivant :
+$5",
+	'confirmemail_invalidated' => 'Confirmation de l’adresse e-mail annulée',
+	'confirmrecreate' => "L’utilisateur [[{{ns:User}}:$1|$1]] ([[{{ns:User_talk}}:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à la modifier, pour le motif suivant :
 : ''$2''
 Veuillez confirmer que vous désirez réellement recréer cette page.",
-	'confirmrecreate-noreason' => 'L’utilisateur [[User:$1|$1]] ([[User talk:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à l’éditer. Veuillez confirmer que vous désirez réellement recréer cette page.',
+	'confirmrecreate-noreason' => 'L’utilisateur [[User:$1|$1]] ([[User talk:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à la modifier. Veuillez confirmer que vous désirez réellement recréer cette page.',
 	'confirm_purge_button' => 'Confirmer',
 	'confirm-purge-top' => 'Voulez-vous rafraîchir cette page (purger le cache) ?',
 	'confirm-purge-bottom' => 'Purger une page l’efface du cache de rendu et force sa dernière version à être régénérée et affichée.',
-	'confirm-watch-button' => 'Valider',
+	'confirm-watch-button' => 'OK',
 	'confirm-watch-top' => 'Ajouter cette page à votre liste de suivi ?',
-	'confirm-unwatch-button' => 'Valider',
+	'confirm-unwatch-button' => 'OK',
 	'confirm-unwatch-top' => 'Supprimer cette page de votre liste de suivi ?',
 	'colon-separator' => '&nbsp;:&#32;',
 	'comparepages' => 'Comparer des pages',
@@ -8700,10 +8935,109 @@ Veuillez confirmer que vous désirez réellement recréer cette page.",
 	'compare-submit' => 'Comparer',
 	'compare-invalid-title' => "Le titre que vous avez spécifié n'est pas valide.",
 	'compare-title-not-exists' => "Le titre que vous avez spécifié n'existe pas.",
-	'compare-revision-not-exists' => "La révision que vous avez spécifié n'existe pas.",
-	'create_an_account' => 'Créer un compte',
-	'createpage' => 'Créer un nouvel article',
+	'compare-revision-not-exists' => "La révision que vous avez indiquée n'existe pas.",
+	'create_an_account' => "S'inscrire",
+	'createpage' => 'Créer une nouvelle page',
 	'choose_reason' => 'Choisissez la raison',
+	'create-account-new' => 'Créer un compte FANDOM',
+	'cockpit_hide' => 'Masquer cockpit',
+	'community' => 'Communauté',
+	'corporatepage-company-info-headline' => 'Informations sur la société',
+	'corporatepage-create-button' => 'Créer un wiki',
+	'corporatepage-create-your-own-wiki' => 'Démarrez votre propre wiki et rencontrez des gens qui aiment les mêmes choses que vous.',
+	'corporatepage-edits-made' => "modifications effectuées aujourd'hui",
+	'corporatepage-featured-wikis-headline' => 'Wikis à la Une',
+	'corporatepage-find-a-wiki' => 'Trouver un wiki',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Conditions d’utilisation
+* Privacy_Policy|Politique de confidentialité',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com|Deutsch
+* http://it.wikia.com|Italiano
+* http://es.wikia.com|Espa&ntilde;ol
+* http://pl.wikia.com|Polski
+* http://fr.wikia.com|Français
+* Languages|Plus...',
+	'corporatepage-footer-rightcolumn' => '* About_Us|À propos de Wikia
+* Hiring|Emplois
+* Special:Contact|Contact
+* Advertising|Publicité
+* Press|Presse
+* http://communaute.wikia.com/wiki/Aide:Contenu|Aide',
+	'corporatepage-from' => 'de',
+	'corporatepage-global-nav-headline' => 'Navigation Wikia globale',
+	'corporatepage-go-to-wiki' => 'Aller à $1',
+	'corporatepage-hide' => 'Masquer la page',
+	'corporatepage-homepage-feature-headline' => 'À la une sur Wikia',
+	'corporatepage-homepageintro' => "<div><h1>Bienvenue sur Wikia</h1>
+<h2>Participez avec des gens qui aiment les mêmes choses que vous.</h2></div>
+<h2>Commencez dès aujourd'hui !</h2>",
+	'corporatepage-in-the-know' => 'Information',
+	'corporatepage-more-link' => 'Plus de liens',
+	'corporatepage-pages-added' => 'pages créées dans l’heure',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. Tous droits réservés.',
+	'corporatepage-search-title' => 'Saisissez les mots-clés pour rechercher les wikis',
+	'corporatepage-update-fqr' => 'mis à jour toutes les heures',
+	'corporatepage-watchlist' => 'Liste de suivi',
+	'corporatepage-wikia-editors' => 'contributeurs',
+	'corporatepage-wikia-hot-spots-desc' => 'Ce sont les pages les plus actives de la semaine, triées par le nombre de contributeurs.',
+	'corporatepage-wikia-hot-spots' => 'Coups de cœur Wikia',
+	'corporatepage-wikia-overview-headline' => 'Aperçu de Wikia',
+	'corporatepage-wikia-wide-stats-headline' => 'Statistiques sur Wikia',
+	'corporatepage-words-added' => 'mots ajoutés la semaine dernière',
+	'createwikipagetitle' => 'Créer un nouveau wiki',
+	'categories-summary' => '',
+	'comma-separator' => ',&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'custom_info' => 'Des thèmes personnalisés peuvent être créés en sélectionnant « Personnaliser » ci-dessus avant de modifier ',
+	'contris' => 'Contributions',
+	'createwiki' => 'Créer un nouveau wiki',
+	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
+	'createwikititle' => 'Title for the wiki',
+	'createwikiname' => 'Name for the wiki',
+	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
+	'createwikidesc' => 'Description of the wiki',
+	'createwikiaddtnl' => 'Additional Information',
+	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'createwikilang' => 'Default language for this wiki',
+	'contris_s' => 'Contributions',
 );
 
 $messages['frc'] = array(
@@ -9235,21 +9569,20 @@ D'fhreagair an clár ríomhphoist: $1",
 	'confirmemail_success' => 'Deimhníodh do ríomhsheoladh. Is féidir leat logáil isteach anois agus sult a bhaint as an vicí!',
 	'confirmemail_loggedin' => 'Deimhníodh do sheoladh ríomhphoist.',
 	'confirmemail_error' => 'Tharlaigh botún éigin le sabháil do dheimhniú.',
-	'confirmemail_subject' => 'Deimhniú do ríomhsheoladh ar an {{SITENAME}}',
-	'confirmemail_body' => 'Chláraigh duine éigin (tusa is dócha) an cuntas "$2" ar {{SITENAME}}
-agus rinneadh é seo ón seoladh IP $1, ag úsáid an ríomhsheolta seo.
+	'confirmemail_subject' => 'Deimhniú sheoladh ríomhphoist as {{SITENAME}}',
+	'confirmemail_body' => 'Chláraigh duine éigin an cuntas "$2" le húsáid an seolaidh
 
-Chun deimhniú gur leatsa an cuntas seo, agus chun gnéithe ríomhphoist
-a chur i ngníomh ag {{SITENAME}}, oscail an nasc seo i do bhrabhsálaí:
+ríomhphoist seo ar {{SITENAME}} - is dócha gur rinne tú féin é seo, ón seoladh IP $1.
+
+Chun deimhniú a dhéanamh gur leatsa é an cuntas seo, agus chun gnéithe ríomhphoist a chur
+
+i ngníomh ag {{SITENAME}}, oscail an nasc seo i do bhrabhsalaí:
 
 $3
 
-<nowiki>*</nowiki>Mura* tusa a chláraigh an cuntas, lean an nasc seo chun
-deimhniú an ríomhsheolta a chur ar cheal:
+Murar tusa an duine atá i gceist, ná roghnaigh an nasc. Rachfaidh an cód deimhnithe
 
-$5
-
-Rachaidh an cód deimhnithe seo as feidhm ag $4.',
+seo as feidhm ag $4.',
 	'confirm_purge_button' => 'Tá',
 	'confirm-purge-top' => 'An bhfuil tú cinnte go dteastaíonn uait taisce an leathanaigh seo a bhánú?',
 );
@@ -12671,8 +13004,8 @@ Vinsamlegast staðfestu að þú viljir endurvekja hana.',
 );
 
 $messages['it'] = array(
-	'category_header' => 'Pagine nella categoria "$1"',
-	'category-media-header' => 'File nella categoria "$1"',
+	'category_header' => '<span style="font-size: 80%;">Pagine nella categoria "$1"</span>',
+	'category-media-header' => '<span style="font-size: 80%;">File nella categoria "$1"</span>',
 	'category-empty' => "''Al momento la categoria non contiene alcuna pagina o file multimediale.''",
 	'category-subcat-count' => "{{PLURAL:$2|Questa categoria contiene un'unica sottocategoria, indicata di seguito.|Questa categoria contiene {{PLURAL:$1|la sottocategoria indicata|le $1 sottocategorie indicate}} di seguito, su un totale di $2.}}",
 	'category-subcat-count-limited' => 'Questa categoria contiene {{PLURAL:$1|una sottocategoria, indicata|$1 sottocategorie, indicate}} di seguito.',
@@ -12682,113 +13015,129 @@ $messages['it'] = array(
 	'category-file-count-limited' => 'Questa categoria contiene {{PLURAL:$1|il file indicato|i $1 file indicati}} di seguito.',
 	'cancel' => 'Annulla',
 	'create' => 'Crea',
-	'copyright' => "Contenuti soggetti a licenza d'uso $1.",
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => "Contenuti soggetti alla licenza d'uso $1.",
+	'copyrightpage' => 'w:it:Project:Licenza|Licenza',
 	'currentevents' => 'Attualità',
 	'currentevents-url' => 'Project:Attualità',
-	'collapsible-collapse' => 'Comprimi',
+	'collapsible-collapse' => 'Riduci',
 	'collapsible-expand' => 'Espandi',
-	'cannotdelete' => 'Non è stato possibile cancellare il file "$1".
-Potrebbe essere stato già cancellato da qualcun altro.',
+	'cannotdelete' => 'Non è stato possibile cancellare la pagina o il file "$1".
+Potrebbe essere stata già cancellata da qualcun altro.',
 	'cannotdelete-title' => 'Impossibile eliminare la pagina "$1"',
-	'cascadeprotected' => 'Su questa pagina non è possibile effettuare modifiche perché è stata inclusa {{PLURAL:$1|nella pagina indicata di seguito, che è stata protetta|nelle pagine indicate di seguito, che sono state protette}} selezionando la protezione "ricorsiva":
+	'cascadeprotected' => 'Su questa pagina non è possibile effettuare modifiche perché è stata inclusa {{PLURAL:$1|nella pagina indicata di seguito, che è stata protetta|nelle pagine indicate di seguito, che sono state protette}} con la protezione "ricorsiva":
 $2',
 	'customcssprotected' => 'Non si dispone dei permessi necessari alla modifica di questa pagina CSS, in quanto contiene le impostazioni personali di un altro utente.',
 	'customjsprotected' => 'Non si dispone dei permessi necessari alla modifica di questa pagina JavaScript, in quanto contiene le impostazioni personali di un altro utente.',
-	'createaccount' => 'Crea un nuovo utente',
-	'createaccountmail' => 'via e-mail',
+	'createaccount' => 'Crea account',
+	'createaccountmail' => 'Via e-mail',
 	'createaccountreason' => 'Motivo:',
-	'createaccounterror' => "Impossìbile creare s'account: $1",
-	'cannotchangeemail' => 'Gli indirizzi e-mail non possono essere modificati in questo wiki.',
-	'createaccount-title' => 'Creazione di un accesso a {{SITENAME}}',
-	'createaccount-text' => 'Qualcuno ha creato un accesso a {{SITENAME}} ($4) a nome di $2, associato a questo indirizzo di posta elettronica. La password per l\'utente "$2" è impostata a "$3".
-È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente.
+	'createaccounterror' => "Impossibile creare l'account: $1",
+	'cannotchangeemail' => 'Gli indirizzi e-mail degli account non possono essere modificati su questa wiki.',
+	'createaccount-title' => 'Creazione di un account per {{SITENAME}}',
+	'createaccount-text' => 'Ciao,
 
-Se l\'accesso è stato creato per errore, si può ignorare questo messaggio.',
+Un account è stato creato per te su {{SITENAME}} con il nome utente "$2" e la password "$3".
+
+Per favore, accedi a $4
+
+Se non hai bisogno di questo account, puoi ignorare questo messaggio o contattare community@fandom.com per qualsiasi domanda.
+
+- Supporto della community di Fandom
+
+___________________________________________
+* Trova aiuto e consigli sulla Wiki della Community: http://it.community.wikia.com/
+* Vuoi ricevere meno messaggi da noi? Puoi disiscriverti o modificare le tue preferenze per le email qui: http://it.community.wikia.com/wiki/Speciale:Preferenze',
 	'changeemail' => "Modifica l'indirizzo e-mail",
 	'changeemail-header' => "Modifica l'indirizzo e-mail dell'account",
 	'changeemail-text' => 'Completa questo modulo per cambiare il tuo indirizzo e-mail. Sarà necessario inserire la password per confermare la modifica.',
-	'changeemail-no-info' => "Devi aver effettuato l'accesso per accedere a questa pagina direttamente.",
-	'changeemail-oldemail' => 'Indirizzo e-mail attuale:',
+	'changeemail-no-info' => "Devi effettuare l'accesso per accedere direttamente a questa pagina.",
+	'changeemail-oldemail' => 'Indirizzo e-mail corrente:',
 	'changeemail-newemail' => 'Nuovo indirizzo e-mail:',
 	'changeemail-none' => '(nessuno)',
 	'changeemail-submit' => 'Modifica e-mail',
 	'changeemail-cancel' => 'Annulla',
-	'confirmedittext' => "Per essere abilitati alla modifica delle pagine è necessario confermare il proprio indirizzo e-mail. Per impostare e confermare l'indirizzo servirsi delle [[Special:Preferences|preferenze]].",
-	'clearyourcache' => "'''Nota:''' dopo aver salvato, potrebbe essere necessario pulire la cache del tuo browser per vedere i cambiamenti.
-*'''Firefox / Safari''': tieni premuto il tasto delle maiuscole e fai clic su ''Ricarica'', oppure premi ''Ctrl-F5'' o ''Ctrl-R'' (''⌘-R'' su Mac)
-*'''Google Chrome''': premi ''Ctrl-Shift-R'' (''⌘-Shift-R'' su un Mac)
-*'''Internet Explorer''': tieni premuto il tasto ''Ctrl'' mentre clicchi su ''Refresh'', oppure premi ''Ctrl-F5''
-*'''Konqueror''': premi il pulsante ''Ricarica'' o il tasto ''F5'';
-*'''Opera''': svuota completamente la cache dal menu ''Strumenti → Preferenze''",
-	'copyrightwarning' => "Per favore tieni presente che tutti i contributi a {{SITENAME}} si considerano pubblicati nei termini d'uso della licenza $2 (vedi $1 per maggiori dettagli).
-Se non desideri che i tuoi testi possano essere modificati e ridistribuiti da chiunque senza alcuna limitazione, non inviarli qui.<br />
-Inviando il testo dichiari inoltre, sotto tua responsabilità, che è stato scritto da te personalmente oppure è stato copiato da una fonte di pubblico dominio o similarmente libera.
-'''Non inviare materiale protetto da copyright senza autorizzazione!'''",
+	'confirmedittext' => 'Devi confermare il tuo indirizzo e-mail prima di poter modificare le pagine.
+Per favore, imposta o conferma il tuo indirizzo e-mail nelle tue [[Special:Preferences|preferenze]].',
+	'clearyourcache' => "'''Nota:''' dopo aver salvato, potrebbe essere necessario [[w:it:Aiuto:Purgare la cache|pulire la cache]] del tuo browser per vedere i cambiamenti.
+* '''Chrome''' - ''Windows:'' tieni premuto il tasto <code>Ctrl</code> e premi quindi <code>F5</code>; ''OS X:'' tieni premuti i tasti <code>⌘&nbsp;Cmd</code> e <code>⇧&nbsp;Shift</code> quindi premi il tasto <code>R</code>.
+* '''Safari''' - tieni premuto il tasto <code>⇧&nbsp;Shift</code> e quindi clicca sul pulsante <code>Ricarica</code> nella barra degli strumenti.
+* '''Firefox''' - ''Windows:'' tieni premuto il tasto <code>Ctrl</code> e quindi premi <code>F5</code>; ''OS X:'' tieni premuti i tasti <code>⌘&nbsp;Cmd</code> e <code>⇧&nbsp;Shift</code> quindi premi il tasto <code>R</code>.
+* '''Internet Explorer''' - tieni premuto il tasto <code>Ctrl</code> e premi quindi <code>F5</code> (o clicca sul pulsante <code>Ricarica</code>).",
+	'copyrightwarning' => "Tutti i contributi a {{SITENAME}} si considerano pubblicati sotto i termini d'uso della licenza $2 (vedere $1 per maggiori informazioni).<br/>",
 	'copyrightwarning2' => "Per favore tieni presente che tutti i contributi a {{SITENAME}} possono essere modificati, stravolti o cancellati da altri contributori.
 Se non desideri che i tuoi testi possano essere alterati, non inviarli qui.<br />
 Inviando il testo dichiari inoltre, sotto tua responsabilità, che è stato scritto da te personalmente oppure è stato copiato da una fonte di pubblico dominio o similarmente libera (vedi $1 per maggiori dettagli).
 '''Non inviare materiale protetto da copyright senza autorizzazione!'''",
-	'cascadeprotectedwarning' => "'''Attenzione:''' Questa pagina è stata bloccata in modo che solo gli utenti con privilegi di amministratore possano modificarla. Ciò avviene perché la pagina è inclusa {{PLURAL:\$1|nella pagina indicata di seguito, che è stata protetta|nelle pagine indicate di seguito, che sono state protette}} selezionando la protezione \"ricorsiva\":",
-	'cantcreateaccounttitle' => 'Impossibile registrare un utente',
-	'cantcreateaccount-text' => "La creazione di nuovi account a partire da questo indirizzo IP ('''$1''') è stata bloccata da [[User:$3|$3]].
+	'cascadeprotectedwarning' => "'''Attenzione:''' questa pagina è stata bloccata in modo che solo gli utenti con privilegi di amministrazione possano modificarla. Ciò avviene perché la pagina è inclusa {{PLURAL:\$1|nella pagina indicata di seguito, che è stata protetta|nelle pagine indicate di seguito, che sono state protette}} selezionando la protezione \"ricorsiva\":",
+	'cantcreateaccounttitle' => "Impossibile creare l'account",
+	'cantcreateaccount-text' => "La creazione di nuovi account da parte di questo indirizzo IP ('''$1''') è stata bloccata da [[User:$3|$3]].
 
 La motivazione del blocco fornita da $3 è la seguente: ''$2''",
-	'currentrev' => 'Versione attuale',
-	'currentrev-asof' => 'Versione attuale delle $1',
-	'currentrevisionlink' => 'Versione attuale',
+	'currentrev' => 'Revisione corrente',
+	'currentrev-asof' => 'Revisione corrente delle $1',
+	'currentrevisionlink' => 'Revisione corrente',
 	'cur' => 'corr',
-	'compareselectedversions' => 'Confronta le versioni selezionate',
+	'compareselectedversions' => 'Confronta le revisioni selezionate',
 	'changepassword' => 'Cambia password',
 	'columns' => 'Colonne:',
 	'copyuploaddisabled' => 'Il caricamento tramite URL è disabilitato.',
 	'categories' => 'Categorie',
-	'categoriespagetext' => '{{PLURAL:$1|La categoria indicata di seguito contiene|Le categorie indicate di seguito contengono}} pagine o file multimediali.
-Le [[Special:UnusedCategories|categorie vuote]] non sono mostrate qui.
-Vedi anche le [[Special:WantedCategories|categorie richieste]].',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
 	'categoriesfrom' => 'Mostra le categorie a partire da:',
-	'changed' => 'modificata',
-	'created' => 'creata',
+	'changed' => 'ha modificato',
+	'created' => 'ha creato',
 	'confirm' => 'Conferma',
-	'confirmdeletetext' => 'Stai per cancellare una pagina con tutta la sua cronologia. Per cortesia, conferma che è tua intenzione procedere a tale cancellazione, che hai piena consapevolezza delle conseguenze della tua azione e che essa è conforme alle linee guida stabilite in [[{{MediaWiki:Policy-url}}]].',
-	'cantrollback' => "Impossibile annullare le modifiche; l'utente che le ha effettuate è l'unico ad aver contribuito alla pagina.",
-	'cannotundelete' => 'Ripristino non riuscito; è possibile che la pagina sia già stata recuperata da un altro utente.',
-	'contributions' => 'Contributi utente',
+	'confirmdeletetext' => 'Stai per cancellare una pagina con tutta la sua cronologia. Vedi anche [[w:it:Aiuto:Cancellare|Aiuto:Cancellare]].',
+	'cantrollback' => "Impossibile annullare le modifiche;
+l'utente che le ha effettuate è l'unico ad aver contribuito alla pagina.",
+	'cannotundelete' => 'Ripristino non riuscito;
+è possibile che la pagina sia già stata recuperata da un altro utente.',
+	'contributions' => 'Contributi',
 	'contributions-title' => 'Contributi di $1',
 	'contribsub2' => 'Per $1 ($2)',
-	'createaccountblock' => 'creazione account bloccata',
+	'createaccountblock' => 'Creazione account bloccata',
 	'change-blocklink' => 'cambia blocco',
 	'contribslink' => 'contributi',
 	'cant-block-while-blocked' => 'Non è possibile bloccare altri utenti mentre si è bloccati.',
 	'cant-see-hidden-user' => 'L\'utente che si sta tentando di bloccare è stato già bloccato e nascosto. Poiché non hai il permesso "hideuser", non è possibile visualizzare o modificare il blocco dell\'utente.',
-	'cant-move-user-page' => 'Non si dispone dei permessi necessari per spostare le pagine utente (escluse le sottopagine).',
-	'cant-move-to-user-page' => 'Non si dispone dei permessi necessari per spostare la pagina su una pagina utente (escluse le sottopagine utente).',
+	'cant-move-user-page' => 'Non si dispone dei permessi necessari per spostare le pagine utente (ad eccezione delle sottopagine).',
+	'cant-move-to-user-page' => 'Non si dispone dei permessi necessari per spostare la pagina su una pagina utente (ad eccezione delle sottopagine utente).',
 	'cantmove-titleprotected' => 'Lo spostamento della pagina non è possibile in quanto il nuovo titolo è stato protetto per impedirne la creazione',
-	'common.css' => '/* Gli stili CSS inseriti qui si applicano a tutte le skin */',
-	'common.js' => '/* Il codice JavaScript inserito qui viene caricato da ciascuna pagina, per tutti gli utenti. */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
+	'common.js' => '/* Il codice JavaScript inserito qui viene caricato da tutti gli utenti ad ogni visualizzazione di pagina. */',
 	'creditspage' => 'Autori della pagina',
 	'confirmemail' => 'Conferma indirizzo e-mail',
 	'confirmemail_noemail' => 'Non è stato indicato un indirizzo e-mail valido nelle proprie [[Special:Preferences|preferenze]].',
-	'confirmemail_text' => "{{SITENAME}} richiede la verifica dell'indirizzo e-mail prima di poter usare le relative funzioni. Premere il pulsante qui sotto per inviare una richiesta di conferma al proprio indirizzo; nel messaggio è presente un collegamento che contiene un codice. Visitare il collegamento con il proprio browser per confermare che l'indirizzo e-mail è valido.",
-	'confirmemail_pending' => "Il codice di conferma è già stato spedito via posta elettronica; se l'account è stato
-creato di recente, si prega di attendere l'arrivo del codice per qualche minuto prima
+	'confirmemail_text' => "{{SITENAME}} richiede la verifica dell'indirizzo e-mail prima di poter usare le relative funzioni. Premere il pulsante qui sotto per inviare una richiesta di conferma al proprio indirizzo; nel messaggio sarà presente un collegamento che contiene un codice. Visitare il collegamento con il proprio browser per confermare che l'indirizzo e-mail sia valido.",
+	'confirmemail_pending' => "Il codice di conferma ti è già stato spedito via e-mail;
+se l'account è stato creato di recente, si prega di attendere l'arrivo del codice per qualche minuto prima
 di tentare di richiederne uno nuovo.",
 	'confirmemail_send' => 'Invia un codice di conferma via e-mail.',
-	'confirmemail_sent' => 'Messaggio e-mail di conferma inviato.',
-	'confirmemail_oncreate' => "Un codice di conferma è stato spedito all'indirizzo
-di posta elettronica indicato. Il codice non è necessario per accedere al sito,
-ma è necessario fornirlo per poter abilitare tutte le funzioni del sito che fanno
-uso della posta elettronica.",
-	'confirmemail_sendfailed' => '{{SITENAME}} non può inviare il messaggio e-mail di conferma. Verificare che il proprio indirizzo e-mail non contenga caratteri non validi.
+	'confirmemail_sent' => 'E-mail di conferma inviata.',
+	'confirmemail_oncreate' => "Un codice di conferma è stato spedito al tuo indirizzo e-mail. Il codice non è necessario per accedere al sito,
+ma è necessario fornirlo per poter abilitare tutte le funzioni del sito che fanno uso della posta elettronica. Se non ricevi l'e-mail, ricordati di controllare la cartella per la posta indesiderata o spam. Per favore, consenti la ricezione di e-mail da community@fandom.com.",
+	'confirmemail_sendfailed' => "{{SITENAME}} non ha potuto inviare l'e-mail di conferma. Verificare che il proprio indirizzo e-mail non contenga caratteri non validi.
 
-Messaggio di errore del mailer: $1',
-	'confirmemail_invalid' => 'Codice di conferma non valido. Il codice potrebbe essere scaduto.',
+Messaggio di errore del servizio di posta: $1",
+	'confirmemail_invalid' => '<center>Grazie per voler confermare la tua e-mail, ma il tuo codice di conferma è scaduto o invalido.<br/>
+Dovrai ricevere un nuovo codice per poter confermare il tuo account.
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>Richiedi un nuovo codice via e-mail</span>]]</span></center>  
+<br>',
 	'confirmemail_needlogin' => 'È necessario $1 per confermare il proprio indirizzo e-mail.',
-	'confirmemail_success' => "L'indirizzo e-mail è confermato. Ora è possibile [[Special:UserLogin|eseguire l'accesso]] e fare pieno uso del sito.",
-	'confirmemail_loggedin' => "L'indirizzo e-mail è stato confermato.",
-	'confirmemail_error' => 'Errore nel salvataggio della conferma.',
-	'confirmemail_subject' => "{{SITENAME}}: richiesta di conferma dell'indirizzo",
-	'confirmemail_body' => 'Qualcuno, probabilmente tu stesso dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
+	'confirmemail_success' => "L'indirizzo e-mail è stato confermato. Ora è possibile [[Special:UserLogin|accedere]] e fare pieno uso del sito.",
+	'confirmemail_loggedin' => "'''Il tuo indirizzo e-mail è stato confermato.'''
+
+Benvenuto!
+
+Con migliaia di wiki su Fandom, ci sono molti modi per divertirsi qui.
+
+Passa un po' di tempo per conoscere Fandom sfogliando le nostre [[w:it:Aiuto:Contenuti|pagine d'aiuto]], leggendo pagine interessanti, scrivendo dei tuoi argomenti preferiti o facendo la conoscenza degli altri utenti.
+
+Il team della community di Fandom",
+	'confirmemail_error' => 'Qualcosa è andato storto durante il salvataggio della tua conferma.',
+	'confirmemail_subject' => 'Conferma il tuo account Fandom, per favore',
+	'confirmemail_body' => 'Qualcuno, probabilmente tu stesso, dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
 
 Per confermare che l\'account ti appartiene veramente e attivare le funzioni relative all\'invio di e-mail su {{SITENAME}}, apri il collegamento seguente con il tuo browser:
 
@@ -12828,19 +13177,19 @@ $5
 
 Questo codice di conferma scadrà automaticamente alle $4.',
 	'confirmemail_invalidated' => 'Richiesta di conferma indirizzo e-mail annullata',
-	'confirmrecreate' => "L'utente [[User:$1|$1]] ([[User talk:$1|discussioni]]) ha cancellato questa pagina dopo che hai iniziato a modificarla, per il seguente motivo: ''$2''
+	'confirmrecreate' => "L'utente [[User:$1|$1]] ([[User talk:$1|discussioni]]) ha cancellato questa pagina dopo che hai iniziato a modificarla per il seguente motivo: ''$2''
 Per favore, conferma che desideri veramente ricreare questa pagina.",
 	'confirmrecreate-noreason' => "L'utente [[User:$1|$1]] ([[User talk:$1|discussioni]]) ha cancellato questa pagina dopo che hai iniziato a modificarla.
 Per favore, conferma che desideri veramente ricreare questa pagina.",
-	'confirm_purge_button' => 'Conferma',
+	'confirm_purge_button' => 'Sì, non sono un robot',
 	'confirm-purge-top' => 'Vuoi pulire la cache di questa pagina?',
-	'confirm-purge-bottom' => 'Ripulire la cache di una pagina consente di mostrare la sua versione più aggiornata.',
+	'confirm-purge-bottom' => 'Pulire la cache di una pagina consente di visualizzare la sua versione più aggiornata.',
 	'confirm-watch-button' => 'OK',
-	'confirm-watch-top' => 'Aggiungi questa pagina alla tua lista degli osservati speciali?',
+	'confirm-watch-top' => 'Aggiungere questa pagina alla tua lista degli osservati speciali?',
 	'confirm-unwatch-button' => 'OK',
-	'confirm-unwatch-top' => 'Elimina questa pagina dalla tua lista degli osservati speciali?',
+	'confirm-unwatch-top' => 'Rimuovere questa pagina dalla tua lista degli osservati speciali?',
 	'comparepages' => 'Confronta le pagine',
-	'compare-selector' => 'Confronta le revisioni di una pagina',
+	'compare-selector' => 'Confronta le revisioni delle pagine',
 	'compare-page1' => 'Pagina 1',
 	'compare-page2' => 'Pagina 2',
 	'compare-rev1' => 'Revisione 1',
@@ -12849,8 +13198,113 @@ Per favore, conferma che desideri veramente ricreare questa pagina.",
 	'compare-invalid-title' => 'Il titolo che hai specificato non è valido.',
 	'compare-title-not-exists' => 'Il titolo che hai specificato non esiste.',
 	'compare-revision-not-exists' => 'La revisione che hai specificato non esiste.',
-	'createpage' => 'Crea nuova pagina',
-	'create_an_account' => 'Crea un account',
+	'createpage' => 'Crea una nuova pagina',
+	'create_an_account' => 'Registrati',
+	'create-account-new' => 'Crea il tuo account FANDOM',
+	'community' => 'Community',
+	'contris' => 'Contributi',
+	'contris_s' => 'Contributi',
+	'createwikipagetitle' => 'Crea un nuova wiki',
+	'categories-summary' => '',
+	'comma-separator' => ',&#32;',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
+	'corporatepage-create-button' => 'Crea una wiki',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'More Links',
+	'corporatepage-in-the-know' => 'In the Know',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-find-a-wiki' => 'Find a Wiki',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Hide Page',
+	'corporatepage-wikia-editors' => 'editori',
+	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-update-fqr' => 'updated hourly',
+	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
+	'corporatepage-go-to-wiki' => 'Vai a $1',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-watchlist' => 'Osservati speciali',
+	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
+	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
+	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
+	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-company-info-headline' => 'Company Information',
+	'corporatepage-pages-added' => 'pages created in the last hour',
+	'corporatepage-edits-made' => 'edits made today',
+	'corporatepage-words-added' => 'words added in the last week',
+	'custom_info' => 'I temi personalizzati possono essere creati selezionando "Personalizza" qui sopra e poi modificando ',
+	'createwiki' => 'Crea un nuova wiki',
+	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
+	'createwikititle' => 'Title for the wiki',
+	'createwikiname' => 'Name for the wiki',
+	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
+	'createwikidesc' => 'Description of the wiki',
+	'createwikiaddtnl' => 'Additional Information',
+	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'createwikilang' => 'Default language for this wiki',
+	'choose_reason' => 'Scegli il motivo',
+	'cockpit_hide' => 'Nascondi cockpit',
 );
 
 $messages['iu'] = array(
@@ -13039,25 +13493,25 @@ Per favore, conferma che desideri veramente ricreare questa pagina.",
 $messages['ja'] = array(
 	'category_header' => 'カテゴリ「$1」にあるページ',
 	'category-media-header' => 'カテゴリ「$1」にあるメディア',
-	'category-empty' => "''このカテゴリには、ページまたはメディアがひとつもありません。''",
-	'category-subcat-count' => '{{PLURAL:$2|このカテゴリには、次の下位カテゴリのみ含まれています。|このカテゴリには、次の$2下位カテゴリが含まれており、そのうち$1カテゴリが表示されています。}}',
-	'category-subcat-count-limited' => 'このカテゴリには、次の{{PLURAL:$1|$1下位カテゴリ}}が含まれています。',
+	'category-empty' => "''このカテゴリに、ページまたはメディアはまだありません。''",
+	'category-subcat-count' => '{{PLURAL:$2|このカテゴリには、次のサブカテゴリのみ含まれています。|このカテゴリには、次の$2サブカテゴリが含まれており、そのうち$1カテゴリが表示されています。}}',
+	'category-subcat-count-limited' => 'このカテゴリには、次の{{PLURAL:$1|$1サブカテゴリ}} が含まれています。',
 	'category-article-count' => '{{PLURAL:$2|このカテゴリには、次のページのみ含まれています。|以下の$2ページがこのカテゴリに含まれており、そのうち$1ページが表示されています。}}',
-	'category-article-count-limited' => '以下のページ{{PLURAL:$1|$1ページ}}が、現在のカテゴリに含まれています。',
+	'category-article-count-limited' => '以下の{{PLURAL:$1|$1ページ}} が、現在のカテゴリに含まれています。',
 	'category-file-count' => '{{PLURAL:$2|このカテゴリには、次のファイルのみが含まれています。|このカテゴリには、$2ファイルが含まれており、そのうち$1ファイルが表示されています。}}',
 	'category-file-count-limited' => '以下の{{PLURAL:$1|$1ファイル}}が、現在のカテゴリに含まれています。',
-	'cancel' => '中止',
+	'cancel' => 'キャンセル',
 	'create' => '作成',
-	'copyright' => '内容は$1のライセンスで利用することができます。',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'コンテンツは$1のもとで利用できます。',
+	'copyrightpage' => 'w:c:ja:ライセンス|ライセンス',
 	'currentevents' => '最近の出来事',
 	'currentevents-url' => 'Project:最近の出来事',
-	'collapsible-collapse' => '折り畳む',
-	'collapsible-expand' => '展開する',
+	'collapsible-collapse' => '非表示',
+	'collapsible-expand' => '表示',
 	'cannotdelete' => '指定されたページあるいはファイル「$1」を削除できませんでした。
 すでに他の人によって削除された可能性があります。',
-	'cannotdelete-title' => '「$1」というページを削除できません',
-	'cascadeprotected' => 'このページは、「カスケード保護」が指定された状態で保護されている以下の{{PLURAL:$1|ページ}}で読み込まれているため、編集できないように保護されています。
+	'cannotdelete-title' => '「$1」ページを削除できません',
+	'cascadeprotected' => 'このページは、「カスケード保護」に指定された{{PLURAL:$1|page, which is|pages, which are}} が含まれているため、編集できないように保護されています。
 $2',
 	'customcssprotected' => 'このCSSページはほかのユーザーの個人設定が含まれているため、編集することができません。',
 	'customjsprotected' => '他の利用者の個人設定を含むため、このJavaScriptのページを編集する権限がありません。',
@@ -13065,136 +13519,153 @@ $2',
 	'createaccountmail' => 'メールで送信',
 	'createaccountreason' => '理由：',
 	'createaccounterror' => 'アカウントを作成できませんでした： $1',
-	'cannotchangeemail' => 'このウィキでは、アカウントの電子メールアドレスを変更できません。',
+	'cannotchangeemail' => 'このWikiでは、アカウントのメールアドレスを変更できません。',
 	'createaccount-title' => '{{SITENAME}}のアカウント作成',
-	'createaccount-text' => '{{SITENAME}} ($4) に「$2」という名前のアカウントが、この電子メールアドレスを連絡先として作成されました。パスワードは「$3」です。
-今すぐログインし、パスワードを変更してください。
+	'createaccount-text' => 'こんにちは
 
-何かの手違いでアカウントが作成されたと思う場合、このメッセージは無視してください。',
-	'changeemail' => 'メールアドレスの変更',
+{{SITENAME}} にて、ユーザー名「$2」とパスワード「$3」であなたのアカウントが作成されました。
+
+
+$4 からログインしてください。
+
+もしこのアカウントを必要としない場合は、このメッセージを無視するか、community@wikia.com へお問い合わせください。
+
+- FANDOMコミュニティサポート
+
+___________________________________________
+* コミュニティセントラルでヘルプやアドバイスを探す: http://ja.community.wikia.com
+* メール配信の停止、受信設定の変更はこちら:http://ja.community.wikia.com/Special:Preferences',
+	'changeemail' => 'メールアドレスを変更',
 	'changeemail-header' => 'アカウントのメールアドレスを変更',
 	'changeemail-text' => 'このフォームへ入力することで、メールアドレスを変更することができます。メールアドレスの変更を完了するためには、パスワードを入力する必要があります。',
-	'changeemail-no-info' => 'このページに直接アクセスするためにはログインしている必要があります。',
+	'changeemail-no-info' => 'このページにアクセスするにはログインが必要です。',
 	'changeemail-oldemail' => '現在のメールアドレス：',
 	'changeemail-newemail' => '新しいメールアドレス：',
-	'changeemail-none' => '(なし)',
+	'changeemail-none' => '（なし）',
 	'changeemail-submit' => 'メールアドレスを変更',
-	'changeemail-cancel' => '中止',
+	'changeemail-cancel' => 'キャンセル',
 	'confirmedittext' => 'ページの編集を始める前にメールアドレスの確認をする必要があります。
-[[Special:Preferences|個人設定]]でメールアドレスを設定し、確認を行ってください。',
-	'clearyourcache' => "'''注意:''' 保存後、変更を確認するにはブラウザのキャッシュを消去する必要がある場合があります。
-* '''Firefox / Safari:''' ''Shift'' を押しながら ''再読み込み'' をクリックする、もしくは ''Ctrl-F5'' か ''Ctrl-R'' を押してください (Macでは ''&#x2318;-R'' )
-* '''Google Chrome:''' ''Ctrl-Shift-R'' を押してください (Macでは ''&#x2318;-Shift-R'' )
-* '''Internet Explorer:''' ''Ctrl'' を押しながら ''最新の情報に更新'' をクリックする、もしくは ''Ctrl-F5'' を押してください
-* '''Konqueror:''' ''再読み込み'' をクリックするか、 ''F5'' を押してください。
-* '''Opera:''' ''ツール → 設定'' からキャッシュをクリアしてください。",
-	'copyrightwarning' => "{{SITENAME}}への投稿は、すべて$2（詳細は$1を参照）のもとで公開されたと見なされることにご注意ください。
-投稿されたものが、他人によって遠慮なく編集され、自由に配布されることを望まない場合は、ここには投稿しないでください。<br />
-また、投稿されるものは、自身によって書かれたものであるか、パブリック・ドメイン、またはそれに類するフリーな資料からの複製であることを約束してください。
-'''著作権保護されている作品を、許諾なしに投稿しないでください！'''",
+[[Special:Preferences|個人設定]]でメールアドレスを設定し、ご確認ください。',
+	'clearyourcache' => "'''注意:''' 保存後、変更を確認するには [[ヘルプ:Bypass_your_cache|ブラウザのキャッシュを消去する必要がある]] 場合があります。
+* '''Chrome:''' - Windows:''Ctrl''キーを押しながらを''F5'' を押してください 。OS Xでは、''⌘ Cmd'' キーと''⇧ Shift''キー を押しながら''R'' キーを押します
+* ''' Safari:'''- ''Shift'' を押しながら ''再読み込み'' をクリックしてください
+* ''' Firefox '''- Windows:''Ctrl''キーを押しながらを''F5'' を押してください。 OS Xでは、 ''⌘ Cmd'' キーと''⇧ Shift''キー を押しながら''R'' キーを押します
+* '''Internet Explorer:'''-''Ctrl''キーを押しながらを''F5'' を押してください 。または '''再読み込み'' をクリックしてください。",
+	'copyrightwarning' => '{{SITENAME}} への投稿は、すべて $2 のもとでリリースされているとみなされます (詳細は $1 を参照)。<br />',
 	'copyrightwarning2' => "{{SITENAME}}への全ての投稿は、他の利用者によって編集、変更、除去される可能性があります。
 自信の投稿が他人によって遠慮なく編集されることを望まない場合は、ここには投稿しないでください。<br />
 また、投稿されるものは、自身によって書かれたものであるか、パブリック・ドメイン、またはそれに類するフリーな資料からの複製であることを約束してください（詳細は$1を参照）。
 '''著作権保護されている作品を、許諾なしに投稿してはいけません！'''",
-	'cascadeprotectedwarning' => "'''警告：'''このページはカスケード保護されている以下の{{PLURAL:$1|ページ}}から読み込まれているため、管理者権限を持つ利用者しか編集できないように保護されています。",
+	'cascadeprotectedwarning' => "'''警告：'''このページはカスケード保護されている以下の{{PLURAL:$1|page|pages}} から読み込まれているため、管理者権限を持つ利用者しか編集できないように保護されています。",
 	'cantcreateaccounttitle' => 'アカウントを作成できません',
-	'cantcreateaccount-text' => "このIPアドレス('''$1''')からのアカウント作成は[[User:$3|$3]]によってブロックされています。
+	'cantcreateaccount-text' => "このIPアドレス('''$1''') からのアカウント作成は[[User:$3|$3]] さんによりブロックされています。
 
-$3が示した理由は ''$2'' です。",
+$3さんが示した理由は ''$2'' です。",
 	'currentrev' => '最新版',
-	'currentrev-asof' => '$1時点における最新版',
+	'currentrev-asof' => '$1に更新',
 	'currentrevisionlink' => '最新版',
 	'cur' => '最新',
-	'compareselectedversions' => '選択した版同士を比較',
-	'changepassword' => 'パスワードの変更',
+	'compareselectedversions' => '選択した各版を比較',
+	'changepassword' => 'パスワードを変更する',
 	'columns' => '列数：',
 	'copyuploaddisabled' => 'URLからのアップロードは無効になっています。',
-	'categories' => 'カテゴリ',
-	'categoriespagetext' => '以下の{{PLURAL:$1|カテゴリ}}にはページまたはメディアが存在します。
-[[Special:UnusedCategories|未使用のカテゴリ]]はここには表示されていません。
-[[Special:WantedCategories|望まれるカテゴリ]]も参照してください。',
+	'categories' => 'カテゴリの一覧',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
 	'categoriesfrom' => '最初に表示するカテゴリ：',
 	'changed' => '変更',
 	'created' => '作成',
-	'confirm' => '確認',
-	'confirmdeletetext' => 'ページをすべての履歴とともに削除しようとしています。
-本当にこの操作を行いたいか、操作の結果を理解しているか、およびこの操作が[[{{MediaWiki:Policy-url}}|方針]]に従っているかどうか、確認をしてください。',
-	'cantrollback' => '編集を差し戻せません。
-最後の投稿者が、このページの唯一の作者です。',
-	'cannotundelete' => '復帰に失敗しました。
-誰かが、既にこのページを復帰した可能性があります。',
-	'contributions' => '利用者の投稿記録',
+	'confirm' => '確定',
+	'confirmdeletetext' => 'このページとその履歴を削除します。この操作を本当に行うかご確認いただくには、[[w:c:ja.community:ヘルプ:削除|削除に関するヘルプ]]をご覧ください。',
+	'cantrollback' => '投稿者が一人しかいないため、編集を元に戻せません。',
+	'cannotundelete' => '削除の取り消しに失敗しました。
+誰かが、既にこのページを元に戻した可能性があります。',
+	'contributions' => '投稿記録',
 	'contributions-title' => '$1の投稿記録',
 	'contribsub2' => '利用者:$1（$2）',
-	'createaccountblock' => 'アカウント作成のブロック',
+	'createaccountblock' => 'アカウント作成をブロック',
 	'change-blocklink' => '設定を変更',
 	'contribslink' => '投稿記録',
-	'cant-block-while-blocked' => 'ブロック中は、他の利用者をブロックできません。',
+	'cant-block-while-blocked' => 'ブロックされている間、他の利用者をブロックできません。',
 	'cant-see-hidden-user' => '投稿ブロックしようとした利用者は、既にブロックされ隠されています。
 hideuser権限を持っていないため、この利用者のブロックを閲覧または編集できません。',
-	'cant-move-user-page' => '利用者ページを移動させる権限がありません（下位ページ内は除く）。',
-	'cant-move-to-user-page' => '利用者下位ページ以外の利用者ページに、ページを移動させる権限がありません。',
+	'cant-move-user-page' => 'ユーザーページを移動させる権限がありません（サブページ内は除く）。',
+	'cant-move-to-user-page' => 'このページを利用者ページへ移動させる権限がありません。（ユーザーのサブページを除く）',
 	'cantmove-titleprotected' => '新しいページ名が作成保護されているため、この場所にページを移動できません。',
-	'common.css' => '/* ここに書いたCSSはすべての外装に反映されます */',
-	'common.js' => '/* ここにあるすべてのJavaScriptは、すべてのページ読み込みですべての利用者に対して読み込まれます */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
+	'common.js' => '/* ここにあるすべてのJavaScriptは、すべての利用者のどのページに対しても読み込まれます */',
 	'creditspage' => 'ページの帰属表示',
 	'confirmemail' => 'メールアドレスの確認',
 	'confirmemail_noemail' => '[[Special:Preferences|個人設定]]で有効なメールアドレスが指定されていません。',
-	'confirmemail_text' => '{{SITENAME}}では、メール機能を利用する前にメールアドレスの確認が必要です。
+	'confirmemail_text' => '{{SITENAME}} では、メール機能を利用する前にメールアドレスの確認が必要です。
 以下のボタンを押すとメールアドレスに確認メールが送られます。
 メールには確認用コードを含むリンクが書かれています。
-そのリンクをブラウザーで読み込んで、メールアドレスの正当性を確認してください。',
+そのリンクをブラウザーで読み込んで、メールアドレスが有効かどうかを確認してください。',
 	'confirmemail_pending' => '確認メールは既に送信されています。
-このアカウントを作成したばかりであれば、メールが届くまで数分ほど待たなければならないかもしれません。',
+メールが届くまで数分ほど時間がかかることがあります。',
 	'confirmemail_send' => '確認用コードを送信する',
 	'confirmemail_sent' => '確認メールを送信しました。',
-	'confirmemail_oncreate' => 'メールアドレスの正当性を確認するためのコードを含んだメールを送信しました。
+	'confirmemail_oncreate' => 'メールアドレスの有効性を確認するためのコードを含んだメールを送信しました。
 この確認を行わなくてもログインはできますが、確認するまでメール通知の機能は無効化されます。',
-	'confirmemail_sendfailed' => '{{SITENAME}}は確認メールを送信できませんでした。
-メールアドレスに不正な文字が含まれていないかどうか確認してください。
+	'confirmemail_sendfailed' => '{{SITENAME}} は、確認用メールを送信できませんでした。メール アドレスに無効な文字が含まれていないか確認してください。 
 
-メールサーバーからの返答：$1',
-	'confirmemail_invalid' => '確認用コードが正しくありません。
-このコードの有効期限が切れている可能性があります。',
+未送信メール: $1',
+	'confirmemail_invalid' => '<center>確認用コードが正しくないか、このコードの有効期限が切れている可能性があります。<br/>
+新しい確認用コードを受け取ってください。
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>新しい確認用コードをリクエスト</span></span><
+br>',
 	'confirmemail_needlogin' => 'メールアドレスを確認するために$1が必要です。',
-	'confirmemail_success' => 'メールアドレスは確認されました。
-[[Special:UserLogin|ログイン]]してウィキを使用できます。',
-	'confirmemail_loggedin' => 'メールアドレスは確認されました。',
+	'confirmemail_success' => 'メールアドレスを確認しました。ログインしてWikiをご利用ください。',
+	'confirmemail_loggedin' => "'''メールアドレスを確認しました。'''
+
+ようこそ！
+
+Fandomにある何千ものコミュニティでは、様々な体験を楽しんでください。
+
+[[w:ja:Help:Contents|Wikiについて]]学んだり、興味のあるページや面白そうなページをチェックしたり、お気に入りのことについて書いてみたり、コミュニティの他のユーザーと知り合うこともできます。
+
+ウィキア・コミュニティ・チーム",
 	'confirmemail_error' => '確認情報を保存する際にエラーが発生しました。',
-	'confirmemail_subject' => '{{SITENAME}} メールアドレスの確認',
-	'confirmemail_body' => 'だれかが、IPアドレス$1から、
-このメールアドレスで{{SITENAME}}のアカウント「$2」を登録しました。
+	'confirmemail_subject' => 'Fandom アカウントの確認をお願いします',
+	'confirmemail_body' => 'こんにちは、$2 さん
 
-このアカウントが本当に自分のものであるか確認して、
-{{SITENAME}}のメール機能を有効にするには、以下のURLをブラウザーで開いてください：
+Fandomへご登録いただき、ありがとうございます！
 
-$3
+あなたの新しいアカウントを有効にするためにもう少し時間をください: $3
 
-もしアカウントの登録をした覚えがない場合は、
-次のURLをブラウザーで開いて、メール確認を中止してください：
+用意はできましたか？
 
-$5
+たった今あなたが参加したコミュニティの最近の活動を見てみましょう。そして コメントを残したり、ページを編集して投稿を始めてみましょう！
 
-この確認用コードは、$4に期限切れになります。',
-	'confirmemail_body_changed' => 'だれかが、IPアドレス$1から
-{{SITENAME}}でアカウント「$2」の電子メールアドレスをこのアドレスに変更しました。
+http://wikia.com/go でFANDOMビデオを見て、ゲーム、エンターテイメント、ライフスタイルの中からお気に入りのWIkiを探してみてください。
+
+Fandomのコミュニティに参加し、どんなことが起きているかをチェックしましょう。わからないことがあったら、コミュニティーセントラルで確認してみてください
+
+- ウィキアコミュニティーサポート
+
+
+___________________________________________
+* コミュニティセントラルでヘルプやアドバイスを探す: http://ja.community.wikia.com
+* メール配信の停止、受信設定の変更はこちら:http://ja.community.wikia.com/Special:Preferences',
+	'confirmemail_body_changed' => 'IPアドレス$1から
+{{SITENAME}} でアカウント「$2」の電子メールアドレスをこのアドレスに変更しました。
 
 このアカウントが本当に自分のものであるならば、
-{{SITENAME}}のメール機能を再び有効化にするために、以下のURLをブラウザーで開いてください：
+{{SITENAME}} のメール機能を再び有効化にするために、以下のURLをブラウザーで開いてください：
 
 $3
 
 もし自分のアカウントでない場合は、
-次のURLをブラウザーで開いて、電子メール確認を中止してください：
+次のURLをブラウザーで開いて、メールドレスの確認を中止してください：
 
 $5
 
 この確認用コードは$4に期限切れになります。',
-	'confirmemail_body_set' => 'だれかが、IPアドレス$1から
-{{SITENAME}}でアカウント「$2」の電子メールアドレスをこのアドレスに設定しました。
+	'confirmemail_body_set' => 'IPアドレス$1から
+{{SITENAME}} でアカウント「$2」の電子メールアドレスをこのアドレスに設定しました。
 
 このアカウントが本当に自分のものであるならば、
-{{SITENAME}}のメール機能を再び有効化にするために、以下のURLをブラウザーで開いてください：
+{{SITENAME}} のメール機能を再び有効化にするために、以下のURLをブラウザーで開いてください：
 
 $3
 
@@ -13205,32 +13676,32 @@ $5
 
 この確認用コードは$4に期限切れになります。',
 	'confirmemail_invalidated' => 'メールアドレスの確認が中止されました',
-	'confirmrecreate' => "[[User:$1|$1]]（[[User talk:$1|トーク]]）が、このページの編集開始後に、このページを、次の理由で削除しました。
+	'confirmrecreate' => "このページの編集開始後に、[[User:$1|$1]]（[[User talk:$1|トーク]]）さんにより次の理由で削除されました。
 : ''$2''
-本当にこのままこのページを再作成して良いか確認してください。",
-	'confirmrecreate-noreason' => 'あなたの編集を開始した後、このページを[[User:$1|$1]] ([[User talk:$1|トーク]])が削除しました。本当にこのページを再作成していいのかご確認ください。',
+このページをもう一度作成するかどうか、確認してください。",
+	'confirmrecreate-noreason' => '編集開始後に、このページを[[User:$1|$1]] ([[User talk:$1|トーク]]) が削除しました。このページをもう一度作成するかどうか、ご確認ください。',
 	'confirm_purge_button' => 'はい',
 	'confirm-purge-top' => 'ページのキャッシュを破棄します。よろしいですか？',
-	'confirm-purge-bottom' => 'ページをパージすると、キャッシュが破棄され、強制的に最新の版が表示されます。',
+	'confirm-purge-bottom' => 'ページをクリアすると、キャッシュが破棄され、強制的に最新の版が表示されます。',
 	'confirm-watch-button' => 'OK',
 	'confirm-watch-top' => 'このページをウォッチリストに追加しますか?',
 	'confirm-unwatch-button' => 'OK',
 	'confirm-unwatch-top' => 'このページをウォッチリストから除去しますか?',
-	'comma-separator' => '、',
+	'comma-separator' => ',&#32;',
 	'colon-separator' => '：',
 	'comparepages' => 'ページの比較',
-	'compare-selector' => 'ページの版を比較',
+	'compare-selector' => 'ページの各版を比較',
 	'compare-page1' => 'ページ1',
 	'compare-page2' => 'ページ2',
 	'compare-rev1' => '版1',
 	'compare-rev2' => '版2',
-	'compare-submit' => '比較する',
+	'compare-submit' => '比較',
 	'compare-invalid-title' => '指定したページ名は使用できません。',
 	'compare-title-not-exists' => '指定されたページは存在しません。',
 	'compare-revision-not-exists' => '指定された版は存在しません。',
 	'contris' => '投稿記録',
-	'createwiki' => '新しいウィキを申請する',
-	'createwikipagetitle' => '新しいウィキを申請する',
+	'createwiki' => '新しいWikiを作成する',
+	'createwikipagetitle' => '新しいWikiを作成する',
 	'createwikitext' => 'このページで新しいウィキの申請ができます。以下の入力欄を埋めてください。',
 	'createwikititle' => 'ウィキのタイトル',
 	'createwikiname' => 'ウィキの名前(URL)',
@@ -13250,11 +13721,99 @@ $5
 	'contactrealname' => 'お名前',
 	'contactwikiname' => 'ウィキの名前',
 	'contactintro' => '詳しくは、<a href=http://www.wikia.com/wiki/Report_a_problem>問題の報告</a>のページをお読みの上、連絡用フォームをお使いになって報告をお願いします。また、ウィキアのコミュニティへは、<a href=http://www.wikia.com/wiki/Community_portal>Community portal</a>からコンタクトをとれます。ソフトウェアのバグに関しては、<a href=http://bugs.wikia.com>bugs.wikia.com</a>にお願いします。<p>もし、<a href=http://ja.wikia.com/wiki/Wikia>ウィキア</a>に個人的なメッセージを送りたいのであれば、下記連絡用フォームを使ってください。<i>全ての入力欄は、必須ではありません。</i>',
-	'create_an_account' => 'アカウントを作成する',
-	'createpage' => '新しい記事を作成する',
-	'choose_reason' => '理由を選択する',
+	'create_an_account' => '登録',
+	'createpage' => '新しいページを作成',
+	'choose_reason' => '理由を選択',
 	'community' => 'コミュニティ',
 	'contris_s' => '投稿記録',
+	'create-account-new' => 'FANDOMアカウントを作成',
+	'cockpit_hide' => '非表示',
+	'corporatepage-create-button' => '新しいWikiコミュニティを作成する',
+	'corporatepage-edits-made' => '回の編集（本日分）',
+	'corporatepage-go-to-wiki' => '$1 へ',
+	'corporatepage-pages-added' => 'ページの作成（直近一時間分）',
+	'corporatepage-update-fqr' => '一時間ごとに更新',
+	'corporatepage-watchlist' => 'ウォッチリスト',
+	'corporatepage-words-added' => 'ワードの追加（先週分）',
+	'custom_info' => 'カスタムテーマは、上記の「カスタム」を選択して、スタイルシートを編集することで利用できます。',
+	'categories-summary' => '',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'More Links',
+	'corporatepage-in-the-know' => 'In the Know',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-find-a-wiki' => 'Find a Wiki',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Hide Page',
+	'corporatepage-wikia-editors' => 'editors',
+	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
+	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
+	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
+	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-company-info-headline' => 'Company Information',
 );
 
 $messages['jam'] = array(
@@ -15130,18 +15689,29 @@ $2',
 	'confirmemail_success' => '이메일 주소가 인증되었습니다. 이제 로그인해서 위키를 사용하세요.',
 	'confirmemail_loggedin' => '이메일 주소가 인증되었습니다.',
 	'confirmemail_error' => '당신의 인증을 저장하는 도중 오류가 발생했습니다.',
-	'confirmemail_subject' => '{{SITENAME}} 이메일 주소 인증',
-	'confirmemail_body' => '$1 아이피 주소를 사용하는 사용자가 {{SITENAME}}의 ‘$2’ 계정에 이메일 인증 신청을 했습니다.
+	'confirmemail_subject' => '계정을 활성화해 주세요!',
+	'confirmemail_body' => '안녕하세요, $2 님.
 
-이 계정이 당신의 계정이라면, 아래 주소를 열어서 이메일 인증을 해 주세요.
+위키아에 가입해주셔서 감사합니다!
 
-$3
+귀하의 계정을 활성화시키기 위해서 잠깐만 시간을 투자해 주세요: $3
 
-당신의 계정이 아니라면, 이메일 인증 신청을 취소하기 위해 아래의 주소를 열어주세요.
+시작할 준비가 되셨나요?
 
-$5
+귀하가 참여한 커뮤니티에서 최근 일어난 일들을 알아 보세요! 댓글을 남기거나 문서를 편집해 기여를 시작하실 수 있습니다.
 
-인증 코드는 $4에 만료됩니다.',
+http://wikia.com/go (영어)에서 영상을 시청하시고 저희가 추천해드리는, 게임, 엔터테인먼트, 생활 등 다양한 분야의 위키를 탐방해 보시는 건 어떨까요?
+
+위키아 중앙 커뮤니티에서 다양한 사람들과 대화를 나누고, 도움을 구해 보세요.
+
+즐거운 위키아 이용 되세요!
+
+- 위키아 커뮤니티 지원팀
+
+
+___________________________________________
+* 위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: http://ko.community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: http://ko.community.wikia.com/특수기능:환경설정',
 	'confirmemail_body_changed' => '$1 IP 주소를 사용하는 사용자가 {{SITENAME}}의 "$2" 계정의 이메일 주소를 바꾸었습니다.
 
 이 계정이 당신의 계정인지 확인하고 {{SITENAME}}의 이메일 기능을 활성화하려면 아래 링크를 클릭하여 이메일 인증을 해 주세요.
@@ -15186,6 +15756,26 @@ $5
 	'compare-invalid-title' => '당신이 입력한 제목이 잘못되었습니다.',
 	'compare-title-not-exists' => '당신이 입력한 문서가 존재하지 않습니다.',
 	'compare-revision-not-exists' => '당신이 지정한 판이 없습니다.',
+	'community' => '커뮤니티',
+	'corporatepage-create-button' => '새 위키 만들기',
+	'corporatepage-create-your-own-wiki' => '새 위키를 만드셔서 당신이 선호하는 것을 같이 선호하는 사람들을 만나보세요.',
+	'corporatepage-find-a-wiki' => '위키 찾아보기',
+	'corporatepage-homepageintro' => '<div><h1>위키아에 어서 오세요</h1>
+<h2>당신이 선호하는 것을 같이 선호하는 사람들과 함께하세요.</h2></div>
+<h2>오늘 바로 시작하세요!</h2>',
+	'corporatepage-in-the-know' => '새 소식 보기',
+	'corporatepage-more-link' => '링크',
+	'corporatepage-watchlist' => '주시목록',
+	'corporatepage-wikia-editors' => '명',
+	'corporatepage-wikia-hot-spots-desc' => '다음은 위키아 전체에서 이번 주에 가장 편집이 많은 문서의 목록입니다.',
+	'corporatepage-wikia-hot-spots' => '위키아 핫 스팟',
+	'corporatepage-wikia-international' => '다른 언어',
+	'contris' => '사용자 기여',
+	'contris_s' => '사용자 기여',
+	'createpage' => '새 문서 만들기',
+	'createwiki' => '새 위키 만들기',
+	'createwikipagetitle' => '새 위키 만들기',
+	'create_an_account' => '계정 만들기',
 );
 
 $messages['ko-kp'] = array(
@@ -18365,6 +18955,7 @@ $5
 	'compare-invalid-title' => 'Наведениот наслов е неважечки.',
 	'compare-title-not-exists' => 'Наведениот наслов не постои.',
 	'compare-revision-not-exists' => 'Наведената ревизија не постои.',
+	'community' => 'Заедница',
 );
 
 $messages['ml'] = array(
@@ -20298,36 +20889,36 @@ $2",
 	'createaccounterror' => 'Het was niet mogelijk de gebruiker aan te maken: $1',
 	'cannotchangeemail' => 'Het e-mailadres voor een gebruiker kan op deze wiki niet gewijzigd worden.',
 	'createaccount-title' => 'Gebruikers registreren voor {{SITENAME}}',
-	'createaccount-text' => 'Iemand heeft een gebruiker op {{SITENAME}} ($4) aangemaakt met de naam "$2" en uw e-mailadres.
+	'createaccount-text' => 'Iemand heeft een gebruiker op {{SITENAME}} ($4) aangemaakt met de naam "$2" en jouw e-mailadres.
 Het wachtwoord voor "$2" is "$3".
-Meld u aan en wijzig uw wachtwoord.
+Meld je aan en wijzig je wachtwoord.
 
-Negeer dit bericht als deze gebruiker zonder uw medeweten is aangemaakt.',
+Negeer dit bericht als deze gebruiker zonder jouw medeweten is aangemaakt.',
 	'changeemail' => 'E-mailadres wijzigen',
 	'changeemail-header' => 'Het e-mailadres van mijn gebruiker wijzigen',
 	'changeemail-text' => 'Vul dit formulier in om uw e-mailadres te wijzigen. U moet uw wachtwoord invoeren om deze wijziging te bevestigen.',
-	'changeemail-no-info' => 'U moet aangemeld zijn om rechtstreeks toegang te hebben tot deze pagina.',
+	'changeemail-no-info' => 'Je dient aangemeld zijn voordat je deze pagina kunt gebruiken.',
 	'changeemail-oldemail' => 'Huidig e-mailadres:',
 	'changeemail-newemail' => 'Nieuw e-mailadres:',
 	'changeemail-none' => '(geen)',
 	'changeemail-submit' => 'E-mailadres wijzigen',
 	'changeemail-cancel' => 'Annuleren',
-	'confirmedittext' => 'U moet uw e-mailadres bevestigen voor u kunt bewerken.
-Voer uw e-mailadres in en bevestig het via [[Special:Preferences|uw voorkeuren]].',
-	'clearyourcache' => "'''Let op!''' Nadat u de wijzigingen hebt opgeslagen is het wellicht nodig uw browsercache te legen.
-* '''Firefox / Safari:''' houd ''Shift'' ingedrukt terwijl u op ''Vernieuwen'' klikt of druk op ''Ctrl-F5'' of ''Ctrl-R'' (''⌘-Shift-R'' op een Mac)
-* '''Google Chrome:''' druk op ''Ctrl-Shift-R'' (''⌘-Shift-R'' op een Mac)
-* '''Internet Explorer:''' houd ''Ctrl'' ingedrukt terwijl u op ''Vernieuwen'' klikt of druk op ''Ctrl-F5''
-* '''Konqueror: '''klik op ''Reload'' of druk op ''F5''
-* '''Opera:''' leeg uw cache in ''Extra → Voorkeuren''",
-	'copyrightwarning' => "Let op: alle bijdragen aan {{SITENAME}} worden geacht te zijn vrijgegeven onder de \$2 (zie \$1 voor details).
-Als u niet wilt dat uw tekst door anderen naar believen bewerkt en verspreid kan worden, kies dan niet voor \"Pagina opslaan\".<br />
-Hierbij belooft u ons tevens dat u deze tekst zelf hebt geschreven of overgenomen uit een vrije, openbare bron.<br />
-'''Gebruik geen materiaal dat beschermd wordt door auteursrecht, tenzij u daarvoor toestemming hebt!'''",
-	'copyrightwarning2' => "Al uw bijdragen aan {{SITENAME}} kunnen bewerkt, gewijzigd of verwijderd worden door andere gebruikers.
-Als u niet wilt dat uw teksten rigoureus aangepast worden door anderen, plaats ze hier dan niet.<br />
-U belooft ook dat u de oorspronkelijke auteur bent van dit materiaal of dat u het hebt gekopieerd uit een bron in het publieke domein of een soortgelijke vrije bron (zie $1 voor details).
-'''Gebruik geen materiaal dat beschermd wordt door auteursrecht, tenzij u daarvoor toestemming hebt!'''",
+	'confirmedittext' => 'Je moet je e-mailadres bevestigen voor je kunt bewerken.
+Voer je e-mailadres in en bevestig het via [[Special:Preferences|je voorkeuren]].',
+	'clearyourcache' => "'''Let op! Nadat je de wijzigingen hebt opgeslagen is het wellicht nodig je browsercache te legen.'''
+
+'''Mozilla / Firefox / Safari:''' houd ''Shift'' ingedrukt terwijl je op ''Huidige pagina vernieuwen'' klikt of typ ''Ctrl-F5'' of ''Ctrl-R'' (''Command-R'' op eenMacintosh);
+'''Konqueror: '''klik ''Reload'' of typ ''F5;''
+'''Opera:''' leeg je cache in ''Extra → Voorkeuren;''
+'''Internet Explorer:''' houd ''Ctrl'' ingedrukt terwijl je op ''Vernieuwen'' klikt of type ''Ctrl-F5.''",
+	'copyrightwarning' => "Opgelet: alle bijdragen aan {{SITENAME}} worden geacht te zijn vrijgegeven onder de $2 (zie $1 voor details).
+Als je niet wilt dat je tekst door anderen naar believen bewerkt en verspreid kan worden, kies dan niet voor ‘Pagina opslaan’.<br />
+Hierbij beloof je ons tevens dat je deze tekst zelf hebt geschreven of overgenomen uit een vrije, openbare bron.<br />
+'''GEBRUIK GEEN MATERIAAL DAT BESCHERMD WORDT DOOR AUTEURSRECHT, TENZIJ JE DAAR TOESTEMMING VOOR HEBT!'''",
+	'copyrightwarning2' => "Al je bijdragen aan {{SITENAME}} kunnen bewerkt, gewijzigd of verwijderd worden door andere gebruikers.
+Als je niet wilt dat je teksten rigoureus aangepast worden door anderen, plaats ze hier dan niet.<br />
+Je belooft ook dat je de oorspronkelijke auteur bent van dit materiaal of dat je het hebt gekopieerd uit een bron in het publieke domein of een soortgelijke vrije bron (zie $1 voor details).
+'''GEBRUIK GEEN MATERIAAL DAT BESCHERMD WORDT DOOR AUTEURSRECHT, TENZIJ JE DAARVOOR TOESTEMMING HEBT!'''",
 	'cascadeprotectedwarning' => "'''Waarschuwing:''' deze pagina is beveiligd en kan alleen door beheerders bewerkt worden, omdat deze is opgenomen in de volgende {{PLURAL:$1|pagina|pagina's}} die beveiligd {{PLURAL:$1|is|zijn}} met de cascade-optie:",
 	'cantcreateaccounttitle' => 'Registreren is mislukt.',
 	'cantcreateaccount-text' => "Registreren vanaf dit IP-adres ('''$1''') is geblokkeerd door [[User:$3|$3]].
@@ -20347,72 +20938,72 @@ De door $3 opgegeven reden is ''$2''",
 Zie ook [[Special:WantedCategories|niet-bestaande categorieën met verwijzingen]].",
 	'categoriesfrom' => 'Categorieën weergeven vanaf:',
 	'changed' => 'gewijzigd',
-	'created' => 'aangemaakt',
+	'created' => 'maakte',
 	'confirm' => 'Bevestigen',
-	'confirmdeletetext' => 'U staat op het punt een pagina te verwijderen, inclusief de geschiedenis.
-Bevestig hieronder dat dit inderdaad uw bedoeling is, dat u de gevolgen begrijpt en dat de verwijdering overeenstemt met het [[{{MediaWiki:Policy-url}}|beleid]].',
+	'confirmdeletetext' => 'Je staat op het punt een pagina te verwijderen, inclusief de geschiedenis.
+Bevestig hieronder dat dit inderdaad je bedoeling is, dat je de gevolgen begrijpt en dat de verwijdering overeenstemt met het [[{{MediaWiki:Policy-url}}|beleid]].',
 	'cantrollback' => 'Ongedaan maken van wijzigingen onmogelijk: deze pagina heeft slechts 1 auteur.',
 	'cannotundelete' => 'Het terugplaatsen is mislukt.
 Misschien heeft een andere gebruiker de pagina al teruggeplaatst.',
-	'contributions' => 'Gebruikersbijdragen',
+	'contributions' => 'Contributions',
 	'contributions-title' => 'Bijdragen van $1',
 	'contribsub2' => 'Voor $1 ($2)',
 	'createaccountblock' => 'registreren gebruikers geblokkeerd',
 	'change-blocklink' => 'blokkade wijzigen',
 	'contribslink' => 'bijdragen',
-	'cant-block-while-blocked' => 'U kunt andere gebruikers niet blokkeren terwijl u zelf geblokkeerd bent.',
-	'cant-see-hidden-user' => "De gebruiker die u probeert te blokken is al geblokkeerd en verborgen.
-Omdat u het recht 'hideuser' niet hebt, kunt u de blokkade van de gebruiker niet bekijken of bewerken.",
-	'cant-move-user-page' => "U hebt geen rechten om gebruikerspagina's te hernoemen (met uitzondering van subpagina's).",
-	'cant-move-to-user-page' => 'U hebt geen rechten om een pagina naar een gebruikerspagina te hernoemen. Hernoemen naar een subpagina is wel mogelijk.',
-	'cantmove-titleprotected' => 'U kunt geen pagina naar deze paginanaam hernoemen, omdat deze paginaam beveiligd is tegen het aanmaken ervan.',
-	'common.css' => '/** CSS die hier wordt geplaatst heeft invloed op alle skins */',
+	'cant-block-while-blocked' => 'Je kunt andere gebruikers niet blokkeren terwijl je zelf geblokkeerd bent.',
+	'cant-see-hidden-user' => "De gebruiker die je probeert te blokken is al geblokkeerd en verborgen.
+Omdat je het recht 'hideuser' niet hebt, kun je de blokkade van de gebruiker niet bekijken of bewerken.",
+	'cant-move-user-page' => "Je hebt geen rechten om gebruikerspagina's te hernoemen (met uitzondering van subpagina's).",
+	'cant-move-to-user-page' => 'Je hebt geen rechten om een pagina naar een gebruikerspagina te hernoemen. Hernoemen naar een subpagina is wel mogelijk.',
+	'cantmove-titleprotected' => 'Je kunt geen pagina naar deze paginaam hernoemen, omdat deze paginanaam beveiligd is tegen het aanmaken ervan.',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => "/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina's voor alle gebruikers */",
 	'creditspage' => 'Auteurspagina',
 	'confirmemail' => 'E-mailadres bevestigen',
-	'confirmemail_noemail' => 'U hebt geen geldig e-mailadres ingegeven in uw [[Special:Preferences|gebruikersvoorkeuren]].',
-	'confirmemail_text' => '{{SITENAME}} eist bevestiging van uw e-mailadres voordat u de e-mailmogelijkheden kunt gebruiken.
+	'confirmemail_noemail' => 'Je hebt geen geldig e-mailadres ingegeven in je [[Special:Preferences|gebruikersvoorkeuren]].',
+	'confirmemail_text' => '{{SITENAME}} eist bevestiging van je e-mailadres voordat je de e-mailmogelijkheden kunt gebruiken.
 Klik op de onderstaande knop om een bevestigingsbericht te ontvangen.
 Dit bericht bevat een verwijzing met een code.
-Open die verwijzing om uw e-mailadres te bevestigen.',
-	'confirmemail_pending' => 'Er is al een bevestigingsbericht aan u verzonden.
-Als u recentelijk uw gebruiker hebt aangemaakt, wacht dan een paar minuten totdat die aankomt voordat u opnieuw een e-mail laat sturen.',
+Open die verwijzing om je e-mailadres te bevestigen.',
+	'confirmemail_pending' => 'Er is al een bevestigingsbericht aan je verzonden.
+Als je recentelijk je gebruiker hebt aangemaakt, wacht dan een paar minuten totdat die aankomt voordat je opnieuw een e-mail laat sturen.',
 	'confirmemail_send' => 'Een bevestigingscode verzenden',
 	'confirmemail_sent' => 'Bevestigingscode verzonden.',
-	'confirmemail_oncreate' => 'Er is een bevestigingscode naar uw e-mailadres verzonden.
-Deze code is niet nodig om u aan te melden, maar u dient deze wel te bevestigen voordat u de e-mailmogelijkheden van deze wiki kunt gebruiken.',
-	'confirmemail_sendfailed' => '{{SITENAME}} kon uw bevestigingscode niet verzenden.
-Controleer uw e-mailadres op ongeldige tekens.
+	'confirmemail_oncreate' => 'Er is een bevestigingscode naar je e-mailadres verzonden.
+Deze code is niet nodig om je aan te melden, maar je dient deze wel te bevestigen voordat je de e-mailmogelijkheden van deze wiki kunt gebruiken.',
+	'confirmemail_sendfailed' => '{{SITENAME}} kon je bevestigingscode niet verzenden.
+Controleer je e-mailadres op ongeldige tekens.
 
 Het e-mailprogramma meldde: $1',
 	'confirmemail_invalid' => 'Ongeldige bevestigingscode.
 Mogelijk is de code verlopen.',
-	'confirmemail_needlogin' => 'U moet $1 om uw e-mailadres te bevestigen.',
-	'confirmemail_success' => 'Uw e-mailadres is bevestigd.
-U kunt zich nu [[Special:UserLogin|aanmelden]] en de wiki gebruiken.',
-	'confirmemail_loggedin' => 'Uw e-mailadres is nu bevestigd.',
-	'confirmemail_error' => 'Er is iets verkeerd gegaan tijdens het opslaan van uw bevestiging.',
+	'confirmemail_needlogin' => 'Je moet $1 om je e-mailadres te bevestigen.',
+	'confirmemail_success' => 'Je e-mailadres is bevestigd.
+Je kunt jezelf nu [[Special:UserLogin|aanmelden]] en {{SITENAME}} gebruiken.',
+	'confirmemail_loggedin' => 'Je e-mailadres is nu bevestigd.',
+	'confirmemail_error' => 'Er is iets verkeerd gegaan tijdens het opslaan van je bevestiging.',
 	'confirmemail_subject' => 'Bevestiging e-mailadres voor {{SITENAME}}',
-	'confirmemail_body' => 'Iemand, waarschijnlijk u, met het IP-adres $1,
+	'confirmemail_body' => 'Iemand, waarschijnlijk jijzelf, met het IP-adres $1,
 heeft zich met dit e-mailadres geregistreerd als gebruiker "$2" op {{SITENAME}}.
 
-Open de volgende verwijzing in uw webbrowser om te bevestigen dat u deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} te activeren:
+Open de volgende verwijzing in je webbrowser om te bevestigen dat je deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} te activeren:
 
 $3
 
-Als u uzelf *niet* hebt aangemeld, volg dan de volgende verwijzing om de bevestiging van uw e-mailadres te annuleren:
+Als je jezelf *niet* hebt aangemeld, volg dan de volgende verwijzing om de bevestiging van je e-mailadres te annuleren:
 
 $5
 
 De bevestigingscode vervalt op $4.',
-	'confirmemail_body_changed' => 'Iemand, waarschijnlijk u, met het IP-adres $1,
+	'confirmemail_body_changed' => 'Iemand, waarschijnlijk jijzelf, met het IP-adres $1,
 heeft het het e-mailadres geregistreerd voor gebruiker "$2" op {{SITENAME}} gewijzigd naar dit e-mailadres.
 
-Open de volgende verwijzing in uw webbrowser om te bevestigen dat u deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} opnieuw te activeren:
+Open de volgende verwijzing in je webbrowser om te bevestigen dat je deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} opnieuw te activeren:
 
 $3
 
-Als u uzelf *niet* hebt aangemeld, volg dan de volgende verwijzing om de bevestiging van uw e-mailadres te annuleren:
+Als je jezelf *niet* hebt aangemeld, volg dan de volgende verwijzing om de bevestiging van je e-mailadres te annuleren:
 
 $5
 
@@ -20430,17 +21021,17 @@ $5
 
 De bevestigingscode vervalt op $4.',
 	'confirmemail_invalidated' => 'De e-mailbevestiging is geannuleerd',
-	'confirmrecreate' => "Nadat u begonnen bent met uw wijziging heeft [[User:$1|$1]] ([[User talk:$1|overleg]]) deze pagina verwijderd met opgave van de volgende reden:
+	'confirmrecreate' => "Nadat je begonnen bent met je wijziging heeft [[User:$1|$1]] ([[User talk:$1|overleg]]) deze pagina verwijderd met opgave van de volgende reden:
 : ''$2''
-Bevestig dat u de pagina opnieuw wilt aanmaken.",
+Bevestig dat je de pagina opnieuw wilt aanmaken.",
 	'confirmrecreate-noreason' => 'Nadat u begonnen bent met uw wijziging heeft [[User:$1|$1]] ([[User talk:$1|overleg]]) deze pagina verwijderd.
 Bevestig dat u de pagina opnieuw wilt aanmaken.',
 	'confirm_purge_button' => 'OK',
 	'confirm-purge-top' => 'De cache van deze pagina legen?',
 	'confirm-purge-bottom' => 'Het opschonen van de cache zorgt ervoor dat de meest recente versie van een pagina wordt weergegeven.',
-	'confirm-watch-button' => 'OK',
+	'confirm-watch-button' => 'Ok',
 	'confirm-watch-top' => 'Deze pagina toevoegen aan uw volglijst?',
-	'confirm-unwatch-button' => 'OK',
+	'confirm-unwatch-button' => 'Ok',
 	'confirm-unwatch-top' => 'Deze pagina verwijderen uit uw volglijst?',
 	'comparepages' => "Pagina's vergelijken",
 	'compare-selector' => 'Paginaversies vergelijken',
@@ -20452,9 +21043,113 @@ Bevestig dat u de pagina opnieuw wilt aanmaken.',
 	'compare-invalid-title' => 'De titel die u hebt opgegeven is ongeldig.',
 	'compare-title-not-exists' => 'De titel die u hebt opgegeven bestaat niet.',
 	'compare-revision-not-exists' => 'De versie die u hebt opgegeven bestaat niet.',
-	'create_an_account' => 'Een gebruikersnaam aanmaken',
-	'createpage' => 'Een nieuw artikel aanmaken',
+	'create_an_account' => 'Registreren',
+	'createpage' => 'Nieuwe pagina aanmaken',
 	'choose_reason' => 'Kies de reden',
+	'categories-summary' => '',
+	'comma-separator' => ',&#32;',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
+	'corporatepage-create-button' => 'Create a wiki',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'More Links',
+	'corporatepage-in-the-know' => 'In the Know',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-find-a-wiki' => 'Find a Wiki',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Hide Page',
+	'corporatepage-wikia-editors' => 'editors',
+	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-update-fqr' => 'updated hourly',
+	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
+	'corporatepage-go-to-wiki' => 'Ga naar $1',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-watchlist' => 'Volglijst',
+	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
+	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
+	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
+	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-company-info-headline' => 'Company Information',
+	'corporatepage-pages-added' => 'pages created in the last hour',
+	'corporatepage-edits-made' => 'edits made today',
+	'corporatepage-words-added' => 'words added in the last week',
+	'custom_info' => 'Custom themes can be built by selecting "Custom" above and then editing ',
+	'contris' => 'Gebruikersbijdragen',
+	'createwiki' => 'Nieuwe wiki aanmaken',
+	'createwikipagetitle' => 'Nieuwe wiki aanmaken',
+	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
+	'createwikititle' => 'Title for the wiki',
+	'createwikiname' => 'Name for the wiki',
+	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
+	'createwikidesc' => 'Description of the wiki',
+	'createwikiaddtnl' => 'Additional Information',
+	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'createwikilang' => 'Default language for this wiki',
+	'community' => 'Community',
+	'contris_s' => 'Contributions',
+	'cockpit_hide' => 'Hide cockpit',
+	'create-account-new' => 'Create your FANDOM Account',
 );
 
 $messages['nl-informal'] = array(
@@ -20827,6 +21522,22 @@ Du må stadfeste at du verkeleg vil nyopprette denne sida.",
 	'create_an_account' => 'Start bruker',
 	'createpage' => 'Start en ny artikkel',
 	'choose_reason' => 'Velg grunn',
+	'cockpit_hide' => 'Skjul cockpit',
+	'community' => 'Fellesskap',
+	'contris' => 'Bidrag',
+	'contris_s' => 'Bidrag',
+	'createwiki' => 'Opprett en ny Wiki',
+	'createwikiaddtnl' => 'Øvrig informasjon',
+	'createwikidesc' => 'Beskrivelse av Wikien',
+	'createwikilang' => 'Standardspråk for denne wikien',
+	'createwikimailsub' => 'Foreslå en ny Wikia',
+	'createwikiname' => 'Navn til wikien',
+	'createwikinamevstitle' => 'Navnet på wikien skiller seg fra tittelen ved at navnet er det som vil brukes som standard nettadresse. For eksempel, navnet «starwars» vil være tilgjengelig på http://starwars.wikia.com/. Wikiens tittel inneholder mellomrom, mens navnet bare bør inneholde bokstaver og tall.',
+	'createwikipagetitle' => 'Opprett en ny Wiki',
+	'createwikisubmitcomplete' => 'Innsendelsen er fullført. Hvis du oppgav en e-postadresse vil du bli kontaktet vedrørende den nye Wikien. Takk for at du bruker {{SITENAME}}.',
+	'createwikitext' => 'Du kan sende en forespørsel om opprettelsen av en ny Wiki på denne siden. Bare fyll ut skjemaet',
+	'createwikititle' => 'Tittel for wikien',
+	'custom_info' => 'Egendefinerte temaer kan bygges ved å velge «Egendefinert» over og så endre',
 );
 
 $messages['nov'] = array(
@@ -21646,17 +22357,17 @@ $messages['pih'] = array(
 $messages['pl'] = array(
 	'category_header' => 'Strony w kategorii „$1”',
 	'category-media-header' => 'Pliki w kategorii „$1”',
-	'category-empty' => "''Obecnie w tej kategorii brak stron oraz plików.''",
+	'category-empty' => "''Obecnie w tej kategorii nie ma stron ani plików.''",
 	'category-subcat-count' => '{{PLURAL:$2|Ta kategoria ma tylko jedną podkategorię.|Poniżej wyświetlono $1 spośród wszystkich $2 podkategorii tej kategorii.}}',
 	'category-subcat-count-limited' => 'Ta kategoria ma {{PLURAL:$1|1 podkategorię|$1 podkategorie|$1 podkategorii}}.',
 	'category-article-count' => '{{PLURAL:$2|W tej kategorii jest tylko jedna strona.|Poniżej wyświetlono $1 spośród wszystkich $2 stron tej kategorii.}}',
 	'category-article-count-limited' => 'W tej kategorii {{PLURAL:$1|jest 1 strona|są $1 strony|jest $1 stron}}.',
-	'category-file-count' => '{{PLURAL:$2|W tej kategorii znajduje się tylko jeden plik.|W tej kategorii {{PLURAL:$1|jest 1 plik|są $1 pliki|jest $1 plików}} z ogólnej liczby $2 plików.}}',
+	'category-file-count' => '{{PLURAL:$2|W tej kategorii znajduje się tylko jeden plik.|Poniżej wyświetlono $1 spośród wszystkich $2 plików tej kategorii.}}',
 	'category-file-count-limited' => 'W tej kategorii {{PLURAL:$1|jest 1 plik|są $1 pliki|jest $1 plików}}.',
 	'cancel' => 'Anuluj',
 	'create' => 'Utwórz',
-	'copyright' => 'Treść udostępniana na licencji $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'Licencja: $1',
+	'copyrightpage' => 'w:c:pl:Licencja|Licencja – FANDOM',
 	'currentevents' => 'Bieżące wydarzenia',
 	'currentevents-url' => 'Project:Aktualności',
 	'collapsible-collapse' => 'Zwiń',
@@ -21666,53 +22377,60 @@ Możliwe, że zostały już usunięte przez kogoś innego.',
 	'cannotdelete-title' => 'Nie można usunąć strony „$1”.',
 	'cascadeprotected' => 'Ta strona została zabezpieczona przed edycją, ponieważ jest ona zawarta na {{PLURAL:$1|następującej stronie, która została zabezpieczona|następujących stronach, które zostały zabezpieczone}} z włączoną opcją dziedziczenia:
 $2',
-	'customcssprotected' => 'Nie jesteś uprawniony do edytowania tej strony CSS, ponieważ zawiera ona ustawienia osobiste innego użytkownika.',
-	'customjsprotected' => 'Nie jesteś uprawniony do edytowania tej strony JavaScript, ponieważ zawiera ona ustawienia osobiste innego użytkownika.',
+	'customcssprotected' => 'Nie masz uprawnień do edytowania tej strony CSS, ponieważ zawiera ona ustawienia osobiste innego użytkownika.',
+	'customjsprotected' => 'Nie masz uprawnień do edytowania tej strony JavaScript, ponieważ zawiera ona ustawienia osobiste innego użytkownika.',
 	'createaccount' => 'Załóż nowe konto',
 	'createaccountmail' => 'poprzez e‐mail',
 	'createaccountreason' => 'Powód',
-	'createaccounterror' => 'Nie można utworzyć konta $1',
+	'createaccounterror' => 'Nie można utworzyć konta: $1',
 	'cannotchangeemail' => 'Na tej wiki nie ma możliwości zmiany adresu e‐mail przypisanego do konta.',
-	'createaccount-title' => 'Utworzenie konta w {{GRAMMAR:MS.lp|{{SITENAME}}}}',
-	'createaccount-text' => 'Ktoś utworzył w {{GRAMMAR:MS.lp|{{SITENAME}}}} ($4), podając Twój adres e‐mail, konto „$2”. Aktualnym hasłem jest „$3”.
-Zaloguj się teraz i je zmień.
+	'createaccount-title' => 'Utworzenie konta na {{GRAMMAR:MS.lp|{{SITENAME}}}}',
+	'createaccount-text' => 'Witaj.
 
-Możesz zignorować tę wiadomość, jeśli konto zostało utworzone przez pomyłkę.',
-	'changeemail' => 'Zmiana adresu e‐mail',
+Ktoś utworzył konto na {{GRAMMAR:MS.lp|{{SITENAME}}}}  podając Twój adres e‐mail. Nazwa użytkownika to „$2”, a hasło „$3”.
+
+Tutaj możesz się zalogować: $4
+
+Jeśli nie potrzebujesz tego konta to zignoruj tę wiadomość lub skontaktuj się z nami przez community@fandom.com
+
+– Wsparcie Społeczności portalu FANDOM
+
+___________________________________________
+* Aby uzyskać dodatkową pomoc od społeczności Fandomu, odwiedź http://spolecznosc.wikia.com
+* W celu zmiany ustawień powiadomień e-mail, odwiedź http://spolecznosc.wikia.com/wiki/Special:Preferences',
+	'changeemail' => 'Zmień adres e‐mail',
 	'changeemail-header' => 'Zmiana adresu e‐mail',
 	'changeemail-text' => 'Wypełnij formularz, jeśli chcesz zmienić swój adres poczty elektronicznej. Będziesz musiał wprowadzić hasło, aby potwierdzić tę zmianę.',
 	'changeemail-no-info' => 'Musisz być zalogowany, by uzyskać bezpośredni dostęp do tej strony.',
-	'changeemail-oldemail' => 'Obecny adres e‐mail',
-	'changeemail-newemail' => 'Nowy adres e-mail',
-	'changeemail-none' => '(brak)',
+	'changeemail-oldemail' => 'Obecny adres e‐mail:',
+	'changeemail-newemail' => 'Nowy adres e-mail:',
+	'changeemail-none' => 'brak',
 	'changeemail-submit' => 'Zapisz nowy',
 	'changeemail-cancel' => 'Anuluj',
 	'confirmedittext' => 'Edytowanie jest możliwe dopiero po zweryfikowaniu adresu e‐mail.
-Podaj adres e‐mail i potwierdź go w swoich [[Special:Preferences|ustawieniach użytkownika]].',
-	'clearyourcache' => "'''Uwaga:''' aby zobaczyć zmiany po zapisaniu, może zajść potrzeba wyczyszczenia pamięci podręcznej przeglądarki.
-* '''Firefox / Safari:''' Przytrzymaj ''Shift'' podczas klikania ''Odśwież bieżącą stronę'', lub naciśnij klawisze ''Ctrl+F5'' lub ''Ctrl+R'' (''⌘-R'' na komputerze Mac)
-* '''Google Chrome:''' Naciśnij ''Ctrl-Shift-R'' (''⌘-Shift-R'' na komputerze Mac)
-* '''Internet Explorer:''' Przytrzymaj ''Ctrl'' jednocześnie klikając ''Odśwież'' lub naciśnij klawisze ''Ctrl+F5''
-* '''Konqueror:''' Kliknij polecenie ''Odśwież'' lub naciśnij klawisz ''F5''
-* '''Opera:''' Wyczyść pamięć podręczną w ''Narzędzia → Preferencje''",
-	'copyrightwarning' => "Wkład do {{GRAMMAR:D.lp|{{SITENAME}}}} jest udostępniany na licencji $2 (szczegóły w $1). Jeśli nie chcesz, żeby Twój tekst był dowolnie zmieniany przez każdego i rozpowszechniany bez ograniczeń, nie umieszczaj go tutaj.<br />
-Zapisując swoją edycję, oświadczasz, że ten tekst jest Twoim dziełem lub pochodzi z materiałów dostępnych na warunkach ''domeny publicznej'' lub kompatybilnych.
-'''PROSZĘ NIE WPROWADZAĆ MATERIAŁÓW CHRONIONYCH PRAWEM AUTORSKIM BEZ POZWOLENIA WŁAŚCICIELA!'''",
+Podaj adres e‐mail i potwierdź go w swoich [[Special:Preferences|preferencjach]].',
+	'clearyourcache' => "'''Uwaga:''' aby zobaczyć zmiany po zapisaniu, może zajść potrzeba [[w:pl:Pomoc:Odświeżanie cache|odświeżenia pamięci podręcznej przeglądarki]].
+
+* '''Chrome''' - Windows: Przytrzymaj ''Ctrl'' i wciśnij ''F5''. OS X: Przytrzymaj ''⌘ Cmd'' oraz ''⇧ Shift'' i wciśnij ''R''.
+* '''Safari''' - Przytrzymaj ''⇧ Shift'' i kliknij na przycisk ''Odśwież'' na pasku narzędzi.
+* '''Firefox''' - Windows: Przytrzymaj ''Ctrl'' i wciśnij ''F5''. OS X: Przytrzymaj ''⌘ Cmd'' oraz ''⇧ Shift'' i wciśnij ''R''.
+* '''Internet Explorer''' - Przytrzymaj ''Ctrl'' i wciśnij ''F5'' (lub kliknij przycisk ''Odśwież'' na pasku narzędzi).",
+	'copyrightwarning' => 'Wkład do {{GRAMMAR:D.lp|{{SITENAME}}}} jest udostępniany na licencji $2 (szczegóły w $1).',
 	'copyrightwarning2' => "Wszelki wkład w {{GRAMMAR:B.lp|{{SITENAME}}}} może być edytowany, zmieniany lub usunięty przez innych użytkowników.
-Jeśli nie chcesz, żeby Twój tekst był dowolnie zmieniany przez każdego i rozpowszechniany bez ograniczeń, nie umieszczaj go tutaj.<br />
-Zapisując swoją edycję, oświadczasz, że ten tekst jest Twoim dziełem lub pochodzi z materiałów dostępnych na warunkach ''domeny publicznej'' lub kompatybilnych (zobacz także $1).
-'''PROSZĘ NIE WPROWADZAĆ MATERIAŁÓW CHRONIONYCH PRAWEM AUTORSKIM BEZ POZWOLENIA WŁAŚCICIELA!'''",
+Jeśli nie chcesz, żeby twój tekst był dowolnie zmieniany przez każdego i rozpowszechniany bez ograniczeń, nie umieszczaj go tutaj.<br />
+Zapisując swoją edycję, oświadczasz, że ten tekst jest twoim dziełem lub pochodzi z materiałów dostępnych na warunkach ''domeny publicznej'' lub kompatybilnych (zobacz także $1).
+'''Proszę nie wprowadzać materiałów chronionych prawem autorskim bez pozwolenia właściciela!'''",
 	'cascadeprotectedwarning' => "'''Uwaga!''' Ta strona została zabezpieczona i tylko użytkownicy z uprawnieniami administratora mogą ją edytować. Strona ta jest zawarta na {{PLURAL:$1|następującej stronie, która została zabezpieczona|następujących stronach, które zostały zabezpieczone}} z włączoną opcją dziedziczenia:",
 	'cantcreateaccounttitle' => 'Nie można utworzyć konta',
-	'cantcreateaccount-text' => "Tworzenie konta z tego adresu IP ('''$1''') zostało zablokowane przez [[User:$3|$3]].
+	'cantcreateaccount-text' => "Tworzenie konta z tego adresu IP ('''$1''') zostało zablokowane przez użytkownika [[User:$3|$3]].
 
-Podany przez $3 powód to ''$2''",
-	'currentrev' => 'Aktualna wersja',
+Podany powód to ''$2''",
+	'currentrev' => 'przejdź do aktualnej wersji',
 	'currentrev-asof' => 'Aktualna wersja na dzień $1',
-	'currentrevisionlink' => 'przejdź do aktualnej wersji',
+	'currentrevisionlink' => 'Aktualna wersja',
 	'cur' => 'bież.',
 	'compareselectedversions' => 'porównaj wybrane wersje',
-	'changepassword' => 'Zmiana hasła',
+	'changepassword' => 'Zmień hasło',
 	'columns' => 'Kolumny',
 	'copyuploaddisabled' => 'Przesyłanie poprzez podanie adres URL jest wyłączone.',
 	'categories' => 'Kategorie',
@@ -21721,10 +22439,10 @@ Podany przez $3 powód to ''$2''",
 Zobacz również [[Special:WantedCategories|brakujące kategorie]].',
 	'categoriesfrom' => 'Wyświetl kategorie, zaczynając od',
 	'changed' => 'zmieniona',
-	'created' => 'utworzona',
+	'created' => 'utworzył',
 	'confirm' => 'Potwierdź',
 	'confirmdeletetext' => 'Zamierzasz usunąć stronę razem z całą dotyczącą jej historią.
-Upewnij się, czy na pewno chcesz to zrobić, że rozumiesz konsekwencje i że robisz to w zgodzie z [[{{MediaWiki:Policy-url}}|zasadami]].',
+Upewnij się, czy na pewno chcesz to zrobić, że rozumiesz konsekwencje. Zobacz także: [[w:pl:Pomoc:Usuwanie|Pomoc:Usuwanie]].',
 	'cantrollback' => 'Nie można cofnąć edycji, ponieważ jest tylko jedna wersja tej strony.',
 	'cannotundelete' => 'Odtworzenie nie powiodło się.
 Ktoś inny prawdopodobnie odtworzył już tę stronę.',
@@ -21739,7 +22457,7 @@ Ktoś inny prawdopodobnie odtworzył już tę stronę.',
 	'cant-move-user-page' => 'Nie masz uprawnień do przenoszenia stron użytkowników (za wyjątkiem podstron).',
 	'cant-move-to-user-page' => 'Nie masz uprawnień do przenoszenia strony do strony użytkownika (za wyjątkiem podstron użytkownika).',
 	'cantmove-titleprotected' => 'Nie możesz przenieść strony, ponieważ nowa nazwa strony jest niedozwolona z powodu zabezpieczenia przed utworzeniem.',
-	'common.css' => '/* Umieszczony tutaj kod CSS zostanie zastosowany we wszystkich skórkach */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Umieszczony tutaj kod JavaScript zostanie załadowany przez każdego użytkownika, podczas każdego ładowania strony. */',
 	'creditspage' => 'Autorzy',
 	'confirmemail' => 'Potwierdzanie adresu e‐mail',
@@ -21748,71 +22466,71 @@ Ktoś inny prawdopodobnie odtworzył już tę stronę.',
 Wciśnij przycisk poniżej aby wysłać na swój adres list z linkiem do strony WWW.
 List będzie zawierał link do strony, w którym zakodowany będzie identyfikator.
 Otwórz ten link w przeglądarce, czym potwierdzisz, że jesteś użytkownikiem tego adresu e‐mail.',
-	'confirmemail_pending' => 'Kod potwierdzenia został właśnie do Ciebie wysłany. Jeśli zarejestrował{{GENDER:|eś|aś|eś(‐aś)}} się niedawno, poczekaj kilka minut na dostarczenie wiadomości przed kolejną prośbą o wysłanie kodu.',
+	'confirmemail_pending' => 'Kod potwierdzenia został właśnie do ciebie wysłany. Jeśli {{GENDER:|zarejestrowałeś|zarejestrowałaś}} się niedawno, poczekaj kilka minut na dostarczenie wiadomości przed kolejną prośbą o wysłanie kodu.',
 	'confirmemail_send' => 'Wyślij kod potwierdzenia',
 	'confirmemail_sent' => 'Wiadomość e‐mail z kodem uwierzytelniającym została wysłana.',
-	'confirmemail_oncreate' => 'Link z kodem potwierdzenia został wysłany na Twój adres e‐mail.
+	'confirmemail_oncreate' => 'Link z kodem potwierdzenia został wysłany na twój adres e‐mail.
 Kod ten nie jest wymagany do zalogowania się, jednak będziesz musiał go aktywować otwierając, otrzymany link, w przeglądarce przed włączeniem niektórych opcji e‐mail na wiki.',
 	'confirmemail_sendfailed' => 'Nie udało się wysłać potwierdzającej wiadomości e‐mail.
 Sprawdź poprawność adresu pod kątem literówki.
 
 System pocztowy zwrócił komunikat: $1',
-	'confirmemail_invalid' => 'Błędny kod potwierdzenia.
-Kod może być przedawniony.',
-	'confirmemail_needlogin' => 'Musisz $1 aby potwierdzić adres email.',
+	'confirmemail_invalid' => 'Błędny lub przedawniony kod potwierdzenia. Potrzebujesz wygenerować kolejny kod, aby potwierdzić adres e-mail.
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>Wyślij kod e-mailem</span>]]</span></center> 
+<br>',
+	'confirmemail_needlogin' => 'Musisz $1, aby potwierdzić adres e-mail.',
 	'confirmemail_success' => 'Adres e‐mail został potwierdzony.
 Możesz [[Special:UserLogin|zalogować się]] i korzystać z szerszego wachlarza funkcji wiki.',
-	'confirmemail_loggedin' => 'Twój adres email został zweryfikowany.',
+	'confirmemail_loggedin' => 'Twój adres e-mail został zweryfikowany.',
 	'confirmemail_error' => 'Pojawiły się błędy przy zapisywaniu potwierdzenia.',
-	'confirmemail_subject' => '{{SITENAME}} – weryfikacja adresu e‐mail',
-	'confirmemail_body' => 'Ktoś łącząc się z komputera o adresie IP $1
-zarejestrował w {{GRAMMAR:MS.lp|{{SITENAME}}}} konto „$2” podając niniejszy adres e‐mail.
+	'confirmemail_subject' => 'Weryfikacja konta na portalu FANDOM',
+	'confirmemail_body' => 'Witaj na portalu FANDOM.
 
-Aby potwierdzić, że to Ty {{GENDER:|zarejestrowałeś|zarejestrowałaś}} to konto oraz, aby włączyć
-wszystkie funkcje korzystające z poczty elektronicznej, otwórz w swojej
-przeglądarce ten link:
+Pamiętaj, aby aktywować swoje nowe konto: $3
+
+Nie wiesz jak zacząć?
+
+Zerknij na ostatnią aktywność społeczności, do której chcesz dołączyć. Dodaj swój wkład komentując i edytując artykuły.
+
+Jeśli chcesz poznać społeczność, przeczytać o nowościach oraz uzyskać pomoc – odwiedź Centrum Społeczności.
+
+Miłej zabawy!
+
+– Wsparcie Społeczności portalu FANDOM
+
+___________________________________________
+* Aby uzyskać dodatkową pomoc od społeczności Fandomu, odwiedź http://spolecznosc.wikia.com
+* W celu zmiany ustawień powiadomień e-mail, odwiedź http://spolecznosc.wikia.com/wiki/Special:Preferences',
+	'confirmemail_body_changed' => "Ktoś, łącząc się z komputera o adresie IP $1, zmienił na {{GRAMMAR:MS.lp|{{SITENAME}}}} adres e-mail przypisany do konta „$2” na ten właśnie.
+
+Aby potwierdzić, że ten adres należy do Ciebie, otwórz ten link w przeglądarce:
 
 $3
 
-Jeśli to *nie* Ty {{GENDER:|zarejestrowałeś|zarejestrowałaś}} konto, otwórz w swojej przeglądarce
+Jeśli '''nie''' jest to Twoje konto, otwórz w swojej przeglądarce
 poniższy link, aby anulować potwierdzenie adresu e‐mail:
 
 $5
 
-Kod zawarty w linku straci ważność $4.',
-	'confirmemail_body_changed' => 'Ktoś łącząc się z komputera o adresie IP $1
-zmienił w {{GRAMMAR:MS.lp|{{SITENAME}}}} ustawiony dla konta „$2” adres e‐mail na ten właśnie.
+Kod zawarty w linku straci ważność $4.",
+	'confirmemail_body_set' => "Ktoś, łącząc się z komputera o adresie IP $1, ustawił na {{GRAMMAR:MS.lp|{{SITENAME}}}} adres e-mail dla konta „$2” na ten właśnie.
 
-Aby potwierdzić, że to Ty {{GENDER:|zmieniłeś|zmieniłaś}} adres otwórz w swojej
-przeglądarce ten link:
+Aby potwierdzić, że ten adres należy do Ciebie, otwórz ten link w przeglądarce:
 
 $3
 
-Jeśli *nie* jest to Twoje konto, otwórz w swojej przeglądarce
+Jeśli '''nie''' jest to Twoje konto, otwórz w swojej przeglądarce
 poniższy link, aby anulować potwierdzenie adresu e‐mail:
 
 $5
 
-Kod zawarty w linku straci ważność $4.',
-	'confirmemail_body_set' => 'Ktoś łącząc się z komputera o adresie IP $1
-ustawił w {{GRAMMAR:MS.lp|{{SITENAME}}}} dla konta „$2” adres e‐mail na ten właśnie.
-
-Aby potwierdzić, że to Ty {{GENDER:|ustawiłeś|ustawiłaś}} adres otwórz w swojej
-przeglądarce ten link:
-
-$3
-
-Jeśli *nie* jest to Twoje konto, otwórz w swojej przeglądarce
-poniższy link, aby anulować potwierdzenie adresu e‐mail:
-
-$5
-
-Kod zawarty w linku straci ważność $4.',
+Kod zawarty w linku straci ważność $4.",
 	'confirmemail_invalidated' => 'Potwierdzenie adresu e‐mail zostało anulowane',
-	'confirmrecreate' => "[[User:$1|$1]] ([[User talk:$1|dyskusja]]) usun{{GENDER:$1|ął|ęła|ął(‐ęła)}} tę stronę po tym, jak rozpoczął{{GENDER:|eś|aś|eś(‐aś)}} jego edycję, podając jako powód usunięcia:
+	'confirmrecreate' => "{{GENDER:$1|||Użytkownik}} [[User:$1|$1]] ([[User talk:$1|dyskusja]]) {{GENDER:$1|usunął|usunęła}} ten artykuł po tym, jak {{GENDER:|rozpocząłeś|rozpoczęłaś}} jego edycję. Powód usunięcia:
 : ''$2''
-Czy na pewno chcesz ją ponownie utworzyć?",
-	'confirmrecreate-noreason' => 'Użytkownik [[User:$1|$1]] ([[User talk:$1|dyskusja]]) usunął tę stronę po rozpoczęciu przez Ciebie edycji. Potwierdź, czy naprawdę chcesz, ponownie utworzyć tę stronę.',
+Czy chcesz go ponownie utworzyć?",
+	'confirmrecreate-noreason' => '{{GENDER:$1|||Użytkownik}} [[User:$1|$1]] ([[User talk:$1|dyskusja]]) {{GENDER:$1|usunął|usunęła}} tę stronę po tym, jak {{GENDER:|rozpocząłeś|rozpoczęłaś}} jej edycję. Czy chcesz ją ponownie utworzyć?',
 	'confirm_purge_button' => 'Wyczyść',
 	'confirm-purge-top' => 'Wyczyścić pamięć podręczną dla tej strony?',
 	'confirm-purge-bottom' => 'Odświeżenie strony wyczyści pamięć podręczną i wymusi pokazanie jej aktualnej wersji.',
@@ -21827,14 +22545,117 @@ Czy na pewno chcesz ją ponownie utworzyć?",
 	'compare-rev1' => 'Wersja 1',
 	'compare-rev2' => 'Wersja 2',
 	'compare-submit' => 'Porównaj',
-	'compare-invalid-title' => 'Tytuł jest nieprawidłowy.',
-	'compare-title-not-exists' => 'Tytuł, który podałeś nie istnieje.',
-	'compare-revision-not-exists' => 'Zmiana, którą wybrałeś nie istnieje.',
+	'compare-invalid-title' => 'Podany tytuł jest nieprawidłowy.',
+	'compare-title-not-exists' => 'Podany tytuł nie istnieje.',
+	'compare-revision-not-exists' => 'Podana zmiana nie istnieje.',
 	'create_an_account' => 'Załóż konto',
-	'createpage' => 'Utwórz nowy artykuł',
+	'createpage' => 'Utwórz nową stronę',
 	'choose_reason' => 'wybierz powód',
-	'contris' => 'Edycje',
+	'contris' => 'Wkład',
 	'cockpit_hide' => 'Ukryj kokpit',
+	'create-account-new' => 'Stwórz konto na portalu FANDOM',
+	'cięta-riposta' => 'Ojtam ojtam',
+	'community' => 'Społeczność',
+	'corporatepage-go-to-wiki' => 'Przejdź do $1',
+	'contris_s' => 'Wkład',
+	'createwikilang' => 'Domyślny język dla tej wiki',
+	'createwikipagetitle' => 'Utwórz nową wiki',
+	'categories-summary' => '',
+	'comma-separator' => ',&#32;',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
+	'corporatepage-create-button' => 'Utwórz wiki',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'Więcej linków',
+	'corporatepage-in-the-know' => 'Bądź na bieżąco',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-find-a-wiki' => 'Znajdź wiki',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Ukryj stronę',
+	'corporatepage-wikia-editors' => 'edytorów',
+	'corporatepage-wikia-hot-spots' => 'FANDOM Hot Spots',
+	'corporatepage-update-fqr' => 'aktualizacje co godzinę',
+	'corporatepage-wikia-hot-spots-desc' => 'Oto najgorętsze strony w tym tygodniu, według ilości edytorów.',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Globalna nawigacja Fandomu',
+	'corporatepage-watchlist' => 'Obserwowane',
+	'corporatepage-homepage-feature-headline' => 'Wyróżnione na Fandomie',
+	'corporatepage-homepageintro' => '<div><h1>Witaj na portalu FANDOM</h1>
+<h2>Współpracuj z ludźmi, który kochają to co ty.</h2></div>
+<h2>Zacznij już dziś!</h2>',
+	'corporatepage-search-title' => 'Wpisz frazy i szukaj wiki',
+	'corporatepage-featured-wikis-headline' => 'Wyróżnione wiki',
+	'corporatepage-wikia-overview-headline' => 'Przegląd portalu FANDOM',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-company-info-headline' => 'Informacje o firmie',
+	'corporatepage-pages-added' => 'stron(y) stworzone w ciągu ostatniej godziny',
+	'corporatepage-edits-made' => 'edycji dzisiaj',
+	'corporatepage-words-added' => 'słów dodanych w zeszłym tygodniu',
+	'custom_info' => 'Custom themes can be built by selecting "Custom" above and then editing ',
+	'createwiki' => 'Utwórz nową wiki',
+	'createwikitext' => 'Możesz złożyć prośbę o stworzenie nowej wiki. Wystarczy wypełnić formularz.',
+	'createwikititle' => 'Tytuł wiki',
+	'createwikiname' => 'Nazwa wiki',
+	'createwikinamevstitle' => "Nazwa różni się od tytułu, tym że nazwa określa domyślny adres url. Np. ''starwars'' będzie dostępne pod http://starwars.wikia.com/. Tytuł może zawierać spacje, a nazwa powinna zawierać tylko litery alfabetu łacińskiego oraz cyfry.",
+	'createwikidesc' => 'Opis wiki',
+	'createwikiaddtnl' => 'Dodatkowe informacje',
+	'createwikimailsub' => 'Złóż prośbę o nową wiki',
+	'createwikisubmitcomplete' => 'Prośba złożona. Jeśli został podany adres e-mail, zostanie on użyty do kontaktu w sprawie wiki.',
 );
 
 $messages['pms'] = array(
@@ -22473,204 +23294,8 @@ $5
 );
 
 $messages['pt'] = array(
-	'category_header' => 'Páginas na categoria "$1"',
-	'category-media-header' => 'Multimédia na categoria "$1"',
-	'category-empty' => "''Esta categoria não contém actualmente nenhuma página ou ficheiro multimédia.''",
-	'category-subcat-count' => '{{PLURAL:$2|Esta categoria só contém a seguinte subcategoria.|Esta categoria contém {{PLURAL:$1|a seguinte subcategoria|as seguintes $1 subcategorias}} (de um total de $2).}}',
-	'category-subcat-count-limited' => 'Esta categoria tem {{PLURAL:$1|a seguinte subcategoria|as seguintes $1 subcategorias}}.',
-	'category-article-count' => '{{PLURAL:$2|Esta categoria só contém a seguinte página.|Esta categoria contém {{PLURAL:$1|a seguinte página|as seguintes $1 páginas}} (de um total de $2).}}',
-	'category-article-count-limited' => 'Há, nesta categoria, {{PLURAL:$1|a página a seguir|as $1 páginas a seguir}}.',
-	'category-file-count' => '{{PLURAL:$2|Esta categoria só contém o seguinte ficheiro.|Esta categoria contém {{PLURAL:$1|o seguinte ficheiro|os seguintes $1 ficheiros}} (de um total de $2).}}',
-	'category-file-count-limited' => 'Nesta categoria há {{PLURAL:$1|um ficheiro|$1 ficheiros}}.',
-	'cancel' => 'Cancelar',
-	'create' => 'Criar',
-	'copyright' => 'Conteúdo disponibilizado nos termos da $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'currentevents' => 'Notícias',
-	'currentevents-url' => 'Project:Notícias',
-	'collapsible-collapse' => 'Ocultar',
-	'collapsible-expand' => 'Expandir',
-	'cannotdelete' => 'Não foi possível eliminar a página ou ficheiro "$1".
-Pode já ter sido eliminado por outro utilizador.',
-	'cannotdelete-title' => 'Não é possível eliminar a página "$1"',
-	'cascadeprotected' => 'Esta página foi protegida contra edições por estar incluída {{PLURAL:$1|na página listada|nas páginas listadas}} a seguir, ({{PLURAL:$1|página essa que está protegida|páginas essas que estão protegidas}} com a opção de protecção "em cascata" activada):
-$2',
-	'customcssprotected' => 'Não tem permissões para editar esta página de CSS porque ela contém as configurações pessoais de outro utilizador.',
-	'customjsprotected' => 'Não tem permissões para editar esta página de JavaScript porque ela contém as configurações pessoais de outro utilizador.',
-	'createaccount' => 'Criar conta',
-	'createaccountmail' => 'por correio electrónico',
-	'createaccountreason' => 'Motivo:',
-	'createaccounterror' => 'Não foi possível criar a conta: $1',
-	'cannotchangeemail' => 'A conta de e-mail não pode ser alterado nesta wiki.',
-	'createaccount-title' => 'Criação de conta na {{SITENAME}}',
-	'createaccount-text' => 'Alguém criou uma conta com o nome $2 para o seu endereço de correio electrónico, na wiki {{SITENAME}} ($4), com a palavra-chave "$3".
-Deve agora autenticar-se e alterar a sua palavra-chave.
-
-Se a conta foi criada por engano, pode ignorar esta mensagem.',
-	'changeemail' => 'Alterar o endereço de correio electrónico',
-	'changeemail-header' => 'Alterar o endereço de correio electrónico da conta',
-	'changeemail-text' => 'Preencha este formulário para alterar o endereço de correio electrónico. Para confirmar esta alteração terá de introduzir a sua palavra-chave.',
-	'changeemail-no-info' => 'Para aceder directamente a esta página tem de estar autenticado.',
-	'changeemail-oldemail' => 'Correio electrónico actual:',
-	'changeemail-newemail' => 'Correio electrónico novo:',
-	'changeemail-none' => '(nenhum)',
-	'changeemail-submit' => 'Alterar correio electrónico',
-	'changeemail-cancel' => 'Cancelar',
-	'confirmedittext' => 'Precisa de confirmar o seu endereço de correio electrónico antes de começar a editar páginas.
-Introduza e valide o endereço através das [[Special:Preferences|preferências do utilizador]], por favor.',
-	'clearyourcache' => "'''Nota:''' Após gravar, terá de limpar a ''cache'' do seu browser para ver as alterações.'''
-
-*'''Firefox / Safari:''' Pressione ''Shift'' enquanto clica ''Recarregar'', ou pressione ''Ctrl-F5'' ou ''Ctrl-R'' (''⌘-R'' no Mac)
-*'''Google Chrome:''' Pressione ''Ctrl-Shift-R'' (''⌘-Shift-R'' no Mac)
-*'''Internet Explorer:''' Pressione ''Ctrl'' enquanto clica ''Recarregar'', ou pressione ''Ctrl-F5''
-*'''Konqueror:''' Clique ''Recarregar'' ou pressione ''F5''
-*'''Opera:''' Limpe a ''cache'' em ''Ferramentas → Preferências'' (''Tools → Preferences'')",
-	'copyrightwarning' => "Note, por favor, que todas as suas contribuições na {{SITENAME}} são consideradas publicadas nos termos da licença $2 (consulte $1 para mais detalhes).
-Se não deseja que o seu texto possa ser inexoravelmente editado e redistribuído, não o envie.
-Garante-nos também que isto é algo escrito por si, ou copiado do domínio público ou de outra fonte de teor livre.<br />
-'''Não envie conteúdos cujos direitos de autor estão protegidos, sem ter a devida permissão!'''",
-	'copyrightwarning2' => "Note, por favor, que todas as suas contribuições na {{SITENAME}} podem ser editadas, alteradas ou removidas por outros utilizadores.
-Se não deseja que o seu texto seja inexoravelmente editado, não o envie.<br />
-Garante-nos também que isto é algo escrito por si, ou copiado do domínio público ou de outra fonte de teor livre (consulte $1 para mais detalhes).<br />
-'''Não envie conteúdos cujos direitos de autor estão protegidos, sem ter a devida permissão!'''",
-	'cascadeprotectedwarning' => "'''Aviso:''' Esta página está protegida de forma que apenas os administradores possam editá-la, porque se encontra incluída {{PLURAL:$1|na seguinte página protegida|nas seguintes páginas protegidas}} em cascata:",
-	'cantcreateaccounttitle' => 'Não é possível criar uma conta',
-	'cantcreateaccount-text' => "A criação de contas a partir deste endereço IP ('''$1''') foi bloqueada por [[User:$3|$3]].
-
-O motivo apresentado por $3 foi ''$2''",
-	'currentrev' => 'Revisão actual',
-	'currentrev-asof' => 'Edição actual desde as $1',
-	'currentrevisionlink' => 'Revisão actual',
-	'cur' => 'act',
-	'compareselectedversions' => 'Comparar as versões seleccionadas',
-	'changepassword' => 'Alterar palavra-chave',
-	'columns' => 'Colunas:',
-	'copyuploaddisabled' => 'Upload por URL impossibilitado.',
-	'categories' => 'Categorias',
-	'categoriespagetext' => '{{PLURAL:$1|A seguinte categoria contém páginas ou ficheiros multimédia|As seguintes categorias contêm páginas ou ficheiros multimédia}}.
-As [[Special:UnusedCategories|categorias não utilizadas]] não são apresentadas nesta lista.
-Veja também as [[Special:WantedCategories|categorias desejadas]].',
-	'categoriesfrom' => 'Listar categorias começando por:',
-	'changed' => 'alterada',
-	'created' => 'criada',
-	'confirm' => 'Confirmar',
-	'confirmdeletetext' => 'Está prestes a eliminar permanentemente uma página ou uma imagem e todo o seu histórico.
-Confirme que é realmente esta a sua intenção, que compreende as consequências e que o faz de acordo com as [[{{MediaWiki:Policy-url}}|políticas e recomendações]] do projecto, por favor.',
-	'cantrollback' => 'Não foi possível reverter a edição; o último contribuidor é o único autor desta página',
-	'cannotundelete' => 'Restauração falhada; alguém talvez já restaurou a página.',
-	'contributions' => 'Contribuições do utilizador',
-	'contributions-title' => 'Contribuições {{GENDER:$1|do utilizador|da utilizadora}} $1',
-	'contribsub2' => 'Para $1 ($2)',
-	'createaccountblock' => 'criação de conta bloqueada',
-	'change-blocklink' => 'alterar bloqueio',
-	'contribslink' => 'contribs',
-	'cant-block-while-blocked' => 'Não pode bloquear outros utilizadores enquanto estiver bloqueado.',
-	'cant-see-hidden-user' => "O utilizador que está tentando bloquear já está bloqueado e oculto.
-Como não tem o privilégio para ocultar utilizadores ''(hideuser)'', não pode ver ou editar o bloqueio deste utilizador.",
-	'cant-move-user-page' => 'Não tem permissão para mover páginas de utilizador (pode mover sub-páginas).',
-	'cant-move-to-user-page' => 'Não tem permissão para mover uma página para uma página de utilizador (pode movê-la para uma subpágina de utilizador).',
-	'cantmove-titleprotected' => 'Não pode mover uma página para esse destino, porque o novo título foi protegido para evitar a sua criação',
-	'common.css' => '/* Código CSS colocado aqui será aplicado a todos os temas */',
-	'common.js' => '/* Código Javascript colocado aqui será carregado para todos os utilizadores em cada carregamento de página */',
-	'creditspage' => 'Créditos da página',
-	'confirmemail' => 'Confirmar endereço de correio electrónico',
-	'confirmemail_noemail' => 'Não tem um endereço de correio electrónico válido nas suas [[Special:Preferences|preferências de utilizador]].',
-	'confirmemail_text' => 'A {{SITENAME}} requer que valide o seu endereço de correio electrónico antes de usar as funcionalidades de correio.
-Clique o botão abaixo para enviar uma mensagem de confirmação para o seu endereço.
-A mensagem incluíra uma URL que contém um código;
-insira a URL no seu browser para confirmar que o seu endereço de correio electrónico é válido.',
-	'confirmemail_pending' => 'Um código de confirmação já lhe foi enviado;
-caso tenha criado a conta recentemente, é recomendado que aguarde alguns minutos até o receber antes de tentar pedir um novo código.',
-	'confirmemail_send' => 'Enviar código de confirmação',
-	'confirmemail_sent' => 'Correio de confirmação enviado.',
-	'confirmemail_oncreate' => 'Foi enviado um código de confirmação para o seu endereço de correio electrónico.
-Este código não é necessário para se autenticar no sistema, mas será necessário para activar qualquer funcionalidade baseada no uso de correio na wiki.',
-	'confirmemail_sendfailed' => 'A {{SITENAME}} não conseguiu enviar a mensagem de confirmação.
-Verifique se o seu endereço de correio electrónico tem caracteres inválidos.
-
-O sistema de correio devolveu o erro: $1',
-	'confirmemail_invalid' => 'Código de confirmação inválido. O código poderá ter expirado.',
-	'confirmemail_needlogin' => 'Precisa de $1 para confirmar o seu endereço de correio electrónico.',
-	'confirmemail_success' => 'O seu endereço de correio electrónico foi confirmado.
-Pode agora [[Special:UserLogin|autenticar-se]] e desfrutar da wiki.',
-	'confirmemail_loggedin' => 'O seu endereço de correio electrónico foi confirmado.',
-	'confirmemail_error' => 'Alguma coisa correu mal ao gravar a sua confirmação.',
-	'confirmemail_subject' => 'Confirmação de endereço de correio electrónico da {{SITENAME}}',
-	'confirmemail_body' => 'Alguém, provavelmente você a partir do endereço IP $1,
-registou uma conta "$2" com este endereço de correio electrónico na {{SITENAME}}.
-
-Para confirmar que esta conta é realmente sua e activar
-as funcionalidades de correio electrónico na {{SITENAME}},
-abra o seguinte link no seu browser:
-
-$3
-
-Se a conta *não* é sua, abra o seguinte link para cancelar
-a confirmação do endereço de correio electrónico:
-
-$5
-
-Este código de confirmação expira a $4.',
-	'confirmemail_body_changed' => 'Alguém, provavelmente você a partir do endereço IP $1,
-alterou o endereço de correio electrónico da conta "$2" para este na {{SITENAME}}.
-
-Para confirmar que esta conta é realmente sua e reactivar
-as funcionalidades de correio electrónico na {{SITENAME}},
-abra o seguinte link no seu browser:
-
-$3
-
-Caso a conta *não* lhe pertença, abra o seguinte link
-para cancelar a confirmação do endereço de correio electrónico:
-
-$5
-
-Este código de confirmação expira a $4.',
-	'confirmemail_body_set' => 'Alguém, provavelmente você a partir do endereço IP $1,
-definiu o seu endereço de correio electrónico como correio da conta "$2" na {{SITENAME}}.
-
-Para confirmar que esta conta é realmente sua e reactivar
-as funcionalidades de correio electrónico na {{SITENAME}},
-abra o seguinte link no seu browser:
-
-$3
-
-Caso a conta *não* lhe pertença, abra o seguinte link
-para cancelar a confirmação do endereço de correio electrónico:
-
-$5
-
-Este código de confirmação expira a $4.',
-	'confirmemail_invalidated' => 'Confirmação de endereço de correio electrónico cancelada',
-	'confirmrecreate' => "Enquanto você editava esta página, o utilizador [[User:$1|$1]] ([[User talk:$1|Discussão]]) eliminou-a pelo seguinte motivo:
-: ''$2''
-Confirme que deseja realmente recriar esta página, por favor.",
-	'confirmrecreate-noreason' => 'O utilizador [[User:$1|$1]] ([[User talk:$1|discussão]]) eliminou esta página depois de você ter começado a editá-la. Confirme que deseja recriar a página, por favor.',
-	'confirm_purge_button' => 'OK',
-	'confirm-purge-top' => 'Limpar a memória cache desta página?',
-	'confirm-purge-bottom' => 'Purgar uma página, limpa a cache e força a sua versão mais recente a aparecer.',
-	'confirm-watch-button' => 'OK',
-	'confirm-watch-top' => 'Adicionar esta página às suas páginas vigiadas?',
-	'confirm-unwatch-button' => 'OK',
-	'confirm-unwatch-top' => 'Remover esta página das páginas vigiadas?',
-	'comparepages' => 'Comparar páginas',
-	'compare-selector' => 'Comparar edições da página',
-	'compare-page1' => 'Página 1',
-	'compare-page2' => 'Página 2',
-	'compare-rev1' => 'Edição 1',
-	'compare-rev2' => 'Edição 2',
-	'compare-submit' => 'Comparar',
-	'compare-invalid-title' => 'O título que especificou é inválido.',
-	'compare-title-not-exists' => 'O título que especificou não existe.',
-	'compare-revision-not-exists' => 'A revisão que especificou não existe.',
-	'create_an_account' => 'Criar uma conta',
-	'createpage' => 'Criar uma página nova',
-	'choose_reason' => 'Escolha a razão',
-);
-
-$messages['pt-br'] = array(
-	'category_header' => 'Páginas na categoria "$1"',
-	'category-media-header' => 'Multimídia na categoria "$1"',
+	'category_header' => '<span style="font-size: 80%;">Páginas na categoria "$1"</span>',
+	'category-media-header' => '<span style="font-size: 80%;">Multimídia na categoria "$1"</span>',
 	'category-empty' => "''No momento esta categoria não possui nenhuma página ou arquivo multimídia.''",
 	'category-subcat-count' => '{{PLURAL:$2|Esta categoria possui apenas a subcategoria a seguir.|Há, nesta categoria {{PLURAL:$1|uma subcategoria|$1 subcategorias}} (dentre um total de $2).}}',
 	'category-subcat-count-limited' => 'Esta categoria possui {{PLURAL:$1|a seguinte sub-categoria|as $1 sub-categorias a seguir}}.',
@@ -22694,19 +23319,27 @@ $2',
 	'customcssprotected' => 'Você não tem permissão para editar esta página CSS, porque ele contém configurações pessoais de outro usuário.',
 	'customjsprotected' => 'Você não tem permissão para editar esta página de JavaScript, porque ele contém configurações pessoais de outro usuário.',
 	'createaccount' => 'Criar conta',
-	'createaccountmail' => 'por e-mail',
-	'createaccountreason' => 'Razão:',
+	'createaccountmail' => 'Por e-mail',
+	'createaccountreason' => 'Motivo:',
 	'createaccounterror' => 'Não foi possível criar a conta: $1',
 	'cannotchangeemail' => 'A conta de e-mail não pode ser alterada neste wiki.',
 	'createaccount-title' => 'Criação de conta em {{SITENAME}}',
-	'createaccount-text' => 'Alguém criou uma conta de nome $2 para o seu endereço de email no wiki {{SITENAME}} ($4), tendo como senha "$3".
-Você deve se autenticar e alterar sua senha.
+	'createaccount-text' => 'Olá,
 
-Ignore esta mensagem caso a conta tenha sido criada por engano.',
-	'changeemail' => 'Alterar o endereço de e-mail',
+Alguém criou uma conta de nome $2 para o seu endereço de email no wiki {{SITENAME}}, tendo como senha "$3".
+
+Você deve se autenticar em $4 e alterar sua senha.
+
+Ignore esta mensagem caso a conta tenha sido criada por engano.
+- Suporte FANDOM
+
+___________________________________________
+* Visite a Central da Comunidade para Ajuda: http://comunidade.wikia.com
+* Quer receber menos mensagens? Você pode se descadastrar ou alterar suas preferências de e-mail aqui: http://comunidade.wikia.com/Special:Preferências',
+	'changeemail' => 'Alterar e-mail',
 	'changeemail-header' => 'Alterar o endereço de e-mail da conta',
-	'changeemail-text' => 'Preencha este formulário para alterar o endereço de e-mail. Para confirmar esta alteração terá de introduzir a sua senha.',
-	'changeemail-no-info' => 'Para aceder diretamente a esta página você tem de estar autenticado.',
+	'changeemail-text' => 'Preencha este formulário para alterar o endereço de e-mail. Para confirmar esta alteração você terá que introduzir a sua senha.',
+	'changeemail-no-info' => 'Você precisa estar autenticado para acessar esta página diretamente.',
 	'changeemail-oldemail' => 'Endereço de e-mail atual:',
 	'changeemail-newemail' => 'Novo endereço de e-mail:',
 	'changeemail-none' => '(nenhum)',
@@ -22720,20 +23353,16 @@ Por favor, introduza um e valide-o através das suas [[Special:Preferences|prefe
 * '''Internet Explorer:''' pressione ''Ctrl'' enquanto clica em ''Recarregar'' ou pressione ''Ctrl-F5'';
 * '''Konqueror:''' clique no botão ''Recarregar'' ou pressione ''F5'';
 * '''Opera:''' limpe o ''cache'' em ''Ferramentas → Preferências'' (''Tools → Preferences'')",
-	'continue-editing' => 'Continuar editando',
-	'creating' => 'Criando $1',
-	'copyrightwarning' => "Por favor, note que todas as suas contribuições em {{SITENAME}} são consideradas como lançadas nos termos da licença $2 (veja $1 para detalhes). Se não deseja que o seu texto seja inexoravelmente editado e redistribuído de tal forma, não o envie.<br />
-Você está, ao mesmo tempo, garantindo-nos que isto é algo escrito por você mesmo ou algo copiado de uma fonte de textos em domínio público ou similarmente de teor livre.
-'''NÃO ENVIE TRABALHO PROTEGIDO POR DIREITOS AUTORAIS SEM A DEVIDA PERMISSÃO!'''",
+	'copyrightwarning' => 'Todas as contribuições ao site {{SITENAME}} são considerados como feitas sob $2 (veja $1 para mais detalhes).<br/>',
 	'copyrightwarning2' => "Por favor, note que todas as suas contribuições em {{SITENAME}} podem ser editadas, alteradas ou removidas por outros contribuidores. Se você não deseja que o seu texto seja inexoravelmente editado, não o envie.<br />
 Você está, ao mesmo tempo, a garantir-nos que isto é algo escrito por si, ou algo copiado de alguma fonte de textos em domínio público ou similarmente de teor livre (veja $1 para detalhes).
 '''NÃO ENVIE TRABALHO PROTEGIDO POR DIREITOS DE AUTOR SEM A DEVIDA PERMISSÃO!'''",
-	'cascadeprotectedwarning' => "'''Atenção:''' Esta página se encontra protegida; apenas {{int:group-sysop}} podem editá-la, uma vez que se encontra incluída {{PLURAL:\$1|na seguinte página protegida|nas seguintes páginas protegidas}} com a \"proteção progressiva\":",
+	'cascadeprotectedwarning' => "'''Atenção:''' Esta página se encontra protegida; apenas usuários com direitos de administrador podem editá-la, uma vez que se encontra incluída {{PLURAL:\$1|na seguinte página protegida|nas seguintes páginas protegidas}} com a \"proteção progressiva\":",
 	'cantcreateaccounttitle' => 'Não é possível criar uma conta',
 	'cantcreateaccount-text' => "Este IP ('''$1''') foi bloqueado de criar novas contas por [[User:$3|$3]].
 
 A justificativa apresentada por $3 foi ''$2''",
-	'currentrev' => 'Revisão atual',
+	'currentrev' => 'ver versão atual',
 	'currentrev-asof' => 'Edição atual tal como às $1',
 	'currentrevisionlink' => 'ver versão atual',
 	'cur' => 'atu',
@@ -22741,38 +23370,32 @@ A justificativa apresentada por $3 foi ''$2''",
 	'changepassword' => 'Alterar senha',
 	'columns' => 'Colunas:',
 	'copyuploaddisabled' => 'O upload por URL encontra-se desativado.',
-	'cachedspecial-viewing-cached-ttl' => 'Você está visualizando uma versão de cache desta página que pode ser de $1 atrás.',
-	'cachedspecial-viewing-cached-ts' => 'Você está visualizando uma versão de cache desta página que pode estar desatualizada.',
-	'cachedspecial-refresh-now' => 'Ver a mais recente.',
-	'categories' => 'Categorias',
-	'categoriespagetext' => '{{PLURAL:$1|A seguinte categoria contém|As seguintes contém}} páginas ou mídia.
-[[Special:UnusedCategories|Categorias não utilizadas]] não são mostradas aqui.
-Veja também [[Special:WantedCategories|categorias pedidas]].',
+	'categories' => 'Lista de categorias',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
 	'categoriesfrom' => 'Listar categorias começando por:',
 	'changed' => 'alterada',
-	'created' => 'criada',
+	'created' => 'criou',
 	'confirm' => 'Confirmar',
-	'confirmdeletetext' => 'Encontra-se prestes a eliminar permanentemente uma página ou uma imagem e todo o seu histórico.
-Por favor, confirme que possui a intenção de fazer isto, que compreende as consequências e que encontra-se a fazer isto de acordo com as [[{{MediaWiki:Policy-url}}|políticas]] do projeto.',
+	'confirmdeletetext' => 'Você se encontra prestes a excluir uma página junto de todo o seu histórico. Veja também [[Ajuda:Eliminar]].',
 	'cantrollback' => 'Não foi possível reverter a edição; o último contribuidor é o único autor desta página',
-	'cannotundelete' => 'Restauração falhada; alguém talvez já restaurou a página.',
-	'contributions' => 'Contribuições {{GENDER:{{BASEPAGENAME}}|do usuário|da usuária}}',
+	'cannotundelete' => 'Restauração falhada; alguém talvez já tenha restaurado a página.',
+	'contributions' => 'Contribuições',
 	'contributions-title' => 'Contribuições {{GENDER:$1|do usuário|da usuária}} $1',
 	'contribsub2' => 'Para $1 ($2)',
 	'createaccountblock' => 'criação de conta de usuário bloqueada',
 	'change-blocklink' => 'alterar bloqueio',
-	'contribslink' => 'contribs',
+	'contribslink' => 'contribuições',
 	'cant-block-while-blocked' => 'Você não pode bloquear outros usuários enquanto estiver bloqueado.',
 	'cant-see-hidden-user' => 'O usuário que você está tentando bloquear já está bloqueado ou oculto. Como você não possui privilégio de ocultar usuários, você não pode ver ou editar o bloqueio desse usuário.',
 	'cant-move-user-page' => 'Você não possui permissão de mover páginas principais de usuários.',
 	'cant-move-to-user-page' => 'Você não tem permissão para mover uma página para uma página de usuários (exceto para uma subpágina de usuário).',
 	'cantmove-titleprotected' => 'Você não pode mover uma página para tal denominação uma vez que o novo título se encontra protegido contra criação',
-	'common.css' => '/** o código CSS colocado aqui será aplicado a todos os temas */',
-	'common.js' => '/* Códigos JavaScript aqui colocados serão carregados por todos aqueles que acessarem alguma página deste wiki */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
+	'common.js' => '/* Códigos JavaScript colocados aqui serão carregados por todos aqueles que acessarem alguma página desta wiki */',
 	'creditspage' => 'Créditos da página',
 	'confirmemail' => 'Confirmar endereço de E-mail',
 	'confirmemail_noemail' => 'Não possui um endereço de e-mail válido indicado nas suas [[Special:Preferences|preferências de usuário]].',
-	'confirmemail_text' => '{{SITENAME}} requer o seu endereço de e-mail esteja validado antes de utilizar as funcionalidades que requerem um endereço de e-mail.
+	'confirmemail_text' => '{{SITENAME}} requer que o seu endereço de e-mail esteja validado antes de utilizar as funcionalidades que requerem um endereço de e-mail.
 Ative o botão abaixo para enviar uma confirmação para o seu endereço de e-mail.
 A mensagem incluirá um link que contém um código;
 acesse o link no seu navegador para confirmar que o seu endereço de e-mail é válido.',
@@ -22785,12 +23408,23 @@ Tal código não é exigido para que possa se autenticar no sistema, mas será n
 Verifique se o seu endereço de e-mail possui caracteres inválidos.
 
 O mailer retornou: $1',
-	'confirmemail_invalid' => 'Código de confirmação inválido. O código poderá ter expirado.',
+	'confirmemail_invalid' => "<center>Obrigado por confirmar o seu e-mail, mas o seu código de confirmação expirou ou está inválido.<br/>Você precisa receber um novo código para confirmar a sua conta.
+
+<span class=''wikia-button big''>[[Special:ConfirmEmail|<span>Pedir um novo código via e-mail</span>]]</span></center>
+<br>",
 	'confirmemail_needlogin' => 'Precisa de $1 para confirmar o seu endereço de e-mail.',
-	'confirmemail_success' => 'O seu endereço de e-mail foi confirmado. Pode agora se ligar.',
-	'confirmemail_loggedin' => 'O seu endereço de e-mail foi agora confirmado.',
+	'confirmemail_success' => 'O seu endereço de e-mail foi confirmado. Você agora pode se [[Special:userLogin|autenticar]] e aproveitar a wiki.',
+	'confirmemail_loggedin' => "'''O seu endereço de e-mail foi agora confirmado.'''
+
+Bem-vindo!
+
+Com milhares de comunidades no Fandom, existem muitas maneiras de se divertir por aqui. 
+
+Passe um tempo conhecendo melhor o Fandom visitando nossas [[w:c:help:Ajuda:Conteúdos|páginas de ajuda]], lendo artigos interessantes, escrevendo sobre seus assuntos favoritos, ou conhecendo outros membros da comunidade.
+
+Time de Comunidade Fandom",
 	'confirmemail_error' => 'Alguma coisa correu mal ao guardar a sua confirmação.',
-	'confirmemail_subject' => '{{SITENAME}} confirmação de endereço de e-mail',
+	'confirmemail_subject' => 'Por favor confirme sua conta Fandom',
 	'confirmemail_body' => 'Alguém, provavelmente você, com o endereço de IP $1,
 registrou uma conta "$2" com este endereço de e-mail em {{SITENAME}}.
 
@@ -22841,12 +23475,12 @@ Este código de confirmação irá expirar em $4.',
 : ''$2''
 Por favor, confirme que realmente deseja recriar esta página.",
 	'confirmrecreate-noreason' => 'O usuário [[User:$1|$1]] ([[User talk:$1|discussão]]) eliminou esta página depois de você ter começado a editá-la. Confirme que deseja recriar a página, por favor.',
-	'confirm_purge_button' => 'OK',
+	'confirm_purge_button' => 'Sim, eu não sou um robô',
 	'confirm-purge-top' => 'Limpar a memória cache desta página?',
 	'confirm-purge-bottom' => "Purgar uma página limpa o ''cache'' e força a sua versão mais recente a aparecer.",
-	'confirm-watch-button' => 'OK',
+	'confirm-watch-button' => 'Ok',
 	'confirm-watch-top' => 'Adicionar esta página às suas páginas vigiadas?',
-	'confirm-unwatch-button' => 'OK',
+	'confirm-unwatch-button' => 'Ok',
 	'confirm-unwatch-top' => 'Remover esta página das páginas vigiadas?',
 	'comparepages' => 'Comparar páginas',
 	'compare-selector' => 'Comparar edições da página',
@@ -22858,6 +23492,113 @@ Por favor, confirme que realmente deseja recriar esta página.",
 	'compare-invalid-title' => 'O título que você especificou é inválido.',
 	'compare-title-not-exists' => 'O título que você especificou não existe.',
 	'compare-revision-not-exists' => 'A revisão que você especificou não existe.',
+	'create_an_account' => 'Inscrever-se',
+	'createpage' => 'Crie um novo artigo',
+	'choose_reason' => 'Escolha o motivo',
+	'create-account-new' => 'Crie a sua conta no FANDOM',
+	'contris_s' => 'Contribuições',
+	'categories-summary' => '',
+	'comma-separator' => ',&#32;',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
+	'corporatepage-create-button' => 'Criar uma wiki',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'More Links',
+	'corporatepage-in-the-know' => 'In the Know',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-find-a-wiki' => 'Find a Wiki',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Hide Page',
+	'corporatepage-wikia-editors' => 'editores',
+	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-update-fqr' => 'updated hourly',
+	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
+	'corporatepage-go-to-wiki' => 'Go to $1',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-watchlist' => 'Páginas vigiadas',
+	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
+	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
+	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
+	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-company-info-headline' => 'Company Information',
+	'corporatepage-pages-added' => 'pages created in the last hour',
+	'corporatepage-edits-made' => 'edits made today',
+	'corporatepage-words-added' => 'words added in the last week',
+	'custom_info' => 'Temas personalizados podem ser feitos ao selecionar a opção "Personalizar" acima e, em seguida, editar ',
+	'contris' => 'Contribuições',
+	'createwiki' => 'Crie uma nova wiki',
+	'createwikipagetitle' => 'Crie uma nova wiki',
+	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
+	'createwikititle' => 'Title for the wiki',
+	'createwikiname' => 'Name for the wiki',
+	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
+	'createwikidesc' => 'Description of the wiki',
+	'createwikiaddtnl' => 'Additional Information',
+	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'createwikilang' => 'Default language for this wiki',
+	'community' => 'Comunidade',
+	'cockpit_hide' => 'Esconder cabine',
 );
 
 $messages['qu'] = array(
@@ -23687,15 +24428,15 @@ Pe piacere conferme ca tu vuè avveramende reccrejà sta pàgene.",
 $messages['ru'] = array(
 	'category_header' => 'Страницы в категории «$1»',
 	'category-media-header' => 'Файлы в категории «$1»',
-	'category-empty' => "''Эта категория в данный момент пуста.''",
+	'category-empty' => "''В настоящее время эта категория пуста.''",
 	'category-subcat-count' => '{{PLURAL:$2|Данная категория содержит только следующую подкатегорию.|{{PLURAL:$1|Показана $1 подкатегория|Показано $1 подкатегории|Показано $1 подкатегорий}} из $2.}}',
 	'category-subcat-count-limited' => 'В этой категории {{PLURAL:$1|$1 подкатегория|$1 подкатегории|$1 подкатегорий}}.',
 	'category-article-count' => '{{PLURAL:$2|Эта категория содержит только одну страницу.|{{PLURAL:$1|Показана $1 страница|Показано $1 страницы|Показано $1 страниц}} этой категории из $2.}}',
 	'category-article-count-limited' => 'В этой категории {{PLURAL:$1|$1 страница|$1 страницы|$1 страниц}}.',
-	'category-file-count' => '{{PLURAL:$2|Эта категория содержит только один файл.|{{PLURAL:$1|Показан $1 файл|Показано $1 файла|Показано $1 файлов}} этой категории  из $2.}}',
+	'category-file-count' => '{{PLURAL:$2|Эта категория содержит только один файл.|{{PLURAL:$1|Показан $1 файл|Показано $1 файла|Показано $1 файлов}} из $2.}}',
 	'category-file-count-limited' => 'В этой категории {{PLURAL:$1|$1 файл|$1 файла|$1 файлов}}.',
-	'cancel' => 'Отменить',
-	'create' => 'Создать',
+	'cancel' => 'Отмена',
+	'create' => 'Добавить',
 	'copyright' => 'Содержимое доступно в соответствии с $1.',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'currentevents' => 'Текущие события',
@@ -23703,17 +24444,17 @@ $messages['ru'] = array(
 	'collapsible-collapse' => 'свернуть',
 	'collapsible-expand' => 'развернуть',
 	'cannotdelete' => 'Невозможно удалить страницу или файл «$1».
-Возможно, страница уже оказалась удалена.',
+Возможно, страница уже удалена.',
 	'cannotdelete-title' => 'Нельзя удалить страницу «$1»',
 	'cascadeprotected' => 'Страница защищена от изменений, поскольку она включена в {{PLURAL:$1|следующую страницу, для которой|следующие страницы, для которых}} включена каскадная защита:
 $2',
-	'customcssprotected' => 'У вас нет разрешения редактировать эту CSS-страницу, так как она содержит личные настройки другого участника.',
-	'customjsprotected' => 'У вас нет разрешения редактировать эту JavaScript-страницу, так как она содержит личные настройки другого участника.',
-	'createaccount' => 'Зарегистрировать нового участника',
-	'createaccountmail' => 'Выслать пароль по эл. почте',
+	'customcssprotected' => 'У вас нет разрешения редактировать эту страницу CSS, так как она содержит личные настройки другого участника.',
+	'customjsprotected' => 'У вас нет разрешения редактировать эту страницу JavaScript, так как она содержит личные настройки другого участника.',
+	'createaccount' => 'Создать учётную запись',
+	'createaccountmail' => 'Выслать пароль по электронной почте',
 	'createaccountreason' => 'Причина:',
 	'createaccounterror' => 'Невозможно создать учётную запись: $1',
-	'cannotchangeemail' => 'Адреса электронной почты этой учётной записи не могут быть изменены в этой вики.',
+	'cannotchangeemail' => 'Адреса электронной почты для учётной записи не могут быть изменены на этой вики.',
 	'createaccount-title' => '{{SITENAME}}: создание учётной записи',
 	'createaccount-text' => 'Кто-то создал учётную запись «$2» на сервере проекта {{SITENAME}} ($4), указав ваш адрес электронной почты.
 
@@ -23723,28 +24464,28 @@ $2',
 	'changeemail' => 'Изменить адрес электронной почты',
 	'changeemail-header' => 'Изменение адреса электронной почты',
 	'changeemail-text' => 'Заполните эту форму, чтобы изменить свой адрес электронной почты. Вам нужно будет ввести пароль, чтобы подтвердить изменение.',
-	'changeemail-no-info' => 'Чтобы обращаться непосредственно к этой странице, вам следует представиться системе.',
+	'changeemail-no-info' => 'Чтобы иметь доступ к этой странице, вам следует представиться системе.',
 	'changeemail-oldemail' => 'Текущий адрес электронной почты:',
 	'changeemail-newemail' => 'Новый адрес электронной почты:',
 	'changeemail-none' => '(нет)',
-	'changeemail-submit' => 'Измененить адрес',
+	'changeemail-submit' => 'Изменить адрес',
 	'changeemail-cancel' => 'Отмена',
 	'confirmedittext' => 'Вы должны подтвердить свой адрес электронной почты перед правкой страниц.
-Пожалуйста, введите и подтвердите свой адрес электронной почты в своих [[Special:Preferences|персональных настройках]].',
-	'clearyourcache' => "'''Замечание.''' Возможно, после сохранения вам придётся очистить кеш своего браузера, чтобы увидеть изменения.
+Пожалуйста, введите и подтвердите свой адрес электронной почты в своих [[Special:Preferences|личных настройках]].',
+	'clearyourcache' => "'''Замечание.''' Возможно, после сохранения вам придётся очистить кэш своего браузера, чтобы увидеть изменения.
 * '''Firefox / Safari:''' Удерживая клавишу ''Shift'', нажмите на панели инструментов ''Обновить'', или нажмите ''Ctrl-F5'' или ''Ctrl-R'' (''⌘-R'' на Mac)
-* '''Google Chrome:''' Нажмите ''Ctrl-Shift-R'' (''⌘-Shift-R'' на Mac)
-* '''Internet Explorer:''' Удерживая ''Ctrl'' нажмите ''Обновить'', или нажмите ''Ctrl-F5''
+* '''Google Chrome + Яндекс.Браузер:''' Нажмите ''Ctrl-Shift-R'' (''⌘-Shift-R'' на Mac)
+* '''Internet Explorer:''' Удерживая ''Ctrl'', нажмите ''Обновить'', или нажмите ''Ctrl-F5''
 * '''Konqueror:''' Нажмите ''Обновить'' или ''F5''
-* '''Opera:''' Выберите очистку кеша в меню ''Инструменты → Настройки''",
-	'copyrightwarning' => "Обратите внимание, что все добавления и изменения текста статьи рассматриваются, как выпущенные на условиях лицензии $2 (см. $1).
-Если вы не хотите, чтобы ваши тексты свободно распространялись и редактировались любым желающим, не помещайте их сюда.<br />
-Вы также подтверждаете, что являетесь автором вносимых дополнений, или скопировали их из
+* '''Opera:''' Выберите очистку кэша в меню ''Инструменты → Настройки''.",
+	'copyrightwarning' => "Обратите внимание, что все добавления и изменения текста статьи рассматриваются как выпущенные на условиях лицензии $2 (см. $1).
+Если вы не хотите, чтобы ваши тексты свободно распространялись и редактировались любым желающим, не размещайте их здесь.<br />
+Вы также подтверждаете, что являетесь автором вносимых дополнений или скопировали их из
 источника, допускающего свободное распространение и изменение своего содержимого.<br />
 '''НЕ РАЗМЕЩАЙТЕ БЕЗ РАЗРЕШЕНИЯ МАТЕРИАЛЫ, ОХРАНЯЕМЫЕ АВТОРСКИМ ПРАВОМ!'''",
 	'copyrightwarning2' => "Пожалуйста, учтите, что любой ваш вклад в проект «{{SITENAME}}» может быть отредактирован или удалён другими участниками.
 Если вы не хотите, чтобы кто-либо изменял ваши тексты, не помещайте их сюда.<br />
-Вы также подтверждаете, что являетесь автором вносимых дополнений, или скопировали их из источника, допускающего свободное распространение и изменение своего содержимого (см. $1).
+Вы также подтверждаете, что являетесь автором вносимых дополнений или скопировали их из источника, допускающего свободное распространение и изменение своего содержимого (см. $1).
 '''НЕ РАЗМЕЩАЙТЕ БЕЗ РАЗРЕШЕНИЯ ОХРАНЯЕМЫЕ АВТОРСКИМ ПРАВОМ МАТЕРИАЛЫ!'''",
 	'cascadeprotectedwarning' => "'''Предупреждение:''' Данную страницу могут редактировать только участники группы «Администраторы», поскольку она включена {{PLURAL:$1|в следующую страницу, для которой|в следующие страницы, для которых}} включена каскадная защита:",
 	'cantcreateaccounttitle' => 'Невозможно создать учётную запись',
@@ -23756,7 +24497,7 @@ $3 {{GENDER:$3|указал|указала}} следующую причину: 
 	'currentrevisionlink' => 'Текущая версия',
 	'cur' => 'текущ.',
 	'compareselectedversions' => 'Сравнить выбранные версии',
-	'changepassword' => 'Изменение пароля',
+	'changepassword' => 'Изменить пароль',
 	'columns' => 'Столбцов:',
 	'copyuploaddisabled' => 'Загрузка по URL отключена.',
 	'categories' => 'Категории',
@@ -23765,12 +24506,12 @@ $3 {{GENDER:$3|указал|указала}} следующую причину: 
 См. также [[Special:WantedCategories|список требуемых категорий]].',
 	'categoriesfrom' => 'Показать категории, начинающиеся с:',
 	'changed' => 'изменена',
-	'created' => 'создана',
+	'created' => 'создал(а)',
 	'confirm' => 'Подтвердить',
 	'confirmdeletetext' => 'Вы запросили полное удаление страницы (или изображения) и всей её истории изменений. Пожалуйста, подтвердите, что вы действительно желаете это сделать, понимаете последствия своих действий, и делаете это в соответствии [[{{MediaWiki:Policy-url}}|с правилами]].',
 	'cantrollback' => 'Невозможно откатить изменения. Последний, кто вносил изменения, является единственным автором этой страницы.',
 	'cannotundelete' => 'Ошибка восстановления. Возможно, кто-то другой уже восстановил страницу.',
-	'contributions' => 'Вклад участника',
+	'contributions' => 'Вклад',
 	'contributions-title' => 'Вклад {{GENDER:$1|участника|участницы}} $1',
 	'contribsub2' => 'Вклад $1 ($2)',
 	'createaccountblock' => 'создание учётных записей запрещено',
@@ -23781,7 +24522,7 @@ $3 {{GENDER:$3|указал|указала}} следующую причину: 
 	'cant-move-user-page' => 'У вас нет разрешения переименовывать основные страницы участников.',
 	'cant-move-to-user-page' => 'У вас нет прав переименовывать страницу в страницу участника (можно переименовать в подстраницу).',
 	'cantmove-titleprotected' => 'Невозможно переименовать страницу, так как новое название входит в список запрещённых.',
-	'common.css' => '/** Размещённый здесь CSS будет применяться ко всем темам оформления */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* Размещённый здесь JavaScript код будет загружаться всем пользователям при обращении к каждой странице */',
 	'creditspage' => 'Благодарности',
 	'confirmemail' => 'Подтверждение адреса электронной почты',
@@ -23872,9 +24613,113 @@ $5
 	'compare-invalid-title' => 'Указанное вами название недопустимо.',
 	'compare-title-not-exists' => 'Не существует указанного вами названия.',
 	'compare-revision-not-exists' => 'Указанной вами версии не существует.',
-	'create_an_account' => 'Зарегистрироваться',
+	'create_an_account' => 'Регистрация',
 	'createpage' => 'Создать новую страницу',
 	'choose_reason' => 'Выберите причину',
+	'create-account-new' => 'Создайте учётную запись на Фэндоме',
+	'community' => 'Сообщество',
+	'corporatepage-footer-leftcolumn' => '* http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F|Русский
+* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/wiki/Accueil|Français
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'contris' => 'Вклад',
+	'contris_s' => 'Вклад',
+	'createwikiaddtnl' => 'Дополнительная информация',
+	'createwikidesc' => 'Описание вики',
+	'createwikilang' => 'Язык по умолчанию для этой вики',
+	'createwikimailsub' => 'Запросить новую Вики',
+	'createwikiname' => 'Название для вики',
+	'createwikinamevstitle' => 'Название вики отличается от заголовка вики. Название будет использоваться как URL по умолчанию. Например, название "starwars" будет использовано как http://starwars.wikia.com/. Заголовок вики может содержать пробелы, а название - только буквы и цифры.',
+	'createwikipagetitle' => 'Создать новую вики',
+	'createwikitext' => 'Вы можете запросить новую вики, создав эту страницу. Просто заполните форму',
+	'createwikititle' => 'Заголовок вики',
+	'custom_info' => 'Настроить тему можно выбрав «Настройка» выше, а затем можно перейти к редактированию ',
+	'categories-summary' => '',
+	'comma-separator' => ',&#32;',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
+	'corporatepage-create-button' => 'Создать вики',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'More Links',
+	'corporatepage-in-the-know' => 'In the Know',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-find-a-wiki' => 'Find a Wiki',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Hide Page',
+	'corporatepage-wikia-editors' => 'правки',
+	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-update-fqr' => 'updated hourly',
+	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
+	'corporatepage-go-to-wiki' => 'Перейти к $1',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-watchlist' => 'Список наблюдения',
+	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
+	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
+	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
+	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-company-info-headline' => 'Company Information',
+	'corporatepage-pages-added' => 'pages created in the last hour',
+	'corporatepage-edits-made' => 'edits made today',
+	'corporatepage-words-added' => 'words added in the last week',
+	'createwiki' => 'Создать новую вики',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'cockpit_hide' => 'Hide cockpit',
 );
 
 $messages['rue'] = array(
@@ -26064,190 +26909,6 @@ Ju lutem konfirmoni nëse dëshironi me të vertetë ta rikrijoni këtë artikul
 	'compare-revision-not-exists' => 'Rishikimi që ju specifikuat nuk ekziston',
 );
 
-$messages['sr'] = array(
-	'category_header' => 'Artikuj në kategorinë "$1"',
-	'category-media-header' => 'Skeda në kategori "$1"',
-	'category-empty' => "''Kjo kategori aktualisht nuk përmban asnjë faqe apo media.''",
-	'category-subcat-count' => '{{PLURAL:$2|Kjo kategori ka vetëm këtë nën-kategori.|Kjo kategori ka {{PLURAL:$1|këtë nën-kategori|$1 këto nën-kategori}}, nga $2 gjithësej.}}',
-	'category-subcat-count-limited' => 'Kjo kategori ka {{PLURAL:$1|këtë nën-kategori|$1 këto nën-kategori}}.',
-	'category-article-count' => '{{PLURAL:$2|Kjo kategori ka vetëm këtë faqe.|Kjo kategori ka {{PLURAL:$1|këtë faqe|$1 faqe}} nga $2 gjithësej.}}',
-	'category-article-count-limited' => '{{PLURAL:$1|Kjo faqe është|$1 faqe janë}} në këtë kategori.',
-	'category-file-count' => '{{PLURAL:$2|Kjo kategori ka vetëm këtë skedë.|{{PLURAL:$1|Kjo skedë është|$1 skeda janë}} në këtë kategori, nga $2 gjithësej.}}',
-	'category-file-count-limited' => '{{PLURAL:$1|Kjo skedë është|$1 skeda janë}} në këtë kategori.',
-	'cancel' => 'Anulo',
-	'create' => 'Krijo',
-	'copyright' => 'Përmbajtja është në disponim nëpërmjet licencës $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'currentevents' => 'Ngjarjet aktuale',
-	'currentevents-url' => 'Project:Ngjarjet aktuale',
-	'collapsible-collapse' => 'Ngushtoje',
-	'collapsible-expand' => 'Zgjeroje',
-	'cannotdelete' => 'Faqja ose skeda $1 nuk mund të fshihej.
-Mund të jetë fshirë nga dikush tjetër.',
-	'cannotdelete-title' => 'Faqja "$1" nuk mund të fshihet',
-	'cascadeprotected' => 'Kjo faqe është mbrojtur nga redaktimi pasi është përfshirë në {{PLURAL:$1|faqen|faqet}} e mëposhtme që {{PLURAL:$1|është|janë}} mbrojtur sipas metodës "cascading":
-$2',
-	'customcssprotected' => "Ju nuk keni leje për të redaktuar këtë faqe CSS, sepse ai përmban cilësimet personale tjetër user's.",
-	'customjsprotected' => "Ju nuk keni leje për të redaktuar këtë faqe JavaScript, sepse ai përmban cilësimet personale tjetër user's.",
-	'createaccount' => 'Hap një llogari',
-	'createaccountmail' => 'me email',
-	'createaccountreason' => 'Arsyeja:',
-	'createaccounterror' => 'I pamundur krijimi i llogarisë: $1',
-	'cannotchangeemail' => 'Adresat e-mail të llogarive nuk mund të ndryshohen në këtë wiki.',
-	'createaccount-title' => 'Hapja e llogarive për {{SITENAME}}',
-	'createaccount-text' => 'Dikush ka përdorur adresën tuaj për të hapur një llogari tek {{SITENAME}} ($4) të quajtur "$2" me fjalëkalimin "$3".
-Duhet të hyni brenda dhe të ndërroni fjalëkalimin tani nëse ky person jeni ju. Përndryshe shpërfilleni këtë mesazh.',
-	'changeemail' => 'Ndrysho postën elektronike',
-	'changeemail-header' => 'Ndrysho llogarinë e adresës së postës elektronike',
-	'changeemail-text' => 'Plotësoni këtë formular për të ndryshuar adresën tuaj të postës elektronike. Ju duhet të shkruani fjalëkalimin tuaj për të konfirmuar këtë ndryshim.',
-	'changeemail-no-info' => 'Ju duhet të identifikoheni në mënyrë që të keni të drejtë hyrjeje në këtë faqe.',
-	'changeemail-oldemail' => 'Posta elektronike e aktuale:',
-	'changeemail-newemail' => 'Posta elektronike e re:',
-	'changeemail-none' => '(asgjë)',
-	'changeemail-submit' => 'Ndrysho postën elektronike',
-	'changeemail-cancel' => 'Anulo',
-	'confirmedittext' => 'Ju duhet së pari ta vërtetoni e-mail adresen para se të redaktoni. Ju lutem plotësoni dhe vërtetoni e-mailin tuaj  te [[Special:Preferences|parapëlqimet]] e juaja.',
-	'clearyourcache' => "''Shënim:''' Pas ruajtjes, juve mund t'iu duhet të anashkaloni \"cache-in\" e shfletuesit tuaj për të parë ndryshimet.
-* '''Firefox / Safari:''' Mbaj të shtypur ''Shift'' ndërkohë që klikon ''Reload'', ose shtyp ''Ctrl-F5'' ose ''Ctrl-R'' (''⌘-R'' në Mac)
-* '''Google Chrome:''' Shtyp ''Ctrl-Shift-R'' (''''⌘-R'''' në Mac)
-* '''Internet Explorer:''' Mbaj të shtypur ''Ctrl''  ndërkohë që klikon ''Refresh'', ose shtyp ''Ctrl-F5''
-* '''Konqueror:''' Kliko ''Reload'' ose shtyp ''F5''
-* '''Opera:''' Zbrazni \"cache-in\" tek ''Tools → Preferences''",
-	'copyrightwarning' => "Ju lutemi, vini re! Të gjitha kontributet në {{SITENAME}} jepen për publikim sipas $2 (shiko $1 për më shumë detaje).
-Nëse ju nuk dëshironi që shkrimet tuaja të redaktohen pa mëshirë dhe të shpërndahen sipas dëshirës, atëherë mos i vendosni këtu.<br />
-Gjithashtu, ju po na premtoni ne që gjithçka e keni shkruar vetë, ose e keni kopjuar nga një domain publik ose nga burime të tjera  te hapura.
-'''Mos vendosni material të mbrojtur nga e drejta e autorit pa leje!'''",
-	'copyrightwarning2' => "Ju lutemi, vini re! Të gjitha kontributet në {{SITENAME}} mund të redaktohen, ndryshohen ose hiqen nga përdorues të tjerë  (shiko $1 për më shumë detaje).
-Nëse ju nuk dëshironi që shkrimet tuaja të redaktohen pa mëshirë dhe të shpërndahen sipas dëshirës, atëherë mos i vendosni këtu<br />
-Gjithashtu, ju po na premtoni ne që gjithçka e keni shkruar vetë, ose e keni kopjuar nga një domain publik ose nga burime të tjera  te hapura.
-'''Mos vendosni material të mbrojtur nga e drejta e autorit pa leje!'''",
-	'cascadeprotectedwarning' => "'''Vini re:''' Kjo faqe është e mbrojtur dhe vetëm përdoruesit me privilegje administrative mund ta redaktojnë pasi është përfshirë në mbrotjen \"ujëvarë\" të {{PLURAL:\$1|faqes së|faqeve të}} mëposhtme:",
-	'cantcreateaccounttitle' => 'Nuk mundet të krijohet llogaria',
-	'cantcreateaccount-text' => "Hapja e llogarive nga kjo adresë IP ('''$1''') është bllokuar nga [[User:$3|$3]].
-
-Arsyeja e dhënë nga $3 është ''$2''.",
-	'currentrev' => 'Versioni i tanishëm',
-	'currentrev-asof' => 'Versioni momental që nga $1',
-	'currentrevisionlink' => 'shikoni versionin e tanishëm',
-	'cur' => 'tani',
-	'compareselectedversions' => 'Krahasoni versionet e zgjedhura',
-	'changepassword' => 'Ndërroni fjalëkalimin',
-	'columns' => 'Kollona:',
-	'copyuploaddisabled' => 'Ngarkimi nga URL-ja u çaktivizua.',
-	'categories' => 'Kategori',
-	'categoriespagetext' => '{{PLURAL:$1|kategoria në vijim përmban|kategoritë në vikim përmbajnë}} faqe ose media.
-[[Special:UnusedCategories|Kategoritë e pa përdorura]] nuk janë të paraqitura këtu.
-Shikoni edhe [[Special:WantedCategories|kategoritë e dëshiruara]].',
-	'categoriesfrom' => 'Paraqit kategoritë duke filluar në:',
-	'changed' => 'ndryshuar',
-	'created' => 'u krijua',
-	'confirm' => 'Konfirmoni',
-	'confirmdeletetext' => 'Jeni duke grisur një faqe me tërë historinë e saj. Ju lutemi konfirmoni që po e bëni qëllimisht, që i kuptoni pasojat, dhe që po veproni në përputhje me [[{{MediaWiki:Policy-url}}]].',
-	'cantrollback' => 'Redaktimi nuk mund të kthehej;
-redaktori i fundit është i vetmi autor i këtij artikulli.',
-	'cannotundelete' => 'Restaurimi dështoi; dikush tjetër mund ta ketë restauruar faqen para jush.',
-	'contributions' => 'Kontributet',
-	'contributions-title' => 'Kontributet e përdoruesit për $1',
-	'contribsub2' => 'Për $1 ($2)',
-	'createaccountblock' => 'hapja e lloggarive është bllokuar',
-	'change-blocklink' => 'ndryshoje bllokun',
-	'contribslink' => 'kontribute',
-	'cant-block-while-blocked' => 'Ju nuk mund të bllokoni përdorues të tjerë ndërkohë që jeni i bllokuar.',
-	'cant-see-hidden-user' => 'Përdoruesi që po përpiqeni të bllokoni është i bllokuar dhe i fshehur.
-Përderisa ju nuk keni të drejtën e fshehjes së përdoruesve, ju nuk mund të shikoni ose redaktoni bllokimet e përdoruesit.',
-	'cant-move-user-page' => 'Ju nuk keni të drejat për të lzhvendosur faqet e përdoruesve (përveç nën-faqeve).',
-	'cant-move-to-user-page' => 'Ju nuk keni të drejta për të zhvendosur një faqe tek një faqe përdoruesi (përvç tek një nën-faqe përdoruesi).',
-	'cantmove-titleprotected' => 'Nuk mund të zhvendosni një faqe në këtë titull pasi ky titull është mbrojtur kundrejt krijimit',
-	'creditspage' => 'Statistika e faqes',
-	'confirmemail' => 'Vërtetoni adresën tuaj',
-	'confirmemail_noemail' => 'Ju nuk keni dhënë email të sakt te [[Special:Preferences|parapëlqimet e juaja]].',
-	'confirmemail_text' => 'Për të marrë email duhet të vërtetoni adresen tuaj. Shtypni butonin e mëposhtëm për të dërguar një email vërtetimi tek adresa juaj. Email-i do të përmbajë një lidhje me kod të shifruar. Duke ndjekur lidhjen nëpërmjet shfletuesit tuaj do të vërtetoni adresën.',
-	'confirmemail_pending' => "Një kod vërtetimi ju është dërguar më parë. Nëse sapo hapët llogarinë tuaj prisni disa minuta deri sa t'iu arrijë mesazhi përpara se të kërkoni një kod të ri.",
-	'confirmemail_send' => 'Dërgo vërtetimin',
-	'confirmemail_sent' => 'Email-i për vërtetim është dërguar.',
-	'confirmemail_oncreate' => 'Një kod vërtetimi është dërguar tek adresa juaj e email-it.
-Ky kod nuk kërkohet për të hyrë brenda në llogarinë tuaj, por nevojitet për të mundësuar mjetet që përdorin email në këtë wiki.',
-	'confirmemail_sendfailed' => '{{SITENAME}} nuk mundi ta çojë email-in tuaj konfirmues.
-Ju lutemi kontrolloni adresen e emial-it tuaj per gabime ne shkrim.
-
-Postieri u kthye: $1',
-	'confirmemail_invalid' => 'Kodi i shifrimit të vërtetimit është gabim ose ka skaduar.',
-	'confirmemail_needlogin' => 'Ju duhet të $1 për ta konfirmuar email-adresën',
-	'confirmemail_success' => 'Adresa juaj është vërtetuar. Mund të hyni brënda dhe të përdorni wiki-n.',
-	'confirmemail_loggedin' => 'Adresa juaj është vërtetuar.',
-	'confirmemail_error' => 'Pati gabim gjatë ruajtjes së vërtetimit tuaj.',
-	'confirmemail_subject' => 'Vërtetim adrese nga {{SITENAME}}',
-	'confirmemail_body' => 'Dikush, me gjasë ju, nga IP adresa $1,
-ka regjistruar një llogari "$2" me këtë e-mail adresë në {{SITENAME}}.
-
-Për të konfirmuar se kjo llogari ju përket me të vërtetë dhe për të aktivizuar
-funksionet e \'\'e-mail\'\'-it në {{SITENAME}}, hapni këtë lidhje në shfletuesin tuaj:
-
-$3
-
-Nëse llogaria *nuk* ju përket, ndiqni këtë lidhje
-për të anuluar konfirmimin e e-mail adresës:
-
-$5
-
-Ky kod i konfirmimit skadon me $4.',
-	'confirmemail_body_changed' => 'Dikush, me gjasë ju, nga IP adresa $1,
-ka ndryshuar e-mail adresën e llogarisë "$2" me këtë adresë në {{SITENAME}}.
-
-Për të konfirmuar se kjo llogari ju përket me të vërtetë dhe për të rizaktivizuar
-funksionet e \'\'e-mail\'\'-it në {{SITENAME}}, hapni këtë lidhje në shfletuesin tuaj:
-
-$3
-
-Nëse llogaria *nuk* ju përket, ndiqni këtë lidhje
-për të anuluar konfirmimin e e-mail adresës:
-
-$5
-
-Ky kod i konfirmimit skadon me $4.',
-	'confirmemail_body_set' => 'Dikush, me gjasë ju, nga IP adresa $1,
-ka ndryshuar e-mail adresën e llogarisë "$2" me këtë adresë në {{SITENAME}}.
-
-Për të konfirmuar se kjo llogari ju përket me të vërtetë dhe për të riaktivizuar
-funksionet e \'\'e-mail\'\'-it në {{SITENAME}}, hapni këtë lidhje në shfletuesin tuaj:
-
-$3
-
-Nëse llogaria *nuk* ju përket, ndiqni këtë lidhje
-për të anuluar konfirmimin e e-mail adresës:
-
-$5
-
-Ky kod i konfirmimit skadon me $4.',
-	'confirmemail_invalidated' => 'Vërtetimi i adresës së email-it është tërhequr',
-	'confirmrecreate' => "Përdoruesi [[User:$1|$1]] ([[User talk:$1|diskutime]]) grisi këtë artikull mbasi ju filluat ta redaktoni për arsyen:
-: ''$2''
-Ju lutem konfirmoni nëse dëshironi me të vertetë ta rikrijoni këtë artikull.",
-	'confirmrecreate-noreason' => 'Përdoruesi [[User:$1|$1]] ([[User talk:$1|talk]]) ka fshirë këtë faqe pasi ju filluat ta redaktoni. Ju lutem konfirmoni që ju vërtet doni të ri-krijoni këtë faqe.',
-	'confirm_purge_button' => 'Shko',
-	'confirm-purge-top' => "Pastro ''cache''-in për këtë faqe?",
-	'confirm-purge-bottom' => "Spastrimi i një faqeje pastron ''cache''-in dhe detyron shfaqjen e verzionit më të fundit të faqes.",
-	'confirm-watch-button' => 'Në rregull',
-	'confirm-watch-top' => 'Shto këtë faqe në listën mbikqyrëse tuajen?',
-	'confirm-unwatch-button' => 'Në rregull',
-	'confirm-unwatch-top' => 'Largo këtë faqe nga lista juaj mbikqyrëse ?',
-	'comparepages' => 'Krahasoni faqet',
-	'compare-selector' => 'Krahasoni versionet e faqeve',
-	'compare-page1' => 'Faqe 1',
-	'compare-page2' => 'Faqe 2',
-	'compare-rev1' => 'Version 1',
-	'compare-rev2' => 'Version 2',
-	'compare-submit' => 'Krahasimi',
-	'compare-invalid-title' => 'Titulli që keni specifikuar është i pavlefshëm',
-	'compare-title-not-exists' => 'Titulli që keni specifikuar nuk ekziston.',
-	'compare-revision-not-exists' => 'Rishikimi që ju specifikuat nuk ekziston',
-	'create_an_account' => 'Kreirajte račun',
-	'createpage' => 'Kreirajte novi članak',
-	'choose_reason' => 'Izaberite razlog',
-	'community' => 'zajednica',
-	'contris' => 'doprinos',
-);
-
 $messages['sr-ec'] = array(
 	'category_header' => 'Странице у категорији „$1“',
 	'category-media-header' => 'Датотеке у категорији „$1“',
@@ -26908,7 +27569,7 @@ $messages['sv'] = array(
 	'cancel' => 'Avbryt',
 	'create' => 'Skapa',
 	'copyright' => 'Innehållet är tillgängligt under $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensiering',
 	'currentevents' => 'Aktuella händelser',
 	'currentevents-url' => 'Project:Aktuella händelser',
 	'collapsible-collapse' => 'Göm',
@@ -26939,14 +27600,13 @@ Du kan ignorera detta meddelande om kontot skapats av misstag.',
 	'changeemail-submit' => 'Ändra e-post',
 	'changeemail-cancel' => 'Avbryt',
 	'confirmedittext' => 'Du måste bekräfta din e-postadress innan du kan redigera sidor. Var vänlig ställ in och validera din e-postadress genom dina [[Special:Preferences|användarinställningar]].',
-	'clearyourcache' => "'''OBS:''' Sedan du sparat sidan kan du behöva tömma din webbläsares cache för att se ändringarna.
-*'''Firefox / Safari:''' Håll ned ''Skift'' och klicka på ''Uppdatera sidan'' eller tryck antingen ''Ctrl-F5'' eller ''Ctrl-R'' (''⌘-R'' på Mac)
-*'''Google Chrome:''' Tryck ''Ctrl-Skift-R''  (''⌘-Shift-R'' på Mac)
-*'''Internet Explorer:'''  Håll ned ''Ctrl'' och klicka på ''Uppdatera'' eller tryck ''Ctrl-F5''
-*'''Konqueror:''' Klicka på ''Reload'' eller tryck på ''F5''
-*'''Opera:''' Rensa cachen i ''Verktyg → Inställningar''",
-	'copyrightwarning' => "Observera att alla bidrag till {{SITENAME}} är att betrakta som utgivna under $2 (se $1 för detaljer). Om du inte vill att din text ska redigeras eller kopieras efter andras gottfinnande skall du inte skriva något här.<br />
-Du lovar oss också att du skrev texten själv, eller kopierade från kulturellt allmängods som inte skyddas av upphovsrätt, eller liknande källor. '''LÄGG INTE UT UPPHOVSRÄTTSSKYDDAT MATERIAL HÄR UTAN TILLÅTELSE!'''",
+	'clearyourcache' => "'''Observera:''' Efter att spara måste du tömma din webbläsares cache för att se ändringarna
+*'''Internet Explorer:''' hålla ned ''Ctrl'' knappen och klicka ''Refresh'' eller ''Reload'' knappen, eller tryck ''Ctrl+F5''.
+*'''Firefox:''' hålla ned ''Shift'' knappen och klicka på Reload; tryck alternativt ''Ctrl+F5'' eller ''Ctrl-Shift-R''.
+*'''Opera''' användare måste tömma sina cacher genom ''Verktyg→Inställningar''
+*'''Konqueror''' och '''Safari''' användare kan klicka ''Reload'' knappen.
+*'''Chrome''': tryck Ctrl+F5 eller Shift+F5",
+	'copyrightwarning' => 'Alla bidrag till {{SITENAME}} är att betrakta som utgivna under  $2 (se $1 för detaljer).<br/>',
 	'copyrightwarning2' => "Observera att alla bidrag till {{SITENAME}} kan komma att redigeras, ändras, eller tas bort av andra deltagare. Om du inte vill se din text förändrad efter andras gottfinnade skall du inte skriva in någon text här.<br />
 Du lovar oss också att du skrev texten själv, eller kopierade från kulturellt allmängods som inte skyddas av upphovsrätt, eller liknande källor - se $1 för detaljer.
 '''LÄGG INTE UT UPPHOVSRÄTTSSKYDDAT MATERIAL HÄR UTAN TILLÅTELSE!'''",
@@ -26971,8 +27631,7 @@ Se även [[Special:WantedCategories|önskade kategorier]].',
 	'changed' => 'ändrad',
 	'created' => 'skapad',
 	'confirm' => 'Bekräfta',
-	'confirmdeletetext' => 'Du håller på att ta bort en sida med hela dess historik.
-Bekräfta att du förstår vad du håller på med och vilka konsekvenser detta leder till, och att du följer [[{{MediaWiki:Policy-url}}|riktlinjerna]].',
+	'confirmdeletetext' => 'Du håller på att ta bort en sida med all sin historia. Se även [[Help:Deletion|Hjälp:Radering]].',
 	'cantrollback' => 'Det gick inte att rulla tillbaka, då sidan endast redigerats av en användare.',
 	'cannotundelete' => 'Återställning misslyckades; kanske någon redan har återställt sidan.',
 	'contributions' => 'Användarbidrag',
@@ -27007,17 +27666,18 @@ Du kan nu [[Special:UserLogin|logga in]] och använda wikin.',
 	'confirmemail_loggedin' => 'Din e-postadress är nu bekräftad.',
 	'confirmemail_error' => 'Någonting gick fel när din bekräftelse skulle sparas.',
 	'confirmemail_subject' => 'Bekräftelse av e-postadress på {{SITENAME}}',
-	'confirmemail_body' => 'Någon, troligen du, har från IP-adressen $1 registrerat användarkontot "$2" med denna e-postadress på {{SITENAME}}.
+	'confirmemail_body' => 'Hej $2,
 
-För att bekräfta att detta konto verkligen är ditt, och för att aktivera funktionerna för e-post på {{SITENAME}}, öppna denna länk i din webbläsare:
+Tack för att du registrerar dig på Wikia.
 
+Vänligen aktivera ditt nya konto genom att bekräfta din e-postadress här:
 $3
 
-Om det *inte* är du som registrerat kontot, följ denna länk för att avbryta bekräftelsen av e-postadressen:
 
-$5
+Vi ser fram emot att se dig snart!
 
-Denna bekräftelsekod kommer inte att fungera efter $4.',
+Wikia Community Team
+http://community.wikia.com/',
 	'confirmemail_body_changed' => 'Någon, troligen du, har från IP-adressen $1
 registrerat användarkontot "$2" med denna e-postadress på {{SITENAME}}.
 
@@ -27071,6 +27731,8 @@ Bekräfta att du verkligen vill återskapa sidan.",
 	'create_an_account' => 'Skapa ett konto',
 	'createpage' => 'Påbörja en artikel',
 	'choose_reason' => 'Välj anledning',
+	'createwiki' => 'Begär en ny wiki',
+	'createwikipagetitle' => 'Begär en ny wiki',
 );
 
 $messages['sw'] = array(
@@ -29441,6 +30103,7 @@ $5
 	'create_an_account' => 'Зареєструватися',
 	'createpage' => 'Створити нову статтю',
 	'choose_reason' => 'Оберіть причину',
+	'contris_s' => 'Внесок',
 );
 
 $messages['ur'] = array(
@@ -29891,8 +30554,8 @@ $messages['vi'] = array(
 	'category-file-count-limited' => '{{PLURAL:$1|Tập tin|$1 tập tin}} sau nằm trong thể loại hiện hành.',
 	'cancel' => 'Hủy bỏ',
 	'create' => 'Tạo',
-	'copyright' => 'Bản quyền $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'Văn bản được phát hành theo <a href="http://congdong.wikia.com/wiki/Giấy_phép">Giấy phép Creative Commons Ghi công–Chia sẻ tương tự</a>.',
+	'copyrightpage' => 'w:vi:Wikia:Giấy phép|Wikia:Giấy phép',
 	'currentevents' => 'Tin tức',
 	'currentevents-url' => 'Project:Thời sự',
 	'collapsible-collapse' => 'Thu gọn',
@@ -29928,9 +30591,9 @@ Xin hãy bỏ qua thông báo này nếu tài khoản này không phải do bạ
 * '''Internet Explorer:''' Giữ phím ''Ctrl'' trong khi nhấn ''Refresh'', hoặc nhấn tổ hợp ''Ctrl-F5''
 * '''Konqueror:''' Nhấn nút ''Reload'' hoặc nhấn ''F5''
 * '''Opera:''' Xóa bộ nhớ đệm trong ''Tools → Preferences''",
-	'copyrightwarning' => "Xin chú ý rằng tất cả các đóng góp của bạn tại {{SITENAME}} được xem là sẽ phát hành theo giấy phép $2 (xem $1 để biết thêm chi tiết). Nếu bạn không muốn trang của bạn bị sửa đổi không thương tiếc và không sẵn lòng cho phép phát hành lại, đừng đăng trang ở đây.<br />
+	'copyrightwarning' => "Xin chú ý rằng tất cả các đóng góp của bạn tại '''{{SITENAME}}''' được xem là sẽ phát hành theo giấy phép $2 (xem [[w:c:congdong:Giấy phép|Giấy phép]] để biết thêm chi tiết). Nếu bạn không muốn trang của mình bị sửa đổi không thương tiếc và không sẵn lòng cho phép phát hành lại, đừng đăng trang ở đây.<br />
 Bạn phải đảm bảo với chúng tôi rằng chính bạn là người viết nên, hoặc chép nó từ một nguồn thuộc phạm vi công cộng hoặc tự do tương đương.
-'''ĐỪNG ĐĂNG TÁC PHẨM CÓ BẢN QUYỀN MÀ CHƯA XIN PHÉP!'''",
+'''XIN ĐỪNG ĐĂNG TÁC PHẨM CÓ BẢN QUYỀN MÀ CHƯA XIN PHÉP!'''",
 	'copyrightwarning2' => "Xin chú ý rằng tất cả các đóng góp của bạn tại {{SITENAME}} có thể được sửa đổi, thay thế, hoặc xóa bỏ bởi các thành viên khác. Nếu bạn không muốn trang của bạn bị sửa đổi không thương tiếc, đừng đăng trang ở đây.<br />
 Bạn phải đảm bảo với chúng tôi rằng chính bạn là người viết nên, hoặc chép nó từ một nguồn thuộc phạm vi công cộng hoặc tự do tương đương (xem $1 để biết thêm chi tiết).
 '''ĐỪNG ĐĂNG TÁC PHẨM CÓ BẢN QUYỀN MÀ CHƯA XIN PHÉP!'''",
@@ -30063,6 +30726,7 @@ Xin hãy xác nhận bạn thực sự muốn tạo lại trang này.",
 	'compare-revision-not-exists' => 'Phiên bản chỉ định không tồn tại.',
 	'create_an_account' => 'Mở tài khoản',
 	'choose_reason' => 'Chọn lý do',
+	'contris_s' => 'Đóng góp',
 );
 
 $messages['vls'] = array(
@@ -31186,21 +31850,9 @@ Also see [[Special:WantedCategories|wanted categories]].',
 	'contribslink' => 'biedraegen',
 );
 
-$messages['zh'] = array(
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-classical'] = array(
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-cn'] = array(
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
 $messages['zh-hans'] = array(
-	'category_header' => '分类“$1”中的页面',
-	'category-media-header' => '分类“$1”中的媒体文件',
+	'category_header' => '<span style="font-size: 80%;">分类“$1”中的页面</span>',
+	'category-media-header' => '<span style="font-size: 80%;">分类“$1”中的媒体文件</span>',
 	'category-empty' => "''本分类尚未包含任何页面或媒体文件。''",
 	'category-subcat-count' => '{{PLURAL:$2|本分类只有下列一个子分类。|本分类包含下列$1个子分类，共$2个子分类。}}',
 	'category-subcat-count-limited' => '本分类包含下列$1个子分类。',
@@ -31223,44 +31875,47 @@ $messages['zh-hans'] = array(
 $2',
 	'customcssprotected' => '您没有权限编辑此CSS页面，因为它包含另一位用户的个人设置。',
 	'customjsprotected' => '您没有权限编辑此JavaScript页面，因为它包含另一位用户的个人设置。',
-	'createaccount' => '创建账户',
+	'createaccount' => '创建帐户',
 	'createaccountmail' => '通过电子邮件',
 	'createaccountreason' => '原因：',
-	'createaccounterror' => '无法建立账户：$1',
-	'cannotchangeemail' => '本wiki不允许对账户的电子邮件地址进行更改。',
-	'createaccount-title' => '在{{SITENAME}}中创建新账户',
-	'createaccount-text' => '有人在{{SITENAME}}中利用您的邮箱创建了一个名为 "$2" 的新帐户（$4），密码是 "$3" 。您应该立即登录并更改密码。
+	'createaccounterror' => '无法建立帐户：$1',
+	'cannotchangeemail' => '本Wiki不允许对帐户的电子邮件地址进行更改。',
+	'createaccount-title' => '在{{SITENAME}}中创建新帐户',
+	'createaccount-text' => '您好，
 
-如果该账户创建错误的话，您可以忽略此信息。',
+在{{SITENAME}}上您的帐户已经创建，用户名为"$2"，密码是 "$3"。您应该立即登录并更改密码。
+
+请在$4登入帐户。
+
+如果您不需要这个帐户，您可以忽略这封邮件或community@wikia.com。
+
+- FANDOM社区支持
+___________________________________________
+* 您可在社区中心寻找更多帮助和建议：http://zh.community.wikia.com
+* 不想收到太多消息？您可以在以下页面退订或更换电子信箱设置：http://zh.community.wikia.com/Special:Preferences',
 	'changeemail' => '更改电子邮件地址',
 	'changeemail-header' => '更改帐户的电子邮件地址',
 	'changeemail-text' => '完成此窗体可以更改您的电子邮件地址。您将需要输入您的密码以确认此更改。',
-	'changeemail-no-info' => '
-您必须登录以直接访问本页。',
+	'changeemail-no-info' => '您必须先登入才能进入这个页面。',
 	'changeemail-oldemail' => '当前的电子邮件地址：',
 	'changeemail-newemail' => '新的电子邮件地址：',
 	'changeemail-none' => '（无）',
 	'changeemail-submit' => '更改电子邮箱',
 	'changeemail-cancel' => '取消',
 	'confirmedittext' => '你必须确认你的电子邮件地址才能编辑本页。请通过[[Special:Preferences|用户资料设置]]设置并确认你的电子邮件地址。',
-	'clearyourcache' => "'''注意：在保存以后，您必须绕过浏览器缓存才能看到所作出的改变。'''
-* '''火狐（Firefox）／Safari'''：按住“Shift”键再点击“刷新”，或按下“Ctrl-F5”或“Ctrl-R”（Mac上为“⌘-R”）
-* '''谷歌浏览器（Google Chrome）'''：按下“Ctrl-Shift-R”（Mac上为“⌘-Shift-R”）
-* '''Internet Explorer'''：按住“Ctrl”键再点击“刷新”，或按下“Ctrl-F5”
-* '''Konqueror'''：点击“刷新”或按下“F5”
-* '''Opera'''：在“工具→首选项”中清除缓存",
-	'copyrightwarning' => "请注意您对{{SITENAME}}的所有贡献都被认为是在$2下发布，请查看在$1的细节。
-如果您不希望您的文字被任意修改和再散布，请不要提交。<br />
-您同时也要向我们保证您所提交的内容是您自己所作，或得自一个不受版权保护或相似自由的来源。
-'''不要在未获授权的情况下发表！'''<br />",
-	'copyrightwarning2' => "请注意您对{{SITENAME}}的所有贡献
-都可能被其他贡献者编辑，修改或删除。
+	'clearyourcache' => "'''注意：'''在保存以后，您必须[[Help:Bypass your cache|绕过浏览器缓存]]才能看到所作出的改变。
+* '''谷歌浏览器（Google Chrome）'''- Windows：按下“Ctrl”键然后按 ''F5''。OS X系统：同时按''⌘ Cmd''和''⇧ Shift''键之后按''R''键。
+* '''Safari''' - 按住''⇧ Shift''键然后点击工具栏中''重新载入''键。
+* '''火狐（Firefox）'''- Windows：按住''Ctrl''键然后按''F5''。OS X系统：同时按''⌘ Cmd''和''⇧ Shift''键之后按''R''键。
+* '''Internet Explorer'''：按住''Ctrl''键然后按''F5''（或者点击“刷新”按钮）。",
+	'copyrightwarning' => '对{{SITENAME}}的所有贡献都被认为是在$2下发布（详情请查看$1）。<br/>',
+	'copyrightwarning2' => "请注意您对{{SITENAME}}的所有贡献都可能被其他贡献者编辑，修改或删除。
 如果您不希望您的文字被任意修改和再散布，请不要提交。<br />
 您同时也要向我们保证您所提交的内容是您自己所作，或得自一个不受版权保护或相似自由的来源（参阅$1的细节）。
 '''不要在未获授权的情况下发表！'''",
 	'cascadeprotectedwarning' => "'''警告：'''本页面已被保护，只有拥有管理员权限的用户可以编辑，因为其包含于下列受连锁保护的{{PLURAL:$1|页面}}：",
-	'cantcreateaccounttitle' => '无法创建账户',
-	'cantcreateaccount-text' => "从该IP地址（'''$1'''）创建账户已被[[User:$3|$3]]禁止。
+	'cantcreateaccounttitle' => '无法创建帐户',
+	'cantcreateaccount-text' => "从该IP地址（'''$1'''）创建帐户已被[[User:$3|$3]]禁止。
 
 $3的理由是''$2''",
 	'currentrev' => '最后版本',
@@ -31270,23 +31925,20 @@ $3的理由是''$2''",
 	'compareselectedversions' => '对比选择的版本',
 	'changepassword' => '更改密码',
 	'columns' => '列：',
-	'copyuploaddisabled' => '通过网址上传功能未开通。',
-	'categories' => '分类',
-	'categoriespagetext' => '以下的{{PLURAL:$1|分类}}中包含了页面或媒体。
-[[Special:UnusedCategories|未用分类]]不会在这里列示。
-请同时参阅[[Special:WantedCategories|需要的分类]]。',
-	'categoriesfrom' => '显示由此项起之分类：',
-	'changed' => '更改',
-	'created' => '创建',
+	'copyuploaddisabled' => '网址上传功能未开通。',
+	'categories' => '分类列表',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
+	'categoriesfrom' => '显示由此项起的分类：',
+	'changed' => '已更改',
+	'created' => '已创建',
 	'confirm' => '确认',
-	'confirmdeletetext' => '您即将删除一个页面或图像以及其历史。
-请确定您要进行此项操作，并且了解其后果，同时您的行为符合[[{{MediaWiki:Policy-url}}]]。',
+	'confirmdeletetext' => '您即将删除一个页面以及其历史。了解更多，请查看 [[Help:Deletion|帮助：删除]]。',
 	'cantrollback' => '无法恢复编辑。最后的贡献者是本文的唯一作者。',
 	'cannotundelete' => '恢复删除失败；可能已有其他人先行恢复了此页面。',
-	'contributions' => '用户贡献',
+	'contributions' => '贡献',
 	'contributions-title' => '$1的用户贡献',
 	'contribsub2' => '$1的贡献（$2）',
-	'createaccountblock' => '禁止创建账户',
+	'createaccountblock' => '禁止创建帐户',
 	'change-blocklink' => '更改封禁',
 	'contribslink' => '贡献',
 	'cant-block-while-blocked' => '您无法在封禁期内封禁其他用户。',
@@ -31295,27 +31947,44 @@ $3的理由是''$2''",
 	'cant-move-user-page' => '您并没有许可权去移动用户页面（它的子页面除外）。',
 	'cant-move-to-user-page' => '您并没有许可权去移动到用户页面（它的子页面除外）。',
 	'cantmove-titleprotected' => '您无法将页面移动到该位置，因为新标题已被保护以防止创建。',
-	'common.css' => '/* 此处的 CSS 将应用于所有的皮肤 */',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
 	'common.js' => '/* 此处的JavaScript将加载于所有用户每一个页面。 */',
 	'creditspage' => '页面致谢',
 	'confirmemail' => '确认邮箱地址',
-	'confirmemail_noemail' => '你还没有在你的[[Special:Preferences|用户资料设置]]中设置有效的电子邮件地址。',
+	'confirmemail_noemail' => '你还没有在你的[[Special:Preferences|个人设置]]中设置有效的电子邮件地址。',
 	'confirmemail_text' => '{{SITENAME}}要求您在使用邮件功能之前验证您的邮箱地址。
-点击以下按钮可向您的邮箱发送一封确认邮件。该邮件包含有一行代码链接；
+点击以下按钮可向您的邮箱发送一封确认邮件。
+该邮件包含有一行代码链接；
 请在您的浏览器中加载此链接以确认您的邮箱地址是有效的。',
 	'confirmemail_pending' => '一个确认码已经被发送到您的邮箱，您可能需要等几分钟才能收到。如果无法收到，请再申请一个新的确认码。',
 	'confirmemail_send' => '邮件发送确认代码',
 	'confirmemail_sent' => '确认邮件已发送。',
-	'confirmemail_oncreate' => '一个确认代码已被发送到您的邮箱。登录时无需使用该代码，但若要启用在此wiki上的电子邮件相关功能，则必须先提交此代码。',
+	'confirmemail_oncreate' => '一个确认代码已被发送到您的邮箱。
+登录时无需使用该代码，但若要启用在此Wiki上的电子邮件相关功能，则必须先提交此代码。
+如果您没有收到这封邮件，请检查您的垃圾箱进行确认，并且设置允许接收来自community@wikia.com的邮件。',
 	'confirmemail_sendfailed' => '{{SITENAME}}不能发送确认邮件，请检查您的邮箱地址是否包含无效字符。
 
 邮件发送器的返回信息：$1',
-	'confirmemail_invalid' => '无效的确认码，该代码可能已经过期。',
+	'confirmemail_invalid' => '<center>感谢确认您的电子邮件，但您的确认码已过期或无效。 <br/>
+你需要申请新的确认码以确认您的帐户。 
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>通过电子邮件申请新的确认码</span>]]</span></center>
+<br>',
 	'confirmemail_needlogin' => '您需要$1以确认您的邮箱地址。',
 	'confirmemail_success' => '您的邮箱已经被确认。您现在可以[[Special:UserLogin|登录]]并使用此网站了。',
-	'confirmemail_loggedin' => '您的邮箱地址现在已被确认。',
+	'confirmemail_loggedin' => "'''您的邮箱地址现在已被确认。'''
+
+欢迎！
+
+在FANDOM上有成千上万个主题社区，充满乐趣。
+
+您可以花几分钟[[w:c:help:Help:Contents|了解一下我们的帮助中心]]，阅读一些有趣的文章，给你喜欢的主题社区添加内容，或是访问社区其他用户的个人主页。
+
+FANDOM社区团队
+
+",
 	'confirmemail_error' => '你的确认过程发生错误。',
-	'confirmemail_subject' => '{{SITENAME}}电子邮件地址确认',
+	'confirmemail_subject' => '请确认您的FANDOM帐户',
 	'confirmemail_body' => '来自IP地址$1的用户（可能是您）在{{SITENAME}}上创建了账户“$2”，并提交了您
 的电子邮箱地址。
 
@@ -31329,174 +31998,300 @@ $3
 $5
 
 确认码会在$4过期。',
-	'confirmemail_body_changed' => '拥有IP地址$1的用户（可能是您）在{{SITENAME}}更改了账户“$2”的电子邮箱地址。
+	'confirmemail_body_changed' => '拥有IP地址$1的用户（可能是您）在{{SITENAME}}更改了帐户“$2”的电子邮箱地址。
 
-请确认这个账户是属于您的，并同时重新激活在{{SITENAME}}上的电子邮件功能。请
+请确认这个帐户是属于您的，并同时重新激活在{{SITENAME}}上的电子邮件功能。请
 在浏览器中打开下面的链接：
 
 $3
 
-如果这个账户*不是*属于您的，请打开下面的链接去取消电子邮件确认：
+如果这个帐户*不是*属于您的，请打开下面的链接去取消电子邮件确认：
 
 $5
 
 确认码会在$4过期。',
-	'confirmemail_body_set' => '拥有IP地址$1的用户（可能是您）在{{SITENAME}}将账户“$2”的电子邮箱地址设置
+	'confirmemail_body_set' => '拥有IP地址$1的用户（可能是您）在{{SITENAME}}将帐户“$2”的电子邮箱地址设置
 到了这个电子邮件地址。
 
-请确认这个账户是属于您的，并同时重新激活在{{SITENAME}}上的电子邮件功能。请
+请确认这个帐户是属于您的，并同时重新激活在{{SITENAME}}上的电子邮件功能。请
 在浏览器中打开下面的链接：
 
 $3
 
-如果这个账户*不是*属于您的，请打开下面的链接去取消电子邮件确认：
+如果这个帐户*不是*属于您的，请打开下面的链接去取消电子邮件确认：
 
 $5
 
 确认码会在$4过期。',
 	'confirmemail_invalidated' => '电邮地址确认已取消',
-	'confirmrecreate' => "在您开始编辑这个页面后，用户[[User:$1|$1]] （[[User talk:$1|讨论]]）以下列原因删除了这个页面：
+	'confirmrecreate' => "在您开始编辑这个页面后，用户[[User:$1|$1]] （[[User talk:$1|对话页]]）以下列原因删除了这个页面：
 : ''$2''
 请确认在您重新创建页面前三思。",
-	'confirmrecreate-noreason' => '用户 [[User:$1|$1]]（[[User talk:$1|talk]]） 在您开始编辑之后删除此页面。请确认您确实要重新创建此页面。',
-	'confirm_purge_button' => '确定',
+	'confirmrecreate-noreason' => '用户 [[User:$1|$1]]（[[User talk:$1|对话页]]） 在您开始编辑之后删除此页面。请确认您确实要重新创建此页面。',
+	'confirm_purge_button' => '是的，我不是一个机器人',
 	'confirm-purge-top' => '要清除此页面的缓存吗?',
-	'confirm-purge-bottom' => '清理一页将会清除快取以及强迫显示最现时之修订版本。',
-	'confirm-watch-button' => '确定',
+	'confirm-purge-bottom' => '清除页面缓存有助于确保使用最新的版本。',
+	'confirm-watch-button' => '好的',
 	'confirm-watch-top' => '将此页添加到您的监视吗？',
-	'confirm-unwatch-button' => '确定',
+	'confirm-unwatch-button' => '好的',
 	'confirm-unwatch-top' => '从监视列表中删除此页吗？',
-	'comma-separator' => '、',
+	'comma-separator' => ',&#32;',
 	'comparepages' => '对比页面',
 	'compare-selector' => '对比页面版本',
 	'compare-page1' => '页面1',
 	'compare-page2' => '页面2',
 	'compare-rev1' => '版本1',
 	'compare-rev2' => '版本2',
-	'compare-submit' => '对比',
+	'compare-submit' => '比较',
 	'compare-invalid-title' => '您指定的标题无效。',
 	'compare-title-not-exists' => '您指定的标题不存在。',
 	'compare-revision-not-exists' => '你指定的版本不存在。',
+	'create-account-new' => '创建您的FANDOM帐户',
+	'community' => '社区',
+	'contris' => '贡献',
+	'contris_s' => '贡献',
+	'createpage' => '创建新页面',
+	'createwiki' => '创建新的维基',
+	'createwikipagetitle' => '创建新的维基',
+	'categories-summary' => '',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
+	'corporatepage-create-button' => '创建维基',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'More Links',
+	'corporatepage-in-the-know' => 'In the Know',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-find-a-wiki' => 'Find a Wiki',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Hide Page',
+	'corporatepage-wikia-editors' => '编辑者',
+	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-update-fqr' => 'updated hourly',
+	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
+	'corporatepage-go-to-wiki' => '转至$1',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-watchlist' => '关注列表',
+	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
+	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
+	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
+	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-company-info-headline' => 'Company Information',
+	'corporatepage-pages-added' => 'pages created in the last hour',
+	'corporatepage-edits-made' => 'edits made today',
+	'corporatepage-words-added' => 'words added in the last week',
+	'custom_info' => '选择上面的"自定义"进行编辑和定制化主题样式。',
+	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
+	'createwikititle' => 'Title for the wiki',
+	'createwikiname' => 'Name for the wiki',
+	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
+	'createwikidesc' => 'Description of the wiki',
+	'createwikiaddtnl' => 'Additional Information',
+	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'createwikilang' => 'Default language for this wiki',
+	'create_an_account' => '注册',
+	'choose_reason' => '选择理由',
+	'cockpit_hide' => '隐藏cockpit',
 );
 
 $messages['zh-hant'] = array(
 	'category_header' => '「$1」分類中的頁面',
 	'category-media-header' => '「$1」分類中的媒體',
 	'category-empty' => "''這個分類中尚未包含任何頁面或媒體。''",
-	'category-subcat-count' => '{{PLURAL:$2|這個分類中只有以下的子分類。|這個分類中有以下的 $1 個子分類，共有 $2 個子分類。}}',
-	'category-subcat-count-limited' => '這個分類下有$1個附分類。',
-	'category-article-count' => '{{PLURAL:$2|這個分類中只有以下的頁面。|這個分類中有以下的 $1 個頁面，共有 $2 個頁面。}}',
+	'category-subcat-count' => '{{PLURAL:$2|這個分類中只有以下的子分類。|以下是這個分類中的 $1 個子分類，共有 $2 個子分類。}}',
+	'category-subcat-count-limited' => '這個分類下有$1個子分類。',
+	'category-article-count' => '{{PLURAL:$2|這個分類中只有以下的頁面。|以下是這個分類的 $1 個頁面，共有 $2 個頁面。}}',
 	'category-article-count-limited' => '這個分類下有$1個頁面。',
-	'category-file-count' => '{{PLURAL:$2|這個分類中只有以下的檔案。|這個分類中有以下的 $1 個檔案，共有 $2 個檔案。}}',
+	'category-file-count' => '{{PLURAL:$2|這個分類中只有以下的檔案。|以下是這個分類中的 $1 個檔案，共有 $2 個檔案。}}',
 	'category-file-count-limited' => '這個分類下有$1個檔案。',
 	'cancel' => '取消',
-	'create' => '建立',
+	'create' => '創建',
 	'copyright' => '本站的全部文本內容在$1之條款下提供。',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'currentevents' => '新聞動態',
 	'currentevents-url' => 'Project:新聞動態',
 	'collapsible-collapse' => '摺叠',
 	'collapsible-expand' => '展開',
-	'cannotdelete' => '無法刪除頁面或圖片"$1"。
+	'cannotdelete' => '無法刪除頁面或檔案"$1"。
 它可能已經被其他人刪除了。',
 	'cannotdelete-title' => '無法刪除“$1”',
 	'cascadeprotected' => '這個頁面已經被保護，因為這個頁面被以下已標註"聯鎖保護"的{{PLURAL:$1|一個|多個}}被保護頁面包含:
 $2',
 	'customcssprotected' => '你並無權限編輯此CSS頁面，因為它包含了其他用戶的個人設置。',
 	'customjsprotected' => '你並無權限去編輯此JavaScript頁面，因為他包含了另一位用戶的個人設定。',
-	'createaccount' => '建立新帳號',
+	'createaccount' => '創建帳戶',
 	'createaccountmail' => '通過電郵',
 	'createaccountreason' => '理由：',
 	'createaccounterror' => '無法建立帳號：$1',
-	'cannotchangeemail' => '本wiki不允許對賬戶的電郵地址進行更改。',
-	'createaccount-title' => '在{{SITENAME}}中建立新賬戶',
-	'createaccount-text' => '有人在{{SITENAME}}中利用您的電郵創建了一個名為 "$2" 的新賬戶（$4），密碼是 "$3" 。您應該立即登入並更改密碼。
+	'cannotchangeemail' => '本wiki不允許更改賬號的電郵地址。',
+	'createaccount-title' => '在{{SITENAME}}中建立新帳號',
+	'createaccount-text' => '您好，
 
-如果該賬戶建立錯誤的話，您可以忽略此訊息。',
-	'changeemail' => '更改電郵地址',
+您的帳號已經創建在{{SITENAME}}上，用戶名為"$2"，密碼是 "$3"。您應該立即登入並更改密碼。
+
+請在$4登入帐號。
+
+如果您不需要這個帳號，您可以忽略這封郵件或聯繫community@wikia.com。
+
+- FANDOM社區支持
+___________________________________________
+* 您可在社區中心尋找更多幫助和建議：http://zh.community.wikia.com
+* 不想收到太多消息？您可以在以下頁面退訂或更換電子信箱設置：http://zh.community.wikia.com/Special:Preferences',
+	'changeemail' => '更改電子郵件',
 	'changeemail-header' => '更改帳號電郵地址',
 	'changeemail-text' => '填寫表格以修改您的電郵地址。您需要輸入您的密碼以確認此更改。',
-	'changeemail-no-info' => '您必須登錄方可直接訪問此頁面。',
+	'changeemail-no-info' => '您必須登入後直接進入這個頁面。',
 	'changeemail-oldemail' => '當前電郵地址：',
 	'changeemail-newemail' => '新電郵地址：',
-	'changeemail-none' => '（無）',
+	'changeemail-none' => '無',
 	'changeemail-submit' => '更改電郵',
 	'changeemail-cancel' => '取消',
 	'confirmedittext' => '在編輯此頁之前您必須確認您的郵箱位址。請透過[[Special:Preferences|偏好設定]]設定並驗證您的郵箱地址。',
-	'clearyourcache' => "'''注意：在保存以後，您必須繞過瀏覽器緩存才能看到所作出的改變。'''
+	'clearyourcache' => "'''注意：在保存以後，您必須[[Help:bypass your cache|繞過瀏覽器緩存]]才能看到所作出的更改。'''
 * '''火狐（Firefox）／Safari'''：按住“Shift”鍵再點擊“刷新”，或按下“Ctrl-F5”或“Ctrl-R”（Mac上為“⌘-R”）
 * '''谷歌瀏覽器（Google Chrome）'''：按下“Ctrl-Shift-R”（Mac上為“⌘-Shift-R”）
 * '''Internet Explorer'''：按住“Ctrl”鍵再點擊“刷新”，或按下“Ctrl-F5”
 * '''Konqueror'''：點擊“刷新”或按下“F5”
-* '''Opera'''：在“工具→首選項”中清除緩存",
-	'copyrightwarning' => "請注意您對{{SITENAME}}的所有貢獻都被認為是在$2下發佈，請檢視在$1的細節。
-如果您不希望您的文字被任意修改和再散佈，請不要提交。<br />
-您同時也要向我們保證您所提交的內容是您自己所作，或得自一個不受版權保護或相似自由的來源。
-'''不要在未獲授權的情況下發表！'''<br />",
+",
+	'copyrightwarning' => '請注意您對{{SITENAME}}的所有貢獻都被認為是在$2下發佈，詳情請參見$1。
+',
 	'copyrightwarning2' => "請注意您對{{SITENAME}}的所有貢獻
 都可能被其他貢獻者編輯，修改或刪除。
 如果您不希望您的文字被任意修改和再散佈，請不要提交。<br />
 您同時也要向我們保證您所提交的內容是您自己所作，或得自一個不受版權保護或相似自由的來源（參閱$1的細節）。
-'''不要在未獲授權的情況下發表！'''",
+'''不要在未獲授權的情況下發表有版權保護的內容！'''",
 	'cascadeprotectedwarning' => "'''警告：'''本頁已經被保護，只有擁有管理員權限的用戶才可修改，因為本頁已被以下連鎖保護的{{PLURAL:$1|一個|多個}}頁面所包含:",
 	'cantcreateaccounttitle' => '無法建立帳號',
 	'cantcreateaccount-text' => "從這個 IP 位址 （<b>$1</b>） 建立帳號已經被 [[User:$3|$3]] 禁止。
 
-當中被 $3 封禁的原因是 ''$2''",
-	'currentrev' => '最新修訂版本',
+被 $3 封禁的原因是 ''$2''",
+	'currentrev' => '最新修訂',
 	'currentrev-asof' => '在$1的最新修訂版本',
-	'currentrevisionlink' => '最新修訂',
+	'currentrevisionlink' => '最新修訂版本',
 	'cur' => '目前',
 	'compareselectedversions' => '比較選定的修訂版本',
 	'changepassword' => '更改密碼',
 	'columns' => '欄:',
 	'copyuploaddisabled' => '通過網址上傳功能未開通。',
-	'categories' => '頁面分類',
-	'categoriespagetext' => '以下的{{PLURAL:$1|分類}}中包含了頁面或媒體。
-[[Special:UnusedCategories|未用分類]]不會在這裏列示。
-請同時參閱[[Special:WantedCategories|需要的分類]]。',
-	'categoriesfrom' => '顯示由此項起之分類:',
+	'categories' => '頁面分類列表',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
+	'categoriesfrom' => '顯示由此項開始之分類：',
 	'changed' => '修改了',
-	'created' => '建立了',
+	'created' => '已創建',
 	'confirm' => '確認',
-	'confirmdeletetext' => '您即將刪除一個頁面或圖片以及其歷史。
-請確定您要進行此項操作，並且了解其後果，同時您的行為符合[[{{MediaWiki:Policy-url}}]]。',
+	'confirmdeletetext' => '您即將刪除一個頁面或圖片以及其歷史。請進一步參見[[Help:Deletion|Help:刪除]]
+',
 	'cantrollback' => '無法恢復編輯；最後的貢獻者是本文的唯一作者。',
 	'cannotundelete' => '恢復失敗；可能之前已經被其他人恢復。',
-	'contributions' => '用戶貢獻',
+	'contributions' => '貢獻',
 	'contributions-title' => '$1的用戶貢獻',
 	'contribsub2' => '$1的貢獻 （$2）',
-	'createaccountblock' => '禁止創建賬戶',
+	'createaccountblock' => '禁止創建帳戶',
 	'change-blocklink' => '更改封禁',
 	'contribslink' => '貢獻',
 	'cant-block-while-blocked' => '當您被封鎖時不可以封鎖其他用戶。',
 	'cant-see-hidden-user' => '您現正嘗試封鎖的用戶已經被封鎖或隱藏。
 您現在沒有隱藏用戶的權限，您不可以檢視或者編輯這位用戶的封鎖。',
 	'cant-move-user-page' => '您並沒有許可權去移動用戶頁面（它的子頁面除外）。',
-	'cant-move-to-user-page' => '您並沒有許可權去移動到用戶頁面（它的子頁面除外）。',
-	'cantmove-titleprotected' => '您不可以移動這個頁面到這個位置，因為該新標題已經被保護以防止建立。',
-	'common.css' => '/* 此處的 CSS 將應用於所有的面板 */',
-	'common.js' => '/* 此處的JavaScript將載入於所有用戶每一個頁面。 */',
+	'cant-move-to-user-page' => '您並沒有將頁面移動到用戶頁面的權限（它的子頁面除外）。',
+	'cantmove-titleprotected' => '您不可以移動頁面到這個位置，因為該新標題已經被保護以防止建立。',
+	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
+	'common.js' => '/* 此處的JavaScript將在所有用戶載入每個頁面時使用。 */',
 	'creditspage' => '頁面致謝',
 	'confirmemail' => '確認郵箱位址',
 	'confirmemail_noemail' => '您沒有在您的[[Special:Preferences|用戶設定]]裡面輸入一個有效的 email 位址。',
 	'confirmemail_text' => '{{SITENAME}}要求您在使用郵件功能之前驗證您的郵箱位址。
 點擊以下按鈕可向您的郵箱發送一封確認郵件。該郵件包含有一行代碼連結；
-請在您的瀏覽器中加載此連結以確認您的郵箱位址是有效的。',
-	'confirmemail_pending' => '一個確認碼已經被發送到您的郵箱，您可能需要等幾分鐘才能收到。如果無法收到，請再申請一個新的確認碼。',
-	'confirmemail_send' => '郵發確認代碼',
+請在您的瀏覽器中載入此連結以確認您的郵箱位址是有效的。',
+	'confirmemail_pending' => '一個認證碼已經被發送到您的郵箱，您可能需要等幾分鐘才能收到。如果無法收到，請再申請一個新的認證碼。',
+	'confirmemail_send' => '發送認證碼',
 	'confirmemail_sent' => '確認郵件已發送。',
-	'confirmemail_oncreate' => '一個確認代碼已經被發送到您的郵箱。該代碼並不要求您進行登入，
-但若您要啟用在此 wiki 上的任何基於電子郵件的功能，您必須先提交此代碼。',
-	'confirmemail_sendfailed' => '{{SITENAME}}無法發送確認郵件，請檢查郵箱位址是否包含非法字元。
+	'confirmemail_oncreate' => '一個認證碼已經發送到您的郵箱。您登入時不會需要該代碼，
+但若您要啟用在此 wiki 上的任何基於電子郵件的功能，您必須先提交此代碼。如果您沒收到這封郵件，請檢查您的郵箱垃圾信區進行確認，並設置允許接收來自community@wikia.com的郵件。',
+	'confirmemail_sendfailed' => '{{SITENAME}}無法發送認證郵件，請檢查郵箱位址是否包含不效字元。
 
-郵件傳送員回應: $1',
-	'confirmemail_invalid' => '無效的確認碼，該代碼可能已經過期。',
-	'confirmemail_needlogin' => '您需要$1以確認您的郵箱位址。',
-	'confirmemail_success' => '您的郵箱已經被確認。您現在可以[[Special:UserLogin|登錄]]並使用此網站了。',
-	'confirmemail_loggedin' => '您的郵箱位址現下已被確認。',
-	'confirmemail_error' => '{{GENDER:|你|妳|你}}的確認過程發生錯誤。',
-	'confirmemail_subject' => '{{SITENAME}}郵箱位址確認',
+郵件發送器回應: $1',
+	'confirmemail_invalid' => '<center>感謝認證您的電子郵件，但您的認證碼已過期或無效。 <br/>
+你需要申請新的認證碼以認證您的帳戶。 
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>通過電子郵件申請新的認證碼</span>]]</span></center>
+<br>
+',
+	'confirmemail_needlogin' => '您需要$1以認證您的郵箱位址。',
+	'confirmemail_success' => '您的郵箱已經被認證。您現在可以[[Special:UserLogin|登錄]]並使用此Wiki了。',
+	'confirmemail_loggedin' => "'''您的郵箱地址現在已被認證。'''
+
+歡迎！
+
+在FANDOM上有成千上萬個主題社區，充滿樂趣。
+
+您可以花幾分鐘[[w:c:help:Help:Contents|瞭解一下我們的幫助中心]]，閱讀一些有趣的文章，給你喜歡的主題社區添加內容，或是訪問社區其他用戶的個人頁面。
+
+FANDOM社區團隊
+
+",
+	'confirmemail_error' => '你的認證過程發生錯誤。',
+	'confirmemail_subject' => '請認證您的FANDOM帳號',
 	'confirmemail_body' => '擁有IP位址$1的用戶（可能是您）在{{SITENAME}}創建了賬戶"$2"，並提交了您的電子郵箱位址。
 
 請確認這個賬戶是屬於您的，並同時啟用在{{SITENAME}}上的
@@ -31510,43 +32305,45 @@ $3
 $5
 
 確認碼會在$4過期。',
-	'confirmemail_body_changed' => '擁有IP位址$1的用戶（可能是您）在{{SITENAME}}更改了賬戶"$2"的電子郵箱位址。
+	'confirmemail_body_changed' => '擁有IP位址$1的用戶（可能是您）在{{SITENAME}}更改了帳戶"$2"的電子郵箱位址。
 
-請確認這個賬戶是屬於您的，並同時重新啟用在{{SITENAME}}上的
+請確認這個帳戶是屬於您的，並同時重新啟用在{{SITENAME}}上的
 電子郵件功能。請在瀏覽器中打開下面的連結:
 
 $3
 
 如果這個賬戶*不是*屬於您的，
-請打開下面的連結去取消電子郵件確認:
+請打開下面的連結去取消電子郵件認證:
 
 $5
 
-確認碼會在$4過期。',
-	'confirmemail_body_set' => '有人，可能是您，來自IP地址$1，已設置的戶口"$2"這個地址{{SITENAME}}網站名稱電郵地址。
+認證碼會在$4過期。',
+	'confirmemail_body_set' => '擁有IP位址$1的用戶（可能是您）在{{SITENAME}}更改了帳戶"$2"的電子郵箱位址。
 
-為了確認這個帳戶確實屬於自己的，重新確認電子郵件功能於{{SITENAME}}網站名稱，請在瀏覽器中打開這個鏈接：
+請確認這個帳戶是屬於您的，並同時重新啟用在{{SITENAME}}上的
+電子郵件功能。請在瀏覽器中打開下面的連結:
 
 $3
 
-如果這帳戶*不*是你的，請點此鏈接取消電子郵件地址確認：
+如果這個賬戶*不是*屬於您的，
+請打開下面的連結去取消電子郵件認證:
 
 $5
 
-這個確認碼會在$4時過期。',
-	'confirmemail_invalidated' => '電郵地址確認已取消',
+認證碼會在$4過期。',
+	'confirmemail_invalidated' => '電郵地址認證已取消',
 	'confirmrecreate' => "在您開始編輯這個頁面後，用戶[[User:$1|$1]] （[[User talk:$1|對話]]）以下列原因刪除了這個頁面：
 : ''$2''
 請確認在您重新創建頁面前三思。",
 	'confirmrecreate-noreason' => '在您開始編輯後，用戶[[User:$1|$1]] （[[User talk:$1|對話]]）刪除了這個頁面。請在重新創建頁面前三思。',
-	'confirm_purge_button' => '確定',
+	'confirm_purge_button' => '是的，我不是機器人',
 	'confirm-purge-top' => '要清除此頁面的快取嗎?',
-	'confirm-purge-bottom' => '清理一頁將會清除快取以及強迫顯示最現時之修訂版本。',
-	'confirm-watch-button' => '確定',
+	'confirm-purge-bottom' => '清理一個頁面的快取以確保顯示最新的修訂版本。',
+	'confirm-watch-button' => '好的',
 	'confirm-watch-top' => '監視此頁？',
-	'confirm-unwatch-button' => '確定',
+	'confirm-unwatch-button' => '好的',
 	'confirm-unwatch-top' => '停止監視此頁？',
-	'comma-separator' => '、',
+	'comma-separator' => ',&#32;',
 	'comparepages' => '比較頁面',
 	'compare-selector' => '比較頁面的修訂',
 	'compare-page1' => '第1頁',
@@ -31555,118 +32352,114 @@ $5
 	'compare-rev2' => '修訂版本2',
 	'compare-submit' => '比較',
 	'compare-invalid-title' => '所指定標題無效。',
-	'compare-title-not-exists' => '所指定的話題不存在。',
+	'compare-title-not-exists' => '所指定的標題不存在。',
 	'compare-revision-not-exists' => '所指定的修訂不存在。',
-);
-
-$messages['zh-hk'] = array(
-	'contribslink' => '貢獻',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-min-nan'] = array(
-	'contribslink' => '貢獻',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-mo'] = array(
-	'contribslink' => '貢獻',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-my'] = array(
-	'contribslink' => '貢獻',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-sg'] = array(
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-tw'] = array(
-	'create' => '建立',
-	'copyright' => '本站的文字內容除另有聲明外，全部以 $1 條款授權使用。',
-	'cannotdelete' => '無法刪除選定的頁面或圖片（它可能已經被其他人刪除了）。',
-	'createaccount' => '建立新帳號',
-	'createaccount-title' => '在{{SITENAME}}中建立新帳號',
-	'createaccount-text' => '有人在{{SITENAME}}中為 $2 建立了一個新帳號($4)。 "$2" 的密碼是 "$3" 。您應該立即登入並更改密碼。
-
-如果該帳號建立錯誤的話，您可以忽略此訊息。',
-	'confirmedittext' => '在編輯此頁之前您必須確認您的電子郵件地址。請透過[[Special:Preferences|參數設定]]設定並驗証您的電子郵件地址。',
-	'clearyourcache' => "'''注意:''' 在儲存以後, 您必須清除瀏覽器的快取才能看到所作出的改變。 '''Mozilla / Firefox / Safari:''' 按著 ''Shift'' 再點擊''重新整理''(或按下''Ctrl-Shift-R''，在蘋果Mac上按下''Cmd-Shift-R'')；'''IE:''' 按著 ''Ctrl'' 再點擊 ''重新整理''，或按下 ''Ctrl-F5''；'''Konqueror:''' 只需點擊 ''重新整理''；'''Opera:''' 使用者需要在 ''工具-設定'' 中完整地清除它們的快取。",
-	'cascadeprotectedwarning' => '警告: 本頁已經被保護，只有擁有管理員權限的使用者才可修改，因為本頁已被以下連鎖保護的{{PLURAL:$1|一個|多個}}頁面所包含:',
-	'cantcreateaccounttitle' => '無法建立帳號',
-	'cantcreateaccount-text' => "從這個IP地址 (<b>$1</b>) 建立帳號已經被[[User:$3|$3]]禁止。
-
-當中被$3封鎖的原因是''$2''",
-	'compareselectedversions' => '比較選定的版本',
-	'confirmdeletetext' => '您即將從資料庫中永遠刪除一個頁面或圖片以及其歷史。
-請確定您要進行此項操作，並且了解其後果，同時您的行為符合[[{{MediaWiki:Policy-url}}]]。',
-	'cantrollback' => '無法復原編輯；最後的貢獻者是本文的唯一作者。',
-	'cannotundelete' => '復原失敗；可能之前已經被其他人復原。',
-	'contributions' => '使用者編修記錄',
-	'contribsub2' => '$1的編修記錄 ($2)',
-	'createaccountblock' => '禁止建立帳號',
-	'confirmemail' => '確認電子郵件地址',
-	'confirmemail_noemail' => '您沒有在您的[[Special:Preferences|使用者設定]]裡面輸入一個有效的 email 位址。',
-	'confirmemail_text' => '此網站要求您在使用郵件功能之前驗證您的電子郵件地址。
-點擊以下按鈕可向您的郵箱發送一封確認郵件。該郵件包含有一行代碼連結；
-請在您的瀏覽器中加載此連結以確認您的電子郵件地址是有效的。',
-	'confirmemail_sendfailed' => '不能發送確認郵件，請檢查電子郵件地址是否包含非法字元。
-
-郵件傳送員回應: $1',
-	'confirmemail_needlogin' => '您需要$1以確認您的電子郵件地址。',
-	'confirmemail_success' => '您的郵箱已經被確認。您現下可以登錄並使用此網站了。',
-	'confirmemail_loggedin' => '您的電子郵件地址現下已被確認。',
-	'confirmemail_subject' => '{{SITENAME}}電子郵件地址確認',
-	'confirmrecreate' => '在您編輯這個頁面後，使用者[[User:$1|$1]]([[User talk:$1|對話]])以下列原因刪除了這個頁面: $2。請在重新建立頁面前三思。',
-	'create_an_account' => '開啟新用戶帳號',
-	'createpage' => '開啟新文章',
-	'choose_reason' => '選擇原因',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-);
-
-$messages['zh-yue'] = array(
-	'create' => '建立',
-	'copyright' => '本站的文字內容除另有聲明外，全部以 $1 條款授權使用。',
-	'cannotdelete' => '無法刪除選定的頁面或圖片（它可能已經被其他人刪除了）。',
-	'createaccount' => '建立新帳號',
-	'createaccount-title' => '在{{SITENAME}}中建立新帳號',
-	'createaccount-text' => '有人在{{SITENAME}}中為 $2 建立了一個新帳號($4)。 "$2" 的密碼是 "$3" 。您應該立即登入並更改密碼。
-
-如果該帳號建立錯誤的話，您可以忽略此訊息。',
-	'confirmedittext' => '在編輯此頁之前您必須確認您的電子郵件地址。請透過[[Special:Preferences|參數設定]]設定並驗証您的電子郵件地址。',
-	'clearyourcache' => "'''注意:''' 在儲存以後, 您必須清除瀏覽器的快取才能看到所作出的改變。 '''Mozilla / Firefox / Safari:''' 按著 ''Shift'' 再點擊''重新整理''(或按下''Ctrl-Shift-R''，在蘋果Mac上按下''Cmd-Shift-R'')；'''IE:''' 按著 ''Ctrl'' 再點擊 ''重新整理''，或按下 ''Ctrl-F5''；'''Konqueror:''' 只需點擊 ''重新整理''；'''Opera:''' 使用者需要在 ''工具-設定'' 中完整地清除它們的快取。",
-	'cascadeprotectedwarning' => '警告: 本頁已經被保護，只有擁有管理員權限的使用者才可修改，因為本頁已被以下連鎖保護的{{PLURAL:$1|一個|多個}}頁面所包含:',
-	'cantcreateaccounttitle' => '無法建立帳號',
-	'cantcreateaccount-text' => "從這個IP地址 (<b>$1</b>) 建立帳號已經被[[User:$3|$3]]禁止。
-
-當中被$3封鎖的原因是''$2''",
-	'compareselectedversions' => '比較選定的版本',
-	'confirmdeletetext' => '您即將從資料庫中永遠刪除一個頁面或圖片以及其歷史。
-請確定您要進行此項操作，並且了解其後果，同時您的行為符合[[{{MediaWiki:Policy-url}}]]。',
-	'cantrollback' => '無法復原編輯；最後的貢獻者是本文的唯一作者。',
-	'cannotundelete' => '復原失敗；可能之前已經被其他人復原。',
-	'contributions' => '使用者編修記錄',
-	'contribsub2' => '$1的編修記錄 ($2)',
-	'createaccountblock' => '禁止建立帳號',
-	'confirmemail' => '確認電子郵件地址',
-	'confirmemail_noemail' => '您沒有在您的[[Special:Preferences|使用者設定]]裡面輸入一個有效的 email 位址。',
-	'confirmemail_text' => '此網站要求您在使用郵件功能之前驗證您的電子郵件地址。
-點擊以下按鈕可向您的郵箱發送一封確認郵件。該郵件包含有一行代碼連結；
-請在您的瀏覽器中加載此連結以確認您的電子郵件地址是有效的。',
-	'confirmemail_sendfailed' => '不能發送確認郵件，請檢查電子郵件地址是否包含非法字元。
-
-郵件傳送員回應: $1',
-	'confirmemail_needlogin' => '您需要$1以確認您的電子郵件地址。',
-	'confirmemail_success' => '您的郵箱已經被確認。您現下可以登錄並使用此網站了。',
-	'confirmemail_loggedin' => '您的電子郵件地址現下已被確認。',
-	'confirmemail_subject' => '{{SITENAME}}電子郵件地址確認',
-	'confirmrecreate' => '在您編輯這個頁面後，使用者[[User:$1|$1]]([[User talk:$1|對話]])以下列原因刪除了這個頁面: $2。請在重新建立頁面前三思。',
-	'create_an_account' => '開啟新用戶帳號',
-	'createpage' => '開啟新文章',
-	'choose_reason' => '選擇原因',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'create-account-new' => '創建您的FANDOM帳戶',
+	'community' => '社區',
+	'contris' => '貢獻',
+	'contris_s' => '貢獻',
+	'createpage' => '建立一個新的頁面',
+	'createwiki' => '創建新的 Wiki',
+	'createwikipagetitle' => '創建新的 Wiki',
+	'categories-summary' => '',
+	'colon-separator' => ':&#32;',
+	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
+**http://twilightsaga.wikia.com/|Twilight Saga Wiki
+**http://lyrics.wikia.com/|Lyric Wiki
+**http://percyjackson.wikia.com/|Percy Jackson Wiki
+**http://yugioh.wikia.com/|Yugioh Wiki
+* http://gaming.wikia.com|Gaming
+** http://wowwiki.com|World of Warcraft Wiki
+** http://borderlands.wikia.com|Borderlands Wiki
+** http://fallout.wikia.com|Fallout Wiki
+** http://callofduty.wikia.com|Call of Duty Wiki
+** http://dragonage.wikia.com|Dragon Age Wiki
+* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
+** http://recipes.wikia.com|Recipes Wiki
+** http://genealogy.wikia.com|Genealogy Wiki
+** http://diy.wikia.com|Do it Yourself Wiki
+** http://vintagepatterns.wikia.com|Vintage Dress Patterns
+* http://answers.wikia.com|Q&amp;A
+** http://answers.wikia.com|Wikianswers
+** http://xbox.answers.wikia.com|Xbox Answers
+** http://anime.answers.wikia.com|Anime Answers
+** http://lego.answers.wikia.com|Lego Answers
+* http://community.wikia.com|Community
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
+	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
+*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
+*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
+*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
+* Privacy_Policy|Privacy Policy
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
+	'corporatepage-create-button' => '創建一個Wiki',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
+	'corporatepage-more-link' => 'More Links',
+	'corporatepage-in-the-know' => 'In the Know',
+	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-find-a-wiki' => 'Find a Wiki',
+	'corporatepage-from' => 'from',
+	'corporatepage-hide' => 'Hide Page',
+	'corporatepage-wikia-editors' => '編輯者',
+	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-update-fqr' => 'updated hourly',
+	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
+	'corporatepage-go-to-wiki' => '前往 $1',
+	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
+<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
+<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
+<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
+	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-watchlist' => '監視列表',
+	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
+<h2>Collaborate with people who love what you love.</h2></div>
+<h2>Get started today!</h2>',
+	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
+	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
+	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-company-info-headline' => 'Company Information',
+	'corporatepage-pages-added' => 'pages created in the last hour',
+	'corporatepage-edits-made' => 'edits made today',
+	'corporatepage-words-added' => 'words added in the last week',
+	'custom_info' => '選擇上面的「自訂」來進行編輯和自訂主題樣式。',
+	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
+	'createwikititle' => 'Title for the wiki',
+	'createwikiname' => 'Name for the wiki',
+	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
+	'createwikidesc' => 'Description of the wiki',
+	'createwikiaddtnl' => 'Additional Information',
+	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
+	'createwikilang' => 'Default language for this wiki',
+	'create_an_account' => '註冊',
+	'choose_reason' => '選擇理由',
+	'cockpit_hide' => '隱藏 cockpit',
 );
 
 $messages['zu'] = array(

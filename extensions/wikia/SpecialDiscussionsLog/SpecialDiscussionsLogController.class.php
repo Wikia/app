@@ -69,10 +69,10 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function constructKibanaUrl( $dayOffset ) {
 		global $wgConsulUrl;
 
-		$esUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, 'query', 'sjc' ) )->getUrl( 'es' );
+		$esUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, 'logs-prod', 'sjc' ) )->getUrl( 'es' );
 		$date = time() - ( $dayOffset * 24 * 60 * 60 );
 
-		return 'http://' . $esUrl . '/logstash-' . date( 'Y.m.d', $date ) . '/_search';
+		return 'http://' . $esUrl . '/logstash-discussion-' . date( 'Y.m.d', $date ) . '/_search';
 	}
 
 	private function getUserByUsername( $userName ) {
@@ -178,6 +178,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				'locationHeader' => wfMessage( 'discussionslog-location-header' )->escaped(),
 				'timestampHeader' => wfMessage( 'discussionslog-timestamp-header' )->escaped(),
 				'userAgentHeader' => wfMessage( 'discussionslog-user-agent-header' )->escaped(),
+				'userActionHeader' => wfMessage( 'discussionslog-user-action-header' )->escaped(),
 		] );
 	}
 
@@ -190,13 +191,17 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 							'userUrl' => $this->getTitle()->getLocalURL(
 									[ UserQuery::getKeyName() => $userLogRecord->user->getName() ]
 							),
-							'site' => $userLogRecord->site,
+							'site' => $userLogRecord->site['title'],
+							'siteUrl' => 'http://'.$userLogRecord->site['domain'] . '/d/u/' .
+							             $userLogRecord->user->getId(),
 							'ip' => $userLogRecord->ip,
-							'ipUrl' => $this->getTitle()->getLocalURL( [ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
+							'ipUrl' => $this->getTitle()->getLocalURL(
+								[ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
 							'locationUrl' => 'https://geoiptool.com/en/?ip=' . $userLogRecord->ip,
 							'moreInfoMsg' => wfMessage( 'discussionslog-more-info' )->escaped(),
 							'timestamp' => $userLogRecord->timestamp,
 							'userAgent' => $userLogRecord->userAgent,
+							'userAction' => $userLogRecord->userAction,
 					]
 			);
 		}
@@ -269,9 +274,10 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$ip = $record-> { 'fastly_client_ip' } ;
 			$site = $record-> { 'site_id' } ;
 			$userId = $record-> { 'user_id' } ;
-			$recordHash = sprintf( '%s:%s:%s', $ip, $site, $userId );
+			$userAction = isset( $record-> { 'user_action' } ) ? $record->{ 'user_action' } : null;
+			$recordHash = sprintf( '%s:%s:%s:%s', $ip, $site, $userId, $userAction );
 
-			if ( $uniqueRecordChecker[$recordHash] === true ) {
+			if ( !empty( $uniqueRecordChecker[$recordHash] ) ) {
 				continue;
 			}
 
@@ -291,11 +297,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				$cityTitle = WikiFactory::getWikiByID( $site )->city_title;
 				$wikiDomain = preg_replace( '#^https?://#', '', WikiFactory::getHostById( $site ) );
 				if ( empty( $cityTitle ) && empty( $wikiDomain ) ) {
-					// most likely from a different environment (e.g. prod contribution when this is on dev, or vice versa)
+					// most likely from a different environment
+					// (e.g. prod contribution when this is on dev, or vice versa)
 					$this->logger->warning( sprintf( 'Site not found: %d', $site ) );
 					continue;
 				} else {
-					$domainCache[$site] = sprintf( '%s (%s)', $cityTitle, $wikiDomain );
+					$domainCache[$site] = ['title' => $cityTitle, 'domain' => $wikiDomain ];
 				}
 			}
 
@@ -308,6 +315,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$userLogRecord->timestamp = date( DATE_RFC2822, $timestamp );
 			$userLogRecord->userAgent = $record-> { 'user_agent' } ;
 			$userLogRecord->user = $user;
+			$userLogRecord->userAction = $userAction;
 
 			$records[$timestamp] = $userLogRecord;
 		}

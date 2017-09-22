@@ -388,6 +388,9 @@
 /*
  * wikia
  */
+.oo-ui-icon-add-image {
+	@include ve-icon(add-image, wikia, $color-buttons);
+}
 .oo-ui-icon-media {
 	@include ve-icon(media, wikia);
 }
@@ -408,6 +411,9 @@
 }
 .oo-ui-icon-preview-photo {
 	@include ve-icon(preview-photo, wikia);
+}
+.oo-ui-icon-preview-video {
+	@include ve-icon(preview-video, wikia);
 }
 .oo-ui-icon-map {
 	@include ve-icon(map, wikia);

@@ -3,7 +3,7 @@
 class CuratedContentService {
 	static protected $instance = null;
 
-	const API_BASE = 'http://fandom.wikia.com/ajax/recirculation_units/';
+	const API_BASE = 'http://fandom.wikia.com/api/recirculation_units/';
 
 	const MCACHE_VER = '1.0';
 	const MCACHE_TIME = 900; // 15 minutes
@@ -12,32 +12,28 @@ class CuratedContentService {
 	 * Get curated posts. Uses cache if available
 	 * @return an array of posts
 	 */
-	public function getPosts() {
+	public function getPosts( $type, $limit ) {
+		$memcKey = wfSharedMemcKey( __METHOD__, self::MCACHE_VER, $type, $limit );
 
-		$memcKey = wfSharedMemcKey( __METHOD__, self::MCACHE_VER );
-
-		$data = WikiaDataAccess::cache(
+		return WikiaDataAccess::cache(
 			$memcKey,
 			self::MCACHE_TIME,
 			function() {
 				return $this->apiRequest();
 			}
 		);
-
-		return $data;
 	}
 
 	/**
 	 * Make an API request to parsely to gather posts
-	 * @param string $type
 	 * @return an array of posts
 	 */
-	private function apiRequest( $type, $meta ) {
+	private function apiRequest() {
 		$response = ExternalHttp::get( self::API_BASE );
 		$data = json_decode( $response, true );
 
 		if ( isset( $data['posts'] ) && is_array( $data['posts'] ) ) {
-			return $this->formatData($data['posts']);
+			return $this->formatData( $data['posts'] );
 		} else {
 			return [];
 		}

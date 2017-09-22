@@ -1,8 +1,4 @@
 <?php
-/**
- * Extension message file
- */
-
 $messages = array();
 
 $messages['en'] = array(
@@ -63,9 +59,9 @@ $messages['ja'] = array(
 
 $messages['ko'] = array(
 	'wikia-in-your-lang-description' => '같은 위키가 사용자의 모국어로도 있을 경우 그에 대해 알립니다. Geo 쿠키와 브라우저 언어를 통해 언어를 인식합니다.',
-	'wikia-in-your-lang-available' => '영어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
-	'wikia-in-your-lang-article-available' => 'This page is also available in English. Check it out! [$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '영어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
+	'wikia-in-your-lang-available' => '한국어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
+	'wikia-in-your-lang-article-available' => '한국어로도 이 페이지를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '한국어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
 );
 
 $messages['nl'] = array(
@@ -91,9 +87,9 @@ $messages['pt'] = array(
 
 $messages['ru'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
-	'wikia-in-your-lang-available' => '$1 также доступна на русском языке. Посмотрите! [$2 $3]',
-	'wikia-in-your-lang-article-available' => 'Эта страница также доступна на русском языке. Посмотрите! [$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '$1 также доступна на русском языке. Посмотрите! [$2 $3]',
+	'wikia-in-your-lang-available' => '$1 также доступна на русском языке. Посмотрите: [$2 $3].',
+	'wikia-in-your-lang-article-available' => 'Эта страница также доступна на русском языке. Посмотрите: [$2 $3].',
+	'wikia-in-your-lang-available-for-mobile' => '$1 также доступна на русском языке. Посмотрите: [$2 $3].',
 );
 
 $messages['vi'] = array(
@@ -105,15 +101,15 @@ $messages['vi'] = array(
 
 $messages['zh-hans'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
-	'wikia-in-your-lang-available' => '$1还有英文社区。点击这里进行查看！[$2 $3]',
+	'wikia-in-your-lang-available' => '$1还有中文社区。点击这里进行查看！[$2 $3]',
 	'wikia-in-your-lang-article-available' => '如需查看此页面中文版，请点击这里！[$2 $3]',
 	'wikia-in-your-lang-available-for-mobile' => '如需查看$1中文版，请点击这里！[$2 $3]',
 );
 
 $messages['zh-hant'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
-	'wikia-in-your-lang-available' => '$1還有英文社區。點擊這裡進行查看！[$2 $3]',
-	'wikia-in-your-lang-article-available' => '如需查看此頁面中文版，請點擊這裡！ [$2 $3]',
+	'wikia-in-your-lang-available' => '$1還有中文社區。點擊這裡進行查看！[$2 $3]',
+	'wikia-in-your-lang-article-available' => '此頁面有中文版本，請點擊這裡查看！ [$2 $3]',
 	'wikia-in-your-lang-available-for-mobile' => '如需查看$1中文版，請點擊這裡！ [$2 $3]',
 );
 

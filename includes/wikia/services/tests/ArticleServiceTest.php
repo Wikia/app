@@ -16,11 +16,22 @@ class ArticleServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetTextSnippetAsArticleTest($snippetLength, $articleText, $expSnippetText) {
 		$randId = (int) ( rand() * microtime() );
-		$mockTitle = $this->getMock( 'Title' );
-		$mockCache = $this->getMock( 'MemCachedClientforWiki', array( 'get', 'set' ), array( array() ) );
-		$mockPage = $this->getMock( 'WikiPage', array( 'getParserOutput', 'makeParserOptions' ), array( $mockTitle ) );
-		$mockOutput = $this->getMock( 'ParserOutput', array( 'getText' ), array() );
-		$mockArticle = $this->getMock( 'Article', array( 'getPage', 'getID' ), array( $mockTitle ) );
+		$mockTitle = $this->createMock( Title::class );
+		$mockCache = $this->getMockBuilder( MemCachedClientforWiki::class )
+			->setMethods( [ 'get', 'set' ] )
+			->setConstructorArgs( [ [] ] )
+			->getMock();
+		$mockPage = $this->getMockBuilder( WikiPage::class )
+			->setMethods( [ 'getParserOutput', 'makeParserOptions' ] )
+			->setConstructorArgs( [ $mockTitle ] )
+			->getMock();
+		$mockOutput = $this->getMockBuilder( ParserOutput::class )
+			->setMethods( [ 'getText' ] )
+			->getMock();
+		$mockArticle = $this->getMockBuilder( Article::class )
+			->setMethods( [ 'getPage', 'getID', 'getText' ] )
+			->setConstructorArgs( [ $mockTitle ] )
+			->getMock();
 
 		$mockCache->expects( $this->any() )
 			->method( 'get' )
@@ -442,7 +453,7 @@ TEXT;
 	 */
 	public function testCleanArticleSnippet( $content, $expected ) {
 		/* @var $title Title */
-		$title = $this->mockClassWithMethods( 'Title' );
+		$title = $this->createMock( Title::class );
 		$service = new ArticleService( $title );
 
 		$this->assertEquals($expected, $service->cleanArticleSnippet( $content ) );

@@ -270,7 +270,8 @@ class RenameUserProcess {
 
 		if ( class_exists( 'SpoofUser' ) ) {
 			$oNewSpoofUser = new SpoofUser( $nun );
-			if ( !$oNewSpoofUser -> isLegal() ) {
+			$conflicts = $oNewSpoofUser->getConflicts();
+			if ( !empty( $conflicts ) ) {
 				$this->addWarning( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
 			}
 		} else {
@@ -423,7 +424,7 @@ class RenameUserProcess {
 
 		// Execute Warning hook (arguments the same as in the original Renameuser extension)
 		if ( !$this->mActionConfirmed ) {
-			wfRunHooks( 'UserRename::Warning', array( $this->mRequestData->oldUsername, $this->mRequestData->newUsername, &$this->mWarnings ) );
+			Hooks::run( 'UserRename::Warning', array( $this->mRequestData->oldUsername, $this->mRequestData->newUsername, &$this->mWarnings ) );
 		}
 
 		$this->mOldUsername = $oldUser->getName();
@@ -498,7 +499,7 @@ class RenameUserProcess {
 		$hookName = 'RenameUser::Abort';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
 		// Give other affected extensions a chance to validate or abort
-		if ( !wfRunHooks( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername, &$this->mErrors ) ) ) {
+		if ( !Hooks::run( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername, &$this->mErrors ) ) ) {
 			$this->addLog( "Aborting procedure as requested by hook." );
 			$this->addError( wfMessage( 'userrenametool-error-extension-abort' )->inContentLanguage()->text() );
 			return false;
@@ -511,7 +512,7 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::BeforeAccountRename';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
+		Hooks::run( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
 
 		// delete the record from all the secondary clusters
 		if ( class_exists( 'ExternalUser_Wikia' ) ) {
@@ -544,7 +545,6 @@ class RenameUserProcess {
 				return false;
 			}
 
-			$fakeUser->setPassword( null );
 			$fakeUser->setEmail( null );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
@@ -557,6 +557,14 @@ class RenameUserProcess {
 
 			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
 			$fakeUser->setGlobalFlag( 'disabled', 1 );
+
+			try {
+				$fakeUser->setPassword( null );
+			} catch ( PasswordError $e ) {
+				// We don't really care if the password wasn't set at all for a fake user
+				// now that we go through Helios
+			}
+
 			$fakeUser->saveSettings();
 			$this->mFakeUserId = $fakeUser->getId();
 			$this->addLog( "Created fake user account for {$fakeUser->getName()} with ID {$this->mFakeUserId} and renameData '{$fakeUser->getGlobalAttribute( 'renameData', '')}'" );
@@ -601,7 +609,7 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::Global';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ) );
+		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ) );
 
 		foreach ( $tasks as $task ) {
 			$this->addLog( "Updating {$task['table']}.{$task['username_column']}." );
@@ -610,7 +618,7 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::AfterGlobal';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ) );
+		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ) );
 
 		$dbw->commit();
 		$this->addLog( "Finished updating shared database: wikicities." );
@@ -627,7 +635,7 @@ class RenameUserProcess {
 		global $wgCityId, $wgUser;
 
 		$wgOldUser = $wgUser;
-		$wgUser = User::newFromName( 'Wikia' );
+		$wgUser = User::newFromName( Wikia::USER );
 
 		$cityDb = WikiFactory::IDtoDB( $wgCityId );
 		$this->addLog( "Processing wiki database: {$cityDb}." );
@@ -638,7 +646,7 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::Local';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ) );
+		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ) );
 
 		/* Move user pages */
 		$this->addLog( "Moving user pages." );
@@ -722,7 +730,7 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::AfterLocal';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ) );
+		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ) );
 
 		$dbw->commit();
 
@@ -758,7 +766,7 @@ class RenameUserProcess {
 		}
 
 		$wgOldUser = $wgUser;
-		$wgUser = User::newFromName( 'Wikia' );
+		$wgUser = User::newFromName( Wikia::USER );
 
 		$cityDb = WikiFactory::IDtoDB( $wgCityId );
 		$this->addLog( "Processing wiki database: {$cityDb}." );
@@ -769,7 +777,7 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::LocalIP';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+		Hooks::run( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
 
 		foreach ( $tasks as $task ) {
 			$this->addLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
@@ -778,7 +786,7 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::AfterLocalIP';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+		Hooks::run( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
 
 		$dbw->commit();
 
@@ -895,7 +903,7 @@ class RenameUserProcess {
 		// TODO: Add a hook
 		$hookName = 'UserRename::Cleanup';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, array( $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
+		Hooks::run( $hookName, array( $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
 
 		$tasks = [];
 		if ( isset( $this->mLogTask ) ) {

@@ -19,6 +19,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 					};
 				}
 			},
+			instantGlobals: {},
 			log: noop,
 			win: {},
 			amazonMatch: {
@@ -33,13 +34,17 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			}
 		};
 
+	mocks.log.levels = {};
+
 	function getRunner(bidders) {
 		bidders = bidders || {};
 		return modules['ext.wikia.adEngine.adEngineRunner'](
 			mocks.adEngine,
 			mocks.adTracker,
+			mocks.instantGlobals,
 			mocks.log,
 			mocks.win,
+			undefined,
 			bidders.amazonMatch,
 			bidders.rubiconFastlane
 		);

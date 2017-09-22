@@ -21,6 +21,9 @@
  * @ingroup SpecialPage
  */
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\CookieHelper;
+
 /**
  * Let users recover their password.
  *
@@ -229,7 +232,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		}
 
 		if( $newpass !== $retype ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'badretype' ) );
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'badretype' ) );
 			throw new PasswordError( $this->msg( 'badretype' )->text() );
 		}
 
@@ -239,13 +242,13 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		}
 
 		$abortMsg = 'resetpass-abort-generic';
-		if ( !wfRunHooks( 'AbortChangePassword', array( $user, $this->mOldpass, $newpass, &$abortMsg ) ) ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'abortreset' ) );
+		if ( !Hooks::run( 'AbortChangePassword', array( $user, $this->mOldpass, $newpass, &$abortMsg ) ) ) {
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'abortreset' ) );
 			throw new PasswordError( $this->msg( $abortMsg )->text() );
 		}
 
-		if( !$user->checkTemporaryPassword($this->mOldpass) && !$user->checkPassword($this->mOldpass) ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'wrongpassword' ) );
+		if ( !$user->checkPassword( $this->mOldpass )->success() ) {
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'wrongpassword' ) );
 			throw new PasswordError( $this->msg( 'resetpass-wrong-oldpass' )->text() );
 		}
 
@@ -256,14 +259,21 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 
 		try {
 			$user->setPassword( $this->mNewpass );
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
 			$this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
 		} catch( PasswordError $e ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
 			throw new PasswordError( $e->getMessage() );
 		}
 
 		$user->setCookies();
 		$user->saveSettings();
+
+		/*
+		 * We shouldn't logout user when changing password, so after deleting
+		 * all user tokens in Helios service we need to set a new access token.
+		 */
+		$cookieHelper = Injector::getInjector()->get( CookieHelper::class );
+		$cookieHelper->setAuthenticationCookieWithUserId( $user->getId(), $this->getRequest()->response() );
 	}
 }

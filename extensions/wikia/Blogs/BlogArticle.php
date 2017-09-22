@@ -299,8 +299,7 @@ class BlogArticle extends Article {
 	 *
 	 */
 	static public function getPropsList() {
-		$replace = array( 'voting' => WPP_BLOGS_VOTING, 'commenting' => WPP_BLOGS_COMMENTING );
-		return $replace;
+		return [ 'commenting' => WPP_BLOGS_COMMENTING ];
 	}
 
 	/**
@@ -348,75 +347,6 @@ class BlogArticle extends Article {
 	}
 
 	/**
-	 * static methods used in Hooks
-	 */
-	static public function getOtherSection( &$catView, &$output ) {
-		global $wgEnableCategoryPaginationExt;
-		if ( $wgEnableCategoryPaginationExt ) {
-			return true;
-		}
-
-		/* @var $catView CategoryViewer */
-		if ( !isset( $catView->blogs ) ) {
-			return true;
-		}
-		$ti = htmlspecialchars( $catView->title->getText() );
-		$r = '';
-		$cat = $catView->getCat();
-
-		$dbcnt = self::blogsInCategory( $cat );
-		$rescnt = count( $catView->blogs );
-		$countmsg = self::getCountMessage( $catView, $rescnt, $dbcnt, 'article' );
-
-		if ( $rescnt > 0 ) {
-			$r = "<div id=\"mw-pages\">\n";
-			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
-			$r .= $countmsg;
-			$r .= $catView->getSectionPagingLinksExt( 'page' );
-			$r .= $catView->formatList( array_values( $catView->blogs ), $catView->blogs_start_char );
-			$r .= $catView->getSectionPagingLinksExt( 'page' );
-			$r .= "\n</div>";
-		}
-		$output = $r;
-
-		return true;
-	}
-
-	static public function blogsInCategory( $cat ) {
-		global $wgMemc;
-		$titleText = $cat->getTitle()->getDBkey();
-		$memKey = self::getCountKey( $titleText );
-
-		$count = $wgMemc->get( $memKey );
-
-		if ( empty( $count ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				array( 'page', 'categorylinks' ),
-				'count(*) as count',
-				array(
-					'page_id = cl_from',
-					'page_namespace' => array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ),
-					'cl_to' => $titleText,
-				),
-				__METHOD__
-			);
-
-			$count = 0;
-			if ( $res->numRows() > 0 ) {
-				while ( $row = $res->fetchObject() ) {
-					$count = $row->count;
-				}
-				$dbr->freeResult( $res );
-			}
-
-			$wgMemc->set( $memKey, $count );
-		}
-
-		return $count;
-	}
-
-	/**
 	 * Hook - AfterCategoriesUpdate
 	 */
 	static public function clearCountCache( $categoryInserts, $categoryDeletes, $title ) {
@@ -439,97 +369,6 @@ class BlogArticle extends Article {
 
 	static public function getCountKey( $catName ) {
 		return wfMemcKey( 'blog', 'category', 'count', $catName );
-	}
-
-	/**
-	 * static method to get number of pages in category
-	 *
-	 * @param $catView
-	 * @param $rescnt
-	 * @param $dbcnt
-	 * @param $type
-	 *
-	 * @return String
-	 */
-	static public function getCountMessage( &$catView, $rescnt, $dbcnt, $type ) {
-		global $wgLang;
-		# See CategoryPage->getCountMessage() function
-		$totalrescnt = count( $catView->blogs ) + count( $catView->children ) + ( $catView->showGallery ? $catView->gallery->count() : 0 );
-		if ( $dbcnt == $rescnt || ( ( $totalrescnt == $catView->limit || $catView->from || $catView->until ) && $dbcnt > $rescnt ) ) {
-			# Case 1: seems sane.
-			$totalcnt = $dbcnt;
-		} elseif ( $totalrescnt < $catView->limit && !$catView->from && !$catView->until ) {
-			# Case 2: not sane, but salvageable.
-			$totalcnt = $rescnt;
-		} else {
-			# Case 3: hopeless.  Don't give a total count at all.
-			return wfMsgExt( "blog-subheader", 'parse', $wgLang->formatNum( $rescnt ) );
-		}
-		return wfMsgExt( "blog-subheader-all", 'parse', $wgLang->formatNum( $rescnt ), $wgLang->formatNum( $totalcnt ) );
-	}
-
-	/**
-	 * Hook
-	 *
-	 * @param $catView
-	 * @param Title $title
-	 * @param $row
-	 * @param $sortkey
-	 *
-	 * @return bool
-	 * @internal param $CategoryViewer
-	 */
-	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
-		global $wgEnableCategoryPaginationExt;
-		if ( $wgEnableCategoryPaginationExt ) {
-			return true;
-		}
-		if ( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
-			/**
-			 * initialize CategoryView->blogs array
-			 */
-			if ( !isset( $catView->blogs ) ) {
-				$catView->blogs = array();
-			}
-
-			// If request comes from wikiamobile or from MercuryApi return not-parsed output
-			if ( !empty( $catView->isJSON ) ) {
-				$catView->blogs[] = [
-					'name' => $title->getText(),
-					'url' => $title->getLocalUrl(),
-				];
-
-				return false;
-			}
-
-			/**
-			 * initialize CategoryView->blogs_start_char array
-			 */
-			if ( !isset( $catView->blogs_start_char ) ) {
-				$catView->blogs_start_char = array();
-			}
-
-			// remove user blog:foo from displayed titles (requested by Angie)
-			// "User blog:Homersimpson89/Best Simpsons episode..." -> "Best Simpsons episode..."
-			$text = $title->getSubpageText();
-			$userName = $title->getBaseText();
-			$link = $catView->getSkin()->link( $title, $userName . " - " . $text );
-
-			$catView->blogs[] = $row->page_is_redirect
-				? '<span class="redirect-in-category">' . $link . '</span>'
-				: $link;
-
-			// The blog entries should be sorted on the category page
-			// just like other pages
-			$catView->blogs_start_char[] = $catView->collation->getFirstLetter( $sortkey );
-
-			/**
-			 * when we return false it won't be displayed as normal category but
-			 * in "other" categories
-			 */
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -582,94 +421,6 @@ class BlogArticle extends Article {
 			}
 		}
 
-
-		return true;
-	}
-
-	/**
-	 * write additinonal checkboxes on editpage
-	 *
-	 * @param $EditPage
-	 * @param $checkboxes
-	 *
-	 * @return bool
-	 */
-	static public function editPageCheckboxes( &$EditPage, &$checkboxes ) {
-		if ( $EditPage->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
-			return true;
-		}
-		wfProfileIn( __METHOD__ );
-		Wikia::log( __METHOD__ );
-
-		$output = array();
-		if ( $EditPage->mTitle->mArticleID ) {
-			$props = self::getProps( $EditPage->mTitle->mArticleID );
-			$output["voting"] = Xml::checkLabel(
-				wfMsg( "blog-voting-label" ),
-				"wpVoting",
-				"wpVoting",
-				isset( $props["voting"] ) && $props[ "voting" ] == 1
-			);
-			$output["commenting"] = Xml::checkLabel(
-				wfMsg( "blog-comments-label" ),
-				"wpCommenting",
-				"wpCommenting",
-				isset( $props["commenting"] ) && $props[ "commenting"] == 1
-			);
-		}
-		$checkboxes += $output;
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
-	 * store properties for updated article
-	 *
-	 * @param $LinksUpdate
-	 *
-	 * @return bool
-	 */
-	static public function linksUpdate( &$LinksUpdate ) {
-
-		$namespace = $LinksUpdate->mTitle->getNamespace();
-		if ( !in_array( $namespace, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
-			return true;
-		}
-
-		wfProfileIn( __METHOD__ );
-		global $wgRequest;
-
-		/**
-		 * restore/change properties for blog article
-		 */
-		$pageId = $LinksUpdate->mTitle->getArticleId();
-		$keep   = array();
-
-		if ( $wgRequest->wasPosted() ) {
-			$keep[ "voting" ]     = $wgRequest->getVal( "wpVoting", 0 );
-			$keep[ "commenting" ] = $wgRequest->getVal( "wpCommenting", 0 );
-		} else {
-			/**
-			 * read current values from database
-			 */
-			$props = self::getProps( $pageId );
-			switch( $namespace ) {
-				case NS_BLOG_ARTICLE:
-					$keep[ "voting" ]     = isset( $props["voting"] ) ? $props["voting"] : 0;
-					$keep[ "commenting" ] = isset( $props["commenting"] ) ? $props["commenting"] : 0;
-					break;
-
-				case NS_BLOG_ARTICLE_TALK:
-					$keep[ "hiddencomm" ] = isset( $props["hiddencomm"] ) ? $props["hiddencomm"] : 0;
-					break;
-			}
-		}
-
-		if ( $pageId ) {
-			$LinksUpdate->mProperties += $keep;
-		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -739,7 +490,7 @@ class BlogArticle extends Article {
 		$results = [];
 
 		// VOLDEV-96: Do not credit edits to localhost
-		$wikiaUser = User::newFromName( 'Wikia' );
+		$wikiaUser = User::newFromName( Wikia::USER );
 
 		/**
 		 * create Blog:Recent posts page if not exists

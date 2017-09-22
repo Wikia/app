@@ -1,0 +1,92 @@
+@import '../wds-functions/index';
+
+@mixin community-header-theming(
+	$header-background-color,
+	$color-text,
+	$color-links,
+	$color-page,
+	$color-page-border
+) {
+	@include dropdown-theming($color-page, $color-text, $color-links, $color-page-border);
+
+	$text-color: community-header-text-color($header-background-color);
+	$text-hover-color: rgba($text-color, .8);
+
+	background-color: $header-background-color;
+
+	&::before {
+		@include community-header-gradient($header-background-color, 200px, $wds-community-header-background-width);
+
+		@media #{$wds-breakpoint-l-down} {
+			@include community-header-gradient($header-background-color, 200px, $wds-community-header-background-width-small-breakpoint);
+		}
+	}
+
+	.wds-button.wds-is-secondary {
+		background-color: rgba($header-background-color, .2);
+		border-color: $text-color;
+		color: $text-color;
+		transition-property: border-color, background-color, color;
+
+		svg {
+			fill: $text-color;
+		}
+	}
+
+	.wds-button.wds-is-secondary:hover {
+		background-color: rgba($header-background-color, .4);
+		border-color: $text-hover-color;
+		color: $text-hover-color;
+
+		svg {
+			fill: $text-hover-color;
+		}
+
+		a {
+			color: $text-hover-color;
+		}
+	}
+
+	.wds-tabs__tab-label {
+		color: $text-color;
+
+		a {
+			color:inherit;
+		}
+	}
+
+	.wds-tabs__tab.wds-is-current {
+		@include wds-box-underline($text-color);
+	}
+
+	.wds-tabs__tab:hover {
+		.wds-tabs__tab-label {
+			color: $text-hover-color;
+
+			a {
+				color: inherit;
+			}
+		}
+
+		&.wds-is-current {
+			@include wds-box-underline($text-hover-color);
+		}
+	}
+
+	.wds-community-header__sitename a {
+		color: $text-color;
+		transition: color .2s;
+
+		&:hover {
+			color: $text-hover-color;
+		}
+	}
+
+	.wds-community-header__counter {
+		color: $text-color;
+	}
+
+	.wds-avatar-stack .user-avatar .avatar .user-avatar__image {
+		border-color: $text-color;
+	}
+}

@@ -57,7 +57,7 @@ class ApiQueryUsers extends ApiQueryBase {
 		$this->tokenFunctions = array(
 			'userrights' => array( 'ApiQueryUsers', 'getUserrightsToken' ),
 		);
-		wfRunHooks( 'APIQueryUsersTokens', array( &$this->tokenFunctions ) );
+		Hooks::run( 'APIQueryUsersTokens', array( &$this->tokenFunctions ) );
 		return $this->tokenFunctions;
 	}
 
@@ -161,11 +161,32 @@ class ApiQueryUsers extends ApiQueryBase {
 
 				/* Wikia change begin - SUS-92 */
 				if ( isset( $this->prop['blockinfo'] ) || isset( $this->prop['localblockinfo'] ) ) {
-					$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] );
-					$isBlocked = $user->isBlocked( true, false, $isGlobalBlockCheck );
-					
-					if ($isBlocked) {
-						$blockInfo = $user->getBlock( true, false, $isGlobalBlockCheck );
+					$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] ) && $this->canViewGlobalBlockInfo();
+					$blockInfo = $user->getBlock( true, false /* don't log in Phalanx stats */, $isGlobalBlockCheck );
+
+					if ( $user->isBlockedGlobally() ) {
+						// SUS-1456: We're performing a global block check, and request is authorized
+						// (internal request from service, or user who can view phalanx)
+
+						// For Phalanx blocks, use separate fields...
+						$data[$name]['phalanxblockedby'] = $blockInfo->getByName();
+						$data[$name]['phalanxblockreason'] = $blockInfo->mReason;
+						$data[$name]['phalanxblockexpiry'] = $blockInfo->getExpiry();
+
+						// reset fields so that we can load info for local block
+						$user->clearBlockInfo();
+
+						// load info for local block and display it in its own fields
+						$localBlockInfo = $user->getBlock( true, false, false /* check only local blocks */ );
+						if ( $localBlockInfo ) {
+							$data[$name]['blockedby'] = $localBlockInfo->getByName();
+							$data[$name]['blockreason'] = $localBlockInfo->mReason;
+							$data[$name]['blockexpiry'] = $localBlockInfo->getExpiry();
+						}
+					} elseif ( $user->isBlocked() ) {
+						// user is not blocked globally, but is blocked locally
+						// or request is not authorized
+
 						$data[$name]['blockedby'] = $blockInfo->getByName();
 						$data[$name]['blockreason'] = $blockInfo->mReason;
 						$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
@@ -246,6 +267,15 @@ class ApiQueryUsers extends ApiQueryBase {
 			$done[] = $u;
 		}
 		return $result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
+	}
+
+	/**
+	 * SUS-1472: Check if current request is authorized to view global block information
+	 * (it is internal request or request by staff/VSTF/helper user)
+	 * @return bool
+	 */
+	private function canViewGlobalBlockInfo() {
+		return $this->getRequest()->isWikiaInternalRequest() || $this->getUser()->isAllowed( 'phalanx' );
 	}
 
 	/**

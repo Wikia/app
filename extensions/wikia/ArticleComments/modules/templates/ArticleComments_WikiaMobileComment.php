@@ -6,10 +6,10 @@
 		<div class=by>
 			<?= $comment['sig'] ;?>
 			<? if( !empty( $comment['isStaff'] ) ) :?>
-			<img class=staff src=<?= wfReplaceImageServer( '/extensions/wikia/StaffSig/images/WikiaStaff.png' ) ?> alt=@wikia/></span>
+			<img class=staff src=<?= wfReplaceImageServer( wfGetSignatureUrl() ) ?> alt=@fandom/></span>
 			<? endif ;?>
 		</div>
-		<div class=txt><?= $comment['text'] ?></div>
+		<div class=txt><?= $commentContent ?></div>
 		<div class=date><?= $comment['timestamp'] ;?></div>
 	</blockquote>
 <?php

@@ -29,7 +29,7 @@ class FactoryTest extends WikiaBaseTest {
 		]
 	];
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		global $IP;
@@ -83,7 +83,7 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testAddAssetDataProvider
+	 * @dataProvider addAssetDataProvider
 	 */
 	public function testAddAsset($asset, $type) {
 		// test private method
@@ -112,7 +112,7 @@ class FactoryTest extends WikiaBaseTest {
 		$addAssetMethod->invoke( $this->instance, $asset );
 	}
 
-	public function testAddAssetDataProvider() {
+	public function addAssetDataProvider() {
 		return [
 			[
 				'assetName' => 'testAsset.css',

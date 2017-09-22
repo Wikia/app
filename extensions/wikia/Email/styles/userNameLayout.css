@@ -1,3 +1,7 @@
+.greeting {
+	margin-bottom: 30px;
+}
+
 .avatar-wrapper {
 	margin: 20px 0;
 	padding-right: 30px;
@@ -5,31 +9,20 @@
 
 .avatar {
 	border-radius: 100%;
+	border: 2px solid #ccc;
 }
 
 .avatar img {
-	height: 50px;
-	width: 50px;
+	height: 40px;
+	width: 40px;
 }
 
 .border {
-	border-top: 1px solid #e6ebf2;
-	border-bottom: 1px solid #e6ebf2;
+	border-top: 1px solid #00b7e0;
+	border-bottom: 1px solid #00b7e0;
 }
 
-.greeting p:last-child {
-	font-weight: bold;
-}
-
-.message {
-	margin: 20px 0;
-}
-
-.message p {
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.username {
-	font-size: 12px;
+.username-layout-links {
+	margin-top: 35px;
+	margin-bottom: 20px;
 }

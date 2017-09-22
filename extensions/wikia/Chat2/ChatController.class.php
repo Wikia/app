@@ -1,15 +1,23 @@
 <?php
 
+use Wikia\Util\Assert;
+use Wikia\Util\AssertionException;
+
 class ChatController extends WikiaController {
 
 	const CHAT_WORDMARK_WIDTH = 115;
 	const CHAT_WORDMARK_HEIGHT = 30;
 	const CHAT_AVATAR_DIMENSION = 41;
 
+	/**
+	 * @see SUS-2245
+	 *
+	 * Do not try more than given amount of re-connections. When limit is reached, reload the page.
+	 */
+	const SOCKET_IO_RECONNECT_MAX_TRIES = 4;
+
 	public function executeIndex() {
 		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
-
-		Chat::info( __METHOD__ . ': Method called' );
 
 		wfProfileIn( __METHOD__ );
 
@@ -22,15 +30,28 @@ class ChatController extends WikiaController {
 		$this->username = $wgUser->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl( $this->username, ChatController::CHAT_AVATAR_DIMENSION );
 
-		// Find the chat for this wiki (or create it, if it isn't there yet).
-		$this->roomId = ChatServerApiClient::getPublicRoomId();
 
 		// we overwrite here data from redis since it causes a bug DAR-1532
 		$pageTitle = new WikiaHtmlTitle();
 		$pageTitle->setParts( [ wfMessage( 'chat' ) ] );
 		$this->pageTitle = $pageTitle->getTitle();
 
+		// Find the chat for this wiki (or create it, if it isn't there yet).
+		$this->roomId = ChatServerApiClient::getPublicRoomId();
 		$this->chatkey = Chat::getSessionKey();
+
+		// SUS-2245: add assertions in Chat code
+		try {
+			Assert::true( is_int( $this->roomId ), 'We could not contact Chat\'s backend to get a valid roomId' );
+			Assert::true( is_string( $this->chatkey ), 'We were not able to generate a valid session key for Chat' );
+		} catch ( AssertionException $ex ) {
+			$this->errorMsg = $ex->getMessage();
+			$this->overrideTemplate( 'error' );
+
+			// set a proper HTTP response code
+			$this->getResponse()->setCode( 500 );
+			return;
+		}
 
 		// Set the hostname of the node server that the page will connect to.
 		$chathost = ChatConfig::getPublicHost();
@@ -45,7 +66,7 @@ class ChatController extends WikiaController {
 		$this->bodyClasses = "";
 		if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
 			$this->isModerator = 1;
-			$this->bodyClasses .= ' chat-mod ';
+			$this->bodyClasses .= ' chatmoderator ';
 		} else {
 			$this->isModerator = 0;
 		}
@@ -101,6 +122,7 @@ class ChatController extends WikiaController {
 
 		$vars['wgChatKey'] = $this->chatkey;
 		$vars['wgChatRoomId'] = $this->roomId;
+		$vars['wgChatReconnectMaxTries'] = self::SOCKET_IO_RECONNECT_MAX_TRIES;
 
 		$vars['wgChatHost'] = $this->chatServerHost;
 		$vars['wgChatPort'] = $this->chatServerPort;

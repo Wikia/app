@@ -33,5 +33,10 @@
 	"right-viewedittab": "Melihat tab \"{{int:edit}}\" untuk laman yang boleh disunting dengan borang",
 	"right-editrestrictedfields": "Menyunting ruangan borang yang terhad",
 	"right-createclass": "Membuat kelas semantik baru",
-	"action-createclass": "buat kelas semantik baru"
+	"action-createclass": "buat kelas semantik baru",
+	"sf-datepicker-prev": "Sebelumnya",
+	"sf-datepicker-next": "Berikutnya",
+	"sf-datepicker-dateformat": "Rentetan format tarikh. Lihat [https://www.mediawiki.org/w/index.php?title=Extension:Semantic_Forms_Inputs&fromsection=Date_picker#Parameters pendokumenan dalam talian] untuk keterangan lanjut.",
+	"sf-datepicker-disabledaysofweek": "Senarai hari-hari yang tidak boleh dipilih (cth. hujung minggu: 6, 0).",
+	"sf-regexp-basetype": "Jenis asas yang hendak digunakan. Barangkali itu sebarang jenis input yang menghasilkan elemen borang HTML dalam bentuk jenis input atau pilihan (cth. text, listbox, datepicker) atau ungkapan nalar yang lain. Asalinya \"text\"."
 }

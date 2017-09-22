@@ -1,10 +1,4 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
@@ -1052,6 +1046,8 @@ $messages['de'] = array(
 	'javascripttest-qunit-intro' => 'Siehe die [$1 Dokumentation zu Tests] auf mediawiki.org',
 	'javascripttest-qunit-heading' => 'MediaWiki-JavaSkript-QUnit-Tester',
 	'joinnow' => 'Jetzt registrieren',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
 );
 
 $messages['de-at'] = array(
@@ -1234,6 +1230,8 @@ $messages['es'] = array(
 	'javascripttest-qunit-intro' => 'Consulte la [$1 documentación sobre las pruebas] en mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Conjunto de pruebas MediaWiki JavaScript QUnit',
 	'joinnow' => 'Registrarte ahora',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
 );
 
 $messages['et'] = array(
@@ -1312,6 +1310,7 @@ $messages['fa'] = array(
 	'javascripttest-pagetext-skins' => 'پوسته‌ای را برای اجرای آزمایش‌ها انتخاب کنید:',
 	'javascripttest-qunit-intro' => '[$1 مستندات آزمایش] را در mediawiki.org ببینید.',
 	'javascripttest-qunit-heading' => 'مجموعه آزمایش QUnit جاوااسکریپت برای مدیاویکی',
+	'joinnow' => 'همکنون عضو شوید',
 );
 
 $messages['ff'] = array(
@@ -1418,6 +1417,8 @@ $messages['fr'] = array(
 	'javascripttest-qunit-intro' => 'Voir [$1 la documentation de test] sur mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Suite de test QUnit de JavaScript sur MediaWiki',
 	'joinnow' => "S'inscrire",
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
 );
 
 $messages['frc'] = array(
@@ -2114,6 +2115,9 @@ $messages['it'] = array(
 	'javascripttest-pagetext-skins' => 'Scegli una skin con cui eseguire i test:',
 	'javascripttest-qunit-intro' => 'Vedi su mediawiki.org la [$1 documentazione riguardante i test].',
 	'javascripttest-qunit-heading' => 'Suite di test di JavaScript per QUnit in MediaWiki',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
+	'joinnow' => 'join now',
 );
 
 $messages['iu'] = array(
@@ -2154,6 +2158,17 @@ $messages['ja'] = array(
 	'jumptonavigation' => '案内',
 	'jumptosearch' => '検索',
 	'joinnow' => 'いますぐ会員になろう',
+	'javascripttest' => 'JavaScript testing',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-disabled' => 'This function is disabled.',
+	'javascripttest-title' => 'Running $1 tests',
+	'javascripttest-pagetext-noframework' => 'This page is reserved for running JavaScript tests.',
+	'javascripttest-pagetext-unknownframework' => 'Unknown testing framework "$1".',
+	'javascripttest-pagetext-frameworks' => 'Please choose one of the following testing frameworks: $1',
+	'javascripttest-pagetext-skins' => 'Choose a skin to run the tests with:',
+	'javascripttest-qunit-name' => 'QUnit',
+	'javascripttest-qunit-intro' => 'See [$1 testing documentation] on mediawiki.org.',
+	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit test suite',
 );
 
 $messages['jam'] = array(
@@ -3454,6 +3469,8 @@ $messages['nl'] = array(
 	'javascripttest-qunit-intro' => 'Zie de [$1 testdocumentatie] op mediawiki.org.',
 	'javascripttest-qunit-heading' => 'QUnit testsuite voor MediaWiki JavaScript',
 	'joinnow' => 'Doe nu mee',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
 );
 
 $messages['nn'] = array(
@@ -3723,6 +3740,8 @@ $messages['pl'] = array(
 	'javascripttest-qunit-intro' => 'Zobacz [$1 dokumentację testów] na mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Pakiet testów JavaScriptu MediaWiki QUnit',
 	'joinnow' => 'Dołącz teraz',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
 );
 
 $messages['pms'] = array(
@@ -3819,30 +3838,6 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'january' => 'Janeiro',
-	'june' => 'Junho',
-	'july' => 'Julho',
-	'january-gen' => 'Janeiro',
-	'june-gen' => 'Junho',
-	'july-gen' => 'Julho',
-	'jan' => 'Jan.',
-	'jun' => 'Jun.',
-	'jul' => 'Jul.',
-	'jumpto' => 'Ir para:',
-	'jumptonavigation' => 'navegação',
-	'jumptosearch' => 'pesquisa',
-	'javascripttest' => 'Teste de JavaScript',
-	'javascripttest-disabled' => 'Esta função está desabilitada.',
-	'javascripttest-title' => 'Executando os testes $1',
-	'javascripttest-pagetext-noframework' => 'Esta página é reservada para a execução de testes de JavaScript.',
-	'javascripttest-pagetext-unknownframework' => 'Estrutura de testes "$1" desconhecido.',
-	'javascripttest-pagetext-frameworks' => 'Escolha, por favor, uma das seguintes estruturas de teste: $1',
-	'javascripttest-pagetext-skins' => 'Escolher um tema para executar os testes com:',
-	'javascripttest-qunit-intro' => 'Consulte a [ $1 documentação de testes] no mediawiki.org.',
-	'joinnow' => 'Registre-se',
-);
-
-$messages['pt-br'] = array(
 	'january' => 'janeiro',
 	'june' => 'junho',
 	'july' => 'julho',
@@ -3863,6 +3858,9 @@ $messages['pt-br'] = array(
 	'javascripttest-pagetext-frameworks' => 'Escolha uma das seguintes estruturas de teste: $1',
 	'javascripttest-pagetext-skins' => 'Escolha o tema para executar os testes:',
 	'javascripttest-qunit-intro' => 'Veja a [$1 documentação de testes] no mediawiki.org.',
+	'joinnow' => 'Acesse agora',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
 	'javascripttest-qunit-heading' => 'Suíte de ferramentas de teste JavaScript QUnit para MediaWiki',
 );
 
@@ -4039,6 +4037,8 @@ $messages['ru'] = array(
 	'javascripttest-qunit-intro' => 'См. [$1 документацию по тестированию] на mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Набор тестов MediaWiki JavaScript QUnit',
 	'joinnow' => 'Регистрируйтесь прямо сейчас',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
 );
 
 $messages['rue'] = array(
@@ -4464,22 +4464,6 @@ $messages['sq'] = array(
 	'jumpto' => 'Shko tek:',
 	'jumptonavigation' => 'lundrim',
 	'jumptosearch' => 'kërko',
-);
-
-$messages['sr'] = array(
-	'january' => 'janar',
-	'june' => 'qershor',
-	'july' => 'korrik',
-	'january-gen' => 'janar',
-	'june-gen' => 'qershor',
-	'july-gen' => 'korrik',
-	'jan' => 'Jan',
-	'jun' => 'Qer',
-	'jul' => 'Korr',
-	'jumpto' => 'Shko tek:',
-	'jumptonavigation' => 'lundrim',
-	'jumptosearch' => 'kërko',
-	'joinnow' => 'Pridružite se',
 );
 
 $messages['sr-ec'] = array(
@@ -5383,6 +5367,9 @@ $messages['zh-hans'] = array(
 	'javascripttest-pagetext-skins' => '选择外观来运行测试：',
 	'javascripttest-qunit-intro' => '请浏览mediawiki.org参阅[$1 测试文档]。',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit 测试套件',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
+	'joinnow' => 'join now',
 );
 
 $messages['zh-hant'] = array(
@@ -5407,66 +5394,9 @@ $messages['zh-hant'] = array(
 	'javascripttest-pagetext-skins' => '選擇運行測試的外觀：',
 	'javascripttest-qunit-intro' => '請看mediawiki.org的[$1 測試說明]',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit 測試套件',
-);
-
-$messages['zh-hk'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'jumpto' => '跳到：',
-	'jumptosearch' => '搜尋',
-);
-
-$messages['zh-min-nan'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'jumpto' => '跳到：',
-	'jumptosearch' => '搜尋',
-);
-
-$messages['zh-mo'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'jumpto' => '跳到：',
-	'jumptosearch' => '搜尋',
-);
-
-$messages['zh-my'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'jumpto' => '跳到：',
-	'jumptosearch' => '搜尋',
-);
-
-$messages['zh-tw'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'january-gen' => '一月',
-	'june-gen' => '六月',
-	'july-gen' => '七月',
-	'jan' => '1月',
-	'jun' => '6月',
-	'jul' => '7月',
-	'jumptosearch' => '搜尋',
-	'joinnow' => '立即加入',
-);
-
-$messages['zh-yue'] = array(
-	'january' => '一月',
-	'june' => '六月',
-	'july' => '七月',
-	'january-gen' => '一月',
-	'june-gen' => '六月',
-	'july-gen' => '七月',
-	'jan' => '1月',
-	'jun' => '6月',
-	'jul' => '7月',
-	'jumptosearch' => '搜尋',
-	'joinnow' => '立即加入',
+	'javascripttest-backlink' => '< $1',
+	'javascripttest-qunit-name' => 'QUnit',
+	'joinnow' => 'join now',
 );
 
 $messages['zu'] = array(

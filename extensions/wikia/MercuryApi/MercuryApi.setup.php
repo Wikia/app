@@ -25,16 +25,22 @@ $wgAutoloadClasses['MercuryApiHooks'] = $dir . 'MercuryApiHooks.class.php';
 
 // model classes
 $wgAutoloadClasses['MercuryApi'] = $dir . 'models/MercuryApi.class.php';
+$wgAutoloadClasses['MercuryApiCategoryModel'] = $dir . 'models/MercuryApiCategoryModel.class.php';
 $wgAutoloadClasses['MercuryApiArticleHandler'] = $dir . 'handlers/MercuryApiArticleHandler.class.php';
 $wgAutoloadClasses['MercuryApiCategoryHandler'] = $dir . 'handlers/MercuryApiCategoryHandler.class.php';
+$wgAutoloadClasses['MercuryApiFilePageHandler'] = $dir . 'handlers/MercuryApiFilePageHandler.class.php';
 $wgAutoloadClasses['MercuryApiMainPageHandler'] = $dir . 'handlers/MercuryApiMainPageHandler.class.php';
+
+// helpers
+$wgAutoloadClasses['MercuryApiCategoryCacheHelper'] = $dir . 'helpers/MercuryApiCategoryCacheHelper.class.php';
 
 // Add new API controller to API controllers list
 $wgWikiaApiControllers['MercuryApiController'] = $dir . 'MercuryApiController.class.php';
 
 // Hooks
-$wgHooks['ArticleSaveComplete'][] = 'MercuryApiHooks::onArticleSaveComplete';
+$wgHooks['AfterCategoriesUpdate'][] = 'MercuryApiHooks::onAfterCategoriesUpdate';
 $wgHooks['ArticleRollbackComplete'][] = 'MercuryApiHooks::onArticleRollbackComplete';
-$wgHooks['TitleGetSquidURLs'][] = 'MercuryApiHooks::onTitleGetSquidURLs';
-$wgHooks['InstantGlobalsGetVariables'][] = 'MercuryApiHooks::onInstantGlobalsGetVariables';
+$wgHooks['ArticleSaveComplete'][] = 'MercuryApiHooks::onArticleSaveComplete';
 $wgHooks['CuratedContentSave'][] = 'MercuryApiHooks::onCuratedContentSave';
+$wgHooks['InstantGlobalsGetVariables'][] = 'MercuryApiHooks::onInstantGlobalsGetVariables';
+$wgHooks['TitleGetSquidURLs'][] = 'MercuryApiHooks::onTitleGetSquidURLs';

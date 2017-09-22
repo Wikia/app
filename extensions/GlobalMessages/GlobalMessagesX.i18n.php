@@ -1,10 +1,4 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
@@ -442,10 +436,6 @@ $messages['pt'] = array(
 	'xml-error-string' => '$1 na linha $2, coluna $3 (byte $4): $5',
 );
 
-$messages['pt-br'] = array(
-	'xml-error-string' => '$1 na linha $2, coluna $3 (byte $4): $5',
-);
-
 $messages['qu'] = array(
 	'xml-error-string' => "$1, $2 siq'ipi, $3 tunupi (byte $4): $5",
 );
@@ -495,10 +485,6 @@ $messages['sl'] = array(
 );
 
 $messages['sq'] = array(
-	'xml-error-string' => '$1 në vijën $2, kol $3 (bite $4): $5',
-);
-
-$messages['sr'] = array(
 	'xml-error-string' => '$1 në vijën $2, kol $3 (bite $4): $5',
 );
 

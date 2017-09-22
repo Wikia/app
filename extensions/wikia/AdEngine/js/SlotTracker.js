@@ -14,14 +14,8 @@ define('ext.wikia.adEngine.slotTracker', [
 			interestingEvents: 0
 		},
 		slotTypes = {
-			CORP_TOP_LEADERBOARD:   'leaderboard',
-			CORP_TOP_RIGHT_BOXAD:   'medrec',
-			EXIT_STITIAL_BOXAD_1:   'medrec',
-			HOME_TOP_LEADERBOARD:   'leaderboard',
-			HOME_TOP_RIGHT_BOXAD:   'medrec',
-			HUB_TOP_LEADERBOARD:    'leaderboard',
 			INCONTENT_BOXAD_1:      'medrec',
-			INCONTENT_LEADERBOARD:  'incontent',
+			INCONTENT_PLAYER:       'incontent',
 			INVISIBLE_SKIN:         'pixel',
 			LEFT_SKYSCRAPER_2:      'skyscraper',
 			LEFT_SKYSCRAPER_3:      'skyscraper',
@@ -68,7 +62,8 @@ define('ext.wikia.adEngine.slotTracker', [
 		var slotname = data.slotname,
 			slotType = slotTypes[slotname] || 'other',
 			extraParams = data.extraParams || {},
-			forcedLabel = data.state;
+			forcedLabel = data.state,
+			productChosen = [eventName, data.provider, slotType].join('/');
 
 		extraParams.pos = data.slotname;
 
@@ -76,7 +71,7 @@ define('ext.wikia.adEngine.slotTracker', [
 		if (isInteresting(eventName, data)) {
 			stats.interestingEvents += 1;
 			adTracker.track(
-				[eventName, data.provider, slotType].join('/'),
+				productChosen,
 				extraParams,
 				value,
 				forcedLabel

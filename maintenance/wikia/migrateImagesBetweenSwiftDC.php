@@ -312,10 +312,10 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				$result = null;
 			}
 		} else {
-			$this->output( "\tImage still exists in source DC \n" );
+			$this->output( "\tNew version of the file exists in source DC \n" );
 			$this->imageSyncQueueItem->setError( self::ERROR_FILE_EXISTS_IN_SOURCE_DC );
 
-			$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: file still exists in source DC' , $this->getLoggerContext());
+			$this->getLogger()->info( 'MigrateImagesBetweenSwiftDC: new version of the file exists in source DC' , $this->getLoggerContext());
 
 			$result = null;
 		}

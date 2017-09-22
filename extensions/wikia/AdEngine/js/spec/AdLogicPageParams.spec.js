@@ -4,7 +4,12 @@
 describe('AdLogicPageParams', function () {
 	'use strict';
 
-	var logMock = function () { return; };
+	var logMock = function () { return; },
+		geoMock = {
+			getCountryCode: function() {
+				return 'PL';
+			}
+		};
 
 	function mockAdContext(targeting) {
 		return {
@@ -31,14 +36,7 @@ describe('AdLogicPageParams', function () {
 			location: { origin: 'http://' + opts.hostname, hostname: opts.hostname },
 			amzn_targs: opts.amzn_targs,
 			wgCookieDomain: opts.hostname.substr(opts.hostname.indexOf('.')),
-			wgABPerformanceTest: opts.perfab
-		};
-	}
-
-	function mockPageViewCounter(pvCount) {
-		return {
-			get: function () { return pvCount || 0; },
-			increment: function () { return pvCount || 1; }
+			pvNumber: opts.pvNumber || 1
 		};
 	}
 
@@ -108,11 +106,11 @@ describe('AdLogicPageParams', function () {
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			mockAdContext(targeting),
-			mockPageViewCounter(opts.pvCount),
 			mockAdLogicZoneParams(),
-			logMock,
 			windowMock.document,
+			geoMock,
 			windowMock.location,
+			logMock,
 			windowMock,
 			abTestMock,
 			kruxMock
@@ -131,6 +129,7 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('zone_domain');
 		expect(params.hostpre).toBe('zone_hostname_prefix');
 		expect(params.lang).toBe('zl');
+		expect(params.geo).toBe('PL');
 	});
 
 	it('getPageLevelParams wpage param', function () {
@@ -197,16 +196,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.ab).toEqual(['17_34', '19_45', '76_112'], 'ab params passed');
 	});
 
-	it('getPageLevelParams abPerfTest info', function () {
-		var params;
-
-		params = getParams();
-		expect(params.perfab).toEqual(undefined);
-
-		params = getParams({}, {perfab: 'foo'});
-		expect(params.perfab).toEqual('foo');
-	});
-
 	it('getPageLevelParams includeRawDbName', function () {
 		var params = getParams();
 
@@ -243,13 +232,13 @@ describe('AdLogicPageParams', function () {
 	});
 
 	it('getPageLevelParams pv param - oasis', function () {
-		var params = getParams({skin: 'oasis'}, {pvCount: 13});
+		var params = getParams({skin: 'oasis'}, {pvNumber: 13});
 
 		expect(params.pv).toBe('13');
 	});
 
 	it('getPageLevelParams pv param - mercury', function () {
-		var params = getParams({skin: 'mercury'}, {pvCount: 13});
+		var params = getParams({skin: 'mercury'}, {pvNumber: 13});
 
 		expect(params.pv).toBe('13');
 	});
@@ -336,5 +325,12 @@ describe('AdLogicPageParams', function () {
 		});
 
 		expect(params.ar).toBe('3:4');
+	});
+
+	it('geo is set only when Wikia.Geo.getCountryCode returns value', function () {
+		geoMock.getCountryCode = function() { return; };
+		var params = getParams();
+
+		expect(params.geo).toBe('none');
 	});
 });

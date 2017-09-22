@@ -109,7 +109,7 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 
 		$title = Title::newFromID( $pageId );
 		if ( $title instanceof Title ) {
-			wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
+			Hooks::run( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
 		}
 	}
 

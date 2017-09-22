@@ -14,6 +14,7 @@ class Node {
 
 	protected $xmlNode;
 	protected $children;
+	protected $cachedSources = null;
 	protected $data = null;
 
 	/**
@@ -26,26 +27,41 @@ class Node {
 		$this->infoboxData = $infoboxData;
 	}
 
-	public function getSource() {
-		return $this->extractSourceFromNode( $this->xmlNode );
-	}
-
-	public function getSourceLabel() {
-		$sourceLabels = [];
-		$sources = $this->extractSourceFromNode( $this->xmlNode );
-		$label = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
-
-		if ( count( $sources ) > 1 ) {
-			foreach ( $sources as $source ) {
-				if ( !empty( $source ) ) {
-					$sourceLabels[$source] = !empty( $label ) ? "{$label} ({$source})" : '';
-				}
-			}
-		} elseif ( !empty( $sources[0] ) ) {
-			$sourceLabels[$sources[0]] = $label;
+	public function getSources() {
+		if ( is_null( $this->cachedSources ) ) {
+			$this->cachedSources = $this->extractSourcesFromNode( $this->xmlNode );
 		}
 
-		return $sourceLabels;
+		return $this->cachedSources;
+	}
+
+	public function getSourcesMetadata() {
+		$metadata = [ ];
+		$sources = $this->getSources();
+		$sourcesLength = count( $sources );
+		$baseLabel = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
+
+		foreach ( $sources as $source ) {
+			$metadata[$source] = [ ];
+			$metadata[$source]['label'] = ( $sourcesLength > 1 ) ?
+				( !empty( $baseLabel ) ? "{$baseLabel} ({$source})" : '' ) :
+				$baseLabel;
+		}
+
+		if ( $sourcesLength > 0 && $this->hasPrimarySource( $this->xmlNode ) ) {
+			// self::extractSourcesFromNode() puts the value of the `source` attribute as the first element of $sources
+			$firstSource = reset( $sources );
+			$metadata[$firstSource]['primary'] = true;
+		}
+
+		return $metadata;
+	}
+
+	public function getMetadata() {
+		return [
+			'type' => $this->getType(),
+			'sources' => $this->getSourcesMetadata()
+		];
 	}
 
 	/**
@@ -111,7 +127,7 @@ class Node {
 	 * @return bool
 	 */
 	public function isEmpty() {
-		$data = $this->getData()[ 'value' ];
+		$data = $this->getData()['value'];
 
 		return ( empty( $data ) && $data != '0' );
 	}
@@ -135,7 +151,7 @@ class Node {
 					'type' => $item->getType(),
 					'data' => $item->getData(),
 					'isEmpty' => $item->isEmpty(),
-					'source' => $item->getSource()
+					'source' => $item->getSources()
 				];
 			},
 			$this->getChildNodes()
@@ -143,32 +159,30 @@ class Node {
 	}
 
 	protected function getRenderDataForChildren() {
-		return array_map( function ( Node $item ) {
+		$renderData = array_map( function ( Node $item ) {
 			return $item->getRenderData();
 		}, array_filter( $this->getChildNodes(), function ( Node $item ) {
 			return !$item->isEmpty();
 		} ) );
+		// rebase keys
+		return array_values( $renderData );
 	}
 
-	protected function getSourceForChildren() {
+	protected function getSourcesForChildren() {
 		/** @var Node $item */
 		$result = [ ];
 		foreach ( $this->getChildNodes() as $item ) {
-			$result = array_merge( $result, $item->getSource() );
+			$result = array_merge( $result, $item->getSources() );
 		}
 		$uniqueParams = array_unique( $result );
 
 		return array_values( $uniqueParams );
 	}
 
-	protected function getSourceLabelForChildren() {
-		/** @var Node $item */
-		$result = [ ];
-		foreach ( $this->getChildNodes() as $item ) {
-			$result = array_merge( $result, $item->getSourceLabel() );
-		}
-
-		return $result;
+	protected function getMetadataForChildren() {
+		return array_map( function ( Node $item ) {
+			return $item->getMetadata();
+		}, $this->getChildNodes() );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
@@ -204,12 +218,12 @@ class Node {
 	}
 
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
-		return ( isset( $xmlNode[ $attribute ] ) ) ? (string)$xmlNode[ $attribute ]
+		return ( isset( $xmlNode[$attribute] ) ) ? (string)$xmlNode[$attribute]
 			: null;
 	}
 
 	protected function getRawInfoboxData( $key ) {
-		return isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ]
+		return isset( $this->infoboxData[$key] ) ? $this->infoboxData[$key]
 			: null;
 	}
 
@@ -235,22 +249,27 @@ class Node {
 	 * @return array
 	 *
 	 */
-	protected function extractSourceFromNode( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ? [ $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ] : [ ];
+	protected function extractSourcesFromNode( \SimpleXMLElement $xmlNode ) {
+		$sources = $this->hasPrimarySource( $xmlNode ) ?
+			[ $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ] : [ ];
 
 		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
-			$source = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $source );
+			$sources = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $sources );
 		}
 		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			$source = $this->matchVariables( $xmlNode->{self::DEFAULT_TAG_NAME}, $source );
+			$sources = $this->matchVariables( $xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
 		}
 
-		return $source;
+		return $sources;
+	}
+
+	protected function hasPrimarySource( \SimpleXMLElement $xmlNode ) {
+		return (bool)$this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 	}
 
 	protected function matchVariables( \SimpleXMLElement $node, array $source ) {
 		preg_match_all( self::EXTRACT_SOURCE_REGEX, (string)$node, $sources );
 
-		return array_unique( array_merge( $source, $sources[ 1 ] ) );
+		return array_unique( array_merge( $source, $sources[1] ) );
 	}
 }

@@ -179,7 +179,7 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 			wfDebug( __METHOD__ . ": checking if wiki #{$cityId} exists on {$cluster} cluster...\n" );
 
 			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
-			$db = wfGetDB( DB_MASTER, [], $wgExternalSharedDB . '_' . $cluster ); // force master - @see PLATFORM-528
+			$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB . '_' . $cluster );
 
 			$res = $db->query( 'SHOW DATABASES ' . $db->buildLike($dbname), __METHOD__ ); // SHOW DATABASES LIKE 'muppet'
 
@@ -239,9 +239,10 @@ function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
 }
 
 function wfDevBoxResourceLoaderGetConfigVars( &$vars ) {
-	global $wgDevelEnvironment;
+	global $wgDevelEnvironment, $wgWikiaDatacenter;
 
 	$vars['wgDevelEnvironment'] = $wgDevelEnvironment;
+	$vars['wgWikiaDatacenter'] = $wgWikiaDatacenter;
 
 	return true;
 }
@@ -261,15 +262,15 @@ function wfDevBoxLogExceptions( $errorText ) {
  * Example: muppet.wikia.com -> muppet.wikia.com
  */
 function getForcedWikiValue(){
-	global $wgDevelEnvironmentName;
+	global $wgDevDomain;
 
-	if (!isset($_SERVER['HTTP_HOST'])) {
+	if ( !isset( $_SERVER['HTTP_HOST'] ) ) {
 		return '';
 	}
 
 	// This is an attempt to match "devbox" host names
-	if (strpos($_SERVER['HTTP_HOST'], "wikia-dev.com") !== false){
-		$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+	if ( strpos( $_SERVER['HTTP_HOST'], $wgDevDomain) !== false ) {
+		$site = str_replace( '.' . $wgDevDomain, '', $_SERVER['HTTP_HOST'] );
 		return "$site.wikia.com";
 	}
 
@@ -328,7 +329,6 @@ function getHtmlForDatabaseComparisonTool(){
 	// Determine what databases are on this dev-box.
 	global $wgWikiFactoryDB;
 
-	//$db_dev = wfGetDB( DB_MASTER, "dump", $wgDBname );
 	$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
 	$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
 

@@ -100,7 +100,7 @@ class RandomPage extends SpecialPage {
 	public function getRandomTitle() {
 		$randstr = wfRandom();
 		$title = null;
-		if ( !wfRunHooks( 'SpecialRandomGetRandomTitle', array( &$randstr, &$this->isRedir, &$this->namespaces,
+		if ( !Hooks::run( 'SpecialRandomGetRandomTitle', array( &$randstr, &$this->isRedir, &$this->namespaces,
 			&$this->extra, &$title ) ) ) {
 			return $title;
 		}

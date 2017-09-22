@@ -1,20 +1,18 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.amazonMatch', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, doc, log, win) {
+], function (adContext, slotsContext, factory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.amazonMatch',
 		config = {
 			oasis: {
-				HOME_TOP_LEADERBOARD: ['7x9', '9x2'],
-				HOME_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
-				HUB_TOP_LEADERBOARD: ['7x9', '9x2'],
-				HUB_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
+				BOTTOM_LEADERBOARD: ['7x9', '9x2'],
 				INCONTENT_BOXAD_1: ['3x2', '1x6', '3x6'],
 				LEFT_SKYSCRAPER_2: ['1x6', '3x2', '3x6'],
 				LEFT_SKYSCRAPER_3: ['1x6', '3x2', '3x6'],
@@ -28,7 +26,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			}
 		},
 		rendered = false,
-		paramPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
+		paramPattern = /([0-9]x[0-9])/,
 		amazonId = '3115',
 		priceMap = {},
 		slots = [];
@@ -38,14 +36,10 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			context = adContext.getContext(),
 			node = doc.getElementsByTagName('script')[0];
 
-		slots = config[skin];
+		slots = slotsContext.filterSlotMap(config[skin]);
 
 		if (context.opts.overridePrefootersSizes) {
 			slots.PREFOOTER_LEFT_BOXAD = ['3x2', '7x9'];
-		}
-
-		if (context.slots.incontentLeaderboard) {
-			slots.INCONTENT_LEADERBOARD = ['7x9','3x2'];
 		}
 
 		amznMatch.type = 'text/javascript';
@@ -67,7 +61,6 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 	function calculatePrices() {
 		var size,
-			tier,
 			tokens,
 			m;
 
@@ -78,11 +71,10 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			m = param.match(paramPattern);
 			if (m) {
 				size = m[1];
-				tier = parseInt(m[2], 10);
-
-				if (!priceMap[size] || tier < priceMap[size]) {
-					priceMap[size] = tier;
+				if (!priceMap[size]) {
+					priceMap[size] = [];
 				}
+				priceMap[size].push(param);
 			}
 		});
 	}
@@ -105,11 +97,13 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 		slots[slotName].forEach(function (size) {
 			if (priceMap[size]) {
-				params.push('a' + size + 'p' + priceMap[size]);
+				priceMap[size].forEach(function (price) {
+					params.push(price);
+				});
 			}
 		});
 
-		return params.length > 0 ? {amznslots: params} : {};
+		return params.length > 0 ? { amznslots: params.sort() } : {};
 	}
 
 	function getPrices() {

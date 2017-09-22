@@ -39,6 +39,9 @@ class DeleteBatch extends Maintenance {
 		$this->addOption( 'i', "Interval to sleep between deletions" );
 		$this->addArg( 'listfile', 'File with titles to delete, separated by newlines. ' .
 			'If not given, stdin will be used.', false );
+
+		// Wikia change
+		$this->addOption( 'by-id', 'Provided list contains article IDs instead of titles, separated by newlines', false, false /* $withArgs */ );
 	}
 
 	public function execute() {
@@ -78,7 +81,7 @@ class DeleteBatch extends Maintenance {
 			if ( $line == '' ) {
 				continue;
 			}
-			$title = Title::newFromText( $line );
+			$title = $this->hasOption( 'by-id' ) ? Title::newFromID( $line ) : Title::newFromText( $line ); # Wikia change
 			if ( is_null( $title ) ) {
 				$this->output( "Invalid title '$line' on line $linenum\n" );
 				continue;

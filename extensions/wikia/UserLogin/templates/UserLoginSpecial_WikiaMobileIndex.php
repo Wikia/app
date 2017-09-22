@@ -22,9 +22,6 @@ if ( !empty( $result ) ) {
 	<? if ( $toastErr ) : ?>
 	<div id=wkLgnMsg><?= $msg ; ?></div>
 	<? endif; ?>
-	<? if ( !$recoverPassword ) : ?>
-	<?= $app->renderView( 'UserLoginSpecial', 'Providers' ) ; ?>
-	<? endif; ?>
 	<form method=post action="<?= $formPostAction ?>">
 		<input type=hidden name=loginToken id='loginToken' value="<?= Sanitizer::encodeAttribute( $loginToken ) ?>">
 		<input type=hidden name=keeploggedin value=true>

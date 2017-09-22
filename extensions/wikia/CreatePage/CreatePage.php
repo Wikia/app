@@ -33,6 +33,7 @@ $wgExtensionMessagesFiles['CreatePageAliases'] = __DIR__ . '/CreatePage.aliases.
  * Special page
  */
 $wgAutoloadClasses['SpecialCreatePage'] = dirname(__FILE__) . '/SpecialCreatePage.class.php';
+$wgAutoloadClasses['CreatePageHelper'] = __DIR__ . '/CreatePageHelper.class.php';
 $wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
 $wgSpecialPageGroups['CreatePage'] = 'pagetools';
 
@@ -162,7 +163,7 @@ function wfCreatePageAjaxGetVEDialog() {
 
 	$body['html'] = $template->render( 'dialog-ve' );
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
-	$body['addPageLabel'] = wfMsg( 'button-createpage' );
+	$body['addPageLabel'] = wfMessage( 'createpage-button-proceed' )->text();
 	$body['cancelLabel'] = wfMsg( 'createpage-button-cancel' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
@@ -197,7 +198,7 @@ function wfCreatePageAjaxGetDialog() {
 	);
 
 	$listtype = "short";
-	wfRunHooks( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
+	Hooks::run( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
 
 	$options = $options + $standardOptions;
 	$optionsCount = count( $options );
@@ -232,7 +233,9 @@ function wfCreatePageAjaxGetDialog() {
 	$template->set_vars( array(
 			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
-			'type' => $listtype
+			'type' => $listtype,
+			'wantedPages' => CreatePageHelper::getMostWantedPages(),
+			'wikiTotalPages' => SiteStats::articles()
 		)
 	);
 
@@ -240,7 +243,7 @@ function wfCreatePageAjaxGetDialog() {
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
-	$body['addPageLabel'] = wfMsg( 'button-createpage' );
+	$body['addPageLabel'] = wfMessage( 'createpage-button-proceed' )->text();
 	$body['article'] = $wgRequest->getVal( 'article' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
@@ -262,6 +265,7 @@ function wfCreatePageAjaxCheckTitle() {
 	if ( empty( $sTitle ) ) {
 		$result['result'] = 'error';
 		$result['msg'] = wfMsg( 'createpage-error-empty-title' );
+		$result['error'] = 'error-empty-title';
 	}
 	else {
 		$oTitle = Title::newFromText( $sTitle, $nameSpace );
@@ -269,25 +273,30 @@ function wfCreatePageAjaxCheckTitle() {
 		if ( !( $oTitle instanceof Title ) || strpos( $sTitle, "#" ) !== false ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
+			$result['error'] = 'error-invalid-title';
 		}
 		else {
 			if ( $oTitle->exists() ) {
 				$result['result'] = 'error';
 				$result['msg'] = wfMsg( 'createpage-error-article-exists', array( $oTitle->getFullUrl(), $oTitle->getText() ) );
+				$result['error'] = 'error-article-exists';
 			}
 			else { // title not exists
 				// macbre: use dedicated hook for this check (change related to release of Phalanx)
-				if ( !wfRunHooks( 'CreatePageTitleCheck', array( $oTitle ) ) ) {
+				if ( !Hooks::run( 'CreatePageTitleCheck', array( $oTitle ) ) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
+					$result['error'] = 'error-article-spam';
 				}
 				if ( $oTitle->getNamespace() == NS_SPECIAL ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
+					$result['error'] = 'error-invalid-title';
 				}
 				if ( $wgUser->isBlockedFrom( $oTitle, false ) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-blocked' );
+					$result['error'] = 'error-article-blocked';
 				}
 			}
 		}

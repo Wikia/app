@@ -63,14 +63,14 @@ class OpenGraphHalResponse implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'description' => 'string',
-        'title' => 'string',
-        'url' => 'string',
-        'site_id' => 'int',
-        'image_url' => 'string',
-        'site_name' => 'string',
-        'date_retrieved' => '\Swagger\Client\Discussion\Models\Instant',
         'type' => 'string',
+        'site_id' => 'int',
+        'title' => 'string',
+        'description' => 'string',
+        'date_retrieved' => '\Swagger\Client\Discussion\Models\Instant',
+        'image_url' => 'string',
+        'url' => 'string',
+        'site_name' => 'string',
         '_links' => '\Swagger\Client\Discussion\Models\HalLinks',
         'requester_id' => 'string',
         '_embedded' => '\Swagger\Client\Discussion\Models\Embeddable[]'
@@ -86,14 +86,14 @@ class OpenGraphHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'description' => 'description',
-        'title' => 'title',
-        'url' => 'url',
-        'site_id' => 'siteId',
-        'image_url' => 'imageUrl',
-        'site_name' => 'siteName',
-        'date_retrieved' => 'dateRetrieved',
         'type' => 'type',
+        'site_id' => 'siteId',
+        'title' => 'title',
+        'description' => 'description',
+        'date_retrieved' => 'dateRetrieved',
+        'image_url' => 'imageUrl',
+        'url' => 'url',
+        'site_name' => 'siteName',
         '_links' => '_links',
         'requester_id' => 'requesterId',
         '_embedded' => '_embedded'
@@ -109,14 +109,14 @@ class OpenGraphHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'description' => 'setDescription',
-        'title' => 'setTitle',
-        'url' => 'setUrl',
-        'site_id' => 'setSiteId',
-        'image_url' => 'setImageUrl',
-        'site_name' => 'setSiteName',
-        'date_retrieved' => 'setDateRetrieved',
         'type' => 'setType',
+        'site_id' => 'setSiteId',
+        'title' => 'setTitle',
+        'description' => 'setDescription',
+        'date_retrieved' => 'setDateRetrieved',
+        'image_url' => 'setImageUrl',
+        'url' => 'setUrl',
+        'site_name' => 'setSiteName',
         '_links' => 'setLinks',
         'requester_id' => 'setRequesterId',
         '_embedded' => 'setEmbedded'
@@ -132,14 +132,14 @@ class OpenGraphHalResponse implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'description' => 'getDescription',
-        'title' => 'getTitle',
-        'url' => 'getUrl',
-        'site_id' => 'getSiteId',
-        'image_url' => 'getImageUrl',
-        'site_name' => 'getSiteName',
-        'date_retrieved' => 'getDateRetrieved',
         'type' => 'getType',
+        'site_id' => 'getSiteId',
+        'title' => 'getTitle',
+        'description' => 'getDescription',
+        'date_retrieved' => 'getDateRetrieved',
+        'image_url' => 'getImageUrl',
+        'url' => 'getUrl',
+        'site_name' => 'getSiteName',
         '_links' => 'getLinks',
         'requester_id' => 'getRequesterId',
         '_embedded' => 'getEmbedded'
@@ -166,14 +166,14 @@ class OpenGraphHalResponse implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['url'] = isset($data['url']) ? $data['url'] : null;
-        $this->container['site_id'] = isset($data['site_id']) ? $data['site_id'] : null;
-        $this->container['image_url'] = isset($data['image_url']) ? $data['image_url'] : null;
-        $this->container['site_name'] = isset($data['site_name']) ? $data['site_name'] : null;
-        $this->container['date_retrieved'] = isset($data['date_retrieved']) ? $data['date_retrieved'] : null;
         $this->container['type'] = isset($data['type']) ? $data['type'] : null;
+        $this->container['site_id'] = isset($data['site_id']) ? $data['site_id'] : null;
+        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
+        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
+        $this->container['date_retrieved'] = isset($data['date_retrieved']) ? $data['date_retrieved'] : null;
+        $this->container['image_url'] = isset($data['image_url']) ? $data['image_url'] : null;
+        $this->container['url'] = isset($data['url']) ? $data['url'] : null;
+        $this->container['site_name'] = isset($data['site_name']) ? $data['site_name'] : null;
         $this->container['_links'] = isset($data['_links']) ? $data['_links'] : null;
         $this->container['requester_id'] = isset($data['requester_id']) ? $data['requester_id'] : null;
         $this->container['_embedded'] = isset($data['_embedded']) ? $data['_embedded'] : null;
@@ -209,64 +209,22 @@ class OpenGraphHalResponse implements ArrayAccess
 
 
     /**
-     * Gets description
+     * Gets type
      * @return string
      */
-    public function getDescription()
+    public function getType()
     {
-        return $this->container['description'];
+        return $this->container['type'];
     }
 
     /**
-     * Sets description
-     * @param string $description
+     * Sets type
+     * @param string $type
      * @return $this
      */
-    public function setDescription($description)
+    public function setType($type)
     {
-        $this->container['description'] = $description;
-
-        return $this;
-    }
-
-    /**
-     * Gets title
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->container['title'];
-    }
-
-    /**
-     * Sets title
-     * @param string $title
-     * @return $this
-     */
-    public function setTitle($title)
-    {
-        $this->container['title'] = $title;
-
-        return $this;
-    }
-
-    /**
-     * Gets url
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->container['url'];
-    }
-
-    /**
-     * Sets url
-     * @param string $url
-     * @return $this
-     */
-    public function setUrl($url)
-    {
-        $this->container['url'] = $url;
+        $this->container['type'] = $type;
 
         return $this;
     }
@@ -293,43 +251,43 @@ class OpenGraphHalResponse implements ArrayAccess
     }
 
     /**
-     * Gets image_url
+     * Gets title
      * @return string
      */
-    public function getImageUrl()
+    public function getTitle()
     {
-        return $this->container['image_url'];
+        return $this->container['title'];
     }
 
     /**
-     * Sets image_url
-     * @param string $image_url
+     * Sets title
+     * @param string $title
      * @return $this
      */
-    public function setImageUrl($image_url)
+    public function setTitle($title)
     {
-        $this->container['image_url'] = $image_url;
+        $this->container['title'] = $title;
 
         return $this;
     }
 
     /**
-     * Gets site_name
+     * Gets description
      * @return string
      */
-    public function getSiteName()
+    public function getDescription()
     {
-        return $this->container['site_name'];
+        return $this->container['description'];
     }
 
     /**
-     * Sets site_name
-     * @param string $site_name
+     * Sets description
+     * @param string $description
      * @return $this
      */
-    public function setSiteName($site_name)
+    public function setDescription($description)
     {
-        $this->container['site_name'] = $site_name;
+        $this->container['description'] = $description;
 
         return $this;
     }
@@ -356,22 +314,64 @@ class OpenGraphHalResponse implements ArrayAccess
     }
 
     /**
-     * Gets type
+     * Gets image_url
      * @return string
      */
-    public function getType()
+    public function getImageUrl()
     {
-        return $this->container['type'];
+        return $this->container['image_url'];
     }
 
     /**
-     * Sets type
-     * @param string $type
+     * Sets image_url
+     * @param string $image_url
      * @return $this
      */
-    public function setType($type)
+    public function setImageUrl($image_url)
     {
-        $this->container['type'] = $type;
+        $this->container['image_url'] = $image_url;
+
+        return $this;
+    }
+
+    /**
+     * Gets url
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->container['url'];
+    }
+
+    /**
+     * Sets url
+     * @param string $url
+     * @return $this
+     */
+    public function setUrl($url)
+    {
+        $this->container['url'] = $url;
+
+        return $this;
+    }
+
+    /**
+     * Gets site_name
+     * @return string
+     */
+    public function getSiteName()
+    {
+        return $this->container['site_name'];
+    }
+
+    /**
+     * Sets site_name
+     * @param string $site_name
+     * @return $this
+     */
+    public function setSiteName($site_name)
+    {
+        $this->container['site_name'] = $site_name;
 
         return $this;
     }
@@ -496,3 +496,5 @@ class OpenGraphHalResponse implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

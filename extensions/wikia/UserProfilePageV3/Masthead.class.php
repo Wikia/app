@@ -7,6 +7,8 @@ class Masthead {
 	 */
 	const DEFAULT_PATH = 'http://images.wikia.com/messaging/images/';
 
+	const DEFAULT_AVATAR_FILENAME = 'Avatar.jpg';
+
 	/**
 	 * path to file, relative
 	 */
@@ -122,12 +124,12 @@ class Masthead {
 		wfProfileIn( __METHOD__ );
 
 		$this->mDefaultAvatars = array();
-		$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
+		$images = getMessageForContentAsArray( 'blog-avatar-defaults' ) ?: [ static::DEFAULT_AVATAR_FILENAME ]; // PLATFORM-2393: add a default value
 
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->mDefaultAvatars[] = self::DEFAULT_PATH . $thumb . $hash . $image;
+				$this->mDefaultAvatars[] = static::DEFAULT_PATH . $thumb . $hash . $image;
 			}
 		}
 
@@ -215,7 +217,7 @@ class Masthead {
 		 * default avatar, path from messaging.wikia.com
 		 */
 		$hash = FileRepo::getHashPathForLevel( $avatar, 2 );
-		return self::DEFAULT_PATH . $hash . $avatar;
+		return static::DEFAULT_PATH . $hash . $avatar;
 	}
 
 	/**
@@ -243,16 +245,16 @@ class Masthead {
 				 * uploaded file, we are adding common/avatars path
 				 */
 				// avatars selected from "samples" are stored as full URLs (BAC-1105)
-				// e.g http://vignette4.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
+				// e.g http://vignette.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
 				// e.g http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg
-				if ( strpos( $url, 'http://' ) === false ) {
+				if ( !preg_match( '/^https?:\/\//', $url ) ) {
 					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url;
 				}
 			} else {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
-				$url = self::getDefaultAvatarUrl( $url );
+				$url = static::getDefaultAvatarUrl( $url );
 			}
 		} else {
 			$defaults = $this->getDefaultAvatars( trim( $thumb, "/" ) . "/" );
@@ -516,10 +518,6 @@ class Masthead {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getThumbPath( $dir ) {
-		return str_replace( "/avatars/", "/avatars/thumb/", $dir );
-	}
-
 	/**
 	 * While this is technically downloading the URL, the function's purpose is to be similar
 	 * to uploadFile, but instead of having the file come from the user's computer, it comes
@@ -713,14 +711,6 @@ class Masthead {
 		$oLogPage->addEntry( 'avatar_chn', $mUserPage, '' );
 		unlink( $sTmpFile );
 
-		/**
-		 * notify image replication system
-		 */
-		global $wgEnableUploadInfoExt;
-		if ( $wgEnableUploadInfoExt ) {
-			UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
-		}
-
 		wfProfileOut( __METHOD__ );
 
 		return $errorNo;
@@ -740,7 +730,10 @@ class Masthead {
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	static public function userMastheadInvalidateCache( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static public function userMastheadInvalidateCache(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 		if ( !$user->isAnon() ) {
 			if ( count( $status->errors ) == 0 ) {
 				global $wgMemc;

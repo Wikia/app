@@ -113,7 +113,7 @@ class CoreTagHooks {
 	 * @param Parser $parser
 	 * @return string HTML
 	 */
-	static function gallery( $content, $attributes, $parser ) {
-		return $parser->renderImageGallery( $content, $attributes );
+	static function gallery( $content, $attributes, $parser, $frame, $marker ) {
+		return $parser->renderImageGallery( $content, $attributes, $marker );
 	}
 }

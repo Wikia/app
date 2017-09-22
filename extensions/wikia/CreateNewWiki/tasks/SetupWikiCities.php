@@ -56,7 +56,7 @@ class SetupWikiCities extends Task {
 			'city_url' => $this->taskContext->getURL(),
 			'city_founding_user' => $founder->getId(),
 			'city_founding_email' => $founder->getEmail(),
-			'city_founding_ip' => ip2long( $wgRequest->getIP() ),
+			'city_founding_ip_bin' => inet_pton( $wgRequest->getIP() ),
 			'city_path' => self::DEFAULT_SLOT,
 			'city_description' => $this->taskContext->getSiteName(),
 			'city_lang' => $this->taskContext->getLanguage(),

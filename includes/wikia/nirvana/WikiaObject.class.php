@@ -27,12 +27,6 @@ abstract class WikiaObject {
 	protected $wg = null;
 
 	/**
-	 * function wrapper object
-	 * @var $wf WikiaFunctionWrapper
-	 */
-	protected $wf = null;
-
-	/**
 	 * Constructor
 	 */
 
@@ -41,7 +35,6 @@ abstract class WikiaObject {
 
 		// setting helpers
 		$this->wg = $this->app->wg;
-		$this->wf = $this->app->wf;
 	}
 
 	/**
@@ -61,6 +54,5 @@ abstract class WikiaObject {
 
 		// setting helpers
 		$this->wg = $app->wg;
-		$this->wf = $app->wf;
 	}
 }

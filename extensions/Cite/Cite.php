@@ -87,10 +87,10 @@ $wgResourceModules['jquery.tooltip'] = $citeResourceTemplate + array(
 
 /**
  * @param $out OutputPage
- * @param $sk Skin
+ * @param Skin $skin
  * @return bool
  */
-function wfCiteBeforePageDisplay( $out, &$sk ) {
+function wfCiteBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 	global $wgCiteEnablePopups;
 
 	if ( $wgCiteEnablePopups ) {
@@ -99,5 +99,3 @@ function wfCiteBeforePageDisplay( $out, &$sk ) {
 
 	return true;
 }
-
-/**#@-*/

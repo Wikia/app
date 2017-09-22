@@ -69,7 +69,7 @@ abstract class WikiaParserTagController extends WikiaController {
 		return $markerId;
 	}
 
-	public final function onParserAfterTidy( Parser &$parser, &$text ) {
+	public final function onParserAfterTidy( Parser $parser, &$text ) {
 		if ( !$this->wg->ArticleAsJson ) {
 			$text = $this->replaceMarkers( $text );
 		}
@@ -97,8 +97,9 @@ abstract class WikiaParserTagController extends WikiaController {
 
 		foreach( $this->tagAttributes as $attrName ) {
 			$validator = $this->buildParamValidator( $attrName );
+			$value = array_key_exists( $attrName, $attributes ) ? $attributes[$attrName] : false;
 
-			if( !$validator->isValid( $attributes[$attrName] ) ) {
+			if( !$validator->isValid( $value ) ) {
 				$error = $validator->getError();
 
 				if ( !is_null($error) ) {

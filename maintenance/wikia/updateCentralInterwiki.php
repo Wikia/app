@@ -16,7 +16,7 @@ include_once( "commandLine.inc" );
 include_once( "updateCentralInterwiki.inc" );
 
 // set a name for the script
-$wgUser = User::newFromName('Wikia');
+$wgUser = User::newFromName( Wikia::USER );
 
 if ( isset( $options['help'] ) || isset( $options['h']) ) {
 die( "Produces an SQL file from Central\'s Interwiki_map article.\n

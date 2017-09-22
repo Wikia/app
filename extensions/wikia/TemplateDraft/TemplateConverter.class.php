@@ -138,7 +138,8 @@ class TemplateConverter {
 		$docs = $preview;
 
 		foreach ( $variables as $var ) {
-			$preview .= "|{$var['name']}=This is a test\n";
+			$preview .= "|{$var['name']}=" .
+				wfMessage( 'templatedraft-preview-example-value' )->inContentLanguage()->plain() . "\n";
 			$docs .= "|{$var['name']}=\n";
 		}
 

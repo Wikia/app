@@ -28,7 +28,7 @@ class SeoLinkHreflang {
 		// <prefix1>.<prefix2>.<wiki>.wikia.com -- preview.fr.muppet.wikia.com
 		// <wiki>.<devbox>.wikia-dev.com -- muppet.rychu.wikia-dev.com
 		// <prefix>.<devbox>.wikia-dev.com -- fr.muppet.rychu.wikia-dev.com
-		$matching = preg_match( '/(?:([a-z-]+)\.)?([a-z]+)\.(?:[a-z]+\.wikia-dev|wikia)\.com$/', $domain, $m );
+		$matching = preg_match( '/(?:([a-z-]+)\.)?([a-z]+)\.(?:[a-z]+\.wikia-dev\.(pl|us|com)|wikia\.com)$/', $domain, $m );
 
 		if ( !$matching ) {
 			return [];
@@ -50,14 +50,8 @@ class SeoLinkHreflang {
 		return [];
 	}
 
-	private static function getLillyLinks( $url ) {
-		$lilly = new Lilly();
-		//$url = str_replace( '.rychu.wikia-dev.com', '.wikia.com', $url );
-		return $lilly->getCluster( $url );
-	}
-
 	private static function generateHreflangLinks( OutputPage $out ) {
-		global $wgEnableLillyExt, $wgArticle;
+		global $wgArticle;
 
 		$title = $out->getTitle();
 
@@ -68,9 +62,7 @@ class SeoLinkHreflang {
 
 		$links = [];
 
-		if ( $wgEnableLillyExt ) {
-			$links = self::getLillyLinks( $title->getFullURL() );
-		} else if ( $title->isMainPage() ) {
+		if ( $title->isMainPage() ) {
 			$links = self::getMainPageLinks( $_SERVER['HTTP_HOST'] );
 		}
 

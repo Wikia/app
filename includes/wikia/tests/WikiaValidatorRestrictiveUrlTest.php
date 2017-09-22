@@ -1,38 +1,42 @@
 <?php
 
-class WikiaValidatorRestrictiveUrlTest extends PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class WikiaValidatorRestrictiveUrlTest extends TestCase {
 
 	/* @var $validator WikiaValidatorRestrictiveUrl */
 	private $validator;
 
-	protected function setUp () {
+	protected function setUp() {
 		$this->validator = new WikiaValidatorRestrictiveUrl();
 	}
 
 	/**
-	 * @dataProvider testUrlsDataProvider
+	 * @dataProvider urlsDataProvider
+	 * @param string $string
+	 * @param bool $isUrl
 	 */
-	public function testUrls ($string, $isUrl) {
-		$result = $this->validator->isValid($string);
-		$this->assertEquals($isUrl, $result);
+	public function testUrls( $string, $isUrl ) {
+		$result = $this->validator->isValid( $string );
+		$this->assertEquals( $isUrl, $result );
 	}
 
-	public function testUrlsDataProvider () {
-		return array(
-			array('http://www.wikia.com', true),
-			array('www.wikia.com', true),
-			array('wikia.com', true),
-			array('http://www.wikia.com/?action=purge', true),
-			array('http://www.wikia.com/#wiki', true),
-			array('http://pl.callofduty.wikia.com/wiki/Call_of_Duty:_Black_Ops', true),
-			array('https://www.wikia.com/Wikia', true),
-			array('www.aol', true), // this is ok for regexp validation
-			array('lordoftherings.aol', true), // this is ok for regexp validation
-			array('lordoftherings.museum', true), // this is theoretically an acceptable URL
-			array('lordoftherings.info', true),
-			array('wikia', false),
-			array('http://wikia', false),
-			array('http://www.wikia.xxx', false), // .xxx is a not a valid domain for the toolbox
-		);
+	public function urlsDataProvider() {
+		return [
+			[ 'http://www.wikia.com', true ],
+			[ 'www.wikia.com', true ],
+			[ 'wikia.com', true ],
+			[ 'http://www.wikia.com/?action=purge', true ],
+			[ 'http://www.wikia.com/#wiki', true ],
+			[ 'http://pl.callofduty.wikia.com/wiki/Call_of_Duty:_Black_Ops', true ],
+			[ 'https://www.wikia.com/Wikia', true ],
+			[ 'www.aol', true ], // this is ok for regexp validation
+			[ 'lordoftherings.aol', true ], // this is ok for regexp validation
+			[ 'lordoftherings.museum', true ], // this is theoretically an acceptable URL
+			[ 'lordoftherings.info', true ],
+			[ 'wikia', false ],
+			[ 'http://wikia', false ],
+			[ 'http://www.wikia.xxx', false ], // .xxx is a not a valid domain for the toolbox
+		];
 	}
 }

@@ -1,17 +1,11 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
 	'youhavenewmessages' => 'You have $1 ($2).',
 	'youhavenewmessagesmulti' => 'You have new messages on $1',
-	'yourname' => 'Username:',
-	'yourpassword' => 'Password:',
+	'yourname' => 'Username',
+	'yourpassword' => 'Password',
 	'yourpasswordagain' => 'Retype password:',
 	'yourdomainname' => 'Your domain:',
 	'yourtext' => 'Your text',
@@ -20,7 +14,7 @@ $messages['en'] = array(
 	'yourrealname' => 'Real name:',
 	'yourlanguage' => 'Language:',
 	'yourvariant' => 'Content language variant:',
-	'yournick' => 'New signature:',
+	'yournick' => 'Signature:',
 	'yourgender' => 'Gender:',
 	'year' => 'From year (and earlier):',
 	'yourbirthdate' => 'Birth Date',
@@ -479,7 +473,7 @@ $messages['be-x-old'] = array(
 
 $messages['bg'] = array(
 	'youhavenewmessages' => 'Имате $1 ($2).',
-	'youhavenewmessagesmulti' => 'Имате нови съобщения в $1',
+	'youhavenewmessagesmulti' => 'Имате нови съобщения на $1',
 	'yourname' => 'Потребителско име:',
 	'yourpassword' => 'Парола:',
 	'yourpasswordagain' => 'Парола (повторно):',
@@ -488,11 +482,12 @@ $messages['bg'] = array(
 	'yourdiff' => 'Разлики',
 	'youremail' => 'Е-поща:',
 	'yourrealname' => 'Истинско име:',
-	'yourlanguage' => 'Език:',
+	'yourlanguage' => 'Език',
 	'yourvariant' => 'Езиков вариант на съдържанието:',
 	'yournick' => 'Подпис:',
 	'yourgender' => 'Пол:',
 	'year' => 'Година:',
+	'yourbirthdate' => 'Дата на раждане -',
 );
 
 $messages['bh'] = array(
@@ -926,19 +921,20 @@ $messages['da'] = array(
 $messages['de'] = array(
 	'youhavenewmessages' => 'Du hast $1 ($2).',
 	'youhavenewmessagesmulti' => 'Du hast neue Nachrichten: $1',
-	'yourname' => 'Benutzername:',
-	'yourpassword' => 'Passwort:',
+	'yourname' => 'Benutzername',
+	'yourpassword' => 'Dein Passwort',
 	'yourpasswordagain' => 'Passwort wiederholen:',
-	'yourdomainname' => 'Deine Domain:',
+	'yourdomainname' => 'Deine Domain',
 	'yourtext' => 'Dein Text',
 	'yourdiff' => 'Unterschiede',
-	'youremail' => 'E-Mail-Adresse:',
-	'yourrealname' => 'Bürgerlicher Name:',
-	'yourlanguage' => 'Sprache der Benutzeroberfläche:',
-	'yourvariant' => 'Sprachvariante:',
-	'yournick' => 'Signatur:',
+	'youremail' => 'Deine E-Mail-Adresse**',
+	'yourrealname' => 'Dein echter Name (keine Pflicht)',
+	'yourlanguage' => 'Sprache:',
+	'yourvariant' => 'Variante',
+	'yournick' => 'Dein „Spitzname“ (zum Unterschreiben)',
 	'yourgender' => 'Geschlecht:',
 	'year' => 'bis Jahr:',
+	'yourbirthdate' => 'Geburtsdatum:',
 );
 
 $messages['de-formal'] = array(
@@ -1102,6 +1098,7 @@ $messages['es'] = array(
 	'yournick' => 'Nueva firma:',
 	'yourgender' => 'Género:',
 	'year' => 'Desde el año (y anterior):',
+	'yourbirthdate' => 'Fecha de nacimiento:',
 );
 
 $messages['et'] = array(
@@ -1168,12 +1165,13 @@ $messages['fa'] = array(
 	'yourtext' => 'متن شما',
 	'yourdiff' => 'تفاوت‌ها',
 	'youremail' => 'پست الکترونیکی:',
-	'yourrealname' => 'نام واقعی:',
-	'yourlanguage' => 'زبان:',
+	'yourrealname' => 'نام واقعی شما*',
+	'yourlanguage' => 'زبان شما:',
 	'yourvariant' => 'گویش زبان محتوا:',
 	'yournick' => 'امضای جدید:',
 	'yourgender' => 'جنسیت:',
 	'year' => 'در این سال (و پیش از آن):',
+	'yourbirthdate' => 'تاریخ تولد:',
 );
 
 $messages['fi'] = array(
@@ -1192,6 +1190,7 @@ $messages['fi'] = array(
 	'yournick' => 'Allekirjoitus',
 	'yourgender' => 'Sukupuoli',
 	'year' => 'Vuosi',
+	'yourbirthdate' => 'Syntymäpäivä:',
 );
 
 $messages['fiu-vro'] = array(
@@ -1239,19 +1238,20 @@ $messages['fo'] = array(
 $messages['fr'] = array(
 	'youhavenewmessages' => 'Vous avez $1 ($2).',
 	'youhavenewmessagesmulti' => 'Vous avez de nouveaux messages sur $1.',
-	'yourname' => 'Nom d’utilisateur :',
-	'yourpassword' => 'Mot de passe :',
+	'yourname' => 'Nom d’utilisateur',
+	'yourpassword' => 'Mot de passe',
 	'yourpasswordagain' => 'Confirmez le mot de passe :',
 	'yourdomainname' => 'Votre domaine',
 	'yourtext' => 'Votre texte',
 	'yourdiff' => 'Différences',
-	'youremail' => 'Courriel :',
+	'youremail' => 'E-mail :',
 	'yourrealname' => 'Nom réel :',
 	'yourlanguage' => 'Langue :',
 	'yourvariant' => 'Variante de la langue du contenu:',
 	'yournick' => 'Signature pour les discussions :',
 	'yourgender' => 'Genre :',
 	'year' => 'À partir de l’année (et précédentes) :',
+	'yourbirthdate' => 'Date de naissance',
 );
 
 $messages['frc'] = array(
@@ -1904,7 +1904,7 @@ $messages['is'] = array(
 $messages['it'] = array(
 	'youhavenewmessages' => 'Hai $1 ($2).',
 	'youhavenewmessagesmulti' => 'Hai nuovi messaggi su $1',
-	'yourname' => 'Nome utente:',
+	'yourname' => 'Username:',
 	'yourpassword' => 'Password:',
 	'yourpasswordagain' => 'Ripeti la password:',
 	'yourdomainname' => 'Specificare il dominio',
@@ -1917,6 +1917,7 @@ $messages['it'] = array(
 	'yournick' => 'Soprannome (nickname):',
 	'yourgender' => 'Genere:',
 	'year' => "Dall'anno (e precedenti):",
+	'yourbirthdate' => 'Data di nascita',
 );
 
 $messages['iu'] = array(
@@ -1940,8 +1941,8 @@ $messages['iu'] = array(
 $messages['ja'] = array(
 	'youhavenewmessages' => '$1が届いています。($2)',
 	'youhavenewmessagesmulti' => '$1に新しい伝言が届いています',
-	'yourname' => '利用者名：',
-	'yourpassword' => 'パスワード：',
+	'yourname' => 'ユーザー名',
+	'yourpassword' => 'パスワード',
 	'yourpasswordagain' => 'パスワード再入力：',
 	'yourdomainname' => 'ドメイン：',
 	'yourtext' => '編集中の文章',
@@ -1954,6 +1955,7 @@ $messages['ja'] = array(
 	'yourgender' => '性別：',
 	'year' => 'これ以前の年：',
 	'yourmail' => 'あなたのメールアドレス(返信先)',
+	'yourbirthdate' => '生年月日',
 );
 
 $messages['jam'] = array(
@@ -2267,7 +2269,7 @@ $messages['kn'] = array(
 
 $messages['ko'] = array(
 	'youhavenewmessages' => '다른 사용자가 $1란에 글을 남겼습니다. ($2)',
-	'youhavenewmessagesmulti' => '다른 사용자가 $1란에 글을 남겼습니다.',
+	'youhavenewmessagesmulti' => '다른 사용자가 $1의 사용자 토론란에 글을 남겼습니다.',
 	'yourname' => '계정 이름:',
 	'yourpassword' => '비밀번호:',
 	'yourpasswordagain' => '암호 재입력:',
@@ -2281,6 +2283,7 @@ $messages['ko'] = array(
 	'yournick' => '새 서명:',
 	'yourgender' => '성별:',
 	'year' => '연도:',
+	'yourbirthdate' => '생년월일 -',
 );
 
 $messages['ko-kp'] = array(
@@ -3131,21 +3134,22 @@ $messages['niu'] = array(
 );
 
 $messages['nl'] = array(
-	'youhavenewmessages' => 'U hebt $1 ($2).',
-	'youhavenewmessagesmulti' => 'U hebt nieuwe berichten op $1',
+	'youhavenewmessages' => 'Je hebt $1 ($2).',
+	'youhavenewmessagesmulti' => 'Je hebt nieuwe berichten op $1',
 	'yourname' => 'Gebruikersnaam:',
 	'yourpassword' => 'Wachtwoord:',
-	'yourpasswordagain' => 'Geef uw wachtwoord opnieuw in:',
-	'yourdomainname' => 'Uw domein:',
-	'yourtext' => 'Uw tekst',
+	'yourpasswordagain' => 'Geef je wachtwoord opnieuw in:',
+	'yourdomainname' => 'Je domein:',
+	'yourtext' => 'Je tekst',
 	'yourdiff' => 'Wijzigingen',
-	'youremail' => 'Uw e-mailadres:',
+	'youremail' => 'Je e-mailadres:',
 	'yourrealname' => 'Uw echte naam:',
 	'yourlanguage' => 'Taal:',
 	'yourvariant' => 'Taalvariant voor inhoud:',
 	'yournick' => 'Tekst voor ondertekening:',
 	'yourgender' => 'Geslacht:',
 	'year' => 'Van jaar (en eerder):',
+	'yourbirthdate' => 'Birth Date',
 );
 
 $messages['nl-informal'] = array(
@@ -3191,6 +3195,7 @@ $messages['no'] = array(
 	'yournick' => 'Signatur:',
 	'yourgender' => 'Kjønn:',
 	'year' => 'År:',
+	'yourbirthdate' => 'Fødselsdag -',
 );
 
 $messages['nov'] = array(
@@ -3405,6 +3410,7 @@ $messages['pl'] = array(
 	'yournick' => 'Twój podpis',
 	'yourgender' => 'Płeć',
 	'year' => 'Przed rokiem (włącznie)',
+	'yourbirthdate' => 'Data urodzenia',
 );
 
 $messages['pms'] = array(
@@ -3495,24 +3501,6 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'youhavenewmessages' => 'Tem $1 ($2).',
-	'youhavenewmessagesmulti' => 'Tem mensagens novas em $1',
-	'yourname' => 'Nome de utilizador:',
-	'yourpassword' => 'Palavra-chave:',
-	'yourpasswordagain' => 'Repita a palavra-chave:',
-	'yourdomainname' => 'O seu domínio:',
-	'yourtext' => 'O seu texto',
-	'yourdiff' => 'Diferenças',
-	'youremail' => 'Correio electrónico:',
-	'yourrealname' => 'Nome verdadeiro:',
-	'yourlanguage' => 'Língua:',
-	'yourvariant' => 'Variante da língua de conteúdo:',
-	'yournick' => 'Assinatura:',
-	'yourgender' => 'Sexo:',
-	'year' => 'Até o ano:',
-);
-
-$messages['pt-br'] = array(
 	'youhavenewmessages' => 'Você tem $1 ($2).',
 	'youhavenewmessagesmulti' => 'Você tem novas mensagens em $1',
 	'yourname' => 'Nome de usuário:',
@@ -3528,6 +3516,7 @@ $messages['pt-br'] = array(
 	'yournick' => 'Assinatura:',
 	'yourgender' => 'Gênero:',
 	'year' => 'Ano (inclusive anteriores):',
+	'yourbirthdate' => 'Birth Date',
 );
 
 $messages['qu'] = array(
@@ -3664,6 +3653,7 @@ $messages['ru'] = array(
 	'yournick' => 'Новая подпись:',
 	'yourgender' => 'Пол:',
 	'year' => 'С года (и ранее):',
+	'yourbirthdate' => 'Дата рождения',
 );
 
 $messages['rue'] = array(
@@ -4031,24 +4021,6 @@ $messages['so'] = array(
 );
 
 $messages['sq'] = array(
-	'youhavenewmessages' => 'Ju keni $1 ($2).',
-	'youhavenewmessagesmulti' => 'Ju keni mesazhe të reja në $1',
-	'yourname' => 'Fusni nofkën tuaj',
-	'yourpassword' => 'Fusni fjalëkalimin tuaj',
-	'yourpasswordagain' => 'Fusni fjalëkalimin përsëri',
-	'yourdomainname' => 'Faqja juaj',
-	'yourtext' => 'Teksti juaj',
-	'yourdiff' => 'Ndryshimet',
-	'youremail' => 'Adresa e email-it*',
-	'yourrealname' => 'Emri juaj i vërtetë*',
-	'yourlanguage' => 'Ndërfaqja gjuhësore',
-	'yourvariant' => 'Varianti i gjuhës së përmbajtjes:',
-	'yournick' => 'Nënshkrimi',
-	'yourgender' => 'Gjinia:',
-	'year' => 'Nga viti (dhe më herët):',
-);
-
-$messages['sr'] = array(
 	'youhavenewmessages' => 'Ju keni $1 ($2).',
 	'youhavenewmessagesmulti' => 'Ju keni mesazhe të reja në $1',
 	'yourname' => 'Fusni nofkën tuaj',
@@ -4644,6 +4616,7 @@ $messages['vi'] = array(
 	'yournick' => 'Chữ ký:',
 	'yourgender' => 'Giới tính:',
 	'year' => 'Từ năm (trở về trước):',
+	'yourbirthdate' => 'Ngày sinh',
 );
 
 $messages['vmf'] = array(
@@ -4887,6 +4860,7 @@ $messages['zh-hans'] = array(
 	'yournick' => '新签名：',
 	'yourgender' => '性别：',
 	'year' => '自年份（及之前内容）：',
+	'yourbirthdate' => 'Birth Date',
 );
 
 $messages['zh-hant'] = array(
@@ -4905,18 +4879,7 @@ $messages['zh-hant'] = array(
 	'yournick' => '新簽名:',
 	'yourgender' => '性別：',
 	'year' => '從該年份 （或更早）:',
-);
-
-$messages['zh-tw'] = array(
-	'yourname' => '您的使用者名:',
-	'yourpassword' => '密碼：',
-	'yournick' => '暱稱:',
-);
-
-$messages['zh-yue'] = array(
-	'yourname' => '您的使用者名:',
-	'yourpassword' => '密碼：',
-	'yournick' => '暱稱:',
+	'yourbirthdate' => 'Birth Date',
 );
 
 $messages['zu'] = array(

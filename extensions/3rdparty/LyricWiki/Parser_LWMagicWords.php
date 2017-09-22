@@ -18,21 +18,20 @@ Version 0.1	2008-02-16
 
 function findFirstLetterOf($fLetterOf)
 {
-	$fLetterOf = strtoupper(trim($fLetterOf));
-	$fLetter = strtoupper((strlen($fLetterOf) == 0)?"":substr($fLetterOf,0,1));
+	$fLetterOf = mb_strtoupper( trim( $fLetterOf ) );
+	$fLetter = mb_substr( $fLetterOf, 0, 1 );
 
 	if(is_numeric($fLetter))
 	{
 		return "0-9";
 	}
-	else if(($fLetter < "A") || ($fLetter > "Z"))
+	if(preg_match("/^[A-ZÀ-ÖØ-ÞĀ-ŽΆ-ΩА-Я]$/u", $fLetter))
 	{
-		return "Symbol";
-	}
-	else
-	{
+		// Covers Latin, accented/extended Latin (3 sets), Greek, and Cyrillic letters.
+		// Rest can be set when creating wiki page to avoid this becoming complicated.
 		return $fLetter;
 	}
+	return "Symbol";
 }
 
 function LyricWikiVariableDefaults()
@@ -52,6 +51,7 @@ function LyricWikiVariableDefaults()
 	$lwVars["albumfletter"] = "ALBUMFLETTER";
 	$lwVars["song"] = "SONG";
 	$lwVars["songfletter"] = "SONGFLETTER";
+	$lwVars["songsubpage"] = "SONGSUBPAGE";
 	$lwVars["artistsortname"] = "ARTISTSORTNAME";
 	return $lwVars;
 }
@@ -103,6 +103,10 @@ function parseLyricWikiTitle($titleStr,&$lwVars)
 		$song = $lwVars["song"];
 		$lwVars["artistfletter"] = findFirstLetterOf($lwVars["artist"]);
 		$lwVars["songfletter"] = findFirstLetterOf($lwVars["song"]);
+		if( 0 < preg_match("/^.+\/(.+)$/",$lwVars["song"],$m2) )
+		{
+			$lwVars["songsubpage"] = trim($m2[1]);
+		}
 	}
 	else
 	{
@@ -142,7 +146,12 @@ function getLyricWikiVariables()
 		$titleStr = $wgTitle->getFullText();
 
 		$ns = $wgTitle->getNamespace();
-		if(($ns != NS_MAIN) && ($ns  != NS_TALK))
+		if($ns == NS_CATEGORY)
+		{
+			//set pagetype for category namespace so template preload in Templates.php can run there.
+			$lwVars["pagetype"] = "category";
+		}
+		elseif(($ns != NS_MAIN) && ($ns != NS_TALK))
 		{
 			//pages outside of the main namespace & talk shouldn't have music-related templates.
 			$lwVars["pagetype"] = "none";
@@ -173,7 +182,7 @@ function wfLyricWikiMagicWords(&$aWikiWords, $langID)
 #---------------------------------------------------
 
 $wgHooks['ParserGetVariableValueSwitch'][] = 'wfLyricWikiVariableSwitch';
-function wfLyricWikiVariableSwitch(&$parser, &$cache, &$magicWordId, &$ret)
+function wfLyricWikiVariableSwitch( Parser $parser, &$cache, &$magicWordId, &$ret )
 {
 	$lwVars = getLyricWikiVariables();
 
@@ -202,9 +211,8 @@ function wfLyricWikiDeclareVarIds(&$magicWordIds)
 	return true;
 }
 
-function wfLyricWikiSterilizeTitle( &$parser, $title = '' )
+function wfLyricWikiSterilizeTitle( $parser, $title = '' )
 {
-	$lwVars = Array();
 
 	preg_match("/(.*?):(.*)/",$title,$match);
 	$artist = $match[1];

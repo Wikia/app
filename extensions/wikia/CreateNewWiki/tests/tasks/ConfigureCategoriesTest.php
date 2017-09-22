@@ -3,20 +3,10 @@
 namespace Wikia\CreateNewWiki\Tasks;
 
 class ConfigureCategoriesTest extends \WikiaBaseTest {
-	private $taskContextMock;
 
-	public function setUp()
-	{
+	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
-
-		$this->taskContextMock = $this->getMock( '\Wikia\CreateNewWiki\Tasks\TaskContext' );
-		$this->mockClass( 'TaskContext', $this->taskContextMock );
-	}
-
-	public function tearDown()
-	{
-		parent::tearDown();
 	}
 
 	/**
@@ -26,7 +16,7 @@ class ConfigureCategoriesTest extends \WikiaBaseTest {
 	 * @param array $expected
 	 */
 	public function testPrepareCategories($vertical, $categories, $expected) {
-		$configureCategoriesTask = new ConfigureCategories($this->taskContextMock);
+		$configureCategoriesTask = new ConfigureCategories( new TaskContext( [] ) );
 		$result = $configureCategoriesTask->prepareCategories($vertical, $categories);
 		$this->assertEquals($expected, $result);
 	}

@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global require, veTrack, Wikia */
+/*global veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -19,7 +19,7 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
+	var conf, tabMessages, uri, viewUri, veEditUri, isViewPage,
 		init, support, targetDeferred,
 		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
@@ -125,7 +125,6 @@
 	conf = mw.config.get( 'wgVisualEditorConfig' );
 	tabMessages = conf.tabMessages;
 	uri = new mw.Uri();
-	pageExists = !!mw.config.get( 'wgRelevantArticleId' );
 	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	isViewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
@@ -228,6 +227,8 @@
 			ve.track( 'mwedit.init', { type: 'page', mechanism: 'click' } );
 
 			if ( history.pushState && uri.query.veaction !== 'edit' ) {
+				mw.hook('ve.afterVEInit').fire(veEditUri);
+
 				// Replace the current state with one that is tagged as ours, to prevent the
 				// back button from breaking when used to exit VE. FIXME: there should be a better
 				// way to do this. See also similar code in the ViewPageTarget constructor.
@@ -363,7 +364,8 @@
 	function setupRedlinks() {
 		$( document ).on(
 			'mouseover click',
-			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
+			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"]), ' +
+			'a[href*="action=edit"][href*="?redlink"]:not([href*="veaction=edit"])',
 			function () {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
@@ -393,13 +395,6 @@
 
 	if ( init.isAvailable ) {
 		$( function () {
-			if (mw.config.get('wgEnableVisualEditorTourExperiment')) {
-				mw.hook('ve.activationComplete').add(function initTour() {
-					require(['VisualEditorTourExperimentInit'], function (veTourInit) {
-						veTourInit.init();
-					});
-				});
-			}
 			if ( isViewPage && uri.query.veaction === 'edit' ) {
 				var isSection = uri.query.vesection !== undefined;
 				init.showLoading();

@@ -1,0 +1,19 @@
+@import 'skins/shared/mixins/flexbox';
+@import 'variables';
+
+$content-spacing-xlarge: 20px;
+$cards-module-line-height: 28px;
+$cards-module-margin-bottom: 42px;
+
+.community-page-cards-module-block {
+	@include flexbox();
+	@include flex-wrap(wrap);
+	margin-bottom: $cards-module-margin-bottom;
+}
+
+.community-page-cards-module-header {
+	font-size: $wds-typescale-size-plus-2;
+	font-weight: bold;
+	line-height: $cards-module-line-height;
+	margin-bottom: $content-spacing-xlarge;
+}

@@ -22,13 +22,14 @@ class UrlGenerator {
 	const MODE_ZOOM_CROP = 'zoom-crop';
 	const MODE_ZOOM_CROP_DOWN = 'zoom-crop-down';
 
-	const IMAGE_TYPE_AVATAR = "avatars";
-	const IMAGE_TYPE_IMAGES = "images";
+	const IMAGE_TYPE_AVATAR = 'avatars';
+	const IMAGE_TYPE_IMAGES = 'images';
 
-	const FORMAT_WEBP = "webp";
-	const FORMAT_JPG = "jpg";
+	const FORMAT_WEBP = 'webp';
+	const FORMAT_JPG = 'jpg';
+	const FORMAT_ORIGINAL = 'original';
 
-	const ZONE_TEMP = "temp";
+	const ZONE_TEMP = 'temp';
 
 	const REVISION_LATEST = 'latest';
 
@@ -248,7 +249,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function replaceThumbnail() {
-		$this->query['replace'] = "true";
+		$this->query['replace'] = 'true';
 		return $this;
 	}
 
@@ -262,6 +263,10 @@ class UrlGenerator {
 
 	public function jpg() {
 		return $this->format(self::FORMAT_JPG);
+	}
+
+	public function forceOriginal() {
+		return $this->format( self::FORMAT_ORIGINAL );
 	}
 
 	public function fromStash() {
@@ -299,7 +304,7 @@ class UrlGenerator {
 			$imagePath .= empty( $queryString ) ? '' : '?'.$queryString;
 		}
 
-		return $this->domainShard( $imagePath );
+		return $this->config->baseUrl() . '/' . $imagePath;
 	}
 
 	public function config() {
@@ -379,14 +384,5 @@ class UrlGenerator {
 	protected function imageType($type) {
 		$this->imageType = $type;
 		return $this;
-	}
-
-	protected function domainShard($imagePath) {
-		// shard based on original image, so frontends can build thumb urls from originals that might be cached in the
-		// user's browser (VE, for instance)
-		$hash = ord(sha1($this->config->relativePath()));
-		$shard = 1 + ($hash % ($this->config->domainShardCount() - 1));
-
-		return str_replace('<SHARD>', $shard, $this->config->baseUrl()) . "/{$imagePath}";
 	}
 }

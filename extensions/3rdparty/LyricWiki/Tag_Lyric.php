@@ -77,10 +77,10 @@ function lyricTagCss($out)
 	$css = <<<DOC
 .lyricbox
 {
-	padding: 1em 1em 0;
-	border: 1px solid silver;
-	color: black;
-	background-color: #ffffcc;
+	padding: 1em;
+	border: 1px solid #ccc;
+	color: #3a3a3a;
+	background-color: #f8f8f8;
 }
 .lyricsbreak{
 	clear:both;
@@ -92,7 +92,7 @@ DOC
 	return true;
 }
 
-function renderLyricTag($input, $argv, $parser)
+function renderLyricTag( $input, array $argv, Parser $parser, PPFrame $frame )
 {
 	wfProfileIn( __METHOD__ );
 
@@ -108,7 +108,7 @@ function renderLyricTag($input, $argv, $parser)
 	}
 
 	#parse embedded wikitext
-	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
+	$transform = $parser->recursiveTagParse( $transform, $frame );
 
 	$retVal = "";
 	$retVal.= gracenote_getNoscriptTag();

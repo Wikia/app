@@ -65,13 +65,13 @@ class ApiQueryBlocks extends ApiQueryBase {
 
 		$this->addFieldsIf ( 'ipb_id', $fld_id );
 		$this->addFieldsIf( array( 'ipb_address', 'ipb_user' ), $fld_user || $fld_userid );
-		$this->addFieldsIf( 'ipb_by_text', $fld_by );
+		$this->addFieldsIf( [ 'ipb_by', 'ipb_by_text' ], $fld_by );
 		$this->addFieldsIf( 'ipb_by', $fld_byid );
 		$this->addFieldsIf( 'ipb_timestamp', $fld_timestamp );
 		$this->addFieldsIf( 'ipb_expiry', $fld_expiry );
 		$this->addFieldsIf( 'ipb_reason', $fld_reason );
 		$this->addFieldsIf( array( 'ipb_range_start', 'ipb_range_end' ), $fld_range );
-		$this->addFieldsIf( array( 'ipb_anon_only', 'ipb_create_account', 'ipb_enable_autoblock',
+		$this->addFieldsIf( array( 'ipb_anon_only', 'ipb_enable_autoblock',
 									'ipb_block_email', 'ipb_deleted', 'ipb_allow_usertalk' ),
 							$fld_flags );
 
@@ -160,7 +160,7 @@ class ApiQueryBlocks extends ApiQueryBase {
 				$block['userid'] = $row->ipb_user;
 			}
 			if ( $fld_by ) {
-				$block['by'] = $row->ipb_by_text;
+				$block['by'] = \User::getUsername( $row->ipb_by, $row->ipb_by_text );
 			}
 			if ( $fld_byid ) {
 				$block['byid'] = $row->ipb_by;
@@ -186,9 +186,7 @@ class ApiQueryBlocks extends ApiQueryBase {
 				if ( $row->ipb_anon_only ) {
 					$block['anononly'] = '';
 				}
-				if ( $row->ipb_create_account ) {
-					$block['nocreate'] = '';
-				}
+
 				if ( $row->ipb_enable_autoblock ) {
 					$block['autoblock'] = '';
 				}

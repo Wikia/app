@@ -16,22 +16,6 @@ class WallMessageTest extends WikiaBaseTest {
 		$this->assertEquals( $wmMock->getWallOwner()->getName(), 'MessageWallTitle' );
 	}
 
-	/**
-	 * if article comment/title is not in database yet, we should use the article comment title's text as a fallback
-	 * to return wall owner name
-	 * @group Integration
-	 */
-	public function testGetWallOwnerACFallback() {
-		$acTitle = Title::newFromText( 'ArticleCommentTitle/@comment/xxx' );
-		$wallTitle = Title::newFromText( 'Empty' );  // it means we couldn't fetch the main wall/forum title from db
-		$wmMock = $this->getMock( 'WallMessage', [ 'getArticleTitle' ], [ $acTitle ] );
-		$wmMock->expects( $this->any() )
-			->method( 'getArticleTitle' )
-			->will( $this->returnValue( $wallTitle ) );
-		$this->assertEquals( $wmMock->getWallOwner()->getName(), 'ArticleCommentTitle' );
-
-	}
-
 	public function testNewFromIds() {
 		$slaveId = 1;
 		$onlyMasterId = 2;
@@ -43,17 +27,25 @@ class WallMessageTest extends WikiaBaseTest {
 			$notExistingId => null
 		];
 
-		$mockDb = $this->getDatabaseMock([ 'select', 'selectRow' ] );
+		$commentsIndexMock = $this->getMockBuilder( CommentsIndex::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'entriesFromIds' ] )
+			->getMock();
+		$commentsIndexMock->expects( $this->once() )
+			->method( 'entriesFromIds' )
+			->with( [ $slaveId ] )
+			->willReturn( [] );
+		$this->mockStaticMethod( CommentsIndex::class, 'getInstance', $commentsIndexMock );
+		$this->mockStaticMethodWithCallBack( 'Title', 'newFromId', function( int $id ) use ( $masterData ) {
+			return $masterData[$id] !== null
+				? $this->createConfiguredMock( Title::class, [ 'exists' => true ] )
+				: null;
+		} );
+
+		$mockDb = $this->getDatabaseMock([ 'select' ] );
 		$mockDb->expects( $this->exactly( 1 ) )
 			->method( 'select' )
 			->will( $this->returnValue( [ $this->getSlaveTitleRow() ] ) );
-
-		$mockDb->expects( $this->exactly( 2 ) )
-			->method( "selectRow" )
-			->will( $this->returnCallback(
-				function ( $table, $vars, $conds ) use ( $masterData ) {
-					return $masterData[ $conds[ 'page_id' ] ];
-				} ) );
 
 		$this->mockGlobalFunction( 'wfGetDb', $mockDb );
 

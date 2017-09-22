@@ -10,7 +10,7 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 	 *
 	 * @dataProvider TemplateParsingDataProvider
 	 */
-	public function testTemplateParsing( $config, $templateText, $expectedValue, $message ) {
+	public function testTemplateParsing( $config, $templateText, $expectedValue ) {
 		$this->mockClassWithMethods(
 			'Title',
 			[ 'getArticleId' => $config[ 'templateId' ] ]
@@ -27,7 +27,7 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 
 		TemplateTypesParser::onFetchTemplateAndTitle( $templateText, new Title );
 
-		$this->assertEquals( $expectedValue, $templateText, $message );
+		$this->assertEquals( $expectedValue, $templateText );
 	}
 
 	public function TemplateParsingDataProvider() {

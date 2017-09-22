@@ -22,7 +22,7 @@ class Autopromote {
 			}
 		}
 
-		wfRunHooks( 'GetAutoPromoteGroups', array( $user, &$promote ) );
+		Hooks::run( 'GetAutoPromoteGroups', array( $user, &$promote ) );
 
 		return $promote;
 	}
@@ -116,7 +116,11 @@ class Autopromote {
 				}
 				return false;
 			case APCOND_EDITCOUNT:
-				if ( !empty($wgEnableEditCountLocal) ) {
+				// Wikia change
+				// SUS-1290: If edit count condition is 0 skip edit count lookup
+				if ( $cond[1] === 0 ) {
+					return true;
+				} elseif ( !empty($wgEnableEditCountLocal) ) {
 					return $user->getEditCountLocal() >= $cond[1];
 				} else {
 					return $user->getEditCount() >= $cond[1];
@@ -140,7 +144,7 @@ class Autopromote {
 				return in_array( 'bot', User::getGroupPermissions( $user->getGroups() ) );
 			default:
 				$result = null;
-				wfRunHooks( 'AutopromoteCondition', array( $cond[0], array_slice( $cond, 1 ), $user, &$result ) );
+				Hooks::run( 'AutopromoteCondition', array( $cond[0], array_slice( $cond, 1 ), $user, &$result ) );
 				if ( $result === null ) {
 					throw new MWException( "Unrecognized condition {$cond[0]} for autopromotion!" );
 				}

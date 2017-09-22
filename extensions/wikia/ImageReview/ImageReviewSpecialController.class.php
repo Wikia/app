@@ -26,7 +26,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		// get more space for images
 		$this->wg->OasisFluid = true;
 		$this->wg->SuppressSpotlights = true;
-		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressCommunityHeader = true;
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 
@@ -151,7 +151,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
 
 		$this->wg->Out->setPageTitle($this->getStatsPageTitle());
-		$stats = $this->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
+
+		$helper = $this->getHelper();
+
+		$stats = $helper->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
 
 		$name = "ImageReviewStats-$startYear-$startMonth-$startDay-to-$endYear-$endMonth-$endDay";
 
@@ -265,9 +268,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} elseif ( $this->action == 'csvstats' ) {
 			$this->forward( get_class( $this ), 'csvStats' );
 		}
-
-		if ( !$this->ts || intval($this->ts) < 0 || intval($this->ts) > time() ) {
-			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . time() );
+		else {
+			// SUS-833: perform the redirect for Special:ImageReview only (ignore /stats and /csvstats)
+			if ( !$this->ts || intval( $this->ts ) < 0 || intval( $this->ts ) > time() ) {
+				$this->wg->Out->redirect( $this->submitUrl . '?ts=' . time() );
+			}
 		}
 	}
 

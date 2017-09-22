@@ -1,14 +1,15 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class HtmlHelperTest extends WikiaBaseTest {
+class HtmlHelperTest extends TestCase {
 
-	public function setUp() {
-		require_once( __DIR__ . '/../HtmlHelper.class.php' );
+	protected function setUp() {
+		require_once __DIR__ . '/../HtmlHelper.class.php';
 		parent::setUp();
 	}
 
 	/**
-	 * @dataProvider testStripAttributesDataProvider
+	 * @dataProvider stripAttributesDataProvider
 	 */
 	public function testStripAttributes( $html, $attribs, $expectedResult ) {
 		$this->assertEquals(
@@ -22,7 +23,7 @@ class HtmlHelperTest extends WikiaBaseTest {
 	 *
 	 * @return array
 	 */
-	public function testStripAttributesDataProvider() {
+	public function stripAttributesDataProvider() {
 		return [
 			[
 				'<a style="color: black">text</a>',

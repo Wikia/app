@@ -87,7 +87,10 @@ class GadgetHooks {
 			}
 
 			if ( $section !== '' ) {
-				$section = wfMsgExt( "gadget-section-$section", 'parseinline' );
+				// begin wikia change
+				// VOLDEV-186: wfMsg cleanup
+				$section = wfMessage( "gadget-section-$section" )->parse();
+				// end wikia change
 
 				if ( count ( $available ) ) {
 					$options[$section] = $available;
@@ -103,7 +106,10 @@ class GadgetHooks {
 				'label' => '&#160;',
 				'default' => Xml::tags( 'tr', array(),
 					Xml::tags( 'td', array( 'colspan' => 2 ),
-						wfMsgExt( 'gadgets-prefstext', 'parse' ) ) ),
+						// begin wikia change
+						// VOLDEV-186: wfMsg cleanup
+						wfMessage( 'gadgets-prefstext' )->parse() ) ),
+						// end wikia change
 				'section' => 'gadgets',
 				'raw' => 1,
 				'rawrow' => 1,
@@ -127,7 +133,7 @@ class GadgetHooks {
 	 * @param $resourceLoader ResourceLoader
 	 * @return bool
 	 */
-	public static function registerModules( &$resourceLoader ) {
+	public static function registerModules( ResourceLoader $resourceLoader ): bool {
 		$gadgets = Gadget::loadList();
 		if ( !$gadgets ) {
 			return true;

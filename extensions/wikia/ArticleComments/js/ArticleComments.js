@@ -226,7 +226,8 @@
 					method: 'axSave',
 					rs: 'ArticleCommentsAjax',
 					title: wgPageName,
-					wpArticleComment: content
+					wpArticleComment: content,
+					token: window.mw.user.tokens.get('editToken')
 
 				}, function (json) {
 					$throbber.css('visibility', 'hidden');
@@ -436,7 +437,7 @@
 					//$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
 
 					if (window.skin === 'oasis') {
-						$('#WikiaPageHeader, #WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
+						$('#WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
 
 						if (!parentId) {
 							ArticleComments.mostRecentCount = ArticleComments.mostRecentCount ?

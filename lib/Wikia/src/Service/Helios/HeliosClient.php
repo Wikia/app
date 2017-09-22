@@ -22,7 +22,7 @@ interface HeliosClient {
 	/**
 	 * A shortcut method for token invalidation requests.
 	 *
-	 * @param $token string - a token to be invalidated
+	 * @param $token  string - a token to be invalidated
 	 * @param $userId integer - the current user id
 	 *
 	 * @return string - json encoded response
@@ -46,4 +46,33 @@ interface HeliosClient {
 	 * @return array - JSON string deserialized into an associative array
 	 */
 	public function generateToken( $userId );
+
+	/**
+	 * Generate a new password for user
+	 *
+	 * @param $userId
+	 * @param $password
+	 *
+	 * @return mixed
+	 */
+	public function setPassword( $userId, $password );
+
+	/**
+	 * Ask Helios if password is valid
+	 *
+	 * @param $password string
+	 * @param $name     string
+	 *
+	 * @return mixed
+	 */
+	public function validatePassword( $password, $name );
+
+	/**
+	 * Remove the password
+	 *
+	 * @param $userId int
+	 *
+	 * @return mixed
+	 */
+	public function deletePassword( $userId );
 }

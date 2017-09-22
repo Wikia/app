@@ -23,18 +23,13 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->origUser = $wgUser;
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$this->fileName = self::PREFIX . str_replace( '$1', time(), self::FILENAME );
 
 		// get a hash of both external file
 		$this->fileHash = md5( Http::get( self::URL, 'default', ['noProxy' => true] ) );
 		$this->reuploadedFileHash = md5( Http::get( self::REUPLOAD_URL, 'default', ['noProxy' => true] ) );
-
-		// use Swift domain
-		global $wgDevelEnvironmentName;
-		// Disabling forcing the image domain due to BAC-1136
-		//$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
 
 		// debug
 		global $wgLocalFileRepo;

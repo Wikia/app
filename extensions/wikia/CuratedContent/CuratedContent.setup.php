@@ -28,10 +28,6 @@ $wgAutoloadClasses['CuratedContentHooks'] =  __DIR__ . '/CuratedContentHooks.cla
 $wgExtensionMessagesFiles['CuratedContent'] = __DIR__ . '/CuratedContent.i18n.php';
 $wgExtensionMessagesFiles['CuratedContentAlias'] = __DIR__ . '/CuratedContent.alias.php';
 
-// Special Page for Content Managment Tool
-$wgAutoloadClasses[ 'CuratedContentSpecialController'] =  __DIR__ . '/CuratedContentSpecialController.class.php' ;
-$wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialController';
-
 JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-duplicate-entry',
 	'wikiacuratedcontent-content-required-entry',
@@ -50,6 +46,7 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 $wgHooks['CuratedContentSave'][] = 'CuratedContentHooks::onCuratedContentSave';
 $wgHooks['SkinAfterBottomScripts'][] = 'CuratedContentHooks::onSkinAfterBottomScripts';
 $wgHooks['OutputPageBeforeHTML'][] = 'CuratedContentHooks::onOutputPageBeforeHTML';
+$wgHooks['BeforePrepareActionButtons'][] = 'CuratedContentHooks::onBeforePrepareActionButtons';
 
 // minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [

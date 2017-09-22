@@ -24,7 +24,10 @@ class UserProfilePageHooks {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static public function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis,
+		$sectionanchor, $flags, $revision, Status &$status, $baseRevId
+	): bool {
 		global $wgCityId;
 		if ( $revision !== NULL ) { // do not count null edits
 			$wikiId = intval( $wgCityId );
@@ -40,9 +43,9 @@ class UserProfilePageHooks {
 	/**
 	 * @brief WikiaMobile hook to add assets so they are minified and concatenated
 	 *
-	 * @param Array $jsStaticPackages
-	 * @param Array $jsExtensionPackages
-	 * @param Array $scssPackages
+	 * @param array $jsStaticPackages
+	 * @param array $jsExtensionPackages
+	 * @param array $scssPackages
 	 *
 	 * @return Boolean
 	 */
@@ -56,8 +59,11 @@ class UserProfilePageHooks {
 
 	/**
 	 * @brief hook handler
+	 * @param Skin $skin
+	 * @param QuickTemplate $template
+	 * @return bool true
 	 */
-	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
+	static public function onSkinTemplateOutputPageBeforeExec( Skin $skin, QuickTemplate $template ): bool {
 		return self::addToUserProfile( $skin, $template );
 	}
 
@@ -65,30 +71,29 @@ class UserProfilePageHooks {
 	 * @brief Monobook fallback for UUP
 	 *
 	 * @param Skin $skin
-	 * @param Object $tpl
+	 * @param QuickTemplate $tpl
 	 *
 	 * @return Boolean
 	 */
-	static function addToUserProfile( &$skin, &$tpl ) {
+	static function addToUserProfile( Skin $skin, QuickTemplate $tpl ): bool {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-		$wg = $app->wg;
-
 		// don't output on Oasis
-		if ( $app->checkSkin( 'oasis' ) ) {
+		if ( $skin->getSkinName() === 'oasis' ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$action = $wg->Request->getVal( 'action', 'view' );
-		if ( $wg->Title->getNamespace() != NS_USER || ( $action != 'view' && $action != 'purge' ) ) {
+		$title = $skin->getTitle();
+		$action = $skin->getRequest()->getVal( 'action', 'view' );
+
+		if ( !$title->inNamespace( NS_USER ) || ( $action != 'view' && $action != 'purge' ) ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		// construct object for the user whose page were' on
-		$user = User::newFromName( $wg->Title->getDBKey() );
+		$user = User::newFromName( $title->getDBKey() );
 
 		// sanity check
 		if ( !is_object( $user ) ) {
@@ -110,8 +115,10 @@ class UserProfilePageHooks {
 			return true;
 		}
 
-		if ( $app->checkSkin( 'wikiamobile' ) && !$user->isAnon() ) {
-			$wg->Out->prependHTML( $app->renderView( 'UserProfilePage', 'index' ) );
+		$outputPage = $skin->getOutput();
+
+		if ( $skin->getSkinName() === 'oasis' && !$user->isAnon() ) {
+			$outputPage->prependHTML( F::app()->renderView( 'UserProfilePage', 'index' ) );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -119,10 +126,11 @@ class UserProfilePageHooks {
 		$html = '';
 
 		$out = array();
-		wfRunHooks( 'AddToUserProfile', array( &$out, $user ) );
+		Hooks::run( 'AddToUserProfile', array( &$out, $user ) );
 
 		if ( count( $out ) > 0 ) {
-			$wg->Out->addExtensionStyle( "{$wg->ExtensionsPath}/wikia/UserProfilePageV3/css/UserprofileMonobook.css" );
+			global $wgExtensionsPath;
+			$outputPage->addExtensionStyle( "{$wgExtensionsPath}/wikia/UserProfilePageV3/css/UserprofileMonobook.css" );
 
 			$html .= "<div id='profile-content'>";
 			$html .= "<div id='profile-content-inner'>";
@@ -130,7 +138,7 @@ class UserProfilePageHooks {
 			$html .= "</div>";
 			$html .= "</div>";
 
-			$wg->Out->addStyle( "common/article_sidebar.css" );
+			$outputPage->addStyle( "common/article_sidebar.css" );
 
 			$html .= '<div class="article-sidebar">';
 			if ( isset( $out['UserProfile1'] ) ) {

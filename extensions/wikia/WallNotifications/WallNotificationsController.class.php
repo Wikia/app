@@ -6,9 +6,6 @@
  * Render Notifications in top-right corner of Wikia interface
  */
 class WallNotificationsController extends WallNotificationControllerBase {
-
-	const NOTIFICATION_TITLE_LIMIT = 48;
-
 	public function Index() {
 		wfProfileIn( __METHOD__ );
 		parent::Index();
@@ -28,10 +25,6 @@ class WallNotificationsController extends WallNotificationControllerBase {
 		// nothing to do in this controller
 	}
 
-	public function getTitle( $title ) {
-		return $title;
-	}
-
 	protected function areNotificationsSuppressedByExtensions() {
 		global $wgUser, $wgAtCreateNewWikiPage;
 
@@ -45,27 +38,5 @@ class WallNotificationsController extends WallNotificationControllerBase {
 
 	protected function setTemplate() {
 		$this->response->getView()->setTemplate( 'WallNotificationsController', 'NotifyEveryone' );
-	}
-
-	public function getEntityData() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
-		$revId = $this->getVal( 'revId' );
-		$useMasterDB = $this->getVal( 'useMasterDB', false );
-
-		$wn = new WallNotificationEntity();
-		if ( $wn->loadDataFromRevId( $revId, $useMasterDB ) ) {
-			$this->response->setData( [
-				'data' => $wn->data,
-				'parentTitleDbKey' => $wn->parentTitleDbKey,
-				'msgText' => $wn->msgText,
-				'threadTitleFull' => $wn->threadTitleFull,
-				'status' => 'ok',
-			] );
-		} else {
-			$this->response->setData( [
-				'status' => 'error'
-			] );
-		}
 	}
 }

@@ -6,6 +6,12 @@ class WikiService extends WikiaModel {
 		'sysop'
 	];
 
+	// groups related to content/discussion moderation (NOT chat moderation)
+	const MODERATOR_GROUPS = [
+		'content-moderator',
+		'threadmoderator'
+	];
+
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
@@ -22,7 +28,6 @@ class WikiService extends WikiaModel {
 	const WIKIAGLOBAL_CITY_ID = 80433;
 
 	const FLAG_PROMOTED = 4;
-	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
 
 	static $botGroups = [ 'bot', 'bot-global' ];
@@ -38,7 +43,7 @@ class WikiService extends WikiaModel {
 		1458396,
 		15510531,
 		24039613
-		/* Abuse filter users start */
+		/* Abuse filter users end */
 	];
 
 	protected $cityVisualizationObject = null;
@@ -61,7 +66,7 @@ class WikiService extends WikiaModel {
 			return [ $this->wg->FounderEmailsDebugUserId ];
 		}
 
-		$wikiId = empty( $wikiId ) ? $this->wg->CityId : $wikiId ;
+		$wikiId = $wikiId ? $wikiId : $this->wg->CityId;
 		$wiki = WikiFactory::getWikiById( $wikiId );
 
 		if ( empty( $wiki ) || $wiki->city_public != 1 ) {
@@ -84,11 +89,10 @@ class WikiService extends WikiaModel {
 			$memKey,
 			self::WIKI_ADMIN_IDS_CACHE_TTL,
 			function() use ( $wiki, $useMaster, $excludeBots, $limit ) {
-				$dbName = $wiki->city_dbname;
 				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
-				$db = wfGetDB( $dbType, [], $dbName );
+				$db = wfGetDB( $dbType, [], $wiki->city_dbname );
 
-				return self::getAdminIdsFromDB( $db, $excludeBots, $limit );
+				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::ADMIN_GROUPS );
 			}
 		);
 
@@ -97,8 +101,42 @@ class WikiService extends WikiaModel {
 		return $userIds;
 	}
 
-	private static function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
-		$conditions = [ 'ug_group' => self::ADMIN_GROUPS ];
+	/**
+	 * get list of wiki content/discussions moderator ids
+	 *
+	 * @param integer $wikiId - wiki Id (default: current wiki Id)
+	 * @param bool    $useMaster - flag that describes if we should use masted DB (default: false)
+	 * @param bool    $excludeBots - flag that describes if bots should be excluded from moderatorlist (default: false)
+	 * @param integer $limit - limit for the number of moderators
+	 *
+	 * @return array of $userIds
+	 */
+	public function getWikiModeratorIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
+		$wikiId = $wikiId ? $wikiId : $this->wg->CityId;
+		$wiki = WikiFactory::getWikiById( $wikiId );
+
+		if ( empty( $wiki ) || $wiki->city_public != 1 ) {
+			return [];
+		}
+
+		// Get moderators
+		$memKey = wfSharedMemcKey( 'wiki_content_moderator_ids', $wikiId, $excludeBots, $limit );
+		$moderatorIds = WikiaDataAccess::cache(
+			$memKey,
+			self::WIKI_ADMIN_IDS_CACHE_TTL,
+			function() use ( $wiki, $useMaster, $excludeBots, $limit ) {
+				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
+				$db = wfGetDB( $dbType, [], $wiki->city_dbname );
+
+				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::MODERATOR_GROUPS );
+			}
+		);
+
+		return array_unique( $moderatorIds );
+	}
+
+	private static function getUserIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null, $groups = self::ADMIN_GROUPS ) {
+		$conditions = [ 'ug_group' => $groups ];
 
 		if ( $excludeBots ) {
 			$groupList = $db->makeList( self::$botGroups );
@@ -207,7 +245,6 @@ class WikiService extends WikiaModel {
 
 				if ( $row ) {
 					$sitestats = array(
-						'views' => $row->ss_total_views,
 						'edits' => $row->ss_total_edits,
 						'articles' => $row->ss_good_articles,
 						'pages' => $row->ss_total_pages,
@@ -356,13 +393,15 @@ class WikiService extends WikiaModel {
 			$userStatsService = new UserStatsService($userId, $wikiId);
 			$stats = $userStatsService->getStats();
 
-			if(!empty($stats['firstRevisionDate'])) {
-				$date = getdate(strtotime($stats['firstRevisionDate']));
+			$placeHolderDate = getdate( strtotime( '2005-06-01' ) );
+
+			if ( !empty( $stats['firstContributionTimestamp'] ) ) {
+				$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
 			} else {
-				$date = getdate(strtotime('2005-06-01'));
+				$date = $placeHolderDate;
 			}
 
-			$userInfo['lastRevision'] = $stats['lastRevisionDate'];
+			$userInfo['lastRevision'] = $stats['lastContributionTimestamp'] ?? '2005-06-01';
 
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
@@ -650,7 +689,9 @@ class WikiService extends WikiaModel {
 				}
 			}
 
-			$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
+			if ( !empty( $results ) ) {
+				$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -842,8 +883,7 @@ class WikiService extends WikiaModel {
 				),
 				array(
 					'city_list.city_public' => 1,
-					'city_list.city_id' => $wikiIds,
-					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
+					'city_list.city_id' => $wikiIds
 				),
 				__METHOD__,
 				array(),

@@ -49,14 +49,16 @@ class VideoService extends WikiaModel {
 				$videoTitle = $title;
 				$videoPageId = $title->getArticleId();
 				$videoProvider = '';
-				wfRunHooks( 'AddPremiumVideo', array( $title ) );
+				Hooks::run( 'AddPremiumVideo', array( $title ) );
 			} else {
 				if ( empty( $this->wg->allowNonPremiumVideos ) ) {
 					wfProfileOut( __METHOD__ );
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				$file = RepoGroup::singleton()->findFile( $videoTitle );
+
+				// SUS-1195: by-pass the RepoGroup process cache
+				$file = WikiaFileHelper::getFileFromTitle( $videoTitle, true /* by-pass the cache */ );
 			}
 
 			if ( !( $file instanceof File ) ) {
