@@ -34,8 +34,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			@include absolute-fill();
 		}
 
-		&.vpaid-enabled video {
-			z-index: $vpaid-z-index;
+		&.vpaid-enabled {
+			video, > div:last-child {
+				z-index: $vpaid-z-index;
+			}
 		}
 
 		.video-player {
