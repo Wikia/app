@@ -48,12 +48,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 	}
 
 	function getAdUnit(options, slotParams) {
-		if (!options.adUnit && adContext.get('opts.megaAdUnitBuilderEnabled')) {
-			// TODO: remove it after merge & release ADEN-5825 mobile-wiki, this is cache related backward compatibility
-			options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
-		}
-
-		return (options.adUnit || adUnitBuilder.build(slotParams.pos, slotParams.src));
+		return options.adUnit || adUnitBuilder.build(slotParams.pos, slotParams.src);
 	}
 
 	function build(aspectRatio, slotParams, options) {
