@@ -163,6 +163,7 @@ define('ext.wikia.adEngine.video.player.porvata.floater', [
 			listeners.adCompleted = function () {
 				disableFloating(floatingContext);
 				elements.video.removeEventListener('wikiaAdCompleted', listeners.adCompleted);
+				win.removeEventListener('scroll', listeners.scroll);
 			};
 			elements.video.addEventListener('wikiaAdCompleted', listeners.adCompleted);
 
