@@ -151,14 +151,24 @@ class RecirculationHooks {
 	}
 
 	private static function shouldIndex() {
+		return self::isPrivateOrProduction() || self::isCorrectNameSpace();
+	}
+
+	private static function isPrivateOrProduction() {
 		global $wgCityId, $wgIsPrivateWiki;
 
-		$context = RequestContext::getMain();
-		$title = $context->getTitle();
 		$isProduction = self::checkIfIsProduction();
 		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
 
-		return ( !$isProduction || $isPrivateWiki || $title->inNamespace( NS_FILE ) ) ||
+		return !$isProduction || $isPrivateWiki;
+	}
+
+	private static function isCorrectNameSpace() {
+		$context = RequestContext::getMain();
+		$title = $context->getTitle();
+
+		return $title->inNamespace( NS_FILE ) ||
 			( $title->inNamespace( NS_BLOG_ARTICLE ) && empty( $metaDataFromService ) );
 	}
+
 }
