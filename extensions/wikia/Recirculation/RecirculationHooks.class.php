@@ -71,10 +71,8 @@ class RecirculationHooks {
 
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE, NS_BLOG_ARTICLE ] );
 
-		if ( $wg->Title->exists() &&
-			in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
-			$wg->request->getVal( 'action', 'view' ) === 'view' &&
-			$wg->request->getVal( 'diff' ) === null &&
+		if ( ( $wg->Title->exists() && in_array( $wg->Title->getNamespace(), $showableNameSpaces ) ) &&
+			( $wg->request->getVal( 'action', 'view' ) === 'view' && $wg->request->getVal( 'diff' ) === null ) &&
 			!WikiaPageType::isCorporatePage()
 		) {
 			return true;
@@ -154,14 +152,13 @@ class RecirculationHooks {
 
 	private static function shouldIndex() {
 		global $wgCityId, $wgIsPrivateWiki;
+
 		$context = RequestContext::getMain();
 		$title = $context->getTitle();
 		$isProduction = self::checkIfIsProduction();
 		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
 
-		return !$isProduction ||
-			$isPrivateWiki ||
-			$title->inNamespace( NS_FILE ) ||
+		return ( !$isProduction || $isPrivateWiki || $title->inNamespace( NS_FILE ) ) ||
 			( $title->inNamespace( NS_BLOG_ARTICLE ) && empty( $metaDataFromService ) );
 	}
 }
