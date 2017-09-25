@@ -85,6 +85,15 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				flush: noop,
 				setPageLevelParams: noop
 			},
+			doc: {
+				getElementById: function () {
+					return {
+						getAttribute: function () {
+							return '{uap: "none"}';
+						}
+					}
+				}
+			},
 			geo: {
 				isProperGeo: function() {
 					return false;
@@ -109,6 +118,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
+			mocks.doc,
 			mocks.geo,
 			{},
 			mocks.log,

@@ -2,36 +2,63 @@
 define('ext.wikia.adEngine.template.roadblock', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	require.optional('ext.wikia.adEngine.template.skin'),
-	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
+	'wikia.window',
 	'wikia.log'
 ], function (
 	adContext,
 	uapContext,
-	btfBlocker,
 	googleSlots,
-	helper,
+	gptHelper,
 	skinTemplate,
-	slotTweaker,
 	doc,
+	win,
 	log
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.roadblock',
 		uapType = 'ruap',
-		tlbSlot = doc.getElementById('TOP_LEADERBOARD') || doc.getElementById('MOBILE_TOP_LEADERBOARD'),
-		medrecSlot = doc.getElementById('TOP_RIGHT_BOXAD'),
-		unblockedSlotsNames = [
-			'BOTTOM_LEADERBOARD',
-			'INCONTENT_PLAYER',
-			'INCONTENT_BOXAD_1',
-			'INVISIBLE_HIGH_IMPACT_2'
-		];
+		medrecSlotEl = doc.getElementById('TOP_RIGHT_BOXAD');
+
+	/**
+	 * Handles medrec slot in case of UAP:roadblock
+	 * @param {Node} medrecSlotEl - medrec slot container element
+	 */
+	function handleMedrec(medrecSlotEl, uapId) {
+		var refreshed = false;
+
+		win.addEventListener('adengine.slot.status', function onAdStatusChange(event) {
+			var gptParams = {},
+				isMedrec = event.detail.slot.name === medrecSlotEl.id,
+				isSuccess = event.detail.adInfo.status === 'success',
+				medrecGptSlot = googleSlots.getSlotByName(medrecSlotEl.id);
+
+			if (!isMedrec && !isSuccess) {
+				return;
+			}
+
+			try {
+				gptParams = JSON.parse(doc.getElementById(medrecGptSlot.getSlotElementId()).getAttribute('data-gpt-slot-params'));
+			} catch (error) {
+				log(['handleMedrec', 'cannot parse GPT params', medrecSlotEl.id], log.levels.error, logGroup);
+			}
+
+			// refresh once if medrec is not related with UAP:Roadblock
+			if (gptParams.uap !== uapId.toString() && !refreshed) {
+				medrecSlotEl.style.opacity = '0';
+				gptHelper.refreshSlot(medrecGptSlot);
+				refreshed = true;
+				log(['handleMedrec', 'refreshing slot', medrecSlotEl.id], log.levels.info, logGroup);
+			} else {
+				medrecSlotEl.style.opacity = '';
+				win.removeEventListener('adengine.slot.status', onAdStatusChange);
+			}
+		});
+	}
 
 	/**
 	 * @param {object} params
@@ -44,19 +71,15 @@ define('ext.wikia.adEngine.template.roadblock', [
 		uapContext.setUapId(params.uap);
 		uapContext.setType(uapType);
 
-		slotTweaker.onReady(tlbSlot.id, function () {
-			if (medrecSlot) {
-				log(['show', 'refreshing slot', medrecSlot.id], log.levels.info, logGroup);
-				helper.refreshSlot(googleSlots.getSlotByName(medrecSlot.id));
-			}
-		});
+		if (medrecSlotEl) {
+			handleMedrec(medrecSlotEl, params.uap);
+		}
 
-		if (isSkinAvailable) {
+		if (skinTemplate && isSkinAvailable) {
 			log(['show', 'loading skin', params.skin], log.levels.info, logGroup);
 			skinTemplate.show(params.skin);
 		}
 
-		unblockedSlotsNames.forEach(btfBlocker.unblock);
 		log(['show', params.uap], log.levels.info, logGroup);
 	}
 

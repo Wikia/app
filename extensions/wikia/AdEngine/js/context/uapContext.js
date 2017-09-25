@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.context.uapContext', [
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.context.uapContext',
 		mainSlotName = 'TOP_LEADERBOARD',
-		uapTypes = ['uap', 'vuap', 'ruap'];
+		uapTypes = ['uap', 'vuap'];
 
 	function setUapId(uap) {
 		context.uapId = uap;
