@@ -13,6 +13,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
@@ -33,6 +34,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockDetection,
 	adBlockRecovery,
 	slotTweaker,
+	doc,
 	geo,
 	instantGlobals,
 	log,
@@ -196,7 +198,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	}
 
 	function refreshTargetingData(slot) {
-		slot.setTargeting('uap', uapContext.getUapId().toString());
+		var el = doc.getElementById(slot.getSlotElementId()),
+			gptParams = JSON.parse(el.getAttribute('data-gpt-slot-params'));
+
+		gptParams.uap = uapContext.getUapId().toString();
+		slot.setTargeting('uap', gptParams.uap);
+		el.setAttribute('data-gpt-slot-params', JSON.stringify(gptParams));
 		return slot;
 	}
 
