@@ -265,10 +265,10 @@ class WikiaPageType {
 	/**
 	 * Check if current page is corporate page
 	 *
-	 * @return false
-	 * @deprecated
+	 * @param int|null $wikiId
+	 * @return bool
 	 */
-	public static function isCorporatePage() {
-		return false;
+	public static function isCorporatePage( $wikiId = null ) {
+		return self::isWikiaHomePage( $wikiId );
 	}
 }
