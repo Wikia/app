@@ -40,11 +40,7 @@ class EditHubModel extends WikiaModel {
 			WikiaHubsModulePopularvideosService::MODULE_ID => 'popular-videos'
 		];
 
-		if ($this->wg->DisableWAMOnHubs) {
-			$this->nonEditableModules[WikiaHubsModuleWikiastatsService::MODULE_ID] = 'wikia-stats';
-		} else {
-			$this->nonEditableModules[WikiaHubsModuleWAMService::MODULE_ID] = 'wam';
-		}
+		$this->nonEditableModules[WikiaHubsModuleWAMService::MODULE_ID] = 'wam';
 
 		$this->modules = $this->editableModules + $this->nonEditableModules;
 
