@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	adContext,
 	btfBlocker,
 	gptHelper,
-	adUnitBuilder,
+	defaultAdUnitBuilder,
 	slotRegistry,
 	log,
 	lookups
@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {string} src          - src to set in slot targeting
 	 * @param {Object} slotMap      - slot map (slot name => targeting)
 	 * @param {Object} [extra]      - optional extra params
-	 * @param {function} [extra.adUnitBuilder]  - provider's ad unit builder object
+	 * @param {function} [extra.getAdUnitBuilder]  - provider's ad unit builder function
 	 * @param {function} [extra.beforeSuccess]  - function to call before calling success
 	 * @param {function} [extra.beforeCollapse] - function to call before calling collapse
 	 * @param {function} [extra.beforeHop]      - function to call before calling hop
@@ -68,15 +68,15 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function getAdUnit(slot) {
-			if (extra.adUnitBuilder) {
-				return extra.adUnitBuilder.build(slot.name, src);
+			if (extra.getAdUnitBuilder) {
+				return extra.getAdUnitBuilder().build(slot.name, src);
 			}
 
-			return adUnitBuilder.build(slot.name, src);
+			return defaultAdUnitBuilder.build(slot.name, src);
 		}
 
 		function fillInSlot(slot) {
-			log(['fillInSlot', slot.name], 'debug', logGroup);
+			log(['fillInSlot', slot.name, providerName], 'debug', logGroup);
 
 			var slotPath = getAdUnit(slot),
 				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])); // copy value
@@ -93,14 +93,16 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			if (lookups) {
 				lookups.storeRealSlotPrices(slot.name);
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
+				slotRegistry.storeScrollY(slot.name);
 			}
 
 			gptHelper.pushAd(slot, slotPath, slotTargeting, {
 				sraEnabled: extra.sraEnabled,
+				isInstartLogicRecoverable: extra.isInstartLogicRecoverable ? extra.isInstartLogicRecoverable(slot.name) : false,
 				isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slot.name) : false,
 				isSourcePointRecoverable: extra.isSourcePointRecoverable ? extra.isSourcePointRecoverable(slot.name) : false
 			});
-			log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
+			log(['fillInSlot', slot.name, providerName, 'done'], 'debug', logGroup);
 		}
 
 		return {

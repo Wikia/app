@@ -8,11 +8,7 @@ describe('AdContext', function () {
 	}
 
 	var mocks = {
-			abTesting: {
-				getGroup: function () {
-					return 'group';
-				}
-			},
+			browserDetect: {},
 			geo: {
 				getCountryCode: function () {
 					return 'CURRENT_COUNTRY';
@@ -67,7 +63,7 @@ describe('AdContext', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
-			mocks.abTesting,
+			mocks.browserDetect,
 			mocks.wikiaCookies,
 			mocks.doc,
 			mocks.geo,
@@ -773,6 +769,22 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.evolve2).toBeFalsy();
 	});
 
+	it('enables FAN provider when provider is enabled by wg var', function () {
+		var adContext;
+		mocks.win = {
+			ads: {
+				context: {
+					providers: {
+						audienceNetwork: true
+					}
+				}
+			}
+		};
+
+		adContext = getModule();
+		expect(adContext.getContext().providers.audienceNetwork).toBeTruthy();
+	});
+
 	it('disable overriding prefooters sizes for mercury', function () {
 		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
 		mocks.win = {
@@ -882,15 +894,263 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
 	});
 
-	it('Enable KILO ad unit builder', function () {
-		mocks.instantGlobals = {wgAdDriverKILOCountries: ['CURRENT_COUNTRY']};
+	[
+		{
+			wgCountry: ['CURRENT_COUNTRY'],
+			sampler: true,
+			expectedResult: true
+		},
+		{
+			wgCountry: ['CURRENT_COUNTRY'],
+			sampler: false,
+			expectedResult: false
+		},
+		{
+			wgCountry: ['OTHER_COUNTRY'],
+			sampler: true,
+			expectedResult: false
+		},
+		{
+			wgCountry: ['OTHER_COUNTRY'],
+			sampler: false,
+			expectedResult: false
+		}
+	].forEach(function (testCase) {
+		var description = 'MOAT for featured video should be ' + (testCase.expectedResult ? 'enabled' : 'disabled') +
+			' for countries: '  + JSON.stringify(testCase.wgCountry) + ' and sampling: ' + testCase.sampler;
 
-		expect(getModule().getContext().opts.enableKILOAdUnit).toBeTruthy();
+		it(description, function () {
+			mocks.instantGlobals = {wgAdDriverMoatTrackingForFeaturedVideoAdCountries: testCase.wgCountry};
+			spyOn(mocks.sampler, 'sample').and.returnValue(testCase.sampler);
+
+			expect(getModule().getContext().opts.isMoatTrackingForFeaturedVideoEnabled).toEqual(testCase.expectedResult);
+		});
 	});
 
-	it('Disable KILO ad unit builder', function () {
-		mocks.instantGlobals = {wgAdDriverKILOCountries: ['AA']};
+	it('Should set by default sampling for MOAT FV on 1% of traffic', function () {
+		mocks.instantGlobals = {wgAdDriverMoatTrackingForFeaturedVideoAdCountries: ['CURRENT_COUNTRY']};
+		spyOn(mocks.sampler, 'sample');
 
-		expect(getModule().getContext().opts.enableKILOAdUnit).toBeFalsy();
+		getModule().getContext();
+
+		var moatSamplerArgs = mocks.sampler.sample.calls.allArgs()[0];
+
+		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
+		expect(moatSamplerArgs[1]).toEqual(1);
+	});
+
+	it('Should set sampling for MOAT FV based on wgVar', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMoatTrackingForFeaturedVideoAdCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverMoatTrackingForFeaturedVideoAdSampling: 25
+		};
+		spyOn(mocks.sampler, 'sample');
+
+		getModule().getContext();
+
+		var moatSamplerArgs = mocks.sampler.sample.calls.allArgs()[0];
+
+		expect(moatSamplerArgs[0]).toEqual('moatTrackingForFeaturedVideo');
+		expect(moatSamplerArgs[1]).toEqual(25);
+	});
+
+	it('Should enable MEGA ad unit builder only for featured video pages', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
+		};
+
+		var context = {
+			targeting: {
+				hasFeaturedVideo: true,
+				skin: 'oasis',
+				pageType: 'article'
+			}
+		};
+
+		getModule().setContext(context);
+		expect(context.opts.megaAdUnitBuilderEnabled).toEqual(true);
+
+	});
+
+	[
+		{
+			hasFeaturedVideo: true,
+			instantGlobals: {
+				wgAdDriverVelesBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'veles',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverVelesBidderCountries: ['ZZ']
+			},
+			testedBidder: 'veles',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverVelesBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'veles',
+			expectedResult: true
+		},
+		{
+			hasFeaturedVideo: true,
+			instantGlobals: {
+				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'rubicon',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverRubiconPrebidCountries: ['ZZ']
+			},
+			testedBidder: 'rubicon',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'rubicon',
+			expectedResult: true
+		},
+		{
+			hasFeaturedVideo: true,
+			instantGlobals: {
+				wgAdDriverAppNexusAstBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'appnexusAst',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverAppNexusAstBidderCountries: ['ZZ']
+			},
+			testedBidder: 'appnexusAst',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverAppNexusAstBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'appnexusAst',
+			expectedResult: true
+		}
+	].forEach(function (testCase) {
+		it('Test bidder configuration', function () {
+			getModule().setContext({
+				targeting: {
+					hasFeaturedVideo: testCase.hasFeaturedVideo
+				}
+			});
+			mocks.instantGlobals = testCase.instantGlobals;
+
+			expect(getModule().getContext().bidders[testCase.testedBidder]).toEqual(testCase.expectedResult);
+		});
+	});
+
+	it('Should disable MEGA on non-FV mobile page', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
+		};
+
+		var context = {
+			targeting: {
+				hasFeaturedVideo: false,
+				skin: 'oasis',
+				pageType: 'article'
+			}
+		};
+
+		getModule().setContext(context);
+		expect(context.opts.megaAdUnitBuilderEnabled).toBeFalsy();
+	});
+
+	it('Should enable MEGA on FV mobile page', function () {
+		mocks.instantGlobals = {
+			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
+		};
+
+		var context = {
+			targeting: {
+				hasFeaturedVideo: true,
+				skin: 'mercury',
+				pageType: 'article'
+			}
+		};
+
+		getModule().setContext(context);
+		expect(context.opts.megaAdUnitBuilderEnabled).toBeTruthy();
+	});
+
+	it('return value by string', function () {
+
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						showAds: 'A',
+						xxx: 'B',
+						countries: ['PL', 'US', 'CA'],
+						negativeValue: false
+					},
+					targeting: {
+						yyy: 'C'
+					},
+					test: {
+						q: 'W',
+						w: 'E'
+					}
+				}
+			}
+		};
+
+		expect(getModule().get('opts.showAds')).toEqual('A');
+		expect(getModule().get('opts.xxx')).toEqual('B');
+		expect(getModule().get('test')).toEqual(mocks.win.ads.context.test);
+		expect(getModule().get('opts.countries')).toEqual(mocks.win.ads.context.opts.countries);
+		expect(getModule().get()).toEqual(getModule().getContext());
+		expect(getModule().get().test).toEqual(mocks.win.ads.context.test);
+		expect(getModule().get('opts.negativeValue')).toEqual(false);
+	});
+
+	it('return undefined if value cant be found', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						showAds: 'A',
+						xxx: 'B',
+						countries: ['PL', 'US', 'CA']
+					},
+					targeting: {
+						yyy: 'C'
+					},
+					test: {
+						q: 'W',
+						w: 'E'
+					}
+				}
+			}
+		};
+
+		expect(getModule().get('not.existing.path')).toBeUndefined();
+		expect(getModule().get('opts.partially_existing_path')).toBeUndefined();
+		expect(getModule().get('opts..partially_existing_path')).toBeUndefined();
+		expect(getModule().get('..')).toBeUndefined();
+		expect(getModule().get('..')).toBeUndefined();
+		expect(getModule().get('opts..showAds')).toBeUndefined();
 	});
 });

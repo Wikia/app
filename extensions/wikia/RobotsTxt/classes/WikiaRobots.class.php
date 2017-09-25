@@ -121,8 +121,7 @@ class WikiaRobots {
 	 * @param PathBuilder $pathBuilder
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
-		global $wgAllowSpecialImagesInRobots,
-			   $wgRequest,
+		global $wgRequest,
 			   $wgRobotsTxtCustomRules,
 			   $wgWikiaEnvironment;
 
@@ -134,10 +133,6 @@ class WikiaRobots {
 			foreach ( (array) $wgRobotsTxtCustomRules['allowSpecialPage'] as $page ) {
 				$this->allowedSpecialPages[$page] = 'allow';
 			}
-		}
-
-		if ( !empty( $wgAllowSpecialImagesInRobots ) ) {
-			$this->allowedSpecialPages['Images'] = 'allow';
 		}
 
 		// TODO: reverse the logic

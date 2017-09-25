@@ -1126,13 +1126,6 @@ $messages['ps'] = array(
 
 $messages['pt'] = array(
 	'qbfind' => 'Procurar',
-	'querypage-no-updates' => 'As actualizações estão presentemente desactivadas para esta página.
-Por enquanto, os dados aqui presentes não poderão ser actualizados.',
-	'querypage-disabled' => 'Esta página especial está desactivada para não prejudicar o desempenho.',
-);
-
-$messages['pt-br'] = array(
-	'qbfind' => 'Procurar',
 	'querypage-no-updates' => 'Momentaneamente as atualizações para esta página estão desativadas. Por enquanto, os dados aqui presentes não poderão ser atualizados.',
 	'querypage-disabled' => 'Esta página especial está desativada para não prejudicar o desempenho.',
 );
@@ -1565,14 +1558,6 @@ $messages['zh-hant'] = array(
 	'qbfind' => '尋找',
 	'querypage-no-updates' => '目前禁止對此頁面進行更新。此處的資料將不能被立即重新整理。',
 	'querypage-disabled' => '此特殊頁面基於效能的原因已經被停用。',
-);
-
-$messages['zh-tw'] = array(
-	'qbfind' => '尋找',
-);
-
-$messages['zh-yue'] = array(
-	'qbfind' => '尋找',
 );
 
 $messages['zu'] = array(

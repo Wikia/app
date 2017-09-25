@@ -37,7 +37,7 @@ $(function () {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
 
-		params.isAdMixExperimentEnabled = window.ads.context.opts.adMixExperimentEnabled;
+		params.isPremiumAdLayoutEnabled = window.ads.context.opts.premiumAdLayoutEnabled;
 
 		$.extend(params, getParamsFromUrl());
 
@@ -83,8 +83,21 @@ $(function () {
 
 					require([
 						'wikia.window',
+						require.optional('ext.wikia.adEngine.adContext'),
+						require.optional('ext.wikia.adEngine.slot.premiumFloatingMedrec'),
 						require.optional('ext.wikia.adEngine.slot.floatingMedrec')
-					], function (win, floatingMedrec) {
+					], function (win, adContext, premiumFloatingMedrec, floatingMedrec) {
+						if (!adContext) {
+							return;
+						}
+
+						var context = adContext.getContext();
+
+						if (context.opts.premiumAdLayoutEnabled && premiumFloatingMedrec) {
+							win.wgAfterContentAndJS.push(premiumFloatingMedrec.init);
+							return;
+						}
+
 						if (floatingMedrec) {
 							win.wgAfterContentAndJS.push(floatingMedrec.init);
 						}

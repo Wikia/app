@@ -3,7 +3,7 @@
 /**
  * Provides an API for tracking page views on Lyrics Wiki
  */
-class LyricFindTrackingService extends WikiaService {
+class LyricFindTrackingService extends WikiaObject {
 
 	use Wikia\Logger\Loggable;
 
@@ -26,7 +26,7 @@ class LyricFindTrackingService extends WikiaService {
 	 * @return bool result
 	 */
 	private function markLyricForRemoval($pageId) {
-		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 1);
+		wfSetWikiaPageProp( WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 1 );
 
 		$this->info( __METHOD__ . ' - marked page for removal', [ 'page_id' => $pageId ] );
 		return true;
@@ -42,7 +42,7 @@ class LyricFindTrackingService extends WikiaService {
 	 * @return bool result
 	 */
 	private function markLyricAsNotRemoved($pageId) {
-		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 0);
+		wfSetWikiaPageProp( WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 0 );
 
 		$this->info( __METHOD__ . ' - marked page as no longer removed', [ 'page_id' => $pageId ] );
 		return true;
@@ -147,7 +147,9 @@ class LyricFindTrackingService extends WikiaService {
 				case self::CODE_LYRIC_IS_INSTRUMENTAL:
 				case self::CODE_LYRIC_IS_AVAILABLE:
 					// LyricFind has reported that the page is okay. If it was banned before, unban it.
-					$removedProp = $this->wf->GetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $this->wg->Title->getArticleID());
+					$removedProp =
+						wfGetWikiaPageProp( WPP_LYRICFIND_MARKED_FOR_REMOVAL,
+							$this->wg->Title->getArticleID() );
 					$isMarkedAsRemoved = (!empty($removedProp));
 					if($isMarkedAsRemoved){
 						$this->markLyricAsNotRemoved($this->wg->Title->getArticleID());

@@ -25,7 +25,6 @@
 
 				// render talk page / edit similar / community message notification
 				case NotificationsController::NOTIFICATION_TALK_PAGE_MESSAGE:
-				case NotificationsController::NOTIFICATION_EDIT_SIMILAR:
 				case NotificationsController::NOTIFICATION_COMMUNITY_MESSAGE:
 ?>
 		<div data-type="<?= $notification['type'] ?>">

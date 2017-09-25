@@ -16,8 +16,7 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.template.floatingRail')
+	'wikia.window'
 ], function (
 	adContext,
 	adEngineRunner,
@@ -34,8 +33,7 @@ require([
 	slotTweaker,
 	sourcePointDetection,
 	adBlockDetection,
-	win,
-	floatingRail
+	win
 ) {
 	'use strict';
 
@@ -57,10 +55,6 @@ require([
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
-		if (floatingRail) {
-			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
-		}
-
 		adInfoTracker.run();
 		slotStateMonitor.run();
 
@@ -102,7 +96,8 @@ require([
 	win
 ) {
 	'use strict';
-	var context = adContext.getContext();
+	var context = adContext.getContext(),
+		premiumSlots = context.slots.premiumAdLayoutSlotsToUnblock;
 
 	function initDesktopSlots() {
 		highImpact.init();
@@ -111,7 +106,8 @@ require([
 	}
 
 	win.addEventListener('wikia.uap', bottomLeaderboard.init);
-	if (context.opts.adMixExperimentEnabled && context.slots.adMixToUnblock.indexOf('BOTTOM_LEADERBOARD') >= 0) {
+
+	if (context.opts.premiumAdLayoutEnabled && premiumSlots.indexOf('BOTTOM_LEADERBOARD') >= 0) {
 		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
 	}
 

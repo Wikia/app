@@ -69,7 +69,7 @@ abstract class WikiaParserTagController extends WikiaController {
 		return $markerId;
 	}
 
-	public final function onParserAfterTidy( Parser &$parser, &$text ) {
+	public final function onParserAfterTidy( Parser $parser, &$text ) {
 		if ( !$this->wg->ArticleAsJson ) {
 			$text = $this->replaceMarkers( $text );
 		}

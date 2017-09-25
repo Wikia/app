@@ -245,7 +245,6 @@ class WikiService extends WikiaModel {
 
 				if ( $row ) {
 					$sitestats = array(
-						'views' => $row->ss_total_views,
 						'edits' => $row->ss_total_edits,
 						'articles' => $row->ss_good_articles,
 						'pages' => $row->ss_total_pages,
@@ -394,13 +393,15 @@ class WikiService extends WikiaModel {
 			$userStatsService = new UserStatsService($userId, $wikiId);
 			$stats = $userStatsService->getStats();
 
-			if(!empty($stats['firstRevisionDate'])) {
-				$date = getdate(strtotime($stats['firstRevisionDate']));
+			$placeHolderDate = getdate( strtotime( '2005-06-01' ) );
+
+			if ( !empty( $stats['firstContributionTimestamp'] ) ) {
+				$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
 			} else {
-				$date = getdate(strtotime('2005-06-01'));
+				$date = $placeHolderDate;
 			}
 
-			$userInfo['lastRevision'] = $stats['lastRevisionDate'];
+			$userInfo['lastRevision'] = $stats['lastContributionTimestamp'] ?? '2005-06-01';
 
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}

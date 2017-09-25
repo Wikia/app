@@ -25,6 +25,12 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = {},
 		prebidLoaded = false;
 
+	function removeAdUnits() {
+		(win.pbjs.adUnits || []).forEach(function (adUnit) {
+			win.pbjs.removeAdUnit(adUnit.code);
+		});
+	}
+
 	function call(skin, onResponse) {
 		var prebid, node;
 
@@ -33,6 +39,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			node = doc.getElementsByTagName('script')[0];
 
 			adaptersRegistry.setupCustomAdapters();
+			adaptersRegistry.registerAliases();
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
@@ -43,17 +50,22 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
 		adUnits = helper.setupAdUnits(skin);
 
+		if (win.pbjs) {
+			win.pbjs._bidsReceived = [];
+		}
+
 		if (adUnits.length > 0) {
 
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
 					win.pbjs.bidderSettings = settings.create();
-					win.pbjs.addAdUnits(adUnits);
 				});
 			}
 
 			win.pbjs.que.push(function () {
+				removeAdUnits();
 				win.pbjs.requestBids({
+					adUnits: adUnits,
 					bidsBackHandler: onResponse
 				});
 			});

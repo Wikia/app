@@ -1,3 +1,4 @@
+/*global describe, expect, it, modules*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', function () {
 	'use strict';
 
@@ -10,97 +11,104 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 		context: {
 			targeting: {
 				mappedVerticalName: ''
+			},
+			opts: {
+				premiumAdLayoutEnabled: true,
+				premiumAdLayoutAppNexusTagsEnabled: false
 			}
 		},
-		instantGlobals: {
-			dev: {
-				wgAdDriverAppNexusBidderPlacementsConfig: {
-					mercury: {
-						entertainment: "9412980",
-						gaming: "9412981",
-						lifestyle: "9412982",
-						other: "9412982"
-					},
-					oasis: {
-						entertainment: '9412971',
-						gaming: '9412972',
-						lifestyle: '9412973',
-						other: '9412973'
-					}
-				}
-			},
-			prod: {
-				wgAdDriverAppNexusBidderPlacementsConfig: {
-					mercury: {
-						entertainment: '9412992',
-						gaming: '9412993',
-						lifestyle: '9412994',
-						other: '9412994'
-					}
-				},
-				oasis: {
-					entertainment: '9412983',
-					gaming: '9412984',
-					lifestyle: '9412985',
-					other: '9412985'
-				}
-			}
-		}
+		log: function() {}
 	}, testCases = [
 		{
-			vertical: 'lifestyle',
+			vertical: 'life',
 			skin: 'mercury',
-			env: 'prod',
-			expected: '9412994'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
-			vertical: 'gaming',
-			skin: 'mercury',
-			env: 'dev',
-			expected: '9412981'
+			vertical: 'life',
+			skin: 'oasis',
+			pos: 'atf',
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
-			vertical: 'entertainment',
+			vertical: 'ent',
 			skin: 'mercury',
-			env: 'prod',
-			expected: '9412992'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
 			vertical: 'other',
 			skin: 'mercury',
-			env: 'prod',
-			expected: '9412994'
-		}, {
-			vertical: 'lifestyle',
-			skin: 'oasis',
-			env: 'dev',
-			expected: '9412973'
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
 			vertical: 'gaming',
 			skin: 'oasis',
-			env: 'dev',
-			expected: '9412972'
+			pos: 'atf',
+			expected: 'string',
+			ANpalEnabled: false
 		}, {
-			vertical: 'entertainment',
+			vertical: 'gaming',
 			skin: 'oasis',
-			env: 'dev',
-			expected: '9412971'
+			pos: 'btf',
+			expected: 'string',
+			ANpalEnabled: false
+		}, {
+			vertical: 'ent',
+			skin: 'oasis',
+			pos: 'btf',
+			isRecovering: false,
+			expected: 'string',
+			ANpalEnabled: false
+		}, {
+			vertical: 'ent',
+			skin: 'oasis',
+			pos: 'atf',
+			isRecovering: true,
+			expected: 'string',
+			ANpalEnabled: false
+		}, {
+			vertical: 'life',
+			skin: 'oasis',
+			pos: 'hivi',
+			isRecovering: true,
+			expected: 'string',
+			ANpalEnabled: false
+		}, {
+			vertical: 'NOT EXISTING',
+			skin: 'oasis',
+			pos: 'btf',
+			expected: 'undefined',
+			ANpalEnabled: false
+		}, {
+			skin: 'oasis',
+			pos: 'atf',
+			expected: 'string',
+			ANpalEnabled: true
 		}
 	];
 
-	function getModule(vertical, env) {
+	function getModule(vertical, ANpalEnabled) {
 		mocks.context.targeting.mappedVerticalName = vertical;
+		mocks.context.opts.premiumAdLayoutAppNexusTagsEnabled = ANpalEnabled;
 
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'](
 			mocks.adContext,
-			mocks.instantGlobals[env]
+			mocks.log
 		);
 	}
 
-
 	testCases.forEach(function (testCase) {
-		it('expected placementId is returned for skin/vertical combination ', function () {
-			var appNexusPlacements = getModule(testCase.vertical, testCase.env),
-				result = appNexusPlacements.getPlacement(testCase.skin);
+		var testCaseName = [
+				testCase.skin,
+				testCase.ANpalEnabled ? 'PAL' : 'non-PAL',
+				testCase.ANpalEnabled ? 'no-vertical' : testCase.vertical
+			];
 
-			expect(result).toEqual(testCase.expected);
+		it('returns expected placementId for ' + testCaseName.join(':'), function () {
+			var appNexusPlacements = getModule(testCase.vertical, testCase.ANpalEnabled),
+				resultType = typeof appNexusPlacements.getPlacement(testCase.skin, testCase.pos, testCase.isRecovering);
+
+			expect(resultType).toEqual(testCase.expected);
 		});
 	});
 })

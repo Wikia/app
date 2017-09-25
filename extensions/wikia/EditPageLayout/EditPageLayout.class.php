@@ -143,7 +143,7 @@ class EditPageLayout extends EditPage {
 		// fire a custom hook when an edit from the edit page is successful (BugId:1317)
 		if (in_array($ret->value, array(self::AS_SUCCESS_UPDATE, self::AS_SUCCESS_NEW_ARTICLE, self::AS_OK, self::AS_END))) {
 			wfDebug(__METHOD__ . ": successful save\n");
-			wfRunHooks('EditPageSuccessfulSave', array($this, $ret));
+			Hooks::run('EditPageSuccessfulSave', array($this, $ret));
 		}
 
 		return $ret;
@@ -486,7 +486,7 @@ class EditPageLayout extends EditPage {
 	 * If you want to use another entry point to this function, be careful.
 	 */
 	protected function showConflict() {
-		if ( wfRunHooks( 'EditPageBeforeConflictDiff', array( &$this, &$this->out ) ) ) {
+		if ( Hooks::run( 'EditPageBeforeConflictDiff', [ $this, &$this->out ] ) ) {
 			// diff
 			$this->out->addHtml('<div id="diff">');
 			$this->out->wrapWikiMsg( '<h2>$1</h2>', 'editpagelayout-diff-header' );
@@ -674,7 +674,7 @@ class EditPageLayout extends EditPage {
 			}
 		}
 
-		wfRunHooks( 'EditPageLayoutShowIntro', [ &$this->mEditPagePreloads, $this->mTitle ] );
+		Hooks::run( 'EditPageLayoutShowIntro', [ &$this->mEditPagePreloads, $this->mTitle ] );
 
 		// custom intro
 		$this->showCustomIntro();

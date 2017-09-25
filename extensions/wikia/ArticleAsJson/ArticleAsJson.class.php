@@ -1,6 +1,6 @@
 <?php
 
-class ArticleAsJson extends WikiaService {
+class ArticleAsJson {
 	static $media = [ ];
 	static $users = [ ];
 	static $mediaDetailConfig = [
@@ -350,7 +350,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onParserAfterTidy( Parser &$parser, &$text ) {
+	public static function onParserAfterTidy( Parser $parser, &$text ): bool {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -395,7 +395,7 @@ class ArticleAsJson extends WikiaService {
 				self::linkifyMediaCaption( $parser, $media );
 			}
 
-			wfRunHooks( 'ArticleAsJsonBeforeEncode', [ &$text ] );
+			Hooks::run( 'ArticleAsJsonBeforeEncode', [ &$text ] );
 
 			$text = json_encode(
 				[
@@ -411,7 +411,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onShowEditLink( Parser &$parser, &$showEditLink ) {
+	public static function onShowEditLink( Parser $parser, &$showEditLink ): bool {
 		global $wgArticleAsJson;
 
 		//We don't have editing in this version

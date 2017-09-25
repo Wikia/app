@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.adEngine', [
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.tracking.viewabilityTracker',
 	'ext.wikia.adEngine.utils.hooks',
 	'wikia.document',
 	'wikia.lazyqueue',
@@ -17,6 +18,7 @@ define('ext.wikia.adEngine.adEngine', [
 	slotRegistry,
 	slotTracker,
 	slotTweaker,
+	viewabilityTracker,
 	registerHooks,
 	doc,
 	lazyQueue,
@@ -59,8 +61,7 @@ define('ext.wikia.adEngine.adEngine', [
 	}
 
 	function prepareAdProviderContainer(providerName, slotName) {
-		// TODO: remove after Liftium-era
-		var providerContainerId = providerName + '_' + slotName.split('.')[0],
+		var providerContainerId = providerName + '_' + slotName,
 			adContainer = doc.getElementById(slotName),
 			providerContainer = doc.getElementById(providerContainerId);
 
@@ -161,6 +162,7 @@ define('ext.wikia.adEngine.adEngine', [
 					viewed: function () {
 						log(['viewed', provider.name, slotName], log.levels.debug, logGroup);
 						slot.container.setAttribute('data-slot-viewed', 'true');
+						viewabilityTracker.track(slot);
 					}
 				});
 

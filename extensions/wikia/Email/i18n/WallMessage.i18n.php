@@ -151,7 +151,7 @@ $messages['zh-hant'] = array(
 	'emailext-wallmessage-following-summary' => '$1在[{{SERVER}} {{SITENAME}}] 留言了： [$2 $3]',
 	'emailext-wallmessage-full-conversation' => '查看完整對話',
 	'emailext-wallmessage-recent-messages' => '[$1 $2上最近的所有留言]',
-	'emailext-wallmessage-reply-subject' => '有人在{{SITENAME}}上對$1作了回復。',
+	'emailext-wallmessage-reply-subject' => '有人在{{SITENAME}}上對$1作了回覆。',
 	'emailext-wallmessage-reply-summary' => '有人在[{{SERVER}} {{SITENAME}}] 上對[$1 $2] 作了回覆',
 );
 

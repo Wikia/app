@@ -6,7 +6,7 @@ class MobileContentParser {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	public static function onParserFirstCallInit( &$parser ) {
+	public static function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( 'mobile', 'MobileContentParser::displayContent' );
 		$parser->setHook( 'nomobile', 'MobileContentParser::hideContent' );
 		return true;

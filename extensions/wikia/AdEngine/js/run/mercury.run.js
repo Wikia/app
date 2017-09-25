@@ -4,7 +4,7 @@ require([
 	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
-	'ext.wikia.adEngine.lookup.openXBidder',
+	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -19,7 +19,7 @@ require([
 	adInfoTracker,
 	slotStateMonitor,
 	amazon,
-	oxBidder,
+	a9,
 	prebid,
 	rubiconFastlane,
 	customAdsLoader,
@@ -31,27 +31,46 @@ require([
 	win
 ) {
 	'use strict';
-
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
-	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
-		amazon.call();
+	function callBiddersOnConsecutivePageView() {
+		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
+		}
+
+		if (
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries) &&
+			!isRubiconDisplayPrebidAdapterActive
+		) {
+			rubiconFastlane.call();
+		}
 	}
 
 	mercuryListener.onLoad(function () {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
-			rubiconFastlane.call();
+		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
 		}
 
-		// TODO ADEN-5170 remove one condition or old OXBidder when we decide which way we go
-		if (
-			geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries) &&
-			!geo.isProperGeo(instantGlobals.wgAdDriverOpenXPrebidBidderCountries)
-		) {
-			oxBidder.call();
+		// TODO ADEN-5756 remove 'if' after A9 full roll out
+		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile) &&
+			!geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			amazon.call();
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) && !isRubiconDisplayPrebidAdapterActive) {
+			rubiconFastlane.call();
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
@@ -63,18 +82,15 @@ require([
 		actionHandler.registerMessageListener();
 	});
 
-	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
-		mercuryListener.onEveryPageChange(function () {
-			prebid.call();
+	// TODO: Remove else statement, this step is required in order to keep bidders working during cache invalidation
+	// Why checking getSlots method - because this method has been removed in PR with required changes
+	if (!win.Mercury.Modules.Ads.getInstance().getSlots) {
+		mercuryListener.afterPageWithAdsRender(function () {
+			callBiddersOnConsecutivePageView();
 		});
-	}
-
-	if (
-		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
-	) {
+	} else {
 		mercuryListener.onEveryPageChange(function () {
-			rubiconFastlane.call();
+			callBiddersOnConsecutivePageView();
 		});
 	}
 });

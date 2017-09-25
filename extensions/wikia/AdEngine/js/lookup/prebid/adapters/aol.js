@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (slotsContext, geo, instantGlobals) {
+], function (slotsContext, instartLogic, geo, instantGlobals) {
 	'use strict';
 
 	var bidderName = 'aol',
@@ -59,6 +60,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 					alias: '4431475',
 					sizeId: '529'
 				}
+				// TODO: fill with proper numbers https://wikia-inc.atlassian.net/browse/ADEN-5517
+				// BOTTOM_LEADERBOARD: {
+				// 	size: [728, 90],
+				// 	placement: 'XXXX',
+				// 	network: network,
+				// 	alias: 'XXXX',
+				// 	sizeId: 'XXXX'
+				// }
 				// Because of differences in AOL dashboard and DFP (ADEN-4750) this slot was disabled. To avoid making
 				// additional calls it is turned off. For more details see epic (ADEN-4580).
 				// INCONTENT_BOXAD_1: {
@@ -95,7 +104,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverAolBidderCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverAolBidderCountries) && !instartLogic.isBlocking();
 	}
 
 	function getSlots(skin) {

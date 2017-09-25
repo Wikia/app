@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'wikia.browserDetect',
-	'ext.wikia.adEngine.adContext'
-], function (page, browserDetect, adContext) {
+	'ext.wikia.adEngine.context.slotsContext',
+	'wikia.browserDetect'
+], function (adContext, page, slotsContext, browserDetect) {
 	'use strict';
 
 	var dfpId = '5441',
@@ -16,7 +17,6 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 
 		return context.targeting;
 	}
-
 
 	function findSlotGroup(map, slotName) {
 		var result = Object.keys(map).filter(function (name) {
@@ -31,13 +31,17 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'LB': ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
 			'MR': ['TOP_RIGHT_BOXAD'],
 			'SKY': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
-			'PF': ['PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER'],
-			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT_2'],
-			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT']
+			'PF': [
+				'PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER',
+				'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD'
+			],
+			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
+			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
+			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'OOYALA']
 		};
 
-		// OTHER: 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'INCONTENT_PLAYER'
-		return findSlotGroup(map, slotName) || 'OTHER';
+		// OTHER: 'INCONTENT_PLAYER'
+		return findSlotGroup(map, slotName.toUpperCase()) || 'OTHER';
 	}
 
 	function getDevice(params) {
@@ -60,8 +64,6 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
-			skin = params.skin,
-			pageType = params.s2,
 			provider = src.indexOf('remnant') === -1 ? 'wka1a' : 'wka2a',
 			wikiName = getContextTargeting().wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki',
 			vertical = params.s0;
@@ -72,11 +74,22 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			provider + '.' + getGroup(slotName),
 			slotName.toLowerCase(),
 			device,
-			skin + '-' + pageType,
+			params.skin + '-' + getAdLayout(params),
 			wikiName + '-' + vertical
 		];
 
 		return adUnitElements.join('/');
+	}
+
+	function getAdLayout(params) {
+		var layout = params.s2,
+			incontentSlotName = params.skin === 'oasis' ? 'INCONTENT_PLAYER' : 'MOBILE_IN_CONTENT';
+
+		if (slotsContext.isApplicable(incontentSlotName)) {
+			layout = layout + '-ic';
+		}
+
+		return layout;
 	}
 
 	function isValid(adUnit) {
@@ -90,6 +103,10 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			}
 		});
 	}
+
+	adContext.addCallback(function () {
+		context = null;
+	});
 
 	return {
 		build: build,

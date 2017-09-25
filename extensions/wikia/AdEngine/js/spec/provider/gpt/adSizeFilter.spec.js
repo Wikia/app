@@ -39,7 +39,16 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		getDocumentWidth: noop,
 		getContentWidth: noop,
 		overridePrefootersSizes: false,
-		log: noop
+		log: noop,
+		win: {
+			ads: {
+				context: {
+					targeting: {
+						hasFeaturedVideo: false
+					}
+				}
+			}
+		}
 	};
 
 	function getModule() {
@@ -48,6 +57,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			mocks.abTest,
 			mocks.getDocument(),
 			mocks.log,
+			mocks.win,
 			mocks.breakpointsLayout
 		);
 	}
@@ -85,6 +95,17 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
+
+	it('Remove 3x3 size from page with Featured Video', function () {
+		spyOn(mocks, 'getDocumentWidth').and.returnValue(2000);
+		mocks.win.ads.context.targeting.hasFeaturedVideo = true;
+
+		var sizesIn = [[3, 3], [728, 90], [1030, 130], [970, 365], [980, 150]],
+			sizesOut = [[728, 90], [1030, 130], [970, 365], [980, 150]];
+
+		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
 
 	it('Returns sizes unmodified for INVISIBLE_SKIN for screens >= 1240', function () {
 		spyOn(mocks, 'getDocumentWidth').and.returnValue(1245);

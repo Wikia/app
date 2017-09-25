@@ -1156,72 +1156,80 @@ $messages['fa'] = array(
 );
 
 $messages['fi'] = array(
-	'myhome-desc' => 'Yksityinen kotisivu kirjautuneille käyttäjille',
+	'myhome-desc' => 'A private home page for logged-in users',
 	'myhome' => 'My Home',
-	'wikiactivity' => 'Aktiivisuus wikissä',
-	'myhome-activity-more' => 'Katso lisää tuoreita muutoksia',
-	'myhome-activity-feed' => 'Tuoreet muutokset',
-	'myhome-activity-feed-empty' => "Tämä Wiki odottaa mukaan tuloasi. Klikkaa '''[[Special:CreatePage|Uusi sivu]]''' aloittaaksesi kirjoittamisen!",
-	'myhome-watchlist-feed' => 'Tarkkailulista',
-	'myhome-watchlist-feed-empty' => 'Voit lisätä sivuja tarkkailulistaasi klikkaamalla "Tarkkaile" linkkiä sivun ylhäällä olevasta palkista. Voit käyttää tarkkailulistaa muutosten tarkkailuun huolehtimillasi sivuilla.',
-	'myhome-user-contributions-feed' => 'Artikkelit',
-	'myhome-hot-spots-feed' => 'Kuumat aiheet',
-	'myhome-hot-spots-feed-empty' => "Tämä Wiki odottaa mukaan tuloasi. Klikkaa '''[[Special:CreatePage|Uusi sivu]]''' aloittaaksesi kirjoittamisen!",
-	'myhome-hot-spots-newest' => 'Uudet sivut wikissä',
-	'tog-userlandingpage' => 'Aloitussivu',
-	'prefs-myhome' => 'Kotisivu',
-	'myhome-feed-newpage' => 'uusi sivu',
-	'myhome-feed-edit' => 'muokkaa',
-	'myhome-feed-move' => 'sivu siirretty',
-	'myhome-feed-talkpage' => 'keskustelusivu',
-	'myhome-feed-blogcomment' => 'blogikommentti',
-	'myhome-feed-delete' => 'poistettu',
-	'myhome-feed-image' => 'kuva lisätty',
-	'myhome-feed-video' => 'video lisätty',
-	'myhome-feed-categorization' => 'luokittelu',
-	'myhome-feed-created-by' => 'luonut $1',
-	'myhome-feed-added-by' => '$1 lisäämä',
-	'myhome-feed-edited-by' => 'muokannut $1',
-	'myhome-feed-posted-by' => '$1 julkaisi tämän',
-	'myhome-feed-comment-by' => 'kommentoinut $1',
-	'myhome-feed-deleted-by' => '$1 poistama',
-	'myhome-feed-moved-by' => '$1 siirtämä',
-	'myhome-feed-article-comment-created-by' => '$1 jätti kommentin',
-	'myhome-feed-article-comment-edited-by' => 'muokkasi käyttäjän $1 kommenttia',
-	'myhome-feed-by' => '$1',
-	'myhome-feed-diff-alt' => 'näytä muutokset tällä sivulla',
-	'myhome-feed-new-page-details' => 'Uusi sivu',
-	'myhome-feed-summary-details' => 'Tiivistelmä',
-	'myhome-feed-section-edit-details' => 'Muokkasi osiota',
-	'myhome-feed-new-blog-post-details' => 'Uusi blogi',
-	'myhome-feed-new-blog-comment-details' => 'Kommentti',
-	'myhome-feed-new-article-comment-details' => 'Kommentti',
-	'myhome-feed-move-details' => 'Uudelleen nimetty',
-	'myhome-feed-redirect-details' => 'Ohjaus',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Lisätty kuva|Lisätyt kuvat}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Lisätty video|Lisätyt videot}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Lisätty luokkaan|Lisätty luokkiin}}',
-	'myhome-user-contributions-empty' => 'Sinä voit auttaa tätä wikiä klikkaamalla "muokkaa tätä sivua" missä tahansa artikkelissa, ja lisätä mitä tiedät. Jokainen voi tehdä muutoksia, lisätä tietoja tai korjata virheitä. Wikin on tehnyt yhteisö, ja kun ensimmäisen kerran klikkaat muokkaus nappia, sinusta tulee osa yhteisöä. Kokeile sitä!',
-	'myhome-hot-spots-number-of-editors' => 'muokkaajaa',
-	'myhome-log-in' => "<center>My Home ominaisuus on ainoastaan saatavilla vain jos olet kirjautunut sisään. <br><br><big>'''[[Special:Userlogin|Ole hyvä ja kirjaudu sisään nähdäksesi tämän sivun!]]'''</big></center>",
-	'myhome-switch-to-monaco' => "My Home ominaisuus on ainoastaan käytettävissä jos käytät Monaco ulkoasua. Jos haluat nähdä My Home:n, käy'''[[Special:Preferences|Asetuksissasi]]''' vaihtamassa ulkoasu.",
-	'myhome-namespace-blog' => 'Blogi',
-	'myhome-community-corner-header' => 'Yhteisön nurkkaus',
-	'oasis-myhome-community-corner-edit' => 'muokkaa viestiä &gt;',
-	'myhome-community-corner-edit' => 'muokkaa viestiä',
-	'community-corner' => "'''Tervetuloa My Home:en! '''Tämä sivu auttaa sinua pysymään ajantasalla siitä mitä wikissä tapahtuu. <br />Jos olet perustaja tai ylläpitäjä tässä wikissä, voit vaihtaa tätä viestiä kertoaksesi tärkeitä asioita mitä tapahtuu sivulla. Esimerkiksi, sinä voit:<br />
+	'wikiactivity' => 'Wiki Activity',
+	'myhome-activity-more' => 'see more recent activity',
+	'myhome-activity-feed' => 'Activity feed',
+	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-watchlist-feed' => 'Followed pages',
+	'myhome-watchlist-feed-empty' => 'You can follow pages by clicking the "Follow" link in the bar at the top of the page. You can use your followed pages list to keep track of the latest changes to pages that you care about.',
+	'myhome-user-contributions-feed' => 'My contributions',
+	'myhome-hot-spots-feed' => 'Hot Spots',
+	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-hot-spots-newest' => 'New pages on the wiki',
+	'tog-userlandingpage' => 'Landing page:',
+	'prefs-myhome' => 'My Home',
+	'myhome-feed-newpage' => 'new page',
+	'myhome-feed-edit' => 'edit',
+	'myhome-feed-move' => 'page moved',
+	'myhome-feed-talkpage' => 'discussion page',
+	'myhome-feed-blogcomment' => 'blog comment',
+	'myhome-feed-delete' => 'deleted',
+	'myhome-feed-image' => 'photo added',
+	'myhome-feed-video' => 'video added',
+	'myhome-feed-categorization' => 'categorization',
+	'myhome-feed-created-by' => 'created by $1',
+	'myhome-feed-added-by' => 'added by $1',
+	'myhome-feed-edited-by' => 'edited by $1',
+	'myhome-feed-posted-by' => 'posted by $1',
+	'myhome-feed-comment-by' => 'comment by $1',
+	'myhome-feed-deleted-by' => 'deleted by $1',
+	'myhome-feed-moved-by' => 'moved by $1',
+	'myhome-feed-article-comment-created-by' => 'new comment by $1',
+	'myhome-feed-article-comment-edited-by' => 'edited comment by $1',
+	'myhome-feed-by' => 'by $1',
+	'myhome-feed-diff-alt' => 'show me the change on this page',
+	'myhome-feed-new-page-details' => 'New page',
+	'myhome-feed-summary-details' => 'Summary',
+	'myhome-feed-section-edit-details' => 'Edited the section',
+	'myhome-feed-new-blog-post-details' => 'New blog',
+	'myhome-feed-new-blog-comment-details' => 'Comment',
+	'myhome-feed-new-article-comment-details' => 'Comment',
+	'myhome-feed-move-details' => 'Renamed',
+	'myhome-feed-redirect-details' => 'Redirect',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Added photo|Added photos}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Added video|Added videos}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Added category|Added categories}}',
+	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any page. Everybody can make changes, add information or correct a mistake. 
 
-*Järjestää projektin tekemään tietyn alueen wikiin
-*Esitellä uusia sivuja jotka jokaisen pitäisi nähdä
-*Saada ihmiset mukaan keskusteluun sivustolla tapahtuvista asioista
-*Antaa kaikkien tietää kirjoittajan joka on lisännyt jotain erityistä wikiin
-*Tai vain lähettää jotain sanoja rohkaisuksi!",
-	'myhome-hot-spots-definition' => 'Sivut, joilla eniten muokkaajia viimeisen {{PLURAL:$1|päivän|$1 päivän}} aikana.',
-	'myhome-default-view-checkbox' => 'Tee $1 minun oletus näkymä',
-	'myhome-default-view-success' => 'Okei, tämä on nyt sinun oletusarvosi',
-	'tooltip-pt-myhome' => 'Palaa kotisivulle',
-	'activityfeed' => 'Toimintasyöte',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|viesti|$1 viestiä}}',
+The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
+	'myhome-hot-spots-number-of-editors' => 'editors',
+	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
+	'myhome-switch-to-monaco' => "The Wiki Activity feature is only available if you're using the Wikia skin. If you'd like to see Wiki Activity, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
+	'myhome-namespace-blog' => 'Blog',
+	'myhome-community-corner-header' => 'Community Messages',
+	'oasis-myhome-community-corner-edit' => 'edit message &gt;',
+	'myhome-community-corner-edit' => 'edit message',
+	'community-corner' => "'''Welcome to Wiki Activity!''' 
+
+This page helps you stay up to date with what's happening on the wiki. 
+
+
+If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
+
+* Organize a project to build up an area of the wiki
+* Show off some new pages that everyone should see
+* Get people involved in a discussion that's happening on the site
+* Give a shout-out to a contributor who's added something special to the wiki
+* Or just post some words of encouragement!",
+	'myhome-hot-spots-definition' => 'Pages with the most editors in the last {{PLURAL:$1|day|$1 days}}.',
+	'myhome-default-view-checkbox' => 'Make $1 my default view',
+	'myhome-default-view-success' => 'Okay, this is your default now',
+	'tooltip-pt-myhome' => 'Go to My Home',
+	'activityfeed' => 'Activity feed',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|one message|$1 messages}}',
+	'accesskey-pt-myhome' => 'g',
 );
 
 $messages['fr'] = array(
@@ -1902,73 +1910,80 @@ $messages['kn'] = array(
 );
 
 $messages['ko'] = array(
-	'myhome' => '마이 홈',
-	'wikiactivity' => '위키 활동 내역',
-	'myhome-activity-more' => '최근 바뀜 더 보기',
-	'myhome-activity-feed-empty' => "이 위키는 당신의 기여를 기다리고 있습니다. '''[[Special:CreatePage|새 문서 시작하기]]'''에서 기여를 시작하세요!",
-	'myhome-watchlist-feed' => '주시문서 목록',
-	'myhome-watchlist-feed-empty' => "문서 위에 있는 '주시' 링크를 누르시면 주시문서 목록에 문서를 추가하실 수 있습니다. 주시문서 목록을 이용하여 관심 있는 문서의 변경점을 추적하실 수 있습니다.",
-	'myhome-hot-spots-feed' => '활발한 문서',
-	'myhome-hot-spots-feed-empty' => "이 위키는 당신의 참여를 기다립니다. '''[[Special:CreatePage|새 문서 시작하기]]'''에서 글을 만들어보세요!",
-	'myhome-hot-spots-newest' => '최근에 만들어진 문서',
-	'tog-userlandingpage' => '위키 방문시 처음 보이는 곳:',
-	'prefs-myhome' => '마이 홈',
-	'myhome-feed-newpage' => '새 문서',
-	'myhome-feed-edit' => '편집됨',
-	'myhome-feed-move' => '문서 이동됨',
-	'myhome-feed-talkpage' => '토론 문서',
-	'myhome-feed-blogcomment' => '블로그 댓글',
-	'myhome-feed-delete' => '삭제됨',
-	'myhome-feed-image' => '파일 추가됨',
-	'myhome-feed-video' => '동영상 추가됨',
-	'myhome-feed-categorization' => '분류 추가됨',
+	'myhome' => 'My Home',
+	'wikiactivity' => 'Wiki Activity',
+	'myhome-activity-more' => '위키 활동 내역 더 보기',
+	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-watchlist-feed' => '주시한 문서만 표시',
+	'myhome-watchlist-feed-empty' => 'You can follow pages by clicking the "Follow" link in the bar at the top of the page. You can use your followed pages list to keep track of the latest changes to pages that you care about.',
+	'myhome-hot-spots-feed' => '인기 문서',
+	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-hot-spots-newest' => '최근 생성된 문서',
+	'tog-userlandingpage' => 'Landing page:',
+	'prefs-myhome' => 'My Home',
+	'myhome-feed-newpage' => 'new page',
+	'myhome-feed-edit' => 'edit',
+	'myhome-feed-move' => 'page moved',
+	'myhome-feed-talkpage' => 'discussion page',
+	'myhome-feed-blogcomment' => 'blog comment',
+	'myhome-feed-delete' => 'deleted',
+	'myhome-feed-image' => 'photo added',
+	'myhome-feed-video' => 'video added',
+	'myhome-feed-categorization' => 'categorization',
 	'myhome-feed-created-by' => '$1에 의해 생성됨',
 	'myhome-feed-added-by' => '$1에 의해 추가됨',
 	'myhome-feed-edited-by' => '$1에 의해 편집됨',
-	'myhome-feed-posted-by' => '$1에 의해 포스팅됨',
-	'myhome-feed-comment-by' => '$1에 의해 댓글 달림',
+	'myhome-feed-posted-by' => '$1에 의해 작성됨',
+	'myhome-feed-comment-by' => '$1의 댓글',
 	'myhome-feed-deleted-by' => '$1에 의해 삭제됨',
 	'myhome-feed-moved-by' => '$1에 의해 이동됨',
-	'myhome-feed-article-comment-created-by' => '$1에 의해 작성된 댓글',
-	'myhome-feed-article-comment-edited-by' => '$1에 의해 수정된 댓글',
-	'myhome-feed-by' => '$1의 기여',
-	'myhome-feed-diff-alt' => '이 문서의 변경점 보기',
-	'myhome-feed-new-page-details' => '새 문서',
-	'myhome-feed-summary-details' => '편집 요약',
-	'myhome-feed-section-edit-details' => '편집한 단락',
+	'myhome-feed-article-comment-created-by' => '$1의 댓글',
+	'myhome-feed-article-comment-edited-by' => '$1에 의해 댓글 편집됨',
+	'myhome-feed-by' => 'by $1',
+	'myhome-feed-diff-alt' => 'show me the change on this page',
+	'myhome-feed-new-page-details' => '새로운 문서',
+	'myhome-feed-summary-details' => '요약',
+	'myhome-feed-section-edit-details' => '편집된 문단',
 	'myhome-feed-new-blog-post-details' => '새 블로그 글',
 	'myhome-feed-new-blog-comment-details' => '댓글',
 	'myhome-feed-new-article-comment-details' => '댓글',
-	'myhome-feed-move-details' => '이름 변경됨',
-	'myhome-feed-redirect-details' => '넘겨주기',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|추가된 그림|추가된 그림들}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|추가된 동영상|추가된 동영상들}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|추가된 분류|추가된 분류들}}',
-	'myhome-user-contributions-empty' => "문서 위에 있는 '편집' 링크를 누르고 당신이 아는 것을 적으셔서 이 위키에 참여하실 수 있습니다. 이 위키를 방문하는 모든 사람이 정보를 추가하고 실수를 고칠 수 있습니다. 위키는 공동체에 의해 만들어지며, 당신이 '편집' 링크를 클릭하는 것만으로 당신은 공동체의 일부가 됩니다. 지금 바로 시도해보세요!",
-	'myhome-hot-spots-number-of-editors' => '명',
-	'myhome-log-in' => "<center>마이 홈 기능은 로그인한 사용자만 사용하실 수 있습니다.<br /><br /><big>'''[[Special:Userlogin|마이 홈 기능을 이용하시려면 로그인하세요!]]'''</big></center>",
-	'myhome-switch-to-monaco' => "마이 홈 기능은 위키아 기본 스킨을 사용중일 때만 보실 수 있습니다. 마이 홈 기능을 이용하기를 원하신다면 '''[[Special:Preferences|사용자 환경 설정]]'''에서 스킨을 변경해주세요.",
+	'myhome-feed-move-details' => 'Renamed',
+	'myhome-feed-redirect-details' => 'Redirect',
+	'myhome-feed-inserted-image-details' => '추가된 그림',
+	'myhome-feed-inserted-video-details' => '추가된 동영상',
+	'myhome-feed-inserted-category-details' => '추가된 분류',
+	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any page. Everybody can make changes, add information or correct a mistake. 
+
+The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
+	'myhome-hot-spots-number-of-editors' => '명 참여',
+	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
+	'myhome-switch-to-monaco' => "The Wiki Activity feature is only available if you're using the Wikia skin. If you'd like to see Wiki Activity, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => '커뮤니티 코너',
-	'oasis-myhome-community-corner-edit' => '메시지 편집 &gt;',
-	'myhome-hot-spots-definition' => '$1일 동안 편집이 가장 많았던 문서 목록입니다.',
-	'myhome-default-view-checkbox' => '$1을 기본으로 보기',
-	'myhome-default-view-success' => '설정이 변경되었습니다.',
-	'activityfeed' => '최근 바뀜',
+	'myhome-community-corner-header' => '커뮤니티 알림판',
+	'oasis-myhome-community-corner-edit' => '내용 편집 &gt;',
+	'myhome-hot-spots-definition' => '최근 $1일 동안 가장 많은 사용자가 참여한 문서',
+	'myhome-default-view-checkbox' => '$1를 기본 설정으로 사용',
+	'myhome-default-view-success' => '기본 설정이 변경되었습니다.',
+	'activityfeed' => '모든 문서 표시',
 	'community-corner' => "'''위키 활동 내역에 오신 것을 환영합니다!'''
 
-이 페이지에서는 현재 커뮤니티에 무슨 일들이 일어나고 있는지 알 수 있도록 도와줍니다.
+이 페이지에서는 최근 커뮤니티에 있었던 활동 내역을 확인할 수 있습니다.
 
-이 위키의 관리자는 이곳을 편집해서 다른 사용자들에게 커뮤니티 무슨 일이 일어나고 있는지 알릴 수 있습니다. 다음과 같이 이곳을 활용할 수 있습니다.
 
-* 위키의 성장을 위한 프로젝트 조직.
-* 모든 사람이 봐야 할 문서 나열.
-* 활발한 논의가 이루어지고 있는 토론 문서에 다른 사용자들의 참여 권장.
+위키 관리자는 “커뮤니티 알림판”을 통해 유용한 정보를 다른 사용자들과 공유할 수 있습니다. 다음은 커뮤니티 알림판의 활용 예입니다.
+
+* 위키의 성장을 위한 프로젝트 정리.
+* 기여를 필요로 하는 문서 나열.
+* 활발한 토론에 대한 참여 권장.
 * 중요한 기여를 한 사용자 칭찬.
-* 편집에 도움이 될 수 있도록 격려.",
-	'myhome-activity-feed' => '활동 내역',
-	'myhome-community-corner-edit' => '편집',
-	'myhome-user-contributions-feed' => '기여 내역',
+* 편집에 도움이 될 만한 글 작성.",
+	'myhome-activity-feed' => '모든 문서 보기',
+	'myhome-community-corner-edit' => '내용 편집',
+	'myhome-user-contributions-feed' => 'My contributions',
+	'myhome-desc' => 'A private home page for logged-in users',
+	'accesskey-pt-myhome' => 'g',
+	'tooltip-pt-myhome' => 'Go to My Home',
+	'wiki-activity-message-wall-messages-count' => '메시지 $1개',
 );
 
 $messages['ksh'] = array(
@@ -2348,88 +2363,80 @@ $messages['ne'] = array(
 );
 
 $messages['nl'] = array(
-	'myhome-desc' => 'Een eigen startpagina voor aangemelde gebruikers',
-	'myhome' => 'Mijn Home',
-	'wikiactivity' => 'Wikiactiviteit',
-	'myhome-activity-more' => 'zie meer recente activiteit',
-	'myhome-activity-feed' => 'Activiteit feed',
-	'myhome-activity-feed-empty' => "Werk nu mee aan deze wiki.
-Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
-	'myhome-watchlist-feed' => 'Volglijst',
-	'myhome-watchlist-feed-empty' => 'Je kunt pagina\'s toevoegen aan uw volglijst door op de verwijzing "{{int:watch}}" te klikken in de balk bovenaan de pagina.
-Je kunt je volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar je bij betrokken bent te bekijken.',
-	'myhome-user-contributions-feed' => 'Bijdragen',
-	'myhome-hot-spots-feed' => "Populaire pagina's",
-	'myhome-hot-spots-feed-empty' => "Deze Wiki wacht op jou om betrokken te raken. Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
-	'myhome-hot-spots-newest' => "Nieuwe pagina's op de Wiki",
-	'tog-userlandingpage' => 'Ingangspagina:',
-	'prefs-myhome' => 'Mijn startpagina',
-	'myhome-feed-newpage' => 'nieuwe pagina',
-	'myhome-feed-edit' => 'bewerken',
-	'myhome-feed-move' => 'pagina hernoemd',
-	'myhome-feed-talkpage' => 'overlegpagina',
-	'myhome-feed-blogcomment' => 'blogreactie',
-	'myhome-feed-delete' => 'verwijderd',
-	'myhome-feed-image' => 'afbeelding toegevoegd',
-	'myhome-feed-video' => 'video toegevoegd',
-	'myhome-feed-categorization' => 'categorisatie',
-	'myhome-feed-created-by' => 'gemaakt door $1',
-	'myhome-feed-added-by' => 'toegevoegd door $1',
-	'myhome-feed-edited-by' => 'bewerkt door $1',
-	'myhome-feed-posted-by' => 'gepost door $1',
-	'myhome-feed-comment-by' => 'reactie door $1',
-	'myhome-feed-deleted-by' => 'verwijderd door $1',
-	'myhome-feed-moved-by' => 'hernoemd door $1',
-	'myhome-feed-article-comment-created-by' => 'nieuwe reactie van $1',
-	'myhome-feed-article-comment-edited-by' => 'reactie door $1 bewerkt',
-	'myhome-feed-by' => 'door $1',
-	'myhome-feed-diff-alt' => 'weergeef me de veranderingen op deze pagina',
-	'myhome-feed-new-page-details' => 'Nieuwe pagina',
-	'myhome-feed-summary-details' => 'Samenvatting',
-	'myhome-feed-section-edit-details' => 'Bewerkte de sectie',
-	'myhome-feed-new-blog-post-details' => 'Nieuwe blog',
-	'myhome-feed-new-blog-comment-details' => 'reactie',
-	'myhome-feed-new-article-comment-details' => 'Reactie',
-	'myhome-feed-move-details' => 'Hernoemd',
-	'myhome-feed-redirect-details' => 'Doorverwijzing',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Afbeelding toegevoegd|Afbeeldingen toegevoegd}}',
-	'myhome-feed-inserted-video-details' => "{{PLURAL:$1|Video toegevoegd|Video's toegevoegd}}",
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Categorie toegevoegd|Categorieën toegevoegd}}',
-	'myhome-user-contributions-empty' => 'Je kunt meewerken aan deze wiki door op "bewerken" te klikken op een pagina en daarna toe te voegen wat je weet.
-Iedereen kan wijzigingen maken, informatie toevoegen of een fout verbeteren.
-De wiki is gebouwd door de gemeenschap, en zo gauw je op de knop "bewerken" klikt, maak jij ook
-onderdeel uit van de gemeenschap.
-Probeer het maar!',
-	'myhome-hot-spots-number-of-editors' => 'bewerkers',
-	'myhome-log-in' => "<center>De functie Mijn Startpagina is alleen beschikbaar als je bent aangemeld.<br /><br />
-<big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Meld je aan om deze pagina te bekijken!]</span>'''</big></center>",
-	'myhome-switch-to-monaco' => "De functie \"Mijn startpagina\" is alleen beschikbaar als je de Wikia-vormgeving gebruikt.
-Als je \"Mijn startpagina\" wilt bekijken, wijzig in '''[[Special:Preferences|uw voorkeuren]]''' het siteuiterlijk.",
+	'myhome-desc' => 'A private home page for logged-in users',
+	'myhome' => 'My Home',
+	'wikiactivity' => 'Wiki Activity',
+	'myhome-activity-more' => 'see more recent activity',
+	'myhome-activity-feed' => 'Activity feed',
+	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-watchlist-feed' => 'Followed pages',
+	'myhome-watchlist-feed-empty' => 'You can follow pages by clicking the "Follow" link in the bar at the top of the page. You can use your followed pages list to keep track of the latest changes to pages that you care about.',
+	'myhome-user-contributions-feed' => 'My contributions',
+	'myhome-hot-spots-feed' => 'Hot Spots',
+	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-hot-spots-newest' => 'New pages on the wiki',
+	'tog-userlandingpage' => 'Landing page:',
+	'prefs-myhome' => 'My Home',
+	'myhome-feed-newpage' => 'new page',
+	'myhome-feed-edit' => 'edit',
+	'myhome-feed-move' => 'page moved',
+	'myhome-feed-talkpage' => 'discussion page',
+	'myhome-feed-blogcomment' => 'blog comment',
+	'myhome-feed-delete' => 'deleted',
+	'myhome-feed-image' => 'photo added',
+	'myhome-feed-video' => 'video added',
+	'myhome-feed-categorization' => 'categorization',
+	'myhome-feed-created-by' => 'created by $1',
+	'myhome-feed-added-by' => 'added by $1',
+	'myhome-feed-edited-by' => 'edited by $1',
+	'myhome-feed-posted-by' => 'posted by $1',
+	'myhome-feed-comment-by' => 'comment by $1',
+	'myhome-feed-deleted-by' => 'deleted by $1',
+	'myhome-feed-moved-by' => 'moved by $1',
+	'myhome-feed-article-comment-created-by' => 'new comment by $1',
+	'myhome-feed-article-comment-edited-by' => 'edited comment by $1',
+	'myhome-feed-by' => 'by $1',
+	'myhome-feed-diff-alt' => 'show me the change on this page',
+	'myhome-feed-new-page-details' => 'New page',
+	'myhome-feed-summary-details' => 'Summary',
+	'myhome-feed-section-edit-details' => 'Edited the section',
+	'myhome-feed-new-blog-post-details' => 'New blog',
+	'myhome-feed-new-blog-comment-details' => 'Comment',
+	'myhome-feed-new-article-comment-details' => 'Comment',
+	'myhome-feed-move-details' => 'Renamed',
+	'myhome-feed-redirect-details' => 'Redirect',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Added photo|Added photos}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Added video|Added videos}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Added category|Added categories}}',
+	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any page. Everybody can make changes, add information or correct a mistake. 
+
+The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
+	'myhome-hot-spots-number-of-editors' => 'editors',
+	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
+	'myhome-switch-to-monaco' => "The Wiki Activity feature is only available if you're using the Wikia skin. If you'd like to see Wiki Activity, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Gemeenschapsberichten',
-	'oasis-myhome-community-corner-edit' => 'bericht bewerken &gt;',
-	'myhome-community-corner-edit' => 'bewerk bericht',
-	'community-corner' => "'''Welkom bij Mijn startpagina!'''
+	'myhome-community-corner-header' => 'Community Messages',
+	'oasis-myhome-community-corner-edit' => 'edit message &gt;',
+	'myhome-community-corner-edit' => 'edit message',
+	'community-corner' => "'''Welcome to Wiki Activity!''' 
 
-Deze pagina helpt je om op de hoogte te blijven van wat er gebeurt in de wiki.
+This page helps you stay up to date with what's happening on the wiki. 
 
-Als je de oprichter of een beheerder van deze wiki bent, kan je dit bericht gebruiken om gemeenschap informatie te geven over wat er momenteel gebeurt op de site. Je kunt bijvoorbeeld:
 
-* Een project organiseren om een gebied van de wiki op te bouwen
+If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
 
-* Een aantal nieuwe pagina's weergeven die iedereen zou moeten zien
-
-* Mensen betrekken in een discussie over wat er gebeurt op de site
-
-* Een bepaalde gebruiker prijzen die iets speciaals heeft toegevoegd aan de wiki
-
-* Of gewoon wat schrijven om mensen aan te moedigen!",
-	'myhome-hot-spots-definition' => "Pagina's met de meeste bewerkers in de laatste $1 dagen.",
-	'myhome-default-view-checkbox' => 'Maak $1 mijn standaard weergave',
-	'myhome-default-view-success' => 'Oké, dit is nu je standaard',
-	'tooltip-pt-myhome' => 'Naar Mijn startpagina gaan',
-	'activityfeed' => 'Activiteitenfeed',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|één bericht|$1 berichten}}',
+* Organize a project to build up an area of the wiki
+* Show off some new pages that everyone should see
+* Get people involved in a discussion that's happening on the site
+* Give a shout-out to a contributor who's added something special to the wiki
+* Or just post some words of encouragement!",
+	'myhome-hot-spots-definition' => 'Pages with the most editors in the last {{PLURAL:$1|day|$1 days}}.',
+	'myhome-default-view-checkbox' => 'Make $1 my default view',
+	'myhome-default-view-success' => 'Okay, this is your default now',
+	'tooltip-pt-myhome' => 'Go to My Home',
+	'activityfeed' => 'Activity feed',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|one message|$1 messages}}',
+	'accesskey-pt-myhome' => 'g',
 );
 
 $messages['nl-informal'] = array(
@@ -3641,83 +3648,80 @@ $messages['uk'] = array(
 );
 
 $messages['vi'] = array(
-	'myhome-desc' => 'Trang riêng này dành cho thành viên đã đăng nhập',
-	'myhome' => 'Nhà của tôi',
-	'wikiactivity' => 'Hoạt động wiki',
-	'myhome-activity-more' => 'xem nhiều hơn hoạt động gần đây',
-	'myhome-activity-feed' => 'Hoạt động nguồn cấp dữ liệu',
-	'myhome-activity-feed-empty' => "Wikia này đang chờ bạn tham gia. Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
-	'myhome-watchlist-feed' => 'Danh sách theo dõi',
-	'myhome-watchlist-feed-empty' => 'Bạn có thể thêm các trang vào danh sách theo dõi của bạn bằng cách nhấp vào liên kết "{{int:watch}}" trên thanh ở đầu trang.
-Bạn có thể sử dụng danh sách theo dõi để theo dõi các thay đổi mới nhất cho các trang mà bạn quan tâm đến.',
-	'myhome-user-contributions-feed' => 'Đóng góp',
-	'myhome-hot-spots-feed' => 'Điểm nóng',
-	'myhome-hot-spots-feed-empty' => "Wiki này đang chờ bạn tham gia.
-Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
-	'myhome-hot-spots-newest' => 'Trang mới trên wikia này',
-	'tog-userlandingpage' => 'Trang giới thiệu',
-	'prefs-myhome' => 'Trang nhà',
-	'myhome-feed-newpage' => 'Trang mới',
-	'myhome-feed-edit' => 'sửa đổi',
-	'myhome-feed-move' => 'trang di chuyển',
-	'myhome-feed-talkpage' => 'trang thảo luận',
-	'myhome-feed-blogcomment' => 'bình luận blog',
-	'myhome-feed-delete' => 'xóa',
-	'myhome-feed-image' => 'ảnh được thêm vào',
-	'myhome-feed-video' => 'đoạn phim được thêm vào',
-	'myhome-feed-categorization' => 'phân loại',
-	'myhome-feed-created-by' => 'tạo bởi $1',
-	'myhome-feed-added-by' => 'thêm vào bởi $1',
-	'myhome-feed-edited-by' => 'sửa đổi bởi $1',
-	'myhome-feed-posted-by' => 'đăng bởi $1',
-	'myhome-feed-comment-by' => 'bình luận bởi $1',
-	'myhome-feed-deleted-by' => 'xóa bởi $1',
-	'myhome-feed-moved-by' => 'di chuyển bởi $1',
-	'myhome-feed-article-comment-created-by' => 'bình luận mới bởi $1',
-	'myhome-feed-article-comment-edited-by' => 'sửa đổi bình luận bởi $1',
-	'myhome-feed-by' => 'bởi $1',
-	'myhome-feed-diff-alt' => 'chỉ cho tôi những thay đổi trên trang này',
-	'myhome-feed-new-page-details' => 'Trang mới',
-	'myhome-feed-summary-details' => 'Tóm lược',
-	'myhome-feed-section-edit-details' => 'Chỉnh sửa mục',
-	'myhome-feed-new-blog-post-details' => 'Blog mới',
-	'myhome-feed-new-blog-comment-details' => 'Bình luận',
-	'myhome-feed-new-article-comment-details' => 'Bình luận',
-	'myhome-feed-move-details' => 'Đổi tên',
-	'myhome-feed-redirect-details' => 'Chuyển hướng',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Thêm hình ảnh|Thêm hình ảnh}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Thêm video|Thêm video}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Thêm thể loại|Thêm thể loại}}',
-	'myhome-user-contributions-empty' => 'Bạn có thể tham gia vào wikia này bằng cách nhấp vào "{{int:editthispage}}" trên mọi trang, vào thêm vào đó những gì bạn biết. Mọi người đều có thể tạo ra sửa đổi, thêm thông tin và chỉnh sửa lỗi. Wikia được xây dựng bởi cộng đồng, và chỉ với một lần nhấp vào nút sửa đổi, bạn đã trở thành một phần của cộng đồng này. Hãy thử ngay!',
-	'myhome-hot-spots-number-of-editors' => 'biên tập viên',
-	'myhome-log-in' => "<center>Tính năng My Home là chỉ khả dụng nếu bạn đang đăng nhập.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Xin vui lòng đăng nhập để xem trang này!]'' '</big></center>",
-	'myhome-switch-to-monaco' => "Tính năng Hoạt động wikia là chỉ khả dụng nếu bạn đang sử dụng giao diện Wikia. Nếu bạn muốn xem Góc cộng đồng, vui lòng truy cập '''[[Special:Preferences|tùy chọn]]''' để thay đổi giao diện của bạn.",
+	'myhome-desc' => 'A private home page for logged-in users',
+	'myhome' => 'My Home',
+	'wikiactivity' => 'Wiki Activity',
+	'myhome-activity-more' => 'see more recent activity',
+	'myhome-activity-feed' => 'Activity feed',
+	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-watchlist-feed' => 'Followed pages',
+	'myhome-watchlist-feed-empty' => 'You can follow pages by clicking the "Follow" link in the bar at the top of the page. You can use your followed pages list to keep track of the latest changes to pages that you care about.',
+	'myhome-user-contributions-feed' => 'My contributions',
+	'myhome-hot-spots-feed' => 'Hot Spots',
+	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-hot-spots-newest' => 'New pages on the wiki',
+	'tog-userlandingpage' => 'Landing page:',
+	'prefs-myhome' => 'My Home',
+	'myhome-feed-newpage' => 'new page',
+	'myhome-feed-edit' => 'edit',
+	'myhome-feed-move' => 'page moved',
+	'myhome-feed-talkpage' => 'discussion page',
+	'myhome-feed-blogcomment' => 'blog comment',
+	'myhome-feed-delete' => 'deleted',
+	'myhome-feed-image' => 'photo added',
+	'myhome-feed-video' => 'video added',
+	'myhome-feed-categorization' => 'categorization',
+	'myhome-feed-created-by' => 'created by $1',
+	'myhome-feed-added-by' => 'added by $1',
+	'myhome-feed-edited-by' => 'edited by $1',
+	'myhome-feed-posted-by' => 'posted by $1',
+	'myhome-feed-comment-by' => 'comment by $1',
+	'myhome-feed-deleted-by' => 'deleted by $1',
+	'myhome-feed-moved-by' => 'moved by $1',
+	'myhome-feed-article-comment-created-by' => 'new comment by $1',
+	'myhome-feed-article-comment-edited-by' => 'edited comment by $1',
+	'myhome-feed-by' => 'by $1',
+	'myhome-feed-diff-alt' => 'show me the change on this page',
+	'myhome-feed-new-page-details' => 'New page',
+	'myhome-feed-summary-details' => 'Summary',
+	'myhome-feed-section-edit-details' => 'Edited the section',
+	'myhome-feed-new-blog-post-details' => 'New blog',
+	'myhome-feed-new-blog-comment-details' => 'Comment',
+	'myhome-feed-new-article-comment-details' => 'Comment',
+	'myhome-feed-move-details' => 'Renamed',
+	'myhome-feed-redirect-details' => 'Redirect',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Added photo|Added photos}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Added video|Added videos}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Added category|Added categories}}',
+	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any page. Everybody can make changes, add information or correct a mistake. 
+
+The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
+	'myhome-hot-spots-number-of-editors' => 'editors',
+	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
+	'myhome-switch-to-monaco' => "The Wiki Activity feature is only available if you're using the Wikia skin. If you'd like to see Wiki Activity, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Thông điệp cộng đồng',
-	'oasis-myhome-community-corner-edit' => 'sửa đổi thông điệp &gt;',
-	'myhome-community-corner-edit' => 'sửa đổi thông điệp',
-	'community-corner' => "''' Chào mừng đến với trang chủ của tôi!'' '
+	'myhome-community-corner-header' => 'Community Messages',
+	'oasis-myhome-community-corner-edit' => 'edit message &gt;',
+	'myhome-community-corner-edit' => 'edit message',
+	'community-corner' => "'''Welcome to Wiki Activity!''' 
 
-Trang này sẽ giúp bạn ở lại đến ngày với những gì đang xảy ra trên wiki.
+This page helps you stay up to date with what's happening on the wiki. 
 
-Nếu bạn là người sáng lập hoặc là quản trị viên trên wiki này, bạn có thể thay đổi thông báo này để nói chuyện với cộng đồng về điều quan trọng xảy ra trên trang web.
-Ví dụ, bạn có thể:
 
- * Tổ chức một dự án để xây dựng một khu vực của wiki
+If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
 
- * Hiển thị ra một số trang mới tất cả mọi người sẽ thấy
-
- * Có được những người tham gia vào một cuộc thảo luận đang xảy ra trên trang web
-
- * Cung cấp cho một shout-out để một cộng tác viên người có thêm một cái gì đó đặc biệt để wiki
-
- * Hoặc chỉ cần đăng một số từ khuyến khích!",
-	'myhome-hot-spots-definition' => 'Các trang với nhiều biên tập viên nhất trong {{PLURAL:$1|ngày hôm nay|$1 ngày qua}}.',
-	'myhome-default-view-checkbox' => 'Làm cho $1 độ xem mặc định của tôi',
-	'myhome-default-view-success' => 'Được rồi, đây là mặc định của bạn bây giờ',
-	'tooltip-pt-myhome' => 'Đi đến nhà của tôi',
-	'activityfeed' => 'Hoạt động nguồn cấp dữ liệu',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|một thông điệp|$1 thông điệp}}',
+* Organize a project to build up an area of the wiki
+* Show off some new pages that everyone should see
+* Get people involved in a discussion that's happening on the site
+* Give a shout-out to a contributor who's added something special to the wiki
+* Or just post some words of encouragement!",
+	'myhome-hot-spots-definition' => 'Pages with the most editors in the last {{PLURAL:$1|day|$1 days}}.',
+	'myhome-default-view-checkbox' => 'Make $1 my default view',
+	'myhome-default-view-success' => 'Okay, this is your default now',
+	'tooltip-pt-myhome' => 'Go to My Home',
+	'activityfeed' => 'Activity feed',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|one message|$1 messages}}',
+	'accesskey-pt-myhome' => 'g',
 );
 
 $messages['zh-hans'] = array(

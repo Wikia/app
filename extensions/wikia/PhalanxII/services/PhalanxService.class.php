@@ -1,12 +1,14 @@
 <?php
 
 use Wikia\Service\Gateway\ConsulUrlProvider;
+use Wikia\Service\Gateway\KubernetesUrlProvider;
+use Wikia\Rabbit\ConnectionBase;
 
 /**
  * @method PhalanxService setLimit( int $limit )
  * @method PhalanxService setUser( User $user )
  */
-class PhalanxService extends Service {
+class PhalanxService {
 
 	use \Wikia\Logger\Loggable;
 
@@ -14,11 +16,13 @@ class PhalanxService extends Service {
 	private $limit = 1;
 	/** @var User */
 	private $user = null;
+	private $k8sUrlProvider = null;
 
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
 	const PHALANX_LOG_PARAM_LENGTH_LIMIT = 64;
+	const ROUTING_KEY = 'onUpdate';
 
 	// number of retries for phalanx POST requests
 	const PHALANX_SERVICE_TRIES_LIMIT = 3;
@@ -34,6 +38,18 @@ class PhalanxService extends Service {
 	 * saving/modifying a block.
 	 */
 	const PHALANX_SERVICE_RELOAD_TIMEOUT = 25;
+
+	/**
+	 * @Inject({
+	 *   Wikia\Service\Gateway\KubernetesUrlProvider::class
+	 * })
+	 * @param KubernetesUrlProvider $urlProvider
+	 */
+	public function __construct(
+		KubernetesUrlProvider $urlProvider
+	) {
+		$this->k8sUrlProvider = $urlProvider;
+	}
 
 	protected function getLoggerContext() {
 		return [
@@ -129,8 +145,16 @@ class PhalanxService extends Service {
 			: [];
 
 		$result = $this->sendToPhalanxDaemon( "reload", $params );
+		$this->sendToPhalanxQueue( $changed );
 		wfProfileOut( __METHOD__ );
 		return $result;
+	}
+
+	private function sendToPhalanxQueue( $changed ) {
+		global $wgPhalanxQueue;
+
+		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
+		$rabbitConnection->publish ( self::ROUTING_KEY, implode( ",", $changed ) );
 	}
 
 	/**
@@ -174,6 +198,7 @@ class PhalanxService extends Service {
 		$options = F::app()->wg->PhalanxServiceOptions;
 
 		$url = $this->getPhalanxUrl( $action );
+		$shadowUrl = $this->getPhalanxShadowUrl( $action );
 		$loggerPostParams = [];
 		$tries = 1;
 		/**
@@ -189,10 +214,13 @@ class PhalanxService extends Service {
 		 * for any other we're sending POST
 		 */
 		else {
-			/**
-			 * city_id should be always known
-			 */
-			$parameters[ 'wiki' ] = F::app()->wg->CityId;
+			global $wgCityId, $wgLanguageCode;
+
+			// Specify wiki ID parameter, for Phalanx Stats logging
+			$parameters[ 'wiki' ] = $wgCityId;
+
+			// SUS-2759: pass on content language code to the service
+			$parameters[ 'lang' ] = $wgLanguageCode;
 
 			if ( ( $action == "match" || $action == "check" ) ) {
 				if ( !is_null( $this->user ) ) {
@@ -267,13 +295,26 @@ class PhalanxService extends Service {
 				] );
 			}
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
+
+			// calling on the shadow ninja powers - making call to k8s Phalanx instance to check if the response
+			// from k8s instances match one received from the mesos instances
+			$shadowResponse = Http::post( $shadowUrl, $options );
+			if ( $response !== $shadowResponse && ( new \Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+				$this->error( "Phalanx shadow call differs", [
+					"phalanxUrl" => $url,
+					"shadowUrl" => $shadowUrl,
+					"response" => $response,
+					"shadow_response" => $shadowResponse,
+					"postParams" => json_encode( $loggerPostParams ),
+				] );
+			}
 		}
 
 		if ( $response === false ) {
 			/* service doesn't work */
 			$res = false;
 
-			$this->error( "Phalanx service error", [
+			$this->error( "Phalanx service failed", [
 				"phalanxUrl" => $url,
 				'requestTime' => $requestTime,
 				'postParams' => json_encode( $loggerPostParams ),
@@ -328,6 +369,10 @@ class PhalanxService extends Service {
 			}
 		}
 		return $res;
+	}
+
+	private function getPhalanxShadowUrl( $action ) {
+		return sprintf("http://%s/%s", $this->k8sUrlProvider->getUrl('phalanx'), $action != "status" ? $action : "" );
 	}
 
 	private function getPhalanxUrl( $action ) {

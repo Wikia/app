@@ -36,7 +36,7 @@ class WallHelper {
 	 *
 	 * @return Title
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getTitle( $namespace = null, $subpage = null, $user = null ) {
 		if ( empty( $user ) ) {
@@ -67,7 +67,7 @@ class WallHelper {
 	 *
 	 * @return User
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	// TODO: remove call to UserProfilePage
 	public function getUser() {
@@ -118,7 +118,7 @@ class WallHelper {
 	 *
 	 * @return array | boolean returns false if ArticleComment class does not exist
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function wikiActivityFilterMessageWall( $title, &$res ) {
 		wfProfileIn( __METHOD__ );
@@ -175,7 +175,7 @@ class WallHelper {
 			$item = [ ];
 		}
 
-		wfRunHooks( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
+		Hooks::run( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
 
 		wfProfileOut( __METHOD__ );
 		return $item;
@@ -316,9 +316,9 @@ class WallHelper {
 			if ( $user instanceof User ) {
 				$items[$i]['real-name'] = $user->getName();
 				if ( !empty( F::app()->wg->EnableWallExt ) ) {
-					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
+					$userLinkTitle = $user->getTalkPage();
 				} else {
-					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER );
+					$userLinkTitle = $user->getUserPage();
 				}
 				$items[$i]['user-profile-url'] = $userLinkTitle->getFullUrl();
 			} else {
@@ -424,7 +424,7 @@ class WallHelper {
 	 * @param integer $textId article's text id in text table
 	 *
 	 * @return string
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getDeletedArticleTitleTxt( $textId ) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -456,7 +456,7 @@ class WallHelper {
 	 * TODO: remove it we don't need to operate on delete wall messages anymore
 	 *
 	 * @return string
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getTitleTxtFromMetadata( $text ) {
 		$pattern = '#<ac_metadata title="([^"]*)">(.*)</ac_metadata>#i';
@@ -559,11 +559,8 @@ class WallHelper {
 	 * @return array|bool
 	 */
 	public static function getWallTitleData( $rc = null, $row = null ) {
-
-		wfProfileIn( __METHOD__ );
-
 		if ( is_object( $row ) ) {
-			$objTitle = Title::newFromText( $row->page_title, $row->page_namespace );
+			$objTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$userText = !empty( $row->rev_user_text ) ? $row->rev_user_text : '';
 
 			$isNew = ( !empty( $row->page_is_new ) && $row->page_is_new === '1' ) ? true : false;
@@ -582,15 +579,30 @@ class WallHelper {
 		if ( !( $objTitle instanceof Title ) ) {
 			// it can be media wiki deletion of an article -- we ignore them
 			Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r( [ $rc, $row ], true ) );
-			wfProfileOut( __METHOD__ );
 			return true;
+		}
+
+		// SUS-1777: Don't bother trying to load Wall Message if this is the Wall itself
+		if ( $objTitle->inNamespace( NS_USER_WALL ) ) {
+			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
+			return [
+				'articleTitle' => $objTitle->getPrefixedText(),
+				'articleFullUrl' => $objTitle->getFullUrl(),
+				'articleTitleVal' => '',
+				'articleTitleTxt' => wfMessage(  'wall-recentchanges-wall-created-title' )->text(),
+				'wallTitleTxt' => $objTitle->getPrefixedText(),
+				'wallPageFullUrl' =>  $objTitle->getFullUrl(),
+				'wallPageName' => $objTitle->getText(),
+				'actionUser' => $userText,
+				'isThread' => true,
+				'isNew' => $isNew
+			];
 		}
 
 		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
 		if ( empty( $wm ) ) {
 			// it can be media wiki deletion of an article -- we ignore them
 			Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r( [ $rc, $row ], true ) );
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -598,7 +610,6 @@ class WallHelper {
 		if ( !$wm->isMain() ) {
 			$wmw = $wm->getTopParentObj();
 			if ( empty( $wmw ) ) {
-				wfProfileOut( __METHOD__ );
 				return true;
 			}
 			$wmw->load();
@@ -617,43 +628,19 @@ class WallHelper {
 			$articleTitleTxt = strip_tags( $articleTitleTxt );
 		}
 
-		$ci = $wm->getCommentsIndexEntry();
-		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
-			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
-			$title = Title::newFromText( $row->page_title, NS_USER_WALL );
+		$title = Title::makeTitle( NS_USER_WALL_MESSAGE, $articleId );
 
-			$out = [
-				'articleTitle' => $title->getPrefixedText(),
-				'articleFullUrl' => $title->getFullUrl(),
-				'articleTitleVal' => '',
-				'articleTitleTxt' => wfMessage(  'wall-recentchanges-wall-created-title' )->text(),
-				'wallTitleTxt' => $title->getPrefixedText(),
-				'wallPageFullUrl' =>  $title->getFullUrl(),
-				'wallPageName' => $row->page_title,
-				'actionUser' => $userText,
-				'isThread' => $wm->isMain(),
-				'isNew' => $isNew
-			];
-
-		} else {
-			$title = Title::newFromText( $articleId, NS_USER_WALL_MESSAGE );
-
-			$out = [
-				'articleTitle' => $title->getPrefixedText(),
-				'articleFullUrl' => $wm->getMessagePageUrl(),
-				'articleTitleVal' => $articleTitleTxt,
-				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMessage( 'wall-recentchanges-deleted-reply-title' )->text() : $articleTitleTxt,
-				'wallTitleTxt' => $wm->getArticleTitle()->getPrefixedText(),
-				'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
-				'wallPageName' => $wm->getArticleTitle()->getText(),
-				'actionUser' => $userText,
-				'isThread' => $wm->isMain(),
-				'isNew' => $isNew
-			];
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $out;
+		return [
+			'articleTitle' => $title->getPrefixedText(),
+			'articleFullUrl' => $wm->getMessagePageUrl(),
+			'articleTitleVal' => $articleTitleTxt,
+			'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMessage( 'wall-recentchanges-deleted-reply-title' )->text() : $articleTitleTxt,
+			'wallTitleTxt' => $wm->getArticleTitle()->getPrefixedText(),
+			'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
+			'wallPageName' => $wm->getArticleTitle()->getText(),
+			'actionUser' => $userText,
+			'isThread' => $wm->isMain(),
+			'isNew' => $isNew
+		];
 	}
 }

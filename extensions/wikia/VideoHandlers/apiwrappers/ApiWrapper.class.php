@@ -595,7 +595,7 @@ class NegativeResponseException extends Exception {
 		$this->apiUrl = $apiUrl;
 		$this->errors = $status instanceof \Status ? $status->errors : [];
 
-		$message = "Negative response from URL '".$apiUrl."'";
+		$message = 'Negative response from URL';
 
 		// Add the error message if there is one
 		if ( !empty( $this->errors ) && ( count( $this->errors ) > 0 ) ) {

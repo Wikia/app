@@ -3,47 +3,6 @@
  * Ajax Functions used by Wikia extensions
  */
 
-$wgAjaxExportList[] = "cxValidateUserName";
-
-/**
- * Validates user names.
- *
- * @Author CorfiX (corfix@wikia.com)
- * @Author Maciej Błaszkowski <marooned at wikia-inc.com>
- *
- * @Param String $uName
- *
- * @Return String
- */
-function cxValidateUserName () {
-	global $wgRequest;
-	wfProfileIn(__METHOD__);
-
-	$uName = $wgRequest->getVal('uName');
-
-	$result = wfValidateUserName($uName);
-
-	if ( $result === true ) {
-		$message = '';
-		if ( !wfRunHooks("cxValidateUserName",array($uName,&$message)) ) {
-			$result = $message;
-		}
-	}
-
-	if( $result === true ) {
-		$data = array('result' => 'OK' );
-	} else {
-		$data = array('result' => 'INVALID', 'msg' => wfMsg($result), 'msgname' => $result );
-	}
-
-	$json = json_encode($data);
-	$response = new AjaxResponse($json);
-	$response->setContentType('application/json; charset=utf-8');
-	$response->setCacheDuration(60);
-	wfProfileOut(__METHOD__);
-	return $response;
-}
-
 /**
  * Given a username, returns one of several codes to indicate whether it is valid to be a NEW username or not.
  *

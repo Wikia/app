@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+use Wikia\PageHeader\Button;
+
 class ForumHooksHelper {
 	/**
 	 * Render the alternative version of thread page
@@ -78,7 +81,6 @@ class ForumHooksHelper {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$path[] = static::getIndexPath();
 			$path[] = [ 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), ];
-
 		}
 		return true;
 	}
@@ -162,7 +164,9 @@ class ForumHooksHelper {
 	 * @param $result
 	 * @return bool
 	 */
-	static public function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
+	static public function getUserPermissionsErrors(
+		Title $title, User $user, string $action, &$result
+	): bool {
 		$result = null;
 
 		if ( Forum::$allowToEditBoard == true ) {
@@ -186,7 +190,7 @@ class ForumHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onContributionsLineEnding( &$contribsPager, &$ret, $row ) {
+	static public function onContributionsLineEnding( ContribsPager $contribsPager, &$ret, $row ): bool {
 
 		if ( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject( $row->page_namespace ), [ NS_WIKIA_FORUM_BOARD ] ) ) {
 
@@ -195,8 +199,7 @@ class ForumHooksHelper {
 			}
 
 			if ( class_exists( 'WallHooksHelper' ) ) {
-				$wallHooks = new WallHooksHelper();
-				return $wallHooks->contributionsLineEndingProcess( $contribsPager, $ret, $row );
+				return WallHooksHelper::contributionsLineEndingProcess( $contribsPager, $ret, $row );
 			}
 		}
 		return true;
@@ -227,7 +230,7 @@ class ForumHooksHelper {
 	 * @return bool
 	 */
 
-	static public function onAfterBuildNewMessageAndPost( &$mw ) {
+	static public function onAfterBuildNewMessageAndPost( WallMessage $mw ): bool {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$forum = ( new Forum );
@@ -239,15 +242,16 @@ class ForumHooksHelper {
 
 	/**
 	 * overriding message
-	 * @param WallMessage $mw
+	 * @param Title $parentTitle
 	 * @param WikiaResponse $response
 	 * @return bool
 	 */
-
-	static public function onWallMessageDeleted( &$mw, &$response ) {
-		$title = $mw->getTitle();
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$response->setVal( 'returnTo', wfMessage( 'forum-thread-deleted-return-to', $mw->getArticleTitle()->getText() )->escaped() );
+	static public function onWallMessageDeleted(
+		Title $parentTitle, WikiaResponse $response
+	): bool {
+		if ( $parentTitle->inNamespace( NS_WIKIA_FORUM_BOARD ) ) {
+			$response->setVal( 'returnTo',
+				wfMessage( 'forum-thread-deleted-return-to', $parentTitle->getBaseText() )->escaped() );
 		}
 		return true;
 	}
@@ -259,7 +263,8 @@ class ForumHooksHelper {
 	 * @return bool: true because it is a hook
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		$app = F::app();
+		global $wgEnableRecirculationDiscussions;
+
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Forum/css/ForumTag.scss' ) );
 		$title = $out->getTitle();
 		if ( $out->isArticle()
@@ -268,14 +273,14 @@ class ForumHooksHelper {
 			&& !Wikia::isMainPage()
 			&& $out->getRequest()->getVal( 'diff' ) === null
 			&& $out->getRequest()->getVal( 'action' ) !== 'render'
-			&& !( $app->checkSkin( 'wikiamobile', $out->getSkin() ) )
-			&& empty( $app->wg->EnableRecirculationDiscussions )
+			&& $out->getSkin()->getSkinName() !== 'wikiamobile'
+			&& empty( $wgEnableRecirculationDiscussions )
 		) {
 			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
 			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );
 			unset( $messages['lastupdate'] );
 			if ( !empty( $messages ) ) {
-				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', [ 'messages' => $messages ] );
+				$text .= F::app()->renderView( 'RelatedForumDiscussionController', 'index', [ 'messages' => $messages ] );
 			}
 		}
 		return true;
@@ -295,19 +300,24 @@ class ForumHooksHelper {
 			$threadId = empty( $parent ) ? $comment_id:$parent;
 			RelatedForumDiscussionController::purgeCache( $threadId );
 
-			// cleare board info
-			$commentsIndex = CommentsIndex::getInstance()->entryFromId( $comment_id );
-			if ( empty( $commentsIndex ) ) {
-				return true;
-			}
-			$board = ForumBoard::newFromId( $commentsIndex->getParentPageId() );
-			if ( empty( $board ) ) {
-				return true;
-			}
+			// clear board info
+			try {
+				$commentsIndex = CommentsIndex::getInstance()->entryFromId( $comment_id );
+				$board = ForumBoard::newFromId( $commentsIndex->getParentPageId() );
+				if ( empty( $board ) ) {
+					return true;
+				}
 
-			$thread = WallThread::newFromId( $threadId );
-			if ( !empty( $thread ) ) {
-				$thread->purgeLastMessage();
+				$thread = WallThread::newFromId( $threadId );
+				if ( !empty( $thread ) ) {
+					$thread->purgeLastMessage();
+				}
+			} catch ( CommentsIndexEntryNotFoundException $entryNotFoundException ) {
+				WikiaLogger::instance()->error( 'SUS-1680: No comments index entry for message', [
+					'messageTitle' => $title->getPrefixedText(),
+					'messageId' => $comment_id,
+					'exception' => $entryNotFoundException
+				] );
 			}
 		}
 		return true;
@@ -381,8 +391,10 @@ class ForumHooksHelper {
 
 	/**
 	 * Create a tag for including the Forum Activity Module on pages
+	 * @param Parser $parser
+	 * @return bool true
 	 */
-	static public function onParserFirstCallInit( Parser &$parser ) {
+	static public function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( 'wikiaforum', [ __CLASS__, 'parseForumActivityTag' ] );
 		return true;
 	}
@@ -451,9 +463,15 @@ class ForumHooksHelper {
 	 * @return bool always true to continue hook processing
 	 */
 	static public function onArticleDeleteComplete( Page $page, User $user, string $reason, int $id ): bool {
-		if ( $page->getTitle()->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+		$pageTitle = $page->getTitle();
+
+		if ( $pageTitle->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
 			$wallHistory = new WallHistory();
 			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
+
+			// SUS-2757: After the main transaction is closed, delete watchlist entries for thread
+			$threadWatchlistDeleteUpdate = new ThreadWatchlistDeleteUpdate( $pageTitle );
+			DeferredUpdates::addUpdate( $threadWatchlistDeleteUpdate );
 		}
 
 		return true;
@@ -474,4 +492,65 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param string $pageSubtitle
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderPageSubtitle( &$pageSubtitle, Title $title ): bool {
+		if (
+			in_array( $title->getNamespace(), [
+				NS_WIKIA_FORUM_BOARD,
+				NS_WIKIA_FORUM_TOPIC_BOARD
+			] ) &&
+			RequestContext::getMain()->getRequest()->getVal( 'action' ) !== 'history'
+		) {
+			$pageSubtitle = F::app()->renderView(
+				'Forum',
+				'brickHeader',
+				[
+					'id' => $title->getText()
+				]
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param bool $shouldDisplayActionButton
+	 *
+	 * @return bool
+	 */
+	public static function onPageHeaderActionButtonShouldDisplay(
+		Title $title,
+		bool &$shouldDisplayActionButton
+	): bool {
+		if ( in_array( $title->getNamespace(), [
+			NS_WIKIA_FORUM_BOARD,
+			NS_WIKIA_FORUM_BOARD_THREAD,
+			NS_WIKIA_FORUM_TOPIC_BOARD,
+		] ) ) {
+			$shouldDisplayActionButton = false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Title $title
+	 * @param array $buttons
+	 *
+	 * @return bool
+	 */
+	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
+		if ( $title->isSpecial( 'Forum' ) ) {
+			$label = wfMessage( 'forum-specialpage-policies' )->escaped();
+			$buttons[] = new Button( $label, 'wds-icons-clipboard-small', '#', 'policies-link' );
+		}
+
+		return true;
+	}
 }

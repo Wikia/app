@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
 use \Wikia\Logger\WikiaLogger;
 
 class PhalanxHooks extends WikiaObject {
@@ -13,7 +14,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @param $id Integer: user ID
 	 * @param $nt Title: user page title
-	 * @param $links Array: tool links
+	 * @param $links array: tool links
 	 * @return boolean true
 	 */
 	static public function loadLinks( $id, $nt, &$links ) {
@@ -22,7 +23,7 @@ class PhalanxHooks extends WikiaObject {
 		$user = RequestContext::getMain()->getUser();
 
 		if ( $user->isAllowed( 'phalanx' ) ) {
-			$links[] = Linker::makeKnownLinkObj(
+			$links[] = Linker::linkKnown(
 				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 				'PhalanxBlock',
 				wfArrayToCGI(
@@ -134,6 +135,11 @@ class PhalanxHooks extends WikiaObject {
 
 		$phalanx['type'] = $typemask;
 
+		// SUS-2759: If a filter is meant to apply to all languages, the p_lang field must be NULL
+		if ( $phalanx['lang'] === 'all' ) {
+			$phalanx['lang'] = null;
+		}
+
 		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
 			unset( $phalanx['expire'] );
@@ -174,7 +180,7 @@ class PhalanxHooks extends WikiaObject {
 		}
 
 		if ( $result !== false ) {
-			$service = new PhalanxService();
+			$service = Injector::getInjector()->get( PhalanxService::class );
 			$ret = $service->reload( $result["success"] );
 		} else {
 			$ret = $result;
@@ -205,7 +211,7 @@ class PhalanxHooks extends WikiaObject {
 
 		$id = $phalanx->delete();
 		if ( $id ) {
-			$service = new PhalanxService();
+			$service = Injector::getInjector()->get( PhalanxService::class );
 			$ids = array( $id );
 			$ret = $service->reload( $ids );
 		} else {

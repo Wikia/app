@@ -572,7 +572,7 @@ class DatabasePostgres extends DatabaseBase {
 		}
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 		if( is_array( $srcTable ) ) {
-			$srcTable = implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable = implode( ',', array_map( [ $this, 'tableName' ], $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}
@@ -1001,6 +1001,13 @@ SQL;
 
 	function buildConcat( $stringList ) {
 		return implode( ' || ', $stringList );
+	}
+
+	public function buildGroupConcatField(
+		$delimiter, $table, $field, $conds = '', $options = array(), $join_conds = array()
+	) {
+		$fld = "array_to_string(array_agg($field)," . $this->addQuotes( $delimiter ) . ')';
+		return '(' . $this->selectSQLText( $table, $fld, $conds, null, array(), $join_conds ) . ')';
 	}
 
 	public function getSearchEngine() {

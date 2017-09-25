@@ -59,9 +59,9 @@ $messages['ja'] = array(
 
 $messages['ko'] = array(
 	'wikia-in-your-lang-description' => '같은 위키가 사용자의 모국어로도 있을 경우 그에 대해 알립니다. Geo 쿠키와 브라우저 언어를 통해 언어를 인식합니다.',
-	'wikia-in-your-lang-available' => '영어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
-	'wikia-in-your-lang-article-available' => 'This page is also available in English. Check it out! [$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '영어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
+	'wikia-in-your-lang-available' => '한국어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
+	'wikia-in-your-lang-article-available' => '한국어로도 이 페이지를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '한국어로도 $1를 이용하실 수 있습니다. 이곳을 확인해 보세요! [$2 $3]',
 );
 
 $messages['nl'] = array(

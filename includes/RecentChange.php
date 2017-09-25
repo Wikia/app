@@ -207,7 +207,7 @@ class RecentChange {
 
 		/* Wikia change begin - @author: Macbre */
 		/* Wysiwyg: add extra data before row is added */
-		wfRunHooks( 'RecentChange_beforeSave', array( &$this ) );
+		Hooks::run( 'RecentChange_beforeSave', [ $this ] );
 		/* Wikia change end */
 
 		# Insert new row
@@ -217,7 +217,7 @@ class RecentChange {
 		$this->mAttribs['rc_id'] = $dbw->insertId();
 
 		# Notify extensions
-		wfRunHooks( 'RecentChange_save', array( &$this ) );
+		Hooks::run( 'RecentChange_save', [ $this ] );
 
 		# Notify external application via UDP
 		if ( !$noudp ) {
@@ -358,7 +358,7 @@ class RecentChange {
 		// Automatic patrol needs "autopatrol", ordinary patrol needs "patrol"
 		$right = $auto ? 'autopatrol' : 'patrol';
 		$errors = array_merge( $errors, $this->getTitle()->getUserPermissionsErrors( $right, $user ) );
-		if( !wfRunHooks('MarkPatrolled', array($this->getAttribute('rc_id'), &$user, false)) ) {
+		if( !Hooks::run('MarkPatrolled', array($this->getAttribute('rc_id'), &$user, false)) ) {
 			$errors[] = array('hookaborted');
 		}
 		// Users without the 'autopatrol' right can't patrol their
@@ -377,7 +377,7 @@ class RecentChange {
 		$this->reallyMarkPatrolled();
 		// Log this patrol event
 		PatrolLog::record( $this, $auto, $user );
-		wfRunHooks( 'MarkPatrolledComplete', array($this->getAttribute('rc_id'), &$user, false) );
+		Hooks::run( 'MarkPatrolledComplete', array($this->getAttribute('rc_id'), &$user, false) );
 		return array();
 	}
 
@@ -735,7 +735,7 @@ class RecentChange {
 				$query .= '&rcid=' . $this->mAttribs['rc_id'];
 			}
 			// HACK: We need this hook for WMF's secure server setup
-			wfRunHooks( 'IRCLineURL', array( &$url, &$query ) );
+			Hooks::run( 'IRCLineURL', array( &$url, &$query ) );
 			$url .= $query;
 		}
 

@@ -35,7 +35,7 @@ class SpecialPageUserCommand extends UserCommand {
 
 		$specialPageName = $page->getName();
 		$options = array();
-		wfRunHooks("UserCommand::SpecialPage::{$specialPageName}",array($this,&$options));
+		Hooks::run("UserCommand::SpecialPage::{$specialPageName}",array($this,&$options));
 		foreach ($options as $k => $v)
 			$this->$k = $v;
 	}

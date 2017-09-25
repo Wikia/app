@@ -51,7 +51,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				}
 			},
 			window: {
-				adEnginePvUID: 'superFooUniqueID'
+				pvUID: 'superFooUniqueID'
 			}
 		},
 		tracker;
@@ -174,6 +174,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adProduct: 'rubicon',
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
+				bidderCode: 'rubicon',
 				rubiconAdId: '56bar',
 				rubiconAdvertiserId: 'foo89',
 				cpm: 123
@@ -181,6 +182,21 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('vast_id')).toEqual('foo89:56bar');
+		expect(getTrackedValue('price')).toEqual('1.20');
+	});
+
+	it('Track data with AppNexus data for appnexusAst ad product', function () {
+		tracker.track({
+			adProduct: 'appnexusAst',
+			slotName: 'TOP_LEADERBOARD',
+			bid: {
+				bidderCode: 'appnexusAst',
+				creative_id: '87765',
+				cpm: 1.20
+			}
+		}, 'fooPlayer', 'barEvent');
+
+		expect(getTrackedValue('vast_id')).toEqual('87765');
 		expect(getTrackedValue('price')).toEqual('1.20');
 	});
 
@@ -209,6 +225,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adProduct: 'veles',
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
+				bidderCode: 'veles',
 				vastId: 'GDFP:123'
 			}
 		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');

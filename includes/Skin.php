@@ -402,7 +402,7 @@ abstract class Skin extends ContextSource {
 		// Wikia change begin - @author: macbre
 		// allow extensions to change body tag attributes (RT #14017)
 		$classes = '';
-		wfRunHooks( 'SkinGetPageClasses', array( &$classes ) );
+		Hooks::run( 'SkinGetPageClasses', array( &$classes ) );
 		// Wikia change end
 
 		return "$numeric $type $name $classes";
@@ -436,7 +436,7 @@ abstract class Skin extends ContextSource {
 
 		/* Wikia change begin - @author: Marcin, #BugId: 30443 */
 		$alternativeCategoryLinks = null;
-		if( !wfRunHooks( 'Skin::getCategoryLinks::begin', array( &$alternativeCategoryLinks ) ) ) {
+		if( !Hooks::run( 'Skin::getCategoryLinks::begin', array( &$alternativeCategoryLinks ) ) ) {
 			return $alternativeCategoryLinks;
 		}
 		/* Wikia change end */
@@ -506,7 +506,7 @@ abstract class Skin extends ContextSource {
 		}
 
 		/* Wikia change begin - @author: Marcin, #BugId: 30443 */
-		wfRunHooks( 'Skin::getCategoryLinks::end', array( &$s ) );
+		Hooks::run( 'Skin::getCategoryLinks::end', array( &$s ) );
 		/* Wikia change end */
 
 		return $s;
@@ -576,7 +576,7 @@ abstract class Skin extends ContextSource {
 	protected function afterContentHook() {
 		$data = '';
 
-		if ( wfRunHooks( 'SkinAfterContent', array( &$data, $this ) ) ) {
+		if ( Hooks::run( 'SkinAfterContent', array( &$data, $this ) ) ) {
 			// adding just some spaces shouldn't toggle the output
 			// of the whole <div/>, so we use trim() here
 			if ( trim( $data ) != '' ) {
@@ -677,7 +677,7 @@ abstract class Skin extends ContextSource {
 		// OutputPage::getBottomScripts() which takes a Skin param. This should be cleaned
 		// up at some point
 		$bottomScriptText = $this->getOutput()->getBottomScripts();
-		wfRunHooks( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
+		Hooks::run( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
 
 		return $bottomScriptText;
 	}
@@ -735,7 +735,7 @@ abstract class Skin extends ContextSource {
 		$out = $this->getOutput();
 		$subpages = '';
 
-		if ( !wfRunHooks( 'SkinSubPageSubtitle', array( &$subpages, $this, $out ) ) ) {
+		if ( !Hooks::run( 'SkinSubPageSubtitle', array( &$subpages, $this, $out ) ) ) {
 			return $subpages;
 		}
 
@@ -847,7 +847,7 @@ abstract class Skin extends ContextSource {
 		// Allow for site and per-namespace customization of copyright notice.
 		$forContent = true;
 
-		wfRunHooks( 'SkinCopyrightFooter', array( $this->getTitle(), $type, &$msg, &$link, &$forContent ) );
+		Hooks::run( 'SkinCopyrightFooter', array( $this->getTitle(), $type, &$msg, &$link, &$forContent ) );
 
 		$msgObj = $this->msg( $msg )->rawParams( $link );
 		if ( $forContent ) {
@@ -899,7 +899,7 @@ abstract class Skin extends ContextSource {
 
 		$url = htmlspecialchars( "$wgStylePath/common/images/poweredby_mediawiki_88x31.png" );
 		$text = '<a href="//www.mediawiki.org/"><img src="' . $url . '" height="31" width="88" alt="Powered by MediaWiki" /></a>';
-		wfRunHooks( 'SkinGetPoweredBy', array( &$text, $this ) );
+		Hooks::run( 'SkinGetPoweredBy', array( &$text, $this ) );
 		return $text;
 	}
 
@@ -1245,7 +1245,7 @@ abstract class Skin extends ContextSource {
 		$bar = array();
 		$this->addToSidebar( $bar, 'sidebar' );
 
-		wfRunHooks( 'SkinBuildSidebar', array( $this, &$bar ) );
+		Hooks::run( 'SkinBuildSidebar', array( $this, &$bar ) );
 		if ( $wgEnableSidebarCache ) {
 			$wgMemc->set( $key, $bar, $wgSidebarCacheExpiry );
 		}
@@ -1514,7 +1514,7 @@ abstract class Skin extends ContextSource {
 		wfProfileIn( __METHOD__ );
 		$siteNotice = '';
 
-		if ( wfRunHooks( 'SiteNoticeBefore', array( &$siteNotice, $this ) ) ) {
+		if ( Hooks::run( 'SiteNoticeBefore', array( &$siteNotice, $this ) ) ) {
 			if ( is_object( $this->getUser() ) && $this->getUser()->isLoggedIn() ) {
 				$siteNotice = $this->getCachedNotice( 'sitenotice' );
 			} else {
@@ -1530,7 +1530,7 @@ abstract class Skin extends ContextSource {
 			}
 		}
 
-		wfRunHooks( 'SiteNoticeAfter', array( &$siteNotice, $this ) );
+		Hooks::run( 'SiteNoticeAfter', array( &$siteNotice, $this ) );
 		wfProfileOut( __METHOD__ );
 		return $siteNotice;
 	}
@@ -1572,7 +1572,9 @@ abstract class Skin extends ContextSource {
 			$attribs = " title=\"$attribs\"";
 		}
 		$result = null;
-		wfRunHooks( 'EditSectionLink', array( &$this, $nt, $section, $attribs, $link, &$result, $lang ) );
+		Hooks::run( 'EditSectionLink',
+			[ $this, $nt, $section, $attribs, $link, &$result, $lang ] );
+
 		if ( !is_null( $result ) ) {
 			# For reverse compatibility, add the brackets *after* the hook is
 			# run, and even add them to hook-provided text.  (This is the main
@@ -1585,7 +1587,7 @@ abstract class Skin extends ContextSource {
 		# clean and non-redundant arguments.
 		$result = $this->getWrappedEditSectionLink( $link, $lang );
 
-		wfRunHooks( 'DoEditSectionLink', array( $this, $nt, $section, $tooltip, &$result, $lang ) );
+		Hooks::run( 'DoEditSectionLink', array( $this, $nt, $section, $tooltip, &$result, $lang ) );
 		return $result;
 	}
 

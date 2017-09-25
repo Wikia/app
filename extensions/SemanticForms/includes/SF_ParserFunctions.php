@@ -154,7 +154,7 @@ class SFParserFunctions {
 	// only gets added to the page once
 	static $num_autocompletion_inputs = 0;
 
-	static function renderDefaultform( &$parser ) {
+	static function renderDefaultform( Parser $parser ) {
 		$curTitle = $parser->getTitle();
 
 		$params = func_get_args();
@@ -185,7 +185,7 @@ class SFParserFunctions {
 		// It's not a category - display nothing.
 	}
 
-	static function renderFormLink ( &$parser ) {
+	static function renderFormLink ( Parser $parser ) {
 		$params = func_get_args();
 		array_shift( $params ); // We don't need the parser.
 
@@ -194,7 +194,7 @@ class SFParserFunctions {
 		return $parser->insertStripItem( self::createFormLink( $parser, $params, 'formlink' ), $parser->mStripState );
 	}
 
-	static function renderFormRedLink ( &$parser ) {
+	static function renderFormRedLink ( Parser $parser ) {
 		$params = func_get_args();
 		array_shift( $params ); // We don't need the parser.
 
@@ -203,7 +203,7 @@ class SFParserFunctions {
 		return $parser->insertStripItem( self::createFormLink( $parser, $params, 'formredlink' ), $parser->mStripState );
 	}
 
-	static function renderQueryFormLink ( &$parser ) {
+	static function renderQueryFormLink ( Parser $parser ) {
 		$params = func_get_args();
 		array_shift( $params ); // We don't need the parser.
 
@@ -212,7 +212,7 @@ class SFParserFunctions {
 		return $parser->insertStripItem( self::createFormLink( $parser, $params, 'queryformlink' ), $parser->mStripState );
 	}
 
-	static function renderFormInput( &$parser ) {
+	static function renderFormInput( Parser $parser ) {
 		$params = func_get_args();
 		array_shift( $params ); // don't need the parser
 
@@ -391,7 +391,7 @@ class SFParserFunctions {
 	/**
 	 * {{#arraymap:value|delimiter|var|formula|new_delimiter}}
 	 */
-	static function renderArrayMap( &$parser, $frame, $args ) {
+	static function renderArrayMap( Parser $parser, $frame, $args ) {
 		// Set variables.
 		$value = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		$delimiter = isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : ',';
@@ -429,7 +429,7 @@ class SFParserFunctions {
 	/**
 	 * {{#arraymaptemplate:value|template|delimiter|new_delimiter}}
 	 */
-	static function renderArrayMapTemplate( &$parser, $frame, $args ) {
+	static function renderArrayMapTemplate( Parser $parser, $frame, $args ) {
 		// Set variables.
 		$value = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		$template = isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -465,7 +465,7 @@ class SFParserFunctions {
 	}
 
 
-	static function renderAutoEdit( &$parser ) {
+	static function renderAutoEdit( Parser $parser ) {
 		$parser->getOutput()->addModules( 'ext.semanticforms.autoedit' );
 
 		// Set defaults.
@@ -601,7 +601,7 @@ class SFParserFunctions {
 		return $parser->insertStripItem( $output, $parser->mStripState );
 	}
 
-	static function createFormLink( &$parser, $params, $parserFunctionName ) {
+	static function createFormLink( Parser $parser, $params, $parserFunctionName ) {
 		// Set defaults.
 		$inFormName = $inLinkStr = $inExistingPageLinkStr = $inLinkType =
 			$inTooltip = $inQueryStr = $inTargetName = '';
@@ -765,7 +765,7 @@ class SFParserFunctions {
 		return $str;
 	}
 
-	static function loadScriptsForPopupForm( &$parser ) {
+	static function loadScriptsForPopupForm( Parser $parser ) {
 		$parser->getOutput()->addModules( 'ext.semanticforms.popupformedit' );
 		return true;
 	}

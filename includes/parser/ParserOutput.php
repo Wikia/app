@@ -188,7 +188,7 @@ class ParserOutput extends CacheTime {
 	function getText() {
 		if ( $this->mEditSectionTokens ) {
 			return preg_replace_callback( ParserOutput::EDITSECTION_REGEX,
-				array( &$this, 'replaceEditSectionLinksCallback' ), $this->mText );
+				[ $this, 'replaceEditSectionLinksCallback' ], $this->mText );
 		}
 		return preg_replace( ParserOutput::EDITSECTION_REGEX, '', $this->mText );
 	}

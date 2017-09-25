@@ -90,10 +90,10 @@ class WallHistoryController extends WallController {
 
 		if ( $this->isThreadLevel ) {
 			$this->response->setVal( 'pageTitle', wfMessage( 'wall-thread-history-title' )->escaped() );
-			wfRunHooks( 'WallHistoryThreadHeader', [ $title, $wallMessage, &$path, &$this->response, &$this->request ] );
+			Hooks::run( 'WallHistoryThreadHeader', [ $title, $wallMessage, &$path, &$this->response, &$this->request ] );
 		} else {
 			$this->response->setVal( 'pageTitle', wfMessage( 'wall-history-title' )->escaped() );
-			wfRunHooks( 'WallHistoryHeader', [ $title, &$path, &$this->response, &$this->request ] );
+			Hooks::run( 'WallHistoryHeader', [ $title, &$path, &$this->response, &$this->request ] );
 		}
 
 		$this->response->setVal( 'path', $path );
@@ -120,7 +120,6 @@ class WallHistoryController extends WallController {
 		$output = $this->getContext()->getOutput();
 		if ( $this->isThreadLevel ) {
 			$output->setPageTitle( wfMessage( 'wall-thread-history-title' )->text() );
-			$this->wg->SuppressPageHeader = true;
 		} else {
 			$output->setPageTitle( wfMessage( 'wall-history-title' )->text() );
 		}

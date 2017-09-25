@@ -32,7 +32,7 @@ class Starters {
 		'fi' => 'fistarter',
 		'fr' => 'starterbeta',
 		'hu' => 'aastarter5',
-		'id' => 'aastarter6',
+		'id' => 'aastarter2',
 		'it' => 'italianstarter',
 		'ja' => 'jastarter',
 		'ko' => 'starterko',

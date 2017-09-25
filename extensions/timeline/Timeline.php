@@ -51,7 +51,7 @@ $wgExtensionMessagesFiles['Timeline'] = dirname(__FILE__) . '/Timeline.i18n.php'
  * @param $parser Parser
  * @return bool
  */
-function wfTimelineExtension( &$parser ) {
+function wfTimelineExtension( Parser $parser ): bool {
 	$parser->setHook( 'timeline', 'wfRenderTimeline' );
 	return true;
 }
@@ -86,7 +86,7 @@ function wfRenderTimeline( $timelinesrc ) {
 	$fname = 'mwstore://' . $backend->getName() . "/timeline-render/$hash";
 
 	// Wikia change - begin
-	wfRunHooks( 'BeforeRenderTimeline', [ &$backend, &$fname, $hash ] );
+	Hooks::run( 'BeforeRenderTimeline', [ &$backend, &$fname, $hash ] );
 	// Wikia change - end
 
 	$previouslyFailed = $backend->fileExists( array( 'src' => "{$fname}.err" ) );

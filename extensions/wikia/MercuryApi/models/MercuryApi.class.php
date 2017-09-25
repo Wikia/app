@@ -119,8 +119,9 @@ class MercuryApi {
 		global $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-		       $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
-		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
+		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
+		       $wgWikiDirectedAtChildrenByStaff;
 
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
@@ -133,6 +134,7 @@ class MercuryApi {
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
+			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
@@ -148,6 +150,7 @@ class MercuryApi {
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
+			'discussionColorOverride' => SassUtil::sanitizeColor($wgDiscussionColorOverride),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'comscore' => [
@@ -491,9 +494,15 @@ class MercuryApi {
 				return $result;
 			}
 		} elseif ( $item['article_id'] === 0 ) {
-			$result['url'] = Title::newFromText( $item['title'] )->getLocalURL();
+			$title =  Title::newFromText( $item['title'] );
 
-			return $result;
+			$category = empty( $title ) ? null : Category::newFromTitle( $title );
+
+			if ( !empty( $category ) && $category->getPageCount() ) {
+				$result['url'] = $title->getLocalURL();
+
+				return $result;
+			}
 		}
 
 		return null;

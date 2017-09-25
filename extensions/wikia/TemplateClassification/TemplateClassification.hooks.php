@@ -36,7 +36,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+		$minoredit, $watchthis, $sectionanchor, $flags, $revision, &$status, $baseRevId
 	) {
 		global $wgCityId;
 
@@ -144,7 +144,7 @@ class Hooks {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 
-				wfRunHooks( 'TemplateClassificationHooks::afterEditPageAssets' );
+				\Hooks::run( 'TemplateClassificationHooks::afterEditPageAssets' );
 			}
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
@@ -158,20 +158,23 @@ class Hooks {
 	}
 
 	/**
-	 * @param \PageHeaderController $pageHeaderController
 	 * @param \Title $title
+	 * @param string $pageType
+	 *
 	 * @return bool
 	 */
-	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
+	public function onPageHeaderPageTypePrepared( \Title $title, string &$pageType ) {
 		global $wgCityId;
 
-		$user = $pageHeaderController->getContext()->getUser();
+		$user = \RequestContext::getMain()->getUser();
+
 		if ( $title->inNamespace( NS_TEMPLATE ) && $title->exists() ) {
 			$view = new View();
-			$pageHeaderController->pageType = $view->renderTemplateType(
-				$wgCityId, $title, $user, $pageHeaderController->pageType
+			$pageType = $view->renderTemplateType(
+				$wgCityId, $title, $user, $pageType
 			);
 		}
+
 		return true;
 	}
 

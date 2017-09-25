@@ -55,16 +55,23 @@ class WallExternalController extends WikiaController {
 
 		$forum = new Forum();
 
-		//** TitleBatch $titleBatch */
-		$titleBatch = $forum->getTitlesForNamespace( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
+		$boardTitles = $forum->getBoardTitles();
 
-		$this->destinationBoards = [ [ 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ] ];
-		/** @var $title Title */
-		foreach ( $titleBatch->getAll() as $title ) {
+		$this->destinationBoards = [
+			[
+				'value' => '',
+				'content' => wfMessage( 'forum-board-destination-empty' )->escaped()
+			]
+		];
+
+		foreach ( $boardTitles as $title ) {
 			$value = $title->getArticleID();
-			if ( $mainWall->getId() != $value ) {
+			if ( $mainWall->getId() !== $value ) {
 				$wall = Wall::newFromTitle( $title );
-				$this->destinationBoards[$value] = [ 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) ];
+				$this->destinationBoards[$value] = [
+					'value' => $value,
+					'content' => htmlspecialchars( $wall->getTitle()->getText() )
+				];
 			}
 		}
 	}
@@ -100,15 +107,19 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
-		$wall = Wall::newFromId( $destinationId );
-		$thread = WallThread::newFromId( $threadId );
+		$threadTitle = Title::newFromID( $threadId );
 
-		if ( empty( $wall ) ) {
+		// SUS-1777: Only allow moving Forum threads
+		if ( empty( $threadTitle ) || $threadTitle->inNamespace( NS_USER_WALL_MESSAGE ) ) {
 			$this->errormsg = 'unknown';
+			return false;
 		}
 
+		$wall = Wall::newFromId( $destinationId );
 
+		$thread = WallThread::newFromId( $threadId );
 		$thread->move( $wall, $this->wg->User );
+
 		$this->status = 'ok';
 	}
 
@@ -236,8 +247,7 @@ class WallExternalController extends WikiaController {
 		 * BugId:68629 XSS vulnerable. We DO NOT want to have
 		 * any HTML here. Hence the strip_tags call.
 		 */
-		$titleMeta = strip_tags( $this->request->getVal( 'messagetitle', null ) );
-		$titleMeta = substr( $titleMeta, 0, 200 );
+		$titleMeta = static::sanitizeMetaTitle( $this->request->getVal( 'messagetitle' ) );
 
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 
@@ -613,7 +623,7 @@ class WallExternalController extends WikiaController {
 		$msgid = $this->request->getVal( 'msgid' );
 
 		// XSS vulnerable (MAIN-1412)
-		$newtitle = strip_tags( trim( $this->request->getVal( 'newtitle' ) ) );
+		$newtitle = static::sanitizeMetaTitle( $this->request->getVal( 'newtitle' ) );
 
 		$newbody = $this->getConvertedContent( $this->request->getVal( 'newbody' ) );
 
@@ -895,5 +905,14 @@ class WallExternalController extends WikiaController {
 			'status' => 'error',
 			'errormsg' => wfMessage( 'wall-message-no-permission' )->escaped()
 		] );
+	}
+
+	/**
+	 * Sanitize the meta-title of a Wall thread and make it conform to length constraints
+	 * @param $title
+	 * @return bool|string
+	 */
+	protected static function sanitizeMetaTitle( $title ) {
+		return substr( trim( strip_tags( $title ) ), 0, 200 );
 	}
 }

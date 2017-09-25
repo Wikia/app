@@ -40,7 +40,7 @@ class ForumController extends WallBaseController {
 		$wall = $this->response->getVal( 'wall' );
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$board = ForumBoard::getEmpty();
+			$board = new ForumBoard();
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
@@ -68,8 +68,6 @@ class ForumController extends WallBaseController {
 
 		// TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-
-		$this->app->wg->SuppressPageHeader = true;
 	}
 
 	protected function redirectToIndex() {
@@ -194,7 +192,7 @@ class ForumController extends WallBaseController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function breadCrumbs() {
+	public function brickHeader() {
 		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 			$path = [ ];
@@ -212,37 +210,10 @@ class ForumController extends WallBaseController {
 		} else {
 			parent::brickHeader();
 		}
-	}
 
-	public function header() {
-		$forum = new Forum();
-		$this->response->setVal( 'threads', $forum->getTotalThreads() );
-		$this->response->setVal( 'activeThreads', $forum->getTotalActiveThreads() );
-
-		$title = $this->wg->Title;
-		$pageHeading = wfMessage( 'forum-specialpage-heading' )->escaped();
-		$pageDescription = '';
-		$showStats = true;
-
-		$nameSpace = $title->getNamespace();
-		if ( $nameSpace === NS_WIKIA_FORUM_BOARD ) {
-			$showStats = false;
-			$pageHeading = wfMessage( 'forum-board-title', $title->getText() )->escaped();
-			$board = ForumBoard::newFromTitle( $title );
-			$pageDescription = $board->getDescription();
-		} else if ( $nameSpace === NS_USER_WALL_MESSAGE ) {
-			$showStats = false;
-			$messageKey = $title->getText();
-			$message = WallMessage::newFromId( $messageKey );
-			if ( !empty( $message ) ) {
-				$message->load();
-				$pageHeading = $message->getMetaTitle();
-			}
-		}
-
-		$this->response->setVal('showStats', $showStats);
-		$this->response->setVal('pageHeading', $pageHeading);
-		$this->response->setVal('pageDescription', $pageDescription);
+		$this->getResponse()
+			->getView()
+			->setTemplatePath( 'extensions/wikia/Wall/templates/Wall_brickHeader.php' );
 	}
 
 	public function threadMessage() {

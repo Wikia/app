@@ -16,7 +16,7 @@ class WikiaStyleGuideSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function index() {
-		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressCommunityHeader = true;
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 		$this->wg->SuppressAds = true;

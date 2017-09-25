@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.math',
 	'wikia.abTest',
-	'wikia.instantGlobals'
-], function (adContext, math, abTest, instantGlobals) {
+	'wikia.instantGlobals',
+	require.optional('ext.wikia.adEngine.wrappers.prebid')
+], function (adContext, math, abTest, instantGlobals, prebid) {
 	'use strict';
 
 	var skins = {
@@ -14,16 +15,6 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		pageTypes = {
 			article: 'a',
 			home: 'h'
-		},
-		prebidIds = {
-			aol: 'ao',
-			appnexus: 'an',
-			audienceNetwork: 'fb',
-			indexExchange: 'ie',
-			openx: 'ox',
-			veles: 've',
-			rubicon: 'ru',
-			wikia: 'wk'
 		},
 		slotSources = {
 			gpt: '1',
@@ -48,6 +39,15 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			MOBILE_IN_CONTENT: 'i',
 			MOBILE_PREFOOTER: 'p',
 			MOBILE_BOTTOM_LEADERBOARD: 'b'
+		},
+		videoBidders = {
+			appnexusAst: 'aa',
+			veles: 've',
+			rubicon: 'ru'
+		},
+		videoSlots = {
+			oasis: 'INCONTENT_PLAYER',
+			mercury: 'MOBILE_IN_CONTENT'
 		};
 
 	function valueOrX(map, key) {
@@ -69,27 +69,6 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		return skin + slot + pageType + src;
 	}
 
-	function getPrebidSlotId(slotData) {
-		var id = 'x',
-
-			bidder,
-			cpm,
-			size,
-			tier;
-
-		if (slotData.hb_bidder) {
-			cpm = parseFloat(slotData.hb_pb);
-
-			bidder = valueOrX(prebidIds, slotData.hb_bidder);
-			size = slotData.hb_size;
-			tier = 't' + math.leftPad(cpm * 100, 4);
-
-			id = bidder + size + tier;
-		}
-
-		return id + slotData.wsi.substr(0, 2);
-	}
-
 	function getAbTestId(slotData) {
 		var experimentId = instantGlobals.wgAdDriverAbTestIdTargeting,
 			experiments = abTest.getExperiments(),
@@ -106,9 +85,28 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		}
 	}
 
+	function getOutstreamData() {
+		var context = adContext.getContext(),
+			getAdserverTargeting = prebid && prebid.get().getAdserverTargetingForAdUnitCode,
+			videoTargeting = getAdserverTargeting && getAdserverTargeting(videoSlots[context.targeting.skin]);
+
+			if (videoTargeting) {
+				return constructOutstreamString(videoTargeting);
+			}
+    	}
+
+	function constructOutstreamString(videoTargeting) {
+		var bidderName = videoTargeting.hb_bidder,
+			isVideoProvider = !!videoBidders[bidderName];
+
+		if (isVideoProvider && videoTargeting.hb_pb) {
+			return videoBidders[bidderName] + math.leftPad(parseFloat(videoTargeting.hb_pb) * 100, 4);
+		}
+	}
+
 	return {
 		getAbTestId: getAbTestId,
-		getPrebidSlotId: getPrebidSlotId,
+		getOutstreamData: getOutstreamData,
 		getWikiaSlotId: getWikiaSlotId
 	};
 });

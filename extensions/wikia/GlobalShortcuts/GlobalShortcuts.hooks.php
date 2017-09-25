@@ -47,7 +47,7 @@ class Hooks {
 		$helper->addCurrentPageActions( $actions, $shortcuts );
 		$helper->addSpecialPageActions( $actions, $shortcuts );
 
-		wfRunHooks( 'PageGetActions', [ &$actions, &$shortcuts ] );
+		\Hooks::run( 'PageGetActions', [ &$actions, &$shortcuts ] );
 		$vars['wgWikiaPageActions'] = $actions;
 		$vars['wgWikiaShortcutKeys'] = $shortcuts;
 

@@ -128,17 +128,12 @@ if ( !empty( $byemail ) ) {
 		</h2>
 		<h3 class="subheading"></h3>
 		<div class="wiki-info">
-			<?= F::app()->renderView( 'WikiHeader', 'Wordmark' ) ?>
 			<p><?= wfMessage( 'usersignup-marketing-wikia' )->escaped() ?></p>
 			<?= wfMessage( 'usersignup-marketing-login' )->parse() ?>
 		</div>
 	<? endif; ?>
 
 	<div class="form-container">
-		<? if ( !$isMonobookOrUncyclo ): ?>
-			<? // 3rd party providers buttons ?>
-			<?= $app->renderView( 'UserLoginSpecial', 'ProvidersTop', [ 'requestType' => 'signup' ] ) ?>
-		<? endif; ?>
 		<?= F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] ) ?>
 	</div>
 	<? if ( empty( $byemail ) ): ?>
