@@ -479,17 +479,12 @@ class WikiaHomePageController extends WikiaController {
 		return $imageUrl;
 	}
 
-	protected function getHubSliderData($params) {
-		$sliderParams = [
-			'module' => WikiaHubsModuleSliderService::MODULE_ID
-		];
-
-		$sliderParams = array_merge( $sliderParams, $params );
-		return $this->app->sendRequest(
-			'WikiaHubsApi',
-			'getModuleData',
-			$sliderParams
-		)->getData();
+	/**
+	 * @return array
+	 * @deprecated
+	 */
+	protected function getHubSliderData() {
+		return [];
 	}
 
 	/**
