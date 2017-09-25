@@ -490,11 +490,10 @@ class WikiaHomePageController extends WikiaController {
 	/**
 	 * Get list of hubs v3 in selected language
 	 *
-	 * @param $langCode
 	 * @return array
 	 * @deprecated
 	 */
-	private function getHubsV3List( $langCode ) {
+	private function getHubsV3List() {
 		return [];
 	}
 
