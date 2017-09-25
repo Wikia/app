@@ -220,12 +220,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
-		if (context.providers.rubiconFastlane) {
-			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries) &&
-				!context.bidders.rubiconDisplay; // disable non-prebid implementation if Rubicon (Prebid) adapter is active
-		}
-
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
 
 		// INVISIBLE_HIGH_IMPACT slot
