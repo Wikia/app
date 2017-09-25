@@ -509,43 +509,6 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	/**
-	 * Add additional parameter to css url to pass them to scss file
-	 *
-	 * @param $oasisSettings
-	 * @return bool
-	 */
-	public static function onAfterOasisSettingsInitialized( &$oasisSettings ) {
-		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
-		global $wgContLang, $wgCityId;
-
-		$settings = [];
-		$helper = new WikiaHomePageHelper();
-
-		$response = F::app()->sendRequest(
-			'WikiaHubsApiController',
-			'getHubsV3List',
-			[ 'lang' => $wgContLang->getCode() ]
-		);
-		$hubsV3List = $response->getVal('list', []);
-
-		$hubsSlots = $helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
-
-		if( isset( $hubsSlots['hub_slot'] ) ) {
-			foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
-				if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
-					$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $hubId);
-					$settings['hub-color-slot-' . ($slot+1)] = isset( $hubSettings['color-buttons'] )
-						? $hubSettings['color-buttons']
-						: null;
-				}
-			}
-		}
-
-		$oasisSettings = array_merge( $oasisSettings, $settings );
-		return true;
-	}
-
-	/**
 	 * draw visualization
 	 */
 	public function visualization() {

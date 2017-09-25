@@ -16,7 +16,7 @@
 
 		@for $i from 1 through 10 {
 			&.hub-slot-#{$i} .wkhome-hero{
-				border-top: 5px solid get_command_line_param("hub-color-slot-#{$i}", $color-wikiahome-community);
+				border-top: 5px solid $color-wikiahome-community;
 			}
 		}
 

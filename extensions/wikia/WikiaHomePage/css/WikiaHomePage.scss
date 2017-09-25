@@ -758,7 +758,7 @@ $wikiahomepage-line-height: 16px;
 			@for $i from 1 through 10 {
 				&.hub-slot-#{$i} {
 					h2 {
-						border-bottom-color: get_command_line_param("hub-color-slot-#{$i}", $color-wikiahome-community);
+						border-bottom-color: $color-wikiahome-community;
 					}
 				}
 			}

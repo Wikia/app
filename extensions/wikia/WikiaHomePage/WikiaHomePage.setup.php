@@ -43,5 +43,4 @@ $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaHomePageController::onWikiaMobil
 $wgHooks['ArticleCommentCheck'][] = 'WikiaHomePageController::onArticleCommentCheck';
 $wgHooks['AfterGlobalHeader'][] = 'WikiaHomePageController::onAfterGlobalHeader';
 $wgHooks['BeforePageDisplay'][] = 'WikiaHomePageController::onBeforePageDisplay';
-$wgHooks['AfterOasisSettingsInitialized'][] = 'WikiaHomePageController::onAfterOasisSettingsInitialized';
 $wgHooks['ArticleFromTitle'][] = 'WikiaHomePageController::onArticleFromTitle';
