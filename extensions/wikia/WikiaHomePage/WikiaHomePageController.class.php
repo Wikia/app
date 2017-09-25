@@ -496,16 +496,11 @@ class WikiaHomePageController extends WikiaController {
 	 * Get list of hubs v3 in selected language
 	 *
 	 * @param $langCode
-	 * @return null
+	 * @return array
+	 * @deprecated
 	 */
 	private function getHubsV3List( $langCode ) {
-		$response = $this->app->sendRequest(
-			'WikiaHubsApiController',
-			'getHubsV3List',
-			[ 'lang' => $langCode ]
-		);
-
-		return $response->getVal('list', []);
+		return [];
 	}
 
 	private function getHubsSectionSlots() {
