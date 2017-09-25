@@ -3,6 +3,17 @@
 class GoogleAmpHelper {
 
 	/**
+	 * Checks whether a title is a CMP.
+	 * @param Title $title
+	 * @return bool
+	 */
+	static private function isCuratedMainPage( Title $title ) : bool {
+		global $wgCityId;
+
+		return $title->isMainPage() && ( new CommunityDataService( $wgCityId ) )->hasData();
+	}
+
+	/**
 	 * Checks whether AMP version is enabled for a given title.
 	 *
 	 * @param Title $title
@@ -13,7 +24,8 @@ class GoogleAmpHelper {
 
 		if ( $title->exists() &&
 			in_array( $title->getNamespace(), $wgGoogleAmpNamespaces ) &&
-			!in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) ) {
+			!in_array( $title->getPrefixedDBkey(), $wgGoogleAmpArticleBlacklist ) &&
+			!self::isCuratedMainPage( $title ) ) {
 				return true;
 		}
 		return false;
