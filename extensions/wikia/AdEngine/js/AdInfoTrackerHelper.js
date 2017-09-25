@@ -14,6 +14,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	function shouldHandleSlot(slot, enabledSlots) {
 		var dataGptDiv = slot.container && slot.container.firstChild;
 
+		console.log("diana-debug: dataGptDiv", dataGptDiv);
+
 		return (
 			enabledSlots[slot.name] &&
 			dataGptDiv &&
@@ -81,6 +83,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'ad_status': status || 'unknown',
 			'scroll_y': slotRegistry.getScrollY(slot.name) || 0
 		};
+
+		console.log("diana-debug: helper - data", data);
 
 		return data;
 	}

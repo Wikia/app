@@ -40,6 +40,8 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 		if (isEnabled()) {
 			log('run', log.levels.debug, logGroup);
 
+			console.log("diana-debug: AdInfoTracker.js - run");
+
 			win.addEventListener('adengine.slot.status', function (event) {
 				var adInfo = event.detail.adInfo || {},
 					adType = adInfo && adInfo.adType,
@@ -47,8 +49,12 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 					slot = event.detail.slot,
 					status = adType === 'blocked' ? 'blocked' : event.detail.status;
 
+				console.log("diana-debug: adengine.slot.status", adInfo);
+
 				if (adInfoTrackerHelper.shouldHandleSlot(slot, enabledSlots)) {
 					data = adInfoTrackerHelper.prepareData(slot, status, adInfo);
+
+					console.log("diana-debug: data", data);
 
 					log(['adengine.slot.status', event], log.levels.debug, logGroup);
 					if (data) {
