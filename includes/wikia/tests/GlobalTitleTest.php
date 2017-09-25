@@ -127,26 +127,27 @@ class GlobalTitleTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider mainPageDataProvider
 	 */
-	function testNewMainPageUrls( $mediaWikiMainpageContent, $exists, $expectedUrl ) {
+	function testNewMainPageUrls( $mediaWikiMainpageContent, $exists, $availableNamespaces, $expectedNamespace, $expectedText ) {
 		$this->mockProdEnv();
 
 		$globalTitleMock = $this->getMockBuilder( 'GlobalTitle' )->setMethods( [
 			'getContent',
 			'exists',
-			'loadContLang',
+			'loadNamespaceNames',
 			'loadAll',
+		    'getNsText'
 		] )->getMock();
-		$globalTitleMock->expects( $this->any() )
-			->method( 'getContent' )
-			->willReturn( $mediaWikiMainpageContent );
-		$globalTitleMock->expects( $this->any() )->method( 'exists' )->willReturn( $exists );
-		$globalTitleMock->expects( $this->any() )->method( 'loadContLang' )->willReturn( null );
+		$globalTitleMock->expects( $this->any() )->method( 'loadNamespaceNames' )->willReturn( $availableNamespaces );
 		$globalTitleMock->expects( $this->any() )->method( 'loadAll' )->willReturn( null );
-		$this->mockClass( 'GlobalTitle', $globalTitleMock );
+		$globalTitleMock->expects( $this->any() )->method( 'getNsText' )->willReturn( $expectedNamespace );
+		$globalTitleMock->expects( $this->any() )->method( 'exists' )->willReturn( $exists );
+		$globalTitleMock->expects( $this->any() )->method( 'getContent' )->willReturn( $mediaWikiMainpageContent );
+		$this->mockClass( GlobalTitle::class, $globalTitleMock );
 
 		$title = GlobalTitle::newMainPage( 177 ); // community.wikia.com
 
-		$this->assertEquals( $title->getFullURL(), $expectedUrl );
+		$this->assertEquals( $title->getNamespace(), $expectedNamespace );
+		$this->assertEquals( $title->getText(), $expectedText );
 	}
 
 	/**
@@ -193,11 +194,35 @@ class GlobalTitleTest extends WikiaBaseTest {
 
 	public function mainPageDataProvider() {
 		return [
-			['Whatever', true, 'http://community.wikia.com/wiki/Whatever'],
-			['Namespace:Test', true, 'http://community.wikia.com/wiki/Namespace:Test'],
-			['Namespace with spaces:Test', true, 'http://community.wikia.com/wiki/Namespace_with_spaces:Test'],
-			['Namespaces_with_underlines:Test', true, 'http://community.wikia.com/wiki/Namespaces_with_underlines:Test'],
-			['Notexists', false, 'http://community.wikia.com/wiki/Main_Page']
+			[
+				'Whatever',
+				true,
+				[],
+				false,
+				'Whatever',
+			],
+			[
+				'Namespace:Test',
+				true,
+				[ '1' => 'Namespace' ],
+				1,
+				'Test',
+			],
+			[
+				'Namespace with spaces:Test',
+				true,
+				[ '1' => 'Namespace_with_spaces' ],
+				1,
+				'Test',
+			],
+			[
+				'Namespaces_with_underlines:Test',
+				true,
+				[ 2 => 'Namespaces_with_underlines' ],
+				2,
+				'Test',
+			],
+			[ 'Notexists', false, [], false, 'Main Page' ],
 		];
 	}
 }

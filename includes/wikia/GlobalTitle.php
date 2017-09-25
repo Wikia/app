@@ -107,8 +107,8 @@ class GlobalTitle extends Title {
 		// extracting namespace from article name
 		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
 		if ( preg_match( $prefixRegexp, $mainPageName, $matches ) ) {
-			$mainPageTitle->loadContLang();
-			$namespaceIndex = $mainPageTitle->mContLang->getNsIndex( $matches[1] );
+			$namespaces = $mainPageTitle->loadNamespaceNames();
+			$namespaceIndex = array_search( $matches[1], $namespaces );
 			if ( $namespaceIndex !== false ) {
 				$namespace = $namespaceIndex;
 				$mainPageName = $matches[2];
@@ -205,7 +205,7 @@ class GlobalTitle extends Title {
 	 *  constructor doesnt load anything from database. This is the place
 	 *  for that kind of things
 	 */
-	private function loadAll() {
+	protected function loadAll() {
 		$old = $this->loadFromCache();
 		$this->loadServer();
 		$this->loadArticlePath();
@@ -835,7 +835,7 @@ class GlobalTitle extends Title {
 	 *
 	 * @return Array
 	 */
-	private function loadNamespaceNames() {
+	protected function loadNamespaceNames() {
 		global $wgCanonicalNamespaceNames;
 
 		/**
