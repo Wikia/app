@@ -46,8 +46,8 @@ define('ext.wikia.adEngine.ml.hivi.leaderboardInputParser', [
 			articleHeight,												// Article height
 			getBidderPrice('indexExchange', prices),					// IndexExchange
 			getBidderPrice('appnexus', prices),							// AppNexus
-			getBidderPrice('fastlane', prices),							// Rubicon Fastlane
-			getBidderPrice('fastlane_private', prices),					// Rubicon Fastlane private
+			'DEPRECATED',												// Rubicon Fastlane
+			'DEPRECATED',												// Rubicon Fastlane private
 			getBidderPrice('aol', prices),								// AOL
 			getBidderPrice('openx', prices)								// OpenX
 		];
