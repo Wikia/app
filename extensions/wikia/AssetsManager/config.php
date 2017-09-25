@@ -1593,39 +1593,6 @@ $config['wikiahomepage_scss_wikiamobile'] = [
 	],
 ];
 
-/** WikiaHubsV3 **/
-$config['wikiahubs_v3'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaHubsV3/js/WikiaHubsV3.js',
-	],
-];
-
-$config['wikiahubs_v3_modal'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaHubsV3/js/WikiaHubsV3Modals.js',
-	],
-];
-
-$config['wikiahubs_v3_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/WikiaHubsV3/css/WikiaHubsV3.scss',
-	],
-];
-
-$config['wikiahubs_v3_scss_mobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/WikiaHubsV3/css/WikiaHubsV3Mobile.scss',
-	],
-];
-
 /** WAMPage **/
 $config['wampage_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
