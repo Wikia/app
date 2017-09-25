@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Util\Assert;
-
 /**
  * Utility class to check types of currently rendered page
  */
