@@ -1667,7 +1667,6 @@ $wgApiAccess = [
 	'TvApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'DesignSystemApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
