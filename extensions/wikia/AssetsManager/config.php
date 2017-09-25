@@ -80,7 +80,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/bottomLeaderboard.js',
@@ -236,17 +235,6 @@ $config['adengine2_a9_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/lookup/a9.js',
-	],
-];
-
-$config['adengine2_rubicon_fastlane_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
-		'//extensions/wikia/AdEngine/js/utils/math.js',
 	],
 ];
 
@@ -839,7 +827,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
