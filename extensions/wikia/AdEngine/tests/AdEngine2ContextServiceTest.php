@@ -390,8 +390,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedPrebidBidderUrl, $result['opts']['prebidBidderUrl'] );
 		unset($result['opts']['prebidBidderUrl']);
 
-		$expected['providers']['rubiconFastlane'] = true;
-
 		$this->assertEquals( $expected, $result );
 	}
 
