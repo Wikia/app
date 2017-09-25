@@ -479,75 +479,27 @@ class WikiaHomePageController extends WikiaController {
 		return $imageUrl;
 	}
 
-	protected function getHubSliderData($params) {
-		$sliderParams = [
-			'module' => WikiaHubsModuleSliderService::MODULE_ID
-		];
-
-		$sliderParams = array_merge( $sliderParams, $params );
-		return $this->app->sendRequest(
-			'WikiaHubsApi',
-			'getModuleData',
-			$sliderParams
-		)->getData();
+	/**
+	 * @return array
+	 * @deprecated
+	 */
+	protected function getHubSliderData() {
+		return [];
 	}
 
 	/**
 	 * Get list of hubs v3 in selected language
 	 *
-	 * @param $langCode
-	 * @return null
+	 * @return array
+	 * @deprecated
 	 */
-	private function getHubsV3List( $langCode ) {
-		$response = $this->app->sendRequest(
-			'WikiaHubsApiController',
-			'getHubsV3List',
-			[ 'lang' => $langCode ]
-		);
-
-		return $response->getVal('list', []);
+	private function getHubsV3List() {
+		return [];
 	}
 
 	private function getHubsSectionSlots() {
 		global $wgCityId, $wgContLang;
 		return $this->helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
-	}
-
-	/**
-	 * Add additional parameter to css url to pass them to scss file
-	 *
-	 * @param $oasisSettings
-	 * @return bool
-	 */
-	public static function onAfterOasisSettingsInitialized( &$oasisSettings ) {
-		Wikia\Logger\WikiaLogger::instance()->debug( 'SUS-1276', [ 'method' => __METHOD__ ] );
-		global $wgContLang, $wgCityId;
-
-		$settings = [];
-		$helper = new WikiaHomePageHelper();
-
-		$response = F::app()->sendRequest(
-			'WikiaHubsApiController',
-			'getHubsV3List',
-			[ 'lang' => $wgContLang->getCode() ]
-		);
-		$hubsV3List = $response->getVal('list', []);
-
-		$hubsSlots = $helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
-
-		if( isset( $hubsSlots['hub_slot'] ) ) {
-			foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
-				if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
-					$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $hubId);
-					$settings['hub-color-slot-' . ($slot+1)] = isset( $hubSettings['color-buttons'] )
-						? $hubSettings['color-buttons']
-						: null;
-				}
-			}
-		}
-
-		$oasisSettings = array_merge( $oasisSettings, $settings );
-		return true;
 	}
 
 	/**
