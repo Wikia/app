@@ -143,7 +143,7 @@ class DPLMain {
 			ExtDynamicPageList::$options['allowcachedresults']['default'] = 'true';
 		}
 		else {
-			ExtDynamicPageList::$options['ordermethod'] = array('default' => 'titlewithoutnamespace', 'counter', 'size', 'category', 'sortkey',
+			ExtDynamicPageList::$options['ordermethod'] = array('default' => 'titlewithoutnamespace', 'size', 'category', 'sortkey',
                                         'category,firstedit',  'category,lastedit', 'category,pagetouched', 'category,sortkey',
                                         'categoryadd', 'firstedit', 'lastedit', 'pagetouched', 'pagesel',
                                         'title', 'titlewithoutnamespace', 'user', 'user,firstedit', 'user,lastedit','none');
