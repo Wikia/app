@@ -109,6 +109,7 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
+		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
 		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
 
 		return true;
