@@ -70,11 +70,13 @@ class RecirculationHooks {
 		$wg = F::app()->wg;
 
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE, NS_BLOG_ARTICLE ] );
+		$isInShowableNamespace =
+			$wg->Title->exists() && in_array( $wg->Title->getNamespace(), $showableNameSpaces );
+		$isViewAction =
+			$wg->request->getVal( 'action', 'view' ) === 'view' &&
+			$wg->request->getVal( 'diff' ) === null;
 
-		if ( ( $wg->Title->exists() && in_array( $wg->Title->getNamespace(), $showableNameSpaces ) ) &&
-			( $wg->request->getVal( 'action', 'view' ) === 'view' && $wg->request->getVal( 'diff' ) === null ) &&
-			!WikiaPageType::isCorporatePage()
-		) {
+		if ( $isInShowableNamespace && $isViewAction && !WikiaPageType::isCorporatePage() ) {
 			return true;
 		} else {
 			return false;
