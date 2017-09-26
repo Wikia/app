@@ -23,7 +23,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaHubsServices',
 );
 
-$wgAutoloadClasses['EditHubModel'] =  $dir . 'models/EditHubModel.class.php';
 $wgAutoloadClasses['WikiaHubsExploreModel'] =  $dir . 'models/WikiaHubsExploreModel.class.php';
 $wgAutoloadClasses['WikiaHubsFeaturedvideoModel'] =  $dir . 'models/WikiaHubsFeaturedvideoModel.class.php';
 $wgAutoloadClasses['WikiaHubsPollsModel'] =  $dir . 'models/WikiaHubsPollsModel.class.php';
