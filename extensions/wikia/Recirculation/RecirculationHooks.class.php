@@ -5,6 +5,8 @@
  */
 class RecirculationHooks {
 
+	const NO_INDEX_NAMESPACES = [ NS_FILE, NS_BLOG_ARTICLE ];
+
 	/**
 	 * Insert Recirculation to the right rail
 	 *
@@ -12,7 +14,7 @@ class RecirculationHooks {
 	 *
 	 * @return bool
 	 */
-	static public function onGetRailModuleList( &$modules ) {
+	public static function onGetRailModuleList( &$modules ) {
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
 		if ( !static::isCorrectPageType() ) {
@@ -66,14 +68,14 @@ class RecirculationHooks {
 	 *
 	 * @return bool
 	 */
-	static public function isCorrectPageType() {
+	public static function isCorrectPageType() {
 		$wg = F::app()->wg;
+		$title = RequestContext::getMain()->getTitle();
+		$showableNamespaces = array_merge( $wg->ContentNamespaces, self::NO_INDEX_NAMESPACES );
+		$isInShowableNamespaces = $title->exists() && $title->inNamespaces( $showableNamespaces );
 
-		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE, NS_BLOG_ARTICLE ] );
-
-		if ( ( $wg->Title->exists() && in_array( $wg->Title->getNamespace(), $showableNameSpaces ) ) &&
-			( $wg->request->getVal( 'action', 'view' ) === 'view' && $wg->request->getVal( 'diff' ) === null ) &&
-			!WikiaPageType::isCorporatePage()
+		if ( $isInShowableNamespaces && !WikiaPageType::isActionPage() &&
+		     !WikiaPageType::isCorporatePage()
 		) {
 			return true;
 		} else {
@@ -81,7 +83,7 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
+	public static function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -112,12 +114,12 @@ class RecirculationHooks {
 
 	private static function getMetaData() {
 		global $wgLanguageCode, $wgCityId, $wgEnableArticleFeaturedVideo;
-		$context = RequestContext::getMain();
-		$title = $context->getTitle();
+		$title = RequestContext::getMain()->getTitle();
 		$articleId = $title->getArticleID();
-		$shouldNoIndex = self::shouldIndex();
 		$metaDataService = new LiftigniterMetadataService();
 		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
+		$shouldNoIndex = self::shoudlNoIndex( $metaDataFromService );
+		$metaData = [];
 		$metaData['language'] = $wgLanguageCode;
 
 		if ( !empty( $metaDataFromService ) ) {
@@ -150,11 +152,15 @@ class RecirculationHooks {
 			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
 	}
 
-	private static function shouldIndex() {
-		return self::isPrivateOrProduction() || self::isCorrectNameSpace();
+	private static function shoudlNoIndex( $metaDataFromService ) {
+		global $wgDisableShowInRecirculation;
+
+		return self::isPrivateOrNotProduction() ||
+		       ( ( self::isNoIndexNamespace() || $wgDisableShowInRecirculation ) &&
+		         empty( $metaDataFromService ) );
 	}
 
-	private static function isPrivateOrProduction() {
+	private static function isPrivateOrNotProduction() {
 		global $wgCityId, $wgIsPrivateWiki;
 
 		$isProduction = self::checkIfIsProduction();
@@ -163,12 +169,8 @@ class RecirculationHooks {
 		return !$isProduction || $isPrivateWiki;
 	}
 
-	private static function isCorrectNameSpace() {
-		$context = RequestContext::getMain();
-		$title = $context->getTitle();
-
-		return $title->inNamespace( NS_FILE ) ||
-			( $title->inNamespace( NS_BLOG_ARTICLE ) && empty( $metaDataFromService ) );
+	private static function isNoIndexNamespace() {
+		return RequestContext::getMain()->getTitle()->inNamespaces( self::NO_INDEX_NAMESPACES );
 	}
 
 }
