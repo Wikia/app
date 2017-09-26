@@ -32,6 +32,12 @@ class RecirculationHooks {
 		return true;
 	}
 
+	/**
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 *
+	 * @return bool
+	 */
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
@@ -84,6 +90,12 @@ class RecirculationHooks {
 		}
 	}
 
+	/**
+	 * @param $cityId
+	 * @param bool $ignoreWgEnableRecirculationDiscussions
+	 *
+	 * @return bool
+	 */
 	public static function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
@@ -104,6 +116,9 @@ class RecirculationHooks {
 		}
 	}
 
+	/**
+	 * @param OutputPage $outputPage
+	 */
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
 		$metaData = self::getMetaData();
 		$metaDataJson = json_encode( $metaData );
@@ -113,6 +128,9 @@ class RecirculationHooks {
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	private static function getMetaData() {
 		global $wgLanguageCode, $wgCityId, $wgEnableArticleFeaturedVideo;
 		$title = RequestContext::getMain()->getTitle();
@@ -145,6 +163,9 @@ class RecirculationHooks {
 		return $metaData;
 	}
 
+	/**
+	 * @return bool
+	 */
 	private static function isProduction() {
 		global $wgDevelEnvironment, $wgStagingEnvironment, $wgWikiaEnvironment;
 
@@ -153,6 +174,11 @@ class RecirculationHooks {
 			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
 	}
 
+	/**
+	 * @param $metaDataFromService is actual Data returned by Liftigniter Metadata Service
+	 *
+	 * @return bool
+	 */
 	private static function shoudlNoIndex( $metaDataFromService ) {
 		global $wgDisableShowInRecirculation;
 
@@ -161,6 +187,9 @@ class RecirculationHooks {
 		         empty( $metaDataFromService ) );
 	}
 
+	/**
+	 * @return bool
+	 */
 	private static function isPrivateOrNotProduction() {
 		global $wgCityId, $wgIsPrivateWiki;
 
@@ -169,6 +198,9 @@ class RecirculationHooks {
 		return !self::isProduction() || $isPrivateWiki;
 	}
 
+	/**
+	 * @return bool
+	 */
 	private static function isNoIndexNamespace() {
 		return RequestContext::getMain()->getTitle()->inNamespaces( self::NO_INDEX_NAMESPACES );
 	}
