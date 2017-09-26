@@ -171,11 +171,9 @@ class BodyController extends WikiaController {
 
 		if ( $namespace == NS_SPECIAL ) {
 			if ( WikiaPageType::isSearch() ) {
-				if ( empty( $this->wg->EnableWikiaHomePageExt ) ) {
-					$railModuleList = [
-						$latestActivityKey => [ 'LatestActivity', 'Index', null ],
-					];
-				}
+				$railModuleList = [
+					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
+				];
 			} else if ( $title->isSpecial( 'Leaderboard' ) ) {
 				$railModuleList = [
 					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
