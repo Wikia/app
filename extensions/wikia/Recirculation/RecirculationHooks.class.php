@@ -112,12 +112,12 @@ class RecirculationHooks {
 
 	private static function getMetaData() {
 		global $wgLanguageCode, $wgCityId, $wgEnableArticleFeaturedVideo;
-		$context = RequestContext::getMain();
-		$title = $context->getTitle();
+		$title = RequestContext::getMain()->getTitle();
 		$articleId = $title->getArticleID();
-		$shouldNoIndex = self::shouldIndex();
 		$metaDataService = new LiftigniterMetadataService();
 		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
+		$shouldNoIndex = self::shoudlNoIndex( $metaDataFromService );
+		$metaData = [];
 		$metaData['language'] = $wgLanguageCode;
 
 		if ( !empty( $metaDataFromService ) ) {
@@ -150,11 +150,15 @@ class RecirculationHooks {
 			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
 	}
 
-	private static function shouldIndex() {
-		return self::isPrivateOrProduction() || self::isCorrectNameSpace();
+	private static function shoudlNoIndex( $metaDataFromService ) {
+		global $wgDisableShowInRecirculation;
+
+		return self::isPrivateOrNotProduction() ||
+		       ( ( self::isNoIndexNamespace() || $wgDisableShowInRecirculation ) &&
+		         empty( $metaDataFromService ) );
 	}
 
-	private static function isPrivateOrProduction() {
+	private static function isPrivateOrNotProduction() {
 		global $wgCityId, $wgIsPrivateWiki;
 
 		$isProduction = self::checkIfIsProduction();
@@ -163,12 +167,10 @@ class RecirculationHooks {
 		return !$isProduction || $isPrivateWiki;
 	}
 
-	private static function isCorrectNameSpace() {
-		$context = RequestContext::getMain();
-		$title = $context->getTitle();
+	private static function isNoIndexNamespace() {
+		$title = RequestContext::getMain()->getTitle();
 
-		return $title->inNamespace( NS_FILE ) ||
-			( $title->inNamespace( NS_BLOG_ARTICLE ) && empty( $metaDataFromService ) );
+		return $title->inNamespace( NS_FILE ) || $title->inNamespace( NS_BLOG_ARTICLE );
 	}
 
 }
