@@ -67,7 +67,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/ml/hivi/leaderboard.js',
 		'//extensions/wikia/AdEngine/js/ml/hivi/leaderboardInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/model/logisticRegression.js',
+		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',

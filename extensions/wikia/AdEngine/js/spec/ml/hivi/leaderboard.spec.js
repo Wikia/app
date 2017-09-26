@@ -115,7 +115,7 @@ describe('ext.wikia.adEngine.ml.hivi.leaderboard', function () {
 	function getModule(inputMock) {
 		return modules['ext.wikia.adEngine.ml.hivi.leaderboard'](
 			getInputParserMock(inputMock),
-			modules['ext.wikia.adEngine.ml.model.logisticRegression'](),
+			modules['ext.wikia.adEngine.ml.model.linear'](),
 			mocks.geo,
 			mocks.instantGlobals
 		);

@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.hivi.leaderboard', [
 	'ext.wikia.adEngine.ml.hivi.leaderboardInputParser',
-	'ext.wikia.adEngine.ml.model.logisticRegression',
+	'ext.wikia.adEngine.ml.model.linear',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (leaderboardInputParser, logisticRegression, geo, instantGlobals) {
+], function (leaderboardInputParser, linearModel, geo, instantGlobals) {
 	'use strict';
 
 	// Values come from notebook: adeng-jupyter/hivi-lb/HiVi Leaderboard.ipynb
@@ -38,7 +38,7 @@ define('ext.wikia.adEngine.ml.hivi.leaderboard', [
 		intercept = 0.04175317,
 		experimentId = '5515_',
 
-		lr = logisticRegression.create(coefficients, intercept);
+		lr = linearModel.create(coefficients, intercept);
 
 	function isEnabled() {
 		return geo.isProperGeo(instantGlobals.wgAdDriverHiViLeaderboardRabbitCountries);
