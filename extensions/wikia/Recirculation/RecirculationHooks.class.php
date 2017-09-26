@@ -164,10 +164,9 @@ class RecirculationHooks {
 	private static function isPrivateOrNotProduction() {
 		global $wgCityId, $wgIsPrivateWiki;
 
-		$isProduction = self::isProduction();
 		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
 
-		return !$isProduction || $isPrivateWiki;
+		return !self::isProduction() || $isPrivateWiki;
 	}
 
 	private static function isNoIndexNamespace() {
