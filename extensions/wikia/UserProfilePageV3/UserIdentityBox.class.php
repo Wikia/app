@@ -115,11 +115,17 @@ class UserIdentityBox extends WikiaObject {
 			if ( !empty( $data['edits'] ) ) {
 				$data['edits'] = $this->wg->Lang->formatNum( $data['edits'] );
 			}
+			
+			// Zero states should not be shown if wikis are hidden
+			if ( $this->user->getGlobalPreference( 'hideEditsWikis' ) ) {
+				$data['showZeroStates'] = false;
+			} else {
+				$data['showZeroStates'] = $this->checkIfDisplayZeroStates( $data );
+			}
 
 			// other data operations
 			$this->getUserTags( $data );
 			$data = $this->extractBirthDate( $data );
-			$data['showZeroStates'] = $this->checkIfDisplayZeroStates( $data );
 		}
 
 		// Sanitize data to prevent XSS (VE-720)
