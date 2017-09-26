@@ -6,6 +6,7 @@
 class RecirculationHooks {
 
 	const NO_INDEX_NAMESPACES = [ NS_FILE, NS_BLOG_ARTICLE ];
+	const DATE_FORMAT = 'Y-m-d H:i:s';
 
 	/**
 	 * Insert Recirculation to the right rail
@@ -124,8 +125,8 @@ class RecirculationHooks {
 
 		if ( !empty( $metaDataFromService ) ) {
 			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
-			$metaData['start_date'] = $metaDataFromService->getDateFrom()->format( 'Y-m-d H:i:s' );
-			$metaData['end_date'] = $metaDataFromService->getDateTo()->format( 'Y-m-d H:i:s' );
+			$metaData['start_date'] = $metaDataFromService->getDateFrom()->format( self::DATE_FORMAT );
+			$metaData['end_date'] = $metaDataFromService->getDateTo()->format( self::DATE_FORMAT );
 			if ( !empty( $metaDataFromService->getGeos() ) ) {
 				$metaData['geolocation'] = $metaDataFromService->getGeos();
 			}
@@ -144,7 +145,7 @@ class RecirculationHooks {
 		return $metaData;
 	}
 
-	private static function checkIfIsProduction() {
+	private static function isProduction() {
 		global $wgDevelEnvironment, $wgStagingEnvironment, $wgWikiaEnvironment;
 
 		return empty( $wgDevelEnvironment ) &&
@@ -163,7 +164,7 @@ class RecirculationHooks {
 	private static function isPrivateOrNotProduction() {
 		global $wgCityId, $wgIsPrivateWiki;
 
-		$isProduction = self::checkIfIsProduction();
+		$isProduction = self::isProduction();
 		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
 
 		return !$isProduction || $isPrivateWiki;
