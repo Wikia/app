@@ -30,9 +30,7 @@ class PhalanxHooks extends WikiaObject {
 				'target' => $nt->getText(),
 			] );
 
-			$content = 'PhalanxBlock';
-
-			$links[] = Html::element( 'a', [ 'href' => $phalanxUrl ], $content );
+			$links[] = Html::element( 'a', [ 'href' => $phalanxUrl ], 'PhalanxBlock' );
 		}
 
 		wfProfileOut( __METHOD__ );
