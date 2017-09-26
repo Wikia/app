@@ -253,22 +253,20 @@ class WikiaPageType {
 	/**
 	 * Check if current page is home page
 	 *
-	 * @param int|null $wikiId
-	 * @return bool
+	 * @return false
+	 * @deprecated
 	 */
-	public static function isWikiaHomePage( $wikiId = null ) {
-		global $wgCityId;
-
-		return WikiFactory::getVarValueByName( 'wgEnableWikiaHomePageExt', $wikiId ?? $wgCityId );
+	public static function isWikiaHomePage() {
+		return false;
 	}
 
 	/**
 	 * Check if current page is corporate page
 	 *
-	 * @param int|null $wikiId
 	 * @return bool
+	 * @deprecated
 	 */
-	public static function isCorporatePage( $wikiId = null ) {
-		return self::isWikiaHomePage( $wikiId );
+	public static function isCorporatePage() {
+		return false;
 	}
 }
