@@ -114,7 +114,7 @@
 		function internalTrack( event, data, onComplete, timeout ) {
 			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
 					script = document.createElement( 'script' ),
-					requestUrl = 'http://a.wikia-beacon.com/__track/special/' + encodeURIComponent( event ),
+					requestUrl = 'https://beacon.wikia-services.com/__track/special/' + encodeURIComponent( event ),
 					requestParameters = [],
 					p,
 					params;
