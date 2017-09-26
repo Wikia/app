@@ -5,6 +5,8 @@
  */
 class RecirculationHooks {
 
+	const NO_INDEX_NAMESPACES = [ NS_FILE, NS_BLOG_ARTICLE ];
+
 	/**
 	 * Insert Recirculation to the right rail
 	 *
@@ -12,7 +14,7 @@ class RecirculationHooks {
 	 *
 	 * @return bool
 	 */
-	static public function onGetRailModuleList( &$modules ) {
+	public static function onGetRailModuleList( &$modules ) {
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
 		if ( !static::isCorrectPageType() ) {
@@ -66,24 +68,22 @@ class RecirculationHooks {
 	 *
 	 * @return bool
 	 */
-	static public function isCorrectPageType() {
+	public static function isCorrectPageType() {
 		$wg = F::app()->wg;
+		$title = RequestContext::getMain()->getTitle();
+		$showableNamespaces = array_merge( $wg->ContentNamespaces, self::NO_INDEX_NAMESPACES );
+		$isInShowableNamespaces = $title->exists() && $title->inNamespaces( $showableNamespaces );
 
-		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE, NS_BLOG_ARTICLE ] );
-		$isInShowableNamespace =
-			$wg->Title->exists() && in_array( $wg->Title->getNamespace(), $showableNameSpaces );
-		$isViewAction =
-			$wg->request->getVal( 'action', 'view' ) === 'view' &&
-			$wg->request->getVal( 'diff' ) === null;
-
-		if ( $isInShowableNamespace && $isViewAction && !WikiaPageType::isCorporatePage() ) {
+		if ( $isInShowableNamespaces && !WikiaPageType::isActionPage() &&
+		     !WikiaPageType::isCorporatePage()
+		) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	static public function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
+	public static function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -170,9 +170,7 @@ class RecirculationHooks {
 	}
 
 	private static function isNoIndexNamespace() {
-		$title = RequestContext::getMain()->getTitle();
-
-		return $title->inNamespace( NS_FILE ) || $title->inNamespace( NS_BLOG_ARTICLE );
+		return RequestContext::getMain()->getTitle()->inNamespaces( self::NO_INDEX_NAMESPACES );
 	}
 
 }
