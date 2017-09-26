@@ -159,12 +159,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'line-text',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-community-apps-header'
+						'key' => 'global-footer-fandom-app-header'
 					]
 				],
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-community-apps-description'
+					'key' => 'global-footer-fandom-app-description'
 				],
 				'links' => [
 					[
