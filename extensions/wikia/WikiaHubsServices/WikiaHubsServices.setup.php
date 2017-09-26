@@ -23,15 +23,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaHubsServices',
 );
 
-$wgAutoloadClasses['WikiaHubsExploreModel'] =  $dir . 'models/WikiaHubsExploreModel.class.php';
-$wgAutoloadClasses['WikiaHubsFeaturedvideoModel'] =  $dir . 'models/WikiaHubsFeaturedvideoModel.class.php';
-$wgAutoloadClasses['WikiaHubsPollsModel'] =  $dir . 'models/WikiaHubsPollsModel.class.php';
-$wgAutoloadClasses['WikiaHubsPopularvideosModel'] =  $dir . 'models/WikiaHubsPopularvideosModel.class.php';
-$wgAutoloadClasses['WikiaHubsSliderModel'] =  $dir . 'models/WikiaHubsSliderModel.class.php';
-$wgAutoloadClasses['WikiaHubsFromthecommunityModel'] =  $dir . 'models/WikiaHubsFromthecommunityModel.class.php';
-$wgAutoloadClasses['WikiaHubsImageModel'] =  $dir . 'models/WikiaHubsImageModel.class.php';
-$wgAutoloadClasses['WikiaHubsWAMModel'] =  $dir . 'models/WikiaHubsWAMModel.class.php';
-
 $wgAutoloadClasses['WikiaHubsServicesHelper'] =  $dir . 'WikiaHubsServicesHelper.class.php';
 
 //message files
