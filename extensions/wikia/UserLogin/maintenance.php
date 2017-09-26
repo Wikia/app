@@ -31,9 +31,7 @@
 				'user_email_authenticated' => NULL,
 				'date(user_registration) = curdate() - interval 7 day'
 			),
-			__METHOD__,
-			array(),
-			array()
+			__METHOD__
 		);
 
 		$recepients = array();
@@ -102,7 +100,7 @@
 	}
 
 	if ( isset( $options['reminder'] ) ) {
-        sendReminder();
+		sendReminder();
 	}
 
 	if ( isset( $options['wiki_reminder'] ) ) {
