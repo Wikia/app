@@ -1611,9 +1611,8 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
 /**
  * @name $wgOasisResponsive
  * Enables the Oasis responsive layout styles
- * Null means enabled on all and disabled for languages defined in $wgOasisResponsiveDisabledInLangs
  */
-$wgOasisResponsive = null;
+$wgOasisResponsive = true;
 
 /**
  * @name $wgDisableReportTime
