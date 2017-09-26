@@ -42,8 +42,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function isVideoBidderEnabled() {
-		var context = adContext.getContext();
-		return context && context.bidders && context.bidders.a9Video;
+		return adContext.get('bidders.a9Video') && adContext.get('targeting.hasFeaturedVideo');
 	}
 
 	function call(skin, onResponse) {
