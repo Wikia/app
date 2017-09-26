@@ -7,6 +7,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
+	'ext.wikia.adEngine.provider.gpt.targeting',
 	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
@@ -28,6 +30,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adDetect,
 	AdElement,
 	googleTag,
+	googleSlots,
+	gptTargeting,
 	passbackHandler,
 	slotTargeting,
 	sourcePoint,
@@ -191,19 +195,23 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
-	function refreshSlot(slot) {
-		log(['Refresh slot', slot.name, slot], log.levels.debug, logGroup);
-		refreshTargetingData(slot);
-		googleTag.refreshSlot(slot);
+	function refreshSlot(slotName) {
+		var slot = googleSlots.getSlotByName(slotName),
+			slotElement;
+
+		if (slot) {
+			log(['Refresh slot', slotName, slot], log.levels.debug, logGroup);
+			slotElement = doc.getElementById(slot.getSlotElementId());
+			refreshTargetingData(slot);
+			googleTag.refreshSlot(slot);
+			slotElement.setAttribute('data-gpt-slot-params', JSON.stringify(gptTargeting.getSlotLevelTargeting(slotName)));
+		} else {
+			log(['Refresh slot', slotName, 'does not exist'], log.levels.debug, logGroup);
+		}
 	}
 
 	function refreshTargetingData(slot) {
-		var el = doc.getElementById(slot.getSlotElementId()),
-			gptParams = JSON.parse(el.getAttribute('data-gpt-slot-params'));
-
-		gptParams.uap = uapContext.getUapId().toString();
-		slot.setTargeting('uap', gptParams.uap);
-		el.setAttribute('data-gpt-slot-params', JSON.stringify(gptParams));
+		slot.setTargeting('uap', uapContext.getUapId().toString());
 		return slot;
 	}
 

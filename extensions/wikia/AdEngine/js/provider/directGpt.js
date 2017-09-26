@@ -23,7 +23,17 @@ define('ext.wikia.adEngine.provider.directGpt', [
 ) {
 	'use strict';
 
-	var context = adContext.getContext();
+	var context = adContext.getContext(),
+		sraEnabled = !context.opts.disableSRA,
+		atfSlots = [
+			'INVISIBLE_SKIN',
+			'TOP_LEADERBOARD',
+			'GPT_FLUSH'
+		];
+
+	if (sraEnabled) {
+		atfSlots.push('TOP_RIGHT_BOXAD');
+	}
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGpt',
@@ -64,13 +74,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
-			sraEnabled: true,
-			atfSlots: [
-				'INVISIBLE_SKIN',
-				'TOP_LEADERBOARD',
-				'TOP_RIGHT_BOXAD',
-				'GPT_FLUSH'
-			],
+			sraEnabled: sraEnabled,
+			atfSlots: atfSlots,
 			getAdUnitBuilder: function () {
 				return context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},

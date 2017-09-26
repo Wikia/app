@@ -1,68 +1,60 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.roadblock', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.provider.gpt.helper',
-	require.optional('ext.wikia.adEngine.template.skin'),
+	'ext.wikia.adEngine.provider.gpt.targeting',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.document',
+	'wikia.log',
 	'wikia.window',
-	'wikia.log'
+	require.optional('ext.wikia.adEngine.template.skin')
 ], function (
-	adContext,
 	uapContext,
-	googleSlots,
 	gptHelper,
-	skinTemplate,
+	targeting,
+	slotRegistry,
 	doc,
+	log,
 	win,
-	log
+	skinTemplate
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.roadblock',
 		uapType = 'ruap',
-		medrecSlotEl = doc.getElementById('TOP_RIGHT_BOXAD');
+		medrecSlotContainer = doc.getElementById('TOP_RIGHT_BOXAD');
 
 	/**
 	 * Handles medrec slot in case of UAP:roadblock
-	 * @param {Node} medrecSlotEl - medrec slot container element
+	 * @param {Node} medrecSlotContainer - medrec slot container element
+	 * @param {string} uapId - UAP ATF line item ID
 	 */
-	function handleMedrec(medrecSlotEl, uapId) {
-		var refreshed = false;
+	function handleMedrec(medrecSlotContainer, uapId) {
+		var	medrecSlot = slotRegistry.get(medrecSlotContainer.id),
+			refreshed = false;
 
-		win.addEventListener('adengine.slot.status', function onAdStatusChange(event) {
-			var gptParams = {},
-				isMedrec = event.detail.slot.name === medrecSlotEl.id,
-				isSuccess = event.detail.adInfo.status === 'success',
-				medrecGptSlot = googleSlots.getSlotByName(medrecSlotEl.id);
-
-			if (!isMedrec && !isSuccess) {
-				return;
-			}
-
-			try {
-				gptParams = JSON.parse(doc.getElementById(medrecGptSlot.getSlotElementId()).getAttribute('data-gpt-slot-params'));
-			} catch (error) {
-				log(['handleMedrec', 'cannot parse GPT params', medrecSlotEl.id], log.levels.error, logGroup);
-			}
+		function onReady() {
+			var uapTargetingValue = targeting.getSlotLevelTargetingValue(medrecSlot.name, 'uap'),
+				hasCorrectUapId = uapTargetingValue === uapId.toString();
 
 			// refresh once if medrec is not related with UAP:Roadblock
-			if (gptParams.uap !== uapId.toString() && !refreshed) {
-				medrecSlotEl.style.opacity = '0';
-				gptHelper.refreshSlot(medrecGptSlot);
-				refreshed = true;
-				log(['handleMedrec', 'refreshing slot', medrecSlotEl.id], log.levels.info, logGroup);
+			if (hasCorrectUapId || refreshed) {
+				medrecSlotContainer.style.opacity = '';
 			} else {
-				medrecSlotEl.style.opacity = '';
-				win.removeEventListener('adengine.slot.status', onAdStatusChange);
+				medrecSlotContainer.style.opacity = '0';
+				gptHelper.refreshSlot(medrecSlot.name);
+				medrecSlot.pre('renderEnded', onReady);
+				refreshed = true;
+				log(['handleMedrec', 'refreshing slot', medrecSlot.name], log.levels.info, logGroup);
 			}
-		});
+		}
+
+		onReady();
 	}
 
 	/**
 	 * @param {object} params
-	 * @param {string} [params.uap] - BFAA line item id
+	 * @param {string} [params.uap] - UAP ATF line item id
 	 * @param {object} [params.skin] - skin template params (see skin template for more info)
  	 */
 	function show(params) {
@@ -71,8 +63,8 @@ define('ext.wikia.adEngine.template.roadblock', [
 		uapContext.setUapId(params.uap);
 		uapContext.setType(uapType);
 
-		if (medrecSlotEl) {
-			handleMedrec(medrecSlotEl, params.uap);
+		if (medrecSlotContainer) {
+			handleMedrec(medrecSlotContainer, params.uap);
 		}
 
 		if (skinTemplate && isSkinAvailable) {
