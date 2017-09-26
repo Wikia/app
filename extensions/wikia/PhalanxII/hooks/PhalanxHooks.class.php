@@ -23,17 +23,14 @@ class PhalanxHooks extends WikiaObject {
 		$user = RequestContext::getMain()->getUser();
 
 		if ( $user->isAllowed( 'phalanx' ) ) {
-			$links[] = Linker::linkKnown(
-				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
-				'PhalanxBlock',
-				wfArrayToCGI(
-					[
-						'type' => Phalanx::TYPE_USER,
-						'wpPhalanxCheckBlocker' => $nt->getText(),
-						'target' => $nt->getText(),
-					]
-				)
-			);
+			$phalanxTitle = GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL );
+			$phalanxUrl = $phalanxTitle->getFullURL( [
+				'type' => Phalanx::TYPE_USER,
+				'wpPhalanxCheckBlocker' => $nt->getText(),
+				'target' => $nt->getText(),
+			] );
+
+			$links[] = Html::element( 'a', [ 'href' => $phalanxUrl ], 'PhalanxBlock' );
 		}
 
 		wfProfileOut( __METHOD__ );
