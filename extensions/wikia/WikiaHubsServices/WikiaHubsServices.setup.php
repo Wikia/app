@@ -32,20 +32,6 @@ $wgAutoloadClasses['WikiaHubsSliderModel'] =  $dir . 'models/WikiaHubsSliderMode
 $wgAutoloadClasses['WikiaHubsFromthecommunityModel'] =  $dir . 'models/WikiaHubsFromthecommunityModel.class.php';
 $wgAutoloadClasses['WikiaHubsImageModel'] =  $dir . 'models/WikiaHubsImageModel.class.php';
 $wgAutoloadClasses['WikiaHubsWAMModel'] =  $dir . 'models/WikiaHubsWAMModel.class.php';
-$wgAutoloadClasses['WikiaHubsModel'] =  $dir . 'models/WikiaHubsModel.class.php';
-
-$wgAutoloadClasses['WikiaHubsModuleService'] =  $dir . 'modules/WikiaHubsModuleService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleEditableService'] =  $dir . 'modules/WikiaHubsModuleEditableService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleNonEditableService'] =  $dir . 'modules/WikiaHubsModuleNonEditableService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleSliderService'] =  $dir . 'modules/WikiaHubsModuleSliderService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleWikiaspicksService'] =  $dir . 'modules/WikiaHubsModuleWikiaspicksService.class.php';
-$wgAutoloadClasses['WikiaHubsModulePopularvideosService'] =  $dir . 'modules/WikiaHubsModulePopularvideosService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleExploreService'] =  $dir . 'modules/WikiaHubsModuleExploreService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleFeaturedvideoService'] =  $dir . 'modules/WikiaHubsModuleFeaturedvideoService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleFromthecommunityService'] =  $dir . 'modules/WikiaHubsModuleFromthecommunityService.class.php';
-$wgAutoloadClasses['WikiaHubsModulePollsService'] =  $dir . 'modules/WikiaHubsModulePollsService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleWAMService'] =  $dir . 'modules/WikiaHubsModuleWAMService.class.php';
-$wgAutoloadClasses['WikiaHubsModuleWikiastatsService'] =  $dir . 'modules/WikiaHubsModuleWikiastatsService.class.php';
 
 $wgAutoloadClasses['WikiaHubsServicesHelper'] =  $dir . 'WikiaHubsServicesHelper.class.php';
 
