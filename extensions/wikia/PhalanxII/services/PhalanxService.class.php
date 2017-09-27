@@ -207,11 +207,10 @@ class PhalanxService {
 			// SUS-2759: pass on content language code to the service
 			$parameters[ 'lang' ] = $wgLanguageCode;
 
-			if ( ( $action == "match" || $action == "check" ) ) {
-				if ( !is_null( $this->user ) ) {
-					$parameters[ 'user' ][] = $this->user->getName();
-				}
+			if ( ( $action == "match" || $action == "check" ) && !empty( $this->user ) ) {
+				$parameters[ 'user' ][] = $this->user->getName();
 			}
+
 			if ( $action == "match" && $this->limit != 1 ) {
 				$parameters['limit'] = $this->limit;
 			}
