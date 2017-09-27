@@ -65,9 +65,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
-		'//extensions/wikia/AdEngine/js/ml/hivi/leaderboard.js',
-		'//extensions/wikia/AdEngine/js/ml/hivi/leaderboardInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
@@ -133,6 +130,7 @@ $config['adengine2_desktop_js'] = [
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',
 		'//resources/wikia/modules/viewportObserver.js',
+		'#group_adengine2_rabbit_js',
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
@@ -141,6 +139,18 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
+	],
+];
+
+$config['adengine2_rabbit_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/fmr/fmrLogisticRegression.js',
+		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClasifier.js',
+		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
+		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
+		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
 	],
 ];
 
@@ -940,6 +950,7 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
+		'#group_adengine2_rabbit_js',
 	],
 ];
 
