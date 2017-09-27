@@ -115,6 +115,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
+		'#group_adengine2_rabbit_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
@@ -130,7 +131,6 @@ $config['adengine2_desktop_js'] = [
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',
 		'//resources/wikia/modules/viewportObserver.js',
-		'#group_adengine2_rabbit_js',
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
@@ -143,6 +143,7 @@ $config['adengine2_desktop_js'] = [
 ];
 
 $config['adengine2_rabbit_js'] = [
+	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
