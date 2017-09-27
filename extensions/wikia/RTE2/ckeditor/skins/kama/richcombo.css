@@ -57,28 +57,28 @@ The visual representation of a rich combo widget looks as follows:
 }
 
 /* The container for combo text and arrow. */
-a.cke_combo_button
+/*a.cke_combo_button
 {
 	display: inline-block;
 	border-radius: 5px;
 	background: url(images/sprites.png) 0 -100px repeat-x;	/* For backwards compatibility. */
-	float: left;
+/*	float: left;
 	padding: 2px 4px 2px 6px;
 	height: 22px;
 	margin: 0 5px 5px 0;
 
 	background: linear-gradient(to top, #fff, #d3d3d3 100px);
 }
-
+*/
 /* Different states of the container. */
-.cke_combo_off .cke_combo_button:hover,
+/*.cke_combo_off .cke_combo_button:hover,
 .cke_combo_off .cke_combo_button:focus,
 .cke_combo_off .cke_combo_button:active
 {
 	background: #DFF1FF;
 	outline: none;
 }
-
+*/
 .cke_rtl .cke_combo_button
 {
 	float: right;
@@ -101,7 +101,7 @@ a.cke_combo_button
 /* The label that shows the current value of the rich combo.
    By default, it holds the name of the property.
    See: .cke_combo_inlinelabel */
-.cke_combo_text
+/*.cke_combo_text
 {
 	line-height: 24px;
 	text-overflow: ellipsis;
@@ -111,7 +111,7 @@ a.cke_combo_button
 	cursor: default;
 	width: 60px;
 }
-
+*/
 .cke_rtl .cke_combo_text
 {
 	float: right;

@@ -1,6 +1,24 @@
 .EditPage {
-	.cke_button {
-		> a {
+		a.cke_button_on {
+				@include box-shadow(-1px, 1px, 2px, $color-epl-button-shadow, true);
+				background-color: $color-epl-button-active;
+				border-top-color: $color-epl-button-border;
+				border-right-color: $color-epl-button-border;
+	}
+	
+		 a.cke_disabled {
+			> a {
+				opacity: .2;
+				zoom: 1; /* IE fix to make opacity work */
+			}
+		}
+		 a.cke_hidden {
+			display: none;
+		}
+	
+
+ 
+		a.cke_button {
 			background-color: $color-epl-button;
 			border: solid 1px $color-epl-button-border;
 			border-radius: 4px;
@@ -15,6 +33,8 @@
 				@include gradient-button-hover;
 			}
 		}
+		.cke_button {
+
 		.cke_label {
 			display: none;
 			cursor: inherit;
@@ -32,23 +52,9 @@
 			vertical-align: baseline;
 			float: none;
 		}
-		&.cke_on {
-			> a {
-				@include box-shadow(-1px, 1px, 2px, $color-epl-button-shadow, true);
-				background-color: $color-epl-button-active;
-				border-top-color: $color-epl-button-border;
-				border-right-color: $color-epl-button-border;
-			}
-		}
-		&.cke_disabled {
-			> a {
-				opacity: .2;
-				zoom: 1; /* IE fix to make opacity work */
-			}
-		}
-		&.cke_hidden {
-			display: none;
-		}
+	
+
+
 		&.cke_button_big {
 			> a {
 				display: inline-block;
@@ -184,7 +190,7 @@
 	.RTEPollButton.cke_button_big .cke_icon {
 		@include sprite-edit-page('poll', 48px, 32px);
 	}
-	.cke_button_table.cke_button_big .cke_icon {
+	.cke_button__table.cke_button_big .cke_icon {
 		@include sprite-edit-page('table', 48px, 32px);
 	}
 	.module_templates .cke_button_big .cke_icon {

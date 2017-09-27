@@ -1127,15 +1127,15 @@
 					el = $('#'+id);
 				if (el) {
 					el = el.parent(); // workaround stupid HTML markup
-					el.removeClass('cke_on cke_off cke_disabled');
+					el.removeClass('cke_button_on cke_button_off cke_button_disabled');
 					if (this.editor.ck.mode == 'wysiwyg') {
-						el.addClass('cke_' + (
+						el.addClass('cke_button_' + (
 							state == CKEDITOR.TRISTATE_ON ? 'on' :
 							state == CKEDITOR.TRISTATE_DISABLED ? 'disabled' :
 							'off')
 						);
 					} else {
-						el.addClass('cke_off');
+						el.addClass('cke_button_off');
 					}
 				}
 			}
