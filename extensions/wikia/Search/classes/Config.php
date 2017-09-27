@@ -854,6 +854,9 @@ class Config {
 		if ( $this->getWikiId() == \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) {
 			$service = 'Select\\Dismax\\Video';
 		}
+		if ( $this->getService()->getGlobal( 'EnableWikiaHomePageExt' ) ) {
+			$service = 'Select\\Dismax\\InterWiki';
+		}
 
 		return $service;
 	}
