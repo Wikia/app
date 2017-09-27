@@ -27,6 +27,7 @@ class WikiaSearchAjaxController extends WikiaController {
 		$crossWikia = $this->request->getBool( 'crossWikia' );
 		$hub = false;
 
+		// TODO: refactor to avoid using wgEnableWikiaHomePageExt
 		$isCorporateWiki = !empty( $this->wg->EnableWikiaHomePageExt );
 
 		$isInterWiki = $crossWikia ? true : $isCorporateWiki;

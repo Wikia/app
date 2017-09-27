@@ -881,7 +881,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @see SearchControllerTest::testIsCorporateWiki
 	 */
 	protected function isCorporateWiki() {
-		return WikiaPageType::isCorporatePage();
+		// TODO: refactor to avoid using wgEnableWikiaHomePageExt
+		return !empty( $this->wg->EnableWikiaHomePageExt );
 	}
 
 	/**

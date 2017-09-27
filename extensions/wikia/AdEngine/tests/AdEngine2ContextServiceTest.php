@@ -103,12 +103,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgEnableWikiaHomePageExt' ],
-				'expectedOpts' => [ 'pageType' => 'corporate' ],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsCorporate' => true ]
-			],
-			[
-				'titleMockType' => 'article',
 				'flags' => [ 'wgWikiDirectedAtChildrenByFounder' ],
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [
@@ -283,7 +277,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
-		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 
