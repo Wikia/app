@@ -271,7 +271,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
-		context.opts.disableSRA = !!instantGlobals.wgAdDriverDisableSRA;
+		context.opts.loadMedrecFromBTF = geo.isProperGeo(instantGlobals.wgAdDriverLoadMedrecFromBTF);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
