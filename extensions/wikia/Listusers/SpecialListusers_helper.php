@@ -37,7 +37,6 @@ class ListusersData {
 			'username'	=> array( 'user_name %s' ),
 			'groups' 	=> array( 'all_groups %s', 'cnt_groups %s'),
 			'revcnt' 	=> array( 'edits %s' ),
-			'loggedin' 	=> array( 'ts %s' ),
 			'dtedit' 	=> array( 'editdate %s' )
 		);
 
@@ -45,7 +44,6 @@ class ListusersData {
 			'username'	=> 'wiki_user_name_edits',
 			'groups' 	=> '',
 			'revcnt' 	=> 'wiki_edits_by_user',
-			'loggedin' 	=> '',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
 
