@@ -206,6 +206,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/utils/time.js',
 		'//extensions/wikia/AdEngine/js/video/ooyalaAdSetProvider.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
@@ -218,7 +219,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js',
-		'//resources/wikia/modules/promise.js'
+		'//resources/wikia/modules/promise.js',
 	],
 ];
 
