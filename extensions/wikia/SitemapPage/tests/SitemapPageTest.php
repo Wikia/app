@@ -60,9 +60,8 @@ class SitemapPageTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider isSitemapPageDataProvider
 	 */
-	public function testIsSitemapPage( $enableHomePage, $articleName, $exp ) {
+	public function testIsSitemapPage( $articleName, $exp ) {
 		$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
-		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', $enableHomePage );
 		$title = Title::newFromText( $articleName );
 		$sitemap = new SitemapPageModel();
 		$isSitemapPage = $sitemap->isSitemapPage( $title );
@@ -71,10 +70,8 @@ class SitemapPageTest extends WikiaBaseTest {
 
 	public function isSitemapPageDataProvider() {
 		return [
-			[ false, self::TEST_ARTICLE, false ],
-			[ false, self::TEST_ARTICLE_SITEMAP, false ],
-			[ true, self::TEST_ARTICLE, false ],
-			[ true, self::TEST_ARTICLE_SITEMAP, true ]
+			[ self::TEST_ARTICLE, false ],
+			[ self::TEST_ARTICLE_SITEMAP, false ],
 		];
 	}
 
