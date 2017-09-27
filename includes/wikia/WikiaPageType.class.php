@@ -251,16 +251,6 @@ class WikiaPageType {
 	}
 
 	/**
-	 * Check if current page is home page
-	 *
-	 * @return false
-	 * @deprecated
-	 */
-	public static function isWikiaHomePage() {
-		return false;
-	}
-
-	/**
 	 * Check if current page is corporate page
 	 *
 	 * @return bool
