@@ -111,8 +111,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			}
 		});
 
-		// In case of a tie in prebid bidders prebid.js picks the fastest bidder.
-		// In case of a tie with prebid and rubiconFastlane we promote prebid
+		// In case of a tie in prebid bidders prebid.js picks the fastest bidder
 		if (slotParams.hb_bidder && highestPriceBidders.indexOf(slotParams.hb_bidder) >= 0) {
 			return slotParams.hb_bidder;
 		}
