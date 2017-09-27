@@ -27,7 +27,7 @@ class WikiaSearchAjaxController extends WikiaController {
 		$crossWikia = $this->request->getBool( 'crossWikia' );
 		$hub = false;
 
-		$isInterWiki = $crossWikia ? true : WikiaPageType::isCorporatePage();
+		$isInterWiki = $crossWikia || WikiaPageType::isCorporatePage();
 
 		$cityId = $isInterWiki ? 0 : $this->wg->CityId;
 
