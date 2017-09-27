@@ -64,15 +64,7 @@ require([
 		actionHandler.registerMessageListener();
 	});
 
-	// TODO: Remove else statement, this step is required in order to keep bidders working during cache invalidation
-	// Why checking getSlots method - because this method has been removed in PR with required changes
-	if (!win.Mercury.Modules.Ads.getInstance().getSlots) {
-		mercuryListener.afterPageWithAdsRender(function () {
-			callBiddersOnConsecutivePageView();
-		});
-	} else {
-		mercuryListener.onEveryPageChange(function () {
-			callBiddersOnConsecutivePageView();
-		});
-	}
+	mercuryListener.afterPageWithAdsRender(function () {
+		callBiddersOnConsecutivePageView();
+	});
 });
