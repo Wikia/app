@@ -1734,13 +1734,25 @@ class ConfigTest extends BaseTest {
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'getWikiId', 'getService' ] )
 		               ->getMock();
-
+		
+		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'EnableWikiaHomePageExt' )
+		    ->will   ( $this->returnValue( false ) )
 		;
 		$this->assertEquals(
 				'Select\\Dismax\\OnWiki',
@@ -1758,7 +1770,8 @@ class ConfigTest extends BaseTest {
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'getWikiId', 'getService' ] )
 		               ->getMock();
-
+		
+		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
 		$config
@@ -1766,12 +1779,59 @@ class ConfigTest extends BaseTest {
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) )
 		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'EnableWikiaHomePageExt' )
+		    ->will   ( $this->returnValue( false ) )
+		;
 		$this->assertEquals(
 				'Select\\Dismax\\Video',
 				$bs->invoke( $config )
 		);
 	}
-
+	
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07578 ms
+	 * @covers \Wikia\Search\Config::bootstrapQueryService
+	 */
+	public function testBootstrapQueryServiceInterWiki() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( [ 'getWikiId', 'getService' ] )
+		               ->getMock();
+		
+		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
+		$bs->setAccessible( true );
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiId' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$config
+		    ->expects( $this->once() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $service ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'EnableWikiaHomePageExt' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->assertEquals(
+				'Select\\Dismax\\InterWiki',
+				$bs->invoke( $config )
+		);
+	}
+	
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07476 ms
