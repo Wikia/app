@@ -254,9 +254,9 @@ class WikiaPageType {
 	 * Check if current page is corporate page
 	 *
 	 * @return bool
-	 * @deprecated
 	 */
 	public static function isCorporatePage() {
-		return false;
+		global $wgCityId;
+		return $wgCityId == Wikia::CORPORATE_WIKI_ID;
 	}
 }
