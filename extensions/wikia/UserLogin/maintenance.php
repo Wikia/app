@@ -38,9 +38,7 @@
 
 		foreach ( $res as $userItem ) {
 			$user = User::newFromId( $userItem->user_id );
-			if ( $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
-				$recepients[] = $user;
-			}
+			$recepients[] = $user;
 		}
 
 		wfProfileOut( __METHOD__ );
