@@ -43,6 +43,20 @@ class WikiaHomePageHelper extends WikiaModel {
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.9';
 
+	//images sizes (moved here from WikiaHomePageController to break dependency)
+	const REMIX_IMG_SMALL_WIDTH = 155;
+	const REMIX_IMG_SMALL_HEIGHT = 100;
+	const REMIX_IMG_MEDIUM_WIDTH = 320;
+	const REMIX_IMG_MEDIUM_HEIGHT = 210;
+	const REMIX_IMG_BIG_WIDTH = 320;
+	const REMIX_IMG_BIG_HEIGHT = 320;
+	const REMIX_GRID_IMG_SMALL_WIDTH = 160;
+	const REMIX_GRID_IMG_SMALL_HEIGHT = 100;
+	const REMIX_GRID_IMG_MEDIUM_WIDTH = 330;
+	const REMIX_GRID_IMG_MEDIUM_HEIGHT = 210;
+	const REMIX_GRID_IMG_BIG_WIDTH = 330;
+	const REMIX_GRID_IMG_BIG_HEIGHT = 320;
+
 	protected $visualizationModel = null;
 	protected $collectionsModel;
 
@@ -699,49 +713,49 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getRemixBigImgHeight() {
 		if (!empty($this->wg->OasisGrid)) {
-			return WikiaHomePageController::REMIX_GRID_IMG_BIG_HEIGHT;
+			return self::REMIX_GRID_IMG_BIG_HEIGHT;
 		} else {
-			return WikiaHomePageController::REMIX_IMG_BIG_HEIGHT;
+			return self::REMIX_IMG_BIG_HEIGHT;
 		}
 	}
 
 	public function getRemixBigImgWidth() {
 		if (!empty($this->wg->OasisGrid)) {
-			return WikiaHomePageController::REMIX_GRID_IMG_BIG_WIDTH;
+			return self::REMIX_GRID_IMG_BIG_WIDTH;
 		} else {
-			return WikiaHomePageController::REMIX_IMG_BIG_WIDTH;
+			return self::REMIX_IMG_BIG_WIDTH;
 		}
 	}
 
 	public function getRemixMediumImgHeight() {
 		if (!empty($this->wg->OasisGrid)) {
-			return WikiaHomePageController::REMIX_GRID_IMG_MEDIUM_HEIGHT;
+			return self::REMIX_GRID_IMG_MEDIUM_HEIGHT;
 		} else {
-			return WikiaHomePageController::REMIX_IMG_MEDIUM_HEIGHT;
+			return self::REMIX_IMG_MEDIUM_HEIGHT;
 		}
 	}
 
 	public function getRemixMediumImgWidth() {
 		if (!empty($this->wg->OasisGrid)) {
-			return WikiaHomePageController::REMIX_GRID_IMG_BIG_WIDTH;
+			return self::REMIX_GRID_IMG_BIG_WIDTH;
 		} else {
-			return WikiaHomePageController::REMIX_IMG_BIG_WIDTH;
+			return self::REMIX_IMG_BIG_WIDTH;
 		}
 	}
 
 	public function getRemixSmallImgHeight() {
 		if (!empty($this->wg->OasisGrid)) {
-			return WikiaHomePageController::REMIX_GRID_IMG_SMALL_HEIGHT;
+			return self::REMIX_GRID_IMG_SMALL_HEIGHT;
 		} else {
-			return WikiaHomePageController::REMIX_IMG_SMALL_HEIGHT;
+			return self::REMIX_IMG_SMALL_HEIGHT;
 		}
 	}
 
 	public function getRemixSmallImgWidth() {
 		if (!empty($this->wg->OasisGrid)) {
-			return WikiaHomePageController::REMIX_GRID_IMG_SMALL_WIDTH;
+			return self::REMIX_GRID_IMG_SMALL_WIDTH;
 		} else {
-			return WikiaHomePageController::REMIX_IMG_SMALL_WIDTH;
+			return self::REMIX_IMG_SMALL_WIDTH;
 		}
 	}
 
