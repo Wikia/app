@@ -148,7 +148,7 @@ $config['adengine2_rabbit_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrLogisticRegression.js',
-		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClasifier.js',
+		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
 		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
