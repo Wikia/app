@@ -865,17 +865,9 @@ class CityVisualization extends WikiaModel {
 	 * @desc Returns an array of wikis with visualization
 	 * @return array
 	 */
-	public function getVisualizationWikisData() {
+	private function getVisualizationWikisData() {
 		$corporateSites = $this->getCorporateSitesList();
 		return $this->getWikiaHomePageHelper()->cleanWikisDataArray($corporateSites);
-	}
-
-	/**
-	 * @desc Returns an array of wikis' ids
-	 * @return array
-	 */
-	public function getVisualizationWikisIds() {
-		return array_keys($this->getCorporateSitesList());
 	}
 
 	/**
