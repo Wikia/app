@@ -25,7 +25,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	public function getData() {
-        $mobileAppsTranslationKeys = self::getLocalizedAppTranslations( $this->lang );
+		$mobileAppsTranslationKeys = self::getLocalizedAppTranslations( $this->lang );
 
 		$data = [
 			'header' => [
@@ -161,12 +161,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'line-text',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => $mobileAppsTranslationKeys['header']
+						'key' => $mobileAppsTranslationKeys[ 'header' ]
 					]
 				],
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => $mobileAppsTranslationKeys['description']
+					'key' => $mobileAppsTranslationKeys[ 'description' ]
 				],
 				'links' => [
 					[
@@ -548,12 +548,17 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return DesignSystemSharedLinks::getInstance()->getSocialHrefs( $this->lang );
 	}
 
-    private function getLocalizedAppTranslations( $lang ) {
-	    $indicator = $lang === 'en' ? 'fandom-app' : 'community-apps';
+	private function getLocalizedAppTranslations( $lang ) {
+		if ( $lang === 'en' ) {
+			return [
+				'header' => 'global-footer-fandom-app-header',
+				'description' => 'global-footer-fandom-app-description'
+			];
+		}
 
-        return [
-            'header' => 'global-footer-' . $indicator . '-header',
-            'description' => 'global-footer-' . $indicator . '-description'
-        ];
-    }
+		return [
+			'header' => 'global-footer-community-apps-header',
+			'description' => 'global-footer-community-apps-description'
+		];
+	}
 }
