@@ -5,8 +5,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.browserDetect',
 	'wikia.log',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.ml.rabbit')
+	'wikia.window'
+	//require.optional('ext.wikia.adEngine.ml.rabbit')
 ], function (lookupServices, slotRegistry, adBlockDetection, browserDetect, log, win, rabbit) {
 	'use strict';
 

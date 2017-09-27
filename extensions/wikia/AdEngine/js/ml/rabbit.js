@@ -1,6 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.ml.rabbit', [
-	require.optional('ext.wikia.adEngine.ml.fmr.fmrLinearRegression'),
+	require.optional('ext.wikia.adEngine.ml.fmr.fmrLogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.fmr.fmrPassiveAggressiveClassifier')
 ], function (fmrLr, fmrPac) {
 	'use strict';

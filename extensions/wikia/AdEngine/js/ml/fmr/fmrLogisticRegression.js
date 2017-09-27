@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.ml.fmr.fmrLinearRegression', [
+define('ext.wikia.adEngine.ml.fmr.fmrLogisticRegression', [
 	'ext.wikia.adEngine.ml.fmr.fmrInputParser',
 	'ext.wikia.adEngine.ml.modelFactory',
 	'ext.wikia.adEngine.ml.model.linear'
@@ -48,6 +48,6 @@ define('ext.wikia.adEngine.ml.fmr.fmrLinearRegression', [
 		inputParser: inputParser,
 		model: linearModel.create(coefficients, intercept),
 		name: 'fmrlr',
-		wgCountriesVariable: 'wgAdDriverFMRLinearRegressionRabbitCountries'
+		wgCountriesVariable: 'wgAdDriverFMRLogisticRegressionRabbitCountries'
 	});
 });
