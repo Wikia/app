@@ -25,8 +25,6 @@ class WikiService extends WikiaModel {
 
 	const WIKI_ADMIN_IDS_CACHE_TTL = 10800; // 10800 == 3hrs;
 
-	const WIKIAGLOBAL_CITY_ID = 80433;
-
 	const FLAG_PROMOTED = 4;
 	const FLAG_OFFICIAL = 16;
 
