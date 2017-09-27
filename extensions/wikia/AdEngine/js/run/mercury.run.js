@@ -6,7 +6,6 @@ require([
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
-	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
@@ -21,7 +20,6 @@ require([
 	amazon,
 	a9,
 	prebid,
-	rubiconFastlane,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
@@ -37,8 +35,6 @@ require([
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	function callBiddersOnConsecutivePageView() {
-		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
-
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
@@ -46,19 +42,9 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
 		}
-
-		if (
-			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries) &&
-			!isRubiconDisplayPrebidAdapterActive
-		) {
-			rubiconFastlane.call();
-		}
 	}
 
 	mercuryListener.onLoad(function () {
-		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
-
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
 		}
@@ -67,10 +53,6 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile) &&
 			!geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			amazon.call();
-		}
-
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) && !isRubiconDisplayPrebidAdapterActive) {
-			rubiconFastlane.call();
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
