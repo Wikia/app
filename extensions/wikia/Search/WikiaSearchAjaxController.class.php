@@ -24,10 +24,8 @@ class WikiaSearchAjaxController extends WikiaController {
 
 		$page = $this->request->getVal( 'page', 1 );
 		$rank = $this->request->getVal( 'rank', 'default' );
-		$crossWikia = $this->request->getBool( 'crossWikia' );
+		$isInterWiki = $this->request->getBool( 'crossWikia' );
 		$hub = false;
-
-		$isInterWiki = $crossWikia ? true : false;
 
 		$cityId = $isInterWiki ? 0 : $this->wg->CityId;
 
