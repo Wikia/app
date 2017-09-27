@@ -153,15 +153,6 @@ class WikiaStatsModel extends WikiaModel {
 		return WikiFactory::getVarValueByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID);
 	}
 
-	public static function setWikiaStatsInWF($statsValues) {
-		WikiFactory::setVarByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID, $statsValues);
-		$corpWikisLangs = array_keys( ( new CityVisualization() )->getVisualizationWikisData() );
-		$wikiaHubsHelper = new WikiaHubsServicesHelper();
-		foreach ($corpWikisLangs as $lang) {
-			$wikiaHubsHelper->purgeHomePageVarnish($lang);
-		}
-	}
-
 	private function setFallbacks($statsFromWF) {
 		$this->editsDefaultFallback = self::EDITS_DEFAULT_FALLBACK < $statsFromWF['editsDefault'] ?
 			$statsFromWF['editsDefault'] : self::EDITS_DEFAULT_FALLBACK;

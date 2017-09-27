@@ -163,7 +163,7 @@ class MyHome {
 	public static function getInitialMainPage(Title &$title) {
 		wfProfileIn(__METHOD__);
 
-		global $wgUser, $wgTitle, $wgRequest, $wgEnableWikiaHomePageExt;
+		global $wgUser, $wgTitle, $wgRequest;
 
 		// dirty hack to make skin chooser work ($wgTitle is not set at this point yet)
 		$wgTitle = Title::newMainPage();
@@ -175,10 +175,7 @@ class MyHome {
 		}
 
 		//user must be logged in and have redirect enabled
-		//this is not used for Corporate Sites where Wikia Visualization is enabled
-		if( empty($wgEnableWikiaHomePageExt) ) {
-			$title = UserService::getMainPage($wgUser);
-		}
+		$title = UserService::getMainPage($wgUser);
 
 		wfProfileOut(__METHOD__);
 		return true;

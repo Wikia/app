@@ -1734,25 +1734,15 @@ class ConfigTest extends BaseTest {
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'getWikiId', 'getService' ] )
 		               ->getMock();
-		
-		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+
+		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
+
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $service ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'EnableWikiaHomePageExt' )
-		    ->will   ( $this->returnValue( false ) )
 		;
 		$this->assertEquals(
 				'Select\\Dismax\\OnWiki',
@@ -1770,25 +1760,15 @@ class ConfigTest extends BaseTest {
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'getWikiId', 'getService' ] )
 		               ->getMock();
-		
-		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+
+		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
+
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) )
-		;
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $service ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'EnableWikiaHomePageExt' )
-		    ->will   ( $this->returnValue( false ) )
 		;
 		$this->assertEquals(
 				'Select\\Dismax\\Video',
@@ -1806,25 +1786,15 @@ class ConfigTest extends BaseTest {
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'getWikiId', 'getService' ] )
 		               ->getMock();
-		
-		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+
+		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', true );
+
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $service ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'EnableWikiaHomePageExt' )
-		    ->will   ( $this->returnValue( true ) )
 		;
 		$this->assertEquals(
 				'Select\\Dismax\\InterWiki',

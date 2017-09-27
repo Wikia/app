@@ -1565,34 +1565,6 @@ $config['userprofilepage_scss_wikiamobile'] = [
 	],
 ];
 
-/** WikiaHomepage **/
-$config['wikiahomepage_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'oasis',
-	'assets' => [
-		'//resources/wikia/libraries/bootstrap/popover.scss',
-		'//skins/oasis/css/wikiagrid.scss',
-		'//skins/oasis/css/modules/WikiaMediaCarousel.scss',
-	],
-];
-
-$config['wikiahomepage_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'oasis',
-	'assets' => [
-		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
-	],
-];
-
-$config['wikiahomepage_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaHomePage/css/WikiaHomePage.wikiamobile.scss',
-	],
-];
-
 /** WAMPage **/
 $config['wampage_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,

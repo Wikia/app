@@ -317,7 +317,7 @@ class ScribeEventProducer {
 	}
 
 	public function setIP ( $ip ) {
-		$this->mParams['userIp'] = $ip;
+		$this->mParams['userIp'] = IP::sanitizeIP( $ip );
 	}
 
 	public function setRevisionTimestamp ( $revision_timestamp ) {

@@ -251,4 +251,23 @@ class Category {
 		}
 		return $this-> { $key } ;
 	}
+
+	/**
+	 * Refresh the counts for this category synchronously.
+	 *
+	 * @return bool True on success, false on failure
+	 *
+	 * @deprecated Please use an async task instead
+	 * @see https://github.com/Wikia/app/pull/12600/files
+	 */
+	public function refreshCounts() {
+		if ( wfReadOnly() ) {
+			return false;
+		}
+
+		$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+		$task->refreshCounts( $this->mName );
+
+		return true;
+	}
 }

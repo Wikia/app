@@ -340,6 +340,7 @@ $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/Com
 $wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 $wgAutoloadClasses['ImageReviewService'] = $IP . '/includes/wikia/services/ImageReviewService.class.php';
 $wgAutoloadClasses['LiftigniterMetadataService'] = $IP . '/includes/wikia/services/LiftigniterMetadataService.class.php';
+$wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/RedirectService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -489,7 +490,6 @@ include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
 $wgAutoloadClasses[ "WikiaApiQuery"                 ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuery.php";
 $wgAutoloadClasses[ "WikiaApiQueryDomains"          ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
 $wgAutoloadClasses[ "WikiaApiQueryPopularPages"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
-$wgAutoloadClasses[ "WikiaApiQueryWrite"            ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryWrite.php";
 $wgAutoloadClasses[ "WikiaApiQueryMostAccessPages"  ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryMostAccessPages.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditPages"    ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditPages.php";
 $wgAutoloadClasses[ "WikiaApiQueryTopEditUsers"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryTopEditUsers.php";
@@ -500,7 +500,6 @@ $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/Cr
 $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
-$wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
 $wgAutoloadClasses[ "ApiLicenses"                   ] = "$IP/includes/wikia/api/ApiLicenses.php";
 
@@ -573,12 +572,8 @@ $wgAPIPropModules[ "wklasteditors"] = "WikiaApiQueryLastEditors";
  * reqistered API modules
  */
 global $wgAPIModules;
-$wgAPIModules[ "insert"            ] = "WikiaApiQueryWrite";
-$wgAPIModules[ "update"            ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "delete"            ] = "ApiDelete";
-$wgAPIModules[ "wdelete"           ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
-$wgAPIModules[ "runjob"            ] = "ApiRunJob";
 $wgAPIModules[ "fetchblob"         ] = "ApiFetchBlob";
 $wgAPIModules[ "licenses"          ] = "ApiLicenses";
 
@@ -933,12 +928,6 @@ $smwgUseExternalDB = false;
  */
 
 $wgABTests = array();
-
-/**
- * default numbers of jobs done in ApiRunJob
- * @see extensions/wikia/WikiaApi/ApiRunJob.php
- */
-$wgApiRunJobsPerRequest = 20;
 
 /**
  * Memcached client timeouts
@@ -1623,9 +1612,8 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
 /**
  * @name $wgOasisResponsive
  * Enables the Oasis responsive layout styles
- * Null means enabled on all and disabled for languages defined in $wgOasisResponsiveDisabledInLangs
  */
-$wgOasisResponsive = null;
+$wgOasisResponsive = true;
 
 /**
  * @name $wgDisableReportTime
