@@ -1,31 +1,29 @@
 <?php
 
-class WikiaCorporateModel extends WikiaModel
-{
+class WikiaCorporateModel extends WikiaModel {
+
+	// taken from wgEnableWikiaHomePageExt
+	const LANG_TO_WIKI_ID = [
+		'en' => Wikia::CORPORATE_WIKI_ID,
+		'de' => 111264,
+		'fr' => 208826,
+		'pl' => 435095,
+		'es' => 637291,
+		'ja' => 875569,
+	];
+
 	/**
 	 * Get corporate wikiId by content lang
 	 *
-	 * @param $lang
-	 *
+	 * @param string $lang
 	 * @return int
-	 *
-	 * @throws Exception
+	 * @throws WikiaException
 	 */
 	public function getCorporateWikiIdByLang($lang) {
-		$visualizationData = $this->getVisualizationData();
-		if (!isset($visualizationData[$lang]['wikiId'])) {
-			throw new Exception('Corporate Wiki not defined for this lang');
+		if (!isset(self::LANG_TO_WIKI_ID[$lang])) {
+			throw new WikiaException('Corporate Wiki not defined for this lang');
 		}
 
-		return $visualizationData[$lang]['wikiId'];
-	}
-
-	/**
-	 * get data about corporate wikis
-	 * @return array
-	 */
-	protected function getVisualizationData() {
-		$visualizationModel = new CityVisualization();
-		return $visualizationModel->getVisualizationWikisData();
+		return self::LANG_TO_WIKI_ID[$lang];
 	}
 }
