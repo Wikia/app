@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\Service\Gateway\ConsulUrlProvider;
-use Wikia\Service\Gateway\KubernetesUrlProvider;
 use Wikia\Rabbit\ConnectionBase;
 
 /**
@@ -16,7 +15,6 @@ class PhalanxService {
 	private $limit = 1;
 	/** @var User */
 	private $user = null;
-	private $k8sUrlProvider = null;
 
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
@@ -38,18 +36,6 @@ class PhalanxService {
 	 * saving/modifying a block.
 	 */
 	const PHALANX_SERVICE_RELOAD_TIMEOUT = 25;
-
-	/**
-	 * @Inject({
-	 *   Wikia\Service\Gateway\KubernetesUrlProvider::class
-	 * })
-	 * @param KubernetesUrlProvider $urlProvider
-	 */
-	public function __construct(
-		KubernetesUrlProvider $urlProvider
-	) {
-		$this->k8sUrlProvider = $urlProvider;
-	}
 
 	protected function getLoggerContext() {
 		return [
@@ -198,7 +184,6 @@ class PhalanxService {
 		$options = F::app()->wg->PhalanxServiceOptions;
 
 		$url = $this->getPhalanxUrl( $action );
-		$shadowUrl = $this->getPhalanxShadowUrl( $action );
 		$loggerPostParams = [];
 		$tries = 1;
 		/**
@@ -225,17 +210,6 @@ class PhalanxService {
 			if ( ( $action == "match" || $action == "check" ) ) {
 				if ( !is_null( $this->user ) ) {
 					$parameters[ 'user' ][] = $this->user->getName();
-				} else {
-					if ( ( new \Wikia\Util\Statistics\BernoulliTrial( 0.001 ) )->shouldSample() ) {
-						$this->error(
-							'PLATFORM-1387',
-							[
-								'exception'    => new Exception(),
-								'block_params' => $parameters,
-								'user_name'    => F::app()->wg->User->getName()
-							]
-						);
-					}
 				}
 			}
 			if ( $action == "match" && $this->limit != 1 ) {
@@ -295,19 +269,6 @@ class PhalanxService {
 				] );
 			}
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
-
-			// calling on the shadow ninja powers - making call to k8s Phalanx instance to check if the response
-			// from k8s instances match one received from the mesos instances
-			$shadowResponse = Http::post( $shadowUrl, $options );
-			if ( $response !== $shadowResponse && ( new \Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
-				$this->error( "Phalanx shadow call differs", [
-					"phalanxUrl" => $url,
-					"shadowUrl" => $shadowUrl,
-					"response" => $response,
-					"shadow_response" => $shadowResponse,
-					"postParams" => json_encode( $loggerPostParams ),
-				] );
-			}
 		}
 
 		if ( $response === false ) {
@@ -369,10 +330,6 @@ class PhalanxService {
 			}
 		}
 		return $res;
-	}
-
-	private function getPhalanxShadowUrl( $action ) {
-		return sprintf("http://%s/%s", $this->k8sUrlProvider->getUrl('phalanx'), $action != "status" ? $action : "" );
 	}
 
 	private function getPhalanxUrl( $action ) {
