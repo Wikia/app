@@ -16,12 +16,11 @@ class WikiaCorporateModel extends WikiaModel {
 	 * Get corporate wikiId by content lang
 	 *
 	 * @param string $lang
-	 * @return int
-	 * @throws WikiaException
+	 * @return int|false
 	 */
 	public function getCorporateWikiIdByLang($lang) {
 		if (!isset(self::LANG_TO_WIKI_ID[$lang])) {
-			throw new WikiaException('Corporate Wiki not defined for this lang');
+			return false;
 		}
 
 		return self::LANG_TO_WIKI_ID[$lang];
