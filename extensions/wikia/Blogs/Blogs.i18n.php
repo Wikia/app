@@ -1824,11 +1824,11 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-nbrcomments' => '{{PLURAL:$1|Un commentaire|$1 commentaires}}',
 	'blog-nopostfound' => 'Aucun billet trouvé.',
 	'blog-writeone' => 'Écrivez-en un !',
-	'blog-empty-user-blog' => "<br/><big>'''No recent blog posts. [[Special:CreateBlogPage|Write one now!]]'''</big>
+	'blog-empty-user-blog' => "<br/><big>'''Aucun billet récent. [[Special:CreateBlogPage|À vous d'en écrire un !]]'''</big>
 
-FANDOM community blogs allow you to contribute a blog post to a wiki's [[{{MediaWiki:blogs-recent-url}}|Community Blog]].
+Vous pouvez contribuer aux blogs communautaires de FANDOM en ajoutant un billet au [[{{MediaWiki:blogs-recent-url}}|blog de la communauté]] d'un wiki.
 
-Blogs are often used for news and announcements, reviews and recommendations, or questions for the local community. See [[Help:Blogs]] for more information.",
+Les blogs permettent de faire des annonces, transmettre des nouveautés, des opinions et des recommandations ou poser des questions à la communauté locale. Pour plus d'informations, voir [[w:fr:Help:Blogs]].",
 	'blog-added' => 'ajouté',
 	'blog-edited' => 'modifié',
 	'blog-page' => 'Blog',
@@ -2761,7 +2761,11 @@ $messages['ja'] = array(
 	'blog-nbrcomments' => 'コメント ($1)',
 	'blog-nopostfound' => '一つも投稿が見つかりませんでした。',
 	'blog-writeone' => '記事を投稿する',
-	'blog-empty-user-blog' => "<br/> <big>'' 最近のブログ記事の投稿はありません。[[Special: CreateBlogPage |早速ブログを書いてみましょう!]] ''</big> FANDOMのコミュニティ ブログではWIki上の様々なブログ記事を [[{{MediaWiki:blogs-recent-url}} |リスト化することができます]]。 ブログはニュースやお知らせ、レビュー、推奨事項、それぞれのコミュニティでの質問や提案など投げかけたりして使われています。詳細については [[ヘルプ: ブログ|こちらより]] ご参照ください。",
+	'blog-empty-user-blog' => "<br/> <big>'''最近のブログ記事の投稿はありません。[[Special: CreateBlogPage |早速ブログを書いてみましょう!]] '''</big>
+
+ブログをアップすると、コミュニティ内の [[{{MediaWiki:blogs-recent-url}} |最近の投稿]]で自動的に表示されます。
+
+ブログはニュースやお知らせ、レビュー、推奨事項、それぞれのコミュニティでの質問や提案など投げかけたりして使われています。詳細については [[ヘルプ: ブログ|こちらより]] ご参照ください。",
 	'blog-added' => '追加',
 	'blog-edited' => '編集',
 	'blog-page' => 'ブログ',
@@ -4119,7 +4123,11 @@ $messages['pl'] = array(
 	'blog-file-page' => "Wpis <a href='$1'>$2</a> na blogu <a href='$3'>$4</a>",
 	'createblogpage' => 'Utwórz blog',
 	'createbloglistingpage' => 'Utwórz listę wpisów na blogach',
-	'create-blog-spam' => 'Wygląda jak spam',
+	'create-blog-spam' => 'Twoja edycja nie została zapisana.<br />Możliwe powody:
+<ul>
+<li>jesteś zablokowany(-a) na wiki,</li>
+<li>coś w tekście wywołało jeden z filtrów antyspamowych.</li>
+</ul>',
 	'create-blog-cant-edit' => 'Nie można wykonać edycji',
 	'create-blog-post-category' => 'Wpisy na blogach',
 	'create-blog-post-category-body' => 'Automatycznie wygenerowana lista wpisów na blogach',
@@ -4130,7 +4138,7 @@ $messages['pl'] = array(
 	'create-blog-post-title' => 'Utwórz nowy wpis na blogu',
 	'create-blog-post-title-edit' => 'Edytuj wpis na blogu',
 	'create-blog-form-title' => 'Co to jest wpis na blogu?',
-	'create-blog-form-post-text' => 'Treść bloga',
+	'create-blog-form-post-text' => 'Treść blogu',
 	'create-blog-form-info' => 'Wpisy na blogach to świetny sposób na dzielenia się wiadomościami, opiniami i pomysłami z resztą społeczności wiki.',
 	'create-blog-form-post-title' => 'Tytuł wpisu na blogu',
 	'create-blog-empty-title-error' => 'Tytuł jest wymagany',
@@ -4139,14 +4147,14 @@ $messages['pl'] = array(
 	'create-blog-invalid-title-error' => 'Nieprawidłowy tytuł',
 	'create-listing-confirm-info' => 'Skopiuj i wklej następujący kod:',
 	'create-blog-no-login' => 'Nie jesteś zalogowany',
-	'create-blog-login-required' => 'Musisz być [{{fullurl:Special:Signup|$1}} zalogowany] aby utworzyć wpis na blogu lub listę wpisów.',
+	'create-blog-login-required' => 'Musisz być [{{fullurl:Special:Signup|$1}} {{GENDER:|zalogowany|zalogowana}}], aby utworzyć wpis na blogu lub listę wpisów.',
 	'create-blog-categories-title' => 'Dodaj wpis do kategorii (kliknij, aby wybrać)',
 	'create-blog-categories-textinput' => 'Dodaj nową kategorię',
 	'create-blog-categories-submit' => 'Zapisz',
 	'create-blog-save' => 'Zapisz stronę',
 	'create-blog-preview' => 'Pokaż podgląd',
 	'create-blog-updated' => 'Wpis na blogu utworzony lub zaktualizowany.',
-	'create-blog-permission-denied' => 'Błąd podczas zapisywania blogu:brak dostępu',
+	'create-blog-permission-denied' => 'Błąd podczas zapisywania blogu: brak dostępu',
 	'create-blog-article-already-exists' => 'Wpis na blogu o tej nazwie istnieje, wybierz inną nazwę',
 	'create-blog-listing-title' => 'Utwórz nową listę wpisów na blogach',
 	'create-blog-listing-form-title' => 'Co to jest lista wpisów na blogach?',
@@ -4181,11 +4189,11 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'blog-nbrcomments' => '{{PLURAL:$1|Jeden komentarz|$1 komentarze|$1 komentarzy}}',
 	'blog-nopostfound' => 'Nie znaleziono żadnych wpisów.',
 	'blog-writeone' => 'Napisz!',
-	'blog-empty-user-blog' => "<br/><big>'''No recent blog posts. [[Special:CreateBlogPage|Write one now!]]'''</big>
+	'blog-empty-user-blog' => "<br/><big>'''Nie ma nowych wpisów na blogu. [[Special:CreateBlogPage|Napisz jeden już teraz!]]'''</big>
 
-FANDOM community blogs allow you to contribute a blog post to a wiki's [[{{MediaWiki:blogs-recent-url}}|Community Blog]].
+Pozwoli ci to na stworzenie wpisu na [[{{MediaWiki:blogs-recent-url}}|blogu tej społeczności]].
 
-Blogs are often used for news and announcements, reviews and recommendations, or questions for the local community. See [[Help:Blogs]] for more information.",
+Blogi często są używane do przekazywania wiadomości, ogłoszeń, recenzji i rekomendacji, czy zadawania pytań społeczności. Zobacz [[w:pl:Pomoc:Blogi|stronę pomocy]] na ten temat.",
 	'blog-added' => 'utworzona',
 	'blog-edited' => 'zmodyfikowana',
 	'blog-page' => 'Blog',
@@ -4229,7 +4237,7 @@ Blogs are often used for news and announcements, reviews and recommendations, or
 	'blogs-recent-url-text' => 'Ostatnie wpisy na blogach',
 	'blog-desc' => 'Blogi',
 	'blog-movepage-badtitle' => 'Nieprawidłowy tytuł wpisu.',
-	'blog-comment-sending' => 'Wysyłanie...',
+	'blog-comment-sending' => 'Wysyłanie…',
 	'blog-by' => '$1 przez $2',
 	'blogs-searchprofile' => 'Blogi',
 	'blogs-searchprofile-tooltip' => 'Szukaj na blogach i listach blogów',
