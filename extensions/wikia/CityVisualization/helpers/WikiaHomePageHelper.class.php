@@ -9,8 +9,6 @@
  * @author Sebastian Marzjan
  *
  */
-use \Wikia\Logger\WikiaLogger;
-
 
 class WikiaHomePageHelper extends WikiaModel {
 
