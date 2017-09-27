@@ -197,22 +197,17 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	function refreshSlot(slotName) {
 		var slot = googleSlots.getSlotByName(slotName),
-			slotElement;
+			targeting;
 
 		if (slot) {
 			log(['Refresh slot', slotName, slot], log.levels.debug, logGroup);
-			slotElement = doc.getElementById(slot.getSlotElementId());
-			refreshTargetingData(slot);
+			targeting = gptTargeting.getSlotLevelTargeting(slotName);
+			targeting.uap = uapContext.getUapId().toString();
+			AdElement.configureSlot(slot, targeting);
 			googleTag.refreshSlot(slot);
-			slotElement.setAttribute('data-gpt-slot-params', JSON.stringify(gptTargeting.getSlotLevelTargeting(slotName)));
 		} else {
 			log(['Refresh slot', slotName, 'does not exist'], log.levels.debug, logGroup);
 		}
-	}
-
-	function refreshTargetingData(slot) {
-		slot.setTargeting('uap', uapContext.getUapId().toString());
-		return slot;
 	}
 
 	adContext.addCallback(function () {

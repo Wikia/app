@@ -24,14 +24,13 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'use strict';
 
 	var context = adContext.getContext(),
-		sraEnabled = !context.opts.disableSRA,
 		atfSlots = [
 			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD',
 			'GPT_FLUSH'
 		];
 
-	if (sraEnabled) {
+	if (!context.opts.loadMedrecFromBTF) {
 		atfSlots.push('TOP_RIGHT_BOXAD');
 	}
 
@@ -74,7 +73,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
-			sraEnabled: sraEnabled,
+			sraEnabled: true,
 			atfSlots: atfSlots,
 			getAdUnitBuilder: function () {
 				return context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
