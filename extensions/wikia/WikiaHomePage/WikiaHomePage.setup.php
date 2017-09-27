@@ -33,9 +33,6 @@ $wgAutoloadClasses['WikiaHomePageController'] = $dir.'WikiaHomePageController.cl
 $wgExtensionMessagesFiles['WikiaHomePage'] = $dir.'WikiaHomePage.i18n.php';
 JSMessages::registerPackage('WikiaHomePage', array('wikia-home-page-*'));
 
-// services
-$wgAutoloadClasses['RedirectService'] = 'includes/wikia/services/RedirectService.class.php';
-
 // hooks
 $wgHooks['GetHTMLAfterBody'][] = 'WikiaHomePageController::onGetHTMLAfterBody';
 $wgHooks['OutputPageBeforeHTML'][] = 'WikiaHomePageController::onOutputPageBeforeHTML';
