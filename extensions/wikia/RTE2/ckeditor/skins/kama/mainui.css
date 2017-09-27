@@ -52,11 +52,11 @@ Special outer level classes used in this file:
 	display: block;
 
 	/* Rounded borders. */
-	border-radius: 5px;
-	border: 1px solid #D3D3D3;
+	border-radius: 0px;
+	border: 1px solid black;
 
 	/* Spacing between the outer and the inner boundaries. */
-	padding: 5px;
+	padding: 0px;
 }
 
 .cke_hc.cke_chrome
@@ -73,14 +73,14 @@ Special outer level classes used in this file:
 
 	/* Rounded borders. */
 	-webkit-touch-callout: none;
-	border-radius: 5px;
+	border-radius: 0px;
 
 	/* The white-to-color gradiend we see at the top of the editor. */
 	background: #d3d3d3 url(images/sprites.png) repeat-x 0 -1950px;
 	background: linear-gradient(to bottom, #fff -15px, #d3d3d3 40px);
 
 	/* Spacing with the inner blocks. */
-	padding: 5px;
+	padding: 0px;
 }
 
 /* Added to the outer boundary of the UI when in inline editing,

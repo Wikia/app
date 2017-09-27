@@ -64,9 +64,9 @@
 		margin-right: 30px;
 		padding-top: 0;
 
-		.cke_button a,
-		.cke_rcombo a,
-		.cke_separator {
+		a.cke_button,
+		.cke_combo a,
+		.cke_toolbar_separator {
 			margin-top: 5px;
 		}
 	}
@@ -98,7 +98,7 @@
 	}
 
 	// buttons separator
-	.cke_separator {
+	.cke_toolbar_separator {
 		@include linear-gradient($color-epl-separator, top, $color-epl-separator-tips, 0%, $color-epl-separator, 10%, $color-epl-separator, 90%, $color-epl-separator-tips, 100%);
 		display: inline-block;
 		float: left;

@@ -89,7 +89,7 @@
 				'rte-tools',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
-			toolbarCanCollapse: true,
+			toolbarCanCollapse: false,
 			resize_enabled: false,
 		//	richcomboCss: $.getSassCommonURL('extensions/wikia/RTE2/css/richcombo.scss'), depracated
 			skin: 'kama',
@@ -504,24 +504,25 @@ CKEDITOR.editor.prototype.switchMode = function(mode) {
 
 // modify parent node of button
 CKEDITOR.dom.element.prototype.setState = function( state ) {
-	var node = this.getParent();
-
+	//var node = this.getParent();
+	//Kacper Olek
+	var node = this;
 	switch ( state )
 	{
 		case CKEDITOR.TRISTATE_ON :
-			node.addClass( 'cke_on' );
-			node.removeClass( 'cke_off' );
-			node.removeClass( 'cke_disabled' );
+			node.addClass( 'cke_button_on' );
+			node.removeClass( 'cke_button_off' );
+			node.removeClass( 'cke_button_disabled' );
 			break;
 		case CKEDITOR.TRISTATE_DISABLED :
-			node.addClass( 'cke_disabled' );
-			node.removeClass( 'cke_off' );
-			node.removeClass( 'cke_on' );
+			node.addClass( 'cke_button_disabled' );
+			node.removeClass( 'cke_button_off' );
+			node.removeClass( 'cke_button_on' );
 			break;
 		default :
-			node.addClass( 'cke_off' );
-			node.removeClass( 'cke_on' );
-			node.removeClass( 'cke_disabled' );
+			node.addClass( 'cke_button_off' );
+			node.removeClass( 'cke_button_on' );
+			node.removeClass( 'cke_button_disabled' );
 			break;
 	}
 };
