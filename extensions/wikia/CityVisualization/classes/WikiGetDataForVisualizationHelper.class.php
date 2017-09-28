@@ -2,10 +2,10 @@
 
 class WikiGetDataForVisualizationHelper implements WikiGetDataHelper {
 	public function getMemcKey($wikiId, $langCode) {
-		/** @var $visualization CityVisualization */
 		$visualization = new CityVisualization();
+		$model = new WikiaCorporateModel();
 
-		return $visualization->getWikiDataCacheKey($visualization->getTargetWikiId($langCode), $wikiId, $langCode);
+		return $visualization->getWikiDataCacheKey($model->getCorporateWikiIdByLang($langCode), $wikiId, $langCode);
 	}
 
 	public function getImages($wikiId, $langCode, $wikiRow) {
