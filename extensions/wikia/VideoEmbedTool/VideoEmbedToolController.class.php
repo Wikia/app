@@ -132,7 +132,7 @@ class VideoEmbedToolController extends WikiaController {
 		$fileTitle = $this->request->getVal('fileTitle', '');
 		$fileTitle = urldecode($fileTitle);
 		$title = Title::newFromText($fileTitle, NS_FILE);
-		if ( !( $title instanceof Title ) ) {
+		if ( !$title->exists() ) {
 			return;
 		}
 
@@ -155,6 +155,7 @@ class VideoEmbedToolController extends WikiaController {
 	*/
 	public function editDescription() {
 		$this->response->setFormat( 'json' );
+		$vHelper = new VideoHandlerHelper();
 
 		try {
 			$this->checkWriteRequest();
@@ -162,13 +163,27 @@ class VideoEmbedToolController extends WikiaController {
 			$this->setTokenMismatchError();
 			return;
 		}
-
-		$title = urldecode( $this->request->getVal('title') );
+		
+		$title = $this->request->getVal('title', '');
+		$title = urldecode($title);
 		$title = Title::newFromText($title, NS_FILE);
-
-		$description = urldecode( $this->request->getVal('description') );
-		$vHelper = new VideoHandlerHelper();
-		$status = $vHelper->setVideoDescription($title, $description);
+		if ( !$title->exists() ) {			
+			$this->status = 'fail';
+			$this->errMsg = wfMessage( 'videohandler-error-video-no-exist' )->text();
+			return;
+		}
+		
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+		$oldDescription = $vHelper->getVideoDescription( $file );
+		$description = $this->request->getVal('description')
+		
+		if( $description AND $description != $oldDescription ) {
+			$vHelper->setVideoDescription($title, urldecode( $description )	
+		} else {
+			$this->status = 'fail';
+			$this->errMsg = wfMessage('vet-description-save-error')->text();
+			return;
+		}
 
 		if ( $status ) {
 			$this->status = 'success';
