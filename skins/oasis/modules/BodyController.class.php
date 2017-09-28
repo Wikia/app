@@ -170,12 +170,10 @@ class BodyController extends WikiaController {
 		}
 
 		if ( $namespace == NS_SPECIAL ) {
-			if ( WikiaPageType::isSearch() ) {
-				if ( empty( $this->wg->EnableWikiaHomePageExt ) ) {
-					$railModuleList = [
-						$latestActivityKey => [ 'LatestActivity', 'Index', null ],
-					];
-				}
+			if ( WikiaPageType::isSearch() || $title->isSpecial( 'ThemeDesignerPreview' ) ) {
+				$railModuleList = [
+					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
+				];
 			} else if ( $title->isSpecial( 'Leaderboard' ) ) {
 				$railModuleList = [
 					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
@@ -188,10 +186,6 @@ class BodyController extends WikiaController {
 				];
 			} else if ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) ) {
 				// intentional nothing here
-			} else if ( $title->isSpecial( 'ThemeDesignerPreview' ) ) {
-				$railModuleList = [
-					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
-				];
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = [ ];

@@ -111,8 +111,6 @@ abstract class WikiaSkin extends SkinTemplate {
 				if ( !empty( $srcMatch[1] ) && $this->assetsManager->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
 					//fix HTML::inlineScript's expansion of ampersands in the src attribute
 					$url = str_replace( '&amp;', '&', $srcMatch[1] );
-					// apply domain sharding
-					$url = wfReplaceAssetServer($url);
 					$res[] = array( 'url' => $url, 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $srcMatch[1] ) && !$this->strictAssetUrlCheck ) {
 					//only non-strict skins accept inline elements
@@ -153,8 +151,6 @@ abstract class WikiaSkin extends SkinTemplate {
 					//fix HTML::element's expansion of ampersands in the src attribute
 					// todo: do we really need this trick? I notice URLs that are not properly encoded in the head element
 					$url = str_replace( '&amp;', '&', $hrefMatch[1] );
-					// apply domain sharding
-					$url = wfReplaceAssetServer($url);
 					$res[] = array( 'url' => $url, 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $hrefMatch[1] ) && !$this->strictAssetUrlCheck ) {
 					$res[] = array( 'url' => null, 'tag' => $m );

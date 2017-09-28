@@ -23,6 +23,7 @@ class CityVisualizationTest extends WikiaBaseTest {
 	 */
 	public function testGenerateBatches($slots, $promotedWikiCount) {
 
+		/* @var CityVisualization $visualization */
 		$visualization = $this->getMock('CityVisualization', ['getSlotsForVerticals']);
 		$visualization
 			->expects($this->any())

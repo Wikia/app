@@ -392,7 +392,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getCorporatePageSearchUrl() {
-		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, WikiService::WIKIAGLOBAL_CITY_ID )->getFullURL();
+		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 	}
 
 	private function getCommunityCentralLink() {
