@@ -17,8 +17,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 		return (
 			enabledSlots[slot.name] &&
 			dataGptDiv &&
-			dataGptDiv.dataset.gptPageParams &&
-			!adBlockDetection.isBlocking()
+			dataGptDiv.dataset.gptPageParams
 		);
 	}
 
@@ -81,6 +80,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'ad_status': status || 'unknown',
 			'scroll_y': slotRegistry.getScrollY(slot.name) || 0
 		};
+
+		log(['prepareData', slot.name, data], log.levels.debug, logGroup);
 
 		return data;
 	}
