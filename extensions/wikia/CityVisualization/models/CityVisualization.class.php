@@ -870,17 +870,6 @@ class CityVisualization extends WikiaModel {
 		return $this->getWikiaHomePageHelper()->cleanWikisDataArray($corporateSites);
 	}
 
-	/**
-	 * Return true when there is active Corporate Wiki in that language - like www.wikia.com or de.wikia.com
-	 *
-	 * @param $langCode
-	 * @return bool
-	 */
-	public function isCorporateLang($langCode) {
-		$corpWikis = $this->getVisualizationWikisData();
-		return isset($corpWikis[$langCode]);
-	}
-
 	public function getWikisCountForStaffTool($opt) {
 	//todo: reuse getWikisForStaffTool
 		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
