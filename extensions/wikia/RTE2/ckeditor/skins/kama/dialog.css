@@ -68,10 +68,9 @@ Comments in this file will give more details about each of the above blocks.
 {
 	font-weight: bold;
 	font-size: 14px;
-	padding: 3px 3px 8px;
+	padding: 5px;
 	cursor: move;
 	position: relative;
-	border-bottom: 1px solid #eee;
 }
 
 .cke_dialog_spinner
@@ -295,15 +294,12 @@ a.cke_dialog_tab_disabled
 
 a.cke_dialog_close_button
 {
-	background-image: url(images/sprites.png);
-	background-repeat: no-repeat;
-	background-position: 0 -1022px;
 	position: absolute;
 	cursor: pointer;
 	text-align: center;
-	height: 20px;
-	width: 20px;
-	top: 5px;
+	height: 16px;
+	width: 16px;
+	top: 0px;
 }
 
 .cke_dialog_close_button span
