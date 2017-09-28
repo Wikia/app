@@ -1,6 +1,7 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.roadblock', [
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.document',
@@ -8,6 +9,7 @@ define('ext.wikia.adEngine.template.roadblock', [
 	require.optional('ext.wikia.adEngine.template.skin')
 ], function (
 	uapContext,
+	btfBlocker,
 	gptHelper,
 	slotRegistry,
 	doc,
@@ -23,12 +25,17 @@ define('ext.wikia.adEngine.template.roadblock', [
 	function handleMedrec(medrecSlotElement) {
 		var medrecSlot = slotRegistry.get(medrecSlotElement.id);
 
-		medrecSlotElement.style.opacity = '0';
-		gptHelper.refreshSlot(medrecSlotElement.id);
-		medrecSlot.pre('renderEnded', function () {
-			medrecSlotElement.style.opacity = '';
-		});
-		log(['handleMedrec', 'refreshing slot', medrecSlot], log.levels.info, logGroup);
+		btfBlocker.unblock(medrecSlot.name);
+		log(['handleMedrec', 'unblocking slot', medrecSlot.name], log.levels.info, logGroup);
+
+		if (gptHelper.isSraEnabled()) {
+			medrecSlotElement.style.opacity = '0';
+			gptHelper.refreshSlot(medrecSlot.name);
+			medrecSlot.pre('renderEnded', function () {
+				medrecSlotElement.style.opacity = '';
+			});
+			log(['handleMedrec', 'refreshing slot', medrecSlot], log.levels.info, logGroup);
+		}
 	}
 
 	/**
