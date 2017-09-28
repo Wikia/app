@@ -44,7 +44,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
-		$vars[] = 'wgAdDriverLoadMedrecFromBTF';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
