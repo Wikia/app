@@ -16,13 +16,6 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			getName: function () { return 'amazon'; },
 			hasResponse: function () { return true; }
 		},
-		fastlane: {
-			trackState: noop,
-			wasCalled: noop,
-			getSlotParams: noop,
-			getName: function() { return 'rubicon_fastlane'; },
-			hasResponse: function () { return true; }
-		},
 		log: noop,
 		prebid: {
 			trackState: noop,
@@ -57,28 +50,6 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		expect(mocks.amazon.trackState).toHaveBeenCalled();
 	});
 
-	it('extends slot targeting for RubiconFastlane', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-			mocks.log,
-			undefined,
-			mocks.fastlane
-			),
-			slotTargetingMock = {a: 'b'},
-			expectedSlotTargeting = {
-				a: 'b',
-				flslots: ['fa1s', 'fa2s', 'fa3s'],
-				bid: 'Rxxxx'
-			};
-
-		spyOn(mocks.fastlane, 'trackState');
-		spyOn(mocks.fastlane, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.fastlane, 'getSlotParams').and.returnValue({flslots: ['fa1s', 'fa2s', 'fa3s']});
-
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
-		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
-		expect(mocks.fastlane.trackState).toHaveBeenCalled();
-	});
-
 	it('extends slot targeting for Prebid.js', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 			mocks.log,
@@ -98,30 +69,6 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
 		expect(mocks.prebid.trackState).toHaveBeenCalled();
-	});
-
-	it('correctly mark all bid slots', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-			mocks.log,
-			mocks.prebid,
-			mocks.amazon,
-			mocks.fastlane
-			),
-			slotTargetingMock = {a: 'b'},
-			expectedSlotTargeting = {
-				a: 'b',
-				slots: ['va1s', 'va2s', 'va3s'],
-				bid: 'RxAxP'
-			},
-			testedProviders = [mocks.amazon, mocks.prebid, mocks.fastlane];
-
-		testedProviders.forEach(function(provider) {
-			spyOn(provider, 'wasCalled').and.returnValue(true);
-			spyOn(provider, 'getSlotParams').and.returnValue({slots: ['va1s', 'va2s', 'va3s']});
-		});
-
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
-		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
 	});
 
 });

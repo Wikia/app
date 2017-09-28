@@ -53,8 +53,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderNielsen();
 			case 'Prebid':
 				return new AnalyticsProviderPrebid();
-			case 'RubiconFastlane':
-				return new AnalyticsProviderRubiconFastlane();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
 			case 'NetzAthleten':
