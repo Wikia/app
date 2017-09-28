@@ -174,15 +174,12 @@ class CheckUserHooks {
 	 * @return bool
 	 */
 	protected static function logUserAccountCreation( User $user, $actiontext ) {
+		/** @var WebRequest $wgRequest */
 		global $wgRequest;
 
 		// Get IP
-		$ip = wfGetIP();
-		// Get XFF header
-		$xff = $wgRequest->getHeader( 'X-Forwarded-For' );
-		list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
-		// Get agent
-		$agent = $wgRequest->getHeader( 'User-Agent' );
+		$ip = $wgRequest->getIP();
+
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 		$rcRow = array(
@@ -201,9 +198,9 @@ class CheckUserHooks {
 			'cuc_timestamp'  => $dbw->timestamp( wfTimestampNow() ),
 			'cuc_ip'         => IP::sanitizeIP( $ip ),
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-			'cuc_xff'        => !$isSquidOnly ? $xff : '',
-			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
+			'cuc_xff'        => '',
+			'cuc_xff_hex'    => null,
+			'cuc_agent'      => ''
 		);
 		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 
