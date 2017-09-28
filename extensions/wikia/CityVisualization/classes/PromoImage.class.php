@@ -146,52 +146,6 @@ class PromoImage extends WikiaObject {
 		return $this;
 	}
 
-	protected function deleteImageHelper($imageName) {
-		$title = Title::newFromText($imageName, NS_FILE);
-		$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
-
-		$visualization = new CityVisualization();
-		$visualization->removeImageFromReview($this->wg->cityId, $title->getArticleId(), $this->wg->contLang->getCode());
-
-		if ($file->exists()) {
-			$file->delete('no longer needed');
-		}
-	}
-
-	protected function removalTaskHelper($imageName) {
-		$visualization = new CityVisualization();
-
-		$content_lang = $this->wg->contLang->getCode();
-
-		//create task only for languages which have corporate wiki
-		if ($visualization->isCorporateLang($content_lang)) {
-			$deletion_list = array(
-				$content_lang => array(
-					$this->wg->cityId => array($imageName)
-				)
-			);
-			Hooks::run('CreatePromoImageReviewTask', ['delete', $deletion_list]);
-		}
-	}
-
-	public function purgeImage() {
-		$this->deleteImage();
-		$this->deleteImageFromCorporate();
-		return $this;
-	}
-
-	public function deleteImageFromCorporate(){
-		if ($this->isCityIdSet()){
-			$this->removalTaskHelper($this->getPathname());
-		}
-	}
-
-	public function deleteImage() {
-		$this->deleteImageHelper($this->getPathname());
-		$this->removed = true;
-		return $this;
-	}
-
 	static protected function inferType( $fileName, &$dbName = null ) {
 		$pattern = "/^(".self::__MAIN_IMAGE_BASE_NAME.")?(".self::__ADDITIONAL_IMAGES_BASE_NAME."-(\d)?)?,?([^.]{1,})?\.?(.*)$/i";
 		$type = self::INVALID;

@@ -107,9 +107,11 @@ class ApiAccessService {
 		}
 		return $result;
 	}
+
+	/**
+	 * @deprecated
+	 */
 	protected function isCorporateWiki() {
-		global $wgEnableWikiaHomePageExt;
-		return !empty($wgEnableWikiaHomePageExt);
+		return false;
 	}
-	
 }
