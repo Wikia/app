@@ -354,7 +354,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 			},
 
 			setState: function( state ) {
-				debugger;
 				if ( this._.state == state )
 					return;
 

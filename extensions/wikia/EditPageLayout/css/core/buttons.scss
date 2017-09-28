@@ -33,6 +33,25 @@
 				@include gradient-button-hover;
 			}
 		}
+
+		.cke_button {
+			> a {
+	
+			background-color: $color-epl-button;
+			border: solid 1px $color-epl-button-border;
+			border-radius: 4px;
+			cursor: default;
+			display: inline-block;
+			float: left;
+			height: 26px;
+			margin: 0 5px;
+			width: 26px;
+
+			&:hover {
+				@include gradient-button-hover;
+			}}
+		}
+
 		.cke_button {
 
 		.cke_button_label {
@@ -54,6 +73,23 @@
 		}
 	
 
+		.cke_label {
+			display: none;
+			cursor: inherit;
+			font-size: 10px;
+			color: $color-text;
+			white-space: nowrap;
+
+			// ck reset
+			padding-top: 0;
+			padding-left: 0;
+			padding-right: 0;
+			padding-bottom: 0;
+			height: auto;
+			line-height: normal;
+			vertical-align: baseline;
+			float: none;
+		}
 
 		&.cke_button_big {
 			> a {
@@ -73,7 +109,25 @@
 				}
 			}
 		}
-	}
+	}	
+	a.cke_button_big {
+	
+		display: inline-block;
+		height: 51px;
+		margin: 0 5px;
+		position: relative;
+		width: 51px;
+		.cke_label {
+			bottom: 0;
+			display: block;
+			left: 0;
+			overflow: hidden;
+			position: absolute;
+			text-align: center;
+			width: 51px;
+			}
+		}
+		
 	//Kacper Olek
 	.cke_button_icon {
 			@include sprite-edit-page-base;
