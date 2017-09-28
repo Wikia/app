@@ -19,6 +19,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.hivi.leaderboard'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
@@ -39,6 +40,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	win,
 	hiviLeaderboard,
 	sraHelper,
+	instartLogic,
 	pageFair
 ) {
 	'use strict';
@@ -119,6 +121,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.src = 'premium';
 			} else if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
+			} else if (instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking()) {
+				slotTargetingData.src = 'rec';
+				slotTargetingData.requestSource = 'instartLogic';
 			}
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';

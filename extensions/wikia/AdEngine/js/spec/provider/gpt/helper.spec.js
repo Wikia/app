@@ -115,6 +115,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			undefined,
 			undefined,
 			mocks.sraHelper,
+			undefined,
 			mocks.pageFair
 		);
 	}

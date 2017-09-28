@@ -15,9 +15,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		slotRegistry: {
 			getScrollY: noop
 		},
-		adBlockDetection: {
-			isBlocking: noop
-		},
 		browserDetect: {
 			getOS: function () {
 				return 'BarOS';
@@ -40,7 +37,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		return modules['ext.wikia.adEngine.adInfoTrackerHelper'](
 			mocks.lookupServices,
 			mocks.slotRegistry,
-			mocks.adBlockDetection,
 			mocks.browserDetect,
 			mocks.log,
 			mocks.window
@@ -64,30 +60,24 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		return slot;
 	}
 
-	it('shouldHandleSlot be true if slot is enabled, has gptPageParams and user does not block ads', function () {
+	it('shouldHandleSlot be true if slot is enabled, has gptPageParams', function () {
 		var enabledSlots = {
-				TOP_LEADERBOARD: true,
-				TOP_RIGHT_BOXAD: true
-			};
-
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		mocks.adBlockDetection.isBlocking.and.returnValue(false);
+			TOP_LEADERBOARD: true,
+			TOP_RIGHT_BOXAD: true
+		};
 
 		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithPageParams(fakeJSONString), enabledSlots)).toBeTruthy();
 	});
 
-	it('shouldHandleSlot be false if slot is not enabled, has gptPageParams and user does not block ads', function () {
+	it('shouldHandleSlot be false if slot is not enabled, has gptPageParams', function () {
 		var enabledSlots = {
 			TOP_RIGHT_BOXAD: true
 		};
 
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		mocks.adBlockDetection.isBlocking.and.returnValue(false);
-
 		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithPageParams(fakeJSONString), enabledSlots)).toBeFalsy();
 	});
 
-	it('shouldHandleSlot be false if slot is enabled, has no gptPageParams div and user does not block ads', function () {
+	it('shouldHandleSlot be false if slot is enabled, has no gptPageParams div', function () {
 		var enabledSlots = {
 			TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true
@@ -96,34 +86,16 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		slot.container = document.createElement('div');
 		slot.name = 'TOP_LEADERBOARD';
 
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		mocks.adBlockDetection.isBlocking.and.returnValue(false);
-
 		expect(getModule().shouldHandleSlot(slot, enabledSlots)).toBeFalsy();
 	});
 
-	it('shouldHandleSlot be false if slot is enabled, has no gptPageParams and user does not block ads', function () {
+	it('shouldHandleSlot be false if slot is enabled, has no gptPageParams', function () {
 		var enabledSlots = {
 			TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true
 		};
-
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		mocks.adBlockDetection.isBlocking.and.returnValue(false);
 
 		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithPageParams(), enabledSlots)).toBeFalsy();
-	});
-
-	it('shouldHandleSlot be false if slot is enabled, has gptPageParams and user blocks ads', function () {
-		var enabledSlots = {
-			TOP_LEADERBOARD: true,
-			TOP_RIGHT_BOXAD: true
-		};
-
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		mocks.adBlockDetection.isBlocking.and.returnValue(true);
-
-		expect(getModule().shouldHandleSlot(getTopLeaderboardSlotWithPageParams(fakeJSONString), enabledSlots)).toBeFalsy();
 	});
 
 	it('prepareData correctly parses gptPageParams', function () {
