@@ -16,15 +16,15 @@
 		padding: 1px 0;
 		zoom: 1; // ie
 
-		> a {
+		
 			outline: none;
 			cursor: pointer;
 			text-decoration: none;
-		}
+		
 		&:first-child {
 			margin-left: 0;
 		}
-		&.cke_off {
+		&.cke_button_off {
 			background-color: $color-epl-hover;
 			border-bottom: 1px solid $color-page-border;
 			padding-bottom: 0;
@@ -33,14 +33,22 @@
 				background-color: mix($color-epl-hover, $color-epl-gradient-light, 75%);
 			}
 		}
-		.cke_label {
+		.cke_button_label {
+			&.cke_button__modesource_label{
 			display: inline-block;
 			font-size: 11px;
 			padding: 3px 6px;
+			}
+	
+			&.cke_button__modewysiwyg_label{
+			display: inline-block;
+			font-size: 11px;
+			padding: 3px 6px;
+			}			
 		}
 	}
 
-	.cke_separator {
+	.cke_toolbar_separator {
 		display: none;
 	}
 }
