@@ -177,7 +177,7 @@ a.cke_button_off:active
 }
 
 /* The icon which is a visual representation of the button. */
-.cke_button_icon
+/*.cke_button_icon
 {
 	cursor: inherit;
 	background-repeat: no-repeat;
@@ -187,7 +187,7 @@ a.cke_button_off:active
 	float: left;
 	display: inline-block;
 }
-
+*/
 .cke_rtl .cke_button_icon
 {
 	float: right;
@@ -200,7 +200,7 @@ a.cke_button_off:active
 
 /* The label of the button that stores the name of the feature. By default,
    labels are invisible. They can be revealed on demand though. */
-.cke_button_label
+/*.cke_button_label
 {
 	display: none;
 	padding-left: 3px;
@@ -210,7 +210,7 @@ a.cke_button_off:active
 	float: left;
 	cursor: default;
 }
-
+*/
 .cke_hc .cke_button_label
 {
 	padding: 0;
