@@ -6,7 +6,6 @@
  */
 class CityVisualization extends WikiaModel {
 	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.80';
-	const CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION = 'v1.09';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
 	const CITY_VISUALIZATION_TABLE_NAME = 'city_visualization';
@@ -17,11 +16,6 @@ class CityVisualization extends WikiaModel {
 	const PROMOTED_SLOTS = 3;
 	const PROMOTED_ARRAY_KEY = 'promoted';
 	const DEMOTED_ARRAY_KEY = 'demoted';
-
-	/**
-	 * @const String name of variable in city_variables table which enables WikiaHomePage extension
-	 */
-	const WIKIA_HOME_PAGE_WF_VAR_NAME = 'wgEnableWikiaHomePageExt';
 
 	protected $verticalMap = array(
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'lifestyle',
@@ -431,40 +425,16 @@ class CityVisualization extends WikiaModel {
 		return (($wikiFlags & WikisModel::FLAG_PROMOTED) == WikisModel::FLAG_PROMOTED);
 	}
 
+	/**
+	 * Given the language code returns ID of a corresponding corporate wiki
+	 *
+	 * @param string $langCode
+	 * @return int|false
+	 *
+	 * @deprecated use WikiaCorporateModel::getCorporateWikiIdByLang instead
+	 */
 	public function getTargetWikiId($langCode) {
-		$corporateSites = $this->getVisualizationWikisData();
-		return ( isset($corporateSites[$langCode]['wikiId']) ) ? $corporateSites[$langCode]['wikiId'] : false;
-	}
-
-	/**
-	 * @desc Returns an array of wikis with visualization
-	 * @return array
-	 */
-	private function getVisualizationWikisData() {
-		$corporateSites = $this->getCorporateSitesList();
-		return $this->getWikiaHomePageHelper()->cleanWikisDataArray($corporateSites);
-	}
-
-	/**
-	 * @desc Gets id of wgEnableWikiaHomePageExt variable and then loads and returns list of corporate sites
-	 * @return array
-	 */
-	protected function getCorporateSitesList() {
-		return WikiaDataAccess::cache(
-			wfSharedMemcKey('corporate_pages_list', self::CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION),
-			WikiaResponse::CACHE_STANDARD,
-			function() {
-				// loads list of corporate sites (sites which have $wgEnableWikiaHomePageExt WF variable set to true)
-				$wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
-
-				if (is_int($wikiFactoryVarId)) {
-					return WikiFactory::getListOfWikisWithVar($wikiFactoryVarId, 'bool', '=', true);
-				}
-				else {
-					return [];
-				}
-			}
-		);
+		return (new WikiaCorporateModel)->getCorporateWikiIdByLang($langCode);
 	}
 
 	/**

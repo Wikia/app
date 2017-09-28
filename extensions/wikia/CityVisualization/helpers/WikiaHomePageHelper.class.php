@@ -309,25 +309,4 @@ class WikiaHomePageHelper extends WikiaModel {
 			return self::REMIX_IMG_SMALL_WIDTH;
 		}
 	}
-
-	/**
-	 * @param Array $sites lists of wikis from WikiFactory::getListOfWikisWithVar()
-	 * @return array
-	 */
-	public function cleanWikisDataArray($sites) {
-		$results = array();
-
-		foreach( $sites as $wikiId => $wiki ) {
-			$results[$wiki['l']] = [
-				'wikiId' => $wikiId,
-				'url' => $wiki['u'],
-				'db' => $wiki['d'],
-				'lang' => $wiki['l'],
-				'wikiTitle' => $wiki['t'],
-			];
-		}
-
-		return $results;
-	}
-
 }
