@@ -22,10 +22,6 @@ class WikiaHtmlTitle {
 	public function __construct() {
 		$this->brandName = wfMessage( 'wikia-pagetitle-brand' );
 		$this->siteName = wfMessage( 'wikia-pagetitle-sitename' );
-
-		if ( WikiaPageType::isWikiaHomePage() ) {
-			$this->siteName = null;
-		}
 	}
 
 	/**

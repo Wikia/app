@@ -79,8 +79,6 @@ extensions/wikia/VideoHandlers/*		@Wikia/sus
 extensions/wikia/Wall/*		@Wikia/sus 
 extensions/wikia/WallNotifications/*		@Wikia/sus 
 extensions/wikia/WikiFactory/*		@Wikia/sus 
-extensions/wikia/WikiaHomePage/*		@Wikia/sus 
-extensions/wikia/WikiaHubsV3/*		@Wikia/sus 
 # staff tools
 extensions/AbuseFilter/*		@Wikia/sus 
 extensions/wikia/CloseMyAccount/*		@Wikia/sus 

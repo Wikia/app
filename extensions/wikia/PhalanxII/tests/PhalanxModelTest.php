@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Service\Gateway\KubernetesUrlProvider;
-
 class PhalanxModelTest extends WikiaBaseTest {
 	const VALID_USERNAME = 'WikiaTest';
 	const VALID_EMAIL = 'moli@wikia-inc.com';
@@ -58,12 +56,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 * @return PhalanxService|PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function setUpService( $block ) {
-		$urlProvider = $this->getMockBuilder( KubernetesUrlProvider::class )
-			->setConstructorArgs([ WIKIA_ENV_DEV, 'sjc' ])
-			->getMock();
 		$phalanxServiceMock =
 			$this->getMockBuilder( PhalanxService::class )
-				->setConstructorArgs( [ $urlProvider ] )
 				->setMethods( [ 'match' ] )
 				->getMock();
 

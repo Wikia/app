@@ -2361,7 +2361,7 @@ $messages['ja'] = array(
 **#category1#
 **#category2#
 *Project:Community Portal|コミュニティ
-**Blog:Recent_postsl|最近の投稿',
+**Blog:Recent_posts|最近の投稿',
 	'oasis-related-video-by-5min' => '提供: 5min Video',
 	'oasis-editpage-readonlywarning' => '<h2>申し訳ありません。</h2>
 <p>現在、このページは編集できなくなっています。間もなく復旧予定ですので、しばらくお待ちください。原因:<br /><em>$1</em></p>
