@@ -123,7 +123,7 @@ class ListusersData {
 			'O'  . $orderby
 		);
 
-		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
+		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata-v2", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
 		if ( empty($cached) ) {
