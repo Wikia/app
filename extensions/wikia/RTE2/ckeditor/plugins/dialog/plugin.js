@@ -141,12 +141,12 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		' role="dialog"' +
 		' aria-labelledby="cke_dialog_title_{id}"' +
 		'>' +
-		'<table class="cke_dialog ' + CKEDITOR.env.cssClass + ' cke_{langDir}"' +
+		'<table class="cke_dialog modalWrapper ' + CKEDITOR.env.cssClass + ' cke_{langDir}"' +
 			' style="position:absolute" role="presentation">' +
 			'<tr><td role="presentation">' +
 			'<div class="cke_dialog_body" role="presentation">' +
 				'<div id="cke_dialog_title_{id}" class="cke_dialog_title" role="presentation"></div>' +
-				'<a id="cke_dialog_close_button_{id}" class="cke_dialog_close_button" href="javascript:void(0)" title="{closeTitle}" role="button"><span class="cke_label">X</span></a>' +
+				'<a id="cke_dialog_close_button_{id}" class="cke_dialog_close_button close wikia-chiclet-button" href="javascript:void(0)" title="{closeTitle}" role="button"><img src = "' + window.stylepath + '/oasis/images/icon_close.png"></a>' +
 				'<div id="cke_dialog_tabs_{id}" class="cke_dialog_tabs" role="tablist"></div>' +
 				'<table class="cke_dialog_contents" role="presentation">' +
 				'<tr>' +
