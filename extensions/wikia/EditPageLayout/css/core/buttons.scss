@@ -6,13 +6,13 @@
 				border-right-color: $color-epl-button-border;
 	}
 	
-		 a.cke_disabled {
-			> a {
+		 a.cke_button_disabled {
+			
 				opacity: .2;
 				zoom: 1; /* IE fix to make opacity work */
-			}
+			
 		}
-		 a.cke_hidden {
+		 a.cke_button_hidden {
 			display: none;
 		}
 	
@@ -35,7 +35,7 @@
 		}
 		.cke_button {
 
-		.cke_label {
+		.cke_button_label {
 			display: none;
 			cursor: inherit;
 			font-size: 10px;
@@ -199,13 +199,15 @@
 
 	// Buttons with label (Signature, Underline, Highlight)
 	.cke_label_button {
-		> a {
+		&.cke_button_signature {
 			width: auto;
 		}
-		.cke_icon {
+	}
+	.cke_label_button {
+		.cke_button_icon {
 			float: left;
 		}
-		.cke_label {
+		.cke_button_label {
 			display: inline;
 			line-height: 26px;
 			padding: 0 4px;
