@@ -95,7 +95,7 @@ class CityVisualization extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	private function generateBatches($corpWikiId, $wikis) {
+	public function generateBatches($corpWikiId, $wikis) {
 		wfProfileIn(__METHOD__);
 
 		$verticalMap = $this->getVerticalMap();
@@ -489,7 +489,7 @@ class CityVisualization extends WikiaModel {
 		return $numberOfSlots;
 	}
 
-	private function getSlotsForVerticals($corpWikiId) {
+	public function getSlotsForVerticals($corpWikiId) {
 		$slots = [];
 
 		foreach($this->verticalMap as $verticalId => $verticalName) {
