@@ -159,12 +159,10 @@ class PromoImage extends WikiaObject {
 	}
 
 	protected function removalTaskHelper($imageName) {
-		$visualization = new CityVisualization();
-
 		$content_lang = $this->wg->contLang->getCode();
 
 		//create task only for languages which have corporate wiki
-		if ($visualization->isCorporateLang($content_lang)) {
+		if ((new WikiaCorporateModel)->isCorporateLang($content_lang)) {
 			$deletion_list = array(
 				$content_lang => array(
 					$this->wg->cityId => array($imageName)

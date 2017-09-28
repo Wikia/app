@@ -25,4 +25,14 @@ class WikiaCorporateModel extends WikiaModel {
 
 		return self::LANG_TO_WIKI_ID[$lang];
 	}
+
+	/**
+	 * Return true when there is active Corporate Wiki in that language - like www.wikia.com or de.wikia.com
+	 *
+	 * @param string $langCode
+	 * @return bool
+	 */
+	public function isCorporateLang($langCode) {
+		return isset(self::LANG_TO_WIKI_ID[$langCode]);
+	}
 }
