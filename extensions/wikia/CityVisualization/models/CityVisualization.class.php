@@ -426,18 +426,6 @@ class CityVisualization extends WikiaModel {
 	}
 
 	/**
-	 * Given the language code returns ID of a corresponding corporate wiki
-	 *
-	 * @param string $langCode
-	 * @return int|false
-	 *
-	 * @deprecated use WikiaCorporateModel::getCorporateWikiIdByLang instead
-	 */
-	public function getTargetWikiId($langCode) {
-		return (new WikiaCorporateModel)->getCorporateWikiIdByLang($langCode);
-	}
-
-	/**
 	 * @return Array An array where the keys are three main hubs ids (integers) and values are string representation of English names
 	 */
 	private function getVerticalMap() {
