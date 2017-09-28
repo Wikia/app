@@ -81,7 +81,7 @@ class DesignSystemSharedLinks {
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
 			'media-kit' => 'http://www.wikia.com/mediakit',
 			'media-kit-contact' => null,
-			'app-store' => 'https://itunes.apple.com/developer/wikia-inc./id422467077',
+			'app-store' => 'https://itunes.apple.com/us/app/fandom-videos-news-reviews/id1230063803?ls=1&mt=8',
 			'google-play' => 'https://play.google.com/store/apps/details?id=com.fandom.app',
 			'fandom-logo' => 'http://fandom.wikia.com/',
 			'games' => 'http://fandom.wikia.com/topics/games',
