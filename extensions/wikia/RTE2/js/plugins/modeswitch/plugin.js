@@ -38,7 +38,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	},
 
 	modeSwitch: function(ev) {
-		debugger;
 		var editor = ev.editor,
 			wikiaEditor = WikiaEditor.getInstance(editor.name),
 			content = editor.getData();
@@ -73,7 +72,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 					editor.setMode('source');
 					editor.setData(data.wikitext, function() {
-						debugger;
 						
 						//Kacper olek Temporary fix(?)
 						//editor.getSelection().removeAllRanges();

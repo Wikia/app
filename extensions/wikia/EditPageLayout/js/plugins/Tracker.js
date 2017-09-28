@@ -91,7 +91,6 @@
 		},
 
 		onCkPanelShow: function( event ) {
-			debugger;
 			var label = event.data.me.label.toLowerCase();
 
 			this.track({

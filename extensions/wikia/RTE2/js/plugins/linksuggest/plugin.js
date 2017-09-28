@@ -3,7 +3,6 @@ CKEDITOR.plugins.add('rte-linksuggest', {
 		if (typeof jQuery.fn.linksuggest === 'function') {
 			editor.on('mode', function(ev) {
 				if (editor.mode === 'source') {
-					debugger;
 					$(editor.textarea.$).linksuggest();
 				}
 			});

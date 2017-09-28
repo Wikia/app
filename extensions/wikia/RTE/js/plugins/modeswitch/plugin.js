@@ -38,7 +38,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	},
 
 	modeSwitch: function(ev) {
-		debugger;
 		var editor = ev.editor,
 			wikiaEditor = WikiaEditor.getInstance(editor.name),
 			content = editor.getData();

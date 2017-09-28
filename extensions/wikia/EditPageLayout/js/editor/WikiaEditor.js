@@ -676,7 +676,7 @@
 		},
 
 		renderToolbars: function() {
-				
+			debugger;	
 			// Find all toolbars
 			var spaces = this.editor.getSpaces();
 			var toolbars = this.toolbars = {};
@@ -974,7 +974,6 @@
 		// in WYSIWYG mode, this is the iframe's body element
 		// in source mode, this is CKE generated textarea
 		getEditbox: function() {
-			debugger;
 			return $(this.editor.ck.mode == 'wysiwyg' ?
 				this.editor.ck.document.getBody().$ : this.editor.ck.container.$);
 		},
