@@ -261,76 +261,8 @@ class CityVisualization extends WikiaModel {
 		return $this->getVisualizationElementMemcKey('wiki_data_special_promote', $wikiId, $langCode);
 	}
 
-	public function getWikiImageNamesCacheKey($wikiId, $langCode, $filter) {
-		return $this->getVisualizationElementMemcKey("wiki_data_visualization_image_names:filter{$filter}", $wikiId, $langCode);
-	}
-
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
 		return wfMemcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
-	}
-
-	protected function getWikiImagesConditions($wikiId, $langCode, $filter) {
-		$conditions = array();
-
-		$conditions ['city_id'] = $wikiId;
-		$conditions ['city_lang_code'] = $langCode;
-
-		switch ($filter) {
-			case ImageReviewStatuses::STATE_APPROVED:
-				$conditions ['image_review_status'] = ImageReviewStatuses::STATE_APPROVED;
-				break;
-			case ImageReviewStatuses::STATE_UNREVIEWED:
-				$conditions ['image_review_status'] = ImageReviewStatuses::STATE_UNREVIEWED;
-				break;
-			default:
-				break;
-		}
-		return $conditions;
-	}
-
-	private function notCachedGetWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
-		wfProfileIn(__METHOD__);
-
-		$wikiImageNames = array();
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$conditions = $this->getWikiImagesConditions($wikiId, $langCode, $filter);
-
-		$result = $db->select(
-			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
-			array(
-				'image_name',
-				'image_index'
-			),
-			$conditions,
-			__METHOD__
-		);
-
-		while ($row = $result->fetchObject()) {
-			$parsed = WikiImageRowHelper::parseWikiImageRow($row);
-			$promoImage = PromoImage::fromPathname($parsed->name);
-			//skip invalid promo image names
-			if ($promoImage->isValid()) {
-				$wikiImageNames[$parsed->index] = $promoImage->getPathname();
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return $wikiImageNames;
-	}
-
-	public function getWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
-		wfProfileIn(__METHOD__);
-
-		$memKey = $this->getWikiImageNamesCacheKey($wikiId, $langCode, $filter);
-		$wikiImageNames = $this->wg->Memc->get($memKey);
-
-		if (empty($wikiImageNames)) {
-			$wikiImageNames = $this->notCachedGetWikiImageNames($wikiId, $langCode, $filter);
-			$this->wg->Memc->set($memKey, $wikiImageNames, self::MEMC_IMAGE_NAMES_EXPIRATION_TIME);
-		}
-		wfProfileOut(__METHOD__);
-
-		return $wikiImageNames;
 	}
 
 	private static function isOfficialWiki($wikiFlags) {
