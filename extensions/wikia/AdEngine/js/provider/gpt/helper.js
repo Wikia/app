@@ -121,7 +121,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.src = 'premium';
 			} else if (adShouldBeRecovered) {
 				slotTargetingData.src = 'rec';
-			} else if (instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking()) {
+			}
+
+			if (instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking()) {
 				slotTargetingData.src = 'rec';
 				slotTargetingData.requestSource = 'instartLogic';
 			}
