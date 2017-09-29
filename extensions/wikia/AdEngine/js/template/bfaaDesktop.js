@@ -67,10 +67,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			updateNavBar(slotContainer.offsetHeight);
 		}, 100));
 
-		if (win.WikiaBar) {
-			win.WikiaBar.hideContainer();
-		}
-
 		if (spotlightFooter) {
 			spotlightFooter.parentNode.style.display = 'none';
 		}

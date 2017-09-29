@@ -9,7 +9,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_pr3b1d_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_TOP = 'adengine2_top_js';
 
 	/**
@@ -76,10 +75,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutAppNexusTagsCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
@@ -188,10 +183,6 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderPrebid::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_PREBID;
-		}
-
-		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
 		}
 
 		return true;
