@@ -84,7 +84,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
+			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries) &&
+			!browserDetect.isEdge();
 		isRecoveryServiceAlreadyEnabled |= context.opts.pageFairRecovery;
 
 		// SourcePoint recovery
