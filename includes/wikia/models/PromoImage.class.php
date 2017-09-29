@@ -93,8 +93,7 @@ class PromoImage extends WikiaObject {
 			$cityId =  $this->getCityId();
 		}
 
-		$f = GlobalFile::newFromText($this->getPathname(), $cityId);
-		return $f;
+		return GlobalFile::newFromText($this->getPathname(), $cityId);
 	}
 
 	public function corporateFileByLang($lang){
@@ -109,7 +108,8 @@ class PromoImage extends WikiaObject {
 		if (preg_match($pattern, $fileName, $matches)){
 			if (!empty($matches[1])) {
 				$type = self::MAIN;
-			} elseif (!empty($matches[2]) && !empty($matches[3])) { // matches additional images and has a number designation
+			} elseif (!empty($matches[2]) && !empty($matches[3])) {
+				// matches additional images and has a number designation
 				$val = intval($matches[3]);
 				if ($val >= self::ADDITIONAL_START && $val <= self::ADDITIONAL_END){
 					$type = $val;
