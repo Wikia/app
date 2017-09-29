@@ -139,6 +139,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				video.addEventListener('wikiaAdsManagerLoaded', function () {
 					viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 				});
+				video.addEventListener('wikiaEmptyAd', function () {
+					viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+				});
 
 				return video;
 			});
