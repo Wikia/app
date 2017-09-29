@@ -154,10 +154,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				video.play(videoSize.width, videoSize.height);
 			}
 
-			win.addEventListener('resize', throttle(function () {
+			function resizeVideo() {
 				var videoSize = getVideoSize(videoContainer, params, videoSettings);
 				video.resize(videoSize.width, videoSize.height);
-			}));
+			}
 
 			if (params.videoTriggerElement) {
 				params.videoTriggerElement.addEventListener('click', playVideo);
@@ -167,10 +167,8 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				});
 			}
 
-			video.addEventListener('play', function() {
-				var videoSize = getVideoSize(videoContainer, params, videoSettings);
-				video.resize(videoSize.width, videoSize.height);
-			});
+			win.addEventListener('resize', throttle(resizeVideo));
+			video.addEventListener('play', resizeVideo);
 
 			return video;
 		});
