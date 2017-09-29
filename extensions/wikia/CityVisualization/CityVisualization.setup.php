@@ -19,6 +19,3 @@ $wgExtensionCredits['other'][] = array(
 
 // getdata helpers
 $wgAutoloadClasses['PromoImage'] = __DIR__ . '/classes/PromoImage.class.php';
-
-//classes
-$wgAutoloadClasses['WikiaHomePageHelper'] =  __DIR__ . '/helpers/WikiaHomePageHelper.class.php';
