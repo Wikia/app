@@ -269,10 +269,6 @@ class CityVisualization extends WikiaModel {
 		return wfMemcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
 	}
 
-	public function getCollectionCacheKey($collectionId) {
-		return wfSharedMemcKey('single_collection_wikis_data', self::CITY_VISUALIZATION_MEMC_VERSION, $collectionId, __METHOD__);
-	}
-
 	/**
 	 * Get wiki data for Special:Promote
 	 * @param integer $wikiId
