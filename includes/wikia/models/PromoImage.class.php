@@ -4,9 +4,9 @@
  * Helper class for handling images used for promotion
  */
 class PromoImage extends WikiaObject {
-	const __MAIN_IMAGE_BASE_NAME = 'Wikia-Visualization-Main';
-	const __ADDITIONAL_IMAGES_BASE_NAME = 'Wikia-Visualization-Add';
-	const __IMAGES_EXT = '.png';
+	const MAIN_IMAGE_BASE_NAME = 'Wikia-Visualization-Main';
+	const ADDITIONAL_IMAGES_BASE_NAME = 'Wikia-Visualization-Add';
+	const IMAGES_EXT = '.png';
 
 	const INVALID = -1;
 	const MAIN = 0;
@@ -70,15 +70,15 @@ class PromoImage extends WikiaObject {
 			$path = null;
 		} else {
 			if ($this->isType(self::MAIN)){
-				$path = self::__MAIN_IMAGE_BASE_NAME;
+				$path = self::MAIN_IMAGE_BASE_NAME;
 			} else {
-				$path = self::__ADDITIONAL_IMAGES_BASE_NAME . "-" . $this->type;
+				$path = self::ADDITIONAL_IMAGES_BASE_NAME . "-" . $this->type;
 			}
 			if ($withDbName && $this->isCityIdSet()) {
 				$path .= ',' . $this->getDBName();
 			}
 			if ($withExtension) {
-				$path .= self::__IMAGES_EXT;
+				$path .= self::IMAGES_EXT;
 			}
 		}
 		return $path;
@@ -103,7 +103,7 @@ class PromoImage extends WikiaObject {
 	}
 
 	static private function inferType( $fileName, &$dbName = null ) {
-		$pattern = "/^(".self::__MAIN_IMAGE_BASE_NAME.")?(".self::__ADDITIONAL_IMAGES_BASE_NAME."-(\d)?)?,?([^.]{1,})?\.?(.*)$/i";
+		$pattern = "/^(".self::MAIN_IMAGE_BASE_NAME.")?(".self::ADDITIONAL_IMAGES_BASE_NAME."-(\d)?)?,?([^.]{1,})?\.?(.*)$/i";
 		$type = self::INVALID;
 
 		if (preg_match($pattern, $fileName, $matches)){
