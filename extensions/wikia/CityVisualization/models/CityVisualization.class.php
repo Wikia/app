@@ -261,20 +261,12 @@ class CityVisualization extends WikiaModel {
 		return $this->getVisualizationElementMemcKey('wiki_data_special_promote', $wikiId, $langCode);
 	}
 
-	public function getWikiDataCacheKey($corporateWikiId, $wikiId, $langCode) {
-		return wfSharedMemcKey('single_wiki_data_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $wikiId, $langCode, __METHOD__);
-	}
-
 	public function getWikiImageNamesCacheKey($wikiId, $langCode, $filter) {
 		return $this->getVisualizationElementMemcKey("wiki_data_visualization_image_names:filter{$filter}", $wikiId, $langCode);
 	}
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
 		return wfMemcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
-	}
-
-	public function getCollectionCacheKey($collectionId) {
-		return wfSharedMemcKey('single_collection_wikis_data', self::CITY_VISUALIZATION_MEMC_VERSION, $collectionId, __METHOD__);
 	}
 
 	/**
@@ -284,16 +276,6 @@ class CityVisualization extends WikiaModel {
 	 */
 	public function getWikiDataForPromote($wikiId, $langCode) {
 		$helper = new WikiGetDataForPromoteHelper();
-		return $this->getWikiData($wikiId, $langCode, $helper);
-	}
-
-	/**
-	 * Get wiki data for Wikia Visualization
-	 * @param integer $wikiId
-	 * @return array $wikiData
-	 */
-	public function getWikiDataForVisualization($wikiId, $langCode) {
-		$helper = new WikiGetDataForVisualizationHelper();
 		return $this->getWikiData($wikiId, $langCode, $helper);
 	}
 
