@@ -25,9 +25,6 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['CityVisualization'] = $dir . 'i18n/CityVisualization.i18n.php';
 
 // getdata helpers
-$wgAutoloadClasses['WikiListConditioner'] = $dir . 'classes/WikiListConditioner.class.php';
-$wgAutoloadClasses['WikiListConditionerForVertical'] = $dir . 'classes/WikiListConditionerForVertical.class.php';
-$wgAutoloadClasses['WikiListConditionerForCollection'] = $dir . 'classes/WikiListConditionerForCollection.class.php';
 $wgAutoloadClasses['PromoImage'] = $dir . '/classes/PromoImage.class.php';
 
 //classes
