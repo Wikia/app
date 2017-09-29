@@ -105,8 +105,8 @@ class CreateWikiChecks {
 			$message = wfMessage( 'autocreatewiki-violate-policy' );
 		} elseif ( !in_array( 'staff', $app->wg->user->getGroups() ) && (static::checkBadWords( $sName, "domain" ) === false) ) {
 			#-- invalid name (bad words)
-			$message = wfMessage('autocreatewiki-violate-policy');
-		} elseif ( !array_key_exists($sLang, WikiaLanguage::getRequestSupportedLanguages() ) ) {
+			$message = wfMessage( 'autocreatewiki-violate-policy' );
+		} elseif ( !array_key_exists( $sLang, WikiaLanguage::getRequestSupportedLanguages() ) ) {
 			#-- invalid language code, most likely due to some frontend hacking
 			$message = wfMessage( 'autocreatewiki-violate-policy' );
 		} else {
