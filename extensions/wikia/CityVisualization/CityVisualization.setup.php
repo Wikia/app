@@ -32,4 +32,3 @@ $wgAutoloadClasses['PromoImage'] = $dir . '/classes/PromoImage.class.php';
 
 //classes
 $wgAutoloadClasses['WikiaHomePageHelper'] =  $dir . '/helpers/WikiaHomePageHelper.class.php';
-$wgAutoloadClasses['CityVisualization'] =  $dir . '/models/CityVisualization.class.php';
