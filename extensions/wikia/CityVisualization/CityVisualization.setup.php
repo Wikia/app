@@ -17,5 +17,3 @@ $wgExtensionCredits['other'][] = array(
 	'version'		  => 1.0
 );
 
-// getdata helpers
-$wgAutoloadClasses['PromoImage'] = __DIR__ . '/classes/PromoImage.class.php';
