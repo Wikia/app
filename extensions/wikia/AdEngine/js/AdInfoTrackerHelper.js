@@ -61,9 +61,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'bidder_won_price': bidderWon ? realSlotPrices[bidderWon] : '',
 			'bidder_1': transformBidderPrice('indexExchange', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_2': transformBidderPrice('appnexus', realSlotPrices, slotPricesIgnoringTimeout),
-			'bidder_3': transformBidderPrice('fastlane', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_4': transformBidderPrice('rubicon', realSlotPrices, slotPricesIgnoringTimeout),
-			'bidder_5': transformBidderPrice('fastlane_private', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_6': transformBidderPrice('aol', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_7': transformBidderPrice('audienceNetwork', realSlotPrices, slotPricesIgnoringTimeout),
 			'bidder_8': transformBidderPrice('veles', realSlotPrices, slotPricesIgnoringTimeout),
@@ -113,20 +111,9 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			}
 		});
 
-		// In case of a tie in prebid bidders prebid.js picks the fastest bidder.
-		// In case of a tie with prebid and rubiconFastlane we promote prebid
+		// In case of a tie in prebid bidders prebid.js picks the fastest bidder
 		if (slotParams.hb_bidder && highestPriceBidders.indexOf(slotParams.hb_bidder) >= 0) {
 			return slotParams.hb_bidder;
-		}
-
-		if (slotParams.rpfl_7450) {
-			if (highestPriceBidders.indexOf('fastlane') >= 0) {
-				return 'fastlane';
-			}
-
-			if (highestPriceBidders.indexOf('fastlane_private') >= 0) {
-				return 'fastlane_private';
-			}
 		}
 
 		return '';

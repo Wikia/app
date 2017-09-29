@@ -12,7 +12,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.remnantGpt',
-	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle'
 ], function (
 	// regular dependencies
@@ -27,7 +26,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderDirectGpt,
 	adProviderEvolve2,
 	adProviderRemnantGpt,
-	adProviderRubiconFastlane,
 	adProviderTurtle
 ) {
 	'use strict';
@@ -37,7 +35,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
 		forcedProviders = {
 			evolve2:  [adProviderEvolve2],
-			rpfl:     [adProviderRubiconFastlane],
 			turtle:   [adProviderTurtle]
 		};
 
@@ -78,11 +75,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		// Second provider: Remnant GPT
 		if (gptEnabled) {
 			providerList.push(adProviderRemnantGpt);
-		}
-
-		// Last resort provider: RubiconFastlane
-		if (context.providers.rubiconFastlane && adProviderRubiconFastlane.canHandleSlot(slotName)) {
-			providerList.push(adProviderRubiconFastlane);
 		}
 
 		return providerList;
