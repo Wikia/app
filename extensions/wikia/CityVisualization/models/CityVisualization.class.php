@@ -261,10 +261,6 @@ class CityVisualization extends WikiaModel {
 		return $this->getVisualizationElementMemcKey('wiki_data_special_promote', $wikiId, $langCode);
 	}
 
-	public function getWikiDataCacheKey($corporateWikiId, $wikiId, $langCode) {
-		return wfSharedMemcKey('single_wiki_data_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $wikiId, $langCode, __METHOD__);
-	}
-
 	public function getWikiImageNamesCacheKey($wikiId, $langCode, $filter) {
 		return $this->getVisualizationElementMemcKey("wiki_data_visualization_image_names:filter{$filter}", $wikiId, $langCode);
 	}
@@ -284,16 +280,6 @@ class CityVisualization extends WikiaModel {
 	 */
 	public function getWikiDataForPromote($wikiId, $langCode) {
 		$helper = new WikiGetDataForPromoteHelper();
-		return $this->getWikiData($wikiId, $langCode, $helper);
-	}
-
-	/**
-	 * Get wiki data for Wikia Visualization
-	 * @param integer $wikiId
-	 * @return array $wikiData
-	 */
-	public function getWikiDataForVisualization($wikiId, $langCode) {
-		$helper = new WikiGetDataForVisualizationHelper();
 		return $this->getWikiData($wikiId, $langCode, $helper);
 	}
 
