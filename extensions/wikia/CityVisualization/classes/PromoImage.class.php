@@ -2,10 +2,7 @@
 
 /**
  * Helper class for handling images used for promotion
- *
- *
  */
-
 class PromoImage extends WikiaObject {
 	const __MAIN_IMAGE_BASE_NAME = 'Wikia-Visualization-Main';
 	const __ADDITIONAL_IMAGES_BASE_NAME = 'Wikia-Visualization-Add';
@@ -16,9 +13,7 @@ class PromoImage extends WikiaObject {
 	const ADDITIONAL_START = 1;
 	const ADDITIONAL_END = 9;
 
-	static public function listAllAdditionalTypes() {
-		return range(self::ADDITIONAL_START, self::ADDITIONAL_END);
-	}
+	private $dbName, $cityId, $type, $fileChanged, $removed;
 
 	static public function fromPathname($pathString){
 		$type = self::inferType($pathString, $dbName);
@@ -34,39 +29,18 @@ class PromoImage extends WikiaObject {
 		$this->removed = false;
 	}
 
-	public function isType($type){
+	private function isType($type){
 		return $this->type === $type;
 	}
 
-	public function isAdditional(){
-		return in_array($this->type, self::listAllAdditionalTypes());
-	}
-
-	public function isValid(){
-		return !$this->isType(self::INVALID) and $this->isCityIdSet();
-	}
-	public function wasRemoved(){
-		return $this->removed;
-	}
-
-	public function getType(){
-		return $this->type;
-	}
-
-	public function setDBName($dbName) {
-		$this->dbName = $dbName;
-		$this->city = null;
-		return $this;
-	}
-
-	public function getDBName(){
+	private function getDBName(){
 		if (empty($this->dbName) and !empty($this->cityId)) {
 			$this->dbName = WikiFactory::IDtoDB($this->cityId);
 		}
 		return $this->dbName;
 	}
 
-	public function isCityIdSet(){
+	private function isCityIdSet(){
 		return (!empty($this->dbName) or !empty($this->cityId));
 	}
 
@@ -76,7 +50,7 @@ class PromoImage extends WikiaObject {
 		return $this;
 	}
 
-	public function getCityId(){
+	private function getCityId(){
 		if (empty($this->cityId) and !empty($this->dbName)){
 			$this->cityId = WikiFactory::DBtoID($this->dbName);
 		}
@@ -91,7 +65,7 @@ class PromoImage extends WikiaObject {
 		return $this;
 	}
 
-	protected function pathnameHelper($withDbName = true, $withExtension = true){
+	private function pathnameHelper($withDbName = true, $withExtension = true){
 		if ($this->isType(self::INVALID)){
 			$path = null;
 		} else {
@@ -128,25 +102,7 @@ class PromoImage extends WikiaObject {
 		return GlobalFile::newFromText($this->getPathname(), $wiki_id);
 	}
 
-	public function isFileChanged(){
-		return !empty($this->fileChanged);
-	}
-
-	public function processUploadedFile($srcFileName) {
-		if ($this->isValid()){ // do not upload invalid filenames
-			$this->fileChanged = true;
-			$dst_file_title = Title::newFromText($this->getPathname(), NS_FILE);
-
-			$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($srcFileName);
-			$file = new LocalFile($dst_file_title, RepoGroup::singleton()->getLocalRepo());
-
-			$file->upload($temp_file->getPath(), '', '');
-			$temp_file->remove();
-		}
-		return $this;
-	}
-
-	static protected function inferType( $fileName, &$dbName = null ) {
+	static private function inferType( $fileName, &$dbName = null ) {
 		$pattern = "/^(".self::__MAIN_IMAGE_BASE_NAME.")?(".self::__ADDITIONAL_IMAGES_BASE_NAME."-(\d)?)?,?([^.]{1,})?\.?(.*)$/i";
 		$type = self::INVALID;
 
