@@ -123,7 +123,7 @@ class MercuryApi {
 		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
 		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgEnableFandomAppSmartBanner;
 
-		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName('wgEnableFandomAppSmartBanner', 177);
+		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
