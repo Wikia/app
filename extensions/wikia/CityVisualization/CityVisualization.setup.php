@@ -29,8 +29,6 @@ $wgExtensionMessagesFiles['CityVisualization'] = $dir . 'i18n/CityVisualization.
 $wgAutoloadClasses['WikiImageRowHelper'] = $dir . 'classes/WikiImageRowHelper.class.php';
 
 // getdata helpers
-$wgAutoloadClasses['WikiGetDataHelper'] = $dir . 'classes/WikiGetDataHelper.class.php';
-$wgAutoloadClasses['WikiGetDataForPromoteHelper'] = $dir . 'classes/WikiGetDataForPromoteHelper.class.php';
 $wgAutoloadClasses['WikiDataGetter'] = $dir . 'classes/WikiDataGetter.class.php';
 $wgAutoloadClasses['WikiListConditioner'] = $dir . 'classes/WikiListConditioner.class.php';
 $wgAutoloadClasses['WikiListConditionerForVertical'] = $dir . 'classes/WikiListConditionerForVertical.class.php';
