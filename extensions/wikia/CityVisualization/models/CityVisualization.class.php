@@ -6,8 +6,5 @@
  */
 class CityVisualization extends WikiaModel {
 
-	const PROMOTED_SLOTS = 3;
-	const PROMOTED_ARRAY_KEY = 'promoted';
-	const DEMOTED_ARRAY_KEY = 'demoted';
 
 }

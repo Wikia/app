@@ -10,12 +10,12 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 			->will($this->returnValue('image.jpg'));
 
 		$batches = [
-			CityVisualization::PROMOTED_ARRAY_KEY => [],
-			CityVisualization::DEMOTED_ARRAY_KEY => []
+			WikiaHomePageHelper::PROMOTED_ARRAY_KEY => [],
+			WikiaHomePageHelper::DEMOTED_ARRAY_KEY => []
 		];
 
 		for ($i = 0; $i < 3; $i++) {
-			$batches[CityVisualization::PROMOTED_ARRAY_KEY][] = [
+			$batches[WikiaHomePageHelper::PROMOTED_ARRAY_KEY][] = [
 				'wiki_name' => 'promoted',
 				'wikiurl' => 'promoted_url',
 				'main_image' => 'image'
@@ -23,7 +23,7 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 		}
 
 		for ($i = 0; $i < 14; $i++) {
-			$batches[CityVisualization::DEMOTED_ARRAY_KEY][] = [
+			$batches[WikiaHomePageHelper::DEMOTED_ARRAY_KEY][] = [
 				'wiki_name' => 'normal',
 				'wikiurl' => 'normal_url',
 				'main_image' => 'image'
@@ -54,12 +54,12 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 			->will($this->returnValue('image.jpg'));
 
 		$batches = [
-			CityVisualization::PROMOTED_ARRAY_KEY => [],
-			CityVisualization::DEMOTED_ARRAY_KEY => []
+			WikiaHomePageHelper::PROMOTED_ARRAY_KEY => [],
+			WikiaHomePageHelper::DEMOTED_ARRAY_KEY => []
 		];
 
 		for ($i = 0; $i < 17; $i++) {
-			$batches[CityVisualization::DEMOTED_ARRAY_KEY][] = [
+			$batches[WikiaHomePageHelper::DEMOTED_ARRAY_KEY][] = [
 				'wiki_name' => 'normal',
 				'wikiurl' => 'normal_url',
 				'main_image' => 'image'
@@ -86,12 +86,12 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 			->will($this->returnValue('image.jpg'));
 
 		$batches = [
-			CityVisualization::PROMOTED_ARRAY_KEY => [],
-			CityVisualization::DEMOTED_ARRAY_KEY => []
+			WikiaHomePageHelper::PROMOTED_ARRAY_KEY => [],
+			WikiaHomePageHelper::DEMOTED_ARRAY_KEY => []
 		];
 
 		for ($i = 0; $i < 1; $i++) {
-			$batches[CityVisualization::PROMOTED_ARRAY_KEY][] = [
+			$batches[WikiaHomePageHelper::PROMOTED_ARRAY_KEY][] = [
 				'wiki_name' => 'promoted',
 				'wikiurl' => 'promoted_url',
 				'main_image' => 'image'
@@ -99,7 +99,7 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 		}
 
 		for ($i = 0; $i < 16; $i++) {
-			$batches[CityVisualization::DEMOTED_ARRAY_KEY][] = [
+			$batches[WikiaHomePageHelper::DEMOTED_ARRAY_KEY][] = [
 				'wiki_name' => 'normal',
 				'wikiurl' => 'normal_url',
 				'main_image' => 'image'

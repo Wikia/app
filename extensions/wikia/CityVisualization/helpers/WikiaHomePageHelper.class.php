@@ -55,6 +55,10 @@ class WikiaHomePageHelper extends WikiaModel {
 	const REMIX_GRID_IMG_BIG_WIDTH = 330;
 	const REMIX_GRID_IMG_BIG_HEIGHT = 320;
 
+	// moved from CityVisualization
+	const PROMOTED_ARRAY_KEY = 'promoted';
+	const DEMOTED_ARRAY_KEY = 'demoted';
+
 	protected function getImageUrl($imageName, $requestedWidth, $requestedHeight) {
 		wfProfileIn(__METHOD__);
 		$imageUrl = '';
@@ -145,18 +149,18 @@ class WikiaHomePageHelper extends WikiaModel {
 				self::SLOTS_SMALL_ARRAY_KEY => array()
 			);
 
-			if (!empty($batch[CityVisualization::PROMOTED_ARRAY_KEY])) {
+			if (!empty($batch[self::PROMOTED_ARRAY_KEY])) {
 				//if there are any promoted wikis they should go firstly to big&medium slots
-				$promotedBatch = $batch[CityVisualization::PROMOTED_ARRAY_KEY];
+				$promotedBatch = $batch[self::PROMOTED_ARRAY_KEY];
 			} else {
 				$promotedBatch = [];
 			}
 
 
-			if (empty($batch[CityVisualization::DEMOTED_ARRAY_KEY])) {
+			if (empty($batch[self::DEMOTED_ARRAY_KEY])) {
 				continue;
 			} else {
-				shuffle($batch[CityVisualization::DEMOTED_ARRAY_KEY]);
+				shuffle($batch[self::DEMOTED_ARRAY_KEY]);
 			}
 
 			$biggerSlotsWikis = array_slice($promotedBatch, 0, self::SLOTS_BIG + self::SLOTS_MEDIUM);
@@ -165,7 +169,7 @@ class WikiaHomePageHelper extends WikiaModel {
 				$biggerSlotsWikis = array_merge(
 					$biggerSlotsWikis,
 					array_splice(
-						$batch[CityVisualization::DEMOTED_ARRAY_KEY],
+						$batch[self::DEMOTED_ARRAY_KEY],
 						0,
 						self::SLOTS_BIG + self::SLOTS_MEDIUM - $promotedCount
 					)
@@ -174,7 +178,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			shuffle($biggerSlotsWikis);
 			$processedBatch[self::SLOTS_BIG_ARRAY_KEY] = array_splice($biggerSlotsWikis, 0, self::SLOTS_BIG);
 			$processedBatch[self::SLOTS_MEDIUM_ARRAY_KEY] = array_splice($biggerSlotsWikis, 0, self::SLOTS_MEDIUM);
-			$processedBatch[self::SLOTS_SMALL_ARRAY_KEY] = $batch[CityVisualization::DEMOTED_ARRAY_KEY];
+			$processedBatch[self::SLOTS_SMALL_ARRAY_KEY] = $batch[self::DEMOTED_ARRAY_KEY];
 
 			$processedBatch = $this->prepareWikisForVisualization($processedBatch);
 			$processedBatches[] = $processedBatch;
