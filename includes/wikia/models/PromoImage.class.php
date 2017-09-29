@@ -34,14 +34,14 @@ class PromoImage extends WikiaObject {
 	}
 
 	private function getDBName(){
-		if (empty($this->dbName) and !empty($this->cityId)) {
+		if (empty($this->dbName) && !empty($this->cityId)) {
 			$this->dbName = WikiFactory::IDtoDB($this->cityId);
 		}
 		return $this->dbName;
 	}
 
 	private function isCityIdSet(){
-		return (!empty($this->dbName) or !empty($this->cityId));
+		return (!empty($this->dbName) || !empty($this->cityId));
 	}
 
 	public function setCityId($cityId) {
@@ -51,7 +51,7 @@ class PromoImage extends WikiaObject {
 	}
 
 	private function getCityId(){
-		if (empty($this->cityId) and !empty($this->dbName)){
+		if (empty($this->cityId) && !empty($this->dbName)){
 			$this->cityId = WikiFactory::DBtoID($this->dbName);
 		}
 		return $this->cityId;
@@ -74,7 +74,7 @@ class PromoImage extends WikiaObject {
 			} else {
 				$path = self::__ADDITIONAL_IMAGES_BASE_NAME . "-" . $this->type;
 			}
-			if ($withDbName and $this->isCityIdSet()) {
+			if ($withDbName && $this->isCityIdSet()) {
 				$path .= ',' . $this->getDBName();
 			}
 			if ($withExtension) {
@@ -109,9 +109,9 @@ class PromoImage extends WikiaObject {
 		if (preg_match($pattern, $fileName, $matches)){
 			if (!empty($matches[1])) {
 				$type = self::MAIN;
-			} elseif (!empty($matches[2]) and !empty($matches[3])) { // matches additional images and has a number designation
+			} elseif (!empty($matches[2]) && !empty($matches[3])) { // matches additional images and has a number designation
 				$val = intval($matches[3]);
-				if ($val >= self::ADDITIONAL_START and $val <= self::ADDITIONAL_END){
+				if ($val >= self::ADDITIONAL_START && $val <= self::ADDITIONAL_END){
 					$type = $val;
 				}
 			}
