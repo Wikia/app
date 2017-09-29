@@ -332,7 +332,7 @@ class WikiFactory {
 			$sLogMessage .= "(reason: {$reason})";
 		}
 
-		static::log( static::LOG_DOMAIN, $sLogMessage,  $city_id );
+		static::log( static::LOG_DOMAIN, htmlspecialchars( $sLogMessage ),  $city_id );
 		$dbw->commit();
 
 		/**
@@ -382,7 +382,7 @@ class WikiFactory {
 			$sLogMessage .= "(reason: {$reason})";
 		}
 
-		static::log( static::LOG_DOMAIN, $sLogMessage, $city_id );
+		static::log( static::LOG_DOMAIN, htmlspecialchars( $sLogMessage ), $city_id );
 		$dbw->commit();
 
 		static::clearDomainCache( $city_id );
@@ -659,10 +659,10 @@ class WikiFactory {
 				static::log(
 					static::LOG_VARIABLE,
 					sprintf($message,
-						$variable->cv_name,
-						var_export( unserialize( $variable->cv_value ), true ),
-						var_export( $value, true ),
-						$reason_extra
+						htmlspecialchars( $variable->cv_name ),
+						htmlspecialchars( var_export( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), true ) ),
+						htmlspecialchars( var_export( $value, true ) ),
+						htmlspecialchars( $reason_extra )
 					),
 					$city_id,
 					$cv_variable_id
@@ -679,9 +679,9 @@ class WikiFactory {
 				static::log(
 					static::LOG_VARIABLE,
 					sprintf($message,
-						$variable->cv_name,
-						var_export( $value, true ),
-						$reason_extra
+						htmlspecialchars( $variable->cv_name ),
+						htmlspecialchars( var_export( $value, true ) ),
+						htmlspecialchars( $reason_extra )
 					),
 					$city_id,
 					$cv_variable_id
@@ -1063,7 +1063,7 @@ class WikiFactory {
 			if ( is_null( $value ) ) {
 				$variable = static::loadVariableFromDB( false, $cv_name, $city_id, $master );
 				$value = isset( $variable->cv_value )
-					? static::substVariables( unserialize( $variable->cv_value ), $city_id )
+					? static::substVariables( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), $city_id )
 					: null;
 			}
 
@@ -1967,7 +1967,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		static::log( static::LOG_STATUS, $sLogMessage, $city_id );
+		static::log( static::LOG_STATUS, htmlspecialchars( $sLogMessage ), $city_id );
 
 		wfProfileOut( __METHOD__ );
 
@@ -2651,7 +2651,7 @@ class WikiFactory {
 			if ( !empty( $reason ) ) {
 				$reason = " (reason: {$reason})";
 			}
-			static::log( static::LOG_STATUS, sprintf("Binary flags %s removed from city_flags.%s", decbin( $city_flags ), $reason ), $city_id );
+			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s removed from city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -2703,7 +2703,7 @@ class WikiFactory {
 			if ( !empty( $reason ) ) {
 				$reason = " (reason: {$reason})";
 			}
-			static::log( static::LOG_STATUS, sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ), $city_id );
+			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -2912,7 +2912,7 @@ class WikiFactory {
 			$cv_description = "(unknown)";
 		}
 
-		$cv_name = trim(trim($cv_name), '$');
+		$cv_name = htmlspecialchars( trim( trim( $cv_name ), '$' ) );
 		$cv_variable_group = trim($cv_variable_group);
 		$dbw->begin();
 		try {
@@ -2972,7 +2972,7 @@ class WikiFactory {
 			$cv_description = "(unknown)";
 		}
 
-		$cv_name = trim($cv_name);
+		$cv_name = htmlspecialchars( trim( $cv_name ) );
 		$cv_variable_group = trim($cv_variable_group);
 		$dbw->begin();
 		try {
@@ -3429,7 +3429,7 @@ class WikiFactory {
 		if ( !isset( $variable->cv_value ) ) {
 			return "";
 		}
-		$value = static::parseValue( unserialize( $variable->cv_value ), $variable->cv_variable_type );
+		$value = static::parseValue( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), $variable->cv_variable_type );
 		return htmlspecialchars( $value );
 	}
 

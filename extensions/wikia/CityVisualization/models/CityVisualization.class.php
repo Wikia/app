@@ -6,7 +6,6 @@
  */
 class CityVisualization extends WikiaModel {
 	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.80';
-	const CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION = 'v1.09';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
 	const CITY_VISUALIZATION_TABLE_NAME = 'city_visualization';
@@ -17,11 +16,6 @@ class CityVisualization extends WikiaModel {
 	const PROMOTED_SLOTS = 3;
 	const PROMOTED_ARRAY_KEY = 'promoted';
 	const DEMOTED_ARRAY_KEY = 'demoted';
-
-	/**
-	 * @const String name of variable in city_variables table which enables WikiaHomePage extension
-	 */
-	const WIKIA_HOME_PAGE_WF_VAR_NAME = 'wgEnableWikiaHomePageExt';
 
 	protected $verticalMap = array(
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'lifestyle',
@@ -43,7 +37,7 @@ class CityVisualization extends WikiaModel {
 	//todo: increase readability
 	//todo: decouple functions possibly extract classes
 	//todo: decrease number of parameters in all functions in this file
-	public function getList($corpWikiId, $contLang, $dontReadMemc = false) {
+	private function getList($corpWikiId, $contLang, $dontReadMemc = false) {
 		wfProfileIn(__METHOD__);
 		$memKey = $this->getVisualizationWikisListDataCacheKey($corpWikiId, $contLang);
 		$wikis = (!$dontReadMemc) ? $this->wg->Memc->get($memKey) : null;
@@ -85,57 +79,6 @@ class CityVisualization extends WikiaModel {
 		$batches = $this->generateBatches($corpWikiId, $wikis);
 		wfProfileOut(__METHOD__);
 		return $batches;
-	}
-
-	public function getWikiBatches($corpWikiId, $contLang, $numberOfBatches) {
-		wfProfileIn(__METHOD__);
-
-		$memKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $contLang);
-		$batches = $this->wg->Memc->get($memKey);
-
-		if (!is_array($batches) || count($batches) < $numberOfBatches) {
-			Wikia::log(__METHOD__, ' not enough batches ', count($batches) . '/' . $numberOfBatches);
-			$batches = $this->getWikiBatchesFromDb($corpWikiId, $contLang);
-		}
-
-		if (!empty($batches)) {
-			$resultingBatches = array_splice($batches, 0, $numberOfBatches);
-			$this->wg->Memc->set($memKey, $batches);
-		} else {
-			$resultingBatches = array();
-		}
-		//complexity limited by maximum number of elements ( 5 in $resultingBatches, 2 in $resultingBatch, 17 in $batchPromotedDemoted )
-		foreach($resultingBatches as &$resultingBatch) {
-			foreach($resultingBatch as &$batchPromotedDemoted) {
-				foreach($batchPromotedDemoted as &$batch) {
-					$batch['wikiname'] = htmlspecialchars($batch['wikiname']);
-				}
-			}
-		}
-		
-		wfProfileOut(__METHOD__);
-		return $resultingBatches;
-	}
-
-	//todo: move to hook helper class
-	public static function onWikiDataUpdated($cityId) {
-		$app = F::app();
-
-		$mdb = wfGetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
-
-		$category = HubService::getCategoryInfoForCity($cityId);
-
-		$table = self::CITY_VISUALIZATION_TABLE_NAME;
-		$data = array(
-			'city_vertical' => $category->cat_id
-		);
-		$cond = array(
-			'city_id' => $cityId,
-		);
-
-		$mdb->update($table, $data, $cond, __METHOD__);
-
-		return true;
 	}
 
 	/**
@@ -306,191 +249,16 @@ class CityVisualization extends WikiaModel {
 		];
 	}
 
-	public function saveVisualizationData($wikiId, $data, $langCode) {
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-
-		$table = self::CITY_VISUALIZATION_TABLE_NAME;
-		$fields = array(self::CITY_VISUALIZATION_TABLE_NAME . '.city_id', 'city_flags');
-		$conds = array(
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id' => $wikiId,
-			'city_lang_code' => $langCode
-		);
-		$results = $sdb->select(array($table), $fields, $conds, __METHOD__);
-
-		$row = $sdb->fetchObject($results);
-
-		if ($row) {
-			//UPDATE
-			$cond = array(
-				'city_id' => $wikiId,
-				'city_lang_code' => $langCode
-			);
-			$mdb->update($table, $data, $cond, __METHOD__);
-			$data['city_flags'] = $row->city_flags;
-		} else {
-			//INSERT
-			$data['city_id'] = $wikiId;
-			$mdb->Insert($table, $data, __METHOD__);
-			$data['city_flags'] = null;
-			Hooks::run('CityVisualization::wikiDataInserted', array($wikiId));
-		}
-		$mdb->commit();
-	}
-
-	/**
-	 * Returns an integer representing flags set for a given wiki
-	 * @param $wikiId
-	 * @param $langCode
-	 * @return mixed
-	 * @throws DBUnexpectedError
-	 */
-	public function getFlag($wikiId, $langCode) {
-		wfProfileIn(__METHOD__);
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-
-		$conds = [
-			'city_id' => $wikiId,
-			'city_lang_code' => $langCode
-		];
-
-		$result = $sdb->select(self::CITY_VISUALIZATION_TABLE_NAME, 'city_flags', $conds);
-
-		$row = $sdb->fetchRow($result);
-
-		wfProfileOut(__METHOD__);
-		return $row['city_flags'];
-	}
-
-	/**
-	 * A public wrapper for adding a flag to a wiki.
-	 * Makes use of the more universal doUpdateFlag() method.
-	 * @param $wikiId
-	 * @param $langCode
-	 * @param $flag
-	 * @return bool
-	 */
-	public function addFlag($wikiId, $langCode, $flag ) {
-		return $this->doUpdateFlag( 'add', $wikiId, $langCode, $flag );
-	}
-
-	/**
-	 * A public wrapper for removing a flag from a wiki.
-	 * Makes use of the more universal doUpdateFlag() method.
-	 * @param $wikiId
-	 * @param $langCode
-	 * @param $flag
-	 * @return bool
-	 */
-	public function removeFlag( $wikiId, $langCode, $flag ) {
-		return $this->doUpdateFlag( 'remove', $wikiId, $langCode, $flag );
-	}
-
-	/**
-	 * Updates flags in the `city_visualization` table in the shared DB for a given wiki.
-	 * @param $action
-	 * @param $wikiId
-	 * @param $langCode
-	 * @param $flag
-	 * @return bool
-	 */
-	private function doUpdateFlag( $action, $wikiId, $langCode, $flag ) {
-		wfProfileIn( __METHOD__ );
-		$mdb = wfGetDB( DB_MASTER, [], $this->wg->ExternalSharedDB );
-
-		switch ( $action ) {
-			case 'add':
-				$operation = $mdb->bitOr( 'city_flags', $flag );
-				break;
-			case 'remove':
-				$operation = $mdb->bitAnd( 'city_flags', $mdb->bitNot( $flag ) );
-				break;
-			default:
-				return false;
-		}
-
-		$result = $mdb->update( self::CITY_VISUALIZATION_TABLE_NAME,
-			[ "city_flags = {$operation}" ],
-			[
-				'city_id' => $wikiId,
-				'city_lang_code' => $langCode,
-			]
-		);
-
-		$mdb->commit( __METHOD__ );
-		wfProfileOut( __METHOD__ );
-		return $result;
-	}
-
-	/**
-	 * @desc Mapping integer id of a comscore vertical to one of the main names recognized by visualization
-	 * @param integer $verticalId tag id from HubService
-	 * @return string | bool returns false if the tag id doesn't match one of the main tags
-	 */
-	private function getVerticalNameId($tagId) {
-		$verticalMap = $this->getVerticalMap();
-		if (isset($verticalMap[$tagId])) {
-			return $verticalMap[$tagId];
-		}
-
-		return false;
-	}
-
-	/**
-	 * @desc Returns an array of comscore ids of verticals
-	 *
-	 * @return array
-	 */
-	public function getVerticalsIds() {
-		return array_keys($this->getVerticalMap());
-	}
-
-	public function purgeVisualizationWikisListCache($corpWikiId, $langCode) {
-		$memcKey = $this->getVisualizationBatchesCacheKey($corpWikiId, $langCode);
-		$this->wg->Memc->delete($memcKey);
-	}
-
-	public function purgeWikiPromoteDataCache($wikiId, $langCode) {
-		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
-		$this->wg->Memc->delete($memcKey);
-	}
-
-	public function updateWikiPromoteDataCache($wikiId, $langCode, $data) {
-		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
-
-		$cityImages = (!empty($data['city_images'])) ? (array)json_decode($data['city_images']) : array();
-		$wikiData = array(
-			'headline' => $data['city_headline'],
-			'description' => $data['city_description'],
-			'main_image' => $data['city_main_image'],
-			'images' => $cityImages
-		);
-
-		$this->wg->Memc->set($memcKey, $wikiData);
-	}
-
-	public function getVisualizationWikisListDataCacheKey($corporateWikiId, $langCode) {
+	private function getVisualizationWikisListDataCacheKey($corporateWikiId, $langCode) {
 		return wfSharedMemcKey('wikis_data_for_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $langCode, __METHOD__);
 	}
 
-	public function getVisualizationBatchesCacheKey($corporateWikiId, $langCode) {
-		return wfSharedMemcKey('wikis_batches_for_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $langCode, __METHOD__);
-	}
-
-	public function getVisualizationVerticalWikisListDataCacheKey($verticalId, $corporateWikiId, $langCode) {
+	private function getVisualizationVerticalWikisListDataCacheKey($verticalId, $corporateWikiId, $langCode) {
 		return wfSharedMemcKey('wikis_data_for_visualization_vertical', self::CITY_VISUALIZATION_MEMC_VERSION, $verticalId, $corporateWikiId, $langCode, __METHOD__);
 	}
 
 	public function getWikiPromoteDataCacheKey($wikiId, $langCode) {
 		return $this->getVisualizationElementMemcKey('wiki_data_special_promote', $wikiId, $langCode);
-	}
-
-	public function getSingleVerticalWikiDataCacheKey($wikiId, $langCode) {
-		return wfSharedMemcKey('wikis_data_visualization_tagged', self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode, __METHOD__);
-	}
-
-	public function getWikiDataCacheKey($corporateWikiId, $wikiId, $langCode) {
-		return wfSharedMemcKey('single_wiki_data_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $wikiId, $langCode, __METHOD__);
 	}
 
 	public function getWikiImageNamesCacheKey($wikiId, $langCode, $filter) {
@@ -499,10 +267,6 @@ class CityVisualization extends WikiaModel {
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
 		return wfMemcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
-	}
-
-	public function getCollectionCacheKey($collectionId) {
-		return wfSharedMemcKey('single_collection_wikis_data', self::CITY_VISUALIZATION_MEMC_VERSION, $collectionId, __METHOD__);
 	}
 
 	/**
@@ -518,20 +282,10 @@ class CityVisualization extends WikiaModel {
 	/**
 	 * Get wiki data for Wikia Visualization
 	 * @param integer $wikiId
-	 * @return array $wikiData
-	 */
-	public function getWikiDataForVisualization($wikiId, $langCode) {
-		$helper = new WikiGetDataForVisualizationHelper();
-		return $this->getWikiData($wikiId, $langCode, $helper);
-	}
-
-	/**
-	 * Get wiki data for Wikia Visualization
-	 * @param integer $wikiId
 	 * @param integer $wikiId
 	 * @return array $wikiData
 	 */
-	public function getWikiData($wikiId, $langCode, WikiGetDataHelper $dataHelper) {
+	private function getWikiData($wikiId, $langCode, WikiGetDataHelper $dataHelper) {
 		wfProfileIn(__METHOD__);
 
 		$memcKey = $dataHelper->getMemcKey($wikiId, $langCode);
@@ -600,7 +354,7 @@ class CityVisualization extends WikiaModel {
 		return $conditions;
 	}
 
-	public function notCachedGetWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
+	private function notCachedGetWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
 		wfProfileIn(__METHOD__);
 
 		$wikiImageNames = array();
@@ -645,417 +399,22 @@ class CityVisualization extends WikiaModel {
 		return $wikiImageNames;
 	}
 
-	public function saveImagesForReview($cityId, $langCode, $images, $imageReviewStatus = ImageReviewStatuses::STATE_UNREVIEWED) {
-		$currentImages = $this->getImagesFromReviewTable($cityId, $langCode);
-
-		$reversedImages = array_flip($images);
-		$imagesToModify = array();
-
-		foreach ($currentImages as $image) {
-			if (isset($reversedImages[$image->image_name])) {
-				$image->last_edited = date('Y-m-d H:i:s');
-				$image->image_review_status = $imageReviewStatus;
-				$imagesToModify[] = $image;
-				unset($reversedImages[$image->image_name]);
-			}
-		}
-
-		$newImages = array_flip($reversedImages);
-
-		$imagesToAdd = array();
-		foreach ($newImages as $image) {
-			$imageData = new stdClass();
-
-			$imageIndex = PromoImage::fromPathname($image)->ensureCityIdIsSet($cityId)->getType();
-
-			$title = Title::newFromText($image, NS_FILE);
-
-			$imageData->city_id = $cityId;
-			$imageData->page_id = $title->getArticleId();
-			$imageData->city_lang_code = $langCode;
-			$imageData->image_index = $imageIndex;
-			$imageData->image_name = $image;
-			$imageData->image_review_status = $imageReviewStatus;
-			$imageData->last_edited = date('Y-m-d H:i:s');
-			$imageData->review_start = null;
-			$imageData->review_end = null;
-			$imageData->reviewer_id = null;
-
-			$imagesToAdd [] = $imageData;
-		}
-
-		if (!empty($imagesToAdd) || !empty($imagesToModify)) {
-			$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-			$dbm->begin(__METHOD__);
-			foreach ($imagesToAdd as $image) {
-				$insertArray = array();
-
-				foreach ($image as $field => $value) {
-					$insertArray[$field] = $value;
-				}
-
-				$dbm->insert(
-					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-					$insertArray
-				);
-			}
-
-			foreach ($imagesToModify as $image) {
-				$updateArray = array();
-
-				$image->reviewer_id = null;
-				$image->review_start = null;
-				$image->review_end = null;
-
-				$oldPageId = $image->page_id;
-
-				$title = Title::newFromText($image->image_name, NS_FILE);
-				if($title instanceof Title) {
-					$image->page_id = $title->getArticleId();
-				}
-
-				foreach ($image as $field => $value) {
-					$updateArray[$field] = $value;
-				}
-
-				$dbm->update(
-					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-					$updateArray,
-					array(
-						'city_id' => $image->city_id,
-						'page_id' => $oldPageId,
-						'city_lang_code' => $image->city_lang_code,
-					)
-				);
-			}
-			$dbm->commit(__METHOD__);
-		}
-	}
-
-	public function deleteImagesFromReview($cityId, $langCode, $corporateWikis) {
-		$imagesToRemove = array();
-
-		foreach ($corporateWikis as $corporateWikiWikis) {
-			foreach ($corporateWikiWikis as $wiki) {
-				foreach ($wiki as $image) {
-					$title = Title::newFromText($image['name'], NS_FILE);
-
-					$imageData = new stdClass();
-					$imageData->city_id = $cityId;
-					$imageData->page_id = $title->getArticleId();
-					$imageData->city_lang_code = $langCode;
-					$imagesToRemove[] = $imageData;
-				}
-			}
-		}
-
-		if (!empty($imagesToRemove)) {
-			$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-			$dbm->begin(__METHOD__);
-
-			foreach ($imagesToRemove as $image) {
-				$removeConds = array();
-
-				foreach ($image as $field => $value) {
-					$removeConds[$field] = $value;
-				}
-
-				$dbm->delete(
-					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-					$removeConds
-				);
-			}
-
-			$dbm->commit(__METHOD__);
-		}
-	}
-
-	public function removeImageFromReview($cityId, $pageId, $langCode) {
-		$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$dbm->delete(
-			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-			array(
-				'city_id' => $cityId,
-				'page_id' => $pageId,
-				'city_lang_code' => $langCode
-			)
-		);
-	}
-
-	public function removeImageFromReviewByName($cityId, $imageName, $langCode) {
-		$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$dbm->delete(
-			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-			array(
-				'city_id' => $cityId,
-				'image_name' => $imageName,
-				'city_lang_code' => $langCode
-			)
-		);
-	}
-
-	protected function getImagesFromReviewTable($cityId, $langCode) {
-		wfProfileIn(__METHOD__);
-
-		$wikiImages = array();
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-
-		$result = $db->select(
-			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
-			array('*'),
-			array(
-				'city_id' => $cityId,
-				'city_lang_code' => $langCode
-			),
-			__METHOD__
-		);
-
-		while ($row = $result->fetchObject()) {
-			$wikiImages [] = $row;
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $wikiImages;
-	}
-
-	public function getImageReviewStatus($wikiId, $pageId) {
-		wfProfileIn(__METHOD__);
-		$reviewStatus = ImageReviewStatuses::STATE_UNREVIEWED;
-
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$conditions['city_id'] = $wikiId;
-		$conditions['page_id'] = $pageId;
-
-		$result = $db->select(
-			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
-			array(
-				'image_review_status',
-			),
-			$conditions,
-			__METHOD__
-		);
-
-		while ($row = $result->fetchObject()) {
-			$reviewStatus = WikiImageRowHelper::parseWikiImageRow($row)->review_status;
-		}
-
-		wfProfileOut(__METHOD__);
-		return $reviewStatus;
-	}
-
-	public static function isOfficialWiki($wikiFlags) {
+	private static function isOfficialWiki($wikiFlags) {
 		return (($wikiFlags & WikisModel::FLAG_OFFICIAL) == WikisModel::FLAG_OFFICIAL);
 	}
 
-	public static function isPromotedWiki($wikiFlags) {
+	private static function isPromotedWiki($wikiFlags) {
 		return (($wikiFlags & WikisModel::FLAG_PROMOTED) == WikisModel::FLAG_PROMOTED);
-	}
-
-	public static function isBlockedWiki($wikiFlags) {
-		return (($wikiFlags & WikisModel::FLAG_BLOCKED) == WikisModel::FLAG_BLOCKED);
-	}
-
-	public function getTargetWikiId($langCode) {
-		$corporateSites = $this->getVisualizationWikisData();
-		return ( isset($corporateSites[$langCode]['wikiId']) ) ? $corporateSites[$langCode]['wikiId'] : false;
-	}
-
-	/**
-	 * @desc Returns an array of wikis with visualization
-	 * @return array
-	 */
-	public function getVisualizationWikisData() {
-		$corporateSites = $this->getCorporateSitesList();
-		return $this->getWikiaHomePageHelper()->cleanWikisDataArray($corporateSites);
-	}
-
-	/**
-	 * @desc Returns an array of wikis' ids
-	 * @return array
-	 */
-	public function getVisualizationWikisIds() {
-		return array_keys($this->getCorporateSitesList());
-	}
-
-	/**
-	 * Return true when there is active Corporate Wiki in that language - like www.wikia.com or de.wikia.com
-	 *
-	 * @param $langCode
-	 * @return bool
-	 */
-	public function isCorporateLang($langCode) {
-		$corpWikis = $this->getVisualizationWikisData();
-		return isset($corpWikis[$langCode]);
-	}
-
-	public function getWikisCountForStaffTool($opt) {
-	//todo: reuse getWikisForStaffTool
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = $this->getTablesForStaffTool($opt);
-		$fields = array('count( ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id ) as count');
-		$conds = $this->getConditionsForStaffTool($opt, $db);
-		$options = $this->getOptionsForStaffTool($opt);
-		$joinConds = $this->getJoinsForStaffTool($opt);
-
-		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
-		$row = $results->fetchRow();
-
-		return isset($row['count']) ? $row['count'] : 0;
-	}
-
-	public function getWikisForStaffTool($opt) {
-	//todo: implement memc and purge it once admin changes data or main image is approved
-	//todo: add sql join and instead of headline provide wiki name
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$table = $this->getTablesForStaffTool($opt);
-		$fields = array(
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id',
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical',
-			'city_list.city_title',
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
-		);
-		$conds = $this->getConditionsForStaffTool($opt, $db);
-		$options = $this->getOptionsForStaffTool($opt);
-		$joinConds = $this->getJoinsForStaffTool($opt);
-
-		$results = $db->select($table, $fields, $conds, __METHOD__, $options, $joinConds);
-		$wikis = array();
-		while( $row = $db->fetchObject($results) ) {
-			$wikis[] = $row;
-		}
-
-		return $wikis;
-	}
-
-	protected function getJoinsForStaffTool($options) {
-		$joinConds = array(
-			'city_list' => array(
-				'join',
-				'city_list.city_id = ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id'
-			)
-		);
-
-		if ( !empty($options->collectionId) ) {
-			$joinConds[WikiaCollectionsModel::COLLECTIONS_CV_TABLE] = [
-				'join',
-				WikiaCollectionsModel::COLLECTIONS_CV_TABLE . '.city_id = ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id'
-			];
-		}
-
-		return $joinConds;
-	}
-
-	protected function getConditionsForStaffTool($options, DatabaseBase $db) {
-		$sqlOptions = array();
-
-		if( isset($options->lang) ) {
-			$sqlOptions[self::CITY_VISUALIZATION_TABLE_NAME . '.city_lang_code'] = $options->lang;
-		}
-
-		if( !empty($options->wikiHeadline) ) {
-			$sqlOptions[] = 'city_list.city_title like "%' . $db->strencode($options->wikiHeadline) . '%"';
-		}
-
-		if ( !empty($options->verticalId) ) {
-			$sqlOptions[self::CITY_VISUALIZATION_TABLE_NAME . '.city_vertical'] = $options->verticalId;
-		}
-
-		if ( !empty($options->collectionId) ) {
-			$sqlOptions[WikiaCollectionsModel::COLLECTIONS_CV_TABLE . '.collection_id'] = $options->collectionId;
-		}
-
-		if ( !empty($options->blockedFlag) ) {
-			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_BLOCKED . ' > 0';
-		}
-
-		if ( !empty($options->officialFlag) ) {
-			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_OFFICIAL . ' > 0';
-		}
-
-		if ( !empty($options->promotedFlag) ) {
-			$sqlOptions[] = self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags & ' .WikisModel::FLAG_PROMOTED . ' > 0';
-		}
-
-		return $sqlOptions;
-	}
-
-	protected function getOptionsForStaffTool($options) {
-		$sqlOptions = array();
-
-		if( isset($options->offset) ) {
-			$sqlOptions['OFFSET'] = $options->offset;
-		}
-
-		if( isset($options->limit) ) {
-			$sqlOptions['LIMIT'] = $options->limit;
-		}
-
-		return $sqlOptions;
-	}
-
-	protected function getTablesForStaffTool($options) {
-		$tables = array(self::CITY_VISUALIZATION_TABLE_NAME,'city_list');
-		if ( !empty($options->collectionId) ) {
-			$tables[] = WikiaCollectionsModel::COLLECTIONS_CV_TABLE;
-		}
-		return $tables;
-	}
-
-	/**
-	 * @desc Gets id of wgEnableWikiaHomePageExt variable and then loads and returns list of corporate sites
-	 * @return array
-	 */
-	protected function getCorporateSitesList() {
-		return WikiaDataAccess::cache(
-			wfSharedMemcKey('corporate_pages_list', self::CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION),
-			WikiaResponse::CACHE_STANDARD,
-			function() {
-				// loads list of corporate sites (sites which have $wgEnableWikiaHomePageExt WF variable set to true)
-				$wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
-
-				if (is_int($wikiFactoryVarId)) {
-					return WikiFactory::getListOfWikisWithVar($wikiFactoryVarId, 'bool', '=', true);
-				}
-				else {
-					return [];
-				}
-			}
-		);
-	}
-
-	/**
-	 * @param Array $collectionsList 2d array in example: [$collection1, $collection2, ...] where $collection1 = [$wikiId1, $wikiId2, ..., $wikiId17]
-	 * @param String $lang language code
-	 */
-	public function getCollectionsWikisData(Array $collectionsList) {
-		$collectionsWikisData = [];
-		$helper = $this->getWikiaHomePageHelper();
-		
-		foreach($collectionsList as $collection => $collectionsWikis) {
-			$collectionsWikisData[$collection] = WikiaDataAccess::cache(
-				$this->getCollectionCacheKey($collection),
-				6 * 60 * 60,
-				function () use ($collection, $collectionsWikis) {
-					$wikiListConditioner = new WikiListConditionerForCollection($collectionsWikis);
-					return $this->getWikisList($wikiListConditioner); 
-				}
-			);
-		}
-		
-		$collectionsWikisData = $helper->prepareBatchesForVisualization($collectionsWikisData);
-		
-		return $collectionsWikisData;
 	}
 
 	/**
 	 * @return Array An array where the keys are three main hubs ids (integers) and values are string representation of English names
 	 */
-	public function getVerticalMap() {
+	private function getVerticalMap() {
 		return $this->verticalMap;
 	}
 
-	public function getWikiaHomePageHelper() {
+	private function getWikiaHomePageHelper() {
 		if( is_null($this->helper) ) {
 			$this->helper = new WikiaHomePageHelper();
 		}
@@ -1063,7 +422,7 @@ class CityVisualization extends WikiaModel {
 		return $this->helper;
 	}
 	
-	public function getSlotsNoPerVertical($corpWikiId, $verticalId) {
+	private function getSlotsNoPerVertical($corpWikiId, $verticalId) {
 		$helper = $this->getWikiaHomePageHelper();
 		$numberOfSlots = $helper->getVarFromWikiFactory($corpWikiId, $this->verticalSlotsMap[$verticalId]);
 		

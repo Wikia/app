@@ -18,6 +18,7 @@
 $wikia-top-ads-index: 2;
 $uap-video-animation-duration: 0.4s;
 $navbar-size-for-sticky-element: 65px;
+$global-navigation-and-sitewide-messages-index: 5000101;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -85,6 +86,7 @@ $navbar-size-for-sticky-element: 65px;
 		margin-top: 0;
 		padding: 0;
 		width: 100%;
+		z-index: $global-navigation-and-sitewide-messages-index;
 	}
 
 	.WikiaTopAdsInner {
@@ -103,7 +105,7 @@ $navbar-size-for-sticky-element: 65px;
 			width: 100%;
 		}
 
-		.video-player > iframe {
+		.mobile-porvata .video-player > iframe {
 			// Hide Learn more text
 			z-index: -1;
 		}
@@ -117,7 +119,7 @@ $navbar-size-for-sticky-element: 65px;
 .bfab-template {
 	position: relative;
 
-	.video-player > iframe {
+	.mobile-porvata .video-player > iframe {
 		// Hide Learn more text
 		z-index: -1;
 	}

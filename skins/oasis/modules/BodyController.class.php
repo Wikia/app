@@ -148,7 +148,7 @@ class BodyController extends WikiaController {
 	public function getRailModuleList() {
 		$title = $this->getContext()->getTitle();
 		$user = $this->getContext()->getUser();
-		
+
 		$namespace = $title->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject( $namespace );
 
@@ -170,12 +170,10 @@ class BodyController extends WikiaController {
 		}
 
 		if ( $namespace == NS_SPECIAL ) {
-			if ( WikiaPageType::isSearch() ) {
-				if ( empty( $this->wg->EnableWikiaHomePageExt ) ) {
-					$railModuleList = [
-						$latestActivityKey => [ 'LatestActivity', 'Index', null ],
-					];
-				}
+			if ( WikiaPageType::isSearch() || $title->isSpecial( 'ThemeDesignerPreview' ) ) {
+				$railModuleList = [
+					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
+				];
 			} else if ( $title->isSpecial( 'Leaderboard' ) ) {
 				$railModuleList = [
 					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
@@ -188,10 +186,6 @@ class BodyController extends WikiaController {
 				];
 			} else if ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) ) {
 				// intentional nothing here
-			} else if ( $title->isSpecial( 'ThemeDesignerPreview' ) ) {
-				$railModuleList = [
-					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
-				];
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = [ ];
@@ -238,8 +232,7 @@ class BodyController extends WikiaController {
 			$isEditPage = BodyController::isEditPage();
 		}
 
-		// allow the right rail when using the external cms since it changes the page state without requiring a page refresh
-		if ( ( $isEditPage && !$this->wg->EnableContributionPrototypeViewing )|| WikiaPageType::isMainPage() ) {
+		if ( $isEditPage || WikiaPageType::isMainPage() ) {
 			$modules = [ ];
 			Hooks::run( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;

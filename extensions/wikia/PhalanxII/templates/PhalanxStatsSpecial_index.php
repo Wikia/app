@@ -9,6 +9,7 @@
 			<th><?= wfMessage( 'phalanx-stats-table-exact' )->escaped(); ?></th>
 			<th><?= wfMessage( 'phalanx-stats-table-regex' )->escaped(); ?></th>
 			<th><?= wfMessage( 'phalanx-stats-table-case' )->escaped(); ?></th>
+			<th><?= wfMessage( 'phalanx-stats-table-language' )->escaped(); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,15 +20,15 @@
 		</tr>
 		<tr>
 			<th><?= wfMessage( 'phalanx-stats-table-text' )->escaped(); ?></th>
-			<td colspan="8"><?= htmlspecialchars( $text ); ?></td>
+			<td colspan="9"><?= htmlspecialchars( $text ); ?></td>
 		</tr>
 		<tr>
 			<th><?= wfMessage( 'phalanx-stats-table-reason' )->escaped(); ?></th>
-			<td colspan="8"><?= $reason ?></td>
+			<td colspan="9"><?= $reason ?></td>
 		</tr>
 		<tr>
 			<th><?= wfMessage( 'phalanx-stats-table-comment' )->escaped(); ?></th>
-			<td colspan="8"><?= $comment ?></td>
+			<td colspan="9"><?= $comment ?></td>
 		</tr>
 	</tbody>
 </table>

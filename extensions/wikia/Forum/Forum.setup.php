@@ -28,6 +28,7 @@ $wgAutoloadClasses['ForumPostInfo'] =  $dir . 'ForumPostInfo.class.php' ;
 $wgAutoloadClasses['ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
 $wgAutoloadClasses['ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
 $wgAutoloadClasses['RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
+$wgAutoloadClasses['ThreadWatchlistDeleteUpdate'] = $dir . 'ThreadWatchlistDeleteUpdate.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['Forum'] = $dir . 'Forum.i18n.php' ;

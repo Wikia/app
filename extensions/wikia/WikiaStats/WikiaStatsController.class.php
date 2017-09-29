@@ -59,16 +59,6 @@ class WikiaStatsController extends WikiaController {
 		}
 	}
 
-	public function saveWikiaStatsInWF() {
-		$statsValues = $this->request->getVal( 'statsValues' );
-		if ( $this->wg->User->isAllowed( 'wikifactory' ) ) {
-			WikiaDataAccess::cachePurge( $this->getStatsMemcacheKey() );
-			WikiaStatsModel::setWikiaStatsInWF( $statsValues );
-		} else {
-			throw new PermissionsException( 'wikifactory' );
-		}
-	}
-
 	private function getStatsMemcacheKey() {
 		return wfSharedMemcKey( 'wikiacorp', 'wikiastats', self::WIKIA_STATS_MEMC_VERSION );
 	}

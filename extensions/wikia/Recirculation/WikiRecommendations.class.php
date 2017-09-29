@@ -103,7 +103,7 @@ class WikiRecommendations {
 		],
 		'fr' => [
 			[
-				'thumbnailUrl' => 'https://vignette4.wikia.nocookie.net/elsas-test/images/c/cd/LIS_Spotlight.jpg/revision/latest/scale-to-width-down/1000?cb=20170831132858&path-prefix=fr',
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/elsas-test/images/c/cf/Picsou_Spotlight.jpg/revision/latest/scale-to-width-down/640?cb=20170831132857&path-prefix=fr',
 				'title' => 'Picsou Wiki',
 				'url' => 'http://fr.picsou.wikia.com/wiki/Picsou_Wiki',
 			],
@@ -574,37 +574,80 @@ class WikiRecommendations {
 		],
 	];
 
-	const DEV_RECOMMENDATIONS = [
+	const STAGING_RECOMMENDATIONS = [
 		[
-			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
-			'title' => 'Game of Thrones',
-			'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/muppet/images/4/4b/Image001.png/revision/latest?cb=20170911141514',
+			'title' => 'Selenium',
+			'url' => 'http://selenium.wikia-staging.com',
 		],
 		[
-			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
-			'title' => 'Death Note',
-			'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/e/e2/Image009.jpg/revision/latest?cb=20170911141722',
+			'title' => 'Halloween',
+			'url' => 'http://halloween.wikia-staging.com',
 		],
 		[
-			'thumbnailUrl' => 'https://vignette.wikia-dev.pl/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
-			'title' => 'Midnight Texas',
-			'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/2/2e/WallPaperHD_138.jpg/revision/latest?cb=20170911141722',
+			'title' => 'Sktest123',
+			'url' => 'http://sktest123.wikia-staging.com',
 		]
 	];
-	
+
+	const DEV_RECOMMENDATIONS = [
+		'us' => [
+			[
+				'thumbnailUrl' => 'https://vignette.wikia-dev.us/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
+				'title' => 'Game of Thrones',
+				'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia-dev.us/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
+				'title' => 'Death Note',
+				'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+			],
+			[
+				'thumbnailUrl' => 'https://vignette.wikia-dev.us/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
+				'title' => 'Midnight Texas',
+				'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+			]
+		],
+	    'pl' => [
+		    [
+			    'thumbnailUrl' => 'https://vignette.wikia-dev.pl/gameofthrones/images/3/3a/WhiteWalker_%28Hardhome%29.jpg/revision/latest?cb=20150601151110',
+			    'title' => 'Game of Thrones',
+			    'url' => 'http://gameofthrones.wikia.com/wiki/Game_of_Thrones_Wiki',
+		    ],
+		    [
+			    'thumbnailUrl' => 'https://vignette.wikia-dev.pl/deathnote/images/1/1d/Light_Holding_Death_Note.png/revision/latest?cb=20120525180447',
+			    'title' => 'Death Note',
+			    'url' => 'http://deathnote.wikia.com/wiki/Main_Page',
+		    ],
+		    [
+			    'thumbnailUrl' => 'https://vignette.wikia-dev.pl/midnight-texas/images/b/b0/Blinded_by_the_Light_106-01-Rev-Sheehan-Davy-Deputy.jpg/revision/latest?cb=20170820185915',
+			    'title' => 'Midnight Texas',
+			    'url' => 'http://midnight-texas.wikia.com/wiki/Midnight,_Texas_Wikia',
+		    ]
+	    ]
+	];
+
 	public static function getRecommendations( $contentLanguage ) {
-		global $wgDevelEnvironment;
+		global $wgWikiaDatacenter, $wgWikiaEnvironment;
 
-
-		if ( empty( $wgDevelEnvironment ) ) {
+		if ( $wgWikiaEnvironment === WIKIA_ENV_STAGING ) {
+			$recommendations = self::STAGING_RECOMMENDATIONS;
+		} elseif ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
+			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
+				$recommendations = self::DEV_RECOMMENDATIONS['pl'];
+			} else {
+				$recommendations = self::DEV_RECOMMENDATIONS['us'];
+			}
+		} else {
 			$recommendations = self::RECOMMENDATIONS['en'];
+			$fallbackedContentLanguage = self::fallbackToSupportedLanguages( $contentLanguage );
 
-			if ( array_key_exists( $contentLanguage, self::RECOMMENDATIONS ) ) {
-				$recommendations = self::RECOMMENDATIONS[$contentLanguage];
+			if ( array_key_exists( $fallbackedContentLanguage, self::RECOMMENDATIONS ) ) {
+				$recommendations = self::RECOMMENDATIONS[$fallbackedContentLanguage];
 			}
 			shuffle( $recommendations );
-		} else {
-			$recommendations = self::DEV_RECOMMENDATIONS;
 		}
 
 		$recommendations = array_slice( $recommendations, 0, self::WIKI_RECOMMENDATIONS_LIMIT );
@@ -617,6 +660,21 @@ class WikiRecommendations {
 		}
 
 		return $recommendations;
+	}
+
+	private static function fallbackToSupportedLanguages( $language ) {
+		switch ( $language ) {
+			case 'pt':
+				return 'pt-br';
+			case 'zh-tw':
+			case 'zh-hk':
+				return 'zh';
+			case 'be':
+			case 'kk':
+				return 'ru';
+			default:
+				return $language;
+		}
 	}
 
 	private static function getThumbnailUrl( $url ) {

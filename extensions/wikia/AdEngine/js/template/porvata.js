@@ -63,26 +63,60 @@ define('ext.wikia.adEngine.template.porvata', [
 		return contentType === 'application/javascript';
 	}
 
-	function enabledFallbackBidHandling(video, params) {
-		var fallbackAdRequested = false;
+	function dispatchEventWhenInViewport(video, eventName) {
+		if (video.wasInViewport) {
+			video.ima.dispatchEvent(eventName);
+		} else {
+			video.addEventListener('wikiaFirstTimeInViewport', function () {
+				video.ima.dispatchEvent(eventName);
+			});
+		}
+	}
+
+	function enabledFallbackBidHandling(video, videoSettings, params) {
+		var hasDirectAd = true,
+			fallbackAdRequested = false;
+
+		video.addEventListener('wikiaAdsManagerLoaded', function () {
+			if (hasDirectAd) {
+				dispatchEventWhenInViewport(video, 'wikiaInViewportWithDirect');
+			}
+		});
 
 		video.addEventListener('wikiaEmptyAd', function () {
-			var fallbackBid;
+			var fallbackBid,
+				offerEvent = 'wikiaInViewportWithoutOffer';
 
 			if (fallbackAdRequested) {
 				return;
 			}
 
+			hasDirectAd = false;
 			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
+
+				offerEvent = 'wikiaInViewportWithFallbackBid';
+				videoSettings.setMoatTracking(false);
+
 				video.reload({
 					height: params.height,
 					width: params.width,
 					vastResponse: fallbackBid.vastContent,
 					vastUrl: fallbackBid.vastUrl
 				});
+				if (typeof params.fallbackBidBlockOutOfViewportPausing !== 'undefined') {
+					params.blockOutOfViewportPausing = params.fallbackBidBlockOutOfViewportPausing;
+				}
+				if (typeof params.fallbackBidEnableInContentFloating !== 'undefined') {
+					params.enableInContentFloating = params.fallbackBidEnableInContentFloating;
+				}
+				if (typeof params.fallbackBidEnableLeaderboardFloating !== 'undefined') {
+					params.enableLeaderboardFloating = params.fallbackBidEnableLeaderboardFloating;
+				}
 			}
+
+			dispatchEventWhenInViewport(video, offerEvent);
 		});
 	}
 
@@ -195,7 +229,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			if (params.useBidAsFallback) {
-				enabledFallbackBidHandling(video, params);
+				enabledFallbackBidHandling(video, settings, params);
 			}
 			video.addEventListener('start', function () {
 				videoFrequencyMonitor.registerLaunchedVideo();

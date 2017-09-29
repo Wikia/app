@@ -321,9 +321,9 @@ function axWFactorySubmitChangeVariable() {
 
 function axWFactoryDomainCRUD($type="add") {
     global $wgRequest, $wgUser, $wgExternalSharedDB, $wgOut;
-    $sDomain = $wgRequest->getVal("domain");
+    $sDomain = htmlspecialchars( $wgRequest->getVal("domain") );
     $city_id = $wgRequest->getVal("cityid");
-    $reason  = $wgRequest->getVal("reason");
+    $reason  = htmlspecialchars( $wgRequest->getVal("reason") );
 
 	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
 	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
@@ -360,7 +360,7 @@ function axWFactoryDomainCRUD($type="add") {
 			}
 			break;
         case "change":
-            $sNewDomain = $wgRequest->getVal("newdomain");
+            $sNewDomain = htmlspecialchars( $wgRequest->getVal("newdomain") );
             #--- first, check if domain is not used
             $oRes = $dbw->select(
                 "city_domains",

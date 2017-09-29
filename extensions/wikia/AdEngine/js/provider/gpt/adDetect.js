@@ -92,18 +92,23 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		}
 	}
 
+	function getIframeOk(iframe, slotName) {
+		try {
+			return !!iframe.contentWindow.document.querySelector;
+		} catch (e) {
+			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
+			log(['getIframeOk', slotName, 'ad iframe not accessible (or not found)'], 'error', logGroup);
+		}
+
+		return false;
+	}
+
 	function getAdType(slotName, gptEvent, iframe) {
-		var status, height, gptEmpty, iframeOk = false;
+		var status, height, gptEmpty, iframeOk;
 
 		log(['getAdType', slotName], 'info', logGroup);
 
-		try {
-			iframeOk = !!iframe.contentWindow.document.querySelector;
-		} catch (e) {
-			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
-			log(['getAdType', slotName, 'ad iframe not accessible (or not found)'], 'error', logGroup);
-		}
-
+		iframeOk = getIframeOk(iframe, slotName);
 		if (iframeOk && iframe.contentWindow.AdEngine_adType) {
 			log(['getAdType', slotName, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
 
@@ -156,13 +161,26 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		return 'inspect_iframe';
 	}
 
+	function getAdProduct(slotName, iframe) {
+		var iframeOk = getIframeOk(iframe, slotName);
+
+		if (iframeOk && iframe.contentWindow.AdEngine_adProduct) {
+			log(['getAdProduct', slotName, 'iframe AdEngine_adProduct = ', iframe.contentWindow.AdEngine_adProduct], 'info', logGroup);
+
+			return iframe.contentWindow.AdEngine_adProduct;
+		}
+
+		return 'other';
+	}
+
 	function isPartnerAdType(adType) {
 		return (/^partner\/[a-zA-Z0-9]{1,30}$/).test(adType);
 	}
 
 	function onAdLoad(slot, gptEvent, iframe, forcedAdType) {
 
-		var adType = forcedAdType || getAdType(slot.name, gptEvent, iframe),
+		var adProduct = getAdProduct(slot.name, iframe),
+			adType = forcedAdType || getAdType(slot.name, gptEvent, iframe),
 			isCollapsed = false,
 			shouldPollForSuccess = false,
 			expectAsyncCollapse = false,
@@ -177,6 +195,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		function callAdCallback(adInfo) {
 			adInfo = adInfo || {};
 			adInfo.adType = adType;
+			adInfo.adProduct = adProduct;
 
 			clearTimeout(successTimer);
 			slot.success(adInfo);
@@ -185,6 +204,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		function callCollapseAdCallback(adInfo) {
 			adInfo = adInfo || {};
 			adInfo.adType = adType;
+			adInfo.adProduct = adProduct;
 
 			isCollapsed = true;
 			clearTimeout(successTimer);
@@ -194,6 +214,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		function callNoAdCallback(adInfo) {
 			adInfo = adInfo || {};
 			adInfo.adType = adType;
+			adInfo.adProduct = adProduct;
 
 			clearTimeout(successTimer);
 			slot.hop(adInfo);

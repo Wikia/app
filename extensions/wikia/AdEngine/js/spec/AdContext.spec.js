@@ -317,40 +317,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
 	});
 
-	it('makes providers.rubiconFastlane true when country in wgCountries', function () {
-		var adContext;
-
-		mocks.win = {
-			ads: {
-				context: {
-					providers: {
-						rubiconFastlane: true
-					}
-				}
-			}
-		};
-		mocks.instantGlobals = {
-			wgAdDriverRubiconFastlaneCountries: ['CURRENT_COUNTRY', 'ZZ'],
-			wgAdDriverRubiconFastlaneProviderCountries: ['CURRENT_COUNTRY', 'ZZ']
-		};
-		adContext = getModule();
-		expect(adContext.getContext().providers.rubiconFastlane).toBeTruthy();
-
-		mocks.instantGlobals = {
-			wgAdDriverRubiconFastlaneCountries: ['YY'],
-			wgAdDriverRubiconFastlaneProviderCountries: ['CURRENT_COUNTRY', 'ZZ']
-		};
-		adContext = getModule();
-		expect(adContext.getContext().providers.rubiconFastlane).toBeFalsy();
-
-		mocks.instantGlobals = {
-			wgAdDriverRubiconFastlaneCountries: ['CURRENT_COUNTRY', 'ZZ'],
-			wgAdDriverRubiconFastlaneProviderCountries: ['YY']
-		};
-		adContext = getModule();
-		expect(adContext.getContext().providers.rubiconFastlane).toBeFalsy();
-	});
-
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext;
 
@@ -1093,5 +1059,64 @@ describe('AdContext', function () {
 
 		getModule().setContext(context);
 		expect(context.opts.megaAdUnitBuilderEnabled).toBeTruthy();
+	});
+
+	it('return value by string', function () {
+
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						showAds: 'A',
+						xxx: 'B',
+						countries: ['PL', 'US', 'CA'],
+						negativeValue: false
+					},
+					targeting: {
+						yyy: 'C'
+					},
+					test: {
+						q: 'W',
+						w: 'E'
+					}
+				}
+			}
+		};
+
+		expect(getModule().get('opts.showAds')).toEqual('A');
+		expect(getModule().get('opts.xxx')).toEqual('B');
+		expect(getModule().get('test')).toEqual(mocks.win.ads.context.test);
+		expect(getModule().get('opts.countries')).toEqual(mocks.win.ads.context.opts.countries);
+		expect(getModule().get()).toEqual(getModule().getContext());
+		expect(getModule().get().test).toEqual(mocks.win.ads.context.test);
+		expect(getModule().get('opts.negativeValue')).toEqual(false);
+	});
+
+	it('return undefined if value cant be found', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						showAds: 'A',
+						xxx: 'B',
+						countries: ['PL', 'US', 'CA']
+					},
+					targeting: {
+						yyy: 'C'
+					},
+					test: {
+						q: 'W',
+						w: 'E'
+					}
+				}
+			}
+		};
+
+		expect(getModule().get('not.existing.path')).toBeUndefined();
+		expect(getModule().get('opts.partially_existing_path')).toBeUndefined();
+		expect(getModule().get('opts..partially_existing_path')).toBeUndefined();
+		expect(getModule().get('..')).toBeUndefined();
+		expect(getModule().get('..')).toBeUndefined();
+		expect(getModule().get('opts..showAds')).toBeUndefined();
 	});
 });

@@ -5,6 +5,29 @@
  * @file
  */
 class ChangeTags {
+	// SUS-2752 temporary begin
+
+	const API_EDIT_TAG = 'apiedit';
+	const CATEGORYSELECT_EDIT_TAG = 'categoryselect';
+	const GALLERY_EDIT_TAG = 'gallery';
+	const ROLLBACK_TAG = 'rollback';
+	const RTE_SOURCE_MODE = 'source';
+	const RTE_WYSIWYG_MODE = 'wysiwyg';
+	const RTE_SOURCE_MODE_TAG = 'rte-source';
+	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
+	const SOURCE_EDIT_TAG = 'sourceedit';
+
+	static $tagBlacklist = [
+		self::API_EDIT_TAG,
+		self::CATEGORYSELECT_EDIT_TAG,
+		self::GALLERY_EDIT_TAG,
+		self::ROLLBACK_TAG,
+		self::RTE_SOURCE_MODE_TAG,
+		self::RTE_WYSIWYG_MODE_TAG,
+		self::SOURCE_EDIT_TAG
+	];
+
+	// SUS-2752 temporary end
 
 	/**
 	 * Creates HTML for the given tags
@@ -27,6 +50,9 @@ class ChangeTags {
 		$tags = explode( ',', $tags );
 
 		Hooks::run( 'FormatSummaryRow', [ &$tags ] );
+
+		// SUS-2752: Temporarily keep edit tags hidden until cleanup
+		$tags = array_diff( $tags, static::$tagBlacklist );
 
 		if( !$tags )
 			return array( '', array() );
@@ -176,10 +202,10 @@ class ChangeTags {
 			throw new MWException( 'Unable to determine appropriate JOIN condition for tagging.' );
 		}
 
-		// JOIN on tag_summary
-		$tables[] = 'tag_summary';
-		$join_conds['tag_summary'] = array( 'LEFT JOIN', "ts_$join_cond=$join_cond" );
-		$fields[] = 'ts_tags';
+		// SUS-2741: ported from MW 1.23, adjusted for compatibility
+		$fields[] = wfGetDB( DB_SLAVE )->buildGroupConcatField(
+			',', 'change_tag', 'ct_tag', "ct_$join_cond=$join_cond"
+		) . ' AS ts_tags';
 
 		if( $wgUseTagFilter && $filter_tag ) {
 			// Somebody wants to filter on a tag.

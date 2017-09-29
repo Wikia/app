@@ -44,7 +44,8 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getCommunityHeader() {
 		$params = $this->getRequestParameters();
 		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
-			$params[static::PARAM_ID]
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
 		$this->cors->setHeaders( $this->response );
@@ -73,7 +74,8 @@ class DesignSystemApiController extends WikiaApiController {
 		);
 
 		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
-			$params[static::PARAM_ID]
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
 		$this->cors->setHeaders( $this->response );

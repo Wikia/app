@@ -99,7 +99,7 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 	protected function getDefaultWelcomerUser() {
-		return User::newFromName( Wikia::USER );
+		return User::newFromName( Wikia::USER, false );
 	}
 
 	public function getUserFeatureFlags() {
@@ -149,9 +149,10 @@ class HAWelcomeTask extends BaseTask {
 		if ( ! $recipientProfile->exists() ) {
 			$this->info( sprintf( "creating welcome user page for %s",
 				$this->recipientObject->getName() ) );
+
 			$recipientProfile->doEdit(
 				$this->getWelcomePageTemplateForRecipient(),
-				false,
+				$this->getTextVersionOfMessage( 'welcome-message-log' ),
 				$this->integerFlags,
 				false,
 				$this->getDefaultWelcomerUser()
@@ -363,8 +364,8 @@ class HAWelcomeTask extends BaseTask {
 		// Sets the sender of the message when the actual message
 		// was posted by the welcome bot
 		if ( $wallMessage ) {
+			/** @var WallMessage $wallMessage */
 			$wallMessage->setPostedAsBot( $this->senderObject );
-			$wallMessage->sendNotificationAboutLastRev();
 		}
 
 		return $wallMessage;

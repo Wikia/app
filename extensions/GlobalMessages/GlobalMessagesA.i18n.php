@@ -23845,29 +23845,29 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'april' => 'abril',
-	'august' => 'agosto',
-	'april-gen' => 'abril',
-	'august-gen' => 'agosto',
-	'apr' => 'abr.',
-	'aug' => 'ago.',
+	'april' => 'Abril',
+	'august' => 'Agosto',
+	'april-gen' => 'Abril',
+	'august-gen' => 'Agosto',
+	'apr' => 'Abr',
+	'aug' => 'Ago',
 	'about' => 'Sobre',
 	'article' => 'Página de conteúdo',
-	'anontalk' => 'Discussão para este IP',
-	'and' => '&#32;e',
+	'anontalk' => 'Discussão para este endereço de IP',
+	'and' => '&#32;and',
 	'actions' => 'Ações',
 	'aboutsite' => 'Sobre {{SITENAME}}',
-	'aboutpage' => 'Project:Sobre',
+	'aboutpage' => 'Project:About',
 	'actionthrottled' => 'Ação controlada',
 	'actionthrottledtext' => 'Como medida "anti-spam", você se encontra impedido de realizar esta operação muitas vezes em um curto espaço de tempo; você já excedeu esse limite.
 Tente novamente em alguns minutos.',
-	'acct_creation_throttle_hit' => 'Visitantes deste wiki utilizando o seu endereço IP criaram {{PLURAL:$1|1 conta|$1 contas}} no último dia, o que é o máximo permitido neste período de tempo.
-Como resultado, visitantes que usam este endereço IP não podem criar mais nenhuma conta no momento.',
+	'acct_creation_throttle_hit' => 'Visitantes deste wiki utilizando o seu endereço de IP criaram {{PLURAL:$1|1 conta|$1 contas}} no último dia, o que é o máximo permitido neste período de tempo.
+Como resultado, visitantes que usam este endereço de IP não podem criar mais nenhuma conta no momento.',
 	'accountcreated' => 'Conta criada',
 	'accountcreatedtext' => 'A conta de usuário para $1 foi criada.',
 	'anoneditwarning' => "'''Atenção''': Você não se encontra autenticado.
 O seu endereço de IP será registrado no histórico de edições desta página.",
-	'anonpreviewwarning' => "''Você não está logado. Gravar registará o seu endereço IP no histórico de edições desta página.''",
+	'anonpreviewwarning' => "''Você não está logado. Ao salvar, o seu endereço IP será registrado no histórico de edições desta página.''",
 	'autoblockedtext' => 'O seu endereço de IP foi bloqueado de forma automática, uma vez que foi utilizado recentemente por outro usuário, o qual foi bloqueado por $1.
 O motivo apresentado foi:
 
@@ -23945,7 +23945,7 @@ Você pode diminuir a lista escolhendo um tipo de registro, um nome de usuário 
 	'activeusers-intro' => 'Esta é uma lista de usuários com algum tipo de atividade nos últimos $1 {{PLURAL:$1|dia|dias}}.',
 	'activeusers-count' => '$1 {{PLURAL:$1|edição|edições}} {{PLURAL:$3|no último dia|nos últimos $3 dias}}',
 	'activeusers-from' => 'Mostrar usuários começando em:',
-	'activeusers-hidebots' => 'Esconder robôs',
+	'activeusers-hidebots' => 'Esconder bots',
 	'activeusers-hidesysops' => 'Esconder administradores',
 	'activeusers-noresult' => 'Nenhum usuário encontrado.',
 	'addwatch' => 'Adicionar às páginas vigiadas',
@@ -23958,7 +23958,7 @@ alguém já editou ou reverteu a página.
 
 A última edição da página foi feita por [[User:$3|$3]] ([[User talk:$3|discussão]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
 	'autoblockid' => 'Autobloqueio #$1',
-	'anononlyblock' => 'anôn. apenas',
+	'anononlyblock' => 'apenas anônimos',
 	'autoblocker' => 'Você foi automaticamente bloqueado, pois partilha um endereço de IP com "[[User:$1|$1]]". O motivo apresentado foi: "$2".',
 	'articleexists' => 'Uma página com este título já existe, ou o título que escolheu é inválido.
 Por favor, escolha outro nome.',
@@ -24127,8 +24127,8 @@ Por favor, escolha outro nome.',
 *199.102.47.72',
 	'api-error-emptypage' => 'Não é permitido criar páginas novas vazias.',
 	'adminskin_ds' => 'Padrão',
-	'admin_skin' => 'Admin Options',
-	'already_a_member' => 'Already a member?',
+	'admin_skin' => 'Opções de admin',
+	'already_a_member' => 'Já é membro?',
 	'add_comment' => 'Deixar mensagem',
 	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
 	'atom' => 'Atom',
@@ -25054,7 +25054,7 @@ $messages['ru'] = array(
 	'allmessagesname' => 'Сообщение',
 	'allmessagesdefault' => 'Текст по умолчанию',
 	'allmessagescurrent' => 'Текущий текст',
-	'allmessagestext' => 'Это список системных сообщений, доступных в пространстве имен MediaWiki. В целях безопасности мы отключили редактирование некоторых сообщений MediaWiki. (Для дополнительной информации см. [[Help:System_messages|эту страницу]].) Если вы считаете, что сообщение должно редактироваться или хотите изменить существующее сообщение, то [[Служебная:Contact|сообщите об этом сотрудникам ФЭНДОМА]].',
+	'allmessagestext' => 'Это список системных сообщений, доступных в пространстве имён MediaWiki. В целях безопасности мы отключили редактирование некоторых сообщений MediaWiki. (Для дополнительной информации см. [[Help:System_messages|эту страницу]].) Если вы считаете, что сообщение должно редактироваться или необходимо изменить существующее сообщение, то [[Служебная:Contact|сообщите об этом сотрудникам ФЭНДОМА]].',
 	'allmessagesnotsupportedDB' => "Эта страница недоступна, так как отключена опция '''\$wgUseDatabaseMessages'''.",
 	'allmessages-filter-legend' => 'Фильтр',
 	'allmessages-filter' => 'Фильтр по статусу изменения:',

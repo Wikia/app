@@ -1,4 +1,5 @@
 <?php
+
 class PhalanxModelTest extends WikiaBaseTest {
 	const VALID_USERNAME = 'WikiaTest';
 	const VALID_EMAIL = 'moli@wikia-inc.com';

@@ -11,6 +11,10 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 		this.params.width = playerWidth;
 		this.params.height = Math.floor((playerWidth * 9) / 16);
 		this.params.onCreate = this.onCreate.bind(this);
+		this.params.initialBitrate = {
+			level: 0.8,
+			duration: 2
+		};
 
 		this.onPlayerCreate = onPlayerCreate;
 
@@ -114,7 +118,9 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 			return module.name === 'adManagerController';
 		});
 
-		if (controller && controller.instance && controller.instance.pageSettings) {
+		if (controller && controller.instance &&
+			controller.instance.pageSettings &&
+			controller.instance.pageSettings['google-ima-ads-manager']) {
 			controller.instance.pageSettings['google-ima-ads-manager'].all_ads = adSet;
 		}
 	};
@@ -125,7 +131,8 @@ define('ooyala-player', ['wikia.browserDetect'], function (browserDetect) {
 				autoplay: options.autoplay,
 				initialVolume: options.autoplay ? 0 : 1,
 				pcode: options.pcode,
-				playerBrandingId: options.playerBrandingId
+				playerBrandingId: options.playerBrandingId,
+				platform: 'html5'
 			},
 			html5Player;
 

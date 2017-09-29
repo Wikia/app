@@ -1865,13 +1865,16 @@ $messages['pt'] = array(
 Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.
 <br /><br />
 Dúvidas ou preocupações? Sinta-se livre para <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nos contatar</a>.',
-	'userlogin-password-email-body' => 'Olá $2,Por favor, use essa senha temporária para se conectar na Wikia: "$3"Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login na Wikia com sua antiga senha.Dúvidas ou preocupações? Sinta-se livre para nos contatar: http://community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => 'Olá $2
+Por favor, use essa senha temporária para se conectar no FANDOM: "$3"
+Se você não solicitou uma nova senha, não se preocupe! Sua conta está segura e protegida. Você pode ignorar este e-mail e continuar fazendo o login no FANDOM com sua antiga senha.
+Dúvidas ou preocupações? Sinta-se livre para nos contatar: http://comunidade.wikia.com/wiki/Especial:Contact/account-issue
 Suporte da Comunidade Wikia
 
 
 ___________________________________________
 
-Para ver os últimos acontecimentos na Wikia, visite http://pt.community.wikia.com
+Para ver os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com
 Deseja controlar quais e-mails você recebe? Vá para: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-password-email-body-HTML' => '',
 	'userlogin-email-footer-line1' => 'Para ver os últimos acontecimentos na Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://pt.community.wikia.com">pt.community.wikia.com</a>',
@@ -1932,7 +1935,7 @@ $messages['ru'] = array(
 	'userlogin-error-resetpass_announce' => 'Похоже, что вы использовали временный пароль. Введите новый пароль здесь, чтобы войти в систему.',
 	'userlogin-error-login-throttled' => 'Вы пытались войти в систему используя неправильный пароль слишком много раз. Подождите какое-то время перед повторной попыткой.',
 	'userlogin-error-login-userblocked' => 'Ваше имя участника было заблокировано и не может быть использовано для входа в систему.',
-	'userlogin-error-edit-account-closed-flag' => 'Ваша учётная запись на Фэндоме была отключена.',
+	'userlogin-error-edit-account-closed-flag' => 'Ваша учётная запись на ФЭНДОМЕ была отключена.',
 	'userlogin-error-cantcreateaccount-text' => 'С вашего IP-адреса запрещено создавать новые учётные записи.',
 	'userlogin-error-userexists' => 'Кто-то уже зарегистрировал это имя участника. Выберите другое.',
 	'userlogin-error-invalidemailaddress' => 'Пожалуйста, введите действительный адрес электронной почты.',
@@ -1946,9 +1949,9 @@ $messages['ru'] = array(
 	'userlogin-error-externaldberror' => 'В настоящее время мы испытываем технические трудности. Пожалуйста, зайдите позже.',
 	'userlogin-error-noemailtitle' => 'Пожалуйста, введите действительный адрес электронной почты.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Сегодня с этого IP-адреса было создано слишком много аккаунтов. Пожалуйста, попробуйте зарегистрироваться позже.',
-	'userlogin-opt-in-label' => 'Сообщать мне о новостях и событиях Фэндома',
+	'userlogin-opt-in-label' => 'Сообщать мне по эл. почте о новостях и событиях ФЭНДОМА',
 	'userlogin-error-resetpass_forbidden' => 'Пароли нельзя изменить',
-	'userlogin-error-blocked-mailpassword' => 'Вы не можете запросить новый пароль, так как ваш IP-адрес был заблокирован на Фэндоме.',
+	'userlogin-error-blocked-mailpassword' => 'Вы не можете запросить новый пароль, так как ваш IP-адрес был заблокирован на ФЭНДОМЕ.',
 	'userlogin-error-throttled-mailpassword' => 'Мы уже отправили пароль для этой учётной записи {{PLURAL:$1| час|$1 часов}} назад. Пожалуйста, проверьте свою электронную почту.',
 	'userlogin-error-mail-error' => 'К сожалению, возникла проблема с отправкой писем на вашу электронную почту. Пожалуйста, [[Special:Contact/general|свяжитесь с нами]].',
 	'userlogin-password-email-sent' => 'Мы направили новый пароль на почту $1.',
@@ -1966,15 +1969,18 @@ $messages['ru'] = array(
 <br /><br />
 Вопросы или проблемы? <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">Свяжитесь с нами</a>.',
 	'userlogin-password-email-signature' => 'Команда Викия',
-	'userlogin-password-email-body' => 'Здравствуйте, $2Пожалуйста, используйте этот временный пароль для входа в Викия: «$3»Если вы не запрашивали новый пароль, не волнуйтесь! Ваша учётная запись в безопасности и надёжно защищена. Вы можете игнорировать это сообщение и использовать старый пароль для входа на Викия.Вопросы или проблемы? Свяжитесь с нами: http://ru.community.wikia.com/wiki/Special:Contact/account-issue
+	'userlogin-password-email-body' => 'Здравствуйте, $2
+Пожалуйста, используйте этот временный пароль для входа на ФЭНДОМ: «$3»
+Если вы не запрашивали новый пароль, не волнуйтесь! Ваша учётная запись в безопасности и надёжно защищена. Вы можете игнорировать это сообщение и использовать старый пароль для входа на ФЭНДОМ.
 
-Команда Викия
+Вопросы или проблемы? Свяжитесь с нами: http://ru.community.wikia.com/wiki/Special:Contact/account-issue
 
+Команда ФЭНДОМА
 
 ___________________________________________
 
-Чтобы проверить последние новости Викия, посетите http://community.wikia.com
-Хотите настроить рассылки и оповещения от Викия? Перейдите в {{fullurl:{{ns:special}}:Preferences}}',
+Чтобы проверить последние новости ФЭНДОМА, посетите http://ru.community.wikia.com
+Хотите настроить рассылки и оповещения от ФЭНДОМА? Перейдите в {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => 'Чтобы узнать о последних новостях Викия, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://ru.community.wikia.com">ru.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Хотите настроить рассылки и оповещения от Викия? Перейдите в <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">личные настройки</a>',
 	'userlogin-loginreqlink' => 'войти',
@@ -1988,7 +1994,7 @@ ___________________________________________
 <img alt="VK" src="http://wikia.com/extensions/wikia/PageShare/icons/vkontakte.svg" style="border:none" width=20 height=20>
 </a>
 &nbsp;
-<a href="http://ru.community.wikia.com/wiki/Блог:Все_сообщения" style="text-decoration:none">
+<a href="http://ru.community.wikia.com/wiki/Блог:Новости_Фэндома" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>
 &nbsp;
@@ -2000,7 +2006,7 @@ ___________________________________________
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
 </a>',
 	'userlogin-logged-in-message' => 'Вы вошли в систему. Зайдите на [[$1|домашнюю страницу]] за последними новостями или проверьте свой [[$2|профайл]].',
-	'userlogin-email-confirmation-banner-success-message' => 'Адрес электронной почты подтвержден.',
+	'userlogin-email-confirmation-banner-success-message' => 'Ваш адрес электронной почты подтверждён.',
 	'userlogin-email-confirmation-banner-error' => 'Либо ссылка для подтверждения аккаунта устарела, либо вы вошли не в тот аккаунт. Пожалуйста, войдите в учётную запись, которую вы хотите подтвердить, или [[Special:ConfirmEmail|нажмите сюда]], чтобы получить новую ссылку.',
 	'userlogin-error-invalidfacebook' => 'Возникла проблема с обнаружением вашей учётной записи Facebook. Пожалуйста, войдите в Facebook и попробуйте ещё раз.',
 	'userlogin-error-fbconnect' => 'Возникла проблема при подключении вашей учётной записи на Фэндоме к Facebook.',

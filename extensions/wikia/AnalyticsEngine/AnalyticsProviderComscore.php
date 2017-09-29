@@ -30,7 +30,7 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 })();
 </script>
 <noscript>
-<img src="http://b.scorecardresearch.com/p?c1=2&amp;c2='.static::$PARTNER_ID.'&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c7='.$this->getC7ParamAndValue().'&amp;c15=&amp;cv=2.0&amp;cj=1" />
+<img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2='.static::$PARTNER_ID.'&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c7='.$this->getC7ParamAndValue().'&amp;c15=&amp;cv=2.0&amp;cj=1" />
 </noscript>
 <!-- End comScore Tag -->';
 			  }

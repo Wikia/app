@@ -418,7 +418,7 @@ $messages['de'] = array(
 	'themedesigner-buttons' => 'Buttons',
 	'themedesigner-links' => 'Links',
 	'themedesigner-header' => 'Header',
-	'themedesigner-text-wordmark' => 'Community-Name',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'Logo',
 	'themedesigner-tile-background' => 'Hintergrund kacheln',
 	'themedesigner-fix-background' => 'fixieren',
@@ -460,10 +460,11 @@ $messages['de'] = array(
 	'themedesigner-wordmark-preview-error' => 'Hoppla! Der Name des Wikis kann nicht leer sein.
 Bitte gib zum Speichern den Namen des Wikis ein.',
 	'themedesigner-upload-disabled' => 'Leider ist das Hochladen von Dateien vorübergehend nicht möglich. Bitte versuche es später erneut.',
-	'themedesigner-community-header-graphic' => 'Header-Bild',
-	'themedesigner-community-header-color' => 'Header',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'Werkzeuge',
 	'right-themedesigner' => 'Wähle ein Farbschema für dein Wiki mit [[Special:ThemeDesigner|Spezial:ThemeDesigner]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['diq'] = array(
@@ -535,7 +536,7 @@ $messages['es'] = array(
 	'themedesigner-buttons' => 'Botones',
 	'themedesigner-links' => 'Enlaces',
 	'themedesigner-header' => 'Encabezado',
-	'themedesigner-text-wordmark' => 'Nombre de comunidad',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'Logo',
 	'themedesigner-tile-background' => 'Repetir fondo',
 	'themedesigner-fix-background' => 'Fijo',
@@ -576,10 +577,11 @@ $messages['es'] = array(
 	'themedesigner-wodmark-preview' => 'Previsualización',
 	'themedesigner-wordmark-preview-error' => '¡Error! El nombre del wiki no puede estar en blanco, por favor escribe el nombre del wiki para guardar.',
 	'themedesigner-upload-disabled' => 'Lo sentimos, hemos desactivado temporalmente la subida de archivos. Para hacer cambios, regresa en unos momentos',
-	'themedesigner-community-header-graphic' => 'Gráfico de encabezado',
-	'themedesigner-community-header-color' => 'Encabezado',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'Barra de herramientas',
 	'right-themedesigner' => 'Crea un tema para tu wiki en [[{{#Special:ThemeDesigner}}]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['eu'] = array(
@@ -625,7 +627,7 @@ $messages['fi'] = array(
 	'themedesigner-buttons' => 'buttons',
 	'themedesigner-links' => 'links',
 	'themedesigner-header' => 'header',
-	'themedesigner-text-wordmark' => 'Community Name',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'Wordmark',
 	'themedesigner-tile-background' => 'tile',
 	'themedesigner-fix-background' => 'fix',
@@ -671,6 +673,7 @@ please enter the name of the wiki to save.",
 	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'toolbar',
 	'right-themedesigner' => 'Create a theme for your wiki at [[Special:ThemeDesigner]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['fr'] = array(
@@ -686,7 +689,7 @@ $messages['fr'] = array(
 	'themedesigner-buttons' => 'boutons',
 	'themedesigner-links' => 'liens',
 	'themedesigner-header' => 'en-tête',
-	'themedesigner-text-wordmark' => 'Nom de la communauté',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'Logo',
 	'themedesigner-tile-background' => 'mosaïque',
 	'themedesigner-fix-background' => 'fixe',
@@ -728,10 +731,11 @@ $messages['fr'] = array(
 	'themedesigner-wordmark-preview-error' => 'Oups ! Le nom du wiki ne peut pas être vide,
 veuillez entrer le nom du wiki pour sauvegarder.',
 	'themedesigner-upload-disabled' => "Désolé, l'importation de fichiers est temporairement désactivée. Réessayez dans quelques instants.",
-	'themedesigner-community-header-graphic' => "image d'en-tête",
-	'themedesigner-community-header-color' => 'en-tête',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => "barre d'outils",
 	'right-themedesigner' => 'Créer un thème pour votre wiki dans [[Special:ThemeDesigner|Spécial:ThemeDesigner]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['fy'] = array(
@@ -944,7 +948,7 @@ $messages['it'] = array(
 	'themedesigner-tab-customize' => 'Personalizza',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-wordmark' => 'Logo',
-	'themedesigner-text-wordmark' => 'Nome della community',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-tile-background' => 'tasselli',
 	'themedesigner-transparency' => 'trasparenza',
 	'themedesigner-type-error' => 'Tipo di file non valido',
@@ -956,10 +960,11 @@ $messages['it'] = array(
 	'themedesigner-wordmark-preview-error' => 'Ops! Il nome della wiki non può essere vuoto,
 per favore immetti il nome della wiki per salvare.',
 	'action-themedesigner' => 'accedi al Theme Designer',
-	'themedesigner-community-header-graphic' => 'immagine intestazione',
-	'themedesigner-community-header-color' => 'intestazione',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'barra',
 	'right-themedesigner' => 'Crea un tema per la tua wiki su [[Special:ThemeDesigner]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['ja'] = array(
@@ -973,7 +978,7 @@ $messages['ja'] = array(
 	'themedesigner-buttons' => 'ボタン',
 	'themedesigner-links' => 'リンク',
 	'themedesigner-header' => 'ヘッダー',
-	'themedesigner-text-wordmark' => 'コミュニティの名前',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'ロゴ',
 	'themedesigner-tile-background' => '画像を並べる',
 	'themedesigner-fix-background' => '固定表示させる',
@@ -1014,13 +1019,14 @@ $messages['ja'] = array(
 	'themedesigner-not-split-background' => '分割しない',
 	'themedesigner-rules-not-split-background' => '背景の画像が$1pxよりも大きい場合、画像を「分割しない」オプションが表示されます。',
 	'themedesigner-rules-color-middle' => '中央の背景色を変更',
-	'themedesigner-community-header-graphic' => 'ヘッダー背景画像',
-	'themedesigner-community-header-color' => 'ヘッダー',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'ツールバー',
 	'themedesigner-wordmark-preview-error' => 'Wikiの名前は空欄にできません。
 名前を入力して保存してください。',
 	'themedesigner-upload-disabled' => '申し訳ありません、現在アップロードが無効になっています。しばらく経ってから再度お試しください。',
 	'right-themedesigner' => '[[Special:ThemeDesigner]]でWikiのテーマを指定する',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['km'] = array(
@@ -1072,7 +1078,7 @@ $messages['ko'] = array(
 	'themedesigner-buttons' => '버튼',
 	'themedesigner-links' => '링크',
 	'themedesigner-header' => '헤더',
-	'themedesigner-text-wordmark' => '위키 이름',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => '워드마크',
 	'themedesigner-tile-background' => '바둑판식',
 	'themedesigner-fix-background' => '고정',
@@ -1112,12 +1118,13 @@ $messages['ko'] = array(
 	'themedesigner-upload-a-graphic' => '그림 올리기',
 	'themedesigner-upload-your-own' => '직접 업로드',
 	'themedesigner-rules-color-middle' => 'Different color for middle of the page',
-	'themedesigner-community-header-graphic' => '헤더 그림',
-	'themedesigner-community-header-color' => '헤더',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => '툴바',
 	'themedesigner-wordmark-preview-error' => '위키 이름 입력란에 내용을 입력해 주십시오.',
 	'themedesigner-upload-disabled' => '일시적으로 파일 업로드 기능이 비활성화되었습니다. 잠시 후 다시 시도해 주십시오.',
 	'right-themedesigner' => 'Create a theme for your wiki at [[Special:ThemeDesigner]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['ku-latn'] = array(
@@ -1152,13 +1159,13 @@ $messages['lol'] = array(
 	'themedesigner-color-middle' => 'crwdns66738:0crwdne66738:0',
 	'themedesigner-rules-color-middle' => 'crwdns66739:0crwdne66739:0',
 	'themedesigner-graphic' => 'crwdns66740:0crwdne66740:0',
-	'themedesigner-community-header-graphic' => 'crwdns66811:0crwdne66811:0',
-	'themedesigner-community-header-color' => 'crwdns66812:0crwdne66812:0',
+	'themedesigner-community-header-graphic' => 'crwdns71046:0crwdne71046:0',
+	'themedesigner-community-header-color' => 'crwdns71047:0crwdne71047:0',
 	'themedesigner-toolbar-color' => 'crwdns66788:0crwdne66788:0',
 	'themedesigner-buttons' => 'crwdns66741:0crwdne66741:0',
 	'themedesigner-links' => 'crwdns66742:0crwdne66742:0',
 	'themedesigner-header' => 'crwdns66743:0crwdne66743:0',
-	'themedesigner-text-wordmark' => 'crwdns66818:0crwdne66818:0',
+	'themedesigner-text-wordmark' => 'crwdns71048:0crwdne71048:0',
 	'themedesigner-graphic-wordmark' => 'crwdns66819:0crwdne66819:0',
 	'themedesigner-tile-background' => 'crwdns66746:0crwdne66746:0',
 	'themedesigner-fix-background' => 'crwdns66747:0crwdne66747:0',
@@ -1200,6 +1207,7 @@ $messages['lol'] = array(
 	'themedesigner-wordmark-preview-error' => 'crwdns66815:0crwdne66815:0',
 	'themedesigner-upload-disabled' => 'crwdns66784:0crwdne66784:0',
 	'right-themedesigner' => 'crwdns66785:0crwdne66785:0',
+	'themedesigner-community-header' => 'crwdns71049:0crwdne71049:0',
 );
 
 $messages['lrc'] = array(
@@ -1415,7 +1423,7 @@ $messages['nl'] = array(
 	'themedesigner-buttons' => 'buttons',
 	'themedesigner-links' => 'links',
 	'themedesigner-header' => 'header',
-	'themedesigner-text-wordmark' => 'Community Name',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'Wordmark',
 	'themedesigner-tile-background' => 'tile',
 	'themedesigner-fix-background' => 'fix',
@@ -1461,6 +1469,7 @@ please enter the name of the wiki to save.",
 	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'toolbar',
 	'right-themedesigner' => 'Create a theme for your wiki at [[Special:ThemeDesigner]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['oc'] = array(
@@ -1507,7 +1516,7 @@ $messages['pl'] = array(
 	'themedesigner-buttons' => 'przyciski',
 	'themedesigner-links' => 'linki',
 	'themedesigner-header' => 'nagłówek',
-	'themedesigner-text-wordmark' => 'Nazwa społeczności',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'Logo',
 	'themedesigner-tile-background' => 'sąsiadująco',
 	'themedesigner-fix-background' => 'nieruchomy',
@@ -1549,9 +1558,10 @@ $messages['pl'] = array(
 	'themedesigner-wordmark-preview-error' => 'Błąd – nazwa wiki nie może być pusta, wprowadź nazwę wiki, aby zapisać.',
 	'themedesigner-upload-disabled' => 'Przepraszamy, przesyłanie plików jest tymczasowo niedostępne. Spróbuj ponownie później.',
 	'right-themedesigner' => 'Edycja wyglądu wiki przy użyciu Kreatora motywu.',
-	'themedesigner-community-header-graphic' => 'grafika w nagłówku',
-	'themedesigner-community-header-color' => 'nagłówek',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'pasek narzędzi',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['pms'] = array(
@@ -1678,6 +1688,7 @@ por favor, escreva o nome da wiki para salvar.',
 	'themedesigner-community-header-color' => 'cabeçalho',
 	'themedesigner-toolbar-color' => 'barra de ferramentas',
 	'right-themedesigner' => 'Crie um tema para a sua wiki em [[Special:ThemeDesigner]]',
+	'themedesigner-community-header' => 'navegação local',
 );
 
 $messages['ro'] = array(
@@ -1718,7 +1729,7 @@ $messages['ru'] = array(
 	'themedesigner-buttons' => 'кнопки',
 	'themedesigner-links' => 'ссылки',
 	'themedesigner-header' => 'заголовок',
-	'themedesigner-text-wordmark' => 'Название сообщества',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'Логотип',
 	'themedesigner-tile-background' => 'плитка',
 	'themedesigner-fix-background' => 'фикс.',
@@ -1759,10 +1770,11 @@ $messages['ru'] = array(
 	'themedesigner-wodmark-preview' => 'Предпросмотр',
 	'themedesigner-wordmark-preview-error' => 'Окошко с названием вики не может быть пустым. Пожалуйста, добавьте название вики.',
 	'themedesigner-upload-disabled' => 'К сожалению, мы временно отключили загрузку файлов. Попробуйте проверить ещё раз через некоторое время',
-	'themedesigner-community-header-graphic' => 'изображение заголовка',
-	'themedesigner-community-header-color' => 'заголовок',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'инструменты',
 	'right-themedesigner' => 'Настройте оформление вики через [[Special:ThemeDesigner]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['sl'] = array(
@@ -2000,7 +2012,7 @@ $messages['vi'] = array(
 	'themedesigner-buttons' => 'buttons',
 	'themedesigner-links' => 'links',
 	'themedesigner-header' => 'header',
-	'themedesigner-text-wordmark' => 'Community Name',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => 'Wordmark',
 	'themedesigner-tile-background' => 'tile',
 	'themedesigner-fix-background' => 'fix',
@@ -2046,6 +2058,7 @@ please enter the name of the wiki to save.",
 	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => 'toolbar',
 	'right-themedesigner' => 'Create a theme for your wiki at [[Special:ThemeDesigner]]',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['wuu'] = array(
@@ -2065,7 +2078,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-buttons' => '按钮',
 	'themedesigner-links' => '链接',
 	'themedesigner-header' => '页眉',
-	'themedesigner-text-wordmark' => '社区名称',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => '标志',
 	'themedesigner-tile-background' => '平铺',
 	'themedesigner-fix-background' => '固定',
@@ -2106,10 +2119,11 @@ $messages['zh-hans'] = array(
 	'themedesigner-wodmark-preview' => '预览',
 	'themedesigner-wordmark-preview-error' => '很抱歉，Wiki名称不能留空，请输入Wiki的名称后再保存。',
 	'themedesigner-upload-disabled' => '对不起，我们已经暂时禁用上传。请稍后进行变更。',
-	'themedesigner-community-header-graphic' => '页眉图案',
-	'themedesigner-community-header-color' => '页眉',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => '工具栏',
 	'right-themedesigner' => '在[[Special:ThemeDesigner]]为你的Wiki创建主题样式',
+	'themedesigner-community-header' => 'local nav',
 );
 
 $messages['zh-hant'] = array(
@@ -2125,7 +2139,7 @@ $messages['zh-hant'] = array(
 	'themedesigner-buttons' => '按鈕',
 	'themedesigner-links' => '連結',
 	'themedesigner-header' => '頁首',
-	'themedesigner-text-wordmark' => '社區名稱',
+	'themedesigner-text-wordmark' => 'Community name',
 	'themedesigner-graphic-wordmark' => '標誌',
 	'themedesigner-tile-background' => '舖排',
 	'themedesigner-fix-background' => '固定',
@@ -2166,9 +2180,10 @@ $messages['zh-hant'] = array(
 	'themedesigner-wodmark-preview' => '預覽',
 	'themedesigner-wordmark-preview-error' => '抱歉 ！Wiki 的名稱必須輸入 ！請輸入Wiki的名稱後再儲存。',
 	'themedesigner-upload-disabled' => '抱歉，我們已經暫時關閉上傳功能。請過一會再作編輯。',
-	'themedesigner-community-header-graphic' => '頁首圖案',
-	'themedesigner-community-header-color' => '頁首',
+	'themedesigner-community-header-graphic' => 'header graphic',
+	'themedesigner-community-header-color' => 'header',
 	'themedesigner-toolbar-color' => '工具列',
 	'right-themedesigner' => '在[[Special:ThemeDesigner]]為你的Wiki創建樣式主題',
+	'themedesigner-community-header' => 'local nav',
 );
 

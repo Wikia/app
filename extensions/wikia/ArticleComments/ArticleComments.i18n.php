@@ -22,7 +22,6 @@ $messages['en'] = array(
 	'article-comments-login' => 'Please [[Special:UserLogin|log in]] to post a comment on this wiki.',
 	'article-comments-toc-item' => 'Comments',
 	'article-comments-comment-cannot-add' => 'You cannot add a comment to the article.',
-	'article-comments-vote' => 'Vote up',
 	'article-comments-reply' => 'Reply',
 	'article-comments-show-all' => 'Show all comments',
 	'article-comments-prev-page' => 'Prev',
@@ -166,7 +165,6 @@ $messages['ar'] = array(
 	'article-comments-login' => 'الرجاء [[Special:UserLogin|تسجيل الدخول]] لإضافة تعليق على هذا الويكي.',
 	'article-comments-toc-item' => 'تعليقات',
 	'article-comments-comment-cannot-add' => 'لا يمكنك إضافة تعليق إلى هذا المقال.',
-	'article-comments-vote' => 'التصويت بالإيجاب',
 	'article-comments-reply' => 'رد',
 	'article-comments-show-all' => 'إظهار كافة التعليقات',
 	'article-comments-prev-page' => 'السابق',
@@ -244,7 +242,6 @@ $messages['az'] = array(
 	'article-comments-rc-blog-comment' => 'Bloq şərhi (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Bloq şərhləri ([[$1]])',
 	'article-comments-toc-item' => 'Şərhlər',
-	'article-comments-vote' => 'Səs ver',
 	'article-comments-reply' => 'Geri göndər',
 	'article-comments-show-all' => 'Bütün şərhləri göstər',
 	'article-comments-prev-page' => 'Öncəki',
@@ -293,7 +290,6 @@ $messages['ba'] = array(
 	'article-comments-login' => 'Был вики-проектта фекер ҡалдырыу өсөн, зинһар,  [[Special:UserLogin|системаға керегеҙ]]',
 	'article-comments-toc-item' => 'Фекерҙәр',
 	'article-comments-comment-cannot-add' => 'Һеҙ был мәҡәлә өсөн фекер ҡалдыра алмыйһығыҙ',
-	'article-comments-vote' => '- өсөн тауыш бирергә',
 	'article-comments-reply' => 'Яуап бирергә',
 	'article-comments-show-all' => 'Бөтә  фекерҙәрҙе күрһәтергә',
 	'wikiamobile-article-comments-view' => 'Яуаптарҙы ҡарау',
@@ -317,7 +313,6 @@ $messages['bar'] = array(
 	'article-comments-login' => 'Zum Kómmentirn [[Special:UserLogin|åmöden]].',
 	'article-comments-toc-item' => 'Kómmentare',
 	'article-comments-comment-cannot-add' => 'Du kåst an Kómmentar zum Artiké dazuadoah.',
-	'article-comments-vote' => 'Obstimmer',
 	'article-comments-reply' => 'Åntworten',
 	'article-comments-show-all' => 'Olle Kómmentare zoang',
 	'article-comments-prev-page' => 'Vurherige',
@@ -370,7 +365,6 @@ $messages['bcl'] = array(
 	'article-comments-login' => 'Tabi man [[Special:UserLogin|maglaog]] tanganing makapaskil nin komento sa wiking ini.',
 	'article-comments-toc-item' => 'Mga Komento',
 	'article-comments-comment-cannot-add' => 'Ika dae tabi makakadugang nin sarong komento sa artikulo.',
-	'article-comments-vote' => 'Magboto pataas',
 	'article-comments-reply' => 'Kasimbagan',
 	'article-comments-show-all' => 'Ipatanaw an gabos na mga komento',
 	'article-comments-prev-page' => 'Nakaagi',
@@ -451,7 +445,6 @@ $messages['bn'] = array(
 	'article-comments-error' => 'মন্তব্য সংরক্ষণ করা সম্ভব নয়',
 	'article-comments-toc-item' => 'মন্তব্যসমূহ',
 	'article-comments-comment-cannot-add' => 'এই নিবন্ধনে আপনি কোনো মন্তব্য যুক্ত করেতে পারবেননা।',
-	'article-comments-vote' => 'পক্ষে ভোট দিন',
 	'article-comments-reply' => 'উত্তর',
 	'article-comments-show-all' => 'সকল মন্তব্য দেখাও',
 	'article-comments-prev-page' => 'পূর্ব',
@@ -497,7 +490,6 @@ $messages['br'] = array(
 	'article-comments-login' => '[[Special:UserLogin|Ret eo kevreañ]] evit lezel ur gemennadenn war ar wiki-mañ.',
 	'article-comments-toc-item' => 'Evezhiadennoù',
 	'article-comments-comment-cannot-add' => "N'hallit ket lakaat un evezhiadenn war ar pennad-mañ.",
-	'article-comments-vote' => 'Votiñ a-du',
 	'article-comments-reply' => 'Respont',
 	'article-comments-show-all' => 'Diskouez an holl evezhiadennoù',
 	'article-comments-prev-page' => 'Kent',
@@ -568,7 +560,6 @@ $messages['ca'] = array(
 	'article-comments-login' => "[[Special:UserLogin|Identifica't]] per deixar un comentari.",
 	'article-comments-toc-item' => 'Comentaris',
 	'article-comments-comment-cannot-add' => 'No pots afegir comentaris en aquest article.',
-	'article-comments-vote' => 'Votar',
 	'article-comments-reply' => 'Respon',
 	'article-comments-show-all' => 'Mostra tots els comentaris',
 	'article-comments-prev-page' => 'Anterior',
@@ -646,7 +637,6 @@ $messages['cs'] = array(
 	'article-comments-login' => 'Pro přidání komentáře se prosím [[Special:UserLogin|přihlašte]].',
 	'article-comments-toc-item' => 'Komentáře',
 	'article-comments-comment-cannot-add' => 'Nelze přidat komentář k článku.',
-	'article-comments-vote' => 'Zahlasovat',
 	'article-comments-reply' => 'Odpovědět',
 	'article-comments-show-all' => 'Zobrazit všechny komentáře',
 	'article-comments-prev-page' => 'Předchozí',
@@ -710,7 +700,6 @@ $messages['cy'] = array(
 	'article-comments-login' => '[[Special:UserLogin|Mewngofnodi]] os ydych chi eisiau postio sylw ar y wici hwn.',
 	'article-comments-toc-item' => 'Sylwadau',
 	'article-comments-comment-cannot-add' => 'Dydych chi ddim yn gallu creu sylw ar yr erthygl hon.',
-	'article-comments-vote' => "Dw i'n hoffi hwn.",
 	'article-comments-reply' => 'Ateb',
 	'article-comments-show-all' => 'Amlygu pob sylw',
 	'article-comments-prev-page' => 'Cynt',
@@ -784,7 +773,6 @@ $messages['de'] = array(
 	'article-comments-login' => 'Zum Kommentieren [[Special:UserLogin|anmelden]].',
 	'article-comments-toc-item' => 'Kommentare',
 	'article-comments-comment-cannot-add' => 'Du kannst keine Kommentare zu diesem Artikel hinzufügen.',
-	'article-comments-vote' => 'Abstimmen',
 	'article-comments-reply' => 'Antworten',
 	'article-comments-show-all' => 'Alle Kommentare anzeigen',
 	'article-comments-prev-page' => 'Vorherige',
@@ -806,23 +794,14 @@ $messages['de'] = array(
 	'wikiamobile-article-comments-login-post' => 'Bitte melde dich an, um Kommentare zu schreiben.',
 	'wikiamobile-article-comments-post-fail' => 'Der Kommentar konnte nicht gespeichert werden, bitte versuche es später erneut.',
 	'enotif_subject_article_comment' => '[{{SITENAME}}] $PAGEEDITOR hat "$PAGETITLE" kommentiert',
-	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-$PAGEEDITOR hat einen Kommentar auf der Seite "$PAGETITLE" hinterlassen.
+- Wikia Community Support
 
-Um alle Kommentare zu sehen, folge diesem Link:
-$PAGETITLE_URL 
-
-Dein freundliches {{SITENAME}}-Benachrichtigungssystem
-
--- 
-Um die Einstellungen deiner Beobachtungsliste anzupassen, besuche: {{fullurl:Special:Watchlist/edit}}
-
-Folge Wikia auf
-
-Facebook: http://facebook.com/wikia.de
-
-Twitter: http://twitter.com/wikia_de',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hallo $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR hat einen Kommentar auf der Seite "$PAGETITLE" hinterlassen.
@@ -876,7 +855,6 @@ $messages['diq'] = array(
 	'article-comments-rc-comments' => 'Vatışê wesiqe da ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Vatışê Blog da ([[$1]])',
 	'article-comments-toc-item' => 'Vatışi',
-	'article-comments-vote' => 'Rey çek',
 	'article-comments-reply' => 'Cewab bıde',
 	'article-comments-show-all' => 'Cıwaba pêron bımocne',
 	'article-comments-prev-page' => 'Verên',
@@ -925,7 +903,6 @@ $messages['el'] = array(
 	'article-comments-login' => 'Παρακαλώ [[Special:UserLogin|συνδεθ]] για να αναρτήσετε σχόλιο σε αυτό το wiki.',
 	'article-comments-toc-item' => 'Σχόλια',
 	'article-comments-comment-cannot-add' => 'Δεν μπορείτε να προσθέσετε σχόλιο για το άρθρο.',
-	'article-comments-vote' => 'Ψηφοφορία μέχρι',
 	'article-comments-reply' => 'Απάντηση',
 	'article-comments-show-all' => 'Εμφάνιση όλων των σχολίων',
 	'article-comments-prev-page' => 'Προηγούμενο',
@@ -953,7 +930,6 @@ $messages['en-gb'] = array(
 	'article-comments-delete' => 'delete',
 	'article-comments-edit' => 'edit',
 	'article-comments-history' => 'history',
-	'article-comments-vote' => 'Vote up',
 	'article-comments-reply' => 'Reply',
 );
 
@@ -969,7 +945,6 @@ $messages['eo'] = array(
 	'article-comments-login' => 'Bonvolu [[Special:UserLogin|ensaluti]] por komenti ĉe ĉi-vikio.',
 	'article-comments-toc-item' => 'Komentoj',
 	'article-comments-comment-cannot-add' => 'Vi ne povas aldoni komenton al la artikolo.',
-	'article-comments-vote' => 'Voĉdoni supren',
 	'article-comments-reply' => 'Respondi',
 	'article-comments-show-all' => 'Montri ĉiujn komentojn',
 	'article-comments-prev-page' => 'Antaŭa',
@@ -997,7 +972,6 @@ $messages['es'] = array(
 	'article-comments-login' => '[[Special:UserLogin|Identifícate]] para dejar un comentario',
 	'article-comments-toc-item' => 'Comentarios',
 	'article-comments-comment-cannot-add' => 'No puedes añadir comentarios aquí',
-	'article-comments-vote' => 'Votar',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Mostrar todos los comentarios',
 	'article-comments-prev-page' => 'Anterior',
@@ -1019,15 +993,14 @@ $messages['es'] = array(
 	'wikiamobile-article-comments-login-post' => 'Inicia sesión para publicar un comentario.',
 	'wikiamobile-article-comments-post-fail' => 'Error al guardar el comentario, por favor inténtalo nuevamente',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha comentado en la página "$PAGETITLE" de {{SITENAME}}',
-	'enotif_body_article_comment' => 'Hola $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguiente enlace para ver todos los comentarios: $PAGETITLE_URL#article-comments
-
-- Equipo comunitario de Wikia
+- Wikia Community Support
 
 ___________________________________________
-* Si necesitas ayuda o consejos, visita nuestra comunidad central http://comunidad.wikia.com
-* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => 'Hola $WATCHINGUSERNAME,
 <br /><br />
 Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguiente enlace para ver todos los comentarios: <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a>
@@ -1064,7 +1037,6 @@ $messages['et'] = array(
 	'article-comments-login' => 'Palun [[Special:UserLogin|logi sisse]] viki kommenteerimiseks.',
 	'article-comments-toc-item' => 'Kommentaarid',
 	'article-comments-comment-cannot-add' => 'Sa ei saa artiklile lisada kommentaari.',
-	'article-comments-vote' => 'Anna hääl',
 	'article-comments-reply' => 'Vasta',
 	'article-comments-show-all' => 'Vaata kõiki kommentaare',
 	'article-comments-prev-page' => 'Eelmine',
@@ -1132,7 +1104,6 @@ $messages['fa'] = array(
 	'article-comments-login' => 'برای نظر دادن [[Special:UserLogin|وارد سامانه شوید]].',
 	'article-comments-toc-item' => 'نظرات',
 	'article-comments-comment-cannot-add' => 'شما نمی‌توانید به مقاله نظری را اضافه کنید.',
-	'article-comments-vote' => 'رای موافق',
 	'article-comments-reply' => 'پاسخ',
 	'article-comments-show-all' => 'نمایش همهٔ نظرات',
 	'article-comments-prev-page' => 'قبلی',
@@ -1175,7 +1146,6 @@ $messages['fi'] = array(
 	'article-comments-login' => '[[Special:UserLogin|Kirjaudu sisään]] kommetoidaksesi tässä wikissä.',
 	'article-comments-toc-item' => 'Kommentit',
 	'article-comments-comment-cannot-add' => 'Et voi lisätä kommenttia tähän artikkeliin.',
-	'article-comments-vote' => 'Äänestä ylös',
 	'article-comments-reply' => 'Vastaa',
 	'article-comments-show-all' => 'Näytä kaikki kommentit',
 	'article-comments-prev-page' => 'Edell.',
@@ -1196,17 +1166,14 @@ $messages['fi'] = array(
 	'wikiamobile-article-comments-login-post' => 'Kirjaudu sisään kommentoidaksesi.',
 	'wikiamobile-article-comments-post-fail' => 'Kommenttia ei voitu tallentaa, yritä myöhemmin uudelleen',
 	'enotif_subject_article_comment' => '$PAGEEDITOR on kommentoinut artikkelia "$PAGETITLE" {{SITENAME}}ssä.',
-	'enotif_body_article_comment' => 'Hei $WATCHINGUSERNAME,
-
-{{SITENAME}}n sivulla $PAGETITLE on uusi kommentti. Nähdäksesi kaikki kommentit, seuraa linkkiä:
-$PAGETITLE_URL#WikiaArticleComments
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
 - Wikia Community Support
 
 ___________________________________________
-* Apua ja neuvoja löydät Community Centralilta: http://community.wikia.com
-* Haluatko vähemmän sähköpostia meiltä? Voit muuttaa asetuksiasi täällä:
-http://community.wikia.com/wiki/Toiminnot:Asetukset',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hei $WATCHINGUSERNAME,
 <br /><br />
 {{SITENAME}}n sivulla $PAGETITLE on uusi kommentti. Seuraa tätä linkkiä nähdäksesi kaikki kommentit: 
@@ -1276,7 +1243,6 @@ $messages['fr'] = array(
 	'article-comments-login' => 'Veuillez vous [[Special:UserLogin|connecter]] pour laisser un commentaire sur ce wiki.',
 	'article-comments-toc-item' => 'Commentaires',
 	'article-comments-comment-cannot-add' => "Vous ne pouvez pas ajouter de commentaire à l'article.",
-	'article-comments-vote' => 'Intéressant',
 	'article-comments-reply' => 'Répondre',
 	'article-comments-show-all' => 'Afficher tous les commentaires',
 	'article-comments-prev-page' => 'Précédent',
@@ -1298,16 +1264,14 @@ $messages['fr'] = array(
 	'wikiamobile-article-comments-login-post' => 'Veuillez vous connecter pour poster un commentaire.',
 	'wikiamobile-article-comments-post-fail' => 'Échec de l’enregistrement du commentaire, veuillez réessayer plus tard',
 	'enotif_subject_article_comment' => '[{{SITENAME}}] Venez lire les derniers commentaires sur $PAGETITLE',
-	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#WikiaArticleComments
-
-— L’équipe Wikia
+- Wikia Community Support
 
 ___________________________________________
-* Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
-* Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.
-* Cliquez sur le lien suivant pour vous désabonner de tous les e-mails de Wikia : http://communaute.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
 <br /><br />
 Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez <a href="$PAGETITLE_URL#WikiaArticleComments">ce lien</a> pour voir tous les commentaires.
@@ -1364,7 +1328,6 @@ $messages['gl'] = array(
 	'article-comments-login' => '[[Special:UserLogin|Acceda ao sistema]] para publicar un comentario neste wiki.',
 	'article-comments-toc-item' => 'Comentarios',
 	'article-comments-comment-cannot-add' => 'Non pode engadir un comentario ao artigo.',
-	'article-comments-vote' => 'Votar positivamente',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Mostrar todos os comentarios',
 	'article-comments-prev-page' => 'Anterior',
@@ -1488,7 +1451,6 @@ $messages['hi'] = array(
 	'article-comments-error' => 'टिप्पणी को सहेजा नहीं जा सका',
 	'article-comments-toc-item' => 'टिप्पणियाँ',
 	'article-comments-comment-cannot-add' => 'आप लेख के लिए एक टिप्पणी जोड़ें नहीं कर सकता।',
-	'article-comments-vote' => 'ऊपर वोट',
 	'article-comments-reply' => 'उत्तर दें',
 	'article-comments-show-all' => 'सभी टिप्पणियाँ दिखाएँ',
 	'article-comments-prev-page' => 'पिछली',
@@ -1511,7 +1473,6 @@ $messages['hi'] = array(
 $messages['hrx'] = array(
 	'article-comments-edit' => 'beoorbeite',
 	'article-comments-history' => 'Versione',
-	'article-comments-vote' => 'Abstimme',
 	'article-comments-reply' => 'Antworte',
 	'article-comments-show-all' => 'All Kommentare oonzeiche',
 	'article-comments-prev-page' => 'Vorriche',
@@ -1550,7 +1511,6 @@ $messages['hu'] = array(
 	'article-comments-login' => 'Kérjük, [[Special:UserLogin|jelentkezz be]] hozzászólás beküldéséhez.',
 	'article-comments-toc-item' => 'Hozzászólások',
 	'article-comments-comment-cannot-add' => 'Nem írhatsz hozzászólást a szócikkhez.',
-	'article-comments-vote' => 'Szavazás',
 	'article-comments-reply' => 'Válasz',
 	'article-comments-show-all' => 'Összes hozzászólás',
 	'article-comments-prev-page' => 'Előző',
@@ -1615,7 +1575,6 @@ $messages['ia'] = array(
 	'article-comments-login' => 'Per favor [[Special:UserLogin|aperi session]] pro publicar un commento in iste wiki.',
 	'article-comments-toc-item' => 'Commentos',
 	'article-comments-comment-cannot-add' => 'Tu non pote adjunger un commento a iste articulo.',
-	'article-comments-vote' => 'Votar positivemente',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Monstrar tote le commentos',
 	'article-comments-prev-page' => 'Previe',
@@ -1679,7 +1638,6 @@ $messages['id'] = array(
 	'article-comments-login' => 'Silakan [[Special:UserLogin|masuk]] untuk mengirim komentar pada wiki ini.',
 	'article-comments-toc-item' => 'Komentar',
 	'article-comments-comment-cannot-add' => 'Anda tidak dapat menambahkan komentar ke artikel',
-	'article-comments-vote' => 'Memberikan suara',
 	'article-comments-reply' => 'Balas',
 	'article-comments-show-all' => 'Perlihatkan semua komentar',
 	'article-comments-prev-page' => 'Sebelumnya',
@@ -1756,7 +1714,6 @@ $messages['it'] = array(
 	'article-comments-login' => 'Per favore [[Special:UserLogin|accedi]] per postare un commento su questa wiki.',
 	'article-comments-toc-item' => 'Commenti',
 	'article-comments-comment-cannot-add' => "Non puoi commentare l'articolo",
-	'article-comments-vote' => 'Vota',
 	'article-comments-reply' => 'Rispondi',
 	'article-comments-show-all' => 'Mostra tutti i commenti',
 	'article-comments-prev-page' => 'Prec',
@@ -1778,16 +1735,14 @@ $messages['it'] = array(
 	'wikiamobile-article-comments-login-post' => 'Effettua il login per lasciare un commento.',
 	'wikiamobile-article-comments-post-fail' => 'Salvataggio del commento non riuscito, per favore riprova più tardi',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentato su "$PAGETITLE" su {{SITENAME}}',
-	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-$PAGEEDITOR ha commentato su "$PAGETITLE".
+- Wikia Community Support
 
-Per vedere il commento, seguire il link qui sotto:
-$PAGETITLE_URL
-
-Per favore continua a visitare e contribuire spesso...
-
-Wikia',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Caro $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR ha commentato su "$PAGETITLE".
@@ -1830,7 +1785,6 @@ $messages['ja'] = array(
 	'article-comments-login' => 'コメントするには[[Special:UserLogin|ログイン]]する必要があります',
 	'article-comments-toc-item' => 'コメント',
 	'article-comments-comment-cannot-add' => 'この記事にはコメントを追加できません。',
-	'article-comments-vote' => '投票する',
 	'article-comments-reply' => '返信する',
 	'article-comments-show-all' => '全てのコメントを表示',
 	'article-comments-prev-page' => '前',
@@ -1850,15 +1804,14 @@ $messages['ja'] = array(
 	'wikiamobile-article-comments-login-post' => 'コメントを投稿するにはログインする必要があります。',
 	'wikiamobile-article-comments-post-fail' => 'コメントの保存に失敗しました。のちほどもう一度お試しください。',
 	'enotif_subject_article_comment' => '{{SITENAME}} のページ「$PAGETITLE」についた最近のコメントを読む',
-	'enotif_body_article_comment' => 'こんにちは、$WATCHINGUSERNAME さん
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-{{SITENAME}} の $PAGETITLE に新しいコメントがあります。コメントをすべて閲覧するには次のリンクをご利用ください: $PAGETITLE_URL#WikiaArticleComments
-
-- ウィキア・コミュニティ・サポート
+- Wikia Community Support
 
 ___________________________________________
-* コミュニティセントラルでヘルプやアドバイスを探す : http://ja.community.wikia.com
-* 私たちが送信するメッセージの受信を減らしたいですか？　こちらにて定期購読解除や電子メールの設定変更をすることができます : http://ja.community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => 'こんにちは、$WATCHINGUSERNAME さん
 <br /><br />
 {{SITENAME}} の $PAGETITLE に新しいコメントがあります。すべてのコメントを閲覧するには次のリンクをご利用ください : <a href="$PAGETITLE_URL#WikiaArticleComments">$PAGETITLE</a>
@@ -1928,7 +1881,6 @@ $messages['kn'] = array(
 	'article-comments-login' => 'ದೈವಿತ್ತು ಈ ವಿಕಿಗೆ ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ [[Special:UserLogin|ಲಾಗ್ ಇನ್]] ಮಾಡಿ.',
 	'article-comments-toc-item' => 'ಟಿಪ್ಪಣಿಗಳು',
 	'article-comments-comment-cannot-add' => 'ನಿಮಗೆ ಈ ಪುಟಕ್ಕೆ ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ ಆಗುದಿಲ್ಲ.',
-	'article-comments-vote' => 'ಉಪ್ವೊಟ್',
 	'article-comments-reply' => 'ಉತ್ತರ ಕೊಡು',
 	'article-comments-show-all' => 'ಯಲ್ಲವೂ ಟಿಪ್ಪಣಿಗಳನ್ನ ತೋರಿಸು',
 	'article-comments-prev-page' => 'ಮೊದ್ದಲಿದು',
@@ -1971,8 +1923,8 @@ __________________________
 
 $messages['ko'] = array(
 	'article-comments-desc' => '위키 페이지의 문서 댓글',
-	'article-comments-file-page' => '[[$3]]에 남겨진 [[$1|$2 사용자의 댓글]]',
-	'article-blog-comments-file-page' => '[[$5|$6의]] [[$3|블로그 글, $4]]에 남겨진 [[$1|$2 사용자의 댓글]]',
+	'article-comments-file-page' => '[[$3]]에 남겨진 [[$1|$2]] 사용자의 댓글',
+	'article-blog-comments-file-page' => '[[$5|$6]]의 블로그 글, [[$3|$4]]에 남겨진 [[$1|$2]] 사용자의 댓글',
 	'article-comments-anonymous' => '익명 사용자',
 	'article-comments-comments' => '댓글 ($1)',
 	'article-comments-post' => '댓글 작성',
@@ -1980,39 +1932,44 @@ $messages['ko'] = array(
 	'article-comments-delete' => '삭제',
 	'article-comments-edit' => '편집',
 	'article-comments-history' => '역사',
-	'article-comments-error' => '작성하신 댓글이 저장되지 못했습니다.',
+	'article-comments-error' => '댓글을 게시하는 데 실패했습니다.',
 	'article-comments-undeleted-comment' => '블로그 글 $1의 복구된 댓글',
 	'article-comments-rc-comment' => '문서 댓글  (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '문서 댓글 ([[$1]])',
-	'article-comments-rc-blog-comment' => '블로그 댓글 (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comment' => '&nbsp;블로그 댓글 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => '블로그 댓글 ([[$1]])',
-	'article-comments-login' => '이 위키에 댓글을 남기시려면 <a href="$1">로그인</a>하세요.',
+	'article-comments-login' => '이 위키에 댓글을 남기시려면 먼저 [[특수기능:로그인|로그인]]해야 합니다.',
 	'article-comments-toc-item' => '댓글',
-	'article-comments-comment-cannot-add' => '이 글에는 댓글을 달 수 없습니다.',
-	'article-comments-vote' => '추천하기',
+	'article-comments-comment-cannot-add' => '이 문서에는 댓글을 달 수 없습니다.',
 	'article-comments-reply' => '댓글',
 	'article-comments-show-all' => '모든 댓글 보기',
 	'article-comments-prev-page' => '이전',
 	'article-comments-next-page' => '다음',
 	'article-comments-page-spacer' => '&#160;...&#160;',
-	'article-comments-delete-reason' => '이 댓글이 달린 글이나 이 댓글의 상위 댓글이 삭제되었으므로 같이 삭제',
-	'article-comments-empty-comment' => "내용이 없는 댓글을 다실 수 없습니다. <a href='$1'>이 댓글을 삭제하시겠습니까?</a>",
-	'article-comments-show-more' => '더 많은 코멘트 보기',
-	'wikiamobile-article-comments-counter' => '{{PLURAL:$1|의견}} $1개',
-	'wikiamobile-article-comments-header' => '댓글 (<span id=wkArtCnt>$1</span>)',
+	'article-comments-delete-reason' => '이 댓글이 달렸던 글 또는 댓글이 삭제되었습니다.',
+	'article-comments-empty-comment' => '내용이 없는 댓글은 게시할 수 없습니다. [$1 이 댓글을 삭제하시겠습니까?]',
+	'article-comments-show-more' => '댓글 더 보기',
+	'wikiamobile-article-comments-counter' => '댓글 $1개',
+	'wikiamobile-article-comments-header' => '댓글',
 	'wikiamobile-article-comments-more' => '더 보기',
 	'wikiamobile-article-comments-prev' => '이전 댓글 더 보기',
 	'wikiamobile-article-comments-none' => '댓글 없음',
 	'wikiamobile-article-comments-view' => '답글 보기',
 	'wikiamobile-article-comments-replies' => '답글',
-	'wikiamobile-article-comments-post-reply' => '답글 입력',
-	'wikiamobile-article-comments-post' => '게시',
+	'wikiamobile-article-comments-post-reply' => '답글 작성',
+	'wikiamobile-article-comments-post' => '작성',
 	'wikiamobile-article-comments-placeholder' => '댓글 입력',
-	'wikiamobile-article-comments-login-post' => '댓글을 달기 위해서는 로그인이 필요합니다.',
-	'wikiamobile-article-comments-post-fail' => '댓글을 게시하는 데 실패했습니다. 다시 시도해주세요.',
-	'enotif_subject_article_comment' => '{{SITENAME}}에서 $PAGEEDITOR 사용자가 $PAGETITLE 문서에 댓글을 달았습니다.',
-	'enotif_body_article_comment' => '$WATCHINGUSERNAME님, $PAGEEDITOR 사용자가 "$PAGETITLE" 문서에 댓글을 남겼습니다. 댓글을 보시려면 다음 링크로 들어가세요: $PAGETITLE_URL
-자주 방문해주시고 기여도 많이 부탁드립니다. - 위키아 드림',
+	'wikiamobile-article-comments-login-post' => '댓글을 작성하기 전에 먼저 로그인해야 합니다.',
+	'wikiamobile-article-comments-post-fail' => '댓글을 게시하는 데 실패했습니다. 잠시 후 다시 시도해주십시오.',
+	'enotif_subject_article_comment' => '{{SITENAME}}의 $PAGETITLE 문서에 댓글이 달렸습니다.',
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
+
+- Wikia Community Support
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p> $WATCHINGUSERNAME님, <br /><br /> $PAGEEDITOR 사용자가 "$PAGETITLE" 문서에 댓글을 남겼습니다. <br /><br /> 댓글을 보시려면 다음 링크로 들어가세요: <a href="$PAGETITLE_URL">$PAGETITLE</a> <br /><br /> 자주 방문해주시고 기여도 많이 부탁드립니다. <br /><br /> {{SITENAME}} <br /><hr /> <ul> <li>메일로 알림받는 항목들을 관리하고 싶으신가요? <a href="{{fullurl:{{ns:special}}:환경설정}}">{{ns:special}}:환경설정<a>에서 해주세요.</li> </ul> </p>',
 	'right-commentdelete' => 'Can delete article comments',
 	'right-commentedit' => 'Can edit article comments',
@@ -2085,7 +2042,6 @@ $messages['lb'] = array(
 	'article-comments-rc-comments' => 'Bemierkunge vum Artikel ([[$1]])',
 	'article-comments-toc-item' => 'Bemierkungen',
 	'article-comments-comment-cannot-add' => 'Dir däerft keng Bemierkung bei den Artikel derbäisetzen.',
-	'article-comments-vote' => 'Stëmmt of',
 	'article-comments-reply' => 'Äntwerten',
 	'article-comments-show-all' => 'All Bemierkunge weisen',
 	'article-comments-prev-page' => 'Vireg',
@@ -2115,7 +2071,6 @@ $messages['lez'] = array(
 	'article-comments-undeleted-comment' => 'Блогдин $1 ччина алуд тавунвай къейд',
 	'article-comments-toc-item' => 'КЪейдер',
 	'article-comments-comment-cannot-add' => 'Квевай макъаладиз къейд алава ийиз ихтияр авайд ттуш.',
-	'article-comments-vote' => 'Сес гун',
 	'article-comments-reply' => 'Жаваб гун',
 	'article-comments-show-all' => 'Вири къейдер къалурун',
 	'article-comments-prev-page' => 'Вилик алатай',
@@ -2168,7 +2123,6 @@ $messages['lol'] = array(
 	'article-comments-login' => 'crwdns65218:0crwdne65218:0',
 	'article-comments-toc-item' => 'crwdns65219:0crwdne65219:0',
 	'article-comments-comment-cannot-add' => 'crwdns65220:0crwdne65220:0',
-	'article-comments-vote' => 'crwdns65221:0crwdne65221:0',
 	'article-comments-reply' => 'crwdns65222:0crwdne65222:0',
 	'article-comments-show-all' => 'crwdns65223:0crwdne65223:0',
 	'article-comments-prev-page' => 'crwdns65224:0crwdne65224:0',
@@ -2190,7 +2144,7 @@ $messages['lol'] = array(
 	'wikiamobile-article-comments-login-post' => 'crwdns65240:0crwdne65240:0',
 	'wikiamobile-article-comments-post-fail' => 'crwdns65241:0crwdne65241:0',
 	'enotif_subject_article_comment' => 'crwdns65242:0$PAGETITLEcrwdnd65242:0{{SITENAME}}crwdne65242:0',
-	'enotif_body_article_comment' => 'crwdns65243:0$WATCHINGUSERNAMEcrwdnd65243:0$PAGETITLEcrwdnd65243:0{{SITENAME}}crwdnd65243:0$PAGETITLE_URLcrwdnd65243:0___________________________________________crwdne65243:0',
+	'enotif_body_article_comment' => 'crwdns71050:0$WATCHINGUSERNAMEcrwdnd71050:0$PAGETITLEcrwdnd71050:0{{SITENAME}}crwdnd71050:0$PAGETITLE_URLcrwdnd71050:0___________________________________________crwdne71050:0',
 	'enotif_body_article_comment-HTML' => 'crwdns65244:0$WATCHINGUSERNAMEcrwdnd65244:0$PAGETITLEcrwdnd65244:0{{SITENAME}}crwdnd65244:0$PAGETITLE_URLcrwdnd65244:0$PAGETITLEcrwdne65244:0',
 	'right-commentdelete' => 'crwdns65245:0crwdne65245:0',
 	'right-commentedit' => 'crwdns65246:0crwdne65246:0',
@@ -2212,7 +2166,6 @@ $messages['lrc'] = array(
 	'article-comments-error' => 'ویر و باور شما اماییه نبوئه',
 	'article-comments-toc-item' => 'ویر و باوریا',
 	'article-comments-comment-cannot-add' => 'شما نتونید نظر د ای گوتار اضاف بکید.',
-	'article-comments-vote' => 'رایا ری وه بالا رئتنه',
 	'article-comments-reply' => 'جؤاو ده ئن',
 	'article-comments-show-all' => 'همه ویر و باوریا نه نشو بیه',
 	'article-comments-prev-page' => 'دما',
@@ -2245,7 +2198,6 @@ $messages['lt'] = array(
 	'article-comments-login' => 'Prašome [[Special:UserLogin|prisijungti]] kad galėtumėte rašyti šioje wiki.',
 	'article-comments-toc-item' => 'Komentarai',
 	'article-comments-comment-cannot-add' => 'Jūs negalite pridėti komentarą į ši straipsnį.',
-	'article-comments-vote' => '↓Balsuoti teigiamai',
 	'article-comments-reply' => 'Atsakyti',
 	'article-comments-show-all' => 'Rodyti visus komentarus',
 	'article-comments-prev-page' => 'Ankstesnis',
@@ -2297,7 +2249,6 @@ $messages['lv'] = array(
 	'article-comments-login' => 'Lūdzu [[Special:UserLogin|pieteikties]] post komentāru par šo viki.',
 	'article-comments-toc-item' => 'Komentāri',
 	'article-comments-comment-cannot-add' => 'Nevar pievienot komentāru rakstu.',
-	'article-comments-vote' => 'Balsot līdz',
 	'article-comments-reply' => 'Atbildēt',
 	'article-comments-show-all' => 'Apskatīt visus komentārus',
 	'article-comments-prev-page' => 'Iepr',
@@ -2359,7 +2310,6 @@ $messages['map-bms'] = array(
 	'article-comments-login' => 'Monggo [[Special:UserLogin|mlebu log]] kanggo ngirimna komentar nang wiki kiye.',
 	'article-comments-toc-item' => 'Komentar',
 	'article-comments-comment-cannot-add' => 'Rika ora teyeng nambahna komentar maring artikel.',
-	'article-comments-vote' => 'Aweh swara',
 	'article-comments-reply' => 'Bales',
 	'article-comments-show-all' => 'Tidokna kabeh komentar',
 	'article-comments-prev-page' => 'Sedurunge',
@@ -2390,7 +2340,6 @@ $messages['mk'] = array(
 	'article-comments-login' => '[[Special:UserLogin|Најавете се]] за да коментирате на ова вики.',
 	'article-comments-toc-item' => 'Коментари',
 	'article-comments-comment-cannot-add' => 'Не можете да додавате комнтари во статијата.',
-	'article-comments-vote' => 'Гласај „За“',
 	'article-comments-reply' => 'Одговори',
 	'article-comments-show-all' => 'Сите коментари',
 	'article-comments-prev-page' => 'Претходна',
@@ -2494,7 +2443,6 @@ $messages['ms'] = array(
 	'article-comments-login' => 'Sila [[Special:UserLogin|log masuk]] untuk mengirim ulasan di wiki ini.',
 	'article-comments-toc-item' => 'Ulasan',
 	'article-comments-comment-cannot-add' => 'Anda tidak boleh mengirim ulasan kepada rencana ini.',
-	'article-comments-vote' => 'Undi setuju',
 	'article-comments-reply' => 'Balas',
 	'article-comments-show-all' => 'Tunjukkan semua ulasan',
 	'article-comments-prev-page' => 'Sebelumnya',
@@ -2554,7 +2502,6 @@ $messages['mt'] = array(
 	'article-comments-login' => 'Jekk jogħġbok [[Special:UserLogin|idħol]] sabiex tibgħat kumment fuq din il-wiki.',
 	'article-comments-toc-item' => 'Kummenti',
 	'article-comments-comment-cannot-add' => 'Ma tistax iżżid kumment lill-artiklu.',
-	'article-comments-vote' => 'Ivvota',
 	'article-comments-reply' => 'Irrispondi',
 	'article-comments-show-all' => 'Uri l-kummenti kollha',
 	'article-comments-prev-page' => "Ta' qabel",
@@ -2599,7 +2546,6 @@ $messages['nan'] = array(
 	'article-comments-login' => '請先 [[Special:UserLogin|登入]]，才通佇這个wiki貼評論。',
 	'article-comments-toc-item' => '評論',
 	'article-comments-comment-cannot-add' => '你袂當佇這篇文章加評論。',
-	'article-comments-vote' => '參加投票',
 	'article-comments-reply' => '回覆',
 	'article-comments-show-all' => '顯示所有的評論',
 	'article-comments-prev-page' => 'chêng',
@@ -2645,7 +2591,6 @@ $messages['nb'] = array(
 	'article-comments-login' => 'Vennligst [[Special:UserLogin|logg inn]] for å kommentere på denne wikien.',
 	'article-comments-toc-item' => 'Kommentarer',
 	'article-comments-comment-cannot-add' => 'Du kan ikke legge en kommentar til artikkelen.',
-	'article-comments-vote' => 'Stem opp',
 	'article-comments-reply' => 'Svar',
 	'article-comments-show-all' => 'Vis alle kommentarer',
 	'article-comments-prev-page' => 'Forrige',
@@ -2731,7 +2676,6 @@ $messages['nl'] = array(
 	'article-comments-login' => '[[Special:UserLogin|Meld u aan]] om een opmerking in deze wiki te kunnen plaatsen.',
 	'article-comments-toc-item' => 'Opmerkingen',
 	'article-comments-comment-cannot-add' => 'Je kunt geen opmerkingen bij de pagina plaatsen.',
-	'article-comments-vote' => 'Positief beoordelen',
 	'article-comments-reply' => 'Antwoorden',
 	'article-comments-show-all' => 'Alle opmerkingen weergeven',
 	'article-comments-prev-page' => 'Vorige',
@@ -2753,15 +2697,14 @@ $messages['nl'] = array(
 	'wikiamobile-article-comments-login-post' => 'Meld u aan om te reageren.',
 	'wikiamobile-article-comments-post-fail' => 'Het opslaan van de reactie is mislukt. Probeer het later opnieuw.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE" op {{SITENAME}}',
-	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
-
-Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende koppeling om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
 - Wikia Community Support
 
 ___________________________________________
-* Voor hulp en advies op Community Central gaat u naar http://community.wikia.com
-* Wilt u minder berichten van ons ontvangen? Schrijf u dan uit of wijzig uw e-mailvoorkeuren: http://community.wikia.com/wiki/Special:Preferences',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hoi $WATCHINGUSERNAME,
 <br /><br />
 $ PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE".
@@ -2821,7 +2764,6 @@ $messages['oc'] = array(
 	'article-comments-rc-blog-comments' => 'Comentaris de blog ([[$1]])',
 	'article-comments-toc-item' => 'Comentaris',
 	'article-comments-comment-cannot-add' => 'Podètz pas apondre cap de comentari a aqueste article.',
-	'article-comments-vote' => 'Interessant',
 	'article-comments-reply' => 'Respondre',
 	'article-comments-show-all' => 'Afichar totes los comentaris',
 	'article-comments-prev-page' => 'Precedent',
@@ -2870,7 +2812,6 @@ $messages['pl'] = array(
 	'article-comments-login' => '[[Special:UserLogin|Zaloguj się]], aby komentować na tej wiki.',
 	'article-comments-toc-item' => 'Komentarze',
 	'article-comments-comment-cannot-add' => 'Nie możesz dodać komentarza do tego artykułu',
-	'article-comments-vote' => 'Zagłosuj',
 	'article-comments-reply' => 'Odpowiedz',
 	'article-comments-show-all' => 'Pokaż wszystkie komentarze',
 	'article-comments-prev-page' => 'Poprzednia',
@@ -2892,15 +2833,14 @@ $messages['pl'] = array(
 	'wikiamobile-article-comments-login-post' => 'Zaloguj się aby dodać komentarz.',
 	'wikiamobile-article-comments-post-fail' => 'Nie udało się zapisać komentarza, spróbuj ponownie później',
 	'enotif_subject_article_comment' => '$PAGEEDITOR skomentował "$PAGETITLE" na {{SITENAME}}',
-	'enotif_body_article_comment' => 'Witaj $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-Na {{SITENAME}} pojawił się nowy komentarz na stronie $PAGETITLE. Użyj tego linku aby zobaczyć wszystkie komentarze: $PAGETITLE_URL#WikiaArticleComments
-
-- Zespół Wikii
+- Wikia Community Support
 
 ___________________________________________
-* Aby uzyskać dodatkową pomoc od społeczności Wikii, odwiedź http://spolecznosc.wikia.com
-* W celu zmiany ustawień powiadomień e-mail, odwiedź http://spolecznosc.wikia.com/wiki/Special:Preferences',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Witaj $WATCHINGUSERNAME,
 <br /><br />
 Na {{SITENAME}} pojawił się nowy komentarz na stronie $PAGETITLE . Użyj tego linku aby zobaczyć wszystkie komentarze: <a href="$PAGETITLE_URL#WikiaArticleComments">$PAGETITLE</a>
@@ -2941,7 +2881,6 @@ $messages['pms'] = array(
 	'article-comments-login' => "Për piasì, ch'a [[Special:UserLogin|intra ant ël sistema]] për mandé un coment dzora sta wiki.",
 	'article-comments-toc-item' => 'Coment',
 	'article-comments-comment-cannot-add' => 'It peule pa gionté un coment a la vos.',
-	'article-comments-vote' => 'Anteressant',
 	'article-comments-reply' => 'Rësponde',
 	'article-comments-show-all' => 'Smon-e tùit ij coment',
 	'article-comments-prev-page' => 'Andaré',
@@ -3002,7 +2941,6 @@ $messages['ps'] = array(
 	'article-comments-login' => 'دلته د يوې تبصرې د خپرولو لپاره لطفاً [[Special:UserLogin|غونډال ته ننوځۍ]].',
 	'article-comments-toc-item' => 'تبصرې',
 	'article-comments-comment-cannot-add' => 'تاسې دې ليکنه کې يوه تبصره نه شی ورگډولی.',
-	'article-comments-vote' => 'مثبته رايه',
 	'article-comments-reply' => 'ځوابول',
 	'article-comments-show-all' => 'ټولې تبصرې ښکاره کول',
 	'article-comments-prev-page' => 'پخوانی',
@@ -3041,7 +2979,6 @@ $messages['pt'] = array(
 	'article-comments-login' => 'Por favor, [[Special:UserLogin|efetue o login]] para postar um comentário sobre este wiki.',
 	'article-comments-toc-item' => 'Comentários',
 	'article-comments-comment-cannot-add' => 'Você não pode adicionar um comentário ao artigo.',
-	'article-comments-vote' => 'Votar',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Mostrar todos os comentários',
 	'article-comments-prev-page' => 'Anterior',
@@ -3063,15 +3000,14 @@ $messages['pt'] = array(
 	'wikiamobile-article-comments-login-post' => 'Autentifique-se para postar um comentário.',
 	'wikiamobile-article-comments-post-fail' => 'Falha ao salvar o comentário, por favor, tente novamente mais tarde',
 	'enotif_subject_article_comment' => 'Comentou sobre "$ PAGETITLE" em {{SITENAME}} $PAGEEDITOR',
-	'enotif_body_article_comment' => 'Olá $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
-
-- Suporte da Comunidade do FANDOM
+- Wikia Community Support
 
 ___________________________________________
-* Encontre ajuda e conselhos na Central da Comunidade: http://comunidade.wikia.com
-* Quer receber menos mensagens de nós? Você pode cancelar a inscrição ou alterar suas preferências de e-mail aqui: http://comunidade.wikia.com/Especial:Preferências',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Olá $ WATCHINGUSERNAME,
 <br /><br />
 Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
@@ -3127,7 +3063,6 @@ $messages['roa-tara'] = array(
 	'article-comments-login' => "Pe piacere [[Special:UserLogin|tràse]] pe mannà 'nu commende sus a sta uicchi.",
 	'article-comments-toc-item' => 'Commende',
 	'article-comments-comment-cannot-add' => "Tu non ge puè aggiungere 'nu commende a 'a vôsce.",
-	'article-comments-vote' => 'Vote',
 	'article-comments-reply' => 'Respunne',
 	'article-comments-show-all' => 'Vide tutte le commènde',
 	'article-comments-prev-page' => 'Prec',
@@ -3190,7 +3125,6 @@ $messages['ru'] = array(
 	'article-comments-login' => 'Пожалуйста, [[Special:UserLogin|войдите в систему]], чтобы оставлять комментарии на этой вики',
 	'article-comments-toc-item' => 'Комментарии',
 	'article-comments-comment-cannot-add' => 'Вы не можете добавить комментарий к этой статье',
-	'article-comments-vote' => 'Голосовать за',
 	'article-comments-reply' => 'Ответить',
 	'article-comments-show-all' => 'Показать все комментарии',
 	'article-comments-prev-page' => 'Пред.',
@@ -3212,14 +3146,14 @@ $messages['ru'] = array(
 	'wikiamobile-article-comments-login-post' => 'Пожалуйста войдите, чтобы оставить комментарий.',
 	'wikiamobile-article-comments-post-fail' => 'Не удалось сохранить комментарий, повторите попытку позже',
 	'enotif_subject_article_comment' => 'Прочитать свежие комментарии страницы $PAGETITLE на {{SITENAME}}',
-	'enotif_body_article_comment' => 'Уважаемый $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-Участник $PAGEEDITOR оставил комментарий в "$PAGETITLE".
+- Wikia Community Support
 
-Чтобы увидеть данный комментарий, проследуйте по этой ссылке:
-$PAGETITLE_URL
-
-Викия',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Уважаемый $WATCHINGUSERNAME,
 <br /><br />
 Участник $PAGEEDITOR оставил комментарий на "$PAGETITLE".
@@ -3331,7 +3265,6 @@ $messages['sr-ec'] = array(
 	'article-comments-rc-comments' => 'Коментари на чланку ([[$1]])',
 	'article-comments-toc-item' => 'Коментари',
 	'article-comments-comment-cannot-add' => 'Не можете додати коментар на чланак.',
-	'article-comments-vote' => 'Гласај',
 	'article-comments-reply' => 'Одговори',
 	'article-comments-show-all' => 'Прикажи све коментаре',
 	'article-comments-prev-page' => 'Претходно',
@@ -3368,7 +3301,6 @@ $messages['sv'] = array(
 	'article-comments-login' => 'Var god [[Special:UserLogin|logga in]] för att posta en kommentar på den här wikin.',
 	'article-comments-toc-item' => 'Kommentarer',
 	'article-comments-comment-cannot-add' => 'Du kan inte lägga till en kommentar till artikeln.',
-	'article-comments-vote' => 'Rösta upp',
 	'article-comments-reply' => 'Svara',
 	'article-comments-show-all' => 'Visa alla kommentarer',
 	'article-comments-prev-page' => 'Föreg',
@@ -3446,7 +3378,6 @@ $messages['te'] = array(
 	'article-comments-login' => 'ఈ వికీలో వ్యాఖ్యానించేందుకు [[Special:UserLogin|లాగినవండి]].',
 	'article-comments-toc-item' => 'వ్యాఖ్యలు',
 	'article-comments-comment-cannot-add' => 'ఈ వ్యాసానికి మీరు వ్యాఖ్యని చేర్చలేరు.',
-	'article-comments-vote' => 'వోటెయ్యండి',
 	'article-comments-reply' => 'జవాబివ్వు',
 	'article-comments-show-all' => 'వ్యాఖ్యలన్నిటినీ చూపించు',
 	'article-comments-prev-page' => 'గత',
@@ -3490,7 +3421,6 @@ $messages['th'] = array(
 	'article-comments-login' => 'โปรด [[Special:UserLogin| เข้าสุ่ระบบ ]] เพื่อแสดงความคิดเห็นบน วิกิ',
 	'article-comments-toc-item' => 'ความคิดเห็น',
 	'article-comments-comment-cannot-add' => 'คุณไม่สามารถเพิ่มความคิดเห็นต่อบทความได้',
-	'article-comments-vote' => 'โหวตขึ้น',
 	'article-comments-reply' => 'ตอบกลับ',
 	'article-comments-show-all' => 'แสดง ความคิดเห็น ทั้งหมด',
 	'article-comments-prev-page' => 'ก่อนหน้า',
@@ -3523,7 +3453,6 @@ $messages['tl'] = array(
 	'article-comments-login' => 'Mangyaring [[Special:UserLogin|log in]] upang makapagpaskil ng isang puna sa wiking ito.',
 	'article-comments-toc-item' => 'Mga puna',
 	'article-comments-comment-cannot-add' => 'Hindi ka makapagdaragdag ng isang puna sa artikulo.',
-	'article-comments-vote' => 'Bumotong paitaas',
 	'article-comments-reply' => 'Tumugon',
 	'article-comments-show-all' => 'Ipakita ang lahat ng mga puna',
 	'article-comments-prev-page' => 'Nakaraan',
@@ -3595,7 +3524,6 @@ $messages['tr'] = array(
 	'article-comments-login' => 'Bu wiki hakkında yorum yapabilmek için lütfen [[Special:UserLogin|oturum açın]].',
 	'article-comments-toc-item' => 'Yorumlar',
 	'article-comments-comment-cannot-add' => 'Bu maddeye yorum ekleyemezsiniz.',
-	'article-comments-vote' => 'Destekle',
 	'article-comments-reply' => 'Yanıtla',
 	'article-comments-show-all' => 'Tüm yanıtları göster',
 	'article-comments-prev-page' => 'Önceki',
@@ -3655,7 +3583,6 @@ $messages['tt-cyrl'] = array(
 	'article-comments-login' => 'Бу викида фикер калдырыр өчен, зинһар,  [[Special:UserLogin|системага керегез]]',
 	'article-comments-toc-item' => 'Фикерләр',
 	'article-comments-comment-cannot-add' => 'Сез бу мәкалә фикер калдыра алмыйсыз',
-	'article-comments-vote' => '- өчен тавыш бирергә',
 	'article-comments-reply' => 'Җавап бирергә',
 	'article-comments-show-all' => 'Бөтен фикерләрне күрсәтергә',
 	'article-comments-prev-page' => 'Алдагы',
@@ -3722,7 +3649,6 @@ $messages['uk'] = array(
 	'article-comments-login' => 'Будь ласка, [[Special:UserLogin|авторизуйтеся,]] щоб коментувати на цій вікі.',
 	'article-comments-toc-item' => 'Коментарі',
 	'article-comments-comment-cannot-add' => 'Ви не можете додати коментар до цієї статті.',
-	'article-comments-vote' => 'Голосувати за',
 	'article-comments-reply' => 'Відповісти',
 	'article-comments-show-all' => 'Показати всі коментарі',
 	'article-comments-prev-page' => 'Перед',
@@ -3792,7 +3718,6 @@ $messages['vi'] = array(
 	'article-comments-login' => 'Xin vui lòng [[Special:UserLogin|đăng nhập]] để đăng một bình luận trên wiki này.',
 	'article-comments-toc-item' => 'Bình luận',
 	'article-comments-comment-cannot-add' => 'Bạn không thể thêm bình luận cho bài viết.',
-	'article-comments-vote' => 'Bình chọn',
 	'article-comments-reply' => 'Trả lời',
 	'article-comments-show-all' => 'Hiển thị tất cả các bình luận',
 	'article-comments-prev-page' => 'Kế trước',
@@ -3814,16 +3739,14 @@ $messages['vi'] = array(
 	'wikiamobile-article-comments-login-post' => 'Vui lòng đăng nhập để viết bình luận.',
 	'wikiamobile-article-comments-post-fail' => 'Không thể lưu bình luận, xin vui lòng thử lại sau',
 	'enotif_subject_article_comment' => '$PAGEEDITOR đã bình luận trang "$PAGETITLE" trên {{SITENAME}}',
-	'enotif_body_article_comment' => 'Xin chào $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-$PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
+- Wikia Community Support
 
-Để xem các chủ đề thảo luận, xin theo liên kết dưới đây:
-$PAGETITLE_URL
-
-Xin hãy truy cập và sửa đổi thường xuyên...
-
-- Cộng đồng hỗ trợ Wikia',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Xin chào $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
@@ -3867,7 +3790,6 @@ $messages['zh-hans'] = array(
 	'article-comments-login' => '请[[Special:UserLogin|登陆]]以在本维基上发表评论。',
 	'article-comments-toc-item' => '评论',
 	'article-comments-comment-cannot-add' => '不能将评论添加到文章中。',
-	'article-comments-vote' => '投票',
 	'article-comments-reply' => '回复',
 	'article-comments-show-all' => '显示所有注释',
 	'article-comments-prev-page' => '上一页',
@@ -3889,16 +3811,14 @@ $messages['zh-hans'] = array(
 	'wikiamobile-article-comments-login-post' => '请登录以发表评论。',
 	'wikiamobile-article-comments-post-fail' => '评论保存失败，请稍后再试',
 	'enotif_subject_article_comment' => '$PAGEEDITOR在{{SITENAME}}上对"$PAGETITLE"发表了评论',
-	'enotif_body_article_comment' => '您好 $WATCHINGUSERNAME，
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-{{SITENAME}} 上的 $PAGETITLE 有新评论。
-点此连结查看评论：$PAGETITLE_URL#WikiaArticleComments
-
-Wikia 社群支援小组
+- Wikia Community Support
 
 ___________________________________________
-* 您可在社群中心寻找协助和建议：http://zh.community.wikia.com
-* 不想收到这么多讯息？您可以在以下页面退订或变更电子信箱设定：http://zh.community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
 <br /><br />
 {{SITENAME}}上的$PAGETITLE有评论哦。点击如下链接查看全部评论：
@@ -3943,7 +3863,6 @@ $messages['zh-hant'] = array(
 	'article-comments-login' => '請 [[Special:UserLogin|登入]] 以在此 wiki 發表評論。',
 	'article-comments-toc-item' => '評論',
 	'article-comments-comment-cannot-add' => '您不能在這篇文章中增加評論。',
-	'article-comments-vote' => '參與投票',
 	'article-comments-reply' => '回覆',
 	'article-comments-show-all' => '顯示所有評論',
 	'article-comments-prev-page' => '前一頁',
@@ -3965,16 +3884,14 @@ $messages['zh-hant'] = array(
 	'wikiamobile-article-comments-login-post' => '請登入後發表評論。',
 	'wikiamobile-article-comments-post-fail' => '評論儲存失敗，請稍後再試',
 	'enotif_subject_article_comment' => '$PAGEEDITOR 在 {{SITENAME}} 的文章 "$PAGETITLE" 中發表評論',
-	'enotif_body_article_comment' => '您好 $WATCHINGUSERNAME，
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
-{{SITENAME}} 上的 $PAGETITLE 有新評論。
-點此連結查看評論：$PAGETITLE_URL#WikiaArticleComments
-
-Wikia 社群支援小組
+- Wikia Community Support
 
 ___________________________________________
-* 您可在社群中心尋找協助和建議：http://zh.community.wikia.com
-* 不想收到這麼多訊息？您可以在以下頁面退訂或變更電子信箱設定：http://zh.community.wikia.com/Special:Preferences',
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
 <br /><br />
 {{SITENAME}} 上的 $PAGETITLE 有新評論。

@@ -199,27 +199,18 @@ class PhalanxService {
 		 * for any other we're sending POST
 		 */
 		else {
-			/**
-			 * city_id should be always known
-			 */
-			$parameters[ 'wiki' ] = F::app()->wg->CityId;
+			global $wgCityId, $wgLanguageCode;
 
-			if ( ( $action == "match" || $action == "check" ) ) {
-				if ( !is_null( $this->user ) ) {
-					$parameters[ 'user' ][] = $this->user->getName();
-				} else {
-					if ( ( new \Wikia\Util\Statistics\BernoulliTrial( 0.001 ) )->shouldSample() ) {
-						$this->error(
-							'PLATFORM-1387',
-							[
-								'exception'    => new Exception(),
-								'block_params' => $parameters,
-								'user_name'    => F::app()->wg->User->getName()
-							]
-						);
-					}
-				}
+			// Specify wiki ID parameter, for Phalanx Stats logging
+			$parameters[ 'wiki' ] = $wgCityId;
+
+			// SUS-2759: pass on content language code to the service
+			$parameters[ 'lang' ] = $wgLanguageCode;
+
+			if ( ( $action == "match" || $action == "check" ) && !empty( $this->user ) ) {
+				$parameters[ 'user' ][] = $this->user->getName();
 			}
+
 			if ( $action == "match" && $this->limit != 1 ) {
 				$parameters['limit'] = $this->limit;
 			}

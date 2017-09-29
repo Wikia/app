@@ -111,6 +111,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.bidders.appnexusAst = geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
 			!hasFeaturedVideo;
+
+		context.bidders.a9Video = geo.isProperGeo(instantGlobals.wgAdDriverA9VideoBidderCountries);
 	}
 
 	function isMEGAEnabledForFVMobile(context) {
@@ -138,7 +140,11 @@ define('ext.wikia.adEngine.adContext', [
 			);
 
 		context.opts.premiumAdLayoutEnabled = isPALEnabledOnDesktopFeaturedVideo || isPALEnabledOnRegularArticle;
-		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
+		context.slots.premiumAdLayoutSlotsToUnblock = [
+			'INVISIBLE_HIGH_IMPACT_2',
+			'INCONTENT_BOXAD_1',
+			'BOTTOM_LEADERBOARD'
+		];
 
 		context.opts.megaAdUnitBuilderEnabled = isMEGAEnabledForFVOasis(context, isPALEnabledOnDesktopFeaturedVideo) ||
 			isMEGAEnabledForFVMobile(context);
@@ -214,12 +220,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
-		if (context.providers.rubiconFastlane) {
-			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries) &&
-				!context.bidders.rubiconDisplay; // disable non-prebid implementation if Rubicon (Prebid) adapter is active
-		}
-
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
 
 		// INVISIBLE_HIGH_IMPACT slot
@@ -281,9 +281,22 @@ define('ext.wikia.adEngine.adContext', [
 		callbacks.push(callback);
 	}
 
+	function get(path) {
+		var isPathValid = path !== undefined && path !== '',
+			nextElement = getContext(),
+			nodes = (path || '').split('.');
+
+		while (isPathValid && nodes.length > 0 && typeof nextElement === 'object') {
+			nextElement = nextElement[nodes.shift()];
+		}
+
+		return nextElement;
+	}
+
 	setContext(w.ads ? w.ads.context : {});
 
 	return {
+		get: get,
 		addCallback: addCallback,
 		getContext: getContext,
 		setContext: setContext

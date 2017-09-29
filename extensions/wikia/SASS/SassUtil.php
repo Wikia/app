@@ -108,8 +108,6 @@ class SassUtil {
 				$oasisSettings['rtl'] = 'true';
 			}
 
-			Hooks::run( 'AfterOasisSettingsInitialized', [ &$oasisSettings ] );
-
 			// RT:70673
 			foreach ($oasisSettings as $key => $val) {
 				if(!empty($val)) {
@@ -157,6 +155,8 @@ class SassUtil {
 
 	/**
 	 * Get normalized color value (RT #74057)
+	 * @param string $color
+	 * @return string
 	 */
 	public static function sanitizeColor($color) {
 		$color = trim(strtolower($color));

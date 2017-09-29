@@ -53,7 +53,7 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 
-	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $oLocalFile = null ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -112,13 +112,6 @@ class ScribeEventProducer {
 		$this->setRevisionSize( $rev_size );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
-
-		if ( $oLocalFile instanceof File ) {
-			$this->setMediaType( $oLocalFile );
-			$this->setIsImageForReview( ImagesService::isLocalImage( $oTitle ) );
-		} else {
-			$this->setIsImageForReview( false );
-		}
 
 		$t = microtime(true);
 		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
@@ -324,7 +317,7 @@ class ScribeEventProducer {
 	}
 
 	public function setIP ( $ip ) {
-		$this->mParams['userIp'] = $ip;
+		$this->mParams['userIp'] = IP::sanitizeIP( $ip );
 	}
 
 	public function setRevisionTimestamp ( $revision_timestamp ) {
@@ -337,28 +330,6 @@ class ScribeEventProducer {
 
 	public function setEventTS ( $ts ) {
 		$this->mParams['eventTS'] = $ts;
-	}
-
-	public function setMediaType ( $oLocalFile ) {
-		$mediaTypeCode = 0;
-		if ( $oLocalFile instanceof LocalFile ) {
-			$mediaType = $oLocalFile->getMediaType();
-
-			switch ( $mediaType ) {
-				case MEDIATYPE_BITMAP:     $mediaTypeCode = 1; break;
-				case MEDIATYPE_DRAWING:    $mediaTypeCode = 2; break;
-				case MEDIATYPE_AUDIO:      $mediaTypeCode = 3; break;
-				case MEDIATYPE_VIDEO:      $mediaTypeCode = 4; break;
-				case MEDIATYPE_MULTIMEDIA: $mediaTypeCode = 5; break;
-				case MEDIATYPE_OFFICE:     $mediaTypeCode = 6; break;
-				case MEDIATYPE_TEXT:       $mediaTypeCode = 7; break;
-				case MEDIATYPE_EXECUTABLE: $mediaTypeCode = 8; break;
-				case MEDIATYPE_ARCHIVE:    $mediaTypeCode = 9; break;
-				default:                   $mediaTypeCode = 1; break;
-			}
-		}
-
-		return $mediaTypeCode;
 	}
 
 	public function setImageLinks ( $image_links ) {
@@ -399,14 +370,6 @@ class ScribeEventProducer {
 		// And when categories are updated:
 		//$this->mParams['categories'] = WikiFactory::getCategories( $this->app->wg->CityId );
 
-	}
-
-	public function setIsImageForReview( $bIsImageForReview = true ) {
-		$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
-	}
-
-	public function setImageApproved( $approved = false ) {
-		$this->mParams['imageApproved'] = intval( $approved );
 	}
 
 	/**

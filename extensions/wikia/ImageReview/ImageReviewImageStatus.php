@@ -11,9 +11,11 @@ use Swagger\Client\ImageReview\Models\ImageHistoryEntry;
 $wgHooks['ImagePageAfterImageLinks'][] = 'efImageReviewDisplayStatus';
 
 function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
-	global $wgCityId, $wgExternalDatawareDB, $wgUser, $wgImageReviewTestCommunities;
+	global $wgCityId, $wgExternalDatawareDB;
 
-	if ( !$wgUser->isAllowed( 'imagereviewstats' ) ) {
+	$context = $imagePage->getContext();
+
+	if ( !$context->getUser()->isAllowed( 'imagereviewstats' ) ) {
 		return true;
 	}
 
@@ -21,66 +23,28 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 		return true;
 	}
 
-	$html .= Xml::element( 'h2', [], wfMessage( 'imagereview-imagepage-header' )->escaped() );
+	$html .= Xml::element( 'h2', [], $context->msg( 'imagereview-imagepage-header' )->escaped() );
 
 	$headers = [
-		wfMessage( 'imagereview-imagepage-table-header-reviewer' )->text(),
-		wfMessage( 'imagereview-imagepage-table-header-state' )->text(),
-		wfMessage( 'imagereview-imagepage-table-header-time' )->text(),
+		$context->msg( 'imagereview-imagepage-table-header-reviewer' )->text(),
+		$context->msg( 'imagereview-imagepage-table-header-state' )->text(),
+		$context->msg( 'imagereview-imagepage-table-header-time' )->text(),
 	];
 
 	$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 
-	if ( in_array( $wgCityId, $wgImageReviewTestCommunities ) ) {
-		$reviews =
-			fetchReviewHistoryFromService( $wgCityId, $imagePage->getTitle() );
+	$reviews =
+		fetchReviewHistoryFromService( $wgCityId, $imagePage->getTitle() );
 
-		// TODO: temporary solution, remove it as soon as image review history is migrated to the new tool
-		// display history of review for images reviewed by old ImageReview tool
-		if ( empty( $reviews ) ) {
-			$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
-		}
-	} else {
+	// TODO: temporary solution, remove it as soon as image review history is migrated to the new tool
+	// display history of review for images reviewed by old ImageReview tool
+	if ( empty( $reviews ) ) {
 		$reviews = fetchReviewHistory( $dbr, $wgCityId, $imagePage->getID() );
 	}
 
 	if ( empty( $reviews ) ) {
-		if ( !in_array( $wgCityId, $wgImageReviewTestCommunities ) && false === isImageInReviewQueue( $dbr, $wgCityId, $imagePage->getID() ) ) {
-			/**
-			 * If the file is a local one and is older than 1 hour - send it to ImageReview
-			 * since it's probably been restored, and is not just a fresh file.
-			 */
-			$lastTouched = new DateTime( $imagePage->getPage()->getTouched() );
-			$now = new DateTime();
-			$file = $imagePage->getDisplayedFile();
-			if ( $file instanceof WikiaLocalFile && $lastTouched < $now->modify( '-1 hour' ) ) {
-				$scribeEventProducer = new ScribeEventProducer( 'edit' );
-				$user = User::newFromName( $file->getUser() );
-				if ( $scribeEventProducer->buildEditPackage( $imagePage, $user, null, $file ) ) {
-					$logParams = [
-						'cityId' => $wgCityId,
-						'pageId' => $imagePage->getID(),
-						'pageTitle' => $imagePage->getTitle()->getText(),
-						'uploadUser' => $user->getName(),
-					];
-					\Wikia\Logger\WikiaLogger::instance()->info(
-						'ImageReviewLog',
-						[
-							'message' => 'Image moved back to queue',
-							'params' => $logParams,
-						]
-					);
-
-					$scribeEventProducer->sendLog();
-				}
-			}
-
-			// oh oh, image is not in queue at all
-			$html .= wfMessage( 'imagereview-imagepage-not-in-queue' )->escaped();
-		} else {
-			// image is in the queue but not reviewed yet
-			$html .= wfMessage( 'imagereview-state-0' )->escaped();
-		}
+		// image is in the queue but not reviewed yet
+		$html .= $context->msg( 'imagereview-state-0' )->escaped();
 	} else {
 		$html .= Xml::buildTable(
 			$reviews,
