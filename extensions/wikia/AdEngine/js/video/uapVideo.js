@@ -167,6 +167,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				});
 			}
 
+			video.addEventListener('play', function() {
+				var videoSize = getVideoSize(videoContainer, params, videoSettings);
+				video.resize(videoSize.width, videoSize.height);
+			});
+
 			return video;
 		});
 	}
