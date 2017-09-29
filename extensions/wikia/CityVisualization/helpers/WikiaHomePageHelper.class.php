@@ -55,41 +55,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	const REMIX_GRID_IMG_BIG_WIDTH = 330;
 	const REMIX_GRID_IMG_BIG_HEIGHT = 320;
 
-	protected $visualizationModel = null;
-	protected $collectionsModel;
-
-	/**
-	 * @return CityVisualization
-	 */
-	protected function getVisualization() {
-		if (empty($this->visualizationModel)) {
-			$this->visualizationModel = new CityVisualization();
-		}
-		return $this->visualizationModel;
-	}
-
-	/**
-	 * @desc Returns WikiFactory variable's value if not found returns 0 and adds information to logs
-	 *
-	 * @param String $varName variable name in WikiFactory
-	 * @return int
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public function getVarFromWikiFactory($wikiId, $varName) {
-		wfProfileIn(__METHOD__);
-		$value = WikiFactory::getVarValueByName($varName, $wikiId);
-
-		if (is_null($value) || $value === false) {
-			Wikia::log(__METHOD__, false, "Variable's value not found in WikiFactory returning 0");
-			wfProfileOut(__METHOD__);
-			return 0;
-		}
-
-		wfProfileOut(__METHOD__);
-		return $value;
-	}
-
 	protected function getImageUrl($imageName, $requestedWidth, $requestedHeight) {
 		wfProfileIn(__METHOD__);
 		$imageUrl = '';
