@@ -8,7 +8,11 @@ describe('AdContext', function () {
 	}
 
 	var mocks = {
-			browserDetect: {},
+			browserDetect: {
+				isEdge: function() {
+					return false;
+				}
+			},
 			geo: {
 				getCountryCode: function () {
 					return 'CURRENT_COUNTRY';
@@ -573,6 +577,23 @@ describe('AdContext', function () {
 		});
 
 		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
+	});
+
+	it('disable PageFair recovery on Edge', function () {
+		var context = {
+			opts: {
+				pageFairRecovery: true
+			}
+		};
+
+		mocks.instantGlobals = {
+			wgAdDriverPageFairRecoveryCountries: ['AA', 'CURRENT_COUNTRY']
+		};
+		spyOn(mocks.browserDetect, 'isEdge').and.returnValue(true);
+
+		getModule().setContext(context);
+
+		expect(context.opts.pageFairRecovery).toBeFalsy();
 	});
 
 	it('enables detection when instantGlobals.wgAdDriverSourcePointDetectionMobileCountries', function () {
