@@ -24,10 +24,6 @@ $wgExtensionCredits['other'][] = array(
 //i18n
 $wgExtensionMessagesFiles['CityVisualization'] = $dir . 'i18n/CityVisualization.i18n.php';
 
-// helper hierarchy
-// row assigners
-$wgAutoloadClasses['WikiImageRowHelper'] = $dir . 'classes/WikiImageRowHelper.class.php';
-
 // getdata helpers
 $wgAutoloadClasses['WikiListConditioner'] = $dir . 'classes/WikiListConditioner.class.php';
 $wgAutoloadClasses['WikiListConditionerForVertical'] = $dir . 'classes/WikiListConditionerForVertical.class.php';
