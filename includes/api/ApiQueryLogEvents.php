@@ -87,9 +87,8 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		$this->addFieldsIf( 'log_params', $this->fld_details );
 
 		if ( $this->fld_tags ) {
-			$this->addTables( 'tag_summary' );
-			$this->addJoinConds( array( 'tag_summary' => array( 'LEFT JOIN', 'log_id=ts_log_id' ) ) );
-			$this->addFields( 'ts_tags' );
+			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'log_id' );
+			$this->addFields( $tsTags );
 		}
 
 		if ( !is_null( $params['tag'] ) ) {
