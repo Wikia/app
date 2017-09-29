@@ -1,12 +1,13 @@
-/*global define, JSON*/
+/*global define, JSON, require*/
 define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.browserDetect',
 	'wikia.log',
-	'wikia.window'
-], function (lookupServices, slotRegistry, adBlockDetection, browserDetect, log, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.ml.rabbit')
+], function (lookupServices, slotRegistry, adBlockDetection, browserDetect, log, win, rabbit) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInfoTrackerHelper';
@@ -77,7 +78,8 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 			'viewport_height': win.innerHeight || 0,
 			'product_label': '',
 			'ad_status': status || 'unknown',
-			'scroll_y': slotRegistry.getScrollY(slot.name) || 0
+			'scroll_y': slotRegistry.getScrollY(slot.name) || 0,
+			'rabbit': (rabbit && rabbit.getSerializedResults()) || ''
 		};
 
 		return data;
