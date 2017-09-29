@@ -47,4 +47,4 @@ a,!1),b()):document.attachEvent&&"complete"===document.readyState&&(document.det
  * @cfg {String} [skinName='moono-lisa']
  * @member CKEDITOR
  */
-CKEDITOR.skinName = 'wikia';
+CKEDITOR.skinName = 'kama';
