@@ -1107,13 +1107,16 @@ class User implements JsonSerializable {
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_MASTER );
+		// SUS-2339 - query wikicities.user table instead of per-cluster copy
+		// `user` - backticks prevent adding `wikicities_cX` prefix to the table name
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_MASTER, [],  $wgExternalSharedDB );
 		if ( !is_object( $dbr ) ) {
 			$this->loadDefaults();
 			return false;
 		}
 
-		$s = $dbr->selectRow( 'user', '*', array( 'user_id' => $this->mId ), __METHOD__ );
+		$s = $dbr->selectRow( '`user`', '*', array( 'user_id' => $this->mId ), __METHOD__ );
 		Hooks::run( 'UserLoadFromDatabase', array( $this, &$s ) );
 
 		if ( $s !== false ) {
