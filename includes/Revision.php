@@ -286,7 +286,7 @@ class Revision implements IDBAccessObject {
 		if( $res ) {
 			$row = $res->fetchObject();
 			if( $row ) {
-				$ret = new Revision( $row );
+				$ret = new Revision( self::replaceUsernameFieldsWithVariables( $row ) );
 				return $ret;
 			}
 		}
@@ -295,20 +295,14 @@ class Revision implements IDBAccessObject {
 	}
 
 	/**
-	 * Return a wrapper for a series of database rows to
-	 * fetch all of a given page's revisions in turn.
-	 * Each row can be fed to the constructor to get objects.
-	 *
-	 * @param $title Title
-	 * @return ResultWrapper
+	 * @param $row
 	 */
-	public static function fetchRevision( $title ) {
-		return self::fetchFromConds(
-			wfGetDB( DB_SLAVE ),
-			array( 'rev_id=page_latest',
-				   'page_namespace' => $title->getNamespace(),
-				   'page_title'     => $title->getDBkey() )
-		);
+	private static function replaceUsernameFieldsWithVariables( $row )
+	{
+		$user = User::newFromId( $row->rev_user );
+		$row->user_name = $user->getName();
+		$row->rev_user_text = $user->getName();
+		return $row;
 	}
 
 	/**
@@ -324,20 +318,19 @@ class Revision implements IDBAccessObject {
 	private static function fetchFromConds( $db, $conditions, $flags = 0 ) {
 		$fields = array_merge(
 			self::selectFields(),
-			self::selectPageFields(),
-			self::selectUserFields()
+			self::selectPageFields()
 		);
 		$options = array( 'LIMIT' => 1 );
 		if ( ( $flags & self::READ_LOCKING ) == self::READ_LOCKING ) {
 			$options[] = 'LOCK IN SHARE MODE';
 		}
 		return $db->select(
-			array( 'revision', 'page', 'user' ),
+			array( 'revision', 'page' ),
 			$fields,
 			$conditions,
 			__METHOD__,
 			$options,
-			array( 'page' => self::pageJoinCond(), 'user' => self::userJoinCond() )
+			array( 'page' => self::pageJoinCond() )
 		);
 	}
 
