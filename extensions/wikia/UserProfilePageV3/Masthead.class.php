@@ -5,7 +5,7 @@ class Masthead {
 	/**
 	 * default avatar path
 	 */
-	const DEFAULT_PATH = 'http://images.wikia.com/messaging/images/';
+	const DEFAULT_PATH = 'https://vignette.wikia.nocookie.net/messaging/images/';
 
 	const DEFAULT_AVATAR_FILENAME = 'Avatar.jpg';
 
