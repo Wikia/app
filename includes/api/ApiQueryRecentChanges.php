@@ -199,12 +199,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
 		}
 
-		//  *** Wikia change (@author ADi) *** /Begin
-		if(!is_null($params['user'])) {
-			$this->addWhereFld('rc_user_text', $this->prepareUsername( $params['user'] ));
-		}
-		// *** Wikia change (@author ADi) *** /End
-
 		/* Add the fields we're concerned with to our query. */
 		$this->addFields( array(
 			'rc_timestamp',
@@ -312,32 +306,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 	}
 
 	/**
-	 * (Wikia) Validate the 'user' parameter
-	 * @param string $userName user name
-	 * @author ADi
-	 */
-	private function prepareUsername( $userName ) {
-		if( $userName ) {
-			$userName = User::getCanonicalName( $userName, 'valid' );
-			if( $userName === false ) {
-				$this->dieUsage( "User name {$userName} is not valid", 'param_user' );
-			}
-			else {
-				$userId = User::idFromName( $userName );
-				if( empty( $userId ) ) {
-					$this->dieUsage( "User name {$userName} not found", 'param_user' );
-				}
-				else {
-					return $userName;
-				}
-			}
-		}
-		else {
-			$this->dieUsage( 'User parameter may not be empty', 'param_user' );
-		}
-	}
-
-	/**
 	 * Extracts from a single sql row the data needed to describe one recent change.
 	 *
 	 * @param $row The row from which to extract the data.
@@ -400,7 +368,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		if ( $this->fld_user || $this->fld_userid ) {
 
 			if ( $this->fld_user ) {
-				$vals['user'] = $row->rc_user_text;
+				$vals['user'] = User::getUsername( $row->user, $row->rc_user_text );
 			}
 
 			if ( $this->fld_userid ) {
