@@ -33,7 +33,6 @@ use Wikia\Service\User\Auth\AuthServiceAccessor;
 use Wikia\Service\User\Auth\CookieHelper;
 use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Service\User\Preferences\PreferenceService;
-use Wikia\Util\PerformanceProfilers\UsernameLookupProfiler;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
@@ -4664,34 +4663,37 @@ class User implements JsonSerializable {
 		return $msg->isBlank() ? $right : $msg->text();
 	}
 
-
 	/**
-	 * We want to use one source for username.
-	 * This function will perform the lookup if
-	 * $wgEnableUsernameLookup is true
+	 * Get the username for an account given by the ID. It's basically User::whoIs() will a fallback.
+	 *
+	 * If it's an anon (userId = 0), return the second argument passed to this method.
+	 * The same fallback will happen when there's no database entry for a given user. In such case warning will be logged.
+	 *
+	 * @see SUS-825
 	 *
 	 * @param $userId int userId
 	 * @param $name string anon username
 	 * @return string
 	 */
-	public static function getUsername( $userId, $name ) {
+	public static function getUsername( int $userId, string $name ) : string {
 		if ( !empty( $userId ) ) {
-			$caller = debug_backtrace()[1];
-			$callerFunction = $caller["class"]."::".$caller["function"];
-			$profiler = UsernameLookupProfiler::create( $caller["class"], $callerFunction );
 			$dbName = static::whoIs( $userId );
+
+			// we currently have 500k mismatches logged every 24h
+			// cache added in User::whoIs should improve the situation here as we'll use the shared user storage
+			// instead of per-cluster copy
 			if( $dbName !== $name ) {
-				WikiaLogger::instance()->debug( "Default name different than lookup", [
+				WikiaLogger::instance()->warning( "Default name different than lookup", [
 					"user_id" => $userId,
 					// SUS-2008, always log username_db as string
 					"username_db" => $dbName ?: '',
 					"username_default" => $name,
-					"caller" => $callerFunction
 				] );
 			}
-			$profiler->end();
+
 			return $dbName ?: $name;
 		}
+		// this covers anons ($userId = 0), just fall back to the second method argument
 		return $name;
 	}
 
