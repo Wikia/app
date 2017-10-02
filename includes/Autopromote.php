@@ -120,11 +120,9 @@ class Autopromote {
 				// SUS-1290: If edit count condition is 0 skip edit count lookup
 				if ( $cond[1] === 0 ) {
 					return true;
-				} elseif ( !empty($wgEnableEditCountLocal) ) {
-					return $user->getEditCountLocal() >= $cond[1];
-				} else {
-					return $user->getEditCount() >= $cond[1];
 				}
+
+				return $user->getEditCount() >= $cond[1];
 			case APCOND_AGE:
 				$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 				return $age >= $cond[1];
