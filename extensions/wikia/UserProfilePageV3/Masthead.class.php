@@ -5,7 +5,7 @@ class Masthead {
 	/**
 	 * default avatar path
 	 */
-	const DEFAULT_PATH = 'https://vignette.wikia.nocookie.net/messaging/images/';
+	const DEFAULT_PATH = 'https://images.wikia.nocookie.net/messaging/images/';
 
 	const DEFAULT_AVATAR_FILENAME = 'Avatar.jpg';
 
@@ -435,7 +435,7 @@ class Masthead {
 		$url = $this->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 		if ( $url ) {
 			# all avatars (including the default ones) are always stored with a full URL
-			if ( startsWith( $url, 'http://' ) and preg_match('#/Avatar\d?.jpg$#', $url) ) {
+			if ( ( startsWith( $url, 'http://' ) or startsWith( $url, "https://" ) ) and preg_match('#/Avatar\d?.jpg$#', $url) ) {
 				return true;
 			}
 

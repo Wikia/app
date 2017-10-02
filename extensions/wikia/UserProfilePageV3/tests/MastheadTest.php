@@ -37,22 +37,22 @@ class MastheadTest extends WikiaBaseTest {
 			// default avatar
 			[
 				'avatarOption' => false,
-				'expectedUrl'  => 'http://images.wikia.com/messaging/images//1/19/Avatar.jpg',
+				'expectedUrl'  => 'https://images.wikia.nocookie.net/messaging/images//1/19/Avatar.jpg',
 			],
 			// custom avatar
 			[
 				'avatarOption' => '/f/fc/119245.png',
-				'expectedUrl'  => 'http://images.wikia.com/common/avatars/f/fc/119245.png',
+				'expectedUrl'  => 'https://images.wikia.nocookie.net/common/avatars/f/fc/119245.png',
 			],
 			// predefined avatar selected by the user ("sample")
 			[
-				'avatarOption' => 'http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg',
-				'expectedUrl'  => 'http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg',
+				'avatarOption' => 'https://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg',
+				'expectedUrl'  => 'https://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg',
 			],
 			// one of the default avatars
 			[
 				'avatarOption' => 'Avatar2.jpg',
-				'expectedUrl'  => 'http://images.wikia.com/messaging/images/e/e8/Avatar2.jpg',
+				'expectedUrl'  => 'https://images.wikia.nocookie.net/messaging/images/e/e8/Avatar2.jpg',
 			],
 		];
 	}
@@ -97,7 +97,23 @@ class MastheadTest extends WikiaBaseTest {
 			[
 				'http://static.wikia.nocookie.net/ba2cd689-8297-4fba-b739-0b6e08efc794',
 				false
-			]
+			],
+			[
+				'https://images.wikia.nocookie.net/messaging/images//1/19/Avatar.jpg',
+				true
+			],
+			[
+				'https://images.wikia.nocookie.net/messaging/images/e/e5/Avatar4.jpg',
+				true
+			],
+			[
+				'https://images.wikia.nocookie.net/common/avatars/3/3b/27078273.png',
+				false
+			],
+			[
+				'https://static.wikia.nocookie.net/ba2cd689-8297-4fba-b739-0b6e08efc794',
+				false
+			],
 		];
 	}
 }

@@ -111,7 +111,7 @@ function print_pre( $param, $return = 0 )
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
-	global $wgWikiaBaseDomain;
+	global $wgWikiaNocookieDomain;
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
 	if ( substr( strtolower( $url ), -4 ) != '.ogg' ) {
@@ -135,7 +135,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
 			// Production
-			$url = str_replace( 'https://images.wikia.com/', sprintf( "https://images.{$wgWikiaBaseDomain}/%s", $cb ), $url );
+			$url = str_replace( 'https://images.wikia.com/', sprintf( "https://images.{$wgWikiaNocookieDomain}/%s", $cb ), $url );
 		}
 	}
 	return $url;
