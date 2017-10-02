@@ -602,6 +602,7 @@ class User implements JsonSerializable {
 	 * @return Int|Null The corresponding user's ID, or null if user is nonexistent
 	 */
 	public static function idFromName( $name ) {
+		global $wgExternalSharedDB;
 		$nt = Title::makeTitleSafe( NS_USER, $name );
 		if( is_null( $nt ) ) {
 			# Illegal name
@@ -612,9 +613,8 @@ class User implements JsonSerializable {
 			return self::$idCacheByName[$name];
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
-
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$s = $dbr->selectRow( '`user`', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
 		if ( $s === false ) {
 			$user_name = $nt->getText();
 			Hooks::run( 'UserNameLoadFromId', array( $user_name, &$s ) );
