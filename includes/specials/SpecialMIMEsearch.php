@@ -43,19 +43,25 @@ class MIMEsearchPage extends QueryPage {
 	}
 
 	public function getQueryInfo() {
-		return array(
-			'tables' => array( 'image' ),
-			'fields' => array( "'" . NS_FILE . "' AS namespace",
-					'img_name AS title',
-					'img_major_mime AS value',
-					'img_size',
-					'img_width',
-					'img_height',
-					'img_user_text',
-					'img_timestamp' ),
-			'conds' => array( 'img_major_mime' => $this->major,
-					'img_minor_mime' => $this->minor )
-		);
+		return [
+			'tables' => [ 'image' ],
+			'fields' => [
+				"'" . NS_FILE . "' AS namespace",
+				'img_name AS title',
+				'img_major_mime AS value',
+				'img_size',
+				'img_width',
+				'img_height',
+				// SUS-808: Single source of truth for user name
+				'img_user',
+				'img_user_text',
+				'img_timestamp',
+			],
+			'conds' => [
+				'img_major_mime' => $this->major,
+				'img_minor_mime' => $this->minor,
+			],
+		];
 	}
 
 	function execute( $par ) {
@@ -100,7 +106,10 @@ class MIMEsearchPage extends QueryPage {
 			$lang->formatNum( $result->img_width ),
 			$lang->formatNum( $result->img_height )
 		) );
-		$user = Linker::link( Title::makeTitle( NS_USER, $result->img_user_text ), htmlspecialchars( $result->img_user_text ) );
+
+		// SUS-808: Single source of truth for user name
+		$userName = User::getUsername( $result->img_user, $result->img_user_text );
+		$user = Linker::link( Title::makeTitle( NS_USER, $userName ), htmlspecialchars( $userName) );
 		$time = htmlspecialchars( $lang->timeanddate( $result->img_timestamp ) );
 
 		return "($download) $plink . . $dimensions . . $bytes . . $user . . $time";
