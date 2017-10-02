@@ -176,9 +176,8 @@ class ApiQueryRevisions extends ApiQueryBase {
 
 		if ( isset( $prop['tags'] ) ) {
 			$this->fld_tags = true;
-			$this->addTables( 'tag_summary' );
-			$this->addJoinConds( array( 'tag_summary' => array( 'LEFT JOIN', array( 'rev_id=ts_rev_id' ) ) ) );
-			$this->addFields( 'ts_tags' );
+			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'rev_id' );
+			$this->addFields( $tsTags );
 		}
 
 		if ( !is_null( $params['tag'] ) ) {
