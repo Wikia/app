@@ -4663,11 +4663,13 @@ class User implements JsonSerializable {
 		return $msg->isBlank() ? $right : $msg->text();
 	}
 
-
 	/**
-	 * We want to use one source for username.
-	 * This function will perform the lookup if
-	 * $wgEnableUsernameLookup is true
+	 * Get the username for an account given by the ID. It's basically User::whoIs() will a fallback.
+	 *
+	 * If it's an anon (userId = 0), return the second argument passed to this method.
+	 * The same fallback will happen when there's no database entry for a given user. In such case warning will be logged.
+	 *
+	 * @see SUS-825
 	 *
 	 * @param $userId int userId
 	 * @param $name string anon username
