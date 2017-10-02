@@ -245,7 +245,9 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		if ( $this->fld_tags ) {
 			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'rc_id' );
 			$this->addFields( $tsTags );
-		} elseif ( !is_null( $params['tag'] ) ) {
+		}
+
+		if ( !is_null( $params['tag'] ) ) {
 			$this->addTables( 'change_tag' );
 			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rc_id=ct_rc_id' ) ) ) );
 			$this->addWhereFld( 'ct_tag' , $params['tag'] );
