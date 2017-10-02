@@ -188,15 +188,29 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 
 		if ( !is_null( $params['user'] ) ) {
-			$this->addWhereFld( 'rc_user_text', $params['user'] );
-			$index['recentchanges'] = 'rc_user_text';
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $params['user'] ) ) {
+				$this->addWhereFld( 'rc_user_text', $params['user'] );
+				$index['recentchanges'] = 'rc_user_text';
+			}
+			else {
+				$this->addWhereFld( 'rc_user', User::newFromName( $params['user'] )->getId() );
+				$index['recentchanges'] = 'rc_user';
+			}
 		}
 
 		if ( !is_null( $params['excludeuser'] ) ) {
 			// We don't use the rc_user_text index here because
 			// * it would require us to sort by rc_user_text before rc_timestamp
 			// * the != condition doesn't throw out too many rows anyway
-			$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
+
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $params['excludeuser'] ) ) {
+				$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
+			}
+			else {
+				$this->addWhere( 'rc_user != ' . User::newFromName( $params['excludeuser'] )->getId() );
+			}
 		}
 
 		/* Add the fields we're concerned with to our query. */
