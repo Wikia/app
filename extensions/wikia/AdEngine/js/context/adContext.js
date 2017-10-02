@@ -84,7 +84,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
+			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries) &&
+			!browserDetect.isEdge();
 		isRecoveryServiceAlreadyEnabled |= context.opts.pageFairRecovery;
 
 		// SourcePoint recovery
@@ -218,12 +219,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
-		}
-
-		if (context.providers.rubiconFastlane) {
-			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries) &&
-				!context.bidders.rubiconDisplay; // disable non-prebid implementation if Rubicon (Prebid) adapter is active
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);

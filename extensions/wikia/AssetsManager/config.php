@@ -65,9 +65,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
-		'//extensions/wikia/AdEngine/js/ml/hivi/leaderboard.js',
-		'//extensions/wikia/AdEngine/js/ml/hivi/leaderboardInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/model/logisticRegression.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
@@ -80,7 +77,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/bottomLeaderboard.js',
@@ -119,6 +115,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
+		'#group_adengine2_rabbit_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
@@ -142,6 +139,19 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
+	],
+];
+
+$config['adengine2_rabbit_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/fmr/fmrLogisticRegression.js',
+		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClassifier.js',
+		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
+		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
+		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
 	],
 ];
 
@@ -208,6 +218,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/utils/time.js',
 		'//extensions/wikia/AdEngine/js/video/ooyalaAdSetProvider.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
@@ -220,7 +231,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/SourcePoint/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js',
-		'//resources/wikia/modules/promise.js'
+		'//resources/wikia/modules/promise.js',
 	],
 ];
 
@@ -237,17 +248,6 @@ $config['adengine2_a9_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/lookup/a9.js',
-	],
-];
-
-$config['adengine2_rubicon_fastlane_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
-		'//extensions/wikia/AdEngine/js/utils/math.js',
 	],
 ];
 
@@ -835,15 +835,11 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/a9.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTier.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
@@ -942,6 +938,7 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
+		'#group_adengine2_rabbit_js',
 	],
 ];
 

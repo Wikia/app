@@ -1,10 +1,10 @@
 /*global define*/
-define('ext.wikia.adEngine.ml.model.logisticRegression', [
+define('ext.wikia.adEngine.ml.model.linear', [
 	'wikia.log'
 ], function (log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.ml.model.logisticRegression';
+	var logGroup = 'ext.wikia.adEngine.ml.model.linear';
 
 	function create(coefficients, intercept) {
 		function predict(x) {

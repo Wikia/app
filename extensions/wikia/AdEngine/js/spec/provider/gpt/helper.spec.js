@@ -39,10 +39,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				isEnabled: noop,
 				addMarker: noop
 			},
-			sourcePoint: {
-				recoverSlots: noop,
-				isEnabled: noop
-			},
 			slotTweaker: {
 				show: noop,
 				hide: noop,
@@ -126,7 +122,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.gptTargeting,
 			mocks.passbackHandler,
 			mocks.slotTargetingHelper,
-			mocks.sourcePoint,
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
@@ -134,7 +129,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.geo,
 			{},
 			mocks.log,
-			undefined,
 			undefined,
 			mocks.sraHelper,
 			mocks.pageFair
