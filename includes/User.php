@@ -4674,24 +4674,25 @@ class User implements JsonSerializable {
 	 * @param $name string anon username
 	 * @return string
 	 */
-	public static function getUsername( $userId, $name ) {
+	public static function getUsername( int $userId, string $name ) : string {
 		if ( !empty( $userId ) ) {
-			$caller = debug_backtrace()[1];
-			$callerFunction = $caller["class"]."::".$caller["function"];
-			$profiler = UsernameLookupProfiler::create( $caller["class"], $callerFunction );
 			$dbName = static::whoIs( $userId );
+
+			// we currently have 500k mismatches logged every 24h
+			// cache added in User::whoIs should improve the situation here as we'll use the shared user storage
+			// instead of per-cluster copy
 			if( $dbName !== $name ) {
-				WikiaLogger::instance()->debug( "Default name different than lookup", [
+				WikiaLogger::instance()->warning( "Default name different than lookup", [
 					"user_id" => $userId,
 					// SUS-2008, always log username_db as string
 					"username_db" => $dbName ?: '',
 					"username_default" => $name,
-					"caller" => $callerFunction
 				] );
 			}
-			$profiler->end();
+
 			return $dbName ?: $name;
 		}
+		// this covers anons ($userId = 0), just fall back to the second method argument
 		return $name;
 	}
 
