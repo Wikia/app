@@ -1302,46 +1302,6 @@ class Wikia {
 	}
 
 	/**
-	 * informJobQueue
-	 * Send information to the backend script what job was added
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param Integer count of job params
-	 *
-	 * @author Piotr Molski (MoLi)
-	 * @return true
-	 */
-	static public function informJobQueue( /*Integer*/ $job_count = 1 ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport;
-
-		if ( empty( $wgEnableScribeReport ) ) {
-			return true;
-		}
-
-		$params = array(
-			'dbname'	=> $wgDBname,
-			'wiki_id'	=> $wgCityId,
-			'jobs'		=> $job_count
-		);
-
-		try {
-			$message = array(
-				'method' => 'jobqueue',
-				'params' => $params
-			);
-			$data = json_encode( $message );
-			WScribeClient::singleton('trigger')->send($data);
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
-
-		return true;
-	}
-
-	/**
 	 * get_const_values
 	 * Returns some stats values from const_values table
 	 *

@@ -257,6 +257,6 @@ class WikiaPageType {
 	 */
 	public static function isCorporatePage() {
 		global $wgCityId;
-		return $wgCityId == Wikia::CORPORATE_WIKI_ID;
+		return ( new WikiaCorporateModel )->isCorporateWiki( $wgCityId );
 	}
 }

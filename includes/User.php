@@ -4675,8 +4675,7 @@ class User implements JsonSerializable {
 	 * @return string
 	 */
 	public static function getUsername( $userId, $name ) {
-		global $wgEnableUsernameLookup;
-		if ( !empty( $userId ) && $wgEnableUsernameLookup ) {
+		if ( !empty( $userId ) ) {
 			$caller = debug_backtrace()[1];
 			$callerFunction = $caller["class"]."::".$caller["function"];
 			$profiler = UsernameLookupProfiler::create( $caller["class"], $callerFunction );
