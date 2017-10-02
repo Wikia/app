@@ -620,7 +620,7 @@ class Revision implements IDBAccessObject {
 	 *      Revision::RAW              get the ID regardless of permissions
 	 * @param $user User object to check for, only if FOR_THIS_USER is passed
 	 *              to the $audience parameter
-	 * @return Integer
+	 * @return int
 	 */
 	public function getUser( $audience = self::FOR_PUBLIC, User $user = null ) {
 		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_USER ) ) {
@@ -635,7 +635,7 @@ class Revision implements IDBAccessObject {
 	/**
 	 * Fetch revision's user id without regard for the current user's permissions
 	 *
-	 * @return String
+	 * @return int
 	 */
 	public function getRawUser() {
 		return $this->mUser;
