@@ -33,7 +33,6 @@ use Wikia\Service\User\Auth\AuthServiceAccessor;
 use Wikia\Service\User\Auth\CookieHelper;
 use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Service\User\Preferences\PreferenceService;
-use Wikia\Util\PerformanceProfilers\UsernameLookupProfiler;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
