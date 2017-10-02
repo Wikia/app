@@ -1824,11 +1824,11 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-nbrcomments' => '{{PLURAL:$1|Un commentaire|$1 commentaires}}',
 	'blog-nopostfound' => 'Aucun billet trouvé.',
 	'blog-writeone' => 'Écrivez-en un !',
-	'blog-empty-user-blog' => "<br/><big>'''Aucun billet récent. [[Special:CreateBlogPage|À vous d'en écrire un !]]'''</big>
+	'blog-empty-user-blog' => "<br/><big>'''Aucun billet récent. [[Special:CreateBlogPage|Écrivez-en un !]]'''</big>
 
 Vous pouvez contribuer aux blogs communautaires de FANDOM en ajoutant un billet au [[{{MediaWiki:blogs-recent-url}}|blog de la communauté]] d'un wiki.
 
-Les blogs permettent de faire des annonces, transmettre des nouveautés, des opinions et des recommandations ou poser des questions à la communauté locale. Pour plus d'informations, voir [[w:fr:Help:Blogs]].",
+Les blogs sont souvent utilisés pour les actualités et les annonces, transmettre des opinions et des recommandations ou poser des questions à la communauté locale. Pour plus d'informations, voir [[w:fr:Aide:Blogs]].",
 	'blog-added' => 'ajouté',
 	'blog-edited' => 'modifié',
 	'blog-page' => 'Blog',
