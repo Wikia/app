@@ -189,7 +189,7 @@ class MultipleLookupCore {
 		if ( !is_array( $cached ) || MULTILOOKUP_NO_CACHE ) {
 			$res = $dbr->select(
 				array( 'recentchanges' ),
-				array( 'rc_user_text as user_name', 'max(rc_timestamp) as rc_timestamp' ),
+				array( 'rc_user_text as user_name', 'rc_user as user_id', 'max(rc_timestamp) as rc_timestamp' ), // SUS-812
 				$where,
 				__METHOD__,
 				array(
@@ -205,7 +205,10 @@ class MultipleLookupCore {
 				$row->rc_url = $this->mWikia->city_url;
 				$row->rc_city_title = $this->mWikia->city_title;
 				$row->log_comment = false;
-				$fetched_data[$row->user_name] = $row;
+
+				// SUS-812: use user_name column for anons, user_id for user accounts to get their names
+				$user_name = User::getUsername( $row->user_id, $row->user_name );
+				$fetched_data[$user_name] = $row;
 			}
 			$dbr->freeResult( $res );
 			unset( $res ) ;
