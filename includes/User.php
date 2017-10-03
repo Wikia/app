@@ -630,8 +630,9 @@ class User implements JsonSerializable {
 		}
 
 		// not in cache, query the database
-		$dbr = wfGetDB( DB_SLAVE );
-		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
+		global $wgExternalSharedDB; // SUS-2945 - let's use wikicities.user instead of per-cluster copy
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$s = $dbr->selectRow( '`user`', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
 
 		if ( $s === false ) {
 			$user_name = $nt->getText();
