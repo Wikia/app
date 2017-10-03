@@ -382,7 +382,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		if ( $this->fld_user || $this->fld_userid ) {
 
 			if ( $this->fld_user ) {
-				$vals['user'] = User::getUsername( $row->user, $row->rc_user_text );
+				$vals['user'] = User::getUsername( $row->rc_user, $row->rc_user_text );
 			}
 
 			if ( $this->fld_userid ) {
@@ -641,7 +641,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			'limit' => 'How many total changes to return',
 			'tag' => 'Only list changes tagged with this tag',
 			'toponly' => 'Only list changes which are the latest revision',
-			'user' => 'Filter results per user name',
 		);
 	}
 
