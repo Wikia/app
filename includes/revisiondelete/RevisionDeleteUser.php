@@ -100,7 +100,7 @@ class RevisionDeleteUser {
 		$dbw->update(
 			'recentchanges',
 			array( "rc_deleted = rc_deleted $op $delUser" ),
-			array( 'rc_user' => User::idFromName( $name ) ),
+			array( 'rc_user' => $userId ),
 			__METHOD__
 		);
 
