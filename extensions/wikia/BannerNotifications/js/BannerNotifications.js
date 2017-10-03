@@ -331,8 +331,11 @@
 
 		$bannerNotificationsWrapper.prepend($element);
 
-		// 'fadeIn' results in 'display: block;' on MS Edge§
-		$element.removeClass(transparentBannerClass);
+		// 'fadeIn' resulted in 'display: block;' on MS Edge
+		// we need to clear the stack after 'prepend' because transition will be not applied
+		setTimeout(function () {
+			$element.removeClass(transparentBannerClass);
+		}, 0);
 	}
 
 	/**
