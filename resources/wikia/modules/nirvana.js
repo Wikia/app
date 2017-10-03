@@ -28,7 +28,7 @@
 				sortedDict = {},
 				sortedKeys = [],
 				urlParams,
-				url = options.scriptPath || context.wgServer + context.wgScriptPath;
+				url = options.scriptPath || context.wgScriptPath;
 
 			if ( ( typeof options.controller === 'undefined' ) || ( typeof options.method === 'undefined' ) ) {
 				throw 'controller and method are required';
