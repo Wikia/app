@@ -20,7 +20,9 @@ define('ext.wikia.adEngine.video.player.ui.dynamicReveal', [
 				if (!slotExpanded) {
 					slotTweaker.expand(params.slotName);
 					slotExpanded = true;
-					video.ima.dispatchEvent('wikiaSlotExpanded');
+					setTimeout(function () {
+						video.ima.dispatchEvent('wikiaSlotExpanded');
+					}, 0);
 				}
 
 				slotWidth = slot.scrollWidth;
