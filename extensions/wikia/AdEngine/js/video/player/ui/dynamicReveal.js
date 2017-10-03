@@ -20,6 +20,7 @@ define('ext.wikia.adEngine.video.player.ui.dynamicReveal', [
 				if (!slotExpanded) {
 					slotTweaker.expand(params.slotName);
 					slotExpanded = true;
+					// Delay dispatching event so it's run after browser really start expanding the slot
 					setTimeout(function () {
 						video.ima.dispatchEvent('wikiaSlotExpanded');
 					}, 0);
