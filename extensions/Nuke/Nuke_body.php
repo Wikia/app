@@ -218,8 +218,15 @@ class SpecialNuke extends SpecialPage {
 
 		if ( $username === '' ) {
 			$what[] = 'rc_user_text';
+			$what[] = 'rc_user'; // SUS-812
 		} else {
-			$where['rc_user_text'] = $username;
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $username ) ) {
+				$where['rc_user_text'] = $username;
+			}
+			else {
+				$where['rc_user'] = User::idFromName( $username );
+			}
 		}
 
 		$pattern = $this->getRequest()->getText( 'pattern' );
@@ -244,7 +251,7 @@ class SpecialNuke extends SpecialPage {
 		foreach ( $result as $row ) {
 			$pages[] = array(
 				Title::makeTitle( $row->rc_namespace, $row->rc_title ),
-				$username === '' ? $row->rc_user_text : false
+				$username === '' ? User::getUsername( $row->rc_user, $row->rc_user_text ) : false // SUS-812
 			);
 		}
 
