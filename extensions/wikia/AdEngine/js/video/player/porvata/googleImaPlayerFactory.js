@@ -40,13 +40,6 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				);
 			}
 
-			if (mobileVideoAd) {
-				// Pause in order to prevent playing video ad in background on iOS
-				addEventListener('wikiaAdCompleted', function () {
-					mobileVideoAd.pause();
-				});
-			}
-
 			dispatchEvent('wikiaAdsManagerLoaded');
 			log('AdsManager loaded', log.levels.debug, logGroup);
 		}
@@ -92,8 +85,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function setAutoPlay(value) {
 			// mobileVideoAd DOM element is present on mobile only
 			if (mobileVideoAd) {
-				mobileVideoAd.setAttribute('muted', value);
-				mobileVideoAd.setAttribute('autoplay', value);
+				mobileVideoAd.muted = value;
+				mobileVideoAd.autoplay = value;
 			}
 		}
 
