@@ -40,11 +40,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				);
 			}
 
-			addEventListener('wikiaAdCompleted', function () {
-				if (mobileVideoAd) {
+			if (mobileVideoAd) {
+				// Pause in order to prevent playing video ad in background on iOS
+				addEventListener('wikiaAdCompleted', function () {
 					mobileVideoAd.pause();
-				}
-			});
+				});
+			}
 
 			dispatchEvent('wikiaAdsManagerLoaded');
 			log('AdsManager loaded', log.levels.debug, logGroup);
