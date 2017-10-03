@@ -425,7 +425,7 @@ class User implements JsonSerializable {
 	}
 
 	private static function getCacheKeyByName( string $name ) : string {
-		return wfMemcKey( 'user', 'name', $name );
+		return wfSharedMemcKey( 'user', 'name', $name );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -615,7 +615,7 @@ class User implements JsonSerializable {
 		}
 
 		if ( isset( self::$idCacheByName[$name] ) ) {
-			return self::$idCacheByName[$name];
+			return (int) self::$idCacheByName[$name];
 		}
 
 		// SUS-2945 | this method makes ~32mm queries every day
@@ -626,7 +626,7 @@ class User implements JsonSerializable {
 		$cachedId = $wgMemc->get( $key );
 
 		if ( is_numeric( $cachedId ) ) {
-			return self::$idCacheByName[$name] = $cachedId;
+			return (int) self::$idCacheByName[$name] = $cachedId;
 		}
 
 		// not in cache, query the database
