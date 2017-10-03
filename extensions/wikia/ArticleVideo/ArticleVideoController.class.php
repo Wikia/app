@@ -13,6 +13,7 @@ class ArticleVideoController extends WikiaController {
 			// TODO: replace it with DS icon when it's ready (XW-2824)
 			$this->setVal( 'closeIconUrl', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
 			$this->setVal( 'videoDetails', $featuredVideoData );
+			$this->setVal( 'jwplayerScript', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/scripts/jwplayer.js' );
 		} else {
 			$this->skipRendering();
 		}
