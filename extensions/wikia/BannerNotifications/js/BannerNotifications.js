@@ -64,7 +64,8 @@
 		fadeTime = 400,
 		wrapperClass = 'wds-banner-notification__container',
 		wrapperSelector = '.' + wrapperClass,
-		notificationSelector = '.wds-banner-notification';
+		notificationSelector = '.wds-banner-notification',
+		transparentBannerClass = 'wds-banner-notification--transparent';
 
 	/**
 	 * Creates a new banner notifications instance (doesn't show it yet though!)
@@ -112,6 +113,7 @@
 			this.timeout = defaultTimeout;
 		}
 
+		debugger;
 		addToDOM(this.$element, this.$parent);
 
 		this.hidden = false;
@@ -309,7 +311,7 @@
 				icon: types[type].svg,
 				typeClassName: types[type].className,
 			})
-		).addClass(type).hide();
+		).addClass(type + ' ' + transparentBannerClass);
 	}
 
 	/**
@@ -329,7 +331,8 @@
 
 		$bannerNotificationsWrapper.prepend($element);
 
-		$element.fadeIn(fadeTime, updatePlaceholderHeight);
+		// 'fadeIn' results in 'display: block;' on MS Edge§
+		$element.removeClass(transparentBannerClass);
 	}
 
 	/**
