@@ -708,9 +708,21 @@ class WikiRecommendations {
 	}
 
 	private static function getThumbnailUrl( $url ) {
+		if ( !VignetteRequest::isVignetteUrl( $url ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning(
+				"Invalid thumbnail url provided for explore-wikis module inside mixed content footer",
+				[
+					'thumbnailUrl' => $url
+				]
+			);
 
-		return VignetteRequest::fromUrl( $url )->zoomCrop()->width( self::THUMBNAIL_WIDTH )->height(
-			floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO )
-		)->url();
+			return '';
+		}
+
+		return VignetteRequest::fromUrl( $url )
+			->zoomCrop()
+			->width( self::THUMBNAIL_WIDTH )
+			->height( floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO ) )
+			->url();
 	}
 }
