@@ -46,6 +46,18 @@ class SpecialUnusedVideos extends ImageQueryPage {
 		return $retval;
 	}
 
+	function reallyDoQuery( $limit, $offset = false ) {
+		$result = parent::reallyDoQuery( $limit, $offset );
+
+		foreach ( $result as $row ) {
+			$row->img_user_text = User::getUsername( $row->img_user, $row->img_user_text );
+		}
+
+		$result->rewind();
+
+		return $result;
+	}
+
 	function usesTimestamps() {
 		return true;
 	}

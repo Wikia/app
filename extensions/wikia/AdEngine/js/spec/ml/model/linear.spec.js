@@ -1,9 +1,9 @@
 /*global describe, expect, it, modules*/
-describe('ext.wikia.adEngine.ml.model.logisticRegression', function () {
+describe('ext.wikia.adEngine.ml.model.linear', function () {
 	'use strict';
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.ml.model.logisticRegression']();
+		return modules['ext.wikia.adEngine.ml.model.linear']();
 	}
 
 	var testCases = [
@@ -25,9 +25,9 @@ describe('ext.wikia.adEngine.ml.model.logisticRegression', function () {
 
 	it('Predict value based on coefficients and intercept', function () {
 		testCases.forEach(function (testCase) {
-			var lr = getModule().create(testCase.data.coefficients, testCase.data.intercept);
+			var lm = getModule().create(testCase.data.coefficients, testCase.data.intercept);
 
-			expect(lr.predict([ 1, 1 ])).toBe(testCase.output);
+			expect(lm.predict([ 1, 1 ])).toBe(testCase.output);
 		});
 	});
 });

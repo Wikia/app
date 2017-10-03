@@ -80,8 +80,7 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder,
-					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled()
+					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,

@@ -243,9 +243,16 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 
 		if ( $this->fld_tags ) {
-			$this->addTables( 'tag_summary' );
-			$this->addJoinConds( array( 'tag_summary' => array( 'LEFT JOIN', array( 'rc_id=ts_rc_id' ) ) ) );
-			$this->addFields( 'ts_tags' );
+			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'rc_id' );
+			$this->addFields( $tsTags );
+		}
+
+		if ( !is_null( $params['tag'] ) ) {
+			$this->addTables( 'change_tag' );
+			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rc_id=ct_rc_id' ) ) ) );
+			$this->addWhereFld( 'ct_tag' , $params['tag'] );
+			global $wgOldChangeTagsIndex;
+			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
 
 		if ( $params['toponly'] || $showRedirects ) {
@@ -256,14 +263,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			if ( $params['toponly'] ) {
 				$this->addWhere( 'rc_this_oldid = page_latest' );
 			}
-		}
-
-		if ( !is_null( $params['tag'] ) ) {
-			$this->addTables( 'change_tag' );
-			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rc_id=ct_rc_id' ) ) ) );
-			$this->addWhereFld( 'ct_tag' , $params['tag'] );
-			global $wgOldChangeTagsIndex;
-			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
 
 		$this->token = $params['token'];

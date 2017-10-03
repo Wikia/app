@@ -11,6 +11,7 @@ class CrossOriginResourceSharingHeaderHelper {
 	const ALLOW_ORIGIN_HEADER_NAME = 'Access-Control-Allow-Origin';
 	const ALLOW_METHOD_HEADER_NAME = 'Access-Control-Allow-Method';
 	const ALLOW_CREDENTIALS_HEADER_NAME = 'Access-Control-Allow-Credentials';
+	const VARY_HEADER_VALUE = 'Origin';
 	const HEADER_DELIMETER = ',';
 
 	const PROD_ORIGINS = ['.wikia.com'];
@@ -85,6 +86,13 @@ class CrossOriginResourceSharingHeaderHelper {
 			foreach ( $this->whitelistOrigins as $origin ) {
 				if ( preg_match( '/' . $origin . '$/', $requestOrigin ) ) {
 					$this->setResponseHeader( $response, self::ALLOW_ORIGIN_HEADER_NAME, $requestOrigin );
+
+					// If we're setting Access-Control-Allow-Origin to something non-"*", then we also have to set Vary: Origin
+					// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#CORS_and_caching
+
+					// We can't just set the Vary header here, though, because it'll get clobbered in WikiaResponse::SendHeaders
+					// So, instead, we have to add the vary header to the output.
+					RequestContext::getMain()->getOutput()->addVaryHeader(self::VARY_HEADER_VALUE);
 					break;
 				}
 			}

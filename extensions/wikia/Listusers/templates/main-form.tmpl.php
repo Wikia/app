@@ -1,5 +1,3 @@
-<!-- s:<?= __FILE__ ?> -->
-<!-- DISTRIBUTION TABLE -->
 <script type="text/javascript" charset="utf-8">
 $( function () {
 
@@ -44,7 +42,6 @@ $( function () {
 			{ "sName": "username" },
 			{ "sName": "groups" },
 			{ "sName": "revcnt" },
-			{ "sName": "loggedin" },
 			{ "sName": "dtedit" }
 		],
 		"bProcessing": true,
@@ -63,7 +60,6 @@ $( function () {
 				order = '',
 				sortingCols = 0,
 				_tmp = [],
-				_tmpDesc = [],
 				columns = [],
 				sortColumns = [],
 				sortOrder = [],
@@ -221,43 +217,28 @@ $( function () {
 	</table>
 </fieldset>
 <? } ?>
-<!--<fieldset class="lu_fieldset">
-<legend><?= wfMessage( 'listusers-options' )->escaped() ?></legend>
-	<div class="lu_filter">
-		<span class="lu_filter lu_first"><?= wfMessage( 'listusersstartingtext' )->escaped() ?></span>
-		<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5"></span>
-		<span class="lu_filter lu_first"><?= wfMessage( 'listuserscontributed' )->escaped() ?></span>
-		<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" ><? foreach ( $obj->mContribs as $val => $text ) { ?><option <?= ( $val == $defContrib ) ? "selected='selected'" : "" ?> value="<?= $val ?>"><?= $text ?><? } ?></select></span>
-		<span class="lu_filter"><input type="button" value="<?= wfMessage( 'listusersdetails' )->escaped() ?>" id="lu-showusers"></span>
-	</div>
-</fieldset>-->
 </form>
 </div>
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lu-table">
 	<thead>
 		<tr>
-			<th width="45%"><?= wfMessage( 'listusers-username' )->escaped() ?></th>
-			<th width="15%"><?= wfMessage( 'listusers-groups' )->escaped() ?></th>
-			<th width="10%"><?= wfMessage( 'listusersrev-cnt' )->escaped() ?></th>
-			<th width="15%"><?= wfMessage( 'listusers-loggedin' )->escaped() ?></th>
-			<th width="15%"><?= wfMessage( 'listusers-edited' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusers-username' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusers-groups' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusersrev-cnt' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusers-edited' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="5" class="dataTables_empty"><?= wfMessage( 'livepreview-loading')->escaped() ?></td>
+			<td colspan="4" class="dataTables_empty"><?= wfMessage( 'livepreview-loading')->escaped() ?></td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
-			<th width="45%"><?= wfMessage( 'listusers-username' )->escaped() ?></th>
-			<th width="15%"><?= wfMessage( 'listusers-groups' )->escaped() ?></th>
-			<th width="5%"><?= wfMessage( 'listusersrev-cnt' )->escaped() ?></th>
-			<th width="15%"><?= wfMessage( 'listusers-loggedin' )->escaped() ?></th>
-			<th width="15%"><?= wfMessage( 'listusers-edited' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusers-username' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusers-groups' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusersrev-cnt' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusers-edited' )->escaped() ?></th>
 		</tr>
 	</tfoot>
 </table>
-
-<!-- END OF DISTRIBUTION TABLE -->
-<!-- e:<?= __FILE__ ?> -->

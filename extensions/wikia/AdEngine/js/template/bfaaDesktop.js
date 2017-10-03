@@ -67,10 +67,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			updateNavBar(slotContainer.offsetHeight);
 		}, 100));
 
-		if (win.WikiaBar) {
-			win.WikiaBar.hideContainer();
-		}
-
 		if (spotlightFooter) {
 			spotlightFooter.parentNode.style.display = 'none';
 		}
@@ -108,7 +104,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 			if (params.loadMedrecFromBTF) {
 				// refresh after uapContext.setUapId
-				helper.refreshSlot(googleSlots.getSlotByName(medrecSlotName));
+				helper.refreshSlot(medrecSlotName);
 			}
 		});
 

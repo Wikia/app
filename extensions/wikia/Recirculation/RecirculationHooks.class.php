@@ -5,7 +5,6 @@
  */
 class RecirculationHooks {
 
-	const NO_INDEX_NAMESPACES = [ NS_FILE, NS_BLOG_ARTICLE ];
 	const DATE_FORMAT = 'Y-m-d H:i:s';
 
 	/**
@@ -78,7 +77,7 @@ class RecirculationHooks {
 	public static function isCorrectPageType() {
 		$wg = F::app()->wg;
 		$title = RequestContext::getMain()->getTitle();
-		$showableNamespaces = array_merge( $wg->ContentNamespaces, self::NO_INDEX_NAMESPACES );
+		$showableNamespaces = array_merge( $wg->ContentNamespaces, self::getNoIndexNamespaces() );
 		$isInShowableNamespaces = $title->exists() && $title->inNamespaces( $showableNamespaces );
 
 		if ( $isInShowableNamespaces && !WikiaPageType::isActionPage() &&
@@ -202,7 +201,19 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	private static function isNoIndexNamespace() {
-		return RequestContext::getMain()->getTitle()->inNamespaces( self::NO_INDEX_NAMESPACES );
+		return RequestContext::getMain()->getTitle()->inNamespaces( self::getNoIndexNamespaces() );
+	}
+
+	/**
+	 * @return array
+	 */
+	private static function getNoIndexNamespaces() {
+		$noIndexNamespaces = [ NS_FILE ];
+		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
+			$noIndexNamespaces[] = NS_BLOG_ARTICLE;
+		}
+
+		return $noIndexNamespaces;
 	}
 
 }

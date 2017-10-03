@@ -290,7 +290,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	 * (uses POST and contains a valid edit token)
 	 *
 	 * @param \User $user
-	 * @return mixed
+	 * @return void
 	 * @throws BadRequestException
 	 */
 	public function assertValidWriteRequest( \User $user ) {
