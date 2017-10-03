@@ -562,8 +562,10 @@ class NewPagesPager extends ReverseChronologicalPager {
 		# Do a batch existence check on pages
 		$linkBatch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
-			$linkBatch->add( NS_USER, $row->rc_user_text );
-			$linkBatch->add( NS_USER_TALK, $row->rc_user_text );
+			$userName = User::getUsername( $row->rc_user, $row->rc_user_text ); // SUS-812
+
+			$linkBatch->add( NS_USER, $userName );
+			$linkBatch->add( NS_USER_TALK, $userName );
 			$linkBatch->add( $row->rc_namespace, $row->rc_title );
 		}
 		$linkBatch->execute();
