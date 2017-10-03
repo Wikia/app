@@ -659,32 +659,32 @@ class WikiRecommendations {
 		]
 	];
 
-	public static function getRecommendations($contentLanguage) {
+	public static function getRecommendations( $contentLanguage ) {
 		global $wgWikiaDatacenter, $wgWikiaEnvironment;
 
-		if ($wgWikiaEnvironment === WIKIA_ENV_STAGING) {
+		if ( $wgWikiaEnvironment === WIKIA_ENV_STAGING ) {
 			$recommendations = self::STAGING_RECOMMENDATIONS;
-		} elseif ($wgWikiaEnvironment === WIKIA_ENV_DEV) {
-			if ($wgWikiaDatacenter === WIKIA_DC_POZ) {
+		} elseif ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
+			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
 				$recommendations = self::DEV_RECOMMENDATIONS['pl'];
 			} else {
 				$recommendations = self::DEV_RECOMMENDATIONS['us'];
 			}
 		} else {
 			$recommendations = self::RECOMMENDATIONS['en'];
-			$fallbackedContentLanguage = self::fallbackToSupportedLanguages($contentLanguage);
+			$fallbackedContentLanguage = self::fallbackToSupportedLanguages( $contentLanguage );
 
-			if (array_key_exists($fallbackedContentLanguage, self::RECOMMENDATIONS)) {
+			if ( array_key_exists( $fallbackedContentLanguage, self::RECOMMENDATIONS ) ) {
 				$recommendations = self::RECOMMENDATIONS[$fallbackedContentLanguage];
 			}
-			shuffle($recommendations);
+			shuffle( $recommendations );
 		}
 
-		$recommendations = array_slice($recommendations, 0, self::WIKI_RECOMMENDATIONS_LIMIT);
+		$recommendations = array_slice( $recommendations, 0, self::WIKI_RECOMMENDATIONS_LIMIT );
 
 		$index = 1;
-		foreach ($recommendations as &$recommendation) {
-			$recommendation['thumbnailUrl'] = self::getThumbnailUrl($recommendation['thumbnailUrl']);
+		foreach ( $recommendations as &$recommendation ) {
+			$recommendation['thumbnailUrl'] = self::getThumbnailUrl( $recommendation['thumbnailUrl'] );
 			$recommendation['index'] = $index;
 			$index++;
 		}
@@ -692,8 +692,8 @@ class WikiRecommendations {
 		return $recommendations;
 	}
 
-	private static function fallbackToSupportedLanguages($language) {
-		switch ($language) {
+	private static function fallbackToSupportedLanguages( $language ) {
+		switch ( $language ) {
 			case 'pt':
 				return 'pt-br';
 			case 'zh-tw':
@@ -707,10 +707,10 @@ class WikiRecommendations {
 		}
 	}
 
-	private static function getThumbnailUrl($url) {
+	private static function getThumbnailUrl( $url ) {
 
-		return VignetteRequest::fromUrl($url)->zoomCrop()->width(self::THUMBNAIL_WIDTH)->height(
-			floor(self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO)
+		return VignetteRequest::fromUrl( $url )->zoomCrop()->width( self::THUMBNAIL_WIDTH )->height(
+			floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO )
 		)->url();
 	}
 }
