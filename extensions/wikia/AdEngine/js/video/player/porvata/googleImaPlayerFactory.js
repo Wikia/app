@@ -40,9 +40,9 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				);
 			}
 
-			addEventListener('allAdsCompleted', function () {
+			addEventListener('wikiaAdCompleted', function () {
 				if (mobileVideoAd) {
-					mobileVideoAd.src = '';
+					mobileVideoAd.pause();
 				}
 			});
 
