@@ -194,7 +194,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				$index['recentchanges'] = 'rc_user_text';
 			}
 			else {
-				$this->addWhereFld( 'rc_user', User::newFromName( $params['user'] )->getId() );
+				$this->addWhereFld( 'rc_user', User::idFromName( $params['user'] ) );
 				$index['recentchanges'] = 'rc_user';
 			}
 		}
@@ -209,7 +209,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
 			}
 			else {
-				$this->addWhere( 'rc_user != ' . User::newFromName( $params['excludeuser'] )->getId() );
+				$this->addWhere( 'rc_user != ' . User::idFromName( $params['excludeuser'] ) );
 			}
 		}
 
