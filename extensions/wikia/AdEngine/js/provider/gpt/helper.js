@@ -7,11 +7,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
+	'ext.wikia.adEngine.provider.gpt.targeting',
 	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
@@ -25,11 +28,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adDetect,
 	AdElement,
 	googleTag,
+	googleSlots,
+	gptTargeting,
 	passbackHandler,
 	slotTargeting,
 	adBlockDetection,
 	adBlockRecovery,
 	slotTweaker,
+	doc,
 	geo,
 	instantGlobals,
 	log,
@@ -178,15 +184,19 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
-	function refreshSlot(slot) {
-		log(['Refresh slot', slot.name, slot], log.levels.debug, logGroup);
-		refreshTargetingData(slot);
-		googleTag.refreshSlot(slot);
-	}
+	function refreshSlot(slotName) {
+		var slot = googleSlots.getSlotByName(slotName),
+			targeting;
 
-	function refreshTargetingData(slot) {
-		slot.setTargeting('uap', uapContext.getUapId().toString());
-		return slot;
+		if (slot) {
+			log(['Refresh slot', slotName, slot], log.levels.debug, logGroup);
+			targeting = gptTargeting.getSlotLevelTargeting(slotName);
+			targeting.uap = uapContext.getUapId().toString();
+			AdElement.configureSlot(slot, targeting);
+			googleTag.refreshSlot(slot);
+		} else {
+			log(['Refresh slot', slotName, 'does not exist'], log.levels.debug, logGroup);
+		}
 	}
 
 	adContext.addCallback(function () {
