@@ -87,6 +87,11 @@ class ImageReviewEventsHooks {
 		return true;
 	}
 
+	public static function onCloseWikiPurgeSharedData( $wikiId ) {
+		self::actionPurge( $wikiId );
+		return true;
+	}
+
 	private static function isFileForReview( $title ) {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$localFile = wfLocalFile( $title );
@@ -141,6 +146,17 @@ class ImageReviewEventsHooks {
 			$data['revisionId'] = $revisionId;
 		}
 
+		$rabbitConnection->publish( self::ROUTING_KEY, $data );
+	}
+
+	private static function actionPurge( $wikiId, $action = 'purged' ) {
+		global $wgImageReview;
+
+		$rabbitConnection =  new ConnectionBase( $wgImageReview );
+		$data = [
+			'wikiId' => $wikiId,
+			'action' => $action
+		];
 		$rabbitConnection->publish( self::ROUTING_KEY, $data );
 	}
 
