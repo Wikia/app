@@ -34,7 +34,7 @@
 	function SWMAjaxDismiss( e ) {
 		e.preventDefault();
 		var	id = e.data.id,
-			ajaxUrl = wgServer + wgScript + "?title=" + wgPageName + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs[]=" + id,
+			ajaxUrl = wgScript + "?title=" + wgPageName + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs[]=" + id,
 			request = $.get(ajaxUrl,function(data){
 				$("#msg_"+id).remove();
 			});

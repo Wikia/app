@@ -169,7 +169,7 @@
         }
 
         if (useLocalResources) {
-            Exhibit.urlPrefix = wgServer + wgScriptPath + "/extensions/SemanticResultFormats/formats/Exhibit/exhibit/";
+            Exhibit.urlPrefix = wgScriptPath + "/extensions/SemanticResultFormats/formats/Exhibit/exhibit/";
         }
 
         if (Exhibit.params.locale) { // ISO-639 language codes,
@@ -251,7 +251,7 @@
         window.SimileAjax_onLoad = loadMe;
 
         var url = /*useLocalResources*/ true ?
-            wgServer + wgScriptPath + "/extensions/SemanticResultFormats/formats/Exhibit/ajax/simile-ajax-api.js?bundle=false" :
+            wgScriptPath + "/extensions/SemanticResultFormats/formats/Exhibit/ajax/simile-ajax-api.js?bundle=false" :
             "http://api.simile-widgets.org/ajax/2.2.1/simile-ajax-api.js";
 
         var createScriptElement = function() {

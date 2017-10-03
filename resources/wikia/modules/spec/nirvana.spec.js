@@ -13,7 +13,6 @@ describe('Nirvana', function () {
 		controllerName = 'foo',
 		methodName = 'bar',
 		origwgScriptPath,
-		origwgServer,
 		jQueryParamMock = function (data) {
 			var ret = '';
 
@@ -30,16 +29,13 @@ describe('Nirvana', function () {
 
 	beforeEach(function () {
 		origwgScriptPath = window.wgScriptPath;
-		origwgServer = window.wgServer;
 
 		// set up the environment
 		window.wgScriptPath = '';
-		window.wgServer = '';
 	});
 
 	afterEach(function () {
 		window.wgScriptPath = origwgScriptPath;
-		window.wgServer = origwgServer;
 	});
 
 	it('registers AMD module', function () {

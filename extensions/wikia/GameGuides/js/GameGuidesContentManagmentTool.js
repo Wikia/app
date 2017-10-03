@@ -1,4 +1,4 @@
-/* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
+/* global wgNamespaceIds, wgFormattedNamespaces, mw, wgScript */
 $(function(){
 	require(['wikia.window', 'jquery', 'wikia.nirvana', 'JSMessages'], function(window, $, nirvana, msg){
 		'use strict';
@@ -22,7 +22,7 @@ $(function(){
 			categoryName = wgFormattedNamespaces[categoryId] + ':',
 			setup = function(elem){
 				(elem || $ul.find('.cat-input')).autocomplete({
-					serviceUrl: wgServer + wgScript,
+					serviceUrl: wgScript,
 					params: {
 						action: 'ajax',
 						rs: 'getLinkSuggest',

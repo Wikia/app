@@ -932,7 +932,7 @@ function WMU_insertPlaceholder( box ) {
 	WMU_box_filled.push(box);
 	var to_update = $( '#WikiaImagePlaceholder' + box );
 	to_update.html($( '#ImageUploadCode' ).html());
-	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
+	$.post(wgScript + '?title=' + wgPageName  +'&action=purge');
 }
 
 function WMU_insertImage(type) {

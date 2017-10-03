@@ -9,7 +9,7 @@ define('LyricFindTracker', ['wikia.window', 'jquery'], function(window, $) {
                 gracenoteid:  gracenoteId,
 				rand: ('' + Math.random()).substr(2,8)
 			},
-			url = window.wgServer + window.wgScriptPath + '/wikia.php?' + $.param(data);
+			url = window.wgScriptPath + '/wikia.php?' + $.param(data);
 
 		img.src = url;
 

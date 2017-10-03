@@ -69,7 +69,7 @@ var ChatView = Backbone.View.extend({
 			linkText = linkText.replace(/_/g, " ");
 			linkText = unescape( linkText );
 
-			var path = wgServer + wgArticlePath;
+			var path = wgArticlePath;
 			article = encodeURIComponent( article );
 			article = article.replace(/%2f/ig, "/"); // make slashes more human-readable (they don't really need to be escaped)
 			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
