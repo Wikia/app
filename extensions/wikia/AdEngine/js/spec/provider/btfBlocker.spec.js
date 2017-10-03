@@ -19,6 +19,9 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		uapContext: {
 			isUapLoaded: function () {
 				return false;
+			},
+			isRoadblockLoaded: function () {
+				return false;
 			}
 		},
 		adBlockDetection: {
