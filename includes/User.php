@@ -625,7 +625,7 @@ class User implements JsonSerializable {
 		$key = self::getCacheKeyByName( $name );
 		$cachedId = $wgMemc->get( $key );
 
-		if ( is_int( $cachedId ) ) {
+		if ( is_numeric( $cachedId ) ) {
 			return self::$idCacheByName[$name] = $cachedId;
 		}
 
@@ -642,12 +642,12 @@ class User implements JsonSerializable {
 			$result = null;
 		} else {
 			$result = (int) $s->user_id;
+
+			// SUS-2945 - only store when there's a match
+			$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
 		}
 
 		self::$idCacheByName[$name] = $result;
-
-		// SUS-2945
-		$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
 
 		if ( count( self::$idCacheByName ) > 1000 ) {
 			self::$idCacheByName = array();
