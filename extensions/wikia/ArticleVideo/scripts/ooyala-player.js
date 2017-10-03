@@ -205,8 +205,6 @@ define('ooyala-player', [
 			params.replayAds = options.replayAds || false;
 		}
 
-
-
 		html5Player = new OoyalaHTML5Player(document.getElementById(videoElementId), params, onCreate, options.inlineSkinConfig);
 		html5Player.setUpPlayer();
 

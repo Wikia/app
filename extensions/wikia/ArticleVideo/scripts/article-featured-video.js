@@ -387,7 +387,6 @@ require([
 					label: 'recommended-video-depth-' + recommendedVideoDepth
 				});
 
-
 				ooyalaVideoController.updateAdSet(ooyalaAdSetProvider.get(recommendedVideoDepth + 1, correlator, {
 					contentSourceId: videoData.dfpContentSourceId,
 					videoId: nextVideoId
