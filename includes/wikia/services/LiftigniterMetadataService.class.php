@@ -25,21 +25,23 @@ class LiftigniterMetadataService {
 			->getConfig()
 			->setApiKey(self::INTERNAL_REQUEST_HEADER, '1' );
 
+		$item = null;
 		try {
-			return $api->getItem( $cityId, $pageId );
-		} catch ( ApiException $apiException ) {
-			$code = $apiException->getCode();
+			list($response, $code) = $api->getItemWithHttpInfo( $cityId, $pageId );
 
-			if (intval($code) != 404) {
-				WikiaLogger::instance()->debug( 'could not fetch data from liftigniter-metadata service', [
-					'exception' => $apiException,
-					'wiki_id' => intval( $cityId ),
-					'page_id' => intval( $pageId )
-				] );
+			if ( $code == 200 ) {
+				$item = $response;
 			}
+		} catch ( ApiException $apiException ) {
+			WikiaLogger::instance()->debug( 'could not fetch data from liftigniter-metadata service', [
+				'exception' => $apiException,
+				'wiki_id' => intval( $cityId ),
+				'page_id' => intval( $pageId ),
+				'status_code' => intval( $apiException->getCode() )
+			] );
 		}
 
-		return null;
+		return $item;
 	}
 
 	/**
