@@ -241,7 +241,7 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( $sArticleTitle !== false ) {
 			$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
-			// some titles does not have a `#` in it, which breaks string splitting
+			// `#` is not included in some titles, which breaks string splitting
 			// so we want to make sure there are exactly 2 items in array
 			list($sArticleTitle, $sArticleAnchor) = array_pad( explode( '#', $sArticleTitle, 2 ), 2, '' );
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
