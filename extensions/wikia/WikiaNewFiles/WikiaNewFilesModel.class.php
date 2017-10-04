@@ -77,6 +77,8 @@ class WikiaNewFilesModel extends WikiaModel {
 		return $sql->runLoop( $this->dbr, function ( &$data, $row ) {
 			$this->addLinkingArticles( $row );
 			$data[] = $row;
+			
+			$row->img_user_text = User::getUsername( $row->img_user, $row->img_user_text );
 		} );
 	}
 

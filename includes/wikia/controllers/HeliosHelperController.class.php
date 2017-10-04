@@ -60,9 +60,10 @@ class HelperController extends \WikiaController {
 
 		return;
 	}
-
+	
 	/**
 	 * AntiSpoof: update records once a new account has been created.
+	 * TODO: remove after post-registration hooks are fixed
 	 *
 	 * @see extensions/AntiSpoof
 	 */
@@ -81,6 +82,7 @@ class HelperController extends \WikiaController {
 
 	/**
 	 * UserLogin: send a confirmation email a new account has been created
+	 * TODO: remove after post-registration hooks are fixed
 	 */
 	public function sendConfirmationEmail() {
 		$this->response->setVal( self::FIELD_SUCCESS, false );

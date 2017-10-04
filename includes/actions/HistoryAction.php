@@ -351,25 +351,22 @@ class HistoryPager extends ReverseChronologicalPager {
 	}
 
 	function getQueryInfo() {
-		$queryInfo = array(
-			'tables'  => array( 'revision', 'user' ),
-			'fields'  => array_merge( Revision::selectFields(), Revision::selectUserFields() ),
-			'conds'   => array_merge(
-				array( 'rev_page' => $this->getWikiPage()->getId() ),
-				$this->conds ),
-			'options' => array( 'USE INDEX' => array( 'revision' => 'page_timestamp' ) ),
-			'join_conds' => array(
-				'user'        => Revision::userJoinCond(),
-				'tag_summary' => array( 'LEFT JOIN', 'ts_rev_id=rev_id' ) ),
-		);
-		ChangeTags::modifyDisplayQuery(
-			$queryInfo['tables'],
-			$queryInfo['fields'],
-			$queryInfo['conds'],
-			$queryInfo['join_conds'],
-			$queryInfo['options'],
-			$this->tagFilter
-		);
+		$queryInfo = [
+			'tables' => [ 'revision', 'user' ],
+			'fields' => array_merge( Revision::selectFields(), Revision::selectUserFields() ),
+			'conds' => array_merge( [ 'rev_page' => $this->getWikiPage()->getId() ], $this->conds ),
+			'options' => [
+				'USE INDEX' => [ 'revision' => 'page_timestamp' ]
+			],
+			'join_conds' => [
+				'user' => Revision::userJoinCond(),
+			],
+		];
+
+		ChangeTags::modifyDisplayQuery( $queryInfo['tables'], $queryInfo['fields'],
+			$queryInfo['conds'], $queryInfo['join_conds'], $queryInfo['options'],
+			$this->tagFilter );
+
 		Hooks::run( 'PageHistoryPager::getQueryInfo', [ $this, &$queryInfo ] );
 
 		return $queryInfo;

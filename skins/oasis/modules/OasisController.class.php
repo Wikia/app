@@ -59,7 +59,6 @@ class OasisController extends WikiaController {
 		$this->gfc = null;
 		$this->nielsen = null;
 		$this->prebid = null;
-		$this->rubiconFastlane = null;
 		$this->sourcePoint = null;
 		$this->instartLogic = null;
 		$this->dynamicYield = null;
@@ -255,7 +254,6 @@ class OasisController extends WikiaController {
 			$this->gfc = AnalyticsEngine::track('GoogleFundingChoices', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->sourcePoint = ARecoveryBootstrapCode::getSourcePointBootstrapCode();
 			$this->instartLogic = ARecoveryBootstrapCode::getInstartLogicBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);

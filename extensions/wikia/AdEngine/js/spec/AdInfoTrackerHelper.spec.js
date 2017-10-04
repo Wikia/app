@@ -167,26 +167,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		expect(data.bidder_won).toBe('');
 	});
 
-	it('prepareData correctly calculates bidder_won for bidders - fastlane_private', function () {
-		var data,
-			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
-
-		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, rpfl_7450: 1});
-		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
-
-		mocks.lookupServices.getDfpSlotPrices = function() {
-			return {
-				fastlane_private: '2.50',
-				openx: '1.30',
-				rubicon: '0.75'
-			};
-		};
-
-		data = getModule().prepareData(slot);
-
-		expect(data.bidder_won).toBe('fastlane_private');
-	});
-
 	it('prepareData correctly calculates bidder_won for bidders - openx', function () {
 		var data,
 			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
@@ -196,7 +176,6 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 
 		mocks.lookupServices.getDfpSlotPrices = function() {
 			return {
-				fastlane_private: '2.50',
 				openx: '3.30',
 				rubicon: '0.75'
 			};
@@ -211,12 +190,11 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 		var data,
 			slot = getTopLeaderboardSlotWithPageParams(fakeJSONString);
 
-		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, hb_bidder: 'rubicon', rpfl_7450: 1});
+		slot.container.firstChild.dataset.gptSlotParams = JSON.stringify({foo: 1, hb_bidder: 'rubicon'});
 		slot.container.firstChild.dataset.gptCreativeSize = fakeJSONString;
 
 		mocks.lookupServices.getDfpSlotPrices = function() {
 			return {
-				fastlane_private: '2.60',
 				openx: '2.60',
 				rubicon: '2.60'
 			};
