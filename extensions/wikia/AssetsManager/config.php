@@ -2700,9 +2700,13 @@ $config['jwplayer_js'] = [
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/jwplayer.js',
 		'//extensions/wikia/ArticleVideo/scripts/jwplayer-onscroll.js',
+<<<<<<< Updated upstream
 		'//extensions/wikia/ArticleVideo/scripts/jwplayer-video-feedback.js',
 		'//extensions/wikia/ArticleVideo/scripts/jwplayer-autoplay-toggle.js',
 	    '//extensions/wikia/ArticleVideo/scripts/video-feedback.js'
+=======
+		'//extensions/wikia/ArticleVideo/scripts/jwplayer-featured-video-tracking.js'
+>>>>>>> Stashed changes
 	],
 ];
 
