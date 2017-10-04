@@ -20,7 +20,6 @@
     "doctrine/annotations": "~1.2",
     "doctrine/cache": "~1.0",
     "ocramius/proxy-manager": "~1.0",
-    "sensiolabs/consul-php-sdk": "^1.0",
     "wikia/phpflickr": "^3.1",
     "param-processor/param-processor": "~1.2",
     "data-values/geo": "~1.0",
@@ -36,6 +35,7 @@
     "wikia/file_ogg": "^1.0",
     "wikia/semantic-media-wiki": "^2.4",
     "wikia/maps": "^3.5",
-    "wikia/semantic-scribunto": "^1.1"
+    "wikia/semantic-scribunto": "^1.1",
+    "sensiolabs/consul-php-sdk": "^3.0"
   }
 }
