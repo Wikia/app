@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 /**
  * @category Wikia
  * @group Integration
@@ -13,7 +15,7 @@ class PhalanxServiceTest extends WikiaBaseTest {
 		$this->setupFile =  __DIR__ . '/../Phalanx_setup.php';
 		parent::setUp();
 
-		$this->service = new PhalanxService();
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 		if ( !$this->service->status() ) {
 			// Skip test if phalanx service is not available
 			$this->markTestSkipped( "Can't connect to phalanx service" );
@@ -86,11 +88,4 @@ class PhalanxServiceTest extends WikiaBaseTest {
 		$this->assertEquals( 0, $ret, "Invalid regex" );
 
 	}
-
-	public function testPhalanxServiceStats() {
-		$ret = $this->service->stats( );
-		// check for known strings
-		$this->assertRegexp( "/email|wiki_creation|summary/", $ret );
-	}
-
 }

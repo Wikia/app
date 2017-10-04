@@ -151,40 +151,34 @@ class PhalanxHooks extends WikiaObject {
 			$phalanx['expire'] = null ;
 		}
 
-		if ( empty( $multitext ) ) {
+		$bulkdata = explode( "\n", $multitext );
+
+		if ( empty( $bulkdata ) ) {
 			/* single mode - insert/update record */
 			$data['id'] = $phalanx->save();
-			$result = $data['id'] ? array( "success" => array( $data['id'] ), "failed" => 0 ) : false;
-		}
-		else {
-			/* non-empty bulk field */
-			$bulkdata = explode( "\n", $multitext );
-			if ( count( $bulkdata ) > 0 ) {
-				$result = array( 'success' => array(), 'failed' => 0 );
-				$targets = [];
-				foreach ( $bulkdata as $bulkrow ) {
-					$bulkrow = trim( $bulkrow );
-					if ( $bulkrow !== '' ) {
-						$targets[] = $bulkrow;
-					}
-				}
-
-				// SUS-1207: Insert Phalanx bulk filters in single write operation
-				$result['success'] = $phalanx->insertBulkFilter( $targets );
-			} else {
-				$result = false;
-			}
-		}
-
-		if ( $result !== false ) {
-			$service = Injector::getInjector()->get( PhalanxService::class );
-			$ret = $service->reload( $result["success"] );
+			$blockIds = $data['id'] ? [ $data['id'] ] : false;
 		} else {
-			$ret = $result;
+			$targets = [];
+			foreach ( $bulkdata as $bulkrow ) {
+				$bulkrow = trim( $bulkrow );
+				if ( $bulkrow !== '' ) {
+					$targets[] = $bulkrow;
+				}
+			}
+
+			// SUS-1207: Insert Phalanx bulk filters in single write operation
+			$blockIds = $phalanx->insertBulkFilter( $targets );
+		}
+
+		if ( !empty( $blockIds ) ) {
+			$service = Injector::getInjector()->get( PhalanxService::class );
+			$service->reload( $blockIds );
+
+			return true;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $ret;
+		return false;
 	}
 
 	/**
@@ -201,7 +195,7 @@ class PhalanxHooks extends WikiaObject {
 		$phalanx = Phalanx::newFromId( $id );
 
 		// VSTF should not be allowed to delete email blocks in Phalanx
-		if ( ( $phalanx->offsetGet( 'type' ) & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+		if ( ( $phalanx['type'] & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -209,8 +203,7 @@ class PhalanxHooks extends WikiaObject {
 		$id = $phalanx->delete();
 		if ( $id ) {
 			$service = Injector::getInjector()->get( PhalanxService::class );
-			$ids = array( $id );
-			$ret = $service->reload( $ids );
+			$ret = $service->reload( [ $id ] );
 		} else {
 			$ret = false;
 		}
