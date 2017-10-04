@@ -1,6 +1,6 @@
 (function () {
 	var videoDetails = window.wgFeaturedVideoData;
-	if (videoDetails) {
+	if (!videoDetails) {
 		return;
 	}
 	var videoElementId = 'featured-video__player';
