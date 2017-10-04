@@ -76,7 +76,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
 				}
 
-				video.addEventListener('allAdsCompleted', function () {
+				video.addEventListener('wikiaAdCompleted', function () {
 					video.reload();
 				});
 
