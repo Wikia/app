@@ -53,12 +53,14 @@ class ArticleVideoContext {
 
 			if ( self::isJWPlayer( $videoData ) ) {
 				$details =
-					json_decode( file_get_contents( 'https://cdn.jwplayer.com/v2/media/' .
-					                                $videoData['videoId'] ), true );
-				$videoData['title'] = $details['title'];
-				$videoData['description'] = $details['description'];
-				$videoData['duration'] =
-					WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+					json_decode( Http::get( 'https://cdn.jwplayer.com/v2/media/' .
+					                        $videoData['videoId'], 1 ), true );
+				if ( !empty( $details ) ) {
+					$videoData['title'] = $details['title'];
+					$videoData['description'] = $details['description'];
+					$videoData['duration'] =
+						WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				}
 			} else {
 				$api = OoyalaBacklotApiService::getInstance();
 
