@@ -10,10 +10,15 @@ class ArticleVideoController extends WikiaController {
 		if ( !empty( $featuredVideoData ) ) {
 			$requestContext->getOutput()->addModules( 'ext.ArticleVideo' );
 
-			// TODO: replace it with DS icon when it's ready (XW-2824)
-			$this->setVal( 'closeIconUrl', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
 			$this->setVal( 'videoDetails', $featuredVideoData );
-			$this->setVal( 'jwplayerScript', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/scripts/jwplayer.js' );
+			if($featuredVideoData['player'] === 'jwplayer') {
+				$this->setVal( 'jwplayerScript', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/scripts/jwplayer-instant.js' );
+				$this->response->getView()->setTemplatePath( __DIR__ .
+				                                             '/templates/ArticleVideo_jwfeatured.php' );
+			} else {
+				// TODO: replace it with DS icon when it's ready (XW-2824)
+				$this->setVal( 'closeIconUrl', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
+			}
 		} else {
 			$this->skipRendering();
 		}

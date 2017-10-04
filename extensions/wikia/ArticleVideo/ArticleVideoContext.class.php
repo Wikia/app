@@ -68,6 +68,10 @@ class ArticleVideoContext {
 		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
 	}
 
+	public static function isJWPlayer( $featuredVideo ) {
+		return isset( $featuredVideo['player'] ) && $featuredVideo['player'] === 'jwplayer';
+	}
+
 	/**
 	 * Returns related video data for given article title, empty array in case of no video
 	 *
