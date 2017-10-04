@@ -1,28 +1,29 @@
 define('wikia.articleVideo.jwPlayerVideoFeedback', ['wikia.articleVideo.videoFeedbackBox'], function (VideoFeedbackBox) {
 
-	return function (featureVideoPlayerInstance) {
+	return function (playerInstance) {
 
 		var videoFeedbackBox;
 
-		featureVideoPlayerInstance.on('time', function (event) {
-			if (event.position >= 5 && !videoFeedbackBox && featureVideoPlayerInstance.getState() === 'playing') {
+		function videoFeedbackInit(event) {
+			if (event.position >= 2 && !videoFeedbackBox && playerInstance.getState() === 'playing') {
 				videoFeedbackBox = new VideoFeedbackBox('.featured-video .video-feedback');
 				videoFeedbackBox.init();
+				playerInstance.off('time', videoFeedbackInit)
 			}
-		});
+		}
 
-		featureVideoPlayerInstance.on('play', function () {
+		playerInstance.on('time', videoFeedbackInit);
+
+		playerInstance.on('play', function () {
 			if (videoFeedbackBox) {
 				videoFeedbackBox.show();
 			}
 		});
 
-		featureVideoPlayerInstance.on('pause', function () {
+		playerInstance.on('pause', function () {
 			if (videoFeedbackBox) {
 				videoFeedbackBox.hide();
 			}
 		});
-
 	}
-
 });
