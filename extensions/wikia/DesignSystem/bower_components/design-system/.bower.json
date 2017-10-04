@@ -14,11 +14,11 @@
     "ember-cli-shims": "0.1.1"
   },
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "0fac2c9e24",
+  "_release": "33d9b94785",
   "_resolution": {
     "type": "branch",
     "branch": "XW-4060",
-    "commit": "0fac2c9e2491c7f7ec5159d1d75cf994d92b8786"
+    "commit": "33d9b94785d12d38e7780ce9637e4ecf7560c0b5"
   },
   "_source": "https://github.com/Wikia/design-system.git",
   "_target": "XW-4060",

@@ -4,7 +4,7 @@
 	display: flex;
 	transition: opacity 0.4s;
 
-	&--transparent {
+	&.wds-is-transparent {
 		opacity: 0;
 	}
 

@@ -65,7 +65,7 @@
 		wrapperClass = 'wds-banner-notification__container',
 		wrapperSelector = '.' + wrapperClass,
 		notificationSelector = '.wds-banner-notification',
-		transparentBannerClass = 'wds-banner-notification--transparent';
+		transparentBannerClass = 'wds-is-transparent';
 
 	/**
 	 * Creates a new banner notifications instance (doesn't show it yet though!)
@@ -113,7 +113,6 @@
 			this.timeout = defaultTimeout;
 		}
 
-		debugger;
 		addToDOM(this.$element, this.$parent);
 
 		this.hidden = false;
