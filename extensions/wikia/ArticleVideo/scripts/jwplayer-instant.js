@@ -17,7 +17,8 @@
         playerInstance.setup({
             file: "//content.jwplatform.com/videos/" + videoId + ".mp4",
             mediaid: videoId,
-            autostart: willAutoplay && !document.hidden
+            autostart: willAutoplay && !document.hidden,
+            image: "//content.jwplatform.com/thumbs/" + videoId + "-640.jpg"
         });
 
 
