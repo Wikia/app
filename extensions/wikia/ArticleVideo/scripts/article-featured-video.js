@@ -360,7 +360,7 @@ require([
 				}
 
 				if (secondsPlayed >= 5 && !videoFeedbackBox && player.getState() === window.OO.STATE.PLAYING) {
-					videoFeedbackBox = new VideoFeedbackBox();
+					videoFeedbackBox = new VideoFeedbackBox('#article-video .video-feedback');
 					videoFeedbackBox.init();
 				}
 			});

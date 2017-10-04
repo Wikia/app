@@ -30,4 +30,40 @@
 		transition: right $video-collapse-animation-speed, bottom $video-collapse-animation-speed, width $video-collapse-animation-speed;
 		width: $video-container-width !important;
 	}
+
+	&.is-collapsed &__details {
+		display: block;
+	}
+
+	&__details {
+		background-color: #000;
+		display: none;
+		font-weight: bold;
+		padding: $video-details-horizontal-padding $video-details-vertical-padding;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+
+		> div {
+			max-width: $video-container-width - 2 * $video-details-vertical-padding;
+		}
+	}
+
+	&__title {
+		color: #ccc;
+		font-size: 14px;
+	}
+
+	&__label {
+		color: #999;
+		font-size: 12px;
+		opacity: 0.5;
+		text-transform: uppercase;
+	}
+
+	&__time {
+		&:before {
+			content: '\2022';
+			padding: 0 2px;
+		}
+	}
 }

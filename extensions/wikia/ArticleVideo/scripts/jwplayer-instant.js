@@ -1,5 +1,8 @@
 (function () {
 	var videoDetails = window.wgFeaturedVideoData;
+	if (!videoDetails) {
+		return;
+	}
 	var videoElementId = 'featured-video__player';
 	var videoId = videoDetails.videoId;
 	var playerInstance = jwplayer(videoElementId);
@@ -47,7 +50,9 @@
 				file: "https://cdn.jwplayer.com/v2/playlists/Y2RWCKuS?related_media_id=" + videoId,
 				oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show',
 				autoplaytimer: 5
-			}
+			},
+			title: videoDetails.title,
+			description: videoDetails.description
 		});
 
 		handleTabNotActive(willAutoplay);
