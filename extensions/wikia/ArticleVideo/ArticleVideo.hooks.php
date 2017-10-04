@@ -69,10 +69,6 @@ class ArticleVideoHooks {
 	private static function addJWPlayerAssets( \OutputPage $out, $featuredVideoData ) {
 		\Wikia::addAssetsToOutput( 'jwplayer_scss' );
 		\Wikia::addAssetsToOutput( 'jwplayer_js' );
-
-		$out->addJsConfigVars( [
-			'wgFeaturedVideoData' => $featuredVideoData
-		] );
 	}
 
 	public static function onInstantGlobalsGetVariables( array &$vars ): bool {

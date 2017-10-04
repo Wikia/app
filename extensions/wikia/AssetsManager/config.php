@@ -2689,7 +2689,8 @@ $config['jwplayer_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss'
+		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss',
+		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss'
 	],
 ];
 
@@ -2698,7 +2699,8 @@ $config['jwplayer_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/jwplayer.js',
-		'//extensions/wikia/ArticleVideo/scripts/jwplayer-onscroll.js'
+		'//extensions/wikia/ArticleVideo/scripts/jwplayer-onscroll.js',
+	    '//extensions/wikia/ArticleVideo/scripts/video-feedback.js'
 	],
 ];
 

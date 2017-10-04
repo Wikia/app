@@ -47,7 +47,9 @@
 				file: "https://cdn.jwplayer.com/v2/playlists/Y2RWCKuS?related_media_id=" + videoId,
 				oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show',
 				autoplaytimer: 5
-			}
+			},
+			title: videoDetails.title,
+			description: videoDetails.description
 		});
 
 		handleTabNotActive(willAutoplay);

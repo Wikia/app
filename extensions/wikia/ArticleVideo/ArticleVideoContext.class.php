@@ -49,12 +49,26 @@ class ArticleVideoContext {
 		$wg = F::app()->wg;
 
 		if ( self::isFeaturedVideoEmbedded( $title ) ) {
-			$api = OoyalaBacklotApiService::getInstance();
-
 			$videoData = self::getFeaturedVideos()[$title];
-			$videoData['title'] = $api->getTitle( $videoData['videoId'] );
-			$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
-			$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
+
+
+			if ( !self::isJWPlayer( $videoData ) ) {
+				$api = OoyalaBacklotApiService::getInstance();
+
+				$videoData['title'] = $api->getTitle( $videoData['videoId'] );
+				$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
+				$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
+
+			} else {
+				$details =
+					json_decode( file_get_contents( 'https://cdn.jwplayer.com/v2/media/' .
+					                                $videoData['videoId'] ), true );
+				$videoData['title'] = $details['title'];
+				$videoData['description'] = $details['description'];
+				$videoData['duration'] =
+					WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+			}
+
 			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
 

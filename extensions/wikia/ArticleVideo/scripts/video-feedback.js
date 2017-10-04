@@ -1,16 +1,17 @@
 define('wikia.articleVideo.videoFeedbackBox', ['wikia.window', 'wikia.tracker'], function (window, tracker) {
 
-	var feedback = $('#article-video .video-feedback'),
-		feedbackVisibleClass = 'visible',
+	var feedbackVisibleClass = 'visible',
 		track = tracker.buildTrackingFunction({
 			category: 'article-video',
 			trackingMethod: 'analytics'
 		});
 
-	function VideoFeedbackBox() {
-		var closeFeedback = feedback.find('.video-feedback-close'),
-			thumbUp = feedback.find('.video-thumb-up'),
-			thumbDown = feedback.find('.video-thumb-down'),
+	function VideoFeedbackBox(selector) {
+		this.feedback = $(selector);
+
+		var closeFeedback = this.feedback.find('.video-feedback-close'),
+			thumbUp = this.feedback.find('.video-thumb-up'),
+			thumbDown = this.feedback.find('.video-thumb-down'),
 			self = this;
 
 		this.isActive = false;
@@ -45,13 +46,13 @@ define('wikia.articleVideo.videoFeedbackBox', ['wikia.window', 'wikia.tracker'],
 
 	VideoFeedbackBox.prototype.hide = function () {
 		if (this.isActive) {
-			feedback.removeClass(feedbackVisibleClass);
+			this.feedback.removeClass(feedbackVisibleClass);
 		}
 	};
 
 	VideoFeedbackBox.prototype.show = function () {
 		if (this.isActive) {
-			feedback.addClass(feedbackVisibleClass);
+			this.feedback.addClass(feedbackVisibleClass);
 		}
 	};
 
