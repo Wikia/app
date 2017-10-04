@@ -36,6 +36,7 @@
     "wikia/semantic-media-wiki": "^2.4",
     "wikia/maps": "^3.5",
     "wikia/semantic-scribunto": "^1.1",
-    "sensiolabs/consul-php-sdk": "^3.0"
+    "sensiolabs/consul-php-sdk": "^3.0",
+    "guzzlehttp/guzzle": "^6.3"
   }
 }
