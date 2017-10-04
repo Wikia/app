@@ -11,10 +11,7 @@
 					<circle cx="24" cy="24" r="22"></circle>
 				</svg>
 			</div>
-			<div id="featured-video-player" class="featured-video-player"></div>
-			<script src="//content.jwplatform.com/libraries/TAUVjJL5.js"></script>
-			<script src="<?= $jwplayerScript; ?>"></script>
-<!--			<div id="ooyala-article-video" class="ooyala-article-video"></div>-->
+			<div id="ooyala-article-video" class="ooyala-article-video"></div>
 			<div class="video-details">
 				<div class="video-label"><?= wfMessage( 'articlevideo-watch' )->escaped() ?>
 					<span class="video-time"><?= $videoDetails['duration'] ?></span>
