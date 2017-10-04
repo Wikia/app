@@ -109,6 +109,7 @@ require([
 
 	if (context.opts.premiumAdLayoutEnabled && premiumSlots.indexOf('BOTTOM_LEADERBOARD') >= 0) {
 		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
+		win.addEventListener('wikia.blocking', bottomLeaderboard.init);
 	}
 
 	if (doc.readyState === 'complete') {
