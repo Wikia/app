@@ -1,5 +1,8 @@
 (function () {
 	var videoDetails = window.wgFeaturedVideoData;
+	if (videoDetails) {
+		return;
+	}
 	var videoElementId = 'featured-video__player';
 	var videoId = videoDetails.videoId;
 	var playerInstance = jwplayer(videoElementId);
