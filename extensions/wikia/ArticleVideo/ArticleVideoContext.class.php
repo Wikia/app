@@ -51,15 +51,7 @@ class ArticleVideoContext {
 		if ( self::isFeaturedVideoEmbedded( $title ) ) {
 			$videoData = self::getFeaturedVideos()[$title];
 
-
-			if ( !self::isJWPlayer( $videoData ) ) {
-				$api = OoyalaBacklotApiService::getInstance();
-
-				$videoData['title'] = $api->getTitle( $videoData['videoId'] );
-				$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
-				$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
-
-			} else {
+			if ( self::isJWPlayer( $videoData ) ) {
 				$details =
 					json_decode( file_get_contents( 'https://cdn.jwplayer.com/v2/media/' .
 					                                $videoData['videoId'] ), true );
@@ -67,6 +59,12 @@ class ArticleVideoContext {
 				$videoData['description'] = $details['description'];
 				$videoData['duration'] =
 					WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+			} else {
+				$api = OoyalaBacklotApiService::getInstance();
+
+				$videoData['title'] = $api->getTitle( $videoData['videoId'] );
+				$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
+				$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
 			}
 
 			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
