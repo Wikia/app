@@ -18,6 +18,7 @@
             file: "//content.jwplatform.com/videos/" + videoId + ".mp4",
             mediaid: videoId,
             autostart: willAutoplay && !document.hidden,
+            mute: !willAutoplay || cookies.get(autoplayCookieName) !== '1',
             image: "//content.jwplatform.com/thumbs/" + videoId + "-640.jpg",
             related: {
                 file: "https://cdn.jwplayer.com/v2/playlists/Y2RWCKuS?related_media_id=" + videoId,
