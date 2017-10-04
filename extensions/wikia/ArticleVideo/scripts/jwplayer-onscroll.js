@@ -33,6 +33,7 @@ define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onSc
 			collapsingDisabled = false;
 			videoCollapsed = true;
 			$featuredVideo.addClass('is-collapsed-ready');
+			playerInstance.setControls(false);
 			$playerContainer.css({
 				'bottom': viewportHeight - videoOffset.top - videoHeight + $(window).scrollTop(),
 				'right': viewportWidth - videoOffset.left - videoWidth,
@@ -56,7 +57,7 @@ define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onSc
 				'width': ''
 			});
 			$featuredVideo.removeClass('is-collapsed is-collapsed-ready');
-			featureVideoPlayerInstance.resize();
+			playerInstance.resize();
 		}
 
 		function toggleCollapse() {
@@ -83,7 +84,8 @@ define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onSc
 		var transitionEvent = whichTransitionEvent();
 		transitionEvent && $playerContainer[0].addEventListener(transitionEvent, function (event) {
 			if (event.propertyName === 'width') {
-				featureVideoPlayerInstance.resize();
+				playerInstance.resize();
+				playerInstance.setControls(true);
 			}
 		});
 
