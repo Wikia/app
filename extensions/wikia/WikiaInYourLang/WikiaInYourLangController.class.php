@@ -114,7 +114,7 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( isset( $aParsed['host'] ) ) {
 			$sHost = $aParsed['host'];
-			$regExp = "/((sandbox-.+?|preview|verify)\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
+			$regExp = "/((?:sandbox-.+?|preview|verify)\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
 			/**
 			 * preg_match returns similar array as a third parameter:
 			 * [
