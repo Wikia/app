@@ -97,6 +97,18 @@ Special outer level classes used in this file:
 	padding: 4px;
 }
 
+.cke_menuitem .cke_button_icon
+{
+	
+	background-image: url('/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png'); /* wgCdnStylePath */
+	background-position: 100px;
+	background-repeat:no-repeat;
+	background-color: transparent;
+	width: 16px;
+	height: 16px;
+	float: left;
+
+}
 .cke_hc .cke_menubutton_icon
 {
 	height: 16px;
