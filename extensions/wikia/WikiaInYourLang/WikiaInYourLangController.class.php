@@ -114,7 +114,7 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( isset( $aParsed['host'] ) ) {
 			$sHost = $aParsed['host'];
-			$regExp = "/(sandbox-.+?|preview|verify)\.?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
+			$regExp = "/((sandbox-.+?|preview|verify)\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
 			/**
 			 * preg_match returns similar array as a third parameter:
 			 * [
@@ -241,9 +241,9 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( $sArticleTitle !== false ) {
 			$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
-			// some titles does not have a `#` in it, which break string splitting
+			// some titles does not have a `#` in it, which breaks string splitting
 			// so we want to make sure there are exactly 2 items in array
-			list($sArticleTitle, $sArticleAnchor) = array_pad(explode('#', $sArticleTitle, 2), 2, '');
+			list($sArticleTitle, $sArticleAnchor) = array_pad( explode( '#', $sArticleTitle, 2 ), 2, '' );
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
 
 			if ( !is_null( $title ) && $title->exists() ) {
