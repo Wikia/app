@@ -2685,11 +2685,20 @@ $config['article_related_video_js'] = [
 	],
 ];
 
+$config['jwplayer_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss'
+	],
+];
+
 $config['jwplayer_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/jwplayer.js'
+		'//extensions/wikia/ArticleVideo/scripts/jwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/jwplayer-onscroll.js'
 	],
 ];
 

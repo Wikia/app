@@ -1,0 +1,33 @@
+@import 'video-shared-variables';
+
+.featured-video {
+	padding-top: 56.25%; // we want to have 16:9 ratio div size
+	position: relative;
+	width: 100%;
+
+	&__player-container {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transform: translate3d(0, 0, 0); // hack for iOS for changing position to fixed while scrolling
+		z-index: 2;
+	}
+
+	&.is-collapsed-ready &__player-container {
+		left: auto;
+		position: fixed;
+		top: auto;
+	}
+
+	&.is-collapsed &__player-container {
+		bottom: 45px !important;
+		left: auto;
+		position: fixed;
+		right: 20px !important;
+		top: auto;
+		transition: right $video-collapse-animation-speed, bottom $video-collapse-animation-speed, width $video-collapse-animation-speed;
+		width: $video-container-width !important;
+	}
+}

@@ -1,10 +1,10 @@
-<div class="featured-video-wrapper">
-	<div id="article-video" class="article-video">
-		<div id="featured-video-player" class="featured-video-player"></div>
-		<script src="//content.jwplatform.com/libraries/VXc5h4Tf.js"></script>
-		<script>
-			window.wgFeaturedVideoData = <?= json_encode($videoDetails); ?>;
-		</script>
-		<script src="<?= $jwplayerScript; ?>"></script>
+<div class="featured-video">
+	<div class="featured-video__player-container">
+		<div id="featured-video__player" class="featured-video__player"></div>
 	</div>
+	<script src="//content.jwplatform.com/libraries/VXc5h4Tf.js"></script>
+	<script>
+		window.wgFeaturedVideoData = <?= json_encode($videoDetails); ?>;
+	</script>
+	<script src="<?= $jwplayerScript; ?>"></script>
 </div>
