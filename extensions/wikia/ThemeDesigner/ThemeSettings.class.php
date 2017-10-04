@@ -64,6 +64,7 @@ class ThemeSettings {
 		// colors
 		$this->defaultSettings = $wgOasisThemes[$themeName];
 		$this->defaultSettings['theme'] = $themeName;
+		$this->defaultSettings['color-body-middle'] = $this->defaultSettings['color-body'];
 
 		// wordmark
 		$this->defaultSettings['wordmark-text'] = $wgSitename;

@@ -65,6 +65,7 @@ class ThemeDesignerHelper {
 	public static function getColorVars() {
 		return [
 			'color-body' => '#BACDD8',
+			'color-body-middle' => '#BACDD8',
 			'color-page' => '#FFF',
 			'color-community-header' => '#006CB0',
 			'color-buttons' => '#006CB0',
