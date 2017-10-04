@@ -1,5 +1,5 @@
 define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onScroll) {
-	return function (featureVideoPlayerInstance, $featuredVideo, $playerContainer) {
+	return function (playerInstance, $featuredVideo, $playerContainer) {
 		var videoCollapsed = false,
 			collapsingDisabled = false;
 
@@ -22,7 +22,7 @@ define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onSc
 		}
 
 		function isVideoInFullScreenMode() {
-			return featureVideoPlayerInstance.getFullscreen();
+			return playerInstance.getFullscreen();
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {

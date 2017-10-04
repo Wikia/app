@@ -12,7 +12,10 @@
 	<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>
 	<script src="//content.jwplatform.com/libraries/VXc5h4Tf.js"></script>
 	<script>
-		window.wgFeaturedVideoData = <?= json_encode($videoDetails); ?>;
+		define('wikia.featuredVideoData', function() {
+			return <?= json_encode($videoDetails); ?>;
+        })
 	</script>
-	<script src="<?= $jwplayerScript; ?>"></script>
+	<script><?= $jwplayerInstance ?></script>
+	<script><?= $jwplayerScript ?></script>
 </div>
