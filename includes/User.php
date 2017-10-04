@@ -4046,16 +4046,9 @@ class User implements JsonSerializable {
 	public function incEditCount() {
 		global $wgEnableEditCountLocal;
 		if( !$this->isAnon() ) {
-			// wikia change, load always from first cluster when we use
-			// shared users database
-			// @author Lucas Garczewski (tor)
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbw = wfGetDB( DB_MASTER );
-			}
+			// Wikia: shared users database
+			global $wgExternalSharedDB;
+			$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
 			$dbw->update( '`user`',
 				array( 'user_editcount=user_editcount+1' ),
@@ -4150,16 +4143,10 @@ class User implements JsonSerializable {
 		} else {
 			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
 			// Load from database
-			// wikia change, load always from first cluster when we use
 			// shared users database
 			// @author Krzysztof Krzyżaniak (eloy)
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbr = wfGetDB( DB_SLAVE );
-			}
+			global $wgExternalSharedDB;
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 			$res = $dbr->select(
 				'user_properties',
@@ -4206,13 +4193,8 @@ class User implements JsonSerializable {
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB;
-		if( isset( $wgSharedDB ) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		}
-		else {
-			$dbw = wfGetDB( DB_MASTER );
-		}
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
 		$insertRows = $deletePrefs = [];
 
