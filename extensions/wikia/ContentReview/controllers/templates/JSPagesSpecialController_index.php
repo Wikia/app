@@ -31,7 +31,7 @@
 				<td><?= $page['latestReviewed']['statusMessage'] ?></td>
 				<td><?= $page['liveRevision']['statusMessage'] ?></td>
 				<td>
-					<?php if ( $page['submit'] ): ?>
+					<?php if ( isset( $page['submit'] ) ): ?>
 						<button class="content-review-module-submit primary" data-page-name="<?= Sanitizer::encodeAttribute( $page['pageName'] ) ?>">
 							<?= $submit ?>
 						</button>
