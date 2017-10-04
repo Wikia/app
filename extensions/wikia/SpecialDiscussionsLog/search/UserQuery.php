@@ -16,7 +16,7 @@ class UserQuery implements SearchQuery {
 		"bool": {
 			"should": [{
 				"query_string": {
-					"query":"rawTags:dis_service_* AND user_id:$userId"
+					"query":"rawTags:dis_service_* AND (user_id:$userId OR wikia_user_id:$userId)"
 				}
 			}]
 		}
