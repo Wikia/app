@@ -7,7 +7,7 @@ require([
 	playerInstance,
 	videoDetails,
 	featuredVideoAutoplay,
-	tracking
+	featuredVideoTracking
 ) {
 	if (!videoDetails) {
 		return;
@@ -59,7 +59,7 @@ require([
 		description: videoDetails.description
 	});
 
-	tracking(playerInstance);
+	featuredVideoTracking(playerInstance);
 
 	handleTabNotActive(willAutoplay);
 });

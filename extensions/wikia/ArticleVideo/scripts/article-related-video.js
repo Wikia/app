@@ -78,7 +78,6 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 					$video.find('.video-time').text(videoTime);
 
 					$video.show();
-
 					track({
 						action: tracker.ACTIONS.IMPRESSION,
 						label: 'related-video'
