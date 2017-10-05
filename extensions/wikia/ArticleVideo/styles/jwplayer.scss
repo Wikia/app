@@ -35,6 +35,12 @@
 		display: block;
 	}
 
+	&.is-collapsed &__close {
+		cursor: pointer;
+		display: block;
+		z-index: 11001;
+	}
+
 	&__details {
 		background-color: #000;
 		display: none;
@@ -65,5 +71,15 @@
 			content: '\2022';
 			padding: 0 2px;
 		}
+	}
+
+	&__close {
+		display: none;
+		fill: #fff;
+		left: 0;
+		padding: 7px;
+		position: absolute;
+		top: 0;
+		z-index: 1;
 	}
 }

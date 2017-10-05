@@ -1,7 +1,8 @@
 define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onScroll) {
 	return function (playerInstance, $featuredVideo, $playerContainer) {
 		var videoCollapsed = false,
-			collapsingDisabled = false;
+			collapsingDisabled = false,
+			$closeBtn = $('.featured-video__close');
 
 		// TODO move to separated module
 		function whichTransitionEvent(){
@@ -81,6 +82,17 @@ define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onSc
 			}
 		}
 
+		function closeButtonClicked() {
+			playerInstance.pause(true);
+			uncollapseVideo();
+			collapsingDisabled = true;
+			// TODO tracking
+			// track({
+			// 	action: tracker.ACTIONS.CLOSE,
+			// 	label: 'featured-video-collapsed'
+			// });
+		}
+
 		var transitionEvent = whichTransitionEvent();
 		transitionEvent && $playerContainer[0].addEventListener(transitionEvent, function (event) {
 			if (event.propertyName === 'width') {
@@ -90,5 +102,10 @@ define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onSc
 		});
 
 		onScroll.bind(toggleCollapse);
+		$closeBtn.click(closeButtonClicked);
+
+		playerInstance.on('play', function () {
+			collapsingDisabled = false;
+		});
 	}
 });
