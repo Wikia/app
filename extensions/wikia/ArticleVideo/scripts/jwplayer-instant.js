@@ -1,20 +1,16 @@
 require([
-	'wikia.cookies',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'jwplayer.instance',
-	'wikia.featuredVideoData'
-], function (cookies, geo, instantGlobals, playerInstance, videoDetails) {
+	'wikia.featuredVideoData',
+	'wikia.featuredVideo.autoplay'
+], function (playerInstance, videoDetails, featuredVideoAutoplay) {
 
 	if (!videoDetails) {
 		return;
 	}
 
 	var videoId = videoDetails.videoId,
-		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
-		inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
-		autoplayCookieName = 'featuredVideoAutoplay',
-		willAutoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
+		inNextVideoAutoplayCountries = featuredVideoAutoplay.inNextVideoAutoplayCountries,
+		willAutoplay = featuredVideoAutoplay.willAutoplay;
 
 	function handleTabNotActive(willAutoplay) {
 		var hidden,

@@ -18,5 +18,6 @@
         })
 	</script>
 	<script><?= $jwplayerInstance ?></script>
+	<script><?= $featuredVideoAutoplay ?></script>
 	<script><?= $jwplayerScript ?></script>
 </div>
