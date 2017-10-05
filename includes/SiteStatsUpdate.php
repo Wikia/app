@@ -107,7 +107,7 @@ class SiteStatsUpdate implements DeferrableUpdate {
 		SiteStats::invalidateCache(); // Wikia change
 	}
 	/**
-	 * @param IDatabase $dbw
+	 * @param DatabaseBase $dbw
 	 * @return bool|mixed
 	 */
 	public static function cacheUpdate( $dbw ) {
