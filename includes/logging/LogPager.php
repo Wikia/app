@@ -315,6 +315,8 @@ class LogPager extends ReverseChronologicalPager {
 			$row->user_text = $row->user_name;
 			$row->user_editcount = $userNames[$row->user_id]->user_editcount;
 		} else {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( "User with id {$row->log_user} was not found" );
 			$row->user_name = 'unknown';
 			$row->user_editcount = 0;
 		}

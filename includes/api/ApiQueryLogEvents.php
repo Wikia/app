@@ -169,8 +169,13 @@ class ApiQueryLogEvents extends ApiQueryBase {
 			}
 
 			if ( $this->fld_user ) {
-				$row->user_name = isset($userNames[$row->log_user]) ?
-					$userNames[$row->log_user] : 'unknown';
+				if ( isset( $userNames[$row->log_user] ) ) {
+					$row->user_name = $userNames[$row->log_user];
+				} else {
+					$row->user_name = 'unknown';
+					\Wikia\Logger\WikiaLogger::instance()
+						->warning( "User with id {$$row->log_user} was not found" );
+				}
 			}
 
 			$vals = $this->extractRowInfo( $row );
@@ -481,13 +486,13 @@ class ApiQueryLogEvents extends ApiQueryBase {
 
 	private function getIndexedUserNames( $userIds ) {
 		global $wgExternalSharedDB;
-		if (count($userIds) === 0) {
+		if ( count( $userIds ) === 0 ) {
 			return [];
 		}
 
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		$conditions = [ 'user_id' => array_unique( $userIds ) ];
-		$dbResults = $db->select( 'user', [ 'user_id', 'user_name' ], $conditions );
+		$dbResults = $db->select( 'user', [ 'user_id', 'user_name' ], $conditions, __METHOD__ );
 
 		$results = [];
 		foreach ( $dbResults as $row ) {
