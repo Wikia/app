@@ -135,7 +135,8 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
 			// Production
-			$url = str_replace( 'https://images.wikia.com/', sprintf( "https://images.{$wgWikiaNocookieDomain}/%s", $cb ), $url );
+			$nocookieDomainEscaped = preg_quote($wgWikiaNocookieDomain);
+			$url = preg_replace( "#https://images.wikia.(?:com|{$nocookieDomainEscaped})/#", sprintf( "https://images.{$wgWikiaNocookieDomain}/%s", $cb ), $url );
 		}
 	}
 	return $url;

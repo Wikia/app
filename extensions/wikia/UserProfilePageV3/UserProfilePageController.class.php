@@ -24,7 +24,7 @@ class UserProfilePageController extends WikiaController {
 	protected $title = null;
 
 	protected $defaultAvatars = null;
-	protected $defaultAvatarPath = 'https://images.wikia.com/messaging/images/';
+	protected $defaultAvatarPath = 'https://images.wikia.nocookie.net/messaging/images/';
 
 	public function __construct() {
 		parent::__construct();
