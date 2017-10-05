@@ -269,10 +269,9 @@ class ResourceLoaderHooks {
 
 			$params = urlencode(http_build_query($loadQuery));
 			$url = $loadScript . "$params/$modules";
-			$url = wfExpandUrl( $url, PROTO_RELATIVE );
 		} else {
 			// just a copy&paste from ResourceLoader::makeLoaderURL :-(
-			$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
+			$url = wfAppendQuery( $loadScript, $query ) . '&*';
 		}
 
 		return false;
