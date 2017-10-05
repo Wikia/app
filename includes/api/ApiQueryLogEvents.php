@@ -177,7 +177,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 				} else {
 					$row->user_name = 'unknown';
 					\Wikia\Logger\WikiaLogger::instance()
-						->warning( "User with id {$$row->log_user} was not found" );
+						->warning( "User with id {$row->log_user} was not found" );
 				}
 			}
 
