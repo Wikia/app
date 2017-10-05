@@ -162,20 +162,6 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		expect(mocks.sampler.sample).not.toHaveBeenCalled();
 	});
 
-	it('Should enable tracking when param.bid is integer (100)', function () {
-		spyOn(mocks.sampler, 'sample').and.returnValue(true);
-
-		var videoSettings = getSettings({
-			bid: {
-				moatTracking: 100
-			},
-			moatTracking: 1
-		});
-
-		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
-		expect(mocks.sampler.sample).not.toHaveBeenCalled();
-	});
-
 	it('Should use sampling when param is integer lower than 100', function () {
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
 
