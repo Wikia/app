@@ -249,7 +249,7 @@ class WatchlistFeed extends SpecialPage
 				$this->rcFormatDiff( $obj ),
 				$title->getFullURL(),
 				$obj->rc_timestamp,
-				$obj->rc_user_text,
+				User::getUsername( $obj->rc_user, $obj->rc_user_text ), // SUS-812
 				$talkpage->getFullURL()
 				);
 			$feed->outItem($item);
@@ -423,7 +423,7 @@ class Watchlist{
 		// Do link batch query - NOTE: I don't know what this section does or wheter it's needed - SWC 20081127
 		$linkBatch = new LinkBatch;
 		while ( $row = $this->mDbr->fetchObject( $this->mChanges ) ) {
-			$userNameUnderscored = str_replace( ' ', '_', $row->rc_user_text );
+			$userNameUnderscored = str_replace( ' ', '_', User::getUsername( $row->rc_user, $row->rc_user_text ) ); // SUS-812
 			if ( $row->rc_user != 0 ) {
 				$linkBatch->add( NS_USER, $userNameUnderscored );
 			}

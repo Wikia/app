@@ -18,6 +18,7 @@ class ApiQueryFirstContributions extends ApiQueryBase {
 		$this->addFields( 'rc_this_oldid as id' );
 		$this->addFields( 'rc_timestamp as timestamp' );
 		$this->addFields( 'rc_user_text as author' );
+		$this->addFields( 'rc_user_id as author_id' );
 
 		// only list edit or new article creation
 		$this->addWhere( 'rc_type < ' . RC_MOVE );
@@ -59,7 +60,7 @@ class ApiQueryFirstContributions extends ApiQueryBase {
 			$editInfo = [
 				'id' => $row->id,
 				'date' => wfTimestamp( TS_ISO_8601, $row->timestamp ),
-				'username' => $row->author
+				'username' => User::getUsername( $row->author_id, $row->author ),
 			];
 
 			$fit = $result->addValue( [ 'query', $this->getModuleName() ], null, $editInfo );
