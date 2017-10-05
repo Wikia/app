@@ -56,8 +56,7 @@ class ArticleVideoContext {
 					json_decode( Http::get( 'https://cdn.jwplayer.com/v2/media/' .
 					                        $videoData['videoId'], 1 ), true );
 				if ( !empty( $details ) ) {
-					$videoData['title'] = $details['title'];
-					$videoData['description'] = $details['description'];
+					$videoData = array_merge( $videoData, $details );
 					$videoData['duration'] =
 						WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
 				}
