@@ -33,14 +33,14 @@ require([
 		}
 
 		document.addEventListener(visibilityChange, function () {
-			if (canPlayVideo(willAutoplay)) {
+			if (canPlayVideo(hidden, willAutoplay)) {
 				playerInstance.play(true);
 			}
 
 		}, false);
 	}
 
-	function canPlayVideo(willAutoplay) {
+	function canPlayVideo(hidden, willAutoplay) {
 		return !document[hidden] && willAutoplay && ['playing', 'paused'].indexOf(playerInstance.getState()) === -1;
 	}
 
