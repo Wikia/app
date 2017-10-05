@@ -8,7 +8,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
 ], function (
 	adContext,
@@ -19,7 +18,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	geo,
 	log,
 	win,
-	bidHelper,
 	floater
 ) {
 	'use strict';
@@ -38,43 +36,29 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	function prepareData(params, playerName, eventName, errorCode, contentType) {
 		var pageLevelParams = pageLevel.getPageLevelParams(),
 			canFloat = floater && floater.canFloat(params) ? 'canFloat' : '',
-			floatingState = (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : ''),
-			trackingData = {
-				'pv_unique_id': win.pvUID,
-				'pv_number': pageLevelParams.pv,
-				'country': geo.getCountryCode(),
-				'skin': pageLevelParams.skin,
-				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
-				'player': playerName,
-				'ad_product': params.adProduct,
-				'position': params.slotName || emptyValue.string,
-				'event_name': eventName,
-				'ad_error_code': errorCode || emptyValue.int,
-				'content_type': contentType || emptyValue.string,
-				'line_item_id': params.lineItemId || emptyValue.int,
-				'creative_id': params.creativeId || emptyValue.int,
-				'price': emptyValue.price,
-				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
-				'additional_1': canFloat,
-				'additional_2': floatingState
-			};
+			floatingState = (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : '');
 
-		if (bidHelper && params.bid) {
-			if (params.bid.bidderCode === 'rubicon') {
-				trackingData['vast_id'] = [
-					params.bid.rubiconAdvertiserId || emptyValue.string,
-					params.bid.rubiconAdId || emptyValue.string
-				].join(':');
-				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-			}
-
-			if (params.bid.bidderCode === 'appnexusAst') {
-				trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
-				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-			}
-		}
-
-		return trackingData;
+		return {
+			'pv_unique_id': win.pvUID,
+			'pv_number': pageLevelParams.pv,
+			'country': geo.getCountryCode(),
+			'skin': pageLevelParams.skin,
+			'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
+			'player': playerName,
+			'ad_product': params.adProduct,
+			'position': params.slotName || emptyValue.string,
+			'event_name': eventName,
+			'ad_error_code': errorCode || emptyValue.int,
+			'content_type': contentType || emptyValue.string,
+			'line_item_id': params.lineItemId || emptyValue.int,
+			'creative_id': params.creativeId || emptyValue.int,
+			'price': params.price || emptyValue.price,
+			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
+			'additional_1': canFloat,
+			'additional_2': floatingState,
+			'vast_id': params.vastId || emptyValue.string,
+			'bidder_won': params.bidderWon || emptyValue.string
+		};
 	}
 
 	/**
