@@ -286,7 +286,7 @@ class Revision implements IDBAccessObject {
 		if( $res ) {
 			$row = $res->fetchObject();
 			if( $row ) {
-				$ret = new Revision( self::replaceUsernameFieldsWithVariables( $row ) );
+				$ret = new Revision( self::replaceUsernameFieldsWithVariables( $row ) ); // SUS-2779
 				return $ret;
 			}
 		}
@@ -316,6 +316,7 @@ class Revision implements IDBAccessObject {
 	 * @return ResultWrapper
 	 */
 	private static function fetchFromConds( $db, $conditions, $flags = 0 ) {
+		// SUS-2779
 		$fields = array_merge(
 			self::selectFields(),
 			self::selectPageFields()

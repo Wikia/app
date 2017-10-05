@@ -286,6 +286,7 @@ class LogPager extends ReverseChronologicalPager {
 			$lb = new LinkBatch;
 			foreach ( $this->mResult as $row ) {
 
+				// SUS-2779
 				$this->joinUserDataToLogRow($row, $this->usersData);
 
 				$lb->add( $row->log_namespace, $row->log_title );
@@ -363,6 +364,7 @@ class LogPager extends ReverseChronologicalPager {
 	}
 
 	public function formatRow( $row ) {
+		// SUS-2779
 		$this->joinUserDataToLogRow( $row, $this->usersData );
 		return $this->mLogEventsList->logLine( $row );
 	}

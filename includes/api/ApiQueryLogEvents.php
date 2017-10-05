@@ -65,6 +65,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		// Order is significant here
 		$this->addTables( array( 'logging', 'page' ) );
 		$this->addOption( 'STRAIGHT_JOIN' );
+		// SUS-2779
 		$this->addJoinConds( array(
 			'page' => array( 'LEFT JOIN',
 				array(	'log_namespace=page_namespace', 'log_title=page_title' ) ) ) );
@@ -154,6 +155,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		$res = $this->select( __METHOD__ );
 		$result = $this->getResult();
 
+		// SUS-2779
 		$userIds = $this->getFieldFromResults( $res, 'log_user' );
 		$userNames = $this->getIndexedUserNames( $userIds );
 
@@ -164,6 +166,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 				break;
 			}
 
+			// SUS-2779
 			if ( $this->fld_userid ) {
 				$row->user_id = $row->log_user;
 			}

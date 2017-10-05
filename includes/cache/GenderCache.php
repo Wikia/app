@@ -98,6 +98,7 @@ class GenderCache {
 	public function doQuery( $users, $caller = '' ) {
 		$default = $this->getDefault();
 
+		// SUS-2779
 		$users = $this->filterListOfUsers($users, $default);
 
 		if ( count( $users ) === 0 ) {

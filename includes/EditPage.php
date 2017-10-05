@@ -2649,6 +2649,7 @@ HTML
 				$data->log_comment = wfMsgHtml( 'rev-deleted-comment' );
 		}
 
+		// SUS-2779
 		$user = User::newFromId($data->log_user);
 		$data->user_name = $user->getName();
 

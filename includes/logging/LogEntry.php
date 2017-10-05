@@ -118,6 +118,7 @@ class DatabaseLogEntry extends LogEntryBase {
 	 * @return array
 	 */
 	public static function getSelectQueryData() {
+		// SUS-2779
 		$tables = [ 'logging' ];
 		$fields = [
 			'log_id', 'log_type', 'log_action', 'log_timestamp',
