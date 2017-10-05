@@ -2698,10 +2698,10 @@ $config['jwplayer_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/jwplayer.js',
-		'//extensions/wikia/ArticleVideo/scripts/jwplayer-onscroll.js',
-		'//extensions/wikia/ArticleVideo/scripts/jwplayer-video-feedback.js',
-		'//extensions/wikia/ArticleVideo/scripts/jwplayer-autoplay-toggle.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.on-scroll.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.video-feedback.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.autoplay-toggle.js',
 	    '//extensions/wikia/ArticleVideo/scripts/video-feedback.js'
 	],
 ];

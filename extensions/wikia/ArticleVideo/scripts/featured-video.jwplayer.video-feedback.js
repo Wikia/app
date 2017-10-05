@@ -1,4 +1,4 @@
-define('wikia.articleVideo.jwPlayerVideoFeedback', ['wikia.articleVideo.videoFeedbackBox'], function (VideoFeedbackBox) {
+define('wikia.articleVideo.featuredVideo.jwplayer.videoFeedback', ['wikia.articleVideo.videoFeedbackBox'], function (VideoFeedbackBox) {
 
 	return function (playerInstance) {
 

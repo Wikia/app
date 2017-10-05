@@ -1,10 +1,10 @@
 require([
 	'wikia.window',
 	'wikia.tracker',
-	'wikia.articleVideo.jwPlayerOnScroll',
-	'wikia.articleVideo.jwPlayerVideoFeedback',
-	'wikia.articleVideo.jwPlayerAutoplayToggle',
-	'jwplayer.instance'
+	'wikia.articleVideo.featuredVideo.jwplayer.onScroll',
+	'wikia.articleVideo.featuredVideo.jwplayer.videoFeedback',
+	'wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle',
+	'wikia.articleVideo.featuredVideo.jwplayer.instance'
 ], function (window,
              tracker,
              jwPlayerOnScroll,

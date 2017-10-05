@@ -1,4 +1,4 @@
-define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onScroll) {
+define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll'], function (onScroll) {
 	return function (playerInstance, $featuredVideo, $playerContainer) {
 		var videoCollapsed = false,
 			collapsingDisabled = false,

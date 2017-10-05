@@ -13,7 +13,7 @@
 	<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>
 	<script src="//content.jwplatform.com/libraries/VXc5h4Tf.js"></script>
 	<script>
-		define('wikia.featuredVideoData', function() {
+		define('wikia.articleVideo.featuredVideo.data', function() {
 			return <?= json_encode($videoDetails); ?>;
         })
 	</script>

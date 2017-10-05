@@ -1,9 +1,7 @@
-define('wikia.articleVideo.jwPlayerAutoplayToggle', ['wikia.featuredVideo.autoplay'], function (featuredVideoAutoplay) {
+define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.articleVideo.featuredVideo.autoplay'], function (featuredVideoAutoplay) {
 
 	return function (playerInstance) {
-		var inAutoplayCountries = featuredVideoAutoplay.inAutoplayCountries,
-			// TODO extract it to separate module
-			autoplayCookieName = 'featuredVideoAutoplay';
+		var inAutoplayCountries = featuredVideoAutoplay.inAutoplayCountries;
 
 		function addAutoplayToggleButton() {
 			playerInstance.addButton(

@@ -1,7 +1,7 @@
 require([
-	'jwplayer.instance',
-	'wikia.featuredVideoData',
-	'wikia.featuredVideo.autoplay'
+	'wikia.articleVideo.featuredVideo.jwplayer.instance',
+	'wikia.articleVideo.featuredVideo.data',
+	'wikia.articleVideo.featuredVideo.autoplay'
 ], function (playerInstance, videoDetails, featuredVideoAutoplay) {
 
 	if (!videoDetails) {

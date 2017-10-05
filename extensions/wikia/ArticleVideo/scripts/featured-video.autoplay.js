@@ -1,4 +1,4 @@
-define('wikia.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo', 'wikia.instantGlobals'], function (cookies, geo, instantGlobals) {
+define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo', 'wikia.instantGlobals'], function (cookies, geo, instantGlobals) {
 
 	var inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
