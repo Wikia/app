@@ -12,12 +12,12 @@ class ArticleVideoController extends WikiaController {
 
 			$this->setVal( 'videoDetails', $featuredVideoData );
 			if ( ArticleVideoContext::isJWPlayer( $featuredVideoData ) ) {
-                $jwPlayerScript = $this->wg->out->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
+				$jwPlayerScript = $this->wg->out->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
 					new ResourceLoaderContext( new ResourceLoader(), $this->wg->request)
 				);
 
-                $this->setVal(
-                	'jwPlayerScript',
+				$this->setVal(
+					'jwPlayerScript',
 					$jwPlayerScript
 				);
 
