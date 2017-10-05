@@ -1,26 +1,8 @@
-define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll'], function (onScroll) {
+define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 'wikia.articleVideo.whichTransitionEvent'], function (onScroll, whichTransitionEvent) {
 	return function (playerInstance, $featuredVideo, $playerContainer) {
 		var videoCollapsed = false,
 			collapsingDisabled = false,
 			$closeBtn = $('.featured-video__close');
-
-		// TODO move to separated module
-		function whichTransitionEvent(){
-			var t;
-			var el = document.createElement('fakeelement');
-			var transitions = {
-				'transition':'transitionend',
-				'OTransition':'oTransitionEnd',
-				'MozTransition':'transitionend',
-				'WebkitTransition':'webkitTransitionEnd'
-			};
-
-			for(t in transitions){
-				if( el.style[t] !== undefined ){
-					return transitions[t];
-				}
-			}
-		}
 
 		function isVideoInFullScreenMode() {
 			return playerInstance.getFullscreen();
