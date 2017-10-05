@@ -79,6 +79,9 @@ class ArticleVideoContext {
 	}
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
+		if ( self::isJWPlayer( $featuredVideo ) ) {
+			return isset( $featuredVideo['videoId'] );
+		}
 		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
 	}
 

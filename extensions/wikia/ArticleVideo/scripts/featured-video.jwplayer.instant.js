@@ -1,21 +1,21 @@
 require([
-	'wikia.cookies',
-	'wikia.geo',
-	'wikia.instantGlobals',
-	'jwplayer.instance',
-	'wikia.featuredVideoData'
-	//'wikia.articleVideo.jwPlayerFeaturedVideoTracking'
-], function (cookies, geo, instantGlobals, playerInstance, videoDetails, /*jwPlayerFeaturedVideoTracking*/) {
-
+	'wikia.articleVideo.featuredVideo.jwplayer.instance',
+	'wikia.articleVideo.featuredVideo.data',
+	'wikia.articleVideo.featuredVideo.autoplay',
+	'wikia.articleVideo.featuredVideo.tracking'
+], function (
+	playerInstance,
+	videoDetails,
+	featuredVideoAutoplay,
+	tracking
+) {
 	if (!videoDetails) {
 		return;
 	}
 
 	var videoId = videoDetails.videoId,
-		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
-		inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
-		autoplayCookieName = 'featuredVideoAutoplay',
-		willAutoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
+		inNextVideoAutoplayCountries = featuredVideoAutoplay.inNextVideoAutoplayCountries,
+		willAutoplay = featuredVideoAutoplay.willAutoplay;
 
 	function handleTabNotActive(willAutoplay) {
 		var hidden,
@@ -44,7 +44,7 @@ require([
 		return !document[hidden] && willAutoplay && ['playing', 'paused'].indexOf(playerInstance.getState()) === -1;
 	}
 
-	//jwPlayerFeaturedVideoTracking(playerInstance);
+	tracking(playerInstance);
 
 	playerInstance.setup({
 		file: "//content.jwplatform.com/videos/" + videoId + ".mp4",

@@ -1,25 +1,8 @@
-define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onScroll) {
+define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 'wikia.articleVideo.whichTransitionEvent'], function (onScroll, whichTransitionEvent) {
 	return function (playerInstance, $featuredVideo, $playerContainer) {
 		var videoCollapsed = false,
-			collapsingDisabled = false;
-
-		// TODO move to separated module
-		function whichTransitionEvent(){
-			var t;
-			var el = document.createElement('fakeelement');
-			var transitions = {
-				'transition':'transitionend',
-				'OTransition':'oTransitionEnd',
-				'MozTransition':'transitionend',
-				'WebkitTransition':'webkitTransitionEnd'
-			};
-
-			for(t in transitions){
-				if( el.style[t] !== undefined ){
-					return transitions[t];
-				}
-			}
-		}
+			collapsingDisabled = false,
+			$closeBtn = $('.featured-video__close');
 
 		function isVideoInFullScreenMode() {
 			return playerInstance.getFullscreen();
@@ -81,6 +64,17 @@ define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onSc
 			}
 		}
 
+		function closeButtonClicked() {
+			playerInstance.pause(true);
+			uncollapseVideo();
+			collapsingDisabled = true;
+			// TODO tracking
+			// track({
+			// 	action: tracker.ACTIONS.CLOSE,
+			// 	label: 'featured-video-collapsed'
+			// });
+		}
+
 		var transitionEvent = whichTransitionEvent();
 		transitionEvent && $playerContainer[0].addEventListener(transitionEvent, function (event) {
 			if (event.propertyName === 'width') {
@@ -90,5 +84,10 @@ define('wikia.articleVideo.jwPlayerOnScroll', ['wikia.onScroll'], function (onSc
 		});
 
 		onScroll.bind(toggleCollapse);
+		$closeBtn.click(closeButtonClicked);
+
+		playerInstance.on('play', function () {
+			collapsingDisabled = false;
+		});
 	}
 });

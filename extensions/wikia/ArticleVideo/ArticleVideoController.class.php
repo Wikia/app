@@ -21,7 +21,6 @@ class ArticleVideoController extends WikiaController {
 					$jwPlayerScript
 				);
 
-
 				$this->response->getView()->setTemplatePath( __DIR__ .
 				                                             '/templates/ArticleVideo_jwfeatured.php' );
 			} else {

@@ -1,4 +1,4 @@
-define('wikia.articleVideo.jwPlayerFeaturedVideoTracking', [], function () {
+define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 	function getDefaultState() {
 		return {
 			wasAlreadyUnmuted: false
@@ -12,7 +12,6 @@ define('wikia.articleVideo.jwPlayerFeaturedVideoTracking', [], function () {
 	var state = getDefaultState();
 
 	return function (featuredVideoPlayer) {
-		debugger;
 		featuredVideoPlayer.on('play', function () {
 			track({
 				label: 'featured-video-play'

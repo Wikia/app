@@ -8,11 +8,12 @@
 			<div
 				class="featured-video__title"><?= htmlspecialchars( $videoDetails['title'] ) ?></div>
 		</div>
+		<?= DesignSystemHelper::renderSvg( 'wds-icons-cross-tiny', 'wds-icon wds-icon-tiny featured-video__close' ) ?>
 	</div>
 	<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>
 	<script src="//content.jwplatform.com/libraries/VXc5h4Tf.js"></script>
 	<script>
-		define('wikia.featuredVideoData', function() {
+		define('wikia.articleVideo.featuredVideo.data', function() {
 			return <?= json_encode($videoDetails); ?>;
         })
 	</script>
