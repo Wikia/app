@@ -31,27 +31,5 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 				});
 			}
 		});
-
-		featuredVideoPlayer.on('playlist', function () {
-			track({
-				action: 'impression',
-				label: 'recommended-video'
-			});
-		});
-
-		featuredVideoPlayer.on('playlistItem', function (newIndex) {
-			track({
-				action: 'impression',
-				label: 'recommended-video-' + newIndex
-			});
-		});
-
-		featuredVideoPlayer.on('firstFrame', function () {
-			debugger
-			track({
-				action: 'impression',
-				label: 'recommended-video-'
-			});
-		});
 	}
 });

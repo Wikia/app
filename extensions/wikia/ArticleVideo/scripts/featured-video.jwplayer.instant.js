@@ -44,8 +44,6 @@ require([
 		return !document[hidden] && willAutoplay && ['playing', 'paused'].indexOf(playerInstance.getState()) === -1;
 	}
 
-	tracking(playerInstance);
-
 	playerInstance.setup({
 		file: "//content.jwplatform.com/videos/" + videoId + ".mp4",
 		mediaid: videoId,
@@ -60,6 +58,8 @@ require([
 		title: videoDetails.title,
 		description: videoDetails.description
 	});
+
+	tracking(playerInstance);
 
 	handleTabNotActive(willAutoplay);
 });
