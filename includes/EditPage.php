@@ -2648,6 +2648,10 @@ HTML
 			if( $data->log_deleted & LogPage::DELETED_COMMENT )
 				$data->log_comment = wfMsgHtml( 'rev-deleted-comment' );
 		}
+
+		$user = User::newFromId($data->log_user);
+		$data->user_name = $user->getName();
+
 		return $data;
 	}
 
