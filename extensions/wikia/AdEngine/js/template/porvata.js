@@ -13,7 +13,6 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.prebid.adapters.veles'),
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
 	DOMElementTweaker,
@@ -29,7 +28,6 @@ define('ext.wikia.adEngine.template.porvata', [
 	doc,
 	log,
 	win,
-	veles,
 	mercuryListener
 ) {
 	'use strict';
@@ -56,11 +54,6 @@ define('ext.wikia.adEngine.template.porvata', [
 				source: 'porvata'
 			});
 		}
-	}
-
-	function loadVeles(params) {
-		params.vastResponse = params.vastResponse || params.bid.ad;
-		veles.markBidsAsUsed(params.hbAdId);
 	}
 
 	function getVideoContainer(slotName) {
@@ -114,6 +107,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
+				params.bid = fallbackBid;
 
 				offerEvent = 'wikiaInViewportWithFallbackBid';
 				videoSettings.setMoatTracking(false);
@@ -192,10 +186,6 @@ define('ext.wikia.adEngine.template.porvata', [
 			params.vastUrl = params.bid.vastUrl;
 		}
 
-		if (params.bid && params.adProduct === 'veles') {
-			loadVeles(params);
-		}
-
 		if (!isVideoAutoplaySupported()) {
 			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
 			callHop(params, true);
@@ -238,12 +228,7 @@ define('ext.wikia.adEngine.template.porvata', [
 				});
 			}
 
-			if (typeof params.onReady === 'function') {
-				// TODO remove this when Veles 1.0 is killed
-				params.onReady(video);
-			} else {
-				onReady(video, params);
-			}
+			onReady(video, params);
 
 			if (params.useBidAsFallback) {
 				enabledFallbackBidHandling(video, settings, params);
