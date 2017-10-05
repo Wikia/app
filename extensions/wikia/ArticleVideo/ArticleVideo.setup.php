@@ -14,3 +14,11 @@ $wgResourceModules['ext.ArticleVideo'] = [
 		'articlevideo-watch',
 	],
 ];
+
+$wgResourceModules['ext.ArticleVideo.jw'] = [
+	'scripts' => [
+		'extensions/wikia/ArticleVideo/scripts/jwplayer.instance.js',
+		'extensions/wikia/ArticleVideo/scripts/jwplayer-instant.js',
+		'extensions/wikia/ArticleVideo/scripts/jwplayer-featured-video-tracking.js',
+	],
+];

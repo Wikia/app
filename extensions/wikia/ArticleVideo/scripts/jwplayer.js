@@ -4,16 +4,14 @@ require([
 	'wikia.articleVideo.jwPlayerOnScroll',
 	'wikia.articleVideo.jwPlayerVideoFeedback',
 	'wikia.articleVideo.jwPlayerAutoplayToggle',
-	'jwplayer.instance',
-	'wikia.articleVideo.jwPlayerFeaturedVideoTracking'
+	'jwplayer.instance'
 ], function (
 	window,
 	tracker,
 	jwPlayerOnScroll,
 	jwPlayerVideoFeedback,
 	jwPlayerAutoplayToggle,
-	playerInstance,
-	jwPlayerFeaturedVideoTracking
+	playerInstance
 ) {
 	var $featuredVideo = $('.featured-video'),
 		$playerContainer = $('.featured-video__player-container');
@@ -21,6 +19,5 @@ require([
 	jwPlayerOnScroll(playerInstance, $featuredVideo, $playerContainer);
 	jwPlayerVideoFeedback(playerInstance);
 	jwPlayerAutoplayToggle(playerInstance);
-	jwPlayerFeaturedVideoTracking(playerInstance);
 });
 

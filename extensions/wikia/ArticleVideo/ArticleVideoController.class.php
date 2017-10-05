@@ -12,8 +12,16 @@ class ArticleVideoController extends WikiaController {
 
 			$this->setVal( 'videoDetails', $featuredVideoData );
 			if ( ArticleVideoContext::isJWPlayer( $featuredVideoData ) ) {
-                $this->setVal( 'jwplayerInstance', file_get_contents($this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/scripts/jwplayer.instance.js') );
-                $this->setVal( 'jwplayerScript', file_get_contents($this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/scripts/jwplayer-instant.js') );
+                $jwPlayerScript = $this->wg->out->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
+					new ResourceLoaderContext( new ResourceLoader(), $this->wg->request)
+				);
+
+                $this->setVal(
+                	'jwPlayerScript',
+					$jwPlayerScript
+				);
+
+
 				$this->response->getView()->setTemplatePath( __DIR__ .
 				                                             '/templates/ArticleVideo_jwfeatured.php' );
 			} else {

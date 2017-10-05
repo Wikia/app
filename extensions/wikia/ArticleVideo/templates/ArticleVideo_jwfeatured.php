@@ -16,6 +16,5 @@
 			return <?= json_encode($videoDetails); ?>;
         })
 	</script>
-	<script><?= $jwplayerInstance ?></script>
-	<script><?= $jwplayerScript ?></script>
+	<script><?= $jwPlayerScript?></script>
 </div>
