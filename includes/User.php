@@ -407,9 +407,11 @@ class User implements JsonSerializable {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$key = $this->getCacheKey();
+
+		// Wikia
 		global $wgMemc;
-		$wgMemc->set( $key, $data );
+		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
+		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG ); // SUS-2945
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
@@ -418,8 +420,12 @@ class User implements JsonSerializable {
 		return self::getCacheKeyById( $this->mId );
 	}
 
-	private static function getCacheKeyById( $id ) {
+	private static function getCacheKeyById( int $id ) : string {
 		return wfMemcKey( 'user', 'id', $id );
+	}
+
+	private static function getCacheKeyByName( string $name ) : string {
+		return wfSharedMemcKey( 'user', 'name', $name );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -609,11 +615,24 @@ class User implements JsonSerializable {
 		}
 
 		if ( isset( self::$idCacheByName[$name] ) ) {
-			return self::$idCacheByName[$name];
+			return (int) self::$idCacheByName[$name];
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
+		// SUS-2945 | this method makes ~32mm queries every day
+		// worth caching given the fact that (user ID, user name) pairs do not change very often
+		global $wgMemc;
+
+		$key = self::getCacheKeyByName( $name );
+		$cachedId = $wgMemc->get( $key );
+
+		if ( is_numeric( $cachedId ) ) {
+			return (int) self::$idCacheByName[$name] = $cachedId;
+		}
+
+		// not in cache, query the database
+		global $wgExternalSharedDB; // SUS-2945 - let's use wikicities.user instead of per-cluster copy
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$s = $dbr->selectRow( '`user`', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
 
 		if ( $s === false ) {
 			$user_name = $nt->getText();
@@ -623,7 +642,10 @@ class User implements JsonSerializable {
 		if ( $s === false ) {
 			$result = null;
 		} else {
-			$result = $s->user_id;
+			$result = (int) $s->user_id;
+
+			// SUS-2945 - only store when there's a match
+			$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
 		}
 
 		self::$idCacheByName[$name] = $result;
@@ -2014,6 +2036,7 @@ class User implements JsonSerializable {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( $this->getCacheKey() );
+			$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
 			$this->userPreferences()->deleteFromCache( $this->getId() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
