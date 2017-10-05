@@ -64,7 +64,7 @@ class WikiRecommendations {
 				'url' => 'http://sing.wikia.com/wiki/Sing_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/zedd/images/8/8e/Zedd_in_2017_for_Double_Zero.png',
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/zedd/images/8/8e/Zedd_in_2017_for_Double_Zero.png/revision/latest?cb=20170502002913',
 				'title' => 'Zedd Wiki',
 				'url' => 'http://zedd.wikia.com/wiki/Zedd_Wiki'
 			],
@@ -708,21 +708,22 @@ class WikiRecommendations {
 	}
 
 	private static function getThumbnailUrl( $url ) {
-		if ( !VignetteRequest::isVignetteUrl( $url ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->warning(
-				"Invalid thumbnail url provided for explore-wikis module inside mixed content footer",
-				[
-					'thumbnailUrl' => $url
-				]
-			);
+		try {
+			return VignetteRequest::fromUrl( $url )
+				->zoomCrop()
+				->width( self::THUMBNAIL_WIDTH )
+				->height( floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO ) )
+				->url();
+		}
+		catch ( Exception $exception ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( "Invalid thumbnail url provided for explore-wikis module inside mixed content footer",
+					[
+						'thumbnailUrl' => $url,
+						'message' => $exception->getMessage(),
+					] );
 
 			return '';
 		}
-
-		return VignetteRequest::fromUrl( $url )
-			->zoomCrop()
-			->width( self::THUMBNAIL_WIDTH )
-			->height( floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO ) )
-			->url();
 	}
 }
