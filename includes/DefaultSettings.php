@@ -5519,7 +5519,6 @@ $wgDBtestpassword = '';
  */
 $wgEnableLocalResourceLoaderLinks = false;
 
-
 /**
  * For really cool vim folding this needs to be at the end:
  * vim: foldmarker=@{,@} foldmethod=marker
