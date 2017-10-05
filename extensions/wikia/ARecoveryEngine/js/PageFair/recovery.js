@@ -13,6 +13,7 @@ define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 			'TOP_RIGHT_BOXAD',
 			'LEFT_SKYSCRAPER_2',
 			'LEFT_SKYSCRAPER_3',
+			'INCONTENT_BOXAD_1',
 			'BOTTOM_LEADERBOARD'
 		];
 
