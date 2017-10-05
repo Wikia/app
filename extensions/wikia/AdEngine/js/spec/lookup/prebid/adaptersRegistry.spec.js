@@ -25,7 +25,6 @@ describe('adaptersRegistry', function () {
             mocks.adapters.openx,
             mocks.adapters.rubicon,
             mocks.adapters.rubiconDisplay,
-            mocks.adapters.veles,
             mocks.adapters.wikia,
             mocks.win
 		);
@@ -42,7 +41,6 @@ describe('adaptersRegistry', function () {
                 indexExchange: new AdapterMock('indexExchange', true),
                 openx: new AdapterMock('openx', true),
                 rubicon: new AdapterMock('rubicon', true),
-                veles: new AdapterMock('veles', true),
                 wikia: new AdapterMock('wikia', true)
             },
             win: {
@@ -88,8 +86,7 @@ describe('adaptersRegistry', function () {
         var adaptersRegistry = getModule(),
             adapters = adaptersRegistry.getAdapters(),
             customAdapters = [
-                mocks.adapters.wikia,
-                mocks.adapters.veles
+                mocks.adapters.wikia
             ];
 
         spyOn(mocks.win.pbjs, 'registerBidAdapter');

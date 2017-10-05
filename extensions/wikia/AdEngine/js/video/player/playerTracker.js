@@ -72,10 +72,6 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
 				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
 			}
-
-			if (params.bid.bidderCode === 'veles') {
-				trackingData['vast_id'] = params.bid.vastId || emptyValue.string;
-			}
 		}
 
 		return trackingData;

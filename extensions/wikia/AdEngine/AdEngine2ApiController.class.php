@@ -25,13 +25,4 @@ class AdEngine2ApiController extends WikiaController {
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 	}
-
-	public function postVelesInfo() {
-		\Wikia\Logger\WikiaLogger::instance()
-			->debug( 'Veles info', [
-				'vast' => substr($this->request->getVal('vast'), 0, 500)
-			]);
-
-		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
-	}
 }

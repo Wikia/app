@@ -219,18 +219,4 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
 	});
-
-	it('Track veles vast id and content type', function () {
-		tracker.track({
-			adProduct: 'veles',
-			slotName: 'TOP_LEADERBOARD',
-			bid: {
-				bidderCode: 'veles',
-				vastId: 'GDFP:123'
-			}
-		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');
-
-		expect(getTrackedValue('vast_id')).toEqual('GDFP:123');
-		expect(getTrackedValue('content_type')).toEqual('application/javascript');
-	});
 });
