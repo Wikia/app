@@ -297,11 +297,11 @@ class Revision implements IDBAccessObject {
 	/**
 	 * @param $row
 	 */
-	private static function replaceUsernameFieldsWithVariables( $row )
-	{
-		$user = User::newFromId( $row->rev_user );
-		$row->user_name = $user->getName();
-		$row->rev_user_text = $user->getName();
+	private static function replaceUsernameFieldsWithVariables( $row ) {
+		$userName = User::getUsername( $row->rev_user, $row->rev_user_text );
+		$row->user_name = $userName;
+		$row->rev_user_text = $userName;
+
 		return $row;
 	}
 
