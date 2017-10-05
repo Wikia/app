@@ -88,49 +88,35 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @author moli
 	 */
-	static public function onEditPhalanxBlock( &$data ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( !isset( $data['id'] ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
+	static public function onEditPhalanxBlock( array &$data ) {
 		$phalanx = Phalanx::newFromId( $data['id'] );
 
 		foreach ( $data as $key => $val ) {
-			if ( $key == 'id' ) continue;
-
-			$phalanx[ $key ] = $val;
-		}
-
-		$typemask = $phalanx['type'];
-		if ( is_array( $phalanx['type'] ) ) {
-			$typemask = 0;
-			foreach ( $phalanx['type'] as $type ) {
-				$typemask |= $type;
+			if ( $key !== 'id' ) {
+				$phalanx[$key] = $val;
 			}
 		}
 
+		$phalanx['type'] = array_reduce( $phalanx['type'], function ( $typeMask, $type ) {
+			return $typeMask | $type;
+		}, 0 );
+
+
 		// VSTF should not be allowed to block emails in Phalanx
-		if ( ( $typemask & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
-			wfProfileOut( __METHOD__ );
+		if ( ( $phalanx['type'] & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			return false;
 		}
 
 		$multitext = '';
-		if ( isset( $phalanx['multitext'] ) && !empty( $phalanx['multitext'] ) ) {
+		if ( !empty( $phalanx['multitext'] ) ) {
 			$multitext = $phalanx['multitext'];
 		}
 
 		unset( $phalanx['multitext'] );
 
-		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
-			wfProfileOut( __METHOD__ );
+		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $phalanx['type'] ) ) {
 			return false;
 		}
-
-		$phalanx['type'] = $typemask;
 
 		// SUS-2759: If a filter is meant to apply to all languages, the p_lang field must be NULL
 		if ( $phalanx['lang'] === 'all' ) {
@@ -140,10 +126,9 @@ class PhalanxHooks extends WikiaObject {
 		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
 			unset( $phalanx['expire'] );
-		} else if ( $phalanx['expire'] != 'infinite' ) {
+		} elseif ( $phalanx['expire'] != 'infinite' ) {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );
@@ -151,14 +136,14 @@ class PhalanxHooks extends WikiaObject {
 			$phalanx['expire'] = null ;
 		}
 
-		$bulkdata = explode( "\n", $multitext );
-
-		if ( empty( $bulkdata ) ) {
+		if ( empty( $multitext ) ) {
 			/* single mode - insert/update record */
 			$data['id'] = $phalanx->save();
 			$blockIds = $data['id'] ? [ $data['id'] ] : false;
 		} else {
+			$bulkdata = explode( "\n", $multitext );
 			$targets = [];
+
 			foreach ( $bulkdata as $bulkrow ) {
 				$bulkrow = trim( $bulkrow );
 				if ( $bulkrow !== '' ) {
@@ -177,7 +162,6 @@ class PhalanxHooks extends WikiaObject {
 			return true;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return false;
 	}
 

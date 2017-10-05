@@ -80,11 +80,14 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	 * @param $blockId int
 	 * @return Phalanx
 	 */
-	public static function newFromId( $blockId ) {
+	public static function newFromId( $blockId ): Phalanx {
 		$instance = new Phalanx( $blockId );
 
 		// read data from database
-		$instance->load();
+		if ( !empty( $blockId ) ) {
+			$instance->load();
+		}
+
 		return $instance;
 	}
 
