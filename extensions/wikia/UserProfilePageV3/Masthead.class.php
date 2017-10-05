@@ -435,7 +435,7 @@ class Masthead {
 		$url = $this->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 		if ( $url ) {
 			# all avatars (including the default ones) are always stored with a full URL
-			if ( ( startsWith( $url, 'http://' ) or startsWith( $url, "https://" ) ) and preg_match('#/Avatar\d?.jpg$#', $url) ) {
+			if ( ( startsWith( $url, 'http://' ) || startsWith( $url, "https://" ) ) && preg_match('#/Avatar\d?.jpg$#', $url) ) {
 				return true;
 			}
 
