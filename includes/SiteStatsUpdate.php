@@ -117,7 +117,7 @@ class SiteStatsUpdate implements DeferrableUpdate {
 		# If account creation is included, the number gets inflated ~20+ fold on enwiki.
 		$activeUsers = $dbr->selectField(
 			'recentchanges',
-			'COUNT( DISTINCT rc_user_text )',
+			'COUNT( DISTINCT rc_user )',
 			[
 				'rc_user != 0',
 				'rc_bot' => 0,
