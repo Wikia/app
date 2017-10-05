@@ -232,6 +232,7 @@ class ResourceLoaderHooks {
 	}
 
 	public static function onAlternateResourceLoaderURL( &$loadScript, &$query, &$url, $modules ) {
+		global $wgEnableLocalResourceLoaderLinks;
 		$resourceLoaderInstance = self::getResourceLoaderInstance();
 
 		$source = false;
@@ -272,6 +273,9 @@ class ResourceLoaderHooks {
 		} else {
 			// just a copy&paste from ResourceLoader::makeLoaderURL :-(
 			$url = wfAppendQuery( $loadScript, $query ) . '&*';
+		}
+		if ( !$wgEnableLocalResourceLoaderLinks ) {
+			$url = wfExpandUrl( $url, PROTO_RELATIVE );
 		}
 
 		return false;

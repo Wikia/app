@@ -1133,7 +1133,7 @@ class ResourceLoader {
 	 */
 	public static function makeLoaderURL( $modules, $lang, $skin, $user = null, $version = null, $debug = false, $only = null,
 			$printable = false, $handheld = false, $extraQuery = array() ) {
-		global $wgLoadScript;
+		global $wgLoadScript, $wgEnableLocalResourceLoaderLinks;
 		wfProfileIn(__METHOD__);
 		$query = self::makeLoaderQuery( $modules, $lang, $skin, $user, $version, $debug,
 			$only, $printable, $handheld, $extraQuery
@@ -1150,7 +1150,10 @@ class ResourceLoader {
 
 		// Prevent the IE6 extension check from being triggered (bug 28840)
 		// by appending a character that's invalid in Windows extensions ('*')
-		$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
+		$url = wfAppendQuery( $loadScript, $query ) . '&*';
+		if ( !$wgEnableLocalResourceLoaderLinks ) {
+			$url = wfExpandUrl( $url, PROTO_RELATIVE );
+		}
 		wfProfileOut(__METHOD__);
 		return $url;
 	}
