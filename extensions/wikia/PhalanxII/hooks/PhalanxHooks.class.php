@@ -203,13 +203,13 @@ class PhalanxHooks extends WikiaObject {
 		$id = $phalanx->delete();
 		if ( $id ) {
 			$service = Injector::getInjector()->get( PhalanxService::class );
-			$ret = $service->reload( [ $id ] );
-		} else {
-			$ret = false;
+			$service->reload( [ $id ] );
+
+			return true;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $ret;
+		return false;
 	}
 
 	/**
