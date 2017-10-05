@@ -310,7 +310,6 @@ class ExternalUser_Wikia extends ExternalUser {
 	 * @return Boolean returns false if errors occur
 	 */
 	public function linkToLocal( $id ) {
-		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
 		if( empty( $this->mRow ) ) {
@@ -331,14 +330,14 @@ class ExternalUser_Wikia extends ExternalUser {
 		}
 
 		if( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
-			$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+			$dbw = wfGetDB( DB_MASTER );
 			$data = array();
 			foreach( ( array )$this->mRow as $field => $value ) {
 				$data[$field] = $value;
 			}
 
 			$row = $dbw->selectRow(
-				'`user`',
+				'user',
 				array( '*' ),
 				array( 'user_id' => $this->getId() ),
 				__METHOD__
