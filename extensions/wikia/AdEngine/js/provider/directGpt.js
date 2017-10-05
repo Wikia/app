@@ -26,13 +26,12 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	var context = adContext.getContext(),
 		sraEnabled = !context.opts.disableSra,
 		atfSlots = [
-			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD',
 			'GPT_FLUSH'
 		];
 
 	if (sraEnabled) {
-		atfSlots.push('TOP_RIGHT_BOXAD');
+		atfSlots.push('TOP_RIGHT_BOXAD', 'INVISIBLE_SKIN');
 	}
 
 	return factory.createProvider(

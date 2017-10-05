@@ -50,7 +50,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
-		sraEnabled = false,
 		hiddenSlots = [
 			'INCONTENT_PLAYER'
 		];
@@ -96,10 +95,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slot.pre('success', function () {
 				slotTweaker.show(slotName);
 			});
-		}
-
-		if (extra.sraEnabled) {
-			sraEnabled = true;
 		}
 
 		setAdditionalTargeting(slotTargetingData);
@@ -215,10 +210,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
-	function isSraEnabled() {
-		return sraEnabled;
-	}
-
 	adContext.addCallback(function () {
 		if (googleTag.isInitialized()) {
 			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
@@ -228,7 +219,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	return {
 		refreshSlot: refreshSlot,
-		pushAd: pushAd,
-		isSraEnabled: isSraEnabled
+		pushAd: pushAd
 	};
 });

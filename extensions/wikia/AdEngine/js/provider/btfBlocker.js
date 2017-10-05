@@ -72,14 +72,15 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		function startBtfQueue() {
 			var context = adContext.getContext(),
-				roadblockKillsBtf = uapContext.isRoadblockLoaded() && win.ads.runtime.disableBtf;
+				roadblockBlocksBtf = uapContext.isRoadblockLoaded() && win.ads.runtime.disableBtf;
+
 			log('startBtfQueue', log.levels.info.debug, logGroup);
 
 			if (btfQueueStarted) {
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled && !roadblockKillsBtf) {
+			if (context.opts.premiumAdLayoutEnabled && !roadblockBlocksBtf) {
 				win.ads.runtime.disableBtf = true;
 				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}
