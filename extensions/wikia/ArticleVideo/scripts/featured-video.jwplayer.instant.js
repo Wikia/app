@@ -8,7 +8,7 @@ require([
 		return;
 	}
 
-	var videoId = videoDetails.videoId,
+	var videoId = videoDetails.mediaId,
 		inNextVideoAutoplayCountries = featuredVideoAutoplay.inNextVideoAutoplayCountries,
 		willAutoplay = featuredVideoAutoplay.willAutoplay;
 
