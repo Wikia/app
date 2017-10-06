@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -33,15 +33,17 @@ class TestCaseTest extends TestCase
 
     public static function tearDownAfterClass()
     {
-        unset($GLOBALS['a']);
-        unset($_ENV['b']);
-        unset($_POST['c']);
-        unset($_GET['d']);
-        unset($_COOKIE['e']);
-        unset($_SERVER['f']);
-        unset($_FILES['g']);
-        unset($_REQUEST['h']);
-        unset($GLOBALS['i']);
+        unset(
+            $GLOBALS['a'],
+            $_ENV['b'],
+            $_POST['c'],
+            $_GET['d'],
+            $_COOKIE['e'],
+            $_SERVER['f'],
+            $_FILES['g'],
+            $_REQUEST['h'],
+            $GLOBALS['i']
+        );
     }
 
     public function testCaseToString()
@@ -496,6 +498,18 @@ class TestCaseTest extends TestCase
         );
     }
 
+    public function testSkipsIfRequiresNonExistingOsFamily()
+    {
+        $test   = new \RequirementsTest('testAlwaysSkip4');
+        $result = $test->run();
+
+        $this->assertEquals(1, $result->skippedCount());
+        $this->assertEquals(
+            'Operating system DOESNOTEXIST is required.',
+            $test->getStatusMessage()
+        );
+    }
+
     public function testSkipsIfRequiresNonExistingFunction()
     {
         $test   = new \RequirementsTest('testNine');
@@ -588,7 +602,7 @@ class TestCaseTest extends TestCase
 
     /**
      * @requires PHP 7
-     * @expectedException TypeError
+     * @expectedException \TypeError
      */
     public function testTypeErrorCanBeExpected()
     {
@@ -673,7 +687,7 @@ class TestCaseTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array>
      */
     private function getAutoreferencedArray()
     {

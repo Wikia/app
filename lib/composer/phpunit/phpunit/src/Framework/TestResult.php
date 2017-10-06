@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -17,7 +17,6 @@ use PHP_Invoker;
 use PHP_Invoker_TimeoutException;
 use PHP_Timer;
 use PHPUnit_Framework_MockObject_Exception;
-use PHPUnit_Framework_RiskyTestError;
 use PHPUnit\Util\Blacklist;
 use PHPUnit\Util\InvalidArgumentHelper;
 use PHPUnit\Util\Printer;
@@ -698,7 +697,7 @@ class TestResult implements Countable
         } catch (PHP_Invoker_TimeoutException $e) {
             $this->addFailure(
                 $test,
-                new PHPUnit_Framework_RiskyTestError(
+                new RiskyTestError(
                     $e->getMessage()
                 ),
                 $_timeout

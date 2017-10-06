@@ -437,8 +437,6 @@ class DifferenceEngine extends ContextSource {
 					$db = wfGetDB( DB_SLAVE );
 					$change = RecentChange::newFromConds(
 						array(
-						// Redundant user,timestamp condition so we can use the existing index
-							'rc_user_text'  => $this->mNewRev->getRawUserText(),
 							'rc_timestamp'  => $db->timestamp( $this->mNewRev->getTimestamp() ),
 							'rc_this_oldid' => $this->mNewid,
 							'rc_last_oldid' => $this->mOldid,

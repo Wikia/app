@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -14,7 +14,7 @@ class DataProviderTestSuite extends TestSuite
     /**
      * Sets the dependencies of a TestCase.
      *
-     * @param array $dependencies
+     * @param string[] $dependencies
      */
     public function setDependencies(array $dependencies)
     {

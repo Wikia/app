@@ -1967,8 +1967,8 @@ $messages['id'] = array(
 	'categoryblacklist' => '*rintisan',
 	'wiki-navigation' => '*#|Halaman terpopuler
 **#visited#|daftar halaman terpopuler
-**#category1#
-**#category2#
+**#kategori1#
+**#kategori2#
 *Project:Community Portal|Komunitas
 **Blog:Recent_posts|Postingan blog terbaru',
 	'imageseo-featured-on' => 'Ditampilkan di:',

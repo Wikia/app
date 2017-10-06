@@ -60,6 +60,92 @@ class HelperController extends \WikiaController {
 
 		return;
 	}
+	
+	/**
+	 * AntiSpoof: update records once a new account has been created.
+	 * TODO: remove after post-registration hooks are fixed
+	 *
+	 * @see extensions/AntiSpoof
+	 */
+	public function updateAntiSpoof() {
+		$this->response->setVal( self::FIELD_SUCCESS, false );
+
+		$username = $this->getVal( self::FIELD_USERNAME );
+
+		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
+			$spoofUser = new \SpoofUser( $username );
+			$this->response->setVal( self::FIELD_SUCCESS, $spoofUser->record() );
+
+			return;
+		}
+	}
+
+	/**
+	 * UserLogin: send a confirmation email a new account has been created
+	 * TODO: remove after post-registration hooks are fixed
+	 */
+	public function sendConfirmationEmail() {
+		$this->response->setVal( self::FIELD_SUCCESS, false );
+
+		if ( !$this->wg->EmailAuthentication ) {
+			$this->response->setVal( self::FIELD_MESSAGE, 'email authentication is not required' );
+
+			return;
+		}
+
+		$username = $this->getVal( self::FIELD_USERNAME );
+
+		wfWaitForSlaves( $this->wg->ExternalSharedDB );
+		$user = \User::newFromName( $username );
+
+		if ( !$user instanceof \User ) {
+			$this->response->setVal( self::FIELD_MESSAGE, 'unable to create a \User object from name' );
+
+			return;
+		}
+
+		if ( !$user->getId() ) {
+			$this->response->setVal( self::FIELD_MESSAGE, 'no such user' );
+
+			return;
+		}
+
+		if ( $user->isEmailConfirmed() ) {
+			$this->response->setVal( self::FIELD_MESSAGE, 'already confirmed' );
+
+			return;
+		}
+
+		$userLoginHelper = ( new \UserLoginHelper );
+		$memcKey = $userLoginHelper->getMemKeyConfirmationEmailsSent( $user->getId() );
+		$emailsSent = intval( $this->wg->Memc->get( $memcKey ) );
+
+		if ( $user->isEmailConfirmationPending() &&
+			strtotime( $user->mEmailTokenExpires ) - strtotime( '+6 days' ) > 0 &&
+			$emailsSent >= \UserLoginHelper::LIMIT_EMAILS_SENT
+		) {
+			$this->response->setVal( self::FIELD_MESSAGE, 'confirmation emails limit reached' );
+
+			return;
+		}
+
+		if ( !\Sanitizer::validateEmail( $user->getEmail() ) ) {
+			$this->response->setVal( self::FIELD_MESSAGE, self::ERR_INVALID_EMAIL );
+
+			return;
+		}
+
+		$mailStatus = $user->sendConfirmationMail(
+			'created', EmailConfirmationController::TYPE, '', true, '', $this->getVal( 'langCode', 'en' ) );
+
+		if ( !$mailStatus->isGood() ) {
+			$this->response->setVal( self::FIELD_MESSAGE, self::ERR_COULD_NOT_SEND_AN_EMAIL_MESSAGE );
+
+			return;
+		}
+
+		$this->response->setVal( self::FIELD_SUCCESS, true );
+	}
 
 	/**
 	 * UserLogin: send an email with temporary password

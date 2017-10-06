@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -3173,7 +3173,7 @@ XML;
     }
 
     /**
-     * @return array
+     * @return array<string, string[]>
      */
     public static function validInvalidJsonDataprovider()
     {

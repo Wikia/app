@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -18,7 +18,7 @@ use Throwable;
  * Re-instantiates Exceptions thrown by user-space code to retain their original
  * class names, properties, and stack traces (but without arguments).
  *
- * Unlike PHPUnit_Framework_Exception, the complete stack of previous Exceptions
+ * Unlike PHPUnit\Framework_\Exception, the complete stack of previous Exceptions
  * is processed.
  */
 class ExceptionWrapper extends Exception

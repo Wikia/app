@@ -23,6 +23,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
+use SebastianBergmann\Environment\OperatingSystem;
 use Traversable;
 
 /**
@@ -35,7 +36,7 @@ class Test
     const REGEX_EXPECTED_EXCEPTION          = '(@expectedException\s+([:.\w\\\\x7f-\xff]+)(?:[\t ]+(\S*))?(?:[\t ]+(\S*))?\s*$)m';
     const REGEX_REQUIRES_VERSION            = '/@requires\s+(?P<name>PHP(?:Unit)?)\s+(?P<operator>[<>=!]{0,2})\s*(?P<version>[\d\.-]+(dev|(RC|alpha|beta)[\d\.])?)[ \t]*\r?$/m';
     const REGEX_REQUIRES_VERSION_CONSTRAINT = '/@requires\s+(?P<name>PHP(?:Unit)?)\s+(?P<constraint>[\d\t -.|~^]+)[ \t]*\r?$/m';
-    const REGEX_REQUIRES_OS                 = '/@requires\s+OS\s+(?P<value>.+?)[ \t]*\r?$/m';
+    const REGEX_REQUIRES_OS                 = '/@requires\s+(?P<name>OS(?:FAMILY)?)\s+(?P<value>.+?)[ \t]*\r?$/m';
     const REGEX_REQUIRES                    = '/@requires\s+(?P<name>function|extension)\s+(?P<value>([^ ]+?))\s*(?P<operator>[<>=!]{0,2})\s*(?P<version>[\d\.-]+[\d\.]?)?[ \t]*\r?$/m';
 
     const UNKNOWN = -1;
@@ -190,10 +191,9 @@ class Test
         $requires = [];
 
         if ($count = \preg_match_all(self::REGEX_REQUIRES_OS, $docComment, $matches)) {
-            $requires['OS'] = \sprintf(
-                '/%s/i',
-                \addcslashes($matches['value'][$count - 1], '/')
-            );
+            foreach (\range(0, $count - 1) as $i) {
+                $requires[$matches['name'][$i]] = $matches['value'][$i];
+            }
         }
 
         if ($count = \preg_match_all(self::REGEX_REQUIRES_VERSION, $docComment, $matches)) {
@@ -252,7 +252,7 @@ class Test
      * @param string $className
      * @param string $methodName
      *
-     * @return array
+     * @return string[]
      */
     public static function getMissingRequirements($className, $methodName)
     {
@@ -295,8 +295,15 @@ class Test
             }
         }
 
-        if (!empty($required['OS']) && !\preg_match($required['OS'], PHP_OS)) {
-            $missing[] = \sprintf('Operating system matching %s is required.', $required['OS']);
+        if (!empty($required['OSFAMILY']) && $required['OSFAMILY'] !== (new OperatingSystem())->getFamily()) {
+            $missing[] = \sprintf('Operating system %s is required.', $required['OSFAMILY']);
+        }
+
+        if (!empty($required['OS'])) {
+            $requiredOsPattern = \sprintf('/%s/i', \addcslashes($required['OS'], '/'));
+            if (!\preg_match($requiredOsPattern, PHP_OS)) {
+                $missing[] = \sprintf('Operating system matching %s is required.', $requiredOsPattern);
+            }
         }
 
         if (!empty($required['functions'])) {
@@ -416,10 +423,8 @@ class Test
      */
     private static function parseAnnotationContent($message)
     {
-        if (\strpos($message, '::') !== false && \count(\explode('::', $message)) == 2) {
-            if (\defined($message)) {
-                $message = \constant($message);
-            }
+        if ((\strpos($message, '::') !== false && \count(\explode('::', $message)) == 2) && \defined($message)) {
+            $message = \constant($message);
         }
 
         return $message;
@@ -534,8 +539,8 @@ class Test
     /**
      * @param string $docComment full docComment string
      *
-     * @return array when @testWith annotation is defined
-     *               null  when @testWith annotation is omitted
+     * @return array|null array when @testWith annotation is defined,
+     *                    null when @testWith annotation is omitted
      *
      * @throws Exception when @testWith annotation is defined but cannot be parsed
      */
@@ -688,7 +693,7 @@ class Test
      * @param string $className
      * @param string $methodName
      *
-     * @return array
+     * @return array<string, bool|null>
      */
     public static function getBackupSettings($className, $methodName)
     {
@@ -849,12 +854,7 @@ class Test
             $methodName
         );
 
-        if (isset($annotations['class']['runTestsInSeparateProcesses']) ||
-            isset($annotations['method']['runInSeparateProcess'])) {
-            return true;
-        }
-
-        return false;
+        return isset($annotations['class']['runTestsInSeparateProcesses']) || isset($annotations['method']['runInSeparateProcess']);
     }
 
     public static function getClassProcessIsolationSettings($className, $methodName)
@@ -864,11 +864,7 @@ class Test
             $methodName
         );
 
-        if (isset($annotations['class']['runClassInSeparateProcess'])) {
-            return true;
-        }
-
-        return false;
+        return isset($annotations['class']['runClassInSeparateProcess']);
     }
 
     /**
@@ -981,8 +977,6 @@ class Test
                 return false;
             }
         }
-
-        return;
     }
 
     /**

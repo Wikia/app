@@ -251,12 +251,15 @@ class WikiaPageType {
 	}
 
 	/**
-	 * Check if current page is corporate page
+	 * Check if current wiki is a corporate one
 	 *
+	 * DesignSystemGlobalNavigationModel class passes the wiki ID here
+	 *
+	 * @param $cityId int|null defaults to the current wiki ID
 	 * @return bool
 	 */
-	public static function isCorporatePage() {
+	public static function isCorporatePage($cityId = null) {
 		global $wgCityId;
-		return ( new WikiaCorporateModel )->isCorporateWiki( $wgCityId );
+		return ( new WikiaCorporateModel )->isCorporateWiki( $cityId ?: $wgCityId );
 	}
 }

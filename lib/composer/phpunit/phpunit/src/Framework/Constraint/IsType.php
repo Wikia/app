@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -108,7 +108,7 @@ class IsType extends Constraint
                 return \is_bool($other);
 
             case 'null':
-                return \is_null($other);
+                return null === $other;
 
             case 'array':
                 return \is_array($other);

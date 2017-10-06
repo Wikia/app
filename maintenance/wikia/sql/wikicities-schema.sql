@@ -721,37 +721,6 @@ CREATE TABLE `user_properties` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `wikia_homepage_collections`
---
-
-DROP TABLE IF EXISTS `wikia_homepage_collections`;
-CREATE TABLE `wikia_homepage_collections` (
-  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `lang_code` varchar(8) NOT NULL,
-  `sort` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL,
-  `sponsor_hero_image` varchar(255) DEFAULT NULL,
-  `sponsor_image` varchar(255) DEFAULT NULL,
-  `sponsor_url` varchar(255) DEFAULT NULL,
-  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `lang_code` (`lang_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `wikia_homepage_collections_city_visualization`
---
-
-DROP TABLE IF EXISTS `wikia_homepage_collections_city_visualization`;
-CREATE TABLE `wikia_homepage_collections_city_visualization` (
-  `collection_id` int(10) unsigned NOT NULL,
-  `city_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`city_id`,`collection_id`),
-  KEY `fk_wikia_homepage_collections` (`collection_id`),
-  CONSTRAINT `fk_wikia_homepage_collections` FOREIGN KEY (`collection_id`) REFERENCES `wikia_homepage_collections` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `wikia_hub_modules`
 --
 
@@ -807,4 +776,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-09-26  8:51:10
+-- Dump completed on 2017-10-06 10:17:51
