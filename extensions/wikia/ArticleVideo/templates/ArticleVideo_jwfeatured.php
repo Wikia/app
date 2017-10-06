@@ -17,8 +17,6 @@
 			return <?= json_encode($videoDetails); ?>;
         })
 	</script>
-	<script><?= $jwplayerInstance ?></script>
-	<script><?= $featuredVideoAutoplay ?></script>
-	<script><?= $jwplayerScript ?></script>
+	<script><?= $jwPlayerScript ?></script>
 </div>
 <?= $app->renderPartial( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>

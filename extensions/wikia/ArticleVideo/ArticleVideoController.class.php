@@ -2,7 +2,7 @@
 
 class ArticleVideoController extends WikiaController {
 	public function featured() {
-		$requestContext = RequestContext::getMain();
+		$requestContext = $this->getContext();
 		$title = $requestContext->getTitle()->getPrefixedDBkey();
 
 		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
@@ -11,10 +11,17 @@ class ArticleVideoController extends WikiaController {
 			$requestContext->getOutput()->addModules( 'ext.ArticleVideo' );
 
 			$this->setVal( 'videoDetails', $featuredVideoData );
+
 			if ( ArticleVideoContext::isJWPlayer( $featuredVideoData ) ) {
-                $this->setVal( 'jwplayerInstance', file_get_contents($this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/scripts/featured-video.jwplayer.instance.js') );
-				$this->setVal( 'featuredVideoAutoplay', file_get_contents($this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/scripts/featured-video.autoplay.js') );
-				$this->setVal( 'jwplayerScript', file_get_contents($this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/scripts/featured-video.jwplayer.instant.js') );
+				$jwPlayerScript = $requestContext->getOutput()->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
+					new \ResourceLoaderContext( new \ResourceLoader(), $requestContext->getRequest())
+				);
+
+				$this->setVal(
+					'jwPlayerScript',
+					\JavaScriptMinifier::minify($jwPlayerScript)
+				);
+
 				$this->response->getView()->setTemplatePath( __DIR__ .
 				                                             '/templates/ArticleVideo_jwfeatured.php' );
 			} else {
