@@ -45,18 +45,17 @@ require([
 	}
 
 	playerInstance.setup({
-		file: "//content.jwplatform.com/videos/" + videoId + ".mp4",
-		mediaid: videoId,
 		autostart: willAutoplay && !document.hidden,
-		mute: willAutoplay,
+		description: videoDetails.description,
 		image: "//content.jwplatform.com/thumbs/" + videoId + "-640.jpg",
+		mute: willAutoplay,
+		playlist: videoDetails.playlist,
 		related: {
+			autoplaytimer: 5,
 			file: "https://cdn.jwplayer.com/v2/playlists/Y2RWCKuS?related_media_id=" + videoId,
-			oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show',
-			autoplaytimer: 5
+			oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show'
 		},
-		title: videoDetails.title,
-		description: videoDetails.description
+		title: videoDetails.title
 	});
 
 	featuredVideoTracking(playerInstance);
