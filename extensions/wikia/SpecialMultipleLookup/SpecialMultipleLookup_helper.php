@@ -106,7 +106,11 @@ class MultipleLookupCore {
 		if ( ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) ) {
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 
-			$qOptions = array( 'ORDER BY' => 'ml_count DESC, ml_ts DESC', 'LIMIT' => $this->mLimit, 'OFFSET' => $this->mOffset );
+			$qOptions = [
+				'ORDER BY' => 'ml_ts DESC',
+				'LIMIT' => $this->mLimit,
+				'OFFSET' => $this->mOffset,
+			];
 
 			if ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
 				if ( isset( $aMatches[1] ) ) {
