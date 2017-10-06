@@ -59,6 +59,6 @@ require([
 		title: videoDetails.title
 	});
 
-	featuredVideoTracking(playerInstance);
+	featuredVideoTracking(playerInstance, willAutoplay);
 	handleTabNotActive(willAutoplay);
 });

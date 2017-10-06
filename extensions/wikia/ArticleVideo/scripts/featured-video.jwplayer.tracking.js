@@ -1,35 +1,146 @@
 define('wikia.articleVideo.featuredVideo.tracking', [], function () {
+	var state = getDefaultState();
+	var gaCategory = 'featured-video';
+	var playerInstance;
+
 	function getDefaultState() {
 		return {
-			wasAlreadyUnmuted: false
+			wasAlreadyUnmuted: false,
+			wasStartTracked: false,
+			depth: 0,
+			progress: {
+				durationTracked: 0,
+				percentTracked: 0
+			}
 		}
 	}
 
 	function track(gaData) {
+		if (!gaData.label) {
+			throw new Error('No tracking label provided');
+		}
+
+		var finalGAData = {
+			action: gaData.action || 'click',
+			category: gaCategory,
+			label: gaData.label,
+			//value tracks sound state: 1 for muted, 0 for unmuted
+			value: Number(playerInstance.getMute())
+		};
+
 		console.log(gaData);
 	}
 
-	var state = getDefaultState();
+	return function (providedPlayerInstance, willAutoplay, gaCategory) {
+		playerInstance = providedPlayerInstance;
+		gaCategory = gaCategory;
 
-	return function (playerInstance) {
-		playerInstance.on('play', function () {
+		playerInstance.once('ready', function () {
 			track({
-				label: 'featured-video-play'
+				label: 'load',
+				action: 'impression'
 			});
+
+			var relatedPlugin = playerInstance.getPlugin('related');
+
+			relatedPlugin.on('open', function () {
+				track({
+					label: 'recommended-video',
+					action: 'impression'
+				});
+			});
+
+			relatedPlugin.on('play', function (data) {
+				state.depth++;
+
+				var labelPrefix = data.auto ? 'recommended-video-autoplay-' : 'recommended-video-select-';
+
+				track({
+					label: labelPrefix + data.position,
+					action: 'impression'
+				});
+
+				track({
+					label: 'recommended-video-depth' + state.depth,
+					action: 'impression'
+				});
+			});
+		});
+
+		playerInstance.once('firstFrame', function () {
+			if (!willAutoplay || state.wasStartTracked) {
+				return;
+			}
+
+			track({
+				label: 'autoplay-start',
+				action: 'impression'
+			});
+		});
+
+		playerInstance.on('play', function () {
+			var label = 'play-resumed';
+
+			if (!state.wasStartTracked) {
+				gaData = willAutoplay ?
+					{ label:'autoplayStart', action: 'impression' } :
+					{ label: 'user-start' };
+
+				state.wasStartTracked = true;
+			}
+
+			track(gaData);
 		});
 
 		playerInstance.on('pause', function () {
 			track({
-				label: 'featured-video-paused'
+				label: 'paused'
 			});
 		});
 
-		playerInstance.on('mute', function (isMuted) {
-			if (!isMuted && state.wasAlreadyUnmuted) {
+		playerInstance.on('mute', function () {
+			if (!playerInstance.isMuted() && !state.wasAlreadyUnmuted) {
 				track({
-					label: 'featured-video-unmuted'
+					label: 'unmuted'
 				});
+
+				state.wasAlreadyUnmuted = true;
 			}
+		});
+
+		playerInstance.on('time', function (data) {
+			var positionFloor = Math.floor(data.position);
+			var durationFloor = Math.floor(data.duration);
+			var percentPlayed = Math.floor(positionFloor * 100 / durationFloor);
+
+			if () {
+				return;
+			}
+
+			if (positionFloor > state.progress.durationTracked && positionFloor % 5 === 0) {
+				track({
+					label: 'played-seconds-' + positionFloor,
+					action: 'view'
+				});
+
+				state.progress.durationTracked = positionFloor;
+			}
+
+			if (percentPlayed > state.progress.percentTracked && percentPlayed % 10 === 0) {
+				track({
+					label: 'played-percentage-' + percentPlayed,
+					action: 'view'
+				});
+
+				state.progress.percentTracked = percentPlayed;
+			}
+		});
+
+		playerInstance.on('complete', function () {
+			track({
+				label: 'completed',
+				action: 'impression'
+			});
 		});
 	}
 });
