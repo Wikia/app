@@ -11,20 +11,20 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 
 	var state = getDefaultState();
 
-	return function (featuredVideoPlayer) {
-		featuredVideoPlayer.on('play', function () {
+	return function (playerInstance) {
+		playerInstance.on('play', function () {
 			track({
 				label: 'featured-video-play'
 			});
 		});
 
-		featuredVideoPlayer.on('pause', function () {
+		playerInstance.on('pause', function () {
 			track({
 				label: 'featured-video-paused'
 			});
 		});
 
-		featuredVideoPlayer.on('mute', function (isMuted) {
+		playerInstance.on('mute', function (isMuted) {
 			if (!isMuted && state.wasAlreadyUnmuted) {
 				track({
 					label: 'featured-video-unmuted'
