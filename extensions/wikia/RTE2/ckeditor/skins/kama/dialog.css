@@ -51,10 +51,9 @@ Comments in this file will give more details about each of the above blocks.
 .cke_dialog_body
 {
 	z-index: 1;
-	border: solid 1px #ddd;
-	padding: 5px;
+	border: solid 1px #AAAAAA;
+	padding: 2px;
 	background-color: #fff;
-	border-radius: 5px;
 }
 
 /* Due to our reset we have to recover the styles of some elements. */
@@ -128,6 +127,7 @@ Comments in this file will give more details about each of the above blocks.
 
 /* The outer part of the dialog contants, which contains the contents body
    and the footer. */
+/*
 .cke_dialog_contents
 {
 	background-color: #ebebeb;
@@ -138,6 +138,14 @@ Comments in this file will give more details about each of the above blocks.
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	margin-top: 22px;
+}
+
+*/
+
+.cke_dialog_contents
+{
+	overflow: auto;
+	padding: 5px 10px;
 }
 
 /* The contents body part, which will hold all elements available in the dialog. */
@@ -156,8 +164,6 @@ Comments in this file will give more details about each of the above blocks.
 	background-color: #ebebeb;
 	border: solid 1px #fff;
 	border-bottom: none;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
 }
 
 .cke_rtl .cke_dialog_footer
@@ -284,10 +290,9 @@ a.cke_dialog_tab_disabled
 	display: none;
 }
 
-.cke_single_page .cke_dialog_contents
+.cke_dialog.cke_single_page .cke_dialog_contents
 {
 	padding-top: 5px;
-	margin-top: 10px;
 }
 
 /* The close button at the top of the dialog. */
@@ -314,12 +319,12 @@ a.cke_dialog_close_button
 
 .cke_ltr .cke_dialog_close_button
 {
-	right: 10px;
+	right: 0px;
 }
 
 .cke_rtl .cke_dialog_close_button
 {
-	left: 10px;
+	left: 0px;
 }
 
 .cke_dialog_close_button
@@ -491,7 +496,7 @@ The buttons used in the dialog footer or inside the contents.
 */
 
 /* The outer part of the button. */
-a.cke_dialog_ui_button
+/*a.cke_dialog_ui_button
 {
 	border-collapse: separate;
 	cursor: default;
@@ -501,6 +506,26 @@ a.cke_dialog_ui_button
 	text-align: center;
 	display: inline-block;
 }
+*/
+/* button */
+.cke_dialog .wikia-button
+{
+	color:#FFFFFF  !important;
+	cursor: pointer !important;
+	font-family:"Lucida Grande",sans-serif  !important;
+	font-size:12px  !important;
+	height:17px  !important;
+	line-height: 17px !important;
+	float: right;
+}
+
+.cke_dialog .wikia-button .cke_dialog_ui_button {
+	color: inherit;
+	cursor: pointer;
+}
+
+
+
 
 /* The inner part of the button (dialog footer buttons only). */
 .cke_dialog_footer_buttons a.cke_dialog_ui_button span
@@ -511,6 +536,10 @@ a.cke_dialog_ui_button
 }
 
 /* Special class appended to the Ok button. */
+
+
+
+
 a.cke_dialog_ui_button_ok
 {
 	background-position: 0 -1144px;
@@ -575,14 +604,20 @@ a.cke_dialog_ui_button:active
 }
 
 /* A special container that holds the footer buttons. */
-.cke_dialog_footer_buttons
+/*.cke_dialog_footer_buttons
 {
 	display: inline-table;
 	margin: 6px 12px 0 12px;
 	width: auto;
 	position: relative;
 }
+*/
 
+.cke_dialog_footer_buttons
+{
+	display: inline-table;
+	position: relative;
+}
 .cke_dialog_footer_buttons span.cke_dialog_ui_button
 {
 	text-align: center;

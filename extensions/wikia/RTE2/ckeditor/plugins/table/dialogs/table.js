@@ -275,7 +275,7 @@
 							type: 'text',
 							id: 'txtCols',
 							'default': 2,
-							label: editor.lang.table.columns,
+							label: "Liczba kolumn",//editor.lang.table.columns,
 							required: true,
 							controlStyle: 'width:5em',
 							validate: validatorNum( editor.lang.table.invalidCols ),
@@ -329,7 +329,7 @@
 							requiredContent: 'table[border]',
 							// Avoid setting border which will then disappear.
 							'default': editor.filter.check( 'table[border]' ) ? 1 : 0,
-							label: editor.lang.table.border,
+							label: "Grubosc",//editor.lang.table.border,
 							controlStyle: 'width:3em',
 							validate: CKEDITOR.dialog.validate.number( editor.lang.table.invalidBorder ),
 							setup: function( selectedTable ) {
@@ -511,7 +511,7 @@
 									captionElement.getItem( i ).remove();
 							}
 						}
-					},
+					}/*,
 					{
 						type: 'text',
 						id: 'txtSummary',
@@ -527,7 +527,7 @@
 							else
 								selectedTable.removeAttribute( 'summary' );
 						}
-					} ]
+					}*/ ]
 				} ]
 			},
 			dialogadvtab && dialogadvtab.createAdvancedTab( editor, null, 'table' )
