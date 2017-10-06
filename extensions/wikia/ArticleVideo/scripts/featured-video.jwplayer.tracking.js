@@ -2,11 +2,11 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 	var state = getDefaultState();
 	var gaCategory = 'featured-video';
 	var playerInstance;
+	var wasAlreadyUnmuted = false;
+	var wasStartTracked = false;
 
 	function getDefaultState() {
 		return {
-			wasAlreadyUnmuted: false,
-			wasStartTracked: false,
 			depth: 0,
 			progress: {
 				durationTracked: 0,
@@ -68,7 +68,7 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		});
 
 		playerInstance.once('firstFrame', function () {
-			if (!willAutoplay || state.wasStartTracked) {
+			if (!willAutoplay || wasStartTracked) {
 				return;
 			}
 
@@ -81,12 +81,16 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		playerInstance.on('play', function () {
 			var label = 'play-resumed';
 
-			if (!state.wasStartTracked) {
+			if (!wasStartTracked) {
 				gaData = willAutoplay ?
-					{ label:'autoplayStart', action: 'impression' } :
+					{ label:'autoplay-start', action: 'impression' } :
 					{ label: 'user-start' };
-
-				state.wasStartTracked = true;
+				debugger;
+				wasStartTracked = true;
+			} else {
+				gaData = {
+					label: 'play-resumed'
+				}
 			}
 
 			track(gaData);
@@ -99,12 +103,12 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		});
 
 		playerInstance.on('mute', function () {
-			if (!playerInstance.isMuted() && !state.wasAlreadyUnmuted) {
+			if (!playerInstance.isMuted() && !wasAlreadyUnmuted) {
 				track({
 					label: 'unmuted'
 				});
 
-				state.wasAlreadyUnmuted = true;
+				wasAlreadyUnmuted = true;
 			}
 		});
 
@@ -112,10 +116,6 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 			var positionFloor = Math.floor(data.position);
 			var durationFloor = Math.floor(data.duration);
 			var percentPlayed = Math.floor(positionFloor * 100 / durationFloor);
-
-			if () {
-				return;
-			}
 
 			if (positionFloor > state.progress.durationTracked && positionFloor % 5 === 0) {
 				track({
@@ -141,6 +141,8 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 				label: 'completed',
 				action: 'impression'
 			});
+
+			state = getDefaultState();
 		});
 	}
 });
