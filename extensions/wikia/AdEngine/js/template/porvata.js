@@ -40,6 +40,24 @@ define('ext.wikia.adEngine.template.porvata', [
 		logGroup = 'ext.wikia.adEngine.template.porvata',
 		videoAspectRatio = 640 / 360;
 
+	function callHop(params, shouldSetStatus) {
+		if (shouldSetStatus) {
+			slotRegistry.get(params.slotName).hop({
+				adType: params.adType,
+				source: 'porvata'
+			});
+		}
+	}
+
+	function callSuccess(params, shouldSetStatus) {
+		if (shouldSetStatus) {
+			slotRegistry.get(params.slotName).success({
+				adType: params.adType,
+				source: 'porvata'
+			});
+		}
+	}
+
 	function loadVeles(params) {
 		params.vastResponse = params.vastResponse || params.bid.ad;
 		veles.markBidsAsUsed(params.hbAdId);
@@ -80,6 +98,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		video.addEventListener('wikiaAdsManagerLoaded', function () {
 			if (hasDirectAd) {
 				dispatchEventWhenInViewport(video, 'wikiaInViewportWithDirect');
+				callSuccess(params, params.setSlotStatusBasedOnVAST);
 			}
 		});
 
@@ -114,6 +133,9 @@ define('ext.wikia.adEngine.template.porvata', [
 				if (typeof params.fallbackBidEnableLeaderboardFloating !== 'undefined') {
 					params.enableLeaderboardFloating = params.fallbackBidEnableLeaderboardFloating;
 				}
+				callSuccess(params, params.setSlotStatusBasedOnVAST);
+			} else {
+				callHop(params, params.setSlotStatusBasedOnVAST);
 			}
 
 			dispatchEventWhenInViewport(video, offerEvent);
@@ -156,6 +178,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 * @param {integer} [params.vpaidMode] - VPAID mode from IMA: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
 	 * @param {Boolean} [params.isDynamic] - Flag defining if slot should be collapsed and expanded
+	 * @param {Boolean} [params.setSlotStatusBasedOnVAST] - Decides whether slot status is dispatched manually or based on VAST response
 	 */
 	function show(params) {
 		var imaVpaidModeInsecure = 2,
@@ -175,18 +198,12 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (!isVideoAutoplaySupported()) {
 			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
-			slotRegistry.get(params.slotName).hop({
-				adType: params.adType,
-				source: 'porvata'
-			});
+			callHop(params, true);
 
 			return;
 		}
 
-		slotRegistry.get(params.slotName).success({
-			adType: params.adType,
-			source: 'porvata'
-		});
+		callSuccess(params, !params.setSlotStatusBasedOnVAST);
 
 		if (params.vpaidMode === imaVpaidModeInsecure) {
 			params.originalContainer = params.container;
