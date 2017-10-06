@@ -54,7 +54,7 @@ class ArticleVideoContext {
 			if ( self::isJWPlayer( $videoData ) ) {
 				$details =
 					json_decode( Http::get( 'https://cdn.jwplayer.com/v2/media/' .
-					                        $videoData['videoId'], 1 ), true );
+					                        $videoData['mediaId'], 1 ), true );
 				if ( !empty( $details ) ) {
 					$videoData['title'] = $details['title'];
 					$videoData['description'] = $details['description'];
@@ -80,7 +80,7 @@ class ArticleVideoContext {
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
 		if ( self::isJWPlayer( $featuredVideo ) ) {
-			return isset( $featuredVideo['videoId'] );
+			return isset( $featuredVideo['mediaId'] );
 		}
 		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
 	}
