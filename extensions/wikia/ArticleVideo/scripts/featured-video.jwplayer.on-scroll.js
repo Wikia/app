@@ -76,12 +76,14 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 		}
 
 		var transitionEvent = whichTransitionEvent();
-		transitionEvent && $playerContainer[0].addEventListener(transitionEvent, function (event) {
-			if (event.propertyName === 'width') {
-				playerInstance.resize();
-				playerInstance.setControls(true);
-			}
-		});
+		if (transitionEvent) {
+			$playerContainer[0].addEventListener(transitionEvent, function (event) {
+				if (event.propertyName === 'width') {
+					playerInstance.resize();
+					playerInstance.setControls(true);
+				}
+			});
+		}
 
 		onScroll.bind(toggleCollapse);
 		$closeBtn.click(closeButtonClicked);
