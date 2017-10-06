@@ -19,25 +19,26 @@ require([
 
 	function handleTabNotActive(willAutoplay) {
 		var hidden,
-			visibilityChange;
+			visibilityChangeEvent;
 
-		if (typeof document.hidden !== "undefined") {
+		if (typeof document.hidden !== 'undefined') {
 			hidden = "hidden";
-			visibilityChange = "visibilitychange";
+			visibilityChangeEvent = 'visibilitychange';
 		} else if (typeof document.msHidden !== "undefined") {
 			hidden = "msHidden";
-			visibilityChange = "msvisibilitychange";
+			visibilityChangeEvent = 'msvisibilitychange';
 		} else if (typeof document.webkitHidden !== "undefined") {
 			hidden = "webkitHidden";
-			visibilityChange = "webkitvisibilitychange";
+			visibilityChangeEvent = 'webkitvisibilitychange';
 		}
 
-		document.addEventListener(visibilityChange, function () {
-			if (canPlayVideo(hidden, willAutoplay)) {
-				playerInstance.play(true);
-			}
-
-		}, false);
+		if (visibilityChangeEvent) {
+			document.addEventListener(visibilityChangeEvent, function () {
+				if (canPlayVideo(hidden, willAutoplay)) {
+					playerInstance.play(true);
+				}
+			}, false);
+		}
 	}
 
 	function canPlayVideo(hidden, willAutoplay) {
@@ -59,7 +60,5 @@ require([
 	});
 
 	featuredVideoTracking(playerInstance);
-
 	handleTabNotActive(willAutoplay);
 });
-

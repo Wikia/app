@@ -19,5 +19,4 @@ require([
 	jwPlayerOnScroll(playerInstance, $featuredVideo, $playerContainer);
 	jwPlayerVideoFeedback(playerInstance);
 	jwPlayerAutoplayToggle(playerInstance);
-});
-
+});s

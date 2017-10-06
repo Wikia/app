@@ -1,8 +1,6 @@
 define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.articleVideo.featuredVideo.autoplay'], function (featuredVideoAutoplay) {
 
 	return function (playerInstance) {
-		var inAutoplayCountries = featuredVideoAutoplay.inAutoplayCountries;
-
 		function addAutoplayToggleButton() {
 			playerInstance.addButton(
 				"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" class='wds-icon'>\n" +
@@ -18,7 +16,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 			);
 		}
 
-		if (inAutoplayCountries) {
+		if (featuredVideoAutoplay.inAutoplayCountries) {
 			addAutoplayToggleButton();
 
 			playerInstance.on('resize', function (event) {
