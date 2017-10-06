@@ -95,6 +95,15 @@ class RevisionDeleteUser {
 			array( 'rc_user_text' => $name ),
 			__METHOD__
 		);
+
+		// SUS-812: make sure do delete rows for a given user account (by rc_user)
+		$dbw->update(
+			'recentchanges',
+			array( "rc_deleted = rc_deleted $op $delUser" ),
+			array( 'rc_user' => $userId ),
+			__METHOD__
+		);
+
 		$dbw->update(
 			'recentchanges',
 			array( "rc_deleted = rc_deleted $op $delAction" ),
