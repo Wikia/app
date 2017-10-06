@@ -12,7 +12,7 @@
 		right: 0;
 		top: 0;
 		transform: translate3d(0, 0, 0); // hack for iOS for changing position to fixed while scrolling
-		z-index: 2;
+		z-index: 2; // this is set to 2 because it has to be larger than z-index of `.WikiaArticle` which is set to 1
 	}
 
 	&.is-collapsed-ready &__player-container {
@@ -21,33 +21,36 @@
 		top: auto;
 	}
 
-	&.is-collapsed &__player-container {
-		bottom: 45px !important;
-		left: auto;
-		position: fixed;
-		right: 20px !important;
-		top: auto;
-		transition: right $video-collapse-animation-speed, bottom $video-collapse-animation-speed, width $video-collapse-animation-speed;
-		width: $video-container-width !important;
-	}
+	&.is-collapsed {
+		.featured-video {
+			&__player-container {
+				bottom: 45px !important;
+				left: auto;
+				position: fixed;
+				right: 20px !important;
+				top: auto;
+				transition: right $video-collapse-animation-speed, bottom $video-collapse-animation-speed, width $video-collapse-animation-speed;
+				width: $video-container-width !important;
+			}
 
-	&.is-collapsed &__details {
-		display: block;
-	}
+			&__details {
+				display: block;
+			}
 
-	&.is-collapsed &__close {
-		cursor: pointer;
-		display: block;
-		z-index: 11001;
+			&__close {
+				cursor: pointer;
+				display: block;
+			}
+		}
 	}
 
 	&__details {
 		background-color: #000;
 		display: none;
 		font-weight: bold;
-		padding: $video-details-horizontal-padding $video-details-vertical-padding;
 		-moz-osx-font-smoothing: grayscale;
 		-webkit-font-smoothing: antialiased;
+		padding: $video-details-horizontal-padding $video-details-vertical-padding;
 
 		> div {
 			max-width: $video-container-width - 2 * $video-details-vertical-padding;
@@ -68,7 +71,7 @@
 
 	&__time {
 		&:before {
-			content: '\2022';
+			content: '\2022'; // bullet (•)
 			padding: 0 2px;
 		}
 	}
