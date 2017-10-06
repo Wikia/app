@@ -69,8 +69,6 @@ $wgAutoloadClasses['ExprError'] = dirname( __FILE__ ) . '/Expr.php';
 $wgAutoloadClasses['Scribunto_LuaParserFunctionsLibrary'] = __DIR__ . '/ParserFunctions.library.php';
 // end wikia change
 
-$wgExtensionMessagesFiles['ParserFunctions'] = dirname( __FILE__ ) . '/ParserFunctions.i18n.php';
-$wgExtensionMessagesFiles['ParserFunctionsMagic'] = dirname( __FILE__ ) . '/ParserFunctions.i18n.magic.php';
 
 $wgParserTestFiles[] = dirname( __FILE__ ) . "/funcsParserTests.txt";
 $wgParserTestFiles[] = dirname( __FILE__ ) . "/stringFunctionTests.txt";

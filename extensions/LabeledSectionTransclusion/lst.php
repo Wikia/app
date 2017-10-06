@@ -34,7 +34,6 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'lst-desc',
 );
 $wgParserTestFiles[] = dirname( __FILE__ ) . "/lstParserTests.txt";
-$wgExtensionMessagesFiles['LabeledSectionTransclusion'] = dirname( __FILE__ ) . '/lst.i18n.php';
 
 // Local settings variable
 // Must be set now to avoid injection via register_globals

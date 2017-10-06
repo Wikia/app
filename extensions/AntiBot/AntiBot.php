@@ -41,7 +41,6 @@ $wgExtensionCredits[version_compare($wgVersion, '1.17alpha', '>=') ? 'antispam' 
 	'author' => 'Tim Starling',
 	'descriptionmsg' => 'antibot-desc',
 );
-$wgExtensionMessagesFiles['AntiBot'] =  dirname( __FILE__ ) . '/AntiBot.i18n.php';
 
 /**
  * A map of payload types to callbacks

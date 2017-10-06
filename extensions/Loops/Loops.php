@@ -28,8 +28,6 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 // language files:
-$wgExtensionMessagesFiles['Loops'     ] = ExtLoops::getDir() . '/Loops.i18n.php';
-$wgExtensionMessagesFiles['LoopsMagic'] = ExtLoops::getDir() . '/Loops.i18n.magic.php';
 
 // hooks registration:
 $wgHooks['ParserFirstCallInit'][] = 'ExtLoops::init';

@@ -16,7 +16,6 @@ $dir = __DIR__;
 
 // common code
 $wgAutoloadClasses['LyricFindHooks'] =  $dir . '/LyricFindHooks.class.php';
-$wgExtensionMessagesFiles['LyricFind'] = $dir . '/LyricFind.i18n.php';
 
 // LyricFind page views tracking
 $wgAutoloadClasses['LyricFindController'] =  $dir . '/LyricFindController.class.php';

@@ -45,7 +45,6 @@ $wgTimelineSettings->perlCommand = "/usr/bin/perl";
 $wgTimelineSettings->timelineFile = dirname(__FILE__)."/EasyTimeline.pl";
 
 $wgHooks['ParserFirstCallInit'][] = 'wfTimelineExtension';
-$wgExtensionMessagesFiles['Timeline'] = dirname(__FILE__) . '/Timeline.i18n.php';
 
 /**
  * @param $parser Parser
