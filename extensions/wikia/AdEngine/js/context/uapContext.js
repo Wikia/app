@@ -36,6 +36,10 @@ define('ext.wikia.adEngine.context.uapContext', [
 		return !!context.uapId;
 	}
 
+	function isRoadblockLoaded() {
+		return !!context.uapId && context.type === 'ruap';
+	}
+
 	function reset() {
 		context = {};
 	}
@@ -58,6 +62,7 @@ define('ext.wikia.adEngine.context.uapContext', [
 		getUapId: getUapId,
 		isBfaaLoaded: isBfaaLoaded,
 		isUapLoaded: isUapLoaded,
+		isRoadblockLoaded: isRoadblockLoaded,
 		reset: reset,
 		setType: setType,
 		setUapId: setUapId,

@@ -18,6 +18,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads.runtime.unblockHighlyViewableSlots = false;
 
 	function unblock(slotName) {
+		log(['unblocking', slotName], log.levels.info, logGroup);
 		unblockedSlots.push(slotName);
 	}
 
@@ -48,7 +49,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 
 			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
-				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
+				if (unblockedSlots.indexOf(slot.name) > -1) {
 					log(['PAL enabled, filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
 					return;
@@ -70,14 +71,16 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function startBtfQueue() {
-			var context = adContext.getContext();
+			var context = adContext.getContext(),
+				roadblockBlocksBtf = uapContext.isRoadblockLoaded() && win.ads.runtime.disableBtf;
+
 			log('startBtfQueue', log.levels.info.debug, logGroup);
 
 			if (btfQueueStarted) {
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled) {
+			if (context.opts.premiumAdLayoutEnabled && !roadblockBlocksBtf) {
 				win.ads.runtime.disableBtf = true;
 				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}
