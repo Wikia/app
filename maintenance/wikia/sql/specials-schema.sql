@@ -101,7 +101,6 @@ CREATE TABLE `multilookup` (
   `ml_count` int(6) unsigned NOT NULL DEFAULT '0',
   `ml_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ml_city_id`,`ml_ip_bin`),
-  UNIQUE KEY `multilookup_ip_city_id_uni_inx` (`ml_city_id`,`ml_ip_bin`),
   KEY `multilookup_ts_inx` (`ml_ts`),
   KEY `multilookup_cnt_ts_inx` (`ml_count`,`ml_ts`),
   KEY `multilookup_ip_bin_ts_inx` (`ml_ip_bin`,`ml_ts`),
@@ -141,4 +140,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-06 10:17:49
+-- Dump completed on 2017-10-06 12:23:06
