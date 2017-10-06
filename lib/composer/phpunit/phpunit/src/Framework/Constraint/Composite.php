@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -54,7 +54,7 @@ abstract class Composite extends Constraint
                 $returnResult
             );
         } catch (ExpectationFailedException $e) {
-            $this->fail($other, $description);
+            $this->fail($other, $description, $e->getComparisonFailure());
         }
     }
 

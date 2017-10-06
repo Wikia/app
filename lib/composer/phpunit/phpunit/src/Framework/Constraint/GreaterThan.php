@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -9,8 +9,6 @@
  */
 namespace PHPUnit\Framework\Constraint;
 
-use numeric;
-
 /**
  * Constraint that asserts that the value it is evaluated for is greater
  * than a given value.
@@ -18,16 +16,17 @@ use numeric;
 class GreaterThan extends Constraint
 {
     /**
-     * @var numeric
+     * @var int|float
      */
     protected $value;
 
     /**
-     * @param numeric $value
+     * @param int|float $value
      */
     public function __construct($value)
     {
         parent::__construct();
+
         $this->value = $value;
     }
 

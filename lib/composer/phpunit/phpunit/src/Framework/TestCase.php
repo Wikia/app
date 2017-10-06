@@ -40,6 +40,8 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
 use SebastianBergmann;
+use SebastianBergmann\Comparator\Comparator;
+use SebastianBergmann\Comparator\Factory as ComparatorFactory;
 use SebastianBergmann\GlobalState\Snapshot;
 use SebastianBergmann\GlobalState\Restorer;
 use SebastianBergmann\GlobalState\Blacklist;
@@ -324,6 +326,11 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      * @var bool
      */
     private $doesNotPerformAssertions = false;
+
+    /**
+     * @var Comparator[]
+     */
+    private $customComparators = [];
 
     /**
      * Constructs a test case with the given name.
@@ -626,6 +633,18 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     }
 
     /**
+     * Sets up an expectation for an exception to be raised by the code under test.
+     * Information for expected exception class, expected exception message, and
+     * expected exception code are retrieved from a given Exception object.
+     */
+    public function expectExceptionObject(Exception $exception)
+    {
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
+        $this->expectExceptionCode($exception->getCode());
+    }
+
+    /**
      * @param bool $flag
      */
     public function setRegisterMockObjectsFromTestArgumentsRecursively($flag)
@@ -883,7 +902,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
             $result->run($this);
         }
 
-        if ($this->useErrorHandler !== null) {
+        if (isset($oldErrorHandlerSetting)) {
             $result->convertErrorsToExceptions($oldErrorHandlerSetting);
         }
 
@@ -1002,18 +1021,9 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         }
 
         $this->restoreGlobalState();
-
-        // Clean up INI settings.
-        foreach ($this->iniSettings as $varName => $oldValue) {
-            \ini_set($varName, $oldValue);
-        }
-
-        $this->iniSettings = [];
-
-        // Clean up locale settings.
-        foreach ($this->locale as $category => $locale) {
-            \setlocale($category, $locale);
-        }
+        $this->unregisterCustomComparators();
+        $this->cleanupIniSettings();
+        $this->cleanupLocaleSettings();
 
         // Perform assertion on output.
         if (!isset($e)) {
@@ -1939,6 +1949,13 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         return \is_string($this->dataName) ? $this->dataName : '';
     }
 
+    public function registerComparator(Comparator $comparator)
+    {
+        ComparatorFactory::getInstance()->register($comparator);
+
+        $this->customComparators[] = $comparator;
+    }
+
     /**
      * Gets the data set description of a TestCase.
      *
@@ -1946,7 +1963,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      *
      * @return string
      */
-    protected function getDataSetAsString($includeData = true)
+    public function getDataSetAsString($includeData = true)
     {
         $buffer = '';
 
@@ -2441,5 +2458,34 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         }
 
         return false;
+    }
+
+    private function unregisterCustomComparators()
+    {
+        $factory = ComparatorFactory::getInstance();
+
+        foreach ($this->customComparators as $comparator) {
+            $factory->unregister($comparator);
+        }
+
+        $this->customComparators = [];
+    }
+
+    private function cleanupIniSettings()
+    {
+        foreach ($this->iniSettings as $varName => $oldValue) {
+            \ini_set($varName, $oldValue);
+        }
+
+        $this->iniSettings = [];
+    }
+
+    private function cleanupLocaleSettings()
+    {
+        foreach ($this->locale as $category => $locale) {
+            \setlocale($category, $locale);
+        }
+
+        $this->locale = [];
     }
 }
