@@ -18,31 +18,15 @@ require([
 		willAutoplay = featuredVideoAutoplay.willAutoplay;
 
 	function handleTabNotActive(willAutoplay) {
-		var hidden,
-			visibilityChangeEvent;
-
-		if (typeof document.hidden !== 'undefined') {
-			hidden = "hidden";
-			visibilityChangeEvent = 'visibilitychange';
-		} else if (typeof document.msHidden !== "undefined") {
-			hidden = "msHidden";
-			visibilityChangeEvent = 'msvisibilitychange';
-		} else if (typeof document.webkitHidden !== "undefined") {
-			hidden = "webkitHidden";
-			visibilityChangeEvent = 'webkitvisibilitychange';
-		}
-
-		if (visibilityChangeEvent) {
-			document.addEventListener(visibilityChangeEvent, function () {
-				if (canPlayVideo(hidden, willAutoplay)) {
-					playerInstance.play(true);
-				}
-			}, false);
-		}
+		document.addEventListener('visibilitychange', function () {
+			if (canPlayVideo(willAutoplay)) {
+				playerInstance.play(true);
+			}
+		}, false);
 	}
 
-	function canPlayVideo(hidden, willAutoplay) {
-		return !document[hidden] && willAutoplay && ['playing', 'paused'].indexOf(playerInstance.getState()) === -1;
+	function canPlayVideo(willAutoplay) {
+		return !document.hidden && willAutoplay && ['playing', 'paused'].indexOf(playerInstance.getState()) === -1;
 	}
 
 	playerInstance.setup({
