@@ -203,8 +203,10 @@ class Command
             return TestRunner::SUCCESS_EXIT;
         }
 
-        unset($this->arguments['test']);
-        unset($this->arguments['testFile']);
+        unset(
+            $this->arguments['test'],
+            $this->arguments['testFile']
+        );
 
         try {
             $result = $runner->doRun($suite, $this->arguments, $exit);
@@ -240,13 +242,13 @@ class Command
     /**
      * Handles the command-line arguments.
      *
-     * A child class of PHPUnit_TextUI_Command can hook into the argument
+     * A child class of PHPUnit\TextUI\Command can hook into the argument
      * parsing by adding the switch(es) to the $longOptions array and point to a
      * callback method that handles the switch(es) in the child class like this
      *
      * <code>
      * <?php
-     * class MyCommand extends PHPUnit_TextUI_Command
+     * class MyCommand extends PHPUnit\TextUI\Command
      * {
      *     public function __construct()
      *     {
@@ -267,8 +269,8 @@ class Command
      *     }
      *
      *     // You will also need this - the static keyword in the
-     *     // PHPUnit_TextUI_Command will mean that it'll be
-     *     // PHPUnit_TextUI_Command that gets instantiated,
+     *     // PHPUnit\TextUI\Command will mean that it'll be
+     *     // PHPUnit\TextUI\Command that gets instantiated,
      *     // not MyCommand
      *     public static function main($exit = true)
      *     {
@@ -810,12 +812,12 @@ class Command
     }
 
     /**
-     * Handles the loading of the PHPUnit_Runner_TestSuiteLoader implementation.
+     * Handles the loading of the PHPUnit\Runner\TestSuiteLoader implementation.
      *
      * @param string $loaderClass
      * @param string $loaderFile
      *
-     * @return TestSuiteLoader
+     * @return TestSuiteLoader|null
      */
     protected function handleLoader($loaderClass, $loaderFile = '')
     {
@@ -855,12 +857,12 @@ class Command
     }
 
     /**
-     * Handles the loading of the PHPUnit_Util_Printer implementation.
+     * Handles the loading of the PHPUnit\Util\Printer implementation.
      *
      * @param string $printerClass
      * @param string $printerFile
      *
-     * @return Printer|string
+     * @return Printer|string|null
      */
     protected function handlePrinter($printerClass, $printerFile = '')
     {

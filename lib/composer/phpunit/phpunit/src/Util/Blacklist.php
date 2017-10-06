@@ -46,12 +46,12 @@ class Blacklist
     ];
 
     /**
-     * @var array
+     * @var string[]
      */
     private static $directories;
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getBlacklistedDirectories()
     {
@@ -103,8 +103,6 @@ class Blacklist
             }
 
             // Hide process isolation workaround on Windows.
-            // @see PHPUnit_Util_PHP::factory()
-            // @see PHPUnit_Util_PHP_Windows::process()
             if (DIRECTORY_SEPARATOR === '\\') {
                 // tempnam() prefix is limited to first 3 chars.
                 // @see http://php.net/manual/en/function.tempnam.php
