@@ -2,7 +2,7 @@
 
 class ArticleVideoController extends WikiaController {
 	public function featured() {
-		$requestContext = RequestContext::getMain();
+		$requestContext = $this->getContext();
 		$title = $requestContext->getTitle()->getPrefixedDBkey();
 
 		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
@@ -11,11 +11,10 @@ class ArticleVideoController extends WikiaController {
 			$requestContext->getOutput()->addModules( 'ext.ArticleVideo' );
 
 			$this->setVal( 'videoDetails', $featuredVideoData );
-			$context = $this->getContext();
 
 			if ( ArticleVideoContext::isJWPlayer( $featuredVideoData ) ) {
-				$jwPlayerScript = $context->getOutput()->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
-					new \ResourceLoaderContext( new \ResourceLoader(), $context->getRequest())
+				$jwPlayerScript = $requestContext->getOutput()->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
+					new \ResourceLoaderContext( new \ResourceLoader(), $requestContext->getRequest())
 				);
 
 				$this->setVal(
