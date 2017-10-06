@@ -2690,7 +2690,8 @@ $config['jwplayer_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss',
-		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss'
+		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
+		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss'
 	],
 ];
 

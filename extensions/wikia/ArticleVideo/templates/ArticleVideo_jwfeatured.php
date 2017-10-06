@@ -21,3 +21,4 @@
 	<script><?= $featuredVideoAutoplay ?></script>
 	<script><?= $jwplayerScript ?></script>
 </div>
+<?= $app->renderPartial( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
