@@ -12,7 +12,7 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"],
 .button,
-button {
+button:not([class^="jw-"]):not([class*=" jw-"]) {
 	@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 	border: 1px solid $color-buttons;
 	border-radius: 4px;
