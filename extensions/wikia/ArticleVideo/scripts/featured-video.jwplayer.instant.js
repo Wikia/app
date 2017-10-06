@@ -52,6 +52,4 @@ require([
 
 	handleTabNotActive(willAutoplay);
 
-
 });
-
