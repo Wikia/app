@@ -117,10 +117,6 @@ $wgExtensionCredits['specialpage'][] = $wgExtensionCredits['parserhook'][] = arr
  */
 $dir = dirname( __FILE__ ) . '/';
 
-if ( $wgUseAjax && $wgCategoryTreeAllowTag ) {
-	$wgExtensionMessagesFiles['CategoryTreeMagic'] = $dir . 'CategoryTree.i18n.magic.php';
-}
-
 $wgAutoloadClasses['CategoryTreePage'] = $dir . 'CategoryTreePage.php';
 $wgAutoloadClasses['CategoryTree'] = $dir . 'CategoryTreeFunctions.php';
 $wgAutoloadClasses['CategoryTreeCategoryPage'] = $dir . 'CategoryPageSubclass.php';
