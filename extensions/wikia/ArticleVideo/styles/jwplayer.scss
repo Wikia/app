@@ -82,4 +82,24 @@
 		top: 0;
 		z-index: 1;
 	}
+
+	// resets wikia button styling
+	// this can potentially breaks some styles in future - it can override jwplayer styles
+	button {
+		background-image: initial;
+		font-family: inherit;
+		font-size: initial;
+		height: initail;
+		line-height: initial;
+		white-space: initial;
+		border-radius: initial;
+		padding: initial;
+		text-decoration: initial;
+
+		&:hover {
+			background-image: initial;
+			background-color: initial;
+			text-decoration: none;
+		}
+	}
 }
