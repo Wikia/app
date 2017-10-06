@@ -17,5 +17,5 @@
 			return <?= json_encode($videoDetails); ?>;
         })
 	</script>
-	<script><?= $jwPlayerScript?></script>
+	<script><?= $jwPlayerScript ?></script>
 </div>
