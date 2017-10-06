@@ -2685,6 +2685,29 @@ $config['article_related_video_js'] = [
 	],
 ];
 
+$config['jwplayer_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss',
+		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
+		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss'
+	],
+];
+
+$config['jwplayer_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/scripts/which-transition-event.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.on-scroll.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.video-feedback.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.autoplay-toggle.js',
+	    '//extensions/wikia/ArticleVideo/scripts/video-feedback.js'
+	],
+];
+
 $config['community_header_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],

@@ -2,7 +2,7 @@
 
 class ArticleVideoController extends WikiaController {
 	public function featured() {
-		$requestContext = RequestContext::getMain();
+		$requestContext = $this->getContext();
 		$title = $requestContext->getTitle()->getPrefixedDBkey();
 
 		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
@@ -10,9 +10,24 @@ class ArticleVideoController extends WikiaController {
 		if ( !empty( $featuredVideoData ) ) {
 			$requestContext->getOutput()->addModules( 'ext.ArticleVideo' );
 
-			// TODO: replace it with DS icon when it's ready (XW-2824)
-			$this->setVal( 'closeIconUrl', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
 			$this->setVal( 'videoDetails', $featuredVideoData );
+
+			if ( ArticleVideoContext::isJWPlayer( $featuredVideoData ) ) {
+				$jwPlayerScript = $requestContext->getOutput()->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
+					new \ResourceLoaderContext( new \ResourceLoader(), $requestContext->getRequest())
+				);
+
+				$this->setVal(
+					'jwPlayerScript',
+					\JavaScriptMinifier::minify($jwPlayerScript)
+				);
+
+				$this->response->getView()->setTemplatePath( __DIR__ .
+				                                             '/templates/ArticleVideo_jwfeatured.php' );
+			} else {
+				// TODO: replace it with DS icon when it's ready (XW-2824)
+				$this->setVal( 'closeIconUrl', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
+			}
 		} else {
 			$this->skipRendering();
 		}
