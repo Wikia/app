@@ -267,15 +267,9 @@ class SiteStatus {
 	private function updateWikiVariables() {
 		$this->debug( "Updating wiki variables." );
 
-		$this->forumsEnabled = $this->getVariableValue( 'wgEnableForumExt' );
-
 		// If Forums are null (i.e. not explicitly false) it means there's no value set for
-		// this community in the DB.  The default value for forums is true in CommonExtensions
-		// so apply that default.
-		if ($this->forumsEnabled !== false) {
-			$this->forumsEnabled = true;
-		}
-
+		// this community in the DB.
+		$this->forumsEnabled = $this->getVariableValue( 'wgEnableForumExt', true );
 		$this->discussionsEnabled = $this->getVariableValue( 'wgEnableDiscussions' );
 		$this->navigationEnabled = $this->getVariableValue( 'wgEnableDiscussionsNavigation' );
 	}
@@ -479,8 +473,8 @@ class SiteStatus {
 		return "$wgDiscussionsApiUrl/$this->siteId/threads";
 	}
 
-	private function getVariableValue( $name ) {
-		return \WikiFactory::getVarValueByName( $name, $this->siteId );
+	private function getVariableValue( $name, $default = false ) {
+		return \WikiFactory::getVarValueByName( $name, $this->siteId , false, $default );
 	}
 
 	public function statusIsComplete() {
