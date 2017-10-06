@@ -135,7 +135,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		input && input.removeAttribute( 'aria-invalid' );
 	}
 
-	var templateSource = '<div class="cke_reset_all {editorId} {editorDialogClass} {hidpi}' +
+	var templateSource = '<div class=" {editorId} {editorDialogClass} {hidpi}' +
 		'" dir="{langDir}"' +
 		' lang="{langCode}"' +
 		' role="dialog"' +
@@ -1691,7 +1691,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		resizable: CKEDITOR.DIALOG_RESIZE_BOTH,
 		minWidth: 600,
 		minHeight: 400,
-		buttons: [ CKEDITOR.dialog.okButton, CKEDITOR.dialog.cancelButton ]
+		buttons: [ CKEDITOR.dialog.okButton]
 	};
 
 	// Tool function used to return an item from an array based on its id
@@ -1765,6 +1765,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 	 * @extends CKEDITOR.dialog.definition
 	 * @constructor Creates a definitionObject class instance.
 	 */
+
+	CKEDITOR.on('dialogDefinition', function( evt ) {
+		evt.data.definition.resizable = CKEDITOR.DIALOG_RESIZE_NONE;
+	});
+
 	var definitionObject = function( dialog, dialogDefinition ) {
 			// TODO : Check if needed.
 			this.dialog = dialog;

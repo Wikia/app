@@ -50,7 +50,7 @@
 				'table,' +
 				'tabletools,' +
 				'undo,' +
-				'wysiwygarea,',
+				'wysiwygarea,' +
 
 //				'toolbar,' +
 //				'dialogui,' +
@@ -58,7 +58,7 @@
 //				'listblock,' +
 //				'floatpanel,' +
 //				'richcombo,' +
-//				'indentblock,' +
+				'indentblock',
 //				'indentlist,' +
 //				'menu,' +
 //				'justify',
