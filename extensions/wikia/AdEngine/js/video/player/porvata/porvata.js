@@ -102,8 +102,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				video.addEventListener('allAdsCompleted', function () {
 					isFirstPlay = false;
-					video.ima.dispatchEvent('wikiaAdCompleted');
 					video.ima.setAutoPlay(false);
+					video.ima.dispatchEvent('wikiaAdCompleted');
 
 					if (viewportListener) {
 						viewportObserver.removeListener(viewportListener);
@@ -137,6 +137,9 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				}
 
 				video.addEventListener('wikiaAdsManagerLoaded', function () {
+					viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+				});
+				video.addEventListener('wikiaEmptyAd', function () {
 					viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
 				});
 

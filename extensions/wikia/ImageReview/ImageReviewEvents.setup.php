@@ -12,3 +12,4 @@ $wgHooks['ArticleDeleteComplete'][] = 'ImageReviewEventsHooks::onArticleDeleteCo
 $wgHooks['ArticleUndelete'][] = 'ImageReviewEventsHooks::onArticleUndelete';
 $wgHooks['OldFileDeleteComplete'][] = 'ImageReviewEventsHooks::onOldFileDeleteComplete';
 $wgHooks['OldImageRevisionVisibilityChange'][] = 'ImageReviewEventsHooks::onOldImageRevisionVisibilityChange';
+$wgHooks['CloseWikiPurgeSharedData'][] = 'ImageReviewEventsHooks::onCloseWikiPurgeSharedData';

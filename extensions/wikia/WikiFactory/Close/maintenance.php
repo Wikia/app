@@ -476,18 +476,13 @@ class CloseWikiMaintenance {
 		$stats    = wfGetDB( DB_MASTER, [], $wgStatsDB );
 
 		/**
-		 * remove records from image_review
-		 */
-		$this->doTableCleanup( $dataware, 'image_review',       $city_id );
-		$this->doTableCleanup( $dataware, 'image_review_stats', $city_id );
-		$this->doTableCleanup( $dataware, 'image_review_wikis', $city_id );
-
-		/**
 		 * remove records from stats-related tables
 		 */
 		$this->doTableCleanup( $dataware, 'pages',              $city_id, 'page_wikia_id' );
 		$this->doTableCleanup( $specials, 'events_local_users', $city_id );
 		$this->doTableCleanup( $stats,    'events',             $city_id );
+
+		Hooks::run( 'CloseWikiPurgeSharedData', [ $city_id ] );
 	}
 
 	/**

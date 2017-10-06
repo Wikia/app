@@ -150,7 +150,8 @@ class ArticleAsJson {
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
-			'user' => $details['userName']
+			'user' => $details['userName'],
+			'mime' => $details['mime']
 		];
 
 		// Only images are allowed to be linked by user

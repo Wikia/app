@@ -2756,9 +2756,9 @@ class WikiFactory {
 	 * @deprecated
 	 */
 
-	static public function getCategory ( $city_id ) {
+	static public function getCategory ( int $city_id ) {
 		// return deprecated category list
-		$categories = static::getCategories( $city_id, true );
+		$categories = self::getCategories( $city_id, true );
 		return !empty($categories) ? $categories[0] : 0;
 	}
 
@@ -2766,13 +2766,12 @@ class WikiFactory {
 	/**
 	 * get new category id and name for $city_id
 	 *
-	 * @param integer	$city_id		wikia identifier in city_list
-	 *
+	 * @param int	$city_id		wikia identifier in city_list
+	 * @param bool $deprecated
 	 * @return array of stdClass ($row->cat_id $row->cat_name) or empty array
 	 *
 	 */
-
-	static public function getCategories( $city_id, $deprecated = false ) {
+	static private function getCategories( int $city_id, $deprecated = false ) {
 		global $wgRunningUnitTests, $wgNoDBUnits;
 
 		$aCategories = [];
@@ -2803,7 +2802,7 @@ class WikiFactory {
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
 		$cached = $oMemc->get($memkey);
 
-		if ( empty($cached) ) {
+		if ( !is_array($cached) ) {
 			$dbr = static::db( DB_SLAVE );
 
 			$oRes = $dbr->select(
@@ -2818,10 +2817,11 @@ class WikiFactory {
 				$aOptions
 			);
 
+			$aCategories = [];
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$aCategories[] = $oRow;
 			}
-			$oMemc->set($memkey, $aCategories, 60*60*24);
+			$oMemc->set( $memkey, $aCategories, WikiaResponse::CACHE_LONG );
 		} else {
 			$aCategories = $cached;
 		}

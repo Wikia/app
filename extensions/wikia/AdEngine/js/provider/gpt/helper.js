@@ -11,7 +11,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.targeting',
 	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
@@ -20,8 +19,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.ml.hivi.leaderboard'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
@@ -34,7 +33,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	gptTargeting,
 	passbackHandler,
 	slotTargeting,
-	sourcePoint,
 	adBlockDetection,
 	adBlockRecovery,
 	slotTweaker,
@@ -43,8 +41,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	instantGlobals,
 	log,
 	win,
-	hiviLeaderboard,
 	sraHelper,
+	instartLogic,
 	pageFair
 ) {
 	'use strict';
@@ -127,6 +125,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.src = 'rec';
 			}
 
+			if (instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking()) {
+				slotTargetingData.src = 'rec';
+				slotTargetingData.requestSource = 'instartLogic';
+			}
+
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
@@ -135,13 +138,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			abId = slotTargeting.getAbTestId(slotTargetingData);
 			if (abId) {
 				slotTargetingData.abi = abId;
-			}
-
-			if (hiviLeaderboard && slotName === 'TOP_LEADERBOARD') {
-				slotTargetingData.hivi = [];
-				hiviLeaderboard.getValue().forEach(function (value) {
-					slotTargetingData.hivi.push(value);
-				});
 			}
 
 			if (

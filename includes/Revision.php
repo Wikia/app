@@ -620,7 +620,7 @@ class Revision implements IDBAccessObject {
 	 *      Revision::RAW              get the ID regardless of permissions
 	 * @param $user User object to check for, only if FOR_THIS_USER is passed
 	 *              to the $audience parameter
-	 * @return Integer
+	 * @return int
 	 */
 	public function getUser( $audience = self::FOR_PUBLIC, User $user = null ) {
 		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_USER ) ) {
@@ -635,7 +635,7 @@ class Revision implements IDBAccessObject {
 	/**
 	 * Fetch revision's user id without regard for the current user's permissions
 	 *
-	 * @return String
+	 * @return int
 	 */
 	public function getRawUser() {
 		return $this->mUser;
@@ -718,27 +718,6 @@ class Revision implements IDBAccessObject {
 	 */
 	public function isMinor() {
 		return (bool)$this->mMinorEdit;
-	}
-
-	/**
-	 * @return Integer rcid of the unpatrolled row, zero if there isn't one
-	 */
-	public function isUnpatrolled() {
-		if( $this->mUnpatrolled !== null ) {
-			return $this->mUnpatrolled;
-		}
-		$dbr = wfGetDB( DB_SLAVE );
-		$this->mUnpatrolled = $dbr->selectField( 'recentchanges',
-			'rc_id',
-			array( // Add redundant user,timestamp condition so we can use the existing index
-				'rc_user_text'  => $this->getRawUserText(),
-				'rc_timestamp'  => $dbr->timestamp( $this->getTimestamp() ),
-				'rc_this_oldid' => $this->getId(),
-				'rc_patrolled'  => 0
-			),
-			__METHOD__
-		);
-		return (int)$this->mUnpatrolled;
 	}
 
 	/**

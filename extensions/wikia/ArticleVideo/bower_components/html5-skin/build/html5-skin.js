@@ -593,14 +593,14 @@ module.exports={
   "discoveryScreen": {
     "panelTitle": {
       "titleFont": {
-        "fontFamily": "Roboto Condensed",
+        "fontFamily": "Ooyala Roboto Condensed",
         "color": "white"
       }
     },
     "contentTitle": {
       "show": true,
       "font": {
-        "fontFamily": "Roboto Condensed",
+        "fontFamily": "Ooyala Roboto Condensed",
         "color": "white"
       }
     },
@@ -4091,7 +4091,7 @@ var TextTrackPanel = React.createClass({displayName: "TextTrackPanel",
     "Monospaced Serif": '"Courier New", Courier, "Nimbus Mono L", "Cutive Mono", monospace',
     "Proportional Serif": '"Times New Roman", Times, Georgia, Cambria, "PT Serif Caption", serif',
     "Monospaced Sans-Serif": '"Deja Vu Sans Mono", "Lucida Console", Monaco, Consolas, "PT Mono", monospace',
-    "Proportional Sans-Serif": 'Roboto, "Arial Unicode Ms", Arial, Helvetica, Verdana, "PT Sans Caption", sans-serif',
+    "Proportional Sans-Serif": '"Ooyala Roboto", "Arial Unicode Ms", Arial, Helvetica, Verdana, "PT Sans Caption", sans-serif',
     "Casual": '"Comic Sans MS", Impact, Handlee, fantasy',
     "Cursive": '"Monotype Corsiva", "URW Chancery L", "Apple Chancery", "Dancing Script", cursive',
     "Small Capitals": '"Arial Unicode Ms", Arial, Helvetica, Verdana, "Marcellus SC", sans-serif'
@@ -5730,7 +5730,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "a9c0ccafac08f7f02cdd30e28c6d6d50250b995d"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "5c488853637c4fdeca3327475227255b3417ccb2"};
   }
 
   // WIKIA CHANGE - START
