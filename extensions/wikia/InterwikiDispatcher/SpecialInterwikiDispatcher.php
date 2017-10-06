@@ -28,8 +28,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InterwikiDispatcher'
 );
 
-$wgExtensionMessagesFiles['SpecialInterwikiDispatcher'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.i18n.php';
-$wgExtensionMessagesFiles['SpecialInterwikiDispatcherAliases'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.alias.php';
 
 //Register hook
 $wgHooks['GetFullURL'][] = 'InterwikiDispatcher::getInterWikiaURLHook';

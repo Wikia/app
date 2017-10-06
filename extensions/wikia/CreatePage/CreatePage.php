@@ -23,11 +23,9 @@ define( 'CREATEPAGE_DIALOG_SIDE_PADDING', 10 );
 /**
  * messages file
  */
-$wgExtensionMessagesFiles['CreatePage'] = dirname( __FILE__ ) . '/CreatePage.i18n.php';
 /**
  * Aliases
  */
-$wgExtensionMessagesFiles['CreatePageAliases'] = __DIR__ . '/CreatePage.aliases.php';
 
 /**
  * Special page

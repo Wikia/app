@@ -26,7 +26,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['CategoryBlueLinks'] = __DIR__ . '/CategoryBlueLinks.i18n.php';
 
 $wgHooks['LinkBegin'][] = 'efCategoryBlueLinks';
 

@@ -15,4 +15,3 @@ $wgAutoloadClasses['ApesterTagController'] =  __DIR__ . '/ApesterTagController.c
 $wgHooks['ParserFirstCallInit'][] = 'ApesterTagController::onParserFirstCallInit';
 
 // i18n
-$wgExtensionMessagesFiles['ApesterTag'] = __DIR__ . '/ApesterTag.i18n.php';

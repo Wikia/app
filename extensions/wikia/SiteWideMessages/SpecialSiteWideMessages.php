@@ -35,7 +35,6 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionFunctions[] = 'SiteWideMessagesInit';
-$wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname(__FILE__) . '/SpecialSiteWideMessages.i18n.php';
 $wgAjaxExportList[] = 'SiteWideMessagesAjaxDismiss';
 
 if ( empty( $wgSWMSupportedLanguages ) ) $wgSWMSupportedLanguages = array( 'en' );

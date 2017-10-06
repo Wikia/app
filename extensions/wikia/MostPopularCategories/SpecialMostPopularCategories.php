@@ -28,10 +28,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgHooks['wgQueryPages'][] = 'wfSetupMostPopularCategories';
 $wgExtensionFunctions[] = 'wfSetupMostPopularCategories';
 #--- messages file
-$wgExtensionMessagesFiles["Mostpopularcategories"] = dirname(__FILE__) . '/SpecialMostPopularCategories.i18n.php';
 
 // aliases
-$wgExtensionMessagesFiles['MostpopularcategoriesAliases'] = __DIR__ . '/SpecialMostPopularCategories.aliases.php';
 
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once( "$IP/extensions/ExtensionFunctions.php" );

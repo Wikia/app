@@ -8,4 +8,3 @@ $wgAutoloadClasses['Custom404PageHooks'] =  __DIR__ . '/Custom404PageHooks.class
 $wgHooks['BeforeDisplayNoArticleText'][] = 'Custom404PageHooks::onBeforeDisplayNoArticleText';
 
 // Messages
-$wgExtensionMessagesFiles['Custom404Page'] = __DIR__ . '/Custom404Page.i18n.php';

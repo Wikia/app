@@ -31,8 +31,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url'			 => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialProtectSite'
 );
 
-$wgExtensionMessagesFiles['SpecialProtectSite'] = $dir . '/SpecialProtectSite.i18n.php';
-$wgExtensionMessagesFiles['SpecialProtectSiteAliases'] = __DIR__ . '/SpecialProtectSite.aliases.php';
 
 /* Add this Special page to the Special page listing array */
 $wgSpecialPages['Protectsite'] = 'ProtectsiteForm';

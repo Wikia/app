@@ -57,7 +57,6 @@ $wgHooks['GetPreferences'][] = 'EditPageLayoutHooks::onGetPreferences';
 $wgHooks['LogEventsListShowLogExtract'][] = 'EditPageLayoutHooks::onLogEventsListShowLogExtract';
 
 // messages
-$wgExtensionMessagesFiles['EditPageLayout'] = $dir . '/EditPageLayout.i18n.php';
 
 // add class to autoloader and register handler for it
 $wgAutoloadClasses['EditorUserPropertiesHandler'] = "$dir/models/EditorUserPropertiesHandler.class.php";

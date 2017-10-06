@@ -14,7 +14,6 @@ $wgAutoloadClasses['FounderProgressBarController'] =  $dir . '/FounderProgressBa
 $wgAutoloadClasses['FounderProgressBarHooks'] =  $dir . '/FounderProgressBarHooks.class.php';
 
 // I18N
-$wgExtensionMessagesFiles['FounderProgressBar'] = $dir . '/FounderProgressBar.i18n.php';
 
 // Hooks
 $wgHooks[ 'ArticleSaveComplete' ][] = 'FounderProgressBarHooks::onArticleSaveComplete';

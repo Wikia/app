@@ -32,4 +32,3 @@ $wgSpecialPages['MiniEditorDemo'] = 'MiniEditorSpecialController';
 /**
  * Message files
  */
-$wgExtensionMessagesFiles['MiniEditor'] = $dir . 'MiniEditor.i18n.php';

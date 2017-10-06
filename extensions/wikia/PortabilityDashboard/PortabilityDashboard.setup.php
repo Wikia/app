@@ -6,4 +6,3 @@ $wgAutoloadClasses[ 'SpecialPortabilityDashboardController' ] = __DIR__ . '/Spec
 $wgSpecialPages[ 'PortabilityDashboard' ] = 'SpecialPortabilityDashboardController';
 $wgSpecialPageGroups[ 'PortabilityDashboard' ] = 'wikia';
 
-$wgExtensionMessagesFiles[ 'PortabilityDashboard' ] = __DIR__ . '/PortabilityDashboard.i18n.php';

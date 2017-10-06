@@ -19,7 +19,6 @@ $wgExtensionCredits['specialpage'][] = [
 
 $dir = dirname( __FILE__ );
 
-$wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 $wgAutoloadClasses['WallDisabledHooksHelper'] =  $dir . '/WallDisabledHooksHelper.class.php';
 
 // don't let others edit wall messages after turning wall on and off

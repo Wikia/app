@@ -73,7 +73,6 @@ $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 /**
  * messages
  */
-$wgExtensionMessagesFiles['UserProfilePageV3'] = $dir . '/UserProfilePage.i18n.php';
 
 $wgResourceModules['ext.UserProfilePage.Lightbox'] = [
 	'styles' => 'css/UserProfilePage_modal.scss',

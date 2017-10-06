@@ -28,7 +28,6 @@ $wgExtensionCredits['specialpage'][] = array(
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
-$wgExtensionMessagesFiles['LookupUser'] = $dir . 'LookupUser.i18n.php';
 $wgExtensionAliasesFiles['LookupUser'] = $dir . 'LookupUser.alias.php';
 $wgAutoloadClasses['LookupUserPage'] = $dir . 'LookupUser.body.php';
 $wgSpecialPages['LookupUser'] = 'LookupUserPage';

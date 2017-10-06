@@ -21,7 +21,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 $dir = dirname(__FILE__);
 
 //i18n
-$wgExtensionMessagesFiles['GoogleAnalyticsSampling'] = $dir . '/GoogleAnalyticsSampling.i18n.php';
 
 // WikiaApp
 $app = F::app();

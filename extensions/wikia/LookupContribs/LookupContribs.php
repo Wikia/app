@@ -26,7 +26,6 @@ $wgSpecialPageGroups['LookupContribs'] = 'users';
 /**
  * i18n
  */
-$wgExtensionMessagesFiles["SpecialLookupContribs"] = $dir . 'SpecialLookupContribs.i18n.php';
 
 /**
  * hooks

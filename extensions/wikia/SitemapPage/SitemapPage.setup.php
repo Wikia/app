@@ -22,7 +22,6 @@ $wgAutoloadClasses['SitemapPageArticle'] = $dir . 'SitemapPageArticle.class.php'
 $wgAutoloadClasses['SitemapPageHooks'] = $dir . 'SitemapPageHooks.class.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['SitemapPage'] = $dir . 'SitemapPage.i18n.php';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'SitemapPageHooks::onArticleFromTitle';

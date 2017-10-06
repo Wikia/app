@@ -7,7 +7,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['AnalyticsEngine'] = __DIR__ . '/i18n/AnalyticsEngine.i18n.php';
 
 // autoloaded classes
 $wgAutoloadClasses['iAnalyticsProvider'] = __DIR__ . '/iAnalyticsProvider.php';

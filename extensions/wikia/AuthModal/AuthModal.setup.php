@@ -8,4 +8,3 @@ $wgHooks['BeforePageDisplay'][] = 'AuthModalHooks::onBeforePageDisplay';
 /**
  * i18n
  */
-$wgExtensionMessagesFiles['AuthModal'] = $dir . 'AuthModal.i18n.php';

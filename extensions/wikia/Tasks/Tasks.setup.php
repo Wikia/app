@@ -20,4 +20,3 @@ $wgAutoloadClasses['TasksSpecialController'] = "$dir/TasksSpecialController.clas
 
 $wgSpecialPages['Tasks'] = 'TasksSpecialController';
 
-$wgExtensionMessagesFiles['Tasks'] = "$dir/Tasks.i18n.php";

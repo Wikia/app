@@ -23,8 +23,6 @@ $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgSpecialPages['ThemeDesignerPreview'] = 'SpecialThemeDesignerPreview';
 
 // i18n
-$wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
-$wgExtensionMessagesFiles['ThemeDesignerAliases'] = "$dir/ThemeDesigner.alias.php";
 
 JSMessages::registerPackage( 'ThemeDesigner', [
 	'themedesigner-wordmark-preview-error'

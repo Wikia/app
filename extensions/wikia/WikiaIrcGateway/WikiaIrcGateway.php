@@ -25,7 +25,6 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaIrcGateway'
 );
 
-$wgExtensionMessagesFiles['WikiaIrcGateway'] = dirname( __FILE__ ) . '/WikiaIrcGateway.i18n.php';
 $wgHooks['ParserFirstCallInit'][] = "wfWikiaIrcGateway";
 
 /**

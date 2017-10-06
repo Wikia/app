@@ -18,7 +18,6 @@ $wgExtensionCredits['other'][] = array(
 $wgAutoloadClasses['QualarooHooks'] = $dir . 'QualarooHooks.class.php';
 
 //i18n
-$wgExtensionMessagesFiles['Qualaroo'] = $dir . 'Qualaroo.i18n.php';
 
 // hooks
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'QualarooHooks::onOasisSkinAssetGroupsBlocking';

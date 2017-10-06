@@ -13,7 +13,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/StaffPowers',
 );
 
-$wgExtensionMessagesFiles['StaffPowers'] = dirname(__FILE__) . '/StaffPowers.i18n.php';
 
 // Power: unblockableness
 $wgHooks['BlockIp'][] = 'efPowersMakeUnblockable';

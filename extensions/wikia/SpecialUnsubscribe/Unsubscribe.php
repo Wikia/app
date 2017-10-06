@@ -31,8 +31,6 @@ $wgExtensionCredits['specialpage'][] = array(
 
 // Set up the new special page
 $dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['Unsubscribe'] = $dir . 'Unsubscribe.i18n.php';
-$wgExtensionMessagesFiles['UnsubscribeAliases'] = $dir . 'Unsubscribe.alias.php';
 
 $wgAutoloadClasses['UnsubscribePage'] = $dir . 'Unsubscribe.body.php';
 $wgSpecialPages['Unsubscribe'] = 'UnsubscribePage';

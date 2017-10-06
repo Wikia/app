@@ -91,7 +91,6 @@ $wgSpecialPages[ 'AllInfoboxes' ] = 'AllinfoboxesQueryPage';
 $wgSpecialPageGroups[ 'AllInfoboxes' ] = 'wikia';
 
 // i18n mapping
-$wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
 
 // MW API
 $wgAPIModules[ 'infobox' ] = 'ApiPortableInfobox';

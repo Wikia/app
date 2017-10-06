@@ -11,7 +11,6 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 //i18n
-$wgExtensionMessagesFiles['JsonFormat'] =                       $dir . '/i18n/JsonFormat.i18n.php';
 
 $wgAutoloadClasses[ 'Wikia\JsonFormat\HtmlParser' ] =           $dir . "/HtmlParser.php";
 $wgAutoloadClasses[ 'JsonFormatService' ] =                     $dir . "/JsonFormatService.php";
