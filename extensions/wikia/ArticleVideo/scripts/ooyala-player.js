@@ -1,7 +1,8 @@
 define('ooyala-player', [
 	'wikia.browserDetect',
+	require.optional('ext.wikia.adEngine.tracking.videoInfoTracker'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
-], function (browserDetect, ooyalaTracker) {
+], function (browserDetect, videoInfoTracker, ooyalaTracker) {
 	'use strict';
 	var baseJSONSkinUrl = '/wikia.php?controller=OoyalaConfig&method=skin&cb=' + window.wgStyleVersion,
 	// TODO ooyala only supports font icons so we probably need to extract our DS icons to font
@@ -190,6 +191,14 @@ define('ooyala-player', [
 
 						options.adTrackingParams.lineItemId = adData.adId;
 						options.adTrackingParams.creativeId = adData.creativeId;
+
+						if (videoInfoTracker && options.adSet && options.adSet[0]) {
+							videoInfoTracker.track(options.adSet[0].tag_url, {
+								creativeId: adData.creativeId,
+								lineItemId: adData.adId,
+								status: 'success'
+							});
+						}
 
 						if (eventData.getAdData().vpaid === true) {
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
