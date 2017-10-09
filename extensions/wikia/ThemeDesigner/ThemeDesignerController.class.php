@@ -30,6 +30,11 @@ class ThemeDesignerController extends WikiaController {
 		// current settings
 		$this->themeSettings = $themeSettings->getSettings();
 
+		// SUS-2975: wordmark-text comes pre-escaped if set - decode any HTML entities
+		if ( !empty( $this->themeSettings['wordmark-text'] ) ) {
+			$this->themeSettings['wordmark-text'] = Sanitizer::decodeCharReferences( $this->themeSettings['wordmark-text'] );
+		}
+
 		// application theme settings (not user settable)
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
