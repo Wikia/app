@@ -1,11 +1,11 @@
 define('wikia.articleVideo.featuredVideo.tracking', [], function () {
-	var state = getDefaultState();
-	var defaultGACategory = 'featured-video';
-	var wasAlreadyUnmuted = false;
-	var depth = 0;
+	var state = getDefaultState(),
+		defaultGACategory = 'featured-video',
+		wasAlreadyUnmuted = false,
+		depth = 0,
 
-	var gaCategory;
-	var playerInstance;
+		gaCategory,
+		playerInstance;
 
 	function getDefaultState() {
 		return {
@@ -82,7 +82,7 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 				});
 
 				track({
-					label: 'recommended-video-depth' + depth,
+					label: 'recommended-video-depth-' + depth,
 					action: 'impression'
 				});
 			});
@@ -136,9 +136,8 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		});
 
 		playerInstance.on('time', function (data) {
-			var positionFloor = Math.floor(data.position);
-			var durationFloor = Math.floor(data.duration);
-			var percentPlayed = Math.floor(positionFloor * 100 / durationFloor);
+			var positionFloor = Math.floor(data.position),
+				percentPlayed = Math.floor(positionFloor * 100 / data.duration);
 
 			if (positionFloor > state.progress.durationTracked && positionFloor % 5 === 0) {
 				track({
