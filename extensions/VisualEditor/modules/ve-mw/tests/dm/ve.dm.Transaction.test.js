@@ -157,7 +157,7 @@ QUnit.test( 'newFromDocumentInsertion with references', function ( assert ) {
 				]
 			}
 		];
-	QUnit.expect( 3 * cases.length );
+	assert.expect( 3 * cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		doc = ve.dm.mwExample.createExampleDocument( cases[i].doc );
 		if ( cases[i].newDocData ) {

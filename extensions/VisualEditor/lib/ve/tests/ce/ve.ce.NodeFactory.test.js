@@ -19,7 +19,8 @@ ve.ce.NodeFactoryNodeStub.static.name = 'node-factory-node-stub';
 
 /* Tests */
 
-QUnit.test( 'splitNodeOnEnter', 2, function ( assert ) {
+QUnit.test( 'splitNodeOnEnter', function ( assert ) {
+	assert.expect( 2 );
 	var factory = new ve.ce.NodeFactory();
 
 	assert.throws(
@@ -38,6 +39,7 @@ QUnit.test( 'splitNodeOnEnter', 2, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'initialization', 1, function ( assert ) {
+QUnit.test( 'initialization', function ( assert ) {
+	assert.expect( 1 );
 	assert.ok( ve.ce.nodeFactory instanceof ve.ce.NodeFactory, 'factory is initialized at ve.ce.nodeFactory' );
 } );

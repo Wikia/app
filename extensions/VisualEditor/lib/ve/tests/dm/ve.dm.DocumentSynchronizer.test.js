@@ -8,13 +8,15 @@ QUnit.module( 've.dm.DocumentSynchronizer' );
 
 /* Tests */
 
-QUnit.test( 'getDocument', 1, function ( assert ) {
+QUnit.test( 'getDocument', function ( assert ) {
+	assert.expect( 1 );
 	var doc = ve.dm.example.createExampleDocument(),
 		ds = new ve.dm.DocumentSynchronizer( doc );
 	assert.strictEqual( ds.getDocument(), doc );
 } );
 
-QUnit.test( 'synchronize', 6, function ( assert ) {
+QUnit.test( 'synchronize', function ( assert ) {
+	assert.expect( 6 );
 	var doc = ve.dm.example.createExampleDocument(),
 		ds = new ve.dm.DocumentSynchronizer( doc ),
 		firstTextNodeUpdates = 0,

@@ -31,7 +31,7 @@ QUnit.test( 'constructor', function ( assert ) {
 		surface = new ve.dm.Surface( doc ),
 		list = new ve.dm.MetaList( surface ),
 		metadata = doc.metadata;
-	QUnit.expect( 4 * metadata.getTotalDataLength() + 1 );
+	assert.expect( 4 * metadata.getTotalDataLength() + 1 );
 	assertItemsMatchMetadata( assert, metadata, list, 'Constructor', true );
 } );
 
@@ -130,7 +130,7 @@ QUnit.test( 'onTransact', function ( assert ) {
 		];
 	// HACK: This works because most transactions above don't change the document length, and the
 	// ones that do change it cancel out
-	QUnit.expect( cases.length * ( 8 * doc.metadata.getTotalDataLength() + 2 ) );
+	assert.expect( cases.length * ( 8 * doc.metadata.getTotalDataLength() + 2 ) );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		tx = new ve.dm.Transaction();
@@ -164,7 +164,7 @@ QUnit.test( 'findItem', function ( assert ) {
 			}
 		}
 	}
-	QUnit.expect( 2 * ( metadata.getLength() + metadata.getTotalDataLength() ) * groups.length );
+	assert.expect( 2 * ( metadata.getLength() + metadata.getTotalDataLength() ) * groups.length );
 
 	for ( g = 0; g < groups.length; g++ ) {
 		groupDesc = groups[g] === null ? 'all items' : groups[g];
@@ -192,7 +192,8 @@ QUnit.test( 'findItem', function ( assert ) {
 	}
 } );
 
-QUnit.test( 'insertMeta', 5, function ( assert ) {
+QUnit.test( 'insertMeta', function ( assert ) {
+	assert.expect( 5 );
 	var expected,
 		doc = ve.dm.example.createExampleDocument( 'withMeta' ),
 		surface = new ve.dm.Surface( doc ),
@@ -224,7 +225,8 @@ QUnit.test( 'insertMeta', 5, function ( assert ) {
 	assert.deepEqual( doc.metadata.getData( 1 ), [ insert, insert ], 'Passing a MetaItem rather than an element' );
 } );
 
-QUnit.test( 'removeMeta', 4, function ( assert ) {
+QUnit.test( 'removeMeta', function ( assert ) {
+	assert.expect( 4 );
 	var expected,
 		doc = ve.dm.example.createExampleDocument( 'withMeta' ),
 		surface = new ve.dm.Surface( doc ),

@@ -16,7 +16,7 @@ QUnit.test( 'getModelFromDom', function ( assert ) {
 	// instead of the Wikia version
 	ve.dm.modelRegistry.register( ve.dm.MWBlockImageNode );
 
-	QUnit.expect( ve.test.utils.countGetModelFromDomTests( cases ) );
+	assert.expect( ve.test.utils.countGetModelFromDomTests( cases ) );
 
 	for ( msg in cases ) {
 		caseItem = ve.copy( cases[msg] );
@@ -32,7 +32,7 @@ QUnit.test( 'getDomFromModel', function ( assert ) {
 	var msg, caseItem,
 		cases = ve.dm.mwExample.domToDataCases;
 
-	QUnit.expect( 2 * ve.getObjectKeys( cases ).length );
+	assert.expect( 2 * ve.getObjectKeys( cases ).length );
 
 	for ( msg in cases ) {
 		caseItem = ve.copy( cases[msg] );

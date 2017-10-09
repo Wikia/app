@@ -19,7 +19,7 @@ QUnit.test( 'getType/isOpenElementData/isCloseElementData', function ( assert ) 
 		isOpen = [0],
 		isClose = [3];
 
-	QUnit.expect( data.getLength() * 3 );
+	assert.expect( data.getLength() * 3 );
 	for ( i = 0; i < data.getLength(); i++ ) {
 		assert.strictEqual( data.getType( i ), types[i], 'Type at offset ' + i );
 		assert.strictEqual( data.isOpenElementData( i ), ve.indexOf( i, isOpen ) !== -1, 'isOpen ' + i );
@@ -27,7 +27,8 @@ QUnit.test( 'getType/isOpenElementData/isCloseElementData', function ( assert ) 
 	}
 } );
 
-QUnit.test( 'isElementData', 1, function ( assert ) {
+QUnit.test( 'isElementData', function ( assert ) {
+	assert.expect( 1 );
 	var i,
 		data = new ve.dm.FlatLinearData( new ve.dm.IndexValueStore(), [
 			{ type: 'heading' },
@@ -72,13 +73,14 @@ QUnit.test( 'isElementData', 1, function ( assert ) {
 			{ msg: 'inside non-content leaf', expected: true },
 			{ msg: 'right of document', expected: false }
 		];
-	QUnit.expect( data.getLength() + 1 );
+	assert.expect( data.getLength() + 1 );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual( data.isElementData( i ), cases[i].expected, cases[i].msg );
 	}
 } );
 
-QUnit.test( 'containsElementData', 1, function ( assert ) {
+QUnit.test( 'containsElementData', function ( assert ) {
+	assert.expect( 1 );
 	var i, data,
 		cases = [
 			{
@@ -102,7 +104,7 @@ QUnit.test( 'containsElementData', 1, function ( assert ) {
 				expected: true
 			}
 		];
-	QUnit.expect( cases.length );
+	assert.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		data = new ve.dm.FlatLinearData( new ve.dm.IndexValueStore(), cases[i].data );
 		assert.strictEqual(

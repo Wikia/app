@@ -8,7 +8,8 @@ QUnit.module( 've.dm.TextNode' );
 
 /* Tests */
 
-QUnit.test( 'getOuterLength', 2, function ( assert ) {
+QUnit.test( 'getOuterLength', function ( assert ) {
+	assert.expect( 2 );
 	var node1 = new ve.dm.TextNode(),
 		node2 = new ve.dm.TextNode();
 

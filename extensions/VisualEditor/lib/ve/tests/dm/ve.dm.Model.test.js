@@ -110,7 +110,7 @@ QUnit.test( 'matchesAttributeSpec', function ( assert ) {
 		}
 	];
 
-	QUnit.expect( cases.length );
+	assert.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
 			ve.dm.Model.matchesAttributeSpec( cases[i].attr, cases[i].spec ),

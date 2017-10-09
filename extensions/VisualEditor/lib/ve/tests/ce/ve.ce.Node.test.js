@@ -21,18 +21,21 @@ ve.ce.nodeFactory.register( ve.ce.NodeStub );
 
 /* Tests */
 
-QUnit.test( 'getModel', 1, function ( assert ) {
+QUnit.test( 'getModel', function ( assert ) {
+	assert.expect( 1 );
 	var model = new ve.dm.NodeStub(),
 		view = new ve.ce.NodeStub( model );
 	assert.strictEqual( view.getModel(), model, 'returns reference to model given to constructor' );
 } );
 
-QUnit.test( 'getParent', 1, function ( assert ) {
+QUnit.test( 'getParent', function ( assert ) {
+	assert.expect( 1 );
 	var a = new ve.ce.NodeStub( new ve.dm.NodeStub() );
 	assert.strictEqual( a.getParent(), null, 'returns null if not attached' );
 } );
 
-QUnit.test( 'attach', 2, function ( assert ) {
+QUnit.test( 'attach', function ( assert ) {
+	assert.expect( 2 );
 	var a = new ve.ce.NodeStub( new ve.dm.NodeStub() ),
 		b = new ve.ce.NodeStub( new ve.dm.NodeStub() );
 	a.on( 'attach', function ( parent ) {
@@ -42,7 +45,8 @@ QUnit.test( 'attach', 2, function ( assert ) {
 	assert.strictEqual( a.getParent(), b, 'parent is set to given object after attach' );
 } );
 
-QUnit.test( 'detach', 2, function ( assert ) {
+QUnit.test( 'detach', function ( assert ) {
+	assert.expect( 2 );
 	var a = new ve.ce.NodeStub( new ve.dm.NodeStub() ),
 		b = new ve.ce.NodeStub( new ve.dm.NodeStub() );
 	a.attach( b );

@@ -30,7 +30,8 @@ QUnit.module( 've' );
 
 // ve.extendObject: Tested upstream (jQuery)
 
-QUnit.test( 'isInstanceOfAny', 7, function ( assert ) {
+QUnit.test( 'isInstanceOfAny', function ( assert ) {
+	assert.expect( 7 );
 	function Foo() {}
 	OO.initClass( Foo );
 
@@ -86,7 +87,8 @@ QUnit.test( 'isInstanceOfAny', 7, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'getDomAttributes', 1, function ( assert ) {
+QUnit.test( 'getDomAttributes', function ( assert ) {
+	assert.expect( 1 );
 	assert.deepEqual(
 		ve.getDomAttributes( $( '<div foo="bar" baz quux=3></div>' ).get( 0 ) ),
 		{ foo: 'bar', baz: '', quux: '3' },
@@ -94,7 +96,8 @@ QUnit.test( 'getDomAttributes', 1, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'setDomAttributes', 3, function ( assert ) {
+QUnit.test( 'setDomAttributes', function ( assert ) {
+	assert.expect( 3 );
 	var element = document.createElement( 'div' );
 	ve.setDomAttributes( element, { foo: 'bar', baz: '', quux: 3 } );
 	assert.deepEqual(
@@ -112,7 +115,8 @@ QUnit.test( 'setDomAttributes', 3, function ( assert ) {
 	assert.ok( !element.hasAttribute( 'onclick' ), 'event attributes are blocked when sanitizing' );
 } );
 
-QUnit.test( 'getHtmlAttributes', 7, function ( assert ) {
+QUnit.test( 'getHtmlAttributes', function ( assert ) {
+	assert.expect( 7 );
 	assert.deepEqual(
 		ve.getHtmlAttributes(),
 		'',
@@ -150,7 +154,8 @@ QUnit.test( 'getHtmlAttributes', 7, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'getOpeningHtmlTag', 3, function ( assert ) {
+QUnit.test( 'getOpeningHtmlTag', function ( assert ) {
+	assert.expect( 3 );
 	assert.deepEqual(
 		ve.getOpeningHtmlTag( 'code', {} ),
 		'<code>',
@@ -168,7 +173,8 @@ QUnit.test( 'getOpeningHtmlTag', 3, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'batchSplice', 8, function ( assert ) {
+QUnit.test( 'batchSplice', function ( assert ) {
+	assert.expect( 8 );
 	var actual = [ 'a', 'b', 'c', 'd', 'e' ], expected = actual.slice( 0 ), bigArr = [],
 		actualRet, expectedRet, i;
 
@@ -225,7 +231,7 @@ QUnit.test( 'createDocumentFromHtml', function ( assert ) {
 				body: ''
 			}
 		];
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 	for ( key in cases ) {
 		doc = ve.createDocumentFromHtml( cases[key].html );
 		expectedHead = $( '<head>' ).html( cases[key].head ).get( 0 );
@@ -235,7 +241,9 @@ QUnit.test( 'createDocumentFromHtml', function ( assert ) {
 	}
 } );
 
-QUnit.test( 'isBlockElement/isVoidElement', 10, function ( assert ) {
+QUnit.test( 'isBlockElement/isVoidElement', function ( assert ) {
+	assert.expect( 10 );
+
 	assert.strictEqual( ve.isBlockElement( 'div' ), true, '"div" is a block element' );
 	assert.strictEqual( ve.isBlockElement( 'SPAN' ), false, '"SPAN" is not a block element' );
 	assert.strictEqual( ve.isBlockElement( 'a' ), false, '"a" is not a block element' );
@@ -284,7 +292,7 @@ QUnit.test( 'graphemeSafeSubstring', function ( assert ) {
 				expected: [ '\ud860\udee2', '' ]
 			}
 		];
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
 			ve.graphemeSafeSubstring( text, cases[i].start, cases[i].end, true ),
@@ -357,7 +365,7 @@ QUnit.test( 'transformStyleAttributes', function ( assert ) {
 				normalize: normalizeBgcolor
 			}
 		];
-	QUnit.expect( 2 * cases.length );
+	assert.expect( 2 * cases.length );
 
 	// Force transformStyleAttributes to think that we're in a broken browser
 	wasStyleAttributeBroken = ve.isStyleAttributeBroken;
@@ -501,7 +509,7 @@ QUnit.test( 'normalizeNode', function ( assert ) {
 				}
 			}
 		];
-	QUnit.expect( 2 * cases.length );
+	assert.expect( 2 * cases.length );
 
 	// Force normalizeNode to think native normalization is broken so it uses the manual
 	// normalization code
@@ -554,7 +562,7 @@ QUnit.test( 'getCommonAncestor', function ( assert ) {
 	function getNode( name ) {
 		return nodes[ name ];
 	}
-	QUnit.expect( tests.length );
+	assert.expect( tests.length );
 	for ( i = 0, len = tests.length; i < len; i++ ) {
 		test = tests[i];
 		testNodes = test.nodes.split( /\s+/ ).map( getNode );

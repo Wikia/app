@@ -8,13 +8,15 @@ QUnit.module( 've.dm.InternalList' );
 
 /* Tests */
 
-QUnit.test( 'getDocument', 1, function ( assert ) {
+QUnit.test( 'getDocument', function ( assert ) {
+	assert.expect( 1 );
 	var doc = ve.dm.example.createExampleDocument(),
 		internalList = doc.getInternalList();
 	assert.deepEqual( internalList.getDocument(), doc, 'Returns original document' );
 } );
 
-QUnit.test( 'queueItemHtml/getItemHtmlQueue', 5, function ( assert ) {
+QUnit.test( 'queueItemHtml/getItemHtmlQueue', function ( assert ) {
+	assert.expect( 5 );
 	var doc = ve.dm.example.createExampleDocument(),
 		internalList = doc.getInternalList();
 	assert.deepEqual(
@@ -44,7 +46,8 @@ QUnit.test( 'queueItemHtml/getItemHtmlQueue', 5, function ( assert ) {
 	assert.deepEqual( internalList.getItemHtmlQueue(), ['Bar', 'Baz', 'Quux'], 'getItemHtmlQueue returns stored HTML items' );
 } );
 
-QUnit.test( 'convertToData', 2, function ( assert ) {
+QUnit.test( 'convertToData', function ( assert ) {
+	assert.expect( 2 );
 	var doc = ve.dm.example.createExampleDocument(),
 		htmlDoc = doc.getHtmlDocument(),
 		internalList = doc.getInternalList(),
@@ -76,7 +79,8 @@ QUnit.test( 'convertToData', 2, function ( assert ) {
 	assert.deepEqual( internalList.getItemHtmlQueue(), [], 'Items html is emptied after conversion' );
 } );
 
-QUnit.test( 'clone', 5, function ( assert ) {
+QUnit.test( 'clone', function ( assert ) {
+	assert.expect( 5 );
 	var internalListClone, internalListClone2,
 		doc = ve.dm.example.createExampleDocument(),
 		doc2 = ve.dm.example.createExampleDocument(),
