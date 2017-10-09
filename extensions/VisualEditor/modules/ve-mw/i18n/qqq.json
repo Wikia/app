@@ -295,5 +295,6 @@
 	"visualeditor-viewpage-savewarning-title": "Title of the dialog shown when the user tries to leave the editor without saving their changes.\n\nFollowed by the following buttons:\n* {{msg-mw|Visualeditor-viewpage-savewarning-discard}}\n* {{msg-mw|Visualeditor-viewpage-savewarning-keep}}\n{{Identical|Are you sure?}}",
 	"visualeditor-wikitext-warning": "Contents of notification displayed when Wikitext has been detected.\n\nRefers to:\n* {{msg-mw|Visualeditor-wikitext-warning-link}}\n* {{msg-mw|Visualeditor-toolbar-cancel}}\n* {{msg-mw|Visualeditor-mweditmodesource-title}}\nSee also:\n* {{msg-mw|Visualeditor-beta-warning}}",
 	"visualeditor-wikitext-warning-link": "Link to page describing what Wikitext is.\n\nUsed in:\n* {{msg-mw|Visualeditor-wikitext-warning}}.\n\nTranslate to a title where most wikis in the language you're translating to have one such help page; if they don't have one, you can use [[mw:Special:MyLanguage/Help:Formatting]] as target.",
-	"visualeditor-wikitext-warning-title": "Title of notification displayed when Wikitext has been detected"
+	"visualeditor-wikitext-warning-title": "Title of notification displayed when Wikitext has been detected",
+	"visualeditor-dialog-media-insert-title": "karamba"
 }

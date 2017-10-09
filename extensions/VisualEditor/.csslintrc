@@ -8,5 +8,7 @@
 	"qualified-headings": false,
 	"unique-headings": false,
 	"universal-selector": false,
-	"unqualified-attributes": false
+	"unqualified-attributes": false,
+	"order-alphabetical": false,
+	"known-properties": false
 }
