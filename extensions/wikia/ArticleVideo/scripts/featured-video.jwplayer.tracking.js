@@ -1,10 +1,11 @@
 define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 	var state = getDefaultState();
 	var defaultGACategory = 'featured-video';
-	var gaCategory;
-	var playerInstance;
 	var wasAlreadyUnmuted = false;
 	var depth = 0;
+
+	var gaCategory;
+	var playerInstance;
 
 	function getDefaultState() {
 		return {
