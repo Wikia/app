@@ -4,14 +4,6 @@
 			"lib/jquery/jquery.js"
 		]
 	},
-	"qunit": {
-		"scripts": [
-			"node_modules/qunitjs/qunit/qunit.js"
-		],
-		"styles": [
-			{ "file": "node_modules/qunitjs/qunit/qunit.css", "test": true }
-		]
-	},
 	"jsdifflib": {
 		"scripts": [
 			"lib/jsdifflib/diffview.js",
