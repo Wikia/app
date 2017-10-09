@@ -40,13 +40,18 @@ class SpecialMultiLookup extends FormSpecialPage {
 			return $this->msg( 'multilookupinvaliduser' )->text();
 		}
 
+		$out = $this->getOutput();
+
+		// Make sure the form is always displayed so that a new search can be started
+		$out->addHTML( $this->getForm()->displayForm( false ) );
+
 		$pager = new MultiLookupPager( $this->getContext(), $data['target'] );
 
-		$this->getOutput()->addHTML(
+		$out->addHTML(
 			$pager->getNavigationBar() . $pager->getBody() . $pager->getNavigationBar()
 		);
 
-		$this->getOutput()->addModules( 'ext.wikia.multiLookup' );
+		$out->addModules( 'ext.wikia.multiLookup' );
 
 		return true;
 	}
