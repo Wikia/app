@@ -14,7 +14,7 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
-	'ext.wikia.adEngine.tracking.adInfoTracker',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window'
 ], function (
@@ -31,7 +31,7 @@ require([
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
-	adInfoTracker,
+	adInfoListener,
 	adBlockDetection,
 	win
 ) {
@@ -55,7 +55,7 @@ require([
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
-		adInfoTracker.run();
+		adInfoListener.run();
 		slotStateMonitor.run();
 
 		// Ads

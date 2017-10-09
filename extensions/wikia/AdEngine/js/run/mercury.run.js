@@ -8,7 +8,7 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.service.actionHandler',
-	'ext.wikia.adEngine.tracking.adInfoTracker',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
@@ -21,7 +21,7 @@ require([
 	messageListener,
 	mercuryListener,
 	actionHandler,
-	adInfoTracker,
+	adInfoListener,
 	geo,
 	instantGlobals,
 	win
@@ -57,7 +57,7 @@ require([
 			prebid.call();
 		}
 
-		adInfoTracker.run();
+		adInfoListener.run();
 		slotStateMonitor.run();
 		actionHandler.registerMessageListener();
 	});
