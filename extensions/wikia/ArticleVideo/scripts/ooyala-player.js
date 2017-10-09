@@ -1,8 +1,8 @@
 define('ooyala-player', [
 	'wikia.browserDetect',
-	require.optional('ext.wikia.adEngine.tracking.videoInfoTracker'),
+	require.optional('ext.wikia.adEngine.utils.eventDispatcher'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
-], function (browserDetect, videoInfoTracker, ooyalaTracker) {
+], function (browserDetect, eventDispatcher, ooyalaTracker) {
 	'use strict';
 	var baseJSONSkinUrl = '/wikia.php?controller=OoyalaConfig&method=skin&cb=' + window.wgStyleVersion,
 	// TODO ooyala only supports font icons so we probably need to extract our DS icons to font
@@ -214,8 +214,9 @@ define('ooyala-player', [
 							}
 						}
 
-						if (videoInfoTracker && options.adSet && options.adSet[html5Player.adIndex]) {
-							videoInfoTracker.track(options.adSet[html5Player.adIndex].tag_url, {
+						if (eventDispatcher && options.adSet && options.adSet[html5Player.adIndex]) {
+							eventDispatcher.dispatch('adengine.video.status', {
+								vastUrl: options.adSet[html5Player.adIndex].tag_url,
 								creativeId: options.adTrackingParams.creativeId,
 								lineItemId: options.adTrackingParams.lineItemId,
 								status: 'success'

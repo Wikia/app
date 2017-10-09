@@ -25,6 +25,20 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			MOBILE_PREFOOTER: true
 		};
 
+	function parseParameters(content) {
+		var parameters = {};
+
+		content.split('&').forEach(function (keyVal) {
+			var data = keyVal.split('=');
+
+			if (data.length === 2) {
+				parameters[data[0]] = data[1];
+			}
+		});
+
+		return parameters;
+	}
+
 	function getBidderWon(slotParams, realSlotPrices) {
 		var slotPricesKeys = Object.keys(realSlotPrices).filter(function(key) {
 				return parseFloat(realSlotPrices[key]) > 0;
@@ -80,6 +94,31 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 		);
 	}
 
+	function trackVideo(adInfo) {
+		var vastParams = parseParameters(adInfo.vastUrl),
+			params = parseParameters(decodeURIComponent(vastParams['cust_params'])),
+			slotPrices = {};
+
+		if (params.amznbid) {
+			slotPrices.a9 = params.amznbid;
+		}
+
+		tracker.track(
+			params.pos,
+			params,
+			params,
+			{
+				adProduct: vastParams.vpos,
+				creativeId: adInfo.creativeId,
+				creativeSize: vastParams.sz,
+				lineItemId: adInfo.lineItemId,
+				status: adInfo.status
+			},
+			{
+				realSlotPrices: slotPrices
+			});
+	}
+
 	function shouldHandleSlot(slot) {
 		var dataGptDiv = slot.container && slot.container.firstChild;
 
@@ -103,6 +142,15 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 				if (shouldHandleSlot(slot)) {
 					log(['adengine.slot.status', event], log.levels.debug, logGroup);
 					trackSlot(slot, status, adInfo);
+				}
+			});
+
+			win.addEventListener('adengine.video.status', function (event) {
+				var adInfo = event.detail || {};
+
+				if (adInfo.vastUrl) {
+					log(['adengine.video.status', event], log.levels.debug, logGroup);
+					trackVideo(adInfo);
 				}
 			});
 		}
