@@ -11,6 +11,7 @@ define('ooyala-player', [
 	function OoyalaHTML5Player(container, params, onPlayerCreate, inlineSkinConfig) {
 		var playerWidth = container.scrollWidth;
 
+		this.adIndex = 0;
 		this.params = params;
 		this.params.width = playerWidth;
 		this.params.height = Math.floor((playerWidth * 9) / 16);
@@ -55,6 +56,10 @@ define('ooyala-player', [
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
 			self.onPlaybackReady();
+		});
+
+		messageBus.subscribe(OO.EVENTS.ADS_PLAYED, 'video-tracker', function () {
+			self.adIndex += 1;
 		});
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYED, 'ads', function () {
@@ -133,6 +138,7 @@ define('ooyala-player', [
 			return module.name === 'adManagerController';
 		});
 
+		this.adIndex = 0;
 		if (controller && controller.instance &&
 			controller.instance.pageSettings &&
 			controller.instance.pageSettings['google-ima-ads-manager']) {
@@ -208,8 +214,8 @@ define('ooyala-player', [
 							}
 						}
 
-						if (videoInfoTracker && options.adSet && options.adSet[0]) {
-							videoInfoTracker.track(options.adSet[0].tag_url, {
+						if (videoInfoTracker && options.adSet && options.adSet[html5Player.adIndex]) {
+							videoInfoTracker.track(options.adSet[html5Player.adIndex].tag_url, {
 								creativeId: options.adTrackingParams.creativeId,
 								lineItemId: options.adTrackingParams.lineItemId,
 								status: 'success'

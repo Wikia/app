@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.tracking.videoInfoTracker',  [
 			params,
 			params,
 			{
-				adProduct: 'video',
+				adProduct: vastParams.vpos,
 				creativeId: adInfo.creativeId,
 				creativeSize: vastParams.sz,
 				lineItemId: adInfo.lineItemId,
