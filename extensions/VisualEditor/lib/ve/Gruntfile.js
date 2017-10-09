@@ -216,7 +216,7 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat', 'cssjanus', 'cssUrlEmbed', 'copy', 'buildloader' ] );
-	grunt.registerTask( 'lint', [ 'jshint', 'jscs', 'csslint', 'banana' ] );
+	grunt.registerTask( 'lint', [ 'jshint', 'csslint', 'banana' ] );
 	grunt.registerTask( 'unit', [ 'karma:main' ] );
 	grunt.registerTask( 'test', [ 'git-build', 'build', 'lint', 'unit' ] );
 	grunt.registerTask( 'watch', [ 'karma:bg:start', 'runwatch' ] );
