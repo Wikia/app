@@ -87,4 +87,8 @@
 		top: 0;
 		z-index: 1;
 	}
+
+	&__wrapper.is-removed {
+		display: none;
+	}
 }
