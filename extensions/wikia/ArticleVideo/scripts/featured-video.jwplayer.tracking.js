@@ -29,12 +29,12 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		};
 
 		// Will be replaced by connecting Internal + GA trackers
-		console.info(gaData);
+		console.info(finalGAData);
 	}
 
-	return function (providedPlayerInstance, willAutoplay, gaCategory) {
+	return function (providedPlayerInstance, willAutoplay, providedGACategory) {
 		playerInstance = providedPlayerInstance;
-		gaCategory = gaCategory;
+		gaCategory = providedGACategory;
 
 		playerInstance.once('ready', function () {
 			track({
@@ -82,7 +82,6 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		});
 
 		playerInstance.on('play', function () {
-			var label = 'play-resumed';
 			var gaData;
 
 			if (state.wasStartTracked) {
