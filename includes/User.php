@@ -632,7 +632,6 @@ class User implements JsonSerializable {
 		global $wgExternalSharedDB; // SUS-2945 - let's use wikicities.user instead of per-cluster copy
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		$s = $dbr->selectRow( '`user`', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
-
 		if ( $s === false ) {
 			$user_name = $nt->getText();
 			Hooks::run( 'UserNameLoadFromId', array( $user_name, &$s ) );
@@ -3136,6 +3135,7 @@ class User implements JsonSerializable {
 	 * @todo Only rarely do all these fields need to be set!
 	 */
 	public function saveSettings() {
+		global $wgExternalSharedDB;
 		$this->load();
 		if ( wfReadOnly() ) {
 			return;
@@ -3148,8 +3148,8 @@ class User implements JsonSerializable {
 
 		Hooks::run( 'BeforeUserSaveSettings', array( $this ) );
 
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->update( 'user',
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+		$dbw->update( '`user`',
 			array( /* SET */
 				'user_name' => $this->mName,
 				'user_real_name' => $this->mRealName,
@@ -4114,9 +4114,6 @@ class User implements JsonSerializable {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange;
-
-		$extuser = ExternalUser::newFromUser( $this );
 
 		$this->loadOptions();
 		// wikia change
@@ -4141,17 +4138,6 @@ class User implements JsonSerializable {
 			} elseif ($this->isDefaultOption($key, $value)) {
 				$deletePrefs[] = $key;
 			}
-			# </Wikia>
-			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
-				switch ( $wgAllowPrefChange[$key] ) {
-					case 'local':
-					case 'message':
-						break;
-					case 'semiglobal':
-					case 'global':
-						$extuser->setPref( $key, $value );
-				}
-			}
 		}
 
 		// user has default set, so clear any other entries from db
@@ -4164,10 +4150,6 @@ class User implements JsonSerializable {
 		}
 
 		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK, __METHOD__);
-
-		if ( $extuser ) {
-			$extuser->updateUser();
-		}
 	}
 
 	/**
