@@ -30,7 +30,6 @@
     "karma-phantomjs-launcher": "latest",
     "karma-requirejs": "latest",
     "karma-script-launcher": "latest",
-    "phantomjs-prebuilt": "latest",
     "requirejs": "latest",
     "jscs-jsdoc": "latest"
   }
