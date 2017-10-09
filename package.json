@@ -21,15 +21,10 @@
     "jasmine-core": "latest",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
-    "karma-coffee-preprocessor": "latest",
     "karma-coverage": "latest",
-    "karma-firefox-launcher": "latest",
-    "karma-html2js-preprocessor": "latest",
     "karma-jasmine": "latest",
     "karma-junit-reporter": "latest",
-    "karma-phantomjs-launcher": "latest",
     "karma-requirejs": "latest",
-    "karma-script-launcher": "latest",
     "requirejs": "latest",
     "jscs-jsdoc": "latest"
   }
