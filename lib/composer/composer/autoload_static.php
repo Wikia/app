@@ -61,6 +61,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'PhpDocReader\\' => 13,
             'PhpAmqpLib\\' => 11,
             'ParserHooks\\' => 12,
@@ -175,6 +176,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'React\\Promise\\' => 
         array (
             0 => __DIR__ . '/..' . '/react/promise/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
         'PhpDocReader\\' => 
         array (
@@ -293,10 +298,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         ),
         'P' => 
         array (
-            'Psr\\Log\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/psr/log',
-            ),
             'ProxyManager\\' => 
             array (
                 0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',

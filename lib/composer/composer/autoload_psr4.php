@@ -21,6 +21,7 @@ return array(
     'SMW\\Maintenance\\' => array($baseDir . '/extensions/SemanticMediaWiki/maintenance'),
     'SMW\\' => array($baseDir . '/extensions/SemanticMediaWiki/src'),
     'React\\Promise\\' => array($vendorDir . '/react/promise/src'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'PhpDocReader\\' => array($vendorDir . '/php-di/phpdoc-reader/src/PhpDocReader'),
     'PhpAmqpLib\\' => array($vendorDir . '/php-amqplib/php-amqplib/PhpAmqpLib'),
     'ParserHooks\\' => array($vendorDir . '/mediawiki/parser-hooks/src'),
