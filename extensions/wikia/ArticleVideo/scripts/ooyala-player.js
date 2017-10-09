@@ -191,8 +191,10 @@ define('ooyala-player', [
 							currentAd = IMAAdsManager.getCurrentAd(),
 							wrapperId;
 
-						options.adTrackingParams.lineItemId = adData.adId;
-						options.adTrackingParams.creativeId = adData.creativeId;
+						if (adData) {
+							options.adTrackingParams.lineItemId = adData.adId;
+							options.adTrackingParams.creativeId = adData.creativeId;
+						}
 
 						if (currentAd) {
 							wrapperId = currentAd.getWrapperAdIds();
