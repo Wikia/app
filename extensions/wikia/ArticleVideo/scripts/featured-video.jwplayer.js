@@ -15,7 +15,7 @@ require([
 		$featuredVideoWrapper = $('.featured-video__wrapper'),
 		$playerContainer = $('.featured-video__player-container');
 
-	jwPlayerOnScroll(playerInstance, $featuredVideo, $playerContainer);
+	var unbindOnScrollEvents = jwPlayerOnScroll(playerInstance, $featuredVideo, $playerContainer);
 	jwPlayerVideoFeedback(playerInstance);
 	jwPlayerAutoplayToggle(playerInstance);
 
@@ -25,6 +25,7 @@ require([
 			$featuredVideoWrapper.addClass('is-removed');
 			playerInstance.remove();
 			playerInstance = null;
+			unbindOnScrollEvents();
 		}
 	});
 });
