@@ -3,11 +3,11 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 	var gaCategory = 'featured-video';
 	var playerInstance;
 	var wasAlreadyUnmuted = false;
-	var wasStartTracked = false;
+	var depth = 0;
 
 	function getDefaultState() {
 		return {
-			depth: 0,
+			wasStartTracked: false,
 			progress: {
 				durationTracked: 0,
 				percentTracked: 0
@@ -28,7 +28,8 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 			value: Number(playerInstance.getMute())
 		};
 
-		console.log(gaData);
+		// Will be replaced by connecting Internal + GA trackers
+		console.info(gaData);
 	}
 
 	return function (providedPlayerInstance, willAutoplay, gaCategory) {
@@ -48,10 +49,12 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 					label: 'recommended-video',
 					action: 'impression'
 				});
+
+				state = getDefaultState();
 			});
 
 			relatedPlugin.on('play', function (data) {
-				state.depth++;
+				depth++;
 
 				var labelPrefix = data.auto ? 'recommended-video-autoplay-' : 'recommended-video-select-';
 
@@ -61,14 +64,14 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 				});
 
 				track({
-					label: 'recommended-video-depth' + state.depth,
+					label: 'recommended-video-depth' + depth,
 					action: 'impression'
 				});
 			});
 		});
 
 		playerInstance.once('firstFrame', function () {
-			if (!willAutoplay || wasStartTracked) {
+			if (!willAutoplay || state.wasStartTracked || depth > 0) {
 				return;
 			}
 
@@ -80,20 +83,23 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 
 		playerInstance.on('play', function () {
 			var label = 'play-resumed';
+			var gaData;
 
-			if (!wasStartTracked) {
-				gaData = willAutoplay ?
-					{ label:'autoplay-start', action: 'impression' } :
-					{ label: 'user-start' };
-				debugger;
-				wasStartTracked = true;
-			} else {
+			if (state.wasStartTracked) {
 				gaData = {
 					label: 'play-resumed'
 				}
+			} else {
+				if (depth === 0) {
+					gaData = willAutoplay ?
+						{ label:'autoplay-start', action: 'impression' } :
+						{ label: 'user-start' };
+				}
+
+				state.wasStartTracked = true;
 			}
 
-			track(gaData);
+			gaData && track(gaData);
 		});
 
 		playerInstance.on('pause', function () {
@@ -141,8 +147,6 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 				label: 'completed',
 				action: 'impression'
 			});
-
-			state = getDefaultState();
 		});
 	}
 });
