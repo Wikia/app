@@ -29,3 +29,8 @@ script:
   - npm test
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - npm test
+cache:
+  directories:
+    - node_modules
+    - extensions/VisualEditor/node_modules
+    - extensions/VisualEditor/lib/ve/node_modules
