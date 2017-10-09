@@ -1,8 +1,10 @@
 dist: trusty
 sudo: false
+addons:
+  chrome: stable
 language: node_js
 node_js:
-  - 6
+  - "node" # this installs the latest version of node
 before_install: 
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - npm install grunt-cli

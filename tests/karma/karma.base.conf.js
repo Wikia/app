@@ -15,15 +15,7 @@ module.exports = function(config) {
 		basePath: '../../',
 		frameworks: ['jasmine'/*, 'detectBrowsers'*/],
 		browsers: [
-			'PhantomJS'
-			//'SlimerJS',
-			//'Chrome',
-			//'ChromeCanary',
-			//'Firefox',
-			//'Opera',
-			//'iOS'
-			//'Safari', // only Mac
-			//'IE' // only Windows
+			'ChromeHeadless'
 		],
 		detectBrowsers: {
 			enabled: false
