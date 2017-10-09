@@ -1,5 +1,5 @@
 /*global describe, expect, it, modules, spyOn*/
-describe('ext.wikia.adEngine.tracking.adInfoTrackerHelper', function () {
+describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 	'use strict';
 	function noop() {}
 
