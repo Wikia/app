@@ -499,7 +499,6 @@
 		],
 		"dependencies": [
 			"jsdifflib",
-			"qunit",
 			"visualEditor.desktop.standalone"
 		]
 	},
