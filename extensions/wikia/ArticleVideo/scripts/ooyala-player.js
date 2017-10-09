@@ -187,15 +187,29 @@ define('ooyala-player', [
 
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
 						var player = html5Player.player,
-							adData = eventData.getAdData();
+							adData = eventData.getAdData(),
+							currentAd = IMAAdsManager.getCurrentAd(),
+							wrapperId;
 
 						options.adTrackingParams.lineItemId = adData.adId;
 						options.adTrackingParams.creativeId = adData.creativeId;
 
+						if (currentAd) {
+							wrapperId = currentAd.getWrapperAdIds();
+							if (wrapperId.length) {
+								options.adTrackingParams.lineItemId = wrapperId[0];
+							}
+
+							wrapperId = currentAd.getWrapperCreativeIds();
+							if (wrapperId.length) {
+								options.adTrackingParams.creativeId = wrapperId[0];
+							}
+						}
+
 						if (videoInfoTracker && options.adSet && options.adSet[0]) {
 							videoInfoTracker.track(options.adSet[0].tag_url, {
-								creativeId: adData.creativeId,
-								lineItemId: adData.adId,
+								creativeId: options.adTrackingParams.creativeId,
+								lineItemId: options.adTrackingParams.lineItemId,
 								status: 'success'
 							});
 						}
