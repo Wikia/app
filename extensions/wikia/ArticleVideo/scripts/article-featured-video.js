@@ -99,6 +99,11 @@ require([
 						.then(function () { return a9.getSlotParams('FEATURED'); })
 						.catch(function () { return {}; })
 						.then(function (additionalSlotParams) { // finally
+							if (additionalSlotParams && additionalSlotParams.amznp) {
+								options.adTrackingParams.bidderWon = 'a9';
+								options.adTrackingParams.price = additionalSlotParams.amznp;
+								options.adTrackingParams.vastId = additionalSlotParams.amzniid;
+							}
 							options.adSet = setupFirstAdSet(additionalSlotParams);
 							initPlayerWithTracking(options, onCreate);
 						});

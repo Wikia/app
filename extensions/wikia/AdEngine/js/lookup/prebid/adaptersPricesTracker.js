@@ -29,12 +29,6 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 
 					bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(cpmPrice)).toFixed(2).toString();
 
-					if (bid.notInvolved) {
-						bestPrices[bidderCode] = 'NOT_INVOLVED';
-					} else if (bid.used) {
-						bestPrices[bidderCode] = 'USED';
-					}
-
 					log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
 				}
 			});

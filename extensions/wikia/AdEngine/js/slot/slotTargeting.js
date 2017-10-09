@@ -42,7 +42,6 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 		},
 		videoBidders = {
 			appnexusAst: 'aa',
-			veles: 've',
 			rubicon: 'ru'
 		},
 		videoSlots = {

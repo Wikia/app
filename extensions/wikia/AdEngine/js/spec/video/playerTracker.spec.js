@@ -40,11 +40,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 				}
 			},
 			log: noop,
-			bidHelper: {
-				transformPriceFromBid: function () {
-					return '1.20';
-				}
-			},
 			slotTargeting: {
 				getWikiaSlotId: function (slotName, src) {
 					return slotName + '-' + src;
@@ -65,8 +60,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
-			mocks.window,
-			mocks.bidHelper
+			mocks.window
 		);
 	}
 
@@ -173,12 +167,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		tracker.track({
 			adProduct: 'rubicon',
 			slotName: 'TOP_LEADERBOARD',
-			bid: {
-				bidderCode: 'rubicon',
-				rubiconAdId: '56bar',
-				rubiconAdvertiserId: 'foo89',
-				cpm: 123
-			}
+			bidderWon: 'rubicon',
+			price: '1.20',
+			vastId: 'foo89:56bar'
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('vast_id')).toEqual('foo89:56bar');
@@ -189,11 +180,9 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		tracker.track({
 			adProduct: 'appnexusAst',
 			slotName: 'TOP_LEADERBOARD',
-			bid: {
-				bidderCode: 'appnexusAst',
-				creative_id: '87765',
-				cpm: 1.20
-			}
+			bidderWon: 'appnexusAst',
+			price: '1.20',
+			vastId: '87765'
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('vast_id')).toEqual('87765');
@@ -218,19 +207,5 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
-	});
-
-	it('Track veles vast id and content type', function () {
-		tracker.track({
-			adProduct: 'veles',
-			slotName: 'TOP_LEADERBOARD',
-			bid: {
-				bidderCode: 'veles',
-				vastId: 'GDFP:123'
-			}
-		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');
-
-		expect(getTrackedValue('vast_id')).toEqual('GDFP:123');
-		expect(getTrackedValue('content_type')).toEqual('application/javascript');
 	});
 });

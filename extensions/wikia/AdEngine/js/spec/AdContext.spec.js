@@ -964,30 +964,6 @@ describe('AdContext', function () {
 		{
 			hasFeaturedVideo: true,
 			instantGlobals: {
-				wgAdDriverVelesBidderCountries: ['CURRENT_COUNTRY']
-			},
-			testedBidder: 'veles',
-			expectedResult: false
-		},
-		{
-			hasFeaturedVideo: false,
-			instantGlobals: {
-				wgAdDriverVelesBidderCountries: ['ZZ']
-			},
-			testedBidder: 'veles',
-			expectedResult: false
-		},
-		{
-			hasFeaturedVideo: false,
-			instantGlobals: {
-				wgAdDriverVelesBidderCountries: ['CURRENT_COUNTRY']
-			},
-			testedBidder: 'veles',
-			expectedResult: true
-		},
-		{
-			hasFeaturedVideo: true,
-			instantGlobals: {
 				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
 			},
 			testedBidder: 'rubicon',

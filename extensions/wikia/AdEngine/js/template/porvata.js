@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.prebid.adapters.veles'),
+	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
 	DOMElementTweaker,
@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	doc,
 	log,
 	win,
-	veles,
+	bidHelper,
 	mercuryListener
 ) {
 	'use strict';
@@ -56,11 +56,6 @@ define('ext.wikia.adEngine.template.porvata', [
 				source: 'porvata'
 			});
 		}
-	}
-
-	function loadVeles(params) {
-		params.vastResponse = params.vastResponse || params.bid.ad;
-		veles.markBidsAsUsed(params.hbAdId);
 	}
 
 	function getVideoContainer(slotName) {
@@ -91,6 +86,35 @@ define('ext.wikia.adEngine.template.porvata', [
 		}
 	}
 
+	function setBidData(bid, params) {
+		if (!bid) {
+			return;
+		}
+
+		params.bid = bid;
+		params.bidderWon = bid.bidderCode;
+		params.vastResponse = bid.vastContent || null;
+		params.vastUrl = bid.vastUrl;
+
+		switch (params.bidderWon) {
+			case 'rubicon':
+				params.vastId = [
+					bid.rubiconAdvertiserId || '',
+					bid.rubiconAdId || ''
+				].join(':');
+				break;
+			case 'appnexusAst':
+				params.vastId = bid.creative_id || '';
+				break;
+			default:
+				params.vastId = '';
+		}
+
+		if (bidHelper) {
+			params.price = bidHelper.transformPriceFromBid(bid);
+		}
+	}
+
 	function enabledFallbackBidHandling(video, videoSettings, params) {
 		var hasDirectAd = true,
 			fallbackAdRequested = false;
@@ -114,6 +138,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
+				setBidData(fallbackBid, params);
 
 				offerEvent = 'wikiaInViewportWithFallbackBid';
 				videoSettings.setMoatTracking(false);
@@ -121,8 +146,8 @@ define('ext.wikia.adEngine.template.porvata', [
 				video.reload({
 					height: params.height,
 					width: params.width,
-					vastResponse: fallbackBid.vastContent,
-					vastUrl: fallbackBid.vastUrl
+					vastResponse: params.vastResponse,
+					vastUrl: params.vastUrl
 				});
 				if (typeof params.fallbackBidBlockOutOfViewportPausing !== 'undefined') {
 					params.blockOutOfViewportPausing = params.fallbackBidBlockOutOfViewportPausing;
@@ -181,19 +206,14 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {Boolean} [params.setSlotStatusBasedOnVAST] - Decides whether slot status is dispatched manually or based on VAST response
 	 */
 	function show(params) {
-		var imaVpaidModeInsecure = 2,
+		var bid, imaVpaidModeInsecure = 2,
 			settings;
 
 		log(['show', params], log.levels.debug, logGroup);
 
 		if (params.hbAdId) {
-			params.bid = prebid.getBidByAdId(params.hbAdId);
-			params.vastResponse = params.bid.vastContent || null;
-			params.vastUrl = params.bid.vastUrl;
-		}
-
-		if (params.bid && params.adProduct === 'veles') {
-			loadVeles(params);
+			bid = prebid.getBidByAdId(params.hbAdId);
+			setBidData(bid, params);
 		}
 
 		if (!isVideoAutoplaySupported()) {
@@ -238,12 +258,7 @@ define('ext.wikia.adEngine.template.porvata', [
 				});
 			}
 
-			if (typeof params.onReady === 'function') {
-				// TODO remove this when Veles 1.0 is killed
-				params.onReady(video);
-			} else {
-				onReady(video, params);
-			}
+			onReady(video, params);
 
 			if (params.useBidAsFallback) {
 				enabledFallbackBidHandling(video, settings, params);
