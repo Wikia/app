@@ -29,8 +29,16 @@ module.exports = function(config) {
 		singleRun: false,
 		reporters: [ 'dots', 'coverage', 'junit' ],
 		coverageReporter: {
-			type : 'cobertura',
-			dir : buildPath + 'jsunit-coverage'
+			reporters: [
+				{
+					type: 'cobertura',
+					dir: buildPath + 'jsunit-coverage'
+				},
+				{
+					type: 'text-summary',
+					dir: buildPath + 'jsunit-coverage'
+				}
+			]
 		},
 		preprocessors: {
 			'**/resources/wikia/modules/*.js': ['coverage'],
