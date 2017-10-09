@@ -52,9 +52,11 @@ class MultiLookupPager extends TablePager {
 		if ( $wiki ) {
 			$row->users = $this->getWikiUsers( $wiki->city_dbname );
 			$row->wiki_url = $wiki->city_url;
+
+			return parent::formatRow( $row );
 		}
 
-		return parent::formatRow( $row );
+		return '';
 	}
 
 	/**
