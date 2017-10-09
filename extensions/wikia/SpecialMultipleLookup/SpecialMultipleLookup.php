@@ -11,18 +11,27 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named MultipleLookup.\n";
 	exit( 1 ) ;
 }
-$wgExtensionCredits['specialpage'][] = array(
+
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Multiple Lookup',
 	'description' => 'Provides user lookup on multiple wikis',
 	'descriptionmsg' => 'specialmultiplelookup-desc',
-	'author' => array( 'Bartek Lapinski', 'Piotr Molski' ),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialMultipleLookup'
-);
-define( "MULTILOOKUP_NO_CACHE", false );
-define( "ML_TEST", 0 );
-require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_helper.php' );
-require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_ajax.php' );
-require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_hooks.php' );
+	'author' => [ 'Bartek Lapinski', 'Piotr Molski' ],
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialMultipleLookup',
+];
 
-extAddSpecialPage( dirname( __FILE__ ) . '/SpecialMultipleLookup_body.php', 'MultiLookup', 'MultipleLookupPage' );
+$wgAutoloadClasses['MultiLookupPager'] = __DIR__ . '/MultiLookupPager.php';
+$wgAutoloadClasses['MultiLookupRowFormatter'] = __DIR__ . '/MultiLookupRowFormatter.php';
+$wgAutoloadClasses['SpecialMultiLookup'] = __DIR__ . '/SpecialMultiLookup.php';
+
+$wgSpecialPages['MultiLookup'] = 'SpecialMultiLookup';
 $wgSpecialPageGroups['MultiLookup'] = 'users';
+
+$wgResourceModules['ext.wikia.multiLookup'] = [
+	'scripts' => [],
+	'styles' => [ 'css/SpecialMultiLookup.css' ],
+	'dependencies' => [],
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/SpecialMultipleLookup',
+];
