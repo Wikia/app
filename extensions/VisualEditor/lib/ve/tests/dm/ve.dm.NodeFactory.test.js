@@ -25,7 +25,8 @@ ve.dm.NodeFactoryNodeStub.static.blacklistedAnnotationTypes = [ 'link', 'textSty
 
 /* Tests */
 
-QUnit.test( 'getChildNodeTypes', 2, function ( assert ) {
+QUnit.test( 'getChildNodeTypes', function ( assert ) {
+	assert.expect( 2 );
 	var factory = new ve.dm.NodeFactory();
 	assert.throws(
 		function () {
@@ -42,7 +43,8 @@ QUnit.test( 'getChildNodeTypes', 2, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'getParentNodeTypes', 2, function ( assert ) {
+QUnit.test( 'getParentNodeTypes', function ( assert ) {
+	assert.expect( 2 );
 	var factory = new ve.dm.NodeFactory();
 	assert.throws(
 		function () {
@@ -59,7 +61,8 @@ QUnit.test( 'getParentNodeTypes', 2, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'canNodeHaveChildren', 2, function ( assert ) {
+QUnit.test( 'canNodeHaveChildren', function ( assert ) {
+	assert.expect( 2 );
 	var factory = new ve.dm.NodeFactory();
 	assert.throws(
 		function () {
@@ -76,7 +79,8 @@ QUnit.test( 'canNodeHaveChildren', 2, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'canNodeTakeAnnotationType', 4, function ( assert ) {
+QUnit.test( 'canNodeTakeAnnotationType', function ( assert ) {
+	assert.expect( 4 );
 	var factory = new ve.dm.NodeFactory();
 	assert.throws(
 		function () {
@@ -103,7 +107,8 @@ QUnit.test( 'canNodeTakeAnnotationType', 4, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'canNodeHaveChildrenNotContent', 2, function ( assert ) {
+QUnit.test( 'canNodeHaveChildrenNotContent', function ( assert ) {
+	assert.expect( 2 );
 	var factory = new ve.dm.NodeFactory();
 	assert.throws(
 		function () {
@@ -120,7 +125,8 @@ QUnit.test( 'canNodeHaveChildrenNotContent', 2, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'initialization', 1, function ( assert ) {
+QUnit.test( 'initialization', function ( assert ) {
+	assert.expect( 1 );
 	assert.ok( ve.dm.nodeFactory instanceof ve.dm.NodeFactory, 'factory is initialized at ve.dm.nodeFactory' );
 } );
 

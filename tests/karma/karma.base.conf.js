@@ -15,15 +15,7 @@ module.exports = function(config) {
 		basePath: '../../',
 		frameworks: ['jasmine'/*, 'detectBrowsers'*/],
 		browsers: [
-			'PhantomJS'
-			//'SlimerJS',
-			//'Chrome',
-			//'ChromeCanary',
-			//'Firefox',
-			//'Opera',
-			//'iOS'
-			//'Safari', // only Mac
-			//'IE' // only Windows
+			'ChromeHeadless'
 		],
 		detectBrowsers: {
 			enabled: false
@@ -35,10 +27,18 @@ module.exports = function(config) {
 		logLevel: config.LOG_INFO,
 		captureTimeout: 10000,
 		singleRun: false,
-		reporters: [ 'progress'/*, 'coverage' , 'growl', 'coverage', 'osx' */],
+		reporters: [ 'dots', 'coverage', 'junit' ],
 		coverageReporter: {
-			type : 'cobertura',
-			dir : buildPath + 'jsunit-coverage'
+			reporters: [
+				{
+					type: 'cobertura',
+					dir: buildPath + 'jsunit-coverage'
+				},
+				{
+					type: 'text-summary',
+					dir: buildPath + 'jsunit-coverage'
+				}
+			]
 		},
 		preprocessors: {
 			'**/resources/wikia/modules/*.js': ['coverage'],

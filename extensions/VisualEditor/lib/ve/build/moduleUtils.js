@@ -90,15 +90,13 @@ var self = module.exports = {
 				moduleName = buildlist[ build ];
 
 				for ( script in modules[ moduleName ].scripts ) {
-					if ( !modules[ moduleName ].scripts[ script ].debug )
-					{
+					if ( !modules[ moduleName ].scripts[ script ].debug ) {
 						filelist.scripts.push( modules[ moduleName ].scripts[ script ] );
 					}
 				}
 
 				for ( style in modules[ moduleName ].styles ) {
-					if ( !modules[ moduleName ].styles[ style ].debug )
-					{
+					if ( !modules[ moduleName ].styles[ style ].debug ) {
 						filelist.styles.push( modules[ moduleName ].styles[ style ] );
 					}
 				}

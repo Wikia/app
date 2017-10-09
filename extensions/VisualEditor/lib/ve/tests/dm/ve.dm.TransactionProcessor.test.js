@@ -648,7 +648,7 @@ QUnit.test( 'commit', function ( assert ) {
 	for ( msg in cases ) {
 		n += ( 'expected' in cases[msg] ) ? 4 : 1;
 	}
-	QUnit.expect( n );
+	assert.expect( n );
 
 	// Run tests
 	for ( msg in cases ) {

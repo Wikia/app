@@ -169,7 +169,7 @@ QUnit.test( 'compatibility', function ( assert ) {
 		blacklist: mw.libs.ve.blacklist
 	};
 
-	QUnit.expect( cases.length );
+	assert.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		profile = $.client.profile( { userAgent: cases[i].userAgent, platform: '' } );
 		matches = [];

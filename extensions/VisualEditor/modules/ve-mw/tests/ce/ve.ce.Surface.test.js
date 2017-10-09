@@ -27,7 +27,7 @@ QUnit.test( 'handleLinearDelete', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		ve.test.utils.runSurfaceHandleSpecialKeyTest(

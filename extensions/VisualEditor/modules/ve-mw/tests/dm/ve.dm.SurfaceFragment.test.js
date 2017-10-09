@@ -9,7 +9,8 @@ QUnit.module( 've.dm.SurfaceFragment' );
 
 /* Tests */
 
-QUnit.test( 'isolateAndUnwrap (MWheading)', 2, function ( assert ) {
+QUnit.test( 'isolateAndUnwrap (MWheading)', function ( assert ) {
+	assert.expect( 2 );
 	ve.test.utils.runIsolateTest( assert, 'mwHeading', new ve.Range( 12, 20 ), function ( data ) {
 		data.splice( 11, 0, { type: '/list' } );
 		data.splice( 12, 1 );

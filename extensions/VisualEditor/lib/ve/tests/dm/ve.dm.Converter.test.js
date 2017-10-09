@@ -24,8 +24,10 @@ QUnit.test( 'getDataElementFromDomElement', 20, function ( assert ) {
 } );
 */
 
-QUnit.test( 'getDomElementsFromDataElement', 20, function ( assert ) {
+QUnit.test( 'getDomElementsFromDataElement', function ( assert ) {
 	var msg, conversion, doc;
+
+	assert.expect( 20 );
 
 	for ( msg in ve.dm.example.conversions ) {
 		conversion = ve.dm.example.conversions[msg];
@@ -41,7 +43,7 @@ QUnit.test( 'getDomElementsFromDataElement', 20, function ( assert ) {
 QUnit.test( 'getModelFromDom', function ( assert ) {
 	var msg, cases = ve.dm.example.domToDataCases;
 
-	QUnit.expect( ve.test.utils.countGetModelFromDomTests( cases ) );
+	assert.expect( ve.test.utils.countGetModelFromDomTests( cases ) );
 
 	for ( msg in cases ) {
 		ve.test.utils.runGetModelFromDomTest( assert, ve.copy( cases[msg] ), msg );
@@ -51,7 +53,7 @@ QUnit.test( 'getModelFromDom', function ( assert ) {
 QUnit.test( 'getDomFromModel', function ( assert ) {
 	var msg, cases = ve.dm.example.domToDataCases;
 
-	QUnit.expect( 2 * ve.getObjectKeys( cases ).length );
+	assert.expect( 2 * ve.getObjectKeys( cases ).length );
 
 	for ( msg in cases ) {
 		ve.test.utils.runGetDomFromModelTest( assert, ve.copy( cases[msg] ), msg );
