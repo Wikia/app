@@ -32,9 +32,7 @@
     "karma": "latest",
     "karma-chrome-launcher": "latest",
     "karma-coverage": "latest",
-    "karma-firefox-launcher": "latest",
     "karma-qunit": "latest",
-    "karma-sauce-launcher": "latest",
     "qunitjs": "latest"
   }
 }
