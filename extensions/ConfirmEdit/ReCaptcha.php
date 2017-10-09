@@ -17,7 +17,6 @@ $wgCaptchaClass = 'ReCaptcha';
 
 $dir = dirname( __FILE__ );
 
-$wgExtensionMessagesFiles['ReCaptcha'] = $dir . '/ReCaptcha.i18n.php';
 
 $wgAutoloadClasses['ReCaptcha'] = $dir . '/ReCaptcha.class.php';
 

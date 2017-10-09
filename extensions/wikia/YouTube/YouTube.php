@@ -57,7 +57,6 @@ $wgExtensionCredits['parserhook'][] = array
 );
 
 // i18n
-$wgExtensionMessagesFiles['YouTube'] = __DIR__ . '/YouTube.i18n.php';
 
 // Define the tallest a video can be to qualify as audio only
 define( 'AUDIO_ONLY_HEIGHT', 30 );

@@ -25,7 +25,6 @@ $wgExtensionCredits['other'][] = [
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutoFollow/',
 ];
 
-$wgExtensionMessagesFiles['AutoFollow'] = __DIR__ . '/AutoFollow.i18n.php';
 
 $wgAutoloadClasses['Wikia\AutoFollow\AutoFollowHooks'] = __DIR__ . '/AutoFollow.hooks.php';
 $wgAutoloadClasses['Wikia\AutoFollow\AutoFollowTask'] = __DIR__ . '/AutoFollowTask.class.php';

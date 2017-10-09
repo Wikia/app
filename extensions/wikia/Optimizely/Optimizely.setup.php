@@ -17,7 +17,6 @@ $wgExtensionCredits[ 'other' ][] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['Optimizely'] = $dir . 'Optimizely.i18n.php';
 
 // classes
 $wgAutoloadClasses[ 'Optimizely' ] =  $dir . 'Optimizely.class.php';

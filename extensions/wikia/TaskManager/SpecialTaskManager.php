@@ -36,12 +36,10 @@ extAddBatchTask( $dir ."/Tasks/UpdateSpecialPagesTask.php", "update_special_page
 /**
  * message file
  */
-$wgExtensionMessagesFiles[ $sSpecialPage ] = $dir . "/Special{$sSpecialPage}.i18n.php";
 
 /**
  * aliases file
  */
-$wgExtensionMessagesFiles[ $sSpecialPage . 'Aliases' ] = $dir . "/Special{$sSpecialPage}.aliases.php";
 
 extAddSpecialPage( $dir . "/Special{$sSpecialPage}_body.php", $sSpecialPage, "{$sSpecialPage}Page" );
 $wgSpecialPageGroups[$sSpecialPage] = 'wikia';

@@ -20,4 +20,3 @@ $wgExtensionCredits['editpreview'][] = [
 ];
 
 // messages
-$wgExtensionMessagesFiles[ 'EditPreview' ] = __DIR__ . '/EditPreview.i18n.php';

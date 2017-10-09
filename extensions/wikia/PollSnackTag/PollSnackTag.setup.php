@@ -16,4 +16,3 @@ $wgAutoloadClasses['PollSnackTagValidator'] =  __DIR__ . '/PollSnackTagValidator
 $wgHooks['ParserFirstCallInit'][] = 'PollSnackTagController::onParserFirstCallInit';
 
 // i18n
-$wgExtensionMessagesFiles['PollSnackTag'] = __DIR__ . '/PollSnackTag.i18n.php';

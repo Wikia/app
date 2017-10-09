@@ -21,7 +21,6 @@ $wgHooks['ParserFirstCallInit'][] = 'efWidgetTagSetup';
 $wgAutoloadClasses['WidgetTagRenderer'] = dirname(__FILE__) . '/WidgetTagRenderer.class.php';
 
 //i18n
-$wgExtensionMessagesFiles['WidgetTag'] = __DIR__ . '/WidgetTag.i18n.php';
 
 /**
  * Setup parser hook

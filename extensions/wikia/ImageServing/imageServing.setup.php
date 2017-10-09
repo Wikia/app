@@ -42,7 +42,6 @@ if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
 }
 
 // i18n
-$wgExtensionMessagesFiles['ImageServing'] = $dir . 'ImageServing.i18n.php';
 
 /* Adds imageCrop api to lists */
 $wgAutoloadClasses[ "WikiaApiCroppedImage"         ] = "{$dir}/api/WikiaApiCroppedImage.php";

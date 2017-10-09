@@ -21,8 +21,6 @@ $wgAutoloadClasses[ 'SpecialUnusedVideosHooks'] =  $dir.'SpecialUnusedVideosHook
 $wgHooks['wgQueryPages'][] = 'SpecialUnusedVideosHooks::registerUnusedVideos';
 
 // i18n mapping
-$wgExtensionMessagesFiles['SpecialUnusedVideos'] = $dir.'SpecialUnusedVideos.i18n.php' ;
-$wgExtensionMessagesFiles['SpecialUnusedVideosAliases'] = $dir.'SpecialUnusedVideos.alias.php' ;
 
 // special pages
 $wgSpecialPages[ 'UnusedVideos' ] =  'SpecialUnusedVideos';

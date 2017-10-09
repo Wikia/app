@@ -8,7 +8,6 @@ $wgExtensionCredits['api'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FirstContributions',
 ];
 
-$wgExtensionMessagesFiles['FirstContributions'] = __DIR__ . '/FirstContributions.i18n.php';
 
 $wgAutoloadClasses['ApiQueryFirstContributions'] = __DIR__ . '/api/ApiQueryFirstContributions.php';
 

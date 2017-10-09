@@ -27,7 +27,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 require_once( dirname(__FILE__) . "/AnswersClass.php");
 require_once( dirname(__FILE__) . "/AttributionCache.class.php");
 
-$wgExtensionMessagesFiles['Answers'] = dirname( __FILE__ ) . '/Answers.i18n.php';
 
 if(empty($wgAnswerHelperIDs)) {
 	$wgAnswerHelperIDs = array( 0 /* anonymous */, 1172427 /* Wikia User */ );

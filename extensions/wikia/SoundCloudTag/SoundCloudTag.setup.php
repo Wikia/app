@@ -16,4 +16,3 @@ $wgAutoloadClasses['SoundCloudTagController'] =  __DIR__ . '/SoundCloudTagContro
 $wgHooks['ParserFirstCallInit'][] = 'SoundCloudTagController::onParserFirstCallInit';
 
 // i18n
-$wgExtensionMessagesFiles['SoundCloudTag'] = __DIR__ . '/SoundCloudTag.i18n.php';

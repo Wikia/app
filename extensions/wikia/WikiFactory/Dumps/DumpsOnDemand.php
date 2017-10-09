@@ -6,7 +6,6 @@
  * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
  */
 $wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
-$wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.php';
 
 class DumpsOnDemand {
 

@@ -13,7 +13,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 $dir = dirname(__FILE__) . '/';
 
 //i18n
-$wgExtensionMessagesFiles['ImageLazyLoad'] = $dir . 'i18n/ImageLazyLoad.i18n.php';
 
 $wgAutoloadClasses[ 'ImageLazyLoad'] =  $dir . 'ImageLazyLoad.class.php' ;
 

@@ -23,7 +23,6 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url'            => 'https://www.mediawiki.org/wiki/Extension:RandomImage',
 	'descriptionmsg' => 'randomimage-desc',
 );
-$wgExtensionMessagesFiles['RandomImage'] = dirname(__FILE__) . '/RandomImage.i18n.php';
 $wgHooks['ParserAfterStrip'][] = 'RandomImage::stripHook';
 $wgHooks['ParserFirstCallInit'][] = 'efRandomImage';
 

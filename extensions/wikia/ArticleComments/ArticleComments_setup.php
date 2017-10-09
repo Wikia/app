@@ -40,7 +40,6 @@ $wgAutoloadClasses['ArticleCommentsAjax'] = __DIR__ . '/classes/ArticleCommentsA
 $wgAutoloadClasses['ArticleCommentsController'] = __DIR__ . '/modules/ArticleCommentsController.class.php';
 $wgAutoloadClasses['ArticleCommentsHooks'] = __DIR__ . '/ArticleCommentsHooks.class.php';
 
-$wgExtensionMessagesFiles['ArticleComments'] = __DIR__ . '/ArticleComments.i18n.php';
 
 if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
 

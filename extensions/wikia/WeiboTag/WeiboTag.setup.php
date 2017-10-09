@@ -15,4 +15,3 @@ $wgAutoloadClasses['WeiboTagValidator'] =  __DIR__ . '/WeiboTagValidator.class.p
 $wgHooks['ParserFirstCallInit'][] = 'WeiboTagController::onParserFirstCallInit';
 
 // i18n
-$wgExtensionMessagesFiles['WeiboTag'] = __DIR__ . '/WeiboTag.i18n.php';

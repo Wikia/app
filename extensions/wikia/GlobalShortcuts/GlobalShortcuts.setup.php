@@ -40,7 +40,6 @@ $wgAutoloadClasses['Wikia\GlobalShortcuts\Helper'] = __DIR__ . '/GlobalShortcuts
 /**
  * Messages
  */
-$wgExtensionMessagesFiles['GlobalShortcuts'] = __DIR__ . '/GlobalShortcuts.i18n.php';
 
 JSMessages::registerPackage( 'GlobalShortcuts', [
 	'global-shortcuts-caption-*',

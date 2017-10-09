@@ -29,6 +29,5 @@ EOT;
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['GoogleSearchResults'] = $dir . 'Special_GoogleSearch.body.php'; # Tell MediaWiki to load the extension body.
-$wgExtensionMessagesFiles['GoogleSearchResults'] = $dir . 'Special_GoogleSearch.i18n.php';
 $wgSpecialPages['GoogleSearchResults'] = 'GoogleSearchResults'; # Let MediaWiki know about your new special page.
 

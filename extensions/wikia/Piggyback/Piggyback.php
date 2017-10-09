@@ -25,8 +25,6 @@ $wgAutoloadClasses['Piggyback'] = $dir . 'Piggyback_body.php'; # Tell MediaWiki 
 $wgAutoloadClasses['PBLoginForm']  = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PBHooks']  = $dir . 'Piggyback_body.php';
 
-$wgExtensionMessagesFiles['Piggyback'] = $dir . 'Piggyback.i18n.php';
-$wgExtensionMessagesFiles['PiggybackAliases'] = $dir . 'Piggyback.alias.php';
 
 $wgSpecialPages['Piggyback'] = 'Piggyback'; # Let MediaWiki know about your new special page.
 

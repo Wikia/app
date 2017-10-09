@@ -25,7 +25,6 @@ $wgExtensionCredits[version_compare($wgVersion, '1.17alpha', '>=') ? 'antispam' 
 	'url'            => 'https://www.mediawiki.org/wiki/Extension:TorBlock',
 );
 
-$wgExtensionMessagesFiles['TorBlock'] =  "$dir/TorBlock.i18n.php";
 $wgAutoloadClasses[ 'TorBlock' ] = "$dir/TorBlock.class.php";
 
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'TorBlock::onGetUserPermissionsErrorsExpensive';

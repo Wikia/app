@@ -34,7 +34,6 @@ $wgAutoloadClasses[ 'FilePageHelper' ] = $dir . 'FilePageHelper.class.php';
 $wgAutoloadClasses[ 'FilePageController' ] = $dir . 'FilePageController.class.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['FilePage'] = $dir . 'FilePage.i18n.php' ;
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'FilePageHooks::onArticleFromTitle';

@@ -7,7 +7,6 @@ $wgDefaultSkin = 'oasis';
 $wgAutoloadClasses['WikiAnswersController'] = dirname( __FILE__ ) . '/WikiAnswersController.class.php';
 
 // i18n
-$wgExtensionMessagesFiles['WikiAnswers'] = dirname( __FILE__ ) . '/WikiAnswers.i18n.php';
 
 // add CSS
 $wgHooks['BeforePageDisplay'][] = 'wfWikiAnswersAddStyle';

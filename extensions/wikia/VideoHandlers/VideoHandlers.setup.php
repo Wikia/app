@@ -84,7 +84,6 @@ $wgAutoloadClasses[ 'VideoInfoHooksHelper'] =  $dir . '/videoInfo/VideoInfoHooks
 /**
  * messages
  */
-$wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
 
 /**
  * hooks

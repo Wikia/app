@@ -77,7 +77,6 @@ $wgAutoloadClasses['Wikia\TemplateClassification\TemplateBulkClassificationTask'
 /**
  * Messages
  */
-$wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassification.i18n.php';
 
 JSMessages::registerPackage( 'TemplateClassificationModal', [
 	'template-classification-edit-modal-*',

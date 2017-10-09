@@ -17,4 +17,3 @@ $wgHooks['WikiaSkinTopScripts'][] = 'PaidAssetDropHooks::onWikiaSkinTopScripts';
 $wgHooks['InstantGlobalsGetVariables'][] = 'PaidAssetDropHooks::onInstantGlobalsGetVariables';
 
 // i18n
-$wgExtensionMessagesFiles['PaidAssetDrop'] = __DIR__ . '/PaidAssetDrop.i18n.php';
