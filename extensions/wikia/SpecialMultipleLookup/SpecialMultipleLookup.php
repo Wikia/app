@@ -24,6 +24,8 @@ $wgAutoloadClasses['MultiLookupPager'] = __DIR__ . '/MultiLookupPager.php';
 $wgAutoloadClasses['MultiLookupRowFormatter'] = __DIR__ . '/MultiLookupRowFormatter.php';
 $wgAutoloadClasses['SpecialMultiLookup'] = __DIR__ . '/SpecialMultiLookup.php';
 
+$wgHooks['ContributionsToolLinks'][] = 'SpecialMultiLookup::onContributionsToolLinks';
+
 $wgSpecialPages['MultiLookup'] = 'SpecialMultiLookup';
 $wgSpecialPageGroups['MultiLookup'] = 'users';
 
