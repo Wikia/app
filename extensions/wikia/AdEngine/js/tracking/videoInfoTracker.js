@@ -4,9 +4,7 @@ define('ext.wikia.adEngine.tracking.videoInfoTracker',  [
 ], function (tracker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.tracking.videoInfoTracker';
-
-	function parseParameters(content, separator) {
+	function parseParameters(content) {
 		var parameters = {};
 
 		content.split('&').forEach(function (keyVal) {

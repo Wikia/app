@@ -1,15 +1,20 @@
 /*global define, require*/
 define('ext.wikia.adEngine.tracking.adInfoTracker',  [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, slotRegistry, browserDetect, log, win, rabbit) {
+], function (adContext, adTracker, slotRegistry, browserDetect, log, win, rabbit) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
+
+	function isEnabled() {
+		return adContext.getContext().opts.enableAdInfoLog;
+	}
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data;
@@ -81,6 +86,10 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	}
 
 	function track(slotName, pageParams, slotParams, adInfo, bidders) {
+		if (!isEnabled()) {
+			return;
+		}
+
 		var data = prepareData(slotName, pageParams, slotParams, adInfo, bidders);
 
 		adTracker.trackDW(data, 'adengadinfo');
@@ -88,6 +97,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	}
 
 	return {
+		isEnabled: isEnabled,
 		track: track
 	};
 });

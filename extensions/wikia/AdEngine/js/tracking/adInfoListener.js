@@ -1,11 +1,10 @@
 /*global define, JSON*/
 define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.lookup.services',
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.tracking.adInfoTracker',
 	'wikia.log',
 	'wikia.window'
-], function (lookupServices, adContext, tracker, log, win) {
+], function (lookupServices, tracker, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',
@@ -91,12 +90,8 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 		);
 	}
 
-	function isEnabled() {
-		return adContext.getContext().opts.enableAdInfoLog;
-	}
-
 	function run() {
-		if (isEnabled()) {
+		if (tracker.isEnabled()) {
 			log('run', log.levels.debug, logGroup);
 
 			win.addEventListener('adengine.slot.status', function (event) {
