@@ -131,13 +131,13 @@ class DumpsOnDemand {
 				return null;
 			}
 
-			$aData = array(
+			$aData = [
 				'dump_wiki_id'	  => $iCityId,
 				'dump_wiki_dbname'  => $oWiki->city_dbname,
 				'dump_wiki_url'	 => $oWiki->city_url,
-				'dump_user_name'	=> $wgUser->getName(),
+				'dump_user_id' => $wgUser->getId(),
 				'dump_requested'	=> wfTimestampNow()
-			);
+			];
 
 			if ( $bHidden ) {
 				$aData['dump_hidden'] = 'Y';
