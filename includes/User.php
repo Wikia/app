@@ -4210,9 +4210,6 @@ class User implements JsonSerializable {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange;
-
-		$extuser = ExternalUser::newFromUser( $this );
 
 		$this->loadOptions();
 		// wikia change
@@ -4237,17 +4234,6 @@ class User implements JsonSerializable {
 			} elseif ($this->isDefaultOption($key, $value)) {
 				$deletePrefs[] = $key;
 			}
-			# </Wikia>
-			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
-				switch ( $wgAllowPrefChange[$key] ) {
-					case 'local':
-					case 'message':
-						break;
-					case 'semiglobal':
-					case 'global':
-						$extuser->setPref( $key, $value );
-				}
-			}
 		}
 
 		// user has default set, so clear any other entries from db
@@ -4260,10 +4246,6 @@ class User implements JsonSerializable {
 		}
 
 		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK, __METHOD__);
-
-		if ( $extuser ) {
-			$extuser->updateUser();
-		}
 	}
 
 	/**

@@ -397,44 +397,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $res;
 	}
 
-	public function updateUser() {
-		global $wgExternalSharedDB;
-		wfProfileIn( __METHOD__ );
-
-		if( wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
-			wfDebug( __METHOD__ . ": tried to updateUser while in read-only mode.\n" );
-		} else {
-			wfDebug( __METHOD__ . ": update central user data \n" );
-
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			$this->mUser->mTouched = User::newTouchedTimestamp();
-			$dbw->update(
-				'`user`',
-				array( /* SET */
-					'user_name' => $this->mUser->mName,
-					'user_real_name' => $this->mUser->mRealName,
-					'user_email' => $this->mUser->mEmail,
-					'user_email_authenticated' => $dbw->timestampOrNull( $this->mUser->mEmailAuthenticated ),
-					'user_options' => '',
-					'user_touched' => $dbw->timestamp( $this->mUser->mTouched ),
-					'user_token' => $this->mUser->mToken,
-					'user_email_token' => $this->mUser->mEmailToken,
-					'user_email_token_expires' => $dbw->timestampOrNull( $this->mUser->mEmailTokenExpires ),
-				),
-				array( /* WHERE */
-					'user_id' => $this->mUser->mId
-				),
-				__METHOD__
-			);
-			$dbw->commit( __METHOD__ );
-
-			if ( $this->mUser->mId ) { // sanity check
-				self::$recentlyUpdated[$this->mUser->mId] = true;
-			}
-		}
-		wfProfileOut( __METHOD__ );
-	}
-
 	/**
 	 * Removes user info from secondary clusters so that it can be regenerated from scratch
 	 *
