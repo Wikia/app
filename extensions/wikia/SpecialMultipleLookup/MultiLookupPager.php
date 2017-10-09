@@ -63,40 +63,32 @@ class MultiLookupPager extends TablePager {
 	 * @return string[] array of user names and IP addresses
 	 */
 	private function getWikiUsers( $dbName ) {
-		global $wgMemc;
-
 		$cacheKey = wfSharedMemcKey( 'multilookup', $this->target, $dbName );
-		$cachedValue = $wgMemc->get( $cacheKey );
 
-		if ( $cachedValue ) {
-			/** @var string[] $cachedValue */
-			return $cachedValue;
-		}
+		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName ) {
+			$dbr = wfGetDB( DB_SLAVE, [], $dbName );
 
-		$dbr = wfGetDB( DB_SLAVE, [], $dbName );
+			$res = $dbr->select(
+				[ 'recentchanges' ],
+				[
+					'rc_user_text as user_name',
+					'rc_user as user_id',
+				],
+				[ 'rc_ip' => $this->target ],
+				__METHOD__,
+				[ 'DISTINCT' ]
+			);
 
-		$res = $dbr->select(
-			[ 'recentchanges' ],
-			[
-				'rc_user_text as user_name',
-				'rc_user as user_id',
-			],
-			[ 'rc_ip' => $this->target ],
-			__METHOD__,
-			[ 'DISTINCT' ]
-		);
+			$users = [];
+			foreach ( $res as $user ) {
+				// SUS-812: use username lookup - user ID for registered users, rc_user_text for anons
+				$userName = User::getUsername( $user->user_id, $user->user_name );
 
-		$users = [];
-		foreach ( $res as $user ) {
-			// SUS-812: use username lookup - user ID for registered users, rc_user_text for anons
-			$userName = User::getUsername( $user->user_id, $user->user_name );
+				$users[] = $userName;
+			}
 
-			$users[] = $userName;
-		}
-
-		$wgMemc->set( $cacheKey, $users, 60 * 15 /* 15 mins */ );
-
-		return $users;
+			return $users;
+		} );
 	}
 
 	/**
