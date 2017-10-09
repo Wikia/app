@@ -17,6 +17,12 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		}
 	}
 
+	function updateVideoCustomDimensions(currentVideo) {
+		window.guaSetCustomDimension(34, currentVideo.mediaid);
+		window.guaSetCustomDimension(35, currentVideo.title);
+		window.guaSetCustomDimension(36, currentVideo.tags);
+	}
+
 	function track(gaData) {
 		if (!gaData.label) {
 			throw new Error('No tracking label provided');
@@ -38,7 +44,13 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		playerInstance = providedPlayerInstance;
 		gaCategory = providedGACategory || defaultGACategory;
 
+		window.guaSetCustomDimension(37, willAutoplay ? 'Yes' : 'No');
+
 		playerInstance.once('ready', function () {
+			updateVideoCustomDimensions(
+				playerInstance.getPlaylistItem()
+			);
+
 			track({
 				label: 'load',
 				action: 'impression'
@@ -57,6 +69,10 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 
 			relatedPlugin.on('play', function (data) {
 				depth++;
+
+				updateVideoCustomDimensions(
+					data.item
+				);
 
 				var labelPrefix = data.auto ? 'recommended-video-autoplay-' : 'recommended-video-select-';
 
