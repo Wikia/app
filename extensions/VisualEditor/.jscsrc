@@ -3,5 +3,6 @@
 
 	"requireSpacesInsideArrayBrackets": null,
 	"requireSpacesInsideBrackets": null,
-	"requireVarDeclFirst": null
+	"requireVarDeclFirst": null,
+	"jsDoc": null
 }
