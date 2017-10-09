@@ -1,4 +1,4 @@
-describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
+describe('ext.wikia.adEngine.tracking.adInfoTrackerHelper', function () {
 	'use strict';
 
 	function noop() {}
@@ -34,7 +34,7 @@ describe('ext.wikia.adEngine.adInfoTrackerHelper', function () {
 	}, fakeJSONString = JSON.stringify({foo: 1});
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.adInfoTrackerHelper'](
+		return modules['ext.wikia.adEngine.tracking.adInfoTrackerHelper'](
 			mocks.lookupServices,
 			mocks.slotRegistry,
 			mocks.browserDetect,

@@ -3,7 +3,6 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
-	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
@@ -15,12 +14,12 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
+	'ext.wikia.adEngine.tracking.adInfoTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window'
 ], function (
 	adContext,
 	adEngineRunner,
-	adInfoTracker,
 	pageLevelParams,
 	slotStateMonitor,
 	adConfigDesktop,
@@ -32,6 +31,7 @@ require([
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
+	adInfoTracker,
 	adBlockDetection,
 	win
 ) {

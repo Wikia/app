@@ -1,6 +1,6 @@
-/*global define, JSON*/
-define('ext.wikia.adEngine.adInfoTracker',  [
-	'ext.wikia.adEngine.adInfoTrackerHelper',
+/*global define*/
+define('ext.wikia.adEngine.tracking.adInfoTracker',  [
+	'ext.wikia.adEngine.tracking.adInfoTrackerHelper',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.adInfoTracker',  [
 ], function (adInfoTrackerHelper, adTracker, adContext, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.adInfoTracker',
+	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker',
 		enabledSlots = {
 			TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true,

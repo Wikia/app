@@ -1,5 +1,5 @@
 /*global define, JSON, require*/
-define('ext.wikia.adEngine.adInfoTrackerHelper',  [
+define('ext.wikia.adEngine.tracking.adInfoTrackerHelper',  [
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.browserDetect',
@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.adInfoTrackerHelper',  [
 ], function (lookupServices, slotRegistry, browserDetect, log, win, rabbit) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.adInfoTrackerHelper';
+	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTrackerHelper';
 
 	function shouldHandleSlot(slot, enabledSlots) {
 		var dataGptDiv = slot.container && slot.container.firstChild;
