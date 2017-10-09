@@ -27,7 +27,7 @@ module.exports = function(config) {
 		logLevel: config.LOG_INFO,
 		captureTimeout: 10000,
 		singleRun: false,
-		reporters: [ 'dots', 'coverage'],
+		reporters: [ 'dots', 'coverage', 'junit' ],
 		coverageReporter: {
 			type : 'cobertura',
 			dir : buildPath + 'jsunit-coverage'

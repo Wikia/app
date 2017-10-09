@@ -14,8 +14,7 @@ CMD_PHPUNIT_COVERAGE=php -v && php -d xdebug.coverage_enable=1 -d opcache.enable
 # command to run karma
 CMD_KARMA=../node_modules/karma/bin/karma start \
 	--single-run \
-	--no-auto-watch \
-	--reporters progress,junit,coverage
+	--no-auto-watch
 
 # set up an environment
 export SERVER_DBNAME=firefly
