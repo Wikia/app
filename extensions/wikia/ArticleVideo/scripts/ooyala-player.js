@@ -195,6 +195,7 @@ define('ooyala-player', [
 						var player = html5Player.player,
 							adData = eventData.getAdData(),
 							currentAd = IMAAdsManager.getCurrentAd(),
+							wrapperCreativeId,
 							wrapperId;
 
 						if (adData) {
@@ -208,9 +209,9 @@ define('ooyala-player', [
 								options.adTrackingParams.lineItemId = wrapperId[0];
 							}
 
-							wrapperId = currentAd.getWrapperCreativeIds();
-							if (wrapperId.length) {
-								options.adTrackingParams.creativeId = wrapperId[0];
+							wrapperCreativeId = currentAd.getWrapperCreativeIds();
+							if (wrapperCreativeId.length) {
+								options.adTrackingParams.creativeId = wrapperCreativeId[0];
 							}
 						}
 

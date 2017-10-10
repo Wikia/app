@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.tracking.adInfoTracker',
 	'wikia.log',
+	'wikia.querystring',
 	'wikia.window'
-], function (adContext, lookupServices, tracker, log, win) {
+], function (adContext, lookupServices, tracker, log, Querystring, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',
@@ -28,20 +29,6 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 
 	function isEnabled() {
 		return adContext.getContext().opts.enableAdInfoLog;
-	}
-
-	function parseParameters(content) {
-		var parameters = {};
-
-		content.split('&').forEach(function (keyVal) {
-			var data = keyVal.split('=');
-
-			if (data.length === 2) {
-				parameters[data[0]] = data[1];
-			}
-		});
-
-		return parameters;
 	}
 
 	function getBidderWon(slotParams, realSlotPrices) {
@@ -100,8 +87,9 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	}
 
 	function trackVideo(adInfo) {
-		var vastParams = parseParameters(adInfo.vastUrl),
-			params = parseParameters(decodeURIComponent(vastParams['cust_params'])),
+		var vastParams = new Querystring(adInfo.vastUrl),
+			customParams = '?' + vastParams.getVal('cust_params', null),
+			params = new Querystring(customParams).getVals(),
 			slotPrices = {};
 
 		if (params.amznbid) {
@@ -113,9 +101,9 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			params,
 			params,
 			{
-				adProduct: vastParams.vpos,
+				adProduct: vastParams.getVal('vpos', null),
 				creativeId: adInfo.creativeId,
-				creativeSize: vastParams.sz,
+				creativeSize: vastParams.getVal('sz', null),
 				lineItemId: adInfo.lineItemId,
 				status: adInfo.status
 			},
