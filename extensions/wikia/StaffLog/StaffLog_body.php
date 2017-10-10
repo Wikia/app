@@ -68,6 +68,9 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 
 	private $aConds, $mDb, $mOffset;
 
+	/**
+	 * @param string $from
+	 */
 	function __construct( $from ) {
 		global $wgExternalDatawareDB;
 		parent::__construct();
@@ -119,7 +122,6 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 	}
 
 	function getIndexField() {
-#		return array( 'abc' => 'cat_title', 'count' => 'cat_pages' );
 		return 'slog_timestamp';
 	}
 
@@ -128,13 +130,8 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 		unset( $this->mDefaultQuery['from'] );
 		return $this->mDefaultQuery;
 	}
-#	protected function getOrderTypeMessages() {
-#		return array( 'abc' => 'special-categories-sort-abc',
-#			'count' => 'special-categories-sort-count' );
-#	}
 
 	protected function getDefaultDirections() {
-#		return array( 'abc' => false, 'count' => true );
 		return false;
 	}
 
@@ -186,11 +183,6 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				break;
 		}
 
-		/*		$title = Title::makeTitle( NS_CATEGORY, $result->cat_title );
-				$titleText = $this->getSkin()->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
-				$count = wfMsgExt( 'nmembers', array( 'parsemag', 'escape' ),
-						$wgLang->formatNum( $result->cat_pages ) ); */
-		//;
 		return Xml::tags('li', null, $out) . "\n";
 	}
 }
