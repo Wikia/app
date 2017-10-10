@@ -5,12 +5,20 @@ define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo
 		autoplayCookieName = 'featuredVideoAutoplay',
 		willAutoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
 
-	function toggleAutoplay() {
-		cookies.set(autoplayCookieName, cookies.get(autoplayCookieName) === '0' ? '1' : '0');
+	function toggleAutoplay(enableAutoplay) {
+		if (enableAutoplay === undefined) {
+			enableAutoplay = !isAutoplayEnabled();
+		}
+
+		cookies.set(autoplayCookieName, enableAutoplay ? '1' : '0');
+
+		return enableAutoplay;
 	}
 
 	function isAutoplayEnabled() {
-		return !!cookies.get(autoplayCookieName);
+		var cookieValue = cookies.get(autoplayCookieName);
+
+		return cookieValue !== '0';
 	}
 
 	return {
