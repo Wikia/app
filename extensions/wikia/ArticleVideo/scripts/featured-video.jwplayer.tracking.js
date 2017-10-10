@@ -1,4 +1,4 @@
-define('wikia.articleVideo.featuredVideo.tracking', [], function () {
+define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function (tracker) {
 	var state = getDefaultState(),
 		defaultGACategory = 'featured-video',
 		wasAlreadyUnmuted = false,
@@ -28,16 +28,21 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 			throw new Error('No tracking label provided');
 		}
 
-		var finalGAData = {
+		var trackingData = {
 			action: gaData.action || 'click',
 			category: gaCategory,
 			label: gaData.label,
 			//value tracks sound state: 1 for muted, 0 for unmuted
-			value: Number(playerInstance.getMute())
+			value: Number(playerInstance.getMute()),
+
+			// Internal tracking data
+			videoId: playerInstance.getPlaylistItem().mediaid,
+			player: 'jwplayer',
+			trackingMethod: 'analytics'
 		};
 
 		// Will be replaced by connecting Internal + GA trackers
-		console.info(finalGAData);
+		tracker.track(trackingData);
 	}
 
 	return function (providedPlayerInstance, willAutoplay, providedGACategory) {
