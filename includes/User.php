@@ -613,6 +613,11 @@ class User implements JsonSerializable {
 			return null;
 		}
 
+		// SUS-2980: This is an anon, they won't have a DB entry - stop here.
+		if ( IP::isIPAddress( $name ) ) {
+			return null;
+		}
+
 		if ( isset( self::$idCacheByName[$name] ) ) {
 			return (int) self::$idCacheByName[$name];
 		}
