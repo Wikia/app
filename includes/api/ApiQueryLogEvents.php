@@ -63,14 +63,12 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		}
 
 		// Order is significant here
-		$this->addTables( array( 'logging', 'user', 'page' ) );
+		$this->addTables( array( 'logging', 'page' ) );
 		$this->addOption( 'STRAIGHT_JOIN' );
+		// SUS-2779
 		$this->addJoinConds( array(
-			'user' => array( 'JOIN',
-				'user_id=log_user' ),
 			'page' => array( 'LEFT JOIN',
-				array(	'log_namespace=page_namespace',
-					'log_title=page_title' ) ) ) );
+				array(	'log_namespace=page_namespace', 'log_title=page_title' ) ) ) );
 
 		$this->addFields( array(
 			'log_type',
@@ -80,8 +78,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		) );
 
 		$this->addFieldsIf( array( 'log_id', 'page_id' ), $this->fld_ids );
-		$this->addFieldsIf( array( 'log_user', 'user_name' ), $this->fld_user );
-		$this->addFieldsIf( 'user_id', $this->fld_userid );
+		$this->addFieldsIf( array( 'log_user' ), $this->fld_user );
 		$this->addFieldsIf( array( 'log_namespace', 'log_title' ), $this->fld_title || $this->fld_parsedcomment );
 		$this->addFieldsIf( 'log_comment', $this->fld_comment || $this->fld_parsedcomment );
 		$this->addFieldsIf( 'log_params', $this->fld_details );
@@ -156,11 +153,32 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		$count = 0;
 		$res = $this->select( __METHOD__ );
 		$result = $this->getResult();
+
+		// SUS-2779
+		$userIds = $this->getFieldFromResults( $res, 'log_user' );
+		$userNames = $this->getIndexedUserNames( $userIds );
+
 		foreach ( $res as $row ) {
 			if ( ++ $count > $limit ) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
 				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->log_timestamp ) );
 				break;
+			}
+
+			// SUS-2779
+			if ( $this->fld_userid ) {
+				$row->user_id = $row->log_user;
+			}
+
+			if ( $this->fld_user ) {
+				if ( isset( $userNames[$row->log_user] ) ) {
+					$row->user_name = $userNames[$row->log_user];
+				} else {
+					$row->user_name = 'unknown';
+					\Wikia\Logger\WikiaLogger::instance()
+						->warning( "User not found by a given ID",
+							[ 'user_id' => $row->log_user ] );
+				}
 			}
 
 			$vals = $this->extractRowInfo( $row );
@@ -467,5 +485,34 @@ class ApiQueryLogEvents extends ApiQueryBase {
 
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
+	}
+
+	private function getIndexedUserNames( $userIds ) {
+		global $wgExternalSharedDB;
+		if ( count( $userIds ) === 0 ) {
+			return [];
+		}
+
+		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$conditions = [ 'user_id' => array_unique( $userIds ) ];
+		$dbResults = $db->select( '`user`', [ 'user_id', 'user_name' ], $conditions, __METHOD__ );
+
+		$results = [];
+		foreach ( $dbResults as $row ) {
+			$results[$row->user_id] = $row->user_name;
+		}
+
+		return $results;
+	}
+
+	private function getFieldFromResults( $res, $fieldName ) {
+		$userIds = [];
+		foreach ( $res as $row ) {
+			if ( isset($row->{ $fieldName }) ) {
+				$userIds[] = $row->{ $fieldName };
+			}
+		}
+
+		return $userIds;
 	}
 }

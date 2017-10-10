@@ -2621,26 +2621,26 @@ HTML
 
 	protected function getLastDelete() {
 		$dbr = wfGetDB( DB_SLAVE );
-		$data = $dbr->selectRow(
-			array( 'logging', 'user' ),
-			array( 'log_type',
-				   'log_action',
-				   'log_timestamp',
-				   'log_user',
-				   'log_namespace',
-				   'log_title',
-				   'log_comment',
-				   'log_params',
-				   'log_deleted',
-				   'user_name' ),
-			array( 'log_namespace' => $this->mTitle->getNamespace(),
-				   'log_title' => $this->mTitle->getDBkey(),
-				   'log_type' => 'delete',
-				   'log_action' => 'delete',
-				   'user_id=log_user' ),
-			__METHOD__,
-			array( 'LIMIT' => 1, 'ORDER BY' => 'log_timestamp DESC' )
-		);
+		$data = $dbr->selectRow( [ 'logging' ], [
+			'log_type',
+			'log_action',
+			'log_timestamp',
+			'log_user',
+			'log_namespace',
+			'log_title',
+			'log_comment',
+			'log_params',
+			'log_deleted',
+		], [
+			'log_namespace' => $this->mTitle->getNamespace(),
+			'log_title' => $this->mTitle->getDBkey(),
+			'log_type' => 'delete',
+			'log_action' => 'delete',
+		], __METHOD__, [
+			'LIMIT' => 1,
+			'ORDER BY' => 'log_timestamp DESC'
+		] );
+
 		// Quick paranoid permission checks...
 		if( is_object( $data ) ) {
 			if( $data->log_deleted & LogPage::DELETED_USER )
@@ -2648,6 +2648,11 @@ HTML
 			if( $data->log_deleted & LogPage::DELETED_COMMENT )
 				$data->log_comment = wfMsgHtml( 'rev-deleted-comment' );
 		}
+
+		// SUS-2779
+		$user = User::newFromId($data->log_user);
+		$data->user_name = $user->getName();
+
 		return $data;
 	}
 
