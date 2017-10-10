@@ -7,9 +7,9 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 		$settingsTopbar
 			.find('.jw-settings-close')
 			.before(
-				'<input type="checkbox" id="autoplayToggle" class="wds-switch__input" ' +
-				(featuredVideoAutoplay.isAutoplayEnabled() ? 'checked >' : '>') +
-				'<label for="autoplayToggle" class="wds-switch__label">Autoplay</label>'
+				'<input type="checkbox" id="featuredVideoAutoplayToggle" class="wds-switch__input"' +
+				(featuredVideoAutoplay.isAutoplayEnabled() ? ' checked>' : '>') +
+				'<label for="featuredVideoAutoplayToggle" class="wds-switch__label">Autoplay</label>'
 			);
 
 		$settingsTopbar
