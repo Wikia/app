@@ -1,5 +1,3 @@
-// to reset wikia button styling for buttons in jwplayer we changed selector for global button element styling in skins/shared/styles/buttons/buttons-wikia.scss
-// selector `button` changed to `button:not([class^="jw-"]):not([class*=" jw-"])`
 @import 'video-shared-variables';
 
 .featured-video {
