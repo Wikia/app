@@ -24,7 +24,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 			addAutoplayToggle();
 
 			playerInstance.on('resize', function (data) {
-				if (data.width > 600) {
+				if (data.width > 600 && !$settingsTopbar.contains('#featuredVideoAutoplayToggle')) {
 					addAutoplayToggle();
 				}
 			});
