@@ -29,6 +29,7 @@ class MastheadTest extends WikiaBaseTest {
 	 */
 	function testGetPurgeUrl($avatarOption, $expectedUrl) {
 		$masthead = $this->getMastheadWithAvatar($avatarOption);
+		$this->mockGlobalVariable( 'wgVignetteUrl', 'https://vignette.wikia.nocookie.net' );
 		$this->assertEquals($expectedUrl, $masthead->getPurgeUrl(), 'Avatar URL should match the expected value');
 	}
 
@@ -37,12 +38,12 @@ class MastheadTest extends WikiaBaseTest {
 			// default avatar
 			[
 				'avatarOption' => false,
-				'expectedUrl'  => 'https://images.wikia.nocookie.net/messaging/images//1/19/Avatar.jpg',
+				'expectedUrl'  => 'https://vignette.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest',
 			],
 			// custom avatar
 			[
 				'avatarOption' => '/f/fc/119245.png',
-				'expectedUrl'  => 'https://images.wikia.nocookie.net/common/avatars/f/fc/119245.png',
+				'expectedUrl'  => 'https://vignette.wikia.nocookie.net/common/avatars/f/fc/119245.png/revision/latest',
 			],
 			// predefined avatar selected by the user ("sample")
 			[
@@ -52,7 +53,7 @@ class MastheadTest extends WikiaBaseTest {
 			// one of the default avatars
 			[
 				'avatarOption' => 'Avatar2.jpg',
-				'expectedUrl'  => 'https://images.wikia.nocookie.net/messaging/images/e/e8/Avatar2.jpg',
+				'expectedUrl'  => 'https://vignette.wikia.nocookie.net/messaging/images/e/e8/Avatar2.jpg/revision/latest',
 			],
 		];
 	}
@@ -108,6 +109,18 @@ class MastheadTest extends WikiaBaseTest {
 			],
 			[
 				'https://images.wikia.nocookie.net/common/avatars/3/3b/27078273.png',
+				false
+			],
+			[
+				'https://vignette.wikia.nocookie.net/messaging/images//1/19/Avatar.jpg',
+				true
+			],
+			[
+				'https://vignette.wikia.nocookie.net/messaging/images/e/e5/Avatar4.jpg',
+				true
+			],
+			[
+				'https://vignette.wikia.nocookie.net/common/avatars/3/3b/27078273.png',
 				false
 			],
 			[

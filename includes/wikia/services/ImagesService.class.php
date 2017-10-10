@@ -156,8 +156,10 @@ class ImagesService {
 
 		if ( strpos( $destSize, "px" ) !== false ) {
 			list( $width, $_ ) = explode( "px", $destSize );
-		} else {
+		} else if ( strpos( $destSize, "x" ) !== false ) {
 			list( $width, $height ) = explode( "x", $destSize );
+		} else {
+			$width = intval( $destSize );
 		}
 
 		return [ $width, $height ];
