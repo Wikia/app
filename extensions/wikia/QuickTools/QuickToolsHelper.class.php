@@ -5,19 +5,25 @@ class QuickToolsHelper extends ContextSource {
 	/**
 	 * Get all pages that should be rolled back for a given user
 	 *
-	 * @param  string $user A name to check against rev_user_text
+	 * @param  string $userName A name to check against rev_user_text
 	 * @param  string $time Timestamp to revert since
 	 * @return Array  An array of page titles to revert
 	 */
-	public function getRollbackTitles( $user, $time ) {
+	public function getRollbackTitles( $userName, $time ) {
 		$dbr = wfGetDB( DB_SLAVE );
+		$user = User::newFromName($userName);
 
 		$titles = [];
 		$where = [
 			'rev_page = page_id',
 			'page_latest = rev_id',
-			'rev_user_text' => $user,
 		];
+
+		if ( $user ) {
+			$where['rev_user'] = $user->getId();
+		} else {
+			$where['rev_user_text'] = $user;
+		}
 
 		if ( $time !== '' ) {
 			$time = $dbr->addQuotes( $time );
