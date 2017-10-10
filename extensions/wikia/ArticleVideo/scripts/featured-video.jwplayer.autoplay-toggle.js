@@ -14,7 +14,8 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 
 		$settingsTopbar
 			.find('.wds-switch__label')
-			.on('click', function (event) {
+			.on('mouseup pointerup touchstart', function (event) {
+				event.stopPropagation();
 				featuredVideoAutoplay.toggleAutoplay(!event.target.previousSibling.checked);
 			});
 	}
