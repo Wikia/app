@@ -2,7 +2,8 @@
 
 class StaffLog extends SpecialPage
 {
-	var $request;
+	/* @var WebRequest $request */
+	private $request;
 	private $aTypes = array( 'piggyback', 'wikifactor' );
 
 	function __construct(){
@@ -64,6 +65,8 @@ class StaffLog extends SpecialPage
 
 
 class StaffLoggerPager extends ReverseChronologicalPager {
+
+	private $aConds, $mDb, $mOffset;
 
 	function __construct( $from ) {
 		global $wgExternalDatawareDB;
@@ -146,7 +149,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 
 	function formatRow($result) {
 		global $wgLang;
-		$linker = $this->getSkin();
+		/* @var Language $wgLang */
 		$time = $wgLang->timeanddate( wfTimestamp(TS_MW, $result->slog_timestamp), true );
 		/* switch for different type of log message */
 		switch ($result->slog_type)
@@ -160,8 +163,8 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				}
 				$out = wfMessage( 'stafflog-blockmsg' ,
 					array($time,
-						$linker->userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
-						$linker->userLink($result->slog_userdst, $result->slog_user_namedst),
+						Linker::userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
+						Linker::userLink($result->slog_userdst, $result->slog_user_namedst),
 						$siteurl,
 						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ))->text();
 				break;
@@ -169,15 +172,17 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				$msg = $result->slog_action == "login" ? "stafflog-piggybackloginmsg" : "stafflog-piggybacklogoutmsg";
 				$out = wfMessage( $msg,
 					array($time,
-						$linker->userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
-						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)))->text();
+						Linker::userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
+						Linker::userLink($result->slog_userdst, $result->slog_user_namedst)))->text();
 				break;
 			case 'wikifactor':
 				$out = $time . ' ' . $result->slog_comment;
 				break;
 			default:
 				$out = "";
-				Hooks::run('StaffLog::formatRow',array($result->slog_type,$result,$time,$linker,&$out));
+
+				// TODO: used by UserRenameToolStaffLogFormatRow only, remove when we get rid of Special:RenameUser
+				Hooks::run('StaffLog::formatRow',array($result->slog_type,$result,$time,&$out));
 				break;
 		}
 
