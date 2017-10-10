@@ -2,7 +2,8 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 	return function (playerInstance, $featuredVideo, $playerContainer) {
 		var videoCollapsed = false,
 			collapsingDisabled = false,
-			$closeBtn = $('.featured-video__close');
+			$closeBtn = $('.featured-video__close'),
+			transitionEvent = whichTransitionEvent();
 
 		function isVideoInFullScreenMode() {
 			return playerInstance.getFullscreen();
@@ -75,14 +76,20 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			// });
 		}
 
-		var transitionEvent = whichTransitionEvent();
+		function onVideoResized(event) {
+			if (event.propertyName === 'width') {
+				playerInstance.resize();
+				playerInstance.setControls(true);
+			}
+		}
+
+		function unbindEvents() {
+			$playerContainer[0].removeEventListener(transitionEvent, onVideoResized);
+			onScroll.unbind(toggleCollapse);
+		}
+
 		if (transitionEvent) {
-			$playerContainer[0].addEventListener(transitionEvent, function (event) {
-				if (event.propertyName === 'width') {
-					playerInstance.resize();
-					playerInstance.setControls(true);
-				}
-			});
+			$playerContainer[0].addEventListener(transitionEvent, onVideoResized);
 		}
 
 		onScroll.bind(toggleCollapse);
@@ -91,5 +98,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 		playerInstance.on('play', function () {
 			collapsingDisabled = false;
 		});
+
+		return unbindEvents;
 	}
 });
