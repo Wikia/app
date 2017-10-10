@@ -562,7 +562,7 @@ class WallHelper {
 		if ( is_object( $row ) ) {
 			// row from the revision table
 			$objTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
-			$userText = User::getUsername( $row->rev_user, $row->rev_user_text ) ?: '';
+			$userText = isset( $row->rev_user ) ? User::getUsername( $row->rev_user, $row->rev_user_text ) : '';
 
 			$isNew = ( !empty( $row->page_is_new ) && $row->page_is_new === '1' ) ? true : false;
 
