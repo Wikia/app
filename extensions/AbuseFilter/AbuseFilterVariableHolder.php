@@ -314,22 +314,7 @@ class AFComputedVariable {
 					break;
 				}
 
-				$dbr = wfGetDB( DB_SLAVE );
-				$res = $dbr->select( 'revision',
-					'DISTINCT rev_user_text',
-					array(
-						'rev_page' => $title->getArticleId(),
-						'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) )
-					),
-					__METHOD__,
-					array( 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 10 )
-				);
-
-				$users = array();
-				foreach( $res as $row ) {
-					$users[] = $row->rev_user_text;
-				}
-				$result = $users;
+				$result = $this->getRecentAuthorsNames( $title->getArticleId(), $cutOff );
 				break;
 			case 'get-page-restrictions':
 				$action = $parameters['action'];
@@ -410,5 +395,21 @@ class AFComputedVariable {
 
 		return $result instanceof AFPData
 			? $result : AFPData::newFromPHPVar( $result );
+	}
+
+	private function getRecentAuthorsNames( $articleId, $cutOff ): array {
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'revision', 'DISTINCT rev_user', [
+				'rev_page' => $articleId,
+				'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) )
+			], __METHOD__, [ 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 10 ] );
+
+		$users = [];
+		foreach ( $res as $row ) {
+			$user = User::newFromId($row->rev_user);
+			$users[] = $user->getName();
+		}
+
+		return $users;
 	}
 }
