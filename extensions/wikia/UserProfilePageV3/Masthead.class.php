@@ -109,13 +109,12 @@ class Masthead {
 	/**
 	 * joinUrlPath -- utility function to properly concatenate url segments to avoid double '/'
 	 *
-	 * @param mixed -- any number of parameters which should be concatenated together
-	 *
+	 * @param String|string[] ...$segments -- any number of parameters which should be concatenated together
 	 * @return string
 	 */
-	private static function joinUrlPath( ) {
+	private static function joinUrlPath( string ...$segments ) {
 		$url = [];
-		foreach ( func_get_args() as $segment ) {
+		foreach ( $segments as $segment ) {
 			$part = trim( $segment, '/' );
 			if ( $part !== "" ) {
 				$url[] = $part;
