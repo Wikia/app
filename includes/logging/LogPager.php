@@ -335,7 +335,7 @@ class LogPager extends ReverseChronologicalPager {
 		$fields = [ 'user_id', 'user_name', 'user_editcount' ];
 		$conditions = [ 'user_id' => array_unique( $userIds ) ];
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		return $db->select( 'user', $fields, $conditions );
+		return $db->select( '`user`', $fields, $conditions );
 	}
 
 	private function getFieldFromResults( $res, $fieldName ) {

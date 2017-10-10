@@ -495,7 +495,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		$conditions = [ 'user_id' => array_unique( $userIds ) ];
-		$dbResults = $db->select( 'user', [ 'user_id', 'user_name' ], $conditions, __METHOD__ );
+		$dbResults = $db->select( '`user`', [ 'user_id', 'user_name' ], $conditions, __METHOD__ );
 
 		$results = [];
 		foreach ( $dbResults as $row ) {
