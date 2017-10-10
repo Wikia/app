@@ -1,7 +1,5 @@
 /*global require*/
 require([
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.a9',
@@ -10,12 +8,11 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.service.actionHandler',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
-	adContext,
-	adInfoTracker,
 	slotStateMonitor,
 	amazon,
 	a9,
@@ -24,6 +21,7 @@ require([
 	messageListener,
 	mercuryListener,
 	actionHandler,
+	adInfoListener,
 	geo,
 	instantGlobals,
 	win
@@ -59,7 +57,7 @@ require([
 			prebid.call();
 		}
 
-		adInfoTracker.run();
+		adInfoListener.run();
 		slotStateMonitor.run();
 		actionHandler.registerMessageListener();
 	});
