@@ -63,7 +63,8 @@ class StaffLog extends SpecialPage {
 
 class StaffLoggerPager extends ReverseChronologicalPager {
 
-	private $aConds, $mDb, $mOffset;
+	public $mDb;
+	private $aConds, $mOffset;
 
 	/**
 	 * @param string $from
@@ -71,7 +72,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 	function __construct( $from ) {
 		global $wgExternalDatawareDB;
 		parent::__construct();
-		$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$this->mDb = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 		$from = str_replace( ' ', '_', $from );
 		if( $from !== '' ) {
 			global $wgCapitalLinks, $wgContLang;
