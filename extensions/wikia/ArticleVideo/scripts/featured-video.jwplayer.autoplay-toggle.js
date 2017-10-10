@@ -12,7 +12,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 				'<label for="autoplayToggle" class="wds-switch__label">Autoplay</label>'
 			);
 
-		$settingsTopbar.find('.switch-label')
+		$settingsTopbar.find('.wds-switch__label')
 			.on('click', function (event) {
 				featuredVideoAutoplay.toggleAutoplay(!event.target.previousSibling.checked);
 			});
