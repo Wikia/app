@@ -20,8 +20,8 @@ require([
 	jwPlayerAutoplayToggle(playerInstance);
 
 	// remove player if VisualEditor is loaded
-	mw.hook('ve.activationComplete').add(function() {
-		if(playerInstance) {
+	mw.hook('ve.activationComplete').add(function () {
+		if (playerInstance) {
 			$featuredVideoWrapper.addClass('is-removed');
 			playerInstance.remove();
 			playerInstance = null;
