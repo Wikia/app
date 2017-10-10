@@ -18,7 +18,7 @@ define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo
 	function isAutoplayEnabled() {
 		var cookieValue = cookies.get(autoplayCookieName);
 
-		return cookieValue === '1' || cookieValue === null;
+		return cookieValue !== '0';
 	}
 
 	return {
