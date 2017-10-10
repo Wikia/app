@@ -126,7 +126,7 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		});
 
 		playerInstance.on('mute', function () {
-			if (!playerInstance.isMuted() && !wasAlreadyUnmuted) {
+			if (!playerInstance.getMute() && !wasAlreadyUnmuted) {
 				track({
 					label: 'unmuted'
 				});
