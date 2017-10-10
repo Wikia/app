@@ -63,8 +63,8 @@ class StaffLog extends SpecialPage {
 
 class StaffLoggerPager extends ReverseChronologicalPager {
 
-	public $mDb;
-	private $aConds, $mOffset;
+	public $mDb, $mOffset;
+	private $aConds;
 
 	/**
 	 * @param string $from
