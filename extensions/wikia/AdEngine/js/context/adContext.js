@@ -255,7 +255,8 @@ define('ext.wikia.adEngine.adContext', [
 		);
 
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
-		context.opts.porvataMoatTracking = geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
+		context.opts.porvataMoatTrackingEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
 
 		enableAdMixExperiment(context);
 

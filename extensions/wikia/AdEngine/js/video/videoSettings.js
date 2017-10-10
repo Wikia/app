@@ -35,7 +35,8 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			}
 
 			if (sampling > 0) {
-				return sampler.sample('moatVideoTracking',  sampling, 100) && adContext.get('opts.porvataMoatTracking');
+				return sampler.sample('moatVideoTracking',  sampling, 100) &&
+					adContext.get('opts.porvataMoatTrackingEnabled');
 			}
 
 			return false;
