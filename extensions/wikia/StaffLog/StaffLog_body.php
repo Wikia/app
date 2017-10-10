@@ -1,15 +1,13 @@
 <?php
 
-class StaffLog extends SpecialPage
-{
-	/* @var WebRequest $request */
+class StaffLog extends SpecialPage {
 	private $request;
 	private $aTypes = array( 'piggyback', 'wikifactor' );
 
 	function __construct(){
-		global $wgRequest;
-		$this->request = &$wgRequest;
 		parent::__construct( "stafflog","stafflog");
+
+		$this->request = $this->getContext()->getRequest();
 		$this->aTypes = array(
 			'' => '',
 			'block' => wfMessage( 'stafflog-filter-type-block' )->text(),
@@ -21,10 +19,9 @@ class StaffLog extends SpecialPage
 
 
 	function execute( $par ){
-		global $wgOut, $wgUser;
 		$this->setHeaders();
 
-		if( !$wgUser->isAllowed( 'stafflog' ) ) {
+		if( !$this->getContext()->getUser()->isAllowed( 'stafflog' ) ) {
 			throw new PermissionsError( 'stafflog' );
 		}
 
@@ -38,7 +35,7 @@ class StaffLog extends SpecialPage
 
 		$sTypesDropDown .= Xml::closeElement( 'select' );
 
-		$wgOut->addHTML(
+		$this->getOutput()->addHTML(
 			Xml::openElement( 'form', array( 'method' => 'get', 'action' => $this->getTitle()->getLocalURL() ) ) .
 				Xml::openElement( 'fieldset' ) .
 				Xml::element( 'legend', null, wfMsg( 'stafflog-filter-label' ), false ) .
