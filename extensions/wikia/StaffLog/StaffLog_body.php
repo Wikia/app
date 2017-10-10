@@ -159,7 +159,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				$out = wfMessage( 'stafflog-blockmsg' ,
 					array($time,
 						Linker::userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
-						Linker::userLink($result->slog_userdst, $result->slog_user_namedst),
+						Linker::userLink($result->slog_userdst, User::getUsername( $result->slog_userdst, $result->slog_user_namedst ) ),
 						$siteurl,
 						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ))->text();
 				break;
@@ -168,7 +168,9 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				$out = wfMessage( $msg,
 					array($time,
 						Linker::userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
-						Linker::userLink($result->slog_userdst, $result->slog_user_namedst)))->text();
+						Linker::userLink($result->slog_userdst, User::getUsername($result->slog_userdst, $result->slog_user_namedst ) )
+					)
+				)->text();
 				break;
 			case 'wikifactor':
 				$out = $time . ' ' . $result->slog_comment;
