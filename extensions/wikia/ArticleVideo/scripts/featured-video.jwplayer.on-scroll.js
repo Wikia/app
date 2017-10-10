@@ -17,7 +17,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			collapsingDisabled = false;
 			videoCollapsed = true;
 			$featuredVideo.addClass('is-collapsed-ready');
-			playerInstance.setControls(false);
+
 			$playerContainer.css({
 				'bottom': viewportHeight - videoOffset.top - videoHeight + $(window).scrollTop(),
 				'right': viewportWidth - videoOffset.left - videoWidth,
@@ -79,7 +79,6 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 		function onVideoResized(event) {
 			if (event.propertyName === 'width') {
 				playerInstance.resize();
-				playerInstance.setControls(true);
 			}
 		}
 
