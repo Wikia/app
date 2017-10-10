@@ -183,7 +183,8 @@ class RecirculationHooks {
 
 		return self::isPrivateOrNotProduction() ||
 		       ( ( self::isNoIndexNamespace() || $wgDisableShowInRecirculation ) &&
-		         empty( $metaDataFromService ) );
+		         empty( $metaDataFromService ) ) ||
+		       RequestContext::getMain()->getRequest()->getVal( 'redirect' ) === 'no';
 	}
 
 	/**
