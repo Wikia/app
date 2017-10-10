@@ -288,14 +288,13 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	/**
-	 * @param RecentChange|null $oRecentChange This is allowed to be null to stay compatible
-	 *                                         with FounderEmailsEvent::register()
+	 * @param RecentChange $oRecentChange
 	 *
 	 * @return bool
 	 *
 	 * @throws Exception
 	 */
-	public static function register( $oRecentChange = null ) {
+	public static function recentChanges( $oRecentChange ) {
 		$currentUser = F::app()->wg->User;
 
 		if ( is_null( $oRecentChange ) ) {
