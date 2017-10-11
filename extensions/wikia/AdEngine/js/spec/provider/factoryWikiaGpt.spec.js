@@ -54,7 +54,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			name: slotName,
 			success: noop,
 			hop: noop,
-			pre: function (name, callback) {
+			post: function (name, callback) {
 				callback();
 			}
 		};
