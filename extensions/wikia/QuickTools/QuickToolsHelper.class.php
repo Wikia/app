@@ -24,7 +24,7 @@ class QuickToolsHelper extends ContextSource {
 		if ( $user ) {
 			$where['rev_user'] = $user->getId();
 		} else {
-			$where['rev_user_text'] = $user;
+			$where['rev_user_text'] = $userName;
 		}
 
 		if ( $time !== '' ) {

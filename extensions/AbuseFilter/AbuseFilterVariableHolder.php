@@ -400,15 +400,14 @@ class AFComputedVariable {
 
 	private function getRecentAuthorsNames( $articleId, $cutOff ): array {
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'revision', 'DISTINCT rev_user', [
+		$res = $dbr->select( 'revision', 'DISTINCT rev_user, rev_user_text', [
 			'rev_page' => $articleId,
 			'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) ),
 		], __METHOD__, [ 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 10 ] );
 
 		$users = [];
 		foreach ( $res as $row ) {
-			$user = User::newFromId( $row->rev_user );
-			$users[] = $user->getName();
+			$users[] = User::getUsername( $row->rev_user, $row->rev_user_text );
 		}
 
 		return $users;
