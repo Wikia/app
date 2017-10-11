@@ -32,7 +32,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		editor.on('mode', $.proxy(this.updateTooltips, this));
 		editor.on('mode', $.proxy(this.mode, this));
 		editor.on('modeSwitch', $.proxy(this.modeSwitch, this));
-		editor.on('dataReady', $.proxy(this.dataReady, this));
+		editor.on('dataReady', $.proxy(this.dataReady, this),null,null,100);
 		editor.on('wysiwygModeReady', $.proxy(this.wysiwygModeReady, this));
 		editor.on('sourceModeReady', $.proxy(this.sourceModeReady, this));
 	},
@@ -136,7 +136,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	dataReady: function(ev) {
 		var editor = ev.editor;
-
+		debugger;
 		if (editor.mode == 'wysiwyg') {
 			editor.fire('wysiwygModeReady');
 

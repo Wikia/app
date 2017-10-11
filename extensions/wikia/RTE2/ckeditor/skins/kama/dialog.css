@@ -149,13 +149,13 @@ Comments in this file will give more details about each of the above blocks.
 }
 
 /* The contents body part, which will hold all elements available in the dialog. */
-.cke_dialog_contents_body
+/*.cke_dialog_contents_body
 {
 	overflow: auto;
 	padding: 17px 10px 5px 10px;
 	margin-top: 22px;
 }
-
+*/
 /* The dialog footer, which usually contains the "Ok" and "Cancel" buttons as
    well as a rsizer handle. */
 .cke_dialog_footer
@@ -528,13 +528,14 @@ The buttons used in the dialog footer or inside the contents.
 
 
 /* The inner part of the button (dialog footer buttons only). */
+/*
 .cke_dialog_footer_buttons a.cke_dialog_ui_button span
 {
 	width: 60px;
 	padding: 5px 20px 5px;
 	display: inline-block;
 }
-
+*/
 /* Special class appended to the Ok button. */
 
 
@@ -571,7 +572,7 @@ a.cke_dialog_ui_button_cancel span
 	background-position: left -1242px;
 }
 
-span.cke_dialog_ui_button
+/*span.cke_dialog_ui_button
 {
 	padding: 2px 10px;
 	text-align: center;
@@ -580,7 +581,7 @@ span.cke_dialog_ui_button
 	cursor: default;
 	min-width: 60px;
 }
-
+*/
 /* .cke_disabled is appended to disabled buttons */
 a.cke_dialog_ui_button span.cke_disabled
 {
@@ -588,14 +589,14 @@ a.cke_dialog_ui_button span.cke_disabled
 	color: #5e5e55;
 	background-color: #c5c5b3;
 }
-
+/*
 a.cke_dialog_ui_button:hover,
 a.cke_dialog_ui_button:focus,
 a.cke_dialog_ui_button:active
 {
 	background-position: 0 -1180px;
 }
-
+*/
 .cke_hc a.cke_dialog_ui_button:hover,
 .cke_hc a.cke_dialog_ui_button:focus,
 .cke_hc a.cke_dialog_ui_button:active

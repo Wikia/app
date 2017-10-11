@@ -142,6 +142,7 @@ CKEDITOR.plugins.sourcearea = {
 				if ( editor.mode == 'wysiwyg' )
 					editor.fire( 'saveSnapshot' );
 				editor.getCommand( 'source' ).setState( CKEDITOR.TRISTATE_DISABLED );
+				debugger;
 				editor.setMode( editor.mode == 'source' ? 'wysiwyg' : 'source' );
 			},
 

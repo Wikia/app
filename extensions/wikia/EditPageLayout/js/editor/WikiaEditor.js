@@ -676,7 +676,6 @@
 		},
 
 		renderToolbars: function() {
-			debugger;	
 			// Find all toolbars
 			var spaces = this.editor.getSpaces();
 			var toolbars = this.toolbars = {};
