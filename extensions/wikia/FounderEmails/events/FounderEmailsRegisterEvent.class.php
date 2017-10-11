@@ -40,7 +40,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 		return true;
 	}
 
-	public static function registerUser( User $user = null ) {
+	public static function registerUser( User $user ) {
 		$eventData = [
 			'newUserName' => $user->getName()
 		];

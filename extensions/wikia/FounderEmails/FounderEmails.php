@@ -9,6 +9,8 @@ if (!defined('MEDIAWIKI')) {
 	die();
 }
 
+global $wgCityId, $wgAutoloadClasses, $wgExtensionCredits;
+
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Founder Emails',
 	'author' => 'Adrian \'ADi\' Wieczorek',
@@ -77,7 +79,6 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['FounderEmailsController'] = $dir . 'FounderEmailsController.class.php';
 $wgAutoloadClasses['SpecialFounderEmails'] = $dir . 'SpecialFounderEmails.class.php';
 
-global $wgCityId;
 // Set default for the toggle (applied to all new user accounts).  This is safe even if this user isn't a founder yet.
 $wgDefaultUserOptions["founderemails-joins-$wgCityId"] = 0;
 $wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 0;
