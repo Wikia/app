@@ -118,22 +118,27 @@ class DatabaseLogEntry extends LogEntryBase {
 	 * @return array
 	 */
 	public static function getSelectQueryData() {
-		// SUS-2779
-		$tables = [ 'logging' ];
-		$fields = [
+		$tables = array( 'logging', 'user' );
+		$fields = array(
 			'log_id', 'log_type', 'log_action', 'log_timestamp',
 			'log_user', 'log_user_text',
 			'log_namespace', 'log_title', // unused log_page
-			'log_comment', 'log_params', 'log_deleted'
-		];
+			'log_comment', 'log_params', 'log_deleted',
+			'user_id', 'user_name', 'user_editcount',
+		);
 
-		return [
+		$joins = array(
+			// IP's don't have an entry in user table
+			'user' => array( 'LEFT JOIN', 'log_user=user_id' ),
+		);
+
+		return array(
 			'tables' => $tables,
 			'fields' => $fields,
-			'conds'  => [],
-			'options' => [],
-			'join_conds' => []
-		];
+			'conds'  => array(),
+			'options' => array(),
+			'join_conds' => $joins,
+		);
 	}
 
 	/**
