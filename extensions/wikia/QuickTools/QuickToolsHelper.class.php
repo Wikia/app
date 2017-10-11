@@ -11,7 +11,8 @@ class QuickToolsHelper extends ContextSource {
 	 */
 	public function getRollbackTitles( $userName, $time ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$user = User::newFromName($userName);
+		// SUS-807
+		$user = User::newFromName( $userName );
 
 		$titles = [];
 		$where = [
@@ -19,6 +20,7 @@ class QuickToolsHelper extends ContextSource {
 			'page_latest = rev_id',
 		];
 
+		// SUS-807
 		if ( $user ) {
 			$where['rev_user'] = $user->getId();
 		} else {

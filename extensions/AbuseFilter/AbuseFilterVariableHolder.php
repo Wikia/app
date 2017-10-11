@@ -314,6 +314,7 @@ class AFComputedVariable {
 					break;
 				}
 
+				// SUS-807
 				$result = $this->getRecentAuthorsNames( $title->getArticleId(), $cutOff );
 				break;
 			case 'get-page-restrictions':
@@ -400,13 +401,13 @@ class AFComputedVariable {
 	private function getRecentAuthorsNames( $articleId, $cutOff ): array {
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 'revision', 'DISTINCT rev_user', [
-				'rev_page' => $articleId,
-				'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) )
-			], __METHOD__, [ 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 10 ] );
+			'rev_page' => $articleId,
+			'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) ),
+		], __METHOD__, [ 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 10 ] );
 
 		$users = [];
 		foreach ( $res as $row ) {
-			$user = User::newFromId($row->rev_user);
+			$user = User::newFromId( $row->rev_user );
 			$users[] = $user->getName();
 		}
 
