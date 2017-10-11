@@ -3801,8 +3801,9 @@ abstract class DatabaseBase implements DatabaseType {
 			$this->getWikiaLogger()->info( "SQL (action=delete) {$sql}", $context );
 		}
 
+		// SUS-2974 | log SQL logs to a separate ES index 'mediawiki-sql'
 		if ( $this->getSampler()->shouldSample() ) {
-			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
+			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
 		if ( $this->isWriteQuery($sql) &&
