@@ -1,23 +1,43 @@
 /*global require*/
-/*jshint maxlen:200*/
-define('ext.wikia.adEngine.customAdsLoader', ['wikia.log'], function (log) {
+(function() {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.customAdsLoader';
+	var availableTemplates = ['bfaa', 'bfab', 'floatingRail', 'floor', 'floorAdhesion', 'interstitial', 'modal',
+			'ooyala', 'playwire', 'porvata', 'roadblock', 'skin'],
+		dependencies = ['wikia.log'];
 
-	function loadCustomAd(params) {
-		log('loadCustomAd', 'debug', logGroup);
-
-		var adModule = 'ext.wikia.adEngine.template.' + params.type;
-		log('loadCustomAd: loading ' + adModule, 'debug', logGroup);
-
-		require([adModule], function (adTemplate) {
-			log('loadCustomAd: module ' + adModule + ' required', 'debug', logGroup);
-			adTemplate.show(params);
-		});
+	function getAdModule(name, allModules) {
+		return allModules[availableTemplates.indexOf(name)];
 	}
 
-	return {
-		loadCustomAd: loadCustomAd
-	};
-});
+	define(
+		'ext.wikia.adEngine.customAdsLoader',
+		dependencies.concat(
+			availableTemplates.map(function(templateName) {
+				return require.optional('ext.wikia.adEngine.template.' + templateName);
+			})
+		),
+		function (log /* template modules */) {
+			var logGroup = 'ext.wikia.adEngine.customAdsLoader',
+				allModules = Array.prototype.slice.call(arguments).slice(dependencies.length);
+
+			function loadCustomAd(params) {
+				log('loadCustomAd: module ' + params.type + ' required', 'debug', logGroup);
+
+				var adModule = getAdModule(params.type, allModules);
+				console.log(adModule, params.type);
+
+				if (adModule){
+					log('loadCustomAd: module ' + params.type + ' found', 'debug', logGroup);
+					adModule.show(params);
+				} else {
+					log('loadCustomAd: module ' + params.type + ' not found', 'error', logGroup);
+				}
+			}
+
+			return {
+				loadCustomAd: loadCustomAd
+			};
+		}
+	);
+})();
