@@ -17,6 +17,10 @@ class ImageReviewEventsHooks {
 		return true;
 	}
 
+	public static function onVisualEditorAddMedia( Title $title ) {
+		static::actionCreate( $title );
+	}
+
 	public static function onFileRevertComplete( Page $page ) {
 		// $page->getTitle() returns Title object created before revert, so latestRevisionId is not updated there
 		$title = Title::newFromID( $page->getTitle()->getArticleID() );
