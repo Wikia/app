@@ -29,6 +29,7 @@ require([
 		return !document.hidden && willAutoplay && ['playing', 'paused'].indexOf(playerInstance.getState()) === -1;
 	}
 
+	//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS';
 
 	playerInstance.setup({
