@@ -28,7 +28,7 @@
 
 				if (adModule){
 					log('loadCustomAd: module ' + params.type + ' found', 'debug', logGroup);
-					adModule.show(params);
+					return adModule.show(params);
 				} else {
 					log('loadCustomAd: module ' + params.type + ' not found', 'error', logGroup);
 				}

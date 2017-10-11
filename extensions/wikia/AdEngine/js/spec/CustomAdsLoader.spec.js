@@ -23,7 +23,7 @@ describe('customAdsLoader', function () {
 		);
 	}
 
-	it('customAdsLoader call the bfaa template', function () {
+	it('customAdsLoader calls the bfaa template', function () {
 		var customAdsLoader = getModule();
 
 		spyOn(mocks.bfaa, 'show');
@@ -33,7 +33,7 @@ describe('customAdsLoader', function () {
 		expect(mocks.bfaa.show).toHaveBeenCalled();
 	});
 
-	it('customAdsLoader call the floorAdhesion template', function () {
+	it('customAdsLoader calls the floorAdhesion template', function () {
 		var customAdsLoader = getModule();
 
 		spyOn(mocks.floorAdhesion, 'show');
@@ -41,6 +41,18 @@ describe('customAdsLoader', function () {
 		customAdsLoader.loadCustomAd({type: 'floorAdhesion'});
 
 		expect(mocks.floorAdhesion.show).toHaveBeenCalled();
+	});
+
+
+
+	it('customAdsLoader returns template execution output', function () {
+		var customAdsLoader = getModule();
+
+		spyOn(mocks.bfaa, 'show').and.returnValue('bfaa output');
+
+		expect(customAdsLoader.loadCustomAd({type: 'bfaa'})).toEqual('bfaa output');
+
+		expect(mocks.bfaa.show).toHaveBeenCalled();
 	});
 
 });
