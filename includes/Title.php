@@ -4281,7 +4281,8 @@ class Title {
 			return 0; // nothing to compare
 		}
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'revision', 'DISTINCT rev_user_text',
+		// SUS-807
+		$res = $dbr->select( 'revision', 'DISTINCT rev_user, rev_user_text',
 			array(
 				'rev_page' => $this->getArticleID(),
 				'rev_timestamp > ' . $dbr->addQuotes( $dbr->timestamp( $old->getTimestamp() ) ),
