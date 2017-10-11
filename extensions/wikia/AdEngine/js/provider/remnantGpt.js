@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 			TOP_RIGHT_BOXAD: {size: '300x250,300x600,300x1050', loc: 'top'}
 		},
 		{
-			beforeSuccess: function (slotName) {
+			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
 				if (!uapContext.isBfaaLoaded()) {
 					slotTweaker.removeTopButtonIfNeeded(slotName);
