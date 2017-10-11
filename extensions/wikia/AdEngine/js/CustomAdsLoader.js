@@ -25,7 +25,6 @@
 				log('loadCustomAd: module ' + params.type + ' required', 'debug', logGroup);
 
 				var adModule = getAdModule(params.type, allModules);
-				console.log(adModule, params.type);
 
 				if (adModule){
 					log('loadCustomAd: module ' + params.type + ' found', 'debug', logGroup);
