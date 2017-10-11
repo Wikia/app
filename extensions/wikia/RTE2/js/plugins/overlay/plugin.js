@@ -7,6 +7,7 @@ CKEDITOR.plugins.add('rte-overlay',
 	currentOverlay: false,
 
 	init: function(editor) {
+		debugger;
 		var self = this;
 
 		// add plugin reference to RTE.overlay object
@@ -47,6 +48,7 @@ CKEDITOR.plugins.add('rte-overlay',
 	},
 
 	showOverlay: function(node) {
+		debugger;
 		//$().log(node, 'showOverlay');
 
 		var overlay = this.getOverlay(node),
@@ -97,6 +99,7 @@ CKEDITOR.plugins.add('rte-overlay',
 	},
 
 	hideOverlay: function(node) {
+		debugger;
 		//$().log(node, 'hideOverlay');
 
 		var overlay = this.getOverlay(node);
@@ -113,6 +116,7 @@ CKEDITOR.plugins.add('rte-overlay',
 	},
 
 	getOverlay: function(node, items) {
+		debugger;
 		var self = this;
 
 		if (!this.overlays) {
@@ -181,6 +185,7 @@ CKEDITOR.plugins.add('rte-overlay',
 	},
 
 	getCaption: function(node) {
+		debugger;
 		// get RTE data
 		var data = node.getData();
 
@@ -216,6 +221,7 @@ CKEDITOR.plugins.add('rte-overlay',
 
 	// get position of overlay over node
 	getOverlayPositon: function(node) {
+		debugger;
 		var position = RTE.tools.getPlaceholderPosition(node);
 
 		if (node.hasClass('media-placeholder')) {
@@ -229,6 +235,7 @@ CKEDITOR.plugins.add('rte-overlay',
 
 	// helper function
 	getImageWidth: function(node) {
+		debugger;
 		// image with thumb of frame
 		var isFramed = node.hasClass('thumb') || node.hasClass('frame');
 
@@ -253,6 +260,7 @@ RTE.overlay = {
 
 	// add overlay menu and block CKeditor context menu
 	add: function(node, items) {
+		debugger;
 		var self = this.plugin;
 
 		/*

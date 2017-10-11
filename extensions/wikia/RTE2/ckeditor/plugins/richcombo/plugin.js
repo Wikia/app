@@ -115,7 +115,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 			 */
 			render: function( editor, output ) {
 				var env = CKEDITOR.env;
-
 				var id = 'cke_' + this.id;
 				var clickFn = CKEDITOR.tools.addFunction( function( el ) {
 					// Restore locked selection in Opera.
@@ -356,7 +355,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 			setState: function( state ) {
 				if ( this._.state == state )
 					return;
-
 				var el = this.document.getById( 'cke_' + this.id );
 				el.setState( state, 'cke_combo' );
 

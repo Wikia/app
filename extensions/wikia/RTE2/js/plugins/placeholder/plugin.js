@@ -119,8 +119,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 						break;
 
 					default:
-						title = lang.codedElement.title;
-						intro = lang.codedElement.intro;
+						title = "Title";//lang.codedElement.title;
+						intro = "intro";//lang.codedElement.intro;
 						break;
 				}
 

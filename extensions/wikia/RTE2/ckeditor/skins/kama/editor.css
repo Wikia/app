@@ -25,7 +25,7 @@ other files.
 @import url("panel.css");
 
 /* Styles the color panel displayed by the color buttons. */
-@import url("colorpanel.css");
+/*@import url("colorpanel.css");*/
 
 /* Styles to toolbar. */
 @import url("toolbar.css");
@@ -37,7 +37,7 @@ other files.
 @import url("richcombo.css");
 
 /* Styles the elements path bar, available at the bottom of the editor UI.*/
-@import url("elementspath.css");
+/*@import url("elementspath.css");*/
 
 /* Contains hard-coded presets for "configurable-like" options of the UI
    (e.g. display labels on specific buttons) */
