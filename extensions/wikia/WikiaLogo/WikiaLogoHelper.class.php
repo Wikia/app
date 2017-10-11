@@ -47,16 +47,14 @@ class WikiaLogoHelper {
 	 * @return bool|GlobalTitle
 	 */
 	public function getCentralWikiUrlForLangIfExists( $lang ) {
-		try {
-			return GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
-		} catch ( Exception $ex ) {
-			return false;
-		}
+		$city_id = $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang );
+		return $city_id ? GlobalTitle::newMainPage( $city_id ) : false;
 	}
 
 	public function getMainCorpPageURL() {
 		global $wgLang;
 
+		/* @var Language $wgLang */
 		if ( empty( $this->isFandomExposed( $wgLang->getCode() ) ) ) {
 			return $this->getCentralUrlForLang( $wgLang->getCode() );
 		} else {
