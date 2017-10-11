@@ -92,26 +92,13 @@ class GenderCache {
 
 	/**
 	 * Preloads genders for given list of users.
-	 * @param $users array|String: userNames
+	 * @param $users List|String: usernames
 	 * @param $caller String: the calling method
 	 */
 	public function doQuery( $users, $caller = '' ) {
 		$default = $this->getDefault();
 
-		// SUS-2779
-		$users = $this->filterListOfUsers($users, $default);
-
-		if ( count( $users ) === 0 ) {
-			return;
-		}
-
-		foreach ( $this->getGenderOfUsersFromDB($users, $caller) as $row ) {
-			$this->cache[$row->user_name] = $row->up_value ? $row->up_value : $default;
-		}
-	}
-
-	private function filterListOfUsers( $users, $default ) {
-		foreach ( (array)$users as $index => $value ) {
+		foreach ( (array) $users as $index => $value ) {
 			$name = strtr( $value, '_', ' ' );
 			if ( isset( $this->cache[$name] ) ) {
 				// Skip users whose gender setting we already know
@@ -123,32 +110,26 @@ class GenderCache {
 			}
 		}
 
-		return $users;
-	}
+		if ( count( $users ) === 0 ) {
+			return;
+		}
 
-	/**
-	 * @param $userNames
-	 * @param $caller
-	 * @return ResultWrapper
-	 */
-	private function getGenderOfUsersFromDB( $userNames, $caller ): ResultWrapper {
-		global $wgExternalSharedDB;
-		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-
-		$table = [ '`user`', '`user_properties`' ];
-		$fields = [ 'user_name', 'up_value' ];
-		$conds = [ 'user_name' => $userNames ];
-		$joins = [
-			'user_properties' => [
-				'LEFT JOIN', [ 'user_id = up_user', 'up_property' => 'gender' ],
-			],
-		];
+		$dbr = wfGetDB( DB_SLAVE );
+		$table = array( 'user', 'user_properties' );
+		$fields = array( 'user_name', 'up_value' );
+		$conds = array( 'user_name' => $users );
+		$joins = array( 'user_properties' =>
+			array( 'LEFT JOIN', array( 'user_id = up_user', 'up_property' => 'gender' ) ) );
 
 		$comment = __METHOD__;
 		if ( strval( $caller ) !== '' ) {
 			$comment .= "/$caller";
 		}
+		$res = $dbr->select( $table, $fields, $conds, $comment, $joins, $joins );
 
-		return $dbr->select( $table, $fields, $conds, $comment, $joins, $joins );
+		foreach ( $res as $row ) {
+			$this->cache[$row->user_name] = $row->up_value ? $row->up_value : $default;
+		}
 	}
+
 }
