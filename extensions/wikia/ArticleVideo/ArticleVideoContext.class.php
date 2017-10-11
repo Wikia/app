@@ -69,6 +69,7 @@ class ArticleVideoContext {
 			}
 
 			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
+			$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
 			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
 
 			return $videoData;

@@ -23,6 +23,10 @@ define('wikia.articleVideo.featuredVideo.tracking', [], function () {
 		window.guaSetCustomDimension(36, currentVideo.tags);
 	}
 
+	function trackComscoreVideoMetrix() {
+
+	}
+
 	function track(gaData) {
 		if (!gaData.label) {
 			throw new Error('No tracking label provided');
