@@ -46,5 +46,4 @@ if(isset($wgScriptPath)){
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['Wikify'] = $dir . 'Special_Wikify.body.php'; # Tell MediaWiki to load the extension body.
-$wgExtensionMessagesFiles['Wikify'] = $dir . 'Special_Wikify.i18n.php';
 $wgSpecialPages['Wikify'] = 'Wikify'; # Let MediaWiki know about your new special page.

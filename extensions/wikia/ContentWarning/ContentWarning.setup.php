@@ -19,7 +19,6 @@ $wgAutoloadClasses['ContentWarningController'] =  $dir . 'ContentWarningControll
 $wgAutoloadClasses['ContentWarningHooks'] =  $dir . 'ContentWarningHooks.class.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['ContentWarning'] = $dir . 'ContentWarning.i18n.php';
 
 // Hooks
 $wgHooks['GetHTMLAfterBody'][] = 'ContentWarningHooks::onGetHTMLAfterBody';

@@ -26,7 +26,6 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'centralhelpsearch-desc',
 );
 
-$wgExtensionMessagesFiles['CentralHelpSearch'] = __DIR__ . '/CentralHelpSearch.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'efCentralHelpSearchSetup';
 

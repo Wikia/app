@@ -8,8 +8,10 @@ QUnit.module( 've.Range' );
 
 /* Tests */
 
-QUnit.test( 'Basic usage (clone, isCollapsed, isBackwards, getLength, equals, equalsSelection, containsOffset, containsRange)', 26, function ( assert ) {
+QUnit.test( 'Basic usage (clone, isCollapsed, isBackwards, getLength, equals, equalsSelection, containsOffset, containsRange)', function ( assert ) {
 	var range = new ve.Range( 100, 200 );
+
+	assert.expect( 26 );
 
 	assert.strictEqual( range.isCollapsed(), false );
 	assert.strictEqual( range.isBackwards(), false );
@@ -44,8 +46,10 @@ QUnit.test( 'Basic usage (clone, isCollapsed, isBackwards, getLength, equals, eq
 
 } );
 
-QUnit.test( 'Modification (flip, truncate, expand, translate, clone)', 17, function ( assert ) {
+QUnit.test( 'Modification (flip, truncate, expand, translate, clone)', function ( assert ) {
 	var range = new ve.Range( 100, 200 );
+
+	assert.expect( 17 );
 
 	assert.equalRange( range.flip(), new ve.Range( 200, 100 ), 'flip reverses the range' );
 	assert.equalRange( range.flip().flip(), range, 'double flip does nothing' );
@@ -72,7 +76,8 @@ QUnit.test( 'Modification (flip, truncate, expand, translate, clone)', 17, funct
 
 } );
 
-QUnit.test( 'Factory methods & serialization (newCoveringRange, newFromJSON, toJSON)', 6, function ( assert ) {
+QUnit.test( 'Factory methods & serialization (newCoveringRange, newFromJSON, toJSON)', function ( assert ) {
+	assert.expect( 6 );
 	var range = new ve.Range( 100, 200 );
 
 	assert.equalRange(

@@ -30,7 +30,6 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__);
 
 $wgExtensionFunctions[] = 'AutomaticWikiAdoptionInit';
-$wgExtensionMessagesFiles['AutomaticWikiAdoption'] = "$dir/AutomaticWikiAdoption.i18n.php";
 $wgAutoloadClasses['AutomaticWikiAdoptionAjax'] = "$dir/AutomaticWikiAdoptionAjax.class.php";
 $wgAutoloadClasses['AutomaticWikiAdoptionHelper'] = "$dir/AutomaticWikiAdoptionHelper.class.php";
 $wgAutoloadClasses['AutomaticWikiAdoptionController'] = "$dir/AutomaticWikiAdoptionController.class.php";

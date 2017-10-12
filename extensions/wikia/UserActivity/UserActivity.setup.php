@@ -37,4 +37,3 @@ $wgSpecialPages['UserActivity'] = 'UserActivity\SpecialController';
 /**
  * messages
  */
-$wgExtensionMessagesFiles['UserActivity'] = $dir . 'UserActivity.i18n.php';

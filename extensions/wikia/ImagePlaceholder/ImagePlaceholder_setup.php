@@ -34,7 +34,6 @@ $wgExtensionFunctions[] = 'ImagePlaceholder_init';
 /**
  * message files
  */
-$wgExtensionMessagesFiles['ImagePlaceholder'] = $dir . 'ImagePlaceholder.i18n.php';
 
 JSMessages::registerPackage('ImagePlaceholder', array('imgplc-*'));
 JSMessages::enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);

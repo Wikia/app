@@ -36,7 +36,6 @@ if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievement
 }
 
 // i18n
-$wgExtensionMessagesFiles['MyHome'] = $dir . 'MyHome.i18n.php';
 
 if (!empty($wgEnableActivityFeedApiFeed)) {
 	$wgAutoloadClasses["ApiQueryActivityFeed"] = $dir . "ApiQueryActivityFeed.php";

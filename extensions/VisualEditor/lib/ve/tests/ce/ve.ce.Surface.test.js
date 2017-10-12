@@ -148,7 +148,7 @@ QUnit.test( 'handleLinearDelete', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		ve.test.utils.runSurfaceHandleSpecialKeyTest(
@@ -340,7 +340,7 @@ QUnit.test( 'handleLinearEnter', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		ve.test.utils.runSurfaceHandleSpecialKeyTest(
@@ -415,7 +415,7 @@ QUnit.test( 'onSurfaceObserverContentChange', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 
 	function testRunner( prevHtml, prevRange, nextHtml, nextRange, expectedOps, expectedRange, msg ) {
 		var txs, i, ops,
@@ -455,7 +455,8 @@ QUnit.test( 'onSurfaceObserverContentChange', function ( assert ) {
 
 } );
 
-QUnit.test( 'getClipboardHash', 1, function ( assert ) {
+QUnit.test( 'getClipboardHash', function ( assert ) {
+	assert.expect( 1 );
 	assert.strictEqual(
 		ve.ce.Surface.static.getClipboardHash(
 			$( $.parseHTML( '  <p class="foo"> B<b>a</b>r </p>\n\t<span class="baz"></span> Quux <h1><span></span>Whee</h1>' ) ).toArray()
@@ -515,7 +516,7 @@ QUnit.test( 'onCopy', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 5 );
+	assert.expect( cases.length * 5 );
 
 	function testRunner( doc, range, expectedData, expectedOriginalRange, expectedBalancedRange, expectedHtml, msg ) {
 		var clipboardKey, parts, clipboardIndex, slice,
@@ -854,7 +855,7 @@ QUnit.test( 'beforePaste/afterPaste', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 
 	function testRunner( documentHtml, pasteHtml, fromVe, useClipboardData, range, expectedOps, pasteSpecial, expectedRange, msg ) {
 		var i, j, txs, ops,
@@ -936,7 +937,7 @@ QUnit.test( 'getNearestCorrectOffset', function ( assert ) {
 			]
 		};
 
-	QUnit.expect( data.getLength() * 2 );
+	assert.expect( data.getLength() * 2 );
 
 	for ( dir = -1; dir <= 1; dir += 2 ) {
 		for ( i = 0; i < data.getLength(); i++ ) {
@@ -1061,7 +1062,7 @@ QUnit.test( 'getRangeSelection', function ( assert ) {
 		}
 	}
 
-	QUnit.expect( expect );
+	assert.expect( expect );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		surface = ve.test.utils.createSurfaceFromHtml( cases[i].html );

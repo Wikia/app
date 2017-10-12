@@ -34,4 +34,3 @@ $wgHooks['LinkBegin'][] = 'WAMPageHooks::onLinkBegin';
 $wgHooks['WikiaCanonicalHref'][] = 'WAMPageHooks::onWikiaCanonicalHref';
 
 // i18n
-$wgExtensionMessagesFiles['WAMPage'] = $dir . 'WAMPage.i18n.php' ;

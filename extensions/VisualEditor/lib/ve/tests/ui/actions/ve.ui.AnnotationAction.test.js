@@ -98,7 +98,7 @@ QUnit.test( 'toggle', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 1 );
+	assert.expect( cases.length * 1 );
 	for ( i = 0; i < cases.length; i++ ) {
 		runAnnotationActionTest( assert, cases[i].html, cases[i].method, cases[i].args, cases[i].range, cases[i].expectedData, cases[i].msg );
 	}

@@ -1306,12 +1306,17 @@ class WikiFactory {
 	 *
 	 * @param integer $id: wiki id in city_list
 	 * @param bool $master
-	 * @return mixed: database row with wiki params
+	 * @return object|false: database row with wiki params
 	 */
 	static public function getWikiByID( $id, $master = false ) {
 
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		// SUS-2983 | do not make queries when provided city_id will not return any row
+		if ( empty( $id ) ) {
 			return false;
 		}
 

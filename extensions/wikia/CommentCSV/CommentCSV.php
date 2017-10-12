@@ -29,7 +29,6 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 //i18n
-$wgExtensionMessagesFiles['CommentCSV'] = $dir . 'CommentCSV.i18n.php';
 
 $wgAutoloadClasses['CommentCSV'] = $dir . '/CommentCSV.class.php';
 

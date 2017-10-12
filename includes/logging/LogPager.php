@@ -30,6 +30,7 @@ class LogPager extends ReverseChronologicalPager {
 	private $types = array(), $performer = '', $title = '', $pattern = '';
 	private $typeCGI = '';
 	public $mLogEventsList;
+	private $usersData = [];
 
 	/**
 	 * Constructor
@@ -276,11 +277,18 @@ class LogPager extends ReverseChronologicalPager {
 	}
 
 	public function getStartBody() {
+		$userIds = $this->getFieldFromResults($this->mResult, 'log_user');
+		$this->usersData = $this->parseUsersData( $this->getUserData( $userIds ) );
+
 		wfProfileIn( __METHOD__ );
 		# Do a link batch query
 		if( $this->getNumRows() > 0 ) {
 			$lb = new LinkBatch;
 			foreach ( $this->mResult as $row ) {
+
+				// SUS-2779
+				$this->joinUserDataToLogRow($row, $this->usersData);
+
 				$lb->add( $row->log_namespace, $row->log_title );
 				$lb->addObj( Title::makeTitleSafe( NS_USER, $row->user_name ) );
 				$lb->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->user_name ) );
@@ -296,7 +304,68 @@ class LogPager extends ReverseChronologicalPager {
 		return '';
 	}
 
+	/**
+	 * @param $row
+	 * @param $userNames
+	 */
+	private function joinUserDataToLogRow( $row, $userNames ) {
+		$row->user_id = $row->log_user;
+
+		if ( isset( $userNames[$row->user_id] ) ) {
+			$row->user_name = $userNames[$row->user_id]->user_name;
+			$row->user_text = $row->user_name;
+			$row->user_editcount = $userNames[$row->user_id]->user_editcount;
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( "User with id {$row->log_user} was not found" );
+			$row->user_name = 'unknown';
+			$row->user_editcount = 0;
+		}
+
+		$row->log_user_text = $row->user_name;
+	}
+
+	private function getUserData( $userIds ) {
+		global $wgExternalSharedDB;
+
+		if (count($userIds) === 0) {
+			return [];
+		}
+
+		$fields = [ 'user_id', 'user_name', 'user_editcount' ];
+		$conditions = [ 'user_id' => array_unique( $userIds ) ];
+		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		return $db->select( '`user`', $fields, $conditions );
+	}
+
+	private function getFieldFromResults( $res, $fieldName ) {
+		$userIds = [];
+		foreach ( $res as $row ) {
+			if ( isset($row->{ $fieldName }) ) {
+				$userIds[] = $row->{ $fieldName };
+			}
+		}
+
+		return $userIds;
+	}
+
+	/**
+	 * @param $dbResults
+	 * @return array
+	 */
+	private function parseUsersData( $dbResults ): array {
+		$results = [];
+
+		foreach ( $dbResults as $row ) {
+			$results[$row->user_id] = $row;
+		}
+
+		return $results;
+	}
+
 	public function formatRow( $row ) {
+		// SUS-2779
+		$this->joinUserDataToLogRow( $row, $this->usersData );
 		return $this->mLogEventsList->logLine( $row );
 	}
 

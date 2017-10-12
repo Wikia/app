@@ -103,7 +103,7 @@ QUnit.test( 'getWikitext', function ( assert ) {
 			wikitext: '{{foo|bar=[[baz|quux]]}}'
 		}
 	];
-	QUnit.expect( cases.length );
+	assert.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		node = new ve.dm.MWTransclusionNode(
 			{ type: 'mwTransclusion', attributes: { mw: cases[i].mw } }

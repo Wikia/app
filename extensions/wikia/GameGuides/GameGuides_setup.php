@@ -24,7 +24,6 @@ $wgAutoloadClasses['GameGuidesModel'] =  "{$dir}/GameGuidesModel.class.php" ;
 /**
  * message files
  */
-$wgExtensionMessagesFiles['GameGuides'] = "{$dir}/GameGuides.i18n.php";
 
 
 //Special Page to preview page in GameGuide style

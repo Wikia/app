@@ -18,8 +18,6 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // Translations
-$wgExtensionMessagesFiles['WikiaNewFiles'] =  __DIR__ . '/WikiaNewFiles.i18n.php';
-$wgExtensionMessagesFiles['WikiaNewFilesAliases'] = __DIR__ . '/WikiaNewFiles.alias.php';
 
 // Autoloaded classes
 $wgAutoloadClasses['WikiaNewFilesSpecialController'] = __DIR__ . '/WikiaNewFilesSpecialController.class.php';

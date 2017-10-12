@@ -39,4 +39,3 @@ $wgHooks[ 'CustomEditor' ][] = 'PortableInfoboxBuilderHooks::onCustomEditor';
 $wgHooks[ 'TemplateClassificationHooks::afterEditPageAssets' ][] = 'PortableInfoboxBuilderHooks::onTCAfterEditPageAssets';
 
 // i18n mapping
-$wgExtensionMessagesFiles[ 'PortableInfoboxBuilder' ] = $dir . 'PortableInfoboxBuilder.i18n.php';

@@ -20,4 +20,3 @@ $wgHooks['BeforePageDisplay'][] = 'Wikia\PageHeader\Hooks::onBeforePageDisplay';
 $wgHooks['EditPage::showEditForm:initial'][] = 'Wikia\PageHeader\Hooks::onEditPageRender';
 
 // i18n
-$wgExtensionMessagesFiles[ 'PageHeader' ] = $dir . 'PageHeader.i18n.php';

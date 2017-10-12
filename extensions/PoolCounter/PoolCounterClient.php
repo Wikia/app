@@ -43,4 +43,3 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['PoolCounter_ConnectionManager']
 	= $wgAutoloadClasses['PoolCounter_Client']
 	= $dir . 'PoolCounterClient_body.php';
-$wgExtensionMessagesFiles['PoolCounterClient'] = $dir . 'PoolCounterClient.i18n.php';

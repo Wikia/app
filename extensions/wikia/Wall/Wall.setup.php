@@ -54,7 +54,6 @@ $wgAutoloadClasses['InappropriateContentException'] = __DIR__ . '/exceptions/Ina
 $wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/exceptions/WallBuilderException.class.php';
 $wgAutoloadClasses['WallBuilderGenericException'] = __DIR__ . '/exceptions/WallBuilderGenericException.class.php';
 
-$wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
 $wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
 $wgHooks['SkinTemplateTabs'][] = 'WallHooksHelper::onSkinTemplateTabs';

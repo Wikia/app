@@ -32,9 +32,6 @@ $wgExtensionCredits['parserhook']['Scribunto'] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['Scribunto'] = $dir . 'Scribunto.i18n.php';
-$wgExtensionMessagesFiles['ScribuntoMagic'] = $dir . 'Scribunto.magic.php';
-$wgExtensionMessagesFiles['ScribuntoNamespaces'] = $dir . 'Scribunto.namespaces.php';
 
 $wgAutoloadClasses['ScribuntoEngineBase'] = $dir.'common/Base.php';
 $wgAutoloadClasses['ScribuntoModuleBase'] = $dir.'common/Base.php';

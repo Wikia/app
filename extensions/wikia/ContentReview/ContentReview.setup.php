@@ -77,8 +77,6 @@ $wgAutoloadClasses['ContentReviewModuleController'] = $IP . '/skins/oasis/module
 /**
  * Messages
  */
-$wgExtensionMessagesFiles['ContentReview'] = __DIR__ . '/ContentReview.i18n.php';
-$wgExtensionMessagesFiles['ContentReviewInternal'] = __DIR__ . '/ContentReviewInternal.i18n.php';
 
 JSMessages::registerPackage( 'ContentReviewModule', [
 	'content-review-module-*'

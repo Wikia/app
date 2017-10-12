@@ -15,7 +15,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutoPageCreate',
 );
 
-$wgExtensionMessagesFiles['AutoPageCreate'] = dirname(__FILE__) . '/AutoPageCreate.i18n.php';
 $wgExtensionFunctions[] = 'wfAutoPageCreateInit';
 
 function wfAutoPageCreateInit() {

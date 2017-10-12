@@ -33,7 +33,7 @@ function runIndentationChangeTest( assert, range, method, expectedRange, expecte
 	surface.destroy();
 }
 
-QUnit.test( 'increase/decrease', 2, function ( assert ) {
+QUnit.test( 'increase/decrease', function ( assert ) {
 	var i,
 		cases = [
 			{
@@ -80,7 +80,7 @@ QUnit.test( 'increase/decrease', 2, function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 4 );
+	assert.expect( cases.length * 4 );
 	for ( i = 0; i < cases.length; i++ ) {
 		runIndentationChangeTest( assert, cases[i].range, cases[i].method, cases[i].expectedRange, cases[i].expectedData, cases[i].expectedOriginalData, cases[i].msg );
 	}

@@ -1,7 +1,6 @@
 <?php
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['ImageMap'] = $dir . 'ImageMap.i18n.php';
 $wgAutoloadClasses['ImageMap'] = $dir . 'ImageMap_body.php';
 $wgHooks['ParserFirstCallInit'][] = 'wfSetupImageMap';
 

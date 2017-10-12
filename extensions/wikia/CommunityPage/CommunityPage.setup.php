@@ -28,7 +28,6 @@ $wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'CommunityPageSpecialHooks::onResourceLoaderGetConfigVars';
 
 /* i18n */
-$wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php';
 
 /* messages exported to JS */
 JSMessages::registerPackage( 'CommunityPageSpecial', [

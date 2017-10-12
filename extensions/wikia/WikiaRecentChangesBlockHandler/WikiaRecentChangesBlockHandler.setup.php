@@ -16,7 +16,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['WikiaRecentChangesBlockHandler'] = $dir . 'WikiaRecentChangesBlockHandler.i18n.php';
 
 //classes
 $wgAutoloadClasses['WikiaRecentChangesBlockHandler'] =  $dir.'WikiaRecentChangesBlockHandler.php';

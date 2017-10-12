@@ -464,26 +464,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * register extension message file
-	 * @param string $name
-	 * @param string $filePath
-	 * @deprecated
-	 */
-	public function registerExtensionMessageFile( $name, $filePath ) {
-		$this->wg->set( 'wgExtensionMessagesFiles', $filePath, $name );
-	}
-
-	/**
-	 * register extension alias file
-	 * @param string $name
-	 * @param string $filePath
-	 * @deprecated
-	 */
-	public function registerExtensionAliasFile( $name, $filePath ) {
-		$this->wg->set( 'wgExtensionAliasesFiles', $filePath, $name );
-	}
-
-	/**
 	 * register special page
 	 * @param string $name special page name
 	 * @param string $className class name

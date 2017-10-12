@@ -36,8 +36,6 @@ $wgHooks['ResourceLoaderRegisterModules'][] = 'GadgetHooks::registerModules';
 $wgHooks['UnitTestsList'][]                 = 'GadgetHooks::unitTestsList';
 
 $dir = dirname( __FILE__ ) . '/';
-$wgExtensionMessagesFiles['Gadgets'] = $dir . 'Gadgets.i18n.php';
-$wgExtensionMessagesFiles['GadgetsAlias'] = $dir . 'Gadgets.alias.php';
 
 $wgAutoloadClasses['ApiQueryGadgetCategories'] = $dir . 'ApiQueryGadgetCategories.php';
 $wgAutoloadClasses['ApiQueryGadgets'] = $dir . 'ApiQueryGadgets.php';

@@ -39,7 +39,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'SOAP Failures Log special page',
 	'version' => '1.2',
 );
-$wgExtensionMessagesFiles['SpecialSoapFailures'] = dirname(__FILE__).'/Special_Soapfailures.i18n.php';
 
 require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['Soapfailures'] = 'Soapfailures';

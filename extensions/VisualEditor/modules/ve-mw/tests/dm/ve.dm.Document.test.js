@@ -232,5 +232,5 @@ QUnit.test( 'getRelativeRange (mwBlockImage / mwInlineImage)', function ( assert
 			);
 		}
 	}
-	QUnit.expect( expectCount );
+	assert.expect( expectCount );
 } );

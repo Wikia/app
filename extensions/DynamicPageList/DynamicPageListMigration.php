@@ -58,7 +58,6 @@ $wgExtensionCredits['parserhook'][] = array(
 require_once( 'DPLSetup.php' );
 
 $wgMessagesDirs['DynamicPageList'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['DynamicPageList'] = dirname(__FILE__).'/DynamicPageList.i18n.php';
 
 ExtDynamicPageList::$DPLVersion = $DPLVersion;
 

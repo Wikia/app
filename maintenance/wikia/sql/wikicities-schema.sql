@@ -291,7 +291,8 @@ CREATE TABLE `dumps` (
   `dump_wiki_id` int(9) NOT NULL,
   `dump_wiki_dbname` varchar(64) NOT NULL,
   `dump_wiki_url` varchar(255) NOT NULL,
-  `dump_user_name` varchar(255) NOT NULL,
+  `dump_user_id` int(9) DEFAULT '0',
+  `dump_user_name` varchar(255) DEFAULT NULL,
   `dump_hidden` enum('N','Y') DEFAULT 'N',
   `dump_closed` enum('N','Y') DEFAULT 'N',
   `dump_requested` datetime NOT NULL,
@@ -674,4 +675,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-06 12:23:07
+-- Dump completed on 2017-10-09  8:44:58

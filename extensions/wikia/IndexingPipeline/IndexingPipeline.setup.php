@@ -10,7 +10,6 @@ $wgExtensionCredits[ 'other' ][] = [
 $dir = dirname( __FILE__ );
 
 //i18n
-$wgExtensionMessagesFiles[ 'IndexingPipeline' ] = $dir . '/IndexingPipeline.i18n.php';
 
 $wgAutoloadClasses[ 'Wikia\IndexingPipeline\PipelineEventProducer' ] = $dir . '/PipelineEventProducer.class.php';
 $wgAutoloadClasses[ 'Wikia\IndexingPipeline\MySQLMetricEventProducer' ] = $dir . '/MySQLMetricEventProducer.class.php';

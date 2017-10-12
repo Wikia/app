@@ -448,7 +448,7 @@ class ListusersData {
 
 		$dbw = wfGetDB( DB_MASTER, array(), $this->mDBh );
 		if ( empty($oRow) ) {
-			$edits = User::edits($user_id);
+			$edits = $user->getEditCount();
 
 			$dbr = wfGetDB( DB_SLAVE );
 			$revRow = $dbr->selectRow(

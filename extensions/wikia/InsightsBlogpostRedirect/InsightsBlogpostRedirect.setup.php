@@ -25,4 +25,3 @@ $wgAutoloadClasses['InsightsBlogpostRedirectController'] = $dir . 'InsightsBlogp
 $wgSpecialPages['Insights'] = 'InsightsBlogpostRedirectController';
 
 //message files
-$wgExtensionMessagesFiles['InsightsBlogpostRedirect'] = $dir . 'InsightsBlogpostRedirect.i18n.php';

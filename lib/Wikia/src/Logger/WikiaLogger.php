@@ -189,8 +189,13 @@ class WikiaLogger implements LoggerInterface {
 	 */
 	public function getSyslogHandler() {
 		if ($this->syslogHandler == null) {
+			// SUS-2966 | We do not want debug logs to be reported on production (info level will be the lowest logged)
+			// $level is the minimum logging level at which this handler will be triggered
+			global $wgWikiaEnvironment;
+			$level = ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) ? Logger::INFO : Logger::DEBUG;
+
 			// all logs from WikiaLogger will have 'program' set to 'mediawiki'
-			$this->syslogHandler = new SyslogHandler('mediawiki');
+			$this->syslogHandler = new SyslogHandler('mediawiki', LOG_USER /* $facility */, $level);
 		}
 
 		return $this->syslogHandler;

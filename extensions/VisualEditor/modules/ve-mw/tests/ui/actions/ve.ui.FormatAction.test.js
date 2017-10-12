@@ -65,7 +65,7 @@ QUnit.test( 'convert (MW-specific types)', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 4 );
+	assert.expect( cases.length * 4 );
 	for ( i = 0; i < cases.length; i++ ) {
 		ve.test.utils.runFormatConverterTest( assert, cases[i].range, cases[i].type, cases[i].attributes, cases[i].expectedRange, cases[i].expectedData, cases[i].msg );
 	}

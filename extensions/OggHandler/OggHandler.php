@@ -22,8 +22,6 @@ if ( !in_array( 'oga', $wgFileExtensions ) ) {
 // Bump this when updating OggPlayer.js to help update caches
 $wgOggScriptVersion = '12';
 
-$wgExtensionMessagesFiles['OggHandler'] = "$oggDir/OggHandler.i18n.php";
-$wgExtensionMessagesFiles['OggHandlerMagic'] = "$oggDir/OggHandler.i18n.magic.php";
 $wgParserOutputHooks['OggHandler'] = array( 'OggHandler', 'outputHook' );
 
 $wgHooks['ExtractThumbParameters'][] = 'OggHandler::onExtractThumbParameters';

@@ -239,7 +239,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'reason'     => $request->getText( 'wpPhalanxReason' ),
 			'comment'    => $request->getText( 'wpPhalanxComment' ),
 			'lang'       => $request->getVal( 'wpPhalanxLanguages', null ),
-			'type'       => $request->getArray( 'wpPhalanxType' ),
+			'type'       => (array) $request->getArray( 'wpPhalanxType' ),
 			'multitext'  => $request->getText( 'wpPhalanxFilterBulk' ),
 			'expire'     => $expire
 		];

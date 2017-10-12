@@ -19,7 +19,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['MainPageTag'] = __DIR__ . '/MainPageTag.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'wfMainPageTag';
 
