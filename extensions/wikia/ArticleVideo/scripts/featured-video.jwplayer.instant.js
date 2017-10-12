@@ -29,15 +29,18 @@ require([
 		return !document.hidden && willAutoplay && ['playing', 'paused'].indexOf(playerInstance.getState()) === -1;
 	}
 
+	//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
+	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS';
+
 	playerInstance.setup({
 		autostart: willAutoplay && !document.hidden,
 		description: videoDetails.description,
-		image: "//content.jwplatform.com/thumbs/" + videoId + "-640.jpg",
+		image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
 		mute: willAutoplay,
 		playlist: videoDetails.playlist,
 		related: {
 			autoplaytimer: 5,
-			file: "https://cdn.jwplayer.com/v2/playlists/Y2RWCKuS?related_media_id=" + videoId,
+			file: 'https://cdn.jwplayer.com/v2/playlists/'+ recommendedPlaylist +'?related_media_id=' + videoId,
 			oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show'
 		},
 		title: videoDetails.title
