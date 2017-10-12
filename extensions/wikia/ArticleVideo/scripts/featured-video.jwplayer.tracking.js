@@ -10,6 +10,9 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 	function getDefaultState() {
 		return {
 			wasStartTracked: false,
+			wasFirstQuartileTriggered: false,
+			wasMidPointTriggered: false,
+			wasThirdQuartileTriggered: false,
 			progress: {
 				durationTracked: 0,
 				percentTracked: 0
@@ -151,6 +154,21 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 				});
 
 				state.progress.durationTracked = positionFloor;
+			}
+
+			if (percentPlayed >= 25 && !state.wasFirstQuartileTriggered) {
+				playerInstance.trigger('videoFirstQuartile');
+				state.wasFirstQuartileTriggered = true;
+			}
+
+			if (percentPlayed >= 50 && !state.wasMidPointTriggered) {
+				playerInstance.trigger('videoMidPoint');
+				state.wasMidPointTriggered = true;
+			}
+
+			if (percentPlayed >= 75 && !state.wasThirdQuartileTriggered) {
+				playerInstance.trigger('videoThirdQuartile');
+				state.wasThirdQuartileTriggered = true;
 			}
 
 			if (percentPlayed > state.progress.percentTracked && percentPlayed % 10 === 0) {
