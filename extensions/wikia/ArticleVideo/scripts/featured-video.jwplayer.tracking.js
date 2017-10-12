@@ -25,6 +25,21 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 		window.guaSetCustomDimension(36, currentVideo.tags);
 	}
 
+	function trackComscoreVideoMetrix() {
+		var mountedScript = document.getElementById('comscoreVideoMetrixTrack'),
+			c1 = _comscore.c1,
+			c2 = _comscore.c2;
+
+		if (mountedScript) {
+			mountedScript.parentElement.removeChild(mountedScript)
+		}
+
+		var script = document.createElement('script');
+		// 01 and 02 come from comscore config and C5=05 is for short form video presumer
+		script.src = 'http://b.scorecardresearch.com/p?C1=' + c1 + '1&C2=' + c2 + '&C5=04';
+		document.head.appendChild(script);
+	}
+
 	function track(gaData) {
 		if (!gaData.label) {
 			throw new Error('No tracking label provided');
@@ -93,6 +108,8 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 					label: 'recommended-video-depth-' + depth,
 					action: 'impression'
 				});
+
+				trackComscoreVideoMetrix();
 			});
 		});
 
@@ -122,6 +139,8 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 				}
 
 				state.wasStartTracked = true;
+
+				trackComscoreVideoMetrix();
 			}
 
 			gaData && track(gaData);
