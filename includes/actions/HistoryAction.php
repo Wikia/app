@@ -394,14 +394,20 @@ class HistoryPager extends ReverseChronologicalPager {
 		# Do a link batch query
 		$this->mResult->seek( 0 );
 		$batch = new LinkBatch();
+
+		// SUS-807
+		$ids = [];
 		foreach ( $this->mResult as $row ) {
-			if( !is_null( $row->user_name ) ) {
-				$batch->add( NS_USER, $row->user_name );
-				$batch->add( NS_USER_TALK, $row->user_name );
-			} else { # for anons or usernames of imported revisions
-				$batch->add( NS_USER, $row->rev_user_text );
-				$batch->add( NS_USER_TALK, $row->rev_user_text );
-			}
+			$ids[] = $row->rev_user;
+		}
+
+		$userNames = User::getIndexedUserNames( $ids);
+
+		foreach ( $this->mResult as $row ) {
+			$userName = $row->rev_user && isset($userNames[$row->rev_user]) ?
+				$userNames[$row->rev_user] : $row->rev_user_text;
+			$batch->add( NS_USER, $userName );
+			$batch->add( NS_USER_TALK, $userName );
 		}
 		$batch->execute();
 		$this->mResult->seek( 0 );
