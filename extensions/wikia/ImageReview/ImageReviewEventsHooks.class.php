@@ -96,7 +96,20 @@ class ImageReviewEventsHooks {
 		return true;
 	}
 
-	private static function isFileForReview( $title ) {
+	/**
+	 * Push given image upload to the queue. This method is used by the re-queueing script.
+	 *
+	 * @see SUS-2988
+	 *
+	 * @param int $pageId
+	 * @param int $revisionId
+	 * @param int $userId
+	 */
+	public static function requeueImageUpload( int $pageId, int $revisionId, int $userId ) {
+		self::actionCreate( Title::newFromID( $pageId ), $revisionId, 'created', $userId );
+	}
+
+	private static function isFileForReview( Title $title ) {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$localFile = wfLocalFile( $title );
 
@@ -106,7 +119,13 @@ class ImageReviewEventsHooks {
 		return false;
 	}
 
-	private static function actionCreate( Title $title, $revisionId = null, $action = 'created' ) {
+	/**
+	 * @param Title $title
+	 * @param int $revisionId
+	 * @param string $action
+	 * @param int $userId allow user ID that makes an upload to be forced (instead of taken from the RequestContext)
+	 */
+	private static function actionCreate( Title $title, $revisionId = null, $action = 'created', $userId = null ) {
 		if ( self::isFileForReview( $title ) ) {
 			global $wgImageReview, $wgCityId;
 
@@ -123,7 +142,7 @@ class ImageReviewEventsHooks {
 						'revision' => $revisionId,
 					]
 				),
-				'userId' => RequestContext::getMain()->getUser()->getId(),
+				'userId' => $userId ?? RequestContext::getMain()->getUser()->getId(),
 				'wikiId' => $wgCityId,
 				'pageId' => $articleId,
 				'revisionId' => $revisionId,
