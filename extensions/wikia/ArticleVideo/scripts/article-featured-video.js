@@ -43,12 +43,12 @@ require([
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
-			trackingOptions: {
+			trackingOptions = {
 				category: 'article-video',
 				trackingMethod: 'analytics',
 				eventName: 'videoplayerevent',
 				player: 'ooyala',
-				videoId: videoData.videoId
+				videoId: window.wgFeaturedVideoData.videoId
 			},
 			trackingQueue = new TrackingQueue(trackingOptions),
 			track = trackingQueue.track.bind(trackingQueue),

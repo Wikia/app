@@ -2,7 +2,7 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 	var state = getDefaultState(),
 		defaultGACategory = 'featured-video',
 		//This will replace 'trackingevent' in internal tracker url path
-		eventName: 'videoplayerevent',
+		eventName = 'videoplayerevent',
 		wasAlreadyUnmuted = false,
 		depth = 0,
 
