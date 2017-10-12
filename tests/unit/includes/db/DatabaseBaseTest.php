@@ -40,7 +40,7 @@ class DatabaseBaseTest extends \PHPUnit\Framework\TestCase {
 
 		$wikiaLoggerMock->expects( $this->once() )
 			->method( 'defaultLogger' )
-			->will( $this->returnValue( $wikiaLoggerMock ) );
+			->willReturnSelf();
 
 		$return = 'a value';
 		$databaseBaseTesterMock = $this->getMockBuilder( DatabaseBaseTester::class )
