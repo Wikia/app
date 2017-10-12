@@ -74,7 +74,6 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			if (shouldPlayPreroll(videoDepth)) {
 				player.playAd(buildVastUrl('preroll', videoDepth, correlator));
 			}
-
 		});
 
 		player.on('videoMidPoint', function () {
