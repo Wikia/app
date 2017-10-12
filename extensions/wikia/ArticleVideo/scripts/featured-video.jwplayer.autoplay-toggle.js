@@ -1,9 +1,6 @@
 define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.articleVideo.featuredVideo.autoplay'], function (featuredVideoAutoplay) {
 
-	function addAutoplayToggle() {
-		var $player = $('#featured-video__player'),
-			$settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
-
+	function addAutoplayToggle($settingsTopbar) {
 		$settingsTopbar
 			.find('.jw-settings-close')
 			.before(
@@ -21,12 +18,15 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 	}
 
 	return function (playerInstance) {
+		var $player = $('#featured-video__player'),
+			$settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
+
 		if (featuredVideoAutoplay.inAutoplayCountries) {
-			addAutoplayToggle();
+			addAutoplayToggle($settingsTopbar);
 
 			playerInstance.on('resize', function (data) {
 				if (data.width > 600 && !$settingsTopbar.contains('#featuredVideoAutoplayToggle')) {
-					addAutoplayToggle();
+					addAutoplayToggle($settingsTopbar);
 				}
 			});
 		}
