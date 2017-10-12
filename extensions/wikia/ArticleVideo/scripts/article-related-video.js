@@ -4,10 +4,13 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 		var $video = $('#article-related-video'),
 			ooyalaVideoElementId = 'ooyala-article-related-video',
 			ooyalaVideoController,
-			track = tracker.buildTrackingFunction({
+			trackingOptions = {
 				category: 'article-video',
-				trackingMethod: 'analytics'
-			});
+				trackingMethod: 'analytics',
+				eventName: 'videoplayerevent',
+				player: 'ooyala',
+			},
+			track = tracker.buildTrackingFunction(trackingOptions);
 
 		function initVideo(ooyalaContainerId, videoId, onCreate) {
 			var options = {
@@ -15,6 +18,8 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 				playerBrandingId: window.wgOoyalaParams.ooyalaPlayerBrandingId,
 				videoId: videoId
 			};
+
+			trackingOptions.videoId = videoId;
 
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaContainerId, options, onCreate);
 		}
