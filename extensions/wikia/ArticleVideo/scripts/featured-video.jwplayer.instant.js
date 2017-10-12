@@ -1,11 +1,13 @@
 require([
 	'wikia.articleVideo.featuredVideo.jwplayer.instance',
 	'wikia.articleVideo.featuredVideo.data',
+	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.tracking'
 ], function (
 	playerInstance,
 	videoDetails,
+	featuredVideoAds,
 	featuredVideoAutoplay,
 	featuredVideoTracking
 ) {
@@ -33,6 +35,9 @@ require([
 	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS';
 
 	playerInstance.setup({
+		advertising: {
+			client: 'googima'
+		},
 		autostart: willAutoplay && !document.hidden,
 		description: videoDetails.description,
 		image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
@@ -46,6 +51,7 @@ require([
 		title: videoDetails.title
 	});
 
+	featuredVideoAds(playerInstance);
 	featuredVideoTracking(playerInstance, willAutoplay);
 	handleTabNotActive(willAutoplay);
 });
