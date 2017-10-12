@@ -113,37 +113,37 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[728, 90],
 						[970, 250]
 					],
-					id: '13',
-					siteID: 215807
+					id: '215807',
+					siteID: 183085
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]
 					],
-					id: '14',
-					siteID: 215808
+					id: '215808',
+					siteID: 183085
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [
 						[300, 250]
 					],
-					id: '15',
-					siteID: 215813
+					id: '215813',
+					siteID: 183085
 				},
 				PREFOOTER_MIDDLE_BOXAD: {
 					sizes: [
 						[300, 250]
 					],
-					id: '16',
-					siteID: 215815
+					id: '215815',
+					siteID: 183085
 				},
 				PREFOOTER_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250]
 					],
-					id: '17',
-					siteID: 215814
+					id: '215814',
+					siteID: 183085
 				},
 				LEFT_SKYSCRAPER_2: {
 					sizes: [
@@ -151,8 +151,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 600],
 						[300, 250]
 					],
-					id: '18',
-					siteID: 215811
+					id: '215811',
+					siteID: 183085
 				},
 				LEFT_SKYSCRAPER_3: {
 					sizes: [
@@ -160,8 +160,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 600],
 						[300, 250]
 					],
-					id: '19',
-					siteID: 215812
+					id: '215812',
+					siteID: 183085
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [
@@ -169,16 +169,16 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 600],
 						[300, 250]
 					],
-					id: '20',
-					siteID: 215809
+					id: '215809',
+					siteID: 183085
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [
 						[728, 90],
 						[970, 250]
 					],
-					id: '21',
-					siteID: 215810
+					id: '215810',
+					siteID: 183085
 				}
 			}
 		};
