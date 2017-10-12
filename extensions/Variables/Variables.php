@@ -31,6 +31,8 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 // language files:
+$wgExtensionMessagesFiles['Variables'     ] = ExtVariables::getDir() . '/Variables.i18n.php';
+$wgExtensionMessagesFiles['VariablesMagic'] = ExtVariables::getDir() . '/Variables.i18n.magic.php';
 
 // hooks registration:
 $wgHooks['ParserFirstCallInit'     ][] = 'ExtVariables::init';

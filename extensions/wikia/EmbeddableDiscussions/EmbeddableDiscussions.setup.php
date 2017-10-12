@@ -19,6 +19,7 @@ $wgHooks['ParserFirstCallInit'][] = 'EmbeddableDiscussionsController::onParserFi
 $wgHooks['BeforePageDisplay'][] = 'EmbeddableDiscussionsController::onBeforePageDisplay';
 
 // i18n
+$wgExtensionMessagesFiles['EmbeddableDiscussions'] = __DIR__ . '/EmbeddableDiscussions.i18n.php';
 
 // messages exported to JS
 JSMessages::registerPackage( 'EmbeddableDiscussions', [

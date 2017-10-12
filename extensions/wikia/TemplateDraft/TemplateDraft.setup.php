@@ -19,6 +19,7 @@ $wgExtensionCredits['other'][] = [
 /**
  * Messages
  */
+$wgExtensionMessagesFiles['TemplateDraft'] = __DIR__ . '/TemplateDraft.i18n.php';
 
 /**
  * Controllers

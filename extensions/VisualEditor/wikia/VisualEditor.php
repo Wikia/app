@@ -257,6 +257,7 @@ $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikia.core';
 
 /* Messages */
 
+$wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
 /* Hooks */
 

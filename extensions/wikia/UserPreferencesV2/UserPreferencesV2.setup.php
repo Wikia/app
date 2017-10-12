@@ -37,3 +37,4 @@ $wgHooks['UserGetDefaultOptions'][] = 'UserPreferencesV2::onUserGetDefaultOption
 /**
  * messages
  */
+$wgExtensionMessagesFiles['UserPreferencesV2'] = __DIR__ . '/UserPreferencesV2.i18n.php';

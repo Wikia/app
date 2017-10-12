@@ -43,6 +43,7 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname( __FILE__ ) . '/';
 
 // Internationalization
+$wgExtensionMessagesFiles['InputBox'] = $dir . 'InputBox.i18n.php';
 
 // Register auto load for the special page class
 $wgAutoloadClasses['InputBoxHooks'] = $dir . 'InputBox.hooks.php';

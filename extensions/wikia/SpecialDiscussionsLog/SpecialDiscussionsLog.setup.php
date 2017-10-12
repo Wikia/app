@@ -28,6 +28,7 @@ $wgHooks['ContributionsToolLinks'][] = 'SpecialDiscussionsLogHooks::onContributi
 $wgSpecialPages['DiscussionsLog'] = 'SpecialDiscussionsLogController';
 
 // message files
+$wgExtensionMessagesFiles['SpecialDiscussionsLog'] = $dir . 'SpecialDiscussionsLog.i18n.php';
 
 // permissions
 $wgAvailableRights[] = 'specialdiscussionslog';

@@ -26,6 +26,8 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 #--- messages file
+$wgExtensionMessagesFiles["Multiwikifinder"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
+$wgExtensionMessagesFiles['MultiwikifinderAliases'] = __DIR__ . '/MultiTasks.aliases.php';
 
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );

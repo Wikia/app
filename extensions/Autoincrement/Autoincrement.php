@@ -21,6 +21,8 @@ $wgExtensionCredits['variable'][] = array(
 );
 
 $dir = dirname( __FILE__ ) . '/';
+$wgExtensionMessagesFiles['Autoincrement'] = $dir . 'Autoincrement.i18n.php';
+$wgExtensionMessagesFiles['AutoincrementMagic'] = $dir . 'Autoincrement.i18n.magic.php';
 
 class Autoincrement {
 	var $mCount;

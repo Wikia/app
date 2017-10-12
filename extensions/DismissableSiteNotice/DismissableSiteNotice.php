@@ -8,6 +8,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice',
 );
 
+$wgExtensionMessagesFiles['DismissableSiteNotice'] = dirname(__FILE__) . '/DismissableSiteNotice.i18n.php';
 
 function wfDismissableSiteNotice( &$notice ) {
 	global $wgMajorSiteNoticeID, $wgUser;

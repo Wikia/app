@@ -22,6 +22,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__);
 
 // Internalization
+$wgExtensionMessagesFiles['BetterLyricWikiTextSnippets'] = $dir . '/BetterLyricWikiTextSnippets.i18n.php';
 
 // Hooks
 $wgHooks['ArticleService::getTextSnippet::beforeStripping'][] = 'efLyricWikiGetTextSnippet';

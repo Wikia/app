@@ -20,3 +20,4 @@ $wgAutoloadClasses['TwitterCardsHooks'] = $dir . 'TwitterCardsHooks.class.php';
 $wgHooks['BeforePageDisplay'][] = 'TwitterCardsHooks::onBeforePageDisplay';
 
 // i18n mapping
+$wgExtensionMessagesFiles['TwitterCards'] = $dir . 'TwitterCards.i18n.php';

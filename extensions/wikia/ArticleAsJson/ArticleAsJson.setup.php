@@ -10,6 +10,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 //i18n
+$wgExtensionMessagesFiles['ArticleAsJson'] = $dir . 'ArticleAsJson.i18n.php';
 
 //classes
 $wgAutoloadClasses['ArticleAsJson'] =  $dir . 'ArticleAsJson.class.php';

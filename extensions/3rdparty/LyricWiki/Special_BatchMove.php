@@ -40,6 +40,7 @@ if(!defined('MEDIAWIKI')) die();
 require_once "extras.php";
 
 $dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['BatchMove'] = $dir.'Special_BatchMove.i18n.php';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Batch Move',

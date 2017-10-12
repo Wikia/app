@@ -33,6 +33,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'MediaGalleryHooks::onMakeGlobalVariab
 $wgHooks['WikiFeatures::afterToggleFeature'][] = 'MediaGalleryHooks::afterToggleFeature';
 
 // i18n mapping
+$wgExtensionMessagesFiles['MediaGallery'] = $dir . 'MediaGallery.i18n.php';
 
 JSMessages::registerPackage('MediaGallery', array(
 	'mediagallery-show-more',

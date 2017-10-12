@@ -46,6 +46,7 @@ $wgAutoloadClasses['AbTestingController'] = "{$dir}/AbTestingController.class.ph
 /**
  * message files
  */
+$wgExtensionMessagesFiles['AbTesting'] = "{$dir}/AbTesting.i18n.php";
 
 // Embed the experiment/treatment config in the head scripts.
 $wgHooks['WikiaSkinTopScripts'][] =  'AbTesting::onWikiaSkinTopScripts';

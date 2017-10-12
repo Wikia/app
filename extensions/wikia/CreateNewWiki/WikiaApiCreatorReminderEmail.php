@@ -28,7 +28,8 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 	 */
 	public function execute() {
 
-		global $wgTheSchwartzSecretToken, $wgCityId, $wgServer;
+		global $wgTheSchwartzSecretToken, $wgCityId, $wgServer,
+			$wgExtensionMessagesFiles;
 
 		$params = $this->extractRequestParams();
 		$status = 0;

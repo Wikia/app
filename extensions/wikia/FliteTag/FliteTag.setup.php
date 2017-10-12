@@ -14,3 +14,4 @@ $wgAutoloadClasses['FliteTagController'] =  __DIR__ . '/FliteTagController.class
 $wgHooks['ParserFirstCallInit'][] = 'FliteTagController::onParserFirstCallInit';
 
 // i18n
+$wgExtensionMessagesFiles['FliteTag'] = __DIR__ . '/FliteTag.i18n.php';

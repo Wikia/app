@@ -15,6 +15,7 @@ $wgAutoloadClasses['WikiaStyleGuideTooltipIconController'] =  $dir . 'WikiaStyle
 $wgAutoloadClasses['WikiaStyleGuideFormHelper'] =  $dir . 'WikiaStyleGuideFormHelper.class.php';
 
 // i18n
+$wgExtensionMessagesFiles['WikiaStyleGuideElements'] = $dir . 'WikiaStyleGuideElements.i18n.php';
 
 // js messages registration
 JSMessages::registerPackage('WikiaStyleGuideDropdown', array('wikiastyleguide-dropdown-*'));

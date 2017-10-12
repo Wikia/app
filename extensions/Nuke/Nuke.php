@@ -8,6 +8,8 @@ define( 'Nuke_VERSION', '1.1.4' );
 
 $dir = dirname(__FILE__) . '/';
 
+$wgExtensionMessagesFiles['Nuke'] = $dir . 'Nuke.i18n.php';
+$wgExtensionMessagesFiles['NukeAlias'] = $dir . 'Nuke.alias.php';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,

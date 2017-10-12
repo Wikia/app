@@ -28,6 +28,7 @@ $wgExtensionCredits['other'][] = array(
     'descriptionmsg' => 'antispaminput-msg',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AntiSpamInput'
 );
+$wgExtensionMessagesFiles['AntiSpamInput'] = dirname(__FILE__) . '/AntiSpamInput.i18n.php';
 
 function wfAntiSpamInputInit () {
 	global $wgHooks;

@@ -37,6 +37,8 @@ $wgSpecialPageGroups['UserRenameTool'] = 'users';
 
 
 // internationalization files
+$wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'SpecialRenameuser.i18n.php';
+$wgExtensionMessagesFiles['UserRenameToolAliases'] = $dir . 'SpecialRenameuser.alias.php';
 
 // classes
 $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/SpecialRenameuser_body.php';
