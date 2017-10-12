@@ -43,10 +43,14 @@ require([
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
-			trackingQueue = new TrackingQueue({
+			trackingOptions: {
 				category: 'article-video',
-				trackingMethod: 'analytics'
-			}),
+				trackingMethod: 'analytics',
+				eventName: 'videoplayerevent',
+				player: 'ooyala',
+				videoId: videoData.videoId
+			},
+			trackingQueue = new TrackingQueue(trackingOptions),
 			track = trackingQueue.track.bind(trackingQueue),
 			collapsedVideoSize = {
 				width: 300,
@@ -250,6 +254,8 @@ require([
 			window.guaSetCustomDimension(34, videoId);
 			window.guaSetCustomDimension(35, videoTitle);
 			window.guaSetCustomDimension(36, videoLabels);
+
+			trackingOptions.videoId = videoId;
 		}
 
 		updateVideoCustomDimensions(videoId, videoTitle, videoLabels);
