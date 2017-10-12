@@ -96,7 +96,7 @@
 			skin: 'kama',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
 	//			theme: 'wikia'
-//			removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...
+//		removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...
 			
 		},
 
@@ -261,12 +261,13 @@
 			$(window).trigger('rteready', editor);
 			GlobalTriggers.fire('rteready', editor);
 
+			
 			// preload format dropdown (BugId:4592)
-			var formatDropdown = editor.ui.create('Format');
+			/*var formatDropdown = editor.ui.create('Format');
 			if (formatDropdown) {
 				formatDropdown.createPanel(editor);
 			}
-
+			*/
 			// send custom event "submit" when edit page is being saved (BugId:2947)
 			var editform = $(editor.element.$.form).bind('submit', $.proxy(function() {
 				editor.fire('submit', {form: editform}, editor);

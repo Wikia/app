@@ -136,7 +136,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	dataReady: function(ev) {
 		var editor = ev.editor;
-		debugger;
 		if (editor.mode == 'wysiwyg') {
 			editor.fire('wysiwygModeReady');
 

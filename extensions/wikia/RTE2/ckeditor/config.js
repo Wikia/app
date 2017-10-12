@@ -14,8 +14,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	
 	config.toolbar = [
-		{ name: 'something', items: [ 'Bold','Italic','Link','BulletedList','NumberedList','Indent','Outdent','Format','JustifyLeft','JustifyCenter','JustifyRight','Undo','Redo','Table','Underline','Strike','Signature','ModeSource','ModeWysiwyg' ] }
-		 
+//		{ name: 'something', items: [ 'Bold','Italic','Link','BulletedList','NumberedList','Indent','Outdent','Format','JustifyLeft','JustifyCenter','JustifyRight','Undo','Redo','Table','Underline','Strike','Signature','ModeSource','ModeWysiwyg' ] }
+	{ name : 'NoThing', items: ['ModeSource', 'ModeWysiwyg'] } 		 
 	];
 
 

@@ -80,7 +80,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 			// We don't want the panel definition in this object.
 			var panelDefinition = this.panel || {};
 			delete this.panel;
-
 			this.id = CKEDITOR.tools.getNextNumber();
 
 			this.document = ( panelDefinition.parent && panelDefinition.parent.getDocument() ) || CKEDITOR.document;

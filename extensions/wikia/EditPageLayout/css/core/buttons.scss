@@ -109,6 +109,19 @@
 				}
 			}
 		}
+		
+		&.cke_button_big {
+				.cke_button_label {
+					bottom: 0;
+					display: block;
+					left: 0;
+					overflow: hidden;
+					position: absolute;
+					text-align: center;
+					width: 51px;
+				}
+		}
+
 	}	
 	a.cke_button_big {
 	
@@ -151,6 +164,11 @@
 			cursor: pointer;
 		}
 		&.cke_button_big .cke_icon {
+			height: 32px;
+			width: 48px;
+			margin: 3px 1px;
+		}
+		&.cke_button_big .cke_button_icon {
 			height: 32px;
 			width: 48px;
 			margin: 3px 1px;
@@ -244,7 +262,7 @@
 	.RTEPollButton.cke_button_big .cke_icon {
 		@include sprite-edit-page('poll', 48px, 32px);
 	}
-	.cke_button__table.cke_button_big .cke_icon {
+	.cke_button__table_icon {
 		@include sprite-edit-page('table', 48px, 32px);
 	}
 	.module_templates .cke_button_big .cke_icon {

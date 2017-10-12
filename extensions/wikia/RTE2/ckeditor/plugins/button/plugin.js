@@ -4,7 +4,7 @@
  */
 
 ( function() {
-	var template = '<a id="{id}"' +
+	var template = '<span class="cke_button"> <a id="{id}"' +
 		' class="cke_button cke_button__{name} cke_button_{state} {cls}"' +
 		( CKEDITOR.env.gecko && !CKEDITOR.env.hc ? '' : ' href="javascript:void(\'{titleJs}\')"' ) +
 		' title="{title}"' +
@@ -38,7 +38,7 @@
 		'<span id="{id}_label" class="cke_button_label cke_button__{name}_label" aria-hidden="false">{label}</span>' +
 		'<span id="{id}_description" class="cke_button_label" aria-hidden="false">{ariaShortcut}</span>' +
 		'{arrowHtml}' +
-		'</a>';
+		'</a></span>';
 
 	var templateArrow = '<span class="cke_button_arrow">' +
 		// BLACK DOWN-POINTING TRIANGLE
@@ -77,6 +77,7 @@
 		// Set defaults.
 		{
 			title: definition.label,
+			className : definition.className || ( definition.command && 'cke_button_' + definition.command ) || '',
 			click: definition.click ||
 			function( editor ) {
 				editor.execCommand( definition.command );

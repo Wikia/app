@@ -1173,7 +1173,7 @@
 		},
 
 		createElement: function( name ) {
-			
+			debugger;
 			var ck = this.editor.ck, ui = this.editor.ck.ui, item;
 			if (ui._.items[name] && (item = ui.create(name)) ) {
 				var output = [];
