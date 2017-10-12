@@ -26,7 +26,6 @@ $wgExtensionCredits['other'][] = [
 ];
 
 //i18n
-$wgExtensionMessagesFiles['ArticleMetaDescription'] = __DIR__ . '/ArticleMetaDescription.i18n.php';
 
 $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
 

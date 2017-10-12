@@ -51,11 +51,15 @@ var ChatView = Backbone.View.extend({
 				// (BugId:97945) Invalid URIs can throw "URIError: URI malformed"
 				try {
 					linkName = decodeURIComponent(linkName);
-				} catch( e ) {}
+				} catch( e ) {
+					return '';
+				}
 
-				linkName = linkName.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-				linkName = linkName.replace(/>/g, "&gt;");
-				return '<a href="'+link+'">'+linkName+'</a>';
+				var a = document.createElement('a');
+				a.href = link;
+				a.textContent = linkName;
+
+				return a.outerHTML;
 			});
 		}
 
@@ -64,15 +68,18 @@ var ChatView = Backbone.View.extend({
 			article = article.replace(/ /g, "_");
 			linkText = linkText.replace(/_/g, " ");
 			linkText = unescape( linkText );
-			linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-			linkText = linkText.replace(/>/g, "&gt;");
 
 			var path = wgServer + wgArticlePath;
 			article = encodeURIComponent( article );
 			article = article.replace(/%2f/ig, "/"); // make slashes more human-readable (they don't really need to be escaped)
 			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
 			var url = path.replace("$1", article);
-			return '<a href="' + url + '">' + linkText + '</a>';
+
+			var a = document.createElement('a');
+			a.href = url;
+			a.textContent = linkText;
+
+			return a.outerHTML;
 		}
 
 		// Linkify [[Pipes|Pipe-notation]] in bracketed links.

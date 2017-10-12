@@ -32,7 +32,6 @@ $wgHooks['GetPreferences'][] = 'CategorySelectHooksHelper::onGetPreferences';
 $wgHooks['MediaWikiPerformAction'][] = 'CategorySelectHooksHelper::onMediaWikiPerformAction';
 
 // Messages
-$wgExtensionMessagesFiles['CategorySelect'] = $dir . 'CategorySelect.i18n.php' ;
 
 JSMessages::registerPackage( 'CategorySelect', array(
 	'categoryselect-button-save',

@@ -16,7 +16,6 @@ $wgAutoloadClasses['VKTagValidator'] =  __DIR__ . '/VKTagValidator.class.php';
 $wgHooks['ParserFirstCallInit'][] = 'VKTagController::onParserFirstCallInit';
 
 // i18n
-$wgExtensionMessagesFiles['VKTag'] = __DIR__ . '/VKTag.i18n.php';
 
 $wgResourceModules['ext.wikia.VKTag'] = [
 	'skinScripts' => [

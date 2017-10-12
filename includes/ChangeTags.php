@@ -126,28 +126,7 @@ class ChangeTags {
 			$rev_id = $dbr->selectField( 'recentchanges', 'rc_this_oldid', array( 'rc_id' => $rc_id ), __METHOD__ );
 		}
 
-		$tsConds = array_filter( array( 'ts_rc_id' => $rc_id, 'ts_rev_id' => $rev_id, 'ts_log_id' => $log_id ) );
-
-		## Update the summary row.
-		$prevTags = $dbr->selectField( 'tag_summary', 'ts_tags', $tsConds, __METHOD__ );
-		$prevTags = $prevTags ? $prevTags : '';
-		$prevTags = array_filter( explode( ',', $prevTags ) );
-		$newTags = array_unique( array_merge( $prevTags, $tags ) );
-		sort( $prevTags );
-		sort( $newTags );
-
-		if ( $prevTags == $newTags ) {
-			// No change.
-			return false;
-		}
-
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->replace(
-			'tag_summary',
-			array( 'ts_rev_id', 'ts_rc_id', 'ts_log_id' ),
-			array_filter( array_merge( $tsConds, array( 'ts_tags' => implode( ',', $newTags ) ) ) ),
-			__METHOD__
-		);
 
 		// Insert the tags rows.
 		$tagsRows = array();
@@ -203,9 +182,7 @@ class ChangeTags {
 		}
 
 		// SUS-2741: ported from MW 1.23, adjusted for compatibility
-		$fields[] = wfGetDB( DB_SLAVE )->buildGroupConcatField(
-			',', 'change_tag', 'ct_tag', "ct_$join_cond=$join_cond"
-		) . ' AS ts_tags';
+		$fields[] = static::buildTsTagsGroupConcatField( $join_cond );
 
 		if( $wgUseTagFilter && $filter_tag ) {
 			// Somebody wants to filter on a tag.
@@ -220,6 +197,12 @@ class ChangeTags {
 			$join_conds['change_tag'] = array( 'INNER JOIN', "ct_$join_cond=$join_cond" );
 			$conds['ct_tag'] = $filter_tag;
 		}
+	}
+
+	public static function buildTsTagsGroupConcatField( string $joinFieldName ) {
+		return wfGetDB( DB_SLAVE )->buildGroupConcatField(
+				',', 'change_tag', 'ct_tag', "ct_$joinFieldName=$joinFieldName"
+			) . ' AS ts_tags';
 	}
 
 	/**

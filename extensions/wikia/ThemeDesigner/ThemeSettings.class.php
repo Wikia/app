@@ -1,6 +1,12 @@
 <?php
 
 class ThemeSettings {
+	const IMAGES = [
+		'background',
+		'community-header-background',
+		'favicon',
+		'wordmark'
+	];
 
 	const WikiFactorySettings = 'wgOasisThemeSettings';
 
@@ -58,6 +64,7 @@ class ThemeSettings {
 		// colors
 		$this->defaultSettings = $wgOasisThemes[$themeName];
 		$this->defaultSettings['theme'] = $themeName;
+		$this->defaultSettings['color-body-middle'] = $this->defaultSettings['color-body'];
 
 		// wordmark
 		$this->defaultSettings['wordmark-text'] = $wgSitename;
@@ -68,16 +75,11 @@ class ThemeSettings {
 		$this->defaultSettings['wordmark-image-name'] = '';
 		$this->defaultSettings['wordmark-type'] = "text";
 
-		// main page banner
-		$this->defaultSettings['banner-image-url'] = '';
-		$this->defaultSettings['banner-image-name'] = '';
-
 		// background
 		$this->defaultSettings['background-image'] = '';
 		$this->defaultSettings['background-image-height'] = null;
 		$this->defaultSettings['background-image-name'] = '';
 		$this->defaultSettings['background-image-width'] = null;
-		$this->defaultSettings['background-image-revision'] = false; // what is this?
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
 		$this->defaultSettings['background-dynamic'] = true;
@@ -85,6 +87,9 @@ class ThemeSettings {
 		//community header background
 		$this->defaultSettings['community-header-background-image'] = '';
 		$this->defaultSettings['community-header-background-image-name'] = '';
+
+		//favicon
+		$this->defaultSettings['favicon-image-name'] = '';
 	}
 
 	public function getSettings() {
@@ -96,7 +101,6 @@ class ThemeSettings {
 
 		if ( !empty( $wikiFactorySettings ) ) {
 			$settings = array_merge( $settings, $wikiFactorySettings );
-			$colorKeys = [ "color-body", "color-page", "color-community-header", "color-buttons", "color-links", "color-header" ];
 
 			// if user didn't define community header background color, but defined buttons color, we use buttons color
 			// as default for community header background
@@ -109,7 +113,7 @@ class ThemeSettings {
 			}
 
 			// if any of the user set colors are invalid, use default
-			foreach ( $colorKeys as $colorKey ) {
+			foreach ( ThemeDesignerHelper::getColorVars() as $colorKey => $defaultValue ) {
 				if ( !ThemeDesignerHelper::isValidColor( $settings[$colorKey] ) ) {
 					$settings = $this->defaultSettings;
 					break;
@@ -187,56 +191,63 @@ class ThemeSettings {
 		bool $setDimensions = false,
 		callable $callback = null
 	) {
-		if ( isset( $settings["{$name}-name"] ) && strpos( $settings["{$name}-name"], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings["{$name}-name"], NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
-			$file = new LocalFile( Title::newFromText( $title, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temp_file->getPath(), '', '' );
-			$temp_file->delete( '' );
+		// SUS-2942: No new file for upload, stop here
+		if ( !isset( $settings["{$name}-name"] ) || strpos( $settings["{$name}-name"], 'Temp_file_' ) !== 0 ) {
+			return null;
+		}
 
-			// For legacy reasons wordmark-image has other convention than the rest
-			if ( $name === 'wordmark-image' ) {
-				$settings['wordmark-image-url'] = $file->getURL();
-			} else {
-				$settings["{$name}"] = $file->getURL();
-			}
-			$settings["{$name}-name"] = $file->getName();
+		$fileRepo = RepoGroup::singleton()->getLocalRepo();
+		$imageTitle = Title::makeTitle( NS_FILE, $title );
 
-			if ( $setDimensions ) {
-				$settings["${name}-height"] = $file->getHeight();
-				$settings["${name}-width"] = $file->getWidth();
-			}
+		$file = new LocalFile( $imageTitle, $fileRepo );
 
-			if ( !empty( $previewThumbnailDimensions ) ) {
-				$imageServing = new ImageServing(
-					null,
-					$previewThumbnailDimensions['width'],
-					[
-						'w' => $previewThumbnailDimensions['width'],
-						'h' => $previewThumbnailDimensions['height']
-					]
-				);
-				$settings["user-{$name}"] = $file->getURL();
-				$settings["user-{$name}-thumb"] = wfReplaceImageServer(
-					$file->getThumbUrl(
-						$imageServing->getCut(
-							$file->getWidth(),
-							$file->getHeight(),
-							'origin'
-						) . '-' . $file->getName()
-					)
-				);
-			}
+		$temp_file = new LocalFile( Title::newFromText( $settings["{$name}-name"], NS_FILE ), $fileRepo );
+		$file->upload( $temp_file->getPath(), '', '' );
+		$temp_file->delete( '' );
 
-			if ( is_callable( $callback ) ) {
-				$callback();
-			}
+		// For legacy reasons wordmark-image has other convention than the rest
+		if ( $name === 'wordmark-image' ) {
+			$settings['wordmark-image-url'] = $file->getURL();
+		} else {
+			$settings["{$name}"] = $file->getURL();
+		}
+		$settings["{$name}-name"] = $file->getName();
 
-			$file->repo->forceMaster();
-			$history = $file->getHistory( 1 );
+		if ( $setDimensions ) {
+			$settings["${name}-height"] = $file->getHeight();
+			$settings["${name}-width"] = $file->getWidth();
+		}
 
-			if ( count( $history ) == 1 ) {
-				return [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
-			}
+		if ( !empty( $previewThumbnailDimensions ) ) {
+			$imageServing = new ImageServing(
+				null,
+				$previewThumbnailDimensions['width'],
+				[
+					'w' => $previewThumbnailDimensions['width'],
+					'h' => $previewThumbnailDimensions['height']
+				]
+			);
+			$settings["user-{$name}"] = $file->getURL();
+			$settings["user-{$name}-thumb"] = wfReplaceImageServer(
+				$file->getThumbUrl(
+					$imageServing->getCut(
+						$file->getWidth(),
+						$file->getHeight(),
+						'origin'
+					) . '-' . $file->getName()
+				)
+			);
+		}
+
+		if ( is_callable( $callback ) ) {
+			$callback();
+		}
+
+		$file->repo->forceMaster();
+		$history = $file->getHistory( 1 );
+
+		if ( count( $history ) == 1 ) {
+			return [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
 		}
 
 		return null;
@@ -245,9 +256,33 @@ class ThemeSettings {
 	public function saveSettings( $settings ) {
 		global $wgUser;
 
+		// SUS-2942: unset unknown properties
+		foreach ( $settings as $key => $value ) {
+			if ( !isset( $this->defaultSettings[$key] ) ) {
+				unset( $settings[$key] );
+			}
+		}
+
+		if ( !empty( $settings['wordmark-font'] ) ) {
+			$settings['wordmark-font'] = htmlspecialchars( $settings['wordmark-font'], ENT_QUOTES );
+		}
+
+		if ( !empty( $settings['wordmark-font-size'] ) ) {
+			$settings['wordmark-font-size'] = htmlspecialchars( $settings['wordmark-font-size'], ENT_QUOTES );
+		}
+
+		if ( !empty( $settings['wordmark-type'] ) ) {
+			$settings['wordmark-type'] = htmlspecialchars( $settings['wordmark-type'], ENT_QUOTES );
+		}
+
+		// SUS-2942: validate user-provided opacity value
+		if ( !empty( $settings['page-opacity'] ) ) {
+			$settings['page-opacity'] = max( intval( $settings['page-opacity'] ), 50 );
+		}
+
 		// Verify wordmark length ( CONN-116 )
 		if ( !empty( $settings['wordmark-text'] ) ) {
-			$settings['wordmark-text'] = trim( $settings['wordmark-text'] );
+			$settings['wordmark-text'] = htmlspecialchars( trim( $settings['wordmark-text'] ), ENT_QUOTES );
 		}
 
 		if ( empty( $settings['wordmark-text'] ) ) {
@@ -322,6 +357,10 @@ class ThemeSettings {
 				$settings[$sColorVar] = $sDefaultValue;
 			}
 		}
+
+		// SUS-2942: get not explicitly set values from old settings
+		$oldSettings = $this->getSettings();
+		$settings = array_merge( $oldSettings, $settings );
 
 		// update WF variable with current theme settings
 		WikiFactory::setVarByName( self::WikiFactorySettings, $this->cityId, $settings, $reason );

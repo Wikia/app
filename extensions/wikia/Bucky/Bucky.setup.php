@@ -19,4 +19,3 @@ $wgAutoloadClasses['Bucky'] =  $dir . 'Bucky.class.php';
 $wgHooks['MakeGlobalVariablesScript'][] = 'Bucky::onMakeGlobalVariablesScript';
 
 //i18n
-$wgExtensionMessagesFiles['Bucky'] = $dir . 'Bucky.i18n.php';

@@ -58,6 +58,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 	private function setUpService( $block ) {
 		$phalanxServiceMock =
 			$this->getMockBuilder( PhalanxService::class )
+				->disableOriginalConstructor()
 				->setMethods( [ 'match' ] )
 				->getMock();
 

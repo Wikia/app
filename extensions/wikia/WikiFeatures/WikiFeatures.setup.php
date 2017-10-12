@@ -29,8 +29,6 @@ $wgAutoloadClasses['WikiFeaturesHelper'] =  $dir . 'WikiFeaturesHelper.class.php
 $wgAutoloadClasses['WikiaLabsSpecialController'] =  $dir . 'WikiaLabsSpecialController.class.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['WikiFeatures'] = $dir . 'WikiFeatures.i18n.php';
-$wgExtensionMessagesFiles['WikiFeaturesAliases'] = $dir . 'WikiFeatures.alias.php' ;
 
 // special pages
 $wgSpecialPages['WikiFeatures'] = 'WikiFeaturesSpecialController';

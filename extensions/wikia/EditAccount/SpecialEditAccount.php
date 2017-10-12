@@ -38,7 +38,6 @@ $wgLogActions['editaccnt/closeaccnt'] = 'editaccount-log-entry-close';
 $wgLogRestrictions['editaccnt'] = 'editaccount';
 
 // Set up the new special page
-$wgExtensionMessagesFiles['EditAccount'] = __DIR__ . '/SpecialEditAccount.i18n.php';
 $wgAutoloadClasses['EditAccount'] = __DIR__ . '/SpecialEditAccount_body.php';
 $wgSpecialPages['EditAccount'] = 'EditAccount';
 $wgSpecialPageGroups['EditAccount'] = 'users';

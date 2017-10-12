@@ -18,7 +18,6 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/OpenGraphMetaCustomizations'
 );
 
-$wgExtensionMessagesFiles['OpenGraphMetaCustomizations'] = __DIR__ . '/OpenGraphMetaCustomizations.i18n.php';
 
 $wgHooks['ParserAfterTidy'][] = 'egOgmcParserAfterTidy';
 

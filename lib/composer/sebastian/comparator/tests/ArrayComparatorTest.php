@@ -14,9 +14,15 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass SebastianBergmann\Comparator\ArrayComparator
+ * @uses SebastianBergmann\Comparator\Comparator
+ * @uses SebastianBergmann\Comparator\Factory
+ * @uses SebastianBergmann\Comparator\ComparisonFailure
  */
 class ArrayComparatorTest extends TestCase
 {
+    /**
+     * @var ArrayComparator
+     */
     private $comparator;
 
     protected function setUp()

@@ -47,9 +47,6 @@ $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.
 $wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';
 
 // i18n mapping
-$wgExtensionMessagesFiles['CreateWikiChecks'] = $dir . 'CreateWikiChecks.i18n.php';
-$wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
-$wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.php';
 
 // setup functions
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';

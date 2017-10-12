@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -17,7 +17,7 @@ class SameSize extends Count
     protected $expectedCount;
 
     /**
-     * @param \Countable|\Traversable\|array $expected
+     * @param \Countable|\Traversable|array $expected
      */
     public function __construct($expected)
     {

@@ -35,7 +35,6 @@ $wgHooks['BeforePageDisplay'][] = 'BannerNotificationsController::onBeforePageDi
 /**
  * i18n
  */
-$wgExtensionMessagesFiles['BannerNotification'] = $dir . 'BannerNotifications.i18n.php';
 
 /**
  * ResourceLoader module

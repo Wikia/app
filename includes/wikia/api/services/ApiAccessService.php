@@ -109,9 +109,9 @@ class ApiAccessService {
 	}
 
 	/**
-	 * @deprecated
+	 * @return bool
 	 */
 	protected function isCorporateWiki() {
-		return false;
+		return WikiaPageType::isCorporatePage();
 	}
 }

@@ -142,6 +142,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.premiumAdLayoutEnabled = isPALEnabledOnDesktopFeaturedVideo || isPALEnabledOnRegularArticle;
 		context.slots.premiumAdLayoutSlotsToUnblock = [
+			'TOP_RIGHT_BOXAD',
 			'INVISIBLE_HIGH_IMPACT_2',
 			'INCONTENT_BOXAD_1',
 			'BOTTOM_LEADERBOARD'
@@ -254,6 +255,8 @@ define('ext.wikia.adEngine.adContext', [
 		);
 
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
+		context.opts.porvataMoatTrackingEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
 
 		enableAdMixExperiment(context);
 
@@ -266,7 +269,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
-
+		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {

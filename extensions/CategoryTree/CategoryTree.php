@@ -99,7 +99,6 @@ $wgCategoryTreePageCategoryOptions['namespaces'] = false;
 $wgCategoryTreePageCategoryOptions['depth'] = 0;
 # $wgCategoryTreePageCategoryOptions['class'] = 'CategoryTreeInlineNode';
 
-$wgExtensionMessagesFiles['CategoryTreeAlias'] = dirname( __FILE__ ) . '/CategoryTree.alias.php';
 
 /**
  * Register extension setup hook and credits
@@ -118,11 +117,6 @@ $wgExtensionCredits['specialpage'][] = $wgExtensionCredits['parserhook'][] = arr
  */
 $dir = dirname( __FILE__ ) . '/';
 
-if ( $wgUseAjax && $wgCategoryTreeAllowTag ) {
-	$wgExtensionMessagesFiles['CategoryTreeMagic'] = $dir . 'CategoryTree.i18n.magic.php';
-}
-
-$wgExtensionMessagesFiles['CategoryTree'] = $dir . 'CategoryTree.i18n.php';
 $wgAutoloadClasses['CategoryTreePage'] = $dir . 'CategoryTreePage.php';
 $wgAutoloadClasses['CategoryTree'] = $dir . 'CategoryTreeFunctions.php';
 $wgAutoloadClasses['CategoryTreeCategoryPage'] = $dir . 'CategoryPageSubclass.php';

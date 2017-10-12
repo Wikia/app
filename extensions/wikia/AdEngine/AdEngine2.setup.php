@@ -32,7 +32,6 @@ $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine2Hooks::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopModules'][] = 'AdEngine2Hooks::onWikiaSkinTopModules';
 
 // i18n
-$wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';
 $wgExtensionFunctions[] = function() {
 	JSMessages::registerPackage( 'AdEngine', [
 		'adengine-*'

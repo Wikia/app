@@ -156,7 +156,6 @@ $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiC
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgAutoloadClasses['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
-$wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
 $wgWikiaApiControllers['DesignSystemApiController'] = "{$IP}/includes/wikia/api/DesignSystemApiController.class.php";
@@ -361,6 +360,7 @@ $wgAutoloadClasses['DesignSystemCommunityHeaderModel'] = "{$IP}/includes/wikia/m
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
 $wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
+$wgAutoloadClasses['UserRegistrationInfo'] = "$IP/includes/wikia/models/UserRegistrationInfo.php";
 $wgAutoloadClasses['PromoImage'] = "{$IP}/includes/wikia/models/PromoImage.class.php";
 
 // modules
@@ -685,7 +685,6 @@ $wgExtensionsPath = false; /// defaults to "{$wgScriptPath}/extensions"
 /**
  * Auxiliary variables for CreateWikiTask
  */
-$wgHubCreationVariables = array();
 $wgLangCreationVariables = array();
 
 /**

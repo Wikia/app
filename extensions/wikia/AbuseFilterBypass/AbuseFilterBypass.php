@@ -29,5 +29,4 @@ $wgAutoloadClasses[ 'AbuseFilterBypass' ] = "{$dir}/AbuseFilterBypass.class.php"
 $wgHooks[ 'AbuseFilterShouldFilter' ][ ] = 'AbuseFilterBypass::onBypassCheck';
 
 //i18n
-$wgExtensionMessagesFiles[ 'AbuseFilterBypass' ] = $dir . '/i18n/AbuseFilterBypass.i18n.php';
 

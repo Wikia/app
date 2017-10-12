@@ -19,7 +19,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $dir = dirname( __FILE__ );
-$wgExtensionMessagesFiles['ImageServing_LyricWiki'] = $dir . '/ImageServing_LyricWiki.i18n.php';
 
 $wgHooks['ImageServing::fallbackOnNoResults'][] = 'lw_ImageServingFallback';
 

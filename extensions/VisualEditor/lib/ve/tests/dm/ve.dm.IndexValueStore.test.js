@@ -8,11 +8,13 @@ QUnit.module( 've.dm.IndexValueStore' );
 
 /* Tests */
 
-QUnit.test( 'index(es)/indexOfHash', 12, function ( assert ) {
+QUnit.test( 'index(es)/indexOfHash', function ( assert ) {
 	var index, indexes,
 		object1 = { a: 1, b: 2 },
 		object2 = { c: 3, d: 4 },
 		store = new ve.dm.IndexValueStore();
+
+	assert.expect( 12 );
 
 	index = store.index( object1 );
 	assert.strictEqual( index, 0, 'First object stores in 0' );
@@ -46,7 +48,8 @@ QUnit.test( 'index(es)/indexOfHash', 12, function ( assert ) {
 
 } );
 
-QUnit.test( 'value(s)', 5, function ( assert ) {
+QUnit.test( 'value(s)', function ( assert ) {
+	assert.expect( 5 );
 	var object1 = { a: 1, b: 2 },
 		object2 = { c: 3, d: 4 },
 		store = new ve.dm.IndexValueStore();

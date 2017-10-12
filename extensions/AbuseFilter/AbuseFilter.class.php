@@ -1500,8 +1500,8 @@ class AbuseFilter {
 
 		$name = Title::makeTitle( $row->rc_namespace, $row->rc_title )->getText();
 		// Add user data if the account was created by a registered user
-		if ( $row->rc_user && $name != $row->rc_user_text ) {
-			$user = User::newFromName( $row->rc_user_text );
+		if ( $row->rc_user && $name != User::whoIs( $row->rc_user ) ) {
+			$user = User::newFromId( $row->rc_user ); // SUS-812
 			$vars->addHolder( self::generateUserVars( $user ) );
 		}
 
@@ -1514,7 +1514,7 @@ class AbuseFilter {
 		$title = Title::makeTitle( $row->rc_namespace, $row->rc_title );
 
 		if ( $row->rc_user ) {
-			$user = User::newFromName( $row->rc_user_text );
+			$user = User::newFromId( $row->rc_user ); // SUS-812
 		} else {
 			$user = new User;
 			$user->setName( $row->rc_user_text );

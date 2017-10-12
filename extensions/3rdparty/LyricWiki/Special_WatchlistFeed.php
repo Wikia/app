@@ -42,7 +42,6 @@ EOT;
 $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['WatchlistFeed'] = $dir . 'Special_WatchlistFeed.body.php';
-$wgExtensionMessagesFiles['WatchlistFeed'] = $dir . 'Special_WatchlistFeed.i18n.php';
 $wgSpecialPages['WatchlistFeed'] = 'WatchlistFeed';
 
 # default options

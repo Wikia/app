@@ -1,6 +1,6 @@
 <?php
 
-$wgExtensionMessagesFiles ['GetQuestionWidget'] = dirname(__FILE__) . '/GetQuestionWidget.i18n.php' ; 
+
 
 class GetQuestionWidget extends UnlistedSpecialPage {
 

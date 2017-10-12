@@ -12,7 +12,6 @@
 # Modified February 2007 by Patrick Delancy for use in TibiaWiki ( http://tibia.erig.net/ )
 
 $wgHooks['ParserFirstCallInit'][] = "wfSpoilerExtension";
-$wgExtensionMessagesFiles['SpoilerExtension'] = dirname(__FILE__) . '/Spoiler.i18n.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'spoilerParserHook' ;
 
 /**

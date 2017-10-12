@@ -104,7 +104,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 			if (params.loadMedrecFromBTF) {
 				// refresh after uapContext.setUapId
-				helper.refreshSlot(googleSlots.getSlotByName(medrecSlotName));
+				helper.refreshSlot(medrecSlotName);
 			}
 		});
 

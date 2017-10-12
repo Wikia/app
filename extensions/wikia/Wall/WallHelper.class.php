@@ -554,14 +554,15 @@ class WallHelper {
 	}
 
 	/**
-	 * @param RecentChange $rc
+	 * @param RecentChange $rc or a row from revison table
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
 	 * @return array|bool
 	 */
 	public static function getWallTitleData( $rc = null, $row = null ) {
 		if ( is_object( $row ) ) {
+			// row from the revision table
 			$objTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
-			$userText = !empty( $row->rev_user_text ) ? $row->rev_user_text : '';
+			$userText = isset( $row->rev_user ) ? User::getUsername( $row->rev_user, $row->rev_user_text ) : '';
 
 			$isNew = ( !empty( $row->page_is_new ) && $row->page_is_new === '1' ) ? true : false;
 
@@ -571,7 +572,7 @@ class WallHelper {
 
 		} else {
 			$objTitle = $rc->getTitle();
-			$userText = $rc->getAttribute( 'rc_user_text' );
+			$userText = User::getUsername( $rc->getAttribute( 'rc_user' ), $rc->getAttribute( 'rc_user_text' ) );
 			$isNew = false; // it doesn't metter for rc -- we've got there rc_log_action
 		}
 

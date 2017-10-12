@@ -13,7 +13,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 //i18n
-$wgExtensionMessagesFiles['UserPageRedirects'] = $dir . 'UserPageRedirects.i18n.php';
 
 $wgAutoloadClasses['UserPageRedirectsHelper']  = $dir . 'UserPageRedirectsHelper.class.php';
 $wgHooks['ArticleFromTitle'][] = 'UserPageRedirectsHelper::ArticleFromTitle';

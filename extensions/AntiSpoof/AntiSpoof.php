@@ -23,7 +23,6 @@ $wgAntiSpoofAccounts = true;
 
 $dir = dirname( __FILE__ );
 
-$wgExtensionMessagesFiles['AntiSpoof'] = "$dir/AntiSpoof.i18n.php";
 
 $wgAutoloadClasses['AntiSpoof'] = "$dir/AntiSpoof_body.php";
 $wgAutoloadClasses['AntiSpoofHooks'] = "$dir/AntiSpoofHooks.php";

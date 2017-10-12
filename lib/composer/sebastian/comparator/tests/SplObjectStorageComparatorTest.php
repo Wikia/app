@@ -16,6 +16,9 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass SebastianBergmann\Comparator\SplObjectStorageComparator
+ * @uses SebastianBergmann\Comparator\Comparator
+ * @uses SebastianBergmann\Comparator\Factory
+ * @uses SebastianBergmann\Comparator\ComparisonFailure
  */
 class SplObjectStorageComparatorTest extends TestCase
 {
@@ -130,5 +133,16 @@ class SplObjectStorageComparatorTest extends TestCase
         $this->expectExceptionMessage('Failed asserting that two objects are equal.');
 
         $this->comparator->assertEquals($expected, $actual);
+    }
+
+    public function testAssertEqualsFails2()
+    {
+        $this->expectException(ComparisonFailure::class);
+        $this->expectExceptionMessage('Failed asserting that two objects are equal.');
+
+        $t = new SplObjectStorage();
+        $t->attach(new \stdClass());
+
+        $this->comparator->assertEquals($t, new \SplObjectStorage());
     }
 }

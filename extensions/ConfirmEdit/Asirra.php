@@ -29,7 +29,6 @@ require_once( "$dir/ConfirmEdit.php" );
 $dir = dirname( __FILE__ ) . '/';
 
 $wgCaptchaClass = 'Asirra';
-$wgExtensionMessagesFiles['Asirra'] = "$dir/Asirra.i18n.php";
 $wgAutoloadClasses['Asirra'] = "$dir/Asirra.class.php";
 
 $wgResourceModules['ext.confirmedit.asirra'] = array(

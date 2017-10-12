@@ -25,7 +25,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // i18n
-$wgExtensionMessagesFiles['DataProvider'] = __DIR__ . '/DataProvider.i18n.php';
 
 class DataProvider {
 	private $skin;

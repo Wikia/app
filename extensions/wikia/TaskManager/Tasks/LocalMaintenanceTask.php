@@ -46,8 +46,7 @@ class LocalMaintenanceTask extends BatchTask {
 	 * @return boolean - status of operation
 	 */
 	public function execute( $params = null ) {
-		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
-			$wgExtensionMessagesFiles;
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
 
 		$this->mTaskID = $params->task_id;
 		$this->mParams = unserialize( $params->task_arguments );

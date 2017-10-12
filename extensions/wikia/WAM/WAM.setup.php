@@ -25,4 +25,3 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['WAM'] = $dir . 'WAM.i18n.php';

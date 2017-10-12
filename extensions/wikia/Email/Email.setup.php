@@ -89,24 +89,4 @@ $wgSpecialPages[ 'SendEmail' ] =  'Email\SpecialSendEmailController';
 /**
  * messages
  */
-$wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
-$wgExtensionMessagesFiles['EmailWatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
-$wgExtensionMessagesFiles['EmailWatchedPageRestored'] = $dir . 'i18n/WatchedPageRestored.i18n.php';
-$wgExtensionMessagesFiles['EmailComment'] = $dir . 'i18n/Comment.i18n.php';
-$wgExtensionMessagesFiles['EmailBlogPost'] = $dir . 'i18n/BlogPost.i18n.php';
-$wgExtensionMessagesFiles['EmailForum'] = $dir . 'i18n/Forum.i18n.php';
-$wgExtensionMessagesFiles['EmailWallMessage'] = $dir . 'i18n/WallMessage.i18n.php';
-$wgExtensionMessagesFiles['EmailWeeklyDigest'] = $dir . 'i18n/WeeklyDigest.i18n.php';
-$wgExtensionMessagesFiles['EmailFounder'] = $dir . 'i18n/Founder.i18n.php';
-$wgExtensionMessagesFiles['EmailFacebookDisconnect'] = $dir . 'i18n/FacebookDisconnect.i18n.php';
-$wgExtensionMessagesFiles['EmailConfirmation'] = $dir . 'i18n/EmailConfirmation.i18n.php';
-$wgExtensionMessagesFiles['EmailFounderDigest'] = $dir . 'i18n/FounderDigest.i18n.php';
-$wgExtensionMessagesFiles['ReactivateAccount'] = $dir . 'i18n/ReactivateAccount.i18n.php';
-$wgExtensionMessagesFiles['EmailCategoryAdd'] = $dir . 'i18n/CategoryAdd.i18n.php';
-$wgExtensionMessagesFiles['EmailWelcome'] = $dir . 'i18n/Welcome.i18n.php';
-$wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
-$wgExtensionMessagesFiles['ForgotPassword'] = $dir . 'i18n/ForgotPassword.i18n.php';
-$wgExtensionMessagesFiles['UserRightsChanged'] = $dir . 'i18n/UserRightsChanged.i18n.php';
-$wgExtensionMessagesFiles['EmailUserNameChange'] = $dir . 'i18n/UserNameChange.i18n.php';
-$wgExtensionMessagesFiles['EmailDiscussions'] = $dir . 'i18n/Discussion.i18n.php';
 
