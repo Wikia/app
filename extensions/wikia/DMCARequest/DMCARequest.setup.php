@@ -24,6 +24,7 @@ $wgAutoloadClasses['DMCARequestSpecialController'] =  __DIR__ . '/DMCARequestSpe
 $wgAutoloadClasses['DMCARequestManagementSpecialController'] =  __DIR__ . '/DMCARequestManagementSpecialController.class.php';
 $wgAutoloadClasses['DMCARequest\ChillingEffectsClient'] =  __DIR__ . '/ChillingEffectsClient.class.php';
 
+$wgExtensionMessagesFiles['DMCARequest'] = __DIR__ . '/DMCARequest.i18n.php' ;
 
 $wgSpecialPages['DMCARequest'] = 'DMCARequestSpecialController';
 $wgSpecialPages['DMCARequestManagement'] = 'DMCARequestManagementSpecialController';

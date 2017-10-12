@@ -56,6 +56,7 @@ require_once 'extras.php';
 
 $dir = dirname(__FILE__) . '/';
 $wgHooks['ParserFirstCallInit'][] = "wfXMLFormatter";
+$wgExtensionMessagesFiles['XMLParser'] = $dir . 'Tag_XML.i18n.php';
 
 if(isset($wgScriptPath))
 {

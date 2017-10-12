@@ -25,6 +25,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__);
 
 // i18n
+$wgExtensionMessagesFiles['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.i18n.php";
 
 // hooks
 $wgHooks['MakeGlobalVariablesScript'][] = 'TimeAgoMessaging::onMakeGlobalVariablesScript';

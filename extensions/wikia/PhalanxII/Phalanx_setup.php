@@ -101,6 +101,7 @@ foreach ( $phalanxhooks as $class => $hooks ) {
 /**
  * messages
  */
+$wgExtensionMessagesFiles['Phalanx'] = $dir . 'Phalanx.i18n.php';
 
 /*
  * globals, rights etc

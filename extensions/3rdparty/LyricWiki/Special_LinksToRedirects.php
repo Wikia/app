@@ -24,6 +24,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'Special page showing all links which point to redirects',
 	'version' => '0.1.1',
 );
+$wgExtensionMessagesFiles['LinksToRedirects'] = dirname(__FILE__).'/Special_LinksToRedirects.i18n.php';
 
 require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['Linkstoredirects'] = 'Linkstoredirects';

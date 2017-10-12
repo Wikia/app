@@ -49,6 +49,7 @@ $wgAutoloadClasses['LinkSuggestLoader'] = __DIR__ . '/LinkSuggestLoader.class.ph
 $wgAutoloadClasses['LinkSuggestHooks'] = __DIR__ . '/LinkSuggestHooks.class.php';
 
 // i18n
+$wgExtensionMessagesFiles['LinkSuggest'] = __DIR__ . '/LinkSuggest.i18n.php';
 
 // hooks
 $wgHooks['GetPreferences'][] = 'LinkSuggestHooks::onGetPreferences' ;

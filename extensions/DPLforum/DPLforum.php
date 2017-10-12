@@ -51,6 +51,9 @@ $wgHooks['CanonicalNamespaces'][] = 'wfDPLforumCanonicalNamespaces';
 
 // Set up i18n and autoload the main class
 $dir = dirname( __FILE__ ) . '/';
+$wgExtensionMessagesFiles['DPLforum'] = $dir . 'DPLforum.i18n.php';
+$wgExtensionMessagesFiles['DPLforumMagic'] = $dir . 'DPLforum.i18n.magic.php';
+$wgExtensionMessagesFiles['DPLforumNamespaces'] = $dir . 'DPLforum.namespaces.php';
 $wgAutoloadClasses['DPLForum'] = $dir . 'DPLforum_body.php';
 
 function wfDPLinit( Parser $parser ): bool {

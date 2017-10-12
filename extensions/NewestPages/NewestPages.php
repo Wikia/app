@@ -25,5 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgNewestPagesLimit = 50;
 
 $dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['NewestPages'] = $dir . 'NewestPages.i18n.php';
+$wgExtensionMessagesFiles['NewestPagesAlias'] = $dir . 'NewestPages.alias.php';
 $wgAutoloadClasses['NewestPages'] = $dir . 'NewestPages.page.php';
 $wgSpecialPages['NewestPages'] = 'NewestPages';

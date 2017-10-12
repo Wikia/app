@@ -31,6 +31,8 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 // language files:
+$wgExtensionMessagesFiles['RegexFun'     ] = ExtRegexFun::getDir() . '/RegexFun.i18n.php';
+$wgExtensionMessagesFiles['RegexFunMagic'] = ExtRegexFun::getDir() . '/RegexFun.i18n.magic.php';
 
 // hooks registration:
 $wgHooks['ParserFirstCallInit'][] = 'ExtRegexFun::init';

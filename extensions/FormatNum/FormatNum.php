@@ -22,6 +22,8 @@ $wgExtensionCredits['parserhook'][] = array (
 $dir = dirname( __FILE__ ) . '/';
 
 // Internationalization
+$wgExtensionMessagesFiles['FormatNum'] = $dir . 'FormatNum.i18n.php';
+$wgExtensionMessagesFiles['FormatNumMagic'] = $dir . 'FormatNum.i18n.magic.php';
 
 # Define a setup function
 $wgHooks['ParserFirstCallInit'][] = 'efFormatNumParserFunction_Setup';

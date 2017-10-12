@@ -15,6 +15,7 @@ $wgExtensionCredits['specialpage'][] = array
     'author'      => '[http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]'
 );
 
+$wgExtensionMessagesFiles['WikiFactoryReporter'] = dirname(__FILE__) . '/SpecialWikiFactoryReporter.i18n.php';
 
 extAddSpecialPage(dirname(__FILE__) . '/SpecialWikiFactoryReporter_body.php', 'WikiFactoryReporter', 'WikiFactoryReporter');
 

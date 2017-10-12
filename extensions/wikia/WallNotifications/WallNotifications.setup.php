@@ -7,6 +7,7 @@ $wgExtensionCredits[ 'other' ][ ] = [
 ];
 
 // i18n
+$wgExtensionMessagesFiles['WallNotifications'] = __DIR__ . '/i18n/WallNotifications.i18n.php';
 
 $wgAutoloadClasses['WallNotifications'] =  __DIR__ . '/WallNotifications.class.php';
 

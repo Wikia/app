@@ -15,6 +15,7 @@ $dir = __DIR__ . '/';
 $app = F::app();
 
 //i18n
+$wgExtensionMessagesFiles['ApiDocs'] = $dir . 'i18n/ApiDocs.i18n.php';
 
 $wgAutoloadClasses['ApiDocsController'] = "{$dir}ApiDocsController.class.php";
 $wgAutoloadClasses['DocsApiController'] = "{$dir}DocsApiController.class.php";

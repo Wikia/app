@@ -14,6 +14,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CookiePolicy/',
 );
 
+$wgExtensionMessagesFiles['CookiePolicy'] = __DIR__ . '/CookiePolicy.i18n.php';
 
 $wgAutoloadClasses['Wikia\CookiePolicy\CookiePolicyHooks'] = __DIR__ . '/CookiePolicy.hooks.php';
 

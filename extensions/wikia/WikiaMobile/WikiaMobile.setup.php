@@ -74,6 +74,7 @@ $wgAutoloadClasses['WikiaMobileController'] = "{$dir}/WikiaMobileController.clas
 /**
  * message files
  */
+$wgExtensionMessagesFiles['WikiaMobile'] = "{$dir}/WikiaMobile.i18n.php";
 
 // initialize i18ns
 JSMessages::registerPackage( 'WkMbl', [

@@ -20,6 +20,8 @@ $wgAutoloadClasses['SpecialVideosHelper'] = $dir . 'SpecialVideosHelper.class.ph
 $wgAutoloadClasses['SpecialVideosHooks'] = $dir . 'SpecialVideosHooks.class.php';
 
 // i18n mapping
+$wgExtensionMessagesFiles['SpecialVideos'] = $dir . 'SpecialVideos.i18n.php';
+$wgExtensionMessagesFiles['SpecialVideosAliases'] = $dir . 'SpecialVideos.alias.php';
 
 // special pages
 $wgSpecialPages['Videos'] = 'SpecialVideosSpecialController';

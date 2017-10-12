@@ -39,6 +39,9 @@ $wgSpecialPages['Chat'] = 'SpecialChat';
 $wgSpecialPages['ChatBanList'] = 'ChatBanListSpecialController';
 
 // i18n
+$wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';
+$wgExtensionMessagesFiles['ChatAliases'] = $dir . '/Chat.aliases.php';
+$wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticons.i18n.php';
 
 // hooks
 $wgHooks['GetRailModuleList'][] = 'ChatHooks::onGetRailModuleList';

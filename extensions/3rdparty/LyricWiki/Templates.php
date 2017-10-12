@@ -51,6 +51,7 @@ require_once 'Parser_LWMagicWords.php';
 require_once 'extras.php';
 
 $dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['lwTemplates'] = $dir.'Templates.i18n.php';
 $wgHooks['EditFormPreloadText'][] = array('lw_templatePreload');
 
 /**

@@ -17,6 +17,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/TagsReport"
 );
 
+$wgExtensionMessagesFiles["TagsReport"] = __DIR__ . '/SpecialTagsReport.i18n.php';
+$wgExtensionMessagesFiles['TagsReportAliases'] = __DIR__ . '/SpecialTagsReport.aliases.php';
 
 extAddSpecialPage( __DIR__ . '/SpecialTagsReport_body.php', 'TagsReport', 'TagsReportPage' );
 $wgSpecialPageGroups['TagsReport'] = 'maintenance';

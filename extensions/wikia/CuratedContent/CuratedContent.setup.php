@@ -25,6 +25,8 @@ $wgAutoloadClasses['CuratedContentHooks'] =  __DIR__ . '/CuratedContentHooks.cla
 /**
  * message files
  */
+$wgExtensionMessagesFiles['CuratedContent'] = __DIR__ . '/CuratedContent.i18n.php';
+$wgExtensionMessagesFiles['CuratedContentAlias'] = __DIR__ . '/CuratedContent.alias.php';
 
 JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-duplicate-entry',

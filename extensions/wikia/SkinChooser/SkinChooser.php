@@ -18,6 +18,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SkinChooser'] = $dir . 'SkinChooser.class.php';
 
 // i18n
+$wgExtensionMessagesFiles['SkinChooser'] = $dir . 'SkinChooser.i18n.php';
 
 // register hooks
 $wgHooks['GetPreferences'][] = 'SkinChooser::onGetPreferences';

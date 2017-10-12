@@ -52,6 +52,9 @@ $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
 /**
  * messages file
  */
+$wgExtensionMessagesFiles['Blogs'] = __DIR__ . '/Blogs.i18n.php';
+$wgExtensionMessagesFiles['BlogsAliases'] = __DIR__ . '/Blogs.alias.php';
+$wgExtensionMessagesFiles['BlogsMagic'] = __DIR__ . '/Blogs.i18n.magic.php';
 
 // special pages
 $wgAutoloadClasses['CreateBlogListingPage'] = __DIR__ . '/SpecialCreateBlogListingPage.php';

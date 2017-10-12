@@ -17,6 +17,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['EditorPreference'] = $dir . 'EditorPreference.class.php';
 
 // i18n
+$wgExtensionMessagesFiles['EditorPreference'] = $dir . 'EditorPreference.i18n.php';
 
 // Hooks
 $wgHooks['EditingPreferencesBefore'][] = 'EditorPreference::onEditingPreferencesBefore';

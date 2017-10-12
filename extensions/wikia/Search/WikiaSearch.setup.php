@@ -59,6 +59,7 @@ $wgWikiaApiControllers['SearchApiController'] = $dir . 'SearchApiController.clas
 /**
  * message files
  */
+$wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'WikiaSearch.i18n.php';
 
 /**
  * preference settings
