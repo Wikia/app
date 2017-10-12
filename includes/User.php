@@ -4617,4 +4617,22 @@ class User implements JsonSerializable {
 			'mName' => $this->mName,
 		];
 	}
+
+	public static function getIndexedUserNames( $userIds ): array {
+		global $wgExternalSharedDB;
+		if ( count( $userIds ) === 0 ) {
+			return [];
+		}
+
+		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$conditions = [ 'user_id' => array_unique( $userIds ) ];
+		$dbResults = $db->select( '`user`', [ 'user_id', 'user_name' ], $conditions, __METHOD__ );
+
+		$results = [];
+		foreach ( $dbResults as $row ) {
+			$results[$row->user_id] = $row->user_name;
+		}
+
+		return $results;
+	}
 }

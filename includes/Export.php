@@ -385,8 +385,16 @@ class WikiExporter {
 				}
 				# Wikia change end
 
+				// SUS-807
+				$userIds = [];
+				foreach ($result as $row) {
+					$userIds[] = $row->rev_user;
+				}
+
+				$userNames = User::getIndexedUserNames($userIds);
+
 				# Output dump results
-				$this->outputPageStream( $result );
+				$this->outputPageStream( $result, $userNames );
 
 				if ( $this->buffer == WikiExporter::STREAM ) {
 					$this->db->bufferResults( $prev );
@@ -475,10 +483,16 @@ class WikiExporter {
 	 * blob storage types will make queries to pull source data.
 	 *
 	 * @param ResultWrapper $resultset
+	 * @param $userNames
 	 */
-	protected function outputPageStream( $resultset ) {
+	protected function outputPageStream( $resultset, $userNames ) {
 		$last = null;
 		foreach ( $resultset as $row ) {
+			// SUS-807
+			if ( $row->rev_user && isset( $userNames[$row->rev_user] ) ) {
+				$row->rev_user_text = $userNames[$row->rev_user];
+			}
+
 			if ( $last === null ||
 				$last->page_namespace != $row->page_namespace ||
 				$last->page_title != $row->page_title ) {

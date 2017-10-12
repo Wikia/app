@@ -156,7 +156,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 
 		// SUS-2779
 		$userIds = $this->getFieldFromResults( $res, 'log_user' );
-		$userNames = $this->getIndexedUserNames( $userIds );
+		$userNames = User::getIndexedUserNames( $userIds );
 
 		foreach ( $res as $row ) {
 			if ( ++ $count > $limit ) {
@@ -485,24 +485,6 @@ class ApiQueryLogEvents extends ApiQueryBase {
 
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
-	}
-
-	private function getIndexedUserNames( $userIds ) {
-		global $wgExternalSharedDB;
-		if ( count( $userIds ) === 0 ) {
-			return [];
-		}
-
-		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$conditions = [ 'user_id' => array_unique( $userIds ) ];
-		$dbResults = $db->select( '`user`', [ 'user_id', 'user_name' ], $conditions, __METHOD__ );
-
-		$results = [];
-		foreach ( $dbResults as $row ) {
-			$results[$row->user_id] = $row->user_name;
-		}
-
-		return $results;
 	}
 
 	private function getFieldFromResults( $res, $fieldName ) {
