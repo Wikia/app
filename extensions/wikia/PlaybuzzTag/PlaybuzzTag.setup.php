@@ -15,3 +15,4 @@ $wgAutoloadClasses['PlaybuzzTagController'] =  __DIR__ . '/PlaybuzzTagController
 $wgHooks['ParserFirstCallInit'][] = 'PlaybuzzTagController::onParserFirstCallInit';
 
 // i18n
+$wgExtensionMessagesFiles['PlaybuzzTag'] = __DIR__ . '/PlaybuzzTag.i18n.php';

@@ -27,6 +27,7 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 $wgHooks['ParserFirstCallInit'][] = "wfAjaxPollTag";
+$wgExtensionMessagesFiles["AjaxPoll"] = __DIR__ . '/AjaxPoll.i18n.php';
 
 /**
  * helper file

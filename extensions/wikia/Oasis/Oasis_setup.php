@@ -16,6 +16,7 @@ $wgExtensionCredits['other'][] = [
 ];
 
 // Messages
+$wgExtensionMessagesFiles['Oasis'] = __DIR__ . '/Oasis.i18n.php';
 
 $wgExtensionFunctions[] = 'wfOasisSetup';
 

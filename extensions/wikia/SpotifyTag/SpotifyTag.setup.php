@@ -16,3 +16,4 @@ $wgAutoloadClasses['SpotifyTagValidator'] =  __DIR__ . '/SpotifyTagValidator.cla
 $wgHooks['ParserFirstCallInit'][] = 'SpotifyTagController::onParserFirstCallInit';
 
 // i18n
+$wgExtensionMessagesFiles['SpotifyTag'] = __DIR__ . '/SpotifyTag.i18n.php';

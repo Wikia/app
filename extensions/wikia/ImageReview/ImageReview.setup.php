@@ -40,3 +40,4 @@ $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 $wgExtensionFunctions[] = 'ImageReviewHooks::setupHooks';
 
 // i18n
+$wgExtensionMessagesFiles['ImageReview'] = $dir . 'ImageReview.i18n.php';

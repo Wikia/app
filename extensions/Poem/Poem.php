@@ -27,6 +27,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'poem-desc',
 );
 $wgParserTestFiles[] = dirname( __FILE__ ) . "/poemParserTests.txt";
+$wgExtensionMessagesFiles['Poem'] =  dirname(__FILE__) . '/Poem.i18n.php';
 
 function wfPoemExtension( Parser $parser ): bool {
 	$parser->setHook( 'poem', 'wfRenderPoemTag' );

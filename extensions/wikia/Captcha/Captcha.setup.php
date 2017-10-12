@@ -93,6 +93,7 @@ $wgCaptchaWhitelist = false;
 $wgCaptchaRegexes = [];
 
 $dir = dirname( __FILE__ );
+$wgExtensionMessagesFiles['Captcha'] = "$dir/Captcha.i18n.php";
 
 // Captcha Hooks
 $wgHooks['EditFilterMerged'][] = 'Captcha\Hooks::confirmEditMerged';

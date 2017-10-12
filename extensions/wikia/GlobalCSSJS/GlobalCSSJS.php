@@ -13,6 +13,7 @@ $wgExtensionCredits['other'][] = array(
   );
   
   //i18n
+$wgExtensionMessagesFiles['GlobalCSSJS'] = __DIR__ . '/GlobalCSSJS.i18n.php';
 
 /**
  * Adds custom user CSS and JavaScript to a page

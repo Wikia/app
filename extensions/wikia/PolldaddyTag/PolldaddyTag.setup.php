@@ -17,3 +17,4 @@ $wgHooks['ParserFirstCallInit'][] = 'PolldaddyTagController::onParserFirstCallIn
 $wgHooks['WikiaMobileAssetsPackages'][] = 'PolldaddyTagController::onWikiaMobileAssetsPackages';
 
 // i18n
+$wgExtensionMessagesFiles['PolldaddyTag'] = __DIR__ . '/PolldaddyTag.i18n.php';

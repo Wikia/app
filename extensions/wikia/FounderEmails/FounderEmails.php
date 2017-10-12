@@ -19,6 +19,7 @@ $wgExtensionCredits['specialpage'][] = array(
 /**
  * messages file
  */
+$wgExtensionMessagesFiles['FounderEmails'] = dirname( __FILE__ ) . '/FounderEmails.i18n.php';
 
 /**
  * extension config

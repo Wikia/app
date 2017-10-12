@@ -18,6 +18,8 @@ $wgAutoloadClasses['SpecialWithoutimages'] = $dir . 'SpecialWithoutimages.class.
 $wgAutoloadClasses['WithoutimagesPage'] = $dir . 'WithoutimagesPage.class.php';
 
 // i18n
+$wgExtensionMessagesFiles['Withoutimages'] = $dir . 'SpecialWithoutimages.i18n.php';
+$wgExtensionMessagesFiles['WithoutimagesAliases'] = $dir . 'SpecialWithoutimages.alias.php';
 
 // special page
 $wgSpecialPages['Withoutimages'] = 'SpecialWithoutimages';

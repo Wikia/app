@@ -16,6 +16,7 @@
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
 $wgSpecialPages[ "CategoryIntersection" ] = "SpecialCategoryIntersection";
+$wgExtensionMessagesFiles['CategoryIntersection'] = dirname( __FILE__ ) . '/SpecialCategoryIntersection.i18n.php';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CategoryIntersection',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialCategoryIntersection', // TODO: Update with a link to appropriate extension info page (such as MediaWiki.org) if this extension gets committed upstream.

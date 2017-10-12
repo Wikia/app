@@ -25,6 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'Info on searches from the LyricWiki Android and iPhone apps',
 	'version' => '1.2',
 );
+$wgExtensionMessagesFiles['SpecialMobileSearches'] = dirname(__FILE__).'/Special_MobileSearches.i18n.php';
 
 require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['MobileSearches'] = 'MobileSearches';

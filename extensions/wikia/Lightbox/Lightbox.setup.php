@@ -31,6 +31,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'LightboxHooks::onMakeGlobalVariablesS
 $wgHooks['GetHTMLAfterBody'][] = 'LightboxHooks::onGetHTMLAfterBody';
 
 // i18n mapping
+$wgExtensionMessagesFiles['Lightbox'] = $dir . 'Lightbox.i18n.php';
 
 JSMessages::registerPackage('Lightbox', array(
 	'lightbox-carousel-more-items',

@@ -27,5 +27,6 @@ $wgHooks['WikiaMobileAssetsPackages'][] = 'RelatedPages::onWikiaMobileAssetsPack
 $wgAutoloadClasses['RelatedPages'] = $dir . 'RelatedPages.class.php';
 
 // messages
+$wgExtensionMessagesFiles['RelatedPages'] = $dir . 'RelatedPages.i18n.php';
 JSMessages::registerPackage( 'RelatedPages', [ 'wikiarelatedpages-heading' ] );
 JSMessages::registerPackage( 'RelatedPagesInContent', [ 'wikiamobile-related-article' , 'wikiamobile-people-also-read'] );

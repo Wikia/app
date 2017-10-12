@@ -29,6 +29,7 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialInterwikiEdit',
 );
 
+$wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
 $wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
 require_once($IP . '/includes/SpecialPage.php');

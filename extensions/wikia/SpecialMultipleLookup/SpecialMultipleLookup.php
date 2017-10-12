@@ -20,6 +20,8 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 define( "MULTILOOKUP_NO_CACHE", false );
 define( "ML_TEST", 0 );
+$wgExtensionMessagesFiles["MultiLookup"] = dirname( __FILE__ ) . '/SpecialMultipleLookup.i18n.php';
+$wgExtensionMessagesFiles['MultiLookupAliases'] = __DIR__ . '/SpecialMultipleLookup.aliases.php';
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_helper.php' );
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_ajax.php' );
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_hooks.php' );

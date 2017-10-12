@@ -52,6 +52,7 @@ $wgHooks['EditPage::importFormData'][] = 'WikiaPhotoGalleryHelper::onImportFormD
 $wgHooks[ 'PageRenderingHash' ][] = 'WikiaPhotoGalleryHelper::addMediaGalleryCacheKey';
 
 // i18n
+$wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/WikiaPhotoGallery.i18n.php';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiaPhotoGalleryAjax';

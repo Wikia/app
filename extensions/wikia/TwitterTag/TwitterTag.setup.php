@@ -14,6 +14,7 @@ $wgExtensionCredits['parserTag'][] = [
 
 $wgAutoloadClasses['TwitterTagController'] = __DIR__ . '/TwitterTagController.class.php';
 
+$wgExtensionMessagesFiles['TwitterTag'] = __DIR__ . '/TwitterTag.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'TwitterTagController::onParserFirstCallInit';
 

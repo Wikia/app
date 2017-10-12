@@ -17,6 +17,7 @@ $dir = __DIR__ . '/';
 $wgAutoloadClasses['AppPromoLandingController'] = $dir . 'AppPromoLandingController.class.php';
 
 // i18n mapping
+$wgExtensionMessagesFiles['AppPromoLanding'] = $dir . 'AppPromoLanding.i18n.php';
 
 // setup functions
 //$wgExtensionFunctions[] = 'AppPromoLandingController::setupAppPromoLanding';

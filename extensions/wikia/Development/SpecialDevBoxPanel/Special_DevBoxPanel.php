@@ -29,6 +29,7 @@ $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 
 // Hooks
 $dir = __DIR__ . '/';
+$wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 
 if (!empty($wgRunningUnitTests) && $wgNoDBUnits) {
 	Language::$dataCache = new FakeCache();

@@ -62,6 +62,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionFunctions[]        = array( 'ExtDynamicPageList', 'setupDPL' );
 $wgHooks['LanguageGetMagic'][] = 'ExtDynamicPageList__languageGetMagic';
 
+$wgExtensionMessagesFiles['DynamicPageList'] =  dirname( __FILE__ ) . '/DynamicPageList.i18n.php';
 
 $DPLVersion = '2.3.0';
 

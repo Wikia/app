@@ -25,3 +25,4 @@ $wgAutoloadClasses['ThumbnailHelper'] = $dir . 'ThumbnailHelper.class.php';
 $wgHooks['BeforePageDisplay'][] = 'ThumbnailHooks::onBeforePageDisplay';
 
 // i18n mapping
+$wgExtensionMessagesFiles['Thumbnails'] = $dir . 'Thumbnails.i18n.php' ;

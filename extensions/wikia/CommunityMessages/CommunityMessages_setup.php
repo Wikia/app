@@ -29,6 +29,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgExtensionFunctions[] = 'CommunityMessagesInit';
+$wgExtensionMessagesFiles['CommunityMessages'] = dirname( __FILE__ ) . '/CommunityMessages.i18n.php';
 $wgAutoloadClasses['CommunityMessages'] = "$IP/extensions/wikia/CommunityMessages/CommunityMessages.class.php";
 $wgAutoloadClasses['CommunityMessagesAjax'] = "$IP/extensions/wikia/CommunityMessages/CommunityMessagesAjax.class.php";
 

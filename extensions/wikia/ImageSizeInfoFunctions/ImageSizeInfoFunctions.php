@@ -32,3 +32,4 @@ $wgAutoloadClasses['ExtImageSizeInfoFunctionsHooks'] = dirname( __FILE__ ) . '/I
 
 $wgHooks['ParserFirstCallInit'][] = 'ExtImageSizeInfoFunctionsHooks::parserFirstCallInit';
 
+$wgExtensionMessagesFiles['ImageSizeInfoFunctions'] =  dirname( __FILE__ ) . '/ImageSizeInfoFunctions.i18n.php';

@@ -19,6 +19,7 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__).'/';
 
+$wgExtensionMessagesFiles['WikiaMiniUpload'] = $dir.'/WikiaMiniUpload.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'WMUSetup';
 
 function WMUSetup( EditPage $editform ): bool {

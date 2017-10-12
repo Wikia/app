@@ -38,6 +38,8 @@ $wgExtensionCredits['specialpage'][] = array(
  * Set up the new special page
  */
 $dir = dirname( __FILE__ ) . '/';
+$wgExtensionMessagesFiles['Sitemap'] = $dir . 'Sitemap.i18n.php';
+$wgExtensionMessagesFiles['SitemapAlias'] = $dir . 'Sitemap.alias.php';
 $wgAutoloadClasses['SitemapPage'] = $dir . 'SpecialSitemap_body.php';
 $wgSpecialPages['Sitemap'] = 'SitemapPage';
 $wgSpecialPageGroups['Sitemap'] = 'wikia';

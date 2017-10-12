@@ -38,6 +38,7 @@ $wgAutoloadClasses['InstantGlobalsModule'] = "{$dir}/InstantGlobalsModule.class.
 $wgWikiaApiControllers['InstantGlobalsApiController'] = $dir . 'InstantGlobalsApiController.class.php';
 
 // i18n
+$wgExtensionMessagesFiles['InstantGlobals'] = $dir . '/InstantGlobals.i18n.php';
 
 /**
  * hooks

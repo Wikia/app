@@ -33,6 +33,7 @@ $wgAutoloadClasses[ 'CategoryPageII' ] = __DIR__ . '/CategoryPageII.php';
 $wgAutoloadClasses[ 'CategoryUrlParams' ] = __DIR__ . '/CategoryUrlParams.class.php';
 
 // Internalization
+$wgExtensionMessagesFiles[ 'CategoryPageII' ] = __DIR__ . '/i18n/CategoryExhibition.i18n.php';
 
 // Hooks
 define('CATEXHIBITION_DISABLED', 'CATEXHIBITION_DISABLED');

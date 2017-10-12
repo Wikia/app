@@ -22,3 +22,4 @@ $wgHooks['OpenGraphMetaHeaders'][] = 'SEOTweaksHooksHelper::onOpenGraphMetaHeade
 $wgHooks['ShowMissingArticle'][] = 'SEOTweaksHooksHelper::onShowMissingArticle';
 
 // messages
+$wgExtensionMessagesFiles['SEOTweaks'] = $dir . 'SEOTweaks.i18n.php';

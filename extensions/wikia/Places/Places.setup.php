@@ -76,6 +76,8 @@ $wgAPIModules['places'] = 'WikiaApiPlaces';
 /**
  * messages
  */
+$wgExtensionMessagesFiles['Places'] = $dir . '/Places.i18n.php';
+$wgExtensionMessagesFiles['PlacesAliases'] = $dir . '/Places.alias.php';
 
 JSMessages::registerPackage('Places', array(
 	'places-toolbar-button-*',

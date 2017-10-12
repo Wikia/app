@@ -32,6 +32,7 @@ $wgAutoloadClasses['VideoHomePageArticle']    =  $dir . 'model/VideoHomePageArti
 $wgAutoloadClasses['VideoHomePagePage']       =  $dir . 'model/VideoHomePagePage.class.php';
 
 // i18n mapping
+$wgExtensionMessagesFiles['VideoPageTool'] = $dir.'VideoPageTool.i18n.php';
 
 // special pages
 $wgSpecialPages['VideoPageAdmin'] = 'VideoPageAdminSpecialController';

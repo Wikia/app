@@ -17,6 +17,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 //i18n
+$wgExtensionMessagesFiles['CanonicalHref'] = __DIR__ . '/CanonicalHref.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
 /**

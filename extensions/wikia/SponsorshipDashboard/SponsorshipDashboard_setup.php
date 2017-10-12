@@ -24,6 +24,7 @@ $dir = dirname(__FILE__) . '/';
 
 require_once( $dir . '/SponsorshipDashboard_autoload.php' );
 
+$wgExtensionMessagesFiles['SponsorshipDashboard'] = $dir . 'SponsorshipDashboard.i18n.php';
 
 $wgAjaxExportList[] = 'SponsorshipDashboardAjax';
 
