@@ -10,7 +10,6 @@ CKEDITOR.plugins.add('rte-media', {
 
 			// get all media (images / videos) - don't include placeholders
 			media = RTE.tools.getMedia();
-			debugger;
 			// regenerate media menu
 			self.setupMedia(media);
 
@@ -164,7 +163,7 @@ CKEDITOR.plugins.add('rte-media', {
 		if (window.wgEnableMediaGalleryExt && $(media).attr('type') === 'image-gallery'){
 			standardButtons.shift();
 		}
-		debugger;
+
 		RTE.overlay.add(media, standardButtons);
 
 		// unbind previous events

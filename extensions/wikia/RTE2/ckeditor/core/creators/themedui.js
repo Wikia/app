@@ -225,7 +225,6 @@ CKEDITOR.replaceClass = 'ckeditor';
 
 		// Fire the mode handler.
 		this._.modes[ newMode ]( function() {
-			debugger;
 			// Set the current mode.
 			editor.mode = newMode;
 
@@ -354,7 +353,6 @@ CKEDITOR.replaceClass = 'ckeditor';
 
 			if ( mode == CKEDITOR.ELEMENT_MODE_REPLACE && editor.config.autoUpdateElement && element.$.form )
 				editor._attachToForm();
-			debugger;
 			editor.setMode( editor.config.startupMode, function() {
 				
 				// Clean on startup.
