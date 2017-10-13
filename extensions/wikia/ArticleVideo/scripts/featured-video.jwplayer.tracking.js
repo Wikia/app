@@ -25,18 +25,27 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 		window.guaSetCustomDimension(36, currentVideo.tags);
 	}
 
+	/**
+	 * Comscore Video Metrix tracking
+	 * C1 (identifier of content) = 1
+	 * C2 (client ID) = 6177433 for Fandom
+	 * C5 (video type identifier) = 04 for featured videos
+	 * We need to track at
+	 */
 	function trackComscoreVideoMetrix() {
-		var mountedScript = document.getElementById('comscoreVideoMetrixTrack'),
-			c1 = _comscore.c1,
-			c2 = _comscore.c2;
+		//Do not track to comscore on dev env
+		if (window.wgDevelEnvironment) {
+			return;
+		}
+
+		var mountedScript = document.getElementById('comscoreVideoMetrixTrack');
 
 		if (mountedScript) {
 			mountedScript.parentElement.removeChild(mountedScript)
 		}
 
 		var script = document.createElement('script');
-		// 01 and 02 come from comscore config and C5=05 is for short form video presumer
-		script.src = 'http://b.scorecardresearch.com/p?C1=' + c1 + '1&C2=' + c2 + '&C5=04';
+		script.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
 		document.head.appendChild(script);
 	}
 
@@ -136,11 +145,11 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 					gaData = willAutoplay ?
 						{ label:'autoplay-start', action: 'impression' } :
 						{ label: 'user-start' };
+
+					trackComscoreVideoMetrix();
 				}
 
 				state.wasStartTracked = true;
-
-				trackComscoreVideoMetrix();
 			}
 
 			gaData && track(gaData);
