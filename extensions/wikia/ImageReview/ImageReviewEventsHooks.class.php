@@ -30,7 +30,8 @@ class ImageReviewEventsHooks {
 		WikiaLogger::instance()->info(
 			__METHOD__,
 			[
-				'file_name' => $file->getTitle()->getPrefixedDBkey()
+				'file_name' => $file->getTitle()->getPrefixedDBkey(),
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, UploadBase::class, LocalFile::class ] )
 			]
 		);
 
@@ -180,7 +181,8 @@ class ImageReviewEventsHooks {
 			WikiaLogger::instance()->info(
 				__METHOD__,
 				[
-					'file_name' => $title->getPrefixedDBkey()
+					'file_name' => $title->getPrefixedDBkey(),
+					'caller' => wfGetCallerClassMethod( [ __CLASS__, UploadBase::class, LocalFile::class ] )
 				]
 			);
 		}
