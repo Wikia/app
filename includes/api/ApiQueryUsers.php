@@ -73,6 +73,7 @@ class ApiQueryUsers extends ApiQueryBase {
 	}
 
 	public function execute() {
+		global $wgExternalSharedDB;
 		$params = $this->extractRequestParams();
 
 		if ( !is_null( $params['prop'] ) ) {
@@ -119,15 +120,14 @@ class ApiQueryUsers extends ApiQueryBase {
 		$result = $this->getResult();
 
 		if ( count( $goodNames ) ) {
-			$this->addTables( 'user' );
-			$this->addFields( 'user_id' );
-			$this->addWhereFld( 'user_name', $goodNames );
 
 			// Wikia: there's no point in querying a per-cluster user table for IP blocks
 			#$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
-
-			$data = array();
-			$res = $this->select( __METHOD__ );
+			$data = [];
+			/* Wikia change begin - SUS-2989 */
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$res = $dbr->select('`user`','user_id' , [ 'user_name' => $goodNames ], __METHOD__);
+			/* Wikia change end - SUS-2989 */
 
 			foreach ( $res as $row ) {
 				$user = User::newFromId( $row->user_id );
