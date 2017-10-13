@@ -38,7 +38,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		return adContext.get('opts.isFVPostrollEnabled') && canAdBePlayed(videoDepth);
 	}
 
-	function buildVastUrl(position, videoDepth, correlator) {
+	function buildVastUrl(position, videoDepth, correlator, bidParams) {
 		var options = {
 				correlator: correlator,
 				vpos: position
@@ -50,12 +50,19 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				src: 'premium'
 			};
 
+		if (videoDepth === 1 && bidParams) {
+			Object.keys(bidParams).forEach(function (key) {
+				slotParams[key] = bidParams[key];
+			});
+		}
 		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
+
+		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
 
 		return vastUrlBuilder.build(aspectRatio, slotParams, options);
 	}
 
-	return function (player) {
+	return function (player, bidParams) {
 		var correlator,
 			videoDepth = 0;
 
@@ -71,7 +78,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			videoDepth += 1;
 
 			if (shouldPlayPreroll(videoDepth)) {
-				player.playAd(buildVastUrl('preroll', videoDepth, correlator));
+				player.playAd(buildVastUrl('preroll', videoDepth, correlator, bidParams));
 			}
 		});
 
