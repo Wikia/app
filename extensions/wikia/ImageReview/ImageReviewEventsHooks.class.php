@@ -101,12 +101,12 @@ class ImageReviewEventsHooks {
 	 *
 	 * @see SUS-2988
 	 *
-	 * @param int $pageId
+	 * @param Title $title Title object of an image to be pushed to the queue
 	 * @param int $revisionId
 	 * @param int $userId
 	 */
-	public static function requeueImageUpload( int $pageId, int $revisionId, int $userId ) {
-		self::actionCreate( Title::newFromID( $pageId ), $revisionId, 'created', $userId );
+	public static function requeueImageUpload( Title $title, int $revisionId, int $userId ) {
+		self::actionCreate( $title, $revisionId, 'created', $userId );
 	}
 
 	private static function isFileForReview( Title $title ) {
