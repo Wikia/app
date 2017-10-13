@@ -69,8 +69,8 @@ class PushUploadsToImageReview extends Maintenance {
 
 		// logging
 		global $wgDBName;
-		$this->output( "\n" . $db->lastQuery() );
-		$this->output( "\n{$wgDBName} - {$count} uploads will be checked ");
+		$this->output( $db->lastQuery() . "\n");
+		$this->output( "{$wgDBName} - {$count} uploads will be checked\n");
 
 		foreach($res as $row) {
 			$title = Title::newFromRow($row);
@@ -86,11 +86,11 @@ class PushUploadsToImageReview extends Maintenance {
 				ImageReviewEventsHooks::requeueImageUpload($title, $row->rev_id, $row->rev_user);
 			}
 			else {
-				$this->output("\n * would push {$row->page_title}, but running in dry-run mode" );
+				$this->output("* would push {$row->page_title} (rev #{$row->rev_id}), but running in dry-run mode\n" );
 			}
 		}
 
-		$this->output( "\n{$wgDBName} - {$pushed} uploads were pushed");
+		$this->output( "{$wgDBName} - {$pushed} uploads were pushed\n");
 
 		WikiaLogger::instance()->info( __CLASS__, [ 'uploads_pushed' => $pushed ] );
 	}
