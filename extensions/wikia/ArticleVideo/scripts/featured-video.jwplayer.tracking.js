@@ -38,7 +38,8 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 			return;
 		}
 
-		var mountedScript = document.getElementById('comscoreVideoMetrixTrack');
+		var scriptId = 'comscoreVideoMetrixTrack',
+			mountedScript = document.getElementById(scriptId);
 
 		if (mountedScript) {
 			mountedScript.parentElement.removeChild(mountedScript)
@@ -46,6 +47,7 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 
 		var script = document.createElement('script');
 		script.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
+		script.id = scriptId;
 		document.head.appendChild(script);
 	}
 
