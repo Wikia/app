@@ -121,7 +121,7 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 						{ label: 'user-start' };
 				}
 
-				playerInstance.trigger('firstVideoPlay');
+				playerInstance.trigger('videoStart');
 				state.wasStartTracked = true;
 			}
 

@@ -11,10 +11,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	function calculateRV(depth) {
 		var capping = adContext.get('opts.fvAdsFrequency');
 
-		return depth < 2 || !capping ? 1 : Math.floor((depth - 1) / capping) + 1;
+		return (depth < 2 || !capping) ? 1 : (Math.floor((depth - 1) / capping) + 1);
 	}
 
-	function cappingAllowsToShowNextVideo(depth) {
+	function shouldPlayAdOnNextVideo(depth) {
 		var capping = adContext.get('opts.fvAdsFrequency');
 
 		return adContext.get('opts.replayAdsForFV') && capping > 0 && (depth - 1) % capping === 0;
@@ -23,7 +23,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	function canAdBePlayed(depth) {
 		var isReplay = depth > 1;
 
-		return !isReplay || (isReplay && cappingAllowsToShowNextVideo(depth));
+		return !isReplay || (isReplay && shouldPlayAdOnNextVideo(depth));
 	}
 
 	function shouldPlayPreroll(videoDepth) {
@@ -75,7 +75,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			return;
 		}
 
-		player.on('firstVideoPlay', function () {
+		player.on('videoStart', function () {
 			log('Preroll position reached', log.levels.info, logGroup);
 
 			correlator = Math.round(Math.random() * 10000000000);
