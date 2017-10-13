@@ -38,7 +38,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		return adContext.get('opts.isFVPostrollEnabled') && canAdBePlayed(videoDepth);
 	}
 
-	function buildVastUrl(position, videoDepth, correlator) {
+	function buildVastUrl(position, videoDepth, correlator, bidParams) {
 		var options = {
 				vpos: position,
 				correlator: correlator
@@ -50,15 +50,24 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				src: 'premium'
 			};
 
+		if (videoDepth === 1) {
+			Object.keys(bidParams).forEach(function (key) {
+				slotParams[key] = bidParams[key];
+			});
+		}
+
 		if (adContext.get('opts.megaAdUnitBuilderEnabled')) {
 			options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
 		}
 
+		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
+
 		return vastUrlBuilder.build(aspectRatio, slotParams, options);
 	}
 
-	return function (player) {
+	return function (player, bidParams) {
 		var correlator,
+			vastUrl,
 			videoDepth = 0;
 
 		if (!adContext.get('opts.showAds')) {
@@ -73,14 +82,16 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			videoDepth += 1;
 
 			if (shouldPlayPreroll(videoDepth)) {
-				player.playAd(buildVastUrl('preroll', videoDepth, correlator));
+				vastUrl = buildVastUrl('preroll', videoDepth, correlator, bidParams);
+				player.playAd(vastUrl);
 			}
 		});
 
 		player.on('videoMidPoint', function () {
 			log('Midroll position reached', log.levels.info, logGroup);
 			if (shouldPlayMidroll(videoDepth)) {
-				player.playAd(buildVastUrl('midroll', videoDepth, correlator));
+				vastUrl = buildVastUrl('midroll', videoDepth, correlator);
+				player.playAd(vastUrl);
 			}
 
 		});
@@ -88,7 +99,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		player.on('beforeComplete', function () {
 			log('Postroll position reached', log.levels.info, logGroup);
 			if (shouldPlayPostroll(videoDepth)) {
-				player.playAd(buildVastUrl('postroll', videoDepth, correlator));
+				vastUrl = buildVastUrl('postroll', videoDepth, correlator);
+				player.playAd(vastUrl);
 			}
 		});
 	};
