@@ -2,7 +2,6 @@
 
 use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
-use Wikia\Tasks\Tasks\ImageReviewTask;
 
 class ImageReviewEventsHooks {
 	const ROUTING_KEY = 'image-review.mw-context.on-upload';
@@ -13,6 +12,27 @@ class ImageReviewEventsHooks {
 		$title = Title::newFromID( $form->getTitle()->getArticleID() );
 
 		self::actionCreate( $title ?? $form->getTitle() );
+
+		return true;
+	}
+
+	/**
+	 * Report all uploads
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/FileUpload
+	 * @see SUS-2988
+	 *
+	 * @param LocalFile $file
+	 * @return bool
+	 */
+	public static function onFileUpload( LocalFile $file ) {
+		// SUS-2988 | log uploads and image review pushes
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'file_name' => $file->getTitle()->getPrefixedDBkey()
+			]
+		);
 
 		return true;
 	}
@@ -101,15 +121,19 @@ class ImageReviewEventsHooks {
 	 *
 	 * @see SUS-2988
 	 *
-	 * @param int $pageId
+	 * @param Title $title Title object of an image to be pushed to the queue
 	 * @param int $revisionId
 	 * @param int $userId
 	 */
-	public static function requeueImageUpload( int $pageId, int $revisionId, int $userId ) {
-		self::actionCreate( Title::newFromID( $pageId ), $revisionId, 'created', $userId );
+	public static function requeueImageUpload( Title $title, int $revisionId, int $userId ) {
+		self::actionCreate( $title, $revisionId, 'created', $userId );
 	}
 
-	private static function isFileForReview( Title $title ) {
+	/**
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isFileForReview( Title $title ) : bool {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$localFile = wfLocalFile( $title );
 
@@ -152,6 +176,14 @@ class ImageReviewEventsHooks {
 			];
 
 			$rabbitConnection->publish( self::ROUTING_KEY, $data );
+
+			// SUS-2988 | log uploads and image review pushes
+			WikiaLogger::instance()->info(
+				__METHOD__,
+				[
+					'file_name' => $title->getPrefixedDBkey()
+				]
+			);
 		}
 	}
 
