@@ -6,6 +6,7 @@ $wgExtensionCredits['other'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FacebookPreferences',
 ];
 
+$wgExtensionMessagesFiles['FacebookPreferences'] = __DIR__ . '/FacebookPreferences.i18n.php';
 
 $wgAutoloadClasses['FacebookService'] = __DIR__ . '/FacebookService.php';
 $wgAutoloadClasses['FacebookApiFactory'] = __DIR__ . '/FacebookApiFactory.php';

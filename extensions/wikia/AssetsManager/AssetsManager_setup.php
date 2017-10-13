@@ -18,6 +18,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //i18n
+$wgExtensionMessagesFiles['AssetsManager'] = __DIR__ . '/i18n/AssetsManager.i18n.php';
 
 $wgAutoloadClasses['AssetsManagerBaseBuilder'] = __DIR__ . '/builders/AssetsManagerBaseBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerOneBuilder'] = __DIR__ . '/builders/AssetsManagerOneBuilder.class.php';

@@ -24,6 +24,7 @@ $wgAutoloadClasses[ 'QuickToolsHelper'] =  __DIR__ . '/QuickToolsHelper.class.ph
 $wgAutoloadClasses[ 'QuickToolsHooksHelper'] =  __DIR__ . '/QuickToolsHooksHelper.class.php';
 
 // i18n
+$wgExtensionMessagesFiles['QuickTools'] = __DIR__ . '/QuickTools.i18n.php';
 
 // Resource Loader modules
 $qtResourceTemplate = array(

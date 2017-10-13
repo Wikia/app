@@ -2,7 +2,6 @@
 
 use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
-use Wikia\Tasks\Tasks\ImageReviewTask;
 
 class ImageReviewEventsHooks {
 	const ROUTING_KEY = 'image-review.mw-context.on-upload';
@@ -15,6 +14,32 @@ class ImageReviewEventsHooks {
 		self::actionCreate( $title ?? $form->getTitle() );
 
 		return true;
+	}
+
+	/**
+	 * Report all uploads
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/FileUpload
+	 * @see SUS-2988
+	 *
+	 * @param LocalFile $file
+	 * @return bool
+	 */
+	public static function onFileUpload( LocalFile $file ) {
+		// SUS-2988 | log uploads and image review pushes
+		WikiaLogger::instance()->info(
+			__METHOD__,
+			[
+				'file_name' => $file->getTitle()->getPrefixedDBkey(),
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, UploadBase::class, LocalFile::class ] )
+			]
+		);
+
+		return true;
+	}
+
+	public static function onVisualEditorAddMedia( Title $title ) {
+		static::actionCreate( $title );
 	}
 
 	public static function onFileRevertComplete( Page $page ) {
@@ -92,7 +117,24 @@ class ImageReviewEventsHooks {
 		return true;
 	}
 
-	private static function isFileForReview( $title ) {
+	/**
+	 * Push given image upload to the queue. This method is used by the re-queueing script.
+	 *
+	 * @see SUS-2988
+	 *
+	 * @param Title $title Title object of an image to be pushed to the queue
+	 * @param int $revisionId
+	 * @param int $userId
+	 */
+	public static function requeueImageUpload( Title $title, int $revisionId, int $userId ) {
+		self::actionCreate( $title, $revisionId, 'created', $userId );
+	}
+
+	/**
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isFileForReview( Title $title ) : bool {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$localFile = wfLocalFile( $title );
 
@@ -102,11 +144,16 @@ class ImageReviewEventsHooks {
 		return false;
 	}
 
-	private static function actionCreate( Title $title, $revisionId = null, $action = 'created' ) {
+	/**
+	 * @param Title $title
+	 * @param int $revisionId
+	 * @param string $action
+	 * @param int $userId allow user ID that makes an upload to be forced (instead of taken from the RequestContext)
+	 */
+	private static function actionCreate( Title $title, $revisionId = null, $action = 'created', $userId = null ) {
 		if ( self::isFileForReview( $title ) ) {
-			global $wgImageReview, $wgCityId;
+			global $wgCityId;
 
-			$rabbitConnection = new ConnectionBase( $wgImageReview );
 			$wamRank = ( new WAMService() )->getCurrentWamRankForWiki( $wgCityId );
 			$revisionId = $revisionId ?? $title->getLatestRevID();
 			$articleId = $title->getArticleID();
@@ -119,7 +166,7 @@ class ImageReviewEventsHooks {
 						'revision' => $revisionId,
 					]
 				),
-				'userId' => RequestContext::getMain()->getUser()->getId(),
+				'userId' => $userId ?? RequestContext::getMain()->getUser()->getId(),
 				'wikiId' => $wgCityId,
 				'pageId' => $articleId,
 				'revisionId' => $revisionId,
@@ -128,14 +175,22 @@ class ImageReviewEventsHooks {
 				'action' => $action
 			];
 
-			$rabbitConnection->publish( self::ROUTING_KEY, $data );
+			self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
+
+			// SUS-2988 | log uploads and image review pushes
+			WikiaLogger::instance()->info(
+				__METHOD__,
+				[
+					'file_name' => $title->getPrefixedDBkey(),
+					'caller' => wfGetCallerClassMethod( [ __CLASS__, UploadBase::class, LocalFile::class ] )
+				]
+			);
 		}
 	}
 
 	private static function actionDelete( $pageId, $revisionId = null, $action = 'deleted' ) {
-		global $wgImageReview, $wgCityId;
+		global $wgCityId;
 
-		$rabbitConnection = new ConnectionBase( $wgImageReview );
 		$data = [
 			'wikiId' => $wgCityId,
 			'pageId' => $pageId,
@@ -146,18 +201,15 @@ class ImageReviewEventsHooks {
 			$data['revisionId'] = $revisionId;
 		}
 
-		$rabbitConnection->publish( self::ROUTING_KEY, $data );
+		self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
 	}
 
 	private static function actionPurge( $wikiId, $action = 'purged' ) {
-		global $wgImageReview;
-
-		$rabbitConnection =  new ConnectionBase( $wgImageReview );
 		$data = [
 			'wikiId' => $wikiId,
 			'action' => $action
 		];
-		$rabbitConnection->publish( self::ROUTING_KEY, $data );
+		self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
 	}
 
 	private static function actionShow( Title $title, $revisionId ) {
@@ -166,5 +218,22 @@ class ImageReviewEventsHooks {
 
 	private static function actionHide( $pageId, $revisionId ) {
 		self::actionDelete( $pageId, $revisionId, 'hidden' );
+	}
+
+	private static $rabbitConnection = null;
+
+	/**
+	 * Cache the connection to RabbitMQ
+	 *
+	 * @return ConnectionBase
+	 */
+	private static function getRabbitConnection() : ConnectionBase {
+		global $wgImageReview;
+
+		if ( is_null( self::$rabbitConnection ) ) {
+			self::$rabbitConnection = new ConnectionBase($wgImageReview);
+		}
+
+		return self::$rabbitConnection;
 	}
 }

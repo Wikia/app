@@ -21,3 +21,4 @@ $wgAutoloadClasses[ 'ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugi
 
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
 
+$wgExtensionMessagesFiles['Forum'] = $dir . 'Forum.i18n.php' ;

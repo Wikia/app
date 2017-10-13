@@ -24,3 +24,4 @@ $wgAutoloadClasses['ResourceLoaderAdEngineInstartLogicModule'] = __DIR__ . '/Res
 $wgHooks['InstantGlobalsGetVariables'][] = 'ARecoveryEngineHooks::onInstantGlobalsGetVariables';
 
 // i18n
+$wgExtensionMessagesFiles['ARecoveryEngine'] = __DIR__ . '/ARecoveryEngine.i18n.php';

@@ -21,6 +21,7 @@ $wgExtensionCredits['specialpage'][] = array(
  * setup functions
  */
 $wgExtensionFunctions[] = 'wfContentFeedsInit';
+$wgExtensionMessagesFiles['ContentFeeds'] = dirname(__FILE__) . '/ContentFeeds.i18n.php';
 
 function wfContentFeedsInit() {
 	global $wgHooks, $wgAutoloadClasses;

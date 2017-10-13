@@ -198,7 +198,7 @@ ve.wikiaTest = ( function () {
 			previous = current;
 		}
 
-		QUnit.expect( testCases.length );
+		assert.expect( testCases.length );
 	};
 
 	/**
@@ -274,7 +274,7 @@ ve.wikiaTest = ( function () {
 			previous = merged;
 		}
 
-		QUnit.expect( testCases.length );
+		assert.expect( testCases.length );
 	};
 
 	// Exports

@@ -31,6 +31,8 @@ $wgAutoloadClasses['RelatedForumDiscussionController'] =  $dir . 'RelatedForumDi
 $wgAutoloadClasses['ThreadWatchlistDeleteUpdate'] = $dir . 'ThreadWatchlistDeleteUpdate.php';
 
 // i18n mapping
+$wgExtensionMessagesFiles['Forum'] = $dir . 'Forum.i18n.php' ;
+$wgExtensionMessagesFiles['ForumAliases'] = $dir . 'Forum.alias.php';
 
 // special pages
 $wgSpecialPages['Forum'] =  'ForumSpecialController';

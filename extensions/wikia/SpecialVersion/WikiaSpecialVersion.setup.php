@@ -22,6 +22,7 @@ $wgSpecialPages['Version'] = 'WikiaSpecialVersionController';
 /**
  * message files
  */
+$wgExtensionMessagesFiles['WikiaSpecialVersion'] = $dir . 'WikiaSpecialVersion.i18n.php' ;
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'Wikia Special:Version',

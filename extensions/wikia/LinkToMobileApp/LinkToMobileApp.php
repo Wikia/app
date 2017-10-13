@@ -30,6 +30,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 //i18n
+$wgExtensionMessagesFiles['LinkToMobileApp'] = __DIR__ . '/LinkToMobileApp.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'efLinkToMobileApp';
 

@@ -54,6 +54,8 @@ define( 'SRF_VERSION', '1.8' );
 // Initialize the formats later on, so the $srfgFormats setting can be manipulated in LocalSettings.
 $wgExtensionFunctions[] = 'srffInitFormats';
 
+$wgExtensionMessagesFiles['SemanticResultFormats'] = dirname( __FILE__ ) . '/SemanticResultFormats.i18n.php';
+$wgExtensionMessagesFiles['SemanticResultFormatsMagic'] = dirname( __FILE__ ) . '/SemanticResultFormats.i18n.magic.php';
 
 $srfgScriptPath = ( $wgExtensionAssetsPath === false ? $wgScriptPath . '/extensions' : $wgExtensionAssetsPath ) . '/SemanticResultFormats';
 $srfgIP = dirname( __FILE__ );

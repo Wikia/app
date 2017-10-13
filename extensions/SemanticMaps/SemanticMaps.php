@@ -97,6 +97,7 @@ require_once 'SM_Settings.php';
 	# OpenLayers API
 	include_once $smgDir . 'includes/services/OpenLayers/SM_OpenLayers.php';
 
+$wgExtensionMessagesFiles['SemanticMaps'] = $smgDir . 'SemanticMaps.i18n.php';
 
 $incDir = __DIR__ . '/includes/';
 

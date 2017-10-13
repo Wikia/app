@@ -18,5 +18,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['ExpandTemplates'] = $dir . 'ExpandTemplates_body.php';
+$wgExtensionMessagesFiles['ExpandTemplates'] = $dir . 'ExpandTemplates.i18n.php';
+$wgExtensionMessagesFiles['ExpandTemplatesAlias'] = $dir . 'ExpandTemplates.alias.php';
 $wgSpecialPages['ExpandTemplates'] = 'ExpandTemplates';
 $wgSpecialPageGroups['ExpandTemplates'] = 'wiki';

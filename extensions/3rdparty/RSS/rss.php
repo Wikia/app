@@ -32,6 +32,7 @@ $wgExtensionCredits['parserhook'][] = array(
 
 define('MAGPIE_OUTPUT_ENCODING', 'UTF-8');
 
+$wgExtensionMessagesFiles['rss'] = dirname(__FILE__) . '/rss.i18n.php';
 
 #change this according to your magpie installation!
 require_once(dirname(__FILE__) . '/magpierss/rss_fetch.inc');

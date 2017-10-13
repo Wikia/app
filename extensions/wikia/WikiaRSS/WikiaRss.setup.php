@@ -30,3 +30,4 @@ $wgAutoloadClasses['WikiaRssExternalController'] =  $dir . '/WikiaRssExternalCon
 $wgHooks['ParserFirstCallInit'][] = 'WikiaRssHooks::onParserFirstCallInit';
 
 //messages
+$wgExtensionMessagesFiles['WikiaRss'] = $dir . '/WikiaRss.i18n.php';

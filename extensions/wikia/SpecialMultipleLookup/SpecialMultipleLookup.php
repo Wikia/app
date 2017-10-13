@@ -26,6 +26,9 @@ $wgAutoloadClasses['SpecialMultiLookup'] = __DIR__ . '/SpecialMultiLookup.php';
 
 $wgHooks['ContributionsToolLinks'][] = 'SpecialMultiLookup::onContributionsToolLinks';
 
+$wgExtensionMessagesFiles["MultiLookup"] = dirname( __FILE__ ) . '/SpecialMultipleLookup.i18n.php';
+$wgExtensionMessagesFiles['MultiLookupAliases'] = __DIR__ . '/SpecialMultipleLookup.aliases.php';
+
 $wgSpecialPages['MultiLookup'] = 'SpecialMultiLookup';
 $wgSpecialPageGroups['MultiLookup'] = 'users';
 

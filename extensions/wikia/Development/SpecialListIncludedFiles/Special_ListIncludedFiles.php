@@ -6,6 +6,7 @@
  * Mainly intended for dev use... not because it's private, just because it's not too useful to anyone else.
  */
 $dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['listincludedfiles'] = $dir . 'Special_ListIncludedFiles.i18n.php';
 
 require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['ListIncludedFiles'] = 'ListIncludedFiles';

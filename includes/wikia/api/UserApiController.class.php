@@ -49,7 +49,7 @@ class UserApiController extends WikiaApiController {
 				'title' => $user->getTitleKey(),
 				'name' => $userName,
 				'url' => AvatarService::getUrl( $userName ),
-				'numberofedits' => (int) $user->getEditCountLocal()
+				'numberofedits' => (int) $user->getEditCount()
 			);
 
 			if ( !empty( $powerUserTypes ) ) {

@@ -17,4 +17,5 @@ $wgExtensionCredits['specialpage'][] =
 	];
 
 $wgAutoloadClasses['UserToolsController'] = __DIR__ . '/UserToolsController.class.php';
+$wgExtensionMessagesFiles['UserTools'] = __DIR__ . '/UserTools.i18n.php';
 

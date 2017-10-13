@@ -21,6 +21,7 @@ if (!defined('MSG_STATUS_UNSEEN')) {
 }
 
 #--- messages file
+$wgExtensionMessagesFiles['SWMSendToGroupTask'] = dirname(__FILE__) . '/SWMSendToGroupWikiTask/SWMSendToGroupTask.i18n.php';
 
 class SWMSendToGroupTask extends BatchTask {
 	public $mType, $mVisible, $mParams, $mFounder, $mStaff;

@@ -26,6 +26,7 @@ $wgAutoloadClasses[ 'CategoryGallery' ] = $dir . '/CategoryGallery.class.php';
 $wgAutoloadClasses[ 'CategoryGalleriesHelper' ] = $dir . '/CategoryGalleriesHelper.class.php';
 
 // Internalization
+$wgExtensionMessagesFiles['CategoryGalleries'] = $dir . '/CategoryGalleries.i18n.php';
 
 // Set up hooks for embedding gallery into category page
 $wgHooks['CategoryPageView'][] = 'CategoryGalleriesHelper::onCategoryPageView';

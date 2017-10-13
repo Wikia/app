@@ -29,6 +29,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'version'        => ExtArrays::VERSION
 );
 
+$wgExtensionMessagesFiles['Arrays'     ] = ExtArrays::getDir() . '/Arrays.i18n.php';
+$wgExtensionMessagesFiles['ArraysMagic'] = ExtArrays::getDir() . '/Arrays.i18n.magic.php';
 
 // hooks registration:
 $wgHooks['ParserFirstCallInit'][] = 'ExtArrays::init';
