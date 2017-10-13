@@ -6,6 +6,7 @@
 
 $wgAutoloadClasses['ImageReviewEventsHooks'] = __DIR__ . '/ImageReviewEventsHooks.class.php';
 
+$wgHooks['FileUpload'][] = 'ImageReviewEventsHooks::onFileUpload';
 $wgHooks['UploadComplete'][] = 'ImageReviewEventsHooks::onUploadComplete';
 $wgHooks['FileRevertComplete'][] = 'ImageReviewEventsHooks::onFileRevertComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'ImageReviewEventsHooks::onArticleDeleteComplete';
