@@ -65,14 +65,22 @@ class PushUploadsToImageReview extends Maintenance {
 		);
 
 		$count = $db->affectedRows();
+		$pushed = 0;
 
 		// logging
 		global $wgDBName;
 		$this->output( "\n" . $db->lastQuery() );
-		$this->output( "\n{$wgDBName} - {$count} upload(s) will be checked ");
+		$this->output( "\n{$wgDBName} - {$count} uploads will be checked ");
 
 		foreach($res as $row) {
 			$title = Title::newFromRow($row);
+
+			// skipping as this is not an image
+			if (!ImageReviewEventsHooks::isFileForReview($title)) {
+				continue;
+			}
+
+			$pushed++;
 
 			if ($this->isDryRun === false) {
 				ImageReviewEventsHooks::requeueImageUpload($title, $row->rev_id, $row->rev_user);
@@ -82,9 +90,9 @@ class PushUploadsToImageReview extends Maintenance {
 			}
 		}
 
-		$this->output( "\nDone!" );
+		$this->output( "\n{$wgDBName} - {$pushed} uploads were pushed");
 
-		WikiaLogger::instance()->info( __CLASS__, [ 'uploads_pushed' => $count ] );
+		WikiaLogger::instance()->info( __CLASS__, [ 'uploads_pushed' => $pushed ] );
 	}
 }
 
