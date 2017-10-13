@@ -72,6 +72,6 @@ require([
 				setupPlayer(bidParams);
 			});
 	} else {
-		setupPlayer({});
+		setupPlayer();
 	}
 });
