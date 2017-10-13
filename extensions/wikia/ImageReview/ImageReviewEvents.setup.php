@@ -19,3 +19,4 @@ $wgHooks['CloseWikiPurgeSharedData'][] = 'ImageReviewEventsHooks::onCloseWikiPur
 $wgHooks['ThemeDesignerSaveImage'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
 $wgHooks['VisualEditorAddMedia'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
 $wgHooks['WikiaMiniUploadInsertImage'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
+$wgHooks['WikiaPhotoGalleryUpload'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
