@@ -151,9 +151,8 @@ class ImageReviewEventsHooks {
 	 */
 	private static function actionCreate( Title $title, $revisionId = null, $action = 'created', $userId = null ) {
 		if ( self::isFileForReview( $title ) ) {
-			global $wgImageReview, $wgCityId;
+			global $wgCityId;
 
-			$rabbitConnection = new ConnectionBase( $wgImageReview );
 			$wamRank = ( new WAMService() )->getCurrentWamRankForWiki( $wgCityId );
 			$revisionId = $revisionId ?? $title->getLatestRevID();
 			$articleId = $title->getArticleID();
@@ -175,7 +174,7 @@ class ImageReviewEventsHooks {
 				'action' => $action
 			];
 
-			$rabbitConnection->publish( self::ROUTING_KEY, $data );
+			self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
 
 			// SUS-2988 | log uploads and image review pushes
 			WikiaLogger::instance()->info(
@@ -188,9 +187,8 @@ class ImageReviewEventsHooks {
 	}
 
 	private static function actionDelete( $pageId, $revisionId = null, $action = 'deleted' ) {
-		global $wgImageReview, $wgCityId;
+		global $wgCityId;
 
-		$rabbitConnection = new ConnectionBase( $wgImageReview );
 		$data = [
 			'wikiId' => $wgCityId,
 			'pageId' => $pageId,
@@ -201,18 +199,15 @@ class ImageReviewEventsHooks {
 			$data['revisionId'] = $revisionId;
 		}
 
-		$rabbitConnection->publish( self::ROUTING_KEY, $data );
+		self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
 	}
 
 	private static function actionPurge( $wikiId, $action = 'purged' ) {
-		global $wgImageReview;
-
-		$rabbitConnection =  new ConnectionBase( $wgImageReview );
 		$data = [
 			'wikiId' => $wikiId,
 			'action' => $action
 		];
-		$rabbitConnection->publish( self::ROUTING_KEY, $data );
+		self::getRabbitConnection()->publish( self::ROUTING_KEY, $data );
 	}
 
 	private static function actionShow( Title $title, $revisionId ) {
@@ -221,5 +216,22 @@ class ImageReviewEventsHooks {
 
 	private static function actionHide( $pageId, $revisionId ) {
 		self::actionDelete( $pageId, $revisionId, 'hidden' );
+	}
+
+	private static $rabbitConnection = null;
+
+	/**
+	 * Cache the connection to RabbitMQ
+	 *
+	 * @return ConnectionBase
+	 */
+	private static function getRabbitConnection() : ConnectionBase {
+		global $wgImageReview;
+
+		if ( is_null( self::$rabbitConnection ) ) {
+			self::$rabbitConnection = new ConnectionBase($wgImageReview);
+		}
+
+		return self::$rabbitConnection;
 	}
 }
