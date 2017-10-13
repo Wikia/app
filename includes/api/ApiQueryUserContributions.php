@@ -237,14 +237,14 @@ class ApiQueryContributions extends ApiQueryBase {
 				// STRAIGHT_JOIN
 				$tables = array( 'revision', 'recentchanges', 'page' );
 				$this->addOption( 'STRAIGHT_JOIN' );
-				$this->addWhere( 'rc_user_text=rev_user_text' );
+				$this->addWhere( '(rc_user != 0 AND rc_user=rev_user OR rc_user_text=rev_user_text)' );
 				$this->addWhere( 'rc_timestamp=rev_timestamp' );
 				$this->addWhere( 'rc_this_oldid=rev_id' );
 			} else {
 				$tables[] = 'recentchanges';
 				$this->addJoinConds( array( 'recentchanges' => array(
 					'LEFT JOIN', array(
-						'rc_user_text=rev_user_text',
+						'(rc_user != 0 AND rc_user=rev_user OR rc_user_text=rev_user_text)',
 						'rc_timestamp=rev_timestamp',
 						'rc_this_oldid=rev_id' ) ) ) );
 			}
