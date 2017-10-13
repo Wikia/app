@@ -2,10 +2,14 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'wikia.articleVideo.featuredVideo.adsTracking',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, log) {
+], function (adContext, vastUrlBuilder, megaAdUnitBuilder, adsTracking, log) {
 
 	var aspectRatio = 640 / 480,
+		featuredVideoPassback = 'jwplayer',
+		featuredVideoSlotName = 'FEATURED',
+		featuredVideoSource = 'premium',
 		logGroup = 'wikia.articleVideo.featuredVideo.ads';
 
 	function calculateRV(depth) {
@@ -44,10 +48,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				vpos: position
 			},
 			slotParams = {
-				passback: 'jwplayer',
-				pos: 'FEATURED',
+				passback: featuredVideoPassback,
+				pos: featuredVideoSlotName,
 				rv: calculateRV(videoDepth),
-				src: 'premium'
+				src: featuredVideoSource
 			};
 
 		if (videoDepth === 1 && bidParams) {
@@ -62,39 +66,49 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		return vastUrlBuilder.build(aspectRatio, slotParams, options);
 	}
 
-	return function (player, bidParams) {
+	return function(player, bidParams) {
 		var correlator,
+			trackingParams = {
+				adProduct: 'featured-video',
+				slotName: featuredVideoSlotName,
+				src: featuredVideoSource
+			},
 			videoDepth = 0;
 
-		if (!adContext.get('opts.showAds')) {
-			log('Ads disabled', log.levels.info, logGroup);
-			return;
+		if (adContext.get('opts.showAds')) {
+			player.on('videoStart', function () {
+				log('Preroll position reached', log.levels.info, logGroup);
+
+				correlator = Math.round(Math.random() * 10000000000);
+				trackingParams.adProduct = 'featured-video';
+				videoDepth += 1;
+
+				if (shouldPlayPreroll(videoDepth)) {
+					trackingParams.adProduct = 'featured-video-preroll';
+					player.playAd(buildVastUrl('preroll', videoDepth, correlator, bidParams));
+				}
+			});
+
+			player.on('videoMidPoint', function () {
+				log('Midroll position reached', log.levels.info, logGroup);
+				if (shouldPlayMidroll(videoDepth)) {
+					trackingParams.adProduct = 'featured-video-midroll';
+					player.playAd(buildVastUrl('midroll', videoDepth, correlator));
+				}
+
+			});
+
+			player.on('beforeComplete', function () {
+				log('Postroll position reached', log.levels.info, logGroup);
+				if (shouldPlayPostroll(videoDepth)) {
+					trackingParams.adProduct = 'featured-video-postroll';
+					player.playAd(buildVastUrl('postroll', videoDepth, correlator));
+				}
+			});
+		} else {
+			trackingParams.adProduct = 'featured-video-no-ad';
 		}
 
-		player.on('videoStart', function () {
-			log('Preroll position reached', log.levels.info, logGroup);
-
-			correlator = Math.round(Math.random() * 10000000000);
-			videoDepth += 1;
-
-			if (shouldPlayPreroll(videoDepth)) {
-				player.playAd(buildVastUrl('preroll', videoDepth, correlator, bidParams));
-			}
-		});
-
-		player.on('videoMidPoint', function () {
-			log('Midroll position reached', log.levels.info, logGroup);
-			if (shouldPlayMidroll(videoDepth)) {
-				player.playAd(buildVastUrl('midroll', videoDepth, correlator));
-			}
-
-		});
-
-		player.on('beforeComplete', function () {
-			log('Postroll position reached', log.levels.info, logGroup);
-			if (shouldPlayPostroll(videoDepth)) {
-				player.playAd(buildVastUrl('postroll', videoDepth, correlator));
-			}
-		});
+		adsTracking(player, trackingParams);
 	};
 });
