@@ -121,8 +121,6 @@ class ApiQueryUsers extends ApiQueryBase {
 
 		if ( count( $goodNames ) ) {
 
-			// Wikia: there's no point in querying a per-cluster user table for IP blocks
-			#$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
 			$data = [];
 			/* Wikia change begin - SUS-2989 */
 			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
@@ -130,7 +128,7 @@ class ApiQueryUsers extends ApiQueryBase {
 			/* Wikia change end - SUS-2989 */
 
 			foreach ( $res as $row ) {
-				$user = User::newFromId( $row->user_id );
+				$user = User::newFromRow( $row );
 				$name = $user->getName();
 
 				$data[$name]['userid'] = $user->getId();
