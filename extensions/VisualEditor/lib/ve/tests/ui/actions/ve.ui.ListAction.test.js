@@ -74,7 +74,7 @@ QUnit.test( '(un)wrap', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 4 );
+	assert.expect( cases.length * 4 );
 	for ( i = 0; i < cases.length; i++ ) {
 		runListConverterTest( assert, cases[i].html, cases[i].method, cases[i].style, cases[i].range, cases[i].expectedRange, cases[i].expectedData, cases[i].expectedOriginalData, cases[i].msg );
 	}

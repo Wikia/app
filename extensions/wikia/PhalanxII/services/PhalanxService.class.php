@@ -2,6 +2,8 @@
 
 use Wikia\Service\Gateway\ConsulUrlProvider;
 use Wikia\Rabbit\ConnectionBase;
+use Wikia\Service\Gateway\KubernetesUrlProvider;
+use Wikia\Service\Gateway\UrlProvider;
 
 /**
  * @method PhalanxService setLimit( int $limit )
@@ -16,6 +18,9 @@ class PhalanxService {
 	/** @var User */
 	private $user = null;
 
+	/** @var UrlProvider $urlProvider */
+	private $urlProvider;
+
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
@@ -29,13 +34,12 @@ class PhalanxService {
 	const PHALANX_SERVICE_TRY_USLEEP = 20000;
 
 	/**
-	 * @var int PHALANX_SERVICE_RELOAD_TIMEOUT
-	 * SUS-964: Give Phalanx /reload requests more time to succeed (25 seconds, the old default
-	 * for $wgHttpTimeout)
-	 * This does not affect site performance - /reload requests are sent only upon
-	 * saving/modifying a block.
+	 * @Inject
+	 * @param KubernetesUrlProvider $urlProvider
 	 */
-	const PHALANX_SERVICE_RELOAD_TIMEOUT = 25;
+	public function __construct( KubernetesUrlProvider $urlProvider ) {
+		$this->urlProvider = $urlProvider;
+	}
 
 	protected function getLoggerContext() {
 		return [
@@ -115,32 +119,14 @@ class PhalanxService {
 	}
 
 	/**
-	 * service for reload function
-	 *
-	 * @example curl "http://localhost:8080/reload?changed=1,2,3"
-	 *
-	 * @param array $changed -- list of rules to reload, default empty array so reload all
-	 *
-	 * @return int|mixed
+	 * Instruct Phalanx nodes to load a set of rules (identified by ID) from the database
+	 * @param int[] $changed -- list of rules to reload
 	 */
 	public function reload( $changed = [] ) {
-		wfProfileIn( __METHOD__ );
-
-		$params = is_array( $changed ) && sizeof( $changed )
-			? [ "changed" => implode( ",", $changed ) ]
-			: [];
-
-		$result = $this->sendToPhalanxDaemon( "reload", $params );
-		$this->sendToPhalanxQueue( $changed );
-		wfProfileOut( __METHOD__ );
-		return $result;
-	}
-
-	private function sendToPhalanxQueue( $changed ) {
 		global $wgPhalanxQueue;
 
 		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
-		$rabbitConnection->publish ( self::ROUTING_KEY, implode( ",", $changed ) );
+		$rabbitConnection->publish( self::ROUTING_KEY, implode( ",", $changed ) );
 	}
 
 	/**
@@ -155,19 +141,6 @@ class PhalanxService {
 	public function validate( $regex ) {
 		wfProfileIn( __METHOD__ );
 		$result = $this->sendToPhalanxDaemon( "validate", [ "regex" => $regex ] );
-		wfProfileOut( __METHOD__ );
-		return $result;
-	}
-
-	/**
-	 * service for stats method
-	 *
-	 * @example curl "http://localhost:8080/stats"
-	 *
-	 */
-	public function stats() {
-		wfProfileIn( __METHOD__ );
-		$result = $this->sendToPhalanxDaemon( "stats", [] );
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
@@ -233,22 +206,14 @@ class PhalanxService {
 				}
 			}
 
-			// SUS-964: Give reload requests more time to succeed
-			// Reload requests are only sent upon saving/modifying a block,
-			// so using a higher value here won't affect site performance
-			if ( $action === 'reload' ) {
-				$options['timeout'] = static::PHALANX_SERVICE_RELOAD_TIMEOUT;
-			}
-
 			$options["postData"] = implode( "&", $postData );
-			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] . "\n" );
-			wfDebug( __METHOD__ . ": " . json_encode( $parameters ) . "\n" );
+
 			$requestTime = microtime( true );
 
 			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
 			// it's better to do the retry than maintain the PHP fallback for that
+			$url = $this->getPhalanxUrl( $action );
 			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
-				$url = $this->getPhalanxUrl( $action );
 				$response = Http::post( $url, $options );
 				if ( false !== $response ) {
 					break;
@@ -332,14 +297,13 @@ class PhalanxService {
 	}
 
 	private function getPhalanxUrl( $action ) {
-		global $wgConsulUrl, $wgConsulServiceTag, $wgPhalanxServiceUrl;
+		global $wgPhalanxServiceUrl;
 
 		if ( !empty( $wgPhalanxServiceUrl ) ) {
 			// e.g. "localhost:4666"
 			$baseurl = $wgPhalanxServiceUrl;
 		} else {
-			$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )
-				->getUrl( 'phalanx' );
+			$baseurl = $this->urlProvider->getUrl( 'phalanx' );
 		}
 
 		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );

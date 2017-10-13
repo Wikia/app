@@ -64,7 +64,7 @@ class AmqpHandler extends AbstractProcessingHandler
                 0,
                 array(
                     'delivery_mode' => 2,
-                    'Content-type' => 'application/json',
+                    'content_type' => 'application/json',
                 )
             );
         } else {
@@ -111,7 +111,7 @@ class AmqpHandler extends AbstractProcessingHandler
      * @param  array  $record
      * @return string
      */
-    private function getRoutingKey(array $record)
+    protected function getRoutingKey(array $record)
     {
         $routingKey = sprintf(
             '%s.%s',

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -15,10 +15,10 @@ use PHPUnit\Framework\TestCase;
 class ArraySubsetTest extends TestCase
 {
     /**
-     * @param bool              $expected
-     * @param array|Traversable $subset
-     * @param array|Traversable $other
-     * @param bool              $strict
+     * @param bool               $expected
+     * @param array|\Traversable $subset
+     * @param array|\Traversable $other
+     * @param bool               $strict
      * @dataProvider evaluateDataProvider
      */
     public function testEvaluate($expected, $subset, $other, $strict)
