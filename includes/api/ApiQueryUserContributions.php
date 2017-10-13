@@ -170,7 +170,19 @@ class ApiQueryContributions extends ApiQueryBase {
 		if ( $this->prefixMode ) {
 			$this->addWhere( 'rev_user_text' . $this->getDB()->buildLike( $this->userprefix, $this->getDB()->anyString() ) );
 		} else {
-			$this->addWhereFld( 'rev_user_text', $this->usernames );
+			// SUS-807
+			$ids = [];
+			$ips = [];
+			foreach ( $this->usernames as $userName ) {
+				$id = User::idFromName( $userName );
+				if ( $id ) {
+					$ids[] = $id;
+				} else {
+					$ips[] = $userName;
+				}
+			}
+
+			$this->addWhereOr(['rev_user' => $ids, 'rev_user_text' => $ips]);
 		}
 		// ... and in the specified timeframe.
 		// Ensure the same sort order for rev_user_text and rev_timestamp
@@ -485,5 +497,43 @@ class ApiQueryContributions extends ApiQueryBase {
 
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
+	}
+
+	private function addWhereOr( $conditions ) {
+		$where = [];
+		foreach ( $conditions as $name => $values ) {
+			if (is_array( $values ) && count($values) === 1) {
+				$values = $values[0];
+			}
+
+			$isEmptyArray = is_array( $values ) && count( $values ) === 0;
+			if ( $values && !$isEmptyArray ) {
+				$where[] = $this->createWhereCondition( $name, $values );
+			}
+		}
+
+		$this->addWhere( '(' . implode( ' OR ', $where ) . ')' );
+	}
+
+	private function normalizeValues( $values ) {
+		return array_map( function ($value) {
+			if (is_numeric($value)) {
+				return $value;
+			}
+
+			return "'$value'";
+		}, $values );
+	}
+
+	private function createWhereCondition( $name, $values ): string {
+		if ( is_array( $values ) ) {
+			$operator = "IN";
+			$values = '(' . implode( ', ', $this->normalizeValues( $values ) ) . ')';
+		} else {
+			$operator = "=";
+			$values = "'{$values}'";
+		}
+
+		return "{$name} {$operator} {$values}";
 	}
 }
