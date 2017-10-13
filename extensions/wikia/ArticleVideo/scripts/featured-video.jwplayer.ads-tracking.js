@@ -8,6 +8,7 @@ define('wikia.articleVideo.featuredVideo.adsTracking', [
 		if (currentAd) {
 			params.lineItemId = currentAd.getAdId();
 			params.creativeId = currentAd.getCreativeId();
+			params.contentType = currentAd.getContentType();
 
 			wrapperId = currentAd.getWrapperAdIds();
 			if (wrapperId.length) {
@@ -27,6 +28,7 @@ define('wikia.articleVideo.featuredVideo.adsTracking', [
 		player.on('adComplete', function () {
 			params.lineItemId = undefined;
 			params.creativeId = undefined;
+			params.contentType = undefined;
 		});
 		player.on('adError', function () {
 			updateParams(params);
