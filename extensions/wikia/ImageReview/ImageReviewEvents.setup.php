@@ -14,4 +14,7 @@ $wgHooks['ArticleUndelete'][] = 'ImageReviewEventsHooks::onArticleUndelete';
 $wgHooks['OldFileDeleteComplete'][] = 'ImageReviewEventsHooks::onOldFileDeleteComplete';
 $wgHooks['OldImageRevisionVisibilityChange'][] = 'ImageReviewEventsHooks::onOldImageRevisionVisibilityChange';
 $wgHooks['CloseWikiPurgeSharedData'][] = 'ImageReviewEventsHooks::onCloseWikiPurgeSharedData';
-$wgHooks['VisualEditorAddMedia'][] = 'ImageReviewEventsHooks::onVisualEditorAddMedia';
+
+// SUS-2988 | bind to custom hooks and add these uploads to image review queue
+$wgHooks['ThemeDesignerSaveImage'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
+$wgHooks['VisualEditorAddMedia'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
