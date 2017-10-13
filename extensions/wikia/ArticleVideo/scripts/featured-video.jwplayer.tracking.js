@@ -30,7 +30,7 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 	 * C1 (identifier of content) = 1
 	 * C2 (client ID) = 6177433 for Fandom
 	 * C5 (video type identifier) = 04 for featured videos
-	 * We need to track at
+	 * We need to track it at each video playback
 	 */
 	function trackComscoreVideoMetrix() {
 		//Do not track to comscore on dev env
