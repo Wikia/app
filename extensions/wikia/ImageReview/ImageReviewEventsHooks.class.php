@@ -37,7 +37,14 @@ class ImageReviewEventsHooks {
 		return true;
 	}
 
-	public static function onVisualEditorAddMedia( Title $title ) {
+	/**
+	 * This method is bound to custom hooks in Wikia features
+	 *
+	 * @see SUS-2988
+	 *
+	 * @param Title $title
+	 */
+	public static function addTitleToTheQueue( Title $title ) {
 		static::actionCreate( $title );
 	}
 
