@@ -23,17 +23,20 @@ ve.dm.nodeFactory.register( ve.dm.BranchNodeStub );
 
 /* Tests */
 
-QUnit.test( 'canHaveChildren', 1, function ( assert ) {
+QUnit.test( 'canHaveChildren', function ( assert ) {
+	assert.expect( 1 );
 	var node = new ve.dm.BranchNodeStub();
 	assert.strictEqual( node.canHaveChildren(), true );
 } );
 
-QUnit.test( 'canHaveChildrenNotContent', 1, function ( assert ) {
+QUnit.test( 'canHaveChildrenNotContent', function ( assert ) {
+	assert.expect( 1 );
 	var node = new ve.dm.BranchNodeStub();
 	assert.strictEqual( node.canHaveChildrenNotContent(), true );
 } );
 
-QUnit.test( 'setRoot', 3, function ( assert ) {
+QUnit.test( 'setRoot', function ( assert ) {
+	assert.expect( 3 );
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub( {}, [node1] ),
 		node3 = new ve.dm.BranchNodeStub( {}, [node2] ),
@@ -44,7 +47,8 @@ QUnit.test( 'setRoot', 3, function ( assert ) {
 	assert.strictEqual( node1.getRoot(), node4 );
 } );
 
-QUnit.test( 'setDocument', 3, function ( assert ) {
+QUnit.test( 'setDocument', function ( assert ) {
+	assert.expect( 3 );
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub( {}, [node1] ),
 		node3 = new ve.dm.BranchNodeStub( {}, [node2] ),
@@ -55,7 +59,8 @@ QUnit.test( 'setDocument', 3, function ( assert ) {
 	assert.strictEqual( node1.getDocument(), node4 );
 } );
 
-QUnit.test( 'push', 3, function ( assert ) {
+QUnit.test( 'push', function ( assert ) {
+	assert.expect( 3 );
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
 		node3 = new ve.dm.BranchNodeStub( {}, [node1] );
@@ -67,7 +72,8 @@ QUnit.test( 'push', 3, function ( assert ) {
 	assert.deepEqual( node3.getChildren(), [node1, node2] );
 } );
 
-QUnit.test( 'pop', 3, function ( assert ) {
+QUnit.test( 'pop', function ( assert ) {
+	assert.expect( 3 );
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
 		node3 = new ve.dm.BranchNodeStub( {}, [node1, node2] );
@@ -79,7 +85,8 @@ QUnit.test( 'pop', 3, function ( assert ) {
 	assert.deepEqual( node3.getChildren(), [node1] );
 } );
 
-QUnit.test( 'unshift', 3, function ( assert ) {
+QUnit.test( 'unshift', function ( assert ) {
+	assert.expect( 3 );
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
 		node3 = new ve.dm.BranchNodeStub( {}, [node1] );
@@ -91,7 +98,8 @@ QUnit.test( 'unshift', 3, function ( assert ) {
 	assert.deepEqual( node3.getChildren(), [node2, node1] );
 } );
 
-QUnit.test( 'shift', 3, function ( assert ) {
+QUnit.test( 'shift', function ( assert ) {
+	assert.expect( 3 );
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
 		node3 = new ve.dm.BranchNodeStub( {}, [node1, node2] );
@@ -103,7 +111,8 @@ QUnit.test( 'shift', 3, function ( assert ) {
 	assert.deepEqual( node3.getChildren(), [node2] );
 } );
 
-QUnit.test( 'splice', 9, function ( assert ) {
+QUnit.test( 'splice', function ( assert ) {
+	assert.expect( 9 );
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
 		node3 = new ve.dm.BranchNodeStub(),

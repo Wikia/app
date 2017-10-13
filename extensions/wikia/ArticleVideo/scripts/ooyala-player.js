@@ -1,7 +1,8 @@
 define('ooyala-player', [
 	'wikia.browserDetect',
+	require.optional('ext.wikia.adEngine.utils.eventDispatcher'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
-], function (browserDetect, ooyalaTracker) {
+], function (browserDetect, eventDispatcher, ooyalaTracker) {
 	'use strict';
 	var baseJSONSkinUrl = '/wikia.php?controller=OoyalaConfig&method=skin&cb=' + window.wgStyleVersion,
 	// TODO ooyala only supports font icons so we probably need to extract our DS icons to font
@@ -10,6 +11,7 @@ define('ooyala-player', [
 	function OoyalaHTML5Player(container, params, onPlayerCreate, inlineSkinConfig) {
 		var playerWidth = container.scrollWidth;
 
+		this.adIndex = 0;
 		this.params = params;
 		this.params.width = playerWidth;
 		this.params.height = Math.floor((playerWidth * 9) / 16);
@@ -54,6 +56,10 @@ define('ooyala-player', [
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
 			self.onPlaybackReady();
+		});
+
+		messageBus.subscribe(OO.EVENTS.ADS_PLAYED, 'video-tracker', function () {
+			self.adIndex += 1;
 		});
 
 		messageBus.subscribe(window.OO.EVENTS.PLAYED, 'ads', function () {
@@ -132,6 +138,7 @@ define('ooyala-player', [
 			return module.name === 'adManagerController';
 		});
 
+		this.adIndex = 0;
 		if (controller && controller.instance &&
 			controller.instance.pageSettings &&
 			controller.instance.pageSettings['google-ima-ads-manager']) {
@@ -186,10 +193,36 @@ define('ooyala-player', [
 
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
 						var player = html5Player.player,
-							adData = eventData.getAdData();
+							adData = eventData.getAdData(),
+							currentAd = IMAAdsManager.getCurrentAd(),
+							wrapperCreativeId,
+							wrapperId;
 
-						options.adTrackingParams.lineItemId = adData.adId;
-						options.adTrackingParams.creativeId = adData.creativeId;
+						if (adData) {
+							options.adTrackingParams.lineItemId = adData.adId;
+							options.adTrackingParams.creativeId = adData.creativeId;
+						}
+
+						if (currentAd) {
+							wrapperId = currentAd.getWrapperAdIds();
+							if (wrapperId.length) {
+								options.adTrackingParams.lineItemId = wrapperId[0];
+							}
+
+							wrapperCreativeId = currentAd.getWrapperCreativeIds();
+							if (wrapperCreativeId.length) {
+								options.adTrackingParams.creativeId = wrapperCreativeId[0];
+							}
+						}
+
+						if (eventDispatcher && options.adSet && options.adSet[html5Player.adIndex]) {
+							eventDispatcher.dispatch('adengine.video.status', {
+								vastUrl: options.adSet[html5Player.adIndex].tag_url,
+								creativeId: options.adTrackingParams.creativeId,
+								lineItemId: options.adTrackingParams.lineItemId,
+								status: 'success'
+							});
+						}
 
 						if (eventData.getAdData().vpaid === true) {
 							player.mb.publish(OO.EVENTS.WIKIA.SHOW_AD_TIME_LEFT, false);
