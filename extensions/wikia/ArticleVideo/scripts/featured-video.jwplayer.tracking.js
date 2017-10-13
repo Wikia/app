@@ -26,7 +26,7 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 	}
 
 	/**
-	 * Comscore Video Metrix tracking
+	 * Comscore Video Metrix tracking, sends tracking request with 3 Comscore parameters:
 	 * C1 (identifier of content) = 1
 	 * C2 (client ID) = 6177433 for Fandom
 	 * C5 (video type identifier) = 04 for featured videos
