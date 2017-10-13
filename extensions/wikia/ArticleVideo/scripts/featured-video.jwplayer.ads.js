@@ -40,8 +40,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 	function buildVastUrl(position, videoDepth, correlator) {
 		var options = {
-				vpos: position,
-				correlator: correlator
+				correlator: correlator,
+				vpos: position
 			},
 			slotParams = {
 				passback: 'jwplayer',
@@ -50,9 +50,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				src: 'premium'
 			};
 
-		if (adContext.get('opts.megaAdUnitBuilderEnabled')) {
-			options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
-		}
+		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
 
 		return vastUrlBuilder.build(aspectRatio, slotParams, options);
 	}
