@@ -68,9 +68,9 @@ class PushUploadsToImageReview extends Maintenance {
 		$pushed = 0;
 
 		// logging
-		global $wgDBName;
+		global $wgDBname;
 		$this->output( $db->lastQuery() . "\n");
-		$this->output( "{$wgDBName} - {$count} uploads will be checked\n");
+		$this->output( "{$wgDBname} - {$count} uploads will be checked\n");
 
 		foreach($res as $row) {
 			$title = Title::newFromRow($row);
@@ -90,7 +90,7 @@ class PushUploadsToImageReview extends Maintenance {
 			}
 		}
 
-		$this->output( "{$wgDBName} - {$pushed} uploads were pushed\n");
+		$this->output( "{$wgDBname} - {$pushed} uploads were pushed\n");
 
 		WikiaLogger::instance()->info( __CLASS__, [ 'uploads_pushed' => $pushed ] );
 	}
