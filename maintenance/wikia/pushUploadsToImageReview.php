@@ -67,9 +67,12 @@ class PushUploadsToImageReview extends Maintenance {
 		$count = $db->affectedRows();
 		$pushed = 0;
 
+		if ($this->isDryRun === true) {
+			$this->output($db->lastQuery() . "\n");
+		}
+
 		// logging
 		global $wgDBname;
-		$this->output( $db->lastQuery() . "\n");
 		$this->output( "{$wgDBname} - {$count} uploads will be checked\n");
 
 		foreach($res as $row) {
