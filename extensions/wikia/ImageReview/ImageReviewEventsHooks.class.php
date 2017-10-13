@@ -109,7 +109,11 @@ class ImageReviewEventsHooks {
 		self::actionCreate( $title, $revisionId, 'created', $userId );
 	}
 
-	private static function isFileForReview( Title $title ) {
+	/**
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isFileForReview( Title $title ) : bool {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			$localFile = wfLocalFile( $title );
 
