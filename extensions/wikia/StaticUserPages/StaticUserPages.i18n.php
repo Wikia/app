@@ -30,10 +30,10 @@ Wenn du von diesem Konto aus eine Willkommensnachricht erhalten hast, bist du ei
 
 Falls du Hilfe brauchst, kannst du der Person, die die Willkommensnachricht unterzeichnet hat, eine Nachricht hinterlassen. Folge dazu einfach dem Link zu deren Diskussionsseite und bearbeite dann die Seite, um deine Nachricht hinzuzufügen.
 
-Für allgemeine Fragen rund um FANDOM besuche bitte die [[Help:Contents|FANDOM-Hilfe]] und [[Special:Contact|kontaktiere unsere Mitarbeiter]], falls deine Fragen dort nicht ausreichend geklärt werden.
+Für allgemeine Fragen rund um FANDOM besuche bitte die [[Hilfe:Übersicht|FANDOM-Hilfe]] und [[Special:Contact|kontaktiere unsere Mitarbeiter]], falls deine Fragen dort nicht ausreichend geklärt werden.
 
 ==Informationen und Unterstützung für die Begrüßungshilfe==
-Weitere Informationen zu den automatisch erstellten Willkommensnachrichten findest du auf der [[Help:Welcome tool|Hilfeseite zu automatischen Begrüßungen]].
+Weitere Informationen zu den automatisch erstellten Willkommensnachrichten findest du auf der [[Hilfe:Begrüßungshilfe|Hilfeseite zu automatischen Begrüßungen]].
 
 Wenn du Probleme mit der FANDOM-Begrüßungshilfe hast, [[Special:Contact|wende dich bitte an die FANDOM-Mitarbeiter]].
 ',
@@ -136,22 +136,22 @@ Se você recebeu as boas-vindas desta conta, então você é um novo editor dest
 
 Se você está buscando ajuda, você pode deixar uma mensagem para a pessoa que assinou a mensagem de boas-vindas. Siga o link para sua página de discussão e em seguida, edite a página para escrever a sua mensagem.
 
-Para ajuda geral no FANDOM, visite [[ajuda: Conteúdo|ajuda FANDOM]], e [[especial: Contato|entre em contato com o staff]] se você ainda tiver dúvidas.
+Para ajuda geral no FANDOM, visite [[Ajuda:Conteúdo|ajuda FANDOM]], e [[Especial:Contat|entre em contato com o staff]] se você ainda tiver dúvidas.
 
 ==Bem-vindo à ferramenta informações e ajuda==
-Para obter mais informações sobre as mensagens de boas-vindas automáticas, consulte a [[ferramenta ajuda: Bem-vindo|Bem-vindo a página de ajuda]].
+Para obter mais informações sobre as mensagens de boas-vindas automáticas, consulte a [[Ajuda: Ferramenta de boas-vindas|ferramenta de boas-vindas]].
 
-Se você tiver quaisquer perguntas sobre a ferramenta de boas-vindas do FANDOM, por favor [[especial:Contato|entre em contato com o staff do FANDOM]].
+Se você tiver quaisquer perguntas sobre a ferramenta de boas-vindas do FANDOM, por favor [[Especial:Contat|entre em contato com o staff do FANDOM]].
 ',
-	'static-user-pages-bot-content' => 'Usuário: o FANDOMbot é uma conta robô operada pelo staff do FANDOM para edições em massa e alterações.',
+	'static-user-pages-bot-content' => 'O Usuário:FANDOMbot é uma [[Ajuda:Bots|conta robô]] operada pelo staff do FANDOM para edições em massa e alterações.',
 );
 
 $messages['ru'] = array(
 	'static-user-pages-user-content' => '<h2 style="overflow:auto">Добро пожаловать на ФЭНДОМ!</h2>
 
-Если вы получили приглашение с этого адреса, значит теперь вы новый редактор этой вики. Поздравляем!
+Если вы получили приглашение от этого участника, значит теперь вы новый редактор этой вики. Поздравляем!
 
-Если вам потребуется помощь, отправьте сообщение участнику, указанному в подписи письма. Перейдите по ссылке на страницу обсуждения и напишите свое сообщение, отредактировав страницу.
+Если вам потребуется помощь, отправьте сообщение участнику, указанному в подписи сообщения. Перейдите по ссылке на страницу обсуждения и напишите своё сообщение.
 
 Если у вас появятся вопросы о ФЭНДОМЕ, посетите [[Справка:Содержание|страницу справки]] или [[Служебная:Contact|свяжитесь с сотрудниками ФЭНДОМА]].
 
@@ -160,7 +160,7 @@ $messages['ru'] = array(
 
 Если у вас есть вопросы об автоматических приветствиях, [[Служебная:Contact|свяжитесь с сотрудниками ФЭНДОМА]].
 ',
-	'static-user-pages-bot-content' => 'User:FANDOMbot — это бот под управлением команды ФЭНДОМА. Мы используем его для массового внесения изменений и правок.',
+	'static-user-pages-bot-content' => 'User:FANDOMbot — это бот под управлением сотрудников ФЭНДОМА. Он используется для массовых изменений и правок.',
 );
 
 $messages['zh-hans'] = array(

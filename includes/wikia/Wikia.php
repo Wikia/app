@@ -85,6 +85,7 @@ class Wikia {
 
 	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
+	const CORPORATE_WIKI_ID = 80433; // www.wikia.com
 
 	const USER = 'FANDOM';
 	const BOT_USER = 'FANDOMbot';
@@ -1295,46 +1296,6 @@ class Wikia {
 				'source' => $requestSource
 			] );
 			$request->response()->header( 'X-Wikia-Is-Internal-Request: ' . $requestSource );
-		}
-
-		return true;
-	}
-
-	/**
-	 * informJobQueue
-	 * Send information to the backend script what job was added
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param Integer count of job params
-	 *
-	 * @author Piotr Molski (MoLi)
-	 * @return true
-	 */
-	static public function informJobQueue( /*Integer*/ $job_count = 1 ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport;
-
-		if ( empty( $wgEnableScribeReport ) ) {
-			return true;
-		}
-
-		$params = array(
-			'dbname'	=> $wgDBname,
-			'wiki_id'	=> $wgCityId,
-			'jobs'		=> $job_count
-		);
-
-		try {
-			$message = array(
-				'method' => 'jobqueue',
-				'params' => $params
-			);
-			$data = json_encode( $message );
-			WScribeClient::singleton('trigger')->send($data);
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
 
 		return true;

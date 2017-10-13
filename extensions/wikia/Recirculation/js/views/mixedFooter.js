@@ -82,6 +82,9 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
 				wikiArticle.liType = 'wiki';
+				if (wikiArticle.type === 'video') {
+					wikiArticle.video = true;
+				}
 
 				$this.replaceWith(utils.renderTemplate(template, wikiArticle));
 			}

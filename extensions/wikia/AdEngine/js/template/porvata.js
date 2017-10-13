@@ -40,6 +40,24 @@ define('ext.wikia.adEngine.template.porvata', [
 		logGroup = 'ext.wikia.adEngine.template.porvata',
 		videoAspectRatio = 640 / 360;
 
+	function callHop(params, shouldSetStatus) {
+		if (shouldSetStatus) {
+			slotRegistry.get(params.slotName).hop({
+				adType: params.adType,
+				source: 'porvata'
+			});
+		}
+	}
+
+	function callSuccess(params, shouldSetStatus) {
+		if (shouldSetStatus) {
+			slotRegistry.get(params.slotName).success({
+				adType: params.adType,
+				source: 'porvata'
+			});
+		}
+	}
+
 	function loadVeles(params) {
 		params.vastResponse = params.vastResponse || params.bid.ad;
 		veles.markBidsAsUsed(params.hbAdId);
@@ -63,26 +81,64 @@ define('ext.wikia.adEngine.template.porvata', [
 		return contentType === 'application/javascript';
 	}
 
-	function enabledFallbackBidHandling(video, params) {
-		var fallbackAdRequested = false;
+	function dispatchEventWhenInViewport(video, eventName) {
+		if (video.wasInViewport) {
+			video.ima.dispatchEvent(eventName);
+		} else {
+			video.addEventListener('wikiaFirstTimeInViewport', function () {
+				video.ima.dispatchEvent(eventName);
+			});
+		}
+	}
+
+	function enabledFallbackBidHandling(video, videoSettings, params) {
+		var hasDirectAd = true,
+			fallbackAdRequested = false;
+
+		video.addEventListener('wikiaAdsManagerLoaded', function () {
+			if (hasDirectAd) {
+				dispatchEventWhenInViewport(video, 'wikiaInViewportWithDirect');
+				callSuccess(params, params.setSlotStatusBasedOnVAST);
+			}
+		});
 
 		video.addEventListener('wikiaEmptyAd', function () {
-			var fallbackBid;
+			var fallbackBid,
+				offerEvent = 'wikiaInViewportWithoutOffer';
 
 			if (fallbackAdRequested) {
 				return;
 			}
 
+			hasDirectAd = false;
 			fallbackBid = prebid.getWinningVideoBidBySlotName(params.slotName, fallbackBidders);
 			if (fallbackBid) {
 				fallbackAdRequested = true;
+
+				offerEvent = 'wikiaInViewportWithFallbackBid';
+				videoSettings.setMoatTracking(false);
+
 				video.reload({
 					height: params.height,
 					width: params.width,
 					vastResponse: fallbackBid.vastContent,
 					vastUrl: fallbackBid.vastUrl
 				});
+				if (typeof params.fallbackBidBlockOutOfViewportPausing !== 'undefined') {
+					params.blockOutOfViewportPausing = params.fallbackBidBlockOutOfViewportPausing;
+				}
+				if (typeof params.fallbackBidEnableInContentFloating !== 'undefined') {
+					params.enableInContentFloating = params.fallbackBidEnableInContentFloating;
+				}
+				if (typeof params.fallbackBidEnableLeaderboardFloating !== 'undefined') {
+					params.enableLeaderboardFloating = params.fallbackBidEnableLeaderboardFloating;
+				}
+				callSuccess(params, params.setSlotStatusBasedOnVAST);
+			} else {
+				callHop(params, params.setSlotStatusBasedOnVAST);
 			}
+
+			dispatchEventWhenInViewport(video, offerEvent);
 		});
 	}
 
@@ -122,6 +178,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 * @param {integer} [params.vpaidMode] - VPAID mode from IMA: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.ImaSdkSettings.VpaidMode
 	 * @param {Boolean} [params.isDynamic] - Flag defining if slot should be collapsed and expanded
+	 * @param {Boolean} [params.setSlotStatusBasedOnVAST] - Decides whether slot status is dispatched manually or based on VAST response
 	 */
 	function show(params) {
 		var imaVpaidModeInsecure = 2,
@@ -141,18 +198,12 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (!isVideoAutoplaySupported()) {
 			log(['hop', params.adProduct, params.slotName, params], log.levels.info, logGroup);
-			slotRegistry.get(params.slotName).hop({
-				adType: params.adType,
-				source: 'porvata'
-			});
+			callHop(params, true);
 
 			return;
 		}
 
-		slotRegistry.get(params.slotName).success({
-			adType: params.adType,
-			source: 'porvata'
-		});
+		callSuccess(params, !params.setSlotStatusBasedOnVAST);
 
 		if (params.vpaidMode === imaVpaidModeInsecure) {
 			params.originalContainer = params.container;
@@ -195,7 +246,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			}
 
 			if (params.useBidAsFallback) {
-				enabledFallbackBidHandling(video, params);
+				enabledFallbackBidHandling(video, settings, params);
 			}
 			video.addEventListener('start', function () {
 				videoFrequencyMonitor.registerLaunchedVideo();

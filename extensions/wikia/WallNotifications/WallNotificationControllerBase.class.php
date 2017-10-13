@@ -122,7 +122,7 @@ abstract class WallNotificationControllerBase extends WikiaService {
 		// array) instead of the most recent so that they start reading where the left off. See bugid 64560.
 		$oldestEntity = end( $notify[ 'grouped' ] );
 		$url = empty( $oldestEntity->data->url ) ? '' : $oldestEntity->data->url;
-		$title = $this->shortenTitle( $data->thread_title );
+		$title = $this->shortenTitle( $data->thread_title ?? '' );
 		$this->response->setVal( 'url', $this->fixNotificationURL( $url ) );
 		$this->response->setVal( 'authors', array_reverse( $authors ) );
 		$this->response->setVal( 'title', $title );
@@ -173,7 +173,7 @@ abstract class WallNotificationControllerBase extends WikiaService {
 		$this->response->setVal( 'msg', $msg );
 		$this->response->setVal( 'authors', $authors );
 		$this->response->setVal( 'iso_timestamp', wfTimestamp( TS_ISO_8601, $data->timestamp ) );
-		$this->response->setVal( 'title', $this->shortenTitle( $data->title ) );
+		$this->response->setVal( 'title', $this->shortenTitle( $data->title ?? '' ) );
 	}
 
 	protected function getNotificationMessage( $isMain, $data, $authors, $userCount, $myName ) {

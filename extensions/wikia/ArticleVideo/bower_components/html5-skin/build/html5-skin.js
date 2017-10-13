@@ -593,14 +593,14 @@ module.exports={
   "discoveryScreen": {
     "panelTitle": {
       "titleFont": {
-        "fontFamily": "Roboto Condensed",
+        "fontFamily": "Ooyala Roboto Condensed",
         "color": "white"
       }
     },
     "contentTitle": {
       "show": true,
       "font": {
-        "fontFamily": "Roboto Condensed",
+        "fontFamily": "Ooyala Roboto Condensed",
         "color": "white"
       }
     },
@@ -1878,7 +1878,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
     if(this.props.responsiveView == this.props.skinConfig.responsive.breakpoints.xs.id) {
       this.props.controller.toggleScreen(CONSTANTS.SCREEN.VIDEO_QUALITY_SCREEN);
     } else {
-      this.toggleQualityPopover();
+      this.toggleQualityPopOver();
       this.closeCaptionPopover();
       this.closeConfigPopover();
     }
@@ -1904,7 +1904,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
 
   closeQualityPopover: function() {
     if(this.props.controller.state.videoQualityOptions.showVideoQualityPopover == true) {
-      this.toggleQualityPopover();
+      this.toggleQualityPopOver();
     }
   },
 
@@ -4091,7 +4091,7 @@ var TextTrackPanel = React.createClass({displayName: "TextTrackPanel",
     "Monospaced Serif": '"Courier New", Courier, "Nimbus Mono L", "Cutive Mono", monospace',
     "Proportional Serif": '"Times New Roman", Times, Georgia, Cambria, "PT Serif Caption", serif',
     "Monospaced Sans-Serif": '"Deja Vu Sans Mono", "Lucida Console", Monaco, Consolas, "PT Mono", monospace',
-    "Proportional Sans-Serif": 'Roboto, "Arial Unicode Ms", Arial, Helvetica, Verdana, "PT Sans Caption", sans-serif',
+    "Proportional Sans-Serif": '"Ooyala Roboto", "Arial Unicode Ms", Arial, Helvetica, Verdana, "PT Sans Caption", sans-serif',
     "Casual": '"Comic Sans MS", Impact, Handlee, fantasy',
     "Cursive": '"Monotype Corsiva", "URW Chancery L", "Apple Chancery", "Dancing Script", cursive',
     "Small Capitals": '"Arial Unicode Ms", Arial, Helvetica, Verdana, "Marcellus SC", sans-serif'
@@ -5185,7 +5185,7 @@ var VideoQualityPanel = React.createClass({displayName: "VideoQualityPanel",
       selected: selectedBitrateId
     });
     this.props.togglePopoverAction();
-    this.props.toggleVideoQualityPanel();
+    this.props.toggleVideoQualityPopOver();
   },
 
     handleBackClick: function() {
@@ -5730,7 +5730,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "8444db95cfa1d1e203b2efaf43b0839e9ca15fdb"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "5c488853637c4fdeca3327475227255b3417ccb2"};
   }
 
   // WIKIA CHANGE - START
@@ -5975,13 +5975,15 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       //initial DOM manipulation
       this.state.mainVideoContainer.addClass('oo-player-container');
       // WIKIA CHANGE - START
+      if (params.initialVolume === 0) {
+	    this.state.volumeState.muted = true;
+	    this.state.volumeState.volume = 0;
+	    this.state.volumeState.oldVolume = 1;
+	    this.setVolume(0);
+	  }
       if (params.autoplay && this.state.isMobile) {
         // set autoplay data attribute which is read by main_html5 plugin
         this.state.mainVideoInnerWrapper.attr('data-autoplay', 'autoplay');
-        this.state.volumeState.muted = true;
-        this.state.volumeState.volume = 0;
-        this.state.volumeState.oldVolume = 1;
-        this.setVolume(0);
       }
       // WIKIA CHANGE - END
       this.state.mainVideoInnerWrapper.addClass('oo-player');

@@ -139,7 +139,7 @@ class WallNotificationEntity {
 	public function loadDataFromRevIdOnWiki( $revId, $wikiId, $useMasterDB = false ) {
 		$dbName = WikiFactory::IDtoDB( $wikiId );
 		$params = [
-			'controller' => 'WallNotifications',
+			'controller' => 'WallNotificationsExternalController',
 			'method' => 'getEntityData',
 			'revId' => $revId,
 			'useMasterDB' => $useMasterDB,

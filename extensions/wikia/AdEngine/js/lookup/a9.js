@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.a9', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (slotsContext, factory, doc, log, win) {
+], function (adContext, slotsContext, factory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
@@ -22,30 +23,40 @@ define('ext.wikia.adEngine.lookup.a9', [
 				MOBILE_TOP_LEADERBOARD: [[320, 50]]
 			}
 		},
+		VIDEO_SLOTS = ['FEATURED'],
 		amazonId = '3115',
 		bids = {},
 		loaded = false,
 		priceMap = {},
 		slots = [];
 
-	function call(skin, onResponse) {
+	function insertScript() {
 		var a9Script = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0],
-			a9Slots;
+			node = doc.getElementsByTagName('script')[0];
+
+		a9Script.type = 'text/javascript';
+		a9Script.async = true;
+		a9Script.src = '//c.amazon-adsystem.com/aax2/apstag.js';
+
+		node.parentNode.insertBefore(a9Script, node);
+	}
+
+	function isVideoBidderEnabled() {
+		return adContext.get('bidders.a9Video') && adContext.get('targeting.hasFeaturedVideo');
+	}
+
+	function call(skin, onResponse) {
+		var a9Slots;
 
 		if (!loaded) {
 			log(['call - load', skin], 'debug', logGroup);
 
-			a9Script.type = 'text/javascript';
-			a9Script.async = true;
-			a9Script.src = '//c.amazon-adsystem.com/aax2/apstag.js';
-
-			node.parentNode.insertBefore(a9Script, node);
-
+			insertScript();
 			configureApstag();
 
 			win.apstag.init({
-				pubID: amazonId
+				pubID: amazonId,
+				videoAdServer: 'DFP'
 			});
 
 			loaded = true;
@@ -55,13 +66,18 @@ define('ext.wikia.adEngine.lookup.a9', [
 		priceMap = {};
 
 		slots = slotsContext.filterSlotMap(config[skin]);
-		a9Slots = getA9Slots(slots);
+		a9Slots = Object.keys(slots).map(createSlotDefinition);
+
+		if (isVideoBidderEnabled()) {
+			a9Slots = a9Slots.concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
+		}
+
 		log(['call - fetchBids', a9Slots], 'debug', logGroup);
 
 		win.apstag.fetchBids({
 			slots: a9Slots,
 			timeout: 2000
-		}, function(currentBids) {
+		}, function (currentBids) {
 			log(['call - fetchBids response', currentBids], 'debug', logGroup);
 
 			currentBids.forEach(function (bid) {
@@ -72,18 +88,19 @@ define('ext.wikia.adEngine.lookup.a9', [
 		});
 	}
 
-	function getA9Slots(slots) {
-		var a9Slots = [];
+	function createSlotDefinition(slotName) {
+		return {
+			sizes: slots[slotName],
+			slotID: slotName,
+			slotName: slotName
+		};
+	}
 
-		Object.keys(slots).forEach(function(slotName) {
-			a9Slots.push({
-				sizes: slots[slotName],
-				slotID: slotName,
-				slotName: slotName
-			});
-		});
-
-		return a9Slots;
+	function createVideoSlotDefinition(videoSlotName) {
+		return {
+			slotID: videoSlotName,
+			mediaType: 'video'
+		};
 	}
 
 	function configureApstagCommand(command, args) {
@@ -95,13 +112,13 @@ define('ext.wikia.adEngine.lookup.a9', [
 		win.apstag._Q = win.apstag._Q || [];
 
 		if (typeof win.apstag.init === 'undefined') {
-			win.apstag.init = function() {
+			win.apstag.init = function () {
 				configureApstagCommand('i', arguments);
 			};
 		}
 
 		if (typeof win.apstag.fetchBids === 'undefined') {
-			win.apstag.fetchBids = function() {
+			win.apstag.fetchBids = function () {
 				configureApstagCommand('f', arguments);
 			};
 		}
@@ -110,7 +127,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 	function calculatePrices() {
 		log(['calculatePrices', bids], 'debug', logGroup);
 
-		Object.keys(bids).forEach(function(slotName) {
+		Object.keys(bids).forEach(function (slotName) {
 			priceMap[slotName] = bids[slotName].amznbid;
 		});
 	}
@@ -141,7 +158,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function isSlotSupported(slotName) {
-		return slots[slotName];
+		return slots[slotName] || VIDEO_SLOTS.indexOf(slotName) >= 0;
 	}
 
 	function getBestSlotPrice(slotName) {

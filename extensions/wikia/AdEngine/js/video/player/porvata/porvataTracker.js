@@ -20,14 +20,17 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			'viewable_impression': 'viewable_impression',
 			'adError': 'error',
 			'wikiaAdPlayTriggered': 'play_triggered',
-			'wikiaAdStop': 'closed'
+			'wikiaAdStop': 'closed',
+			'wikiaInViewportWithDirect': 'in_viewport_with_direct',
+			'wikiaInViewportWithFallbackBid': 'in_viewport_with_fallback_bid',
+			'wikiaInViewportWithoutOffer': 'in_viewport_without_offer'
 		};
 
 	function getContentType(player) {
 		var ad;
 
 		if (player) {
-			ad = player.ima.getAdsManager().getCurrentAd();
+			ad = player.ima.getAdsManager() && player.ima.getAdsManager().getCurrentAd();
 
 			if (ad) {
 				return ad.getContentType();

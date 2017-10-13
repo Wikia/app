@@ -3,8 +3,7 @@
 class EditPageLayoutTest extends WikiaBaseTest {
 
 	public function setUp() {
-		require_once( dirname(__FILE__) . '/../../CityVisualization/CityVisualization.setup.php' );
-		$this->setupFile = dirname(__FILE__) . '/../EditPageLayout_setup.php';
+		$this->setupFile = __DIR__ . '/../EditPageLayout_setup.php';
 		parent::setUp();
 	}
 

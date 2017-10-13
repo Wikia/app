@@ -19,8 +19,6 @@ class ChatController extends WikiaController {
 	public function executeIndex() {
 		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
 
-		Chat::info( __METHOD__ . ': Method called' );
-
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php

@@ -25,8 +25,6 @@ class WikiService extends WikiaModel {
 
 	const WIKI_ADMIN_IDS_CACHE_TTL = 10800; // 10800 == 3hrs;
 
-	const WIKIAGLOBAL_CITY_ID = 80433;
-
 	const FLAG_PROMOTED = 4;
 	const FLAG_OFFICIAL = 16;
 
@@ -393,13 +391,15 @@ class WikiService extends WikiaModel {
 			$userStatsService = new UserStatsService($userId, $wikiId);
 			$stats = $userStatsService->getStats();
 
-			if(!empty($stats['firstRevisionDate'])) {
-				$date = getdate(strtotime($stats['firstRevisionDate']));
+			$placeHolderDate = getdate( strtotime( '2005-06-01' ) );
+
+			if ( !empty( $stats['firstContributionTimestamp'] ) ) {
+				$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
 			} else {
-				$date = getdate(strtotime('2005-06-01'));
+				$date = $placeHolderDate;
 			}
 
-			$userInfo['lastRevision'] = $stats['lastRevisionDate'];
+			$userInfo['lastRevision'] = $stats['lastContributionTimestamp'] ?? '2005-06-01';
 
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
@@ -575,6 +575,7 @@ class WikiService extends WikiaModel {
 	public function getWikiDescription( Array $wikiIds, $imgWidth = 250, $imgHeight = null ) {
 
 		$wikiDetails = $this->getDetails( $wikiIds );
+		$corpModel = new WikiaCorporateModel();
 
 		foreach ( $wikiDetails as $wikiId => $wikiData ) {
 			if ( empty( $wikiData['desc']) ) {
@@ -582,7 +583,7 @@ class WikiService extends WikiaModel {
 			}
 			$wikiDetails[ $wikiId ]['image_wiki_id'] = null;
 			if ( !empty( $wikiData['image'] ) ) {
-				$wikiDetails[ $wikiId ]['image_wiki_id'] = $this->getCityVisualizationObject()->getTargetWikiId( $wikiData['lang'] );
+				$wikiDetails[ $wikiId ]['image_wiki_id'] = $corpModel->getCorporateWikiIdByLang( $wikiData['lang'] );
 
 				$imageUrl = $this->getImageSrcByTitle( $wikiDetails[ $wikiId ]['image_wiki_id'], $wikiData['image'], $imgWidth, $imgHeight);
 				$wikiDetails[ $wikiId ]['image_url'] = $imageUrl;
@@ -592,17 +593,6 @@ class WikiService extends WikiaModel {
 		}
 
 		return $wikiDetails;
-	}
-
-	public function setCityVisualizationObject( $cityVisualizationObject ) {
-		$this->cityVisualizationObject = $cityVisualizationObject;
-	}
-
-	public function getCityVisualizationObject() {
-		if ( empty( $this->cityVisualizationObject ) ) {
-			$this->cityVisualizationObject = new CityVisualization();
-		}
-		return $this->cityVisualizationObject;
 	}
 
 	/**
@@ -918,7 +908,6 @@ class WikiService extends WikiaModel {
 					'headline' => $row->city_headline,
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,
-					//see extensions/wikia/CityVisualization/models/CityVisualization.class.php
 					'image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
 					'flags' => array(
 						'official' => ( ( $row->city_flags & self::FLAG_OFFICIAL ) == self::FLAG_OFFICIAL ),

@@ -36,7 +36,7 @@ class WallHelper {
 	 *
 	 * @return Title
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getTitle( $namespace = null, $subpage = null, $user = null ) {
 		if ( empty( $user ) ) {
@@ -67,7 +67,7 @@ class WallHelper {
 	 *
 	 * @return User
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	// TODO: remove call to UserProfilePage
 	public function getUser() {
@@ -118,7 +118,7 @@ class WallHelper {
 	 *
 	 * @return array | boolean returns false if ArticleComment class does not exist
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function wikiActivityFilterMessageWall( $title, &$res ) {
 		wfProfileIn( __METHOD__ );
@@ -424,7 +424,7 @@ class WallHelper {
 	 * @param integer $textId article's text id in text table
 	 *
 	 * @return string
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getDeletedArticleTitleTxt( $textId ) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -456,7 +456,7 @@ class WallHelper {
 	 * TODO: remove it we don't need to operate on delete wall messages anymore
 	 *
 	 * @return string
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getTitleTxtFromMetadata( $text ) {
 		$pattern = '#<ac_metadata title="([^"]*)">(.*)</ac_metadata>#i';
@@ -554,14 +554,15 @@ class WallHelper {
 	}
 
 	/**
-	 * @param RecentChange $rc
+	 * @param RecentChange $rc or a row from revison table
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
 	 * @return array|bool
 	 */
 	public static function getWallTitleData( $rc = null, $row = null ) {
 		if ( is_object( $row ) ) {
+			// row from the revision table
 			$objTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
-			$userText = !empty( $row->rev_user_text ) ? $row->rev_user_text : '';
+			$userText = isset( $row->rev_user ) ? User::getUsername( $row->rev_user, $row->rev_user_text ) : '';
 
 			$isNew = ( !empty( $row->page_is_new ) && $row->page_is_new === '1' ) ? true : false;
 
@@ -571,7 +572,7 @@ class WallHelper {
 
 		} else {
 			$objTitle = $rc->getTitle();
-			$userText = $rc->getAttribute( 'rc_user_text' );
+			$userText = User::getUsername( $rc->getAttribute( 'rc_user' ), $rc->getAttribute( 'rc_user_text' ) );
 			$isNew = false; // it doesn't metter for rc -- we've got there rc_log_action
 		}
 

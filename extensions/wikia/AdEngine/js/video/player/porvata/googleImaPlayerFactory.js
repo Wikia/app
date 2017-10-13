@@ -40,6 +40,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				);
 			}
 
+			dispatchEvent('wikiaAdsManagerLoaded');
 			log('AdsManager loaded', log.levels.debug, logGroup);
 		}
 
@@ -84,8 +85,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function setAutoPlay(value) {
 			// mobileVideoAd DOM element is present on mobile only
 			if (mobileVideoAd) {
-				mobileVideoAd.setAttribute('muted', value);
-				mobileVideoAd.setAttribute('autoplay', value);
+				mobileVideoAd.muted = value;
+				mobileVideoAd.autoplay = value;
 			}
 		}
 

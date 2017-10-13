@@ -106,12 +106,14 @@ class MultipleLookupCore {
 		if ( ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) ) {
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 
-			$qOptions = array( 'ORDER BY' => 'ml_count DESC, ml_ts DESC', 'LIMIT' => $this->mLimit, 'OFFSET' => $this->mOffset );
+			$qOptions = [
+				'ORDER BY' => 'ml_ts DESC',
+				'LIMIT' => $this->mLimit,
+				'OFFSET' => $this->mOffset,
+			];
 
-			if ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
-				if ( isset( $aMatches[1] ) ) {
-					$qOptions['ORDER BY'] = ( $aMatches[1] == 'desc' ? 'ml_ts DESC' : 'ml_ts' );
-				}
+			if ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) && isset( $aMatches[1] ) ) {
+				$qOptions['ORDER BY'] = ( $aMatches[1] == 'desc' ? 'ml_ts DESC' : 'ml_ts' );
 			}
 
 			$oRes = $dbs->select(
@@ -148,7 +150,7 @@ class MultipleLookupCore {
 
 	/* fetch all contributions from that given database */
 	function fetchContribs( $singleWiki = false ) {
-		global $wgOut, $wgRequest, $wgLang, $wgMemc;
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$fetched_data = array ();
@@ -189,7 +191,7 @@ class MultipleLookupCore {
 		if ( !is_array( $cached ) || MULTILOOKUP_NO_CACHE ) {
 			$res = $dbr->select(
 				array( 'recentchanges' ),
-				array( 'rc_user_text as user_name', 'max(rc_timestamp) as rc_timestamp' ),
+				array( 'rc_user_text as user_name', 'rc_user as user_id', 'max(rc_timestamp) as rc_timestamp' ), // SUS-812
 				$where,
 				__METHOD__,
 				array(
@@ -205,7 +207,10 @@ class MultipleLookupCore {
 				$row->rc_url = $this->mWikia->city_url;
 				$row->rc_city_title = $this->mWikia->city_title;
 				$row->log_comment = false;
-				$fetched_data[$row->user_name] = $row;
+
+				// SUS-812: use user_name column for anons, user_id for user accounts to get their names
+				$user_name = User::getUsername( $row->user_id, $row->user_name );
+				$fetched_data[$user_name] = $row;
 			}
 			$dbr->freeResult( $res );
 			unset( $res ) ;
@@ -224,7 +229,7 @@ class MultipleLookupCore {
 
 	/* a customized version of makeKnownLinkObj - hardened'n'modified for all those non-standard wikia out there */
 	private function produceLink ( $nt, $text, $query, $url, $sk, $wiki_meta, $namespace, $article_id ) {
-		global $wgContLang, $wgOut, $wgMetaNamespace ;
+		global $wgMetaNamespace ;
 
 		$str = htmlspecialchars($nt->getLocalURL( $query ));
 
@@ -282,8 +287,7 @@ class MultipleLookupCore {
 	public function produceLine( $row ) {
 		global $wgLang;
 		$sk = RequestContext::getMain()->getSkin();
-		$page_user = Title::makeTitle ( NS_USER, $row->user_name );
-		$page_contribs = Title::makeTitle ( NS_SPECIAL, "Contributions/{$row->user_name}" );
+		$page_contribs = SpecialPage::getSafeTitleFor( 'Contributions', $row->user_name );
 
 		$meta = strtr( $row->rc_city_title, ' ', '_' );
 		$contrib = $this->produceLink ( $page_contribs, $row->user_name, '', $row->rc_url, $sk, $meta, 0, 0 );

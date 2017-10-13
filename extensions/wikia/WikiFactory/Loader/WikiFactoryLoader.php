@@ -558,7 +558,7 @@ class WikiFactoryLoader {
 				set_error_handler( "wfUnserializeHandler" );
 				$_variable_key = $oRow->cv_name;
 				$_variable_value = $oRow->cv_value;
-				$tUnserVal = unserialize( $oRow->cv_value );
+				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
 				if( !empty( $wgDevelEnvironment ) && $oRow->cv_name === "wgServer" ) {

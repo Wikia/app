@@ -52,7 +52,7 @@ class GlobalTitle extends Title {
 
 	static protected $cachedObjects = array();
 
-	private static $extraExtensionNamespaces = [];
+	static $extraExtensionNamespaces = [];
 
 	/**
 	 * @desc Static constructor, Create new Title from name of page
@@ -100,8 +100,22 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$mainPageName = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id )->getContent();
-		$title = self::newFromText( $mainPageName, NS_MAIN, $city_id );
+		$mainPageTitle = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id );
+		$mainPageName = str_replace( ' ', '_', $mainPageTitle->getContent() );
+		$namespace = NS_MAIN;
+		// support for non-MAIN namespace pages, based on Title::secureAndSplit method
+		// extracting namespace from article name
+		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
+		if ( preg_match( $prefixRegexp, $mainPageName, $matches ) ) {
+			$namespaces = $mainPageTitle->loadNamespaceNames();
+			$namespaceIndex = array_search( $matches[1], $namespaces );
+			if ( $namespaceIndex !== false ) {
+				$namespace = $namespaceIndex;
+				$mainPageName = $matches[2];
+			}
+		}
+
+		$title = self::newFromText( $mainPageName, $namespace, $city_id );
 
 		// Don't give fatal errors if the message is broken
 		if ( !$title->exists() ) {
@@ -191,7 +205,7 @@ class GlobalTitle extends Title {
 	 *  constructor doesnt load anything from database. This is the place
 	 *  for that kind of things
 	 */
-	private function loadAll() {
+	protected function loadAll() {
 		$old = $this->loadFromCache();
 		$this->loadServer();
 		$this->loadArticlePath();
@@ -714,13 +728,6 @@ class GlobalTitle extends Title {
 		 */
 		$city = WikiFactory::getWikiByID( $this->mCityId );
 
-		/**
-		 * if we got this far and not have a value, ask master
-		 */
-		if ( empty( $city ) ) {
-			$city = WikiFactory::getWikiByID( $this->mCityId, true );
-		}
-
 		if ( $city ) {
 			$server = rtrim( $city->city_url, "/" );
 			$this->mServer = \WikiFactory::getLocalEnvURL( $server );
@@ -821,7 +828,7 @@ class GlobalTitle extends Title {
 	 *
 	 * @return Array
 	 */
-	private function loadNamespaceNames() {
+	protected function loadNamespaceNames() {
 		global $wgCanonicalNamespaceNames;
 
 		/**

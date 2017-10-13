@@ -10,6 +10,7 @@ error_reporting(E_ALL);
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 include_once( __DIR__ . '/ForumDumper.php' );
 include_once( __DIR__ . '/FollowsFinder.php' );
+include_once( __DIR__ . '/WallHistoryFinder.php' );
 
 
 class DumpForumData extends Maintenance {
@@ -37,6 +38,7 @@ class DumpForumData extends Maintenance {
 		$this->dumpRevisions();
 		$this->dumpVotes();
 		$this->dumpFollows();
+		$this->dumpWallHistory();
 	}
 
 	private function setConnectinoEncoding() {
@@ -48,6 +50,7 @@ class DumpForumData extends Maintenance {
 		fwrite( $this->fh, "DELETE FROM import_revision;\n" );
 		fwrite( $this->fh, "DELETE FROM import_vote;\n" );
 		fwrite( $this->fh, "DELETE FROM import_follows;\n" );
+		fwrite( $this->fh, "DELETE FROM import_history;\n" );
 	}
 
 	private function dumpPages() {
@@ -97,6 +100,20 @@ class DumpForumData extends Maintenance {
 			$insert = $this->createInsert(
 				'import_follows',
 				Discussions\FollowsFinder::COLUMNS_FOLLOWS,
+				$data
+			);
+			fwrite( $this->fh, $insert . "\n");
+		}
+	}
+
+	private function dumpWallHistory() {
+		$dumper = new Discussions\WallHistoryFinder( wfGetDB( DB_SLAVE ) );
+		$history = $dumper->find();
+
+		foreach ( $history as $data ) {
+			$insert = $this->createInsert(
+				'import_history',
+				Discussions\WallHistoryFinder::COLUMNS,
 				$data
 			);
 			fwrite( $this->fh, $insert . "\n");

@@ -8,7 +8,8 @@ QUnit.module( 've.ce' );
 
 /* Tests */
 
-QUnit.test( 'whitespacePattern', 4, function ( assert ) {
+QUnit.test( 'whitespacePattern', function ( assert ) {
+	assert.expect( 4 );
 	assert.deepEqual( 'a b'.match( ve.ce.whitespacePattern ), [' '], 'matches spaces' );
 	assert.deepEqual( 'a\u00A0b'.match( ve.ce.whitespacePattern ), ['\u00A0'], 'matches non-breaking spaces' );
 	assert.strictEqual( 'a\tb'.match( ve.ce.whitespacePattern ), null, 'does not match tab' );
@@ -47,7 +48,7 @@ QUnit.test( 'getDomHash/getDomText', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		surface = ve.test.utils.createSurfaceFromHtml( cases[i].html );
@@ -202,7 +203,7 @@ QUnit.test( 'getOffset', function ( assert ) {
 		expected += testCases[i].expected.length;
 	}
 
-	QUnit.expect( expected );
+	assert.expect( expected );
 
 	function testOffsets( parent, testCase, expectedIndex ) {
 		var i;
@@ -246,7 +247,8 @@ QUnit.test( 'getOffset', function ( assert ) {
 
 // TODO: ve.ce.getOffsetOfSlug
 
-QUnit.test( 'isShortcutKey', 3, function ( assert ) {
+QUnit.test( 'isShortcutKey', function ( assert ) {
+	assert.expect( 3 );
 	assert.strictEqual( ve.ce.isShortcutKey( { ctrlKey: true } ), true, 'ctrlKey' );
 	assert.strictEqual( ve.ce.isShortcutKey( { metaKey: true } ), true, 'metaKey' );
 	assert.strictEqual( ve.ce.isShortcutKey( {} ), false, 'Not set' );
@@ -272,7 +274,7 @@ QUnit.test( 'nextCursorOffset', function ( assert ) {
 		{ html: '<p><img><b>foo</b></p>', expected: ['p', 1] },
 		{ html: '<p><b>foo</b><img><b>bar</b></p>', expected: ['p', 2] }
 	];
-	QUnit.expect( tests.length );
+	assert.expect( tests.length );
 	elt = ve.createDocumentFromHtml( '' ).createElement( 'div' );
 	for ( i = 0, len = tests.length; i < len; i++ ) {
 		test = tests[i];
@@ -300,7 +302,7 @@ QUnit.test( 'resolveTestOffset', function ( assert ) {
 	for ( i = 0, ilen = tests.length; i < ilen; i++ ) {
 		count += tests[i].length + 1;
 	}
-	QUnit.expect( 2 * count );
+	assert.expect( 2 * count );
 	dom = ve.createDocumentFromHtml( '' );
 	elt = dom.createElement( 'div' );
 	for ( i = 0, ilen = tests.length; i < ilen; i++ ) {
@@ -351,7 +353,7 @@ QUnit.test( 'fakeImes', function ( assert ) {
 			}
 		}
 	}
-	QUnit.expect( count );
+	assert.expect( count );
 
 	// TODO: make this function actually affect the events triggered
 	fakePreventDefault = function () {};

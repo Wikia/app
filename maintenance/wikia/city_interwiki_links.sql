@@ -589,4 +589,5 @@ REPLACE INTO interwiki (iw_prefix, iw_url, iw_local, iw_trans) VALUES
 ("wowwiki","http://www.wowwiki.com/$1",0,0),
 ("wikimoon","http://wikimoon.org/index.php?title=$1",0,0),
 ("homepage","http://www.wikia.com/$1",1,0),
-("wikiavideo","http://video.wikia.com/wiki/Video:$1",1,1);
+("wikiavideo","http://video.wikia.com/wiki/Video:$1",1,1),
+("fandom","http://fandom.wikia.com/articles/$1",1,0);

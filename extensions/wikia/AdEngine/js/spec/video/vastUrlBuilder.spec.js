@@ -5,12 +5,12 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	function noop() {
 	}
 
-	var REGULAR_AD_UNIT_QUERY_PARAM = '&iu=my\/ad\/unit&',
-		PREMIUM_AD_UNIT_QUERY_PARAM = '&iu=premium\/ad\/unit&',
+	var AD_UNIT_QUERY_PARAM = '&iu=',
+		REGULAR_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'my\/ad\/unit&',
 		mocks = {
 			adContext: {
-				getContext: function () {
-					return {opts: {}};
+				get: function () {
+					return false;
 				}
 			},
 			adUnitBuilder: {
@@ -20,7 +20,7 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			},
 			megaAdUnitBuilder: {
 				build: function () {
-					return 'premium/ad/unit';
+					return 'mega/ad/unit';
 				}
 			},
 			slotTargeting: {
@@ -56,8 +56,8 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
-			mocks.megaAdUnitBuilder,
 			mocks.slotTargeting,
+			mocks.megaAdUnitBuilder,
 			mocks.loc,
 			mocks.log
 		);
@@ -144,7 +144,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	});
 
 	it('Build VAST URL with regular ad unit for premium ad layout and without correct video pos name', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{premiumAdLayoutEnabled: true}});
 		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
@@ -156,11 +155,13 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
 	});
 
-	it('Build VAST URL with premium ad unit for premium ad layout and with correct video pos name', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
-		var vastUrl = getModule().build(1, mocks.slotParams, {},'featured');
+	it('Should override adUnit if is in options', function () {
+		var CUSTOM_AD_UNIT = 'THIS_IS_CUSTOM_AD_UNIT',
+			vastUrl = getModule().build(1, mocks.slotParams, {
+				adUnit: CUSTOM_AD_UNIT
+			});
 
-		expect(vastUrl).toMatch(PREMIUM_AD_UNIT_QUERY_PARAM);
+		expect(vastUrl).toContain(AD_UNIT_QUERY_PARAM + CUSTOM_AD_UNIT);
 	});
 
 	it('Build VAST URL with restricted number of ads', function () {

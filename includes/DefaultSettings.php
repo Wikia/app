@@ -5285,7 +5285,7 @@ $wgAjaxLicensePreview = true;
  *
  */
 $wgCrossSiteAJAXdomains = [
-	"internal.vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
+	"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
 ];
 
 /**

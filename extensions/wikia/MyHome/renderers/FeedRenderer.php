@@ -332,7 +332,8 @@ class FeedRenderer {
 						$html .= $authorLine;
 					$html .= Xml::closeElement('p');
 					$html .= Xml::openElement('p');
-						$html .= $comment['wall-comment'];
+						// SUS-2752: snippeting of parsed wikitext can result in broken HTML
+						$html .= strip_tags( $comment['wall-comment'] );
 						$html .= ' ';
 						$html .= Xml::openElement('a', array('href' => $comment['wall-message-url']));
 							$html .= $timestamp;

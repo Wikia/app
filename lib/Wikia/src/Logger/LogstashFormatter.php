@@ -12,15 +12,19 @@ use Exception;
 
 
 class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
-	public function __construct()
-	{
-		// prevent "Undefined variable: applicationName" notice
-		parent::__construct(null);
+
+	const APPNAME = 'mediawiki';
+
+	/**
+	 * @param string $appname
+	 */
+	public function __construct($appname = self::APPNAME) {
+		parent::__construct($appname);
 	}
 
 	protected function formatV0(array $record) {
 		$message = array(
-			'appname' => 'mediawiki',
+			'appname' => $this->applicationName,
 			'@timestamp' => $record['datetime'],
 			'@message' => $record['message'],
 		);

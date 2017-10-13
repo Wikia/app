@@ -11,6 +11,14 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 				}
 			},
 			adContext: {
+				get: function (name) {
+					var map = {
+						'opts.showAds': true,
+						'opts.adsFrequency': 3
+					};
+
+					return map[name];
+				},
 				getContext: function () {
 					return mocks.defaultContext;
 				}
@@ -19,14 +27,26 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 				build: function () {
 					return FAKE_VAST_URL;
 				}
+			},
+			megaAdUnitBuilder: {
+				build: function () {
+					return 'mega/ad/unit';
+				}
 			}
 	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.ooyalaAdSetProvider'](
+			mocks.megaAdUnitBuilder,
 			mocks.adContext,
 			mocks.vastUrlBuilder
 		);
+	}
+
+	function mockContext(map) {
+		spyOn(mocks.adContext, 'get').and.callFake(function (name) {
+			return map[name];
+		});
 	}
 
 	it('Should return simplest adset if there is no parameter provided', function () {
@@ -51,7 +71,11 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 
 	it('Should return mid-roll if it is enabled in adContext', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts: {showAds: true, isFVMidrollEnabled: true}});
+		mockContext({
+			'opts.showAds': true,
+			'opts.isFVMidrollEnabled': true
+		});
+
 		var adSet = getModule().get();
 
 		expect(adSet.length).toEqual(2);
@@ -61,7 +85,11 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 
 	it('Should return mid-roll with position 50% of movie', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts: {showAds: true, isFVMidrollEnabled: true}});
+		mockContext({
+			'opts.showAds': true,
+			'opts.isFVMidrollEnabled': true
+		});
+
 		var adSet = getModule().get();
 
 		expect(adSet.length).toEqual(2);
@@ -71,7 +99,11 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 
 	it('Should return post-roll if it is enabled in adContext', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts: {showAds: true, isFVPostrollEnabled: true}});
+		mockContext({
+			'opts.showAds': true,
+			'opts.isFVPostrollEnabled': true
+		});
+
 		var adSet = getModule().get();
 
 		expect(adSet.length).toEqual(2);
@@ -81,7 +113,11 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 
 	it('Should return pos-roll with position in the end of movie', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts: {showAds: true, isFVPostrollEnabled: true}});
+		mockContext({
+			'opts.showAds': true,
+			'opts.isFVPostrollEnabled': true
+		});
+
 		var adSet = getModule().get();
 
 		expect(adSet.length).toEqual(2);
@@ -116,14 +152,13 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 	});
 
 	it('Should show preroll in correct frequency', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({
-			opts: {
-				isFVMidrollEnabled: false,
-				isFVPostrollEnabled: false,
-				replayAdsForFV: true,
-				fvAdsFrequency: 2,
-				showAds: true
-			}
+		mockContext({
+			'opts.isFVMidrollEnabled': false,
+			'opts.isFVPostrollEnabled': false,
+			'opts.replayAdsForFV': true,
+			'opts.fvAdsFrequency': 2,
+			'opts.showAds': true
+
 		});
 
 		expect(getModule().get(1).length).toEqual(1);
@@ -134,14 +169,12 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 	});
 
 	it('Should enable all ads if frequency capping is set and ads are enabled', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({
-			opts: {
-				isFVMidrollEnabled: true,
-				isFVPostrollEnabled: true,
-				replayAdsForFV: true,
-				fvAdsFrequency: 3,
-				showAds: true
-			}
+		mockContext({
+			'opts.isFVMidrollEnabled': true,
+			'opts.isFVPostrollEnabled': true,
+			'opts.replayAdsForFV': true,
+			'opts.fvAdsFrequency': 3,
+			'opts.showAds': true
 		});
 
 		expect(getModule().get(1).length).toEqual(3);
@@ -154,14 +187,12 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 	});
 
 	it('Should enable preroll and postrolls if both are enabled', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({
-			opts: {
-				isFVMidrollEnabled: false,
-				isFVPostrollEnabled: true,
-				replayAdsForFV: true,
-				fvAdsFrequency: 1,
-				showAds: true
-			}
+		mockContext({
+			'opts.isFVMidrollEnabled': false,
+			'opts.isFVPostrollEnabled': true,
+			'opts.replayAdsForFV': true,
+			'opts.fvAdsFrequency': 1,
+			'opts.showAds': true
 		});
 
 		expect(getModule().get(1).length).toEqual(2);
@@ -175,12 +206,10 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 
 	it('Should correctly count rv parameter for preroll', function () {
 		spyOn(mocks.vastUrlBuilder, 'build');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({
-			opts: {
-				fvAdsFrequency: 3,
-				replayAdsForFV: true,
-				showAds: true
-			}
+		mockContext({
+			'opts.fvAdsFrequency': 3,
+			'opts.replayAdsForFV': true,
+			'opts.showAds': true
 		});
 
 		getModule().get(1);
@@ -232,5 +261,46 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 
 		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[2].contentSourceId).toEqual(111);
 		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[2].videoId).toEqual(222);
+	});
+
+	it('does not pass bidder info to mid and post roll', function () {
+		spyOn(mocks.vastUrlBuilder, 'build');
+		mockContext({
+			'opts.isFVMidrollEnabled': true,
+			'opts.isFVPostrollEnabled': true,
+			'opts.replayAdsForFV': true,
+			'opts.showAds': true
+		});
+
+		var bidParams = {
+			bidid: 789
+		};
+
+		getModule().get(1, 666, {}, bidParams);
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(0)[1].bidid).toEqual(789);
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(1)[1].bidid).toBeUndefined();
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(2)[1].bidid).toBeUndefined();
+	});
+
+	it('does not pass bidder info to any ad on next video', function () {
+		spyOn(mocks.vastUrlBuilder, 'build');
+		mockContext({
+			'opts.isFVMidrollEnabled': true,
+			'opts.isFVPostrollEnabled': true,
+			'opts.fvAdsFrequency': 1,
+			'opts.replayAdsForFV': true,
+			'opts.showAds': true
+		});
+
+		var bidParams = {
+			bidid: 789
+		};
+
+		getModule().get(1, 666, {}, bidParams); // first video
+
+		getModule().get(2, 666, {}, bidParams); // second video
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(3)[1].bidid).toBeUndefined(); // preroll
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(4)[1].bidid).toBeUndefined(); // midroll
+		expect(mocks.vastUrlBuilder.build.calls.argsFor(5)[1].bidid).toBeUndefined(); // postroll
 	});
 });

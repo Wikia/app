@@ -116,11 +116,6 @@ module.exports = function (config) {
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
 			'extensions/wikia/PhalanxII/spec/*.spec.js',
 
-			//Wikia HomePage
-			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.mocks.js',
-			'extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
-			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
-
 			/**
 			 * Extension: VideoPageTool
 			 * @description This extension is actually split up into a 'homepage' & an 'admin' component and is

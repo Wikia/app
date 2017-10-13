@@ -3,8 +3,8 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 	'use strict';
 
 	var mocks = {
-		geo: {
-			isProperGeo: function () {
+		adContext: {
+			get: function () {
 				return true;
 			}
 		},
@@ -32,9 +32,9 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 	function getSettings(params) {
 		params = params || {};
 		return modules['ext.wikia.adEngine.video.videoSettings'](
+			mocks.adContext,
 			mocks.resolvedState,
 			mocks.sampler,
-			mocks.geo,
 			mocks.win
 		).create(params);
 	}
@@ -184,6 +184,17 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		});
 
 		expect(mocks.sampler.sample).toHaveBeenCalled();
+	});
+
+	it('Should be able to disable moat tracking on runtime', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		var videoSettings = getSettings({
+			moatTracking: 100
+		});
+		videoSettings.setMoatTracking(false);
+
+		expect(videoSettings.isMoatTrackingEnabled()).toBeFalsy();
 	});
 });
 

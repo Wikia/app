@@ -5,7 +5,7 @@
 				<? if ( !empty( $firstLevelItem['items'] ) ): ?>
 					<div class="wds-dropdown">
 						<div class="wds-tabs__tab-label wds-dropdown__toggle">
-							<a href="<?= $firstLevelItem['href'] ?? '#' ?>"
+							<a href="<?= Sanitizer::encodeAttribute( $firstLevelItem['href'] ) ?? '#' ?>"
 								<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
 								data-tracking="<?= $firstLevelItem['tracking_label'] ?>">
 								<span><?= $firstLevelItem['title']['value'] ?></span>
@@ -17,7 +17,7 @@
 								<? foreach ( $firstLevelItem['items'] as $index => $secondLevelItem ): ?>
 									<? if ( array_key_exists( 'items', $secondLevelItem ) && !empty( $secondLevelItem['items'] ) ): ?>
 										<li class="<?= $index > count( $secondLevelItem['items'] ) - 1 ? 'wds-is-sticked-to-parent ' : '' ?>wds-dropdown-level-2">
-											<a href="<?= $secondLevelItem['href'] ?? '#' ?>"
+											<a href="<?= Sanitizer::encodeAttribute( $secondLevelItem['href'] ) ?? '#' ?>"
 												<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
 												class="wds-dropdown-level-2__toggle"
 												data-tracking="<?= $secondLevelItem['tracking_label'] ?>"
@@ -29,7 +29,7 @@
 												<ul class="wds-list wds-is-linked">
 													<? foreach ( $secondLevelItem['items'] as $thirdLevelItem ): ?>
 														<li>
-															<a href="<?= $thirdLevelItem['href'] ?? '#' ?>"
+															<a href="<?= Sanitizer::encodeAttribute( $thirdLevelItem['href'] ) ?? '#' ?>"
 																<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
 																data-tracking="<?= $thirdLevelItem['tracking_label'] ?>"
 															><?= $thirdLevelItem['title']['value'] ?></a>
@@ -40,7 +40,7 @@
 										</li>
 									<? else : ?>
 										<li>
-											<a href="<?= $secondLevelItem['href'] ?? '#' ?>"
+											<a href="<?= Sanitizer::encodeAttribute( $secondLevelItem['href'] ) ?? '#' ?>"
 												<? if ( $isPreview ): ?>target="_blank"<? endif; ?>
 												data-tracking="<?= $secondLevelItem['tracking_label'] ?>"
 											>
@@ -54,7 +54,7 @@
 					</div>
 				<? else : ?>
 					<div class="wds-tabs__tab-label">
-						<a href="<?= $firstLevelItem['href'] ?? '#' ?>"
+						<a href="<?= Sanitizer::encodeAttribute( $firstLevelItem['href'] ) ?? '#' ?>"
 							<? if ( $isPreview ): ?> target="_blank"<? endif; ?>
 							data-tracking="<?= $firstLevelItem['tracking_label'] ?>"
 						>

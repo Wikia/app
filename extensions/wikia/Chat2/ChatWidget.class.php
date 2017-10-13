@@ -148,7 +148,6 @@ class ChatWidget {
 
 		wfProfileIn( __METHOD__ );
 
-		Chat::info( __METHOD__ . ': Method called' );
 		$chatters = [ ];
 		if ( empty( $wgReadOnly ) ) {
 			// cache the whole response

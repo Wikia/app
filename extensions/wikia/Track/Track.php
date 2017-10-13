@@ -11,7 +11,7 @@ $wgHooks[ 'MakeGlobalVariablesScript' ][] = 'Track::addGlobalVars';
 $wgHooks[ 'WikiaSkinTopScripts' ][] = 'Track::onWikiaSkinTopScripts';
 
 class Track {
-	const BASE_URL = 'http://a.wikia-beacon.com/__track';
+	const BASE_URL = 'https://beacon.wikia-services.com/__track';
 	const GA_URL = 'https://www.google-analytics.com';
 	const GA_VERSION = 1;
 

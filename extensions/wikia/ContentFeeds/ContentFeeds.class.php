@@ -153,22 +153,6 @@ class ContentFeeds {
 	}
 
 	/**
-	 * parser hook for <topvotedlist> tag
-	 * @return string tag body
-	 */
-	public static function highestRatedParserHook( $input, $args, $parser ) {
-		$args = self::extractArgs( $args );
-
-		$tagBody = '<ul class="cfTopVotedListTag">';
-		foreach ( DataProvider::singleton()->GetTopVotedArticles( $args['limit'] ) as $article ) {
-			$tagBody .= '<li><a href="' . htmlspecialchars( $article['url'] ) . '">' . htmlspecialchars( $article['text'] ) . '</a></li>';
-		}
-		$tagBody .= '</ul>';
-
-		return $tagBody;
-	}
-
-	/**
 	 * nifty "parser hook" for <recentimages> tag
 	 * @return string tag body
 	 */

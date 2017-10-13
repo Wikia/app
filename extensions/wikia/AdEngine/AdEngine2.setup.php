@@ -23,6 +23,7 @@ $wgAutoloadClasses['AdEngine2ApiController'] = __DIR__ . '/AdEngine2ApiControlle
 
 // Hooks for AdEngine2
 $wgHooks['AfterInitialize'][] = 'AdEngine2Hooks::onAfterInitialize';
+$wgHooks['InstantGlobalsGetNewsAndStoriesVariables'][] = 'AdEngine2Hooks::onInstantGlobalsGetNewsAndStoriesVariables';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AdEngine2Hooks::onInstantGlobalsGetVariables';
 $wgHooks['OasisSkinAssetGroups'][] = 'AdEngine2Hooks::onOasisSkinAssetGroups';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AdEngine2Hooks::onOasisSkinAssetGroupsBlocking';

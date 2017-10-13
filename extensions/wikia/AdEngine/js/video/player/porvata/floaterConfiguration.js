@@ -19,11 +19,8 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 					video = this.elements.video;
 
 				video.addEventListener('wikiaSlotExpanded', function () {
-					var container = floatingContext.elements.originalContainer || video.container,
-						body = container.ownerDocument.body;
-
-					floatingContext.preferred.width = body.scrollWidth;
-					floatingContext.preferred.height = body.scrollHeight;
+					floatingContext.preferred.width = video.container.scrollWidth;
+					floatingContext.preferred.height = video.container.scrollHeight;
 					floatingContext.floatAgain();
 					floatingContext.fireEvent('start');
 
@@ -43,7 +40,9 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 			onBeforeDetach: function (floatingContext) {
 				var viewport = floatingContext.elements.viewport;
 
-				viewport.style.height = viewport.offsetHeight + 'px';
+				// Magic 14 is related to #INCONTENT_WRAPPER > #INCONTENT_PLAYER margins
+				// and prevents jumping when video is going to float
+				viewport.style.height = (viewport.offsetHeight - 14) + 'px';
 			},
 			onDetach: function (floatingContext) {
 				floatingContext.elements.providerContainer.style.height = floatingContext.getHeight() + 'px';

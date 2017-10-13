@@ -48,24 +48,6 @@ $wgSpecialPages['CreateQuestionPage'] = 'CreateQuestionPage';
 $wgAutoloadClasses['GetQuestionWidget'] = dirname( __FILE__ ) . "/SpecialGetQuestionWidget.php";
 $wgSpecialPages['GetQuestionWidget'] = 'GetQuestionWidget';
 
-$wgHooks['AddNewAccount'][] = 'fnQuestionAttributionRegister';
-function fnQuestionAttributionRegister( $user ){
-	global $wgOut;
-
-	fnWatchHeldPage( $user );
-
-	//anon has asked a question and then registered, so we have to give them attribution
-	if( isset( $_SESSION['wsQuestionAsk'] ) && $_SESSION['wsQuestionAsk'] != "" ){
-		fnQuestionAttribution( $user );
-		$title = Title::newFromText( $_SESSION['wsQuestionAsk'] );
-		unset($_SESSION['wsQuestionAsk']);
-		$wgOut->redirect( $title->getFullURL( "state=registered" ) );
-	}
-
-	return true;
-}
-
-
 $wgHooks['UserLoginComplete'][] = 'fnQuestionAttributionLogin';
 function fnQuestionAttributionLogin( $user ){
 	global $wgOut;

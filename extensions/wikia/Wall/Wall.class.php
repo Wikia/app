@@ -3,8 +3,9 @@
 class Wall extends WikiaModel {
 	const DESCRIPTION_CACHE_TTL = 3600;
 
-	/** @var  Title */
+	/** @var Title $title */
 	protected $mTitle;
+	/** @var int $mCityId */
 	protected $mCityId;
 
 	protected $mMaxPerPage = false;
@@ -16,7 +17,7 @@ class Wall extends WikiaModel {
 	 * @param $id
 	 * @param int $flags
 	 *
-	 * @return null|Wall
+	 * @return null|static
 	 */
 	static public function newFromId( $id, $flags = 0 ) {
 		$title = Title::newFromId( $id, $flags );
@@ -29,44 +30,32 @@ class Wall extends WikiaModel {
 	/**
 	 * @param Title $title
 	 *
-	 * @return null|Wall
+	 * @return static
 	 */
-	static public function newFromTitle( Title $title ) {
+	static public function newFromTitle( Title $title ): Wall {
 		wfProfileIn( __METHOD__ );
-		if ( !( $title instanceof Title ) ) {
-			wfProfileOut( __METHOD__ );
-			return null;
-		}
 
-		$wall = self::getEmpty();
+		$wall = new static();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
-		wfProfileOut( __METHOD__ );
-		return $wall;
-	}
-
-	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
-		wfProfileIn( __METHOD__ );
-		if ( !( $title instanceof Title ) ) {
-			wfProfileOut( __METHOD__ );
-			return null;
-		}
-		$wall = self::getEmpty();
-		$wall->mTitle = $title;
-		$wall->mCityId = F::app()->wg->CityId;
-		$wall->mRelatedPageId = (int)$relatedPageId;
 		wfProfileOut( __METHOD__ );
 		return $wall;
 	}
 
 	/**
-	 * @return Wall
+	 * @param Title $title
+	 * @param int $relatedPageId
+	 * @return static
 	 */
-	static public function getEmpty() {
-		/* small work around for problem with static constructors and inheritance */
-		// TODO: Look in to Late Static Bindings
-		$className = get_called_class();
-		return new $className();
+	static public function newFromRelatedPages( Title $title, $relatedPageId ): Wall {
+		wfProfileIn( __METHOD__ );
+
+		$wall = new static();
+		$wall->mTitle = $title;
+		$wall->mCityId = F::app()->wg->CityId;
+		$wall->mRelatedPageId = (int)$relatedPageId;
+		wfProfileOut( __METHOD__ );
+		return $wall;
 	}
 
 	public function getId() {
@@ -86,7 +75,6 @@ class Wall extends WikiaModel {
 	 * @return string raw wikitext
 	 */
 	public function getRawDescription() {
-		/** @var Article $oArticle */
 		$oArticle = new Article( $this->getTitle() );
 		return $oArticle->getPage()->getRawText();
 	}

@@ -1994,22 +1994,31 @@ class WallHooksHelper {
 	 * @param $urls String[]
 	 * @return bool
 	 */
-	public static function onTitleGetSquidURLs( $title, &$urls ) {
-		wfProfileIn( __METHOD__ );
+	public static function onTitleGetSquidURLs( Title $title, &$urls ) {
 
-		if ( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
+		if ( $title->inNamespace( NS_USER_WALL ) ) {
 			// CONN-430: Resign from default ArticleComment purges
 			$urls = [];
 		}
 
-		if ( $title->inNamespaces( NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
+		if ( $title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
 			// CONN-430: purge cache only for main thread page and owner's wall page
 			// while running AfterBuildNewMessageAndPost hook
 			$wallMessage = WallMessage::newFromTitle( $title );
-			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_USER_WALL ) );
+			$urls = $wallMessage->getSquidURLs( NS_USER_WALL );
 		}
 
-		wfProfileOut( __METHOD__ );
+		if ( $title->inNamespace( NS_USER_WALL_MESSAGE_GREETING ) ) {
+			// SUS-2756: For Message Wall Greetings, just purge the greeting page + user wall
+			$dbKey = $title->getDBkey();
+			$wallTitle = Title::makeTitle( NS_USER_WALL, $dbKey );
+
+			$urls = [
+				$title->getFullURL(),
+				$wallTitle->getFullURL(),
+			];
+		}
+
 		return true;
 	}
 

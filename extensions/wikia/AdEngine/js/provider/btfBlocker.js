@@ -18,6 +18,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads.runtime.unblockHighlyViewableSlots = false;
 
 	function unblock(slotName) {
+		log(['unblocking', slotName], log.levels.info, logGroup);
 		unblockedSlots.push(slotName);
 	}
 
@@ -41,19 +42,26 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		function processBtfSlot(slot) {
 			var context = adContext.getContext();
-			log(['processBtfSlot', slot.name], 'debug', logGroup);
+
+			if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
+				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
+				return;
+			}
 
 			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
-				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
+				if (unblockedSlots.indexOf(slot.name) > -1) {
+					log(['PAL enabled, filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
 					return;
 				}
 			} else {
 				if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+					log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
 					config.highlyViewableSlots.map(unblock);
 				}
 
 				if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
+					log(['Filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
 					return;
 				}
@@ -63,14 +71,16 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function startBtfQueue() {
-			var context = adContext.getContext();
-			log('startBtfQueue', 'debug', logGroup);
+			var context = adContext.getContext(),
+				roadblockBlocksBtf = uapContext.isRoadblockLoaded() && win.ads.runtime.disableBtf;
+
+			log('startBtfQueue', log.levels.info.debug, logGroup);
 
 			if (btfQueueStarted) {
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled) {
+			if (context.opts.premiumAdLayoutEnabled && !roadblockBlocksBtf) {
 				win.ads.runtime.disableBtf = true;
 				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}
@@ -82,7 +92,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function onSlotResponse(slotName) {
-			log(['onSlotResponse', slotName], 'debug', logGroup);
+			log(['onSlotResponse', slotName], log.levels.info.debug, logGroup);
 
 			// Remove slot from pendingAtfSlots
 			var index = pendingAtfSlots.indexOf(slotName);
@@ -93,7 +103,11 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				// If pendingAtfSlots is empty, start BTF slots
 				log(['remove from pendingAtfSlots', pendingAtfSlots, slotName], log.levels.debug, logGroup);
 				if (pendingAtfSlots.length === 0) {
-					startBtfQueue();
+					/*
+					mobil require is asynchronous.
+					We need to wait for code that is executed by require (UAP) before we start executing BTF queue
+					 */
+					win.setTimeout(startBtfQueue, 0);
 				}
 			}
 		}
@@ -107,7 +121,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function fillInSlotWithDelay(slot) {
-			log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
+			log(['fillInSlotWithDelay', slot.name], log.levels.info.debug, logGroup);
 
 			function fillInSlotOnResponse() {
 				onSlotResponse(slot.name);

@@ -1723,7 +1723,7 @@ Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas d
 Por favor [[$2|deixe uma mensagem]] se eu puder ajudar em algo. Divirta-se em {{SITENAME}}!
 
 $2",
-	'welcome-message-log' => 'bem vindo novo contribuidor',
+	'welcome-message-log' => 'Bem-vindo novo contribuidor!',
 	'welcome-message-user-staff' => '==Bem-vindo==
 
 Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade FANDOM. Obrigado por sua edição em[[:$1]]!
@@ -1731,7 +1731,7 @@ Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunid
 Parece que nenhum administrador desta comunidade está ativo no momento, mas se precisar de ajuda, você pode visitar nossas [[Ajuda:Conteúdo|páginas de ajuda]] 
 ou visite a [[w:c:comunidade|Central da comunidade]] para explorar nossos [[w:c:comunidade:Especial:Forum|fóruns]].
 
-Você lambem pode seguir o [[w:c:community:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Univerdade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
+Você também pode seguir o [[w:c:comunidade:Categoria:Notícias da Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Universidade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
 
 Por favor [[$2| deixe uma mensagem]] se eu puder ajudar em algo.
 
@@ -1745,11 +1745,11 @@ Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunid
 '''[[Especial:Criar uma conta|Por favor inicie sua sessão e crie um nome de usuário]]'''. É uma maneira fácil de manter o controle de suas contribuições e ajuda você a comunicar-se com o resto da comunidade.
 
 Parece que nenhum administrador desta comunidade está ativo agora, mas se precisar de ajuda, você pode visitar nossas [[Ajuda:Conteúdos|páginas de ajuda]] 
-ou visitar a [[w:c:comunidadea|Central da comunidade]] para checar nossos [[w:c:communidade:Especial:Forum|fóruns]].
+ou visitar a [[w:c:comunidade|Central da comunidade]] para checar nossos [[w:c:communidade:Especial:Forum|fóruns]].
 
-Você também pode seguir o [[w:c:comunidade:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Universidade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
+Você também pode seguir o [[w:c:comunidade:Categoria:Notícias da Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Universidade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
 
-Por favor [[$2]]| deixe uma mensagem]] se eu puder ajudar em algo.
+Por favor [[$2|deixe uma mensagem]] se eu puder ajudar em algo.
 
 Divirta-se em {{SITENAME}}
 
@@ -1760,7 +1760,7 @@ $2",
 
 '''[[Especial:Criar uma conta|Por favor inicie sua sessão e crie um nome de usuário]]'''. É uma maneira fácil de manter o controle de suas contribuições e ajuda você a comunicar-se com o resto da comunidade.
 
-Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas de ajuda]] ou entre em contato comigo ou [[Especial:Lista_de_utilizadores/sysop|outro administrador]] aqui. Para obter ajuda geral, você pode visitar a [[w:c:comunidade|Central da comunidade]] para explorar os [[w:c:comunidade:Especial:Forum|fóruns]] e os [[w:c:comunidade:Categoria:Notícias_da_Comunidade|blogs]].
+Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas de ajuda]] ou entre em contato comigo ou [[Especial:Lista de utilizadores/sysop|outro administrador]] aqui. Para obter ajuda geral, você pode visitar a [[w:c:comunidade|Central da comunidade]] para explorar os [[w:c:comunidade:Especial:Forum|fóruns]] e os [[w:c:comunidade:Categoria:Notícias da Comunidade|blogs]].
 
 Divirta-se em {{SITENAME}}!",
 	'welcome-message-wall-user-staff' => 'Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade FANDOM. Obrigado por sua edição de [[:$1]]!
@@ -1774,7 +1774,7 @@ Divirta-se na {{SITENAME}}!',
 
 '''[[Especial:Criar uma conta|Por favor inicie sua sessão e crie um nome de usuário]]'''. É uma maneira fácil de manter o controle de suas contribuições e ajuda você a comunicar-se com o resto da comunidade.
 
-Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas de ajuda]] ou entre em contato comigo ou [[Especial:Lista_de_utilizadores/sysop|outro administrador]] aqui. Para obter ajuda geral, você pode visitar a [[w:c:comunidade|Central da comunidade]] para explorar os [[w:c:comunidade:Especial:Forum|fóruns]] e os [[w:c:comunidade:Categoria:Notícias_da_Comunidade|blogs]].
+Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas de ajuda]] ou entre em contato comigo ou [[Especial:Lista de utilizadores/sysop|outro administrador]] aqui. Para obter ajuda geral, você pode visitar a [[w:c:comunidade|Central da comunidade]] para explorar os [[w:c:comunidade:Especial:Forum|fóruns]] e os [[w:c:comunidade:Categoria:Notícias da Comunidade|blogs]].
 
 Divirta-se em {{SITENAME}}!",
 	'welcome-message-wall-anon-staff' => "Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade. Obrigado por sua edição de [[:$1]]!
@@ -1784,14 +1784,14 @@ Divirta-se em {{SITENAME}}!",
 Parece que nenhum administrador desta comunidade está ativo no momento, mas se precisar de ajuda, você pode visitar nossas [[Ajuda:Conteúdo|páginas de ajuda]] 
 ou visite a [[w:c:comunidade|Central da comunidade]] para explorar nossos [[w:c:comunidade:Especial:Forum|fóruns]].
 
-Você lambem pode seguir o [[w:c:community:Categoria:Notícias_da_Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Univerdade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
+Você também pode seguir o [[w:c:comunidade:Categoria:Notícias da Comunidade|blog do staff]] para saber das últimas notícias e eventos no FANDOM. E não se esqueça de dar uma olhada na [[w:c:comunidade:Universidade FANDOM|Universidade FANDOM]] para assistir vídeos informativos.
 
 Divirta-se em {{SITENAME}}!",
 	'welcome-description' => 'Envie uma mensagem de boas-vindas para usuários depois das suas primeiras edições',
 	'welcome-enabled' => 'page-user message-anon message-user',
 	'welcome-user' => '@latest',
 	'welcome-bot' => '@bot',
-	'right-welcomeexempt' => 'Flags user as exempt from welcome tool messages',
+	'right-welcomeexempt' => 'Marque usuário como isento das mensagens da ferramenta de boas-vindas',
 );
 
 $messages['roa-tara'] = array(

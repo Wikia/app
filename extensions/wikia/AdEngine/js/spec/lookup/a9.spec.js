@@ -2,7 +2,13 @@
 describe('Method ext.wikia.adEngine.lookup.a9', function () {
 	'use strict';
 
-	var mocks, testCases;
+	var mocks,
+		testCases,
+		VIDEO_SLOT_NAME = 'FEATURED',
+		VIDEO_SLOT = {
+			slotID: VIDEO_SLOT_NAME,
+			mediaType: 'video'
+		};
 
 	function noop() {
 		return;
@@ -20,6 +26,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.a9'](
+			mocks.adContext,
 			mocks.slotsContext,
 			getFactory(),
 			mocks.document,
@@ -35,6 +42,12 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 		a9.call();
 	}
 
+	function mockAdContext(data) {
+		spyOn(mocks.adContext, 'get').and.callFake(function (name) {
+			return data[name];
+		});
+	}
+
 	mocks = {
 		targeting: noop,
 		adContext: {
@@ -44,6 +57,9 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 					slots: noop,
 					targeting: mocks.targeting
 				};
+			},
+			get: function () {
+				return null;
 			}
 		},
 		slotsContext: {
@@ -175,7 +191,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 					amznp: 'amznp3'
 				}
 			}
-		},
+		}
 	];
 
 	Object.keys(testCases).forEach(function (k) {
@@ -203,4 +219,42 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 		init(a9, []);
 		expect(a9.hasResponse()).toEqual(true);
 	});
+
+	it('should not show video slot if it is not enabled', function () {
+		expect(getModule().getSlotParams(VIDEO_SLOT_NAME)).toEqual({});
+	});
+
+	it('enable video slot if it is enabled and there is featured video page', function () {
+		spyOn(mocks.window.apstag, 'fetchBids');
+		mockAdContext({
+			'bidders.a9Video': true,
+			'targeting.hasFeaturedVideo': true
+		});
+
+		getModule().call();
+		expect(mocks.window.apstag.fetchBids.calls.first().args[0].slots).toContain(VIDEO_SLOT);
+	});
+
+	it('disable video slot on not featured video pages', function () {
+		spyOn(mocks.window.apstag, 'fetchBids');
+		mockAdContext({
+			'bidders.a9Video': true,
+			'targeting.hasFeaturedVideo': false
+		});
+
+		getModule().call();
+		expect(mocks.window.apstag.fetchBids.calls.first().args[0].slots).not.toContain(VIDEO_SLOT);
+	});
+
+	it('disable video slot if it is disabled', function () {
+		spyOn(mocks.window.apstag, 'fetchBids');
+		mockAdContext({
+			'bidders.a9Video': false,
+			'targeting.hasFeaturedVideo': true
+		});
+
+		getModule().call();
+		expect(mocks.window.apstag.fetchBids.calls.first().args[0].slots).not.toContain(VIDEO_SLOT);
+	});
+
 });

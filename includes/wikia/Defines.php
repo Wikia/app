@@ -33,7 +33,6 @@ define("WPP_IMAGE_SERVING", 0);
 define("WPP_PLB_PROPS", 1);
 define("WPP_PLB_LAYOUT_DELETE", 2);
 define("WPP_PLB_LAYOUT_NOT_PUBLISH", 3);
-define("WPP_BLOGS_VOTING", 4);
 define("WPP_BLOGS_COMMENTING", 5);
 define("WPP_PLACES_LATITUDE", 6);
 define("WPP_PLACES_LONGITUDE", 7);

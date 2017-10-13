@@ -84,6 +84,10 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			{
 				slotName: 'UAP_BFAA',
 				adUnit: '/5441/wka2a.VIDEO/uap_bfaa/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'ABCD',
+				adUnit: '/5441/wka2a.VIDEO/abcd/tablet/oasis-home/_godofwar-gaming'
 			}
 		],
 		testCasesForValidation = [

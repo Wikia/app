@@ -34,8 +34,10 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			@include absolute-fill();
 		}
 
-		&.vpaid-enabled video {
-			z-index: $vpaid-z-index;
+		&.vpaid-enabled {
+			video, > div:last-child {
+				z-index: $vpaid-z-index;
+			}
 		}
 
 		.video-player {
@@ -181,15 +183,15 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		}
 
 		.ima-mute-div, .volume-control {
-			bottom: 14px;
-			right: 7px;
-
+			bottom: 0;
+			right: 0;
 			.speaker {
+				padding: 14px 7px 14px 12px;
 				&.mute {
-					background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg') no-repeat left bottom; /* inline */
+					background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg') no-repeat 12px 24px; /* inline */
 				}
 
-				background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg') no-repeat left bottom; /* inline */
+				background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg') no-repeat 12px 24px; /* inline */
 			}
 		}
 	}

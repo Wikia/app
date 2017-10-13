@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		}
 
 		amznMatch.type = 'text/javascript';
-		amznMatch.src = 'http://c.amazon-adsystem.com/aax2/amzn_ads.js';
+		amznMatch.src = 'https://c.amazon-adsystem.com/aax2/amzn_ads.js';
 		amznMatch.addEventListener('load', function () {
 			var renderAd = win.amznads.renderAd;
 			if (!win.amznads.getAdsCallback || !renderAd) {

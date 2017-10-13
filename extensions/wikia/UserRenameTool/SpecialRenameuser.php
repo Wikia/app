@@ -62,7 +62,7 @@ $wgLogHeaders['renameuser']            = 'userrenametool-logpagetext';
 // hooks
 $wgHooks['StaffLog::formatRow'][] = 'UserRenameToolStaffLogFormatRow';
 
-function UserRenameToolStaffLogFormatRow( $type, $row, $time, $linker, &$out ) {
+function UserRenameToolStaffLogFormatRow( $type, $row, $time, &$out ) {
 	if ( $type == "renameuser" ) {
 		$out = "{$time} Rename - {$row->slog_comment}";
 		return false;

@@ -111,16 +111,12 @@ function print_pre( $param, $return = 0 )
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
+	global $wgWikiaNocookieDomain;
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
-	if ( substr( strtolower( $url ), -4 ) != '.ogg' && isset( $wg->ImagesServers ) && is_int( $wg->ImagesServers ) ) {
-		if ( strlen( $url ) > 7 && substr( $url, 0, 7 ) == 'http://' ) {
-			$hash = sha1( $url );
-			$inthash = ord ( $hash );
-
-			$serverNo = $inthash % ( $wg->ImagesServers -1 );
-			$serverNo++;
-
+	if ( substr( strtolower( $url ), -4 ) != '.ogg' ) {
+		$url = str_replace("http://", "https://", $url );
+		if ( strlen( $url ) > 8 && substr ( $url, 0, 8 ) == "https://" ) {
 			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
 			if ( $timestamp == "" ) {
 				$matches = array();
@@ -139,43 +135,10 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
 			// Production
-			$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->ImagesDomainSharding}/%s", $serverNo, $cb ), $url );
+			$nocookieDomainEscaped = preg_quote($wgWikiaNocookieDomain);
+			$url = preg_replace( "#https://images.wikia.(?:com|{$nocookieDomainEscaped})/#", sprintf( "https://images.{$wgWikiaNocookieDomain}/%s", $cb ), $url );
 		}
 	}
-	return $url;
-}
-
-/**
- * Returns a link to the same asset after applying domain sharding
- *
- * @see wfReplaceImageServer
- * @author Władysław Bodzek
- * @param $url string URL to an asset
- * @return string URL after applying domain sharding
- */
-function wfReplaceAssetServer( $url ) {
-	global $wgImagesServers, $wgDevelEnvironment;
-
-	$matches = array();
-
-	if ( preg_match( "#^(?<a>(https?:)?//(slot[0-9]+\\.)?images)(?<b>\\.wikia\\.nocookie\\.net/.*)\$#", $url, $matches ) ) {
-		$hash = sha1( $url );
-		$inthash = ord( $hash );
-
-		$serverNo = $inthash % ( $wgImagesServers -1 );
-		$serverNo++;
-
-		$url = $matches['a'] . ( $serverNo ) . $matches['b'];
-	} elseif ( !empty( $wgDevelEnvironment ) && preg_match( '/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.(pl|us|com)\/(.*))$/', $url, $matches ) ) {
-		$hash = sha1( $url );
-		$inthash = ord( $hash );
-
-		$serverNo = $inthash % ( $wgImagesServers -1 );
-		$serverNo++;
-
-		$url = "{$matches[1]}i{$serverNo}.{$matches[3]}";
-	}
-
 	return $url;
 }
 

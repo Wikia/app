@@ -156,7 +156,7 @@ $messages['pms'] = array(
 $messages['pt'] = array(
 	'bannernotifications-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
 	'bannernotifications-general-ajax-failure' => 'O navegador não pode se conectar ao FANDOM. Tente novamente mais tarde.',
-	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Se precisar que enviemos outra, por favor [[Special:ConfirmEmail|Clique aqui e enviaremos novamente.]] Se você precisar alterar o seu e-mail, visite sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
+	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Se precisar que enviemos outra, por favor [[Special:ConfirmEmail|clique aqui e enviaremos novamente.]] Se você precisar alterar o seu e-mail, visite sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
 	'bannernotifications-no-email' => 'Sua conta não possui um endereço de e-mail confirmado. Por favor configure seu e-mail em sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
 );
 
@@ -167,9 +167,9 @@ $messages['roa-tara'] = array(
 
 $messages['ru'] = array(
 	'bannernotifications-desc' => 'Отображает системные уведомления для события, таких как сбои AJAX',
-	'bannernotifications-general-ajax-failure' => 'Браузер не смог подключиться к Фэндому. Попробуйте ещё раз позже.',
+	'bannernotifications-general-ajax-failure' => 'Браузер не смог подключиться к ФЭНДОМУ. Попробуйте ещё раз позже.',
 	'bannernotifications-not-confirmed-email' => 'Адрес вашей электронной почты ещё не подтверждён. Вы должны были получить сообщение о подтверждении на почту. Не получили? [[Служебная:ConfirmEmail|Нажмите здесь]], и мы вышлем вам новое письмо. Если вы хотите изменить адрес электронной почты, перейдите в соответствующий раздел [[Служебная:Preferences#mw-prefsection-emailv2|личных настроек]].',
-	'bannernotifications-no-email' => 'У вашей учетной записи нет подтвержденного адреса электронной почты. Пожалуйста, укажите адрес электронной почты на странице [[Служебная:Preferences#mw-prefsection-emailv2|личных настроек]].',
+	'bannernotifications-no-email' => 'У вашей учётной записи не подтверждён адрес электронной почты. Пожалуйста, укажите адрес электронной почты на странице [[Special:Preferences#mw-prefsection-emailv2|личных настроек]].',
 );
 
 $messages['sv'] = array(

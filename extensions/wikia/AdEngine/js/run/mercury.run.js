@@ -1,31 +1,27 @@
 /*global require*/
 require([
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
-	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.service.actionHandler',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
-	adContext,
-	adInfoTracker,
 	slotStateMonitor,
 	amazon,
 	a9,
 	prebid,
-	rubiconFastlane,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
 	actionHandler,
+	adInfoListener,
 	geo,
 	instantGlobals,
 	win
@@ -37,8 +33,6 @@ require([
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	function callBiddersOnConsecutivePageView() {
-		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
-
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
@@ -46,19 +40,9 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
 		}
-
-		if (
-			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-			geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries) &&
-			!isRubiconDisplayPrebidAdapterActive
-		) {
-			rubiconFastlane.call();
-		}
 	}
 
 	mercuryListener.onLoad(function () {
-		var isRubiconDisplayPrebidAdapterActive = adContext.getContext().bidders.rubiconDisplay;
-
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
 		}
@@ -69,28 +53,16 @@ require([
 			amazon.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) && !isRubiconDisplayPrebidAdapterActive) {
-			rubiconFastlane.call();
-		}
-
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
 
-		adInfoTracker.run();
+		adInfoListener.run();
 		slotStateMonitor.run();
 		actionHandler.registerMessageListener();
 	});
 
-	// TODO: Remove else statement, this step is required in order to keep bidders working during cache invalidation
-	// Why checking getSlots method - because this method has been removed in PR with required changes
-	if (!win.Mercury.Modules.Ads.getInstance().getSlots) {
-		mercuryListener.afterPageWithAdsRender(function () {
-			callBiddersOnConsecutivePageView();
-		});
-	} else {
-		mercuryListener.onEveryPageChange(function () {
-			callBiddersOnConsecutivePageView();
-		});
-	}
+	mercuryListener.afterPageWithAdsRender(function () {
+		callBiddersOnConsecutivePageView();
+	});
 });

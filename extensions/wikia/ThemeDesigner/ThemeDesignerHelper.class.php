@@ -65,10 +65,13 @@ class ThemeDesignerHelper {
 	public static function getColorVars() {
 		return [
 			'color-body' => '#BACDD8',
+			'color-body-middle' => '#BACDD8',
 			'color-page' => '#FFF',
+			'color-community-header' => '#006CB0',
 			'color-buttons' => '#006CB0',
 			'color-links' => '#006CB0',
-			'color-header' => '#3A5766'
+			'color-header' => '#3A5766',
+			'wordmark-color' => '#006CB0',
 		];
 	}
 }

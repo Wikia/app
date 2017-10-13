@@ -280,6 +280,7 @@ class WikiaFileHelper {
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
 		$data = array(
 			'mediaType' => '',
+			'mime' => '',
 			'videoEmbedCode' => '',
 			'playerAsset' => '',
 			'imageUrl' => '',
@@ -310,6 +311,7 @@ class WikiaFileHelper {
 
 				$data['exists'] = true;
 				$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
+				$data['mime'] = $file->getMimeType();
 
 				$width = (int) $file->getWidth();
 				$height = (int) $file->getHeight();
@@ -635,7 +637,10 @@ class WikiaFileHelper {
 	public static function getByUserMsg( $userName, $addedAt ) {
 		// get link to user page
 		$link = AvatarService::renderLink( $userName );
-		$addedBy = wfMessage( 'thumbnails-added-by', $link, wfTimeFormatAgo( $addedAt, false ) )->text();
+		$addedBy = wfMessage( 'thumbnails-added-by' )
+			->rawParams( $link )
+			->params( wfTimeFormatAgo( $addedAt, false ) )
+			->escaped();
 
 		return $addedBy;
 	}
