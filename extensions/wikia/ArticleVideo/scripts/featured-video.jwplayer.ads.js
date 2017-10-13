@@ -44,9 +44,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				correlator: correlator
 			},
 			slotParams = {
+				passback: 'jwplayer',
 				pos: 'FEATURED',
-				src: 'premium',
-				rv: calculateRV(videoDepth)
+				rv: calculateRV(videoDepth),
+				src: 'premium'
 			};
 
 		if (adContext.get('opts.megaAdUnitBuilderEnabled')) {
