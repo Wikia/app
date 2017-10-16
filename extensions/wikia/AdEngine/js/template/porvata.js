@@ -8,13 +8,13 @@ define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.video.player.ui.videoInterface',
 	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'ext.wikia.adEngine.video.videoSettings',
-	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.adapters.veles'),
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
+	require.optional('ext.wikia.adEngine.wrappers.prebid')
 ], function (
 	DOMElementTweaker,
 	slotRegistry,
@@ -24,13 +24,13 @@ define('ext.wikia.adEngine.template.porvata', [
 	videoInterface,
 	videoFrequencyMonitor,
 	videoSettings,
-	prebid,
 	browserDetect,
 	doc,
 	log,
 	win,
 	veles,
-	mercuryListener
+	mercuryListener,
+	prebid
 ) {
 	'use strict';
 	var fallbackBidders = [
@@ -186,7 +186,7 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		log(['show', params], log.levels.debug, logGroup);
 
-		if (params.hbAdId) {
+		if (prebid && params.hbAdId) {
 			params.bid = prebid.getBidByAdId(params.hbAdId);
 			params.vastResponse = params.bid.vastContent || null;
 			params.vastUrl = params.bid.vastUrl;
@@ -245,7 +245,7 @@ define('ext.wikia.adEngine.template.porvata', [
 				onReady(video, params);
 			}
 
-			if (params.useBidAsFallback) {
+			if (prebid && params.useBidAsFallback) {
 				enabledFallbackBidHandling(video, settings, params);
 			}
 			video.addEventListener('start', function () {

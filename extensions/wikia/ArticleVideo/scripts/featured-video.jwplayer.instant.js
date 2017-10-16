@@ -5,6 +5,7 @@ require([
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.tracking',
+	'wikia.articleVideo.featuredVideo.events',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
 	adContext,
@@ -13,6 +14,7 @@ require([
 	featuredVideoAds,
 	featuredVideoAutoplay,
 	featuredVideoTracking,
+	featuredVideoEvents,
 	a9
 ) {
 	if (!videoDetails) {
@@ -56,6 +58,7 @@ require([
 		});
 
 		featuredVideoAds(playerInstance, bidParams);
+		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
 		handleTabNotActive(willAutoplay);
 	}
