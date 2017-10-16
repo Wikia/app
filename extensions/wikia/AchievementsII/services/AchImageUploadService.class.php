@@ -231,6 +231,10 @@ class AchImageUploadService {
 			RepoGroup::singleton()->getLocalRepo()
 		);
 		$file->upload( $badgeFile, '/* comment */', '/* page text */' );
+
+		// SUS-3048 | push an upload to image review queue
+		Hooks::run( 'AchievementsImageUpload', [ $file->getTitle() ] );
+
 		return $file;
 	}
 
