@@ -8,7 +8,7 @@
 			tabContent.each(function() {
 				// SUS-2997: Prevent individual tabbers from line-breaking
 				var titleText = this.title.replace(/\s/g, '\u00A0'),
-					anchor = $('<a>').text(titleText).attr('title', this.title).attr('href', 'javascript:void(0);');
+					anchor = $('<a>').text(titleText).attr('title', this.title).attr('href', '#');
 				$('<li>').append(anchor).appendTo(nav);
 
 				// SUS-2997: Manually insert word break point after each tab
