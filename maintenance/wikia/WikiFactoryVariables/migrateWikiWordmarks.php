@@ -27,7 +27,6 @@ class MigrateWikiWordmarks extends Maintenance {
 	protected $dryRun  = false;
 	protected $verbose = false;
 	protected $keyName = '';
-	protected $success = 0;
 	const WIKI_FACTORY_VARIABLE = "wgOasisThemeSettings";
 
 	public function __construct() {
@@ -47,18 +46,18 @@ class MigrateWikiWordmarks extends Maintenance {
 		$reason        = $this->getOption( 'reason' );
 
 		if ( empty( $this->keyName ) ) {
-			$this->error( "Error: Empty key name.\n" );
+			$this->error( "Error: Empty key name." . PHP_EOL );
 			return false;
 		}
 
 		$varData = (array) WikiFactory::getVarByName( self::WIKI_FACTORY_VARIABLE, $wgCityId, true );
 		if ( empty( $varData['cv_id'] ) ) {
-			$this->error( "Error: " . self::WIKI_FACTORY_VARIABLE . " not found.\n" );
+			$this->error( "Error: " . self::WIKI_FACTORY_VARIABLE . " not found." . PHP_EOL );
 			return false;
 		}
 
 		echo "Variable: " . self::WIKI_FACTORY_VARIABLE . " (Id: $varData[cv_id])" . PHP_EOL;
-		$this->debug( "Variable data: " . json_encode( $varData ) . "\n" );
+		$this->debug( "Variable data: " . json_encode( $varData ) . PHP_EOL );
 
 		$wg = F::app()->wg;
 		$wg->User = User::newFromName( Wikia::BOT_USER );
@@ -70,12 +69,12 @@ class MigrateWikiWordmarks extends Maintenance {
 		$keyValue = $prevValue[$this->keyName];
 
 		if ( empty( $keyValue ) ) {
-			echo "Key is empty - skipping" . PHP_EOL;
+			$this->output( "Key is empty - skipping" . PHP_EOL );
 			return false;
 		}
 
 		if ( strpos( $keyValue,"http://" ) !== 0 ) {
-			echo "Value doesn't start with 'http://' " . $keyValue .  " - skipping " .PHP_EOL;
+			$this->output( "Value doesn't start with 'http://' " . $keyValue .  " - skipping " . PHP_EOL );
 			return false;
 		}
 
@@ -83,19 +82,18 @@ class MigrateWikiWordmarks extends Maintenance {
 		$keyValue = preg_replace( '#^http://#', "https://", $keyValue, 1, $replacements );
 
 		if ( $replacements !== 1 ) {
-			echo "Value not changed " . $keyValue . "- skipping" . PHP_EOL;
+			$this->output( "Value not changed " . $keyValue . "- skipping" . PHP_EOL );
 			return false;
 		}
 
 		$newValue = array_filter(array_unique(array_merge($prevValue, [ $this->keyName => $keyValue ])));
-		$this->debug("Setting " . self::WIKI_FACTORY_VARIABLE . " to " . var_export( $newValue, true ) );
+		$this->debug("Setting " . self::WIKI_FACTORY_VARIABLE . " to " . var_export( $newValue, true ) . PHP_EOL );
 		$status = $this->setVariable( $wgCityId, $newValue, $reason );
 
 		if ( $this->dryRun || $status ) {
-			echo " ... DONE.\n";
-			$this->success++;
+			$this->output(" ... DONE." . PHP_EOL );
 		} else {
-			echo " ... FAILED.\n";
+			$this->output( " ... FAILED." . PHP_EOL );
 		}
 	}
 
@@ -114,7 +112,7 @@ class MigrateWikiWordmarks extends Maintenance {
 				WikiFactory::clearCache( $wikiId );
 			}
 		} else {
-			echo "Dry run, not changing variable." . PHP_EOL;
+			$this->output( "Dry run, not changing variable." . PHP_EOL );
 		}
 
 		return $status;
@@ -126,7 +124,7 @@ class MigrateWikiWordmarks extends Maintenance {
 	 */
 	protected function debug( $msg ) {
 		if ( $this->verbose ) {
-			echo $msg;
+			$this->output( $msg );
 		}
 	}
 
