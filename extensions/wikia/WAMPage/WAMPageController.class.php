@@ -38,7 +38,7 @@ class WAMPageController extends WikiaController
 		$this->indexWikis = $this->model->getIndexWikis( $this->getIndexParams() );
 
 		$total = ( empty( $this->indexWikis['wam_results_total'] ) ) ? 0 : $this->indexWikis['wam_results_total'];
-        $this->selectedDate = $this->indexWikis['wam_actual_date'];
+		$this->selectedDate = $this->indexWikis['wam_actual_date'];
 
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
@@ -80,21 +80,21 @@ class WAMPageController extends WikiaController
 			]
 		);
 
-        $timestamp = $this->selectedDate;
+		$timestamp = $this->selectedDate;
 
-        if (!empty($filterMinMaxDates['min_date'])) {
-            $dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
-            if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['min_date']])) {
-                $this->selectedDate = null;
-            }
-        }
+		if (!empty($filterMinMaxDates['min_date'])) {
+			$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
+			if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['min_date']])) {
+				$this->selectedDate = null;
+			}
+		}
 
-        if (!empty($filterMinMaxDates['max_date'])) {
-            $dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::LESS_THAN_EQUAL]);
-            if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['max_date']])) {
-                $this->selectedDate = null;
-            }
-        }
+		if (!empty($filterMinMaxDates['max_date'])) {
+			$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::LESS_THAN_EQUAL]);
+			if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['max_date']])) {
+				$this->selectedDate = null;
+			}
+		}
 
 		$this->filterLanguages = $this->model->getWAMLanguages( $this->selectedDate );
 

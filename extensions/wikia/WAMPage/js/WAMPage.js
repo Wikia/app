@@ -59,20 +59,20 @@ WAMPage.prototype = {
 					maxDate = new Date(window.wamFilterMinMaxDates.max_date * 1000);
 
 				var filterWam = function () {
-                    var $date = $('#WamFilterDate'),
-                        timestamp = parseInt($date.val(), 10);
-                    //Conversion to second epoch, which is necessary if date hasn't changed as internally ms are stored
-                    if (timestamp > 9999999999) {
-                        timestamp = timestamp / 1000;
-                    }
-                    $date.val(timestamp - new Date().getTimezoneOffset() * 60);
-                    WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
-                        null, {
-                            lang: wgContentLanguage,
-                            filter: 'date'
-                        });
-                    WAMPage.filterWamIndex($date);
-                };
+					var $date = $('#WamFilterDate'),
+						timestamp = parseInt($date.val(), 10);
+					//Conversion to second epoch, which is necessary if date hasn't changed as internally ms are stored
+					if (timestamp > 9999999999) {
+						timestamp = timestamp / 1000;
+					}
+					$date.val(timestamp - new Date().getTimezoneOffset() * 60);
+					WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
+						null, {
+							lang: wgContentLanguage,
+							filter: 'date'
+						});
+					WAMPage.filterWamIndex($date);
+				};
 
 				minDate.setMinutes(minDate.getMinutes() + minDate.getTimezoneOffset());
 				maxDate.setMinutes(maxDate.getMinutes() + maxDate.getTimezoneOffset());
