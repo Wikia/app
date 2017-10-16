@@ -34,7 +34,6 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 
 		if (positionFloor > state[prefix].progress.durationWatched && positionFloor % 5 === 0) {
 			playerInstance.trigger(prefix + 'SecondsPlayed', { value: positionFloor });
-			console.log(prefix, positionFloor);
 
 			state[prefix].progress.durationWatched = positionFloor;
 		}

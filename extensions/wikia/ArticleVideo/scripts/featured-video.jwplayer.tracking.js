@@ -46,10 +46,6 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 				label: 'load',
 				action: 'impression'
 			});
-
-			var relatedPlugin = playerInstance.getPlugin('related');
-
-
 		});
 
 		playerInstance.on('relatedVideoImpression', function () {
