@@ -82,7 +82,7 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 			})
 		});
 
-		playerInstance.on('videoStart', function (data) {
+		playerInstance.on('playerStart', function (data) {
 			var gaData = data.auto ?
 				{ label:'autoplay-start', action: 'impression' } :
 				{ label: 'user-start' };

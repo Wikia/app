@@ -88,9 +88,10 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 				playerInstance.trigger('videoResumed');
 			} else {
 				if (depth === 0) {
-					playerInstance.trigger('videoStart', { auto: willAutoplay });
+					playerInstance.trigger('playerStart', { auto: willAutoplay });
 				}
 
+				playerInstance.trigger('videoStart');
 				wasStartEventFired = true;
 			}
 		});
