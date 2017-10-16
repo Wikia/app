@@ -2,6 +2,22 @@
 
 All notable changes of the PHPUnit 5.7 release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [5.7.22] - 2017-09-24
+
+### Fixed
+
+* Fixed [#2769](https://github.com/sebastianbergmann/phpunit/issues/2769): Usage of `setUseErrorHandler()` produces `Undefined variable` error
+
+## [5.7.21] - 2017-06-21
+
+### Added
+
+* Added `PHPUnit\Framework\AssertionFailedError`, `PHPUnit\Framework\Test`, and `PHPUnit\Framework\TestSuite` to the forward compatibility layer for PHPUnit 6
+
+### Fixed
+
+* Fixed [#2705](https://github.com/sebastianbergmann/phpunit/issues/2705): `stderr` parameter in `phpunit.xml` always considered `true`
+
 ## [5.7.20] - 2017-05-22
 
 ### Fixed
@@ -161,6 +177,8 @@ All notable changes of the PHPUnit 5.7 release series are documented in this fil
 * The `--tap` and `--log-tap` commandline options have been deprecated
 * The `--self-update` and `--self-upgrade` commandline options have been deprecated (PHAR binary only)
 
+[5.7.22]: https://github.com/sebastianbergmann/phpunit/compare/5.7.21...5.7.22
+[5.7.21]: https://github.com/sebastianbergmann/phpunit/compare/5.7.20...5.7.21
 [5.7.20]: https://github.com/sebastianbergmann/phpunit/compare/5.7.19...5.7.20
 [5.7.19]: https://github.com/sebastianbergmann/phpunit/compare/5.7.18...5.7.19
 [5.7.18]: https://github.com/sebastianbergmann/phpunit/compare/5.7.17...5.7.18

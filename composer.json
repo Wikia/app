@@ -12,8 +12,8 @@
   },
   "require": {
     "wikia/fluent-sql-php": "1.0.*",
-    "monolog/monolog": "^1.18",
-    "phpunit/phpunit": "^6.2",
+    "monolog/monolog": "^1.23",
+    "phpunit/phpunit": "^6.4",
     "cssjanus/cssjanus": "1.1.*",
     "tijsverkoyen/css-to-inline-styles": "1.5.2",
     "php-di/php-di": "^5.0",

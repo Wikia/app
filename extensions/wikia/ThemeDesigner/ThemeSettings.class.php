@@ -243,7 +243,12 @@ class ThemeSettings {
 			$callback();
 		}
 
+		// SUS-3044 | push an upload to image review queue
+		Hooks::run( 'ThemeDesignerSaveImage', [ $file->getTitle() ] );
+
 		$file->repo->forceMaster();
+
+		/* @var OldLocalFile[] $history */
 		$history = $file->getHistory( 1 );
 
 		if ( count( $history ) == 1 ) {

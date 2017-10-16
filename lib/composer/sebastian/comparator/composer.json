@@ -22,13 +22,18 @@
             "email": "bschussek@2bepublished.at"
         }
     ],
+    "prefer-stable": true,
     "require": {
         "php": "^7.0",
-        "sebastian/diff": "^1.2",
+        "sebastian/diff": "^2.0",
         "sebastian/exporter": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
     },
     "autoload": {
         "classmap": [

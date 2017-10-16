@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -38,6 +38,8 @@ class ErrorHandler
      * @param string $errfile
      * @param int    $errline
      *
+     * @return false
+     *
      * @throws Error
      */
     public static function handleError($errno, $errstr, $errfile, $errline)
@@ -48,7 +50,7 @@ class ErrorHandler
 
         self::$errorStack[] = [$errno, $errstr, $errfile, $errline];
 
-        $trace = \debug_backtrace(false);
+        $trace = \debug_backtrace();
         \array_shift($trace);
 
         foreach ($trace as $frame) {
@@ -87,6 +89,8 @@ class ErrorHandler
      * the previous handler when invoked
      *
      * @param int $severity PHP predefined error constant
+     *
+     * @return \Closure
      *
      * @throws \Exception if event of specified severity is emitted
      */
