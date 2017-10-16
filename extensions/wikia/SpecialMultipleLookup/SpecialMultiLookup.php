@@ -63,19 +63,4 @@ class SpecialMultiLookup extends FormSpecialPage {
 	public function onSuccess() {
 		// nothing to do
 	}
-
-	static public function onContributionsToolLinks( $id, $nt, &$links ) {
-		global $wgUser; // NOSONAR
-
-		if ( $id == 0 && $wgUser->isAllowed( 'multilookup' ) ) {
-			$attribs = [
-				'href' => 'http://community.wikia.com/wiki/Special:MultiLookup?target=' . urlencode( $nt->getText() ),
-				'title' => wfMessage( 'multilookupselectuser' )->text(),
-			];
-
-			$links[] = Html::element( 'a', $attribs, wfMessage( 'multilookup' )->text() );
-		}
-
-		return true;
-	}
 }
