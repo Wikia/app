@@ -10,8 +10,7 @@ define('ext.wikia.adEngine.template.bfab', [
 ], function (resolvedState, slotTweaker, uapVideo, VideoSettings, log, doc, recoveryTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.bfab',
-		slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD');
+	var logGroup = 'ext.wikia.adEngine.template.bfab';
 
 	/**
 	 * @param {object} params
@@ -22,7 +21,8 @@ define('ext.wikia.adEngine.template.bfab', [
 	 * @param {object} [params.videoTriggerElement] - DOM element which triggers video (button or background)
 	 */
 	function show(params) {
-		var videoSettings = VideoSettings.create(params);
+		var slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD'),
+			videoSettings = VideoSettings.create(params);
 
 		slot.classList.add('bfab-template');
 		resolvedState.setImage(videoSettings);
