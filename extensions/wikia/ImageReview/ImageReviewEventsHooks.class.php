@@ -31,7 +31,8 @@ class ImageReviewEventsHooks {
 			__METHOD__,
 			[
 				'file_name' => $file->getTitle()->getPrefixedDBkey(),
-				'caller' => wfGetCallerClassMethod( [ __CLASS__, UploadBase::class, LocalFile::class, Hooks::class ] )
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, UploadBase::class, LocalFile::class, Hooks::class ] ),
+				'file_class' => get_class( $file ),
 			]
 		);
 
