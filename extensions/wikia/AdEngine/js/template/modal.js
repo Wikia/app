@@ -11,8 +11,7 @@ define('ext.wikia.adEngine.template.modal', [
 ], function (adSlot, adDetect, modalHandlerFactory, doc, log, iframeWriter, throttle, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.modal',
-		modalHandler = modalHandlerFactory.create();
+	var logGroup = 'ext.wikia.adEngine.template.modal';
 
 	/**
 	 * Show the modal ad
@@ -43,6 +42,7 @@ define('ext.wikia.adEngine.template.modal', [
 					height: params.height
 				}
 			},
+			modalHandler = modalHandlerFactory.create(),
 			lightboxParams = modalHandler.getExpansionModel(),
 			slot;
 
