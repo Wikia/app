@@ -124,7 +124,7 @@ class ApiQueryUsers extends ApiQueryBase {
 			$data = [];
 			/* Wikia change begin - SUS-2989 */
 			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-			$res = $dbr->select('`user`', ['user_id', 'user_name'], [ 'user_name' => $goodNames ], __METHOD__);
+			$res = $dbr->select('`user`', [ 'user_id', 'user_name' ], [ 'user_name' => $goodNames ], __METHOD__);
 			/* Wikia change end - SUS-2989 */
 
 			foreach ( $res as $row ) {
