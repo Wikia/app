@@ -45,7 +45,7 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 
 		if (percentPlayed >= 50 && !state[prefix].wasMidPointTriggered) {
 			playerInstance.trigger(prefix + 'MidPoint');
-			state.wasMidPointTriggered = true;
+			state[prefix].wasMidPointTriggered = true;
 		}
 
 		if (percentPlayed >= 75 && !state[prefix].wasThirdQuartileTriggered) {
