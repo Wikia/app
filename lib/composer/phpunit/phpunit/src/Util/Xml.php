@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -93,7 +93,7 @@ class Xml
         \libxml_use_internal_errors($internal);
         \error_reporting($reporting);
 
-        if ($xinclude) {
+        if (isset($cwd)) {
             @\chdir($cwd);
         }
 
@@ -239,7 +239,7 @@ class Xml
                 break;
 
             case 'boolean':
-                $variable = $element->textContent == 'true' ? true : false;
+                $variable = $element->textContent == 'true';
                 break;
 
             case 'integer':

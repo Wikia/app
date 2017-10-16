@@ -1,5 +1,7 @@
 define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function (tracker) {
 	var defaultGACategory = 'featured-video',
+		//This will replace 'trackingevent' in internal tracker url path
+		eventName = 'videoplayerevent',
 		gaCategory,
 		playerInstance;
 
@@ -22,6 +24,7 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 			value: Number(playerInstance.getMute()),
 
 			// Internal tracking data
+			eventName: eventName,
 			videoId: playerInstance.getPlaylistItem().mediaid,
 			player: 'jwplayer',
 			trackingMethod: 'analytics'

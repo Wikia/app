@@ -9,6 +9,10 @@ class WikiaCorporateModel extends WikiaModel {
 		'pl' => 435095,
 		'es' => 637291,
 		'ja' => 875569,
+		'pt-br' => 993754,
+		'ru' => 1169860,
+		'zh' => 1187214,
+		'zh-tw' => 1187219,
 	];
 
 	/**

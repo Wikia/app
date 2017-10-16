@@ -56,7 +56,7 @@ class WikiaPhotoGalleryAjax {
 	 * Return HTML and messages for gallery editor
 	 */
 	static public function getEditorDialog() {
-		global $wgExtensionMessagesFiles, $wgTitle, $wgRequest;
+		global $wgTitle;
 
 		wfProfileIn(__METHOD__);
 
@@ -80,9 +80,9 @@ class WikiaPhotoGalleryAjax {
 		$html = $template->render('editorDialog');
 
 		// get list of this extension messages
-		$messages = array();
-		require($wgExtensionMessagesFiles['WikiaPhotoGallery']); // contains i18n in $messages
-		$list = array_keys($messages['en']);
+		$messages = [];
+		require_once __DIR__ . '/WikiaPhotoGallery.i18n.php'; // contains i18n in $messages
+		$list = array_keys( $messages['en'] );
 
 		// additional messages
 		$list[] = 'save';
