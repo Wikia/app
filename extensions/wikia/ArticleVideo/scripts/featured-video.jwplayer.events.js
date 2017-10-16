@@ -2,15 +2,15 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 	var state = getNewState(),
 		wasAlreadyUnmuted = false,
 		depth = 0,
-		playerInstance,
+		wasStartTracked = false,
 		prefixes = {
 			ad: 'ad',
 			video: 'video'
-		};
+		},
+		playerInstance;
 
 	function getDefaultState() {
 		return {
-			wasStartTracked: false,
 			wasFirstQuartileTriggered: false,
 			wasMidPointTriggered: false,
 			wasThirdQuartileTriggered: false,
@@ -85,16 +85,14 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 		});
 
 		playerInstance.on('play', function () {
-			var eventName;
-
-			if (state.wasStartTracked) {
+			if (wasStartTracked) {
 				playerInstance.trigger('videoResumed');
 			} else {
 				if (depth === 0) {
 					playerInstance.trigger('videoStart', { auto: willAutoplay });
 				}
 
-				state.wasStartTracked = true;
+				wasStartTracked = true;
 			}
 		});
 
