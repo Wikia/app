@@ -1,34 +1,22 @@
 <?php
-/**
- * Wikia Search Internationalization Messages
- */
 $messages = array();
-
-
-  /********************************/
- /*   Begin V2 Messages          */
-/********************************/
 
 $messages['en'] = array(
 	'wikiasearch2-page-title-with-query' => "Search results for '$1' - $2",
-	'wikiasearch2-page-title-no-query-interwiki' => 'Search Wikia',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Search FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Search $1',
-	'wikiasearch2-search-all-wikia' => 'Search all of Wikia',
+	'wikiasearch2-search-all-wikia' => 'Search all of FANDOM',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|result|results}}',
 	'wikiasearch2-pages' => '$1 {{PLURAL:$2|page|pages}}',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|image|images}}',
 	'wikiasearch2-videos' => '$1 {{PLURAL:$2|video|videos}}',
-	'wikiasearch2-pages-k' => '$1k {{PLURAL:$2|page|pages}}',
-	'wikiasearch2-images-k' => '$1k {{PLURAL:$2|image|images}}',
-	'wikiasearch2-videos-k' => '$1k {{PLURAL:$2|video|videos}}',
-	'wikiasearch2-pages-M' => '$1M {{PLURAL:$2|page|pages}}',
-	'wikiasearch2-images-M' => '$1M {{PLURAL:$2|image|images}}',
-	'wikiasearch2-videos-M' => '$1M {{PLURAL:$2|video|videos}}',
+	'wikiasearch3-related-wiki' => 'Related Wiki',
+	'wikiasearch3-view-more-wikis' => 'View More Wikis',
 	'wikiasearch2-search-on-wiki' => 'Search within this wiki',
 	'wikiasearch2-results-count' => 'About $1 {{PLURAL:$1|result|results}} for $2 from {{SITENAME}}',
 	'wikiasearch2-results-for' => 'Results for $1 from {{SITENAME}}',
 	'wikiasearch2-results-redirected-from' => 'redirected from',
-	'wikiasearch2-global-search-headline' => 'Find wikias on Wikia',
+	'wikiasearch2-global-search-headline' => 'Find communities on FANDOM',
 	'wikiasearch2-wiki-search-headline' => 'Search this wiki',
 	'wikiasearch2-advanced-search' => 'Advanced Search Options',
 	'wikiasearch2-advanced-select-all' => 'Select all',
@@ -54,27 +42,16 @@ $messages['en'] = array(
 	'wikiasearch2-sort-duration' => 'Duration',
 	'wikiasearch2-choose-category' => 'Choose Category',
 	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
-	'wikiasearch2-exact-result' => 'Result for $1 from Wikia',
-
-
-	'wikiasearch2-top-module-title' => 'What\'s hot now',
-	'wikiasearch2-top-module-test-1' => 'Top pages',
-	'wikiasearch2-top-module-test-2' => 'Popular articles',
-	'wikiasearch2-top-module-test-3' => 'What\'s hot now',
-	'wikiasearch2-top-module-edit' => 'Last edited on $1',
-
+	'wikiasearch2-exact-result' => 'Result for $1 from FANDOM',
+	'wikiasearch2-top-module-title' => 'Top pages',
+	'wikiasearch2-fandom-stories-title' => 'Related {{PLURAL:$1|Story|Stories}}',
+	'wikiasearch2-fandom-stories-view-more' => 'View More Stories',
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
-	'wikiamobile-wikiasearch2-results-count-of' => ' of $1 {{PLURAL:$1|result|results}}',
-	
-	'wikiasearch2-video-results' => 'Videos for \'$1\''
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$3|result|results}}',
+	'wikiasearch2-video-results' => "Videos for '$1'",
 );
 
-/** Message documentation (Message documentation)
- * @author Michał Roszka (Mix) <michal@wikia-inc.com>
- * @author MtaÄ
- * @author Siebrand
- */
 $messages['qqq'] = array(
 	'wikiasearch2-page-title-with-query' => 'The message is used as the title of the page (appears in the title bar of a browser window). Parameters: $1 - a keyword or a search term searched for; $2 - the name of the wiki.',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'The message says "search this wiki" as opposed to "search all Wikia network". Parameters:
@@ -86,310 +63,272 @@ $messages['qqq'] = array(
 	'wikiasearch2-search-ads-header' => 'Heading displayed above search advertisements.',
 	'wikiamobile-wikiasearch2-next' => 'Message is used to go to next result page',
 	'wikiamobile-wikiasearch2-prev' => 'Message is used to go to previous result page',
-	'wikiamobile-wikiasearch2-results-count-of' => 'Message is used to go to show on which results number user is and whats total result number',
+	'wikiamobile-wikiasearch2-count-of-results' => 'Message uses to show start number of first and last result shown on current page and numbet of total results',
 	'wikiasearch2-tabs-articles' => 'Name of a tab with articles. This tab is displayed in the right column on search page',
 	'wikiasearch2-tabs-photos-and-videos' => 'Name of a tab with photos and videos. This tab is displayed in the right column on search page',
 	'wikiasearch2-users' => 'Name of a tab with users. This tab is displayed in the right column on search page',
 	'wikiasearch2-users-tooltip' => 'Search in UsersTooltip displayed on hover on Blogs Tab in the right column on
 	search page',
-	'wikiasearch2-pages' => 'Parameters: $1 - number of Pages below 1000',
-	'wikiasearch2-images' => 'Parameters: $1 - number of Images below 1000',
-	'wikiasearch2-videos' => 'Parameters: $1 - number of Videos below 1000',
-	'wikiasearch2-pages-k' => 'Parameters: $1 - number of Pages below 1000000',
-	'wikiasearch2-images-k' => 'Parameters: $1 - number of Images below 1000000',
-	'wikiasearch2-videos-k' => 'Parameters: $1 - number of Videos below 1000000',
-	'wikiasearch2-pages-M' => 'Parameters: $1 - number of Pages above 1000000',
-	'wikiasearch2-images-M' => 'Parameters: $1 - number of Images above 1000000',
-	'wikiasearch2-videos-M' => 'Parameters: $1 - number of Videos above 1000000',
+	'wikiasearch2-pages' => 'Message showing number of pages on a wiki. Parameters: $1 - number of Pages rounded into thousands/millions with localized K/M/B suffix, $2 - full rounded number of pages that allows you to pick the right plural form',
+	'wikiasearch2-images' => 'Message showing number of images on a wiki. Parameters: $1 - number of Images rounded into thousands/millions with localized K/M/B suffix, $2 - full rounded number of images that allows you to pick the right plural form',
+	'wikiasearch2-videos' => 'Message showing number of videos on a wiki. Parameters: $1 - number of Videos rounded into thousands/millions with localized K/M/B suffix, $2 - full rounded number of videos that allows you to pick the right plural form',
 	'wikiasearch2-crosswiki-description' => 'Used to display a generic description of a wiki for cross-wiki search results',
 	'wikiasearch2-top-module-title' => 'Top module header title on search page',
-	'wikiasearch2-top-module-edit' => 'Article last edit string containing date',
-	'wikiasearch2-video-results' => 'List on-wiki and premium videos in a search'
+	'wikiasearch2-video-results' => 'List on-wiki and premium videos in a search',
+	'wikiasearch2-exact-result' => 'Missing documentation',
+	'wikiasearch2-global-search-headline' => 'Missing documentation',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Missing documentation',
+	'wikiasearch2-search-all-wikia' => 'Missing documentation',
 );
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = array(
-	'wikiasearch-titles-only' => 'Soek slegs in bladsyname',
-	'wikiasearch-system-error-msg' => "Weens 'n stelselfout, kan u soektog nie voltooi word nie",
-	'wikiasearch-search-this-wiki' => 'Soek slegs deur Wikia Central',
-	'wikiasearch-search-wikia' => 'Deursoek Wikia',
 );
 
-/** Arabic (العربية)
- * @author Malhargan
- */
 $messages['ar'] = array(
-	'wikiasearch-titles-only' => 'البحث فقط في عناوين الصفحات',
-	'wikiasearch-system-error-msg' => 'بسبب خطأ في النظام ، لا يمكن إكمال البحث',
-	'wikiasearch-search-wikia' => 'بحث ويكي',
 );
 
-/** Azerbaijani (azərbaycanca)
- * @author Sortilegus
- */
 $messages['az'] = array(
-	'wikiasearch-titles-only' => 'Yalnız səhifə başlıqlarında axtar',
-	'wikiasearch-system-error-msg' => 'Sistem xətasına görə axtarış etmək mümkün deyil',
-	'wikiasearch-search-this-wiki' => 'Yalnız Wikia Central üzrə axtarış',
-	'wikiasearch-search-wikia' => 'Wikiada axtar',
-	'wikiasearch-image-results' => '"$1" üçün şəkil axtarışının nəticələri',
 );
 
-/** Bashkir (Башҡортса)
- * @author Roustammr
- */
 $messages['ba'] = array(
-	'wikiasearch-titles-only' => 'Биттәрҙең баш исемдәренән генә эҙләргә',
-	'wikiasearch-search-this-wiki' => 'Wikia Central да ғына эҙләү',
-	'wikiasearch-search-wikia' => 'Wikia ла эҙләргә',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- */
 $messages['be-tarask'] = array(
-	'wikiasearch-titles-only' => 'Шукаць толькі ў назвах старонак',
-	'wikiasearch-system-error-msg' => 'У выніку сыстэмнай памылкі Ваш пошук ня можа быць выкананы',
-	'wikiasearch-search-this-wiki' => 'Пошук выключна ў Wikia Central',
-	'wikiasearch-search-wikia' => 'Знайсьці ў Wikia',
-	'wikiasearch-image-results' => 'Вынікі пошуку выяваў для «$1»',
 );
 
-/** Breton (brezhoneg)
- * @author Fulup
- * @author Y-M D
- */
 $messages['br'] = array(
-	'wikiasearch-titles-only' => 'Klask e titl ar pajennoù hepken',
-	'wikiasearch-system-error-msg' => "N'eus ket bet gellet ober ar c'hlask dre ma 'z eus bet ur fazi sistem",
-	'wikiasearch-search-this-wiki' => 'Klask er Wikia Kreiz hepken',
-	'wikiasearch-search-wikia' => 'Klask e Wikia',
-	'wikiasearch-image-results' => 'Disoc\'hoù skeudenn evit "$1"',
 );
 
-/** Czech (česky)
- * @author Dontlietome7
- * @author Reaperman
- */
 $messages['cs'] = array(
-	'search-desc' => 'Vyhledávací engine Wikia používající Solr',
-	'wikiasearch-titles-only' => 'Hledat pouze v názvech stránek',
-	'wikiasearch-system-error-msg' => 'Kvůli systémové chybě nelze dokončit vyhledávání',
-	'wikiasearch-search-this-wiki' => 'Prohledávat pouze Wikia Central',
-	'wikiasearch-search-wikia' => 'Prohledat Wkii',
-	'wikiasearch-image-results' => 'Výsledky obrázků pro "$1"',
-	'wikiasearch-search-all-wikia' => 'Hledat v celé Wikii',
 );
 
-/** German (Deutsch)
- * @author LWChris
- * @author MtaÄ
- * @author PtM
- * @author SVG
- */
 $messages['de'] = array(
-	'search-desc' => 'Wikia-weite Suchengine, verwendet das Solr Backend',
-	'wikiasearch-titles-only' => 'Suche nur in Seitentiteln',
-	'wikiasearch-system-error-msg' => 'Aufgrund eines Systemfehlers konnte deine Suche nicht abgeschlossen werden',
-	'wikiasearch-search-this-wiki' => 'Nur Wikia Zentrale durchsuchen',
-	'wikiasearch-search-wikia' => 'Wikia durchsuchen',
-	'wikiasearch-image-results' => 'Bild-Ergebnisse für „$1“',
-	'wikiasearch-search-all-wikia' => 'Suche alle von Wikia',
-	'wikiasearch2-page-title-with-query' => 'Suchergebnisse für "$1" - $2',
-	'wikiasearch2-page-title-no-query-interwiki' => 'Durchsuche Wikia',
-	'wikiasearch2-page-title-no-query-intrawiki' => 'Suche nach $1',
-	'wikiasearch2-search-all-wikia' => 'Durchsuche alle Wikia-Wikis',
+	'wikiasearch2-page-title-with-query' => "Suchergebnisse für '$1' - $2",
+	'wikiasearch2-page-title-no-query-interwiki' => 'FANDOM durchsuchen',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Durchsuche $1',
+	'wikiasearch2-search-all-wikia' => 'Alle FANDOM-Communitys durchsuchen',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|Ergebnis|Ergebnisse}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|Seite|Seiten}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|Seite|Seiten}}',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|Bild|Bilder}}',
 	'wikiasearch2-videos' => '$1 {{PLURAL:$2|Video|Videos}}',
-	'wikiasearch2-pages-k' => '$1k {{PLURAL:$2|Seite|Seiten}}',
-	'wikiasearch2-images-k' => '$1k {{PLURAL:$2|Bild|Bilder}}',
-	'wikiasearch2-videos-k' => '$1k {{PLURAL:$2|Video|Videos}}',
-	'wikiasearch2-pages-M' => '$1M {{PLURAL:$2|Seite|Seiten}}',
-	'wikiasearch2-images-M' => '$1M {{PLURAL:$2|Bild|Bilder}}',
-	'wikiasearch2-videos-M' => '$1M {{PLURAL:$2|Video|Videos}}',
 	'wikiasearch2-search-on-wiki' => 'Durchsuche dieses Wiki',
-	'wikiasearch2-results-count' => 'Über $1 {{PLURAL:$1|Ergebnis|Ergebnisse}} für $2',
-	'wikiasearch2-results-for' => 'Ergebnisse für $1',
+	'wikiasearch2-results-count' => 'Etwa $1 {{PLURAL:$1|Ergebnis|Ergebnisse}} für $2 {{SITENAME}}',
+	'wikiasearch2-results-for' => 'Ergebnisse für $1 von {{SITENAME}}',
 	'wikiasearch2-results-redirected-from' => 'weitergeleitet von',
-	'wikiasearch2-global-search-headline' => 'Entdecke weitere Wikia-Communitys',
-	'wikiasearch2-wiki-search-headline' => 'Suchergebnisse',
-	'wikiasearch2-advanced-search' => 'Erweiterte Such-Optionen',
+	'wikiasearch2-global-search-headline' => 'Communitys bei FANDOM finden',
+	'wikiasearch2-wiki-search-headline' => 'Dieses Wiki durchsuchen',
+	'wikiasearch2-advanced-search' => 'Erweiterte Suchoptionen',
 	'wikiasearch2-onhub' => 'in der Kategorie $1',
 	'wikiasearch2-enable-go-search' => 'Gehe bei einer direkten Übereinstimmung einer Suchanfrage mit einem Seitentitel direkt zur Seite und nicht zuerst zu den Suchergebnissen',
 	'wikiasearch2-noresults' => 'Nichts gefunden.',
 	'wikiasearch2-spellcheck' => 'Es wurde für <em>$1</em> nichts gefunden. <strong>Treffer für <em>$2</em>.</strong>',
 	'wikiasearch2-tabs-articles' => 'Artikel',
-	'wikiasearch2-tabs-photos-and-videos' => 'Fotos und Videos',
+	'wikiasearch2-tabs-photos-and-videos' => 'Bilder und Videos',
 	'wikiasearch2-users' => 'Personen',
+	'wikiasearch3-related-wiki' => 'Ähnliches Wiki',
+	'wikiasearch3-view-more-wikis' => 'Weitere Wikis',
+	'wikiasearch2-advanced-select-all' => 'Alle auswählen',
+	'wikiasearch2-search-all-namespaces' => 'Durchsuche standardmäßig alle Namensräume',
+	'wikiasearch2-search-ads-header' => 'Werbeanzeigen',
+	'wikiasearch2-users-tooltip' => 'Ausschließlich nach Benutzern suchen',
+	'wikiasearch2-filter-options-label' => 'Filteroptionen',
+	'wikiasearch2-sort-options-label' => 'Sortieroptionen',
+	'wikiasearch2-filter-all' => 'Alle Dateien',
+	'wikiasearch2-filter-category' => 'Kategorie',
+	'wikiasearch2-filter-hd' => 'Ausschließlich in HD',
+	'wikiasearch2-filter-photos' => 'Nur Bilder',
+	'wikiasearch2-filter-videos' => 'Nur Videos',
+	'wikiasearch2-sort-relevancy' => 'Relevanz',
+	'wikiasearch2-sort-publish-date' => 'Veröffentlichungsdatum',
+	'wikiasearch2-sort-duration' => 'Dauer',
+	'wikiasearch2-choose-category' => 'Kategorie auswählen',
+	'wikiasearch2-crosswiki-description' => '$1 ist eine Community, zu der jeder beitragen kann. Schau dich um und füge dein Wissen hinzu!',
+	'wikiasearch2-exact-result' => 'Ergebnis für $1 von FANDOM',
+	'wikiasearch2-top-module-title' => 'Top-Seiten',
+	'wikiasearch2-fandom-stories-title' => 'Ähnliche {{PLURAL:$1|Story|Storys}}',
+	'wikiasearch2-fandom-stories-view-more' => 'Weitere Storys',
+	'wikiamobile-wikiasearch2-next' => 'Nächste',
+	'wikiamobile-wikiasearch2-prev' => 'Vorherige',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 von $3 {{PLURAL:$3|Ergebnis|Ergebnisse}}',
+	'wikiasearch2-video-results' => "Videos für '$1'",
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author LWChris
- */
 $messages['de-formal'] = array(
-	'wikiasearch-system-error-msg' => 'Aufgrund eines Systemfehlers konnte Ihre Suche nicht abgeschlossen werden',
 );
 
-/** Greek (Ελληνικά)
- * @author Dada
- * @author Evropi
- */
 $messages['el'] = array(
-	'wikiasearch-titles-only' => 'Αναζήτηση μόνο στους τίτλους των σελίδων',
-	'wikiasearch-system-error-msg' => 'Εξαιτίας ενός σφάλματος του συστήματος, η αναζήτησή σας δεν ολοκληρώθηκε',
-	'wikiasearch-search-this-wiki' => 'Αναζήτηση μόνο στο Wikia Central',
-	'wikiasearch-search-wikia' => 'Αναζήτηση στο Wikia',
-	'wikiasearch-image-results' => 'Αποτελέσματα Εικόνων για "$1"',
+	'wikiasearch2-exact-result' => 'Αποτελέσματα για $1 από το Wikia',
+	'wikiasearch2-global-search-headline' => 'Βρείτε wikias στο Wikia',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Ψάξτε στο Wikia',
+	'wikiasearch2-search-all-wikia' => 'Ψάξτε σε όλο το Wikia',
+	'wikiasearch2-advanced-search' => 'Επιλογές Προηγμένης Αναζήτησης',
+	'wikiasearch2-advanced-select-all' => 'Επιλογή όλων',
+	'wikiasearch2-choose-category' => 'Διαλέξτε Κατηγορία',
+	'wikiasearch2-crosswiki-description' => 'Το $1 είναι μία ιστοσελίδα κοινοτήτων όπου ο καθένας μπορεί να συμβάλει. Ανακαλύψτε, μοιραστείτε και προσθέστε τη γνώση σας!',
+	'wikiasearch2-enable-go-search' => 'Ενεργοποίηση Πηγαίνω-Αναζητώ',
+	'wikiasearch2-filter-all' => 'Όλα τα Αρχεία',
+	'wikiasearch2-filter-category' => 'Κατηγορία',
+	'wikiasearch2-filter-hd' => 'Μόνο HD',
+	'wikiasearch2-filter-options-label' => 'Επιλογές Φιλτραρίσματος',
+	'wikiasearch2-filter-photos' => 'Μόνο Εικόνες',
+	'wikiasearch2-filter-videos' => 'Μόνο Βίντεο',
+	'wikiasearch2-images' => '$1 {{PLURAL:$2|εικόνα|εικόνες}}',
+	'wikiasearch2-noresults' => 'Δεν βρέθηκαν αποτελέσματα.',
+	'wikiasearch2-onhub' => ' στον κόμβο $1',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Ψάξτε $1',
+	'wikiasearch2-page-title-with-query' => "Ψάξτε αποτελέσματα για '$1' - $2",
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|σελίδα|σελίδες}}',
+	'wikiasearch2-results-count' => 'Περίπου $1 {{PLURAL:$1|αποτέλεσμα|αποτελέσματα}} για $2 από το {{SITENAME}}',
+	'wikiasearch2-results-for' => 'Αποτελέσματα για $1 από το {{SITENAME}}',
+	'wikiasearch2-results-redirected-from' => 'ανακατεύθυνση από',
+	'wikiasearch2-results' => '$1 {{PLURAL:$1|αποτέλεσμα|αποτελέσματα}}',
+	'wikiasearch2-search-ads-header' => 'Διαφημίσεις',
+	'wikiasearch2-search-all-namespaces' => 'Αναζήτηση σε όλους τους χώρους ονομάτων από προεπιλογή',
+	'wikiasearch2-search-on-wiki' => 'Ψάξτε σε αυτό το wiki',
+	'wikiasearch2-sort-duration' => 'Διάρκεια',
+	'wikiasearch2-sort-options-label' => 'Επιλογές Ταξινόμησης',
+	'wikiasearch2-sort-publish-date' => 'Ημερομηνία Έκδοσης',
+	'wikiasearch2-sort-relevancy' => 'Σχέση',
+	'wikiasearch2-spellcheck' => 'Δεν βρέθηκαν αποτελέσματα για <em>$1</em>. <strong>Δείχνουμε αποτελέσματα για <em>$2</em>.</strong>',
+	'wikiasearch2-tabs-articles' => 'Άρθρα',
+	'wikiasearch2-tabs-photos-and-videos' => 'Εικόνες και Βίντεο',
+	'wikiasearch2-top-module-title' => 'Τι είναι φλέγων τώρα',
+	'wikiasearch2-users-tooltip' => 'Αναζητήστε στους Χρήστες',
+	'wikiasearch2-users' => 'Χρήστες',
+	'wikiasearch2-video-results' => "Βίντεο για '$1'",
+	'wikiasearch2-videos' => '$1 {{PLURAL:$2|βίντεο|βίντεο}}',
+	'wikiasearch2-wiki-search-headline' => 'Αναζήτηση σε αυτό το wiki',
 );
 
-/** Spanish (español)
- * @author Armando-Martin
- * @author Ciencia Al Poder
- * @author Invadinado
- * @author VegaDark
- */
 $messages['es'] = array(
-	'search-desc' => 'Motor de búsqueda a través de Wikia usando Solr',
-	'wikiasearch-titles-only' => 'Buscar sólo en títulos de páginas',
-	'wikiasearch-system-error-msg' => 'Debido a un error del sistema, su búsqueda no se pudo completar',
-	'wikiasearch-search-this-wiki' => 'Buscar sólo en Wikia Central',
-	'wikiasearch-search-wikia' => 'Buscar en Wikia',
-	'wikiasearch-image-results' => 'Resultados para la imagen "$1"',
-	'wikiasearch-search-all-wikia' => 'Buscar en todo Wikia',
 	'wikiasearch2-page-title-with-query' => "Resultados de la búsqueda de '$1' - $2",
-	'wikiasearch2-page-title-no-query-interwiki' => 'Buscar en Wikia',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Buscar en FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Buscar $1',
-	'wikiasearch2-search-all-wikia' => 'Buscar en todo Wikia',
+	'wikiasearch2-search-all-wikia' => 'Buscar en todo FANDOM',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|resultado|resultados}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|página|páginas}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|página|páginas}}',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|imagen|imágenes}}',
-	'wikiasearch2-videos' => '$1 {{PLURAL:$2|vídeo|vídeos}}',
-	'wikiasearch2-pages-k' => '$1k {{PLURAL:$2|página|páginas}}',
-	'wikiasearch2-images-k' => '$1k {{PLURAL:$2|imagen|imágenes}}',
-	'wikiasearch2-videos-k' => '$1k {{PLURAL:$2|vídeo|vídeos}}',
-	'wikiasearch2-pages-M' => '$1M {{PLURAL:$2|página|páginas}}',
-	'wikiasearch2-images-M' => '$1M {{PLURAL:$2|imagen|imágenes}}',
-	'wikiasearch2-videos-M' => '$1M {{PLURAL:$2|vídeo|vídeos}}',
+	'wikiasearch2-videos' => '$1 {{PLURAL:$2|video|videos}}',
 	'wikiasearch2-search-on-wiki' => 'Buscar en este wiki',
-	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|resultado|resultados}} para $2',
-	'wikiasearch2-results-for' => 'Resultados de $1',
-	'wikiasearch2-global-search-headline' => 'Encuentra las comunidades de Wikia que estás buscando',
+	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|resultado|resultados}} para $2 de {{SITENAME}}',
+	'wikiasearch2-results-for' => 'Resultados para $1 de {{SITENAME}}',
+	'wikiasearch2-global-search-headline' => 'Encuentra comunidades en FANDOM',
 	'wikiasearch2-wiki-search-headline' => 'Buscar en este wiki',
 	'wikiasearch2-advanced-search' => 'Opciones de búsqueda avanzada',
-	'wikiasearch2-onhub' => 'en el concentrador $1',
+	'wikiasearch2-onhub' => ' en el hub de $1',
 	'wikiasearch2-enable-go-search' => 'Habilitar la búsqueda Go-Search',
-	'wikiasearch2-noresults' => 'No se han encontrado resultados',
+	'wikiasearch2-noresults' => 'No se han encontrado resultados.',
 	'wikiasearch2-spellcheck' => 'No se han encontrado resultados para <em>$1</em>. <strong>Mostrando resultados para <em>$2</em>.</strong>',
 	'wikiasearch2-tabs-articles' => 'Artículos',
-	'wikiasearch2-tabs-photos-and-videos' => 'Fotos y Vídeos',
+	'wikiasearch2-tabs-photos-and-videos' => 'Imágenes y videos',
 	'wikiasearch2-users' => 'Gente',
+	'wikiasearch3-related-wiki' => 'Wiki relacionado',
+	'wikiasearch3-view-more-wikis' => 'Ver más wikis',
+	'wikiasearch2-results-redirected-from' => 'redirigido desde',
+	'wikiasearch2-advanced-select-all' => 'Seleccionar todo',
+	'wikiasearch2-search-all-namespaces' => 'Buscar todos los espacios de nombre por defecto',
+	'wikiasearch2-search-ads-header' => 'Anuncios',
+	'wikiasearch2-users-tooltip' => 'Buscar entre los usuarios',
+	'wikiasearch2-filter-options-label' => 'Opciones para filtrar',
+	'wikiasearch2-sort-options-label' => 'Opciones para ordenar',
+	'wikiasearch2-filter-all' => 'Todos los archivos',
+	'wikiasearch2-filter-category' => 'Categoría',
+	'wikiasearch2-filter-hd' => 'Sólo HD',
+	'wikiasearch2-filter-photos' => 'Sólo imágenes',
+	'wikiasearch2-filter-videos' => 'Sólo videos',
+	'wikiasearch2-sort-relevancy' => 'Relevancia',
+	'wikiasearch2-sort-publish-date' => 'Fecha de publicación',
+	'wikiasearch2-sort-duration' => 'Duración',
+	'wikiasearch2-choose-category' => 'Elegir categoría',
+	'wikiasearch2-crosswiki-description' => '$1 es un sitio en donde cualquiera puede contribuir. ¡Descubre, comparte y agrega tus conocimientos!',
+	'wikiasearch2-exact-result' => 'Resultado para $1 de FANDOM',
+	'wikiasearch2-top-module-title' => 'Páginas top',
+	'wikiasearch2-fandom-stories-title' => 'Relacionado con {{PLURAL:$1|historia|historias}}',
+	'wikiasearch2-fandom-stories-view-more' => 'Ver más historias',
+	'wikiamobile-wikiasearch2-next' => 'Siguiente',
+	'wikiamobile-wikiasearch2-prev' => 'Anterior',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$1|resultado|resultados}}',
+	'wikiasearch2-video-results' => "Videos de '$1'",
 );
 
-/** Estonian (eesti)
- * @author Hendrik
- */
 $messages['et'] = array(
-	'wikiasearch-titles-only' => 'Otsi ainult lehtede pealkirjadest',
 );
 
-/** Persian (فارسی) */
 $messages['fa'] = array(
-	'wikiasearch-titles-only' => 'جستجو فقط در عنوان صفحه‌ها',
-	'wikiasearch-system-error-msg' => 'به علت مشکلی در سیستم جستجو پایان نیافت',
 );
 
-/** Finnish (suomi)
- * @author Crt
- * @author Nike
- * @author VezonThunder
- */
 $messages['fi'] = array(
-	'search-desc' => 'Wikian-laajuinen hakukone, joka käyttää Solr-taustaosaa',
-	'wikiasearch-titles-only' => 'Etsi vain sivujen otsikoista',
-	'wikiasearch-system-error-msg' => 'Hakua ei voitu suorittaa loppuun järjestelmävirheen takia',
-	'wikiasearch-search-this-wiki' => 'Etsi vain Wikia Centralista',
-	'wikiasearch-search-wikia' => 'Etsi Wikiasta',
-	'wikiasearch-image-results' => 'Kuvatulokset haulla ”$1”',
-	'wikiasearch-search-all-wikia' => 'Hae koko Wikiasta',
+	'wikiasearch2-advanced-search' => 'Laajennetut hakuehdot',
+	'wikiasearch2-advanced-select-all' => 'Valitse kaikki',
+	'wikiasearch2-enable-go-search' => 'Mahdollista Go-Search',
+	'wikiasearch2-search-all-namespaces' => 'Etsi oletuksena kaikista nimiavaruuksista',
+	'wikiasearch2-tabs-articles' => 'Artikkelit',
+	'wikiasearch2-tabs-photos-and-videos' => 'Kuvat ja videot',
+	'wikiasearch2-users' => 'Käyttäjät',
+	'wikiasearch2-wiki-search-headline' => 'Etsi tästä wikistä',
 );
 
-/** French (français)
- * @author DavidL
- * @author Gomoko
- * @author IAlex
- * @author WikiEoFrEn
- * @author Wyz
- */
 $messages['fr'] = array(
-	'search-desc' => 'Moteur de recherche à travers les Wikia utilisant Solr',
-	'wikiasearch-titles-only' => 'Ne chercher que dans les titres des pages',
-	'wikiasearch-system-error-msg' => "À cause d'une erreur du système, nous n'avons pas pu accomplir votre recherche",
-	'wikiasearch-search-this-wiki' => 'Ne chercher que dans Wikia Central',
-	'wikiasearch-search-wikia' => 'Chercher dans Wikia',
-	'wikiasearch-image-results' => 'Résultats d’images pour « $1 »',
-	'wikiasearch-search-all-wikia' => 'Rechercher sur tous les Wikia',
 	'wikiasearch2-page-title-with-query' => 'Résultats de recherche pour « $1 » - $2',
-	'wikiasearch2-page-title-no-query-interwiki' => 'Rechercher sur Wikia',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Rechercher sur FANDOM',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Rechercher $1',
-	'wikiasearch2-search-all-wikia' => 'Rechercher sur tout Wikia',
+	'wikiasearch2-search-all-wikia' => "Rechercher sur l'ensemble de FANDOM",
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|résultat|résultats}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|page|pages}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|page|pages}}',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|image|images}}',
 	'wikiasearch2-videos' => '$1 {{PLURAL:$2|vidéo|vidéos}}',
-	'wikiasearch2-pages-k' => '$1k {{PLURAL:$2|page|pages}}',
-	'wikiasearch2-images-k' => '$1k {{PLURAL:$2|image|images}}',
-	'wikiasearch2-videos-k' => '$1k {{PLURAL:$2|vidéo|vidéos}}',
-	'wikiasearch2-pages-M' => '$1M {{PLURAL:$2|page|pages}}',
-	'wikiasearch2-images-M' => '$1M {{PLURAL:$2|image|images}}',
-	'wikiasearch2-videos-M' => '$1M {{PLURAL:$2|vidéo|vidéos}}',
 	'wikiasearch2-search-on-wiki' => 'Rechercher sur ce wiki',
 	'wikiasearch2-results-count' => 'Environ $1 {{PLURAL:$1|résultat|résultats}} pour $2',
 	'wikiasearch2-results-for' => 'Résultats pour $1',
 	'wikiasearch2-results-redirected-from' => 'redirigé depuis',
-	'wikiasearch2-global-search-headline' => 'Trouver des wikias sur Wikia',
+	'wikiasearch2-global-search-headline' => 'Rechercher des communautés sur FANDOM',
 	'wikiasearch2-wiki-search-headline' => 'Rechercher sur ce wiki',
 	'wikiasearch2-advanced-search' => 'Options de recherche avancée',
 	'wikiasearch2-onhub' => 'dans le thème « $1 »',
 	'wikiasearch2-enable-go-search' => 'Activer « aller » pour la recherche',
-	'wikiasearch2-noresults' => "Aucun résultat n'a été trouvé.",
+	'wikiasearch2-noresults' => 'Aucun résultat.',
 	'wikiasearch2-spellcheck' => "Aucun résultat n'a été trouvé pour <em>$1</em>. <strong>Affichage des résultats pour <em>$2</em>.</strong>",
+	'wikiasearch3-related-wiki' => 'Wiki à ce sujet',
+	'wikiasearch3-view-more-wikis' => 'Voir plus de wikis',
+	'wikiasearch2-advanced-select-all' => 'Tout sélectionner',
+	'wikiasearch2-search-all-namespaces' => 'Par défaut, rechercher dans tous les espaces de noms',
+	'wikiasearch2-search-ads-header' => 'Publicités',
+	'wikiasearch2-tabs-articles' => 'Articles',
+	'wikiasearch2-tabs-photos-and-videos' => 'Images et vidéos',
+	'wikiasearch2-users' => 'Personnes',
+	'wikiasearch2-users-tooltip' => 'Rechercher parmi les utilisateurs',
+	'wikiasearch2-filter-options-label' => 'Options de filtre',
+	'wikiasearch2-sort-options-label' => 'Options de tri',
+	'wikiasearch2-filter-all' => 'Tous les fichiers',
+	'wikiasearch2-filter-category' => 'Catégorie',
+	'wikiasearch2-filter-hd' => 'HD uniquement',
+	'wikiasearch2-filter-photos' => 'Images uniquement',
+	'wikiasearch2-filter-videos' => 'Vidéos uniquement',
+	'wikiasearch2-sort-relevancy' => 'Pertinence',
+	'wikiasearch2-sort-publish-date' => 'Date publication',
+	'wikiasearch2-sort-duration' => 'Durée',
+	'wikiasearch2-choose-category' => 'Choisissez une catégorie',
+	'wikiasearch2-crosswiki-description' => "$1 est un site communautaire sur lequel n'importe qui peut participer. Découvrez, partagez et ajoutez ce que vous savez !",
+	'wikiasearch2-exact-result' => 'Résultat pour $1 sur FANDOM',
+	'wikiasearch2-top-module-title' => 'Pages les plus visitées',
+	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Article|Articles}} à ce sujet',
+	'wikiasearch2-fandom-stories-view-more' => "Voir plus d'articles",
+	'wikiamobile-wikiasearch2-next' => 'Suivant',
+	'wikiamobile-wikiasearch2-prev' => 'Précédent',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $3 {{PLURAL:$3|résultat|résultats}}',
+	'wikiasearch2-video-results' => "Vidéos pour '$1'",
 );
 
-/** Scottish Gaelic (Gàidhlig)
- * @author Akerbeltz
- */
 $messages['gd'] = array(
-	'search-desc' => 'Einnsean-luirg thar nam uicipeidean le Solr backend',
-	'wikiasearch-titles-only' => 'Lorg am broinn tiotalan nan duilleagan a-mhàin',
-	'wikiasearch-system-error-msg' => "Cha b' urrainn dhuinn an lorg agad a thoirt gu buil air sgàth mearachd an t-siostaim",
-	'wikiasearch-search-this-wiki' => 'Lorg air Wikia Central a-mhàin',
-	'wikiasearch-search-wikia' => 'Lorg air Wikia',
-	'wikiasearch-image-results' => 'Toraidhean deilbh airson "$1"',
-	'wikiasearch-search-all-wikia' => "Lorg air feadh a' Wikia",
 );
 
-/** Galician (Galego)
- * @author Toliño
- */
 $messages['gl'] = array(
-	'search-desc' => 'Motor de procuras a través de Wikia que emprega tecnoloxía Solr',
-	'wikiasearch-titles-only' => 'Procurar só nos títulos das páxinas',
-	'wikiasearch-system-error-msg' => 'Debido a un erro do sistema, non se puido completar a súa procura',
-	'wikiasearch-search-this-wiki' => 'Procurar só en Wikia Central',
-	'wikiasearch-search-wikia' => 'Procurar en Wikia',
-	'wikiasearch-image-results' => 'Resultados de imaxes para "$1"',
-	'wikiasearch-search-all-wikia' => 'Procurar en toda Wikia',
 	'wikiasearch2-page-title-with-query' => 'Resultados da procura de "$1" - $2',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Procurar en Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Procurar "$1"',
 	'wikiasearch2-search-all-wikia' => 'Procurar en toda Wikia',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|resultado|resultados}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|páxina|páxinas}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|páxina|páxinas}}',
 	'wikiasearch2-search-on-wiki' => 'Procurar neste wiki',
 	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|resultado|resultados}} para "$2"',
 	'wikiasearch2-results-for' => 'Resultados para "$1"',
@@ -402,185 +341,187 @@ $messages['gl'] = array(
 	'wikiasearch2-spellcheck' => 'Non se atopou ningún resultado para <em>$1</em>. <strong>Móstranse os resultados para <em>$2</em>.</strong>',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
- * @author Michawiki
- */
 $messages['hsb'] = array(
-	'wikiasearch-titles-only' => 'Jenož w titulach stronow pytać',
-	'wikiasearch-system-error-msg' => 'Systemoweho zmylka dla waše pytanje njeda so dokónčić',
-	'wikiasearch-search-this-wiki' => 'Jenož centralnu Wikiju přepytać',
-	'wikiasearch-search-wikia' => 'Wikiju přepytać',
-	'wikiasearch-image-results' => 'Wobrazowe wuslědki za "$1"',
 );
 
-/** Hungarian (magyar)
- * @author Glanthor Reviol
- * @author Misibacsi
- * @author TK-999
- */
 $messages['hu'] = array(
-	'search-desc' => 'Solr alapú Wikia-közi keresőmotor',
-	'wikiasearch-titles-only' => 'Keresés csak a lapcímekben',
-	'wikiasearch-system-error-msg' => 'A keresés nem teljesíthető rendszerhiba miatt',
-	'wikiasearch-search-this-wiki' => 'Keresés csak a Wikia Centralon',
-	'wikiasearch-search-wikia' => 'Keresés a Wikián',
-	'wikiasearch-image-results' => 'Képkeresés eredményei: "$1"',
-	'wikiasearch-search-all-wikia' => 'Keresés a Wikia egészében',
 );
 
-/** Armenian (Հայերեն)
- * @author Pandukht
- */
 $messages['hy'] = array(
-	'wikiasearch-titles-only' => 'Որոնել միայն էջերի վերնագրերում',
-	'wikiasearch-system-error-msg' => 'Որոնումը հնարավոր չե կատարել համակարգային սխալի պատճառով',
-	'wikiasearch-search-this-wiki' => 'Որոնում միայն Wikia Central-ով',
-	'wikiasearch-search-wikia' => 'Որոնել Wikia-ում',
 );
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
-	'search-desc' => 'Motor de recerca trans-Wikia usante le back-end Solr',
-	'wikiasearch-titles-only' => 'Cercar solmente in titulos de paginas',
-	'wikiasearch-system-error-msg' => 'A causa de un error de systema, le recerca non poteva esser completate',
-	'wikiasearch-search-this-wiki' => 'Cercar solmente in Wikia Central',
-	'wikiasearch-search-wikia' => 'Cercar in Wikia',
-	'wikiasearch-image-results' => 'Resultatos de imagines pro "$1"',
-	'wikiasearch-search-all-wikia' => 'Cercar in tote Wikia',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- * @author Farras
- * @author Irwangatot
- */
 $messages['id'] = array(
-	'search-desc' => 'Mesin pencari Cross-Wikia dengan menggunakan Solr backend',
-	'wikiasearch-titles-only' => 'Cari hanya dalam judul halaman',
-	'wikiasearch-system-error-msg' => 'Karena kesalahan sistem, pencarian anda tidak dapat diselesaikan',
-	'wikiasearch-search-this-wiki' => 'Cari hanya Wikia Central',
-	'wikiasearch-search-wikia' => 'Pencarian Wikia',
-	'wikiasearch-image-results' => 'Hasil Pencarian Gambar untuk "$1"',
-	'wikiasearch-search-all-wikia' => 'Cari di semua Wikia',
 );
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
 $messages['ig'] = array(
-	'wikiasearch-titles-only' => 'Chọwa na ime ishi ihü nani',
-	'wikiasearch-system-error-msg' => 'Màkà nsigbú na nsónùsòrò, ihe nchowá gi enwéghìkì mecha',
-	'wikiasearch-search-this-wiki' => 'Chọwa na nánì Mpkurụ Wikia',
-	'wikiasearch-search-wikia' => 'Chọwa na imé Wikia',
 );
 
-/** Italian (italiano)
- * @author Leviathan 89
- * @author Lexaeus 94
- * @author Pietrodn
- */
 $messages['it'] = array(
-	'search-desc' => 'Motore di ricerca di Wikia che utilizza il backend Solr',
-	'wikiasearch-titles-only' => 'Cerca solo nei titoli delle pagine',
-	'wikiasearch-system-error-msg' => 'A causa di un errore di sistema, la tua ricerca non è stata completata',
-	'wikiasearch-search-this-wiki' => 'Cerca sono in Wikia Central',
-	'wikiasearch-search-wikia' => 'Cerca in Wikia',
-	'wikiasearch-image-results' => 'Risultati immagini per "$1"',
-	'wikiasearch-search-all-wikia' => 'Cerca in tutta Wikia',
-	'wikiasearch2-page-title-no-query-interwiki' => 'Cerca in Wikia',
-	'wikiasearch2-page-title-no-query-intrawiki' => 'Ricerca $1',
-	'wikiasearch2-search-all-wikia' => 'Cerca in tutta Wikia',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|pagina|pagine}}',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Cerca su FANDOM',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Cerca su $1',
+	'wikiasearch2-search-all-wikia' => 'Cerca su tutto FANDOM',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|pagina|pagine}}',
 	'wikiasearch2-search-on-wiki' => "Cerca all'interno di questa wiki",
-	'wikiasearch2-results-count' => 'Mostra $1 {{PLURAL:$1|il risultato|i risultati}} per $2',
-	'wikiasearch2-results-for' => 'Risultati per $1',
-	'wikiasearch2-global-search-headline' => 'Trova delle wiki su Wikia',
-	'wikiasearch2-wiki-search-headline' => 'Trova questa wiki',
-	'wikiasearch2-advanced-search' => 'Opzioni di Ricerca Avanzata',
-	'wikiasearch2-onhub' => 'Nel centro di $1',
+	'wikiasearch2-results-count' => "{{PLURAL:$1|$1 risultato|All'incirca $1 risultati}} per $2 da {{SITENAME}}",
+	'wikiasearch2-results-for' => 'Risultati per $1 da {{SITENAME}}',
+	'wikiasearch2-global-search-headline' => 'Trova community su FANDOM',
+	'wikiasearch2-wiki-search-headline' => 'Cerca su questa wiki',
+	'wikiasearch2-advanced-search' => 'Opzioni di ricerca avanzate',
+	'wikiasearch2-onhub' => " nell'Hub $1",
+	'wikiasearch2-page-title-with-query' => 'Risultati di ricerca per "$1" - $2',
+	'wikiasearch2-results' => '$1 {{PLURAL:$1|risultato|risultati}}',
+	'wikiasearch2-images' => '$1 {{PLURAL:$2|immagine|immagini}}',
+	'wikiasearch2-videos' => '$1 video',
+	'wikiasearch3-related-wiki' => 'Wiki correlata',
+	'wikiasearch3-view-more-wikis' => 'Visualizza altre wiki',
+	'wikiasearch2-results-redirected-from' => 'reindirizzamento da',
+	'wikiasearch2-advanced-select-all' => 'Seleziona tutto',
+	'wikiasearch2-enable-go-search' => 'Attiva ricerca diretta',
+	'wikiasearch2-noresults' => 'Nessun risultato trovato.',
+	'wikiasearch2-spellcheck' => 'Non è stato trovato alcun risultato per <em>$1</em>. <strong>Visualizzazione dei risultati per <em>$2</em>.</strong>',
+	'wikiasearch2-search-all-namespaces' => 'Ricerca tutti i namespace di default',
+	'wikiasearch2-search-ads-header' => 'Pubblicità',
+	'wikiasearch2-tabs-articles' => 'Articoli',
+	'wikiasearch2-tabs-photos-and-videos' => 'Immagini e video',
+	'wikiasearch2-users' => 'Persone',
+	'wikiasearch2-users-tooltip' => 'Cerca tra gli utenti',
+	'wikiasearch2-filter-options-label' => 'Opzioni di filtraggio',
+	'wikiasearch2-sort-options-label' => 'Opzioni di ordinamento',
+	'wikiasearch2-filter-all' => 'Tutti i file',
+	'wikiasearch2-filter-category' => 'Categoria',
+	'wikiasearch2-filter-hd' => 'Solo HD',
+	'wikiasearch2-filter-photos' => 'Solo immagini',
+	'wikiasearch2-filter-videos' => 'Solo video',
+	'wikiasearch2-sort-relevancy' => 'Rilevanza',
+	'wikiasearch2-sort-publish-date' => 'Data di pubblicazione',
+	'wikiasearch2-sort-duration' => 'Durata',
+	'wikiasearch2-choose-category' => 'Seleziona una categoria',
+	'wikiasearch2-crosswiki-description' => '$1 è una comunità alla quale chiunque può contribuire. Scopri, condividi e aggiungi la tua conoscenza!',
+	'wikiasearch2-exact-result' => 'Risultato per $1 da FANDOM',
+	'wikiasearch2-top-module-title' => 'Pagine migliori',
+	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Storia correlata|Storie correlate}}',
+	'wikiasearch2-fandom-stories-view-more' => 'Visualizza altre storie',
+	'wikiamobile-wikiasearch2-next' => 'Avanti',
+	'wikiamobile-wikiasearch2-prev' => 'Indietro',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 di $3 {{PLURAL:$3|risultato|risultati}}',
+	'wikiasearch2-video-results' => 'Video per "$1"',
 );
 
-/** Japanese (日本語)
- * @author Schu
- * @author Tommy6
- */
 $messages['ja'] = array(
-	'search-desc' => 'Solr バックエンドを使用したクロスウィキア検索エンジン',
-	'wikiasearch-titles-only' => 'ページのタイトルだけを検索する',
-	'wikiasearch-system-error-msg' => 'システムエラーにより検索を完了できませんでした。',
-	'wikiasearch-search-this-wiki' => 'セントラルウィキアのみを検索する',
-	'wikiasearch-search-wikia' => 'ウィキア全体を検索',
-	'wikiasearch-image-results' => '"$1" の画像検索結果',
-	'wikiasearch-search-all-wikia' => 'すべてのウィキアから検索',
+	'wikiasearch2-page-title-with-query' => '「$1」の検索結果 - $2',
+	'wikiasearch2-page-title-no-query-interwiki' => 'FANDOMを検索',
+	'wikiasearch2-page-title-no-query-intrawiki' => '$1内を検索',
+	'wikiasearch2-search-all-wikia' => 'すべてのFANDOMから検索',
+	'wikiasearch2-results' => '$1{{PLURAL:$1|件|件}}',
+	'wikiasearch2-pages' => '$1{{PLURAL:$2|ページ|ページ}}',
+	'wikiasearch2-images' => '$1{{PLURAL:$2|画像|画像}}',
+	'wikiasearch2-videos' => '$1{{PLURAL:$2|動画|動画}}',
+	'wikiasearch3-related-wiki' => '関連するWiki',
+	'wikiasearch3-view-more-wikis' => 'Wikiをもっと見る',
+	'wikiasearch2-search-on-wiki' => 'このWiki内を検索',
+	'wikiasearch2-results-count' => '{{SITENAME}}内の$2の検索結果：約$1{{PLURAL:$1|件|件}}',
+	'wikiasearch2-results-for' => '{{SITENAME}} から $1 の結果',
+	'wikiasearch2-results-redirected-from' => 'リダイレクト元:',
+	'wikiasearch2-global-search-headline' => 'FANDOMでコミュニティを探す',
+	'wikiasearch2-wiki-search-headline' => 'このWiki内を検索',
+	'wikiasearch2-advanced-search' => '高度な検索設定',
+	'wikiasearch2-advanced-select-all' => 'すべて選択',
+	'wikiasearch2-onhub' => ' in the $1 Hub',
+	'wikiasearch2-enable-go-search' => 'Go-Searchを有効にする',
+	'wikiasearch2-noresults' => 'お探しのキーワードに一致する情報は見つかりませんでした。',
+	'wikiasearch2-spellcheck' => '「<em>$1</em>」の検索結果は見つかりませんでした。 <strong>「<em>$2</em>」の検索結果を表示しています。</strong>',
+	'wikiasearch2-search-all-namespaces' => 'デフォルトですべての名前空間を検索する',
+	'wikiasearch2-search-ads-header' => '広告',
+	'wikiasearch2-tabs-articles' => '記事',
+	'wikiasearch2-tabs-photos-and-videos' => '画像と動画',
+	'wikiasearch2-users' => 'ユーザー',
+	'wikiasearch2-users-tooltip' => 'ユーザーを検索',
+	'wikiasearch2-filter-options-label' => 'フィルタの選択',
+	'wikiasearch2-sort-options-label' => 'ソーティング選択',
+	'wikiasearch2-filter-all' => 'すべてのファイル',
+	'wikiasearch2-filter-category' => 'カテゴリ',
+	'wikiasearch2-filter-hd' => 'HD Only',
+	'wikiasearch2-filter-photos' => '画像のみ',
+	'wikiasearch2-filter-videos' => '動画のみ',
+	'wikiasearch2-sort-relevancy' => '関連性',
+	'wikiasearch2-sort-publish-date' => '公開日',
+	'wikiasearch2-sort-duration' => 'Duration',
+	'wikiasearch2-choose-category' => 'Choose Category',
+	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
+	'wikiasearch2-exact-result' => 'FANDOMでの「$1」の検索結果',
+	'wikiasearch2-top-module-title' => '上位ページ',
+	'wikiasearch2-fandom-stories-title' => '関連{{PLURAL:$1|ストーリー|ストーリー}}',
+	'wikiasearch2-fandom-stories-view-more' => 'ストーリーをもっと見る',
+	'wikiamobile-wikiasearch2-next' => '次へ',
+	'wikiamobile-wikiasearch2-prev' => '戻る',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1～$2/$3{{PLURAL:$3|件|件}}',
+	'wikiasearch2-video-results' => '「$1」の動画',
 );
 
-/** Jamaican Creole English (Patois)
- * @author Yocahuna
- */
 $messages['jam'] = array(
-	'wikiasearch-titles-only' => 'Saach onggl ina piej taikl',
-	'wikiasearch-system-error-msg' => 'Juu tu sistim era, yu saach kudn kompliit',
-	'wikiasearch-search-this-wiki' => 'Saach Wikia Central onli',
-	'wikiasearch-search-wikia' => 'Saach Wikia',
-	'wikiasearch-image-results' => 'Imij Rizolt fi "$1"',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
- * @author George Animal
- */
+$messages['ko'] = array(
+	'wikiasearch2-global-search-headline' => '위키아 산하 위키 찾기',
+	'wikiasearch2-page-title-no-query-interwiki' => '위키아에서 찾기',
+	'wikiasearch2-search-all-wikia' => '위키아 전체에서 찾기',
+	'wikiamobile-wikiasearch2-next' => '다음',
+	'wikiamobile-wikiasearch2-prev' => '이전',
+	'wikiasearch2-advanced-search' => '다음 설정된 이름공간에서 찾기',
+	'wikiasearch2-advanced-select-all' => '모두 선택',
+	'wikiasearch2-choose-category' => '분류 선택하기',
+	'wikiasearch2-enable-go-search' => '검색하고자 하는 항목과 일치하는 이름을 가진 문서가 있으면 검색할 때 그 문서로 바로 이동 (넘겨주기 문서 포함)',
+	'wikiasearch2-filter-all' => '모든 파일 중에서 찾기',
+	'wikiasearch2-filter-category' => '분류',
+	'wikiasearch2-filter-hd' => '고화질 동영상만 보기',
+	'wikiasearch2-filter-options-label' => '검색 옵션',
+	'wikiasearch2-filter-photos' => '그림에서만 찾기',
+	'wikiasearch2-filter-videos' => '동영상에서만 찾기',
+	'wikiasearch2-noresults' => '해당하는 항목이 없습니다.',
+	'wikiasearch2-onhub' => '$1 분야의 위키',
+	'wikiasearch2-page-title-no-query-intrawiki' => '$1에서 찾기',
+	'wikiasearch2-page-title-with-query' => "'$1'에 대한 검색 결과 - $2",
+	'wikiasearch2-pages' => '$1개의 문서',
+	'wikiasearch2-results-count' => '$2에 대한 $1개의 결과',
+	'wikiasearch2-results-for' => '$1에 대한 검색 결과',
+	'wikiasearch2-results' => '$1개의 결과',
+	'wikiasearch2-search-ads-header' => '광고',
+	'wikiasearch2-search-all-namespaces' => '기본적으로 모든 이름공간에서 찾기',
+	'wikiasearch2-search-on-wiki' => '이 위키에서만 찾기',
+	'wikiasearch2-sort-duration' => '길이순',
+	'wikiasearch2-sort-options-label' => '정렬 옵션',
+	'wikiasearch2-sort-publish-date' => '최신순',
+	'wikiasearch2-sort-relevancy' => '관련도순',
+	'wikiasearch2-spellcheck' => '<em>$1</em>에 해당하는 항목이 없습니다. <strong>다음은 <em>$2</em>에 대한 검색 결과입니다.</strong>',
+	'wikiasearch2-tabs-articles' => '문서',
+	'wikiasearch2-tabs-photos-and-videos' => '그림 및 동영상',
+	'wikiasearch2-users-tooltip' => '사용자에서 검색',
+	'wikiasearch2-users' => '사용자',
+	'wikiasearch2-wiki-search-headline' => '이 위키에서 찾기',
+);
+
 $messages['ku-latn'] = array(
-	'wikiasearch-image-results' => 'Encamên wêneyê ji bo "$1"',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = array(
-	'wikiasearch-titles-only' => 'Nëmmen an de Säitentitele sichen',
-	'wikiasearch-system-error-msg' => 'Duerch e Feeler am System konnt net fäerdeg gesicht ginn',
-	'wikiasearch-search-this-wiki' => 'Nëmmen a Wikia Central sichen',
-	'wikiasearch-search-wikia' => 'A Wikia sichen',
-	'wikiasearch-image-results' => 'Resultater vun de Biller fir "$1"',
 );
 
-/** Ganda (Luganda)
- * @author Kizito
- */
 $messages['lg'] = array(
-	'wikiasearch-titles-only' => "Noonyeza mu mitwe gy'empapula gyokka",
-	'wikiasearch-system-error-msg' => 'Okunoonya kwo kugaanye olwa kiremya mu sisitemu',
-	'wikiasearch-search-wikia' => 'Noonyeza mu Wikia',
 );
 
-/** Basa Banyumasan (Basa Banyumasan)
- * @author StefanusRA
- */
 $messages['map-bms'] = array(
-	'wikiasearch-titles-only' => 'Goleti nang judul kaca thok',
-	'wikiasearch-system-error-msg' => 'Jalaran kesalahan sistem, panggoletane panjenengan ora bisa dirampungna',
-	'wikiasearch-search-this-wiki' => 'Goleti nang Wikia Central thok',
-	'wikiasearch-image-results' => 'Hasil gambar nggo "$1"',
 );
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = array(
-	'search-desc' => 'Пребарувач низ сета Викија на основа на Solr',
-	'wikiasearch-titles-only' => 'Пребарувај само наслови на страници',
-	'wikiasearch-system-error-msg' => 'Се појави системска грешја и пребарувањето не можеше да се изврши',
-	'wikiasearch-search-this-wiki' => 'Пербарувај само по Викија Централата',
-	'wikiasearch-search-wikia' => 'Пребарајте ја Викија',
-	'wikiasearch-image-results' => 'Резултати за слики за „$1“',
-	'wikiasearch-search-all-wikia' => 'Пребарај ја целата Викија',
 	'wikiasearch2-page-title-with-query' => 'Резултати од пребарувањето на „$1“ - $2',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Пребарување по Викија',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Пребарување на $1',
 	'wikiasearch2-search-all-wikia' => 'Пребарај ја целата Викија',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|резултат|резултати}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|страница|страници}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|страница|страници}}',
 	'wikiasearch2-search-on-wiki' => 'Пребарај во ова вики',
 	'wikiasearch2-results-count' => 'Има околу $1 {{PLURAL:$1|резултат|резултат}} за $2',
 	'wikiasearch2-results-for' => 'Резултати за $1',
@@ -593,17 +534,7 @@ $messages['mk'] = array(
 	'wikiasearch2-spellcheck' => 'Не пронајдов ништо за <em>$1</em>. <strong>Ги прикажувам резултатите за <em>$2</em>.</strong>',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = array(
-	'search-desc' => 'Enjin carian rentas Wikia yang menggunakan backend Solr',
-	'wikiasearch-titles-only' => 'Cari tajuk laman sahaja',
-	'wikiasearch-system-error-msg' => 'Carian anda tidak dapat disiapkan kerana ralat sistem',
-	'wikiasearch-search-this-wiki' => 'Cari di Wikia Central sahaja',
-	'wikiasearch-search-wikia' => 'Cari dalam Wikia',
-	'wikiasearch-image-results' => 'Hasil Carian Gambar (Imej) untuk "$1"',
-	'wikiasearch-search-all-wikia' => 'Cari di seluruh Wikia',
 	'wikiasearch2-page-title-with-query' => "Hasil carian untuk '$1' - $2",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Cari dalam Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Cari dalam $1',
@@ -622,23 +553,13 @@ $messages['ms'] = array(
 	'wikiasearch2-spellcheck' => 'Tiada hasil carian untuk <em>$1</em>. <strong>Hasil carian dipaparkan untuk <em>$2</em>.</strong>',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
- * @author Audun
- */
 $messages['nb'] = array(
-	'search-desc' => 'Kryss-Wikia søkemotor som bruker Solr-bakgrunnsfunksjon',
-	'wikiasearch-titles-only' => 'Kun søk i sidetitler',
-	'wikiasearch-system-error-msg' => 'På grunn av en systemfeil kunne ikke søket ditt fullføres',
-	'wikiasearch-search-this-wiki' => 'Søk kun i Wikiasentralen',
-	'wikiasearch-search-wikia' => 'Søk i Wikia',
-	'wikiasearch-image-results' => 'Bilderesultat for «$1»',
-	'wikiasearch-search-all-wikia' => 'Søk gjennom hele Wikia',
 	'wikiasearch2-page-title-with-query' => 'Søkeresultater for «$1» – $2',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Søk i Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Søk i $1',
 	'wikiasearch2-search-all-wikia' => 'Søk i hele Wikia',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|resultat|resultater}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|side|sider}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|side|sider}}',
 	'wikiasearch2-search-on-wiki' => 'Søk innenfor denne wikien',
 	'wikiasearch2-results-count' => 'Omkring $1 {{PLURAL:$1|resultat|resultater}} for $2',
 	'wikiasearch2-results-for' => 'Resultater for $1',
@@ -651,23 +572,13 @@ $messages['nb'] = array(
 	'wikiasearch2-spellcheck' => 'Ingen resultater ble funnet for <em>$1</em>. <strong>Viser resultater for <em>$2</em>.</strong>',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
 $messages['nl'] = array(
-	'search-desc' => "Zoekmachine die gebruik maakt van Solr om in alle Wikia-wiki's te zoeken",
-	'wikiasearch-titles-only' => 'Alleen paginanamen doorzoeken',
-	'wikiasearch-system-error-msg' => 'Door een systeemfout was het niet mogelijk uw zoekopdracht uit te voeren',
-	'wikiasearch-search-this-wiki' => 'Alleen Wikia Central doorzoeken',
-	'wikiasearch-search-wikia' => 'Wikia doorzoeken',
-	'wikiasearch-image-results' => 'Afbeeldingsresultaten voor "$1"',
-	'wikiasearch-search-all-wikia' => 'Heel Wikia dooezoeken',
 	'wikiasearch2-page-title-with-query' => "Zoekresultaten voor '$1' - $2",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Wikia doorzoeken',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'In $1 zoeken',
 	'wikiasearch2-search-all-wikia' => 'Heel Wikia dooezoeken',
 	'wikiasearch2-results' => '{{PLURAL:$1|één resultaat|$1 resultaten}}',
-	'wikiasearch2-pages' => "{{PLURAL:$1|één pagina|$1 pagina's}}",
+	'wikiasearch2-pages' => "{{PLURAL:$2|één pagina|$1 pagina's}}",
 	'wikiasearch2-search-on-wiki' => 'Binnen deze wiki zoeken',
 	'wikiasearch2-results-count' => 'Over {{PLURAL:$1|één resultaat|$1 resultaten}} for $2',
 	'wikiasearch2-results-for' => 'Resultaten voor $1',
@@ -681,174 +592,187 @@ $messages['nl'] = array(
 	'wikiasearch2-search-all-namespaces' => 'Standaard in alle naamruimten zoeken',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
- * @author Siebrand
- */
 $messages['nl-informal'] = array(
-	'wikiasearch-system-error-msg' => 'Door een systeemfout was het niet mogelijk je zoekopdracht uit te voeren',
 );
 
-/** Occitan (occitan)
- * @author Cedric31
- */
 $messages['oc'] = array(
-	'wikiasearch-titles-only' => 'Cercar pas que dins los títols de las paginas',
-	'wikiasearch-system-error-msg' => "A causa d'una error del sistèma, avèm pas pogut acomplir vòstra recèrca",
-	'wikiasearch-search-this-wiki' => 'Cercar pas que dins Wikia Central',
-	'wikiasearch-search-wikia' => 'Cercar dins Wikia',
 );
 
-/** Oriya (ଓଡ଼ିଆ)
- * @author Psubhashish
- */
 $messages['or'] = array(
-	'wikiasearch-search-this-wiki' => 'କେବଳ ଉଇକିଆ ସେଣ୍ଟ୍ରାଲରେ  ଖୋଜିବେ',
 );
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sovq
- */
 $messages['pl'] = array(
-	'search-desc' => 'Silnik wyszukiwania w różnych Wikia  oparty na backendzie Solr',
-	'wikiasearch-titles-only' => 'Szukaj wyłącznie w tytułach stron',
-	'wikiasearch-system-error-msg' => 'Ze względu na błąd systemu, wyszukiwanie nie mogło zostać wykonane',
-	'wikiasearch-search-this-wiki' => 'Szukaj wyłącznie w Wikia Central',
-	'wikiasearch-search-wikia' => 'Szukaj w Wikii',
-	'wikiasearch-image-results' => 'Grafiki odnalezione dla „$1”',
-	'wikiasearch-search-all-wikia' => 'Wyszukiwanie wszystkich Wikia',
-	'wikiasearch2-page-title-with-query' => 'Wyników dla frazy "$1" - $2',
-	'wikiasearch2-page-title-no-query-interwiki' => 'Przeszukaj Wikię',
-	'wikiasearch2-page-title-no-query-intrawiki' => 'Wyszukaj $1',
-	'wikiasearch2-search-all-wikia' => 'Szukaj na wszystkich wiki',
-	'wikiasearch2-results' => '$1 {{PLURAL:$1|Wynik|Wyniki|Wyników}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|Strona|Strony|Stron}}',
+	'wikiasearch2-page-title-with-query' => 'Wyników dla frazy „$1” - $2',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Przeszukaj FANDOM',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Szukaj na $1',
+	'wikiasearch2-search-all-wikia' => 'Przeszukaj cały FANDOM',
+	'wikiasearch2-results' => '$1 {{PLURAL:$1|wynik|wyniki|wyników}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|strona|strony|stron}}',
 	'wikiasearch2-search-on-wiki' => 'Szukaj na tej wiki',
-	'wikiasearch2-results-count' => 'Około $1 {{PLURAL:$1|wynik|wyniki|wyników}} dla "$2"',
-	'wikiasearch2-results-for' => 'Wyniki dla $1',
+	'wikiasearch2-results-count' => 'Około $1 {{PLURAL:$1|wynik|wyniki|wyników}} dla „$2” na {{SITENAME}}',
+	'wikiasearch2-results-for' => 'Wyniki dla „$1” na {{SITENAME}}',
 	'wikiasearch2-results-redirected-from' => 'przekierowanie z',
-	'wikiasearch2-global-search-headline' => 'Wyszukaj wikię na Wikii',
-	'wikiasearch2-wiki-search-headline' => 'Przeszukaj wiki',
-	'wikiasearch2-advanced-search' => 'Zaawansowane Opcje Wyszukiwania',
-	'wikiasearch2-onhub' => 'W portalu $1',
-	'wikiasearch2-enable-go-search' => 'Bezpośrednio przekierowuj do wyszukiwanych artykułów',
+	'wikiasearch2-global-search-headline' => 'Szukaj społeczności na portalu FANDOM',
+	'wikiasearch2-wiki-search-headline' => 'Szukaj na tej wiki',
+	'wikiasearch2-advanced-search' => 'Zaawansowane opcje wyszukiwania',
+	'wikiasearch2-onhub' => ' w hubie $1',
+	'wikiasearch2-enable-go-search' => 'Bezpośrednio kieruj do wyszukiwanych artykułów',
 	'wikiasearch2-noresults' => 'Brak wyników.',
 	'wikiasearch2-spellcheck' => 'Brak wyników dla zapytania <em>$1</em>. <strong>Wyświetlono wyniki dla <em>$2</em>.</strong>',
 	'wikiasearch2-tabs-articles' => 'Artykuły',
-	'wikiasearch2-tabs-photos-and-videos' => 'Zdjęcia i Filmy',
+	'wikiasearch2-tabs-photos-and-videos' => 'Zdjęcia i filmy',
 	'wikiasearch2-users' => 'Ludzie',
+	'wikiasearch3-related-wiki' => 'Powiązana wiki',
+	'wikiasearch3-view-more-wikis' => 'Zobacz więcej wiki',
+	'wikiasearch2-advanced-select-all' => 'Wybierz wszystkie',
+	'wikiasearch2-search-all-namespaces' => 'Domyślnie przeszukuj wszystkie przestrzenie nazw',
+	'wikiasearch2-search-ads-header' => 'Reklama',
+	'wikiasearch2-users-tooltip' => 'Szukaj w profilach użytkowników',
+	'wikiasearch2-filter-options-label' => 'Filtr',
+	'wikiasearch2-sort-options-label' => 'Sortowanie',
+	'wikiasearch2-filter-all' => 'Wszystkie pliki',
+	'wikiasearch2-filter-category' => 'Kategoria',
+	'wikiasearch2-filter-hd' => 'Tylko HD',
+	'wikiasearch2-filter-photos' => 'Tylko obrazy',
+	'wikiasearch2-filter-videos' => 'Tylko filmy',
+	'wikiasearch2-sort-relevancy' => 'Zgodność z frazą',
+	'wikiasearch2-sort-publish-date' => 'Data publikacji',
+	'wikiasearch2-sort-duration' => 'Czas trwania',
+	'wikiasearch2-choose-category' => 'Wybierz kategorię',
+	'wikiasearch2-crosswiki-description' => '$1 to społeczność, do której każdy może dołączyć. Odkrywaj, dodawaj i podziel się swoją wiedzą!',
+	'wikiasearch2-exact-result' => 'Wynik dla $1 w FANDOM',
+	'wikiasearch2-top-module-title' => 'Najpopularniejsze strony',
+	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Powiązana Wieść|Powiązane Wieści}}',
+	'wikiasearch2-fandom-stories-view-more' => 'Zobacz więcej wieści z Fandomu',
+	'wikiamobile-wikiasearch2-next' => 'Dalej',
+	'wikiamobile-wikiasearch2-prev' => 'Wstecz',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 z $3 {{PLURAL:$3|wyniku|wyników}}',
+	'wikiasearch2-video-results' => 'Filmy dla „$1”',
+	'wikiasearch2-images' => '$1 {{PLURAL:$2|obraz|obrazy|obrazów}}',
+	'wikiasearch2-videos' => '$1 {{PLURAL:$2|film|filmy|filmów}}',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = array(
-	'search-desc' => "Motor d'arserca a travers le Wikia ch'a deuvra Solr",
-	'wikiasearch-titles-only' => 'Sërché mach ant ij tìtoj dle pàgine',
-	'wikiasearch-system-error-msg' => "Për n'eror dël sistema, soa arserca a peul pa esse completà",
-	'wikiasearch-search-this-wiki' => 'Serca Mach an Wikia Sentral',
-	'wikiasearch-search-wikia' => 'Serca an Wikia',
-	'wikiasearch-image-results' => 'Figura Arzultà për "$1"',
-	'wikiasearch-search-all-wikia' => 'Arserché su tuta Wikia',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
-	'wikiasearch-titles-only' => 'يوازې د مخ په سرليکونو کې پلټل',
-	'wikiasearch-system-error-msg' => 'د غونډال د ستونزو له امله، ستاسې پلټنه نه شي بشپړه کېدای.',
-	'wikiasearch-search-this-wiki' => 'يوازې مرکزي ويکي يا پلټل',
-	'wikiasearch-search-wikia' => 'ويکيا پلټل',
-	'wikiasearch-image-results' => 'د "$1" لپاره د انځور پايلې',
-	'wikiasearch-search-all-wikia' => 'ټول ويکييا پلټل',
 );
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- */
 $messages['pt'] = array(
-	'search-desc' => 'Motor de pesquisa em toda a Wikia, usando o backend Solr',
-	'wikiasearch-titles-only' => 'Pesquisar apenas nos títulos de página',
-	'wikiasearch-system-error-msg' => 'Não foi possível concluir a sua pesquisa devido a um erro de sistema',
-	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na Wikia Central',
-	'wikiasearch-search-wikia' => 'Pesquisar na Wikia',
-	'wikiasearch-image-results' => 'Resultados de Imagens para "$1"',
+	'wikiasearch2-page-title-with-query' => "Resultados da pesquisa por '$1' - $2'",
+	'wikiasearch2-page-title-no-query-interwiki' => 'Pesquisar no FANDOM',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Pesquisar na $1',
+	'wikiasearch2-search-all-wikia' => 'Pesquisar por todo o FANDOM',
+	'wikiasearch2-results' => '$1 {{PLURAL:$1|resultado|resultados}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|página|páginas}}',
+	'wikiasearch2-images' => '$1 {{PLURAL:$2|imagem|imagens}}',
+	'wikiasearch2-videos' => '$1 {{PLURAL:$2|vídeo|vídeos}}',
+	'wikiasearch3-related-wiki' => 'Wiki relacionada',
+	'wikiasearch3-view-more-wikis' => 'Visualizar mais wikis',
+	'wikiasearch2-search-on-wiki' => 'Pesquisar nesta wiki',
+	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|resultado|resultados}] para $2 na {{SITENAME}}',
+	'wikiasearch2-results-for' => 'Resultados para $1 na {{SITENAME}}',
+	'wikiasearch2-results-redirected-from' => 'redirecionado de',
+	'wikiasearch2-global-search-headline' => 'Encontrar comunidades no FANDOM',
+	'wikiasearch2-wiki-search-headline' => 'Pesquisar nesta wiki',
+	'wikiasearch2-advanced-search' => 'Opções avançadas de pesquisa',
+	'wikiasearch2-advanced-select-all' => 'Selecionar tudo',
+	'wikiasearch2-onhub' => ' in the $1 Hub',
+	'wikiasearch2-enable-go-search' => 'Habilitar a pesquisa',
+	'wikiasearch2-noresults' => 'Nenhum resultado encontrado.',
+	'wikiasearch2-spellcheck' => 'Nenhum resultado foi encontrado para <em>$1</em>. <strong>Mostrando resultados para <em>$2</em>.</strong>',
+	'wikiasearch2-search-all-namespaces' => 'Pesquisar todos os namespaces como padrão',
+	'wikiasearch2-search-ads-header' => 'Anúncios',
+	'wikiasearch2-tabs-articles' => 'Artigos',
+	'wikiasearch2-tabs-photos-and-videos' => 'Fotos e vídeos',
+	'wikiasearch2-users' => 'Pessoas',
+	'wikiasearch2-users-tooltip' => 'Pesquisar em usuários',
+	'wikiasearch2-filter-options-label' => 'Opções de filtragem',
+	'wikiasearch2-sort-options-label' => 'Opções de ordenação',
+	'wikiasearch2-filter-all' => 'Todos os arquivos',
+	'wikiasearch2-filter-category' => 'Categoria',
+	'wikiasearch2-filter-hd' => 'Apenas HD',
+	'wikiasearch2-filter-photos' => 'Apenas fotos',
+	'wikiasearch2-filter-videos' => 'Apenas vídeos',
+	'wikiasearch2-sort-relevancy' => 'Relevância',
+	'wikiasearch2-sort-publish-date' => 'Data de publicação',
+	'wikiasearch2-sort-duration' => 'Duração',
+	'wikiasearch2-choose-category' => 'Escolher categoria',
+	'wikiasearch2-crosswiki-description' => '$1 é um site de comunidade no qual qualquer um pode contribuir. Descubra, compartilhe e adicione seu conhecimento!',
+	'wikiasearch2-exact-result' => 'Resultado para $1 no FANDOM',
+	'wikiasearch2-top-module-title' => 'Páginas em alta',
+	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|História|Histórias}} relacionadas',
+	'wikiasearch2-fandom-stories-view-more' => 'Visualizar mais histórias',
+	'wikiamobile-wikiasearch2-next' => 'Próximo',
+	'wikiamobile-wikiasearch2-prev' => 'Anterior',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $ 3 {{PLURAL:$3|resultado|resultados}}',
+	'wikiasearch2-video-results' => "Vídeos para '$1'",
 );
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Aristóbulo
- * @author Daemorris
- * @author Giro720
- */
-$messages['pt-br'] = array(
-	'search-desc' => 'Motor de pesquisa em toda a Wikia, usando o backend Solr',
-	'wikiasearch-titles-only' => 'Pesquisar apenas nos títulos de páginas',
-	'wikiasearch-system-error-msg' => 'Devido a um erro de sistema, sua pesquisa não pôde ser efetuada',
-	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na wikia Central',
-	'wikiasearch-search-wikia' => 'Pesquisar na wikia',
-	'wikiasearch-image-results' => 'Resultados de Imagens para "$1"',
-);
-
-/** Romanian (română)
- * @author Stelistcristi
- */
 $messages['ro'] = array(
-	'wikiasearch-search-wikia' => 'Căutare Wikia',
-	'wikiasearch-image-results' => 'Rezultate imagine pentru "$1"',
 );
 
-/** Russian (русский)
- * @author Kuzura
- */
 $messages['ru'] = array(
-	'search-desc' => 'Кросс-Викия поиск с помощью сервера Solr',
-	'wikiasearch-titles-only' => 'Искать только в заголовках страниц',
-	'wikiasearch-system-error-msg' => 'Из-за системной ошибки, поиск не может быть выполнен',
-	'wikiasearch-search-this-wiki' => 'Поиск только по Wikia Central',
-	'wikiasearch-search-wikia' => 'Найти на Wikia',
-	'wikiasearch-image-results' => 'Результаты поиска изображения для «$1»',
-	'wikiasearch-search-all-wikia' => 'Поиск по всей Викия',
-	'wikiasearch2-page-title-with-query' => "Результаты поиска для '$1' - $2",
-	'wikiasearch2-page-title-no-query-interwiki' => 'Найти на Викия',
-	'wikiasearch2-page-title-no-query-intrawiki' => 'Поиск $1',
-	'wikiasearch2-search-all-wikia' => 'Поиск по всей Викия',
+	'wikiasearch2-page-title-with-query' => 'Результаты поиска для «$1» — $2',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Поиск по Фэндому',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Поиск в «$1»',
+	'wikiasearch2-search-all-wikia' => 'Поиск в Фэндоме',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|результат|результата|результатов}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|страница|страницы|страниц}}',
-	'wikiasearch2-search-on-wiki' => 'Поиск в этой вики',
-	'wikiasearch2-results-count' => 'Примерно $1 {{PLURAL:$1|результат|результата|результатов}} для $2',
-	'wikiasearch2-results-for' => 'Результаты для $1',
-	'wikiasearch2-global-search-headline' => 'Найти викии на Викия',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|страница|страницы|страниц}}',
+	'wikiasearch2-search-on-wiki' => 'Поиск на этой вики',
+	'wikiasearch2-results-count' => 'Примерно $1 {{PLURAL:$1|результат|результата|результатов}} для «$2» на {{SITENAME}}',
+	'wikiasearch2-results-for' => 'Результаты для «$1» на {{SITENAME}}',
+	'wikiasearch2-global-search-headline' => 'Поиск сообществ Фэндома',
 	'wikiasearch2-wiki-search-headline' => 'Поиск по вики',
 	'wikiasearch2-advanced-search' => 'Расширенные параметры поиска',
 	'wikiasearch2-onhub' => 'в $1 Портале',
 	'wikiasearch2-enable-go-search' => 'Перенаправлять на статью при использовании поиска',
 	'wikiasearch2-noresults' => 'Ничего не найдено',
-	'wikiasearch2-spellcheck' => 'Ничего не найдено для <em>$1</em>. <strong>Показать результатыт поиска для <em>$2</em>.</strong>',
+	'wikiasearch2-spellcheck' => 'Ничего не найдено для <em>$1</em>. <strong>Показать результаты поиска для <em>$2</em>.</strong>',
+	'wikiasearch2-images' => '$1 {{PLURAL:$2|изображение|изображения|изображений}}',
+	'wikiasearch2-videos' => '$1 {{PLURAL:$2|видео|видео}}',
+	'wikiasearch3-related-wiki' => 'Близкая по теме вики',
+	'wikiasearch3-view-more-wikis' => 'Показать больше вики',
+	'wikiasearch2-results-redirected-from' => 'перенаправлено с',
+	'wikiasearch2-advanced-select-all' => 'Выбрать всё',
+	'wikiasearch2-search-all-namespaces' => 'По умолчанию проводить поиск по всем пространствам имён',
+	'wikiasearch2-search-ads-header' => 'Реклама',
+	'wikiasearch2-tabs-articles' => 'Статьи',
+	'wikiasearch2-tabs-photos-and-videos' => 'Фото и видео',
+	'wikiasearch2-users' => 'Участники',
+	'wikiasearch2-users-tooltip' => 'Поиск по участникам',
+	'wikiasearch2-filter-options-label' => 'Опции фильтра',
+	'wikiasearch2-sort-options-label' => 'Сортировка',
+	'wikiasearch2-filter-all' => 'Все файлы',
+	'wikiasearch2-filter-category' => 'Категории',
+	'wikiasearch2-filter-hd' => 'Только HD',
+	'wikiasearch2-filter-photos' => 'Только фото',
+	'wikiasearch2-filter-videos' => 'Только видео',
+	'wikiasearch2-sort-relevancy' => 'Релевантность',
+	'wikiasearch2-sort-publish-date' => 'Дата публикации',
+	'wikiasearch2-sort-duration' => 'Продолжительность',
+	'wikiasearch2-choose-category' => 'Выберите категорию',
+	'wikiasearch2-crosswiki-description' => '$1 — это сообщество, где каждый может внести вклад. Открывайте, делитесь и добавляйте свои знания!',
+	'wikiasearch2-exact-result' => 'Результаты поиска по запросу «$1» на Фэндоме',
+	'wikiasearch2-top-module-title' => 'Лучшие статьи',
+	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Близкая по теме статья|Близкие по теме статьи|Близких по теме статей}}',
+	'wikiasearch2-fandom-stories-view-more' => 'Показать больше статей',
+	'wikiamobile-wikiasearch2-next' => 'Следующая',
+	'wikiamobile-wikiasearch2-prev' => 'Предыдущая',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 из $3 {{PLURAL:$3|результата|результатов}}',
+	'wikiasearch2-video-results' => 'Видео для «$1»',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
- * @author Rancher
- * @author Verlor
- */
 $messages['sr-ec'] = array(
-	'wikiasearch-titles-only' => 'Претражи само наслове страница',
-	'wikiasearch-system-error-msg' => 'Због системске грешке, ваша претрага се не може извршити',
-	'wikiasearch-search-this-wiki' => 'Претражи само централну Викију',
-	'wikiasearch-search-wikia' => 'Претражи Викију',
 );
 
-/** Seeltersk (Seeltersk)
- * @author Pyt
- */
 $messages['stq'] = array(
 	'wikiasearch2-page-title-with-query' => "Säikresultoate foar '$1' - $2",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Säik truch Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Säik $1',
 	'wikiasearch2-search-all-wikia' => 'Säik in aal Wikia-Wikis',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|Resultoat|Resultoate}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|Siede|Sieden}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|Siede|Sieden}}',
 	'wikiasearch2-search-on-wiki' => 'Truchsäik dit Wiki',
 	'wikiasearch2-results-count' => 'Sowät $1 {{PLURAL:$1|Resultoat|Resultoate}} foar $2',
 	'wikiasearch2-results-for' => 'Resultoate foar $1',
@@ -861,24 +785,13 @@ $messages['stq'] = array(
 	'wikiasearch2-spellcheck' => 'Deer wuud foar <em>$1</em> niks fuunen. <strong>Träffere foar <em>$2</em>.</strong>',
 );
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
-	'search-desc' => 'Kryss-Wikias sökmotor som använder bakgrundsfunktionen Solr',
-	'wikiasearch-titles-only' => 'Sök endast i sidtitlar',
-	'wikiasearch-system-error-msg' => 'På grund av ett systemfel kunde sökningen inte slutföras',
-	'wikiasearch-search-this-wiki' => 'Sök endast på Wikia Central',
-	'wikiasearch-search-wikia' => 'Sök Wikia',
-	'wikiasearch-image-results' => 'Bildresultat för "$1"',
-	'wikiasearch-search-all-wikia' => 'Sök på hela Wikia',
 	'wikiasearch2-page-title-with-query' => "Sökresultat för '$1'-$2",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Sök på Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Sök på $1',
 	'wikiasearch2-search-all-wikia' => 'Sök på hela Wikia',
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|resultat|resultat}}',
-	'wikiasearch2-pages' => '$1 {{PLURAL:$1|sida|sidor}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$2|sida|sidor}}',
 	'wikiasearch2-search-on-wiki' => 'Sök inom denna wiki',
 	'wikiasearch2-results-count' => 'Om $1 {{PLURAL:$1|resultat|resultat}} för $2',
 	'wikiasearch2-results-for' => 'Resultat för $1',
@@ -889,112 +802,126 @@ $messages['sv'] = array(
 	'wikiasearch2-spellcheck' => 'Inga resultat hittades för <em>$1</em>. <strong>Visar resultat för <em>$2</em>.</strong>',
 );
 
-/** Tamil (தமிழ்)
- * @author Mahir78
- * @author TRYPPN
- */
 $messages['ta'] = array(
-	'wikiasearch-titles-only' => 'பக்க தலைப்புகளில் மட்டும் தேடுக',
-	'wikiasearch-system-error-msg' => 'கணினியில் ஏற்பட்ட பிழை காரணமாக, தங்களின் தேடுதல்களை முழுதும் செய்து முடிக்க முடியவில்லை',
-	'wikiasearch-search-this-wiki' => 'மத்திய விக்கியாவில் மட்டும் தேடுங்கள்',
-	'wikiasearch-search-wikia' => 'விக்கியாவில் தேடுங்கள்',
-	'wikiasearch-image-results' => '"$1"-ன் தோற்றத்தின் முடிவுகள்',
 );
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = array(
-	'wikiasearch-titles-only' => 'కేవలం పుటల శీర్శికలలో వెతుకు',
-	'wikiasearch-search-wikia' => 'వికియాను వెతకండి',
-	'wikiasearch-image-results' => '"$1" కొరకు బొమ్మల ఫలితాలు',
 );
 
-/** Thai (ไทย)
- * @author Akkhaporn
- */
 $messages['th'] = array(
-	'search-desc' => 'เครื่องมือการค้นหาข้าม Wikia ใช้ Solr backend',
-	'wikiasearch-titles-only' => 'ค้นหาเฉพาะในชื่อหน้า',
-	'wikiasearch-system-error-msg' => 'เนื่องจากการผิดพลาดของระบบ การค้นหาของคุณอาจไม่เสร็จสมบูรณ์',
-	'wikiasearch-search-this-wiki' => 'ค้นหา Wikia Central เท่านั้น',
-	'wikiasearch-search-wikia' => 'ค้นหา Wikia',
-	'wikiasearch-image-results' => 'ผลการค้นหารูปภาพสำหรับ "$1"',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
-	'search-desc' => 'Makinang panghanap ng Cross-Wikia na ginagamit ang panlikurang dulo ng Solr',
-	'wikiasearch-titles-only' => 'Maghanap lamang sa loob ng mga pamagat ng pahina',
-	'wikiasearch-system-error-msg' => 'Dahila sa isang kamalian ng sistema, hindi makukumpleto ang paghahanap mo',
-	'wikiasearch-search-this-wiki' => 'Maghanap lamang sa Wikia Central',
-	'wikiasearch-search-wikia' => 'Maghanap sa Wikia',
-	'wikiasearch-image-results' => 'Mga Kinalabasang Larawan para sa "$1"',
 );
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- * @author Ильнар
- */
 $messages['tt-cyrl'] = array(
-	'search-desc' => 'Solr серверы ярдәмендә Кросс-Викия эзләве',
-	'wikiasearch-titles-only' => 'Битнең баш исемнәреннән генә эзләргә',
-	'wikiasearch-system-error-msg' => 'система хатасы аркасында эзләшү мөмкин түгел',
-	'wikiasearch-search-this-wiki' => 'Wikia Central да гына эзләү',
-	'wikiasearch-search-wikia' => 'Wikia дә табарга',
-	'wikiasearch-image-results' => '«$1» өчен рәсемнәр табу',
-	'wikiasearch-search-all-wikia' => 'Бөтен Викия буенча эзләү',
 );
 
-/** Ukrainian (українська)
- * @author A1
- * @author Ast
- * @author Prima klasy4na
- * @author Тест
- */
 $messages['uk'] = array(
-	'wikiasearch-titles-only' => 'Шукати тільки в заголовках сторінок',
-	'wikiasearch-system-error-msg' => 'Ваш пошук не може бути виконаним через системну помилку',
-	'wikiasearch-search-wikia' => 'Шукати на Вікіа',
-	'wikiasearch-image-results' => 'Результати пошуку зображень для "$1"',
-	'wikiasearch-search-all-wikia' => 'Шукати по всій Вікіа',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- * @author XiaoQiaoGrace
- */
 $messages['vi'] = array(
-	'search-desc' => 'Thông qua công cụ tìm kiếm Wikia bằng cách sử dụng phụ trợ Solr',
-	'wikiasearch-titles-only' => 'Chỉ tìm kiếm tiêu đề trang',
-	'wikiasearch-system-error-msg' => 'Do một lỗi hệ thống, tìm kiếm của bạn không thể hoàn tất',
-	'wikiasearch-search-this-wiki' => 'Chỉ tìm kiếm ở trung tâm Wikia',
-	'wikiasearch-search-wikia' => 'Tìm kiếm Wikia',
-	'wikiasearch-image-results' => 'Kết quả hình ảnh cho "$1"',
-	'wikiasearch-search-all-wikia' => 'Tìm kiếm tất cả Wikia',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
- * @author Dimension
- * @author Yfdyh000
- */
 $messages['zh-hans'] = array(
-	'search-desc' => '跨Wikia搜索引擎（使用Solr后端）',
-	'wikiasearch-titles-only' => '仅在页面标题中搜索',
-	'wikiasearch-system-error-msg' => '系统错误，无法完成您的搜索',
-	'wikiasearch-search-this-wiki' => '仅在Wikia Central中搜索',
-	'wikiasearch-search-wikia' => '搜索Wikia',
-	'wikiasearch-image-results' => '"$1"图像搜索结果',
-	'wikiasearch-search-all-wikia' => '搜索所有Wikia',
+	'wikiasearch2-page-title-with-query' => '对“$1”的搜索结果 - $2',
+	'wikiasearch2-page-title-no-query-interwiki' => '搜索FANDOM',
+	'wikiasearch2-page-title-no-query-intrawiki' => '搜索$1',
+	'wikiasearch2-search-all-wikia' => '搜索所有FANDOM社区',
+	'wikiasearch2-results' => '$1{{PLURAL:$1|项结果|项结果}}',
+	'wikiasearch2-pages' => '$1{{PLURAL:$2|个页面|个页面}}',
+	'wikiasearch2-images' => '$1{{PLURAL:$2|张图片|张图片}}',
+	'wikiasearch2-videos' => '$1{{PLURAL:$2|个视频|个视频}}',
+	'wikiasearch3-related-wiki' => '其他维基',
+	'wikiasearch3-view-more-wikis' => '查看更多维基',
+	'wikiasearch2-search-on-wiki' => '在此Wiki中搜索',
+	'wikiasearch2-results-count' => '在{{SITENAME}}搜寻$2得到大约$1{{PLURAL:$1|项结果|项结果}}',
+	'wikiasearch2-results-for' => '在{{SITENAME}}搜寻$1的所有结果',
+	'wikiasearch2-results-redirected-from' => '重定向自',
+	'wikiasearch2-global-search-headline' => '在FANDOM上查找社区',
+	'wikiasearch2-wiki-search-headline' => '搜寻这个wiki',
+	'wikiasearch2-advanced-search' => '高级搜索选项',
+	'wikiasearch2-advanced-select-all' => '选取全部',
+	'wikiasearch2-onhub' => ' in the $1 Hub',
+	'wikiasearch2-enable-go-search' => '直接进入在搜寻栏中键入的页面',
+	'wikiasearch2-noresults' => '搜寻不到结果。',
+	'wikiasearch2-spellcheck' => '未找到关于<em>$1</em>的搜索结果。<strong>显示关于<em>$2</em>的搜索结果。</strong>',
+	'wikiasearch2-search-all-namespaces' => '预设搜寻所有命名空间',
+	'wikiasearch2-search-ads-header' => '广告',
+	'wikiasearch2-tabs-articles' => '文章页',
+	'wikiasearch2-tabs-photos-and-videos' => '图像和视频',
+	'wikiasearch2-users' => '用户',
+	'wikiasearch2-users-tooltip' => '搜寻用户',
+	'wikiasearch2-filter-options-label' => '筛选选项',
+	'wikiasearch2-sort-options-label' => '排序方式',
+	'wikiasearch2-filter-all' => '所有文件',
+	'wikiasearch2-filter-category' => '分类',
+	'wikiasearch2-filter-hd' => '只搜寻高清视频',
+	'wikiasearch2-filter-photos' => '只搜寻图像',
+	'wikiasearch2-filter-videos' => '只搜寻视频',
+	'wikiasearch2-sort-relevancy' => '相关内容',
+	'wikiasearch2-sort-publish-date' => '上传时间',
+	'wikiasearch2-sort-duration' => '时长',
+	'wikiasearch2-choose-category' => '选择分类',
+	'wikiasearch2-crosswiki-description' => '$1是一个任何人都可以贡献的线上社区网站。你可以发现、分享和添加知识！',
+	'wikiasearch2-exact-result' => 'FANDOM上关于$1的查询结果',
+	'wikiasearch2-top-module-title' => '热门页面',
+	'wikiasearch2-fandom-stories-title' => '其他{{PLURAL:$1|故事|故事}}',
+	'wikiasearch2-fandom-stories-view-more' => '阅读更多故事',
+	'wikiamobile-wikiasearch2-next' => '下一页',
+	'wikiamobile-wikiasearch2-prev' => '上一页',
+	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|项结果|项结果}}中的$1- $2',
+	'wikiasearch2-video-results' => '关于"$1"的视频',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
- * @author Ffaarr
- */
 $messages['zh-hant'] = array(
-	'wikiasearch-search-wikia' => '搜尋Wikia',
-	'wikiasearch-search-all-wikia' => '搜尋整個 Wikia',
+	'wikiasearch2-page-title-with-query' => '對「$1」的搜尋結果 - $2',
+	'wikiasearch2-page-title-no-query-interwiki' => '搜索FANDOM',
+	'wikiasearch2-page-title-no-query-intrawiki' => '搜尋$1',
+	'wikiasearch2-search-all-wikia' => '搜尋所有FANDOM社區',
+	'wikiasearch2-results' => '$1{{PLURAL:$1|項結果|項結果}}',
+	'wikiasearch2-pages' => '$1{{PLURAL:$2|個頁面|個頁面}}',
+	'wikiasearch2-images' => '$1{{PLURAL:$2|張圖片|張圖片}}',
+	'wikiasearch2-videos' => '$1{{PLURAL:$2|個影片|個影片}}',
+	'wikiasearch3-related-wiki' => '相關的wiki',
+	'wikiasearch3-view-more-wikis' => '查看更多wiki',
+	'wikiasearch2-search-on-wiki' => '在此Wiki中搜尋',
+	'wikiasearch2-results-count' => '在{{SITENAME}}搜尋$2得到大約$1個結果',
+	'wikiasearch2-results-for' => '在{{SITENAME}}搜尋 $1 的所有結果',
+	'wikiasearch2-results-redirected-from' => '重定向自',
+	'wikiasearch2-global-search-headline' => '在FANDOM上查找社區',
+	'wikiasearch2-wiki-search-headline' => '搜尋這個wiki',
+	'wikiasearch2-advanced-search' => '進階搜尋選項',
+	'wikiasearch2-advanced-select-all' => '選取全部',
+	'wikiasearch2-onhub' => ' in the $1 Hub',
+	'wikiasearch2-enable-go-search' => '直接進入在搜尋欄中鍵入的頁面',
+	'wikiasearch2-noresults' => '搜尋不到結果。',
+	'wikiasearch2-spellcheck' => '未找到關於<em>$1</em>的搜尋結果。 <strong>顯示關於<em>$2</em>的搜尋結果。 </strong>',
+	'wikiasearch2-search-all-namespaces' => '預設搜尋所有命名空間',
+	'wikiasearch2-search-ads-header' => '廣告',
+	'wikiasearch2-tabs-articles' => '文章頁',
+	'wikiasearch2-tabs-photos-and-videos' => '圖片和影片',
+	'wikiasearch2-users' => '用戶',
+	'wikiasearch2-users-tooltip' => '搜尋用戶',
+	'wikiasearch2-filter-options-label' => '搜尋範圍',
+	'wikiasearch2-sort-options-label' => '排序方式',
+	'wikiasearch2-filter-all' => '所有檔案',
+	'wikiasearch2-filter-category' => '分類',
+	'wikiasearch2-filter-hd' => '只搜尋高畫質影片',
+	'wikiasearch2-filter-photos' => '只搜尋圖片',
+	'wikiasearch2-filter-videos' => '只搜尋影片',
+	'wikiasearch2-sort-relevancy' => '相關度',
+	'wikiasearch2-sort-publish-date' => '上傳時間',
+	'wikiasearch2-sort-duration' => '影片長度',
+	'wikiasearch2-choose-category' => '選擇分類',
+	'wikiasearch2-crosswiki-description' => '$1是一個任何人都可以貢獻的線上社區網站。你可以發現、分享和添加知識！',
+	'wikiasearch2-exact-result' => 'FANDOM上關於$1的查詢結果',
+	'wikiasearch2-top-module-title' => '熱門頁面',
+	'wikiasearch2-fandom-stories-title' => '相關的{{PLURAL:$1|故事|故事}}',
+	'wikiasearch2-fandom-stories-view-more' => '閱讀更多故事',
+	'wikiamobile-wikiasearch2-next' => '下一頁',
+	'wikiamobile-wikiasearch2-prev' => '上一頁',
+	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|項結果|項結果}}中的$1- $2',
+	'wikiasearch2-video-results' => '關於「$1」的影片',
 );
 

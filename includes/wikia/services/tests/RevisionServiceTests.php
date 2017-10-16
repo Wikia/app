@@ -192,4 +192,117 @@ class RevisionServiceTests extends WikiaBaseTest {
 
 		$this->assertEquals($expectedResult, $result);
 	}
+
+	/**
+	 * @dataProvider filterByArticleDataProvider
+	 */
+	public function testFilterByArticle( $testDescription, $input, $expected ) {
+		$dbMock = $this->getMock('StdClass', array( 'selectSQLText', 'query', 'addQuotes' ));
+		$revisionService = new RevisionService( $dbMock, 0 );
+		$result = $revisionService->filterByArticle( $input );
+
+		$this->assertEquals($expected, $result, $testDescription);
+	}
+
+	public function filterByArticleDataProvider() {
+		return [
+			[
+				'Empty input',
+				'input' => [],
+				'expected' => [],
+			],
+			[
+				'One result of the same page',
+				'input' => [
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353927,
+					],
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353827,
+					],
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353727,
+					],
+				],
+				'expected' => [
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353927,
+					]
+				],
+			],
+			[
+				'Multiple results of different pages',
+				'input' => [
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353927,
+					],
+					[
+						'article' => 2,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353827,
+					],
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353727,
+					],
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353627,
+					],
+					[
+						'article' => 2,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353527,
+					],
+					[
+						'article' => 3,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353427,
+					],
+				],
+				'expected' => [
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353927,
+					],
+					[
+						'article' => 2,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353827,
+					],
+					[
+						'article' => 3,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353427,
+					]
+				],
+			],
+		];
+	}
 }

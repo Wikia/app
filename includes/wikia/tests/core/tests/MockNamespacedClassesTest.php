@@ -2,27 +2,27 @@
 
 namespace {
 
+	class FakeMockNamespacedClass {}
+
 	class MockNamespacedClassesTest extends WikiaBaseTest {
 
+		/**
+		 * @group UsingDB
+		 */
 		public function testConstructorMocks() {
-			$fakeObject = new stdClass;
+			$this->mockClass( 'WikiaMockTest', FakeMockNamespacedClass::class );
+			$this->mockClass( 'WikiaConstructorClassTest\WikiaMockTest', FakeMockNamespacedClass::class );
 
-			$this->getConstructorMock('WikiaMockTest')
-				->expects($this->any())
-				->method('__construct')
-				->will($this->returnValue($fakeObject));
-
-			$this->getConstructorMock('WikiaConstructorClassTest\WikiaMockTest')
-				->expects($this->any())
-				->method('__construct')
-				->will($this->returnValue($fakeObject));
-
-			$this->assertSame($fakeObject,new WikiaMockTest(),'class from main namespace');
-			$this->assertSame($fakeObject,new \WikiaMockTest(),'class from main namespace (with \\ at the beginning)');
-			$this->assertSame($fakeObject,new WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace');
-			$this->assertSame($fakeObject,new \WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace (with \\ at the beginning)');
+			$this->assertInstanceOf('FakeMockNamespacedClass', new WikiaMockTest(),'class from main namespace');
+			$this->assertInstanceOf('FakeMockNamespacedClass', new \WikiaMockTest(),'class from main namespace (with \\ at the beginning)');
+			$this->assertInstanceOf('FakeMockNamespacedClass', new WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace');
+			$this->assertInstanceOf('FakeMockNamespacedClass', new \WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace (with \\ at the beginning)');
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05653 ms
+		 */
 		public function testStaticMethodMocks() {
 			$fakeObject = new stdClass;
 
@@ -43,6 +43,10 @@ namespace {
 
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05473 ms
+		 */
 		public function testRegularMethodMocks() {
 			$fakeObject = new stdClass;
 
@@ -64,6 +68,10 @@ namespace {
 
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05636 ms
+		 */
 		public function testCallingFromOtherNamespace() {
 			$expValue = 2;
 
@@ -81,6 +89,10 @@ namespace {
 			$this->assertEquals($expValue,\WikiaClassTest3\callRegular(),'call static method from another namespace using alias');
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05362 ms
+		 */
 		public function testCallingFromOtherNamespaceWithAlias() {
 			$expValue = 2;
 

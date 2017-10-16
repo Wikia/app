@@ -1,45 +1,27 @@
 {
-	/* Common */
-
-	// Enforcing
-	"camelcase": true,
-	"curly": true,
-	"eqeqeq": true,
-	"immed": true,
-	"latedef": true,
-	"newcap": true,
-	"noarg": true,
-	"noempty": true,
-	"nonew": true,
-	"quotmark": "single",
-	"trailing": true,
-	"undef": true,
-	"unused": true,
-	// Legacy
-	"onevar": true,
-
-	/* Local */
-
 	// Enforcing
 	"bitwise": true,
-	"forin": false,
-	"plusplus": false,
-	"regexp": true,
+	"eqeqeq": true,
+	"freeze": true,
+	"latedef": true,
+	"noarg": true,
+	"nonew": true,
+	"undef": true,
+	"unused": true,
 	"strict": false,
+
 	// Relaxing
 	"es5": false,
-	"multistr": true,
-	"smarttabs": true,
+
 	// Environment
 	"browser": true,
 	"jquery": true,
-	// Legacy
-	"nomen": true,
 
-	"predef": [
-		"OO",
-		"ve",
-		"unicodeJS",
-		"QUnit"
-	]
+	"globals": {
+		"mw": false,
+		"OO": false,
+		"QUnit": false,
+		"unicodeJS": false,
+		"ve": false
+	}
 }

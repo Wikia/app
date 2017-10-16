@@ -1,101 +1,37 @@
 @import 'variables';
-@import 'mixins/transition';
 
 //variables
-$slotFooterWidth: 300px;//some networks use this instead of 320
-$slotFooterWidthMax: 320px;
-$slotFooterHeight: 50px;
-$slotFooterMargin: 0;
-$slotFooterColor: #666;
-//z-index has to be high enough to be above page content
-//and low enough so expandables can be above it
-$slotZIndex: 4000;
+$slotWidth: 300px; //in content width
+$slotTopHeight: 50px;
 
-#wkFloatingAd {
-	position: relative;
-	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
-	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+#MOBILE_TOP_LEADERBOARD {
+	background-color: white;
+	min-height: 50px;
+	margin: 3px auto 0;
+	width: 320px;
 
-	text-align: center;
-
-	max-height: $slotFooterHeight;
-
-	&.over {
-		z-index: $slotZIndex;
-	}
-
-	&.fixed {
-		position: fixed;
-		bottom: 0;
-
-		margin: 0;
-		padding: 0;
-
-		width: 100%;
-
-		background-color: $slotFooterColor;
-	}
-
-	&.jsfix {
-		position: absolute;
-	}
-
-	> * {
-		//Footer Ad
-		//force Ad content to stick in place
-		//and don't exceed allowed dimensions
-		margin: $slotFooterMargin auto;
-		max-width: $slotFooterWidthMax;
-		max-height: $slotFooterHeight;
-	}
-}
-
-#wkAdTopLeader {
-	visibility: hidden;
-
-	&.show {
-		visibility: visible;
-
-		width: $slotFooterWidthMax;
-		height: $slotFooterHeight;
-
-		margin: 0 auto;
-		text-align: center;
+	&.hidden, .hidden {
+		display: none;
 	}
 }
 
 .ad-in-content {
-	visibility: hidden;
+	border-top: 1px solid $border-color;
+	//compensate for wkPage margin
+	left: -3.125%;
+	margin: 1rem auto;
+	min-width: $slotWidth;
+	padding: 15px 0;
+	position: relative;
+	text-align: center;
 
-	&.show {
-		visibility: visible;
-
-		position: relative;
-		margin: 0 auto;
-
-		padding: 15px 0;
-		height: 270px;
-		width: 300px;
-
-		border-top: 1px solid $border-color;
+	&.hidden, .hidden {
+		display: none;
 	}
 }
 
 #wkAdBeforeFooter.show {
 	margin-top: 10px;
-}
-
-.wkAdWrapper {
-	display: inline-block;
-
-	height: 250px;
-	width: 300px;
-
-	background: rgba(0,0,0,.3);
-
-	&.show {
-		background: transparent;
-	}
 }
 
 .wkAdLabel {
@@ -111,9 +47,26 @@ $slotZIndex: 4000;
 	}
 }
 
-//when ads are loaded and "floating" at the bottom
-//then make sure there's enough space to host them
-//without getting the adslot overlaying the links
-.ads {
-	padding-bottom: 50px;
+#mw-content-text div.wikia-ad-interactive-map,
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
+	height: 50px;
+	margin: 0 auto 15px;
+	width: 320px;
+
+	& > iframe {
+		border: none;
+		height: 50px;
+		left: auto;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		top: auto;
+		width: 320px;
+		z-index: 10;
+	}
+}
+
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
+	height: 60px;
+	padding-top: 10px;
 }

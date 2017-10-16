@@ -52,6 +52,9 @@ class MyHomeTest extends WikiaBaseTest {
 		return $data;
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testNewPageCreation() {
 		// set content of new article
 		global $wgParser;
@@ -167,7 +170,7 @@ class MyHomeTest extends WikiaBaseTest {
 
 	function testPackData() {
 		$in = array('foo' => 'bar');
-		$out = MyHome::customDataPrefix . '{"foo":"bar"}';
+		$out = MyHome::CUSTOM_DATA_PREFIX . '{"foo":"bar"}';
 
 		$this->assertEquals(
 			$out,
@@ -176,7 +179,7 @@ class MyHomeTest extends WikiaBaseTest {
 	}
 
 	function testUnpackData() {
-		$in = MyHome::customDataPrefix . '{"foo":"bar"}';
+		$in = MyHome::CUSTOM_DATA_PREFIX . '{"foo":"bar"}';
 		$out = array('foo' => 'bar');
 
 		$this->assertEquals(

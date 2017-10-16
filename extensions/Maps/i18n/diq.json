@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Erdemaslancan",
+			"Gorizon",
+			"Mirzali"
+		]
+	},
+	"maps_map": "Xerita",
+	"maps-copycoords-prompt": "CTRL+C, ENTER",
+	"maps-layer-value": "Erc",
+	"maps-abb-north": "Z",
+	"maps-abb-east": "A",
+	"maps-abb-south": "V",
+	"maps-abb-west": "P",
+	"maps-latitude": "Verıniye:",
+	"maps-longitude": "Derganiye:",
+	"maps_coordinates_missing": "Qan dê xerita koordinat nêdebya.",
+	"maps_googlemaps3": "Google Maps v3",
+	"maps_openlayers": "OpenLayers",
+	"mapeditor": "Vurnerê Xerita",
+	"specialpages-group-maps": "Xeritey",
+	"mapeditor-none-text": "Çıniyo",
+	"mapeditor-done-button": "Qeyd ke",
+	"mapeditor-remove-button": "Hewad",
+	"mapeditor-import-button2": "Zerre ke",
+	"mapeditor-code-title": "Wiki kode",
+	"mapeditor-form-title": "Detaya timar ke",
+	"mapeditor-link-title-switcher-link-text": "Gıre",
+	"mapeditor-form-field-title": "Sername",
+	"mapeditor-form-field-text": "Metın",
+	"mapeditor-form-field-link": "Gıre",
+	"mapeditor-form-field-icon": "Ikon",
+	"mapeditor-form-field-group": "Grube",
+	"mapeditor-form-field-image": "Resım"
+}

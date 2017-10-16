@@ -1,106 +1,90 @@
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/forms";
-@import "skins/oasis/css/mixins/wordmark";
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/core/layout";
-@import "../mixins/submitpane";
-@import "../mixins/divider";
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/forms';
+@import 'skins/shared/mixins/wordmark';
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/placeholders/bodytext';
+@import '../mixins/submitpane';
 
 .WikiaSignup {
 	margin: 50px 25px 50px 15px;
-
 	text-align: justify;
 
-	>.pageheading {
+	> .pageheading {
 		border: 0;
 		font-size: 32px;
+		font-weight: bold;
 		line-height: 38px;
 		margin: 0;
-		font-weight: bold;
 	}
-	>.subheading {
+
+	> .subheading {
 		font-weight: normal;
 		margin: 0;
 	}
-	>div {
+
+	> div {
 		display: inline-block;
 		text-align: left;
 		vertical-align: top;
 	}
+
 	&:after {
 		content: '';
-		width: 100%;
 		display: inline-block;
 		font-size: 0;
 		line-height: 0;
+		width: 100%;
 	}
+
 	.wiki-info {
 		width: 250px;
+
 		p {
 			margin: 30px 0;
 			padding-right: 50px;
 		}
+
 		.wordmark.text {
 			margin-top: 28px;
 		}
 	}
+
 	.marketing {
 		width: 250px;
+
 		.benefit {
 			@include clearfix;
 			margin: 30px 0;
+
 			p {
 				padding-right: 15px;
 			}
 		}
-		.avatars,
-		.wikis {
-			float: left;
-			height: 74px;
-			list-style: none;
-			margin: 0;
-			width: 74px;
-			.avatar {
-				border: 1px solid $color-page-border;
-				float: left;
-				margin: 0 5px 5px 0;
-				padding: 0;
-			}
-			.wiki {
-				border: 1px solid $color-page-border;
-				height: 18px;
-				margin: 0 0 5px 0;
-				padding: 0;
-				width: 65px;
-				img {
-					margin: 0;
-					padding: 0;
-					vertical-align: top;
-				}
-			}
-		}
+
 		h2 {
 			border: 0;
 			font-size: 16px;
 			font-weight: bold;
 			margin: 0;
 		}
+
 		h3 {
 			font-size: 12px;
 			font-weight: bold;
 			line-height: 13px;
-			margin: 0 0 0 80px;
 		}
+
 		p {
 			font-size: 12px;
 			line-height: 16px;
-			margin-left: 80px;
 		}
 
-		@if ( $responsive-layout-enabled ) {
+		@if ($responsive-or-breakpoints-layout-enabled) {
 			@media screen and (max-width: 910px) {
-				width: 100%;
 				margin-top: 35px;
+				width: 100%;
+
 				.benefit {
 					float: left;
 					width: 33%;
@@ -113,65 +97,42 @@
 	.form-container {
 		margin: 0 auto;
 		width: 332px;
+
 		.input-group {
 			width: 318px;
+
 			label {
-				display:block;
+				display: block;
 			}
 		}
-		input[type=text],
-		input[type=password] {
+
+		[type=text],
+		[type=password] {
 			width: 299px;
 		}
-		.captcha {
-			.fancy-captcha {
-				p {
-					margin: 0;
-				}
-				#wpCaptchaWord {
-					@include wikia-form-input-field;
-					display: inline;
-					width: 105px;
-				}
-				img {
-					background-color: white;
-					border: 1px solid $color-page-border;
-					float: right;
-					height: 32px;
-					text-align: center;
-					width: 122px;
-				}
-			}
-		}
+
 		.submit-pane {
 			@include submitpane;
 		}
 
-		@if ( $responsive-layout-enabled ) {
+		@if ($responsive-or-breakpoints-layout-enabled) {
 			@media screen and (max-width: 910px) {
-				width: 52%;
 				padding-left: 2%;
+				width: 52%;
+
 				form {
 					width: 332px;
-				}
-				.sso-login {
-					margin: 0;
 				}
 			}
 		}
 	}
+
 	.wordmark {
 		@include wordmark;
 	}
 
-	.sso-login {
-		margin: 0 auto;
-		text-align: center;
-		width: 332px;
-
-		.sso-login-divider {
-			@include divider;
-		}
+	.hidden {
+		display: none;
 	}
 }
 
@@ -181,4 +142,8 @@
 
 .WikiaMainContent {
 	float: none;
+}
+
+.captcha-load-error-modal {
+	@extend %bodytext;
 }

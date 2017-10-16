@@ -164,7 +164,7 @@
 		};
 	})();
 
-	// reload the edit page (used by AjaxLogin / UserLogin) - BugId:5307
+	// reload the edit page (used by UserLogin) - BugId:5307
 	WE.reloadEditor = function() {
 		var editorInstance = WE.getInstance(),
 			editorForm = editorInstance.ui.getForm();
@@ -264,6 +264,14 @@
 
 				GlobalTriggers.fire('WikiaEditorReady', this);
 				$().log('Editor is ready!', 'WikiaEditor');
+				WE.track( {
+					action: Wikia.Tracker.ACTIONS.IMPRESSION,
+					label: 'edit-page-ready',
+					value: Math.round( new Date() - window.wgNow )
+				} );
+				if ( !this.config.isMiniEditor && window.veTrack ) {
+					veTrack( { action: 'ck-edit-page-stop' } );
+				}
 			}
 		},
 

@@ -1,0 +1,17 @@
+{
+  "name": "skin-validator",
+  "version": "0.1.0",
+  "dependencies": {
+    "jsonlint": ">=1.6.2",
+    "jsonschema": ">=1.0.2",
+    "strip-json-comments": "^2.0.1",
+    "tv4": ">=1.1.9"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-githooks": "^0.3.1"
+  }
+}

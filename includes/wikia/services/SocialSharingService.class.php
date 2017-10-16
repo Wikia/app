@@ -2,10 +2,9 @@
 /**
  * Helper for generating sharing links for the major Social networks/sites
  * 
- * WARNING: some of the networks have officially deprecated these API's but still support them
- * this is mainly being used by old extensions and the WikiaMobile skin for really
- * good reasons, if you need sharing functionality for Desktop browsers go and check out
- * the ShareButtons extension.
+ * WARNING: some of the networks have officially deprecated these APIs but still support them.
+ * This is mainly being used by old extensions and the WikiaMobile skin for really good reasons.
+ * If you need sharing functionality for desktop browsers, please use the PageShare extension.
  *
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com
  */

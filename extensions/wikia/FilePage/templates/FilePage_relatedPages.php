@@ -1,1 +1,3 @@
-<?= $text ?>
+<div id="RelatedPagesModuleWrapper">
+	<?= $text ?>
+</div>

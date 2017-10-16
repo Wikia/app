@@ -23,7 +23,7 @@
 /**
  * The MediaWiki class is the helper class for the index.php entry point.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  */
 class MediaWiki {
 
@@ -87,7 +87,7 @@ class MediaWiki {
 			/* Wikia change begin - @author: Macbre */
 			/* Add hook to allow modification of page user is redirected to when title is not specified in URL */
 			if(!$request->getInt( 'diff' ) && !$request->getInt( 'oldid' )) {
-				wfRunHooks( 'InitialQueriesMainPage', array( &$ret ) );
+				Hooks::run( 'InitialQueriesMainPage', array( &$ret ) );
 			}
 			/* Wikia change end */
 
@@ -121,7 +121,7 @@ class MediaWiki {
 		/* Wikia change begin - @author: nAndy */
 		/* Add hook to allow modification of page user is redirected to when title is not specified in URL */
 		/* It can be used for redirects but it changes url in end user's browser so it might not be what you want it to be */
-		wfRunHooks( 'AfterCheckInitialQueries', array( &$title, &$action, &$ret ) );
+		Hooks::run( 'AfterCheckInitialQueries', array( &$title, &$action, &$ret ) );
 		/* Wikia change end */
 
 		if ( $ret === null || ( $ret->getDBkey() == '' && $ret->getInterwiki() == '' ) ) {
@@ -177,10 +177,12 @@ class MediaWiki {
 				wfProfileOut( __METHOD__ );
 				return;
 		}
+
+		Transaction::setAttribute( Transaction::PARAM_SKIN, $user->getSkin()->getSkinName() );
 		// Wikia end
 
 		$unused = null; // To pass it by reference
-		wfRunHooks( 'BeforeInitialize', array( &$title, &$unused, &$output, &$user, $request, $this ) );
+		Hooks::run( 'BeforeInitialize', array( &$title, &$unused, &$output, &$user, $request, $this ) );
 
 		// Invalid titles. Bug 21776: The interwikis must redirect even if the page name is empty.
 		if ( is_null( $title ) || ( $title->getDBkey() == '' && $title->getInterwiki() == '' ) ||
@@ -241,8 +243,8 @@ class MediaWiki {
 		} elseif ( $request->getVal( 'action', 'view' ) == 'view' && !$request->wasPosted()
 			&& ( $request->getVal( 'title' ) === null ||
 				$title->getPrefixedDBKey() != $request->getVal( 'title' ) )
-			&& !count( $request->getValueNames( array( 'action', 'title' ) ) )
-			&& wfRunHooks( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
+			&& !count( $request->getValueNames( array( 'action', 'title', '_ga' ) ) )
+			&& Hooks::run( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
 			if ( $title->isSpecialPage() ) {
 				list( $name, $subpage ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
@@ -275,6 +277,11 @@ class MediaWiki {
 				wfProfileOut( __METHOD__ );
 				throw new HttpError( 500, $message );
 			} else {
+				if ( !empty( $gaParams = $request->getVal( '_ga' ) ) ) {
+					// add GA cross domain tracking parameter when redirecting
+					$targetUrl = wfExpandUrl( $title->getFullURL( [ '_ga' => $gaParams ] ), PROTO_CURRENT );
+				}
+
 				$output->setSquidMaxage( 1200 );
 				$output->redirect( $targetUrl, '301' );
 			}
@@ -306,14 +313,9 @@ class MediaWiki {
 			}
 		}
 
-		if ( $pageView ) {
-			// Promote user to any groups they meet the criteria for
-			$user->addAutopromoteOnceGroups( 'onView' );
-		}
-
 		// Wikia change - begin
 		// BugId:7282
-		wfRunHooks( 'AfterInitialize', array( &$title, &$article, &$output, &$user, $request, $this ) );
+		Hooks::run( 'AfterInitialize', array( &$title, &$article, &$output, &$user, $request, $this ) );
 		// Wikia change - end
 
 		wfProfileOut( __METHOD__ );
@@ -343,7 +345,7 @@ class MediaWiki {
 		if ( $action === null ) {
 			// Wikia change - begin
 			// @author macbre
-			wfRunHooks('MediaWikiGetAction', array($this, $this->context));
+			Hooks::run('MediaWikiGetAction', array($this, $this->context));
 			// Wikia change - end
 
 			$action = Action::getActionName( $this->context );
@@ -395,7 +397,7 @@ class MediaWiki {
 			// Give extensions a change to ignore/handle redirects as needed
 			$ignoreRedirect = $target = false;
 
-			wfRunHooks( 'InitializeArticleMaybeRedirect',
+			Hooks::run( 'InitializeArticleMaybeRedirect',
 				array( &$title, &$request, &$ignoreRedirect, &$target, &$article ) );
 
 			// Follow redirects only for... redirects.
@@ -488,6 +490,8 @@ class MediaWiki {
 	 * Ends this task peacefully
 	 */
 	public function restInPeace() {
+		Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre
+
 		MessageCache::logMessages();
 		wfLogProfilingData();
 		// Commit and close up!
@@ -510,7 +514,7 @@ class MediaWiki {
 		$title = $this->context->getTitle();
 		$user = $this->context->getUser();
 
-		if ( !wfRunHooks( 'MediaWikiPerformAction',
+		if ( !Hooks::run( 'MediaWikiPerformAction',
 			array( $output, $page, $title, $user, $request, $this ) ) )
 		{
 			wfProfileOut( __METHOD__ );
@@ -526,7 +530,7 @@ class MediaWiki {
 			return;
 		}
 
-		if ( wfRunHooks( 'UnknownAction', array( $request->getVal( 'action', 'view' ), $page ) ) ) {
+		if ( Hooks::run( 'UnknownAction', array( $request->getVal( 'action', 'view' ), $page ) ) ) {
 			$output->showErrorPage( 'nosuchaction', 'nosuchactiontext' );
 		}
 
@@ -580,6 +584,28 @@ class MediaWiki {
 		return true;
 	}
 
+	/**
+	 * Added by Wikia
+	 *
+	 * Sets metric parameters for the current request
+	 *
+	 * @param $title Title object
+	 * @param $action String name of the action
+	 */
+	private function setMetricParameters($title, $action) {
+		global $wgUser;
+
+		if ($title->isSpecialPage()) {
+			Transaction::setEntryPoint( Transaction::ENTRY_POINT_SPECIAL_PAGE );
+		} else {
+			Transaction::setEntryPoint( Transaction::ENTRY_POINT_PAGE );
+			Transaction::setAttribute( Transaction::PARAM_NAMESPACE, $title->getNamespace() );
+		}
+
+		Transaction::setAttribute( Transaction::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
+		Transaction::setAttribute( Transaction::PARAM_ACTION, $action );
+	}
+
 	private function main() {
 		global $wgUseFileCache, $wgTitle, $wgUseAjax;
 
@@ -611,49 +637,9 @@ class MediaWiki {
 		$action = $this->getAction();
 		$wgTitle = $title;
 
-		/*
-		 * Wikia Change - begin
-		 */
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			global $wgUser, $wgVersion;
-			global $wgContLang;
-			global $wgExtraNamespaces;
-
-			$loggedIn = $wgUser->isLoggedIn() ? 'user' : 'anon';
-			$ns = $title->getNamespace();
-			if( $wgExtraNamespaces[$ns] ) {
-				$nsKey = 'custom';
-			} else {
-				$nsKey = MWNamespace::getCanonicalName( $ns );
-				if ( $nsKey === false ) {
-					$nsKey = $ns;
-				} else {
-					$nsKey = $wgContLang->lc( $nsKey );
-				}
-				if ( $nsKey == '' ) {
-					$nsKey = 'main';
-				}
-			}
-
-			if( $title->isSpecialPage() ) {
-				list( $thisName, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
-				if(is_string($thisName)) {
-					newrelic_name_transaction('mw/'.$loggedIn.'/'.$nsKey.'/'.$thisName);
-				} else {
-					newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
-				}
-			} else {
-				newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
-			}
-			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-				newrelic_add_custom_parameter( 'loggedIn', $loggedIn );
-				newrelic_add_custom_parameter( 'action', $action );
-				newrelic_add_custom_parameter( 'version', $wgVersion );
-			}
-		}
-		/*
-		 * Wikia Change - end
-		 */
+		//Wikia Change
+		$this->setMetricParameters($title, $action);
+		//Wikia Change End
 
 		if ( $wgUseFileCache && $title->getNamespace() >= 0 ) {
 			wfProfileIn( 'main-try-filecache' );

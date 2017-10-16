@@ -22,8 +22,12 @@ class PlacesTest extends WikiaBaseTest {
 		$this->model = PlaceModel::newFromAttributes($this->attribs);
 
 		// use main page as an article for this place
-		$mainPage = Title::newMainPage();
-		$this->model->setPageId($mainPage->getArticleId());
+		$this->model->setPageId(1);
+
+		// mock Title object
+		$this->mockClassWithMethods('Title', [
+			'exists' => true
+		], 'newFromId');
 	}
 
 	function testPlaceModelNewFromAttributes() {
@@ -73,5 +77,15 @@ class PlacesTest extends WikiaBaseTest {
 		$html = $resp->toString();
 
 		$this->assertEquals("<place width='300' lat='52.406878' lon='16.922124' />", $html);
+	}
+
+	function testGetDistanceTo() {
+		$dest = PlaceModel::newFromAttributes( [
+			'lat' => '52.38720549',
+			'lon' => '16.95263382',
+		] );
+
+		$this->assertEquals( 0, $this->model->getDistanceTo( $this->model ) );
+		$this->assertEquals( 3012, $this->model->getDistanceTo( $dest ) );
 	}
 }

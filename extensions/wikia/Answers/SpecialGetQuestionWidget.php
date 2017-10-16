@@ -9,7 +9,7 @@ class GetQuestionWidget extends UnlistedSpecialPage {
 		parent::__construct("GetQuestionWidget");
 	}
 	
-	function execute(){
+	function execute( $par ){
 		global $wgOut, $wgUser, $wgContLang, $wgServer, $wgSitename;
 		
 		$wgOut->setPagetitle( wfMsg("get_widget_title") );

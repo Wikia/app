@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'categorygalleries-desc' => 'Shows a pages gallery on category pages',
 );
 
-/** Tunisian Spoken Arabic (   زَوُن)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Csisc
  */
 $messages['aeb'] = array(
@@ -51,6 +51,13 @@ $messages['bar'] = array(
 	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
 );
 
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'categorygalleries-desc' => 'Паказвае галерэю старонак на старонках катэгорыяў',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -79,7 +86,7 @@ $messages['ca'] = array(
 	'categorygalleries-desc' => 'Mostra una galeria de pàgines sobre les pàgines de la categoria',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -98,6 +105,13 @@ $messages['de'] = array(
  */
 $messages['es'] = array(
 	'categorygalleries-desc' => 'Muestra una galería de páginas encima de las páginas de la categoría',
+);
+
+/** Persian (فارسی)
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'categorygalleries-desc' => 'نمایش صفحه گالری در صفحه رده',
 );
 
 /** Finnish (suomi)
@@ -149,6 +163,13 @@ $messages['ia'] = array(
 	'categorygalleries-desc' => 'Monstra un galeria de paginas in paginas de categoria',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Riemogerz
+ */
+$messages['id'] = array(
+	'categorygalleries-desc' => 'Tampilkan galeri gambar mini pada halaman kategori',
+);
+
 /** Italian (italiano)
  * @author Pietrodn
  */
@@ -161,6 +182,13 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'categorygalleries-desc' => 'カテゴリページでページをギャラリー形式で表示する',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'categorygalleries-desc' => '분류 페이지에 갤러리 표시',
 );
 
 /** Colognian (Ripoarisch)
@@ -282,6 +310,13 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'categorygalleries-desc' => 'Visar ett sido-galleri på kategorisidor',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'categorygalleries-desc' => 'పేజీల గ్యాలరీని వర్గ పేజీల్లో చూపిస్తుంది',
 );
 
 /** Tagalog (Tagalog)

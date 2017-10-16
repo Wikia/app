@@ -1,15 +1,15 @@
-<div id="CreatePageDialog" title="<?= wfMsg( 'createpage-dialog-title' ) ?>" >
-	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog(true); return false;">
+<div id="CreatePageDialog" title="<?= wfMsg( 'createpage-dialog-title' ) ?>" class="create-page-dialog__form-container">
+	<form name="CreatePageForm" id="CreatePageForm" onsubmit="CreatePage.submitDialog('page-create-title-modal'); return false;">
 		<div id="CreatePageContainer">
-			<div id="CreatePageDialogHeader">
-				<?= wfMsg( 'createpage-dialog-message1' ) ?>
-			</div>
 			<div id="CreatePageDialogSub">
 				<?= wfMsg( 'createpage-dialog-message2' ) ?>
 			</div>
 			<input id="wpCreatePageDialogTitle" name="wpCreatepageDialogTitle" type="text" />
+			<div id="CreatePageDialogInputSub">
+				<?= wfMessage( 'createpage-dialog-message3', $wikiTotalPages )->text() ?>
+			</div>
 			<div id="CreatePageDialogTitleErrorMsg" class="CreatePageError hiddenStructure"></div>
-				<?php if( !$useFormatOnly ): ?>
+			<?php if( !$useFormatOnly ): ?>
 				<div id="CreatePageDialogChoose">
 					<?= wfMsg( 'createpage-dialog-choose' ) ?>
 				</div>
@@ -38,14 +38,23 @@
 						<script type="text/javascript">CreatePage.options['<?= $name ;?>'] = <?= json_encode( $params ) ;?>;</script>
 					<? endforeach ;?>
 				</ul>
+			<?php else: ?>
+				<br />
+				<input type="hidden" name="wpCreatePageChoices" value="format" />
+			<?php endif; ?>
 		</div>
-		<?php else: ?>
-			<br />
-			<input type="hidden" name="wpCreatePageChoices" value="format" />
-		<?php endif; ?>
 		<input id="hiddenCreatePageDialogButton" type="submit" style="display: none;" name="hiddenCreatePageDialogButton" value="<?= wfMsg("createpage-dialog-title") ?>" />
-		<div id="CreatePageDialogButton" class="modalToolbar neutral">
-			<?= Wikia::specialPageLink('CreatePage', 'button-createpage', 'wikia-button createpage', 'blank.gif', 'oasis-create-page', 'sprite new'); ?>
-		</div>
 	</form>
 </div>
+<? if ( !empty( $wantedPages ) ): ?>
+	<div class="create-page-dialog__proposals">
+		<div class="create-page-dialog__proposals-header">
+			<?= wfMessage( 'createpage-dialog-redlinks-list-header' )->text() ?>
+		</div>
+		<ul class="create-page-dialog__proposals-list">
+			<? foreach ( $wantedPages as $page ): ?>
+				<li><a href="<?= $page['url']; ?>" class="new"><?= $page['title']; ?></a></li>
+			<? endforeach; ?>
+		</ul>
+	</div>
+<? endif; ?>

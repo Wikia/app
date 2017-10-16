@@ -5,11 +5,9 @@
  * for MediaWiki itself (see mediawiki/core:/resources/startup.js).
  * Avoid use of: ES5, SVG, HTML5 DOM, ContentEditable etc.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-
-/*global mw */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -20,7 +18,7 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled,
+		init, support, targetPromise, enable, userPrefEnabled,
 		plugins = [];
 
 	/**
@@ -28,13 +26,11 @@
 	 * @returns {jQuery.Promise}
 	 */
 	function getTarget() {
-		var loadTargetDeferred;
-		if ( !getTargetDeferred ) {
-			getTargetDeferred = $.Deferred();
-			loadTargetDeferred = $.Deferred()
-				.done( function () {
+		if ( !targetPromise ) {
+			targetPromise = mw.loader.using( 'ext.visualEditor.viewPageTarget' )
+				.then( function () {
 					var target = new ve.init.mw.ViewPageTarget();
-					ve.init.mw.targets.push( target );
+					$( '#content' ).append( target.$element );
 
 					// Transfer methods
 					ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
@@ -42,27 +38,26 @@
 					// Add plugins
 					target.addPlugins( plugins );
 
-					getTargetDeferred.resolve( target );
-				} )
-				.fail( getTargetDeferred.reject );
-
-			mw.loader.using( 'ext.visualEditor.viewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
+					return target;
+				}, function ( e ) {
+					mw.log.warn( 'VisualEditor failed to load: ' + e );
+				} );
 		}
-		return getTargetDeferred.promise();
+		return targetPromise;
 	}
 
 	conf = mw.config.get( 'wgVisualEditorConfig' );
 	tabMessages = conf.tabMessages;
 	uri = new mw.Uri();
-	// BUG 49000: For special pages, no information about page existence is
-	// exposed to mw.config (see BUG 53774), so we assume it exists.
-	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
-	viewUri = new mw.Uri( mw.util.wikiGetlink( mw.config.get( 'wgRelevantPageName' ) ) );
-	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
+	pageExists = !!mw.config.get( 'wgRelevantArticleId' );
+	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	isViewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	// On a view page, extend the current URI so parameters like oldid are carried over
+	// On a non-view page, use viewUri
+	veEditUri = ( isViewPage ? uri : viewUri ).clone().extend( { veaction: 'edit' } );
 
 	support = {
 		es5: !!(
@@ -75,37 +70,26 @@
 			Array.prototype.map &&
 			Date.now &&
 			Date.prototype.toJSON &&
-			Function.prototype.bind &&
 			Object.create &&
 			Object.keys &&
 			String.prototype.trim &&
 			window.JSON &&
 			JSON.parse &&
-			JSON.stringify
+			JSON.stringify &&
+			Function.prototype.bind
 		),
-		contentEditable: 'contentEditable' in document.createElement( 'div' )
+		contentEditable: 'contentEditable' in document.createElement( 'div' ),
+		svg: !!(
+			document.createElementNS &&
+			document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' ).createSVGRect
+		)
 	};
 
 	init = {
 
 		support: support,
 
-		blacklist: {
-			// IE <= 8 has various incompatibilities in layout and feature support
-			// IE9 and IE10 generally work but fail in ajax handling when making POST
-			// requests to the VisualEditor/Parsoid API which is causing silent failures
-			// when trying to save a page (bug 49187)
-			'msie': [['<=', 10]],
-			// Android 2.x and below "support" CE but don't trigger keyboard input
-			'android': [['<', 3]],
-			// Firefox issues in versions 12 and below (bug 50780)
-			// Wikilink [[./]] bug in Firefox 14 and below (bug 50720)
-			'firefox': [['<=', 14]],
-			// Opera < 12 was not tested and it's userbase is almost nonexistent anyway
-			'opera': [['<', 12]],
-			// Blacklist all versions:
-			'blackberry': null
-		},
+		blacklist: conf.blacklist,
 
 		/**
 		 * Add a plugin module or function.
@@ -128,21 +112,21 @@
 		 *
 		 *     @example
 		 *     // Register ResourceLoader module
-		 *     ve.libs.mw.addPlugin( 'ext.gadget.foobar' );
+		 *     mw.libs.ve.addPlugin( 'ext.gadget.foobar' );
 		 *
 		 *     // Register a callback
-		 *     ve.libs.mw.addPlugin( function ( target ) {
+		 *     mw.libs.ve.addPlugin( function ( target ) {
 		 *         ve.dm.Foobar = .....
 		 *     } );
 		 *
 		 *     // Register a callback that loads another script
-		 *     ve.libs.mw.addPlugin( function () {
+		 *     mw.libs.ve.addPlugin( function () {
 		 *         return $.getScript( 'http://example.com/foobar.js' );
 		 *     } );
 		 *
 		 * @param {string|Function} plugin Module name or callback that optionally returns a promise
 		 */
-		addPlugin: function( plugin ) {
+		addPlugin: function ( plugin ) {
 			plugins.push( plugin );
 		},
 
@@ -152,6 +136,14 @@
 		},
 
 		setupTabs: function () {
+			// HACK: Remove this when the Education Program offers a proper way to detect and disable.
+			if (
+				// HACK: Work around jscs.requireCamelCaseOrUpperCaseIdentifiers
+				mw.config.get( 'wgNamespaceIds' )[ true && 'education_program' ] === mw.config.get( 'wgNamespaceNumber' )
+			) {
+				return;
+			}
+
 			var caVeEdit,
 				action = pageExists ? 'edit' : 'create',
 				pTabsId = $( '#p-views' ).length ? 'p-views' : 'p-cactions',
@@ -190,7 +182,7 @@
 					$caVeEdit = $( caVeEdit );
 					$caVeEditLink = $caVeEdit.find( 'a' );
 				}
-			} else {
+			} else if ( $caEdit.length && $caVeEdit.length ) {
 				// Make the state of the page consistent with the config if needed
 				/*jshint bitwise:false */
 				if ( reverseTabOrder ^ conf.tabPosition === 'before' ) {
@@ -207,10 +199,28 @@
 				}
 			}
 
-			// Alter the edit tab (#ca-edit)
-			if ( tabMessages[action + 'source'] !== null ) {
-				$caEditLink.text( mw.msg( tabMessages[action + 'source'] ) );
+			// If the edit tab is hidden, remove it.
+			if ( !( init.isAvailable && userPrefEnabled ) ) {
+				$caVeEdit.remove();
 			}
+
+			// Alter the edit tab (#ca-edit)
+			if ( $( '#ca-view-foreign' ).length ) {
+				if ( tabMessages[action + 'localdescriptionsource'] !== null ) {
+					$caEditLink.text( mw.msg( tabMessages[action + 'localdescriptionsource'] ) );
+				}
+			} else {
+				if ( tabMessages[action + 'source'] !== null ) {
+					$caEditLink.text( mw.msg( tabMessages[action + 'source'] ) );
+				}
+			}
+
+			if ( conf.tabPosition === 'before' ) {
+				$caEdit.addClass( 'collapsible' );
+			} else {
+				$caVeEdit.addClass( 'collapsible' );
+			}
+
 			// Process appendix messages
 			if ( tabMessages[action + 'appendix'] !== null ) {
 				$caVeEditLink.append(
@@ -234,10 +244,16 @@
 		},
 
 		setupSectionLinks: function () {
-			var $editsections = $( '#mw-content-text .mw-editsection' );
+			var $editsections = $( '#mw-content-text .mw-editsection' ),
+				bodyDir = $( 'body' ).css( 'direction' );
 
-			// match direction to the user interface
-			$editsections.css( 'direction', $( 'body' ).css( 'direction' ) );
+			// Match direction of the user interface
+			// TODO: Why is this needed? It seems to work fine without.
+			if ( $editsections.css( 'direction' ) !== bodyDir ) {
+				// Avoid creating inline style attributes if the inherited value is already correct
+				$editsections.css( 'direction', bodyDir );
+			}
+
 			// The "visibility" css construct ensures we always occupy the same space in the layout.
 			// This prevents the heading from changing its wrap when the user toggles editSourceLink.
 			if ( $editsections.find( '.mw-editsection-visualeditor' ).length === 0 ) {
@@ -258,17 +274,21 @@
 					$divider
 						.addClass( 'mw-editsection-divider' )
 						.text( dividerText );
-					$editLink
-						.attr( 'href', function ( i, val ) {
-							return new mw.Uri( veEditUri ).extend( {
-								'vesection': new mw.Uri( val ).query.section
-							} );
-						} )
-						.addClass( 'mw-editsection-visualeditor' );
-					if ( conf.tabPosition === 'before' ) {
-						$editSourceLink.before( $editLink, $divider );
-					} else {
-						$editSourceLink.after( $divider, $editLink );
+					// Don't mess with section edit links on foreign file description pages
+					// (bug 54259)
+					if ( !$( '#ca-view-foreign' ).length ) {
+						$editLink
+							.attr( 'href', function ( i, val ) {
+								return new mw.Uri( veEditUri ).extend( {
+									vesection: new mw.Uri( val ).query.section
+								} );
+							} )
+							.addClass( 'mw-editsection-visualeditor' );
+						if ( conf.tabPosition === 'before' ) {
+							$editSourceLink.before( $editLink, $divider );
+						} else {
+							$editSourceLink.after( $divider, $editLink );
+						}
 					}
 				} );
 			}
@@ -298,7 +318,6 @@
 				// init without refresh as that'd initialise for the wrong rev id (bug 50925)
 				// and would preserve the wrong DOM with a diff on top.
 				$editsections
-					.addClass( 'mw-editsection-expanded' )
 					.find( '.mw-editsection-visualeditor' )
 						.click( init.onEditSectionLinkClick )
 				;
@@ -314,11 +333,28 @@
 				return;
 			}
 
+			init.showLoading();
+			ve.track( 'mwedit.init', { type: 'page', mechanism: 'click' } );
+
+			if ( history.pushState && uri.query.veaction !== 'edit' ) {
+				// Replace the current state with one that is tagged as ours, to prevent the
+				// back button from breaking when used to exit VE. FIXME: there should be a better
+				// way to do this. See also similar code in the ViewPageTarget constructor.
+				history.replaceState( { tag: 'visualeditor' }, document.title, uri );
+				// Set veaction to edit
+				history.pushState( { tag: 'visualeditor' }, document.title, veEditUri );
+				// Update mw.Uri instance
+				uri = veEditUri;
+			}
+
 			e.preventDefault();
 
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'edit-link-click' } );
-				target.activate();
+				target.activate()
+					.done( function () {
+						ve.track( 'mwedit.ready' );
+					} )
+					.always( init.hideLoading );
 			} );
 		},
 
@@ -327,19 +363,51 @@
 				return;
 			}
 
+			init.showLoading();
+			ve.track( 'mwedit.init', { type: 'section', mechanism: 'click' } );
+
+			if ( history.pushState && uri.query.veaction !== 'edit' ) {
+				// Replace the current state with one that is tagged as ours, to prevent the
+				// back button from breaking when used to exit VE. FIXME: there should be a better
+				// way to do this. See also similar code in the ViewPageTarget constructor.
+				history.replaceState( { tag: 'visualeditor' }, document.title, uri );
+				// Change the state to the href of the section link that was clicked. This saves
+				// us from having to figure out the section number again.
+				history.pushState( { tag: 'visualeditor' }, document.title, this.href );
+			}
+
 			e.preventDefault();
 
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'section-edit-link-click' } );
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
-				target.activate();
+				target.activate()
+					.done( function () {
+						ve.track( 'mwedit.ready' );
+					} )
+					.always( init.hideLoading );
 			} );
+		},
+
+		showLoading: function () {
+			if ( !init.$loading ) {
+				init.$loading = $( '<div class="mw-viewPageTarget-loading"></div>' );
+			}
+			$( '#firstHeading' ).prepend( init.$loading );
+		},
+
+		hideLoading: function () {
+			if ( init.$loading ) {
+				init.$loading.detach();
+			}
 		}
 	};
 
 	support.visualEditor = support.es5 &&
 		support.contentEditable &&
+		support.svg &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
+
+	enable = mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable );
 
 	userPrefEnabled = (
 		// Allow disabling for anonymous users separately from changing the
@@ -355,7 +423,7 @@
 			mw.config.get( 'wgUserName' ) === null ?
 				( conf.defaultUserOptions.enable && !conf.defaultUserOptions.betatempdisable ) :
 				(
-					mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable ) &&
+					enable && enable !== '0' &&
 						!mw.user.options.get(
 							'visualeditor-betatempdisable',
 							conf.defaultUserOptions.betatempdisable
@@ -369,16 +437,6 @@
 	init.isAvailable = (
 		support.visualEditor &&
 
-		userPrefEnabled &&
-
-		// Disable on redirect pages until redirects are editable (bug 47328)
-		// Property wgIsRedirect is relatively new in core, many cached pages
-		// don't have it yet. We do a best-effort approach using the url query
-		// which will cover all working redirect (the only case where one can
-		// read a redirect page without ?redirect=no is in case of broken or
-		// double redirects).
-		!mw.config.get( 'wgIsRedirect', !!uri.query.redirect ) &&
-
 		// Only in supported skins
 		$.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1 &&
 
@@ -387,6 +445,9 @@
 			new mw.Title( mw.config.get( 'wgRelevantPageName' ) ).getNamespaceId(),
 			conf.namespaces
 		) !== -1 &&
+
+		// Not on pages which are outputs of the Page Translation feature
+		mw.config.get( 'wgTranslatePageTranslation' ) !== 'translation' &&
 
 		// Only for pages with a wikitext content model
 		mw.config.get( 'wgPageContentModel' ) === 'wikitext'
@@ -404,7 +465,7 @@
 	// on this page. See above for why it may be false.
 	mw.libs.ve = init;
 
-	if ( init.isAvailable ) {
+	if ( init.isAvailable && userPrefEnabled ) {
 		$( 'html' ).addClass( 've-available' );
 	} else {
 		$( 'html' ).addClass( 've-not-available' );
@@ -412,22 +473,25 @@
 		// for e.g. "Edit" > "Edit source" even when VE is not available.
 	}
 
-	if ( !userPrefEnabled ) {
-		// However if ve is not available because of user preferences (as opposed
-		// to because of the page, namespace, browser etc.) then we do want to
-		// return early as in that case even transformation of edit source should
-		// not be done.
-		return;
-	}
-
 	$( function () {
-		if ( init.isAvailable && isViewPage ) {
-			if ( uri.query.veaction === 'edit' ) {
+		if ( init.isAvailable ) {
+			if ( isViewPage && uri.query.veaction === 'edit' ) {
+				var isSection = uri.query.vesection !== undefined;
+				init.showLoading();
+
+				ve.track( 'mwedit.init', { type: isSection ? 'section' : 'page', mechanism: 'url' } );
 				getTarget().done( function ( target ) {
-					target.activate();
+					target.activate()
+						.done( function () {
+							ve.track( 'mwedit.ready' );
+						} )
+						.always( init.hideLoading );
 				} );
 			}
 		}
-		init.setupSkin();
+
+		if ( userPrefEnabled ) {
+			init.setupSkin();
+		}
 	} );
 }() );

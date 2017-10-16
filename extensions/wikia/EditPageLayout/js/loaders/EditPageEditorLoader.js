@@ -111,12 +111,27 @@
 			return { plugins: plugins, config: config };
 		},
 
-		init: function() {
+		initWikiaEditor: function() {
 			var data = this.getData();
 
 			window.WikiaEditor.create(data.plugins, data.config);
 
 			$(window).bind('UserLoginSubmit', window.WikiaEditor.storeContent);
+		},
+
+		initAceEditor: function() {
+			require(['wikia.editpage.ace.editor'], function(aceEditor){
+				aceEditor.init();
+			});
+
+		},
+
+		init: function() {
+			if (window.wgEnableCodePageEditor) {
+				this.initAceEditor();
+			} else {
+				this.initWikiaEditor();
+			}
 		}
 	});
 

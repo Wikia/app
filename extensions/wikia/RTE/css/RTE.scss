@@ -1,9 +1,8 @@
 // This file is used for styling the edit page
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/gradient";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 // positioning for first run notice
 .editform {
@@ -125,7 +124,7 @@
 	display: none;
 	font-size: 11px;
 	height: 14px;
-	opacity: 0.9;
+	opacity: .9;
 	padding: 4px;
 	position: absolute;
 	right: 0;
@@ -140,9 +139,6 @@
 }
 
 .RTEMediaCaption {
-	background: #f9f9f9;
-	border: solid 1px #ccc;
-	border-top: none;
 	display: none;
 	font-size: 11px;
 	left: 0;
@@ -215,7 +211,7 @@
 }
 
 .RTEPlaceholderPreviewTitleBar span {
-	background: transparent url(/skins/oasis/images/sprite.png) no-repeat -1146px -81px; /* $wgCdnStylePath */
+	background: transparent url(/skins/shared/images/sprite.png) no-repeat -1146px -81px; /* $wgCdnStylePath */
 	cursor: pointer;
 	height: 12px;
 	position: absolute;
@@ -555,10 +551,6 @@
 	.RTEWidescreenButton .cke_icon {
 		background-position: 0 -1264px;
 	}
-
-	.RTEPollButton .cke_icon {
-		background-position: 0 -1328px;
-	}
 }
 
 // link suggest - RT #37690
@@ -580,8 +572,6 @@
 		color: $color-text;
 	}
 	.RTEMediaCaption {
-		background-color: $color-article-thumb-background;
-		border-color: $color-article-thumb-border;
 		cursor: default;
 		a {
 			cursor: default;
@@ -626,8 +616,8 @@
 		padding-left: 10px;
 	}
 	.cke_dialog_close_button {
-		@include border-radius(3px);
 		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+		border-radius: 3px;
 		height: 19px;
 		text-align: center;
 		width: 19px;
@@ -643,10 +633,10 @@
 		background: transparent;
 		overflow: hidden;
 		.cke_dialog_tab {
-			@include border-radius-nw(5px);
-			@include border-radius-ne(5px);
 			@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
 			border: none;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
 			color: $color-text;
 			display: inline-block;
 			font-size: 11px;

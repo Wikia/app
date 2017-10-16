@@ -33,22 +33,18 @@ class WAMPageHooks {
 	 * @return true because it's a hook
 	 */
 	static public function onArticleFromTitle(&$title, &$article) {
-		global $wgOut;
-
 		wfProfileIn( __METHOD__ );
 		self::init();
 
 		if( self::$model->isWAMPage($title) ) {
 			self::$app->wg->SuppressPageHeader = true;
-			self::$app->wg->SuppressWikiHeader = true;
+			self::$app->wg->SuppressCommunityHeader = true;
 			self::$app->wg->SuppressRail = true;
 			self::$app->wg->SuppressFooter = true;
 			$article = new WAMPageArticle( $title );
 		} else {
-			$newTabTitle = self::$model->getWAMRedirect( $title );
-			if ( $newTabTitle instanceof Title ) {
-				$wgOut->redirect( $newTabTitle->getLocalURL(), 301 );
-			}
+			$redirectService = new RedirectService( 'wam' );
+			$redirectService->redirectIfURLExists();
 		}
 
 		wfProfileOut( __METHOD__ );

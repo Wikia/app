@@ -20,6 +20,21 @@
  * @file
  */
 
+use Email\Controller\EmailConfirmationController;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Domain\User\Attribute;
+use Wikia\Logger\Loggable;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Helios\ClientException;
+use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\User\Attributes\UserAttributes;
+use Wikia\Service\User\Auth\AuthResult;
+use Wikia\Service\User\Auth\AuthServiceAccessor;
+use Wikia\Service\User\Auth\CookieHelper;
+use Wikia\Service\User\Permissions\PermissionsService;
+use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Util\Statistics\BernoulliTrial;
+
 /**
  * Int Number of characters in user_token field.
  * @ingroup Constants
@@ -30,7 +45,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 8 );
+define( 'MW_USER_VERSION', 17 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -56,7 +71,20 @@ class PasswordError extends MWException {
  * for rendering normal pages are set in the cookie to minimize use
  * of the database.
  */
-class User {
+class User implements JsonSerializable {
+
+	# WIKIA CHANGE BEGIN
+	# adamk@wikia-inc.com
+	/**
+	 * Traits extending the class
+	 */
+	use PowerUserTrait;
+	use GlobalUserDataTrait;
+	use AuthServiceAccessor;
+	# WIKIA CHANGE END
+
+	use Loggable;
+
 	/**
 	 * Global constants made accessible as class constants so that autoloader
 	 * magic can be used.
@@ -64,6 +92,13 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
+	const CACHE_ATTRIBUTES_KEY = "attributes";
+	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
+
+	const INVALIDATE_CACHE_THROTTLE_SESSION_KEY = 'invalidate-cache-throttle';
+	const INVALIDATE_CACHE_THROTTLE = 60; /* seconds */
+
+	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -76,9 +111,6 @@ class User {
 		'mId',
 		'mName',
 		'mRealName',
-		'mPassword',
-		'mNewpassword',
-		'mNewpassTime',
 		'mEmail',
 		'mTouched',
 		'mToken',
@@ -87,89 +119,26 @@ class User {
 		'mEmailTokenExpires',
 		'mRegistration',
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
-		'mEditCount',
 		// user_groups table
 		'mGroups',
 		// user_properties table
 		'mOptionOverrides',
 	);
 
-	/**
-	 * Array of Strings Core rights.
-	 * Each of these should have a corresponding message of the form
-	 * "right-$right".
-	 * @showinitializer
-	 */
-	static $mCoreRights = array(
-		'apihighlimits',
-		'autoconfirmed',
-		'autopatrol',
-		'bigdelete',
-		'block',
-		'blockemail',
-		'bot',
-		'browsearchive',
-		'createaccount',
-		'createpage',
-		'createtalk',
-		'delete',
-		'deletedhistory',
-		'deletedtext',
-		'deleterevision',
-		'edit',
-		'editinterface',
-		'editusercssjs', #deprecated
-		'editusercss',
-		'edituserjs',
-		'hideuser',
-		'import',
-		'importupload',
-		'ipblock-exempt',
-		'markbotedits',
-		'mergehistory',
-		'minoredit',
-		'move',
-		'movefile',
-		'move-rootuserpages',
-		'move-subpages',
-		'nominornewtalk',
-		'noratelimit',
-		'override-export-depth',
-		'patrol',
-		'protect',
-		'proxyunbannable',
-		'purge',
-		'read',
-		'reupload',
-		'reupload-shared',
-		'rollback',
-		'sendemail',
-		'siteadmin',
-		'suppressionlog',
-		'suppressredirect',
-		'suppressrevision',
-		'unblockself',
-		'undelete',
-		'unwatchedpages',
-		'upload',
-		'upload_by_url',
-		'userrights',
-		'userrights-interwiki',
-		'writeapi',
-	);
-	/**
-	 * String Cached results of getAllRights()
-	 */
-	static $mAllRights = false;
-
 	/** @name Cache variables */
 	//@{
-	var $mId, $mName, $mRealName, $mPassword, $mNewpassword, $mNewpassTime,
-		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
+	var $mId, $mName, $mRealName,
+		$mEmail, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
-		$mCookiePassword, $mEditCount, $mAllowUsertalk;
+		$mCookiePassword, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
+
+	/** @var string TS_MW timestamp from the DB */
+	public $mTouched;
+
+	/** @var string TS_MW timestamp from cache */
+	protected $mQuickTouched;
 
 	/**
 	 * Bool Whether the cache variables have been loaded.
@@ -194,13 +163,11 @@ class User {
 	 */
 	var $mFrom;
 
-	var $mTheme; # Wikia - Skin chooser related
-
 	/**
 	 * Lazy-initialized variables, invalidated with clearInstanceCache
 	 */
-	var $mNewtalk, $mDatePreference, $mBlockedby, $mHash, $mRights,
-		$mBlockreason, $mEffectiveGroups, $mImplicitGroups, $mFormerGroups, $mBlockedGlobally,
+	var $mNewtalk, $mDatePreference, $mBlockedby, $mHash,
+		$mBlockreason, $mBlockedGlobally,
 		$mLocked, $mHideName, $mOptions;
 
 	/**
@@ -221,6 +188,21 @@ class User {
 	static $idCacheByName = array();
 
 	/**
+	 * @var string the service auth token (currently helios); should NEVER be cached
+	 */
+	private $globalAuthToken = null;
+
+	/**
+	 * @var UserAttributes
+	 */
+	private $attributeService;
+
+	/**
+	 * @var PermissionsService
+	 */
+	private static $permissionsService;
+
+	/**
 	 * Lightweight constructor for an anonymous user.
 	 * Use the User::newFrom* factory functions for other kinds of users.
 	 *
@@ -239,6 +221,69 @@ class User {
 	 */
 	function __toString(){
 		return $this->getName();
+	}
+
+	/**
+	 * @return HeliosClient
+	 */
+	private static function heliosClient() {
+		return Injector::getInjector()->get( HeliosClient::class );
+	}
+
+	/**
+	 * @return CookieHelper
+	 */
+	private static function authCookieHelper() {
+		return Injector::getInjector()->get( CookieHelper::class );
+	}
+
+	/**
+	 * @return PreferenceService
+	 */
+	private function userPreferences() {
+		return Injector::getInjector()->get(PreferenceService::class);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function arePreferencesReadOnly() {
+		return $this->userPreferences()->getPreferences( $this->getId() )->isReadOnly();
+	}
+
+	/**
+	 * @return UserAttributes
+	 */
+	private function userAttributes() {
+		if ( is_null( $this->attributeService ) ) {
+			$this->attributeService = Injector::getInjector()->get( UserAttributes::class );
+		}
+
+		return $this->attributeService;
+	}
+
+	/**
+	 * @return PermissionsService
+	 */
+	private static function permissionsService() {
+		if ( is_null( self::$permissionsService ) ) {
+			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		}
+
+		return self::$permissionsService;
+	}
+
+	/**
+	 * @return BernoulliTrial
+	 */
+	private function getOrSetOptionSampler() {
+		static $sampler = null;
+
+		if ($sampler === null) {
+			$sampler = new BernoulliTrial(self::GET_SET_OPTION_SAMPLE_RATE);
+		}
+
+		return $sampler;
 	}
 
 	/**
@@ -269,10 +314,6 @@ class User {
 			case 'id':
 				$this->loadFromId();
 				break;
-			case 'session':
-				$this->loadFromSession();
-				wfRunHooks( 'UserLoadAfterLoadFromSession', array( $this ) );
-				break;
 			default:
 				throw new MWException( "Unrecognised value for User->mFrom: \"{$this->mFrom}\"" );
 		}
@@ -291,7 +332,7 @@ class User {
 		}
 
 		# Try cache
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = $this->getCacheKey();
 		$data = $wgMemc->get( $key );
 		if ( !is_array( $data ) || $data['mVersion'] < MW_USER_VERSION ) {
 			# Object is expired, load from DB
@@ -307,16 +348,20 @@ class User {
 			 */
 			$isExpired = true;
 			if(!empty($data)) {
-				$_key = wfSharedMemcKey( "user_touched", $this->mId );
+				$_key = self::getUserTouchedKey( $this->mId );
 				$_touched = $wgMemc->get( $_key );
 				if( empty( $_touched ) ) {
 					$wgMemc->set( $_key, $data['mTouched'] );
+					wfDebug( "Shared user: miss on shared user_touched\n" );
 				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
 				}
+				else {
+					wfDebug( "Shared user: invalidating local user cache due to shared user_touched\n" );
+				}
 			}
+			# /Wikia
 		}
-
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "User: cache miss for user {$this->mId}\n" );
 			# Load from DB
@@ -342,20 +387,44 @@ class User {
 	 */
 	public function saveToCache() {
 		$this->load();
-		$this->loadGroups();
 		$this->loadOptions();
 		if ( $this->isAnon() ) {
 			// Anonymous users are uncached
 			return;
 		}
+
+		// prepare mOptionOverrides for caching
+		$this->mOptionOverrides = [];
+		foreach ( $this->mOptions as $optionKey => $optionValue ) {
+			if ( $this->shouldOptionBeStored( $optionKey, $optionValue ) ) {
+				$this->mOptionOverrides[$optionKey] = $optionValue;
+			}
+		}
+
 		$data = array();
 		foreach ( self::$mCacheVars as $name ) {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+
+		// Wikia
 		global $wgMemc;
-		$wgMemc->set( $key, $data );
+		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
+		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG ); // SUS-2945
+
+		wfDebug( "User: user {$this->mId} stored in cache\n" );
+	}
+
+	private function getCacheKey() {
+		return self::getCacheKeyById( $this->mId );
+	}
+
+	private static function getCacheKeyById( int $id ) : string {
+		return wfMemcKey( 'user', 'id', $id );
+	}
+
+	private static function getCacheKeyByName( string $name ) : string {
+		return wfSharedMemcKey( 'user', 'name', $name );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -384,14 +453,13 @@ class User {
 		$name = self::getCanonicalName( $name, $validate );
 		if ( $name === false ) {
 			return false;
-		} else {
-			# Create unloaded user object
-			$u = new User;
-			$u->mName = $name;
-			$u->mFrom = 'name';
-			$u->setItemLoaded( 'name' );
-			return $u;
 		}
+		# Create unloaded user object
+		$u = new User;
+		$u->mName = $name;
+		$u->mFrom = 'name';
+		$u->setItemLoaded( 'name' );
+		return $u;
 	}
 
 	/**
@@ -423,7 +491,7 @@ class User {
 		$id = $dbr->selectField( 'user', 'user_id', array(
 			'user_email_token' => md5( $code ),
 			'user_email_token_expires > ' . $dbr->addQuotes( $dbr->timestamp() ),
-			) );
+		) );
 		if( $id !== false ) {
 			return User::newFromId( $id );
 		} else {
@@ -432,18 +500,63 @@ class User {
 	}
 
 	/**
-	 * Create a new user object using data from session or cookies. If the
-	 * login credentials are invalid, the result is an anonymous user.
+	 * Creates a MediaWiki User object based on the token given in the HTTP request.
 	 *
-	 * @param $request WebRequest object to use; $wgRequest will be used if
-	 *        ommited.
-	 * @return User object
+	 * @param  WebRequest $request The HTTP request data as an object
+	 *
+	 * @return User                A logged in User object on successful authentication,
+	 *                             or an anonymous User object on failure
 	 */
-	public static function newFromSession( WebRequest $request = null ) {
-		$user = new User;
-		$user->mFrom = 'session';
-		$user->mRequest = $request;
-		return $user;
+	public static function newFromToken( \WebRequest $request ) {
+		global $wgMemc;
+
+		$cookieHelper = self::authCookieHelper();
+		$token = $cookieHelper->getAccessToken( $request );
+
+		if ( !$token ) {
+			return new User;
+		}
+
+		try {
+			$tokenInfo = self::heliosClient()->info( $token );
+			if ( empty( $tokenInfo->user_id ) ) {
+				return new User;
+			}
+			$user = self::newFromId( $tokenInfo->user_id );
+			$user->setGlobalAuthToken( $token );
+
+			// Don't return the user object if it's disabled
+			// @see SERVICES-459
+			if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
+				$cookieHelper->clearAuthenticationCookie( $request->response() );
+				$user->loadDefaults();
+				return $user;
+			}
+
+			// start the session if there's none so far
+			// the code is borrowed from SpecialUserlogin
+			// @see PLATFORM-1261
+			if ( session_id() == '' ) {
+				$sessionId = substr( hash( 'sha256', $token ), 0, 32 );
+				wfSetupSession( $sessionId );
+				WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
+
+				// Update mTouched on user when he starts new MW session, but not too often
+				// @see SOC-1326 and SUS-546
+				$throttleKey = wfSharedMemcKey( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY, $tokenInfo->user_id );
+				$invalidateCacheThrottleTime = $wgMemc->get( $throttleKey );
+				if ( $invalidateCacheThrottleTime === null || $invalidateCacheThrottleTime < time() ) {
+					$wgMemc->set( $throttleKey, time() + self::INVALIDATE_CACHE_THROTTLE, self::INVALIDATE_CACHE_THROTTLE );
+					$user->invalidateCache();
+				}
+			}
+
+			return $user;
+		} catch ( ClientException $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
+		}
+
+		return new User;
 	}
 
 	/**
@@ -473,8 +586,8 @@ class User {
 	 * @return String|false The corresponding username
 	 */
 	public static function whoIs( $id ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		return $dbr->selectField( 'user', 'user_name', array( 'user_id' => $id ), __METHOD__ );
+		// Wikia change - @see SUS-1015
+		return self::newFromId( $id )->getName();
 	}
 
 	/**
@@ -500,22 +613,42 @@ class User {
 			return null;
 		}
 
-		if ( isset( self::$idCacheByName[$name] ) ) {
-			return self::$idCacheByName[$name];
+		// SUS-2980: This is an anon, they won't have a DB entry - stop here.
+		if ( IP::isIPAddress( $name ) ) {
+			return null;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
+		if ( isset( self::$idCacheByName[$name] ) ) {
+			return (int) self::$idCacheByName[$name];
+		}
 
+		// SUS-2945 | this method makes ~32mm queries every day
+		// worth caching given the fact that (user ID, user name) pairs do not change very often
+		global $wgMemc;
+
+		$key = self::getCacheKeyByName( $name );
+		$cachedId = $wgMemc->get( $key );
+
+		if ( is_numeric( $cachedId ) ) {
+			return (int) self::$idCacheByName[$name] = $cachedId;
+		}
+
+		// not in cache, query the database
+		global $wgExternalSharedDB; // SUS-2945 - let's use wikicities.user instead of per-cluster copy
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$s = $dbr->selectRow( '`user`', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
 		if ( $s === false ) {
 			$user_name = $nt->getText();
-			wfRunHooks( 'UserNameLoadFromId', array( $user_name, &$s ) );
+			Hooks::run( 'UserNameLoadFromId', array( $user_name, &$s ) );
 		}
 
 		if ( $s === false ) {
 			$result = null;
 		} else {
-			$result = $s->user_id;
+			$result = (int) $s->user_id;
+
+			// SUS-2945 - only store when there's a match
+			$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
 		}
 
 		self::$idCacheByName[$name] = $result;
@@ -569,12 +702,12 @@ class User {
 		global $wgContLang, $wgMaxNameChars;
 
 		if ( $name == ''
-		|| User::isIP( $name )
-		|| strpos( $name, '/' ) !== false
-		|| strlen( $name ) > $wgMaxNameChars
-		|| $name != $wgContLang->ucfirst( $name ) ) {
+			|| User::isIP( $name )
+			|| strpos( $name, '/' ) !== false
+			|| strlen( $name ) > $wgMaxNameChars
+			|| $name != $wgContLang->ucfirst( $name ) ) {
 			wfDebugLog( 'username', __METHOD__ .
-				": '$name' invalid due to empty, IP, slash, length, or lowercase" );
+				": '$name' invalid due to empty, IP, slash, colon, length, or lowercase" );
 			return false;
 		}
 
@@ -630,7 +763,7 @@ class User {
 		static $reservedUsernames = false;
 		if ( !$reservedUsernames ) {
 			$reservedUsernames = $wgReservedUsernames;
-			wfRunHooks( 'UserGetReservedNames', array( &$reservedUsernames ) );
+			Hooks::run( 'UserGetReservedNames', array( &$reservedUsernames ) );
 		}
 
 		// Certain names may be reserved for batch processes.
@@ -716,37 +849,26 @@ class User {
 	 * @return mixed: true on success, string or array of error message on failure
 	 */
 	public function getPasswordValidity( $password ) {
-		global $wgMinimalPasswordLength, $wgContLang;
+		$result = self::heliosClient()->validatePassword( $password, $this->getName() );
 
-		static $blockedLogins = array(
-			'Useruser' => 'Passpass', 'Useruser1' => 'Passpass1', # r75589
-			'Apitestsysop' => 'testpass', 'Apitestuser' => 'testpass' # r75605
-		);
-
-		$result = false; //init $result to false for the internal checks
-
-		if( !wfRunHooks( 'isValidPassword', array( $password, &$result, $this ) ) )
-			return $result;
-
-		if ( $result === false ) {
-			if( strlen( $password ) < $wgMinimalPasswordLength ) {
-				return 'passwordtooshort';
-			} elseif ( $wgContLang->lc( $password ) == $wgContLang->lc( $this->mName ) ) {
-				return 'password-name-match';
-			} elseif ( isset( $blockedLogins[ $this->getName() ] ) && $password == $blockedLogins[ $this->getName() ] ) {
-				return 'password-login-forbidden';
-			} else {
-				//it seems weird returning true here, but this is because of the
-				//initialization of $result to false above. If the hook is never run or it
-				//doesn't modify $result, then we will likely get down into this if with
-				//a valid password.
-				return true;
-			}
-		} elseif( $result === true ) {
+		if ( !empty( $result->success ) && $result->success ) {
 			return true;
-		} else {
-			return $result; //the isValidPassword hook set a string $result and returned true
 		}
+
+		if ( empty( $result->errors ) ) {
+			return 'unknown-error';
+		}
+
+		if ( count( $result->errors ) === 1 ) {
+			return $result->errors[0]->description;
+		}
+
+		$return = [];
+		foreach ( $result->errors as $errors ) {
+			$return[] = $errors->description;
+		}
+
+		return $return;
 	}
 
 	/**
@@ -841,57 +963,19 @@ class User {
 	}
 
 	/**
-	 * Count the number of edits of a user
-	 * @todo It should not be static and some day should be merged as proper member function / deprecated -- domas
-	 *
-	 * @param $uid Int User ID to check
-	 * @return Int the user's edit count
-	 */
-	public static function edits( $uid ) {
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
-		// check if the user_editcount field has been initialized
-		$field = $dbr->selectField(
-			'user', 'user_editcount',
-			array( 'user_id' => $uid ),
-			__METHOD__
-		);
-
-		if( $field === null ) { // it has not been initialized. do so.
-			$dbw = wfGetDB( DB_MASTER );
-			$count = $dbr->selectField(
-				'revision', 'count(*)',
-				array( 'rev_user' => $uid ),
-				__METHOD__
-			);
-			$dbw->update(
-				'user',
-				array( 'user_editcount' => $count ),
-				array( 'user_id' => $uid ),
-				__METHOD__
-			);
-		} else {
-			$count = $field;
-		}
-		wfProfileOut( __METHOD__ );
-		return $count;
-	}
-
-	/**
 	 * Return a random password.
 	 *
 	 * @return String new random password
 	 */
 	public static function randomPassword() {
 		global $wgMinimalPasswordLength;
-		// Decide the final password length based on our min password length, stopping at a minimum of 10 chars
-		$length = max( 10, $wgMinimalPasswordLength );
+		// Decide the final password length based on our min password length, stopping at a minimum of 20 chars
+		$length = max( 20, $wgMinimalPasswordLength );
 		// Multiply by 1.25 to get the number of hex characters we need
-		$length = $length * 1.25;
 		// Generate random hex chars
-		$hex = MWCryptRand::generateHex( $length );
+		$hex = MWCryptRand::generateHex( ceil( $length * 1.25 ) );
 		// Convert from base 16 to base 32 to get a proper password like string
-		return wfBaseConvert( $hex, 16, 32 );
+		return substr( wfBaseConvert( $hex, 16, 32, $length ), -$length );
 	}
 
 	/**
@@ -908,8 +992,6 @@ class User {
 		$this->mId = 0;
 		$this->mName = $name;
 		$this->mRealName = '';
-		$this->mPassword = $this->mNewpassword = '';
-		$this->mNewpassTime = null;
 		$this->mEmail = '';
 		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
@@ -927,12 +1009,10 @@ class User {
 		$this->mEmailTokenExpires = null;
 		$this->mRegistration = wfTimestamp( TS_MW );
 		$this->mGroups = array();
-		$this->mMonacoData = null;
-		$this->mMonacoSidebar = null;
 
 		$this->mBirthDate = null; // Wikia. Added to reflect our user table layout.
 
-		wfRunHooks( 'UserLoadDefaults', array( $this, $name ) );
+		Hooks::run( 'UserLoadDefaults', array( $this, $name ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -966,98 +1046,22 @@ class User {
 	}
 
 	/**
-	 * Load user data from the session or login cookie. If there are no valid
-	 * credentials, initialises the user as an anonymous user.
-	 * @return Bool True if the user is logged in, false otherwise.
+	 * A comparison of two strings, not vulnerable to timing attacks
+	 * @param string $answer the secret string that you are comparing against.
+	 * @param string $test compare this string to the $answer.
+	 * @return bool True if the strings are the same, false otherwise
 	 */
-	private function loadFromSession() {
-		global $wgExternalAuthType, $wgAutocreatePolicy;
-		$result = null;
-		wfRunHooks( 'UserLoadFromSession', array( $this, &$result ) );
-		if ( $result !== null ) {
-			return $result;
-		}
-
-		$request = $this->getRequest();
-
-		$cookieId = $request->getCookie( 'UserID' );
-		$sessId = $request->getSessionData( 'wsUserID' );
-
-		if ( $cookieId !== null ) {
-			$sId = intval( $cookieId );
-			if( $sessId !== null && $cookieId != $sessId ) {
-				$this->loadDefaults(); // Possible collision!
-				wfDebugLog( 'loginSessions', "Session user ID ($sessId) and
-					cookie user ID ($sId) don't match!" );
-				return false;
+	protected function compareSecrets( $answer, $test ) {
+		if ( strlen( $answer ) !== strlen( $test ) ) {
+			$passwordCorrect = false;
+		} else {
+			$result = 0;
+			for ( $i = 0; $i < strlen( $answer ); $i++ ) {
+				$result |= ord( $answer{$i} ) ^ ord( $test{$i} );
 			}
-			$request->setSessionData( 'wsUserID', $sId );
-		} elseif ( $sessId !== null && $sessId != 0 ) {
-			$sId = $sessId;
-		} else {
-			$this->loadDefaults();
-			return false;
+			$passwordCorrect = ( $result == 0 );
 		}
-
-		if ( $request->getSessionData( 'wsUserName' ) !== null ) {
-			$sName = $request->getSessionData( 'wsUserName' );
-		} elseif ( $request->getCookie( 'UserName' ) !== null ) {
-			$sName = $request->getCookie( 'UserName' );
-			$request->setSessionData( 'wsUserName', $sName );
-		} else {
-			$this->loadDefaults();
-			return false;
-		}
-
-		// wikia change start
-		if ( $wgExternalAuthType && $wgAutocreatePolicy == 'view' ) {
-			$extUser = ExternalUser::newFromCookie();
-			if ( $extUser ) {
-				$extUser->linkToLocal( $sId );
-			}
-		}
-
-		$passwordCorrect = FALSE;
-		// wikia change end
-
-		$proposedUser = User::newFromId( $sId );
-		if ( !$proposedUser->isLoggedIn() ) {
-			# Not a valid ID
-			$this->loadDefaults();
-			return false;
-		}
-
-		global $wgBlockDisablesLogin;
-		if( $wgBlockDisablesLogin && $proposedUser->isBlocked() ) {
-			# User blocked and we've disabled blocked user logins
-			$this->loadDefaults();
-			return false;
-		}
-
-		if ( $request->getSessionData( 'wsToken' ) ) {
-			$passwordCorrect = $proposedUser->getToken( false ) === $request->getSessionData( 'wsToken' );
-			$from = 'session';
-		} elseif ( $request->getCookie( 'Token' ) ) {
-			$passwordCorrect = $proposedUser->getToken( false ) === $request->getCookie( 'Token' );
-			$from = 'cookie';
-		} else {
-			# No session or persistent login cookie
-			$this->loadDefaults();
-			return false;
-		}
-
-		if ( ( $sName === $proposedUser->getName() ) && $passwordCorrect ) {
-			$this->loadFromUserObject( $proposedUser );
-			$request->setSessionData( 'wsToken', $this->mToken );
-			wfDebug( "User: logged in from $from\n" );
-			wfRunHooks( 'UserLoadFromSessionInfo', array( $this, $from ) );
-			return true;
-		} else {
-			# Invalid credentials
-			wfDebug( "User: can't log in from $from, invalid credentials\n" );
-			$this->loadDefaults();
-			return false;
-		}
+		return $passwordCorrect;
 	}
 
 	/**
@@ -1076,22 +1080,23 @@ class User {
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_MASTER );
+		// SUS-2339 - query wikicities.user table instead of per-cluster copy
+		// `user` - backticks prevent adding `wikicities_cX` prefix to the table name
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_MASTER, [],  $wgExternalSharedDB );
 		if ( !is_object( $dbr ) ) {
 			$this->loadDefaults();
 			return false;
 		}
 
-		$s = $dbr->selectRow( 'user', '*', array( 'user_id' => $this->mId ), __METHOD__ );
-		wfRunHooks( 'UserLoadFromDatabase', array( $this, &$s ) );
+		$s = $dbr->selectRow( '`user`', '*', array( 'user_id' => $this->mId ), __METHOD__ );
+		Hooks::run( 'UserLoadFromDatabase', array( $this, &$s ) );
 
 		if ( $s !== false ) {
 			# Initialise user table data
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
-			$this->mMonacoData = null;
-			$this->mMonacoSidebar = null;
 			return true;
 		} else {
 			# Invalid user_id
@@ -1134,16 +1139,7 @@ class User {
 			$all = false;
 		}
 
-		if ( isset( $row->user_editcount ) ) {
-			$this->mEditCount = $row->user_editcount;
-		} else {
-			$all = false;
-		}
-
-		if ( isset( $row->user_password ) ) {
-			$this->mPassword = $row->user_password;
-			$this->mNewpassword = $row->user_newpassword;
-			$this->mNewpassTime = wfTimestampOrNull( TS_MW, $row->user_newpass_time );
+		if ( isset( $row->user_email ) ) {
 			$this->mEmail = $row->user_email;
 			if ( isset( $row->user_options ) ) {
 				$this->decodeOptions( $row->user_options );
@@ -1162,8 +1158,8 @@ class User {
 		}
 
 		// Wikia. The following if/else statement has been added to reflect our user table layout.
-		if ( isset( $row->user_birthdate ) ) {
-			$this->mBirthDate = wfTimestampOrNull( TS_MW, $row->user_birthdate );
+		if ( isset( $row->user_birthdate ) && $row->user_birthdate !== '0000-00-00' ) {
+			$this->mBirthDate = $row->user_birthdate;
 		} else {
 			$all = false;
 		}
@@ -1180,68 +1176,10 @@ class User {
 	 */
 	protected function loadFromUserObject( $user ) {
 		$user->load();
-		$user->loadGroups();
 		$user->loadOptions();
 		foreach ( self::$mCacheVars as $var ) {
 			$this->$var = $user->$var;
 		}
-	}
-
-	/**
-	 * Load the groups from the database if they aren't already loaded.
-	 */
-	private function loadGroups() {
-		if ( is_null( $this->mGroups ) ) {
-			$dbr = wfGetDB( DB_MASTER );
-			$res = $dbr->select( 'user_groups',
-				array( 'ug_group' ),
-				array( 'ug_user' => $this->mId ),
-				__METHOD__ );
-			$this->mGroups = array();
-			foreach ( $res as $row ) {
-				$this->mGroups[] = $row->ug_group;
-			}
-		}
-		wfRunHooks( 'UserLoadGroups', array( $this ) );
-	}
-
-	/**
-	 * Add the user to the group if he/she meets given criteria.
-	 *
-	 * Contrary to autopromotion by \ref $wgAutopromote, the group will be
-	 *   possible to remove manually via Special:UserRights. In such case it
-	 *   will not be re-added automatically. The user will also not lose the
-	 *   group if they no longer meet the criteria.
-	 *
-	 * @param $event String key in $wgAutopromoteOnce (each one has groups/criteria)
-	 *
-	 * @return array Array of groups the user has been promoted to.
-	 *
-	 * @see $wgAutopromoteOnce
-	 */
-	public function addAutopromoteOnceGroups( $event ) {
-		global $wgAutopromoteOnceLogInRC;
-
-		$toPromote = array();
-		if ( $this->getId() ) {
-			$toPromote = Autopromote::getAutopromoteOnceGroups( $this, $event );
-			if ( count( $toPromote ) ) {
-				$oldGroups = $this->getGroups(); // previous groups
-				foreach ( $toPromote as $group ) {
-					$this->addGroup( $group );
-				}
-				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
-
-				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
-				$log->addEntry( 'autopromote',
-					$this->getUserPage(),
-					'', // no comment
-					// These group names are "list to texted"-ed in class LogPage.
-					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
-				);
-			}
-		}
-		return $toPromote;
 	}
 
 	/**
@@ -1255,11 +1193,9 @@ class User {
 		$this->mDatePreference = null;
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
-		$this->mTheme = null; # Wikia - Skin chooser related
-		$this->mRights = null;
-		$this->mEffectiveGroups = null;
-		$this->mImplicitGroups = null;
 		$this->mOptions = null;
+		$this->mOptionOverrides = null;
+		$this->mOptionsLoaded = false;
 
 		if ( $reloadFrom ) {
 			$this->mLoadedItems = array();
@@ -1276,6 +1212,14 @@ class User {
 	public static function getDefaultOptions() {
 		global $wgNamespacesToBeSearchedDefault, $wgDefaultUserOptions, $wgContLang, $wgDefaultSkin;
 
+		static $defOpt = null;
+		if ( !defined( 'MW_PHPUNIT_TEST' ) && $defOpt !== null ) {
+			// Disabling this for the unit tests, as they rely on being able to change $wgContLang
+			// mid-request and see that change reflected in the return value of this function.
+			// Which is insane and would never happen during normal MW operation
+			// Owen backported this from MW 1.25
+			return $defOpt;
+		}
 		$defOpt = $wgDefaultUserOptions;
 		# default language setting
 		$variant = $wgContLang->getDefaultVariant();
@@ -1286,13 +1230,14 @@ class User {
 		}
 		$defOpt['skin'] = $wgDefaultSkin;
 
+		// Owen fixed this (see above)
 		// FIXME: Ideally we'd cache the results of this function so the hook is only run once,
 		// but that breaks the parser tests because they rely on being able to change $wgContLang
 		// mid-request and see that change reflected in the return value of this function.
 		// Which is insane and would never happen during normal MW operation, but is also not
 		// likely to get fixed unless and until we context-ify everything.
 		// See also https://www.mediawiki.org/wiki/Special:Code/MediaWiki/101488#c25275
-		wfRunHooks( 'UserGetDefaultOptions', array( &$defOpt ) );
+		Hooks::run( 'UserGetDefaultOptions', array( &$defOpt ) );
 
 		return $defOpt;
 	}
@@ -1313,14 +1258,17 @@ class User {
 	}
 
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Get blocking information
 	 * @param $bFromSlave Bool Whether to check the slave database first. To
 	 *                    improve performance, non-critical checks are done
 	 *                    against slaves. Check when actually saving should be
 	 *                    done against master.
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
 	 */
-	private function getBlockedStatus( $bFromSlave = true ) {
+	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ) {
+		/* Wikia change end */
 		global $wgProxyWhitelist, $wgUser;
 
 		if ( -1 != $this->mBlockedby ) {
@@ -1340,7 +1288,7 @@ class User {
 		# We only need to worry about passing the IP address to the Block generator if the
 		# user is not immune to autoblocks/hardblocks, and they are the current user so we
 		# know which IP address they're actually coming from
-		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->getID() == $wgUser->getID() ) {
+		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->equals( $wgUser ) ) {
 			$ip = $this->getRequest()->getIP();
 		} else {
 			$ip = null;
@@ -1381,14 +1329,29 @@ class User {
 		}
 
 		# Extensions
-		wfRunHooks( 'GetBlockedStatus', array( &$this ) );
+		/* Wikia change begin - SUS-92 */
+		Hooks::run( 'GetBlockedStatus', [ $this, $shouldLogBlockInStats, $global ] );
+		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
-		    $this->mBlock->mBy = $this->mBlockedby;
-		    $this->mBlock->mReason = $this->mBlockreason;
-        }
+			$this->mBlock->mBy = $this->mBlockedby;
+			$this->mBlock->mReason = $this->mBlockreason;
+		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Wikia change - SUS-1649: Clear all block-related info from this instance of User class
+	 * This allows us to re-run block check functions with different parameters (e.g. checking for only local blocks)
+	 * @see User::getBlockedStatus()
+	 */
+	public function clearBlockInfo() {
+		$this->mBlock = null;
+		$this->mBlockedby = -1;
+		$this->mBlockreason = '';
+		$this->mHideName = 0;
+		$this->mAllowUsertalk = false;
 	}
 
 	/**
@@ -1522,7 +1485,7 @@ class User {
 	public function pingLimiter( $action = 'edit' ) {
 		# Call the 'PingLimiter' hook
 		$result = false;
-		if( !wfRunHooks( 'PingLimiter', array( &$this, $action, $result ) ) ) {
+		if ( !Hooks::run( 'PingLimiter', [ $this, $action, $result ] ) ) {
 			return $result;
 		}
 
@@ -1608,26 +1571,33 @@ class User {
 		return $triggered;
 	}
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Check if user is blocked
 	 *
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @return Bool True if blocked, false otherwise
 	 */
-	public function isBlocked( $bFromSlave = true ) { // hacked from false due to horrible probs on site
-		return $this->getBlock( $bFromSlave ) instanceof Block && $this->getBlock()->prevents( 'edit' );
+	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ) { // hacked from false due to horrible probs on site
+		$block = $this->getBlock( $bFromSlave, $shouldLogBlockInStats, $global );
+		return $block instanceof Block && $block->prevents( 'edit' );
 	}
 
 	/**
 	 * Get the block affecting the user, or null if the user is not blocked
 	 *
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @return Block|null
 	 */
-	public function getBlock( $bFromSlave = true ){
-		$this->getBlockedStatus( $bFromSlave );
+	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ){
+		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats, $global );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
+	/* Wikia change end */
 
 	/**
 	 * Check if user is blocked from editing a particular article
@@ -1644,12 +1614,12 @@ class User {
 		$allowUsertalk = ( $wgBlockAllowsUTEdit ? $this->mAllowUsertalk : false );
 		# If a user's name is suppressed, they cannot make edits anywhere
 		if ( !$this->mHideName && $allowUsertalk && $title->getText() === $this->getName() &&
-		  $title->getNamespace() == NS_USER_TALK ) {
+			$title->getNamespace() == NS_USER_TALK ) {
 			$blocked = false;
 			wfDebug( __METHOD__ . ": self-talk page, ignoring any blocks\n" );
 		}
 
-		wfRunHooks( 'UserIsBlockedFrom', array( $this, $title, &$blocked, &$allowUsertalk ) );
+		Hooks::run( 'UserIsBlockedFrom', array( $this, $title, &$blocked, &$allowUsertalk ) );
 
 		wfProfileOut( __METHOD__ );
 		return $blocked;
@@ -1701,7 +1671,7 @@ class User {
 			$ip = $this->getRequest()->getIP();
 		}
 		$blocked = false;
-		wfRunHooks( 'UserIsBlockedGlobally', array( &$this, $ip, &$blocked ) );
+		Hooks::run( 'UserIsBlockedGlobally', [ $this, $ip, &$blocked ] );
 		$this->mBlockedGlobally = (bool)$blocked;
 		return $this->mBlockedGlobally;
 	}
@@ -1745,7 +1715,7 @@ class User {
 	 */
 	public function getId() {
 		if( $this->mId === null && $this->mName !== null
-		&& User::isIP( $this->mName ) ) {
+			&& User::isIP( $this->mName ) ) {
 			// Special case, we know the user is anonymous
 			return 0;
 		} elseif( !$this->isItemLoaded( 'id' ) ) {
@@ -1813,62 +1783,84 @@ class User {
 	 * @return Bool True if the user has new messages
 	 */
 	public function getNewtalk() {
+		# Wikia change - begin
+		# leave early, don't check it for our varnish ip addresses
+		global $wgSquidServers, $wgSquidServersNoPurge;
+		if( in_array( $this->getName(), $wgSquidServers ) ||
+			in_array( $this->getName(), $wgSquidServersNoPurge )
+		) {
+			return false;
+		}
+		# Wikia change - end
+
 		$this->load();
 
 		# Load the newtalk status if it is unloaded (mNewtalk=-1)
 		if( $this->mNewtalk === -1 ) {
-			$this->mNewtalk = false; # reset talk page status
+			$this->mNewtalk = (bool) WikiaDataAccess::cache(
+				$this->getNewTalkMemcKey(),
+				WikiaResponse::CACHE_LONG,
+				function() : int {
+					// WikiaDataAccess::cache assumes that there's a cache miss
+					// when we get either null or false from the caching layer - cast the result to an integer
 
-			# Check memcached separately for anons, who have no
-			# entire User object stored in there.
-			if( !$this->mId ) {
-				# hack: don't check it for our varnish ip addresses
-				global $wgSquidServers, $wgSquidServersNoPurge;
-				if( in_array( $this->getName(), $wgSquidServers ) ||
-					in_array( $this->getName(), $wgSquidServersNoPurge )
-				) {
-					return $this->mNewtalk;
-				}
+					// Check memcached separately for anons, who have no
+					// entire User object stored in there.
+					if ( !$this->mId ) {
+						global $wgDisableAnonTalk;
+						if ( $wgDisableAnonTalk ) {
+							// Anon newtalk disabled by configuration.
+							$result = false;
+						} else {
+							$result = $this->checkNewtalk( 'user_ip', $this->getName() );
+						}
+					} else {
+						$result = $this->checkNewtalk( 'user_id', $this->mId );
+					}
 
-				global $wgMemc;
-				$key = wfMemcKey( 'newtalk', 'ip', $this->getName() );
-				$newtalk = $wgMemc->get( $key );
-				if( strval( $newtalk ) !== '' ) {
-					$this->mNewtalk = (bool)$newtalk;
-				} else {
-					// Since we are caching this, make sure it is up to date by getting it
-					// from the master
-					$this->mNewtalk = $this->checkNewtalk( 'user_ip', $this->getName(), true );
-					$wgMemc->set( $key, (int)$this->mNewtalk, 1800 );
+					return (int) $result;
 				}
-			} else {
-				$this->mNewtalk = $this->checkNewtalk( 'user_id', $this->mId );
-			}
+			);
 		}
 
 		return (bool)$this->mNewtalk;
 	}
 
 	/**
+	 * Wikia change
+	 * @see SUS-2571
+	 *
+	 * @return string
+	 */
+	private function getNewTalkMemcKey() : string {
+		if ( $this->isAnon() ) {
+			return wfMemcKey( 'newtalk', 'ip', $this->getName() );
+		}
+		else {
+			return wfMemcKey( 'newtalk', 'user', $this->getId() );
+		}
+	}
+
+	/**
 	 * Return the talk page(s) this user has new messages on.
-	 * @return Array of String page URLs
+	 * @return string[] page URLs
 	 */
 	public function getNewMessageLinks() {
-		$talks = array();
-		wfRunHooks( 'UserRetrieveNewTalks', array( &$this, &$talks) );
+		$talks = [];
+		Hooks::run( 'UserRetrieveNewTalks', [ $this, &$talks ] );
 
-		/* Wikia change begin - @author: XXX */
-		if( $this->getNewtalk() ) {
+		/* Wikia change begin */
+		if ( $this->getNewtalk() ) {
 			global $wgCityId, $wgSitename;
 			$up = $this->getUserPage();
 			$utp = $up->getTalkPage();
 			unset( $talks[$wgCityId] );
-			$talks[0] = array( "wiki" => $wgSitename, "link" => $utp->getFullURL() );
+			$talks[0] = [ "wiki" => $wgSitename, "link" => $utp->getFullURL() ];
+
 			return $talks;
 		}
-		else {
-			return array_values($talks);
-		}
+
+		return array_values( $talks );
 		/* Wikia change end */
 	}
 
@@ -1878,15 +1870,11 @@ class User {
 	 * @see getNewtalk()
 	 * @param $field String 'user_ip' for anonymous users, 'user_id' otherwise
 	 * @param $id String|Int User's IP address for anonymous users, User ID otherwise
-	 * @param $fromMaster Bool true to fetch from the master, false for a slave
 	 * @return Bool True if the user has new messages
 	 */
-	protected function checkNewtalk( $field, $id, $fromMaster = false ) {
-		if ( $fromMaster ) {
-			$db = wfGetDB( DB_MASTER );
-		} else {
-			$db = wfGetDB( DB_SLAVE );
-		}
+	protected function checkNewtalk( $field, $id ) {
+		$db = wfGetDB( DB_SLAVE );
+
 		$ok = $db->selectField( 'user_newtalk', $field,
 			array( $field => $id ), __METHOD__ );
 		return $ok !== false;
@@ -1952,7 +1940,6 @@ class User {
 			$field = 'user_id';
 			$id = $this->getId();
 		}
-		global $wgMemc;
 
 		if( $val ) {
 			$changed = $this->updateNewtalk( $field, $id );
@@ -1960,12 +1947,13 @@ class User {
 			$changed = $this->deleteNewtalk( $field, $id );
 		}
 
-		if( $this->isAnon() ) {
-			// Anons have a separate memcached space, since
-			// user records aren't kept for them.
-			$key = wfMemcKey( 'newtalk', 'ip', $id );
-			$wgMemc->set( $key, $val ? 1 : 0, 1800 );
-		}
+		// Wikia change - start
+		// SUS-2571 - store the updated new talk state to avoid database queries
+		// cast the value to an integer to avoid false cache misses in WikiaDataAccess::cache
+		global $wgMemc;
+		$wgMemc->set( $this->getNewTalkMemcKey(), (int) $val, WikiaResponse::CACHE_LONG );
+		// Wikia change - end
+
 		if ( $changed ) {
 			$this->invalidateCache();
 		}
@@ -1992,43 +1980,57 @@ class User {
 		$this->load();
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
-			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
-			# not uncyclo
+			$wgMemc->delete( $this->getCacheKey() );
+			$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
+			$this->userPreferences()->deleteFromCache( $this->getId() );
+			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
+			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
-				$memckey = wfSharedMemcKey( "user_touched", $this->mId );
-				$wgMemc->delete( $memckey );
+				$memckey = self::getUserTouchedKey( $this->mId );
+				$wgMemc->set( $memckey, $this->mTouched );
+				wfDebug( "Shared user: updating shared user_touched\n" );
 			}
 		}
 	}
 
 	/**
 	 * Immediately touch the user data cache for this account.
-	 * Updates user_touched field, and removes account data from memcached
-	 * for reload on the next hit.
+	 *
+	 * Calls touch() and removes account data from memcached
+	 *
+	 * @see SUS-1620
 	 */
 	public function invalidateCache() {
-		if( wfReadOnly() ) {
-			return;
-		}
-		$this->load();
-		if ( wfReadOnly() ) { return; }
-		if( $this->mId ) {
-			$this->mTouched = self::newTouchedTimestamp();
+		$this->touch();
+		$this->clearSharedCache();
 
-			#<Wikia>
-            global $wgExternalSharedDB, $wgSharedDB;
-            if( isset( $wgSharedDB ) ) {
-                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-            }
-            else {
-                    $dbw = wfGetDB( DB_MASTER );
-            }
-			#</Wikia>
-			$dbw->update( '`user`',
-				array( 'user_touched' => $dbw->timestamp( $this->mTouched ) ),
-				array( 'user_id' => $this->mId ),
-				__METHOD__ );
-			$this->clearSharedCache();
+		// Wikia change
+		self::permissionsService()->invalidateCache( $this );
+	}
+
+	/**
+	 * Update the "touched" timestamp for the user
+	 *
+	 * This is useful on various login/logout events when making sure that
+	 * a browser or proxy that has multiple tenants does not suffer cache
+	 * pollution where the new user sees the old users content. The value
+	 * of getTouched() is checked when determining 304 vs 200 responses.
+	 * Unlike invalidateCache(), this preserves the User object cache and
+	 * avoids database writes.
+	 *
+	 * @@see SUS-1620
+	 * @since 1.25
+	 */
+	public function touch() {
+		global $wgMemc;
+
+		$this->load();
+
+		if ( $this->mId ) {
+			$key = wfSharedMemcKey( 'user-quicktouched', 'id', $this->mId );
+			$timestamp = self::newTouchedTimestamp();
+			$wgMemc->set( $key, $timestamp );
+			$this->mQuickTouched = $timestamp;
 		}
 	}
 
@@ -2045,11 +2047,40 @@ class User {
 
 	/**
 	 * Get the user touched timestamp
-	 * @return String timestamp
+	 * @return string TS_MW Timestamp
 	 */
 	public function getTouched() {
+		global $wgMemc;
+
 		$this->load();
+
+		if ( $this->mId ) {
+			if ( $this->mQuickTouched === null ) {
+				$key = wfSharedMemcKey( 'user-quicktouched', 'id', $this->mId );
+				$timestamp = $wgMemc->get( $key );
+				if ( !$timestamp ) {
+					# Set the timestamp to get HTTP 304 cache hits
+					$this->touch();
+				}
+			}
+
+			return max( $this->mTouched, $this->mQuickTouched );
+		}
+
 		return $this->mTouched;
+	}
+
+	/**
+	 * A function to clear cache with no side effects.  Functions such as clearSharedCache
+	 * or invalidateCache both have side effects like loading things from cache before clearing
+	 * it and writing back to cache after finishing.
+	 *
+	 * @param int $userId
+	 */
+	public static function clearUserCache( $userId ) {
+		global $wgMemc;
+		$memKey = self::getCacheKeyById( $userId );
+		$wgMemc->delete( $memKey );
 	}
 
 	/**
@@ -2063,66 +2094,73 @@ class User {
 	 * wipes it, so the account cannot be logged in until
 	 * a new password is set, for instance via e-mail.
 	 *
-	 * @param $str String New password to set
-	 * @throws PasswordError on failure
+	 * @param string $password New password to set
+	 * @param bool   $forceLogout
 	 *
-	 * @return bool
+	 * @return bool on failure
+	 *
+	 * @throws Exception
+	 * @throws PasswordError on failure
 	 */
-	public function setPassword( $str ) {
-		global $wgAuth;
-
-		if( $str !== null ) {
-			if( !$wgAuth->allowPasswordChange() ) {
-				throw new PasswordError( wfMsg( 'password-change-forbidden' ) );
-			}
-
-			if( !$this->isValidPassword( $str ) ) {
-				global $wgMinimalPasswordLength;
-				$valid = $this->getPasswordValidity( $str );
-				if ( is_array( $valid ) ) {
-					$message = array_shift( $valid );
-					$params = $valid;
-				} else {
-					$message = $valid;
-					$params = array( $wgMinimalPasswordLength );
-				}
-				throw new PasswordError( wfMsgExt( $message, array( 'parsemag' ), $params ) );
-			}
+	public function setPassword( $password, $forceLogout = true ) {
+		if ( is_null( $password ) ) {
+			$this->heliosDeletePassword();
+		} else {
+			$this->heliosSetNewPassword( $password );
 		}
 
-		if( !$wgAuth->setPassword( $this, $str ) ) {
-			throw new PasswordError( wfMsg( 'externaldberror' ) );
-		}
+		$this->setToken();
 
-		$this->setInternalPassword( $str );
+		if ( $forceLogout ) {
+			self::heliosClient()->forceLogout( $this->getId() );
+		}
 
 		return true;
 	}
 
-	/**
-	 * Set the password and reset the random token unconditionally.
-	 *
-	 * @param $str String New password to set
-	 */
-	public function setInternalPassword( $str ) {
-		$this->load();
-		$this->setToken();
+	private function heliosSetNewPassword( $password ) {
+		$heliosPasswordChange = null;
 
-		if( $str === null ) {
-			// Save an invalid hash...
-			$this->mPassword = '';
-		} else {
-			// Wikia uses the old hashing until we migrate all wikis to MW 1.13
-			//$this->mPassword = self::crypt( $str );
-			$this->mPassword = self::oldCrypt( $str, $this->mId );
+		$heliosPasswordChange = self::heliosClient()->setPassword( $this->getId(), $password );
+
+		if ( empty( $heliosPasswordChange ) ) {
+			$this->error( 'Helios password set communication failed', [
+				'userId' => $this->getId(),
+			] );
+			throw new PasswordError( wfMessage( 'externaldberror' )->text() );
 		}
-		$this->mNewpassword = '';
-		$this->mNewpassTime = null;
+
+		if ( !empty( $heliosPasswordChange->errors ) ) {
+			$this->error( 'Helios password set failed', [
+				'userId' => $this->getId(),
+				'err'    => $heliosPasswordChange,
+			] );
+			throw new PasswordError( wfMessage( $heliosPasswordChange->errors[0]->description )->text() );
+		}
+	}
+
+	private function heliosDeletePassword() {
+		$result = self::heliosClient()->deletePassword( $this->getId() );
+
+		if ( empty( $result ) ) {
+			$this->error( 'Helios password deletion communication failed', [
+				'userId' => $this->getId(),
+			] );
+			throw new PasswordError( wfMessage( 'externaldberror' )->text() );
+		}
+
+		if ( !empty( $result->errors ) ) {
+			$this->error( 'Helios password deletion failed', [
+				'userId' => $this->getId(),
+				'err'    => $result,
+			] );
+			throw new PasswordError( wfMessage( $result->errors[0]->description )->text() );
+		}
 	}
 
 	/**
 	 * Get the user's current token.
-	 * @param $forceCreation Force the generation of a new token if the user doesn't have one (default=true for backwards compatibility)
+	 * @param boolean $forceCreation Force the generation of a new token if the user doesn't have one (default=true for backwards compatibility)
 	 * @return String Token
 	 */
 	public function getToken( $forceCreation = true ) {
@@ -2140,7 +2178,6 @@ class User {
 	 * @param $token String|bool If specified, set the token to this value
 	 */
 	public function setToken( $token = false ) {
-		global $wgSecretKey, $wgProxyKey;
 		$this->load();
 		if ( !$token ) {
 			$this->mToken = MWCryptRand::generateHex( USER_TOKEN_LENGTH );
@@ -2150,54 +2187,38 @@ class User {
 	}
 
 	/**
-	 * Set the cookie password
-	 *
-	 * @param $str String New cookie password
-	 */
-	private function setCookiePassword( $str ) {
-		$this->load();
-		$this->mCookiePassword = md5( $str );
-	}
-
-	/**
-	 * Set the password for a password reminder or new account email
-	 *
-	 * @param $str String New password to set
-	 * @param $throttle Bool If true, reset the throttle timestamp to the present
-	 */
-	public function setNewpassword( $str, $throttle = true ) {
-		$this->load();
-		// Wikia uses the old hashing until we migrate all wikis to MW 1.13
-		//$this->mNewpassword = self::crypt( $str );
-		$this->mNewpassword = self::oldCrypt( $str, $this->mId );
-		if ( $throttle ) {
-			$this->mNewpassTime = wfTimestampNow();
-		}
-	}
-
-	/**
-	 * Has password reminder email been sent within the last
-	 * $wgPasswordReminderResendTime hours?
-	 * @return Bool
-	 */
-	public function isPasswordReminderThrottled() {
-		global $wgPasswordReminderResendTime;
-		$this->load();
-		if ( !$this->mNewpassTime || !$wgPasswordReminderResendTime ) {
-			return false;
-		}
-		$expiry = wfTimestamp( TS_UNIX, $this->mNewpassTime ) + $wgPasswordReminderResendTime * 3600;
-		return time() < $expiry;
-	}
-
-	/**
 	 * Get the user's e-mail address
 	 * @return String User's email address
 	 */
 	public function getEmail() {
 		$this->load();
-		wfRunHooks( 'UserGetEmail', array( $this, &$this->mEmail ) );
+		Hooks::run( 'UserGetEmail', array( $this, &$this->mEmail ) );
 		return $this->mEmail;
+	}
+
+	/**
+	 * Return the new email address that is waiting for confirmation
+	 *
+	 * @return string
+	 */
+	public function getNewEmail() {
+		return $this->getGlobalAttribute( 'new_email' );
+	}
+
+	/**
+	 * Sets a new email address, to be confirmed
+	 *
+	 * @param $newEmail
+	 */
+	public function setNewEmail( $newEmail ) {
+		$this->setGlobalAttribute( 'new_email', $newEmail );
+	}
+
+	/**
+	 * Clear out the new email after its been confirmed
+	 */
+	public function clearNewEmail() {
+		$this->setGlobalAttribute( 'new_email', null );
 	}
 
 	/**
@@ -2206,7 +2227,7 @@ class User {
 	 */
 	public function getEmailAuthenticationTimestamp() {
 		$this->load();
-		wfRunHooks( 'UserGetEmailAuthenticationTimestamp', array( $this, &$this->mEmailAuthenticated ) );
+		Hooks::run( 'UserGetEmailAuthenticationTimestamp', array( $this, &$this->mEmailAuthenticated ) );
 		return $this->mEmailAuthenticated;
 	}
 
@@ -2219,6 +2240,11 @@ class User {
 		if( $str == $this->mEmail ) {
 			return;
 		}
+
+		/* Wikia change */
+		/* add a new hook that sends both before/after emails @param User, new_email, old_email */
+		Hooks::run( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
+
 		$this->mEmail = $str;
 
 		/* Wikia change begin - @author: Macbre */
@@ -2228,7 +2254,7 @@ class User {
 		}
 		/* Wikia change end */
 
-		wfRunHooks( 'UserSetEmail', array( $this, &$this->mEmail ) );
+		Hooks::run( 'UserSetEmail', array( $this, &$this->mEmail ) );
 	}
 
 	/**
@@ -2253,6 +2279,26 @@ class User {
 	}
 
 	/**
+	 * @param $oname
+	 * @param null $defaultOverride
+	 * @param bool|false $ignoreHidden
+	 * @return String
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
+	 */
+	public function getOption($oname, $defaultOverride = null, $ignoreHidden = false) {
+		if ($this->getOrSetOptionSampler()->shouldSample()) {
+			$this->warning("calling getOption", [
+				"class" => "user",
+				"type" => "getoption",
+				"option" => $oname,
+				"source" => wfBacktrace(true),
+			]);
+		}
+
+		return $this->getOptionHelper($oname, $defaultOverride, $ignoreHidden);
+	}
+
+	/**
 	 * Get the user's current setting for a given option.
 	 *
 	 * @param $oname String The option to check
@@ -2262,7 +2308,7 @@ class User {
 	 * @see getBoolOption()
 	 * @see getIntOption()
 	 */
-	public function getOption( $oname, $defaultOverride = null, $ignoreHidden = false ) {
+	private function getOptionHelper( $oname, $defaultOverride = null, $ignoreHidden = false ) {
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
@@ -2283,23 +2329,13 @@ class User {
 		}
 
 		if ( array_key_exists( $oname, $this->mOptions ) ) {
-			# Wikia - Skin chooser related
-			if($oname == 'skin') {
-				if(strlen(trim($this->mOptions[$oname])) > 7 &&  substr(trim($this->mOptions[$oname]), 0, 6) == 'quartz') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOption('theme', substr(trim($this->mOptions[$oname]), 6));
-				} else if(trim($this->mOptions[$oname]) == 'slate' || trim($this->mOptions[$oname]) == 'smoke') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOption('theme', trim($this->mOptions[$oname]));
-				}
-			}
 
 			/* Wikia change begin - @author: Macbre */
 			/* allow extensions to modify value returned by User::getOption() */
 			/* make local copy of option value, so hook won't modify value read from DB and store in object */
 			$value = $this->mOptions[$oname];
 
-			wfRunHooks( 'UserGetOption', array( $this->mOptions, $oname, &$value ) );
+			Hooks::run( 'UserGetOption', array( $this->mOptions, $oname, &$value ) );
 
 			return $value;
 			/* Wikia change end */
@@ -2312,6 +2348,7 @@ class User {
 	 * Get all user's options
 	 *
 	 * @return array
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOptions() {
 		global $wgHiddenPrefs;
@@ -2330,6 +2367,25 @@ class User {
 			}
 		}
 
+		// Populate with attributes from attribute service
+		foreach ( $this->userAttributes()->getAttributes( $this->getId() ) as $attrName => $attrValue ) {
+			$options[$attrName] = $attrValue;
+		}
+
+		// Populate with user global preferences, and wiki local preferences
+		$preferences = $this->userPreferences()->getPreferences( $this->getId() );
+
+		foreach ( $preferences->getGlobalPreferences() as $globalPreference ) {
+			$options[ $globalPreference->getName() ] = $globalPreference->getValue();
+		}
+
+		global $wgCityId;
+		$localPreferences = $preferences->getLocalPreferencesForWiki( $wgCityId );
+
+		foreach ( $localPreferences as $localPreference ) {
+			$options[ $localPreference->getName() ] = $localPreference->getValue();
+		}
+
 		return $options;
 	}
 
@@ -2338,6 +2394,7 @@ class User {
 	 *
 	 * @param $oname String The option to check
 	 * @return Bool User's current value for the option
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 * @see getOption()
 	 */
 	public function getBoolOption( $oname ) {
@@ -2350,7 +2407,7 @@ class User {
 	 * @param $oname String The option to check
 	 * @param $defaultOverride Int A default value returned if the option does not exist
 	 * @return Int User's current value for the option
-	 * @see getOption()
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getIntOption( $oname, $defaultOverride=0 ) {
 		$val = $this->getOption( $oname );
@@ -2361,12 +2418,291 @@ class User {
 	}
 
 	/**
+	 * Get a preference local to this wikia.
+	 *
+	 * Refere to getGlobalPreference for more detailed documentation.
+	 *
+	 * @param string $preference the preference name
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @param mixed $default
+	 * @param bool $ignoreHidden
+	 * @return string
+	 * @see getGlobalPreference
+	 */
+	public function getLocalPreference($preference, $cityId, $sep = "-", $default = null, $ignoreHidden = false) {
+		global $wgPreferenceServiceRead;
+
+		if ($wgPreferenceServiceRead) {
+			$value = $this->userPreferences()->getLocalPreference($this->getId(), $cityId, $preference, $default, $ignoreHidden);
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Get a global user preference.
+	 *
+	 * Preferences are options that typically alter the users experience. Some
+	 * examples include the skin, language, and whether or not marketing is
+	 * allowed.
+	 *
+	 * @param string $preference
+	 * @param mixed $default
+	 * @param bool $ignoreHidden
+	 * @return string
+	 */
+	public function getGlobalPreference($preference, $default = null, $ignoreHidden = false) {
+		global $wgPreferenceServiceRead;
+
+		if ($wgPreferenceServiceRead) {
+			$preferences = [];
+			$value = $this->userPreferences()->getGlobalPreference($this->getId(), $preference, $default, $ignoreHidden);
+			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
+				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
+			}
+
+			Hooks::run(
+				'UserGetPreference',
+				[
+					$preferences,
+					$preference,
+					&$value
+				]
+			);
+		} else {
+			$value = $this->getOptionHelper($preference, $default, $ignoreHidden);
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Set a preference local to a wikia. See createLocalOptionName for details regarding
+	 * the format. Note that the $sep param is provided in the rare case where
+	 * the option name is not normal. Should you have to use the separator, PLEASE MAKE
+	 * A PLAN TO NORMALIZE IT TO "-".
+	 *
+	 * @param string $preference
+	 * @param string $value
+	 * @param int $cityId [optional, defaults to $wgCityId]
+	 * @param string $sep [optional, defaults to '-']
+	 * @see getGlobalPreference
+	 */
+	public function setLocalPreference($preference, $value, $cityId, $sep = '-') {
+		global $wgPreferenceServiceWrite;
+
+		if ( $wgPreferenceServiceWrite ) {
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$this->setOptionHelper( $preferenceGlobalName, $value );
+		}
+	}
+
+	/**
+	 * Set a global user preference.
+	 *
+	 * @param string $preference
+	 * @param string $value
+	 * @see getGlobalPreference for documentation about preferences
+	 */
+	public function setGlobalPreference( $preference, $value ) {
+		global $wgPreferenceServiceWrite;
+
+		if ( $wgPreferenceServiceWrite ) {
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
+			if ( $preference == 'skin' ) {
+				unset( $this->mSkin );
+			}
+		} else {
+			$this->setOptionHelper( $preference, $value );
+		}
+	}
+
+	/**
+	 * @param String $preference set to default
+	 * for now its support only old aproach to handle preferences (get/set Option)
+	 * It will be handled with https://wikia-inc.atlassian.net/browse/SERVICES-483
+	 */
+	public function removeGlobalPreference($preference){
+		unset( $this->mOptions[ $preference ] );
+	}
+
+	/**
+	 * Get the default global preference.
+	 *
+	 * @param string $preference
+	 * @return string
+	 * @see getGlobalPreference for documentation about preferences
+	 */
+	public function getDefaultGlobalPreference( $preference ) {
+		return $this->userPreferences()->getGlobalDefault( $preference );
+	}
+
+	/**
+	 * Get a global user attribute.
+	 *
+	 * Attributes are facts about the user such as their avatar URL, their
+	 * location, or their twitter username.
+	 *
+	 * @param string $attribute
+	 * @param mixed $default
+	 * @return string
+	 */
+	public function getGlobalAttribute( $attribute, $default = null ) {
+
+		if ( $this->shouldGetAttributeFromService( $attribute ) ) {
+			return $this->userAttributes()->getAttribute( $this->getId(), $attribute, $default );
+		}
+
+		return $this->getOptionHelper($attribute, $default);
+	}
+
+	/**
+	 * @param $attributeName
+	 * @return bool
+	 */
+	private function shouldGetAttributeFromService( $attributeName ) {
+		return $this->isPublicAttribute( $attributeName );
+	}
+
+	private function isPublicAttribute( $attributeName ) {
+		global $wgPublicUserAttributes;
+
+		return in_array( $attributeName, $wgPublicUserAttributes );
+	}
+
+	/**
+	 * Set a global user attribute. You also have to call `saveSettings` for the value to be saved in the DB.
+	 *
+	 * @param string $attribute
+	 * @param string $value
+	 * @see getGlobalAttribute for more documentation about attributes
+	 */
+	public function setGlobalAttribute( $attribute, $value ) {
+		if ( $this->isPublicAttribute( $attribute ) ) {
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attribute, $value ) );
+		} else {
+			$this->setOptionHelper( $attribute, $value );
+		}
+	}
+
+	/**
+	 * Get a user flag local to a wikia.
+	 *
+	 * @param string $flag the flag name
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @return bool
+	 * @see getGlobalFlag for more documentation about flags
+	 */
+	public function getLocalFlag( $flag, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		return $this->getGlobalFlag( $name );
+	}
+
+	/**
+	 * Set a user flag local to a wikia.
+	 *
+	 * @param string $flag the flag name
+	 * @param bool $value The value of the flag
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @see getGlobalFlag for more documentation about flags
+	 */
+	public function setLocalFlag( $flag, $value, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		$this->setGlobalFlag( $name, $value );
+	}
+
+	/**
+	 * Get a global user flag.
+	 *
+	 * Flags are typically boolean settings that are used internally to signify
+	 * something about the user such as whether or not their account has been
+	 * disabled or if they are a power user.
+	 *
+	 * @param string $flag
+	 * @return bool
+	 */
+	public function getGlobalFlag($flag, $default = null) {
+		return $this->getOptionHelper($flag, $default);
+	}
+
+	/**
+	 * Set a global user flag.
+	 *
+	 * @param string $flag
+	 * @param        $value
+	 *
+	 * @return bool
+	 * @see getGlobalFlag for more documentation about flags
+	 */
+	public function setGlobalFlag($flag, $value) {
+		$this->setOptionHelper($flag, $value);
+	}
+
+	/**
+	 * Create a local option name. All localized (wikia specific) options,
+	 * preferences, attributes or flags should be of the form "{option}-{cityId}"
+	 *
+	 * IF YOU USE $sep, MAKE A PLAN TO NORMALIZE IT TO "-"!
+	 *
+	 * @param string $property
+	 * @param int $cityId [optional]
+	 * @param string $sep the separator between the option and the id.
+	 * @return string
+	 */
+	public static function localToGlobalPropertyName($property, $cityId = null, $sep = '-') {
+		global $wgCityId;
+		if (!isset($cityId)) {
+			$cityId = $wgCityId;
+		}
+
+		return sprintf("%s%s%s", $property, $sep, $cityId);
+	}
+
+	private function replaceNewlineAndCRWithSpace($value) {
+		if ($value) {
+			$value = str_replace("\r\n", "\n", $value);
+			$value = str_replace("\r", "\n", $value);
+			$value = str_replace("\n", " ", $value);
+		}
+
+		return $value;
+	}
+
+	/**
+	 * @param $oname
+	 * @param $val
+	 * @deprecated use set(Global|Local)Preference  set(Global|Local)Attribute or set(Global|Local)Flag
+	 */
+	public function setOption( $oname, $val ) {
+		if ($this->getOrSetOptionSampler()->shouldSample()) {
+			$this->warning("calling setOption", [
+				"class" => "user",
+				"type" => "setoption",
+				"source" => wfBacktrace(true),
+			]);
+		}
+
+		$this->setOptionHelper($oname, $val);
+	}
+
+	/**
 	 * Set the given option for a user.
 	 *
 	 * @param $oname String The option to set
 	 * @param $val mixed New value to set
 	 */
-	public function setOption( $oname, $val ) {
+	private function setOptionHelper( $oname, $val ) {
 		$this->load();
 		$this->loadOptions();
 
@@ -2374,18 +2710,9 @@ class User {
 			# Clear cached skin, so the new one displays immediately in Special:Preferences
 			unset( $this->mSkin );
 		}
-		# Wikia - Skin chooser related
-		if ( $oname == 'theme' ) {
-			# Clear cached skin, so the new one displays immediately in Special:Preferences
-			unset($this->mTheme);
-		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
-		if( $val ) {
-			$val = str_replace( "\r\n", "\n", $val );
-			$val = str_replace( "\r", "\n", $val );
-			$val = str_replace( "\n", " ", $val );
-		}
+		$val = $this->replaceNewlineAndCRWithSpace($val);
 		// Explicitly NULL values should refer to defaults
 		global $wgDefaultUserOptions;
 		if( is_null( $val ) && isset( $wgDefaultUserOptions[$oname] ) ) {
@@ -2410,7 +2737,7 @@ class User {
 		// Important migration for old data rows
 		if ( is_null( $this->mDatePreference ) ) {
 			global $wgLang;
-			$value = $this->getOption( 'date' );
+			$value = $this->getGlobalPreference( 'date' );
 			$map = $wgLang->getDatePreferenceMigrationMap();
 			if ( isset( $map[$value] ) ) {
 				$value = $map[$value];
@@ -2427,7 +2754,7 @@ class User {
 	 */
 	public function getStubThreshold() {
 		global $wgMaxArticleSize; # Maximum article size, in Kb
-		$threshold = intval( $this->getOption( 'stubthreshold' ) );
+		$threshold = intval( $this->getGlobalPreference( 'stubthreshold' ) );
 		if ( $threshold > $wgMaxArticleSize * 1024 ) {
 			# If they have set an impossible value, disable the preference
 			# so we can use the parser cache again.
@@ -2437,197 +2764,19 @@ class User {
 	}
 
 	/**
-	 * Get the permissions this user has.
-	 * @return Array of String permission names
-	 */
-	public function getRights() {
-		if ( is_null( $this->mRights ) ) {
-			$this->mRights = self::getGroupPermissions( $this->getEffectiveGroups() );
-			wfRunHooks( 'UserGetRights', array( $this, &$this->mRights ) );
-			// Force reindexation of rights when a hook has unset one of them
-			$this->mRights = array_values( $this->mRights );
-		}
-		return $this->mRights;
-	}
-
-	/**
-	 * Get the list of explicit group memberships this user has.
-	 * The implicit * and user groups are not included.
-	 * @return Array of String internal group names
-	 */
-	public function getGroups() {
-		$this->load();
-		$this->loadGroups();
-		return $this->mGroups;
-	}
-
-	/**
-	 * Get the list of implicit group memberships this user has.
-	 * This includes all explicit groups, plus 'user' if logged in,
-	 * '*' for all accounts, and autopromoted groups
-	 * @param $recache Bool Whether to avoid the cache
-	 * @return Array of String internal group names
-	 */
-	public function getEffectiveGroups( $recache = false ) {
-		if ( $recache || is_null( $this->mEffectiveGroups ) ) {
-			wfProfileIn( __METHOD__ );
-			$this->mEffectiveGroups = array_unique( array_merge(
-				$this->getGroups(), // explicit groups
-				$this->getAutomaticGroups( $recache ) // implicit groups
-			) );
-			# Hook for additional groups
-			wfRunHooks( 'UserEffectiveGroups', array( &$this, &$this->mEffectiveGroups ) );
-			wfProfileOut( __METHOD__ );
-		}
-		return $this->mEffectiveGroups;
-	}
-
-	/**
-	 * Get the list of implicit group memberships this user has.
-	 * This includes 'user' if logged in, '*' for all accounts,
-	 * and autopromoted groups
-	 * @param $recache Bool Whether to avoid the cache
-	 * @return Array of String internal group names
-	 */
-	public function getAutomaticGroups( $recache = false ) {
-		if ( $recache || is_null( $this->mImplicitGroups ) ) {
-			wfProfileIn( __METHOD__ );
-			$this->mImplicitGroups = array( '*' );
-			if ( $this->getId() ) {
-				$this->mImplicitGroups[] = 'user';
-
-				$this->mImplicitGroups = array_unique( array_merge(
-					$this->mImplicitGroups,
-					Autopromote::getAutopromoteGroups( $this )
-				) );
-			}
-			if ( $recache ) {
-				# Assure data consistency with rights/groups,
-				# as getEffectiveGroups() depends on this function
-				$this->mEffectiveGroups = null;
-			}
-			wfProfileOut( __METHOD__ );
-		}
-		return $this->mImplicitGroups;
-	}
-
-	/**
-	 * Returns the groups the user has belonged to.
-	 *
-	 * The user may still belong to the returned groups. Compare with getGroups().
-	 *
-	 * The function will not return groups the user had belonged to before MW 1.17
-	 *
-	 * @return array Names of the groups the user has belonged to.
-	 */
-	public function getFormerGroups() {
-		if( is_null( $this->mFormerGroups ) ) {
-			$dbr = wfGetDB( DB_MASTER );
-			$res = $dbr->select( 'user_former_groups',
-				array( 'ufg_group' ),
-				array( 'ufg_user' => $this->mId ),
-				__METHOD__ );
-			$this->mFormerGroups = array();
-			foreach( $res as $row ) {
-				$this->mFormerGroups[] = $row->ufg_group;
-			}
-		}
-		return $this->mFormerGroups;
-	}
-
-	/**
 	 * Get the user's edit count.
-	 * @return Int
-	 */
-	public function getEditCount() {
-		if( $this->getId() ) {
-			if ( !isset( $this->mEditCount ) ) {
-				/* Populate the count, if it has not been populated yet */
-				$this->mEditCount = User::edits( $this->mId );
-			}
-			return $this->mEditCount;
-		} else {
-			/* nil */
-			return null;
-		}
-	}
-
-	/**
-	 * Wikia. Get number of edits localized for wiki,
-	 *
 	 * NOTE: UserStatsService:getEditCountWiki function retrieves User object inside
 	 * due to this fact localized editcount shouldn't be a field of User class
 	 * to avoid infinite loop
-	 *
-	 * @autor Kamil Koterba
-	 * @since Feb 2013
 	 * @return Int
 	 */
-	public function getEditCountLocal() {
-		if( $this->getId() ) {
-
+	public function getEditCount() {
+		if ( $this->getId() ) {
 			$userStatsService = new UserStatsService( $this->mId );
 			return $userStatsService->getEditCountWiki();
-
-		} else {
-			/* nil */
-			return null;
 		}
-	}
 
-	/**
-	 * Add the user to the given group.
-	 * This takes immediate effect.
-	 * @param $group String Name of the group to add
-	 */
-	public function addGroup( $group ) {
-		if( wfRunHooks( 'UserAddGroup', array( $this, &$group ) ) ) {
-			$dbw = wfGetDB( DB_MASTER );
-			if( $this->getId() ) {
-				$dbw->insert( 'user_groups',
-					array(
-						'ug_user'  => $this->getID(),
-						'ug_group' => $group,
-					),
-					__METHOD__,
-					array( 'IGNORE' ) );
-			}
-		}
-		$this->loadGroups();
-		$this->mGroups[] = $group;
-		$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
-
-		$this->invalidateCache();
-	}
-
-	/**
-	 * Remove the user from the given group.
-	 * This takes immediate effect.
-	 * @param $group String Name of the group to remove
-	 */
-	public function removeGroup( $group ) {
-		$this->load();
-		if( wfRunHooks( 'UserRemoveGroup', array( $this, &$group ) ) ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->delete( 'user_groups',
-				array(
-					'ug_user'  => $this->getID(),
-					'ug_group' => $group,
-				), __METHOD__ );
-			// Remember that the user was in this group
-			$dbw->insert( 'user_former_groups',
-				array(
-					'ufg_user'  => $this->getID(),
-					'ufg_group' => $group,
-				),
-				__METHOD__,
-				array( 'IGNORE' ) );
-		}
-		$this->loadGroups();
-		$this->mGroups = array_diff( $this->mGroups, array( $group ) );
-		$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
-
-		$this->invalidateCache();
+		return 0;
 	}
 
 	/**
@@ -2635,7 +2784,7 @@ class User {
 	 * @return Bool
 	 */
 	public function isLoggedIn() {
-		return $this->getID() != 0;
+		return $this->getId() != 0;
 	}
 
 	/**
@@ -2647,56 +2796,16 @@ class User {
 	}
 
 	/**
-	 * Check if user is allowed to access a feature / make an action
+	 * Checks if two user objects point to the same user.
 	 *
-	 * @internal param \String $varargs permissions to test
-	 * @return Boolean: True if user is allowed to perform *any* of the given actions
+	 * Ported from MW 1.25 by Michał Roszka
 	 *
+	 * @since 1.25
+	 * @param User $user
 	 * @return bool
 	 */
-	public function isAllowedAny( /*...*/ ){
-		$permissions = func_get_args();
-		foreach( $permissions as $permission ){
-			if( $this->isAllowed( $permission ) ){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 *
-	 * @internal param $varargs string
-	 * @return bool True if the user is allowed to perform *all* of the given actions
-	 */
-	public function isAllowedAll( /*...*/ ){
-		$permissions = func_get_args();
-		foreach( $permissions as $permission ){
-			if( !$this->isAllowed( $permission ) ){
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Internal mechanics of testing a permission
-	 * @param $action String
-	 * @return bool
-	 */
-	public function isAllowed( $action = '' ) {
-		if ( $action === '' ) {
-			return true; // In the spirit of DWIM
-		}
-		# Patrolling may not be enabled
-		if( $action === 'patrol' || $action === 'autopatrol' ) {
-			global $wgUseRCPatrol, $wgUseNPPatrol;
-			if( !$wgUseRCPatrol && !$wgUseNPPatrol )
-				return false;
-		}
-		# Use strict parameter to avoid matching numeric 0 accidentally inserted
-		# by misconfiguration: 0 == 'foo'
-		return in_array( $action, $this->getRights(), true );
+	public function equals( User $user ) {
+		return $this->getName() === $user->getName();
 	}
 
 	/**
@@ -2725,10 +2834,9 @@ class User {
 	public function getRequest() {
 		if ( $this->mRequest ) {
 			return $this->mRequest;
-		} else {
-			global $wgRequest;
-			return $wgRequest;
 		}
+		global $wgRequest;
+		return $wgRequest;
 	}
 
 	/**
@@ -2778,19 +2886,28 @@ class User {
 	 * the next change of the page if it's watched etc.
 	 * @param $title Title of the article to look at
 	 */
-	public function clearNotification( &$title ) {
-		global $wgUseEnotif, $wgShowUpdatedMarker;
+	public function clearNotification( Title $title ) {
+		global $wgUseEnotif, $wgShowUpdatedMarker, $wgCityId;
 
 		# Do nothing if the database is locked to writes
 		if( wfReadOnly() ) {
 			return;
 		}
 
-		if( $title->getNamespace() == NS_USER_TALK &&
-			$title->getText() == $this->getName() ) {
-			if( !wfRunHooks( 'UserClearNewTalkNotification', array( &$this ) ) )
+		if ( $title->getNamespace() == NS_USER_TALK && $title->getText() == $this->getName() ) {
+			if ( !Hooks::run( 'UserClearNewTalkNotification', [ $this ] ) ) {
 				return;
-			$this->setNewtalk( false );
+			}
+
+			// SUS-2161: Only schedule a notification update if there are new messages
+			if ( $this->getNewtalk() ) {
+				$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
+					->title( $title )
+					->wikiId( $wgCityId );
+
+				$task->call( 'clearMessageNotification', $this->getName() );
+				$task->queue();
+			}
 		}
 
 		if( !$wgUseEnotif && !$wgShowUpdatedMarker ) {
@@ -2817,8 +2934,13 @@ class User {
 		// If the page is watched by the user (or may be watched), update the timestamp on any
 		// any matching rows
 		if ( $watched ) {
-			$wl = WatchedItem::fromUserTitle( $this, $title );
-			$wl->clearWatch();
+			// SUS-2161: Use a background task for watchlist update
+			$task = ( new \Wikia\Tasks\Tasks\WatchlistUpdateTask() )
+				->title( $title )
+				->wikiId( $wgCityId );
+
+			$task->call( 'clearWatch', $this->getId() );
+			$task->queue();
 		}
 	}
 
@@ -2844,9 +2966,9 @@ class User {
 				), __METHOD__
 			);
 
-			wfRunHooks( 'User::resetWatch', array ( $id ) );
-		# 	We also need to clear here the "you have new message" notification for the own user_talk page
-		#	This is cleared one page view later in Article::viewUpdates();
+			Hooks::run( 'User::resetWatch', array ( $id ) );
+			# 	We also need to clear here the "you have new message" notification for the own user_talk page
+			#	This is cleared one page view later in Article::viewUpdates();
 		}
 	}
 
@@ -2947,13 +3069,13 @@ class User {
 			'UserID' => $this->mId,
 			'UserName' => $this->getName(),
 		);
-		if ( 1 == $this->getOption( 'rememberpassword' ) ) {
+		if ( 1 == $this->getGlobalPreference( 'rememberpassword' ) ) {
 			$cookies['Token'] = $this->mToken;
 		} else {
 			$cookies['Token'] = false;
 		}
 
-		wfRunHooks( 'UserSetCookies', array( $this, &$session, &$cookies ) );
+		Hooks::run( 'UserSetCookies', array( $this, &$session, &$cookies ) );
 
 		foreach ( $session as $name => $value ) {
 			$request->setSessionData( $name, $value );
@@ -2965,13 +3087,18 @@ class User {
 				$this->setCookie( $name, $value );
 			}
 		}
+
+		if ( !empty( $this->getGlobalAuthToken() ) ) {
+			// Set Helios token
+			self::authCookieHelper()->setAuthenticationCookieWithToken( $this->getGlobalAuthToken(), $request->response() );
+		}
 	}
 
 	/**
 	 * Log this user out.
 	 */
 	public function logout() {
-		if( wfRunHooks( 'UserLogout', array( &$this ) ) ) {
+		if ( Hooks::run( 'UserLogout', [ $this ] ) ) {
 			$this->doLogout();
 		}
 	}
@@ -2981,12 +3108,28 @@ class User {
 	 * @see logout()
 	 */
 	public function doLogout() {
+		$accessToken = self::authCookieHelper()->getAccessToken( $this->getRequest() );
+		if ( !empty( $accessToken ) ) {
+			self::heliosClient()->invalidateToken( $accessToken, $this->getId() );
+		}
+		self::authCookieHelper()->clearAuthenticationCookie( $this->getRequest()->response() );
+
 		$this->clearInstanceCache( 'defaults' );
 
 		$this->getRequest()->setSessionData( 'wsUserID', 0 );
+		$this->getRequest()->setSessionData( 'wsEditToken', null );
 
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
+
+		// Wikia change - begin (@see PLATFORM-1028)
+		// @author macbre
+		// There's no need to keep the user name (in both session and cookie) when you log out
+		$this->getRequest()->setSessionData( 'wsUserName', null );
+		$this->clearCookie( 'UserName' );
+		// Wikia change - end
+
+		wfResetSessionID();
 
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );
@@ -2997,50 +3140,23 @@ class User {
 	 * @todo Only rarely do all these fields need to be set!
 	 */
 	public function saveSettings() {
-		global $wgAuth;
-
+		global $wgExternalSharedDB;
 		$this->load();
-		if ( wfReadOnly() ) { return; }
-		if ( 0 == $this->mId ) { return; }
+		if ( wfReadOnly() ) {
+			return;
+		}
+		if ( 0 == $this->mId ) {
+			return;
+		}
 
 		$this->mTouched = self::newTouchedTimestamp();
-		if ( !$wgAuth->allowSetLocalPassword() ) {
-			$this->mPassword = '';
-		}
 
-		// wikia change begin
-		/**
-		 * @author Krzysztof Krzyżaniak (eloy)
-		 * trap for BugId: 4013
-		 */
-		if( $this->mEmail == "devbox@wikia-inc.com" || $this->mEmail == "devbox+test@wikia-inc.com" ) {
-			// gather everything we know about request
-			global $wgCommandLineMode;
-			$log = "MOLI TRAP@devbox: ";
-			if( $wgCommandLineMode && !empty($argv)) {
-				$log .= $argv[ 0 ];
-				openlog( "trap", LOG_PID | LOG_PERROR, LOG_LOCAL6 );
-				syslog( LOG_WARNING, "$log");
-				closelog();
-			}
-			else {
-				global $wgTitle;
-				if (is_object($wgTitle)) {
-					$log .= $wgTitle->getFullUrl();
-					error_log( $log );
-				}
-			}
-		}
+		Hooks::run( 'BeforeUserSaveSettings', array( $this ) );
 
-		// wikia change end
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->update( 'user',
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+		$dbw->update( '`user`',
 			array( /* SET */
 				'user_name' => $this->mName,
-				'user_password' => $this->mPassword,
-				'user_newpassword' => $this->mNewpassword,
-				'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
 				'user_real_name' => $this->mRealName,
 				'user_email' => $this->mEmail,
 				'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
@@ -3054,8 +3170,10 @@ class User {
 		);
 
 		$this->saveOptions();
+		$this->savePreferences();
+		$this->saveAttributes();
 
-		wfRunHooks( 'UserSaveSettings', array( $this ) );
+		Hooks::run( 'UserSaveSettings', array( $this ) );
 		$this->clearSharedCache();
 
 		# Wikia - bad style fix for #1531 - needs review if it is still needed
@@ -3114,15 +3232,12 @@ class User {
 		$fields = array(
 			'user_id' => $seqVal,
 			'user_name' => $name,
-			'user_password' => $user->mPassword,
-			'user_newpassword' => $user->mNewpassword,
-			'user_newpass_time' => $dbw->timestampOrNull( $user->mNewpassTime ),
 			'user_email' => $user->mEmail,
 			'user_email_authenticated' => $dbw->timestampOrNull( $user->mEmailAuthenticated ),
 			'user_real_name' => $user->mRealName,
 			'user_token' => strval( $user->mToken ),
 			'user_registration' => $dbw->timestamp( $user->mRegistration ),
-			'user_birthdate' => $dbw->timestampOrNull( $user->mBirthDate ), // Wikia. Added to reflect our user table layout.
+			'user_birthdate' => $user->mBirthDate, // Wikia. Added to reflect our user table layout.
 			'user_editcount' => 0,
 		);
 		foreach ( $params as $name => $value ) {
@@ -3155,15 +3270,12 @@ class User {
 			array(
 				'user_id' => $seqVal,
 				'user_name' => $this->mName,
-				'user_password' => $this->mPassword,
-				'user_newpassword' => $this->mNewpassword,
-				'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
 				'user_email' => $this->mEmail,
 				'user_email_authenticated' => $dbw->timestampOrNull( $this->mEmailAuthenticated ),
 				'user_real_name' => $this->mRealName,
 				'user_token' => strval( $this->mToken ),
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
-				'user_birthdate' => $dbw->timestampOrNull( $this->mBirthDate ), // Wikia. Added to reflect our user table layout.
+				'user_birthdate' => $this->mBirthDate, // Wikia. Added to reflect our user table layout.
 				'user_editcount' => 0,
 			), __METHOD__
 		);
@@ -3173,6 +3285,8 @@ class User {
 		$this->clearInstanceCache();
 
 		$this->saveOptions();
+		$this->savePreferences();
+		$this->saveAttributes();
 	}
 
 	/**
@@ -3233,14 +3347,14 @@ class User {
 		// since it disables the parser cache, its value will always
 		// be 0 when this function is called by parsercache.
 
-		$confstr =        $this->getOption( 'math' );
+		$confstr =        $this->getGlobalPreference( 'math' );
 		$confstr .= '!' . $this->getStubThreshold();
 		if ( $wgUseDynamicDates ) { # This is wrong (bug 24714)
 			$confstr .= '!' . $this->getDatePreference();
 		}
-		$confstr .= '!' . ( $this->getOption( 'numberheadings' ) ? '1' : '' );
+		$confstr .= '!' . ( $this->getGlobalPreference( 'numberheadings' ) ? '1' : '' );
 		$confstr .= '!' . $wgLang->getCode();
-		$confstr .= '!' . $this->getOption( 'thumbsize' );
+		$confstr .= '!' . $this->getGlobalPreference( 'thumbsize' );
 		// add in language specific options, if any
 		$extra = $wgContLang->getExtraHashOptions();
 		$confstr .= $extra;
@@ -3252,7 +3366,7 @@ class User {
 
 		// Give a chance for extensions to modify the hash, if they have
 		// extra options or other effects on the parser cache.
-		wfRunHooks( 'PageRenderingHash', array( &$confstr ) );
+		Hooks::run( 'PageRenderingHash', array( &$confstr ) );
 
 		// Make it a valid memcached key fragment
 		$confstr = str_replace( ' ', '_', $confstr );
@@ -3331,8 +3445,7 @@ class User {
 	 * @param $password String: user password.
 	 * @return Boolean: True if the given password is correct, otherwise False.
 	 */
-	public function checkPassword( $password ) {
-		global $wgAuth, $wgLegacyEncoding;
+	public function checkPassword( $password, &$errorMessageKey = null ) {
 		$this->load();
 
 		// Even though we stop people from creating passwords that
@@ -3341,55 +3454,20 @@ class User {
 		// domain passwords in a mysql database, so we should
 		// check this (in case $wgAuth->strict() is false).
 		if( !$this->isValidPassword( $password ) ) {
-			return false;
+			return AuthResult::create( false )->build();
 		}
 
-		if( $wgAuth->authenticate( $this->getName(), $password ) ) {
-			return true;
-		} elseif( $wgAuth->strict() ) {
-			/* Auth plugin doesn't allow local authentication */
-			return false;
-		} elseif( $wgAuth->strictUserAuth( $this->getName() ) ) {
-			/* Auth plugin doesn't allow local authentication for this user name */
-			return false;
+		// Wikia change - begin
+		// Helios integration
+		$authResult = $this->authenticationService()->authenticate( $this->mName, $password );
+		if ( $authResult->success() && !$authResult->isResetPasswordAuth() ) {
+			$this->setGlobalAuthToken( $authResult->getAccessToken() );
+		} elseif ( $authResult->checkStatus( WikiaResponse::RESPONSE_CODE_SERVICE_UNAVAILABLE ) ) {
+			$errorMessageKey = 'login-abort-service-unavailable';
 		}
-		if ( self::comparePasswords( $this->mPassword, $password, $this->mId ) ) {
-			return true;
-		} elseif ( $wgLegacyEncoding ) {
-			# Some wikis were converted from ISO 8859-1 to UTF-8, the passwords can't be converted
-			# Check for this with iconv
-			$cp1252Password = iconv( 'UTF-8', 'WINDOWS-1252//TRANSLIT', $password );
-			if ( $cp1252Password != $password &&
-				self::comparePasswords( $this->mPassword, $cp1252Password, $this->mId ) )
-			{
-				return true;
-			}
-		}
+		// Wikia change - end
 
-		return false;
-	}
-
-	/**
-	 * Check if the given clear-text password matches the temporary password
-	 * sent by e-mail for password reset operations.
-	 *
-	 * @param $plaintext string
-	 *
-	 * @return Boolean: True if matches, false otherwise
-	 */
-	public function checkTemporaryPassword( $plaintext ) {
-		global $wgNewPasswordExpiry;
-
-		$this->load();
-		if( self::comparePasswords( $this->mNewpassword, $plaintext, $this->getId() ) ) {
-			if ( is_null( $this->mNewpassTime ) ) {
-				return true;
-			}
-			$expiry = wfTimestamp( TS_UNIX, $this->mNewpassTime ) + $wgNewPasswordExpiry;
-			return ( time() < $expiry );
-		} else {
-			return false;
-		}
+		return $authResult;
 	}
 
 	/**
@@ -3422,7 +3500,7 @@ class User {
 			$request = $this->getRequest();
 		}
 
-		if ( $this->isAnon() ) {
+		if ( $this->isAnon() && session_status() !== PHP_SESSION_ACTIVE /* Wikia change (SUS-20) */ ) {
 			return EDIT_TOKEN_SUFFIX;
 		} else {
 			$token = $request->getSessionData( 'wsEditToken' );
@@ -3438,16 +3516,6 @@ class User {
 	}
 
 	/**
-	 * Generate a looking random token for various uses.
-	 *
-	 * @param $salt String Optional salt value
-	 * @return String The new random token
-	 */
-	public static function generateToken( $salt = '' ) {
-		return MWCryptRand::generateHex( 32 );
-	}
-
-	/**
 	 * Check given value against the token value stored in the session.
 	 * A match should confirm that the form was submitted from the
 	 * user's own login session, not a form submission from a third-party
@@ -3460,10 +3528,32 @@ class User {
 	 */
 	public function matchEditToken( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		if ( $val != $sessionToken ) {
+		$equals = !is_null( $val ) && hash_equals( $sessionToken, $val );
+		if ( !$equals ) {
 			wfDebug( "User::matchEditToken: broken session data\n" );
+
+			// Wikia change - begin
+			// @see MAIN-4660 log edit tokens mismatches
+			if ($val != '') {
+				WikiaLogger::instance()->error(
+					__METHOD__ . '::tokenMismatch',
+					[
+						'client_val'  => $val,
+						'session_val' => $sessionToken,
+						'session_id'  => session_id(),
+						'salt'        => $salt,
+						'user_id'     => $this->getId(),
+						'user_name'   => $this->getName(),
+						'exception'   => new Exception(),
+					]
+				);
+			}
+			// Wikia change - end
 		}
-		return $val == $sessionToken;
+
+		Hooks::run( 'UserMatchEditToken' ); # Wikia change
+
+		return $equals;
 	}
 
 	/**
@@ -3477,17 +3567,30 @@ class User {
 	 */
 	public function matchEditTokenNoSuffix( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		return substr( $sessionToken, 0, 32 ) == substr( $val, 0, 32 );
+		return !is_null( $val ) && hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
 	}
 
 	/**
 	 * Generate a new e-mail confirmation token and send a confirmation/invalidation
 	 * mail to the user's given address.
 	 *
-	 * @param $type String: message to send, either "created", "changed" or "set"
-	 * @return Status object
+	 * @param string $type
+	 * @param string $mailtype
+	 * @param string $mailmsg
+	 * @param bool|true $ip_arg
+	 * @param string $emailTextTemplate
+	 * @param null $language
+	 * @return Status
+	 * @throws MWException
 	 */
-	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '' ) {
+	public function sendConfirmationMail(
+		$type = 'created',
+		$mailtype = EmailConfirmationController::TYPE,
+		$mailmsg = '',
+		$ip_arg = true,
+		$emailTextTemplate = '',
+		$language = null ) {
+
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -3523,26 +3626,31 @@ class User {
 		}
 
 		$priority = 0;
-		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg ) );
+		Hooks::run( 'UserSendConfirmationMail', [ $this, &$args, &$priority, &$url, $token, $ip_arg, $type ] );
+
+		$emailController = $this->getEmailController( $mailtype );
+		if ( !empty( $emailController ) ) {
+			return $this->sendUsingEmailExtension( $emailController, $url, $language );
+		}
 
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;
 
 		if ( empty($wgEnableRichEmails) ) {
-		return $this->sendMail( wfMsg( $subject ),
-			wfMsg( $message,
-				$this->getRequest()->getIP(),
-				$this->getName(),
-				$url,
-				$wgLang->timeanddate( $expiration, false ),
-				$invalidateURL,
-				$wgLang->date( $expiration, false ),
-				$wgLang->time( $expiration, false ) ), null, null, $mailtype, null, $priority );
+			return $this->sendMail( wfMsg( $subject ),
+				wfMsg( $message,
+					$this->getRequest()->getIP(),
+					$this->getName(),
+					$url,
+					$wgLang->timeanddate( $expiration, false ),
+					$invalidateURL,
+					$wgLang->date( $expiration, false ),
+					$wgLang->time( $expiration, false ) ), null, null, $mailtype, null, $priority );
 		} else {
-			$wantHTML = $this->isAnon() || $this->getOption( 'htmlemails' );
+			$wantHTML = $this->isAnon() || $this->getGlobalPreference( 'htmlemails' );
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getOption('language'), array(), $args, $wantHTML );
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
 
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
@@ -3557,37 +3665,84 @@ class User {
 		/* Wikia change end */
 	}
 
-	/**
-	 * Confirmation after change the emial
-	 *
-	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
-	 */
-	function sendReConfirmationMail() {
-		$this->setOption("mail_edited","1");
-		$this->saveSettings();
-		/* Wikia change - begin */
-		$result = null;
-		wfRunHooks( 'UserSendReConfirmationMail', array( &$this, &$result ) );
-		if ( empty($result) ) {
-			$result = $this->sendConfirmationMail( false, 'ReConfirmationMail', 'reconfirmemail' );
+	private function getEmailController( $mailType ) {
+		$controller = "";
+		if ( $this->isConfirmationMail( $mailType ) ) {
+			$controller = Email\Controller\EmailConfirmationController::class;
+		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
+			$controller = Email\Controller\EmailConfirmationReminderController::class;
+		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
+			$controller = Email\Controller\ConfirmationChangedEmailController::class;
+		} elseif ( $this->isReactivateAccountMail( $mailType ) ) {
+			$controller = Email\Controller\ReactivateAccountController::class;
 		}
 
-		return $result;
-		/* Wikia change - end */
+		return $controller;
+	}
+
+	private function isConfirmationMail( $mailType ) {
+		return $mailType == EmailConfirmationController::TYPE;
+	}
+
+	private function isConfirmationReminderMail( $mailType ) {
+		return $mailType == "ConfirmationReminderMail";
+	}
+
+	private function isChangeEmailConfirmationMail( $mailType ) {
+		return $mailType == "ReConfirmationMail";
+	}
+
+	private function isReactivateAccountMail( $mailType ) {
+		return $mailType == "ReactivationMail";
+	}
+
+	private function sendUsingEmailExtension( $emailController, $url, $language=null ) {
+		$params = [
+			'targetUser' => $this->getName(),
+			'newEmail' => $this->getNewEmail(),
+			'confirmUrl' => $url,
+		];
+
+		if ($language !== null) {
+			$params['targetLang'] = $language;
+		}
+
+		$responseData = F::app()->sendRequest( $emailController, 'handle', $params )->getData();
+
+		if ( $responseData['result'] == 'ok' ) {
+			return Status::newGood();
+		} else {
+			return Status::newFatal( $responseData['error'] );
+		}
+
+	}
+
+	/**
+	 * Confirmation after change the email
+	 *
+	 * @return Status|bool True on success, a WikiError object on failure.
+	 */
+	function sendReConfirmationMail() {
+		$this->setGlobalFlag("mail_edited","1");
+		$this->saveSettings();
+		return $this->sendConfirmationMail(
+			false,
+			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : EmailConfirmationController::TYPE
+		);
 	}
 
 	/**
 	 * Confirmation reminder after 7 day
 	 *
-	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
+	 * @return Status|false True on success, a WikiError object on failure.
 	 */
 	function sendConfirmationReminderMail() {
-		if( ($this->getOption("cr_mailed", 0) == 1) || ($this->getOption("mail_edited", 0) == 1) ) {
+		if( ($this->getGlobalFlag("cr_mailed", 0) == 1) || ($this->getGlobalFlag("mail_edited", 0) == 1) ) {
 			return false;
 		}
-		$this->setOption("cr_mailed","1");
+		$this->setGlobalFlag("cr_mailed","1");
 		$this->saveSettings();
-		return $this->sendConfirmationMail( false, 'ConfirmationReminder', 'confirmemailreminder', false );
+		return $this->sendConfirmationMail( false, 'ConfirmationReminder', '', false );
 	}
 
 	/**
@@ -3615,7 +3770,7 @@ class User {
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;
-		if ( !empty($wgEnableRichEmails) && ($this->isAnon() || $this->getOption('htmlemails')) && !empty($bodyHTML) ) {
+		if ( !empty($wgEnableRichEmails) && ($this->isAnon() || $this->getGlobalPreference('htmlemails')) && !empty($bodyHTML) ) {
 			$body = array( 'text' => $body, 'html' => $bodyHTML );
 		}
 		/* Wikia change end */
@@ -3648,7 +3803,7 @@ class User {
 	}
 
 	/**
-	* Return a URL the user can use to confirm their email address.
+	 * Return a URL the user can use to confirm their email address.
 	 * @param $token String Accepts the email confirmation token
 	 * @return String New token URL
 	 */
@@ -3680,9 +3835,15 @@ class User {
 	 * @return String Formatted URL
 	 */
 	protected function getTokenUrl( $page, $token ) {
+		global $wgEnableNewAuthModal;
+
+		if ( $wgEnableNewAuthModal ) {
+			return WikiFactory::getLocalEnvURL( "http://www.wikia.com/confirm-email?token=$token" );
+		}
+
 		// Hack to bypass localization of 'Special:'
 		$title = Title::makeTitle( NS_MAIN, "Special:$page/$token" );
-		return $title->getCanonicalUrl();
+		return $title->getCanonicalURL();
 	}
 
 	/**
@@ -3694,7 +3855,7 @@ class User {
 	 */
 	public function confirmEmail() {
 		$this->setEmailAuthenticationTimestamp( wfTimestampNow() );
-		wfRunHooks( 'ConfirmEmailComplete', array( $this ) );
+		Hooks::run( 'ConfirmEmailComplete', array( $this ) );
 		return true;
 	}
 
@@ -3710,7 +3871,6 @@ class User {
 		$this->mEmailToken = null;
 		$this->mEmailTokenExpires = null;
 		$this->setEmailAuthenticationTimestamp( null );
-		wfRunHooks( 'InvalidateEmailComplete', array( $this ) );
 		return true;
 	}
 
@@ -3721,7 +3881,7 @@ class User {
 	function setEmailAuthenticationTimestamp( $timestamp ) {
 		$this->load();
 		$this->mEmailAuthenticated = $timestamp;
-		wfRunHooks( 'UserSetEmailAuthenticationTimestamp', array( $this, &$this->mEmailAuthenticated ) );
+		Hooks::run( 'UserSetEmailAuthenticationTimestamp', array( $this, &$this->mEmailAuthenticated ) );
 	}
 
 	/**
@@ -3735,7 +3895,8 @@ class User {
 			return false;
 		}
 		$canSend = $this->isEmailConfirmed();
-		wfRunHooks( 'UserCanSendEmail', array( &$this, &$canSend ) );
+		Hooks::run( 'UserCanSendEmail', [ $this, &$canSend ] );
+
 		return $canSend;
 	}
 
@@ -3745,7 +3906,7 @@ class User {
 	 * @return Bool
 	 */
 	public function canReceiveEmail() {
-		return $this->isEmailConfirmed() && !$this->getOption( 'disablemail' );
+		return $this->isEmailConfirmed() && !$this->getGlobalPreference( 'disablemail' );
 	}
 
 	/**
@@ -3762,7 +3923,7 @@ class User {
 		global $wgEmailAuthentication;
 		$this->load();
 		$confirmed = true;
-		if( wfRunHooks( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
+		if ( Hooks::run( 'EmailConfirmed', [ $this, &$confirmed ] ) ) {
 			if( $this->isAnon() ) {
 				return false;
 			}
@@ -3773,9 +3934,8 @@ class User {
 				return false;
 			}
 			return true;
-		} else {
-			return $confirmed;
 		}
+		return $confirmed;
 	}
 
 	/**
@@ -3827,417 +3987,21 @@ class User {
 	}
 
 	/**
-	 * Get the permissions associated with a given list of groups
-	 *
-	 * @param $groups Array of Strings List of internal group names
-	 * @return Array of Strings List of permission key names for given groups combined
-	 */
-	public static function getGroupPermissions( $groups ) {
-		global $wgGroupPermissions, $wgRevokePermissions;
-		$rights = array();
-		// grant every granted permission first
-		foreach( $groups as $group ) {
-			if( isset( $wgGroupPermissions[$group] ) ) {
-				$rights = array_merge( $rights,
-					// array_filter removes empty items
-					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
-			}
-		}
-		// now revoke the revoked permissions
-		foreach( $groups as $group ) {
-			if( isset( $wgRevokePermissions[$group] ) ) {
-				$rights = array_diff( $rights,
-					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
-			}
-		}
-		return array_unique( $rights );
-	}
-
-	/**
-	 * Get all the groups who have a given permission
-	 *
-	 * @param $role String Role to check
-	 * @return Array of Strings List of internal group names with the given permission
-	 */
-	public static function getGroupsWithPermission( $role ) {
-		global $wgGroupPermissions;
-		$allowedGroups = array();
-		foreach ( $wgGroupPermissions as $group => $rights ) {
-			if ( isset( $rights[$role] ) && $rights[$role] ) {
-				$allowedGroups[] = $group;
-			}
-		}
-		return $allowedGroups;
-	}
-
-	/**
-	 * Get the localized descriptive name for a group, if it exists
-	 *
-	 * @param $group String Internal group name
-	 * @return String Localized descriptive group name
-	 */
-	public static function getGroupName( $group ) {
-		$msg = wfMessage( "group-$group" );
-		return $msg->isBlank() ? $group : $msg->text();
-	}
-
-	/**
-	 * Get the localized descriptive name for a member of a group, if it exists
-	 *
-	 * @param $group String Internal group name
-	 * @param $username String Username for gender (since 1.19)
-	 * @return String Localized name for group member
-	 */
-	public static function getGroupMember( $group, $username = '#' ) {
-		$msg = wfMessage( "group-$group-member", $username );
-		return $msg->isBlank() ? $group : $msg->text();
-	}
-
-	/**
-	 * Return the set of defined explicit groups.
-	 * The implicit groups (by default *, 'user' and 'autoconfirmed')
-	 * are not included, as they are defined automatically, not in the database.
-	 * @return Array of internal group names
-	 */
-	public static function getAllGroups() {
-		global $wgGroupPermissions, $wgRevokePermissions;
-		return array_diff(
-			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
-			self::getImplicitGroups()
-		);
-	}
-
-	/**
-	 * Get a list of all available permissions.
-	 * @return Array of permission names
-	 */
-	public static function getAllRights() {
-		if ( self::$mAllRights === false ) {
-			global $wgAvailableRights;
-			if ( count( $wgAvailableRights ) ) {
-				self::$mAllRights = array_unique( array_merge( self::$mCoreRights, $wgAvailableRights ) );
-			} else {
-				self::$mAllRights = self::$mCoreRights;
-			}
-			wfRunHooks( 'UserGetAllRights', array( &self::$mAllRights ) );
-		}
-		return self::$mAllRights;
-	}
-
-	/**
-	 * Get a list of implicit groups
-	 * @return Array of Strings Array of internal group names
-	 */
-	public static function getImplicitGroups() {
-		global $wgImplicitGroups;
-		$groups = $wgImplicitGroups;
-		wfRunHooks( 'UserGetImplicitGroups', array( &$groups ) );	#deprecated, use $wgImplictGroups instead
-		return $groups;
-	}
-
-	/**
-	 * Get the title of a page describing a particular group
-	 *
-	 * @param $group String Internal group name
-	 * @return Title|Bool Title of the page if it exists, false otherwise
-	 */
-	public static function getGroupPage( $group ) {
-		$msg = wfMessage( 'grouppage-' . $group )->inContentLanguage();
-		if( $msg->exists() ) {
-			$title = Title::newFromText( $msg->text() );
-			if( is_object( $title ) )
-				return $title;
-		}
-		return false;
-	}
-
-	/**
-	 * Create a link to the group in HTML, if available;
-	 * else return the group name.
-	 *
-	 * @param $group String Internal name of the group
-	 * @param $text String The text of the link
-	 * @return String HTML link to the group
-	 */
-	public static function makeGroupLinkHTML( $group, $text = '' ) {
-		if( $text == '' ) {
-			$text = self::getGroupName( $group );
-		}
-		$title = self::getGroupPage( $group );
-		if( $title ) {
-			return Linker::link( $title, htmlspecialchars( $text ) );
-		} else {
-			return $text;
-		}
-	}
-
-	/**
-	 * Create a link to the group in Wikitext, if available;
-	 * else return the group name.
-	 *
-	 * @param $group String Internal name of the group
-	 * @param $text String The text of the link
-	 * @return String Wikilink to the group
-	 */
-	public static function makeGroupLinkWiki( $group, $text = '' ) {
-		if( $text == '' ) {
-			$text = self::getGroupName( $group );
-		}
-		$title = self::getGroupPage( $group );
-		if( $title ) {
-			$page = $title->getPrefixedText();
-			return "[[$page|$text]]";
-		} else {
-			return $text;
-		}
-	}
-
-	/**
-	 * Returns an array of the groups that a particular group can add/remove.
-	 *
-	 * @param $group String: the group to check for whether it can add/remove
-	 * @return Array array( 'add' => array( addablegroups ),
-	 *     'remove' => array( removablegroups ),
-	 *     'add-self' => array( addablegroups to self),
-	 *     'remove-self' => array( removable groups from self) )
-	 */
-	public static function changeableByGroup( $group ) {
-		global $wgAddGroups, $wgRemoveGroups, $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
-
-		$groups = array( 'add' => array(), 'remove' => array(), 'add-self' => array(), 'remove-self' => array() );
-		if( empty( $wgAddGroups[$group] ) ) {
-			// Don't add anything to $groups
-		} elseif( $wgAddGroups[$group] === true ) {
-			// You get everything
-			$groups['add'] = self::getAllGroups();
-		} elseif( is_array( $wgAddGroups[$group] ) ) {
-			$groups['add'] = $wgAddGroups[$group];
-		}
-
-		// Same thing for remove
-		if( empty( $wgRemoveGroups[$group] ) ) {
-		} elseif( $wgRemoveGroups[$group] === true ) {
-			$groups['remove'] = self::getAllGroups();
-		} elseif( is_array( $wgRemoveGroups[$group] ) ) {
-			$groups['remove'] = $wgRemoveGroups[$group];
-		}
-
-		// Re-map numeric keys of AddToSelf/RemoveFromSelf to the 'user' key for backwards compatibility
-		if( empty( $wgGroupsAddToSelf['user']) || $wgGroupsAddToSelf['user'] !== true ) {
-			foreach( $wgGroupsAddToSelf as $key => $value ) {
-				if( is_int( $key ) ) {
-					$wgGroupsAddToSelf['user'][] = $value;
-				}
-			}
-		}
-
-		if( empty( $wgGroupsRemoveFromSelf['user']) || $wgGroupsRemoveFromSelf['user'] !== true ) {
-			foreach( $wgGroupsRemoveFromSelf as $key => $value ) {
-				if( is_int( $key ) ) {
-					$wgGroupsRemoveFromSelf['user'][] = $value;
-				}
-			}
-		}
-
-		// Now figure out what groups the user can add to him/herself
-		if( empty( $wgGroupsAddToSelf[$group] ) ) {
-		} elseif( $wgGroupsAddToSelf[$group] === true ) {
-			// No idea WHY this would be used, but it's there
-			$groups['add-self'] = User::getAllGroups();
-		} elseif( is_array( $wgGroupsAddToSelf[$group] ) ) {
-			$groups['add-self'] = $wgGroupsAddToSelf[$group];
-		}
-
-		if( empty( $wgGroupsRemoveFromSelf[$group] ) ) {
-		} elseif( $wgGroupsRemoveFromSelf[$group] === true ) {
-			$groups['remove-self'] = User::getAllGroups();
-		} elseif( is_array( $wgGroupsRemoveFromSelf[$group] ) ) {
-			$groups['remove-self'] = $wgGroupsRemoveFromSelf[$group];
-		}
-
-		return $groups;
-	}
-
-	/**
-	 * Returns an array of groups that this user can add and remove
-	 * @return Array array( 'add' => array( addablegroups ),
-	 *  'remove' => array( removablegroups ),
-	 *  'add-self' => array( addablegroups to self),
-	 *  'remove-self' => array( removable groups from self) )
-	 */
-	public function changeableGroups() {
-		if( $this->isAllowed( 'userrights' ) ) {
-			// This group gives the right to modify everything (reverse-
-			// compatibility with old "userrights lets you change
-			// everything")
-			// Using array_merge to make the groups reindexed
-			$all = array_merge( User::getAllGroups() );
-			return array(
-				'add' => $all,
-				'remove' => $all,
-				'add-self' => array(),
-				'remove-self' => array()
-			);
-		}
-
-		// Okay, it's not so simple, we will have to go through the arrays
-		$groups = array(
-			'add' => array(),
-			'remove' => array(),
-			'add-self' => array(),
-			'remove-self' => array()
-		);
-		$addergroups = $this->getEffectiveGroups();
-
-		foreach( $addergroups as $addergroup ) {
-			$groups = array_merge_recursive(
-				$groups, $this->changeableByGroup( $addergroup )
-			);
-			$groups['add']    = array_unique( $groups['add'] );
-			$groups['remove'] = array_unique( $groups['remove'] );
-			$groups['add-self'] = array_unique( $groups['add-self'] );
-			$groups['remove-self'] = array_unique( $groups['remove-self'] );
-		}
-		return $groups;
-	}
-
-	/**
 	 * Increment the user's edit-count field.
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
-		global $wgMemc, $wgCityId, $wgEnableEditCountLocal;
-		if( !$this->isAnon() ) {
-            // wikia change, load always from first cluster when we use
-            // shared users database
-            // @author Lucas Garczewski (tor)
-            global $wgExternalSharedDB, $wgSharedDB;
-            if( isset( $wgSharedDB ) ) {
-                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-            }
-            else {
-                    $dbw = wfGetDB( DB_MASTER );
-            }
-
-			$dbw->update( '`user`',
-				array( 'user_editcount=user_editcount+1' ),
-				array( 'user_id' => $this->getId() ),
-				__METHOD__ );
-			$dbw->commit();
-
+		if ( !$this->isAnon() ) {
 			/**
 			 * Wikia change
 			 * Update editcount for wiki
 			 * @since Feb 2013
 			 * @author Kamil Koterba
 			 */
-			if ( !empty($wgEnableEditCountLocal) ) {
-				$dbw = wfGetDB( DB_MASTER );
-				$dbw->update( 'wikia_user_properties',
-					array( 'wup_value=wup_value+1' ),
-					array( 'wup_user' => $this->getId(),
-						'wup_property' => 'editcount' ),
-					__METHOD__ );
 
-				if ($dbw->affectedRows() == 1) {
-					//increment memcache also
-					$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
-					$wgMemc->incr( $key );
-				} else {
-					//initialize editcount skipping memcache
-					$this->getEditCountLocal( 0, true );
-				}
-			}
+			$userStatsService = new UserStatsService( $this->getId() );
+			$userStatsService->increaseEditsCount();
 			/* end of change */
-
-		}
-		// edit count in user cache too
-		$this->invalidateCache();
-	}
-
-	/**
-	 * Get the description of a given right
-	 *
-	 * @param $right String Right to query
-	 * @return String Localized description of the right
-	 */
-	public static function getRightDescription( $right ) {
-		$key = "right-$right";
-		$msg = wfMessage( $key );
-		return $msg->isBlank() ? $right : $msg->text();
-	}
-
-	/**
-	 * Make an old-style password hash
-	 *
-	 * @param $password String Plain-text password
-	 * @param $userId String User ID
-	 * @return String Password hash
-	 */
-	public static function oldCrypt( $password, $userId ) {
-		global $wgPasswordSalt;
-		if ( $wgPasswordSalt ) {
-			return md5( $userId . '-' . md5( $password ) );
-		} else {
-			return md5( $password );
-		}
-	}
-
-	/**
-	 * Make a new-style password hash
-	 *
-	 * @param $password String Plain-text password
-	 * @param bool|string $salt Optional salt, may be random or the user ID.
-
-	 *                     If unspecified or false, will generate one automatically
-	 * @return String Password hash
-	 */
-	public static function crypt( $password, $salt = false ) {
-		global $wgPasswordSalt;
-
-		$hash = '';
-		if( !wfRunHooks( 'UserCryptPassword', array( &$password, &$salt, &$wgPasswordSalt, &$hash ) ) ) {
-			return $hash;
-		}
-
-		if( $wgPasswordSalt ) {
-			if ( $salt === false ) {
-				$salt = MWCryptRand::generateHex( 8 );
-			}
-			return ':B:' . $salt . ':' . md5( $salt . '-' . md5( $password ) );
-		} else {
-			return ':A:' . md5( $password );
-		}
-	}
-
-	/**
-	 * Compare a password hash with a plain-text password. Requires the user
-	 * ID if there's a chance that the hash is an old-style hash.
-	 *
-	 * @param $hash String Password hash
-	 * @param $password String Plain-text password to compare
-	 * @param $userId String|bool User ID for old-style password salt
-	 *
-	 * @return Boolean
-	 */
-	public static function comparePasswords( $hash, $password, $userId = false ) {
-		$type = substr( $hash, 0, 3 );
-
-		$result = false;
-		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
-			return $result;
-		}
-
-		if ( $type == ':A:' ) {
-			# Unsalted
-			return md5( $password ) === substr( $hash, 3 );
-		} elseif ( $type == ':B:' ) {
-			# Salted
-			list( $salt, $realHash ) = explode( ':', substr( $hash, 3 ), 2 );
-			return md5( $salt.'-'.md5( $password ) ) === $realHash;
-		} else {
-			# Old-style
-			return self::oldCrypt( $password, $userId ) === $hash;
 		}
 	}
 
@@ -4250,12 +4014,12 @@ class User {
 	 * @return int|bool True if not $wgNewUserLog; otherwise ID of log item or 0 on failure
 	 */
 	public function addNewUserLogEntry( $byEmail = false, $reason = '' ) {
-		global $wgUser, $wgContLang, $wgNewUserLog;
+		global $wgContLang, $wgNewUserLog, $wgUser;
 		if( empty( $wgNewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( $this->getName() == $wgUser->getName() ) {
+		if( $this->equals( $wgUser ) ) {
 			$action = 'create';
 		} else {
 			$action = 'create2';
@@ -4302,7 +4066,6 @@ class User {
 			return;
 
 		$this->mOptions = self::getDefaultOptions();
-
 		// Maybe load from the object
 		if ( !is_null( $this->mOptionOverrides ) ) {
 			wfDebug( "User: loading options for user " . $this->getId() . " from override cache.\n" );
@@ -4312,16 +4075,10 @@ class User {
 		} else {
 			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
 			// Load from database
-			// wikia change, load always from first cluster when we use
 			// shared users database
 			// @author Krzysztof Krzyżaniak (eloy)
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbr = wfGetDB( DB_SLAVE );
-			}
+			global $wgExternalSharedDB;
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 			$res = $dbr->select(
 				'user_properties',
@@ -4339,73 +4096,86 @@ class User {
 
 		$this->mOptionsLoaded = true;
 
-		wfRunHooks( 'UserLoadOptions', array( $this, &$this->mOptions ) );
+		Hooks::run( 'UserLoadOptions', array( $this, &$this->mOptions ) );
+	}
+
+	/**
+	 * Save this user's preferences into the database.
+	 *
+	 * @see getGlobalPreference for documentation about preferences
+	 */
+	protected function savePreferences() {
+		$this->userPreferences()->save($this->getId());
+	}
+
+	/**
+	 * Save this user's attributes into the attribute service.
+	 */
+	protected function saveAttributes() {
+		$this->userAttributes()->save( $this->getId() );
 	}
 
 	/**
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange;
-
-		$extuser = ExternalUser::newFromUser( $this );
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
-		if( isset( $wgSharedDB ) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		}
-		else {
-			$dbw = wfGetDB( DB_MASTER );
-		}
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
-		$insert_rows = array();
+		$insertRows = $deletePrefs = [];
 
 		$saveOptions = $this->mOptions;
 
 		// Allow hooks to abort, for instance to save to a global profile.
 		// Reset options to default state before saving.
-		if( !wfRunHooks( 'UserSaveOptions', array( $this, &$saveOptions ) ) ) {
+		if( !Hooks::run( 'UserSaveOptions', array( $this, &$saveOptions ) ) ) {
 			return;
 		}
 
 		foreach( $saveOptions as $key => $value ) {
 			# Don't bother storing default values
 			# <Wikia>
-			if ( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) {
-				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );
-			}
-			# </Wikia>
-			else {
-				if ( ( is_null( self::getDefaultOption( $key ) ) &&
-						!( $value === false || is_null($value) ) ) ||
-						$value != self::getDefaultOption( $key ) ) {
-					$insert_rows[] = array(
-							'up_user' => $this->getId(),
-							'up_property' => $key,
-							'up_value' => $value,
-						);
-				}
-			}
-			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
-				switch ( $wgAllowPrefChange[$key] ) {
-					case 'local':
-					case 'message':
-						break;
-					case 'semiglobal':
-					case 'global':
-						$extuser->setPref( $key, $value );
-				}
+			if ( $this->shouldOptionBeStored( $key, $value ) ) {
+				$insertRows[] = [ 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value ];
+			} elseif ($this->isDefaultOption($key, $value)) {
+				$deletePrefs[] = $key;
 			}
 		}
 
-		$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
-		$dbw->insert( 'user_properties', $insert_rows, __METHOD__ );
-
-		if ( $extuser ) {
-			$extuser->updateUser();
+		// user has default set, so clear any other entries from db
+		if (!empty($deletePrefs)) {
+			(new WikiaSQL())
+				->DELETE('user_properties')
+				->WHERE('up_user')->EQUAL_TO($this->getId())
+					->AND_('up_property')->IN($deletePrefs)
+				->run($dbw);
 		}
+
+		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK, __METHOD__);
+	}
+
+	/**
+	 * @desc Check if user option should be stored in DataBase.
+	 * We don't want to store default values in order to easily change them in future.
+	 * @param $key
+	 * @param $value
+	 * @return bool
+	 */
+	private function shouldOptionBeStored( $key, $value ) {
+		if (
+			( is_null( self::getDefaultOption( $key ) ) && !( $value === false || is_null($value) ) ) ||
+			$value != self::getDefaultOption( $key )
+		) {
+			return true;
+		}
+		return false;
+	}
+
+	private function isDefaultOption($key, $value) {
+		return $value == self::getDefaultOption($key);
 	}
 
 	/**
@@ -4476,5 +4246,375 @@ class User {
 	 */
 	public function wikiaConfirmationTokenUrl( $token ) {
 		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
+	}
+
+	/**
+	 * Return the memcache key for storing cross-wiki "user_touched" value.
+	 *
+	 * It's used to refresh user caches on Wiki B when user changes his setting on Wiki A
+	 *
+	 * @author wikia
+	 *
+	 * @param int $user_id
+	 * @return string memcache key
+	 */
+	public static function getUserTouchedKey( $user_id ) {
+		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
+	}
+
+	/**
+	 * Get the global authentication token.
+	 * @return string
+	 */
+	public function getGlobalAuthToken() {
+		return $this->globalAuthToken;
+	}
+
+	/**
+	 * Set the global authentication token.
+	 * @param string
+	 */
+	public function setGlobalAuthToken( $token ) {
+		$this->globalAuthToken = $token;
+	}
+
+	/**
+	 * Is the user authenticated via the authentication service?
+	 * @return bool true if yes, false if no
+	 */
+	public function isUserAuthenticatedViaAuthenticationService() {
+		global $wgRejectAuthenticationFallback;
+
+		if ( !$wgRejectAuthenticationFallback ) {
+			return true;
+		}
+
+		$token = $this->getGlobalAuthToken();
+		if ( empty( $token ) ) {
+			return false;
+		}
+
+		$tokenInfo = self::heliosClient()->info( $token );
+		if ( !empty( $tokenInfo->user_id ) ) {
+			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the list of explicit group memberships this user has.
+	 * The implicit * and user groups are not included.
+	 * @return Array of String internal group names
+	 */
+	public function getGroups() {
+		return self::permissionsService()->getExplicitGroups( $this );
+	}
+
+	/**
+	 * Get the list of implicit group memberships this user has.
+	 * This includes all explicit groups, plus 'user' if logged in,
+	 * '*' for all accounts, and autopromoted groups
+	 * @param $recache Bool Whether to avoid the cache
+	 * @return Array of String internal group names
+	 */
+	public function getEffectiveGroups( $recache = false ) {
+		return self::permissionsService()->getEffectiveGroups( $this, $recache );
+	}
+
+	/**
+	 * Get the list of implicit group memberships this user has.
+	 * This includes 'user' if logged in, '*' for all accounts,
+	 * and autopromoted groups
+	 * @param $recache Bool Whether to avoid the cache
+	 * @return Array of String internal group names
+	 */
+	public function getAutomaticGroups( $recache = false ) {
+		return self::permissionsService()->getAutomaticGroups( $this, $recache );
+	}
+
+	/**
+	 * Get a list of implicit groups
+	 * @return Array of Strings Array of internal group names
+	 */
+	public static function getImplicitGroups() {
+		return self::permissionsService()->getConfiguration()->getImplicitGroups();
+	}
+
+	/**
+	 * Return the set of defined explicit groups.
+	 * The implicit groups (by default *, 'user' and 'autoconfirmed')
+	 * are not included, as they are defined automatically, not in the database.
+	 * @return Array of internal group names
+	 */
+	public static function getAllGroups() {
+		return self::permissionsService()->getConfiguration()->getExplicitGroups();
+	}
+
+	/**
+	 * Get the permissions associated with a given list of groups
+	 *
+	 * @param $groups Array of Strings List of internal group names
+	 * @return Array of Strings List of permission key names for given groups combined
+	 */
+	public static function getGroupPermissions( $groups ) {
+		return self::permissionsService()->getConfiguration()->getGroupPermissions( $groups );
+	}
+
+	/**
+	 * Get all the groups who have a given permission
+	 *
+	 * @param $role String Role to check
+	 * @return Array of Strings List of internal group names with the given permission
+	 */
+	public static function getGroupsWithPermission( $role ) {
+		return self::permissionsService()->getConfiguration()->getGroupsWithPermission( $role );
+	}
+
+	/**
+	 * Get the permissions this user has.
+	 * @return Array of String permission names
+	 */
+	public function getRights() {
+		return self::permissionsService()->getPermissions( $this );
+	}
+
+	/**
+	 * Get a list of all available permissions.
+	 * @return Array of permission names
+	 */
+	public static function getAllRights() {
+		return self::permissionsService()->getConfiguration()->getPermissions();
+	}
+
+	/**
+	 * Returns an array of the groups that a particular group can add/remove.
+	 *
+	 * @param $group String: the group to check for whether it can add/remove
+	 * @return Array array( 'add' => array( addablegroups ),
+	 *     'remove' => array( removablegroups ),
+	 *     'add-self' => array( addablegroups to self),
+	 *     'remove-self' => array( removable groups from self) )
+	 */
+	public static function changeableByGroup( $group ) {
+		return self::permissionsService()->getConfiguration()->getGroupsChangeableByGroup( $group );
+	}
+
+	/**
+	 * Add the user to the given group(s).
+	 * This takes immediate effect.
+	 * @param $groups string Name of group or array with list of groups
+	 * @return true if operation was successful, false otherwise
+	 */
+	public function addGroup( $groups ) {
+		return self::permissionsService()->addToGroup( RequestContext::getMain()->getUser(), $this, $groups );
+	}
+
+	/**
+	 * Remove the user from the given group(s).
+	 * This takes immediate effect.
+	 * @param $groups string Name of group or array with list of groups
+	 * @return true if operation was successful, false otherwise
+	 */
+	public function removeGroup( $groups ) {
+		return self::permissionsService()->removeFromGroup( RequestContext::getMain()->getUser(), $this, $groups );
+	}
+
+	/**
+	 * Returns an array of groups that this user can add and remove
+	 * @return Array array( 'add' => array( addablegroups ),
+	 *  'remove' => array( removablegroups ),
+	 *  'add-self' => array( addablegroups to self),
+	 *  'remove-self' => array( removable groups from self) )
+	 */
+	public function changeableGroups() {
+		return self::permissionsService()->getChangeableGroups( $this );
+	}
+
+	/**
+	 * Check if user is allowed to access a feature / make an action
+	 *
+	 * internal param \String $varargs permissions to test
+	 * @return Boolean: True if user is allowed to perform *any* of the given actions
+	 *
+	 * @return bool
+	 */
+	public function isAllowedAny( /*...*/ ){
+		$permissions = func_get_args();
+		return self::permissionsService()->hasAnyPermission( $this, $permissions );
+	}
+
+	/**
+	 *
+	 * internal param $varargs string
+	 * @return bool True if the user is allowed to perform *all* of the given actions
+	 */
+	public function isAllowedAll( /*...*/ ){
+		$permissions = func_get_args();
+		return self::permissionsService()->hasAllPermissions( $this, $permissions );
+	}
+
+	/**
+	 * Internal mechanics of testing a permission
+	 * @param $action String
+	 * @return bool
+	 */
+	public function isAllowed( $action = '' ) {
+		return self::permissionsService()->hasPermission( $this, $action );
+	}
+
+	/**
+	 * Whether this user is Wikia staff or not
+	 * @return bool
+	 */
+	public function isStaff() {
+		return self::permissionsService()->isInGroup( $this, 'staff' );
+	}
+
+	/**
+	 * Get the localized descriptive name for a group, if it exists
+	 *
+	 * @param $group String Internal group name
+	 * @return String Localized descriptive group name
+	 */
+	public static function getGroupName( $group ) {
+		$msg = wfMessage( "group-$group" );
+		return $msg->isBlank() ? $group : $msg->text();
+	}
+
+	/**
+	 * Get the localized descriptive name for a member of a group, if it exists
+	 *
+	 * @param $group String Internal group name
+	 * @param $username String Username for gender (since 1.19)
+	 * @return String Localized name for group member
+	 */
+	public static function getGroupMember( $group, $username = '#' ) {
+		$msg = wfMessage( "group-$group-member", $username );
+		return $msg->isBlank() ? $group : $msg->text();
+	}
+
+	/**
+	 * Get the title of a page describing a particular group
+	 *
+	 * @param $group String Internal group name
+	 * @return Title|Bool Title of the page if it exists, false otherwise
+	 */
+	public static function getGroupPage( $group ) {
+		$msg = wfMessage( 'grouppage-' . $group )->inContentLanguage();
+		if( $msg->exists() ) {
+			$title = Title::newFromText( $msg->text() );
+			if( is_object( $title ) )
+				return $title;
+		}
+		return false;
+	}
+
+	/**
+	 * Create a link to the group in HTML, if available;
+	 * else return the group name.
+	 *
+	 * @param $group String Internal name of the group
+	 * @param $text String The text of the link
+	 * @return String HTML link to the group
+	 */
+	public static function makeGroupLinkHTML( $group, $text = '' ) {
+		if( $text == '' ) {
+			$text = self::getGroupName( $group );
+		}
+		$title = self::getGroupPage( $group );
+		if( $title ) {
+			return Linker::link( $title, htmlspecialchars( $text ) );
+		}
+		return $text;
+	}
+
+	/**
+	 * Create a link to the group in Wikitext, if available;
+	 * else return the group name.
+	 *
+	 * @param $group String Internal name of the group
+	 * @param $text String The text of the link
+	 * @return String Wikilink to the group
+	 */
+	public static function makeGroupLinkWiki( $group, $text = '' ) {
+		if( $text == '' ) {
+			$text = self::getGroupName( $group );
+		}
+		$title = self::getGroupPage( $group );
+		if( $title ) {
+			$page = $title->getPrefixedText();
+			return "[[$page|$text]]";
+		} else {
+			return $text;
+		}
+	}
+
+	/**
+	 * Get the description of a given right
+	 *
+	 * @param $right String Right to query
+	 * @return String Localized description of the right
+	 */
+	public static function getRightDescription( $right ) {
+		$key = "right-$right";
+		$msg = wfMessage( $key );
+		return $msg->isBlank() ? $right : $msg->text();
+	}
+
+	/**
+	 * Get the username for an account given by the ID. It's basically User::whoIs() will a fallback.
+	 *
+	 * If it's an anon (userId = 0), return the second argument passed to this method.
+	 * The same fallback will happen when there's no database entry for a given user. In such case warning will be logged.
+	 *
+	 * @see SUS-825
+	 *
+	 * @param $userId int userId
+	 * @param $name string anon username
+	 * @return string
+	 */
+	public static function getUsername( int $userId, string $name ) : string {
+		if ( !empty( $userId ) ) {
+			$dbName = static::whoIs( $userId );
+
+			// we currently have 500k mismatches logged every 24h
+			// cache added in User::whoIs should improve the situation here as we'll use the shared user storage
+			// instead of per-cluster copy
+			if( $dbName !== $name ) {
+				WikiaLogger::instance()->warning( "Default name different than lookup", [
+					"user_id" => $userId,
+					// SUS-2008, always log username_db as string
+					"username_db" => $dbName ?: '',
+					"username_default" => $name,
+				] );
+			}
+
+			return $dbName ?: $name;
+		}
+		// this covers anons ($userId = 0), just fall back to the second method argument
+		return $name;
+	}
+
+	/**
+	 * Returns a simple representation of user object.
+	 *
+	 * @return array
+	 */
+	public function jsonSerialize() {
+		// Detailed logging for PLATFORM-2770.
+		WikiaLogger::instance()->debug(
+			'User::jsonSerialize was called',
+			[
+				'user_id' => $this->getId(),
+				'user_name' => $this->getName(),
+				'exception' => new Exception()
+			]
+		);
+
+		return [
+			'mId' => $this->mId,
+			'mName' => $this->mName,
+		];
 	}
 }

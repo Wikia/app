@@ -1,4 +1,4 @@
-var ChatBanModal = function(title, okCallback, options) {
+var ChatBanModal = function (title, okCallback, options) {
 	'use strict';
 
 	var data = {};
@@ -10,80 +10,80 @@ var ChatBanModal = function(title, okCallback, options) {
 	}
 
 	// TODO: Remove isChangeBan - back end will check for this
-	$.get( window.wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function( data ) {
-		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
-				var primaryBtnMsg = data.isChangeBan ?
-						$.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'),
-					modalPrimaryBtn = uiButton.render( {
-						'type': 'link',
-						'vars': {
-							'id': 'ok',
-							'href': '#',
-							'classes': [ 'normal', 'primary' ],
-							'value': primaryBtnMsg,
-							'title': primaryBtnMsg
-						}
-					} ),
-					secondaryBtnMsg = $.msg( 'chat-ban-modal-button-cancel' ),
-					modalSecondaryBtn = uiButton.render( {
-						'type': 'link',
-						'vars': {
-							'id': 'cancel',
-							'href': '#',
-							'classes': [ 'normal', 'secondary' ],
-							'value': secondaryBtnMsg,
-							'title': secondaryBtnMsg
-						}
-					}),
-					modalId = 'ChatBanModal',
-					banModal = uiModal.render( {
-						type: 'default',
-						vars: {
-							id: modalId,
-							size: 'small',
-							content: data.template,
-							title: title,
-							closeButton: true,
-							closeText: $.msg( 'close' ),
-							primaryBtn: modalPrimaryBtn,
-							secondBtn: modalSecondaryBtn
-						}
-					} );
+	$.get(window.wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function (data) {
+		require(['wikia.ui.factory'], function (uiFactory) {
+			uiFactory.init(['modal']).then(function (uiModal) {
+				// uiFactory uses JSMessages internally
+				$.msg = function () {
+					return mw.message.call(this, arguments).text();
+				};
+				var banModalConfig = {
+					type: 'default',
+					vars: {
+						id: 'ChatBanModal',
+						size: 'small',
+						content: data.template,
+						title: title,
+						buttons: [
+							{
+								vars: {
+									value: data.isChangeBan ?
+										mw.message('chat-ban-modal-button-change-ban').escaped() :
+										mw.message('chat-ban-modal-button-ok').escaped(),
+									classes: ['normal', 'primary'],
+									data: [
+										{
+											key: 'event',
+											value: 'ok'
+										}
+									]
+								}
+							},
+							{
+								'vars': {
+									'value': mw.message('chat-ban-modal-button-cancel').escaped(),
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
+								}
 
-				require( [ 'wikia.ui.modal' ], function( modal ) {
-					banModal = modal.init( modalId, banModal );
+							}
+						]
+					}
+				};
 
-					banModal.$element.find( '#cancel' ).click( function( event ) {
-						event.preventDefault();
-						banModal.close();
-					} );
+				uiModal.createComponent(banModalConfig, function (banModal) {
 
-					var banModalOkBtn = banModal.$element.find( '#ok'),
-						reasonInput = banModal.$element.find( 'input[name=reason]' );
+					var reasonInput = banModal.$element.find('input[name=reason]');
 
-					reasonInput.placeholder().keydown( function( e ) {
-						if( e.which === 13 ) {
+					function banUser() {
+						var reason = reasonInput.val(),
+							expires = banModal.$element.find('select[name=expires]').val();
+
+						okCallback(expires, reason);
+
+						banModal.trigger('close');
+					}
+
+					reasonInput.placeholder().keydown(function (e) {
+						if (e.which === 13) {
 							// Submit when 'enter' key is pressed (BugId:28101).
 							e.preventDefault();
-							banModalOkBtn.click();
+							banUser();
 						}
-					} );
+					});
 
-					banModalOkBtn.click( function( event ) {
+					banModal.bind('ok', function (event) {
 						event.preventDefault();
-
-						var reason = reasonInput.val(),
-							expires = banModal.$element.find( 'select[name=expires]' ).val();
-
-						okCallback( expires, reason );
-
-						banModal.close();
-					} );
+						banUser();
+					});
 
 					banModal.show();
-				} );
-			} );
-		} );
-	} );
+				});
+			});
+		});
+	});
 };

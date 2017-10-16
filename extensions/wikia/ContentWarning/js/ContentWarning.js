@@ -1,5 +1,6 @@
-jQuery(function($) {
-
+/*global jQuery, window*/
+jQuery(function ($) {
+	'use strict';
 	// Hide content warning, show content
 	function afterApproved() {
 		$('body').removeClass('ShowContentWarning');
@@ -15,12 +16,11 @@ jQuery(function($) {
 			method: 'index',
 			format: 'html',
 			type: 'GET',
-			callback: function(html) {
-				$(window.skin == 'oasis' ? '#WikiaMainContent' : '#bodyContent').before($(html));
+			callback: function (html) {
+				$(window.skin === 'oasis' ? '#WikiaMainContent' : '#bodyContent').before($(html));
 
 				// User acknowledges the content warning message and wishes to proceed
-				$('#ContentWarningApprove').click(function() {
-
+				$('#ContentWarning').on('click', '#ContentWarningApprove', function () {
 					// Logged in user
 					if (window.wgUserName) {
 						$.nirvana.sendRequest({
@@ -31,15 +31,13 @@ jQuery(function($) {
 							format: 'json',
 							callback: afterApproved
 						});
-
-					// Anonymous user
 					} else {
+						// Anonymous user
 						afterApproved();
 					}
 
 					$.cookies.set('ContentWarningApproved', '1', {
-						hoursToLive: 24,
-						domain: wgServer.split('/')[2]
+						hoursToLive: 24
 					});
 				});
 			}

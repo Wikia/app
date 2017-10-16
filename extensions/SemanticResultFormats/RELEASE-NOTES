@@ -2,10 +2,66 @@ For a documentation of all features, see
 http://semantic-mediawiki.org/wiki/Semantic_Result_Formats
 
 
+== SRF 1.8 ==
+
+Released on December 2, 2012.
+
+; Compatibility changes
+
+* Changed minimum MediaWiki version from 1.16 to 1.17.
+* Changed minimum Semantic MediaWiki version from 1.7 to 1.8.
+* Full compatibility with MediaWiki 1.19 and forward-compatibility with 1.20.
+* Changed minimum Validator version from 0.4 to 1.0.
+* jqplotbar and jqplotpie format are replaced by jqplotchart format
+* SRF_Settings.php has been deprecated (will be removed in 1.9) as entry point, use SemanticResultFormats.php instead
+
+; New formats
+
+* slideshow (written by Stephan Gambke)
+* listwidget (bug 37721, I54660c15) (mwjames)
+* sparkline format (I911862ce) (mwjames)
+* timeseries printer (Ibad00690) (mwjames)
+* d3chart format (I4baa7df8) (mwjames)
+* jqplotseries format (I3c8847aa) (mwjames)
+* jqplotchart format (I3c8847aa) (mwjames)
+* incoming format (Ie5be9196) (mwjames)
+* syndication feed (atom, rss) (bug 38636, Ia3cdc243) (mwjames)
+* dygraphs chart format (Ibac4b753) (mwjames)
+* event calendar (Iaff44b71) (mwjames)
+* earliest format (written by Jeroen De Dauw, Nischay Nahata)
+* latest format (written by Jeroen De Dauw, Nischay Nahata)
+
+; New features
+
+* (Ice7ba7ea) Enable tableview plugin support for timeseries, jqplotseries, and dygraphs format
+* (bug 38094) Tag cloud format added 'sphere widget' (mwjames)
+* (I6920ae49) Tag cloud format added 'wordcloud widget' (mwjames)
+* (bug 37695) Tag cloud format added template support (mwjames)
+* (bug 38184) Gallery format added 'slideshow widget' (mwjames)
+* (bug 38357) Gallery format added 'overlay' parameter enabling gallery slideshow/carousel image overlay  (mwjames)
+* (I7c49a644) Gallery format added redirects to enable images to be redirect to another target (mwjames)
+* (bug 38296, Ic9f5e186) Gallery format fixed Special:Ask gallery display error (mwjames)
+* (I338b6b19, I7a0e663b) Gallery format added support for pointing to the subject property in the gallery property parameters using "-"
+* (I762cde6a) Value rank format added template support (mwjames)
+
+; Other improvements
+
+* Added test file support (see SemanticResultFormats/tests/...)
+* All formats have been moved (see SemanticResultFormats/formats/...)
+* Added new folder (SemanticResultFormats/resources/...) where all external plug-ins will be successively been moved
+* Introduce a new array-based syntax to define parameters (see Validator/IParameterDefinition class)
+
+; Bug fixes
+
+* (bug 38258, I10be92c9) Fix authors/editors in bibtex
+
 == SRF 1.7.1 ==
+
+Released on March 8, 2012.
 
 * Fixed issue with the graphlenegd parameter in the graph format (bug 33745).
 * Added 'default' parameter to math formats (bug 34983).
+* Added 'galleryformat' parameter with carousel option (bug 34411) (mwjames)
 
 New formats in this version are:
 * tree, ultree, oltree (written by Stephan Gambke)
@@ -22,13 +78,13 @@ Released on January 1, 2012.
 * Added value distribution support to jqplotpie and jqplotbar.
 * Added min parameter to jqplotbar to set the minimun value for the Y-axis.
 * Added pointlabel parameter to jqplotbar and chartlegend, legendlocation,
-  datalabels and datalabeltype parameters to jqplotpie based on a patches by James Hong Kong.
+  datalabels and datalabeltype parameters to jqplotpie based on a patches by mwjames.
 * Made array and hash formats compatible with 'Array' extension 2.0 and 'HashTables' 1.0.
 * Added summary parameter to the icalendar format.
 
 New formats in this version are:
 * valuerank (written by DaSch)
-* D3Line, D3Bar and D3Treemap (written by James Hong Kong) (requires MW 1.17 or later)
+* D3Line, D3Bar and D3Treemap (written by mwjames) (requires MW 1.17 or later)
 
 == SRF 1.6.2 ==
 

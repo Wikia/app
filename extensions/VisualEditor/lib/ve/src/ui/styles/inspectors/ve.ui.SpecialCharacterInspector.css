@@ -1,0 +1,44 @@
+/*!
+ * ObjectOriented UserInterface SpecialCharacterInspector styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-specialCharacterInspector-spinner {
+	/* There might be a better place for a spinner? */
+	/* @embed */
+	background-image: url(../images/spinner.gif);
+	width: 31px;
+	height: 31px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ve-ui-specialCharacterInspector-list h3 {
+	font-size: 1em;
+	text-transform: capitalize;
+}
+
+.ve-ui-specialCharacterInspector-list-group {
+	white-space: normal;
+}
+
+.ve-ui-specialCharacterInspector-list-character {
+	cursor: pointer;
+	font-size: 1.5em;
+	line-height: 1.5em;
+	width: 1.5em;
+	height: 1.5em;
+	text-align: center;
+	display: inline-block;
+	margin: 0 1px 1px 0;
+	border: 1px solid #e6e6e6;
+	-webkit-transition: border-color 100ms;
+	-moz-transition: border-color 100ms;
+	-o-transition: border-color 100ms;
+	transition: border-color 100ms;
+}
+
+.ve-ui-specialCharacterInspector-list-character:hover {
+	border-color: #ccc;
+}

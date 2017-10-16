@@ -3,6 +3,183 @@
 Security reminder: MediaWiki does not require PHP's register_globals
 setting since version 1.2.0. If you have it on, turn it '''off''' if you can.
 
+== MediaWiki 1.19.24 ==
+
+This is a security and maintenance release of the MediaWiki 1.19 branch.
+
+== Changes since 1.19.23 ==
+
+* (T85848, T71210) SECURITY: Don't parse XMP blocks that contain XML entities,
+  to prevent various DoS attacks.
+* (T88310) SECURITY: Always expand xml entities when checking SVG's.
+* (T73394) SECURITY: Escape > in Html::expandAttributes to prevent XSS.
+* (T85855) SECURITY: Don't execute another user's CSS or JS on preview.
+* (T85349, T85850, T86711) SECURITY: Multiple issues fixed in SVG filtering to
+  prevent XSS and protect viewer's privacy.
+
+== MediaWiki 1.19.23 ==
+
+This is a security and maintenance release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.22 ===
+
+* (bug T76686) [SECURITY] thumb.php outputs wikitext message as raw HTML, which
+  could lead to xss. Permission to edit MediaWiki namespace is required to
+  exploit this.
+* (bug T74222) The original patch for T74222 was reverted as unnecessary.
+* Add missing $ in front of variable in OutputPage.php
+
+== MediaWiki 1.19.22 ==
+
+This is a security and maintenance release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.21 ===
+
+* (bugs 66776, 71478) SECURITY:  User PleaseStand reported a way to inject code
+  into API clients that used format=php to process pages that underwent flash
+  policy mangling. This was fixed along with improving how the mangling was done
+  for format=json, and allowing sites to disable the mangling using
+  $wgMangleFlashPolicy.
+* (bug 72222) SECURITY: Do not show log action when the entry is revdeleted with
+  DELETED_ACTION. NOTICE: this may be reverted in a future release pending a
+  public RFC about the desired functionality. This issue was reported by user
+  Bawolff.
+* (bug 71621) Make allowing site-wide styles on restricted special pages a
+  config option.
+* $wgMangleFlashPolicy was added to make MediaWiki's mangling of anything that
+  might be a flash policy directive configurable.
+
+== MediaWiki 1.19.21 ==
+
+This is a maintenance release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.20 ===
+
+* (bug 67440) Allow classes to be registered properly from installer.
+* (bug 47281) Fixed a dumpBackup.php error with --uploads --include-files
+  options: Unable to find the wrapper "mwstore".
+  System administrators are encouraged to upgrade to this release or 1.22+
+  and produce a full data dump.
+  https://www.mediawiki.org/wiki/Special:MyLanguage/Manual:Backing_up_a_wiki
+* (bug 63049) Removed anonymous functions from ApiFormatBase, added in
+  1.19.13 as part of the fix for bug 61362, for PHP 5.2 compatibility.
+
+== MediaWiki 1.19.20 ==
+
+This is a security release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.19 ===
+* (bug 70672) SECURITY: OutputPage: Remove separation of css and js module
+  allowance.
+
+== MediaWiki 1.19.19 ==
+
+This is a security release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.18 ===
+* (bug 69008) SECURITY: Enhance CSS filtering in SVG files. Filter <style>
+  elements; normalize style elements and attributes before filtering; add
+  checks for attributes that contain css; add unit tests for html5sec and
+  reported bugs.
+
+== MediaWiki 1.19.18 ==
+
+This is a security release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.17 ===
+
+* (bug 68187) SECURITY: Prepend jsonp callback with comment.
+* (bug 65778) SECURITY: Copy prevent-clickjacking between OutputPage and
+  ParserOutput.
+
+== MediaWiki 1.19.17 ==
+
+This is a security and maintenance release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.16 ===
+
+* (bug 65839) SECURITY: Prevent external resources in SVG files.
+* (bug 66428) MimeMagic: Don't seek before BOF. This has weird side effects
+  like only extracting the tail of the file partially or not at all.
+
+== MediaWiki 1.19.16 ==
+
+This is a security release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.15 ===
+
+* (bug 65501) SECURITY: Don't parse usernames as wikitext on
+  Special:PasswordReset.
+
+== MediaWiki 1.19.15 ==
+
+This is a maintenance release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.14 ===
+
+* Fixed resetting passwords.
+* (bug 58640) Fixed a compatibility issue with PCRE 8.34 that caused pages
+  to appear blank or with missing text.
+
+== MediaWiki 1.19.14 ==
+
+This is a security and maintenance release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.13 ===
+
+* (bug 62497) SECURITY: Add CSRF token on Special:ChangePassword.
+* (bug 62467) Set a title for the context during import on the cli.
+
+== MediaWiki 1.19.13 ==
+
+This is a security and maintenance release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.12 ===
+
+* (bug 61362) SECURITY: API: Don't find links in the middle of api.php links.
+* Use the correct branch of the extensions' git repositories.
+
+== MediaWiki 1.19.12 ==
+
+This is a security release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.11 ===
+
+* (bug 60771) SECURITY: Disallow uploading SVG files using non-whitelisted
+  namespaces files. Also disallow iframe elements. User will get an error
+  including the namespace name if they use a non- whitelisted namespace.
+* (bug 61346) SECURITY: Make token comparison use constant time. It seems like
+  our token comparison would be vulnerable to timing attacks. This will take
+  constant time.
+
+== MediaWiki 1.19.11 ==
+
+This is a security release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.10 ===
+* (bug 60339) SECURITY: Sanitize shell arguments to DjVu files, and other media formats
+
+== MediaWiki 1.19.10 ==
+
+This is a security release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.9 ===
+* (bug 57550) SECURITY: Disallow stylesheets in SVG Uploads
+* (bug 58088) SECURITY: Don't normalize U+FF3C to \ in CSS Checks
+* (bug 58472) SECURITY: Disallow -o-link in styles
+* (bug 58553) SECURITY: Return error on invalid XML for SVG Uploads
+* (bug 58699) SECURITY: Fix RevDel log entry information leaks
+
+== MediaWiki 1.19.9 ==
+
+This is a security and maintenance release of the MediaWiki 1.19 branch.
+
+=== Changes since 1.19.8 ===
+* (bug 53032) SECURITY: Don't cache when a call could autocreate
+* (bug 55332) SECURITY: Improve css javascript detection
+* (bug 49717) Fix behaviour $wgVerifyMimeType = false; in Upload
+* Translations
+
 == MediaWiki 1.19.8 ==
 
 This is a security and maintenance release of the MediaWiki 1.19 branch.

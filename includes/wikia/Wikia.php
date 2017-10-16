@@ -20,8 +20,6 @@ $wgHooks['UserRights']               [] = "Wikia::notifyUserOnRightsChange";
 $wgHooks['SetupAfterCache']          [] = "Wikia::setupAfterCache";
 $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
-$wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
-$wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
 $wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
@@ -30,13 +28,13 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
+$wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
+$wgHooks['getUserPermissionsErrors'] [] = 'Wikia::canEditInterfaceWhitelistErrors';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
-//$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
-$wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
 # User hooks
@@ -47,60 +45,65 @@ $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 $wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
 $wgHooks['BeforeRenderTimeline']     [] = "Wikia::onBeforeRenderTimeline";
 
-/**
- * This class have only static methods so they can be used anywhere
- *
- */
+# remove "Temp_file_" from purger queue - BAC-1221
+$wgHooks['LocalFileExecuteUrls']     []  = 'Wikia::onLocalFileExecuteUrls';
 
+# send ETag response header - BAC-1227
+$wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
+
+# Add X-Served-By and X-Backend-Response-Time response headers - BAC-550
+$wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
+$wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
+$wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
+$wgHooks['ApiMainBeforeSendCacheHeaders'][] = 'Wikia::onApiMainBeforeSendCacheHeaders';
+$wgHooks['AjaxResponseSendHeadersAfter'][] = 'Wikia::onAjaxResponseSendHeadersAfter';
+
+# don't purge all variants of articles in Chinese - BAC-1278
+$wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
+
+# don't purge all thumbs - PLATFORM-161
+$wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
+
+$wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
+$wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
+$wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
+
+# handle internal requests - PLATFORM-1473
+$wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
+
+# Log user email changes
+$wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
+
+use Wikia\Tracer\WikiaTracer;
+
+/**
+ * This class has only static methods so they can be used anywhere
+ */
 class Wikia {
 
-	const VARNISH_STAGING_HEADER = 'X-Staging';
-	const VARNISH_STAGING_PREVIEW = 'preview';
-	const VARNISH_STAGING_VERIFY = 'verify';
 	const REQUIRED_CHARS = '0123456789abcdefG';
 
-	private static $vars = array();
+	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
+	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
+	const CORPORATE_WIKI_ID = 80433; // www.wikia.com
+
+	const USER = 'FANDOM';
+	const BOT_USER = 'FANDOMbot';
+
+	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
+
+	const CUSTOM_INTERFACE_PREFIX = 'custom-';
+	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
+	const TAG_INTERFACE_PREFIX = 'tag-';
+	// one for the extension messages, one for the user messages
+	const GADGETS_INTERFACE_PREFIX = 'gadgets-';
+	const GADGET_INTERFACE_PREFIX = 'gadget-';
+
+	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
+	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
+
+	private static $vars = [];
 	private static $cachedLinker;
-
-	private static $apacheHeaders = null;
-
-	/**
-	 * Return the name of staging server (or empty string for production/dev envs)
-	 * @return string
-	 */
-	public static function getStagingServerName() {
-		if ( is_null( self::$apacheHeaders ) ) {
-			self::$apacheHeaders = function_exists('apache_request_headers') ? apache_request_headers() : array();
-		}
-		if ( isset( self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ] ) ) {
-			return self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ];
-		}
-		return '';
-	}
-
-	/**
-	 * Check if we're running on preview server
-	 * @return bool
-	 */
-	public static function isPreviewServer() {
-		return self::getStagingServerName() === self::VARNISH_STAGING_PREVIEW;
-	}
-
-	/**
-	 * Check if we're running on verify server
-	 * @return bool
-	 */
-	public static function isVerifyServer() {
-		return self::getStagingServerName() === self::VARNISH_STAGING_VERIFY;
-	}
-
-	/**
-	 * Check if we're running in preview or verify env
-	 * @return bool
-	 */
-	public static function isStagingServer() {
-		return self::isPreviewServer() || self::isVerifyServer();
-	}
 
 	public static function setVar($key, $value) {
 		Wikia::$vars[$key] = $value;
@@ -119,25 +122,80 @@ class Wikia {
 	}
 
 	/**
-	 * @author inez@wikia.com
+	 * Set some basic wiki variables.  For use in cron jobs and tasks where some wiki
+	 * context is required to construct URLs
+	 *
+	 * @param int $wikiId ID to use as the current wiki
+	 * @param User|int|null $user User object or ID to use as the current user
 	 */
-	function getThemesOfSkin($skinname = 'quartz') {
-		global $wgSkinTheme;
+	public static function initAsyncRequest( $wikiId, $user = null ) {
+		$wg = F::app()->wg;
+		$wg->CityID = $wikiId;
 
-		$themes = array();
+		// Do NOT set $wgDbname here.  The wfGetDB method will no longer do
+		// what you think it should since it pulls from a LoadBalance cache
+		// that likely already has cached DB handles for the previous value
+		$dbName = WikiFactory::IDtoDB( $wikiId );
+		$wg->Server = trim( WikiFactory::DBtoUrl( $dbName ), '/' );
 
-		if(isset($wgSkinTheme) && is_array($wgSkinTheme) && isset($wgSkinTheme[$skinname])) {
-			foreach($wgSkinTheme[$skinname] as $val) {
-				if( $val != 'custom' && ! (isset($wgSkipThemes) && is_array($wgSkipThemes) && isset($wgSkipThemes[$skinname]) && in_array($wgSkipThemes[$skinname],$val))) {
-					$themes[] = $val;
-				}
-			}
+		if ( !empty( $wg->DevelEnvironment ) ) {
+			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
 		}
 
-		return $themes;
+		// Update wgUser if its been set to a reasonable value
+		if ( is_object( $user ) ) {
+			$wg->User = $user;
+		} elseif ( is_numeric( $user ) ) {
+			$wg->User = User::newFromId( $user );
+		}
 	}
 
+	public static function getFaviconFullUrl() {
+		return WikiaDataAccess::cache(
+			wfMemcKey( self::FAVICON_URL_CACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				$faviconFilename = ThemeSettings::FaviconImageName;
+				$localFavicon = wfFindFile( $faviconFilename );
 
+				if ( $localFavicon ) {
+					return $localFavicon->getUrl();
+				}
+
+				// SUS-214: fallback to image in repo instead of Community Central
+				return F::app()->wg->ResourceBasePath . static::DEFAULT_FAVICON_FILE;
+			}
+		);
+	}
+
+	public static function invalidateFavicon() {
+		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
+	}
+
+	/**
+	 * Return either a path to locally-uploaded Wiki.png file or a shared file taken from the code repo
+	 * (if there's no Wiki.png file uploaded on a wiki)
+	 *
+	 * @see SUS-1165
+	 *
+	 * @return mixed an array containing "url" and "size" keys
+	 */
+	public static function getWikiLogoMetadata() {
+		$localWikiLogo = wfLocalFile( 'Wiki.png' );
+
+		if ( $localWikiLogo->exists() ) {
+			return [
+				'url' => $localWikiLogo->getUrl(),
+				'size' => sprintf( '%dx%d', $localWikiLogo->getWidth(), $localWikiLogo->getHeight() )
+			];
+		}
+		else {
+			return [
+				'url' => F::app()->wg->ResourceBasePath . self::DEFAULT_WIKI_LOGO_FILE,
+				'size' => '155x155'
+			];
+		}
+	}
 
     /**
      * successbox
@@ -190,8 +248,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function errormsg($what)
-    {
+    static public function errormsg($what) {
         return Xml::element("span", array( "style"=> "color: #fe0000; font-weight: bold;"), $what);
     }
 
@@ -212,8 +269,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function linkTag($url, $title, $attribs = null )
-    {
+    static public function linkTag($url, $title, $attribs = null ) {
         return Xml::element("a", array( "href"=> $url), $title);
     }
 
@@ -230,8 +286,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function successmsg($what)
-    {
+    static public function successmsg($what) {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
@@ -253,6 +308,8 @@ class Wikia {
      * @return string fixed domain name
      */
 	static public function fixDomainName( $name, $language = false, $type = false ) {
+		global $wgWikiaBaseDomain;
+
 		if (empty( $name )) {
 			return $name;
 		}
@@ -260,133 +317,26 @@ class Wikia {
 		$name = strtolower( $name );
 
 		$parts = explode(".", trim($name));
-		Wikia::log( __METHOD__, "info", "$name $language $type" );
-		if( is_array( $parts ) ) {
-			if( count( $parts ) <= 2 ) {
-				$allowLang = true;
-				switch( $type ) {
-					case "answers":
-						$domains = self::getAnswersDomains();
-						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
-							$name =  sprintf("%s.%s.%s", $name, $domains[$language], "wikia.com");
-							$allowLang = false;
-						} else {
-							$name =  sprintf("%s.%s.%s", $name, $domains["default"], "wikia.com");
-						}
-						break;
+		if( is_array( $parts ) && count( $parts ) <= 2 ) {
+			$allowLang = true;
 
-					default:
-						$name = $name.".wikia.com";
+			if ( $type === 'answers' ) {
+				$domains = self::getAnswersDomains();
+				if ( $language && isset( $domains[$language] ) && !empty( $domains[$language] ) ) {
+					$name = sprintf( "%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain );
+					$allowLang = false;
+				} else {
+					$name = sprintf( "%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain );
 				}
-				if ( $language && $language != "en" && $allowLang ) {
-					$name = $language.".".$name;
-				}
+			} else {
+				$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
+			}
+
+			if ( $language && $language != "en" && $allowLang ) {
+				$name = $language.".".$name;
 			}
 		}
 		return $name;
-	}
-
-
-    /**
-     * addCredits
-     *
-     * add html with credits to xml dump
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia
-     * @author emil@wikia
-     *
-     * @param object $row: Database Row with page object
-     *
-     * @return string: HTML string with credits line
-     */
-    static public function addCredits( $row )
-    {
-		global $wgIwPrefix, $wgExternalSharedDB, $wgAddFromLink;
-
-        $text = "";
-
-		if ( $wgAddFromLink && ($row->page_namespace != 8) && ($row->page_namespace != 10) ) {
-			if (isset($wgIwPrefix)){
-				$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$wgIwPrefix) . '</small></div>';
-			}
-            elseif (isset($wgExternalSharedDB)){
-				global $wgServer,$wgArticlePath,$wgSitename;
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-				$oRow = $dbr->selectRow(
-                    'interwiki',
-                    array( 'iw_prefix' ),
-                    array( 'iw_url' => $wgServer.$wgArticlePath ),
-                    __METHOD__
-                );
-				if ($oRow) {
-					$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$oRow->iw_prefix) . '</small></div>';
-				}
-				else {
-					$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url') . '</small></div>';
-				}
-			}
-            else {
-				$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url') . '</small></div>';
-			}
-		}
-
-        return $text;
-    }
-
-    /**
-     * ImageProgress
-     *
-     * hmtl code with progress image
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia
-     *
-     * @param string $type: type of progress image, default bar
-     *
-     * @return string: HTML string with progress image
-     */
-    static public function ImageProgress( $type = "bar" )
-    {
-        $sImagesCommonPath = wfGetImagesCommon();
-        switch ( $type ) {
-            default:
-                return Xml::element( 'img', array(
-                    "src"    => "{$sImagesCommonPath}/skins/quartz/images/progress_bar.gif", // FIXME: image does not exist
-                    "width"  => 100,
-                    "height" => 9,
-                    "alt"    => ".....",
-                    "border" => 0
-                ));
-        }
-    }
-
-    /**
-     * binphp
-     *
-     * full path to php binary used in background scripts. wikia uses
-     * /opt/wikia/php/bin/php, fp & localhost could use others. Write here Your
-     * additional conditions to check
-     *
-	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
-     * @access public
-     * @static
-     *
-     * @return string: path to php binary
-     */
-	static public function binphp() {
-		wfProfileIn( __METHOD__ );
-
-		$path = ( file_exists( "/opt/wikia/php/bin/php" )
-			&& is_executable( "/opt/wikia/php/bin/php" ) )
-			? "/opt/wikia/php/bin/php"
-			: "/usr/bin/php";
-
-		wfProfileOut( __METHOD__ );
-
-		return $path;
 	}
 
 	/**
@@ -396,10 +346,12 @@ class Wikia {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param String $method     -- use __METHOD__
-	 * @param String $sub        -- sub-section name (if more than one in same method); default false
+	 * @param String|bool $sub   -- sub-section name (if more than one in same method); default false
 	 * @param String $message    -- additional message; default false
 	 * @param Boolean $always    -- skip checking of $wgErrorLog and write log (or not); default false
 	 * @param Boolean $timestamp -- write timestamp before line; default false
+	 *
+	 * @deprecated use WikiaLogger instead
 	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
@@ -407,9 +359,13 @@ class Wikia {
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			// Currently this goes to syslog1's /var/log/httpd-info.log
-			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
+			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
+			\Wikia\Logger\WikiaLogger::instance()->debug( $message, [
+				'exception' => new Exception(),
+				'method' => $method
+			] );
 		}
+
 		/**
 		 * commandline = echo
 		 */
@@ -424,6 +380,11 @@ class Wikia {
 		 * and use wfDebug as well
 		 */
 		if (function_exists("wfDebug")) {
+			if ( $message instanceof Status ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( "Wikia::log \$message is a Status object", [
+					'exception' => new Exception(),
+				]);
+			}
 			wfDebug( $method . ": " . $message . "\n" );
 		} else {
 			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");
@@ -437,6 +398,8 @@ class Wikia {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 *
 	 * @param String $method - use __METHOD__
+	 *
+	 * @deprecated use WikiaLogger instead
 	 */
 	static public function logBacktrace($method) {
 		$backtrace = trim(strip_tags(wfBacktrace()));
@@ -457,6 +420,8 @@ class Wikia {
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 *
 	 * @param String $method - use __METHOD__ as default
+	 *
+	 * @deprecated use WikiaLogger instead
 	 */
 	static public function debugBacktrace($method) {
 		$backtrace = wfDebugBacktrace();
@@ -494,154 +459,25 @@ class Wikia {
 	 * @access public
 	 * @static
 	 *
-	 * @param String $lang  -- language code
+	 * @param String $langCode  -- language code
 	 *
 	 * @return User -- instance of user object
 	 */
 	static public function staffForLang( $langCode ) {
-		wfProfileIn( __METHOD__ );
+		$staffMap = WikiFactory::getVarValueByName( 'wgFounderWelcomeAuthor', Wikia::COMMUNITY_WIKI_ID );
 
-		$staffSigs = wfMsgExt('staffsigs', array('language'=>'en')); // fzy, rt#32053
-
-		$staffUser = false;
-		if( !empty( $staffSigs ) ) {
-			$lines = explode("\n", $staffSigs);
-
-			$data = array();
-			$sectLangCode = '';
-			foreach ( $lines as $line ) {
-				if( strpos( $line, '* ' ) === 0 ) {
-					//language line
-					$sectLangCode = trim( $line, '* ' );
-					continue;
-				}
-				if( strpos( $line, '* ' ) == 1 && $sectLangCode ) {
-					//user line
-					$user = trim( $line, '** ' );
-					$data[$sectLangCode][] = $user;
-				}
-			}
-
-			//did we get any names for our target language?
-			if( !empty( $data[$langCode] ) ) {
-				//pick one
-				$key = array_rand($data[$langCode]);
-
-				//use it
-				$staffUser = User::newFromName( $data[$langCode][$key] );
-				$staffUser->load();
-			}
+		if ( !empty( $staffMap[$langCode] ) && is_array( $staffMap[$langCode] ) ) {
+			$key = array_rand( $staffMap[$langCode] );
+			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
+		} else {
+			// Fallback to robot when there is no explicit welcoming user set (unsupported language)
+			$staffUser = User::newFromName( 'Fandom' );
 		}
 
-		/**
-		 * fallback to Wikia
-		 */
-		if( ! $staffUser ) {
-			$staffUser = User::newFromName( 'Wikia' );
-			$staffUser->load();
-		}
+		$staffUser->load();
 
-		wfProfileOut( __METHOD__ );
 		return $staffUser;
 	}
-
-	/**
-	 * View any string as a hexdump.
-	 *
-	 * This is most commonly used to view binary data from streams
-	 * or sockets while debugging, but can be used to view any string
-	 * with non-viewable characters.
-	 *
-	 * @version     1.3.2
-	 * @author      Aidan Lister <aidan@php.net>
-	 * @author      Peter Waller <iridum@php.net>
-	 * @link        http://aidanlister.com/repos/v/function.hexdump.php
-	 * @param       string  $data        The string to be dumped
-	 * @param       bool    $htmloutput  Set to false for non-HTML output
-	 * @param       bool    $uppercase   Set to true for uppercase hex
-	 * @param       bool    $return      Set to true to return the dump
-	 */
-	static public function hex($data, $htmloutput = true, $uppercase = false, $return = false) {
-		// Init
-		$hexi   = '';
-		$ascii  = '';
-		$dump   = ($htmloutput === true) ? '<pre>' : '';
-		$offset = 0;
-		$len    = strlen($data);
-
-		// Upper or lower case hexadecimal
-		$x = ($uppercase === false) ? 'x' : 'X';
-
-		// Iterate string
-		for ($i = $j = 0; $i < $len; $i++) {
-			// Convert to hexidecimal
-			$hexi .= sprintf("%02$x ", ord($data[$i]));
-
-			// Replace non-viewable bytes with '.'
-			if (ord($data[$i]) >= 32) {
-				$ascii .= ($htmloutput === true) ? htmlentities($data[$i]) : $data[$i];
-			} else {
-				$ascii .= '.';
-			}
-
-			// Add extra column spacing
-			if ($j === 7) {
-				$hexi  .= ' ';
-				$ascii .= ' ';
-			}
-
-			// Add row
-			if (++$j === 16 || $i === $len - 1) {
-				// Join the hexi / ascii output
-				$dump .= sprintf("%04$x  %-49s  %s", $offset, $hexi, $ascii);
-
-				// Reset vars
-				$hexi   = $ascii = '';
-				$offset += 16;
-				$j      = 0;
-
-				// Add newline
-				if ($i !== $len - 1) {
-					$dump .= "\n";
-				}
-			}
-		}
-
-		// Finish dump
-		$dump .= ($htmloutput === true) ? '</pre>' : '';
-		$dump .= "\n";
-
-		// Output method
-		if ($return === false) {
-			echo $dump;
-		} else {
-			return $dump;
-		}
-	}
-
-	/**
-	 * Represents a write lock on the key, based in MessageCache::lock
-	 */
-	static public function lock( $key ) {
-		global $wgMemc;
-		$timeout = 10;
-		$lockKey = wfMemcKey( $key, "lock" );
-		for ($i=0; $i < $timeout && !$wgMemc->add( $lockKey, 1, $timeout ); $i++ ) {
-			sleep(1);
-		}
-
-		return $i >= $timeout;
-	}
-
-	/**
-	 * Unlock a write lock on the key, based in MessageCache::unlock
-	 */
-	static public function unlock($key) {
-		global $wgMemc;
-		$lockKey = wfMemcKey( $key, "lock" );
-		return $wgMemc->delete( $lockKey );
-	}
-
 
 	/**
 	 * A function for making time periods readable
@@ -816,12 +652,6 @@ class Wikia {
 	static public function setupAfterCache() {
 		global $wgTTCache;
 		$wgTTCache = wfGetSolidCacheStorage();
-
-		# setup externalAuth
-		global $wgExternalAuthType, $wgAutocreatePolicy;
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			$wgAutocreatePolicy = 'view';
-		}
 		return true;
 	}
 
@@ -848,42 +678,6 @@ class Wikia {
 		}
 		wfProfileOut(__METHOD__);
 		return $domains;
-	}
-
-	/**
-	 * fixed answers sitenames
-	 */
-	public static function getAnswersSitenames() {
-		global $wgAvailableAnswersLang, $wgContLang;
-		wfProfileIn(__METHOD__);
-		$result = array();
-		$msg = "autocreatewiki-sitename-answers";
-		if ( !empty($wgAvailableAnswersLang) ) {
-			foreach ( $wgAvailableAnswersLang as $lang ) {
-				$sitename = wfMsgExt( $msg, array( "language" => $lang ) );
-				if ( !empty($sitename) && !wfEmptyMsg( $msg, $sitename ) ) {
-					$result[$lang] = $sitename;
-				}
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-
-	/**
-	 * check if domain is valid according to some known standards
-	 * (it is not very strict checking)
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy)
-	 * @access public
-	 * @static
-	 *
-	 * @param String $domain -- domain name for checking
-	 *
-	 * @return Boolean  -- true if valid, false otherwise
-	 */
-	public static function isValidDomain( $domain ) {
-		return (bool )preg_match("/^([a-z0-9]([-a-z0-9]*[a-z0-9])?\\.)+((a[cdefgilmnoqrstuwxz]|aero|arpa)|(b[abdefghijmnorstvwyz]|biz)|(c[acdfghiklmnorsuvxyz]|cat|com|coop)|d[ejkmoz]|(e[ceghrstu]|edu)|f[ijkmor]|(g[abdefghilmnpqrstuwy]|gov)|h[kmnrtu]|(i[delmnoqrst]|info|int)|(j[emop]|jobs)|k[eghimnprwyz]|l[abcikrstuvy]|(m[acdghklmnopqrstuvwxyz]|mil|mobi|museum)|(n[acefgilopruz]|name|net)|(om|org)|(p[aefghklmnrstwy]|pro)|qa|r[eouw]|s[abcdeghijklmnortvyz]|(t[cdfghjklmnoprtvwz]|travel)|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw])$/i", $domain );
 	}
 
 	/* TODO remove when cat_hidden is fixed */
@@ -968,32 +762,6 @@ class Wikia {
 	}
 
 	/**
-	 * Returns true if the currently set skin is Oasis.  Do not call this before the skin
-	 * has been set on wgUser.
-	 */
-	public static function isOasis(){
-		wfProfileIn( __METHOD__ );
-
-		$isOasis = (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis');
-
-		wfProfileOut( __METHOD__ );
-		return $isOasis;
-	}
-
-	/**
-	 * Returns true if the currently set skin is WikiaMobile.  Do not call this before the skin
-	 * has been set on wgUser.
-	 */
-	public static function isWikiaMobile( $skin = null ){
-		wfProfileIn( __METHOD__ );
-
-		$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );
-
-		wfProfileOut( __METHOD__ );
-		return $isWikiaMobile;
-	}
-
-	/**
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
 	 */
 	static public function ComposeMail( /*MailAddress*/ $to, /*String*/&$body, /*String*/&$subject ) {
@@ -1031,23 +799,27 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo, $smwgDefaultStore, $wgEnableSemanticMediaWikiExt;
+
+		$info = [];
 
 		if( !empty( $wgCityId ) ) {
-			$info = "city_id: {$wgCityId}";
+			$info[] = "city_id: {$wgCityId}";
 		}
 		if( empty( $wgDBcluster ) ) {
-			$info .= ", cluster: c1";
+			$info[] = "cluster: c1";
 		}
 		else {
-			$info .= ", cluster: $wgDBcluster";
+			$info[] = "cluster: $wgDBcluster";
 		}
 		if( !empty( $wgWikiaDatacenter ) ) {
-			$info .= ", dc: $wgWikiaDatacenter";
+			$info[] = "dc: $wgWikiaDatacenter";
 		}
-		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
+		if( !empty( $wgEnableSemanticMediaWikiExt ) ) {
+			$info[] = "smw_store: $smwgDefaultStore";
+		}
 
-		$software[ "Internals" ] = $info;
+		$software[ "Internals" ] = join( ', ', $info );
 
 		/**
 		 * obligatory hook return value
@@ -1058,13 +830,10 @@ class Wikia {
 	/**
 	 * get properties for page
 	 * FIXME: maybe it should be cached?
-	 * @static
-	 * @access public
-	 * @param page_id
-	 * @param oneProp if you just want one property, this will return the value only, not an array
-	 * @return Array
+	 * @param $page_id int
+	 * @param $oneProp string if you just want one property, this will return the value only, not an array
+	 * @return mixed
 	 */
-
 	static public function getProps( $page_id, $oneProp = null ) {
 		wfProfileIn( __METHOD__ );
 		$return = array();
@@ -1087,7 +856,7 @@ class Wikia {
 		);
 		while( $row = $dbr->fetchObject( $res ) ) {
 			$return[ $row->pp_propname ] = $row->pp_value;
-			Wikia::log( __METHOD__, "get", "id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}" );
+			wfDebug( __METHOD__ . " id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}\n" );
 		}
 		$dbr->freeResult( $res );
 		wfProfileOut( __METHOD__ );
@@ -1135,30 +904,6 @@ class Wikia {
 	}
 
 	/**
-	 * ignoreUser
-	 * @author tor
-	 *
-	 * marks a user as ignored for the purposes of stats counting, used to ignore test accounts
-	 * hooked up to AddNewAccount
-	 */
-	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgStatsDBEnabled, $wgExternalDatawareDB;
-
-		if ( empty( $wgStatsDBEnabled ) ) {
-			return true;
-		}
-
-		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
-			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-
-				$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );
-			}
-		}
-
-		return true;
-	}
-	/**
 	 * build user authentication key
 	 * @static
 	 * @access public
@@ -1185,11 +930,9 @@ class Wikia {
 			return false;
 		}
 
-		$ts = time();
 		$params = array(
 			'user' 			=> (string) $username,
-			'signature1' 	=> (string) $ts,
-			'token'			=> (string) wfGenerateUnsubToken( $email, $ts ),
+			'token'			=> (string) wfGenerateUnsubToken( $email ),
 		);
 
 		// Generate content verification signature
@@ -1199,7 +942,7 @@ class Wikia {
 		$signature = hash_hmac( $hash_algorithm, $data, $wgWikiaAuthTokenKeys[ 'private' ] );
 
 		// encode public information
-		$public_information = array( $username, $ts, $signature, $wgWikiaAuthTokenKeys[ 'public' ] );
+		$public_information = array( $username, $signature, $wgWikiaAuthTokenKeys[ 'public' ] );
 		$result = strtr( base64_encode( implode( "|", $public_information ) ), '+/=', '-_,' );
 
 		wfProfileOut( __METHOD__ );
@@ -1207,137 +950,34 @@ class Wikia {
 		return $result;
 	}
 
-
-	/**
-	 * Parse given message containing a wikitext list of items and return array of items
-	 *
-	 * @author macbre
-	 */
-	static public function parseMessageToArray($msgName, $forContent = false) {
-		wfProfileIn( __METHOD__ );
-		$items = array();
-		$message = $forContent ? wfMsgForContent($msgName) : wfMsg($msgName);
-
-		if (!wfEmptyMsg($msgName, $message)) {
-			$parsed = explode("\n", $message);
-
-			foreach($parsed as $item) {
-				$items[] = trim($item, ' *');
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $items;
-	}
-	/**
-	 * check user authentication key
-	 * @static
-	 * @access public
-	 * @param array $params
-	 */
-	static public function verifyUserSecretKey( $url, $hash_algorithm = 'sha256' ) {
-		global $wgWikiaAuthTokenKeys;
-		wfProfileIn( __METHOD__ );
-
-		@list( $user, $signature1, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
-
-		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty ( $public_key) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		# verification public key
-		if ( $wgWikiaAuthTokenKeys['public'] == $public_key ) {
-			$private_key = $wgWikiaAuthTokenKeys['private'];
-		} else {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		$oUser = User::newFromName( $user );
-		if ( !is_object($oUser) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		// verify params
-		$email = $oUser->getEmail();
-		$params = array(
-			'user'			=> (string) $user,
-			'signature1'	=> (string) $signature1,
-			'token'			=> (string) wfGenerateUnsubToken( $email, $signature1 )
-		);
-
-		// message to hash
-		$message = serialize( $params );
-
-		// computed signature
-		$hash = hash_hmac( $hash_algorithm, $message, $private_key );
-
-		// compare values
-		if ( $hash != $signature2 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $params;
-	}
-
-
-	/**
-	 * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
-	 * maintanance scripts while something is wrong with performance
-	 *
-	 * @static
-	 * @author Piotr Molski (moli) <moli at wikia-inc.com>
-	 * @param int $maxSleep
-	 * @return null
-	 */
-	static function switchDBToLightMode( $WFLoader ) {
-		// commandline scripts only
-		if ( $WFLoader->mCommandLine ) {
-			// switch db to light mode
-			wfDBLightMode(60);
-		}
-		return true;
-	}
-
-	static public function getAllHeaders() {
-		if ( function_exists( 'getallheaders' ) ) {
-			$headers = getallheaders();
-		} else {
-			$headers = $_SERVER;
-		}
-		return $headers;
-	}
-
 	static public function isUnsubscribed( $to, $body, $subject ) {
 		# Hook moved from SpecialUnsubscribe extension
 		#if this opt is set, fake their conf status to OFF, and stop here.
 		$user = User::newFromName( $to->name );
 
-		if( $user instanceof User && $user->getBoolOption('unsubscribed') ) {
+		if( $user instanceof User && (bool)$user->getGlobalPreference('unsubscribed') ) {
 			return false;
 		}
 
 		return true;
 	}
 
-	static public function allowNotifyOnPageChange ( /* User */ $editor, /* Title */ $title ) {
-		global $wgWikiaBotUsers;
+	/**
+	 * Do not send watchlist emails for edits made by Wikia bot accounts
+	 *
+	 * @param User $editor
+	 * @param Title $title
+	 * @return bool return false if you want to block an email
+	 */
+	static public function allowNotifyOnPageChange ( User $editor, /* Title */ $title ) {
+		global $wgWikiaBotLikeUsers;
 
-		$allow = true;
-		if ( !empty( $wgWikiaBotUsers ) ) {
-			foreach ( $wgWikiaBotUsers as $type => $user ) {
-				if ( $user["username"] == $editor->getName() ) {
-					$allow = false;
-					break;
-				}
-			}
+		if ( in_array( $editor->getName(), $wgWikiaBotLikeUsers)  ) {
+			return false;
 		}
-
-		return $allow;
+		else {
+			return true;
+		}
 	}
 
 	/**
@@ -1466,7 +1106,7 @@ class Wikia {
 	 * @return bool true
 	 */
 	static public function recentChangesSave( $oRC ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport;
+		global $wgCityId, $wgDBname, $wgEnableScribeReport, $wgRequest;
 
 		if ( empty( $wgEnableScribeReport ) ) {
 			return true;
@@ -1478,6 +1118,10 @@ class Wikia {
 
 		$rc_ip = $oRC->getAttribute( 'rc_ip' );
 		if ( is_null( $rc_ip ) ) {
+			return true;
+		}
+
+		if ( !User::isIP( $rc_ip ) ) {
 			return true;
 		}
 
@@ -1497,24 +1141,6 @@ class Wikia {
 		}
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Fallback actions from $wgDisabledActionsWithViewFallback to "view" (BugId:9964)
-	 *
-	 * @author macbre
-	 */
-	static public function onMediaWikiGetAction(MediaWiki $mediaWiki, RequestContext $context) {
-		global $wgDisabledActionsWithViewFallback;
-		$request = $context->getRequest();
-		$action = $request->getVal('action', 'view');
-
-		if ( in_array( $action, $wgDisabledActionsWithViewFallback ) ) {
-			$request->setVal('action', 'view');
-			wfDebug(__METHOD__ . ": '{$action}' action fallbacked to 'view'\n");
 		}
 
 		return true;
@@ -1563,8 +1189,38 @@ class Wikia {
 			}
 		}
 
+		// purge Special:RecentChanges too (SUS-2595)
+		$rcTitle = SpecialPage::getTitleFor('RecentChanges');
+
+		$urls[] = $rcTitle->getInternalURL();
+		$urls[] = $rcTitle->getInternalURL('feed=rss');
+		$urls[] = $rcTitle->getInternalURL('feed=atom');
+
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+	static public function getEnvironmentRobotPolicy(WebRequest $request) {
+		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
+
+		$policy = '';
+
+		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+			$policy = $wgDefaultRobotPolicy;
+		}
+
+		$stagingHeader = $request->getHeader('X-Staging');
+
+		if( !empty($stagingHeader) ) {
+			// we've got special cases like externaltest.* and showcase.* aliases:
+			// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
+			// those cases for backend look like production,
+			// therefore we don't want to base only on environment variables
+			// but on HTML headers as well, see:
+			// https://github.com/Wikia/app/blob/dev/redirect-robots.php#L285
+			$policy = 'noindex,nofollow';
+		}
+		return $policy;
 	}
 
 	/**
@@ -1576,14 +1232,14 @@ class Wikia {
 		$out = $skinTemplate->getOutput();
 		$title = $skinTemplate->getTitle();
 
-		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
-		if (($title instanceof Title) && NS_CATEGORY == $title->getNamespace()) { // FIXME
-			$tpl->set( 'pagetitle', preg_replace("/^{$title->getNsText()}:/", '', $out->getHTMLTitle()));
-		}
-
 		// Pass parameters to skin, see: Login friction project (Marooned)
 		$tpl->set( 'thisurl', $title->getPrefixedURL() );
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
+
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $skinTemplate->getRequest() );
+		if ( !empty( $robotPolicy ) ) {
+			$out->setRobotPolicy( $robotPolicy );
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -1597,8 +1253,8 @@ class Wikia {
 	 * @author macbre
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
-		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss,
+				$wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
@@ -1606,124 +1262,40 @@ class Wikia {
 			wfDebug("Wikia: using resource loader debug mode\n");
 		}
 
+		$wgUseSiteJs = $wgUseSiteJs && $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
+		$wgUseSiteCss = $wgUseSiteCss && $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
+
+		// Don't enable user JS unless explicitly enabled by the user (CE-2509)
+		if ( !$user->getGlobalPreference( 'enableuserjs', false ) ) {
+			$wgAllowUserJs = false;
+		} else {
+			$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
+				$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+		}
+
+		$wgAllowUserCss = $wgAllowUserCss && $request->getBool( 'useusercss',
+			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
+		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
+
 		return true;
 	}
 
 	/**
-	 * ord
-	 * Returns the character id using the approriate encoding
+	 * Detect internal HTTP requests: log them and set a response header to ease debugging
 	 *
-	 * @static
-	 * @access public
-	 * @author Wladyslaw Bodzek
+	 * @see PLATFORM-1473
 	 *
-	 * @param $char string Character
-	 * @param $encoding string [optional] Encoding
-	 *
-	 * @return int Character id
-	 *
+	 * @param WebRequest $request
+	 * @return bool true, it's a hook
 	 */
-	static public function ord( $char, $encoding = 'UTF-8' ) {
-		$char = mb_convert_encoding($char,'UCS-4BE',$encoding);
-		if ($char == '')
-			return false;
+	static public function onWebRequestInitialized( WebRequest $request ) {
+		if ( $request->isWikiaInternalRequest() ) {
+			$requestSource = $request->getHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER );
 
-		return reset(unpack("N",$char));
-	}
-
-	/**
-	 * chr
-	 * Returns the character using the approriate encoding
-	 *
-	 * @static
-	 * @access public
-	 * @author Wladyslaw Bodzek
-	 *
-	 * @param $ord int Character id
-	 * @param $encoding string [optional] Encoding
-	 *
-	 * @return string Character
-	 *
-	 */
-	static public function chr( $ord, $encoding = 'UTF-8' ) {
-		return mb_convert_encoding(pack("N",$ord),$encoding,'UCS-4BE');
-	}
-
-	/**
-	 * This function uses the facebook api to get the open graph id for this domain
-	 *
-	 * @global string $wgServer
-	 * @global string $fbAccessToken
-	 * @global string $fbDomain
-	 * @global MemCachedClientforWiki $wgMemc
-	 * @return int
-	 */
-
-	static public function getFacebookDomainId() {
-		global $wgServer, $fbAccessToken, $fbDomain, $wgMemc;
-
-		if (!$fbAccessToken || !$fbDomain)
-			return false;
-
-		wfProfileIn(__METHOD__);
-		$memckey = wfMemcKey('fbDomainId');
-		$result = $wgMemc->get($memckey);
-		if (is_null($result)) {
-			if (preg_match('/\/\/(\w*)\./',$wgServer,$matches)) {
-				$domain = $matches[1].$fbDomain;
-			} else {
-				$domain = str_replace('http://', '', $wgServer);
-			}
-			$url = 'https://graph.facebook.com/?domain='.$domain;
-			$response = json_decode(Http::get($url));
-			if (isset($response->id)) {
-				$result = $response->id;
-			} else {
-				$result = 0;  // If facebook tells us nothing, don't keep trying, just give up until cache expires
-			}
-			$wgMemc->set($memckey, $result, 60*60*24*7);  // 1 week
-
-		}
-		wfProfileOut(__METHOD__);
-
-		return $result;
-	}
-
-	/**
-	 * informJobQueue
-	 * Send information to the backend script what job was added
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param Integer count of job params
-	 *
-	 * @author Piotr Molski (MoLi)
-	 * @return true
-	 */
-	static public function informJobQueue( /*Integer*/ $job_count = 1 ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport;
-
-		if ( empty( $wgEnableScribeReport ) ) {
-			return true;
-		}
-
-		$params = array(
-			'dbname'	=> $wgDBname,
-			'wiki_id'	=> $wgCityId,
-			'jobs'		=> $job_count
-		);
-
-		try {
-			$message = array(
-				'method' => 'jobqueue',
-				'params' => $params
-			);
-			$data = json_encode( $message );
-			WScribeClient::singleton('trigger')->send($data);
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+			Wikia\Logger\WikiaLogger::instance()->info( 'Wikia internal request', [
+				'source' => $requestSource
+			] );
+			$request->response()->header( 'X-Wikia-Is-Internal-Request: ' . $requestSource );
 		}
 
 		return true;
@@ -1821,18 +1393,7 @@ class Wikia {
 					break;
 			}
 		}
-	}
 
-	// Hook to Construct a tag for newrelic
-	// TEMPORARLY DISABLED
-	// @deprecated
-	static public function onPerformActionNewrelicNameTransaction($output, $article, $title, User $user, $request, $wiki ) {
-		global $wgVersion;
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			$loggedin = $user->isLoggedIn() ? 'user' : 'anon';
-			$action = $wiki->getAction();
-			newrelic_name_transaction( "/action/$action/$loggedin/$wgVersion" );
-		}
 		return true;
 	}
 
@@ -1927,21 +1488,6 @@ class Wikia {
 	}
 
 	/**
-	 * Force article Last-Modified header to include modification time of app and config repos
-	 *
-	 * @param $modifiedTimes array List of components modification time
-	 * @return true
-	 */
-	public static function onOutputPageCheckLastModified( &$modifiedTimes ) {
-		global $IP, $wgWikiaConfigDirectory;
-
-		$modifiedTimes['wikia_app'] = filemtime("$IP/includes/specials/SpecialVersion.php");
-		$modifiedTimes['wikia_config'] = filemtime("$wgWikiaConfigDirectory/CommonSettings.php");
-
-		return true;
-	}
-
-	/**
 	 * Add shared AMD modules
 	 *
 	 * @param $out OutputPage
@@ -1981,10 +1527,20 @@ class Wikia {
 		$output = wfShellExec("identify -regard-warnings {$imageFile} 2>&1", $retVal);
 		wfDebug("Exit code #{$retVal}\n{$output}\n");
 
-		$isValid = ($retVal === 0);
+		/**
+		 * Let's ignore warnings reported by "identify" binary and focus on errors, examples:
+		 *
+		 * identify: Ignoring attempt to set negative chromaticity value `/tmp/Gree.png' @ warning/png.c/MagickPNGWarningHandler/1671.
+		 * identify.im6: no decode delegate for this image format `/tmp/UploadTestExwn06' @ error/constitute.c/ReadImage/544.
+		 *
+		 * @see SUS-1625
+		 */
+		$isValid = strpos( $output, ' @ error/' ) === false; /* no errors reported */
 
 		if (!$isValid) {
-			Wikia::log(__METHOD__, 'failed',  rtrim($output), true);
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [
+				'output' => rtrim($output),
+			] );
 
 			// pass an error to UploadBase class
 			$error = array('verification-error');
@@ -2068,14 +1624,22 @@ class Wikia {
 	/**
 	 * @param $user User
 	 */
-	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
+	public static function invalidateUser( $user, $disabled = false, $keepEmail = true, $ajax = false ) {
 		global $wgExternalAuthType;
 
 		if ( $disabled ) {
+			$userEmail = $user->getEmail();
+			// Optionally keep email in user property
+			if ( $keepEmail && !empty( $userEmail ) ) {
+				$user->setGlobalAttribute( 'disabled-user-email', $userEmail );
+			} elseif ( !$keepEmail ) {
+				// Make sure user property is removed
+				$user->setGlobalAttribute( 'disabled-user-email', null );
+			}
 			$user->setEmail( '' );
-			$user->setPassword( wfGenerateToken() . self::REQUIRED_CHARS );
-			$user->setOption( 'disabled', 1 );
-			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
+			$user->setPassword( null );
+			$user->setGlobalFlag( 'disabled', 1);
+			$user->setGlobalAttribute( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;
 			$user->invalidateEmail();
 			if ( $ajax ) {
@@ -2104,21 +1668,19 @@ class Wikia {
 	static function onAfterSetupLocalFileRepo(Array &$repo) {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
-		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgEnableSwiftFileBackend, $wgUploadPath;
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgUploadPath;
 
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
 		$wgFSSwiftContainer = substr( $path, 0, -7 );
 
-		if ( !empty( $wgEnableSwiftFileBackend ) ) {
-			$repo['backend'] = 'swift-backend';
-			$repo['zones'] = array (
-				'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
-				'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
-				'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
-				'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
-				'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
-			);
-		}
+		$repo['backend'] = 'swift-backend';
+		$repo['zones'] = array (
+			'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+			'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+			'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+			'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+			'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+		);
 
 		return true;
 	}
@@ -2132,13 +1694,361 @@ class Wikia {
 	 * @return bool true - it's a hook
 	 */
 	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
-		global $wgEnableSwiftFileBackend, $wgFSSwiftContainer;
+		global $wgFSSwiftContainer;
 
-		if ( !empty( $wgEnableSwiftFileBackend ) ) {
-			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
-			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
+		$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+		$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
+
+		return true;
+	}
+
+	/**
+	 * Filter-out "Tenp_file_" images from list of URLs to purge
+	 *
+	 * @param File $file image to purge
+	 * @param array $urls URLs to purge generated by MW core
+	 */
+	static function onLocalFileExecuteUrls( File $file, Array &$urls ) {
+		if ( strpos( $file->getName(), 'Temp_file_' ) === 0  && $file->getExtension() === '' ) {
+			wfDebug(__METHOD__ . ": removed {$file->getName()} from the purger queue\n");
+			$urls = [];
 		}
 
 		return true;
 	}
+
+	/**
+	 * Send ETag header with article's last modification timestamp and cache buster
+	 *
+	 * See BAC-1227 for details
+	 *
+	 * @param WikiPage $article
+	 * @param ParserOptions $popts
+	 * @param $eTag
+	 * @author macbre
+	 */
+	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
+		global $wgStyleVersion, $wgUser, $wgCacheEpoch;
+		$touched = $article->getTouched();
+
+		// don't emit the default touched value set in WikiPage class (see CONN-430)
+		if ($touched === '19700101000000') {
+			$eTag = '';
+			return true;
+		}
+
+		// use the same rules as in OutputPage::checkLastModified
+		$timestamps = [
+			'page' => $touched,
+			'user' => $wgUser->getTouched(),
+			'epoch' => $wgCacheEpoch,
+		];
+
+		$eTag = sprintf( '%s-%s', max($timestamps), $wgStyleVersion );
+		return true;
+	}
+
+	/**
+	 * Add response headers with debug data and statistics
+	 *
+	 * @param WebResponse $response
+	 * @author macbre
+	 */
+	private static function addExtraHeaders(WebResponse $response) {
+		global $wgRequestTime;
+		$elapsed = microtime( true ) - $wgRequestTime;
+
+		$response->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
+		$response->header( sprintf( 'X-Backend-Response-Time: %01.3f', $elapsed ) );
+
+		$response->header( sprintf( 'X-Trace-Id: %s', WikiaTracer::instance()->getTraceId() ) );
+		$response->header( sprintf( 'X-Span-Id: %s', WikiaTracer::instance()->getSpanId() ) );
+
+		$response->header( sprintf( 'X-Request-Path: %s', WikiaTracer::instance()->getRequestPath() ) );
+
+		$response->header( 'X-Cache: ORIGIN' );
+		$response->header( 'X-Cache-Hits: ORIGIN' );
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
+	 *
+	 * See BAC-550 for details
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $sk
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onBeforeSendCacheControl(OutputPage $out) {
+		self::addExtraHeaders( $out->getRequest()->response() );
+		return true;
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to ResourceLoader
+	 *
+	 * See BAC-1319 for details
+	 *
+	 * @param ResourceLoader $rl
+	 * @param ResourceLoaderContext $context
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onResourceLoaderAfterRespond(ResourceLoader $rl, ResourceLoaderContext $context) {
+		self::addExtraHeaders( $context->getRequest()->response() );
+		return true;
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to wikia.php
+	 *
+	 * @param WikiaApp $app
+	 * @param WikiaResponse $response
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onNirvanaAfterRespond(WikiaApp $app, WikiaResponse $response) {
+		self::addExtraHeaders( $app->wg->Request->response() );
+		return true;
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to api.php
+	 *
+	 * @param WebResponse $response
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onApiMainBeforeSendCacheHeaders( WebResponse $response ) {
+		self::addExtraHeaders( $response );
+		return true;
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
+	 *
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onAjaxResponseSendHeadersAfter() {
+		self::addExtraHeaders( F::app()->wg->Request->response() );
+		return true;
+	}
+
+	/**
+	 * Purge a limited set of language variants on Chinese wikis
+	 *
+	 * See BAC-1278 / BAC-698 for details
+	 *
+	 * @param Language $contLang
+	 * @param array $variants
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onTitleGetLangVariants(Language $contLang, Array &$variants) {
+		switch($contLang->getCode()) {
+			case 'zh':
+				// skin displays links to these variants only
+				$variants = ['zh-hans', 'zh-hant'];
+				break;
+		}
+
+		return true;
+	}
+
+	/**
+	 * No neeed to purge all thumbnails
+	 *
+	 * @author macbre
+	 * @see PLATFORM-161
+	 * @see PLATFORM-252
+	 *
+	 * @param LocalFile $file
+	 * @param array $urls thumbs to purge
+	 * @return bool
+	 */
+	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
+		// purge only the first thumbnail
+		$urls = array_slice($urls, 0, 1);
+
+		return true;
+	}
+
+	/**
+	 * Restrict editinterface right to whitelist
+	 * set $result true to allow, false to deny, leave alone means don't care
+	 * usually return true to allow processing other hooks
+	 * return false stops permissions processing and we are totally decided (nothing later can override)
+	 */
+	static function canEditInterfaceWhitelist(
+		Title $title, User $wgUser, string $action, &$result
+	): bool {
+		global $wgEditInterfaceWhitelist;
+
+		// Allowed actions at this point
+		$allowedActions = [
+			'read',
+			'move', // Is being checked in next hook canEditInterfaceWhitelistErrors
+			'undelete' // Is being checked in next hook canEditInterfaceWhitelistErrors
+		];
+
+		// List the conditions we don't care about for early exit
+		if ( in_array( $action, $allowedActions )
+			|| $title->getNamespace() != NS_MEDIAWIKI
+		) {
+			return true;
+		}
+
+		// Allow trusted users to edit interface messages (util, vstf, select admins)
+		if ( $wgUser->isAllowed( 'editinterfacetrusted' ) ) {
+			return true;
+		}
+
+		if ( $action === 'delete' && $wgUser->isAllowed( 'deleteinterfacetrusted' ) ) {
+			return true;
+		}
+
+		// In this NS, editinterface applies only to white listed pages
+		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
+			|| $title->isCssPage()
+			|| ( Wikia::isUsingSafeJs() && $title->isJsPage() )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::EDITNOTICE_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::TAG_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::GADGETS_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::GADGET_INTERFACE_PREFIX )
+		) {
+			return $wgUser->isAllowed( 'editinterface' );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Rights checks for MediaWiki namespace
+	 * Prepares error message to throw when user is not allowed to do action within MediaWiki namespace
+	 * @param Title $title Title on which action will be performed
+	 * @param User $user User that wants to perform action
+	 * @param $action action to perform
+	 * @param $result Allows to pass error. Set $result true to allow, false to deny, leave alone means don't care
+	 * @return bool False to break flow to throw an error, true to continue
+	 */
+	public static function canEditInterfaceWhitelistErrors( \Title $title, \User $user, $action, &$result ) {
+		global $wgEditInterfaceWhitelist;
+
+		if ( $title->inNamespace( NS_MEDIAWIKI )
+			&& !$user->isAllowed( 'editinterfacetrusted' )
+		) {
+			// Restrict move
+			if ( $action === 'move' ) {
+				$result = [ \PermissionsError::prepareBadAccessErrorArray( 'editinterfacetrusted' ) ];
+				return false;
+			}
+
+			// Restrict undelete
+			if ( $action === 'undelete' && !in_array( $title->getDBKey(), $wgEditInterfaceWhitelist ) ) {
+				$result = [ \PermissionsError::prepareBadAccessErrorArray( 'editinterfacetrusted' ) ];
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Displays a warning when viewing site JS pages if JavaScript is disabled
+	 * on the wikia.
+	 *
+	 * @param  OutputPage $out  The OutputPage object
+	 * @param  Skin       $skin The Skin object that will be used to render the page.
+	 * @return boolean
+	 */
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		global $wgUseSiteJs;
+		$title = $out->getTitle();
+
+		if ( !$wgUseSiteJs && $title->isJsPage() ) {
+			\BannerNotificationsController::addConfirmation( wfMessage( 'usesitejs-disabled-warning' )->parse(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Add a preference for enabling personal JavaScript.
+	 *
+	 * @param  User    $user        The current user.
+	 * @param  array   $preferences The preferences array.
+	 * @return boolean
+	 */
+	public static function onGetPreferences( User $user, array &$preferences ) {
+		$preferences['enableuserjs'] = array(
+			'type' => 'toggle',
+			'label-message' => 'tog-enableuserjs',
+			'section' => 'under-the-hood/advanced-displayv2',
+		);
+		return true;
+	}
+
+	/**
+	 * Checks if a wikia is using safe mechanisms for using and editing custom JS pages.
+	 * @return bool
+	 */
+	public static function isUsingSafeJs() {
+		global $wgUseSiteJs, $wgEnableContentReviewExt;
+
+		return !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt );
+	}
+
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts, Skin $skin ) {
+		global $wgWikiDirectedAtChildrenByFounder;
+
+		if ( !empty( $wgWikiDirectedAtChildrenByFounder ) ) {
+			$vars['wgWikiDirectedAtChildrenByFounder'] = $wgWikiDirectedAtChildrenByFounder;
+		}
+
+		if ( self::isUsingSafeJs() ) {
+			$vars['wgUseSiteJs'] = true;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook for storing historical log of email changes
+	 * Depends on the central user_email_log table defined in the EditAccount extension
+	 * @return bool
+	 */
+	public static function logEmailChanges($user, $new_email, $old_email) {
+		global $wgExternalSharedDB, $wgUser, $wgRequest;
+		if ( $wgExternalSharedDB && isset( $new_email ) && isset( $old_email ) ) {
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			$dbw->insert(
+				'user_email_log',
+				['user_id' => $user->getId(),
+				 'old_email' => $old_email,
+				 'new_email' => $new_email,
+				 'changed_by_id' => $wgUser->getId(),
+				 'changed_by_ip' => $wgRequest->getIP()		// stored as string
+				]);
+		}
+		return true;
+	}
+
+	public static function surrogateKey( $args ) {
+		global $wgCachePrefix;
+
+		return 'mw-' . implode( '-', [ $wgCachePrefix ?: wfWikiID(), implode( '-', func_get_args() ) ] );
+	}
+
+	public static function sharedSurrogateKey( $args ) {
+		return 'mw-' . implode( '-', func_get_args() );
+	}
+
+	public static function purgeSurrogateKey( $key ) {
+		CeleryPurge::purgeBySurrogateKey( $key );
+	}
+
 }

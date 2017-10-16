@@ -16,6 +16,7 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
+
 		if ( $request->getText( 'userloginext01', '' ) != '' ) {
 			$this->mUsername = $request->getText( 'userloginext01', '' );
 		}
@@ -51,41 +52,24 @@ class UserLoginForm extends LoginForm {
 		$this->wpUserBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
 	}
 
-	// add new account
+	/**
+	 * Adds a new user account and sends a confirmation email.
+	 *
+	 * @return User an instance of User on success; null otherwise.
+	 * @throws PermissionsError
+	 * @throws ReadOnlyError
+	 */
 	public function addNewAccount() {
 		$u = $this->addNewAccountInternal();
-		if( $u == null )
-			return false;
 
-		// send confirmation email
-		$userLoginHelper = new UserLoginHelper();
-		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername, $u );
-		$this->mainLoginForm( $result['msg'], $result['result'] );
+		if ( $u instanceof User ) {
+			// send confirmation email
+			$userLoginHelper = new UserLoginHelper();
+			$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
+			$this->mainLoginForm( $result['msg'], $result['result'] );
+		}
 
 		return $u;
-	}
-
-	// add new accout by proxy
-	public function addNewAccountMailPassword() {
-		$u = $this->addNewAccountInternal();
-		if ($u == null) {
-			return false;
-		}
-
-		// add log
-		$userLoginHelper = (new UserLoginHelper);
-		$userLoginHelper->addNewUserLogEntry( $u, true );
-
-		// mail temporary password
-		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array('language' => $u->getOption('language'), 'type' => 'account-creation-email') );
-		$result = $this->mailPasswordInternal( $u, false, 'usersignup-account-creation-email-subject', 'usersignup-account-creation-email-body', $emailTextTemplate );
-		if( !$result->isGood() ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
-			return false;
-		} else {
-			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->mUsername )->parse(), 'success' );
-			return $u;
-		}
 	}
 
 	// initial validation for username
@@ -97,14 +81,14 @@ class UserLoginForm extends LoginForm {
 		}
 
 		// check username length
-		if( !User::isNotMaxNameChars($this->mUsername) ) {
+		if ( !User::isNotMaxNameChars( $this->mUsername ) ) {
 			global $wgWikiaMaxNameChars;
 			$this->mainLoginForm( wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped(), 'error', 'username' );
 			return false;
 		}
 
 		// check valid username
-		if( !User::getCanonicalName( $this->mUsername, 'creatable' ) ) {
+		if ( !User::getCanonicalName( $this->mUsername, 'creatable' ) ) {
 			$this->mainLoginForm( wfMessage( 'usersignup-error-symbols-in-username' )->escaped(), 'error', 'username' );
 			return false;
 		}
@@ -114,7 +98,7 @@ class UserLoginForm extends LoginForm {
 
 		if ( $result === true ) {
 			$msgKey = '';
-			if ( !wfRunHooks('cxValidateUserName', array($this->mUsername, &$msgKey)) ) {
+			if ( !Hooks::run( 'cxValidateUserName', array( $this->mUsername, &$msgKey ) ) ) {
 				$result = $msgKey;
 			}
 		}
@@ -122,11 +106,11 @@ class UserLoginForm extends LoginForm {
 		if ( $result !== true ) {
 			$msg = '';
 			if ( $result == 'userlogin-bad-username-taken' ) {
-				$msg = wfMessage('userlogin-error-userexists')->escaped();
+				$msg = wfMessage( 'userlogin-error-userexists' )->escaped();
 			} else if ( $result == 'userlogin-bad-username-character' ) {
-				$msg = wfMessage('usersignup-error-symbols-in-username')->escaped();
+				$msg = wfMessage( 'usersignup-error-symbols-in-username' )->escaped();
 			} else if ( $result == 'userlogin-bad-username-length' ) {
-				$msg = wfMessage('usersignup-error-username-length', $app->wg->WikiaMaxNameChars)->escaped();
+				$msg = wfMessage( 'usersignup-error-username-length', $app->wg->WikiaMaxNameChars )->escaped();
 			} else {
 				$msg = $result;
 			}
@@ -147,7 +131,7 @@ class UserLoginForm extends LoginForm {
 		}
 
 		// check password length
-		if( !User::isNotMaxNameChars($this->mPassword) ) {
+		if ( !User::isNotMaxNameChars( $this->mPassword ) ) {
 			$this->mainLoginForm( wfMessage( 'usersignup-error-password-length' )->escaped(), 'error', 'password' );
 			return false;
 		}
@@ -165,7 +149,7 @@ class UserLoginForm extends LoginForm {
 
 		// check valid age
 		$userBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
-		if( $userBirthDay > strtotime('-13 years') ) {
+		if ( $userBirthDay > strtotime( '-13 years' ) ) {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'birthday' );
 			return false;
 		}
@@ -176,13 +160,13 @@ class UserLoginForm extends LoginForm {
 	// initial validation for email
 	public function initValidationEmail() {
 		// check empty email
-		if ( $this->mEmail == '') {
+		if ( $this->mEmail == '' ) {
 			$this->mainLoginForm( wfMessage( 'usersignup-error-empty-email' )->escaped(), 'error', 'email' );
 			return false;
 		}
 
 		// check email format
-		if( !Sanitizer::validateEmail( $this->mEmail ) ) {
+		if ( !Sanitizer::validateEmail( $this->mEmail ) ) {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-invalidemailaddress' )->escaped(), 'error', 'email' );
 			return false;
 		}
@@ -196,74 +180,72 @@ class UserLoginForm extends LoginForm {
 	 * @return bool
 	 */
 	public function initValidationRegsPerEmail() {
-		global $wgAccountsPerEmail, $wgMemc;
-
 		$sEmail = $this->mEmail;
-		if ( isset( $wgAccountsPerEmail )
-			&& is_numeric( $wgAccountsPerEmail )
-			&& !UserLoginHooksHelper::isWikiaEmail( $sEmail )
-		) {
-			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
-			$count = $wgMemc->get($key);
-			if ( $count !== false
-				&& (int)$count >= (int)$wgAccountsPerEmail
-			) {
-				$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
-				return false;
-			}
+		$result = UserLoginHelper::withinEmailRegLimit( $sEmail );
+		if ( !$result ) {
+			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
 		}
-		return true;
+		return $result;
 	}
 
+	/**
+	 * Adds a user account going through all MW built-in checks.
+	 *
+	 * @return bool|User an instance of User on success, boolean false otherwise.
+	 * @throws PermissionsError
+	 * @throws ReadOnlyError
+	 */
 	public function addNewAccountInternal() {
-		if (!$this->initValidationUsername()) {
+		if ( !$this->initValidationUsername() ) {
 			return false;
 		}
 
-		if (!$this->initValidationEmail()) {
+		if ( !$this->initValidationEmail() ) {
 			return false;
 		}
 
-		if (!$this->initValidationPassword()) {
+		if ( !$this->initValidationPassword() ) {
 			return false;
 		}
 
-		if (!$this->initValidationBirthdate()) {
+		if ( !$this->initValidationBirthdate() ) {
 			return false;
 		}
 
 		return parent::addNewAccountInternal();
 	}
 
-	public function mainLoginForm( $msg, $msgtype = 'error', $errParam='' ) {
+	public function mainLoginForm( $msg, $msgtype = 'error', $errParam = '' ) {
 		$this->msgType = $msgtype;
 		$this->msg = $msg;
 		$this->errParam = $errParam;
 	}
 
-	public function initUser( $u, $autocreate, $skipConfirm = false ) {
+	public function initUser( User &$u, $autocreate, $skipConfirm = false ) {
 		global $wgCityId;
-		$u = parent::initUser( $u, $autocreate );
+		if ( ! parent::initUser( $u, $autocreate ) ) {
+			return false;
+		}
 
 		if ( $skipConfirm === false ) {
-			//Set properties that will require user to confirm email after signup
-			$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
-			$u->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
-			$u->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, $wgCityId );
+			// Set properties that will require user to confirm email after signup
+			$u->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
+			$u->setGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
+			$u->setGlobalFlag( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, $wgCityId );
 			$u->saveSettings();
 			UserLoginHelper::setNotConfirmedUserSession( $u->getId() );
 		}
 
-		wfRunHooks( 'AddNewAccount', array( $u, false ) );
+		Hooks::run( 'AddNewAccount', array( $u, false ) );
 
-		return $u;
+		return true;
 	}
 
 	public function userNotPrivilegedMessage() {
 		$this->mainLoginForm( wfMessage( 'userlogin-error-user-not-allowed' )->escaped() );
 	}
 
-	public function userBlockedMessage(Block $block) {
+	public function userBlockedMessage( Block $block ) {
 		$this->mainLoginForm( wfMessage( 'userlogin-error-cantcreateaccount-text' )->escaped() );
 	}
 
@@ -280,10 +262,9 @@ class UserLoginForm extends LoginForm {
 	 * @return bool
 	 */
 	public function EmptySpamFields() {
-		if( empty( $this->fakeUsername) && empty( $this->fakePassword ) ) {
+		if ( empty( $this->fakeUsername ) && empty( $this->fakePassword ) ) {
 			return true;
 		}
 		return false;
 	}
-
 }

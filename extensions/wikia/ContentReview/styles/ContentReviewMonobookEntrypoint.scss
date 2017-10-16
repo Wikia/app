@@ -1,0 +1,53 @@
+@import 'ContentReviewVariables';
+
+/* Monobook review status entrypoint styles */
+#p-cactions {
+	.content-review-status-link {
+		background-color: red;
+	}
+
+	.content-review-status {
+		position: relative;
+		font-weight: bold;
+		&::after {
+			content: '';
+			border-radius: 50%;
+			width: 8px;
+			height: 8px;
+			background-color: red;
+			position: absolute;
+			right: 8px;
+			top: calc(50% - 5px);
+			/* Make z-index higher than on for parent (#p-cactions li a:hover) defined in skins/monobook/main.css */
+			z-index: 4;
+		}
+	}
+
+	.content-review-status {
+		padding-right: 15px;
+	}
+
+	.content-review-cactions-status-none::after {
+		background-color: $content-review-color-none;
+	}
+
+	.content-review-cactions-status-approved::after {
+		background-color: $content-review-color-approved;
+	}
+
+	.content-review-cactions-status-live::after {
+		background-color: $content-review-color-live;
+	}
+
+	.content-review-cactions-status-rejected::after {
+		background-color: $content-review-color-rejected;
+	}
+
+	.content-review-cactions-status-unsubmitted::after {
+		background-color: $content-review-color-unsubmitted;
+	}
+
+	.content-review-cactions-status-awaiting::after {
+		background-color: $content-review-color-awaiting;
+	}
+}

@@ -8,16 +8,24 @@ Latest version of the install file: http://svn.wikimedia.org/viewvc/mediawiki/tr
 
 Semantic Maps requires:
 
-* Maps with the same version as this release of Semantic Maps
-** Validator 0.4.11 or above
-** MediaWiki 1.17 or above
-* PHP 5.2 or above, 5.3 or above recommended
+* PHP 5.3 or above
 * Semantic MediaWiki 1.7 or above
+* Maps with the same version as this release of Semantic Maps
+** Validator 0.4.13 or above
+** MediaWiki 1.18 or above
 
 Semantic Maps also extensions these extensions when installed:
 
 * Semantic Forms (2.2 or later)
 * Admin Links (any version)
+
+Not up to specs yet? Maybe you can use Semantic Maps 1.0.x which requires:
+
+* PHP 5.2 or above
+* Semantic MediaWiki 1.7 or above for SM 1.0.5 or SMW 1.6.x > 1.6.0 for SM 1.0 to 1.0.4.
+* Maps with the same version as the release of Semantic Maps
+** Validator 0.4.11 or above
+** MediaWiki 1.17 or above
 
 == Download ==
 

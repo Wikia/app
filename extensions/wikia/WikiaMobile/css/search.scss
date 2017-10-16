@@ -1,5 +1,5 @@
 #wkSrhTgl {
-	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_search.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_search.png'); /* inline */
 }
 
 #wkSrhFrm{
@@ -75,8 +75,10 @@
 	background-position: center;
 	background-size: 40%;
 	-webkit-transition: opacity .3s;
+	-moz-transition: opacity .3s;
+	transition: opacity .3s;
 
-	&.hide {
+	.hide-clear > & {
 		opacity: 0;
 		pointer-events: none;
 	}

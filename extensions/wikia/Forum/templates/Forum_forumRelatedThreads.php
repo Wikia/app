@@ -1,23 +1,33 @@
-<?php if($showModule): ?>
-	<section class="module WikiaActivityModule ForumActivityModule">
-		<h1><?= wfMessage( 'forum-related-module-heading' )->escaped(); ?></h1>
-		<ul>
-			<?php foreach($messages as $message): ?>
-			<li>
-				<?= AvatarService::renderAvatar($message['message']->getUser()->getName(), 20); ?>
-				<em>
-					<a href="<?= $message['message']->getMessagePageUrl(); ?>"><?= $message['message']->getMetaTitle(); ?></a>
-				</em>
-				<div class="edited-by">
+<?php if ( $showModule ) { ?>
+	<section class="rail-module activity-module forum-activity-module" id="ForumRelatedThreadsModule">
+		<h2><?= wfMessage( 'forum-related-module-heading' )->escaped() ?></h2>
+		<ul class="activity-items">
+			<?php foreach ( $messages as $message ) { ?>
+			<li class="activity-item">
+				<?php
+					$messageLast = empty( $message['reply'] ) ? $message['message'] : $message['reply'];
+					$username = User::isIp( $messageLast->getUser()->getName() ) ? wfMessage( 'oasis-anon-user' )->escaped() : htmlspecialchars( $messageLast->getUser()->getName() );
+				?>
 
-					<?php $messageLast = empty($message['reply']) ? $message['message']:$message['reply'];  ?>
+				<a class="activity-avatar" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>">
+					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $messageLast->getUser()->getName(), 30 ) ?>" data-tracking="activity-avatar" title="<?= $username ?>" />
+				</a>
 
-					<?php $user = '<a href="'.$messageLast->getUser()->getUserPage()->getFullUrl().'">'.$messageLast->getUser()->getName().'</a>'; ?>
-					<?php $time = '<span class="timeago abstimeago" title="'.$messageLast->getCreateTime().'" alt="'.$messageLast->getCreateTime(TS_MW).'">&nbsp;</span>' ?>
-					<?= wfMessage( !empty($message['reply']) ? 'forum-activity-module-posted' : 'forum-activity-module-started' )->rawParams( $user, $time )->escaped(); ?>
+				<div class="activity-info">
+					<div class="page-title">
+						<a href="<?= Sanitizer::encodeAttribute( $message['message']->getMessagePageUrl() ); ?>" title="<?= Sanitizer::encodeAttribute( $message['message']->getMetaTitle() ); ?>" data-tracking="activity-title">
+							<?= htmlspecialchars( $message['message']->getMetaTitle() ); ?>
+						</a>
+					</div>
+					<div class="edit-info">
+						<a class="edit-info-user" href="<?= $messageLast->getUser()->getUserPage()->getFullUrl() ?>" data-tracking="activity-username">
+							<?= $username ?>
+						</a>
+						<span class="edit-info-time"> • <?= wfTimeFormatAgo( $messageLast->getCreateTime() ) ?></span>
+					</div>
 				</div>
 			</li>
-			<?php endforeach; ?>
+			<?php } ?>
 		</ul>
 	</section>
-<?php endif; ?>
+<?php } ?>

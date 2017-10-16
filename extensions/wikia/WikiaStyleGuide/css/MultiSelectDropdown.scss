@@ -1,11 +1,9 @@
 /* MultiSelectDropdown depends on Dropdown */
 
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/mixins/arrow";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
+@import "skins/shared/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/box-shadow";
 
 @import "DropdownColors";
 

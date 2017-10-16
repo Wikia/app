@@ -49,7 +49,7 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 					'name' => 'username',
 					'isRequired' => true,
 					'label' => $this->msg( 'coppatool-label-username' )->escaped(),
-					'value' => $this->userName,
+					'value' => Sanitizer::encodeAttribute( $this->userName ),
 				],
 				[
 					'type' => 'submit',
@@ -73,7 +73,7 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 						[ 'href' => '#' ],
 						$this->msg( 'coppatool-disable' )->escaped()
 					),
-					'done' => $userObj->getOption( 'disabled', false ),
+					'done' => $userObj->getGlobalFlag( 'disabled', false ),
 				];
 				$this->buttons[] = [
 					'buttonAction' => 'blank-profile',
@@ -89,6 +89,17 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 						'a',
 						[ 'href' => '#' ],
 						$this->msg( 'coppatool-delete-user-pages' )->escaped()
+					),
+				];
+				
+				$this->buttons[] = [
+					'buttonAction' => 'coppa-staticimagereview',
+					'buttonLink' => Linker::makeExternalLink(
+                        			"http://www.wikia.com/image-review/coppa/" . $this->userName,
+                       				 $this->msg( 'coppatool-staticimagereview' )->escaped(),
+                       				 true,
+                        			'',
+                       				[ 'target' => '_blank' ]
 					),
 				];
 			} else {

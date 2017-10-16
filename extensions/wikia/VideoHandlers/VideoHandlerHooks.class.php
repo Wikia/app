@@ -3,17 +3,6 @@ class VideoHandlerHooks {
 
 	const VIDEO_WIKI = 298117;
 
-	static public function WikiaVideoNewImagesBeforeQuery( &$where ) {
-		$where[] = 'img_media_type != \'VIDEO\'';
-		$where[] = 'img_major_mime != \'video\'';
-		$where[] = 'img_media_type != \'swf\'';
-		return true;
-	}
-
-	static public function WikiaVideo_isMovable( $result, $index ) {
-		return true;
-	}
-
 	static public function WikiaVideoParserBeforeStrip( $parser, &$text, $strip_state ) {
 
 		global $wgWikiaVideoGalleryId, $wgRTEParserEnabled;
@@ -57,24 +46,6 @@ class VideoHandlerHooks {
 		return true;
 	}
 
-	/**
-	 * @param OutputPage $out
-	 * @param $skin
-	 * @return bool
-	 */
-	static public function onBeforePageDisplay( $out, $skin ) {
-		wfProfileIn(__METHOD__);
-
-		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
-			// not used on mobileskin
-			// part of oasis skin so not needed there
-			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/VideoHandlers/css/VideoHandlers.scss' ) );
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
 	static public function onSetupAfterCache( ) {
 		global $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory,
@@ -94,7 +65,7 @@ class VideoHandlerHooks {
 			'backend' => 'local-backend',
 		);
 
-		wfRunHooks( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
+		Hooks::run( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
 		return true;
 	}
 
@@ -109,8 +80,8 @@ class VideoHandlerHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	static public function initParserHook( &$parser ) {
-		$parser->setHook('videogallery', array($parser, 'renderImageGallery'));
+	static public function initParserHook( Parser $parser ): bool {
+		$parser->setHook( 'videogallery', [ 'CoreTagHooks', 'gallery' ] );
 		return true;
 	}
 
@@ -167,7 +138,7 @@ class VideoHandlerHooks {
 		return false;
 	}
 
-	static public function convertOldInterwikiToNewInterwiki( &$parser, &$text ) {
+	static public function convertOldInterwikiToNewInterwiki( Parser $parser, string &$text ): bool {
 		global $wgRTEParserEnabled;
 		if ( $wgRTEParserEnabled ) {
 			return true;
@@ -201,7 +172,7 @@ class VideoHandlerHooks {
 	 * @param File $cacheEntry
 	 * @return true
 	 */
-	public function onFindRedirectedFile( $repos, $title, $options, $useCache, &$file, &$cacheEntry ) {
+	public static function onFindRedirectedFile( $repos, $title, $options, $useCache, &$file, &$cacheEntry ) {
 		$redirect = RepoGroup::singleton()->getLocalRepo()->checkRedirect( $title );
 		if ( $redirect instanceof Title && $redirect->getNamespace() == NS_FILE && $title->getDBKey() != $redirect->getDBKey() ) {
 			foreach ( $repos as $repo ) {
@@ -213,6 +184,37 @@ class VideoHandlerHooks {
 				}
 			}
 		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: update options for Http request (uploading video only)
+	 * @param array $options
+	 * @return true
+	 */
+	public static function onUploadFromUrlReallyFetchFile( &$options ) {
+		// check if proxy is disabled
+		if ( !empty( F::app()->wg->DisableProxy ) ) {
+			$options['noProxy'] = true;
+			// reset to default
+			F::app()->wg->DisableProxy = false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * SUS-81: bind to hooks that are triggered when clearing the video_info cache
+	 *
+	 * This allow us to purge the cached responses of getVideoList method when a video is added / re-uploaded / deleted.
+	 *
+	 * @param VideoInfo $video
+	 * @return bool
+	 */
+	public static function clearVideoCache( VideoInfo $video ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
+		Wikia::purgeSurrogateKey( VideoHandlerController::getVideoListSurrogateKey() );
 
 		return true;
 	}

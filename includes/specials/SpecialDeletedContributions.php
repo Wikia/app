@@ -71,9 +71,13 @@ class DeletedContribsPager extends IndexPager {
 	}
 
 	function getUserCond() {
-		$condition = array();
-
-		$condition['ar_user_text'] = $this->target;
+		$condition = [];
+		$uid = User::idFromName( $this->target );
+		if ( empty( $uid ) ) {
+			$condition[ 'ar_user_text' ] = $this->target;
+		} else {
+			$condition[ 'ar_user' ] = $uid;
+		}
 		$index = 'usertext_timestamp';
 
 		return array( $index, $condition );
@@ -133,12 +137,11 @@ class DeletedContribsPager extends IndexPager {
 	 */
 	function formatRow( $row ) {
 		wfProfileIn( __METHOD__ );
-
 		$rev = new Revision( array(
 				'id'         => $row->ar_rev_id,
 				'comment'    => $row->ar_comment,
 				'user'       => $row->ar_user,
-				'user_text'  => $row->ar_user_text,
+				'user_text' => User::getUsername( $row->ar_user, $row->ar_user_text ),
 				'timestamp'  => $row->ar_timestamp,
 				'minor_edit' => $row->ar_minor_edit,
 				'deleted'    => $row->ar_deleted,
@@ -229,7 +232,6 @@ class DeletedContribsPager extends IndexPager {
 		}
 
 		$ret = Html::rawElement( 'li', array(), $ret ) . "\n";
-
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -354,7 +356,9 @@ class DeletedContributionsPage extends SpecialPage {
 			$tools[] = Linker::link( $talk, $this->msg( 'sp-contributions-talk' )->escaped() );
 			if( ( $id !== null ) || ( $id === null && IP::isIPAddress( $nt->getText() ) ) ) {
 				if( $this->getUser()->isAllowed( 'block' ) ) { # Block / Change block / Unblock links
-					if ( $userObj->isBlocked() ) {
+					/* Wikia change begin - SUS-92 */
+					if ( $userObj->isBlocked( true, false ) && $userObj->getBlock( true, false )->getType() !== Block::TYPE_AUTO ) {
+					/* Wikia change end */
 						$tools[] = Linker::linkKnown( # Change block link
 							SpecialPage::getTitleFor( 'Block', $nt->getDBkey() ),
 							$this->msg( 'change-blocklink' )->escaped()
@@ -401,21 +405,21 @@ class DeletedContributionsPage extends SpecialPage {
 			);
 
 			# Add a link to change user rights for privileged users
-			$userrightsPage = new UserrightsPage();
-			$userrightsPage->setContext( $this->getContext() );
-			if( $id !== null && $userrightsPage->userCanChangeRights( User::newFromId( $id ) ) ) {
+			if( $id !== null && UserrightsPage::userCanChangeRights( User::newFromId( $id ), false ) ) {
 				$tools[] = Linker::linkKnown(
 					SpecialPage::getTitleFor( 'Userrights', $nt->getDBkey() ),
 					$this->msg( 'sp-contributions-userrights' )->escaped()
 				);
 			}
 
-			wfRunHooks( 'ContributionsToolLinks', array( $id, $nt, &$tools ) );
+			Hooks::run( 'ContributionsToolLinks', array( $id, $nt, &$tools ) );
 
 			$links = $this->getLanguage()->pipeList( $tools );
 
 			// Show a note if the user is blocked and display the last block log entry.
-			if ( $userObj->isBlocked() ) {
+			/* Wikia change begin - SUS-92 */
+			if ( $userObj->isBlocked( true, false ) ) {
+			/* Wikia change end */
 				$out = $this->getOutput(); // LogEventsList::showLogExtract() wants the first parameter by ref
 				LogEventsList::showLogExtract(
 					$out,

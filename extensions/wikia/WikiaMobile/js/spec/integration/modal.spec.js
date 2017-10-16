@@ -1,28 +1,32 @@
-/*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Modal module", function () {
+/*global describe, it, afterEach, getBody, expect, jasmine, document*/
+describe('Modal module', function () {
 	'use strict';
 	var timerCallback,
 		open,
-		close;
-
-	var trueFeatures = window.Features;
+		close,
+		trueFeatures = window.Features;
 
 	window.Features = {};
 
-	beforeEach(function() {
+	beforeEach(function () {
 		timerCallback = jasmine.createSpy('timerCallback');
-		jasmine.Clock.useMock();
+		jasmine.clock().install();
+	});
+
+	afterEach(function () {
+		jasmine.clock().uninstall();
 	});
 
 	var modal = modules.modal({
-		show: function(){},
-		hide: function(){},
-		remove: function(){}
+		show: function () {},
+		hide: function () {},
+		remove: function () {}
 	}, jQuery);
 
-	it('should be defined', function(){
+	it('should be defined', function () {
 
-		getBody().innerHTML = "<div id=wkMdlWrp><div id=wkMdlTB><div id=wkMdlTlBar></div><div id=wkMdlClo class=clsIco></div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div></div>";
+		getBody().innerHTML = '<div id=wkMdlWrp><div id=wkMdlTB><div id=wkMdlTlBar></div>' +
+		'<div id=wkMdlClo class=clsIco></div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div></div>';
 
 		expect(modal).toBeDefined();
 
@@ -39,30 +43,28 @@ describe("Modal module", function () {
 		expect(typeof modal.removeClass).toBe('function');
 	});
 
-	it('should init itself on open', function(){
+	it('should init itself on open', function () {
 		var wrap = document.getElementById('wkMdlWrp');
 
 		window.scrollY = 30;
 
 		modal.open({
 			content: 'TEST',
-			onOpen: function(){
+			onOpen: function () {
 				open = true;
 			},
-			onClose: function(){
+			onClose: function () {
 				close = true;
 			}
 		});
 
-		expect(window.location.hash).toBe('#Modal');
-
-		jasmine.Clock.tick(60);
+		jasmine.clock().tick(60);
 
 		expect(document.getElementById('wkMdlCnt').innerHTML).toBe('TEST');
 		expect(wrap.className).toMatch('zoomer open');
 		expect(wrap.style.top).toMatch('30px');
 
-		jasmine.Clock.tick(310);
+		jasmine.clock().tick(310);
 
 		expect(document.documentElement.className).toMatch('modal');
 		expect(wrap.className).toMatch('zoomer open');
@@ -71,19 +73,19 @@ describe("Modal module", function () {
 		expect(open).toBe(true);
 	});
 
-	it('should close modal', function(){
+	it('should close modal', function () {
 		var wrap = document.getElementById('wkMdlWrp');
 
 		modal.close();
 
 		expect(document.documentElement.className).not.toMatch(' modal');
 
-		jasmine.Clock.tick(15);
+		jasmine.clock().tick(15);
 
 		expect(wrap.className).toBe('zoomer');
 		expect(wrap.style.top).toMatch('30px');
 
-		jasmine.Clock.tick(320);
+		jasmine.clock().tick(320);
 
 		expect(document.getElementById('wkMdlCnt').innerHTML).toBe('');
 		expect(document.getElementById('wkMdlTlBar').innerHTML).toBe('');
@@ -95,7 +97,7 @@ describe("Modal module", function () {
 		expect(close).toBe(true);
 	});
 
-	it('should handle toolbar correctly', function(){
+	it('should handle toolbar correctly', function () {
 		modal.open({
 			content: 'TEST',
 			toolbar: 'TEST'
@@ -114,7 +116,7 @@ describe("Modal module", function () {
 		expect(document.getElementById('wkMdlTlBar').style.display).toBe('block');
 	});
 
-	it('should handle caption correctly', function(){
+	it('should handle caption correctly', function () {
 		modal.open({
 			content: 'TEST',
 			caption: 'TEST'
@@ -134,7 +136,7 @@ describe("Modal module", function () {
 		expect(document.getElementById('wkMdlFtr').style.display).toBe('block');
 	});
 
-	it('should handle content correctly', function(){
+	it('should handle content correctly', function () {
 		modal.open({
 			content: 'TEST'
 		});
@@ -149,12 +151,12 @@ describe("Modal module", function () {
 
 	});
 
-	it('should return wrapper', function(){
+	it('should return wrapper', function () {
 		var wrap = document.getElementById('wkMdlWrp');
 		expect(modal.getWrapper()).toBe(wrap);
 	});
 
-	it('should add/remove class', function(done){
+	it('should add/remove class', function () {
 		var wrap = document.getElementById('wkMdlWrp');
 
 		modal.addClass('ClassyClass');
@@ -164,17 +166,17 @@ describe("Modal module", function () {
 		expect(wrap.className).not.toMatch('ClassyClass');
 	});
 
-	it('should return if modal is open', function(){
+	it('should return if modal is open', function () {
 		modal.open({
 			content: 'WhatevZ'
 		});
 
-		expect(modal.isOpen()).toBe(true)
+		expect(modal.isOpen()).toBe(true);
 
 		modal.close();
 
 		expect(modal.isOpen()).toBe(false);
 	});
 
-	 window.Features = trueFeatures;
+	window.Features = trueFeatures;
 });

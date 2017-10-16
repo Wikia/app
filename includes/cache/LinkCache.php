@@ -48,7 +48,8 @@ class LinkCache {
 		}
 		// start wikia change
 		elseif( $wgEnableFastLinkCache ) {
-			return (int) $wgMemc->get(self::getMemcKey($title, 'good'));
+			$fields = $wgMemc->get(self::getMemcKey($title, 'combined'));
+			return isset($fields['id']) ? intval($fields['id']) : 0;
 		}
 		// end wikia change
 		else {
@@ -72,7 +73,7 @@ class LinkCache {
 		}
 		// start wikia change
 		elseif( $wgEnableFastLinkCache ) {
-			$fields = $wgMemc->get(self::getMemcKey($dbkey, 'fields'));
+			$fields = $wgMemc->get(self::getMemcKey($dbkey, 'combined'));
 			return isset($fields[$field]) ? $fields[$field] : null;
 		}
 		// end wikia change
@@ -102,6 +103,7 @@ class LinkCache {
 		$dbkey = $title->getPrefixedDbKey();
 		$this->mGoodLinks[$dbkey] = intval( $id );
 		$this->mGoodLinkFields[$dbkey] = array(
+			'id' => intval( $id ),
 			'length' => intval( $len ),
 			'redirect' => intval( $redir ),
 			'revision' => intval( $revision ) );
@@ -109,8 +111,7 @@ class LinkCache {
 		// start wikia change
 		global $wgMemc, $wgEnableFastLinkCache;
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->set(self::getMemcKey($dbkey, 'good'), intval( $id ), 3600);
-			$wgMemc->set(self::getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'combined'), $this->mGoodLinkFields[$dbkey], 3600);
 		}
 		// end wikia change
 	}
@@ -126,6 +127,7 @@ class LinkCache {
 		$dbkey = $title->getPrefixedDbKey();
 		$this->mGoodLinks[$dbkey] = intval( $row->page_id );
 		$this->mGoodLinkFields[$dbkey] = array(
+			'id' => intval( $row->page_id ),
 			'length' => intval( $row->page_len ),
 			'redirect' => intval( $row->page_is_redirect ),
 			'revision' => intval( $row->page_latest ),
@@ -134,8 +136,7 @@ class LinkCache {
 		// start wikia change
 		global $wgMemc, $wgEnableFastLinkCache;
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->set(self::getMemcKey($dbkey, 'good'), intval( $row->page_id ), 3600);
-			$wgMemc->set(self::getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'combined'), $this->mGoodLinkFields[$dbkey], 3600);
 		}
 		// end wikia change
 	}
@@ -166,8 +167,7 @@ class LinkCache {
 		// start wikia change
 		global $wgMemc, $wgEnableFastLinkCache;
 		if( $wgEnableFastLinkCache ) {
-			$wgMemc->delete(self::getMemcKey($dbkey, 'good'));
-			$wgMemc->delete(self::getMemcKey($dbkey, 'fields'));
+			$wgMemc->delete(self::getMemcKey($dbkey, 'combined'));
 		}
 		// end wikia change
 	}
@@ -259,7 +259,7 @@ class LinkCache {
 	 * Gets memcache key for given title's DB key and entry's type
 	 *
 	 * @param string $dbkey title's DB key
-	 * @param string $type either "good" or "fields"
+	 * @param string $type "combined" (or obsolete "good" or "fields")
 	 * @return string memcache key
 	 *
 	 * @aauthor macbre

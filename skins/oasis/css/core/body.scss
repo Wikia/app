@@ -1,21 +1,19 @@
-@import "color";
 @import "layout";
-@import "../mixins/clearfix";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 body {
 	color: $color-text;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 12px;
 	margin: 0;
 	overflow-x: auto;
-	padding: 0 0 30px 0;
-	>h1 {
-		display: none;
-	}
+	padding: 0;
 }
 
-body.global-header-fixed-at-top {
-	padding-top: 37px;
+.WikiaSiteWrapper > h2 {
+	display: none;
 }
 
 a {
@@ -28,27 +26,6 @@ a {
 
 .clearfix {
 	@include clearfix;
-}
-
-.skiplinkcontainer {
-	position: absolute;
-	top: 0;
-	right: 0;
-	h1 {
-		display: none;
-	}
-	.skiplink {
-		display: block;
-		margin: 0 auto;
-		right: 0;
-		width: 100px;
-		position: absolute;
-		top: -9999px;
-		&:active,
-		&:focus {
-			top: 0px;
-		}
-	}
 }
 
 // for backward compatibility with Monaco
@@ -76,5 +53,10 @@ a {
 .neutral {
 	background-color: $color-page-border;
 	border-color: $color-page;
+	color: $color-text;
+}
+
+// Customization for Local_Sitemap
+.local-sitemap-line a span {
 	color: $color-text;
 }

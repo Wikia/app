@@ -28,6 +28,7 @@ class AchRankingService {
 		$cacheKey = self::getRankingCacheKey( $limit, $compareToSnapshot );
 		$ranking = $wgMemc->get( $cacheKey );
 
+		// We do not flush cache when condition changed. See MAIN-5571
 		if( empty( $ranking ) ) {
 			$ranking = array();
 			$rules = array('ORDER BY' => 'score desc');
@@ -162,8 +163,12 @@ class AchRankingService {
 		while(($row = $dbr->fetchObject($res)) && (count($badges) <= $limit)) {
 			$user = User::newFromId($row->user_id);
 
-			if( $user && AchAwardingService::canEarnBadges( $user ) ) {
-				$badges[] = array('user' => $user, 'badge' => new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level), 'date' => $row->date);
+			if ( $user && AchAwardingService::canEarnBadges( $user ) ) {
+				$badges[] = [
+					'user' => $this->getUsernameAndProfileUrl( $user ),
+					'badge' => new AchBadge( $row->badge_type_id, $row->badge_lap, $row->badge_level ),
+					'date' => $row->date
+				];
 			}
 		}
 
@@ -172,5 +177,18 @@ class AchRankingService {
 		wfProfileOut(__METHOD__);
 
 		return $badges;
+	}
+
+	/**
+	 * Get the user's profileUrl and username.
+	 *
+	 * Previously we were passing the entire user object, but
+	 * that was exposing private user data. See MAIN-9412.
+	 */
+	private function getUsernameAndProfileUrl( User $user ) : array {
+		return [
+			'profileUrl' => $user->getUserPage()->getLocalURL(),
+			'userName' => $user->getName()
+		];
 	}
 }

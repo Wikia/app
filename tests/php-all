@@ -1,3 +1,2 @@
 #!/bin/sh
-cd /usr/wikia/source/wiki/tests
-ant -f build-wikia.xml php
+make phpunit phpunit-infrastructure

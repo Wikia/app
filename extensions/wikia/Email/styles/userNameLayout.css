@@ -1,0 +1,28 @@
+.greeting {
+	margin-bottom: 30px;
+}
+
+.avatar-wrapper {
+	margin: 20px 0;
+	padding-right: 30px;
+}
+
+.avatar {
+	border-radius: 100%;
+	border: 2px solid #ccc;
+}
+
+.avatar img {
+	height: 40px;
+	width: 40px;
+}
+
+.border {
+	border-top: 1px solid #00b7e0;
+	border-bottom: 1px solid #00b7e0;
+}
+
+.username-layout-links {
+	margin-top: 35px;
+	margin-bottom: 20px;
+}

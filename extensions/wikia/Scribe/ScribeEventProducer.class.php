@@ -1,47 +1,51 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class ScribeEventProducer {
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
 
-	private $mediaNS = array(NS_IMAGE, NS_FILE);
+	const
+		EDIT_CATEGORY       = 'log_edit',
+		CREATEPAGE_CATEGORY = 'log_create',
+		UNDELETE_CATEGORY   = 'log_undelete',
+		DELETE_CATEGORY     = 'log_delete';
 
 	const
-		EDIT_CATEGORY 		    = 'log_edit',
-		CREATEPAGE_CATEGORY		= 'log_create',
-		UNDELETE_CATEGORY	    = 'log_undelete',
-		DELETE_CATEGORY		    = 'log_delete';
-
-	const
-		EDIT_CATEGORY_INT			= 1,
-		CREATEPAGE_CATEGORY_INT		= 2,
-		DELETE_CATEGORY_INT			= 3,
-		UNDELETE_CATEGORY_INT		= 4;
+		EDIT_CATEGORY_INT       = 1,
+		CREATEPAGE_CATEGORY_INT = 2,
+		DELETE_CATEGORY_INT     = 3,
+		UNDELETE_CATEGORY_INT   = 4;
 
 	function __construct( $key, $archive = 0 ) {
 		$this->app = F::app();
 		switch ( $key ) {
-			case 'edit' 		:
+			case 'edit':
 				$this->mKey = self::EDIT_CATEGORY;
 				$this->mEventType = self::EDIT_CATEGORY_INT;
 				break;
-			case 'create' 		:
+			case 'create':
 				$this->mKey = self::CREATEPAGE_CATEGORY;
 				$this->mEventType = self::CREATEPAGE_CATEGORY_INT;
 				break;
-			case 'delete' 		:
+			case 'delete':
 				$this->mKey = self::DELETE_CATEGORY;
 				$this->mEventType = self::DELETE_CATEGORY_INT;
 				break;
-			case 'undelete'		:
+			case 'undelete':
 				$this->mKey = self::UNDELETE_CATEGORY;
 				$this->mEventType = self::UNDELETE_CATEGORY_INT;
 				break;
 		}
-
+		$geo = json_decode( RequestContext::getMain()->getRequest()->getCookie( 'Geo', '' ) );
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
-		$this->setIp( $this->app->wg->Request->getIP() );
+
+		$this->setIp( RequestContext::getMain()->getRequest()->getIP() );
+		$this->setGeoRegion( $geo->region );
+		$this->setGeoCountry( $geo->country );
+		$this->setGeoContinent( $geo->continent );
 		$this->setHostname( wfHostname() );
 		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );
@@ -49,7 +53,7 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 
-	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -106,7 +110,6 @@ class ScribeEventProducer {
 		$this->setIsRedirect( $oTitle->isRedirect() );
 		$this->setRevisionTimestamp( wfTimestamp( TS_DB, $rev_timestamp ) );
 		$this->setRevisionSize( $rev_size );
-		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
 
@@ -173,7 +176,7 @@ class ScribeEventProducer {
 		return $logid;
 	}
 
-	public function buildUndeletePackage( $oTitle ) {
+	public function buildUndeletePackage( $oTitle, $created = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oTitle ) ) {
@@ -183,7 +186,7 @@ class ScribeEventProducer {
 		}
 
 		$oPage = WikiPage::factory( $oTitle );
-		if ( !$oPage instanceof Article ) {
+		if ( !$oPage instanceof WikiPage ) {
 			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -203,9 +206,14 @@ class ScribeEventProducer {
 			return true;
 		}
 
+		$oLocalFile = null;
+		if ( $created && $oTitle->getNamespace() == NS_FILE ) {
+			$oLocalFile = wfLocalFile( $oTitle );
+		}
+
 		wfProfileOut( __METHOD__ );
 
-		return $this->buildEditPackage( $oPage, $oUser );
+		return $this->buildEditPackage( $oPage, $oUser, null, $oLocalFile );
 	}
 
 	public function buildMovePackage( $oTitle, $oUser, $page_id = null, $redirect_id = null ) {
@@ -246,6 +254,18 @@ class ScribeEventProducer {
 		wfProfileOut( __METHOD__ );
 
 		return $this->buildEditPackage( $oPage, $oUser, $oRevision );
+	}
+
+	public function setGeoRegion ( $region ) {
+		$this->mParams['geoRegion'] = $region;
+	}
+
+	public function setGeoCountry ( $country ) {
+		$this->mParams['geoCountry'] = $country;
+	}
+
+	public function setGeoContinent ( $continent ) {
+		$this->mParams['geoContinent'] = $continent;
 	}
 
 	public function setCityId ( $city_id ) {
@@ -297,7 +317,7 @@ class ScribeEventProducer {
 	}
 
 	public function setIP ( $ip ) {
-		$this->mParams['userIp'] = $ip;
+		$this->mParams['userIp'] = IP::sanitizeIP( $ip );
 	}
 
 	public function setRevisionTimestamp ( $revision_timestamp ) {
@@ -310,40 +330,6 @@ class ScribeEventProducer {
 
 	public function setEventTS ( $ts ) {
 		$this->mParams['eventTS'] = $ts;
-	}
-
-	public function setMediaType ( $oTitle ) {
-		wfProfileIn( __METHOD__ );
-
-		$result = 0;
-		$page_namespace = $oTitle->getNamespace();
-		if ( in_array( $page_namespace, $this->mediaNS ) ) {
-
-			$mediaType = MEDIATYPE_UNKNOWN;
-			$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
-
-			if ( $oLocalFile instanceof LocalFile ) {
-				$mediaType = $oLocalFile->getMediaType();
-			}
-			if ( empty($mediaType) ) {
-				$mediaType = MEDIATYPE_UNKNOWN;
-			}
-			switch ( $mediaType ) {
-				case MEDIATYPE_BITMAP			: $result = 1; break;
-				case MEDIATYPE_DRAWING		: $result = 2; break;
-				case MEDIATYPE_AUDIO			: $result = 3; break;
-				case MEDIATYPE_VIDEO			: $result = 4; break;
-				case MEDIATYPE_MULTIMEDIA	: $result = 5; break;
-				case MEDIATYPE_OFFICE			: $result = 6; break;
-				case MEDIATYPE_TEXT				: $result = 7; break;
-				case MEDIATYPE_EXECUTABLE	: $result = 8; break;
-				case MEDIATYPE_ARCHIVE		: $result = 9; break;
-				default 									: $result = 1; break;
-			}
-		}
-
-		$this->mParams['mediaType'] = $result;
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function setImageLinks ( $image_links ) {
@@ -373,9 +359,29 @@ class ScribeEventProducer {
 		$this->mParams['languageId'] = WikiFactory::LangCodeToId($lang_code);
 	}
 
-
 	public function setCategory() {
+		//This field is called categoryId but getCategory returns an object with cat_id and cat_name fields
 		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
+
+		// The code should probably be changed to this after double checking the scribe consumers
+		//$category = WikiFactory::getCategory( $this->app->wg->CityId );
+		//$this->mParams['categoryId'] = isset($category->cat_id) ? $category->cat_id : 0;
+		//
+		// And when categories are updated:
+		//$this->mParams['categories'] = WikiFactory::getCategories( $this->app->wg->CityId );
+
+	}
+
+	/**
+	 * Sends a unified ImageReviewLog message
+	 * @param  string $sLogMessage  A log message
+	 * @return void
+	 */
+	private function logSendScribeMessage() {
+		WikiaLogger::instance()->info( 'SendScribeMessage', [
+			'method' => __METHOD__,
+			'params' => $this->mParams,
+		] );
 	}
 
 	public function sendLog() {
@@ -383,6 +389,7 @@ class ScribeEventProducer {
 		try {
 			$data = json_encode($this->mParams);
 			WScribeClient::singleton( $this->mKey )->send( $data );
+			$this->logSendScribeMessage();
 		}
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );

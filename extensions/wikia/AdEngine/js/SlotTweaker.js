@@ -1,44 +1,52 @@
-var SlotTweaker = function(log, document, window) {
+/*global define*/
+define('ext.wikia.adEngine.slotTweaker', [
+	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.slot.adSlot',
+	'wikia.document',
+	'wikia.log',
+	'wikia.window'
+], function (DOMElementTweaker, adSlot, doc, log, win) {
 	'use strict';
 
-	var logGroup = 'SlotTweaker'
-		, addDefaultHeight, removeClass, removeDefaultHeight, hide, show, removeTopButtonIfNeeded
-		, defaultHeightClass = 'default-height'
-		, rclass = /[\t\r\n]/g
-		, isLeaderboard, isStandardLeaderboardSize, adjustLeaderboardSize
-		, standardLeaderboardSizeClass = 'standard-leaderboard'
-	;
+	var logGroup = 'ext.wikia.adEngine.slotTweaker',
+		defaultHeightClass = 'default-height',
+		standardLeaderboardSizeClass = 'standard-leaderboard';
 
-	removeClass = function(element, cls) {
-		var elClasses = ' ' + element.className.replace(rclass, ' ') + ' '
-			, newClasses = elClasses.replace(' ' + cls + ' ', ' ');
+	function hide(slotname, useInline) {
+		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+		DOMElementTweaker.hide(doc.getElementById(slotname), useInline);
+	}
 
-		log(['removeClass ' + cls, element], 8, logGroup);
-		element.className = newClasses;
-	};
+	function show(slotname) {
+		log('show ' + slotname + ' removing class hidden', 6, logGroup);
 
-	removeDefaultHeight = function(slotname) {
-		var slot = document.getElementById(slotname);
+		var slot = doc.getElementById(slotname);
+
+		if (slot) {
+			DOMElementTweaker.removeClass(slot, 'hidden');
+		}
+	}
+
+	function removeDefaultHeight(slotname) {
+		var slot = doc.getElementById(slotname);
 
 		log('removeDefaultHeight ' + slotname, 6, logGroup);
 
 		if (slot) {
-			removeClass(slot, defaultHeightClass);
+			DOMElementTweaker.removeClass(slot, defaultHeightClass);
 		}
-	};
+	}
 
-	isLeaderboard = function (slotname) {
-		return slotname.indexOf('LEADERBOARD') !== -1;
-	};
+	function isTopLeaderboard(slotname) {
+		return slotname.indexOf('TOP_LEADERBOARD') !== -1;
+	}
 
-	isStandardLeaderboardSize = function (slotname) {
-		var slot = document.getElementById(slotname),
+	function isStandardLeaderboardSize(slotname) {
+		var slot = doc.getElementById(slotname),
 			isStandardSize;
 
 		if (slot) {
-			isStandardSize = slot.offsetHeight >= 90
-				&& slot.offsetHeight <= 95
-				&& slot.offsetWidth <= 728;
+			isStandardSize = slot.offsetHeight >= 90 && slot.offsetHeight <= 95 && slot.offsetWidth <= 728;
 
 			log(
 				['isStandardLeaderboardSize', slotname, slot.offsetWidth + 'x' + slot.offsetHeight, isStandardSize],
@@ -49,75 +57,160 @@ var SlotTweaker = function(log, document, window) {
 			return isStandardSize;
 		}
 		log('isStandardLeaderboardSize: ' + slotname + ' missing', 3, logGroup);
-	};
+	}
 
-	addDefaultHeight = function(slotname) {
-		var slot = document.getElementById(slotname);
+	function addDefaultHeight(slotname) {
+		var slot = doc.getElementById(slotname);
 
 		log('addDefaultHeight ' + slotname, 6, logGroup);
 
 		if (slot) {
 			slot.className += ' ' + defaultHeightClass;
 		}
-	};
+	}
 
 	// TODO: fix it, it's a hack!
-	adjustLeaderboardSize = function(slotname) {
-		var slot = document.getElementById(slotname);
-
-		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
+	function adjustLeaderboardSize(slotname) {
+		var slot = doc.getElementById(slotname);
+		if (isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			slot.className += ' ' + standardLeaderboardSizeClass;
 		}
-	};
+	}
 
 	// TODO: fix it, it's a hack!
-	removeTopButtonIfNeeded = function(slotname) {
-		if (isLeaderboard(slotname) && !isStandardLeaderboardSize(slotname)) {
-			log('removing TOP_BUTTON(_WIDE)', 3, logGroup);
-			hide('TOP_BUTTON');
-			hide('TOP_BUTTON_WIDE');
+	function removeTopButtonIfNeeded(slotname) {
+		if (isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
+			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
+
+			win.Wikia.reviveQueue.push({
+				zoneId: 27,
+				slotName: 'TOP_BUTTON_WIDE'
+			});
 		}
-		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			log('pushing TOP_BUTTON(_WIDE).force to Liftium2 queue', 2, logGroup);
-			window.adslots2.push(['TOP_BUTTON.force', null, 'Liftium2']);
-			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
+	}
+
+	function onReady(slotName, callback) {
+		var iframe = adSlot.getIframe(slotName);
+
+		if (!iframe) {
+			log('onIframeReady - iframe does not exist', 'debug', logGroup);
+			return;
 		}
-	};
 
-	hide = function(slotname, usingClass) {
-		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
+		if (iframe.contentWindow.document.readyState === 'complete') {
+			callback(iframe);
+		} else {
+			iframe.addEventListener('load', function () {
+				callback(iframe);
+			});
+		}
+	}
 
-		var slot = document.getElementById(slotname);
+	function isBlockedElement(original) {
+		return original.style.display === 'none';
+	}
 
-		if (slot) {
-			if (usingClass) {
-				slot.className += ' hidden';
-			} else {
-				slot.style.display = 'none';
+	function tweakRecoveredSlot(originalIframe, iframe) {
+		var original = originalIframe,
+			target = iframe;
+
+		while(isBlockedElement(original)) {
+			DOMElementTweaker.moveStylesToInline(original, target, ['paddingBottom', 'opacity']);
+			target.style.display = 'block';
+
+			original = original.parentNode;
+			target = target.parentNode;
+		}
+	}
+
+	function makeResponsive(slotName, aspectRatio) {
+		var slot = doc.getElementById(slotName),
+			providerContainer = adSlot.getProviderContainer(slotName);
+
+		log(['makeResponsive', slotName, aspectRatio], 'info', logGroup);
+		slot.classList.add('slot-responsive');
+
+		onReady(slotName, function (iframe) {
+			log(['makeResponsive', slotName], 'debug', logGroup);
+			if (!aspectRatio) {
+				var height = iframe.contentWindow.document.body.scrollHeight,
+					width = iframe.contentWindow.document.body.scrollWidth;
+
+				aspectRatio = width/height;
 			}
+
+			log(['Slot ratio', aspectRatio], 'debug', logGroup);
+			providerContainer.style.paddingBottom = 100/aspectRatio + '%';
+		});
+	}
+
+	function adjustIframeByContentSize(slotName) {
+		onReady(slotName, function (iframe) {
+			var height = iframe.contentWindow.document.body.scrollHeight,
+				width = iframe.contentWindow.document.body.scrollWidth;
+
+			iframe.width = width;
+			iframe.height = height;
+			log(['adjustIframeByContentSize', slotName, width, height], 'debug', logGroup);
+		});
+	}
+
+	function collapse(slotName, skipAnimation) {
+		var slot = doc.getElementById(slotName);
+
+		// make max-height consistent with expand()
+		if (!skipAnimation) {
+			slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
+			DOMElementTweaker.forceRepaint(slot);
 		}
-	};
+		DOMElementTweaker.removeClass(slot, 'expanded');
+		DOMElementTweaker.addClass(slot, 'collapsed');
+		DOMElementTweaker.addClass(slot, 'slot-animation');
+		slot.style.maxHeight = '0';
+	}
 
-	show = function(slotname, usingClass) {
-		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
+	function expand(slotName) {
+		var slot = doc.getElementById(slotName);
 
-		var slot = document.getElementById(slotname);
+		slot.style.maxHeight = slot.offsetHeight + 'px';
+		DOMElementTweaker.removeClass(slot, 'hidden');
+		DOMElementTweaker.removeClass(slot, 'collapsed');
+		DOMElementTweaker.addClass(slot, 'expanded');
+		DOMElementTweaker.addClass(slot, 'slot-animation');
+		// make some space for slot content after page resize
+		slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
+	}
 
-		if (slot) {
-			if (usingClass) {
-				removeClass(slot, 'hidden');
-			} else {
-				throw 'Showing slot not based on hidden class unsupported';
-			}
+	/**
+	 * Triggers repaint to hide empty slot placeholders in Chrome
+	 * This is a temporary workaround
+	 * @param {string} slotId
+	 */
+	function hackChromeRefresh(slotId) {
+		var slot = doc.getElementById(slotId),
+			parent = slot && slot.parentElement;
+
+		if (parent && slotId.match(/^INCONTENT/)) {
+			parent.style.display = 'none';
+			DOMElementTweaker.forceRepaint(parent);
+			parent.style.display = '';
 		}
-	};
+	}
 
 	return {
 		addDefaultHeight: addDefaultHeight,
+		adjustIframeByContentSize: adjustIframeByContentSize,
+		adjustLeaderboardSize: adjustLeaderboardSize,
+		collapse: collapse,
+		expand: expand,
+		hackChromeRefresh: hackChromeRefresh,
+		hide: hide,
+		isTopLeaderboard: isTopLeaderboard,
+		makeResponsive: makeResponsive,
+		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
-		adjustLeaderboardSize: adjustLeaderboardSize,
-		hide: hide,
-		show: show
+		show: show,
+		tweakRecoveredSlot: tweakRecoveredSlot
 	};
-};
+});

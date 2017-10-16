@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gazeb"
+		]
+	},
+	"maps_map": "Мапа",
+	"maps-loading-map": "Награваня мапы. . .",
+	"maps-abb-north": "С",
+	"maps-abb-east": "В",
+	"maps-abb-south": "Ю",
+	"maps-abb-west": "З"
+}

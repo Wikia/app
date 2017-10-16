@@ -45,7 +45,7 @@ class HistoryAction extends FormlessAction {
 			array( 'page' => $this->getTitle()->getPrefixedText() )
 		);
 
-		wfRunHooks('GetHistoryDescription', array( &$description ) );
+		Hooks::run('GetHistoryDescription', array( &$description ) );
 
 		return $description;
 		/* End of Wikia change */
@@ -75,7 +75,7 @@ class HistoryAction extends FormlessAction {
 
 	/**
 	 * Print the history page for an article.
-	 * @return nothing
+	 * @return void
 	 */
 	function onView() {
 		global $wgScript, $wgUseFileCache, $wgSquidMaxage;
@@ -84,7 +84,7 @@ class HistoryAction extends FormlessAction {
 		$request = $this->getRequest();
 
 		/* Wikia change @author Tomek */
-		if( !wfRunHooks('BeforePageHistory', array( &$this->page ) ) ) {
+		if ( !Hooks::run( 'BeforePageHistory', [ $this->page ] ) ) {
 			return;
 		}
 		/* End of Wikia change */
@@ -179,7 +179,7 @@ class HistoryAction extends FormlessAction {
 			'</fieldset></form>'
 		);
 
-		wfRunHooks( 'PageHistoryBeforeList', array( &$this->page ) );
+		Hooks::run( 'PageHistoryBeforeList', array( &$this->page ) );
 
 		// Create and output the list.
 		$pager = new HistoryPager( $this, $year, $month, $tagFilter, $conds );
@@ -351,26 +351,24 @@ class HistoryPager extends ReverseChronologicalPager {
 	}
 
 	function getQueryInfo() {
-		$queryInfo = array(
-			'tables'  => array( 'revision', 'user' ),
-			'fields'  => array_merge( Revision::selectFields(), Revision::selectUserFields() ),
-			'conds'   => array_merge(
-				array( 'rev_page' => $this->getWikiPage()->getId() ),
-				$this->conds ),
-			'options' => array( 'USE INDEX' => array( 'revision' => 'page_timestamp' ) ),
-			'join_conds' => array(
-				'user'        => Revision::userJoinCond(),
-				'tag_summary' => array( 'LEFT JOIN', 'ts_rev_id=rev_id' ) ),
-		);
-		ChangeTags::modifyDisplayQuery(
-			$queryInfo['tables'],
-			$queryInfo['fields'],
-			$queryInfo['conds'],
-			$queryInfo['join_conds'],
-			$queryInfo['options'],
-			$this->tagFilter
-		);
-		wfRunHooks( 'PageHistoryPager::getQueryInfo', array( &$this, &$queryInfo ) );
+		$queryInfo = [
+			'tables' => [ 'revision', 'user' ],
+			'fields' => array_merge( Revision::selectFields(), Revision::selectUserFields() ),
+			'conds' => array_merge( [ 'rev_page' => $this->getWikiPage()->getId() ], $this->conds ),
+			'options' => [
+				'USE INDEX' => [ 'revision' => 'page_timestamp' ]
+			],
+			'join_conds' => [
+				'user' => Revision::userJoinCond(),
+			],
+		];
+
+		ChangeTags::modifyDisplayQuery( $queryInfo['tables'], $queryInfo['fields'],
+			$queryInfo['conds'], $queryInfo['join_conds'], $queryInfo['options'],
+			$this->tagFilter );
+
+		Hooks::run( 'PageHistoryPager::getQueryInfo', [ $this, &$queryInfo ] );
+
 		return $queryInfo;
 	}
 
@@ -630,6 +628,8 @@ class HistoryPager extends ReverseChronologicalPager {
 			}
 		}
 
+		Hooks::run( 'PageHistoryToolsList', [ $this, &$row, &$tools ] );
+
 		if ( $tools ) {
 			$s .= ' (' . $lang->pipeList( $tools ) . ')';
 		}
@@ -639,7 +639,7 @@ class HistoryPager extends ReverseChronologicalPager {
 		$classes = array_merge( $classes, $newClasses );
 		$s .= " $tagSummary";
 
-		wfRunHooks( 'PageHistoryLineEnding', array( $this, &$row , &$s, &$classes ) );
+		Hooks::run( 'PageHistoryLineEnding', array( $this, &$row , &$s, &$classes ) );
 
 		$attribs = array();
 		if ( $classes ) {

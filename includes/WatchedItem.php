@@ -6,9 +6,28 @@
 
 /**
  * @ingroup Watchlist
+ *
+ * Note: MediaWiki works with the assumption that when people watch pages they either watch both the talk page
+ * and the normal page, or neither. That means that for each watched page MediaWiki always automatically adds
+ * two entries: One for the page and one for its talk page. E.g. when the user watches the Main Page, then there
+ * will be two rows in the database table: One for the Main Page in namespace 0 and one for the Main Page in
+ * namespace 1 (which is the according talk page).
+ *
+ * More information: http://www.mediawiki.org/wiki/Manual:Watchlist_table
  */
 class WatchedItem {
-	var $mTitle, $mUser, $id, $ns, $ti;
+
+	/* @var Title $mTitle */
+	public $mTitle;
+
+	/* @var User $mUser  */
+	public $mUser;
+
+	public $userID;
+
+	public $nameSpace;
+
+	public $databaseKey;
 
 	/**
 	 * Create a WatchedItem object with the given user and title
@@ -16,19 +35,19 @@ class WatchedItem {
 	 * @param $title Title: the title we're going to (un)watch
 	 * @return WatchedItem object
 	 */
-	public static function fromUserTitle( $user, $title ) {
-		$wl = new WatchedItem;
-		$wl->mUser = $user;
-		$wl->mTitle = $title;
-		$wl->id = $user->getId();
+	public static function fromUserTitle( \User $user, \Title $title ) {
+		$watchedItem = new WatchedItem();
+		$watchedItem->mUser = $user;
+		$watchedItem->mTitle = $title;
+		$watchedItem->userID = $user->getId();
 		# Patch (also) for email notification on page changes T.Gries/M.Arndt 11.09.2004
 		# TG patch: here we do not consider pages and their talk pages equivalent - why should we ?
 		# The change results in talk-pages not automatically included in watchlists, when their parent page is included
-		# $wl->ns = $title->getNamespace() & ~1;
-		$wl->ns = $title->getNamespace();
+		# $wl->nameSpace = $title->getNamespace() & ~1;
+		$watchedItem->nameSpace = $title->getNamespace();
 
-		$wl->ti = $title->getDBkey();
-		return $wl;
+		$watchedItem->databaseKey = $title->getDBkey();
+		return $watchedItem;
 	}
 
 	/**
@@ -39,9 +58,19 @@ class WatchedItem {
 		# Pages and their talk pages are considered equivalent for watching;
 		# remember that talk namespaces are numbered as page namespace+1.
 
+		// Only loggedin user can have a watchlist
+		if ( $this->mUser->isAnon() ) {
+			return false;
+		}
+
+		// some pages cannot be watched
+		if ( !$this->mTitle->isWatchable() ) {
+			return false;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'watchlist', 1, array( 'wl_user' => $this->id, 'wl_namespace' => $this->ns,
-			'wl_title' => $this->ti ), __METHOD__ );
+		$res = $dbr->select( 'watchlist', 1, array( 'wl_user' => $this->userID, 'wl_namespace' => $this->nameSpace,
+			'wl_title' => $this->databaseKey ), __METHOD__ );
 		$iswatched = ($dbr->numRows( $res ) > 0) ? 1 : 0;
 		return $iswatched;
 	}
@@ -52,33 +81,35 @@ class WatchedItem {
 	 * @return bool (always true)
 	 */
 	public function addWatch() {
-		wfProfileIn( __METHOD__ );
-		$rows = array();
+
+		// Only loggedin user can have a watchlist
+		if ( wfReadOnly() || $this->mUser->isAnon() ) {
+			return false;
+		}
+
+		$rows = [];
 
 		// Use INSERT IGNORE to avoid overwriting the notification timestamp
 		// if there's already an entry for this page
 		$dbw = wfGetDB( DB_MASTER );
 		$timestamp = null;
 		
-		$rows[] = array(
-			'wl_user' => $this->id,
-			'wl_namespace' => MWNamespace::getSubject( $this->ns ),
-			'wl_title' => $this->ti,
+		$rows[] =[
+			'wl_user' => $this->userID,
+			'wl_namespace' => MWNamespace::getSubject( $this->nameSpace ),
+			'wl_title' => $this->databaseKey,
 			'wl_notificationtimestamp' => $timestamp
-		);
+		];
 		
-		$rows[] = array(
-			'wl_user' => $this->id,
-			'wl_namespace' => MWNamespace::getTalk($this->ns),
-			'wl_title' => $this->ti,
+		$rows[] = [
+			'wl_user' => $this->userID,
+			'wl_namespace' => MWNamespace::getTalk($this->nameSpace),
+			'wl_title' => $this->databaseKey,
 			'wl_notificationtimestamp' => $timestamp
-		);
+		];
 		
 		$dbw->insert( 'watchlist', $rows, __METHOD__, 'IGNORE' );
-		
-		wfRunHooks( 'WatchedItem::addWatch', array ( $this ) );
-		
-		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -87,16 +118,20 @@ class WatchedItem {
 	 * @return bool
 	 */
 	public function removeWatch() {
-		wfProfileIn( __METHOD__ );
+
+		// Only loggedin user can have a watchlist
+		if ( wfReadOnly() || $this->mUser->isAnon() ) {
+			return false;
+		}
 
 		$success = false;
 		
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'watchlist',
 			array(
-				'wl_user' => $this->id,
-				'wl_namespace' => MWNamespace::getSubject($this->ns),
-				'wl_title' => $this->ti
+				'wl_user' => $this->userID,
+				'wl_namespace' => MWNamespace::getSubject($this->nameSpace),
+				'wl_title' => $this->databaseKey
 			), __METHOD__
 		);
 		if ( $dbw->affectedRows() ) {
@@ -109,50 +144,47 @@ class WatchedItem {
 		# entries: clear them
 		$dbw->delete( 'watchlist',
 			array(
-				'wl_user' => $this->id,
-				'wl_namespace' => MWNamespace::getTalk($this->ns),
-				'wl_title' => $this->ti
+				'wl_user' => $this->userID,
+				'wl_namespace' => MWNamespace::getTalk($this->nameSpace),
+				'wl_title' => $this->databaseKey
 			), __METHOD__
 		);
 
+		// No errors, update the global_watchlist table.
 		if ( $dbw->affectedRows() ) {
-			$success = true;
+			Hooks::run( 'WatchedItem::updateWatch', array ( $this, $this->userID ) );
 		}
-
-		wfRunHooks( 'WatchedItem::removeWatch', array ( $this, $success ) );
-
-		wfProfileOut( __METHOD__ );
 
 		return $success;
 	}
 
 	/**
 	 * Wikia changes: update watch in database
-	 * @param $watchers Array: array of users IDs. If empty, $this->id is taken
+	 * @param $watchers Array: array of users IDs. If empty, $this->userID is taken
 	 * @param $timestamp: update timestamp
 	 * @return bool (always true)
 	 */
-	public function updateWatch( /*Array*/$watchers = null, $timestamp = null ) {
+	public function updateWatch( $watchers = null, $timestamp = null ) {
 		$dbw = wfGetDB( DB_MASTER );
-		
-		$user = ( !empty($watchers) ) ? $watchers : $this->id;
+
+		$watchers = ( !empty( $watchers ) ) ? $watchers : $this->userID;
 		$ts = ( !is_null( $timestamp ) ) ? $dbw->timestamp( $timestamp ) : null;
-		
+
 		$dbw->begin();
 		$dbw->update( 'watchlist',
 				array( /* SET */
 					'wl_notificationtimestamp' => $ts
 				), array( /* WHERE */
-					'wl_title' => $this->ti,
-					'wl_namespace' => $this->ns,
-					'wl_user' => $user
+					'wl_title' => $this->databaseKey,
+					'wl_namespace' => $this->nameSpace,
+					'wl_user' => $watchers
 				), __METHOD__
 		);
 		$dbw->commit();
-		
-		wfRunHooks( 'WatchedItem::updateWatch', array ( $this, $user, $ts ) );
-		
-		return true;	
+
+		Hooks::run( 'WatchedItem::updateWatch', array ( $this, $watchers, $ts ) );
+
+		return true;
 	}
 	
 	/**
@@ -178,20 +210,20 @@ class WatchedItem {
 	/**
 	 * Handle duplicate entries. Backend for duplicateEntries().
 	 *
-	 * @param $ot Title
-	 * @param $nt Title
+	 * @param $oldTitle Title
+	 * @param $newTitle Title
 	 *
 	 * @return bool
 	 */
-	private static function doDuplicateEntries( $ot, $nt ) {	
-		$oldnamespace = $ot->getNamespace();
-		$newnamespace = $nt->getNamespace();
-		$oldtitle = $ot->getDBkey();
-		$newtitle = $nt->getDBkey();
+	private static function doDuplicateEntries( \Title $oldTitle, \Title $newTitle ) {
+		$oldNamespace = $oldTitle->getNamespace();
+		$newNamespace = $newTitle->getNamespace();
+		$oldDBKey = $oldTitle->getDBkey();
+		$newDBKey = $newTitle->getDBkey();
 
 		$dbw = wfGetDB( DB_MASTER );
 		$res = $dbw->select( 'watchlist', 'wl_user',
-			array( 'wl_namespace' => $oldnamespace, 'wl_title' => $oldtitle ),
+			array( 'wl_namespace' => $oldNamespace, 'wl_title' => $oldDBKey ),
 			__METHOD__, 'FOR UPDATE'
 		);
 		# Construct array to replace into the watchlist
@@ -199,8 +231,8 @@ class WatchedItem {
 		foreach ( $res as $s ) {
 			$values[] = array(
 				'wl_user' => $s->wl_user,
-				'wl_namespace' => $newnamespace,
-				'wl_title' => $newtitle
+				'wl_namespace' => $newNamespace,
+				'wl_title' => $newDBKey
 			);
 		}
 
@@ -213,9 +245,9 @@ class WatchedItem {
 		# Note that multi-row replace is very efficient for MySQL but may be inefficient for
 		# some other DBMSes, mostly due to poor simulation by us
 		$dbw->replace( 'watchlist', array( array( 'wl_user', 'wl_namespace', 'wl_title' ) ), $values, __METHOD__ );
-		
-		wfRunHooks( 'WatchedItem::replaceWatch', array ( $ot, $nt, $values ) );
-				
+
+		Hooks::run( 'WatchedItem::replaceWatch', [ $oldTitle, $newTitle ] );
+
 		return true;
 	}
 }

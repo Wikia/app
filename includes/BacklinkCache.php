@@ -17,7 +17,7 @@
  *
  * Introduced by r47317
  *
- * @internal documentation reviewed on 18 Mar 2011 by hashar
+ * internal documentation reviewed on 18 Mar 2011 by hashar
  *
  * @author Tim Starling
  * @copyright © 2009, Tim Starling, Domas Mituzas
@@ -103,7 +103,7 @@ class BacklinkCache {
 	/**
 	 * Get the slave connection to the database
 	 * When non existing, will initialize the connection.
-	 * @return Database object
+	 * @return DatabaseBase object
 	 */
 	protected function getDB() {
 		if ( !isset( $this->db ) ) {
@@ -193,7 +193,7 @@ class BacklinkCache {
 			return $prefixes[$table];
 		} else {
 			$prefix = null;
-			wfRunHooks( 'BacklinkCacheGetPrefix', array( $table, &$prefix ) );
+			Hooks::run( 'BacklinkCacheGetPrefix', array( $table, &$prefix ) );
 			if( $prefix ) {
 				return $prefix;
 			} else {
@@ -246,7 +246,7 @@ class BacklinkCache {
 				break;
 			default:
 				$conds = null;
-				wfRunHooks( 'BacklinkCacheGetConditions', array( $table, $this->title, &$conds ) );
+				Hooks::run( 'BacklinkCacheGetConditions', array( $table, $this->title, &$conds ) );
 				if( !$conds )
 					throw new MWException( "Invalid table \"$table\" in " . __CLASS__ );
 		}

@@ -74,15 +74,12 @@ class SpecialPageFactory {
 		'Unblock'                   => 'SpecialUnblock',
 		'BlockList'                 => 'SpecialBlockList',
 		'ChangePassword'            => 'SpecialChangePassword',
-		'PasswordReset'             => 'SpecialPasswordReset',
 		'DeletedContributions'      => 'DeletedContributionsPage',
 		'Preferences'               => 'SpecialPreferences',
 		'Contributions'             => 'SpecialContributions',
 		'Listgrouprights'           => 'SpecialListGroupRights',
-		'Listusers'                 => 'SpecialListUsers' ,
 		'Listadmins'                => 'SpecialListAdmins',
 		'Listbots'                  => 'SpecialListBots',
-		'Activeusers'               => 'SpecialActiveUsers',
 		'Userrights'                => 'UserrightsPage',
 		'EditWatchlist'             => 'SpecialEditWatchlist',
 
@@ -137,6 +134,7 @@ class SpecialPageFactory {
 		// Unlisted / redirects
 		'Blankpage'                 => 'SpecialBlankpage',
 		'Blockme'                   => 'SpecialBlockme',
+		'Diff'                      => 'SpecialDiff',
 		'Emailuser'                 => 'SpecialEmailUser',
 		'JavaScriptTest'            => 'SpecialJavaScriptTest',
 		'Movepage'                  => 'MovePageForm',
@@ -160,15 +158,11 @@ class SpecialPageFactory {
 	 */
 	static function getList() {
 		global $wgSpecialPages;
-		global $wgDisableCounters, $wgDisableInternalSearch, $wgEmailAuthentication;
+		global $wgDisableInternalSearch, $wgEmailAuthentication;
 		global $wgEnableEmail;
 
 		if ( !is_object( self::$mList ) ) {
 			wfProfileIn( __METHOD__ );
-
-			if ( !$wgDisableCounters ) {
-				self::$mList['Popularpages'] = 'PopularpagesPage';
-			}
 
 			if ( !$wgDisableInternalSearch ) {
 				self::$mList['Search'] = 'SpecialSearch';
@@ -188,7 +182,7 @@ class SpecialPageFactory {
 
 			// Run hooks
 			// This hook can be used to remove undesired built-in special pages
-			wfRunHooks( 'SpecialPage_initList', array( &self::$mList ) );
+			Hooks::run( 'SpecialPage_initList', array( &self::$mList ) );
 
 			// Cast to object: func()[$key] doesn't work, but func()->$key does
 			settype( self::$mList, 'object' );
@@ -469,6 +463,12 @@ class SpecialPageFactory {
 		}
 
 		$page->including( $including );
+
+		// Wikia change - begin - @author: wladek
+		if ( !$including ) {
+			Transaction::setAttribute(Transaction::PARAM_SPECIAL_PAGE_NAME, $page->getName());
+		}
+		// Wikia change - end
 
 		// Execute special page
 		$profName = 'Special:' . $page->getName();

@@ -1,0 +1,37 @@
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/oasis/css/core/breakpoints-variables';
+
+$negative-top-margin: 1px;
+
+.mw-special-InfoboxBuilder {
+	padding: 0;
+}
+
+.WikiaPage {
+	border: none;
+
+	.InfoboxBuilder {
+		@include flex(1);
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.WikiaPage, .InfoboxBuilder {
+		padding: 0;
+		width:  $page-width-small;
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.WikiaPage, .InfoboxBuilder {
+		padding: 0;
+		width: $content-width-medium;
+	}
+}
+
+@media #{$breakpoint-large-up} {
+	.WikiaPage, .InfoboxBuilder {
+		padding: 0;
+		width: $content-width-large;
+	}
+}

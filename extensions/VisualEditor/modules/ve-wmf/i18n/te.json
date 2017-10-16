@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Arjunaraoc",
+			"Jayarathina",
+			"Sank",
+			"Shanmugamp7",
+			"Veeven",
+			"Visdaviva",
+			"மதனாஹரன்",
+			"Chaduvari"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|విజువల్ ఎడిటర్]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|విజువల్ ఎడిటర్]] వాడి చేసిన మార్పు",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|విజువల్ ఎడిటర్:తనిఖీ]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|విజువల్ ఎడిటర్]]  వాడి చేసిన మార్పువలనఊహించని పరిణామాలు వుండవచ్చని వ్యవస్థ కనుగొన్నది.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor:మార్చబడింది]]",
+	"tag-visualeditor-switched-description": "వాడుకరి VisualEditor ను వాడుతూ దిద్దుబాటు మొదలుపెట్టి, తరువాత wikitext ఎడిటరుకు మారారు.",
+	"visualeditor-feedback-link": "ప్రాజేక్ట్:విజువల్ ఎడిటర్/సూచనలు",
+	"visualeditor-feedback-tool": "సూచనలివ్వండి"
+}

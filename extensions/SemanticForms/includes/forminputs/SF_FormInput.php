@@ -90,29 +90,46 @@ abstract class SFFormInput {
 		$params['mandatory'] = array(
 			'name' => 'mandatory',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_mandatory' )
+			'description' => wfMessage( 'sf_forminputs_mandatory' )->text()
 		);
 		$params['restricted'] = array(
 			'name' => 'restricted',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_restricted' )
+			'description' => wfMessage( 'sf_forminputs_restricted' )->text()
 		);
 		$params['class'] = array(
 			'name' => 'class',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_class' )
+			'description' => wfMessage( 'sf_forminputs_class' )->text()
 		);
 		$params['property'] = array(
 			'name' => 'property',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_property' )
+			'description' => wfMessage( 'sf_forminputs_property' )->text()
 		);
 		$params['default'] = array(
 			'name' => 'default',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_default' )
+			'description' => wfMessage( 'sf_forminputs_default' )->text()
 		);
 		return $params;
+	}
+
+	/**
+	 * @param $key
+	 * @param $configVars
+	 * @param $functionData
+	 * @param $input_id
+	 * @return array
+	 */
+	private static function updateFormInputJsFunctionData( $key, &$configVars, $functionData, $input_id ) {
+		if ( array_key_exists( $key, $configVars ) ) {
+			$functionDataArray = $configVars[ $key ];
+		} else {
+			$functionDataArray = array();
+		}
+		$functionDataArray[ $input_id ] = $functionData;
+		return $functionDataArray;
 	}
 
 	/**
@@ -165,14 +182,14 @@ abstract class SFFormInput {
 	public function getJsValidationFunctionData() {
 		return $this->mJsValidationFunctionData;
 	}
-	
-	
+
+
 	/**
 	 * Returns the names of the resource modules this input type uses.
-	 * 
-	 * Returns the names of the modules as an array or - if there is only one 
+	 *
+	 * Returns the names of the modules as an array or - if there is only one
 	 * module - as a string.
-	 * 
+	 *
 	 * @return null|string|array
 	 */
 	public function getResourceModuleNames() {
@@ -203,7 +220,10 @@ abstract class SFFormInput {
 	 * @param String $name The name of the initialization function.
 	 * @param String $param The parameter passed to the initialization function.
 	 */
-	public function addJsInitFunctionData( $name, $param = 'null' ) {
+	public function addJsInitFunctionData( $name, $param = null ) {
+		if ( is_string( $param ) ) {
+			$param = json_decode( $param );
+		}
 		$this->mJsInitFunctionData[] = array( 'name' => $name, 'param' => $param );
 	}
 
@@ -283,6 +303,23 @@ abstract class SFFormInput {
 		return array();
 	}
 
+	// Now the same set of methods, but for Cargo instead of SMW.
+	public static function getDefaultCargoTypes() {
+		return array();
+	}
+
+	public static function getDefaultCargoTypeLists() {
+		return array();
+	}
+
+	public static function getOtherCargoTypesHandled() {
+		return array();
+	}
+
+	public static function getOtherCargoTypeListsHandled() {
+		return array();
+	}
+
 	/**
 	 * Method to make new style input types compatible with old-style call from
 	 * the SF parser.
@@ -293,7 +330,7 @@ abstract class SFFormInput {
 	 */
 	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
 
-		global $sfgFieldNum, $wgOut;
+		global $sfgFieldNum, $wgParser;
 
 		// create an input of the called class
 		// TODO: get_called_class was introduced in PHP 5.3. The use of the
@@ -304,46 +341,34 @@ abstract class SFFormInput {
 			if ( $input_name === 'sf_free_text' ) { // free text
 				$calledClass = 'SFTextAreaInput';
 			} else {
-				$bt = debug_backtrace(false);		
+				$bt = debug_backtrace(false);
 				$calledClass = $bt[1]['args'][0][0];
 			}
 		}
-		
+
 		$input = new $calledClass ( $sfgFieldNum, $cur_value, $input_name, $is_disabled, $other_args );
 
+		$output = $wgParser->getOutput();
 		$modules = $input->getResourceModuleNames();
-		
+
 		// register modules for the input
 		if ( $modules !== null ) {
-			$wgOut->addModuleStyles( $modules );
-			$wgOut->addModuleScripts( $modules );
+			$output->addModuleStyles( $modules );
+			$output->addModuleScripts( $modules );
 		}
 
-		// create calls to JS initialization and validation
-		// TODO: This data should be transferred as a JSON blob and then be evaluated from a dedicated JS file
 		if ( $input->getJsInitFunctionData() || $input->getJsValidationFunctionData() ) {
 
-			$jstext = '';
 			$input_id = $input_name == 'sf_free_text' ? 'sf_free_text' : "input_$sfgFieldNum";
+			$configVars = $output->getJsConfigVars();
 
-			foreach ( $input->getJsInitFunctionData() as $jsInitFunctionData ) {
-				$jstext .= "jQuery('#$input_id').SemanticForms_registerInputInit({$jsInitFunctionData['name']}, {$jsInitFunctionData['param']} );";
-			}
+			$initFunctionData = self::updateFormInputJsFunctionData( 'ext.sf.initFunctionData', $configVars, $input->getJsInitFunctionData(), $input_id );
+			$validationFunctionData = self::updateFormInputJsFunctionData( 'ext.sf.validationFunctionData', $configVars, $input->getJsValidationFunctionData(), $input_id );
 
-			foreach ( $input->getJsValidationFunctionData() as $jsValidationFunctionData ) {
-				$jstext .= "jQuery('#$input_id').SemanticForms_registerInputValidation( {$jsValidationFunctionData['name']}, {$jsValidationFunctionData['param']});";
-			}
-
-			if ( $modules !== null ) {
-				$jstext = 'mw.loader.using(' . json_encode( $modules )
-					. ',function(){' . $jstext
-					. '},function(e,module){alert(module+": "+e);});';
-			}
-
-			$jstext = 'jQuery(function(){' . $jstext . '});';
-
-			// write JS code directly to the page's code
-			$wgOut->addScript( Html::inlineScript( $jstext ) );
+			$output->addJsConfigVars( array(
+				'ext.sf.initFunctionData' => $initFunctionData,
+				'ext.sf.validationFunctionData' => $validationFunctionData
+			) );
 		}
 
 		return $input->getHtmlText();

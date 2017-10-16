@@ -77,6 +77,11 @@ class ApiMove extends ApiBase {
 			}
 		}
 
+		// Rate limit
+		if ( $user->pingLimiter( 'move' ) ) {
+			$this->dieUsageMsg( 'actionthrottledtext' );
+		}
+
 		// Move the page
 		$retval = $fromTitle->moveTo( $toTitle, true, $params['reason'], !$params['noredirect'] );
 		if ( $retval !== true ) {

@@ -5,16 +5,12 @@
  * 
  * Webservice documentation: http://code.google.com/apis/maps/documentation/geocoding/
  *
- * @file Maps_GoogleGeocoder.php
- * @ingroup Maps
- * @ingroup Geocoders
- *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Sergey Chernyshev
  * @author Desiree Gennaro
  */
-final class MapsGoogleGeocoder extends MapsGeocoder {
+final class MapsGoogleGeocoder extends \Maps\Geocoder {
 	
 	/**
 	 * Registers the geocoder.
@@ -25,12 +21,12 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	 * @since 0.7
 	 */
 	public static function register() {
-		MapsGeocoders::registerGeocoder( 'google', __CLASS__ );
+		\Maps\Geocoders::registerGeocoder( 'google', __CLASS__ );
 		return true;
 	}		
 	
 	/**
-	 * @see MapsGeocoder::getRequestUrl
+	 * @see \Maps\Geocoder::getRequestUrl
 	 * 
 	 * @since 0.7
 	 * 
@@ -43,7 +39,7 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	}
 	
 	/**
-	 * @see MapsGeocoder::parseResponse
+	 * @see \Maps\Geocoder::parseResponse
 	 * 
 	 * @since 0.7
 	 * 
@@ -65,7 +61,7 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	}
 	
 	/**
-	 * @see MapsGeocoder::getOverrides
+	 * @see \Maps\Geocoder::getOverrides
 	 * 
 	 * @since 0.7
 	 * 

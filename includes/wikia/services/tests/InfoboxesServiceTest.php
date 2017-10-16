@@ -182,6 +182,8 @@ class InfoboxesServiceTest extends WikiaBaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01089 ms
 	 * @covers InfoboxesService::getSearchResponse
 	 */
 	public function testGetSearchResponse() {

@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -14,7 +14,6 @@
  * @ingroup SMWDataValues
  */
 class SMWPropertyListValue extends SMWDataValue {
-
 	/**
 	 * List of properte data items that are stored.
 	 * @var array of SMWDIProperty
@@ -34,29 +33,24 @@ class SMWPropertyListValue extends SMWDataValue {
 				$propertyName = $propertyNameParts[1];
 				$propertyNamespace = $wgContLang->getNsText( SMW_NS_PROPERTY );
 				if ( $namespace != $propertyNamespace ) {
-					$this->addError( wfMsgForContent( 'smw_wrong_namespace', $propertyNamespace ) );
+					$this->addError( wfMessage( 'smw_wrong_namespace', $propertyNamespace )->inContentLanguage()->text() );
 				}
 			}
 
 			$propertyName = smwfNormalTitleText( $propertyName );
 
 			try {
-				$diProperty = SMWDIProperty::newFromUserLabel( $propertyName );
+				$diProperty = SMW\DIProperty::newFromUserLabel( $propertyName );
 			} catch ( SMWDataItemException $e ) {
-				$diProperty = new SMWDIProperty( 'Error' );
-				$this->addError( wfMsgForContent( 'smw_noproperty', $propertyName ) );
+				$diProperty = new SMW\DIProperty( 'Error' );
+				$this->addError( wfMessage( 'smw_noproperty', $propertyName )->inContentLanguage()->text() );
 			}
 
 			$this->m_diProperties[] = $diProperty;
 			$stringValue .= ( $stringValue ? ';' : '' ) . $diProperty->getKey();
 		}
 
-		try {
-			$this->m_dataitem = new SMWDIString( $stringValue );
-		} catch ( SMWStringLengthException $e ) {
-			$this->m_dataitem = new SMWDIString( 'Error' );
-			$this->addError( wfMsgForContent( 'smw_maxstring', $stringValue ) );
-		}
+		$this->m_dataitem = new SMWDIBlob( $stringValue );
 	}
 
 	/**
@@ -67,29 +61,37 @@ class SMWPropertyListValue extends SMWDataValue {
 	 * @return boolean
 	 */
 	protected function loadDataItem( SMWDataItem $dataItem ) {
-		if ( $dataItem->getDIType() == SMWDataItem::TYPE_STRING ) {
-			$this->m_dataitem = $dataItem;
-			$this->m_diProperties = array();
 
-			foreach ( explode( ';', $dataItem->getString() ) as $propertyKey ) {
-				try {
-					$this->m_diProperties[] = new SMWDIProperty( $propertyKey );
-				} catch ( SMWDataItemException $e ) {
-					$this->m_diProperties[] = new SMWDIProperty( 'Error' );
-					$this->addError( wfMsgForContent( 'smw_parseerror' ) );
-				}
-			}
-
-			$this->m_caption = false;
-
-			return true;
-		} else {
+		if ( !$dataItem instanceof SMWDIBlob ) {
 			return false;
 		}
+
+		$this->m_dataitem = $dataItem;
+		$this->m_diProperties = array();
+
+		foreach ( explode( ';', $dataItem->getString() ) as $propertyKey ) {
+			$property = null;
+
+			try {
+				$property = new SMW\DIProperty( $propertyKey );
+			} catch ( SMWDataItemException $e ) {
+				$property = new SMW\DIProperty( 'Error' );
+				$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
+			}
+
+			if ( $property instanceof SMWDIProperty ) {
+				 // Find a possible redirect
+				$this->m_diProperties[] = $property->getRedirectTarget();
+			}
+		}
+
+		$this->m_caption = false;
+
+		return true;
 	}
 
 	public function getShortWikiText( $linked = null ) {
-		return  ( $this->m_caption !== false ) ?  $this->m_caption : $this->makeOutputText( 2, $linked );
+		return ( $this->m_caption !== false ) ?  $this->m_caption : $this->makeOutputText( 2, $linked );
 	}
 
 	public function getShortHTMLText( $linker = null ) {
@@ -121,8 +123,10 @@ class SMWPropertyListValue extends SMWDataValue {
 		$result = '';
 		$sep = ( $type == 4 ) ? '; ' : ', ';
 		foreach ( $this->m_diProperties as $diProperty ) {
-			if ( $result !== '' ) $result .= $sep;
-			$propertyValue = SMWDataValueFactory::newDataItemValue( $diProperty, null );
+			if ( $result !== '' ) {
+				$result .= $sep;
+			}
+			$propertyValue = \SMW\DataValueFactory::getInstance()->newDataValueByItem( $diProperty, null );
 			$result .= $this->makeValueOutputText( $type, $propertyValue, $linker );
 		}
 		return $result;
@@ -130,12 +134,16 @@ class SMWPropertyListValue extends SMWDataValue {
 
 	protected function makeValueOutputText( $type, $propertyValue, $linker ) {
 		switch ( $type ) {
-			case 0: return $propertyValue->getShortWikiText( $linker );
-			case 1: return $propertyValue->getShortHTMLText( $linker );
-			case 2: return $propertyValue->getLongWikiText( $linker );
-			case 3: return $propertyValue->getLongHTMLText( $linker );
-			case 4: return $propertyValue->getWikiValue();
+			case 0:
+			return $propertyValue->getShortWikiText( $linker );
+			case 1:
+			return $propertyValue->getShortHTMLText( $linker );
+			case 2:
+			return $propertyValue->getLongWikiText( $linker );
+			case 3:
+			return $propertyValue->getLongHTMLText( $linker );
+			case 4:
+			return $propertyValue->getWikiValue();
 		}
 	}
-
 }

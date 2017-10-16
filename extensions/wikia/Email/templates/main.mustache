@@ -1,0 +1,92 @@
+<html>
+<head>
+	<title>Wikia</title>
+</head>
+<body>
+
+<div class="main-wrapper">
+	<div class="fandom-bar">
+		{{# icons.FandomTopBar}}
+			<img src="{{url}}" height="5" width="100%" alt="Top Bar">
+		{{/ icons.FandomTopBar}}
+	</div>
+	<table class="header-wrap">
+		<tr>
+			<td></td>
+			<td>
+				<div class="content">
+					<div class="header content-inner">
+						<a href="http://www.wikia.com" class="logo">
+							{{# icons.FandomLogoHeader}}<img src="{{url}}" alt="Fandom">{{/ icons.FandomLogoHeader}}
+						</a>
+					</div>
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<table class="body-wrap">
+		<tr>
+			<td></td>
+			<td>
+				<div class="content">
+					<div class="main-content content-inner">
+						{{{content}}}
+					</div>
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<table class="footer-wrap">
+		<tr>
+			<td></td>
+			<td>
+				<div class="content">
+					<div class="footer content-inner">
+						<a href="http://www.wikia.com">
+							{{# icons.FandomLogoFooter}}<img src="{{url}}" alt="Fandom">{{/ icons.FandomLogoFooter}}
+						</a>
+						<p class="social-links">
+							{{#socialIcons}}
+								<a class="{{iconClass}}" href="{{iconLink}}" >
+									<img src="{{iconSrc}}" alt="{{iconAlt}}">
+								</a>
+							{{/socialIcons}}
+						</p>
+
+						{{#footerMessages}}
+							<p class="fine-print">{{{.}}}</p>
+						{{/footerMessages}}
+
+						{{# badges}}
+
+							<hr class="spacer">
+
+							{{# footerMobileApplicationMessages}}
+								<p class="fine-print">{{{.}}}</p>
+							{{/ footerMobileApplicationMessages}}
+
+							<div class="mobile-badges">
+								{{# badges.ios}}
+									<a class="ios-badge" href="{{link}}">
+										<img src="{{src}}" alt="iOS">
+									</a>
+								{{/ badges.ios}}
+								{{# badges.android}}
+									<a class="android-badge" href="{{link}}">
+										<img src="{{src}}" alt="Android">
+									</a>
+								{{/ badges.android}}
+						</div>
+
+						{{/ badges}}
+					</div>
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

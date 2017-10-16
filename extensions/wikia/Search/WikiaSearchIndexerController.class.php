@@ -11,6 +11,7 @@ use Wikia\Search\MediaWikiService;
  */
 class WikiaSearchIndexerController extends WikiaController
 {
+	const REQUEST_PARAMETER_API_KEY = 'apiKey';
 	/**
 	 * Allows us to avoid direct calls to MediaWiki components
 	 * @var Wikia\Search\MediaWikiService
@@ -46,12 +47,17 @@ class WikiaSearchIndexerController extends WikiaController
 
 		$serviceName = 'Wikia\Search\IndexService\\' . $this->getVal( 'service', 'DefaultContent' );
 		$ids = explode( '|', $this->getVal( 'ids', '' ) );
-		$service = new $serviceName( $ids );
-		
-		$ids = $this->getVal( 'ids' );
-	    if ( !empty( $ids ) ) {
-	        $this->response->setData( $service->getResponseForPageIds() );
-	    }
+		if ( class_exists( $serviceName ) ) {
+			/* @var Wikia\Search\IndexService\AbstractService $service */
+			$service = new $serviceName( $ids );
+			$ids = $this->getVal( 'ids' );
+			if ( !empty( $ids ) ) {
+				$this->response->setData( $service->getResponseForPageIds() );
+			}
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'WikiaSearchIndexer invoked with bad service param.',
+				[ 'serviceName' => $serviceName ] );
+		}
 	}
 	
 	/**
@@ -68,5 +74,20 @@ class WikiaSearchIndexerController extends WikiaController
 		$service = new $serviceName();
 		
 		$this->response->setData( $service->getStubbedWikiResponse() );
+	}
+
+	/**
+	 * Check for existence of specific key in request.
+	 * If key exists - access is allowed
+	 * @return bool
+	 */
+	public function isAnonAccessAllowedInCurrentContext() {
+		$originalRequest = RequestContext::getMain()->getRequest();
+		$apiKey = $originalRequest->getVal( self::REQUEST_PARAMETER_API_KEY, null );
+		global $wgPrivateWikiaApiAccessKey;
+		if( ( $apiKey !== null ) && ( $apiKey === $wgPrivateWikiaApiAccessKey ) ) {
+			return true;
+		}
+		return false;
 	}
 }

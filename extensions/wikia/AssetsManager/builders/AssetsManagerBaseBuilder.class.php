@@ -16,7 +16,6 @@ class AssetsManagerBaseBuilder {
 
 	protected $mContent;
 	protected $mContentType;
-	protected $mCacheMode = 'public';
 
 	public function __construct(WebRequest $request) {
 		$this->mType = $request->getText('type');
@@ -33,6 +32,11 @@ class AssetsManagerBaseBuilder {
 		}
 	}
 
+	/**
+	 * @param float $processingTimeStart Unix timestamp in microseconds used for profiling (when profiling is forced)
+	 * @return string
+	 * @throws Exception
+	 */
 	public function getContent( $processingTimeStart = null ) {
 		$minifyTimeStart = null;
 
@@ -45,7 +49,7 @@ class AssetsManagerBaseBuilder {
 				$newContent = $this->minifyCSS( $this->mContent );
 
 			} else if ( $this->mContentType == AssetsManager::TYPE_JS ) {
-				$newContent = self::minifyJS( $this->mContent, ( $this->mOid == 'oasis_shared_js' || $this->mOid == 'rte' ) ? true : false );
+				$newContent = self::minifyJS( $this->mContent );
 			}
 		}
 
@@ -79,15 +83,10 @@ class AssetsManagerBaseBuilder {
 	public function getCacheDuration() {
 		global $wgResourceLoaderMaxage, $wgStyleVersion;
 		if($this->mCb > $wgStyleVersion) {
-			Wikia::log(__METHOD__, false, "shorter TTL set for {$this->mOid}", true);
 			return $wgResourceLoaderMaxage['unversioned'];
 		} else {
 			return $wgResourceLoaderMaxage['versioned'];
 		}
-	}
-
-	public function getCacheMode() {
-		return $this->mCacheMode;
 	}
 
 	public function getContentType() {
@@ -98,33 +97,34 @@ class AssetsManagerBaseBuilder {
 		return 'Accept-Encoding';
 	}
 
-	public static function minifyJS($content, $useYUI = false) {
-		global $IP;
+	/**
+	 * @param $content string
+	 * @return string
+	 * @throws Exception
+	 */
+	public static function minifyJS($content) {
 		wfProfileIn(__METHOD__);
+		$res = JavaScriptMinifier::minify($content);
 
-		$tempInFile = tempnam(sys_get_temp_dir(), 'AMIn');
-		file_put_contents($tempInFile, $content);
+		if ( !is_string( $res ) ) {
+			$e = new Exception( 'JS minification failed' );
 
-		if($useYUI) {
-			$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
-			shell_exec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
-			$out = file_get_contents($tempOutFile);
-			unlink($tempOutFile);
-		} else {
-			$jsmin = "{$IP}/lib/vendor/jsmin";
-			$out = shell_exec("cat $tempInFile | $jsmin");
+			\Wikia\Logger\WikiaLogger::instance()->error( 'AssetsManagerBaseBuilder::minifyJS failed', [
+				'exception' => $e,
+			]);
+
+			throw $e;
 		}
 
-		unlink($tempInFile);
-
 		wfProfileOut(__METHOD__);
-		return $out;
+		return $res;
 	}
 
 	private function minifyCSS($content) {
 		wfProfileIn(__METHOD__);
-		$out = Minify_CSS_Compressor::process($content);
+		$out = CSSMin::minify($content);
 		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 }

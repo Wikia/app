@@ -12,9 +12,8 @@ EOT;
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'ImageServing test',
 	'author' => 'Tomasz Odrobny',
-	'url' => '',
-	'description' => 'ImageServing testing web pege',
-	'descriptionmsg' => 'myextension-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageServing/Test',
+	'descriptionmsg' => 'imageservingtest-desc',
 	'version' => '0.0.0',
 );
 

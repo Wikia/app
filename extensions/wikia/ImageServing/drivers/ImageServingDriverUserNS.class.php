@@ -1,21 +1,24 @@
 <?php
 class ImageServingDriverUserNS extends ImageServingDriverMainNS {
 
-	function formatResult( $imageList , $dbOut, $limit ) {
-		$out = parent::formatResult( $imageList , $dbOut, $limit );
-		foreach ( $this->getArticlesList() as $key => $value ) {
-			$user = explode( '/', $value['title'] );
-			if ( !empty( $out[$key] ) ) {
-				$out[$key] = array( $this->getData( $user[0] ) ) + array_slice( $out[$key], 0, $limit - 1 );
+	function formatResult( $allImages, $filteredImages ) {
+		$out = parent::formatResult( $allImages, $filteredImages );
+		foreach ( $this->getArticles() as $articleId => $articleData ) {
+			$titleParts = explode( '/', $articleData['title'] );
+			$userName = $titleParts[0];
+			if ( !empty( $out[$articleId] ) ) {
+				$out[$articleId] = array( $this->getAvatar( $userName ) ) + array_slice( $out[$articleId], 0, ImageServing::MAX_LIMIT - 1 );
 			} else {
-				$out[$key] = array( $this->getData( $user[0] ) );
+				$out[$articleId] = array( $this->getAvatar( $userName ) );
 			}
 		}
+
 		return $out;
 	}
 
-	private function getData( $user ) {
+	private function getAvatar( $user ) {
 		$cut = $this->imageServing->getCut( 100, 100, "center", false );
+
 		return array(
 			"name" => 'avatar',
 			"url" => AvatarService::getAvatarUrl( $user, $cut )

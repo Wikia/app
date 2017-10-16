@@ -2,28 +2,33 @@
 
 /**
  * Represents a user-defined form.
+ *
  * @author Yaron Koren
  * @file
  * @ingroup SF
  */
 class SFForm {
 	private $mFormName;
-	private $mTemplates;
 	private $mPageNameFormula;
 	private $mCreateTitle;
 	private $mEditTitle;
 	private $mAssociatedCategory;
+	private $mItems;
 
-	static function create( $formName, $templates ) {
+	static function create( $formName, $items ) {
 		$form = new SFForm();
 		$form->mFormName = ucfirst( str_replace( '_', ' ', $formName ) );
-		$form->mTemplates = $templates;
 		$form->mAssociatedCategory = null;
+		$form->mItems = $items;
 		return $form;
 	}
 
 	function getFormName() {
 		return $this->mFormName;
+	}
+
+	function getItems() {
+		return $this->mItems;
 	}
 
 	function setPageNameFormula( $pageNameFormula ) {
@@ -42,24 +47,16 @@ class SFForm {
 		$this->mAssociatedCategory = $associatedCategory;
 	}
 
-	function creationHTML() {
-		$text = "";
-		foreach ( $this->mTemplates as $i => $ft ) {
-			$text .= $ft->creationHTML( $i );
-		}
-		return $text;
-	}
-
-	function createMarkup() {
+	function createMarkup( $standardInputs = array(), $freeTextLabel = null ) {
 		$title = Title::makeTitle( SF_NS_FORM, $this->mFormName );
-		$fs = SFUtils::getSpecialPage( 'FormStart' );
+		$fs = SpecialPageFactory::getPage( 'FormStart' );
 		$form_start_url = SFUtils::titleURLString( $fs->getTitle() ) . "/" . $title->getPartialURL();
-		$form_description = wfMsgForContent( 'sf_form_docu', $this->mFormName, $form_start_url );
+		$form_description = wfMessage( 'sf_form_docu', $this->mFormName, $form_start_url )->inContentLanguage()->text();
 		$form_input = "{{#forminput:form=" . $this->mFormName;
 		if ( !is_null( $this->mAssociatedCategory ) ) {
 			$form_input .= "|autocomplete on category=" . $this->mAssociatedCategory;
 		}
-	       	$form_input .= "}}\n";
+		$form_input .= "}}\n";
 		$text = <<<END
 <noinclude>
 $form_description
@@ -86,12 +83,53 @@ END;
 <div id="wikiPreview" style="display: none; padding-bottom: 25px; margin-bottom: 25px; border-bottom: 1px solid #AAAAAA;"></div>
 
 END;
-		foreach ( $this->mTemplates as $template ) {
-			$text .= $template->createMarkup() . "\n";
+		foreach ( $this->mItems as $item ) {
+			if ( $item['type'] == 'template' ) {
+				$template = $item['item'];
+				$text .= $template->createMarkup() . "\n";
+			} elseif ( $item['type'] == 'section' ) {
+				$section = $item['item'];
+				$text .= $section->createMarkup() . "\n";
+			}
 		}
-		$free_text_label = wfMsgForContent( 'sf_form_freetextlabel' );
-		$text .= <<<END
-'''$free_text_label:'''
+
+		if ( is_null( $freeTextLabel ) ) {
+			$freeTextLabel = wfMessage( 'sf_form_freetextlabel' )->inContentLanguage()->text();
+		}
+
+		// Add in standard inputs if they were specified.
+		if ( count( $standardInputs ) > 0 ) {
+			if ( array_key_exists( 'free text', $standardInputs ) ) {
+				$text .= "'''$freeTextLabel:'''\n\n";
+				$text .= $standardInputs['free text'] . "\n\n\n";
+			}
+			if ( array_key_exists( 'summary', $standardInputs ) ) {
+				$text .= $standardInputs['summary'] . "\n\n";
+			}
+			if ( array_key_exists( 'minor edit', $standardInputs ) ) {
+				$text .= $standardInputs['minor edit'] . ' ';
+			}
+			if ( array_key_exists( 'watch', $standardInputs ) ) {
+				$text .= $standardInputs['watch'];
+			}
+			if ( array_key_exists( 'minor edit', $standardInputs ) || array_key_exists( 'watch', $standardInputs ) ) {
+				$text .= "\n\n";
+			}
+			if ( array_key_exists( 'save', $standardInputs ) ) {
+				$text .= $standardInputs['save'] . ' ';
+			}
+			if ( array_key_exists( 'preview', $standardInputs ) ) {
+				$text .= $standardInputs['preview'] . ' ';
+			}
+			if ( array_key_exists( 'changes', $standardInputs ) ) {
+				$text .= $standardInputs['changes'] . ' ';
+			}
+			if ( array_key_exists( 'cancel', $standardInputs ) ) {
+				$text .= $standardInputs['cancel'];
+			}
+		} else {
+			$text .= <<<END
+'''$freeTextLabel:'''
 
 {{{standard input|free text|rows=10}}}
 
@@ -101,9 +139,9 @@ END;
 {{{standard input|minor edit}}} {{{standard input|watch}}}
 
 {{{standard input|save}}} {{{standard input|preview}}} {{{standard input|changes}}} {{{standard input|cancel}}}
-</includeonly>
-
 END;
+		}
+		$text .= "\n</includeonly>\n";
 
 		return $text;
 	}

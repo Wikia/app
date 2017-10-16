@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dani",
+			"Dorgan",
+			"Glanthor Reviol",
+			"TK-999"
+		]
+	},
+	"semanticdrilldown-desc": "Adatlefúró felület a szemantikus adatokban való navigációhoz",
+	"specialpages-group-sd_group": "Szemantikus adatlefúrás",
+	"browsedata": "Adatok böngészése",
+	"sd_browsedata_choosecategory": "Válassz egy kategóriát",
+	"sd_browsedata_viewcategory": "kategória megtekintése",
+	"sd_browsedata_docu": "Kattints egy vagy több elemre alább, hogy pontosítsd az eredményeket.",
+	"sd_browsedata_subcategory": "Alkategória",
+	"sd_browsedata_other": "Egyéb",
+	"sd_browsedata_none": "Nincs",
+	"sd_browsedata_filterbyvalue": "Szűrés ezen érték alapján",
+	"sd_browsedata_filterbysubcategory": "Szűrés ezen alkategória alapján",
+	"sd_browsedata_otherfilter": "Olyan lapok megjelenítése, melyeken ennek a szűrőnek más az értéke",
+	"sd_browsedata_nonefilter": "Olyan lapok megjelenítése, melyeken ennek a szűrőnek nincs értéke",
+	"sd_browsedata_or": "vagy",
+	"sd_browsedata_removefilter": "Szűrő eltávolítása",
+	"sd_browsedata_removesubcategoryfilter": "Alkategória szűrő törlése",
+	"sd_browsedata_resetfilters": "Szűrő alaphelyzetbe állítása",
+	"sd_browsedata_addanothervalue": "Kattints a nyílra másik érték hozzáadásához",
+	"sd_browsedata_daterangestart": "Kezdődátum:",
+	"sd_browsedata_daterangeend": "Végdátum:",
+	"sd_browsedata_novalues": "Nincsenek ehhez a szűrőhöz tartozó értékek",
+	"sd_createfilter_usepropertyvalues": "A tulajdonság összes értékének használata ennél a szűrőnél",
+	"sd_createfilter_usecategoryvalues": "A szűrő értékeinek felvétele ebből a kategóriából:",
+	"sd_createfilter_requirefilter": "Egy másik szűrő legyen kiválasztva, mielőtt ez megjelenik:",
+	"sd-pageschemas-filter": "Szűrő",
+	"sd-pageschemas-values": "Értékek"
+}

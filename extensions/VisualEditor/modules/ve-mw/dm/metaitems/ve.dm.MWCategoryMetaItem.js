@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWCategoryMetaItem class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -20,7 +20,7 @@ ve.dm.MWCategoryMetaItem = function VeDmMWCategoryMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWCategoryMetaItem, ve.dm.MetaItem );
+OO.inheritClass( ve.dm.MWCategoryMetaItem, ve.dm.MetaItem );
 
 /* Static Properties */
 
@@ -30,25 +30,21 @@ ve.dm.MWCategoryMetaItem.static.group = 'mwCategory';
 
 ve.dm.MWCategoryMetaItem.static.matchTagNames = [ 'link' ];
 
-ve.dm.MWCategoryMetaItem.static.matchRdfaTypes = [
-	'mw:WikiLink/Category', // old type, pre-bug 53432
-	'mw:PageProp/Category' // new type
-];
+ve.dm.MWCategoryMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/Category' ];
 
 ve.dm.MWCategoryMetaItem.static.toDataElement = function ( domElements ) {
-	var firstDomElement = domElements[0],
-		href = firstDomElement.getAttribute( 'href' ),
+	var href = domElements[0].getAttribute( 'href' ),
 		/*jshint regexp:false */
 		matches = href.match( /^((?:\.\.?\/)*)(.*?)(?:#(.*))?$/ ),
 		rawSortkey = matches[3] || '';
 	return {
-		'type': 'mwCategory',
-		'attributes': {
-			'hrefPrefix': matches[1],
-			'category': decodeURIComponent( matches[2] ).replace( /_/g, ' ' ),
-			'origCategory': matches[2],
-			'sortkey': decodeURIComponent( rawSortkey ).replace( /_/g, ' ' ),
-			'origSortkey': rawSortkey
+		type: this.name,
+		attributes: {
+			hrefPrefix: matches[1],
+			category: decodeURIComponent( matches[2] ).replace( /_/g, ' ' ),
+			origCategory: matches[2],
+			sortkey: decodeURIComponent( rawSortkey ).replace( /_/g, ' ' ),
+			origSortkey: rawSortkey
 		}
 	};
 };
@@ -62,7 +58,7 @@ ve.dm.MWCategoryMetaItem.static.toDomElements = function ( dataElement, doc ) {
 		origCategory = dataElement.attributes.origCategory || '',
 		origSortkey = dataElement.attributes.origSortkey || '',
 		normalizedOrigCategory = decodeURIComponent( origCategory ).replace( /_/g, ' ' ),
-		normalizedOrigSortkey = decodeURIComponent( origSortkey );
+		normalizedOrigSortkey = decodeURIComponent( origSortkey ).replace( /_/g, ' ' );
 	if ( normalizedOrigSortkey === sortkey ) {
 		sortkey = origSortkey;
 	} else {
@@ -73,7 +69,7 @@ ve.dm.MWCategoryMetaItem.static.toDomElements = function ( dataElement, doc ) {
 	} else {
 		category = encodeURIComponent( category );
 	}
-	domElement.setAttribute( 'rel', 'mw:WikiLink/Category' );
+	domElement.setAttribute( 'rel', 'mw:PageProp/Category' );
 	href = hrefPrefix + category;
 	if ( sortkey !== '' ) {
 		href += '#' + sortkey;

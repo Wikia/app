@@ -10,7 +10,6 @@ class WikiaLocalFileShared  {
 	var $forceMime = '';
 	var $oFile = null;
 	var $videoId = '';
-	var $trackingArticleId = false;
 	var $embedCodeMaxHeight = false;
 	var $metadata = null;
 
@@ -50,28 +49,27 @@ class WikiaLocalFileShared  {
 	 * Returns embed HTML
 	 *
 	 * @param string $width Desired width of video player
-	 * @param bool $autoplay Whether the video should play on page load
-	 * @param bool $isAjax Whether the curent request is part of an ajax call
-	 * @param bool $postOnload
+	 * @param array $options [optional] associative array which accepts the following keys
+	 *  'autoplay' bool Whether the video should play on page load
+	 *  'isAjax' bool Whether the curent request is part of an ajax call
+	 *  'isInline' bool Is embed video file inline
 	 * @return bool|string
 	 */
-	public function getEmbedCode( $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbedCode( $width, array $options = [] ) {
 		wfProfileIn( __METHOD__ );
-		if ( ( $this->trackingArticleId !== false ) && ( F::app()->wg->title instanceof Title ) ) {
-			$this->trackingArticleId = F::app()->wg->title->getArticleID();
-		}
+
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty($handler) ) {
 			if ( $this->embedCodeMaxHeight !== false && $this->embedCodeMaxHeight > 0 ) {
 				$handler->setMaxHeight( $this->embedCodeMaxHeight );
 			}
 			$handler->setThumbnailImage( $this->oFile->transform( array( 'width' => $width ) ) );
-			$this->trackingArticleId = false;
-			$res = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
+
+			$res = $handler->getEmbed( $width, $options );
+
 			$res['title'] = $this->oFile->getTitle()->getDBKey();
 			$res['provider'] = $this->getProviderName();
 		} else {
-			$this->trackingArticleId = false;
 			$res = false;
 		}
 		wfProfileOut( __METHOD__ );
@@ -141,6 +139,19 @@ class WikiaLocalFileShared  {
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty( $handler ) ) {
 			return $handler->getExpirationDate();
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get regional restrictions of Video file or false
+	 * @return string|false
+	 */
+	public function getRegionalRestrictions() {
+		$handler = $this->oFile->getHandler();
+		if ( $this->isVideo() && !empty( $handler ) ) {
+			return $handler->getRegionalRestrictions();
 		}
 
 		return false;
@@ -225,7 +236,7 @@ class WikiaLocalFileShared  {
 			$handler = new $class();
 			$handler->setVideoId( $this->oFile->videoId );
 
-			$this->oFile->metadata = ( isset( $this->forceMetadata ) ) ? $this->forceMetadata : $handler->getMetadata();
+			$this->oFile->metadata = ( isset( $this->forceMetadata ) ) ? $this->forceMetadata : $handler->getVideoMetadata();
 			$this->oFile->media_type = MEDIATYPE_VIDEO;
 			$this->forceMime = false;
 		}
@@ -278,9 +289,20 @@ class WikiaLocalFileShared  {
 			}
 		}
 
-		if ( !empty($this->metadata[$key]) ) {
-			$value = $this->metadata[$key];
+		if ( is_array( $this->metadata ) ) {
+			if ( !empty( $this->metadata[$key] ) ) {
+				$value = $this->metadata[$key];
+			} else {
+				$value = $default;
+			}
 		} else {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'File metadata not an instance of an array. Expecting array', [
+					'type' => gettype( $this->metadata ),
+					'file' => $this->oFile,
+					'exception' => new Exception()
+				]
+			);
 			$value = $default;
 		}
 

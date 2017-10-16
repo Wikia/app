@@ -13,7 +13,7 @@ class MyToolsController extends WikiaController {
 		global $wgUser;
 
 		if(isset($params['tools'])) {
-			$wgUser->setOption('myTools', json_encode($params['tools']));
+			$wgUser->setGlobalPreference('myTools', json_encode($params['tools']));
 			$wgUser->saveSettings();
 		}
 
@@ -26,7 +26,7 @@ class MyToolsController extends WikiaController {
 		global $wgUser;
 
 		$out = array();
-		$tools = json_decode($wgUser->getOption('myTools'), true);
+		$tools = json_decode($wgUser->getGlobalPreference('myTools'), true);
 
 		if(is_array($tools)) {
 			foreach($tools as $tool) {
@@ -101,7 +101,7 @@ class MyToolsController extends WikiaController {
 			);
 		}
 
-		wfRunHooks('MyTools::getDefaultTools', array(&$out));
+		Hooks::run('MyTools::getDefaultTools', array(&$out));
 
 		return $out;
 	}
@@ -114,7 +114,7 @@ class MyToolsController extends WikiaController {
 		global $wgUser;
 
 		$out = array();
-		$tools = json_decode($wgUser->getOption('myTools'), true);
+		$tools = json_decode($wgUser->getGlobalPreference('myTools'), true);
 
 		if(is_array($tools)) {
 			foreach($tools as $tool) {
@@ -139,7 +139,7 @@ class MyToolsController extends WikiaController {
 
 		$toolsNames = $this->getAllToolsNames();
 
-		wfRunHooks('MyTools::getAllToolsNames', array(&$toolsNames));
+		Hooks::run('MyTools::getAllToolsNames', array(&$toolsNames));
 
 		$tools = array();
 

@@ -103,7 +103,7 @@
 			for (attr in this.cache) {
 				if (this.cache.hasOwnProperty(attr)) {
 					val = this.cache[attr];
-					tmpArr.push(encodeURIComponent(attr) + (val === u ? '' : '=' + encodeURIComponent(val)));
+					tmpArr.push(encodeURIComponent(attr) + (val === u ? '' : '=' + val));
 				}
 			}
 
@@ -280,32 +280,17 @@
 		};
 
 		/**
-		 * Updates the URL without navigating away from the page
+		 * @desc Sanitize HREF - checks if it's in valid format, i.e. it starts with a hash sign
+		 * and is not empty; cuts hash sign from it if it's valid or returns empty string otherwise
 		 *
 		 * @public
-		 */
-		p.pushState = function(data) {
-			// Check browser support of HTML5 history api
-			if(!(win.history && win.history.pushState)) {
-				return;
-			}
-			data = data || {};
-			win.history.pushState(data, win.document.title, this.toString());
-		};
-
-		/**
-		 * Updates the URL without navigating away from the page
-		 * Replaces history state instead of adding to it.
 		 *
-		 * @public
+		 * @param {String} href to sanitize
+		 * @return {String}
 		 */
-		p.replaceState = function(data) {
-			// Check browser support of HTML5 history api
-			if(!(win.history && win.history.replaceState)) {
-				return;
-			}
-			data = data || {};
-			win.history.replaceState(data, win.document.title, this.toString());
+		p.sanitizeHref = function(href) {
+			href = href.trim();
+			return (href.indexOf("#") === 0 && href.length > 1) ? href.slice(1) : '';
 		};
 
 		return Querystring;

@@ -15,11 +15,18 @@ class ImageServingHelper {
 	 */
 	public static function onLinksUpdateComplete( $linksUpdate ) {
 		wfProfileIn(__METHOD__);
-
+		$images = $linksUpdate->getImages();
 		$articleId = $linksUpdate->getTitle()->getArticleID();
-		$images = array_keys($linksUpdate->getImages());
-		self::buildIndex( $articleId, $images);
 
+		if(count($images) === 1) {
+			$images = array_keys($images);
+			self::buildIndex( $articleId, $images);
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
+		$article = new Article($linksUpdate->getTitle());
+		self::buildAndGetIndex( $article );
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -58,7 +65,9 @@ class ImageServingHelper {
 	 * @param WikiaPhotoGallery $ig
 	 * @return bool return true to continue hooks flow
 	 */
-	public static function onBeforeParserrenderImageGallery( $parser, &$ig) {
+	public static function onBeforeParserrenderImageGallery(
+		Parser $parser, WikiaPhotoGallery &$ig
+	): bool {
 		global $wgEnableWikiaPhotoGalleryExt;
 
 		if ((!self::$hookOnOff) || empty($wgEnableWikiaPhotoGalleryExt)) {
@@ -71,6 +80,7 @@ class ImageServingHelper {
 		$data = $ig->getData();
 
 		$ig = new FakeImageGalleryImageServing( $data['images'] );
+
 		wfProfileOut(__METHOD__);
 		return false;
 	}
@@ -123,34 +133,17 @@ class ImageServingHelper {
 
 		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
 
-		$dbw = wfGetDB(DB_MASTER, array());
-
 		if( count($images) < 1 ) {
 			if( $ignoreEmpty) {
 				wfProfileOut(__METHOD__);
 				return false;
 			}
-			$dbw->delete( 'page_wikia_props',
-				array(
-					'page_id' =>  $articleId,
-					'propname' => WPP_IMAGE_SERVING
-				),
-				__METHOD__
-			);
+			wfDeleteWikiaPageProp(WPP_IMAGE_SERVING, $articleId);
 			wfProfileOut(__METHOD__);
 			return array();
 		}
 
-		$dbw->replace('page_wikia_props','',
-			array(
-				'page_id' =>  $articleId,
-				'propname' => WPP_IMAGE_SERVING,
-				'props' => serialize($images)
-			),
-			__METHOD__
-		);
-
-		$dbw->commit();
+		wfSetWikiaPageProp(WPP_IMAGE_SERVING, $articleId, $images);
 		wfProfileOut(__METHOD__);
 		return $images;
 	}
@@ -167,7 +160,6 @@ class ImageServingHelper {
 		}
 		wfProfileIn(__METHOD__);
 
-		$article->getRawText(); // TODO: not sure whether it's actually needed
 		$title = $article->getTitle();
 		$content = $article->getContent();
 
@@ -177,8 +169,9 @@ class ImageServingHelper {
 
 		$out = array();
 		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
-
-		$images = self::buildIndex($article->getID(), $out[0], $ignoreEmpty, $dryRun);
+		$imageList = $out[0];
+		Hooks::run( "ImageServing::buildAndGetIndex", [ &$imageList, $title ] );
+		$images = self::buildIndex($article->getID(), $imageList, $ignoreEmpty, $dryRun);
 
 		wfProfileOut(__METHOD__);
 		return $images;

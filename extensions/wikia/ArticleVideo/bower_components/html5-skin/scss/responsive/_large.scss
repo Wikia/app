@@ -1,0 +1,151 @@
+.oo-large {
+
+  // Content Screens
+  .oo-content-screen {
+    padding: $panel-padding-lg;
+  }
+  .oo-content-screen-title {
+    font-size: $font-size-lg-screen-title;
+    span.oo-icon {
+      top: 4px;
+      font-size: 1em;
+    }
+  }
+
+  // State Screens
+  .oo-state-screen {
+    .oo-state-screen-info {
+      .oo-state-screen-title {
+        font-size: 3.0em;
+      }
+      .oo-state-screen-description {
+        font-size: 1.8em;
+      }
+    }
+  }
+
+  // Discovery Panel
+  .oo-discovery-panel {
+    padding: $panel-padding-lg;
+    margin-top:auto;
+    margin-bottom:auto;
+    .oo-discovery-panel-title {
+      position: absolute;
+    }
+    .oo-discovery-toaster-container-style {
+      max-height: 460px;
+    }
+    @include apply-to-safari-only ('.oo-discovery-toaster-container-style') {
+      min-height: 360px;
+    }
+
+    .oo-discovery-image-wrapper-style {
+      width: 214px;
+      height: auto;
+      margin: 0 60px 60px 0;
+
+      &:nth-of-type(even) {
+        margin-bottom: 0;
+      }
+      &:last-child, &:nth-last-child(2):nth-of-type(odd) {
+        margin-right:0;
+      }
+    }
+    .oo-image-style {
+      height: 120px;
+    }
+  }
+
+  // Closed Caption Panel
+  .oo-content-screen-closed-captions {
+    .oo-switch-container {
+      height: 26px;
+      width: 126px;
+      margin-left:34px;
+      .oo-switch-captions {
+        font-size: $font-size-base * $large-multiple;
+      }
+    }
+    .oo-data-panel {
+      padding-left: 7px;
+      width: 850px;
+    }
+    .oo-text-color-selection-container {
+      padding-left: $panel-padding-lg;
+    }
+    .oo-caption-opacity-inner-wrapper {
+      padding-left: $panel-padding-lg;
+    }
+    .oo-font-size-inner-wrapper {
+      padding-left: $panel-padding-lg;
+    }
+    .oo-text-enhancements-inner-wrapper {
+      padding-left: $panel-padding-lg;
+    }
+  }
+
+  //Error screen
+  .oo-error-screen {
+    .oo-error-title {
+      font-size: 2em;
+    }
+    .oo-error-description {
+      font-size: 1.4em;
+    }
+    .oo-error-action {
+      font-size: 1.4em;
+    }
+  }
+
+  //Action Icons
+  .oo-action-icon-pause {
+    font-size:32px;
+  }
+  .oo-action-icon span.oo-icon, .oo-action-icon-pause.oo-animate-pause {
+    font-size:150px;
+  }
+
+  //Ad Panel
+  .oo-ad-top-bar {
+     height: 34px;
+
+    .oo-ad-title, .oo-ad-playback-info {
+        font-size: 1em;
+        padding-left: 7.5px;
+        padding-right: 7.5px;
+    }
+    .oo-learn-more {
+      font-size: 1em;
+      margin-right: 10px;
+
+      .oo-button-icon {
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+    }
+    .oo-skip-button {
+      font-size: 1em;
+
+      .oo-skip-icon {
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+    }
+
+    .oo-skip-button.oo-visible {
+      margin-right: 15px;
+      margin-left: 15px;
+
+      .oo-skip-icon {
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  //Close Buttons
+  button.oo-close-btn {
+    top: $panel-padding-lg;
+    right: $panel-padding-lg;
+  }
+}

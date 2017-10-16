@@ -1,11 +1,11 @@
 <?php
 	class AdminDashboardTest extends WikiaBaseTest {
-		
+
 		public function setUp() {
 			$this->setupFile = dirname(__FILE__) . '/../AdminDashboard.setup.php';
 			parent::setUp();
 		}
-		
+
 		const TEST_CITY_ID = 79860;
 		protected static $list = array('pageviews', 'edits', 'photos');
 
@@ -22,14 +22,6 @@
 			if (!is_null($fetch_obj))
 				$this->setMockDb($fetch_obj);
 
-
-			$mock = $this->getMock('QuickStatsController', array('getDailyLikes'));
-			$mock->expects($this->any())
-					->method('getDailyLikes')
-					->will($this->returnValue(false));
-
-			$this->mockClass('QuickStatsController', $mock);
-
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 			$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 
@@ -37,15 +29,15 @@
 		}
 
 		protected function setMockDb($fetch_obj) {
-			$mock_result = $this->getMock('ResultWrapper', array(), array(), '', false);
+			$mock_result = $this->getMock('ResultWrapper', array('fetchObject'), array(), '', false);
+			$mock_result->expects($this->any())
+				->method('fetchObject')
+				->will($this->onConsecutiveCalls($fetch_obj[0], $fetch_obj[1], $fetch_obj[2], $fetch_obj[3], $fetch_obj[4], $fetch_obj[5], $fetch_obj[6], $fetch_obj[7], $fetch_obj[8], $fetch_obj[9], $fetch_obj[10], $fetch_obj[11], $fetch_obj[12], $fetch_obj[13], $fetch_obj[14]));
 
-			$mock_db = $this->getMock('DatabaseMysql', array('select', 'fetchObject'));
+			$mock_db = $this->getDatabaseMock(['query', 'mysqlRealEscapeString']);
 			$mock_db->expects($this->any())
-					->method('select')
+					->method('query')
 					->will($this->returnValue($mock_result));
-			$mock_db->expects($this->any())
-					->method('fetchObject')
-					->will($this->onConsecutiveCalls($fetch_obj[0], $fetch_obj[1], $fetch_obj[2], $fetch_obj[3], $fetch_obj[4], $fetch_obj[5], $fetch_obj[6], $fetch_obj[7], $fetch_obj[8], $fetch_obj[9], $fetch_obj[10], $fetch_obj[11], $fetch_obj[12], $fetch_obj[13], $fetch_obj[14]));
 
 			$this->getGlobalFunctionMock( 'wfGetDB' )
 				->expects( $this->exactly( 3 ) )
@@ -56,6 +48,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.03352 ms
 		 * @dataProvider getStatsDataProvider
 		 */
 		public function testGetStats($cache_value, $expected_daily, $expected_total, $fetch_obj=null) {
@@ -216,26 +210,6 @@
 						$data[$date][$l] = 0;
 				}
 			}
-		}
-
-		/**
-		 * @dataProvider shortenNumberDecoratorDataProvider
-		 */
-		public function testShortenNumberDecorator($number,$expected) {
-			$result = QuickStatsController::shortenNumberDecorator($number);
-			$this->assertEquals($expected, $result);
-		}
-
-		public function shortenNumberDecoratorDataProvider() {
-				return array(
-					array(1234,'1,234'), // note: this only works for EN
-					array(56000,'56K'),
-					array(56710,'56.7K'),
-					array(56756,'56.8K'),
-					array(56900,'56.9K'),
-					array(56990,'57K'),
-					array(123456789,'123.5M')
-				);
 		}
 
 		protected static function getFetchObjResult($key, $cnt, $date=null) {

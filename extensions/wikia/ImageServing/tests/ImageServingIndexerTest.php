@@ -3,6 +3,7 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @author macbre
  * @group Integration
+ * @group MediaFeatures
  */
 class ImageServingIndexerTest extends WikiaBaseTest {
 
@@ -32,8 +33,11 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 		$article->mContentLoaded = true;
 
 		// disable access to the database
-		$this->getMethodMock('DatabaseMysql','replace');
-		$this->getMethodMock('Database','delete');
+		$this->mockGlobalFunction( 'wfDeleteWikiaPageProp', false );
+		$this->mockGlobalFunction( 'wfSetWikiaPageProp', false );
+
+		// mock wgTitle needed by RedirectsService
+		$this->mockGlobalVariable( 'wgTitle', $title );
 
 		$images = ImageServingHelper::buildAndGetIndex($article);
 		$this->assertEquals($expectedImages, $images, 'List of images matches expected ones');

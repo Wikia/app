@@ -9,15 +9,15 @@
  * @addtogroup Skins
  */
 
-if(!defined('MEDIAWIKI')) {
-	die(-1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die( -1 );
 }
 
 abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	protected $ads;
 
-	function __construct(){
+	function __construct() {
 		//required to let Common.css and MonoBook.css be output
 		//@see Skin::setupUserCss
 		$this->themename = '';
@@ -28,76 +28,89 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		$this->strictAssetUrlCheck = false;
 	}
 
-	function initPage(&$out) {
+	function initPage( OutputPage $out ) {
 		global $wgHooks, $wgShowAds, $wgRequest;
 
 		parent::initPage( $out );
 
-		$diff = $wgRequest->getVal('diff');
+		$diff = $wgRequest->getVal( 'diff' );
 
-		if($wgShowAds == false || isset($diff)) {
+		if ( $wgShowAds == false || isset( $diff ) ) {
 			$this->ads = false;
 		}
 
-		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array($this, 'addWikiaVars');
-		$wgHooks['SkinTemplateSetupPageCss'][] = array($this, 'addWikiaCss');
-		$wgHooks['SkinGetPageClasses'][] = array($this, 'addBodyClasses');
-		$wgHooks['SkinGetHeadScripts'][] = array($this, 'onSkinGetHeadScripts');
+		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = [ $this, 'addWikiaVars' ];
+		$wgHooks['SkinTemplateSetupPageCss'][] = [ $this, 'addWikiaCss' ];
+		$wgHooks['SkinGetHeadScripts'][] = [ $this, 'onSkinGetHeadScripts' ];
 	}
 
 	function setupSkinUserCss( OutputPage $out ) {
 		parent::setupSkinUserCss( $out );
 
-		$out->addModuleStyles('wikia.monobook');
+		$out->addModuleStyles( 'wikia.monobook' );
 
 		// add file with fixes for IE8
-		$out->addStyle('wikia/css/IE80Fixes.css', 'screen', 'IE 8');
+		$out->addStyle( 'wikia/css/IE80Fixes.css', 'screen', 'IE 8' );
 	}
 
-	public function addWikiaVars(&$obj, BaseTemplate &$tpl) {
-		global $wgUser;
-		wfProfileIn(__METHOD__);
-
+	public function addWikiaVars( Skin $skin, QuickTemplate $tpl ): bool {
 		// ads
-		$this->setupAds($tpl);
+		$this->setupAds( $tpl );
 
 		// setup footer links
-        $tpl->set('footerlinks',  wfMsgExt( 'Shared-Monobook-footer-wikia-links', 'parse' ) );
+		$tpl->set( 'footerlinks', $this->msg( 'shared-Monobook-footer-wikia-links' )->parse() );
 
 		# rt33045
-		$tpl->set('contact',    '<a href="'. $wgUser->getSkin()->makeUrl('Special:Contact') . '" title="Contact Wikia">Contact Wikia</a>');
+		$tpl->set( 'contact', '<a href="' . $this->makeUrl( 'Special:Contact' ) . '" title="Contact Wikia">Contact Wikia</a>' );
 
-		# BAC-1036
-		$tpl->set('logopath', wfReplaceImageServer( $tpl->data['logopath'] ));
+		# BAC-1036, CE-278
+		/* Replace Wikia logo path
+		   This functionality is for finding proper path of Wiki.png instead of const one from wgLogo
+		   wikia logo should be stored under File:Wiki.png on current wikia. If wfFindFile doesn't find it
+		   on current wikia it tires to fallback to starter.wikia.com where the default one is stored
+		*/
+		$logoPage = Title::newFromText( 'Wiki.png', NS_FILE );
+		$logoFile = wfFindFile( $logoPage );
+		if ( $logoFile ) {
+			$tpl->set( 'logopath', $logoFile->getUrl() );
+		} else {
+			$tpl->set( 'logopath', wfReplaceImageServer( $tpl->data['logopath'] ) );
+		}
 
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
-	public function addWikiaCss(&$out) {
+	public function addWikiaCss( &$out ) {
 		global $wgStylePath, $wgStyleVersion;
-		$out = '@import "'.$wgStylePath.'/wikia/css/Monobook.css?'.$wgStyleVersion.'";' . $out;
+		$out = '@import "' . $wgStylePath . '/wikia/css/Monobook.css?' . $wgStyleVersion . '";' . $out;
 		return true;
 	}
 
-	public function addBodyClasses(&$classes) {
-		$classes .= ($this->ads ? ' with-adsense' : ' without-adsense');
-		return true;
+	/**
+	 * @param OutputPage $out
+	 * @param array $bodyAttrs
+	 */
+	public function addToBodyAttributes( $out, &$bodyAttrs ) {
+		$bodyAttrs['class'] .= ( $this->ads ? ' with-adsense' : ' without-adsense' );
+		$bodyAttrs['class'] .= $this->getUserLoginStatusClass();
+
+		// VOLDEV-168: Add a community-specific class to the body tag
+		$bodyAttrs['class'] .= ' ' . $this->getBodyClassForCommunity();
 	}
 
 	// load skin-specific JS files from MW (wikibits, user and site JS) - BugId:960
-	public function onSkinGetHeadScripts(&$scripts) {
+	public function onSkinGetHeadScripts( &$scripts ) {
 		global $wgResourceBasePath;
-		$scripts .= "\n<!--[if lt IE 8]><script src=\"". $wgResourceBasePath ."/resources/wikia/libraries/json2/json2.js\"></script><![endif]-->";
-		$scripts .= "\n<!--[if lt IE 9]><script src=\"". $wgResourceBasePath ."/resources/wikia/libraries/html5/html5.min.js\"></script><![endif]-->";
+		$scripts .= "\n<!--[if lt IE 8]><script src=\"" . $wgResourceBasePath . "/resources/wikia/libraries/json2/json2.js\"></script><![endif]-->";
+		$scripts .= "\n<!--[if lt IE 9]><script src=\"" . $wgResourceBasePath . "/resources/wikia/libraries/html5/html5.min.js\"></script><![endif]-->";
 
-		$packages = array( 'monobook_js' );
+		$packages = [ 'monobook_js' ];
 
-		wfRunHooks('MonobookSkinAssetGroups', array(&$packages));
+		Hooks::run( 'MonobookSkinAssetGroups', [ &$packages ] );
 
 		$srcs = AssetsManager::getInstance()->getURL( $packages );
 
-		foreach($srcs as $src) {
+		foreach ( $srcs as $src ) {
 			$scripts .= "\n<script src=\"$src\"></script>";
 		}
 
@@ -106,53 +119,45 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	/**
 	 * Setup ads handling
+	 * @param QuickTemplate $tpl
 	 */
-	protected function setupAds(BaseTemplate &$tpl) {
-		$tpl->set('ads-column', '');
-		$tpl->set('ads_top', '');
-		$tpl->set('ads_topleft', '');
-		$tpl->set('ads_topright', '');
-		$tpl->set('ads_bot','');
+	protected function setupAds( QuickTemplate $tpl ) {
+		$tpl->set( 'ads-column', '' );
+		$tpl->set( 'ads_top', '' );
+		$tpl->set( 'ads_topleft', '' );
+		$tpl->set( 'ads_topright', '' );
+		$tpl->set( 'ads_bot', '' );
 	}
 
 	/**
 	 * Return tracking code
 	 */
 	private function getAnalyticsCode() {
-		global $wgCityId;
-
-		return AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
-			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Controller::getCachedCategory()) .
-			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
-			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+		return AnalyticsEngine::track( 'QuantServe', AnalyticsEngine::EVENT_PAGEVIEW );
 	}
 
 	/**
 	 * Return Wikia specific toolbox
 	 */
 	function wikiaBox() {
-		global $wgOut;
-		wfProfileIn(__METHOD__);
-
 		$wikicitiesNavUrls = $this->buildWikicitiesNavUrls();
-		$toolboxTitle = htmlspecialchars(wfMsg('wikicities-nav'));
-		$wikiaMessages = self::getWikiaMessages();
+		$toolboxTitle = $this->msg( 'wikicities-nav' )->escaped();
+		$wikiaMessages = $this->getWikiaMessages();
 
-		if (!empty($wikicitiesNavUrls)) {
-			foreach($wikicitiesNavUrls as $navlink) {
-				$items[] = '<li id="'.htmlspecialchars($navlink['id']).'"><a href="'.htmlspecialchars($navlink['href']).'">'.htmlspecialchars($navlink['text']).'</a></li>';
+		if ( !empty( $wikicitiesNavUrls ) ) {
+			foreach ( $wikicitiesNavUrls as $navlink ) {
+				$items[] = '<li id="' . htmlspecialchars( $navlink['id'] ) . '"><a href="' . htmlspecialchars( $navlink['href'] ) . '">' . htmlspecialchars( $navlink['text'] ) . '</a></li>';
 			}
 
 			$toolbox = "
 			<ul>
-				" . implode("\n\t\t\t\t", $items) . "
+				" . implode( "\n\t\t\t\t", $items ) . "
 			</ul>
 			<hr />";
-		}
-		else {
+		} else {
 			$toolbox = '';
 		}
-		$staffBlogLinkText = wfMessage( 'wikia_messages' )->escaped();
+		$staffBlogLinkText = $this->msg( 'wikia_messages' )->escaped();
 		$html = <<<HTML
 	<div class="portlet" id="p-wikicities-nav">
 		<h5>$toolboxTitle</h5>
@@ -166,63 +171,56 @@ HTML;
 
 		echo $html;
 
-		wfProfileOut(__METHOD__);
 	}
 
 	protected function getWikiaMessages() {
-		global $wgMemc, $wgOut, $wgLang, $wgContLang;
-		wfProfileIn( __METHOD__ );
+		global $wgMemc, $wgContLang;
 
-		$cacheWikiaMessages = $wgLang->getCode() == $wgContLang->getCode();
-		if( $cacheWikiaMessages ) {
-			$memcKey = wfMemcKey( 'WikiaMessages', $wgLang->getCode() );
+		$cacheWikiaMessages = $this->getLanguage()->getCode() == $wgContLang->getCode();
+		if ( $cacheWikiaMessages ) {
+			$memcKey = wfMemcKey( 'WikiaMessages', $this->getLanguage()->getCode() );
 			$ret = $wgMemc->get( $memcKey );
 		}
 
-		if( empty( $ret ) ) {
-			$ret = wfMessage( 'shared-News_box' )->parse();
-			if( $cacheWikiaMessages ) {
-				$wgMemc->set( $memcKey, $ret, 60*60 );
+		if ( empty( $ret ) ) {
+			$ret = $this->msg( 'shared-News_box' )->parse();
+			if ( $cacheWikiaMessages ) {
+				$wgMemc->set( $memcKey, $ret, 60 * 60 );
 			}
 		}
-		wfProfileOut( __METHOD__ );
+
 		return $ret;
 	}
 
-	protected function buildWikicitiesNavUrls () {
-		global $wgWikicitiesNavLinks, $wgMemc, $wgLang, $wgContLang;
-		wfProfileIn( __METHOD__ );
-		$cacheWikicitiesNavUrls = $wgLang->getCode() == $wgContLang->getCode();
-		if( $cacheWikicitiesNavUrls ) {
-			$memcKey = wfMemcKey( 'wikiaNavUrls', $wgLang->getCode() );
+	protected function buildWikicitiesNavUrls() {
+		global $wgWikicitiesNavLinks, $wgMemc, $wgContLang;
+
+		$cacheWikicitiesNavUrls = $this->getLanguage()->getCode() == $wgContLang->getCode();
+		if ( $cacheWikicitiesNavUrls ) {
+			$memcKey = wfMemcKey( 'wikiaNavUrls', $this->getLanguage()->getCode() );
 			$result = $wgMemc->get( $memcKey );
 		}
-		
-		if( empty( $result ) ) {
-			$result = array();
-			if(isset($wgWikicitiesNavLinks) && is_array($wgWikicitiesNavLinks)) {
+
+		if ( empty( $result ) ) {
+			$result = [ ];
+			if ( isset( $wgWikicitiesNavLinks ) && is_array( $wgWikicitiesNavLinks ) ) {
 				foreach ( $wgWikicitiesNavLinks as $link ) {
-					$text = wfMessage( $link['text'] )->text();
-					wfProfileIn( __METHOD__.'::'.$link['text'] );
-					if ($text != '-') {
-						$dest = wfMessage( $link['href'] )->text();
-						wfProfileIn( __METHOD__.'::'.$link['text'].'::2' );
-						$result[] = array(
-						'text' => $text,
-						'href' => $this->makeInternalOrExternalUrl( $dest ),
-						'id' => 'n-'.$link['text']
-						);
-						wfProfileOut( __METHOD__.'::'.$link['text'].'::2' );
+					$text = $this->msg( $link['text'] )->text();
+					if ( $text != '-' ) {
+						$dest = $this->msg( $link['href'] )->text();
+						$result[] = [
+							'text' => $text,
+							'href' => $this->makeInternalOrExternalUrl( $dest ),
+							'id' => 'n-' . $link['text']
+						];
 					}
-					wfProfileOut( __METHOD__.'::'.$link['text'] );
 				}
 			}
-			if( $cacheWikicitiesNavUrls ) {
-				$wgMemc->set( $memcKey, $result, 60*60 );
+			if ( $cacheWikicitiesNavUrls ) {
+				$wgMemc->set( $memcKey, $result, 60 * 60 );
 			}
 		}
-		
-		wfProfileOut( __METHOD__ );
+
 		return $result;
 	}
 
@@ -231,7 +229,7 @@ HTML;
 		$analytics = $this->getAnalyticsCode();
 		$bottomScriptText = parent::bottomScripts();
 
-		$html =  <<<HTML
+		$html = <<<HTML
 <!-- WikiaBottomScripts -->
 $bottomScriptText
 <!-- /WikiaBottomScripts -->
@@ -244,19 +242,18 @@ HTML;
 
 	function wideSkyscraper() {
 		global $wgDBname;
-		$wideSkyscraperWikis = array('yugioh', 'transformers', 'swg', 'paragon');
-		if (in_array($wgDBname, $wideSkyscraperWikis)) {
+		$wideSkyscraperWikis = [ 'yugioh', 'transformers', 'swg', 'paragon' ];
+		if ( in_array( $wgDBname, $wideSkyscraperWikis ) ) {
 			echo ' style="margin-right: 165px;"';
 		}
 	}
 
 	function isSkyscraper() {
 		global $wgDBname, $wgEnableAdsInContent;
-		$noSkyscraperWikis = array('espokemon');
-		if (in_array($wgDBname, $noSkyscraperWikis) && $wgEnableAdsInContent) {
+		$noSkyscraperWikis = [ 'espokemon' ];
+		if ( in_array( $wgDBname, $noSkyscraperWikis ) && $wgEnableAdsInContent ) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

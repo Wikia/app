@@ -9,9 +9,23 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  */
-class WikiaRequest {
+class WikiaRequest implements Wikia\Interfaces\IRequest {
+
+	// default = "wrap and throw" for internal requests, "return" for external requests
+	const EXCEPTION_MODE_DEFAULT = -1;
+	const EXCEPTION_MODE_RETURN = 0;
+	const EXCEPTION_MODE_WRAP_AND_THROW = 1;
+	const EXCEPTION_MODE_THROW = 2;
+
+	static private $exceptionModes = [
+		self::EXCEPTION_MODE_DEFAULT,
+		self::EXCEPTION_MODE_RETURN,
+		self::EXCEPTION_MODE_WRAP_AND_THROW,
+		self::EXCEPTION_MODE_THROW,
+	];
 
 	private $isInternal = false;
+	private $exceptionMode = self::EXCEPTION_MODE_DEFAULT;
 	protected $params = array();
 
 	/**
@@ -45,6 +59,7 @@ class WikiaRequest {
 			return $this->params[$key];
 		}
 
+		taint( $default );
 		return $default;
 	}
 
@@ -74,6 +89,39 @@ class WikiaRequest {
 	}
 
 	/**
+	 * checks what exception mode is set
+	 * @return int One of WikiaRequest::EXCEPTION_MODE_*
+	 */
+	public function getExceptionMode() {
+		return $this->exceptionMode;
+	}
+
+	/**
+	 * set exception mode
+	 * @param int $value One of WikiaRequest::EXCEPTION_MODE_*
+	 */
+	public function setExceptionMode( $value ) {
+		$value = (int) $value;
+		if ( !in_array( $value, self::$exceptionModes ) ) {
+			throw new InvalidArgumentException( 'Exception mode is invalid' );
+		}
+		$this->exceptionMode = $value;
+	}
+
+	/**
+	 * returns the effective exception mode (resolved the "default" mode depending on "isInternal" flag)
+	 * @return int One of WikiaRequest::EXCEPTION_MODE_*
+	 */
+	public function getEffectiveExceptionMode() {
+		$exceptionMode = $this->getExceptionMode();
+		if ( $exceptionMode == self::EXCEPTION_MODE_DEFAULT ) {
+			$exceptionMode = $this->isInternal() ? self::EXCEPTION_MODE_WRAP_AND_THROW : self::EXCEPTION_MODE_RETURN;
+		}
+
+		return $exceptionMode;
+	}
+
+	/**
 	 * get all params
 	 * @return array
 	 */
@@ -97,12 +145,15 @@ class WikiaRequest {
 	 * Fetch a boolean value from the input or return $default if not set.
 	 * Guaranteed to return true or false, with normal PHP semantics for
 	 * boolean interpretation of strings.
+	 * String "false" will be interpreted as false.
 	 * @param $name string
 	 * @param $default bool
 	 * @return bool
 	 */
 	public function getBool( $name, $default = false ) {
-		return $this->getVal( $name, $default ) ? true : false;
+		$value = $this->getVal( $name, $default );
+		if (is_string($value) && strcasecmp($value, "false") == 0) return false;
+		return $value ? true : false;
 	}
 
 	/**
@@ -152,6 +203,8 @@ class WikiaRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
+		Hooks::run( 'WikiaRequestWasPosted' );
+
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 
@@ -221,12 +274,28 @@ class WikiaRequest {
 	public function setSessionData( $key, $data ) {
 		$_SESSION[$key] = $data;
 	}
-	
+
 	/*
 	 * Get data from $_SERVER['SCRIPT_URL'], which is original path of the request, before mod_rewrite changed it.
 	 * Please be aware how our URL rewrites work before you think about using this.
+	 * @return string|null
 	 */
 	public function getScriptUrl() {
-		return $_SERVER['SCRIPT_URL'];
-	}	
+		$scriptUrl = isset( $_SERVER['SCRIPT_URL'] ) ? $_SERVER['SCRIPT_URL'] : null;
+		return $scriptUrl;
+	}
+
+	/**
+	 * Verify if write request is a valid, non-CSRF request
+	 * (uses POST and contains a valid edit token)
+	 *
+	 * @param \User $user
+	 * @return void
+	 * @throws BadRequestException
+	 */
+	public function assertValidWriteRequest( \User $user ) {
+		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
+	}
 }

@@ -1,7 +1,7 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
 @import "responsive-variables";
-@import "../mixins/calc";
+@import "skins/shared/mixins/calc";
 
 // Background
 // TODO: we might want to consider pre-calculating all of the background
@@ -9,8 +9,17 @@
 // more performant. However, before we do that, we should come up with a
 // better way of passing parameters into Sass (like using a hash), otherwise
 // the URLs generated for Sass files will be even more ridiculously long.
-$background-height: get_command_line_param( "background-image-height", 0 ) * 1px; // convert int to pixel value
-$background-width: get_command_line_param( "background-image-width", 0 ) * 1px; // convert int to pixel value
+$background-height: get_command_line_param( "background-image-height", 0 );
+$background-width: get_command_line_param( "background-image-width", 0 );
+
+// convert unitless int values to pixels
+@if type-of($background-height) == number and unitless($background-height) {
+  $background-height : $background-height * 1px;
+}
+@if type-of($background-width) == number and unitless($background-width) {
+  $background-width : $background-width * 1px;
+}
+
 $background-width-half: $background-width / 2;
 $background-offset: ( $breakpoint-fluid - $background-width ) / 2;
 $background-align: if( $background-width > $width-outside, center, left );
@@ -62,13 +71,17 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
 		&:after {
 			background-position: $background-position-after 0;
+			/* @noflip */
 			margin-right: 0;
+			/* @noflip */
 			right: $background-offset-right;
 		}
 
 		&:before {
 			background-position: $background-position-before 0;
+			/* @noflip */
 			margin-left: 0;
+			/* @noflip */
 			left: $background-offset-left;
 		}
 
@@ -126,13 +139,17 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
 		&:after {
 			background-position: $background-position-after 0;
+			/* @noflip */
 			right: 50%;
+			/* @noflip */
 			margin-right: $background-margin;
 		}
 
 		&:before {
 			background-position: 0;
+			/* @noflip */
 			left: 50%;
+			/* @noflip */
 			margin-left: $background-margin;
 		}
 
@@ -154,22 +171,24 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 }
 
 // standard logic
-body {
-	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
-}
+@if ( $oasisWidthType != 0) {
+	body {
+		background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
+	}
 
-body.background-not-tiled {
-	background-repeat: no-repeat;
-}
+	body.background-not-tiled {
+		background-repeat: no-repeat;
+	}
 
-body.background-fixed {
-	background-attachment: fixed;
+	body.background-fixed {
+		background-attachment: fixed;
+	}
 }
 
 // responive layout logic
 @if ( $responsive-layout-enabled ) {
 	body.background-dynamic.skin-oasis {
-		background: $color-body;
+		background-color: $color-body;
 		overflow: hidden;
 		position: relative;
 
@@ -182,7 +201,7 @@ body.background-fixed {
 			position: absolute;
 			top: 0;
 			width: $background-width-half;
-			z-index: -2;
+			z-index: -1;
 		}
 		&.background-fixed:after,
 		&.background-fixed:before
@@ -192,13 +211,17 @@ body.background-fixed {
 
 		&:after {
 			background-position: -$background-width-half 0;
+			/* @noflip */
 			right: 50%;
+			/* @noflip */
 			margin-right: -$background-width-half;
 		}
 
 		&:before {
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
+			/* @noflip */
 			left: 50.1%;
+			/* @noflip */
 			margin-left: -$background-width-half;
 		}
 
@@ -213,7 +236,6 @@ body.background-fixed {
 				height: 100%;
 				position: fixed;
 				top: 0;
-				z-index: -1;
 			}
 		}
 	}

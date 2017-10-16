@@ -269,30 +269,6 @@ class LinkHolderArray {
 
 		$linkcolour_ids = array();
 
-		// experimental - begin - @author: wladek - preload data from memcached
-		// todo: verify results
-		global $wgMemc, $wgEnableFastLinkCache, $wgEnableMemcachedBulkMode;
-		if ( !empty( $wgEnableFastLinkCache ) && !empty( $wgEnableMemcachedBulkMode ) ) {
-			$memcKeys = array();
-			foreach ( $this->internals as $ns => $entries ) {
-				if ( $ns == NS_SPECIAL ) {
-					continue;
-				}
-				foreach ( $entries as $entry ) {
-					if ( is_null( $entry['title'] ) ) {
-						continue;
-					}
-					if ( $entry['pdbk'] !== '' ) {
-						$memcKeys[] = LinkCache::getMemcKey($entry['pdbk'], 'good');
-						$memcKeys[] = LinkCache::getMemcKey($entry['pdbk'], 'fields');
-					}
-				}
-			}
-			$wgMemc->prefetch($memcKeys);
-		}
-		// experimental - end
-
-
 		# Generate query
 		$queries = array();
 		foreach ( $this->internals as $ns => $entries ) {
@@ -360,7 +336,7 @@ class LinkHolderArray {
 		}
 		if ( count($linkcolour_ids) ) {
 			//pass an array of page_ids to an extension
-			wfRunHooks( 'GetLinkColours', array( $linkcolour_ids, &$colours ) );
+			Hooks::run( 'GetLinkColours', array( $linkcolour_ids, &$colours ) );
 		}
 		wfProfileOut( __METHOD__.'-check' );
 
@@ -565,7 +541,7 @@ class LinkHolderArray {
 						$varCategories[$oldkey]=$vardbk;
 				}
 			}
-			wfRunHooks( 'GetLinkColours', array( $linkcolour_ids, &$colours ) );
+			Hooks::run( 'GetLinkColours', array( $linkcolour_ids, &$colours ) );
 
 			// rebuild the categories in original order (if there are replacements)
 			if(count($varCategories)>0){
@@ -593,9 +569,7 @@ class LinkHolderArray {
 		wfProfileIn( __METHOD__ );
 
 		$text = preg_replace_callback(
-			'/<!--(LINK|IWLINK) (.*?)-->/',
-			array( &$this, 'replaceTextCallback' ),
-			$text );
+			'/<!--(LINK|IWLINK) (.*?)-->/', [ $this, 'replaceTextCallback' ], $text );
 
 		wfProfileOut( __METHOD__ );
 		return $text;

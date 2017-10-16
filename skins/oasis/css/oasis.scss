@@ -1,93 +1,97 @@
 // Legacy
-@import "/skins/common/shared.css";
-@import "/skins/wikia/shared.css";
+@import '/skins/common/shared.css';
+@import '/skins/wikia/shared.css';
 
 // Layout
-@import "core/layout";
-@import "wikiagrid";
-@import "lib/foundation.custom/foundation.custom";
+@import 'core/layout';
+@import 'wikiagrid';
+@import 'lib/foundation.custom/foundation.custom';
 
 // Mixins
-@import "mixins/bodytext";
-@import "mixins/border-radius";
-@import "mixins/border-opacity";
-@import "mixins/box-shadow";
-@import "mixins/clearfix";
-@import "mixins/forms";
-@import "mixins/gradient";
-@import "mixins/menus";
-@import "mixins/opacity";
-@import "mixins/wordmark";
+@import 'skins/shared/mixins/bodytext';
+@import 'skins/shared/mixins/border-opacity';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/forms';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/menus';
+@import 'skins/shared/mixins/wordmark';
 
 // Core
-@import "core/buttons";
-@import "core/ads";
-@import "core/autocomplete";
-@import "core/typography";
-@import "core/sprite";
-@import "core/color";
-@import "core/reset";
-@import "core/modal";
-@import "core/body";
-@import "core/background";
-@import "core/globalelements";
-@import "core/GlobalHeader";
-@import "core/AccountNavigation";
-@import "core/page";
-@import "core/CommentsLikes";
-@import "core/WikiHeader";
-@import "core/PageHeader";
-@import "core/Search";
-@import "core/article";
-@import "core/tablepager";
-@import "core/Footer";
-@import "core/Notifications";
-@import "core/table";
-@import "core/tabs";
-@import "core/Paginator";
-@import "core/successerror";
-@import "core/SpeechBubble";
-@import "core/ArticleAfterComments";
-@import "core/GlobalNotification";
-@import "core/WikiaBar";
-@import "core/jquery.ui.autocomplete"; // TODO: load on demand
-@import "core/video-thumbnail";
+@import 'skins/shared/buttons';
+@import 'core/ads';
+@import 'core/autocomplete';
+@import 'core/typography';
+@import 'skins/shared/styles/sprite';
+@import 'skins/shared/color';
+@import 'core/reset';
+@import 'core/modal';
+@import 'core/body';
+@import 'core/background';
+@import 'core/globalelements';
+@import 'core/page';
+@import 'core/CommentsLikes';
+@import 'core/Search';
+@import 'core/article';
+@import 'core/tablepager';
+@import 'core/Footer';
+@import 'core/Notifications';
+@import 'skins/shared/table';
+@import 'skins/shared/tabs';
+@import 'skins/shared/paginator';
+@import 'core/successerror';
+@import 'core/SpeechBubble';
+@import 'core/ArticleAfterComments';
+@import 'core/BannerNotificationsOasis';
+@import 'core/WikiaBar';
+@import 'core/thumbnails';
+@import 'core/MenuElement';
+@import 'core/visualeditor';
+@import 'skins/shared/styles/jquery.ui.autocomplete'; // TODO: load on demand
 
 // Bootstrap
-@import "resources/wikia/libraries/bootstrap/tooltip";
-@import "resources/wikia/libraries/bootstrap/popover";
+@import 'resources/wikia/libraries/bootstrap/tooltip';
+@import 'resources/wikia/libraries/bootstrap/popover';
+
+// UI Components initial scss
+@import 'resources/wikia/ui_components/modal/css/modal-initial.scss';
 
 // Extensions (only include here if used on the majority of page views!)
-@import "modules/LatestPhotos";
-@import "extensions/wikia/Blogs/css/oasis";
-@import "extensions/wikia/CategorySelect/css/CategorySelect";
-@import "extensions/wikia/RelatedPages/RelatedPages";
-@import "extensions/wikia/ImageLazyLoad/css/ImageLazyLoad";
-@import "extensions/wikia/UserLogin/css/UserLoginGlobal";
-@import "extensions/wikia/VideoHandlers/css/VideoHandlers";
-@import "extensions/wikia/WikiaStyleGuide/css/Form";
-@import "extensions/wikia/WikiaPhotoGallery/css/slideshow"; // TODO: load on demand
-@import "extensions/wikia/WikiaBar/css/WikiaBar";
-@import "extensions/wikia/Chat2/css/ChatEntryPoint";
-@import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar";
-@import "extensions/wikia/UserLogin/css/UserLoginDropdown";
-@import "extensions/wikia/Forum/css/RelatedForumDiscussion";	// on every article page
-@import "extensions/wikia/TOC/css/toc.scss";
+@import 'extensions/wikia/WikiaLogo/styles/WikiaLogo';
+@import 'extensions/wikia/Blogs/css/oasis';
+@import 'extensions/wikia/CategorySelect/css/CategorySelect';
+@import 'extensions/wikia/RelatedPages/RelatedPages';
+@import 'extensions/wikia/ImageLazyLoad/css/ImageLazyLoad';
+@import 'extensions/wikia/UserLogin/css/UserLoginGlobal';
+@import 'extensions/wikia/WikiaStyleGuide/css/Form';
+@import 'extensions/wikia/WikiaStyleGuide/css/tooltip-icon';
+@import 'extensions/wikia/WikiaBar/css/WikiaBar';
+@import 'extensions/wikia/Chat2/css/ChatWidget';
+@import 'extensions/wikia/Forum/css/RelatedForumDiscussion'; // on every article page
+@import 'extensions/wikia/TOC/css/toc';
+@import 'extensions/wikia/VideosModule/styles/VideosModule';
+@import 'extensions/wikia/MediaGallery/styles/MediaGallery'; // relies on bulky foundation mixins
+@import 'extensions/wikia/PageShare/styles/PageShare';
+@import 'extensions/wikia/CreatePage/css/CreatePage';
 
-// CSS (needs leading slash and file extension)
-@import "/extensions/wikia/CreatePage/css/CreatePage.css";
-@import "/extensions/FBConnect/css/fbModal.css";
-@import "/extensions/wikia/AjaxLogin/AjaxLogin.css";
+//Site Optimizations
+@import 'extensions/wikia/Rail/styles/RailElement';
 
 // Print
 @media print {
-	@import "print";
+	@import 'print';
 }
 
-// load all responsive layout files
-// These files should always be loaded after everything else in oasis.scss because
-// they override some of the styles.
-@import "core/responsive-variables";
-@import "core/responsive-font-sizing";
-@import "core/responsive-core";
-@import "core/responsive-mainpage-tag";
+// Responsive layout files
+// These files override some of the styles for older extentions.
+@import 'core/responsive-variables';
+@import 'core/responsive-font-sizing';
+@import 'core/responsive-core';
+@import 'core/responsive-mainpage-tag';
+
+// Breakpoints
+// todo Cleanup responsive and old oasis layout files
+@import 'core/breakpoints-variables';
+@import 'core/breakpoints-layout';
+@import 'core/breakpoints-typography';
+@import 'core/breakpoints-background';

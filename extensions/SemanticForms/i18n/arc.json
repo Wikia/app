@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"Basharh",
+			"Michaelovic"
+		]
+	},
+	"sf_createproperty_proptype": "ܐܕܫܐ:",
+	"templates": "ܩܠܒ̈ܐ",
+	"createtemplate": "ܒܪܝ ܩܠܒܐ",
+	"sf_createtemplate_namelabel": "ܫܡܐ ܕܩܠܒܐ:",
+	"sf_createtemplate_templatefields": "ܚܩܠ̈ܐ ܕܩܠܒ̈ܐ",
+	"sf_createtemplate_fieldname": "ܫܡܐ ܕܚܩܠܐ:",
+	"sf_createtemplate_aggregationlabel": "ܟܘܢܝܐ ܕܡܟܬܒܘܬܐ:",
+	"sf_createtemplate_deletefield": "ܫܘܦ",
+	"forms": "ܕ̈ܘܡܝܐ",
+	"sf_createform_template": "ܩܠܒܐ:",
+	"sf_createform_field": "ܚܩܠܐ:",
+	"sf_createform_hidden": "ܛܘܫܝܐ",
+	"sf_createform_removetemplate": "ܠܚܝ ܩܠܒܐ",
+	"sf_createform_addtemplate": "ܐܘܣܦ ܩܠܒܐ:",
+	"sf_createform_add": "ܐܘܣܦ",
+	"sf_createform_before": "ܩܕܡ ܩܠܒܐ:",
+	"createcategory": "ܒܪܝ ܣܕܪܐ",
+	"sf_createcategory_name": "ܫܡܐ ܕܣܕܪܐ:",
+	"sf_formstart_createoredit": "ܒܪܝ ܐܘ ܫܚܠܦ",
+	"sf_formedit_createtitle": "ܒܪܝ $1: $2",
+	"sf_editsource": "ܫܚܠܦ ܡܒܘܥܐ",
+	"sf_formedit_edittitle": "ܫܚܠܦ $1: $2",
+	"sf_formedit_remove": "ܠܚܝ ܐܝܟܢܘܬܐ ܗܕܐ",
+	"sf_formedit_addanother": "ܐܘܣܦ ܐܚܪܢܐ",
+	"sf_formedit_none": "ܠܐ ܡܕܡ",
+	"uploadwindow": "ܐܣܩ ܟܘܬܐ",
+	"sf_deletionlog": "ܣܓܠܐ ܕܫܝܦܐ",
+	"sf_form_freetextlabel": "ܟܬܒܬܐ ܚܐܪܬܐ",
+	"sf_blank_namespace": "ܪܫܝܬܐ",
+	"sf-datepicker-close": "ܣܟܘܪ",
+	"sf-datepicker-prev": "ܕܩܕܡ",
+	"sf-datepicker-next": "ܕܒܬܪ",
+	"sf-datepicker-today": "ܝܘܡܢܐ"
+}

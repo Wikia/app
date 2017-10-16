@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kening Aldgilles",
+			"Robin0van0der0vliet"
+		]
+	},
+	"visualeditor-annotationbutton-bold-tooltip": "Fet",
+	"visualeditor-annotationbutton-italic-tooltip": "Kursyf",
+	"visualeditor-annotationbutton-language-tooltip": "Taal",
+	"visualeditor-annotationbutton-underline-tooltip": "Understreekje",
+	"visualeditor-contextitemwidget-label-secondary": "Bewurkje",
+	"visualeditor-dialog-action-cancel": "Annulearje",
+	"visualeditor-dialog-action-goback": "Werom",
+	"visualeditor-dialog-command-help-title": "Fluchtoetsen",
+	"visualeditor-formatdropdown-format-paragraph": "Paragraaf",
+	"visualeditor-help-tool": "Help",
+	"visualeditor-historybutton-redo-tooltip": "Op 'e nij útfiere",
+	"visualeditor-historybutton-undo-tooltip": "Weromsette",
+	"visualeditor-languageinspector-title": "Taal",
+	"visualeditor-languageinspector-widget-label-language": "Taal",
+	"visualeditor-shortcuts-history": "Skiednis",
+	"visualeditor-toolbar-history": "Skiednis",
+	"visualeditor-toolbar-insert": "Ynfoegje"
+}

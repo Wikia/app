@@ -18,31 +18,35 @@
 // Slightly modified from version in itms_teknomunk.php
 class DurableCache {
 
-	/* @var $db Resource */
-	var $db;
-
-	/* @var $db_master Resource */
-	var $db_master;
-
-	function DurableCache(){
-		$this->db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
-		$this->db_master = &wfGetDB(DB_MASTER)->getProperty('mConn');
-	}
-
-	function fetch($key){
+	function fetch( $key ) {
 		$retVal = null;
-		$queryString = "SELECT value FROM lw_map WHERE keyName='$key'";
-		if($result = mysql_query($queryString,$this->db)){
-			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-				$retVal = mysql_result($result, 0, "value");
-			}
+		$dbr = wfGetDB( DB_SLAVE );
+		$result = $dbr->selectField(
+			[ 'lw_map' ],
+			'value',
+			[
+				'keyName' => $key,
+			],
+			__METHOD__
+		);
+		if ( $result !== false ) {
+			$retVal = $result;
 		}
 		return $retVal;
 	}
-	function store($key, $value){
-		$source = str_replace("'", "\'", $value); // to prevent query errors
-		$queryString = "REPLACE INTO lw_map (keyName, value) VALUES ('$key', '$source')";
-		return mysql_query($queryString, $this->db_master); // need to use the master db connection to write
+
+	function store( $key, $value ) {
+		$dbw = wfGetDB( DB_MASTER );
+		$result = $dbw->replace(
+			'lw_map',
+			[ 'keyName' ],
+			[
+				'keyName' => $key,
+				'value' => $value,
+			],
+			__METHOD__
+		);
+		return $result;
 	}
 
 	function fetchExpire( $entryKey, $validAfter ){

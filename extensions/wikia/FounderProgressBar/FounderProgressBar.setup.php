@@ -4,6 +4,7 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'FounderProgressBar',
 	'author'         => 'Wikia',
 	'descriptionmsg' => 'founderprogressbar-credits',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FounderProgressBar'
 );
 
 $dir = dirname(__FILE__).'/';
@@ -20,7 +21,6 @@ $wgHooks[ 'ArticleSaveComplete' ][] = 'FounderProgressBarHooks::onArticleSaveCom
 $wgHooks[ 'UploadComplete' ][] = 'FounderProgressBarHooks::onUploadComplete';
 $wgHooks[ 'UploadWordmarkComplete' ][] = 'FounderProgressBarHooks::onUploadWordmarkComplete';
 $wgHooks[ 'AddNewAccount' ][] = 'FounderProgressBarHooks::onAddNewAccount';
-$wgHooks['FounderProgressBarOnFacebookConnect'][] = 'FounderProgressBarHooks::onFacebookConnect';
 $wgHooks['AfterVideoFileUploaderUpload'][] = 'FounderProgressBarHooks::onAfterVideoFileUploaderUpload';
 
 // On wiki creation or WikiFactory enable add db columns

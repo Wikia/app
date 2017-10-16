@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Odisha1",
+			"Psubhashish",
+			"ଶିତିକଣ୍ଠ ଦାଶ"
+		]
+	},
+	"visualeditor": "ଭିଜୁଆଲ-ଏଡ଼ିଟର",
+	"visualeditor-aliennode-tooltip": "ଦୁଃଖିତ, ଏହି ଭାଗଟି ବର୍ତ୍ତମାନ କେବଳ ଉତ୍ସ ସମ୍ପାଦନା ଦ୍ଵାରା ହିଁ ବଦଳାଯାଇ ପାରିବ ।",
+	"visualeditor-annotationbutton-bold-tooltip": "ବୋଲ୍‌ଡ",
+	"visualeditor-annotationbutton-code-tooltip": "କମ୍ପ୍ୟୁଟର କୋଡ",
+	"visualeditor-annotationbutton-italic-tooltip": "ତେରେଛା",
+	"visualeditor-annotationbutton-language-tooltip": "ଭାଷା",
+	"visualeditor-annotationbutton-link-tooltip": "ଲିଙ୍କ",
+	"visualeditor-annotationbutton-subscript-tooltip": "ସବ୍‌ସ୍କ୍ରିପ୍ଟ",
+	"visualeditor-annotationbutton-superscript-tooltip": "ସୁପର୍‌ସ୍କ୍ରିପ୍ଟ",
+	"visualeditor-dialog-action-cancel": "ବାତିଲ",
+	"visualeditor-dialog-action-goback": "ପଛକୁ ଫେରିବେ",
+	"visualeditor-formatdropdown-format-heading1": "ଶିରୋନାମ ୧",
+	"visualeditor-formatdropdown-format-heading2": "ଶିରୋନାମ ୨",
+	"visualeditor-formatdropdown-format-heading3": "ଶିରୋନାମ ୩",
+	"visualeditor-formatdropdown-format-heading4": "ଶିରୋନାମ ୪",
+	"visualeditor-formatdropdown-format-heading5": "ଶିରୋନାମ ୫",
+	"visualeditor-formatdropdown-format-heading6": "ଶିରୋନାମ ୬",
+	"visualeditor-formatdropdown-format-paragraph": "ଅନୁଚ୍ଛେଦ",
+	"visualeditor-historybutton-undo-tooltip": "ପଛକୁ ଫେରିବା"
+}

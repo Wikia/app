@@ -72,7 +72,7 @@
 				util.$content = $( '#mw_contentholder' );
 
 			} else if ( $( '#article' ).length ) {
-				// Standard, CologneBlue
+				// Standard
 				util.$content = $( '#article' );
 
 			// Wikia change - begin - @author: wladek
@@ -342,13 +342,9 @@
 			// just add it to the bottom of their 'sidebar' element as a fallback
 			switch ( mw.config.get( 'skin' ) ) {
 			case 'standard':
-			case 'cologneblue':
 				$( '#quickbar' ).append( $link.after( '<br/>' ) );
 				return $link[0];
-			case 'nostalgia':
-				$( '#searchform' ).before( $link ).before( ' &#124; ' );
-				return $link[0];
-			default: // Skins like chick, modern, monobook, myskin, simple, vector...
+			default: // Skins like monobook...
 
 				// Select the specified portlet
 				$portlet = $( '#' + portlet );
@@ -379,13 +375,9 @@
 				// Unhide portlet if it was hidden before
 				$portlet.removeClass( 'emptyPortlet' );
 
-				// Wrap the anchor tag in a list item (and a span if $portlet is a Vector tab)
+				// Wrap the anchor tag in a list item
 				// and back up the selector to the list item
-				if ( $portlet.hasClass( 'vectorTabs' ) ) {
-					$item = $link.wrap( '<li><span></span></li>' ).parent().parent();
-				} else {
-					$item = $link.wrap( '<li></li>' ).parent();
-				}
+				$item = $link.wrap( '<li></li>' ).parent();
 
 				// Implement the properties passed to the function
 				if ( id ) {
@@ -565,6 +557,30 @@
 			return address.search( new RegExp( '^' + RE_IP_ADD + block + '$' ) ) !== -1;
 		},
 
+
+
+
+
+
+
+
+		getUrl: function ( str, params ) {
+			var url = mw.config.get( 'wgArticlePath' ).replace(
+				'$1',
+				util.wikiUrlencode( typeof str === 'string' ? str : mw.config.get( 'wgPageName' ) )
+			);
+
+			if ( params && !$.isEmptyObject( params ) ) {
+				url += ( url.indexOf( '?' ) !== -1 ? '&' : '?' ) + $.param( params );
+			}
+
+			return url;
+		},
+
+
+
+
+
 		/**
 		 * Note: borrows from IP::isIPv6
 		 *
@@ -598,6 +614,9 @@
 				&& address.search( /::/ ) !== -1 && address.search( /::.*::/ ) === -1;
 		}
 	};
+
+
+
 
 	mw.util = util;
 

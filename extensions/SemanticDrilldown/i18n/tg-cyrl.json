@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ibrahim"
+		]
+	},
+	"browsedata": "Мурури дода",
+	"sd_browsedata_choosecategory": "Гурӯҳеро интихоб кунед",
+	"sd_browsedata_viewcategory": "нигаристан гурӯҳ",
+	"sd_browsedata_subcategory": "Зергурӯҳ",
+	"sd_browsedata_other": "Дигар",
+	"sd_browsedata_none": "Ҳеҷ",
+	"sd_browsedata_or": "ё",
+	"sd_browsedata_daterangestart": "Шурӯъ:",
+	"sd_browsedata_daterangeend": "Охир:",
+	"sd_createfilter_requirefilter": "Қабл аз намоиши ин яке, филтри дигар бояд интихоб шавад:"
+}

@@ -47,7 +47,7 @@ class GlobalUsageImagePageHooks {
 			$wikiName = WikiMap::getWikiName( $wiki );
 			$escWikiName = Sanitizer::escapeClass( $wikiName );
 			/* Wikia change begin */
-			wfRunHooks( 'GlobalUsageImagePageWikiLink', array( &$wikiName ) );
+			Hooks::run( 'GlobalUsageImagePageWikiLink', array( &$wikiName ) );
 			/* Wikia change end */
 			$guHtml .= "<li class='mw-gu-onwiki-$escWikiName'>" . wfMsgExt(
 					'globalusage-on-wiki', 'parseinline',

@@ -2,9 +2,8 @@
 
 /**
  * File holding the SMWSerializer class that provides basic functions for
- * serialising data in OWL and RDF syntaxes. 
+ * serialising data in OWL and RDF syntaxes.
  *
- * @file SMW_Serializer.php
  * @ingroup SMW
  *
  * @author Markus Krötzsch
@@ -22,14 +21,14 @@ define( 'SMW_SERIALIZER_DECL_APROP', 4 );
  * implementations may want to use their own scheme (e.g. using two buffers as
  * in the case of SMWRDFXMLSerializer). The function flushContent() returns the
  * string serialized so far so as to enable incremental serialization.
- * 
+ *
  * RDF and OWL have two types of dependencies that are managed by this class:
  * namespaces (and similar abbreviation schemes) and element declarations.
  * The former need to be defined before being used, while the latter can occur
  * at some later point in the serialization. Declarations are relevant to the
  * OWL data model, being one of Class, DatatypeProperty, and ObjectProperty
  * (only the latter two are mutually exclusive). This class determines the
- * required declaration from the context in which an element is used. 
+ * required declaration from the context in which an element is used.
  *
  * @ingroup SMW
  */
@@ -51,7 +50,7 @@ abstract class SMWSerializer {
 	/**
 	 * Array for recording required declarations; format:
 	 * resourcename => decl-flag, where decl-flag is a sum of flags
-	 * SMW_SERIALIZER_DECL_CLASS, SMW_SERIALIZER_DECL_OPROP, 
+	 * SMW_SERIALIZER_DECL_CLASS, SMW_SERIALIZER_DECL_OPROP,
 	 * SMW_SERIALIZER_DECL_APROP.
 	 * @var array of integer
 	 */
@@ -59,7 +58,7 @@ abstract class SMWSerializer {
 	/**
 	 * Array for recording previous declarations; format:
 	 * resourcename => decl-flag, where decl-flag is a sum of flags
-	 * SMW_SERIALIZER_DECL_CLASS, SMW_SERIALIZER_DECL_OPROP, 
+	 * SMW_SERIALIZER_DECL_CLASS, SMW_SERIALIZER_DECL_OPROP,
 	 * SMW_SERIALIZER_DECL_APROP.
 	 * @var array of integer
 	 */
@@ -82,14 +81,14 @@ abstract class SMWSerializer {
 	 * @var array of string
 	 */
 	protected $global_namespaces;
-	
+
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		$this->clear();
 	}
-	
+
 	/**
 	 * Clear internal states to start a new serialization.
 	 */
@@ -115,7 +114,7 @@ abstract class SMWSerializer {
 	 * Complete the serialization so that calling flushContent() will return
 	 * the final part of the output, leading to a complete serialization with
 	 * all necessary declarations. No further serialization functions must be
-	 * called after this. 
+	 * called after this.
 	 */
 	public function finishSerialization() {
 		$this->serializeDeclarations();
@@ -125,7 +124,7 @@ abstract class SMWSerializer {
 	/**
 	 * Serialize the header (i.e. write it to the internal buffer). May
 	 * include standard syntax to start output but also declare some common
-	 * namespaces globally. 
+	 * namespaces globally.
 	 */
 	abstract protected function serializeHeader();
 
@@ -133,7 +132,7 @@ abstract class SMWSerializer {
 	 * Serialise the footer (i.e. write it to the internal buffer).
 	 */
 	abstract protected function serializeFooter();
-	
+
 	/**
 	 * Serialize any declarations that have been found to be missing while
 	 * serializing other elements.
@@ -141,9 +140,15 @@ abstract class SMWSerializer {
 	public function serializeDeclarations() {
 		foreach ( $this->decl_todo as $name => $flag ) {
 			$types = array();
-			if ( $flag & SMW_SERIALIZER_DECL_CLASS ) $types[] = 'owl:Class';
-			if ( $flag & SMW_SERIALIZER_DECL_OPROP ) $types[] = 'owl:ObjectProperty';
-			if ( $flag & SMW_SERIALIZER_DECL_APROP ) $types[] = 'owl:DatatypeProperty';
+			if ( $flag & SMW_SERIALIZER_DECL_CLASS ) {
+				$types[] = 'owl:Class';
+			}
+			if ( $flag & SMW_SERIALIZER_DECL_OPROP ) {
+				$types[] = 'owl:ObjectProperty';
+			}
+			if ( $flag & SMW_SERIALIZER_DECL_APROP ) {
+				$types[] = 'owl:DatatypeProperty';
+			}
 			foreach ( $types as $typename ) {
 				$this->serializeDeclaration( $name, $typename );
 			}
@@ -178,7 +183,9 @@ abstract class SMWSerializer {
 	 * (what is flushed is gone).
 	 */
 	public function flushContent() {
-		if ( ( $this->pre_ns_buffer === '' ) && ( $this->post_ns_buffer === '' ) ) return '';
+		if ( ( $this->pre_ns_buffer === '' ) && ( $this->post_ns_buffer === '' ) ) {
+			return '';
+		}
 		$this->serializeNamespaces();
 		$result = $this->pre_ns_buffer . $this->post_ns_buffer;
 		$this->pre_ns_buffer = '';
@@ -200,10 +207,10 @@ abstract class SMWSerializer {
 	 * Serialize a single namespace.
 	 * Namespaces that were serialized in such a way that they remain
 	 * available for all following output should be added to
-	 * $global_namespaces. 
-	 * @param $shortname string abbreviation/prefix to declare 
+	 * $global_namespaces.
+	 * @param $shortname string abbreviation/prefix to declare
 	 * @param $uri string URI prefix that the namespace encodes
-	 */ 
+	 */
 	abstract protected function serializeNamespace( $shortname, $uri );
 
 	/**
@@ -218,7 +225,7 @@ abstract class SMWSerializer {
 	}
 
 	/**
-	 * State that a certain declaration is needed. The method checks if the 
+	 * State that a certain declaration is needed. The method checks if the
 	 * declaration is already available, and records a todo otherwise.
 	 */
 	protected function requireDeclaration( SMWExpResource $resource, $decltype ) {
@@ -230,14 +237,16 @@ abstract class SMWSerializer {
 			}
 		}
 		// Do not declare blank nodes:
-		if ( $resource->isBlankNode() ) return;
+		if ( $resource->isBlankNode() ) {
+			return;
+		}
 
 		$name = $resource->getUri();
 		if ( array_key_exists( $name, $this->decl_done ) && ( $this->decl_done[$name] & $decltype ) ) {
 			return;
 		}
 		if ( !array_key_exists( $name, $this->decl_todo ) ) {
-			$this->decl_todo[$name] = $decltype;			
+			$this->decl_todo[$name] = $decltype;
 		} else {
 			$this->decl_todo[$name] = $this->decl_todo[$name] | $decltype;
 		}
@@ -246,30 +255,33 @@ abstract class SMWSerializer {
 	/**
 	 * Update the declaration "todo" and "done" lists for the case that the
 	 * given data has been serialized with the type information it provides.
-	 *  
+	 *
 	 * @param $expData specifying the type data upon which declarations are based
 	 */
 	protected function recordDeclarationTypes( SMWExpData $expData ) {
 		foreach ( $expData->getSpecialValues( 'rdf', 'type') as $typeresource ) {
 			if ( $typeresource instanceof SMWExpNsResource ) {
 				switch ( $typeresource->getQName() ) {
-					case 'owl:Class': $typeflag = SMW_SERIALIZER_DECL_CLASS; break; 
-					case 'owl:ObjectProperty': $typeflag = SMW_SERIALIZER_DECL_OPROP; break; 
-					case 'owl:DatatypeProperty': $typeflag = SMW_SERIALIZER_DECL_APROP; break; 
+					case 'owl:Class': $typeflag = SMW_SERIALIZER_DECL_CLASS;
+					break;
+					case 'owl:ObjectProperty': $typeflag = SMW_SERIALIZER_DECL_OPROP;
+					break;
+					case 'owl:DatatypeProperty': $typeflag = SMW_SERIALIZER_DECL_APROP;
+					break;
 					default: $typeflag = 0;
 				}
 				if ( $typeflag != 0 ) {
 					$this->declarationDone( $expData->getSubject(), $typeflag );
 				}
-			}  
+			}
 		}
 	}
 
 	/**
 	 * Update the declaration "todo" and "done" lists to reflect the fact that
 	 * the given element has been declared to has the given type.
-	 * 
-	 * @param $element SMWExpResource specifying the element to update 
+	 *
+	 * @param $element SMWExpResource specifying the element to update
 	 * @param $typeflag integer specifying the type (e.g. SMW_SERIALIZER_DECL_CLASS)
 	 */
 	protected function declarationDone( SMWExpResource $element, $typeflag ) {
@@ -288,8 +300,8 @@ abstract class SMWSerializer {
 	 * Check if the given property is one of the special properties of the OWL
 	 * language that require their values to be classes or RDF lists of
 	 * classes. In these cases, it is necessary to declare this in the exported
-	 * data. 
-	 *  
+	 * data.
+	 *
 	 * @note The list of properties checked here is not complete for the OWL
 	 * language but covers what is used in SMW.
 	 * @note OWL 2 allows URIs to refer to both classes and individual elements
@@ -297,15 +309,18 @@ abstract class SMWSerializer {
 	 * used as such, hence it is enough to check the property. Moreover, we do
 	 * not use OWL Datatypes in SMW, so rdf:type, rdfs:domain, etc. always
 	 * refer to classes.
+	 *
 	 * @param SMWExpNsResource $property
+	 *
+	 * @return boolean
 	 */
 	protected function isOWLClassTypeProperty( SMWExpNsResource $property ) {
 		$locname = $property->getLocalName();
 		if ( $property->getNamespaceID() == 'rdf' ) {
-			return ( $locname == 'type' ); 
+			return ( $locname == 'type' );
 		} elseif ( $property->getNamespaceID() == 'owl' ) {
 			return ( $locname == 'intersectionOf' ) || ( $locname == 'unionOf' ) ||
-			       ( $locname == 'equivalentClass' ) || 
+			       ( $locname == 'equivalentClass' ) ||
 			       ( $locname == 'complementOf' ) || ( $locname == 'someValuesFrom' ) ||
 			       ( $locname == 'allValuesFrom' ) || ( $locname == 'onClass' );
 		} elseif ( $property->getNamespaceID() == 'rdfs' ) {

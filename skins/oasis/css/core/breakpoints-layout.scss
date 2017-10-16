@@ -1,0 +1,278 @@
+@import 'skins/oasis/css/core/layout';
+@import 'skins/shared/mixins/calc';
+@import 'skins/shared/mixins/flexbox';
+@import 'breakpoints-variables';
+//todo remove styling by ID after cleanup after removal of responsive layout
+
+@if $widthType == 0 {
+	// consider using https://github.com/stowball/mqGenie for release
+	@media #{$breakpoint-small-only} {
+		.WikiaPage {
+			padding: 0 $padding-width-small;
+			width: $page-width-small - 2 * $content-border-width;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		.WikiaPage {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		.WikiaPage {
+			padding: 0 $padding-width-large;
+			width: $page-width-large;
+		}
+	}
+
+	body {
+		overflow-x: hidden;
+		position: relative;
+
+		@media #{$breakpoint-not-supported} {
+			overflow-x: auto;
+		}
+
+		// CONCF-612: large modal sizes are hidden by small (and overflown) body
+		// solution: show scrollbar on body if nessesary
+		&.modalShown {
+			overflow-y: auto;
+		}
+	}
+
+	.WikiaMainContent {
+		width: 100%;
+
+		@media #{$breakpoint-medium-up} {
+			@include calc(width, '100% - 320px');
+		}
+	}
+
+	.WikiaArticle {
+		padding: 0;
+	}
+
+	.oasis-one-column .WikiaMainContent {
+		width: 100%;
+	}
+
+	@media #{$breakpoint-small-only} {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
+			width: 100%;
+		}
+
+		//Center ads on small breakpoint
+		.WikiaTopAds {
+			width: 100%;
+		}
+	}
+
+	@media #{$breakpoint-medium-up} {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
+			@include width-calc('100% - 320px');
+		}
+
+		.main-page-tag-rcs,
+		.rcs-container {
+			width: 300px;
+		}
+	}
+
+	.WikiaRail,
+	.main-page-tag-rcs {
+		padding: 0;
+
+		@media #{$breakpoint-below-small-plus} {
+			-moz-column-count: 2;
+			-webkit-column-count: 2;
+			column-count: 2;
+
+			// this is copied from responsive-core.scss
+			clear: both;
+			float: none;
+			padding: 13px 10px 0;
+			width: auto;
+
+			.module,
+			.admin-dashboard-module {
+				box-sizing: border-box;
+				display: inline-block;
+				margin: 12px 8px;
+				position: static;
+				vertical-align: top;
+				width: 330px;
+
+				.carousel-container {
+					left: 0;
+					margin: auto;
+					width: 265px;
+				}
+
+			}
+
+			.rail-module {
+				display: inline-block;
+				width: 330px;
+			}
+		}
+
+		@media #{$breakpoint-small-plus-up} {
+			@include display-inline-flex();
+		}
+	}
+
+	@media #{$breakpoint-small-only} {
+		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
+			margin: 0 1px;
+		}
+
+		.EditPageToolbar .cke_toolbar_widescreen .cke_toolbar_insert {
+			padding: 0;
+		}
+	}
+
+	.EditPage.editpage-visualwidemode .EditPageMain {
+		width: 100%;
+	}
+
+	.EditPage.editpage-sourcewidemode-off .EditPageMain {
+		margin-right: -310px;
+		padding: 0;
+		width: 100%;
+
+		.EditPageMainContainer {
+			margin-right: 300px;
+		}
+	}
+
+	.EditPageRail {
+		width: 300px;
+	}
+
+	.EditPageHeader {
+
+		> h2 {
+			display: inline-block;
+			float: left;
+		}
+	}
+
+	.wds-banner-notification__container {
+		$banner-notification-width-large: $page-width-large + 20;
+		$banner-notification-width-medium: $page-width-medium;
+		$banner-notification-width-small-plus: $page-width-small-plus - 20;
+		$banner-notification-width-small: $page-width-small + 8;
+
+		@media #{$breakpoint-small-only} {
+			width: $banner-notification-width-small;
+
+			&.float {
+				margin-left: $banner-notification-width-small / -2;
+			}
+		}
+
+		@media #{$breakpoint-small-plus} {
+			width: $banner-notification-width-small-plus;
+
+			&.float {
+				margin-left: $banner-notification-width-small-plus / -2;
+			}
+		}
+
+		@media #{$breakpoint-medium-only} {
+			width: $banner-notification-width-medium;
+
+			&.float {
+				margin-left: $banner-notification-width-medium / -2;
+			}
+		}
+
+		@media #{$breakpoint-large-up} {
+			width: $banner-notification-width-large;
+
+			&.float {
+				margin-left: $banner-notification-width-large / -2;
+			}
+		}
+	}
+
+	// 'special case' for 1024px tablets (think landscape iPad)
+	@media #{$breakpoint-small-plus} {
+		.WikiaPage {
+			padding: 0 $padding-width-small-plus;
+			width: $page-width-small-plus;
+		}
+
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded,
+		.WikiaMainContent {
+			// right rail width + space between RR and content
+			@include width-calc('100% - 320px');
+		}
+
+		.main-page-tag-rcs {
+			// right rail width
+			width: 300px;
+		}
+	}
+
+	@media #{$breakpoint-not-supported} {
+		body {
+			//This has to be visible to allow for zooming out
+			overflow: visible;
+		}
+	}
+}
+
+// Visual Editor changes for breakpoints
+$ve-overlay-color: rgba(0, 0, 0, .5);
+$vw-overlay-shadow-size: 1000vw; // IE does not support vmax
+body.ve {
+	.WikiaSiteWrapper {
+		pointer-events: none;
+	}
+
+	.ve-ui-overlay {
+		pointer-events: all;
+	}
+
+	.WikiaMainContent {
+		box-shadow: 0 0 0 $vw-overlay-shadow-size $ve-overlay-color;
+		padding: 0;
+		pointer-events: all;
+		z-index: $zTop;
+	}
+
+	.ve-init-mw-viewPageTarget-toolbar {
+		margin: 0;
+	}
+
+	.WikiaArticle {
+		min-height: 0;
+		padding: 0 10px;
+	}
+
+	// cover some additional elements with an overlay
+	.WikiaArticleFooter, .CategorySelect.articlePage {
+		border-color: $ve-overlay-color;
+		margin: 0;
+		padding: 10px;
+		pointer-events: none;
+		position: relative;
+
+		&::after {
+			background: $ve-overlay-color;
+			bottom: 0;
+			content: ' ';
+			display: block;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+}

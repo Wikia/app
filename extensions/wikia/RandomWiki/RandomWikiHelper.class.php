@@ -76,17 +76,18 @@ class RandomWikiHelper {
 
 				foreach ( $wikis as $wikiID => $pvCount ) {
 					if ( $pvCount >= $minPageViews ) {
-						$hub = WikiFactory::getCategory( $wikiID );
+						$hub = WikiFactoryHub::getInstance();
+						$cat_id = $hub->getCategoryId( $wikiID );
 
-						if ( !$hub ) {
+						if ( !$cat_id ) {
 							continue;
 						}
 
-						if ( !isset( self::$mData[ 'hubs' ][ $hub->cat_id ] ) ) {
-							self::$mData[ 'hubs' ][ $hub->cat_id ] = array( );
+						if ( !isset( self::$mData[ 'hubs' ][ $cat_id ] ) ) {
+							self::$mData[ 'hubs' ][ $cat_id ] = array( );
 						}
 
-						self::$mData[ 'hubs' ][ $hub->cat_id ][ ] = $wikiID;
+						self::$mData[ 'hubs' ][ $cat_id ][ ] = $wikiID;
 						$counter++;
 					}
 				}
@@ -103,7 +104,10 @@ class RandomWikiHelper {
 			}
 
 			self::$mData[ 'total' ] = $counter;
-			$wgMemc->set( $cacheKey, self::$mData, 3600 * self::CACHE_EXPIRY );
+
+			if ( !empty( $wikis ) ) {
+				$wgMemc->set( $cacheKey, self::$mData, 3600 * self::CACHE_EXPIRY );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );

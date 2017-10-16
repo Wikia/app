@@ -25,7 +25,9 @@ function define(id, deps, def) {
 
 define.amd = true;
 
-require = function(){
+require = function(deps, def){
+	//whatever is required, make it available as a module - prepend it with require, so it's possible to distunguish it from actual modules
+	define('require,' + deps.toString(), deps, def);
 };
 
 require.optional = function(name){

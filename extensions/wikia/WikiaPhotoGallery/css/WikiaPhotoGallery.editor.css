@@ -1,17 +1,12 @@
 .WikiaPhotoGalleryEditorPage {
 	display: none;
 	height: 460px;
-	/*overflow: auto;*/
 	position: relative;
 }
 
 #WikiaPhotoGalleryEditor .WikiaPhotoGalleryEditorPageInner {
 	padding: 0 15px;
 	position: relative;
-}
-
-#WikiaPhotoGalleryEditor .modalContent {
-	*display: block; /* IE7 */
 }
 
 /* generic stuff */
@@ -46,7 +41,6 @@ img.WikiaPhotoGalleryProgress {
 
 /* slider from jQuery UI */
 #WikiaPhotoGalleryEditor .ui-slider {
-	-moz-border-radius: 4px;
 	border: solid 1px #aaa;
 	cursor: pointer;
 	display: inline-block;
@@ -108,9 +102,7 @@ img.WikiaPhotoGalleryProgress {
 	margin: 0 20px 0 5px;
 }
 
-/* Feed checkbox */
-#WikiaPhotoGalleryFeedInUse,
-#WikiaPhotoGallerySlideshowFeedInUse,
+/* Editor Checkboxes */
 #WikiaPhotoGallerySlideshowRecentUploads {
 	margin: 0 5px 0 0;
 }
@@ -140,10 +132,6 @@ img.WikiaPhotoGalleryProgress {
 
 #WikiaPhotoGallerySearch input[type="text"] {
 	width: 193px;
-}
-
-#WikiaPhotoGallerySearch button {
-	*width: 35px; /* IE7 */
 }
 
 /* search results */
@@ -341,8 +329,6 @@ img.WikiaPhotoGalleryProgress {
 .WikiaPhotoGalleryEditorPage .WikiaPhotoGalleryColorPickerPopUp {
 	background-color: #fff;
 	border: solid 1px #cacaca;
-	-moz-box-shadow: 0 0 10px 1px #aaa;
-	-webkit-box-shadow: 0 0 10px 1px #aaa;
 	display: none;
 	position: absolute;
 	padding: 5px 10px;
@@ -556,9 +542,7 @@ img.WikiaPhotoGalleryProgress {
 	padding: 0;
 }
 
-#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded,
-#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed,
-#WikiaPhotoGalleryEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed {
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded {
 	opacity: 0.5;
 }
 
@@ -711,16 +695,7 @@ img.WikiaPhotoGalleryProgress {
 	padding: 0;
 }
 
-#WikiaPhotoGallerySliderEditorPreview .Wikia-video-play-button:hover {
-	cursor: auto;
-	opacity: .65;
-	filter: alpha(opacity = 65);
-}
-
-
-#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded,
-#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed,
-#WikiaPhotoGalleryEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed {
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded {
 	opacity: 0.5;
 }
 
@@ -792,7 +767,7 @@ p.SliderLink {
 	background-repeat: no-repeat;
 }
 
-#WikiaPhotoGalleryImageUploadSize { 
+#WikiaPhotoGalleryImageUploadSize {
 	display: none;
 	font-weight: bold;
 	float: right;
@@ -813,4 +788,9 @@ p.SliderLink {
 	color: #FFF;
 	font-size: 14px;
 	background-color: #F00;
+}
+
+/* Hack to position the play circle in slider preview. */
+#WikiaPhotoGallerySliderEditorPreview .play-circle {
+	top: 80px;
 }

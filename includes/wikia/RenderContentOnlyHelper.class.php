@@ -12,23 +12,10 @@ class RenderContentOnlyHelper {
 	const LEAVE_NO_SKIN_ELEMENTS = 1;
 	const LEAVE_ARTICLE_PLACEHOLDER_ONLY = 2;
 	const LEAVE_NAV_ONLY = 4;
+	const LEAVE_GLOBAL_NAV_ONLY = 5;
 
 	private static $renderContentOnly = false;
 	private static $renderContentOnlyLevel = self::LEAVE_ALL_SKIN_ELEMENTS;
-
-	/**
-	 * Method accessed by hook to set correct behaviour
-	 */
-	public static function onUnknownAction( $action, $article ) {
-		if ( $action == 'rendercontentonly' ) {
-			self::$renderContentOnly = true;
-			self::$renderContentOnlyLevel = self::LEAVE_ARTICLE_PLACEHOLDER_ONLY;
-			global $wgArticle;
-			$wgArticle->view();
-			return false;
-		}
-		return true;
-	}
 
 	/**
 	 * @return bool

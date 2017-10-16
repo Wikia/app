@@ -1,0 +1,27 @@
+.discussionslog-container {
+	.form-ipaddress,
+	.form-username,
+	.form-divider {
+		float: left;
+		margin-right: 10px;
+	}
+
+	.form-divider {
+		font-style: italic;
+		margin-left: 10px;
+		text-transform: uppercase;
+	}
+
+	.log-table-caption,
+	.log-error-message {
+		clear: both;
+		font-weight: bold;
+		padding-bottom: 8px;
+		padding-top: 12px;
+	}
+
+	.useragent {
+		font-size: 1em;
+		line-height: 110%;
+	}
+}

@@ -1,32 +1,38 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
 
-
-.ve-ui-dialog .ve-ui-window-frame {
+.oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {
+	background: $color-page;
 	border-color: $color-page-border;
-}
-
-.ve-ui-window-title {
-	color: $color-text;
 }
 
 @if $is-dark-wiki {
-	.ve-ui-window-head {
+	.oo-ui-window-head {
 		border-bottom: 1px solid $color-page-border;
 	}
 
-	.ve-ui-window-foot {
+	.oo-ui-window-foot {
 		border-top: 1px solid $color-page-border;
 	}
 }
 
-.ve-ui-pagedOutlineLayout-outlinePanel {
-	border-color: $color-page-border;
-
-	.ve-ui-outlineControlsWidget {
-		border-top: 1px solid $color-page-border;
-	}
+.oo-ui-dialog-content .oo-ui-window-closeButton {
+  float: right;
+  margin: 0.7em 0.7em;
+  position: relative;
+  z-index: 1;
 }
 
-.ve-ui-dialog-content .ve-ui-window-body .ve-ui-surface {
-	border-color: $color-page-border;
+.oo-ui-processDialog-actions-safe,
+.oo-ui-processDialog-actions-primary {
+	float: right;
+	position: static;
+}
+
+.oo-ui-windowManager-modal > .oo-ui-dialog-overlayless {
+	background-color: transparent;
+}
+
+.ve-ui-mwSaveDialog-captcha > div {
+	margin: 5px auto 0 auto;
 }

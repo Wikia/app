@@ -1,58 +1,65 @@
-var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
+/*jshint camelcase:false, maxdepth:4*/
+/*global define*/
+define('ext.wikia.adEngine.adLogicPageDimensions', [
+	'ext.wikia.adEngine.slotTweaker',
+	'wikia.document',
+	'wikia.log',
+	'wikia.throttle',
+	'wikia.window'
+], function (slotTweaker, doc, log, throttle, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.logic.shortpage',
+	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
 		initCalled = false,
 		wrappedAds = {},
 
 		/**
 		 * Slots based on page length
 		 */
-		preFootersThreshold = 2400,
+		preFootersThreshold = 1500,
 		slotsOnlyOnLongPages = {
 			LEFT_SKYSCRAPER_2: 2400,
 			LEFT_SKYSCRAPER_3: 4000,
 			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
+			PREFOOTER_MIDDLE_BOXAD: preFootersThreshold,
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
 		pageHeight,
 
 		/**
-		 * Slots based on screen width
+		 * Slots based on screen width for responsive design
 		 *
 		 * @see skins/oasis/css/core/responsive-variables.scss
 		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
-		mediaQueriesToCheck = {
-			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1030px)',
-			noSkins: 'screen and (max-width: 1260px)'
-		},
 		slotsToHideOnMediaQuery = {
-			TOP_BUTTON_WIDE: 'noTopButton',
-			'TOP_BUTTON_WIDE.force': 'noTopButton',
-			TOP_RIGHT_BOXAD: 'oneColumn',
-			HOME_TOP_RIGHT_BOXAD: 'oneColumn',
-			LEFT_SKYSCRAPER_2: 'oneColumn',
-			LEFT_SKYSCRAPER_3: 'oneColumn',
-			INCONTENT_BOXAD_1: 'oneColumn',
-			INVISIBLE_SKIN: 'noSkins'
+			TOP_RIGHT_BOXAD:         'oneColumn',
+			LEFT_SKYSCRAPER_2:       'oneColumn',
+			LEFT_SKYSCRAPER_3:       'oneColumn',
+			INCONTENT_BOXAD_1:       'oneColumn',
+			PREFOOTER_MIDDLE_BOXAD:  'noMiddlePrefooter'
+		},
+		mediaQueriesToCheck = {
+			twoColumns: 'screen and (min-width: 1024px)',
+			oneColumn: 'screen and (max-width: 1023px)',
+			noTopButton: 'screen and (max-width: 1063px)',
+			noMiddlePrefooter: 'screen and (max-width: 1083px)'
 		},
 		mediaQueriesMet,
 		matchMedia;
 
 	function matchMediaMoz(query) {
-		return window.matchMedia(query).matches;
+		return win.matchMedia(query).matches;
 	}
 
 	function matchMediaIe(query) {
-		return window.styleMedia.matchMedium(query);
+		return win.styleMedia.matchMedium(query);
 	}
 
 	// Chose proper implementation of machMedia
-	matchMedia = window.matchMedia && matchMediaMoz;
-	matchMedia = matchMedia || (window.styleMedia && window.styleMedia.matchMedium && matchMediaIe);
-	matchMedia = matchMedia || (window.media && window.media.matchMedium);
+	matchMedia = win.matchMedia && matchMediaMoz;
+	matchMedia = matchMedia || (win.styleMedia && win.styleMedia.matchMedium && matchMediaIe);
+	matchMedia = matchMedia || (win.media && win.media.matchMedium);
 
 	if (!matchMedia) {
 		log('No working matchMedia implementation found', 'user', logGroup);
@@ -61,7 +68,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	/**
 	 * Logic to check for given slot on every window resize
 	 *
-	 * @param slotname
+	 * @param {string} slotname
 	 * @returns {boolean}
 	 */
 	function shouldBeShown(slotname) {
@@ -81,14 +88,18 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			}
 		}
 
-		return longEnough && wideEnough;
+		if (!longEnough || !wideEnough) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
 	 * Refresh an ad and show/hide based on the changed window size
-	 * No logging here, it needs to be super fast
+	 * Logging on state changes only, it needs to be super fast
 	 *
-	 * @param ad one of the wrappedAds
+	 * @param {object} ad one of the wrappedAds
 	 */
 	function refresh(ad) {
 		if (shouldBeShown(ad.slotname)) {
@@ -96,7 +107,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 				log(['Loading ad in slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.show(ad.slotname, true);
-				ad.provider.fillInSlot(ad.slotinfo);
+				ad.loadCallback();
 				ad.state = 'shown';
 
 			} else if (ad.state === 'hidden') {
@@ -109,49 +120,31 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			if (ad.state === 'none') {
 				log(['Hiding empty slot ' + ad.slotname, ad], 'info', logGroup);
 
-				slotTweaker.hide(ad.slotname, true);
+				slotTweaker.hide(ad.slotname);
+				slotTweaker.hackChromeRefresh(ad.slotname);
 				ad.state = 'ready';
 
 			} else if (ad.state === 'shown') {
 				log(['Hiding slot ' + ad.slotname, ad], 'info', logGroup);
 
-				slotTweaker.hide(ad.slotname, true);
+				slotTweaker.hide(ad.slotname);
+				slotTweaker.hackChromeRefresh(ad.slotname);
 				ad.state = 'hidden';
 			}
 		}
 	}
 
 	/**
-	 * Add an ad to the wrappedAds
-	 *
-	 * @param slotname
-	 * @param slotinfo -- the info you pass to fillInSlot
-	 * @param provider -- the original provider for the slot
-	 */
-	function add(slotname, slotinfo, provider) {
-		log(['add', slotname, slotinfo, provider], 'debug', logGroup);
-
-		wrappedAds[slotname] = {
-			slotname: slotname,
-			state: 'none',
-			slotinfo: slotinfo,
-			provider: provider
-		};
-
-		refresh(wrappedAds[slotname]);
-	}
-
-	/**
-	 * Update the pageHeight and trigger refresh of all ads.
+	 * Update the pageHeight and mediaQueriesMet
 	 * No logging here, it needs to be super fast
 	 */
-	function onResize() {
-		var slotname,
-			mediaQueryIndex;
+	function updateVars() {
+		var mediaQueryIndex;
 
-		pageHeight = document.documentElement.scrollHeight;
+		pageHeight = doc.documentElement.scrollHeight;
 
-		if (window.wgOasisResponsive) {
+		// All ads should be shown on non-responsive oasis
+		if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {
@@ -168,6 +161,14 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Refresh all ads
+	 * No logging here, it needs to be super fast
+	 */
+	function refreshAll() {
+		var slotname;
 
 		for (slotname in wrappedAds) {
 			if (wrappedAds.hasOwnProperty(slotname)) {
@@ -177,82 +178,70 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	}
 
 	/**
+	 * Update the pageHeight and trigger refresh of all ads
+	 */
+	function onResize() {
+		updateVars();
+		refreshAll();
+	}
+
+	/**
 	 * If supported, bind to resize event (and fire it once)
 	 */
 	function init() {
 		log('init', 'debug', logGroup);
-		if (window.addEventListener) {
-			onResize();
-			window.addEventListener('resize', onResize);
+		if (win.addEventListener) {
+			win.addEventListener('orientationchange', throttle(onResize, 100));
+			win.addEventListener('resize', throttle(onResize, 100));
 		} else {
 			log('No support for addEventListener. No dimension-dependent ads will be shown', 'error', logGroup);
 		}
+
+		initCalled = true;
+	}
+
+	/**
+	 * Add an ad to the wrappedAds
+	 *
+	 * @param {string} slotname
+	 * @param {function} loadCallback -- the function to call when an ad shows up the first time
+	 */
+	function add(slotname, loadCallback) {
+		log(['add', slotname, loadCallback], 'debug', logGroup);
+
+		if (!initCalled) {
+			init();
+		}
+
+		updateVars();
+
+		wrappedAds[slotname] = {
+			slotname: slotname,
+			state: 'none',
+			loadCallback: loadCallback
+		};
+
+		refresh(wrappedAds[slotname]);
 	}
 
 	/**
 	 * Check if window size logic is applicable to the given slot
 	 *
-	 * @param slotinfo
+	 * @param {string} slotname
 	 * @return {boolean}
 	 */
-	function isApplicable(slotinfo) {
-		log(['isApplicable', slotinfo], 'debug', logGroup);
+	function isApplicable(slotname) {
+		log(['isApplicable', slotname], 'debug', logGroup);
 
-		var slotname = slotinfo[0];
-		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnMediaQuery[slotname]);
-	}
-
-	/**
-	 * Check if page should have prefooters (note it can change later)
-	 *
-	 * @returns {boolean}
-	 */
-	function hasPreFooters() {
-		log('hasPreFooters', 'debug', logGroup);
-		return pageHeight < preFootersThreshold;
-	}
-
-	/**
-	 * Get proxy for given provider delaying fillInSlot to the time screen dimensions criteria
-	 * are met. It'll hide and reshow the slots when screen dimensions change in case it affects
-	 * their desired presence
-	 *
-	 * @param provider
-	 * @returns {{name: string, wrappedProvider: *, canHandleSlot: Function, fillInSlot: Function}}
-	 */
-	function getProxy(provider) {
-		log(['getProxy', provider], 'debug', logGroup);
-
-		function canHandleSlot(slotinfo) {
-			log(['canHandleSlot', slotinfo, provider], 'debug', logGroup);
-			return provider.canHandleSlot(slotinfo);
-		}
-
-		function fillInSlot(slotinfo) {
-			log(['fillInSlot', slotinfo, provider], 'debug', logGroup);
-
-			var slotname = slotinfo[0];
-			add(slotname, slotinfo, provider);
-		}
-
-		// Init once
-		if (!initCalled) {
-			initCalled = true;
-			init();
-		}
-
-		// Return the provider interface
-		return {
-			name: 'WindowSizeProviderProxy',
-			wrappedProvider: provider,
-			canHandleSlot: canHandleSlot,
-			fillInSlot: fillInSlot
-		};
+		return !!(
+			slotsOnlyOnLongPages[slotname] ||
+			slotsToHideOnMediaQuery[slotname]
+		);
 	}
 
 	return {
+		addSlot: add,
 		isApplicable: isApplicable,
-		hasPreFooters: hasPreFooters,
-		getProxy: getProxy
+		shouldBeShown: shouldBeShown
 	};
-};
+});

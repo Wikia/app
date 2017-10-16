@@ -87,8 +87,8 @@ EOD;
 		'cmdir'    => 'desc',
 	);
 
-#	if($wgUser->getOption('language') != 'en') { // waiting for international logic phase Future (v 2.0)
-#		$domain = $wgUser->getOption('language');
+#	if($wgUser->getGlobalPreference('language') != 'en') { // waiting for international logic phase Future (v 2.0)
+#		$domain = $wgUser->getGlobalPreference('language');
 #	} else {
 		$domain = Wikia::langToSomethingMap($wgAnswersURLs, $wgLanguageCode, "{$wgLanguageCode}.answers.wikia.com");
 #	}

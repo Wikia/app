@@ -22,8 +22,6 @@ class ArtistRedirects extends SpecialPage
 	function wfArtistRedirects(){
 		global $wgOut;
 
-		$tablePrefix = "";
-
 		$wgOut->setPageTitle("Artist Redirects");
 
 		$msg = "";
@@ -50,8 +48,14 @@ class ArtistRedirects extends SpecialPage
 			if(!$content){
 				ob_start();
 
-				$queryString = "SELECT COUNT(*) as numRedirs FROM $tablePrefix"."page WHERE page_is_redirect=1 AND page_title NOT LIKE '%:%'";
-				$numRedirs = lw_simpleQuery($queryString);
+				$dbr = wfGetDB( DB_SLAVE );
+				$numRedirs = $dbr->selectField(
+					"page",
+					"COUNT(*) as numRedirs",
+					[
+						"page_is_redirect" => 1,
+						"page_title NOT LIKE '%:%'"
+					], __METHOD__);
 
 				print "View results by pages:\n";
 				print "<ul>\n";
@@ -69,15 +73,16 @@ class ArtistRedirects extends SpecialPage
 				$wgMemc->set($currCacheKey, $content, strtotime("+$cacheHours hour"));
 			}
 		} else {
-			$offset = max(0, $_GET['offset']);
-			$limit = min($_GET['limit'], $MAX_LIMIT);
+			$request = $this->getRequest();
+			$offset = max( 0, $request->getInt( 'offset' ) );
+			$limit = min( $request->getInt( 'limit' ), $MAX_LIMIT );
 			$currCacheKey = $cacheKey."_$offset"."_$limit";
 
 			$content = $wgMemc->get($currCacheKey);
 			if(!$content){
 				ob_start();
 
-				$db = &wfGetDB(DB_SLAVE)->getProperty('mConn'); /* @var $db Resource */
+				$db = wfGetDB( DB_SLAVE );
 
 				print "This page lists artist redirects.  It will help you find abbreviations, nick-names, misspellings, and more. ";
 				print "It may not be extremely interesting, but it also allows search engines to index all of these varaints so that ";
@@ -88,35 +93,44 @@ class ArtistRedirects extends SpecialPage
 				print "This page is cached every $cacheHours hours - \n";
 				print "last cached: <strong>".date('m/d/Y \a\t g:ia')."</strong>\n";
 
-				$queryString = "SELECT page_title FROM $tablePrefix"."page WHERE page_is_redirect=1 AND page_title NOT LIKE '%:%' ORDER BY page_title LIMIT $offset,$limit";
-				if($result = mysql_query($queryString,$db)){
-					if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-						print "<table>\n";
-						$COLS_TO_USE = 3;
-						$REQUEST_URI = $_SERVER['REQUEST_URI'];
-						for($cnt=0; $cnt<$numRows; $cnt++){
-							$pageTitle = mysql_result($result, $cnt, "page_title");
-							if(($cnt % $COLS_TO_USE) == 0){
-								print "\t<tr".((($cnt%2)!=0)?" class='odd'":"").">\n\t\t";
-							}
-							print "<td>";
-							print "<a href='/index.php?virtPage&amp;title=".urlencode($pageTitle)."'>";
-							print utf8_encode(str_replace("_", " ", $pageTitle));
-							print "</a>";
-							print "</td>";
-							if((($cnt+1) % $COLS_TO_USE) == 0){
-								print "\n\t</tr>\n";
-							}
+				$result = $db->select(
+					[ 'page' ],
+					[ 'page_title' ],
+					[
+						'page_is_redirect' => 1,
+						'page_title NOT ' . $db->buildLike( $db->anyString(), ':' , $db->anyString() ),
+					],
+					__METHOD__,
+					[
+						'ORDER BY' => 'page_title',
+						'OFFSET' => $offset,
+						'LIMIT' => $limit,
+					]
+				);
+				if ( $result->numRows() > 0 ) {
+					print "<table>\n";
+					$COLS_TO_USE = 3;
+					$REQUEST_URI = $_SERVER['REQUEST_URI'];
+					foreach ( $result as $row ) {
+						$pageTitle = $row->page_title;
+						if(($cnt % $COLS_TO_USE) == 0){
+							print "\t<tr".((($cnt%2)!=0)?" class='odd'":"").">\n\t\t";
 						}
-						while(($cnt % $COLS_TO_USE) != 0){
-							print "<td>&nbsp;</td>";
-							if((($cnt+1) % $COLS_TO_USE) == 0){
-								print "\n\t</tr>\n";
-							}
-							$cnt++;
+						print "<td>";
+						print Xml::element( 'a', [ 'href' => '/index.php?virtPage&title=' . urlencode( $pageTitle ) ], utf8_encode( str_replace( '_', ' ', $pageTitle ) ) );
+						print "</td>";
+						if((($cnt+1) % $COLS_TO_USE) == 0){
+							print "\n\t</tr>\n";
 						}
-						print "</table>\n";
 					}
+					while(($cnt % $COLS_TO_USE) != 0){
+						print "<td>&nbsp;</td>";
+						if((($cnt+1) % $COLS_TO_USE) == 0){
+							print "\n\t</tr>\n";
+						}
+						$cnt++;
+					}
+					print "</table>\n";
 				}
 
 				$content = ob_get_clean();

@@ -122,7 +122,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 				if ( strpos( $titleText, '*/' ) === false ) {
 					$scripts .=  "/* " . $this->getResourceName($title,$titleText,$options) . " */\n";
 				}
-				$scripts .= $script . "\n";
+				$scripts .= $script . "\n;\n";
 			}
 		}
 		return $scripts;

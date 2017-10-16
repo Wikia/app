@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated
+ */
 class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
@@ -141,7 +144,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 					$video['wiki_name'] = $wiki->city_title;
 					$video['wiki_lang'] = $wiki->city_lang;
 
-					$title = Title::newFromText( $video['video_name'], NS_VIDEO );
+					$title = Title::newFromText( $video['video_name'], NS_FILE );
 
 					if ( !empty( $title ) && $title->exists() ) {
 						$vid = wfFindFile( $title );
@@ -151,7 +154,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 							$handler = $vid->getHandler();
 
 							if ( $handler instanceof OoyalaVideoHandler ) {
-								$metadata = $handler->getMetadata( true );
+								$metadata = $handler->getVideoMetadata( true );
 
 								$video['video_id'] = $metadata['videoId'];
 								$video['duration'] = WikiaFileHelper::formatDuration( $metadata['duration'] );
@@ -180,7 +183,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			$this->response->setVal( 'status', $status );
 
 			if ( $status ) {
-				wfRunHooks( 'GameGuidesSponsoredVideosSave' );
+				Hooks::run( 'GameGuidesSponsoredVideosSave' );
 			}
 		}
 

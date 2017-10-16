@@ -6,6 +6,16 @@
  * @author Jakub Olek <jolek(at)wikia-inc.com>
  */
 class WikiaMobileController extends WikiaController{
+	function __construct() {
+		//Some internal methods called from this controller need the skin to be wikiamobile
+		//It makes sense to set it explicitly here as other skins shouldn't use it anyway
+		RequestContext::getMain()->setSkin(
+			Skin::newFromKey( 'wikiamobile' )
+		);
+
+		parent::__construct();
+	}
+
 	/**
 	 * Fetches the requested batch for a specific index
 	 * section in a category page
@@ -32,14 +42,7 @@ class WikiaMobileController extends WikiaController{
 		$wgLang = !empty( $lang ) ? Language::factory( $lang ) : $this->wg->Lang;
 
 		//Cache on Varnish for 15 minutes
-		$this->response->setCacheValidity(
-			900,
-			900,
-			[
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			]
-		);
+		$this->response->setCacheValidity(900);
 
 		$this->forward( 'WikiaMobileNavigationService', 'navMenu' );
 	}

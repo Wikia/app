@@ -13,7 +13,12 @@
  */
 function wfProfileIn( $functionname ) {
 	global $wgProfiler;
-	if ( $wgProfiler instanceof Profiler || isset( $wgProfiler['class'] ) ) {
+	// Wikia change - @author: wladek - 2x faster
+	if ( $wgProfiler instanceof Profiler ) {
+		if ( !($wgProfiler instanceof ProfilerStub) ) {
+			$wgProfiler->profileIn( $functionname );
+		}
+	} elseif ( isset( $wgProfiler['class'] ) ) {
 		Profiler::instance()->profileIn( $functionname );
 	}
 }
@@ -24,7 +29,12 @@ function wfProfileIn( $functionname ) {
  */
 function wfProfileOut( $functionname = 'missing' ) {
 	global $wgProfiler;
-	if ( $wgProfiler instanceof Profiler || isset( $wgProfiler['class'] ) ) {
+	// Wikia change - @author: wladek - 2x faster
+	if ( $wgProfiler instanceof Profiler ) {
+		if ( !($wgProfiler instanceof ProfilerStub) ) {
+			$wgProfiler->profileOut($functionname);
+		}
+	} elseif ( isset( $wgProfiler['class'] ) ) {
 		Profiler::instance()->profileOut( $functionname );
 	}
 }
@@ -39,6 +49,9 @@ class Profiler {
 	protected $mTimeMetric = 'wall';
 	protected $mProfileID = false, $mCollateDone = false, $mTemplated = false;
 	private static $__instance = null;
+
+	/** @var ProfilerDataSink[] */
+	protected $sinks;
 
 	function __construct( $params ) {
 		if ( isset( $params['timeMetric'] ) ) {
@@ -108,10 +121,11 @@ class Profiler {
 
 	public function getProfileID() {
 		if ( $this->mProfileID === false ) {
-			return wfWikiID();
-		} else {
-			return $this->mProfileID;
+			global $wgDBname;
+
+			$this->mProfileID = function_exists( 'wfWikiID' ) ? wfWikiID() : $wgDBname;
 		}
+		return $this->mProfileID;
 	}
 
 	/**
@@ -207,7 +221,7 @@ class Profiler {
 	 * Returns a tree of function call instead of a list of functions
 	 */
 	function getCallTree() {
-		return implode( '', array_map( array( &$this, 'getCallTreeLine' ), $this->remapCallTree( $this->mStack ) ) );
+		return implode( '', array_map( [ $this, 'getCallTreeLine' ], $this->remapCallTree( $this->mStack ) ) );
 	}
 
 	/**
@@ -510,4 +524,28 @@ class Profiler {
 			wfDebug( $s );
 		}
 	}
+
+	public function hasSinks() {
+		return !empty($this->sinks);
+	}
+
+	public function addSink( ProfilerDataSink $sink ) {
+		$this->sinks[] = $sink;
+	}
+
+	public function sendToSinks( ProfilerData $data ) {
+		foreach ( $this->sinks as $sink ) {
+			$sink->send( $data );
+		}
+	}
+
+	function getCpuTime( $ru = null ) {
+		if ( $ru == null ) {
+			$ru = getrusage();
+		}
+
+		return $ru['ru_utime.tv_sec'] + $ru['ru_stime.tv_sec']
+			+ ( $ru['ru_utime.tv_usec'] + $ru['ru_stime.tv_usec'] ) * 1e-6;
+	}
+
 }

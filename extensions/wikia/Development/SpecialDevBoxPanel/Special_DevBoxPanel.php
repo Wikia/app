@@ -25,22 +25,20 @@ if(!defined('MEDIAWIKI')) die("Not a valid entry point.");
 // Credentials for the editable (not public) devbox database.
 //require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxDatabase.php' );
 
-// TODO: DETERMINE THE CORRECT PERMISSIONS... IS THERE A "DEVELOPERS" GROUP THAT WE ALL ACTUALLY BELONG TO?  WILL WE BE ON ALL WIKIS?
-// Permissions
-$wgAvailableRights[] = 'devboxpanel';
-$wgGroupPermissions['*']['devboxpanel'] = false;
-$wgGroupPermissions['user']['devboxpanel'] = false;
-$wgGroupPermissions['staff']['devboxpanel'] = true;
-$wgGroupPermissions['devboxpanel']['devboxpanel'] = true;
-
 $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 
 // Hooks
 $dir = __DIR__ . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
-$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+
+if (!empty($wgRunningUnitTests) && $wgNoDBUnits) {
+	Language::$dataCache = new FakeCache();
+	$wgHooks['WikiFactory::execute'] = ["wfUnitForceWiki"];
+} else {
+	$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+}
+
 $wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
-$wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'wfDevBoxResourceLoaderGetConfigVars';
 $wgExceptionHooks['MWExceptionRaw'][] = "wfDevBoxLogExceptions";
 
@@ -52,6 +50,25 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgSpecialPages['DevBoxPanel'] = 'DevBoxPanel';
+
+if (getenv('wgDevelEnvironmentName')) {
+	$wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
+} else {
+
+	# PLATFORM-1737 (Allow multiple dashes on dev hostnames)
+	# Get first hyphen, if there's any, delete it and everything from the left side of that "-", else pass whole $host
+	$host = gethostname();
+	$index = stripos($host, "-");
+	if($index > 0) {
+		$wgDevelEnvironmentName = trim(substr($host, $index + 1));
+	} else {
+		$wgDevelEnvironmentName = trim($host);
+	}
+}
+
+// Asset manaager and ajax requests come in "too early" for the rest of config
+// So we need a fallback global domain.  This is kind of a hack, fixme.
+$wgDevboxDefaultWikiDomain = 'www.wikia.com';
 
 class DevBoxPanel extends SpecialPage {
 	public function __construct(){
@@ -85,8 +102,8 @@ class DevBoxPanel extends SpecialPage {
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$tmpl->set_vars(array(
 								"dbComparisonHtml" => getHtmlForDatabaseComparisonTool(),
-								"infoHtml"         => getHtmlForInfo(),
-								"footer"           => wfMsg("devbox-footer", __FILE__),
+								"infoHtml"			=> getHtmlForInfo(),
+								"footer"			  => wfMsg("devbox-footer", __FILE__),
 								));
 			$wgOut->addHTML($tmpl->render('special-devboxpanel'));
 		} else {
@@ -104,7 +121,7 @@ class DevBoxPanel extends SpecialPage {
  * @return boolean true to allow the WikiFactoryLoader to do its other necessary initalization.
  */
 function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
-	global $wgDevelEnvironment, $wgWikiFactoryDB, $wgCommandLineMode, $wgDevboxDefaultWikiDomain;
+	global $wgDevelEnvironment, $wgExternalSharedDB, $wgCommandLineMode, $wgDevboxDefaultWikiDomain;
 	if($wgDevelEnvironment){
 		$forcedWikiDomain = getForcedWikiValue();
 		$cityId = WikiFactory::DomainToID($forcedWikiDomain);
@@ -128,7 +145,7 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 				/**
 				 * find city_id by database name
 				 */
-				$dbr = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
+				$dbr = WikiFactory::db( DB_SLAVE );
 				$cityId = $dbr->selectField(
 					"city_list",
 					array( "city_id" ),
@@ -152,33 +169,38 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 
 		// This section allows us to use c1 or c2 as a source for wiki databases
 		// Be aware that this means the database has to be loaded in the right cluster according to wikicities!
-		$db = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
-		$sql = 'SELECT city_cluster from city_list where city_id = ' . $cityId;
-		$result = $db->query( $sql, __METHOD__ );
-
-		$row = $result->fetchRow();
-		$wikiFactoryLoader->mVariables["wgDBcluster"] = $row['city_cluster'];
+		$db = WikiFactory::db( DB_SLAVE );
+		$cluster = $db->selectField( 'city_list', 'city_cluster', [ 'city_id' => $cityId ], __METHOD__ );
+		$wikiFactoryLoader->mVariables["wgDBcluster"] = $cluster;
 
 		// Final sanity check to make sure our database exists
 		if ($forcedWikiDomain != $wgDevboxDefaultWikiDomain) {
-			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
-			$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c1');
-			$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
+			// check if the wiki exist on a cluster
+			wfDebug( __METHOD__ . ": checking if wiki #{$cityId} exists on {$cluster} cluster...\n" );
 
-			$devbox_dbs = array_merge(getDevBoxOverrideDatabases($db1), getDevBoxOverrideDatabases($db2));
-			if (array_search($dbname, $devbox_dbs) === false) {
-				echo "<pre>Fatal Error: No local copy of database [$dbname] was found.</pre>";
-				exit(); // fatal error
+			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
+			$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB . '_' . $cluster );
+
+			$res = $db->query( 'SHOW DATABASES ' . $db->buildLike($dbname), __METHOD__ ); // SHOW DATABASES LIKE 'muppet'
+
+			if ( $res->numRows() === 0 ) {
+				header( 'HTTP/1.1 503' );
+				header( 'X-Error: missing database' );
+				header( 'Content-Type: text/plain' );
+
+				die( "No local copy of database [$dbname] was found on {$cluster} cluster [using {$db->getServer()} DB]." );
 			}
 		}
-
-		// TODO: move this into the config file
-		global $wgReadOnly;
-		$wgReadOnly = false;
-
 	}
 	return true;
 } // end wfDevBoxForceWiki()
+
+function wfUnitForceWiki(){
+	global $wgDevelEnvironmentName, $wgDBcluster;
+	$wgDevelEnvironmentName = 'test';
+	$wgDBcluster = '';
+	return false;
+}
 
 /**
  * "Disable" WikiFactory wiki-specific settings when $wgDevboxSkipWikiFactoryVariables = true
@@ -217,27 +239,13 @@ function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
 }
 
 function wfDevBoxResourceLoaderGetConfigVars( &$vars ) {
-	global $wgDevelEnvironment;
+	global $wgDevelEnvironment, $wgWikiaDatacenter;
 
 	$vars['wgDevelEnvironment'] = $wgDevelEnvironment;
+	$vars['wgWikiaDatacenter'] = $wgWikiaDatacenter;
 
 	return true;
 }
-
-/**
- * Modify parser cache key to be different on each devbox (BugId:24647)
- *
- * @param string $hash part of parser cache key to be modified
- * @param User $user current user instance
- * @return boolean true
- */
-function wfDevBoxSeparateParserCache(&$hash) {
-	global $wgDevelEnvironmentName;
-
-	$hash .= "!dev-{$wgDevelEnvironmentName}";
-	return true;
-}
-
 
 function wfDevBoxLogExceptions( $errorText ) {
 	Wikia::logBacktrace("wfDevBoxLogExceptions");
@@ -246,56 +254,45 @@ function wfDevBoxLogExceptions( $errorText ) {
 }
 
 /**
- * @return array Parts of host. used to set $wgDevelEnvironmentName;
- */
-function getHostParts() {
-	if (!isset($_SERVER['HTTP_HOST'])) return null;
-	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return null;
-	$aHostParts = explode(".", str_replace('.wikia-dev.com', '', $_SERVER['HTTP_HOST']));
-	return $aHostParts;
-}
-
-/**
  * @return String full domain of wiki which this dev-box should behave as.
  *
  * Hostname scheme: override.developer.wikia-dev.com
  * Example: muppet.owen.wikia-dev.com -> muppet.wikia.com
  * Example: es.gta.owen.wikia-dev.com -> es.gta.wikia.com
+ * Example: muppet.wikia.com -> muppet.wikia.com
  */
 function getForcedWikiValue(){
-	global $wgDevelEnvironmentName;
-	$aHostParts = getHostParts();
+	global $wgDevDomain;
 
-	if(!empty($hostParts)) {
-		$wgDevelEnvironmentName = array_pop($hostParts);
-	} else {
-		$host = exec('hostname'); //TODO: replce it by gethostname php >= 5.3.0
-		$host = explode("-", $host);
-		$wgDevelEnvironmentName = trim($host[1]);
+	if ( !isset( $_SERVER['HTTP_HOST'] ) ) {
+		return '';
 	}
 
-	if(empty($aHostParts)) {
-		return "";
+	// This is an attempt to match "devbox" host names
+	if ( strpos( $_SERVER['HTTP_HOST'], $wgDevDomain) !== false ) {
+		$site = str_replace( '.' . $wgDevDomain, '', $_SERVER['HTTP_HOST'] );
+		return "$site.wikia.com";
 	}
-	array_pop($aHostParts);  // remove developer name
-	$override = implode(".", $aHostParts);
-	return "$override.wikia.com";
+
+	// Otherwise assume it's a wiki and try it anyway
+	return $_SERVER['HTTP_HOST'];
+
 } // end getForcedWikiValue()
 
 
 /**
+ * @param DatabaseBase $db
  * @return array - databases which are available on this cluster
- *                 use the writable devbox server instead of the production slaves.
+ *					  use the writable devbox server instead of the production slaves.
  */
-function getDevBoxOverrideDatabases(DatabaseMysql $db){
+function getDevBoxOverrideDatabases(DatabaseBase $db){
 
 	$IGNORE_DBS = array('information_schema', 'mysql', '#mysql50#lost+found', 'wikicities_c2');
 	$retval = array();
 
-	$info = $db->getLBInfo();
-	$connection = mysql_connect($info['host'], $info['user'], $info['password']);
-	$res = mysql_query('SHOW DATABASES', $connection);
-	while ($row = mysql_fetch_object($res)) {
+	$res = $db->query( 'SHOW DATABASES', __METHOD__ );
+
+	while( $row = $res->fetchObject() ) {
 		$retval[] = $row->Database;
 	}
 
@@ -332,7 +329,6 @@ function getHtmlForDatabaseComparisonTool(){
 	// Determine what databases are on this dev-box.
 	global $wgWikiFactoryDB;
 
-	//$db_dev = wfGetDB( DB_MASTER, "dump", $wgDBname );
 	$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
 	$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
 
@@ -382,12 +378,12 @@ function getHtmlForInfo(){
 	global $wgDBname,$wgExternalSharedDB;
 
 	$settings = array(
-		"error_log"            => ini_get('error_log'),
-		"\$IP"                 => $IP,
-		"\$wgScriptPath"       => $wgScriptPath,
-		"\$wgExtensionsPath"   => $wgExtensionsPath,
-		"\$wgCityId"           => $wgCityId,
-		"\$wgDBname"           => $wgDBname,
+		"error_log"				=> ini_get('error_log'),
+		"\$IP"					  => $IP,
+		"\$wgScriptPath"		 => $wgScriptPath,
+		"\$wgExtensionsPath"	=> $wgExtensionsPath,
+		"\$wgCityId"			  => $wgCityId,
+		"\$wgDBname"			  => $wgDBname,
 		"\$wgExternalSharedDB" => $wgExternalSharedDB,
 	);
 	$html .= "<table class='devbox-settings'>\n";
@@ -404,3 +400,25 @@ function getHtmlForInfo(){
 	return $html;
 } // end getHtmlForInfo()
 
+/**
+ * Vary memcache by devbox
+ *
+ * We append wfWikiID() here as wfMemcKey() uses
+ * $wgCachePrefix or wfWikiID() if the first one is not set
+ *
+ * Sessions are shared between devboxes
+ *
+ * E.g. memcached: get(dev-macbre-plpoznan:revisiontext:textid:96888)
+ *
+ * @author macbre
+ * @see PLATFORM-1401
+ * @see https://github.com/Wikia/app/pull/5842
+ */
+$wgHooks['WikiFactory::onExecuteComplete'][] = function() {
+	global $wgCachePrefix, $wgSharedKeyPrefix, $wgDevelEnvironmentName;
+
+	$wgCachePrefix = 'dev-' . $wgDevelEnvironmentName . '-' . wfWikiID(); // e.g. dev-macbre-muppet / dev-macbre-glee / ...
+	$wgSharedKeyPrefix = 'dev-' . $wgDevelEnvironmentName . '-' . $wgSharedKeyPrefix; // e.g. dev-macbre-wikicities
+
+	return true;
+};

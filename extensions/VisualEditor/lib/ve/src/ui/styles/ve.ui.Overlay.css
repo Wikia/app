@@ -1,0 +1,25 @@
+/*!
+ * VisualEditor Overlay styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-overlay {
+	font-family: sans-serif;
+	line-height: 1.5em;
+	font-size: 1em;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.ve-ui-overlay > * {
+	z-index: 1;
+}
+
+.ve-ui-overlay-global {
+	/* Toolbar is z-index 1 */
+	z-index: 2;
+}

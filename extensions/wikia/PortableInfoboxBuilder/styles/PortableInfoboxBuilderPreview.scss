@@ -1,0 +1,55 @@
+@import 'skins/shared/color';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
+
+$empty-header-height: 28px;
+
+// common styles with infoboxes on wikia oasis article
+@include wikiaArticleOverwrites;
+@include commonElementsStyles;
+@include individualElementsStyles;
+
+// Overwrites
+.portable-infobox {
+	color: $color-text;
+	width: $infobox-width;
+
+	// disable infobox background inside infobox builder
+	&.pi-europa {
+		&.pi-background {
+			background-color: transparent;
+		}
+	}
+}
+
+// move infobox background color to items - required for sortable
+.pi-item:not(.pi-secondary-background) {
+	background-color: $infobox-background;
+}
+
+.pi-title,
+.pi-header,
+.pi-data-label {
+	color: inherit;
+}
+
+.pi-data {
+	overflow: visible;
+}
+
+.pi-header {
+	min-height: $empty-header-height;
+
+	&.collapsible {
+		@include collapsibleChevron;
+
+		&:after  {
+			box-sizing: content-box;
+		}
+	}
+}
+
+// use this class inside infobox builder to show article background color in preview
+.article-background-color {
+	background-color: $color-page;
+}

@@ -321,7 +321,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			);
 		}
 		// Wikia - change begin - @author: wladek
-		wfRunHooks( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
+		Hooks::run( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
 		// Wikia - change end
 		return $styles;
 	}
@@ -433,6 +433,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 
 		wfProfileIn( __METHOD__.'-filemtime' );
 		$filesMtime = max( array_map( array( __CLASS__, 'safeFilemtime' ), $files ) );
+		$filesMtime = ResourceLoaderHooks::normalizeTimestamp($filesMtime); // Wikia change - @macbre
 		wfProfileOut( __METHOD__.'-filemtime' );
 		$this->modifiedTime[$context->getHash()] = max(
 			$filesMtime,
@@ -462,10 +463,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				return AssetsManager::getInstance()->getSassLocalURL($path,false);
 				break;
 			default:
-				$url = "{$this->remoteBasePath}/$path";;
-
-				// apply domain sharding
-				$url = wfReplaceAssetServer( $url );
+				$url = "{$this->remoteBasePath}/$path";
 
 				return $url;
 		}
@@ -584,7 +582,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			$js .= $contents . "\n";
 		}
 		// Wikia - change begin - @author: wladek
-		wfRunHooks( 'ResourceLoaderFileModuleConcatenateScripts', array( &$js, $this ) );
+		Hooks::run( 'ResourceLoaderFileModuleConcatenateScripts', array( &$js, $this ) );
 		// Wikia - change end
 		return $js;
 	}
@@ -616,7 +614,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				)
 			);
 		}
-		wfRunHooks( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
+		Hooks::run( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
 		return $styles;
 	}
 
@@ -692,7 +690,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	const FILE_TYPE_REGULAR = 'regular';
 	const FILE_TYPE_SASS = 'sass';
 
-	protected function getFileType( $fileName ) {
+	protected static function getFileType( $fileName ) {
 		$extension = strrchr($fileName,'.');
 		switch ($extension) {
 			case '.scss':
@@ -711,15 +709,14 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				break;
 			case self::FILE_TYPE_SASS:
 				$sassService = SassService::newFromFile($fileName);
-				$params = $context->getRequest()->getVal('sass_params');
-				$params = !empty($params) ? FormatJson::decode($params,true) : array();
+				$params = $context->getSassParams();
 				$sassService->setSassVariables($params);
 				return $sassService->getCss();
 				break;
 		}
 	}
 
-	protected function getFileModificationTime( $fileName ) {
+	protected static function getFileModificationTime( $fileName ) {
 		switch (self::getFileType($fileName)) {
 			case self::FILE_TYPE_REGULAR:
 				return filemtime($fileName);

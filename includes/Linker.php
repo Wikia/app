@@ -191,7 +191,7 @@ class Linker {
 
 		$ret = null;
 		wfProfileIn(__METHOD__.'-hooks');
-		if ( !wfRunHooks( 'LinkBegin', array( $dummy, $target, &$html,
+		if ( !Hooks::run( 'LinkBegin', array( $dummy, $target, &$html,
 		&$customAttribs, &$query, &$options, &$ret ) ) ) {
 			wfProfileOut(__METHOD__.'-hooks');
 			wfProfileOut( __METHOD__ );
@@ -199,8 +199,13 @@ class Linker {
 		}
 		wfProfileOut(__METHOD__.'-hooks');
 
-		# Normalize the Title if it's a special page
-		$target = self::normaliseSpecialPage( $target );
+		// Wikia change
+		// SUS-698: Don't normalise GlobalTitle references to special pages
+		// this returns a local title, and the link works fine without calling this
+		if ( !( $target instanceof GlobalTitle ) ) {
+			# Normalize the Title if it's a special page
+			$target = self::normaliseSpecialPage( $target );
+		}
 
 		# If we don't know whether the page exists, let's find out.
 		wfProfileIn( __METHOD__ . '-checkPageExistence' );
@@ -235,7 +240,7 @@ class Linker {
 
 		$ret = null;
 		wfProfileIn(__METHOD__.'-hooks');
-		if ( wfRunHooks( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
+		if ( Hooks::run( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
 			wfProfileOut(__METHOD__.'-hooks');
 			$ret = Html::rawElement( 'a', $attribs, $html );
 		} else {
@@ -282,7 +287,7 @@ class Linker {
 		global $wgWikiaEnableAutoPageCreateExt;
 		$isAutoPageCreateEnabled =  isset( $wgWikiaEnableAutoPageCreateExt ) && $wgWikiaEnableAutoPageCreateExt == true;
 		//do not add queries to link if this is a link to user page and message wall is enabled
-		if ( $target->isTalkPage() && F::app()->wg->EnableWallExt ) {
+		if ( $target->getNamespace() == NS_USER_TALK && F::app()->wg->EnableWallExt ) {
 			$num = array_search( 'broken', $options );
 			if($num !== false) unset($options[$num]);
 		}
@@ -319,7 +324,7 @@ class Linker {
 
 		//wikia change - start
 		// do not add 'new' class to link to user talk page if wall is enabled
-		if ( $target->isTalkPage() && F::app()->wg->EnableWallExt ) {
+		if ( $target->getNamespace() == NS_USER_TALK && F::app()->wg->EnableWallExt ) {
 			$num = array_search( 'broken', $options );
 			if ( $num !== false ) unset( $options[$num] );
 		}
@@ -463,6 +468,13 @@ class Linker {
 	 * @return string
 	 */
 	private static function fnamePart( $url ) {
+		if (VignetteRequest::isVignetteUrl($url)) {
+			$basename = VignetteRequest::getImageFilename( $url );
+			if ( $basename ) {
+				return $basename;
+			}
+		}
+
 		$basename = strrchr( $url, '/' );
 		if ( false === $basename ) {
 			$basename = $url;
@@ -486,7 +498,7 @@ class Linker {
 			$alt = self::fnamePart( $url );
 		}
 		$img = '';
-		$success = wfRunHooks( 'LinkerMakeExternalImage', array( &$url, &$alt, &$img ) );
+		$success = Hooks::run( 'LinkerMakeExternalImage', array( &$url, &$alt, &$img ) );
 		if ( !$success ) {
 			wfDebug( "Hook LinkerMakeExternalImage changed the output of external image with url {$url} and alt text {$alt} to {$img}\n", true );
 			return $img;
@@ -530,12 +542,11 @@ class Linker {
 	 * @param $widthOption: Used by the parser to remember the user preference thumbnailsize
 	 * @return String: HTML for an image, with links, wrappers, etc.
 	 */
-	public static function makeImageLink2( Title $title, $file, $frameParams = array(),
-		$handlerParams = array(), $time = false, $query = "", $widthOption = null )
+	public static function makeImageLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "", $widthOption = null )
 	{
 		$res = null;
 		$dummy = new DummyLinker;
-		if ( !wfRunHooks( 'ImageBeforeProduceHTML', array( &$dummy, &$title,
+		if ( !Hooks::run( 'ImageBeforeProduceHTML', array( &$dummy, &$title,
 			&$file, &$frameParams, &$handlerParams, &$time, &$res ) ) ) {
 			return $res;
 		}
@@ -602,7 +613,12 @@ class Linker {
 			}
 		}
 
-		if ( isset( $fp['thumbnail'] ) || isset( $fp['manualthumb'] ) || isset( $fp['framed'] ) ) {
+		if (
+			isset( $fp['thumbnail'] )
+			|| isset( $fp['manualthumb'] )
+			|| isset( $fp['framed'] )
+			|| WikiaFileHelper::isVideoFile( $file ) // wikia change
+		) {
 			global $wgContLang;
 			# Create a thumbnail. Alignment depends on language
 			# writing direction, # right aligned for left-to-right-
@@ -664,7 +680,12 @@ class Linker {
 			 * Wikia change start
 			 * @author Federico
 			 */
-			$origHTML = $s = $thumb->toHtml( $params );
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+				$origHTML = $s = $thumb->toHtml( $params );
+			} else {
+				$origHTML = $s = $thumb->renderView( $params );
+			}
+
 			/**
 			 * Wikia change end
 			 */
@@ -674,8 +695,10 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: Federico "Lox" Lucignano */
-		/* Give extensions the ability to add HTML to full size unframed images */
-		wfRunHooks( 'ImageAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, $origHTML, &$s ) );
+		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			/* Give extensions the ability to add HTML to full size unframed images */
+			Hooks::run( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
+		}
 		/* Wikia change end */
 
 		return str_replace( "\n", ' ', $prefix . $s . $postfix );
@@ -684,8 +707,9 @@ class Linker {
 	/**
 	 * Get the link parameters for MediaTransformOutput::toHtml() from given
 	 * frame parameters supplied by the Parser.
-	 * @param $frameParams The frame parameters
-	 * @param $query An optional query string to add to description page links
+	 * @param array $frameParams The frame parameters
+	 * @param string $query An optional query string to add to description page links
+	 * @return array
 	 */
 	private static function getImageLinkMTOParams( $frameParams, $query = '' ) {
 		$mtoParams = array();
@@ -708,6 +732,7 @@ class Linker {
 		 * Allow MediaTransformOutput subclasses know if there's a caption
 		 */
 		$mtoParams['caption'] = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
+
 		/**
 		 * Wikia change end
 		 */
@@ -724,8 +749,9 @@ class Linker {
 	 * @param $params Array
 	 * @param $framed Boolean
 	 * @param $manualthumb String
+	 * @return mixed
 	 */
-	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt,
+	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt = '',
 		$align = 'right', $params = array(), $framed = false , $manualthumb = "" )
 	{
 		$frameParams = array(
@@ -751,8 +777,7 @@ class Linker {
 	 * @param string $query
 	 * @return mixed
 	 */
-	public static function makeThumbLink2( Title $title, $file, $frameParams = array(),
-		$handlerParams = array(), $time = false, $query = "" )
+	public static function makeThumbLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "" )
 	{
 		global $wgStylePath, $wgContLang;
 		$exists = $file && $file->exists();
@@ -774,7 +799,7 @@ class Linker {
 		$thumb = false;
 
 		if ( !$exists ) {
-			$outerWidth = $hp['width'] + 2;
+			$width = $hp['width'];
 		} else {
 			if ( isset( $fp['manualthumb'] ) ) {
 				# Use manually specified thumbnail
@@ -796,7 +821,7 @@ class Linker {
 				$srcWidth = $file->getWidth( $page );
 
 				/* Wikia change start - Jakub */
-				F::app()->runHook( 'LinkerMakeThumbLink2FileOriginalSize', array( $file, &$srcWidth ) );
+				Hooks::run( 'LinkerMakeThumbLink2FileOriginalSize', [ $file, &$srcWidth ] );
 				/* Wikia change end */
 
 				if ( $srcWidth && !$file->mustRender() && $hp['width'] > $srcWidth ) {
@@ -806,98 +831,64 @@ class Linker {
 			}
 
 			if ( $thumb ) {
-				$outerWidth = $thumb->getWidth() + 2;
+				$width = $thumb->getWidth();
 			} else {
-				$outerWidth = $hp['width'] + 2;
+				$width = $hp['width'];
 			}
 		}
 
 		# ThumbnailImage::toHtml() already adds page= onto the end of DjVu URLs
 		# So we don't need to pass it here in $query. However, the URL for the
-		# zoom icon still needs it, so we make a unique query for it. See bug 14771
+		# zoom/file page icon still needs it, so we make a unique query for it. See bug 14771
 		$url = $title->getLocalURL( $query );
 		if ( $page ) {
 			$url = wfAppendQuery( $url, 'page=' . urlencode( $page ) );
 		}
 
-		$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
-
-		/**
-		 * Wikia change begin - author Federico
-		 * allow access tot he $params variable
-		 */
 		$params = array();
 		$origHTML = null;
-		/**
-		 * Wikia change end
-		 */
 
+		/* Wikia change/refactor start - @author Liz */
+		// TODO: Look into making this a separate function
 		if ( !$exists ) {
-			/**
-			 * Wikia change start
-			 * @author Federico
-			 */
 			$origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
-			$s .= $origHTML;
-			/**
-			 * Wikia change end
-			 */
-
-			$zoomIcon = '';
 		} elseif ( !$thumb ) {
-			/**
-			 * Wikia change start
-			 * @author Federico
-			 */
 			$origHTML = htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
-			$s .= $origHTML;
-			/**
-			 * Wikia change end
-			 */
-
-			$zoomIcon = '';
 		} else {
 			$params = array(
-				'alt' => $fp['alt'],
-				'title' => $fp['title'],
-				'img-class' => 'thumbimage' );
+				'alt'        => $fp['alt'],
+				'title'      => $fp['title'],
+				'img-class'  => 'thumbimage',
+				'align'      => $fp['align'],
+				'outerWidth' => $width,
+				'file'       => $file,
+				'url'        => $url,
+			);
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
 
-			/**
-			 * Wikia change start
-			 * @author Federico
-			 */
-			$origHTML = $thumb->toHtml( $params );
-			$s .= $origHTML;
-			/**
-			 * Wikia change end
-			 */
-
-			if ( isset( $fp['framed'] ) ) {
-				$zoomIcon = "";
+			// Split rendering between 'wikiamobile' which uses the old non-templated path
+			// vs everything else which should use the new templated controller
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+				$origHTML = $thumb->toHtml( $params );
 			} else {
-				$zoomIcon = Html::rawElement( 'div', array( 'class' => 'magnify' ),
-					Html::rawElement( 'a', array(
-						'href' => $url,
-						'class' => 'internal',
-						'title' => wfMsg( 'thumbnail-more' ) ),
-						Html::element( 'img', array(
-							'src' => $wgStylePath . '/common/images/magnify-clip' . ( $wgContLang->isRTL() ? '-rtl' : '' ) . '.png',
-							'width' => 15,
-							'height' => 11,
-							'alt' => "" ) ) ) );
+				$origHTML = $thumb->renderView( $params );
 			}
 		}
-		$s .= '  <div class="thumbcaption">' . $zoomIcon . $fp['caption'] . "</div></div></div>";
 
-		/* Wikia change begin - @author: macbre */
-		/* Give extensions ability to add HTML to thumbed / framed images */
-		/* @author: wladek - added outerWidth parameter for BugId: 3734 */
-		wfRunHooks( 'ThumbnailAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $params, $zoomIcon, $url,  $time, $origHTML, &$s ) );
-		/* Wikia change end */
+		$isMobile = F::app()->checkSkin( 'wikiamobile' );
 
-		return str_replace( "\n", ' ', $s );
+		if ( $isMobile ) {
+			// Hook only used for mobile now
+			Hooks::run( 'ThumbnailAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$origHTML ) );
+		} else {
+			// Render with controller for desktop
+			$params['html'] = $origHTML;
+			$origHTML = F::app()->renderView( 'ThumbnailController', 'articleBlock', $params );
+		}
+		/* Wikia change/refactor end */
+
+		return str_replace( "\n", ' ', $origHTML );
 	}
 
 	/**
@@ -906,8 +897,8 @@ class Linker {
 	 * @param $title Title object
 	 * @param $label String: link label (plain text)
 	 * @param $query String: query string
-	 * @param $unused1 Unused parameter kept for b/c
-	 * @param $unused2 Unused parameter kept for b/c
+	 * @param string $unused1 Unused parameter kept for b/c
+	 * @param string $unused2 Unused parameter kept for b/c
 	 * @param $time Boolean: a file of a certain timestamp was requested
 	 * @return String
 	 */
@@ -983,10 +974,10 @@ class Linker {
 	/**
 	 * Create a direct link to a given uploaded file.
 	 *
-	 * @param $title Title object.
-	 * @param $html String: pre-sanitized HTML
-	 * @param $time string: MW timestamp of file creation time
-	 * @return String: HTML
+	 * @param Title $title Title object.
+	 * @param string $html pre-sanitized HTML
+	 * @param bool|string $time MW timestamp of file creation time
+	 * @return string HTML
 	 */
 	public static function makeMediaLinkObj( $title, $html = '', $time = false ) {
 		$img = wfFindFile( $title, array( 'time' => $time ) );
@@ -1032,6 +1023,8 @@ class Linker {
 	 * a message key from the link text.
 	 * Usage example: Linker::specialLink( 'Recentchanges' )
 	 *
+	 * @param string $name
+	 * @param string $key
 	 * @return string
 	 */
 	public static function specialLink( $name, $key = '' ) {
@@ -1049,6 +1042,7 @@ class Linker {
 	 * @param $escape Boolean: do we escape the link text?
 	 * @param $linktype String: type of external link. Gets added to the classes
 	 * @param $attribs Array of extra attributes to <a>
+	 * @return string
 	 */
 	public static function makeExternalLink( $url, $text, $escape = true, $linktype = '', $attribs = array() ) {
 		$class = "external";
@@ -1064,7 +1058,7 @@ class Linker {
 			$text = htmlspecialchars( $text );
 		}
 		$link = '';
-		$success = wfRunHooks( 'LinkerMakeExternalLink',
+		$success = Hooks::run( 'LinkerMakeExternalLink',
 			array( &$url, &$text, &$link, &$attribs, $linktype ) );
 		if ( !$success ) {
 			wfDebug( "Hook LinkerMakeExternalLink changed the output of link with url {$url} and text {$text} to {$link}\n", true );
@@ -1078,7 +1072,7 @@ class Linker {
 	 * Make user link (or user contributions for unregistered users)
 	 * @param $userId   Integer: user id in database.
 	 * @param $userName String: user name in database.
-	 * @param $altUserName String: text to display instead of the user name (optional)
+	 * @param $altUserName string|bool text to display instead of the user name (optional)
 	 * @return String: HTML fragment
 	 * @since 1.19 Method exists for a long time. $displayText was added in 1.19.
 	 */
@@ -1123,7 +1117,8 @@ class Linker {
 			// check if the user has an edit
 			$attribs = array();
 			if ( $redContribsWhenNoEdits ) {
-				$count = !is_null( $edits ) ? $edits : User::edits( $userId );
+				$user = User::newFromId( $userId );
+				$count = !is_null( $edits ) || !$user ? $edits : $user->getEditCount();
 				if ( $count == 0 ) {
 					$attribs['class'] = 'new';
 				}
@@ -1140,7 +1135,7 @@ class Linker {
 			$items[] = self::emailLink( $userId, $userText );
 		}
 
-		wfRunHooks( 'UserToolLinksEdit', array( $userId, $userText, &$items ) );
+		Hooks::run( 'UserToolLinksEdit', array( $userId, $userText, &$items ) );
 
 		if ( $items ) {
 			return ' <span class="mw-usertoollinks">(' . $wgLang->pipeList( $items ) . ')</span>';
@@ -1175,7 +1170,7 @@ class Linker {
 			$userText = $userText->getName();
 		}
 
-		wfRunHooks('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
+		Hooks::run('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
 		/** End of Wikia change */
 
 		return $userTalkLink;
@@ -1262,6 +1257,7 @@ class Linker {
 	 * @param $comment String
 	 * @param $title Mixed: Title object (to generate link to the section in autocomment) or null
 	 * @param $local Boolean: whether section links should refer to local page
+	 * @return string
 	 */
 	public static function formatComment( $comment, $title = null, $local = false ) {
 		wfProfileIn( __METHOD__ );
@@ -1684,7 +1680,7 @@ class Linker {
 			. "</ul>\n</td></tr></table>\n";
 
 		/* Create new entry point for JS generated TOC */
-		wfRunHooks('Linker::overwriteTOC', [ &$title, &$toc ]);
+		Hooks::run('Linker::overwriteTOC', [ &$title, &$toc ]);
 
 		return $toc;
 
@@ -1746,7 +1742,7 @@ class Linker {
 
 		/* Wikia change begin - @author: Macbre */
 		$skin = RequestContext::getMain()->getSkin();
-		wfRunHooks( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) );
+		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) );
 		/* Wikia change end */
 
 		return $ret;
@@ -1801,7 +1797,7 @@ class Linker {
 		$query = array(
 			'action' => 'rollback',
 			'from' => $rev->getUserText(),
-			'token' => $wgUser->getEditToken( array( $title->getPrefixedText(), $rev->getUserText() ) ),
+			'token' => $wgUser->getEditToken( [ $title->getPrefixedText(), $rev->getUserText() ] ),
 		);
 		if ( $wgRequest->getBool( 'bot' ) ) {
 			$query['bot'] = '1';
@@ -1809,10 +1805,12 @@ class Linker {
 		}
 		return self::link(
 			$title,
-			wfMsgHtml( 'rollbacklink' ),
-			array( 'title' => wfMsg( 'tooltip-rollback' ) ),
+			wfMessage( 'rollbacklink' )->escaped(),
+			# Wikia change begin
+			[ 'title' => wfMessage( 'tooltip-rollback' ), 'data-action' => 'rollback' ],
+			# Wikia change end
 			$query,
-			array( 'known', 'noclasses' )
+			[ 'known', 'noclasses' ]
 		);
 	}
 

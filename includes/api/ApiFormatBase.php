@@ -33,6 +33,7 @@ abstract class ApiFormatBase extends ApiBase {
 
 	private $mIsHtml, $mFormat, $mUnescapeAmps, $mHelp, $mCleared;
 	private $mBufferResult = false, $mBuffer, $mDisabled = false;
+	private $mMasked;
 
 	/**
 	 * Constructor
@@ -265,18 +266,27 @@ See <a href='https://www.mediawiki.org/wiki/API'>complete documentation</a>, or
 
 		// encode all comments or tags as safe blue strings
 		$text = preg_replace( '/\&lt;(!--.*?--|.*?)\&gt;/', '<span style="color:blue;">&lt;\1&gt;</span>', $text );
-		// identify URLs
-		$protos = wfUrlProtocolsWithoutProtRel();
-		// This regex hacks around bug 13218 (&quot; included in the URL)
-		$text = preg_replace( "#(($protos).*?)(&quot;)?([ \\'\"<>\n]|&lt;|&gt;|&quot;)#", '<a href="\\1">\\1</a>\\3\\4', $text );
 		// identify requests to api.php
-		$text = preg_replace( "#api\\.php\\?[^ <\n\t]+#", '<a href="\\0">\\0</a>', $text );
+		$text = preg_replace( '#^(\s*)(api\.php\?[^ <\n\t]+)$#m', '\1<a href="\2">\2</a>', $text );
 		if ( $this->mHelp ) {
 			// make strings inside * bold
 			$text = preg_replace( "#\\*[^<>\n]+\\*#", '<b>\\0</b>', $text );
 			// make strings inside $ italic
 			$text = preg_replace( "#\\$[^<>\n]+\\$#", '<b><i>\\0</i></b>', $text );
 		}
+
+		// Armor links (bug 61362)
+		$this->mMasked = array();
+		$text = preg_replace_callback( '#<a .*?</a>#', array( $this, 'armorLinkCallback' ), $text );
+
+		// identify URLs
+		$protos = wfUrlProtocolsWithoutProtRel();
+		// This regex hacks around bug 13218 (&quot; included in the URL)
+		$text = preg_replace( "#(($protos).*?)(&quot;)?([ \\'\"<>\n]|&lt;|&gt;|&quot;)#", '<a href="\\1">\\1</a>\\3\\4', $text );
+
+		// Unarmor links
+		$text = preg_replace_callback( '#<([0-9a-f]{40})>#', array( $this, 'unarmorLinkCallback' ), $text );
+		$this->mMasked = null;
 
 		/**
 		 * Temporary fix for bad links in help messages. As a special case,
@@ -289,6 +299,17 @@ See <a href='https://www.mediawiki.org/wiki/API'>complete documentation</a>, or
 		}
 
 		return $text;
+	}
+
+	private function armorLinkCallback( $matches ) {
+		$sha = sha1( $matches[0] );
+		$this->mMasked[$sha] = $matches[0];
+		return "<$sha>";
+	}
+
+	private function unarmorLinkCallback( $matches ) {
+		$sha = $matches[1];
+		return isset( $this->mMasked[$sha] ) ? $this->mMasked[$sha] : $matches[0];
 	}
 
 	public function getExamples() {

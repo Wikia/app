@@ -14,11 +14,12 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Places',
-	'version' => '2.0',
+	'version' => '2.2',
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
-	'descriptionmsg' => 'places-desc'
+	'descriptionmsg' => 'places-desc',
+	'url' => 'https://github.com/Wikia/app/blob/dev/extensions/wikia/Places/README.md'
 );
 
 $dir = dirname( __FILE__ );
@@ -39,7 +40,10 @@ $wgAutoloadClasses['PlacesController'] =  $dir . '/PlacesController.class.php';
 $wgAutoloadClasses['PlacesCategoryController'] =  $dir . '/PlacesCategoryController.class.php';
 $wgAutoloadClasses['PlacesEditorController'] =  $dir . '/PlacesEditorController.class.php';
 $wgAutoloadClasses['PlacesSpecialController'] =  $dir . '/PlacesSpecialController.class.php';
+$wgAutoloadClasses['NearbySpecialController'] =  $dir . '/NearbySpecialController.class.php';
+
 $wgSpecialPages['Places'] = 'PlacesSpecialController';
+$wgSpecialPages['Nearby'] = 'NearbySpecialController';
 
 /**
  * models
@@ -59,7 +63,6 @@ $wgHooks['BeforePageDisplay'][] = 'PlacesHooks::onBeforePageDisplay';
 $wgHooks['ArticleSaveComplete'][] = 'PlacesHooks::onArticleSaveComplete';
 $wgHooks['RTEUseDefaultPlaceholder'][] = 'PlacesHooks::onRTEUseDefaultPlaceholder';
 $wgHooks['OutputPageBeforeHTML'][] = 'PlacesHooks::onOutputPageBeforeHTML';
-$wgHooks['PageHeaderIndexExtraButtons'][] = 'PlacesHooks::onPageHeaderIndexExtraButtons';
 $wgHooks['EditPage::showEditForm:initial'][] = 'PlacesHooks::onShowEditForm';
 
 // for later
@@ -74,6 +77,7 @@ $wgAPIModules['places'] = 'WikiaApiPlaces';
  * messages
  */
 $wgExtensionMessagesFiles['Places'] = $dir . '/Places.i18n.php';
+$wgExtensionMessagesFiles['PlacesAliases'] = $dir . '/Places.alias.php';
 
 JSMessages::registerPackage('Places', array(
 	'places-toolbar-button-*',
@@ -84,9 +88,19 @@ JSMessages::registerPackage('Places', array(
 JSMessages::registerPackage('PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
 JSMessages::registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
 
-/*
- * user rights
+/**
+ * Resources Loader module
  */
-$wgAvailableRights[] = 'places-enable-category-geolocation';
-$wgGroupPermissions['*']['places-enable-category-geolocation'] = false;
-$wgGroupPermissions['sysop']['places-enable-category-geolocation'] = true;
+$wgResourceModules['ext.wikia.Nearby'] = [
+	'scripts' => [
+		'js/SpecialNearby.js',
+	],
+	'styles' => [
+		'css/SpecialNearby.css'
+	],
+	'dependencies' => [
+		'mediawiki.api'
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Places'
+];

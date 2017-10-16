@@ -1,203 +1,257 @@
-(function($) {
+/* global Wall:true, Observable */
+(function ($, mw) {
+	'use strict';
 
-Wall.BackendBridge = $.createClass(Observable, {
-	pageController: 'WallExternalController',
+	Wall.BackendBridge = $.createClass(Observable, {
+		pageController: 'WallExternalController',
+		bucky: window.Bucky('Wall.BackendBridge'),
 
-	loadPage: function(page, pagenumber, callback) {
-		$.nirvana.sendRequest({
-			controller: this.pageController,
-			method: 'getCommentsPage',
-			format: 'json',
-			data: {
-				page: pagenumber,
-				pagetitle: page['title'],
-				pagenamespace: page['namespace']
-			},
-			callback: this.proxy(function(data) {
-				var html = data.html,
-					page = $('.comments, .ThreadList', html),
-					pagination = $('.Pagination', html);
+		loadPage: function (page, pagenumber, callback) {
+			this.bucky.timer.start('loadPage');
 
-				if ($.isFunction(callback)) {
-					callback(page, pagination);
+			$.nirvana.sendRequest({
+				controller: this.pageController,
+				method: 'getCommentsPage',
+				format: 'json',
+				data: {
+					page: pagenumber,
+					pagetitle: page.title,
+					pagenamespace: page.namespace
+				},
+				callback: this.proxy(function (data) {
+					var html = data.html,
+						page = $('.comments, .ThreadList', html),
+						pagination = $('.Pagination', html);
+
+					if ($.isFunction(callback)) {
+						callback(page, pagination);
+					}
+
+					this.fire('pageLoaded', page, pagination);
+					this.bucky.timer.stop('loadPage');
+				})
+			});
+		},
+
+		/**
+		 * relatedTopics - nullable or empty array
+		 * boardId - nullable
+		 */
+		postNew: function (page, title, body, convertToFormat, notifyEveryone, relatedTopics, successCallback, failCallback) {
+			this.bucky.timer.start('postNew');
+
+			$.nirvana.sendRequest({
+				controller: this.pageController,
+				method: 'postNewMessage',
+				type: 'POST',
+				data: {
+					body: body,
+					messagetitle: title,
+					notifyeveryone: notifyEveryone,
+					pagetitle: page.title,
+					pagenamespace: page.namespace,
+					convertToFormat: convertToFormat,
+					relatedTopics: relatedTopics,
+					token: mw.user.tokens.get('editToken')
 				}
-
-				this.fire('pageLoaded', page, pagination);
-			})
-		});
-	},
-
-	/**
-	 * relatedTopics - nullable or empty array
-	 * boardId - nullable
-	 */
-	postNew: function(page, title, body, convertToFormat, notifyEveryone, relatedTopics, callback) {
-		$.nirvana.sendRequest({
-			controller: this.pageController,
-			method: 'postNewMessage',
-			data: {
-				body: body,
-				messagetitle: title,
-				notifyeveryone: notifyEveryone,
-				pagetitle: page['title'],
-				pagenamespace: page['namespace'],
-				convertToFormat: convertToFormat,
-				relatedTopics: relatedTopics
-			},
-			callback: this.proxy(function(data) {
+			}).done(this.proxy(function (data) {
 				var newmsg = $(data.message);
 
-				if ($.isFunction(callback)) {
-					callback(newmsg);
+				if ($.isFunction(successCallback)) {
+					successCallback(newmsg);
 				}
-
 				this.fire('newPosted', newmsg);
-			})
-		});
-	},
+			})).fail(this.proxy(function (data) {
+				if ($.isFunction(failCallback)) {
+					failCallback(data);
+				}
+			})).always(this.proxy(function(){
+				this.bucky.timer.stop('postNew');
+			}));
+		},
 
-	postReply: function(page, body, convertToFormat, parent, quotedFrom, callback) {
-		$.nirvana.sendRequest({
-			controller: this.pageController,
-			method: 'replyToMessage',
-			data: {
-				body: body,
-				parent: parent,
+		postReply: function (page, body, convertToFormat, parent, quotedFrom, successCallback, failCallback) {
+			this.bucky.timer.start('postReply');
 
-				pagetitle: page['title'],
-				pagenamespace: page['namespace'],
-				convertToFormat: convertToFormat,
-				quotedFrom: quotedFrom || ''
-			},
-			callback: this.proxy(function(data) {
+			$.nirvana.sendRequest({
+				controller: this.pageController,
+				method: 'replyToMessage',
+				type: 'POST',
+				data: {
+					body: body,
+					parent: parent,
+
+					pagetitle: page.title,
+					pagenamespace: page.namespace,
+					convertToFormat: convertToFormat,
+					quotedFrom: quotedFrom || '',
+					token: mw.user.tokens.get('editToken')
+				}
+			}).done(this.proxy(function (data) {
 				var newMessage = $(data.message);
 
-				if ($.isFunction(callback)) {
-					callback(newMessage);
+				if ($.isFunction(successCallback)) {
+					successCallback(newMessage);
 				}
 
 				this.fire('postReply', newMessage);
-			})
-		});
-	},
+			})).fail(this.proxy(function (data) {
+				if ($.isFunction(failCallback)) {
+					failCallback(data);
+				}
+			})).always(this.proxy(function () {
+				this.bucky.timer.stop('postReply');
+			}));
+		},
 
-	loadEditData: function(page, id, mode, convertToFormat, callback) {
-		this.fire('beforeEditDataLoad', id);
+		loadEditData: function (page, id, mode, convertToFormat, callback) {
+			this.bucky.timer.start('loadEditData');
 
-		$.nirvana.sendRequest({
-			controller: this.pageController,
-			method: 'editMessage',
-			format: 'json',
-			data: {
-				msgid: id,
-				pagetitle: page['title'],
-				pagenamespace: page['namespace'],
-				convertToFormat: convertToFormat
-			},
-			callback: this.proxy(function(data) {
+			this.fire('beforeEditDataLoad', id);
 
-				// backend error lets reload the page
-				if (data.status == false && data.forcereload == true) {
-					var url = window.location.href;
+			$.nirvana.sendRequest({
+				controller: this.pageController,
+				method: 'editMessage',
+				format: 'json',
+				data: {
+					msgid: id,
+					pagetitle: page.title,
+					pagenamespace: page.namespace,
+					convertToFormat: convertToFormat
+				},
+				callback: this.proxy(function (data) {
 
-					if (url.indexOf('#') >= 0) {
-						url = url.substring(0, url.indexOf('#'));
+					// backend error lets reload the page
+					if (data.status === false && data.forcereload === true) {
+						var url = window.location.href;
+
+						if (url.indexOf('#') >= 0) {
+							url = url.substring(0, url.indexOf('#'));
+						}
+
+						// we're about to navigate away so let's send bucky data right away
+						this.bucky.timer.stop('loadEditData');
+						this.bucky.flush();
+						window.location.href = url + '?reload=' + Math.floor(Math.random() * 999);
+						return;
 					}
 
-					window.location.href = url + '?reload=' + Math.floor(Math.random() * 999);
+					data.mode = mode;
+					data.id = id;
+
+					if ($.isFunction(callback)) {
+						callback(data);
+					}
+
+					this.fire('editDataLoaded', data);
+
+					// resolve profiling in case we didn't navigate away
+					this.bucky.timer.stop('loadEditData');
+				})
+			});
+		},
+
+		saveEdit: function (page, id, title, body, isreply, convertToFormat, successCallback, failCallback) {
+			this.bucky.timer.start('saveEdit');
+
+			$.nirvana.sendRequest({
+				controller: this.pageController,
+				method: 'editMessageSave',
+				format: 'json',
+				type: 'POST',
+				data: {
+					msgid: id,
+					newtitle: title,
+					newbody: body,
+					isreply: isreply,
+					pagetitle: page.title,
+					pagenamespace: page.namespace,
+					convertToFormat: convertToFormat,
+					token: mw.user.tokens.get('editToken')
 				}
-
-				data.mode = mode;
-				data.id = id;
-
-				if ($.isFunction(callback)) {
-					callback(data);
+			}).done(this.proxy(function (data) {
+				if ($.isFunction(successCallback)) {
+					successCallback(data);
 				}
-
-				this.fire('editDataLoaded', data);
-			})
-		});
-	},
-
-	saveEdit: function(page, id, title, body, isreply, convertToFormat, callback) {
-		$.nirvana.sendRequest({
-			controller: this.pageController,
-			method: 'editMessageSave',
-			format: 'json',
-			data: {
-				msgid: id,
-				newtitle: title,
-				newbody: body,
-				isreply: isreply,
-				pagetitle: page['title'],
-				pagenamespace: page['namespace'],
-				convertToFormat: convertToFormat
-			},
-			callback: this.proxy(function(data) {
-				if ($.isFunction(callback)) {
-					callback(data);
-				}
-
 				this.fire('editSaved', data);
-			})
-		});
-	},
-
-	switchWatch: function(element, isWatched, commentId, callback) {
-		$.nirvana.sendRequest({
-			controller: this.pageController,
-			method: 'switchWatch',
-			format: 'json',
-			data: {
-				isWatched: isWatched,
-				commentId: commentId
-			},
-			callback: this.proxy(function(data) {
-				if ($.isFunction(callback)) {
-					callback(element, data);
+			})).fail(this.proxy(function (data) {
+				if ($.isFunction(failCallback)) {
+					failCallback(data);
 				}
+			})).always(this.proxy(function () {
+				this.bucky.timer.stop('saveEdit');
+			}));
+		},
 
-				this.fire('afterSwitchWatch', element, data);
-			})
-		});
-	},
+		switchWatch: function (element, isWatched, commentId, callback) {
+			var buckyString = 'switchWatch.' + (isWatched ? 'unfollow' : 'follow');
+			this.bucky.timer.start(buckyString);
 
-	notifyEveryone: function(msgid, dir, callback) {
-		$.nirvana.sendRequest({
-			controller: this.pageController,
-			method: 'notifyEveryoneSave',
-			format: 'json',
-			data: {
-				msgid: msgid,
-				dir: dir
-			},
-			callback: this.proxy(function(data) {
-				if ($.isFunction(callback)) {
-					callback(data);
-				}
+			$.nirvana.sendRequest({
+				controller: this.pageController,
+				method: 'switchWatch',
+				format: 'json',
+				type: 'POST',
+				data: {
+					isWatched: isWatched,
+					commentId: commentId,
+					token: mw.user.tokens.get('editToken')
+				},
+				callback: this.proxy(function (data) {
+					if ($.isFunction(callback)) {
+						callback(element, data);
+					}
 
-				this.fire('notifyEveryoneSaved', data);
-			})
-		});
-	},
-	
-	updateTopics: function(msgid, relatedTopics, callback) {
-		$.nirvana.sendRequest({
-			controller: this.pageController,
-			method: 'updateTopics',
-			format: 'json',
-			data: {
-				msgid: msgid,
-				relatedTopics: relatedTopics
-			},
-			type: 'post',
-			callback: function(json) {
-				if ($.isFunction(callback)) {
-					callback(json);
-				}
-			}
-		});
-	}
-});
+					this.fire('afterSwitchWatch', element, data);
+					this.bucky.timer.stop(buckyString);
+				})
+			});
+		},
 
-})(jQuery);
+		notifyEveryone: function (msgid, dir, callback) {
+			this.bucky.timer.start('notifyEveryone');
+
+			$.nirvana.sendRequest({
+				controller: this.pageController,
+				method: 'notifyEveryoneSave',
+				format: 'json',
+				type: 'POST',
+				data: {
+					msgid: msgid,
+					dir: dir,
+					token: mw.user.tokens.get('editToken')
+				},
+				callback: this.proxy(function (data) {
+					if ($.isFunction(callback)) {
+						callback(data);
+					}
+
+					this.fire('notifyEveryoneSaved', data);
+					this.bucky.timer.stop('notifyEveryone');
+				})
+			});
+		},
+
+		updateTopics: function (msgid, relatedTopics, callback) {
+			this.bucky.timer.start('updateTopics');
+
+			$.nirvana.sendRequest({
+				controller: this.pageController,
+				method: 'updateTopics',
+				format: 'json',
+				type: 'POST',
+				data: {
+					msgid: msgid,
+					relatedTopics: relatedTopics,
+					token: mw.user.tokens.get('editToken')
+				},
+				callback: this.proxy(function (json) {
+					if ($.isFunction(callback)) {
+						callback(json);
+					}
+					this.bucky.timer.stop('updateTopics');
+				})
+			});
+		}
+	});
+})(jQuery, mediaWiki);

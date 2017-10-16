@@ -13,7 +13,6 @@
 #answers_ask input.header_field,
 #tabAsk input.header_field,
 #tab input.header_field {
-	-moz-border-radius:10px 10px 10px 10px;
 	-webkit-border-radius:10px 10px 10px 10px;
 	border:3px solid #E0EAF8;
 	font-family:"Helvetica Neue",Helvetica,Arial,default;
@@ -53,7 +52,7 @@
 
 /* Category field */
 
-.mainpage #WikiaArticleCategories {
+.mainpage #articleCategories {
 	        display: none;
 }
 
@@ -87,7 +86,6 @@
 }
 
 #question_box {
-	-moz-border-radius: 10px 10px 0px 0px;
 	-webkit-border-radius: 10px 10px 0px 0px;
 	border-left: 2px solid #E0EAF8;
 	border-right: 2px solid #E0EAF8;
@@ -100,7 +98,6 @@
 }
 
 #answer_box {
-	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	margin-bottom: 20px;
 	padding-bottom: 35px; /* overcome float:right" in save button */
@@ -112,7 +109,6 @@
 }
 
 #article_save_button {
-	-moz-box-shadow:none;
 	background: #2966B8;
 	border: 1px solid;
 	color: #fff;
@@ -177,7 +173,6 @@
 
 
 .qa_box {
-	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-style: solid;
 	border-width: 1px;
@@ -194,7 +189,6 @@
 }
 
 #qa_toolbox_button {
-	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	background-color: #fff;
 	border: 1px solid #A9C5EB;
@@ -322,7 +316,6 @@
 #answers_article .ui-corner-bottom,
 #answers_article .ui-corner-all,
 #answers_article .ui-corner-top {
-	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
 }
 
@@ -364,7 +357,6 @@
 
 /* Related questions */
 #related_questions {
-	-moz-border-radius: 10px 10px 10px 10px;
 	-webkit-border-radius:10px 10px 10px 10px;
 	padding: 10px;
 }
@@ -415,7 +407,6 @@ div.article-comm-input-text textarea {
 #search_box {
 	background-image: none;
 	padding: 0px;
-	-moz-border-radius: 5px; 
 	-webkit-border-radius: 5px;
 }
 
@@ -639,7 +630,6 @@ div.userInfoNoAvatar .userPoints {
 }
 
 .action-right a:link, .action-right a:visited {
-	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 	background: #6094DB;
 	color: #FFF;
@@ -937,7 +927,6 @@ body.page-Wikianswers #contentSub,
 div.noarticletext,
 #wikisticky_browser, 
 .wikisticky_special_link,
-.WidgetTopVoted,
 .WidgetWatchlist,
 .WidgetWikiPage,
 .WidgetTopContent,

@@ -4,10 +4,14 @@ namespace {
 
 	class MockNamespacedFunctionsTest extends WikiaBaseTest {
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05464 ms
+		 */
 		public function testFunctionNameSpec() {
 			$expValue = 2;
 
-			$this->getGlobalFunctionMock("\\NamespacedFunctions\\named1")
+			$this->getGlobalFunctionMock("NamespacedFunctions\\named1")
 				->expects($this->any())
 				->method("named1")
 				->will($this->returnValue($expValue));
@@ -21,10 +25,14 @@ namespace {
 			$this->assertEquals($expValue,\NamespacedFunctions\named2(),'without \\ at the beginning');
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05561 ms
+		 */
 		public function testNamespacedFunctionsMocks() {
 			$expValue = 2;
 
-			$this->getGlobalFunctionMock("\\NamespacedFunctions\\testFunction")
+			$this->getGlobalFunctionMock("NamespacedFunctions\\testFunction")
 				->expects($this->any())
 				->method("testFunction")
 				->will($this->returnValue($expValue));

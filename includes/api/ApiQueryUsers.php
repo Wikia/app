@@ -57,7 +57,7 @@ class ApiQueryUsers extends ApiQueryBase {
 		$this->tokenFunctions = array(
 			'userrights' => array( 'ApiQueryUsers', 'getUserrightsToken' ),
 		);
-		wfRunHooks( 'APIQueryUsersTokens', array( &$this->tokenFunctions ) );
+		Hooks::run( 'APIQueryUsersTokens', array( &$this->tokenFunctions ) );
 		return $this->tokenFunctions;
 	}
 
@@ -84,6 +84,19 @@ class ApiQueryUsers extends ApiQueryBase {
 		$users = (array)$params['users'];
 		$goodNames = $done = array();
 		$result = $this->getResult();
+
+		// Wikia change - begin
+		// @see PLATFORM-1561
+		$ids = (array)$params['ids'];
+
+		foreach( $ids as $id ) {
+			$u = User::newFromId( $id );
+			if ( !$u->isAnon() ) { # do not add anons as IP addresses
+				$users[] = $u->getName();
+			}
+		}
+		// Wikia change - end
+
 		// Canonicalize user names
 		foreach ( $users as $u ) {
 			$n = User::getCanonicalName( $u );
@@ -107,22 +120,17 @@ class ApiQueryUsers extends ApiQueryBase {
 
 		if ( count( $goodNames ) ) {
 			$this->addTables( 'user' );
-			$this->addFields( '*' );
+			$this->addFields( 'user_id' );
 			$this->addWhereFld( 'user_name', $goodNames );
 
-			if ( isset( $this->prop['groups'] ) || isset( $this->prop['rights'] ) ) {
-				$this->addTables( 'user_groups' );
-				$this->addJoinConds( array( 'user_groups' => array( 'LEFT JOIN', 'ug_user=user_id' ) ) );
-				$this->addFields( 'ug_group' );
-			}
-
-			$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
+			// Wikia: there's no point in querying a per-cluster user table for IP blocks
+			#$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
 
 			$data = array();
 			$res = $this->select( __METHOD__ );
 
 			foreach ( $res as $row ) {
-				$user = User::newFromRow( $row );
+				$user = User::newFromId( $row->user_id );
 				$name = $user->getName();
 
 				$data[$name]['userid'] = $user->getId();
@@ -137,14 +145,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['groups'] ) ) {
-					if ( !isset( $data[$name]['groups'] ) ) {
-						$data[$name]['groups'] = self::getAutoGroups( $user );
-					}
-
-					if ( !is_null( $row->ug_group ) ) {
-						// This row contains only one group, others will be added from other rows
-						$data[$name]['groups'][] = $row->ug_group;
-					}
+					$data[$name]['groups'] = $user->getEffectiveGroups();
 				}
 
 				if ( isset( $this->prop['implicitgroups'] ) && !isset( $data[$name]['implicitgroups'] ) ) {
@@ -152,30 +153,53 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['rights'] ) ) {
-					if ( !isset( $data[$name]['rights'] ) ) {
-						$data[$name]['rights'] = User::getGroupPermissions( $user->getAutomaticGroups() );
-					}
-
-					if ( !is_null( $row->ug_group ) ) {
-						$data[$name]['rights'] = array_unique( array_merge( $data[$name]['rights'],
-							User::getGroupPermissions( array( $row->ug_group ) ) ) );
-					}
+					$data[$name]['rights'] = $user->getRights();
 				}
-				if ( $row->ipb_deleted ) {
+				if ( isset( $row->ipb_deleted ) /* Wikia change */ && $row->ipb_deleted ) {
 					$data[$name]['hidden'] = '';
 				}
-				if ( isset( $this->prop['blockinfo'] ) && !is_null( $row->ipb_by_text ) ) {
-					$data[$name]['blockedby'] = $row->ipb_by_text;
-					$data[$name]['blockreason'] = $row->ipb_reason;
-					$data[$name]['blockexpiry'] = $row->ipb_expiry;
+
+				/* Wikia change begin - SUS-92 */
+				if ( isset( $this->prop['blockinfo'] ) || isset( $this->prop['localblockinfo'] ) ) {
+					$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] ) && $this->canViewGlobalBlockInfo();
+					$blockInfo = $user->getBlock( true, false /* don't log in Phalanx stats */, $isGlobalBlockCheck );
+
+					if ( $user->isBlockedGlobally() ) {
+						// SUS-1456: We're performing a global block check, and request is authorized
+						// (internal request from service, or user who can view phalanx)
+
+						// For Phalanx blocks, use separate fields...
+						$data[$name]['phalanxblockedby'] = $blockInfo->getByName();
+						$data[$name]['phalanxblockreason'] = $blockInfo->mReason;
+						$data[$name]['phalanxblockexpiry'] = $blockInfo->getExpiry();
+
+						// reset fields so that we can load info for local block
+						$user->clearBlockInfo();
+
+						// load info for local block and display it in its own fields
+						$localBlockInfo = $user->getBlock( true, false, false /* check only local blocks */ );
+						if ( $localBlockInfo ) {
+							$data[$name]['blockedby'] = $localBlockInfo->getByName();
+							$data[$name]['blockreason'] = $localBlockInfo->mReason;
+							$data[$name]['blockexpiry'] = $localBlockInfo->getExpiry();
+						}
+					} elseif ( $user->isBlocked() ) {
+						// user is not blocked globally, but is blocked locally
+						// or request is not authorized
+
+						$data[$name]['blockedby'] = $blockInfo->getByName();
+						$data[$name]['blockreason'] = $blockInfo->mReason;
+						$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
+					}
 				}
+				/* Wikia change end */
 
 				if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {
 					$data[$name]['emailable'] = '';
 				}
 
 				if ( isset( $this->prop['gender'] ) ) {
-					$gender = $user->getOption( 'gender' );
+					$gender = $user->getGlobalAttribute( 'gender' );
 					if ( strval( $gender ) === '' ) {
 						$gender = 'unknown';
 					}
@@ -246,6 +270,15 @@ class ApiQueryUsers extends ApiQueryBase {
 	}
 
 	/**
+	 * SUS-1472: Check if current request is authorized to view global block information
+	 * (it is internal request or request by staff/VSTF/helper user)
+	 * @return bool
+	 */
+	private function canViewGlobalBlockInfo() {
+		return $this->getRequest()->isWikiaInternalRequest() || $this->getUser()->isAllowed( 'phalanx' );
+	}
+
+	/**
 	* Gets all the groups that a user is automatically a member of (implicit groups)
 	* @param $user User
 	* @return array
@@ -276,6 +309,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				ApiBase::PARAM_ISMULTI => true,
 				ApiBase::PARAM_TYPE => array(
 					'blockinfo',
+					'localblockinfo',
 					'groups',
 					'implicitgroups',
 					'rights',
@@ -286,6 +320,9 @@ class ApiQueryUsers extends ApiQueryBase {
 				)
 			),
 			'users' => array(
+				ApiBase::PARAM_ISMULTI => true
+			),
+			'ids' => array(
 				ApiBase::PARAM_ISMULTI => true
 			),
 			'token' => array(
@@ -308,7 +345,8 @@ class ApiQueryUsers extends ApiQueryBase {
 				'  emailable      - Tags if the user can and wants to receive e-mail through [[Special:Emailuser]]',
 				'  gender         - Tags the gender of the user. Returns "male", "female", or "unknown"',
 			),
-			'users' => 'A list of users to obtain the same information for',
+			'users' => 'A list of user names to obtain the same information for',
+			'ids' => 'A list of user IDs to obtain the same information for',
 			'token' => 'Which tokens to obtain for each user',
 		);
 	}
@@ -318,7 +356,10 @@ class ApiQueryUsers extends ApiQueryBase {
 	}
 
 	public function getExamples() {
-		return 'api.php?action=query&list=users&ususers=brion|TimStarling&usprop=groups|editcount|gender';
+		return [
+			'api.php?action=query&list=users&ususers=brion|TimStarling&usprop=groups|editcount|gender',
+			'api.php?action=query&list=users&usids=1|2&usprop=groups|editcount|gender',
+		];
 	}
 
 	public function getHelpUrls() {

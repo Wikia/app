@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Htt",
+			"Kaustubh",
+			"Mahitgar"
+		]
+	},
+	"browsedata": "डाटा न्याहाळा",
+	"sd_browsedata_choosecategory": "एक वर्ग निवडा",
+	"sd_browsedata_viewcategory": "वर्ग पहा",
+	"sd_browsedata_subcategory": "उपवर्ग",
+	"sd_browsedata_other": "इतर",
+	"sd_browsedata_none": "(काहीही नाही)",
+	"sd_browsedata_filterbyvalue": "या किंमती प्रमाणे फिल्टर करा",
+	"sd_browsedata_filterbysubcategory": "या उपवर्गा प्रमाणे फिल्टर करा",
+	"sd_browsedata_otherfilter": "या फिल्टरच्या दुसर्‍या किंमतीसाठीची पाने दाखवा",
+	"sd_browsedata_nonefilter": "या फिल्टरच्या शून्य किंमतीसाठीची पाने दाखवा",
+	"sd_browsedata_or": "किंवा",
+	"sd_browsedata_removefilter": "हा फिल्टर काढा",
+	"sd_browsedata_removesubcategoryfilter": "हा उपवर्ग फिल्टर काढा",
+	"sd_browsedata_resetfilters": "फिल्टर पूर्ववत करा",
+	"sd_browsedata_addanothervalue": "दुसरी किंमत वाढवा",
+	"sd_createfilter_usepropertyvalues": "या फिल्टरकरीता या गुणधर्माच्या सर्व किंमती वापरा",
+	"sd_createfilter_usecategoryvalues": "या फिल्टरकरीता या वर्गातून किंमती मिळवा:",
+	"sd_createfilter_requirefilter": "हा फिल्टर दर्शविण्याआधी जर दुसरा फिल्टर वापरायचा असेल तर त्याचे नाव:"
+}

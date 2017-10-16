@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Crazymadlover",
+			"Omnipaedista"
+		]
+	},
+	"specialpages-group-sf_group": "Σημασιολογικοὶ Τύποι",
+	"createproperty": "Ποιεῖν ἰδιότητα τινά",
+	"sf_createproperty_propname": "Ὄνομα ἰδιότητος:",
+	"sf_createproperty_proptype": "Τύπος:",
+	"templates": "Πρότυπα",
+	"sf_templates_definescat": "ὁρίζει κατηγορίαν: $1",
+	"createtemplate": "Ποιεῖν πρότυπόν τι",
+	"sf_createtemplate_namelabel": "Ὄνομα προτύπου:",
+	"sf_createtemplate_fieldname": "Ὄνομα πεδίου:",
+	"sf_createtemplate_addfield": "Προστιθέναι πεδίον",
+	"sf_createtemplate_deletefield": "Σβεννύναι",
+	"forms": "Τύποι",
+	"sf_forminputs_mandatory": "Ὑποχρεωτικόν",
+	"createform": "Ποιεῖν τύπον τινά",
+	"sf_createform_template": "Πρότυπον:",
+	"sf_createform_field": "Πεδίον:",
+	"sf_createform_inputtypedefault": "(προκαθωρισμένη)",
+	"sf_createform_hidden": "Κεκρυμμένη",
+	"sf_createform_add": "Προστιθέναι",
+	"sf_createcategory_name": "Ὄνομα κατηγορίας:",
+	"sf_formstart_createoredit": "Ποιεῖν ἢ μεταγράφειν",
+	"sf_formedit_createtitle": "Ποιεῖν $1: $2",
+	"sf_viewform": "Ὁρᾶν τύπον",
+	"sf_editsource": "Μεταγράφειν πηγήν",
+	"sf_formedit_edittitle": "Μεταγράφειν $1: $2",
+	"sf_formedit_remove": "Άφαιρεῖν",
+	"sf_formedit_none": "Οὐδέν",
+	"runquery": "Ἐκτελεῖν πεῦσιν",
+	"sf_runquery_title": "Ἐκτελεῖν πεῦσιν: $1",
+	"uploadwindow": "Ἐπιφορτίζειν θυρίδα",
+	"sf_form_freetextlabel": "Ἐλεύθερον κείμενον",
+	"sf_blank_namespace": "Κύριον"
+}

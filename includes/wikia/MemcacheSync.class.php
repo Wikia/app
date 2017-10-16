@@ -9,11 +9,14 @@
  */
 
 class MemcacheSync{
+
+	use Wikia\Logger\Loggable;
+
 	/** @var MemcachedPhpBagOStuff */
 	var $memc = null;
 	var $key;
 	var $lockKey;
-	var $instance; 
+	var $instance;
 	function __construct( $cache, $key ) {
 		$this->memc = $cache;
 		if(empty($key)) {
@@ -22,6 +25,12 @@ class MemcacheSync{
 		$this->key = $key;
 		$this->lockKey = wfSharedMemcKey('MemcacheSyncLock', $key);
 		$this->instance = uniqid ('', true);
+	}
+
+	protected function getLoggerContext() {
+		return [
+			'key' => $this->key,
+		];
 	}
 
 	function lock($time = 5) {
@@ -50,12 +59,14 @@ class MemcacheSync{
 		return $this->memc->get($this->lockKey, false);
 	}
 
-	function get($val = null) {
-		return $this->memc->get($this->key, $val);
+	function get() {
+		$this->debug( __METHOD__, [ 'exception' => new Exception() ] );
+		return $this->memc->get($this->key);
 	}
 
 	function set($val, $time = 0) {
 		if($this->isMy()) {
+			$this->debug( __METHOD__, [ 'exception' => new Exception() ] );
 			$this->memc->set($this->key, $val, $time);
 			return true;
 		} else {
@@ -64,6 +75,51 @@ class MemcacheSync{
 	}
 
 	function delete() {
+		$this->debug( __METHOD__, [ 'exception' => new Exception() ] );
 		$this->memc->delete($this->key);
+	}
+
+	protected function randomSleep( $max = 20 ) {
+		$this->debug( __METHOD__, [ 'exception' => new Exception() ] );
+		usleep( rand( 1, $max*1000 ) );
+	}
+
+	/**
+	 * Modify the shared memcache entry after locking it. After this function gets the lock, it calls the $getDataCallback,
+	 * which should return the value to be put into the memcache. In case the lock cannot be acquired, $lockFailCallback
+	 * is called
+	 * If the $getDataCallback returns null or false, no memcache data is set
+	 * @param $getDataCallback - callback returning the data to be put in the memcache entry.
+	 * @param $lockFailCallback - callback to execute on failure
+	 */
+	public function lockAndSetData( $getDataCallback, $lockFailCallback ) {
+		// Try to update the data $count times before giving up
+		$count = 5;
+		while ( $count-- ) {
+			if( $this->lock() ) {
+				$data = $getDataCallback();
+				$success = false;
+				// Make sure we have data
+				if ( isset( $data ) ) {
+					// See if we can set it successfully
+					if ( $this->set( $data ) ) {
+						$success = true;
+					}
+				} else {
+					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$this->unlock();
+				if ( $success ) {
+					break;
+				}
+			} else {
+				$this->randomSleep( $count );
+			}
+		}
+		// If count is -1 it means we left the above loop failing to update
+		if ( $count == -1 ) {
+			$lockFailCallback();
+		}
 	}
 }

@@ -2,21 +2,20 @@ $height-designer: 250px;
 $height-toolbar: 45px;
 $color-borders: #CECECE;
 
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/globalelements";
 @import "skins/oasis/css/core/reset";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/core/buttons";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/buttons";
 @import "skins/oasis/css/core/typography";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 body {
 	background: #F5F5F5;
 	color: #666;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 13px;
 	margin: 0;
 	overflow: hidden;
@@ -71,7 +70,6 @@ body {
 		}
 	}
 }
-
 
 .Toolbar {
 	@include linear-gradient(#cfe1ed, top, #cfe1ed, 0%, #a6c4dc, 100%);
@@ -174,12 +172,12 @@ section {
 }
 
 fieldset {
-	border-left: 1px solid $color-borders;
+	border-right: 1px solid $color-borders;
 	float: left;
 	height: 165px;
 	margin: 15px 0 15px 14px;
-	&:first-child {
-		border-left: 0;
+	&:last-child {
+		border-right: 0;
 	}
 }
 

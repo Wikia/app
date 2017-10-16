@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"Andriykopanytsia",
+			"Base",
+			"Steve.rusyn",
+			"SteveR",
+			"Тест"
+		]
+	},
+	"semanticdrilldown-desc": "Розгорнутий інтерфейс для навігації у семантичних даних",
+	"specialpages-group-sd_group": "Семантична розгорненість",
+	"browsedata": "Огляд даних",
+	"sd_browsedata_choosecategory": "Виберіть категорію",
+	"sd_browsedata_viewcategory": "перегляд категорії",
+	"sd_browsedata_docu": "Натистіть на один або більше елементів нижче для обмеження результатів.",
+	"sd_browsedata_subcategory": "Підкатегорія",
+	"sd_browsedata_other": "Інші",
+	"sd_browsedata_none": "Немає",
+	"sd_browsedata_filterbyvalue": "Фільтрувати за цим значенням",
+	"sd_browsedata_filterbysubcategory": "Фільтрувати за цією підкатегорією",
+	"sd_browsedata_otherfilter": "Показати сторінки з іншими значеннями за цим фільтром",
+	"sd_browsedata_nonefilter": "Показати сторінки без значень за цим фільтром",
+	"sd_browsedata_or": "або",
+	"sd_browsedata_removefilter": "Вилучити цей фільтр",
+	"sd_browsedata_removesubcategoryfilter": "Вилучити цей фільтр за підкатегорією",
+	"sd_browsedata_resetfilters": "Скинути фільтри",
+	"sd_browsedata_addanothervalue": "Натисніть на стрілку, щоб додати інше значення",
+	"sd_browsedata_daterangestart": "Початок:",
+	"sd_browsedata_daterangeend": "Кінець:",
+	"sd_browsedata_novalues": "Немає значень для цього фільтра",
+	"sd_createfilter_usepropertyvalues": "Використовуйте усі значення цієї властивості для фільтру",
+	"sd_createfilter_usecategoryvalues": "Отримати значення для фільтру із цієї категорії:",
+	"sd_createfilter_requirefilter": "Вимагати вибору іншого фільтра, перед тим, як відображати цей:",
+	"sd-pageschemas-filter": "Фільтр",
+	"sd-pageschemas-values": "Значення"
+}

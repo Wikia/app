@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lloffiwr"
+		]
+	},
+	"browsedata": "Pori'r data",
+	"sd_browsedata_choosecategory": "Dewis categori",
+	"sd_browsedata_viewcategory": "gweld y categori",
+	"sd_browsedata_docu": "Clicio ar un eitem neu ragor isod i gyfyngu'r canlyniadau.",
+	"sd_browsedata_subcategory": "Isgategori",
+	"sd_browsedata_other": "Arall",
+	"sd_browsedata_none": "Dim",
+	"sd_browsedata_filterbyvalue": "Hidlo yn ôl y gwerth hwn",
+	"sd_browsedata_filterbysubcategory": "Hidlo yn ôl yr isgategori hwn",
+	"sd_browsedata_otherfilter": "Dangos tudalennau gyda gwerth arall i'r hidl hwn",
+	"sd_browsedata_nonefilter": "Dangos tudalennau heb unrhyw werth i'r hidl hwn",
+	"sd_browsedata_or": "neu",
+	"sd_browsedata_removefilter": "Tynnu'r hidl hwn i ffwrdd",
+	"sd_browsedata_removesubcategoryfilter": "Tynnu'r hidl i'r isgategori hwn i ffwrdd",
+	"sd_browsedata_resetfilters": "Ailosod yr hidlau",
+	"sd_browsedata_addanothervalue": "Clicio'r saeth i ychwanegu gwerth arall",
+	"sd_browsedata_daterangestart": "Dechrau:",
+	"sd_browsedata_daterangeend": "Diwedd:",
+	"sd-pageschemas-filter": "Hidl",
+	"sd-pageschemas-values": "Gwerthoedd"
+}

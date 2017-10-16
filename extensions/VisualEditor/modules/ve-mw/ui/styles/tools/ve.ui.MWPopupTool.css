@@ -1,0 +1,43 @@
+/*!
+ * VisualEditor MediaWiki UserInterface popup tool styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwNoticesPopupTool-items,
+.ve-ui-mwHelpPopupTool-items {
+	padding: 0.5em 1em;
+}
+
+.ve-ui-mwNoticesPopupTool-items > div:not(:first-child),
+.ve-ui-mwHelpPopupTool-item:not(:first-child) {
+	border-top: solid 1px #ddd;
+	padding-top: 0.8em;
+	margin-top: 0.8em;
+}
+
+.ve-ui-mwHelpPopupTool-item > .oo-ui-buttonElement-frameless {
+	display: block;
+	margin: 0.5em 0;
+}
+
+.ve-ui-mwHelpPopupTool-item > .oo-ui-buttonElement-frameless:first-child {
+	margin-top: 0;
+}
+
+.ve-ui-mwHelpPopupTool-version-label,
+.ve-ui-mwHelpPopupTool-version-link,
+.ve-ui-mwHelpPopupTool-version-date {
+	font-size: 0.9em;
+	color: #555;
+}
+
+/*
+ * Bidi-isolate the version number,
+ * so it won't mess up the date after it.
+ * Bug 68688
+ */
+.ve-ui-mwHelpPopupTool-version-link {
+	unicode-bidi: embed;
+}

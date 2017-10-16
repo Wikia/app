@@ -81,6 +81,15 @@ class FSLockManager extends LockManager {
 		} elseif ( isset( $this->locksHeld[$path][self::LOCK_EX] ) ) {
 			$this->locksHeld[$path][$type] = 1;
 		} else {
+			// Wikia change
+			// PLATFORM-1735:
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => new Exception(),
+				'lockDir' => $this->lockDir,
+				'path' => $path,
+				'type' => $type,
+			] );
+
 			wfSuppressWarnings();
 			$handle = fopen( $this->getLockPath( $path ), 'a+' );
 			wfRestoreWarnings();

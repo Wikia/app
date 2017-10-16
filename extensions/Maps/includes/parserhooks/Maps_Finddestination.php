@@ -1,4 +1,5 @@
 <?php
+use DataValues\Geo\Formatters\GeoCoordinateFormatter;
 
 /**
  * Class for the 'finddestination' parser hooks, which can find a
@@ -6,22 +7,12 @@
  * 
  * @since 0.7
  * 
- * @file Maps_Finddestination.php
- * @ingroup Maps
- *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
+
 class MapsFinddestination extends ParserHook {
-	/**
-	 * No LSB in pre-5.3 PHP *sigh*.
-	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
-	 */	
-	public static function staticInit( Parser &$parser ) {
-		$instance = new self;
-		return $instance->init( $parser );
-	}	
-	
+
 	/**
 	 * Gets the name of the parser hook.
 	 * @see ParserHook::getName
@@ -47,73 +38,59 @@ class MapsFinddestination extends ParserHook {
 		global $egMapsCoordinateNotation, $egMapsAllowCoordsGeocoding, $egMapsCoordinateDirectional;	 
 		
 		$params = array();
-		
-		$params['location'] = new Parameter( 'location' );
-		$params['location']->addCriteria( new CriterionIsLocation() );
-		$params['location']->addDependencies( 'mappingservice', 'geoservice' );
-		$params['location']->setMessage( 'maps-finddestination-par-location' );
-		
-		$params['bearing'] = new Parameter(
-			'bearing',
-			Parameter::TYPE_FLOAT
+
+		$params['location'] = array(
+			'dependencies' => array( 'mappingservice', 'geoservice' ),
+			'type' => 'mapslocation',
 		);
-		$params['bearing']->setMessage( 'maps-finddestination-par-bearing' );
-		
-		$params['distance'] = new Parameter( 'distance' );
-		$params['distance']->addCriteria( new CriterionIsDistance() );
-		$params['distance']->setMessage( 'maps-finddestination-par-distance' );
-		// TODO: manipulate to distance object
-		
-		$params['mappingservice'] = new Parameter(
-			'mappingservice', 
-			Parameter::TYPE_STRING,
-			'', // TODO
-			array(),
-			array(
-				new CriterionInArray( MapsMappingServices::getAllServiceValues() ),
-			)
+
+		$params['format'] = array(
+			'default' => $egMapsCoordinateNotation,
+			'values' => $egMapsAvailableCoordNotations,
+			'aliases' => 'notation',
+			'tolower' => true,
 		);
-		$params['mappingservice']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
-		$params['mappingservice']->setMessage( 'maps-finddestination-par-mappingservice' );
-		
-		$params['geoservice'] = new Parameter(
-			'geoservice', 
-			Parameter::TYPE_STRING,
-			$egMapsDefaultGeoService,
-			array( 'service' ),
-			array(
-				new CriterionInArray( $egMapsAvailableGeoServices ),
-			)
+
+		$params['directional'] = array(
+			'type' => 'boolean',
+			'default' => $egMapsCoordinateDirectional,
 		);
-		$params['geoservice']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
-		$params['geoservice']->setMessage( 'maps-finddestination-par-geoservice' );
-		
-		$params['allowcoordinates'] = new Parameter(
-			'allowcoordinates', 
-			Parameter::TYPE_BOOLEAN,
-			$egMapsAllowCoordsGeocoding
-		);			
-		$params['allowcoordinates']->setMessage( 'maps-finddestination-par-allowcoordinates' );
-		
-		$params['format'] = new Parameter(
-			'format',
-			Parameter::TYPE_STRING,
-			$egMapsCoordinateNotation,
-			array( 'notation' ),
-			array(
-				new CriterionInArray( $egMapsAvailableCoordNotations ),
-			)			
+
+		$params['bearing'] = array(
+			'type' => 'float',
 		);
-		$params['format']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
-		$params['format']->setMessage( 'maps-finddestination-par-format' );
-		
-		$params['directional'] = new Parameter(
-			'directional',
-			Parameter::TYPE_BOOLEAN,
-			$egMapsCoordinateDirectional
-		);			
-		$params['directional']->setMessage( 'maps-finddestination-par-directional' );
-		
+
+		$params['distance'] = array(
+			'type' => 'distance',
+		);
+
+		$params['mappingservice'] = array(
+			'default' => '',
+			'values' => MapsMappingServices::getAllServiceValues(),
+			'tolower' => true,
+		);
+
+		$params['geoservice'] = array(
+			'default' => $egMapsDefaultGeoService,
+			'aliases' => 'service',
+			'values' => $egMapsAvailableGeoServices,
+			'tolower' => true,
+		);
+
+		$params['allowcoordinates'] = array(
+			'type' => 'boolean',
+			'default' => $egMapsAllowCoordsGeocoding,
+		);
+
+		// Give grep a chance to find the usages:
+		// maps-finddestination-par-location, maps-finddestination-par-format,
+		// maps-finddestination-par-directional, maps-finddestination-par-bearing,
+		// maps-finddestination-par-distance, maps-finddestination-par-mappingservice,
+		// maps-finddestination-par-geoservice, maps-finddestination-par-allowcoordinates
+		foreach ( $params as $name => &$param ) {
+			$param['message'] = 'maps-finddestination-par-' . $name;
+		}
+
 		return $params;
 	}
 	
@@ -140,31 +117,23 @@ class MapsFinddestination extends ParserHook {
 	 * @return string
 	 */
 	public function render( array $parameters ) {
-		$canGeocode = MapsGeocoders::canGeocode();
-			
-		if ( $canGeocode ) {
-			$location = MapsGeocoders::attemptToGeocode(
-				$parameters['location'],
-				$parameters['geoservice'],
-				$parameters['mappingservice']
-			);
-		} else {
-			$location = MapsCoordinateParser::parseCoordinates( $parameters['location'] );
-		}
-		
-		// TODO
-		if ( $location ) {
-			$destination = MapsGeoFunctions::findDestination(
-				$location,
-				$parameters['bearing'],
-				MapsDistanceParser::parseDistance( $parameters['distance'] )
-			);
-			$output = MapsCoordinateParser::formatCoordinates( $destination, $parameters['format'], $parameters['directional'] );
-		} else {
-			// The location should be valid when this method gets called.
-			throw new MWException( 'Attempt to find a destination from an invalid location' );
-		}
-			
+		$destination = MapsGeoFunctions::findDestination(
+			$parameters['location']->getCoordinates(),
+			$parameters['bearing'],
+			$parameters['distance']
+		);
+
+		$options = new \ValueFormatters\FormatterOptions( array(
+			GeoCoordinateFormatter::OPT_FORMAT => $parameters['format'],
+			GeoCoordinateFormatter::OPT_DIRECTIONAL => $parameters['directional'],
+			GeoCoordinateFormatter::OPT_PRECISION => 1 / 360000
+		) );
+
+		$formatter = new GeoCoordinateFormatter( $options );
+
+		$geoCoords = new \DataValues\LatLongValue( $destination['lat'], $destination['lon'] );
+		$output = $formatter->format( $geoCoords );
+
 		return $output;
 	}
 

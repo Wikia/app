@@ -1,81 +1,76 @@
 <?php
 class ArticleCommentsController extends WikiaController {
+	use Wikia\Logger\Loggable;
+
 	private $dataLoaded = false;
 	private static $content = null;
 
 	public function executeIndex() {
-		wfProfileIn(__METHOD__);
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
 
-		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
-			$isMobile = $this->app->checkSkin( 'wikiamobile' );
+		// for non-JS version !!! (used also for Monobook and WikiaMobile)
+		if ($this->wg->Request->wasPosted()) {
+			$sComment = $this->wg->Request->getVal( 'wpArticleComment', false );
+			$iArticleId = $this->wg->Request->getVal( 'wpArticleId', false );
+			$sSubmit = $this->wg->Request->getVal( 'wpArticleSubmit', false );
+			$token = $this->wg->Request->getVal( 'token' );
 
-			// for non-JS version !!! (used also for Monobook and WikiaMobile)
-			if ($this->wg->Request->wasPosted()) {
-				$sComment = $this->wg->Request->getVal( 'wpArticleComment', false );
-				$iArticleId = $this->wg->Request->getVal( 'wpArticleId', false );
-				$sSubmit = $this->wg->Request->getVal( 'wpArticleSubmit', false );
+			if ( $sSubmit && $sComment && $iArticleId && $this->wg->User->matchEditToken( $token ) ) {
+				$oTitle = Title::newFromID( $iArticleId );
 
-				if ( $sSubmit && $sComment && $iArticleId ) {
-					$oTitle = Title::newFromID( $iArticleId );
+				if ( $oTitle instanceof Title ) {
+					$response = ArticleComment::doPost( $this->wg->Request->getVal( 'wpArticleComment' ), $this->wg->User, $oTitle );
 
-					if ( $oTitle instanceof Title ) {
-						$response = ArticleComment::doPost( $this->wg->Request->getVal('wpArticleComment') , $this->wg->User, $oTitle );
+					if ( !$isMobile ) {
+						$this->wg->Out->redirect( $oTitle->getLocalURL() );
+					} else {
+						$result = [ ];
+						$canComment = ArticleCommentInit::userCanComment( $result, $oTitle );
 
-						if ( !$isMobile ) {
-							$this->wg->Out->redirect( $oTitle->getLocalURL() );
-						} else {
-							$result = array();
-							$canComment = ArticleCommentInit::userCanComment( $result, $oTitle );
-
-							//this check should be done for all the skins and before calling ArticleComment::doPost but that requires a good bit of refactoring
-							//and some design review as the OAsis/Monobook template doesn't handle error feedback from this code
-							if ( $canComment == true ) {
-								if ( empty( $response[2]['error'] ) ) {
-									//wgOut redirect doesn't work when running fully under the
-									//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
-									$this->response->redirect( $oTitle->getLocalURL( array( 'page' => 1 ) ) . '#article-comments' );
-								} else {
-									$this->response->setVal( 'error', $response[2]['msg'] );
-								}
+						//this check should be done for all the skins and before calling ArticleComment::doPost but that requires a good bit of refactoring
+						//and some design review as the OAsis/Monobook template doesn't handle error feedback from this code
+						if ( $canComment == true ) {
+							if ( empty( $response[ 2 ][ 'error' ] ) ) {
+								//wgOut redirect doesn't work when running fully under the
+								//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
+								$this->response->redirect( $oTitle->getLocalURL( [ 'page' => 1 ] ) . '#article-comments' );
 							} else {
-								$this->response->setVal( 'error', $result['msg'] );
+								$this->response->setVal( 'error', $response[ 2 ][ 'msg' ] );
 							}
+						} else {
+							$this->response->setVal( 'error', $result[ 'msg' ] );
 						}
 					}
 				}
 			}
-
-			$this->page = $this->wg->request->getVal( 'page', 1 );
-			$this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
-			$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
-
-			if ( $this->isLoadingOnDemand ) {
-				$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
-
-			} else {
-				$this->getCommentsData( $this->wg->Title, $this->page );
-
-				if ( $isMobile ) {
-					$this->forward( __CLASS__, 'WikiaMobileIndex', false );
-
-				} else if ( $this->app->checkSkin( 'oasis' ) ) {
-					$this->response->addAsset( 'articlecomments' . ( $this->isMiniEditorEnabled ? '_mini_editor' : '' ) . '_scss' );
-				}
-			}
 		}
 
-		wfProfileOut(__METHOD__);
+		$this->page = $this->wg->request->getVal( 'page', 1 );
+		$this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
+		$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
+
+		if ( $this->isLoadingOnDemand ) {
+			$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
+
+		} else {
+			$this->getCommentsData( $this->wg->Title, $this->page );
+
+			if ( $isMobile ) {
+				$this->forward( __CLASS__, 'WikiaMobileIndex', false );
+
+			} else if ( $this->app->checkSkin( 'oasis' ) ) {
+				$this->response->addAsset( 'articlecomments' . ( $this->isMiniEditorEnabled ? '_mini_editor' : '' ) . '_scss' );
+			}
+		}
 	}
 
 	/**
 	 * The content for an article page. This is included on the index (for the current title)
 	 * if lazy loading is disabled, otherwise it is requested via AJAX.
 	 */
-	public function executeContent() {
+	public function content() {
 		//this is coming via ajax we need to set correct wgTitle ourselves
 		global $wgTitle;
-
-		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
@@ -93,7 +88,6 @@ class ArticleCommentsController extends WikiaController {
 		if ( $title === null ) {
 			$this->response->setCode( 404 );
 			$this->skipRendering();
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -105,10 +99,9 @@ class ArticleCommentsController extends WikiaController {
 
 		// When lazy loading this request it shouldn't be cached in the browser
 		if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
-			$this->response->setCacheValidity( 0, 0, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
+			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
+			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -141,7 +134,6 @@ class ArticleCommentsController extends WikiaController {
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 **/
 	public function executeWikiaMobileCommentsPage() {
-		wfProfileIn( __METHOD__ );
 		$articleID = $this->request->getInt( 'articleID' );
 		$title = null;
 
@@ -167,14 +159,10 @@ class ArticleCommentsController extends WikiaController {
 		if ( $this->page <  $this->pagesCount ) {
 			$this->response->setVal( 'nextPage', $this->page + 1 );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	private function getCommentsData(Title $title, $page, $perPage = null, $filterid = null) {
-		wfProfileIn(__METHOD__);
-
-		$key = implode( '_', array( $title->getArticleID(), $page, $perPage, $filterid ) );
+		$key = implode( '_', [ $title->getArticleID(), $page, $perPage, $filterid ] );
 		$data = null;
 
 		// avoid going through all this when calling the method from the same round trip for the same paramenters
@@ -199,14 +187,17 @@ class ArticleCommentsController extends WikiaController {
 
 		if ( empty( $data ) ) {
 			// Seems like we should always have data, let's leave a log somewhere if this happens
-			Wikia::log( __METHOD__, false, 'No data, this should not happen.' );
+			Wikia\Logger\WikiaLogger::instance()->error(
+				__METHOD__ . ' - no data, this should not happen',
+				[
+					'exception' => new Exception()
+				]
+			);
 		}
 
 		$this->ajaxicon = $this->wg->StylePath.'/common/images/ajax.gif';
 		$this->pagesCount = ( $data['commentsPerPage'] > 0 ) ? ceil( $data['countComments'] / $data['commentsPerPage'] ) : 0;
 		$this->response->setValues( $data );
-
-		wfProfileOut(__METHOD__);
 
 		return $data;
 	}
@@ -218,7 +209,7 @@ class ArticleCommentsController extends WikiaController {
 		return true;
 	}
 
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		if ( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) {
 			$app = F::app();
 
@@ -227,13 +218,13 @@ class ArticleCommentsController extends WikiaController {
 
 			// Load MiniEditor assets (oasis skin only)
 			if ( ArticleComment::isMiniEditorEnabled() ) {
-				$app->sendRequest( 'MiniEditor', 'loadAssets', array(
+				$app->sendRequest( 'MiniEditor', 'loadAssets', [
 					'loadStyles' => !ArticleComment::isLoadingOnDemand(),
 					'loadOnDemand' => true,
-					'loadOnDemandAssets' => array(
+					'loadOnDemandAssets' => [
 						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
-					)
-				));
+					]
+				] );
 			}
 		}
 		return true;

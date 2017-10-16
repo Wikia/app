@@ -1,31 +1,28 @@
-@import "layout";
-@import "responsive-variables";
+@import 'layout';
+@import 'responsive-variables';
 
-@import "../mixins/box-sizing";
-@import "../mixins/calc";
+@import 'skins/shared/mixins/calc';
 
-@if ( $responsive-layout-enabled ) {
+@if ($responsive-layout-enabled) {
 	html {
 		overflow-y: auto;
 	}
 
-	body.skin-oasis {
+	.skin-oasis {
 		min-width: $width-outside-min;
 	}
 
-	body.skin-oasis > .global-notification,
-	.WikiaHeader .page-width-container,
+	.skin-oasis > .wds-banner-notification__container,
 	.WikiaPage {
 		max-width: $width-outside-max;
 	}
 
-	.global-notification,
-	.WikiaHeader .page-width-container {
-		@include box-sizing( border-box );
+	.wds-banner-notification__container {
+		box-sizing: border-box;
 		width: $width-outside;
 	}
 
-	.global-notification {
+	.wds-banner-notification__container {
 		&.float {
 			margin-left: -515px;
 		}
@@ -36,31 +33,8 @@
 		padding: 0;
 	}
 
-	.WikiHeader {
-		.navbackground {
-			width: 100%;
-		}
-
-		.WikiNav {
-			right: -4px;
-			width: auto;
-
-			.subnav-2 {
-				width: auto;
-			}
-		}
-	}
-
-	.WikiHeaderSearch {
-		display: none;
-	}
-
-	.WikiaHeader {
-		min-width: 0;
-	}
-
 	.WikiaMainContent {
-		margin-right: -( $width-rail + $width-gutter );
+		margin-right: -($width-rail + $width-gutter);
 		position: static;
 		width: 100%;
 	}
@@ -73,28 +47,12 @@
 	.oasis-one-column {
 		.WikiaMainContent {
 			margin-right: 0;
-			width: 100%
+			width: 100%;
 		}
 
 		.WikiaMainContentContainer {
 			margin-right: 0;
 			position: relative;
-		}
-	}
-
-	.WikiaPage #WikiaArticleBottomAd {
-		clear: both;
-		margin: 0;
-	}
-
-	.WikiaPageHeader,
-	.wikinav2 .WikiaPageHeader {
-		margin: 0 0 $width-padding 0;
-		padding-bottom: $width-padding / 2;
-
-		.wikia-menu-button,
-		> .comments {
-			margin-top: 3px;
 		}
 	}
 
@@ -104,148 +62,81 @@
 	}
 
 	@media screen and (max-width: $breakpoint-min) {
-		body.skin-oasis {
+		.skin-oasis {
 			overflow-x: auto;
 		}
 	}
 
 	@media screen and (max-width: $breakpoint-small) {
-	// ABTesting: DAR-1859: START
-		html:not(.keep-rail-on-right) {
-			// ABTesting: DAR-1859: END
-			.WikiaArticle {
-				min-height: auto;
-			}
-
-			.WikiaMainContent {
-				float: none;
-				margin-right: 0;
-			}
-
-			.WikiaMainContentContainer {
-				margin-right: 0;
-			}
-
-			.WikiaRail {
-				float: none;
-				padding: 0 10px;
-				width: auto;
-			}
-
-			.WikiaHeader li.start-a-wiki {
-				display: none;
-			}
-
-			.WikiHeader {
-				min-height: 154px;
-				padding-top: 0;
-
-				> nav {
-					left: 0;
-					top: 85px;
-				}
-
-				.buttons {
-					top: 87px;
-				}
-			}
-
-			.WikiNav li.nav-item:first-child {
-				margin-left: 10px;
-			}
-
-			.WikiHeaderSearch {
-				display: block;
-				left: 280px;
-				position: absolute;
-				right: 10px;
-				top: 12px;
-				width: auto;
-
-				input[type="text"] {
-					@include box-sizing( border-box );
-					font-size: 15pt;
-					height: 40px !important;
-					left: 0;
-					margin-right: 0;
-					position: absolute;
-					right: 53px;
-					width: auto;
-					@include width-calc('100% - 53px');
-				}
-
-				.wikia-button {
-					height: 40px !important;
-					position: absolute;
-					right: 0;
-				}
-			}
-
-			// TODO: clean up all the wikinav2/oasis-one-column styles...
-			.wikinav2.oasis-one-column .WikiaPageHeader {
-				padding-right: 0;
-
-				.tally {
-					right: 0;
-				}
-			}
-
-			.WikiaSearchHeader .WikiaSearch,
-			.WikiaRail .WikiaSearch,
-			.WikiaPageHeader .WikiaSearch {
-				display: none;
-			}
-
-			// ABTesting: DAR-1859: START
+		.WikiaArticle {
+			min-height: auto;
 		}
-	// ABTesting: DAR-1859: END
+
+		.WikiaMainContent {
+			float: none;
+			margin-right: 0;
+		}
+
+		.WikiaMainContentContainer {
+			margin-right: 0;
+		}
+
+		.WikiaRail {
+			float: none;
+			margin: 0;
+			padding: 13px 10px 0;
+			width: auto;
+
+			&.loaded,
+			&.AdminDashboardRail {
+				-moz-column-count: 2;
+				-webkit-column-count: 2;
+				column-count: 2;
+			}
+
+			.module,
+			.admin-dashboard-module {
+				box-sizing: border-box;
+
+				-moz-column-break-inside: avoid;
+				-webkit-column-break-inside: avoid;
+				column-break-inside: avoid;
+
+				// fallback, because column-break-inside is currently NYI
+				display: inline-block;
+				position: static;
+				width: 100%;
+			}
+		}
+
+		.WikiaRail .WikiaSearch,
+		.WikiaRail .search-suggest {
+			display: none;
+		}
 	}
 
 	@media screen and (max-width: $breakpoint-content) {
-	// ABTesting: DAR-1859: START
-		html:not(.keep-rail-on-right) {
-			// ABTesting: DAR-1859: END
+		.wds-banner-notification__container {
+			width: 100%;
 
-			.WikiHeader .WikiNav {
-				right: 0;
-
-				.navbackground img {
-					display: none;
-				}
+			&.float {
+				left: 0;
+				margin-left: 0;
 			}
-
-			.WikiaHeader .page-width-container {
-				width: auto;
-			}
-
-			.global-notification {
-				width: 100%;
-				&.float {
-					left: 0;
-					margin-left: 0;
-				}
-			}
-
-			.WikiaPage {
-				border: 0;
-				width: auto;
-			}
-
-			.WikiaPageContentWrapper {
-				padding-top: 20px;
-			}
-
-			.WikiaTopAds {
-				width: 100%;
-			}
-
-			// ABTesting: DAR-1859: START
 		}
-	// ABTesting: DAR-1859: END
+
+		.WikiaPage {
+			border: 0;
+			width: auto;
+		}
+
+		.WikiaTopAds {
+			width: 100%;
+		}
+
 	}
 
 	@media screen and (min-width: $breakpoint-fluid) {
-		.WikiaHeader .page-width-container,
 		.WikiaPage {
 			margin: 0 $width-adskin;
 			width: auto;
@@ -253,19 +144,8 @@
 	}
 
 	@media screen and (min-width: $breakpoint-max) {
-		.WikiaHeader .page-width-container,
 		.WikiaPage {
 			margin: 0 auto;
 		}
 	}
-
-// ABTesting: DAR-1859: START
-	html.keep-rail-on-right {
-		overflow-x: scroll;
-
-		body {
-			min-width: 1058px;
-		}
-	}
-// ABTesting: DAR-1859: END
 }

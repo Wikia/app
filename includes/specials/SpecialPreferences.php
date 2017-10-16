@@ -39,7 +39,7 @@ class SpecialPreferences extends SpecialPage {
 
 		$user = $this->getUser();
 		if ( $user->isAnon() ) {
-			$out->showErrorPage( 'prefsnologin', 'prefsnologintext', array( $this->getTitle()->getPrefixedDBkey() ) );
+			$out->showErrorPage( 'prefsnologin', 'prefsnologintext', array( wfGetReturntoParam() ) );
 			return;
 		}
 		$this->checkReadOnly();
@@ -53,7 +53,7 @@ class SpecialPreferences extends SpecialPage {
 
 		/* Wikia change begin - @author: macbre */
 		/* Enable custom notifications handling */
-		wfRunHooks('SpecialPreferencesOnRender', array(&$this));
+		Hooks::run( 'SpecialPreferencesOnRender', [ $this ] );
 		/* Wikia change end */
 
 		if ( $this->getRequest()->getCheck( 'success' ) ) {
@@ -95,11 +95,11 @@ class SpecialPreferences extends SpecialPage {
 
 		$storage = array();
 
-		wfRunHooks('SpecialPreferencesBeforeResetUserOptions', array( $this, &$user, &$storage ) );
+		Hooks::run('SpecialPreferencesBeforeResetUserOptions', array( $this, &$user, &$storage ) );
 
 		$user->resetOptions();
 
-		wfRunHooks('SpecialPreferencesAfterResetUserOptions', array( $this, &$user, &$storage) );
+		Hooks::run('SpecialPreferencesAfterResetUserOptions', array( $this, &$user, &$storage) );
 
 		$user->saveSettings();
 

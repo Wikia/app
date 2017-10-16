@@ -2,10 +2,11 @@
 
 require_once dirname(__FILE__) . '/_fixtures/TestController.php';
 
+use PHPUnit\Framework\TestCase;
 /**
  * @ingroup mwabstract
  */
-class WikiaControllerTest extends PHPUnit_Framework_TestCase {
+class WikiaControllerTest extends TestCase {
 
 	public function generatingHelpDataProvider() {
 		return array(
@@ -32,7 +33,7 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
-	/*
+	/**
 	 * Test that the Controller response object is working properly for get/set/unset of a controller property
 	 */
 	public function testResponse() {

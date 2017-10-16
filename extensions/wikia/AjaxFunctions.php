@@ -1,46 +1,7 @@
 <?php
-/*
+/**
  * Ajax Functions used by Wikia extensions
  */
-
-/**
- * Validates user names.
- *
- * @Author CorfiX (corfix@wikia.com)
- * @Author Maciej Błaszkowski <marooned at wikia-inc.com>
- *
- * @Param String $uName
- *
- * @Return String
- */
-function cxValidateUserName () {
-	global $wgRequest;
-	wfProfileIn(__METHOD__);
-
-	$uName = $wgRequest->getVal('uName');
-
-	$result = wfValidateUserName($uName);
-
-	if ( $result === true ) {
-		$message = '';
-		if ( !wfRunHooks("cxValidateUserName",array($uName,&$message)) ) {
-			$result = $message;
-		}
-	}
-
-	if( $result === true ) {
-		$data = array('result' => 'OK' );
-	} else {
-		$data = array('result' => 'INVALID', 'msg' => wfMsg($result), 'msgname' => $result );
-	}
-
-	$json = json_encode($data);
-	$response = new AjaxResponse($json);
-	$response->setContentType('application/json; charset=utf-8');
-	$response->setCacheDuration(60);
-	wfProfileOut(__METHOD__);
-	return $response;
-}
 
 /**
  * Given a username, returns one of several codes to indicate whether it is valid to be a NEW username or not.
@@ -53,43 +14,50 @@ function cxValidateUserName () {
  * TODO: Is this a duplicate of user::isCreatableName()? It is important to note that wgWikiaMaxNameChars may be less than wgMaxNameChars which
  * is intentional because there are some long usernames that were created when only wgMaxNameChars limited to 255 characters and we still want
  * those usernames to be valid (so that they can still login), but we just don't want NEW accounts to be created above the length of wgWikiaMaxNameChars.
+ *
+ * @param string $uName The user name to check
+ *
+ * @return bool|string Return errors as an i18n key or true if the name is valid
  */
-function wfValidateUserName($uName){
-	wfProfileIn(__METHOD__);
+function wfValidateUserName( $uName ) {
 
-	$result = true;#wfMsg ('username-valid');
+	if ( !User::isNotMaxNameChars( $uName ) ) {
+		return 'userlogin-bad-username-length';
 
-	$nt = Title::newFromText( $uName );
-	if( !User::isNotMaxNameChars($uName) ) {
-		$result = 'userlogin-bad-username-length';
+	}
 
-	} elseif ( is_null( $nt ) ) {
-		$result = 'userlogin-bad-username-character';
-	} else {
-		$uName = $nt->getText();
+	$userTitle = Title::newFromText( $uName );
+	if ( is_null( $userTitle ) ) {
+		return 'userlogin-bad-username-character';
+	}
 
-		if ( !User::isCreatableName( $uName ) ) {
-			$result = 'userlogin-bad-username-character';
-		} else {
-			$dbr = wfGetDB (DB_SLAVE);
-			$uName = $dbr->strencode($uName);
-			if ($uName == '') {
-				$result = 'userlogin-bad-username-character';
-			} else {
-				if(User::idFromName($uName) != 0) {
-					$result = 'userlogin-bad-username-taken';
-				}
+	$uName = $userTitle->getText();
+	if ( !User::isCreatableName( $uName ) ) {
+		return 'userlogin-bad-username-character';
+	}
 
-				global $wgReservedUsernames;
-				if(in_array($uName, $wgReservedUsernames)){
-					$result = 'userlogin-bad-username-taken'; // if we returned 'invalid', that would be confusing once a user checked and found that the name already met the naming requirements.
-				}
+	$dbr = wfGetDB( DB_SLAVE );
+	$uName = $dbr->strencode( $uName );
+	if ( $uName == '' ) {
+		return 'userlogin-bad-username-character';
+	}
+
+	if ( class_exists( 'SpoofUser' ) ) {
+		$spoof = new SpoofUser( $uName );
+		if ( $spoof->isLegal() ) {
+			$conflicts = $spoof->getConflicts();
+			if ( !empty( $conflicts ) ) {
+				return 'userlogin-bad-username-taken';
 			}
 		}
 	}
 
-	wfProfileOut(__METHOD__);
-	return $result;
-}
+	if ( in_array( $uName, F::app()->wg->ReservedUsernames ) ) {
+		// if we returned 'invalid', that would be confusing once a user
+		// checked and found that the name already met the naming requirements.
+		return 'userlogin-bad-username-taken';
+	}
 
-$wgAjaxExportList[] = "cxValidateUserName";
+	// This username is valid
+	return true;
+}

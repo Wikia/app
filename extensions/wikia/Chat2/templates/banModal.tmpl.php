@@ -7,43 +7,43 @@ $form = array(
 
 // cach shared html strings
 $optionsHtml = '';
-foreach($options as $label => $value) {
-	$optionsHtml .= "<option value='".$value."'>".$label."</option>";
+foreach ( $options as $label => $value ) {
+	$optionsHtml .= "<option value='" . Sanitizer::encodeAttribute( $value ) . "'>" . htmlspecialchars( $label ) . "</option>";
 }
-$expiresLabel = '<label>'.wfMsg('chat-ban-modal-label-expires') . '</label>';
+$expiresLabel = '<label>' . wfMessage( 'chat-ban-modal-label-expires' )->escaped() . '</label>';
 
 // Changing a ban
-if($isChangeBan) {
+if ( $isChangeBan ) {
 	$expiresRow = array(
 		'type' => 'custom',
-		'output' => $expiresLabel.'<p class="timeago" title="'.$isoTime.'" alt="'.$fmtTime.'">'.$fmtTime.'</p>',
+		'output' => $expiresLabel . '<p class="timeago" title="' . Sanitizer::encodeAttribute( $isoTime ) . '" alt="' . Sanitizer::encodeAttribute( $fmtTime ) . '">' . htmlspecialchars( $fmtTime ) . '</p>',
 	);
 	$changeToRow = array(
 		'type' => 'custom',
-		'output' => '<label>'.wfMsg('chat-ban-modal-change-ban-label').'</label><select name="expires"><option value="0">'.wfMsg('chat-ban-modal-end-ban').'</option>'.$optionsHtml.'</select>',
+		'output' => '<label>' . wfMessage( 'chat-ban-modal-change-ban-label' )->escaped() . '</label><select name="expires"><option value="0">' . wfMessage( 'chat-ban-modal-end-ban' )->escaped() . '</option>' . $optionsHtml . '</select>',
 	);
-	array_push($form['inputs'], $expiresRow, $changeToRow);
+	array_push( $form['inputs'], $expiresRow, $changeToRow );
 
 // Creating a new ban
 } else {
 	$expiresRow = array(
 		'type' => 'custom',
-		'output' => $expiresLabel.'<select name="expires">'.$optionsHtml.'</select>',
+		'output' => $expiresLabel . '<select name="expires">' . $optionsHtml . '</select>',
 	);
-	array_push($form['inputs'], $expiresRow);
+	array_push( $form['inputs'], $expiresRow );
 }
 
 // Reason for creating / changing a ban
 $reasonRow = array(
-	'label' => wfMsg('chat-ban-modal-label-reason'),
+	'label' => wfMessage( 'chat-ban-modal-label-reason' )->escaped(),
 	'type' => 'text',
 	'name' => 'reason',
 	'attributes' => array(
 		'maxlength' => 160,
-		'placeholder' => $isChangeBan ? '' : wfMsg('chat-log-reason-banadd'),
+		'placeholder' => $isChangeBan ? '' : wfMessage( 'chat-log-reason-banadd' )->escaped(),
 	),
 );
-array_push($form['inputs'], $reasonRow);
+array_push( $form['inputs'], $reasonRow );
 
 // return the form HTML
-echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
+echo F::app()->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) );

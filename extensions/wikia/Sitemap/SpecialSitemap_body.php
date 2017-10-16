@@ -19,8 +19,18 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class SitemapPage extends UnlistedSpecialPage {
 
 	const BLOBS_TABLE_NAME = 'sitemap_blobs';
+
+	/**
+	 * For video-extended sitemaps, we query Solr to find out which file pages with videos are
+	 * indexed in it. This is a limit for this query. If the limit is exceeded, the optimization
+	 * is disabled and we query Solr for each of the file pages with videos separately.
+	 *
+	 * @see SitemapPage::hasSnippet
+	 */
+	const SOLR_LIMIT = 10000;
+
 	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
-		$mSizeLimit, $mPage, $mGoogleCode;
+		$mSizeLimit, $mPage;
 
 	/**
 	 * @var MediaQueryService
@@ -31,34 +41,22 @@ class SitemapPage extends UnlistedSpecialPage {
 	/**
 	 * standard constructor
 	 * @access public
+	 * @param $name
 	 */
-	public function __construct( $name = "Sitemap" ) {
+	public function __construct( $name = 'Sitemap' ) {
 		parent::__construct( $name );
 
-		$this->mPriorities = array(
+		$this->mPriorities = [
 			// MediaWiki standard namespaces
-			NS_MAIN                 => '1.0',
-			NS_TALK                 => '0.1',
-			NS_USER                 => '0.2',
-			NS_USER_TALK            => '0.1',
-			NS_PROJECT              => '0.1',
-			NS_PROJECT_TALK         => '0.1',
-			NS_FILE                 => '0.5',
-			NS_FILE_TALK            => '0.1',
-			NS_MEDIAWIKI            => '0.1',
-			NS_MEDIAWIKI_TALK       => '0.1',
-			NS_TEMPLATE             => '0.1',
-			NS_TEMPLATE_TALK        => '0.1',
-			NS_HELP                 => '0.1',
-			NS_HELP_TALK            => '0.1',
-			NS_CATEGORY             => '1.0',
-			NS_CATEGORY_TALK        => '0.1',
-        );
+			NS_MAIN => '1.0',
+			NS_FILE => '0.5',
+			NS_CATEGORY => '1.0',
+		];
 
 		$this->mSizeLimit = ( pow( 2, 20 ) * 10 ) - 20; // safe margin
 		$this->mLinkLimit = 5000;
 		$this->mPage = 0;
-		$this->mCacheTime = 86400*14; // cron is run every week but we want to keep them longer
+		$this->mCacheTime = 86400 * 14; // cron is run every week but we want to keep them longer
 		$this->mMediaService = new MediaQueryService();
 	}
 
@@ -71,42 +69,66 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgUser, $wgOut;
+		global $wgMemc, $wgRequest, $wgOut, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots;
+
+		$showIndex = strpos( $subpage, '-index.xml' ) !== false;
+		$isNewSitemapDefault = !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots );
+
+		$forceOldSitemap = strpos( $subpage, '-oldsitemapxml-' ) !== false;
+		$forceNewSitemap = strpos( $subpage, '-newsitemapxml-' ) !== false;
+
+		if ( ( $showIndex && $isNewSitemapDefault && !$forceOldSitemap ) || $forceNewSitemap ) {
+			if ( empty( $wgEnableSitemapXmlExt ) ) {
+				$this->print404();
+				return;
+			}
+
+			$wgOut->disable();
+			$response = F::app()->sendRequest( 'SitemapXml', 'index', [ 'path' => $subpage ] );
+			$response->sendHeaders();
+			echo $response->getBody();
+			return;
+		}
+
+		if ( !is_array( $wgMemc->get( wfMemcKey( 'sitemap-index' ) ) ) ) {
+			$wgOut->disable();
+			header( 'HTTP/1.1 500 Internal Server Error' );
+			echo '<h1>500 Internal Server Error</h1>' . PHP_EOL;
+			echo '<p>Sitemap not available. Please check again later.</p>' . PHP_EOL;
+			return;
+		}
 
 		/**
 		 * subpage works as type param, param has precedence, default is "index"
 		 */
-		$this->mType = "index";
+		$this->mType = 'index';
 		if ( !empty( $subpage ) ) {
 			$this->mType = $subpage;
 		}
 
-		$t = $wgRequest->getText( "type", "" );
-		if ( $t != "" ) {
+		$t = $wgRequest->getText( 'type', '' );
+		if ( $t != '' ) {
 			$this->mType = $t;
 		}
 
 		$this->parseType();
 
-		if( $this->mType == "google" ) {
-			$this->verifyGoogle();
-		}
-		else {
-			$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
-			$this->getNamespacesList();
-			if ( $this->mType == "namespace" ) {
-				$wgOut->disable();
+		// cache on both CDN and client
+		header( 'Cache-Control: s-maxage=86400', true );
+		header( 'X-Pass-Cache-Control: public, max-age=86400', true );
+		header( 'X-Robots-Tag: noindex' );
 
-				header( "Content-type: application/x-gzip" );
-				header( "Cache-control: max-age=86400", true );
-				print $this->generateNamespace();
-			}
-			else if($subpage == 'sitemap-index.xml') {
-				$this->generateIndex();
-			}
-			else {
-				$this->print404();
-			}
+		$this->mTitle = SpecialPage::getTitleFor( 'Sitemap', $subpage );
+		$this->getNamespacesList();
+		if ( $this->mType == 'namespace' && in_array( $this->mNamespace, $this->mNamespaces ) ) {
+			$wgOut->disable();
+
+			header( 'Content-type: application/x-gzip' );
+			print $this->generateNamespace();
+		} else if ( $subpage == 'sitemap-index.xml' || $subpage == 'sitemap-oldsitemapxml-index.xml' ) {
+			$this->generateIndex();
+		} else {
+			$this->print404();
 		}
 	}
 
@@ -114,73 +136,53 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * get all namespaces, take them from article so will only have
 	 * pages for existed namespaces
 	 *
+	 * @return array
 	 * @access public
 	 */
 	public function getNamespacesList() {
-		global $wgSitemapNamespaces;
+		global $wgContLang;
 
-		if ( is_array( $wgSitemapNamespaces ) ) {
-			$this->mNamespaces = $wgSitemapNamespaces;
-			return;
-		}
+		$excludeList = [ NS_USER, NS_PROJECT, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP, 110, 1100, 1200, 1202 ];
 
-		$excludeList = array(NS_USER, NS_PROJECT, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP, 110, 1100, 1200, 1202);
+		$nsIds = $wgContLang->getNamespaceIds();
+		$sitemapNsIds = array_filter( $nsIds, function ( $id ) use ( $excludeList ) {
+			// Exclude negative namespaces
+			if ( $id < 0 ) {
+				return false;
+			}
 
-		$includeList = array();
+			// Exclude talk pages
+			if ( $id % 2 !== 0 ) {
+				return false;
+			}
 
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE, "vslow" );
+			// Exclude namespaces from $excludeList:
+			if ( in_array( $id, $excludeList ) ) {
+				return false;
+			}
+
+			return true;
+		} );
+
+		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 		$res = $dbr->select(
 			'page',
-			array( 'page_namespace' ),
-			array(),
+			[ 'page_namespace' ],
+			[ 'page_namespace' => $sitemapNsIds ],
 			__METHOD__,
-			array(
+			[
 				'GROUP BY' => 'page_namespace',
 				'ORDER BY' => 'page_namespace',
-			)
+			]
 		);
 
+		$this->mNamespaces = [];
 
 		while ( $row = $dbr->fetchObject( $res ) ) {
-			if( $row->page_namespace >= 0 ) {
-
-				if ( !in_array($row->page_namespace, $excludeList ) ) {
-
-					if (  $row->page_namespace%2 == 0 || in_array( $row->page_namespace, $includeList ) ) {
-						$this->mNamespaces[] = $row->page_namespace;
-					}
-				}
-
-			}
+			$this->mNamespaces[] = $row->page_namespace;
 		}
-		wfProfileOut( __METHOD__ );
 
 		return $this->mNamespaces;
-	}
-
-	/**
-	 * compare provided hex with local configuration
-	 *
-	 * @access private
-	 */
-	private function verifyGoogle() {
-		global $wgGoogleSiteVerification, $wgGoogleSiteVerificationAlwaysValid, $wgOut;
-
-		$wgOut->disable();
-
-		$out = "";
-		if( $wgGoogleSiteVerification == $this->mGoogleCode ||
-			$wgGoogleSiteVerificationAlwaysValid ) {
-			header( "Cache-Control: public, max-age=3600", true );
-			$out .= "google-site-verification: google{$this->mGoogleCode}.html";
-		}
-		else {
-			header( "Cache-Control: no-cache" );
-			header( "HTTP/1.0 404 Not Found" );
-			$out .= "go away";
-		}
-		print $out;
 	}
 
 	/**
@@ -191,17 +193,12 @@ class SitemapPage extends UnlistedSpecialPage {
 		 * requested files are named like sitemap-wikicities-NS_150-0.xml.gz
 		 * index is named like sitemap-index-wikicities.xml
 		 */
-		if ( preg_match( "/^sitemap\-.+NS_(\d+)\-(\d+)/", $this->mType, $match ) ) {
-			$this->mType = "namespace";
-			$this->mNamespace = $match[ 1 ];
-			$this->mPage = $match[ 2 ];
-		}
-		elseif( preg_match( "/^google([0-9a-f]{16}).html$/", $this->mType, $match ) ) {
-			$this->mType = "google";
-			$this->mGoogleCode = $match[ 1 ];
-		}
-		else {
-			$this->mType = "index";
+		if ( preg_match( '/^sitemap\-.+NS_(\d+)\-(\d+)/', $this->mType, $match ) ) {
+			$this->mType = 'namespace';
+			$this->mNamespace = $match[1];
+			$this->mPage = $match[2];
+		} else {
+			$this->mType = 'index';
 			$this->mNamespace = false;
 		}
 	}
@@ -214,26 +211,22 @@ class SitemapPage extends UnlistedSpecialPage {
 	private function generateIndex() {
 		global $wgServer, $wgOut, $wgMemc, $wgContentNamespaces;
 
-		wfProfileIn( __METHOD__ );
-
 		$timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
 		$id = wfWikiID();
 
 		$wgOut->disable();
 
-		$out = "";
-		$out .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
+		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 
-		header( "Content-type: application/xml; charset=UTF-8" );
-		header( "Cache-control: max-age=86400", true );
+		header( 'Content-type: application/xml; charset=UTF-8' );
+		header( 'Cache-control: max-age=86400', true );
 
-		$index = $wgMemc->get( wfMemcKey( "sitemap-index") );
-		if( is_array( $index ) ) {
-			foreach( $index as $namespace => $pages ) {
+		$index = $wgMemc->get( wfMemcKey( 'sitemap-index' ) );
+		if ( is_array( $index ) ) {
+			foreach ( $index as $namespace => $pages ) {
 				$cnt = 0;
-				foreach( $pages as $page ) {
+				foreach ( $pages as $page ) {
 					$out .= sprintf( "\t<!-- page %d -->\n", $cnt );
 					$out .= "\t<sitemap>\n";
 					$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-{$cnt}.xml.gz</loc>\n";
@@ -242,8 +235,7 @@ class SitemapPage extends UnlistedSpecialPage {
 					$cnt++;
 				}
 			}
-		}
-		else {
+		} else {
 			$this->getNamespacesList();
 			foreach ( $this->mNamespaces as $namespace ) {
 				$out .= "\t<sitemap>\n";
@@ -255,8 +247,6 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$out .= "</sitemapindex>\n";
 
-		wfProfileOut( __METHOD__ );
-
 		print $out;
 	}
 
@@ -266,67 +256,64 @@ class SitemapPage extends UnlistedSpecialPage {
 	 */
 	private function generateNamespace( Array $sitemapIndex = null, $forceUpdate = false ) {
 		global $wgMemc;
-		wfProfileIn( __METHOD__ );
 
-		if( !$forceUpdate ) {
+		if ( !$forceUpdate ) {
 			$namespaceSitemap = $this->generateNamespaceFromDb();
-			if( !empty($namespaceSitemap) ) {
+			if ( !empty( $namespaceSitemap ) ) {
 				// this sitemap was pre-generated by the maintenance script and stored in db
-				wfProfileOut( __METHOD__ );
 				/*
 				 * We have to decode sitemap, change localhost urls to real wiki url
 				 * and encode it again
 				 * because on maintenance level we do not know what domain we should use
 				 */
-				return gzencode( str_replace("http://localhost/", "http://".$_SERVER['SERVER_NAME']."/", gzdecode($namespaceSitemap)) );
+				return gzencode( str_replace( 'http://localhost/', 'http://' . $_SERVER['SERVER_NAME'] . '/', gzdecode( $namespaceSitemap ) ) );
 			}
 		}
+		$start = microtime( true ) * 1000;
 
-		$dbr = wfGetDB( DB_SLAVE, "vslow" );
+		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$out .= sprintf( "<!-- generated on the fly by %s -->\n", $this->mTitle->getFullURL() );
 
-		$scope = array( 'page_namespace' => $this->mNamespace );
-		$index = is_array( $sitemapIndex ) ? $sitemapIndex : $wgMemc->get( wfMemcKey( "sitemap-index") );
-		if( isset( $index[ $this->mNamespace ] [ $this->mPage ] ) ) {
-			$scope[] = sprintf( "page_id BETWEEN %d AND %d",
-				$index[ $this->mNamespace ] [ $this->mPage ][ "start" ],
-				$index[ $this->mNamespace ] [ $this->mPage ][ "end" ]
+		$scope = [
+			'page_namespace' => $this->mNamespace,
+			'page_is_redirect' => false,
+		];
+
+		$index = is_array( $sitemapIndex ) ? $sitemapIndex : $wgMemc->get( wfMemcKey( 'sitemap-index' ) );
+		if ( isset( $index[$this->mNamespace][$this->mPage] ) ) {
+			$scope[] = sprintf( 'page_id BETWEEN %d AND %d',
+				$index[$this->mNamespace][$this->mPage]['start'],
+				$index[$this->mNamespace][$this->mPage]['end']
 			);
 			$out .= sprintf( "<!-- pages from %d to %d -->\n",
-				$index[ $this->mNamespace ] [ $this->mPage ][ "start" ],
-				$index[ $this->mNamespace ] [ $this->mPage ][ "end" ]
+				$index[$this->mNamespace][$this->mPage]['start'],
+				$index[$this->mNamespace][$this->mPage]['end']
 			);
 		}
+
 		$sth = $dbr->select(
 			'page',
-			array(
+			[
 				'page_namespace',
 				'page_title',
 				'page_touched',
-			),
+				'page_id',
+			],
 			$scope,
 			__METHOD__,
-			array( "ORDER BY" => "page_id" )
+			[
+				'ORDER BY' => 'page_id',
+				'USE INDEX' => 'PRIMARY', # PLATFORM-1286
+			]
 		);
 
-		$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
-		if( $includeVideo && ( $this->mNamespace != NS_FILE ) ) {
-			$includeVideo = false;
-		}
-		$startTime = microtime(true);
+		$includeVideo = F::app()->wg->EnableVideoSitemaps && $this->mNamespace == NS_FILE;
 
 		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"" . ( $includeVideo ? ' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"' : '' ) . ">\n";
 		while ( $row = $dbr->fetchObject( $sth ) ) {
 			$size = strlen( $out );
-			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-			$stamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
-			$prior = isset( $this->mPriorities[ $row->page_namespace ] )
-				? $this->mPriorities[ $row->page_namespace ]
-				: "0.5";
-
-			$entry = $this->titleEntry( $title, $stamp, $prior, $includeVideo );
+			$entry = $this->titleEntry( $row, $includeVideo );
 
 			/**
 			 * break if it's to big
@@ -338,148 +325,149 @@ class SitemapPage extends UnlistedSpecialPage {
 			$out .= $entry;
 		}
 		$out .= "</urlset>\n";
-		$endTime = microtime(true);
-		$out .= "<!-- Generating time: " . ( $endTime - $startTime ) . " sec - " . date('Y-m-d H:i:s') . " -->\n";
+		$out .= sprintf( '<!-- Generation time: %dms -->' . PHP_EOL, ( microtime( true ) * 1000 - $start ) );
+		$out .= sprintf( '<!-- Generation date: %s -->' . PHP_EOL, wfTimestamp( TS_ISO_8601 ) );
 
-		wfProfileOut( __METHOD__ );
 		return gzencode( $out );
 	}
 
 	private function generateNamespaceFromDb() {
-		wfProfileIn( __METHOD__ );
+		// Sitemaps are ONLY saved to database for NS_6 and only if wgEnableVideoSitemaps is true.
+		// If you turn that var ON you're putting the pre-cached sitemaps into the db.
+		// If you then turn the var back OFF you're serving the outdated sitemaps.
+		// SEO-557
+		if ( !F::app()->wg->EnableVideoSitemaps ) {
+			return null;
+		}
 
 		$dbr = wfGetDB( DB_SLAVE );
-		if( $dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
+		if ( $dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
 			$sitemapContent = $dbr->selectField(
 				self::BLOBS_TABLE_NAME,
 				'sbl_content',
-				array(
+				[
 					'sbl_ns_id' => $this->mNamespace,
 					'sbl_page_id' => $this->mPage
-				),
+				],
 				__METHOD__
 			);
-		}
-		else {
+		} else {
 			$sitemapContent = null;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $sitemapContent;
 	}
 
 	private function storeNamespaceToDb( $sitemapNamespaceContent ) {
-		wfProfileIn( __METHOD__ );
-
 		$dbr = wfGetDB( DB_MASTER );
-		if( $dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
+		if ( $dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
 			$dbr->replace(
 				self::BLOBS_TABLE_NAME,
 				null,
-				array(
+				[
 					'sbl_ns_id' => $this->mNamespace,
 					'sbl_page_id' => $this->mPage,
 					'sbl_content' => $sitemapNamespaceContent
-				),
+				],
 				__METHOD__
 			);
 			$dbr->commit();
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
-	private function titleEntry( Title $title, $date, $priority, $includeVideo = false ) {
+	private function titleEntry( $row, $includeVideo ) {
+		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+		$timestamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
+		$priority = isset( $this->mPriorities[$row->page_namespace] )
+			? $this->mPriorities[$row->page_namespace]
+			: '0.5';
+
+		$videoEntry = '';
+		if ( $includeVideo ) {
+			$skipDescription = !$this->hasSnippet( $row->page_id );
+			$videoEntry = $this->videoEntry( $title, $skipDescription );
+		}
+
 		return
 			"\t<url>\n" .
 			"\t\t<loc>{$title->getFullURL()}</loc>\n" .
-			"\t\t<lastmod>$date</lastmod>\n" .
+			"\t\t<lastmod>$timestamp</lastmod>\n" .
 			"\t\t<priority>$priority</priority>\n" .
-			( $includeVideo ? $this->videoEntry( $title ) : "" ) .
+			$videoEntry .
 			"\t</url>\n";
 	}
 
-	private function videoEntry( Title $title ) {
-		wfProfileIn( __METHOD__ );
-
+	private function videoEntry( Title $title, $skipDescription = false ) {
 		$file = wfFindFile( $title );
 
-		$videoTitleData = $this->mMediaService->getMediaData( $title, 500 );
+		$videoTitleData = $this->mMediaService->getMediaData( $title, $skipDescription ? 0 : 500 );
 
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 		if ( !$isVideo ) {
-			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
 		$metaData = $videoTitleData['meta'];
 
-		if( ( $videoTitleData['type'] != MediaQueryService::MEDIA_TYPE_VIDEO ) || $metaData['canEmbed'] === 0 ) {
-			wfProfileOut( __METHOD__ );
+		if ( ( $videoTitleData['type'] != MediaQueryService::MEDIA_TYPE_VIDEO ) || $metaData['canEmbed'] === 0 ) {
 			return '';
 		}
 
-		$description = !empty($videoTitleData['desc']) ? $videoTitleData['desc'].' ' : ( !empty($metaData['description']) ? $metaData['description'].' ' : '' );
+		$description = !empty( $videoTitleData['desc'] ) ? $videoTitleData['desc'] . ' ' : ( !empty( $metaData['description'] ) ? $metaData['description'] . ' ' : '' );
 		$description .= $videoTitleData['title'];
 		$entry =
-				"\t\t<video:video>\n" .
-				"\t\t\t<video:title><![CDATA[{$videoTitleData['title']}]]></video:title>\n" .
-				"\t\t\t<video:description><![CDATA[{$description}]]></video:description>\n" .
-				( !empty($videoTitleData['thumbUrl']) ? "\t\t\t<video:thumbnail_loc>{$videoTitleData['thumbUrl']}</video:thumbnail_loc>\n" : "" ) .
-				( ( $metaData['srcType'] == 'player') ? "\t\t\t<video:player_loc allow_embed=\"yes\" " . ( !empty($metaData['autoplayParam']) ? "autoplay=\"{$metaData['autoplayParam']}\"" : "" ) . ">".htmlentities($metaData['srcParam'])."</video:player_loc>\n" :
-						"\t\t\t<video:content_loc>".htmlentities($metaData['srcParam'])."</video:content_loc>\n" ) .
-				( !empty($metaData['duration']) ? "\t\t\t<video:duration>{$metaData['duration']}</video:duration>\n" : "" ) .
-				"\t\t\t<video:family_friendly>yes</video:family_friendly>\n" .
-				"\t\t</video:video>\n";
+			"\t\t<video:video>\n" .
+			"\t\t\t<video:title><![CDATA[{$videoTitleData['title']}]]></video:title>\n" .
+			"\t\t\t<video:description><![CDATA[{$description}]]></video:description>\n" .
+			( !empty( $videoTitleData['thumbUrl'] ) ? "\t\t\t<video:thumbnail_loc>{$videoTitleData['thumbUrl']}</video:thumbnail_loc>\n" : "" ) .
+			( ( $metaData['srcType'] == 'player' ) ? "\t\t\t<video:player_loc allow_embed=\"yes\" " . ( !empty( $metaData['autoplayParam'] ) ? "autoplay=\"{$metaData['autoplayParam']}\"" : "" ) . ">" . htmlentities( $metaData['srcParam'] ) . "</video:player_loc>\n" :
+				"\t\t\t<video:content_loc>" . htmlentities( $metaData['srcParam'] ) . "</video:content_loc>\n" ) .
+			( !empty( $metaData['duration'] ) ? "\t\t\t<video:duration>{$metaData['duration']}</video:duration>\n" : "" ) .
+			"\t\t\t<video:family_friendly>yes</video:family_friendly>\n" .
+			"\t\t</video:video>\n";
 
-		wfProfileOut( __METHOD__ );
 		return $entry;
 	}
 
 	public function cachePages( $namespace ) {
-		wfProfileIn( __METHOD__ );
-
-		$dbr = wfGetDB( DB_SLAVE, "vslow" );
+		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 		$sth = $dbr->select(
-			array( "page" ),
-			array( "page_title, page_id, page_namespace" ),
-			array( "page_namespace" => $namespace ),
+			[ 'page' ],
+			[ 'page_title, page_id, page_namespace' ],
+			[ 'page_namespace' => $namespace ],
 			__METHOD__,
-			array( "ORDER BY" => "page_id" )
+			[ 'ORDER BY' => 'page_id' ]
 		);
 		$pCounter = 0; // counter for pages in index
 		$rCounter = 0; // counter for rows (titles)
-		$index = array();
-		$index[ $pCounter ] = array( );
-		$last  = 0;
-		while( $row = $dbr->fetchObject( $sth ) ) {
-			if( empty( $index[ $pCounter ][ "start" ] )  ) {
-				$index[ $pCounter ][ "start" ] = $row->page_id;
+		$index = [];
+		$index[$pCounter] = [];
+		$last = 0;
+		while ( $row = $dbr->fetchObject( $sth ) ) {
+			if ( empty( $index[$pCounter]['start'] ) ) {
+				$index[$pCounter]['start'] = $row->page_id;
 			}
 			$rCounter++;
-			if( $rCounter >= $this->mLinkLimit ) {
-				$index[ $pCounter ][ "end" ] = $row->page_id;
+			if ( $rCounter >= $this->mLinkLimit ) {
+				$index[$pCounter]['end'] = $row->page_id;
 				$pCounter++;
 				$rCounter = 0;
-				$index[ $pCounter ] = array( );
+				$index[$pCounter] = [];
 			}
 			$last = $row->page_id;
 		}
-		if( empty( $index[ $pCounter ][ "end" ] ) ) {
-			$index[ $pCounter ][ "end" ] = $last;
+		if ( empty( $index[$pCounter]['end'] ) ) {
+			$index[$pCounter]['end'] = $last;
 		}
-		wfProfileOut( __METHOD__ );
 
 		return $index;
 	}
 
 	public function cacheSitemap( $namespace, $sitemapIndex ) {
-		wfProfileIn(__METHOD__);
-
 		$this->initDb();
 
 		$this->mTitle = Title::newFromText( 'Sitemap', NS_SPECIAL );
-		foreach( $sitemapIndex[$namespace] as $pageNo => $data ) {
+		foreach ( $sitemapIndex[$namespace] as $pageNo => $data ) {
 			$this->mNamespace = $namespace;
 			$this->mPage = $pageNo;
 
@@ -487,19 +475,15 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->storeNamespaceToDb( $this->generateNamespace( $sitemapIndex, true ) );
 		}
 
-		wfProfileOut(__METHOD__);
 		return false;
 	}
 
 	private function initDb() {
-		wfProfileIn(__METHOD__);
 		$dbr = wfGetDb( DB_MASTER );
 
-		if( !$dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
-			$dbr->sourceFile( dirname(__FILE__) . '/sitemap_blobs.patch.sql' );
+		if ( !$dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
+			$dbr->sourceFile( dirname( __FILE__ ) . '/sitemap_blobs.patch.sql' );
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -512,35 +496,90 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$wgOut->disable();
 
-		$out = "";
-		header( "Cache-Control: no-cache" );
-		header( "HTTP/1.0 404 Not Found" );
-		$out .= "404: Page doesn't exist";
-		print $out;
+		header( 'HTTP/1.0 404 Not Found' );
+		echo '404: Page doesn\'t exist';
 	}
 
 	/**
 	 * LoadExtensionSchemaUpdates handler; set up sitemap_blobs table on install/upgrade.
 	 */
 	public static function onLoadExtensionSchemaUpdates( $updater = null ) {
-		wfProfileIn( __METHOD__ );
-
-		if( !empty( $updater ) ) {
-			$map = array(
+		if ( !empty( $updater ) ) {
+			$map = [
 				'mysql' => 'sitemap_blobs.patch.sql',
-			);
+			];
 
 			$type = $updater->getDB()->getType();
-			if( isset( $map[$type] ) ) {
-				$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
+			if ( isset( $map[$type] ) ) {
+				$sql = dirname( __FILE__ ) . '/' . $map[$type];
 				$updater->addExtensionTable( SitemapPage::BLOBS_TABLE_NAME, $sql );
-			}
-			else {
+			} else {
 				throw new MWException( "Sitemap extension does not currently support $type database." );
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	/**
+	 * Query Solr (once) to find out which NS_FILE pages are indexed in Solr
+	 *
+	 * Later we use this information to only expect a snippet for pages that are indexed in Solr.
+	 * This means no querying Solr for information it doesn't have and no falling back to parsing
+	 * wikitext for mostly empty pages (if they weren't empty, they would be indexed).
+	 *
+	 * If more there are more than self::SOLR_LIMIT documents, we'll always return true.
+	 *
+	 * @param $pageId
+	 * @return bool
+	 */
+	private function hasSnippet( $pageId ) {
+		global $wgCityId;
+
+		static $pageIdsWithSnippets = null;
+		static $alwaysReturnTrue = false;
+
+		if ( is_null( $pageIdsWithSnippets ) ) {
+			$pageIdsWithSnippets = [];
+
+			$luceneQuery = sprintf( 'wid:%d AND is_image:false AND ns:%d', $wgCityId, NS_FILE );
+
+			$config = new Wikia\Search\Config();
+			$config->setDirectLuceneQuery( true );
+			$config->setLimit( 1 );
+			$config->setQuery( $luceneQuery );
+
+			$queryServiceFactory = new Wikia\Search\QueryService\Factory();
+			$response = $queryServiceFactory->getFromConfig( $config )->search();
+
+			$numResults = $response->getResultsFound();
+
+			if ( $numResults > self::SOLR_LIMIT ) {
+				$alwaysReturnTrue = true;
+				return true;
+			}
+
+			$limit = Wikia\Search\Config::MAX_RESULTS_PER_PAGE;
+
+			for ( $start = 0; $start < $numResults; $start += $limit ) {
+				$config->setLimit( $limit );
+				$config->setStart( $start );
+				$query = $queryServiceFactory->getFromConfig( $config );
+				$response = $query->search();
+
+				$results = (array)$response->getResults();
+
+				foreach ( $results as $result ) {
+					$pageId = $result->getFields()['pageid'];
+					$pageIdsWithSnippets[$pageId] = true;
+				}
+			}
+		}
+
+		if ( $alwaysReturnTrue ) {
+			return true;
+		}
+
+		return isset( $pageIdsWithSnippets[$pageId] );
 	}
 }

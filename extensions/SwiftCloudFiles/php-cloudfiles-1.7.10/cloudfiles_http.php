@@ -121,6 +121,8 @@ class CF_Http
     private $_cdn_acl_user_agent;
     private $_cdn_acl_referrer;
 
+    const PUT_TIMEOUT_MS = 30000; # Wikia change / PLATFORM-1788
+
     function __construct($api_version)
     {
         $this->dbug = False;
@@ -205,7 +207,7 @@ class CF_Http
 
     # Uses separate cURL connection to authenticate
     #
-    public function authenticate( $user, $pass, $host = NULL ) {
+    private function do_authenticate( $user, $pass, $host = NULL ) {
 		$path = array( );
 		$headers = array(
 			sprintf( "%s: %s", AUTH_USER_HEADER, $user ),
@@ -232,7 +234,7 @@ class CF_Http
 		curl_setopt( $curl_ch, CURLOPT_TIMEOUT, 10 );
 		curl_setopt( $curl_ch, CURLOPT_URL, $url );
 		if ( curl_exec( $curl_ch ) === false ) {
-			$this->response_reason = "(curl error: " . curl_errno( $curl_ch ) . ") ";
+			$this->response_reason = "[{$host}] (curl error: " . curl_errno( $curl_ch ) . ") ";
 			$this->response_reason .= curl_error( $curl_ch );
 		}
 		curl_close( $curl_ch );
@@ -240,7 +242,43 @@ class CF_Http
 		return array( $this->response_status, $this->response_reason,
 			$this->storage_url, $this->cdnm_url, $this->auth_token );
 	}
-	
+
+	// Wikia change - begin
+	// retry auth request in case of an error (PLATFORM-1659)
+	public function authenticate( $user, $pass, $host = NULL ) {
+		$retriesLeft = self::MAX_RETRIES;
+		$res = false;
+
+		wfDebug( __METHOD__ . "\n" );
+
+		while( $retriesLeft >= 0 ) {
+			list( $status, $reason, $surl, $curl, $atoken ) = $this->do_authenticate( $user, $pass, $host );
+
+			# PLATFORM-1659 - retry all HTTP 50x responses
+			if ( ($status >= 200 && $status <= 299) ) {
+				wfDebug( __METHOD__ . ": ok\n" );
+				break;
+			}
+
+			# PLATFORM-1521 - report an error only when there are no retries left
+			$level = ( $retriesLeft === 0 ) ? 'error' : 'warning';
+
+			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: authentication retry', array(
+				'exception'    => new SwiftRetryException( $reason, is_numeric($status) ? $status : 0 ),
+				'retries-left' => $retriesLeft,
+			) );
+
+			wfDebug( sprintf( "%s : retrying as I got '%s' (%d retries left)\n", __METHOD__ , trim( $reason ), $retriesLeft ) );
+
+			// wait a bit before retrying the request
+			usleep( self::RETRY_DELAY * 1000 );
+			$retriesLeft--;
+		}
+
+		return array( $status, $reason, $surl, $curl, $atoken );
+	}
+	// Wikia change - end
+
     # (CDN) GET /v1/Account
     #
     function list_cdn_containers($enabled_only)
@@ -795,8 +833,14 @@ class CF_Http
         return array($return_code,$this->response_reason);
     }
 
-    # PUT /v1/Account/Container/Object
-    #
+	/**
+	 * PUT /v1/Account/Container/Object
+	 *
+	 * @param CF_Object $obj
+	 * @param resource $fp
+	 * @return array
+	 * @throws SyntaxException
+	 */
     function put_object(&$obj, &$fp)
     {
         if (!is_object($obj) || get_class($obj) != "CF_Object") {
@@ -824,6 +868,7 @@ class CF_Http
         }
 
         $this->_init($conn_type);
+        curl_setopt($this->connections[$conn_type], CURLOPT_TIMEOUT_MS, self::PUT_TIMEOUT_MS); # Wikia change / PLATFORM-1788
         curl_setopt($this->connections[$conn_type],
                 CURLOPT_INFILE, $fp);
         if (!$obj->content_length) {
@@ -970,7 +1015,12 @@ class CF_Http
         // Wikia change - end
 
         $hdrs = self::_process_headers($metadata, $headers);
-        $hdrs[DESTINATION] = $destination;
+
+		// Wikia change - begin
+		// @author macbre
+		// BAC-1102 - encode URL in HTTP header as RFC 5987 tells us to
+        $hdrs[DESTINATION] = urlencode($destination);
+		// Wikia change - end
 
         $return_code = $this->_send_request($conn_type,$url_path,$hdrs,"COPY");
         switch ($return_code) {
@@ -1444,7 +1494,7 @@ class CF_Http
             CURLOPT_URL, $url_path);
 
         if (!curl_exec($this->connections[$conn_type]) && curl_errno($this->connections[$conn_type]) !== 0) {
-            $this->error_str = "(curl error: "
+            $this->error_str = "[{$this->storage_url}: {$method} <{$url_path}> " . json_encode($headers) . "] (curl error: "
                 . curl_errno($this->connections[$conn_type]) . ") ";
             $this->error_str .= curl_error($this->connections[$conn_type]);
 
@@ -1463,7 +1513,7 @@ class CF_Http
 	// Wikia change - begin
 	// retry request in case of an error
 	const MAX_RETRIES = 5;
-	const RETRY_DELAY = 1000; // ms
+	const RETRY_DELAY = 250; // ms
 
 	private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False) {
 		$retriesLeft = self::MAX_RETRIES;
@@ -1472,20 +1522,21 @@ class CF_Http
 		while( $retriesLeft >= 0 ) {
 			$res = $this->_do_send_request( $conn_type, $url_path, $hdrs, $method, $force_new );
 
-			if ( !in_array( $res, [ 500, 503, false ] ) ) {
-				// request was successful, return
+			# PLATFORM-1059 - retry all HTTP 50x responses
+			if ( $res !== false && $res < 500 ) {
 				break;
 			}
 
-			// log errors
-			if ( is_numeric( $res ) ) {
-				$message = json_encode( [ $conn_type, $url_path, $hdrs, "HTTP {$res}" ] );
-			}
-			else {
-				$message = $this->error_str;
-			}
+			# PLATFORM-1521 - report an error only when there are no retries left
+			$level = ( $retriesLeft === 0 ) ? 'error' : 'warning';
 
-			\Wikia\SwiftStorage::log( __CLASS__ . '::retryRequest::' . $retriesLeft, $message );
+			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: retry', [
+				'exception'    => new SwiftRetryException( $this->error_str, is_numeric($res) ? $res : 0 ),
+				'retries-left' => $retriesLeft,
+				'headers'      => $hdrs,
+				'conn-type'    => $conn_type,
+				'path'         => $url_path
+			] );
 
 			// wait a bit before retrying the request
 			usleep( self::RETRY_DELAY * 1000 );

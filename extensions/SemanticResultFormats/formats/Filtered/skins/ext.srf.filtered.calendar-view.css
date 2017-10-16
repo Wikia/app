@@ -1,0 +1,10 @@
+/*
+	Stylesheet for the calendar view
+*/
+
+a.fc-event-hori, .fc-event-hori a {
+    color: #ffffff;
+	font-weight: bold;
+	padding: 0 2px;
+}
+

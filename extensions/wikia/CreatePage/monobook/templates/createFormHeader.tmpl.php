@@ -10,11 +10,11 @@
 <?php endif; ?>
 
 <div id="createpage_messenger" style="display:none; color:red;" ></div>
-<b><?=wfMsg ('createpage_title_caption');?></b>
+<b><?= wfMessage( 'createpage_title_caption' )->escaped(); ?></b>
 <br/>
-<input name="postTitle" id="postTitle" value="<?=isset($formData['postTitle'])?$formData['postTitle']:"";?>" style="width: 70%" /><br/><br/>
+<input name="postTitle" id="postTitle" value="<?= Sanitizer::encodeAttribute( isset( $formData['postTitle'] ) ? $formData['postTitle'] : '' ); ?>" style="width: 70%" /><br/><br/>
 <?php if(!empty($editIntro)): ?>
 	<?php echo $editIntro; ?>
 	<br />
 <?php endif; ?>
-<b><?=wfMsg ('createpage_enter_text');?></b>
+<b><?= wfMessage( 'createpage_enter_text' )->escaped(); ?></b>

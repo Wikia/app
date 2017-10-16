@@ -11,7 +11,8 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 abstract class WikiaController extends WikiaDispatchableObject {
-	final public function allowsExternalRequests(){
+
+	public function allowsExternalRequests(){
 		return true;
 	}
 
@@ -127,5 +128,23 @@ abstract class WikiaController extends WikiaDispatchableObject {
 		if ( $this->response->getFormat() == 'html' ) {
 			$this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/Wikia_help.php' );
 		}
+	}
+
+	/**
+	 * Stub method, which provides a fallback in case
+	 * when user doesn't have permissions to launch controller (e.g. anonymous user).
+	 *
+	 * For example, extending of this method can be used
+	 * for developing API for anonymous users, but with access keys.
+	 *
+	 * Important: due to complexity of existing flow of processing requests -
+	 * at the point of execution of this method, instance of controller is not injected yet with request object
+	 *
+	 * So, if you want to access request, use: RequestContext::getMain()->getRequest()
+	 *
+	 * @return bool
+	 */
+	public function isAnonAccessAllowedInCurrentContext() {
+		return false;
 	}
 }

@@ -43,7 +43,7 @@ class WikiaPhotoGalleryHelper {
 	 */
 	static public function setup(&$ig, &$text, &$params) {
 		wfProfileIn(__METHOD__);
-		
+
 		$ig = new WikiaPhotoGallery();
 
 		// store content of <gallery> tag
@@ -62,9 +62,12 @@ class WikiaPhotoGalleryHelper {
 
 	/**
 	 * Allow this extension to use its own "parser" for <gallery> tag content
+	 * @param Parser $parser
+	 * @param WikiaPhotoGallery $ig
+	 * @return bool false
 	 */
-	static public function beforeRenderImageGallery(&$parser, &$ig) {
-		$ig->parse($parser);
+	static public function beforeRenderImageGallery( Parser $parser, WikiaPhotoGallery $ig ): bool {
+		$ig->parse( $parser );
 		// by returning false we're telling MW parser to return gallery's HTML immediatelly
 		return false;
 	}
@@ -94,7 +97,7 @@ class WikiaPhotoGalleryHelper {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
+		if ( F::app()->checkSkin( [ 'oasis' ] ) ) {
 			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
 
 			// load message for MW toolbar button tooltip
@@ -184,7 +187,7 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Parse given link and return link tag attributes
 	 */
-	static public function parseLink(&$parser, $url, $text, $link) {
+	static public function parseLink( $parser, $url, $text, $link ) {
 		// fallback: link to image page + lightbox
 		$linkAttribs = array(
 			'class' => 'image lightbox',
@@ -192,8 +195,13 @@ class WikiaPhotoGalleryHelper {
 			'title' => $text,
 		);
 
+		// MAIN-11034: $parser can be empty here, just return
+		if ( !( $parser instanceof Parser ) ) {
+			return $linkAttribs;
+		}
+
 		// detect internal / external links (|links= param)
-		if ($link != '') {
+		if ( $link != '' ) {
 			$chars = Parser::EXT_LINK_URL_CLASS;
 			$prots = $parser->mUrlProtocols;
 
@@ -662,9 +670,9 @@ class WikiaPhotoGalleryHelper {
 			$image['videoPlayButton'] = false;
 			if( WikiaFileHelper::isFileTypeVideo($img) ) {
 				// Get play button overlay for video thumb
-				$image['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( self::STRICT_IMG_WIDTH_PREV, self::STRICT_IMG_HEIGHT_PREV );
+				$image['videoPlayButton'] = '<span class="play-circle"></span>';
 			}
-			
+
 			//need to use parse() - see RT#44270
 			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
 
@@ -684,126 +692,6 @@ class WikiaPhotoGalleryHelper {
 			'width' => self::STRICT_IMG_WIDTH_PREV,
 		));
 		$html = $template->render('sliderPreview');
-
-		wfProfileOut(__METHOD__);
-		return $html;
-	}
-
-
-
-	/**
-	 * Render gallery preview for feed
-	 *
-	 * @author Marooned
-	 */
-	static public function renderFeedGalleryPreview($gallery) {
-		global $wgTitle, $wgParser, $wgExtensionsPath;
-		wfProfileIn(__METHOD__);
-
-		$data = WikiaPhotoGalleryRSS::parseFeed($gallery['params']['rssfeed']);
-
-		//use images from feed
-		$gallery['images'] = $data['images'];
-
-		// render thumbnail and parse caption for each image (default "box" is 200x200)
-		$thumbSize = !empty($gallery['params']['widths']) && is_numeric($gallery['params']['widths']) ? $gallery['params']['widths'] : 200;
-		$borderSize = (!empty($gallery['params']['bordersize'])) ? $gallery['params']['bordersize'] : 'small';
-		$orientation = !empty($gallery['params']['orientation']) ? $gallery['params']['orientation'] : 'none';
-		$ratio = self::getRatioFromOption($orientation);
-		$crop = true;
-
-		// calculate height based on gallery width
-		$height = round($thumbSize / $ratio);
-
-		foreach ($gallery['images'] as $index => &$image) {
-			$image['placeholder'] = false;
-
-			$image['height'] = $height;
-			$image['width'] = $thumbSize;
-
-			$image['thumbnail'] = false;
-			$image['image'] = $image['src'];
-
-			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $image['link'], $match);
-			$image['caption'] = wfMsg('wikiaPhotoGallery-feed-caption', $image['caption'], $image['link'], $match[1]);
-		}
-
-		//compensate image wrapper width depending on the border size
-		switch ($borderSize) {
-			case 'large':
-				$thumbSize += 10; //5px * 2
-				$height += 10;
-				break;
-			case 'medium':
-				$thumbSize += 4; //2px * 2
-				$height += 4;
-				break;
-			case 'small':
-				$thumbSize += 2; //1px * 2
-				$height += 2;
-				break;
-		}
-
-		// render gallery HTML preview
-		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-		$template->set_vars(array(
-			'borderColor' => (!empty($gallery['params']['bordercolor'])) ? $gallery['params']['bordercolor'] : 'accent',
-			'borderSize' => $borderSize,
-			'captionsAlign' => (!empty($gallery['params']['captionalign'])) ? $gallery['params']['captionalign'] : 'left',
-			'captionsColor' => (!empty($gallery['params']['captiontextcolor'])) ? $gallery['params']['captiontextcolor'] : null,
-			'captionsPosition' => (!empty($gallery['params']['captionposition'])) ? $gallery['params']['captionposition'] : 'below',
-			'captionsSize' => (!empty($gallery['params']['captionsize'])) ? $gallery['params']['captionsize'] : 'medium',
-			'fromFeed' => true,
-			'gallery' => $gallery,
-			'maxHeight' => $height,
-			'perRow' => (!empty($gallery['params']['columns'])) ? intval($gallery['params']['columns']): 'dynamic',
-			'position' => (!empty($gallery['params']['position'])) ? $gallery['params']['position'] : 'left',
-			'spacing' => (!empty($gallery['params']['spacing'])) ? $gallery['params']['spacing'] : 'medium',
-			'width' => $thumbSize
-		));
-
-		$html = $template->render('galleryPreview');
-
-		wfProfileOut(__METHOD__);
-		return $html;
-	}
-
-	/**
-	 * Render slideshow preview
-	 *
-	 * @author Marooned
-	 */
-	static public function renderFeedSlideshowPreview($slideshow) {
-		wfProfileIn(__METHOD__);
-
-		$data = WikiaPhotoGalleryRSS::parseFeed($slideshow['params']['rssfeed']);
-
-		//use images from feed
-		$slideshow['images'] = $data['images'];
-
-		// handle "crop" attribute
-		$crop = isset($slideshow['params']['crop']) ? ($slideshow['params']['crop'] == 'true') : false;
-
-		// render thumbnail
-		$maxWidth = isset($slideshow['params']['widths']) && is_numeric($slideshow['params']['widths']) ? $slideshow['params']['widths'] : 300;
-		$maxHeight = round($maxWidth * 3/4);
-
-		// render slideshow images
-		foreach ($slideshow['images'] as &$image) {
-			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $image['link'], $match);
-			$image['caption'] = wfMsg('wikiaPhotoGallery-feed-caption', $image['caption'], $image['link'], $match[1]);
-			$image['image'] = $image['src'];
-		}
-
-		// render gallery HTML preview
-		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-		$template->set_vars(array(
-			'fromFeed' => true,
-			'height' => $maxHeight,
-			'slideshow' => $slideshow,
-			'width' => $maxWidth
-		));
-		$html = $template->render('slideshowPreview');
 
 		wfProfileOut(__METHOD__);
 		return $html;
@@ -953,7 +841,7 @@ class WikiaPhotoGalleryHelper {
 				$editPage->summary = wfMsgForContent('wikiaPhotoGallery-edit-summary');
 
 				// watch all my edits / preserve watchlist (RT #59138)
-				if ($wgUser->getOption('watchdefault')) {
+				if ($wgUser->getGlobalPreference('watchdefault')) {
 					$editPage->watchthis = true;
 				}
 				else {
@@ -1091,6 +979,27 @@ class WikiaPhotoGalleryHelper {
 		if( $text !== false ) {
 			$text = str_replace('<gallery ', "<gallery source=\"template\x7f\" ", $text);
 		}
+		return true;
+	}
+
+	/**
+	 * Hook handler - Add a key for new gallery to parser cache
+	 * TODO: Remove this hook once media gallery is ready to be fully deployed
+	 *
+	 * @param $hash
+	 * @return bool
+	 */
+	public static function addMediaGalleryCacheKey( &$hash ) {
+		global $wgRequest, $wgEnableMediaGalleryExt;
+
+		if ( $wgRequest->getVal( 'gallery' ) == 'new' ) {
+
+			$wgEnableMediaGalleryExt = true;
+
+			// Add a key to parser cache key
+			$hash .= '!' . 'NewGallery';
+		}
+
 		return true;
 	}
 
@@ -1329,5 +1238,85 @@ class WikiaPhotoGalleryHelper {
 				return 1;
 				break;
 		}
+	}
+
+	/**
+	 * Checks if the gallery parameter navigation="true" needs to be added to or removed from galleries.
+	 * See checkNavigationParamGalleries for more information.
+	 * @param $editPage
+	 * @param $request
+	 * @return bool
+	 */
+	static public function onImportFormData( $editPage, $request ) {
+		$editPage->textbox1 = preg_replace_callback(
+			'/< *gallery([^>]*)>([^<]+)< *\/ *gallery *>/',
+			'WikiaPhotoGalleryHelper::checkNavigationParamGalleries',
+			$editPage->textbox1
+		);
+
+		return True;
+	}
+
+	/**
+	 * Checks if a gallery needs to have the parameter navigation="true" added or removed from
+	 * its tag. The spec says that if the gallery has 2 or more images, one of which is linked,
+	 * and the gallery is not a slider (ie, has type="slider" as a parameter), then the gallery
+	 * should have navigation="true" added to the tag. If it has navigation="true" already and
+	 * the gallery is edited to removed all linked images, the parameter should be removed.
+	 * See VID-1888 for more information.
+	 * @param $matches
+	 * @return string
+	 */
+	static public function checkNavigationParamGalleries( $matches ) {
+		$galleryParams = trim( $matches[1] );
+		$galleryContent = trim( $matches[2] );
+		$galleryLines = array_filter( explode( "\n", $galleryContent ) );
+		$hasNavigationParam = false;
+
+		if ( preg_match_all( "/([^ =\"']+) *= *[\"']?([^ \"']+)[\"']?/", $galleryParams, $paramMatches ) ) {
+			$paramNames = $paramMatches[1];
+			$paramValues = $paramMatches[2];
+			foreach ( $paramNames as $paramIndex => $paramName ) {
+				$paramName = strtolower( $paramName );
+
+				// If this gallery is a slider, return untouched
+				if ( $paramName == 'type' && strtolower( $paramValues[$paramIndex] ) == 'slider' ) {
+					return $matches[0];
+				}
+
+				if ( $paramName == 'navigation' ) {
+					$hasNavigationParam = true;
+				}
+
+			}
+		}
+
+		// Requirements state not to convert galleries that only contain one image
+		if ( count( $galleryLines ) <= 1 ) {
+			return $matches[0];
+		}
+
+		// Look for any linked images
+		$hasLink = false;
+		foreach ( $galleryLines as $line ) {
+			if ( preg_match( '/\| *link=/', $line ) ) {
+				$hasLink = true;
+				break;
+			}
+		}
+
+		if ( $hasLink && !$hasNavigationParam ) {
+			// Add navigation if gallery has links
+			$gallery = "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." navigation=\"true\">\n$galleryContent\n</gallery>";
+		} elseif ( !$hasLink && $hasNavigationParam ) {
+			// Removed navigation param if gallery has no links
+			$galleryParams = preg_replace( '/navigation\s*=[\'"]\s*true[\'"]/i', '', $galleryParams );
+			$gallery =  "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" ).">\n$galleryContent\n</gallery>";
+		} else {
+			// Return gallery tag unaltered if there are no linked gallery images
+			$gallery = $matches[0];
+		}
+
+		return $gallery;
 	}
 }

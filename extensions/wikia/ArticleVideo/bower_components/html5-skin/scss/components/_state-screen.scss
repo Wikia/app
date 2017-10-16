@@ -1,0 +1,144 @@
+.oo-state-screen {
+  @extend .oo-expand;
+  overflow: hidden;
+  cursor: default;
+  @include vendor-prefixes(user-select, none);
+
+  .oo-fading-underlay {
+    @extend .oo-expand;
+    background-color: #1a1a1a;
+    opacity: 0;
+  }
+  .oo-fading-underlay-active {
+    @extend .oo-expand;
+    background-color: #1a1a1a;
+    opacity: 0.5;
+  }
+  .oo-fading-underlay.oo-animate-fade {
+    opacity: 0.5;
+    @include vendor-prefixes(transition, all 1s ease);
+  }
+  .oo-underlay-gradient {
+    @extend .oo-expand;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%);
+  }
+
+  .oo-state-screen-selectable {
+    @extend .oo-expand;
+    text-decoration:none;
+    cursor: default;
+    //for IE
+    background-color:white;
+    opacity: 0;
+    filter: alpha(opacity=1);
+  }
+
+  .oo-state-screen-poster {
+    width:100%;
+    top:0;
+    left:0;
+    background-size: cover; //set back to contain after poster attr added to video tag
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    img {
+      visibility: hidden;
+      width:100%;
+    }
+  }
+
+  .oo-state-screen-poster-small {
+    position: relative;
+    width: 75%;
+    height: 200px;
+    top: 5%;
+    left: 5%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    img {
+      visibility: hidden;
+      width:0;
+    }
+  }
+
+  .oo-state-screen-info {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    top: 5%;
+    left: 5%;
+
+    .oo-state-screen-title {
+      font-size: $font-size-md-screen-title; //this.props.skinConfig.startScreen.titleFont.fontSize
+      font-family: $font-family-roboto-condensed; //this.props.skinConfig.startScreen.titleFont.fontFamily
+      font-weight: bold;
+      max-width: 70%;
+      resize: none;
+      margin-bottom: 15px;
+    }
+
+    .oo-state-screen-description {
+      font-size: $font-size-md-screen-desc; //this.props.skinConfig.startScreen.descriptionFont.fontSize
+      font-family: $font-family-roboto-condensed; //this.props.skinConfig.startScreen.descriptionFont.fontFamily
+      max-width:70%;
+      clear:both;
+    }
+  }
+
+  .oo-info-panel-top {
+    top:5%;
+  }
+  .oo-info-panel-bottom {
+    top:66%;
+  }
+  .oo-info-panel-left {
+    left:5%;
+  }
+  .oo-info-panel-right {
+    left:-3%;
+  }
+
+  .oo-action-icon {
+    @extend .oo-center-vertical-horizontal;
+    cursor: pointer;
+
+    span.oo-icon {
+      font-size: 150px;
+      opacity: 1;
+      color: white;
+    }
+  }
+
+  .oo-action-icon-top {
+    top:15% !important;
+  }
+  .oo-action-icon-bottom {
+    top:80% !important;
+  }
+  .oo-action-icon-left {
+    left:10% !important;
+  }
+  .oo-action-icon-right {
+    left:90% !important;
+  }
+
+  .oo-interactive-container {
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    pointer-events: none;
+  }
+}

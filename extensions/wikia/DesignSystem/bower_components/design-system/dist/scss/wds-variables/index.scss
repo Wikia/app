@@ -1,0 +1,23 @@
+// Base variables
+@import 'breakpoints';
+@import 'colors';
+@import 'icons';
+@import 'typography';
+@import 'z-index-scale';
+
+// Component variables
+$wds-button-border-width: 1px;
+$wds-button-padding-horizontal: 18px;
+$wds-button-transition-duration: 300ms;
+$wds-community-header-background-height: 105px;
+// Keep in sync with ThemeSettings::BACKGROUND_HEIGHT
+$wds-community-header-background-height-small-breakpoint: 115px;
+$wds-community-header-background-width: 430px;
+// Keep in sync with ThemeSettings::BACKGROUND_WIDTH
+$wds-community-header-background-width-small-breakpoint: 471px;
+$wds-dropdown-border-radius: 4px;
+$wds-dropdown-border-width: 1px;
+$wds-dropdown-height: 270px;
+$wds-dropdown-padding: 18px;
+$wds-global-navigation-height: 55px;
+$wds-list-item-vertical-padding: 11px;

@@ -25,6 +25,8 @@ define( 'DBO_DEFAULT', 16 );
 define( 'DBO_PERSISTENT', 32 );
 define( 'DBO_SYSDBA', 64 ); //for oracle maintenance
 define( 'DBO_DDLMODE', 128 ); // when using schema files: mostly for Oracle
+define( 'DBO_SSL', 256 );
+define( 'DBO_COMPRESS', 512 );
 /**@}*/
 
 /**@{
@@ -238,6 +240,12 @@ define( 'APCOND_IPINRANGE', 6 );
 define( 'APCOND_AGE_FROM_EDIT', 7 );
 define( 'APCOND_BLOCKED', 8 );
 define( 'APCOND_ISBOT', 9 );
+/**@}*/
+
+/**@{
+ * Max string length for shell invocations; based on binfmts.h
+ */
+define( 'SHELL_MAX_ARG_STRLEN', '100000');
 /**@}*/
 
 /**

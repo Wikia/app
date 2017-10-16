@@ -18,9 +18,9 @@ class WikiaMobileService extends WikiaService {
 	 */
 	private $templateObject;
 
-	private $jsBodyPackages = [ 'wikiamobile_js_body_full' ];
+	private $jsBodyPackages = [];
 	private $jsExtensionPackages = [];
-	private $scssPackages = [ 'wikiamobile_scss' ];
+	private $scssPackages = [];
 
 	private $globalVariables = [];
 
@@ -38,47 +38,44 @@ class WikiaMobileService extends WikiaService {
 	private function handleAds(){
 		wfProfileIn( __METHOD__ );
 
-		$floatingAd = '';
 		$topLeaderBoardAd = '';
-		$inContentAd = '';
-		$modalInterstitial = '';
 
 		$mobileAdService = new WikiaMobileAdService();
 
-		if ($mobileAdService->shouldLoadAssets()) {
-			$this->jsBodyPackages[] = 'wikiamobile_js_ads';
+		if ( $mobileAdService->shouldShowAds() ) {
+			$this->jsBodyPackages[] = 'wikiamobile_ads_js';
 
-			if ($mobileAdService->shouldShowAds()) {
-				$floatingAd = $this->app->renderView( 'WikiaMobileAdService', 'floating' );
-				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
-				$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
-				$modalInterstitial = $this->app->renderView( 'WikiaMobileAdService', 'modalInterstitial' );
-				$this->globalVariables['wgShowAds'] = true;
-				$this->globalVariables['wgUsePostScribe'] = true; /** @see ADEN-666 */
+			if ( $this->wg->AdDriverTrackState ) {
+				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
 			}
+
+			$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 		}
 
-		//Ad units
-		$this->response->setVal( 'floatingAd', $floatingAd );
 		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
-		$this->response->setVal( 'inContentAd', $inContentAd );
-		$this->response->setVal( 'modalInterstitial', $modalInterstitial );
 
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function handleAssets(){
+	private function handleAssets( $type = '' ){
 		wfProfileIn( __METHOD__ );
 
 		$cssLinks = '';
 		$jsBodyFiles = '';
 		$jsExtensionFiles = '';
-		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
+
+		if ( $type == 'preview' ) {
+			array_unshift( $this->jsBodyPackages, 'wikiamobile_js_preview' );
+			array_unshift( $this->scssPackages, 'wikiamobile_scss_preview' );
+		} else {
+			array_unshift( $this->jsBodyPackages, 'wikiamobile_js_body_full' );
+			array_unshift( $this->scssPackages, 'wikiamobile_scss' );
+		}
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
-		$this->app->runHook(
+		Hooks::run(
 			'WikiaMobileAssetsPackages',
 			[
 				//This should be a static package - files that need to be loaded on EVERY page
@@ -89,23 +86,16 @@ class WikiaMobileService extends WikiaService {
 			]
 		);
 
-		if ( is_array( $this->scssPackages ) ) {
-			//force main SCSS as first to make overriding it possible
-			foreach ( $this->assetsManager->getURL( $this->scssPackages ) as $s ) {
-				//packages/assets are enqueued via an hook, let's make sure we should actually let them through
-				if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
-					//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
-					$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
-				}
+		// SASS files requested via WikiaMobileAssetsPackages hook
+		$sassFiles = [];
+		foreach ( $this->assetsManager->getURL( $this->scssPackages ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+				$sassFiles[] = $src;
 			}
 		}
 
-		if ( is_array( $styles ) ) {
-			foreach ( $styles as $s ) {
-				//safe URL's as getStyles performs all the required checks
-				$cssLinks .= "<link rel=stylesheet href='{$s['url']}'/>";//this is a strict skin, getStyles returns only elements with a set URL
-			}
-		}
+		// try to fetch all SASS files using a single request (CON-1487)
+		$cssLinks .= $this->skin->getStylesWithCombinedSASS($sassFiles);
 
 		if ( is_array( $this->jsExtensionPackages ) ) {
 			//core JS in the head section, definitely safe
@@ -146,8 +136,7 @@ class WikiaMobileService extends WikiaService {
 			$trackingCode .= AnalyticsEngine::track(
 					'QuantServe',
 					AnalyticsEngine::EVENT_PAGEVIEW,
-					[],
-					['extraLabels'=> ['mobilebrowser']]
+					['extraLabels'=> ['Category.MobileWeb.WikiaMobile']]
 				) .
 				AnalyticsEngine::track(
 					'Comscore',
@@ -156,15 +145,7 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		//Stats for Gracenote reporting
-		if ( $this->wg->cityId == self::LYRICSWIKI_ID ){
-			$trackingCode .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
-
-		$trackingCode .= AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW ).
-			AnalyticsEngine::track( 'GA_Urchin', 'onewiki', [$this->wg->cityId] ).
-			AnalyticsEngine::track( 'GA_Urchin', 'pagetime', ['wikiamobile'] ).
-			AnalyticsEngine::track( 'GA_Urchin', 'varnish-stat').
-			AnalyticsEngine::track( 'GAS', 'usertiming' );
+		$trackingCode .= AnalyticsEngine::track( 'GoogleUA', 'usertiming' );
 
 		$this->response->setVal( 'trackingCode', $trackingCode );
 
@@ -175,13 +156,16 @@ class WikiaMobileService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		//Add GameGuides SmartBanner promotion on Gaming Vertical
-		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) ) {
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
+			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
+			&& empty( $this->wg->WikiaMobileSmartBannerConfig['disabled'] )
+		) {
 			$this->jsExtensionPackages[] = 'wikiamobile_smartbanner_init_js';
 
 			$this->globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
-			$this->globalVariables['wgAppAuthor'] = $this->wg->WikiaMobileSmartBannerConfig['author'];
+			$this->globalVariables['wgAppIcon'] = $this->wg->WikiaMobileSmartBannerConfig['icon'];
 
-			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
+			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig['meta'] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -191,35 +175,79 @@ class WikiaMobileService extends WikiaService {
 		JSMessages::enqueuePackage( 'WkMbl', JSMessages::INLINE );
 	}
 
-	private function handleContent(){
+	private function handleContent($content = ''){
 		wfProfileIn( __METHOD__ );
 
-		$this->response->setVal( 'wikiaNavigation',
-			$this->app->renderView( 'WikiaMobileNavigationService', 'index' )
-		);
+		if( !empty( $content ) ) {
 
-		$this->response->setVal( 'pageContent',
-			$this->app->renderView( 'WikiaMobileBodyService', 'index', [
-					'bodyText' => $this->templateObject->get( 'bodytext' ),
-					'categoryLinks' => $this->templateObject->get( 'catlinks')
-				]
-			)
-		);
+			$this->response->setVal( 'pageContent',
+				$this->app->renderView( 'WikiaMobileBodyService', 'index', [
+						'bodyText' => $content
+					]
+				)
+			);
 
-		$this->response->setVal( 'wikiaFooter',
-			$this->app->renderView( 'WikiaMobileFooterService', 'index' )
-		);
+		} else {
+			$this->response->setVal( 'wikiaNavigation',
+				$this->app->renderView( 'WikiaMobileNavigationService', 'index' )
+			);
+
+			$this->response->setVal( 'pageContent',
+				$this->app->renderView( 'WikiaMobileBodyService', 'index', [
+						'bodyText' => $this->templateObject->get( 'bodytext' ),
+						'categoryLinks' => $this->templateObject->get( 'catlinks')
+					]
+				)
+			);
+
+			$this->response->setVal( 'wikiaFooter',
+				$this->app->renderView( 'WikiaMobileFooterService', 'index' )
+			);
+		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function isArticleView() {
+		global $wgRequest, $wgTitle;
+
+		$action = $wgRequest->getVal( 'action', 'view' );
+		$namespace = $wgTitle->getNamespace();;
+
+		return ( ( $action === 'view' || $action === 'ajax' ) &&
+			$wgTitle->getArticleId() !== 0 &&
+			( $namespace !== NS_USER && $namespace !== NS_BLOG_ARTICLE ) // skip user profile and user blog pages
+		);
+	}
+
+	private function handleToc() {
+		$toc = '';
+
+		//Enable TOC only on view action and on real articles and preview
+		if ( $this->isArticleView() ) {
+			$this->jsExtensionPackages[] = 'wikiamobile_js_toc';
+			$this->scssPackages[] = 'wikiamobile_scss_toc';
+
+			$toc = $this->app->renderPartial( 'WikiaMobileService', 'toc' );
+		}
+
+		$this->response->setVal( 'toc', $toc );
+	}
+
+	private function disableSiteCSS() {
+		global $wgUseSiteCss;
+		$wgUseSiteCss = false;
 	}
 
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
+		$this->disableSiteCSS();
 		$this->handleMessages();
-		$this->handleAds();
 		$this->handleSmartBanner();
 		$this->handleContent();
+		$this->handleAds();
+		$this->handleToc();
 		$this->handleAssets();
 		$this->handleTracking();
 
@@ -235,6 +263,22 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'headLinks', $this->wg->Out->getHeadLinks() );
 		$this->response->setVal( 'pageTitle', htmlspecialchars( $this->wg->Out->getHTMLTitle() ) );
 		$this->response->setVal( 'bodyClasses', [ 'wkMobile', $this->templateObject->get( 'pageclass' ) ] );
+		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $this->globalVariables ) );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	public function preview() {
+		wfProfileIn( __METHOD__ );
+
+		$content = $this->request->getVal( 'content' );
+
+		$this->handleMessages();
+		$this->handleToc();
+		$this->handleContent( $content );
+		$this->handleAssets( 'preview' );
+
+		$this->response->setVal( 'jsClassScript', '<script>document.documentElement.className = "js";</script>' );
 		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $this->globalVariables ) );
 
 		wfProfileOut( __METHOD__ );

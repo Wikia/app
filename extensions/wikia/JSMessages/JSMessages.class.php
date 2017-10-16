@@ -48,7 +48,7 @@ class JSMessages {
 	/**
 	 * Add a package to be available in JS
 	 *
-	 * @param string $name - package name
+	 * @param string $package - package name
 	 * @param int $mode - how to emit messages (inline / external)
 	 */
 	static public function enqueuePackage($package, $mode) {
@@ -108,9 +108,6 @@ class JSMessages {
 
 		$ret = array();
 		foreach( $messageKeys as $msg ) {
-			if ( is_array( $msg ) ) {
-				var_dump( $msg );
-			}
 			if (substr($msg, 0, $patternLen) === $pattern) {
 				$ret[$msg] = wfmsgExt($msg, array('language' => $langCode));
 			}
@@ -250,9 +247,6 @@ class JSMessages {
 			$vars['wgMessages'] = self::getPackages($packages, false /* don't allow wildcards in INLINE mode (BugId:18482) */);
 		}
 
-		// messages cache buster used by JSMessages (BugId:6324)
-		$vars['wgJSMessagesCB'] = JSMessagesHelper::getMessagesCacheBuster();
-
 		self::log(__METHOD__, 'preparing list of external packages...');
 
 		$url = self::getExternalPackagesUrl();
@@ -263,6 +257,17 @@ class JSMessages {
 		}
 
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Add wgJSMessagesCB global variable to startup ResourceLoader module
+	 *
+	 * @param array $vars JS global variables
+	 * @return bool true
+	 */
+	static public function onResourceLoaderGetConfigVars(Array &$vars) {
+		$vars['wgJSMessagesCB'] = JSMessagesHelper::getMessagesCacheBuster();
 		return true;
 	}
 

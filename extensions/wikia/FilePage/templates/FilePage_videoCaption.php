@@ -1,11 +1,13 @@
-<?
-	//$providerLink = '<a href="' . $detailUrl . '" target="_blank">' . $provider . '</a>';
-	$providerLink = '<a href="' . $providerUrl . '" target="_blank">' . $provider . '</a>';
-?>
 <div class="video-page-caption">
-	<p class="video-provider"><?= wfMessage( 'video-page-from-provider' )->rawParams( $providerLink )->escaped() ?></p>
-	<p class="video-views"><?= wfMessage( 'video-page-views' )->numParams( $viewCount )->parse() ?></p>
-	<? if( $expireDate ): ?>
-		<p class="expire-date"><?= $expireDate ?></p>
-	<? endif; ?>
+	<div class="inner">
+		<p class="video-provider"><?= $providerPhrase ?></p>
+		<? if ( $regionalRestrictions ) : ?>
+			<p class="regional-restriction hidden" id="restricted-content-viewable" data-regional-restrictions="<?= Sanitizer::encodeAttribute( strtolower( $regionalRestrictions ) ); ?>">
+				<?= wfMessage( 'video-page-regional-restrictions-viewable' )->escaped(); ?>
+			</p>
+			<p class="regional-restriction hidden" id="restricted-content-unviewable">
+				<?=  wfMessage( 'video-page-regional-restrictions-unviewable' )->escaped(); ?>
+			</p>
+		<? endif; ?>
+	</div>
 </div>

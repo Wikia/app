@@ -15,10 +15,14 @@
  * Note: edit user interface and cache support functions have been
  * moved to separate EditPage and HTMLFileCache classes.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  *
  * //Wikia Change Start - helping PHP lint
  * @property Title mTitle
+ * @method bool exists
+ * @method int getID
+ * @method Title getRedirectTarget
+ * @method void loadPageData
  * //Wikia Change End
  */
 class Article extends Page {
@@ -112,7 +116,7 @@ class Article extends Page {
 		}
 
 		$page = null;
-		wfRunHooks( 'ArticleFromTitle', array( &$title, &$page ) );
+		Hooks::run( 'ArticleFromTitle', array( &$title, &$page ) );
 		if ( !$page ) {
 			switch( $title->getNamespace() ) {
 				case NS_FILE:
@@ -192,11 +196,9 @@ class Article extends Page {
 	 * This function has side effects! Do not use this function if you
 	 * only want the real revision text if any.
 	 *
-	 * @return Return the text of this revision
+	 * @return string the text of this revision
 	 */
 	public function getContent() {
-		global $wgUser;
-
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->mPage->getID() === 0 ) {
@@ -208,7 +210,7 @@ class Article extends Page {
 					$text = '';
 				}
 			} else {
-				$text = wfMsgExt( $wgUser->isLoggedIn() ? 'noarticletext' : 'noarticletextanon', 'parsemag' );
+				$text = wfMessage( 'noarticletext' )->text();
 			}
 			wfProfileOut( __METHOD__ );
 
@@ -320,7 +322,7 @@ class Article extends Page {
 				$this->mRevision = Revision::newFromId( $oldid );
 				if ( !$this->mRevision ) {
 					wfDebug( __METHOD__ . " failed to retrieve specified revision, id $oldid\n" );
-					Wikia::log(__METHOD__, 1, "failed to retrieve specified revision, title '$t', id $oldid", true); # Wikia change - @author macbre
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . " - failed to retrieve specified revision", [ 'title' => $t, 'rev_id' => (string) $oldid ] ); # Wikia change - @author macbre
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -335,7 +337,7 @@ class Article extends Page {
 			$this->mRevision = $this->mPage->getRevision();
 			if ( !$this->mRevision ) {
 				wfDebug( __METHOD__ . " failed to retrieve current page, rev_id " . $this->mPage->getLatest() . "\n" );
-				Wikia::log(__METHOD__, 3, "failed to retrieve current page, title '$t', rev_id " . $this->mPage->getLatest(), true); # Wikia change - @author macbre
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . " - failed to retrieve current page", [ 'title' => $t, 'rev_id' => (string) $this->mPage->getLatest() ] ); # Wikia change - @author macbre
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -346,7 +348,7 @@ class Article extends Page {
 		$this->mContent = $this->mRevision->getText( Revision::FOR_THIS_USER ); // Loads if user is allowed
 		$this->mRevIdFetched = $this->mRevision->getId();
 
-		wfRunHooks( 'ArticleAfterFetchContent', array( &$this, &$this->mContent ) );
+		Hooks::run( 'ArticleAfterFetchContent', [ $this, &$this->mContent ] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -453,6 +455,7 @@ class Article extends Page {
 		$parserCache = ParserCache::singleton();
 
 		$parserOptions = $this->getParserOptions();
+
 		# Render printable version, use printable version cache
 		if ( $wgOut->isPrintable() ) {
 			$parserOptions->setIsPrintable( true );
@@ -504,7 +507,7 @@ class Article extends Page {
 		while ( !$outputDone && ++$pass ) {
 			switch( $pass ) {
 				case 1:
-					wfRunHooks( 'ArticleViewHeader', array( &$this, &$outputDone, &$useParserCache ) );
+					Hooks::run( 'ArticleViewHeader', [ $this, &$outputDone, &$useParserCache ] );
 					break;
 				case 2:
 					# Early abort if the page doesn't exist
@@ -513,15 +516,15 @@ class Article extends Page {
 						$this->showMissingArticle();
 						wfProfileOut( __METHOD__ );
 						/* Wikia change begin - @author: Marcin, #BugId: 30436 */
-							$text = '';
-							if (wfRunHooks('ArticleNonExistentPage', array( &$this, $wgOut, &$text))) {
-								$this->mParserOutput = $wgParser->parse(
-									$text,
-									$this->getTitle(),
-									$parserOptions
-								);
-								$wgOut->addParserOutput( $this->mParserOutput );
-							}
+						$text = '';
+						if ( Hooks::run( 'ArticleNonExistentPage', [ $this, $wgOut, &$text ] ) ) {
+							$this->mParserOutput = $wgParser->parse(
+								$text,
+								$this->getTitle(),
+								$parserOptions
+							);
+							$wgOut->addParserOutput( $this->mParserOutput );
+						}
 						/* Wikia change end */
 						return;
 					}
@@ -529,6 +532,10 @@ class Article extends Page {
 					# Try the parser cache
 					if ( $useParserCache ) {
 						$this->mParserOutput = $parserCache->get( $this, $parserOptions );
+
+						//Wikia Change
+						Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, $this->mParserOutput !== false );
+						//Wikia Change End
 
 						if ( $this->mParserOutput !== false ) {
 							if ( $oldid ) {
@@ -538,6 +545,9 @@ class Article extends Page {
 								wfDebug( __METHOD__ . ": showing parser cache contents\n" );
 							}
 							$wgOut->addParserOutput( $this->mParserOutput );
+							// Wikia change - begin - @author: wladek
+							Hooks::run('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
+							// Wikia change - end
 							# Ensure that UI elements requiring revision ID have
 							# the correct version information.
 							$wgOut->setRevisionId( $this->mPage->getLatest() );
@@ -549,11 +559,29 @@ class Article extends Page {
 							}
 							$outputDone = true;
 						}
+					// Wikia change - begin - @author: wladek
+					} else {
+						Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, false );
+					// Wikia change - end
 					}
 					break;
 				case 3:
 					# This will set $this->mRevision if needed
 					$this->fetchContent();
+
+					// Wikia change - begin
+					// @author macbre
+					// return status different than HTTP 200 when revision is missing (BAC-630)
+					if ( !$this->mRevision instanceof Revision ) {
+						global $wgEnableParserCache;
+						wfDebug( __METHOD__ . ": no revision found - disabling parser cache and returning 404\n" );
+
+						$wgOut->getRequest()->response()->header('X-Missing-Revision: 1', true, 404);
+
+						$useParserCache = false;
+						$wgEnableParserCache = false;
+					}
+					// Wikia change - end
 
 					# Are we looking at an old revision
 					if ( $oldid && $this->mRevision ) {
@@ -577,7 +605,7 @@ class Article extends Page {
 						wfDebug( __METHOD__ . ": showing CSS/JS source\n" );
 						$this->showCssOrJsPage();
 						$outputDone = true;
-					} elseif( !wfRunHooks( 'ArticleViewCustom', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
+					} elseif( !Hooks::run( 'ArticleViewCustom', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
 						# Allow extensions do their own custom view for certain pages
 						$outputDone = true;
 					} else {
@@ -619,6 +647,12 @@ class Article extends Page {
 					$this->mParserOutput = $poolArticleView->getParserOutput();
 					$wgOut->addParserOutput( $this->mParserOutput );
 
+					// Wikia change - begin - @author: wladek
+					Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, $poolArticleView->getIsDirty() );
+
+					Hooks::run('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
+					// Wikia change - end
+
 					# Don't cache a dirty ParserOutput object
 					if ( $poolArticleView->getIsDirty() ) {
 						$wgOut->setSquidMaxage( 0 );
@@ -627,9 +661,7 @@ class Article extends Page {
 
 					# <Wikia>
 					if ( !$poolArticleView->getIsDirty() ) {
-						$this->mParserOutput->setPerformanceStats('wikitextSize',strlen($this->getContent()));
-						$this->mParserOutput->setPerformanceStats('htmlSize',strlen($this->mParserOutput->getText()));
-						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
+						Hooks::run('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
 					}
 					# </Wikia>
 
@@ -650,18 +682,22 @@ class Article extends Page {
 		# Adjust title for main page & pages with displaytitle
 		if ( $pOutput ) {
 			$this->adjustDisplayTitle( $pOutput );
+
+			if ($pOutput->getText() == '') {
+				\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1212 - empty parser output' );
+			}
 		}
 
 		# For the main page, overwrite the <title> element with the con-
 		# tents of 'pagetitle-view-mainpage' instead of the default (if
 		# that's not empty).
 		# This message always exists because it is in the i18n files
+		# Wikia change - begin
 		if ( $this->getTitle()->isMainPage() ) {
-			$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
-			if ( !$msg->isDisabled() ) {
-				$wgOut->setHTMLTitle( $msg->title( $this->getTitle() )->text() );
-			}
+			// The wiki name and brand name are added to all titles
+			$wgOut->setHTMLTitle( '' );
 		}
+		# Wikia change - end
 
 		# Check for any __NOINDEX__ tags on the page using $pOutput
 		$policy = $this->getRobotPolicy( 'view', $pOutput );
@@ -694,9 +730,11 @@ class Article extends Page {
 	public function showDiffPage() {
 		global $wgRequest, $wgUser;
 
+		Transaction::setAttribute( Transaction::PARAM_ACTION, 'diff' ); # Wikia change
+
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
 		$purge = $wgRequest->getVal( 'action' ) == 'purge';
 		$unhide = $wgRequest->getInt( 'unhide' ) == 1;
 		$oldid = $this->getOldID();
@@ -729,7 +767,7 @@ class Article extends Page {
 			'clearyourcache' );
 
 		// Give hooks a chance to customise the output
-		if ( wfRunHooks( 'ShowRawCssJs', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
+		if ( Hooks::run( 'ShowRawCssJs', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
 			// Wrap the whole lot in a <pre> and don't parse
 			$m = array();
 			preg_match( '!\.(css|js)$!u', $this->getTitle()->getText(), $m );
@@ -753,7 +791,7 @@ class Article extends Page {
 		$ns = $this->getTitle()->getNamespace();
 
 		$specialPolicy = array();
-		wfRunHooks( 'ArticleRobotPolicy', array( &$specialPolicy, $this->getTitle() ) );
+		Hooks::run( 'ArticleRobotPolicy', array( &$specialPolicy, $this->getTitle() ) );
 		if ( !empty($specialPolicy) ) {
 			return $specialPolicy;
 		}
@@ -865,7 +903,7 @@ class Article extends Page {
 		if ( isset( $this->mRedirectedFrom ) ) {
 			// This is an internally redirected page view.
 			// We'll need a backlink to the source page for navigation.
-			if ( wfRunHooks( 'ArticleViewRedirect', array( &$this ) ) ) {
+			if ( Hooks::run( 'ArticleViewRedirect', [ $this ] ) ) {
 				# start wikia change
 				global $wgWikiaUseNoFollow;
 				$redirAttribs = array();
@@ -948,7 +986,7 @@ class Article extends Page {
 		# chance to mark this new article as patrolled.
 		$this->showPatrolFooter();
 
-		wfRunHooks( 'ArticleViewFooter', array( $this ) );
+		Hooks::run( 'ArticleViewFooter', array( $this ) );
 
 	}
 
@@ -994,7 +1032,7 @@ class Article extends Page {
 	 * namespace, show the default message text. To be called from Article::view().
 	 */
 	public function showMissingArticle() {
-		global $wgOut, $wgRequest, $wgUser, $wgSend404Code;
+		global $wgOut, $wgRequest, $wgSend404Code;
 
 		# Show info in user (talk) namespace. Does the user exist? Is he blocked?
 		if ( $this->getTitle()->getNamespace() == NS_USER || $this->getTitle()->getNamespace() == NS_USER_TALK ) {
@@ -1006,7 +1044,9 @@ class Article extends Page {
 			if ( !($user && $user->isLoggedIn()) && !$ip ) { # User does not exist
 				$wgOut->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n\$1\n</div>",
 					array( 'userpage-userdoesnotexist-view', wfEscapeWikiText( $rootPart ) ) );
-			} elseif ( $user->isBlocked() ) { # Show log extract if the user is currently blocked
+			/* Wikia change begin - SUS-92 */
+			} elseif ( $user->isBlocked( true, false ) ) { # Show log extract if the user is currently blocked
+			/* Wikia change end */
 				LogEventsList::showLogExtract(
 					$wgOut,
 					'block',
@@ -1024,7 +1064,7 @@ class Article extends Page {
 			}
 		}
 
-		wfRunHooks( 'ShowMissingArticle', array( $this ) );
+		Hooks::run( 'ShowMissingArticle', array( $this ) );
 
 		# Show delete and move logs
 		LogEventsList::showLogExtract( $wgOut, array( 'delete', 'move' ), $this->getTitle()->getPrefixedText(), '',
@@ -1040,7 +1080,7 @@ class Article extends Page {
 			$wgRequest->response()->header( "HTTP/1.1 404 Not Found" );
 		}
 
-		$hookResult = wfRunHooks( 'BeforeDisplayNoArticleText', array( $this ) );
+		$hookResult = Hooks::run( 'BeforeDisplayNoArticleText', array( $this ) );
 
 		if ( ! $hookResult ) {
 			return;
@@ -1056,15 +1096,7 @@ class Article extends Page {
 			// Use the default message text
 			$text = $this->getTitle()->getDefaultMessageText();
 		} else {
-			$createErrors = $this->getTitle()->getUserPermissionsErrors( 'create', $wgUser );
-			$editErrors = $this->getTitle()->getUserPermissionsErrors( 'edit', $wgUser );
-			$errors = array_merge( $createErrors, $editErrors );
-
-			if ( !count( $errors ) ) {
-				$text = wfMsgNoTrans( 'noarticletext' );
-			} else {
-				$text = wfMsgNoTrans( 'noarticletext-nopermission' );
-			}
+			$text = wfMessage( 'noarticletext' )->inContentLanguage()->plain();
 		}
 		$text = "<div class='noarticletext'>\n$text\n</div>";
 
@@ -1123,7 +1155,7 @@ class Article extends Page {
 	public function setOldSubtitle( $oldid = 0 ) {
 		global $wgLang, $wgOut, $wgUser, $wgRequest;
 
-		if ( !wfRunHooks( 'DisplayOldSubtitle', array( &$this, &$oldid ) ) ) {
+		if ( !Hooks::run( 'DisplayOldSubtitle', [ $this, &$oldid ] ) ) {
 			return;
 		}
 
@@ -1236,64 +1268,59 @@ class Article extends Page {
 	}
 
 	/**
-	 * View redirect
+	 * Return the HTML for the top of a redirect page
 	 *
-	 * @param $target Title|Array of destination(s) to redirect
-	 * @param $appendSubtitle Boolean [optional]
-	 * @param $forceKnown Boolean: should the image be shown as a bluelink regardless of existence?
-	 * @return string containing HMTL with redirect link
+	 * @param Title|array $target Destination(s) to redirect
+	 * @param bool $appendSubtitle [optional]
+	 * @param bool $forceKnown Should the image be shown as a bluelink regardless of existence?
+	 * @return string Containing HTML with redirect link
 	 */
 	public function viewRedirect( $target, $appendSubtitle = true, $forceKnown = false ) {
-		global $wgOut, $wgStylePath;
-
-		if ( !is_array( $target ) ) {
-			$target = array( $target );
-		}
-
 		$lang = $this->getTitle()->getPageLanguage();
-		$imageDir = $lang->getDir();
-
+		$out = $this->getContext()->getOutput();
 		if ( $appendSubtitle ) {
-			$wgOut->appendSubtitle( wfMsgHtml( 'redirectpagesub' ) );
+			$out->addSubtitle( wfMessage( 'redirectpagesub' ) );
 		}
 
-		// the loop prepends the arrow image before the link, so the first case needs to be outside
+		// VOLDEV-120: Fix redirect icons on dark wikias
+		Wikia::addAssetsToOutput( 'resources/mediawiki.action/mediawiki.action.view.redirectPage.scss' );
+		return static::getRedirectHeaderHtml( $lang, $target, $forceKnown );
+	}
 
-		/**
-		 * @var $title Title
-		 */
-		$title = array_shift( $target );
-
-		if ( $forceKnown ) {
-			$link = Linker::linkKnown( $title, htmlspecialchars( $title->getFullText() ) );
-		} else {
-			$link = Linker::link( $title, htmlspecialchars( $title->getFullText() ) );
+	/**
+	 * Return the HTML for the top of a redirect page
+	 *
+	 * @since 1.23
+	 * @param Language $lang
+	 * @param Title|array $target Destination(s) to redirect
+	 * @param bool $forceKnown Should the image be shown as a bluelink regardless of existence?
+	 * @return string Containing HTML with redirect link
+	 */
+	public static function getRedirectHeaderHtml( Language $lang, $target, $forceKnown = false ) {
+		if ( !is_array( $target ) ) {
+			$target = [ $target ];
 		}
 
-		$nextRedirect = $wgStylePath . '/common/images/nextredirect' . $imageDir . '.png';
-		$alt = $lang->isRTL() ? '←' : '→';
-		// Automatically append redirect=no to each link, since most of them are redirect pages themselves.
-		foreach ( $target as $rt ) {
-			$link .= Html::element( 'img', array( 'src' => $nextRedirect, 'alt' => $alt ) );
-			if ( $forceKnown ) {
-				$link .= Linker::linkKnown( $rt, htmlspecialchars( $rt->getFullText(), array(), array( 'redirect' => 'no' ) ) );
-			} else {
-				$link .= Linker::link( $rt, htmlspecialchars( $rt->getFullText() ), array(), array( 'redirect' => 'no' ) );
-			}
+		$html = '<ul class="redirectText">';
+		/** @var Title $title */
+		foreach ( $target as $title ) {
+			$html .= '<li>' . Linker::link(
+					$title,
+					htmlspecialchars( $title->getFullText() ),
+					[],
+					// Make sure wiki page redirects are not followed
+					$title->isRedirect() ? [ 'redirect' => 'no' ] : [],
+					( $forceKnown ? [ 'known', 'noclasses' ] : [] )
+				) . '</li>';
 		}
+		$html .= '</ul>';
 
-		$imageUrl = $wgStylePath . '/common/images/redirect' . $imageDir . '.png';
-
-		# start wikia change - overwrite imageUrl with $wgRedirectIconUrl
-		global $wgRedirectIconUrl;
-		if( !empty( $wgRedirectIconUrl ) ) {
-			$imageUrl = $wgRedirectIconUrl;
-		}
-		# end wikia change
+		$redirectToText = wfMessage( 'redirectpagesub' )->inLanguage( $lang )->escaped();
 
 		return '<div class="redirectMsg">' .
-			Html::element( 'img', array( 'src' => $imageUrl, 'alt' => '#REDIRECT' ) ) .
-			'<span class="redirectText">' . $link . '</span></div>';
+		'<p>' . $redirectToText . '</p>' .
+		$html .
+		'</div>';
 	}
 
 	/**
@@ -1311,7 +1338,7 @@ class Article extends Page {
 	 */
 	public function protect() {
 		# Wikia change @author nAndy
-		wfRunHooks( 'BeforePageProtect', array(&$this) );
+		Hooks::run( 'BeforePageProtect', [ $this ] );
 		# End of Wikia change
 		$form = new ProtectionForm( $this );
 		$form->execute();
@@ -1322,7 +1349,7 @@ class Article extends Page {
 	 */
 	public function unprotect() {
 		# Wikia change @author nAndy
-		wfRunHooks( 'BeforePageUnprotect', array(&$this) );
+		Hooks::run( 'BeforePageUnprotect', [ $this ] );
 		# End of Wikia change
 		$this->protect();
 	}
@@ -1334,7 +1361,7 @@ class Article extends Page {
 		global $wgOut, $wgRequest, $wgLang;
 
 		# Wikia change @author nAndy
-		wfRunHooks( 'BeforePageDelete', array(&$this) );
+		Hooks::run( 'BeforePageDelete', [ $this ] );
 		# End of Wikia change
 
 		# This code desperately needs to be totally rewritten
@@ -1346,7 +1373,7 @@ class Article extends Page {
 		$permission_errors = $title->getUserPermissionsErrors( 'delete', $user );
 
 		# Wikia change @author nAndy (DAR-1133)
-		wfRunHooks( 'BeforeDeletePermissionErrors', [ &$this, &$title, &$user, &$permission_errors ] );
+		Hooks::run( 'BeforeDeletePermissionErrors', [ $this, $title, $user, &$permission_errors ] );
 		# End of Wikia change
 
 		if ( count( $permission_errors ) ) {
@@ -1450,7 +1477,7 @@ class Article extends Page {
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->addWikiMsg( 'confirmdeletetext' );
 
-		wfRunHooks( 'ArticleConfirmDelete', array( $this, $wgOut, &$reason ) );
+		Hooks::run( 'ArticleConfirmDelete', array( $this, $wgOut, &$reason ) );
 
 		$user = $this->getContext()->getUser();
 
@@ -1465,7 +1492,7 @@ class Article extends Page {
 		} else {
 			$suppress = '';
 		}
-		$checkWatch = $user->getBoolOption( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
+		$checkWatch = (bool)$user->getGlobalPreference( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
 
 		$form = Xml::openElement( 'form', array( 'method' => 'post',
 			'action' => $this->getTitle()->getLocalURL( 'action=delete' ), 'id' => 'deleteconfirm' ) ) .
@@ -1626,7 +1653,7 @@ class Article extends Page {
 				&& !$this->mRedirectedFrom && !$this->getTitle()->isRedirect();
 			// Extension may have reason to disable file caching on some pages.
 			if ( $cacheable ) {
-				$cacheable = wfRunHooks( 'IsFileCacheable', array( &$this ) );
+				$cacheable = Hooks::run( 'IsFileCacheable', [ $this ] );
 			}
 		}
 
@@ -1858,6 +1885,11 @@ class Article extends Page {
 			return call_user_func_array( array( $this->mPage, $fname ), $args );
 		}
 		trigger_error( 'Inaccessible function via __call(): ' . $fname, E_USER_ERROR );
+	}
+
+	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
+							$forcePatrolled = false) {
+		return $this->mPage->doEdit( $text, $summary, $flags, $baseRevId, $user, $forcePatrolled );
 	}
 
 	// ****** B/C functions to work-around PHP silliness with __call and references ****** //

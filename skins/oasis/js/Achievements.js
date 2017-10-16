@@ -29,7 +29,7 @@
 			this.trackSponsoredBadges();
 
 			if ( wgOasisResponsive ) {
-				$( window ).on( 'resize', this.resizeBadgesDescription );
+				$( window ).on( 'resize', $.proxy( this.resizeBadgesDescription, this ) );
 			}
 		},
 

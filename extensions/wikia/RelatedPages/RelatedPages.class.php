@@ -4,15 +4,16 @@ class RelatedPages {
 
 	protected $pages = null;
 	protected $categories = null;
-	protected $categoryCacheTTL = 8; // in hours
-	protected $categoryRankCacheTTL = 24; // in hours
 	protected $categoriesLimit = 6;
 	protected $pageSectionNo = 4; // number of section before which module should be injected (for long articles)
 	protected $isRendered = false;
-	protected $memcKeyPrefix = '';
 	static protected $instance = null;
 
-	protected function __construct( ) {
+	const MCACHE_VER = '1.01';
+
+	const LIMIT_MAX = 10;
+
+	protected function __construct() {
 	}
 
 	protected function __clone() {
@@ -23,7 +24,7 @@ class RelatedPages {
 	 * @return RelatedPages
 	 */
 	static public function getInstance() {
-		if( RelatedPages::$instance == null ) {
+		if ( RelatedPages::$instance == null ) {
 			RelatedPages::$instance = new RelatedPages();
 		}
 		return RelatedPages::$instance;
@@ -34,7 +35,7 @@ class RelatedPages {
 	}
 
 	private static function followRedirect( &$title ) {
-		$redirect = (new WikiPage( $title ))->getRedirectTarget();
+		$redirect = ( new WikiPage( $title ) )->getRedirectTarget();
 
 		if ( !empty( $redirect ) ) {
 			$title = $redirect;
@@ -49,15 +50,15 @@ class RelatedPages {
 		if ( is_null( $this->categories ) ) {
 			$title = $titleOrId instanceof Title ? $titleOrId : Title::newFromID( $titleOrId );
 
-			if( !empty( $title ) ) {
+			if ( !empty( $title ) ) {
 				$categories = [];
 
 				self::followRedirect( $title );
 
-				foreach( $title->getParentCategories() as $category => $title ) {
+				foreach ( $title->getParentCategories() as $category => $title ) {
 					$titleObj = Title::newFromText( $category, NS_CATEGORY );
 
-					//User might add category like [[Category: ]] and from that I could not create proper Title object
+					// User might add category like [[Category: ]] and from that I could not create proper Title object
 					if ( $titleObj instanceof Title ) {
 						$categories[] = $titleObj->getDBkey();
 					}
@@ -75,15 +76,15 @@ class RelatedPages {
 		$this->categories = null;
 	}
 
-	public function setData( $data ){
+	public function setData( $data ) {
 		$this->pages = $data;
 	}
 
-	public function getData(){
+	public function getData() {
 		return $this->pages;
 	}
 
-	public function pushData( $data ){
+	public function pushData( $data ) {
 		$this->pages[] = $data;
 	}
 
@@ -91,7 +92,7 @@ class RelatedPages {
 		return $this->isRendered;
 	}
 
-	public function setRendered($value) {
+	public function setRendered( $value ) {
 		$this->isRendered = $value;
 	}
 
@@ -100,69 +101,68 @@ class RelatedPages {
 	}
 
 	/**
-	 * get related pages for article
+	 * Get related pages for article
+	 *
 	 * @param int $articleId Article ID
-	 * @param int $limit limit
+	 * @param int $limit limit (up to 10 - see LIMIT_MAX const)
+	 * @return array
 	 */
 	public function get( $articleId, $limit = 3 ) {
 		wfProfileIn( __METHOD__ );
 
 		// prevent from calling this function more than one, use reset() to omit
-		if( is_array( $this->getData() ) ) {
+		if ( is_array( $this->getData() ) ) {
 			wfProfileOut( __METHOD__ );
 			return $this->getData();
 		}
 
-		$this->setData( array() );
-		$categories = $this->getCategories( $articleId );
+		// get up to self::LIMIT_MAX items and cache them
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, $articleId, self::MCACHE_VER ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $articleId ) {
+				$this->setData( [] );
+				$categories = $this->getCategories( $articleId );
 
-		if ( count($categories) > 0 ) {
-			//RT#80681/RT#139837: apply category blacklist
-			$categories = CategoriesService::filterOutBlacklistedCategories($categories);
-			$categories = $this->getCategoriesByRank( $categories );
+				if ( count( $categories ) > 0 ) {
+					// RT#80681/RT#139837: apply category blacklist
+					$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
+					$categories = $this->getCategoriesByRank( $categories );
 
-			if( count( $categories ) > $this->categoriesLimit ) {
-				// limit the number of categories to look for
-				$categories = array_slice( $categories, 0, $this->categoriesLimit );
+					if ( count( $categories ) > $this->categoriesLimit ) {
+						// limit the number of categories to look for
+						$categories = array_slice( $categories, 0, $this->categoriesLimit );
+					}
+
+					$pages = $this->getPagesForCategories( $articleId, $categories );
+
+					$this->afterGet( $pages, self::LIMIT_MAX );
+				}
+				return $this->getData();
 			}
+		);
 
-			// limit * 2 - get more pages (some can be filtered out - RT #72703)
-			$pages = $this->getPagesForCategories( $articleId, $limit * 2, $categories );
-
-			$this->afterGet( $pages, $limit );
-		}
+		// apply the limit
+		$this->setData( array_slice( $data, 0, $limit ) );
 
 		wfProfileOut( __METHOD__ );
 		return $this->getData();
 	}
 
-	protected function afterGet( $pages, $limit ){
+	protected function afterGet( $pages, $limit ) {
 		wfProfileIn( __METHOD__ );
 
-		// ImageServing extension enabled, get images
-		$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
-		$images = $imageServing->getImages(1); // get just one image per article
+		$imageServing = new ImageServing( array_keys( $pages ), 200, array( 'w' => 2, 'h' => 1 ) );
+		$images = $imageServing->getImages( 1 ); // get just one image per article
 
-		// TMP: always remove last article to get a text snippeting working example
-		// macbre: removed as requested by Angie
-		//$images = array_slice($images, 0, $limit-1, true);
-
-		foreach( $pages as $pageId => $data ) {
-			if( isset( $images[$pageId] ) ) {
-				$image = $images[$pageId][0];
-				$data['imgUrl'] = $image['url'];
-
-				$this->pushData( $data );
-			}
-			else {
-				// no images, get a text snippet
-				$data['text'] = $this->getArticleSnippet( $pageId );
-
-				if ($data['text'] != '') {
-					$this->pushData( $data );
-				}
-			}
-			if (count($this->getData()) >= $limit) {
+		foreach ( $pages as $pageId => $data ) {
+			$data[ 'imgUrl' ] = isset( $images[ $pageId ] ) ? $images[ $pageId ][ 0 ][ 'url' ] : null;
+			$data[ 'imgOriginalDimensions' ] = isset( $images[ $pageId ] )
+				? $images[ $pageId ][ 0 ][ 'original_dimensions' ]
+				: null;
+			$data[ 'text' ] = $this->getArticleSnippet( $pageId );
+			$this->pushData( $data );
+			if ( count( $this->getData() ) >= $limit ) {
 				break;
 			}
 		}
@@ -171,138 +171,102 @@ class RelatedPages {
 	}
 
 	/**
-	 * get all pages for given category
-	 * @param string $category category name
-	 * @return array list of page ids
+	 * get pages that belong to a list of categories
+	 * @author Owen
+	 * @author Macbre
+	 *
+	 * @param int $articleId
+	 * @param array $categories
+	 * @return array
+	 * @throws DBUnexpectedError|MWException
 	 */
-	protected function getPagesForCategory( $category ) {
-		global $wgMemc;
+	protected function getPagesForCategories( $articleId, Array $categories ) {
+		if ( empty( $categories ) ) {
+			return [];
+		}
+
 		wfProfileIn( __METHOD__ );
+		$fname = __METHOD__;
 
-		if ( empty( $this->memcKeyPrefix ) ){
-			$cacheKey = wfMemcKey( __METHOD__, $category);
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category);
-		}
-		$cache = $wgMemc->get( $cacheKey );
-		if( is_array($cache) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
+		// make the caching key more deterministic
+		sort( $categories );
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
+		$pages = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, 'categories', md5( serialize( $categories ) ) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $categories, $fname ) {
+				$dbr = wfGetDB( DB_SLAVE );
 
-		$pages = array();
-		$res = $dbr->select(
-			$tables,
-			array( "cl_from AS page_id" ),
-			array( "cl_to" => $category ),
-			__METHOD__,
-			array(),
-			$joinSql
-		);
-
-		while( $row = $dbr->fetchObject($res) ) {
-			$pages[] = $row->page_id;
-		}
-
-		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
-
-		wfProfileOut( __METHOD__ );
-		return $pages;
-	}
-
-	/**
-	* get pages that belong to a list of categories
-	* @author Owen
-	*/
-	protected function getPagesForCategories($articleId, $limit, Array $categories) {
-		global $wgMemc;
-
-		wfProfileIn(__METHOD__);
-		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, $articleId);
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId);
-		}
-		$cache = $wgMemc->get($cacheKey);
-
-		if ( is_array( $cache ) ) {
-			wfProfileOut(__METHOD__);
-			return $cache;
-		}
-
-		$dbr = wfGetDB(DB_SLAVE);
-		$pages = array();
-
-		if ( empty($categories) ) {
-			wfProfileOut(__METHOD__);
-			return $pages;
-		}
-
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
-
-		$innerSQL = $dbr->selectSQLText(
-			$tables,
-			array( "cl_from AS page_id"),
-			array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )"),
-			__METHOD__,
-			array(),
-			$joinSql
-		);
-
-		$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i WHERE page_id != $articleId GROUP BY page_id ORDER BY c desc LIMIT $limit";
-		$res = $dbr->query($sql, __METHOD__);
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$pageId = $row->page_id;
-			$title = Title::newFromId($pageId);
-
-			// filter out redirect pages (RT #72662)
-			if (!empty($title) && $title->exists() && !$title->isRedirect()) {
-				$prefixedTitle = $title->getPrefixedText();
-
-				$pages[$pageId] = array(
-					'url' => $title->getLocalUrl(),
-					'title' => $prefixedTitle,
-					'id' => (int) $pageId
+				/**
+				 * SELECT count(page_id) as c, cl_from AS page_id, page_namespace, page_title, page_is_redirect, page_len, page_latest
+				 * FROM `categorylinks` JOIN `page` ON ( (page_id = cl_from AND page_namespace = 0))
+				 * WHERE (cl_to IN ( 'Gwara','Gzik','Kuchnia_regionalna','Potrawy','Tradycja' )
+				 * 		AND page_is_redirect = 0)
+				 * GROUP BY page.page_id
+				 * ORDER BY c desc
+				 * LIMIT 11;
+				 *
+				 * @see PLATFORM-2226
+				 */
+				$res = $dbr->select(
+					[ 'categorylinks', 'page' ],
+					[
+						'count(page_id) AS c',
+						// columns below are required by Title::newFromRow
+						'page_id',
+						'page_namespace',
+						'page_title',
+						'page_is_redirect',
+						'page_len',
+						'page_latest'
+					],
+					[
+						'cl_to' => $categories,
+						'page_is_redirect' => 0, # ignore redirects
+					],
+					$fname,
+					[
+						'GROUP BY' => 'page.page_id',
+						'ORDER BY' => 'c DESC',
+						'LIMIT' => self::LIMIT_MAX + 1, # +1 as we get the current page (i.e. $articleId) as well
+					],
+					[
+						'page' => [
+							'JOIN',
+							[
+								'page_id = cl_from',
+								'page_namespace = 0'
+							]
+						]
+					]
 				);
+
+				$pages = [];
+
+				while ( $row = $dbr->fetchObject( $res ) ) {
+					$pageId = (int) $row->page_id;
+					$title = Title::newFromRow( $row );
+
+					$pages[ $pageId ] = [
+						'url' => $title->getLocalUrl(),
+						'title' => $title->getPrefixedText(),
+						'id' => $pageId
+					];
+				}
+
+				return $pages;
 			}
-		}
+		);
 
-		$wgMemc->set($cacheKey, $pages, ( $this->categoryCacheTTL * 3600));
-		wfProfileOut(__METHOD__);
-		return $pages;
-	}
+		// filter out the page we want to get related pages for
+		$articleId = intval( $articleId );
 
-	protected function getPageJoinSql( $dbr, &$tables ) {
-		global $wgContentNamespaces;
-		wfProfileIn( __METHOD__ );
-
-		if(count($wgContentNamespaces) > 0) {
-			$joinSql = array( "page" =>
-				array(
-					"JOIN",
-					implode(
-						" AND ",
-						array(
-							"page_id = cl_from",
-							( count($wgContentNamespaces) == 1)
-								? "page_namespace = " . intval(reset($wgContentNamespaces))
-								: "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )",
-						)
-					)
-				)
-			);
-			$tables[] = "page";
-		} else {
-			$joinSql = array();
+		if ( array_key_exists( $articleId, $pages ) ) {
+			unset( $pages[ $articleId ] );
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $joinSql;
+		return $pages;
 	}
 
 	/**
@@ -310,72 +274,60 @@ class RelatedPages {
 	 * @param array $categories
 	 */
 	protected function getCategoriesByRank( Array $categories ) {
-		$categoryRank = $this->getCategoryRank();
-
 		$results = array();
-		foreach( $categories as $category ) {
-			if( isset($categoryRank[$category]) ) {
-				$results[$categoryRank[$category]] = $category;
+		if ( empty( $categories ) ) {
+			return $results;
+		}
+
+		$category_rank = [];
+		foreach ( $categories as $category ) {
+			$category_rank[ $category ] = $this->getCategoryRankByName( $category );
+		}
+
+		if ( !empty( $category_rank ) ) {
+			arsort( $category_rank );
+
+			$rank = 0;
+			foreach ( $category_rank as $category => $not_used ) {
+				$results[ ++$rank ] = $category;
 			}
 		}
 
-		ksort( $results );
-		return count($results) ? array_values( $results ) : $categories;
+		return count( $results ) ? array_values( $results ) : $categories;
 	}
 
 	/**
-	 * get category rank, based on number of articles assigned
-	 * @return array
+	 * @param string $category
+	 * @return int
 	 */
-	protected function getCategoryRank() {
-		global $wgMemc;
+	private function getCategoryRankByName( $category ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ){
-			$cacheKey = wfMemcKey( __METHOD__);
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__);
-		}
-		$cache = $wgMemc->get( $cacheKey );
-		if( is_array($cache) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
+		$count = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, md5( $category ) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $category ) {
+				global $wgContentNamespaces;
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
+				$dbr = wfGetDB( DB_SLAVE );
+				$sql = ( new WikiaSQL() )->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FROM( 'categorylinks' )->WHERE( 'cl_to' )->EQUAL_TO( $category );
+				if ( count( $wgContentNamespaces ) > 0 ) {
+					$join_cond = ( count( $wgContentNamespaces ) == 1 ) ? "page_namespace = " . intval( reset( $wgContentNamespaces ) ) : "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )";
+					$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
+				}
 
-		$res = $dbr->select(
-			$tables,
-			array( "cl_to", "COUNT(cl_to) AS count" ),
-			array(),
-			__METHOD__,
-			array(
-				"GROUP BY" => "cl_to",
-				"HAVING" => "count > 1",
-				"ORDER BY" => "count DESC"
-			),
-			$joinSql
+				$result = $sql->run( $dbr, function( $result ) { return $result->fetchObject(); } );
+				return ( is_object( $result ) ) ? intval( $result->count ) : 0;
+			}
 		);
-		$results = array();
-
-		$rank = 1;
-		while($row = $dbr->fetchObject($res)) {
-			$results[$row->cl_to] = $rank;
-			$rank++;
-		}
-
-		$wgMemc->set( $cacheKey, $results, ( $this->categoryRankCacheTTL * 3600 ) );
 
 		wfProfileOut( __METHOD__ );
-		return $results;
+		return $count;
 	}
 
 	/**
 	 * get a snippet of article text
 	 * @param int $articleId Article ID
-	 * @param int $length snippet length (in characters)
 	 */
 	public function getArticleSnippet( $articleId ) {
 		$service = new ArticleService( $articleId );
@@ -383,55 +335,18 @@ class RelatedPages {
 	}
 
 	/**
-	 * @param OutputPage $out
-	 * @param            $text
-	 *
-	 * Add needed messages to page and add JS assets
-	 *
-	 * @return bool
-	 */
-	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		$app = F::app();
-		$wg = $app->wg;
-		$request = $app->wg->Request;
-		$title = $wg->Title;
-
-		if ( $out->isArticle() && $request->getVal( 'action', 'view') == 'view' ) {
-			JSMessages::enqueuePackage( 'RelatedPages', JSMessages::INLINE );
-
-			if(
-				!(Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces )) &&
-				!$app->checkSkin( 'wikiamobile' )
-			) {
-				$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
-
-				foreach( $scripts as $script ){
-					$wg->Out->addScript( "<script src='{$script}'></script>" );
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * @param $jsStaticPackages
-	 * @param $jsExtensionPackages
-	 * @param $scssPackages
 	 *
 	 * Adds assets for RelatedPages on wikiamobile
 	 *
 	 * @return bool
 	 */
-	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
-		$jsStaticPackages[] = 'relatedpages_js';
-		//css is in WikiaMobile.scss as AM can't concatanate scss files currently
+	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages ) {
+		if ( F::app()->wg->Request->getVal( 'action', 'view' ) == 'view' ) {
+			$jsStaticPackages[] = 'relatedpages_wikiamobile_js';
+			// css is in WikiaMobile.scss as AM can't concatanate scss files currently
+		}
 
-		return true;
-	}
-
-	public static function onSkinAfterContent( &$text ){
-		$text = '<!-- RelatedPages -->';
 		return true;
 	}
 }

@@ -1,0 +1,14 @@
+h3 {
+	color: #3a3a3a;
+	font-family: Helvetica Neue, Arial, Sans-serif;
+	line-height: 22px;
+	margin: 0;
+}
+
+li {
+	list-style: none;
+}
+
+td h3:not(:first-child) {
+	margin-top: 20px;
+}

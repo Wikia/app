@@ -36,6 +36,7 @@ class ImagePage extends Article {
 	/**
 	 * Constructor from a page id
 	 * @param $id Int article ID to load
+	 * @return \Article|\ImagePage|null
 	 */
 	public static function newFromID( $id ) {
 		$t = Title::newFromID( $id );
@@ -61,7 +62,7 @@ class ImagePage extends Article {
 		$this->fileLoaded = true;
 
 		$this->displayImg = $img = false;
-		wfRunHooks( 'ImagePageFindFile', array( $this, &$img, &$this->displayImg ) );
+		Hooks::run( 'ImagePageFindFile', array( $this, &$img, &$this->displayImg ) );
 		if ( !$img ) { // not set by hook?
 			$img = wfFindFile( $this->getTitle() );
 			if ( !$img ) {
@@ -86,22 +87,10 @@ class ImagePage extends Article {
 	}
 
 	public function view() {
-		global $wgOut, $wgShowEXIF, $wgRequest, $wgUser, $wgAddNoIndexToFilePages;
-
-		/**
-		 * Wikia change start
-		 *
-		 * https://wikia.fogbugz.com/default.asp?70212#475120
-		 */
-		if(!empty($wgAddNoIndexToFilePages)) {
-			$wgOut->addMeta('robots', 'noindex, follow');
-		}
-		/**
-		 * wikia change end
-		 */
+		global $wgOut, $wgShowEXIF, $wgRequest, $wgUser;
 
 		$diff = $wgRequest->getVal( 'diff' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
 
 		if ( $this->getTitle()->getNamespace() != NS_FILE || ( isset( $diff ) && $diffOnly ) ) {
 			return parent::view();
@@ -153,7 +142,6 @@ class ImagePage extends Article {
 		if($showmeta) {
 			$this->imageMetadata($formattedMetadata);
 		}
-		$this->imageFooter();
 		/* End Wikia Change */
 
 		// Add remote Filepage.css
@@ -218,7 +206,7 @@ class ImagePage extends Article {
 
 		# Allow extensions to add something after the image links
 		$html = '';
-		wfRunHooks( 'ImagePageAfterImageLinks', array( $this, &$html ) );
+		Hooks::run( 'ImagePageAfterImageLinks', array( $this, &$html ) );
 		if ( $html ) {
 			$wgOut->addHTML( $html );
 		}
@@ -235,13 +223,6 @@ class ImagePage extends Article {
 		$wgOut->addWikiText( $this->makeMetadataTable( $formattedMetadata ) );
 		$wgOut->addModules( array( 'mediawiki.action.view.metadata' ) );
 	 }
-
-	/**
-	 * Wikia - called in view() function, so it can be used by ImagePageTabbed
-	 */
-	protected function imageFooter() {
-		// to be used by child classes
-	}
 
 	/**
 	 * Wikia - abstracted out part of view() function, so it can be overwritten by ImagePageTabbed
@@ -284,7 +265,7 @@ class ImagePage extends Article {
 			$r[] = '<li><a href="#metadata">' . wfMsgHtml( 'metadata' ) . '</a></li>';
 		}
 
-		wfRunHooks( 'ImagePageShowTOC', array( $this, &$r ) );
+		Hooks::run( 'ImagePageShowTOC', array( $this, &$r ) );
 
 		return '<ul id="filetoc">' . implode( "\n", $r ) . '</ul>';
 	}
@@ -298,11 +279,24 @@ class ImagePage extends Article {
 	 * @return String The metadata table. This is treated as Wikitext (!)
 	 */
 	protected function makeMetadataTable( $metadata ) {
+		/* Wikia change start */
+		$wg = F::app()->wg;
+		$filter = $wg->FilePageFilterMetaFields;
+		/* Wikia change end */
+
 		$r = "<div class=\"mw-imagepage-section-metadata\">";
-		$r .= wfMsgNoTrans( 'metadata-help' );
+		$r .= wfMessage( 'metadata-help' )->plain();
 		$r .= "<table id=\"mw_metadata\" class=\"mw_metadata\">\n";
 		foreach ( $metadata as $type => $stuff ) {
 			foreach ( $stuff as $v ) {
+
+				/* Wikia change start */
+				// Filter out metadata fields that we don't want to show the user
+				if ( !empty( $filter[strtolower( $v['name'] )] ) ) {
+					continue;
+				}
+				/* Wikia change end */
+
 				# @todo FIXME: Why is this using escapeId for a class?!
 				$class = Sanitizer::escapeId( $v['id'] );
 				if ( $type == 'collapsed' ) {
@@ -338,7 +332,7 @@ class ImagePage extends Article {
 
 		$this->loadFile();
 
-		$sizeSel = intval( $wgUser->getOption( 'imagesize' ) );
+		$sizeSel = intval( $wgUser->getGlobalPreference( 'imagesize' ) );
 		if ( !isset( $wgImageLimits[$sizeSel] ) ) {
 			$sizeSel = User::getDefaultOption( 'imagesize' );
 
@@ -368,9 +362,9 @@ class ImagePage extends Article {
 			$height_orig = $this->displayImg->getHeight( $page );
 			$height = $height_orig;
 
-			$longDesc = wfMsg( 'parentheses', $this->displayImg->getLongDesc() );
+			$longDesc = wfMessage( 'parentheses', $this->displayImg->getLongDesc() )->escaped();
 
-			wfRunHooks( 'ImageOpenShowImageInlineBefore', array( &$this, &$wgOut ) );
+			Hooks::run( 'ImageOpenShowImageInlineBefore', [ $this, $wgOut ] );
 
 			if ( $this->displayImg->allowInlineDisplay() ) {
 				# image
@@ -513,22 +507,33 @@ class ImagePage extends Article {
 			}
 
 			if ( $showLink ) {
-				$filename = wfEscapeWikiText( $this->displayImg->getName() );
-				$linktext = $filename;
+				$linktext = htmlspecialchars( $this->displayImg->getName(), ENT_QUOTES );
+				$imgTitle = $this->displayImg->getTitle();
 				if ( isset( $msgbig ) ) {
-					$linktext = wfEscapeWikiText( $msgbig );
+					$linktext = htmlspecialchars( $msgbig, ENT_QUOTES );
 				}
-				$medialink = "[[Media:$filename|$linktext]]";
+				$medialink = Linker::makeMediaLinkFile( $imgTitle, $this->displayImg, $linktext );
 
 				if ( !$this->displayImg->isSafeFile() ) {
-					$warning = wfMsgNoTrans( 'mediawarning' );
-					$wgOut->addWikiText( <<<EOT
+					$warning = wfMessage( 'mediawarning' )->parse();
+					$wgOut->addHTML( <<<EOT
 <div class="fullMedia"><span class="dangerousLink">{$medialink}</span>$dirmark <span class="fileInfo">$longDesc</span></div>
 <div class="mediaWarning">$warning</div>
 EOT
 						);
 				} else {
-					$wgOut->addWikiText( <<<EOT
+					if ( in_array( $this->displayImg->getMimeType(), [ 'image/jpeg', 'image/png' ] ) ) {
+						$medialink .= ' ' . wfMessage( 'parentheses' )->rawParams( Html::element(
+							'a',
+							[
+								'href' => $this->displayImg->getUrlGenerator()->forceOriginal()->url(),
+								'class' => 'internal',
+								'download' => $imgTitle->getDBkey(),
+							],
+							wfMessage( 'download' )->plain()
+						) )->escaped();
+					}
+					$wgOut->addHTML( <<<EOT
 <div class="fullMedia">{$medialink}{$dirmark} <span class="fileInfo">$longDesc</span>
 </div>
 EOT
@@ -786,7 +791,7 @@ EOT
 
 			$link = Linker::linkKnown( Title::makeTitle( $element->page_namespace, $element->page_title ) );
 			/* begin wikia change bugid:70406 Fix broken "Board Thread" link on File pages */
-			wfRunHooks( "FilePageImageUsageSingleLink", array(&$link, &$element) );
+			Hooks::run( "FilePageImageUsageSingleLink", array(&$link, &$element) );
 			/* end wikia change */
 			if ( !isset( $redirects[$element->page_title] ) ) {
 				$liContents = $link;
@@ -999,7 +1004,7 @@ class ImageHistoryList {
 
 	/**
 	 * @param $iscur
-	 * @param $file File
+	 * @param $file File|OldLocalFile
 	 * @return string
 	 */
 	public function imageHistoryLine( $iscur, $file ) {
@@ -1105,7 +1110,7 @@ class ImageHistoryList {
 			}
 			$row .= '<span class="history-deleted">' . $url . '</span>';
 		} else {
-			$url = $iscur ? $this->current->getUrl() : $this->current->getArchiveUrl( $img );
+			$url = $iscur ? $this->current->getUrl() : $file->getUrl();
 			$row .= Xml::element( 'a', array( 'href' => $url ), $wgLang->timeanddate( $timestamp, true ) );
 		}
 		$row .= "</td>";
@@ -1144,7 +1149,7 @@ class ImageHistoryList {
 		}
 
 		$rowClass = null;
-		wfRunHooks( 'ImagePageFileHistoryLine', array( $this, $file, &$row, &$rowClass ) );
+		Hooks::run( 'ImagePageFileHistoryLine', array( $this, $file, &$row, &$rowClass ) );
 		$classAttr = $rowClass ? " class='$rowClass'" : '';
 
 		return "<tr{$classAttr}>{$row}</tr>\n";
@@ -1247,6 +1252,7 @@ class ImageHistoryPseudoPager extends ReverseChronologicalPager {
 	}
 
 	/**
+	 * @param Object $row
 	 * @return string
 	 */
 	function formatRow( $row ) {

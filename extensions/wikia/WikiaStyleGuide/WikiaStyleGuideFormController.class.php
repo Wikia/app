@@ -1,5 +1,5 @@
 <?php
-class WikiaStyleGuideFormController extends WikiaController {
+class WikiaStyleGuideFormController extends WikiaService {
 
 	/**
 	 * $form: An array containing the structure for the form.

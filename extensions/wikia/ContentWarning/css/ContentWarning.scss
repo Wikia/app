@@ -1,5 +1,5 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
 
 .ContentWarning {
 	display: none;
@@ -44,15 +44,21 @@
 		#bodyContent {
 			overflow: hidden;
 			visibility: hidden;
-			width: 0;
 		}
 	}
 
 	.WikiaMainContent,
-	.WikiaRail {
+	.WikiaRail,
+	.WikiaFooter {
+		height: 0;
 		overflow: hidden;
 		visibility: hidden;
-		width: 0;
+	}
+
+	.WikiaRail {
+		.wikia-ad {
+			display: none;
+		}
 	}
 
 	.ContentWarning {

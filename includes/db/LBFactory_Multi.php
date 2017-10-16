@@ -57,6 +57,8 @@ class LBFactory_Multi extends LBFactory {
 	 * @param $conf array
 	 */
 	function __construct( $conf ) {
+		parent::__construct( $conf );
+
 		$this->chronProt = new ChronologyProtector;
 		$this->conf = $conf;
 		$required = array( 'sectionsByDB', 'sectionLoads', 'serverTemplate' );
@@ -84,6 +86,15 @@ class LBFactory_Multi extends LBFactory {
 			global $wgReadOnly;
 			$wgReadOnly = $this->readOnlyBySection[$section];
 		}
+	}
+
+	/**
+	 * Implemented in LBFactory_Wikia class
+	 *
+	 * @return null
+	 */
+	function getMastersPoll() {
+		return null;
 	}
 
 	/**
@@ -119,7 +130,19 @@ class LBFactory_Multi extends LBFactory {
 		if ( isset( $this->groupLoadsBySection[$section] ) ) {
 			$groupLoads = array_merge_recursive( $groupLoads, $this->groupLoadsBySection[$section] );
 		}
-		return $this->newLoadBalancer( $this->serverTemplate, $this->sectionLoads[$section], $groupLoads );
+
+		$readOnlyReason = $this->readOnlyReason;
+		// Use the LB-specific read-only reason if everything isn't already read-only
+		if ( $readOnlyReason === false && isset( $this->readOnlyBySection[$section] ) ) {
+			$readOnlyReason = $this->readOnlyBySection[$section];
+		}
+
+		return $this->newLoadBalancer(
+			$this->serverTemplate,
+			$this->sectionLoads[$section],
+			$groupLoads,
+			$readOnlyReason
+		);
 	}
 
 	/**
@@ -153,7 +176,13 @@ class LBFactory_Multi extends LBFactory {
 		if ( isset( $this->templateOverridesByCluster[$cluster] ) ) {
 			$template = $this->templateOverridesByCluster[$cluster] + $template;
 		}
-		return $this->newLoadBalancer( $template, $this->externalLoads[$cluster], array() );
+
+		return $this->newLoadBalancer(
+			$template,
+			$this->externalLoads[$cluster],
+			array(),
+			$this->readOnlyReason
+		);
 	}
 
 	/**
@@ -175,14 +204,16 @@ class LBFactory_Multi extends LBFactory {
 	 * @param $template
 	 * @param $loads array
 	 * @param $groupLoads
+	 * @param string|bool $readOnlyReason
 	 * @return LoadBalancer
 	 */
-	function newLoadBalancer( $template, $loads, $groupLoads ) {
+	private function newLoadBalancer( $template, $loads, $groupLoads, $readOnlyReason ) {
 		global $wgMasterWaitTimeout;
 		$servers = $this->makeServerArray( $template, $loads, $groupLoads );
 		$lb = new LoadBalancer( array(
 			'servers' => $servers,
-			'masterWaitTimeout' => $wgMasterWaitTimeout
+			'masterWaitTimeout' => $wgMasterWaitTimeout,
+			'readOnlyReason' => $readOnlyReason
 		));
 		return $lb;
 	}
@@ -219,8 +250,13 @@ class LBFactory_Multi extends LBFactory {
 			if ( isset( $groupLoadsByServer[$serverName] ) ) {
 				$serverInfo['groupLoads'] = $groupLoadsByServer[$serverName];
 			}
-			if ( isset( $this->hostsByName[$serverName] ) ) {
-				$serverInfo['host'] = $this->hostsByName[$serverName];
+
+			// Wikia change - @author macbre
+			// sectionLoads entries may contain hostnames + port numbers (eg. lb-s1:1234)
+			@list( $hostName, $port ) = explode( ':', $serverName );
+
+			if ( isset( $this->hostsByName[$hostName] ) ) {
+				$serverInfo['host'] = $this->hostsByName[$hostName] . ( $port ?  ':' . $port : '' );
 			} else {
 				$serverInfo['host'] = $serverName;
 			}

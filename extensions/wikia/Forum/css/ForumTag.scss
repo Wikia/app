@@ -1,67 +1,88 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/flexbox";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
-// Note: a lot of this is borrowed from .WikiaRail .module
+// Note: a lot of this is borrowed from .WikiaRail .activity-module
 // Shared Monobook and Oasis styling
-.mw-content-ltr .ForumActivityModule {
-	margin: 0 auto;
-	margin-bottom: 10px;
-	padding: 16px 8px 8px;
+.mw-content-ltr .forum-activity-module {
+	margin: 0 auto 30px;
 	position: relative;
-	width: 284px;
+	width: 300px;
 	word-wrap: break-word;
-	ul {
-		list-style: none;
-		margin: 10px 0;
-	}
-	h1 {
-		border-bottom: 0;
-		font-size: 18px;
+
+	h2 {
+		border-bottom: 1px solid $color-page-border;
+		font-size: $wds-typescale-size-base;
 		font-weight: bold;
-		margin-top: 0px;
-		margin-bottom: 15px;
+		height: 30px;
+		margin-bottom: 16px;
 		padding-left: 2px;
 	}
-	em {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		a {
+
+	ul {
+		list-style: none;
+		margin-left: 0;
+	}
+
+	.activity-avatar {
+		display: inline-block;
+	}
+
+	.activity-item {
+		@include flexbox();
+		@include align-items(center);
+		padding: 6px 0;
+	}
+
+	.activity-info {
+		display: inline-block;
+		margin-left: 7px;
+		width: calc(100% - 45px);
+	}
+
+	.edit-info {
+		color: rgba($color-text, .75);
+		font-size: $wds-typescale-size-minus-2;
+		line-height: 16px;
+		max-height: 16px;
+
+		.edit-info-user {
+			color: rgba($color-text, .75);
+			display: inline-block;
+			max-width: 150px;
+			overflow: hidden;
+			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
+
+		.edit-info-time {
+			vertical-align: top;
+		}
 	}
-	.subtle {
-		font-size: 11px;
-		margin-left: 3px;
+
+	.page-title {
+		color: $color-links;
+		font-size: $wds-typescale-size-minus-1;
+		line-height: normal;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.wds-avatar {
+		border-color: $color-page-border;
 	}
 }
 
 // Oasis-specific styling
-.WikiaArticle .ForumActivityModule {
+.WikiaArticle .forum-activity-module {
 	@include clearfix;
-	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
-	background: $color-page;
-	border: 1px solid $color-page-border;
-	@if lightness($color-page) < 50 {
-		@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
-		background: $color-module-background;
-		border: 1px solid $color-page-border;
-	}
-	em {
-		display: inherit;
-	}
-	.avatar {
-		left: 0;
-		position: absolute;
-		top: 7px;
-	}
-	.subtle {
-		color: $color-text;
-	}
 }
 
 // use full width on main pages using grid
-.main-page-tag-lcs .ForumActivityModule,
-.main-page-tag-rcs .ForumActivityModule {
+.main-page-tag-lcs .forum-activity-module,
+.main-page-tag-rcs .forum-activity-module {
 	width: auto;
 }

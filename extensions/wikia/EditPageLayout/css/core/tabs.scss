@@ -1,16 +1,16 @@
 .EditPageTabs {
 	bottom: -1px;
 	display: none;
+	line-height: 12px;
 	position: absolute;
 	right: $width-rail-epl;
 
 	.cke_button {
-		@include border-radius(5px);
-		@include border-radius-se(0);
-		@include border-radius-sw(0);
 		background-color: $color-epl-gradient-light;
 		border: 1px solid $color-page-border;
 		border-bottom: 0;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 		display: inline-block;
 		margin-left: 3px;
 		padding: 1px 0;

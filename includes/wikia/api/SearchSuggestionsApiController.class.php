@@ -33,27 +33,18 @@ class SearchSuggestionsApiController extends WikiaApiController {
 			$request->setVal('format', 'array');
 
 			$linkSuggestions = LinkSuggest::getLinkSuggest( $request );
+			$searchSuggestions = [];
 
-			if ( !empty( $linkSuggestions ) ) {
-
-				foreach( $linkSuggestions as $suggestion ){
-					$searchSuggestions[]['title'] = $suggestion;
-				}
-
-				$this->response->setVal( 'items', $searchSuggestions );
-
-			} else {
-				throw new NotFoundApiException();
+			if ( !is_array( $linkSuggestions ) ) {
+				$linkSuggestions = [];
 			}
 
-			$this->response->setCacheValidity(
-				86400 /* 24h */,
-				86400 /* 24h */,
-				array(
-					WikiaResponse::CACHE_TARGET_BROWSER,
-					WikiaResponse::CACHE_TARGET_VARNISH
-				)
-			);
+			foreach( $linkSuggestions as $suggestion ){
+				$searchSuggestions[]['title'] = $suggestion;
+			}
+			$this->response->setVal( 'items', $searchSuggestions );
+
+			$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 		} else {
 			throw new NotFoundApiException( 'Link Suggest extension not available' );
 		}

@@ -1,15 +1,14 @@
 <div class="UserLoginModal">
-	<h1><?= wfMessage('userlogin-login-heading')->escaped() ?></h1>
 <?php
 	$tabIndex = 5;
-	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
-	
+	$specialSignupLink = SpecialPage::getTitleFor( 'UserSignup' )->getLocalURL();
+
 	$form = array(
 		'inputs' => array(
 			array(
 				'type' => 'hidden',
 				'name' => 'loginToken',
-				'value' => $loginToken
+				'value' => Sanitizer::encodeAttribute( $loginToken ),
 			),
 			array(
 				'type' => 'hidden',
@@ -20,7 +19,7 @@
 				'type' => 'text',
 				'name' => 'username',
 				'isRequired' => true,
-				'label' => wfMessage('yourname')->escaped(),
+				'label' => wfMessage( 'yourname' )->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 			array(
@@ -28,30 +27,30 @@
 				'name' => 'password',
 				'class' => 'password-input',
 				'isRequired' => true,
-				'label' => wfMessage('yourpassword')->escaped(),
+				'label' => wfMessage( 'yourpassword' )->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMessage('userlogin-forgot-password')->escaped().'</a>',
+				'output' => '<a href="#" class="forgot-password" tabindex="0">' . wfMessage( 'userlogin-forgot-password' )->escaped() . '</a>',
 			),
 			array(
 				'type' => 'checkbox',
 				'name' => 'keeploggedin',
 				'value' => '1',
-				'label' => wfMessage('userlogin-remembermypassword')->escaped(),
+				'label' => wfMessage( 'userlogin-remembermypassword' )->escaped(),
 				'class' => 'keep-logged-in',
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'submit',
-				'value' => wfMessage('login')->escaped(),
+				'value' => wfMessage( 'login' )->escaped(),
 				'class' => 'login-button big',
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'custom',
-				'output' => wfMessage('userlogin-get-account', array($specialSignupLink, ++$tabIndex))->inContentLanguage()->text(),
+				'output' => wfMessage( 'userlogin-get-account', array( $specialSignupLink, ++$tabIndex ) )->inContentLanguage()->text(),
 				'class' => 'get-account',
 				'tabindex' => ++$tabIndex,
 			)
@@ -60,10 +59,6 @@
 		'action' => $formPostAction,
 	);
 
-	//$form['isInvalid'] = true;
-	//$form['errorMsg'] = '';
-
-	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
-	echo $app->renderView('UserLoginSpecial', 'Providers', array('tabindex' => ++$tabIndex));
+	echo $app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) );
 ?>
 </div>

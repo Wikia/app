@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWInlineImage class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,22 +10,32 @@
  *
  * @class
  * @extends ve.dm.LeafNode
+ * @mixins ve.dm.MWImageNode
+ *
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWInlineImageNode = function VeDmMWInlineImageNode( length, element ) {
-	ve.dm.LeafNode.call( this, 0, element );
+ve.dm.MWInlineImageNode = function VeDmMWInlineImageNode() {
+	// Parent constructor
+	ve.dm.LeafNode.apply( this, arguments );
+
+	// Mixin constructors
+	ve.dm.MWImageNode.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWInlineImageNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.MWInlineImageNode, ve.dm.LeafNode );
+
+// Need to mixin base class as well
+OO.mixinClass( ve.dm.MWInlineImageNode, ve.dm.GeneratedContentNode );
+
+OO.mixinClass( ve.dm.MWInlineImageNode, ve.dm.MWImageNode );
 
 /* Static Properties */
 
 ve.dm.MWInlineImageNode.static.rdfaToType = {
-	'mw:Image': 'inline',
+	'mw:Image': 'none',
 	'mw:Image/Frameless': 'frameless'
 };
 
@@ -34,7 +44,7 @@ ve.dm.MWInlineImageNode.static.isContent = true;
 ve.dm.MWInlineImageNode.static.name = 'mwInlineImage';
 
 ve.dm.MWInlineImageNode.static.storeHtmlAttributes = {
-	'blacklist': [ 'typeof', 'class', 'src', 'resource', 'width', 'height', 'href' ]
+	blacklist: [ 'typeof', 'class', 'src', 'resource', 'width', 'height', 'href' ]
 };
 
 ve.dm.MWInlineImageNode.static.matchTagNames = [ 'span' ];
@@ -42,11 +52,12 @@ ve.dm.MWInlineImageNode.static.matchTagNames = [ 'span' ];
 ve.dm.MWInlineImageNode.static.blacklistedAnnotationTypes = [ 'link' ];
 
 ve.dm.MWInlineImageNode.static.getMatchRdfaTypes = function () {
-	return Object.keys( this.rdfaToType );
+	return ve.getObjectKeys( this.rdfaToType );
 };
 
-ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
-	var $span = $( domElements[0] ),
+ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter ) {
+	var dataElement,
+		$span = $( domElements[0] ),
 		$firstChild = $span.children().first(), // could be <span> or <a>
 		$img = $firstChild.children().first(),
 		typeofAttr = $span.attr( 'typeof' ),
@@ -63,6 +74,7 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 
 	attributes.width = width !== undefined && width !== '' ? Number( width ) : null;
 	attributes.height = height !== undefined && height !== '' ? Number( height ) : null;
+
 	attributes.isLinked = $firstChild.is( 'a' );
 	if ( attributes.isLinked ) {
 		attributes.href = $firstChild.attr( 'href' );
@@ -71,6 +83,11 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 	// Extract individual classes
 	classes = typeof classes === 'string' ? classes.trim().split( /\s+/ ) : [];
 
+	// Deal with border flag
+	if ( classes.indexOf( 'mw-image-border' ) !== -1 ) {
+		attributes.borderImage = true;
+		recognizedClasses.push( 'mw-image-border' );
+	}
 	// Vertical alignment
 	if ( classes.indexOf( 'mw-valign-middle' ) !== -1 ) {
 		attributes.valign = 'middle';
@@ -102,7 +119,7 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 
 	// Border
 	if ( classes.indexOf( 'mw-image-border' ) !== -1 ) {
-		attributes.border = true;
+		attributes.borderImage = true;
 		recognizedClasses.push( 'mw-image-border' );
 	}
 
@@ -113,9 +130,13 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 	}
 
 	// Store unrecognized classes so we can restore them on the way out
-	attributes.unrecognizedClasses = ve.simpleArrayDifference( classes, recognizedClasses );
+	attributes.unrecognizedClasses = OO.simpleArrayDifference( classes, recognizedClasses );
 
-	return { 'type': this.name, 'attributes': attributes };
+	dataElement = { type: this.name, attributes: attributes };
+
+	this.storeGeneratedContents( dataElement, dataElement.attributes.src, converter.getStore() );
+
+	return dataElement;
 };
 
 ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
@@ -128,7 +149,8 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 
 	ve.setDomAttributes( img, data.attributes, [ 'src', 'width', 'height', 'resource' ] );
 
-	if ( !this.typeToRdfa ) {
+	// Checking hasOwnProperty because subclasses may implement their own rdfaToType (Wikia VE-1533).
+	if ( !this.hasOwnProperty( 'typeToRdfa' ) ) {
 		this.typeToRdfa = {};
 		for ( rdfa in this.rdfaToType ) {
 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
@@ -137,13 +159,11 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 
 	span.setAttribute( 'typeof', this.typeToRdfa[data.attributes.type] );
 
-	span.setAttribute( 'typeof', this.typeToRdfa[data.attributes.type] );
-
 	if ( data.attributes.defaultSize ) {
 		classes.push( 'mw-default-size' );
 	}
 
-	if ( data.attributes.border ) {
+	if ( data.attributes.borderImage ) {
 		classes.push( 'mw-image-border' );
 	}
 
@@ -152,7 +172,7 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 	}
 
 	if ( data.attributes.unrecognizedClasses ) {
-		classes = ve.simpleArrayUnion( classes, data.attributes.unrecognizedClasses );
+		classes = OO.simpleArrayUnion( classes, data.attributes.unrecognizedClasses );
 	}
 
 	if (

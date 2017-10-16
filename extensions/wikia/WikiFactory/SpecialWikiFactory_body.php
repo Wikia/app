@@ -108,10 +108,10 @@ class WikiFactoryPage extends SpecialPage {
 	 *
 	 * @param mixed $subpage:
 	 *
-	 * @return Database Row from city_list
+	 * @return mixed: database row from city_list
 	 */
 	private function getWikiData( $subpage ) {
-		global $wgRequest;
+		global $wgRequest, $wgWikiaBaseDomain;
 
 		$domain	= $wgRequest->getVal( "wpCityDomain", null );
 		$cityid	= $wgRequest->getVal( "cityid", null );
@@ -162,7 +162,7 @@ class WikiFactoryPage extends SpecialPage {
 					 */
 					if( sizeof(explode(".", $domain )) <= 2 && strlen( $domain ) > 0) {
 						$this->mDomain = $domain;
-						$domain = $domain.".wikia.com";
+						$domain = $domain.".".$wgWikiaBaseDomain;
 					} else {
 						list( $code, $subdomain ) = explode(".", $domain, 2 );
 						$exists = 0;
@@ -232,7 +232,7 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return nothing
 	 */
 	public function doWikiForm() {
-		global $wgOut, $wgRequest, $wgStylePath;
+		global $wgOut, $wgRequest, $wgStylePath, $wgUser;
 		global $wgDevelEnvironment;
 
 		$info = null;
@@ -290,21 +290,8 @@ class WikiFactoryPage extends SpecialPage {
 						$info = $this->doSharedUploadEnable( $wgRequest );
 					}
 					break;
-				case "google":
-					if ($wgRequest->getVal('wt-add-site')) {
-						$this->doAddToWebmasterTools();
-					} else if ($wgRequest->getVal('wt-rem-site')) {
-						$this->doRemoveFromWebmasterTools();
-					} else if ($wgRequest->getVal('wt-verify-site')) {
-						$this->doVerifyWithWebmasterTools();
-					} else if ($wgRequest->getVal('wt-add-verify-site')) {
-						if ($this->doAddToWebmasterTools()) {
-							$this->doVerifyWithWebmasterTools();
-						}
-					}
-					break;
 			}
-			wfRunHooks('WikiFactory::onPostChangesApplied', array($this->mWiki->city_id));
+			Hooks::run('WikiFactory::onPostChangesApplied', array($this->mWiki->city_id));
 		}
 		else {
 			/**
@@ -336,7 +323,8 @@ class WikiFactoryPage extends SpecialPage {
 			"groups"      => WikiFactory::getGroups(),
 			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
-			"statuses" 	  => $this->mStatuses,
+			"protected"   => WikiFactory::getFlags ( $this->mWiki->city_id ) & WikiFactory::FLAG_PROTECTED,
+			"statuses"    => $this->mStatuses,
 			"variables"   => WikiFactory::getVariables(),
 			"variableName"=> $this->mVariableName,
 			"isDevel"     => $wgDevelEnvironment,
@@ -345,25 +333,60 @@ class WikiFactoryPage extends SpecialPage {
 		);
 		if( $this->mTab === 'info' ) {
 			$vars[ 'founder_id' ] = $this->mWiki->city_founding_user;
+			#this is the static stored email
+			$vars[ 'founder_email' ] = $this->mWiki->city_founding_email;
 
 			if( !empty( $this->mWiki->city_founding_user ) ) {
 				#if we knew who they were, get their current info
 				$fu = User::newFromId( $this->mWiki->city_founding_user );
 				$vars[ 'founder_username' ] = $fu->getName();
 				$vars[ 'founder_usermail' ] = $fu->getEmail();
-			}
-			else
+				$vars[ 'founder_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?founder=" . rawurlencode( $fu->getName() );
+				$vars[ 'founder_usermail_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?email=" . urlencode( $vars[ 'founder_usermail' ] );
+				$vars[ 'founder_email_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?email=" . urlencode( $vars[ 'founder_email' ] );
+			} else
 			{	#dont know who made the wiki, so dont try to do lookups
 				$vars[ 'founder_username' ] = null;
 				$vars[ 'founder_usermail' ] = null;
 			}
 
-			#this is the static stored email
-			$vars[ 'founder_email' ] = $this->mWiki->city_founding_email;
+			if( $wgUser->isAllowed( 'lookupuser' ) ) {
+				$vars[ 'lookupuser_by_founder_email_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_email']));
+
+				if( !empty( $vars['founder_username'] ) ) {
+					$vars[ 'lookupuser_by_founder_username_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_username']));
+				}
+				if( !empty( $vars['founder_usermail'] ) ) {
+					$vars[ 'lookupuser_by_founder_usermail_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_usermail']));
+				}
+			}
 		}
 		if( $this->mTab === "tags" ||  $this->mTab === "findtags" ) {
 			$vars[ 'searchTag' ] = $this->mSearchTag;
 			$vars[ 'searchTagWikiIds' ] = $this->mTagWikiIds;
+		}
+		if( $this->mTab === "hubs" ) {
+
+			$hub = WikiFactoryHub::getInstance();
+			$vars['vertical_id'] = $hub->getVerticalId( $this->mWiki->city_id );
+			$vars['verticals'] = $hub->getAllVerticals();
+
+			$wiki_old_categories = $hub->getWikiCategories ( $this->mWiki->city_id, false );
+			$wiki_new_categories = $hub->getWikiCategories( $this->mWiki->city_id, true );
+			$wiki_categories = array_merge($wiki_old_categories, $wiki_new_categories);
+
+			$wiki_cat_ids = array();
+			foreach ($wiki_categories as $cat) {
+				$wiki_cat_ids[] = $cat['cat_id'];
+			}
+			$vars['wiki_categoryids'] = $wiki_cat_ids;
+
+			$all_old_categories = $hub->getAllCategories( false );
+			$all_new_categories = $hub->getAllCategories( true );
+			$all_categories = array_replace($all_old_categories, $all_new_categories);
+
+			$vars['all_categories'] = $all_categories;
+
 		}
 		if( $this->mTab === "clog" ) {
 			$pager = new ChangeLogPager( $this->mWiki->city_id );
@@ -371,18 +394,6 @@ class WikiFactoryPage extends SpecialPage {
 				"limit"     => $pager->getForm(),
 				"body"      => $pager->getBody(),
 				"nav"       => $pager->getNavigationBar()
-			);
-		}
-		if( $this->mTab === "google" ) {
-			global $wgGoogleWebToolsAccts;
-
-			$api = new WebmasterToolsAPI('', '', $this->mWiki);
-			$info = $api->site_info();
-
-			$vars[ "google" ] = array(
-				"info"     => $info,
-				"accounts" => $wgGoogleWebToolsAccts,
-				"api"      => $api,
 			);
 		}
 		if( $this->mTab === "ezsharedupload" ) {
@@ -434,23 +445,15 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return mixed	info when change, null when not changed
 	 */
 	private function doUpdateHubs( &$request ) {
-		$cat_id = $request->getVal( "wpWikiCategory", null );
+		$vertical_id = $request->getVal("wpWikiVertical", null);
+		$cat_ids = $request->getArray( "wpWikiCategory", array() );
 		$reason = $request->getVal( "wpReason", null );
-		if( !is_null( $cat_id ) ){
-			$hub = WikiFactoryHub::getInstance();
-			$hub->setCategory( $this->mWiki->city_id, $cat_id, $reason );
-			$categories = $hub->getCategories();
+		$hub = WikiFactoryHub::getInstance();
 
-			// ugly fast fix for fb#9937 (until all the hub management is cleaned up)
-			global $wgMemc;
-			$key = sprintf("%s:%d", 'WikiFactory::getCategory', intval($this->mWiki->city_id));
-			$wgMemc->delete( $key );
+		$hub->setVertical( $this->mWiki->city_id, $vertical_id, $reason );
+		$hub->updateCategories( $this->mWiki->city_id, $cat_ids, $reason );
 
-			return Wikia::successbox( "Hub is now set to: ". $categories[ $cat_id ]['name'] );
-		}
-		else {
-			return Wikia::successbox( "Hub was not changed.");
-		}
+		return Wikia::successbox( "Vertical and Categories updated");
 	}
 
 	/**
@@ -498,6 +501,7 @@ class WikiFactoryPage extends SpecialPage {
 	private function doUpdateDomains( &$request ) {
 		$action = $request->getText( "wpAction", null );
 		$reason = $request->getText( "wpReason", wfMsg( 'wikifactory-public-status-change-default-reason' ) );
+
 		$message = "";
 		switch( $action ) {
 			case "status":
@@ -506,6 +510,15 @@ class WikiFactoryPage extends SpecialPage {
 				$this->mWiki->city_public = $status;
 				WikiFactory::clearCache( $this->mWiki->city_id );
 				$message = "Status of this wiki was changed to " . $this->mStatuses[ $status ];
+			case "protect":
+				$protect = $request->getCheck( "wpProtected", false);
+				if ($protect) {
+					$message = "Wiki protected";
+					WikiFactory::setFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED, false, $reason );
+				} else {
+					$message = "Wiki un-protected";
+					WikiFactory::resetFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED, false, $reason );
+				}
 			break;
 		}
 		return Wikia::successmsg( $message );
@@ -926,36 +939,6 @@ class WikiFactoryPage extends SpecialPage {
 		}
 		return $html;
 	}
-
-	private function doAddToWebmasterTools () {
-		global $wgRequest, $wgGoogleWebToolsAccts;
-		$acct_name = $wgRequest->getVal('wt-account-name');
-
-		if (array_key_exists($acct_name, $wgGoogleWebToolsAccts)) {
-			$acct_pass = $wgGoogleWebToolsAccts[$acct_name]['pass'];
-
-			$api = new WebmasterToolsAPI($acct_name, $acct_pass, $this->mWiki);
-			$api->add_site();
-			return true;
-		} else {
-			// Display error
-			return false;
-		}
-	}
-
-	private function doRemoveFromWebmasterTools () {
-		$api = new WebmasterToolsAPI('', '', $this->mWiki);
-		$api->remove_site();
-
-		return true;
-	}
-
-	private function doVerifyWithWebmasterTools () {
-		$api = new WebmasterToolsAPI('', '', $this->mWiki);
-		$api->verify_site();
-
-		return true;
-	}
 }
 
 /**
@@ -1049,13 +1032,17 @@ class ChangeLogPager extends TablePager {
 	 * @return string: formated table field
 	 */
 	function formatValue( $field, $value ) {
+		global $wgWikiaBaseDomain;
 		switch ($field) {
 			case "city_url":
 				preg_match("/http:\/\/([\w\.\-]+)\//", $value, $matches );
-				$sRetval = str_ireplace(".wikia.com", "", $matches[1]);
+				$sRetval = str_ireplace(".".$wgWikiaBaseDomain, "", $matches[1]);
 				return $sRetval;
 				break;
 
+			case "cl_text":
+				return '<div class="ChangeLogPager_cl_value">' . $value . '</div>';
+				break;
 			case "cl_timestamp":
 				return wfTimestamp( TS_EXIF, $value );
 				break;
@@ -1226,248 +1213,5 @@ class CityListPager {
 
 	static public function bold( $subject, $search ) {
 		echo str_replace( $search, "<strong>{$search}</strong>", $subject );
-	}
-};
-
-// DEPRECATED
-// use GWTService
-class WebmasterToolsAPI {
-
-	const FEED_URI = 'https://www.google.com/webmasters/tools/feeds';
-
-	private $mAuth, $mEmail, $mPass, $mType, $mSource, $mService, $mWiki, $mSiteURI;
-
-	/**
-	 * constructor
-	 * If email and password are empty, will use the default preferred account from '
-	 *
-	 * @access public
-	 */
-	public function __construct( $email, $pass, $wiki ) {
-		global $wgGoogleWebToolsAccts;
-
-		// If email and password weren't specified, use the preferred account.
-		if(empty($email) && empty($pass)){
-			if(is_array($wgGoogleWebToolsAccts)){
-				foreach($wgGoogleWebToolsAccts as $acctEmail => $acctData){
-					if(isset($acctData['preferred']) && ($acctData['preferred'] == 1)){
-						$email = $acctEmail;
-						$pass = $acctData['pass'];
-						break;
-					}
-				}
-
-				// If no preferred email/pass was found, just grab the first one
-				if(empty($email) && empty($pass) && (count($wgGoogleWebToolsAccts) > 0)){
-					$keys = array_keys($wgGoogleWebToolsAccts);
-					$email = $keys[0];
-					$pass = (isset($wgGoogleWebToolsAccts[$email]['pass']) ? $wgGoogleWebToolsAccts[$email]['pass'] : "");
-				}
-			}
-		}
-
-		$this->mEmail   = $email;
-		$this->mPass    = $pass;
-		$this->mType    = 'GOOGLE';
-		$this->mSource  = 'WIKIA';
-		$this->mService = 'sitemaps';
-
-		if (!is_object($wiki)) {
-			$wiki = WikiFactory::getWikiByID( $wiki );
-			if (!$wiki) {
-				throw new Exception("Could not find wiki by ID");
-			}
-		}
-		$this->mWiki    = $wiki;
-		$this->mSiteURI = $this->make_site_uri();
-		$this->mAuth    = $this->getAuthToken();
-	}
-
-	private function getAuthToken () {
-		$content = Http::post('https://www.google.com/accounts/ClientLogin',
-							null,
-							array(CURLOPT_POSTFIELDS => array(
-										"Email"       => $this->mEmail,
-										"Passwd"      => $this->mPass,
-										"accountType" => $this->mType,
-										"source"      => $this->mSource,
-										"service"     => $this->mService,
-									)
-							)
-					);
-
-		if (preg_match('/Auth=(\S+)/', $content, $matches)) {
-			return $matches[1];
-		} else {
-			return;
-		}
-	}
-
-	private function normalize_site ($site) {
-		if (!preg_match('!^http://!', $site)) $site = 'http://'.$site;
-		if (!preg_match('!/$!', $site))       $site = $site.'/';
-
-		return $site;
-	}
-
-	private function make_site_uri () {
-		$site = $this->normalize_site($this->mWiki->city_url);
-		$uri = self::FEED_URI . '/sites/' . urlencode($site);
-		return $uri;
-	}
-
-	private function make_site_id () {
-		return $this->normalize_site($this->mWiki->city_url).'sitemap-index.xml';
-	}
-
-	public function site_info () {
-		$content = Http::get($this->mSiteURI,
-							null,
-							array(CURLOPT_HTTPHEADER => array('Authorization: GoogleLogin auth='.$this->mAuth))
-					);
-		if (!$content) return;
-
-		$doc = new DOMDocument();
-		$doc->loadXML($content);
-
-		$e = $doc->documentElement;
-		$info = array();
-
-		foreach ($e->childNodes as $node) {
-			switch ($node->nodeName) {
-				case 'updated':
-					$info['updated'] = $node->nodeValue;
-					break;
-				case 'wt:verified':
-					$info['verified'] = $node->nodeValue == 'true' ? true : false;
-					break;
-				case 'wt:verification-method':
-					if (preg_match('/google([a-f0-9]+)\.html/', $node->nodeValue, $matches)) {
-						$info['verification_code'] = $matches[1];
-					}
-					break;
-				case 'title':
-					$info['site'] = $node->nodeValue;
-					break;
-				default:
-					//error_log("#### NODE: ".$node->nodeName.'='.$node->nodeValue);
-			}
-		}
-
-		$info['account_name'] = $this->mEmail;
-
-		return $info;
-	}
-
-	public function add_site () {
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars(array( "site" => $this->normalize_site($this->mWiki->city_url)));
-		$xml = $oTmpl->render("wt-add-request");
-
-		$content = Http::post($uri = self::FEED_URI . '/sites/',
-							null,
-							array(CURLOPT_POSTFIELDS => $xml,
-									CURLOPT_HTTPHEADER => array('Content-type: application/atom+xml',
-																'Authorization: GoogleLogin auth='.$this->mAuth)
-							)
-					);
-
-		if ($content) {
-			WikiFactory::setVarByName('wgGoogleWebToolsAccount', $this->mWiki->city_id, $this->mEmail);
-
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function remove_site () {
-		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
-
-		// Update the wgGoogleSiteVerification variable with this code
-		WikiFactory::setVarByName('wgGoogleSiteVerification', $this->mWiki->city_id, '');
-		WikiFactory::setVarByName('wgGoogleWebToolsAccount', $this->mWiki->city_id, '');
-
-		$c = curl_init( $this->mSiteURI );
-		curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
-		curl_setopt($c, CURLOPT_TIMEOUT, $wgHTTPTimeout);
-		curl_setopt($c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion");
-		curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		curl_setopt($c, CURLOPT_HTTPHEADER, array('Authorization: GoogleLogin auth='.$this->mAuth));
-
-		curl_exec( $c );
-
-		# Don't return the text of error messages, return false on error
-		$retcode = curl_getinfo( $c, CURLINFO_HTTP_CODE );
-
-		if ( $retcode != 200 ) {
-			error_log("Failed to delete site ".$this->mWiki->site_url." from Webmaster Tools.  Code=".$retcode);
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public function verify_site ($code = null) {
-
-		if (!$code) {
-			$info = $this->site_info();
-			$code = $info['verification_code'];
-		}
-
-		// Update the wgGoogleSiteVerification variable with this code
-		WikiFactory::setVarByName('wgGoogleSiteVerification', $this->mWiki->city_id, $code);
-
-		// Send the verification request to google
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array( "site_id" => $this->make_site_id()) );
-		$xml = $oTmpl->render("wt-verify-request");
-
-		if ($this->put_verify($xml)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private function put_verify ( $xml ) {
-		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
-
-		$c = curl_init( $this->mSiteURI );
-		curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
-		curl_setopt($c, CURLOPT_TIMEOUT, $wgHTTPTimeout);
-		curl_setopt($c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion");
-		curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'PUT' );
-
-		curl_setopt($c, CURLOPT_HTTPHEADER, array('Authorization: GoogleLogin auth='.$this->mAuth,
-												  'Content-type: application/atom+xml'));
-
-		curl_setopt($c, CURLOPT_POSTFIELDS, $xml);
-
-		ob_start();
-		curl_exec( $c );
-		$text = ob_get_contents();
-		ob_end_clean();
-
-		# Don't return the text of error messages, return false on error
-		$retcode = curl_getinfo( $c, CURLINFO_HTTP_CODE );
-
-		if ( $retcode != 200 ) {
-			wfDebug( __METHOD__ . ": HTTP return code $retcode\n" );
-			$text = false;
-		}
-		# Don't return truncated output
-		$errno = curl_errno( $c );
-		if ( $errno != CURLE_OK ) {
-			$errstr = curl_error( $c );
-			wfDebug( __METHOD__ . ": CURL error code $errno: $errstr\n" );
-			$text = false;
-		}
-		curl_close( $c );
-
-		return $text;
 	}
 };

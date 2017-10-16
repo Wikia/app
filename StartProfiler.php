@@ -1,6 +1,20 @@
 <?php
+// Wikia change - begin - @author Mix
+$wgProfilingDataLogged = false;
+
+register_shutdown_function( function() {
+	global $wgProfilingDataLogged;
+	if ( ! $wgProfilingDataLogged && function_exists( 'wfLogProfilingData' ) ) {
+		wfLogProfilingData();
+		$wgProfilingDataLogged = true;
+	}
+} );
+// Wikia change - end
+
 # defined here since this is loaded before settings -gp
-$wgProfilerSamplePercent = 10;
+$wgProfilerSamplePercent = 1;
+$wgXhprofSamplePercent = 1;
+$wgProfilerRequestSample = mt_rand(1, 100);
 if( !empty( $_GET['forceprofile'] ) ) {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleText.php' );
 	$wgProfiler = new ProfilerSimpleText(array());
@@ -13,16 +27,14 @@ if( !empty( $_GET['forceprofile'] ) ) {
 } elseif( !empty( $_GET['forcetrace'] ) ) {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleTrace.php' );
 	$wgProfiler = new ProfilerSimpleTrace(array());
-} elseif( false ) {
-	// this extension is not finished yet, do not enable
-	if ( !class_exists( 'ProfilerSimple' ) ) {
-		require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimple.php');
+} elseif ($wgProfilerRequestSample <= $wgProfilerSamplePercent  ) {
+	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleDataCollector.php' );
+	$wgProfiler = new ProfilerSimpleDataCollector(array());
+} elseif ($wgProfilerRequestSample <= $wgProfilerSamplePercent + $wgXhprofSamplePercent ) {
+	if ( function_exists('tideways_enable') ) {
+		require_once( dirname(__FILE__).'/includes/profiler/ProfilerTideways.php' );
+		$wgProfiler = new ProfilerTideways(array());
 	}
-	require_once( dirname(__FILE__).'/extensions/wikia/WyvProfiler/WyvProfiler.class.php' );
-	$wgProfiler = new WyvProfiler;
-} elseif (rand(1, 100) <= $wgProfilerSamplePercent  ) {
-	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleUDP.php' );
-	$wgProfiler = new ProfilerSimpleUDP(array());
 } else {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerStub.php' );
 }

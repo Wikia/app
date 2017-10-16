@@ -14,20 +14,16 @@ class VideoHomePageArticle extends Article {
 	public function view() {
 		wfProfileIn(__METHOD__);
 
+		// Don't show the category bar
+		F::app()->wg->SuppressArticleCategories = true;
+
 		// Get all the MW stuff out of the way first
 		parent::view();
 
 		$out = $this->getContext()->getOutput();
 
-		$vpt_html = F::app()->sendRequest('VideoHomePageController', 'index');
-		$page_html = $out->getHTML();
+		$html = F::app()->renderView( 'VideoHomePageController', 'index' );
 		$out->clearHTML();
-
-		// Put the original page below the vpt home page
-		$html = $vpt_html . $page_html;
-
-		// Uncomment to eliminate the original page from output
-		//$html = $vpt_html;
 
 		$html .= F::app()->renderView( 'VideoHomePage', 'partners' );
 

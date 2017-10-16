@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"EugeneZelenko",
+			"Jon Harald Søby",
+			"Kghbln",
+			"Purodha",
+			"Shirayuki",
+			"Siebrand",
+			"The Evil IP address",
+			"Umherirrender",
+			"Liuxinyu970226"
+		]
+	},
+	"semanticdrilldown-desc": "{{desc|name=Semantic Drilldown|url=https://www.mediawiki.org/wiki/Extension:SemanticDrilldown}}",
+	"specialpages-group-sd_group": "{{doc-special-group|that=are related to Semantic Drilldown|like=[[Special:Filters]], [[Special:CreateFilter]], [[Special:BrowseData]]}}",
+	"browsedata": "{{doc-special|BrowseData}}",
+	"sd_browsedata_choosecategory": "This it the title of the box on [[Special:BrowseData]] that displays the categories that my be browsed.",
+	"sd_browsedata_viewcategory": "{{doc-special|BrowseData}}",
+	"sd_browsedata_docu": "This is an informatory message providing help for the usage of [[Special:BrowseData]].",
+	"sd_browsedata_subcategory": "This is the title of the section on [[Special:BrowseData]] listing the subcategories of the category currently browsed.",
+	"sd_browsedata_other": "This is the name of the value automatically shown on [[Special:BrowseData]] in case some preconditions apply. \n{{Identical|Other}}",
+	"sd_browsedata_none": "This is the name of the value automatically shown on [[Special:BrowseData]] in case some preconditions apply.\n{{Identical|None}}",
+	"sd_browsedata_filterbyvalue": "This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a browsable property value.",
+	"sd_browsedata_filterbysubcategory": "This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a browsable subcategory.",
+	"sd_browsedata_otherfilter": "{{doc-special|BrowseData}}",
+	"sd_browsedata_nonefilter": "{{doc-special|BrowseData}}",
+	"sd_browsedata_or": "{{Identical|Or}}",
+	"sd_browsedata_removefilter": "This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a filter currently in use.",
+	"sd_browsedata_removesubcategoryfilter": "This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over a filter currently in use.",
+	"sd_browsedata_resetfilters": "This is the content of a tooltip on [[Special:BrowseData]] when you hover your mouse over the category currently used for a filter.",
+	"sd_browsedata_addanothervalue": "This is an informatory message providing help for the usage of [[Special:BrowseData]].",
+	"sd_browsedata_daterangestart": "The title of the input field on [[Special:BrowseData]] that allows to enter the start date of a filter.\n{{Identical|Start}}",
+	"sd_browsedata_daterangeend": "The title of the input field on [[Special:BrowseData]] that allows to enter the end date of a filter.\n{{Identical|End}}",
+	"sd_browsedata_novalues": "This is an informatory message on [[Special:BrowseData]].",
+	"sd_createfilter_usepropertyvalues": "An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter.",
+	"sd_createfilter_usecategoryvalues": "An option on [[Special:CreateFilter]] that may be chosen upon creation of a filter. It is followed by a drop-down list that allows to select an available category.",
+	"sd_createfilter_requirefilter": "The title of the drop-down list on [[Special:CreateFilter]] that allows to select an available filter.",
+	"sd-pageschemas-filter": "The title of the section displaying information about a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.\n{{Identical|Filter}}",
+	"sd-pageschemas-values": "The title of the subsection to {{msg-mw|Sd-pageschemas-filter}} displaying information about the set of values for a single filter used by the page schema. Provided for the [[mw:Extension:Page_Schemas|Page Schemas]] extension.\n{{Identical|Value}}"
+}

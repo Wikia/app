@@ -2,8 +2,10 @@
 
 class OasisController extends WikiaController {
 
-	private static $extraBodyClasses = array();
-	private static  $bodyParametersArray = array();
+	private static $extraBodyClasses = [];
+	private static $extraHtmlClasses = [];
+	private static $bodyParametersArray = [];
+	private static $skinAssetGroups = [];
 
 	/* @var AssetsManager */
 	private $assetsManager;
@@ -16,6 +18,19 @@ class OasisController extends WikiaController {
 
 		if(!in_array($className,self::$extraBodyClasses)) {
 			self::$extraBodyClasses[] = $className;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Add extra CSS classes to <html> tag
+	 * @param $className string class name
+	 * @return bool - true if class name was added, false if class name was already present
+	 */
+	public static function addHtmlClass( $className ) {
+		if ( !in_array( $className, self::$extraHtmlClasses ) ) {
+			self::$extraHtmlClasses[] = $className;
 			return true;
 		}
 		return false;
@@ -39,9 +54,19 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
-		$this->ivw = null;
-		$this->amazonDirectTargetedBuy = null;
+		$this->amazonMatch = null;
+		$this->a9 = null;
+		$this->gfc = null;
+		$this->nielsen = null;
+		$this->prebid = null;
+		$this->sourcePoint = null;
+		$this->instartLogic = null;
 		$this->dynamicYield = null;
+		$this->krux = null;
+		$this->netzathleten = null;
+		$this->recoveryHeadBootstrapCode = null;
+		$this->recoveryTopBodyBootstrapCode = null;
+		$this->recoveryBottomBodyBootstrapCode = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -52,8 +77,10 @@ class OasisController extends WikiaController {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public function onMakeGlobalVariablesScript(Array &$vars) {
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
+		$vars['wgOasisBreakpoints'] = BodyController::isOasisBreakpoints();
+		$vars['verticalName'] = HubService::getCurrentWikiaVerticalName();
 		return true;
 	}
 
@@ -72,7 +99,7 @@ class OasisController extends WikiaController {
 		if (WikiaPageType::isSearch() || WikiaPageType::isForum()) {
 			// Remove this whole condition when AdDriver2.js is fully implemented and deployed
 
-			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
+			$jsAtBottom = true;
 		}
 		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
 			$jsAtBottom = false;
@@ -84,16 +111,32 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne;
+		global $wgOut, $wgUser, $wgOasisThemeSettings,
+		$wgWikiaMobileSmartBannerConfig;
 
 		wfProfileIn(__METHOD__);
+		$request = $this->getContext()->getRequest();
 
-		//Add Smart banner for My Wikia App
-		//See: https://wikia-inc.atlassian.net/browse/MOB-167
-		$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+		//Add Smart banner for Wikia dedicated App
+		//Or fallback to My Wikia App
+		if (
+			!empty( $wgWikiaMobileSmartBannerConfig ) &&
+			is_array( $wgWikiaMobileSmartBannerConfig['meta'] ) &&
+			!empty( $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'] )
+		) {
+			$appId= $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'];
+			// SUS-1808: Encode this URL for IE 11 and below
+			$requestUrl = Sanitizer::encodeAttribute( $request->getFullRequestURL() );
+			$wgOut->addHeadItem(
+				'Wikia App Smart Banner',
+				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $requestUrl )
+			);
+		} else {
+			$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+		}
 
 		/* set the grid if passed in, otherwise, respect the default */
-		$grid = $wgRequest->getVal('wikiagrid', '');
+		$grid = $request->getVal('wikiagrid', '');
 
 		if ( '1' === $grid ) {
 			$this->wg->OasisGrid = true;
@@ -104,19 +147,12 @@ class OasisController extends WikiaController {
 
 		$jsPackages = array();
 		$scssPackages = array();
-		$this->app->runHook(
-			'WikiaAssetsPackages',
-			array(
-				&$wgOut,
-				&$jsPackages,
-				&$scssPackages
-			)
-		);
+		Hooks::run( 'WikiaAssetsPackages', [ $wgOut, &$jsPackages, &$scssPackages ] );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
-		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+		$wikiWelcome = $request->getVal('wiki-welcome');
 
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
@@ -152,7 +188,7 @@ class OasisController extends WikiaController {
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
 		if(!empty($skin->themename)) {
-			$bodyClasses[] = "oasis-{$skin->themename}";
+			$bodyClasses[] = Sanitizer::escapeClass( "oasis-{$skin->themename}" );
 		}
 
 		// mark dark themes
@@ -160,26 +196,19 @@ class OasisController extends WikiaController {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
 
+		/**
+		 * Login status based CSS class
+		 */
+		$bodyClasses[] = $skin->getUserLoginStatusClass();
+
 		// sets background settings by adding classes to <body>
-		if ( isset($this->wg->OasisThemeSettings['background-fixed'])
-			&& filter_var($this->wg->OasisThemeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-fixed';
-		}
+		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
 
-		if ( isset($this->wg->OasisThemeSettings['background-tiled'])
-			&& !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-not-tiled';
-		}
-
-		if ( isset($this->wg->OasisThemeSettings['background-dynamic'])
-			&& filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-dynamic';
-		}
+		// VOLDEV-168: Add a community-specific class to the body tag
+		$bodyClasses[] = $skin->getBodyClassForCommunity();
 
 		$this->bodyClasses = $bodyClasses;
+		$this->htmlClasses = self::$extraHtmlClasses;
 
 		if (is_array($scssPackages)) {
 			foreach ($scssPackages as $package) {
@@ -188,44 +217,12 @@ class OasisController extends WikiaController {
 		}
 
     	// Reset (this ensures no duplication in CSS links)
-		$this->cssLinks = '';
-		$this->cssPrintLinks = '';
+		$sassFiles = ['skins/oasis/css/oasis.scss'];
 
-		$sassFiles = [];
-		foreach ( $skin->getStyles() as $s ) {
-			if ( !empty($s['url']) ) {
-				$tag = $s['tag'];
-				if ( !empty( $wgAllInOne ) ) {
-					$url = $this->minifySingleAsset($s['url']);
-					if ($url !== $s['url']) {
-						$tag = str_replace($s['url'],$url,$tag);
-					}
-				}
+		$this->cssLinks = $skin->getStylesWithCombinedSASS($sassFiles);
 
-				// Print styles will be loaded separately at the bottom of the page
-				if ( stripos($tag, 'media="print"') !== false ) {
-					$this->cssPrintLinks .= $tag;
-				} elseif ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
-					$sassFiles[] = $s['url'];
-				} else {
-					$this->cssLinks .= $tag;
-				}
-			} else {
-				$this->cssLinks .= $s['tag'];
-			}
-		}
-
-		$mainSassFile = 'skins/oasis/css/oasis.scss';
-		if (!empty($sassFiles)) {
-			array_unshift($sassFiles, $mainSassFile);
-			$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
-			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
-
-			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
-			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
-		} else {
-			$this->cssLinks = Html::linkedStyle($this->assetsManager->getSassCommonURL($mainSassFile)) . $this->cssLinks;
-		}
+		// $sassFiles will be updated by getStylesWithCombinedSASS method will all extracted and concatenated SASS files
+		$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
 
 		$this->headLinks = $wgOut->getHeadLinks();
 		$this->headItems = $skin->getHeadItems();
@@ -245,87 +242,29 @@ class OasisController extends WikiaController {
 			}
 		}
 
-		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
+		// setup loading of JS/CSS
 		$this->loadJs();
 
-		// FIXME: create separate module for stats stuff?
-		// load Google Analytics code
-		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
-		// onewiki GA
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-
-		// track page load time
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-
-		// track browser height TODO NEF no browser height tracking code anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
-
-		// record which varnish this page was served by
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
-
-		// TODO NEF not used, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
-
-		// TODO NEF we dont do AB this way anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
-
-		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
-		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
-
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
-		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
+		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->a9 = AnalyticsEngine::track('A9', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->gfc = AnalyticsEngine::track('GoogleFundingChoices', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->sourcePoint = ARecoveryBootstrapCode::getSourcePointBootstrapCode();
+			$this->instartLogic = ARecoveryBootstrapCode::getInstartLogicBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
-		}
-
-		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
-			$this->displayAdminDashboard = true;
-		} else {
-			$this->displayAdminDashboard = false;
+			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->recoveryHeadBootstrapCode = ARecoveryBootstrapCode::getHeadBootstrapCode();
+			$this->recoveryTopBodyBootstrapCode = ARecoveryBootstrapCode::getTopBodyBootstrapCode();
+			$this->recoveryBottomBodyBootstrapCode = ARecoveryBootstrapCode::getBottomBodyBootstrapCode();
 		}
 
 		wfProfileOut(__METHOD__);
-	}
-
-	private function rewriteJSlinks( $link ) {
-		global $IP;
-		wfProfileIn( __METHOD__ );
-
-		$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
-
-		if ( count( $parts ) == 2 ) {
-			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
-			$fileName = $parts[0];
-			$fileName = preg_replace("#^(https?:)?//[^/]+#","",$fileName);
-			$hash = filemtime( $IP . '/' . $fileName);
-			$link = $parts[0].'?cb='.$hash;
-		} else {
-			$ret = preg_replace_callback(
-				'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
-				function ( $matches ) {
-					global $IP, $wgStyleVersion;
-					$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
-					//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
-					$hash = filemtime( $IP . '/' . $filename[0] );
-					return str_replace( $wgStyleVersion, $hash, $matches[0]);
-				},
-				$link
-			);
-
-			if ( $ret ) {
-				$link = $ret;
-			}
-		}
-		//error_log( $link );
-
-		wfProfileOut( __METHOD__ );
-		return $link;
 	}
 
 	/**
@@ -381,32 +320,28 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
 
-		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
-		$this->wikiaScriptLoader = '';
+		// load AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
+		$this->globalBlockingScripts = '';
 		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
-		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
+		Hooks::run('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
-			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				$blockingFile = $this->rewriteJSlinks( $blockingFile );
-			}
-
-			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
+			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
-		// move JS files added to OutputPage to list of files to be loaded using WSL
+		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
 
-		foreach ( $scripts as $s ) {
-			//add inline scripts to jsFiles and move non-inline to WSL queue
+			foreach ( $scripts as $s ) {
+			//add inline scripts to jsFiles and move non-inline to the queue
 			if ( !empty( $s['url'] ) ) {
 				// FIXME: quick hack to load MW core JavaScript at the top of the page - really, please fix me!
 				// @author macbre
@@ -418,61 +353,53 @@ class OasisController extends WikiaController {
 					if ( $wgAllInOne ) {
 						$url = $this->minifySingleAsset( $url );
 					}
-					if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-						$url = $this->rewriteJSlinks( $url );
-					}
 					$jsReferences[] = $url;
 				}
 			} else {
 				$this->jsFiles .= $s['tag'];
 			}
 		}
+		$isLoggedIn = $wgUser->isLoggedIn();
 
-		// Load the combined JS
-		$jsAssetGroups = array(
-			'oasis_shared_core_js', 'oasis_shared_js',
-		);
-		if ($wgUser->isLoggedIn()) {
-			$jsAssetGroups[] = 'oasis_user_js';
+		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
+
+		if ( $isLoggedIn ) {
+			$assetGroups[] = 'oasis_user_js';
 		} else {
-			$jsAssetGroups[] = 'oasis_anon_js';
+			$assetGroups[] = 'oasis_anon_js';
 		}
-		wfRunHooks('OasisSkinAssetGroups', array(&$jsAssetGroups));
-		$assets = array();
 
-		$assets['oasis_shared_js'] = $this->assetsManager->getURL($jsAssetGroups);
+
+		$jsLoader = '';
+
+		Hooks::run('OasisSkinAssetGroups', array(&$assetGroups));
+
+		// add groups queued via OasisController::addSkinAssetGroup
+		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);
+
+		$assets = $this->assetsManager->getURL( $assetGroups ) ;
 
 		// jQueryless version - appears only to be used by the ad-experiment at the moment.
-		$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
+		// disabled - not needed atm (and skipped in wsl-version anyway)
+		// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
 
-		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-			foreach ( $assets as $group => $urls ) {
-				foreach ( $urls as $index => $u ) {
-					$assets[$group][$index] = $this->rewriteJSlinks( $assets[$group][$index] );
-				}
-			}
+		// add $jsReferences
+		$assets = array_merge($assets, $jsReferences);
+
+		// generate direct script tags
+		foreach ($assets as $url) {
+			$url = htmlspecialchars( $url );
+			$jsLoader .= "<script src=\"{$url}\"></script>\n";
 		}
-
-		$assets['references'] = $jsReferences;
-
-		// generate code to load JS files
-		$assets = json_encode($assets);
-		$jsLoader = <<<EOT
-<script type="text/javascript">
-	var wsl_assets = {$assets};
-	var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
-
-	(function(){ wsl.loadScript(toload); })();
-</script>
-EOT;
 
 		$tpl = $this->app->getSkinTemplateObj();
 
 		// $tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
 		// FIXME: we need to remove head items - i.e. <meta> tags
-		$headScripts = str_replace($this->wg->out->getHeadItems(), '', $tpl->data['headscripts']);
-		// ...and top scripts too (BugId: 32747)
-		$headScripts = str_replace($this->topScripts, '', $headScripts);
+		$remove = $this->wg->out->getHeadItemsArray();
+		$remove[ ] = $this->topScripts;
+		array_walk( $remove, 'trim' );
+		$headScripts = str_replace( $remove, '', $tpl->data[ 'headscripts' ] );
 
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 
@@ -484,8 +411,6 @@ EOT;
 			$this->bottomScripts = $bottomScripts;
 			$this->jsFiles = $jsFiles;
 		}
-
-		$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -576,7 +501,53 @@ EOT;
 		return '';
 	}
 
+	/**
+	 * Takes $themeSettings ( in $wgOasisThemeSettings format )
+	 * and produces array of strings representing classes
+	 * that should be applied to body element
+	 *
+	 * @param $themeSettings array
+	 * @return array
+	 */
+	protected function getOasisBackgroundClasses($themeSettings) {
+		$bodyClasses = [];
+
+		if ( isset($themeSettings['background-fixed'])
+			&& filter_var($themeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-fixed';
+		}
+
+		if ( isset($themeSettings['background-tiled'])
+			&& !filter_var($themeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-not-tiled';
+
+			if ( (isset($themeSettings['background-dynamic'])
+					&& filter_var($themeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN))
+				// old wikis may not have 'background-dynamic' set
+				|| (!isset($themeSettings['background-dynamic'])
+					&& isset($themeSettings['background-image-width'])
+					&& (int)$themeSettings['background-image-width'] >= ThemeSettings::MIN_WIDTH_FOR_SPLIT))
+			{
+
+				$bodyClasses[] = 'background-dynamic';
+			}
+		}
+
+		return $bodyClasses;
+	}
+
 	public static function addBodyParameter($parameter) {
 		static::$bodyParametersArray[] = $parameter;
+	}
+
+	/**
+	 * Adds given AssetsManager group to Oasis main non-blocking JS request
+	 *
+	 * @param string $group group name
+	 */
+	public static function addSkinAssetGroup($group) {
+		self::$skinAssetGroups[] = $group;
 	}
 }

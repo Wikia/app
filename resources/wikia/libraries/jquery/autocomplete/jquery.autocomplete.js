@@ -2,22 +2,18 @@
 *  Ajax Autocomplete for jQuery, version 1.0.6
 *  (c) 2009 Tomas Kirda
 *
+*  Changed by Wikia - not compatible anymore
+*
 *  Ajax Autocomplete for jQuery is freely distributable under the terms of an MIT-style license.
 *  For details, see the web site: http://www.devbridge.com/projects/autocomplete/jquery/
 *
 *  Last Review: 4/24/2009
 */
-
 (function($) {
 
   $.fn.autocomplete = function(options) {
     return this.each(function() {
-      /* Wikia changes - reach autocomplete instance */
-      if(!window.Wikia.autocomplete) {
-        window.Wikia.autocomplete = {};
-      }
-      window.Wikia.autocomplete[this.name] = new Autocomplete(this, options);
-      return window.Wikia.autocomplete[this.name];
+        $(this).data('autocomplete', new Autocomplete(this, options));
     });
   };
 
@@ -45,13 +41,12 @@
     this.ignoreValueChange = false;
     this.serviceUrl = options.serviceUrl;
     this.isLocal = false;
-    /* Wikia changes */
-    this.inUse = true;
     this.options = {
       autoSubmit: false,
       minChars: 1,
       maxHeight: 300,
       deferRequestBy: 0,
+      disabled: false,
       width: 0,
       highlight: true,
       params: {},
@@ -60,10 +55,16 @@
       selectedClass: 'selected',
       appendTo: 'body',
       /* Wikia changes */
+      fnContainerMarkup: function (mainContainerId, autocompleteElId, containerClass, width) {
+        return '<div id="' + mainContainerId + '" class="' + containerClass + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + width + ';"></div></div></div>';
+      },
+      suggestionWrapperElement: 'div',
       queryParamName: 'query',
       fnPreprocessResults: null,
       skipBadQueries: false,
-      positionRight: null
+      positionRight: null,
+      setPosition: true,
+      matchFromStart: true
     };
     if (options) {
       // since we're using an old version of this plugin with minChars instead of minLength,
@@ -107,7 +108,11 @@
 
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
+      // Wikia change: make markup configurable
+      var containerMarkup = this.options.fnContainerMarkup(
+      	this.mainContainerId, autocompleteElId, 'autocomplete-container', this.options.width
+      );
+      $(containerMarkup).appendTo(this.options.appendTo);
 
       this.container = $(this.options.appendTo).find('#' + autocompleteElId);
       this.fixPosition();
@@ -123,13 +128,26 @@
       this.container.css({ maxHeight: this.options.maxHeight + 'px' });
     },
 
+    disable: function() {
+        this.options.disabled = true;
+        this.hide();
+    },
+
+    enable: function() {
+        this.options.disabled = false;
+    },
+
     fixPosition: function() {
-      var offset = this.el.offset();
-      var parentOffset = $(this.options.appendTo).offset();
-      var el = $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
-      if ( this.options.positionRight !== null ) {
-        el.css({ right: this.options.positionRight });
+      // Wikia change start - setPosition option added
+      if (this.options.setPosition) {
+        var offset = this.el.offset();
+        var parentOffset = $(this.options.appendTo).offset();
+        var el = $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
+        if ( this.options.positionRight !== null ) {
+          el.css({ right: this.options.positionRight });
+        }
       }
+    // Wikia change end
     },
 
     enableKillerFn: function() {
@@ -153,8 +171,7 @@
     },
 
     onKeyPress: function(e) {
-      /* Wikia changes */
-      if (!this.enabled || !this.inUse) { return; }
+      if (!this.enabled) { return; }
       // return will exit the function
       // and event will not fire
       switch (e.keyCode) {
@@ -168,7 +185,7 @@
             this.hide();
             return;
           }
-          //Wikia: fire event when enter was pressed on suggestion
+            //Wikia: fire event when enter was pressed on suggestion
           this.el.trigger('suggestEnter');
           this.select(this.selectedIndex, /*wikia change*/ e /*end*/);
           if (e.keyCode === 9/* Event.KEY_TAB */) { return; }
@@ -187,8 +204,10 @@
     },
 
     onKeyUp: function(e) {
-      /* Wikia changes */
-      if (!this.inUse) { return; }
+        if (this.options.disabled) {
+            return;
+        }
+
       switch (e.keyCode) {
         case 38: //Event.KEY_UP:
         case 40: //Event.KEY_DOWN:
@@ -231,13 +250,14 @@
     },
 
     getSuggestionsLocal: function(q) {
-      var ret, arr, len, val;
+      var ret, arr, len, val, pos;
       arr = this.options.lookup;
       len = arr.suggestions.length;
       ret = { suggestions:[], data:[] };
       for(var i=0; i< len; i++){
         val = arr.suggestions[i];
-        if(val.toLowerCase().indexOf(q.toLowerCase()) === 0){
+        pos = val.toLowerCase().indexOf(q.toLowerCase());
+        if( (this.options.matchFromStart && pos === 0) || (!this.options.matchFromStart && pos >= 0) ){
           ret.suggestions.push(val);
           ret.data.push(arr.data[i]);
         }
@@ -246,8 +266,6 @@
     },
 
     getSuggestions: function(q) {
-      /* Wikia changes */
-      if (!this.inUse) { return; }
       var cr, me, ls;
       cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
       if (cr && $.isArray(cr.suggestions)) {
@@ -257,10 +275,10 @@
       } else if (!this.isBadQuery(q)) {
         me = this;
 
-    /* Wikia change - allow custom param name */
-    //me.options.params.query = q;
-    var requestParams = me.options.params;
-    requestParams[me.options.queryParamName] = q;
+        /* Wikia change - allow custom param name */
+        //me.options.params.query = q;
+        var requestParams = me.options.params;
+        requestParams[me.options.queryParamName] = q;
         $.get(this.serviceUrl, requestParams, function(txt) { me.processResponse(txt); }, 'text');
       }
     },
@@ -278,8 +296,8 @@
       this.selectedIndex = -1;
       this.container.hide();
 
-    // Wikia: fire event when suggestions are shown
-    this.el.trigger('suggestHide');
+      // Wikia: fire event when suggestions are shown
+      this.el.trigger('suggestHide');
     },
 
     suggest: function() {
@@ -288,19 +306,26 @@
         return;
       }
 
-      var me, len, div, f, suggestion;
+      var me, len, div, f, suggestion, v, suggestionWrapperElement;
       me = this;
       len = this.options.maxSuggestions && this.options.maxSuggestions < this.suggestions.length ? this.options.maxSuggestions : this.suggestions.length;
       f = this.options.fnFormatResult;
       v = this.getQuery(this.currentValue);
+      // wikia change - start
+      suggestionWrapperElement = this.options.suggestionWrapperElement;
+      // wikia change - end
       this.container.hide().empty();
-      
+
       for (var i = 0; i < len; i++) {
         // wikia change - start
         suggestion = this.suggestions[i];
-        div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
-          + ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
-          + '</div>');
+        div = $('<' + suggestionWrapperElement + '>')
+            .attr('title', $.htmlentities(suggestion))
+            .html(f($.htmlentities(suggestion), this.data[i], $.htmlentities(v)));
+
+        if (me.selectedIndex === i) {
+          div.addClass(this.options.selectedClass);
+        }
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         // wikia change - start
@@ -308,24 +333,25 @@
         // wikia change - end
         this.container.append(div);
       }
-      
+
       this.enabled = true;
       this.container.show();
 
-    // Wikia: fire event when suggestions are shown
-    this.el.trigger('suggestShow');
+      // Wikia: fire event when suggestions are shown
+      this.el.trigger('suggestShow');
     },
 
     processResponse: function(text) {
       var response;
       try {
-        response = eval('(' + text + ')');
+      	// Wikia change - use parseJSON instead of eval, backported from new version
+        response = (typeof text === 'string') ? $.parseJSON(text) : text;
       } catch (err) { return; }
 
-    /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
-    if(this.options.fnPreprocessResults != null){
-    response = this.options.fnPreprocessResults(response);
-    }
+      /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
+      if(this.options.fnPreprocessResults != null){
+        response = this.options.fnPreprocessResults(response);
+      }
 
       if (!$.isArray(response.data)) { response.data = []; }
       this.suggestions = response.suggestions;
@@ -367,7 +393,7 @@
         this.ignoreValueChange = true;
         // wikia change - start
         if (this.onSelect(i, e) !== false) {
-          this.hide();
+            this.hide();
         }
         // wikia change - end
       }

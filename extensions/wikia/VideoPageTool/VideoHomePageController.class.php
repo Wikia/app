@@ -39,12 +39,13 @@ class VideoHomePageController extends WikiaController {
 		OasisController::addBodyClass( 'WikiaVideo' );
 		$this->response->addAsset( 'videohomepage_js' );
 		$this->response->addAsset( 'videohomepage_scss' );
+		$this->response->addAsset( 'videohomepage_css' );
 
 		$program = $this->getProgram();
 		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
 			$this->haveProgram = true;
 			$this->featuredContent = $this->app->renderView( 'VideoHomePage', 'featured' );
-//			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
+			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
 //			$this->fanContent = $this->app->renderView( 'VideoHomePage', 'fan' );
 //			$this->popularContent = $this->app->renderView( 'VideoHomePage', 'popular' );
 		} else {
@@ -64,7 +65,6 @@ class VideoHomePageController extends WikiaController {
 		$partners[ 'iva' ] = array( 'label' => 'IVA' );
 		$partners[ 'screenplay' ] = array( 'label' => 'Screenplay' );
 		$partners[ 'ooyala' ] = array( 'label' => 'Ooyala' );
-		$partners[ 'realgravity' ] = array( 'label' => 'RealGravity' );
 
 		foreach( $partners as &$partner ) {
 			$partner['url'] = GlobalTitle::newFromText( $partner['label'], NS_CATEGORY, VideoHandlerHooks::VIDEO_WIKI )->getFullUrl();

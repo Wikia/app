@@ -124,18 +124,14 @@ if(isset($wgScriptPath))
 	$wgHooks['BeforePageDisplay'][] = "gracenoteLyricsTagCss";
 
 	// This only needs to be included once between the Lyrics tag and the GracenoteLyrics tag.
-	$wgHooks['BeforePageDisplay'][] = "gracenote_installCopyProtection";
-	$wgHooks['BeforePageDisplay'][] = "gracenote_disableEdit";
 	$wgHooks['SkinAfterBottomScripts'][] = 'gracenote_outputGoogleAnalytics';
-
-	//$wgHooks['getUserPermissionsErrorsExpensive'][] = "gracenote_disableEditByPermissions";
 
 	// Use this pre-existing Wikia-specific hook to apply the index policy changes after the defaults are set (which comes after parsing).
 	$wgHooks['AfterViewUpdates'][] = "efGracenoteApplyIndexPolicy";
 }
 
 #Install extension
-function gracenoteLyricsTag( Parser &$parser)
+function gracenoteLyricsTag( Parser $parser )
 {
   #install hook on the element <gracenotelyrics>
   $parser->setHook("gracenotelyrics", "renderGracenoteLyricsTag");
@@ -150,9 +146,9 @@ function gracenoteLyricsTagCss(OutputPage $out)
 .lyricbox
 {
 	padding: 1em;
-	border: 1px solid silver;
-	color: black;
-	background-color: #ffffcc;
+	border: 1px solid #ccc;
+	color: #3a3a3a;
+	background-color: #f8f8f8;
 }
 DOC
 ;
@@ -168,10 +164,6 @@ function renderGracenoteLyricsTag($input, $argv, Parser $parser)
 
 	$isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
-	// If appropriate, build ringtones links.
-	$ringtoneLink = "";
-	// NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
-	// If a user has ringtone-ads turned off, their CSS will make the ad invisible.
 	GLOBAL $wgExtensionsPath;
 	$imgPath = "$wgExtensionsPath/3rdparty/LyricWiki";
 	$artist = $parser->mTitle->getDBkey();
@@ -188,16 +180,6 @@ function renderGracenoteLyricsTag($input, $argv, Parser $parser)
 	}
 	$artistLink = str_replace("_", "+", $artistLink);
 	$songLink = str_replace("_", "+", $songLink);
-	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' rel='nofollow' target='_blank'>";
-	$ringtoneLink = "";
-	$ringtoneLink.= "<div class='rtMatcher'>";
-	$ringtoneLink.= "$href<img src='$imgPath/phone_left.gif' alt='phone' width='16' height='17'/> ";
-	$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
-	$ringtoneLink.= " <img src='$imgPath/phone_right.gif' alt='phone' width='16' height='17'/></a>";
-	$ringtoneLink.= "<span class='adNotice'>Ad</span>";
-	$ringtoneLink.= "</div>";
-	GLOBAL $wgFirstLyricTag;
-	$wgFirstLyricTag = false; // Even though the gracenote extension ignores these, this will prevent ringtones on other <lyrics> tags.
 
 	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
 	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
@@ -211,9 +193,7 @@ function renderGracenoteLyricsTag($input, $argv, Parser $parser)
 	$retVal.= gracenote_getNoscriptTag();
 
 	$retVal.= "<div class='lyricbox'>";
-	$retVal.= ($isInstrumental?"":$ringtoneLink)."\n"; // if this is an instrumental, just a ringtone link on the bottom is plenty.
 	$retVal.= gracenote_obfuscateText($transform);
-	$retVal.= "\n$ringtoneLink";
 	$retVal.= "</div>";
 	$retVal.= gracenote_getPrintDisabledNotice();
 

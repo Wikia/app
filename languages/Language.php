@@ -137,18 +137,30 @@ class Language {
 
 	/**
 	 * Get a cached language object for a given language code
+	 * !!!Wikia changed - entire method!!!
+	 *
 	 * @param $code String
+	 * @param $cityId int - used only in global title to force rebuilding cache for other wiki
 	 * @return Language
 	 */
-	static function factory( $code ) {
-		if ( !isset( self::$mLangObjCache[$code] ) ) {
+	static function factory( $code, $cityId = null ) {
+		global $wgCityId;
+		if ( is_null( $cityId )) {
+			$cityId = $wgCityId;
+		}
+
+		if ( !isset( self::$mLangObjCache[$code][$cityId] ) ) {
 			if ( count( self::$mLangObjCache ) > 10 ) {
 				// Don't keep a billion objects around, that's stupid.
-				self::$mLangObjCache = array();
+				self::$mLangObjCache = [];
 			}
-			self::$mLangObjCache[$code] = self::newFromCode( $code );
+			if ( !isset( self::$mLangObjCache[$code] ) ) {
+				self::$mLangObjCache[$code] = [];
+			}
+
+			self::$mLangObjCache[$code][$cityId] = self::newFromCode( $code );
 		}
-		return self::$mLangObjCache[$code];
+		return self::$mLangObjCache[$code][$cityId];
 	}
 
 	/**
@@ -342,6 +354,9 @@ class Language {
 			$this->namespaceNames = self::$dataCache->getItem( $this->mCode, 'namespaceNames' );
 			$validNamespaces = MWNamespace::getCanonicalNamespaces();
 
+			if ($this->namespaceNames == '') {
+				$this->namespaceNames = [];
+			}
 			$this->namespaceNames = $wgExtraNamespaces + $this->namespaceNames + $validNamespaces;
 
 			$this->namespaceNames[NS_PROJECT] = $wgMetaNamespace;
@@ -364,7 +379,7 @@ class Language {
 			# Re-order by namespace ID number...
 			ksort( $this->namespaceNames );
 
-			wfRunHooks( 'LanguageGetNamespaces', array( &$this->namespaceNames ) );
+			Hooks::run( 'LanguageGetNamespaces', array( &$this->namespaceNames ) );
 		}
 
 		return $this->namespaceNames;
@@ -584,20 +599,6 @@ class Language {
 	/**
 	 * @return array
 	 */
-	function getQuickbarSettings() {
-		return array(
-			$this->getMessage( 'qbsettings-none' ),
-			$this->getMessage( 'qbsettings-fixedleft' ),
-			$this->getMessage( 'qbsettings-fixedright' ),
-			$this->getMessage( 'qbsettings-floatingleft' ),
-			$this->getMessage( 'qbsettings-floatingright' ),
-			$this->getMessage( 'qbsettings-directionality' )
-		);
-	}
-
-	/**
-	 * @return array
-	 */
 	function getDatePreferences() {
 		return self::$dataCache->getItem( $this->mCode, 'datePreferences' );
 	}
@@ -695,13 +696,78 @@ class Language {
 	 */
 	public static function getTranslatedLanguageNames( $code ) {
 		$names = array();
-		wfRunHooks( 'LanguageGetTranslatedLanguageNames', array( &$names, $code ) );
+		Hooks::run( 'LanguageGetTranslatedLanguageNames', array( &$names, $code ) );
 
 		foreach ( self::getLanguageNames() as $code => $name ) {
 			if ( !isset( $names[$code] ) ) $names[$code] = $name;
 		}
 
 		return $names;
+	}
+
+	/**
+	 * Get an array of language names, indexed by code.
+	 * @param null|string $inLanguage Code of language in which to return the names
+	 *		Use null for autonyms (native names)
+	 * @param string $include One of:
+	 *		'all' all available languages
+	 *		'mw' only if the language is defined in MediaWiki or wgExtraLanguageNames (default)
+	 *		'mwfile' only if the language is in 'mw' *and* has a message file
+	 * @return array Language code => language name
+	 * @since 1.20
+	 */
+	public static function fetchLanguageNames( $inLanguage = null, $include = 'mw' ) {
+		global $wgExtraLanguageNames;
+		static $coreLanguageNames;
+
+		if ( $coreLanguageNames === null ) {
+			global $IP;
+			include "$IP/languages/Names.php";
+		}
+
+		$names = array();
+
+		if ( $inLanguage ) {
+			# TODO: also include when $inLanguage is null, when this code is more efficient
+			Hooks::run( 'LanguageGetTranslatedLanguageNames', array( &$names, $inLanguage ) );
+		}
+
+		$mwNames = $wgExtraLanguageNames + $coreLanguageNames;
+		foreach ( $mwNames as $mwCode => $mwName ) {
+			# - Prefer own MediaWiki native name when not using the hook
+			# - For other names just add if not added through the hook
+			if ( $mwCode === $inLanguage || !isset( $names[$mwCode] ) ) {
+				$names[$mwCode] = $mwName;
+			}
+		}
+
+		if ( $include === 'all' ) {
+			return $names;
+		}
+
+		$returnMw = array();
+		$coreCodes = array_keys( $mwNames );
+		foreach ( $coreCodes as $coreCode ) {
+			$returnMw[$coreCode] = $names[$coreCode];
+		}
+
+		if ( $include === 'mwfile' ) {
+			$namesMwFile = array();
+			# We do this using a foreach over the codes instead of a directory
+			# loop so that messages files in extensions will work correctly.
+			foreach ( $returnMw as $code => $value ) {
+				if ( is_readable( self::getMessagesFileName( $code ) )
+					|| is_readable( self::getJsonMessagesFileName( $code ) )
+				) {
+					$namesMwFile[$code] = $names[$code];
+				}
+			}
+
+			return $namesMwFile;
+		}
+
+		# 'mw' option; default if it's not one of the other two options (all/mwfile)
+		return $returnMw;
 	}
 
 	/**
@@ -720,7 +786,7 @@ class Language {
 	 * @param $code string
 	 * @return string
 	 */
-	function getLanguageName( $code ) {
+	static function getLanguageName( $code ) {
 		$names = self::getLanguageNames();
 		if ( !array_key_exists( $code, $names ) ) {
 			return '';
@@ -1679,7 +1745,7 @@ class Language {
 		global $wgUser, $wgLocalTZoffset;
 
 		if ( $tz === false ) {
-			$tz = $wgUser->getOption( 'timecorrection' );
+			$tz = $wgUser->getGlobalPreference( 'timecorrection' );
 		}
 
 		$data = explode( '|', $tz, 3 );
@@ -1887,7 +1953,7 @@ class Language {
 		$options += array( 'timecorrection' => true, 'format' => true );
 		if ( $options['timecorrection'] !== false ) {
 			if ( $options['timecorrection'] === true ) {
-				$offset = $user->getOption( 'timecorrection' );
+				$offset = $user->getGlobalPreference( 'timecorrection' );
 			} else {
 				$offset = $options['timecorrection'];
 			}
@@ -2176,7 +2242,7 @@ class Language {
 	 * @return bool
 	 */
 	function isMultibyte( $str ) {
-		return (bool)preg_match( '/[\x80-\xff]/', $str );
+		return strlen( $str ) !== mb_strlen( $str );
 	}
 
 	/**
@@ -2612,7 +2678,7 @@ class Language {
 		}
 		$this->mMagicHookDone = true;
 		wfProfileIn( 'LanguageGetMagic' );
-		wfRunHooks( 'LanguageGetMagic', array( &$this->mMagicExtensions, $this->getCode() ) );
+		Hooks::run( 'LanguageGetMagic', array( &$this->mMagicExtensions, $this->getCode() ) );
 		wfProfileOut( 'LanguageGetMagic' );
 	}
 
@@ -2668,11 +2734,11 @@ class Language {
 			// Initialise array
 			$this->mExtendedSpecialPageAliases =
 				self::$dataCache->getItem( $this->mCode, 'specialPageAliases' );
-			wfRunHooks( 'LanguageGetSpecialPageAliases',
+			Hooks::run( 'LanguageGetSpecialPageAliases',
 				array( &$this->mExtendedSpecialPageAliases, $this->getCode() ) );
 		}
 
-		return $this->mExtendedSpecialPageAliases;
+		return !empty($this->mExtendedSpecialPageAliases) ? $this->mExtendedSpecialPageAliases : [];
 	}
 
 	/**
@@ -3182,6 +3248,22 @@ class Language {
 	}
 
 	/**
+	 * Get the grammar forms for the content language
+	 * @return array Array of grammar forms
+	 * @since 1.20
+	 */
+	function getGrammarForms() {
+		global $wgGrammarForms;
+		if ( isset( $wgGrammarForms[$this->getCode()] )
+			&& is_array( $wgGrammarForms[$this->getCode()] )
+		) {
+			return $wgGrammarForms[$this->getCode()];
+		}
+
+		return array();
+	}
+
+	/**
 	 * Provides an alternative text depending on specified gender.
 	 * Usage {{gender:username|masculine|feminine|neutral}}.
 	 * username is optional, in which case the gender of current user is used,
@@ -3589,7 +3671,7 @@ class Language {
 	public static function getMessagesFileName( $code ) {
 		global $IP;
 		$file = self::getFileName( "$IP/languages/messages/Messages", $code, '.php' );
-		wfRunHooks( 'Language::getMessagesFileName', array( $code, &$file ) );
+		Hooks::run( 'Language::getMessagesFileName', array( $code, &$file ) );
 		return $file;
 	}
 
@@ -3600,17 +3682,6 @@ class Language {
 	public static function getClassFileName( $code ) {
 		global $IP;
 		return self::getFileName( "$IP/languages/classes/Language", $code, '.php' );
-	}
-
-	/**
-	 * @todo move function to hook Language::getMessagesFileName
-	 * @author wikia
-	 * @param $code string
-	 * @return string
-	 */
-	public static function getAdditionalMessagesFileName( $code ) {
-		global $IP;
-		return self::getFileName( "$IP/languages/messages/wikia/Messages", $code, '.php' );
 	}
 
 	/**
@@ -3704,7 +3775,8 @@ class Language {
 		# such as action=raw much more expensive than they need to be.
 		# This will hopefully cover most cases.
 		$talk = preg_replace_callback( '/{{grammar:(.*?)\|(.*?)}}/i',
-			array( &$this, 'replaceGrammarInNamespace' ), $talk );
+			[ $this, 'replaceGrammarInNamespace' ], $talk );
+
 		return str_replace( ' ', '_', $talk );
 	}
 
@@ -4010,5 +4082,79 @@ class Language {
 	 */
 	public function getConvRuleTitle() {
 		return $this->mConverter->getConvRuleTitle();
+	}
+
+	/**
+	 * Get the plural rules for the language
+	 * @since 1.20
+	 * @return array Associative array with plural form number and plural rule as key-value pairs
+	 */
+	public function getPluralRules() {
+		$pluralRules = self::$dataCache->getItem( strtolower( $this->mCode ), 'pluralRules' );
+		$fallbacks = Language::getFallbacksFor( $this->mCode );
+		if ( !$pluralRules ) {
+			foreach ( $fallbacks as $fallbackCode ) {
+				$pluralRules = self::$dataCache->getItem( strtolower( $fallbackCode ), 'pluralRules' );
+				if ( $pluralRules ) {
+					break;
+				}
+			}
+		}
+		return $pluralRules;
+	}
+
+	/**
+	 * Shorten number to thousands/millions/billions
+	 * Returns an object containing 2 values to allow calculation of correct plural version of the message
+	 *	* shortened number string
+	 *	* rounded number
+	 *
+	 * Languages like PL and RU uses more complex plural rules that uses multiple forms for different numbers
+	 * http://www.unicode.org/cldr/charts/29/supplemental/language_plural_rules.html#pl
+	 *
+	 * @param $number
+	 * @param $precision
+	 * @return DecoratedShortenNumber
+	 *
+	 * (added by Wikia)
+	 */
+	public function shortenNumberDecorator( $number, $precision = 1 ) {
+		$number = intval( $number );
+
+		$shorteningBreakpoints = [
+			'number-shortening-billions' => 1000000000,
+			'number-shortening-millions' => 1000000,
+			'number-shortening' => 1000
+		];
+
+		foreach ( $shorteningBreakpoints as $messageKey => $breakpointNumber ) {
+			if ( $number >= $breakpointNumber ) {
+				return new DecoratedShortenNumber(
+					wfMessage( $messageKey )
+						->params( $this->formatNum( round( $number / $breakpointNumber, $precision ) ) )
+						->escaped(),
+					round( $number, - ( log10( $breakpointNumber ) - $precision ) )
+				);
+			}
+		}
+
+		return new DecoratedShortenNumber(
+			$this->formatNum( $number ),
+			$number
+		);
+	}
+}
+
+
+/**
+ * Class DecoratedShortenNumber returned by Language::shortenNumberDecorator()
+ */
+class DecoratedShortenNumber {
+	public $decorated;
+	public $rounded;
+
+	public function __construct( $decorated, $rounded ) {
+		$this->decorated = $decorated;
+		$this->rounded = $rounded;
 	}
 }

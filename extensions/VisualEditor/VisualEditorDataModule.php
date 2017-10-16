@@ -4,7 +4,7 @@
  *
  * @file
  * @ingroup Extensions
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -15,6 +15,7 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 	protected $origin = self::ORIGIN_USER_SITEWIDE;
 	protected $gitInfo;
 	protected $gitHeadHash;
+	protected $targets = array( 'desktop', 'mobile' );
 
 	/* Methods */
 
@@ -25,10 +26,10 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 	public function getScript( ResourceLoaderContext $context ) {
 		// Messages
 		$msgInfo = $this->getMessageInfo();
-		$parsedMesssages = array();
+		$parsedMessages = array();
 		$messages = array();
 		foreach ( $msgInfo['args'] as $msgKey => $msgArgs ) {
-			$parsedMesssages[ $msgKey ] = call_user_func_array( 'wfMessage', $msgArgs )
+			$parsedMessages[ $msgKey ] = call_user_func_array( 'wfMessage', $msgArgs )
 				->inLanguage( $context->getLanguage() )
 				->parse();
 		}
@@ -47,7 +48,7 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 
 		return
 			've.init.platform.addParsedMessages(' . FormatJson::encode(
-				$parsedMesssages,
+				$parsedMessages,
 				ResourceLoader::inDebugMode()
 			) . ');'.
 			've.init.platform.addMessages(' . FormatJson::encode(
@@ -75,8 +76,8 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 			'summary' => array( 'summary' ),
 			'watchthis' => array( 'watchthis' ),
 			'visualeditor-browserwarning' => array( 'visualeditor-browserwarning' ),
-			'visualeditor-report-notice' => array( 'visualeditor-report-notice' ),
 			'visualeditor-wikitext-warning' => array( 'visualeditor-wikitext-warning' ),
+			'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => array( 'wikia-visualeditor-dialog-wikiamediainsert-policy-message' ),
 		);
 
 		// Override message value
@@ -99,13 +100,16 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 		// EditPage supports customisation based on title, we can't support that here
 		// since these messages are cached on a site-level. $wgTitle is likely set to null.
 		$title = Title::newFromText( 'Dwimmerlaik' );
-		wfRunHooks( 'EditPageCopyrightWarning', array( $title, &$copywarnMsg ) );
+		Hooks::run( 'EditPageCopyrightWarning', array( $title, &$copywarnMsg ) );
 
 		// Keys used in copyright warning
 		$msgKeys[] = 'copyrightpage';
 		$msgKeys[] = $copywarnMsg[0];
 		// Normalise to 'copyrightwarning' so we have a consistent key in the front-end.
 		$msgArgs[ 'copyrightwarning' ] = $copywarnMsg;
+
+		// Citation tools
+		$msgVals['visualeditor-cite-tool-definition.json'] = json_encode( self::getCitationTools() );
 
 		$msgKeys = array_values( array_unique( array_merge(
 			$msgKeys,
@@ -118,6 +122,31 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 			'args' => $msgArgs,
 			'vals' => $msgVals,
 		);
+	}
+
+	/**
+	 * Retrieve the list of citation templates that we want to make available in the
+	 * VisualEditor toolbar (via the Cite dropdown). These are defined on-wiki at
+	 * MediaWiki:Visualeditor-cite-tool-definition.json.
+	 *
+	 * @return array
+	 */
+	public static function getCitationTools() {
+		$citationDefinition = json_decode(
+			wfMessage( 'visualeditor-cite-tool-definition.json' )->plain()
+		);
+		$citationTools = array();
+		if ( is_array( $citationDefinition ) ) {
+			foreach ( $citationDefinition as $tool ) {
+				if ( !isset( $tool->title ) ) {
+					$tool->title =
+						wfMessage( 'visualeditor-cite-tool-name-' . $tool->name )->text();
+					$msgKeys[] = $tool->title;
+				}
+				$citationTools[] = $tool;
+			}
+		}
+		return $citationTools;
 	}
 
 	public function getMessages() {

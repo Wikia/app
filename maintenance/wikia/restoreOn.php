@@ -132,7 +132,7 @@ if ( $wgUser->isAnon() ) {
                                 'text'       => $revText,
                                 'comment'    => $row->ar_comment,
                                 'user'       => $row->ar_user,
-                                'user_text'  => $row->ar_user_text,
+                                'user_text'  => User::getUsername( $row->ar_user, $row->ar_user_text ),
                                 'timestamp'  => $row->ar_timestamp,
                                 'minor_edit' => $row->ar_minor_edit,
                                 'text_id'    => $row->ar_text_id,
@@ -189,5 +189,5 @@ if ( $wgUser->isAnon() ) {
 	if ( $interval ) {
 		sleep( $interval );
 	}
-	wfWaitForSlaves( 5 );
+	wfWaitForSlaves();
 ?>

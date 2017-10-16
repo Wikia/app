@@ -45,7 +45,7 @@
 		clear: right;
 		float: right;
 		position: relative;
-		width: 300px;
+		width: $width-rail;
 	}
 }
 
@@ -67,10 +67,6 @@
 	}
 
 	@media screen and (max-width: $breakpoint-small) {
-	// ABTesting: DAR-1859: START
-		html:not(.keep-rail-on-right) {
-			// ABTesting: DAR-1859: END
-			@include minMainPageTags();
-		}
+		@include minMainPageTags();
 	}
 }

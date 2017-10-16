@@ -87,7 +87,10 @@ class GadgetHooks {
 			}
 
 			if ( $section !== '' ) {
-				$section = wfMsgExt( "gadget-section-$section", 'parseinline' );
+				// begin wikia change
+				// VOLDEV-186: wfMsg cleanup
+				$section = wfMessage( "gadget-section-$section" )->parse();
+				// end wikia change
 
 				if ( count ( $available ) ) {
 					$options[$section] = $available;
@@ -103,7 +106,10 @@ class GadgetHooks {
 				'label' => '&#160;',
 				'default' => Xml::tags( 'tr', array(),
 					Xml::tags( 'td', array( 'colspan' => 2 ),
-						wfMsgExt( 'gadgets-prefstext', 'parse' ) ) ),
+						// begin wikia change
+						// VOLDEV-186: wfMsg cleanup
+						wfMessage( 'gadgets-prefstext' )->parse() ) ),
+						// end wikia change
 				'section' => 'gadgets',
 				'raw' => 1,
 				'rawrow' => 1,
@@ -127,7 +133,7 @@ class GadgetHooks {
 	 * @param $resourceLoader ResourceLoader
 	 * @return bool
 	 */
-	public static function registerModules( &$resourceLoader ) {
+	public static function registerModules( ResourceLoader $resourceLoader ): bool {
 		$gadgets = Gadget::loadList();
 		if ( !$gadgets ) {
 			return true;
@@ -138,6 +144,7 @@ class GadgetHooks {
 		 */
 		foreach ( $gadgets as $g ) {
 			$module = $g->getModule();
+
 			if ( $module ) {
 				$resourceLoader->register( $g->getModuleName(), $module );
 			}
@@ -222,7 +229,21 @@ class GadgetHooks {
 			return;
 		}
 
-		$u = $t->getLocalURL( 'action=raw&ctype=' . $wgJsMimeType );
+		// Wikia change begin; author: lukaszk
+		$extraQuery = '';
+
+		if ( Wikia::isUsingSafeJs() ) {
+			$contentReviewHelper = new Wikia\ContentReview\Helper();
+
+			if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+				$extraQuery = '&current=' . $contentReviewHelper->getJsPagesTimestamp();
+			} else {
+				$extraQuery = '&reviewed=' . $contentReviewHelper->getReviewedJsPagesTimestamp();
+			}
+		}
+
+		$u = $t->getLocalURL( 'action=raw&ctype=' . $wgJsMimeType . $extraQuery );
+		// Wikia change end
 		$out->addScriptFile( $u, $t->getLatestRevID() );
 	}
 
@@ -369,7 +390,7 @@ class Gadget {
 	 * @return Boolean
 	 */
 	public function isEnabled( $user ) {
-		return (bool)$user->getOption( "gadget-{$this->name}", $this->onByDefault );
+		return (bool)$user->getGlobalPreference( "gadget-{$this->name}", $this->onByDefault );
 	}
 
 	/**
@@ -380,7 +401,7 @@ class Gadget {
 	 */
 	public function isAllowed( $user ) {
 		return count( array_intersect( $this->requiredRights, $user->getRights() ) ) == count( $this->requiredRights )
-			&& ( !count( $this->requiredSkins ) || in_array( $user->getOption( 'skin' ), $this->requiredSkins ) );
+			&& ( !count( $this->requiredSkins ) || in_array( $user->getGlobalPreference( 'skin' ), $this->requiredSkins ) );
 	}
 
 	/**
@@ -620,7 +641,7 @@ class Gadget {
 /**
  * Class representing a list of resources for one gadget
  */
-class GadgetResourceLoaderModule extends ResourceLoaderWikiModule {
+class GadgetResourceLoaderModule extends ResourceLoaderGlobalWikiModule {
 	private $pages, $dependencies;
 
 	/**
@@ -654,4 +675,26 @@ class GadgetResourceLoaderModule extends ResourceLoaderWikiModule {
 	public function getDependencies() {
 		return $this->dependencies;
 	}
+
+	// Wikia change begin; author: lukaszk
+	public function getModifiedTime( ResourceLoaderContext $context ) {
+		if ( Wikia::isUsingSafeJs() ) {
+			$pages = $this->getPages( $context );
+
+			foreach ( $pages as $page ) {
+				if ( $page['type'] === 'script' ) {
+					$contentReviewHelper = new Wikia\ContentReview\Helper();
+
+					if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+						return $contentReviewHelper->getJsPagesTimestamp();
+					} else {
+						return $contentReviewHelper->getReviewedJsPagesTimestamp();
+					}
+				}
+			}
+		}
+
+		return parent::getModifiedTime( $context );
+	}
+	// Wikia change end
 }

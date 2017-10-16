@@ -1,0 +1,184 @@
+@import 'skins/shared/mixins/background-opacity';
+@import 'skins/shared/color';
+
+$media-margin: 2.5px;
+
+.ve {
+	.media-gallery-wrapper {
+
+		.media {
+			transition: none;
+		}
+
+		// Hide "Show more" button when gallery is displayed in VE
+		.more {
+			display: none;
+		}
+	}
+}
+
+// In VE captions are wrapped in <p> (unlike in article view) so in order to
+// achieve same rendering effect "nautralize" styling of that <p>
+.media-gallery-caption .ve-ce-generated-wrapper {
+	display: inline;
+	margin: 0;
+}
+
+.media-gallery-wrapper {
+	@include grid-row();
+	margin: 0 $media-margin * -1;
+	padding: 1px; // leave room for the image outlines
+	width: auto;
+
+	// galleries don't need a clearfix after them.
+	&:after {
+		clear: none;
+	}
+
+	// default is 8 or more images
+	.media {
+		@include grid-column(3, $float: false);
+		display: inline-block;
+		position: relative;
+		transition: all 1s ease-in-out;
+
+		img {
+			outline: 1px solid $color-page-border-subtle;
+			width: 100%;
+		}
+
+		&.hidden {
+			display: none;
+			opacity: 0;
+		}
+
+		&.fade {
+			opacity: 0;
+			transition-duration: .5s;
+		}
+	}
+
+	&.count-1 .media {
+		@include grid-column(6, false, false, 3, $float: false);
+	}
+
+	&.count-2 .media {
+		@include grid-column(6, $float: false);
+	}
+
+	&.count-3 .media {
+		@include grid-column(4, $float: false);
+	}
+
+	&.count-4 .media {
+		@include grid-column(3, $float: false);
+	}
+
+	&.count-5 .media {
+		@include grid-column(6);
+
+		&:nth-child(n+2) {
+			@include grid-column(3, $float: false);
+		}
+	}
+
+	&.count-6 .media {
+		@include grid-column(4, $float: false);
+	}
+
+	&.count-7 .media {
+		@include grid-column(4, $float: false);
+
+		&:nth-child(n+4) {
+			@include grid-column(3, $float: false);
+		}
+	}
+
+	&[class*="count-"] .media:nth-child(n) {
+		padding: $media-margin;
+	}
+
+	.toggler {
+		margin-left: $media-margin * -1;
+		padding: .5em;
+		text-align: center;
+
+		button {
+			margin-left: $media-margin * 2;
+			outline: none;
+			position: relative;
+
+			&.hidden {
+				display: none;
+			}
+		}
+	}
+
+	/**
+	 * Calculate caption default and hover positions:
+	 * Default state:
+	 *    - Absolutely positioned top of caption to 100%
+	 *    - Add a negative top margin to pull the caption up the sum of it's own height (padding plus one line-height)
+	 *    - Also, pull it up a bit more to offset the parent element's padding ($media-margin)
+	 * Hovered class:
+	 *    - Expand caption content so it's height can be calculated by JS.
+	 */
+
+	$caption-line-height: 18px;
+	$caption-padding: 9px;
+	$caption-height: ($caption-padding * 2) + $caption-line-height;
+	$caption-top-offset: -1 * ($caption-height + $media-margin);
+
+	.media-gallery-caption {
+		@include background-opacity(#000, 60);
+		bottom: $media-margin;
+		color: #fff;
+		font-size: 12px;
+		left: $media-margin;
+		line-height: $caption-line-height;
+		margin-top: $caption-top-offset;
+		overflow: hidden;
+		padding: $caption-padding;
+		position: absolute;
+		right: $media-margin;
+		top: 100%;
+		transition: all 400ms linear;
+
+		a {
+			color: #b3b3b3;
+		}
+
+		.inner {
+			max-height: $caption-line-height;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		&.hovered {
+			.inner {
+				max-height: none;
+				white-space: normal;
+			}
+		}
+
+		&.scroll {
+			overflow: auto;
+		}
+	}
+
+	.add-image {
+		display: none; // VID-1965
+		float: right;
+		margin-right: $media-margin + .1; // add a little space for right border
+	}
+}
+
+.media-gallery-inner {
+	overflow: hidden;
+}
+
+// display the add image button on the same line as headers that come directly before the gallery
+h2 + .media-gallery-wrapper .add-image {
+	margin-top: -2.55em;
+}

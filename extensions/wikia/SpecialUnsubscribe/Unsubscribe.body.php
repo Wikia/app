@@ -1,4 +1,8 @@
 <?php
+
+use Wikia\Security\CSRFDetector;
+use Email\EmailController;
+
 /**
  * Provides the special page for single point unsubscribe.
  * Access is done via links provided in emails to user ONLY.
@@ -32,21 +36,20 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: parameter passed to the page or null
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgUser, $wgOut;
+		global $wgRequest, $wgOut;
 
 		$this->setHeaders();
 
 		$hash_key = $wgRequest->getText('key', null );
 
-		$email = $token = $timestamp = null;
+		$email = $token = null;
 		if ( !empty( $hash_key ) ) {
 			#$hask_key = urldecode ( $hash_key );
-			$data = Wikia::verifyUserSecretKey( $hash_key, 'sha256' );
+			$data = EmailController::verifyUserSecretKey( $hash_key, 'sha256' );
 			error_log( "data = " . print_r($data, true) );
 			if ( !empty( $data ) ) {
 				$username 	= ( isset( $data['user'] ) ) ? $data['user'] : null;
 				$token 		= ( isset( $data['token'] ) ) ? $data['token'] : null;
-				$timestamp 	= ( isset( $data['signature1'] ) ) ? $data['signature1'] : null;
 
 				$oUser = User::newFromName( $username );
 				$email = $oUser->getEmail();
@@ -54,31 +57,25 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		} else {
 			$email = $wgRequest->getText( 'email' , null );
 			$token = $wgRequest->getText( 'token' , null );
-			$timestamp = $wgRequest->getText( 'timestamp' , null );
 		}
 
-		if($email == null || $token == null || $timestamp == null) {
+		if($email == null || $token == null) {
 			#give up now, abandon all hope.
 			$wgOut->addWikiMsg( 'unsubscribe-badaccess' );
 			return;
 		}
 
-		#validate timestamp isnt spoiled (you only have 7 days)
-		$timeCutoff = strtotime("7 days ago");
-		if( $timestamp <= $timeCutoff ) {
-			$wgOut->addWikiMsg( 'unsubscribe-badtime' );
-			// $wgOut->addHTML("timestamp={$timestamp}\n"); #DEVL (remove before release)
-			// $wgOut->addHTML("timeCutoff={$timeCutoff}\n"); #DEVL (remove before release)
-			return;
-		}
-
 		#generate what the token SHOULD be
-		$shouldToken = wfGenerateUnsubToken($email, $timestamp);
-		if( $token != $shouldToken ) {
+		$shouldToken = wfGenerateUnsubToken($email);
+		if( !hash_equals( $shouldToken, $token ) ) {
 			$wgOut->addWikiMsg( 'unsubscribe-badtoken' );
 			// $wgOut->addHTML("shouldtoken={$shouldToken}\n"); #DEVL (remove before release)
 			return;
 		}
+
+		// PLATFORM-2389: request token is checked above
+		// tell CSRFDetector that we're fine here
+		CSRFDetector::onUserMatchEditToken();
 
 		#does the non-blank email they gave us look like an email?
 		if( Sanitizer::validateEmail( $email ) == false ) {
@@ -97,7 +94,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 			$this->procUnsub( $email );
 		} else {
 			#this is 1st pass, give them a button to push
-			$this->showInfo( $email , $token, $timestamp);
+			$this->showInfo( $email , $token);
 		}
 
 	}
@@ -135,7 +132,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 * @param $token string: token from url, to verify this link
 	 */
 	function showInfo( $email, $token, $timestamp ) {
-		global $wgOut, $wgLang, $wgScript;
+		global $wgOut;
 
 
 		/**
@@ -179,7 +176,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 				#this shouldnt need to be checked, but we will anyway
 				# we don't need it now - this is in EmailConfirmed hook
-				/*if( $user->getBoolOption($this->mPrefname) ) {
+				/*if( $user->getGlobalPreference($this->mPrefname) ) {
 					unset($this->mUsers[$uid]);
 					continue;
 				}*/
@@ -220,7 +217,6 @@ class UnsubscribePage extends UnlistedSpecialPage {
 <input type="hidden" name="title" value="{$form_title}" />
 <input type="hidden" name="email" value="{$email}" />
 <input type="hidden" name="token" value="{$token}" />
-<input type="hidden" name="timestamp" value="{$timestamp}" />
 <input type="hidden" name="confirm" value="1" />
 {$unsub_text} &nbsp; <input type="submit" value="{$unsub_button}" />
 </form>
@@ -262,17 +258,19 @@ EOT
 				}
 
 				#our new flag
-				$user->setOption( $this->mPrefname, 1);
+				$user->setGlobalPreference( $this->mPrefname, 1);
 
 				#FB:1758 don't invalidate email, but do turn off email options
 				#(users can do this on their own when they are logged in)
-				$user->setOption( 'enotiffollowedpages', 0);
-				$user->setOption( 'enotifusertalkpages', 0);
-				$user->setOption( 'enotifwatchlistpages', 0);
-				$user->setOption( 'enotifminoredits', 0);
-				$user->setOption( 'watchlistdigest', 0);
-				$user->setOption( 'marketingallowed', 0);
-				$user->setOption( 'disablemail', 1);
+				$user->setGlobalPreference( 'enotiffollowedpages', 0);
+				$user->setGlobalPreference( 'enotifusertalkpages', 0);
+				$user->setGlobalPreference( 'enotifwatchlistpages', 0);
+				$user->setGlobalPreference( 'enotifminoredits', 0);
+				$user->setGlobalPreference( 'watchlistdigest', 0);
+				$user->setGlobalPreference( 'enotifdiscussionsvotes', 0);
+				$user->setGlobalPreference( 'enotifdiscussionsfollows', 0);
+				$user->setGlobalPreference( 'marketingallowed', 0);
+				$user->setGlobalPreference( 'disablemail', 1);
 
 				#super important, dont forget to save the bits back to metal
 				$user->saveSettings();

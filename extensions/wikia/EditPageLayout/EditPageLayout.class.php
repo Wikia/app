@@ -143,7 +143,7 @@ class EditPageLayout extends EditPage {
 		// fire a custom hook when an edit from the edit page is successful (BugId:1317)
 		if (in_array($ret->value, array(self::AS_SUCCESS_UPDATE, self::AS_SUCCESS_NEW_ARTICLE, self::AS_OK, self::AS_END))) {
 			wfDebug(__METHOD__ . ": successful save\n");
-			wfRunHooks('EditPageSuccessfulSave', array($this, $ret));
+			Hooks::run('EditPageSuccessfulSave', array($this, $ret));
 		}
 
 		return $ret;
@@ -344,7 +344,11 @@ class EditPageLayout extends EditPage {
 	}
 
 	/**
-	 * Add hidden field to be shown in "Edit title" dialog
+	 * Add hidden field to editor
+	 * this can be any type of field checkbox, text, hidden etc
+	 * It won't be visible to user as it's hidden by css
+	 * @param array $field Array of attributes
+	 *        eg. [ 'name' => 'exampleName', 'type' => 'checkbox', ...]
 	 */
 	public function addHiddenField($field) {
 		$this->mHiddenFields[] = $field;
@@ -442,12 +446,14 @@ class EditPageLayout extends EditPage {
 	}
 
 	public function renderSummaryBox() {
-		$html = Xml::element('textarea', array(
+		$html = Xml::element( 'input', [
+			'type' => 'text',
 			'id' => $this->mSummaryBox['name'],
 			'name' => $this->mSummaryBox['name'],
 			'placeholder' => $this->mSummaryBox['placeholder'],
 			'tabindex' => '1', // BugId:5327
-		), $this->summary, false /* $allowShortTag */);
+			'value' => $this->summary,
+		] );
 
 		return $html;
 	}
@@ -480,7 +486,7 @@ class EditPageLayout extends EditPage {
 	 * If you want to use another entry point to this function, be careful.
 	 */
 	protected function showConflict() {
-		if ( wfRunHooks( 'EditPageBeforeConflictDiff', array( &$this, &$this->out ) ) ) {
+		if ( Hooks::run( 'EditPageBeforeConflictDiff', [ $this, &$this->out ] ) ) {
 			// diff
 			$this->out->addHtml('<div id="diff">');
 			$this->out->wrapWikiMsg( '<h2>$1</h2>', 'editpagelayout-diff-header' );
@@ -523,18 +529,18 @@ class EditPageLayout extends EditPage {
 
 		parent::showTextbox1($customAttribs, $textoverride );
 	}
-	
+
 	/**
 	 * Add items to loaded content
 	 */
-	function getContent() {
+	function getContent($def_text = '') {
 		$content = parent::getContent();
-		
+
 		$addFile = $this->app->getGlobal('wgRequest')->getVal('addFile');
-		
+
 		if( $addFile ) {
 			$file = wfFindFile( $addFile );
-			
+
 			if( $file ) {
 				$title = $file->getTitle()->getText();
 				$content = "[[File:" . $title . "|right|thumb|335px]] " . $content;
@@ -569,7 +575,7 @@ class EditPageLayout extends EditPage {
 		);
 
 		// All of the following is pasted from EditPage:displayPermissionsError and pruned
-		
+
 		if ( $this->app->wg->Request->getBool( 'redlink' ) ) {
 			// The edit page was reached via a red link.
 			// Redirect to the article page and let them click the edit tab if
@@ -582,7 +588,7 @@ class EditPageLayout extends EditPage {
 
 		$this->app->wg->Out->setPageTitle( wfMessage( 'viewsource-title', $this->getContextTitle()->getPrefixedText() ) );
 		$this->app->wg->Out->addBacklinkSubtitle( $this->getContextTitle() );
-		
+
 		# If the user made changes, preserve them when showing the markup
 		# (This happens when a user is blocked during edit, for instance)
 		if ( !$this->firsttime ) {
@@ -600,7 +606,7 @@ class EditPageLayout extends EditPage {
 		if ( $this->mTitle->exists() ) {
 			$this->app->wg->Out->returnToMain( null, $this->mTitle );
 		}
-		
+
 	}
 
 	public function isReadOnlyPage() {
@@ -653,17 +659,22 @@ class EditPageLayout extends EditPage {
 				);
 			}
 
-			// check for empty message (BugId:6923)
-			$parsedMsg = wfMsg($msgName);
-			if (!wfEmptyMsg($msgName, $parsedMsg) && strip_tags($parsedMsg) != '') {
-				$msg = wfMsgExt($msgName, array('parse'));
+			$msgParams = [];
 
-				$this->mEditPagePreloads['EditPageIntro'] = array(
-					'content' => $msg,
-					'class' => $class,
-				);
+			// check for empty message (BugId:6923)
+			if ( !empty( $msgName ) ) {
+				$message = wfMessage( $msgName, $msgParams );
+				$messageParsed = $message->parse();
+				if ( !$message->isBlank() && trim( strip_tags( $messageParsed ) ) != '' ) {
+					$this->mEditPagePreloads['EditPageIntro'] = [
+							'content' => $messageParsed,
+							'class' => $class,
+					];
+				}
 			}
 		}
+
+		Hooks::run( 'EditPageLayoutShowIntro', [ &$this->mEditPagePreloads, $this->mTitle ] );
 
 		// custom intro
 		$this->showCustomIntro();
@@ -699,15 +710,12 @@ class EditPageLayout extends EditPage {
 	 * @return bool
 	 */
 	protected function userDismissedEduNote() {
-		$EditorUserPropertiesHandler = new EditorUserPropertiesHandler();
+		$editorUserPropertiesHandler = new EditorUserPropertiesHandler();
+		$result = false;
 
 		try {
-			$results = $EditorUserPropertiesHandler->getUserPropertyValue(
-				$EditorUserPropertiesHandler->getEditorMainPageNoticePropertyName()
-			);
-			$result = ($results->value == true) ? true : false;
+			$result = $editorUserPropertiesHandler->getEditorMainPageNoticePropertyForCurrentUser() == true;
 		} catch( Exception $e ) {
-			$result = false;
 		}
 
 		return $result;

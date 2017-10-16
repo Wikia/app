@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beluga",
+			"Cimon Avaro",
+			"Crt",
+			"Nedergard",
+			"Nike",
+			"Str4nd",
+			"ZeiP"
+		]
+	},
+	"semanticdrilldown-desc": "Semanttisen tiedonlouhinnan navigointiliittymä",
+	"specialpages-group-sd_group": "Semanttinen tiedonlouhinta",
+	"browsedata": "Datan selaus",
+	"sd_browsedata_choosecategory": "Valitse luokka",
+	"sd_browsedata_viewcategory": "näytä luokka",
+	"sd_browsedata_docu": "Valitse alta yksi tai useampi kohde tulosten rajaamiseksi.",
+	"sd_browsedata_subcategory": "Alaluokka",
+	"sd_browsedata_other": "Muu",
+	"sd_browsedata_none": "Ei mikään",
+	"sd_browsedata_filterbyvalue": "Suodata tällä arvolla",
+	"sd_browsedata_filterbysubcategory": "Suodata tämän alaluokan mukaan",
+	"sd_browsedata_otherfilter": "Näytä sivut tämän suodattimen toisella arvolla",
+	"sd_browsedata_nonefilter": "Näytä sivut ilman arvoa tällä suodattimella",
+	"sd_browsedata_or": "tai",
+	"sd_browsedata_removefilter": "Poista suodatin",
+	"sd_browsedata_removesubcategoryfilter": "Poista tämä alaluokka-suodatin",
+	"sd_browsedata_resetfilters": "Nollaa suodattimet",
+	"sd_browsedata_addanothervalue": "Napsauta nuolta lisääksesi uuden arvon",
+	"sd_browsedata_daterangestart": "Alku",
+	"sd_browsedata_daterangeend": "Loppu",
+	"sd_browsedata_novalues": "Tälle suodattimelle ei ole arvoja",
+	"sd_createfilter_usepropertyvalues": "Käytä tämän ominaisuuden kaikkia arvoja tälle suodattimelle",
+	"sd_createfilter_usecategoryvalues": "Nouda suodattimen arvot tästä luokasta:",
+	"sd_createfilter_requirefilter": "Toinen suodatin on valittava ennen kuin tämä näytetään:",
+	"sd-pageschemas-filter": "Suodatin",
+	"sd-pageschemas-values": "Arvot"
+}

@@ -1,0 +1,24 @@
+.digest-layout-container {
+	text-align: center;
+}
+
+.digest-layout-details {
+	margin: 0 auto;
+	max-width: 375px;
+	width: 100%;
+}
+
+.digest-layout-container td {
+	text-align: center;
+}
+
+.digest-details-icon, .signature-icon {
+	height: 40px;
+	margin: 20px 5px 10px;
+	width: 40px;
+}
+
+.digest-details-header {
+	font-weight: bold;
+	margin-bottom: 0;
+}

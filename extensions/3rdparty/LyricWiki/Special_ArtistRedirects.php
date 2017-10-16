@@ -11,12 +11,6 @@
 
 if(!defined('MEDIAWIKI')) die();
 
-// Allows anyone to view the page.
-//$wgAvailableRights[] = 'artistredirects';
-//$wgGroupPermissions['*']['artistredirects'] = true;
-//$wgGroupPermissions['user']['artistredirects'] = true;
-//$wgGroupPermissions['sysop']['artistredirects'] = true;
-
 $wgExtensionCredits["specialpage"][] = array(
   'name' => 'Artist Redirects',
   'version' => '0.0.1',

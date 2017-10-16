@@ -5,6 +5,27 @@ namespace Wikia\JsonFormat;
 use Wikia\Measurements\Time;
 
 class HtmlParser {
+
+	/**
+	 * Prevention from circular references, when parsing articles with tabs.
+	 * Used for storing titles of articles, which been visited.
+	 * @var array
+	 * @see DivContainingHeadersVisitor::parseTabview
+	 */
+	protected static $VISITED_ARTICLES = [ ];
+
+	public static function markAsVisited( $articleTitle ) {
+		self::$VISITED_ARTICLES[ $articleTitle ] = true;
+	}
+
+	public static function isVisited( $articleTitle ) {
+		return isset( self::$VISITED_ARTICLES[ $articleTitle ] );
+	}
+
+	public static function clearVisited() {
+		self::$VISITED_ARTICLES = [ ];
+	}
+
 	/**
 	 * @param string $html
 	 * @return \JsonFormatNode
@@ -13,10 +34,11 @@ class HtmlParser {
 		$time = Time::start([__CLASS__, __METHOD__]);
 		$doc = new \DOMDocument();
 
-		libxml_use_internal_errors(true);
+		$libxmlErrorSetting = libxml_use_internal_errors(true);
 		$html = preg_replace("/\s+/", " ", $html);
 		$doc->loadHTML("<?xml encoding=\"UTF-8\">\n<html><body>" . $html . "</body></html>");
 		libxml_clear_errors();
+		libxml_use_internal_errors($libxmlErrorSetting);
 		$body = $doc->getElementsByTagName('body')->item(0);
 
 		$jsonFormatTraversingState = new \JsonFormatBuilder();
@@ -27,7 +49,7 @@ class HtmlParser {
 		return $root;
 	}
 
-	protected function createVisitor( $jsonFormatTraversingState ) {
+	public function createVisitor( $jsonFormatTraversingState ) {
 		$compositeVisitor = new \CompositeVisitor();
 
 		$compositeVisitor->addVisitor( new \TextNodeVisitor($compositeVisitor, $jsonFormatTraversingState) );

@@ -15,16 +15,13 @@ unset($wgSkipSkins[ array_search('answers', $wgSkipSkins) ]);
 $wgHooks['ArticleSaveComplete'][] = 'AttributionCache::purgeArticleContribs';
 $wgHooks['TitleMoveComplete'][] = 'AttributionCache::purgeArticleContribsAfterMove';
 
-// FIXME: this SHOULD NOT be here. Move to Skin.
-$wgExtensionFunctions[] = 'answersStyle';
-function answersStyle() {
-	global $wgOut, $wgStylePath, $wgUseNewAnswersSkin;
-
-	if ( !empty( $wgUseNewAnswersSkin ) ) {
-		$wgOut->addExtensionStyle("{$wgStylePath}/answers/css/monaco_answers.css");
-	}
-	return true;
-}
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'Answers',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'answers-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Answers',
+	
+);
 
 // FIXME: Migrate require_once's to inclues for performance reasons.
 require_once( dirname(__FILE__) . "/AnswersClass.php");
@@ -50,24 +47,6 @@ $wgSpecialPages['CreateQuestionPage'] = 'CreateQuestionPage';
 
 $wgAutoloadClasses['GetQuestionWidget'] = dirname( __FILE__ ) . "/SpecialGetQuestionWidget.php";
 $wgSpecialPages['GetQuestionWidget'] = 'GetQuestionWidget';
-
-$wgHooks['AddNewAccount'][] = 'fnQuestionAttributionRegister';
-function fnQuestionAttributionRegister( $user ){
-	global $wgOut;
-
-	fnWatchHeldPage( $user );
-
-	//anon has asked a question and then registered, so we have to give them attribution
-	if( isset( $_SESSION['wsQuestionAsk'] ) && $_SESSION['wsQuestionAsk'] != "" ){
-		fnQuestionAttribution( $user );
-		$title = Title::newFromText( $_SESSION['wsQuestionAsk'] );
-		unset($_SESSION['wsQuestionAsk']);
-		$wgOut->redirect( $title->getFullURL( "state=registered" ) );
-	}
-
-	return true;
-}
-
 
 $wgHooks['UserLoginComplete'][] = 'fnQuestionAttributionLogin';
 function fnQuestionAttributionLogin( $user ){
@@ -284,9 +263,6 @@ function fnAddAnswerJSGlobalVariables(Array &$vars){
 	global $wgMinimalPasswordLength;
 	$vars['wgMinimalPasswordLength'] = $wgMinimalPasswordLength;
 
-	global $wgAfterContentAndJS;
-	$vars['wgAfterContentAndJS'] = ($wgAfterContentAndJS?$wgAfterContentAndJS:array());
-
 	global $wgIsMainpage;
 	$vars['wgIsMainpage'] = ($wgIsMainpage?$wgIsMainpage:false);
 
@@ -374,7 +350,7 @@ function wfCustomMoveForm( &$newTitle, &$oldTitle, &$form ){
 }
 
 $wgHooks['TitleMoveComplete'][] = 'fnRedirectOnMove';
-function fnRedirectOnMove(&$title, &$newtitle, &$user, $oldid, $newid) {
+function fnRedirectOnMove( Title $title, Title $newtitle, User $user, $oldid, $newid ): bool {
 	global $wgOut;
 	$wgOut->redirect( $newtitle->getFullURL() );
 	return true;
@@ -408,7 +384,7 @@ $wgHooks['CategoryViewer::addPage'][] = 'answerAddCategoryPage';
 // Since this function returns false, it prevents the default behavior from adding this item to the "pages" section
 // of the category page.
 ////
-function answerAddCategoryPage(&$catView, &$title, &$row){
+function answerAddCategoryPage( CategoryViewer $catView, Title $title, &$row, $humanSortkey ) {
 	global $wgContLang;
 
 	if (empty($catView->answers)){
@@ -436,16 +412,11 @@ function answerAddCategoryPage(&$catView, &$title, &$row){
 		// Assume answered for now until David's isAnsweredQuestion is reworked
 		$class = "answered_questions";
 	}
-	$catView->answers[$class][] = "<span class=\"$class\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+	$catView->answers[$class][] = "<span class=\"$class\">" . Linker::linkKnown( $title, $title->getPrefixedText() . '?' ) . '</span>';
 
 	if(!isset($catView->answerArticles[$class])){
 		$catView->answerArticles[$class] = array();
 	}
-
-	/*
-	list( $namespace, $title ) = explode( ":", $row->cl_sortkey, 2 );
-	$catView->answers_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $title ) );
-	*/
 
 	// Note that return false here will prevent it from being displayed as a "normal" category
 	return false;
@@ -454,15 +425,10 @@ function answerAddCategoryPage(&$catView, &$title, &$row){
 ////
 // This function will be called by a hook so that it can change the rendering of the CategoryPage.
 ////
-function answerCategoryOtherSection(&$catView, &$r){
-	global $wgUser;
-
+function answerCategoryOtherSection( CategoryViewer $catView, &$r ): bool {
 	if( empty( $catView->answers ) ) {
 		return true;
 	}
-
-	$ti = htmlspecialchars( $catView->title->getText() );
-	$cat = $catView->getCat();
 
 	$r .= "<table style=\"width: 100%\"><tr>";
 
@@ -470,7 +436,9 @@ function answerCategoryOtherSection(&$catView, &$r){
 		$r .= "<td style=\"width: 50%; vertical-align: top\">\n";
 		$r .= "<div id=\"mw-pages\">\n";
 		$r .= "<h2>" . Answer::getSpecialCategory("answered") . "</h2>";
-		$r .= wfMsgExt( 'answers-category-count-answered', array('parsemag'), count($catView->answers['answered_questions'] ) );
+		$r .= $catView->msg( 'answers-category-count-answered' )
+			->numParams( count( $catView->answers['answered_questions'] ) )
+			->escaped();
 		$r .= "<ul>\n";
 		foreach($catView->answers["answered_questions"] as $q){
 			$r.= "<li>$q</li>\n";
@@ -484,7 +452,9 @@ function answerCategoryOtherSection(&$catView, &$r){
 		$r .= "<td style=\"width: 50%; vertical-align: top\">\n";
 		$r .= "<div id=\"mw-pages\">\n";
 		$r .= "<h2>" . str_replace("-","",Answer::getSpecialCategory("unanswered")) . "</h2>";
-		$r .= wfMsgExt( 'answers-category-count-unanswered', array('parsemag'), count( $catView->answers['unanswered_questions'] ) );
+		$r .= $catView->msg( 'answers-category-count-unanswered' )
+			->numParams( count( $catView->answers['unanswered_questions'] ) )
+			->escaped();
 		$r .= "<ul>\n";
 		foreach($catView->answers["unanswered_questions"] as $q){
 			$r.= "<li>$q</li>\n";
@@ -495,18 +465,6 @@ function answerCategoryOtherSection(&$catView, &$r){
 	}
 
 	$r .= "</tr></table>\n";
-
-	/*
-	$dbcnt = $cat->getPageCount() - $cat->getSubcatCount() - $cat->getFileCount();
-	$rescnt = count( $catView->answers );
-
-	if( $rescnt > 0 ) {
-		$r = "<div id=\"mw-pages\">\n";
-		$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
-		$r .= $catView->formatList( $catView->blogs, $catView->blogs_start_char );
-		$r .= "\n</div>";
-	}
-	*/
 
 	return true;
 }
@@ -543,19 +501,16 @@ function displayMagicAnswer($editor){
 //CategoryPageView
 //injects Ads into Category pages
 $wgHooks['CategoryPageView'][] = 'wfCategoryPageWithAds';
-function wfCategoryPageWithAds(&$cat){
-	global  $wgOut;
+function wfCategoryPageWithAds( $cat ){
 
-	global $wgUser;
-
-	$article = new Article($cat->mTitle);
+	$article = new Article( $cat->getTitle() );
 	$article->view();
 
-	if ( NS_CATEGORY == $cat->mTitle->getNamespace() ) {
+	if ( NS_CATEGORY == $cat->getTitle()->getNamespace() ) {
 		global $wgOut, $wgRequest;
 		$from = $wgRequest->getVal( 'from' );
 		$until = $wgRequest->getVal( 'until' );
-		$viewer = new CategoryWithAds( $cat->mTitle, $from, $until);
+		$viewer = new CategoryWithAds( $cat->getTitle(), $from, $until );
 		$wgOut->addHTML( $viewer->getHTML() );
 	}
 
@@ -564,19 +519,19 @@ function wfCategoryPageWithAds(&$cat){
 
 class CategoryWithAds extends CategoryViewer{
 
-	function __construct( $title, $from = '', $until = '', $query = array() ) {
-		parent::__construct( $title, RequestContext::getMain(), array( $from ), array( $until ), $query );
-		$this->from = $from;
-		$this->until = $until;
+	function __construct( $title, $from = '', $until = '' ) {
+		parent::__construct( $title, RequestContext::getMain() );
+		$this->fromSortKey = $from;
+		$this->untilSortKey = $until;
 	}
 
 	function doCategoryQuery() {
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-		if( $this->from != '' ) {
-			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->from );
+		if( $this->fromSortKey != '' ) {
+			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->fromSortKey );
 			$this->flip = false;
-		} elseif( $this->until != '' ) {
-			$pageCondition = 'cl_sortkey < ' . $dbr->addQuotes( $this->until );
+		} elseif( $this->untilSortKey != '' ) {
+			$pageCondition = 'cl_sortkey < ' . $dbr->addQuotes( $this->untilSortKey );
 			$this->flip = true;
 		} else {
 			$pageCondition = '1 = 1';
@@ -596,12 +551,10 @@ class CategoryWithAds extends CategoryViewer{
 		);
 
 		$count = 0;
-		$this->nextPage = null;
 		while( $x = $dbr->fetchObject ( $res ) ) {
 			if( ++$count > $this->limit ) {
 				// We've reached the one extra which shows that there are
 				// additional pages to be had. Stop here...
-				$this->nextPage = $x->cl_sortkey;
 				break;
 			}
 
@@ -613,7 +566,7 @@ class CategoryWithAds extends CategoryViewer{
 			} elseif( $this->showGallery && $title->getNamespace() == NS_FILE ) {
 				$this->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 			} else {
-				if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$x ) ) ) {
+				if ( Hooks::run( "CategoryViewer::addPage", [ $this, &$title, &$x, $x->cl_sortkey ] ) ) {
 					$this->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 				}
 			}
@@ -623,7 +576,6 @@ class CategoryWithAds extends CategoryViewer{
 }
 
 include( dirname(__FILE__) . "/HomePageList.php");
-include( dirname(__FILE__) . "/EditSimilarAnswers.php");
 include( dirname(__FILE__) . "/FakeAnswersMessaging.php");
 
 $wgAjaxExportList[] = 'wfAnswersGetEditPointsAjax';
@@ -645,17 +597,4 @@ function wfAnswersGetEditPointsAjax() {
 	$response->checkLastModified(strtotime($timestamp));
 	$response->setCacheDuration($wgSquidMaxage);
 	return $response;
-}
-
-$wgHooks["UserToggles"][] = "wfHideFromAttribution";
-function wfHideFromAttribution(&$toggles) {
-	$toggles[] = "hidefromattribution";
-	return true;
-}
-
-
-$wgHooks['CustomArticleFooter'][] = "wfAnswersHideFooter";
-function wfAnswersHideFooter($skin, &$tpl, &$custom_article_footer ) {
-	$custom_article_footer = "<!-- Blank comment to remove article footer for answers via " . __FUNCTION__ . "-->\n";
-	return true;
 }

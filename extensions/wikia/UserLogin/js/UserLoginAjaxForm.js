@@ -1,171 +1,175 @@
-/*global WikiaForm:true */
-var UserLoginAjaxForm = function(el, options){
-	this.el = $(el);
-	this.options = options || {};
-	this.init();
-};
+/*global wgScriptPath, UserBaseAjaxForm */
+(function () {
+	'use strict';
 
-UserLoginAjaxForm.prototype.init = function() {
-	// DOM cache
-	this.form = this.el.find("form");
-	this.wikiaForm = new WikiaForm(this.form);
-	this.inputs = {
-		username: this.form.find('input[name=username]'),
-		password: this.form.find('input[name=password]'),
-		keeploggedin: this.form.find('input[name=keeploggedin]'),
-		logintoken: this.form.find('input[name=loginToken]'),
-		returnto: this.form.find('input[name=returnto]')
+	/**
+	 * Handle any login forms that are shown dynamically with JS
+	 * @param {jQuery} el Wrapping element for the form
+	 * @param {Object} options Configuration options for the module
+	 * @constructor
+	 * @extends UserBaseAjaxForm
+	 */
+	var UserLoginAjaxForm = function (el, options) {
+		UserBaseAjaxForm.call(this, el, options);
 	};
-	this.submitButton = this.form.find('input[type=submit]');
-	this.forgotPasswordLink = this.form.find('.forgot-password');
 
-	// get login token
-	this.retrieveLoginToken();
+	/**
+	 * Pull in the base class's functionality
+	 * @type {UserBaseAjaxForm.prototype}
+	 */
+	UserLoginAjaxForm.prototype = Object.create(UserBaseAjaxForm.prototype);
 
-	// form submission handler
-	this.form.submit($.proxy(this.submitLogin, this));
+	/**
+	 * Set up module functionality
+	 */
+	UserLoginAjaxForm.prototype.init = function () {
+		UserBaseAjaxForm.prototype.init.call(this);
+		this.retrieveLoginToken();
+	};
 
-	// forgot password handler
-	this.forgotPasswordLink.click($.proxy(this.mailPassword, this));
+	/**
+	 * Callback after ajax login
+	 * @param {Object} json Response from server after ajax login
+	 */
+	UserLoginAjaxForm.prototype.submitLoginHandler = function (json) {
+		var result = json.result;
 
-	this.inputs['username'].focus();
-};
+		UserBaseAjaxForm.prototype.submitLoginHandler.call(this, json);
 
-UserLoginAjaxForm.prototype.submitLogin = function(e) {
-	$(window).trigger('UserLoginSubmit');
-
-	this.submitButton.attr('disabled', 'disabled');
-	if(this.options['ajaxLogin']) {
-		e.preventDefault();
-		this.ajaxLogin();
-	}
-};
-
-UserLoginAjaxForm.prototype.ajaxLogin = function() {
-	// TODO: use $.nirvana.postJson
-	$.post(wgScriptPath + '/wikia.php', {
-		controller: 'UserLoginSpecial',
-		method: 'login',
-		format: 'json',
-		loginToken: this.loginToken,
-		username: this.inputs['username'].val(),
-		password: this.inputs['password'].val(),
-		keeploggedin: this.inputs['keeploggedin'].is(':checked')
-	}, $.proxy(this.submitLoginHandler, this));
-};
-
-UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
-	$().log(json);
-	this.form.find('.error-msg').remove();
-	this.form.find('.input-group').removeClass('error');
-	var result = json['result'],
-		callback;
-
-	if(result === 'ok') {
-		window.wgUserName = json['wgUserName'];
-		callback = this.options['callback'] || '';
-		if(callback && typeof callback === 'function') {
-			callback(json);
+		if (result === 'resetpass') {
+			this.onResetPasswordResponse(json);
+		} else if (result === 'closurerequested') {
+			this.onAccountClosureRequestResponse();
 		} else {
-			// reload page if no callback specified
-			this.reloadPage();
+			this.onErrorResponse();
 		}
-	} else if(result === 'resetpass') {
-		callback = this.options['resetpasscallback'] || '';
-		if(callback && typeof callback === 'function') {
-			callback(json);
+	};
+
+	/**
+	 * Called when a user has requested a password change
+	 */
+	UserLoginAjaxForm.prototype.onResetPasswordResponse = function () {
+		$.nirvana.sendRequest({
+			controller: 'UserLoginSpecial',
+			method: 'changePassword',
+			format: 'html',
+			data: {
+				username: this.inputs.username.val(),
+				password: this.inputs.password.val(),
+				loginToken: this.inputs.loginToken.val(),
+				returnto: this.inputs.returnto.val(),
+				fakeGet: 1
+			},
+			callback: this.setupChangePasswordForm.bind(this)
+		});
+	};
+
+	/**
+	 * Replace form's content based on HTML sent from the server.
+	 * @param {string} html
+	 */
+	UserLoginAjaxForm.prototype.setupChangePasswordForm = function (html) {
+		var content, form, heading, modal, contentBlock, duration;
+
+		content = $('<div>').hide().append(html);
+		duration = 400;
+
+		// forced login modal needs a new header and some HTML adjustments
+		if (this.options.modal) {
+			heading = content.find('h1');
+			modal = this.options.modal;
+			contentBlock = modal.$element.find('.UserLoginModal');
+
+			modal.setTitle(heading.text());
+			heading.remove();
+
+			contentBlock.slideUp(duration, function () {
+				contentBlock.html('').html(content);
+				content.show();
+				contentBlock.slideDown(duration);
+			});
+
+		// any non-modal change password flow
 		} else {
-			// default implementation
-			$.post(wgScriptPath + '/wikia.php', {
-					controller: 'UserLoginSpecial',
-					method: 'changePassword',
-					format: 'html',
-					username: this.inputs['username'].val(),
-					password: this.inputs['password'].val(),
-					returnto: this.inputs['returnto'].val(),
-					fakeGet: 1
-				}, $.proxy(this.retrieveTemplateHandler, this)
+			form = this.form;
+
+			form.slideUp(duration, (function () {
+				var newForm = content.find('form');
+				form.replaceWith(content);
+				content.slideDown(duration);
+				newForm.on('submit', this.submitLoginAfterResetPass.bind(this));
+				this.wikiaForm = new WikiaForm(newForm);
+				this.inputs = this.wikiaForm.inputs;
+			}).bind(this));
+		}
+	};
+
+	/**
+	 * Called after a user has requested an account closer and then tries to log in with that same account.
+	 */
+	UserLoginAjaxForm.prototype.onAccountClosureRequestResponse = function () {
+		$.post(wgScriptPath + '/wikia.php', {
+			controller: 'UserLoginSpecial',
+			method: 'getCloseAccountRedirectUrl',
+			format: 'json'
+		}, function (data) {
+			window.location = data.redirectUrl;
+		});
+	};
+
+	/**
+	 * Get login token from back end and update the form field value
+	 * @param {Object} [params]
+	 */
+	UserLoginAjaxForm.prototype.retrieveLoginToken = function (params) {
+		params = params || {};
+		if (!this.loginToken || params.clearCache) {
+			this.loginToken = 'retrieving';
+			$.nirvana.postJson(
+				'UserLoginSpecial',
+				'retrieveLoginToken',
+				function (res) {
+					this.loginToken = res.loginToken;
+					this.inputs.loginToken.val(res.loginToken);
+				}.bind(this)
 			);
 		}
-	} else if(result === 'unconfirm') {
-		$.post(wgScriptPath + '/wikia.php', {
-			controller: 'UserLoginSpecial',
-			method: 'getUnconfirmedUserRedirectUrl',
-			format: 'json',
-			username: this.inputs['username'].val()
-		}, function(json) {
-			window.location = json['redirectUrl'];
-		});
-	} else {
-		this.submitButton.removeAttr('disabled');
-		this.errorValidation(json);
-	}
-};
+	};
 
-UserLoginAjaxForm.prototype.retrieveTemplateHandler = function(html) {
-	var content = $('<div style="display:none" />').append(html);
-	var heading = content.find('h1');
-	var form = this.form;
-	this.form.slideUp(400, function() {
-		form.replaceWith(content);
-		content.slideDown(400);
-	});
-};
 
-/* TODO: Generalize this - hyun */
-/* It seems like we stuff all utility functions into jQuery namespace.  I'd rather wait until we come to a decision on placement of global utility functions than to further pollute jQuery - hyun */
-UserLoginAjaxForm.prototype.reloadPage = function() {
-	var location = window.location.href;
-	var delim = "?";
-	if(location.indexOf("?") > 0){
-		delim = "&";
-	}
-	window.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
-};
 
-UserLoginAjaxForm.prototype.errorValidation = function(json) {
-	if(json['errParam']) {
-		this.wikiaForm.showInputError(json['errParam'], json['msg']);
-	} else {
-		this.wikiaForm.showGenericError(json['msg']);
-	}
-};
+	/**
+	 * Handler for login form submit
+	 * @param {Object} e jQuery event object
+	 */
+	UserLoginAjaxForm.prototype.submitLoginAfterResetPass = function (e) {
+		this.submitButton.attr('disabled', 'disabled');
+		if (this.options.ajaxLogin) {
+			e.preventDefault();
+			this.ajaxLoginAfterResetPass();
+		}
+	};
 
-UserLoginAjaxForm.prototype.retrieveLoginToken = function(params) {
-	params = params || {};
-	if(!this.loginToken || params['clearCache']) {
-		this.loginToken = 'retrieving';
-		// TODO: use $.nirvana.postJson
-		$.post(wgScriptPath + '/wikia.php', {
-			controller: 'UserLoginSpecial',
-			method: 'retrieveLoginToken',
-			format: 'json'
-		}, $.proxy(function(res) {
-			this.loginToken = res.loginToken;
-			this.inputs['logintoken'].val(res.loginToken);
-		}, this));
-	}
-};
+	/**
+	 * Make the call to the back end to log the user in via ajax
+	 */
+	UserLoginAjaxForm.prototype.ajaxLoginAfterResetPass = function () {
+		$.nirvana.postJson(
+			'UserLoginSpecial',
+			'loginForm',
+			{
+				loginToken: this.loginToken,
+				username: this.inputs.username.val(),
+				password: this.inputs.password.val(),
+				newpassword: this.inputs.newpassword.val(),
+				retype: this.inputs.retype.val(),
+				action: this.inputs.action.val(),
+				editToken: this.inputs.editToken.val()
+			},
+			this.submitLoginHandler.bind(this)
+		);
+	};
 
-UserLoginAjaxForm.prototype.mailPassword = function(e) {
-	e.preventDefault();
-	this.form.find('.input-group').removeClass('error');
-	this.form.find('.error-msg').remove();
-	$().log('mailing password');
-	// TODO: use $.nirvana.postJson
-	$.post(wgScriptPath + '/wikia.php', {
-		controller: 'UserLoginSpecial',
-		method: 'mailPassword',
-		format: 'json',
-		username: this.inputs['username'].val()
-	}, $.proxy(this.mailPasswordHandler, this) );
-};
-
-UserLoginAjaxForm.prototype.mailPasswordHandler = function(json) {
-	$().log(json);
-	if(json['result'] === 'ok') {
-		this.errorValidation(json);
-	} else if(json['result'] === 'error') {
-		this.errorValidation(json);
-	}
-};
+	// Expose global
+	window.UserLoginAjaxForm = UserLoginAjaxForm;
+})();

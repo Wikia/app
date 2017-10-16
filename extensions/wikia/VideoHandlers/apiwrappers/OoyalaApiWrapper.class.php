@@ -4,7 +4,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 	protected $ingestion = true;
 
-	protected static $API_URL = 'http://api.ooyala.com';
+	protected static $API_URL = 'https://api.ooyala.com';
 	protected static $CACHE_KEY = 'ooyalaapi';
 	protected static $CACHE_KEY_VERSION = 0.2;
 	protected static $aspectRatio = 1.7777778;
@@ -20,8 +20,8 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		// check for customized video
 		$parsed = explode( "?", $url );
-		if( is_array($parsed) && !empty($parsed) ) {
-			$query = explode( 'videoid=', array_pop($parsed) );
+		if( is_array( $parsed ) && !empty( $parsed ) ) {
+			$query = explode( 'videoid=', array_pop( $parsed ) );
 			$videoId = array_pop( $query );
 
 			$apiWrapper = new static( $videoId );
@@ -38,7 +38,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	public function getProvider() {
-		if ( !empty($this->metadata['provider']) ) {
+		if ( !empty( $this->metadata['provider'] ) ) {
 			return $this->metadata['provider'];
 		}
 
@@ -50,8 +50,8 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 	public static function getProviderName( $labels ) {
 		$provider = '';
-		foreach( $labels as $label ) {
-			if ( !empty($label['full_name']) && preg_match('/\/Providers\/([\w\s]+)/', $label['full_name'], $matches) ) {
+		foreach ( $labels as $label ) {
+			if ( !empty( $label['full_name'] ) && preg_match( '/\/Providers\/([\w\s]+)/', $label['full_name'], $matches ) ) {
 				$provider = $matches[1];
 				break;
 			}
@@ -62,7 +62,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 	public static function formatProviderName( $name ) {
 		$provider = 'ooyala';
-		if ( !empty($name) ) {
+		if ( !empty( $name ) ) {
 			$provider .= '/'.strtolower( preg_replace( '/[\s\W]+/', '', $name ) );
 		}
 
@@ -88,11 +88,11 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	public function getThumbnailUrl() {
-		if ( !empty($this->metadata['thumbnail']) ) {
+		if ( !empty( $this->metadata['thumbnail'] ) ) {
 			return $this->metadata['thumbnail'];
 		}
 
-		if ( !empty($this->interfaceObj['preview_image_url']) ) {
+		if ( !empty( $this->interfaceObj['preview_image_url'] ) ) {
 			return $this->interfaceObj['preview_image_url'];
 		}
 
@@ -100,11 +100,11 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	public function getVideoTitle() {
-		if ( !empty($this->videoName) ) {
+		if ( !empty( $this->videoName ) ) {
 			return $this->videoName;
 		}
 
-		if ( !empty($this->interfaceObj['name']) ) {
+		if ( !empty( $this->interfaceObj['name'] ) ) {
 			return $this->interfaceObj['name'];
 		}
 
@@ -122,7 +122,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		$extra = array(
 			'api_key' => $wgOoyalaApiConfig['AppId'],
-			'expires' => strtotime("+1 hour"),
+			'expires' => strtotime( "+1 hour" ),
 		);
 
 		if ( $method == 'GET' ) {
@@ -138,10 +138,10 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	public static function getApiSig( $appKey, $method, $reqPath, $params, $reqBody = '' ) {
-		$sig = $appKey.strtoupper($method).$reqPath;
+		$sig = $appKey.strtoupper( $method ).$reqPath;
 
 		ksort( $params );
-		foreach( $params as $key => $value ) {
+		foreach ( $params as $key => $value ) {
 			$sig .= $key.'='.$value;
 		}
 
@@ -164,17 +164,20 @@ class OoyalaApiWrapper extends ApiWrapper {
 		if ( !isset( $this->metadata['startDate'] ) ) {
 			$this->metadata['startDate'] = $this->getVideoStartDate();
 		}
+		if ( !isset( $this->metadata['distributor'] ) ) {
+			$this->metadata['distributor'] = $this->getDistributor();
+		}
 		if ( !isset( $this->metadata['pageCategories'] ) ) {
 			$this->metadata['pageCategories'] = $this->getPageCategories();
 		}
 	}
 
 	protected function getOriginalDescription() {
-		if ( !empty($this->metadata['description']) ) {
+		if ( !empty( $this->metadata['description'] ) ) {
 			return $this->metadata['description'];
 		}
 
-		if ( !empty($this->interfaceObj['description']) ) {
+		if ( !empty( $this->interfaceObj['description'] ) ) {
 			return $this->interfaceObj['description'];
 		}
 
@@ -182,11 +185,11 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	protected function getVideoDuration() {
-		if ( !empty($this->metadata['duration']) ) {
+		if ( !empty( $this->metadata['duration'] ) ) {
 			return $this->metadata['duration'];
 		}
 
-		if ( !empty($this->interfaceObj['duration']) ) {
+		if ( !empty( $this->interfaceObj['duration'] ) ) {
 			return ( $this->interfaceObj['duration']/1000 );
 		}
 
@@ -197,48 +200,64 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return self::$aspectRatio;
 	}
 
+	/**
+	 * Get published time
+	 * @return string
+	 */
 	protected function getVideoPublished() {
-		if ( !empty($this->metadata['published']) ) {
+		if ( !empty( $this->metadata['published'] ) ) {
 			return $this->metadata['published'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['published']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['published'] ) ) {
 			return strtotime( $this->interfaceObj['metadata']['published'] );
 		}
 
 		return '';
 	}
 
+	/**
+	 * Get video category
+	 * @return string
+	 */
 	protected function getVideoCategory() {
-		if ( !empty($this->metadata['category']) ) {
+		if ( !empty( $this->metadata['category'] ) ) {
 			return $this->metadata['category'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['category']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['category'] ) ) {
 			return $this->interfaceObj['metadata']['category'];
 		}
 
 		return '';
 	}
 
+	/**
+	 * Get video keywords
+	 * @return string
+	 */
 	protected function getVideoKeywords() {
-		if ( !empty($this->metadata['keywords']) ) {
+		if ( !empty( $this->metadata['keywords'] ) ) {
 			return $this->metadata['keywords'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['keywords']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['keywords'] ) ) {
 			return $this->interfaceObj['metadata']['keywords'];
 		}
 
 		return '';
 	}
 
+	/**
+	 * Get language
+	 * @return string
+	 */
 	protected function getLanguage() {
-		if ( !empty($this->metadata['language']) ) {
+		if ( !empty( $this->metadata['language'] ) ) {
 			return $this->metadata['language'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['lang']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['lang'] ) ) {
 			return $this->interfaceObj['metadata']['lang'];
 		}
 
@@ -246,7 +265,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get subtitle
+	 * Get subtitle
 	 * @return string
 	 */
 	protected function getSubtitle() {
@@ -261,30 +280,42 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * Check for HD
+	 * @return int
+	 */
 	protected function isHdAvailable() {
-		if ( !empty($this->metadata['hd']) ) {
+		if ( !empty( $this->metadata['hd'] ) ) {
 			return $this->metadata['hd'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['hd']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['hd'] ) ) {
 			return 1;
 		}
 
 		return 0;
 	}
 
+	/**
+	 * Get industry rating
+	 * @return string
+	 */
 	protected function getIndustryRating() {
-		if ( !empty($this->metadata['industryRating']) ) {
+		if ( !empty( $this->metadata['industryRating'] ) ) {
 			return $this->metadata['industryRating'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['industryrating']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['industryrating'] ) ) {
 			return $this->interfaceObj['metadata']['industryrating'];
 		}
 
 		return '';
 	}
 
+	/**
+	 * Check for age gate
+	 * @return boolean
+	 */
 	protected function isAgeGate() {
 		if ( !empty( $this->metadata['ageGate'] ) || !empty( $this->metadata['ageRequired'] ) ) {
 			return true;
@@ -298,7 +329,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get age required
+	 * Get age required
 	 * @return int
 	 */
 	protected function getAgeRequired() {
@@ -313,56 +344,88 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return 0;
 	}
 
+	/**
+	 * Get genres
+	 * @return string
+	 */
 	protected function getGenres() {
-		if ( !empty($this->metadata['genres']) ) {
+		if ( !empty( $this->metadata['genres'] ) ) {
 			return $this->metadata['genres'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['genres']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['genres'] ) ) {
 			return $this->interfaceObj['metadata']['genres'];
 		}
 
 		return '';
 	}
 
+	/**
+	 * Get actors
+	 * @return string
+	 */
 	protected function getActors() {
-		if ( !empty($this->metadata['actors']) ) {
+		if ( !empty( $this->metadata['actors'] ) ) {
 			return $this->metadata['actors'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['actors']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['actors'] ) ) {
 			return $this->interfaceObj['metadata']['actors'];
 		}
 
 		return '';
 	}
 
+	/**
+	 * Get start date for time restrictions
+	 * @return string
+	 */
 	protected function getVideoStartDate() {
-		if ( !empty($this->metadata['startDate']) ) {
+		if ( !empty( $this->metadata['startDate'] ) ) {
 			return $this->metadata['startDate'];
 		}
 
-		if ( !empty($this->interfaceObj['time_restrictions']['start_date']) ) {
+		if ( !empty( $this->interfaceObj['time_restrictions']['start_date'] ) ) {
 			return strtotime( $this->interfaceObj['time_restrictions']['start_date'] );
 		}
 
 		return '';
 	}
 
+	/**
+	 * Get expiration date
+	 * @return string
+	 */
 	protected function getVideoExpirationDate() {
-		if ( !empty($this->metadata['expirationDate']) ) {
+		if ( !empty( $this->metadata['expirationDate'] ) ) {
 			return $this->metadata['expirationDate'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['expirationdate']) ) {
-			return strtotime( $this->interfaceObj['metadata']['expirationdate'] );
+		if ( !empty( $this->interfaceObj['time_restrictions']['end_date'] ) ) {
+			return strtotime( $this->interfaceObj['time_restrictions']['end_date'] );
 		}
 
 		return '';
 	}
 
 	/**
-	 * get target country
+	 * Get regional restrictions
+	 * @return string
+	 */
+	protected function getRegionalRestrictions() {
+		if ( !empty( $this->metadata['regionalRestrictions'] ) ) {
+			return $this->metadata['regionalRestrictions'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['regional_restrictions'] ) ) {
+			return strtoupper( $this->interfaceObj['metadata']['regional_restrictions'] );
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get target country
 	 * @return string
 	 */
 	protected function getTargetCountry() {
@@ -378,7 +441,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get source
+	 * Get source
 	 * @return string
 	 */
 	protected function getSource() {
@@ -394,7 +457,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get source id (video id from source)
+	 * Get source id (video id from source)
 	 * @return string
 	 */
 	protected function getSourceId() {
@@ -410,7 +473,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get series
+	 * Get series
 	 * @return string
 	 */
 	protected function getSeries() {
@@ -426,7 +489,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get season
+	 * Get season
 	 * @return string
 	 */
 	protected function getSeason() {
@@ -442,7 +505,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get episode
+	 * Get episode
 	 * @return string
 	 */
 	protected function getEpisode() {
@@ -458,7 +521,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get page categories
+	 * Get page categories
 	 * @return string
 	 */
 	protected function getPageCategories() {
@@ -474,7 +537,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get resolution
+	 * Get resolution
 	 * @return string
 	 */
 	protected function getResolution() {
@@ -490,7 +553,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get characters
+	 * Get characters
 	 * @return string
 	 */
 	protected function getCharacters() {
@@ -506,7 +569,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get video type
+	 * Get video type
 	 * @return string
 	 */
 	protected function getVideoType() {
@@ -522,7 +585,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * get video name
+	 * Get video name
 	 * @return string
 	 */
 	protected function getVideoName() {
@@ -532,6 +595,22 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty( $this->interfaceObj['metadata']['name'] ) ) {
 			return $this->interfaceObj['metadata']['name'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get distributor
+	 * @return string
+	 */
+	protected function getDistributor() {
+		if ( !empty( $this->metadata['distributor'] ) ) {
+			return $this->metadata['distributor'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['distributor'] ) ) {
+			return $this->interfaceObj['metadata']['distributor'];
 		}
 
 		return '';

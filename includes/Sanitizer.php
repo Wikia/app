@@ -429,7 +429,7 @@ class Sanitizer {
 		 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 		 * Allow modifying list of tags to avoid stripping
 		 */
-		wfRunHooks( 'SanitizerTagsLists', array( &$extratags, &$removetags ) );
+		Hooks::run( 'SanitizerTagsLists', array( &$extratags, &$removetags ) );
 		/** Wikia change end **/
 
 		# Populate $htmlpairs and $htmlelements with the $extratags and $removetags arrays
@@ -725,7 +725,7 @@ class Sanitizer {
 					$value = "{$value}px";
 				}
 			}
-			
+
 			/* Wikia change */
 			/* bugId::34438 mirror table alignment behavior as it would be in HTML4 */
 			if ($attribute === 'align' && $element === 'table') {
@@ -885,23 +885,16 @@ class Sanitizer {
 	}
 
 	/**
-	 * Pick apart some CSS and check it for forbidden or unsafe structures.
-	 * Returns a sanitized string. This sanitized string will have
-	 * character references and escape sequences decoded, and comments
-	 * stripped. If the input is just too evil, only a comment complaining
-	 * about evilness will be returned.
-	 *
-	 * Currently URL references, 'expression', 'tps' are forbidden.
-	 *
-	 * NOTE: Despite the fact that character references are decoded, the
-	 * returned string may contain character references given certain
-	 * clever input strings. These character references must
-	 * be escaped before the return value is embedded in HTML.
-	 *
-	 * @param $value String
-	 * @return String
+	 * Normalize CSS into a format we can easily search for hostile input
+	 *  - decode character references
+	 *  - decode escape sequences
+	 *  - convert characters that IE6 interprets into ascii
+	 *  - remove comments, unless the entire value is one single comment
+	 * @param string $value the css string
+	 * @return string normalized css
 	 */
-	static function checkCss( $value ) {
+	public static function normalizeCss( $value ) {
+
 		// Decode character references like &#123;
 		$value = Sanitizer::decodeCharReferences( $value );
 
@@ -930,6 +923,21 @@ class Sanitizer {
 		$value = preg_replace_callback( $decodeRegex,
 			array( __CLASS__, 'cssDecodeCallback' ), $value );
 
+		// Normalize Halfwidth and Fullwidth Unicode block that IE6 might treat as ascii
+		$value = preg_replace_callback(
+			'/[！-［］-ｚ]/u', // U+FF01 to U+FF5A, excluding U+FF3C (bug 58088)
+			array( __CLASS__, 'cssNormalizeUnicodeWidth' ),
+			$value
+		);
+
+		// Convert more characters IE6 might treat as ascii
+		// U+0280, U+0274, U+207F, U+029F, U+026A, U+207D, U+208D
+		$value = str_replace(
+			array( 'ʀ', 'ɴ', 'ⁿ', 'ʟ', 'ɪ', '⁽', '₍' ),
+			array( 'r', 'n', 'n', 'l', 'i', '(', '(' ),
+			$value
+		);
+
 		// Remove any comments; IE gets token splitting wrong
 		// This must be done AFTER decoding character references and
 		// escape sequences, because those steps can introduce comments
@@ -945,13 +953,78 @@ class Sanitizer {
 			$value = substr( $value, 0, $commentPos );
 		}
 
+		// S followed by repeat, iteration, or prolonged sound marks,
+		// which IE will treat as "ss"
+		$value = preg_replace(
+			'/s(?:
+				\xE3\x80\xB1 | # U+3031
+				\xE3\x82\x9D | # U+309D
+				\xE3\x83\xBC | # U+30FC
+				\xE3\x83\xBD | # U+30FD
+				\xEF\xB9\xBC | # U+FE7C
+				\xEF\xB9\xBD | # U+FE7D
+				\xEF\xBD\xB0   # U+FF70
+			)/ix',
+			'ss',
+			$value
+		);
+
+		return $value;
+	}
+
+
+	/**
+	 * Pick apart some CSS and check it for forbidden or unsafe structures.
+	 * Returns a sanitized string. This sanitized string will have
+	 * character references and escape sequences decoded and comments
+	 * stripped (unless it is itself one valid comment, in which case the value
+	 * will be passed through). If the input is just too evil, only a comment
+	 * complaining about evilness will be returned.
+	 *
+	 * Currently URL references, 'expression', 'tps' are forbidden.
+	 *
+	 * NOTE: Despite the fact that character references are decoded, the
+	 * returned string may contain character references given certain
+	 * clever input strings. These character references must
+	 * be escaped before the return value is embedded in HTML.
+	 *
+	 * @param string $value
+	 * @return string
+	 */
+	static function checkCss( $value ) {
+		$value = self::normalizeCss( $value );
+
 		// Reject problematic keywords and control characters
-		if ( preg_match( '/[\000-\010\016-\037\177]/', $value ) ) {
+		if ( preg_match( '/[\000-\010\013\016-\037\177]/', $value ) ) {
 			return '/* invalid control char */';
-		} elseif ( preg_match( '! expression | filter\s*: | accelerator\s*: | url\s*\( !ix', $value ) ) {
+		} elseif ( preg_match(
+			'! expression
+				| filter\s*:
+				| accelerator\s*:
+				| -o-link\s*:
+				| -o-link-source\s*:
+				| -o-replace\s*:
+				| url\s*\(
+				| image\s*\(
+				| image-set\s*\(
+				| attr\s*\([^)]+[\s,]+url
+			!ix', $value ) ) {
 			return '/* insecure input */';
 		}
 		return $value;
+	}
+
+	/**
+	 * Normalize Unicode U+FF01 to U+FF5A
+	 * @param character $char
+	 * @return character in ASCII range \x21-\x7A
+	 */
+	static function cssNormalizeUnicodeWidth( $matches ) {
+		$cp = utf8ToCodepoint( $matches[0] );
+		if ( $cp === false ) {
+			return '';
+		}
+		return chr( $cp - 65248 ); // ASCII range \x21-\x7A
 	}
 
 	/**
@@ -1043,7 +1116,7 @@ class Sanitizer {
 	/**
 	 * Encode an attribute value for HTML output.
 	 * @param $text String
-	 * @return HTML-encoded text fragment
+	 * @return String HTML-encoded text fragment
 	 */
 	static function encodeAttribute( $text ) {
 		$encValue = htmlspecialchars( $text, ENT_QUOTES );
@@ -1692,7 +1765,7 @@ class Sanitizer {
 		 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 		 * Allow modifying list of attributes to avoid stripping
 		 */
-		wfRunHooks( 'SanitizerAttributesSetup', array( &$whitelist ) );
+		Hooks::run( 'SanitizerAttributesSetup', array( &$whitelist ) );
 		/** Wikia change end **/
 
 		return $whitelist;
@@ -1822,7 +1895,7 @@ class Sanitizer {
 	 */
 	public static function validateEmail( $addr ) {
 		$result = null;
-		if( !wfRunHooks( 'isValidEmailAddr', array( $addr, &$result ) ) ) {
+		if( !Hooks::run( 'isValidEmailAddr', array( $addr, &$result ) ) ) {
 			return $result;
 		}
 

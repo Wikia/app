@@ -8,15 +8,15 @@
 
 div.popupform-wrapper {
 	position: fixed;
-	left: 0px;
-	top: 0px;
+	left: 0;
+	top: 0;
 	height: 100%;
 	width: 100%;
 }
 
 div.popupform-background {
-	left: 0px;
-	top: 0px;
+	left: 0;
+	top: 0;
 	height: 100%;
 	width: 100%;
 	background: black;

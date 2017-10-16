@@ -1,0 +1,60 @@
+@import 'skins/shared/mixins/flexbox';
+@import 'video-shared-variables';
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors";
+
+.article-video {
+	.video-feedback {
+		@include align-items(center);
+		background-color: rgba(255, 255, 255, 0.9);
+		border-radius: 2px;
+		color: $wds-color-dark-blue-gray;
+		cursor: default;
+		display: none;
+		font-size: 14px;
+		max-width: 240px;
+		padding: 5px 8px;
+		position: absolute;
+		right: 6px;
+		top: 6px;
+		z-index: 100001;
+
+		&.visible {
+			@include flexbox();
+		}
+
+		.video-feedback-close {
+			@include flex-shrink(0);
+			cursor: pointer;
+			margin-right: 10px;
+		}
+
+		.video-thumb {
+			@include flexbox();
+			@include flex-shrink(0);
+			align-items: center;
+			border-radius: 50%;
+			cursor: pointer;
+			height: 22px;
+			justify-content: center;
+			margin-left: 12px;
+			width: 22px;
+		}
+
+		.video-thumb-up {
+			background-color: $wds-color-success;
+
+			svg {
+				position: relative;
+				top: -1px; // to have thumb centered in a circle
+			}
+		}
+
+		.video-thumb-down {
+			background-color: $wds-color-alert;
+		}
+	}
+
+	&.is-collapsed .video-feedback {
+		display: none;
+	}
+}

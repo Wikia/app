@@ -4,22 +4,22 @@
 		'type' => 'text',
 		'name' => 'username',
 		'isRequired' => true,
-		'label' => wfMessage('yourname')->escaped(),
+		'label' => wfMessage( 'yourname' )->escaped(),
 		'value' => ''
 	);
 
 	$forgotPasswordBtn = array(
 		'type' => 'submit',
-		'value' => wfMessage('userlogin-forgot-password-button')->escaped(),
+		'value' => wfMessage( 'userlogin-forgot-password-button' )->escaped(),
 		'class' => 'login-button big',
 	);
 
 	$backToLoginLink = array(
 		'type' => 'custom',
-		'output' => wfMessage('userlogin-forgot-password-go-to-login')->parse(),
+		'output' => wfMessage( 'userlogin-forgot-password-go-to-login' )->parse(),
 	);
 
-	if (isset($result) && ($result == 'error')) {
+	if ( isset( $result ) && ( $result == 'error' ) ) {
 		$userNameInput['isInvalid'] = true;
 		$userNameInput['errorMsg'] = $msg;
 	}
@@ -33,11 +33,11 @@
 		'method' => 'post',
 	);
 
-	if (isset($result) && ($result == 'ok')) {
+	if ( isset( $result ) && ( $result == 'ok' ) ) {
 		$form['success'] = true;
 		$form['errorMsg'] = $msg;
 	}
 
-	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
+	echo $app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) );
 	?>
 </div>

@@ -8,10 +8,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 /**
  * Polish language labels for important SMW labels (namespaces, datatypes,...).
@@ -43,7 +45,6 @@ class SMWLanguagePl extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Strona', // name of page datatype
-		'_str' => 'Łańcuch znaków',  // name of the string type
 		'_txt' => 'Tekst',  // name of the text type (very long strings)
 		'_cod' => 'Kod',  // name of the (source) code type
 		'_boo' => 'Wartość logiczna',  // name of the boolean type
@@ -57,13 +58,15 @@ class SMWLanguagePl extends SMWLanguage {
 		'_tel' => 'Telephone number',  // name of the telephone (URI) type //TODO: translate
 		'_rec' => 'Record', // name of record data type //TODO: translate
 		'_qty' => 'Quantity', // name of the number type with units of measurement //TODO: translate
+		'_mlt_rec' => 'Monolingual text',
 	);
 
 	protected $m_DatatypeAliases = array(
 		'URI'                   => '_uri',
 		'Liczba zmiennoprzecinkowa' => '_num',
 		'Liczba całkowita'      => '_num',
-		'Wyliczenie'            => '_str',
+		'Wyliczenie'            => '_txt',
+		'Łańcuch znaków'        => '_txt', // old name of the string type
 	);
 
 	protected $m_SpecialProperties = array(
@@ -78,9 +81,29 @@ class SMWLanguagePl extends SMWLanguage {
 		'_SERV' => 'Zapewnia usługę',
 		'_PVAL' => 'Dopuszcza wartość',
 		'_MDAT' => 'Modification date',  // TODO: translate
+		'_CDAT' => 'Creation date', // TODO: translate
+		'_NEWP' => 'Is a new page', // TODO: translate
+		'_LEDT' => 'Last editor is', // TODO: translate
 		'_ERRP' => 'Has improper value for', // TODO: translate
 		'_LIST' => 'Has fields', // TODO: translate
 		'_SOBJ' => 'Has subobject', // TODO: translate
+		'_ASK'  => 'Has query', // TODO: translate
+		'_ASKST'=> 'Query string', // TODO: translate
+		'_ASKFO'=> 'Query format', // TODO: translate
+		'_ASKSI'=> 'Query size', // TODO: translate
+		'_ASKDE'=> 'Query depth', // TODO: translate
+		'_ASKDU'=> 'Query duration', // TODO: translate
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'Mime type',
+		'_ERRC' => 'Has processing error',
+		'_ERRT' => 'Has processing error text',
+		'_PREC'  => 'Display precision of',
+		'_LCODE' => 'Language code',
+		'_TEXT'  => 'Text',
+		'_PDESC' => 'Has property description',
+		'_PVAP'  => 'Allows pattern',
+		'_DTITLE' => 'Display title of',
+		'_PVUC' => 'Has uniqueness constraint',
 	);
 
 	protected $m_SpecialPropertyAliases = array(
@@ -99,7 +122,7 @@ class SMWLanguagePl extends SMWLanguage {
 
 	protected $m_dateformats = array( array( SMW_Y ), array( SMW_MY, SMW_YM ), array( SMW_MDY, SMW_DMY, SMW_YMD, SMW_YDM ) );
 
-	protected $m_months = array( "styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień" );
+	protected $m_months = array( "styczeń", "luty", "marsz", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień" );
 
 	protected $m_monthsshort = array( "sty", "lut", "mar", "kwi", "maj", "cze", "lip", "sie", "wrz", "paź", "lis", "gru" );
 

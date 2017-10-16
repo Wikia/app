@@ -3,8 +3,7 @@
  * @see http://www.mediawiki.org/wiki/Extension:Maps
  * 
  * @since 1.0
- * @ingroup Maps
- * 
+ *
  * @licence GNU GPL v2++
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
  */

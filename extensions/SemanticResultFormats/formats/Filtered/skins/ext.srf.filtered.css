@@ -1,0 +1,57 @@
+/*
+	Main stylesheet for the filtered query printer
+*/
+
+
+.filtered {
+    height: 100%;
+}
+
+.filtered-filters {
+    height: 40%;
+	overflow: auto;
+	border: 1px solid #aaa;
+	margin: 1em;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.filtered-views {
+    height: 60%;
+	overflow: auto;
+	border: 1px solid #aaa;
+	margin: 1em;
+}
+
+.filtered-views-selectors-container {
+	border-bottom: 1px solid #aaa;
+	overflow: hidden;
+}
+
+.filtered-view-selector {
+	border-right: 1px solid #aaa;
+	padding: 1em;
+	float: left;
+	cursor: pointer;
+}
+
+.filtered-views-container {
+	padding: 1em;
+}
+
+.filtered-view.active {
+	display: block;
+}
+
+.filtered-view.inactive {
+	display: none;
+}
+
+.filtered-view-selector.active {
+	background-color: #f0f7ff;
+}
+
+.filtered-view-selector.inactive {
+}
+

@@ -10,6 +10,7 @@ echo wfMessage( 'specialcontact-intro-bad-ad' )->parseAsBlock();
 
 <form id="contactform" method="post" action="" enctype="multipart/form-data">
 <input hidden="wpContactCategory" value="bad-ad" />
+<input name="wpEditToken" type="hidden" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>" />
 
 <?php
 if ( $isLoggedIn ) {
@@ -38,23 +39,18 @@ if ( $isLoggedIn ) {
 </p>
 
 <p>
+<label for="wpContactAdUrl"><?= wfMessage( 'specialcontact-label-bad-ad-url' )->parse() ?></label>
+<textarea name="wpContactAdUrl" class="contact-ad-url"></textarea>
+</p>
+
+<p>
 <label for="wpDescription"><?= wfMessage( 'specialcontact-label-bad-ad-description' )->escaped() ?></label>
 <textarea name="wpDescription"></textarea>
 </p>
 
 <p>
 <label for="wpScreenshot1"><?= wfMessage( 'specialcontact-label-screenshot' )->escaped() ?></label>
-<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" />
-</p>
-
-<p class="additionalScreenShot">
-<label for="wpScreenshot2"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
-<input id="wpScreenshot2" name="wpScreenshot[]" type="file" accept="image/*" />
-</p>
-
-<p class="additionalScreenShot">
-<label for="wpScreenshot3"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
-<input id="wpScreenshot3" name="wpScreenshot[]" type="file" accept="image/*" />
+<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" multiple />
 </p>
 
 <?php
@@ -79,8 +75,6 @@ if ( $isLoggedIn && $hasEmail ) {
 }
 ?>
 
-<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= htmlspecialchars( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
+<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= Sanitizer::encodeAttribute( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
 </form>
-
-<p><?= wfMessage( 'specialcontact-noform-footer' )->parse() ?></p>

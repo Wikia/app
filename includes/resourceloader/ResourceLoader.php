@@ -28,6 +28,8 @@
  */
 class ResourceLoader {
 
+	const RESOURCE_LOADER_MINIMUM_CACHE = '20160105100000';
+
 	/* Protected Static Members */
 	protected static $filterCacheVersion = 7;
 	protected static $requiredSourceProperties = array( 'loadScript' );
@@ -234,7 +236,7 @@ class ResourceLoader {
 		$this->setSourceForStaticModules('common');
 		// Wikia - change end
 		// Register extension modules
-		wfRunHooks( 'ResourceLoaderRegisterModules', array( &$this ) );
+		Hooks::run( 'ResourceLoaderRegisterModules', [ $this ] );
 		$this->register( $wgResourceModules );
 
 		if ( $wgEnableJavaScriptTest === true ) {
@@ -314,12 +316,13 @@ class ResourceLoader {
 		$testModules = array();
 		$testModules['qunit'] = include( "$IP/tests/qunit/QUnitTestResources.php" );
 		// Get other test suites (e.g. from extensions)
-		wfRunHooks( 'ResourceLoaderTestModules', array( &$testModules, &$this ) );
+		Hooks::run( 'ResourceLoaderTestModules', [ &$testModules, $this ] );
 
 		// Add the testrunner (which configures QUnit) to the dependencies.
 		// Since it must be ready before any of the test suites are executed.
 		foreach( $testModules['qunit'] as $moduleName => $moduleProps ) {
 			$testModules['qunit'][$moduleName]['dependencies'][] = 'mediawiki.tests.qunit.testrunner';
+			$testModules['qunit'][$moduleName]['position'] = 'top';
 		}
 
 		foreach( $testModules as $id => $names ) {
@@ -446,7 +449,7 @@ class ResourceLoader {
 	public function respond( ResourceLoaderContext $context ) {
 		global $wgCacheEpoch, $wgUseFileCache;
 
-		wfRunHooks('ResourceLoaderBeforeRespond',array($this,&$context));
+		Hooks::run('ResourceLoaderBeforeRespond',array($this,&$context));
 
 		// Use file cache if enabled and available...
 		if ( $wgUseFileCache ) {
@@ -498,7 +501,8 @@ class ResourceLoader {
 
 		// To send Last-Modified and support If-Modified-Since, we need to detect
 		// the last modified time
-		$mtime = wfTimestamp( TS_UNIX, $wgCacheEpoch );
+		// ResourceLoader minimum cache added in MAIN-6140
+		$mtime = wfTimestamp( TS_UNIX, max( $wgCacheEpoch, self::RESOURCE_LOADER_MINIMUM_CACHE ) );
 		foreach ( $modules as $module ) {
 			/**
 			 * @var $module ResourceLoaderModule
@@ -515,7 +519,9 @@ class ResourceLoader {
 		wfProfileOut( __METHOD__.'-getModifiedTime' );
 
 		// Send content type and cache related headers
-		$this->sendResponseHeaders( $context, $mtime );
+		if ( $errors === '' ) {
+			$this->sendResponseHeaders($context, $mtime);
+		}
 
 		// If there's an If-Modified-Since header, respond with a 304 appropriately
 		if ( $this->tryRespondLastModified( $context, $mtime ) ) {
@@ -544,6 +550,8 @@ class ResourceLoader {
 			$response = $this->makeComment( $outputBuffer ) . $response;
 		}
 		ob_clean();
+
+		Hooks::run( 'ResourceLoaderAfterRespond',[ $this,&$context ] );
 		// Wikia change - end
 		echo $response;
 
@@ -583,7 +591,7 @@ class ResourceLoader {
 		}
 
 		// Wikia - change begin - @author: macbre
-		wfRunHooks('ResourceLoaderModifyMaxAge',array($context,$mtime,&$maxage,&$smaxage));
+		Hooks::run( 'ResourceLoaderModifyMaxAge',[ $this, $context, $mtime, &$maxage, &$smaxage ] );
 		// Wikia - change end
 
 		if ( $context->getOnly() === 'styles' ) {
@@ -601,7 +609,7 @@ class ResourceLoader {
 			$exp = min( $maxage, $smaxage );
 			header( 'Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
 			// Wikia - change begin - @author: wladek
-			wfRunHooks('ResourceLoaderCacheControlHeaders',array($context,$maxage,$smaxage,$exp));
+			Hooks::run('ResourceLoaderCacheControlHeaders',array($context,$maxage,$smaxage,$exp));
 			// Wikia - change end
 		}
 	}
@@ -709,8 +717,18 @@ class ResourceLoader {
 	 * @param Exception $e to be shown to the user
 	 * @return string sanitized text that can be returned to the user
 	 */
-	protected function formatException( $e ) {
+	protected function formatException( Exception $e ): string {
 		global $wgShowExceptionDetails;
+
+		// SUS-1899: Ensure we log exceptions thrown in ResourceLoader
+		\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+			'exception' => $e
+		] );
+
+		// SUS-1900: emit a proper HTTP error code indicating that something went wrong
+		HttpStatus::header( 500 );
+		header( "X-MediaWiki-Exception: 1" );
+		header( "Content-Type: text/plain; charset=utf-8" );
 
 		if ( $wgShowExceptionDetails ) {
 			return $this->makeComment( $e->__toString() );
@@ -1124,7 +1142,7 @@ class ResourceLoader {
 		/* Wikia - change begin - @author: wladek */
 		$loadScript = $wgLoadScript;
 		$url = false;
-		if ( !wfRunHooks('AlternateResourceLoaderURL',array(&$loadScript,&$query,&$url,$modules)) || $url !== false ) {
+		if ( !Hooks::run('AlternateResourceLoaderURL',array(&$loadScript,&$query,&$url,$modules)) || $url !== false ) {
 			wfProfileOut(__METHOD__);
 			return $url;
 		}
@@ -1169,7 +1187,7 @@ class ResourceLoader {
 		$query += $extraQuery;
 
 		// Wikia - change begin - @author: wladek
-		wfRUnHooks( 'ResourceLoaderMakeQuery', array( $modules, &$query ) );
+		Hooks::run( 'ResourceLoaderMakeQuery', [ $modules, &$query ] );
 		// Wikia - change end
 
 		// Make queries uniform in order

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	/*!
+	 * VisualEditor keyboard event logger page
+	 *
+	 * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+	 */
+	-->
+	<head>
+		<meta charset="utf-8">
+		<title>Keyboard Event Logger</title>
+		<style>
+			html {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+			}
+
+			body {
+				margin: 1em;
+				padding: 0;
+				height: 100%;
+			}
+
+			.ve-demo-form {
+				width: 100%;
+				min-height: 2em;
+			}
+
+			.ve-demo-content {
+				border: 1px solid gray;
+				width: 100%;
+				min-height: 2em;
+				max-height: 15%;
+				overflow-y: auto;
+			}
+
+			.ve-demo-log {
+				margin-top: 1em;
+				border: 1px solid gray;
+				width: 100%;
+				height: 80%;
+				white-space: pre;
+				font-family: monospace;
+				padding: 0;
+				overflow-y: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<form class="ve-demo-form">
+			IME identifier (name and version):
+			<input type="text" class="ve-demo-identifier">
+			<input type="submit" value="Start Logging Keyboard Events">
+		</form>
+		<div class="ve-demo-content" contenteditable="true"></div>
+		<textarea class="ve-demo-log"></textarea>
+
+		<script src="../../lib/jquery/jquery.js"></script>
+		<script src="../../lib/oojs/oojs.jquery.js"></script>
+		<script src="../../lib/unicodejs/unicodejs.js"></script>
+		<script src="../../src/ve.js"></script>
+		<script src="../../src/ve.EventSequencer.js"></script>
+		<script>
+			( function () {
+				var $form, $content, $log, startTime,
+					oldHtml = '',
+					oldStartOffset = 0,
+					oldEndOffset = 0,
+					comments,
+					log = [];
+
+				function makeEventHandler( eventName ) {
+					return function ( e ) {
+						logEvent( 'sendEvent', eventName, e );
+					};
+				}
+
+				function makeAfterLoopHandler() {
+					return function () {
+						logEvent( 'endLoop' );
+					};
+				}
+
+				function eventToObject( e ) {
+					// TODO: flesh this out more
+					if ( !e || e.keyCode === undefined ) {
+						return {};
+					} else {
+						return { keyCode: e.keyCode };
+					}
+				}
+
+				function logEvent( methodName, eventName, e ) {
+					var args = [],
+						msUtc = (new Date().getTime() - startTime) / 1000,
+						newHtml = $content.html(),
+						newStartOffset = document.getSelection().anchorOffset,
+						newEndOffset = document.getSelection().focusOffset;
+
+					if ( oldHtml !== newHtml ) {
+						logWrite( {
+							seq: log.length,
+							time: msUtc,
+							action: 'changeText',
+							args: [ newHtml ]
+						} );
+						oldHtml = newHtml;
+					}
+					if (
+						oldStartOffset !== newStartOffset ||
+						oldEndOffset !== newEndOffset
+					) {
+						logWrite( {
+							seq: log.length,
+							time: msUtc,
+							action: 'changeSel',
+							args: [
+								newStartOffset,
+								newEndOffset
+							]
+						} );
+						oldStartOffset = newStartOffset;
+						oldEndOffset = newEndOffset;
+					}
+					if ( eventName !== undefined ) {
+						args.push( eventName );
+						args.push( eventToObject( e ) );
+					}
+
+					logWrite( {
+						seq: log.length,
+						time: msUtc,
+						action: methodName,
+						args: args
+					} );
+				}
+
+				function logWrite( val ) {
+					log.push( val );
+					showLog();
+				}
+
+				function showLog() {
+					var i, len, jsons = [];
+					jsons.push( JSON.stringify( comments ) );
+					for ( i = 0, len = log.length; i < len; i++ ) {
+						jsons.push( JSON.stringify( log[i] ) );
+					}
+					$log.val( $log.val() + '[\n\t' + jsons.join(',\n\t') + '\n]' );
+					$log[0].scrollTop = $log[0].scrollHeight;
+				}
+
+				/** @param {jQuery.Event} e Halo form submit event */
+				function start( e ) {
+					e.preventDefault();
+
+					comments = {
+						imeIdentifier: $( '.ve-demo-identifier' ).val(),
+						userAgent: navigator.userAgent,
+						startDom: $content.html()
+					};
+
+					$form.hide();
+					$content.show().focus();
+				}
+
+				function init() {
+					var i, len, eventSequencer, handlers = {},
+						eventNames = [
+							'compositionstart',
+							'compositionend',
+							'keydown',
+							'keyup',
+							'keypress',
+							'input'
+						];
+
+					$form = $( '.ve-demo-form' );
+					$content = $( '.ve-demo-content' ).hide();
+					$log = $( '.ve-demo-log' ).val( '' );
+
+					for ( i = 0, len = eventNames.length; i < len; i++ ) {
+						handlers[ eventNames[i] ] =
+							makeEventHandler( eventNames[i] );
+					}
+
+					eventSequencer = new ve.EventSequencer( eventNames )
+						.attach( $content )
+						.on( handlers )
+						.afterLoop( makeAfterLoopHandler() );
+
+					startTime = new Date().getTime();
+
+					$form.on( 'submit', start );
+
+					$log.on( 'click', function () {
+						if ( this.select ) {
+							this.select();
+						}
+					} );
+				}
+
+				init();
+			}() );
+		</script>
+	</body>
+</html>

@@ -3,6 +3,8 @@
 @import 'mixins/linear-gradient.scss';
 @import 'mixins/box-shadow.scss';
 
+$item-size: 125px;
+
 #wkCatExh {
 	margin: 20px auto;
 	display: table;
@@ -12,8 +14,8 @@
 .wkExhItm {
 	position: relative;
 	display: inline-block;
-	width: 135px;
-	height: 135px;
+	width: $item-size;
+	height: $item-size;
 	margin: 5px;
 	text-align: left;
 
@@ -31,10 +33,10 @@
 }
 
 .exhPlcHld {
-	width: 135px;
-	height: 135px;
+	width: $item-size;
+	height: $item-size;
 	background-color: $link-color;
-	background-image:  url('/extensions/wikia/WikiaMobile/images/exhibition-placeholder.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/exhibition-placeholder.png'); /* inline */
 	display: inline-block;
 }
 
@@ -50,6 +52,7 @@
 	line-height: 15px;
 
 	pointer-events: none;
+	overflow: hidden;
 
 	span {
 		height: 30px;
@@ -63,7 +66,7 @@
 	header {
 		line-height: 50px;
 	}
-	
+
 	.cnt {
 		position: absolute;
 		left: 20px;
@@ -115,7 +118,7 @@
 
 #expAll {
 	float: right;
-	
+
 	&.exp {
 		.expand {
 			display: none;
@@ -132,27 +135,9 @@
 	}
 }
 
-#catTtl{
-	font-size: medium;
-	color: $page-text-alternate-color;
-	font-weight: 100;
-	margin-left: 5px;
-}
-
-header {
-	&:after {
-		content: ".";
-		display: block;
-		height: 0;
-		font-size:0;
-		clear: both;
-		visibility:hidden;
-	}
-}
-
 @media screen and (min-width:321px) {
 	.wkExhItm, .exhPlcHld {
-		width: 105px;
-		height: 105px;
+		width: $item-size - 30px;
+		height: $item-size - 30px;
 	}
 }

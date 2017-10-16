@@ -53,14 +53,12 @@ class AssetsManager {
 	}
 
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		global $wgCdnRootUrl, $wgAssetsManagerQuery;
+		global $wgAssetsManagerQuery;
 
 		$params = SassUtil::getSassSettings();
 
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
-		$vars['wgCdnRootUrl'] = $wgCdnRootUrl; // TODO: wgCdnStylePath?
-
 		return true;
 	}
 
@@ -222,9 +220,6 @@ class AssetsManager {
 
 		$url = $prefix . $this->getAMLocalURL( 'sass', $scssFilePath, $params );
 
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
-
 		wfProfileOut( __METHOD__ );
 		return $url;
 	}
@@ -259,19 +254,20 @@ class AssetsManager {
 	 * @return string|array the resulting filepaths or the original url if filepath can't be determined
 	 */
 	public function getSassFilePath($urls) {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgWikiaNocookieDomain;
 
 		/**
 		 * for production urls, where urls are similar to:
 		 * http://slot(1-9).images(1-9).wikia.nocookie.net/__am/sass/options/path/to/file.scss
 		 */
-		$regex = '/^(https?):\/\/(slot[0-9]+\.images([0-9]+))\.wikia.nocookie.net\/(.*)$/';
+		$noCookieDomainEscaped = preg_quote($wgWikiaNocookieDomain);
+		$regex = "/^(https?):\\/\\/(slot[0-9]+\\.images([0-9]+))\\.{$noCookieDomainEscaped}\\/(.*)$/";
 		if (!empty($wgDevelEnvironment)) {
 			/**
 			 * for urls in dev, where a url looks like:
 			 * http://i(1-9).nelson.wikia-dev.com/__am/sass/options/path/to/file.scss
 			 */
-			$regex = '/^(https?):\/\/(i[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
+			$regex = '/^(https?):\/\/(i[0-9]+\.[a-z0-9]+)\.wikia-dev.(pl|us|com)\/(.*)$/';
 		}
 
 		$urls = (array) $urls;
@@ -325,6 +321,35 @@ class AssetsManager {
 		return substr($url, -5) == '.scss';
 	}
 
+	/**
+	 * determines whether a given url is for JS group
+	 *
+	 * Example: http://slot1.images1.wikia.nocookie.net/__am/1413971462/group/noexternals%3D1/monetization_module_js
+	 *
+	 * @param string $url the url to check
+	 * @return bool true if the url is a JS group, false otherwise
+	 */
+	public function isGroupUrl($url) {
+		return is_string( $url ) && ( strpos( $url, '/group/' ) !== false );
+	}
+
+	/**
+	 * Return AM group name from given URL
+	 *
+	 * If the given URL is not a valid group URL, false is returned
+	 *
+	 * @param string $url the URL to extract group name from
+	 * @return bool|false group name or false if URL is invalid
+	 */
+	public function getGroupNameFromUrl($url) {
+		if ( $this->isGroupUrl( $url ) ) {
+			$parts = explode( '/', $url );
+			return end( $parts );
+		} else {
+			return false;
+		}
+	}
+
 	public function getSassesUrl($sassList) {
 		if (!is_array($sassList)) {
 			$sassList = [$sassList];
@@ -374,7 +399,8 @@ class AssetsManager {
 		// as it build our whole PHP stack and reads file from filesystem
 		// which cannot be cached by web server as the content is assumed
 		// to be dynamic
-		$url = $wgScriptPath . '/' . $filePath;
+		// BAC-696: added ltrim() - prevent double slash in the URL
+		$url = $wgScriptPath . '/' . ltrim( $filePath, '/' );
 		// TODO: remove it completely
 		//if ($minify !== null ? $minify : $this->mMinify) {
 		//	$url = $this->getAMLocalURL('one', $filePath);
@@ -397,8 +423,6 @@ class AssetsManager {
 			// in varnish (BugId: 33905)
 			$url = $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
 		}
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
 
 		return $url;
 	}
@@ -450,9 +474,6 @@ class AssetsManager {
 			if ( !$isEmpty ) {
 				$url = $prefix . $this->getAMLocalURL('group', $groupName, $params);
 
-				// apply domain sharding
-				$url = wfReplaceAssetServer( $url );
-
 				$URLs[] = $url;
 			}
 		} else {
@@ -467,8 +488,6 @@ class AssetsManager {
 					// in varnish (BugId: 33905)
 					$url = $this->getOneCommonURL($asset,$minify);
 				}
-				// apply domain sharding
-				$url = wfReplaceAssetServer( $url );
 
 				$URLs[] = $url;
 			}
@@ -561,44 +580,17 @@ class AssetsManager {
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
-		wfProfileIn( __METHOD__ );
-
-		global $wgAssetsManagerQuery, $IP, $wgSpeedBox, $wgDevelEnvironment;
-
-		$cb = $this->mCacheBuster;
-
-		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-			if ( $type == 'sass' ) {
-				$cb = hexdec( substr( wfAssetManagerGetSASShash( $IP . '/' . $oid ), 0, 8 ) );
-
-			} else if ( $type == 'one' && endsWith( $oid, '.js' ) ) {
-				$cb = filemtime( $IP . '/' . $oid );
-			}
-		}
-
+		global $wgAssetsManagerQuery;
 		$url = sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
 			/* 2 */ $oid,
 			/* 3 */ !empty($params) ? urlencode(http_build_query($params)) : '-',
-			/* 4 */ $cb);
-
-		wfProfileOut( __METHOD__ );
+			/* 4 */ $this->mCacheBuster);
 		return $url;
 	}
 
-
 	public function getAllowedAssetExtensions(){
 		return $this->mAllowedAssetExtensions;
-	}
-
-	/**
-	 * Return request details containing HTTP referer and user agent
-	 * @return string request details for debug logging
-	 */
-	public static function getRequestDetails() {
-		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '-';
-		$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '-';
-		return "UA:{$userAgent}, referer:{$referer}";
 	}
 
 	/**
@@ -617,10 +609,15 @@ class AssetsManager {
 	public function checkAssetUrlForSkin( $url, WikiaSkin $skin ) {
 		wfProfileIn( __METHOD__ );
 
+		// ResourceLoader has its own skin filtering mechanism, skip the check for /__load/ URLs - CON-2113
+		if ( strpos( $url, '/__load/' ) !== false ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		//lazy loading of AssetsConfig
 		$this->loadConfig();
 		$group = null;
-		$skinName = $skin->getSkinName();
 		$strict = $skin->isStrict();
 
 		if ( is_string( $url ) && array_key_exists($url, $this->mGeneratedUrls) ) {
@@ -642,15 +639,28 @@ class AssetsManager {
 			return !$strict;
 		}
 
-		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
-		$check = ( is_array( $registeredSkin ) ) ? in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
-
-		//if not strict packages with no skin registered are positive
-		if ( $strict === false ) {
-			$check = $check || empty( $registeredSkin );
-		}
+		$check = $this->checkIfGroupForSkin($group, $skin);
 
 		wfProfileOut( __METHOD__ );
+		return $check;
+	}
+
+	/**
+	 * Checks if given asset's group should be loaded for provided skin
+	 * @param string $group - Asset Manager group name
+	 * @param Skin $skin - skin instance
+	 * @return bool whether group should be loaded for given skin
+	 */
+	public function checkIfGroupForSkin($group, Skin $skin) {
+		$this->loadConfig();
+		$skinName = $skin->getSkinName();
+		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
+		$check = ( is_array( $registeredSkin ) ) ?
+			in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
+		//if not strict packages with no skin registered are positive
+		if ( ( $skin instanceof WikiaSkin ) && ( $skin->isStrict() === false ) ) {
+			$check = $check || empty( $registeredSkin );
+		}
 		return $check;
 	}
 
@@ -727,14 +737,6 @@ class AssetsManager {
 			$request['ttl'] = $options['ttl'];
 		}
 
-		if ( !empty( $options['varnishTTL'] ) ) {
-			$request['varnishTTL'] = $options['varnishTTL'];
-		}
-
-		if ( !empty( $options['browserTTL'] ) ) {
-			$request['browserTTL'] = $options['browserTTL'];
-		}
-
 		$request['cb'] = $wgStyleVersion;
 
 		if ( !empty( $request ) ) {
@@ -751,5 +753,57 @@ class AssetsManager {
 			wfProfileOut( __METHOD__ );
 			throw new WikiaException( 'No resources to load specified' );
 		}
+	}
+
+	/**
+	 * Gets the URL and converts it to minified one if it points to single static file (JS or CSS)
+	 * If it's not recognized as static asset the original URL is returned
+	 *
+	 * @param $url string URL to be inspected
+	 * @return string
+	 */
+	public function minifySingleAsset( $url ) {
+		global $wgAllInOne, $wgExtensionsPath, $wgStylePath, $wgResourceBasePath;
+
+		if ( !empty( $wgAllInOne ) ) {
+			static $map;
+			if (empty($map)) {
+				$map = [
+					[ $wgExtensionsPath, 'extensions/' ],
+					[ $wgStylePath, 'skins/' ],
+					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
+					[ $wgResourceBasePath . '/resources', 'resources/' ],
+				];
+			}
+
+			// BugId:38195 - don't minify already minified assets
+			if (strpos($url, '/__am/') !== false) {
+				return $url;
+			}
+
+			// don't minify already minified JS files
+			if (strpos($url, '.min.js') !== false) {
+				return $url;
+			}
+
+			foreach ($map as $item) {
+				list( $prefix, $replacement ) = $item;
+
+				// BugId: 38195 - wgExtensionPath / stylePath / ResourceBasePath do not end with a slash
+				// add one to remove double slashes in resulting URL
+				$prefix .= '/';
+
+				if (startsWith($url, $prefix)) {
+					$nurl = substr($url,strlen($prefix));
+					$matches = array();
+					if (preg_match("/^([^?]+)/",$nurl,$matches)) {
+						if (preg_match("/\\.(css|js)\$/i",$matches[1])) {
+							return $this->getOneCommonURL($replacement . $matches[1], true);
+						}
+					}
+				}
+			}
+		}
+		return $url;
 	}
 }

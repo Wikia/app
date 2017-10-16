@@ -38,6 +38,10 @@ class AchConfig {
 		BADGE_LUCKYEDIT
 	);
 
+	private static $mEditOnlyBadge = array(
+		BADGE_EDIT
+	);
+
 	private static $mInstance;
 	//private $mLoadedData;
 	private $mAllDataFetched;
@@ -344,6 +348,14 @@ class AchConfig {
 
 	public function isSecret($badgeTypeId) {
 		return in_array($badgeTypeId, self::$mSecretBadges);
+	}
+
+	public function shouldShow( $badgeTypeId ) {
+		global $wgAchievementsEditOnly;
+		if ( empty( $wgAchievementsEditOnly ) || in_array( $badgeTypeId, self::$mEditOnlyBadge ) ) {
+			return true;
+		}
+		return false;
 	}
 
 	public function isInTrack($badgeTypeId) {

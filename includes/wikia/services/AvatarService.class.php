@@ -1,7 +1,12 @@
 <?php
-class AvatarService extends Service {
+
+use Wikia\Vignette\StaticAssetsUrlGenerator;
+use Wikia\Vignette\UrlConfig;
+
+class AvatarService {
 
 	const AVATAR_SIZE_SMALL = 20;
+	const AVATAR_SIZE_SMALL_PLUS = 30;
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
@@ -13,39 +18,39 @@ class AvatarService extends Service {
 	/**
 	 * Internal method for getting user object with caching
 	 */
-	static private function getUser($userName) {
-		wfProfileIn(__METHOD__);
+	static private function getUser( $userName ) {
+		wfProfileIn( __METHOD__ );
 
 		static $usersCache;
 
-		if( isset($usersCache[$userName]) ) {
+		if ( isset( $usersCache[$userName] ) ) {
 			$user = $usersCache[$userName];
 		} else {
-			$user = User::newFromName($userName);
+			$user = User::newFromName( $userName );
 
 			$usersCache[$userName] = $user;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $user;
 	}
 
 	/**
 	 * Get URL to default avatar
 	 */
-	static public function getDefaultAvatar($avatarSize) {
-		wfProfileIn(__METHOD__);
+	static public function getDefaultAvatar( $avatarSize ) {
+		wfProfileIn( __METHOD__ );
 		global $wgStylePath;
 
-		if (class_exists('Masthead')) {
-			$avatarUrl = Masthead::newFromUserId(0)->getThumbnail($avatarSize);
+		if ( class_exists( 'Masthead' ) ) {
+			$avatarUrl = Masthead::newFromUserId( 0 )->getThumbnail( $avatarSize );
 		}
 		else {
-			$randomInt = rand(1, 3);
+			$randomInt = rand( 1, 3 );
 			$avatarUrl = "{$wgStylePath}/oasis/images/generic_avatar{$randomInt}.png";
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $avatarUrl;
 	}
 
@@ -56,25 +61,25 @@ class AvatarService extends Service {
 	 * @param  int    $ns
 	 * @return string $url
 	 */
-	static function getUrl($userName, $ns = NS_USER) {
-		wfProfileIn(__METHOD__);
+	static function getUrl( $userName, $ns = NS_USER ) {
+		wfProfileIn( __METHOD__ );
 
 		static $linksCache;
 
 		$url = '';
-		
+
 		$cacheSignature = "{$userName}_{$ns}";
 
-		if( isset($linksCache[$cacheSignature]) ) {
+		if ( isset( $linksCache[$cacheSignature] ) ) {
 			$url = $linksCache[$cacheSignature];
 		} else {
-			if (User::isIP($userName)) {
+			if ( User::isIP( $userName ) ) {
 				// anon: point to Special:Contributions
-				$url = Skin::makeSpecialUrl('Contributions').'/'.$userName;
+				$url = Skin::makeSpecialUrl( 'Contributions' ) . '/' . $userName;
 			}
 			else {
 				// user: point to user page
-				$userPage = Title::newFromText($userName, $ns);
+				$userPage = Title::newFromText( $userName, $ns );
 				if ( !is_null( $userPage ) ) {
 					$url = $userPage->getLocalUrl();
 				}
@@ -83,7 +88,7 @@ class AvatarService extends Service {
 			$linksCache[$cacheSignature] = $url;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $url;
 	}
 
@@ -94,124 +99,229 @@ class AvatarService extends Service {
 	 * @param int $avatarSize
 	 * @return String avatar's URL
 	 */
-	static function getAvatarUrl($user, $avatarSize = 20) {
-		wfProfileIn(__METHOD__);
+	static function getAvatarUrl( $user, $avatarSize = 20 ) {
+		wfProfileIn( __METHOD__ );
 
 		static $avatarsCache;
-		if( $user instanceof User ) {
+		if ( $user instanceof User ) {
 			$key = "{$user->getName()}::{$avatarSize}";
 		} else {
-			//assumes $user is a string with user name
+			// assumes $user is a string with user name
 			$key = "{$user}::{$avatarSize}";
 		}
 
-		if( isset($avatarsCache[$key]) ) {
+		if ( isset( $avatarsCache[$key] ) ) {
 			$avatarUrl = $avatarsCache[$key];
 		} else {
-			if( !($user instanceof User) ) {
-				$user = self::getUser($user);
+			if ( !( $user instanceof User ) ) {
+				$user = self::getUser( $user );
 			}
 
 			// handle anon users - return default avatar
-			if( empty($user) || !class_exists('Masthead') ) {
-				$avatarUrl = self::getDefaultAvatar($avatarSize);
+			if ( empty( $user ) || !class_exists( 'Masthead' ) ) {
+				$avatarUrl = self::getDefaultAvatar( $avatarSize );
 
-				wfProfileOut(__METHOD__);
+				wfProfileOut( __METHOD__ );
 				return $avatarUrl;
 			}
 
-			$masthead = Masthead::newFromUser($user);
-			$avatarUrl = $masthead->getThumbnailPurgeUrl($avatarSize);
-
+			$masthead = Masthead::newFromUser( $user );
 			// use per-user cachebuster when custom avatar is used
-			$cb = !$masthead->isDefault() ? intval($user->getOption('avatar_rev')) : 0;
+			$cb = !$masthead->isDefault() ? intval( $user->getGlobalAttribute( 'avatar_rev' ) ) : 0;
 
-			// Make URLs consistent and using no-cookie domain.  We need to pass a
-			// stringified zero rather than an actual zero because this function
-			// treats them differently o_O  Setting this to string zero matches
-			// the anonymous user behavior (BugId:22190)
-			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
-
-			// make avatars as JPG intead of PNGs / GIF but only when it will be a gain (most likely)
-			if (intval($avatarSize) > self::PERFORMANCE_JPEG_THRESHOLD) {
-				$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
-			}
+			$avatarUrl = self::getVignetteUrl( $masthead, $avatarSize, $cb );
 
 			$avatarsCache[$key] = $avatarUrl;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $avatarUrl;
 	}
 
 	/**
 	 * Render avatar
+	 * @param string $userName
+	 * @param int $avatarSize
+	 * @param string $class
+	 * @return string rendered avatar <img /> tag
 	 */
-	static function renderAvatar($userName, $avatarSize = 20) {
-		wfProfileIn(__METHOD__);
+	static function renderAvatar( $userName, $avatarSize = 20, $class = '' ) {
+		wfProfileIn( __METHOD__ );
 
 		// For performance reasons, we only generate avatars that are of specific sizes.
 		// We allow HTML tag to resize to any size.
-		if ($avatarSize <= self::AVATAR_SIZE_SMALL) {
+		if ( $avatarSize <= self::AVATAR_SIZE_SMALL ) {
 			$allowedSize = self::AVATAR_SIZE_SMALL;
-		} else if ($avatarSize <= self::AVATAR_SIZE_MEDIUM) {
+		} else if ( $avatarSize <= self::AVATAR_SIZE_MEDIUM ) {
 			$allowedSize = self::AVATAR_SIZE_MEDIUM;
 		} else {
 			$allowedSize = self::AVATAR_SIZE_LARGE;
 		}
 
-		$avatarUrl = self::getAvatarUrl($userName, $allowedSize);
+		$avatarUrl = self::getAvatarUrl( $userName, $allowedSize );
 
-		$ret = Xml::element('img', array(
+		$ret = Xml::element( 'img', array(
 			'src' => $avatarUrl,
 			'width' => $avatarSize,
 			'height' => $avatarSize,
-			'class' => 'avatar',
-			'alt' => $userName,
-		));
+			'class' => $class ?: 'avatar',
+			'alt' => IP::isIPAddress( $userName ) ? wfMessage( 'oasis-anon-user' )->text() : $userName,
+		) );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
 	/**
 	 * Render link to user page / Special:Contributions
 	 */
-	static function renderLink($userName) {
-		wfProfileIn(__METHOD__);
+	static function renderLink( $userName ) {
+		wfProfileIn( __METHOD__ );
 
 		// for anons show "A Wikia user" instead of IP address
-		if (User::isIP($userName)) {
-			$label = wfMsg('oasis-anon-user');
+		if ( User::isIP( $userName ) ) {
+			$label = wfMsg( 'oasis-anon-user' );
 		}
 		else {
 			$label = $userName;
 		}
 
-		$link = Xml::element('a',
-			array('href' => self::getUrl($userName)),
-			$label);
+		$link = Xml::element( 'a',
+			array( 'href' => self::getUrl( $userName ) ),
+			$label );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $link;
 	}
 
 	/**
 	 * Render avatar and link to user page
 	 */
-	static function render($userName, $avatarSize = 20) {
-		wfProfileIn(__METHOD__);
+	static function render( $userName, $avatarSize = 20 ) {
+		wfProfileIn( __METHOD__ );
 
 		// render avatar
-		$ret = self::renderAvatar($userName, $avatarSize);
+		$ret = self::renderAvatar( $userName, $avatarSize );
 
 		// add small spacing
 		$ret .= ' ';
 
 		// render link to user page / Special:Contributions
-		$ret .= self::renderLink($userName);
+		$ret .= self::renderLink( $userName );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	/**
+	 * isEmptyOrFirstDefault -- check if the user has set none or uses the first of the default avatars
+	 */
+	static public function isEmptyOrFirstDefault( $userName ) {
+		wfProfileIn( __METHOD__ );
+		global $wgStylePath;
+
+		if ( class_exists( 'Masthead' ) ) {
+			$avatarUrl = Masthead::newFromUserName( $userName )->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
+			$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
+			$firstDefaultImage = $images[ 0 ];
+			if ( empty( $avatarUrl ) || substr( $avatarUrl, -strlen( $firstDefaultImage ) ) === $firstDefaultImage ) {
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
+		} else {
+			$avatarUrl = self::getAvatarUrl( $userName );
+			$avatarDefaultUrlStart = "{$wgStylePath}/oasis/images/generic_avatar";
+			if ( $avatarUrl === '' || strpos( $avatarUrl, $avatarDefaultUrlStart ) === 0 ) {
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
+	}
+
+	/**
+	 * @param Masthead $masthead
+	 * @param int $width
+	 * @param $timestamp
+	 * @return \Wikia\Vignette\UrlGenerator
+	 */
+	public static function getVignetteUrl( Masthead $masthead, $width, $timestamp ) {
+		$relativePath = $masthead->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
+
+		if ( $relativePath ) {
+			if ( strpos( $relativePath, '/' ) !== false ) { // custom avatar
+				$url = self::vignetteCustomUrl( $width, $relativePath, $timestamp );
+			} else { // wikia-provided avatars
+				$hash = FileRepo::getHashPathForLevel( $relativePath, 2 );
+				$bucket = VignetteRequest::parseBucket( Masthead::getAvatarDefaultPath() );
+				$relativePath = $hash . $relativePath;
+				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
+			}
+		} else { // default avatar
+			$defaultAvatarUrl = $masthead->getDefaultAvatars()[0];
+			$url = ImagesService::getThumbUrlFromFileUrl( $defaultAvatarUrl, $width );
+		}
+
+		return $url;
+	}
+
+	private static function vignetteCustomUrl( $width, $relativePath, $timestamp ) {
+		global $wgBlogAvatarPath;
+
+		$url = $relativePath;
+		if ( !preg_match( '/^https?:\/\//', $relativePath ) ) {
+			$bucket = VignetteRequest::parseBucket( $wgBlogAvatarPath );
+			$relativePath = ltrim( $relativePath, '/' );
+			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp );
+		}
+		else {
+			// handle full URLs introduced by PLATFORM-1334
+			$parsedUrl = parse_url( $relativePath );
+
+			$bucket = VignetteRequest::parseBucket( $relativePath );
+			$relativePath = join( '/', array_filter( [
+				VignetteRequest::parsePathPrefix( $relativePath ),
+				VignetteRequest::parseRelativePath( $relativePath )
+			] ) );
+
+			// custom avatars
+			// e.g. http://vignette.wikia-dev.com/3feccb7c-d544-4998-b127-3eba49eb59af/scale-to-width-down/16
+			if ( is_null( $bucket ) ) {
+				$config = ( new UrlConfig() )
+					->setRelativePath( $parsedUrl['path'] )
+					->setBaseUrl( sprintf( '%s://%s', $parsedUrl['scheme'], $parsedUrl['host'] ) );
+
+				$url = ( new StaticAssetsUrlGenerator( $config ) )
+					->scaleToWidth( $width )
+					->url();
+			}
+			else {
+				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, false, false );
+			}
+		}
+
+		return $url;
+	}
+
+	private static function buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, $avatarImageType = true ) {
+		$config = [
+			'bucket' => $bucket,
+			'timestamp' => $timestamp,
+			'relative-path' => $relativePath,
+		];
+
+		$avatar = VignetteRequest::fromConfigMap( $config )->scaleToWidth( $width );
+
+		if ( intval( $width ) > self::PERFORMANCE_JPEG_THRESHOLD ) {
+			$avatar->jpg();
+		}
+
+		if ( $avatarImageType ) {
+			$avatar->avatar();
+		}
+
+		return $avatar->url();
 	}
 }

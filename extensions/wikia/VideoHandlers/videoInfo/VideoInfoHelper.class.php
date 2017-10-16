@@ -107,12 +107,13 @@ class VideoInfoHelper extends WikiaModel {
 
 	/**
 	 * get total view from database
+	 * @param DatabaseBase $db
 	 * @return array $videoList
 	 */
-	public static function getTotalViewsFromDB() {
+	public static function getTotalViewsFromDB( DatabaseBase $db = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = empty( $db ) ? wfGetDB( DB_SLAVE ) : $db;
 
 		$result = $db->select(
 			array( 'video_info' ),
@@ -131,6 +132,34 @@ class VideoInfoHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $videoList;
+	}
+
+	/**
+	 * get total views of a video from database using title
+	 * @param $title
+	 * @return int $viewCount
+	 */
+	public static function getTotalViewsFromTitle( $title ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_SLAVE );
+
+		$result = $db->select(
+			array( 'video_info' ),
+			array( 'views_total' ),
+			array( 'video_title' => $title ),
+			__METHOD__
+		);
+
+		$viewCount = 0;
+		$row = $db->fetchObject( $result );
+		if ( $row ) {
+			$viewCount = $row->views_total;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $viewCount;
 	}
 
 	/**

@@ -53,6 +53,7 @@ $wgResourceModules['ext.wikihiero'] = array(
 	'styles' => 'ext.wikihiero.css',
 	'localBasePath' => "$dir/modules",
 	'remoteExtPath' => 'wikihiero/modules',
+	'source' => 'common'
 );
 
 $wgResourceModules['ext.wikihiero.Special'] = array(
@@ -77,7 +78,7 @@ $wgCompiledFiles[] = MWInit::extCompiledPath( 'wikihiero/data/tables.php' );
  * @param $parser Parser
  * @return bool
  */
-function wfRegisterWikiHiero( &$parser ) {
+function wfRegisterWikiHiero( Parser $parser ): bool {
 	$parser->setHook( 'hiero', 'WikiHiero::parserHook' );
 	return true;
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wikia API V1 documentation</title>
+    {{#css}}
+        <link href="{{.}}"  media="screen" rel="stylesheet" type="text/css" />
+    {{/css}}
+    {{#js}}
+        <script src="{{.}}"></script>
+    {{/js}}
+
+    <script type="text/javascript">
+        $(function () {
+        	var path = window.location.pathname;
+            window.swaggerUi = new SwaggerUi({
+                discoveryUrl: (path[ path.length - 1] !== '/') ? path + '/' : path,
+                mainUrl: 'Docs/List',
+                protocol: "http",
+                dom_id:"swagger-ui-container",
+                supportHeaderParams: false,
+                disabled: $('body').data('disabled'),
+                supportedSubmitMethods: ['get', 'post', 'put'],
+                onComplete: function(swaggerApi, swaggerUi){
+                    $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+                },                
+                docExpansion: "none"
+            });
+
+            window.swaggerUi.load();
+        });
+
+    </script>
+</head>
+
+<body class="skin-oasis" {{{bodyData}}}>
+    <header class="subnav">
+    </header>
+    {{{licenseWarning}}}
+
+    <h1>Wikia API V1 documentation</h1>
+    <div id="message-bar" class="swagger-ui-wrap">
+        &nbsp;
+    </div>
+
+    <div id="swagger-ui-container" class="swagger-ui-wrap">
+
+    </div>
+    <footer class="footer-spacer"></footer>
+    <footer class="subnav">
+        {{{licenseMessage}}}
+    </footer>
+</body>
+
+</html>

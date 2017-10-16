@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Purodha"
+		]
+	},
+	"semanticdrilldown-desc": "En Schnettshtell för der Metmaacher, öm sesh en einzel Schrette dorsch de semantische Date ze wöhle.",
+	"specialpages-group-sd_group": "Semantsch Nohbohre",
+	"browsedata": "En dä Date bläddere",
+	"sd_browsedata_choosecategory": "Donn en Saachjrupp ußwähle",
+	"sd_browsedata_viewcategory": "Saachjropp beloore",
+	"sd_browsedata_docu": "Donn op eine, odder och ettlijje, fun dä Felltere unge klecke, öm dat wat erus kütt, jet kleiner ze maache.",
+	"sd_browsedata_subcategory": "Ungerjrupp",
+	"sd_browsedata_other": "Söns wat",
+	"sd_browsedata_none": "Kei",
+	"sd_browsedata_filterbyvalue": "Donn övver dä Wäät felltere",
+	"sd_browsedata_filterbysubcategory": "Donn övver di Unger-Saachjropp felltere",
+	"sd_browsedata_otherfilter": "Donn Sigge zeije met enem andere Wäät för hee dä Felter",
+	"sd_browsedata_nonefilter": "Donn Sigge zeije oohne Wäät för hee dä Felter",
+	"sd_browsedata_or": "udder",
+	"sd_browsedata_removefilter": "Donn dä Felter hee fottschmiiße",
+	"sd_browsedata_removesubcategoryfilter": "Donn dä Felter övver en Ungersaachjropp fott schmiiße",
+	"sd_browsedata_resetfilters": "Donn de Feltere widder op Shtandat setze",
+	"sd_browsedata_addanothervalue": "Donn op dä Piel klecke, öm noch ene Wäät dobei ze zälle",
+	"sd_browsedata_daterangestart": "Aanfang:",
+	"sd_browsedata_daterangeend": "Engk:",
+	"sd_browsedata_novalues": "Et sin kein Wääte för dä Felter do",
+	"sd_createfilter_usepropertyvalues": "Donn all de Wääte us hee dä Eijeschaff för dä Felter bruche",
+	"sd_createfilter_usecategoryvalues": "De müjjelesche Wääte för noh ze feltere kumme us dä Saachjrupp:",
+	"sd_createfilter_requirefilter": "Ih dat hee dä Felter aanjezeish weede kann, moß vörher ald ene andere Felter ußjesooht gewääse sin, un zwa dä:",
+	"sd-pageschemas-filter": "Fėlter",
+	"sd-pageschemas-values": "Wääte"
+}

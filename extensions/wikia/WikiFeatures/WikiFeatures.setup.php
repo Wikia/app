@@ -7,6 +7,17 @@
  */
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
+
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'WikiFeatures',
+	'author' => array(
+		'Hyun Lim',
+		'Owen Davis'
+	),
+	'descriptionmsg' => 'wikifeatures-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AuthImage',
+);
+
 //classes
 $wgAutoloadClasses['WikiFeaturesSpecialController'] = $dir . 'WikiFeaturesSpecialController.class.php';
 $app->getDispatcher()->addRouting(
@@ -25,17 +36,15 @@ $wgExtensionMessagesFiles['WikiFeaturesAliases'] = $dir . 'WikiFeatures.alias.ph
 $wgSpecialPages['WikiFeatures'] = 'WikiFeaturesSpecialController';
 $wgSpecialPages['WikiaLabs'] = 'WikiaLabsSpecialController';
 
-$wgAvailableRights[] = 'wikifeatures';
-
-$wgGroupPermissions['*']['wikifeatures'] = false;
-$wgGroupPermissions['staff']['wikifeatures'] = true;
-$wgGroupPermissions['sysop']['wikifeatures'] = true;
-$wgGroupPermissions['bureaucrat']['wikifeatures'] = true;
-$wgGroupPermissions['helper']['wikifeatures'] = true;
-
-$wgGroupPermissions['*']['wikifeaturesview'] = false;
-$wgGroupPermissions['user']['wikifeaturesview'] = true;
-
 $wgLogTypes[] = 'wikifeatures';
 $wgLogNames['wikifeatures'] = 'wikifeatures-log-name';
 $wgLogHeaders['wikifeatures'] = 'wikifeatures-log-header';
+
+JSMessages::registerPackage( 'WikiFeatures', array(
+	'wikifeatures-deactivate-heading',
+	'wikifeatures-deactivate-description',
+	'wikifeatures-deactivate-notification',
+	'wikifeatures-deactivate-confirm-button',
+	'wikifeatures-deactivate-cancel-button'
+) );
+

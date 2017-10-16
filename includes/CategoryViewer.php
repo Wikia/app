@@ -91,8 +91,8 @@ class CategoryViewer extends ContextSource {
 			$this->getPagesSection() .
 			$this->getImageSection() .
 		# <Wikia>
-			$this->getOtherSection(); 
-		# </Wikia>	
+			$this->getOtherSection();
+		# </Wikia>
 
 		if ( $r == '' ) {
 			// If there is no category content to display, only
@@ -228,7 +228,7 @@ class CategoryViewer extends ContextSource {
 	 * @param $pageLength
 	 * @param $isRedirect bool
 	 */
-	function addPage( $title, $sortkey, $pageLength, $isRedirect = false ) {
+	function addPage( Title $title, $sortkey, $pageLength, $isRedirect = false ) {
 		global $wgContLang;
 
 		$link = Linker::link( $title );
@@ -284,7 +284,7 @@ class CategoryViewer extends ContextSource {
 
 			/* Wikia change begin - @author: TomekO */
 			/* Changed by MoLi (1.19 ugrade) */
-			wfRunHooks( 'CategoryViewer::beforeCategoryData',array( &$extraConds ) );
+			Hooks::run( 'CategoryViewer::beforeCategoryData',array( &$extraConds ) );
 			/* Wikia change end */
 
 			$res = $dbr->select(
@@ -318,7 +318,7 @@ class CategoryViewer extends ContextSource {
 					$humanSortkey = $title->getCategorySortkey( $row->cl_sortkey_prefix );
 				}
 
-				if ( ++$count > $this->limit 
+				if ( ++$count > $this->limit
 					/* Wikia change begin - @author: Federico "Lox" Lucignano */
 					/* allow getting all the items in a category */
 					&& is_integer( $this->limit )
@@ -337,7 +337,7 @@ class CategoryViewer extends ContextSource {
 					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				} else {
 					# <Wikia>
-					if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$row ) ) ) {
+					if( Hooks::run( "CategoryViewer::addPage", array( $this, $title, &$row, $humanSortkey ) ) ) {
 						$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 					}
 					# </Wikia>
@@ -353,9 +353,9 @@ class CategoryViewer extends ContextSource {
 		$r = '';
 		/* Wikia change begin - @author: wladek */
 		/* Category Galleries hook */
-		wfRunHooks('CategoryPage::getCategoryTop',array($this,&$r));
+		Hooks::run('CategoryPage::getCategoryTop',array($this,&$r));
 		/* Wikia change end */
-				
+
 		$r .= $this->getCategoryBottom();
 		return $r === ''
 			? $r
@@ -442,24 +442,12 @@ class CategoryViewer extends ContextSource {
 	/* <Wikia> */
 	function getOtherSection() {
 		$r = "";
-		wfRunHooks( "CategoryViewer::getOtherSection", array( &$this, &$r ) );
+		Hooks::run( "CategoryViewer::getOtherSection", [ $this, &$r ] );
+
 		return $r;
 	}
 	/* </Wikia> */
 
-	/* <Wikia> */
-	/**
-	* Get paging links using private function getSectionPagingLinks
-	*
-	* @param $type String same like in getSectionPagingLinks function
-	* @return String: HTML output, possibly empty if there are no other pages
-	*/
-	public function getSectionPagingLinksExt( $type ) {
-		$paginationLinks = $this->getSectionPagingLinks( $type );
-		return $paginationLinks;
-	}
-	/* </Wikia> */
-	
 	/**
 	 * Get the paging links for a section (subcats/pages/files), to go at the top and bottom
 	 * of the output.
@@ -712,14 +700,18 @@ class CategoryViewer extends ContextSource {
 			# to refresh the incorrect category table entry -- which should be
 			# quick due to the small number of entries.
 			$totalcnt = $rescnt;
-			$this->cat->refreshCounts();
+
+			// SUS-1782: Schedule a background task to update the bogus data
+			$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+			$task->call( 'refreshCounts', $this->title->getDBkey() );
+			$task->queue();
 		} else {
 			# Case 3: hopeless.  Don't give a total count at all.
 			return wfMessage( "category-$type-count-limited" )->numParams( $rescnt )->parseAsBlock();
 		}
 		return wfMessage( "category-$type-count" )->numParams( $rescnt, $totalcnt )->parseAsBlock();
 	}
-	
+
 	/**
 	 * getter for private $cat variable, used in Hooks
 	 *

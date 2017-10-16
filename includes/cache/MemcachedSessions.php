@@ -17,7 +17,7 @@
  * @return String: cache key
  */
 function memsess_key( $id ) {
-	return wfGetSessionKey($id);
+	return "wikicities:session:{$id}";
 }
 
 /**
@@ -49,8 +49,17 @@ function memsess_close() {
  * @return Mixed: session data
  */
 function memsess_read( $id ) {
+	/** Wikia change - begin - PLATFORM-308 */
+	if ( empty( $id ) ) {
+		memsess_destroy( $id );
+		return true;
+	}
+	/** Wikia change - end */
+
 	$memc =& getMemc();
 	$data = $memc->get( memsess_key( $id ) );
+
+	wfDebug( sprintf( "%s[%s]: %s\n", __METHOD__, $id, $data ) );
 
 	if( ! $data ) return '';
 	return $data;
@@ -64,9 +73,17 @@ function memsess_read( $id ) {
  * @return Boolean: success
  */
 function memsess_write( $id, $data ) {
+	/** Wikia change - begin - PLATFORM-308 */
+	if ( empty( $id ) ) {
+		memsess_destroy( $id );
+		return true;
+	}
+	/** Wikia change - end */
+
 	$memc =& getMemc();
 	$memc->set( memsess_key( $id ), $data, 3600 );
 
+	wfDebug( sprintf( "%s[%s]: %s\n", __METHOD__, $id, $data ) );
 	return true;
 }
 
@@ -80,6 +97,7 @@ function memsess_destroy( $id ) {
 	$memc =& getMemc();
 	$memc->delete( memsess_key( $id ) );
 
+	wfDebug( sprintf( "%s[%s]\n", __METHOD__, $id ) );
 	return true;
 }
 

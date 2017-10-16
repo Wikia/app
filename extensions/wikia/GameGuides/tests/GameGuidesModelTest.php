@@ -3,13 +3,14 @@
 class GameGuidesModelTest extends WikiaBaseTest
 {
 
-	public function setUp() {
-		global $IP;
-		$this->setupFile = "{$IP}/extensions/wikia/GameGuides/GameGuides_setup.php";
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../GameGuides_setup.php';
 		parent::setUp();
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0113 ms
 	 * @covers GameGuidesModel::getResultSet
 	 */
 	public function testGetResultSet()

@@ -11,6 +11,13 @@ if ( !defined('MEDIAWIKI') ) {
  *
  * To use this extension $wgEnableWidgetBoxFeed = true
   */
+  
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'PartnerFeed',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'partner-feed-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PartnerFeed',
+);
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['ExtendedFeedItem']	= $dir . 'PartnerFeed.class.php';
@@ -19,7 +26,7 @@ $wgAutoloadClasses['PartnerAtomFeed']	= $dir . 'PartnerFeed.class.php';
 $wgAutoloadClasses['PartnerFeed']	= $dir . 'PartnerFeed.body.php';
 
 $wgExtensionMessagesFiles['PartnerFeed'] = $dir . 'PartnerFeed.i18n.php';
-$wgExtensionMessagesFiles['PartnerFeedAliases'] = __DIR__ . '/PartnerFeed.aliases.php';
+$wgExtensionMessagesFiles['PartnerFeedAliases'] = $dir. 'PartnerFeed.aliases.php';
 
 $wgSpecialPages['PartnerFeed']		= 'PartnerFeed';
 $wgSpecialPageGroups['PartnerFeed']	= 'wikia';

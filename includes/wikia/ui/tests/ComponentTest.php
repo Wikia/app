@@ -1,60 +1,51 @@
 <?php
-class ComponentTest extends WikiaBaseTest {
+use PHPUnit\Framework\TestCase;
+
+class ComponentTest extends TestCase {
 	
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 		global $IP;
 		include_once $IP . '/includes/wikia/ui/Component.class.php';
 	}
 
 	/**
-	 * @dataProvider testSetTemplatePathDataProvider
+	 * @covers \Wikia\UI\Component::getTemplatePath
+	 * @dataProvider getTemplatePathDataProvider
+	 * 
+	 * @param string $templateType
+	 * @param string $expected
 	 */
-	public function testSetTemplatePath( $templateType, $templatePath, $expected ) {
-		// test private method
-		$setTemplatePathMethod = new ReflectionMethod( 'Wikia\UI\Component', 'setTemplatePath' );
-		$setTemplatePathMethod->setAccessible( true );
-		
-		$UIComponentMock = $this->getMock('Wikia\UI\Component', ['getBaseTemplatePath', 'fileExists']);
-		$UIComponentMock->expects( $this->once() )
-			->method( 'getBaseTemplatePath' )
-			->will( $this->returnValue( $templatePath ) );
+	public function testGetTemplatePath( $templateType, $expected ) {
+		$component = new \Wikia\UI\Component();
 
-		$UIComponentMock->expects( $this->once() )
-			->method( 'fileExists' )
-			->will( $this->returnValue( true ) );
+		$component->setBaseTemplatePath( __DIR__ . '/fixtures/sample_component' );
+		$component->setType( $templateType );
 		
-		$setTemplatePathMethod->invoke( $UIComponentMock, $templateType );
-		/** @var $UIComponentMock Wikia\UI\Component */
-		$this->assertEquals( $expected, $UIComponentMock->getTemplatePath() );
+		$this->assertEquals( __DIR__ . "/$expected", $component->getTemplatePath() );
 	}
 	
-	public function testSetTemplatePathDataProvider() {
+	public function getTemplatePathDataProvider() {
 		return [
 			[ 
-				'templateType' => 'input', 
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_input.mustache',
+				'templateType' => 'input',
+				'expected' => 'fixtures/sample_component_input.mustache',
 			],
 			[ 
-				'templateType' => 'anchor', 
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_anchor.mustache',
+				'templateType' => 'anchor',
+				'expected' => 'fixtures/sample_component_anchor.mustache',
 			],
 			[ 
-				'templateType' => 'button', 
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_button.mustache',
+				'templateType' => 'button',
+				'expected' => 'fixtures/sample_component_button.mustache',
 			],
 			[ 
-				'templateType' => 'big button', 
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_big_button.mustache',
+				'templateType' => 'big button',
+				'expected' => 'fixtures/sample_component_big_button.mustache',
 			],
 			[
 				'templateType' => 'AWESOME BuTtOn',
-				'templatePath' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component',
-				'expected' => '/resources/wikia/ui_compontens/sample_component/templates/sample_component_awesome_button.mustache',
+				'expected' => 'fixtures/sample_component_awesome_button.mustache',
 			],
 		];
 	}
@@ -62,12 +53,15 @@ class ComponentTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testValidateTemplateVarsDataProvider
 	 */
-	public function testValidateTemplateVars( $tplVarsCfg, $tplValues, $componentType, $expectedException ) {
+	public function validateTemplateVars( $tplVarsCfg, $tplValues, $componentType, $expectedException ) {
 		// test private method
 		$validateTemplateVarsMethod = new ReflectionMethod( '\Wikia\UI\Component', 'validateTemplateVars' );
 		$validateTemplateVarsMethod->setAccessible( true );
 
-		$UIComponentMock = $this->getMock('\Wikia\UI\Component', ['getTemplateVarsConfig', 'getVarsValues', 'getType']);
+		$UIComponentMock = $this->getMockBuilder( \Wikia\UI\Component::class )
+			->setMethods( ['getTemplateVarsConfig', 'getVarsValues', 'getType'] )
+			->getMock();
+
 		$UIComponentMock->expects( $this->once() )
 			->method( 'getTemplateVarsConfig' )
 			->will( $this->returnValue( $tplVarsCfg ) );
@@ -81,13 +75,13 @@ class ComponentTest extends WikiaBaseTest {
 			->will( $this->returnValue( $componentType ) );
 		
 		if( !is_null( $expectedException ) ) {
-			$this->setExpectedException( $expectedException );
+			$this->expectException( $expectedException );
 		}
 		
 		$validateTemplateVarsMethod->invoke( $UIComponentMock );
 	}
 	
-	public function testValidateTemplateVarsDataProvider() {
+	public function validateTemplateVarsDataProvider() {
 		return [
 			[
 				'tplVarsCfg' => [

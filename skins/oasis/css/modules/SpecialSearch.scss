@@ -1,10 +1,10 @@
 /** @todo remove includes and bind in main oasis.scss **/
 // Mixins
-@import "../mixins/gradient";
-@import "../mixins/bodytext";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/bodytext";
 
 // Oasis Page Modules //
-@import "../core/color";
+@import "skins/shared/color";
 
 .mw-search-results {
 	.searchresult {
@@ -21,6 +21,6 @@
 
 .WikiaArticle {
 	ul {
-		margin-left: 0px;
+		margin-left: 0;
 	}
 }

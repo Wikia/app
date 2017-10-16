@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Universal Life"
+		]
+	},
+	"maps_map": "Mapa",
+	"maps-loading-map": "Cargando la mapa...",
+	"maps-abb-north": "N",
+	"maps-abb-east": "E",
+	"maps-abb-south": "S",
+	"maps-abb-west": "O"
+}

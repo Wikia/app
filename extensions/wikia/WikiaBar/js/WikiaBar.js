@@ -1,5 +1,4 @@
 var WikiaBar = {
-	WIKIA_BAR_BOXAD_NAME: 'WIKIA_BAR_BOXAD_1',
 	WIKIA_BAR_STATE_ANON_ML_KEY: 'AnonMainLangWikiaBar_0.0001',
 	WIKIA_BAR_STATE_ANON_NML_KEY: 'AnonNotMainLangWikiaBar_0.0001',
 	WIKIA_BAR_HIDDEN_ANON_ML_TTL: 24 * 60 * 1000, //millieseconds
@@ -62,10 +61,19 @@ var WikiaBar = {
 		return true;
 	},
 	getAdIfNeeded: function () {
-		var WikiaBarBoxAd = $('#' + this.WIKIA_BAR_BOXAD_NAME);
-		if( WikiaBarBoxAd.hasClass('wikia-ad') == false && window.wgShowAds && window.wgAdsShowableOnPage && window.wgEnableWikiaBarAds ) {
-			window.adslots2.push([this.WIKIA_BAR_BOXAD_NAME, null, 'AdEngine2', null]);
-			WikiaBarBoxAd.addClass('wikia-ad');
+		var isEnabled = window.ads &&
+				window.ads.context &&
+				window.ads.context.opts &&
+				window.ads.context.opts.showAds &&
+				window.wgEnableWikiaBarAds;
+
+		if (isEnabled) {
+			window.Wikia.reviveQueue = window.Wikia.reviveQueue || [];
+
+			window.Wikia.reviveQueue.push({
+				zoneId: 28,
+				slotName: 'WIKIA_BAR_BOXAD_1'
+			});
 		}
 	},
 	cutMessageIntoSmallPieces: function (messageArray, container, cutMessagePrecision) {
@@ -186,15 +194,35 @@ var WikiaBar = {
 		this.wikiaBarCollapseWrapperObj.addClass('hidden');
 		this.wikiaBarWrapperObj.removeClass('hidden');
 		this.wikiaBarHidden = false;
+
+		this.toggleVisibilityClassOnBody(true);
 	},
 	hide: function () {
 		$('#WikiaNotifications').addClass('hidden');
 		this.wikiaBarCollapseWrapperObj.removeClass('hidden');
 		this.wikiaBarWrapperObj.addClass('hidden');
 		this.wikiaBarHidden = true;
+
+		this.toggleVisibilityClassOnBody(false);
 	},
 	isWikiaBarHidden: function () {
 		return this.wikiaBarHidden;
+	},
+	showContainer: function() {
+		$('#WikiaBar').show();
+		this.toggleVisibilityClassOnBody(true);
+	},
+	hideContainer: function() {
+		$('#WikiaBar').hide();
+		this.toggleVisibilityClassOnBody(false);
+	},
+	toggleVisibilityClassOnBody: function(state) {
+		if (this.wikiaBarWrapperObj.length) {
+			$('body').toggleClass('wikia-bar-visible', state);
+		}
+	},
+	isContainerHidden: function() {
+		return $('#WikiaBar').is(":visible");
 	},
 	onShownClick: function (e) {
 		this.changeBarStateData();
@@ -301,7 +329,7 @@ var WikiaBar = {
 			this.hide();
 		}
 
-		if (window.wgAction == 'edit') {
+		if (window.wgAction == 'edit' && !window.wgEnableCodePageEditor) {
 			var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
 				editorInstance = WE.getInstance();
 
@@ -393,7 +421,7 @@ var WikiaBar = {
 				action: action,
 				category: category,
 				label: label,
-				trackingMethod: 'ga',
+				trackingMethod: 'analytics',
 				value: value
 			}, params);
 		}
@@ -422,27 +450,5 @@ var WikiaBar = {
 if (window.wgEnableWikiaBarExt) {
 	$(function () {
 		WikiaBar.init();
-
-		// ABTEST: DAR_GlobalNavigationFixed
-		// Determine what group we're in for experiment DAR_GlobalNavigationFixed
-		group = window.Wikia.AbTest
-			? Wikia.AbTest.getGroup( "DAR_GLOBALNAVIGATIONFIXED" )
-			: null ;
-
-		switch (group) {
-        case "HIDE_WIKIA_BAR":
-            // collapse as the default state for anons
-            if (WikiaBar && WikiaBar.isUserAnon() && WikiaBar.getAnonData(false) === false) {
-                WikiaBar.hide();
-            }
-            // no break intended: for this group we should have global nav fixed too
-            // break;
-        case "SHOW_WIKIA_BAR":
-            $('body').addClass('global-header-fixed-at-top');
-            break;
-        default:
-            // no changes in behaviour
-		}
 	});
 }
-

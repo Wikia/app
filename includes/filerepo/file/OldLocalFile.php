@@ -112,6 +112,26 @@ class OldLocalFile extends LocalFile {
 		return $this->archive_name;
 	}
 
+	/**
+	 * Get the archive timestamp for this file. This timestamp is different from the
+	 * oi_timestamp that is stored in the table. It's encoded in the oi_name field in the
+	 * table and on disk. It is the original timestamp from the image table.
+	 *
+	 * It's odd that it's encoded in a string in the name. Ideally we would separate this from the
+	 * name and put it in a column by itself.
+	 *
+	 * @return string of integers if it matches the expect format; false otherwise
+	 */
+	public function getArchiveTimestamp() {
+		$name = $this->getArchiveName();
+		$hit = preg_match( "/^(\d+)\!.*$/", $name, $matches );
+		if ( $hit && isset( $matches[1] ) ) {
+			return $matches[1];
+		}
+
+		return false;
+	}
+
 	function isOld() {
 		return true;
 	}
@@ -120,7 +140,7 @@ class OldLocalFile extends LocalFile {
 		return $this->exists() && !$this->isDeleted(File::DELETED_FILE);
 	}
 
-	function loadFromDB() {
+	function loadFromDB( $flags=0 ) {
 		wfProfileIn( __METHOD__ );
 		$this->dataLoaded = true;
 		$dbr = $this->repo->getSlaveDB();

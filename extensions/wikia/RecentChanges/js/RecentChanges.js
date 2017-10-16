@@ -1,4 +1,7 @@
 jQuery(function($) {
+	//Used by AjaxRC
+	window.Wikia = window.Wikia || {};
+	
 	var RecentChanges = {
 		init: function() {
 			this.$table = $('.mw-recentchanges-table');
@@ -9,7 +12,6 @@ jQuery(function($) {
 
 			this.dropdown = new Wikia.MultiSelectDropdown(this.$dropdown);
 			this.dropdown.on('change', $.proxy(this.onChange, this));
-
 		},
 
 		saveFilters: function(event) {
@@ -41,4 +43,5 @@ jQuery(function($) {
 	};
 
 	RecentChanges.init();
+	window.Wikia.RecentChanges = RecentChanges; //needed for AjaxRC
 });

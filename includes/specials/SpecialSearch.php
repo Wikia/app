@@ -180,14 +180,14 @@ class SpecialSearch extends SpecialPage {
 		# If there's an exact or very near match, jump right there.
 		$t = SearchEngine::getNearMatch( $term );
 
-		if ( !wfRunHooks( 'SpecialSearchGo', array( &$t, &$term ) ) ) {
+		if ( !Hooks::run( 'SpecialSearchGo', array( &$t, &$term ) ) ) {
 			# Hook requested termination
 			return;
 		}
 
 		if( !is_null( $t ) && ( $searchWithNamespace || $t->getNamespace() == NS_MAIN || $t->getNamespace() == NS_CATEGORY) ) {
 			// Wikia change (ADi): hook call added
-			wfRunHooks( 'SpecialSearchIsgomatch', array( &$t, $term ) );
+			Hooks::run( 'SpecialSearchIsgomatch', array( &$t, $term ) );
 			$this->getOutput()->redirect( $t->getFullURL() );
 			return;
 		}
@@ -195,7 +195,7 @@ class SpecialSearch extends SpecialPage {
 		$t = Title::newFromText( $term );
 		if( !is_null( $t ) ) {
 			global $wgGoToEdit;
-			wfRunHooks( 'SpecialSearchNogomatch', array( &$t ) );
+			Hooks::run( 'SpecialSearchNogomatch', array( &$t ) );
 			wfDebugLog( 'nogomatch', $t->getText(), false );
 
 			# If the feature is enabled, go straight to the edit page
@@ -222,7 +222,7 @@ class SpecialSearch extends SpecialPage {
 		$search->prefix = $this->mPrefix;
 		$term = $search->transformSearchTerm($term);
 
-		wfRunHooks( 'SpecialSearchSetupEngine', array( $this, $this->profile, $search ) );
+		Hooks::run( 'SpecialSearchSetupEngine', array( $this, $this->profile, $search ) );
 
 		$this->setupPage( $term );
 
@@ -361,7 +361,7 @@ class SpecialSearch extends SpecialPage {
 
 		// show number of results and current offset
 		/* Wikia change begin - @author: Macbre (merge 1.19 MoLi) */
-		if ( !( F::app()->checkSkin( 'oasis' ) ) ) {
+		if ( !( F::app()->checkSkin( [ 'oasis' ] ) ) ) {
 			$out->addHTML( $this->formHeader( $term, $num, $totalRes ) );
 			$out->addHtml( $this->getProfileForm( $this->profile, $term ) );
 		}
@@ -379,9 +379,9 @@ class SpecialSearch extends SpecialPage {
 				max( $titleMatchesNum, $textMatchesNum ) < $this->limit
 			);
 			//$out->addHTML( "<p class='mw-search-pager-top'>{$prevnext}</p>\n" );
-			wfRunHooks( 'SpecialSearchResults', array( $term, &$titleMatches, &$textMatches ) );
+			Hooks::run( 'SpecialSearchResults', array( $term, &$titleMatches, &$textMatches ) );
 		} else {
-			wfRunHooks( 'SpecialSearchNoResults', array( $term ) );
+			Hooks::run( 'SpecialSearchNoResults', array( $term ) );
 		}
 
 		$out->parserOptions()->setEditSection( false );
@@ -424,7 +424,7 @@ class SpecialSearch extends SpecialPage {
 
 		// show number of results and current offset
 		/* Wikia change begin - @author: Macbre */
-		if ( F::app()->checkSkin( 'oasis' ) ) {
+		if ( F::app()->checkSkin( [ 'oasis' ] ) ) {
 			$out->addHTML( $this->formHeader($term, $num, $totalRes));
 			$out->addHtml( $this->getProfileForm( $this->profile, $term ) );
 			if( $this->searchAdvanced ) {
@@ -445,7 +445,7 @@ class SpecialSearch extends SpecialPage {
 
 		/* Wikia change begin - @author: Macbre */
 		/* Don't show "create an article" link in Oasis */
-		if ( F::app()->checkSkin( 'oasis' ) ) {
+		if ( F::app()->checkSkin( [ 'oasis' ] ) ) {
 			return '';
 		}
 		/* Wikia change end */
@@ -468,7 +468,7 @@ class SpecialSearch extends SpecialPage {
 			$messageName = 'searchmenu-new-nocreate';
 		}
 		$params = array( $messageName, wfEscapeWikiText( $t->getPrefixedText() ) );
-		wfRunHooks( 'SpecialSearchCreateLink', array( $t, &$params ) );
+		Hooks::run( 'SpecialSearchCreateLink', array( $t, &$params ) );
 
 		if( $messageName ) {
 			$this->getOutput()->wrapWikiMsg( "<p class=\"mw-search-createlink\">\n$1</p>", $params );
@@ -552,7 +552,7 @@ class SpecialSearch extends SpecialPage {
 		$result = $matches->next();
 		while( $result ) {
 			// Wikia change /Begin (ADi)
-			wfRunHooks( 'SpecialSearchShowHit', array( &$out, $result, $terms, $num ) );
+			Hooks::run( 'SpecialSearchShowHit', array( &$out, $result, $terms, $num ) );
 			// Wikia change /End (ADi)
 			$out .= $this->showHit( $result, $terms );
 			$result = $matches->next();
@@ -591,7 +591,7 @@ class SpecialSearch extends SpecialPage {
 
 		$link_t = clone $t;
 
-		wfRunHooks( 'ShowSearchHitTitle',
+		Hooks::run( 'ShowSearchHitTitle',
 					array( &$link_t, &$titleSnippet, $result, $terms, $this ) );
 
 		$link = Linker::linkKnown(
@@ -722,7 +722,7 @@ class SpecialSearch extends SpecialPage {
 
 					// Wikia change /Begin (ADi)
 					$resultData = "<div class='mw-search-result-data'>{$score}{$desc} - {$date}{$related}</div>";
-					wfRunHooks( 'SearchShowHit', array( $result, &$link, &$redirect, &$section, &$extract, &$resultData ) );
+					Hooks::run( 'SearchShowHit', array( $result, &$link, &$redirect, &$section, &$extract, &$resultData ) );
 					// Wikia change /End
 
 					wfProfileOut( __METHOD__ );
@@ -749,7 +749,7 @@ class SpecialSearch extends SpecialPage {
 
 		// Wikia change /Begin (ADi)
 		$resultData = "<div class='mw-search-result-data'>{$score}{$size} - {$date}{$related}</div>";
-		wfRunHooks( 'SearchShowHit', array( $result, &$link, &$redirect, &$section, &$extract, &$resultData ) );
+		Hooks::run( 'SearchShowHit', array( $result, &$link, &$redirect, &$section, &$extract, &$resultData ) );
 		// Wikia change /End
 
 		wfProfileOut( __METHOD__ );
@@ -895,7 +895,7 @@ class SpecialSearch extends SpecialPage {
 			return $this->powerSearchBox( $term, $opts );
 		} else {
 			$form = '';
-			wfRunHooks( 'SpecialSearchProfileForm', array( $this, &$form, $profile, $term, $opts ) );
+			Hooks::run( 'SpecialSearchProfileForm', array( $this, &$form, $profile, $term, $opts ) );
 			return $form;
 		}
 	}
@@ -956,7 +956,7 @@ class SpecialSearch extends SpecialPage {
 				Xml::checkLabel( wfMsg( 'powersearch-redir' ), 'redirs', 'redirs', $this->searchRedirects );
 		}
 
-		wfRunHooks( 'SpecialSearchPowerBox', array( &$showSections, $term, $opts ) );
+		Hooks::run( 'SpecialSearchPowerBox', array( &$showSections, $term, $opts ) );
 
 		$hidden = '';
 		unset( $opts['redirs'] );
@@ -1053,7 +1053,7 @@ class SpecialSearch extends SpecialPage {
 			)
 		);
 
-		wfRunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
+		Hooks::run( 'SpecialSearchProfiles', array( &$profiles ) );
 
 		foreach( $profiles as &$data ) {
 			if ( !is_array( $data['namespaces'] ) ) continue;
@@ -1170,7 +1170,7 @@ class SpecialSearch extends SpecialPage {
 		$out .= Xml::submitButton( wfMsg( 'searchbutton' ) ) . "\n";
 
 		// Wikia change (ADi) /begin
-		wfRunHooks( 'SpecialSearchShortDialog', array( $term, &$out ) );
+		Hooks::run( 'SpecialSearchShortDialog', array( $term, &$out ) );
 		// Wikia change (ADi) /end
 
 		return $out . $this->didYouMeanHtml;

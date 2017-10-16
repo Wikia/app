@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"AiseluRB",
+			"Amire80",
+			"Assele",
+			"Haqmar",
+			"Sagan",
+			"Рустам Нурыев"
+		]
+	},
+	"visualeditor": "Күҙләгес мөхәррир",
+	"visualeditor-aliennode-tooltip": "Үкенескә күрә, хәҙер был элемент сығанаҡ кодты мөхәррирләү режимында ғына үҙгәртелә ала.",
+	"visualeditor-annotationbutton-bold-tooltip": "Ҡалын",
+	"visualeditor-annotationbutton-italic-tooltip": "Ҡыя",
+	"visualeditor-annotationbutton-link-tooltip": "Һылтанма",
+	"visualeditor-clearbutton-tooltip": "Форматлауҙы юйырға",
+	"visualeditor-dialog-action-apply": "Үҙгәртеүҙәрҙе ҡулланырға",
+	"visualeditor-dialog-action-cancel": "Кире алырға",
+	"visualeditor-dialog-action-goback": "Кире ҡайтырға",
+	"visualeditor-formatdropdown-format-heading1": "Башлыҡ 1",
+	"visualeditor-formatdropdown-format-heading2": "Башлыҡ 2",
+	"visualeditor-formatdropdown-format-heading3": "Башлыҡ 3",
+	"visualeditor-formatdropdown-format-heading4": "Башлыҡ 4",
+	"visualeditor-formatdropdown-format-heading5": "Башлыҡ 5",
+	"visualeditor-formatdropdown-format-heading6": "Башлыҡ 6",
+	"visualeditor-formatdropdown-format-paragraph": "Параграф",
+	"visualeditor-formatdropdown-format-preformatted": "Әҙер формат",
+	"visualeditor-formatdropdown-title": "Форматты үҙгәртергә",
+	"visualeditor-historybutton-redo-tooltip": "Тергеҙергә",
+	"visualeditor-historybutton-undo-tooltip": "Кире алырға",
+	"visualeditor-indentationbutton-indent-tooltip": "Буш араны ҙурайтырға",
+	"visualeditor-indentationbutton-outdent-tooltip": "Буш араны кәметергә",
+	"visualeditor-inspector-close-tooltip": "Ябырға",
+	"visualeditor-inspector-remove-tooltip": "Юйырға",
+	"visualeditor-linkinspector-title": "Дәүһылтанма",
+	"visualeditor-listbutton-bullet-tooltip": "Тамғалы исемлек",
+	"visualeditor-listbutton-number-tooltip": "Һанлы исемлек"
+}

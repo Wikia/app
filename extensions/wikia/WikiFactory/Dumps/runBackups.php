@@ -10,15 +10,16 @@
  * SERVER_ID=177 php runBackups.php  -- generate current backups for all
  *	active wikis
  *
- * SERVER_ID=177 php runBackups.php  --both --id=177 -- generate full & current
- * 	backups for city_id = 177
+ * SERVER_ID=177 php runBackups.php  --both --id=177 --s3 -- generate full & current
+ * 	backups for city_id = 177 and upload it to S3
  *
  * SERVER_ID=177 php runBackups.php  --both --db=wikicities -- generate full & current
  * 	backups for city_dbname = wikicities
+ *
+ * This script is executed by /extensions/wikia/WikiFactory/Dumps/maintenance/DumpsOnDemandCron.php
  */
-ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
-require_once('commandLine.inc');
 
+require_once(__DIR__ .'/../../../../maintenance/commandLine.inc');
 
 /**
  * run backup for range of wikis
@@ -43,7 +44,7 @@ function runBackups( $from, $to, $full, $options ) {
 	/**
 	 * store backup in the system tmp dir
 	 */
-	$basedir = isset( $options['tmp'] ) ? sys_get_temp_dir() : '';
+	$use_temp = isset( $options['tmp'] );
 
 	/**
 	 * send backup to Amazon S3 and delete the local copy
@@ -111,66 +112,81 @@ function runBackups( $from, $to, $full, $options ) {
 			array( "ORDER BY" => "city_id" )
 	);
 	while( $row = $dbw->fetchObject( $sth ) ) {
-		/**
-		 * get cluster for this wiki
-		 */
-		$cluster = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
-		$server  = wfGetDB( DB_SLAVE, 'dumps', $row->city_dbname )->getProperty( "mServer" );
-		/**
-		 * build command
-		 */
-		$status  = false;
-		
-		if ( '' == $basedir ) {
-			$basedir = getDirectory( $row->city_dbname, $hide );
-		}
-		if( $full || $both ) {
-			$path = sprintf("%s/%s_pages_full.xml.gz", $basedir, $row->city_dbname );
-			$time = wfTime();
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true );
-			$cmd = array(
-				"SERVER_ID={$row->city_id}",
-				"php",
-				"{$IP}/maintenance/dumpBackup.php",
-				"--conf {$wgWikiaLocalSettingsPath}",
-				"--aconf {$wgWikiaAdminSettingsPath}",
-				"--full",
-				"--xml",
-				"--quiet",
-				"--server=$server",
-				"--output=gzip:{$path}"
-			);
-			wfShellExec( implode( " ", $cmd ), $status );
-			$time = Wikia::timeDuration( wfTime() - $time );
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true );
-			if ( $s3 && 0 == DumpsOnDemand::putToAmazonS3( $path, !$hide,  MimeMagic::singleton()->guessMimeType( $path ) ) ) {
-				unlink( $path );
-			}
+		$basedir = getDirectory( $row->city_dbname, $hide, $use_temp );
 
+		if( $full || $both ) {
+			doDumpBackup( $row, sprintf("%s/%s_pages_full.xml.7z", $basedir, $row->city_dbname ), [ '--full' ] );
 		}
 		if( !$full || $both ) {
-			$path = sprintf("%s/%s_pages_current.xml.gz", $basedir, $row->city_dbname );
-			$time = wfTime();
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true);
-			$cmd = array(
-				"SERVER_ID={$row->city_id}",
-				"php",
-				"{$IP}/maintenance/dumpBackup.php",
-				"--conf {$wgWikiaLocalSettingsPath}",
-				"--aconf {$wgWikiaAdminSettingsPath}",
-				"--current",
-				"--xml",
-				"--quiet",
-				"--server=$server",
-				"--output=gzip:{$path}"
-			);
-			wfShellExec( implode( " ", $cmd ), $status );
-			$time = Wikia::timeDuration( wfTime() - $time );
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
-			if ( $s3 && 0 == DumpsOnDemand::putToAmazonS3( $path, !$hide,  MimeMagic::singleton()->guessMimeType( $path ) ) ) {
-				unlink( $path );
+			doDumpBackup( $row, sprintf("%s/%s_pages_current.xml.7z", $basedir, $row->city_dbname ), [ '--current' ] );
+		}
+	}
+}
+
+/**
+ * Perform backup generation and upload to S3
+ *
+ * @param object $row wiki entry from city_list
+ * @param string $path where to upload the generated dump
+ * @param string $path where to upload the generated dump
+ * @param array $args optional extra arguments for dumpBackup.php
+ */
+function doDumpBackup( $row, $path, array $args = [] ) {
+	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $options;
+	$logger = Wikia\Logger\WikiaLogger::instance();
+
+	$time = wfTime();
+	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true);
+
+	$server = wfGetDB( DB_SLAVE, 'dumps', $row->city_dbname )->getProperty( "mServer" );
+	$cmd = implode( ' ', array_merge( [
+		"SERVER_ID={$row->city_id}",
+		"php -d display_errors=1",
+		"{$IP}/maintenance/dumpBackup.php",
+		"--conf {$wgWikiaLocalSettingsPath}",
+		"--aconf {$wgWikiaAdminSettingsPath}",
+		"--xml",
+		"--quiet",
+		"--server=$server",
+		"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
+	], $args ) );
+
+	// redirect stderr to stdout, so it becomes a part of $output
+	$cmd .= ' 2>&1';
+
+	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} command: {$cmd}", true, true);
+
+	$output = wfShellExec( $cmd, $status );
+	$time = Wikia::timeDuration( wfTime() - $time );
+
+	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
+	Wikia::log( __METHOD__, "info", $output, true, true);
+
+	if ( $status === 0 ) {
+		if ( isset( $options['s3'] ) ) {
+			Wikia\Util\Assert::true( file_exists( $path ), __FUNCTION__ . ': Dump file does not exist' );
+
+			$res = DumpsOnDemand::putToAmazonS3( $path, !isset( $options[ "hide" ] ),  MimeMagic::singleton()->guessMimeType( $path ) );
+			unlink( $path );
+
+			if ( $res !== 0 ) {
+				$logger->error( __METHOD__ . '::putToAmazonS3', [
+					'exception' => new Exception( 'putToAmazonS3 failed', $res ),
+					'row' => (array) $row,
+				] );
+
+				exit( 1 );
 			}
 		}
+	}
+	else {
+		$logger->error( __METHOD__ . '::dumpBackup', [
+			'exception' => new Exception( $cmd, $status ),
+			'row' => (array) $row,
+			'output' => $output
+		]);
+
+		exit( 2 );
 	}
 }
 
@@ -179,11 +195,10 @@ function runBackups( $from, $to, $full, $options ) {
  *
  * <root>/<first letter>/<two first letters>/<database>
  */
-function getDirectory( $database, $hide = false ) {
-	global $wgDevelEnvironment;
+function getDirectory( $database, $hide = false, $use_temp = false ) {
 
-	$folder     = empty( $wgDevelEnvironment ) ?  "raid" : "tmp";
-	$subfolder = $hide ? "dumps-hidden" : "dumps";
+	$folder     = $use_temp ?  sys_get_temp_dir() : "data";
+	$subfolder  = $hide ? "dumps-hidden" : "dumps";
 	$database   = strtolower( $database );
 
 	$directory = sprintf(

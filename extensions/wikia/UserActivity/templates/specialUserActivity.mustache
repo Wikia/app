@@ -1,0 +1,21 @@
+<br />
+<p>{{pageDescription}}</p>
+<table width="100%" class="article-table">
+	<thead>
+		<tr class="useractivity-header">
+			<th id="title-header" class="sortable">{{tableTitle}}</th>
+			<th id="edits-header" class="sortable">{{tableEdits}}</th>
+			<th id="last-edit-header" class="sortable">{{tableLastEdit}}</th>
+			<th id="rights-header">{{tableRights}}</th>
+		</tr>
+	</thead>
+	{{#items}}
+	<tr>
+		<td><strong><a href="{{url}}">{{title}}</a></strong></td>
+		<td><a href="{{url}}wiki/Special:Contributions/{{username}}">{{editString}}</a></td>
+		<td>{{lastEdit}}</td>
+		<td>{{groups}}</td>
+	</tr>
+	{{/items}}
+</table>
+{{{pagination}}}

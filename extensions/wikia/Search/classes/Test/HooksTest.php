@@ -10,7 +10,9 @@ use Wikia\Search\Hooks;
 class HooksTest extends BaseTest {
 	
 	/**
-	 * @covers Wikia\Search\Hooks
+	 * @group Slow
+	 * @slowExecutionTime 0.08068 ms
+	 * @covers \Wikia\Search\Hooks
 	 */
 	public function testOnWikiaMobileAssetsPackages() {
 
@@ -40,7 +42,7 @@ class HooksTest extends BaseTest {
 				'As a hook, Wikia\Search\Hooks::onWikiaMobileAssetsPackages must return true.'
 		);
 		$this->assertEmpty(
-		        $jsBody,
+		        $jsExtension,
 		        'Wikia\Search\Hooks::onWikiaMobileAssetsPackages shoudl not append the value "wikiasearch_js_wikiamobile" to the jsBodyPackages array if the title is not special search.'
 		);
 		$this->assertEmpty(
@@ -48,12 +50,12 @@ class HooksTest extends BaseTest {
 		        'Wikia\Search\Hooks::onWikiaMobileAssetsPackages should not append the value "wikiasearch_scss_wikiamobile" to the jsBodyPackages array  if the title is not special search.'
 		);
 		$this->assertTrue(
-		        $hooks->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
+		        $hooks->onWikiaMobileAssetsPackages( $jsStatic, $jsExtension, $cssPkg ),
 		        'As a hook, Wikia\Search\Hooks::onWikiaMobileAssetsPackages must return true.'
 		);
 		$this->assertContains(
 				'wikiasearch_js_wikiamobile',
-				$jsBody,
+				$jsExtension,
 				'Wikia\Search\Hooks::onWikiaMobileAssetsPackages shoudl append the value "wikiasearch_js_wikiamobile" to the jsBodyPackages array.'
 		);
 		$this->assertContains(
@@ -62,104 +64,10 @@ class HooksTest extends BaseTest {
 		        'Wikia\Search\Hooks::onWikiaMobileAssetsPackages shoudl append the value "wikiasearch_scss_wikiamobile" to the jsBodyPackages array.'
 		);
 	}
-	
+
 	/**
-	 * @covers Wikia\Search\Hooks::onArticleDeleteComplete
-	 */
-	public function testOnArticleDeleteComplete() {
-		$mockArticle = $this->getMockBuilder( 'Article' )
-		                    ->disableOriginalConstructor()
-		                    ->getMock();
-		$mockUser = $this->getMockBuilder( 'User' )
-		                 ->disableOriginalConstructor()
-		                 ->getMock();
-		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', null );
-		$mockIndexer = $this->getMock( 'Wikia\Search\Indexer', array( 'deleteArticle' ) );
-		$mockIndexer
-		    ->expects( $this->once() )
-		    ->method ( 'deleteArticle' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( true ) )
-		;
-		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$this->assertTrue(
-				$mockHooks->onArticleDeleteComplete( $mockArticle, $mockUser, 'why not', 123 )
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\Hooks::onArticleSaveComplete
-	 */
-	public function testOnArticleSaveComplete() {
-		$mockArticle = $this->getMockBuilder( 'Article' )
-		                    ->disableOriginalConstructor()
-		                    ->getMock();
-		$mockUser = $this->getMockBuilder( 'User' )
-		                 ->disableOriginalConstructor()
-		                 ->getMock();
-		$mockTitle = $this->getMockBuilder( 'Title' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'getArticleID' ) )
-		                  ->getMock();
-		$mockRev = $this->getMockBuilder( 'Revision' )
-		                ->disableOriginalConstructor()
-		                ->getMock();
-		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', null );
-		$mockIndexer = $this->getMock( 'Wikia\Search\Indexer', array( 'reindexBatch' ) );
-		$mockArticle
-		    ->expects( $this->once() )
-		    ->method ( 'getTitle' )
-		    ->will   ( $this->returnValue( $mockTitle ) )
-		;
-		$mockTitle
-		    ->expects( $this->once() )
-		    ->method ( 'getArticleID' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$mockIndexer
-		    ->expects( $this->once() )
-		    ->method ( 'reindexBatch' )
-		    ->with   ( array( 123 ) )
-		    ->will   ( $this->returnValue( true ) )
-		;
-		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$whatevs = array();
-		$whatevs2 = 0;
-		$this->assertTrue(
-				$mockHooks->onArticleSaveComplete( $mockArticle, $mockUser, 'why not', 'yup', 0, 0, 'foo', $whatevs, $mockRev, $whatevs2, $whatevs2 )
-		);
-	}
-	
-	/**
-	 * @covers Wikia\Search\Hooks::onArticleUndelete
-	 */
-	public function testOnArticleUndelete() {
-		$mockTitle = $this->getMockBuilder( 'Title' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'getArticleID' ) )
-		                  ->getMock();
-		$mockHooks = $this->getMock( 'Wikia\Search\Hooks', null );
-		$mockIndexer = $this->getMock( 'Wikia\Search\Indexer', array( 'reindexBatch' ) );
-		$mockTitle
-		    ->expects( $this->once() )
-		    ->method ( 'getArticleID' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$mockIndexer
-		    ->expects( $this->once() )
-		    ->method ( 'reindexBatch' )
-		    ->with   ( array( 123 ) )
-		    ->will   ( $this->returnValue( true ) )
-		;
-		$this->mockClass( 'Wikia\Search\Indexer', $mockIndexer );
-		$whatevs = array();
-		$whatevs2 = 0;
-		$this->assertTrue(
-				$mockHooks->onArticleUndelete( $mockTitle, 0 )
-		);
-	}
-	
-	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08024 ms
 	 * @covers Wikia\Search\Hooks::onWikiFactoryPublicStatusChange
 	 */
 	public function testOnWikiFactoryPublicStatusChange() {
@@ -189,6 +97,8 @@ class HooksTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07897 ms
 	 * @covers Wikia\Search\Hooks::onGetPreferences
 	 */
 	public function testonGetPreferences() {
@@ -209,60 +119,5 @@ class HooksTest extends BaseTest {
 		}
 		$this->assertArrayHasKey( 'enableGoSearch', $prefs );
 		$this->assertArrayHasKey( 'searchAllNamespaces', $prefs );
-	}
-	
-	/**
-	 * @covers Wikia\Search\Hooks::onLinkEnd
-	 * @covers Wikia\Search\Hooks::popLinks
-	 */
-	public function testOnLinkEndAndPopLinks() {
-		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId', 'getCanonicalPageIdFromPageId' ] );
-		$mockTitle = $this->getMockBuilder( 'Title' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( [ 'getArticleId' ] )
-		                  ->getMock();
-		
-		$mockSkin = $this->getMockBuilder( 'Skin' )
-		                 ->disableOriginalConstructor()
-		                 ->getMock();
-		
-		$mockTitle
-		    ->expects( $this->once() )
-		    ->method ( 'getArticleId' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$mockService
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getCanonicalPageIdFromPageId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( 456 ) )
-		;
-		$mockService
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getWikiId' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$options = [];
-		$text = 'foo';
-		$attribs = [];
-		$ret = false;
-		$expected = '123_456 | foo';
-		$this->mockClass( 'Wikia\Search\MediaWikiService', $mockService );
-		$this->assertTrue(
-				\Wikia\Search\Hooks::onLinkEnd( $mockSkin, $mockTitle, $options, $text, $attribs, $ret )
-		);
-		$this->assertAttributeContains(
-				$expected,
-				'outboundLinks',
-				'Wikia\Search\Hooks'
-		);
-		$this->assertEquals(
-				[ $expected ],
-				\Wikia\Search\Hooks::popLinks()
-		);
-		$this->assertAttributeEmpty(
-				'outboundLinks',
-				'Wikia\Search\Hooks'
-		);
 	}
 }

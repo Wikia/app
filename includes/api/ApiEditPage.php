@@ -200,7 +200,7 @@ class ApiEditPage extends ApiBase {
 			$requestArray['wpStarttime'] = wfTimestampNow();	// Fake wpStartime
 		}
 
-		if ( $params['minor'] || ( !$params['notminor'] && $user->getOption( 'minordefault' ) ) )	{
+		if ( $params['minor'] || ( !$params['notminor'] && $user->getGlobalPreference( 'minordefault' ) ) )	{
 			$requestArray['wpMinoredit'] = '';
 		}
 
@@ -246,7 +246,7 @@ class ApiEditPage extends ApiBase {
 		// Run hooks
 		// Handle APIEditBeforeSave parameters
 		$r = array();
-		if ( !wfRunHooks( 'APIEditBeforeSave', array( $ep, $ep->textbox1, &$r ) ) ) {
+		if ( !Hooks::run( 'APIEditBeforeSave', array( $ep, $ep->textbox1, &$r ) ) ) {
 			if ( count( $r ) ) {
 				$r['result'] = 'Failure';
 				$apiResult->addValue( null, $this->getModuleName(), $r );
@@ -335,6 +335,8 @@ class ApiEditPage extends ApiBase {
 					$r['newrevid'] = intval( $newRevId );
 					$r['newtimestamp'] = wfTimestamp( TS_ISO_8601,
 						$articleObj->getTimestamp() );
+					Hooks::run( 'ApiEditPage::SuccessfulApiEdit', [ $newRevId ] );
+					wfSetupSession();
 				}
 				break;
 

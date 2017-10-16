@@ -61,21 +61,65 @@ if( !function_exists( 'mb_strrpos' ) ) {
 
 
 // Support for Wietse Venema's taint feature
-if ( !function_exists( 'istainted' ) ) {
+if ( !function_exists( 'is_tainted' ) ) {
 	/** @codeCoverageIgnore */
-	function istainted( $var ) {
-		return 0;
+	function is_tainted( $var ) {
+		return false;
 	}
 	/** @codeCoverageIgnore */
 	function taint( $var, $level = 0 ) {}
 	/** @codeCoverageIgnore */
 	function untaint( $var, $level = 0 ) {}
-	define( 'TC_HTML', 1 );
-	define( 'TC_SHELL', 1 );
-	define( 'TC_MYSQL', 1 );
-	define( 'TC_PCRE', 1 );
-	define( 'TC_SELF', 1 );
 }
+
+/** Wikia change begin - backport hash_equals from MW 1.24 **/
+// hash_equals function only exists in PHP >= 5.6.0
+if ( !function_exists( 'hash_equals' ) ) {
+	/**
+	 * Check whether a user-provided string is equal to a fixed-length secret without
+	 * revealing bytes of the secret through timing differences.
+	 *
+	 * This timing guarantee -- that a partial match takes the same time as a complete
+	 * mismatch -- is why this function is used in some security-sensitive parts of the code.
+	 * For example, it shouldn't be possible to guess an HMAC signature one byte at a time.
+	 *
+	 * Longer explanation: http://www.emerose.com/timing-attacks-explained
+	 *
+	 * @codeCoverageIgnore
+	 * @param string $known_string Fixed-length secret to compare against
+	 * @param string $user_string User-provided string
+	 * @return bool True if the strings are the same, false otherwise
+	 */
+	function hash_equals( $known_string, $user_string ) {
+		// Strict type checking as in PHP's native implementation
+		if ( !is_string( $known_string ) ) {
+			trigger_error( 'hash_equals(): Expected known_string to be a string, ' .
+				gettype( $known_string ) . ' given', E_USER_WARNING );
+
+			return false;
+		}
+
+		if ( !is_string( $user_string ) ) {
+			trigger_error( 'hash_equals(): Expected user_string to be a string, ' .
+				gettype( $user_string ) . ' given', E_USER_WARNING );
+
+			return false;
+		}
+
+		// Note that we do one thing PHP doesn't: try to avoid leaking information about
+		// relative lengths of $known_string and $user_string, and of multiple $known_strings.
+		// However, lengths may still inevitably leak through, for example, CPU cache misses.
+		$known_string_len = strlen( $known_string );
+		$user_string_len = strlen( $user_string );
+		$result = $known_string_len ^ $user_string_len;
+		for ( $i = 0; $i < $user_string_len; $i++ ) {
+			$result |= ord( $known_string[$i % $known_string_len] ) ^ ord( $user_string[$i] );
+		}
+
+		return ( $result === 0 );
+	}
+}
+/** Wikia change -end **/
 /// @endcond
 
 /**
@@ -116,8 +160,8 @@ function wfArrayDiff2_cmp( $a, $b ) {
  * Returns an array where the values in the first array are replaced by the
  * values in the second array with the corresponding keys
  *
- * @param $a Array
- * @param $b Array
+ * @param $a array
+ * @param $b array
  * @return array
  */
 function wfArrayLookup( $a, $b ) {
@@ -130,7 +174,7 @@ function wfArrayLookup( $a, $b ) {
  * @param $key String|Int
  * @param $value Mixed
  * @param $default Mixed
- * @param $changed Array to alter
+ * @param &$changed array Array to alter
  */
 function wfAppendToArrayIfNotDefault( $key, $value, $default, &$changed ) {
 	if ( is_null( $changed ) ) {
@@ -145,9 +189,9 @@ function wfAppendToArrayIfNotDefault( $key, $value, $default, &$changed ) {
  * Backwards array plus for people who haven't bothered to read the PHP manual
  * XXX: will not darn your socks for you.
  *
- * @param $array1 Array
+ * @param $array1 array
  * @param [$array2, [...]] Arrays
- * @return Array
+ * @return array
  */
 function wfArrayMerge( $array1/* ... */ ) {
 	$args = func_get_args();
@@ -175,7 +219,7 @@ function wfArrayMerge( $array1/* ... */ ) {
  *   		array( 'y' )
  *   	)
  * @param varargs
- * @return Array
+ * @return array
  */
 function wfMergeErrorArrays( /*...*/ ) {
 	$args = func_get_args();
@@ -194,10 +238,10 @@ function wfMergeErrorArrays( /*...*/ ) {
 /**
  * Insert array into another array after the specified *KEY*
  *
- * @param $array Array: The array.
- * @param $insert Array: The array to insert.
+ * @param $array array: The array.
+ * @param $insert array: The array to insert.
  * @param $after Mixed: The key to insert after
- * @return Array
+ * @return array
  */
 function wfArrayInsertAfter( $array, $insert, $after ) {
 	// Find the offset of the element to insert after.
@@ -218,9 +262,9 @@ function wfArrayInsertAfter( $array, $insert, $after ) {
 /**
  * Recursively converts the parameter (an object) to an array with the same data
  *
- * @param $objOrArray Object|Array
+ * @param $objOrArray Object|array
  * @param $recursive Bool
- * @return Array
+ * @return array
  */
 function wfObjectToArray( $objOrArray, $recursive = true ) {
 	$array = array();
@@ -241,14 +285,14 @@ function wfObjectToArray( $objOrArray, $recursive = true ) {
 /**
  * Wrapper around array_map() which also taints variables
  *
- * @param  $function Callback
- * @param  $input Array
- * @return Array
+ * @param  $function callback
+ * @param  $input array
+ * @return array
  */
 function wfArrayMap( $function, $input ) {
 	$ret = array_map( $function, $input );
 	foreach ( $ret as $key => $value ) {
-		$taint = istainted( $input[$key] );
+		$taint = is_tainted( $input[$key] );
 		if ( $taint ) {
 			taint( $ret[$key], $taint );
 		}
@@ -290,6 +334,7 @@ function wfRandom() {
  * so no fancy : for IIS7.
  *
  * %2F in the page titles seems to fatally break for some reason.
+ * @see http://httpd.apache.org/docs/2.2/mod/core.html#allowencodedslashes
  *
  * @param $s String:
  * @return string
@@ -323,8 +368,8 @@ function wfUrlencode( $s ) {
  * "days=7&limit=100". Options in the first array override options in the second.
  * Options set to null or false will not be output.
  *
- * @param $array1 Array ( String|Array )
- * @param $array2 Array ( String|Array )
+ * @param $array1 array ( String|Array )
+ * @param $array2 array ( String|Array )
  * @param $prefix String
  * @return String
  */
@@ -712,7 +757,7 @@ function wfUrlProtocolsWithoutProtRel() {
  * 3) Adds a "delimiter" element to the array, either '://', ':' or '//' (see (2))
  *
  * @param $url String: a URL to parse
- * @return Array: bits of the URL in an associative array, per PHP docs
+ * @return array: bits of the URL in an associative array, per PHP docs
  */
 function wfParseUrl( $url ) {
 	global $wgUrlProtocols; // Allow all protocols defined in DefaultSettings/LocalSettings.php
@@ -872,7 +917,7 @@ function wfDebug( $text, $logonly = false ) {
 			$cache = array();
 		}
 	}
-	# if ( wfRunHooks( 'Debug', array( $text, null ) ) ) { // Wikia change - BAC-91
+	# if ( Hooks::run( 'Debug', array( $text, null ) ) ) { // Wikia change - BAC-91
 		if ( $wgDebugLogFile != '' && !$wgProfileOnly ) {
 			# Strip unprintables; they can switch terminal modes when binary data
 			# gets dumped, which is pretty annoying.
@@ -955,7 +1000,7 @@ function wfDebugLog( $logGroup, $text, $public = true ) {
 		$time = wfTimestamp( TS_DB );
 		$wiki = wfWikiID();
 		$host = wfHostname();
-		if ( wfRunHooks( 'Debug', array( $text, $logGroup ) ) ) {
+		if ( Hooks::run( 'Debug', array( $text, $logGroup ) ) ) {
 			wfErrorLog( "$time $host $wiki: $text", $wgDebugLogGroups[$logGroup] );
 		}
 	} elseif ( $public === true ) {
@@ -1129,7 +1174,9 @@ function wfErrorLog( $text, $file ) {
  */
 function wfLogProfilingData() {
 	global $wgRequestTime, $wgDebugLogFile, $wgDebugRawPage, $wgRequest;
-	global $wgProfileLimit, $wgUser;
+	global $wgProfileLimit, $wgUser, $wgProfilingDataLogged;
+
+	$wgProfilingDataLogged = true;
 
 	$profiler = Profiler::instance();
 
@@ -1170,11 +1217,22 @@ function wfLogProfilingData() {
 	if ( $wgUser->isItemLoaded( 'id' ) && $wgUser->isAnon() ) {
 		$forward .= ' anon';
 	}
-	$log = sprintf( "%s\t%04.3f\t%s\n",
-		gmdate( 'YmdHis' ), $elapsed,
-		urldecode( $wgRequest->getRequestURL() . $forward ) );
 
-	wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
+	// Wikia change - begin - FauxRequest::getRequestURL() is not implemented and throws exception
+	// in maintenance scripts
+	try {
+		$log = sprintf( "%s\t%04.3f\t%s\n",
+			gmdate( 'YmdHis' ), $elapsed,
+			urldecode( $wgRequest->getRequestURL() . $forward ) );
+
+		wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
+	} catch (MWException $e) {
+		// double-check it is the case
+		if ( $e->getMessage() !== "FauxRequest::getRequestURL() not implemented" ) {
+			throw $e;
+		}
+	}
+	// Wikia change - end
 }
 
 /**
@@ -1212,9 +1270,8 @@ function wfReadOnly() {
  * @return bool
  */
 function wfReadOnlyReason() {
-	global $wgReadOnly;
 	wfReadOnly();
-	return $wgReadOnly;
+	return wfMessage( 'wikia-read-only-mode' )->plain();
 }
 
 /**
@@ -1449,7 +1506,7 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
 function wfMsgGetKey( $key, $useDB = true, $langCode = false, $transform = true ) {
 	wfDeprecated( __METHOD__, '1.18' );
 
-	wfRunHooks( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
+	Hooks::run( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
 
 	$cache = MessageCache::singleton();
 	$message = $cache->get( $key, $useDB, $langCode );
@@ -1465,7 +1522,7 @@ function wfMsgGetKey( $key, $useDB = true, $langCode = false, $transform = true 
  * Replace message parameter keys on the given formatted output.
  *
  * @param $message String
- * @param $args Array
+ * @param $args array
  * @return string
  * @private
  */
@@ -1537,7 +1594,7 @@ function wfMsgWikiHtml( $key ) {
  *
  * Returns message in the requested format
  * @param $key String: key of the message
- * @param $options Array: processing rules. Can take the following options:
+ * @param $options array: processing rules. Can take the following options:
  *   <i>parse</i>: parses wikitext to HTML
  *   <i>parseinline</i>: parses wikitext to HTML and removes the surrounding
  *       p's added by parser or tidy
@@ -1686,6 +1743,14 @@ function wfHostname() {
 function wfReportTime() {
 	global $wgRequestTime, $wgShowHostnames;
 
+	// Wikia change - begin
+	// @author macbre - BAC-550
+	global $wgDisableReportTime;
+	if ( !empty( $wgDisableReportTime ) ) {
+		return '';
+	}
+	// Wikia change - end
+
 	$elapsed = microtime( true ) - $wgRequestTime;
 
 	return $wgShowHostnames
@@ -1731,7 +1796,7 @@ function wfDebugBacktrace( $limit = 0 ) {
 	}
 
 	if ( $limit && version_compare( PHP_VERSION, '5.4.0', '>=' ) ) {
-		return array_slice( debug_backtrace( DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit ), 1 );
+		return array_slice( debug_backtrace( DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit + 1 ), 1 );
 	} else {
 		return array_slice( debug_backtrace(), 1 );
 	}
@@ -1742,10 +1807,11 @@ function wfDebugBacktrace( $limit = 0 ) {
  *
  * @return string
  */
-function wfBacktrace() {
+function wfBacktrace( $forceCommandLineMode = false ) {
 	global $wgCommandLineMode;
 
-	if ( $wgCommandLineMode ) {
+	$commandLinemode = $wgCommandLineMode || $forceCommandLineMode;
+	if ( $commandLinemode ) {
 		$msg = '';
 	} else {
 		$msg = "<ul>\n";
@@ -1763,7 +1829,7 @@ function wfBacktrace() {
 		} else {
 			$line = '-';
 		}
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "$file line $line calls ";
 		} else {
 			$msg .= '<li>' . $file . ' line ' . $line . ' calls ';
@@ -1773,13 +1839,13 @@ function wfBacktrace() {
 		}
 		$msg .= $call['function'] . '()';
 
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "\n";
 		} else {
 			$msg .= "</li>\n";
 		}
 	}
-	if ( $wgCommandLineMode ) {
+	if ( $commandLinemode ) {
 		$msg .= "\n";
 	} else {
 		$msg .= "</ul>\n";
@@ -1795,7 +1861,7 @@ function wfBacktrace() {
  * @return Bool|string
  */
 function wfGetCaller( $level = 2 ) {
-	$backtrace = wfDebugBacktrace( $level );
+	$backtrace = wfDebugBacktrace( $level + 1 );
 	if ( isset( $backtrace[$level] ) ) {
 		return wfFormatStackFrame( $backtrace[$level] );
 	} else {
@@ -2251,13 +2317,6 @@ function wfSuppressWarnings( $end = false ) {
 		}
 	} else {
 		if ( !$suppressCount ) {
-			// E_DEPRECATED and E_USER_DEPRECATED are undefined in PHP 5.2
-			if( !defined( 'E_DEPRECATED' ) ) {
-				define( 'E_DEPRECATED', 8192 );
-			}
-			if( !defined( 'E_USER_DEPRECATED' ) ) {
-				define( 'E_USER_DEPRECATED', 16384 );
-			}
 			$originalLevel = error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED | E_USER_DEPRECATED | E_STRICT ) );
 		}
 		++$suppressCount;
@@ -2352,9 +2411,9 @@ function wfTimestamp( $outputtype = TS_UNIX, $ts = 0 ) {
 		# TS_EXIF
 	} elseif ( preg_match( '/^(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/D', $ts, $da ) ) {
 		# TS_MW
-	} elseif ( preg_match( '/^-?\d{1,13}$/D', $ts ) ) {
+	} elseif ( preg_match( '/^-?\d{1,13}(\.\d+)?$/D', $ts ) ) {
 		# TS_UNIX
-		$uts = $ts;
+		$uts = (int) $ts;
 		$strtime = "@$ts"; // http://php.net/manual/en/datetime.formats.compound.php
 	} elseif ( preg_match( '/^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}.\d{6}$/', $ts ) ) {
 		# TS_ORACLE // session altered to DD-MM-YYYY HH24:MI:SS.FF6
@@ -2815,11 +2874,11 @@ function wfEscapeShellArg( ) {
  * Execute a shell command, with time and memory limits mirrored from the PHP
  * configuration if supported.
  * @param $cmd String Command line, properly escaped for shell.
- * @param &$retval optional, will receive the program's exit code.
+ * @param &$retval int optional, will receive the program's exit code.
  *                 (non-zero is usually failure)
  * @param $environ Array optional environment variables which should be
  *                 added to the executed command environment.
- * @return collected stdout as a string (trailing newlines stripped)
+ * @return string collected stdout as a string (trailing newlines stripped)
  */
 function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	global $IP, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
@@ -2848,6 +2907,8 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	}
 
 	wfInitShellLocale();
+
+	Hooks::run( 'BeforeWfShellExec', [ &$cmd, &$environ ] ); // Wikia change
 
 	$envcmd = '';
 	foreach( $environ as $k => $v ) {
@@ -2883,7 +2944,7 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 		$filesize = intval( $wgMaxShellFileSize );
 
 		if ( $time > 0 && $mem > 0 ) {
-			$script = "$IP/bin/ulimit4.sh";
+			$script = "$IP/includes/ulimit4.sh";
 			if ( is_executable( $script ) ) {
 				$cmd = '/bin/bash ' . escapeshellarg( $script ) . " $time $mem $filesize " . escapeshellarg( $cmd );
 			}
@@ -2891,15 +2952,35 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	}
 	wfDebug( "wfShellExec: $cmd\n" );
 
+	// Don't try to execute commands that exceed Linux's MAX_ARG_STRLEN.
+	// Other platforms may be more accomodating, but we don't want to be
+	// accomodating, because very long commands probably include user
+	// input. See T129506.
+	if ( strlen( $cmd ) > SHELL_MAX_ARG_STRLEN ) {
+		throw new Exception( __METHOD__ . '(): total length of $cmd must not exceed SHELL_MAX_ARG_STRLEN' );
+	}
+
 	$retval = 1; // error by default?
 	ob_start();
 	passthru( $cmd, $retval );
 	$output = ob_get_contents();
 	ob_end_clean();
 
+	// Wikia change - begin
+	if ( $retval !== 0 ) {
+		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
+			'exception' => new Exception( $cmd, $retval ),
+			'caller' => wfGetCaller(),
+			'output' => $output,
+			'load_avg' => implode( ', ', sys_getloadavg() ),
+		]);
+	}
+	// Wikia change - end
+
 	if ( $retval == 127 ) {
 		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
 	}
+
 	return $output;
 }
 
@@ -2935,7 +3016,7 @@ function wfShellMaintenanceCmd( $script, array $parameters = array(), array $opt
 	global $wgPhpCli;
 	// Give site config file a chance to run the script in a wrapper.
 	// The caller may likely want to call wfBasename() on $script.
-	wfRunHooks( 'wfShellMaintenanceCmd', array( &$script, &$parameters, &$options ) );
+	Hooks::run( 'wfShellMaintenanceCmd', array( &$script, &$parameters, &$options ) );
 	$cmd = isset( $options['php'] ) ? array( $options['php'] ) : array( $wgPhpCli );
 	if ( isset( $options['wrapper'] ) ) {
 		$cmd[] = $options['wrapper'];
@@ -3318,23 +3399,6 @@ function wfCreateObject( $name, $p ) {
 }
 
 /**
- * @return bool
- */
-function wfHttpOnlySafe() {
-	global $wgHttpOnlyBlacklist;
-
-	if( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-		foreach( $wgHttpOnlyBlacklist as $regex ) {
-			if( preg_match( $regex, $_SERVER['HTTP_USER_AGENT'] ) ) {
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-
-/**
  * Check if there is sufficent entropy in php's built-in session generation
  * PHP's built-in session entropy is enabled if:
  * - entropy_file is set or you're on Windows with php 5.3.3+
@@ -3357,17 +3421,42 @@ function wfCheckEntropy() {
  */
 function wfFixSessionID() {
 	// If the cookie or session id is already set we already have a session and should abort
-	if ( isset( $_COOKIE[ session_name() ] ) || session_id() ) {
+	if ( !empty( $_COOKIE[ session_name() ] ) || session_id() ) {
 		return;
 	}
+	session_id( MWCryptRand::generateHex( 32 ) );
+}
 
-	$entropyEnabled = wfCheckEntropy();
+/**
+ * Reset the session_id
+ *
+ * Backported from MW 1.22
+ */
+function wfResetSessionID() {
+	global $wgCookieSecure;
 
-	// If built-in entropy is not enabled or not sufficient override php's built in session id generation code
-	if ( !$entropyEnabled ) {
-		wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );
-		session_id( MWCryptRand::generateHex( 32 ) );
+	// Wikia change - start
+	// leave early if PHP session is not active - PLATFORM-2364
+	if ( session_status() != PHP_SESSION_ACTIVE ) {
+		wfDebug( __METHOD__ . ": PHP session is not active, leaving early\n" );
+		return;
 	}
+	// Wikia change - end
+
+	$oldSessionId = session_id();
+	$cookieParams = session_get_cookie_params();
+	if ( wfCheckEntropy() && $wgCookieSecure == $cookieParams['secure'] ) {
+		session_regenerate_id( true ); // Wikia - $delete_old_session = true
+	} else {
+		$tmp = $_SESSION;
+		session_destroy();
+		wfSetupSession( MWCryptRand::generateHex( 32 ) );
+		$_SESSION = $tmp;
+	}
+	$newSessionId = session_id();
+	Hooks::run( 'ResetSessionID', array( $oldSessionId, $newSessionId ) );
+
+	wfDebug( sprintf( "%s: new ID is '%s'\n", __METHOD__, $newSessionId ) );
 }
 
 /**
@@ -3397,7 +3486,6 @@ function wfSetupSession( $sessionId = false ) {
 		# hasn't already been set to the desired value (that causes errors)
 		ini_set( 'session.save_handler', $wgSessionHandler );
 	}
-	$httpOnlySafe = wfHttpOnlySafe() && $wgCookieHttpOnly;
 	wfDebugLog( 'cookie',
 		'session_set_cookie_params: "' . implode( '", "',
 			array(
@@ -3405,8 +3493,8 @@ function wfSetupSession( $sessionId = false ) {
 				$wgCookiePath,
 				$wgCookieDomain,
 				$wgCookieSecure,
-				$httpOnlySafe ) ) . '"' );
-	session_set_cookie_params( 0, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $httpOnlySafe );
+				$wgCookieHttpOnly  ) ) . '"' );
+	session_set_cookie_params( 0, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookieHttpOnly  );
 	session_cache_limiter( 'private, must-revalidate' );
 	if ( $sessionId ) {
 		session_id( $sessionId );
@@ -3416,6 +3504,16 @@ function wfSetupSession( $sessionId = false ) {
 	wfSuppressWarnings();
 	session_start();
 	wfRestoreWarnings();
+
+	// Wikia change - start
+	// log all sessions started with 1% sampling (PLATFORM-1266)
+	if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'caller' => wfGetAllCallers(),
+			'exception' => new Exception()
+		] );
+	}
+	// Wikia change - end
 }
 
 /**
@@ -3520,10 +3618,9 @@ function wfSplitWikiID( $wiki ) {
  * Note 2: use $this->getDB() in maintenance scripts that may be invoked by
  * updater to ensure that a proper database is being updated.
  *
- * @return DatabaseBase
+ * @return DatabaseMysqli
  */
-function &wfGetDB( $db, $groups = array(), $wiki = false ) {
-
+function &wfGetDB( int $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
 	global $smwgUseExternalDB, $wgDBname;
 	if( $smwgUseExternalDB === true ) {
@@ -3582,6 +3679,7 @@ function wfFindFile( $title, $options = array() ) {
 	wfProfileIn(__METHOD__);
 
 	if ( F::app()->wg->IsGhostVideo ) {
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 	$file = RepoGroup::singleton()->findFile( $title, $options );
@@ -3699,18 +3797,40 @@ function wfGetNull() {
  *
  * Wikia note: provide external DB name in $wiki parameter to wait for external DB
  *
- * @param $maxLag Integer (deprecated)
  * @param $wiki mixed Wiki identifier accepted by wfGetLB
  */
-function wfWaitForSlaves( $maxLag = false, $wiki = false ) {
+function wfWaitForSlaves( $wiki = false ) {
 	$lb = wfGetLB( $wiki );
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
 	if ( $lb->getServerCount() > 1 ) {
+		// Wikia change - begin
+		// PLATFORM-1489: check if we're using consul configuration for DB slave
+		if ( $lb->hasConsulConfig() ) {
+			// get the list of IP addresses of all slave nodes from consul
+			// so that we can check all of them explicitly
+			$consul = new Wikia\Consul\Client();
+
+			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+			$slaves = $consul->getNodesFromHostname( $slaveInfo['hostName'] );
+
+			// clone the loadbalancer and add all slaves that we've got from Consul
+			$lb = clone $lb;
+
+			for ( $i=0; $i < count( $slaves ); $i++ ) {
+				list( $slaveHost, $slavePort ) = explode( ':', $slaves[$i] );
+				$entry = $slaveInfo;
+				$entry['host'] = $slaveHost;
+
+				$lb->setServerInfo( $i+1, $entry );
+			}
+		}
+		// Wikia change - end
+
 		/* Wikia change - added array() and $wiki parameters to getConnection to be able to wait for various DBs */
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
-		$lb->waitForAll( $pos );
+		$lb->waitForAll( $pos, $wiki );
 	}
 }
 
@@ -3810,13 +3930,14 @@ function wfMemoryLimit() {
 /**
  * Converts shorthand byte notation to integer form
  *
- * @param $string String
+ * @param string $string
+ * @param int $default Returned if $string is empty
  * @return Integer
  */
-function wfShorthandToInteger( $string = '' ) {
+function wfShorthandToInteger( $string = '', $default = -1 ) {
 	$string = trim( $string );
-	if( $string === '' ) {
-		return -1;
+	if ( $string === '' ) {
+		return $default;
 	}
 	$last = $string[strlen( $string ) - 1];
 	$val = intval( $string );
@@ -3912,17 +4033,6 @@ function wfGetParserCacheStorage() {
 }
 
 /**
- * Call hook functions defined in $wgHooks
- *
- * @param $event String: event name
- * @param $args Array: parameters passed to hook functions
- * @return Boolean True if no handler aborted the hook
- */
-function wfRunHooks( $event, $args = array() ) {
-	return Hooks::run( $event, $args );
-}
-
-/**
  * Wrapper around php's unpack.
  *
  * @param $format String: The format string (See php's docs)
@@ -3956,4 +4066,21 @@ function wfUnpack( $format, $data, $length=false ) {
 		throw new MWException( "unpack could not unpack binary data" );
 	}
 	return $result;
+}
+
+/**
+ * Get a random string containing a number of pseudo-random hex
+ * characters.
+ * @note This is not secure, if you are trying to generate some sort
+ *       of token please use MWCryptRand instead.
+ *
+ * @param int $length The length of the string to generate
+ * @return string
+ */
+function wfRandomString( $length = 32 ) {
+	$str = '';
+	for ( $n = 0; $n < $length; $n += 7 ) {
+		$str .= sprintf( '%07x', mt_rand() & 0xfffffff );
+	}
+	return substr( $str, 0, $length );
 }

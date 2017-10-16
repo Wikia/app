@@ -50,7 +50,7 @@ class ResourceLoaderSiteModule extends ResourceLoaderGlobalWikiModule {
 				'media' => 'handheld' );
 		}
 
-		wfRunHooks( 'ResourceLoaderSiteModule::getPages', array( $this, $context, &$pages ) );
+		Hooks::run( 'ResourceLoaderSiteModule::getPages', array( $this, $context, &$pages ) );
 
 		return $pages;
 	}

@@ -5,8 +5,6 @@
  *
  * Mainly intended for dev use... not because it's private, just because it's not too useful to anyone else.
  */
-
-$wgGroupPermissions['staff']['listincludedfilesright'] = true;
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['listincludedfiles'] = $dir . 'Special_ListIncludedFiles.i18n.php';
 

@@ -6,20 +6,20 @@ describe("ChatView Test", function(){
 	beforeEach(function(){
 		origwgServer = window.wgServer;
 		origwgArticlePath = window.wgArticlePath;
-		origEMOTICONS = window.EMOTICONS;
+		origEMOTICONS = window.wgChatEmoticons;
 
 		/*
 		 * some mockup so we can create NodeRoomController
 		 */
 		window.wgServer = "http://poznan.mech.wikia-dev.com";
 		window.wgArticlePath = "/wiki/$1";
-		window.EMOTICONS = '';
+		window.wgChatEmoticons = '';
 	});
 
 	afterEach(function(){
 		window.wgServer = origwgServer;
 		window.wgArticlePath = origwgArticlePath;
-		window.EMOTICONS = origEMOTICONS;
+		window.wgChatEmoticons = origEMOTICONS;
 	});
 
 	it("processText links", function() {
@@ -39,13 +39,13 @@ describe("ChatView Test", function(){
 			.toEqual('<a href="http://poznan.mech.wikia-dev.com/wiki/Are_you_sure%3F">Custom?</a>', 'escaping question mark in pipelined bracket link');
 
 		expect(c.processText('http://poznan.mech.wikia-dev.com/index.php?title=Lost&action=edit'))
-			.toEqual('<a href="http://poznan.mech.wikia-dev.com/index.php?title=Lost&action=edit">http://poznan.mech.wikia-dev.com/index.php?title=Lost&action=edit</a>', 'not escaping question mark in local wiki url');
+			.toEqual('<a href="http://poznan.mech.wikia-dev.com/index.php?title=Lost&amp;action=edit">http://poznan.mech.wikia-dev.com/index.php?title=Lost&amp;action=edit</a>', 'not escaping question mark in local wiki url');
 
 		expect(c.processText('http://poznan.mech.wikia-dev.com/wiki/Lost?action=edit'))
 			.toEqual('<a href="http://poznan.mech.wikia-dev.com/wiki/Lost?action=edit">Lost?action=edit</a>', 'not escaping question mark in local wiki url and shortening local url');
 
 		expect(c.processText('http://poznan.mech.wikia.com/index.php?title=Lost&action=edit'))
-			.toEqual('<a href="http://poznan.mech.wikia.com/index.php?title=Lost&action=edit">http://poznan.mech.wikia.com/index.php?title=Lost&action=edit</a>', 'not escaping question mark in external url');
+			.toEqual('<a href="http://poznan.mech.wikia.com/index.php?title=Lost&amp;action=edit">http://poznan.mech.wikia.com/index.php?title=Lost&amp;action=edit</a>', 'not escaping question mark in external url');
 
 		expect(c.processText('http://poznan.mech.wikia.com/wiki/Lost?action=edit'))
 			.toEqual('<a href="http://poznan.mech.wikia.com/wiki/Lost?action=edit">http://poznan.mech.wikia.com/wiki/Lost?action=edit</a>', 'not escaping question mark in external wiki address');

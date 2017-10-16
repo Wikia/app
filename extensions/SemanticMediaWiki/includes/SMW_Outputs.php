@@ -20,7 +20,6 @@
  * that creates SMW outputs that may require head items must afterwards clear the temporal store by
  * writing its contents to the according output.
  *
- * @file SMW_Ouputs.php
  * @ingroup SMW
  *
  * @author Markus Krötzsch
@@ -41,15 +40,15 @@ class SMWOutputs {
 	 * to the output.
 	 */
 	protected static $scripts = array();
-	
+
 	/// Protected member for temporarily storing resource modules.
 	protected static $resourceModules = array();
 
 	/**
 	 * Adds a resource module to the parser output.
-	 * 
+	 *
 	 * @since 1.5.3
-	 * 
+	 *
 	 * @param string $moduleName
 	 */
 	public static function requireResource( $moduleName ) {
@@ -61,17 +60,17 @@ class SMWOutputs {
 	 * enclosing script tags. Note that the same could be achieved with
 	 * requireHeadItems, but scripts use a special method "addScript" in
 	 * MediaWiki OutputPage, hence we distinguish them.
-	 * 
+	 *
 	 * The id is used to avoid that the requirement for one script is
 	 * recorded multiple times in SMWOutputs.
-	 * 
+	 *
 	 * @param string $id
 	 * @param string $item
 	 */
 	public static function requireScript( $id, $script ) {
 		self::$scripts[$id] = $script;
 	}
-	
+
 	/**
 	 * Adds head items that are not Resource Loader modules. Should only
 	 * be used for custom head items such as RSS fedd links.
@@ -81,7 +80,7 @@ class SMWOutputs {
 	 *
 	 * Support for calling this with the old constants SMW_HEADER_STYLE
 	 * and SMW_HEADER_TOOLTIP will vanish in SMW 1.7 at the latest.
-	 * 
+	 *
 	 * @param mixed $id
 	 * @param string $item
 	 */
@@ -117,13 +116,11 @@ class SMWOutputs {
 	 */
 	static public function requireFromParserOutput( ParserOutput $parserOutput ) {
 		// Note: we do not attempt to recover which head items where scripts here.
-		// ParserOutpt::getHeadItems() was added in MW 1.16
-		if ( is_callable( array( $parserOutput, 'getHeadItems' ) ) ) {
-			$parserOutputHeadItems = $parserOutput->getHeadItems();
-		} else {
-			$parserOutputHeadItems = (array)$parserOutput->headItems;
-		}
+
+		$parserOutputHeadItems = $parserOutput->getHeadItems();
+
 		self::$headItems = array_merge( (array)self::$headItems, $parserOutputHeadItems );
+
 		/// TODO Is the following needed?
 		if ( isset( $parserOutput->mModules ) ) {
 			foreach ( $parserOutput->mModules as $module ) {
@@ -169,12 +166,7 @@ class SMWOutputs {
 			$parserOutput->addHeadItem( "\t\t" . $item . "\n", $key );
 		}
 
-		// Check if the resource loader can be used or not.
-		if ( method_exists( $parserOutput, 'addModules' ) ) {
-			$parserOutput->addModules( array_values( self::$resourceModules ) );
-		} else {
-			self::addModulesBC( $parserOutput );
-		}
+		$parserOutput->addModules( array_values( self::$resourceModules ) );
 
 		self::$resourceModules = array();
 		self::$headItems = array();
@@ -198,76 +190,10 @@ class SMWOutputs {
 			$output->addHeadItem( $key, "\t\t" . $item . "\n" );
 		}
 
-		// Check if the resource loader can be used or not.
-		if ( method_exists( $output, 'addModules' ) ) {
-			$output->addModules( array_values( self::$resourceModules ) );
-		} else {
-			self::addModulesBC( $output );
-		}
+		$output->addModules( array_values( self::$resourceModules ) );
 
 		self::$resourceModules = array();
 		self::$headItems = array();
-	}
-
-	/**
-	 * Backwards compatibility method to add the stored modules to an
-	 * OutputPage or ParserOuput (calls are the same so we don't care).
-	 * Only extension modules and a few MW modules that are included
-	 * in SMW for compatibility are supported.
-	 *
-	 * @note This method can vanish when dropping compatibility to MW 1.16.
-	 */
-	static public function addModulesBC( $output ) {
-		$items = array();
-		foreach ( self::$resourceModules as $moduleName ) {
-			self::processModuleBC( $moduleName, $items );
-		}
-		foreach ( $items as $key => $item ) {
-			$output->addHeadItem( $key, $item );
-		}
-	}
-
-	/**
-	 * Backwards compatibility method to generate the header items for
-	 * loading the specified module.
-	 *
-	 * @note This method can vanish when dropping compatibility to MW 1.16.
-	 */
-	static public function processModuleBC( $moduleName, &$items  ) {
-		global $wgResourceModules, $wgContLang, $smwgScriptPath;
-
-		if ( array_key_exists( $moduleName, $wgResourceModules ) ) {
-			$module = $wgResourceModules[$moduleName];
-			$basePath = $module['remoteBasePath'];
-			foreach( self::getValueArrayForKey( 'dependencies', $module ) as $dependency ) {
-				self::processModuleBC( $dependency, $items );
-			}
-			if ( $moduleName == 'ext.smw.style' && $wgContLang->isRTL() ) { // manual RTL support
-				// This is obsolete with Resource Loader, since it flips styles automatically
-				$items["CSSRTL"] = "<link rel=\"stylesheet\" type=\"text/css\" href=\"$smwgScriptPath/skins/SMW_custom_rtl.css\" />\n";
-			}
-			foreach( self::getValueArrayForKey( 'scripts', $module ) as $script ) {
-				$items["JS$script"] = "<script type=\"text/javascript\" src=\"$basePath/$script\"></script>\n";
-			}
-			foreach( self::getValueArrayForKey( 'styles', $module ) as $style ) {
-				$items["CSS$style"] = "<link rel=\"stylesheet\" type=\"text/css\" href=\"$basePath/$style\" />\n";
-			}
-		}
-	}
-
-	/**
-	 * Helper method for processModuleBC().
-	 *
-	 * @note This method can vanish when dropping compatibility to MW 1.16.
-	 */
-	static public function getValueArrayForKey( $key, $array ) {
-		if ( !array_key_exists( $key, $array ) ) {
-			return array();
-		} elseif ( is_array( $array[$key] ) ) {
-			return $array[$key];
-		} else {
-			return array( $array[$key] );
-		}
 	}
 
 }

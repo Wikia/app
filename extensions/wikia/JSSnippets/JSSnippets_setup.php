@@ -13,12 +13,23 @@
   * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
   */
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'JSSnippets',
+	'author' => array(
+		'Maciej Brencz (macbre) <macbre at wikia-inc.com>',
+		'Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>'
+	),
+	'descriptionmsg' => 'jssnippets-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JSSnippets',
+);
+
 $dir = dirname(__FILE__);
+
+//i18n
+$wgExtensionMessagesFiles['JSSnippets'] = $dir . '/JSSnippets.i18n.php';
 
 // classes
 $wgAutoloadClasses['JSSnippets'] =  $dir . '/JSSnippets.class.php';
 
 // hooks
-$wgHooks['EditPageLayoutModifyPreview'][] = 'JSSnippets::onEditPageLayoutModifyPreview';
 $wgHooks['WikiaSkinTopScripts'][] = 'JSSnippets::onMakeGlobalVariablesScript';
-$wgHooks['SkinAfterBottomScripts'][] = 'JSSnippets::onSkinAfterBottomScripts';

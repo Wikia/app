@@ -11,11 +11,23 @@
 $wgHooks['ParserFirstCallInit'][] = 'efHideTagsSetup';
 
 function efHideTagsSetup(Parser $parser) {
+	global $wgEnableVerbatimExt, $wgEnableFlashmp3whitelistExt;
+
+	if ( empty( $wgEnableVerbatimExt ) ) {
+		$parser->setHook( 'verbatim', 'efHideTags' );
+	}
+
+	// CE-2809
+	if ( !empty( $wgEnableFlashmp3whitelistExt ) ) {
+		$parser->setHook( 'mp3', 'efHideTags' );
+	}
+
 	$parser->setHook( 'vote', 'efHideTags' );
 	$parser->setHook( 'comments', 'efHideTags' );
 	$parser->setHook( 'rhtml', 'efHideTags' );
 	$parser->setHook( 'pageby', 'efHideTags' );
 	$parser->setHook( 'pageTools', 'efHideTags' );
+	$parser->setHook( 'imap', 'efHideTags' );
 	/* copy above line and change tag name to hide additional tags */
 
 	$parser->setHook( 'loggedin', 'efJustPrintTags' );

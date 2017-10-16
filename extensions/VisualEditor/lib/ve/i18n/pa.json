@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amikeco",
+			"Babanwalia",
+			"Bouron",
+			"Nasir8891"
+		]
+	},
+	"visualeditor": "ভিজ্যুয়াল এডিটর",
+	"visualeditor-aliennode-tooltip": "ਅਫ਼ਸੋਸ, ਇਹ ਤੱਤ ਅਜੇ ਸਿਰਫ਼ ਸਰੋਤ ਦੇ ਤੌਰ 'ਤੇ ਹੀ ਸੋਧਿਆ ਜਾ ਸਕਦਾ ਹੈ।",
+	"visualeditor-annotationbutton-bold-tooltip": "গাড়",
+	"visualeditor-annotationbutton-code-tooltip": "কম্পিউটার কোড",
+	"visualeditor-annotationbutton-italic-tooltip": "বাঁকা",
+	"visualeditor-annotationbutton-language-tooltip": "ভাষা",
+	"visualeditor-annotationbutton-link-tooltip": "লিংক",
+	"visualeditor-annotationbutton-strikethrough-tooltip": "মাঝামাঝি",
+	"visualeditor-annotationbutton-underline-tooltip": "আন্ডারলাইন",
+	"visualeditor-clearbutton-tooltip": "ফরম্যটিং অপসারণ",
+	"visualeditor-dialog-action-apply": "কার্যকর করো",
+	"visualeditor-dialog-action-cancel": "বাতিল",
+	"visualeditor-dialog-action-goback": "পেছনে যাও"
+}

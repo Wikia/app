@@ -1,0 +1,28 @@
+{{> greeting}}
+<table>
+	<tr>
+		<td class="border">
+			<div class="avatar-wrapper">
+				<img class="avatar" src="{{editorAvatarURL}}">
+			</div>
+		</td>
+		<td class="widest border">
+			<div class="message">
+				{{{userNameMessage}}}
+			</div>
+		</td>
+	</tr>
+</table>
+<div class="username-layout-links">
+	{{#links}}
+		<div>
+			<a href="{{url}}">{{label}}</a>
+		</div>
+	{{/links}}
+</div>
+{{#contentFooterMessages}}
+	<p>{{{.}}}</p>
+{{/contentFooterMessages}}
+<p class="signature">
+	{{signature}}
+</p>

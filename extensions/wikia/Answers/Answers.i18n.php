@@ -1,32 +1,22 @@
 <?php
-
-/**
- * Internationalization for Answer extension
- *
- * @package MediaWiki
- * @subpackage Extensions
- *
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- *
- */
-
 $messages = array();
 
 $messages['en'] = array(
+	'answers-desc' => "Wikia's Answer site extension",
 	'answer_title' => 'Answer',
 	'answered_by' => 'Answered by',
 	'unregistered' => 'Unregistered',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
 	'edit_points' => '{{PLURAL:$1|edit point|edit points}}',
-	'ask_a_question' => 'Ask a question...',
+	'ask_a_question' => 'Welcome to {{SITENAME}}. What would you like to know?',
 	'ask_a_question-widget' => 'Ask a question...',
 	'in_category' => '...in category',
 	'ask_button' => 'Ask',
-	'ask_thanks' => 'Thanks for the rockin\' question!',
+	'ask_thanks' => "Thanks for the rockin' question!",
 	'question_asked_by' => 'Question asked by',
-	'question_asked_by_a_wikia_user' => 'Question asked by a Wikia user',
+	'question_asked_by_a_wikia_user' => 'Question asked by a FANDOM user',
 	'new_question_comment' => 'new question',
-	'answers_toolbox' => 'Wikianswers toolbox',
+	'answers_toolbox' => '{{SITENAME}} toolbox',
 	'improve_this_answer' => 'Improve this answer',
 	'answer_this_question' => 'Answer this question:',
 	'notify_improved' => 'Email me when improved',
@@ -38,7 +28,7 @@ $messages['en'] = array(
 	'unanswered_category' => 'Un-answered questions',
 	'answered_category' => 'Answered questions',
 	'related_questions' => 'Related questions',
-	'related_answered_questions' => 'Related answered questions',
+	'related_answered_questions' => 'More questions',
 	'recent_unanswered_questions' => 'Recent Unanswered Questions',
 	'popular_categories' => 'Popular Categories',
 	'createaccount-captcha' => 'Please type the word below',
@@ -46,22 +36,22 @@ $messages['en'] = array(
 	'inline-welcome' => 'Welcome to Wikianswers',
 	'skip_this' => 'Skip this',
 	'see_all_changes' => 'See all changes',
-	'toolbox_anon_message' => '<i>"Wikianswers leverages the unique characterstics of a wiki to form the very best answers to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
 	'no_questions_found' => 'No questions found',
-	'widget_settings'	=> 'Question Settings',
-	'style_settings'	=> 'Style Settings',
+	'widget_settings' => 'Question Settings',
+	'style_settings' => 'Style Settings',
 	'get_widget_title' => 'Add Questions to your site',
 	'background_color' => 'Background color',
 	'widget_category' => 'Type of Questions',
 	'category' => 'Category Name',
 	'custom_category' => 'Custom Category',
 	'number_of_items' => 'Number of items to show',
-	'width'		=> 'Width',
-	'next_page'		=> 'Next &raquo;',
-	'prev_page'		=> '&laquo; Prev',
-	'see_all'		=> 'See all',
-	'get_code'	=> 'Grab Code',
-	'link_color'	=> 'Question Link Color',
+	'width' => 'Width',
+	'next_page' => 'Next &raquo;',
+	'prev_page' => '&laquo; Prev',
+	'see_all' => 'See all',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
 	'widget_order' => 'Question Order',
 	'widget_ask_box' => 'Include ask box',
 	'question_redirected_help_page' => 'Why was my question redirected here',
@@ -75,35 +65,28 @@ $messages['en'] = array(
 	'ads_by_google' => 'Ads by Google',
 	'magic_answer_headline' => 'Does this answer your question?',
 	'magic_answer_yes' => 'Yes, use this as a starting point',
-	'magic_answer_no' => 'No, don\'t use this',
+	'magic_answer_no' => "No, don't use this",
 	'magic_answer_credit' => 'Provided by Yahoo Answers',
 	'rephrase' => 'Rephrase this question',
 	'rephrase_this' => '<a href="$1" $2>Reword the question</a>',
 	'question_not_answered' => 'This question has not been answered',
 	'you_can' => 'You can:',
-	'answer_this' => '<a href="$1">Answer this question</a>, even if you don\'t know the whole answer',
+	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Answer this question</a><br /><br /><hr /><br /><br />',
 	'research_this_on_wikipedia' => '<a href="$1">Research this question</a> on Wikipedia',
 	'receive_email' => '<a href="$1" $2>Receive an email</a> when this question is answered',
 	'ask_friends_on_twitter' => 'Ask Friends on <a href="$1" $2>Twitter</a>',
 	'quick_action_panel' => 'Quick Action Panel',
 	'categorize' => 'Categorize',
 	'categorize_help' => 'One category per line',
-	'answers_widget_admin_note' => '<b>Admins:</b> If you\'d like to be an admin on <a href="http://answers.wikia.com" target="_blank">Wikianswers</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">click here</a>.',
-	'answers_widget_user_note' => 'Can you help by becoming a <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">category editor</a> on <a href="http://answers.wikia.com" target="_blank">Wikianswers</a>?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> is a Q&amp;A wiki where answers are improved, wiki-style.',
-	'answers-category-count-answered' => 'This category contains $1 answered {{PLURAL:$1|question|questions}}.',
-	'answers-category-count-unanswered' => 'This category contains $1 unanswered {{PLURAL:$1|question|questions}}.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> is a site where you can ask questions and contribute answers. We\'re aiming to create the best answer to any question. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Find</a> and answer <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">unanswered</a> questions. It\'s a wiki - so be bold!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Get started by asking a question about "{{PAGENAME}}"',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Ask a question on <a href="http://answers.wikia.com/wiki/Wikianswers">Wikianswers</a> or <a href="http://www.wikia.com/Special:CreateAnswers">start your own answers site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Here are $1 answered questions.',
+	'answers-category-count-unanswered' => 'Here are $1 unanswered questions.',
+	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
 	'reword_this' => '<a href="$1" $2>Reword this question</a>',
-	'no_related_answered_questions' => 'There are no related questions yet. Get a <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">random answered question instead</a>, or ask a new one!<br />
-	<div class="createbox" align="center">
-	<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
-	<input name="action" value="create" type="hidden">
-	<input name="prefix" value="Special:CreateQuestionPage/" type="hidden">
-	<input name="editintro" value="" type="hidden">
-	<input class="createboxInput" name="title" value="" size="50" type="text">
-	<input name="create" class="createboxButton" value="Type your question and click here" type="submit"></form></div>',
+	'no_related_answered_questions' => 'There are no related questions yet.',
 	'auto_friend_request_body' => 'Will you add me as a friend?',
 	'tog-hidefromattribution' => 'Hide my avatar and name from attribution list',
 	'q' => '<!-- -->',
@@ -113,22 +96,267 @@ $messages['en'] = array(
 	'header_questionmark_pre' => '',
 	'header_questionmark_post' => '?',
 	'plus_x_more_helpers' => '... plus $1 more helpers',
-	'anwb-step1-headline' => 'What\'s your wiki about?',
+	'anwb-step1-headline' => "What's your wiki about?",
 	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
-	'anwb-step1-example' => 'Answers for all your pro-wrestling questions!',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
 	'anwb-choose-logo' => 'Choose your logo',
-	'anwb-step2-text' => 'Next, choose a logo for {{SITENAME}}. It\'s best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don\'t want to do it right now.<br /><br />',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
 	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
 	'anwb-fp-headline' => 'Create some questions!',
-	'anwb-fp-text' => 'Your Answers site should start off with some questions!<br /><br />Add a list of questions, and then provide the answers yourself. It\'s important to get some useful information on the site, so people can find it and ask and answer even more questions.',
-	'anwb-fp-example' => '<strong>Example</strong><br /><br />For a pet care answers site:<br /><br /><ul><li>Should I buy cat litter?</li><li>What\'s the best breed of dog?</li><li>What\'s the best way to train a cat?</li><li></ul><br /><br />For a health care answers site:<br /><br /><ul><li>What are the health benefits of exercise?</li><li>How can I find a good doctor in my area?</li><li>How can I lose weight easily?</li></ul>',
-	'nwb-thatisall-headline' => 'That\'s it - you\'re done!',
-	'anwb-thatisall-text' => 'That\'s it - you\'re ready to roll!<br /><br />Now it\'s time to start writing more questions and answers, so that your site can be found more easily in search engines.<br /><br />The list of questions added in the last step has been put into your questions site. Head in to answer your questions, and start your own answers community!',
-	'anwb-logo-preview' => 'Here\'s a preview of your logo',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'nwb-thatisall-headline' => "That's it - you're done!",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
 	'anwb-save-tagline' => 'Save tagline',
-	'badWords' => 'fuck', // testing a bug
-
-	// toolbox
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
 	'qa-toolbox-button' => 'Answer a random question',
 	'qa-toolbox-share' => 'Share',
 	'qa-toolbox-tools' => 'Advanced tools»',
@@ -136,8 +364,6 @@ $messages['en'] = array(
 	'qa-toolbox-delete' => 'Delete this question',
 	'qa-toolbox-history' => 'Past versions of this page',
 	'qa-featured-sites' => '-',
-
-	// Skin Chooser
 	'answers_skins' => 'Answers',
 	'answers-bluebell' => 'Bluebell',
 	'answers-leaf' => 'Leaf',
@@ -151,26 +377,19 @@ $messages['en'] = array(
 	'answers-custom' => 'Custom',
 );
 
-/** Message documentation (Message documentation)
- * @author Siebrand
- */
 $messages['qqq'] = array(
+	'answers-desc' => '{{desc}}',
 	'answers-category-count-answered' => 'Parameters:
 * $1 is the number of answered questions.',
 	'answers-category-count-unanswered' => 'Parameters:
 * $1 is the number of unanswered questions.',
+	'question_asked_by_a_wikia_user' => 'Missing documentation',
 );
 
-/** Afrikaans (Afrikaans) */
 $messages['af'] = array(
 	'research_this' => 'Vors dit na',
 );
 
-/** Azerbaijani (Azərbaycanca)
- * @author Cekli829
- * @author Melikov Memmed
- * @author Vago
- */
 $messages['az'] = array(
 	'answer_title' => 'Cavab',
 	'question_asked_by' => 'Sualı verən',
@@ -185,10 +404,11 @@ $messages['az'] = array(
 	'answers_skins' => 'Cavablar',
 );
 
-/** Breton (Brezhoneg)
- * @author Fulup
- * @author Y-M D
- */
+$messages['bg'] = array(
+	'ads_by_google' => 'Реклами от Google',
+	'you_can' => 'Можете:',
+);
+
 $messages['br'] = array(
 	'answer_title' => 'Respont',
 	'answered_by' => 'Respontet gant',
@@ -220,57 +440,50 @@ $messages['br'] = array(
 	'answers-forest' => 'Koadeg',
 );
 
-/** German (Deutsch)
- * @author George Animal
- * @author Kghbln
- * @author LWChris
- * @author SVG
- * @author Tiin
- */
 $messages['de'] = array(
 	'answer_title' => 'Antwort',
-	'answered_by' => 'Beantwortet von',
-	'unregistered' => 'Nicht registriert',
+	'answered_by' => 'Bearbeitet von',
+	'unregistered' => 'Unregistrierte(r) Benutzer',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|Helfer|Helfer}}',
-	'edit_points' => '{{PLURAL:$1|Bearbeitungspunkt|Bearbeitungspunkte}}',
-	'ask_a_question' => 'Eine Frage stellen...',
-	'ask_a_question-widget' => 'Eine Frage stellen...',
-	'in_category' => '...in der Kategorie',
+	'edit_points' => '{{PLURAL:$1|Punkt|Punkte}}',
+	'ask_a_question' => 'Gib deine Frage ein...',
+	'ask_a_question-widget' => 'Gib deine Frage ein...',
+	'in_category' => '...in Kategorie',
 	'ask_button' => 'Fragen',
-	'ask_thanks' => 'Danke für deine klasse Frage!',
+	'ask_thanks' => 'Danke für diese tolle Frage!',
 	'question_asked_by' => 'Frage gestellt von',
-	'question_asked_by_a_wikia_user' => 'Frage gestellt von einem Wikia Benutzer',
-	'new_question_comment' => 'neue Frage',
-	'answers_toolbox' => 'Wikianswers Toolbox',
-	'improve_this_answer' => 'Diese Antwort verbessern',
-	'answer_this_question' => 'Diese Frage beantworten:',
+	'question_asked_by_a_wikia_user' => 'Frage eines FANDOM-Benutzers',
+	'new_question_comment' => 'Neue Frage',
+	'answers_toolbox' => 'Wikianswers-Toolbox',
+	'improve_this_answer' => 'Verbessere diese Antwort',
+	'answer_this_question' => 'Beantworte diese Frage',
 	'notify_improved' => 'E-Mail bei Verbesserung',
 	'research_this' => 'Das hier recherchieren',
 	'notify_answered' => 'E-Mail bei Antwort',
 	'recent_asked_questions' => 'Zuletzt gestellte Fragen',
-	'recent_answered_questions' => 'Zuletzt gestellte Fragen',
-	'recent_edited_questions' => 'Kürzlich bearbeitete Fragen',
-	'unanswered_category' => 'Offene Fragen',
+	'recent_answered_questions' => 'Zuletzt beantwortete Fragen',
+	'recent_edited_questions' => 'Zuletzt bearbeitete Fragen',
+	'unanswered_category' => 'Unbeantwortete Fragen',
 	'answered_category' => 'Beantwortete Fragen',
 	'related_questions' => 'Ähnliche Fragen',
 	'related_answered_questions' => 'Ähnliche beantwortete Fragen',
-	'recent_unanswered_questions' => 'Aktuelle Offene Fragen',
+	'recent_unanswered_questions' => 'Neue unbeantwortete Fragen',
 	'popular_categories' => 'Beliebte Kategorien',
-	'createaccount-captcha' => 'Bitte gib das Wort unten ein',
-	'inline-register-title' => 'Benachrichtige mich, wenn meine Frage beantwortet wird!',
+	'createaccount-captcha' => 'Bitte gib das folgende Wort ein',
+	'inline-register-title' => 'Benachrichtige mich wenn meine Frage beantwortet wurde!',
 	'inline-welcome' => 'Willkommen bei Wikianswers',
 	'skip_this' => 'Überspringen',
-	'see_all_changes' => 'Alle Änderungen sehen',
+	'see_all_changes' => 'Zeige alle Änderungen',
 	'toolbox_anon_message' => '<i>"Wikianswers nutzt die einzigartigen Merkmale eines Wikis, um die absolut besten Antworten auf alle Fragen zu finden."</i><br /><br /> <b>Jimmy Wales</b><br />Gründer von Wikipedia und Wikianswers',
 	'no_questions_found' => 'Keine Fragen gefunden',
 	'widget_settings' => 'Frage-Einstellungen',
 	'style_settings' => 'Style-Einstellungen',
-	'get_widget_title' => 'Fragen zu deiner Seite hinzufügen',
+	'get_widget_title' => 'Füge Fragen zu deiner Seite hinzu',
 	'background_color' => 'Hintergrundfarbe',
 	'widget_category' => 'Art der Fragen',
-	'category' => 'Kategoriename',
+	'category' => 'Eine Kategorie pro Zeile',
 	'custom_category' => 'Benutzerdefinierte Kategorie',
-	'number_of_items' => 'Anzahl sichtbarer Elemente',
+	'number_of_items' => 'Anzahl angezeigter Einträge',
 	'width' => 'Breite',
 	'next_page' => 'Nächste &raquo;',
 	'prev_page' => '&laquo; Vorherige',
@@ -281,59 +494,52 @@ $messages['de'] = array(
 	'question_redirected_help_page' => 'Warum wurde meine Frage hierhin weitergeleitet',
 	'twitter_hashtag' => 'Wikianswers',
 	'twitter_ask' => 'Auf Twitter fragen',
-	'facebook_ask' => 'Auf Facebook fragen',
-	'facebook_send_request' => 'Direkt an Freunde senden',
-	'ask_friends' => 'Bitte deine Freunde beim Beantworten zu helfen:',
-	'facebook_send_request_content' => 'Kannst du helfen das zu beantworten? $1',
-	'facebook_signed_in' => 'Du bist bei Facebook Connect angemeldet',
+	'facebook_ask' => 'Stelle diese Frage in Facebook',
+	'facebook_send_request' => 'Schicke direkt an meine Freunde',
+	'ask_friends' => 'Bitte deine Freunde um Hilfe bei der Antwort:',
+	'facebook_send_request_content' => 'Kannst du mir helfen das zu beantworten? $1',
+	'facebook_signed_in' => 'Du bist über Facebook Connect eingeloggt',
 	'ads_by_google' => 'Google-Anzeigen',
-	'magic_answer_headline' => 'Ist deine Frage damit beantwortet?',
-	'magic_answer_yes' => 'Ja, dies als Ausgangspunkt verwenden',
-	'magic_answer_no' => 'Nein, das hier nicht verwenden',
+	'magic_answer_headline' => 'Beantwortet das deine Frage?',
+	'magic_answer_yes' => 'Ja, benutzte das zum Ausbauen',
+	'magic_answer_no' => 'Nein, das passt nicht',
 	'magic_answer_credit' => 'Bereitgestellt von Yahoo Answers',
-	'rephrase' => 'Diese Frage neu formulieren',
-	'rephrase_this' => '<a href="$1" $2>Die Frage umformulieren</a>',
+	'rephrase' => 'Bennene diese Frage um',
+	'rephrase_this' => '<a href="$1" $2>Bennene diese Frage um</a>',
 	'question_not_answered' => 'Diese Frage wurde nicht beantwortet',
 	'you_can' => 'Du kannst:',
-	'answer_this' => '<a href="$1">Diese Frage beantworten</a>, auch wenn du nicht die ganze Antwort weißt',
+	'answer_this' => '<a href="$1">Beantworte diese Frage</a>, selbst wenn du sie nicht komplett zu beantworten weißt.',
 	'research_this_on_wikipedia' => '<a href="$1">Die Frage recherchieren</a> auf Wikipedia',
-	'receive_email' => '<a href="$1" $2>Eine E-Mail erhalten</a> wenn diese Frage beantwortet wird',
-	'ask_friends_on_twitter' => 'Freunde bei <a href="$1" $2>Twitter</a> fragen',
+	'receive_email' => '<a href="$1" $2>Benachrichtige mich via E-Mail</a> wenn diese Frage beantwortet wurde',
+	'ask_friends_on_twitter' => 'Frage Freunde auf <a href="$1" $2>Twitter</a>',
 	'categorize' => 'Kategorisieren',
-	'categorize_help' => 'Eine Kategorie pro Zeile',
-	'answers_widget_admin_note' => '<b>Administratoren:</b> Wenn du gerne ein Administrator von <a href="http://answers.wikia.com" target="_blank">Wikianswers</a> werden würdest, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klicke hier</a>.',
-	'answers_widget_user_note' => 'Kannst du helfen, indem du ein <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">Kategorie-Editor</a> auf <a href="http://answers.wikia.com" target="_blank">Wikianswers</a> wirst?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> ist ein Q&amp;A-Wiki, wo Antworten nach dem Wiki-Prinzip verbessert werden.',
-	'answers-category-count-answered' => 'Diese Kategorie enthält $1 beantwortete {{PLURAL:$1|Frage|Fragen}}.',
-	'answers-category-count-unanswered' => 'Diese Kategorie enthält $1 unbeantwortete {{PLURAL:$1|Frage|Fragen}}.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> ist eine Seite, auf der du Fragen stellen und Antworten bearbeiten kannst. Wir zielen darauf ab, die beste Antwort zu jeder Frage zu geben. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Finde</a> und beantworte <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">unbeantwortete</a> Fragen. Dies ist ein Wiki - also traue dich!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Beginne, indem du eine Frage über "{{PAGENAME}}" stellst',
-	'reword_this' => '<a href="$1" $2>Frage umformulieren</a>',
-	'no_related_answered_questions' => 'Es gibt noch keine ähnliche Fragen. Erhalte stattdessen eine <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">zufällig beantwortete Frage</a> oder stelle eine Neue!<br />
-<div class="createbox" align="center">
-<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
-<input name="action" value="create" type="hidden">
-<input name="prefix" value="Special:CreateQuestionPage/" type="hidden">
-<input name="editintro" value="" type="hidden">
-<input class="createboxInput" name="title" value="" size="50" type="text">
-<input name="create" class="createboxButton" value="Frage eingeben und klicken" type="submit"></form></div>',
-	'auto_friend_request_body' => 'Willst du mich als Freund hinzufügen?',
-	'tog-hidefromattribution' => 'Verstecke meinen Avatar und meinen Namen auf der Namensnennung-Liste',
+	'categorize_help' => 'Kategoriename',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Stelle deine Fragen auf <a href="http://frag.wikia.com/" target="_blank">Wikianswers</a> oder <a href="http://www.wikia.com/Special:CreateAnswers?uselang=de">erstelle deine eigene Frage-Antwort-Seite</a>!',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Diese Kategorie enthält $1 beantwortete Fragen.',
+	'answers-category-count-unanswered' => 'Diese Kategorie enthält $1 unbeantwortete Fragen.',
+	'answers_widget_no_questions' => 'Hilf uns dabei, die besten Antworten auf alle Fragen zu finden!',
+	'answers_widget_no_questions_askabout' => '<br><br>Mach mit und stelle eine Frage über "{{PAGENAME}}"',
+	'reword_this' => '<a href="$1" $2>Formuliere diese Frage um</a>',
+	'no_related_answered_questions' => 'Es gibt noch keine ähnlichen Fragen.',
+	'auto_friend_request_body' => 'Wirst du mich als Freund hinzufügen?',
+	'tog-hidefromattribution' => 'Meinen Namen und Avatar nicht unter bearbeiteten Artikeln anzeigen',
 	'a' => 'Antwort:',
-	'answering_tips' => '<h3>Tipps für das Antworten:</h3> Wenn du eine Antwort gibst, versuche so präzise wie möglich zu sein. Wenn du die Informationen aus einer anderen Quelle wie der Wikipedia beziehst, ergänze einen entsprechenden Link im Text. Und vielen Dank für den Beitrag zum {{SITENAME}}!',
-	'plus_x_more_helpers' => '... sowie $1 weitere Helfer',
-	'anwb-step1-headline' => 'Worum geht es in deinem Wiki?',
-	'anwb-choose-logo' => 'Wähle dein Logo',
-	'anwb-step2-text' => 'Als nächstes wähle ein Logo für {{SITENAME}}. Es empfiehlt sich, ein Bild hochzuladen, von dem du der Meinung bist, dass es Deine Antwort-Seite repräsentiert. <br /> Du kannst diesen Schritt überspringen, wenn du es nicht jetzt tun möchtest.',
-	'anwb-step2-example' => 'Dies wäre ein gutes Logo für eine Skateboard-Antwort-Seite.',
-	'anwb-fp-headline' => 'Erstelle ein paar Fragen!',
-	'anwb-logo-preview' => 'Hier ist eine Vorschau deines Logos',
+	'answering_tips' => '<h3>Tipps fürs Beantworten:</h3> Wenn du eine Frage beantwortest, versuche so genau wie möglich zu sein. Wenn du Informationen von einer anderen Seite als Wikipedia beziehst, gib einen Link an. Vielen Dank für deinen Beitrag zu {{SITENAME}}!',
+	'plus_x_more_helpers' => '...sowie $1 weitere Helfer',
+	'anwb-step1-headline' => 'Wovon handelt der Inhalt deiner Seite?',
+	'anwb-choose-logo' => 'Logo auswählen',
+	'anwb-step2-text' => 'Wähle als nächstes ein Logo für {{SITENAME}}. Am besten lädst du ein Bild hoch, von dem du denkst, dass es das Thema am besten rüber bringt.<br />Du kannst diesen Schritt überspringen, wenn du momentan noch kein Logo erstellen möchtest.<br /><br />',
+	'anwb-step2-example' => 'Dies könnte ein gutes Logo für eine Frage-Antwort-Seite zum Thema Skateboard sein.',
+	'anwb-fp-headline' => 'Erstelle einige Fragen!',
+	'anwb-logo-preview' => 'Vorschau des Logos',
 	'qa-toolbox-button' => 'Beantworte eine zufällige Frage',
-	'qa-toolbox-share' => 'Teilen',
+	'qa-toolbox-share' => 'Frage deine Freunde',
 	'qa-toolbox-tools' => 'Erweiterte Optionen »',
 	'qa-toolbox-protect' => 'Schütze diese Frage',
 	'qa-toolbox-delete' => 'Lösche diese Frage',
-	'qa-toolbox-history' => 'Frühere Versionen dieser Seite',
+	'qa-toolbox-history' => 'Versionsgeschichte dieser Seite',
 	'answers_skins' => 'Antworten',
 	'answers-bluebell' => 'Glockenblume',
 	'answers-leaf' => 'Blatt',
@@ -344,12 +550,265 @@ $messages['de'] = array(
 	'answers-moonlight' => 'Mondschein',
 	'answers-carbon' => 'Karbon',
 	'answers-obsession' => 'Besessenheit',
-	'answers-custom' => 'Benutzerdefiniert',
+	'answers-custom' => 'Angepasst',
+	'anwb-fp-example' => '<strong>Beispiele</strong><br /><br />...für eine Frage-Antwort-Seite über Haustiere:<br /><br /><ul><li>Soll ich Katzenstreu kaufen</li><li>Welches Hundefutter ist das beste</li><li>Wie kann man eine Katze am besten erziehen</li><li></ul><br /><br />...für eine Frage-Antwort-Seite über Gesundheitsthemen:<br /><br /><ul><li>Welche gesundheitlichen Vorteile hat regelmäßiges Joggen</li><li>Wie finde ich einen guten Arzt in meiner Nähe</li><li>Wie kann ich am effektivsten abnehmen</li></ul>',
+	'anwb-fp-text' => 'Deine Frage-Antwort-Seite sollte mit ein paar Fragen starten!<br /><br />Füge eine Liste von Fragen hinzu und erstelle die ersten Antworten. Es ist wichtig, einige nützliche Informationen auf die Seite zu packen, damit andere sie finden und weitere Fragen stellen und beantworten können.',
+	'anwb-save-tagline' => 'Kurzerklärung speichern',
+	'anwb-step1-example' => '<strong>Beispiel:</strong><br /> Antworten auf alle deine Fragen zum Thema Wrestling!',
+	'anwb-step1-text' => 'Deine Frage-Antwort-Seite benötigt eine <strong>Kurzerklärung</strong> (ein Satz!).<br /><br />Die Kurzerklärung hilft anderen dein Angebot durch Suchmaschinen zu finden - versuche also möglichst präzise zu schreiben, welche Inhalte deine Seite behandelt.',
+	'anwb-thatisall-text' => 'Das wars auch schon - jetzt kann es losgehen!<br /><br />Du solltest damit beginnen, noch weitere Fragen und Antworten zu deiner Seite hinzuzufügen, so dass sie besser durch Suchmaschinen gefunden wird.<br /><br />Die Liste der Fragen aus dem letzten Schritt sind bereits auf deiner Frage-Antwort-Seite erstellt worden. Rufe sie auf, beantworte sie und starte deine eigene Community!',
+	'get_code' => 'Code holen',
+	'nwb-thatisall-headline' => 'Das wars auch schon - jetzt kann es losgehen!',
+	'q' => 'Frage:',
+	'answers-desc' => "Wikia's Answer site extension",
+	'quick_action_panel' => 'Quick Action Panel',
+	'?' => '?',
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-featured-sites' => '-',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author Tiin
- */
 $messages['de-formal'] = array(
 	'auto_friend_request_body' => 'Wollen Sie mich als Freund hinzufügen?',
 	'answering_tips' => '<h3>Tipps für das Antworten:</h3> Wenn Sie eine Antwort geben, versuchen Sie so präzise wie möglich zu sein. Wenn Sie die Informationen aus einer anderen Quelle wie der Wikipedia beziehen, ergänzen Sie einen entsprechenden Link im Text. Und vielen Dank für Ihren Beitrag zum {{SITENAME}}!',
@@ -358,9 +817,6 @@ $messages['de-formal'] = array(
 	'qa-toolbox-delete' => 'Löschen Sie diese Frage',
 );
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
 $messages['diq'] = array(
 	'ask_a_question' => 'çiyê pers bike',
 	'ask_a_question-widget' => 'çiyê pers bike',
@@ -368,98 +824,755 @@ $messages['diq'] = array(
 	'see_all' => 'Bewni hemi',
 );
 
-/** Greek (Ελληνικά) */
 $messages['el'] = array(
 	'research_this' => 'Αναζητήστε αυτό',
 );
 
-/** Spanish (Español)
- * @author Armando-Martin
- * @author Bola
- * @author Rodrigo Molinero
- */
 $messages['es'] = array(
 	'answer_title' => 'Respuesta',
-	'answered_by' => 'Contestado por',
+	'answered_by' => 'Respondido por',
 	'unregistered' => 'No registrado',
-	'ask_a_question' => 'Haz una pregunta...',
+	'ask_a_question' => 'Pregunta en {{SITENAME}}',
 	'ask_a_question-widget' => 'Haz una pregunta...',
 	'question_asked_by' => 'Pregunta hecha por',
 	'new_question_comment' => 'nueva pregunta',
 	'improve_this_answer' => 'Mejora esta contestación',
-	'answer_this_question' => 'Responde a esta pregunta:',
+	'answer_this_question' => 'Responder esta pregunta',
 	'notify_improved' => 'Envíeme un email cuando la mejore',
 	'research_this' => 'Investigar esto',
 	'notify_answered' => 'Envíame un mail cuando seas contestado',
-	'recent_asked_questions' => 'Preguntas más frecuentes',
-	'recent_answered_questions' => 'Preguntas recién contestadas',
-	'recent_edited_questions' => 'Preguntas recién editadas',
-	'unanswered_category' => 'Preguntas no contestadas',
-	'answered_category' => 'Preguntas contestadas',
+	'recent_asked_questions' => 'Preguntas hechas recientemente',
+	'recent_answered_questions' => 'Preguntas respondidas recientemente',
+	'recent_edited_questions' => 'Preguntas editadas recientemente',
+	'unanswered_category' => 'Preguntas sin respuesta',
+	'answered_category' => 'Preguntas respondidas',
 	'related_questions' => 'Preguntas relacionadas',
-	'related_answered_questions' => 'Preguntas relacionadas que poseen respuesta',
+	'related_answered_questions' => 'Más preguntas',
 	'popular_categories' => 'Categorías populares',
-	'createaccount-captcha' => 'Por favor introduce la palabra descrita debajo',
-	'inline-register-title' => 'Informame cuando mi pregunta sea contestada!',
-	'inline-welcome' => 'Bienvenido a Wikianswers',
-	'skip_this' => 'Omitir esto',
+	'createaccount-captcha' => 'Por favor escribe abajo la palabra',
+	'inline-register-title' => 'Notificarme cuando mi pregunta sea contestada',
+	'inline-welcome' => 'Bienvenido a WikiRespuestas',
+	'skip_this' => 'Saltar esto',
 	'see_all_changes' => 'Ver todos los cambios',
 	'no_questions_found' => 'Ningunas preguntas encontradas',
 	'widget_settings' => 'Configuración de preguntas',
-	'get_widget_title' => 'Añade preguntas a tu página web',
+	'get_widget_title' => 'Añadir pregunta a tu sitio',
 	'background_color' => 'Color de fondo',
 	'widget_category' => 'Tipo de preguntas',
 	'category' => 'Nombre de Categoría',
 	'custom_category' => 'Personalizar categoría',
-	'number_of_items' => 'Número de elementos a mostrar',
+	'number_of_items' => 'Número de items a mostrar',
 	'width' => 'Anchura',
-	'see_all' => 'Ver todos',
+	'see_all' => 'Ver todo',
 	'get_code' => 'Coger código',
 	'link_color' => 'Color de enlace de la pregunta',
 	'widget_order' => 'Orden de las preguntas',
-	'question_redirected_help_page' => 'Porqué fue mi pregunta redirigida aquí?',
+	'question_redirected_help_page' => '¿Por qué se redirigió mi pregunta aquí?',
 	'twitter_hashtag' => 'WikiRespuestas',
 	'twitter_ask' => 'Preguntar en Twitter',
 	'facebook_ask' => 'Preguntar en Facebook',
 	'facebook_send_request' => 'Mandar directamente a Amigos',
-	'ads_by_google' => 'Anuncios de Google',
-	'magic_answer_headline' => 'Contesta esto a tú pregunta?',
-	'magic_answer_yes' => 'Si, usa esto como punto de partida',
-	'magic_answer_no' => 'No, no use esto',
-	'magic_answer_credit' => 'Proporcionado por Yahoo Answers',
-	'question_not_answered' => 'La pregunta no ha sido respondida aún.',
+	'ads_by_google' => 'Publicidad de Google',
+	'magic_answer_headline' => '¿Esta es la respuesta a tu pregunta?',
+	'magic_answer_yes' => 'Sí, úsala como punto de partida',
+	'magic_answer_no' => 'No, no uses esta',
+	'magic_answer_credit' => 'De Yahoo Answers',
+	'question_not_answered' => 'Esta pregunta no ha sido contestada',
 	'you_can' => 'Puedes:',
 	'answer_this' => '<a href="$1">Responde esta pregunta</a>, incluso si no sabes la respuesta completa',
 	'research_this_on_wikipedia' => '<a href="$1">Investigar sobre esta pregunta</a> en Wikipedia',
 	'receive_email' => '<a href="$1" $2>Recibir un correo electrónico</a> cuando se responda a esta pregunta',
-	'ask_friends_on_twitter' => 'Pregunta a tus amigos por <a href="$1" $2>Twitter</a>',
-	'quick_action_panel' => 'Panel de Acción Rápida',
+	'ask_friends_on_twitter' => 'Pregunta a tus amigos en <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Panel de acción rápida',
 	'categorize' => 'Categorizar',
 	'categorize_help' => 'Una categoría por línea',
-	'answers_widget_admin_note' => '<b>Administradores:</b> Si queréis ser administradores de <a href="http://respuestas.wikia.com" target="_blank">WikiRespuestas</a>, <a href="http://respuestas.wikia.com/wiki/WikiRespuestas:Administradores" target="_blank">haz clic aquí</a>.',
-	'answers_widget_user_note' => '¿Quieres ayudarnos <a href="http://respuestas.wikia.com/wiki/C%C3%B3mo_cambio_la_categor%C3%ADa_de_una_pregunta" target="_blank">categorizando preguntas</a> en <a href="http://respuestas.wikia.com" target="_blank">WikiRespuestas</a>?',
-	'answers_widget_anon_note' => '<a href="http://respuestas.wikia.com" target="_blank">WikiRespuestas</a> es un Q&amp;A wiki donde se pueden mejorar las respuestas a las preguntas, con un estilo wiki.',
-	'answers-category-count-answered' => 'Esta categoría contiene $1 {{PLURAL:$1|pregunta respondida|preguntas respondidas}}.',
-	'answers-category-count-unanswered' => 'Esta categoría contiene $1 {{PLURAL:$1|pregunta sin responder|preguntas sin responder}}.',
-	'answers_widget_no_questions' => '<a href="http://respuestas.wikia.com" target="_blank">WikiRespuestas</a> es un sitio donde puedes hacer preguntas y contribuir dando respuestas. Nuestro objetivo es crear la mejor respuesta para cada pregunta. <a href="http://respuestas.wikia.com/wiki/Special:Search" target="_blank">Busca</a> y responde <a href="http://respuestas.wikia.com/wiki/Category:Un-answered_questions">preguntas sin responder</a>. Es un wiki - ¡se valiente!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Comienza preguntando sobre  "{{PAGENAME}}"',
-	'reword_this' => '<a href="$1" $2>Reformula esta pregunta</a>',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Haz una pregunta en <a href="http://respuestas.wikia.com/">WikiRespuestas</a> o <a href="http://www.wikia.com/Special:CreateAnswers?uselang=es">comienza tu propio sitio de respuestas</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Esta categoría contiene $1 preguntas respondidas.',
+	'answers-category-count-unanswered' => 'Esta categoría contiene $1 pregunta/s sin responder.',
+	'answers_widget_no_questions' => 'Ayúdanos a dar la mejor respuesta a cualquier pregunta.',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
+	'reword_this' => '<a href="$1" $2>Reescribe la pregunta</a>',
 	'auto_friend_request_body' => '¿Me añadirás como amigo?',
 	'tog-hidefromattribution' => 'Ocultar mi avatar y nombre en la lista de atribuciones',
 	'a' => 'Respuesta:',
-	'anwb-step1-headline' => 'De qué trata tí Wiki?',
-	'anwb-choose-logo' => 'Elija su logo',
+	'anwb-step1-headline' => '¿Sobre qué tema se enfoca tu wiki?',
+	'anwb-choose-logo' => 'Elige tu logo',
+	'question_asked_by_a_wikia_user' => 'Pregunta hecha por un usuario de FANDOM',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|colaboración|colaboraciones}}',
+	'answers-custom' => 'Personalizada',
+	'anwb-fp-example' => '<strong>Ejemplo</strong><br /><br />Para un wiki de respuestas sobre mascotas:<br /><br /><ul><li>¿Debo comprar un gato pequeño?</li><li>¿Cuál es la mejor forma para alimentar a un perro?</li><li>¿Cómo puedo entrenar a mi gato?</li></ul><br /><br />Para un wiki de respuestas sobre salud:<br /><br /><ul><li>¿Cuáles son los beneficios del ejercicio sobre la salud?</li><li>¿Cómo puedo encontrar a un buen doctor en mi zona?</li><li>¿Cómo puedo perder peso fácilmente?</li></ul>',
+	'anwb-fp-headline' => '¡Crea algunas preguntas!',
+	'anwb-fp-text' => '¡Tu wiki de Respuestas debe comenzar con algunas preguntas!<br /><br />Añade una lista de preguntas, y después dales una respuesta tú mismo. Es importante que des algo de información útil para tu wiki, así la gente podrá encontrarlo más fácilmente y preguntar y responder más preguntas.',
+	'anwb-logo-preview' => 'Aquí tienes una previsualización del logo',
+	'anwb-save-tagline' => 'Guardar tagline',
+	'anwb-step1-example' => '¡Responde a todas tus preguntas sobre Wrestling!',
+	'anwb-step1-text' => 'Tu sitio de Wiki Respuestas necesita un <strong>tagline</strong>.<br /><br />El tagline ayudará a que la gente encuentre tu wiki desde los motores de búsqueda, así que intenta ser claro sobre el tema que trata tu wiki.',
+	'anwb-step2-example' => 'Podría ser un buen logo para un wiki de respuestas sobre monopatines, ¿no estás de acuerdo?',
+	'anwb-step2-text' => 'Sigamos, elige un logo para {{SITENAME}}. Lo mejor es subir una imagen que pienses que representa tu sitio de Respuestas.<br />Puedes saltarte este paso si no quieres hacerlo ahora, más adelante lo podrás hacer.<br /><br />',
+	'anwb-thatisall-text' => '¡Eso es - el wiki ya está listo para revolucionar el mundo de las respuestas!<br /><br />Ahora es el momento de comenzar a escribir más preguntas y respuestas, así te asegurarás de que tu sitio pueda ser encontrado más fácilmente por los motores de búsqueda.<br /><br />La lista de preguntas que añadiste en el paso anterior ha sido incluida en tu sitio de preguntas. ¡Responde a tus propias preguntas, comienza tu propia comunidad de respuestas y demuéstrale a todos que tienes la respuesta que estaban buscando!',
+	'ask_button' => 'Pregunta',
+	'ask_friends' => 'Pide ayuda a tus amigos para responder esto:',
+	'ask_thanks' => '¡Gracias por la magnífica pregunta!',
+	'edit_points' => '{{PLURAL:$1|punto de edición|puntos de edición}}',
+	'header_questionmark_pre' => '',
+	'in_category' => '... en categoría',
+	'no_related_answered_questions' => 'Todavía no hay preguntas relacionadas.',
+	'nwb-thatisall-headline' => '¡Ya está, lo hiciste!',
+	'qa-toolbox-button' => 'Responder una pregunta al azar',
+	'qa-toolbox-delete' => 'Borrar esta pregunta',
+	'qa-toolbox-history' => 'Versiones anteriores de esta página',
+	'qa-toolbox-protect' => 'Proteger esta pregunta',
+	'qa-toolbox-share' => 'Compartir',
+	'qa-toolbox-tools' => 'Herramientas avanzadas»',
+	'recent_unanswered_questions' => 'Preguntas recientes no respondidas',
+	'rephrase' => 'Reescribe esta pregunta',
+	'rephrase_this' => 'Reescribe esta pregunta',
+	'answers-desc' => "Wikia's Answer site extension",
+	'answers_toolbox' => '{{SITENAME}} toolbox',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'style_settings' => 'Style Settings',
+	'next_page' => 'Next &raquo;',
+	'prev_page' => '&laquo; Prev',
+	'widget_ask_box' => 'Include ask box',
+	'facebook_send_request_content' => 'Can you help answer this? $1',
+	'facebook_signed_in' => 'You are signed into Facebook Connect',
+	'q' => '<!-- -->',
+	'?' => '?',
+	'answering_tips' => "<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you're getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!",
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... plus $1 more helpers',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
 );
 
-/** Finnish (Suomi) */
 $messages['fi'] = array(
 	'research_this' => 'Tutki tätä',
+	'ads_by_google' => 'Google mainokset',
+	'answer_this' => '<a href="$1">Vastaa tähän kysymykseen</a>, vaikka et tiedä koko vastausta',
+	'answer_this_question' => 'Vastaa tähän kysymykseen',
+	'answer_title' => 'Vastaus',
+	'answered_by' => 'Vastannut',
+	'answered_category' => 'Vastauksen saaneet kysymykset',
+	'answers-category-count-answered' => 'Tämä luokka sisältää $1 vastattuja kysymyksiä.',
+	'answers-category-count-unanswered' => 'Tämä luokka sisältää $1 vastaamattomia kysymyksiä.',
+	'next_page' => 'Seuraava &raquo;',
+	'answers-desc' => "Wikia's Answer site extension",
+	'unregistered' => 'Unregistered',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
+	'edit_points' => '{{PLURAL:$1|edit point|edit points}}',
+	'ask_a_question' => 'Welcome to {{SITENAME}}. What would you like to know?',
+	'ask_a_question-widget' => 'Ask a question...',
+	'in_category' => '...in category',
+	'ask_button' => 'Ask',
+	'ask_thanks' => "Thanks for the rockin' question!",
+	'question_asked_by' => 'Question asked by',
+	'question_asked_by_a_wikia_user' => 'Question asked by a FANDOM user',
+	'new_question_comment' => 'new question',
+	'answers_toolbox' => '{{SITENAME}} toolbox',
+	'improve_this_answer' => 'Improve this answer',
+	'notify_improved' => 'Email me when improved',
+	'notify_answered' => 'Email me when answered',
+	'recent_asked_questions' => 'Recently Asked Questions',
+	'recent_answered_questions' => 'Recently Answered Questions',
+	'recent_edited_questions' => 'Recently Edited Questions',
+	'unanswered_category' => 'Un-answered questions',
+	'related_questions' => 'Related questions',
+	'related_answered_questions' => 'More questions',
+	'recent_unanswered_questions' => 'Recent Unanswered Questions',
+	'popular_categories' => 'Popular Categories',
+	'createaccount-captcha' => 'Please type the word below',
+	'inline-register-title' => 'Notify me when my question is answered!',
+	'inline-welcome' => 'Welcome to Wikianswers',
+	'skip_this' => 'Skip this',
+	'see_all_changes' => 'See all changes',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'no_questions_found' => 'No questions found',
+	'widget_settings' => 'Question Settings',
+	'style_settings' => 'Style Settings',
+	'get_widget_title' => 'Add Questions to your site',
+	'background_color' => 'Background color',
+	'widget_category' => 'Type of Questions',
+	'category' => 'Category Name',
+	'custom_category' => 'Custom Category',
+	'number_of_items' => 'Number of items to show',
+	'width' => 'Width',
+	'prev_page' => '&laquo; Prev',
+	'see_all' => 'See all',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
+	'widget_order' => 'Question Order',
+	'widget_ask_box' => 'Include ask box',
+	'question_redirected_help_page' => 'Why was my question redirected here',
+	'twitter_hashtag' => 'wikianswers',
+	'twitter_ask' => 'Ask on Twitter',
+	'facebook_ask' => 'Ask on Facebook',
+	'facebook_send_request' => 'Send Directly to Friends',
+	'ask_friends' => 'Ask your friends to help answer:',
+	'facebook_send_request_content' => 'Can you help answer this? $1',
+	'facebook_signed_in' => 'You are signed into Facebook Connect',
+	'magic_answer_headline' => 'Does this answer your question?',
+	'magic_answer_yes' => 'Yes, use this as a starting point',
+	'magic_answer_no' => "No, don't use this",
+	'magic_answer_credit' => 'Provided by Yahoo Answers',
+	'rephrase' => 'Rephrase this question',
+	'rephrase_this' => '<a href="$1" $2>Reword the question</a>',
+	'question_not_answered' => 'This question has not been answered',
+	'you_can' => 'You can:',
+	'research_this_on_wikipedia' => '<a href="$1">Research this question</a> on Wikipedia',
+	'receive_email' => '<a href="$1" $2>Receive an email</a> when this question is answered',
+	'ask_friends_on_twitter' => 'Ask Friends on <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Quick Action Panel',
+	'categorize' => 'Categorize',
+	'categorize_help' => 'One category per line',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Ask a question on <a href="http://answers.wikia.com/wiki/Wikianswers">Wikianswers</a> or <a href="http://www.wikia.com/Special:CreateAnswers">start your own answers site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
+	'reword_this' => '<a href="$1" $2>Reword this question</a>',
+	'no_related_answered_questions' => 'There are no related questions yet.',
+	'auto_friend_request_body' => 'Will you add me as a friend?',
+	'tog-hidefromattribution' => 'Hide my avatar and name from attribution list',
+	'q' => '<!-- -->',
+	'a' => 'Answer:',
+	'?' => '?',
+	'answering_tips' => "<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you're getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!",
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... plus $1 more helpers',
+	'anwb-step1-headline' => "What's your wiki about?",
+	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
+	'anwb-choose-logo' => 'Choose your logo',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
+	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
+	'anwb-fp-headline' => 'Create some questions!',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'nwb-thatisall-headline' => "That's it - you're done!",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
+	'anwb-save-tagline' => 'Save tagline',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-toolbox-button' => 'Answer a random question',
+	'qa-toolbox-share' => 'Share',
+	'qa-toolbox-tools' => 'Advanced tools»',
+	'qa-toolbox-protect' => 'Protect this question',
+	'qa-toolbox-delete' => 'Delete this question',
+	'qa-toolbox-history' => 'Past versions of this page',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
+	'answers-custom' => 'Custom',
 );
 
-/** French (Français)
- * @author McDutchie
- * @author Wyz
- */
 $messages['fr'] = array(
 	'answer_title' => 'Réponse',
 	'answered_by' => 'Réponse de',
@@ -472,14 +1585,14 @@ $messages['fr'] = array(
 	'ask_button' => 'Demander',
 	'ask_thanks' => 'Merci pour cette question intéressante !',
 	'question_asked_by' => 'Question posée par',
-	'question_asked_by_a_wikia_user' => 'Question posée par un utilisateur de Wikia',
+	'question_asked_by_a_wikia_user' => 'Question posée par un utilisateur de FANDOM',
 	'new_question_comment' => 'nouvelle question',
 	'answers_toolbox' => 'Boîte à outils Wikiréponses',
 	'improve_this_answer' => 'Améliorer cette réponse',
 	'answer_this_question' => 'Répondre à cette question :',
-	'notify_improved' => 'M’envoyer un courriel quand elle est améliorée',
+	'notify_improved' => 'M’envoyer un e-mail quand elle est améliorée',
 	'research_this' => 'Rechercher ceci',
-	'notify_answered' => 'M’envoyer un courriel quand une réponse est donnée',
+	'notify_answered' => 'M’envoyer un e-mail quand une réponse est donnée',
 	'recent_asked_questions' => 'Questions posées récemment',
 	'recent_answered_questions' => 'Questions ayant reçu une réponse récemment',
 	'recent_edited_questions' => 'Questions modifiées récemment',
@@ -531,7 +1644,7 @@ $messages['fr'] = array(
 	'you_can' => 'Vous pouvez :',
 	'answer_this' => '<a href="$1">Répondre à cette question</a>, même si vous ne connaissez qu’une partie de la réponse',
 	'research_this_on_wikipedia' => '<a href="$1">Rechercher cette question</a> sur Wikipédia',
-	'receive_email' => '<a href="$1" $2>Recevoir un courriel</a> quand cette question reçoit une réponse',
+	'receive_email' => '<a href="$1" $2>Recevoir un e-mail</a> quand cette question reçoit une réponse',
 	'ask_friends_on_twitter' => 'Demander à des amis sur <a href="$1" $2>Twitter</a>',
 	'quick_action_panel' => 'Panneau d’action rapide',
 	'categorize' => 'Catégoriser',
@@ -587,11 +1700,255 @@ $messages['fr'] = array(
 	'answers-carbon' => 'Carbone',
 	'answers-obsession' => 'Obsession',
 	'answers-custom' => 'Personnalisé',
+	'answers-desc' => "Wikia's Answer site extension",
+	'q' => '<!-- -->',
+	'?' => '?',
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-featured-sites' => '-',
 );
 
-/** Galician (Galego)
- * @author Toliño
- */
 $messages['gl'] = array(
 	'answer_title' => 'Resposta',
 	'answered_by' => 'Respondida por',
@@ -721,9 +2078,6 @@ $messages['gl'] = array(
 	'answers-custom' => 'Personalizado',
 );
 
-/** Hungarian (Magyar)
- * @author TK-999
- */
 $messages['hu'] = array(
 	'answer_title' => 'Válasz',
 	'answered_by' => 'Válaszolt:',
@@ -798,9 +2152,6 @@ $messages['hu'] = array(
 	'answers_widget_admin_note' => '<b>Adminisztrátorok:</b> Ha adminisztrátor szeretnél lenni a <a href="http://answers.wikia.com" target="_blank">Wikianswersen</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">kattints ide</a>.',
 );
 
-/** Interlingua (Interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'answer_title' => 'Responsa',
 	'answered_by' => 'Respondite per',
@@ -930,9 +2281,6 @@ $messages['ia'] = array(
 	'answers-custom' => 'Personalisate',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- */
 $messages['id'] = array(
 	'answer_title' => 'Jawaban',
 	'answered_by' => 'Dijawab oleh',
@@ -1034,23 +2382,19 @@ $messages['id'] = array(
 	'answers-custom' => 'Kustom',
 );
 
-/** Italian (Italiano)
- * @author Leviathan 89
- * @author Nemo bis
- */
 $messages['it'] = array(
 	'answer_title' => 'Risposta',
-	'answered_by' => 'Risposta da',
+	'answered_by' => 'Risposta data da',
 	'unregistered' => 'Non registrato',
-	'anonymous_edit_points' => '$1 {{PLURAL:$1|contributore|contributori}}',
-	'edit_points' => '{{PLURAL:$1|modifica punto|modifica punti}}',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|collaboratore|collaboratori}}',
+	'edit_points' => '{{PLURAL:$1|punto modifica|punti modifica}}',
 	'ask_a_question' => 'Fai una domanda...',
 	'ask_a_question-widget' => 'Fai una domanda...',
 	'in_category' => '...nella categoria',
 	'ask_button' => 'Chiedi',
 	'ask_thanks' => 'Grazie per la domanda sconvolgente!',
 	'question_asked_by' => 'Domanda posta da',
-	'question_asked_by_a_wikia_user' => 'Domanda posta da un utente di Wikia',
+	'question_asked_by_a_wikia_user' => 'Domanda posta da un utente FANDOM',
 	'new_question_comment' => 'nuova domanda',
 	'answers_toolbox' => 'Casella degli strumenti di Wikirisposte',
 	'improve_this_answer' => 'Migliora questa risposta',
@@ -1114,12 +2458,12 @@ $messages['it'] = array(
 	'quick_action_panel' => 'Pannello di azione rapida',
 	'categorize' => 'Categorizza',
 	'categorize_help' => 'Una categoria per riga',
-	'answers_widget_admin_note' => '<b>Amministratori:</b> Se vuoi diventare un\'amministratore su <a href="http://answers.wikia.com" target="_blank">Wikirisposte</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">clicca qui</a>.',
-	'answers_widget_user_note' => 'Puoi aiutare diventando un <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">editore di categorie</a> su <a href="http://answers.wikia.com" target="_blank">Wikirisposte</a>?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">Wikirisposte</a> è una D&amp;R wiki dove le risposte sono migliorate, in stile wiki.',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => '<a href="http://risposte.wikia.com" target="_blank"><b>WikiRisposte</b></a> è una wiki dove le risposte alle varie domande vengono perfezionate in modo collaborativo.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
 	'answers-category-count-answered' => 'Questa categoria contiene $1 {{PLURAL:$1|domanda|domande}} risolte.',
 	'answers-category-count-unanswered' => 'Questa categoria contiente $1 {{PLURAL:$1|domanda|domande}} senza risposta.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikirisposte</a> è un sito dove puoi porre domande e contribuire rispondendo. Il nostro obiettivo è fornire le risposte migliori a qualunque domanda. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Trova</a> e rispondi alle domande <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">senza risposta</a>. È una wiki - quindi sii audace!',
+	'answers_widget_no_questions' => 'Aiutaci a trovare la migliore risposta ad ogni <a href="http://risposte.wikia.com/wiki/Categoria:Domande_senza_risposta" target="_blank">domanda</a> su <b><a href="http://risposte.wikia.com/wiki/WikiRisposte" target="_blank">WikiRisposte</a>.</b><br><br><a href="http://risposte.wikia.com/wiki/Speciale:Ricerca" target="_blank">Trova</a> le <a href="http://risposte.wikia.com/wiki/Categoria:Domande_senza_risposta" target="_blank">domande irrisolte</a> e scrivi la tua risposta.<br><br>Inizia facendo una domanda su "{{PAGENAME}}".',
 	'answers_widget_no_questions_askabout' => '<br /><br />Inizia chiedendo qualcosa su "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Riformula questa domanda</a>',
 	'no_related_answered_questions' => 'Non ci sono ancora domande correlate. Ottieni <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">una risposta ad una domanda casuale invece</a>, o chiedi una nuova domanda!<br />
@@ -1165,16 +2509,1008 @@ $messages['it'] = array(
 	'answers-carbon' => 'Carbone',
 	'answers-obsession' => 'Ossessione',
 	'answers-custom' => 'Personalizzato',
+	'answers-desc' => "Wikia's Answer site extension",
+	'q' => '<!-- -->',
+	'?' => '?',
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-featured-sites' => '-',
 );
 
-/** Japanese (日本語) */
 $messages['ja'] = array(
 	'research_this' => 'この質問について調べる',
+	'question_asked_by_a_wikia_user' => 'FANDOMユーザーからの質問',
+	'a' => 'Answer:',
+	'anonymous_edit_points' => '$1 のヘルパー',
+	'answer_this' => '<a href="$1">この質問に回答する</a>。完璧な答えでなくてもかまいません。',
+	'answer_this_question' => 'この質問に回答',
+	'answer_title' => '回答',
+	'answered_by' => '回答したユーザー',
+	'answered_category' => '回答済みの質問',
+	'answering_tips' => '<h3>回答する際には:</h3>
+回答を投稿する際には、できるだけ正確なものにするようにしてください。もし、Wikipediaのような外部のサイトからの情報をもとにするのであれば、そのサイトへのリンクをテキスト中に含めるようにしてください。',
+	'answers-category-count-answered' => 'このカテゴリには $1 の回答済みの質問が属しています。',
+	'answers-category-count-unanswered' => 'このカテゴリには $1 の回答待ちの質問が属しています。',
+	'answers_toolbox' => 'ツールボックス',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers_widget_no_questions' => '<b><a href="http://ja.answers.wikia.com/wiki/" target="_blank">ウィキ・アンサーズ</a></b>の<a href="http://ja.answers.wikia.com/wiki/Category:%e5%9b%9e%e7%ad%94%e5%be%85%e3%81%a1%e3%81%ae%e8%b3%aa%e5%95%8f" target="_blank">質問</a>により良い回答を提供するお手伝いをしてみませんか？<br /><br /><a href="http://ja.answers.wikia.com/wiki/Special:Search" target="_blank">質問を検索</a>し<a href="http://ja.answers.wikia.com/wiki/Category:%e5%9b%9e%e7%ad%94%e5%be%85%e3%81%a1%e3%81%ae%e8%b3%aa%e5%95%8f" target="_blank">回答待ちの質問</a>に回答してみてください。',
+	'answers_widget_no_questions_askabout' => '<div class="emptymwmsg mediawiki_widget-no-questions"></div>',
+	'answers_widget_user_note' => '{{SITENAME}}の訪問者による質問を<a href="http://answers.wikia.com">ウィキ・アンサーズ</a>で探して回答してみましょう。',
+	'ask_a_question-widget' => '新しく質問する場合はここに入力',
+	'ask_a_question' => '新しく質問する場合はここに入力',
+	'ask_button' => '質問する',
+	'createaccount-captcha' => '下の文字列を入力してください',
+	'custom_category' => 'カスタムカテゴリ',
+	'edit_points' => '編集ポイント',
+	'improve_this_answer' => 'この回答を更新する',
+	'in_category' => 'カテゴリ',
+	'new_question_comment' => '新しい質問',
+	'next_page' => '次 &raquo;',
+	'no_related_answered_questions' => '関連する質問はまだありません。',
+	'notify_answered' => '回答されたらメールで通知する',
+	'notify_improved' => '回答が更新されたらメールで通知する',
+	'popular_categories' => '人気カテゴリ',
+	'prev_page' => '&laquo; 前',
+	'question_asked_by' => '質問者:',
+	'question_not_answered' => 'この質問への回答はまだありません',
+	'question_redirected_help_page' => 'なぜ、私の質問がここにリダイレクトされたのですか。',
+	'receive_email' => 'この質問への回答がされたら<a href="$1" $2>メールで通知する</a>。',
+	'recent_answered_questions' => '最新の回答済み質問',
+	'recent_asked_questions' => '最新の質問',
+	'recent_edited_questions' => '最近回答した質問',
+	'recent_unanswered_questions' => '最新の回答待ち質問',
+	'related_answered_questions' => '関連する回答済み質問',
+	'related_questions' => '関連する質問',
+	'rephrase' => 'この質問の言い回しを変える',
+	'rephrase_this' => '<a href="$1" $2>この質問の言い回しを変える</a>',
+	'research_this_on_wikipedia' => 'ウィキペディアで<a href="$1">この質問について調べる</a>。',
+	'reword_this' => '<a href="$1" $2>この質問の言い回しを変える</a>。',
+	'see_all' => '全て見る',
+	'tog-hidefromattribution' => '投稿者のリストに自分のアバターと名前を表示しない',
+	'unanswered_category' => '回答待ちの質問',
+	'unregistered' => '未登録',
+	'you_can' => '次のことができます:',
+	'answers-desc' => "Wikia's Answer site extension",
+	'ask_thanks' => "Thanks for the rockin' question!",
+	'inline-register-title' => 'Notify me when my question is answered!',
+	'inline-welcome' => 'Welcome to Wikianswers',
+	'skip_this' => 'Skip this',
+	'see_all_changes' => 'See all changes',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'no_questions_found' => 'No questions found',
+	'widget_settings' => 'Question Settings',
+	'style_settings' => 'Style Settings',
+	'get_widget_title' => 'Add Questions to your site',
+	'background_color' => 'Background color',
+	'widget_category' => 'Type of Questions',
+	'category' => 'Category Name',
+	'number_of_items' => 'Number of items to show',
+	'width' => 'Width',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
+	'widget_order' => 'Question Order',
+	'widget_ask_box' => 'Include ask box',
+	'twitter_hashtag' => 'wikianswers',
+	'twitter_ask' => 'Ask on Twitter',
+	'facebook_ask' => 'Ask on Facebook',
+	'facebook_send_request' => 'Send Directly to Friends',
+	'ask_friends' => 'Ask your friends to help answer:',
+	'facebook_send_request_content' => 'Can you help answer this? $1',
+	'facebook_signed_in' => 'You are signed into Facebook Connect',
+	'ads_by_google' => 'Ads by Google',
+	'magic_answer_headline' => 'Does this answer your question?',
+	'magic_answer_yes' => 'Yes, use this as a starting point',
+	'magic_answer_no' => "No, don't use this",
+	'magic_answer_credit' => 'Provided by Yahoo Answers',
+	'ask_friends_on_twitter' => 'Ask Friends on <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Quick Action Panel',
+	'categorize' => 'Categorize',
+	'categorize_help' => 'One category per line',
+	'auto_friend_request_body' => 'Will you add me as a friend?',
+	'q' => '<!-- -->',
+	'?' => '?',
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... plus $1 more helpers',
+	'anwb-step1-headline' => "What's your wiki about?",
+	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
+	'anwb-choose-logo' => 'Choose your logo',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
+	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
+	'anwb-fp-headline' => 'Create some questions!',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'nwb-thatisall-headline' => "That's it - you're done!",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
+	'anwb-save-tagline' => 'Save tagline',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-toolbox-button' => 'Answer a random question',
+	'qa-toolbox-share' => 'Share',
+	'qa-toolbox-tools' => 'Advanced tools»',
+	'qa-toolbox-protect' => 'Protect this question',
+	'qa-toolbox-delete' => 'Delete this question',
+	'qa-toolbox-history' => 'Past versions of this page',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
+	'answers-custom' => 'Custom',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
+$messages['ko'] = array(
+	'a' => '답변:',
+	'ads_by_google' => 'Google 광고',
+	'anonymous_edit_points' => '$1명의 익명 기여자',
+	'answer_this' => '이 질문에 대한 총체적인 답변을 잘 모르시더라도 <a href="$1">답변을 달아보세요</a>',
+	'answer_this_question' => '이 질문에 답변하기:',
+	'answer_title' => '답변',
+	'answered_category' => '답변이 등록된 질문',
+	'answering_tips' => '<h3>답변 달기 팁:</h3> 답변을 다실 때는 최대한 분명하게 하셔야 합니다. 위키백과와 같은 다른 곳을 출처로 하실 수도 있으며, 이런 경우에는 참조한 곳의 링크를 넣어주시는 것이 좋습니다. {{SITENAME}}에 기여해주셔서 감사합니다!',
+	'answers-category-count-answered' => '이 분류에는 $1개의 답변이 등록된 질문이 있습니다.',
+	'answers-category-count-unanswered' => '이 분류에는 $1개의 답변이 등록되지 않은 질문이 있습니다.',
+	'ask_a_question-widget' => '질문을 입력해주세요...',
+	'ask_a_question' => '{{SITENAME}}에 오신 것을 환영합니다. 무엇을 알고 싶으신가요?',
+	'ask_button' => '질문하기',
+	'background_color' => '배경색',
+	'createaccount-captcha' => '아래에 단어를 입력하세요',
+	'edit_points' => '포인트',
+	'facebook_ask' => 'Facebook에 문의하기',
+	'facebook_send_request' => 'Facebook 친구들에게 바로 보내기',
+	'facebook_signed_in' => 'Facebook 연동 기능을 사용하여 로그인했습니다.',
+	'new_question_comment' => '새 질문',
+	'next_page' => '다음 &raquo;',
+	'no_related_answered_questions' => '관련된 질문이 없습니다.',
+	'prev_page' => '&laquo; 이전',
+	'qa-toolbox-button' => '임의의 질문에 답변하기',
+	'qa-toolbox-delete' => '이 질문 삭제하기',
+	'qa-toolbox-share' => '공유',
+	'qa-toolbox-tools' => '고급 도구»',
+	'question_redirected_help_page' => '왜 제 질문이 여기로 넘어온거죠',
+	'recent_answered_questions' => '최근에 답변이 달린 질문',
+	'recent_asked_questions' => '최근에 생성한 질문',
+	'recent_edited_questions' => '최근에 편집한 질문',
+	'recent_unanswered_questions' => '최근에 생성된 질문',
+	'related_answered_questions' => '관련된 답변이 달린 질문',
+	'related_questions' => '관련 질문',
+	'unanswered_category' => '답변이 등록되지 않은 질문',
+	'answers-desc' => "Wikia's Answer site extension",
+	'answered_by' => 'Answered by',
+	'unregistered' => 'Unregistered',
+	'in_category' => '...in category',
+	'ask_thanks' => "Thanks for the rockin' question!",
+	'question_asked_by' => 'Question asked by',
+	'question_asked_by_a_wikia_user' => 'Question asked by a FANDOM user',
+	'answers_toolbox' => '{{SITENAME}} toolbox',
+	'improve_this_answer' => 'Improve this answer',
+	'notify_improved' => 'Email me when improved',
+	'research_this' => 'Research this',
+	'notify_answered' => 'Email me when answered',
+	'popular_categories' => 'Popular Categories',
+	'inline-register-title' => 'Notify me when my question is answered!',
+	'inline-welcome' => 'Welcome to Wikianswers',
+	'skip_this' => 'Skip this',
+	'see_all_changes' => 'See all changes',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'no_questions_found' => 'No questions found',
+	'widget_settings' => 'Question Settings',
+	'style_settings' => 'Style Settings',
+	'get_widget_title' => 'Add Questions to your site',
+	'widget_category' => 'Type of Questions',
+	'category' => 'Category Name',
+	'custom_category' => 'Custom Category',
+	'number_of_items' => 'Number of items to show',
+	'width' => 'Width',
+	'see_all' => 'See all',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
+	'widget_order' => 'Question Order',
+	'widget_ask_box' => 'Include ask box',
+	'twitter_hashtag' => 'wikianswers',
+	'twitter_ask' => 'Ask on Twitter',
+	'ask_friends' => 'Ask your friends to help answer:',
+	'facebook_send_request_content' => 'Can you help answer this? $1',
+	'magic_answer_headline' => 'Does this answer your question?',
+	'magic_answer_yes' => 'Yes, use this as a starting point',
+	'magic_answer_no' => "No, don't use this",
+	'magic_answer_credit' => 'Provided by Yahoo Answers',
+	'rephrase' => 'Rephrase this question',
+	'rephrase_this' => '<a href="$1" $2>Reword the question</a>',
+	'question_not_answered' => 'This question has not been answered',
+	'you_can' => 'You can:',
+	'research_this_on_wikipedia' => '<a href="$1">Research this question</a> on Wikipedia',
+	'receive_email' => '<a href="$1" $2>Receive an email</a> when this question is answered',
+	'ask_friends_on_twitter' => 'Ask Friends on <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Quick Action Panel',
+	'categorize' => 'Categorize',
+	'categorize_help' => 'One category per line',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Ask a question on <a href="http://answers.wikia.com/wiki/Wikianswers">Wikianswers</a> or <a href="http://www.wikia.com/Special:CreateAnswers">start your own answers site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
+	'reword_this' => '<a href="$1" $2>Reword this question</a>',
+	'auto_friend_request_body' => 'Will you add me as a friend?',
+	'tog-hidefromattribution' => 'Hide my avatar and name from attribution list',
+	'q' => '<!-- -->',
+	'?' => '?',
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... plus $1 more helpers',
+	'anwb-step1-headline' => "What's your wiki about?",
+	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
+	'anwb-choose-logo' => 'Choose your logo',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
+	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
+	'anwb-fp-headline' => 'Create some questions!',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'nwb-thatisall-headline' => "That's it - you're done!",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
+	'anwb-save-tagline' => 'Save tagline',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-toolbox-protect' => 'Protect this question',
+	'qa-toolbox-history' => 'Past versions of this page',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
+	'answers-custom' => 'Custom',
+);
+
 $messages['lb'] = array(
 	'answer_title' => 'Äntwert',
 	'ask_a_question' => 'Eng Fro stellen...',
@@ -1192,9 +3528,135 @@ $messages['lb'] = array(
 	'reword_this' => '<a href="$1" $2>Dës Fro nei formuléieren</a>',
 );
 
-/** Lithuanian (Lietuvių)
- * @author Eitvys200
- */
+$messages['lol'] = array(
+	'answers-desc' => 'crwdns65074:0crwdne65074:0',
+	'answer_title' => 'crwdns65075:0crwdne65075:0',
+	'answered_by' => 'crwdns65076:0crwdne65076:0',
+	'unregistered' => 'crwdns65077:0crwdne65077:0',
+	'anonymous_edit_points' => 'crwdns65078:0{PLURAL:$1|helper|helpers}crwdne65078:0',
+	'edit_points' => 'crwdns65079:0{PLURAL:$1|edit point|edit points}crwdne65079:0',
+	'ask_a_question' => 'crwdns65080:0{{SITENAME}}crwdne65080:0',
+	'ask_a_question-widget' => 'crwdns65081:0crwdne65081:0',
+	'in_category' => 'crwdns65082:0crwdne65082:0',
+	'ask_button' => 'crwdns65083:0crwdne65083:0',
+	'ask_thanks' => 'crwdns65084:0crwdne65084:0',
+	'question_asked_by' => 'crwdns65085:0crwdne65085:0',
+	'question_asked_by_a_wikia_user' => 'crwdns66473:0crwdne66473:0',
+	'new_question_comment' => 'crwdns65087:0crwdne65087:0',
+	'answers_toolbox' => 'crwdns65088:0{{SITENAME}}crwdne65088:0',
+	'improve_this_answer' => 'crwdns65089:0crwdne65089:0',
+	'answer_this_question' => 'crwdns65090:0crwdne65090:0',
+	'notify_improved' => 'crwdns65091:0crwdne65091:0',
+	'research_this' => 'crwdns65092:0crwdne65092:0',
+	'notify_answered' => 'crwdns65093:0crwdne65093:0',
+	'recent_asked_questions' => 'crwdns65094:0crwdne65094:0',
+	'recent_answered_questions' => 'crwdns65095:0crwdne65095:0',
+	'recent_edited_questions' => 'crwdns65096:0crwdne65096:0',
+	'unanswered_category' => 'crwdns65097:0crwdne65097:0',
+	'answered_category' => 'crwdns65098:0crwdne65098:0',
+	'related_questions' => 'crwdns65099:0crwdne65099:0',
+	'related_answered_questions' => 'crwdns65100:0crwdne65100:0',
+	'recent_unanswered_questions' => 'crwdns65101:0crwdne65101:0',
+	'popular_categories' => 'crwdns65102:0crwdne65102:0',
+	'createaccount-captcha' => 'crwdns65103:0crwdne65103:0',
+	'inline-register-title' => 'crwdns65104:0crwdne65104:0',
+	'inline-welcome' => 'crwdns65105:0crwdne65105:0',
+	'skip_this' => 'crwdns65106:0crwdne65106:0',
+	'see_all_changes' => 'crwdns65107:0crwdne65107:0',
+	'toolbox_anon_message' => 'crwdns65108:0crwdne65108:0',
+	'no_questions_found' => 'crwdns65109:0crwdne65109:0',
+	'widget_settings' => 'crwdns65110:0crwdne65110:0',
+	'style_settings' => 'crwdns65111:0crwdne65111:0',
+	'get_widget_title' => 'crwdns65112:0crwdne65112:0',
+	'background_color' => 'crwdns65113:0crwdne65113:0',
+	'widget_category' => 'crwdns65114:0crwdne65114:0',
+	'category' => 'crwdns65115:0crwdne65115:0',
+	'custom_category' => 'crwdns65116:0crwdne65116:0',
+	'number_of_items' => 'crwdns65117:0crwdne65117:0',
+	'width' => 'crwdns65118:0crwdne65118:0',
+	'next_page' => 'crwdns65119:0crwdne65119:0',
+	'prev_page' => 'crwdns65120:0crwdne65120:0',
+	'see_all' => 'crwdns65121:0crwdne65121:0',
+	'get_code' => 'crwdns65122:0crwdne65122:0',
+	'link_color' => 'crwdns65123:0crwdne65123:0',
+	'widget_order' => 'crwdns65124:0crwdne65124:0',
+	'widget_ask_box' => 'crwdns65125:0crwdne65125:0',
+	'question_redirected_help_page' => 'crwdns65126:0crwdne65126:0',
+	'twitter_hashtag' => 'crwdns65127:0crwdne65127:0',
+	'twitter_ask' => 'crwdns65128:0crwdne65128:0',
+	'facebook_ask' => 'crwdns65129:0crwdne65129:0',
+	'facebook_send_request' => 'crwdns65130:0crwdne65130:0',
+	'ask_friends' => 'crwdns65131:0crwdne65131:0',
+	'facebook_send_request_content' => 'crwdns65132:0crwdne65132:0',
+	'facebook_signed_in' => 'crwdns65133:0crwdne65133:0',
+	'ads_by_google' => 'crwdns65134:0crwdne65134:0',
+	'magic_answer_headline' => 'crwdns65135:0crwdne65135:0',
+	'magic_answer_yes' => 'crwdns65136:0crwdne65136:0',
+	'magic_answer_no' => 'crwdns65137:0crwdne65137:0',
+	'magic_answer_credit' => 'crwdns65138:0crwdne65138:0',
+	'rephrase' => 'crwdns65139:0crwdne65139:0',
+	'rephrase_this' => 'crwdns65140:0crwdne65140:0',
+	'question_not_answered' => 'crwdns65141:0crwdne65141:0',
+	'you_can' => 'crwdns65142:0crwdne65142:0',
+	'answer_this' => 'crwdns65143:0crwdne65143:0',
+	'research_this_on_wikipedia' => 'crwdns65144:0crwdne65144:0',
+	'receive_email' => 'crwdns65145:0crwdne65145:0',
+	'ask_friends_on_twitter' => 'crwdns65146:0crwdne65146:0',
+	'quick_action_panel' => 'crwdns65147:0crwdne65147:0',
+	'categorize' => 'crwdns65148:0crwdne65148:0',
+	'categorize_help' => 'crwdns65149:0crwdne65149:0',
+	'answers_widget_admin_note' => 'crwdns65150:0{{int:Answers widget user note}}crwdne65150:0',
+	'answers_widget_user_note' => 'crwdns65151:0crwdne65151:0',
+	'answers_widget_anon_note' => 'crwdns65152:0{{int:Answers widget user note}}crwdne65152:0',
+	'answers-category-count-answered' => 'crwdns65153:0crwdne65153:0',
+	'answers-category-count-unanswered' => 'crwdns65154:0crwdne65154:0',
+	'answers_widget_no_questions' => 'crwdns65155:0crwdne65155:0',
+	'answers_widget_no_questions_askabout' => 'crwdns65156:0crwdne65156:0',
+	'reword_this' => 'crwdns65157:0crwdne65157:0',
+	'no_related_answered_questions' => 'crwdns65158:0crwdne65158:0',
+	'auto_friend_request_body' => 'crwdns65159:0crwdne65159:0',
+	'tog-hidefromattribution' => 'crwdns65160:0crwdne65160:0',
+	'q' => 'crwdns65161:0crwdne65161:0',
+	'a' => 'crwdns65162:0crwdne65162:0',
+	'?' => 'crwdns65163:0crwdne65163:0',
+	'answering_tips' => 'crwdns65164:0{{SITENAME}}crwdne65164:0',
+	'header_questionmark_pre' => 'crwdns65165:0crwdne65165:0',
+	'header_questionmark_post' => 'crwdns65166:0crwdne65166:0',
+	'plus_x_more_helpers' => 'crwdns65167:0crwdne65167:0',
+	'anwb-step1-headline' => 'crwdns65168:0crwdne65168:0',
+	'anwb-step1-text' => 'crwdns65169:0crwdne65169:0',
+	'anwb-step1-example' => 'crwdns65170:0crwdne65170:0',
+	'anwb-choose-logo' => 'crwdns65171:0crwdne65171:0',
+	'anwb-step2-text' => 'crwdns65172:0{{SITENAME}}crwdne65172:0',
+	'anwb-step2-example' => 'crwdns65173:0crwdne65173:0',
+	'anwb-fp-headline' => 'crwdns65174:0crwdne65174:0',
+	'anwb-fp-text' => 'crwdns65175:0crwdne65175:0',
+	'anwb-fp-example' => 'crwdns65176:0crwdne65176:0',
+	'nwb-thatisall-headline' => 'crwdns65177:0crwdne65177:0',
+	'anwb-thatisall-text' => 'crwdns65178:0crwdne65178:0',
+	'anwb-logo-preview' => 'crwdns65179:0crwdne65179:0',
+	'anwb-save-tagline' => 'crwdns65180:0crwdne65180:0',
+	'badWords' => 'crwdns65181:0crwdne65181:0',
+	'qa-toolbox-button' => 'crwdns65182:0crwdne65182:0',
+	'qa-toolbox-share' => 'crwdns65183:0crwdne65183:0',
+	'qa-toolbox-tools' => 'crwdns65184:0crwdne65184:0',
+	'qa-toolbox-protect' => 'crwdns65185:0crwdne65185:0',
+	'qa-toolbox-delete' => 'crwdns65186:0crwdne65186:0',
+	'qa-toolbox-history' => 'crwdns65187:0crwdne65187:0',
+	'qa-featured-sites' => 'crwdns65188:0crwdne65188:0',
+	'answers_skins' => 'crwdns65189:0crwdne65189:0',
+	'answers-bluebell' => 'crwdns65190:0crwdne65190:0',
+	'answers-leaf' => 'crwdns65191:0crwdne65191:0',
+	'answers-carnation' => 'crwdns65192:0crwdne65192:0',
+	'answers-sky' => 'crwdns65193:0crwdne65193:0',
+	'answers-spring' => 'crwdns65194:0crwdne65194:0',
+	'answers-forest' => 'crwdns65195:0crwdne65195:0',
+	'answers-moonlight' => 'crwdns65196:0crwdne65196:0',
+	'answers-carbon' => 'crwdns65197:0crwdne65197:0',
+	'answers-obsession' => 'crwdns65198:0crwdne65198:0',
+	'answers-custom' => 'crwdns65199:0crwdne65199:0',
+);
+
 $messages['lt'] = array(
 	'answer_title' => 'Atsakyti',
 	'answered_by' => 'Atsakė',
@@ -1275,9 +3737,6 @@ $messages['lt'] = array(
 	'answers-custom' => 'Pasirinktinis',
 );
 
-/** Macedonian (Македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = array(
 	'answer_title' => 'Одговори',
 	'answered_by' => 'Одговорено од',
@@ -1410,9 +3869,6 @@ $messages['mk'] = array(
 	'answers-custom' => 'Прилагодено',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = array(
 	'answer_title' => 'Jawapan',
 	'answered_by' => 'Dijawab oleh',
@@ -1542,17 +3998,14 @@ $messages['ms'] = array(
 	'answers-custom' => 'Tersuai',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
- * @author Audun
- */
 $messages['nb'] = array(
 	'answer_title' => 'Svar',
 	'answered_by' => 'Besvart av',
 	'unregistered' => 'Uregistrert',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|hjelper|hjelpere}}',
 	'edit_points' => '{{PLURAL:$1|redigeringspoeng|redigeringspoeng}}',
-	'ask_a_question' => 'Still et spørsmål...',
-	'ask_a_question-widget' => 'Still et spørsmål...',
+	'ask_a_question' => 'Spør på WikiSvar',
+	'ask_a_question-widget' => 'Spør på WikiSvar',
 	'in_category' => '... i kategorien',
 	'ask_button' => 'Spør',
 	'ask_thanks' => 'Takk for det fantastiske spørsmålet!',
@@ -1621,13 +4074,13 @@ $messages['nb'] = array(
 	'quick_action_panel' => 'Hurtighandlingspanel',
 	'categorize' => 'Kategorisér',
 	'categorize_help' => 'Én kategori per linje',
-	'answers_widget_admin_note' => '<b>Administratorer:</b> Hvis du ønsker å bli en administrator på <a href="http://answers.wikia.com" target="_blank">WikiSvar</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klikk her</a>.',
-	'answers_widget_user_note' => 'Kan du hjelpe til ved å bli en <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">kategoriredaktør</a> på <a href="http://answers.wikia.com" target="_blank">WikiSvar</a>?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">WikiSvar</a> er en spør-og-svar-wiki hvor svarene forbedres på wiki-vis.',
+	'answers_widget_admin_note' => '<a href="http://svar.wikia.com">WikiSvar</a> trenger flere administratorer. <a href="http://svar.wikia.com/wiki/WikiSvar:Administratorer">Finn ut mer her.</a>',
+	'answers_widget_user_note' => 'Kan du hjelpe til med å bli en <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
+	'answers_widget_anon_note' => '<a href="http://svar.wikia.com" target="_blank">WikiSvar er en spør-og-svar-wiki der alle svar kan forbedres, av hvem som helst.</a>',
 	'answers-category-count-answered' => 'Denne kategorien inneholder $1 besvarte {{PLURAL:$1|spørsmål|spørsmål}}.',
 	'answers-category-count-unanswered' => 'Denne kategorien inneholder $1 ubesvarte {{PLURAL:$1|spørsmål|spørsmål}}.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">WikiSvar</a> er en side hvor du kan stille spørsmål og bidra med svar. Vi tar sikte på å ha det beste svaret på ethvert spørsmål. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Finn</a> og besvar <a href="http://answers.wikia.com/wiki/Kategori:Ubesvarte_spørsmål">ubesvarte</a> spørsmål. Det er en wiki – så vær modig!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om «{{PAGENAME}}»',
+	'answers_widget_no_questions' => 'Hjelp oss å skape det beste svaret til hvilket som helst <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">spørsmål</a> på <a href="http://svar.wikia.com/" target="_blank">WikiSvar</a>.<br/><br/><a href="http://svar.wikia.com/wiki/Spesial:Søk" target="_blank">Finn</a> og besvar <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">ubesvarte spørsmål</a>.',
+	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Omformuler dette spørsmålet</a>',
 	'no_related_answered_questions' => 'Det er ingen relaterte spørsmål ennå. Få et <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">tilfeldig besvart spørsmål istedenfor</a>, eller still et nytt!<br />
 <div class="createbox" align="center">
@@ -1677,18 +4130,12 @@ $messages['nb'] = array(
 	'answers-custom' => 'Egendefinert',
 );
 
-/** Dutch (Nederlands)
- * @author MarkvA
- * @author McDutchie
- * @author SPQRobin
- * @author Siebrand
- */
 $messages['nl'] = array(
 	'answer_title' => 'Antwoord',
 	'answered_by' => 'Beantwoord door',
 	'unregistered' => 'Niet-geregistreerd',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
-	'edit_points' => '{{PLURAL:$1|bewerkingspunt|bewerkingspuntent}}',
+	'edit_points' => '{{PLURAL:$1|bewerk punt|bewerk punten}}',
 	'ask_a_question' => 'Stel een vraag...',
 	'ask_a_question-widget' => 'Stel een vraag...',
 	'in_category' => '...in categorie',
@@ -1697,7 +4144,7 @@ $messages['nl'] = array(
 	'question_asked_by' => 'Vraag gesteld door',
 	'question_asked_by_a_wikia_user' => 'Vraag gesteld door een Wikia-gebruiker',
 	'new_question_comment' => 'nieuwe vraag',
-	'answers_toolbox' => 'Wikiantwoordenpaneel',
+	'answers_toolbox' => 'Wikianswers toolbox',
 	'improve_this_answer' => 'Dit antwoord verbeteren',
 	'answer_this_question' => 'Deze vraag beantwoorden:',
 	'notify_improved' => 'E-mail mij als een antwoord wordt verbeterd',
@@ -1759,13 +4206,13 @@ $messages['nl'] = array(
 	'quick_action_panel' => 'Snelle handelingen',
 	'categorize' => 'Categorie toewijzen',
 	'categorize_help' => 'Eén categorie per regel',
-	'answers_widget_admin_note' => '<b>Beheerders:</b> als u beheerder wilt worden op <a href="http://answers.wikia.com" target="_blank">Wikiantwoorden</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klik hier</a>.',
-	'answers_widget_user_note' => 'Kunt u helpen door een <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">categorieredacteur</a> te worden op <a href="http://answers.wikia.com" target="_blank">WikiAntwoorden</a>?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">WikiAntwoorden</a> is een vraag en antwoordwiki waar antwoorden op wikiwijze worden verbeterd.',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Stel een vraag op <a href="http://antwoorden.wikia.com/wiki/Wikiantwoorden">Wikiantwoorden</a> of <a href="http://www.wikia.com/Special:CreateAnswers?uselang=nl">begin je eigen antwoorden site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
 	'answers-category-count-answered' => 'Deze categorie bevat $1 beantwoorde {{PLURAL:$1|vraag|vragen}}.',
 	'answers-category-count-unanswered' => 'Deze categorie bevat $1 onbeantwoorde {{PLURAL:$1|vraag|vragen}}.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">WikiAntwoorden</a> is een site waar u vragen kunt stellen en kunt bijdragen aan antwoorden. We willen graag het beste antwoord op iedere vraag hebben. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Zoek</a> en beantwoord <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">vragen</a>. Het is een wiki, dus doe het gewoon!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Begin door een vraag te stellen over "{{PAGENAME}}"',
+	'answers_widget_no_questions' => 'Help ons om het beste antwoord te maken voor <a href="http://antwoorden.wikia.com/wiki/Categorie:Onbeantwoorde_vragen" target="_blank">vragen</a> op <b><a href="http://antwoorden.wikia.com/wiki/Wikiantwoorden" target="_blank">Wikiantwoorden</a>.</b><br><br><a href="http://antwoorden.wikia.com/wiki/Special:Search" target="_blank">Vind</a> en beantwoord <a href="http://antwoorden.wikia.com/wiki/Categorie:Onbeantwoorde_vragen" target="_blank">onbeantwoorde vragen</a>.',
+	'answers_widget_no_questions_askabout' => '<br><br>Begin door een vraag te stellen over "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Vraag herformuleren</a>',
 	'no_related_answered_questions' => 'Er zijn nog geen gerelateerde vragen. Bekijk in plaats daarvan <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">een willekeurige beantwoorde vraag</a> of stel een nieuwe vraag!<br />
 <div class="createbox" align="center">
@@ -1810,25 +4257,351 @@ $messages['nl'] = array(
 	'answers-carbon' => 'Koolstof',
 	'answers-obsession' => 'Obsessie',
 	'answers-custom' => 'Aangepast',
+	'answers-desc' => "Wikia's Answer site extension",
+	'q' => '<!-- -->',
+	'?' => '?',
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-featured-sites' => '-',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
- * @author Siebrand
- */
 $messages['nl-informal'] = array(
 	'answers_widget_user_note' => 'Kan jij helpen door een <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">categorieredacteur</a> te worden op <a href="http://answers.wikia.com" target="_blank">WikiaAntwoorden</a>?',
 	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">WikiAntwoorden</a> is een site waar je vragen kunt stellen en kunt bijdragen aan antwoorden. We willen graag het beste antwoord op iedere vraag hebben. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Zoek</a> en beantwoord <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">vragen</a>. Het is een wiki, dus doe het gewoon!',
 );
 
-/** Occitan (Occitan) */
+$messages['nn'] = array(
+	'answers_widget_admin_note' => '<a href="http://svar.wikia.com">WikiSvar</a> treng fleire administratorar. <a href="http://svar.wikia.com/wiki/WikiSvar:Administratorer">Finn ut meir her.</a>',
+	'answers_widget_anon_note' => '<a href="http://svar.wikia.com" target="_blank">WikiSvar er ein spør-og-svar-wiki der alle svar kan forbedras, av kven som helst.</a>',
+	'answers_widget_no_questions' => 'Hjelp oss å skape det beste svaret til hvilket som helst <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">spørsmål</a> på <a href="http://svar.wikia.com/" target="_blank">WikiSvar</a>.<br/><br/><a href="http://svar.wikia.com/wiki/Spesial:Søk" target="_blank">Finn</a> og besvar <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">ubesvarte spørsmål</a>.',
+	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om "{{PAGENAME}}"',
+	'answers_widget_user_note' => 'Kan du hjelpe med med å bli ein <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
+	'ask_a_question-widget' => 'Spør på WikiSvar',
+	'ask_a_question' => 'Spør på WikiSvar',
+	'unanswered_category' => 'Ubesvarte spørsmål',
+);
+
+$messages['no'] = array(
+	'question_asked_by_a_wikia_user' => 'Spørsmål stilt av en Wikia-bruker',
+	'ads_by_google' => 'Ads fra Google',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|hjelper|hjelpere}}',
+	'answer_this' => 'Svar på dette spørsmålet',
+	'answer_this_question' => '<a href="$1">Svar på dette spørsmålet</a>, selv om du ikke vet hele svaret',
+	'answer_title' => 'Svar',
+	'answered_by' => 'Besvart av',
+	'answered_category' => 'Besvarte spørsmål',
+	'answers-category-count-answered' => 'Denne kategorien inneholder $1 besvarte spørsmål.',
+	'answers-category-count-unanswered' => 'Denne kategorien inneholder $1 ubesvarte spørsmål.',
+	'answers_toolbox' => 'Wikisvar verktøy',
+	'answers_widget_admin_note' => '<a href="http://svar.wikia.com">WikiSvar</a> trenger flere administratorer. <a href="http://svar.wikia.com/wiki/WikiSvar:Administratorer">Finn ut mer her.</a>',
+	'answers_widget_anon_note' => '<a href="http://svar.wikia.com" target="_blank">WikiSvar er en spør-og-svar-wiki der alle svar kan forbedres, av hvem som helst.</a>',
+	'answers_widget_no_questions' => 'Hjelp oss å skape det beste svaret til hvilket som helst <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">spørsmål</a> på <a href="http://svar.wikia.com/" target="_blank">WikiSvar</a>.<br/><br/><a href="http://svar.wikia.com/wiki/Spesial:Søk" target="_blank">Finn</a> og besvar <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">ubesvarte spørsmål</a>.',
+	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om «{{PAGENAME}}»',
+	'answers_widget_user_note' => 'Kan du hjelpe til med å bli en <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
+	'ask_a_question-widget' => 'Spør på WikiSvar',
+	'ask_a_question' => 'Spør på WikiSvar',
+	'ask_button' => 'Spør',
+	'ask_friends' => 'Spør vennen din om å besvare:',
+	'ask_friends_on_twitter' => 'Spør venner på <a href="$1" $2>Twitter</a>',
+	'ask_thanks' => 'Takk for det råbra spørsmålet!',
+	'auto_friend_request_body' => 'Vil du legge meg til som venn?',
+	'background_color' => 'Bakgrunnsfarge',
+	'categorize' => 'Kategoriser',
+	'categorize_help' => 'Én kategori per linje',
+	'category' => 'Kategorinavn',
+	'createaccount-captcha' => 'Vennligst skriv ordet under',
+	'custom_category' => 'Egendefinert kategori',
+	'edit_points' => '{{PLURAL:$1|redigeringspoeng|redigeringspoeng}}',
+	'facebook_ask' => 'Spør på Facebook',
+	'facebook_send_request' => 'Send direkte til venner',
+	'facebook_send_request_content' => 'Kan du hjelpe til med å besvare dette? $1',
+	'facebook_signed_in' => 'Du er logget inn i Facebook Connect',
+	'get_code' => 'Få kode',
+	'get_widget_title' => 'Legg til spørsmål på siden din',
+	'improve_this_answer' => 'Forbedre dette svaret',
+	'in_category' => '...i kategorien',
+	'inline-register-title' => 'Meld fra til meg når spørsmålet mitt blir besvart!',
+	'inline-welcome' => 'Velkommen til Wikisvar',
+	'link_color' => 'Lenkefarge for spørsmål',
+	'magic_answer_credit' => 'Skaffet til rette av Yahoo Answers',
+	'magic_answer_headline' => 'Besvarer dette spørsmålet ditt?',
+	'magic_answer_no' => 'Nei, ikke bruk dette',
+	'magic_answer_yes' => 'Ja, bruk dette som utgangspunkt',
+	'new_question_comment' => 'nytt spørsmål',
+	'next_page' => 'Neste &raquo;',
+	'no_questions_found' => 'Ingen spørsmål funnet',
+	'no_related_answered_questions' => 'Det er ingen relaterte spørsmål ennå.',
+	'notify_answered' => 'Send meg en e-post når besvart',
+	'notify_improved' => 'Send meg en e-post når forbedret',
+	'number_of_items' => 'Antall objekter å vise',
+	'popular_categories' => 'Populære kategorier',
+	'prev_page' => '&laquo; Forrige',
+	'question_asked_by' => 'Spørsmål stilt av',
+	'question_not_answered' => 'Dette spørsmålet har ikke blitt besvart',
+	'question_redirected_help_page' => 'Hvorfor ble spørsmålet mitt videreført hit',
+	'quick_action_panel' => 'Hurtighandlingspanel',
+	'receive_email' => '<a href="$1" $2>Motta en e-post</a> når dette spørsmålet blir besvart',
+	'recent_answered_questions' => 'Nylig besvarte spørsmål',
+	'recent_asked_questions' => 'Nylig stile spørsmål',
+	'recent_edited_questions' => 'Nylig endrede spørsmål',
+	'recent_unanswered_questions' => 'Nylig ubesvarte spørsmål',
+	'related_answered_questions' => 'Liknende besvarte spørsmål',
+	'related_questions' => 'Liknende spørsmål',
+	'rephrase' => 'Omformuler dette spørsmålet',
+	'rephrase_this' => '<a href="$1" $2>Omformuler spørsmålet</a>',
+	'research_this' => 'Undersøk dette',
+	'research_this_on_wikipedia' => '<a href="$1">Undersøk dette spørsmålet</a> på Wikipedia',
+	'reword_this' => '<a href="$1" $2>Omformuler dette spørsmålet</a>',
+	'unanswered_category' => 'Ubesvarte spørsmål',
+	'unregistered' => 'Uregistrert',
+	'you_can' => 'Du kan:',
+);
+
 $messages['oc'] = array(
 	'research_this' => 'Recercar aquò',
 );
 
-/** Polish (Polski)
- * @author Sovq
- * @author Woytecr
- */
 $messages['pl'] = array(
 	'answer_title' => 'Odpowiedz',
 	'answered_by' => 'Odpowiedział',
@@ -1839,31 +4612,31 @@ $messages['pl'] = array(
 	'in_category' => '...w kategorii',
 	'ask_button' => 'Zapytaj',
 	'ask_thanks' => 'Dziękujemy za pytanie!',
-	'question_asked_by' => 'Pytanie zadał',
-	'question_asked_by_a_wikia_user' => 'Pytanie zadana przez użytkownika Wikia',
+	'question_asked_by' => 'Pytanie zadane przez',
+	'question_asked_by_a_wikia_user' => 'Pytanie zadane przez użytkownika Fandomu',
 	'new_question_comment' => 'nowe pytanie',
 	'answers_toolbox' => 'Narzędzia Wikianswers',
-	'improve_this_answer' => 'Popraw tą odpowiedź',
+	'improve_this_answer' => 'Rozwiń odpowiedź',
 	'answer_this_question' => 'Odpowiedz na to pytanie:',
-	'notify_improved' => 'Wyślij e-mail przy poprawie',
-	'research_this' => 'Wyszukaj',
-	'notify_answered' => 'Wyślij e-mail przy odpowiedzi',
+	'notify_improved' => 'Powiadom mnie e-mailem o zmianie odpowiedzi',
+	'research_this' => 'Przeszukaj',
+	'notify_answered' => 'Wyślij do mnie e-mail, gdy pojawi się odpowiedź',
 	'recent_asked_questions' => 'Ostatnio zadawane pytania',
-	'recent_answered_questions' => 'Ostatnie pytania na które odpowiedziano',
+	'recent_answered_questions' => 'Najnowsze odpowiedzi na pytania',
 	'recent_edited_questions' => 'Ostatnio edytowane pytania',
 	'unanswered_category' => 'Pytania bez odpowiedzi',
 	'answered_category' => 'Pytania z odpowiedziami',
 	'related_questions' => 'Podobne pytania',
-	'related_answered_questions' => 'Odpowiedzi na powiązane pytania',
+	'related_answered_questions' => 'Podobne pytania z odpowiedzią',
 	'recent_unanswered_questions' => 'Ostatnie pytania bez odpowiedzi',
 	'popular_categories' => 'Popularne Kategorie',
-	'createaccount-captcha' => 'Wpisz słowo poniżej',
+	'createaccount-captcha' => 'Wpisz słowo z obrazka',
 	'inline-register-title' => 'Powiadom mnie gdy zostanie udzielona odpowiedź',
 	'inline-welcome' => 'Witamy w Wikianswers',
 	'skip_this' => 'Pomiń',
 	'see_all_changes' => 'Zobacz wszystkie zmiany',
 	'toolbox_anon_message' => '<i>"Wikianswers wykorzystuje unikatowe rozwiązania wiki aby udzielać najlepszych odpowiedzi na każde pytanie"</i><br /><br /> <b>Jimmy Wales</b><br>założyciel Wikipedii i Wikianswers',
-	'no_questions_found' => 'Nie znaleziono pytania',
+	'no_questions_found' => 'Nie znaleziono pytań',
 	'widget_settings' => 'Ustawienia pytań',
 	'style_settings' => 'Ustawienia stylu',
 	'get_widget_title' => 'Dodaj Pytania do swojej strony',
@@ -1874,17 +4647,17 @@ $messages['pl'] = array(
 	'number_of_items' => 'Liczba elementów do wyświetlenia',
 	'width' => 'Szerokość',
 	'next_page' => 'Następne &raquo;',
-	'prev_page' => '&laquo; Poprzednie',
+	'prev_page' => '&laquo; Poprzednia',
 	'see_all' => 'Zobacz wszystkie',
 	'link_color' => 'Kolor linku pytania',
 	'widget_order' => 'Kolejność Pytań',
-	'question_redirected_help_page' => 'Dlaczego moje pytanie przekierowano tutaj',
+	'question_redirected_help_page' => 'Dlaczego moje pytanie zostało tutaj przekierowane',
 	'twitter_hashtag' => 'wikianswers',
 	'twitter_ask' => 'Zapytaj na Twitterze',
 	'facebook_ask' => 'Zapytaj na Facebooku',
-	'facebook_send_request' => 'Wyślij do Znajomych',
+	'facebook_send_request' => 'Wyślij bezpośrednio do znajomych',
 	'ask_friends' => 'Poproś znajomych aby pomogli odpowiedzieć:',
-	'facebook_send_request_content' => 'Możesz pomóc w odpowiedzi? $1',
+	'facebook_send_request_content' => 'Możesz pomóc odpowiedzieć na to? $1',
 	'ads_by_google' => 'Reklamy Google',
 	'magic_answer_headline' => 'Czy to wystarczająca odpowiedź?',
 	'magic_answer_yes' => 'Tak, użyj tego jako punkt wyjścia',
@@ -1892,22 +4665,323 @@ $messages['pl'] = array(
 	'magic_answer_credit' => 'Dostarczone przez Yahoo Answers',
 	'rephrase' => 'Sformułuj to pytanie inaczej',
 	'rephrase_this' => '<a href="$1" $2>Sformułuj to pytanie inaczej</a>',
-	'question_not_answered' => 'Na to pytanie nie udzielono odpowiedzi',
+	'question_not_answered' => 'Na to pytanie nie została udzielona odpowiedź',
 	'you_can' => 'Możesz:',
 	'answer_this' => '<a href="$1">Odpowiedz na to pytanie</a>, nawet jeśli nie znasz pełnej odpowiedzi',
 	'ask_friends_on_twitter' => 'Zapytaj znajomych na <a href="$1" $2>Twitterze</a>',
-	'categorize' => 'Określ kategorię',
+	'categorize' => 'Dodaj kategorię',
 	'categorize_help' => 'Jedna kategoria na linię',
+	'a' => 'Odpowiedź:',
+	'edit_points' => '{{PLURAL:$1|punkt edycji|punkty edycji|punktów edycji}}',
+	'facebook_signed_in' => 'Jesteś {{GENDER:|zalogowany|zalogowana|zalogowany/a}} przez Facebook Connect',
+	'get_code' => 'Pobierz kod',
+	'no_related_answered_questions' => 'Nie ma jeszcze podobnych pytań.',
+	'nwb-thatisall-headline' => 'To wszystko - gotowe!',
+	'plus_x_more_helpers' => '...i $1 użytkowników anonimowych',
+	'qa-toolbox-button' => 'Odpowiedz na losowe pytanie',
+	'qa-toolbox-delete' => 'Usuń to pytanie',
+	'qa-toolbox-history' => 'Poprzednia wersja tej strony',
+	'qa-toolbox-protect' => 'Zabezpiecz to pytanie',
+	'qa-toolbox-share' => 'Publikuj',
+	'qa-toolbox-tools' => 'Zaawansowane»',
+	'quick_action_panel' => 'Panel szybkiego działania',
+	'receive_email' => '<a href="$1" $2>Otrzymaj e-mail</a> gdy zostanie udzielona odpowiedź na to pytanie',
+	'research_this_on_wikipedia' => '<a href="$1">Wyszukaj odpowiedzi na to pytanie</a> na Wikipedii',
+	'reword_this' => '<a href="$1" $2>Przeredaguj to pytanie</a>',
+	'tog-hidefromattribution' => 'Ukryj mój avatar i nazwę użytkownika na liście autorów',
+	'widget_ask_box' => 'Wyświetlaj pole na pytania',
+	'answers-desc' => "Wikia's Answer site extension",
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Ask a question on <a href="http://answers.wikia.com/wiki/Wikianswers">Wikianswers</a> or <a href="http://www.wikia.com/Special:CreateAnswers">start your own answers site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Here are $1 answered questions.',
+	'answers-category-count-unanswered' => 'Here are $1 unanswered questions.',
+	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
+	'auto_friend_request_body' => 'Will you add me as a friend?',
+	'q' => '<!-- -->',
+	'?' => '?',
+	'answering_tips' => "<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you're getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!",
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'anwb-step1-headline' => "What's your wiki about?",
+	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
+	'anwb-choose-logo' => 'Choose your logo',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
+	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
+	'anwb-fp-headline' => 'Create some questions!',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
+	'anwb-save-tagline' => 'Save tagline',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
+	'answers-custom' => 'Custom',
 );
 
-/** Piedmontese (Piemontèis) */
 $messages['pms'] = array(
 	'research_this' => 'Sërché sòn',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'answer_title' => 'ځواب',
 	'answered_by' => 'ځوابوونکی',
@@ -1923,41 +4997,167 @@ $messages['ps'] = array(
 	'answers-sky' => 'اسمان',
 	'answers-forest' => 'ځنګل',
 	'answers-carbon' => 'کاربون',
+	'header_questionmark_post' => '؟',
 );
 
-/** Portuguese (Português) */
 $messages['pt'] = array(
-	'research_this' => 'Investigar isto',
-);
-
-/** Brazilian Portuguese (Português do Brasil) */
-$messages['pt-br'] = array(
 	'research_this' => 'Pesquisar isto',
+	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário do FANDOM',
+	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Responder esta pergunta</a><br /><br /><hr /><br /><br />',
+	'answer_this_question' => 'Responder esta pergunta',
+	'answer_title' => 'Resposta',
+	'answered_category' => 'Perguntas respondidas',
+	'answers-category-count-answered' => 'Esta categoria contem $1 pergunta/s respondida/s',
+	'answers-category-count-unanswered' => 'Esta categoria contem $1 pergunta/s sem resposta.',
+	'answers_toolbox' => 'WikiRespostas toolbox',
+	'answers_widget_admin_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'answers_widget_anon_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'answers_widget_no_questions' => 'Nos ajude a criar a melhor resposta para alguma das <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas</a> na <b><a href="http://respostas.wikia.com/wiki/WikiRespostas" target="_blank">WikiRespostas</a>.</b><br><br><a href="http://respostas.wikia.com/wiki/Especial:Busca" target="_blank">Find</a> e responda as  <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas sem respostas</a>.',
+	'answers_widget_no_questions_askabout' => '<br><br>Comece fazendo uma pergunta sobre "{{PAGENAME}}"',
+	'answers_widget_user_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'ask_a_question-widget' => 'Faça sua pergunta...',
+	'ask_a_question' => 'Faça sua pergunta...',
+	'ask_button' => 'Pergunte',
+	'ask_friends' => 'Peça aos seus amigos para ajudar a responder:',
+	'ask_friends_on_twitter' => 'Pergunte aos seus amigos no <a href="$1">Twitter</a>',
+	'ask_thanks' => 'Obrigado pela otima pergunta!',
+	'badWords' => 'merda filhodaputa bunda',
+	'improve_this_answer' => 'Melhore esta resposta',
+	'in_category' => '...na categoria',
+	'new_question_comment' => 'nova pergunta',
+	'next_page' => 'Proxima »',
+	'notify_answered' => 'Avise-me por email quando tiver resposta.',
+	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
+	'popular_categories' => 'Categorias mais populares',
+	'prev_page' => '« Anteriores',
+	'question_asked_by' => 'Pergunta feita por',
+	'question_not_answered' => 'Esta pergunta ainda não foi respondida',
+	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
+	'quick_action_panel' => 'Painel de ação rapida',
+	'receive_email' => '<a href="$1">Receba um email</a> quando esta pergunta for respondida',
+	'recent_answered_questions' => 'Perguntas respondidas recentemente',
+	'recent_asked_questions' => 'Perguntas Recentes',
+	'recent_edited_questions' => 'Perguntas editadas recentemente',
+	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
+	'related_answered_questions' => 'Perguntas respondidas relacionadas',
+	'rephrase' => 'Refazer a pergunta',
+	'research_this_on_wikipedia' => '<a href="$1">Pesquisar esta pergunta</a> na Wikipedia',
+	'see_all' => 'Ver todas',
+	'twitter_ask' => 'Faça esta pergunta no Twitter',
+	'twitter_hashtag' => 'WikiRespostas',
+	'unanswered_category' => 'Perguntas sem respostas',
+	'you_can' => 'Voce pode:',
+	'answers-desc' => "Wikia's Answer site extension",
+	'answered_by' => 'Answered by',
+	'unregistered' => 'Unregistered',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
+	'edit_points' => '{{PLURAL:$1|edit point|edit points}}',
+	'related_questions' => 'Related questions',
+	'createaccount-captcha' => 'Please type the word below',
+	'inline-register-title' => 'Notify me when my question is answered!',
+	'inline-welcome' => 'Welcome to Wikianswers',
+	'skip_this' => 'Skip this',
+	'see_all_changes' => 'See all changes',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'no_questions_found' => 'No questions found',
+	'widget_settings' => 'Question Settings',
+	'style_settings' => 'Style Settings',
+	'get_widget_title' => 'Add Questions to your site',
+	'background_color' => 'Background color',
+	'widget_category' => 'Type of Questions',
+	'category' => 'Category Name',
+	'custom_category' => 'Custom Category',
+	'number_of_items' => 'Number of items to show',
+	'width' => 'Width',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
+	'widget_order' => 'Question Order',
+	'widget_ask_box' => 'Include ask box',
+	'facebook_ask' => 'Ask on Facebook',
+	'facebook_send_request' => 'Send Directly to Friends',
+	'facebook_send_request_content' => 'Can you help answer this? $1',
+	'facebook_signed_in' => 'You are signed into Facebook Connect',
+	'ads_by_google' => 'Ads by Google',
+	'magic_answer_headline' => 'Does this answer your question?',
+	'magic_answer_yes' => 'Yes, use this as a starting point',
+	'magic_answer_no' => "No, don't use this",
+	'magic_answer_credit' => 'Provided by Yahoo Answers',
+	'rephrase_this' => '<a href="$1" $2>Reword the question</a>',
+	'categorize' => 'Categorize',
+	'categorize_help' => 'One category per line',
+	'reword_this' => '<a href="$1" $2>Reword this question</a>',
+	'no_related_answered_questions' => 'There are no related questions yet.',
+	'auto_friend_request_body' => 'Will you add me as a friend?',
+	'tog-hidefromattribution' => 'Hide my avatar and name from attribution list',
+	'q' => '<!-- -->',
+	'a' => 'Answer:',
+	'?' => '?',
+	'answering_tips' => "<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you're getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!",
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... plus $1 more helpers',
+	'anwb-step1-headline' => "What's your wiki about?",
+	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
+	'anwb-choose-logo' => 'Choose your logo',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
+	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
+	'anwb-fp-headline' => 'Create some questions!',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'nwb-thatisall-headline' => "That's it - you're done!",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
+	'anwb-save-tagline' => 'Save tagline',
+	'qa-toolbox-button' => 'Answer a random question',
+	'qa-toolbox-share' => 'Share',
+	'qa-toolbox-tools' => 'Advanced tools»',
+	'qa-toolbox-protect' => 'Protect this question',
+	'qa-toolbox-delete' => 'Delete this question',
+	'qa-toolbox-history' => 'Past versions of this page',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
+	'answers-custom' => 'Custom',
 );
 
-/** Tarandíne (Tarandíne) */
+$messages['ro'] = array(
+	'answered_category' => 'Answered questions',
+	'unanswered_category' => 'Unanswered questions',
+);
+
 $messages['roa-tara'] = array(
 	'research_this' => 'Cerche quiste',
 );
 
-/** Russian (Русский)
- * @author Eleferen
- * @author Kuzura
- * @author Lvova
- */
 $messages['ru'] = array(
 	'answer_title' => 'Ответ',
 	'answered_by' => 'Ответил',
 	'unregistered' => 'Аноним',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|помощник|помощника|помощников}}',
 	'edit_points' => '{{PLURAL:$1|очко редактирования|очка редактирования|очков редактирования}}',
-	'ask_a_question' => 'Задать вопрос ...',
-	'ask_a_question-widget' => 'Задать вопрос ...',
+	'ask_a_question' => 'Задать вопрос…',
+	'ask_a_question-widget' => 'Задать вопрос…',
 	'in_category' => '...в категории',
 	'ask_button' => 'Спросить',
 	'ask_thanks' => 'Спасибо за хороший вопрос!',
 	'question_asked_by' => 'Вопрос задал',
-	'question_asked_by_a_wikia_user' => 'Вопрос задал участник Викия',
+	'question_asked_by_a_wikia_user' => 'Вопрос от участника Фэндома',
 	'new_question_comment' => 'новый вопрос',
 	'answers_toolbox' => 'Инструменты Вики Ответов',
 	'improve_this_answer' => 'Улучшить этот ответ',
@@ -1968,7 +5168,7 @@ $messages['ru'] = array(
 	'recent_asked_questions' => 'Свежие вопросы',
 	'recent_answered_questions' => 'Свежие ответы',
 	'recent_edited_questions' => 'Свежие правки в вопросах',
-	'unanswered_category' => 'Вопросы без ответов',
+	'unanswered_category' => 'Un-answered questions',
 	'answered_category' => 'Вопросы с ответами',
 	'related_questions' => 'Вопросы, близкие по теме',
 	'related_answered_questions' => 'Ответы, близкие по теме',
@@ -2072,11 +5272,255 @@ $messages['ru'] = array(
 	'answers-carbon' => 'Углерод',
 	'answers-obsession' => 'Одержимость',
 	'answers-custom' => 'Настройка',
+	'answers-desc' => "Wikia's Answer site extension",
+	'q' => '<!-- -->',
+	'?' => '?',
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-featured-sites' => '-',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
- * @author Rancher
- */
 $messages['sr-ec'] = array(
 	'answer_title' => 'Одговор',
 	'answered_by' => 'Одговорено од',
@@ -2087,12 +5531,9 @@ $messages['sr-ec'] = array(
 	'header_questionmark_post' => '?',
 );
 
-/** Swedish (Svenska)
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
 	'answer_title' => 'Svar',
-	'answered_by' => 'Besvarad av',
+	'answered_by' => 'Besvaras av',
 	'unregistered' => 'Oregistrerad',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|hjälpare|hjälpare}}',
 	'edit_points' => '{{PLURAL:$1|redigeringspoäng|redigeringspoäng}}',
@@ -2113,8 +5554,8 @@ $messages['sv'] = array(
 	'recent_asked_questions' => 'Nyligen ställda frågor',
 	'recent_answered_questions' => 'Nyligen besvarade frågor',
 	'recent_edited_questions' => 'Nyligen redigerade frågor',
-	'unanswered_category' => 'Obesvarade frågor',
-	'answered_category' => 'Besvarade frågor',
+	'unanswered_category' => 'Un-answered questions',
+	'answered_category' => 'Answered questions',
 	'related_questions' => 'Relaterade frågor',
 	'related_answered_questions' => 'Relaterade besvarade frågor',
 	'recent_unanswered_questions' => 'Nyligen obesvarade frågor',
@@ -2173,7 +5614,7 @@ $messages['sv'] = array(
 	'answers-category-count-unanswered' => 'Denna kategori innehåller $1 {{PLURAL:$1|obesvarad fråga|obesvarade frågor}}.',
 	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> är en webbplats där du kan ställa frågor och bidra med svar. Vi siktar mot att skapa det bästa svaret på någon fråga. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Hitta</a> och svara på<a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">obesvarade</a> frågor. Det är en wiki - så vara djärv!',
 	'answers_widget_no_questions_askabout' => '<br /><br />Komma igång med att ställa en fråga om "{{PAGENAME}}"',
-	'reword_this' => '<a href="$1" $2>Omformulera frågan</a>',
+	'reword_this' => '<a href="$1" $2>Omformulera denna fråga</a>',
 	'no_related_answered_questions' => 'Det finns inga relaterade frågor ännu. Skaffa en <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">slumpmässig besvarad fråga istället</a>, eller ställ en ny fråga!<br />
 	<div class="createbox" align="center">
 	<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
@@ -2219,17 +5660,11 @@ $messages['sv'] = array(
 	'answers-custom' => 'Anpassad',
 );
 
-/** Tamil (தமிழ்)
- * @author Shanmugamp7
- */
 $messages['ta'] = array(
 	'answer_title' => 'பதில்',
 	'ask_button' => 'கேள்',
 );
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = array(
 	'new_question_comment' => 'కొత్త ప్రశ్న',
 	'width' => 'వెడల్పు',
@@ -2237,26 +5672,18 @@ $messages['te'] = array(
 	'answers-forest' => 'అడవి',
 );
 
-/** Tagalog (Tagalog) */
 $messages['tl'] = array(
 	'research_this' => 'Saliksikin ito',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
- * @author Ajdar
- */
 $messages['tt-cyrl'] = array(
 	'answer_title' => 'Җавап',
 );
 
-/** Ukrainian (Українська) */
 $messages['uk'] = array(
 	'research_this' => 'Дослідити',
 );
 
-/** Veps (Vepsän kel')
- * @author Игорь Бродский
- */
 $messages['vep'] = array(
 	'answer_title' => 'Vastuz',
 	'width' => 'Leveduz',
@@ -2270,10 +5697,382 @@ $messages['vep'] = array(
 	'answers-moonlight' => 'Kudmavauktuz',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
- * @author Anakmalaysia
- * @author Hzy980512
- */
+$messages['vi'] = array(
+	'tog-hidefromattribution' => 'Ẩn hình đại diện và tên của tôi khỏi danh sách cấp quyền',
+	'answers-desc' => "Wikia's Answer site extension",
+	'answer_title' => 'Answer',
+	'answered_by' => 'Answered by',
+	'unregistered' => 'Unregistered',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
+	'edit_points' => '{{PLURAL:$1|edit point|edit points}}',
+	'ask_a_question' => 'Welcome to {{SITENAME}}. What would you like to know?',
+	'ask_a_question-widget' => 'Ask a question...',
+	'in_category' => '...in category',
+	'ask_button' => 'Ask',
+	'ask_thanks' => "Thanks for the rockin' question!",
+	'question_asked_by' => 'Question asked by',
+	'question_asked_by_a_wikia_user' => 'Question asked by a FANDOM user',
+	'new_question_comment' => 'new question',
+	'answers_toolbox' => '{{SITENAME}} toolbox',
+	'improve_this_answer' => 'Improve this answer',
+	'answer_this_question' => 'Answer this question:',
+	'notify_improved' => 'Email me when improved',
+	'research_this' => 'Research this',
+	'notify_answered' => 'Email me when answered',
+	'recent_asked_questions' => 'Recently Asked Questions',
+	'recent_answered_questions' => 'Recently Answered Questions',
+	'recent_edited_questions' => 'Recently Edited Questions',
+	'unanswered_category' => 'Un-answered questions',
+	'answered_category' => 'Answered questions',
+	'related_questions' => 'Related questions',
+	'related_answered_questions' => 'More questions',
+	'recent_unanswered_questions' => 'Recent Unanswered Questions',
+	'popular_categories' => 'Popular Categories',
+	'createaccount-captcha' => 'Please type the word below',
+	'inline-register-title' => 'Notify me when my question is answered!',
+	'inline-welcome' => 'Welcome to Wikianswers',
+	'skip_this' => 'Skip this',
+	'see_all_changes' => 'See all changes',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'no_questions_found' => 'No questions found',
+	'widget_settings' => 'Question Settings',
+	'style_settings' => 'Style Settings',
+	'get_widget_title' => 'Add Questions to your site',
+	'background_color' => 'Background color',
+	'widget_category' => 'Type of Questions',
+	'category' => 'Category Name',
+	'custom_category' => 'Custom Category',
+	'number_of_items' => 'Number of items to show',
+	'width' => 'Width',
+	'next_page' => 'Next &raquo;',
+	'prev_page' => '&laquo; Prev',
+	'see_all' => 'See all',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
+	'widget_order' => 'Question Order',
+	'widget_ask_box' => 'Include ask box',
+	'question_redirected_help_page' => 'Why was my question redirected here',
+	'twitter_hashtag' => 'wikianswers',
+	'twitter_ask' => 'Ask on Twitter',
+	'facebook_ask' => 'Ask on Facebook',
+	'facebook_send_request' => 'Send Directly to Friends',
+	'ask_friends' => 'Ask your friends to help answer:',
+	'facebook_send_request_content' => 'Can you help answer this? $1',
+	'facebook_signed_in' => 'You are signed into Facebook Connect',
+	'ads_by_google' => 'Ads by Google',
+	'magic_answer_headline' => 'Does this answer your question?',
+	'magic_answer_yes' => 'Yes, use this as a starting point',
+	'magic_answer_no' => "No, don't use this",
+	'magic_answer_credit' => 'Provided by Yahoo Answers',
+	'rephrase' => 'Rephrase this question',
+	'rephrase_this' => '<a href="$1" $2>Reword the question</a>',
+	'question_not_answered' => 'This question has not been answered',
+	'you_can' => 'You can:',
+	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Answer this question</a><br /><br /><hr /><br /><br />',
+	'research_this_on_wikipedia' => '<a href="$1">Research this question</a> on Wikipedia',
+	'receive_email' => '<a href="$1" $2>Receive an email</a> when this question is answered',
+	'ask_friends_on_twitter' => 'Ask Friends on <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Quick Action Panel',
+	'categorize' => 'Categorize',
+	'categorize_help' => 'One category per line',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Ask a question on <a href="http://answers.wikia.com/wiki/Wikianswers">Wikianswers</a> or <a href="http://www.wikia.com/Special:CreateAnswers">start your own answers site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Here are $1 answered questions.',
+	'answers-category-count-unanswered' => 'Here are $1 unanswered questions.',
+	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
+	'reword_this' => '<a href="$1" $2>Reword this question</a>',
+	'no_related_answered_questions' => 'There are no related questions yet.',
+	'auto_friend_request_body' => 'Will you add me as a friend?',
+	'q' => '<!-- -->',
+	'a' => 'Answer:',
+	'?' => '?',
+	'answering_tips' => "<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you're getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!",
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... plus $1 more helpers',
+	'anwb-step1-headline' => "What's your wiki about?",
+	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
+	'anwb-choose-logo' => 'Choose your logo',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
+	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
+	'anwb-fp-headline' => 'Create some questions!',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'nwb-thatisall-headline' => "That's it - you're done!",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
+	'anwb-save-tagline' => 'Save tagline',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-toolbox-button' => 'Answer a random question',
+	'qa-toolbox-share' => 'Share',
+	'qa-toolbox-tools' => 'Advanced tools»',
+	'qa-toolbox-protect' => 'Protect this question',
+	'qa-toolbox-delete' => 'Delete this question',
+	'qa-toolbox-history' => 'Past versions of this page',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
+	'answers-custom' => 'Custom',
+);
+
 $messages['zh-hans'] = array(
 	'answer_title' => '回答',
 	'answered_by' => '作答者',
@@ -2296,5 +6095,733 @@ $messages['zh-hans'] = array(
 	'next_page' => '下一页 &raquo;',
 	'prev_page' => '&laquo; 上一页',
 	'ads_by_google' => 'Google广告',
+	'question_asked_by_a_wikia_user' => 'FANDOM用户的提问',
+	'answers-desc' => "Wikia's Answer site extension",
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
+	'edit_points' => '{{PLURAL:$1|edit point|edit points}}',
+	'in_category' => '...in category',
+	'ask_thanks' => "Thanks for the rockin' question!",
+	'question_asked_by' => 'Question asked by',
+	'new_question_comment' => 'new question',
+	'answers_toolbox' => '{{SITENAME}} toolbox',
+	'improve_this_answer' => 'Improve this answer',
+	'answer_this_question' => 'Answer this question:',
+	'notify_improved' => 'Email me when improved',
+	'research_this' => 'Research this',
+	'notify_answered' => 'Email me when answered',
+	'recent_asked_questions' => 'Recently Asked Questions',
+	'recent_answered_questions' => 'Recently Answered Questions',
+	'recent_edited_questions' => 'Recently Edited Questions',
+	'createaccount-captcha' => 'Please type the word below',
+	'inline-register-title' => 'Notify me when my question is answered!',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'no_questions_found' => 'No questions found',
+	'widget_settings' => 'Question Settings',
+	'widget_category' => 'Type of Questions',
+	'category' => 'Category Name',
+	'custom_category' => 'Custom Category',
+	'number_of_items' => 'Number of items to show',
+	'width' => 'Width',
+	'see_all' => 'See all',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
+	'widget_order' => 'Question Order',
+	'widget_ask_box' => 'Include ask box',
+	'question_redirected_help_page' => 'Why was my question redirected here',
+	'twitter_hashtag' => 'wikianswers',
+	'twitter_ask' => 'Ask on Twitter',
+	'facebook_ask' => 'Ask on Facebook',
+	'facebook_send_request' => 'Send Directly to Friends',
+	'ask_friends' => 'Ask your friends to help answer:',
+	'facebook_send_request_content' => 'Can you help answer this? $1',
+	'facebook_signed_in' => 'You are signed into Facebook Connect',
+	'magic_answer_headline' => 'Does this answer your question?',
+	'magic_answer_yes' => 'Yes, use this as a starting point',
+	'magic_answer_no' => "No, don't use this",
+	'magic_answer_credit' => 'Provided by Yahoo Answers',
+	'rephrase' => 'Rephrase this question',
+	'rephrase_this' => '<a href="$1" $2>Reword the question</a>',
+	'question_not_answered' => 'This question has not been answered',
+	'you_can' => 'You can:',
+	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Answer this question</a><br /><br /><hr /><br /><br />',
+	'research_this_on_wikipedia' => '<a href="$1">Research this question</a> on Wikipedia',
+	'receive_email' => '<a href="$1" $2>Receive an email</a> when this question is answered',
+	'ask_friends_on_twitter' => 'Ask Friends on <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Quick Action Panel',
+	'categorize' => 'Categorize',
+	'categorize_help' => 'One category per line',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Ask a question on <a href="http://answers.wikia.com/wiki/Wikianswers">Wikianswers</a> or <a href="http://www.wikia.com/Special:CreateAnswers">start your own answers site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Here are $1 answered questions.',
+	'answers-category-count-unanswered' => 'Here are $1 unanswered questions.',
+	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
+	'reword_this' => '<a href="$1" $2>Reword this question</a>',
+	'no_related_answered_questions' => 'There are no related questions yet.',
+	'auto_friend_request_body' => 'Will you add me as a friend?',
+	'tog-hidefromattribution' => 'Hide my avatar and name from attribution list',
+	'q' => '<!-- -->',
+	'a' => 'Answer:',
+	'?' => '?',
+	'answering_tips' => "<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you're getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!",
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... plus $1 more helpers',
+	'anwb-step1-headline' => "What's your wiki about?",
+	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
+	'anwb-choose-logo' => 'Choose your logo',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
+	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
+	'anwb-fp-headline' => 'Create some questions!',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'nwb-thatisall-headline' => "That's it - you're done!",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
+	'anwb-save-tagline' => 'Save tagline',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-toolbox-button' => 'Answer a random question',
+	'qa-toolbox-share' => 'Share',
+	'qa-toolbox-tools' => 'Advanced tools»',
+	'qa-toolbox-protect' => 'Protect this question',
+	'qa-toolbox-delete' => 'Delete this question',
+	'qa-toolbox-history' => 'Past versions of this page',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
+	'answers-custom' => 'Custom',
+);
+
+$messages['zh-hant'] = array(
+	'question_asked_by_a_wikia_user' => 'FANDOM用戶的提問',
+	'popular_categories' => '熱門分類',
+	'answers-desc' => "Wikia's Answer site extension",
+	'answer_title' => 'Answer',
+	'answered_by' => 'Answered by',
+	'unregistered' => 'Unregistered',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
+	'edit_points' => '{{PLURAL:$1|edit point|edit points}}',
+	'ask_a_question' => 'Welcome to {{SITENAME}}. What would you like to know?',
+	'ask_a_question-widget' => 'Ask a question...',
+	'in_category' => '...in category',
+	'ask_button' => 'Ask',
+	'ask_thanks' => "Thanks for the rockin' question!",
+	'question_asked_by' => 'Question asked by',
+	'new_question_comment' => 'new question',
+	'answers_toolbox' => '{{SITENAME}} toolbox',
+	'improve_this_answer' => 'Improve this answer',
+	'answer_this_question' => 'Answer this question:',
+	'notify_improved' => 'Email me when improved',
+	'research_this' => 'Research this',
+	'notify_answered' => 'Email me when answered',
+	'recent_asked_questions' => 'Recently Asked Questions',
+	'recent_answered_questions' => 'Recently Answered Questions',
+	'recent_edited_questions' => 'Recently Edited Questions',
+	'unanswered_category' => 'Un-answered questions',
+	'answered_category' => 'Answered questions',
+	'related_questions' => 'Related questions',
+	'related_answered_questions' => 'More questions',
+	'recent_unanswered_questions' => 'Recent Unanswered Questions',
+	'createaccount-captcha' => 'Please type the word below',
+	'inline-register-title' => 'Notify me when my question is answered!',
+	'inline-welcome' => 'Welcome to Wikianswers',
+	'skip_this' => 'Skip this',
+	'see_all_changes' => 'See all changes',
+	'toolbox_anon_message' => '<i>"Wikianswers uses the unique characteristics of a wiki to form the very best answer to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
+	'no_questions_found' => 'No questions found',
+	'widget_settings' => 'Question Settings',
+	'style_settings' => 'Style Settings',
+	'get_widget_title' => 'Add Questions to your site',
+	'background_color' => 'Background color',
+	'widget_category' => 'Type of Questions',
+	'category' => 'Category Name',
+	'custom_category' => 'Custom Category',
+	'number_of_items' => 'Number of items to show',
+	'width' => 'Width',
+	'next_page' => 'Next &raquo;',
+	'prev_page' => '&laquo; Prev',
+	'see_all' => 'See all',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
+	'widget_order' => 'Question Order',
+	'widget_ask_box' => 'Include ask box',
+	'question_redirected_help_page' => 'Why was my question redirected here',
+	'twitter_hashtag' => 'wikianswers',
+	'twitter_ask' => 'Ask on Twitter',
+	'facebook_ask' => 'Ask on Facebook',
+	'facebook_send_request' => 'Send Directly to Friends',
+	'ask_friends' => 'Ask your friends to help answer:',
+	'facebook_send_request_content' => 'Can you help answer this? $1',
+	'facebook_signed_in' => 'You are signed into Facebook Connect',
+	'ads_by_google' => 'Ads by Google',
+	'magic_answer_headline' => 'Does this answer your question?',
+	'magic_answer_yes' => 'Yes, use this as a starting point',
+	'magic_answer_no' => "No, don't use this",
+	'magic_answer_credit' => 'Provided by Yahoo Answers',
+	'rephrase' => 'Rephrase this question',
+	'rephrase_this' => '<a href="$1" $2>Reword the question</a>',
+	'question_not_answered' => 'This question has not been answered',
+	'you_can' => 'You can:',
+	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Answer this question</a><br /><br /><hr /><br /><br />',
+	'research_this_on_wikipedia' => '<a href="$1">Research this question</a> on Wikipedia',
+	'receive_email' => '<a href="$1" $2>Receive an email</a> when this question is answered',
+	'ask_friends_on_twitter' => 'Ask Friends on <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Quick Action Panel',
+	'categorize' => 'Categorize',
+	'categorize_help' => 'One category per line',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Ask a question on <a href="http://answers.wikia.com/wiki/Wikianswers">Wikianswers</a> or <a href="http://www.wikia.com/Special:CreateAnswers">start your own answers site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Here are $1 answered questions.',
+	'answers-category-count-unanswered' => 'Here are $1 unanswered questions.',
+	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
+	'reword_this' => '<a href="$1" $2>Reword this question</a>',
+	'no_related_answered_questions' => 'There are no related questions yet.',
+	'auto_friend_request_body' => 'Will you add me as a friend?',
+	'tog-hidefromattribution' => 'Hide my avatar and name from attribution list',
+	'q' => '<!-- -->',
+	'a' => 'Answer:',
+	'?' => '?',
+	'answering_tips' => "<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you're getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!",
+	'header_questionmark_pre' => '',
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... plus $1 more helpers',
+	'anwb-step1-headline' => "What's your wiki about?",
+	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
+	'anwb-choose-logo' => 'Choose your logo',
+	'anwb-step2-text' => "Next, choose a logo for {{SITENAME}}. It's best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don't want to do it right now.<br /><br />",
+	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
+	'anwb-fp-headline' => 'Create some questions!',
+	'anwb-fp-text' => "Add a list of questions here. Later, you can add answers in for the ones you know. It's important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />",
+	'anwb-fp-example' => "<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What's the best breed of dog?<br />
+- What's the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />",
+	'nwb-thatisall-headline' => "That's it - you're done!",
+	'anwb-thatisall-text' => "Now it's time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!",
+	'anwb-logo-preview' => "Here's a preview of your logo",
+	'anwb-save-tagline' => 'Save tagline',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
+	'qa-toolbox-button' => 'Answer a random question',
+	'qa-toolbox-share' => 'Share',
+	'qa-toolbox-tools' => 'Advanced tools»',
+	'qa-toolbox-protect' => 'Protect this question',
+	'qa-toolbox-delete' => 'Delete this question',
+	'qa-toolbox-history' => 'Past versions of this page',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Answers',
+	'answers-bluebell' => 'Bluebell',
+	'answers-leaf' => 'Leaf',
+	'answers-carnation' => 'Carnation',
+	'answers-sky' => 'Sky',
+	'answers-spring' => 'Spring',
+	'answers-forest' => 'Forest',
+	'answers-moonlight' => 'Moonlight',
+	'answers-carbon' => 'Carbon',
+	'answers-obsession' => 'Obsession',
+	'answers-custom' => 'Custom',
 );
 

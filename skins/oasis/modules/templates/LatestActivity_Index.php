@@ -1,27 +1,28 @@
-<section class="WikiaActivityModule module" id="<?= !empty( $userName ) ? 'WikiaRecentActivityUser' : 'WikiaRecentActivity'; ?>">
-	<h1 class="activity-heading"><?= $moduleHeader ?></h1>
-	<ul>
-<?php
-	if(!empty($changeList)){
-		foreach ($changeList as $item) {
-?>
-		<li>
-			<img src="<?= $wg->BlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
-			<em><?= $item['page_href'] ?></em>
-			<div class="edited-by"><?= $item['changemessage'] ?></div>
-		</li>
-<?php
-		}
-	}
-	elseif(!empty($userName)) {
-		echo wfMsg( 'userprofilepage-recent-activity-default', $userName );
-	}
-?>
-	</ul>
+<section class="rail-module activity-module" id="wikia-recent-activity">
 
-	<? if ( $userName && count($changeList) ) :?>
-		<?= Wikia::specialPageLink('Contributions/' . $userName, 'userprofilepage-top-recent-activity-see-more', 'more') ;?>
-	<? elseif(empty($userName)): ?>
-		<?= Wikia::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
-	<? endif ;?>
+	<h2 class="has-icon"><?= $activityIcon ?><?= $moduleHeader ?></h2>
+
+	<? if ( !empty( $changeList ) ): ?>
+		<ul class="activity-items">
+			<? foreach ( $changeList as $item ): ?>
+				<li class="activity-item">
+					<div class="page-title">
+						<a href="<?= $item['page_url'] ?>" class="page-title-link" data-tracking="activity-title" ><?= $item['page_title'] ?></a>
+					</div>
+					<div class="edit-info">
+						<a class="edit-info-user" data-tracking="activity-username" href="<?= $item['user_profile_url'] ?>">
+							<?= User::isIP( $item['user_name'] ) ? wfMessage( 'oasis-anon-user' )->escaped() : htmlspecialchars( $item['user_name'] ) ?>
+						</a>
+						<? if ( !empty( $item['time_ago'] ) ): ?>
+							<span class="edit-info-time"> • <?=  wfTimeFormatAgo( $item['time_ago'] ) ?></span>
+						<? endif ?>
+					</div>
+				</li>
+			<? endforeach; ?>
+		</ul>
+	<? endif; ?>
+
+	<? if ( $renderCommunityEntryPoint ): ?>
+		<?= F::app()->renderView( 'CommunityPageEntryPoint', 'Index' ) ?>
+	<? endif; ?>
 </section>

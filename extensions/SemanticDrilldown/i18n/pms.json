@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Borichèt",
+			"Dragonòt"
+		]
+	},
+	"semanticdrilldown-desc": "N'antërfacia a cascada për esploré dat semàntich",
+	"specialpages-group-sd_group": "Cascada Semàntica",
+	"browsedata": "Sërché ij dat",
+	"sd_browsedata_choosecategory": "Sern na categorìa",
+	"sd_browsedata_viewcategory": "varda categorìa",
+	"sd_browsedata_docu": "Sgnaca su un o pi element sì-sota për strenze j'arzultà",
+	"sd_browsedata_subcategory": "Sotcategorìa",
+	"sd_browsedata_other": "Àutr",
+	"sd_browsedata_none": "Gnun",
+	"sd_browsedata_filterbyvalue": "Filtra për sto valor-sì",
+	"sd_browsedata_filterbysubcategory": "Filtra për sta sotcategorìa-sì",
+	"sd_browsedata_otherfilter": "Mostra pàgine con n'àutr valor për sto filtr-sì",
+	"sd_browsedata_nonefilter": "Mostra pàgine con gnun valor për sto filtr-sì",
+	"sd_browsedata_or": "o",
+	"sd_browsedata_removefilter": "Gava sto filtr-sì",
+	"sd_browsedata_removesubcategoryfilter": "Gava sto filtr ëd sotcategorìa",
+	"sd_browsedata_resetfilters": "Spian-a filtr",
+	"sd_browsedata_addanothervalue": "Sgnaca la flecia për gionté n'àutr valor",
+	"sd_browsedata_daterangestart": "Prinsipi:",
+	"sd_browsedata_daterangeend": "Fin:",
+	"sd_browsedata_novalues": "A-i é pa gnun valor për sto filtr-sì",
+	"sd_createfilter_usepropertyvalues": "Dovré tùit ij valor dë sta proprietà-sì për ël filtr",
+	"sd_createfilter_usecategoryvalues": "Pija ij valor për filtr da sta categorìa-sì:",
+	"sd_createfilter_requirefilter": "Ciama ëd selessioné n'àutr filtr prima che sto-sì a sia visualisà:",
+	"sd-pageschemas-filter": "Filtr",
+	"sd-pageschemas-values": "Valor"
+}

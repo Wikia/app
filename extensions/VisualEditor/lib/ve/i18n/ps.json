@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ahmed-Najib-Biabani-Ibrahimkhel"
+		]
+	},
+	"visualeditor": "ليدنيز سمونگر",
+	"visualeditor-aliennode-tooltip": "اوبخښۍ، دا مطلب اوس يوازې د سرچينې په بڼه کې د سمون وړ دی.",
+	"visualeditor-annotationbutton-bold-tooltip": "زغرد",
+	"visualeditor-annotationbutton-code-tooltip": "کمپيوټر کوډ",
+	"visualeditor-annotationbutton-italic-tooltip": "رېوند",
+	"visualeditor-annotationbutton-language-tooltip": "ژبه",
+	"visualeditor-annotationbutton-link-tooltip": "تړنه",
+	"visualeditor-annotationbutton-subscript-tooltip": "ووړليک",
+	"visualeditor-annotationbutton-superscript-tooltip": "لوی ليک",
+	"visualeditor-clearbutton-tooltip": "بڼه جوړېدنه سپينول",
+	"visualeditor-dialog-action-apply": "بدلونونه پلي کول",
+	"visualeditor-dialog-action-cancel": "ناگارل",
+	"visualeditor-dialog-action-goback": "پر شا تلل",
+	"visualeditor-formatdropdown-format-heading1": "سرليک 1",
+	"visualeditor-formatdropdown-format-heading2": "سرليک 2",
+	"visualeditor-formatdropdown-format-heading3": "سرليک 3",
+	"visualeditor-formatdropdown-format-heading4": "سرليک 4",
+	"visualeditor-formatdropdown-format-heading5": "سرليک 5",
+	"visualeditor-formatdropdown-format-heading6": "سرليک 6",
+	"visualeditor-formatdropdown-format-paragraph": "پاراگراف",
+	"visualeditor-formatdropdown-title": "بڼه بدلول",
+	"visualeditor-help-tool": "لارښود",
+	"visualeditor-historybutton-redo-tooltip": "بياکړل",
+	"visualeditor-historybutton-undo-tooltip": "ناکړل",
+	"visualeditor-inspector-close-tooltip": "تړل",
+	"visualeditor-inspector-remove-tooltip": "غورځول",
+	"visualeditor-languageinspector-title": "ژبه",
+	"visualeditor-languageinspector-widget-changelang": "ژبه بدلول",
+	"visualeditor-languageinspector-widget-label-direction": "لوری",
+	"visualeditor-languageinspector-widget-label-langcode": "د ژبې کوډ",
+	"visualeditor-languageinspector-widget-label-language": "ژبه",
+	"visualeditor-linkinspector-title": "تړنه",
+	"visualeditor-listbutton-bullet-tooltip": "گولۍ داره لړليک",
+	"visualeditor-listbutton-number-tooltip": "شمېرن لړليک"
+}

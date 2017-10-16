@@ -1,77 +1,90 @@
-<?php 
+<?php
 class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
-	protected $articlesFromCategory = 10;
-	private $straightJoinLimit = 70000;
-	
-	protected function getImagesFromDB($articles = array()) {
-		parent::getImagesFromDB($articles);
+	const STRAIGHT_JOIN_LIMIT = 70000;
+	const ARTICLES_LIMIT_PER_CATEGORY = 10;
 
-		$toGetFromArticle = array();
-		foreach($articles as $val) {
-			if($this->getImagesCountBeforeFiltr($val) < $this->queryLimit) {
-				$this->getCategoryArticleList($val, $toGetFromArticle);
+	protected function loadImagesFromDb( $articleIds = array() ) {
+		parent::loadImagesFromDb( $articleIds );
+
+		$articleCategories = array();
+		foreach ( $articleIds as $categoryId ) {
+			if ( $this->getAllImagesCountForArticle( $categoryId ) < self::QUERY_LIMIT ) {
+				$this->addTopArticlesFromCategory( $categoryId, $articleCategories );
 			}
 		}
-		
-		$props = $this->getArticleProbs(array_keys($toGetFromArticle), $this->queryLimit);
-		
+
+		$imageIndex = $this->getImageIndex( array_keys( $articleCategories ), self::QUERY_LIMIT );
+
 		$propNumber = 0;
-		foreach($props as  $article => $prop) {
-			$count = 0;
+		foreach ( $imageIndex as $articleId => $articleImageIndex ) {
 			$propNumber++;
-			foreach( $prop as $key => $image  ) {
-				foreach( $toGetFromArticle[$article] as $cat ) {
-					$this->addImagesList(  $image, $cat, $propNumber*(2*$this->queryLimit + $key), $this->queryLimit );
+			foreach ( $articleImageIndex as $key => $imageData ) {
+				foreach ( $articleCategories[$articleId] as $categoryId ) {
+					$this->addImage( $imageData, $categoryId, $propNumber * ( 2 * self::QUERY_LIMIT + $key ), self::QUERY_LIMIT );
 				}
 			}
-		}		
+		}
 	}
-	
-	protected function getCategoryArticleList($id, &$toGetFromArticle) {
-		$out = array();
-				
-		$count = $this->db->selectField ( 
-			array( 'page', 'categorylinks' ), 
-			array( 'COUNT(cl_from)' ), 
+
+	protected function addTopArticlesFromCategory( $categoryId, &$articleCategories ) {
+
+		$key = wfMemcKey(__METHOD__, $categoryId);
+		$cachedPageIds = $this->memc->get($key);
+		if (is_array($cachedPageIds)) {
+			foreach ($cachedPageIds as $page_id) {
+				if ( empty( $articleCategories[$page_id] ) ) {
+					$articleCategories[$page_id] = array();
+				}
+				$articleCategories[$page_id][] = $categoryId;
+			}
+			return;
+		}
+
+		# fetch number of articles in category
+		# which controls if we use STRAIGHT_JOIN in the next query
+		$count = $this->db->selectField(
+			array( 'page', 'categorylinks' ),
+			array( 'COUNT(cl_from)' ),
 			array(
-				'cl_to  = page_title', 
-				'page_id' => $id 
+				'cl_to  = page_title',
+				'page_id' => $categoryId
 			),
 			__METHOD__
 		);
-		
+
+		# fetch list of N longest (by wikitext size) articles from this category
 		$options = array(
-			'ORDER BY' =>  'page.page_len desc',
-			'LIMIT' => $this->articlesFromCategory
+			'ORDER BY' => 'page.page_len desc',
+			'LIMIT' => self::ARTICLES_LIMIT_PER_CATEGORY,
 		);
-		
-		if ( $count > $this->straightJoinLimit ) {
+
+		if ( $count > self::STRAIGHT_JOIN_LIMIT ) {
 			$options[] = 'STRAIGHT_JOIN';
 		}
 
 		$res = $this->db->select(
-			array( 'page', 'categorylinks' ,'page as cat_page'  ),
+			array( 'page', 'categorylinks', 'page as cat_page' ),
 			array(
-				"page.page_title", 
-				"page.page_id", 
-				"page.page_len" 
+				"page.page_id",
 			),
 			array(
 				'cl_from = page.page_id',
-				'cl_to  = cat_page.page_title', 
-				'cat_page.page_id' => $id 
+				'cl_to  = cat_page.page_title',
+				'cat_page.page_id' => $categoryId
 			),
 			__METHOD__,
 			$options
 		);
 
-		while ($row =  $this->db->fetchRow( $res ) ) {
-			if(empty($toGetFromArticle[$row['page_id']])) {
-				$toGetFromArticle[$row['page_id']] = array( $id );	
-			} else {
-				$toGetFromArticle[$row['page_id']][] = $id;
+		$cachedPageIds = [];
+
+		while ( $row = $this->db->fetchRow( $res ) ) {
+			if ( empty( $articleCategories[$row['page_id']] ) ) {
+				$articleCategories[$row['page_id']] = array();
 			}
+			$articleCategories[$row['page_id']][] = $categoryId;
+			$cachedPageIds[] = intval( $row['page_id'] );
 		}
-		return $out;
+		$this->memc->set($key, $cachedPageIds, WikiaResponse::CACHE_STANDARD);
 	}
 }

@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dalibor Bosits",
+			"SpeedyGonsales",
+			"MaGa"
+		]
+	},
+	"templates": "Predlošci",
+	"sf_templates_docu": "Postoje sljedeći predlošci na wikiju.",
+	"sf_createtemplate_deletefield": "Izbriši",
+	"sf_formedit_remove": "Ukloni",
+	"sf_form_docu": "Ovo je obrazac \"$1\".\nZa kreiranje stranica uporabom ovog obrasca, unesite ime stranice u polje ispod;\nako takva stranica već postoji, otvorit će Vam se obrazac za uređivanje te stranice."
+}

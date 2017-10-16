@@ -1,0 +1,53 @@
+/*!
+ * VisualEditor MediaWiki UserInterface MWParameterResultWidget styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwParameterResultWidget {
+	padding-right: 0.25em;
+}
+
+.ve-ui-mwParameterResultWidget .oo-ui-optionWidget-icon {
+	top: 0.25em;
+	margin-top: 0;
+}
+
+.ve-ui-mwParameterResultWidget-label,
+.ve-ui-mwParameterResultWidget-names,
+.ve-ui-mwParameterResultWidget-description {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	/* HACK: Based on the expected width of this widget, using % produces unreliable results*/
+	max-width: 33em;
+}
+
+.ve-ui-mwParameterResultWidget-label {
+	font-weight: bold;
+	float: left;
+}
+
+.ve-ui-mwParameterResultWidget-names {
+	float: right;
+	font-size: 0.9em;
+}
+
+.ve-ui-mwParameterResultWidget-name {
+	border-radius: 0.3em;
+	padding: 0.125em 0.25em;
+	margin-left: 0.5em;
+	color: #999;
+	background-color: #eee;
+	border: solid 1px #ddd;
+}
+
+.ve-ui-mwParameterResultWidget-name:first-child {
+	background-color: #fff;
+}
+
+.ve-ui-mwParameterResultWidget-description {
+	clear: both;
+	color: #555;
+}

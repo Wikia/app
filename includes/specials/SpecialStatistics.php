@@ -21,6 +21,9 @@
  * @ingroup SpecialPage
  */
 
+
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 /**
  * Special page lists various statistics, including the contents of
  * `site_stats`, plus page view details if enabled
@@ -28,8 +31,9 @@
  * @ingroup SpecialPage
  */
 class SpecialStatistics extends SpecialPage {
+	use PermissionsServiceAccessor;
 
-	private $views, $edits, $good, $images, $total, $users,
+	private $edits, $good, $images, $total, $users,
 			$activeUsers = 0;
 
 	public function __construct() {
@@ -37,12 +41,11 @@ class SpecialStatistics extends SpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgMemc, $wgDisableCounters, $wgMiserMode;
+		global $wgMemc, $wgMiserMode;
 
 		$this->setHeaders();
 		$this->getOutput()->addModuleStyles( 'mediawiki.special' );
 
-		$this->views = SiteStats::views();
 		$this->edits = SiteStats::edits();
 		$this->good = SiteStats::articles();
 		$this->images = SiteStats::images();
@@ -50,12 +53,6 @@ class SpecialStatistics extends SpecialPage {
 		$this->users = SiteStats::users();
 		$this->activeUsers = SiteStats::activeUsers();
 		$this->hook = '';
-
-		# Staticic - views
-		$viewsStats = '';
-		if( !$wgDisableCounters ) {
-			$viewsStats = $this->getViewsStats();
-		}
 
 		# Set active user count
 		if( !$wgMiserMode ) {
@@ -81,23 +78,17 @@ class SpecialStatistics extends SpecialPage {
 
 		# Statistic - usergroups
 		$text .= $this->getGroupStats();
-		$text .= $viewsStats;
-
-		# Statistic - popular pages
-		if( !$wgDisableCounters && !$wgMiserMode ) {
-			$text .= $this->getMostViewedPages();
-		}
 
 		# Statistic - other
 		$extraStats = array();
-		if( wfRunHooks( 'SpecialStatsAddExtra', array( &$extraStats ) ) ) {
+		if( Hooks::run( 'SpecialStatsAddExtra', array( &$extraStats ) ) ) {
 			$text .= $this->getOtherStats( $extraStats );
 		}
 
 		$text .= Xml::closeElement( 'table' );
 
 		#<Wikia>
-		wfRunHooks( "CustomSpecialStatistics", array( &$this, &$text ) );
+		Hooks::run( "CustomSpecialStatistics", [ $this, &$text ] );
 		#</Wikia>
 
 		# Customizable footer
@@ -187,11 +178,11 @@ class SpecialStatistics extends SpecialPage {
 	}
 
 	private function getGroupStats() {
-		global $wgGroupPermissions, $wgImplicitGroups;
+		global $wgGroupPermissions;
 		$text = '';
 		foreach( $wgGroupPermissions as $group => $permissions ) {
 			# Skip generic * and implicit groups
-			if ( in_array( $group, $wgImplicitGroups ) || $group == '*' ) {
+			if ( $this->permissionsService()->getConfiguration()->isImplicitGroup( $group ) ) {
 				continue;
 			}
 			$groupname = htmlspecialchars( $group );
@@ -223,8 +214,7 @@ class SpecialStatistics extends SpecialPage {
 			$countUsers = SiteStats::numberingroup( $groupname );
 			if( $countUsers == 0 ) {
 				// wikia change start
-				global $wgWikiaGlobalUserGroups;
-				if( is_array( $wgWikiaGlobalUserGroups ) && in_array( $groupname, $wgWikiaGlobalUserGroups ) ) {
+				if( $this->permissionsService()->getConfiguration()->isGlobalGroup( $groupname ) ) {
 					//rt#57322 hide our effective global groups
 					continue;
 				}
@@ -235,56 +225,6 @@ class SpecialStatistics extends SpecialPage {
 				$this->getLanguage()->formatNum( $countUsers ),
 				array( 'class' => 'statistics-group-' . Sanitizer::escapeClass( $group ) . $classZero )  );
 		}
-		return $text;
-	}
-
-	private function getViewsStats() {
-		return Xml::openElement( 'tr' ) .
-			Xml::tags( 'th', array( 'colspan' => '2' ), wfMsgExt( 'statistics-header-views', array( 'parseinline' ) ) ) .
-			Xml::closeElement( 'tr' ) .
-				$this->formatRow( wfMsgExt( 'statistics-views-total', array( 'parseinline' ) ),
-					$this->getLanguage()->formatNum( $this->views ),
-						array ( 'class' => 'mw-statistics-views-total' ), 'statistics-views-total-desc' ) .
-				$this->formatRow( wfMsgExt( 'statistics-views-peredit', array( 'parseinline' ) ),
-					$this->getLanguage()->formatNum( sprintf( '%.2f', $this->edits ?
-						$this->views / $this->edits : 0 ) ),
-						array ( 'class' => 'mw-statistics-views-peredit' ) );
-	}
-
-	private function getMostViewedPages() {
-		$text = '';
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-				'page',
-				array(
-					'page_namespace',
-					'page_title',
-					'page_counter',
-				),
-				array(
-					'page_is_redirect' => 0,
-					'page_counter > 0',
-				),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'page_counter DESC',
-					'LIMIT' => 10,
-				)
-			);
-			if( $res->numRows() > 0 ) {
-				$text .= Xml::openElement( 'tr' );
-				$text .= Xml::tags( 'th', array( 'colspan' => '2' ), wfMsgExt( 'statistics-mostpopular', array( 'parseinline' ) ) );
-				$text .= Xml::closeElement( 'tr' );
-				foreach ( $res as $row ) {
-					$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
-					if( $title instanceof Title ) {
-						$text .= $this->formatRow( Linker::link( $title ),
-								$this->getLanguage()->formatNum( $row->page_counter ) );
-
-					}
-				}
-				$res->free();
-			}
 		return $text;
 	}
 

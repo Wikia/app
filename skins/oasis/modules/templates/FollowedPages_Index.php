@@ -1,5 +1,5 @@
 <section class="FollowedPagesModule module">
-	<h1><?= wfMsg('wikiafollowedpages-userpage-heading') ?></h1>
+	<h2><?= wfMsg('wikiafollowedpages-userpage-heading') ?></h2>
 <?php
 	if(count($data) == 0) {
 		echo wfMsg('wikiafollowedpages-special-empty');

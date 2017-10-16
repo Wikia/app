@@ -16,11 +16,11 @@ class SpecialCreatePage extends SpecialEditPage {
 		parent::__construct( 'CreatePage'  /*class*/, '' /*restriction*/, true );
 	}
 
-	public function execute( $subpage ) {
+	public function execute( $par ) {
 		global $wgUser, $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath;
 
-		if ( !empty( $subpage ) ) {
-			if ( !wfRunHooks('SpecialCreatePage::Subpage', array( $subpage )) ) {
+		if ( !empty( $par ) ) {
+			if ( !Hooks::run('SpecialCreatePage::Subpage', array( $par )) ) {
 				return;
 			}
 		}
@@ -67,37 +67,41 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	protected function parseFormData() {
-		global $wgRequest;
+		Hooks::run( 'BlogsAlternateEdit', array( false ) );
 
-		wfRunHooks( 'BlogsAlternateEdit', array( false ) );
+		$request = $this->getRequest();
 
-		$this->mFormData['postBody'] = $wgRequest->getVal( 'wpTextbox1' );
-		$this->mFormData['postTitle'] = $wgRequest->getVal( 'postTitle' );
-		$this->mFormData['postEditSummary'] = $wgRequest->getVal( 'wpSummary' );
-		$this->mFormData['postCategories'] = $wgRequest->getVal( 'wpCategoryTextarea1' );
+		$this->mFormData['postBody'] = $request->getVal( 'wpTextbox1' );
+		$this->mFormData['postTitle'] = $request->getVal( 'postTitle' );
+		$this->mFormData['postEditSummary'] = $request->getVal( 'wpSummary' );
+		$this->mFormData['postCategories'] = $request->getVal( 'wpCategoryTextarea1' );
+
+		if ( !$this->getUser()->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
+			$this->mFormErrors[] = $this->msg( 'sessionfailure' )->escaped();
+		}
 
 		$postBody = trim( $this->mFormData['postBody'] );
 		if ( empty( $postBody ) ) {
-			$this->mFormErrors[] = wfMsg( 'createpage_empty_article_body_error' );
+			$this->mFormErrors[] = $this->msg( 'createpage_empty_article_body_error' )->escaped();
 		}
 
 		if ( empty( $this->mFormData['postTitle'] ) ) {
-			$this->mFormErrors[] = wfMsg( 'createpage_empty_title_error' );
+			$this->mFormErrors[] = $this->msg( 'createpage_empty_title_error' )->escaped();
 		}
 		else {
 			$oPostTitle = Title::newFromText( $this->mFormData['postTitle'], NS_MAIN );
 
 			if ( !( $oPostTitle instanceof Title ) ) {
-				$this->mFormErrors[] = wfMsg( 'createpage_invalid_title_error' );
+				$this->mFormErrors[] = $this->msg( 'createpage_invalid_title_error' )->escaped();
 			}
 			else {
 				$sFragment = $oPostTitle->getFragment();
 				if ( strlen( $sFragment ) > 0 ) {
-					$this->mFormErrors[] = wfMsg( 'createpage_invalid_title_error' );
+					$this->mFormErrors[] = $this->msg( 'createpage_invalid_title_error' )->escaped();
 				} else {
 					$this->mPostArticle = new Article( $oPostTitle, 0 );
 					if ( $this->mPostArticle->exists() ) {
-						$this->mFormErrors[] = wfMsg( 'createpage_article_already_exists' );
+						$this->mFormErrors[] = $this->msg( 'createpage_article_already_exists' )->escaped();
 					}
 				}
 			}
@@ -141,7 +145,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	protected function save() {
-		global $wgOut, $wgUser, $wgContLang, $wgRequest;
+		global $wgOut, $wgRequest;
 
 		// CategorySelect compatibility (add categories to article body)
 		if ( $this->mCategorySelectEnabled ) {
@@ -165,14 +169,19 @@ class SpecialCreatePage extends SpecialEditPage {
 				$wgOut->redirect( $this->mPostArticle->getTitle()->getFullUrl() );
 				break;
 			default:
-				Wikia::log( __METHOD__, "createpage", $status );
-				if ( ( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) || ( $status == EditPage::AS_READ_ONLY_PAGE_ANON ) ) {
+				/**
+				 * PLATFORM-1160: Log the entire $status to ELK
+				 *
+				 * Recommendation: use $status->value for comparisons and messages rather than $status in the following block.
+				 */
+				Wikia\Logger\WikiaLogger::instance()->warning( 'PLATFORM-1160', [ 'method' => __METHOD__, 'status_object' => $status ] );
+				if ( ( $status->value == EditPage::AS_READ_ONLY_PAGE_LOGGED ) || ( $status->value == EditPage::AS_READ_ONLY_PAGE_ANON ) ) {
 					$sMsg = wfMsg( 'createpage_cant_edit' );
 				}
 				else {
 					$sMsg = wfMsg( 'createpage_spam' );
 				}
-				$this->mFormErrors[] = $sMsg . " ($status)";
+				$this->mFormErrors[] = $sMsg . " ($status->value)";
 
 				global $wgCreatePageCaptchaTriggered;
 				// do not display form - there is already one invoked from Captcha [RT#21902] - Marooned
@@ -194,7 +203,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	 * @param $result
 	 * @return bool
 	 */
-	public function wfCreatePageOnConfirmEdit( &$captcha, &$editPage, $newtext, $section, $merged, &$result ) {
+	public function wfCreatePageOnConfirmEdit( $captcha, $editPage, $newtext, $section, $merged, &$result ) {
 		global $wgTitle;
 		$canonspname = array_shift(SpecialPageFactory::resolveAlias( $wgTitle->getDBkey() ));
 		if ( $canonspname != 'CreatePage' ) {

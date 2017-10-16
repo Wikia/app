@@ -70,7 +70,7 @@ class SpecialContributions extends SpecialPage {
 
 		$user = $this->getUser();
 
-		$this->opts['limit'] = $request->getInt( 'limit', $user->getOption( 'rclimit' ) );
+		$this->opts['limit'] = $request->getInt( 'limit', $user->getGlobalPreference( 'rclimit' ) );
 		$this->opts['target'] = $target;
 		$this->opts['topOnly'] = $request->getBool( 'topOnly' );
 
@@ -161,7 +161,7 @@ class SpecialContributions extends SpecialPage {
 		// Add RSS/atom links
 		$this->addFeedLinks( array( 'action' => 'feedcontributions', 'user' => $target ) );
 
-		if ( wfRunHooks( 'SpecialContributionsBeforeMainOutput', array( $id ) ) ) {
+		if ( Hooks::run( 'SpecialContributionsBeforeMainOutput', array( $id ) ) ) {
 
 			$out->addHTML( $this->getForm() );
 
@@ -232,25 +232,30 @@ class SpecialContributions extends SpecialPage {
 			$links = $this->getLanguage()->pipeList( $tools );
 
 			// Show a note if the user is blocked and display the last block log entry.
-			if ( $userObj->isBlocked() ) {
+			/* Wikia change begin - SUS-92 */
+			if ( $userObj->isBlocked( true, false ) ) {
+			/* Wikia change end */
 				$out = $this->getOutput(); // showLogExtract() wants first parameter by reference
-				LogEventsList::showLogExtract(
-					$out,
-					'block',
-					$nt,
-					'',
-					array(
-						'lim' => 1,
-						'showIfEmpty' => false,
-						'msgKey' => array(
-							$userObj->isAnon() ?
-								'sp-contributions-blocked-notice-anon' :
-								'sp-contributions-blocked-notice',
-							$userObj->getName() # Support GENDER in 'sp-contributions-blocked-notice'
-						),
-						'offset' => '' # don't use WebRequest parameter offset
-					)
-				);
+				//If user is blocked globally we do not show local log extract as it doesn't contain information about this block
+				if ( Hooks::run('ContributionsLogEventsList', array( $out, $userObj) ) ) {
+					LogEventsList::showLogExtract(
+						$out,
+						'block',
+						$nt,
+						'',
+						array(
+							'lim' => 1,
+							'showIfEmpty' => false,
+							'msgKey' => array(
+								$userObj->isAnon() ?
+									'sp-contributions-blocked-notice-anon' :
+									'sp-contributions-blocked-notice',
+								$userObj->getName() # Support GENDER in 'sp-contributions-blocked-notice'
+							),
+							'offset' => '' # don't use WebRequest parameter offset
+						)
+					);
+				}
 			}
 		}
 
@@ -282,7 +287,9 @@ class SpecialContributions extends SpecialPage {
 
 		if ( ( $id !== null ) || ( $id === null && IP::isIPAddress( $username ) ) ) {
 			if ( $this->getUser()->isAllowed( 'block' ) ) { # Block / Change block / Unblock links
-				if ( $target->isBlocked() ) {
+				/* Wikia change begin - SUS-92 */
+				if ( $target->isBlocked( true, false) && $target->getBlock( true, false )->getType() != Block::TYPE_AUTO ) {
+				/* Wikia change end */
 					$tools[] = Linker::linkKnown( # Change block link
 						SpecialPage::getTitleFor( 'Block', $username ),
 						$this->msg( 'change-blocklink' )->escaped()
@@ -329,16 +336,17 @@ class SpecialContributions extends SpecialPage {
 		}
 
 		# Add a link to change user rights for privileged users
-		$userrightsPage = new UserrightsPage();
-		$userrightsPage->setContext( $this->getContext() );
-		if ( $id !== null && $userrightsPage->userCanChangeRights( $target ) ) {
-			$tools[] = Linker::linkKnown(
-				SpecialPage::getTitleFor( 'Userrights', $username ),
-				$this->msg( 'sp-contributions-userrights' )->escaped()
-			);
+		if ( !empty( $this->getUser()->getId() ) && !empty( $id ) ) {
+			$isself = $id === $this->getUser()->getId();
+			if ( UserrightsPage::userCanChangeRights( $this->getUser(), $isself, true ) ) {
+				$tools[] = Linker::linkKnown(
+					SpecialPage::getTitleFor( 'Userrights', $username ),
+					$this->msg( 'sp-contributions-userrights' )->escaped()
+				);
+			}
 		}
 
-		wfRunHooks( 'ContributionsToolLinks', array( $id, $userpage, &$tools ) );
+		Hooks::run( 'ContributionsToolLinks', array( $id, $userpage, &$tools ) );
 		return $tools;
 	}
 
@@ -615,7 +623,8 @@ class ContribsPager extends ReverseChronologicalPager {
 			$this->tagFilter
 		);
 
-		wfRunHooks( 'ContribsPager::getQueryInfo', array( &$this, &$queryInfo ) );
+		Hooks::run( 'ContribsPager::getQueryInfo', [ $this, &$queryInfo ] );
+
 		return $queryInfo;
 	}
 
@@ -863,7 +872,7 @@ class ContribsPager extends ReverseChronologicalPager {
 		$ret .= " $tagSummary";
 
 		// Let extensions add data
-		wfRunHooks( 'ContributionsLineEnding', array( &$this, &$ret, $row ) );
+		Hooks::run( 'ContributionsLineEnding', [ $this, &$ret, $row ] );
 
 		$classes = implode( ' ', $classes );
 		$ret = "<li class=\"$classes\">$ret</li>\n";

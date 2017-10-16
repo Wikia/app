@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Video Service
@@ -11,6 +12,8 @@ class VideoService extends WikiaModel {
 	 * @return string error message or array( $videoTitle, $videoPageId, $videoProvider )
 	 */
 	public function addVideo( $url ) {
+		global $wgIsGhostVideo;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wg->User->isAllowed('videoupload') ) {
@@ -23,6 +26,13 @@ class VideoService extends WikiaModel {
 			return wfMessage('videos-error-no-video-url')->text();
 		}
 
+		$vHelper = new VideoHandlerHelper();
+# @TODO Commenting out to fix MAIN-4436 -- Should be fixed correctly when content team is back
+#		if ( !$vHelper->isVideoProviderSupported( $url ) ) {
+#			wfProfileOut( __METHOD__ );
+#			return wfMessage( 'videos-error-provider-not-supported' )->parse();
+#		}
+
 		try {
 			// is it a WikiLink?
 			$title = Title::newFromText($url, NS_FILE);
@@ -30,33 +40,43 @@ class VideoService extends WikiaModel {
 				$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
 			}
 			if ( !$title || !WikiaFileHelper::isFileTypeVideo($title) ) {
-				$transFileNS = wfMessage('nstab-image')->inContentLanguage()->text();
-
-				if ( ($pos = strpos($url, 'Video:')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
-				} elseif ( ($pos = strpos($url, 'File:')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
-				} elseif ( ($pos = strpos($url, $transFileNS.':')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
+				$file = $this->getVideoFileByUrl( $url );
+				if ( $file ) {
+					$title = $file->getTitle();
 				}
 			}
 			if ( $title && WikiaFileHelper::isFileTypeVideo($title) ) {
 				$videoTitle = $title;
 				$videoPageId = $title->getArticleId();
 				$videoProvider = '';
-				wfRunHooks( 'AddPremiumVideo', array( $title ) );
+				Hooks::run( 'AddPremiumVideo', array( $title ) );
 			} else {
 				if ( empty( $this->wg->allowNonPremiumVideos ) ) {
 					wfProfileOut( __METHOD__ );
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
+
+				// SUS-1195: by-pass the RepoGroup process cache
+				$file = WikiaFileHelper::getFileFromTitle( $videoTitle, true /* by-pass the cache */ );
 			}
 
-			// Add a default description if available and one doesn't already exist
-			$file = wfFindFile( $videoTitle );
-			$vHelper = new VideoHandlerHelper();
-			$vHelper->addDefaultVideoDescription( $file );
+			if ( !( $file instanceof File ) ) {
+				WikiaLogger::instance()->error( '\VideoHandlerHelper->adDefaultVideoDescription() - File is empty', [
+					'exception' => new Exception(),
+					'url' => $url,
+					'title' => $title,
+					'videoTitle' => $videoTitle,
+					'videoPageId' => $videoPageId,
+					'videoProvider' => $videoProvider,
+					'wgIsGhostVideo' => $wgIsGhostVideo
+				] );
+				wfProfileOut( __METHOD__ );
+				return wfMessage( 'videos-something-went-wrong' )->parse();
+			} else {
+				// Add a default description if available and one doesn't already exist
+				$vHelper->addDefaultVideoDescription( $file );
+			}
 		} catch ( Exception $e ) {
 			wfProfileOut( __METHOD__ );
 			return $e->getMessage();
@@ -100,8 +120,7 @@ class VideoService extends WikiaModel {
 		foreach( $wikis as $wikiId => $wiki ) {
 			$result[$wikiId] = true;
 			if ( !empty( $wiki['d'] ) ) {
-				$userName = $this->wg->User->getName();
-				$response = ApiService::foreignCall( $wiki['d'], $params, ApiService::WIKIA, $userName );
+				$response = ApiService::foreignCall( $wiki['d'], $params, ApiService::WIKIA, true );
 				if ( !empty( $response['error'] ) ) {
 					Wikia::log( __METHOD__, false, "Error: Cannot add video to wiki $wikiId ($response[error])", true, true);
 					$result[$wikiId] = false;
@@ -112,6 +131,30 @@ class VideoService extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Get Video file by given URL
+	 * @param string $url
+	 * @return File|null
+	 */
+	public function getVideoFileByUrl( $url ) {
+		global $wgContLang;
+
+		$file = null;
+
+		$nsFileTranslated = $wgContLang->getNsText( NS_FILE );
+
+		// added $nsFileTransladed to fix bugId:#48874
+		$pattern = '/(File:|' . $nsFileTranslated . ':)(.+)$/';
+		if ( preg_match( $pattern, $url, $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+			if ( !$file && preg_match( $pattern, urldecode( $url ), $matches ) ) { // bugID: 26721
+				$file = wfFindFile( urldecode( $matches[2] ) );
+			}
+		}
+
+		return $file;
 	}
 
 }

@@ -15,37 +15,17 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Checks whether given page can be indexed by web crawlers
-	 *
-	 * @param Title $title page to check
-	 * @return bool is trackable?
-	 */
-	static public function pageIsIndexable(Title $title) {
-		wfProfileIn(__METHOD__);
-		$res = true;
-
-		if ($title->getNamespace() === NS_LYRICFIND) {
-			$mainNStitle = Title::newFromText($title->getText(), NS_MAIN);
-
-			// the same lyric exists in main namespace, prevent indexing of LyricFind version
-			if ($mainNStitle->exists()) {
-				$res = false;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return $res;
-	}
-
-	/**
-	 * Loads page views tracking code
+	 * Loads page views tracking code (in Oasis, mobile skin and monobook)
 	 *
 	 * @param array $jsAssetGroups AssetsManager groups to load
 	 * @return bool true
 	 */
-	static public function onOasisSkinAssetGroups(Array &$jsAssetGroups) {
+	static public function onSkinAssetGroups(Array &$jsAssetGroups) {
 		$wg = F::app()->wg;
 		if (self::pageIsTrackable($wg->Title)) {
+			// load:
+			// * js/modules/LyricFind.Tracker.js
+			// * js/tracking.js
 			$jsAssetGroups[] = 'LyricsFindTracking';
 		}
 
@@ -53,7 +33,8 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Blocks view page source page
+	 * Blocks view source page & make it so that users cannot create/edit
+	 * pages that are on the takedown list.
 	 *
 	 * @param EditPage $editPage edit page instance
 	 * @return bool show edit page form?
@@ -61,12 +42,24 @@ class LyricFindHooks {
 	static public function onAlternateEdit(EditPage $editPage) {
 		$wg = F::app()->wg;
 		$title = $editPage->getTitle();
-		$isLyricFind = $title->getNamespace() === NS_LYRICFIND;
-		$isNotAllowedToEdit = $title->isNamespaceProtected($wg->User);
 
-		$blockEdit = ($isLyricFind && $isNotAllowedToEdit);
-		if ($blockEdit) {
-			$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-edit-blocked')));
+		// Block view-source on the certain pages.
+		if($title->exists()){
+			// Look at the page-props to see if this page is blocked.
+			if(!$wg->user->isAllowed( 'editlyricfind' )){ // some users (staff/admin) will be allowed to edit these to prevent vandalism/spam issues.
+				$removedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL,
+					$title->getArticleID());
+				if(!empty($removedProp)){
+					$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-editpage-blocked')));
+					$blockEdit = true;
+				}
+			}
+		} else {
+			// Page is being created. Prevent this if page is prohibited by LyricFind.
+			$blockEdit = LyricFindTrackingService::isPageBlockedViaApi($amgId="", $gracenoteId="", $title->getText());
+			if($blockEdit){
+				$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-creation-blocked')));
+			}
 		}
 
 		return !$blockEdit;
@@ -96,17 +89,25 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Prevent indexing of articles in NS_LYRICFIND if the same lyric exists in main namespace
+	 * If this song is on takedown list... replace the lyrics content with a message about why
+	 * it is gone. This will replace the content of all <lyrics> tags on the page (also <lyricfind>
+	 * and <gracenotelyrics> tags for support of legacy pages).
 	 *
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @return bool true
+	 * @param Parser $parser
+	 * @param $text a string containing the wikitext (this is _not_ a Text object).
+	 * @param strip_state (undocumented)
 	 */
-	static public function onBeforePageDisplay(OutputPage $out, Skin $skin ) {
-		if (!self::pageIsIndexable($out->getTitle())) {
-			$out->setRobotPolicy('noindex,follow');
+	static public function onParserBeforeStrip(Parser $parser, &$text, &$strip_state){
+		$removedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $parser->getTitle()->getArticleID());
+		$isMarkedAsRemoved = (!empty($removedProp));
+		if($isMarkedAsRemoved){
+			// Replace just the lyrics boxes if any are found. If none are found, hide the whole page.
+			$NO_LIMIT = -1;
+			$numReplacements = 0;
+			$text = preg_replace("/<(lyrics|lyricfind|gracenotelyrics)>(.*?)<\/(lyrics|lyricfind|gracenotelyrics)>/is", "<lyrics>{{lyricfind_takedown}}</lyrics>", $text, $NO_LIMIT, $numReplacements);
 		}
 
 		return true;
 	}
+
 }

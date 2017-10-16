@@ -1,7 +1,0 @@
-/* vim: noet ts=4 sw=4
- * http://www.gnu.org/licenses/gpl-3.0.txt */
-
-/* hide the [edit] section links */
-.editsection {
-	display: none;
-}

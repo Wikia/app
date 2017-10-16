@@ -23,13 +23,9 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'EditAccount',
 	'version' => '1.0',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'descriptionmsg' => 'editaccount-desc'
+	'descriptionmsg' => 'editaccount-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditAccount'
 );
-
-// New user right, required to use the extension.
-$wgAvailableRights[] = 'editaccount';
-$wgGroupPermissions['*']['editaccount'] = false;
-$wgGroupPermissions['util']['editaccount'] = true;
 
 // Log definition
 $wgLogTypes[] = 'editaccnt';
@@ -42,9 +38,13 @@ $wgLogActions['editaccnt/closeaccnt'] = 'editaccount-log-entry-close';
 $wgLogRestrictions['editaccnt'] = 'editaccount';
 
 // Set up the new special page
-$dir = dirname( __FILE__ ) . '/';
-$wgExtensionMessagesFiles['EditAccount'] = $dir . 'SpecialEditAccount.i18n.php';
-$wgAutoloadClasses['EditAccount'] = $dir . 'SpecialEditAccount_body.php';
+$wgExtensionMessagesFiles['EditAccount'] = __DIR__ . '/SpecialEditAccount.i18n.php';
+$wgAutoloadClasses['EditAccount'] = __DIR__ . '/SpecialEditAccount_body.php';
 $wgSpecialPages['EditAccount'] = 'EditAccount';
-// Special page group for MW 1.13+
 $wgSpecialPageGroups['EditAccount'] = 'users';
+
+$wgResourceModules['ext.editAccount'] = [
+	'localBasePath' => __DIR__ . '/modules',
+	'remoteExtPath' => 'wikia/EditAccount/modules',
+	'styles' => 'ext.editAccount.scss',
+];

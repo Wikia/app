@@ -65,21 +65,27 @@ class ApiMediaSearch extends ApiBase {
 	}
 
 	protected function getType( $title ) {
-		$fileTitle = Title::newFromText( $title, NS_FILE );
-		$image = wfFindFile( $fileTitle );
-
+		$image = wfFindFile( $title );
 		$mediaTypes = [
 			'BITMAP' => 'photo',
 			'VIDEO' => 'video'
 		];
-
 		return $mediaTypes[ $image->getMediaType() ];
 	}
 
 	protected function getUrl( $title ) {
-		$fileTitle = Title::newFromText( $title, NS_FILE );
-		$image = wfFindFile( $fileTitle );
+		$image = wfFindFile( $title );
 		return $image->getFullUrl();
+	}
+
+	/**
+	 * Gets the duration of a video.
+	 * @param string $title
+	 * @return int Number of seconds
+	 */
+	protected function getDuration( $title ) {
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+		return $file ? round( $file->getMetadataDuration() ) : 0;
 	}
 
 	public function getResults( $query, $limit, $batch, $video, $photo, $mixed ) {
@@ -143,11 +149,21 @@ class ApiMediaSearch extends ApiBase {
 		$items = [];
 
 		foreach( $raw['items'] as $rawItem ) {
+			$title = Title::newFromText( $rawItem['title'], NS_FILE );
 			$item = [
-				'title' => $rawItem['title'],
-				'type' => $this->getType( $rawItem['title'] ),
-				'url' => $this->getUrl( $rawItem['title'] )
+				'title' => $title->getText(),
+				'type' => $this->getType( $title ),
+				'url' => $this->getUrl( $title )
 			];
+			if ( $item['type'] === 'video' ) {
+				$item['duration'] = $this->getDuration( $title );
+			}
+			if ( $item['type'] === 'photo' ) {
+				$file = wfFindFile( $title );
+				$item['width'] = $file->getWidth();
+				$item['height'] = $file->getHeight();
+				$item['id'] = $title->getArticleID();
+			}
 			array_push( $items, $item );
 		}
 

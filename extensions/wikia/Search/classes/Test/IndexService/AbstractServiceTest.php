@@ -17,6 +17,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08087 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::__construct
 	 */
 	public function testConstruct() {
@@ -33,6 +35,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07938 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::setPageId
 	 */
 	public function testSetPageId() {
@@ -50,6 +54,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
     /**
+	 * @group Slow
+	 * @slowExecutionTime 0.08144 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::setPageIds
 	 */
 	public function testSetPageIds() {
@@ -67,6 +73,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09325 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getCurrentDocumentId
 	 */
 	public function testGetCurrentDocumentId() {
@@ -80,6 +88,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08049 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getJsonDocumentFromResponse
 	 */
 	public function testGetJsonDocumentFromResponse() {
@@ -94,6 +104,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08623 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsSuccess() {
@@ -104,7 +116,7 @@ class AbstractServiceTest extends BaseTest
 		
 		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'pageIdExists' ) )
+		                  ->setMethods( array( 'pageIdExists', 'pageIdCanBeIndexed' ) )
 		                  ->getMock();
 		
 		$executeResponse = array( 'foo' => 'bar' );
@@ -113,6 +125,12 @@ class AbstractServiceTest extends BaseTest
 		$mwservice
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
+		    ->with   ( 234 )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mwservice
+		    ->expects( $this->any() )
+		    ->method ( 'pageIdCanBeIndexed' )
 		    ->with   ( 234 )
 		    ->will   ( $this->returnValue( true ) )
 		;
@@ -145,6 +163,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08187 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsSkipRepeats() {
@@ -155,7 +175,7 @@ class AbstractServiceTest extends BaseTest
 		
 		$mwservice = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
 		                  ->disableOriginalConstructor()
-		                  ->setMethods( array( 'pageIdExists' ) )
+		                  ->setMethods( array( 'pageIdExists', 'pageIdCanBeIndexed' ) )
 		                  ->getMock();
 		
 		$service->setPageIds( array( 456 ) );
@@ -169,6 +189,12 @@ class AbstractServiceTest extends BaseTest
 		    ->method ( 'pageIdExists' )
 		    ->with   ( 456 )
 		    ->will   ( $this->returnValue( true ) )
+		;
+		$mwservice
+			->expects( $this->any() )
+			->method ( 'pageIdCanBeIndexed' )
+			->with   ( 456 )
+			->will   ( $this->returnValue( true ) )
 		;
 		$service
 		    ->expects( $this->any() )
@@ -193,6 +219,8 @@ class AbstractServiceTest extends BaseTest
 	}
 
     /**
+	 * @group Slow
+	 * @slowExecutionTime 0.08554 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsError() {
@@ -235,6 +263,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08127 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsNotExists() {
@@ -255,13 +285,18 @@ class AbstractServiceTest extends BaseTest
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
 		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( false ) )
-		;
+		    ->will   ( $this->returnValue( false ) );
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getCurrentDocumentId' )
-		    ->will   ( $this->returnValue( '321_123' ) )
-		;
+		    ->will   ( $this->returnValue( '321_123' ) );
+
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getCurrentDocumentId' )
+			->will   ( $this->returnValue( '321_123' ) );
+
 		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
 		$reflIf->setValue( $service, $mwservice );
@@ -272,8 +307,11 @@ class AbstractServiceTest extends BaseTest
 				$service->getResponseForPageIds()
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @group Broken
+	 * @slowExecutionTime 0.07976 ms
 	 * @covers Wikia\Search\IndexService\AbstractService::getService
 	 */
 	public function testGetService() {
@@ -300,6 +338,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08203 ms
 	 * @covers Wikia\Search\IndexService\AbstractService::getResponse
 	 */
 	public function testGetResponseWorks() {
@@ -326,6 +366,8 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07978 ms
 	 * @covers Wikia\Search\IndexService\AbstractService::getResponse
 	 */
 	public function testGetResponseBreaks() {

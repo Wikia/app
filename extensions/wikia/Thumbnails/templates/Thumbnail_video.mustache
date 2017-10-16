@@ -1,0 +1,14 @@
+<a
+	href="{{linkHref}}"
+	class="video video-thumbnail {{#linkClasses}}{{.}} {{/linkClasses}}"
+	{{#linkId}} id="{{id}}" {{/linkId}}
+	{{#rdf}} itemprop='video' itemscope itemtype="http://schema.org/VideoObject"{{/rdf}}
+	{{#extraLinkAttrs}} {{{.}}}{{/extraLinkAttrs}}>
+
+	{{>Thumbnail_imgTag}}
+	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}
+
+	{{#duration}}<span class="duration" itemprop="duration">{{duration}}</span>{{/duration}}
+	<span class="play-circle"></span>
+	{{#durationISO}}<meta itemprop="duration" content="{{durationISO}}">{{/durationISO}}
+</a>

@@ -38,6 +38,14 @@ $specialPageAliases['ja'] = array(
 	'Hieroglyphs' => array( 'ヒエログリフ' ),
 );
 
+// begin wikia change
+// VOLDEV-97
+/** Korean (한국어) */
+$specialPageAliases['ko'] = array(
+	'Hieroglyphs' => array( '상형문자' ),
+);
+// end wikia change
+
 /** Macedonian (Македонски) */
 $specialPageAliases['mk'] = array(
 	'Hieroglyphs' => array( 'Хиероглифи' ),
@@ -58,4 +66,10 @@ $specialPageAliases['es'] = array(
 	'Hieroglyphs' => array( 'Jeroglíficos' ),
 );
 
-
+// begin wikia change
+// VOLDEV-94
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'Hieroglyphs' => array( 'Chữ_tượng_hình' ),
+);
+// end wkia change

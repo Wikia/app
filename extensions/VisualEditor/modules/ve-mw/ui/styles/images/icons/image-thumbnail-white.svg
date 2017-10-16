@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="image-thumbnail" style="opacity:0.75;fill:white;">
+        <path id="frame" d="M4 4v15h16v-15zm15 14h-14v-13h14z"/>
+        <path id="mountains" d="M6 15v-2.5l3.5-3.5 2.328 2.312-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3z"/>
+        <path id="sky" d="M9.516 6.844l3.046 3.172 2.938-2.016 2.5 2v-4h-12v5z"/>
+        <path id="text" d="M6 16h10v1h-10z"/>
+        <path id="zoom" d="M17 16h1v1h-1z"/>
+    </g>
+</svg>

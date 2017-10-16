@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Minh Nguyen",
+			"Vinhtantran",
+			"පසිඳු කාවින්ද"
+		]
+	},
+	"browsedata": "Duyệt dữ liệu",
+	"sd_browsedata_choosecategory": "Chọn một thể loại",
+	"sd_browsedata_viewcategory": "xem thể loại",
+	"sd_browsedata_subcategory": "Thể loại con",
+	"sd_browsedata_other": "Khác",
+	"sd_browsedata_none": "Không có",
+	"sd_browsedata_filterbyvalue": "Lọc theo giá trị này",
+	"sd_browsedata_filterbysubcategory": "Lọc theo thể loại con này",
+	"sd_browsedata_otherfilter": "Hiển thị trang với giá trị khác cho bộ lọc này",
+	"sd_browsedata_nonefilter": "Hiển thị không có giá trị nào đối với bộ lọc này",
+	"sd_browsedata_or": "hoặc",
+	"sd_browsedata_removefilter": "Bỏ bộ lọc này",
+	"sd_browsedata_removesubcategoryfilter": "Bỏ bộ lọc thể loại con này",
+	"sd_browsedata_resetfilters": "Tái tạo bộ lọc",
+	"sd_browsedata_addanothervalue": "Nhấn chuột vào tên mũi để thêm giá trị khác",
+	"sd_browsedata_daterangestart": "Bắt đầu:",
+	"sd_browsedata_daterangeend": "Kết thúc:",
+	"sd_createfilter_usepropertyvalues": "Sử dụng tất cả các giá trị của thuộc tính này cho bộ lọc",
+	"sd_createfilter_usecategoryvalues": "Lấy giá trị cho bộ lọc từ thể loại này:",
+	"sd_createfilter_requirefilter": "Cần bộ lọc khác được chọn trước khi hiển thị cái này:",
+	"sd-pageschemas-values": "Các giá trị"
+}

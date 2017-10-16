@@ -3,6 +3,7 @@
  * A model for the Game Guides controller
  *
  * @author Federico "Lox" Lucignano
+ * @deprecated
  */
 
 class GameGuidesModel{

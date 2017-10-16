@@ -1,0 +1,24 @@
+This is the roadmap and release schedule for the Semantic Result Formats extension.
+
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:SemanticResultFormats
+Latest version of the roadmap: https://gerrit.wikimedia.org/r/gitweb?p=mediawiki/extensions/SemanticResultFormats.git;a=blob;f=ROADMAP
+
+== Semantic Result Formats 1.8 ==
+
+September 2012
+
+* Migrate parameters to Validator 0.5.x style definitions
+* Fix several broken param description messages
+
+== Semantic Result Formats 1.9 ==
+
+Early 2013
+
+* Drop compatibility with MediaWiki < 1.18
+* Drop compatibility with PHP < 5.3
+
+== Semantic Result Formats 1.10 ==
+
+Mid or late 2013
+
+* Drop compatibility with MediaWiki < 1.19

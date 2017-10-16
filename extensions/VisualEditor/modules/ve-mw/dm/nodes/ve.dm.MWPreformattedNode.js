@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWPreformattedNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,28 +10,25 @@
  *
  * @class
  * @extends ve.dm.PreformattedNode
+ *
  * @constructor
- * @param {ve.dm.LeafNode[]} [children] Child nodes to attach
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.MWPreformattedNode = function VeDmMWPreformattedNode( children, element ) {
+ve.dm.MWPreformattedNode = function VeDmMWPreformattedNode() {
 	// Parent constructor
-	ve.dm.PreformattedNode.call( this, children, element );
+	ve.dm.PreformattedNode.apply( this, arguments );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWPreformattedNode, ve.dm.PreformattedNode );
+OO.inheritClass( ve.dm.MWPreformattedNode, ve.dm.PreformattedNode );
 
 /* Static Properties */
 
 ve.dm.MWPreformattedNode.static.name = 'mwPreformatted';
 
-ve.dm.MWPreformattedNode.static.suggestedParentNodeTypes = [ 'document' ];
-
-ve.dm.MWPreformattedNode.static.toDataElement = function () {
-	return { 'type': 'mwPreformatted' };
-};
+ve.dm.MWPreformattedNode.static.suggestedParentNodeTypes = [ 'document', 'tableCell' ];
 
 /* Registration */
 

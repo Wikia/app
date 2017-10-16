@@ -10,5 +10,4 @@ $wgHooks['ArticleSaveComplete'][] = 'ScribeEventProducerController::onSaveComple
 $wgHooks['NewRevisionFromEditComplete'][] = 'ScribeEventProducerController::onSaveRevisionComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'ScribeEventProducerController::onDeleteComplete';
 $wgHooks['ArticleUndelete'][] = 'ScribeEventProducerController::onArticleUndelete';
-$wgHooks['TitleMoveComplete'][] = 'ScribeEventProducerController::onMoveComplete'; 
-
+$wgHooks['TitleMoveComplete'][] = 'ScribeEventProducerController::onMoveComplete';

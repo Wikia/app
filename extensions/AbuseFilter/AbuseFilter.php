@@ -78,17 +78,8 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = 'AbuseFilterHooks::onLoadExtensionSch
 $wgHooks['ContributionsToolLinks'][] = 'AbuseFilterHooks::onContributionsToolLinks';
 $wgHooks['UploadVerification'][] = 'AbuseFilterHooks::onUploadVerification';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AbuseFilterHooks::onMakeGlobalVariablesScript';
-
-$wgAvailableRights[] = 'abusefilter-modify';
-$wgAvailableRights[] = 'abusefilter-log-detail';
-$wgAvailableRights[] = 'abusefilter-view';
-$wgAvailableRights[] = 'abusefilter-log';
-$wgAvailableRights[] = 'abusefilter-private';
-$wgAvailableRights[] = 'abusefilter-modify-restricted';
-$wgAvailableRights[] = 'abusefilter-revert';
-$wgAvailableRights[] = 'abusefilter-view-private';
-$wgAvailableRights[] = 'abusefilter-hidden-log';
-$wgAvailableRights[] = 'abusefilter-hide-log';
+$wgHooks['UserRename::Local'][] = 'AbuseFilterHooks::onUserRenameLocal';
+$wgHooks['UserRename::LocalIP'][] = 'AbuseFilterHooks::onUserRenameLocalIP';
 
 $wgLogTypes[] = 'abusefilter';
 $wgLogNames['abusefilter']          = 'abusefilter-log-name';

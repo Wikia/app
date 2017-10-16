@@ -3,7 +3,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit(1);
 }
 
-//@{
 /**
  * @file
  * @ingroup Extensions
@@ -27,7 +26,7 @@ $wgAutoloadClasses['TitleBlacklistHooks'] = dirname( __FILE__ ) . '/TitleBlackli
  */
 define( 'TBLSRC_MSG',       0 );	///< For internal usage
 define( 'TBLSRC_LOCALPAGE', 1 );	///< Local wiki page
-define( 'TBLSRC_URL',	    2 );	///< Load blacklist from URL
+define( 'TBLSRC_GLOBALPAGE',2 );	///< Global wiki page
 define( 'TBLSRC_FILE',      3 );	///< Load from file
 /** @} */
 
@@ -46,17 +45,8 @@ $dir = dirname( __FILE__ );
 $wgAutoloadClasses['ApiQueryTitleBlacklist'] = "$dir/api/ApiQueryTitleBlacklist.php";
 $wgAPIModules['titleblacklist'] = 'ApiQueryTitleBlacklist';
 
-$wgAvailableRights[] = 'tboverride';	// Implies tboverride-account
-$wgAvailableRights[] = 'tboverride-account';	// For account creation
-$wgGroupPermissions['sysop']['tboverride'] = true;
-
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'TitleBlacklistHooks::userCan';
 $wgHooks['AbortMove'][] = 'TitleBlacklistHooks::abortMove';
-//$wgHooks['AbortNewAccount'][] = 'TitleBlacklistHooks::abortNewAccount';
-//$wgHooks['AbortAutoAccount'][] = 'TitleBlacklistHooks::abortNewAccount';
 $wgHooks['CentralAuthAutoCreate'][] = 'TitleBlacklistHooks::centralAuthAutoCreate';
 $wgHooks['EditFilter'][] = 'TitleBlacklistHooks::validateBlacklist';
 $wgHooks['ArticleSaveComplete'][] = 'TitleBlacklistHooks::clearBlacklist';
-//$wgHooks['UserCreateForm'][] = 'TitleBlacklistHooks::addOverrideCheckbox';
-
-//@}

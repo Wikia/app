@@ -10,10 +10,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 
 /**
@@ -27,7 +29,6 @@ class SMWLanguageId extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Halaman', // name of page datatype
-		'_str' => 'String',  // name of the string type
 		'_txt' => 'Teks',  // name of the text type
 		'_cod' => 'Kode',  // name of the (source) code type
 		'_boo' => 'Boole',  // name of the boolean type
@@ -41,11 +42,12 @@ class SMWLanguageId extends SMWLanguage {
 		'_tel' => 'Nomor telepon',  // name of the telephone (URI) type
 		'_rec' => 'Rekaman', // name of record data type
 		'_qty' => 'Quantity', // name of the number type with units of measurement //TODO: translate
+		'_mlt_rec' => 'Monolingual text',
 	);
 
 	protected $m_DatatypeAliases = array(
 		'URI'           => '_uri',
-		'Enumerasi'     => '_str',
+		'Enumerasi'     => '_txt',
 		'Nomor telepon' => '_tel',
 	);
 
@@ -61,9 +63,29 @@ class SMWLanguageId extends SMWLanguage {
 		'_SERV' => 'Memberikan layanan',
 		'_PVAL' => 'Mengizinkan nilai',
 		'_MDAT' => 'Tanggal modifikasi',
+		'_CDAT' => 'Creation date', // TODO: translate
+		'_NEWP' => 'Is a new page', // TODO: translate
+		'_LEDT' => 'Last editor is', // TODO: translate
 		'_ERRP' => 'Memiliki nilai yang tidak tepat untuk',
 		'_LIST' => 'Memiliki bidang',
 		'_SOBJ' => 'Has subobject', // TODO: translate
+		'_ASK'  => 'Has query', // TODO: translate
+		'_ASKST'=> 'Query string', // TODO: translate
+		'_ASKFO'=> 'Query format', // TODO: translate
+		'_ASKSI'=> 'Query size', // TODO: translate
+		'_ASKDE'=> 'Query depth', // TODO: translate
+		'_ASKDU'=> 'Query duration', // TODO: translate
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'Mime type',
+		'_ERRC' => 'Has processing error',
+		'_ERRT' => 'Has processing error text',
+		'_PREC'  => 'Display precision of',
+		'_LCODE' => 'Language code',
+		'_TEXT'  => 'Text',
+		'_PDESC' => 'Has property description',
+		'_PVAP'  => 'Allows pattern',
+		'_DTITLE' => 'Display title of',
+		'_PVUC' => 'Has uniqueness constraint',
 	);
 
 	protected $m_SpecialPropertyAliases = array(

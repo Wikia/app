@@ -1,0 +1,17 @@
+@mixin wordmark {
+	font-weight: bold;
+	line-height: normal;
+	width: 250px;
+	&.small {
+		font-size: 25px;
+	}
+	&.medium {
+		font-size: 30px;
+	}
+	&.large {
+		font-size: 40px;
+	}
+	a:hover {
+		text-decoration: none;
+	}
+}

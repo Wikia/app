@@ -62,7 +62,7 @@ class AchBadge {
 	}
 
 	public function getDetails() {
-		return wfMsgForContent(AchConfig::getInstance()->getBadgeToGetDetailsKey($this->mBadgeTypeId), array($this->getCategory()));
+		return wfMessage( AchConfig::getInstance()->getBadgeToGetDetailsKey( $this->mBadgeTypeId ), $this->getCategory() )->parse();
 	}
 
 	public function getToGet($i = null) {

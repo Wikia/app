@@ -1,6 +1,6 @@
 <?php
 
-class ImagesService extends Service {
+class ImagesService {
 	const FILE_DATA_COMMENT_OPION_NAME = 'comment';
 	const FILE_DATA_DESC_OPION_NAME = 'description';
 
@@ -8,6 +8,7 @@ class ImagesService extends Service {
 	const EXT_JPEG = '.jpeg';
 	const EXT_PNG  = '.png';
 	const EXT_GIF  = '.gif';
+	const DATA_TAG = 'data:image';
 
 	public static $allowedExtensionsList = [self::EXT_GIF, self::EXT_PNG, self::EXT_JPG, self::EXT_JPEG];
 
@@ -17,7 +18,7 @@ class ImagesService extends Service {
 	 * @param integer $pageId
 	 * @return string imageUrl
 	 */
-	public static function getImageSrc($wikiId, $pageId, $imgSize = 250) {
+	public static function getImageSrc($wikiId, $pageId, $imgSize = 250, $imgHeight = null) {
 		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
@@ -29,7 +30,11 @@ class ImagesService extends Service {
 			'imgFailOnFileNotFound' => 'true',
 		);
 
-		$response = ApiService::foreignCall($dbname, $param);
+		if($imgHeight!==null){
+			$param['imgHeight']  = $imgHeight;
+		}
+
+		$response = ApiService::foreignCall($dbname, $param, ApiService::API, true);
 
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
@@ -79,7 +84,7 @@ class ImagesService extends Service {
 		);
 
 		$imagePage = $title->getFullUrl();
-		$response = ApiService::foreignCall($dbname, $param);
+		$response = ApiService::foreignCall($dbname, $param, ApiService::API, true);
 
 		if (!empty($response['query']['pages'])) {
 			$imagePageData = array_shift($response['query']['pages']);
@@ -120,15 +125,63 @@ class ImagesService extends Service {
 	 * @return String new URL
 	 */
 	public static function overrideThumbnailFormat($thumbUrl, $newExtension) {
+		if (empty($thumbUrl) || !self::isValidThumbOverrideFormat($newExtension)) {
+			return $thumbUrl;
+		}
 
-		if ( !empty($thumbUrl)
-				&& in_array($newExtension, self::$allowedExtensionsList) // only change extension if it's allowed
-				&& !self::imageUrlHasExtension($thumbUrl, $newExtension) // only change extension if it's different that current one
-			) {
+		if (VignetteRequest::isVignetteUrl($thumbUrl)) {
+			$vignetteUrl = VignetteRequest::setThumbnailFormat( $thumbUrl, $newExtension );
+			if ( $vignetteUrl ) {
+				return $vignetteUrl;
+			}
+		}
+
+		if (!self::imageUrlHasExtension($thumbUrl, $newExtension) && !self::isDataTagImage($thumbUrl)) {
 			$thumbUrl .= $newExtension;
 		}
 
 		return $thumbUrl;
+	}
+
+	private static function isValidThumbOverrideFormat($extension) {
+		return in_array($extension, self::$allowedExtensionsList);
+	}
+
+	private static function isDataTagImage($url) {
+		return substr($url, 0, strlen(static::DATA_TAG)) == static::DATA_TAG;
+	}
+
+	private static function parseThumbDestSize( $destSize ) {
+		$width = $height = null;
+
+		if ( strpos( $destSize, "px" ) !== false ) {
+			list( $width, $_ ) = explode( "px", $destSize );
+		} else if ( strpos( $destSize, "x" ) !== false ) {
+			list( $width, $height ) = explode( "x", $destSize );
+		} else {
+			$width = intval( $destSize );
+		}
+
+		return [ $width, $height ];
+	}
+
+	private static function vignetteOriginalToThumb( $imageUrl, $width, $height ) {
+		try {
+			$generator = VignetteRequest::fromUrl( $imageUrl );
+		} catch (Exception $e) {
+			return $imageUrl;
+		}
+
+		if ( $width && $height ) {
+			$generator
+				->fixedAspectRatio()
+				->height( $height )
+				->width( $width );
+		} else {
+			$generator->scaleToWidth( $width );
+		}
+
+		return $generator->url();
 	}
 
 	/**
@@ -142,27 +195,29 @@ class ImagesService extends Service {
 	 */
 	public static function getThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension = null) {
 		if (!empty($imageUrl)) {
-			if ( !self::IsExternalThumbnailUrl($imageUrl) ) {
-				$imageUrl = str_replace('/images/', '/images/thumb/', $imageUrl);
+			if ( VignetteRequest::isVignetteUrl( $imageUrl ) ) {
+				list( $width, $height ) = self::parseThumbDestSize( $destSize );
+				$imageUrl = self::vignetteOriginalToThumb( $imageUrl, $width, $height );
 			} else {
-				$imageUrl = $imageUrl;
+				if ( !self::IsExternalThumbnailUrl( $imageUrl ) ) {
+					$imageUrl = str_replace( '/images/', '/images/thumb/', $imageUrl );
+				}
+
+				/**
+				 * url is virtual base for thumbnail, so
+				 *
+				 * - get last part of path
+				 * - add it as thumbnail file prefixed with widthpx
+				 */
+				$parts = explode( "/", $imageUrl );
+				$file = array_pop( $parts );
+
+				if ( ctype_digit( (string)$destSize ) ) {
+					$destSize .= 'px';
+				}
+
+				$imageUrl = sprintf( "%s/%s-%s", $imageUrl, $destSize, $file );
 			}
-
-
-			/**
-			 * url is virtual base for thumbnail, so
-			 *
-			 * - get last part of path
-			 * - add it as thumbnail file prefixed with widthpx
-			 */
-			$parts = explode( "/", $imageUrl );
-			$file = array_pop( $parts );
-
-			if ( ctype_digit( (string)$destSize ) ) {
-				$destSize .= 'px';
-			}
-
-			$imageUrl = sprintf( "%s/%s-%s", $imageUrl, $destSize, $file );
 
 			if ( !empty($newExtension) ) {
 				$imageUrl = self::overrideThumbnailFormat($imageUrl, $newExtension);
@@ -173,6 +228,23 @@ class ImagesService extends Service {
 	}
 
 	/**
+	 * @desc Returns normal image URL made from thumbnail
+	 *
+	 * @param String $thumbUrl thumbnail image's URL
+	 * @return String new URL
+	 */
+	public static function getFileUrlFromThumbUrl( $thumbUrl ) {
+		if ( VignetteRequest::isVignetteUrl( $thumbUrl ) ) {
+			return VignetteRequest::fromUrl( $thumbUrl, true )->url();
+		} elseif ( self::IsExternalThumbnailUrl( $thumbUrl ) ) {
+			$imageUrl = str_replace( '/images/thumb/', '/images/', $thumbUrl );
+			return preg_replace( '~/[^/]+$~', '', $imageUrl );
+		} else {
+			return $thumbUrl;
+		}
+	}
+
+	/**
 	 * @desc Checks if given URL is pointing to our external thumbnail service.
 	 *
 	 * @param String $url url to test
@@ -180,7 +252,7 @@ class ImagesService extends Service {
 	 * @return boolean
 	 */
 	public static function IsExternalThumbnailUrl($url) {
-		return strpos($url, '/images/thumb/') !== false;
+		return VignetteRequest::isVignetteUrl( $url ) || strpos( $url, '/images/thumb/' ) !== false;
 	}
 
 	/**
@@ -391,5 +463,30 @@ class ImagesService extends Service {
 			'page_id' => $page_id,
 			'errors' => $errors,
 		);
+	}
+
+	/**
+	 * Check if given title is a local image
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isLocalImage( Title $title ) {
+		$allowedTypes = [
+			MEDIATYPE_BITMAP,
+			MEDIATYPE_DRAWING,
+		];
+
+		$localFile = RepoGroup::singleton()->getLocalRepo()->newFile( $title );
+
+		if ( $title->inNamespaces( NS_IMAGE, NS_FILE )
+			&& in_array( $localFile->getMediaType(), $allowedTypes )
+			&& !$title->isRedirect()
+			&& $localFile instanceof LocalFile
+			&& $localFile->exists()
+		) {
+			return true;
+		}
+		return false;
 	}
 }

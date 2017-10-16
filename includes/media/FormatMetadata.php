@@ -259,6 +259,17 @@ class FormatMetadata {
 					// else it will just output $val without formatting it.
 					break;
 
+				/** Wikia change start */
+				case 'duration':
+					$val = WikiaFileHelper::formatDuration($val);
+					break;
+
+				case 'published':
+					global $wgContLang;
+					$val = $wgContLang->date($val);
+					break;
+				/** Wikia change end */
+
 				case 'ExposureProgram':
 					switch( $val ) {
 					case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8:
@@ -937,6 +948,7 @@ class FormatMetadata {
 	 * @param $lang String lang code of item or false
 	 * @param $default Boolean if it is default value.
 	 * @param $noHtml Boolean If to avoid html (for back-compat)
+	 * @throws MWException
 	 * @return language item (Note: despite how this looks,
 	 * 	this is treated as wikitext not html).
 	 */
@@ -1341,23 +1353,5 @@ class FormatMetadata {
 				$street, $city, $region, $postal, $country,
 				$tel );
 		}
-	}
-}
-
-/** For compatability with old FormatExif class
- * which some extensions use.
- *
- * @deprecated since 1.18
- *
-**/
-class FormatExif {
-	var $meta;
-	function FormatExif ( $meta ) {
-		wfDeprecated(__METHOD__);
-		$this->meta = $meta;
-	}
-
-	function getFormattedData ( ) {
-		return FormatMetadata::getFormattedData( $this->meta );
 	}
 }

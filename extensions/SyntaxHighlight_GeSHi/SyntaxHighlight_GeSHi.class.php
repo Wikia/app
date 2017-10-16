@@ -18,12 +18,20 @@ class SyntaxHighlight_GeSHi {
 	 * @param string $text
 	 * @param array $args
 	 * @param Parser $parser
+	 * @param PPFrame $frame
 	 * @return string
 	 */
-	public static function parserHook( $text, $args = array(), $parser ) {
+	public static function parserHook( $text, $args = array(), $parser, $frame ) {
+		// SUS-1913: In production, swap 1% of GeSHi calls with Syntax Highlight experiment
+		if ( SyntaxHighlightHooks::shouldReplaceGeshi() ) {
+			return SyntaxHighlightHooks::onRenderSyntaxHighlightTag( $text, $args, $parser, $frame );
+		}
+
 		global $wgSyntaxHighlightDefaultLang, $wgUseSiteCss, $wgUseTidy;
 		wfProfileIn( __METHOD__ );
 		self::initialise();
+		// Replace strip markers (For e.g. {{#tag:syntaxhighlight|<nowiki>...}})
+		$text = $parser->mStripState->unstripNoWiki( $text );
 		$text = rtrim( $text );
 		// Don't trim leading spaces away, just the linefeeds
 		$text = preg_replace( '/^\n+/', '', $text );
@@ -74,8 +82,8 @@ class SyntaxHighlight_GeSHi {
 			}
 		}
 		// Starting line number
-		if( isset( $args['start'] ) ) {
-			$geshi->start_line_numbers_at( $args['start'] );
+		if ( isset( $args['start'] ) && ctype_digit( $args['start'] ) ) {
+			$geshi->start_line_numbers_at( (int)$args['start'] );
 		}
 		$geshi->set_header_type( $enclose );
 		// Strict mode
@@ -97,6 +105,10 @@ class SyntaxHighlight_GeSHi {
 			wfProfileOut( __METHOD__ );
 			return $error;
 		}
+
+		// SUS-1514: Log GeSHi parsing time
+		static::profileGeshiPerformance( $geshi );
+
 		// Armour for Parser::doBlockLevels()
 		if( $enclose === GESHI_HEADER_DIV ) {
 			$out = str_replace( "\n", '', $out );
@@ -235,6 +247,11 @@ class SyntaxHighlight_GeSHi {
 	 * @return bool
 	 */
 	public static function viewHook( $text, $title, $output ) {
+		// SUS-1913: In production, swap 1% of GeSHi calls with Syntax Highlight experiment
+		if ( SyntaxHighlightHooks::shouldReplaceGeshi() ) {
+			return SyntaxHighlightHooks::onShowRawCssJs( $text, $title, $output );
+		}
+
 		global $wgUseSiteCss;
 		// Determine the language
 		$matches = array();
@@ -245,6 +262,9 @@ class SyntaxHighlight_GeSHi {
 		if( $geshi instanceof GeSHi ) {
 			$out = $geshi->parse_code();
 			if( !$geshi->error() ) {
+				// SUS-1514: Log GeSHi parsing time
+				static::profileGeshiPerformance( $geshi );
+
 				// Done
 				$output->addHeadItem( "source-$lang", self::buildHeadItem( $geshi ) );
 				$output->addHTML( "<div dir=\"ltr\">{$out}</div>" );
@@ -267,6 +287,8 @@ class SyntaxHighlight_GeSHi {
 	 * @return GeSHi
 	 */
 	public static function prepare( $text, $lang ) {
+		global $wgTitle, $wgOut;
+
 		self::initialise();
 		$geshi = new GeSHi( $text, $lang );
 		if( $geshi->error() == GESHI_ERROR_NO_SUCH_LANG ) {
@@ -276,6 +298,20 @@ class SyntaxHighlight_GeSHi {
 		$geshi->enable_classes();
 		$geshi->set_overall_class( "source-$lang" );
 		$geshi->enable_keyword_links( false );
+
+		// Wikia change start
+		if( $wgTitle instanceof Title && EditPageLayoutHelper::isCodeSyntaxHighlightingEnabled( $wgTitle ) ) {
+			$theme = 'solarized-light';
+			if( SassUtil::isThemeDark() ) {
+				$theme = 'solarized-dark';
+			}
+			$geshi->set_language_path(GESHI_ROOT . $theme . DIRECTORY_SEPARATOR);
+			$geshi->set_overall_id('theme-' . $theme);
+
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/SyntaxHighlight_GeSHi/styles/solarized.scss'));
+		}
+		// Wikia change end
+
 		return $geshi;
 	}
 
@@ -288,6 +324,33 @@ class SyntaxHighlight_GeSHi {
 	 */
 	public static function buildHeadItem( $geshi ) {
 		global $wgUseSiteCss, $wgSquidMaxage;
+		// begin Wikia change
+		// VOLDEV-85
+		// backporting core fix to monobook font size
+		/**
+		 * GeSHi comes by default with a font-family set to monospace, which
+		 * causes the font-size to be smaller than one would expect.
+		 * We append a CSS hack to the default GeSHi styles: specifying 'monospace'
+		 * twice "resets" the browser font-size specified for monospace.
+		 *
+		 * The hack is documented in MediaWiki core under
+		 * docs/uidesign/monospace.html and in bug 33496.
+		 */
+		// Preserve default since we don't want to override the other style
+		// properties set by geshi (padding, font-size, vertical-align etc.)
+		$geshi->set_code_style(
+			'font-family: monospace, monospace;',
+			/* preserve defaults = */ true
+		);
+
+		// No need to preserve default (which is just "font-family: monospace;")
+		// outputting both is unnecessary
+		$geshi->set_overall_style(
+			'font-family: monospace, monospace;',
+			/* preserve defaults = */ false
+		);
+		// end Wikia change
+
 		$lang = $geshi->language;
 		$css = array();
 		$css[] = '<style type="text/css">/*<![CDATA[*/';
@@ -398,7 +461,7 @@ class SyntaxHighlight_GeSHi {
 	 * @param $extensionTypes
 	 * @return bool
 	 */
-	public static function hOldSpecialVersion_GeSHi( &$sp, &$extensionTypes ) {
+	public static function hOldSpecialVersion_GeSHi( $sp, &$extensionTypes ) {
 		return self::hSpecialVersion_GeSHi( $extensionTypes );
 	}
 
@@ -431,5 +494,18 @@ class SyntaxHighlight_GeSHi {
 			$out .= $chunk;
 		}
 		return $out;
+	}
+
+	/**
+	 * Wikia change
+	 * Log GeSHi syntax highlight parsing time with 10% sampling
+	 *
+	 * @see https://wikia-inc.atlassian.net/browse/SUS-1514
+	 * @param GeSHi $geSHi
+	 */
+	private static function profileGeshiPerformance( GeSHi $geSHi ) {
+		\Wikia\Logger\WikiaLogger::instance()->debugSampled( 0.1, 'SUS-1514 - GeSHi syntax highlight performance', [
+			'parsingTime' => $geSHi->get_time()
+		] );
 	}
 }

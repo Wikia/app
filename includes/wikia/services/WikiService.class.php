@@ -1,25 +1,48 @@
 <?php
 
 class WikiService extends WikiaModel {
+	const ADMIN_GROUPS = [
+		'bureaucrat',
+		'sysop'
+	];
+
+	// groups related to content/discussion moderation (NOT chat moderation)
+	const MODERATOR_GROUPS = [
+		'content-moderator',
+		'threadmoderator'
+	];
+
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
 	const TOPUSER_LIMIT = 150;
 
-	const CACHE_VERSION = '4';
-	const MAX_WIKI_RESULTS = 250;
+	const CACHE_VERSION = '5';
+	const MAX_WIKI_RESULTS = 300;
 
-	const FLAG_NEW = 1;
-	const FLAG_HOT = 2;
+	const MOST_LINKED_CACHE_TTL = 86400; // 86400 == 24h
+	const MOST_LINKED_LIMIT = 50;
+
+	const WIKI_ADMIN_IDS_CACHE_TTL = 10800; // 10800 == 3hrs;
+
 	const FLAG_PROMOTED = 4;
-	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
 
-	static $botGroups = array('bot', 'bot-global');
-	static $excludedWikiaUsers = array(
+	static $botGroups = [ 'bot', 'bot-global' ];
+	static $excludedWikiaUsers = [
 		22439, //Wikia
-		1458396, //Abuse filter
-	);
+		/* Abuse filter users start */
+		519362,
+		3245469,
+		5309332,
+		4067247,
+		4865761,
+		4119511,
+		1458396,
+		15510531,
+		24039613
+		/* Abuse filter users end */
+	];
 
 	protected $cityVisualizationObject = null;
 	protected $wikisModel;
@@ -37,64 +60,104 @@ class WikiService extends WikiaModel {
 	 * @return array of $userIds
 	 */
 	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null, $includeFounder = true ) {
-		wfProfileIn( __METHOD__ );
-
-		$userIds = array();
-		if ( empty($this->wg->FounderEmailsDebugUserId) ) {
-			// get founder
-			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-			$wiki = WikiFactory::getWikiById($wikiId);
-			if ( !empty($wiki) && $wiki->city_public == 1 ) {
-				if ($includeFounder) {
-					$userIds[] = $wiki->city_founding_user;
-				}
-
-				// get admin and bureaucrat
-				if ( empty($this->wg->EnableAnswers) ) {
-					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots, $limit );
-
-					$adminIds = WikiaDataAccess::cache(
-						$memKey,
-						60 * 60 * 3,
-						function() use ($wiki, $useMaster, $excludeBots, $limit) {
-							$dbname = $wiki->city_dbname;
-							$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
-							$db = wfGetDB( $dbType, array(), $dbname );
-
-							$conditions = array("ug_group in ('sysop','bureaucrat')");
-
-							if ($excludeBots) {
-								$conditions[] = "ug_user not in (select distinct ug_user from user_groups where ug_group in (" .
-									$db->makeList(self::$botGroups) .
-									"))";
-							}
-
-							$result = $db->select(
-								'user_groups',
-								'distinct ug_user',
-								$conditions,
-								__METHOD__,
-								(!empty($limit))?(array('LIMIT' => $limit)):array()
-							);
-
-							$adminIds = array();
-							while ( $row = $db->fetchObject($result) ) {
-								$adminIds[] = $row->ug_user;
-							}
-							$db->freeResult( $result );
-							return $adminIds;
-						}
-					);
-
-					$userIds = array_unique( array_merge($userIds, $adminIds) );
-				}
-			}
-		} else {
-			$userIds[] = $this->wg->FounderEmailsDebugUserId;
+		if ( !empty( $this->wg->FounderEmailsDebugUserId ) ) {
+			return [ $this->wg->FounderEmailsDebugUserId ];
 		}
 
-		wfProfileOut( __METHOD__ );
+		$wikiId = $wikiId ? $wikiId : $this->wg->CityId;
+		$wiki = WikiFactory::getWikiById( $wikiId );
+
+		if ( empty( $wiki ) || $wiki->city_public != 1 ) {
+			return [];
+		}
+
+		// Get founder
+		$userIds = [];
+		if ( $includeFounder ) {
+			$userIds[] = $wiki->city_founding_user;
+		}
+
+		if ( !empty( $this->wg->EnableAnswers ) ) {
+			return $userIds;
+		}
+
+		// Get admins and bureaucrats
+		$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots, $limit );
+		$adminIds = WikiaDataAccess::cache(
+			$memKey,
+			self::WIKI_ADMIN_IDS_CACHE_TTL,
+			function() use ( $wiki, $useMaster, $excludeBots, $limit ) {
+				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
+				$db = wfGetDB( $dbType, [], $wiki->city_dbname );
+
+				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::ADMIN_GROUPS );
+			}
+		);
+
+		$userIds = array_unique( array_merge( $userIds, $adminIds ) );
+
 		return $userIds;
+	}
+
+	/**
+	 * get list of wiki content/discussions moderator ids
+	 *
+	 * @param integer $wikiId - wiki Id (default: current wiki Id)
+	 * @param bool    $useMaster - flag that describes if we should use masted DB (default: false)
+	 * @param bool    $excludeBots - flag that describes if bots should be excluded from moderatorlist (default: false)
+	 * @param integer $limit - limit for the number of moderators
+	 *
+	 * @return array of $userIds
+	 */
+	public function getWikiModeratorIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
+		$wikiId = $wikiId ? $wikiId : $this->wg->CityId;
+		$wiki = WikiFactory::getWikiById( $wikiId );
+
+		if ( empty( $wiki ) || $wiki->city_public != 1 ) {
+			return [];
+		}
+
+		// Get moderators
+		$memKey = wfSharedMemcKey( 'wiki_content_moderator_ids', $wikiId, $excludeBots, $limit );
+		$moderatorIds = WikiaDataAccess::cache(
+			$memKey,
+			self::WIKI_ADMIN_IDS_CACHE_TTL,
+			function() use ( $wiki, $useMaster, $excludeBots, $limit ) {
+				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
+				$db = wfGetDB( $dbType, [], $wiki->city_dbname );
+
+				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::MODERATOR_GROUPS );
+			}
+		);
+
+		return array_unique( $moderatorIds );
+	}
+
+	private static function getUserIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null, $groups = self::ADMIN_GROUPS ) {
+		$conditions = [ 'ug_group' => $groups ];
+
+		if ( $excludeBots ) {
+			$groupList = $db->makeList( self::$botGroups );
+			$subQuery = "select distinct ug_user from user_groups where ug_group in ($groupList)";
+
+			$conditions[] = "ug_user not in ($subQuery)";
+		}
+
+		$result = $db->select(
+			'user_groups',
+			'distinct ug_user',
+			$conditions,
+			__METHOD__,
+			!empty( $limit ) ? [ 'LIMIT' => $limit ] : []
+		);
+
+		$adminIds = [];
+		while ( $row = $db->fetchObject( $result ) ) {
+			$adminIds[] = $row->ug_user;
+		}
+		$db->freeResult( $result );
+
+		return $adminIds;
 	}
 
 	/**
@@ -180,7 +243,6 @@ class WikiService extends WikiaModel {
 
 				if ( $row ) {
 					$sitestats = array(
-						'views' => $row->ss_total_views,
 						'edits' => $row->ss_total_edits,
 						'articles' => $row->ss_good_articles,
 						'pages' => $row->ss_total_pages,
@@ -212,21 +274,27 @@ class WikiService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$fname = __METHOD__;
 
 		$topEditors = WikiaDataAccess::cache(
 			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
 			static::TOPUSER_CACHE_VALID,
-			function() use ( $wikiId, $excludeBots ) {
+			function() use ( $wikiId, $excludeBots, $fname ) {
+				global $wgSpecialsDB;
 				$topEditors = array();
 
-				$db = wfGetDB( DB_SLAVE, array(), 'specials' );
+				$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 
 				$result = $db->select(
 					array( 'events_local_users' ),
 					array( 'user_id', 'edits', 'all_groups' ),
 					array( 'wiki_id' => $wikiId, 'edits != 0' ),
-					__METHOD__,
-					array( 'ORDER BY' => 'edits desc', 'LIMIT' => static::TOPUSER_LIMIT )
+					$fname,
+					array(
+						'ORDER BY' => 'edits desc',
+						'LIMIT' => static::TOPUSER_LIMIT,
+						'USE INDEX' => 'PRIMARY', # mysql in Reston wants to use a different key (PLATFORM-1648)
+					)
 				);
 
 				while( $row = $db->fetchObject($result) ) {
@@ -299,15 +367,15 @@ class WikiService extends WikiaModel {
 	 * @param integer $userId
 	 * @param integer $wikiId
 	 * @param integer $avatarSize
-	 * @param callable $checkUserCallback
+	 * @param callable $checkUserCallback (optional)
 	 * @return array userInfo
 	 *
 	 */
-	public function getUserInfo($userId, $wikiId, $avatarSize, $checkUserCallback) {
+	public function getUserInfo($userId, $wikiId, $avatarSize, $checkUserCallback = null) {
 		$userInfo = array();
 		$user = User::newFromId($userId);
 
-		if ($user instanceof User && $checkUserCallback($user)) {
+		if ( $user instanceof User && ( !is_callable( $checkUserCallback ) || $checkUserCallback( $user ) ) ) {
 			$username = $user->getName();
 
 			$userInfo['avatarUrl'] = AvatarService::getAvatarUrl($user, $avatarSize);
@@ -320,16 +388,18 @@ class WikiService extends WikiaModel {
 			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
 			$userInfo['userId'] = $userId;
 
-			$userStatsService = new UserStatsService($userId);
-			$stats = $userStatsService->getGlobalStats($wikiId);
+			$userStatsService = new UserStatsService($userId, $wikiId);
+			$stats = $userStatsService->getStats();
 
-			if(!empty($stats['date'])) {
-				$date = getdate(strtotime($stats['date']));
+			$placeHolderDate = getdate( strtotime( '2005-06-01' ) );
+
+			if ( !empty( $stats['firstContributionTimestamp'] ) ) {
+				$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
 			} else {
-				$date = getdate(strtotime('2005-06-01'));
+				$date = $placeHolderDate;
 			}
 
-			$userInfo['lastRevision'] = $stats['lastRevision'];
+			$userInfo['lastRevision'] = $stats['lastContributionTimestamp'] ?? '2005-06-01';
 
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
@@ -344,31 +414,51 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return mixed|null|string
 	 */
-	public function getWikiImages($wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO) {
+	public function getWikiImages( $wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO ) {
 		$images = array();
 		try {
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-			$tables = array('city_visualization');
-			$fields = array('city_id', 'city_main_image');
-			$conds = array('city_id' => $wikiIds);
-			$results = $db->select($tables, $fields, $conds, __METHOD__, array(), array());
+			$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+			$tables = array( 'city_visualization' );
+			$fields = array( 'city_id', 'city_lang_code', 'city_main_image' );
+			$conds = array( 'city_id' => $wikiIds );
+			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
-			while($row = $results->fetchObject()) {
-				$title = Title::newFromText($row->city_main_image, NS_FILE);
-				$file = wffindFile($title);
-				
-				if ($file instanceof File && $file->exists()) {
-					$imageServing = new ImageServing(null, $imageWidth, $imageHeight);
-					$images[$row->city_id] = ImagesService::overrideThumbnailFormat(
-						$imageServing->getUrl( $row->city_main_image, $file->getWidth(), $file->getHeight() ),
+			while ( $row = $results->fetchObject() ) {
+				$promoImage = PromoImage::fromPathname($row->city_main_image);
+				$promoImage->ensureCityIdIsSet($row->city_id);
+
+				$file = $promoImage->corporateFileByLang($row->city_lang_code);
+
+				if ( $file->exists() ) {
+					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
+					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
+						$imageServing->getUrl( $file, $file->getWidth(), $file->getHeight() ),
 						ImagesService::EXT_JPG
 					);
 				}
 			}
-		} catch(Exception $e) {
-			// for devbox machines
+		} catch ( Exception $e ) {
+			Wikia::log( __METHOD__, false, $e->getMessage() );
 		}
 		return $images;
+	}
+
+	public function getWikiWordmark( $wikiId ) {
+		$url = '';
+		$history = WikiFactory::getVarByName( 'wgOasisThemeSettingsHistory', $wikiId );
+		$settings = unserialize( $history->cv_value );
+		if ( $settings !== false ) {
+			$currentSettings =  end( $settings );
+
+			if ( isset($currentSettings['settings']['wordmark-type']) && $currentSettings['settings']['wordmark-type'] == 'text' ) {
+				return '';
+			}
+
+			if ( isset( $currentSettings['settings'] ) && !empty( $currentSettings['settings']['wordmark-image-url'] ) ) {
+					$url = wfReplaceImageServer( $currentSettings['settings']['wordmark-image-url'], $currentSettings['timestamp'] );
+			}
+		}
+		return $url;
 	}
 
 	public function getWikiAdmins ($wikiId, $avatarSize, $limit = null) {
@@ -379,9 +469,8 @@ class WikiService extends WikiaModel {
 				$admins = array();
 				try {
 					$admins = $this->getWikiAdminIds($wikiId, false, true, $limit, false);
-					$checkUserCallback = function ($user) { return true; };
 					foreach ($admins as &$admin) {
-						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize, $checkUserCallback);
+						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize);
 						$admin = $userInfo;
 					}
 				} catch (Exception $e) {
@@ -393,6 +482,55 @@ class WikiService extends WikiaModel {
 	}
 
 	/**
+	 * @param int $wikiId
+	 * @return array most linked articles
+	 */
+	public function getMostLinkedPages( $wikiId = 0 ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$memKey = $this->getMemcKeyMostLinked( $wikiId );
+		$mostLinked = $this->wg->Memc->get( $memKey );
+
+		if ( $mostLinked === false ) {
+			$mostLinked = [];
+			$dbname = WikiFactory::IDtoDB( $wikiId );
+			if ( !empty( $dbname ) ) {
+				$db = wfGetDB( DB_SLAVE, array(), $dbname );
+			} else {
+				$db = false;
+			}
+
+			if ( $db !== false ) {
+				$res = $db->select(
+					array( 'querycache', 'page' ),
+					array( 'page_id', 'qc_value', 'page_title' ),
+					array(
+						'qc_title = page_title',
+						'qc_namespace = page_namespace',
+						'page_is_redirect = 0',
+						'qc_type' => 'Mostlinked',
+						'qc_namespace' => '0'
+					),
+					__METHOD__,
+					array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => self::MOST_LINKED_LIMIT  )
+				);
+
+				while ( $row = $db->fetchObject( $res ) ) {
+					$mostLinked[ $row->page_id ] = [ 	"page_id" => $row->page_id,
+														"page_title" => $row->page_title,
+														"backlink_cnt" => $row->qc_value ];
+				}
+			}
+			$this->wg->Memc->set( $memKey, $mostLinked, self::MOST_LINKED_CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $mostLinked;
+	}
+
+	/**
 	 * @param int wiki id
 	 * @param int avatar size
 	 *
@@ -401,7 +539,12 @@ class WikiService extends WikiaModel {
 	public function getMostActiveAdmins($wikiId, $avatarSize) {
 		$edits = $ids = $lastRevision = [];
 		$admins = $this->getWikiAdmins($wikiId, $avatarSize);
-		$ids = array_map(function($item) { return $item['userId']; }, $admins);
+
+		foreach ( $admins as $admin ) {
+			if ( isset( $admin['userId'] ) ) {
+				$ids[] = $admin['userId'];
+			}
+		}
 
 		$adminsEdits = DataMartService::getUserEditsByWikiId( $ids, $wikiId);
 
@@ -432,6 +575,7 @@ class WikiService extends WikiaModel {
 	public function getWikiDescription( Array $wikiIds, $imgWidth = 250, $imgHeight = null ) {
 
 		$wikiDetails = $this->getDetails( $wikiIds );
+		$corpModel = new WikiaCorporateModel();
 
 		foreach ( $wikiDetails as $wikiId => $wikiData ) {
 			if ( empty( $wikiData['desc']) ) {
@@ -439,7 +583,7 @@ class WikiService extends WikiaModel {
 			}
 			$wikiDetails[ $wikiId ]['image_wiki_id'] = null;
 			if ( !empty( $wikiData['image'] ) ) {
-				$wikiDetails[ $wikiId ]['image_wiki_id'] = $this->getCityVisualizationObject()->getTargetWikiId( $wikiData['lang'] );
+				$wikiDetails[ $wikiId ]['image_wiki_id'] = $corpModel->getCorporateWikiIdByLang( $wikiData['lang'] );
 
 				$imageUrl = $this->getImageSrcByTitle( $wikiDetails[ $wikiId ]['image_wiki_id'], $wikiData['image'], $imgWidth, $imgHeight);
 				$wikiDetails[ $wikiId ]['image_url'] = $imageUrl;
@@ -449,17 +593,6 @@ class WikiService extends WikiaModel {
 		}
 
 		return $wikiDetails;
-	}
-
-	public function setCityVisualizationObject( $cityVisualizationObject ) {
-		$this->cityVisualizationObject = $cityVisualizationObject;
-	}
-
-	public function getCityVisualizationObject() {
-		if ( empty( $this->cityVisualizationObject ) ) {
-			$this->cityVisualizationObject = new CityVisualization();
-		}
-		return $this->cityVisualizationObject;
 	}
 
 	/**
@@ -527,22 +660,26 @@ class WikiService extends WikiaModel {
 				//this respects WF's data abstraction layer
 				//also: WF data is heavily cached
 				$name = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-				$hubName = ( !empty( $hub ) ) ? $hub : $this->getVerticalByWikiId( $wikiId );
-				$langCode = WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
-				$topic = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
-				$domain = $this->getDomainByWikiId( $wikiId );
+				if ( !empty( $name ) ) {
+					$hubName = ( !empty( $hub ) ) ? $hub : $this->getVerticalByWikiId( $wikiId );
+					$langCode = WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
+					$topic = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
+					$domain = $this->getDomainByWikiId( $wikiId );
 
-				$results[] = array(
-					'id' => $wikiId,
-					'name' => ( !empty( $name ) ) ? $name : null,
-					'hub' => $hubName,
-					'language' => ( !empty( $langCode ) ) ? $langCode : null,
-					'topic' => ( !empty( $topic ) ) ? $topic : null,
-					'domain' => $domain
-				);
+					$results[ ] = array(
+						'id' => $wikiId,
+						'name' => $name,
+						'hub' => $hubName,
+						'language' => ( !empty( $langCode ) ) ? $langCode : null,
+						'topic' => ( !empty( $topic ) ) ? $topic : null,
+						'domain' => $domain
+					);
+				}
 			}
 
-			$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
+			if ( !empty( $results ) ) {
+				$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -586,6 +723,7 @@ class WikiService extends WikiaModel {
 				$wikis = $this->app->wg->Memc->get( $cacheKey );
 
 				if ( !is_array( $wikis ) ) {
+					$wikis = [];
 					$db = $this->getSharedDB();
 
 					$string = $db->addQuotes( "%{$string}%" );
@@ -675,9 +813,9 @@ class WikiService extends WikiaModel {
 	/**
 	 * Get details about one or more wikis
 	 *
-	 * @param Array $wikiIds An array of one or more wiki ID's
+	 * @param array $wikiIds An array of one or more wiki ID's
 	 *
-	 * @return Array A collection of results, the index is the wiki ID and each item has a name,
+	 * @return array A collection of results, the index is the wiki ID and each item has a name,
 	 * url, lang, hubId, headline, desc, image and flags index.
 	 */
 	public function getDetails( Array $wikiIds = null ) {
@@ -712,23 +850,28 @@ class WikiService extends WikiaModel {
 			$rows = $db->select(
 				array(
 					'city_visualization',
-					'city_list'
+					'city_list',
+					'city_verticals',
+					'city_cat_mapping',
+					'city_cats'
 				),
 				array(
 					'city_list.city_id',
 					'city_list.city_title',
+					'city_list.city_description',
 					'city_list.city_url',
-					'city_visualization.city_lang_code',
-					'city_visualization.city_vertical',
+					'city_list.city_lang',
+					'city_list.city_vertical',
 					'city_visualization.city_headline',
 					'city_visualization.city_description',
 					'city_visualization.city_main_image',
 					'city_visualization.city_flags',
+					'city_verticals.vertical_name',
+					'city_cats.cat_name'
 				),
 				array(
 					'city_list.city_public' => 1,
-					'city_list.city_id IN (' . implode( ',', $wikiIds ) . ')',
-					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
+					'city_list.city_id' => $wikiIds
 				),
 				__METHOD__,
 				array(),
@@ -736,31 +879,44 @@ class WikiService extends WikiaModel {
 					'city_visualization' => array(
 						'LEFT JOIN',
 						'city_list.city_id = city_visualization.city_id'
+					),
+					'city_verticals' => array(
+						'LEFT JOIN',
+						'city_list.city_vertical = city_verticals.vertical_id'
+					),
+					'city_cat_mapping' => array (
+						'LEFT JOIN',
+						'city_list.city_id = city_cat_mapping.city_id',
+					),
+					'city_cats' => array(
+						'LEFT JOIN',
+						'city_cat_mapping.cat_id = city_cats.cat_id'
 					)
 				)
 			);
 
 			while( $row = $db->fetchObject( $rows ) ) {
+				$domain = parse_url( $row->city_url, PHP_URL_HOST );
 				$item = array(
 					'name' => $row->city_title,
 					'url' => $row->city_url,
-					'lang' => $row->city_lang_code,
-					'hubId' => $row->city_vertical,
+					'domain' => !empty($domain) ? $domain : null,
+					'title' => $row->city_title,
+					'topic' => $row->cat_name,
+					'lang' => $row->city_lang,
+					'hub' => $row->vertical_name,
 					'headline' => $row->city_headline,
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,
-					//see extensions/wikia/CityVisualization/models/CityVisualization.class.php
-					'image' => $row->city_main_image,
+					'image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
 					'flags' => array(
-						'new' => ( ( $row->city_flags & self::FLAG_NEW ) == self::FLAG_NEW ),
-						'hot' => ( ( $row->city_flags & self::FLAG_HOT ) == self::FLAG_HOT ),
 						'official' => ( ( $row->city_flags & self::FLAG_OFFICIAL ) == self::FLAG_OFFICIAL ),
 						'promoted' => ( ( $row->city_flags & self::FLAG_PROMOTED ) == self::FLAG_PROMOTED )
 					)
 				);
 
 				$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $row->city_id );
-				$this->wg->Memc->set( $cacheKey, $item, 43200 /* 12h */ );
+				$this->wg->Memc->set( $cacheKey, $item, WikiaResponse::CACHE_LONG /* 12h */ );
 				$results[$row->city_id] = $item;
 			}
 		}
@@ -775,6 +931,10 @@ class WikiService extends WikiaModel {
 
 	protected function getMemcKeyTotalImages( $wikiId ) {
 		return wfSharedMemcKey( 'wiki_total_images', $wikiId );
+	}
+
+	protected function getMemcKeyMostLinked( $wikiId ) {
+		return wfSharedMemcKey( 'wiki_most_linked', $wikiId );
 	}
 
 	public function invalidateCacheTotalImages( $wikiId = 0 ) {

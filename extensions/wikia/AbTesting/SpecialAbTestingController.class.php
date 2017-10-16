@@ -11,6 +11,46 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		parent::__construct('AbTesting', 'abtestpanel', false);
 	}
 
+	public function calcGeneralInformation(&$experiment) {
+		$gaSlots = $gaFlotsInFuture  = [];
+		// we need timestamp and strtotime in UTC, regardless of current timezone (ie. devboxes)
+		$timezone = date_default_timezone_get();
+		date_default_timezone_set('UTC');
+		$now = time();
+
+		$experiment[ 'css_class' ] = '';
+
+		foreach ( $experiment[ 'versions' ] as $id => $version ) {
+			$startTime = strtotime( $version[ 'start_time' ] );
+			$endTime   = strtotime( $version[ 'end_time' ] );
+			if ( $startTime <= $now && $endTime >= $now ) {
+				$experiment[ 'versions' ][ $id ][ 'css_class' ] = 'running';
+				$experiment[ 'css_class' ] = 'running';
+
+				if ( strlen( $version[ 'ga_slot' ] ) ) {
+					$gaSlots[] = $version[ 'ga_slot'];
+				}
+			} elseif ( $startTime > $now ) {
+				$experiment[ 'versions' ][ $id ][ 'css_class' ] = 'scheduled';
+				$experiment[ 'css_class' ] = 'scheduled';
+
+				if ( strlen( $version[ 'ga_slot' ] ) ) {
+					$gaFlotsInFuture[] = $version[ 'ga_slot'];
+				}
+			} else {
+				$experiment[ 'versions' ][ $id ][ 'css_class' ] = 'not-running';
+			}
+		}
+
+		if ( empty( $experiment[ 'css_class' ] ) ) {
+			$experiment[ 'css_class' ] = 'not-running';
+		}
+
+		date_default_timezone_set( $timezone );
+
+		return [ array_unique( $gaSlots ), array_unique( $gaFlotsInFuture ) ];
+	}
+
 	public function index() {
 		if ( !$this->wg->User->isAllowed( 'abtestpanel' ) ) {
 			$this->skipRendering();
@@ -23,10 +63,25 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 		$this->setHeaders();
 		$experiments = $abData->getAll();
+		$gaSlots = $futureGaSlots = [];
+
 		foreach ($experiments as &$exp) {
 			$this->addActions($exp);
+			list( $expGaSlots, $expFutureGaSlots ) = $this->calcGeneralInformation($exp);
+			if ( count($expGaSlots) ) {
+				$gaSlots = array_merge( $gaSlots, $expGaSlots );
+			}
+			if ( count($expFutureGaSlots) ) {
+				$futureGaSlots = array_merge( $futureGaSlots, $expFutureGaSlots );
+			}
 		}
+
+		sort( $gaSlots );
+		sort( $futureGaSlots );
+
 		$this->setVal( 'experiments', $experiments );
+		$this->setVal( 'gaSlots', implode( ', ', $gaSlots ) );
+		$this->setVal( 'futureGaSlots', implode( ', ', $futureGaSlots ) );
 
 		$actions = array();
 		$actions[] = array(
@@ -63,7 +118,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'type' => $hasStarted ? 'display' : 'text',
 			'name' => 'name',
 			'label' => wfMsg('abtesting-heading-name'),
-			'value' => $experiment['name'],
+			'value' => htmlspecialchars( $experiment['name'] ),
 		);
 
 		$fields['description'] = array(
@@ -71,7 +126,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'class' => 'fullwidth',
 			'name' => 'description',
 			'label' => wfMsg('abtesting-heading-description'),
-			'value' => $experiment['description'],
+			'value' => htmlspecialchars( $experiment['description'] ),
 		);
 
 		$fields['version_id'] = array(
@@ -85,7 +140,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'name' => 'start_time',
 			'class' => 'datepicker',
 			'label' => wfMsg('abtesting-heading-start-time'),
-			'value' => $lastVersion ? $lastVersion['start_time'] : '',
+			'value' => $lastVersion ? htmlspecialchars( $lastVersion['start_time'] ) : '',
 		);
 
 		$fields['end_time'] = array(
@@ -93,14 +148,14 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'name' => 'end_time',
 			'class' => 'datepicker',
 			'label' => wfMsg('abtesting-heading-end-time'),
-			'value' => $lastVersion ? $lastVersion['end_time'] : '',
+			'value' => $lastVersion ? htmlspecialchars( $lastVersion['end_time'] ) : '',
 		);
 
 		$fields['ga_slot'] = array(
 			'type' => 'text',
 			'name' => 'ga_slot',
 			'label' => wfMsg('abtesting-heading-ga-slot'),
-			'value' => $lastVersion ? $lastVersion['ga_slot'] : '',
+			'value' => $lastVersion ? htmlspecialchars( $lastVersion['ga_slot'] ) : '',
 		);
 
 		$fields['flags_before'] = array(
@@ -142,7 +197,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$groups[] = array(
 				'type' => 'hidden',
 				'name' => 'groups[]',
-				'value' => $group['name'],
+				'value' => htmlspecialchars( $group['name'] ),
 				'attributes' => array(
 					'data-id' => $group['id']
 				)
@@ -153,7 +208,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				'name' => 'ranges[]',
 				'class' => 'ranges',
 				'label' => $group['name'] . ' ' . $rangesInfo,
-				'value' => $ranges,
+				'value' => htmlspecialchars( $ranges ),
 			);
 
 			$groups[] = $this->getPopupButtonField('Styles','group-styles','styles[]',$styles);
@@ -168,16 +223,14 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		);
 
 		$fields[] = array(
-			'type' => 'nirvanaview',
+			'type' => 'custom',
 			'class' => 'experiment-groups',
-			'controller' => 'WikiaStyleGuideForm',
-			'view' => 'index',
-			'params' => array(
-				'form' => array(
+			'output' => F::app()->renderPartial( 'WikiaStyleGuideForm', 'index', [
+				'form' => [
 					'inputs' => $groups,
 					'legend' => wfMsg('abtesting-heading-treatment-groups')
-				)
-			),
+				]
+			]),
 		);
 
 		$form = array(
@@ -197,6 +250,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 	}
 
 	public function save() {
+		$this->checkPermissions();
+
 		$data = $this->request->getParams();
 
 		$id = $data['id'];
@@ -213,6 +268,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 		if ( $status->isGood() ) {
 			$experiment = $this->getAbData()->getById($id, true);
+			$this->calcGeneralInformation($experiment);
 			$this->addActions($experiment);
 			$this->setVal('status',true);
 			$this->setVal('id',$id);

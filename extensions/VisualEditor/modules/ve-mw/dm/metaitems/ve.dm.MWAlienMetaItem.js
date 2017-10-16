@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWAlienMetaItem class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -21,7 +21,7 @@ ve.dm.MWAlienMetaItem = function VeDmMWAlienMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWAlienMetaItem, ve.dm.AlienMetaItem );
+OO.inheritClass( ve.dm.MWAlienMetaItem, ve.dm.AlienMetaItem );
 
 /* Static Properties */
 

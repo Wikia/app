@@ -20,9 +20,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version'        => Nuke_VERSION,
 );
 
-$wgGroupPermissions['sysop']['nuke'] = true;
-$wgAvailableRights[] = 'nuke';
-
 $wgAutoloadClasses['SpecialNuke'] = $dir . 'Nuke_body.php';
 $wgSpecialPages['Nuke'] = 'SpecialNuke';
 $wgSpecialPageGroups['Nuke'] = 'pagetools';

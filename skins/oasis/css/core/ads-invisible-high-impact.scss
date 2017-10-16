@@ -1,0 +1,76 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/image-replacement';
+
+$close-image: '/resources/wikia/ui_components/modal/images/ads-close-light.svg';
+$z-high-impact: $zTop + 2;
+
+#InvisibleHighImpactWrapper {
+	z-index: $z-high-impact;
+
+	&.hidden {
+		display: none !important;
+	}
+
+	#INVISIBLE_HIGH_IMPACT_2 iframe {
+		display: block;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.background {
+		background: rgba(0, 0, 0, .9);
+		bottom: 0;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		width: 100%;
+	}
+
+	.top-bar {
+		background-color: rgba(0,0,0,0.5);
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		//This is needed to make sure that close button is always displayed above ad
+		//ad can take the whole space of interstitial if too big creative is targeted
+		//- it shouldn't happen but it protects users from being not able to close interstitial
+		z-index: $z-high-impact;
+	}
+
+	.close {
+		background-color: $color-black;
+		cursor: pointer;
+		display: inline-block;
+		float: right;
+		padding: 7px 7px;
+		position: relative;
+
+		&:hover {
+			background-color: #333;
+		}
+
+		.close-button {
+			@include image-replacement();
+			background-image: url($close-image);
+			background-position: center center;
+			background-size: 16px 16px;
+			display: block;
+			height: 16px;
+			outline: none;
+			width: 16px;
+		}
+	}
+
+	.label {
+		color: $color-text-light;
+		display: inline-block;
+		font-size: 17px;
+		padding: 5px 10px;
+		position: relative;
+	}
+}
+
+.stop-scrolling {
+	overflow: hidden
+}

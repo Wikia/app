@@ -10,8 +10,23 @@ function askQuestion(){
 	q = q.replace(/#/g,""); //we only want one space
 	q = encodeURIComponent( q );
 
-	var path = window.wgServer + window.wgArticlePath.replace("$1","");
-	window.location = path + "Special:CreateQuestionPage?questiontitle=" + q.charAt(0).toUpperCase() + q.substring(1);
+	var path = window.wgServer + window.wgArticlePath.replace("$1",""),
+		questionTitle = q.charAt(0).toUpperCase() + q.substring(1);
+
+	jQuery.ajax({
+		url: path + "Special:CreateQuestionPage",
+		type: 'POST',
+		data: {
+			'questiontitle': questionTitle,
+			'token': window.mw.user.tokens.get('editToken')
+		}
+	}).done(function () {
+		window.location.href = path + questionTitle + "?state=asked";
+	}).fail(function () {
+		console.log("Error creating question!");
+		window.location.href = path + "Special:CreateQuestionPage";
+	});
+
 	return false;
 }
 /*]]>*/</script>

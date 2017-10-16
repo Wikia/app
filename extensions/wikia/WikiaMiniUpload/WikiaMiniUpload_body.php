@@ -99,11 +99,13 @@ class WikiaMiniUpload {
 		$constrain = array();
 		$exactHeight = $wgRequest->getVal('exactHeight');
 		if ( $exactHeight ) {
+			$exactHeight = intval($exactHeight);
 			$constrain[] = "img_height = $exactHeight";
 		}
 
 		$exactWidth = $wgRequest->getVal('exactWidth');
 		if ( $exactWidth ) {
+			$exactWidth = intval($exactWidth);
 			$constrain[] = "img_width = $exactWidth";
 		}
 
@@ -115,7 +117,7 @@ class WikiaMiniUpload {
 	}
 
      function query() {
-        global $wgRequest, $wgHTTPProxy;
+        global $wgRequest, $wgFlickrAPIKey;
 
         $query = $wgRequest->getText('query');
         $page = $wgRequest->getVal('page', 1);
@@ -123,9 +125,7 @@ class WikiaMiniUpload {
 
         if ( $sourceId == 1 ) {
 
-            $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
-            $proxyArr = explode(':', $wgHTTPProxy);
-            $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
+            $flickrAPI = new phpFlickr($wgFlickrAPIKey);
             $flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
 
 			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -210,6 +210,8 @@ class WikiaMiniUpload {
 		$itemId = $wgRequest->getVal('itemId');
 		$sourceId = $wgRequest->getInt('sourceId');
 
+		$this->assertValidRequest();
+
 		if ( $sourceId == 0 ) {
 			$file = wfFindFile(Title::newFromText($itemId, 6));
 			$props = array();
@@ -231,7 +233,7 @@ class WikiaMiniUpload {
 			$tempid = $this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
-			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
+			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']['_content']).'.jpg');
 			$props['mwname'] = $tempname;
 			$props['extraId'] = $itemId;
 			$props['tempid'] = $tempid;
@@ -259,7 +261,7 @@ class WikiaMiniUpload {
 
 		$ret = $upload->verifyUpload();
 
-		if ( !wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($mSrcName)) ) {
+		if ( !Hooks::run('WikiaMiniUpload:BeforeProcessing', array($mSrcName)) ) {
 			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
 			return UploadBase::VERIFICATION_ERROR;
 		}
@@ -390,7 +392,7 @@ class WikiaMiniUpload {
 		);
 
 		$thumb =  $file->transform( $hp );
-		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
+		$more = wfMessage( 'thumbnail-more' )->escaped();
 
 		if ( !$thumbnail ) {
 			// cater for full size here
@@ -416,7 +418,7 @@ class WikiaMiniUpload {
 					'<a href="'.$url.'" class="internal" title="'.$more.'">'.
 					'<img src="'.$wgStylePath.'/common/images/magnify-clip.png" ' .
 					'width="15" height="11" alt="" /></a></div>';
-			$s .= '  <div class="thumbcaption">'.$zoomicon.$caption."</div></div></div>";
+			$s .= '  <div class="thumbcaption">'.$zoomicon. htmlspecialchars( $caption ) ."</div></div></div>";
 		}
 		return str_replace("\n", ' ', $s);
 	}
@@ -427,7 +429,11 @@ class WikiaMiniUpload {
 	 * @return bool|String
 	 */
 	function insertImage() {
+		/* @var WebRequest $wgRequest */
 		global $wgRequest, $wgUser, $wgContLang;
+
+		$this->assertValidRequest();
+
 		$type = $wgRequest->getVal('type');
 		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');
@@ -435,9 +441,11 @@ class WikiaMiniUpload {
 
 		$gallery = $wgRequest->getVal( 'gallery', '' );
 		$title_main = urldecode( $wgRequest->getVal( 'article', '' ) );
-		$fck = $wgRequest->getCheck( 'ns', false );
 		$ns = $wgRequest->getVal( 'ns', '' );
 		$link = urldecode( $wgRequest->getVal( 'link', '' ) );
+
+		// Are we in the ck editor?
+		$ck = $wgRequest->getVal( 'ck' );
 
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
@@ -500,6 +508,10 @@ class WikiaMiniUpload {
 						$file_mwname->delete('');
 						$this->tempFileClearInfo( $tempid );
 						$newFile = false;
+
+						// SUS-3042 | push an upload to image review queue
+						Hooks::run( 'WikiaMiniUploadInsertImage', [ $file_name->getTitle() ] );
+
 					} else if ( $type == 'existing' ) {
 						$file = wfFindFile( Title::newFromText( $name, 6 ) );
 
@@ -552,7 +564,7 @@ class WikiaMiniUpload {
 						return wfMsg( 'wmu-file-protected' );
 					}
 
-					$temp_file = new LocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
+					$temp_file = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 					$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
 					if ( !empty($extraId) ) {
@@ -577,9 +589,12 @@ class WikiaMiniUpload {
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
 					$this->tempFileClearInfo( $tempid );
+
+					// SUS-3042 | push an upload to image review queue
+					Hooks::run( 'WikiaMiniUploadInsertImage', [ $file->getTitle() ] );
 				}
 
-				if ( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
+				if ( $wgUser->getGLobalPreference( 'watchdefault' ) || ( $newFile && $wgUser->getGlobalPreference( 'watchcreations' ) ) ) {
 					$wgUser->addWatch($title);
 				}
 				$db =& wfGetDB(DB_MASTER);
@@ -606,7 +621,7 @@ class WikiaMiniUpload {
 
 		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
 
-		if ( ( -2 == $gallery ) && !$fck ) {
+		if ( ( -2 == $gallery ) && !$ck ) {
 			// this went in from the single placeholder...
 			$name = $title->getText();
 			$size = $wgRequest->getVal('size');
@@ -621,7 +636,7 @@ class WikiaMiniUpload {
 			$article_obj = new Article( $title_obj );
 			$text = $article_obj->getContent();
 
-			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
+			Hooks::run( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
 
 			$box = $wgRequest->getVal( 'box', '' );
 
@@ -785,11 +800,9 @@ class WikiaMiniUpload {
 	}
 
 	function getFlickrPhotoInfo( $itemId ) {
-		global $wgHTTPProxy;
+		global $wgFlickrAPIKey;
 
-		$flickrAPI = new phpFlickr( 'bac0bd138f5d0819982149f67c0ca734' );
-		$proxyArr = explode( ':', $wgHTTPProxy );
-		$flickrAPI->setProxy( $proxyArr[0], $proxyArr[1] );
+		$flickrAPI = new phpFlickr( $wgFlickrAPIKey );
 		$flickrResult = $flickrAPI->photos_getInfo( $itemId );
 
 		// phpFlickr 3.x has different response structure than previous version
@@ -895,5 +908,17 @@ class WikiaMiniUpload {
 		}
 
 		return $info;
+	}
+
+	/**
+	 * @throws BadRequestException
+	 * @see PLATFORM-1531
+	 */
+	function assertValidRequest() {
+		global $wgRequest, $wgUser;
+
+		if ( !$wgRequest->wasPosted() ||  !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
 	}
 }

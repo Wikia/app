@@ -1,7 +1,7 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/clearfix";
 
 #about-achievements {
 	@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);

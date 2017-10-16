@@ -7,7 +7,9 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'   => 'VideoPageTool',
-	'author' => array( 'Garth Webb', 'Kenneth Kouot', 'Liz Lee', 'Saipetch Kongkatong' )
+	'author' => array( 'Garth Webb', 'Kenneth Kouot', 'Liz Lee', 'Saipetch Kongkatong' ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideoPageTool',
+	'descriptionmsg' => 'videopagetool-desc'
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -37,13 +39,10 @@ $wgSpecialPages['VideoPageAdmin'] = 'VideoPageAdminSpecialController';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'VideoPageToolHooks::onArticleFromTitle';
-
-// permissions
-$wgGroupPermissions['*']['videopagetool'] = false;
-$wgGroupPermissions['staff']['videopagetool'] = true;
-$wgGroupPermissions['sysop']['videopagetool'] = true;
-$wgGroupPermissions['helper']['videopagetool'] = true;
-$wgGroupPermissions['vstf']['videopagetool'] = true;
+$wgHooks['ArticlePurge'][] = 'VideoPageToolHooks::onArticlePurge';
+$wgHooks['CategorySelectSave'][] = 'VideoPageToolHooks::onCategorySelectSave';
+$wgHooks['VideoIngestionComplete'][] = 'VideoPageToolHooks::onVideoIngestionComplete';
+$wgHooks['FileDeleteComplete'][] = 'VideoPageToolHooks::onFileDeleteComplete';
 
 // register messages package for JS
 JSMessages::registerPackage('VideoPageTool', array(
@@ -53,5 +52,7 @@ JSMessages::registerPackage('VideoPageTool', array(
 	'videopagetool-description-maxlength-error',
 	'videopagetool-video-title-default-text',
 	'videopagetool-image-title-default-text',
-	'videopagetool-formerror-altthumb'
+	'videopagetool-formerror-videokey',
+	'videopagetool-formerror-altthumb',
+	'videopagetool-formerror-category-name',
 ));

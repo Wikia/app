@@ -1,0 +1,4 @@
+This directory is managed by composer and should NOT be edited directly.
+
+This is only a temporary solution (or not) until we can mirror these composer packages
+locally to prevent the external dependency.

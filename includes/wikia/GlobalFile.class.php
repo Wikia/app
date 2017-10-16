@@ -6,7 +6,7 @@
  * @author macbre
  */
 
-class GlobalFile extends WikiaObject {
+class GlobalFile extends WikiaObject implements UrlGeneratorInterface {
 
 	private $mTitle;
 
@@ -38,7 +38,7 @@ class GlobalFile extends WikiaObject {
 					'img_major_mime',
 					'img_minor_mime'
 				],
-				['img_name' => $this->getName()],
+				['img_name' => $this->mTitle->getDBkey()],
 				__METHOD__
 			);
 		}
@@ -49,6 +49,8 @@ class GlobalFile extends WikiaObject {
 	 *
 	 * @param string $title file name
 	 * @param int $wikiId city ID
+	 *
+	 * @return GlobalFile
 	 */
 	static public function newFromText($title, $wikiId) {
 		$title = GlobalTitle::newFromText($title, NS_FILE, $wikiId);
@@ -122,12 +124,12 @@ class GlobalFile extends WikiaObject {
 	 * @return string
 	 */
 	private function getHashPath() {
-		$hash = md5($this->mTitle->getText());
+		$hash = md5($this->mTitle->getDBkey());
 		return "{$hash[0]}/{$hash[0]}{$hash[1]}/";
 	}
 
 	function getUrlRel() {
-		return $this->getHashPath() . rawurlencode($this->getName());
+		return $this->getHashPath() . rawurlencode($this->mTitle->getDBkey());
 	}
 
 	/**
@@ -160,6 +162,33 @@ class GlobalFile extends WikiaObject {
 	public function getMimeType() {
 		$this->loadData();
 		return !empty($this->mData) ? "{$this->mData->img_major_mime}/{$this->mData->img_minor_mime}" : null;
+	}
+
+	/**
+	 * @return string  A path to file's bucket
+	 */
+	public function getBucket() {
+		return VignetteRequest::parseBucket( $this->getUploadDir() );
+	}
+
+	/**
+	 * @return string  A language prefix
+	 */
+	public function getPathPrefix() {
+		return VignetteRequest::parsePathPrefix( $this->getUploadDir() );
+	}
+
+	/**
+	 * @return \Wikia\Vignette\UrlGenerator object
+	 */
+	public function getUrlGenerator() {
+		return VignetteRequest::fromConfigMap( [
+			'is-archive' => false,
+			'timestamp' => $this->getTimestamp(),
+			'relative-path' => $this->getUrlRel(),
+			'bucket' => $this->getBucket(),
+			'path-prefix' => $this->getPathPrefix(),
+		] );
 	}
 
 	/**

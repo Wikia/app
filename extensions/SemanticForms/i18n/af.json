@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Arnobarnard",
+			"Naudefj",
+			"SPQRobin"
+		]
+	},
+	"sf_createproperty_propname": "Naam:",
+	"sf_createproperty_proptype": "Tipe:",
+	"templates": "Sjablone",
+	"sf_createtemplate_standardformat": "Standaard",
+	"sf_createtemplate_deletefield": "Skrap",
+	"sf_createform_template": "Sjabloon:",
+	"sf_createform_field": "Veld:",
+	"sf_createform_inputtypedefault": "(standaard)",
+	"sf_createform_hidden": "Verborge",
+	"sf_createform_add": "Voeg by",
+	"sf_createcategory_name": "Naam:",
+	"sf_formedit_remove": "Skrap",
+	"sf_formedit_none": "Geen",
+	"sf_blank_error": "mag nie leeg wees nie",
+	"sf_bad_date_error": "moet 'n geldige datum wees",
+	"sf_deletionlog": "Skraplogboek",
+	"sf_form_freetextlabel": "Vrye teks",
+	"sf-datepicker-close": "Sluit",
+	"sf-datepicker-prev": "Vorige",
+	"sf-datepicker-next": "Volgende",
+	"sf-datepicker-today": "Vandag",
+	"sf-regexp-wrongformat": "Verkeerde formaat."
+}

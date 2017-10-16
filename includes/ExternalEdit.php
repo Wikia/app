@@ -54,7 +54,7 @@ class ExternalEdit extends ContextSource {
 		$request = $context->getRequest();
 
 		return !$request->getVal( 'internaledit' ) &&
-			( $context->getUser()->getOption( $pref ) || $request->getVal( 'externaledit' ) );
+			( $context->getUser()->getGlobalPreference( $pref ) || $request->getVal( 'externaledit' ) );
 	}
 
 	/**

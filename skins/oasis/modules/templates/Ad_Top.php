@@ -1,28 +1,28 @@
 <div class="WikiaTopAds" id="WikiaTopAds">
-<div class="WikiaTopAdsInner">
 
-<?php
+	<div class="WikiaTopAdsInner">
 
-if (WikiaPageType::isWikiaHub()) {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'HUB_TOP_LEADERBOARD'));
-} elseif ($wg->EnableWikiaHomePageExt) {
-	if (WikiaPageType::isSearch()) {
-		echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
-	} else {
-		echo $app->renderView('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
-	}
-} elseif (WikiaPageType::isMainPage()) {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
-} else {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
-}
+		<?= $app->renderView('Ad', 'Index', [
+			'slotName' => 'TOP_LEADERBOARD',
+			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
+		]); ?>
 
-echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON_WIDE'));
+		<?= $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE', 'pageTypes' => ['homepage_logged', 'search', 'all_ads']]); ?>
 
-?>
+	</div>
+
+	<?= $app->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN', 'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']]); ?>
 
 </div>
 
-<?= $app->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_SKIN')); ?>
+<div id="InvisibleHighImpactWrapper" class="hidden">
+	<div class="background"></div>
 
+	<div class="top-bar">
+		<div class="label"><?= ucfirst(wfMessage( 'adengine-advertisement' )->escaped()) ?></div>
+		<a class="close">
+			<div class="close-button"></div>
+		</a>
+	</div>
+	<div id="INVISIBLE_HIGH_IMPACT_2" class="wikia-ad noprint"></div>
 </div>

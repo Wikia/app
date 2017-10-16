@@ -48,7 +48,10 @@ define( 'EXPR_PI', 36 );
 
 class ExprError extends MWException {
 	public function __construct( $msg, $parameter = '' ) {
-		$this->message = '<strong class="error">' . wfMsgForContent( "pfunc_expr_$msg", htmlspecialchars( $parameter ) ) . '</strong>';
+		// begin wikia change
+		// VOLDEV-114
+		$this->message = wfMessage( "pfunc_expr_$msg", $parameter )->inContentLanguage()->text();
+		// end wikia change
 	}
 }
 

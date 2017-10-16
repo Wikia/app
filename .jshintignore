@@ -1,3 +1,4 @@
 // Add files & directories to be ignored by new .jshintrc rules
-// Useful for ignoring legacy code written before establishing linting policy
+// Useful for ignoring library files
 
+**/lib/**

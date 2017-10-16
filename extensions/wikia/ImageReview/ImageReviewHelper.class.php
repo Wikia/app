@@ -1,27 +1,25 @@
 <?php
 
+use \Wikia\Tasks\Tasks\ImageReviewTask;
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * ImageReview Helper
+ *
+ * @author (contributing) Adam Karmiński <adamk@wikia-inc.com>
  */
 class ImageReviewHelper extends ImageReviewHelperBase {
 
 	private $user_id = 0;
-	const LIMIT_IMAGES = 20;
-	/*
-	 * LIMIT_IMAGES_FROM_DB should be a little greater than LIMIT_IMAGES, so if
-	 * we fetch a few icons from DB, we can skip them
-	 */
-	const LIMIT_IMAGES_FROM_DB = 24;
-
-	static $sortOptions = array(
-		'latest first' => 0,
-		'by priority and recency' => 1,
-		'oldest first' => 2,
-	);
-
+	/**
+	 * @var ImageReviewStatsCache
+     */
+	private $stats_cache;
+	
 	function __construct() {
 		parent::__construct();
-		$this->user_id = $this->wg->user->getId();
+		$this->user_id     = $this->wg->user->getId();
+		$this->stats_cache = new ImageReviewStatsCache( $this->user_id, $this->wg );
 	}
 
 	/**
@@ -54,6 +52,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				'review_state' => $image['state'],
 				'reviewer_id' => $this->user_id
 			);
+
+			// SUS-2650: invalidate file page of reviewed image
+			$task = new ImageReviewTask();
+			$task->call( 'invalidateFilePage', (int) $image['pageId'] );
+			$task->wikiId( $image['wiki_id'] );
+			$task->queue();
 		}
 
 		$db = $this->getDatawareDB( DB_MASTER );
@@ -83,106 +87,64 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$db->commit();
 
 		// update stats directly in memcache so they look nice without impacting the database
-		$key = wfMemcKey( 'ImageReviewSpecialController', 'ImageReviewHelper::getImageCount', $this->user_id );
-		$stats = $this->wg->memc->get($key, null);
-		if ($stats) {
-			switch ( $action ) {
-				case '':
-				//	$stats['reviewer'] += count($images);
-				//	$stats['unreviewed'] -= count($images);
-					$stats['questionable'] += count($sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE]);
-					break;
-				case ImageReviewSpecialController::ACTION_QUESTIONABLE:
-					$changedState = count( $sqlWhere[ImageReviewStatuses::STATE_APPROVED] ) + count( $sqlWhere[ImageReviewStatuses::STATE_REJECTED] );
-				//	$stats['reviewer'] += $changedState;
-					$stats['questionable'] -= $changedState;
-					break;
-				case ImageReviewSpecialController::ACTION_REJECTED:
-					$changedState = count( $sqlWhere[ImageReviewStatuses::STATE_APPROVED] ) + count( $sqlWhere[ImageReviewStatuses::STATE_DELETED] );
-					$stats['rejected'] -= $changedState;
-					break;
-			}
-			$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
-			// Quick hack/fix for stats going negative -- FIXME
-			if ($stats['unreviewed'] < 0)
-				$this->wg->memc->delete( $key );
-		}
+		$this->updateStatsOnAction(
+			$action,
+			count($images),
+			count($sqlWhere[ImageReviewStatuses::STATE_APPROVED]),
+			count($sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE]),
+			count($sqlWhere[ImageReviewStatuses::STATE_REJECTED]),
+			count($deletionList)
+		);
 
-		if ( !empty( $deletionList ) ) {
-			$task = new ImageReviewTask();
-			$task->createTask(
-				array(
-					'page_list' => $deletionList,
-				),
-				TASK_QUEUED,
-				BatchTask::PRIORITY_HIGH
-			);
-		}
+		$this->createDeleteImagesTask( $deletionList );
 
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function updateStatsOnAction( $action, $reviewed, $approved, $questionable, $rejected, $deleted ) {
+		switch ( $action ) {
+			case '':
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_REVIEWER, $reviewed );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_UNREVIEWED, -$reviewed );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_REJECTED, $rejected );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_QUESTIONABLE, $questionable );
+				break;
+			case ImageReviewSpecialController::ACTION_QUESTIONABLE:
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_REVIEWER, $approved + $rejected );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_QUESTIONABLE, -($approved + $rejected) );
+				break;
+			case ImageReviewSpecialController::ACTION_REJECTED:
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_UNREVIEWED, -$reviewed );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_REJECTED, -($approved + $deleted) );
+				break;
+		}
+	}
+
 	/**
-	 * reset state in abandoned work
-	 * note: this is run via a cron script
+	 * Creates a task removing listed images
+	 * @param  array  $aDeletionList  An array of [ city_id, page_id ] arrays.
+	 * @return void
 	 */
-	public function resetAbandonedWork() {
-		wfProfileIn( __METHOD__ );
+	public function createDeleteImagesTask( $aDeletionList ) {
+		if ( !empty( $aDeletionList ) ) {
+			$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
+			$task->call('delete', $aDeletionList);
+			$task->prioritize();
+			$task->queue();
+		}
+	}
 
-		$db = $this->getDatawareDB( DB_MASTER );
-
-		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600; // 1 sec
-		$review_start = wfTimestamp(TS_DB, time() - $timeLimit );
-
-		// for STATE_UNREVIEWED
-		$db->update(
-			'image_review',
-			array(
-				'reviewer_id' => null,
-				'state' => ImageReviewStatuses::STATE_UNREVIEWED,
-				'review_start' => '0000-00-00 00:00:00',
-				'review_end' => '0000-00-00 00:00:00',
-			),
-			array(
-				"review_start < '{$review_start}'",
-				'state' => ImageReviewStatuses::STATE_IN_REVIEW,
-			),
-			__METHOD__
-		);
-
-		// for STATE_QUESTIONABLE
-		$db->update(
-			'image_review',
-			array(
-				'state' => ImageReviewStatuses::STATE_QUESTIONABLE,
-				'review_start' => '0000-00-00 00:00:00',
-				'review_end' => '0000-00-00 00:00:00',
-			),
-			array(
-				"review_start < '{$review_start}'",
-				'state' => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
-			),
-			__METHOD__
-		);
-
-		// for STATE_REJECTED
-		$db->update(
-			'image_review',
-			array(
-				'state' => ImageReviewStatuses::STATE_REJECTED,
-				'review_start' => '0000-00-00 00:00:00',
-				'review_end' => '0000-00-00 00:00:00',
-			),
-			array(
-				"review_start < '{$review_start}'",
-				'state' => ImageReviewStatuses::STATE_REJECTED_IN_REVIEW,
-			),
-			__METHOD__
-		);
-
-		$db->commit();
-
-		wfProfileOut( __METHOD__ );
+	/**
+	 * Creates a task removing listed images from image_review queue
+	 * @param  array  $aDeletionList  An array of [ city_id, page_id ] arrays.
+	 * @return void
+	 */
+	public function createDeleteFromQueueTask( $aDeletionList ) {
+		if ( !empty( $aDeletionList ) ) {
+			$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
+			$task->call('deleteFromQueue', $aDeletionList);
+			$task->queue();
+		}
 	}
 
 	/**
@@ -237,7 +199,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		$db->freeResult( $result );
 
-		error_log("ImageReview : refetched " . count($imageList) . " images based on timestamp");
+		WikiaLogger::instance()->info( "ImageReviewLog", [
+			'method' => __METHOD__,
+			'message' => "Refetched " . count( $imageList ) . " images based on timestamp",
+		] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -251,28 +216,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	public function getImageList( $timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
 		wfProfileIn( __METHOD__ );
 
-		// get images
-		$db = $this->getDatawareDB( DB_MASTER );
-		$result = $db->query('
-			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority
-			FROM (
-				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority
-				FROM `image_review`
-				WHERE state = ' . $state . ' AND top_200 = false
-				ORDER BY ' . $this->getOrder($order) . '
-				LIMIT ' . self::LIMIT_IMAGES_FROM_DB . '
-			) as image_review
-			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id)'
-		);
+		$oDB = $this->getDatawareDB( DB_MASTER );
+		$oDatabaseHelper = $this->getDatabaseHelper();
+
+		$oResults = $oDatabaseHelper->selectImagesForList( $this->getOrder( $order ), self::LIMIT_IMAGES_FROM_DB, $state );
 
 		$rows = array();
 		$updateWhere = array();
 		$iconsWhere = array();
-		while ( $row = $db->fetchObject($result) ) {
+		while ( $row = $oDB->fetchObject($oResults) ) {
 			$rows[] = $row;
 			$updateWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 		}
-		$db->freeResult( $result );
+		$oDB->freeResult( $oResults );
 
 		# update records
 		if ( count($updateWhere) > 0) {
@@ -299,219 +255,191 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				$values[] = "review_end = '0000-00-00 00:00:00'";
 			}
 
-			$db->update(
+			$oDB->update(
 				'image_review',
 				$values,
 				array( implode(' OR ', $updateWhere) ),
 				__METHOD__
 			);
 		}
-		$db->commit();
+		$oDB->commit();
 
-		$imageList = $invalidImages = $unusedImages = array();
-		foreach( $rows as $row) {
+		$imageList = $unusedImages = $aDeleteFromQueueList = [];
+
+		foreach ( $rows as $row ) {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 
-			if (count($imageList) < self::LIMIT_IMAGES) {
-				$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
+			if ( count( $imageList ) < self::LIMIT_IMAGES ) {
+				$bDisplayImage = true;
+				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
 
-				$extension = pathinfo( strtolower( $img['page'] ), PATHINFO_EXTENSION ); // this needs to use the page index since src for SVG ends in .svg.png :/
-
-				if ( empty( $img['src'] ) && $state != ImageReviewStatuses::STATE_QUESTIONABLE && $state != ImageReviewStatuses::STATE_REJECTED ) {
-					$invalidImages[] = $record;
-				} elseif ( 'ico' == $extension ) {
-					$iconsWhere[] = $record;
+				if ( $oImagePage instanceof GlobalTitle !== true ) {
+					$bDisplayImage = false;
+					$sReason = 'Page does not exist';
+				} elseif ( $oImagePage->isRedirect() === true ) {
+					$bDisplayImage = false;
+					$sReason = 'Page is a redirect';
 				} else {
-					$isThumb = true;
-
-					if ( empty( $img['src'] ) ) {
-						// if we don't have a thumb by this opint, we still need to display something, fall back to placeholder
-						$globalTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-						if ( is_object( $globalTitle ) ) {
-							$img['page'] = $globalTitle->getFullUrl();
-							// @TODO this should be taken from the code instead of being hardcoded
-							$img['src'] = 'http://images.wikia.com/central/images/8/8c/Wikia_image_placeholder.png';
-						} else {
-							// this should never happen
-							$invalidImages[] = $record;
-							continue;
-						}
+					$oImageGlobalFile = new GlobalFile( $oImagePage );
+					if ( $oImageGlobalFile->exists() === false ) {
+						$bDisplayImage = false;
+						$sReason = 'File does not exist';
 					}
+				}
 
-					if  ( in_array( $extension, array( 'gif', 'svg' ) ) ) {
-						$img = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
-						$isThumb = false;
-					}
+				if ( $bDisplayImage === true && $oImageGlobalFile instanceof GlobalFile ) {
+					$sThumbUrl = $oImageGlobalFile->getUrlGenerator()
+						->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
+						->height( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
+						->thumbnailDown()
+						->url();
 
-					$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
-
-					$imageList[] = array(
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'state' => $row->state,
-						'src' => $img['src'],
-						'url' => $img['page'],
-						'priority' => $row->priority,
-						'flags' => $row->flags,
-						'isthumb' => $isThumb,
-						'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
+					$aImageInfo = array(
+						'src' => $sThumbUrl,
+						'page' => $oImagePage->getFullUrl(),
+						'extension' => $oImageGlobalFile->getMimeType(),
 					);
+
+					if ( strpos( 'ico', $aImageInfo['extension'] ) ) {
+						$iconsWhere[] = $record;
+						continue;
+					} else {
+						$isThumb = true; // Vignette handles .gif and .svg files
+
+						$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
+
+						$imageList[] = array(
+							'wikiId' => $row->wiki_id,
+							'pageId' => $row->page_id,
+							'state' => $row->state,
+							'src' => $aImageInfo['src'],
+							'url' => $aImageInfo['page'],
+							'priority' => $row->priority,
+							'flags' => $row->flags,
+							'isthumb' => $isThumb,
+							'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
+						);
+					}
+				} else {
+					$aDeleteFromQueueList[] = [
+						'wiki_id' => $row->wiki_id,
+						'page_id' => $row->page_id,
+						'reason' => $sReason,
+					];
+					continue;
 				}
 			} else {
 				$unusedImages[] = $record;
 			}
 		}
 
-		$commit = false;
-		if ( count($invalidImages) > 0 ) {
-			$db->update(
-				'image_review',
-				array(
-					'state' => ImageReviewStatuses::STATE_QUESTIONABLE // changed from STATE_INVALID_IMAGE
-				),
-				array( implode(' OR ', $invalidImages) ),
-				__METHOD__
-			);
-			$commit = true;
+		/**
+		 * Invalid images
+		 */
+		if ( !empty( $aDeleteFromQueueList ) ) {
+			$this->createDeleteFromQueueTask( $aDeleteFromQueueList );
 		}
 
-		if ( count($iconsWhere) > 0 ) {
-			$db->update(
-					'image_review',
-					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE),
-					array( implode(' OR ', $iconsWhere) ),
-					__METHOD__
-				   );
-			$commit = true;
+		/**
+		 * Icons
+		 */
+		if ( !empty( $iconsWhere ) ) {
+			$aIconsValues = [
+				'state' => ImageReviewStatuses::STATE_ICO_IMAGE,
+			];
+			$aIconsWhere = [ implode( 'OR', $iconsWhere ) ];
+			$this->imageListAdditionalAction( 'icons', $oDB, $aIconsValues, $aIconsWhere );
 		}
 
-		if ( count($unusedImages) > 0 ) {
-			$db->update(
-				'image_review',
-				array(
-					'reviewer_id = null',
-					'state' => $state
-				),
-				array( implode(' OR ', $unusedImages) ),
-				__METHOD__
-			);
-			$commit = true;
-			error_log("ImageReview : returning " . count($unusedImages) . " back to the queue");
+		/**
+		 * Unused images
+		 */
+		if ( !empty( $unusedImages ) ) {
+			$aUnusedValues = [
+				'reviewer_id = null',
+				'state' => $state,
+			];
+			$aUnusedWhere = [ implode( 'OR', $unusedImages ) ];
+			$this->imageListAdditionalAction( 'unused', $oDB, $aUnusedValues, $aUnusedWhere );
 		}
 
-		if ( $commit ) $db->commit();
-
-		error_log("ImageReview : fetched new " . count($imageList) . " images");
+		/**
+		 * Return valid images list
+		 */
+		WikiaLogger::instance()->info( "ImageReviewLog", [
+			'method' => __METHOD__,
+			'message' => 'Fetched ' . count( $imageList ) . ' new images',
+		] );
 
 		wfProfileOut( __METHOD__ );
 
 		return $imageList;
 	}
 
-	protected function getWhitelistedWikis() {
-		wfProfileIn( __METHOD__ );
-
-		$topWikis = $this->getTopWikis();
-
-		$whitelistedWikis = $this->getWhitelistedWikisFromWF();
-
-		$out = array_keys( $whitelistedWikis + $topWikis );
-
-		wfProfileOut( __METHOD__ );
-
-		return $out;
-	}
-
-	protected function getWhitelistedWikisFromWF() {
-		wfProfileIn( __METHOD__ );
-		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__ );
-
-		$data = $this->wg->memc->get($key, null);
-
-		if(!empty($data)) {
-			wfProfileOut( __METHOD__ );
-			return $data;
+	private function imageListAdditionalAction( $sType, DatabaseBase $oDB, Array $aValues, Array $aWhere ) {
+		$iCount = count( $aWhere );
+		if ( $iCount > 0 ) {
+			$oDatabaseHelper = $this->getDatabaseHelper();
+			$oDatabaseHelper->updateBatchImages( $aValues, $aWhere );
 		}
 
-		$oVariable = WikiFactory::getVarByName( 'wgImageReviewWhitelisted', 177 );
-		$fromWf = WikiFactory::getListOfWikisWithVar($oVariable->cv_variable_id, 'bool', '=' ,true);
-
-		$this->wg->memc->set($key, $fromWf, 60*10);
-		wfProfileOut( __METHOD__ );
-		return $fromWf;
+		WikiaLogger::instance()->info( "ImageReviewLog", [
+			'method' => __METHOD__,
+			'message' => "Updated {$iCount} images (type {$sType})",
+		] );
 	}
 
-	protected function getTopWikis() {
-		wfProfileIn( __METHOD__ );
-		$key = wfMemcKey( 'ImageReviewSpecialController','v2', __METHOD__ );
-		$data = $this->wg->memc->get($key, null);
-		if( !empty($data) ) {
-			wfProfileOut( __METHOD__ );
-			return $data;
-		}
 
-		$ids = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY, 200 );
 
-		$this->wg->memc->set( $key, $ids, 86400 /* 24h */ );
-		wfProfileOut( __METHOD__ );
-		return $ids;
-	}
-
-	public function getImageCount() {
+	public function getImageCount( $sAction = false, $iImageListCount = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
-		$total = $this->wg->memc->get($key, null);
-		if ( !empty($total) ) {
+		$total = $this->stats_cache->getStats();
+
+		/**
+		 * Don't use cached results if:
+		 * 1. In Unreviewed queue
+		 * 2. SQL select returns 0 images
+		 * 3. Cached count of unreviewed >= 0
+		 */
+		if ( !empty( $total ) &&
+		    (
+				$sAction != ImageReviewSpecialController::ACTION_UNREVIEWED ||
+				$iImageListCount != 0
+			) &&
+			$total[ImageReviewStatsCache::STATS_UNREVIEWED] >= 0
+		) {
 			wfProfileOut( __METHOD__ );
 			return $total;
 		}
 
-		$db = $this->getDatawareDB( DB_SLAVE );
-		$where = array();
+		static $initial_stats = [
+			ImageReviewStatsCache::STATS_INVALID      => 0,
+			ImageReviewStatsCache::STATS_UNREVIEWED   => 0,
+			ImageReviewStatsCache::STATS_QUESTIONABLE => 0,
+			ImageReviewStatsCache::STATS_REJECTED     => 0,
+			ImageReviewStatsCache::STATS_REVIEWER     => 0,
+		];
 
-		$statesToFetch = array(
-			ImageReviewStatuses::STATE_QUESTIONABLE,
-			ImageReviewStatuses::STATE_REJECTED,
-			ImageReviewStatuses::STATE_UNREVIEWED
-		);
-		$where[] = 'state in (' . $db->makeList( $statesToFetch ) . ')';
+		$total = array_merge( $initial_stats, $total );
 
-		$where[] = 'top_200 = 0';
+		$db_helper = $this->getDatabaseHelper();
+		$counters = $db_helper->countImagesByState();
 
-		$list = $this->getWhitelistedWikis();
-		if ( !empty($list) ) {
-			$where[] = 'wiki_id not in('.implode(',', $list).')';
+		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $counters ) ) {
+			$total[ImageReviewStatsCache::STATS_UNREVIEWED] = $counters[ ImageReviewStatuses::STATE_UNREVIEWED ];
+		}
+		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $counters ) ) {
+			$total[ImageReviewStatsCache::STATS_QUESTIONABLE] = $counters[ ImageReviewStatuses::STATE_QUESTIONABLE ];
+		}
+		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $counters ) ) {
+			$total[ImageReviewStatsCache::STATS_REJECTED] = $counters[ ImageReviewStatuses::STATE_REJECTED ];
+		}
+		if ( array_key_exists( ImageReviewStatuses::STATE_INVALID_IMAGE, $counters ) ) {
+			$total[ImageReviewStatsCache::STATS_INVALID] = $counters[ ImageReviewStatuses::STATE_INVALID_IMAGE ];
 		}
 
-		// select by reviewer, state and total count with rollup and then pick the data we want out
-		$result = $db->select(
-			array( 'image_review' ),
-			array( 'state', 'count(*) as total' ),
-			$where,
-			__METHOD__,
-			array( 'GROUP BY' => 'state' )
-		);
-
-		$total = array(
-			'unreviewed' => 0,
-			'questionable' => 0,
-			'rejected' => 0,
-		);
-		while( $row = $db->fetchObject($result) ) {
-			$total[$row->state] = $row->total;
-		}
-
-		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $total ) ) {
-			$total['unreviewed'] = $this->wg->Lang->formatNum($total[ImageReviewStatuses::STATE_UNREVIEWED]);
-		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $total ) ) {
-			$total['questionable'] = $this->wg->Lang->formatNum($total[ImageReviewStatuses::STATE_QUESTIONABLE]);
-		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $total ) ) {
-			$total['rejected'] = $this->wg->Lang->formatNum( $total[ImageReviewStatuses::STATE_REJECTED]);
-		}
-		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
+		$this->stats_cache->setStats( $total );
 
 		wfProfileOut( __METHOD__ );
 		return $total;
@@ -607,11 +535,45 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
 	}
 
+	/**
+	 * reset state in abandoned work
+	 * note: this is run via a cron script
+	 */
+	public function resetAbandonedWork() {
+		wfProfileIn( __METHOD__ );
+
+		$oDatabaseHelper = $this->getDatabaseHelper();
+
+		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600; // 1 sec
+		$sFrom = wfTimestamp(TS_DB, time() - $timeLimit );
+
+		// for STATE_UNREVIEWED
+		$oDatabaseHelper->updateResetAbandoned( $sFrom,
+			ImageReviewStatuses::STATE_UNREVIEWED,
+			ImageReviewStatuses::STATE_IN_REVIEW
+		);
+
+		// for STATE_QUESTIONABLE
+		$oDatabaseHelper->updateResetAbandoned( $sFrom,
+			ImageReviewStatuses::STATE_QUESTIONABLE,
+			ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
+		);
+
+		// for STATE_REJECTED
+		$oDatabaseHelper->updateResetAbandoned( $sFrom,
+			ImageReviewStatuses::STATE_REJECTED,
+			ImageReviewStatuses::STATE_REJECTED_IN_REVIEW
+		);
+
+		wfProfileOut( __METHOD__ );
+		return $sFrom;
+	}
+
 	private function getImageStatesForStats() {
 		wfProfileIn( __METHOD__ );
 
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
-		$states = $this->wg->memc->get($key, null);
+		$states = $this->wg->memc->get($key);
 		if ( empty($states) ) {
 			$states = array();
 			$db = $this->getDatawareDB( DB_SLAVE );
@@ -639,7 +601,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		wfProfileIn( __METHOD__ );
 
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
-		$reviewers = $this->wg->memc->get($key, null);
+		$reviewers = $this->wg->memc->get($key);
 		if ( empty($reviewers) ) {
 			$reviewers = array();
 			$db = $this->getDatawareDB( DB_SLAVE );
@@ -662,48 +624,4 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		wfProfileOut( __METHOD__ );
 		return $reviewers;
 	}
-
-	public static function onWikiFactoryPublicStatusChange( $city_public, $city_id, $reason ) {
-		global $wgExternalDatawareDB;
-
-		if ( $city_public == 0 || $city_public == -1 ) {
-			// the wiki was disabled, mark all unreviewed images as deleted
-
-			$newState = ImageReviewStatuses::STATE_WIKI_DISABLED;
-			$statesToUpdate = array(
-				ImageReviewStatuses::STATE_UNREVIEWED,
-				ImageReviewStatuses::STATE_REJECTED,
-				ImageReviewStatuses::STATE_QUESTIONABLE,
-				ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
-				ImageReviewStatuses::STATE_REJECTED_IN_REVIEW,
-				ImageReviewStatuses::STATE_IN_REVIEW,
-			);
-		} elseif ( $city_public == 1 ) {
-			// the wiki was re-enabled, put all images back into the queue as unreviewed
-
-			$newState = ImageReviewStatuses::STATE_UNREVIEWED;
-			$statesToUpdate = array(
-				ImageReviewStatuses::STATE_WIKI_DISABLED,
-			);
-		} else {
-			// the state change doesn't affect images, we don't need to do anything here
-			return true;
-		}
-
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-
-		$dbw->update(
-			'image_review',
-			array(
-				'state' => $newState,
-			),
-			array(
-				'wiki_id' => $city_id,
-				'state' => $dbw->makeList( $statesToUpdate ),
-			)
-		);
-
-		return true;
-	}
 }
-

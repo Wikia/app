@@ -26,7 +26,8 @@ $app->wg->append(
 			'Maciej Błaszkowski',
 			'Christian Williams',
 			'Federico "Lox" Lucignano <federico@wikia-inc.com>'
-		)
+		),
+		"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageTweaks"
 	),
 	'other'
 );
@@ -37,11 +38,6 @@ $app->wg->append(
 $wgAutoloadClasses['ImageTweaksHooks'] = "{$dir}/ImageTweaksHooks.class.php";
 
 /**
- * services
- */
-$wgAutoloadClasses['ImageTweaksService'] = "{$dir}/ImageTweaksService.class.php";
-
-/**
  * hooks
  */
 //hook into Linker::MakeImageLink2
@@ -50,7 +46,7 @@ $wgHooks['ImageAfterProduceHTML'][] = 'ImageTweaksHooks::onImageAfterProduceHTML
 //hook into Linker::MakeThumbLink2
 $wgHooks['ThumbnailAfterProduceHTML'][] = 'ImageTweaksHooks::onThumbnailAfterProduceHTML';
 
-//hook into ImageThumbnail::toHTML
+//hook into ThumbnailImage::toHTML
 $wgHooks['ThumbnailImageHTML'][] = 'ImageTweaksHooks::onThumbnailImageHTML';
 
 //hook into ThumbnailVideo::toHTML

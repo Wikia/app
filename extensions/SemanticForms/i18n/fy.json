@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kening Aldgilles",
+			"Snakesteuben",
+			"Robin0van0der0vliet"
+		]
+	},
+	"sf_createtemplate_standardformat": "Tabel",
+	"sf_createtemplate_deletefield": "Fuortsmite",
+	"sf_createform_inputtypedefault": "(standert)",
+	"sf_createform_add": "Tafoegje",
+	"sf_createclass_create": "Oanmeitsje",
+	"sf_formedit_createtitle": "$1 oanmeitsje: $2",
+	"sf_formedit_createtitlenotarget": "$1 oanmeitsje",
+	"sf_editsource": "Bewurkje boarne",
+	"sf_formedit_none": "Gjin",
+	"sf-datepicker-close": "Slute",
+	"sf-datepicker-prev": "Foarige",
+	"sf-datepicker-next": "Folgjende",
+	"sf-datepicker-today": "Hjoed"
+}

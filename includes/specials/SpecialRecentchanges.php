@@ -42,19 +42,19 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	public function getDefaultOptions() {
 		$opts = new FormOptions();
 
-		$opts->add( 'days',  (int)$this->getUser()->getOption( 'rcdays' ) );
-		$opts->add( 'limit', (int)$this->getUser()->getOption( 'rclimit' ) );
+		$opts->add( 'days',  (int)$this->getUser()->getGlobalPreference( 'rcdays' ) );
+		$opts->add( 'limit', (int)$this->getUser()->getGlobalPreference( 'rclimit' ) );
 		$opts->add( 'from', '' );
 
-		$opts->add( 'hideminor',     $this->getUser()->getBoolOption( 'hideminor' ) );
+		$opts->add( 'hideminor',     (bool)$this->getUser()->getGlobalPreference( 'hideminor' ) );
 		$opts->add( 'hidebots',      true  );
 		$opts->add( 'hideanons',     false );
 		$opts->add( 'hideliu',       false );
-		$opts->add( 'hidepatrolled', $this->getUser()->getBoolOption( 'hidepatrolled' ) );
+		$opts->add( 'hidepatrolled', (bool)$this->getUser()->getGlobalPreference( 'hidepatrolled' ) );
 		$opts->add( 'hidemyself',    false );
 		// Wikia change - begin
 		// still needed?
-		$opts->add( 'hideenhanced', !$this->getUser()->getOption( 'usenewrc' ) );
+		$opts->add( 'hideenhanced', !$this->getUser()->getGlobalPreference( 'usenewrc' ) );
 		// Wikia change - end
 
 		$opts->add( 'namespace', '', FormOptions::INTNULL );
@@ -85,9 +85,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		$opts->fetchValuesFromRequest( $this->getRequest() );
 
-		$user->setOption( 'usenewrc', !$opts['hideenhanced'] );
+		$user->setGlobalPreference( 'usenewrc', !$opts['hideenhanced'] );
 		if( $user->isLoggedIn() ) {
-			if( $user->getOption( 'usenewrc' ) != !$opts['hideenhanced'] ) {
+			if( $user->getGlobalPreference( 'usenewrc' ) != !$opts['hideenhanced'] ) {
 				$user->saveSettings();
 			}
 		}
@@ -109,7 +109,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	protected function getCustomFilters() {
 		if ( $this->customFilters === null ) {
 			$this->customFilters = array();
-			wfRunHooks( 'SpecialRecentChangesFilters', array( $this, &$this->customFilters ) );
+			Hooks::run( 'SpecialRecentChangesFilters', array( $this, &$this->customFilters ) );
 		}
 		return $this->customFilters;
 	}
@@ -405,9 +405,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	/**
 	 * Process the query
 	 *
-	 * @param $conds Array
+	 * @param $conds array
 	 * @param $opts FormOptions
-	 * @return database result or false (for Recentchangeslinked only)
+	 * @return mixed database result or false (for Recentchangeslinked only)
 	 */
 	public function doMainQuery( $conds, $opts ) {
 		$tables = array( 'recentchanges' );
@@ -446,7 +446,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			);
 		}
 
-		if ( !wfRunHooks( 'SpecialRecentChangesQuery',
+		if ( !Hooks::run( 'SpecialRecentChangesQuery',
 			array( &$conds, &$tables, &$join_conds, $opts, &$query_options, &$fields ) ) )
 		{
 			return false;
@@ -527,7 +527,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			$rows = $this->filterByCategories( $rows, $opts );
 		}
 
-		$showWatcherCount = $wgRCShowWatchingUsers && $this->getUser()->getOption( 'shownumberswatching' );
+		$showWatcherCount = $wgRCShowWatchingUsers && $this->getUser()->getGlobalPreference( 'shownumberswatching' );
 		$watcherCache = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -638,9 +638,13 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$form = Xml::tags( 'form', array( 'action' => $wgScript ), $out );
 		$panel[] = $form;
 		$panelString = implode( "\n", $panel );
+		$panelString = Html::rawElement( 'div', [ 'class' => 'rc-fieldset-content' ], $panelString );
 
 		$this->getOutput()->addHTML(
-			Xml::fieldset( wfMsg( 'recentchanges-legend' ), $panelString, array( 'class' => 'rcoptions' ) )
+			Xml::fieldset( wfMessage( 'recentchanges-legend' )->escaped(), $panelString, [
+				'class' => 'rcoptions collapsible',
+				'id' => 'recentchanges-options',
+			] )
 		);
 
 		$this->setBottomText( $opts );
@@ -666,7 +670,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			$extraOpts['tagfilter'] = $tagFilter;
 		}
 
-		wfRunHooks( 'SpecialRecentChangesPanel', array( &$extraOpts, $opts ) );
+		Hooks::run( 'SpecialRecentChangesPanel', array( &$extraOpts, $opts ) );
 		return $extraOpts;
 	}
 
@@ -706,7 +710,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		# start wikia change
 		$nsSelect = '';
 		/* Wikia Change */
-		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
+		Hooks::run( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
 		
 		$nsLabel = Xml::label( wfMsg( 'namespace' ), 'namespace' );
 		if ( empty($nsSelect) ) {

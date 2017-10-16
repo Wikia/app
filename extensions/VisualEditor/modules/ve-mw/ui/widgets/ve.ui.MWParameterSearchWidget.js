@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWParameterSearchWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,35 +9,40 @@
  * Creates an ve.ui.MWParameterSearchWidget object.
  *
  * @class
- * @extends ve.ui.SearchWidget
+ * @extends OO.ui.SearchWidget
  *
  * @constructor
+ * @param {ve.dm.MWTemplateModel} template Template model
  * @param {Object} [config] Configuration options
+ * @cfg {number|null} [limit=3] Limit on the number of initial options to show, null to show all
  */
 ve.ui.MWParameterSearchWidget = function VeUiMWParameterSearchWidget( template, config ) {
-	// Configuration intialization
+	// Configuration initialization
 	config = ve.extendObject( {
-		'placeholder': ve.msg( 'visualeditor-parameter-input-placeholder' )
+		placeholder: ve.msg( 'visualeditor-parameter-input-placeholder' ),
+		limit: 3
 	}, config );
 
 	// Parent constructor
-	ve.ui.SearchWidget.call( this, config );
+	OO.ui.SearchWidget.call( this, config );
 
 	// Properties
 	this.template = template;
 	this.index = [];
+	this.showAll = false;
+	this.limit = config.limit || null;
 
 	// Events
-	this.template.connect( this, { 'add': 'buildIndex', 'remove': 'buildIndex' } );
+	this.template.connect( this, { add: 'buildIndex', remove: 'buildIndex' } );
 
 	// Initialization
-	this.$.addClass( 've-ui-mwParameterSearchWidget' );
+	this.$element.addClass( 've-ui-mwParameterSearchWidget' );
 	this.buildIndex();
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWParameterSearchWidget, ve.ui.SearchWidget );
+OO.inheritClass( ve.ui.MWParameterSearchWidget, OO.ui.SearchWidget );
 
 /* Events */
 
@@ -56,7 +61,7 @@ ve.inheritClass( ve.ui.MWParameterSearchWidget, ve.ui.SearchWidget );
  */
 ve.ui.MWParameterSearchWidget.prototype.onQueryChange = function () {
 	// Parent method
-	ve.ui.SearchWidget.prototype.onQueryChange.call( this );
+	OO.ui.SearchWidget.prototype.onQueryChange.call( this );
 
 	// Populate
 	this.addResults();
@@ -66,11 +71,16 @@ ve.ui.MWParameterSearchWidget.prototype.onQueryChange = function () {
  * Handle select widget select events.
  *
  * @method
- * @param {ve.ui.OptionWidget} item Selected item
- * @emits select
+ * @param {OO.ui.OptionWidget} item Selected item
+ * @fires select
  */
 ve.ui.MWParameterSearchWidget.prototype.onResultsSelect = function ( item ) {
-	this.emit( 'select', item && item.getData() ? item.getData().name : null );
+	if ( item instanceof ve.ui.MWParameterResultWidget ) {
+		this.emit( 'select', item.getData().name );
+	} else if ( item instanceof ve.ui.MWMoreParametersResultWidget ) {
+		this.showAll = true;
+		this.addResults();
+	}
 };
 
 /**
@@ -96,11 +106,14 @@ ve.ui.MWParameterSearchWidget.prototype.buildIndex = function () {
 		description = spec.getParameterDescription( name );
 
 		this.index.push( {
-			'text': [ name, label, aliases.join( ' ' ), description ].join( ' ' ),
-			'name': name,
-			'label': label,
-			'aliases': aliases,
-			'description': description
+			// Query information
+			text: [ label, description ].join( ' ' ).toLowerCase(),
+			names: [ name ].concat( aliases ).join( '|' ).toLowerCase(),
+			// Display information
+			name: name,
+			label: label,
+			aliases: aliases,
+			description: description
 		} );
 	}
 
@@ -114,45 +127,60 @@ ve.ui.MWParameterSearchWidget.prototype.buildIndex = function () {
  * @method
  */
 ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
-	var i, len, item,
+	var i, len, item, textMatch, nameMatch, remainder,
 		exactMatch = false,
-		value = this.query.getValue().trim(),
+		value = this.query.getValue().trim().replace( /[\|\{\}]/g, '' ),
 		query = value.toLowerCase(),
+		hasQuery = !!query.length,
 		items = [];
+
+	this.results.clearItems();
 
 	for ( i = 0, len = this.index.length; i < len; i++ ) {
 		item = this.index[i];
-		if ( item.text.indexOf( query ) >= 0 ) {
-			items.push( new ve.ui.MWParameterResultWidget( item, { '$$': this.$$ } ) );
-			if ( item.name === value || ve.indexOf( value, item.aliases ) !== -1 ) {
+		if ( hasQuery ) {
+			textMatch = item.text.indexOf( query ) >= 0;
+			nameMatch = item.names.indexOf( query ) >= 0;
+		}
+		if ( !hasQuery || textMatch || nameMatch ) {
+			items.push( new ve.ui.MWParameterResultWidget( { $: this.$, data: item } ) );
+			if ( hasQuery && nameMatch ) {
 				exactMatch = true;
 			}
 		}
+		if ( !hasQuery && !this.showAll && items.length >= this.limit ) {
+			remainder = len - i;
+			break;
+		}
 	}
 
-	if ( !exactMatch && value.length && !this.template.hasParameter( value ) ) {
+	if ( hasQuery && !exactMatch && value.length && !this.template.hasParameter( value ) ) {
 		items.unshift( new ve.ui.MWParameterResultWidget( {
-			'name': value,
-			'label': value,
-			'aliases': [],
-			'description': ve.msg( 'visualeditor-parameter-search-unknown' )
-		}, { '$$': this.$$ } ) );
+			$: this.$,
+			data: {
+				name: value,
+				label: value,
+				aliases: [],
+				description: ve.msg( 'visualeditor-parameter-search-unknown' )
+			}
+		} ) );
 	}
 
 	if ( !items.length ) {
-		items.push( new ve.ui.MWParameterResultWidget(
-			{
-				'name': null,
-				'label': '',
-				'aliases': [],
-				'description': ve.msg( 'visualeditor-parameter-search-no-unused' )
-			},
-			{ '$$': this.$$, 'disabled': true }
-		) );
+		items.push( new ve.ui.MWNoParametersResultWidget( {
+			$: this.$,
+			data: {},
+			disabled: true
+		} ) );
+	} else if ( remainder ) {
+		items.push( new ve.ui.MWMoreParametersResultWidget( {
+			$: this.$,
+			data: { remainder: remainder }
+		} ) );
 	}
 
 	this.results.addItems( items );
-	if ( query.length ) {
+	if ( hasQuery ) {
 		this.results.highlightItem( this.results.getFirstSelectableItem() );
 	}
 };

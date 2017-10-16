@@ -3,37 +3,42 @@
 class SpecialCreateNewWiki extends UnlistedSpecialPage {
 
 	public function __construct() {
-		parent::__construct('CreateNewWiki', 'createnewwiki');
+		parent::__construct( 'CreateNewWiki', 'createnewwiki' );
 	}
 
-	public function execute() {
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgEnableUserLoginExt;
+	/**
+	 * @param string $par
+	 * @throws ErrorPageError
+	 */
+	public function execute( $par ) {
 		wfProfileIn( __METHOD__ );
+		$out = $this->getOutput();
+		$user = $this->getUser();
+
+		$this->checkPermissions();
 
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		if (!$wgUser->isAllowed('createnewwiki')) {
-			$this->displayRestrictionError();
+			$out->readOnlyPage();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		$wgOut->setPageTitle(wfMsg('cnw-title'));
-		$wgOut->addHtml(F::app()->renderView('CreateNewWiki', 'Index'));
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'));
-		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>');
-		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/AjaxLogin/AjaxLogin.js"></script>');
-		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWiki.js"></script>');
-		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWikiSupplemental.js"></script>');
-		$wgOut->addModules('wikia.stringhelper');
-
-		if($wgEnableUserLoginExt) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginModal.scss'));
+		// SUS-1182: CreateNewWiki should check for valid email before progressing to the second step
+		// but allow anons to pass this check
+		if ( $user->isLoggedIn() && !$user->isEmailConfirmed() ) {
+			throw new ErrorPageError( 'cnw-error-unconfirmed-email-header', 'cnw-error-unconfirmed-email' );
 		}
+
+		// SUS-352: check local and global user blocks before progressing to the second step
+		if ( $user->isBlocked() ) {
+			throw new UserBlockedError( $user->getBlock() );
+		}
+
+		$out->setPageTitle( wfMessage( 'cnw-title' ) );
+
+		$out->addHtml( F::app()->renderView( 'CreateNewWiki', 'Index' ) );
+		Wikia::addAssetsToOutput( 'create_new_wiki_scss' );
+		Wikia::addAssetsToOutput( 'create_new_wiki_js' );
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -27,8 +27,11 @@ class CommunityMessages {
 	 * check conditions and display message
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @param string $msgs
+	 * @param Skin $skin
+	 * @return bool
 	 */
-	static function onSkinTemplatePageBeforeUserMsg(&$msgs) {
+	static function onSkinTemplatePageBeforeUserMsg( string &$msgs, Skin $skin ): bool {
 		global $wgUser, $wgMemc, $wgCookiePrefix;
 
 		if (self::$messageSeen) {
@@ -37,26 +40,12 @@ class CommunityMessages {
 		}
 
 		//get timestamp of message
-		$communityMessagesTimestamp = $wgMemc->get(wfMemcKey('CommunityMessagesTimestamp'));
+		$cacheKey = static::getCommunityMessagesCacheKey();
+		$communityMessagesTimestamp = $wgMemc->get( $cacheKey );
 
-		if (!$communityMessagesTimestamp) {
-			$msgTitle = Title::newFromText('community-corner', NS_MEDIAWIKI);
-			if ($msgTitle) {
-				$msgRev = Revision::newFromTitle($msgTitle);
-				if ($msgRev) {
-					$communityMessagesTimestamp = wfTimestamp(TS_UNIX, $msgRev->getTimestamp());
-					$wgMemc->set(wfMemcKey('CommunityMessagesTimestamp'), $communityMessagesTimestamp, 86400 /*24h*/);
-				}
-			}
-		}
-
-		if (!$communityMessagesTimestamp) {
-			//no message?
-			return true;
-		}
-
-		if ($communityMessagesTimestamp < (time() - 86400 /*24h*/)) {
-			//message older than 24h - do not inform user about it
+		if ( !$communityMessagesTimestamp ||
+			 $communityMessagesTimestamp < ( time() - 86400 /*24h*/ ) ) {
+			// no message or message older than 24h - do not inform user about it
 			return true;
 		}
 
@@ -87,7 +76,7 @@ class CommunityMessages {
 		}
 
 		// macbre: add an easy way for Oasis to show it's own notification for community messages
-		wfRunHooks('CommunityMessages::showMessage', array(&$msg));
+		Hooks::run('CommunityMessages::showMessage', [ &$msg, $skin ] );
 
 		return true;
 	}
@@ -99,16 +88,15 @@ class CommunityMessages {
 	 * @param WikiPage $article
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @return bool
 	 */
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId ): bool {
 		global $wgMemc;
 		$title = $article->getTitle();
 
-		if ($title->getNamespace() == NS_MEDIAWIKI && strtolower($title->getText()) == 'community-corner') {
-			$revision = Revision::newFromTitle($title);
-			if ($revision) {
-				$wgMemc->set(wfMemcKey('CommunityMessagesTimestamp'), wfTimestamp(TS_UNIX, $revision->getTimestamp()), 86400 /*24h*/);
-			}
+		if ($title->getNamespace() == NS_MEDIAWIKI && strtolower($title->getText()) == 'community-corner' && !$minoredit) {
+			// SUS-2566: Skip DB call here. We just made an edit, let's just use the current time.
+			$wgMemc->set( static::getCommunityMessagesCacheKey(), time(), 86400 /*24h*/ );
 		}
 
 		return true;
@@ -119,13 +107,39 @@ class CommunityMessages {
 	 * update user's timestamp of seen message
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
 	 */
-	static function onBeforePageDisplay(&$output, &$skin) {
-		global $wgTitle;
+	static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
+		$title = $out->getTitle();
 
-		if ($wgTitle->isSpecial('ActivityFeed') || $wgTitle->isSpecial('MyHome') || $wgTitle->isSpecial('WikiActivity')) {
-			self::dismissMessage();
+		if ( !$title->isSpecial( 'ActivityFeed' ) && !$title->isSpecial( 'MyHome' ) &&
+			 !$title->isSpecial( 'WikiActivity' ) ) {
+			return true;
 		}
+
+		global $wgMemc;
+		$communityMessagesTimestamp = $wgMemc->get( static::getCommunityMessagesCacheKey() ) ?? time();
+
+		// SUS-2585: Update table for logged in users
+		$user = $out->getUser();
+		if ( $user->isLoggedIn() && $communityMessagesTimestamp > (int) static::getUserTimestamp( $user ) ) {
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\DismissCommunityMessageTask() )
+				->wikiId( $wgCityId )
+				->createdBy( $user );
+
+			$task->call( 'dismissCommunityMessage', $communityMessagesTimestamp );
+			$task->queue();
+
+			return true;
+		}
+
+		// set cookie for anons
+		$out->getRequest()->response()
+			->setcookie('CommunityMessages', $communityMessagesTimestamp, time() + 86400 /*24h*/);
 
 		return true;
 	}
@@ -193,5 +207,9 @@ class CommunityMessages {
 			__METHOD__
 		);
 		return $userTimestamp ? wfTimestamp(TS_UNIX, $userTimestamp) : false;
+	}
+
+	private static function getCommunityMessagesCacheKey(): string {
+		return wfMemcKey( 'CommunityMessagesTimestamp' );
 	}
 }

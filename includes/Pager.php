@@ -119,7 +119,7 @@ abstract class IndexPager extends ContextSource implements Pager {
 		$this->mOffset = $this->mRequest->getText( 'offset' );
 
 		# Use consistent behavior for the limit options
-		$this->mDefaultLimit = intval( $this->getUser()->getOption( 'rclimit' ) );
+		$this->mDefaultLimit = intval( $this->getUser()->getGlobalPreference( 'rclimit' ) );
 		list( $this->mLimit, /* $offset */ ) = $this->mRequest->getLimitOffset();
 
 		$this->mIsBackwards = ( $this->mRequest->getVal( 'dir' ) == 'prev' );

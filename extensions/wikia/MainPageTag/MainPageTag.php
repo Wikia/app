@@ -11,6 +11,16 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'MainPageTag',
+	'author' => 'Christian Williams',
+	'descriptionmsg' => 'mainpagetag-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MainPageTag',
+);
+
+//i18n
+$wgExtensionMessagesFiles['MainPageTag'] = __DIR__ . '/MainPageTag.i18n.php';
+
 $wgHooks['ParserFirstCallInit'][] = 'wfMainPageTag';
 
 // Set to "true" once the right column parser tag has run. Used to establish the order in which the column tags were called.
@@ -27,8 +37,9 @@ $wgMainPageTag_count = 0;
 /**
  * Set hooks for each of the three parser tags
  * @param Parser $parser reference to MediaWiki Parser object
+ * @return bool
  */
-function wfMainPageTag( &$parser ) {
+function wfMainPageTag( Parser $parser ): bool {
 	$parser->setHook( 'mainpage-rightcolumn-start', 'wfMainPageTag_rcs' );
 	$parser->setHook( 'mainpage-leftcolumn-start', 'wfMainPageTag_lcs' );
 	$parser->setHook( 'mainpage-endcolumn', 'wfMainPageTag_ec' );
@@ -41,8 +52,9 @@ function wfMainPageTag( &$parser ) {
  * @param string $input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
  * @param array $args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
  * @param Parser $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
+ * @return string
  */
-function wfMainPageTag_rcs( $input, $args, $parser ) {
+function wfMainPageTag_rcs( $input, $args, $parser ): string {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
 
 	if ( !$wfMainPageTag_lcs_called ) {
@@ -63,8 +75,9 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
  * @param string $input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
  * @param array $args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
  * @param array $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
+ * @return string
  */
-function wfMainPageTag_lcs( $input, $args, $parser ) {
+function wfMainPageTag_lcs( $input, $args, $parser ): string {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
 
 	$wfMainPageTag_lcs_called = true;
@@ -73,6 +86,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	$isOasis = F::app()->checkSkin( 'oasis' );
 	$isGridLayoutEnabled = $isOasis && BodyController::isGridLayoutEnabled();
 	$isResponsiveLayoutEnabled = $isOasis && BodyController::isResponsiveLayoutEnabled();
+	$areBreakpointsLayoutEnabled = $isOasis && BodyController::isOasisBreakpoints();
 	$gutter = isset( $args['gutter'] ) ? str_replace( 'px', '', $args['gutter'] ) : 10;
 
 	$html = '<div class="main-page-tag-lcs ';
@@ -84,7 +98,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	if ( $wfMainPageTag_rcs_called ) {
 		$html .= 'main-page-tag-lcs-collapsed"';
 
-		if ( !$isResponsiveLayoutEnabled ) {
+		if ( !$isResponsiveLayoutEnabled && !$areBreakpointsLayoutEnabled ) {
 			$html .= ' style="padding-right: '. $gutter .'px"';
 		}
 
@@ -92,7 +106,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	} else {
 		$gutter += 300;
 		$html .= 'main-page-tag-lcs-exploded" ';
-		if ( $isGridLayoutEnabled || $isResponsiveLayoutEnabled ) {
+		if ( $isGridLayoutEnabled || $isResponsiveLayoutEnabled || $areBreakpointsLayoutEnabled ) {
 			$html .= '><div class="lcs-container">';
 		} else {
 			$html .= 'style="margin-right: -'. $gutter .'px; "><div class="lcs-container" style="margin-right: '. $gutter .'px;">';
@@ -106,7 +120,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
  * Inserts the necessary HTML to end either left or right column
  * only if there was a column start tag parsed
  */
-function wfMainPageTag_ec( $input, $args, $parser ) {
+function wfMainPageTag_ec( $input, $args, $parser ): string {
 	global $wgMainPageTag_count;
 
 	$html = '';

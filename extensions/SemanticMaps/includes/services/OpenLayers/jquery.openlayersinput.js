@@ -1,16 +1,16 @@
 /**
- * JavasSript for the OpenLayers form input of the Semantic Maps extension.
+ * JavaScript for the OpenLayers form input of the Semantic Maps extension.
  * @see http://www.mediawiki.org/wiki/Extension:Semantic_Maps
  * 
  * @since 1.0
  * @ingroup SemanticMaps
  * 
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
  */
 
 (function( $ ){ $.fn.openlayersinput = function( mapDivId, options ) {
-	
+
 	var self = this;
 	
 	/**
@@ -86,7 +86,7 @@
 			);		
 		};		
 	}
-	
+
 	this.mapforminput( mapDivId, options );
 	
 	this.mapDiv.openlayers( mapDivId, options );		
@@ -119,9 +119,10 @@
 		}
 
 	}))();
+
 	this.mapDiv.map.addControl( clickControl );
 	clickControl.activate();
-	
+	;
 	return this;
 	
 }; })( jQuery );

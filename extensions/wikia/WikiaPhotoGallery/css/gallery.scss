@@ -1,0 +1,23 @@
+@import 'skins/shared/color';
+
+.wikia-gallery-item {
+	// mimicking paragraph tags
+	%p {
+		font-size: 12px;
+		line-height: 16px;
+		margin: 8px 0 5px;
+	}
+
+	.title {
+		@extend %p;
+		font-weight: bold;
+	}
+
+	.lightbox-caption {
+		@extend %p;
+	}
+}
+
+.wikia-gallery-caption-below .lightbox-caption {
+	color: $color-alternate-text;
+}

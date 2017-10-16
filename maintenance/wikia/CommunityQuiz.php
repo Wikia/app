@@ -2,8 +2,6 @@
 /**
  * Michał Roszka (Mix) <michal@wikia-inc.com>
  * 
- * A script populating the noreptemp.spamwikis table with the current data.
- * 
  * Usage:
  * 
  * SERVER_ID=177 php CommunityQuiz.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php
@@ -38,7 +36,7 @@ class CommunityQuiz {
     /**
      * The constructor
      */
-    public function __construct( DatabaseMysql $dbObj, $date ) {
+    public function __construct( DatabaseBase $dbObj, $date ) {
         $this->dbObj = $dbObj;
         $this->date = $date;
         return null;

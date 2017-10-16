@@ -8,6 +8,9 @@
  * and query specifics/optimisations
  */
 
+use Wikia\Logger\WikiaLogger;
+use Wikia\Util\Statistics\BernoulliTrial;
+
 /** Number of times to re-try an operation in case of deadlock */
 define( 'DEADLOCK_TRIES', 4 );
 /** Minimum time to wait before retry, in microseconds */
@@ -173,7 +176,7 @@ interface DatabaseType {
 	 *
 	 * @return string: wikitext of a link to the server software's web site
 	 */
-	static function getSoftwareLink();
+	function getSoftwareLink();
 
 	/**
 	 * A string describing the current software version, like from
@@ -198,6 +201,14 @@ interface DatabaseType {
  * @ingroup Database
  */
 abstract class DatabaseBase implements DatabaseType {
+
+	// @const log 1% of queries
+	const QUERY_SAMPLE_RATE = 0.01;
+
+	// @const log queries that took more than 15 seconds
+	const SLOW_QUERY_LOG_THRESHOLD = 15;
+
+	protected $sampler = null;
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -230,6 +241,9 @@ abstract class DatabaseBase implements DatabaseType {
 
 	protected $delimiter = ';';
 
+	/** @var array Map of (table name => 1) for TEMPORARY tables */
+	protected $mSessionTempTables = [];
+
 # ------------------------------------------------------------------------------
 # Accessors
 # ------------------------------------------------------------------------------
@@ -253,7 +267,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 *   - false to disable debugging
 	 *   - omitted or null to do nothing
 	 *
-	 * @return The previous value of the flag
+	 * @return bool The previous value of the flag
 	 */
 	function debug( $debug = null ) {
 		return wfSetBit( $this->mFlags, DBO_DEBUG, $debug );
@@ -277,9 +291,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 * split up queries into batches using a LIMIT clause than to switch off
 	 * buffering.
 	 *
-	 * @param $buffer null|bool
+	 * @param  null|bool $buffer
 	 *
-	 * @return The previous value of the flag
+	 * @return bool The previous value of the flag
 	 */
 	function bufferResults( $buffer = null ) {
 		if ( is_null( $buffer ) ) {
@@ -310,8 +324,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Historically, transactions were allowed to be "nested". This is no
 	 * longer supported, so this function really only returns a boolean.
 	 *
-	 * @param $level An integer (0 or 1), or omitted to leave it unchanged.
-	 * @return The previous value
+	 * @param int $level An integer (0 or 1), or omitted to leave it unchanged.
+	 * @return int The previous value
 	 */
 	function trxLevel( $level = null ) {
 		return wfSetVar( $this->mTrxLevel, $level );
@@ -319,8 +333,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Get/set the number of errors logged. Only useful when errors are ignored
-	 * @param $count The count to set, or omitted to leave it unchanged.
-	 * @return The error count
+	 * @param int $count The count to set, or omitted to leave it unchanged.
+	 * @return int The error count
 	 */
 	function errorCount( $count = null ) {
 		return wfSetVar( $this->mErrorCount, $count );
@@ -328,8 +342,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Get/set the table prefix.
-	 * @param $prefix The table prefix to set, or omitted to leave it unchanged.
-	 * @return The previous table prefix.
+	 * @param string $prefix The table prefix to set, or omitted to leave it unchanged.
+	 * @return string The previous table prefix.
 	 */
 	function tablePrefix( $prefix = null ) {
 		return wfSetVar( $this->mTablePrefix, $prefix );
@@ -578,17 +592,36 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Constructor.
-	 * @param $server String: database server host
-	 * @param $user String: database user name
-	 * @param $password String: database user password
-	 * @param $dbName String: database name
-	 * @param $flags
-	 * @param $tablePrefix String: database table prefixes. By default use the prefix gave in LocalSettings.php
+	 *
+	 * FIXME: It is possible to construct a Database object with no associated
+	 * connection object, by specifying no parameters to __construct(). This
+	 * feature is deprecated and should be removed.
+	 *
+	 * DatabaseBase subclasses should not be constructed directly in external
+	 * code. DatabaseBase::factory() should be used instead.
+	 *
+	 * @param array $params Parameters passed from DatabaseBase::factory()
 	 */
-	function __construct( $server = false, $user = false, $password = false, $dbName = false,
-		$flags = 0, $tablePrefix = 'get from global'
-	) {
+	function __construct( $params = null ) {
 		global $wgDBprefix, $wgCommandLineMode;
+
+		if ( is_array( $params ) ) { // MW 1.22
+			$server = $params['host'];
+			$user = $params['user'];
+			$password = $params['password'];
+			$dbName = $params['dbname'];
+			$flags = $params['flags'];
+			$tablePrefix = $params['tablePrefix'];
+		} else { // legacy calling pattern
+			wfDeprecated( __METHOD__ . " method called without parameter array.", "1.23" );
+			$args = func_get_args();
+			$server = isset( $args[0] ) ? $args[0] : false;
+			$user = isset( $args[1] ) ? $args[1] : false;
+			$password = isset( $args[2] ) ? $args[2] : false;
+			$dbName = isset( $args[3] ) ? $args[3] : false;
+			$flags = isset( $args[4] ) ? $args[4] : 0;
+			$tablePrefix = isset( $args[5] ) ? $args[5] : 'get from global';
+		}
 
 		$this->mFlags = $flags;
 
@@ -622,22 +655,6 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * Same as new DatabaseMysql( ... ), kept for backward compatibility
-	 * @deprecated since 1.17
-	 *
-	 * @param $server
-	 * @param $user
-	 * @param $password
-	 * @param $dbName
-	 * @param $flags int
-	 * @return DatabaseMysql
-	 */
-	static function newFromParams( $server, $user, $password, $dbName, $flags = 0 ) {
-		wfDeprecated( __METHOD__, '1.17' );
-		return new DatabaseMysql( $server, $user, $password, $dbName, $flags );
-	}
-
-	/**
 	 * Same as new factory( ... ), kept for backward compatibility
 	 * @deprecated since 1.18
 	 * @see Database::factory()
@@ -653,7 +670,7 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * Given a DB type, construct the name of the appropriate child class of
 	 * DatabaseBase. This is designed to replace all of the manual stuff like:
-	 *	$class = 'Database' . ucfirst( strtolower( $type ) );
+	 *    $class = 'Database' . ucfirst( strtolower( $dbType ) );
 	 * as well as validate against the canonical list of DB types we have
 	 *
 	 * This factory function is mostly useful for when you need to connect to a
@@ -661,31 +678,79 @@ abstract class DatabaseBase implements DatabaseType {
 	 * an extension, et cetera). Do not use this to connect to the MediaWiki
 	 * database. Example uses in core:
 	 * @see LoadBalancer::reallyOpenConnection()
-	 * @see ExternalUser_MediaWiki::initFromCond()
 	 * @see ForeignDBRepo::getMasterDB()
-	 * @see WebInstaller_DBConnect::execute()
+	 * @see WebInstallerDBConnect::execute()
 	 *
-	 * @param $dbType String A possible DB type
-	 * @param $p Array An array of options to pass to the constructor.
-	 *    Valid options are: host, user, password, dbname, flags, tablePrefix
-	 * @return DatabaseBase subclass or null
+	 * @since 1.18
+	 *
+	 * @param string $dbType A possible DB type
+	 * @param array $p An array of options to pass to the constructor.
+	 *    Valid options are: host, user, password, dbname, flags, tablePrefix, schema, driver
+	 * @throws MWException If the database driver or extension cannot be found
+	 * @return DatabaseBase|null DatabaseBase subclass or null
 	 */
-	public final static function factory( $dbType, $p = array() ) {
+	final public static function factory( $dbType, $p = array() ) {
 		$canonicalDBTypes = array(
-			'mysql', 'postgres', 'sqlite', 'oracle', 'mssql', 'ibm_db2'
+			'mysql' => [ 'mysqli' ],
+			'postgres' => array(),
+			'sqlite' => array(),
+			'oracle' => array(),
+			'mssql' => array(),
 		);
-		$dbType = strtolower( $dbType );
-		$class = 'Database' . ucfirst( $dbType );
 
-		if( in_array( $dbType, $canonicalDBTypes ) || ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) ) {
-			return new $class(
-				isset( $p['host'] ) ? $p['host'] : false,
-				isset( $p['user'] ) ? $p['user'] : false,
-				isset( $p['password'] ) ? $p['password'] : false,
-				isset( $p['dbname'] ) ? $p['dbname'] : false,
-				isset( $p['flags'] ) ? $p['flags'] : 0,
-				isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global'
+		$driver = false;
+		$dbType = strtolower( $dbType );
+		if ( isset( $canonicalDBTypes[$dbType] ) && $canonicalDBTypes[$dbType] ) {
+			$possibleDrivers = $canonicalDBTypes[$dbType];
+			if ( !empty( $p['driver'] ) ) {
+				if ( in_array( $p['driver'], $possibleDrivers ) ) {
+					$driver = $p['driver'];
+				} else {
+					throw new MWException( __METHOD__ .
+						" cannot construct Database with type '$dbType' and driver '{$p['driver']}'" );
+				}
+			} else {
+				foreach ( $possibleDrivers as $posDriver ) {
+					if ( extension_loaded( $posDriver ) ) {
+						$driver = $posDriver;
+						break;
+					}
+				}
+			}
+		} else {
+			$driver = $dbType;
+		}
+		if ( $driver === false ) {
+			throw new MWException( __METHOD__ .
+				" no viable database extension found for type '$dbType'" );
+		}
+
+		// Determine schema defaults. Currently Microsoft SQL Server uses $wgDBmwschema,
+		// and everything else doesn't use a schema (e.g. null)
+		// Although postgres and oracle support schemas, we don't use them (yet)
+		// to maintain backwards compatibility
+		$defaultSchemas = array(
+			'mysql' => null,
+			'postgres' => null,
+			'sqlite' => null,
+			'oracle' => null,
+			'mssql' => 'get from global',
+		);
+
+		$class = 'Database' . ucfirst( $driver );
+		if ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) {
+			$params = array(
+				'host' => isset( $p['host'] ) ? $p['host'] : false,
+				'user' => isset( $p['user'] ) ? $p['user'] : false,
+				'password' => isset( $p['password'] ) ? $p['password'] : false,
+				'dbname' => isset( $p['dbname'] ) ? $p['dbname'] : false,
+				'flags' => isset( $p['flags'] ) ? $p['flags'] : 0,
+				'tablePrefix' => isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global',
+				'schema' => isset( $p['schema'] ) ? $p['schema'] : $defaultSchemas[$dbType],
+				'foreign' => isset( $p['foreign'] ) ? $p['foreign'] : false
 			);
+
+			return new $class( $params );
 		} else {
 			return null;
 		}
@@ -715,10 +780,10 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * @param $errno
-	 * @param $errstr
+	 * @param int $errno
+	 * @param string $errstr
 	 */
-	protected function connectionErrorHandler( $errno,  $errstr ) {
+	public function connectionErrorHandler( $errno,  $errstr ) {
 		$this->mPHPError = $errstr;
 	}
 
@@ -735,6 +800,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * @param $error String: fallback error message, used if none is given by DB
+	 *
+	 * @throws DBConnectionError
 	 */
 	function reportConnectionError( $error = 'Unknown error' ) {
 		$myError = $this->lastError();
@@ -763,7 +830,44 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool
 	 */
 	function isWriteQuery( $sql ) {
-		return !preg_match( '/^(?:SELECT|BEGIN|COMMIT|SET|SHOW|\(SELECT)\b/i', $sql );
+		return !preg_match( '/^(?:SELECT|BEGIN|ROLLBACK|COMMIT|SET|SHOW|EXPLAIN|\(SELECT)\b/i', ltrim( $sql ) ) && // PLATFORM-1417 (ltrim)
+			!preg_match('/(FOR UPDATE|LOCK IN SHARE MODE)$/i', rtrim( $sql ) ); // MAIN-5810 (rtrim)
+	}
+
+	/**
+	 * @param string $sql A SQL query
+	 * @return bool Whether $sql is SQL for TEMPORARY table operation
+	 */
+	protected function registerTempTableOperation( $sql ) {
+		if ( preg_match(
+			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$this->mSessionTempTables[$matches[1]] = 1;
+			return true;
+		} elseif ( preg_match(
+			'/^DROP\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$isTemp = isset( $this->mSessionTempTables[$matches[1]] );
+			unset( $this->mSessionTempTables[$matches[1]] );
+			return $isTemp;
+		} elseif ( preg_match(
+			'/^TRUNCATE\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		} elseif ( preg_match(
+			'/^(?:INSERT\s+(?:\w+\s+)?INTO|UPDATE|DELETE\s+FROM)\s+[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		}
+		return false;
 	}
 
 	/**
@@ -779,14 +883,17 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * However, the query wrappers themselves should call this function.
 	 *
-	 * @param  $sql        String: SQL query
-	 * @param  $fname      String: Name of the calling function, for profiling/SHOW PROCESSLIST
+	 * @param string $sql : SQL query
+	 * @param string $fname : Name of the calling function, for profiling/SHOW PROCESSLIST
 	 *     comment (you can use __METHOD__ or add some extra info)
-	 * @param  $tempIgnore Boolean:   Whether to avoid throwing an exception on errors...
+	 * @param bool $tempIgnore : Whether to avoid throwing an exception on errors...
 	 *     maybe best to catch the exception instead?
-	 * @return boolean|ResultWrapper. true for a successful write query, ResultWrapper object
+	 *
+	 * @return bool|ResultWrapper true for a successful write query, ResultWrapper object
 	 *     for a successful read query, or false on failure if $tempIgnore set
-	 * @throws DBQueryError Thrown when the database returns an error of any kind
+	 *
+	 * @throws DBQueryError
+	 * @throws MWException
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
@@ -808,6 +915,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
+		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
+
 		if ( !$this->mDoneWrites && $is_writeable ) {
 			# Set a flag indicating that writes have been done
 			wfDebug( __METHOD__ . ": Writes done: $sql\n" );
@@ -815,13 +924,19 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# <Wikia>
-		global $wgProfiler, $wgDBReadOnly;
-		if ( $is_writeable && $wgDBReadOnly ) {
+		global $wgDBReadOnly, $wgReadOnly;
+		if ( $is_writeable && !$isTemporaryTableOperation && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
 			}
-			wfDebugLog( 'database', "DB readonly mode: $sql" );
+			WikiaLogger::instance()->error( 'DB readonly mode', [
+				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
+				'sql'       => $sql,
+				'server'    => $this->mServer,
+				'reason'    => (string) $wgReadOnly,
+			] );
+			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
 			return false;
 		}
 		# </Wikia>
@@ -836,19 +951,46 @@ abstract class DatabaseBase implements DatabaseType {
 			$userName = str_replace( '/', '', $userName );
 		} else {
 			$userName = '';
+
+			# Wikia change - if the user object is not ready yet, show the client IP (see PLATFORM-1671 for examples)
+			global $wgRequest;
+			if ( $wgRequest instanceof WebRequest ) {
+				$userName = $wgRequest->getIP();
+			}
 		}
-		$commentedSql = preg_replace( '/\s/', " /* $fname $userName */ ", $sql, 1 );
+
+		# Wikia change - log the name of the maintenance class that run this query (instead of 127.0.0.1)
+		global $maintClass;
+		if ( !empty( $maintClass ) ) {
+			$userName = str_replace( '/', '', $maintClass );
+		}
+
+		# Wikia change - begin
+		# @author macbre
+		if ( $fname === '' ) {
+			wfDebug( "Query: \$fname autogenerated, please pass __METHOD__ to the query() call!\n" );
+			$fname = wfGetCallerClassMethod( [ 'WikiaSQL', 'FluentSql\SQL', 'WikiaDataAccess', __CLASS__ ] );
+		}
+
+		# @author: wladek
+		$traceIdComment = '';
+		if ( class_exists("\\Wikia\\Tracer\\WikiaTracer") ) {
+			$traceIdComment = sprintf(" - %s",\Wikia\Tracer\WikiaTracer::instance()->getTraceId());
+		}
+		# Wikia change - end
+
+		$commentedSql = preg_replace( '/\s/', " /* $fname $userName$traceIdComment */ ", $sql, 1 );
 
 		# Wikia change - begin
 		# @author macbre
 		# Add profiling data to queries like BEGIN or COMMIT (preg_replace above will not handle them)
-		if (strpos($sql, ' ') === false) {
+		if ( strpos( $sql, ' ' ) === false ) {
 			$commentedSql = "{$sql} /* {$fname} {$userName} */";
 		}
 		# Wikia change - end
 
 		# If DBO_TRX is set, start a transaction
-		if ( ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
+		if ( $isMaster && ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
 			$sql != 'BEGIN' && $sql != 'COMMIT' && $sql != 'ROLLBACK' ) {
 			# avoid establishing transactions for SHOW and SET statements too -
 			# that would delay transaction initializations to once connection
@@ -866,19 +1008,15 @@ abstract class DatabaseBase implements DatabaseType {
 			$sqlx = strtr( $sqlx, "\t\n", '  ' );
 
 			$master = $isMaster ? 'master' : 'slave';
-			wfDebug( "Query {$this->mDBname} ($cnt) ($master): $sqlx\n" );
+			$DBuser = $this->getLBInfo( 'user' );
+			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
-		if ( istainted( $sql ) & TC_MYSQL ) {
+		if ( is_tainted( $sql ) ) {
 			throw new MWException( 'Tainted query found' );
 		}
 
-		$queryId = MWDebug::query( $sql, $fname, $isMaster );
-
-		# Do the query and handle errors
-		$ret = $this->doQuery( $commentedSql );
-
-		MWDebug::queryTime( $queryId );
+		$ret = $this->executeAndProfileQuery( $commentedSql, $fname, $isMaster );
 
 		# Try reconnecting if the connection was lost
 		if ( false === $ret && $this->wasErrorReissuable() ) {
@@ -896,7 +1034,7 @@ abstract class DatabaseBase implements DatabaseType {
 					# Not a database error to lose a transaction after a minute or two
 					wfLogDBError( "Connection lost and reconnected after {$elapsed}s, query: $sqlx\n" );
 				}
-				$ret = $this->doQuery( $commentedSql );
+				$ret = $this->executeAndProfileQuery( $commentedSql, $fname, $isMaster );
 			} else {
 				wfDebug( "Failed\n" );
 			}
@@ -918,11 +1056,13 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Report a query error. Log the error, and if neither the object ignore
 	 * flag nor the $tempIgnore flag is set, throw a DBQueryError.
 	 *
-	 * @param $error String
-	 * @param $errno Integer
-	 * @param $sql String
-	 * @param $fname String
-	 * @param $tempIgnore Boolean
+	 * @param String $error
+	 * @param Integer $errno
+	 * @param String $sql
+	 * @param String $fname
+	 * @param Boolean $tempIgnore
+	 *
+	 * @throws DBQueryError
 	 */
 	function reportQueryError( $error, $errno, $sql, $fname, $tempIgnore = false ) {
 		# Ignore errors during error handling to avoid infinite recursion
@@ -1031,8 +1171,8 @@ abstract class DatabaseBase implements DatabaseType {
 		reset( $args );
 		$this->preparedArgs =& $args;
 
-		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/',
-			array( &$this, 'fillPreparedArg' ), $preparedQuery );
+		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/', [ $this, 'fillPreparedArg' ],
+			$preparedQuery );
 	}
 
 	/**
@@ -1040,8 +1180,10 @@ abstract class DatabaseBase implements DatabaseType {
 	 * The arguments should be in $this->preparedArgs and must not be touched
 	 * while we're doing this.
 	 *
-	 * @param $matches Array
+	 * @param array $matches
+	 *
 	 * @return String
+	 * @throws DBUnexpectedError
 	 */
 	function fillPreparedArg( $matches ) {
 		switch( $matches[1] ) {
@@ -1136,6 +1278,49 @@ abstract class DatabaseBase implements DatabaseType {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * A SELECT wrapper which returns a list of single field values from result rows.
+	 *
+	 * Usually throws a DBQueryError on failure. If errors are explicitly
+	 * ignored, returns false on failure.
+	 *
+	 * If no result rows are returned from the query, false is returned.
+	 *
+	 * @param string|array $table Table name. See DatabaseBase::select() for details.
+	 * @param string $var The field name to select. This must be a valid SQL
+	 *   fragment: do not use unvalidated user input.
+	 * @param string|array $cond The condition array. See DatabaseBase::select() for details.
+	 * @param string $fname The function name of the caller.
+	 * @param string|array $options The query options. See DatabaseBase::select() for details.
+	 *
+	 * @return array|bool The values from the field, or false on failure
+	 * @throws DBUnexpectedError
+	 * @since 1.25
+	 */
+	public function selectFieldValues(
+		$table, $var, $cond = '', $fname = __METHOD__, $options = array()
+	) {
+		if ( $var === '*' ) { // sanity
+			throw new DBUnexpectedError( $this, "Cannot use a * field: got '$var'" );
+		}
+
+		if ( !is_array( $options ) ) {
+			$options = array( $options );
+		}
+
+		$res = $this->select( $table, $var, $cond, $fname, $options );
+		if ( $res === false ) {
+			return false;
+		}
+
+		$values = array();
+		foreach ( $res as $row ) {
+			$values[] = $row->$var;
+		}
+
+		return $values;
 	}
 
 	/**
@@ -1383,14 +1568,14 @@ abstract class DatabaseBase implements DatabaseType {
 	 * The equivalent of DatabaseBase::select() except that the constructed SQL
 	 * is returned, instead of being immediately executed.
 	 *
-	 * @param $table string|array Table name
-	 * @param $vars string|array Field names
-	 * @param $conds string|array Conditions
-	 * @param $fname string Caller function name
-	 * @param $options string|array Query options
-	 * @param $join_conds string|array Join conditions
+	 * @param string|array $table Table name
+	 * @param string|array $vars Field names
+	 * @param string|array $conds Conditions
+	 * @param string $fname Caller function name
+	 * @param string|array $options Query options
+	 * @param string|array $join_conds Join conditions
 	 *
-	 * @return SQL query string.
+	 * @return string SQL query string.
 	 * @see DatabaseBase::select()
 	 */
 	function selectSQLText( $table, $vars, $conds = '', $fname = 'DatabaseBase::select', $options = array(), $join_conds = array() ) {
@@ -1525,17 +1710,18 @@ abstract class DatabaseBase implements DatabaseType {
 		# as to avoid crashing php on some large strings.
 		# $sql = preg_replace ( "/'([^\\\\']|\\\\.)*'|\"([^\\\\\"]|\\\\.)*\"/", "'X'", $sql);
 
-		$sql = str_replace ( "\\\\", '', $sql );
-		$sql = str_replace ( "\\'", '', $sql );
-		$sql = str_replace ( "\\\"", '', $sql );
-		$sql = preg_replace ( "/'.*'/s", "'X'", $sql );
-		$sql = preg_replace ( '/".*"/s', "'X'", $sql );
+		$sql = str_replace( "\\\\", '', $sql );
+		$sql = str_replace( "\\'", '', $sql );
+		$sql = str_replace( "\\\"", '', $sql );
+		$sql = preg_replace( "/'.*'/s", "'X'", $sql );
+		$sql = preg_replace( '/".*"/s', "'X'", $sql );
 
 		# All newlines, tabs, etc replaced by single space
-		$sql = preg_replace ( '/\s+/', ' ', $sql );
+		$sql = preg_replace( '/\s+/', ' ', $sql );
 
 		# All numbers => N
-		$sql = preg_replace ( '/-?[0-9]+/s', 'N', $sql );
+		$sql = preg_replace( '/-?\d+(,-?\d+)+/s', 'N,...,N', $sql );
+		$sql = preg_replace( '/-?\d+/s', 'N', $sql );
 
 		return $sql;
 	}
@@ -1589,20 +1775,6 @@ abstract class DatabaseBase implements DatabaseType {
 		$this->ignoreErrors( $old );
 
 		return (bool)$res;
-	}
-
-	/**
-	 * mysql_field_type() wrapper
-	 * @param $res
-	 * @param $index
-	 * @return string
-	 */
-	function fieldType( $res, $index ) {
-		if ( $res instanceof ResultWrapper ) {
-			$res = $res->result;
-		}
-
-		return mysql_field_type( $res, $index );
 	}
 
 	/**
@@ -1769,8 +1941,9 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Makes an encoded list of strings from an array
-	 * @param $a Array containing the data
-	 * @param $mode int Constant
+	 *
+	 * @param Array $a containing the data
+	 * @param int $mode Constant
 	 *      - LIST_COMMA:          comma separated, no field names
 	 *      - LIST_AND:            ANDed WHERE clause (without the WHERE). See
 	 *        the documentation for $conds in DatabaseBase::select().
@@ -1779,6 +1952,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 *      - LIST_NAMES:          comma separated field names
 	 *
 	 * @return string
+	 * @throws DBUnexpectedError
+	 * @throws MWException
 	 */
 	function makeList( $a, $mode = LIST_COMMA ) {
 		if ( !is_array( $a ) ) {
@@ -1799,6 +1974,10 @@ abstract class DatabaseBase implements DatabaseType {
 				}
 			} else {
 				$first = false;
+			}
+
+			if ( is_bool( $value ) ) {
+				$value = (int) $value;
 			}
 
 			if ( ( $mode == LIST_AND || $mode == LIST_OR ) && is_numeric( $field ) ) {
@@ -1892,6 +2071,38 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	function bitOr( $fieldLeft, $fieldRight ) {
 		return "($fieldLeft | $fieldRight)";
+	}
+
+	/**
+	 * Build a concatenation list to feed into a SQL query
+	 * @param array $stringList list of raw SQL expressions; caller is responsible for any quoting
+	 * @return String
+	 */
+	public function buildConcat( $stringList ) {
+		return 'CONCAT(' . implode( ',', $stringList ) . ')';
+	}
+
+	/**
+	 * Build a GROUP_CONCAT or equivalent statement for a query.
+	 *
+	 * This is useful for combining a field for several rows into a single string.
+	 * NULL values will not appear in the output, duplicated values will appear,
+	 * and the resulting delimiter-separated values have no defined sort order.
+	 * Code using the results may need to use the PHP unique() or sort() methods.
+	 *
+	 * @param string $delim Glue to bind the results together
+	 * @param string|array $table Table name
+	 * @param string $field Field name
+	 * @param string|array $conds Conditions
+	 * @param string|array $join_conds Join conditions
+	 * @return String SQL text
+	 * @since 1.23
+	 */
+	public function buildGroupConcatField(
+		$delim, $table, $field, $conds = '', $join_conds = array()
+	) {
+		$fld = "GROUP_CONCAT($field SEPARATOR " . $this->addQuotes( $delim ) . ')';
+		return '(' . $this->selectSQLText( $table, $fld, $conds, null, array(), $join_conds ) . ')';
 	}
 
 	/**
@@ -2172,6 +2383,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * If it's a string, adds quotes and backslashes
+	 * If it's a boolean, converts it to int
 	 * Otherwise returns as-is
 	 *
 	 * @param $s string
@@ -2181,6 +2393,8 @@ abstract class DatabaseBase implements DatabaseType {
 	function addQuotes( $s ) {
 		if ( $s === null ) {
 			return 'NULL';
+		} elseif ( is_bool( $s ) ) {
+			return (int) $s;
 		} else {
 			# This will also quote numeric values. This should be harmless,
 			# and protects against weird problems that occur when they really
@@ -2194,7 +2408,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Quotes an identifier using `backticks` or "double quotes" depending on the database type.
 	 * MySQL uses `backticks` while basically everything else uses double quotes.
 	 * Since MySQL is the odd one out here the double quotes are our generic
-	 * and we implement backticks in DatabaseMysql.
+	 * and we implement backticks in DatabaseMysqli.
 	 *
 	 * @param $s string
 	 *
@@ -2371,7 +2585,7 @@ abstract class DatabaseBase implements DatabaseType {
 			$rows = array( $rows );
 		}
 
-		foreach( $rows as $row ) {
+		foreach ( $rows as $row ) {
 			# Delete rows which collide
 			if ( $uniqueIndexes ) {
 				$sql = "DELETE FROM $quotedTable WHERE ";
@@ -2459,6 +2673,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 *                    ANDed together in the WHERE clause
 	 * @param $fname      String: Calling function name (use __METHOD__) for
 	 *                    logs/profiling
+	 *
+	 * @throws DBUnexpectedError
+	 * @throws MWException
 	 */
 	function deleteJoin( $delTable, $joinTable, $delVar, $joinVar, $conds,
 		$fname = 'DatabaseBase::deleteJoin' )
@@ -2519,14 +2736,16 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * DELETE query wrapper.
 	 *
-	 * @param $table Array Table name
+	 * @param string $table Table name
 	 * @param $conds String|Array of conditions. See $conds in DatabaseBase::select() for
 	 *               the format. Use $conds == "*" to delete all rows
-	 * @param $fname String name of the calling function
+	 * @param $fname string name of the calling function
 	 *
 	 * @return bool
+	 * @throws DBUnexpectedError
+	 * @throws MWException
 	 */
-	function delete( $table, $conds, $fname = 'DatabaseBase::delete' ) {
+	function delete( string $table, $conds, $fname = 'DatabaseBase::delete' ) {
 		if ( !$conds ) {
 			throw new DBUnexpectedError( $this, 'DatabaseBase::delete() called with no conditions' );
 		}
@@ -2540,6 +2759,19 @@ abstract class DatabaseBase implements DatabaseType {
 			}
 			$sql .= ' WHERE ' . $conds;
 		}
+
+		// Wikia change- begin
+		// improve logging for BAC-1094
+		if ( strpos( $sql, '`user`' ) !== false ) {
+			global $wgUser;
+			WikiaLogger::instance()->warning( 'MOLI: delete from user', [
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+				'sent_by' => !empty( $wgUser ) ? $wgUser->getName() : ''
+			] );
+		}
+		// Wikia change- end
 
 		return $this->query( $sql, $fname );
 	}
@@ -2587,7 +2819,7 @@ abstract class DatabaseBase implements DatabaseType {
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 
 		if ( is_array( $srcTable ) ) {
-			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable = implode( ',', array_map( [ $this, 'tableName' ], $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}
@@ -2624,9 +2856,10 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * @param $sql String SQL query we will append the limit too
 	 * @param $limit Integer the SQL limit
-	 * @param $offset Integer|false the SQL offset (default false)
+	 * @param bool|false|int $offset Integer|false the SQL offset (default false)
 	 *
 	 * @return string
+	 * @throws DBUnexpectedError
 	 */
 	function limitResult( $sql, $limit, $offset = false ) {
 		if ( !is_numeric( $limit ) ) {
@@ -2814,7 +3047,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $timeout Integer: the maximum number of seconds to wait for
 	 *   synchronisation
 	 *
-	 * @return An integer: zero if the slave was past that position already,
+	 * @return integer: zero if the slave was past that position already,
 	 *   greater than zero if we waited for some period of time, less than
 	 *   zero if we timed out.
 	 */
@@ -2889,11 +3122,19 @@ abstract class DatabaseBase implements DatabaseType {
 	 * End a transaction
 	 *
 	 * @param $fname string
+	 * @return null|bool returns boolean with the result of commit
+	 * 	or null if inside the "nested" transaction
 	 */
 	function commit( $fname = 'DatabaseBase::commit' ) {
 		if ( $this->mTrxLevel ) {
-			$this->query( 'COMMIT', $fname );
+			// Wikia change - begin
+			$res = $this->query( 'COMMIT', $fname );
 			$this->mTrxLevel = 0;
+			return $res === true;
+			// Wikia change - end
+		}
+		else {
+			wfDebug( __METHOD__ . ": skipped [$fname]\n" );
 		}
 	}
 
@@ -2908,6 +3149,9 @@ abstract class DatabaseBase implements DatabaseType {
 			$this->query( 'ROLLBACK', $fname, true );
 			$this->mTrxLevel = 0;
 		}
+		else {
+			wfDebug( __METHOD__ . ": skipped [$fname]\n" );
+		}
 	}
 
 	/**
@@ -2918,11 +3162,13 @@ abstract class DatabaseBase implements DatabaseType {
 	 * The table names passed to this function shall not be quoted (this
 	 * function calls addIdentifierQuotes when needed).
 	 *
-	 * @param $oldName String: name of table whose structure should be copied
-	 * @param $newName String: name of table to be created
-	 * @param $temporary Boolean: whether the new table should be temporary
-	 * @param $fname String: calling function name
-	 * @return Boolean: true if operation was successful
+	 * @param String $oldName : name of table whose structure should be copied
+	 * @param String $newName : name of table to be created
+	 * @param Boolean $temporary : whether the new table should be temporary
+	 * @param String $fname : calling function name
+	 *
+	 * @return bool : true if operation was successful
+	 * @throws MWException
 	 */
 	function duplicateTableStructure( $oldName, $newName, $temporary = false,
 		$fname = 'DatabaseBase::duplicateTableStructure' )
@@ -2934,8 +3180,10 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * List all tables on the database
 	 *
-	 * @param $prefix Only show tables with this prefix, e.g. mw_
-	 * @param $fname String: calling function name
+	 * @param string $prefix : Only show tables with this prefix, e.g. mw_
+	 * @param string $fname : calling function name
+	 *
+	 * @throws MWException
 	 */
 	function listTables( $prefix = null, $fname = 'DatabaseBase::listTables' ) {
 		throw new MWException( 'DatabaseBase::listTables is not implemented in descendant class' );
@@ -3034,7 +3282,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * installations. Most callers should use LoadBalancer::safeGetLag()
 	 * instead.
 	 *
-	 * @return Database replication lag in seconds
+	 * @return int replication lag in seconds
 	 */
 	function getLag() {
 		return intval( $this->mFakeSlaveLag );
@@ -3102,12 +3350,15 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Returns true on success, error string or exception on failure (depending
 	 * on object's error ignore settings).
 	 *
-	 * @param $filename String: File name to open
-	 * @param $lineCallback Callback: Optional function called before reading each line
-	 * @param $resultCallback Callback: Optional function called for each MySQL result
-	 * @param $fname String: Calling function name or false if name should be
+	 * @param String $filename : File name to open
+	 * @param bool|callable $lineCallback : Optional function called before reading each line
+	 * @param bool|callable $resultCallback : Optional function called for each MySQL result
+	 * @param bool|String $fname : Calling function name or false if name should be
 	 *      generated dynamically using $filename
+	 *
 	 * @return bool|string
+	 * @throws Exception
+	 * @throws MWException
 	 */
 	function sourceFile( $filename, $lineCallback = false, $resultCallback = false, $fname = false ) {
 		wfSuppressWarnings();
@@ -3347,15 +3598,6 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * Build a concatenation list to feed into a SQL query
-	 * @param $stringList Array: list of raw SQL expressions; caller is responsible for any quoting
-	 * @return String
-	 */
-	function buildConcat( $stringList ) {
-		return 'CONCAT(' . implode( ',', $stringList ) . ')';
-	}
-
-	/**
 	 * Acquire a named lock
 	 *
 	 * Abstracted from Filestore::lock() so child classes can implement for
@@ -3417,11 +3659,11 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @since 1.18
 	 */
 	public function dropTable( $tableName, $fName = 'DatabaseBase::dropTable' ) {
-		if( !$this->tableExists( $tableName, $fName ) ) {
+		if ( !$this->tableExists( $tableName, $fName ) ) {
 			return false;
 		}
 		$sql = "DROP TABLE " . $this->tableName( $tableName );
-		if( $this->cascadingDeletes() ) {
+		if ( $this->cascadingDeletes() ) {
 			$sql .= " CASCADE";
 		}
 		return $this->query( $sql, $fName );
@@ -3474,4 +3716,147 @@ abstract class DatabaseBase implements DatabaseType {
 	public function setBigSelects( $value = true ) {
 		// no-op
 	}
+
+
+	/**
+	 * Execute and profile the query. This is a wrapper for capturing timing information
+	 * while executing a query.
+	 *
+	 * @param string $sql the query
+	 * @param string $fname the function name
+	 * @param bool $isMaster is this against the master
+	 *
+	 * @return ResultWrapper|mysqli_result|bool see doQuery
+	 */
+	protected function executeAndProfileQuery( $sql, $fname, $isMaster ) {
+		$queryId = MWDebug::query( $sql, $fname, $isMaster );
+		$start = microtime( true );
+
+		/* @var $ret mysqli_result|bool */
+		$ret = $this->doQuery( $sql );
+
+		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
+
+		MWDebug::queryTime( $queryId );
+
+		if ( $this->wasDeadlock() ) {
+			$this->logDeadlock();
+		}
+
+		return $ret;
+	}
+
+	/**
+	 * Log a SQL statement. This function does not log every statement but samples
+	 * at the rate defined in self::QUERY_SAMPLE_RATE.
+	 *
+	 * @param string $sql the query
+	 * @param ResultWrapper|mysqli_result|bool $ret database results
+	 * @param string $fname the name of the function that made this query
+	 * @param float $elapsedTime time (in seconds) it took the query to complete
+	 * @param bool $isMaster is this against the master
+	 * @return void
+	 */
+	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
+		global $wgDBcluster, $wgRequest;
+
+		if ( $ret instanceof ResultWrapper ) {
+			// NOP for MySQL driver
+			$num_rows = $ret->numRows();
+		} elseif ( $ret instanceof mysqli_result) {
+			// for SELECT queries report how many rows are sent to the client
+			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
+			$num_rows = $ret->num_rows ?: $this->affectedRows();
+		} elseif ( $ret === true ) {
+			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
+			$num_rows = $this->affectedRows();
+		} else {
+			// failed queries
+			$num_rows = false;
+		}
+
+		if ( startsWith( $sql, 'DELETE ' ) && strpos( $sql, '`revision`' ) !== false ) {
+
+			WikiaLogger::instance()->warning( 'PLATFORM-1311', [
+				'reason' => 'SQL DELETE',
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+			] );
+		}
+
+		$context = [
+			'method'      => $fname,
+			'elapsed'     => $elapsedTime,
+			'num_rows'    => $num_rows,
+			'transaction_level' => $this->mTrxLevel, # either 0 or 1
+			'cluster'     => $wgDBcluster,
+			'server'      => $this->mServer,
+			'server_role' => $isMaster ? 'master' : 'slave',
+			'db_name'     => $this->mDBname,
+			'db_user'     => $this->getLBInfo( 'user' ),
+			'exception'   => new Exception(), // log the backtrace
+		];
+
+		/* @var WebRequest $wgRequest */
+		if ( $wgRequest && $wgRequest->getVal( 'action' ) == 'delete' ) {
+			$this->getWikiaLogger()->info( "SQL (action=delete) {$sql}", $context );
+		}
+
+		// SUS-2974 | send SQL logs to a separate ES index 'mediawiki-sql'
+		if ( $this->getSampler()->shouldSample() ) {
+			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
+		}
+
+		if ( $this->isWriteQuery($sql) &&
+			(
+				strpos( $sql, '`revision`' ) !== false
+				|| strpos( $sql, '`page`' ) !== false
+				|| strpos( $sql, '`archive`' ) !== false
+				|| strpos( $sql, '`text`' ) !== false
+				|| strpos( $sql, '`filearchive`' ) !== false
+				|| strpos( $sql, '`oldimage`' ) !== false
+			)
+		) {
+			$this->getWikiaLogger()->info( "Important table write - SQL {$sql}", $context );
+		}
+
+		# PLATFORM-1648: 1% sampling does not really catch spikes of slow DB queries
+		# e.g. queries on events_local_users via DataProvider::GetTopFiveUsers
+		if ( $elapsedTime > self::SLOW_QUERY_LOG_THRESHOLD ) {
+			$this->getWikiaLogger()->info( "Slow query {$sql}", $context );
+		}
+	}
+
+	protected function logDeadlock() {
+		$res = $this->doQuery( "SHOW ENGINE INNODB STATUS;" );
+		if ( $res && $row = $this->fetchRow( $res ) ) {
+			$statusString = $row['Status'];
+
+			if ( preg_match('/\nLATEST DETECTED DEADLOCK\n-+\n(.*?)(?:\n-+\n|$)/s', $statusString, $m) ) {
+				$deadlockDetails = $m[1];
+				$this->getWikiaLogger()->error( 'Database deadlock occurred', [
+					'latest_deadlock_details' => $deadlockDetails,
+					'exception' => new Exception(),
+				]);
+			}
+		}
+	}
+
+	public function getSampler() {
+		if ( !isset( $this->sampler ) ) {
+			$this->sampler = new BernoulliTrial( self::QUERY_SAMPLE_RATE );
+		}
+
+		return $this->sampler;
+	}
+
+	public function setSampler( BernoulliTrial $sampler ) {
+		$this->sampler = $sampler;
+	}
+
+	public function getWikiaLogger() {
+		return WikiaLogger::instance();
+	}
+
 }

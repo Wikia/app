@@ -45,21 +45,6 @@ $wgExtensionCredits['antispam'][] = array(
 );
 
 /**
- * The 'skipcaptcha' permission key can be given out to
- * let known-good users perform triggering actions without
- * having to go through the captcha.
- *
- * By default, sysops and registered bot accounts will be
- * able to skip, while others have to go through it.
- */
-$wgGroupPermissions['*'            ]['skipcaptcha'] = false;
-$wgGroupPermissions['user'         ]['skipcaptcha'] = false;
-$wgGroupPermissions['autoconfirmed']['skipcaptcha'] = false;
-$wgGroupPermissions['bot'          ]['skipcaptcha'] = true; // registered bots
-$wgGroupPermissions['sysop'        ]['skipcaptcha'] = true;
-$wgAvailableRights[] = 'skipcaptcha';
-
-/**
  * List of IP ranges to allow to skip the captcha, similar to the group setting:
  * "$wgGroupPermission[...]['skipcaptcha'] = true"
  *

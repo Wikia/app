@@ -1,0 +1,35 @@
+// scrollable list with shadow
+@mixin scrollable-list($max-height, $color-background: $wds-color-white) {
+	$color-shadow: rgba($wds-color-black, .12);
+	@if luminance($color-background) < .3 {
+		$color-shadow: rgba($wds-color-white, .4);
+	}
+
+	background: {
+		image: radial-gradient(farthest-side at 50% 0, $color-shadow, transparent),
+		radial-gradient(farthest-side at 50% 100%, $color-shadow, transparent);
+		position: 0 0, 0 100%;
+		repeat: no-repeat;
+		size: 100% 9px;
+	}
+	max-height: $max-height;
+	overflow-y: auto;
+	position: relative;
+	z-index: 1;
+
+	&::after,
+	&::before {
+		background-color: $color-background;
+		content: '';
+		display: block;
+		height: 30px;
+		margin: 0 0 -30px;
+		position: relative;
+		z-index: -1;
+	}
+
+	&::after {
+		background-color: $color-background;
+		margin: -29px 0 0;
+	}
+}

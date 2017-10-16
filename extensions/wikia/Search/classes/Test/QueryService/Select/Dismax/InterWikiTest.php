@@ -10,6 +10,8 @@ use Wikia, ReflectionMethod, ReflectionProperty;
 class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09581 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::extractMatch
 	 */
 	public function testExtractMatch() {
@@ -36,6 +38,8 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10522 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::registerNonDismaxComponents
 	 */
 	public function testRegisterNonDismaxComponents() {
@@ -64,6 +68,8 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10014 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::registerFilterQueryForMatch
 	 */
 	public function testRegisterFilterQueryForMatch() {
@@ -112,6 +118,8 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10068 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::prepareRequest
 	 */
 	public function testPrepareRequest() {
@@ -158,6 +166,8 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09779 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::getFilterQueryString
 	 */
 	public function testGetFilterQueryString() {
@@ -168,11 +178,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getService' ) )
 		                   ->getMockForAbstractClass();
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId' ] );
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getHub' )
-		    ->will   ( $this->returnValue( 'Entertainment' ) )
-		;
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( "getService" )
@@ -186,52 +192,96 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				'articles_i:[50 TO *] AND -id:123 AND (hub_s:Entertainment)',
+				'articles_i:[50 TO *] AND -id:123',
 				$reflspell->invoke( $mockSelect )
 		);
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09923 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub', 'getLanguageCode' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getLanguageCode','getHub' ) );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal', 'getWikiId' ) )
 		                      ->getMock();
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( null )
-		                   ->getMock();
-		
+							->setConstructorArgs( array( $dc ) )
+							->setMethods( [ 'getConfig', 'generateArrayQuery' ] )
+							->getMock();
+
 		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getHub' )
-		    ->will   ( $this->returnValue( 'Entertainment' ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
+		    ->expects( $this->at(0) )
 		    ->method ( 'getLanguageCode' )
-		    ->will   ( $this->returnValue( 'en' ) )
+		    ->will   ( $this->returnValue( 'x1' ) )
+		;
+		$mockConfig
+			->expects( $this->at(1) )
+			->method ( 'getHub' )
+			->will   ( $this->returnValue( 'x2' ) )
 		;
 		$mockService
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'CrossWikiaSearchExcludedWikis' )
-		    ->will   ( $this->returnValue( array( 123, 321 ) ) )
+			->expects( $this->any() )
+			->method ( 'getGlobal' )
+			->with   ( 'CrossWikiaSearchExcludedWikis' )
+			->will   ( $this->returnValue( array( 123, 321 ) ) )
 		;
+		$mockSelect
+			->expects( $this->at(0) )
+			->method ( 'getConfig' )
+			->will   ( $this->returnValue( $mockConfig ) )
+			;
+		$mockSelect
+			->expects( $this->at(1) )
+			->method( 'generateArrayQuery' )
+			->will( $this->returnCallback(  function( $param1 ) {
+						$param1[] = ' ( (aa:AA) OR (bb:BB) ) ';
+						return $param1;
+					}
+				)
+			);
+		$mockSelect
+			->expects( $this->at(2) )
+			->method( 'generateArrayQuery' )
+			->will( $this->returnCallback(  function( $param1 ) {
+						$param1[] = ' ( (cc:CC) OR (dd:DD) ) ';
+						return $param1;
+					}
+				)
+			);
+
 		$mockService
-			->expects( $this->once() )
+			->expects( $this->any() )
 			->method ( 'getWikiId' )
 			->will   ( $this->returnValue( 456 ) )
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getQueryClausesString' );
 		$method->setAccessible( true );
+
 		$this->assertEquals(
-				'lang_s:en AND (hub:Entertainment)',
-				$method->invoke( $mockSelect )
+			" ( (aa:AA) OR (bb:BB) )  AND  ( (cc:CC) OR (dd:DD) ) ",
+			$method->invoke( $mockSelect )
 		);
-	}	
+	}
+
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::generateArrayQuery
+	 */
+	public function testGenerateArrayQuery() {
+
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'generateArrayQuery' ] )
+			->getMock();
+
+		$arr = [ ];
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'generateArrayQuery' );
+		$method->setAccessible( true );
+		$this->assertEquals( [ ' ( (hub_s:Entertainment) OR (hub_s:Gaming) ) ' ], $method->invokeArgs( $mockSelect, [ $arr, 'hub_s', ['Entertainment', 'Gaming'] ] ) );
+	}
+
 }

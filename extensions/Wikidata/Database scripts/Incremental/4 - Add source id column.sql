@@ -1,1 +1,0 @@
-ALTER TABLE `uw_alt_meaningtexts` ADD `source_id` INT NULL DEFAULT NULL;

@@ -1,0 +1,17 @@
+.avatar-wrapper {
+	padding-right: 10px;
+}
+
+.avatar {
+	border-radius: 100%;
+	border: 2px solid #ccc;
+}
+
+.avatar img {
+	height: 40px;
+	width: 40px;
+}
+
+.message {
+	margin-bottom: 20px;
+}

@@ -466,6 +466,13 @@ abstract class Installer {
 	public static function getExistingLocalSettings() {
 		global $IP;
 
+		// You might be wondering why this is here. Well if you don't do this
+		// then some poorly-formed extensions try to call their own classes
+		// after immediately registering them. We really need to get extension
+		// registration out of the global scope and into a real format.
+		// @see https://bugzilla.wikimedia.org/67440
+		global $wgAutoloadClasses;
+
 		wfSuppressWarnings();
 		$_lsExists = file_exists( "$IP/LocalSettings.php" );
 		wfRestoreWarnings();
@@ -599,7 +606,6 @@ abstract class Installer {
 		}
 		$status->value->insert( 'site_stats', array(
 			'ss_row_id' => 1,
-			'ss_total_views' => 0,
 			'ss_total_edits' => 0,
 			'ss_good_articles' => 0,
 			'ss_total_pages' => 0,
@@ -1465,7 +1471,7 @@ abstract class Installer {
 			$user->addToDatabase();
 
 			try {
-				$user->setPassword( $this->getVar( '_AdminPassword' ) );
+				$user->setPassword( $this->getVar( '_AdminPassword' ), false );
 			} catch( PasswordError $pwe ) {
 				return Status::newFatal( 'config-admin-error-password', $name, $pwe->getMessage() );
 			}

@@ -3,7 +3,7 @@
 class SpecialPageUserCommand extends UserCommand {
 
 	const EXTERNAL_DATA_SOURCE_WIKI_ID = 4036;
-	const EXTERNAL_DATA_URL = 'http://messaging.wikia.com/wikia.php?controller=Footer&method=executeToolbarGetList&format=json';
+	const EXTERNAL_DATA_URL = 'http://messaging.wikia.com/wikia.php?controller=UserTools&method=executeToolbarGetList&format=json';
 	const EXTERNAL_DATA_CACHE_TTL = 7200;
 
 	protected $disabledExtension = false;
@@ -14,11 +14,6 @@ class SpecialPageUserCommand extends UserCommand {
 		$page = SpecialPageFactory::getPage($this->name);
 		if (!is_object($page)) {
 			$this->buildExternalData();
-			// BugId:22989 - we don't want the PageLayoutBuilder to be shown if disabled.
-			if ( 'LayoutBuilder' == $this->name ) {
-				// do not show PLB if it's not available on the wiki
-				$this->available = $this->enabled;
-			}
 			return;
 		}
 
@@ -40,7 +35,7 @@ class SpecialPageUserCommand extends UserCommand {
 
 		$specialPageName = $page->getName();
 		$options = array();
-		wfRunHooks("UserCommand::SpecialPage::{$specialPageName}",array($this,&$options));
+		Hooks::run("UserCommand::SpecialPage::{$specialPageName}",array($this,&$options));
 		foreach ($options as $k => $v)
 			$this->$k = $v;
 	}

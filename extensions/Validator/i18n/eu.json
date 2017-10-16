@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"පසිඳු කාවින්ද",
+			"Subi"
+		]
+	},
+	"validator-type-string": "testua",
+	"validator-type-integer": "zenbaki osoa",
+	"validator-type-float": "zenbakia",
+	"validator-type-boolean": "bai/ez",
+	"validator-type-char": "karakterea",
+	"validator-listerrors-errors": "Erroreak",
+	"validator-listerrors-low": "Baxua",
+	"validator-listerrors-normal": "Normala",
+	"validator-listerrors-high": "Altua",
+	"validator-describe-descriptionmsg": "'''Deskribapena''': $1",
+	"validator-describe-empty": "hutsik",
+	"validator-describe-header-type": "Mota",
+	"validator-describe-header-default": "Lehenetsia",
+	"validator-describe-header-description": "Deskribapena"
+}

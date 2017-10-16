@@ -12,21 +12,20 @@ class WikiaVideoAddForm extends SpecialPage {
 		parent::__construct( "WikiaVideoAdd", "wikiavideoadd" );
 	}
 
+	protected function checkPermission() {
+		$permissionRequired = UploadBase::isAllowed( $this->getUser() );
+		if( $permissionRequired !== true ) {
+			throw new PermissionsError( $permissionRequired );
+		}
+	}
+
 	public function execute( $subpage ) {
 		global $wgOut;
 
-		if ( !$this->getUser()->isLoggedIn() ) {
-			$wgOut->addHTML( wfMessage( 'wva-notlogged' )->text() );
-			return;
-		}
+		$this->checkPermission();
 
 		if ( $this->getUser()->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
-		}
-
-		if ( !$this->getUser()->isAllowed( 'upload' ) ) {
-			$wgOut->addHTML( wfMessage( 'wva-notallowed' )->text() );
-			return;
 		}
 
 		if ( !$this->getUser()->isAllowed( 'videoupload' ) ) {
@@ -58,7 +57,9 @@ class WikiaVideoAddForm extends SpecialPage {
 	}
 
 	public function showForm( $errors = array() ) {
-		global $wgOut, $wgUser;
+		global $wgOut;
+
+		$this->checkPermission();
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
 		$action = htmlspecialchars($titleObj->getLocalURL( "action=submit" ));
@@ -67,24 +68,17 @@ class WikiaVideoAddForm extends SpecialPage {
 		$wpWikiaVideoAddName = $this->getRequest()->getVal( 'wpWikiaVideoAddName', '' );
 		$wpWikiaVideoAddUrl = $this->getRequest()->getVal( 'wpWikiaVideoAddUrl', '');
 
-		if ( !$wgUser->isAllowed( 'upload' ) ) {
-			if ( !$wgUser->isLoggedIn() ) {
-				$wgOut->addHTML( wfMessage( 'wva-notlogged' )->text() );
-			} else {
-				$wgOut->addHTML( wfMessage( 'wva-notallowed' )->text() );
-			}
-		} else {
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				'out' => $wgOut,
-				'action' => $action,
-				'name' => $name,
-				'errors' => $errors,
-				'wpWikiaVideoAddName' => $wpWikiaVideoAddName,
-				'wpWikiaVideoAddUrl' => $wpWikiaVideoAddUrl,
-			) );
-			$wgOut->addHTML( $oTmpl->render('quickform') );
-		}
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			'out' => $wgOut,
+			'action' => $action,
+			'name' => $name,
+			'token' => $this->getUser()->getEditToken(),
+			'errors' => $errors,
+			'wpWikiaVideoAddName' => $wpWikiaVideoAddName,
+			'wpWikiaVideoAddUrl' => $wpWikiaVideoAddUrl,
+		) );
+		$wgOut->addHTML( $oTmpl->render( 'quickform' ) );
 	}
 
 	public function doSubmit() {
@@ -100,6 +94,12 @@ class WikiaVideoAddForm extends SpecialPage {
 			if ( $this->mName != '' ) {
 				$replaced = true;
 			}
+		}
+
+		if ( !$this->getRequest()->wasPosted() || !$this->getUser()->matchEditToken( $this->getRequest()->getVal( 'token' ) ) ) {
+			$errors['videoUrl'] = wfMessage( 'wva-failure' )->text();
+			$this->showForm($errors);
+			return;
 		}
 
 		if ( $this->mUrl == '' ) {
@@ -122,7 +122,7 @@ class WikiaVideoAddForm extends SpecialPage {
 			// sanitize all video titles
 			$this->mName = VideoFileUploader::sanitizeTitle( $this->mName );
 
-			$title = Title::makeTitleSafe( NS_VIDEO, $this->mName );
+			$title = Title::makeTitleSafe( NS_FILE, $this->mName );
 			if ( $title instanceof Title ) {
 				$permErrors = $title->getUserPermissionsErrors( 'edit', $this->getUser() );
 				$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $this->getUser() );

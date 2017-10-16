@@ -1,19 +1,22 @@
 <?
 /**
  * @var $wg WikiaGlobalRegistry
- * @var $wf WikiaFunctionWrapper
  * @var $parseErrors array
  * @var $wikiaMenuNodes array
  * @var $wikiMenuNodes array
  * @var $blacklist
+ * @var $specialVideosUrl string
+ * @var $showVideoLink boolean
  */
 ?>
-<header class="wkPrfHead up"><?= wfMessage('wikiamobile-menu')->text() ?></header>
+<header class="wkPrfHead up"><?= wfMessage( 'wikiamobile-menu' )->escaped(); ?></header>
 <nav id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 	<header>
-		<button id=wkNavBack class=wkBtn><?= wfMessage( 'wikiamobile-back' )->text(); ?></button>
-		<h1 class='collSec addChev'></h1>
-		<a id=wkNavLink class=chvRgt></a>
+		<button id=wkNavBack class=wkBtn><?= wfMessage( 'wikiamobile-back' )->escaped(); ?></button>
+		<h1 class='collSec addChev'>
+			<a id=wkNavLink></a>
+			<span class=cld></span>
+		</h1>
 	</header>
 <ul id=lvl1 class=wkLst>
 <?
@@ -124,5 +127,8 @@
 		}
 	}
 ?>
+	<? if ( $showVideoLink ) { ?>
+		<li><a class="video-link" href="<?= $specialVideosUrl ?>"><?= wfMessage('wikiamobile-videos')->escaped() ?></a></li>
+	<? } ?>
 </ul>
 </nav>

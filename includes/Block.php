@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Blocks and bans object
  *
@@ -19,7 +20,11 @@
  *
  * @file
  */
+
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 class Block {
+	use PermissionsServiceAccessor;
 	/* public*/ var $mReason, $mTimestamp, $mAuto, $mExpiry, $mHideName;
 
 	protected
@@ -27,8 +32,7 @@ class Block {
 		$mFromMaster,
 
 		$mBlockEmail,
-		$mDisableUsertalk,
-		$mCreateAccount;
+		$mDisableUsertalk;
 
 	/// @var User|String
 	protected $target;
@@ -83,7 +87,6 @@ class Block {
 		$this->mTimestamp = wfTimestamp( TS_MW, $timestamp );
 		$this->mAuto = $auto;
 		$this->isHardblock( !$anonOnly );
-		$this->prevents( 'createaccount', $createAccount );
 		if ( $expiry == 'infinity' || $expiry == wfGetDB( DB_SLAVE )->getInfinity() ) {
 			$this->mExpiry = 'infinity';
 		} else {
@@ -147,7 +150,6 @@ class Block {
 			&& $this->type == $block->type
 			&& $this->mAuto == $block->mAuto
 			&& $this->isHardblock() == $block->isHardblock()
-			&& $this->prevents( 'createaccount' ) == $block->prevents( 'createaccount' )
 			&& $this->mExpiry == $block->mExpiry
 			&& $this->isAutoblocking() == $block->isAutoblocking()
 			&& $this->mHideName == $block->mHideName
@@ -377,7 +379,6 @@ class Block {
 		$this->isHardblock( !$row->ipb_anon_only );
 		$this->isAutoblocking( $row->ipb_enable_autoblock );
 
-		$this->prevents( 'createaccount', $row->ipb_create_account );
 		$this->prevents( 'sendemail', $row->ipb_block_email );
 		$this->prevents( 'editownusertalk', !$row->ipb_allow_usertalk );
 	}
@@ -492,7 +493,6 @@ class Block {
 			'ipb_timestamp'        => $db->timestamp( $this->mTimestamp ),
 			'ipb_auto'             => $this->mAuto,
 			'ipb_anon_only'        => !$this->isHardblock(),
-			'ipb_create_account'   => $this->prevents( 'createaccount' ),
 			'ipb_enable_autoblock' => $this->isAutoblocking(),
 			'ipb_expiry'           => $expiry,
 			'ipb_range_start'      => $this->getRangeStart(),
@@ -517,7 +517,7 @@ class Block {
 		if ( $this->isAutoblocking() && $this->getType() == self::TYPE_USER ) {
 			wfDebug( "Doing retroactive autoblocks for " . $this->getTarget() . "\n" );
 
-			$continue = wfRunHooks(
+			$continue = Hooks::run(
 				'PerformRetroactiveAutoblock', array( $this, &$blockIds ) );
 
 			if ( $continue ) {
@@ -635,7 +635,7 @@ class Block {
 		}
 
 		# Allow hooks to cancel the autoblock.
-		if ( !wfRunHooks( 'AbortAutoblock', array( $autoblockIP, &$this ) ) ) {
+		if ( !Hooks::run( 'AbortAutoblock', [ $autoblockIP, $this ] ) ) {
 			wfDebug( "Autoblock aborted by hook.\n" );
 			return false;
 		}
@@ -666,7 +666,6 @@ class Block {
 		$timestamp = wfTimestampNow();
 		$autoblock->mTimestamp = $timestamp;
 		$autoblock->mAuto = 1;
-		$autoblock->prevents( 'createaccount', $this->prevents( 'createaccount' ) );
 		# Continue suppressing the name if needed
 		$autoblock->mHideName = $this->mHideName;
 		$autoblock->prevents( 'editownusertalk', $this->prevents( 'editownusertalk' ) );
@@ -745,7 +744,7 @@ class Block {
 					'ipb_expiry' => $dbw->timestamp( $this->mExpiry ),
 				),
 				array( /* WHERE */
-					'ipb_address' => (string)$this->getTarget()
+					'ipb_id' => $this->getId()
 				),
 				__METHOD__
 			);
@@ -875,9 +874,6 @@ class Block {
 				# For now... <evil laugh>
 				return true;
 
-			case 'createaccount':
-				return wfSetVar( $this->mCreateAccount, $x );
-
 			case 'sendemail':
 				return wfSetVar( $this->mBlockEmail, $x );
 
@@ -960,9 +956,17 @@ class Block {
 	 * Purge expired blocks from the ipblocks table
 	 */
 	public static function purgeExpired() {
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->delete( 'ipblocks',
-			array( 'ipb_expiry < ' . $dbw->addQuotes( $dbw->timestamp() ) ), __METHOD__ );
+		global $wgCityId;
+
+		if ( !wfReadOnly() ) {
+			// Wikia change - begin
+			// @see SUS-2147
+			$task = new Wikia\Tasks\Tasks\BlockPurgeExpiredTask();
+			$task->wikiId( $wgCityId );
+			$task->call( 'purgeExpired' );
+			$task->queue();
+			// Wikia change - end
+		}
 	}
 
 	/**
@@ -1215,12 +1219,43 @@ class Block {
 	}
 
 	/**
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * wikia change for Phalanx
-	 *
-	 * @param $blockEmail boolean
+	 * Wikia change
+	 * SUS-288: Hide blocker name from logs and error pages if the block was made by staff/VSTF
+	 * @return bool Whether to hide the blocker's user name
 	 */
-	public function setCreateAccount( $createAccount ) {
-		$this->mCreateAccount = $createAccount;
+	public function shouldHideBlockerName() {
+		$blocker = ( $this->blocker instanceof User ) ? $this->blocker : User::newFromName( $this->blocker );
+
+		if ( $blocker instanceof User ) {
+			$this->blocker = $blocker;
+			return $this->permissionsService()->hasPermission( $blocker, 'hideblockername' );
+		}
+
+		return false;
+	}
+
+	/**
+	 * SUS-288: Return the group name that should be shown instead of user name if the blocker name is hidden
+	 * (i.e. if the block was made by staff/VSTF)
+	 * @return string Group name text that will be parsed and output on the error page
+	 */
+	public function getGroupNameForHiddenBlocker() {
+		/** @var User $blockerUser */
+		$blockerUser = $this->getBlocker();
+		$permissionsService = $this->permissionsService();
+
+		// Get the global groups of this user that have 'hideblockername' permission
+		$groups = array_intersect(
+			$permissionsService->getExplicitGlobalGroups( $blockerUser ),
+			$permissionsService->getConfiguration()->getGroupsWithPermission( 'hideblockername' )
+		);
+
+		// Select the group name to show in the block message
+		if ( count( $groups ) ) {
+			$group = array_shift( $groups );
+			return User::getGroupName( $group );
+		}
+
+		return '';
 	}
 }

@@ -68,7 +68,9 @@ class AbuseFilterViewHistory extends AbuseFilterView {
 		$filterForm = Xml::fieldset( wfMsg( 'abusefilter-history-select-legend' ), $filterForm );
 		$out->addHTML( $filterForm );
 
-		$pager = new AbuseFilterHistoryPager( $filter, $this, $user );
+		$userId = User::idFromName( $user );
+
+		$pager = new AbuseFilterHistoryPager( $filter, $this, $userId );
 		$table = $pager->getBody();
 
 		$out->addHTML( $pager->getNavigationBar() . $table . $pager->getNavigationBar() );
@@ -82,10 +84,10 @@ class AbuseFilterHistoryPager extends TablePager {
 	 * @param $page Article
 	 * @param $user User
 	 */
-	function __construct( $filter, $page, $user ) {
+	function __construct( $filter, $page, $userId ) {
 		$this->mFilter = $filter;
 		$this->mPage = $page;
-		$this->mUser = $user;
+		$this->mUserId = $userId;
 		$this->mDefaultDirection = true;
 		parent::__construct( $this->mPage->getContext() );
 	}
@@ -133,9 +135,10 @@ class AbuseFilterHistoryPager extends TablePager {
 				$formatted = $sk->link( $title, $lang->timeanddate( $row->afh_timestamp, true ) );
 				break;
 			case 'afh_user_text':
+				$userName = User::getUsername( $row->afh_user, $row->afh_user_text );
 				$formatted =
-					$sk->userLink( $row->afh_user, $row->afh_user_text ) . ' ' .
-					$sk->userToolLinks( $row->afh_user, $row->afh_user_text );
+					$sk->userLink( $row->afh_user, $userName ) . ' ' .
+					$sk->userToolLinks( $row->afh_user, $userName );
 				break;
 			case 'afh_public_comments':
 				$formatted = $this->getOutput()->parse( $value );
@@ -224,8 +227,8 @@ class AbuseFilterHistoryPager extends TablePager {
 				),
 		);
 
-		if ( $this->mUser ) {
-			$info['conds']['afh_user_text'] = $this->mUser;
+		if ( $this->mUserId ) {
+			$info['conds']['afh_user'] = $this->mUserId;
 		}
 
 		if ( $this->mFilter ) {
@@ -249,7 +252,7 @@ class AbuseFilterHistoryPager extends TablePager {
 	}
 
 	function isFieldSortable( $name ) {
-		$sortable_fields = array( 'afh_timestamp', 'afh_user_text' );
+		$sortable_fields = array( 'afh_timestamp' );
 		return in_array( $name, $sortable_fields );
 	}
 

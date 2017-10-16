@@ -24,7 +24,8 @@
 					"primary"
 				],
 				"title": "Primary standard button example",
-				"value": "Primary standard button"
+				"value": "Primary standard button",
+				"imageClass": "new"
 			}
 		}
 	},

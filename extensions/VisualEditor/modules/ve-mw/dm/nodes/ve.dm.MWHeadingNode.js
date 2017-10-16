@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWHeadingNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,30 +10,25 @@
  *
  * @class
  * @extends ve.dm.HeadingNode
+ *
  * @constructor
- * @param {ve.dm.LeafNode[]} [children] Child nodes to attach
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.MWHeadingNode = function VeDmMWHeadingNode( children, element ) {
+ve.dm.MWHeadingNode = function VeDmMWHeadingNode() {
 	// Parent constructor
-	ve.dm.HeadingNode.call( this, children, element );
+	ve.dm.HeadingNode.apply( this, arguments );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWHeadingNode, ve.dm.HeadingNode );
+OO.inheritClass( ve.dm.MWHeadingNode, ve.dm.HeadingNode );
 
 /* Static Properties */
 
 ve.dm.MWHeadingNode.static.name = 'mwHeading';
 
-ve.dm.MWHeadingNode.static.suggestedParentNodeTypes = [ 'document' ];
-
-ve.dm.MWHeadingNode.static.toDataElement = function () {
-	var parentElement = ve.dm.HeadingNode.static.toDataElement.apply( this, arguments );
-	parentElement.type = 'mwHeading';
-	return parentElement;
-};
+ve.dm.MWHeadingNode.static.suggestedParentNodeTypes = [ 'document', 'tableCell' ];
 
 /* Registration */
 

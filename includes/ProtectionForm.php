@@ -308,7 +308,7 @@ class ProtectionForm {
 		 *             you can also return an array of message name and its parameters
 		 */
 		$errorMsg = '';
-		if( !wfRunHooks( 'ProtectionForm::save', array( $this->mArticle, &$errorMsg ) ) ) {
+		if( !Hooks::run( 'ProtectionForm::save', array( $this->mArticle, &$errorMsg ) ) ) {
 			if ( $errorMsg == '' ) {
 				$errorMsg = array( 'hookaborted' );
 			}
@@ -431,7 +431,7 @@ class ProtectionForm {
 			"</td></tr>";
 		}
 		# Give extensions a chance to add items to the form
-		wfRunHooks( 'ProtectionForm::buildForm', array($this->mArticle,&$out) );
+		Hooks::run( 'ProtectionForm::buildForm', array($this->mArticle,&$out) );
 
 		$out .= Xml::closeElement( 'tbody' ) . Xml::closeElement( 'table' );
 
@@ -482,7 +482,7 @@ class ProtectionForm {
 					<td class='mw-input'>" .
 						Xml::checkLabel( wfMsg( 'watchthis' ),
 							'mwProtectWatch', 'mwProtectWatch',
-							$this->mTitle->userIsWatching() || $wgUser->getOption( 'watchdefault' ) ) .
+							$this->mTitle->userIsWatching() || $wgUser->getGlobalPreference( 'watchdefault' ) ) .
 					"</td>
 				</tr>";
 			}
@@ -610,6 +610,6 @@ class ProtectionForm {
 		$out->addHTML( Xml::element( 'h2', null, LogPage::logName( 'protect' ) ) );
 		LogEventsList::showLogExtract( $out, 'protect', $this->mTitle );
 		# Let extensions add other relevant log extracts
-		wfRunHooks( 'ProtectionForm::showLogExtract', array($this->mArticle,$out) );
+		Hooks::run( 'ProtectionForm::showLogExtract', array($this->mArticle,$out) );
 	}
 }

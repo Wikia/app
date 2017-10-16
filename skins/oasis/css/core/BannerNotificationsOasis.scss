@@ -1,0 +1,44 @@
+@import 'layout';
+@import 'skins/shared/mixins/calc';
+@import 'extensions/wikia/BannerNotifications/css/BannerNotifications';
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.wikia-grid {
+	.wds-banner-notification__container {
+		width: 988px;
+
+		&.float {
+			margin-left: -505px;
+
+			// DAR-2719: Hidden banner notification when window shrank
+			@media screen and (max-width: 1020px) {
+				@include calc(width, '100% - 20px');
+				left: 0;
+				margin: 0;
+			}
+		}
+	}
+}
+
+/* end temp transistion code */
+
+.modalWrapper .wds-banner-notification__container {
+	position: relative;
+	// z-index value needs to be higher than for `.wds-community-header`
+	// extensions/wikia/CommunityHeader/styles/index.scss#L20-L20
+	z-index: 6;
+}
+
+// VisualEditor specific notification styling
+.ve-ui-window-body {
+	.wds-banner-notification__container {
+		box-sizing: border-box;
+		position: absolute;
+		width: 100%;
+
+		.close {
+			position: absolute;
+			right: 15px;
+		}
+	}
+}

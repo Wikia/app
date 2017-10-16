@@ -11,7 +11,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'MiniEditor',
 	'author' => array( 'Liz Lee', 'Kyle Florence', 'Owen Davis' ),
-	'url' => 'http://www.wikia.com',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MiniEditor',
 	'descriptionmsg' => 'minieditor-desc'
 );
 
@@ -33,10 +33,3 @@ $wgSpecialPages['MiniEditorDemo'] = 'MiniEditorSpecialController';
  * Message files
  */
 $wgExtensionMessagesFiles['MiniEditor'] = $dir . 'MiniEditor.i18n.php';
-
-/**
- * Permissions
- */
-$wgAvailableRights[] = 'minieditor-specialpage';
-$wgGroupPermissions['*']['minieditor-specialpage'] = false;
-$wgGroupPermissions['staff']['minieditor-specialpage'] = true;

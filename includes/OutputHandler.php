@@ -7,14 +7,16 @@
 
 /**
  * Standard output handler for use with ob_start
- * 
+ *
  * @param $s string
- * 
+ *
  * @return string
  */
 function wfOutputHandler( $s ) {
-	global $wgDisableOutputCompression, $wgValidateAllHtml;
-	$s = wfMangleFlashPolicy( $s );
+	global $wgDisableOutputCompression, $wgValidateAllHtml, $wgMangleFlashPolicy;
+	if ( $wgMangleFlashPolicy ) {
+		$s = wfMangleFlashPolicy( $s );
+	}
 	if ( $wgValidateAllHtml ) {
 		$headers = apache_response_headers();
 		$isHTML = true;
@@ -70,7 +72,7 @@ function wfRequestExtension() {
 /**
  * Handler that compresses data with gzip if allowed by the Accept header.
  * Unlike ob_gzhandler, it works for HEAD requests too.
- * 
+ *
  * @param $s string
  *
  * @return string
@@ -122,8 +124,8 @@ function wfGzipHandler( $s ) {
  */
 function wfMangleFlashPolicy( $s ) {
 	# Avoid weird excessive memory usage in PCRE on big articles
-	if ( preg_match( '/\<\s*cross-domain-policy\s*\>/i', $s ) ) {
-		return preg_replace( '/\<\s*cross-domain-policy\s*\>/i', '<NOT-cross-domain-policy>', $s );
+	if ( preg_match( '/\<\s*cross-domain-policy(?=\s|\>)/i', $s ) ) {
+		return preg_replace( '/\<(\s*)(cross-domain-policy(?=\s|\>))/i', '<$1NOT-$2', $s );
 	} else {
 		return $s;
 	}

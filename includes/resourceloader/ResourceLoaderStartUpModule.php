@@ -38,7 +38,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			$wgVariantArticlePath, $wgActionPaths, $wgUseAjax, $wgVersion,
 			$wgEnableAPI, $wgEnableWriteAPI, $wgDBname, $wgEnableMWSuggest,
 			$wgSitename, $wgFileExtensions, $wgExtensionAssetsPath,
-			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength;
+			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength, $wgCommunityPageDisableTopContributors;
 
 		$mainPage = Title::newMainPage();
 
@@ -95,15 +95,18 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgCookiePrefix' => $wgCookiePrefix,
 			'wgResourceLoaderMaxQueryLength' => $wgResourceLoaderMaxQueryLength,
 			'wgCaseSensitiveNamespaces' => $caseSensitiveNamespaces,
+			'wgLegalTitleChars' => Title::convertByteClassToUnicodeClass( Title::legalChars() ),
 			// Wikia - change begin - @author: wladek
 			'wgSassParams' => SassUtil::getSassSettings(),
 			// Wikia - change end
 		);
+
 		if ( $wgUseAjax && $wgEnableMWSuggest ) {
 			$vars['wgMWSuggestTemplate'] = SearchEngine::getMWSuggestTemplate();
 		}
 
-		wfRunHooks( 'ResourceLoaderGetConfigVars', array( &$vars ) );
+		Hooks::run( 'ResourceLoaderGetConfigVars', array( &$vars ) );
+		Hooks::run( 'ResourceLoaderGetConfigVarsWithContext', array( &$vars, $context ) );
 
 		return $vars;
 	}
@@ -144,6 +147,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				// seem to do that, and custom implementations might forget. Coerce it to TS_UNIX
 				$moduleMtime = wfTimestamp( TS_UNIX, $module->getModifiedTime( $context ) );
 				$mtime = max( $moduleMtime, wfTimestamp( TS_UNIX, $wgCacheEpoch ) );
+				$mtime = ResourceLoaderHooks::normalizeTimestamp($mtime); // Wikia change - @macbre
 				// Wikia - change begin - @author: wladek
 				$flags = $module->getFlag( $module->getFlagNames() );
 				if ( !empty( $flags ) ) {
@@ -198,7 +202,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 
 			// The core modules:
 			$modules = array( 'jquery', 'mediawiki' );
-			wfRunHooks( 'ResourceLoaderGetStartupModules', array( &$modules ) );
+			Hooks::run( 'ResourceLoaderGetStartupModules', array( &$modules ) );
 
 			// Get the latest version
 			$version = 0;
@@ -240,19 +244,10 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			// Conditional script injection
 			// Wikia change - begin - @author: wladek
 //			$scriptTag = Html::linkedScript( $wgLoadScript . '?' . wfArrayToCGI( $query ) );
-			// get jquery from CDN if we have wsl and getJqueryUrl loaded
-			$modulesWithoutJquery = array_diff($modules,array('jquery'));
-			$scriptTagJquery = Xml::encodeJsVar(
+			$scriptTag = Xml::encodeJsVar(
 					Html::linkedScript( ResourceLoader::makeLoaderURL($modules, $query['lang'],
 					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
 			);
-			$scriptTagNoJquery = Xml::encodeJsVar(
-					Html::linkedScript( ResourceLoader::makeLoaderURL($modulesWithoutJquery, $query['lang'],
-					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
-			);
-			$scriptTag = <<<ENDSCRIPT
-( (window.wsl && window.getJqueryUrl && window.wgJqueryUrl) ? (wsl.buildScript(window.getJqueryUrl()) + $scriptTagNoJquery) : ($scriptTagJquery) )
-ENDSCRIPT;
 			$scriptTag = new XmlJsCode($scriptTag);
 			// Wikia change - end
 			$out .= "if ( isCompatible() ) {\n" .
@@ -293,6 +288,7 @@ ENDSCRIPT;
 		// infinite recursion - think carefully before making changes to this
 		// code!
 		$time = wfTimestamp( TS_UNIX, $wgCacheEpoch );
+		$time = ResourceLoaderHooks::normalizeTimestamp($time); // Wikia change - @macbre
 		foreach ( $loader->getModuleNames() as $name ) {
 			$module = $loader->getModule( $name );
 			$time = max( $time, $module->getModifiedTime( $context ) );

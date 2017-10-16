@@ -1,33 +1,50 @@
 <?php echo $wiki->city_description; ?>
 <ul>
 	<li>
-		Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
+		Wiki was created on <strong><?= $wiki->city_created ?></strong>
 	</li>
 	<li>
-		Founder id: #<strong><?php echo $founder_id; ?></strong>
+		Founder id: #<strong><?= $founder_id; ?></strong>
 		<? if( !empty( $founder_id ) ): ?>
 			<ul>
-				<li>Current name: <?php 
-					print "<strong>" . $founder_username . "</strong>";
-					print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?founder=". rawurlencode($founder_username) . "\">more by this username</a></sup>";
-					?></li>
-				<li>Current email: <?php 
-				if( empty( $founder_usermail ) ) :
-					print "<i>empty</i>";
-				else:
-					print "<strong>" . $founder_usermail . "</strong>";
-					print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?email=". urlencode($founder_usermail) . "\">more by this email</a></sup>";
-				endif; ?></li>
+				<li>Current name:
+					<strong><?= $founder_username ?></strong>
+					<sup>
+						<a href="<?= $founder_metrics_url ?>">more by this username</a>
+						<?php if(!empty( $lookupuser_by_founder_username_url )): ?> |
+							<a href="<?= $lookupuser_by_founder_username_url ?>">lookup username</a>
+						<?php endif; ?>
+					</sup>
+				</li>
+				<li>Current email:
+				<?php if( empty( $founder_usermail ) ) :?>
+					<i>empty</i>
+				<?php else: ?>
+					<strong><?= $founder_usermail; ?></strong>
+					<sup>
+						<a href="<?= $founder_usermail_metrics_url ?>">more by this email</a>
+						<?php if( !empty( $lookupuser_by_founder_usermail_url ) ): ?> |
+							<a href="<?= $lookupuser_by_founder_usermail_url; ?>">lookup email</a>
+						<?php endif; ?>
+					</sup>
+				<?php endif; ?>
+				</li>
 			</ul>
 		<? endif; ?>
 	</li>
 	<li>
-		Founder email: <?php if( empty( $founder_email ) ) :
-			print "<i>empty</i>";
-		else:
-			print "<strong>" . $founder_email . "</strong>";
-			print " <sup><a href=\"{$wikiFactoryUrl}/Metrics?email=". urlencode($founder_email) . "\">more by this email</a></sup>";
-		endif; ?>
+		Founder email:
+		<?php if( empty( $founder_email ) ) : ?>
+			<i>empty</i>
+		<?php else: ?>
+			<strong><?= $founder_email ?></strong>
+			<sup>
+				<a href="<?= $founder_email_metrics_url; ?>">more by this email</a>
+				<?php if( !empty( $lookupuser_by_founder_email_url ) ): ?> |
+					<a href="<?= $lookupuser_by_founder_email_url ?>">lookup email</a>
+				<?php endif; ?>
+			</sup>
+		<?php endif; ?>
 	</li>
 	<li>
 		Tags: <?php if( is_array( $tags ) ): echo "<strong>"; foreach( $tags as $id => $tag ): echo "{$tag} "; endforeach; echo "</strong>"; endif; ?>

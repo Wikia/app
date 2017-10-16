@@ -4,11 +4,16 @@
  *
  * @file
  * @ingroup Extensions
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 class ApiVisualEditorEdit extends ApiVisualEditor {
+
+	public function __construct( ApiMain $main, $name ) {
+		parent::__construct( $main, $name );
+		$main->setShouldCheckWriteApiPermission( false );
+	}
 
 	protected function saveWikitext( $title, $wikitext, $params ) {
 		$apiParams = array(
@@ -30,12 +35,8 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		// FIXME add some way that the user's preferences can be respected
 		$apiParams['watchlist'] = $params['watch'] ? 'watch' : 'unwatch';
 
-		if ( $params['captchaid'] ) {
-			$apiParams['captchaid'] = $params['captchaid'];
-		}
-
-		if ( $params['captchaword'] ) {
-			$apiParams['captchaword'] = $params['captchaword'];
+		if ( $params['g-recaptcha-response'] ) {
+			$apiParams['g-recaptcha-response'] = $params['g-recaptcha-response'];
 		}
 
 		$api = new ApiMain(
@@ -47,43 +48,51 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			true // enable write
 		);
 
+		$api->setShouldCheckWriteApiPermission( false );
 		$api->execute();
 
 		return $api->getResultData();
 	}
 
 	public function execute() {
-		global $wgVisualEditorNamespaces, $wgVisualEditorUseChangeTagging;
-
 		$user = $this->getUser();
 		$params = $this->extractRequestParams();
 		$page = Title::newFromText( $params['page'] );
 		if ( !$page ) {
 			$this->dieUsageMsg( 'invalidtitle', $params['page'] );
 		}
-		if ( !in_array( $page->getNamespace(), $wgVisualEditorNamespaces ) ) {
+		if ( !in_array( $page->getNamespace(), $this->veConfig->get( 'VisualEditorNamespaces' ) ) ) {
 			$this->dieUsage( "VisualEditor is not enabled in namespace " .
 				$page->getNamespace(), 'novenamespace' );
 		}
 
 		$parserParams = array();
-		if ( isset( $params['oldwt'] ) ) {
-			$parserParams['oldwt'] = $params['oldwt'];
-		} else if ( isset( $params['oldid'] ) ) {
+		if ( isset( $params['oldid'] ) ) {
 			$parserParams['oldid'] = $params['oldid'];
 		}
 
-		$wikitext = $this->postHTML( $page, $params['html'], $parserParams );
+		$html = $params['html'];
+		if ( substr( $html, 0, 11 ) === 'rawdeflate,' ) {
+			$html = gzinflate( base64_decode( substr( $html, 11 ) ) );
+		}
 
-		if ( $wikitext === false ) {
-			$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
+		if ( $params['cachekey'] !== null ) {
+			$wikitext = $this->trySerializationCache( $params['cachekey'] );
+			if ( !is_string( $wikitext ) ) {
+				$this->dieUsage( 'No cached serialization found with that key', 'badcachekey' );
+			}
+		} else {
+			$wikitext = $this->postHTML( $page, $html, $parserParams );
+			if ( $wikitext === false ) {
+				$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
+			}
 		}
 
 		$saveresult = $this->saveWikitext( $page, $wikitext, $params );
 		$editStatus = $saveresult['edit']['result'];
 
 		// Error
-		if ( !isset( $saveresult['edit']['result'] ) || $editStatus !== 'Success' ) {
+		if ( $editStatus !== 'Success' ) {
 			$result = array(
 				'result' => 'error',
 				'edit' => $saveresult['edit']
@@ -91,7 +100,9 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 
 		// Success
 		} else {
-			if ( isset( $saveresult['edit']['newrevid'] ) && $wgVisualEditorUseChangeTagging ) {
+			if ( isset( $saveresult['edit']['newrevid'] )
+				&& $this->veConfig->get( 'VisualEditorUseChangeTagging' )
+			) {
 				ChangeTags::addTags( 'visualeditor', null,
 					intval( $saveresult['edit']['newrevid'] ),
 					null
@@ -109,6 +120,40 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			$result = $this->parseWikitext( $page );
 			if ( $result === false ) {
 				$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
+			}
+
+			$result['isRedirect'] = $page->isRedirect();
+
+			if ( class_exists( 'FlaggablePageView' ) ) {
+				$view = FlaggablePageView::singleton();
+
+				// Defeat !$this->isPageView( $request ) || $request->getVal( 'oldid' ) check in setPageContent
+				$view->getContext()->setRequest( new DerivativeRequest(
+					$this->getRequest(),
+					array(
+						'diff' => null,
+						'oldid' => '',
+						'action' => 'view'
+					) + $this->getRequest()->getValues()
+				) );
+
+				// The two parameters here are references but we don't care
+				// about what FlaggedRevs does with them.
+				$outputDone = null;
+				$useParserCache = null;
+				$view->setPageContent( $outputDone, $useParserCache );
+				$view->displayTag();
+			}
+			$result['contentSub'] = $this->getOutput()->getSubtitle();
+			$lang = $this->getLanguage();
+
+			if ( isset( $saveresult['edit']['newtimestamp'] ) ) {
+				$ts = $saveresult['edit']['newtimestamp'];
+
+				$result['lastModified'] = array(
+					'date' => $lang->userDate( $ts, $user ),
+					'time' => $lang->userTime( $ts, $user )
+				);
 			}
 
 			if ( isset( $saveresult['edit']['newrevid'] ) ) {
@@ -140,13 +185,12 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			'watch' => null,
 			'html' => null,
 			'summary' => null,
-			'captchaid' => null,
-			'captchaword' => null,
+			'cachekey' => null,
 		);
 	}
 
 	public function needsToken() {
-		return true;
+		return 'csrf';
 	}
 
 	public function getTokenSalt() {
@@ -161,6 +205,9 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		return true;
 	}
 
+	/**
+	 * @deprecated since MediaWiki core 1.25
+	 */
 	public function getParamDescription() {
 		return array(
 			'page' => 'The page to perform actions on.',
@@ -175,11 +222,14 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			'token' => 'Edit token',
 			'needcheck' => 'When saving, set this parameter if the revision might have roundtrip'
 				. ' problems. This will result in the edit being tagged.',
-			'captchaid' => 'Captcha ID (when saving with a captcha response).',
-			'captchaword' => 'Answer to the captcha (when saving with a captcha response).',
+			'cachekey' => 'Use the result of a previous serializeforcache request with this key.'
+				. 'Overrides html.',
 		);
 	}
 
+	/**
+	 * @deprecated since MediaWiki core 1.25
+	 */
 	public function getDescription() {
 		return 'Save an HTML5 page to MediaWiki (converted to wikitext via the Parsoid service).';
 	}

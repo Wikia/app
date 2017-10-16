@@ -1,6 +1,0 @@
-# 
-# THIS EXTENSION DEPENDS ON CODE THAT HAS BEEN MOVED TO A BRANCH, AND NO LONGER EXISTS IN TRUNK!
-# 
-# TO SATISTFY THE DEPENDENCIES OF THIS CODE, YOU MUST GET THE UsabilityInitiative EXTENSION FROM ONE OF THE FOLLOWING:
-#	/branches/REL1_16/extensions/UsabilityInitiative/ -- official release version
-#	/branches/usability-initiative-1_16/ -- intermediate version with more recent patches, should be merged soon

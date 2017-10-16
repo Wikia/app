@@ -10,13 +10,17 @@ abstract class WikiaSkin extends SkinTemplate {
 	const LINK_REGEX = '/(<!--\[\s*if[^>]+>\s*<link[^>]*rel=["\']?stylesheet["\']?[^>]*>\s*<!\[\s*endif[^>]+-->|<link[^>]*rel=["\']?stylesheet["\']?[^>]*>)/imsU';
 	const STYLE_REGEX = '/(<!--\[\s*if[^>]+>\s*<style[^>]*>.*<\/style>\s*<!\[\s*endif[^>]+-->|<style[^>]*>.*<\/style>)/imsU';
 
+	const USER_LOGIN_STATUS_CLASS_LOGGED = ' user-logged';
+	const USER_LOGIN_STATUS_CLASS_ANON = ' user-anon';
+
 	protected $app = null;
 	protected $wg = null;
-	protected $wf = null;
 
 	//strict mode for checking if an asset's URL is registered for the current skin
 	//@see AssetsManager::checkAssetUrlForSkin
 	protected $strictAssetUrlCheck = true;
+
+	private $assetsManager;
 
 	/**
 	 * WikiaSkin constructor
@@ -29,7 +33,8 @@ abstract class WikiaSkin extends SkinTemplate {
 	function __construct( $templateClassName = null, $skinName = null, $themeName = null, $styleName = null ) {
 		$this->app = F::app();
 		$this->wg = $this->app->wg;
-		$this->wf = $this->app->wf;
+
+		$this->assetsManager = AssetsManager::getInstance();
 
 		/**
 		 * old skins initialize template, skinname, stylename and themename statically in the class declaration,
@@ -90,7 +95,6 @@ abstract class WikiaSkin extends SkinTemplate {
 		wfProfileIn( __METHOD__ );
 
 		$scriptTags = $this->wg->out->getScriptsOnly() . $this->wg->out->getHeadItems();
-		$am = AssetsManager::getInstance();
 		$matches = array();
 		$res = array();
 
@@ -104,11 +108,9 @@ abstract class WikiaSkin extends SkinTemplate {
 				//find the src if set
 				preg_match( '/<script[^>]+src=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $srcMatch );
 
-				if ( !empty( $srcMatch[1] ) && $am->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
+				if ( !empty( $srcMatch[1] ) && $this->assetsManager->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
 					//fix HTML::inlineScript's expansion of ampersands in the src attribute
 					$url = str_replace( '&amp;', '&', $srcMatch[1] );
-					// apply domain sharding
-					$url = wfReplaceAssetServer($url);
 					$res[] = array( 'url' => $url, 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $srcMatch[1] ) && !$this->strictAssetUrlCheck ) {
 					//only non-strict skins accept inline elements
@@ -132,7 +134,6 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		//there are a number of extension that use addScript to append link tags for stylesheets, need to include those too
 		$stylesTags = $this->wg->out->buildCssLinks(). $this->wg->out->getHeadItems() . $this->wg->out->getScriptsOnly();
-		$am = AssetsManager::getInstance();
 		$matches = array();
 		$res = array();
 
@@ -146,12 +147,10 @@ abstract class WikiaSkin extends SkinTemplate {
 				//find the src if set
 				preg_match( '/<link[^>]+href=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $hrefMatch );
 
-				if ( !empty( $hrefMatch[1] ) && $am->checkAssetUrlForSkin( $hrefMatch[1], $this ) ) {
+				if ( !empty( $hrefMatch[1] ) && $this->assetsManager->checkAssetUrlForSkin( $hrefMatch[1], $this ) ) {
 					//fix HTML::element's expansion of ampersands in the src attribute
 					// todo: do we really need this trick? I notice URLs that are not properly encoded in the head element
 					$url = str_replace( '&amp;', '&', $hrefMatch[1] );
-					// apply domain sharding
-					$url = wfReplaceAssetServer($url);
 					$res[] = array( 'url' => $url, 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $hrefMatch[1] ) && !$this->strictAssetUrlCheck ) {
 					$res[] = array( 'url' => null, 'tag' => $m );
@@ -175,6 +174,48 @@ abstract class WikiaSkin extends SkinTemplate {
 		return $res;
 	}
 
+	/**
+	 * This method extracts links to SASS files from $this->getStyles() method
+	 * and generates a single <link> tag to load all of them via a single HTTP request.
+	 *
+	 * Additionaly, all SASS files from $sassFiles array will be loaded as well.
+	 *
+	 * Once this function ends its run $sassFiles will be updated (via a reference)
+	 * with all SASS files extracted from getStyles().
+	 *
+	 * @param array $sassFiles additional list of SASS files to load
+	 * @return string CSS links with extracted SASS files and the rest
+	 */
+	public function getStylesWithCombinedSASS(Array &$sassFiles) {
+		wfProfileIn(__METHOD__);
+
+		global $wgAllInOne;
+		$cssLinks = [];
+
+		foreach ( $this->getStyles() as $s ) {
+			if ( !empty($s['url']) ) {
+				if ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
+					$sassFiles[] = $s['url'];
+				} else {
+					$cssLinks[] = $s['tag'];
+				}
+			} else {
+				$cssLinks[] = $s['tag'];
+			}
+		}
+
+		// turn an url (http://something.wikia.com/__am/sass/options/path/to/file.scss) to a local filepath
+		$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
+
+		// get a single URL to fetch all the required SASS files
+		$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
+
+		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, count($sassFiles) ) );
+
+		wfProfileOut(__METHOD__);
+		return Html::linkedStyle($sassFilesUrl) . implode('', $cssLinks);
+	}
+
 	/*
 	 * WikiaMobile skin has its own getTopScripts
 	 * MobileWikiaSkin::getTopScripts
@@ -182,15 +223,16 @@ abstract class WikiaSkin extends SkinTemplate {
 	 */
 	public function getTopScripts() {
 		$scripts = '';
-		$vars = array(
+		$vars = [
 			'Wikia' => new stdClass(),
-			'wgJqueryUrl' => AssetsManager::getInstance()->getURL( 'jquery' ),
-		);
+		];
 
-		wfrunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+		Hooks::run( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+
+		$scripts .= $this->renderTopShortTTLModules();
 
 		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
-		wfrunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
+		Hooks::run( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
 			// Mocking mw.loader.state so the script can be loaded up high
 			// Whatever is passed to mw.loader.state is saved to window.preMwLdrSt
@@ -203,6 +245,30 @@ abstract class WikiaSkin extends SkinTemplate {
 		}
 
 		return self::makeInlineVariablesScript($vars) . $scripts;
+	}
+
+	/**
+	 * Load ResourceLoader modules that have a short caching time
+	 *
+	 * Used by AbTesting and InstantGlobals
+	 *
+	 * @return string
+	 * @author macbre
+	 */
+	protected function renderTopShortTTLModules() {
+		$shortTtlScriptModules = [];
+
+		Hooks::run( 'WikiaSkinTopShortTTLModules', [ &$shortTtlScriptModules, $this ] );
+
+		if ( !empty($shortTtlScriptModules) ) {
+			$scripts = ResourceLoader::makeCustomLink( $this->wg->out, $shortTtlScriptModules, 'scripts' ) . "\n";
+		}
+		else {
+			$scripts = '';
+		}
+
+		return $scripts;
+
 	}
 
 	// expose protected methods from Skin object
@@ -233,7 +299,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	}
 
 	static function makeInlineVariablesScript( $data ) {
-		$wf = F::app()->wf;
 		wfProfileIn( __METHOD__ );
 
 		if( $data ) {
@@ -250,6 +315,28 @@ abstract class WikiaSkin extends SkinTemplate {
 			wfProfileOut(__METHOD__ );
 			return '';
 		}
+	}
+
+	/**
+	 * Returns a name of a class that is associated with a login status of the current user.
+	 * @return string
+	 */
+	public function getUserLoginStatusClass() {
+		if ( F::app()->wg->User->isLoggedIn() ) {
+			return self::USER_LOGIN_STATUS_CLASS_LOGGED;
+		}
+
+		return self::USER_LOGIN_STATUS_CLASS_ANON;
+	}
+
+	/**
+	 * VOLDEV-168: Add a community-specific class to the body tag
+	 * The class is the local DB name with a wiki- prefix
+	 *
+	 * @return string Generated CSS class for this wikia
+	 */
+	public function getBodyClassForCommunity() {
+		return Sanitizer::escapeClass( "wiki-{$this->wg->DBname}" );
 	}
 
 	public function initPage( OutputPage $out ) {

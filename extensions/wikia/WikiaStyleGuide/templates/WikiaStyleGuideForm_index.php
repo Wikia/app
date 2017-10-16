@@ -90,20 +90,6 @@
 									<strong><?= $value ?></strong>
 								<? endif ?>
 							<? break; ?>
-							<? case 'nirvana': ?>
-								<?= ( string ) F::app()->sendRequest(
-									$input[ 'controller' ],
-									$input[ 'method' ],
-									( empty( $input[ 'params' ] ) ? array() : $input[ 'params' ] )
-								) ?>
-							<? break; ?>
-							<? case 'nirvanaview': ?>
-								<?= F::app()->getView(
-									$input[ 'controller' ],
-									$input[ 'view' ],
-									( empty( $input[ 'params' ] ) ? array() : $input[ 'params' ] )
-								) ?>
-							<? break; ?>
 							<? case 'password': ?>
 								<input type="password" <?= $inputAttributes ?>>
 							<? break; ?>
@@ -119,6 +105,7 @@
 							<? break; ?>
 							<? case 'text': ?>
 							<? case 'url': ?>
+							<? case 'email': ?>
 								<input type="<?= $type ?>" <?= $inputAttributes ?>>
 							<? break; ?>
 							<? case 'textarea': ?>

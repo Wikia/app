@@ -31,9 +31,6 @@ $wgWidgets['WidgetSlideshow'] = array(
     'editable' => true,
 );
 
-$wgGroupPermissions['sysop']['wteditimagelist'] = true;
-$wgGroupPermissions['staff']['wteditimagelist'] = true;
-
 function WidgetSlideshow($id, $params) {
 
 	global $wgUser;

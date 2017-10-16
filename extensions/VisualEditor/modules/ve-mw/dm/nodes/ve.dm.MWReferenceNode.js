@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWReferenceNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,24 +10,30 @@
  *
  * @class
  * @extends ve.dm.LeafNode
+ * @mixins ve.dm.FocusableNode
+ *
  * @constructor
- * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWReferenceNode = function VeDmMWReferenceNode( length, element ) {
+ve.dm.MWReferenceNode = function VeDmMWReferenceNode() {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
+	ve.dm.LeafNode.apply( this, arguments );
+
+	// Mixin constructors
+	ve.dm.FocusableNode.call( this );
 
 	// Event handlers
 	this.connect( this, {
-		'root': 'onRoot',
-		'unroot': 'onUnroot'
+		root: 'onRoot',
+		unroot: 'onUnroot'
 	} );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWReferenceNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.MWReferenceNode, ve.dm.LeafNode );
+
+OO.mixinClass( ve.dm.MWReferenceNode, ve.dm.FocusableNode );
 
 /* Static members */
 
@@ -38,6 +44,16 @@ ve.dm.MWReferenceNode.static.matchTagNames = null;
 ve.dm.MWReferenceNode.static.matchRdfaTypes = [ 'mw:Extension/ref' ];
 
 ve.dm.MWReferenceNode.static.isContent = true;
+
+ve.dm.MWReferenceNode.static.blacklistedAnnotationTypes = [ 'link' ];
+
+/**
+ * Regular expression for parsing the listKey attribute
+ * @static
+ * @property {RegExp}
+ * @inheritable
+ */
+ve.dm.MWReferenceNode.static.listKeyRegex = /^(auto|literal)\/(.*)$/;
 
 ve.dm.MWReferenceNode.static.toDataElement = function ( domElements, converter ) {
 	var dataElement,
@@ -53,16 +69,16 @@ ve.dm.MWReferenceNode.static.toDataElement = function ( domElements, converter )
 		contentsUsed = ( body !== '' && queueResult.isNew );
 
 	dataElement = {
-		'type': this.name,
-		'attributes': {
-			'mw': mwData,
-			'originalMw': mwDataJSON,
-			'childDomElements': ve.copy( Array.prototype.slice.apply( domElements[0].childNodes ) ),
-			'listIndex': listIndex,
-			'listGroup': listGroup,
-			'listKey': listKey,
-			'refGroup': refGroup,
-			'contentsUsed': contentsUsed
+		type: this.name,
+		attributes: {
+			mw: mwData,
+			originalMw: mwDataJSON,
+			childDomElements: ve.copy( Array.prototype.slice.apply( domElements[0].childNodes ) ),
+			listIndex: listIndex,
+			listGroup: listGroup,
+			listKey: listKey,
+			refGroup: refGroup,
+			contentsUsed: contentsUsed
 		}
 	};
 	return dataElement;
@@ -86,6 +102,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 	keyedNodes = converter.internalList
 		.getNodeGroup( dataElement.attributes.listGroup )
 		.keyedNodes[dataElement.attributes.listKey];
+
 	if ( setContents ) {
 		// Check if a previous node has already set the content. If so, we don't overwrite this
 		// node's contents.
@@ -105,7 +122,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 		// Check if any other nodes with this key provided content. If not
 		// then we attach the contents to the first reference with this key
 
-		// Check that this the first reference with its key
+		// Check that this is the first reference with its key
 		if ( keyedNodes && dataElement === keyedNodes[0].element ) {
 			setContents = true;
 			// Check no other reference originally defined the contents
@@ -121,7 +138,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 
 	if ( setContents && !contentsAlreadySet ) {
 		converter.getDomSubtreeFromData(
-			itemNode.getDocument().getFullData( new ve.Range( itemNodeRange.start, itemNodeRange.end ), true ),
+			itemNode.getDocument().getFullData( itemNodeRange, true ),
 			itemNodeWrapper
 		);
 		itemNodeHtml = $( itemNodeWrapper ).html(); // Returns '' if itemNodeWrapper is empty
@@ -133,7 +150,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 	}
 
 	// Generate name
-	listKeyParts = dataElement.attributes.listKey.match( /^(auto|literal)\/(.*)$/ );
+	listKeyParts = dataElement.attributes.listKey.match( this.listKeyRegex );
 	if ( listKeyParts[1] === 'auto' ) {
 		// Only render a name if this key was reused
 		if ( keyedNodes.length > 1 ) {
@@ -143,7 +160,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 				dataElement.attributes.listKey,
 				// Generate a name starting with ':' to distinguish it from normal names
 				'literal/:'
-			).substr( 'literal/'.length );
+			).slice( 'literal/'.length );
 		} else {
 			name = undefined;
 		}
@@ -176,13 +193,52 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 		}
 	} else {
 		el.setAttribute( 'data-mw', JSON.stringify( mwData ) );
+		// HTML for the external clipboard, it will be ignored by the converter
+		$( el ).append(
+			$( '<sup>', doc ).text( this.getIndexLabel( dataElement, converter.internalList ) )
+		);
 	}
 
 	return [ el ];
 };
 
-ve.dm.MWReferenceNode.static.remapInternalListIndexes = function ( dataElement, mapping ) {
+ve.dm.MWReferenceNode.static.remapInternalListIndexes = function ( dataElement, mapping, internalList ) {
+	var listKeyParts;
+	// Remap listIndex
 	dataElement.attributes.listIndex = mapping[dataElement.attributes.listIndex];
+
+	// Remap listKey if it was automatically generated
+	listKeyParts = dataElement.attributes.listKey.match( this.listKeyRegex );
+	if ( listKeyParts[1] === 'auto' ) {
+		dataElement.attributes.listKey = 'auto/' + internalList.getNextUniqueNumber();
+	}
+};
+
+ve.dm.MWReferenceNode.static.remapInternalListKeys = function ( dataElement, internalList ) {
+	var suffix = '';
+	// Try name, name2, name3, ... until unique
+	while ( ve.indexOf( dataElement.attributes.listKey + suffix, internalList.keys ) !== -1 ) {
+		suffix = suffix ? suffix + 1 : 2;
+	}
+	if ( suffix ) {
+		dataElement.attributes.listKey = dataElement.attributes.listKey + suffix;
+	}
+};
+
+/**
+ * Gets the index label for the reference
+ * @static
+ * @param {Object} dataElement Element data
+ * @param {ve.dm.InternalList} internalList Internal list
+ * @returns {string} Reference label
+ */
+ve.dm.MWReferenceNode.static.getIndexLabel = function ( dataElement, internalList ) {
+	var listIndex = dataElement.attributes.listIndex,
+		listGroup = dataElement.attributes.listGroup,
+		refGroup = dataElement.attributes.refGroup,
+		position = internalList.getIndexPosition( listGroup, listIndex );
+
+	return '[' + ( refGroup ? refGroup + ' ' : '' ) + ( position + 1 ) + ']';
 };
 
 /* Methods */
@@ -204,6 +260,15 @@ ve.dm.MWReferenceNode.prototype.isInspectable = function () {
  */
 ve.dm.MWReferenceNode.prototype.getInternalItem = function () {
 	return this.getDocument().getInternalList().getItemNode( this.getAttribute( 'listIndex' ) );
+};
+
+/**
+ * Gets the index label for the reference
+ * @method
+ * @returns {string} Reference label
+ */
+ve.dm.MWReferenceNode.prototype.getIndexLabel = function () {
+	return this.constructor.static.getIndexLabel( this.element, this.getDocument().getInternalList() );
 };
 
 /**

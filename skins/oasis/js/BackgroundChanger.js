@@ -8,6 +8,7 @@
 
 define('wikia.backgroundchanger', function()  {
 	'use strict';
+	var loadedCss = [];
 	/**
 	 * Load background.scss with params
 	 *
@@ -39,13 +40,13 @@ define('wikia.backgroundchanger', function()  {
 				'color-body-middle': options.backgroundMiddleColor || options.backgroundColor
 			},
 			settings = $.extend({}, window.wgSassParams, optionsForSass),
-			sassUrl = $.getSassCommonURL('/skins/oasis/css/core/background.scss', settings);
+			settingsBreakpoints = $.extend({}, settings, {widthType: 0}),
+			sassUrl = window.wgOasisBreakpoints ? $.getSassCommonURL('/skins/oasis/css/core/breakpoints-background.scss', settingsBreakpoints) : $.getSassCommonURL('/skins/oasis/css/core/background.scss', settings);
 
 		// preload adskin image
 		imagePreload.src = options.skinImage;
 
-		// load CSS and apply class changes to body element after loading
-		$.getCSS(sassUrl, function() {
+		var onCssLoadCallBack = function() {
 			if (options.skinImage !== '' && options.skinImageWidth > 0 && options.skinImageHeight > 0) {
 				if ((options.backgroundFixed === undefined) || !!options.backgroundFixed) {
 					$('body').addClass('background-fixed');
@@ -64,10 +65,29 @@ define('wikia.backgroundchanger', function()  {
 				} else {
 					$('body').removeClass('background-dynamic');
 				}
+
+				if (!!options.ten64) {
+					$('.background-image-gradient').addClass('no-gradients');
+				}
 			} else {
 				$('body').removeClass('background-dynamic background-not-tiled background-fixed');
 			}
-		});
+		};
+
+		var nodeIndex = loadedCss.indexOf(sassUrl);
+
+		if (nodeIndex > -1) {
+			$('link[data-background-changer]').attr('disabled', true);
+			$('link[data-background-changer="'+sassUrl+'"]').attr('disabled', false);
+			onCssLoadCallBack();
+		} else {
+			// load CSS and apply class changes to body element after loading
+			$.getCSS(sassUrl, function(link) {
+				loadedCss.push(sassUrl);
+				$(link).attr('data-background-changer', sassUrl);
+				onCssLoadCallBack();
+			});
+		}
 	}
 
 	return {

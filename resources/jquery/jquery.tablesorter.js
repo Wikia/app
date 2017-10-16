@@ -289,7 +289,7 @@
 			if ( !this.sortDisabled ) {
 
 				var $th = thisCached.addClass( table.config.cssHeader ).attr( 'title', msg[1] )
-					/* Wikia change - check whether arrows already exists before appending */
+					/* Wikia change - check whether arrows already exist before appending */
 					.each( function() {
 						if( !thisCached.find( "div .chevron" ).length ) {
 							thisCached.append( '<div><span class="chevron"></span><span class="chevron"></span></div>' );
@@ -536,7 +536,8 @@
 				sortList: [],
 				headerList: [],
 				selectorHeaders: 'thead tr:eq(0) th',
-				debug: false
+				debug: false,
+				complete: function() {} // wikia change - react to sorting completion BAC-718
 			},
 
 			dateRegex: [],
@@ -554,6 +555,10 @@
 						shiftDown = 0,
 						firstTime = true;
 
+					// Quit if already initialized
+					if ( $table.hasClass('jquery-tablesorter') ) {
+						return;
+					}
 					// Quit if no tbody
 					if ( !table.tBodies ) {
 						return;
@@ -671,6 +676,8 @@
 							appendToTable(
 								$table[0], multisort( $table[0], config.sortList, cache )
 							);
+
+							config.complete(); // wikia change - react to sorting completion BAC-718
 
 							// Stop normal event by returning false
 							return false;

@@ -1,20 +1,20 @@
 <?php
 
-class JsonFormatService extends \WikiaService {
+use Wikia\JsonFormat\HtmlParser;
 
-	const SIMPLE_JSON_SCHEMA_VERSION = 1;
+class JsonFormatService extends WikiaObject {
+
+	const SIMPLE_JSON_SCHEMA_VERSION = 3;
 	const SIMPLE_JSON_CACHE_EXPIRATION = 14400; //4 hour
 
 	private $htmlParser;
 	private $requestContext;
 
-	function __construct( $htmlParser = null ) {
-		if( $htmlParser == null ) {
-			$htmlParser = new Wikia\JsonFormat\HtmlParser();
-		}
-		$this->requestContext = new RequestContext();
-		$this->htmlParser = $htmlParser;
+	public function __construct() {
 		parent::__construct();
+
+		$this->requestContext = new RequestContext();
+		$this->htmlParser = new HtmlParser();
 	}
 
 	/**
@@ -56,7 +56,19 @@ class JsonFormatService extends \WikiaService {
 		$cacheKey = wfMemcKey( "SimpleJson", $article->getPage()->getId(), self::SIMPLE_JSON_SCHEMA_VERSION );
 		$jsonSimple = $this->app->wg->memc->get( $cacheKey );
 		if ( $jsonSimple === false ) {
+
+			/**
+			 * Prevention from circular references, when parsing articles with tabs.
+			 *
+			 * E.g. when page contains tab, which is actually link to itself,
+			 * or if any tab contains tab, which referenced to given page.
+			 *
+			 * @see DivContainingHeadersVisitor::parseTabview
+			 */
+			HtmlParser::markAsVisited( $article->getTitle()->getText() );
 			$jsonFormatRootNode = $this->getJsonFormatForArticle( $article );
+			// We have finished parsing of article, so we can clean array of visited articles
+			HtmlParser::clearVisited();
 
 			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
 			$jsonSimple = $simplifier->simplify( $jsonFormatRootNode, $article->getTitle()->getText() );
@@ -67,4 +79,5 @@ class JsonFormatService extends \WikiaService {
 		$measurement->stop();
 		return $jsonSimple;
 	}
+
 }

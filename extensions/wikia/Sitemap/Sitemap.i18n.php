@@ -55,7 +55,7 @@ $messages['ca'] = array(
 	'sitemap-desc' => 'Generar mapes del lloc sobre la marxa',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -259,7 +259,7 @@ $messages['ru'] = array(
 	'sitemap-desc' => 'Создание файлов Sitemap для вики на лету',
 );
 
-/** Seeltersk (Seeltersk)
+/** Saterland Frisian (Seeltersk)
  * @author Pyt
  */
 $messages['stq'] = array(
@@ -313,4 +313,11 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'sitemap-desc' => '联机生成站点地图',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
+ */
+$messages['zh-hant'] = array(
+	'sitemap-desc' => '快速產生 Wiki 網站地圖',
 );

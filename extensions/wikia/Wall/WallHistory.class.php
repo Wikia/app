@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class WallHistory, it's used by WallHistoryController and ForumController
+ */
 class WallHistory extends WikiaModel {
 
 	/**
@@ -7,25 +10,26 @@ class WallHistory extends WikiaModel {
 	 */
 	const DEFAULT_LAST_POSTS_COUNT = 5;
 
-	var $wikiId;
-	var $page = 1;
-	var $perPage = 100;
+	private $page = 1;
+	private $perPage = 100;
 
-	public function __construct() {
-		parent::__construct();
-	}
+	/**
+	 * Events of message creation, edit, delete and restore are stored in wall_history table.
+	 *
+	 * - Messages deleted using MediaWiki flow are removed from the table.
+	 * - Messages deleted via Wall flow are marked by setting deleted_or_removed to 1 (its used by Forum activity module only)
+	 *
+	 * @param int $type one of WH_* defines
+	 * @param WallNotificationAdminEntity $feed
+	 * @param User $user
+	 */
+	public function add( int $type, $feed, User $user ) {
 
-	public function getDB($db = DB_MASTER) {
-		return wfGetDB($db);
-	}
-
-	public function add( $type, $feed, $user ) {
-
-		switch($type) {
+		switch( $type ) {
 			case WH_EDIT:
 			case WH_NEW:
-				//wall the wall action goes through this point.
-				wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->title_id));
+				// wall the wall action goes through this point.
+				Hooks::run( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->title_id ] );
 				$this->addNewOrEdit( $type, $feed, $user );
 			break;
 			case WH_ARCHIVE:
@@ -33,138 +37,147 @@ class WallHistory extends WikiaModel {
 			case WH_REOPEN:
 			case WH_REMOVE:
 			case WH_RESTORE:
-				//wall the wall action goes through this point.
-				wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->message_id));
-				$this->addStatChangeAction( $type, $feed, $user );
+				// wall the wall action goes through this point.
+				Hooks::run( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->message_id ] );
+				$this->addStatChangeAction( $type, $feed );
 			break;
 		}
 
 		WikiaDataAccess::cachePurge( $this->getLastPostsMemcKey() );
 	}
 
-	public function remove($pageId) {
-		$this->getDB(DB_MASTER)->delete(
+	/**
+	 * When deleting a page from NS_USER_WALL_MESSAGE namespace, remove its entries from wall_history
+	 *
+	 * @param int $pageId
+	 */
+	public function remove( int $pageId ) {
+		$this->getDB( DB_MASTER )->delete(
 			'wall_history',
-			array(
-				'parent_comment_id' => ((int) $pageId)
-			)
+			[
+				'parent_comment_id' => ( (int) $pageId )
+			],
+			__METHOD__
 		);
 	}
 
 	public function moveThreads( $from, $to ) {
-		$this->getDB(DB_MASTER)->update(
+		$this->getDB( DB_MASTER )->update(
 			'wall_history',
-			array( 'parent_page_id' => $to ),
-			array(
+			[ 'parent_page_id' => $to ],
+			[
 				'parent_page_id' => $from
-			),
+			],
 			__METHOD__
 		);
 
-		$this->getDB(DB_MASTER)->commit();
+		$this->getDB( DB_MASTER )->commit();
 	}
 
 	public function moveThread( $thread, $to ) {
-		$this->getDB(DB_MASTER)->update(
+		$this->getDB( DB_MASTER )->update(
 			'wall_history',
-			array( 'parent_page_id' => $to ),
-			array(
+			[ 'parent_page_id' => $to ],
+			[
 				"parent_comment_id = $thread or comment_id = $thread"
-			),
+			],
 			__METHOD__
 		);
 
-		$this->getDB(DB_MASTER)->commit();
+		$this->getDB( DB_MASTER )->commit();
 	}
 
-	private function addNewOrEdit($action, $feed, $user) {
-		if(!($feed instanceof WallNotificationEntity)) {
-			return false;
-		}
+	/**
+	 * @param int $action
+	 * @param WallNotificationEntity $feed
+	 * @param User $user
+	 */
+	private function addNewOrEdit( int $action, $feed, User $user ) {
+
+		$data = $feed->data;
 
 		$this->internalAdd(
-			(int) $feed->data->parent_page_id,
-			(int) $user->getID(),
+			(int) $data->parent_page_id,
+			(int) $user->getId(),
 			$user->getName(),
-			!$feed->isMain(),
-			$feed->data->title_id,
-			$feed->data->article_title_ns,
-			$feed->data->parent_id,
-			$feed->data_noncached->thread_title_full,
+			$feed->isReply(),
+			$data->title_id,
+			$data->article_title_ns,
+			$data->parent_id,
+			$feed->threadTitleFull,
 			$action,
-			$feed->data->reason,
-			$feed->data->rev_id
-		);
-		return true;
-	}
-
-	private function addStatChangeAction($action, $feed, $user) {
-		if(!($feed instanceof WallNotificationAdminEntity)) {
-			return false;
-		}
-
-		$title = Title::newFromId($feed->data->message_id);
-
-		if(empty($title)) {
-			return false;
-		}
-
-		$this->internalAdd(
-			$feed->data->parent_page_id,
-			$feed->data->user_removing_id,
-			'',
-			$feed->data->is_reply,
-			$feed->data->message_id,
-			$title->getNamespace(),
-			$feed->data->parent_id,
-			$feed->data->title,
-			$action,
-			$feed->data->reason,
-			null
-		);
-
-
-		$this->getDB(DB_MASTER)->update(
-			'wall_history',
-			array( 'deleted_or_removed' => ($action == WH_DELETE || $action == WH_REMOVE) ? 1:0),
-			array(
-				'comment_id' => $feed->data->message_id
-			),
-			__METHOD__
-		);
-
-		return true;
-	}
-	//make it public for migration script
-
-	public function internalAdd( $parentPageId, $postUserId, $postUserName, $isReply, $commentId, $ns, $parentCommentId, $metatitle, $action, $reason, $revId) {
-		$this->getDB(DB_MASTER)->insert(
-			'wall_history',
-			array(
-				'parent_page_id' => $parentPageId,
-				'post_user_id' => $postUserId,
-				'post_ns' => MWNamespace::getSubject( $ns ),
-				'post_user_ip' => ( intval($postUserId) === 0 ? $this->ip2long($postUserName) : null),
-				'is_reply' => $isReply,
-				'comment_id' => $commentId,
-				'parent_comment_id' => ( $isReply ? $parentCommentId:$commentId),
-				'metatitle' => $metatitle,
-				'reason' => empty($reason) ? null:$reason,
-				'action' => $action,
-				'revision_id' => $revId
-			)
+			$data->reason,
+			$data->rev_id
 		);
 	}
 
 	/**
-	 * Gets data for Forum Activity Module with a cache layer.
+	 * @param int $action
+	 * @param WallNotificationAdminEntity $feed
+	 */
+	private function addStatChangeAction( int $action, $feed ) {
+
+		$data = $feed->data;
+		$title = Title::newFromID( $data->message_id );
+
+		if ( empty( $title ) ) {
+			return;
+		}
+
+		$this->internalAdd(
+			$data->parent_page_id,
+			$data->user_removing_id,
+			'',
+			$data->is_reply,
+			$data->message_id,
+			$title->getNamespace(),
+			$data->parent_id,
+			$data->title,
+			$action,
+			$data->reason,
+			null
+		);
+
+
+		$this->getDB( DB_MASTER )->update(
+			'wall_history',
+			[ 'deleted_or_removed' => ( $action == WH_DELETE || $action == WH_REMOVE ) ? 1: 0 ],
+			[
+				'comment_id' => $data->message_id
+			],
+			__METHOD__
+		);
+	}
+
+	private function internalAdd( $parentPageId, $postUserId, $postUserName, $isReply, $commentId, $ns, $parentCommentId, $metatitle, $action, $reason, $revId ) {
+		$this->getDB( DB_MASTER )->insert(
+			'wall_history',
+			[
+				'parent_page_id' => $parentPageId,
+				'post_user_id' => $postUserId,
+				'post_ns' => MWNamespace::getSubject( $ns ),
+				'post_user_ip' => ( intval( $postUserId ) === 0 ? $this->ip2long( $postUserName ) : null ),
+				'is_reply' => $isReply,
+				'comment_id' => $commentId,
+				'parent_comment_id' => ( $isReply ? $parentCommentId: $commentId ),
+				'metatitle' => $metatitle,
+				'reason' => empty( $reason ) ? null: $reason,
+				'action' => $action,
+				'revision_id' => $revId
+			],
+			__METHOD__
+		);
+	}
+
+	/**
+	 * Gets data for Forum Activity Module with a cache layer (called by ForumController).
 	 *
 	 * @param int $ns    The namespace (this should theoretically work for Forum and Wall)
 	 * @param int $count The number of activities to get
 	 *
 	 * @return array Formatted data that gets passed to the view
 	 */
-	public function  getLastPosts( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
+	public function getLastPosts( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
 		wfProfileIn( __METHOD__ );
 
 		$key = $this->getLastPostsMemcKey();
@@ -196,13 +209,13 @@ class WallHistory extends WikiaModel {
 	 *
 	 * @return array Formatted data that gets passed to the view
 	 */
-	public function  getLastPostsFromDB( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
+	private function getLastPostsFromDB( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
 		wfProfileIn( __METHOD__ );
 
 		$ns    = (int)MWNamespace::getSubject( $ns );
 		$count = (int)$count;
 		$db    = $this->getDB( DB_SLAVE );
-		$out   = array();
+		$out   = [ ];
 
 		$result = $db->query(
 			'SELECT
@@ -274,61 +287,70 @@ class WallHistory extends WikiaModel {
 		return $out;
 	}
 
-	public function get($parent_page_id, $sort, $parent_comment_id = 0, $show_replay = true) {
-		$sort = ($sort === 'nf') ? 'desc' : 'asc';
-		$where = $this->getWhere($parent_page_id, $parent_comment_id, $show_replay);
+	/**
+	 * Data provider for WallHistoryController used to render action=history pages for NS_USER_WALL articles
+	 *
+	 * @param $parent_page_id
+	 * @param $sort
+	 * @param int $parent_comment_id
+	 * @param bool $show_replay
+	 * @return array
+	 */
+	public function get( $parent_page_id, $sort, $parent_comment_id = 0, $show_replay = true ) {
+		$sort = ( $sort === 'nf' ) ? 'desc' : 'asc';
+		$where = $this->getWhere( $parent_page_id, $parent_comment_id, $show_replay );
 
-		if($where === false) {
-			return array();
+		if ( $where === false ) {
+			return [ ];
 		}
-		return $this->loadFromDB($where, $this->getLimit(), $this->getOffset(), $sort);
+		return $this->loadFromDB( $where, $this->getLimit(), $this->getOffset(), $sort );
 	}
 
-	public function getCount($parent_page_id = 0, $parent_comment_id = 0, $show_replay  = true) {
-		$where = $this->getWhere($parent_page_id, $parent_comment_id, $show_replay);
+	public function getCount( $parent_page_id = 0, $parent_comment_id = 0, $show_replay  = true ) {
+		$where = $this->getWhere( $parent_page_id, $parent_comment_id, $show_replay );
 
-		if($where === false) {
+		if ( $where === false ) {
 			return false;
 		}
-		$db =  $this->getDB(DB_SLAVE);
+		$db =  $this->getDB( DB_SLAVE );
 		$row = $db->selectRow(
 			'wall_history',
-			array(
+			[
 				'count(*) as cnt'
-			),
+			],
 			$where,
 			__METHOD__
 		);
 		return $row->cnt;
 	}
 
-	protected function getWhere($parent_page_id = 0, $parent_comment_id = 0, $show_replay = true) {
-		$query = array();
+	protected function getWhere( $parent_page_id = 0, $parent_comment_id = 0, $show_replay = true ) {
+		$query = [ ];
 
-		if( $parent_comment_id === 0 ) {
+		if ( $parent_comment_id === 0 ) {
 			$query[] = 'parent_page_id is null';
 		} else {
-			$query[] = '(comment_id = '.$parent_comment_id.' OR parent_comment_id = '.$parent_comment_id.')';
+			$query[] = '(comment_id = ' . $parent_comment_id . ' OR parent_comment_id = ' . $parent_comment_id . ')';
 		}
 
-		if(empty($parent_page_id)) {
+		if ( empty( $parent_page_id ) ) {
 			return $query;
 		}
 
-		if($parent_page_id > 0 ) {
-			$query = array(
+		if ( $parent_page_id > 0 ) {
+			$query = [
 				'parent_page_id' => $parent_page_id
-			);
+			];
 		}
 
-		if(!$show_replay) {
+		if ( !$show_replay ) {
 			$query['is_reply'] = 0;
 		}
 
 		return $query;
 	}
 
-	public function setPage($page, $perPage) {
+	public function setPage( $page, $perPage ) {
 		$this->page = (int) $page;
 		$this->perPage = (int) $perPage;
 	}
@@ -338,15 +360,15 @@ class WallHistory extends WikiaModel {
 	}
 
 	protected function getOffset() {
-		return ($this->page - 1) * $this->perPage;
+		return ( $this->page - 1 ) * $this->perPage;
 	}
 
-	protected function baseLoadFromDB($con, $limit, $offset, $sort) {
-		$db =  $this->getDB(DB_SLAVE);
+	protected function baseLoadFromDB( $conds, $limit, $offset, $sort ) {
+		$db =  $this->getDB( DB_SLAVE );
 
 		$res = $db->select(
 			'wall_history',
-			array(
+			[
 				'parent_page_id',
 				'post_user_id',
 				'post_user_ip',
@@ -358,28 +380,28 @@ class WallHistory extends WikiaModel {
 				'metatitle',
 				'reason',
 				'revision_id'
-			),
-			$con,
+			],
+			$conds,
 			__METHOD__,
-			array(
+			[
 				'LIMIT' => $limit,
 				'OFFSET' => $offset,
-				'ORDER BY' => 'event_date '.$sort,
-			)
+				'ORDER BY' => 'event_date ' . $sort,
+			]
 		);
 
 		return $res;
 	}
 
-	protected function loadFromDB($con, $limit, $offset, $sort) {
-		$db =  $this->getDB(DB_SLAVE);
+	protected function loadFromDB( $conds, $limit, $offset, $sort ) {
+		$db =  $this->getDB( DB_SLAVE );
 
-		$res = $this->baseLoadFromDB($con, $limit, $offset, $sort);
+		$res = $this->baseLoadFromDB( $conds, $limit, $offset, $sort );
 
-		$out = array();
-		while($row = $db->fetchRow($res)) {
-			$data = $this->formatData($row);
-			if(!empty($data)){
+		$out = [ ];
+		while ( $row = $db->fetchRow( $res ) ) {
+			$data = $this->formatData( $row );
+			if ( !empty( $data ) ) {
 				$out[] = $data;
 			}
 		}
@@ -387,29 +409,33 @@ class WallHistory extends WikiaModel {
 		return $out;
 	}
 
-	protected function formatData($row) {
-		$user = null;
-		if($row['post_user_id'] > 0) {
-			$user = User::newFromID($row['post_user_id']);
+	/**
+	 * @param array $row
+	 * @return array|void
+	 */
+	protected function formatData( Array $row ) {
+
+		if ( $row['post_user_id'] > 0 ) {
+			$user = User::newFromId( $row['post_user_id'] );
 		} else {
-			$user = User::newFromName($this->long2ip($row['post_user_ip']), false);
+			$user = User::newFromName( long2ip( $row['post_user_ip'] ), false );
 		}
 
-		$message = WallMessage::newFromId($row['comment_id']);
+		$message = WallMessage::newFromId( $row['comment_id'] );
 
-		if(empty($message)) {
+		if ( empty( $message ) ) {
 			return;
 		}
 
 		$title = $message->getTitle();
 
-		if( ($title instanceof Title) && ($message instanceof WallMessage) ) {
-			return array(
+		if ( $title instanceof Title ) {
+			return [
 				'user' => $user,
 				'event_date' => $row['event_date'],
-				'event_iso' => wfTimestamp(TS_ISO_8601, $row['event_date']),
-				'event_mw' => wfTimestamp(TS_MW, $row['event_date']),
-				'display_username' => $user->getId() == 0 ? wfMsg('oasis-anon-user'):$user->getName(),
+				'event_iso' => wfTimestamp( TS_ISO_8601, $row['event_date'] ),
+				'event_mw' => wfTimestamp( TS_MW, $row['event_date'] ),
+				'display_username' => $user->isAnon() ? wfMsg( 'oasis-anon-user' ): $user->getName(),
 				'metatitle' => $row['metatitle'],
 				'page_id' => $row['comment_id'],
 				'title' => $title,
@@ -418,18 +444,15 @@ class WallHistory extends WikiaModel {
 				'reason' => $row['reason'],
 				'revision_id' => $row['revision_id'],
 				'wall_message' => $message
-			);
+			];
 		} else {
-		//it happened once on devbox when master&slave weren't sync'ed
+		// it happened once on devbox when master&slave weren't sync'ed
 			wfDebug( __METHOD__ . ": Seems like master&slave are not sync'ed\n" );
 		}
 	}
 
-	protected function ip2long($userName) {
-		return User::isIP($userName) ? ip2long($userName):null;
+	protected function ip2long( $userName ) {
+		return User::isIP( $userName ) ? ip2long( $userName ): null;
 	}
 
-	protected function long2ip($IP) {
-		return long2ip($IP);
-	}
 }

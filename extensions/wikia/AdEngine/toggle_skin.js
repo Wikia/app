@@ -24,7 +24,7 @@ var displayToggleSkin = function(){
 					text-align: center;\
 					top: 0;\
 					width: 100%;\
-					z-index: 0;\
+					z-index: 1;\
 				}';
 			for (var i=0; i<ToggleSkin.settings.creativeSkins.length; i++) {
 				html += '\

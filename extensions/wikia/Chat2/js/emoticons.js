@@ -11,101 +11,143 @@
  *
  */
 
+'use strict';
 
-/** CONSTANTS & VARIABLES **/
+var WikiaEmoticons,
+	EmoticonMapping,
+	RegexSanitization = /[-[\]{}()*+?.,\\^$|#\s]/g,
+	RegexWikiaImageTag = /^(?:https?:)?\/\/(?:[^\/]+\.)*?wikia(?:-dev)?(?:\.com|\.nocookie\.net)\//,
+	RegexLineStartingByAsterisk = /^\*[ ]*([^*].*)/,
+	RegexLineStartingByTwoAsterisk = /^\*\* *([^*"][^"]*)/;
+
 // By explicitly setting the dimensions, this will make sure the feature stays as emoticons instead of getting
 // spammy or inviting disruptive vandalism (19px vandalism probably won't be AS offensive).
-if(typeof WikiaEmoticons == 'undefined'){
+if (typeof WikiaEmoticons === 'undefined'){
 	WikiaEmoticons = {};
 }
 WikiaEmoticons.EMOTICON_WIDTH = 19;
 WikiaEmoticons.EMOTICON_HEIGHT = 19;
 
-/** FUNCTIONS **/
-
 /**
- * Takes in some chat text and an emoticonMapping (which strings should be replaced with images at which URL) and returns
- * the text modified so that the replacable text (eg ":)") is replaced with the HTML for the image of that emoticon.
+ * Takes in some chat text and an emoticonMapping (which strings should be replaced with images at which URL) and
+ * returns the text modified so that the replacable text (eg ":)") is replaced with the HTML for the image of
+ * that emoticon.
  */
-WikiaEmoticons.doReplacements = function(text, emoticonMapping){
-	// This debug is probably noisy, but I added it here just in case all of these regexes turn out to be slow (so we could
-	// see that in the log & know that we need to make this function more efficient).
-	$().log("Processing any emoticons... ");
+WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
+	// This debug is probably noisy, but I added it here just in case all of these regexes turn out
+	// to be slow (so we could see that in the log & know that we need to make this function more efficient).
+	$().log('Processing any emoticons... ', 'chat:emoticons');
 
-	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString();
-	for(var regexString in imgUrlsByRegexString){
-		/*
-		 * empty string for emote icons crash Chat
-		 * so ignore them
-		 */
-		if(regexString == '') continue;
+	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString(),
+		origText,
+		regex,
+		buildTagFunc,
+		maxEmoticons = 5,
+		combinedRegexStr = Object.keys(imgUrlsByRegexString)
+			.map(function (key) {
+				return key.replace(RegexSanitization, '\\$&');
+				}
+			).join('|');
 
-		imgSrc = imgUrlsByRegexString[regexString];
-		imgSrc = imgSrc.replace(/"/g, "%22"); // prevent any HTML-injection
+	regex = new RegExp('(^|\\s)(' + combinedRegexStr + ')([^/]|$)', 'i');
 
-		// Fix > and <
-		regexString = regexString.replace(/>/g, "&gt;");
-		regexString = regexString.replace(/</g, "&lt;");
-
-		// Build the regex for the character (make it ignore the match if there is a "/" immediately after the emoticon. That creates all kinds of problems with URLs).
-		var numIters = 0;
-		var origText = text;
-		do{
-			var regex = new RegExp("(^| )(" + regexString + ")([^/]|$)", "gi"); // NOTE: \s does not work for whitespace here for some reason.
-			var emoticon = " <img src=\""+imgSrc+"\" width='"+WikiaEmoticons.EMOTICON_WIDTH+"' height='"+WikiaEmoticons.EMOTICON_HEIGHT+"' alt=\"$2\" title=\"$2\"/> ";
-			var glyphUsed = text.replace(regex, '$2');
-			glyphUsed = glyphUsed.replace(/"/g, "&quot;"); // prevent any HTML-injection
-			text = text.replace(regex, '$1' + emoticon + '$3');
-		} while ((origText != text) && (numIters++ < 5));
+	//return early if none match
+	if (!text.match(regex)) {
+		return text;
 	}
 
-	$().log("Done processing emoticons.");
+	buildTagFunc = WikiaEmoticons.buildTagGenerator(imgUrlsByRegexString);
+
+	do {
+		origText = text;
+		text = text.replace(regex, buildTagFunc);
+	} while ((origText !== text) && --maxEmoticons > 0);
+
+	$().log('Done processing emoticons.', 'chat:emoticons');
 	return text;
-} // end doReplacements()
+};
+
+WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
+
+	return function (match, leading, tag, trailing) {
+		var imgSrc = imgUrlsByRegexString[tag.toLowerCase()];
+		// If emoticon not found, return text version
+		if (typeof imgSrc === 'undefined') {
+			return match;
+		}
+		imgSrc = imgSrc.replace(/"/g, '%22'); // prevent any HTML-injection
+
+		// Don't return any img tag if this is an external image
+		if (!imgSrc.match(RegexWikiaImageTag)) {
+			return '';
+		}
+
+		tag = mw.html.escape(tag);
+		imgSrc = mw.html.escape(imgSrc);
+
+		return (
+			leading +
+			' <img ' +
+				'src="' + imgSrc + '" ' +
+				'width="' + WikiaEmoticons.EMOTICON_WIDTH + '" ' +
+				'height="' + WikiaEmoticons.EMOTICON_HEIGHT + '" ' +
+				'alt="' + tag + '" ' +
+				'title="' + tag + '"/> ' +
+			trailing
+		);
+	};
+};
 
 // class EmoticonMapping
-if(typeof EmoticonMapping === 'undefined'){
-	EmoticonMapping = function(){
-		var self = this;
+if (typeof EmoticonMapping === 'undefined') {
+	EmoticonMapping = function () {
+		var self = this,
+			emoticonsPath = window.wgExtensionsPath + '/wikia/Chat2/images/emoticons';
+
 		this._regexes = {
-			// EXAMPLE DATA ONLY: This is what the generated text will look like... but it's loaded from ._settings on-demand.
-			//			":\\)|:-\\)|\\(smile\\)": "http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif",
-			//			":\\(|:-\\(": "http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png",
+			// EXAMPLE DATA ONLY: This is what the generated text will look like... but it's loaded from ._settings
+			// on-demand:
+			//  ":\\)|:-\\)|\\(smile\\)": "http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif",
+			//  ":\\(|:-\\(": "http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png",
 		};
 
-		// Since the values in here are processed and then cached, don't modify this directly.  Use mutators (which can invalidate the cached data such as self._regexes).
-		// TODO: fetch emoticons from nocookie domain
-		this._settings = {
-			"http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif": [":)", ":-)", "(smile)"],
-			"http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png": [":(", ":-(", ":|"]
-		};
+		// Since the values in here are processed and then cached, don't modify this directly.  Use mutators
+		// (which can invalidate the cached data such as self._regexes).
+		this._settings = {};
+		this._settings[emoticonsPath + '/smile.png'] = [':)', ':-)', '(smile)'];
+		this._settings[emoticonsPath + '/sad.png'] = [':(', ':-(', ':|'];
 
 		/**
 		 * Convert our specific wikitext format into the hash of emoticons settings.  Overwrites all
 		 * of the existing settings (instead of merging).
 		 */
-		this.loadFromWikiText = function(wikiText){
+		this.loadFromWikiText = function (wikiText) {
 			self._settings = {}; // clear out old values
 
-			var emoticonArray = wikiText.split("\n");
-			var currentKey = '';
+			var emoticonArray = wikiText.split('\n'),
+				currentKey = '',
+				i,
+				urlMatch,
+				url,
+				glyph,
+				glyphMatch;
 
-			// TODO: FIXME: Rewrite this to use regexes so that we don't require the space after the asterisks (because that's not needed in normal wikitext).
+			// TODO: FIXME: Rewrite this to use regexes so that we don't require the space after the asterisks
+			// (because that's not needed in normal wikitext).
 			// Loop through array, construct object
-			//$().log("Loading emoticon mapping...");
-			for(var i=0; i<emoticonArray.length; i++) {
-				var urlMatch = emoticonArray[i].match(/^\*[ ]*([^*].*)/); // line starting with 1 "*" then optional spaces, then some non-empty content.
-				if(urlMatch && urlMatch[1]){
-					var url = urlMatch[1];
+			for (i = 0; i < emoticonArray.length; i++) {
+				// line starting with 1 "*" then optional spaces, then some non-empty content.
+				urlMatch = emoticonArray[i].match(RegexLineStartingByAsterisk);
+				if (urlMatch && urlMatch[1]) {
+					url = urlMatch[1];
 					self._settings[url] = [];
 					currentKey = url;
-					//$().log("  " + url + "...");
 				} else if (self._settings[currentKey]) {
-					var glyphMatch = emoticonArray[i].match(/^\*\*[ ]*([^*].*)/); // line starting with 2 "**"'s then optional spaces, then some non-empty content.
-					if( glyphMatch && glyphMatch[1]){
-						var glyph = glyphMatch[1];
+					// line starting with 2 "**"'s then optional spaces, then some non-empty content.
+					glyphMatch = emoticonArray[i].match(RegexLineStartingByTwoAsterisk);
+					if (glyphMatch && glyphMatch[1]) {
+						glyph = glyphMatch[1];
 						self._settings[currentKey].push(glyph);
-						//$().log("       " + glyph);
 					}
 				}
 			}
@@ -115,47 +157,45 @@ if(typeof EmoticonMapping === 'undefined'){
 		};
 
 		/**
-		 * Returns a hash where the keys are regex strings (strings that can be passed into the constructor of RegExp) and
-		 * where the values are the img url of the emoticon that should be substituted for the string.
+		 * Returns a hash where the keys are emoticon and where the values are the img url of the emoticon that should
+		 * be substituted for the string.
 		 */
-		this.getImgUrlsByRegexString = function(){
+		this.getImgUrlsByRegexString = function () {
 			// If the regexes haven't been built from the config yet, build them.
-			//$().log("settings len: " + Object.keys(self._settings).length + " regex len: " + Object.keys(self._regexes).length);
+
+			var numSettings = 0,
+				numRegexes = 0,
+				keyName,
+				regKeyName,
+				imgSrc,
+				codes,
+				code,
+				regexString,
+				index;
 
 			// Object.keys() doesn't exist in IE 8, so do this the oldschool way.
-			//if(Object.keys(self._settings).length != Object.keys(self._regexes).length){
-			var numSettings = 0;
-			var numRegexes = 0;
-			for(var keyName in self._settings){
+			for (keyName in self._settings){
 				numSettings++;
 			}
-			for(var regKeyName in self._regexes){
+			for (regKeyName in self._regexes){
 				numRegexes++;
 			}
-			if(numSettings != numRegexes){
-				//$().log("..Processing settings");
-				for(var imgSrc in self._settings){
-					var codes = self._settings[imgSrc];
-					var regexString = "";
-					for(var index = 0; codes.length > index; index ++){
 
-						var code = codes[index];
-						// Escape the string for use in the regex (thanks to http://simonwillison.net/2006/Jan/20/escape/#p-6).
-						code = code.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-						if(code != ""){
-							regexString += ((regexString =="")?"":"|");
-							regexString += code;
-						}
-					}
-					//$().log("...Regexstr: " + regexString);
-
-					// Stores the regex to img mapping.
-					self._regexes[regexString] = imgSrc;
-				}
+			if (numSettings === numRegexes) {
+				return self._regexes;
 			}
 
+			for (imgSrc in self._settings){
+				codes = self._settings[imgSrc];
+				regexString = '';
+				for (index = 0; codes.length > index; index++){
+					code = codes[index];
+					// Fix > and <
+					code = code.replace(/>/g, '&gt;').replace(/</g, '&lt;');
+					self._regexes[code.toLowerCase()] = imgSrc;
+				}
+			}
 			return self._regexes;
 		};
-
 	};
 }

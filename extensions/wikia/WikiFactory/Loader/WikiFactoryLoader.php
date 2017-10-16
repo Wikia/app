@@ -41,17 +41,17 @@ class WikiFactoryLoader {
 
 	// TODO: FIXME: Why is there a mWikiID and an mCityID?
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
-	public $mAlternativeDomainUsed, $mCityDB, $mDebug;
+	public $mAlternativeDomainUsed, $mCityDB, $mCityCluster, $mDebug;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
-	public $mNoRedirect, $mTimestamp, $mAdCategory, $mCommandLine;
+	public $mTimestamp, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 	public $mSaveDefaults = false;
-	public $mBeta = false;
 	public $mCacheAnyway = array( "wgArticlePath" );
-	public $mCheckUpgrade = false;
 
 	private $mDBhandler, $mDBname;
+
+	const PER_CLUSTER_READ_ONLY_MODE_REASON = 'This cluster is running in read-only mode.';
 
 	/**
 	 * __construct
@@ -127,13 +127,12 @@ class WikiFactoryLoader {
 		$this->mIsWikiaActive = 0;
 		$this->mAlwaysFromDB = 0;
 		$this->mWikiID = 0;
-		$this->mSkipFileCache = 1;
-		$this->mNoRedirect = false;
 		$this->mDBhandler  = null;
 		$this->mCityDB     = false;
 
 		if( !empty( $wgDevelEnvironment ) ) {
 			$this->mDebug = true;
+			$this->mAlwaysFromDB = 1;
 		}
 
 		/**
@@ -164,15 +163,6 @@ class WikiFactoryLoader {
 			}
 		}
 
-		/**
-		 * @author Krzysztof Krzyżaniak (eloy)
-		 *
-		 * handle beta.* domains
-		 */
-		if( getenv( "X-Beta") == 1 ) {
-			$this->mBeta = true;
-		}
-
 		WikiFactory::isUsed( true );
 
 		/**
@@ -197,12 +187,12 @@ class WikiFactoryLoader {
 	 * @todo change new Database to LoadBalancer factory
 	 *
 	 * @param int $type
-	 * @return Database    database handler
+	 * @return DatabaseBase database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
-		if( $this->mDBhandler instanceof Database ) {
+		if( $this->mDBhandler instanceof DatabaseBase ) {
 			return $this->mDBhandler;
 		}
 
@@ -218,7 +208,7 @@ class WikiFactoryLoader {
 		 */
 		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
 			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback to {$wgDBserver}" );
-			$this->mDBhandler = new DatabaseMysql( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
+			$this->mDBhandler = new DatabaseMysqli( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
 			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
 		}
 
@@ -235,10 +225,10 @@ class WikiFactoryLoader {
 	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
 	 */
 	public function execute() {
+		global $wgCityId, $wgDevelEnvironment,
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain;
 
 		wfProfileIn(__METHOD__);
-		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang;
 
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
@@ -247,7 +237,7 @@ class WikiFactoryLoader {
 		 *
 		 * @author Sean Colombo
 		 */
-		if( !wfRunHooks( 'WikiFactory::execute', array( &$this ) ) ) {
+		if ( !Hooks::run( 'WikiFactory::execute', [ $this ] ) ) {
 			wfProfileOut(__METHOD__);
 			return $this->mWikiID;
 		}
@@ -299,10 +289,10 @@ class WikiFactoryLoader {
 							"city_factory_timestamp",
 							"city_url",
 							"city_dbname",
-							"ad_cat"
+							"city_cluster"
 						),
 						($this->mCityID) ? array( "city_list.city_id" => $this->mCityID ) : array( "city_list.city_dbname" => $this->mCityDB ),
-						__METHOD__
+						__METHOD__ . '::domaindb'
 					);
 
 				if( isset( $oRow->city_id ) )  {
@@ -314,15 +304,15 @@ class WikiFactoryLoader {
 					$this->mIsWikiaActive = $oRow->city_public;
 					$this->mCityHost = $host;
 					$this->mCityDB   = $oRow->city_dbname;
+					$this->mCityCluster = $oRow->city_cluster;
 					$this->mTimestamp = $oRow->city_factory_timestamp;
-					$this->mAdCategory = empty( $oRow->ad_cat  ) ?  $oRow->ad_cat : "NONE";
 					$this->mDomain = array(
 						"id" => $oRow->city_id,
 						"host" => $host,
 						"active" => $oRow->city_public,
 						"time" =>  $oRow->city_factory_timestamp,
-						"ad" => $oRow->ad_cat,
-						"db" => $this->mCityDB
+						"db" => $this->mCityDB,
+						"cluster" => $oRow->city_cluster,
 					);
 				}
 			}
@@ -343,13 +333,13 @@ class WikiFactoryLoader {
 						"city_domain",
 						"city_url",
 						"city_dbname",
-						"ad_cat"
+						"city_cluster"
 					),
 					array(
 						"city_domains.city_id = city_list.city_id",
 						"city_domains.city_domain" => $this->mServerName
 					),
-					__METHOD__
+					__METHOD__ . '::servername'
 				);
 				if( isset( $oRow->city_id ) &&  $oRow->city_id > 0 ) {
 					$oRow->city_domain = strtolower( $oRow->city_domain );
@@ -361,15 +351,15 @@ class WikiFactoryLoader {
 						$this->mIsWikiaActive = $oRow->city_public;
 						$this->mCityHost = $host;
 						$this->mCityDB   = $oRow->city_dbname;
+						$this->mCityCluster = $oRow->city_cluster;
 						$this->mTimestamp = $oRow->city_factory_timestamp;
-						$this->mAdCategory = empty( $oRow->ad_cat  ) ?  $oRow->ad_cat : "NONE";
 						$this->mDomain = array(
 							"id"     => $oRow->city_id,
 							"host"   => $host,
 							"active" => $oRow->city_public,
 							"time"   => $oRow->city_factory_timestamp,
-							"ad"     => $oRow->ad_cat,
-							"db"     => $oRow->city_dbname
+							"db"     => $oRow->city_dbname,
+							"cluster" => $oRow->city_cluster,
 						);
 					}
 				}
@@ -395,8 +385,8 @@ class WikiFactoryLoader {
 			$this->mCityHost = $this->mDomain["host"];
 			$this->mIsWikiaActive = $this->mDomain["active"];
 			$this->mTimestamp = isset( $this->mDomain["time"] ) ? $this->mDomain["time"] : null;
-			$this->mAdCategory = empty( $this->mDomain["ad"] ) ? "NONE" : $this->mDomain["ad"];
 			$this->mCityDB = isset( $this->mDomain[ "db" ] ) ? $this->mDomain[ "db" ] : false;
+			$this->mCityCluster = $this->mDomain["cluster"];
 		}
 
 
@@ -406,13 +396,6 @@ class WikiFactoryLoader {
 		 */
 		if ( $this->mWikiID == 177 ) {
 			$this->mSaveDefaults = true;
-		}
-
-		/**
-		 * @todo check if owikis.wikia.com should not be regex
-		 */
-		if( $this->mServerName == "owikis.wikia.com" || $this->mBeta == true ) {
-			$this->mNoRedirect = true;
 		}
 
 		/**
@@ -445,7 +428,7 @@ class WikiFactoryLoader {
 		 */
 		$cond2 = !empty( $host ) && $this->mAlternativeDomainUsed && ( $host != $this->mOldServerName );
 
-		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) && $this->mNoRedirect === false ) {
+		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
 			$url = wfGetCurrentUrl();
 			/**
 			 * now recombine url from parts
@@ -454,7 +437,17 @@ class WikiFactoryLoader {
 				$url[ "path" ] = "/{$path}" . $url[ "path" ];
 			}
 
-			$target = $url[ "scheme" ] . "://" . $host . $url[ "path" ];
+			// Special treatment for paragon.wiki
+			// For URLs starting with upper-case letter (/Something) redirect to /wiki/Something
+			$wikiPrefix = '';
+			if ( $host == 'paragon.wikia.com' ) {
+				$firstLetter = substr( $url['path'], 1, 1 );
+				if ( is_string( $firstLetter ) && ctype_upper( $firstLetter ) ) {
+					$wikiPrefix = '/wiki';
+				}
+			}
+
+			$target = WikiFactory::getLocalEnvURL( $url[ "scheme" ] . "://" . $host . $wikiPrefix . $url[ "path" ] );
 			$target = isset( $url[ "query" ] ) ? $target . "?" . $url[ "query" ] : $target;
 
 			$this->debug( "redirected from {$url[ "url" ]} to {$target}" );
@@ -473,14 +466,15 @@ class WikiFactoryLoader {
 		if( empty( $this->mWikiID ) || $this->mIsWikiaActive == -1 ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
-				$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
+				$this->debug( "redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				if( $this->mIsWikiaActive < 0 ) {
 					header( "X-Redirected-By-WF: MarkedForClosing" );
 				}
 				else {
 					header( "X-Redirected-By-WF: NotAValidWikia" );
 				}
-				header("Location: $wgNotAValidWikia");
+				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
 			}
@@ -497,61 +491,18 @@ class WikiFactoryLoader {
 					$database = strtolower( $this->mCityDB );
 					$redirect = sprintf(
 						"http://%s/wiki/Special:CloseWiki/information/%s",
-						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.wikia.com",
+						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.{$wgWikiaBaseDomain}",
 						$database
 					);
 				}
 				else {
-					$redirect = $wgNotAValidWikia;
+					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
 				}
 				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				header( "X-Redirected-By-WF: Dump" );
 				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
-			}
-		}
-
-		/**
-		 * for yellowikis.wikia check geolocation and for GB -> redirect to owikis
-		 * @author Przemek Piotrowski (Nef)
-		 */
-		if( 0 === strpos($this->mServerName, 'yellowikis.') ) {
-			header( "X-Redirected-By-WF: Geo" );
-			global $wgLocationOfGeoIPDatabase;
-			if( !empty($wgLocationOfGeoIPDatabase) && file_exists($wgLocationOfGeoIPDatabase) ) {
-				/**
-				 * ProxyTools methods cannot be used because PT is not loaded at this point.
-				 * PT cannot be just included as it requires a lot to be initialized first )-:
-				 *
-				 * Order is *important* here! Proxy are added "from the right side"
-				 * to the combined HTTP_X_FORWARDED_FOR + REMOTE_ADDR.
-				 */
-				$ips = array();
-				if( !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-					$ips = preg_split('/\s*,\s*/', $_SERVER['HTTP_X_FORWARDED_FOR']);
-				}
-				if (!empty($_SERVER['REMOTE_ADDR'])) {
-					$ips[] = $_SERVER['REMOTE_ADDR'];
-				}
-
-				if( !empty($ips[0]) ) {
-					require_once 'Net/GeoIP.php';
-					try {
-						$geoip = Net_GeoIP::getInstance($wgLocationOfGeoIPDatabase);
-						if( 'GB' == $geoip->lookupCountryCode($ips[0]) ) {
-							header( "X-Redirected-By-WF: Geo" );
-							/**
-							 * just exit, no redirect at all
-							 */
-							wfProfileOut( __METHOD__ );
-							exit( 0 );
-						}
-					}
-					catch (Exception $e) {
-						#--- ignore exception, redirect is an option, not a necessity
-					}
-				}
 			}
 		}
 
@@ -598,7 +549,7 @@ class WikiFactoryLoader {
 					"cv_id = cv_variable_id",
 					"cv_city_id = {$this->mWikiID}"
 				),
-				__METHOD__
+				__METHOD__ . '::varsdb'
 			);
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
 				#--- some magic, rewritting path, etc legacy data
@@ -607,30 +558,15 @@ class WikiFactoryLoader {
 				set_error_handler( "wfUnserializeHandler" );
 				$_variable_key = $oRow->cv_name;
 				$_variable_value = $oRow->cv_value;
-				$tUnserVal = unserialize( $oRow->cv_value );
+				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
-				if( (!empty( $wgDevelEnvironment ) || $this->mNoRedirect ) && $oRow->cv_name === "wgServer" ) {
-					if( $this->mBeta == true ) {
-						/**
-						 * add beta to hostname (if not exists already)
-						 */
-						$url = parse_url( $tUnserVal );
-						if( $url && isset( $url[ "host" ] ) ) {
-							if( !preg_match( "/^beta\./", $url[ "host" ] ) ) {
-								$url[ "host" ] = "beta." . $url[ "host" ];
-								$tUnserVal = http_build_url( $tUnserVal, $url );
-								$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
-								$this->debug( "Set value of wgServer to {$tUnserVal} for beta wikis" );
-							}
-						}
-					}
-					else {
-						/**
-						 * skip this variable
-						 */
-						$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
-					}
+				if( !empty( $wgDevelEnvironment ) && $oRow->cv_name === "wgServer" ) {
+					/**
+					 * skip this variable
+					 */
+					unset($this->mVariables[ $oRow->cv_name ]);
+					$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
 				}
 				else {
 					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
@@ -658,7 +594,7 @@ class WikiFactoryLoader {
 					"city_tag.id = city_tag_map.tag_id",
 					"city_id = {$this->mWikiID}"
 				),
-				__METHOD__
+				__METHOD__ . '::tagsdb'
 			);
 			while( $row = $dbr->fetchObject( $sth ) ) {
 				$this->mVariables[ "wgWikiFactoryTags" ][ $row->id ] = $row->name;
@@ -693,17 +629,14 @@ class WikiFactoryLoader {
 			}
 			$this->debug( "reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ) );
 			wfProfileOut( __METHOD__."-varsdb" );
-
-			/**
-			 * maybe upgrade database to current schema
-			 */
-			if( $this->mCheckUpgrade === true ) {
-				$this->maybeUpgrade();
-			}
 		}
 
+		# take some WF variables values from city_list
+		$this->mVariables["wgDBname"] = $this->mCityDB;
+		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
+
 		// @author macbre
-		wfRunHooks( 'WikiFactory::executeBeforeTransferToGlobals', array( &$this ) );
+		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
 
 		/**
 		 * transfer configuration variables from database to GLOBALS
@@ -739,10 +672,6 @@ class WikiFactoryLoader {
 				 * merge local values with global
 				 */
 				switch( $key ) {
-					case "wgGroupPermissionsLocal":
-						$this->LocalToGlobalPermissions( $tValue );
-						break;
-
 					case "wgNamespacesWithSubpagesLocal":
 						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgNamespacesWithSubpages"] );
 						break;
@@ -765,13 +694,13 @@ class WikiFactoryLoader {
 				}
 
 				if ($key == 'wgServer') {
-					$headers = Wikia::getAllHeaders();
-					if (array_key_exists('X-Original-Host', $headers) &&
-					    !empty($headers['X-Original-Host'])) {
+					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
 						global $wgConf;
-						$tValue = 'http://'.$headers['X-Original-Host'];
-						$wgConf->localVHosts = array_merge($wgConf->localVHosts,
-										   array( $headers['X-Original-Host'] ));
+
+						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
+
+						$tValue = 'http://'.$stagingServer;
+						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
 				}
 
@@ -787,11 +716,6 @@ class WikiFactoryLoader {
 			}
 		}
 		$wgCityId = $this->mWikiID;
-
-		/**
-		 * set advertising category
-		 */
-		$wgWikiaAdvertiserCategory = $this->mAdCategory;
 
 		/**
 		 * set/replace $wgDBname in $wgDBservers
@@ -820,6 +744,8 @@ class WikiFactoryLoader {
 				}
 			}
 		}
+
+		Hooks::run( 'WikiFactory::onExecuteComplete', [ $this ] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -881,13 +807,13 @@ class WikiFactoryLoader {
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 * @access public
+	 * @static
 	 *
 	 * @param string $local: string with permissions
 	 *
-	 * @return array with permissions
 	 * @see parsePermissionsSettings
 	 */
-	public function LocalToGlobalPermissions( $local ) {
+	static public function LocalToGlobalPermissions( $local ) {
 		global $wgGroupPermissions;
 		$permissions = self::parsePermissionsSettings( $local );
 
@@ -897,8 +823,6 @@ class WikiFactoryLoader {
 				array_merge( $wgGroupPermissions[$group], $rights ) :
 				$rights;
 		}
-
-		return $wgGroupPermissions;
 	}
 
 	/**
@@ -944,8 +868,6 @@ class WikiFactoryLoader {
 	 * @access private
 	 *
 	 * @param	string	$message	log message
-	 *
-	 * @return nothing
 	 */
 	private function debug( $message ) {
 		wfDebug("wikifactory: {$message}", true);
@@ -955,34 +877,26 @@ class WikiFactoryLoader {
 	}
 
 	/**
-	 * maybeUpgrade
+	 * Check the value of "wgReadOnlyCluster" WikiFactory variable defined for community.wikia.com
+	 * that controls which DB cluster is in read-only mode.
 	 *
-	 * look for existence of some columns in database. If they are not exist
-	 * run database upgrade  on first request. Not very efficient for regular
-	 * usage but good for transition time
+	 * @author macbre
+	 * @see SUS-1634
+	 *
+	 * An example:
+	 * $wgReadOnlyCluster = "c1"; // this will turn on read-only mode on all c1 wikis
+	 *
+	 * @param string $cluster
+	 * @return bool if true is returned, the caller should set $wgReadOnly flag
 	 */
-	private function maybeUpgrade( ) {
-		wfProfileIn( __METHOD__ . "-upgradedb" );
-		$dbr = $this->getDB();
-
-		/**
-		 * look for rev_sha1 in revision table
-		 */
-		if( !$dbr->fieldExists( "revision", "rev_sha1", __METHOD__ ) ) {
-			$ret = true;
-			ob_start( array( $this, 'outputHandler' ) );
-			try {
-				$up = DatabaseUpdater::newForDB( $this->db );
-				$up->doUpdates();
-			} catch ( MWException $e ) {
-				$this->debug( "An error occured: " . $e->getText() );
-				$ret = false;
-			}
-			ob_end_flush();
-			wfProfileOut( __METHOD__ . "-upgradedb" );
-			return $ret;
+	public static function checkPerClusterReadOnlyFlag( string $cluster ) : bool {
+		// we're already in DB read-only mode (are we in Reston DC?), leave early
+		global $wgDBReadOnly;
+		if ( $wgDBReadOnly === true ) {
+			return false;
 		}
 
-		wfProfileOut( __METHOD__ . "-upgradedb" );
+		$readOnlyCluster = WikiFactory::getVarValueByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID );
+		return $readOnlyCluster === $cluster;
 	}
-};
+}

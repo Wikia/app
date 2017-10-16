@@ -10,11 +10,12 @@ if(!defined('MEDIAWIKI')) {
 
 
 // for now it's more a copy of VideoEmbedTool files
-// TODO: L10n-able description
 $wgExtensionCredits['other'][] = array(
-        'name' => 'Video Embed Tool',
-        'author' => 'Bartek Łapiński, Inez Korczyński',
+    'name' => 'Video Embed Tool',
+    'author' => 'Bartek Łapiński, Inez Korczyński',
 	'version' => '0.99',
+	'descriptionmsg' => 'vet-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideoEmbedTool'
 );
 $dir = dirname(__FILE__).'/';
 
@@ -23,9 +24,6 @@ $wgAutoloadClasses['VideoEmbedToolSearchService'] = $dir . 'VideoEmbedToolSearch
 $wgAutoloadClasses['VideoEmbedToolController'] = $dir . '/VideoEmbedToolController.class.php';
 
 define( 'VIDEO_PREVIEW', 350 );
-
-$wgNamespaceAliases["Video"] = 6;
-$wgNamespaceAliases["Video_talk"] = 7;
 
 #--- register special page (MW 1.1x way)
 if ( !function_exists( 'extAddSpecialPage' ) ) {
@@ -44,9 +42,8 @@ JSMessages::registerPackage('VideoEmbedTool', array(
 	'vet-warn3',
 	'vet-insert-error',
 	'vet-imagebutton',
+	'vet-error-while-loading'
 ));
-JSMessages::enqueuePackage('VideoEmbedTool', JSMessages::EXTERNAL);
-
 
 /**
  * @param $article
@@ -56,7 +53,7 @@ JSMessages::enqueuePackage('VideoEmbedTool', JSMessages::EXTERNAL);
  * @return bool
  */
 function VETArticleSave( $article, $user, &$text, $summary) {
-	if (NS_VIDEO == $article->mTitle->getNamespace()) {
+	if (NS_FILE == $article->mTitle->getNamespace()) {
 		$text = $article->dataline . $text;
 	}
 	return true;
@@ -99,9 +96,9 @@ function VET() {
 	$vet = new VideoEmbedTool();
 
 	$html = $vet->$method();
-	$domain = $wgRequest->getVal('domain', null);
+	$domain = $wgRequest->getVal('domain', '');
 	if(!empty($domain)) {
-		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
+		$html .= '<script type="text/javascript">document.domain = ' . json_encode($domain) . '</script>';
 	}
 	$resp = new AjaxResponse( $html );
 	$resp->setContentType( 'text/html' );

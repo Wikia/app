@@ -97,7 +97,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					$fit = $this->appendProtocols( $p );
 					break;
 				default:
-					wfRunHooks( 'UseExternalQuerySiteInfo', array(&$this) );
+					Hooks::run( 'UseExternalQuerySiteInfo', [ $this ] );
 					if ( !isset($this->noErrors) ) {
 						ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
 					}
@@ -183,7 +183,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 			$data['misermode'] = '';
 		}
 
-		wfRunHooks( 'APIQuerySiteInfoGeneralInfo', array( $this, &$data ) );
+		Hooks::run( 'APIQuerySiteInfoGeneralInfo', array( $this, &$data ) );
 
 		return $this->getResult()->addValue( 'query', $property, $data );
 	}
@@ -299,12 +299,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				$val['language'] = $langNames[$prefix];
 			}
 			$val['url'] = wfExpandUrl( $row['iw_url'], PROTO_CURRENT );
-			if( isset( $row['iw_wikiid'] ) ) {
-				$val['wikiid'] = $row['iw_wikiid'];
-			}
-			if( isset( $row['iw_api'] ) ) {
-				$val['api'] = $row['iw_api'];
-			}
 
 			$data[] = $val;
 		}
@@ -345,13 +339,9 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	}
 
 	protected function appendStatistics( $property ) {
-		global $wgDisableCounters;
 		$data = array();
 		$data['pages'] = intval( SiteStats::pages() );
 		$data['articles'] = intval( SiteStats::articles() );
-		if ( !$wgDisableCounters ) {
-			$data['views'] = intval( SiteStats::views() );
-		}
 		$data['edits'] = intval( SiteStats::edits() );
 		$data['images'] = intval( SiteStats::images() );
 		$data['users'] = intval( SiteStats::users() );
@@ -361,14 +351,14 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 		// Wikia change begin
 		// @author macbre
-		wfRunHooks( 'APIQuerySiteInfoStatistics', array( $this, &$data ) );
+		Hooks::run( 'APIQuerySiteInfoStatistics', array( $this, &$data ) );
 		// Wikia change end
 
 		return $this->getResult()->addValue( 'query', $property, $data );
 	}
 
 	protected function appendUserGroups( $property, $numberInGroup ) {
-		global $wgGroupPermissions, $wgAddGroups, $wgRemoveGroups, $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
+		global $wgGroupPermissions;
 
 		$data = array();
 		$result = $this->getResult();
@@ -390,16 +380,11 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				}
 			}
 
-			$groupArr = array(
-				'add' => $wgAddGroups,
-				'remove' => $wgRemoveGroups,
-				'add-self' => $wgGroupsAddToSelf,
-				'remove-self' => $wgGroupsRemoveFromSelf
-			);
+			$groupArr = User::changeableByGroup( $group );
 
 			foreach ( $groupArr as $type => $rights ) {
-				if ( isset( $rights[$group] ) ) {
-					$arr[$type] = $rights[$group];
+				if ( !empty( $rights ) ) {
+					$arr[$type] = $rights;
 					$result->setIndexedTagName( $arr[$type], 'group' );
 				}
 			}

@@ -10,9 +10,9 @@ abstract class Page {}
  * Some fields are public only for backwards-compatibility. Use accessors.
  * In the past, this class was part of Article.php and everything was public.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  */
-class WikiPage extends Page {
+class WikiPage extends Page implements IDBAccessObject {
 	// doDeleteArticleReal() return values. Values less than zero indicate fatal errors,
 	// values greater than zero indicate that there were problems not resulting in page
 	// not being deleted
@@ -52,6 +52,11 @@ class WikiPage extends Page {
 	/**@}}*/
 
 	/**
+	 * @var int; one of the READ_* constants
+	 */
+	protected $mDataLoadedFrom = self::READ_NONE;
+
+	/**
 	 * @var Title
 	 */
 	protected $mRedirectTarget = null;
@@ -70,11 +75,6 @@ class WikiPage extends Page {
 	 * @var string
 	 */
 	protected $mTouched = '19700101000000';
-
-	/**
-	 * @var int|null
-	 */
-	protected $mCounter = null;
 
 	/**
 	 * Constructor and clear the article
@@ -117,15 +117,58 @@ class WikiPage extends Page {
 	 * Constructor from a page id
 	 *
 	 * @param $id Int article ID to load
+	 * @param $from string|int one of the following values:
+	 *        - "fromdb" or WikiPage::READ_NORMAL to select from a slave database
+	 *        - "fromdbmaster" or WikiPage::READ_LATEST to select from the master database
 	 *
 	 * @return WikiPage
 	 */
-	public static function newFromID( $id ) {
-		$t = Title::newFromID( $id );
-		if ( $t ) {
-			return self::factory( $t );
+	public static function newFromID( $id, $from = 'fromdb' ) {
+		$from = self::convertSelectType( $from );
+		$db = wfGetDB( $from === self::READ_LATEST ? DB_MASTER : DB_SLAVE );
+		$row = $db->selectRow( 'page', self::selectFields(), array( 'page_id' => $id ), __METHOD__ );
+		if ( !$row ) {
+			return null;
 		}
-		return null;
+		return self::newFromRow( $row, $from );
+	}
+
+	/**
+	 * Constructor from a database row
+	 *
+	 * @since 1.20
+	 * @param $row object: database row containing at least fields returned
+	 *        by selectFields().
+	 * @param $from string|int: source of $data:
+	 *        - "fromdb" or WikiPage::READ_NORMAL: from a slave DB
+	 *        - "fromdbmaster" or WikiPage::READ_LATEST: from the master DB
+	 *        - "forupdate" or WikiPage::READ_LOCKING: from the master DB using SELECT FOR UPDATE
+	 * @return WikiPage
+	 */
+	public static function newFromRow( $row, $from = 'fromdb' ) {
+		$page = self::factory( Title::newFromRow( $row ) );
+		$page->loadFromRow( $row, $from );
+		return $page;
+	}
+
+	/**
+	 * Convert 'fromdb', 'fromdbmaster' and 'forupdate' to READ_* constants.
+	 *
+	 * @param $type object|string|int
+	 * @return mixed
+	 */
+	private static function convertSelectType( $type ) {
+		switch ( $type ) {
+		case 'fromdb':
+			return self::READ_NORMAL;
+		case 'fromdbmaster':
+			return self::READ_LATEST;
+		case 'forupdate':
+			return self::READ_LOCKING;
+		default:
+			// It may already be an integer or whatever else
+			return $type;
+		}
 	}
 
 	/**
@@ -155,8 +198,8 @@ class WikiPage extends Page {
 	 */
 	public function clear() {
 		$this->mDataLoaded = false;
+		$this->mDataLoadedFrom = self::READ_NONE;
 
-		$this->mCounter = null;
 		$this->mRedirectTarget = null; # Title object if set
 		$this->mLastRevision = null; # Latest revision
 		$this->mTouched = '19700101000000';
@@ -178,7 +221,6 @@ class WikiPage extends Page {
 			'page_namespace',
 			'page_title',
 			'page_restrictions',
-			'page_counter',
 			'page_is_redirect',
 			'page_is_new',
 			'page_random',
@@ -191,17 +233,18 @@ class WikiPage extends Page {
 	/**
 	 * Fetch a page record with the given conditions
 	 * @param $dbr DatabaseBase object
-	 * @param $conditions Array
+	 * @param $conditions array
+	 * @param $options array
 	 * @return mixed Database result resource, or false on failure
 	 */
-	protected function pageData( $dbr, $conditions ) {
+	protected function pageData( $dbr, $conditions, $options = array() ) {
 		$fields = self::selectFields();
 
-		wfRunHooks( 'ArticlePageDataBefore', array( &$this, &$fields ) );
+		Hooks::run( 'ArticlePageDataBefore', [ $this, &$fields ] );
 
-		$row = $dbr->selectRow( 'page', $fields, $conditions, __METHOD__ );
+		$row = $dbr->selectRow( 'page', $fields, $conditions, __METHOD__, $options );
 
-		wfRunHooks( 'ArticlePageDataAfter', array( &$this, &$row ) );
+		Hooks::run( 'ArticlePageDataAfter', [ $this, &$row ] );
 
 		return $row;
 	}
@@ -212,12 +255,13 @@ class WikiPage extends Page {
 	 *
 	 * @param $dbr DatabaseBase object
 	 * @param $title Title object
+	 * @param $options Array
 	 * @return mixed Database result resource, or false on failure
 	 */
-	public function pageDataFromTitle( $dbr, $title ) {
+	public function pageDataFromTitle( $dbr, $title, $options = array() ) {
 		return $this->pageData( $dbr, array(
 			'page_namespace' => $title->getNamespace(),
-			'page_title'     => $title->getDBkey() ) );
+			'page_title'     => $title->getDBkey() ), $options );
 	}
 
 	/**
@@ -225,37 +269,69 @@ class WikiPage extends Page {
 	 *
 	 * @param $dbr DatabaseBase
 	 * @param $id Integer
+	 * @param $options Array
 	 * @return mixed Database result resource, or false on failure
 	 */
-	public function pageDataFromId( $dbr, $id ) {
-		return $this->pageData( $dbr, array( 'page_id' => $id ) );
+	public function pageDataFromId( $dbr, $id, $options = array() ) {
+		return $this->pageData( $dbr, array( 'page_id' => $id ), $options );
 	}
 
 	/**
 	 * Set the general counter, title etc data loaded from
 	 * some source.
 	 *
-	 * @param $data Object|String One of the following:
-	 *		A DB query result object or...
-	 *		"fromdb" to get from a slave DB or...
-	 *		"fromdbmaster" to get from the master DB
+	 * @param $from object|string|int One of the following:
+	 *        - A DB query result object
+	 *        - "fromdb" or WikiPage::READ_NORMAL to get from a slave DB
+	 *        - "fromdbmaster" or WikiPage::READ_LATEST to get from the master DB
+	 *        - "forupdate"  or WikiPage::READ_LOCKING to get from the master DB using SELECT FOR UPDATE
+	 *
 	 * @return void
 	 */
-	public function loadPageData( $data = 'fromdb' ) {
-		if ( $data === 'fromdbmaster' ) {
+	public function loadPageData( $from = 'fromdb' ) {
+		$from = self::convertSelectType( $from );
+		if ( is_int( $from ) && $from <= $this->mDataLoadedFrom ) {
+			// We already have the data from the correct location, no need to load it twice.
+			return;
+		}
+
+		if ( $from === self::READ_LOCKING ) {
+			$data = $this->pageDataFromTitle( wfGetDB( DB_MASTER ), $this->mTitle, array( 'FOR UPDATE' ) );
+		} elseif ( $from === self::READ_LATEST ) {
 			$data = $this->pageDataFromTitle( wfGetDB( DB_MASTER ), $this->mTitle );
-		} elseif ( $data === 'fromdb' ) { // slave
+		} elseif ( $from === self::READ_NORMAL ) {
 			$data = $this->pageDataFromTitle( wfGetDB( DB_SLAVE ), $this->mTitle );
 			# Use a "last rev inserted" timestamp key to dimish the issue of slave lag.
 			# Note that DB also stores the master position in the session and checks it.
 			$touched = $this->getCachedLastEditTime();
 			if ( $touched ) { // key set
 				if ( !$data || $touched > wfTimestamp( TS_MW, $data->page_touched ) ) {
+					$from = self::READ_LATEST;
 					$data = $this->pageDataFromTitle( wfGetDB( DB_MASTER ), $this->mTitle );
 				}
 			}
+		} else {
+			// No idea from where the caller got this data, assume slave database.
+			$data = $from;
+			$from = self::READ_NORMAL;
 		}
 
+		$this->loadFromRow( $data, $from );
+	}
+
+	/**
+	 * Load the object from a database row
+	 *
+	 * @since 1.20
+	 * @param $data object: database row containing at least fields returned
+	 *        by selectFields()
+	 * @param $from string|int One of the following:
+	 *        - "fromdb" or WikiPage::READ_NORMAL if the data comes from a slave DB
+	 *        - "fromdbmaster" or WikiPage::READ_LATEST if the data comes from the master DB
+	 *        - "forupdate"  or WikiPage::READ_LOCKING if the data comes from from
+	 *          the master DB using SELECT FOR UPDATE
+	 */
+	public function loadFromRow( $data, $from ) {
 		$lc = LinkCache::singleton();
 
 		if ( $data ) {
@@ -266,7 +342,6 @@ class WikiPage extends Page {
 			# Old-fashioned restrictions
 			$this->mTitle->loadRestrictions( $data->page_restrictions );
 
-			$this->mCounter     = intval( $data->page_counter );
 			$this->mTouched     = wfTimestamp( TS_MW, $data->page_touched );
 			$this->mIsRedirect  = intval( $data->page_is_redirect );
 			$this->mLatest      = intval( $data->page_latest );
@@ -277,6 +352,7 @@ class WikiPage extends Page {
 		}
 
 		$this->mDataLoaded = true;
+		$this->mDataLoadedFrom = self::convertSelectType( $from );
 	}
 
 	/**
@@ -303,17 +379,6 @@ class WikiPage extends Page {
 	 */
 	public function hasViewableContent() {
 		return $this->mTitle->exists() || $this->mTitle->isAlwaysKnown();
-	}
-
-	/**
-	 * @return int The view count for the page
-	 */
-	public function getCount() {
-		if ( !$this->mDataLoaded ) {
-			$this->loadPageData();
-		}
-
-		return $this->mCounter;
 	}
 
 	/**
@@ -381,7 +446,14 @@ class WikiPage extends Page {
 			return; // page doesn't exist or is missing page_latest info
 		}
 
-		$revision = Revision::newFromPageId( $this->getId(), $latest );
+		// Bug 37225: if session S1 loads the page row FOR UPDATE, the result always includes the
+		// latest changes committed. This is true even within REPEATABLE-READ transactions, where
+		// S1 normally only sees changes committed before the first S1 SELECT. Thus we need S1 to
+		// also gets the revision row FOR UPDATE; otherwise, it may not find it since a page row
+		// UPDATE and revision row INSERT by S2 may have happened after the first S1 SELECT.
+		// http://dev.mysql.com/doc/refman/5.0/en/set-transaction.html#isolevel_repeatable-read.
+		$flags = ( $this->mDataLoadedFrom == self::READ_LOCKING ) ? Revision::READ_LOCKING : 0;
+		$revision = Revision::newFromPageId( $this->getId(), $latest, $flags );
 		if ( $revision ) { // sanity
 			$this->setLastEdit( $revision );
 		}
@@ -590,10 +662,12 @@ class WikiPage extends Page {
 	 *
 	 * The target will be fetched from the redirect table if possible.
 	 * If this page doesn't have an entry there, call insertRedirect()
+	 *
+	 * @param int $flags
 	 * @return Title|mixed object, or null if this page is not a redirect
 	 */
-	public function getRedirectTarget() {
-		if ( !$this->mTitle->isRedirect() ) {
+	public function getRedirectTarget( $flags = 0 ) {
+		if ( !$this->mTitle->isRedirect( $flags ) ) {
 			return null;
 		}
 
@@ -602,7 +676,8 @@ class WikiPage extends Page {
 		}
 
 		# Query the redirect table
-		$dbr = wfGetDB( DB_SLAVE );
+		$useMasterDb = $flags & Title::GAID_FOR_UPDATE;
+		$dbr = $useMasterDb ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'redirect',
 			array( 'rd_namespace', 'rd_title', 'rd_fragment', 'rd_interwiki' ),
 			array( 'rd_from' => $this->getId() ),
@@ -837,10 +912,10 @@ class WikiPage extends Page {
 	 *               get the current revision (default value)
 	 * @return ParserOutput or false if the revision was not found
 	 */
-	public function getParserOutput( ParserOptions $parserOptions, $oldid = null ) {
+	public function getParserOutput( ParserOptions $parserOptions, $oldid = null, $fromCache = true ) {
 		wfProfileIn( __METHOD__ );
 
-		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid );
+		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid ) && $fromCache;
 		wfDebug( __METHOD__ . ': using parser cache: ' . ( $useParserCache ? 'yes' : 'no' ) . "\n" );
 		if ( $parserOptions->getStubThreshold() ) {
 			wfIncrStats( 'pcache_miss_stub' );
@@ -871,22 +946,15 @@ class WikiPage extends Page {
 	 * @param $user User The relevant user
 	 */
 	public function doViewUpdates( User $user ) {
-		global $wgDisableCounters;
 		if ( wfReadOnly() ) {
 			return;
-		}
-
-		# Don't update page view counters on views from bot users (bug 14044)
-		if ( !$wgDisableCounters && !$user->isAllowed( 'bot' ) && $this->mTitle->exists() ) {
-			DeferredUpdates::addUpdate( new ViewCountUpdate( $this->getId() ) );
-			DeferredUpdates::addUpdate( new SiteStatsUpdate( 1, 0, 0 ) );
 		}
 
 		# Update newtalk / watchlist notification status
 		$user->clearNotification( $this->mTitle );
 
 		# wikia changes begin
-		wfRunHooks( 'AfterViewUpdates', array( $this ) );
+		Hooks::run( 'AfterViewUpdates', array( $this ) );
 		# wikia changes end
 	}
 
@@ -896,7 +964,7 @@ class WikiPage extends Page {
 	public function doPurge() {
 		global $wgUseSquid;
 
-		if( !wfRunHooks( 'ArticlePurge', array( &$this ) ) ){
+		if( !Hooks::run( 'ArticlePurge', [ $this ] ) ) {
 			return false;
 		}
 
@@ -907,7 +975,7 @@ class WikiPage extends Page {
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->commit();
+			$dbw->commit( __METHOD__ );
 
 			// Send purge
 			$update = SquidUpdate::newSimplePurge( $this->mTitle );
@@ -944,7 +1012,6 @@ class WikiPage extends Page {
 			'page_id'           => $page_id,
 			'page_namespace'    => $this->mTitle->getNamespace(),
 			'page_title'        => $this->mTitle->getDBkey(),
-			'page_counter'      => 0,
 			'page_restrictions' => '',
 			'page_is_redirect'  => 0, # Will set this shortly...
 			'page_is_new'       => 1,
@@ -993,6 +1060,22 @@ class WikiPage extends Page {
 			# An extra check against threads stepping on each other
 			$conditions['page_latest'] = $lastRevision;
 		}
+
+		// Wikia change - begin
+		/**
+		 * PLATFORM-1311: page_latest can be set to zero only during page creation
+		 *
+		 * https://www.mediawiki.org/wiki/Manual:Page_table#page_latest says the following:
+		 *
+		 * WikiPage::updateRevisionOn() should set it to a non-zero value.
+		 * It needs to link to a revision with a valid revision.rev_page.
+		 */
+		Wikia\Util\Assert::true( $revision->getId() > 0 , 'PLATFORM-1311', [
+			'reason' => __METHOD__ . ' tried to set page_latest to zero',
+			'page_id' => $this->getId(),
+			'name' => $this->getTitle()->getPrefixedDBkey(),
+		] );
+		// Wikia change - end
 
 		$now = wfTimestampNow();
 		$dbw->update( 'page',
@@ -1165,7 +1248,7 @@ class WikiPage extends Page {
 			if ( $section == 'new' ) {
 				# Inserting a new section
 				$subject = $sectionTitle ? wfMsgForContent( 'newsectionheaderdefaultlevel', $sectionTitle ) . "\n\n" : '';
-				if ( wfRunHooks( 'PlaceNewSection', array( $this, $oldtext, $subject, &$text ) ) ) {
+				if ( Hooks::run( 'PlaceNewSection', array( $this, $oldtext, $subject, &$text ) ) ) {
 					$text = strlen( trim( $oldtext ) ) > 0
 						? "{$oldtext}\n\n{$subject}{$text}"
 						: "{$subject}{$text}";
@@ -1245,8 +1328,9 @@ class WikiPage extends Page {
 	 *
 	 *  Compatibility note: this function previously returned a boolean value indicating success/failure
 	 */
-	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null ) {
-		global $wgUser, $wgDBtransactions, $wgUseAutomaticEditSummaries;
+	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
+							$forcePatrolled = false) {
+		global $wgUser, $wgUseAutomaticEditSummaries;
 
 		# Low-level sanity check
 		if ( $this->mTitle->getText() === '' ) {
@@ -1258,14 +1342,24 @@ class WikiPage extends Page {
 		$user = is_null( $user ) ? $wgUser : $user;
 		$status = Status::newGood( array() );
 
-		# Load $this->mTitle->getArticleID() and $this->mLatest if it's not already
+		// Load the data from the master database if needed.
+		// The caller may already loaded it from the master or even loaded it using
+		// SELECT FOR UPDATE, so do not override that using clear().
 		$this->loadPageData( 'fromdbmaster' );
 
 		$flags = $this->checkFlags( $flags );
 
-		if ( !wfRunHooks( 'ArticleSave', array( &$this, &$user, &$text, &$summary,
-			$flags & EDIT_MINOR, null, null, &$flags, &$status ) ) )
-		{
+		if ( !Hooks::run( 'ArticleSave', [
+			$this,
+			&$user,
+			&$text,
+			&$summary,
+			$flags & EDIT_MINOR,
+			null,
+			null,
+			&$flags,
+			&$status,
+		] ) ) {
 			wfDebug( __METHOD__ . ": ArticleSave hook aborted save!\n" );
 
 			if ( $status->isOK() ) {
@@ -1318,11 +1412,6 @@ class WikiPage extends Page {
 				return $status;
 			}
 
-			# Make sure the revision is either completely inserted or not inserted at all
-			if ( !$wgDBtransactions ) {
-				$userAbort = ignore_user_abort( true );
-			}
-
 			$revision = new Revision( array(
 				'page'       => $this->getId(),
 				'comment'    => $summary,
@@ -1350,23 +1439,27 @@ class WikiPage extends Page {
 				$ok = $this->updateRevisionOn( $dbw, $revision, $oldid, $oldIsRedirect );
 
 				// wikia changes begin
-				wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
-				// wikia changes end
+				if ( !Hooks::run( 'ArticleDoEdit', [ $dbw, $this->mTitle, $revision ] ) ) {
+					$status->fatal( 'unknownerror' );
 
-				if ( !$ok ) {
+					$dbw->rollback( __METHOD__ );
+				} elseif ( !$ok ) {
 					/* Belated edit conflict! Run away!! */
 					$status->fatal( 'edit-conflict' );
 
-					# Delete the invalid revision if the DB is not transactional
-					if ( !$wgDBtransactions ) {
-						$dbw->delete( 'revision', array( 'rev_id' => $revisionId ), __METHOD__ );
-					}
+					\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+						'reason' => 'ArticleDoEdit rollback - updateRevisionOn failed',
+						'exception' => new Exception(),
+						'name' => $this->mTitle->getPrefixedDBkey(),
+						'rev_id' => $revisionId,
+						'page_id' => $this->getId(),
+					]);
 
 					$revisionId = 0;
 					$dbw->rollback(__METHOD__);
 				} else {
 					global $wgUseRCPatrol;
-					wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, $baseRevId, $user, false ) );
+					Hooks::run( 'NewRevisionFromEditComplete', array( $this, $revision, $baseRevId, $user, false ) );
 					# Update recentchanges
 					if ( !( $flags & EDIT_SUPPRESS_RC ) ) {
 						# Mark as patrolled if the user can do so
@@ -1375,7 +1468,7 @@ class WikiPage extends Page {
 						# Add RC row to the DB
 						$rc = RecentChange::notifyEdit( $now, $this->mTitle, $isminor, $user, $summary,
 							$oldid, $this->getTimestamp(), $bot, '', $oldsize, $newsize,
-							$revisionId, $patrolled
+							$revisionId, $patrolled || $forcePatrolled
 						);
 
 						# Log auto-patrolled edits
@@ -1383,17 +1476,13 @@ class WikiPage extends Page {
 							PatrolLog::record( $rc, true, $user );
 						}
 					}
-					$user->incEditCount();
 					$dbw->commit(__METHOD__);
+					$user->incEditCount();
 				}
 			} else {
 				// Bug 32948: revision ID must be set to page {{REVISIONID}} and
 				// related variables correctly
 				$revision->setId( $this->getLatest() );
-			}
-
-			if ( !$wgDBtransactions ) {
-				ignore_user_abort( $userAbort );
 			}
 
 			// Now that ignore_user_abort is restored, we can respond to fatal errors
@@ -1424,6 +1513,12 @@ class WikiPage extends Page {
 			$newid = $this->insertOn( $dbw );
 
 			if ( $newid === false ) {
+				\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+					'reason' => 'ArticleDoEdit rollback - insertOn failed',
+					'exception' => new Exception(),
+					'name' => $this->mTitle->getPrefixedDBkey(),
+				]);
+
 				$dbw->rollback();
 				$status->fatal( 'edit-already-exists' );
 
@@ -1447,10 +1542,10 @@ class WikiPage extends Page {
 			$this->updateRevisionOn( $dbw, $revision, 0 );
 
 			// wikia changes begin
-			wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
+			Hooks::run( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
 			// wikia changes end
 
-			wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user ) );
+			Hooks::run( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user ) );
 
 			# Update recentchanges
 			if ( !( $flags & EDIT_SUPPRESS_RC ) ) {
@@ -1461,21 +1556,30 @@ class WikiPage extends Page {
 					$this->mTitle->getUserPermissionsErrors( 'autopatrol', $user ) );
 				# Add RC row to the DB
 				$rc = RecentChange::notifyNew( $now, $this->mTitle, $isminor, $user, $summary, $bot,
-					'', strlen( $text ), $revisionId, $patrolled );
+					'', strlen( $text ), $revisionId, $patrolled || $forcePatrolled);
 
 				# Log auto-patrolled edits
 				if ( $patrolled ) {
 					PatrolLog::record( $rc, true, $user );
 				}
 			}
-			$user->incEditCount();
 			$dbw->commit(__METHOD__);
+			$user->incEditCount();
 
 			# Update links, etc.
 			$this->doEditUpdates( $revision, $user, array( 'created' => true ) );
 
-			wfRunHooks( 'ArticleInsertComplete', array( &$this, &$user, $text, $summary,
-				$flags & EDIT_MINOR, null, null, &$flags, $revision ) );
+			Hooks::run( 'ArticleInsertComplete', [
+				$this,
+				$user,
+				$text,
+				$summary,
+				$flags & EDIT_MINOR,
+				null,
+				null,
+				&$flags,
+				$revision,
+			] );
 		}
 
 		# Do updates right now unless deferral was requested
@@ -1486,11 +1590,19 @@ class WikiPage extends Page {
 		// Return the new revision (or null) to the caller
 		$status->value['revision'] = $revision;
 
-		wfRunHooks( 'ArticleSaveComplete', array( &$this, &$user, $text, $summary,
-			$flags & EDIT_MINOR, null, null, &$flags, $revision, &$status, $baseRevId ) );
-
-		# Promote user to any groups they meet the criteria for
-		$user->addAutopromoteOnceGroups( 'onEdit' );
+		Hooks::run( 'ArticleSaveComplete', [
+			$this,
+			$user,
+			$text,
+			$summary,
+			$flags & EDIT_MINOR,
+			null,
+			null,
+			$flags,
+			$revision,
+			&$status,
+			$baseRevId,
+		] );
 
 		wfProfileOut( __METHOD__ );
 		return $status;
@@ -1530,7 +1642,7 @@ class WikiPage extends Page {
 		}
 
 		$popts = ParserOptions::newFromUserAndLang( $user, $wgContLang );
-		wfRunHooks( 'ArticlePrepareTextForEdit', array( $this, $popts ) );
+		Hooks::run( 'ArticlePrepareTextForEdit', array( $this, $popts ) );
 
 		$edit = (object)array();
 		$edit->revid = $revid;
@@ -1590,21 +1702,13 @@ class WikiPage extends Page {
 		$u = new LinksUpdate( $this->mTitle, $editInfo->output );
 		$u->doUpdate();
 
-		wfRunHooks( 'ArticleEditUpdates', array( &$this, &$editInfo, $options['changed'] ) );
+		Hooks::run( 'ArticleEditUpdates', [ $this, &$editInfo, $options['changed'] ] );
 
-		if ( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
+		if ( Hooks::run( 'ArticleEditUpdatesDeleteFromRecentchanges', [ $this ] ) ) {
 			if ( 0 == mt_rand( 0, 99 ) ) {
-				// Flush old entries from the `recentchanges` table; we do this on
-				// random requests so as to avoid an increase in writes for no good reason
-				global $wgRCMaxAge;
-
-				$dbw = wfGetDB( DB_MASTER );
-				$cutoff = $dbw->timestamp( time() - $wgRCMaxAge );
-				$dbw->delete(
-					'recentchanges',
-					array( "rc_timestamp < '$cutoff'" ),
-					__METHOD__
-				);
+				// Flush old entries from the `recentchanges` table
+				// Wikia: use a job backported from MediaWiki 1.25 (@see PLATFORM-965)
+				Wikia\Tasks\Tasks\RecentChangesUpdateTask::newPurgeTask();
 			}
 		}
 
@@ -1642,7 +1746,7 @@ class WikiPage extends Page {
 			&& $shortTitle != $user->getTitleKey()
 			&& !( $revision->isMinor() && $user->isAllowed( 'nominornewtalk' ) )
 		) {
-			if ( wfRunHooks( 'ArticleEditUpdateNewTalk', array( &$this ) ) ) {
+			if ( Hooks::run( 'ArticleEditUpdateNewTalk', [ $this ] ) ) {
 				$other = User::newFromName( $shortTitle, false );
 				if ( !$other ) {
 					wfDebug( __METHOD__ . ": invalid username\n" );
@@ -1693,7 +1797,7 @@ class WikiPage extends Page {
 		$revision->insertOn( $dbw );
 		$this->updateRevisionOn( $dbw, $revision );
 
-		wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user ) );
+		Hooks::run( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -1707,7 +1811,7 @@ class WikiPage extends Page {
 	 * @param &$cascade Integer. Set to false if cascading protection isn't allowed.
 	 * @param $expiry Array: per restriction type expiration
 	 * @param $user User The user updating the restrictions
-	 * @return bool true on success
+	 * @return Status
 	 */
 	public function doUpdateRestrictions( array $limit, array $expiry, &$cascade, $reason, User $user ) {
 		global $wgContLang;
@@ -1804,7 +1908,7 @@ class WikiPage extends Page {
 		$protectDescription = trim( $protectDescription );
 
 		if ( $id ) { # Protection of existing page
-			if ( !wfRunHooks( 'ArticleProtect', array( &$this, &$user, $limit, $reason ) ) ) {
+			if ( !Hooks::run( 'ArticleProtect', [ $this, $user, $limit, $reason ] ) ) {
 				return Status::newGood();
 			}
 
@@ -1863,8 +1967,8 @@ class WikiPage extends Page {
 				), __METHOD__
 			);
 
-			wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $nullRevision, $latest, $user ) );
-			wfRunHooks( 'ArticleProtectComplete', array( &$this, &$user, $limit, $reason ) );
+			Hooks::run( 'NewRevisionFromEditComplete', [ $this, $nullRevision, $latest, $user ] );
+			Hooks::run( 'ArticleProtectComplete', [ $this, $user, $limit, $reason ] );
 		} else { # Protection of non-existing page (also known as "title protection")
 			# Cascade protection is meaningless in this case
 			$cascade = false;
@@ -1973,19 +2077,24 @@ class WikiPage extends Page {
 		$reason, $suppress = false, $id = 0, $commit = true, &$error = '', User $user = null
 	) {
 		global $wgUser;
-		$user = is_null( $user ) ? $wgUser : $user;
 
 		wfDebug( __METHOD__ . "\n" );
 
-		if ( ! wfRunHooks( 'ArticleDelete', array( &$this, &$user, &$reason, &$error ) ) ) {
+		if ( $this->mTitle->getDBkey() === '' ) {
+			return WikiPage::DELETE_NO_PAGE;
+		}
+
+		$user = is_null( $user ) ? $wgUser : $user;
+		if ( !Hooks::run( 'ArticleDelete', [ $this, &$user, &$reason, &$error ] ) ) {
 			return WikiPage::DELETE_HOOK_ABORTED;
 		}
-		$dbw = wfGetDB( DB_MASTER );
-		$t = $this->mTitle->getDBkey();
-		$id = $id ? $id : $this->mTitle->getArticleID( Title::GAID_FOR_UPDATE );
 
-		if ( $t === '' || $id == 0 ) {
-			return WikiPage::DELETE_NO_PAGE;
+		if ( $id == 0 ) {
+			$this->loadPageData( 'forupdate' );
+			$id = $this->getID();
+			if ( $id == 0 ) {
+				return WikiPage::DELETE_NO_PAGE;
+			}
 		}
 
 		// Bitfields to further suppress the content
@@ -2000,7 +2109,38 @@ class WikiPage extends Page {
 			$bitfield = 'rev_deleted';
 		}
 
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
+
+		// Wikia change - begin -@author: wladek
+		$pageRow = $dbw->selectRow('page','*',[
+			'page_id' => $id,
+		],__METHOD__);
+		if (!$pageRow){
+			$pageRow = (object)[
+				'page_namespace' => '-1',
+				'page_title' => '???',
+			];
+		}
+		$beforeRevisionCount = $dbw->selectField('revision','count(*)',[
+			'rev_page' => $id,
+		],__METHOD__);
+		$beforeArchiveCount = $dbw->selectField('archive','count(*)',[
+			'ar_namespace' => $pageRow->page_namespace,
+			'ar_title'     => $pageRow->page_title,
+		],__METHOD__);
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'RevisionAudit - before delete revisions',[
+				'exception' => new Exception(),
+				'page_namespace' => $pageRow->page_namespace,
+				'page_title' => $pageRow->page_title,
+				'page_id' => $id,
+				'rev_count_before' => $beforeRevisionCount,
+				'ar_count_before' => $beforeArchiveCount,
+			]
+		);
+		// Wikia change - end
+
 		// For now, shunt the revision data into the archive table.
 		// Text is *not* removed from the text table; bulk storage
 		// is left intact to avoid breaking block-compression or
@@ -2040,11 +2180,23 @@ class WikiPage extends Page {
 		$ok = ( $dbw->affectedRows() > 0 ); // getArticleId() uses slave, could be laggy
 
 		if ( !$ok ) {
+			// Wikia change - begin - @author: wladek
+			\Wikia\Logger\WikiaLogger::instance()->debug(
+				'RevisionAudit - delete revision error',[
+					'exception' => new Exception(),
+					'page_namespace' => $pageRow->page_namespace,
+					'page_title' => $pageRow->page_title,
+					'page_id' => $id,
+					'rev_count_before' => $beforeRevisionCount,
+					'ar_count_before' => $beforeArchiveCount,
+					'error_name' => 'no page row deleted',
+				]
+			);
+			// Wikia change - end
+
 			$dbw->rollback();
 			return WikiPage::DELETE_NO_REVISIONS;
 		}
-
-		$this->doDeleteUpdates( $id );
 
 		# Log the deletion, if the page was suppressed, log it at Oversight instead
 		$logtype = $suppress ? 'suppress' : 'delete';
@@ -2052,8 +2204,7 @@ class WikiPage extends Page {
 		# Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$hookAddedLogEntry = false;
 
-		# @todo mediawiki merge 1.19: $log doesn't exist there
-		wfRunHooks('ArticleDoDeleteArticleBeforeLogEntry', array(&$this, &$logtype, $this->mTitle, $reason, &$hookAddedLogEntry));
+		Hooks::run( 'ArticleDoDeleteArticleBeforeLogEntry', [ $this, &$logtype, $this->mTitle, $reason, &$hookAddedLogEntry ] );
 		if( !$hookAddedLogEntry ) {
 			# if hook above didn't log anything log it as default
 
@@ -2066,11 +2217,39 @@ class WikiPage extends Page {
 		}
 		# Wikia change end
 
+		// Wikia change: doDeleteUpdates has side effects that reset the title. This prevents hooks from acting on the
+		// page if they rely on the title or related associations.
+		$this->doDeleteUpdates( $id );
+		// Wikia change end
+
+		// Wikia change - begin - @author: wladek
+		$afterRevisionCount = $dbw->selectField('revision','count(*)',[
+			'rev_page' => $id,
+		],__METHOD__);
+		$afterArchiveCount = $dbw->selectField('archive','count(*)',[
+			'ar_namespace' => $pageRow->page_namespace,
+			'ar_title'     => $pageRow->page_title,
+		],__METHOD__);
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'RevisionAudit - after delete revisions',[
+				'exception' => new Exception(),
+				'page_namespace' => $pageRow->page_namespace,
+				'page_title' => $pageRow->page_title,
+				'page_id' => $id,
+				'rev_count_before' => $beforeRevisionCount,
+				'ar_count_before' => $beforeArchiveCount,
+				'rev_count_after' => $afterRevisionCount,
+				'ar_count_after' => $afterArchiveCount,
+			]
+		);
+		// Wikia change - end
+
 		if ( $commit ) {
 			$dbw->commit();
 		}
 
-		wfRunHooks( 'ArticleDeleteComplete', array( &$this, &$user, $reason, $id ) );
+		Hooks::run( 'ArticleDeleteComplete', [ $this, $user, $reason, $id ] );
+
 		return WikiPage::DELETE_SUCCESS;
 	}
 
@@ -2113,6 +2292,15 @@ class WikiPage extends Page {
 			$dbw->delete( 'page_props', array( 'pp_page' => $id ), __METHOD__ );
 		}
 
+		if ( $this->mTitle->inNamespace( NS_CATEGORY ) ) {
+			$field = $dbw->selectField( 'category', 'cat_title', [ 'cat_title' => $this->mTitle->getDBkey(), 'cat_pages <= 0' ], __METHOD__ );
+			if ( $field ) {
+				$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+				$task->call( 'refreshCounts', $field );
+				$task->queue();
+			}
+		}
+
 		# If using cleanup triggers, we can skip some manual deletes
 		if ( !$dbw->cleanupTriggers() ) {
 			# Clean up recentchanges entries...
@@ -2131,10 +2319,10 @@ class WikiPage extends Page {
 
 		# Clear the cached article id so the interface doesn't act like we exist
 		$this->mTitle->resetArticleID( 0 );
-		
+
 		# Wikia change here
 		$this->setCachedLastEditTime( wfTimestampNow() );
-		# Wikia 
+		# Wikia
 	}
 
 	/**
@@ -2275,9 +2463,9 @@ class WikiPage extends Page {
 		$target = Revision::newFromId( $s->rev_id );
 		if ( empty( $summary ) ) {
 			if ( $from == '' ) { // no public user name
-				$summary = wfMsgForContent( 'revertpage-nouser' );
+				$summary = wfMessage( 'revertpage-nouser' );
 			} else {
-				$summary = wfMsgForContent( 'revertpage' );
+				$summary = wfMessage( 'revertpage' );
 			}
 		}
 
@@ -2295,7 +2483,15 @@ class WikiPage extends Page {
 			$wgContLang->timeanddate( wfTimestamp( TS_MW, $s->rev_timestamp ) ),
 			$current->getId(), $wgContLang->timeanddate( $current->getTimestamp() )
 		);
-		$summary = wfMsgReplaceArgs( $summary, $args );
+
+		if ( $summary instanceof Message ) {
+			$summary = $summary->params( $args )->inContentLanguage()->text();
+		} else {
+			$summary = wfMsgReplaceArgs( $summary, $args );
+		}
+
+		// Trim spaces on user supplied text
+		$summary = trim( $summary );
 
 		# Save
 		$flags = EDIT_UPDATE;
@@ -2316,7 +2512,7 @@ class WikiPage extends Page {
 			$revId = false;
 		}
 
-		wfRunHooks( 'ArticleRollbackComplete', array( $this, $guser, $target, $current ) );
+		Hooks::run( 'ArticleRollbackComplete', array( $this, $guser, $target, $current ) );
 
 		$resultDetails = array(
 			'summary' => $summary,
@@ -2353,6 +2549,12 @@ class WikiPage extends Page {
 		$title->touchLinks();
 		$title->purgeSquid();
 		$title->deleteTitleProtection();
+
+		// SUS-1782: If this is a category, try to load its category table entry
+		// If it does not have one, a background task will be scheduled to create one
+		if ( $title->inNamespace( NS_CATEGORY ) ) {
+			Category::newFromTitle( $title )->getID();
+		}
 	}
 
 	/**
@@ -2389,8 +2591,15 @@ class WikiPage extends Page {
 
 		# Images
 		if ( $title->getNamespace() == NS_FILE ) {
-			$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia Change End
 		}
 
 		# User talk pages
@@ -2412,12 +2621,17 @@ class WikiPage extends Page {
 	 * @todo:  verify that $title is always a Title object (and never false or null), add Title hint to parameter $title
 	 */
 	public static function onArticleEdit( $title ) {
-		// Invalidate caches of articles which include this page
-		DeferredUpdates::addHTMLCacheUpdate( $title, 'templatelinks' );
+		// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
+		global $wgCityId;
 
-
-		// Invalidate the caches of all pages which redirect here
-		DeferredUpdates::addHTMLCacheUpdate( $title, 'redirect' );
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $title );
+		// Invalidate caches of articles which include this page and those
+		// that redirect to it
+		$task->call( 'purge', ['templatelinks', 'redirect'] );
+		$task->queue();
+		// Wikia Change End
 
 		# Purge squid for this page only
 		$title->purgeSquid();
@@ -2638,7 +2852,7 @@ class WikiPage extends Page {
 		global $wgSkipCountForCategories;
 
 		/* Used by CategoryService */
-		wfRunHooks( 'ArticleUpdateCategoryCounts', array( &$this, $added, $deleted ));
+		Hooks::run( 'ArticleUpdateCategoryCounts', [ $this, $added, $deleted ] );
 
 		if( is_array( $wgSkipCountForCategories ) ) {
 			$added = array_diff( $added, $wgSkipCountForCategories );
@@ -2661,15 +2875,28 @@ class WikiPage extends Page {
 			return;
 		}
 
-		$insertRows = array();
-
+		// Wikia change - begin - @author: wladek
+		// PLATFORM-410: Attempt to lower the chance of deadlocks
+		sort( $insertCats );
+		$missingCats = [];
 		foreach ( $insertCats as $cat ) {
+			if ( !$dbw->selectRow( 'category', 'cat_id', [ 'cat_title' => $cat ], __METHOD__, [ 'FOR UPDATE' ] ) ) {
+				$missingCats[] = $cat;
+			}
+		}
+
+		$insertRows = array();
+		foreach ( $missingCats as $cat ) {
 			$insertRows[] = array(
 				'cat_id' => $dbw->nextSequenceValue( 'category_cat_id_seq' ),
 				'cat_title' => $cat
 			);
 		}
-		$dbw->insert( 'category', $insertRows, __METHOD__, 'IGNORE' );
+
+		if ( !empty( $insertRows ) ) {
+			$dbw->insert( 'category', $insertRows, __METHOD__, 'IGNORE' );
+		}
+		// Wikia change - end
 
 		$addFields    = array( 'cat_pages = cat_pages + 1' );
 		$removeFields = array( 'cat_pages = cat_pages - 1' );
@@ -2698,6 +2925,24 @@ class WikiPage extends Page {
 				array( 'cat_title' => $deleted ),
 				__METHOD__
 			);
+
+			// SUS-1782: Get those removed categories which seem to be empty now...
+			$emptyCats = $dbw->selectFieldValues(
+				'category',
+				'cat_title',
+				[
+					'cat_pages <= 0',
+					'cat_title' => $deleted
+				],
+				__METHOD__
+			);
+
+			// ...and schedule a background task to delete them if needed.
+			if ( !empty( $emptyCats ) ) {
+				$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+				$task->call( 'refreshCounts', $emptyCats );
+				$task->queue();
+			}
 		}
 	}
 
@@ -2991,6 +3236,14 @@ class PoolWorkArticleView extends PoolCounterWork {
 
 		# <Wikia>
 		$this->parserOutput->setPerformanceStats( 'time', $time );
+		Transaction::addEvent( Transaction::EVENT_ARTICLE_PARSE, array(
+			'real' => $time,
+			'article' => $this->page->getTitle()->getPrefixedDBkey(),
+			'input_length' => strlen($text),
+			'options_used' => implode(',',$this->parserOutput->getUsedOptions()),
+			'options_hash' => $this->parserOptions->optionsHash($this->parserOutput->getUsedOptions()),
+			'output_cacheable' => $this->parserOutput->isCacheable() && !$this->parserOutput->containsOldMagic(),
+		));
 		# </Wikia>
 
 		# Timing hack

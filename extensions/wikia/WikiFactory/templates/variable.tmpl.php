@@ -53,26 +53,20 @@ Current value:
 <?php if( !isset( $variable->cv_value ) || is_null( $variable->cv_value ) ): ?>
     <strong>Value is not set</strong>
 <?php else: ?>
-    <pre><?php echo var_export( unserialize( $variable->cv_value ) ) ?></pre>
+    <pre><?php echo WikiFactory::renderValue( $variable ) ?></pre>
 <?php endif ?>
 </div>
 
 <div style="width: 45%; float: right">
 Value on community (possibly default value):
 <?php
-$name = $variable->cv_name;
-global $$name;
-global $preWFValues;
-if( isset( $preWFValues[$name] ) ) {
-	// was modified, spit out saved default
-	echo "<pre>" . var_export( $preWFValues[$name], true ) . "</pre>";
-} elseif( isset( $$name ) ) {
-	// was not modified, spit out actual value
-	echo "<pre>" . var_export( $$name, true ) . "</pre>";
-} else {
-	// no value set
-	echo "<strong>No value set.</strong>";
-} ?>
+	$value = WikiFactory::renderValueOnCommunity( $variable->cv_name, $variable->cv_variable_type );
+	if ( $value !== "" ) {
+		echo "<pre>{$value}</pre>";
+	} else {
+		echo "<strong>Value is not set</strong>";
+	}
+?>
 </div>
 
 <div style="margin-top: 2em; clear: both;">
@@ -88,7 +82,7 @@ New value:
 <?php if( $variable->cv_variable_type === "boolean" ): ?>
 
 	<select name="varValue" id="varValue">
-	<?php   if( unserialize( $variable->cv_value === true ) ): ?>
+	<?php   if( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ) === true ): ?>
 		<option value="1" selected="selected">true</option>
 		<option value="0">false</option>
 	<?php   else: ?>
@@ -99,23 +93,29 @@ New value:
 
 <?php elseif( $variable->cv_variable_type == "integer"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo unserialize( $variable->cv_value ) ?>" size="40" maxlength="255" />
+	<input type="text" name="varValue" id="varValue" value="<?php echo WikiFactory::renderValue( $variable ) ?>" size="40" maxlength="255" />
 
 <?php elseif( $variable->cv_variable_type == "string"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo unserialize( $variable->cv_value ) ?>" size="100" class="input-string" /><br />
-
-<?php elseif ($variable->cv_variable_type == "array" && !empty($wgDevelEnvironment)): ?>
-
-	<textarea name="varValue" id="varValue"><?php if( isset( $variable->cv_value ) ) echo var_export( unserialize( $variable->cv_value ), 1) ?></textarea><br />
+	<input type="text" name="varValue" id="varValue" value="<?php echo WikiFactory::renderValue( $variable ) ?>" size="100" class="input-string" /><br />
 
 <?php else: ?>
 
-	 <textarea name="varValue" id="varValue"><?php if( isset( $variable->cv_value ) ) echo var_export( unserialize( $variable->cv_value ), 1) ?></textarea><br />
+	<textarea name="varValue" id="varValue"><?php echo WikiFactory::renderValue( $variable ) ?></textarea><br />
 
 <?php endif ?>
-	<br/>By tag: <input type="text" name="tagName" id="tagName" value="" size="30" /> (Apply this value to wikis with this tag)
-	<br/>Reason: <input type="text" id="wk-reason" name="reason" value="" size="30" /> (optional, reason text or ticket number)
+	<div class="clearfix">
+		<div class="wf-variable-form-inline-group wf-variable-form-left">
+			<label for="reason">
+			<?= wfMessage( 'wikifactory-label-reason' )->parse(); ?></label>
+			<input type="text" id="wk-reason" name="reason" value="" size="30" />
+		</div>
+		<div class="wf-variable-form-inline-group wf-variable-form-right">
+			<label for="tagName">
+			<strong>By tag</strong> (apply this value to wikis with this tag) :</label>
+			<input type="text" name="tagName" id="tagName" value="" size="30" />
+		</div>
+	</div>
 	<br/><input type="button" id="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.tagCheck();" />
 	&nbsp;<input type="button" class="wikia-button red" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
@@ -148,7 +148,7 @@ New value:
 <?php if( $rel_var->cv_variable_type === "boolean" ): ?>
 
 	<select name="varValue" id="varValue">
-	<?php   if( unserialize( $rel_var->cv_value === true ) ): ?>
+	<?php   if( unserialize( $rel_var->cv_value, [ 'allowed_classes' => false ] ) ): ?>
 		<option value="1" selected="selected">true</option>
 		<option value="0">false</option>
 	<?php   else: ?>
@@ -159,15 +159,15 @@ New value:
 
 <?php elseif( $rel_var->cv_variable_type == "integer"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo unserialize( $rel_var->cv_value ) ?>" size="40" maxlength="255" />
+	<input type="text" name="varValue" id="varValue" value="<?php echo WikiFactory::renderValue( $rel_var ) ?>" size="40" maxlength="255" />
 
 <?php elseif( $rel_var->cv_variable_type == "string"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo unserialize( $rel_var->cv_value ) ?>" size="160" class="input-string" />
+	<input type="text" name="varValue" id="varValue" value="<?php echo WikiFactory::renderValue( $rel_var ) ?>" size="160" class="input-string" />
 
 <?php else: ?>
 
-	 <textarea name="varValue" id="varValue"><?php if( isset( $rel_var->cv_value ) ) echo var_export( unserialize( $rel_var->cv_value ), 1) ?></textarea><br />
+	 <textarea name="varValue" id="varValue"><?php echo WikiFactory::renderValue( $rel_var ) ?></textarea><br />
 
 <?php endif ?>
 	<input type="button" id="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.submit($(this).parent().attr('id'));" />

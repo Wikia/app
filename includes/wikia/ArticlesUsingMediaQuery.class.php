@@ -68,12 +68,7 @@ class ArticlesUsingMediaQuery {
 	}
 
 	public function getMemcKey() {
-		$key = '';
-		$key .= $this->app->wg->cityId;
-		$key .= 'ArticlesUsingMediaQuery_v3_';
-		$key .= md5($this->fileTitle->getDBKey());
-
-		return $key;
+		return wfMemcKey( 'ArticlesUsingMediaQuery', 'v3', md5( $this->fileTitle->getDBKey() ) );
 	}
 
 	public function unsetCache() {
@@ -114,12 +109,14 @@ class ArticlesUsingMediaQuery {
 
 	/**
 	 * @param $article WikiPage
-	 * @param bool $wgUser
+	 * @param User $wgUser
 	 * @param bool $reason
 	 * @param bool $error
 	 * @return bool
 	 */
-	public static function onArticleDelete( &$article, &$wgUser=false, &$reason=false, &$error=false ) {
+	public static function onArticleDelete(
+		WikiPage $article, User $wgUser, $reason, &$error
+	): bool {
 		$id = $article->mTitle->getArticleID();
 		$dbr = wfGetDB( DB_SLAVE );
 

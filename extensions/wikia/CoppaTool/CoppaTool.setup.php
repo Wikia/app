@@ -13,13 +13,11 @@ $wgExtensionCredits['specialpage'][] = [
 	'author' => [
 		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	],
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CoppaTool',
 ];
 
 $wgAutoloadClasses['CoppaToolSpecialController'] =  __DIR__ . '/CoppaToolSpecialController.class.php';
 $wgAutoloadClasses['CoppaToolController'] =  __DIR__ . '/CoppaToolController.class.php';
-
-$wgAvailableRights[] = 'coppatool';
-$wgGroupPermissions['util']['coppatool'] = true;
 
 $wgExtensionMessagesFiles['CoppaTool'] = __DIR__ . '/CoppaTool.i18n.php' ;
 

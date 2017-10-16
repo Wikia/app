@@ -184,6 +184,7 @@ abstract class Engine {
 	 */
 	public function clearData(){
 		$this->values = [];
+		return $this;
 	}
 
 	/**
@@ -240,6 +241,6 @@ abstract class Engine {
 	 * of calling this method multiple times
 	 */
 	public function getVal( $name ) {
-		return $this->values[$name];
+		return isset($this->values[$name]) ? $this->values[$name]: null;
 	}
 }

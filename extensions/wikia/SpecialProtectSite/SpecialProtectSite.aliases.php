@@ -19,3 +19,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['es'] = array(
 	'Protectsite' => array( 'ProtegerWiki', 'Protectsite' )
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Protectsite' => array( 'サイト保護' )
+);

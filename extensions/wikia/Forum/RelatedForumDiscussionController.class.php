@@ -1,108 +1,71 @@
 <?php
-class RelatedForumDiscussionController extends WikiaController {
 
-	public function init() {
+use Wikia\Logger\WikiaLogger;
 
-	}
+class RelatedForumDiscussionController extends WikiaService {
+
+	/** Expiry time to use in cache requests */
+	const CACHE_EXPIRY = 86400; // 24*60*60
 
 	public function index() {
-
-		$messages = $this->getData($this->app->wg->Title->getArticleId());
-
-		unset($messages['lastupdate']);
+		$this->response->setVal('messages', $this->getVal( 'messages' ));
 
 		// loading assets in Monobook that would normally load in oasis
-		if($this->app->checkSkin('monobook')) {
-			$this->response->addAsset( 'skins/oasis/css/core/sprite.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/js/RelatedForumDiscussion.js' );
+		if ( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'skins/shared/styles/sprite.scss' );
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/RelatedForumMonobook.scss' );
 		}
 
-		$content = '';
+		$title = $this->getContext()->getTitle();
+		$topicTitle = Title::newFromText( $title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 
-		// don't render anything if there are no discussions for this article
-		if(empty($messages)) {
-			$content = $this->app->renderView( "RelatedForumDiscussion", "zeroState" );
-		} else {
-			$content = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
-		}
-
-		$this->content = $content;
 		// common data
-		$this->sectionHeading = wfMessage( 'forum-related-discussion-heading', $this->wg->Title->getText() )->escaped();
-		$this->newPostButton = wfMessage( 'forum-related-discussion-new-post-button' )->escaped();
-		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
-		$this->newPostUrl = $topicTitle->getFullUrl('openEditor=1');
-		$this->newPostTooltip = wfMessage( 'forum-related-discussion-new-post-tooltip', $this->wg->Title->getText() )->escaped();
-		$this->blankImgUrl = wfBlankImgUrl();
+		$this->response->setVal('sectionHeading', wfMessage( 'forum-related-discussion-heading', $title->getText() )->escaped());
+		$this->response->setVal('newPostButton', wfMessage( 'forum-related-discussion-new-post-button' )->escaped());
+		$this->response->setVal('newPostUrl', $topicTitle->getFullUrl( 'openEditor=1' ));
+		$this->response->setVal('newPostTooltip', wfMessage( 'forum-related-discussion-new-post-tooltip', $title->getText() )->escaped());
+		$this->response->setVal('blankImgUrl', wfBlankImgUrl());
+
+		$this->response->setVal('seeMoreUrl', $topicTitle->getFullUrl());
+		$this->response->setVal('seeMoreText', wfMessage( 'forum-related-discussion-see-more' )->escaped());
 	}
 
-	public function relatedForumDiscussion() {
-		$this->messages = $this->getVal('messages');
+	/**
+	 * Purge the cache for articles related to a given thread
+	 * @param int $threadId
+	 */
+	public static function purgeCache( $threadId ) {
+		$relatedPages = new WallRelatedPages();
+		$ids = $relatedPages->getMessagesRelatedArticleIds( $threadId, 'order_index', DB_MASTER );
 
-		// set template data
-		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
-		$this->seeMoreUrl = $topicTitle->getFullUrl();
-		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
-	}
-
-	public function zeroState() {
-		$this->creative = wfMessage( 'forum-related-discussion-zero-state-creative' )->parse();
-	}
-
-	public function checkData() {
-		$articleId = $this->getVal('articleId');
-		$title = Title::newFromId($articleId);
-		if(empty($articleId) || empty($title)) {
-			$this->replace = false;
-			$this->articleId = 	$articleId;
-			return;
-		}
-
-		$messages = $this->getData($articleId);
-
-		$timediff = time() - $messages['lastupdate'];
-
-		$this->lastupdate = $messages['lastupdate'];
-		$this->timediff = $timediff;
-
-		unset($messages['lastupdate']);
-
-		if($timediff < 24*60*60) {
-			$this->replace = true;
-			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
-		} else {
-			$this->replace = false;
-			$this->html = '';
-		}
-
-		$this->response->setCacheValidity( 0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER) );
-		$this->response->setCacheValidity( 6*60*60, 6*60*60, array(WikiaResponse::CACHE_TARGET_VARNISH) );
-	}
-
-	public function purgeCache() {
-		$threadId = $this->getVal('threadId');
-
-		$rm = new WallRelatedPages();
-		$ids = $rm->getMessagesRelatedArticleIds($threadId, 'order_index', DB_MASTER);
-		$requestsParams = array();
-
-		foreach($ids as $id) {
+		foreach ( $ids as $id ) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
-			WikiaDataAccess::cachePurge($key);
-			$requestsParams[] = array('articleId' => $id);
+			WikiaDataAccess::cachePurge( $key );
+			// VOLDEV-46: Update module by purging page, not via AJAX
+			$wikiaPage = WikiPage::newFromID( $id );
+			if ( $wikiaPage ) {
+				$wikiaPage->doPurge();
+			} else {
+				self::logError( "Found a null related wikipage on thread purge", [ "articleID" => $id, "threadID" => $threadId ] );
+			}
 		}
-
-		RelatedForumDiscussionController::purgeMethodVariants('checkData', $requestsParams);
 	}
 
-	private function getData($id) {
-		$key = wfMemcKey( __CLASS__, 'getData', $id );
-		return WikiaDataAccess::cache( $key, 24*60*60, function() use ($id) {
+	/**
+	 * Fetch Forum discussions related to an article from the cache
+	 * @param int $articleId MediaWiki article id
+	 * @return array: Cache data
+	 */
+	public static function getData( $articleId ) {
+		$key = wfMemcKey( __CLASS__, 'getData', $articleId );
+		return WikiaDataAccess::cache( $key, self::CACHE_EXPIRY, function() use ( $articleId ) {
 			$wlp = new WallRelatedPages();
-			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );
+			$messages = $wlp->getArticlesRelatedMessgesSnippet( $articleId, 2, 2 );
 			return $messages;
-		});
+		} );
 	}
 
+	private static function logError( $message, array $param = [] ) {
+		WikiaLogger::instance()->error( 'RelatedForumDiscussionController: ' . $message, $param );
+	}
 }

@@ -9,13 +9,14 @@
  */
 
 class WAMApiController extends WikiaApiController {
+	use Wikia\Logger\Loggable;
+
 	const DEFAULT_PAGE_SIZE = 20;
 	const MAX_PAGE_SIZE = 20;
 	const DEFAULT_AVATAR_SIZE = 28;
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
-
-	const MEMCACHE_VER = '1.02';
+	const WAM_RESPONSE_CACHE_VALIDITY = 21600;
 
 	/**
 	 * A method to get WAM index (list of wikis with their WAM ranks)
@@ -53,7 +54,7 @@ class WAMApiController extends WikiaApiController {
 	 * 		last_peak - the last time that the Wiki was at its peak_wam_rank
 	 * 		title - wiki title
 	 * 		url - wiki url
-	 * 		hub_id - wiki hub id
+	 * 		vertical_id - wiki vertical id
 	 * 		wam_change - wam score change from $wam_previous_day
 	 * 		wam_is_new - 1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
@@ -66,7 +67,7 @@ class WAMApiController extends WikiaApiController {
 		$wamIndex = WikiaDataAccess::cacheWithLock(
 			wfSharedMemcKey(
 				'wam_index_table',
-				self::MEMCACHE_VER,
+				WAMService::MEMCACHE_VER,
 				$app->wg->ContLang->getCode(),
 				implode(':', $options)
 			),
@@ -101,18 +102,19 @@ class WAMApiController extends WikiaApiController {
 			}
 		);
 
-		$this->response->setVal('wam_index', $wamIndex['wam_index']);
-		$this->response->setVal('wam_results_total', $wamIndex['wam_results_total']);
-		$this->response->setVal('wam_index_date', $wamIndex['wam_index_date']);
-		$this->response->setCacheValidity(
-			6 * 60 * 60 /* 6h */,
-			6 * 60 * 60 /* 6h */,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
+			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
+		}
 
+		$this->setResponseData(
+			[
+				'wam_index' => $wamIndex[ 'wam_index' ],
+				'wam_results_total' => $wamIndex[ 'wam_results_total' ],
+				'wam_index_date' => $wamIndex[ 'wam_index_date' ]
+			],
+			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
+			self::WAM_RESPONSE_CACHE_VALIDITY
+		);
 	}
 
 	/**
@@ -126,11 +128,32 @@ class WAMApiController extends WikiaApiController {
 		$this->response->setVal('min_max_dates', $this->getMinMaxWamIndexDateInternal());
 	}
 
+	/**
+	 * Gets language codes of the wikis that are in the WAM ranking for a given day
+	 *
+	 * @requestParam Integer $wam_day timestamp of the day for the requested list
+	 * @responseParam Array $languages list of aviable languages for the specified day
+	 */
+	public function getWAMLanguages() {
+		$wamDay = $this->request->getVal( 'wam_day', null );
+		$wamDates = $this->getMinMaxWamIndexDateInternal();
+
+		if ( empty( $wamDay ) || $wamDay > $wamDates[ 'max_date' ] ) {
+			$wamDay = $wamDates[ 'max_date' ];
+		} elseif ( $wamDay < $wamDates[ 'min_date' ] ) {
+			$wamDay = $wamDates[ 'min_date' ];
+		}
+
+		$wamService = new WAMService();
+		$result = $wamService->getWAMLanguages( $wamDay );
+		$this->response->setVal( 'languages', $result );
+	}
+
 	private function getMinMaxWamIndexDateInternal() {
 		$wamDates = WikiaDataAccess::cache(
 			wfSharedMemcKey(
 				'wam_minmax_date',
-				self::MEMCACHE_VER
+				WAMService::MEMCACHE_VER
 			),
 			2 * 60 * 60,
 			function () {
@@ -151,7 +174,8 @@ class WAMApiController extends WikiaApiController {
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
-		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', false);
+		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', true);
+		$options['excludeNonCommercial'] = $this->hideNonCommercialContent();
 		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
 		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
@@ -176,8 +200,22 @@ class WAMApiController extends WikiaApiController {
 			$options['currentTimestamp'] = $wamDates['max_date'];
 			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
 		} else {
-			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] < $wamDates['min_date']) {
-				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_date'], $wamDates['max_date']);
+			if($options['currentTimestamp'] > $wamDates['max_date']) {
+				$options['currentTimestamp'] = $wamDates['max_date'];
+
+				$this->warning( __METHOD__ . " - current timestamp over maximum", [
+					'wam_last_entry_date' => wfTimestamp( TS_DB, $wamDates['max_date'] ), // e.g. 2016-11-01 00:00:00
+					'wam_requested_entry_date' => wfTimestamp( TS_DB, $options['currentTimestamp'] ),
+					'exception' => new Exception(),
+				] );
+			} else if($options['currentTimestamp'] < $wamDates['min_date']) {
+				$options['currentTimestamp'] = $wamDates['min_date'];
+
+				$this->warning( __METHOD__ . " - current timestamp below minimum", [
+					'wam_first_entry_date' => wfTimestamp( TS_DB, $wamDates['min_date'] ), // e.g. 2016-11-01 00:00:00
+					'wam_requested_entry_date' => wfTimestamp( TS_DB, $options['currentTimestamp'] ),
+					'exception' => new Exception(),
+				] );
 			}
 
 			if(empty($options['previousTimestamp'])) {

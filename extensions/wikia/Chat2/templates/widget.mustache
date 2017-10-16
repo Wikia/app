@@ -1,0 +1,33 @@
+<section class="chat-module {{sectionClassName}} ChatModuleUninitialized">
+	<div class="chat-contents
+		{{#userName}} chat-user-logged-in{{/userName}}
+		{{^userName}} chat-user-anonymous{{/userName}}
+		{{#hasUsers}} chat-room-active{{/hasUsers}}
+		{{^hasUsers}} chat-room-empty{{/hasUsers}}">
+		<h2 class="chat-headline">
+			<span class="chat-live">{{chatLiveText}}</span>
+		</h2>
+		<div class="chat-details">
+			<div class="avatars">
+				<div class="wds-avatar-stack">
+					{{> widgetUserElement}}
+				</div>
+				{{#moreUsersCount}}
+					<a href="{{linkToSpecialChat}}" class="more-users-count">
+						+{{moreUsersCount}}
+					</a>
+				{{/moreUsersCount}}
+			</div>
+			<a href="{{linkToSpecialChat}}" class="wds-is-secondary wds-button wds-is-squished start-a-chat-button">
+				{{buttonText}}
+			</a>
+		</div>
+	</div>
+	{{#guidelinesText}}
+		<div class="more">{{{guidelinesText}}}</div>
+	{{/guidelinesText}}
+</section>
+{{#fromParserTag}}
+	<script language="javascript" type="text/javascript">if ( typeof ChatWidget!=="undefined" ) ChatWidget.init();</script>
+	<a class="ChatMonobookWidget" href="{{linkToSpecialChat}}">{{joinChatText}}></a>
+{{/fromParserTag}}

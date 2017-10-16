@@ -1,6 +1,5 @@
-@import "../mixins/clearfix";
-@import "../mixins/border-radius";
-@import "color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
 
 .WikiaUserPagesHeader {
 	@include clearfix;
@@ -20,20 +19,6 @@
 		line-height: 26px;
 		vertical-align: top;
 	}
-
-	.sync-profile-button {
-		position: absolute;
-		top: 28px;
-		right: 25px;
-		padding-left: 5px !important;
-
-		img {
-			position: relative;
-			top: 1px;
-			padding-right: 3px;
-		}
-	}
-
 
 	.wikia-avatar {
 		border: 2px solid $color-page;
@@ -105,7 +90,7 @@
 	}
 	.tabs-container {
 		&:before {
-			background: url(/skins/oasis/images/sprite.png) 0 -48px no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/shared/images/sprite.png) 0 -48px no-repeat; /* $wgCdnStylePath */
 			bottom: 0;
 			content: " ";
 			height: 8px;

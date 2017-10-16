@@ -1,5 +1,10 @@
 <?php
-class ApiService extends Service {
+
+use \Wikia\DependencyInjection\Injector;
+use \Wikia\Service\User\Auth\CookieHelper;
+use \Wikia\Service\User\Auth\HeliosCookieHelper;
+
+class ApiService {
 
 	/**
 	 * string constant for mediawiki api endpoint
@@ -15,121 +20,126 @@ class ApiService extends Service {
 
 	/**
 	 * Simple wrapper for calling MW API
+	 *
+	 * @param array $params
+	 *
+	 * @return array|bool
 	 */
-	static function call(Array $params) {
-		wfProfileIn(__METHOD__);
-
+	static function call( Array $params ) {
 		$res = false;
 
 		try {
-			$api = new ApiMain(new FauxRequest($params));
+			$api = new ApiMain( new FauxRequest( $params ) );
 			$api->execute();
 			$res = $api->getResultData();
-		}
-		catch(Exception $e) {};
+		} catch ( Exception $e ) {
+		};
 
-		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
 	/**
 	 * Do cross-wiki API call
 	 *
-	 * @param string database name
-	 * @param array API query parameters
-	 * @param string endpoint (api.php or wikia.php, generally)
-	 * @param string userName
+	 * @param string $dbName database name
+	 * @param array $params API query parameters
+	 * @param string $endpoint (api.php or wikia.php, generally)
+	 * @param boolean $setUser
+	 *
 	 * @return mixed API response
 	 */
-	static function foreignCall( $dbname, Array $params, $endpoint = self::API, $userName  = '' ) {
-		wfProfileIn(__METHOD__);
-		$hostName = self::getHostByDbName($dbname);
+	static function foreignCall( string $dbName, array $params, string $endpoint = self::API, bool $setUser = false ) {
+		$hostName = self::getHostByDbName( $dbName );
 
-		// request JSON format of API response
-		$params['format'] = 'json';
-
-		$parts = array();
-		foreach($params as $key => $value) {
-			$parts[] = urlencode($key) . '=' . urlencode($value);
+		// If hostName is empty, this would make a request to the current host.
+		if ( empty( $hostName ) ) {
+			return false;
 		}
 
-		$url = "{$hostName}/{$endpoint}?" . implode('&', $parts);
-		wfDebug(__METHOD__ . ": {$url}\n");
+		// request JSON format of API response
+		$params[ 'format' ] = 'json';
+
+		$url = "{$hostName}/{$endpoint}?" . http_build_query( $params );
+		wfDebug( __METHOD__ . ": {$url}\n" );
 
 		$options = [];
-		if ( !empty($userName) ) {
-			$options = self::loginAsUser( $userName );
+		if ( $setUser ) {
+			$options = self::loginAsUser();
 		}
 
 		// send request and parse response
-		$resp = Http::get($url, 'default', $options);
+		$resp = Http::get( $url, 'default', $options );
 
-		if ($resp === false) {
-			wfDebug(__METHOD__ . ": failed!\n");
+		if ( $resp === false ) {
+			wfDebug( __METHOD__ . ": failed!\n" );
 			$res = false;
-		}
-		else {
-			$res = json_decode($resp, true /* $assoc */);
+		} else {
+			$res = json_decode( $resp, true /* $assoc */ );
 		}
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
 	/**
 	 * Get domain for a wiki using given database name
 	 *
-	 * @param string database name
+	 * @param string $dbName database name
+	 *
 	 * @return string HTTP domain
 	 */
-	private static function getHostByDbName($dbname) {
-		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+	private static function getHostByDbName( string $dbName ): string {
+		global $wgDevelEnvironment, $wgDevDomain;
 
-		$cityId = WikiFactory::DBtoID($dbname);
-		$hostName = WikiFactory::getVarValueByName('wgServer', $cityId);
+		/**
+		 * wgServer is generated in runtime on devboxes therefore we
+		 * can't use it to get host by db name
+		 */
+		if ( !empty( $wgDevelEnvironment ) ) {
+			$hostName = WikiFactory::DBtoUrl( $dbName );
 
-		if (!empty($wgDevelEnvironment)) {
-			if ( strpos($hostName, "wikia.com") ) {
-				$hostName = str_replace("wikia.com", "{$wgDevelEnvironmentName}.wikia-dev.com", $hostName );
+			if ( strpos( $hostName, 'wikia.com' ) ) {
+				$hostName = str_replace( 'wikia.com', $wgDevDomain, $hostName );
 			} else {
-				$hostName = WikiFactory::getLocalEnvURL($hostName);
+				$hostName = WikiFactory::getLocalEnvURL( $hostName );
 			}
+		} else {
+			$cityId = WikiFactory::DBtoID( $dbName );
+			$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
 		}
 
-		return rtrim($hostName, '/');
+		return rtrim( $hostName, '/' );
 	}
 
 	/**
 	 * get user data
-	 * @param string $userName
 	 * @return array $options
 	 */
-	public static function loginAsUser( $userName ) {
-		$app = F::app();
+	public static function loginAsUser() {
+		global $wgCookiePrefix;
+		$context = RequestContext::getMain();
 
-		$options = array();
-
-		if ( $app->wg->User->isLoggedIn() ) {
-			$user = $app->wg->User;
-		} else {
-			$user = User::newFromName( $userName );
-			if ( !($user instanceof User) ) {
-				return $options;
-			}
+		$options = [];
+		$user = $context->getUser();
+		if ( !$user->isLoggedIn() ) {
+			return $options;
 		}
 
-		$params = array(
+		$params = [
 			'UserID' => $user->getId(),
 			'UserName' => $user->getName(),
 			'Token' => $user->getToken(),
-		);
+		];
 
 		$cookie = '';
 		foreach ( $params as $key => $value ) {
-			$cookie .= $app->wg->CookiePrefix.$key.'='.$value.';';
+			$cookie .= $wgCookiePrefix . $key . '=' . $value . ';';
 		}
 
-		$options['curlOptions'] = array( CURLOPT_COOKIE => $cookie );
+		$token = Injector::getInjector()->get( CookieHelper::class )->getAccessToken( $context->getRequest() );
+		if ( !empty( $token ) ) {
+			$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . '=' . $token . ';';
+		}
+		$options[ 'curlOptions' ] = [ CURLOPT_COOKIE => $cookie ];
 
 		return $options;
 	}

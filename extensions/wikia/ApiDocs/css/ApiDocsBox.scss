@@ -1,6 +1,10 @@
 //apis and methods headings
 $resourceHeadingHeight: 65px;
 
+#resources {
+	margin-bottom: 60px;
+}
+
 .resource {
 	clear: both;
 	width: 960px;
@@ -97,6 +101,9 @@ $resourceHeadingHeight: 65px;
 }
 .resource:last-child {
 	border-bottom: solid 1px $midGray-c3;
+}
+.resource.active:last-child {
+	border-bottom: none;
 }
 //after toggle,
 //.resource

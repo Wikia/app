@@ -20,18 +20,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Multi-Title Finder",
-    "description" => "Staff tool to search for a specific title across Wikia ",
-    "author" => "Moli <moli at wikia.com>"
+    "descriptionmsg" => "multiwikifinder-desc",
+    "author" => "Moli <moli at wikia.com>",
+    "url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/MultiTasks"
 );
 
 #--- messages file
 $wgExtensionMessagesFiles["Multiwikifinder"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
 $wgExtensionMessagesFiles['MultiwikifinderAliases'] = __DIR__ . '/MultiTasks.aliases.php';
-
-$wgAvailableRights[] = 'multiwikifinder';
-$wgGroupPermissions['staff']['multiwikifinder'] = true;
-$wgGroupPermissions['helper']['multiwikifinder'] = true;
-$wgGroupPermissions['vstf']['multiwikifinder'] = true;
 
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );

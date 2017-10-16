@@ -54,6 +54,24 @@ var WikiaPhotoGallerySlideshow = {
 			lastInView = inView;
 		});
 
+		slideshow.find('a.wikia-slideshow-image').click(function(ev) {
+			var linkType = 'lightbox';
+
+			if (this.className.indexOf('link-internal') !== -1) {
+				linkType = 'link-internal';
+			} else if (this.className.indexOf('link-external') !== -1) {
+				linkType = 'link-external';
+			}
+
+			Wikia.Tracker.track({
+				action: 'click',
+				category: 'article',
+				label: 'show-slideshow-' + linkType,
+				trackingMethod: 'analytics',
+				value: 0
+			}, {});
+		});
+
 		// handle clicks on "Add Image"
 		slideshow.find('.wikia-slideshow-addimage').click(function(e) {
 

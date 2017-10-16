@@ -1,34 +1,64 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 /**
- * @method setBlock
- * @method getBlock
- * @method setText
- * @method getText
- * @method getLang
+ * @method PhalanxModel setBlock( $block )
+ * @method object getBlock
+ * @method PhalanxModel setText( string $text )
+ * @method string getText
+ * @method PhalanxModel setShouldLogInStats( bool $shouldLogInStats )
+ * @method bool getShouldLogInStats
+ * @method User getUser
+ * @method PhalanxModel setUser( User $user )
+ * @method PhalanxModel setService( PhalanxService $service )
  */
 abstract class PhalanxModel extends WikiaObject {
-	public $model = null;
-	public $text = null;
-	public $block = null;
-	public $lang = null;
+	/** @var string $text */
+	protected $text = null;
+
+	/** @var null|object $block Information about the current block that was triggered */
+	protected $block = null;
+
 	/* @var User */
-	public $user = null;
+	protected $user = null;
+
 	/* @var PhalanxService */
 	private $service = null;
-	public $ip = null;
+	protected $ip = null;
 
-	public function __construct( $model, $data = array() ) {
+	protected $shouldLogInStats = true;
+
+	public function __construct() {
 		parent::__construct();
-		$this->model = $model;
-		if ( !empty( $data ) ) {
-			foreach ( $data as $key => $value ) {
-				$method = "set{$key}";
-				$this->$method( $value );
-			}
-		}
-		$this->service = new PhalanxService();
+
+		$this->user = $this->wg->user;
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 		$this->ip = $this->wg->request->getIp();
+	}
+
+	/**
+	 * Determines the Phalanx block type from a piece of content that
+	 * was not passed in with a specified type.
+	 *
+	 * @param $content string|Title|User content to guess type for
+	 * @return int
+	 */
+	public static function determineTypeId( $content ) {
+		// Allow extensions to pass in unspecified content types to
+		// eliminate dependence on Phalanx from other extensions;
+		// Phalanx is not enabled on the internal wiki and causes
+		// extensions with a dependency on it to fail hard (500 errors)
+		// See CE-377
+		// default to TYPE_CONTENT
+		$typeId = Phalanx::TYPE_CONTENT;
+		if ( $content instanceof Title ) {
+			$typeId = Phalanx::TYPE_TITLE;
+		} else if ( $content instanceof User ) {
+			$typeId = Phalanx::TYPE_USER;
+		}
+
+		return $typeId;
 	}
 
 	/**
@@ -38,13 +68,13 @@ abstract class PhalanxModel extends WikiaObject {
 	 * @param $content string|Title|User content to check (text, title, user name, ...)
 	 * @return PhalanxModel|null
 	 */
-	public static function newFromType($typeId, $content) {
+	public static function newFromType( $typeId, $content ) {
 		$instance = null;
 
-		switch($typeId) {
+		switch( $typeId ) {
 			case Phalanx:: TYPE_TITLE:
-				$title = ($content instanceof Title) ? $content : Title::newFromText($content);
-				$instance = new PhalanxContentModel($title);
+				$title = ( $content instanceof Title ) ? $content : Title::newFromText( $content );
+				$instance = new PhalanxContentModel( $title );
 				break;
 
 			case Phalanx:: TYPE_SUMMARY:
@@ -53,31 +83,42 @@ abstract class PhalanxModel extends WikiaObject {
 			case Phalanx:: TYPE_ANSWERS_RECENT_QUESTIONS:
 			case Phalanx:: TYPE_WIKI_CREATION:
 			case Phalanx:: TYPE_EMAIL:
-				$instance = new PhalanxTextModel($content);
+				$instance = new PhalanxTextModel( $content );
 				break;
 
 			case Phalanx:: TYPE_USER:
-				$user = ($content instanceof User) ? $content : User::newFromName($content);
-				$instance = new PhalanxUserModel($user);
+				$user = ( $content instanceof User ) ? $content : User::newFromName( $content );
+				$instance = new PhalanxUserModel( $user );
 				break;
 		}
 
 		return $instance;
 	}
 
-	public function isOk() {
+	/**
+	 * Skip calls to Phalanx service if this method returns true
+	 * We must skip check if and only if:
+	 * - user has 'phalanxexempt' right (staff/VSTF/helper)
+	 * - this is an internal request (except if it's looking up different user, e.g. user-permissions service)
+	 *
+	 * @return bool whether to skip call to Phalanx service
+	 */
+	public function isOk(): bool {
+		global $wgUser;
+
 		return (
-			( ( $this->user instanceof User ) && ( $this->user->getName() == $this->wg->User->getName() && $this->wg->User->isAllowed( 'phalanxexempt' ) ) ) ||
-			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) )
+			// SUS-1522: Permit user-permissions service to look up Phalanx blocks for different users
+			( $this->isWikiaInternalRequest() && $this->user->equals( $wgUser ) ) ||
+			$this->user->isAllowed( 'phalanxexempt' )
 		);
 	}
 
-	public function __call($name, $args) {
-		$method = substr($name, 0, 3);
-		$key = strtolower( substr( $name, 3 ) );
+	public function __call( $name, $args ) {
+		$method = substr( $name, 0, 3 );
+		$key = lcfirst( substr( $name, 3 ) );
 
 		$result = null;
-		switch($method) {
+		switch( $method ) {
 			case 'get':
 				if ( isset( $this->$key ) ) {
 					$result = $this->$key;
@@ -91,34 +132,22 @@ abstract class PhalanxModel extends WikiaObject {
 		return $result;
 	}
 
-	protected function fallback( $method, $type ) {
-		$fallback = "{$method}_{$type}_old";
-		$ret = false;
-		if ( method_exists( $this, $fallback ) ) {
-			Wikia::log( __METHOD__, __LINE__, "Call method from previous version of Phalanx - check Phalanx service!\n" );
-			$ret = call_user_func( array( $this, $fallback ) );
-		}
-		return $ret;
-	}
-
 	public function logBlock() {
 		$txt = $this->getText();
-		wfDebug( __METHOD__ . ":". __LINE__. ": Block '#{$this->block->id}' blocked '{" . ( ( is_array( $txt ) ) ? implode(",", $txt) : $txt ) . "}'.\n", true );
+		wfDebug( __METHOD__ . ":" . __LINE__ . ": Block '#{$this->block->id}' blocked '{" . ( ( is_array( $txt ) ) ? implode( ",", $txt ) : $txt ) . "}'.\n", true );
 	}
 
 	public function match( $type, $method = 'logBlock' ) {
 		$ret = true;
 
 		if ( !$this->isOk() ) {
-			$isUser = ($this->user instanceof User) && ( $this->user->getName() == $this->wg->User->getName() );
-
 			$content = $this->getText();
 
 			# send request to service
 			$result = $this->service
-				->setLimit(1)
-				->setUser( $isUser ? $this->user : null )
-				->match( $type, $content, $this->getLang() );
+				->setLimit( 1 )
+				->setUser( ( $this->getShouldLogInStats() && $this->user instanceof User ) ? $this->user : null )
+				->match( $type, $content );
 
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
@@ -126,8 +155,6 @@ abstract class PhalanxModel extends WikiaObject {
 					$this->setBlock( $result )->$method();
 					$ret = false;
 				}
-			} else {
-				$ret = $this->fallback( "match", $type );
 			}
 		}
 
@@ -136,15 +163,27 @@ abstract class PhalanxModel extends WikiaObject {
 
 	public function check( $type ) {
 		# send request to service
-		$result = $this->service->check( $type, $this->getText(), $this->getLang() );
+		$result = $this->service->check( $type, $this->getText() );
 
 		if ( $result !== false ) {
 			# we have response from Phalanx service - 0/1
 			$ret = $result;
 		} else {
-			$ret = $this->fallback( "check", $type );
+			$ret = true;
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * Check if the current request is an internal one (has the required header and is a GET)
+	 *
+	 * @see PLATFORM-1473
+	 *
+	 * @return bool
+	 */
+	public function isWikiaInternalRequest() {
+		$request = $this->wg->Request;
+		return !$request->wasPosted() && $request->isWikiaInternalRequest();
 	}
 }

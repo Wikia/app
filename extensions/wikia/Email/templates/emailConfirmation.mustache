@@ -1,0 +1,26 @@
+{{> greeting}}
+<table>
+	<tr>
+		<td>
+			{{> button}}
+		</td>
+	</tr>
+		<tr>
+			<td colspan="2">
+				<p>{{contentFooterMessageTop}}</p>
+				<p>
+					<ul class="with-spacing">
+						{{#contentFooterList}}
+							<li>{{.}}</li>
+						{{/contentFooterList}}
+					</ul>
+				</p>
+				{{#contentFooterMessagesBottom}}
+					<p>{{{.}}}</p>
+				{{/contentFooterMessagesBottom}}
+				<p class="signature">
+					{{signature}}
+				</p>
+			</td>
+		</tr>
+</table>

@@ -9,7 +9,7 @@
 ></div>
 <? foreach ($barContents['buttons'] as $idx => $button): ?>
 	<a class="wikiabar-button" href="<?= $button['href'] ?>" data-index="<?= $idx; ?>">
-		<img src="<?= $wg->BlankImgUrl ?>" class="icon <?= $button['class'] ?>" />
+		<img src="<?= $button['image_url'] ?>" class="icon <?= $button['class'] ?>" />
 		<span><?= $button['text'] ?></span>
 	</a>
 <? endforeach; ?>

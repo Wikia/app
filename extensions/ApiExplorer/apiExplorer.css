@@ -34,6 +34,7 @@ dd.paramContent{ /* even with the rule above, this is still needed in order to h
 }
 div.paramContent{ /* Top level*/
 	background-color: #d3eaff;
+	color:#3a3a3a;
 }
 dd.paramContent{ /* per-module */
 	background-color:#c4e19f;

@@ -36,7 +36,7 @@ class SpoofUser {
 
 	/**
 	 * Get the normalized key form
-	 * @return string|nuyll
+	 * @return string|null
 	 */
 	public function getNormalized() {
 		return $this->mNormalized;
@@ -45,21 +45,32 @@ class SpoofUser {
 	/**
 	 * Does the username pass Unicode legality and script-mixing checks?
 	 *
-	 * @return array empty if no conflict, or array containing conflicting usernames
+	 * @param $skipExactMatch - when true exact match username is not returned
+	 *
+	 * @return array empty if no conflict, or array containing conflicting user names
 	 */
-	public function getConflicts() {
+	public function getConflicts( $skipExactMatch = false ) {
 		$dbr = self::getDBSlave();
 
 		// Join against the user table to ensure that we skip stray
 		// entries left after an account is renamed or otherwise munged.
-		/* Wikia Change - begin */
+		/* Wikia Change - begin :
+			Quote the table names, otherwise the select method
+				tries to prefix the tablenames with the current user DB
+			Added $skipExactMatch */
+		$conds = array(
+			'su_normalized' => $this->mNormalized,
+			'su_name=user_name',
+		);
+		if ( $skipExactMatch ) {
+			// BINARY enforces case sensitive comparison
+			$conds[] = "BINARY su_name != {$dbr->addQuotes( $this->mName )}";
+		}
+
 		$spoofedUsers = $dbr->select(
-			array( 'specials.spoofuser', 'events_local_users' ),
+			array( '`spoofuser`', '`user`' ),
 			array( 'user_name' ),
-			array(
-				'su_normalized' => $this->mNormalized,
-				'su_name=user_name',
-			),
+			$conds,
 			__METHOD__,
 			array(
 				'LIMIT' => 5
@@ -139,7 +150,7 @@ class SpoofUser {
 	 * @return DatabaseBase
 	 */
 	protected static function getDBSlave() {
-		return wfGetDB( DB_SLAVE, array(), 'specials' );
+		return wfGetDB( DB_SLAVE, [], F::app()->wg->ExternalSharedDB );
 	}
 
 	/**
@@ -147,7 +158,7 @@ class SpoofUser {
 	 * @return DatabaseBase
 	 */
 	protected static function getDBMaster() {
-		return wfGetDB( DB_MASTER, array(), 'specials' );
+		return wfGetDB( DB_MASTER, [], F::app()->wg->ExternalSharedDB );
 	}
 
 	/**

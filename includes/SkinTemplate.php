@@ -100,6 +100,7 @@ class SkinTemplate extends Skin {
 	 */
 	var $useHeadElement = false;
 
+	var $data;
 	/**#@-*/
 
 	/**
@@ -136,7 +137,7 @@ class SkinTemplate extends Skin {
 		global $wgScript, $wgStylePath;
 		global $wgMimeType, $wgJsMimeType;
 		global $wgXhtmlDefaultNamespace, $wgXhtmlNamespaces, $wgHtml5Version;
-		global $wgDisableCounters, $wgSitename, $wgLogo, $wgHideInterlanguageLinks;
+		global $wgSitename, $wgLogo, $wgHideInterlanguageLinks;
 		global $wgMaxCredits, $wgShowCreditsIfMax;
 		global $wgPageShowWatchingUsers;
 		global $wgDebugComments;
@@ -201,7 +202,10 @@ class SkinTemplate extends Skin {
 			$tpl->setRef( 'xhtmldefaultnamespace', $wgXhtmlDefaultNamespace );
 			$tpl->set( 'xhtmlnamespaces', $wgXhtmlNamespaces );
 			$tpl->set( 'html5version', $wgHtml5Version );
-			$tpl->set( 'headlinks', $out->getHeadLinks() );
+			// For Oasis getHeadlinks is called in OasisController.class.php
+			if ( !F::app()->checkSkin( 'oasis' ) ) {
+				$tpl->set( 'headlinks', $out->getHeadLinks() );
+			}
 			$tpl->set( 'csslinks', $out->buildCssLinks() );
 			$tpl->set( 'pageclass', $this->getPageClasses( $title ) );
 			$tpl->set( 'skinnameclass', ( 'skin-' . Sanitizer::escapeClass( $this->getSkinName() ) ) );
@@ -285,7 +289,7 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'rtl', $lang->isRTL() );
 
 		$tpl->set( 'capitalizeallnouns', $lang->capitalizeAllNouns() ? ' capitalize-all-nouns' : '' );
-		$tpl->set( 'showjumplinks', $user->getOption( 'showjumplinks' ) );
+		$tpl->set( 'showjumplinks', $user->getGlobalPreference( 'showjumplinks' ) );
 		$tpl->set( 'username', $this->loggedin ? $this->username : null );
 		$tpl->setRef( 'userpage', $this->userpage );
 		$tpl->setRef( 'userpageurl', $this->userpageUrlDetails['href'] );
@@ -372,7 +376,7 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'usernewmessages', $ntl );
 		/* Wikia change end */
 
-		wfRunHooks( 'SkinTemplatePageBeforeUserMsg', array( &$ntl ) );
+		Hooks::run( 'SkinTemplatePageBeforeUserMsg', [ &$ntl, $this ] );
 
 		wfProfileOut( __METHOD__ . '-stuff2' );
 
@@ -381,19 +385,13 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'logo', $this->logoText() );
 
 		$tpl->set( 'copyright', false );
+		// No longer used
 		$tpl->set( 'viewcount', false );
 		$tpl->set( 'lastmod', false );
 		$tpl->set( 'credits', false );
 		$tpl->set( 'numberofwatchingusers', false );
 		if ( $out->isArticle() && $title->exists() ) {
 			if ( $this->isRevisionCurrent() ) {
-				if ( !$wgDisableCounters ) {
-					$viewcount = $this->getWikiPage()->getCount();
-					if ( $viewcount ) {
-						$tpl->set( 'viewcount', $this->msg( 'viewcount' )->numParams( $viewcount )->parse() );
-					}
-				}
-
 				if( $wgPageShowWatchingUsers ) {
 					$dbr = wfGetDB( DB_SLAVE );
 					$num = $dbr->selectField( 'watchlist', 'COUNT(*)',
@@ -428,7 +426,6 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'footerlinks', array(
 			'info' => array(
 				'lastmod',
-				'viewcount',
 				'numberofwatchingusers',
 				'credits',
 				'copyright',
@@ -487,7 +484,7 @@ class SkinTemplate extends Skin {
 			$pageLang = $title->getPageLanguage();
 			$realBodyAttribs['lang'] = $pageLang->getHtmlCode();
 			$realBodyAttribs['dir'] = $pageLang->getDir();
-			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir();
+			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir().' mw-content-text';
 		}
 
 		$out->mBodytext = Html::rawElement( 'div', $realBodyAttribs, $out->mBodytext );
@@ -544,7 +541,7 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'reporttime', wfReportTime() );
 
 		// original version by hansm
-		if( !wfRunHooks( 'SkinTemplateOutputPageBeforeExec', array( &$this, &$tpl ) ) ) {
+		if ( !Hooks::run( 'SkinTemplateOutputPageBeforeExec', [ $this, $tpl ] ) ) {
 			wfDebug( __METHOD__ . ": Hook SkinTemplateOutputPageBeforeExec broke outputPage execution!\n" );
 		}
 
@@ -749,7 +746,7 @@ class SkinTemplate extends Skin {
 			}
 		}
 
-		wfRunHooks( 'PersonalUrls', array( &$personal_urls, &$title ) );
+		Hooks::run( 'PersonalUrls', [ &$personal_urls, $title, $this ] );
 		wfProfileOut( __METHOD__ );
 		return $personal_urls;
 	}
@@ -789,9 +786,17 @@ class SkinTemplate extends Skin {
 		}
 
 		$result = array();
-		if( !wfRunHooks( 'SkinTemplateTabAction', array( &$this,
-				$title, $message, $selected, $checkEdit,
-				&$classes, &$query, &$text, &$result ) ) ) {
+		if ( !Hooks::run( 'SkinTemplateTabAction', [
+			$this,
+			$title,
+			$message,
+			$selected,
+			$checkEdit,
+			&$classes,
+			&$query,
+			&$text,
+			&$result,
+		] ) ) {
 			return $result;
 		}
 
@@ -883,7 +888,7 @@ class SkinTemplate extends Skin {
 		$userCanRead = $title->quickUserCan( 'read', $user );
 
 		$preventActiveTabs = false;
-		wfRunHooks( 'SkinTemplatePreventOtherActiveTabs', array( &$this, &$preventActiveTabs ) );
+		Hooks::run( 'SkinTemplatePreventOtherActiveTabs', [ $this, &$preventActiveTabs ] );
 
 		// Checks if page is some kind of content
 		if( $title->canExist() ) {
@@ -1052,7 +1057,7 @@ class SkinTemplate extends Skin {
 				}
 			}
 
-			wfRunHooks( 'SkinTemplateNavigation', array( &$this, &$content_navigation ) );
+			Hooks::run( 'SkinTemplateNavigation', [ $this, &$content_navigation ] );
 
 			if ( $userCanRead && !$wgDisableLangConversion ) {
 				$pageLang = $title->getPageLanguage();
@@ -1091,12 +1096,11 @@ class SkinTemplate extends Skin {
 				'context' => 'subject'
 			);
 
-			wfRunHooks( 'SkinTemplateNavigation::SpecialPage',
-				array( &$this, &$content_navigation ) );
+			Hooks::run( 'SkinTemplateNavigation::SpecialPage', [ $this, &$content_navigation ] );
 		}
 
 		// Equiv to SkinTemplateContentActions
-		wfRunHooks( 'SkinTemplateNavigation::Universal', array( &$this,  &$content_navigation ) );
+		Hooks::run( 'SkinTemplateNavigation::Universal', [ $this, &$content_navigation ] );
 
 		// Setup xml ids and tooltip info
 		foreach ( $content_navigation as $section => &$links ) {
@@ -1133,7 +1137,7 @@ class SkinTemplate extends Skin {
 			}
 		}
 
-		wfRunHooks('SkinTemplateTabs', array($this, &$content_navigation));
+		Hooks::run('SkinTemplateTabs', array($this, &$content_navigation));
 
 		wfProfileOut( __METHOD__ );
 
@@ -1242,8 +1246,8 @@ class SkinTemplate extends Skin {
 			}
 
 			// Use the copy of revision ID in case this undocumented, shady hook tries to mess with internals
-			wfRunHooks( 'SkinTemplateBuildNavUrlsNav_urlsAfterPermalink',
-				array( &$this, &$nav_urls, &$revid, &$revid ) );
+			Hooks::run( 'SkinTemplateBuildNavUrlsNav_urlsAfterPermalink',
+				[ $this, &$nav_urls, &$revid, &$revid ] );
 		}
 
 		if ( $out->isArticleRelated() ) {
@@ -1309,10 +1313,13 @@ class SkinTemplate extends Skin {
  * @ingroup Skins
  */
 abstract class QuickTemplate {
+	/* @var array */
+	var $data;
+
 	/**
 	 * Constructor
 	 */
-	public function QuickTemplate() {
+	public function __construct() {
 		$this->data = array();
 		$this->translator = new MediaWiki_I18N();
 	}
@@ -1508,7 +1515,8 @@ abstract class BaseTemplate extends QuickTemplate {
 				$toolbox['permalink']['id'] = 't-permalink';
 			}
 		}
-		wfRunHooks( 'BaseTemplateToolbox', array( &$this, &$toolbox ) );
+		Hooks::run( 'BaseTemplateToolbox', [ $this, &$toolbox ] );
+
 		wfProfileOut( __METHOD__ );
 		return $toolbox;
 	}
@@ -1618,7 +1626,7 @@ abstract class BaseTemplate extends QuickTemplate {
 			ob_start();
 			// We pass an extra 'true' at the end so extensions using BaseTemplateToolbox
 			// can abort and avoid outputting double toolbox links
-			wfRunHooks( 'SkinTemplateToolboxEnd', array( &$this, true ) );
+			Hooks::run( 'SkinTemplateToolboxEnd', [ $this, true ] );
 			$hookContents = ob_get_contents();
 			ob_end_clean();
 			if ( !trim( $hookContents ) ) {
@@ -1872,6 +1880,11 @@ abstract class BaseTemplate extends QuickTemplate {
 
 		// Reduce footer links down to only those which are being used
 		$validFooterLinks = array();
+
+		if (!is_array($footerlinks)) {
+			return $validFooterLinks;
+		}
+
 		foreach( $footerlinks as $category => $links ) {
 			$validFooterLinks[$category] = array();
 			foreach( $links as $link ) {
@@ -1951,4 +1964,3 @@ abstract class BaseTemplate extends QuickTemplate {
 	}
 
 }
-

@@ -1,4 +1,7 @@
 <?php
+
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Base class for the output of file transformation methods.
  *
@@ -42,6 +45,14 @@ abstract class MediaTransformOutput {
 	}
 
 	/**
+	 * Set the URL for thumb object
+	 * @param string $url
+	 */
+	public function setUrl( $url ) {
+		$this->url = $url;
+	}
+
+	/**
 	 * @return string|false The permanent thumbnail storage path
 	 */
 	public function getStoragePath() {
@@ -55,6 +66,26 @@ abstract class MediaTransformOutput {
 	public function setStoragePath( $storagePath ) {
 		$this->storagePath = $storagePath;
 	}
+
+	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
+	function mediaType() {
+		return 'unknown';
+	}
+
+	/**
+	 * For any class that doesn't override renderView, fallback to the old toHtml behavior
+	 * @param array $options
+	 * @return string
+	 */
+	public function renderView( array $options = [] ) {
+		return $this->toHtml( $options );
+	}
+	/**
+	 * Wikia change end
+	 */
 
 	/**
 	 * Fetch HTML for this transform output
@@ -153,12 +184,12 @@ abstract class MediaTransformOutput {
 
 	/**
 	 * @param $title string
-	 * @param $params array
+	 * @param string $params
 	 * @return array
 	 */
 	public function getDescLinkAttribs( $title = null, $params = '' ) {
 		$query = $this->page ? ( 'page=' . urlencode( $this->page ) ) : '';
-		if( $params ) {
+		if ( $params ) {
 			$query .= $query ? '&'.$params : $params;
 		}
 		$attribs = array(
@@ -183,13 +214,12 @@ class ThumbnailImage extends MediaTransformOutput {
 	 * If $path is set to null, the output file is treated as a source copy.
 	 * If $path is set to false, no output file will be created.
 	 *
-	 * @param $file File object
-	 * @param $url String: URL path to the thumb
-	 * @param $width Integer: file's width
-	 * @param $height Integer: file's height
-	 * @param $path String|false|null: filesystem path to the thumb
-	 * @param $page Integer: page number, for multipage files
-	 * @private
+	 * @param File $file File object
+	 * @param string $url URL path to the thumb
+	 * @param int $width File's width
+	 * @param int $height File's height
+	 * @param string|bool|null $path Filesystem path to the thumb
+	 * @param int|bool $page Page number, for multi-page files
 	 */
 	function __construct( $file, $url, $width, $height, $path = false, $page = false ) {
 		$this->file = $file;
@@ -207,6 +237,31 @@ class ThumbnailImage extends MediaTransformOutput {
 		$this->path = $path;
 		$this->page = $page;
 	}
+
+	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
+	function mediaType() {
+		return 'image';
+	}
+
+	function renderView( array $options = [] ) {
+		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
+		// may be fed back into code that will be parsed for wikitext and leading whitespace will be
+		// wrap this HTML in <pre> tags.  VID-1819
+		$html = trim( F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
+			'thumb'   => $this,
+			'options' => $options,
+		] ) );
+		// Strip empty space between tags
+		$html = preg_replace( "/>\s+</", "><", $html );
+
+		return $html;
+	}
+	/**
+	 * Wikia change end
+	 */
 
 	/**
 	 * Return HTML <img ... /> tag for the thumbnail, will include
@@ -230,6 +285,7 @@ class ThumbnailImage extends MediaTransformOutput {
 	 * For images, desc-link and file-link are implemented as a click-through. For
 	 * sounds and videos, they may be displayed in other ways.
 	 *
+	 * @throws MWException
 	 * @return string
 	 */
 	function toHtml( $options = array() ) {
@@ -290,7 +346,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		$html = $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 
 		//give extensions a chance to modify the markup
-		wfRunHooks( 'ThumbnailImageHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
+		Hooks::run( 'ThumbnailImageHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
 
 		return $html;
 		/**
@@ -320,6 +376,17 @@ class MediaTransformError extends MediaTransformOutput {
 		$this->url = false;
 		$this->path = false;
 	}
+	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
+	// Keep the same error functionality as before
+	function renderView ( array $options = [] ) {
+		return $this->toHtml( $options );
+	}
+	/**
+	 * Wikia change end
+	 */
 
 	function toHtml( $options = array() ) {
 		return "<div class=\"MediaTransformError\" style=\"" .

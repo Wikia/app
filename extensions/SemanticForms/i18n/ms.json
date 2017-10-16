@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Anakmalaysia"
+		]
+	},
+	"semanticforms-desc": "Borang untuk menambahkan dan menyunting data semantik",
+	"createproperty": "Wujudkan sifat",
+	"sf_createproperty_linktoform": "Sifat ini akan dipautkan dengan laman-laman yang menggunakan borang ini:",
+	"sf_createproperty_allowedvalsinput": "Jika anda mahu sifat ini hanya dibenarkan mempunyai nilai-nilai tertentu, isikan senarai nilai yang dibenarkan, diikuti oleh tanda koma (jika sesuatu nilai ada tanda koma, gantinya dengan \"\\,\".):",
+	"sf_createproperty_propname": "Nama sifat:",
+	"sf_createproperty_proptype": "Jenis:",
+	"templates": "Templat",
+	"sf_createtemplate_connectingproperty": "Nama sifat untuk menyambungkan medan-medan templat ini dengan seluruh halaman:",
+	"sf_createtemplate_deletefield": "Hapuskan",
+	"forms": "Borang",
+	"sf_createform_template": "Templat:",
+	"sf_createform_inputtype": "Jenis input:",
+	"sf_createform_inputtypedefault": "(azali)",
+	"sf_createform_formlabel": "Label borang:",
+	"sf_createform_add": "Tambahkan",
+	"sf_createcategory_defaultform": "Borang sediaan:",
+	"sf_createclass_listofvalues": "Senarai nilai?",
+	"sf_createclass_create": "Cipta",
+	"formedit": "Sunting dengan borang",
+	"sf_formedit_createtitle": "Cipta $1: $2",
+	"sf_formedit_createtitlenotarget": "Cipta $1",
+	"sf_formcreate": "Buat dengan borang",
+	"sf_viewform": "Lihat borang",
+	"sf_editsource": "Sunting sumber",
+	"sf_formedit_saveandcontinueediting": "Simpan dan sambung",
+	"sf_blank_namespace": "Utama",
+	"right-viewedittab": "Melihat tab \"{{int:edit}}\" untuk laman yang boleh disunting dengan borang",
+	"right-editrestrictedfields": "Menyunting ruangan borang yang terhad",
+	"right-createclass": "Membuat kelas semantik baru",
+	"action-createclass": "buat kelas semantik baru",
+	"sf-datepicker-prev": "Sebelumnya",
+	"sf-datepicker-next": "Berikutnya",
+	"sf-datepicker-dateformat": "Rentetan format tarikh. Lihat [https://www.mediawiki.org/w/index.php?title=Extension:Semantic_Forms_Inputs&fromsection=Date_picker#Parameters pendokumenan dalam talian] untuk keterangan lanjut.",
+	"sf-datepicker-disabledaysofweek": "Senarai hari-hari yang tidak boleh dipilih (cth. hujung minggu: 6, 0).",
+	"sf-regexp-basetype": "Jenis asas yang hendak digunakan. Barangkali itu sebarang jenis input yang menghasilkan elemen borang HTML dalam bentuk jenis input atau pilihan (cth. text, listbox, datepicker) atau ungkapan nalar yang lain. Asalinya \"text\"."
+}

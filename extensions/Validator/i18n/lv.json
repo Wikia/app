@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"GreenZeb"
+		]
+	},
+	"validator-listerrors-errors": "Kļūdas",
+	"validator-listerrors-minor": "Maznozīmīgas",
+	"validator-listerrors-fatal": "Fatālas"
+}

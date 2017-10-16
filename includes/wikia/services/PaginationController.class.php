@@ -2,7 +2,7 @@
 /**
  * Pagination controller
  */
-class PaginationController extends WikiaController {
+class PaginationController extends WikiaService {
 	const MAX_DISPLAYED_PAGES = 6;
 
 	/**
@@ -12,6 +12,8 @@ class PaginationController extends WikiaController {
 	 * @requestParam int $itemsPerPage number of items to show on each page
 	 * @requestParam int $currentPage selected page number
 	 * @requestParam String $url string with the url to which method will add "?page=" or "&page=" suffix
+	 * @requestParam String $prevMsg (optional) text showed on preview button
+	 * @requestParam String $nextMsg (optional) text showed on next button
 	 */
 	public function index() {
 		$this->response->addAsset('includes/wikia/services/css/pagination.scss');
@@ -21,6 +23,8 @@ class PaginationController extends WikiaController {
 		$this->currentPage = $this->getVal('currentPage');
 		$this->data = $this->getVal('data', array());
 		$this->url = $this->getVal('url', '#');
+		$this->prevMsg = $this->getVal( 'prevMsg', wfMessage( 'wikia-pagination-prev' )->plain() );
+		$this->nextMsg = $this->getVal( 'nextMsg', wfMessage( 'wikia-pagination-next' )->plain() );
 		
 		if( strpos($this->url, '?') === false ) {
 			$this->url .= ($this->url === '#' ? '' : '?page=');

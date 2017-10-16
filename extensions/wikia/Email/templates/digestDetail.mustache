@@ -1,0 +1,21 @@
+<tr>
+	<td>
+		{{# icons}}
+			{{> icon}}
+		{{/ icons}}
+		{{^ icons}}
+			{{> icon}}
+		{{/ icons}}
+	</td>
+</tr>
+<tr>
+	<td>
+		{{# detailsHeader}}
+			<p class="digest-details-header">
+				{{detailsHeader}}
+			</p>
+		{{/ detailsHeader}}
+		<p>{{{details}}}</p>
+	</td>
+</tr>
+

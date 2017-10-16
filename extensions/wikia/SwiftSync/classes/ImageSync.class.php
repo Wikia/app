@@ -14,15 +14,20 @@ class ImageSync implements \Iterator {
 	protected $current;
 	
 	/* 
-	 * @param $res ResultWrapper
+	 * @param $res \ResultWrapper
 	 */
-	function __construct( $res ) {
+	function __construct( \ResultWrapper $res ) {
 		$this->res = $res;
 		$this->inx = 0;
 		$this->setCurrent( $this->res->current() );
 	}
 
-	/* load top X image to sync */
+	/**
+	 * Load top X image to sync
+	 *
+	 * @param int $limit
+	 * @return \Wikia\SwiftSync\ImageSync
+	 */
 	public static function newFromQueue( $limit = 50 ) {
 		wfProfileIn( __METHOD__ );
 		
@@ -40,16 +45,17 @@ class ImageSync implements \Iterator {
 		return self::parseResult( $res );
 	}
 
+	/**
+	 * @param \ResultWrapper $result
+	 * @return \Wikia\SwiftSync\ImageSync
+	 */
 	protected static function parseResult( $result ) {
 		wfProfileIn( __METHOD__ );
 
 		$syncResult = null;
 		if ( !is_null( $result ) ) {
 			$syncResult = new ImageSync( $result );
-		} else {
-			\Wikia\SwiftStorage::log( __METHOD__, 'No image to sync to other DC' );
 		}
-		
 		wfProfileOut( __METHOD__ );
 		
 		return $syncResult;
@@ -78,7 +84,7 @@ class ImageSync implements \Iterator {
 		return $this->current;
 	}
 
-	/* @return void */
+	/* @return int */
 	function key() {
 		return $this->inx;
 	}

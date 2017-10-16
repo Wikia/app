@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Игорь Бродский"
+		]
+	},
+	"sd_browsedata_viewcategory": "nähta kategorii",
+	"sd_browsedata_other": "Toižed",
+	"sd_browsedata_none": "Ei ole",
+	"sd_browsedata_or": "vai",
+	"sd_browsedata_daterangestart": "Aug:",
+	"sd_browsedata_daterangeend": "Lop:"
+}

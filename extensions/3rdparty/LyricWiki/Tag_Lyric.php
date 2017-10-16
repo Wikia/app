@@ -58,20 +58,11 @@ $wgExtensionCredits["parserhook"][]=array(
 if(isset($wgScriptPath))
 {
 	#Instruct mediawiki to call LyricExtension to initialise new extension
-	$wgExtensionFunctions[] = "lyricTag";
 	$wgHooks['ParserFirstCallInit'][] = "lyricTag_InstallParser";
 	$wgHooks['BeforePageDisplay'][] = "lyricTagCss";
 
 	// Use this pre-existing Wikia-specific hook to apply the index policy changes after the defaults are set (which comes after parsing).
 	$wgHooks['AfterViewUpdates'][] = "efApplyIndexPolicy";
-}
-
-#Install extension
-function lyricTag()
-{
-	// Keep track of whether this is the first <lyric> tag on the page - this is to prevent too many Ringtones ad links.
-	global $wgFirstLyricTag;
-	$wgFirstLyricTag = true;
 }
 
 function lyricTag_InstallParser( $parser ) {
@@ -86,10 +77,10 @@ function lyricTagCss($out)
 	$css = <<<DOC
 .lyricbox
 {
-	padding: 1em 1em 0;
-	border: 1px solid silver;
-	color: black;
-	background-color: #ffffcc;
+	padding: 1em;
+	border: 1px solid #ccc;
+	color: #3a3a3a;
+	background-color: #f8f8f8;
 }
 .lyricsbreak{
 	clear:both;
@@ -101,7 +92,7 @@ DOC
 	return true;
 }
 
-function renderLyricTag($input, $argv, $parser)
+function renderLyricTag( $input, array $argv, Parser $parser, PPFrame $frame )
 {
 	wfProfileIn( __METHOD__ );
 
@@ -110,44 +101,6 @@ function renderLyricTag($input, $argv, $parser)
 
 	$isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
-	// If appropriate, build ringtones links.
-	GLOBAL $wgFirstLyricTag, $wgLyricTagDisplayRingtone;
-	$ringtoneLink = "";
-
-	// For whatever reason, the links were not showing up after page-edits.
-	// It seems that the parser is called multiple-times when saving a page-edit.
-	$wgFirstLyricTag = true;
-
-	$retVal = "";
-	// NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
-	// If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-	if( !empty( $wgLyricTagDisplayRingtone ) && $wgFirstLyricTag ){
-		GLOBAL $wgExtensionsPath;
-		$imgPath = "$wgExtensionsPath/3rdparty/LyricWiki";
-		$artist = $parser->mTitle->getDBkey();
-		$colonIndex = strpos("$artist", ":");
-		$songTitle = $parser->mTitle->getText();
-		$artistLink = $artist;
-		$songLink = $songTitle;
-		if($colonIndex !== false){
-			$artist = substr($artist, 0, $colonIndex);
-			$songTitle = substr($songTitle, $colonIndex+1);
-
-			$artistLink = str_replace(" ", "+", $artist);
-			$songLink = str_replace(" ", "+", $songTitle);
-		}
-		$artistLink = str_replace("_", "+", $artistLink);
-		$songLink = str_replace("_", "+", $songLink);
-		$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' rel='nofollow' target='_blank'>";
-		$ringtoneLink = "";
-		$ringtoneLink = "<div class='rtMatcher'>";
-		$ringtoneLink.= "$href<img src='" . $imgPath . "/phone_left.gif' alt='phone' width='16' height='17'/> ";
-		$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
-		$ringtoneLink.= " <img src='" . $imgPath . "/phone_right.gif' alt='phone' width='16' height='17'/></a>";
-		$ringtoneLink.= "<span class='adNotice'>Ad</span>";
-		$ringtoneLink.= "</div>";
-		$wgFirstLyricTag = false;
-	}
 
 	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
 	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
@@ -155,13 +108,12 @@ function renderLyricTag($input, $argv, $parser)
 	}
 
 	#parse embedded wikitext
-	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
+	$transform = $parser->recursiveTagParse( $transform, $frame );
 
+	$retVal = "";
 	$retVal.= gracenote_getNoscriptTag();
 	$retVal.= "<div class='lyricbox'>";
-	$retVal.= ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
 	$retVal.= gracenote_obfuscateText($transform);
-	$retVal.= $ringtoneLink;
 	$retVal.= "<div class='lyricsbreak'></div>\n"; // so that we can have stuff in the box (like videos & awards) even if the lyrics are short.
 	$retVal.= "</div>";
 
@@ -170,7 +122,7 @@ function renderLyricTag($input, $argv, $parser)
 
 	wfProfileOut( __METHOD__ );
 	return $retVal;
-}
+} // end renderLyricTag()
 
 /**
  * The parser tag may have set a parser option (which gets cached in the parser-cache) indicating that

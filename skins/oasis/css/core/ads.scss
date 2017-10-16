@@ -1,14 +1,29 @@
-@import "color";
-@import "layout";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/transition';
+@import 'layout';
+@import 'responsive-variables';
+@import 'breakpoints-variables';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/sticky';
+@import 'skins/shared/mixins/transform';
+@import 'ads-floor';
+@import 'ads-in-content';
+@import 'ads-interstitial';
+@import 'ads-invisible-high-impact';
+@import 'ads-mixin';
+@import 'ads-porvata';
 
-/** Hide 1x1 iframes **/
-.wikia-ad iframe[width="1"][height="1"] {
-	display: none;
-}
+$wikia-top-ads-index: 2;
+$uap-video-animation-duration: 0.4s;
+$navbar-size-for-sticky-element: 65px;
+$global-navigation-and-sitewide-messages-index: 5000101;
 
-.wikia-ad.hidden {
+/** Hide invisible slots and 1x1 iframes **/
+#INVISIBLE_SKIN,
+.wikia-ad.hidden,
+.wikia-ad .hidden {
 	display: none !important;
 }
 
@@ -21,88 +36,207 @@
 	padding: 10px 0;
 	text-align: center;
 	width: $width-outside;
-	z-index: 0;
+	z-index: $wikia-top-ads-index;
+
 	.WikiaTopAdsInner {
 		@include clearfix;
-		display: inline-block;
-		>div {
-			float: right;
-		}
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: center;
 	}
+
 	.standard-leaderboard {
 		max-width: 728px;
 	}
+
 	.wikia-ad {
-		>img {
-			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
+		> img {
+			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
 }
 
-#TOP_BUTTON, #TOP_BUTTON_WIDE {
-  margin-right: 10px;
+.wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
+	position: relative;
 }
 
-#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
-	>div {
+.wikia-ad {
+	&.slot-animation {
+		@include transition(max-height, 1.6s, ease, 0);
+		overflow: hidden;
+	}
+
+	&.slot-responsive {
+		width: 100%;
+
+		.provider-container iframe {
+			@include absolute-fill();
+		}
+	}
+}
+
+.bfaa-template {
+	&.WikiaSiteWrapper {
+		@include flexbox();
+		@include flex-direction(column);
+	}
+
+	.WikiaTopAds {
+		@include order(-1);
+		margin-top: 0;
+		padding: 0;
+		width: 100%;
+		z-index: $global-navigation-and-sitewide-messages-index;
+	}
+
+	.WikiaTopAdsInner {
+		width: 100%;
+	}
+
+	#TOP_LEADERBOARD {
+		@include transition(height, $uap-video-animation-duration, ease, 0);
+		background: $color-black;
+		max-width: none;
+		overflow: hidden;
+		width: 100%;
+
+		video {
+			height: auto;
+			width: 100%;
+		}
+
+		.mobile-porvata .video-player > iframe {
+			// Hide Learn more text
+			z-index: -1;
+		}
+	}
+
+	.wds-community-header {
+		margin-top: 20px;
+	}
+}
+
+.bfab-template {
+	position: relative;
+
+	.mobile-porvata .video-player > iframe {
+		// Hide Learn more text
+		z-index: -1;
+	}
+}
+
+#TOP_BUTTON_WIDE {
+        margin-right: 10px;
+}
+
+@media screen and (max-width: 1063px) {
+	#TOP_BUTTON_WIDE {
+		display: none;
+	}
+}
+
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #TOP_LEADERBOARD {
+	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
-	>div[id^=Liftium_] {
-		text-align: center;
-	}
+}
+
+#TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
 }
 
+#TOP_LEADERBOARD_AB {
+	background: rgba($color-page, $page-opacity);
+	max-width: $page-width-medium;
+	margin: 0 auto;
+	position: relative;
+	z-index: $wikia-top-ads-index;
+
+	.thumbnails-h-abp {
+		border: none;
+	}
+}
+
+@if $widthType == 0 {
+	@media #{$breakpoint-small-only} {
+		#TOP_LEADERBOARD_AB {
+			width: $page-width-small - 2 * $content-border-width;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		#TOP_LEADERBOARD_AB {
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		#TOP_LEADERBOARD_AB {
+			width: $page-width-large;
+		}
+	}
+}
+
 /** Skyscrapers **/
+@media #{$breakpoint-small-plus-up} {
+	#WikiaRail.left-skyscraper-3-present {
+		padding-bottom: 610px;
+	}
+	#WikiaRail.small-left-skyscraper-3-present {
+		padding-bottom: 260px;
+	}
+}
+
 #LEFT_SKYSCRAPER_2 {
-	// FIXME: this is bad. Is it necessary?
-	@extend section;
+	margin-bottom: 10px;
+	font-size: 0;
+	text-align: center;
+	> div, > iframe {
+		display: inline-block;
+	}
 }
 
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
-	right: 80px;
-	top: -640px;
+	right: 0;
+	text-align: center;
+	top: -600px;
+	width: 300px;
 }
 
-#RIGHT_SKYSCRAPER {
-	// FIXME: this is bad. Is it necessary?
-	@extend .module;
-	text-align: center;
-	img {
-		margin: 40px auto;
+#BOTTOM_LEADERBOARD {
+	&.bfab-template {
+		@include transition(height, $uap-video-animation-duration, ease, 0);
+		background: $color-black;
 	}
+
+	overflow: hidden;
+	margin: 0 0 23px 0;
+	text-align: center;
+	width: 100%;
 }
 
 /** Box ads **/
 .home-top-right-ads {
 	float: right;
 }
-#HOME_TOP_RIGHT_BOXAD {
-	margin-bottom: 10px;
-	position: relative;
-	width: 300px;
-	z-index: 100;
+
+.home-top-right-ads.hidden {
+	display: none;
 }
+
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
-	.SelfServeUrl {
-		line-height: 10px;
-		margin: 0;
-		position: relative;
-		top: -16px;
-	}
-	#HOME_TOP_RIGHT_BOXAD,
 	#TOP_RIGHT_BOXAD {
 		background-color: mix($color-page, $color-page-opposite, 95%);
-		margin-bottom: 0;
 		padding: 15px;
 	}
 }
+
 /* end transistion temp code */
 
 #TOP_BOXAD {
@@ -111,26 +245,22 @@
 	}
 }
 
-#TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
+#TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
+
+	&.default-height {
+		height: 250px;
+	}
 }
 
-#CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
-	height: 250px;
-}
-
-#PREFOOTER_LEFT_BOXAD {
+#PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
-	margin: 0 15px;
-}
+	margin: 0 30px 0 0;
 
-#PREFOOTER_RIGHT_BOXAD {
-	margin: 0 15px;
-}
-
-#PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
-	height: 250px;
+	&.default-height {
+		height: 250px;
+	}
 }
 
 /** Spotlights **/
@@ -188,44 +318,10 @@
 	}
 }
 
-/** Invisible ads **/
-#INVISIBLE_1, #INVISIBLE_2 {
-	position: absolute;
-}
-
 /** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
-body >a >img[src$="noad.gif"] {
+body > a > img[src$="noad.gif"] {
 	position: absolute;
 	z-index: 0;
-}
-
-.SelfServeUrl {
-	color: #666;
-	font-size: 10px;
-	margin: -10px 0 10px 0;
-	text-align: center;
-}
-
-.home-top-right-ads .SelfServeUrl {
-	position: relative;
-	z-index: 100;
-}
-
-/** Exitstitial ad */
-#ExitstitialInfobox {
-	p {
-		border-bottom: 1px solid #ccc;
-		padding-bottom: 5px;
-	}
-	.close-exitstitial-ad {
-		font-size: 120%;
-		text-align: center;
-	}
-	.ad-centered-wrapper {
-		height: 400px;
-		margin-bottom: 20px;
-		margin-top: 20;
-	}
 }
 
 .ad-centered-wrapper {
@@ -241,25 +337,52 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-// Right rail ads centering
-#LEFT_SKYSCRAPER_2 {
-	font-size: 0;
-	text-align: center;
-	> div, > iframe {
-		display: inline-block;
+// Floating medrec
+#WikiaAdInContentPlaceHolder {
+	// TODO ADEN-5234 Remove @media after finieshed ABTest. position should be still there
+	@media #{$breakpoint-small-plus-up} {
+		position: absolute;
+	}
+
+	#INCONTENT_BOXAD_1 {
+		position: relative;
+		text-align: center;
+		width: 300px;
 	}
 }
 
-// Floating medrec
-#WikiaAdInContentPlaceHolder {
-	position: absolute;
-	#INCONTENT_BOXAD_1 {
-		height: 250px;
-		width: 300px;
-		position: relative;
-		@if ( not $responsive-layout-enabled ) {
-			margin-left: 15px;
-			margin-right: 15px;
+#WikiaAdInContentPlaceHolder.rail-sticky-module {
+	@include sticky();
+	top: $navbar-size-for-sticky-element;
+
+	@media #{$breakpoint-below-small-plus} {
+		position: static;
+	}
+}
+
+#ext-wikia-adEngine-template-modal {
+	> section {
+		overflow: hidden;
+		padding: 0px;
+		> div {
+			overflow: hidden;
 		}
 	}
+
+	> header .close-counter {
+		float: right;
+		font-size: 17px;
+	}
+}
+
+//@TODO remove .oasis-responsive after deprecating responsive (July 2015)
+.oasis-breakpoints, .oasis-responsive {
+	#WikiaArticleBottomAd {
+		clear: both;
+		margin: 0;
+	}
+}
+
+#WikiaArticleMsg {
+	display: none;
 }

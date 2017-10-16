@@ -1,4 +1,0 @@
-As of MediaWiki 1.16.0 this extension is obsoleted by the FlaggedRevs and
-ReaderFeedback extensions. It will be removed from trunk on the 1.16.0 release.
-You are advised to migrate to the FlaggedRevs and/or ReaderFeedback extensions.
-The Review extension will no longer be updated or supported.

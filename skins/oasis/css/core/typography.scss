@@ -8,9 +8,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	#WikiHeader .wordmark, .font-cpmono {
-		font-family: "CPMono_v07Bold";
-	}
 }
 
 
@@ -21,9 +18,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		src: local('☺'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.woff') format('woff'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.svg#webfontaOEEV2k6') format('svg'); /* $wgCdnStylePath */
 		font-weight: normal;
 		font-style: normal;
-	}
-	#WikiHeader .wordmark, .font-fontin {
-		font-family: "FontinSansBold";
 	}
 }
 
@@ -36,9 +30,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	#WikiHeader .wordmark, .font-garton {
-		font-family: "GartonMedium";
-	}
 }
 
 
@@ -49,9 +40,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		src: local('☺'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.woff') format('woff'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.svg#webfont2KYBVKLT') format('svg'); /* $wgCdnStylePath */
 		font-weight: normal;
 		font-style: normal;
-	}
-	#WikiHeader .wordmark, .font-idolwild {
-		font-family: "IdolwildRegular";
 	}
 }
 
@@ -64,9 +52,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	#WikiHeader .wordmark, .font-imfell {
-		font-family: "IMFELLDWPicaPRORegular";
-	}
 }
 
 
@@ -77,9 +62,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		src: local('☺'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.woff') format('woff'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.svg#webfontmMSjIQwC') format('svg'); /* $wgCdnStylePath */
 		font-weight: normal;
 		font-style: normal;
-	}
-	#WikiHeader .wordmark, .font-josefin {
-		font-family: "JosefinSansStdLight";
 	}
 }
 
@@ -92,9 +74,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	#WikiHeader .wordmark, .font-megalopolis {
-		font-family: "MEgalopolisExtraRegular";
-	}
 }
 
 
@@ -105,9 +84,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		src: local('☺'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.woff') format('woff'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.svg#webfont5FiGFJOa') format('svg'); /* $wgCdnStylePath */
 		font-weight: normal;
 		font-style: normal;
-	}
-	#WikiHeader .wordmark, .font-orbitron {
-		font-family: "OrbitronMedium";
 	}
 }
 
@@ -120,9 +96,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	#WikiHeader .wordmark, .font-pixiefont {
-		font-family: "PixieFontRegular";
-	}
 }
 
 
@@ -133,9 +106,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		src: local('☺'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.woff') format('woff'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.svg#webfontnTm7Rj2p') format('svg'); /* $wgCdnStylePath */
 		font-weight: normal;
 		font-style: normal;
-	}
-	#WikiHeader .wordmark, .font-prociono {
-		font-family: "ProcionoRegular";
 	}
 }
 
@@ -148,9 +118,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	#WikiHeader .wordmark, .font-tangerine {
-		font-family: "TangerineRegular";
-	}
 }
 
 
@@ -161,9 +128,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		src: local('☺'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.woff') format('woff'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.svg#webfontCVZ9BHQN') format('svg'); /* $wgCdnStylePath */
 		font-weight: normal;
 		font-style: normal;
-	}
-	#WikiHeader .wordmark, .font-titillium {
-		font-family: "TitilliumText22LRegular";
 	}
 }
 
@@ -176,9 +140,6 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		font-weight: normal;
 		font-style: normal;
 	}
-	#WikiHeader .wordmark, .font-veggieburger {
-		font-family: "VeggieburgerBold";
-	}
 }
 
 
@@ -189,8 +150,5 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 		src: local('☺'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.woff') format('woff'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.svg#webfontlKPF1zIT') format('svg'); /* $wgCdnStylePath */
 		font-weight: normal;
 		font-style: normal;
-	}
-	#WikiHeader .wordmark, .font-yanone {
-		font-family: "YanoneKaffeesatzRegular";
 	}
 }

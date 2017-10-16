@@ -24,7 +24,7 @@
 // - TODO: Tracklisting format which isn't tied to a master artist or album.  This is needed for parsing list pages, etc. It will require a different structure for song-names since they will have the artist in them.  Should name it differently to avoid confusion (eg: "song" is current, this would be "pageTitle" or "fullTitle" or something - just keep in mind to avoid confusion related to namespaces when naming this return value... eg: 'fullPageTitle' would be wrong since "Gracenote:" wouldn't go in there).
 ////
 
-include_once 'extras.php'; // for lw_simpleQuery to start
+include_once 'extras.php';
 GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
 $LW_USE_PERSISTENT_CONNECTIONS = true;
 $ENABLE_LOGGING_SLOW_SOAP = false;
@@ -65,9 +65,10 @@ if(!$SHUT_DOWN_API){
 	}
 
 	if(!$funcsOnly){
-		if(!defined('MEDIAWIKI')){
-			define( 'MEDIAWIKI', true );
-		}
+		// This causes devbox to crash because WebStart will then re-define it. Not sure what changed in core MediaWiki.
+		// if(!defined('MEDIAWIKI')){
+		//	 define( 'MEDIAWIKI', true );
+		// }
 
 		require_once $LW_PATH."includes/Defines.php";
 
@@ -453,9 +454,9 @@ if(!$funcsOnly){
 	wfDebug("LWSOAP: Done setting up SOAP functions, about to process...\n");
 
 	// Use the request to (try to) invoke the service
-	$HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
+	$rawPostData = file_get_contents("php://input"); // preferred to HTTP_RAW_POST_DATA in PHP 5.6+
 	wfDebug("LWSOAP: Dispatching to the ->service().\n");
-	$server->service($HTTP_RAW_POST_DATA);
+	$server->service($rawPostData);
 	wfDebug("LWSOAP: Returned from ->service().");
 
 	// If the script took a long time to run, log it here.
@@ -466,7 +467,7 @@ if(!$funcsOnly){
 			if(is_writable($fileName)){
 				error_log(date("Y-m-d H:i:s")." - $scriptTime - ".$_SERVER['REQUEST_URI']."\n", 3, $fileName);
 				ob_start();
-				print_r($HTTP_RAW_POST_DATA);
+				print_r($rawPostData);
 				error_log(ob_get_clean(), 3, $fileName);
 			} else {
 				error_log("File not writable: \"$fileName\"", 1, "sean.colombo@gmail.com");
@@ -525,13 +526,12 @@ function searchArtists($searchString){
 		$debug = true;
 	}
 	$artist = lw_fmtArtist($artist);
-	$artist = str_replace("'", "\'", $artist);
 
 	print (!$debug?"":"Starting title: \"$artist\".\n");
 
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
-// TODO: HAVE IT FOLLOW REDIRECTS, FIND CLOSE MATCHES, FALL BACK TO GRACENOTE, ETC.? or just use SimpleSearch now?
+// TODO: HAVE IT FOLLOW REDIRECTS, FIND CLOSE MATCHES, ETC.? or just use SimpleSearch now?
 
 		// If the string starts or ends with %'s, trim them off.
 		if(strlen($artist) >= 1){
@@ -544,22 +544,26 @@ function searchArtists($searchString){
 			print (!$debug?"":"After trimming '%'s off: \"$artist\".\n");
 
 			// TODO: Is it even worth trying this initial query before the SimpleSearch service?
-			$db = lw_connect_readOnly();
-			$ns = NS_MAIN;
-			$queryString = "SELECT page_title FROM page WHERE page_namespace=$ns AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
-			if($result = mysql_query($queryString, $db)){
-				if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-					for($cnt=0; $cnt<$numRows; $cnt++){
-						$retVal[] = mysql_result($result, $cnt, "page_title");
-					}
-				} else {
-					print (!$debug?"":"No matches for page_title LIKE \"$artist\".\n");
-				}
-			} else {
-				print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
+			$db = wfGetDB( DB_SLAVE );
+			$result = $db->select(
+				[ 'page' ],
+				[ 'page_title' ],
+				[
+					'page_namespace' => NS_MAIN,
+					'page_title NOT ' . $db->buildLike( $db->anyString(), ':' , $db->anyString() ),
+					'page_title' => $artist,
+				],
+				__METHOD__,
+				[
+					'LIMIT' => $MAX_RESULTS,
+				]
+			);
+
+			foreach ( $result as $row ) {
+				$retVal[] = $row->page_title;
 			}
 
-			// If there were no results at all, look for some with a more liberal query (which takes WAY too long to execute).
+			// If there were no results at all, look for some with a more liberal query.
 			if(count($retVal) == 0){
 				// Under the hood this uses the SimpleSearch service which is powered by Lucene.
 				$searchResults = lw_getSearchResults($artist, $MAX_RESULTS * 3); // select more than max so that we can filter after-the-fact for artists.
@@ -696,12 +700,12 @@ function getSOTD(){
 
 /**
  * The most commonly called function in the API... attempts to find a match for a provided artist/song name and return
- * a fair-use snippet of lyrics along with a link to the page.  Internally handles "fuzzy" title matching to get close matches,
- * fallback to Gracenote pages if those exist and regular pages don't, and follow "implied redirects" (eg: "Prodigy" redirects
+ * a fair-use snippet of lyrics along with a link to the page.  Internally handles "fuzzy" title matching to get close matches
+ * and follow "implied redirects" (eg: "Prodigy" redirects
  * to "The Prodigy", therefore we can infer that "Prodigy:Firestarter" => "The Prodigy:Firestarter").
  *
  * @params doHyphens is a bool which will be true initially and indicates that the function should try to remove hyphens.  Recursive calls might not do this.
- * @param ns the namespace to use when looking for songs. Will always try the main namespace first, but recursive calls might fall back to NS_GRACENOTE if matches aren't found in the main namespace.
+ * @param ns the namespace to use when looking for songs.
  * @param isOuterRequest is a bool which represents if this is the actual request from the SOAP or REST APIs.  It will be set to false by all recursive calls.
  * @param lyricsTagFound is a bool which is modified by reference and will indicate whether a lyrics tag (or equivalent formatting including an {{instrumental}} template) of any kind was found to indicate that the resulting wikitext is most likely lyrics.
  * @param allowFullLyrics is a bool which is the default for whether the lyrics need to be truncated. For direct calls this should always be left to 'false' for legal reasons... however, there are currently hacks which want the full text of a page so they can post-process the wikitext.
@@ -733,15 +737,8 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 		print "DECODE: ".utf8_decode($artist)."\n";
 	}
 
-	// If this is explicitly a request for a Gracenote page, change the namespace and continue on.
-	$GRACENOTE_NS_STRING = "Gracenote"; // TODO: FIXME: Is there a more programmatic way to get this string?
 	$LW_NS_STRING = "LyricWiki"; // TODO: FIXME: There MUST be a more programattic way to get this :P
-	if($artist == $GRACENOTE_NS_STRING){
-		$artist = $song; // the name will automatically get split up if we stuff the whole thing into the artist variable.
-		$song = "";
-		$ns = NS_GRACENOTE;
-		print (!$debug?"":"Gracenote page was explicitly requested. Now looking for \"$artist\" in the Gracenote namespace.");
-	} else if($artist == $LW_NS_STRING){
+	if($artist == $LW_NS_STRING){
 		$artist = $song;
 		$song = "";
 		$ns = NS_PROJECT;
@@ -762,7 +759,6 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 	}
 	$defaultLyrics = "Not found";
 	$defaultUrl = "http://lyrics.wikia.com";
-	$nsString = ($ns == NS_GRACENOTE ? $GRACENOTE_NS_STRING.":" : "");
 	$nsString = ($ns == NS_PROJECT ? $LW_NS_STRING.":" : "");
 	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
 	$instrumental = "Instrumental";
@@ -933,6 +929,14 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				$finalName = $page_id = "";
 				$content = lw_getPage($title, $finalName, $debug, $ns, $page_id);
 
+				// LYR-7 - if pages are on LyricFind takedown list, remove their content here.
+				$pageRemovedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $page_id);
+				if(!empty($pageRemovedProp)){
+					// Overwrite with the same content that normal takedowns used before LF API (this lets the
+					// Community easily update the text since it's a template).
+					$content = "{{lyricfind_takedown}}";
+				}
+
 				// Parse the lyrics from the content.
 				$matches = array();
 				if(0<preg_match("/<(gracenotelyrics|lyrics?)>(.*)<.(gracenotelyrics|lyrics?)>/si", $content, $matches) || (0<preg_match("/<(gracenotelyrics|lyrics?)>(.*)/si", $content, $matches))){
@@ -969,7 +973,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				$retVal['lyrics'] = $content;
 				$retVal['url'] = $url;
 
-				// Additional data to help with tracking the hits for royalty payments via Gracenote (among other potential uses).
+				// Additional data to help with tracking the hits (formerly for Gracenote royalty payments, now we use LF API instead).
 				$retVal['page_namespace'] = $ns;
 				$retVal['page_id'] = $page_id;
 
@@ -1004,20 +1008,9 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 			}
 
 			// If there was no result, give it another try without the hyphen trick.
-			if(($retVal['lyrics'] == $defaultLyrics) && ($lastHyphen !== false)){ // this logic should be kept even if isOuterRequest is false (ie: Gracenote should be tried with and without the hyphen trick
+			if(($retVal['lyrics'] == $defaultLyrics) && ($lastHyphen !== false)){ // this logic should be kept even if isOuterRequest is false
 				print (!$debug?"":"Trying again but assuming hyphens are part of the song name...\n");
 				$retVal = getSong($origArtist, $hyphenSong, false, $ns, false, $debug); // the first false stops the hyphen trick from being tried again, the second false indicates that this is a recursive call
-			}
-
-			// If there was no result, give it another try by going through the NS_GRACNOTE (if this is not NS_GRACENOTE already) before trying the fallback search.
-			if(($isOuterRequest) && ($retVal['lyrics'] == $defaultLyrics) && ($ns != NS_GRACENOTE)){
-				print (!$debug?"":"Trying again but using Gracenote namespace this time...\n");
-				$gnRetVal = getSong($artist, $song, true, NS_GRACENOTE, false, $debug); // since we're starting all tricks from scratch, use doHyphens=true
-
-				// If we found a legit match, overwrite whole result (don't do that normally because it would mess up the URL to use the GN namespace even though song is in neither namespace).
-				if($gnRetVal['lyrics'] != $defaultLyrics){
-					$retVal = $gnRetVal;
-				}
 			}
 
 			// Done looking for matches, there is either a match or not at this point.
@@ -1036,43 +1029,26 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					lw_soapStats_logHit($resultFound, $reqType);
 				}
 
-				// SWC 20101209 - Now we allow our own apps to get full lyrics, but the request has to be cryptographically signed so that others can't do the same thing.
-				// NOTE: The value of the fullApiAuth param for the request must be the md5 hash of the concatenation of wgFullLyricWikiApiToken, the artist, and the song.
-				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
-				if(!empty($fullApiAuth)){
-					global $wgFullLyricWikiApiToken;
-					print (!$debug?"":"Comparing token against artist: $artist\n");
-					print (!$debug?"":"Comparing token against song: $song\n");
-
-					$expectedSig = md5($wgFullLyricWikiApiToken . "$origArtist$origSong");
-					if($expectedSig == $fullApiAuth){
-						$allowFullLyrics = true;
-					} else if($ns == NS_GRACENOTE){
-						// If the song is in the GN Namespace, then there is one more possibility for the name of the song
-						$expectedSig = md5($wgFullLyricWikiApiToken . "Gracenote$origArtist$origSong");
-						if($expectedSig == $fullApiAuth){
-							$allowFullLyrics = true;
-						}
-					}
-				}
-
 				// Determine if this result was from the takedown list (must be done before truncating to a snippet, below).
-				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{gracenote[ _]takedown\}\}/", $retVal['lyrics']));
+				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{(gracenote|lyricfind)[ _]takedown\}\}/", $retVal['lyrics']));
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
-				if($allowFullLyrics){
-					// If the full lyrics are being returned (ie: to our mobile app) and the song is a Gracenote song, add the mobile branding as mentioned in the contract.
-					if($ns == NS_GRACENOTE){
-						$retVal['lyrics'] .= "\n\n&copy; Gracenote's providers";
-					}
-				} else {
+				// SWC 20151006 - allowFullLyrics is not likely to be true anymore. That was a previous feature to allow the original LyricWiki app (from 2010) to access
+				// lyrics. The newer LyricWiki app (Lyrically) does NOT use this feature, it uses its own API. To see the code which handled the signature, roll back the commit
+				// in which this comment appeared.
+				if(!$allowFullLyrics){
 					if(($retVal['lyrics'] != $defaultLyrics) && ($retVal['lyrics'] != $instrumental) && ($retVal['lyrics'] != "")){
 						$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";
 						$lyrics = $retVal['lyrics'];
 
 						if(mb_strlen($lyrics) < 50){
-							$lyrics = "";
+							if($lyrics == "{{lyricfind_takedown}}"){
+								// TODO: INJECT THE ACTUAL RESULT OF THE TEMPLATE IN HERE INSTEAD!!
+								$lyrics = "We don't currently have a license for these lyrics. Please try again in a few days!";
+							} else {
+								$lyrics = "[...]";
+							}
 						} else {
 							$lyrics = mb_substr($lyrics, 0, max(0, round(mb_strlen($lyrics) / 7)), 'UTF-8') . "[...]";
 						}
@@ -1101,6 +1077,8 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 		$retVal['isOnTakedownList'] = ($retVal['isOnTakedownList'] ? "1" : "0"); // turn it into a string
 		requestFinished($id);
 	}
+
+	$retVal['lyrics'] = removeWikitextFromLyrics($retVal['lyrics']);
 
 	wfProfileOut( __METHOD__ );
 	return $retVal;
@@ -1459,9 +1437,7 @@ function getAlbum($artist, $album, $year){
 
 		// TODO: Link to the LyricWiki page
 		$ns = $songResult['page_namespace'];
-		$GRACENOTE_NS_STRING = "Gracenote"; // FIXME: Is there a more programmatic way to get this string?
 		$LW_NS_STRING = "LyricWiki";
-		$nsString = ($ns == NS_GRACENOTE ? $GRACENOTE_NS_STRING.":" : ""); // TODO: is there a better way to get this?
 		$nsString = ($ns == NS_PROJECT ? $LW_NS_STRING.":" : ""); // TODO: is there a better way to get this?
 		$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it. - TODO: This is also defined in getSong()... refactor it to be global or make it a member function of a class.
 		$url = $urlRoot.$nsString.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
@@ -2140,7 +2116,7 @@ function lw_tracksToWiki($artistName, $songs){
 ////
 function lw_fmtArtist($artist){
 	$retVal = rawurldecode(ucwords($artist));
-	$retVal = preg_replace('/([-\("\.])([a-z])/e', '"$1".strtoupper("$2")', $retVal);
+	$retVal = preg_replace_callback('/([-\("\.])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $retVal);
 	$retVal = str_replace(" ", "_", $retVal);
 	return $retVal;
 } // end lw_fmtArtist()
@@ -2154,8 +2130,8 @@ function lw_fmtAlbum($album,$year){
 // Returns the standardly formatted song name.
 ////
 function lw_fmtSong($song){
-	$retVal = rawurldecode(ucwords($song));
-	$retVal = preg_replace('/([-\("\.])([a-z])/e', '"$1".strtoupper("$2")', $retVal);
+	$retVal = ucwords(rawurldecode($song));
+	$retVal = preg_replace_callback('/([-\("\.])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $retVal);
 	$retVal = str_replace(" ", "_", $retVal);
 	return $retVal;
 } // end lw_fmtSong()
@@ -2195,10 +2171,10 @@ function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
 	}
 
 	$title = str_replace("|", "/", $title); # TODO: Figure out if this is the right solution.
-	$title = preg_replace('/([-\("\.\/:_])([a-z])/e', '"$1".strtoupper("$2")', $title);
-	$title = preg_replace('/\b(O)[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.  Does it to "O'Riley" but not "I'm" or "Don't"
-	$title = preg_replace('/( \()[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
-	$title = preg_replace('/ [\']([a-z])/ei', '" ".strtoupper("\'$1")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
+	$title = preg_replace_callback('/([-\("\.\/:_])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $title);
+	$title = preg_replace_callback('/\b(O)[\']([a-z])/i', function($m){ return $m[1].strtoupper("'".$m[2]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.  Does it to "O'Riley" but not "I'm" or "Don't"
+	$title = preg_replace_callback('/( \()[\']([a-z])/i', function($m){ return $m[1].strtoupper("'".$m[2]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
+	$title = preg_replace_callback('/ [\']([a-z])/i', function($m){ return " ".strtoupper("'".$m[1]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
 	$title = strtr($title, " ", "_"); // Warning: multiple-byte substitutions don't seem to work here, so smart-quotes can't be fixed in this line.
 
 	// Naming conventions. See: http://www.lyricwiki.org/LyricWiki:Page_names
@@ -2230,13 +2206,9 @@ function lw_pageExists($pageTitle, $ns=NS_MAIN, $debug=false){
 		print (!$debug?"":"Using cached value for $ns:$pageTitle\n");
 		$retVal = $EXIST_CACHE["$ns:$pageTitle"];
 	} else {
-		$queryTitle = str_replace("'", "\'", $pageTitle);
+		$pageTitleObj = Title::newFromText( $pageTitle, $ns );
 
-		// the page_namespace='$ns' speeds it up significantly since it can then use the index on page_namespace,page_title
-		$queryString = "SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='$ns'";
-		print (!$debug?"":"Query for looking up the page:\n$queryString\n");
-
-		$retVal = (0 < lw_simpleQuery($queryString));
+		$retVal = $pageTitleObj instanceof Title && $pageTitleObj->exists();
 		$EXIST_CACHE["$ns:$pageTitle"] = $retVal;
 	}
 	print (!$debug?"":"Page exists: ".($retVal?"yes":"no")."\n");
@@ -2388,7 +2360,7 @@ function login($username, $password) {
 			}
 		} else {
 			$u->loadFromDatabase();
-			if (!$u->checkPassword($password)) {
+			if ( !$u->checkPassword( $password )->success() ) {
 				$err .= ($password==""?"Please enter a password.\n":"Incorrect password.\n");
 			} else {
 				# We've verified now, update the real record
@@ -2397,7 +2369,7 @@ function login($username, $password) {
 				} else {
 					$r = 0;
 				}
-				$u->setOption( 'rememberpassword', $r );
+				$u->setGlobalPreference( 'rememberpassword', $r );
 				$wgAuth->updateUser( $u );
 				$wgUser = $u;
 				$wgUser->setCookies();
@@ -2475,8 +2447,6 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 				$dbw->commit();
 				wfDebug("LWSOAP: Stored in the database successfully.\n");
 				$wgMemc->delete($memkey);
-			} else {
-				wfDebug("LWSOAP: Error storing SOAP failure!! - " . mysql_error() . "\n");
 			}
 		} else {
 			wfDebug("LWSOAP: Updating $memkey to " . ($numFails + 1) . "\n");
@@ -2506,13 +2476,20 @@ function requestStarted($funcName, $requestData){
 	 */
 	if( !wfReadOnly() ) {
 		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES) {
-			$db = lw_connect();
 			$requestData = str_replace("'", "[&apos;]", $requestData);
-			$queryString = "INSERT INTO apiRequests (requestedThrough, requestedFunction, requestData, requestTime)";
-			$queryString.= " VALUES ('$REQUEST_TYPE', '".mysql_real_escape_string($funcName, $db)."', '".mysql_real_escape_string($requestData, $db)."', NOW())";
-			if( mysql_query($queryString, $db ) ){
-				$retVal = mysql_insert_id( $db );
-			}
+
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->insert(
+				'apiRequests',
+				[
+					"requestedThrough" => $REQUEST_TYPE,
+					"requestedFunction" => $funcName,
+					"requestData" => $requestData,
+					"requestTime" => $dbw->timestamp( wfTimestampNow() ),
+				],
+				__METHOD__
+			);
+			$retVal = $dbw->insertId();
 		}
 	}
 	return $retVal;
@@ -2527,8 +2504,31 @@ function requestStarted($funcName, $requestData){
 function requestFinished($id){
 	if( !wfReadOnly() ) {
 		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES){
-			$db = lw_connect();
-			mysql_query("DELETE FROM apiRequests WHERE id=$id", $db);
+			$dbr = wfGetDB( DB_MASTER );
+			$dbr->delete("apiRequests",
+			[
+				id => $id
+			], __METHOD__);
 		}
 	}
 } // end requestFinished()
+
+////
+// Given the lyrics (possibly containing wikitext) this will filter
+// most wikitext out of them that is likely to appear in them.
+////
+function removeWikitextFromLyrics($lyrics){
+	// Clean up wikipedia template to be plaintext
+	$lyrics = preg_replace("/\{\{wp.*\|(.*?)\}\}/", "$1", $lyrics);
+
+	// Clean up links & category-links to be plaintext
+	$lyrics = preg_replace("/\[\[([^\|\]]*)\]\]/", "$1", $lyrics); // links with no alias (no pipe)
+	$lyrics = preg_replace("/\[\[.*\|(.*?)\]\]/", "$1", $lyrics);
+
+	// Filter out extra formatting markup
+	$lyrics = preg_replace("/'''/", "", $lyrics); // rm bold
+	$lyrics = preg_replace("/''/", "", $lyrics); // rm italics
+
+	return $lyrics;
+} // end removeWikitextFromLyrics()
+

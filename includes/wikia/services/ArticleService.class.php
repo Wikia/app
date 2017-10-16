@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Util\GlobalStateWrapper;
+
 /**
  * A service to retrieve plain text snippets from articles
  *
@@ -6,7 +9,9 @@
  */
 class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
-	const CACHE_VERSION = 8;
+	const CACHE_VERSION = 9;
+	const SOLR_SNIPPETS_FIELD = 'snippet_s';
+	const SOLR_ARTICLE_TYPE_FIELD = 'article_type_s';
 
 	/** @var Article $article */
 	private $article = null;
@@ -28,11 +33,11 @@ class ArticleService extends WikiaObject {
 			'h6'
 	);
 	private $patterns = array(
-		//strip decimal entities
-		'/&#\d{2,5};/ue' => '',
-		//strip hex entities
-		'/&#x[a-fA-F0-7]{2,8};/ue' => '',
-		//this should be always the last
+		// strip decimal entities
+		'/&#\d{2,5};/u' => '',
+		// strip hex entities
+		'/&#x[a-fA-F0-7]{2,8};/u' => '',
+		// this should be always the last
 		'/\s+/' => ' '
 	);
 	private static $localCache = array();
@@ -43,6 +48,8 @@ class ArticleService extends WikiaObject {
 	 */
 	protected $solrDocumentService;
 
+	private $solrHostname;
+
 	/**
 	 * ArticleService constructor
 	 *
@@ -50,6 +57,12 @@ class ArticleService extends WikiaObject {
 	 */
 	public function __construct( $articleOrId = null ) {
 		parent::__construct();
+		global $wgSolrHost, $wgSolrKvHost;
+		if (isset($wgSolrKvHost)){
+			$this->solrHostname = $wgSolrKvHost;
+		} else {
+			$this->solrHostname = $wgSolrHost;
+		}
 
 		if ( !is_null( $articleOrId ) ) {
 			if ( is_numeric( $articleOrId ) ) {
@@ -78,27 +91,42 @@ class ArticleService extends WikiaObject {
 	 * @param integer $articleId A valid article ID from which
 	 * an Article instance will be constructed to be used as a
 	 * source of content
+	 * @return ArticleService fluent interface
 	 */
 	public function setArticleById( $articleId ) {
-		$this->article = Article::newFromID($articleId);
+		$this->article = Article::newFromID( $articleId );
 		return $this;
 	}
 
 	/**
 	 * Sets the Article instance via Title object
-	 * @param Title $article Title object
+	 * @param Title $title Title object
 	 * class to use as a source of content
 	 * @return ArticleService fluent interface
 	 */
 	public function setArticleByTitle( Title $title ) {
-		$this->article = new Article($title);
+		$this->article = new Article( $title );
 		return $this;
 	}
 
 	/**
-	 * Gets a plain text snippet from an article
+	 * Gets a plain text snippet from an article.  An optional second argument allows a break limit.
+	 * When given, if the text is greater than $breakLimit, truncate it to $length, if its less than
+	 * $breakLimit, return the whole snippet.  This allows better snippets for text that is very close
+	 * in character count to $length.
+	 *
+	 * For example if $length=100 and $breakLimit=200 and the source text is 205 characters, the content
+	 * will be truncated at the word closest to 100 characters.  If the source text is 150 characters,
+	 * then this method will return all 150 characters.
+	 *
+	 * If however we only give one parameter, $length=200 and the source text is 205 characters, we
+	 * will return text truncated at the word nearest 200 characters, likely only leaving out a single
+	 * word from the snippet.  This can lead to a strange user experience in some cases (e.g. a user
+	 * clicks a link in a notification email to see the full edit and finds that there's only one word
+	 * they weren't able to read from the email)
 	 *
 	 * @param integer $length [OPTIONAL] The maximum snippet length, defaults to 100
+	 * @param integer $breakLimit A breakpoint for showing the full snippet.
 	 *
 	 * @return string The plain text snippet, it includes SUFFIX at the end of the string
 	 * if the length of the article's content is longer than $length, the text will be cut
@@ -108,7 +136,7 @@ class ArticleService extends WikiaObject {
 	 *
 	 * @example
 	 * $service = new ArticleService( $article );
-	 * $snippet = $service->getTextSnippet( 250 );
+	 * $snippet = $service->getTextSnippet( 250, 400 );
 	 *
 	 * $service->setArticleById( $title->getArticleID() );
 	 * $snippet = $service->getTextSnippet( 50 );
@@ -116,43 +144,43 @@ class ArticleService extends WikiaObject {
 	 * $service->setArticle( $anotherArticle );
 	 * $snippet = $service->getTextSnippet();
 	 */
-	public function getTextSnippet( $length = 100 ) {
-		//don't allow more than the maximum to avoid flooding Memcached
+	public function getTextSnippet( $length = 100, $breakLimit = null ) {
+		// don't allow more than the maximum to avoid flooding Memcached
 		if ( $length > self::MAX_LENGTH ) {
 			throw new WikiaException( 'Maximum allowed length is ' . self::MAX_LENGTH );
 		}
 
-		// it may sometimes happen that the aricle is just not there
+		// It may be that the article is just not there
 		if ( !( $this->article instanceof Article ) ) {
 			return '';
 		}
 
-		$fname = __METHOD__;
-		wfProfileIn( __METHOD__ );
-
 		$id = $this->article->getID();
-		// in case the article is missing just return empty string
 		if ( $id <= 0 ) {
-			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
-		//memoize to avoid Memcache access overhead
-		//when the same article needs to be processed
-		//more than once in the same process
-		if ( array_key_exists( $id, self::$localCache ) ) {
-			$text = self::$localCache[$id];
+		$text = $this->getTextSnippetSource( $id );
+		$length = $this->adjustTextSnippetLength( $text, $length, $breakLimit );
+		$snippet = wfShortenText( $text, $length, $useContentLanguage = true );
+
+		return $snippet;
+	}
+
+	private function getTextSnippetSource( $articleId ) {
+		// Memoize to avoid Memcache access overhead when the same article needs to be processed
+		// more than once in the same process
+		if ( array_key_exists( $articleId, self::$localCache ) ) {
+			$text = self::$localCache[$articleId];
 		} else {
-			$key = self::getCacheKey( $id );
+			$key = self::getCacheKey( $articleId );
 			$service = $this;
-			$text = self::$localCache[$id] = WikiaDataAccess::cache(
+			$text = self::$localCache[$articleId] = WikiaDataAccess::cache(
 				$key,
 				86400 /*24h*/,
-				function() use ( $service, $fname ){
-					wfProfileIn( $fname . '::CacheMiss' );
-
+				function() use ( $service ) {
 					$content = '';
-					if ( !empty( $this->wg->SolrMaster ) ) {
+					if ( !$this->wg->DevelEnvironment && !empty( $this->wg->SolrMaster ) ) {
 						$content = $service->getTextFromSolr();
 					}
 
@@ -161,48 +189,78 @@ class ArticleService extends WikiaObject {
 						$content = $service->getUncachedSnippetFromArticle();
 					}
 
-					wfProfileOut( $fname . '::CacheMiss' );
 					return $content;
 				}
 			);
 		}
 
-		$snippet = wfShortenText( $text, $length, true /*use content language*/ );
+		return $text;
+	}
 
-		wfProfileOut( __METHOD__ );
-		return $snippet;
+	private function adjustTextSnippetLength( $text, $length, $breakLimit ) {
+		if ( empty( $breakLimit ) ) {
+			return $length;
+		}
+
+		$textLength = mb_strlen( $text );
+		if ( $textLength >= $breakLimit ) {
+			return $length;
+		}
+
+		return $breakLimit;
 	}
 
 	/**
 	 * Accesses a snippet from MediaWiki.
 	 * @return string
 	 */
-	public function getUncachedSnippetFromArticle() {
-		//get standard parser cache for anons,
-		//99% of the times it will be available but
-		//generate it in case is not
+	public function getUncachedSnippetFromArticle()
+	{
+		// get standard parser cache for anons,
+		// 99% of the times it will be available but
+		// generate it in case is not
+		$content = '';
 		$page = $this->article->getPage();
 		$opts = $page->makeParserOptions( new User() );
-		$content = $page->getParserOutput( $opts )->getText();
+		$parserOutput = $page->getParserOutput( $opts );
+		try {
+			$content = $this->getContentFromParser( $parserOutput );
+		} catch ( Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'ArticleService, not parser output object found',
+				['parserOutput' => $parserOutput, 'parserOptions' => $opts, 'wikipage_dump' => $page, 'exception' => $e]
+			);
+		}
 
-		//Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
-		wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->article, &$content, ArticleService::MAX_LENGTH ) );
+		// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
+		Hooks::run( 'ArticleService::getTextSnippet::beforeStripping',
+			[ $this->article, &$content, ArticleService::MAX_LENGTH ] );
 
+		return $this->cleanArticleSnippet( $content );
+	}
+
+	/**
+	 * Cleans up the content of the article snippet
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function cleanArticleSnippet( $content ) {
 		if ( mb_strlen( $content ) > 0 ) {
-			//remove all unwanted tag pairs and their contents
+			// remove all unwanted tag pairs and their contents
 			foreach ( $this->tags as $tag ) {
 				$content = preg_replace( "/<{$tag}\b[^>]*>.*<\/{$tag}>/imsU", '', $content );
 			}
 
-			//cleanup remaining tags
+			// cleanup remaining tags
 			$content = strip_tags( $content );
 
-			//apply some replacements
+			// apply some replacements
 			foreach ( $this->patterns as $reg => $rep ) {
 				$content = preg_replace( $reg, $rep, $content );
 			}
 
-			//decode entities
+			// decode entities
 			$content = html_entity_decode( $content );
 			$content = trim( $content );
 
@@ -213,24 +271,68 @@ class ArticleService extends WikiaObject {
 		return $content;
 	}
 
+	private function getContentFromParser( $output ) {
+		if ( !$output instanceof ParserOutput ) {
+			throw new Exception("Not ParserOutput instance.");
+		}
+		return $output->getText();
+	}
+
 	/**
 	 * Gets a plain text of an article using Solr.
 	 *
 	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
 	 */
-	public function getTextFromSolr() {
-		$service = new SolrDocumentService();
-		// note that this will use wgArticleId without an article
-		if ( $this->article ) {
-			$service->setArticleId( $this->article->getId() );
-		}
+	public function getTextFromSolr()
+	{
+		$wrapper = new GlobalStateWrapper(['wgSolrHost' => $this->solrHostname]);
+
+		$document = $wrapper->wrap(function(){
+			$service = new SolrDocumentService();
+			// note that this will use wgArticleId without an article
+			if ( $this->article ) {
+				$service->setArticleId( $this->article->getID() );
+			}
+			return $service->getResult();
+		});
+
 		$htmlField = Wikia\Search\Utilities::field( 'html' );
 
-		$document = $service->getResult();
+		$text = '';
+		if ( $document !== null ) {
+			if ( !empty( $document[ static::SOLR_SNIPPETS_FIELD ] ) ) {
+				$text = $document[ static::SOLR_SNIPPETS_FIELD ];
+			} elseif ( isset( $document[$htmlField] ) ) {
+				$text = $document[$htmlField];
+			}
+		}
+		return $text;
+	}
+
+	/**
+	 * Gets the article type using Solr.
+	 * Since SolrDocumentService uses memoization, we will NOT do an additional Solr request
+	 * because of this method - both snippet and article type can use the same memoized
+	 * result
+	 *
+	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
+	 */
+	public function getArticleType() {
+		if ( !($this->article instanceof Article ) ) {
+			return '';
+		}
+		$wrapper = new GlobalStateWrapper(['wgSolrHost' => $this->solrHostname]);
+		$document = $wrapper->wrap(function() {
+			$service = new SolrDocumentService();
+			$service->setArticleId( $this->article->getID() );
+			return $service->getResult();
+		});
 
 		$text = '';
-		if ( ( $document !== null ) && ( isset( $document[$htmlField] ) ) ) {
-			$text = $document[$htmlField];
+		if ( $document !== null ) {
+			if ( !empty( $document[ static::SOLR_ARTICLE_TYPE_FIELD] ) ) {
+				$text = $document[ static::SOLR_ARTICLE_TYPE_FIELD];
+			}
 		}
 		return $text;
 	}
@@ -273,7 +375,10 @@ class ArticleService extends WikiaObject {
 	/**
 	 * Clear the cache when the page is edited
 	 */
-	static public function onArticleSaveComplete( WikiPage &$page, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static public function onArticleSaveComplete(
+		WikiPage $page, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags,
+		$revision, Status &$status, $baseRevId
+	): bool {
 		/**
 		 * @var $service ArticleService
 		 */

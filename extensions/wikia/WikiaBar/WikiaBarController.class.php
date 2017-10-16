@@ -19,7 +19,7 @@ class WikiaBarController extends WikiaController {
 
 		$this->lang = F::app()->wg->contLang->getCode();
 
-		if( HubService::isCurrentPageAWikiaHub() ) {
+		if( WikiaPageType::isWikiaHub() ) {
 			$this->vertical = HubService::getCategoryInfoForCurrentPage()->cat_id;
 		} else {
 			$this->vertical = HubService::getCategoryInfoForCity(F::app()->wg->cityId)->cat_id;
@@ -32,7 +32,7 @@ class WikiaBarController extends WikiaController {
 
 	protected function isCorporateMainPageNonAnon() {
 		return (
-			HubService::isCorporatePage()
+			WikiaPageType::isCorporatePage()
 			&& Wikia::isMainPage()
 			&& !F::app()->wg->User->isAnon()
 		);

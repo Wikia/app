@@ -1,10 +1,14 @@
-$(function(){
-	var msgBox = document.getElementById('wkLgnMsg'),
-		msg = msgBox && msgBox.innerText;
+require(['jquery', 'wikia.window', 'wikia.loader', 'toast'], function ($, window, loader, toast) {
+	'use strict';
 
-	if(msg){
-		require('toast', function(t){
-			t.show(msg);
-		});
+	function init() {
+		var msgBox = document.getElementById('wkLgnMsg'),
+			msg = msgBox && msgBox.innerText;
+
+		if (msg) {
+			toast.show(msg);
+		}
 	}
+
+	$(init);
 });

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWEntityNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -11,17 +11,17 @@
  * @class
  * @extends ve.dm.LeafNode
  * @constructor
- * @param {number} [length] Length of content data in document
+ *
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWEntityNode = function VeDmMWEntityNode( length, element ) {
+ve.dm.MWEntityNode = function VeDmMWEntityNode() {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
+	ve.dm.LeafNode.apply( this, arguments );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWEntityNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.MWEntityNode, ve.dm.LeafNode );
 
 /* Static Properties */
 
@@ -34,7 +34,7 @@ ve.dm.MWEntityNode.static.matchTagNames = [ 'span' ];
 ve.dm.MWEntityNode.static.matchRdfaTypes = [ 'mw:Entity' ];
 
 ve.dm.MWEntityNode.static.toDataElement = function ( domElements ) {
-	return { 'type': 'mwEntity', 'attributes': { 'character': domElements[0].textContent } };
+	return { type: this.name, attributes: { character: domElements[0].textContent } };
 };
 
 ve.dm.MWEntityNode.static.toDomElements = function ( dataElement, doc ) {

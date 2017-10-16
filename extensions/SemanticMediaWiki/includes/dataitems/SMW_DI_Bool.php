@@ -1,8 +1,8 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataItems
  */
+use SMW\DataItemException;
 
 /**
  * This class implements Boolean data items.
@@ -21,6 +21,10 @@ class SMWDIBoolean extends SMWDataItem {
 	protected $m_boolean;
 
 	public function __construct( $boolean ) {
+		if ( !is_bool( $boolean ) ) {
+			throw new DataItemException( "Initialization value '$boolean' is not a boolean." );
+		}
+
 		$this->m_boolean = ( $boolean == true );
 	}
 
@@ -49,10 +53,16 @@ class SMWDIBoolean extends SMWDataItem {
 		if ( $serialization == 't' ) {
 			return new SMWDIBoolean( true );
 		} elseif  ( $serialization == 'f' ) {
-			return new SMWDIBoolean( true );
+			return new SMWDIBoolean( false );
 		} else {
-			throw new SMWDataItemException( "Boolean data item unserialised from illegal value '$serialization'" );
+			throw new DataItemException( "Boolean data item unserialised from illegal value '$serialization'" );
 		}
 	}
 
+	public function equals( SMWDataItem $di ) {
+		if ( $di->getDIType() !== SMWDataItem::TYPE_BOOLEAN ) {
+			return false;
+		}
+		return $di->getBoolean() === $this->m_boolean;
+	}
 }

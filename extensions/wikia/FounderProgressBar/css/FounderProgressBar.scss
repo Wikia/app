@@ -1,10 +1,8 @@
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/transform";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/transform";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/responsive-variables";
 
@@ -185,9 +183,10 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 
 .FounderProgressList {
 	@include box-shadow(2px, 2px, 2px, $color-founder-progress-list-border-shadow, false, 0);
-	border: 1px solid $color-founder-progress-preview-border;
-	position: relative; 
-	width: 698px;
+	border: solid $color-founder-progress-preview-border;
+	border-width: 0 1px 1px 0;
+	position: relative;
+	width: 100%;
 	z-index: 7;
 	>nav {
 		@include box-shadow(0, 3px, 6px, $color-founder-progress-list-border-shadow);
@@ -378,13 +377,10 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 	position: relative;
 }
 
-@if ( $responsive-layout-enabled ) {
-	@media screen and (max-width: $breakpoint-small) {
-		.FounderProgressList {
-			width: 100%;
-			.tail {
-				display: none;
-			}
+@if ( $responsive-or-breakpoints-layout-enabled ) {
+	@media screen and (max-width: 1024px) {
+		.FounderProgressList .tail {
+			display: none;
 		}
 	}
 }

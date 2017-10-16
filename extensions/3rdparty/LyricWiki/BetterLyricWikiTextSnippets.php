@@ -31,8 +31,12 @@ $wgHooks['ArticleService::getTextSnippet::beforeStripping'][] = 'efLyricWikiGetT
  * Hooked into ArticleService::getTextSnippet to give a more helpful result when used on LyricWiki.
  *
  * Will modify the value of 'content' parameter to cause any changes desired.
+ * @param Article $article
+ * @param $content
+ * @param $length
+ * @return bool
  */
-function efLyricWikiGetTextSnippet( &$article, &$content, $length ) {
+function efLyricWikiGetTextSnippet( Article $article, &$content, $length ): bool {
 	$matches = array();
 	$text = $article->getText();
 
@@ -43,4 +47,4 @@ function efLyricWikiGetTextSnippet( &$article, &$content, $length ) {
 	}
 
 	return true;
-} // end efLyricWikiGetTextSnippet()
+}

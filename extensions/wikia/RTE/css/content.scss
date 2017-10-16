@@ -17,7 +17,7 @@ head {
 	color: $color-text;
 	padding-left: 6px;
 
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		padding: 0 10px;
 	}
 
@@ -59,8 +59,6 @@ img.video {
 /* thumbs */
 img.thumb,
 img.frame {
-	background: $color-article-thumb-background;
-	border: 1px solid $color-article-thumb-border;
 	clear: right;
 	display: inline;
 	float: right;
@@ -183,12 +181,6 @@ img.image-slideshow {
 	&.alignRight {
 		float: right;
 	}
-}
-
-/* Wikia Poll placeholder */
-img.placeholder-poll {
-	background-image: url(/extensions/wikia/WikiaPoll/images/poll-placeholder.png);/* $wgCdnStylePath */
-	float: left;
 }
 
 /* redlinks (RT #87906) */

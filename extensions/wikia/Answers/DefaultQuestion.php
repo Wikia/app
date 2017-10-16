@@ -47,7 +47,7 @@ class DefaultQuestion {
 			return false;
 		}
 
-		if ( !wfRunHooks( 'CreateDefaultQuestionPageFilter', array($this->title) ) ) {
+		if ( !Hooks::run( 'CreateDefaultQuestionPageFilter', array($this->title) ) ) {
 			wfDebug(__METHOD__ . ": question '{$this->title}' filtered out by hook\n");
 			return false;
 		}
@@ -72,7 +72,7 @@ class DefaultQuestion {
 
 		if( $wgUser->isLoggedIn() ){
 			// check user preferences before adding to watchlist (RT #45647)
-			$watchCreations = $wgUser->getOption('watchcreations');
+			$watchCreations = $wgUser->getGlobalPreference('watchcreations');
 			if (!empty($watchCreations)) {
 				$wgUser->addWatch( $this->title );
 			}
@@ -163,7 +163,7 @@ class DefaultQuestion {
 	// don't allow swear words when generating list of recenlty asked questions (via HPL)
 	function filterWordsTest() {
 		// changed $this->question => $this->title (2013/01/27)
-		if ( !wfRunHooks( 'DefaultQuestion::filterWordsTest' , array( $this->title )) ) {
+		if ( !Hooks::run( 'DefaultQuestion::filterWordsTest' , array( $this->title )) ) {
 			wfDebug(__METHOD__ . ": question '{$this->question}' filtered out by hook\n");
 			return true;
 		}

@@ -23,12 +23,6 @@ class WikiaApp {
 	private $localRegistry = null;
 
 	/**
-	 * hook dispatcher
-	 * @var $hookDispatcher WikiaHookDispatcher
-	 */
-	private $hookDispatcher = null;
-
-	/**
 	 * namespace Registry
 	 * @var $namespaceRegistry array list of namespaces Registered by nirvana framework
 	 */
@@ -53,16 +47,16 @@ class WikiaApp {
 	protected $skinTemplateObj = null;
 
 	/**
+	 * WikiaApp is a singleton
+	 * @var WikiaApp
+	 */
+	protected static $appInstance;
+
+	/**
 	 * global MW variables helper accessor
 	 * @var $wg WikiaGlobalRegistry
 	 */
 	public $wg = null;
-
-	/**
-	 * global MW functions helper accessor
-	 * @var $wf WikiaFunctionWrapper
-	 */
-	public $wf = null;
 
 	/**
 	 * this variable is use for local cache of view. Used by getViewOnce, renderViewOnce
@@ -72,12 +66,11 @@ class WikiaApp {
 
 	/**
 	 * constructor
-	 * @param $globalRegistry WikiaGlobalRegistry
-	 * @param $localRegistry WikiaLocalRegistry
-	 * @param $hookDispatcher WikiaHookDispatcher
+	 * @param WikiaRegistry $globalRegistry
+	 * @param WikiaRegistry $localRegistry
 	 */
 
-	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
+	public function __construct( WikiaRegistry $globalRegistry = null, WikiaRegistry $localRegistry = null ) {
 
 		if(!is_object($globalRegistry)) {
 			$globalRegistry = (new WikiaGlobalRegistry);
@@ -87,25 +80,12 @@ class WikiaApp {
 			$localRegistry = (new WikiaLocalRegistry);
 		}
 
-		if(!is_object($hookDispatcher)) {
-			$hookDispatcher = (new WikiaHookDispatcher);
-		}
-
-		if(!is_object($functionWrapper)) {
-			$functionWrapper = (new WikiaFunctionWrapper);
-		}
-
 		$this->localRegistry = $localRegistry;
-		$this->hookDispatcher = $hookDispatcher;
 
 		// set helper accessors
 		$this->wg = $globalRegistry;
-		$this->wf = $functionWrapper;
 
-		// register ajax dispatcher
-		if(is_object($this->wg)) {
-			$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
-		} else {
+		if ( !is_object( $this->wg ) ) {
 			// can't use Wikia::log or wfDebug or wfBacktrace at this point (not defined yet)
 			error_log( __METHOD__ . ': WikiaGlobalRegistry not set in ' . __CLASS__ . ' ' . __METHOD__ );
 			$message = "";
@@ -118,9 +98,21 @@ class WikiaApp {
 	}
 
 	/**
+	 * get application object
+	 * @return WikiaApp
+	 */
+	public static function app() {
+		if (!isset(self::$appInstance)) {
+			self::$appInstance = new WikiaApp();
+		}
+		return self::$appInstance;
+	}
+
+	/**
 	 * checks if a class reference or a string refer to a WikiaService instance
 	 *
 	 * @param mixed $controllerClass a string with the name of the class or a reference to an object
+	 * @return bool
 	 */
 	public function isService( $controllerClass ) {
 		return ( is_object( $controllerClass ) ) ? is_a( $controllerClass, 'WikiaService' ) : ( ( strrpos( $controllerClass, 'Service' ) === ( strlen( $controllerClass ) - 7 ) ) );
@@ -130,6 +122,7 @@ class WikiaApp {
 	 * checks if a class reference or a string refer to a WikiaController instance
 	 *
 	 * @param mixed $controllerClass a string with the name of the class or a reference to an object
+	 * @return bool
 	 */
 	public function isController( $controllerClass ) {
 		return ( is_object( $controllerClass ) ) ? is_a( $controllerClass, 'WikiaController' ) : ( ( strrpos( $controllerClass, 'Controller' ) === ( strlen( $controllerClass ) - 10 ) ) );
@@ -157,8 +150,9 @@ class WikiaApp {
 
 	/**
 	 * This helper gets the full controller class name from the request object built by sendRequest
-	 * @param String $baseName
 	 * This does some extra defensive work, otherwise you can end up trying to dispatch FooControllerController
+	 * @param String $baseName
+	 * @return null|String
 	 */
 	public function getControllerClassName( $baseName ) {
 		if ( empty($baseName) ) {
@@ -172,8 +166,9 @@ class WikiaApp {
 
 	/**
 	 * This helper gets the full controller class name from the request object built by sendRequest
-	 * @param String $baseName
 	 * This does some extra defensive work, otherwise you can end up trying to dispatch FooServiceService
+	 * @param String $baseName
+	 * @return null|String
 	 */
 
 	public function getServiceClassName ( $baseName ) {
@@ -184,14 +179,6 @@ class WikiaApp {
 		} else {
  			return $baseName . "Service";
 		}
-	}
-
-	/**
-	 * get hook dispatcher
-	 * @return WikiaHookDispatcher
-	 */
-	public function getHookDispatcher() {
-		return $this->hookDispatcher;
 	}
 
 	/**
@@ -224,22 +211,6 @@ class WikiaApp {
 	 */
 	public function getLocalRegistry() {
 		return $this->localRegistry;
-	}
-
-	/**
-	 * get global function wrapper
-	 * @return WikiaFunctionWrapper
-	 */
-	public function getFunctionWrapper() {
-		return $this->wf;
-	}
-
-	/**
-	 * set global function wrapper
-	 * @param WikiaFunctionWrapper $functionWrapper
-	 */
-	public function setFunctionWrapper(WikiaFunctionWrapper $functionWrapper) {
-		$this->wf = $functionWrapper;
 	}
 
 	/**
@@ -337,9 +308,11 @@ class WikiaApp {
 	 * @return WikiaDispatcher
 	 */
 	public function getDispatcher() {
+		wfProfileIn(__METHOD__);
 		if( $this->dispatcher == null ) {
 			$this->dispatcher = (new WikiaDispatcher);
 		}
+		wfProfileOut(__METHOD__);
 		return $this->dispatcher;
 	}
 
@@ -352,40 +325,27 @@ class WikiaApp {
 	}
 
 	/**
-	 * register hook (alias: WikiaHookDispatcher::registerHook)
-	 * @param string $hookName
-	 * @param string $className
-	 * @param string $methodName
-	 * @param array $options
-	 * @param bool $alwaysRebuild
-	 */
-	public function registerHook( $hookName, $className, $methodName, Array $options = array(), $alwaysRebuild = false, $object = null ) {
-		$this->wg->append( 'wgHooks', $this->hookDispatcher->registerHook( $className, $methodName, $options, $alwaysRebuild, $object ), $hookName );
-	}
-
-	/**
-	 * registerNamespaceControler
-	 * if the namespace is registered using registerNamespaceControler
-	 * $className, $methodName will be exexuted instead of regular article path
+	 * If the namespace is registered using registerNamespaceController $className, $methodName
+	 * will be executed instead of regular article path.  The title is passed as a request
+	 * attribute, e.g.:
 	 *
-	 * title is passed as a request attribute. ($app->renderView($className, $methodName, array( 'title' => $wgTitle ) )
+	 *     $app->renderView( $className, $methodName, [ 'title' => $wgTitle ] )
 	 *
 	 * @param integer $namespace
 	 * @param string $className
 	 * @param string $methodName
-	 * @param string $exists - Controler will be only executed if wgTitle exists
+	 *
 	 * @deprecated
 	 */
 
-	public function registerNamespaceControler( $namespace, $className, $methodName, $exists ) {
+	public function registerNamespaceController( $namespace, $className, $methodName ) {
 		if(empty($this->namespaceRegistry)) {
-			$this->registerHook( 'ArticleViewHeader', 'WikiaApp', 'onArticleViewHeader', array(), false, $this );
+			Hooks::register( 'ArticleViewHeader', [ $this, 'onArticleViewHeader' ] );
 		}
 
 		$this->namespaceRegistry[$namespace] =  array(
 			'className' => $className,
-			'methodName' => $methodName,
-		  	'exists' => $exists
+			'methodName' => $methodName
 		);
 	}
 
@@ -408,19 +368,28 @@ class WikiaApp {
 	 *
 	 * onArticleViewHeader
 	 *
-	 * This is a hook which serves the needs of registerNamespaceControler
+	 * This is a hook which serves the needs of registerNamespaceController
 	 *
-	 * @param $article Article
-	 * @param $outputDone Bool
-	 * @param $useParserCache
+	 * @param Article $article
+	 * @param bool $outputDone
+	 * @param bool $useParserCache
+	 * @return bool
 	 */
 
-	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
+	public function onArticleViewHeader(
+		Article $article, bool &$outputDone, bool &$useParserCache
+	): bool {
 		$title = $article->getTitle();
 
 		$namespace = $title->getNamespace();
-		if( !empty($this->namespaceRegistry[$namespace]) && (empty($this->namespaceRegistry['exists']) || $title->exists()) ) {
-			$this->wg->Out->addHTML($this->renderView($this->namespaceRegistry[$namespace]['className'], $this->namespaceRegistry[$namespace]['methodName'], array( 'title' => $article->getTitle() ) ));
+		if ( !empty( $this->namespaceRegistry[$namespace] ) ) {
+			$this->wg->Out->addHTML(
+				$this->renderView(
+					$this->namespaceRegistry[$namespace]['className'],
+					$this->namespaceRegistry[$namespace]['methodName'],
+					[ 'title' => $article->getTitle() ]
+				)
+			);
 			$outputDone = true;
 		}
 
@@ -448,6 +417,7 @@ class WikiaApp {
 	 * register controller class
 	 * @param string $className Name of controller class
 	 * @param string $filePath Path to file containing class
+	 * @param null $routing
 	 * @param array $options Array of routing options
 	 *
 	 * The dispatcher will check options for you before dispatching the request
@@ -458,19 +428,19 @@ class WikiaApp {
 	 *
 	 * F::app()->registerController("FooController", "/path", array(
 	 * "performActionA" => array(
-	 *		"global" => "wgEnableNewFoo",
-	 *		"skin" => array( "mobile" )
-	 *	),
-	 *	"performActionB" => array(
-	 *		"skin" => array( "oasis" ),
-	 *		"before" => "calledBeforeActionB",
-	 *		"after" => "calledAfterActionB"
-	 *	),
-	 *	"performActionC" => array(
-	 *		"notSkin" => array( "oasis" ),
-	 *		"method" => "notOasis"
-	 *	),
-	 *	// default is "any skin"
+	 *        "global" => "wgEnableNewFoo",
+	 *        "skin" => array( "mobile" )
+	 *    ),
+	 *    "performActionB" => array(
+	 *        "skin" => array( "oasis" ),
+	 *        "before" => "calledBeforeActionB",
+	 *        "after" => "calledAfterActionB"
+	 *    ),
+	 *    "performActionC" => array(
+	 *        "notSkin" => array( "oasis" ),
+	 *        "method" => "notOasis"
+	 *    ),
+	 *    // default is "any skin"
 	 *
 	 *  $options is left unused for now, with the potential for future features (async controllers, memcache pre-fetching)
 	 * @deprecated
@@ -531,6 +501,7 @@ class WikiaApp {
 	/**
 	 * get global variable (alias: WikiaGlobalRegistry::get(var,'mediawiki'))
 	 * @param string $globalVarName
+	 * @return null
 	 */
 	public function getGlobal( $globalVarName ) {
 		return $this->wg->get( $globalVarName );
@@ -538,9 +509,13 @@ class WikiaApp {
 
 	/**
 	 * set global variable (alias: WikiaGlobalRegistry::set(var, value, key))
+	 *
 	 * @param string $globalVarName variable name
 	 * @param mixed $value value
 	 * @param string $key key (optional)
+	 *
+	 * @return WikiaGlobalRegistry
+	 *
 	 * @deprecated
 	 */
 	public function setGlobal( $globalVarName, $value, $key = null ) {
@@ -571,15 +546,22 @@ class WikiaApp {
 	/**
 	 * Prepares and sends a request to a Controller
 	 *
-	 * @param $controllerName string the name of the controller, without the 'Controller' or 'Model' suffix
-	 * @param $methodName string the name of the Controller method to call
-	 * @param $params array an array with the parameters to pass to the specified method
-	 * @param $internal boolean wheter it's an internal (PHP to PHP) or external request
+	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
+	 * @param string $methodName The name of the Controller method to call
+	 * @param array $params An array with the parameters to pass to the specified method
+	 * @param bool $internal
+	 * @param int $exceptionMode exception mode
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
-	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true ) {
+	public function sendRequest( $controllerName = null, $methodName = null, $params = array(),
+	                             $internal = true, $exceptionMode = null ) {
+		wfProfileIn(__METHOD__);
 		$values = array();
+
+		if ( !empty( $controllerName ) && empty( $methodName ) ) {
+			$methodName = WikiaDispatcher::DEFAULT_METHOD_NAME;
+		}
 
 		if ( !empty( $controllerName ) ) {
 			$values['controller'] = $controllerName;
@@ -592,37 +574,54 @@ class WikiaApp {
 		$params = array_merge( (array) $params, $values );
 
 		if ( empty( $methodName ) || empty( $controllerName ) ) {
-			$params = array_merge( $params, $_POST, $_GET );
+			$internal = false;
+			$params = array_merge( $_POST, $_GET, $params );
 		}
 
 		$request = new WikiaRequest($params);
 
+		if ( !$internal ) {
+			$internal =
+				F::app()->wg->request->isWikiaInternalRequest() &&
+				F::app()->wg->request->isMwAuthOk();
+		}
 		$request->setInternal( $internal );
 
-		return $this->getDispatcher()->dispatch( $this, $request );
+		if ( $exceptionMode !== null ) {
+			$request->setExceptionMode( $exceptionMode );
+		}
+
+		$out = $this->getDispatcher()->dispatch( $this, $request );
+		wfProfileOut(__METHOD__);
+		return $out;
+	}
+
+	/**
+	 * Prepares and sends a request to a Controller, mark as external
+	 *
+	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
+	 * @param string $methodName The name of the Controller method to call
+	 * @param array $params An array with the parameters to pass to the specified method
+	 * @param int $exceptionMode exception mode
+	 *
+	 * @return WikiaResponse a response object with the data produced by the method call
+	 */
+	public function sendExternalRequest( $controllerName, $methodName, $params = array(), $exceptionMode = null ) {
+		return $this->sendRequest( $controllerName, $methodName, $params, /* internal */ false, $exceptionMode );
 	}
 
 	/**
 	 * simple global function wrapper (most likely it won't work for references)
 	 *
-	 * @param string $funcName global function name
-	 * @param mixed $arg1 - $argN function arguments
+	 * @internal string $funcName global function name
+	 * @internal mixed $funcArgs - $argN function arguments
+	 * @return mixed
 	 * @experimental
 	 */
 	public function runFunction() {
 		$funcArgs = func_get_args();
 		$funcName = array_shift( $funcArgs );
 		return call_user_func_array( $funcName, $funcArgs );
-	}
-
-	/**
-	 * simple wfRunHooks wrapper
-	 *
-	 * @param string $hookName The name of the hook to run
-	 * @param array $params An array of the params to pass in the hook call
-	 */
-	public function runHook( $hookName, $parameters ) {
-		return wfRunHooks( $hookName, $parameters );
 	}
 
 	/**
@@ -657,7 +656,10 @@ class WikiaApp {
 	 */
 
 	public function renderView( $controllerName, $method, Array $params = null ) {
-		return $this->sendRequest( $controllerName, $method, $params, true )->toString();
+		wfProfileIn(__METHOD__);
+		$out = $this->sendRequest( $controllerName, $method, $params, true )->toString();
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	/**
@@ -708,13 +710,6 @@ class WikiaApp {
 	}
 
 	/**
-	 * @todo: take a look here, consider removing
-	 */
-	public static function ajax() {
-		return F::app()->sendRequest( null, null, null, false );
-	}
-
-	/**
 	 * commit any open transactions, only if writes were done on connection and if it's a POST request
 	 */
 	public function commit(){
@@ -724,6 +719,16 @@ class WikiaApp {
 			 */
 			$factory = wfGetLBFactory();
 			$factory->commitMasterChanges();  // commits only if writes were done on connection
+
+			// SUS-2757: Execute any deferred updates
+			DeferredUpdates::doUpdates( 'commit' );
 		}
 	}
 }
+
+/**
+ * WikiaFactory class alias
+ *
+ */
+class F extends WikiaApp { }
+

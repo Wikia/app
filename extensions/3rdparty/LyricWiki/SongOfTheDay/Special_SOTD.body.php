@@ -11,8 +11,7 @@ class SOTD extends SpecialPage
 	function __construct()
 	{
 		parent::__construct( 'SOTD' );
-		global $errors, $errorlist, $wgOut;
-		$wgOut->addStyle(AssetsManager::getInstance()->getOneCommonURL('extensions/3rdparty/LyricWiki/SongOfTheDay/Special_SOTD.css'));
+		global $errors, $errorlist;
 		$errors = array ( 'set' => false );
 		$errorlist = '';
 	}
@@ -152,8 +151,8 @@ class SOTD extends SpecialPage
 		{
 			$user = User::newFromId( $userId );
 			$userLink = $user->getUserPage()->getPrefixedText();
-			$userText = $user->getOption('nickname');
-			if ( empty ( $userText ) || $user->getOption('fancysig') )
+			$userText = $user->getGlobalAttribute('nickname');
+			if ( empty ( $userText ) || $user->getGlobalAttribute('fancysig') )
 			{
 				$userText = $user->getName();
 			}
@@ -196,6 +195,9 @@ class SOTD extends SpecialPage
 		$action = $wgRequest->getText('action');
 		$mode = $wgRequest->getText('mode');
 		$pagename = $this->getTitle()->getPrefixedText();
+
+		$wgOut->addStyle(AssetsManager::getInstance()->getOneCommonURL('extensions/3rdparty/LyricWiki/SongOfTheDay/Special_SOTD.css'));
+
 		if ( $par == 'Admin' )
 		{	# Admin mode subpage
 			if ( $canModify )

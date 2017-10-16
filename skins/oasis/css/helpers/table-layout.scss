@@ -1,0 +1,11 @@
+/**
+ * Creates a table-like layout with columns.
+ */
+.table-layout {
+	display: table;
+	width: 100%;
+	> * {
+		display: table-cell;
+		vertical-align: middle;
+	}
+}

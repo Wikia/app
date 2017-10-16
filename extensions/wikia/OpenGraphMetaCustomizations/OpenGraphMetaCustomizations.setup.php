@@ -12,20 +12,20 @@ if ( !defined( 'MEDIAWIKI' ) ) die( 'This is an extension to the MediaWiki packa
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'OpenGraphMetaCustomizations',
-	'version' => '0.2',
+	'version' => '0.3',
 	'author' => array('[http://lyrics.wikia.com/User:Sean_Colombo Sean Colombo]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'descriptionmsg' => 'ogmc-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/OpenGraphMetaCustomizations'
 );
 
-$dir = dirname( __FILE__ );
-$wgExtensionMessagesFiles['OpenGraphMetaCustomizations'] = $dir . '/OpenGraphMetaCustomizations.i18n.php';
+$wgExtensionMessagesFiles['OpenGraphMetaCustomizations'] = __DIR__ . '/OpenGraphMetaCustomizations.i18n.php';
 
 $wgHooks['ParserAfterTidy'][] = 'egOgmcParserAfterTidy';
 
 /**
  * Adds an output-hook so that the parser knows to apply the customizations.
  */
-function egOgmcParserAfterTidy( &$parser, &$text ) {
+function egOgmcParserAfterTidy( Parser $parser, &$text ) {
 	$pOut = $parser->getOutput();
 	$pOut->addOutputHook('applyOpenGraphMetaCustomizations');
 
@@ -33,61 +33,22 @@ function egOgmcParserAfterTidy( &$parser, &$text ) {
 } // end egOgmcParserAfterTidy
 
 /**
- * Now that the page is far enough along, use the ImageServing and ArticleService to set
- * the mainImage and description (respectively) on the OuptutPage.  These values will then
+ * Now that the page is far enough along, use ArticleService to set
+ * the description on the OuptutPage.  This value will then
  * be used by the OpenGraphMeta extension.
  */
 $wgParserOutputHooks['applyOpenGraphMetaCustomizations'] = 'egOgmcParserOutputApplyValues';
-function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
+function egOgmcParserOutputApplyValues( OutputPage $out, ParserOutput $parserOutput, $data ) {
+	wfProfileIn(__METHOD__);
 	global $wgTitle;
 
 	$articleId = $wgTitle->getArticleID();
 	$titleImage = $titleDescription = null;
-	wfRunHooks('OpenGraphMeta:beforeCustomFields', array($articleId, &$titleImage, &$titleDescription));
-
-	// Only use ImageServing if no main image is already specified.  This lets people override the image with the parser function: [[File:{{#setmainimage:Whatever.png}}]].
-	if(!isset($out->mMainImage)){
-		if (is_null($titleImage)) {
-			// Get image from ImageServing
-			// TODO: Make sure we automatically respect these restrictions from Facebook:
-			// 		"An image URL which should represent your object within the graph.
-			//		The image must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
-			//		We support PNG, JPEG and GIF formats."
-			$imageServing = new ImageServing( $articleId );
-			foreach ( $imageServing->getImages( 1 ) as $key => $value ) {
-				$titleImage = Title::newFromText( $value[0]['name'], NS_FILE );
-			}
-		}
-		
-		// If ImageServing was not able to deliver a good match, fall back to the wiki's wordmark.
-		if ( empty($titleImage) && !is_object( $titleImage ) && F::app()->checkSkin( 'oasis' ) ){
-			$themeSettings = new ThemeSettings();
-			$settings = $themeSettings->getSettings();
-			if ($settings["wordmark-type"] == "graphic") {
-				$titleImage = Title::newFromText( $settings['wordmark-image-name'], NS_FILE );
-			}
-		}
-
-		// If we have a Title object for an image, convert it to an Image object and store it in mMainImage.
-		if (!empty($titleImage) && is_object($titleImage)) {
-			$mainImage = wfFindFile($titleImage);
-			if ($mainImage !== false) {
-				$parserOutput->setProperty('mainImage', $mainImage);
-				$out->mMainImage = $parserOutput->getProperty('mainImage');
-			}
-		} else {
-			// Fall back to using a Wikia logo.  There aren't any as "File:" pages, so we use a new config var for one that
-			// is being added to skins/common.
-			global $wgBigWikiaLogo;
-			$logoUrl = wfReplaceImageServer( $wgBigWikiaLogo );
-			$parserOutput->setProperty('mainImage', $logoUrl);
-			$out->mMainImage = $parserOutput->getProperty('mainImage');
-		}
-	}
+	Hooks::run('OpenGraphMeta:beforeCustomFields', array($articleId, &$titleImage, &$titleDescription));
 
 	// Get description from ArticleService
 	if (is_null($titleDescription)) {
-		$DESC_LENGTH = 100;
+		$DESC_LENGTH = 500;
 		$articleService = new ArticleService( $wgTitle );
 		$titleDescription = $articleService->getTextSnippet( $DESC_LENGTH );
 	}
@@ -97,7 +58,5 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 		$out->mDescription = $parserOutput->getProperty('description');
 	}
 
-	if ($page_id = Wikia::getFacebookDomainId()) {
-		$out->addMeta('property:fb:page_id', $page_id);
-	}
+	wfProfileOut(__METHOD__);
 } // end egOgmcParserOutputApplyValues()

@@ -22,46 +22,7 @@ class Autopromote {
 			}
 		}
 
-		wfRunHooks( 'GetAutoPromoteGroups', array( $user, &$promote ) );
-
-		return $promote;
-	}
-
-	/**
-	 * Get the groups for the given user based on the given criteria.
-	 *
-	 * Does not return groups the user already belongs to or has once belonged.
-	 *
-	 * @param $user The user to get the groups for
-	 * @param $event String key in $wgAutopromoteOnce (each one has groups/criteria)
-	 *
-	 * @return array Groups the user should be promoted to.
-	 *
-	 * @see $wgAutopromoteOnce
-	 */
-	public static function getAutopromoteOnceGroups( User $user, $event ) {
-		global $wgAutopromoteOnce;
-
-		$promote = array();
-
-		if ( isset( $wgAutopromoteOnce[$event] ) && count( $wgAutopromoteOnce[$event] ) ) {
-			$currentGroups = $user->getGroups();
-			$formerGroups = $user->getFormerGroups();
-			foreach ( $wgAutopromoteOnce[$event] as $group => $cond ) {
-				// Do not check if the user's already a member
-				if ( in_array( $group, $currentGroups ) ) {
-					continue;
-				}
-				// Do not autopromote if the user has belonged to the group
-				if ( in_array( $group, $formerGroups ) ) {
-					continue;
-				}
-				// Finally - check the conditions
-				if ( self::recCheckCondition( $cond, $user ) ) {
-					$promote[] = $group;
-				}
-			}
-		}
+		Hooks::run( 'GetAutoPromoteGroups', array( $user, &$promote ) );
 
 		return $promote;
 	}
@@ -105,7 +66,7 @@ class Autopromote {
 				return false;
 			} elseif ( $cond[0] == '^' ) { // XOR (exactly one cond passes)
 				if ( count( $cond ) > 3 ) {
-					wfWarn( 'recCheckCondition() given XOR ("^") condition on three or more conditions. Check your $wgAutopromote and $wgAutopromoteOnce settings.' );
+					wfWarn( 'recCheckCondition() given XOR ("^") condition on three or more conditions. Check your $wgAutopromote settings.' );
 				}
 				return self::recCheckCondition( $cond[1], $user )
 					xor self::recCheckCondition( $cond[2], $user );
@@ -134,12 +95,13 @@ class Autopromote {
 	 * APCOND_AGE.  Other types will throw an exception if no extension evalu-
 	 * ates them.
 	 *
-	 * @param $cond Array: A condition, which must not contain other conditions
+	 * @param $cond array: A condition, which must not contain other conditions
 	 * @param $user User The user to check the condition against
 	 * @return bool Whether the condition is true for the user
+	 * @throws MWException
 	 */
 	private static function checkCondition( $cond, User $user ) {
-		global $wgEmailAuthentication, $wgEnableEditCountLocal;
+		global $wgEmailAuthentication;
 		if ( count( $cond ) < 1 ) {
 			return false;
 		}
@@ -155,11 +117,13 @@ class Autopromote {
 				}
 				return false;
 			case APCOND_EDITCOUNT:
-				if ( !empty($wgEnableEditCountLocal) ) {
-					return $user->getEditCountLocal() >= $cond[1];
-				} else {
-					return $user->getEditCount() >= $cond[1];
+				// Wikia change
+				// SUS-1290: If edit count condition is 0 skip edit count lookup
+				if ( $cond[1] === 0 ) {
+					return true;
 				}
+
+				return $user->getEditCount() >= $cond[1];
 			case APCOND_AGE:
 				$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 				return $age >= $cond[1];
@@ -179,7 +143,7 @@ class Autopromote {
 				return in_array( 'bot', User::getGroupPermissions( $user->getGroups() ) );
 			default:
 				$result = null;
-				wfRunHooks( 'AutopromoteCondition', array( $cond[0], array_slice( $cond, 1 ), $user, &$result ) );
+				Hooks::run( 'AutopromoteCondition', array( $cond[0], array_slice( $cond, 1 ), $user, &$result ) );
 				if ( $result === null ) {
 					throw new MWException( "Unrecognized condition {$cond[0]} for autopromotion!" );
 				}

@@ -120,7 +120,7 @@ abstract class MediaHandler {
 	*/
 	static function getMetadataVersion () {
 		$version = Array( '2' ); // core metadata version
-		wfRunHooks('GetMetadataVersion', Array(&$version));
+		Hooks::run('GetMetadataVersion', Array(&$version));
 		return implode( ';', $version);
 	 }
 
@@ -590,6 +590,7 @@ abstract class ImageHandler extends MediaHandler {
 		if ( !isset( $params['page'] ) ) {
 			$params['page'] = 1;
 		} else  {
+			$params['page'] = intval( $params['page'] );
 			if ( $params['page'] > $image->pageCount() ) {
 				$params['page'] = $image->pageCount();
 			}

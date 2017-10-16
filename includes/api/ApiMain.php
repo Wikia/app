@@ -79,6 +79,7 @@ class ApiMain extends ApiBase {
 		'patrol' => 'ApiPatrol',
 		'import' => 'ApiImport',
 		'userrights' => 'ApiUserrights',
+		'options' => 'ApiOptions',
 	);
 
 	/**
@@ -133,6 +134,12 @@ class ApiMain extends ApiBase {
 
 	private $mCacheMode = 'private';
 	private $mCacheControl = array();
+
+	/**
+	 * Wikia change - fix visualeditor api permissions
+	 * @var bool $shouldCheckWriteApiPermission
+	 */
+	private $shouldCheckWriteApiPermission = true;
 
 	/**
 	 * Constructs an instance of ApiMain that utilizes the module and format specified by $request.
@@ -405,6 +412,8 @@ class ApiMain extends ApiBase {
 		global $wgUseXVO, $wgVaryOnXFP;
 		$response = $this->getRequest()->response();
 
+		Hooks::run( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
+
 		if ( $this->mCacheMode == 'private' ) {
 			$response->header( 'Cache-Control: private' );
 			return;
@@ -649,21 +658,33 @@ class ApiMain extends ApiBase {
 	}
 
 	/**
+	 * @param bool $shouldCheckWriteApiPermission
+	 */
+	public function setShouldCheckWriteApiPermission( bool $shouldCheckWriteApiPermission ) {
+		$this->shouldCheckWriteApiPermission = $shouldCheckWriteApiPermission;
+	}
+
+	/**
 	 * Check for sufficient permissions to execute
 	 * @param $module ApiBase An Api module
 	 */
 	protected function checkExecutePermissions( $module ) {
+
+		$accessAllowedByController = $this->accessAllowedByController();
+
 		$user = $this->getUser();
 		if ( $module->isReadMode() && !in_array( 'read', User::getGroupPermissions( array( '*' ) ), true ) &&
-			!$user->isAllowed( 'read' ) )
+			!$user->isAllowed( 'read' ) && !$accessAllowedByController )
 		{
 			$this->dieUsageMsg( 'readrequired' );
 		}
+
+		// TODO: do we have to take into account $accessAllowedByController for write mode?
 		if ( $module->isWriteMode() ) {
 			if ( !$this->mEnableWrite ) {
 				$this->dieUsageMsg( 'writedisabled' );
 			}
-			if ( !$user->isAllowed( 'writeapi' ) ) {
+			if ( $this->shouldCheckWriteApiPermission && !$user->isAllowed( 'writeapi' ) ) {
 				$this->dieUsageMsg( 'writerequired' );
 			}
 			if ( wfReadOnly() ) {
@@ -712,11 +733,15 @@ class ApiMain extends ApiBase {
 			$this->setupExternalResponse( $module, $params );
 		}
 
+		$module->setupLogContext( $params ); // Wikia Change
+
 		// Execute
 		$module->profileIn();
 		$module->execute();
-		wfRunHooks( 'APIAfterExecute', array( &$module ) );
+		Hooks::run( 'APIAfterExecute', array( &$module ) );
 		$module->profileOut();
+
+		$module->destroyLogContext(); // Wikia Change
 
 		if ( !$this->mInternalMode ) {
 			// Print result data
@@ -1058,6 +1083,46 @@ class ApiMain extends ApiBase {
 	 */
 	public function getFormats() {
 		return $this->mFormats;
+	}
+
+	/**
+	 * Gets controller from request, and delegates to given controller - checking of access permissions
+	 *
+	 * @return bool
+	 * @throws WikiaException
+	 * @throws ControllerNotFoundException
+	 */
+	protected function accessAllowedByController() {
+
+		// Code for instantination of controller copied from method WikiaDispatcher::dispatch
+
+		$originalRequest = RequestContext::getMain()->getRequest();
+		$app = WikiaApp::app();
+
+		global $wgAutoloadClasses;
+		// Determine the "base" name for the controller, stripping off Controller/Service/Module
+		$controllerName = $app->getBaseName( $originalRequest->getVal( 'controller' ) );
+		if ( empty( $controllerName ) ) {
+			return false;
+		}
+
+		// Service classes must be dispatched by full name otherwise we look for a controller.
+		if ( $app->isService( $originalRequest->getVal( 'controller' ) ) ) {
+			$controllerClassName = $app->getServiceClassName( $controllerName );
+		} else {
+			$controllerClassName = $app->getControllerClassName( $controllerName );
+		}
+
+		if ( empty( $wgAutoloadClasses[ $controllerClassName ] ) ) {
+			return false;
+		}
+
+		// Determine the final name for the controller and method based on any routing rules
+		$controller = new $controllerClassName; /* @var $controller WikiaController */
+
+		$accessAllowedByController = $controller->isAnonAccessAllowedInCurrentContext();
+
+		return $accessAllowedByController;
 	}
 }
 

@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16",
+			"Civvì",
+			"Darth Kule",
+			"Gianfranco",
+			"Wertuose"
+		]
+	},
+	"semanticdrilldown-desc": "Un'interfaccia drilldown per navigare attraverso dati semantici",
+	"specialpages-group-sd_group": "Drilldown semantico",
+	"browsedata": "Esplora i dati",
+	"sd_browsedata_choosecategory": "Scegli una categoria",
+	"sd_browsedata_viewcategory": "vedi categoria",
+	"sd_browsedata_docu": "Clicca su uno o più fra gli elementi sottostanti per restringere i tuoi risultati.",
+	"sd_browsedata_subcategory": "Sottocategoria",
+	"sd_browsedata_other": "Altro",
+	"sd_browsedata_none": "Nessuno",
+	"sd_browsedata_filterbyvalue": "Filtra per questo valore",
+	"sd_browsedata_filterbysubcategory": "Filtra per questa sottocategoria",
+	"sd_browsedata_otherfilter": "Mostra pagine con un altro valore per questo filtro",
+	"sd_browsedata_nonefilter": "Mostra pagine senza valori per questo filtro",
+	"sd_browsedata_or": "o",
+	"sd_browsedata_removefilter": "Rimuovi questo filtro",
+	"sd_browsedata_removesubcategoryfilter": "Rimuovi questo filtro per sottocategoria",
+	"sd_browsedata_resetfilters": "Azzera filtri",
+	"sd_browsedata_addanothervalue": "Clicca la freccia per aggiungere un altro valore",
+	"sd_browsedata_daterangestart": "Parti da:",
+	"sd_browsedata_daterangeend": "Fino a:",
+	"sd_browsedata_novalues": "Non ci sono valori per questo filtro",
+	"sd_createfilter_usepropertyvalues": "Usa tutti i valori di questa proprietà per il filtro",
+	"sd_createfilter_usecategoryvalues": "Ottieni i valori per il filtro da questa categoria:",
+	"sd_createfilter_requirefilter": "Richiedi la selezione di un altro filtro prima che questo sia visualizzato:",
+	"sd-pageschemas-filter": "Filtro",
+	"sd-pageschemas-values": "Valori"
+}

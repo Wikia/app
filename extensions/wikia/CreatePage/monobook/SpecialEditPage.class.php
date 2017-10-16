@@ -22,13 +22,13 @@ abstract class SpecialEditPage extends SpecialPage {
 		}
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		global $wgRequest, $wgUser;
 
 		$wgRequest->setVal( 'action', 'edit' );
 
 		// force CategorySelect initialisation if available
-		if ( class_exists( 'CategorySelectHooksHelper' ) && ( $wgUser->getOption( 'disablecategoryselect', false ) == false ) ) {
+		if ( class_exists( 'CategorySelectHooksHelper' ) && ( $wgUser->getGlobalPreference( 'disablecategoryselect', false ) == false ) ) {
 			$this->mCategorySelectEnabled = true;
 			CategorySelectHooksHelper::onMediaWikiPerformAction( null, null, $this->mTitle, null, null, null );
 		}
@@ -63,7 +63,7 @@ abstract class SpecialEditPage extends SpecialPage {
 		// Allow extensions to modify edit form
 		global $wgEnableRTEExt, $wgRequest;
 		if ( !empty( $wgEnableRTEExt ) ) {
-			wfRunHooks( 'AlternateEdit', array( $this->mEditPage ) );
+			Hooks::run( 'AlternateEdit', array( $this->mEditPage ) );
 			$this->mEditPage->textbox1 = $wgRequest->getVal( 'wpTextbox1' );
 
 			RTE::log( __METHOD__ . '::wikitext', $this->mEditPage->textbox1 );
@@ -71,7 +71,7 @@ abstract class SpecialEditPage extends SpecialPage {
 
 		// fix for RT #38845 - allow for preloading text content
 		if ( !$wgRequest->wasPosted() ) {
-			wfRunHooks( 'EditFormPreloadText', array( &$this->mEditPage->textbox1, &$this->mEditPage->mTitle ) );
+			Hooks::run( 'EditFormPreloadText', array( &$this->mEditPage->textbox1, &$this->mEditPage->mTitle ) );
 		}
 	}
 

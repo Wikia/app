@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"פוילישער",
+			"පසිඳු කාවින්ද"
+		]
+	},
+	"apihelp-sfautoedit-param-target": "דער נאמען פונעם בלאט צו ווערן געשאפן אדער רעדאקטירט",
+	"sf_createproperty_propname": "אטריבוט נאמען:",
+	"sf_createproperty_proptype": "טיפ:",
+	"templates": "מוסטערן",
+	"sf_templates_docu": "די פאלגנדע מוסטערן עקזיסטירן אין דער וויקי.",
+	"sf_templates_definescat": "דעפינירט קאטעגאריע: $1",
+	"createtemplate": "באשאפן א מוסטער",
+	"sf_createtemplate_namelabel": "מוסטער נאמען:",
+	"sf_createtemplate_templatefields": "מוסטער פֿעלדער",
+	"sf_createtemplate_deletefield": "אויסמעקן",
+	"sf_createform_hidden": "באַהאַלטן",
+	"sf_createform_atend": "בײַם סוף",
+	"sf_createform_add": "צולייגן",
+	"createcategory": "שאפֿן א קאטעגאריע",
+	"sf-createcategory-with-name": "שאפן  קאטעגאריע: $1",
+	"sf_createcategory_name": "קאטעגאריע נאָמען:",
+	"sf_createclass_create": "שאַפֿן",
+	"formedit": "רעדאַקטירן מיט א פֿארעם",
+	"sf_formedit_createtitlenotarget": "שאפן $1",
+	"sf_viewform": "ווײַזן פארעם",
+	"sf_editsource": "רעדאקטירן מקור",
+	"sf_formedit_edittitle": "רעדאקטירן $1: $2",
+	"sf_formedit_remove": "אַראָפּנעמען דעם אינסטאנץ",
+	"sf_formedit_addanotherabove": "צולייגן נאך אן אינסטאנץ פאר דעם דאזיקן",
+	"sf_formedit_addanother": "צוילייגן נאך איינס",
+	"sf_formedit_none": "קיין",
+	"sf_formedit_emptytitle": "גרײַז: די אימפארטירטע דאטן שאפט א ליידיגן בלאט טיטל.",
+	"sf_formedit_saveandcontinueediting": "אויפהיטן און גיין ווײַטער",
+	"sf_formedit_saveandcontinue_summary": "אויפגעהיט דורכן \"$1\" קנעפל אין פארעם",
+	"sf_autoedit_redlinkexists": "$1 עקזיסטירט שוין.",
+	"sf_bad_date_error": "דארף זײַן א גילטיקע דאַטע",
+	"sf_blank_namespace": "הויפט",
+	"sf-datepicker-close": "שליסן",
+	"sf-datepicker-today": "הײַנט"
+}

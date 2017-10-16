@@ -13,7 +13,7 @@ class SkinOasis extends WikiaSkin {
 	function setupSkinUserCss( OutputPage $out ) {}
 
 	/**
-	 * Oasis handles OutputPage::mScripts differently using WSL
+	 * Oasis handles OutputPage::mScripts differently
 	 * so we don't want them to be duplicated
 	 *
 	 * @return string

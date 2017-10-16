@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"George Animal",
+			"Purodha"
+		]
+	},
+	"visualeditor-dialog-meta-categories-data-label": "Kategorî",
+	"visualeditor-dialog-meta-categories-section": "Kategorî",
+	"visualeditor-dialog-meta-categories-sortkey-label": "Navê rûpelê di kategoriyê de",
+	"visualeditor-dialog-meta-languages-section": "Ziman",
+	"visualeditor-dialog-template-title": "Şablon",
+	"visualeditor-dialogbutton-template-tooltip": "Şablon"
+}

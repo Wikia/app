@@ -22,7 +22,7 @@
 		display: inline-block;
 		height: 50px;
 		width: 50px;
-		background-image: url('/extensions/wikia/WikiaMobile/images/spinner.png'); /* base64 */
+		background-image: url('/extensions/wikia/WikiaMobile/images/spinner.png'); /* inline */
 		background-size: contain;
 		-webkit-animation: rotate $loaderSpeed infinite linear;
 		-moz-animation: rotate $loaderSpeed infinite linear;

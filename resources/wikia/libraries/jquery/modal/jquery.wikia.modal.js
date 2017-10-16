@@ -15,19 +15,22 @@ $.fn.extend({
 			showCloseButton: true,
 			width: 400,
 			height: "auto",
+			tabsOutsideContent: false,
 			topOffset: 50,
 			escapeToClose: true
-		};
+		}, calculatedZIndex, modalWidth, mainContent;
+
 		if (options) {
 			$.extend(settings, options);
 		}
+
 		// modal wrapper ID
 		var ts = Math.round((new Date()).getTime() / 1000),
 			id = settings.id || ($(this).attr('id') || ts) + 'Wrapper',
 			wrapper;
 
 		//wrap with modal chrome
-		if (skin == "oasis") {
+		if (skin === 'oasis' || settings.appendToBody) {
 			/**
 			 * Generate modal content and add it to <body>
 			 * <section class="modalWrapper" id="'+id+'"><section class="modalContent">[modal content]</section></section>');
@@ -51,7 +54,8 @@ $.fn.extend({
 		}
 
 		// let's have it dynamically generated, so every newly created modal will be on top
-		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (2000000001 + ($('body').children('.blackout').length) * 2);
+		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (5001101 + ($('body').children('.blackout').length) * 2);
+		calculatedZIndex = zIndex + 1;
 
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
@@ -71,41 +75,57 @@ $.fn.extend({
 			headline.prependTo(wrapper);
 		}
 
-		if (skin == "oasis") {
-
+		// skin === oasis is for backward support
+		if (settings.tabsOutsideContent || skin === 'oasis') {
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');
 			if (modalTabs.exists()) {
 				modalTabs.insertBefore(wrapper.find('.modalContent'));
 			}
+		}
 
-			if(options.width != 'auto') {
-				//set up dimensions and position
-				var modalWidth = $("#WikiaMainContent").width();
+		// calculate modal width for oasis
+		if (skin === 'oasis') {
 
-				// or use width provided
-				if (typeof options.width != 'undefined') {
-					modalWidth = options.width + 40 /* padding */;
+			if(settings.width !== 'auto') {
+
+				// use provided width
+				if (settings.width !== undefined) {
+					modalWidth = settings.width + 40 /* padding */;
+				} else {
+					// or use wikiaMainContent
+					mainContent = $("#WikiaMainContent");
+					if (mainContent.length > 0) {
+						modalWidth = mainContent.width();
+					}
 				}
 			} else {
 				modalWidth = 'auto';
 			}
-			//position modal. width must be set before calculating negative left margin
-			wrapper.css({
-				left: "50%",
-				top: $(window).scrollTop() + settings.topOffset,
-				width: modalWidth,
-				height: options.height,
-				zIndex: zIndex + 1
-			}).css("margin-left", -wrapper.outerWidth(false)/2);
 
+			//position modal. width must be set before calculating negative left margin
+			wrapper.width(modalWidth)
+				.css({
+				left: '50%',
+				height: settings.height,
+				'margin-left': -wrapper.outerWidth(false)/2,
+				top: $(window).scrollTop() + settings.topOffset,
+				zIndex: calculatedZIndex
+			});
+		} else if (settings.suppressDefaultStyles) {
+			// z-index and top value need to be set when modal is created
+			// their values are calculated based on the current state of the page
+			wrapper.css({
+				zIndex: calculatedZIndex,
+				top: $(window).scrollTop() + settings.topOffset
+			});
 		} else {
 			wrapper
 				.width(settings.width)
 				.css({
 					marginLeft: -wrapper.outerWidth(false) / 2,
 					top: wrapper.getModalTopOffset(),
-					zIndex: zIndex + 1
+					zIndex: calculatedZIndex
 				})
 				.fadeIn("fast");
 		}
@@ -167,7 +187,7 @@ $.fn.extend({
 			});
 		}
 		$(window).bind("resize.modal", function() {
-			if (window.skin == 'oasis') {
+			if (window.skin == 'oasis' || !settings.resizeModal) {
 				return;
 			}
 
@@ -207,7 +227,7 @@ $.fn.extend({
 				}
 		});
 
-		if (skin == "oasis") {
+		if (skin == 'oasis' || settings.appendToBody) {
 			blackout.appendTo("body");
 		} else {
 			blackout.appendTo("#positioned_elements");
@@ -280,7 +300,7 @@ $.fn.extend({
 		var wrapper = this.closest(".modalWrapper");
 
 		// let's have it dynamically generated, so every newly created modal will be on the top
-		var zIndex = 2000000001 + ($('body').children('.blackout').length) * 2 ;
+		var zIndex = 5001101 + ($('body').children('.blackout').length) * 2 ;
 		// show associated blackout
 		var blackout = $(this).data('blackout');
 		var blackoutOpacity = blackout.attr('data-opacity');

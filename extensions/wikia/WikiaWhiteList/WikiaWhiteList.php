@@ -20,7 +20,7 @@ define ('CLASS_PARSE_WHITELIST', '/class\s*?=\s*?"%s\s*?(%s)"/');
 
 // Register hooks
 $wgHooks['ParserAfterTidy'][] = 'wfParserWhiteList' ;
-function wfParserWhiteList ( &$out, &$text) { 
+function wfParserWhiteList( Parser $parser, string &$text ): bool {
 	$text = wfWhiteListRemoveNoFollowLinks($text);
 	return true;
 }
@@ -139,7 +139,7 @@ class WikiaWhitelist
 		    $settings['previousFilter'] = false;
         }
 		if (empty($settings['files'])) {
-		    $settings['files'] = array("DB: wikicities MediaWiki:External_links_whitelist");
+		    $settings['files'] = array("DB: wikia MediaWiki:External_links_whitelist");
         } else {
             $use_prefix = 1;
         }

@@ -1,0 +1,9 @@
+<section class="trending-articles hidden">
+	<h2>{{trendingArticlesHeading}}</h2>
+	{{#trendingArticles}}
+	<a href="{{url}}" title="{{title}}" class="related-article small">
+		<img src="{{blankImg}}" {{#imgUrl}}data-src="{{imgUrl}}"{{/imgUrl}} alt="{{title}}" width="{{width}}px" height="{{height}}px" class="lazy" />
+		<div class="title">{{title}}</div>
+	</a>
+	{{/trendingArticles}}
+</section>

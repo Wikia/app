@@ -67,6 +67,10 @@ define( 'IP_ADDRESS_STRING',
 	')'
 );
 
+// Wikia change: non-routable IP adresses
+define( 'NON_ROUTABLE_IPV4', '0.0.0.0' );
+define( 'NON_ROUTABLE_IPV6', '::' );
+
 /**
  * A collection of public static functions to play with IP address
  * and IP blocks.
@@ -134,8 +138,9 @@ class IP {
 
 	/**
 	 * Convert an IP into a nice standard form.
-	 * IPv6 addresses in octet notation are expanded to 8 words.
-	 * IPv4 addresses are just trimmed.
+	 * Both IPv4 and IPv6 addresses are trimmed. Additionally,
+	 * IPv6 addresses in octet notation are expanded to 8 words;
+	 * IPv4 addresses have leading zeros, in each octet, removed.
 	 *
 	 * @param $ip String: IP address in quad or octet form (CIDR or not).
 	 * @return String
@@ -145,8 +150,16 @@ class IP {
 		if ( $ip === '' ) {
 			return null;
 		}
-		if ( self::isIPv4( $ip ) || !self::isIPv6( $ip ) ) {
-			return $ip; // nothing else to do for IPv4 addresses or invalid ones
+		/* If not an IP, just return trimmed value, since sanitizeIP() is called
+		 * in a number of contexts where usernames are supplied as input.
+		 */
+		if ( !self::isIPAddress( $ip ) ) {
+			return $ip;
+		}
+		if ( self::isIPv4( $ip ) ) {
+			// Remove leading 0's from octet representation of IPv4 address
+			$ip = preg_replace( '/(?:^|(?<=\.))0+(?=[1-9]|0\.|0$)/', '', $ip );
+			return $ip;
 		}
 		// Remove any whitespaces, convert to upper case
 		$ip = strtoupper( $ip );
@@ -198,7 +211,7 @@ class IP {
 	 *
 	 * A bare IPv6 address is accepted despite the lack of square brackets.
 	 *
-	 * @param $both The string with the host and port
+	 * @param string $both The string with the host and port
 	 * @return array
 	 */
 	public static function splitHostAndPort( $both ) {
@@ -446,9 +459,17 @@ class IP {
 		if ( self::isIPv6( $ip ) ) {
 			$n = self::toUnsigned6( $ip );
 		} else {
+			// T62035/T97897: An IP with leading 0's fails in ip2long sometimes (e.g. *.08),
+			// also double/triple 0 needs to be changed to just a single 0 for ip2long.
+			$ip = self::sanitizeIP( $ip );
 			$n = ip2long( $ip );
 			if ( $n < 0 ) {
 				$n += pow( 2, 32 );
+				// On 32-bit platforms (and on Windows), 2^32 does not fit into an int,
+				// so $n becomes a float. We convert it to string instead.
+				if ( is_float( $n ) ) {
+					$n = (string)$n;
+				}
 			}
 		}
 		return $n;

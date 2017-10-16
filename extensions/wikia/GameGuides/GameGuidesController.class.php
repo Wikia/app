@@ -1,10 +1,11 @@
 <?php
+
 /**
  * Game Guides mobile app API controller
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * @deprecated
  */
-
 class GameGuidesController extends WikiaController {
 	const API_VERSION = 1;
 	const API_REVISION = 6;
@@ -26,6 +27,41 @@ class GameGuidesController extends WikiaController {
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
+	//Make sure this is updated as in GameGuides.js
+	private static $disabledNamespaces = [
+		// Core MediaWiki
+		-2,
+		-1,
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		10,
+		11,
+		12,
+		13,
+		15,
+		// Forum
+		110,
+		111,
+		// Blog
+		500,
+		501,
+		// Top List
+		700,
+		701,
+		// Wall
+		1200,
+		1201,
+		1202,
+		// Wikia Forum
+		2000,
+		2001,
+		2002,
+	];
 
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
@@ -34,7 +70,7 @@ class GameGuidesController extends WikiaController {
 		if ( $requestedVersion != self::API_VERSION || $requestedRevision != self::API_REVISION ) {
 			throw new GameGuidesWrongAPIVersionException();
 		}
-		
+
 		$this->mModel = new GameGuidesModel();
 		$this->mPlatform = $this->request->getVal( 'os' );
 	}
@@ -48,7 +84,7 @@ class GameGuidesController extends WikiaController {
 	 * @responseParam see GameGuidesModel::getWikiList
 	 * @see GameGuidesModel::getWikiList
 	 */
-	public function listWikis(){
+	public function listWikis() {
 		wfProfileIn( __METHOD__ );
 
 		Wikia::log( __METHOD__, '', '', true );
@@ -59,7 +95,7 @@ class GameGuidesController extends WikiaController {
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->mModel->getWikisList( $limit, $batch );
 
-		foreach( $result as $key => $value ){
+		foreach ( $result as $key => $value ) {
 			$this->response->setVal( $key, $value );
 		}
 
@@ -74,7 +110,7 @@ class GameGuidesController extends WikiaController {
 	 * @see GameGuidesModel::getWikiContents
 	 */
 
-	public function listWikiContents(){
+	public function listWikiContents() {
 		wfProfileIn( __METHOD__ );
 
 		Wikia::log( __METHOD__, '', '', true );
@@ -83,7 +119,7 @@ class GameGuidesController extends WikiaController {
 
 		$result = $this->mModel->getWikiContents();
 
-		foreach( $result as $key => $value ){
+		foreach ( $result as $key => $value ) {
 			$this->response->setVal( $key, $value );
 		}
 
@@ -100,21 +136,21 @@ class GameGuidesController extends WikiaController {
 	 * @responseParam see GameGuidesModel::getCategoryContents
 	 * @see GameGuidesModel::getCategoryContents
 	 */
-	public function listCategoryContents(){
+	public function listCategoryContents() {
 		wfProfileIn( __METHOD__ );
 
 		Wikia::log( __METHOD__, '', '', true );
 
 		$this->response->setFormat( 'json' );
 
-		$category = $this->getVal('category');
+		$category = $this->getVal( 'category' );
 
 
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->mModel->getCategoryContents( $category, $limit, $batch );
 
-		foreach( $result as $key => $value ){
+		foreach ( $result as $key => $value ) {
 			$this->response->setVal( $key, $value );
 		}
 
@@ -131,7 +167,7 @@ class GameGuidesController extends WikiaController {
 	 * @responseParam see GameGuidesModel::getSearchResults
 	 * @see GameGuidesModel::getSearchResults
 	 */
-	public function search(){
+	public function search() {
 		wfProfileIn( __METHOD__ );
 
 		Wikia::log( __METHOD__, '', '', true );
@@ -142,7 +178,7 @@ class GameGuidesController extends WikiaController {
 		$limit = $this->request->getInt( 'limit', GameGuidesModel::SEARCH_RESULTS_LIMIT );
 		$result = $this->mModel->getSearchResults( $term, $limit );
 
-		foreach( $result as $key => $value ){
+		foreach ( $result as $key => $value ) {
 			$this->response->setVal( $key, $value );
 		}
 
@@ -156,17 +192,11 @@ class GameGuidesController extends WikiaController {
 	 * $this->cacheResponseFor( 1, self:HOURS )
 	 * $this->cacheResponseFor( 14, self:DAYS )
 	 */
-	private function cacheResponseFor( $factor, $period ){
-		if( isset( $period ) && isset( $factor ) ) {
+	private function cacheResponseFor( $factor, $period ) {
+		if ( isset( $period ) && isset( $factor ) ) {
 			$cacheValidityTime = $factor * $period;
 
-			$this->response->setCacheValidity(
-				$cacheValidityTime,
-				$cacheValidityTime,
-				[
-					WikiaResponse::CACHE_TARGET_VARNISH
-				]
-			);
+			$this->response->setCacheValidity( $cacheValidityTime );
 		}
 	}
 
@@ -175,7 +205,7 @@ class GameGuidesController extends WikiaController {
 	 *
 	 * @example wikia.php?controller=GameGuides&method=getPage&page={Title}
 	 */
-	public function getPage(){
+	public function getPage() {
 		global $wgTitle;
 
 		//This will always return json
@@ -204,9 +234,9 @@ class GameGuidesController extends WikiaController {
 					$relatedPages =
 						$this->app->sendRequest( 'RelatedPagesApi', 'getList',
 							[
-								'ids' => [$articleId]
+								'ids' => [ $articleId ]
 							]
-						)->getVal('items')[$articleId];
+						)->getVal( 'items' )[ $articleId ];
 
 					if ( !empty( $relatedPages ) ) {
 						$this->response->setVal( 'relatedPages', $relatedPages );
@@ -239,10 +269,13 @@ class GameGuidesController extends WikiaController {
 	 * @param $urls String[]
 	 * @return bool
 	 */
-	static function onTitleGetSquidURLs( $title, &$urls ){
-		$urls[] = GameGuidesController::getUrl( 'getPage', array(
-			'page' => $title->getPartialURL()
-		));
+	static function onTitleGetSquidURLs( $title, &$urls ) {
+
+		if ( !in_array( $title->getNamespace(), self::$disabledNamespaces ) ) {
+			$urls[] = self::getUrl( 'getPage', array(
+				'page' => $title->getPrefixedText()
+			) );
+		}
 
 		return true;
 	}
@@ -252,7 +285,7 @@ class GameGuidesController extends WikiaController {
 	 *
 	 * @requestParam String title of a page
 	 */
-	public function renderPage(){
+	public function renderPage() {
 		wfProfileIn( __METHOD__ );
 
 		$titleName = $this->request->getVal( 'page' );
@@ -270,7 +303,7 @@ class GameGuidesController extends WikiaController {
 		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
 		$this->response->setVal( 'messages', JSMessages::getPackages( array( 'GameGuides' ) ) );
 		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
-		$this->response->setVal( 'html', $html['parse']['text']['*'] );
+		$this->response->setVal( 'html', $html[ 'parse' ][ 'text' ][ '*' ] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -279,7 +312,7 @@ class GameGuidesController extends WikiaController {
 	 * @brief helper function to build a GameGuidesSpecial Preview
 	 * it returns a page and all 'global' assets
 	 */
-	public function renderFullPage(){
+	public function renderFullPage() {
 		global $IP;
 
 		wfProfileIn( __METHOD__ );
@@ -288,13 +321,13 @@ class GameGuidesController extends WikiaController {
 
 		$scripts = '';
 
-		foreach( $resources->scripts as $s ) {
+		foreach ( $resources->scripts as $s ) {
 			$scripts .= $s;
 		}
 
 		//getPage sets cache for a response for 7 days
 		$page = $this->sendSelfRequest( 'getPage', [
-			'page' => $this->getVal( 'page')
+			'page' => $this->getVal( 'page' )
 		] );
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
@@ -310,11 +343,11 @@ class GameGuidesController extends WikiaController {
 	 * @responseParam String url to current resources
 	 * @responseParam Integer cb current style version number
 	 */
-	public function getResourcesUrl(){
+	public function getResourcesUrl() {
 		global $IP;
 
 		$this->response->setFormat( 'json' );
-		$this->cacheResponseFor( 15, self::MINUTES );
+		$this->cacheResponseFor( 300, self::MINUTES );
 
 		$hash = md5_file( $IP . self::ASSETS_PATH );
 
@@ -324,6 +357,78 @@ class GameGuidesController extends WikiaController {
 
 		//when apps will be updated this won't be needed anymore
 		$this->response->setVal( 'cb', $this->wg->StyleVersion );
+	}
+
+
+	/*
+	 * if Curated content is enabled, take content from there,
+	 * otherwise take content from GameGuide Content
+	 */
+	private function getContentSource() {
+		$content = null;
+		if ( $this->wg->EnableCuratedContentExt ) {
+			global $wgCityId;
+			$wikiaCuratedContent = ( new CommunityDataService( $wgCityId ) )->getNonFeaturedSections();
+			$content = $this->curatedContentToGameGuides( $wikiaCuratedContent );
+		} else {
+			$content = $this->wg->WikiaGameGuidesContent;
+		}
+		return $content;
+	}
+
+	/**
+	 * @param array $wikiaCuratedContent
+	 * @return array
+	 */
+	public function curatedContentToGameGuides( array $wikiaCuratedContent ) {
+		$gameGuideContent = array_map( function ( $CCTag ) {
+			return [
+				'title' => $CCTag[ 'label' ],
+				'image_id' => $CCTag[ 'image_id' ],
+				'categories' => array_map(
+					function ( $CCItem ) {
+						return $this->createGGItem( $CCItem );
+					}, array_filter( $CCTag[ 'items' ],
+						function ( $CCItem ) {
+							return $this->isValidItem( $CCItem );
+						}
+					)
+				)
+			];
+		}, $wikiaCuratedContent );
+		return isset( $gameGuideContent ) ? $gameGuideContent : [ ];
+	}
+
+	/**
+	 * @param $CCItem
+	 * @return bool
+	 */
+	private function isValidItem( $CCItem ) {
+		return ( !empty( $CCItem[ 'title' ] )
+				 && is_string( $CCItem[ 'title' ] )
+				 && $CCItem[ 'type' ] === 'category' );
+	}
+
+	/**
+	 * @param $CCItem
+	 * @return array
+	 */
+	private function createGGItem( $CCItem ) {
+		$GGCategory = [ ];
+		$GGCategory[ 'title' ] = $this->removeCategoryPrefix( $CCItem[ 'title' ] );
+		$GGCategory[ 'label' ] = $CCItem[ 'label' ];
+		if ( empty( $CCItem[ 'image_id' ] ) ) {
+			$GGCategory[ 'image_id' ] = 0;
+		} else {
+			$GGCategory[ 'image_id' ] = $CCItem[ 'image_id' ];
+		}
+		$GGCategory[ 'id' ] = $CCItem[ 'article_id' ];
+		return $GGCategory;
+	}
+
+	private function removeCategoryPrefix( $title ) {
+		$pos = strpos( $title, ':' );
+		return substr( $title, $pos + 1 );
 	}
 
 	/**
@@ -339,12 +444,12 @@ class GameGuidesController extends WikiaController {
 	 * getList&tag='' - list of all members of a given tag
 	 *
 	 */
-	public function getList(){
+	public function getList() {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
 
-		$content = $this->wg->WikiaGameGuidesContent;
+		$content = $this->getContentSource();
 
 		if ( empty( $content ) ) {
 			$this->getCategories();
@@ -372,7 +477,7 @@ class GameGuidesController extends WikiaController {
 	 * @response categories
 	 * @response offset
 	 */
-	private function getCategories(){
+	private function getCategories() {
 		wfProfileIn( __METHOD__ );
 
 		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
@@ -381,7 +486,7 @@ class GameGuidesController extends WikiaController {
 		$categories = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
 			6 * self::HOURS,
-			function() use ( $limit, $offset ) {
+			function () use ( $limit, $offset ) {
 				return ApiService::call(
 					array(
 						'action' => 'query',
@@ -397,26 +502,26 @@ class GameGuidesController extends WikiaController {
 			}
 		);
 
-		$allCategories = $categories['query']['allcategories'];
+		$allCategories = $categories[ 'query' ][ 'allcategories' ];
 
 		if ( !empty( $allCategories ) ) {
 
-			$ret = [];
+			$ret = [ ];
 
-			foreach( $allCategories as $value ) {
-				if($value['size'] - $value['files'] > 0){
+			foreach ( $allCategories as $value ) {
+				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
 
 					$ret[] = array(
-						'title' => $value['*'],
-						'id'=> isset( $value['pageid'] ) ? (int) $value['pageid'] : 0
+						'title' => $value[ '*' ],
+						'id' => isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0
 					);
 				}
 			}
 
 			$this->response->setVal( 'items', $ret );
 
-			if ( !empty( $categories['query-continue'] ) ) {
-				$this->response->setVal( 'offset', $categories['query-continue']['allcategories']['acfrom'] );
+			if ( !empty( $categories[ 'query-continue' ] ) ) {
+				$this->response->setVal( 'offset', $categories[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
 			}
 
 		} else {
@@ -436,14 +541,14 @@ class GameGuidesController extends WikiaController {
 	 *
 	 * @responseReturn Array|false Categories or false if tag was not found
 	 */
-	private function getTagCategories( $content, $requestTag ){
+	private function getTagCategories( $content, $requestTag ) {
 		wfProfileIn( __METHOD__ );
 
 		$ret = false;
 
-		foreach( $content as $tag ){
-			if ( $requestTag == $tag['title'] ) {
-				$ret = $tag['categories'];
+		foreach ( $content as $tag ) {
+			if ( $requestTag == $tag[ 'title' ] ) {
+				$ret = $tag[ 'categories' ];
 			}
 		}
 
@@ -452,17 +557,17 @@ class GameGuidesController extends WikiaController {
 
 			if ( !empty( $sort ) ) {
 				if ( $sort == 'alpha' ) {
-					usort($ret, function( $a, $b ){
-						return strcasecmp($a['title'], $b['title']);
-					});
-				} else if ( $sort == 'hot' ) {
+					usort( $ret, function ( $a, $b ) {
+						return strcasecmp( $a[ 'title' ], $b[ 'title' ] );
+					} );
+				} elseif ( $sort == 'hot' ) {
 					$hot = array_keys(
 						DataMartService::getTopArticlesByPageview(
 							$this->wg->CityId,
-							array_reduce($ret, function($ret, $item){
-								$ret[] = $item['id'];
+							array_reduce( $ret, function ( $ret, $item ) {
+								$ret[] = $item[ 'id' ];
 								return $ret;
-							}),
+							} ),
 							null,
 							false,
 							//I need all of them basically
@@ -470,15 +575,15 @@ class GameGuidesController extends WikiaController {
 						)
 					);
 
-					$sorted = [];
-					$left = [];
+					$sorted = [ ];
+					$left = [ ];
 					foreach ( $ret as $value ) {
-						$key = array_search( $value['id'], $hot );
+						$key = array_search( $value[ 'id' ], $hot );
 
 						if ( $key === false ) {
 							$left[] = $value;
 						} else {
-							$sorted[$key] = $value;
+							$sorted[ $key ] = $value;
 						}
 					}
 
@@ -492,15 +597,15 @@ class GameGuidesController extends WikiaController {
 			}
 
 			//Use 'id' instead of image_id
-			foreach( $ret as &$value ) {
-				if ( !empty( $value['image_id'] ) ) {
-					$value['id'] = $value['image_id'];
+			foreach ( $ret as &$value ) {
+				if ( !empty( $value[ 'image_id' ] ) ) {
+					$value[ 'id' ] = $value[ 'image_id' ];
 				}
-				unset($value['image_id']);
+				unset( $value[ 'image_id' ] );
 			}
 
 			$this->response->setVal( 'items', $ret );
-		} else if ( $requestTag !== '' ) {
+		} elseif ( $requestTag !== '' ) {
 			wfProfileOut( __METHOD__ );
 			throw new InvalidParameterApiException( 'tag' );
 		}
@@ -517,22 +622,19 @@ class GameGuidesController extends WikiaController {
 	private function getTags( $content ) {
 		wfProfileIn( __METHOD__ );
 
-		$this->response->setVal(
-			'tags',
-			array_reduce(
-				$content,
-				function( $ret, $item ) {
-					if( $item['title'] !== '' ) {
-						$ret[] = array(
-							'title' => $item['title'],
-							'id' => isset( $item['image_id'] ) ? $item['image_id'] : 0
-						);
-					}
-
-					return $ret;
+		$this->response->setVal( 'tags', array_reduce(
+			$content,
+			function ( $ret, $item ) {
+				if ( $item[ 'title' ] !== '' ) {
+					$ret[] = array(
+						'title' => $item[ 'title' ],
+						'id' => isset( $item[ 'image_id' ] ) ? $item[ 'image_id' ] : 0
+					);
 				}
-			)
-		);
+
+				return $ret;
+			}
+		) );
 
 		//there also might be some categories without TAG, lets find them as well
 		$this->getTagCategories( $content, '' );
@@ -546,7 +648,7 @@ class GameGuidesController extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	static function onGameGuidesContentSave(){
+	static function onGameGuidesContentSave() {
 		self::purgeMethod( 'getList' );
 
 		return true;
@@ -562,14 +664,14 @@ class GameGuidesController extends WikiaController {
 		//We have full control on when this data change so lets cache it for a longer period of time
 		$this->cacheResponseFor( 120, self::DAYS );
 
-		$lang = $this->request->getVal( 'lang' , 'en' );
+		$lang = $this->request->getVal( 'lang', 'en' );
 
 		$languages = $this->wg->WikiaGameGuidesSponsoredVideos;
 
-		if( !empty( $languages ) ) {
+		if ( !empty( $languages ) ) {
 			if ( array_key_exists( $lang, $languages ) ) {
-				$this->response->setVal( 'items', $languages[$lang] );
-			} else if ( $lang == 'list' ) {
+				$this->response->setVal( 'items', $languages[ $lang ] );
+			} elseif ( $lang == 'list' ) {
 				$this->response->setVal( 'items', array_keys( $languages ) );
 			} else {
 				throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
@@ -588,12 +690,12 @@ class GameGuidesController extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	static function onGameGuidesSponsoredSave(){
+	static function onGameGuidesSponsoredSave() {
 		$languages = array_keys( F::app()->wg->WikiaGameGuidesSponsoredVideos );
 		//Empty array is there to purge call to getVideos without any language
 		$variants = [
-			[],
-			['lang' => 'list']
+			[ ],
+			[ 'lang' => 'list' ]
 		];
 
 		foreach ( $languages as $lang ) {

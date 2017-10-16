@@ -8,45 +8,19 @@
  */
 
 class AssetsConfig {
-	private /* array */ $mConfig;
+	private static /* array */ $mConfig;
 
-	public static function getSiteCSS( $combine, $minify = null, $params = null, $skinname = 'oasis', $articleName = 'Wikia.css') {
-		wfProfileIn(__METHOD__);
+	const JQUERY_VERSION = '1.8.2';
 
-		$srcs = array();
-		global $wgSquidMaxage;
-		$siteargs = array(
-			'action' => 'raw',
-			'maxage' => $wgSquidMaxage,
-		);
-		// BugId:20929 tell (or trick) varnish to store the latest revisions of Wikia.css and Common.css.
-		$oTitleCommonCss	= Title::newFromText( 'Common.css', NS_MEDIAWIKI );
-		$oTitleWikiaCss		= Title::newFromText( 'Wikia.css',  NS_MEDIAWIKI );
-		$siteargs['maxrev'] = max( (int) $oTitleWikiaCss->getLatestRevID(), (int) $oTitleCommonCss->getLatestRevID() );
-		unset( $oTitleWikiaCss, $oTitleCommonCss );
+	/*
+	 * The getters below are called by resolveItemsToAssets method (when '#function_' is used in config.php)
+	 */
 
-		$query = wfArrayToCGI( array(
-			'usemsgcache' => 'yes',
-			'ctype' => 'text/css',
-			'smaxage' => $wgSquidMaxage
-		) + $siteargs );
-
-		$srcs[] = Title::newFromText( $articleName, NS_MEDIAWIKI)->getFullURL( $query );
-
-		// user specific CSS based on user preferences (if logged-in)
-		$siteargs['gen'] = 'css';
-		$siteargs['useskin'] = $skinname;
-		$srcs[] = Title::newFromText( '-' )->getFullURL( wfArrayToCGI( $siteargs ) );
-
-		wfProfileOut(__METHOD__);
-		return $srcs;
+	public static function getSiteJS() {
+		return array( Title::newFromText( '-' )->getFullURL( 'action=raw&smaxage=0&gen=js&useskin=oasis' ) );
 	}
 
-	public static function getSiteJS( $combine ) {
-		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
-	}
-
-	public static function getRTEAssets( $combine ) {
+	public static function getRTEAssets() {
 		global $IP;
 		$path = "extensions/wikia/RTE";
 		$files = array(
@@ -55,12 +29,12 @@ class AssetsConfig {
 		);
 
 		$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
-		$input = substr( $input, strpos($input, 'files :') + 7 );
+		$input = substr( $input, strpos( $input, 'files :' ) + 7 );
 		$input = trim( $input, " \n\t[]{}" );
 
 		// get all *.js files from ckeditor.wikia.pack file
 		if ( preg_match_all( '%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER ) ) {
-			foreach( $matches as $match ) {
+			foreach ( $matches as $match ) {
 				$name = $match[1] . '.js';
 				$files[] = $path . '/ckeditor/' . $name;
 			}
@@ -69,13 +43,14 @@ class AssetsConfig {
 		return $files;
 	}
 
-	public static function getEPLAssets( $combine ) {
-		// This class always exists at the moment, this is just in case it goes away at some point
-		if (class_exists('EditPageLayoutHelper')) {
-			return EditPageLayoutHelper::getAssets();
-		} else {
-			return array();
+	public static function getEPLAssets() {
+		$files = [];
+
+		if ( class_exists( 'EditPageLayoutHelper' ) ) {
+			$files = EditPageLayoutHelper::getAssets();
 		}
+
+		return $files;
 	}
 
 	/**
@@ -85,15 +60,15 @@ class AssetsConfig {
 	public static function getJQueryUrl( $combine, $minify, $params ) {
 		global $wgUseJQueryFromCDN;
 
-		if (!empty($wgUseJQueryFromCDN) && empty($params['noexternals'])) {
+		if ( !empty( $wgUseJQueryFromCDN ) && empty( $params['noexternals'] ) ) {
 			$url = $minify
-				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'
-				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js';
+				? '#external_https://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.min.js'
+				: '#external_https://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.js';
 		} else {
-			$url = 'resources/jquery/jquery-1.8.2.js';
+			$url = 'resources/jquery/jquery-' . static::JQUERY_VERSION . '.js';
 		}
 
-		return array($url);
+		return array( $url );
 	}
 
 	/**
@@ -101,15 +76,16 @@ class AssetsConfig {
 	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	private function load(){
-		wfProfileIn( __METHOD__ );
+	private function load() {
+		if ( empty( static::$mConfig ) ) {
+			wfProfileIn( __METHOD__ );
+			include( __DIR__ . '/config.php' );
 
-		if( empty( $this->mConfig ) ) {
-			include( 'config.php' );
-			$this->mConfig = $config;
+			/* @var $config Array */
+			static::$mConfig = $config;
+
+			wfProfileOut( __METHOD__ );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -120,10 +96,10 @@ class AssetsConfig {
 	public function getGroupSkin( $groupName ) {
 		$this->load();
 
-		if ( isset( $this->mConfig[$groupName] ) ) {
-			return ( isset( $this->mConfig[$groupName]['skin'] ) ) ? $this->mConfig[$groupName]['skin'] : null;
+		if ( $this->isGroupDefined( $groupName ) ) {
+			return ( isset( static::$mConfig[$groupName]['skin'] ) ) ? static::$mConfig[$groupName]['skin'] : null;
 		} else {
-			//this is being called on non-defined groups programmatically, so no need to log failure
+			// this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
 		}
 	}
@@ -136,10 +112,10 @@ class AssetsConfig {
 	public function getGroupType( $groupName ) {
 		$this->load();
 
-		if ( isset( $this->mConfig[$groupName] ) ) {
-			return $this->mConfig[$groupName]['type'];
+		if ( $this->isGroupDefined( $groupName ) ) {
+			return static::$mConfig[$groupName]['type'];
 		} else {
-			//this is being called on non-defined groups programmatically, so no need to log failure
+			// this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
 		}
 	}
@@ -148,16 +124,18 @@ class AssetsConfig {
 	 * Returns assets array for particular group. If group does not exists in config then returns empty array
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
+	 *
+	 * @param $groupName
+	 * @return array
+	 * @throws InvalidArgumentException
 	 */
 	protected function getGroupAssets( $groupName ) {
 		$this->load();
 
-		if ( is_string( $groupName ) && isset( $this->mConfig[$groupName] ) ) {
-			return $this->mConfig[$groupName]['assets'];
+		if ( $this->isGroupDefined( $groupName ) ) {
+			return static::$mConfig[$groupName]['assets'];
 		} else {
-			$requestDetails = AssetsManager::getRequestDetails();
-			Wikia::log(__METHOD__, false, "group '{$groupName}' doesn't exist ({$requestDetails})", true /* $always */);
-			return array();
+			throw new InvalidArgumentException("Group '{$groupName}' doesn't exist");
 		}
 	}
 
@@ -186,14 +164,11 @@ class AssetsConfig {
 			} elseif ( substr( $item, 0, 7 ) == '#group_' ) {
 				// reference to another group
 				$assets = array_merge( $assets, $this->resolve( substr( $item, 7 ), $combine, $minify, $params ) );
-			} elseif ( substr ($item, 0, 10 ) == '#function_' ) {
+			} elseif ( substr ( $item, 0, 10 ) == '#function_' ) {
 				// reference to a function that returns array of URIs
 				$assets = array_merge( $assets, call_user_func( substr( $item, 10 ), $combine, $minify, $params ) );
-			} elseif ( substr ($item, 0, 10 ) == '#external_' ) {
+			} elseif ( substr ( $item, 0, 10 ) == '#external_' || Http::isValidURI( $item ) ) {
 				// reference to a file to be fetched by the browser from external server (BugId:9522)
-				$assets[] = $item;
-			} elseif ( Http::isValidURI( $item ) ) {
-				// reference to remote file (http and https)
 				$assets[] = $item;
 			}
 		}
@@ -201,15 +176,19 @@ class AssetsConfig {
 		return $assets;
 	}
 
+	/**
+	 * Check if given group is defined in config file(s)
+	 *
+	 * @param $groupName group to check
+	 * @return bool true if the group is defined
+	 */
+	public function isGroupDefined($groupName) {
+		return is_string( $groupName ) && isset( static::$mConfig[$groupName] );
+	}
+
 	public function getGroupNames() {
 		$this->load();
 
-		return array_keys( $this->mConfig );
-	}
-
-	static public function isUserDependent( $oid ) {
-		return in_array( $oid, array(
-			'site_user_css',
-		));
+		return array_keys( static::$mConfig );
 	}
 }

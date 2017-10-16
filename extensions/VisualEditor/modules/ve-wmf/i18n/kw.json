@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"George Animal",
+			"Nrowe",
+			"Purodha"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Chanjyel welesek]]",
+	"tag-visualeditor-description": "Chanjyes der an [[{{MediaWiki:visualeditor-descriptionpagelink}}|janjyel welesek]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Chanjyel welesek: Checkya]]"
+}

@@ -1,0 +1,67 @@
+/*!
+* Display neat icons on redirect pages.
+*/
+@import 'skins/shared/color';
+
+/* Hide, but keep accessible for screen-readers. */
+.redirectMsg p {
+	overflow: hidden;
+	height: 0;
+	zoom: 1;
+}
+
+.redirectText {
+	list-style: none none;
+	display: inline;
+	font-size: 140%;
+	/* shared.css has some very weird directionality-specific rules for 'ul' we need to override,
+	 search for "Correct directionality when page dir is different from site/user dir" */
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.mw-content-ltr .redirectText li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	padding-left: 42px;
+	background-image: linear-gradient(transparent, transparent), url('/resources/mediawiki.action/images/nextredirect-ltr-#{$sprite-theme}.svg'); /* inline */
+	background-repeat: no-repeat;
+
+	&:first-child {
+		padding-left: 47px;
+		background-image: linear-gradient(transparent, transparent), url('/resources/mediawiki.action/images/redirect-ltr-#{$sprite-theme}.svg'); /* inline */
+	}
+}
+
+.mw-content-rtl .redirectText li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	padding-right: 42px;
+	background-image: linear-gradient(transparent, transparent), url('/resources/mediawiki.action/images/nextredirect-rtl-#{$sprite-theme}.svg'); /* inline */
+
+	&:first-child {
+		padding-right: 47px;
+		background-image: linear-gradient(transparent, transparent), url('/resources/mediawiki.action/images/redirect-rtl-#{$sprite-theme}.svg'); /* inline */
+	}
+}
+
+/* Dark fallback icon for Monobook */
+.skin-monobook {
+	.mw-content-ltr .redirectText li {
+		background-image: linear-gradient(transparent, transparent), url('/resources/mediawiki.action/images/nextredirect-ltr-dark.svg'); /* inline */
+
+		&:first-child {
+			background-image: linear-gradient(transparent, transparent), url('/resources/mediawiki.action/images/redirect-ltr-dark.svg'); /* inline */
+		}
+	}
+	
+	.mw-content-rtl .redirectText li {
+		background-image: linear-gradient(transparent, transparent), url('/resources/mediawiki.action/images/nextredirect-rtl-dark.svg'); /* inline */
+
+		&:first-child {
+			background-image: linear-gradient(transparent, transparent), url('/resources/mediawiki.action/images/redirect-rtl-dark.svg'); /* inline */
+		}
+	}
+}

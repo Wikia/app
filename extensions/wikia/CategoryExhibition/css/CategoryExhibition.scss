@@ -1,8 +1,8 @@
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/core/color";
-@import "extensions/wikia/TopLists/css/mixins";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
+
+$color: #000; // was removed from /skins/shared/mixins/box-shadow
 
 $thumb-size-width: 130px;
 $thumb-size-height: 115px;
@@ -12,6 +12,7 @@ $thumb-border-left: 5px;
 $thumb-border-right: 6px;
 $details-fg-color: $color-button-text;
 $details-bg-color: $color-buttons;
+$color: #000;
 
 $color-inctive-button: mix($color-page, #000, 60%);
 @if lightness($color-page) < 50 {
@@ -20,10 +21,6 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 @if lightness($color-page) < 80 {
 	$color: lighten($color, 20%);
-}
-
-#toplists-loading-screen {
-	@include blockInput;
 }
 
 .category-gallery-form {
@@ -46,7 +43,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		position: relative;
 		width: 14px;
 		height: 14px;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png'); /* base64 */
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-inactive.png'); /* inline */
 		background-repeat: no-repeat;
 		background-position: center;
 
@@ -64,7 +61,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 				background-color: $color-buttons;
 			}
 
-			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png'); /* base64 */
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-images-active.png'); /* inline */
 		}
 
 		#cat-exh-new-one {
@@ -93,7 +90,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		position: relative;
 		width: 14px;
 		height: 14px;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png'); /* base64 */
+		background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-inactive.png'); /* inline */
 		background-repeat: no-repeat;
 		background-position: center;
 
@@ -111,7 +108,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 				background-color: $color-buttons;
 			}
 
-			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png'); /* base64 */
+			background-image: url('/extensions/wikia/CategoryExhibition/img/icon-category-list-active.png'); /* inline */
 		}
 
 		#cat-exh-old-one {
@@ -259,20 +256,20 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	}
 
 	.title {
-		@include border-radius-ne(9px);
-		@include border-radius-se(9px);
-		position: relative;
-		display: inline-block;
 		background-color: $details-bg-color;
+		border-bottom-right-radius: 9px;
+		border-top-right-radius: 9px;
 		color: $details-fg-color;
-		padding: 3px 5px 3px;
-		margin-top: $thumb-size-height + $thumb-border-top - 9px;
+		display: inline-block;
+		font-size: 11px;
+		font-weight: normal;
 		line-height: 16px;
+		margin-top: $thumb-size-height + $thumb-border-top - 9px;
 		max-height: 32px;
 		max-width: $thumb-size-width + 5px;
 		overflow: hidden;
-		font-weight: normal;
-		font-size: 11px;
+		padding: 3px 5px 3px;
+		position: relative;
 	}
 }
 
@@ -298,11 +295,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		margin-left: auto;
 		margin-right: auto;
 	}
-	
-	.Wikia-video-play-button {
-		margin: 5px;
-	}
-	
+
 	.title {
 		position: relative;
 		text-align: left;

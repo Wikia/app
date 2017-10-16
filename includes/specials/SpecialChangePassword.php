@@ -21,6 +21,9 @@
  * @ingroup SpecialPage
  */
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\CookieHelper;
+
 /**
  * Let users recover their password.
  *
@@ -51,6 +54,11 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		$this->getOutput()->disallowUserJs();
 
 		$user = $this->getUser();
+
+		if ( !$user->isLoggedIn() && !LoginForm::getLoginToken() ) {
+			LoginForm::setLoginToken();
+		}
+
 		if( !$request->wasPosted() && !$user->isLoggedIn() ) {
 			$this->error( $this->msg( 'resetpass-no-info' )->text() );
 			return;
@@ -70,6 +78,14 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 				if( !$wgAuth->allowPasswordChange() ) {
 					$this->error( $this->msg( 'resetpass_forbidden' )->text() );
 					return;
+				}
+
+				if ( !$user->isLoggedIn()
+					&& $request->getVal( 'wpLoginOnChangeToken' ) !== LoginForm::getLoginToken()
+				) {
+					// Potential CSRF (bug 62497)
+					$this->error( $this->msg( 'sessionfailure' )->text() );
+					return false;
 				}
 
 				$this->attemptReset( $this->mNewpass, $this->mRetype );
@@ -136,6 +152,10 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 			$oldpassMsg = 'oldpassword';
 			$submitMsg = 'resetpass-submit-loggedin';
 		}
+		$loginOnChangeToken = '';
+		if ( !$user->isLoggedIn() ) {
+			$loginOnChangeToken = Html::hidden( 'wpLoginOnChangeToken', LoginForm::getLoginToken() );
+		}
 		$this->getOutput()->addHTML(
 			Xml::fieldset( $this->msg( 'resetpass_header' )->text() ) .
 			Xml::openElement( 'form',
@@ -147,6 +167,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 			Html::hidden( 'wpName', $this->mUserName ) . "\n" .
 			Html::hidden( 'wpDomain', $this->mDomain ) . "\n" .
 			Html::hidden( 'returnto', $this->getRequest()->getVal( 'returnto' ) ) . "\n" .
+			$loginOnChangeToken .
 			$this->msg( 'resetpass_text' )->parseAsBlock() . "\n" .
 			Xml::openElement( 'table', array( 'id' => 'mw-resetpass-table' ) ) . "\n" .
 			$this->pretty( array(
@@ -211,7 +232,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		}
 
 		if( $newpass !== $retype ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'badretype' ) );
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'badretype' ) );
 			throw new PasswordError( $this->msg( 'badretype' )->text() );
 		}
 
@@ -221,13 +242,13 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		}
 
 		$abortMsg = 'resetpass-abort-generic';
-		if ( !wfRunHooks( 'AbortChangePassword', array( $user, $this->mOldpass, $newpass, &$abortMsg ) ) ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'abortreset' ) );
+		if ( !Hooks::run( 'AbortChangePassword', array( $user, $this->mOldpass, $newpass, &$abortMsg ) ) ) {
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'abortreset' ) );
 			throw new PasswordError( $this->msg( $abortMsg )->text() );
 		}
 
-		if( !$user->checkTemporaryPassword($this->mOldpass) && !$user->checkPassword($this->mOldpass) ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'wrongpassword' ) );
+		if ( !$user->checkPassword( $this->mOldpass )->success() ) {
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'wrongpassword' ) );
 			throw new PasswordError( $this->msg( 'resetpass-wrong-oldpass' )->text() );
 		}
 
@@ -238,14 +259,21 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 
 		try {
 			$user->setPassword( $this->mNewpass );
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
 			$this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
 		} catch( PasswordError $e ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
+			Hooks::run( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
 			throw new PasswordError( $e->getMessage() );
 		}
 
 		$user->setCookies();
 		$user->saveSettings();
+
+		/*
+		 * We shouldn't logout user when changing password, so after deleting
+		 * all user tokens in Helios service we need to set a new access token.
+		 */
+		$cookieHelper = Injector::getInjector()->get( CookieHelper::class );
+		$cookieHelper->setAuthenticationCookieWithUserId( $user->getId(), $this->getRequest()->response() );
 	}
 }

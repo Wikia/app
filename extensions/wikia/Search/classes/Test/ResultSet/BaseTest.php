@@ -42,6 +42,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09942 ms
 	 * @covers Wikia\Search\ResultSet\Base::configure
 	 */
 	public function testConfigure() {
@@ -83,6 +85,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09693 ms
 	 * @covers Wikia\Search\ResultSet\Base::setResults
 	 */
 	public function testSetResults() {
@@ -104,6 +108,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.12031 ms
 	 * @covers \Wikia\Search\ResultSet\Base::addResult
 	 */
 	public function testAddResult() {
@@ -251,6 +257,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09768 ms
 	 * @covers \Wikia\Search\ResultSet\Base::getResultsStart
 	 */
 	public function testGetResultsStart() {
@@ -269,6 +277,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09781 ms
 	 * @covers \Wikia\Search\ResultSet\Base::getQueryTime
 	 */
 	public function testGetQueryTime() {
@@ -287,10 +297,12 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09851 ms
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsStartNotZero() {
-		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki', 'mustAddMatchedRecords' ] );
 		
 		$this->resultSet
 		    ->expects( $this->once() )
@@ -300,6 +312,11 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		$this->config
 		    ->expects( $this->never() )
 		    ->method ( 'getInterWiki' )
+		;
+		$this->config
+			->expects( $this->any() )
+			->method( 'mustAddMatchedRecords' )
+			->will( $this->returnValue( 0 ) )
 		;
 		$this->resultSet
 		    ->expects( $this->never() )
@@ -318,10 +335,12 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09803 ms
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsOnWiki() {
-		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki', 'mustAddMatchedRecords' ] );
 		
 		$this->resultSet
 		    ->expects( $this->once() )
@@ -333,6 +352,11 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getInterWiki' )
 		    ->will   ( $this->returnValue( false ) )
 		;
+		$this->config
+			->expects( $this->any() )
+			->method( 'mustAddMatchedRecords' )
+			->will( $this->returnValue( 0 ) )
+		;
 		$this->resultSet
 		    ->expects( $this->never() )
 		    ->method ( "prependWikiMatchIfExists" )
@@ -350,10 +374,12 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09953 ms
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsInterWiki() {
-		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki', 'mustAddMatchedRecords' ] );
 		
 		$this->resultSet
 		    ->expects( $this->once() )
@@ -365,6 +391,11 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getInterWiki' )
 		    ->will   ( $this->returnValue( true ) )
 		;
+		$this->config
+			->expects( $this->any() )
+			->method( 'mustAddMatchedRecords' )
+			->will( $this->returnValue( 0 ) )
+		;
 		$this->resultSet
 		    ->expects( $this->once() )
 		    ->method ( "prependWikiMatchIfExists" )
@@ -382,6 +413,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10073 ms
 	 * @covers Wikia\Search\ResultSet\Base::prependWikiMatchIfExists
 	 */
 	public function testPrependWikiMatchNoMatch() {
@@ -408,6 +441,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09776 ms
 	 * @covers Wikia\Search\ResultSet\Base::prependWikiMatchIfExists
 	 */
 	public function testPrependWikiMatchWithMatch() {
@@ -439,6 +474,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0976 ms
 	 * @covers Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchNoMatch() {
@@ -465,6 +502,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0977 ms
 	 * @covers Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchWithMatch() {
@@ -497,6 +536,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09726 ms
 	 * @covers \Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound
 	 */
 	public function testIsOnlyArticleMatchFoundWrongResultNum() {
@@ -515,6 +556,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09743 ms
 	 * @covers Wikia\Search\ResultSet\Base::addMatchResult
 	 */
 	public function testAddMatchResultNoResult() {
@@ -552,6 +595,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09758 ms
 	 * @covers Wikia\Search\ResultSet\Base::addMatchResult
 	 */
 	public function testAddMatchResultWithResult() {
@@ -591,6 +636,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09789 ms
 	 * @covers \Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound
 	 */
 	public function testIsOnlyArticleMatchFoundNotArticleMatch() {
@@ -625,6 +672,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09745 ms
 	 * @covers \Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound
 	 */
 	public function testIsOnlyArticleMatchFoundCorrect() {

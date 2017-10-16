@@ -82,8 +82,8 @@ class ChangesList extends ContextSource {
 		$user = $context->getUser();
 		$sk = $context->getSkin();
 		$list = null;
-		if( wfRunHooks( 'FetchChangesList', array( $user, &$sk, &$list ) ) ) {
-			$new = $context->getRequest()->getBool( 'enhanced', $user->getOption( 'usenewrc' ) );
+		if( Hooks::run( 'FetchChangesList', array( $user, &$sk, &$list ) ) ) {
+			$new = $context->getRequest()->getBool( 'enhanced', $user->getGlobalPreference( 'usenewrc' ) );
 			return $new ? new EnhancedChangesList( $context ) : new OldChangesList( $context );
 		} else {
 			return $list;
@@ -299,7 +299,7 @@ class ChangesList extends ContextSource {
 		);
 
 		$s .= '(' . $diffLink . $this->message['pipe-separator'] . $histLink . ') . . ';
-		wfRunHooks( 'ChangesListInsertDiffHist', array($this, &$diffLink, &$histLink, &$s, $rc, $unpatrolled) );
+		Hooks::run( 'ChangesListInsertDiffHist', array($this, &$diffLink, &$histLink, &$s, $rc, $unpatrolled) );
 		/** End of Wikia change */
 	}
 
@@ -335,7 +335,7 @@ class ChangesList extends ContextSource {
 		$articlelink .= $this->getLanguage()->getDirMark();
 
 		/** Start of Wikia change @author nAndy */
-		wfRunHooks( 'ChangesListInsertArticleLink',
+		Hooks::run( 'ChangesListInsertArticleLink',
 			array($this, &$articlelink, &$s, $rc, $unpatrolled, $watched) );
 		/** End of Wikia change */
 
@@ -380,7 +380,7 @@ class ChangesList extends ContextSource {
 		// Start of Wikia change - @author nAndy
 		// modified for MW1.19 by macbre
 		$s = $formatter->getActionText() . " $mark" . $formatter->getComment();
-		wfRunHooks( 'ChangesListInsertLogEntry', array($this, $rc, &$s, $formatter, &$mark) );
+		Hooks::run( 'ChangesListInsertLogEntry', array($this, $rc, &$s, $formatter, &$mark) );
 
 		return $s;
 		// End of Wikia change
@@ -403,7 +403,7 @@ class ChangesList extends ContextSource {
 
 		// Start of Wikia change - @author nAndy
 		// modified for MW1.19 by macbre
-		wfRunHooks( 'ChangesListInsertComment', array($this, $rc, &$comment) );
+		Hooks::run( 'ChangesListInsertComment', array($this, $rc, &$comment) );
 		// End of Wikia change
 
 		return $comment;
@@ -495,7 +495,7 @@ class ChangesList extends ContextSource {
 
 				/** Start of Wikia change @author nAndy */
 				$rollbackLink = Linker::generateRollback( $rev, $this->getContext() );
-				wfRunHooks( 'ChangesListInsertRollback', array($this, &$s, &$rollbackLink, $rc) );
+				Hooks::run( 'ChangesListInsertRollback', array($this, &$s, &$rollbackLink, $rc) );
 
 				$s .= ' '.$rollbackLink;
 				/*End of Wikia change*/
@@ -593,7 +593,7 @@ class OldChangesList extends ChangesList {
 				),
 				''
 			);
-			wfRunHooks( 'ChangesListInsertFlags', array($this, &$flags, $rc) );
+			Hooks::run( 'ChangesListInsertFlags', array($this, &$flags, $rc) );
 			$s .= $flags.' ';
 			/** End of Wikia change */
 
@@ -637,7 +637,7 @@ class OldChangesList extends ChangesList {
 		}
 
 		/** Start of Wikia change @author nAndy */
-		if( wfRunHooks( 'OldChangesListRecentChangesLine', array($this, &$s, $rc) ) ) {
+		if( Hooks::run( 'OldChangesListRecentChangesLine', array($this, &$s, $rc) ) ) {
 			wfProfileOut( __METHOD__ );
 			return "$dateheader<li class=\"".implode( ' ', $classes )."\">".$s."</li>\n";
 		} else {
@@ -773,7 +773,7 @@ class EnhancedChangesList extends ChangesList {
 				$secureName = SpecialPage::getTitleFor( 'Log', $logType )->getPrefixedDBkey();
 			}
 			// Start of Wikia change - @author unknown
-			wfRunHooks( 'ChangesListMakeSecureName', array($this, &$secureName, $rc) );
+			Hooks::run( 'ChangesListMakeSecureName', array($this, &$secureName, $rc) );
 			// End of Wikia change
 			if( !isset( $this->rc_cache[$secureName] ) ) {
 				$this->rc_cache[$secureName] = array();
@@ -790,10 +790,14 @@ class EnhancedChangesList extends ChangesList {
 	public function lineLinksCache($rc, $unpatrolled, $counter) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
-		
+
 		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter);
 		$out = $wgMemc->get($memcKey);
 		if(!empty($out)) {
+			// wikia change start (BAC-492)
+			$out['usertalklink'] = $this->isDeleted($rc, Revision::DELETED_USER) ?
+				null : Linker::userToolLinks($rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text']);
+			// wikia change end
 			wfProfileOut( __METHOD__ );
 			return $out;
 		}
@@ -869,7 +873,7 @@ class EnhancedChangesList extends ChangesList {
 		if ( $block[0]->mAttribs['rc_log_type'] ) {
 			# Log entry
 			$classes = 'mw-collapsible mw-collapsed mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-log-'
-					. $block[0]->mAttribs['rc_log_type'] . '-' . $block[0]->mAttribs['rc_title'] );
+				. $block[0]->mAttribs['rc_log_type'] );
 		} else {
 			$classes = 'mw-collapsible mw-collapsed mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-ns'
 					. $block[0]->mAttribs['rc_namespace'] . '-' . $block[0]->mAttribs['rc_title'] );
@@ -1044,7 +1048,7 @@ class EnhancedChangesList extends ChangesList {
 		$r .= $this->numberofWatchingusers($block[0]->numberofWatchingusers);
 
 		// Start of Wikia change - @author unknown
-		wfRunHooks( 'ChangesListHeaderBlockGroup', array($this, &$r, &$block) );
+		Hooks::run( 'ChangesListHeaderBlockGroup', array($this, &$r, &$block) );
 		// End of Wikia change
 
 		# Sub-entries
@@ -1085,7 +1089,7 @@ class EnhancedChangesList extends ChangesList {
 					$link = '';
 					// Start of Wikia change
 
-					wfRunHooks( 'ChangesListItemGroupRegular', array(&$link, &$rcObj) );
+					Hooks::run( 'ChangesListItemGroupRegular', array(&$link, &$rcObj) );
 					// End of Wikia change
 
 					if(empty($link)) {
@@ -1217,8 +1221,10 @@ class EnhancedChangesList extends ChangesList {
 		$logType = $rcObj->mAttribs['rc_log_type'];
 		if( $logType ) {
 			# Log entry
-			$classes = 'mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-log-'
-					. $logType . '-' . $rcObj->mAttribs['rc_title'] );
+			// begin Wikia change - @author Cqm
+			// VOLDEV-43
+			$classes = 'mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-log-' . $logType );
+			// end Wikia change
 		} else {
 			$classes = 'mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-ns' .
 					$rcObj->mAttribs['rc_namespace'] . '-' . $rcObj->mAttribs['rc_title'] );

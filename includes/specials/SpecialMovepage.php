@@ -263,7 +263,7 @@ class MovePageForm extends UnlistedSpecialPage {
 		$out->addHTML(
 			 Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalURL( 'action=submit' ), 'id' => 'movepage' ) )
 		);
-		wfRunHooks( 'ArticleMoveForm', array( &$out ) );
+		Hooks::run( 'ArticleMoveForm', array( &$out ) );
 		$out->addHTML(
 			 Xml::openElement( 'fieldset' ) .
 			 Xml::element( 'legend', null, wfMsg( 'move-page-legend' ) ) .
@@ -370,7 +370,7 @@ class MovePageForm extends UnlistedSpecialPage {
 			);
 		}
 
-		$watchChecked = $user->isLoggedIn() && ($this->watch || $user->getBoolOption( 'watchmoves' )
+		$watchChecked = $user->isLoggedIn() && ($this->watch || (bool)$user->getGlobalPreference( 'watchmoves' )
 			|| $this->oldTitle->userIsWatching());
 		# Don't allow watching if user is not logged in
 		if( $user->isLoggedIn() ) {
@@ -404,7 +404,7 @@ class MovePageForm extends UnlistedSpecialPage {
 	}
 
 	function doSubmit() {
-		global $wgMaximumMovedPages, $wgFixDoubleRedirects, $wgDeleteRevisionsLimit;
+		global $wgMaximumMovedPages, $wgFixDoubleRedirects;
 
 		$user = $this->getUser();
 
@@ -415,7 +415,14 @@ class MovePageForm extends UnlistedSpecialPage {
 		$ot = $this->oldTitle;
 		$nt = $this->newTitle;
 
-		if( ! wfRunHooks( 'SpecialMovepageBeforeMove', array(&$this))) {
+		if ( !Hooks::run( 'SpecialMovepageBeforeMove', [ $this ] ) ) {
+			return;
+		}
+
+		# Check rights for new title
+		$permErrors = $nt->getUserPermissionsErrors( 'move', $user );
+		if ( count( $permErrors ) ) {
+			$this->showForm( $permErrors );
 			return;
 		}
 
@@ -486,7 +493,7 @@ class MovePageForm extends UnlistedSpecialPage {
 			DoubleRedirectJob::fixRedirects( 'move', $ot, $nt );
 		}
 
-		wfRunHooks( 'SpecialMovepageAfterMove', array( &$this, &$ot, &$nt ) );
+		Hooks::run( 'SpecialMovepageAfterMove', [ $this, &$ot, &$nt ] );
 
 		$out = $this->getOutput();
 		$out->setPagetitle( wfMsg( 'pagemovedsub' ) );

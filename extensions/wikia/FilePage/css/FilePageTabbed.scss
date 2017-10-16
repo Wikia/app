@@ -1,7 +1,7 @@
-@import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
+@import "extensions/wikia/VideoHandlers/css/crunchyrollWidget";
 
 .page-listings {
 	@include clearfix;
@@ -19,7 +19,7 @@
 			position: relative;
 			top: -1px;
 			&.disabled {
-				@include opacity(50);
+				opacity: .5;
 			}
 			&.left {
 				@include arrow(6px, $color-buttons, 'left');
@@ -39,22 +39,14 @@
 		position: relative;
 	}
 	.page-listing-image {
-		background-color: black;
-		display: block;
-		height: 90px;
-		width: 160px;
 		img {
-			display: block;
-			height: 90px;
-			margin: 0 auto;
-			max-width: 160px;
 			&.no-image {
 				background-color: #f0f0f0;
-				background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* base64 */
-				background-position: 50px 25px;
+				background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* inline */
+				background-position: 70px 30px;
 				background-repeat: no-repeat;
-				height: 90px;
-				width: 160px;
+				height: 100px;
+				width: 200px;
 			}
 		}
 	}
@@ -92,11 +84,21 @@
 		font-size: 18px;
 		margin: 0;
 	}
-	.expire-date {
+	span.expire-date {
+		&:before {
+			content: '•';
+			margin: 0 5px;
+		}
+	}
+	.regional-restriction {
 		clear: both;
-		font-size: 11px;
-		line-height: 11px;
-		padding-top: 10px;
+		font-size: 12px;
+		color: $color-alternate-text;
+		line-height: 18px;
+		width: 460px;
+	}
+	.inner {
+		width: 670px;
 	}
 }
 
@@ -131,4 +133,12 @@ ul.tabs {
 	ul.tabs {
 		display: none;
 	}
+}
+
+p.hidden {
+  display: none;
+}
+
+.WikiaArticle {
+	@include crunchyrollWidget;
 }

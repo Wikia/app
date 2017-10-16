@@ -1,125 +1,141 @@
-/* exported AdTracker */
-/* jshint camelcase:false, maxparams:5 */
-
-var AdTracker = function (log, tracker) {
+/*global define*/
+/*jshint camelcase:false*/
+define('ext.wikia.adEngine.adTracker', [
+	'ext.wikia.adEngine.utils.timeBuckets',
+	'wikia.tracker',
+	'wikia.window',
+	'wikia.log'
+], function (timeBuckets, tracker, win, log) {
 	'use strict';
 
-	var logGroup = 'AdTracker',
-		maxTrackedTime = 5,
-		trackedSize = {
-			CORP_TOP_LEADERBOARD: '728x90',
-			CORP_TOP_RIGHT_BOXAD: '300x250',
-			EXIT_STITIAL_BOXAD_1: '300x250',
-			HOME_TOP_LEADERBOARD: '728x90',
-			HOME_TOP_RIGHT_BOXAD: '300x250',
-			HUB_TOP_LEADERBOARD:  '728x90',
-			INCONTENT_BOXAD_1:    '300x250',
-			INVISIBLE_1:          '0x0',
-			INVISIBLE_2:          '0x0',
-			INVISIBLE_SKIN:       '1x1',
-			LEFT_SKYSCRAPER_2:    '160x600',
-			LEFT_SKYSCRAPER_3:    '160x600',
-			MODAL_INTERSTITIAL:   '300x250',
-			MODAL_INTERSTITIAL_1: '300x250',
-			MODAL_INTERSTITIAL_2: '300x250',
-			MODAL_INTERSTITIAL_3: '300x250',
-			MODAL_INTERSTITIAL_4: '300x250',
-			MODAL_RECTANGLE:      '300x100',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD:'300x250',
-			SEVENONEMEDIA_FLUSH:  '0x0',
-			TOP_BUTTON_WIDE:      '292x90',
-			TOP_LEADERBOARD:      '728x90',
-			TOP_RIGHT_BOXAD:      '300x250',
-			WIKIA_BAR_BOXAD_1:    '300x50'
+	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
+		logGroup = 'ext.wikia.adEngine.adTracker';
+
+	function encodeAsQueryString(extraParams) {
+		var out = [], key, keys = [], i, len;
+
+		if (win.ads && win.ads.runtime.sp && typeof win.ads.runtime.sp.blocking === 'boolean') {
+			extraParams.sp = win.ads.runtime.sp.blocking ? 'yes' : 'no';
+		}
+
+		if (win.ads && win.ads.runtime.pf && typeof win.ads.runtime.pf.blocking === 'boolean') {
+			extraParams.pf = win.ads.runtime.pf.blocking ? 'yes' : 'no';
+		}
+
+		for (key in extraParams) {
+			if (extraParams.hasOwnProperty(key)) {
+				keys.push(key);
+			}
+		}
+		keys.sort();
+		for (i = 0, len = keys.length; i < len; i += 1) {
+			key = keys[i];
+			out.push(key + '=' + extraParams[key]);
+		}
+		return out.join(';');
+	}
+
+	/**
+	 * A generic function to track an ad-related event and its timing in Google Analytics
+	 *
+	 * @param {string} eventName - the event name (use slashes for structure)
+	 * @param {object} data - extra data to track as JS object (will be converted to URL-like query-string)
+	 * @param {number=} value - time in milliseconds (or empty)
+	 * @param {string=} forcedLabel - the event label, if empty, the time bucket will be used
+	 */
+	function track(eventName, data, value, forcedLabel) {
+		var category = 'ad/' + eventName,
+			action = typeof data === 'string' ? data : encodeAsQueryString(data || {}),
+			gaLabel = forcedLabel,
+			gaValue,
+			trackValue;
+
+		if (!gaLabel) {
+			if (value === undefined) {
+				gaLabel = '';
+				value = 0;
+			} else {
+				gaLabel = timeBuckets.getTimeBucket(buckets, value / 1000);
+				if (/\+$|invalid/.test(gaLabel)) {
+					category = category.replace('ad', 'ad/error');
+				}
+			}
+		}
+
+		gaValue = Math.round(value);
+
+		// Empty action is not allowed by Google Analytics, thus:
+		action = action || 'nodata';
+		trackValue = {
+			ga_category: category,
+			ga_action: action,
+			ga_label: gaLabel,
+			ga_value: isNaN(gaValue) ? 0 : gaValue,
+			trackingMethod: 'ad'
+		};
+		tracker.track(trackValue);
+		log(trackValue, 'debug', logGroup);
+	}
+
+	/**
+	 * A generic function to track an ad-related event and its timing in DataWarehouse
+	 *
+	 * @param {object} data - data to track as JS object (will be converted to URL-like query-string)
+	 * @param {string} eventName - part of track URL (https://beacon.wikia-services.com/__track/special/[eventName]?c...)
+	 */
+	function trackDW(data, eventName) {
+		var trackValue = {
+			eventName: eventName,
+			trackingMethod: 'internal'
 		};
 
-	function formatTrackTime(t) {
-		var formatted;
-
-		log(['formatTrackTime', t], 'debug', logGroup);
-
-		if (isNaN(t)) {
-			log(['formatTrackTime', t, 'Error, time tracked is NaN'], 'warning', logGroup);
-			return 'NaN';
+		if (typeof data === 'string') {
+			trackValue.ping = data;
+		} else {
+			Object.keys(data).forEach(function (key) {
+				trackValue[key] = data[key];
+			});
 		}
-
-		if (t < 0) {
-			log(['formatTrackTime', t, 'Error, time tracked is a negative number'], 'warning', logGroup);
-			return 'negative';
-		}
-
-		formatted = t / 1000;
-		if (formatted > maxTrackedTime) {
-			formatted = 'more_than_' + maxTrackedTime;
-			log(['formatTrackTime', t, formatted], 'debug', logGroup);
-			return formatted;
-		}
-
-		formatted = formatted.toFixed(1);
-
-		log(['formatTrackTime', t, formatted], 'debug', logGroup);
-		return formatted;
+		tracker.track(trackValue);
+		log(['trackDW', trackValue], 'debug', logGroup);
 	}
 
-	function trackInit(provider, slotname, slotsize) {
-		log(['trackInit', slotname, slotsize], 'debug', logGroup);
+	/**
+	 * Measure time now. Use the passed event name and data object. Return an object with a track
+	 * method. When the method is called, the actual tracking happens. This allows you to separate
+	 * the time when the metric is gather from the time the metric is sent to GA
+	 *
+	 * @param {string} eventName
+	 * @param {string|object} eventData
+	 * @param {string=} eventType
+	 * @returns {{track: Function}}
+	 */
+	function measureTime(eventName, eventData, eventType) {
 
-		tracker.track({
-			eventName: 'liftium.slot3',
-			ga_category: 'slot3/' + slotsize.split(',')[0],
-			ga_action: slotname,
-			ga_label: provider,
-			trackingMethod: 'ad'
-		});
-	}
-
-	function trackEnd(provider, category, slotname, hopTime, reason) {
-		log(['trackEnd', category, slotname, hopTime], 'debug', logGroup);
-
-		var labelPrefix = '';
-
-		if (reason) {
-			labelPrefix = reason + '/';
-		}
-
-		tracker.track({
-			eventName: 'liftium.hop3',
-			ga_category: category + '3/' + provider,
-			ga_action: 'slot ' + slotname,
-			ga_label: labelPrefix + formatTrackTime(hopTime),
-			trackingMethod: 'ad'
-		});
-	}
-
-	function trackSlot(provider, slotname) {
-		var slotStart,
-			slotsize = trackedSize[slotname] || 'unknown';
+		var timingValue = win.wgNow && new Date().getTime() - win.wgNow.getTime();
+		eventType = eventType ? '/' + eventType : '';
 
 		return {
-			init: function () {
-				slotStart = new Date().getTime();
-				trackInit(provider, slotname, slotsize);
-			},
-			success: function () {
-				var slotEnd = new Date().getTime();
-				if (!slotStart) {
-					throw 'AdTracker: call init before success';
-				}
-				trackEnd(provider, 'success', slotname, slotEnd - slotStart);
-			},
-			hop: function (reason) {
-				var slotEnd = new Date().getTime();
+			measureDiff: function (diffData, diffType) {
+				eventType = '/' + diffType;
+				eventData = diffData;
+				timingValue = win.wgNow && new Date().getTime() - win.wgNow.getTime() - timingValue;
 
-				if (!slotStart) {
-					throw 'AdTracker: call init before hop';
+				return {
+					track: this.track
+				};
+			},
+			track: function () {
+				if (timingValue) {
+					track('timing/' + eventName + eventType, eventData, timingValue);
 				}
-				trackEnd(provider, 'hop', slotname, slotEnd - slotStart, reason);
 			}
 		};
 	}
 
 	return {
-		trackSlot: trackSlot
+		track: track,
+		trackDW: trackDW,
+		measureTime: measureTime
 	};
-};
+});

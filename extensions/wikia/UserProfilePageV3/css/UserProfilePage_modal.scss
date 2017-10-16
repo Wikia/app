@@ -1,59 +1,75 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/oasis/css/core/responsive-variables";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/clearfix";
 
 .UPPLightbox {
-		
-	.tab-content li {
-		@include clearfix;
-		font-size: 14px;
-	}
-	
-	.column {
-		float: left;
-		padding: 0 10px;
-		width: 350px;
-		label:first-child {
-			margin-top: 0;
+
+	.tab-content {
+		padding-top: 20px;
+
+		li {
+			border: none;
 		}
-		&.avatar {
-			width: 150px;
-		}
-		&.avatar-options {
-			width: 540px;
-		}
-	}
-	
-	label {
-		display: block;
-		margin-top: 20px;
-	}
-	
-	input[type=text] {
-		font-size: 14px;
-		padding: 3px;
-		width: 250px;
 	}
 
-	.tweet-at {
-		position: absolute;
-		margin: 5px 0 0 3px;
+	.input-group {
+		float: none;
+
+		input[type="text"],
+		.favorite-wikis {
+			box-sizing: border-box;
+			width: 100%;
+		}
+
+		/* VOLDEV-83: Fix confusing avatar upload interface */
+		input[type="file"] {
+			display: none;
+		}
+
+		.tweet-at, .fb-start {
+			float: left;
+			margin-top: 10px;
+			width: 110px;
+		}
+
+		input[name="fbPage"], input[name="twitter"] {
+			@include width-calc('100% - 110px');
+		}
 	}
-	input[name="twitter"] {
-		padding-left: 15px;
-		width: 235px;
+
+	img.avatar {
+		display: block;
+		float: left;
+		margin-right: 60px;
 	}
-	
+
+	.sample-avatars {
+		overflow: hidden;
+
+		li {
+			cursor: pointer;
+			float: left;
+			margin: 0 10px 10px 0;
+
+		}
+	}
+
 	.favorite-wikis {
 		@include clearfix;
 		-webkit-appearance: textfield;
 		-moz-appearance: textfield;
 		border: 1px solid $color-page-border;
+		margin-bottom: 5px;
 		padding: 3px;
-		width: 250px;
+
+		+ label {
+			text-align: right;
+		}
+
 		li {
-			@include border-radius(5px);
 			background: mix($color-page, $color-text, 92%);
+			border-radius: 5px;
 			float: left;
 			font-size: 12px;
 			line-height: normal;
@@ -83,31 +99,35 @@
 		}
 	}
 	.favorite-wikis-refresh {
-		position: absolute;
-		margin-left: 265px;
 		background-color: $color-buttons;
+		position: absolute;
+		bottom: 10px;
+
 		img {
 			background: url(/extensions/wikia/UserProfilePageV3/images/icon-return.png); /* $wgCdnStylePath */
 			height: 12px;
-			left: 3px;
-			top: 3px;
-			width: 14px;		
+			width: 14px;
 		}
 	}
-	
-	#facebookPage a, #hideEditsWikis {
+
+	#facebookPage a {
 		display: block;
 		font-size: 11px;
 		line-height: 11px;
 		text-align: right;
 		width: 260px;
 	}
-	
-	#facebookConnectAvatar label {
-		margin-top: 20px;
-	}
-	.sample-avatars li {
-		float: left;
-		margin-right: 10px;
+
+	@media screen and (max-width: $breakpoint-min) {
+
+		// prevent layout errors while 'connect with facebook' button is loading
+		.avatar-options {
+			overflow: hidden;
+			width: 248px;
+		}
+
+		input[type="file"] {
+			width: 230px;
+		}
 	}
 }

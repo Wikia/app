@@ -24,7 +24,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * @param $params array
 	 */
 	function __construct( $params ) {
-		global $wgMemCachedClass, $wgMoxiTestNodes;
+		global $wgMemCachedClass;
 
 		if ( !isset( $params['servers'] ) ) {
 			$params['servers'] = $GLOBALS['wgMemCachedServers'];
@@ -42,7 +42,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 			$params['timeout'] = $GLOBALS['wgMemCachedTimeout'];
 		}
 		if ( !isset( $params['connect_timeout'] ) ) {
-			$params['connect_timeout'] = 0.1;
+			$params['connect_timeout'] = $GLOBALS['wgMemCachedConnectionTimeout'] ?: 0.5; # Wikia change (global introduced)
 		}
 
 		if (empty($wgMemCachedClass) || !class_exists($wgMemCachedClass)) {
@@ -70,7 +70,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	/**
 	 * @param $key string
 	 * @param $value
-	 * @param $exptime int
+	 * @param $exptime int If it's equal to zero, the item will never expire!
 	 * @return bool
 	 */
 	public function set( $key, $value, $exptime = 0 ) {

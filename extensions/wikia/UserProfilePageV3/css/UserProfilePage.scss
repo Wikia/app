@@ -1,10 +1,9 @@
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/box-shadow";
 @import "skins/oasis/css/core/layout";
-@import "skins/oasis/css/mixins/bodytext";
+@import "skins/shared/mixins/bodytext";
 
 $radius-user-profile-masthead: 5px;
 
@@ -25,14 +24,14 @@ $color-masthead: $color-page;
 
 $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 40%);
 
-// Temporary - waiting for UI Styleguide team
-@import "modalFix";
-
-
 .WikiaUserPagesHeader {
-	@if $page-opacity == 100 {
+	@if $page-opacity == 1 {
 		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%);
 	}
+
+	padding-top: 20px;
+	width: 100%;
+
 	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
 		background: transparent;
 		padding: 0 10px 6px;
@@ -93,21 +92,20 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
         }
 	}
 	.masthead-info {
-		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
-		@include border-radius-nw($radius-user-profile-masthead * 2);
-		@include border-radius-ne($radius-user-profile-masthead * 2);
-		@include border-radius-sw($radius-user-profile-masthead);
-		@include border-radius-se($radius-user-profile-masthead);
 		@include box-shadow(0px, 2px, 10px, rgba(0,0,0,.25));
-
 		@include clearfix;
 		background: $color-masthead;
+		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
+		border-bottom-left-radius: $radius-user-profile-masthead;
+		border-bottom-right-radius: $radius-user-profile-masthead;
+		border-top-left-radius: $radius-user-profile-masthead * 2;
+		border-top-right-radius: $radius-user-profile-masthead * 2;
 		margin-left: 165px;
 		margin-bottom: 20px;
 		position: relative;
 
 		&:hover {
-			#userIdentityBoxEdit {
+			.user-identity-box-edit {
 				display: block;
 			}
 		}
@@ -118,9 +116,9 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			width: 320px;
 		}
 		hgroup {
-			@include border-radius-nw($radius-user-profile-masthead);
-			@include border-radius-ne($radius-user-profile-masthead);
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 0%, $color-buttons, 100%);
+			border-top-left-radius: $radius-user-profile-masthead;
+			border-top-right-radius: $radius-user-profile-masthead;
 			color: $color-button-text;
 			overflow: auto;
 			padding: 8px 25px;
@@ -132,7 +130,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			line-height: 38px;
 		}
 		.tag {
-			@include border-radius(3px);
+			border-radius: 3px;
 			background: mix($color-button-highlight, $color-page, 80%);
 			display: inline-block;
 			margin-left: 10px;
@@ -141,7 +139,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			text-transform: uppercase;
 			top: -4px;
 			+.tag {
-				margin-left: 0;
+				margin-left: 5px;
 			}
 		}
 		h2 {
@@ -152,6 +150,18 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			span {
 				color: $color-user-profile-masthead-aka;
 				margin: 0 1px 0 6px;
+			}
+		}
+		.bio {
+			max-height: 100px;
+			overflow: hidden;
+		}
+
+		.bio-toggle {
+			display: none;
+			margin-top: 10px;
+			span {
+				cursor: pointer;
 			}
 		}
 	}
@@ -173,9 +183,41 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	}
 
 	.tally {
-		margin-bottom: 25px;
+		padding-bottom: 10px;
+
 		em {
 			margin-right: 5px;
+		}
+
+		.discussion-label {
+			padding: 5px 0;
+		}
+
+		&:last-of-type {
+			margin-bottom: 25px;
+		}
+	}
+
+	.discussion-details {
+		border-top: 1px solid $color-page-border;
+		padding-top: 10px;
+
+		a {
+			color: $color-text;
+
+			&:hover {
+				color: $color-links;
+			}
+		}
+	}
+
+	.contributions-details {
+		a {
+			color: $color-text;
+
+			&:hover {
+				color: $color-links;
+			}
 		}
 	}
 
@@ -186,7 +228,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			margin-right: 1em;
 		}
 		.icon {
-			@include border-radius(50px);
+			border-radius: 50px;
 			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgCdnStylePath */
 			height: 17px;
 			position: relative;
@@ -260,18 +302,20 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			padding-bottom: 10px;
 		}
 
-		#userIdentityBoxEdit {
+		.user-identity-box-edit {
 			display: block;
 		}
 	}
 }
 
-#userIdentityBoxEdit {
+.user-identity-box-edit {
+	cursor: pointer;
 	display: none;
 	margin-top: 10px;
 	position: absolute;
 	right: 10px;
-	img {
+	list-style: none;
+	svg {
 		position: relative;
 		top: 2px;
 	}
@@ -287,7 +331,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	padding-top: 10px;
 }
 
-@if ( $responsive-layout-enabled ) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
 	// TODO: To be changed when final proposal for new search placement for small screens layout will be decided
 	@media screen and (max-width: 1023px) {
 		.UserProfileMastheadSearch {

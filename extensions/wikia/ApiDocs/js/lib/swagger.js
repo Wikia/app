@@ -7,6 +7,8 @@
 
     SwaggerApi.prototype.discoveryUrl = "http://api.wordnik.com/v4/resources.json";
 
+    SwaggerApi.prototype.mainUrl = "";
+
     SwaggerApi.prototype.debug = false;
 
     SwaggerApi.prototype.api_key = null;
@@ -19,6 +21,9 @@
       }
       if (options.discoveryUrl != null) {
         this.discoveryUrl = options.discoveryUrl;
+      }
+      if (options.mainUrl != null) {
+        this.mainUrl = options.mainUrl;
       }
       if (options.debug != null) {
         this.debug = options.debug;
@@ -51,7 +56,7 @@
     SwaggerApi.prototype.build = function() {
       var _this = this;
       this.progress('fetching resource list: ' + this.discoveryUrl);
-      return jQuery.getJSON(this.discoveryUrl, function(response) {
+      return jQuery.getJSON(this.discoveryUrl + this.mainUrl, function(response) {
         var res, resource, _i, _j, _len, _len1, _ref, _ref1;
         if (response.apiVersion != null) {
           _this.apiVersion = response.apiVersion;
@@ -68,7 +73,6 @@
           } else {
             _this.basePath = _this.discoveryUrl;
           }
-          log('derived basepath from discoveryUrl as ' + _this.basePath);
         }
         _this.apis = {};
         _this.apisArray = [];
@@ -206,7 +210,6 @@
       this.name = resourceObj.readableName; //parts[parts.length - 1].replace('.{format}', '');
       this.readableName = resourceObj.readableName;
       this.basePath = this.api.basePath;
-      console.log('bp: ' + this.basePath);
       this.operations = {};
       this.operationsArray = [];
       this.modelsArray = [];
@@ -221,8 +224,6 @@
           this.api.fail("SwaggerResources must have a path.");
         }
         this.url = this.api.suffixApiKey(this.api.basePath + this.path.replace('{format}', 'json'));
-        console.log('basePath: ' + this.api.basePath);
-        console.log('url: ' + this.url);
         this.api.progress('fetching resource ' + this.name + ': ' + this.url);
         jQuery.getJSON(this.url, function(response) {
           var endpoint, _i, _len, _ref;

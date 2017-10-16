@@ -17,7 +17,7 @@
  */
 class SyntaxException extends Exception { }
 class AuthenticationException extends Exception { }
-class InvalidResponseException extends Exception { }
+class InvalidResponseException extends WikiaException { }
 class NonEmptyContainerException extends Exception { }
 class NoSuchObjectException extends Exception { }
 class NoSuchContainerException extends Exception { }
@@ -29,13 +29,4 @@ class BadContentTypeException extends Exception { }
 class InvalidUTF8Exception extends Exception { }
 class ConnectionNotOpenException extends Exception { }
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
-?>
+class SwiftRetryException extends Exception {} # Wikia change

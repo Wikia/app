@@ -209,7 +209,7 @@ class CF_Authentication
         }
         if ($status < 200 || $status > 299) {
             throw new InvalidResponseException(
-                "Unexpected response (".$status."): ".$reason);
+                "Unexpected response (".$status."): ". trim($reason). " [{$this->auth_host}]");
         }
 
         if (!($surl || $curl) || !$atoken) {

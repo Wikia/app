@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"පසිඳු කාවින්ද"
+		]
+	},
+	"sd_browsedata_choosecategory": "زمرہ انتخاب کریں",
+	"sd_browsedata_viewcategory": "قول زمرہ",
+	"sd_browsedata_other": "دیگر",
+	"sd_browsedata_none": "کوئی بھی نہیں",
+	"sd_browsedata_or": "یا",
+	"sd_browsedata_removefilter": "اس فلٹر حذف کریں",
+	"sd_browsedata_resetfilters": "فلٹر کو دوبارہ مرتب کریں",
+	"sd_browsedata_daterangestart": "شروع:",
+	"sd_browsedata_daterangeend": "ديكھيں:",
+	"sd_browsedata_novalues": "وہاں کوئی اقدار اس فلٹر کریں",
+	"sd-pageschemas-filter": "فلٹر کریں",
+	"sd-pageschemas-values": "اقدار"
+}

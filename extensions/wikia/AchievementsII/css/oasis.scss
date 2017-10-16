@@ -1,7 +1,6 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/gradient";
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 /* fix for Oasis */
 #leaderboard-body .list-heading {
@@ -37,7 +36,7 @@
 	li {
 		border-bottom: 1px solid $color-page-border;
 		margin: 10px 2px 7px 0;
-		padding-bottom: 0px;
+		padding-bottom: 0;
 		clear: both;
 		&:last-child {
 			border-bottom: none;
@@ -65,7 +64,7 @@
 	min-width: 270px;
 	
 	&.sponsored-hover {
-		padding: 0 0 0 0;
+		padding: 0;
 		border: {
 			color:$color-buttons;
 			style: solid;
@@ -76,7 +75,7 @@
 		}
 
 		img {
-			margin: 0 0 0 0;
+			margin: 0;
 		}
 
 		& > .earned {
@@ -87,7 +86,7 @@
 			color: $color-button-text;
 			background-color: $color-buttons;
 			line-height: 20px;
-			margin: 0 0 0 0;
+			margin: 0;
 		}
 	}
 
@@ -122,15 +121,8 @@
 	display: block;
 }
 
-/* rail in the right side */
-.WikiaLatestEarnedBadgesModule {
-	.clearfix { /** @todo questionable **/
-		@include clearfix;
-	}
-}
-
 .WikiaRail {
-	& > div.AchievementsModule {
+	.AchievementsModule {
 		.achievements-leaderboard-button {
 			clear: both;
 			margin: {
@@ -160,15 +152,12 @@
 			@include clearfix;
 			li {
 				display: inline-block;
-				border-bottom: none!important;
+				border-bottom: 0;
 				margin: 7px 0;
 				padding: 0;
 				img {
 					float: left;
 				}
-				/* IE7 fixes - RT #72881 */
-				*clear: none;
-				*float: left;
 			}
 
 		}
@@ -184,20 +173,15 @@
 			margin-top: 10px;
 			@include clearfix;
 		}
-
-		/* IE7 fix - RT #72881 */
-		& > div {
-			*display: inline;
-		}
 	}
 	
-	& > div.UserProfileAchievementsModule {
+	.UserProfileAchievementsModule {
 
 		.data {
 			@include clearfix;
 
 			.data-details, .data-details > p {
-				margin: 0px;
+				margin: 0;
 				font-size: 11px;
 				line-height: 13px;
 
@@ -243,7 +227,7 @@
 				}
 
 				.badge-icon-earnable {
-					margin-top: 0px
+					margin-top: 0;
 				}
 			}
 		}

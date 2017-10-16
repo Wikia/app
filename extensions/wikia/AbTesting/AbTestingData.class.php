@@ -16,6 +16,8 @@ class AbTestingData extends WikiaObject {
 	const MIN = 'min';
 	const MAX = 'max';
 
+	protected $useMaster = false;
+
 	protected $blacklistedColumns = array(
 		self::TABLE_EXPERIMENTS => array(
 			'groups',
@@ -27,9 +29,15 @@ class AbTestingData extends WikiaObject {
 	);
 
 	public function getDb( $db_type = DB_SLAVE ) {
+		if ( $this->useMaster ) {
+			$db_type = DB_MASTER;
+		}
 		return wfGetDB( $db_type, array(), $this->wg->ExternalDatawareDB );
 	}
 
+	public function setUseMaster( $useMaster = true ) {
+		$this->useMaster = $useMaster;
+	}
 
 
 	/* READ METHODS */
@@ -113,7 +121,6 @@ class AbTestingData extends WikiaObject {
 		// don't race with replication lag
 		$db_type = $use_master ? DB_MASTER : DB_SLAVE;
 
-		/** @var $dbr DatabaseMysql */
 		$dbr = $this->getDb( $db_type );
 		$res = $dbr->select(
 			array( // tables
@@ -270,8 +277,8 @@ class AbTestingData extends WikiaObject {
 		);
 
 		$dbr = $this->getDb(DB_MASTER);
-		$val1 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$startExpr})",$startConds);
-		$val2 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$endExpr})",$endConds);
+		$val1 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$startExpr})",$startConds, __METHOD__);
+		$val2 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$endExpr})",$endConds, __METHOD__);
 
 		if ( is_null($val1) ) {
 			return $val2;

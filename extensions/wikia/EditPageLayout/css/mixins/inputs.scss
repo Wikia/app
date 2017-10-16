@@ -1,10 +1,7 @@
-@import "skins/oasis/css/mixins/border-radius";
-
 @mixin epl-textfield {
-	@include border-radius(4px);
-
 	background-color: $color-epl-input;
 	border: 1px solid $color-epl-input-border;
+	border-radius: 4px;
 	color: $color-text;
 	display: block;
 	font-family: inherit;
@@ -34,7 +31,7 @@
 @mixin epl-editorarea {
 	display: block; // Webkit treats textareas as inline elements. Fixes BugId:12664
 	font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
-	font-size: 13.5px;
+	font-size: 13px;
 	margin: 0;
 	padding: 0;
 	outline: none;

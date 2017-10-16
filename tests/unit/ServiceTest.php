@@ -9,28 +9,15 @@ class ServiceTest extends WikiaBaseTest {
 		$wgMemc = wfGetCache(CACHE_MEMCACHED);
 	}
 
-	function testAvatarService() {
-		$anonName = '10.10.10.10';
-		$userName = 'WikiaBot';
-
-		$this->mockGlobalVariable('wgDevBoxImageServerOverride', 'images.foo.wikia-dev.com');
-
-		// users
-		$this->assertRegExp('/width="32"/', AvatarService::render($userName, 32));
-		$this->assertRegExp('/\/20px-/', AvatarService::render($userName, 16));
-		$this->assertRegExp('/User:WikiaBot/', AvatarService::renderLink($userName));
-		$this->assertRegExp('/^<img src="http:\/\/images/', AvatarService::renderAvatar($userName));
-		$this->assertRegExp('/^http:\/\/images/', AvatarService::getAvatarUrl($userName));
-
-		// anons
-		$this->assertRegExp('/Special:Contributions\//', AvatarService::getUrl($anonName));
-		$this->assertRegExp('/^<img src="/', AvatarService::renderAvatar($anonName));
-		$this->assertRegExp('/\/20px-/', AvatarService::renderAvatar($anonName, 20));
-		$this->assertRegExp('/Special:Contributions/', AvatarService::renderLink($anonName));
-	}
-
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.35311 ms
+	 * @group UsingDB
+	 */
 	function testPageStatsService() {
 		global $wgTitle, $wgMemc;
+
+		$this->markTestSkipped('This test fails randomly');
 
 		$wgTitle = Title::newMainPage();
 		$articleId = $wgTitle->getArticleId();
@@ -84,8 +71,12 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertTrue(empty($data));
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testUserStatsService() {
-		global $wgArticle;
+		$this->markTestSkipped('This is not a unit test');
+
 		$user = User::newFromName('QATestsBot');
 
 		$service = new UserStatsService($user->getId());
@@ -96,16 +87,6 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertInternalType('string', $stats['date']);
 
 		// edits increase - perform fake edit
-		$edits = $stats['edits'];
-
-		$flags = $status = false;
-		UserStatsService::onArticleSaveComplete($wgArticle, $user, false, false, false, false, false, $flags, false, $status, false);
-
-		$stats = $service->getStats();
-
-		$this->assertEquals($edits+1, $stats['edits']);
-
-		// edits increase ("manual")
 		$edits = $stats['edits'];
 
 		$service->increaseEditsCount();

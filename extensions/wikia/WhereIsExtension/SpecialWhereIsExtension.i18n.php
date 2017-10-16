@@ -1,53 +1,36 @@
 <?php
-
-/**
- * WhereIsExtension
- *
- * A WhereIsExtension extension for MediaWiki
- * Provides a list of wikis with enabled selected extension
- *
- * @author Maciej Błaszkowski (Marooned) <marooned@wikia.com>
- * @date 2008-07-02
- * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia, Inc.
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- * @package MediaWiki
- * @subpackage SpecialPage
- *
- * To activate this functionality, place this file in your extensions/
- * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/WhereIsExtension/SpecialWhereIsExtension.php");
- */
-
 $messages = array();
 
 $messages['en'] = array(
-	'whereisextension'			=> 'Where is extension',	//the name displayed on Special:SpecialPages
-	'whereisextension-submit'	=> 'Search',
-	'whereisextension-list'		=> 'List of wikis with matched criteria ($1)',
-	'whereisextension-isset'	=> 'is set to',
-	'whereisextension-filter'	=> 'Filter',
-	'whereisextension-all-groups'	=> 'All groups',
-	'whereisextension-name-contains'	=> 'variable name contains',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension' => 'Where is extension',
+	'whereisextension-submit' => 'Search',
+	'whereisextension-list' => 'List of wikis with matched criteria ($1)',
+	'whereisextension-isset' => 'is set to',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'All groups',
+	'whereisextension-name-contains' => 'variable name contains',
 	'whereisextension-search-like-value' => 'Like:',
 	'whereisextension-search-type' => 'Type:',
-	'whereisextension-search-type-bool' => "Boolean",
-	'whereisextension-search-type-full' => "Like",
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Like',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- * @author Siebrand
- */
 $messages['qqq'] = array(
+	'whereisextension-desc' => '{{desc}}',
 	'whereisextension-submit' => '{{Identical|Search}}',
 	'whereisextension-filter' => 'Used as some kind of fieldset description.
 {{Identical|Filter}}',
 	'whereisextension-search-type' => '{{Identical|Type}}',
+	'whereisextension-edit' => 'A link to edit a value of a variable.',
+	'whereisextension-select-all' => 'A link to select all wikis on a list with a given variable.',
+	'whereisextension-deselect-all' => 'A link to deselect all wikis on a list with a given variable.',
 );
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = array(
 	'whereisextension' => 'Waar is die uitbreiding',
 	'whereisextension-submit' => 'Soek',
@@ -58,31 +41,18 @@ $messages['af'] = array(
 	'whereisextension-name-contains' => 'veranderlike-naam bevat',
 );
 
-/** Aragonese (aragonés)
- * @author Juanpabl
- */
 $messages['an'] = array(
 	'whereisextension-filter' => 'Filtrar',
 );
 
-/** Arabic (العربية)
- * @author OsamaK
- */
 $messages['ar'] = array(
 	'whereisextension-filter' => 'مُرشِّح',
 );
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
 $messages['az'] = array(
 	'whereisextension-submit' => 'Axtar',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- */
 $messages['be-tarask'] = array(
 	'whereisextension' => 'Дзе пашырэньне',
 	'whereisextension-submit' => 'Шукаць',
@@ -97,20 +67,12 @@ $messages['be-tarask'] = array(
 	'whereisextension-search-type-full' => 'Падобна',
 );
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = array(
 	'whereisextension-submit' => 'Търсене',
 	'whereisextension-all-groups' => 'Всички групи',
 	'whereisextension-search-type' => 'Тип:',
 );
 
-/** Breton (brezhoneg)
- * @author Fulup
- * @author Gwenn-Ael
- * @author Y-M D
- */
 $messages['br'] = array(
 	'whereisextension' => "Pelec'h emañ an astenn",
 	'whereisextension-submit' => 'Klask',
@@ -125,10 +87,6 @@ $messages['br'] = array(
 	'whereisextension-search-type-full' => 'Evel',
 );
 
-/** Catalan (català)
- * @author Gemmaa
- * @author Paucabot
- */
 $messages['ca'] = array(
 	'whereisextension' => "Extensió ''Where is''",
 	'whereisextension-submit' => 'Cerca',
@@ -143,14 +101,10 @@ $messages['ca'] = array(
 	'whereisextension-search-type-full' => 'Com',
 );
 
-/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'whereisextension-submit' => 'گەڕان',
 );
 
-/** Czech (česky)
- * @author Dontlietome7
- */
 $messages['cs'] = array(
 	'whereisextension' => 'Rozšíření Kde je',
 	'whereisextension-submit' => 'Hledání',
@@ -165,10 +119,6 @@ $messages['cs'] = array(
 	'whereisextension-search-type-full' => 'Jako',
 );
 
-/** German (Deutsch)
- * @author LWChris
- * @author Laximilian scoken
- */
 $messages['de'] = array(
 	'whereisextension' => 'Wo ist die Erweiterung',
 	'whereisextension-submit' => 'Suchen',
@@ -181,11 +131,13 @@ $messages['de'] = array(
 	'whereisextension-search-type' => 'Typ:',
 	'whereisextension-search-type-bool' => 'Boolean',
 	'whereisextension-search-type-full' => 'Wie',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
 $messages['diq'] = array(
 	'whereisextension-submit' => 'Cı geyre',
 	'whereisextension-isset' => 'Saz kerdiya',
@@ -197,17 +149,10 @@ $messages['diq'] = array(
 	'whereisextension-search-type-full' => 'Rındeni',
 );
 
-/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'whereisextension-submit' => 'Dii',
 );
 
-/** Spanish (español)
- * @author Absay
- * @author Crazymadlover
- * @author Pertile
- * @author Peter17
- */
 $messages['es'] = array(
 	'whereisextension' => 'Dónde está la extensión',
 	'whereisextension-submit' => 'Buscar',
@@ -220,11 +165,13 @@ $messages['es'] = array(
 	'whereisextension-search-type' => 'Tipo:',
 	'whereisextension-search-type-bool' => 'Expresión Booleana',
 	'whereisextension-search-type-full' => 'Semejante a',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Basque (euskara)
- * @author An13sa
- */
 $messages['eu'] = array(
 	'whereisextension' => 'Non dagoen zehazteko luzapena',
 	'whereisextension-submit' => 'Bilatu',
@@ -239,11 +186,6 @@ $messages['eu'] = array(
 	'whereisextension-search-type-full' => 'Honen antzekoa:',
 );
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Crt
- * @author Ilkea
- */
 $messages['fi'] = array(
 	'whereisextension' => 'Missä on laajennus',
 	'whereisextension-submit' => 'Haku',
@@ -256,13 +198,13 @@ $messages['fi'] = array(
 	'whereisextension-search-type' => 'Tyyppi:',
 	'whereisextension-search-type-bool' => 'Totuusarvo',
 	'whereisextension-search-type-full' => 'Kuten',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** French (français)
- * @author IAlex
- * @author Peter17
- * @author Slamduck
- */
 $messages['fr'] = array(
 	'whereisextension' => "Où se trouve l'extension",
 	'whereisextension-submit' => 'Rechercher',
@@ -275,11 +217,13 @@ $messages['fr'] = array(
 	'whereisextension-search-type' => 'Type :',
 	'whereisextension-search-type-bool' => 'Booléen',
 	'whereisextension-search-type-full' => 'Comme',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Galician (galego)
- * @author Toliño
- */
 $messages['gl'] = array(
 	'whereisextension' => 'Onde está a extensión',
 	'whereisextension-submit' => 'Procurar',
@@ -294,15 +238,10 @@ $messages['gl'] = array(
 	'whereisextension-search-type-full' => 'Semellante a',
 );
 
-/** Hausa (هَوُسَ) */
 $messages['ha'] = array(
 	'whereisextension-submit' => 'Nema',
 );
 
-/** Hungarian (magyar)
- * @author Dani
- * @author Glanthor Reviol
- */
 $messages['hu'] = array(
 	'whereisextension' => '„Hol van” kiterjesztés',
 	'whereisextension-submit' => 'Keresés',
@@ -315,9 +254,6 @@ $messages['hu'] = array(
 	'whereisextension-search-type-bool' => 'Logikai érték',
 );
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'whereisextension' => 'Ubi es le extension',
 	'whereisextension-submit' => 'Cercar',
@@ -332,11 +268,6 @@ $messages['ia'] = array(
 	'whereisextension-search-type-full' => 'Como',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Farras
- * @author Irwangatot
- * @author Kenrick95
- */
 $messages['id'] = array(
 	'whereisextension' => 'Di mana ekstensi',
 	'whereisextension-submit' => 'Cari',
@@ -351,24 +282,29 @@ $messages['id'] = array(
 	'whereisextension-search-type-full' => 'Seperti',
 );
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
 $messages['ig'] = array(
 	'whereisextension-submit' => 'Chọwa',
 );
 
-/** Italian (italiano) */
 $messages['it'] = array(
 	'whereisextension-submit' => 'Ricerca',
 	'whereisextension-all-groups' => 'Tutti i gruppi',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension' => 'Where is extension',
+	'whereisextension-list' => 'List of wikis with matched criteria ($1)',
+	'whereisextension-isset' => 'is set to',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-name-contains' => 'variable name contains',
+	'whereisextension-search-like-value' => 'Like:',
+	'whereisextension-search-type' => 'Type:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Like',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Japanese (日本語)
- * @author Naohiro19
- * @author Schu
- * @author Yanajin66
- */
 $messages['ja'] = array(
 	'whereisextension' => '拡張子の場所',
 	'whereisextension-submit' => '検索',
@@ -381,50 +317,75 @@ $messages['ja'] = array(
 	'whereisextension-search-type' => 'タイプ:',
 	'whereisextension-search-type-bool' => 'ブール値',
 	'whereisextension-search-type-full' => 'Like演算子:',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Kalaallisut (kalaallisut)
- * @author Qaqqalik
- */
 $messages['kl'] = array(
 	'whereisextension-submit' => 'Ujarlerit',
 );
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- */
 $messages['kn'] = array(
 	'whereisextension-submit' => 'ಹುಡುಕು',
 );
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
+$messages['ko'] = array(
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension' => 'Where is extension',
+	'whereisextension-submit' => 'Search',
+	'whereisextension-list' => 'List of wikis with matched criteria ($1)',
+	'whereisextension-isset' => 'is set to',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'All groups',
+	'whereisextension-name-contains' => 'variable name contains',
+	'whereisextension-search-like-value' => 'Like:',
+	'whereisextension-search-type' => 'Type:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Like',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
+);
+
 $messages['ksh'] = array(
 	'whereisextension-search-type' => 'Tüp:',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
- * @author George Animal
- */
 $messages['ku-latn'] = array(
 	'whereisextension-submit' => 'Lêbigere',
 	'whereisextension-filter' => 'Fîltre',
 	'whereisextension-search-type' => 'Cure:',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = array(
 	'whereisextension-submit' => 'Sichen',
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'All Gruppen',
 );
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
+$messages['lol'] = array(
+	'whereisextension-desc' => 'crwdns65862:0crwdne65862:0',
+	'whereisextension' => 'crwdns65863:0crwdne65863:0',
+	'whereisextension-submit' => 'crwdns65864:0crwdne65864:0',
+	'whereisextension-list' => 'crwdns65865:0crwdne65865:0',
+	'whereisextension-isset' => 'crwdns65866:0crwdne65866:0',
+	'whereisextension-filter' => 'crwdns65867:0crwdne65867:0',
+	'whereisextension-all-groups' => 'crwdns65868:0crwdne65868:0',
+	'whereisextension-name-contains' => 'crwdns65869:0crwdne65869:0',
+	'whereisextension-search-like-value' => 'crwdns65870:0crwdne65870:0',
+	'whereisextension-search-type' => 'crwdns65871:0crwdne65871:0',
+	'whereisextension-search-type-bool' => 'crwdns65872:0crwdne65872:0',
+	'whereisextension-search-type-full' => 'crwdns65873:0crwdne65873:0',
+	'whereisextension-edit' => 'crwdns65874:0crwdne65874:0',
+	'whereisextension-select-all' => 'crwdns65875:0crwdne65875:0',
+	'whereisextension-deselect-all' => 'crwdns65876:0crwdne65876:0',
+	'right-WhereIsExtension' => 'crwdns65877:0crwdne65877:0',
+);
+
 $messages['mk'] = array(
 	'whereisextension' => 'Каде е додатокот',
 	'whereisextension-submit' => 'Пребарај',
@@ -439,9 +400,6 @@ $messages['mk'] = array(
 	'whereisextension-search-type-full' => 'Како',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = array(
 	'whereisextension' => 'Sambungan di Mana',
 	'whereisextension-submit' => 'Cari',
@@ -456,18 +414,12 @@ $messages['ms'] = array(
 	'whereisextension-search-type-full' => 'Seperti',
 );
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
 $messages['my'] = array(
 	'whereisextension-submit' => 'ရှာ​ဖွေ​ရန်​',
 	'whereisextension-filter' => 'စိစစ်မှု',
 	'whereisextension-search-type' => 'အမျိုးအစား :',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
- * @author Nghtwlkr
- */
 $messages['nb'] = array(
 	'whereisextension' => 'Hvor er utvidelsen',
 	'whereisextension-submit' => 'Søk',
@@ -482,16 +434,10 @@ $messages['nb'] = array(
 	'whereisextension-search-type-full' => 'Lik',
 );
 
-/** Nepali (नेपाली)
- * @author RajeshPandey
- */
 $messages['ne'] = array(
 	'whereisextension-submit' => 'खोज्नुहोस्',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
 $messages['nl'] = array(
 	'whereisextension' => 'Waar is de uitbreiding',
 	'whereisextension-submit' => 'Zoeken',
@@ -504,11 +450,13 @@ $messages['nl'] = array(
 	'whereisextension-search-type' => 'Type:',
 	'whereisextension-search-type-bool' => 'Booleaanse operator',
 	'whereisextension-search-type-full' => 'Zoals',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Occitan (occitan)
- * @author Cedric31
- */
 $messages['oc'] = array(
 	'whereisextension' => "Ont se tròba l'extension",
 	'whereisextension-submit' => 'Recercar',
@@ -519,19 +467,12 @@ $messages['oc'] = array(
 	'whereisextension-name-contains' => 'lo nom de la variabla conten',
 );
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = array(
 	'whereisextension-submit' => 'Uffgucke',
 );
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sp5uhe
- */
 $messages['pl'] = array(
-	'whereisextension' => 'Rozszerzenie do wyszukiwania',
+	'whereisextension' => 'Wyszukiwanie rozszerzeń',
 	'whereisextension-submit' => 'Szukaj',
 	'whereisextension-list' => 'Lista wiki, które odpowiadają kryteriom',
 	'whereisextension-isset' => 'jest ustawiona na',
@@ -542,12 +483,13 @@ $messages['pl'] = array(
 	'whereisextension-search-type' => 'Typ:',
 	'whereisextension-search-type-bool' => 'Wartość logiczna',
 	'whereisextension-search-type-full' => 'Podobnie do',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'whereisextension' => "Anté ch'a l'é l'estension",
 	'whereisextension-submit' => 'Serca',
@@ -562,38 +504,13 @@ $messages['pms'] = array(
 	'whereisextension-search-type-full' => 'Com',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'whereisextension-submit' => 'پلټنه',
 	'whereisextension-filter' => 'چاڼګر',
 	'whereisextension-all-groups' => 'ټولې ډلې',
 );
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- */
 $messages['pt'] = array(
-	'whereisextension' => 'Onde está a extensão',
-	'whereisextension-submit' => 'Pesquisar',
-	'whereisextension-list' => 'Lista de wikis que correspondem aos critérios',
-	'whereisextension-isset' => 'tem o valor',
-	'whereisextension-filter' => 'Filtro',
-	'whereisextension-all-groups' => 'Todos os grupos',
-	'whereisextension-name-contains' => 'nome da variável contém',
-	'whereisextension-search-like-value' => 'Semelhante a:',
-	'whereisextension-search-type' => 'Tipo:',
-	'whereisextension-search-type-bool' => 'Booleano',
-	'whereisextension-search-type-full' => 'Semelhante a',
-);
-
-/** Brazilian Portuguese (português do Brasil)
- * @author Daemorris
- * @author Giro720
- * @author McDutchie
- */
-$messages['pt-br'] = array(
 	'whereisextension' => 'Extensão onde está',
 	'whereisextension-submit' => 'Pesquisar',
 	'whereisextension-list' => 'Lista de wikis com critério correspondente',
@@ -605,13 +522,13 @@ $messages['pt-br'] = array(
 	'whereisextension-search-type' => 'Tipo:',
 	'whereisextension-search-type-bool' => 'Booleano',
 	'whereisextension-search-type-full' => 'Semelhante a',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Russian (русский)
- * @author Eleferen
- * @author Lockal
- * @author Александр Сигачёв
- */
 $messages['ru'] = array(
 	'whereisextension' => 'Где расширение',
 	'whereisextension-submit' => 'Искать',
@@ -624,16 +541,17 @@ $messages['ru'] = array(
 	'whereisextension-search-type' => 'Тип:',
 	'whereisextension-search-type-bool' => 'Логический',
 	'whereisextension-search-type-full' => 'Подобно',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Sinhala (සිංහල) */
 $messages['si'] = array(
 	'whereisextension-submit' => 'සොයන්න',
 );
 
-/** Slovenian (slovenščina)
- * @author Dbc334
- */
 $messages['sl'] = array(
 	'whereisextension' => 'Kje je razširitev',
 	'whereisextension-submit' => 'Išči',
@@ -648,11 +566,6 @@ $messages['sl'] = array(
 	'whereisextension-search-type-full' => 'Kot',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
- * @author Charmed94
- * @author Rancher
- * @author Verlor
- */
 $messages['sr-ec'] = array(
 	'whereisextension' => 'Где је проширење',
 	'whereisextension-submit' => 'Претражи',
@@ -667,10 +580,6 @@ $messages['sr-ec'] = array(
 	'whereisextension-search-type-full' => 'Како',
 );
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
 	'whereisextension' => 'Var är tillägg',
 	'whereisextension-submit' => 'Sök',
@@ -685,17 +594,11 @@ $messages['sv'] = array(
 	'whereisextension-search-type-full' => 'Gilla',
 );
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = array(
 	'whereisextension-submit' => 'వెతుకు',
 	'whereisextension-all-groups' => 'అన్ని గుంపులు',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'whereisextension' => 'Dugtong na nasaan',
 	'whereisextension-submit' => 'Hanapin',
@@ -710,9 +613,6 @@ $messages['tl'] = array(
 	'whereisextension-search-type-full' => 'Wangis',
 );
 
-/** Ukrainian (українська)
- * @author Тест
- */
 $messages['uk'] = array(
 	'whereisextension-submit' => 'Шукати',
 	'whereisextension-filter' => 'Фільтр',
@@ -720,10 +620,6 @@ $messages['uk'] = array(
 	'whereisextension-search-type' => 'Тип:',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- * @author XiaoQiaoGrace
- */
 $messages['vi'] = array(
 	'whereisextension' => 'Đâu là phần mở rộng',
 	'whereisextension-submit' => 'Tìm kiếm',
@@ -736,14 +632,48 @@ $messages['vi'] = array(
 	'whereisextension-search-type' => 'Kiểu:',
 	'whereisextension-search-type-bool' => 'Boolean',
 	'whereisextension-search-type-full' => 'Giống như',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
- * @author Hydra
- */
 $messages['zh-hans'] = array(
 	'whereisextension-submit' => '搜寻',
 	'whereisextension-search-type' => '类型：',
 	'whereisextension-search-type-full' => '喜欢',
+	'whereisextension' => '扩展功能位置',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-list' => 'List of wikis with matched criteria ($1)',
+	'whereisextension-isset' => 'is set to',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'All groups',
+	'whereisextension-name-contains' => 'variable name contains',
+	'whereisextension-search-like-value' => 'Like:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
+);
+
+$messages['zh-hant'] = array(
+	'whereisextension' => '擴展功能位置',
+	'whereisextension-desc' => 'Provides a list of wikis with enabled extensions',
+	'whereisextension-submit' => 'Search',
+	'whereisextension-list' => 'List of wikis with matched criteria ($1)',
+	'whereisextension-isset' => 'is set to',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'All groups',
+	'whereisextension-name-contains' => 'variable name contains',
+	'whereisextension-search-like-value' => 'Like:',
+	'whereisextension-search-type' => 'Type:',
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Like',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 

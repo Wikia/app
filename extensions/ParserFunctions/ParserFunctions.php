@@ -14,7 +14,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * Defines the maximum length of a string that string functions are allowed to operate on
  * Prevention against denial of service by string function abuses.
  */
-$wgPFStringLengthLimit = 1000;
+// wikia change start (BAC-1119)
+if (empty($wgPFStringLengthLimit)) {
+	$wgPFStringLengthLimit = 1000;
+}
+// wikia change end
 
 /**
  * Enable string functions.
@@ -59,6 +63,11 @@ $wgExtensionCredits['parserhook'][] = array(
 $wgAutoloadClasses['ExtParserFunctions'] = dirname( __FILE__ ) . '/ParserFunctions_body.php';
 $wgAutoloadClasses['ExprParser'] = dirname( __FILE__ ) . '/Expr.php';
 $wgAutoloadClasses['ConvertParser'] = dirname( __FILE__ ) . '/Convert.php';
+// being wikia change
+// VOLDEV-114
+$wgAutoloadClasses['ExprError'] = dirname( __FILE__ ) . '/Expr.php';
+$wgAutoloadClasses['Scribunto_LuaParserFunctionsLibrary'] = __DIR__ . '/ParserFunctions.library.php';
+// end wikia change
 
 $wgExtensionMessagesFiles['ParserFunctions'] = dirname( __FILE__ ) . '/ParserFunctions.i18n.php';
 $wgExtensionMessagesFiles['ParserFunctionsMagic'] = dirname( __FILE__ ) . '/ParserFunctions.i18n.magic.php';
@@ -109,3 +118,13 @@ function wfRegisterParserFunctions( $parser ) {
 
 	return true;
 }
+
+// begin wikia change
+// VOLDEV-114
+$wgHooks['ScribuntoExternalLibraries'][] = function( $engine, array &$extraLibraries ) {
+	if( $engine == 'lua' ) {
+		$extraLibraries['mw.ext.ParserFunctions'] = 'Scribunto_LuaParserFunctionsLibrary';
+	}
+	return true;
+};
+// end wikia change

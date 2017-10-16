@@ -1,0 +1,79 @@
+/**
+ * Include this file in all templates to maintain consistent common styles
+ */
+
+* {
+	color: #39424d;
+	font-family: 'Helvetica Neue', Arial, sans-serif;
+	font-size: 14px;
+}
+
+a, a * {
+	color: #00b7e0;
+	line-height: 20px;
+	text-decoration: none;
+}
+
+sub, sup {
+	font-size: 8px;
+}
+
+p {
+	line-height: 22px;
+	margin: 0 0 18px 0;
+	padding: 0;
+}
+
+img {
+	border: 0;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: separate;
+}
+
+tr.avatar > td {
+	padding-bottom: 15px;
+	padding-top: 20px;
+}
+
+td {
+	padding: 0;
+}
+
+td.widest {
+	width: 100%;
+}
+
+.button {
+	background-color: #00b7e0;
+	color: #fff;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	height: auto;
+	line-height: 14px;
+	margin: 15px 0 30px;
+	padding: 16px 18px;
+	text-transform: uppercase;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+ul.with-spacing {
+	margin: 20px 0;
+	padding-left: 20px;
+}
+
+li {
+	line-height: 22px;
+	margin: 0;
+}
+
+.signature {
+	font-weight: bold;
+}

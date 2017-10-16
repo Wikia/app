@@ -1,30 +1,28 @@
-@import "skins/oasis/css/mixins/bodytext";
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/border-opacity";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/box-sizing";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/forms";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/core/buttons";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/border-opacity";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/forms";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/buttons";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/modal";
 @import "skins/oasis/css/core/reset";
 @import "skins/oasis/css/core/typography";
 @import "extensions/wikia/WikiaStyleGuide/css/Form";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 @import "ChatColor";
 @import "ChatModal";
-@import "ChatSprite";
 @import "UserStatsMenu";
 
 body {
 	background: $color-body;
 	color: $color-text;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 13px;
+	height: 100%;
 	margin: 0;
 	&.warn {
 		.Chat {
@@ -40,7 +38,12 @@ body {
 	&.limit-reached .remaining {
 		color: $color-error;
 	}
-	.remaining {
+	&.limit-reached .limit-reached-msg{
+		color: $color-error;
+		display: block;
+		left: 5px;
+	}
+	.remaining, .limit-reached-msg {
 		display: none;
 		line-height: 25px;
 		position: absolute;
@@ -88,13 +91,14 @@ a {
 }
 
 .ChatHeader {
-	@include border-radius-ne(5px);
-	@include border-radius-nw(5px);
 	background-color: $color-page;
 	border: 1px solid $color-page-border;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	height: 40px;
 	margin: 10px;
 	position: relative;
+
 	.User {
 		border-left: 1px solid $color-page-border;
 		height: 26px;
@@ -104,18 +108,26 @@ a {
 		right: 0;
 		top: 5px;
 		width: 113px;
+
 		img {
 			vertical-align: middle;
 		}
+
 		.username {
 			font-weight: bold;
+
+			.badge {
+				top: 0;
+			}
 		}
+
 		&.chat-mod, &.staff {
 			.username:after {
 				top: 1px;
 			}
 		}
 	}
+
 	.private {
 		font-size: 16px;
 		font-weight: bold;
@@ -128,20 +140,24 @@ a {
 	font-size: 11px;
 	padding: 7px 5px 7px 32px;
 	position: relative;
+
 	&.away {
 		color: $color-chat-gray;
+
 		.status {
 			display: inline;
 		}
 	}
+
 	img {
 		border: 1px solid $color-page-border;
 		height: 22px;
-		position: absolute;
 		left: 5px;
+		position: absolute;
 		vertical-align: middle;
 		width: 22px;
 	}
+
 	.username {
 		display: block;
 		margin-right: 15px;
@@ -149,40 +165,33 @@ a {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 
-		&:after {
-			content: '';
-			height: 15px;
+		.badge {
+			height: 18px;
 			position: absolute;
 			right: 5px;
 			top: 5px;
-			width: 15px;
+			width: 18px;
 		}
 	}
-	&.chat-mod .username:after, &.staff .username:after {
-		@include sprite-Chat-base;
-	}
-	&.chat-mod .username:after {
-		@include sprite-Chat('icon-chat_mod');
-	}
-	&.staff .username:after {
-		@include sprite-Chat('icon-staff' + $sprite-normal, 14px, 14px);
-	}
+
 	.details {
 		font-size: 11px;
 	}
+
 	.status {
 		display: none;
 	}
+
 	.UserStatsMenu {
 		display: none;
 	}
 }
 
 #WikiaPage {
-	@include border-radius-se(5px);
-	@include border-radius-sw(5px);
 	background-color: $color-page;
 	border: 1px solid $color-page-border;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 	bottom: 10px;
 	color: $color-text;
 	left: 10px;
@@ -246,6 +255,7 @@ a {
 	}
 	.message {
 		white-space: pre-line;
+		word-wrap: break-word;
 	}
 	.me-message {
 		color: $color-chat-gray;
@@ -278,7 +288,7 @@ a {
 	position: absolute;
 	right: 150px;
 	&.blocked {
-	   opacity: 0.3;
+	   opacity: .3;
 	}
 	img {
 		border: 1px solid $color-page-border;
@@ -298,9 +308,9 @@ a {
 		width: 100%;
 	}
 	.message {
-		@include box-sizing();
 		background-color: lighten($color-page, 5%);
 		border: 1px solid $color-page-border;
+		box-sizing: border-box;
 		height: 3.3em;
 		padding: 2px;
 		position: relative;
@@ -318,14 +328,14 @@ a {
 	top: 0;
 	width: 150px;
 	.User {
-		padding-left: 47px;
+		padding-left: 37px;
 		min-height: 22px;
 		&:hover {
 			background: $color-menu-highlight;
 			cursor: pointer;
 		}
 		img {
-			left: 20px;
+			left: 5px;
 		}
 	}
 	h1 {
@@ -384,13 +394,13 @@ a {
 		}
 	}
 	.blocked {
-	    opacity: 0.3;
+	    opacity: .3;
 	}
 	.splotch {
-		@include border-radius(10px);
 		@include linear-gradient(#dc0d0e, top, #e63031, 0, #dc0d0e, 50%, #e63031, 100%);
 		background-clip: padding-box;
 		border: 1px solid white;
+		border-radius: 10px;
 		color: white;
 		display: none;
 		font-size: 9px;

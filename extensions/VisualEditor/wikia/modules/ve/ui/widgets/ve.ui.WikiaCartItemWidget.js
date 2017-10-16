@@ -1,31 +1,43 @@
+/*
+ * VisualEditor UserInterface WikiaCartItemWidget class.
+ */
+
 /* global require */
 
-ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model, config ) {
-	var size = 60, $image;
-	this.model = model;
-	ve.ui.OptionWidget.call( this, this.model.title, config );
+/**
+ * @class
+ * @extends OO.ui.OptionWidget
+ *
+ * @constructor
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( config ) {
+	var size = 80, $image;
 
-	this.$.addClass( 've-ui-texture-pending' );
+	ve.ui.WikiaCartItemWidget.super.call( this, config );
 
-	$image = this.$$( '<img>' )
+	this.model = config.model;
+	this.$element.addClass( 've-ui-texture-pending' );
+
+	$image = this.$( '<img>' )
 		.attr( {
-			'height': size,
-			'width': size
+			height: size,
+			width: size
 		} )
 		.addClass( 've-ui-wikiaCartImage' )
-		.load( ve.bind( function() {
-			this.$
+		.load( function () {
+			this.$element
 				.prepend( $image )
 				.removeClass( 've-ui-texture-pending' );
-		}, this ) );
+		}.bind( this ) );
 
-	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
+	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
 		$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'image', size, size ) );
-	}, this ) );
+	}.bind( this ) );
 };
 
-ve.inheritClass( ve.ui.WikiaCartItemWidget, ve.ui.OptionWidget );
+OO.inheritClass( ve.ui.WikiaCartItemWidget, OO.ui.OptionWidget );
 
-ve.ui.WikiaCartItemWidget.prototype.getModel = function() {
+ve.ui.WikiaCartItemWidget.prototype.getModel = function () {
 	return this.model;
 };

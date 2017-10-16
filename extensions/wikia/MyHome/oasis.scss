@@ -1,7 +1,5 @@
-@import "../../../skins/oasis/css/core/color";
-@import "../../../skins/oasis/css/mixins/clearfix";
-@import "../../../skins/oasis/css/mixins/border-radius";
-
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
 /* overwriting Monoco-styling */
 .WikiaArticle ul.activityfeed { margin-left: 0; }
 .activityfeed {
@@ -24,15 +22,6 @@
 	img.sprite {
 		margin-left: -30px;
 		margin-right: 8px;
-
-		// Wikia-video-play-button
-		&.play {
-			margin: 0;
-		}
-	}
-	
-	.Wikia-video-play-button {
-		margin: auto;
 	}
 
 	strong {
@@ -74,30 +63,14 @@
 
 		li {
 			list-style: none;
-			border: solid 1px $color-page-border;
 			float: left;
-			margin: 4px 4px 4px 0;
+			margin: 0 10px 10px 0;
 			position: relative;
-
-			a {
-				cursor: pointer;
-				display: table-cell;
-				text-align: center;
-				vertical-align: middle;
-				width: 160px;
-				padding: 5px 0;
-
-				// anchors that lead to images have a set height
-				&[data-image-link] {
-					height: 160px;
-					padding: 0;
-				}
-			}
 		}
 	}
 
 	.myhome-video-play {
-		background-image: url(/extensions/wikia/MyHome/images/play.png); /* base64 */
+		background-image: url(/extensions/wikia/MyHome/images/play.png); /* inline */
 		background-repeat: no-repeat;
 		background-position: 50% 50%;
 		top: 0;

@@ -15,8 +15,9 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WAM Page',
 	'author' => 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan, Damian Jóźwiak, Łukasz Konieczny',
-	'description' => 'WAM Page',
-	'version' => 1.0
+	'descriptionmsg' => 'wam-page-desc',
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WAMPage'
 );
 
 // classes
@@ -31,7 +32,6 @@ $wgHooks['ArticleFromTitle'][] = 'WAMPageHooks::onArticleFromTitle';
 $wgHooks['MakeGlobalVariablesScript'][] = 'WAMPageHooks::onMakeGlobalVariablesScript';
 $wgHooks['LinkBegin'][] = 'WAMPageHooks::onLinkBegin';
 $wgHooks['WikiaCanonicalHref'][] = 'WAMPageHooks::onWikiaCanonicalHref';
-
 
 // i18n
 $wgExtensionMessagesFiles['WAMPage'] = $dir . 'WAMPage.i18n.php' ;

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWExternalLinkAnnotation class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -27,20 +27,16 @@ ve.dm.MWExternalLinkAnnotation = function VeDmMWExternalLinkAnnotation( element 
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWExternalLinkAnnotation, ve.dm.LinkAnnotation );
+OO.inheritClass( ve.dm.MWExternalLinkAnnotation, ve.dm.LinkAnnotation );
 
 /* Static Properties */
 
 ve.dm.MWExternalLinkAnnotation.static.name = 'link/mwExternal';
 
-ve.dm.MWExternalLinkAnnotation.static.matchRdfaTypes = [
-	'mw:ExtLink',
-	'mw:ExtLink/Numbered'
-];
+ve.dm.MWExternalLinkAnnotation.static.matchRdfaTypes = [ 'mw:ExtLink' ];
 
 ve.dm.MWExternalLinkAnnotation.static.toDataElement = function ( domElements ) {
 	var parentResult = ve.dm.LinkAnnotation.static.toDataElement.apply( this, arguments );
-	parentResult.type = 'link/mwExternal';
 	parentResult.attributes.rel = domElements[0].getAttribute( 'rel' );
 	return parentResult;
 };
@@ -58,9 +54,9 @@ ve.dm.MWExternalLinkAnnotation.static.toDomElements = function ( dataElement ) {
  */
 ve.dm.MWExternalLinkAnnotation.prototype.getComparableObject = function () {
 	return {
-		'type': this.getType(),
-		'href': this.getAttribute( 'href' ),
-		'rel': this.getAttribute( 'rel' ) || 'mw:ExtLink'
+		type: this.getType(),
+		href: this.getAttribute( 'href' ),
+		rel: this.getAttribute( 'rel' ) || 'mw:ExtLink'
 	};
 };
 

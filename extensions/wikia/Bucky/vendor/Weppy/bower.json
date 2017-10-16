@@ -1,0 +1,14 @@
+{
+	"name": "weppy",
+	"version": "0.9.0",
+	"main": [
+		"/dist/weppy.amd.js",
+		"/dist/weppy.cjs.js",
+		"/dist/weppy.js",
+		"/dist/weppy..d.ts"
+	],
+	"ignore": [
+		"tests"
+	],
+	"license": "MIT"
+}

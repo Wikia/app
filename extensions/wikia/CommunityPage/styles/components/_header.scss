@@ -1,0 +1,90 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'variables';
+
+$hero-image-url: '/extensions/wikia/CommunityPage/images/fandom_heart.svg';
+$hero-image-height: 200px;
+$hero-image-background: $wds-color-slate-gray;
+
+.community-page-header {
+	@include flexbox();
+	@include justify-content(center);
+	align-items: flex-end;
+	background: url($hero-image-url) center no-repeat;
+	background-color: $hero-image-background;
+	background-size: 100px 100px;
+	height: $hero-image-height;
+	position: relative;
+	text-align: center;
+
+	&.community-page-header-cover {
+		background-position: center;
+		background-size: cover;
+	}
+
+	&.community-page-header-cover:before {
+		background-color: rgba(0, 0, 0, 0.35);
+		content: '';
+		height: $hero-image-height;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 0;
+	}
+
+	.community-page-header-content {
+		padding-bottom: 24px;
+		width: 94%;
+		z-index: 0;
+	}
+
+	.community-page-header-welcome-message {
+		color: $wds-color-white;
+		font-size: $wds-typescale-size-plus-4;
+		font-weight: bold;
+		line-height: 40px;
+		margin:	0;
+	}
+
+	.community-page-header-welcome-message:lang(ja) {
+		font-size: $wds-typescale-size-plus-2;
+	}
+
+	.community-page-subheader-welcome-message {
+		color: $wds-color-white;
+		font-size: $wds-typescale-size-plus-2;
+		line-height: $wds-line-height;
+		margin: 6px 0 0 0;
+	}
+}
+
+@mixin header-image($marginSize) {
+	left: -$marginSize;
+	width: calc(100% + 2 * #{$marginSize});
+}
+
+@media #{$breakpoint-large-up} {
+	.community-page-header {
+		@include header-image($padding-width-large);
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.community-page-header {
+		@include header-image($padding-width-medium);
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-header {
+		@include header-image($padding-width-small-plus);
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.community-page-header {
+		@include header-image($padding-width-small);
+	}
+}
+

@@ -25,7 +25,10 @@
  * and handle all outputting (or lack of outputting) via it.
  * @ingroup HTTP
  */
-class WebResponse {
+class WebResponse implements \Wikia\HTTP\Response {
+
+	const NO_COOKIE_PREFIX  = '';
+	const MAX_HEADER_LENGTH = 4096;
 
 	/**
 	 * Output a HTTP header, wrapper for PHP's
@@ -35,16 +38,21 @@ class WebResponse {
 	 * @param $http_response_code null|int Forces the HTTP response code to the specified value.
 	 */
 	public function header( $string, $replace = true, $http_response_code = null ) {
+		// PLATFORM-3070: In case of extremely long headers we should trim them to avoid problems with Fastly or other clients
+		if ( strlen( $string ) > self::MAX_HEADER_LENGTH ) {
+			$string = substr( $string, 0, self::MAX_HEADER_LENGTH );
+		}
+
 		header( $string, $replace, $http_response_code );
 	}
 
 	/**
 	 * Set the browser cookie
-	 * @param $name String: name of cookie
-	 * @param $value String: value to give cookie
-	 * @param $expire Int: number of seconds til cookie expires
-	 * @param $prefix String: Prefix to use, if not $wgCookiePrefix (use '' for no prefix)
-	 * @param @domain String: Cookie domain to use, if not $wgCookieDomain
+	 * @param string $name : name of cookie
+	 * @param string $value : value to give cookie
+	 * @param int $expire : Expire time in seconds (a unix epoch time)
+	 * @param string $prefix : Prefix to use, if not $wgCookiePrefix (use '' for no prefix)
+	 * @param string $domain : Cookie domain to use, if not $wgCookieDomain
 	 */
 	public function setcookie( $name, $value, $expire = 0, $prefix = null, $domain = null ) {
 		global $wgCookiePath, $wgCookiePrefix, $wgCookieDomain;
@@ -58,7 +66,6 @@ class WebResponse {
 		if( $domain === null ) {
 			$domain = $wgCookieDomain;
 		}
-		$httpOnlySafe = wfHttpOnlySafe() && $wgCookieHttpOnly;
 		wfDebugLog( 'cookie',
 			'setcookie: "' . implode( '", "',
 				array(
@@ -68,14 +75,14 @@ class WebResponse {
 					$wgCookiePath,
 					$domain,
 					$wgCookieSecure,
-					$httpOnlySafe ) ) . '"' );
+					$wgCookieHttpOnly ) ) . '"' );
 		setcookie( $prefix . $name,
 			$value,
 			$expire,
 			$wgCookiePath,
 			$domain,
 			$wgCookieSecure,
-			$httpOnlySafe );
+			$wgCookieHttpOnly );
 	}
 }
 

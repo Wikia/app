@@ -1,0 +1,11 @@
+<form id="TemplateClassificationEditForm">
+	{{#templateTypes}}
+		<label for="template-classification-{{type}}" class="template-classification-edit-form-label">
+			<input type="radio" id="template-classification-{{type}}" value="{{type}}" name="template-classification-types" class="template-classification-edit-form-input">
+			<div>
+				<span class="tc-type-name">{{name}}</span>
+				<p>{{description}}</p>
+			</div>
+		</label>
+	{{/templateTypes}}
+</form>

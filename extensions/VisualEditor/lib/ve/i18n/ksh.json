@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Purodha"
+		]
+	},
+	"visualeditor": "Sigge beldlesch beärbeide",
+	"visualeditor-annotationbutton-bold-tooltip": "Fätte Schreff",
+	"visualeditor-annotationbutton-italic-tooltip": "Scheive Schreff",
+	"visualeditor-annotationbutton-link-tooltip": "ene Lengk",
+	"visualeditor-clearbutton-tooltip": "Fomaateeronge fottnämme",
+	"visualeditor-formatdropdown-format-heading1": "Övverschreff 1",
+	"visualeditor-formatdropdown-format-heading2": "Övverschreff 2",
+	"visualeditor-formatdropdown-format-heading3": "Övverschreff 3",
+	"visualeditor-formatdropdown-format-heading4": "Övverschreff 4",
+	"visualeditor-formatdropdown-format-heading5": "Övverschreff 5",
+	"visualeditor-formatdropdown-format-heading6": "Övverschreff 6",
+	"visualeditor-formatdropdown-format-paragraph": "Afschnett",
+	"visualeditor-formatdropdown-format-preformatted": "De Fommateerong es ald doh",
+	"visualeditor-formatdropdown-title": "De Fommateerong ändere",
+	"visualeditor-historybutton-redo-tooltip": "Donn dat norr_ens",
+	"visualeditor-historybutton-undo-tooltip": "Donn de läzde Änderong zeröck nämme",
+	"visualeditor-indentationbutton-indent-tooltip": "Mieh enjeröck",
+	"visualeditor-indentationbutton-outdent-tooltip": "Winnijer enjeröck",
+	"visualeditor-inspector-close-tooltip": "Zohmaache",
+	"visualeditor-inspector-remove-tooltip": "Fottnämme",
+	"visualeditor-linkinspector-title": "Lengk ändere",
+	"visualeditor-listbutton-bullet-tooltip": "Leß met Pungkte",
+	"visualeditor-listbutton-number-tooltip": "En Leß met Nommere"
+}

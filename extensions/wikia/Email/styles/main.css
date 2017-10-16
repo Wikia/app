@@ -1,0 +1,138 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.body-wrap {
+	width: 100%;
+}
+
+.main-wrapper {
+	background-color: #f6f6f6;
+}
+
+.content {
+	display: block;
+	margin: 0 auto;
+	max-width: 600px;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+
+.content-inner {
+	padding: 40px 6.6667%;
+}
+
+.main-content {
+	background-color: #fff;
+	border: 1px solid #d7d7d7;
+	border-bottom: 0;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.header-wrap, .footer-wrap {
+	text-align: center;
+	width: 100%;
+}
+
+.header {
+	padding-bottom: 20px;
+	padding-top: 20px;
+}
+
+.header img {
+	height: 30px;
+	width: 144px;
+}
+
+.footer {
+	background-color: #39424d;
+	padding-left: 0;
+	padding-right: 0;
+	max-width: 600px;
+}
+
+.footer img {
+	height: 46px;
+	width: 194px;
+}
+
+.footer .spacer {
+	border-width: 1px 0 0 0;
+	border-color: #fff;
+	border-style: solid;
+	margin: 25px auto;
+	width: 300px;
+}
+
+.fandom-bar img {
+	display: block;
+	height: 5px;
+	padding: 0;
+	width: 100%;
+}
+
+.hub-icon {
+	display: block;
+	margin: 0 auto 5px;
+}
+
+.social-links {
+	margin-top: 40px;
+}
+
+.social-links img {
+	padding: 0 10px;
+}
+
+.social-links .facebook img {
+	height: 20px;
+	width: 10px;
+}
+
+.social-links .twitter img {
+	height: 18px;
+	width: 22px;
+}
+
+.social-links .vk img {
+	height: 17px;
+	width: 29px;
+}
+
+.social-links .youtube img {
+	width: 24px;
+	height: 17px;
+}
+
+.social-links .instagram img {
+	height: 20px;
+	width: 20px;
+}
+
+.fine-print, .fine-print * {
+	color: #fff;
+	font-size: 10px;
+	line-height: 20px;
+	margin-bottom: 0;
+}
+
+.fine-print a {
+	 text-decoration: underline;
+}
+
+.mobile-badges {
+	margin-top: 15px;
+}
+
+.mobile-badges .ios-badge img {
+	height: auto;
+	padding-bottom: 9px;
+	width: 120px;
+}
+
+.mobile-badges .android-badge img {
+	height: auto;
+	width: 140px;
+}

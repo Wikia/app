@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTransclusionMetaItem class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -21,7 +21,7 @@ ve.dm.MWTransclusionMetaItem = function VeDmMWTransclusionMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWTransclusionMetaItem, ve.dm.AlienMetaItem );
+OO.inheritClass( ve.dm.MWTransclusionMetaItem, ve.dm.AlienMetaItem );
 
 /* Static Properties */
 

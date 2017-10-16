@@ -13,6 +13,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'stafflog-desc',
 	'version' => '0.0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/StaffLog'
 );
 
 $dir = __DIR__ . '/';
@@ -30,9 +31,5 @@ $wgLogRestrictions['StaffLog'] = 'StaffLog';
 
 $wgStaffLogType = array(1 => "Block");
 $wgSpecialPageGroups['stafflog'] = 'changes';
-
-$wgAvailableRights[] = 'stafflog';
-$wgGroupPermissions['staff']['stafflog'] = true;
-$wgGroupPermissions['helper']['stafflog'] = true;
 
 require_once $dir."StaffLog.events.php";

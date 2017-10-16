@@ -85,9 +85,11 @@
 			if (this.options.onComplete) {
 				this.options.onComplete(this.api, this);
 			}
-			return setTimeout(function() {
-				return Docs.shebang();
-			}, 400);
+			if ( this.options.disabled !== true ) {
+				setTimeout(function() {
+					return Docs.shebang();
+				}, 400);
+			}
 		};
 
 		SwaggerUi.prototype.showMessage = function(data) {

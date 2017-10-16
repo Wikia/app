@@ -76,7 +76,7 @@ function actionCreate( $action, $article ) {
 		global $wgOut;
 		$text = $article->getTitle()->getPrefixedText();
 		$wgOut->setPageTitle( $text );
-		$wgOut->setHTMLTitle( wfMsg( 'pagetitle', $text . ' - ' . wfMsg( 'createbox-create' ) ) );
+		$wgOut->setHTMLTitle( wfMsg( 'createbox-create' ) . ' - ' . $text );
 		$wgOut->addWikiMsg( 'createbox-exists' );
 	}
 	return false;
@@ -98,7 +98,7 @@ function acMakeBox( $input, $argv, $parser ) {
 	if( $wgRequest->getVal( 'action' ) == 'create' ) {
 		$prefix = acGetOption( $input, 'prefix' );
 		$preload = acGetOption( $input, 'preload' );
-		$editintro = acGetOption( $input, 'editintro' ); 
+		$editintro = acGetOption( $input, 'editintro' );
 		$text = $parser->getTitle()->getPrefixedText();
 		if( $prefix && strpos( $text, $prefix ) === 0 ) {
 			$text = substr( $text, strlen( $prefix ) );
@@ -129,11 +129,21 @@ ENDFORM;
 }
 
 function acRedirect( $title, $action ) {
-	global $wgRequest, $wgOut;
-	$query = "action={$action}"
-		. '&preload=' . $wgRequest->getVal( 'preload' )
-		. '&editintro=' . $wgRequest->getVal( 'editintro' )
-		. '&section=' . $wgRequest->getVal( 'section' );
+	global $wgRequest, $wgOut, $wgEnableFlowTracking;
+
+	$queryData = [
+		'action' => $action,
+		'preload' => $wgRequest->getVal( 'preload' ),
+		'editintro' => $wgRequest->getVal( 'editintro' ),
+		'section' => $wgRequest->getVal( 'section' ),
+	];
+
+	if( !empty( $wgEnableFlowTracking ) ) {
+		$queryData['flow'] = FlowTrackingHooks::CREATE_PAGE_CREATE_BOX;
+	}
+
+	$query = http_build_query($queryData);
+
 	$wgOut->setSquidMaxage( 1200 );
 	$wgOut->redirect( $title->getFullURL( $query ), '301' );
 }

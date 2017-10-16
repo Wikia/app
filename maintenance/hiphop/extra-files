@@ -27,8 +27,6 @@ resources/Resources.php
 serialized/serialize.php
 skins/MonoBook.deps.php
 skins/MonoBook.php
-skins/Vector.deps.php
-skins/Vector.php
 thumb.php
 trackback.php
 

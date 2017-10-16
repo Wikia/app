@@ -39,7 +39,7 @@ class SkinMonoBook extends WikiaSkinMonoBook {
 
 		// Ugh. Can't do this properly because $wgHandheldStyle may be a URL
 		if( $wgHandheldStyle ) {
-			// Currently in testing... try 'chick/main.css'
+			// Currently in testing... 
 			$out->addStyle( $wgHandheldStyle, 'handheld' );
 		}
 
@@ -84,16 +84,17 @@ class MonoBookTemplate extends WikiaSkinTemplate {
 
 		$this->html( 'headelement' );
 		/* Wikia change begin - @author: Tomek */
-		global $wgUser;
 		$afterBodyHtml = '';
-		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$afterBodyHtml));
+		Hooks::run( 'GetHTMLAfterBody', [ $this->getSkin(), &$afterBodyHtml ] );
 		echo $afterBodyHtml;
 		/* Wikia change end */
 ?><div id="globalWrapper">
 <div id="column-content">
 <?php
 /* Wikia change begin - @author: Hyun */
-	method_exists($this->skin, "printTopHtml") && $this->skin->printTopHtml();
+if (isset($this->data['skin']) && method_exists($this->data['skin'], 'printTopHtml')) {
+	$this->data['skin']->printTopHtml();
+}
 /* Wikia change end */
 ?>
 <div id="content" <?php $this->html("specialpageattributes") ?>>
@@ -185,7 +186,17 @@ class MonoBookTemplate extends WikiaSkinTemplate {
 ?>
 	</div>
 <?php }
-
+		/* Wikia change begin - @author: sactage */
+		// WW-93: Add ComScore tag for uncyclopedia-like wikis
+		global $wgCityId;
+		if ( WikiFactory::getWikiByID( $wgCityId )->city_umbrella == 'uncyclo' ) { ?>
+			<div id="uncyc-branding" class="branding vertical-comedy">
+				<a class="wikia-logo">
+					<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D">
+					<span><?php echo wfMessage( 'vertical-comedy' )->text(); ?></span>
+				</a>
+			</div>
+<?php } /* Wikia change end */
 		// Generate additional footer links
 		$footerlinks = array(
 			'lastmod', 'viewcount', 'numberofwatchingusers',
@@ -300,8 +311,8 @@ echo $footerEnd;
 
 <?php
 		}
-		wfRunHooks( 'MonoBookTemplateToolboxEnd', array( &$this ) );
-		wfRunHooks( 'SkinTemplateToolboxEnd', array( &$this, true ) );
+Hooks::run( 'MonoBookTemplateToolboxEnd', [ $this ] );
+Hooks::run( 'SkinTemplateToolboxEnd', [ $this, true ] );
 ?>
 			</ul>
 		</div>

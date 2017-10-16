@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Create Page',
 	'author' => array( 'Bartek Lapinski', 'Adrian Wieczorek' ),
-	'url' => 'http://www.wikia.com' ,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CreatePage',
 	'descriptionmsg' => 'createpage-desc',
 );
 
@@ -33,6 +33,7 @@ $wgExtensionMessagesFiles['CreatePageAliases'] = __DIR__ . '/CreatePage.aliases.
  * Special page
  */
 $wgAutoloadClasses['SpecialCreatePage'] = dirname(__FILE__) . '/SpecialCreatePage.class.php';
+$wgAutoloadClasses['CreatePageHelper'] = __DIR__ . '/CreatePageHelper.class.php';
 $wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
 $wgSpecialPageGroups['CreatePage'] = 'pagetools';
 
@@ -54,6 +55,7 @@ function wfCreatePageInit() {
 	$wgHooks['BeforeInitialize'][] = 'wfCreatePageOnBeforeInitialize';
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
+	$wgAjaxExportList[] = 'wfCreatePageAjaxGetVEDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
 }
 
@@ -88,7 +90,14 @@ function wfCreatePageSetupVars(Array &$vars ) {
 		$contentNamespaces[] = $wgContLang->getNsText( $contentNs );
 	}
 
-	$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
+	/**
+	 * In some cases create page popup may be disabled
+	 * This avoids overwriting this variable if it's already set
+	 * For example see: InsightsHooks::onMakeGlobalVariablesScript
+	 */
+	if ( !isset( $vars['WikiaEnableNewCreatepage'] ) ) {
+		$vars['WikiaEnableNewCreatepage'] = $wgUser->getGlobalPreference( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
+	}
 
 	if (!empty( $wgWikiaDisableDynamicLinkCreatePagePopup )) {
 		$vars['WikiaDisableDynamicLinkCreatePagePopup'] = true;
@@ -114,8 +123,13 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 			} else {
 				$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
 			}
-		} else if ( $msg = $wgRequest->getVal( 'useMessage' ) ) {
-			$editpage->textbox1 = wfMsgForContentNoTrans( $msg );
+		} elseif ( $msgKey = $wgRequest->getVal( 'useMessage' ) ) {
+			$msg = wfMessage( $msgKey );
+			$msgParams = $wgRequest->getArray( 'messageParams' );
+			if ( $msgParams !== null ) {
+				$msg = $msg->params( $msgParams );
+			}
+			$editpage->textbox1 = $msg->inContentLanguage()->plain();
 		}
 	}
 	return true ;
@@ -138,8 +152,30 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 	return true;
 }
 
+function wfCreatePageAjaxGetVEDialog() {
+	global $wgRequest;
+
+	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+	$template->set_vars( array(
+			'article' => urldecode( $wgRequest->getVal( 'article' ) )
+		)
+	);
+
+	$body['html'] = $template->render( 'dialog-ve' );
+	$body['title'] = wfMsg( 'createpage-dialog-title' );
+	$body['addPageLabel'] = wfMessage( 'createpage-button-proceed' )->text();
+	$body['cancelLabel'] = wfMsg( 'createpage-button-cancel' );
+
+	$response = new AjaxResponse( json_encode( $body ) );
+	$response->setCacheDuration( 0 ); // no caching
+	$response->setContentType( 'application/json; charset=utf-8' );
+
+	return $response;
+}
+
 function wfCreatePageAjaxGetDialog() {
-	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript, $wgEnableVideoToolExt;
+	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript,
+	$wgEnableVideoToolExt, $wgEnableVisualEditorUI, $wgRequest;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
@@ -162,7 +198,7 @@ function wfCreatePageAjaxGetDialog() {
 	);
 
 	$listtype = "short";
-	wfRunHooks( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
+	Hooks::run( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
 
 	$options = $options + $standardOptions;
 	$optionsCount = count( $options );
@@ -186,7 +222,7 @@ function wfCreatePageAjaxGetDialog() {
 
 	$wgCreatePageDialogWidth = ( $detectedWidth > $wgCreatePageDialogWidth ) ? ( $detectedWidth + ( CREATEPAGE_DIALOG_SIDE_PADDING * 2 ) ) : $wgCreatePageDialogWidth;
 
-	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
+	$defaultLayout = $wgUser->getGlobalPreference( 'createpagedefaultblank', false ) ?  'blank' : 'format';
 
 	// some extensions (e.g. PLB) can remove "format" option, so fallback to first available option here
 	if(!array_key_exists($defaultLayout, $options) ) {
@@ -195,9 +231,11 @@ function wfCreatePageAjaxGetDialog() {
 	}
 
 	$template->set_vars( array(
-			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
+			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
-			'type' => $listtype
+			'type' => $listtype,
+			'wantedPages' => CreatePageHelper::getMostWantedPages(),
+			'wikiTotalPages' => SiteStats::articles()
 		)
 	);
 
@@ -205,6 +243,8 @@ function wfCreatePageAjaxGetDialog() {
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
+	$body['addPageLabel'] = wfMessage( 'createpage-button-proceed' )->text();
+	$body['article'] = $wgRequest->getVal( 'article' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
 	$response->setCacheDuration( 0 ); // no caching
@@ -225,6 +265,7 @@ function wfCreatePageAjaxCheckTitle() {
 	if ( empty( $sTitle ) ) {
 		$result['result'] = 'error';
 		$result['msg'] = wfMsg( 'createpage-error-empty-title' );
+		$result['error'] = 'error-empty-title';
 	}
 	else {
 		$oTitle = Title::newFromText( $sTitle, $nameSpace );
@@ -232,25 +273,30 @@ function wfCreatePageAjaxCheckTitle() {
 		if ( !( $oTitle instanceof Title ) || strpos( $sTitle, "#" ) !== false ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
+			$result['error'] = 'error-invalid-title';
 		}
 		else {
 			if ( $oTitle->exists() ) {
 				$result['result'] = 'error';
 				$result['msg'] = wfMsg( 'createpage-error-article-exists', array( $oTitle->getFullUrl(), $oTitle->getText() ) );
+				$result['error'] = 'error-article-exists';
 			}
 			else { // title not exists
 				// macbre: use dedicated hook for this check (change related to release of Phalanx)
-				if ( !wfRunHooks( 'CreatePageTitleCheck', array( $oTitle ) ) ) {
+				if ( !Hooks::run( 'CreatePageTitleCheck', array( $oTitle ) ) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
+					$result['error'] = 'error-article-spam';
 				}
 				if ( $oTitle->getNamespace() == NS_SPECIAL ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
+					$result['error'] = 'error-invalid-title';
 				}
 				if ( $wgUser->isBlockedFrom( $oTitle, false ) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-blocked' );
+					$result['error'] = 'error-article-blocked';
 				}
 			}
 		}

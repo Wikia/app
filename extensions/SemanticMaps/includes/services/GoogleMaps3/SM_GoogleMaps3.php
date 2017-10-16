@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This groupe contains all Google Maps v3 related files of the Semantic Maps extension.
+ * This group contains all Google Maps v3 related files of the Semantic Maps extension.
  * 
  * @defgroup SMGoogleMaps3 Google Maps v3
  * @ingroup SMGoogleMaps3
@@ -15,7 +15,7 @@
  * @file SM_GoogleMaps3.php
  * @ingroup SMGoogleMaps3
  *
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
@@ -24,20 +24,25 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $moduleTemplate = array(
-	'localBasePath' => dirname( __FILE__ ),
+	'localBasePath' => __DIR__,
 	'remoteBasePath' => $smgScriptPath .  '/includes/services/GoogleMaps3',	
 	'group' => 'ext.semanticmaps',
 );
 
 $wgResourceModules['ext.sm.fi.googlemaps3'] = $moduleTemplate + array(
-	'dependencies' => array( 'ext.maps.googlemaps3', 'ext.sm.forminputs' ),
+	'dependencies' => array(
+		'ext.sm.fi.googlemaps3.single',
+	),
 	'scripts' => array(
-		'ext.sm.googlemapsinput.js'
+		'ext.sm.googlemapsinput.js',
 	),
 );
 
 $wgResourceModules['ext.sm.fi.googlemaps3.single'] = $moduleTemplate + array(
-	'dependencies' => array( 'ext.sm.fi.googlemaps3' ),
+	'dependencies' => array(
+		'ext.maps.googlemaps3',
+		'ext.sm.forminputs',
+	),
 	'scripts' => array(
 		'jquery.googlemapsinput.js',
 	),
@@ -47,7 +52,7 @@ $wgResourceModules['ext.sm.fi.googlemaps3.single'] = $moduleTemplate + array(
 /*
 $wgResourceModules['ext.sm.fi.googlemaps3.multi'] = $moduleTemplate + array(
 	'dependencies' => array( 'ext.sm.fi.googlemaps3', 'jquery.ui.button', 'jquery.ui.dialog' ),
-	'localBasePath' => dirname( __FILE__ ),
+	'localBasePath' => __DIR__,
 	'scripts' => array(
 		'jquery.gmapsmultiinput.js',
 	),
@@ -63,10 +68,10 @@ unset( $moduleTemplate );
 $wgHooks['MappingServiceLoad'][] = 'smfInitGoogleMaps3';
 
 function smfInitGoogleMaps3() {
-	global $wgAutoloadClasses, $sfgFormPrinter;
+	global $wgAutoloadClasses;
 	
-	$wgAutoloadClasses['SMGoogleMaps3FormInput'] = dirname( __FILE__ ) . '/SM_GoogleMaps3FormInput.php';
-	//$wgAutoloadClasses['SMGoogleMaps3MultiInput'] = dirname( __FILE__ ) . '/SM_GoogleMaps3MultiInput.php';
+	$wgAutoloadClasses['SMGoogleMaps3FormInput'] = __DIR__ . '/SM_GoogleMaps3FormInput.php';
+	//$wgAutoloadClasses['SMGoogleMaps3MultiInput'] = __DIR__ . '/SM_GoogleMaps3MultiInput.php';
 	
 	MapsMappingServices::registerServiceFeature( 'googlemaps3', 'qp', 'SMMapPrinter' );
 	MapsMappingServices::registerServiceFeature( 'googlemaps3', 'fi', 'SMGoogleMaps3FormInput' );

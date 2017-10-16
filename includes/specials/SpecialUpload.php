@@ -173,7 +173,7 @@ class SpecialUpload extends SpecialPage {
 			$this->processUpload();
 		} else {
 			# Backwards compatibility hook
-			if( !wfRunHooks( 'UploadForm:initial', array( &$this ) ) ) {
+			if ( !Hooks::run( 'UploadForm:initial', [ $this ] ) ) {
 				wfDebug( "Hook 'UploadForm:initial' broke output of the upload form" );
 				return;
 			}
@@ -391,7 +391,7 @@ class SpecialUpload extends SpecialPage {
 			return;
 		}
 
-		if( !wfRunHooks( 'UploadForm:BeforeProcessing', array( &$this ) ) ) {
+		if ( !Hooks::run( 'UploadForm:BeforeProcessing', [ $this ] ) ) {
 			wfDebug( "Hook 'UploadForm:BeforeProcessing' broke processing the file.\n" );
 			// This code path is deprecated. If you want to break upload processing
 			// do so by hooking into the appropriate hooks in UploadBase::verifyUpload
@@ -427,6 +427,14 @@ class SpecialUpload extends SpecialPage {
 			}
 		}
 
+		// This is as late as we can throttle, after expected issues have been handled
+		if ( UploadBase::isThrottled( $this->getUser() ) ) {
+			$this->showRecoverableUploadError(
+				$this->msg( 'actionthrottledtext' )->escaped()
+			);
+			return;
+		}
+
 		// Get the page text if this is not a reupload
 		if( !$this->mForReUpload ) {
 			$pageText = self::getInitialPageText( $this->mComment, $this->mLicense,
@@ -442,7 +450,7 @@ class SpecialUpload extends SpecialPage {
 
 		// Success, redirect to description page
 		$this->mUploadSuccessful = true;
-		wfRunHooks( 'SpecialUploadComplete', array( &$this ) );
+		Hooks::run( 'SpecialUploadComplete', [ $this ] );
 		$this->getOutput()->redirect( $this->mLocalFile->getTitle()->getFullURL() );
 	}
 
@@ -505,7 +513,7 @@ class SpecialUpload extends SpecialPage {
 	 * @return Bool|String
 	 */
 	protected function getWatchCheck() {
-		if( $this->getUser()->getOption( 'watchdefault' ) ) {
+		if( $this->getUser()->getGlobalPreference( 'watchdefault' ) ) {
 			// Watch all edits!
 			return true;
 		}
@@ -517,7 +525,7 @@ class SpecialUpload extends SpecialPage {
 			return $local->getTitle()->userIsWatching();
 		} else {
 			// New page should get watched if that's our option.
-			return $this->getUser()->getOption( 'watchcreations' );
+			return $this->getUser()->getGlobalPreference( 'watchcreations' );
 		}
 	}
 
@@ -769,7 +777,6 @@ class UploadForm extends HTMLForm {
 			+ $this->getDescriptionSection()
 			+ $this->getOptionsSection();
 
-		wfRunHooks( 'UploadFormInitDescriptor', array( &$descriptor ) );
 		parent::__construct( $descriptor, $context, 'upload' );
 
 		# Set some form properties
@@ -861,7 +868,6 @@ class UploadForm extends HTMLForm {
 				'checked' => $selectedSourceType == 'url',
 			);
 		}
-		wfRunHooks( 'UploadFormSourceDescriptors', array( &$descriptor, &$radio, $selectedSourceType ) );
 
 		$descriptor['Extensions'] = array(
 			'type' => 'info',
@@ -953,7 +959,7 @@ class UploadForm extends HTMLForm {
 					? 'filereuploadsummary'
 					: 'fileuploadsummary',
 				'default' => $this->mComment,
-				'cols' => intval( $this->getUser()->getOption( 'cols' ) ),
+				'cols' => intval( $this->getUser()->getGlobalPreference( 'cols' ) ),
 				'rows' => 8,
 			)
 		);
@@ -1020,7 +1026,7 @@ class UploadForm extends HTMLForm {
 					'id' => 'wpWatchthis',
 					'label-message' => 'watchthisupload',
 					'section' => 'options',
-					'default' => $user->getOption( 'watchcreations' ),
+					'default' => $user->getGlobalPreference( 'watchcreations' ),
 				)
 			);
 		}

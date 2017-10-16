@@ -1,0 +1,28 @@
+<div class="community-page-module-section-title">{{topAdminsHeaderText}}</div>
+<div class="community-page-admins-list reset">
+	{{#topAdminsList}}
+		<div class="community-page-admin-item">
+			<div class="user-avatar-wrapper">
+				<div class="badge-container" title="{{badge.badgeText}}">{{{badge.badgeMarkup}}}</div>
+				<div class="avatar-container">
+					<a data-tracking="top-admins-user-avatar" href="{{profilePage}}" title="{{userName}}">
+						{{{avatar}}}
+					</a>
+				</div>
+			</div>
+			<div class="community-page-contributor-details">
+				<a data-tracking="top-admins-user" href="{{profilePage}}">{{userName}}</a>
+			</div>
+		</div>
+	{{/topAdminsList}}
+	{{^topAdminsList}}
+		<div class="community-page-zero">
+			{{noAdminText}}
+			<a href="{{noAdminHref}}">{{noAdminContactText}}</a>
+		</div>
+	{{/topAdminsList}}
+</div>
+<div class="community-page-admins-text">{{adminsText}}</div>
+{{#haveOtherAdmins}}
+	<a id="openModalTopAdmins" class="community-page-admins-view-all" data-tracking="view-all-admins" href="">{{otherAdmins}}</a>
+{{/haveOtherAdmins}}

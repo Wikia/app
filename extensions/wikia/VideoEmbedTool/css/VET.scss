@@ -4,15 +4,12 @@
  * @author Liz Lee
  */
 @import "skins/oasis/css/core/WikiaSlider";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/box-sizing-border-box";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/box-shadow";
 
 $color-inactive-button: darken($color-secondary-button, 50%);
 @if lightness($color-page) < 50 {
@@ -234,9 +231,9 @@ $color-related-videos-background: darken($color-page, 20%);
 			}
 		}
 		&.disabled {
-			@include opacity(50);
 			@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
 			cursor: auto;
+			opacity: .5;
 		}
 	}
 	p {
@@ -265,17 +262,17 @@ $color-related-videos-background: darken($color-page, 20%);
 		width: 50000px;
 	}
 	li {
-		@include box-sizing-border-box;
+		box-sizing: border-box;
 		text-align: center;
 		float: left;
 		font-size: 12px;
 		line-height: 18px;
 		padding-right: 6px;
 		width: 166px;
-		&.in-preview .Wikia-video-play-button {
-			@include box-sizing-border-box;
+		&.in-preview .video-thumbnail {
 			border: 4px solid $color-buttons;
-			@include opacity(100);
+			box-sizing: border-box;
+			opacity: 1;
 		}
 		&:last {
 			padding-right: 0;
@@ -364,15 +361,6 @@ $color-related-videos-background: darken($color-page, 20%);
 		.VideoEmbedCaption {
 			width: 394px;
 		}
-		input.VideoEmbedCaption {
-			clear: left;
-			display: none;
-			float: left;
-			margin-top: 8px;
-			&.show {
-				display: block;
-			}
-		}
 		.input-group {
 			clear: both;
 			padding: 15px 0;
@@ -385,8 +373,8 @@ $color-related-videos-background: darken($color-page, 20%);
 			}
 			> div,
 			> textarea {
+				box-sizing: border-box;
 				width: 412px;
-				@include box-sizing-border-box;
 			}
 			> textarea {
 				min-height: 75px;
@@ -439,10 +427,6 @@ $color-related-videos-background: darken($color-page, 20%);
 				text-indent: 100%;
 				width: 44px;
 				white-space: nowrap;
-
-				&.VideoEmbedNoThumbOption {
-					background-position: 0px -49px;
-				}
 			}
 			.vet-layout-label {
 				background: url("/extensions/wikia/VideoEmbedTool/images/MediatoolsSprite.png") 0px -89px no-repeat; /* $wgCdnStylePath */
@@ -467,6 +451,7 @@ $color-related-videos-background: darken($color-page, 20%);
 	}
 	.VideoEmbedThumb {
 		float: right;
+		width: 350px;
 		p {
 			padding-top: 5px;
 			text-align: center;

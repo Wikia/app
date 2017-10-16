@@ -13,18 +13,11 @@ class AjaxPollClass {
 	const MEMC_PREFIX_GETVOTES = 'AjaxPollClass::getVotes';
 
 	public $mId, $mBody, $mAttribs, $mParser, $mQuestion, $mStatus, $mTotal;
+	/* @var Title $mTitle */
 	public $mTitle, $mCreated;
 	public $mAnswers = array();
 
 	public static $mCount = 0; # macbre: count ajax polls on the page
-
-	/**
-	 * __construct
-	 */
-	public function __construct() {
-
-	}
-
 
 	/**
 	 * renderFromTag
@@ -35,13 +28,13 @@ class AjaxPollClass {
 	 * @static
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @param string $input: Text from tag
-	 * @param array $params: atrributions
-	 * @param Object $parser: Wiki Parser object
+	 * @param string $input : Text from tag
+	 * @param array $params : atrributions
+	 * @param Object $parser : Wiki Parser object
+	 *
+	 * @return string
 	 */
 	static public function renderFromTag( $input, $params, $parser ) {
-		global $wgOut;
-
 		/**
 		 * ID of the poll
 		 */
@@ -68,7 +61,9 @@ class AjaxPollClass {
 	 * @static
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @param string $poll_id	poll identifier in database
+	 * @param string $poll_id poll identifier in database
+	 *
+	 * @return AjaxPollClass
 	 */
 	static public function newFromId( $poll_id ) {
 		global $wgTitle, $wgParser;
@@ -137,9 +132,11 @@ class AjaxPollClass {
 	 *
 	 * get HTML for votes
 	 *
-	 * @return array: votes for this poll
+	 * @param bool $isSubmit
+	 *
+	 * @return array : votes for this poll
 	 */
-	public function getVotes($isSubmit = false) {
+	public function getVotes( $isSubmit = false ) {
 		global $wgLang, $wgMemc;
 
 		if ( is_null( $this->mId ) ) {
@@ -150,53 +147,52 @@ class AjaxPollClass {
 		$votes = array();
 		$total = 0;
 
-		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
-		if (!$isSubmit) {
-			$votes = $wgMemc->get($memcKey);
+		$memcKey = $this->getVotesMemKey();
+		if ( !$isSubmit ) {
+			$votes = $wgMemc->get( $memcKey );
 		}
-		if (!empty($votes)) {
-			foreach($votes as $ans => $ansData){
+		if ( !empty( $votes ) ) {
+			foreach( $votes as $ansData ){
 				$total += $ansData["value"];
 			}
 		} else {
-			$votes = array();
 			$dbr = wfGetDB( $isSubmit ? DB_MASTER : DB_SLAVE );
-			$oRes = $dbr->select(
-				array( "poll_vote" ),
-				array( "poll_answer" ),
-				array( "poll_id" => $this->mId ),
-				__METHOD__
-			);
 
-			while( $oRow = $dbr->fetchObject( $oRes ) ) {
-				if( isset( $votes[ $oRow->poll_answer ] ) ) {
-					$votes[ $oRow->poll_answer ][ "value" ]++;
-				} else {
-					$votes[ $oRow->poll_answer ][ "value" ] = 1;
-				}
-				$total++;
-			}
-			$dbr->freeResult( $oRes );
+			$votes = ( new WikiaSQL() )
+				->SELECT( 'poll_answer' )
+					->COUNT( '*' )->AS_( 'count' )
+				->FROM( 'poll_vote' )
+				->WHERE( 'poll_id' )->EQUAL_TO( $this->mId )
+				->GROUP_BY( 'poll_answer' )
+				->runLoop( $dbr, function( &$votes, $row ) use ( &$total ) {
+					$votes[$row->poll_answer]['value'] = $row->count;
+					$total += $row->count;
+				} );
 
 			/**
 			 * count percentage of answers
 			 */
-			foreach( $votes as $nr => $vote ) {
-				$percent = $vote[ "value" ] / $total * 100;
-				$votes[ $nr ][ "percent" ] = round($percent, 2);
-				$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
+			foreach( $votes as $nr => &$vote ) {
+				$percent = $vote[ 'value' ] / $total * 100;
+				$vote['percent'] = round( $percent, 2 );
+				$vote['pixels'] = $this->percent2pixels( $percent );
+				$vote['key'] = $nr;
 
+				/* @var Language $wgLang */
 				$percent = $wgLang->formatNum(round($percent, 2));
-				$votes[ $nr ][ "title" ] = wfMsg("ajaxpoll-percentVotes", $percent);
-				$votes[ $nr ][ "key" ] = $nr;
+				$vote[ "title" ] = wfMsg("ajaxpoll-percentVotes", $percent);
 			}
 
 			// NOTE: Remember to purge everywhere that poll_vote is updated.
-			$wgMemc->set($memcKey, $votes, 3600);
+			$wgMemc->set( $memcKey, $votes, 3600 );
 		}
 		wfProfileOut( __METHOD__ );
 
-		return array( $votes, $total );
+		return [ $votes, $total ];
+	}
+
+	protected function getVotesMemKey() {
+		return wfMemcKey( self::MEMC_PREFIX_GETVOTES, $this->mId );
 	}
 
 	/**
@@ -295,7 +291,9 @@ class AjaxPollClass {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 * @access private
 	 *
-	 * @return integer	number of pixels
+	 * @param int $percent
+	 *
+	 * @return int number of pixels
 	 */
 	private function percent2pixels( $percent ) {
 		return (int )( ( $percent * self::BAR_WIDTH ) / 100 );
@@ -313,6 +311,7 @@ class AjaxPollClass {
 	private function parseInput() {
 
 		$answers = array();
+		$question = '';
 		$lines = explode( "\n", trim( $this->mBody ) );
 		if( is_array( $lines ) ) {
 			foreach( $lines as $nr => $line ) {
@@ -368,7 +367,7 @@ class AjaxPollClass {
 	 * @return array	rendered HTML answer and status of operation
 	 */
 	public function doSubmit( &$request ) {
-		global $wgUser, $wgTitle, $parserMemc;
+		global $wgTitle, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$status = false;
@@ -381,14 +380,8 @@ class AjaxPollClass {
 				// invalidate cache
 				$wgTitle->invalidateCache();
 
-				// clear parser cache
-				$oArticle = new Article($wgTitle);
-				$parserCache =& ParserCache::singleton();
-				$parserMemc->set( $parserCache->getKey($oArticle, $wgUser), null, 0 );
-
-				// Send purge
-				$update = SquidUpdate::newSimplePurge( $wgTitle );
-				$update->doUpdate();
+				// Send purge for the article (don't purge its history page - PLATFORM-92)
+				SquidUpdate::purge([ $wgTitle->getFullURL() ]);
 			} else {
 				$status = wfMsg( "ajaxpoll-error" );
 			}
@@ -402,8 +395,7 @@ class AjaxPollClass {
 		);
 
 		// Purge the vote stats.
-		global $wgMemc;
-		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
+		$memcKey = $this->getVotesMemKey();
 		$wgMemc->delete($memcKey);
 
 		wfProfileOut( __METHOD__ );
@@ -418,8 +410,9 @@ class AjaxPollClass {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 * @access private
 	 *
-	 * @param integer	$answer	number of question
+	 * @param integer $answer number of question
 	 *
+	 * @return bool
 	 */
 	private function doVote( $answer ) {
 		global $wgUser, $wgRequest;
@@ -475,9 +468,9 @@ class AjaxPollClass {
 	 * create table with update.php
 	 */
 	static public function schemaUpdate() {
-		global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
-		$wgExtNewTables[] = array( "poll_vote", dirname(__FILE__) . "/patch-create-poll_vote.sql" );
-		$wgExtNewTables[] = array( "poll_info", dirname(__FILE__) . "/patch-create-poll_info.sql" );
+		global $wgExtNewTables;
+		$wgExtNewTables[] = array( "poll_vote", __DIR__ . "/patch-create-poll_vote.sql" );
+		$wgExtNewTables[] = array( "poll_info", __DIR__ . "/patch-create-poll_info.sql" );
 		return true;
 	}
 }

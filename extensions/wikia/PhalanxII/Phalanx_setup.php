@@ -14,7 +14,8 @@ $wgExtensionCredits['other'][] = array(
 		'Piotr Molski (moli@wikia-inc.com)',
 		'Krzysztof Krzyżaniak (eloy@wikia-inc.com)',
 		'Maciej Szumocki (szumo@wikia-inc.com)'
-	)
+	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PhalanxII'
 );
 
 define( "PHALANX_VERSION",  2 );
@@ -56,18 +57,21 @@ $phalanxhooks = array(
 		),
 	'PhalanxContentBlock' =>
 		array(
-			'EditFilter'         => 'editFilter',
-			'AbortMove'          => 'abortMove',
-			'EditContent'        => 'editContent',
-			'CheckContent'       => 'checkContent',
+			'SpecialMovepageBeforeMove'       => 'beforeMove',
+			'EditFilter'                      => 'editFilter',
+			'AbortMove'                       => 'abortMove',
+			'EditContent'                     => 'editContent',
+			'CheckContent'                    => 'checkContent',
+			'APIEditBeforeSave'               => 'filterAPIEditBeforeSave',
+			'FileUploadSummaryCheck'          => 'checkContent',
 		),
 	'PhalanxTitleBlock' =>
 		array(
-			'SpecialMovepageBeforeMove'       => 'beforeMove',
 			'EditFilter'                      => 'editFilter',
 			'CreateDefaultQuestionPageFilter' => 'checkTitle',
 			'CreatePageTitleCheck'            => 'checkTitle',
 			'PageTitleFilter'                 => 'pageTitleFilter',
+			'UploadVerification'              => 'checkFileTitle',
 		),
 	'PhalanxAnswersBlock' =>
 		array(
@@ -75,42 +79,23 @@ $phalanxhooks = array(
 		),
 	'PhalanxWikiCreationBlock' =>
 		array(
-			'AutoCreateWiki::checkBadWords'   => 'isAllowedText'
+			'CreateWikiChecks::checkBadWords' => 'isAllowedText'
 		),
 	'PhalanxHooks' =>
 		array(
 			'ContributionsToolLinks'          => 'loadLinks',
 			'SpamFilterCheck'                 => 'onSpamFilterCheck',
-			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
-			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
 			'AfterFormatPermissionsErrorMessage' => 'onAfterFormatPermissionsErrorMessage',
+			// temp logging for PLATFORM-317
+			'GetBlockedStatus'                => 'onGetBlockedStatus',
+			'ContributionsLogEventsList'      => 'onContributionsLogEventsList',
 		)
 );
 
-// don't bother initializing hooks if user is immune to Phalanx
 foreach ( $phalanxhooks as $class => $hooks ) {
 	foreach ( $hooks as $name => $method ) {
 		$wgHooks[$name][] = $class . '::' . $method;
 	}
-}
-
-/*
- * Fallback to previous version of Phalanx
- */
-$fallback_classes = array(
-	/* classes */
-	'PhalanxFallback'          => $dir . 'fallback/Phalanx.class.php',
-	/* hooks */
-	'UserBlock'                => $dir . 'fallback/hooks/UserBlock.class.php',
-	'ContentBlock'             => $dir . 'fallback/hooks/ContentBlock.class.php',
-	'TitleBlock'               => $dir . 'fallback/hooks/TitleBlock.class.php',
-	'QuestionTitleBlock'       => $dir . 'fallback/hooks/QuestionTitleBlock.class.php',
-	'RecentQuestionsBlock'     => $dir . 'fallback/hooks/RecentQuestionsBlock.class.php',
-	'WikiCreationBlock'        => $dir . 'fallback/hooks/WikiCreationBlock.class.php'
-);
-
-foreach ( $fallback_classes as $class_name => $class_path ) {
-	$wgAutoloadClasses[ $class_name] =  $class_path ;
 }
 
 /**
@@ -139,5 +124,3 @@ $wgLogActions['phalanx/delete']     	= 'phalanx-rule-log-delete';
 $wgLogActions['phalanxemail/add']   	= 'phalanx-rule-log-add';
 $wgLogActions['phalanxemail/edit']  	= 'phalanx-rule-log-edit';
 $wgLogActions['phalanxemail/delete'] 	= 'phalanx-rule-log-delete';
-
-$wgAvailableRights[] = 'phalanxexempt';

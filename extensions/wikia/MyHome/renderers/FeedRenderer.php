@@ -278,23 +278,6 @@ class FeedRenderer {
 	}
 
 	/**
-	 * Returns one row for related videos section
-	 *
-	 * @param $text
-	 * @return string
-	 *
-	 * @author Jakub Kurcek <jakub@wikia-inc.com>
-	 */
-	public static function formatRelatedVideosRow( $text ) {
-		$html = Xml::openElement('tr');
-		$html .= Xml::openElement('td');
-		$html .= $text;
-		$html .= Xml::closeElement('td');
-		$html .= Xml::closeElement('tr');
-		return $html;
-	}
-
-	/**
 	 * Returns rows with message wall comments
 	 *
 	 * @param Array $comments an array with comments
@@ -349,7 +332,8 @@ class FeedRenderer {
 						$html .= $authorLine;
 					$html .= Xml::closeElement('p');
 					$html .= Xml::openElement('p');
-						$html .= $comment['wall-comment'];
+						// SUS-2752: snippeting of parsed wikitext can result in broken HTML
+						$html .= strip_tags( $comment['wall-comment'] );
 						$html .= ' ';
 						$html .= Xml::openElement('a', array('href' => $comment['wall-message-url']));
 							$html .= $timestamp;
@@ -606,12 +590,7 @@ class FeedRenderer {
 			$html .= self::formatDetailsRow('move', Xml::element('a', array('href' => $row['to_url']), $row['to_title']), false);
 		}
 
-		// intro of new content
-		if ( defined('NS_RELATED_VIDEOS') && isset( $row['ns'] ) && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] ) ) {
-			$RelatedVideosService = new RelatedVideosService();
-			$html .= $RelatedVideosService->formatRelatedVideosRow($row['relatedVideosDescription']);
-			$row['comment'] = false;
-		} else if ( isset($row['intro']) ) {
+		if ( isset($row['intro']) ) {
 			// new blog post
 			if ( defined('NS_BLOG_ARTICLE') && $row['ns'] == NS_BLOG_ARTICLE ) {
 				$html .= self::formatDetailsRow('new-blog-post', self::formatIntro($row['intro']),false);
@@ -707,6 +686,10 @@ class FeedRenderer {
 			$popupTitle = $wg->Lang->getNsText($namespace) . ':' . $item['name'];
 
 			$titleObj = Title::newFromText($item['name'], NS_FILE);
+			if (!$titleObj) {
+				continue;
+			}
+			
 			$fileName = $titleObj->getText(); // Pass display version of title to Lightbox
 
 			// wrapper for thumbnail
@@ -724,12 +707,24 @@ class FeedRenderer {
 				$attribs['href'] = $title->getLocalUrl();
 			}
 
-			$thumb = $item['html'];
-			// Only wrap the line in an anchor if it doesn't already include one
-			if ( preg_match('/<a[^>]+href/', $thumb) ) {
-				$thumbs[] = "<li>$thumb</li>";
+			$hookDummy = new DummyLinker;
+			$hookFile = false;
+			$hookFrameParams = [];
+			$hookHandlerParams = [];
+			$hookTime = false;
+			$hookRes = null;
+
+			if ( !Hooks::run( 'ImageBeforeProduceHTML',
+				array( &$hookDummy, &$title, &$hookFile, &$hookFrameParams, &$hookHandlerParams, &$hookTime, &$hookRes ) ) ) {
+				$thumbs[] = "<li>$hookRes</li>";
 			} else {
-				$thumbs[] = "<li><a data-image-link href=\"{$title->getLocalUrl()}\">$thumb</a></li>";
+				$thumb = $item['html'];
+				// Only wrap the line in an anchor if it doesn't already include one
+				if ( preg_match('/<a[^>]+href/', $thumb) ) {
+					$thumbs[] = "<li>$thumb</li>";
+				} else {
+					$thumbs[] = "<li><a data-image-link href=\"{$title->getLocalUrl()}\">$thumb</a></li>";
+				}
 			}
 		}
 

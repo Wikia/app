@@ -10,10 +10,6 @@ class WikiaMobileHooks {
 	 * @var null
 	 */
 	static private $mediaNsString = null;
-	/**
-	 * @var bool
-	 */
-	static private $displayErrorPage = false;
 
 	/**
 	 * @param $parser Parser
@@ -21,7 +17,7 @@ class WikiaMobileHooks {
 	 * @param $strip_state
 	 * @return bool
 	 */
-	static public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
+	static public function onParserBeforeStrip( Parser $parser, string &$text, &$strip_state ): bool {
 		global $wgWikiaMobileDisableMediaGrouping;
 		wfProfileIn( __METHOD__ );
 
@@ -122,17 +118,11 @@ class WikiaMobileHooks {
 	 * @param $text String
 	 * @return bool
 	 */
-	static public function onParserAfterTidy( &$parser, &$text ){
+	static public function onParserAfterTidy( Parser $parser, string &$text ): bool {
 		wfProfileIn( __METHOD__ );
 
-		//cleanup page output from unwanted stuff
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			//remove inline styling to avoid weird results and optimize the output size
-			$text = preg_replace(
-				'/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im',
-				'',
-				$text
-			);
+			self::cleanMobileOutput( $text );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -168,18 +158,44 @@ class WikiaMobileHooks {
 	 * @return bool
 	 */
 	static public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
+		global $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
+			//retrieve section index from mw:editsection tag
+			preg_match( '#section="(.*?)"#', $link, $matches );
+			if ( $wgArticleAsJson || F::app()->wg->User->isAnon() ) {
+				$link = '';
+			}
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
-
-			//$link contains the section edit link, add it to the next line to put it back
-			//ATM editing is not allowed in WikiaMobile
-			$ret = "<h{$level} id=\"{$anchor}\" {$attribs}{$text}</h{$level}>";
+			$ret = "<h{$level} id='{$anchor}' section='{$matches[1]}' {$attribs}{$text}{$link}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @param $skin Skin
+	 * @param $title Title
+	 * @param $section Integer
+	 * @param $tooltip
+	 * @param $result
+	 * @param bool $lang
+	 */
+	public static function onDoEditSectionLink( $skin, $nt, $section, $tooltip, &$result, $lang ) {
+		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
+			$link = F::app()->wg->Title->getLocalURL( [
+				'section' => $section,
+				'action' => 'edit'
+			] );
+
+			$result = "<a href='$link' class='editsection'></a>";
+
+			return false;
+		}
+
 		return true;
 	}
 
@@ -210,7 +226,7 @@ class WikiaMobileHooks {
 	 * @return bool
 	 */
 
-	static public function onCategoryPageView( CategoryPage &$categoryPage ) {
+	static public function onCategoryPageView( CategoryPage $categoryPage ): bool {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
@@ -229,12 +245,12 @@ class WikiaMobileHooks {
 
 			//this is going to be additional call but at least it won't be loaded on every page
 			foreach ( $scripts as $s ) {
-				$out->addScript( '<script src="' . $s . '"></script>' );
+				$out->addScript( '<script src="' . Sanitizer::encodeAttribute( $s ) . '"></script>' );
 			}
 
 			//set proper titles for a page
-			$out->setPageTitle( $text . ' <span id=catTtl>' . wfMessage( 'wikiamobile-categories-tagline' )->inContentLanguage()->plain() . '</span>');
-			$out->setHTMLTitle( $text );
+			$out->setPageTitle( $text );
+			$out->setHTMLTitle( $title->getPrefixedText() );
 
 			//render lists: exhibition and alphabetical
 			$params = array( 'categoryPage' => $categoryPage );
@@ -253,7 +269,7 @@ class WikiaMobileHooks {
 	 * @param WikiPage $page
 	 * @return bool
 	 */
-	static public function onArticlePurge( WikiPage &$page ) {
+	static public function onArticlePurge( WikiPage $page ): bool {
 		wfProfileIn( __METHOD__ );
 
 		$title = $page->getTitle();
@@ -300,9 +316,14 @@ class WikiaMobileHooks {
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
+			//Do not show error on non-blank help pages (including shared help)
+			} else if ( $ns == NS_HELP && ( $title->isKnown() ||
+					is_callable('SharedHelpArticleExists') && SharedHelpArticleExists( $title ) ) ) {
+				wfProfileOut( __METHOD__ );
+				return true;
 			}
 
-			self::$displayErrorPage = true;
+			WikiaMobileErrorService::$displayErrorPage = true;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -316,14 +337,14 @@ class WikiaMobileHooks {
 	 * @param $skin Skin
 	 * @return bool
 	 */
-	static public function onBeforePageDisplay( &$out, &$skin ){
+	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
-		if( $app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
+		if( $app->checkSkin( 'wikiamobile', $skin ) && WikiaMobileErrorService::$displayErrorPage == true ) {
 			$out->clearHTML();
 
-			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
+			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', [ 'out' => $out ] ) );
 
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -345,13 +366,11 @@ class WikiaMobileHooks {
 
 			//get all the possible variations of the File namespace
 			//and the translation in the wiki's language
-			foreach ( array( NS_FILE, NS_IMAGE, NS_VIDEO ) as $ns ) {
-				$translatedNs[] = $wgContLang->getNsText( $ns );
+			$translatedNs[] = $wgContLang->getNsText( NS_FILE );
 
-				foreach( $wgNamespaceAliases as $alias => $nsAlias ) {
-					if( $nsAlias == $ns ) {
-						$translatedNs[] = $alias;
-					}
+			foreach ( $wgNamespaceAliases as $alias => $nsAlias ) {
+				if ( $nsAlias == NS_FILE ) {
+					$translatedNs[] = $alias;
 				}
 			}
 
@@ -360,5 +379,18 @@ class WikiaMobileHooks {
 
 		wfProfileOut( __METHOD__ );
 		return self::$mediaNsString;
+	}
+
+	static private function cleanMobileOutput( &$text ) {
+		wfProfileIn( __METHOD__ );
+
+		//remove inline styling to avoid weird results and optimize the output size
+		$attributesToStrip = [ 'style', 'color', 'bgcolor', 'border', 'align', 'cellspacing', 'cellpadding', 'hspace', 'vspace' ];
+		$text = HtmlHelper::stripAttributes( $text, $attributesToStrip );
+
+		//don't let the article content be an empty space
+		$text = trim( $text );
+
+		wfProfileOut( __METHOD__ );
 	}
 }

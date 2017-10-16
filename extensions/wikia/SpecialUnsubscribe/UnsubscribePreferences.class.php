@@ -42,7 +42,7 @@ class UnsubscribePreferences {
 		$defaultPreferences = self::insert( $defaultPreferences, 'emailauthentication', $unsubscribe );
 
 		// add a notice if needed
-		if ( $user->getOption( 'unsubscribe' ) ) {
+		if ( $user->getGlobalPreference( 'unsubscribe' ) ) {
 			$defaultPreferences = self::insert( $defaultPreferences, 'watchdefault', $notice, false );
 		}
 

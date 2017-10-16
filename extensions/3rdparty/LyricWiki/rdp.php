@@ -18,7 +18,7 @@ class RecursiveDecentParser
 	var $source = "";
 	var $pos = 0;
 
-	function RecursiveDecentParser( $source )
+	function __construct( $source )
 	{
 		$this->source = $source;
 		$this->reset();

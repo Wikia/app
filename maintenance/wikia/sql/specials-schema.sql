@@ -1,43 +1,55 @@
-CREATE TABLE `city_list_count` (
-  `city_created` date NOT NULL,
-  `count_created` int(8) unsigned NOT NULL,
-  PRIMARY KEY `city_created` 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- MySQL dump 10.13  Distrib 5.6.24-72.2, for debian-linux-gnu (x86_64)
+--
+-- Host: geo-db-specials-slave.query.consul    Database: specials
+-- ------------------------------------------------------
+-- Server version	5.6.24-72.2-log
 
 
-CREATE TABLE `city_list_cats` (
-  `city_id` int(9) NOT NULL DEFAULT '0',
-  `city_dbname` varchar(64) NOT NULL DEFAULT 'notreal',
-  `city_created` datetime DEFAULT NULL,
-  `city_founding_user` int(5) DEFAULT NULL,
-  `city_title` varchar(255) DEFAULT NULL,
-  `city_lang` varchar(8) NOT NULL DEFAULT 'en',
-  `city_last_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `city_public` int(1) NOT NULL DEFAULT '1',
-  `date_created` date DEFAULT NULL,
-  `count_created` int(8) unsigned NOT NULL,
-  `cat_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (city_id),
-  UNIQUE KEY `city_dbname_inx` (city_dbname),
-  KEY `city_founding_user_inx` (city_founding_user),
-  KEY `date_created_inx` (date_created),
-  KEY `cat_name_inx` (cat_name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+-- Table structure for table `common_key_value`
+--
 
-CREATE TABLE `multilookup` (
-  `ml_city_id` int(9) unsigned NOT NULL,
-  `ml_ip` int(10) NOT NULL,
-  `ml_count` int(6) unsigned NOT NULL default 0,
-  `ml_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (ml_city_id, ml_ip),
-  KEY `multilookup_ts_inx` (ml_ip, ml_ts)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `common_key_value`;
+CREATE TABLE `common_key_value` (
+  `identifier` varchar(255) NOT NULL,
+  `content` mediumblob NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Table structure for table `const_values`
+--
+
+DROP TABLE IF EXISTS `const_values`;
+CREATE TABLE `const_values` (
+  `name` varchar(50) NOT NULL,
+  `val` int(8) unsigned NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `discussion_reporting`
+--
+
+DROP TABLE IF EXISTS `discussion_reporting`;
+CREATE TABLE `discussion_reporting` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dr_query` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `dr_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `discussion_dr_title_query_idx` (`dr_title`,`dr_query`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Table structure for table `events_local_users`
+--
+
+DROP TABLE IF EXISTS `events_local_users`;
 CREATE TABLE `events_local_users` (
   `wiki_id` int(8) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   `user_name` varchar(255) NOT NULL DEFAULT '',
-  `last_ip` int(10) unsigned NOT NULL DEFAULT '0',
   `edits` int(11) unsigned NOT NULL DEFAULT '0',
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',
@@ -47,15 +59,85 @@ CREATE TABLE `events_local_users` (
   `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
-  KEY `user_name` (`user_name`),
-  KEY `user_id` (`user_id`,`user_name`),
   KEY `user_edits` (`user_id`,`edits`,`wiki_id`),
-  KEY `wiki_sgroup` (`wiki_id`,`single_group`),
-  KEY `wiki_allgroup` (`wiki_id`,`all_groups`(200)),
-  KEY `editdate_wiki` (`editdate`,`wiki_id`,`user_id`),
-  KEY `wiki_user_name_edits` (`wiki_id`,`user_name`,`user_id`,`edits`),
-  KEY `wiki_editdate_user_edits` (`wiki_id`,`editdate`,`user_id`,`edits`),
-  KEY `wiki_edits_by_user` (`wiki_id`,`edits`,`user_id`)
+  KEY `user_id` (`user_id`),
+  KEY `edits` (`edits`),
+  KEY `wiki_id` (`wiki_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+
+--
+-- Table structure for table `jobs_dirty`
+--
+
+DROP TABLE IF EXISTS `jobs_dirty`;
+CREATE TABLE `jobs_dirty` (
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `city_id` int(8) unsigned NOT NULL,
+  `locked` timestamp NULL DEFAULT NULL,
+  UNIQUE KEY `city_id_inx` (`city_id`),
+  KEY `locked` (`locked`)
+) ENGINE=MEMORY DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `jobs_summary`
+--
+
+DROP TABLE IF EXISTS `jobs_summary`;
+CREATE TABLE `jobs_summary` (
+  `city_id` int(8) unsigned NOT NULL,
+  `total` int(8) unsigned DEFAULT '0',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`city_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `multilookup`
+--
+
+DROP TABLE IF EXISTS `multilookup`;
+CREATE TABLE `multilookup` (
+  `ml_city_id` int(9) unsigned NOT NULL,
+  `ml_ip_bin` varbinary(16) NOT NULL DEFAULT '',
+  `ml_count` int(6) unsigned NOT NULL DEFAULT '0',
+  `ml_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ml_city_id`,`ml_ip_bin`),
+  KEY `multilookup_ts_inx` (`ml_ts`),
+  KEY `multilookup_cnt_ts_inx` (`ml_count`,`ml_ts`),
+  KEY `multilookup_ip_bin_ts_inx` (`ml_ip_bin`,`ml_ts`),
+  KEY `multilookup_ip_bin_cnt_ts_inx` (`ml_ip_bin`,`ml_count`,`ml_ts`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+
+--
+-- Table structure for table `phalanx_stats`
+--
+
+DROP TABLE IF EXISTS `phalanx_stats`;
+CREATE TABLE `phalanx_stats` (
+  `ps_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ps_blocker_id` int(8) unsigned NOT NULL,
+  `ps_blocker_type` smallint(1) unsigned NOT NULL,
+  `ps_timestamp` binary(14) NOT NULL DEFAULT '\0\0\0\0\0\0\0\0\0\0\0\0\0\0',
+  `ps_blocked_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ps_wiki_id` int(9) NOT NULL,
+  `ps_blocker_hit` smallint(1) unsigned NOT NULL,
+  `ps_referrer` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`ps_id`),
+  KEY `wiki_id` (`ps_wiki_id`,`ps_timestamp`),
+  KEY `blocker_id` (`ps_blocker_id`,`ps_timestamp`),
+  KEY `ps_timestamp` (`ps_timestamp`),
+  KEY `ps_blocker_id` (`ps_blocker_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `script_log`
+--
+
+DROP TABLE IF EXISTS `script_log`;
+CREATE TABLE `script_log` (
+  `logname` varchar(50) NOT NULL,
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`logname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+-- Dump completed on 2017-10-06 12:23:06

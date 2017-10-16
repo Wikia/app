@@ -4,40 +4,97 @@
  * Forum
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
-class Forum extends Walls {
+class Forum extends WikiaObject {
 
 	const ACTIVE_DAYS = 7;
 	const BOARD_MAX_NUMBER = 50;
 	const AUTOCREATE_USER = 'Wikia';
-	//controlling from outside if use can edit/create/delete board page
+	// controlling from outside if use can edit/create/delete board page
 	static $allowToEditBoard = false;
 
+	/**
+	 * @desc Min and max lengths of fields
+	 * @var array
+	 */
+	private $fieldsLengths = [
+		'title' => [ 'min' => 4, 'max' => 40 ],
+		'desc' => [ 'min' => 4, 'max' => 255 ],
+	];
 
-	public function getBoardList($db = DB_SLAVE) {
-		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
-		$titlesBatch = new TitleBatch($boardTitles);
-		$orderIndexes = $titlesBatch->getWikiaProperties(WPP_WALL_ORDER_INDEX,$db);
+	const LEN_OK = 0;
+	const LEN_TOO_BIG_ERR = -1;
+	const LEN_TOO_SMALL_ERR = -2;
 
-		$boards = array();
-		/** @var $title Title */
-		foreach($boardTitles as $title) {
-			/** @var $board ForumBoard */
-			$board = ForumBoard::newFromTitle($title);
-			$title = $board->getTitle();
-			$id = $title->getArticleID();
+	/**
+	 * Returns list of ForumBoardInfo ordered by order index
+	 *
+	 * @param int $dbType
+	 * @return array array of serialized ForumBoardInfo
+	 */
+	public function getBoardList( int $dbType = DB_SLAVE ): array {
+		$db = wfGetDB( $dbType );
 
-			$boardInfo = $board->getBoardInfo();
-			$boardInfo['id'] = $title->getArticleID();
-			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
-			$boardInfo['url'] = $title->getFullURL();
-			$orderIndex = $orderIndexes[$id];
-			$boards[$orderIndex] = $boardInfo;
+		$result = $db->select(
+			[ 'page', 'page_wikia_props'],
+			// SUS-2519: Only load the fields we actually use
+			// This allows the query planner to use proper index for page table
+			[ 'page.page_id AS page_id', 'page_title', 'page_namespace', 'propname', 'props' ],
+			[
+				// SUS-2519: Order of conditions matter.
+				// First reduce the list to Forum Boards only to reduce the number of rows scanned.
+				'page_namespace' => NS_WIKIA_FORUM_BOARD,
+				'propname = ' . $db->addQuotes( WPP_WALL_ORDER_INDEX ) . ' OR propname IS NULL'
+			],
+			__METHOD__,
+			[],
+			[ 'page_wikia_props' => [ 'LEFT JOIN', 'page.page_id = page_wikia_props.page_id' ] ]
+		);
+
+		$boardInfoByOrderIndex = [];
+
+		foreach ( $result as $row ) {
+			$boardTitle = Title::newFromRow( $row );
+
+			$board = ForumBoard::newFromTitle( $boardTitle );
+			$boardInfo = $board->getBoardInfo()->toArray();
+
+			// SUS-2519: if there is no explicit sorting info present, then use page ID
+			if ( empty( $row->props ) ) {
+				$boardInfoByOrderIndex[$row->page_id] = $boardInfo;
+				continue;
+			}
+
+			$orderIndex = wfUnserializeProp( $row->propname, $row->props );
+
+			// IRIS-1493: Sorting info may be duplicated - if this is the case, then use page ID
+			if ( isset( $boardInfoByOrderIndex[$orderIndex] ) ) {
+				$boardInfoByOrderIndex[$row->page_id] = $boardInfo;
+				continue;
+			}
+
+			$boardInfoByOrderIndex[$orderIndex] = $boardInfo;
 		}
 
-		krsort($boards);
+		krsort( $boardInfoByOrderIndex );
 
-		return $boards;
+		return $boardInfoByOrderIndex;
+	}
+
+	/**
+	 * Return list of existing Forum Board titles, without extra board information
+	 * @return TitleArray
+	 */
+	public function getBoardTitles(): TitleArray {
+		$db = wfGetDB( DB_SLAVE );
+
+		$result = $db->select(
+			'page',
+			[ 'page_id', 'page_title', 'page_namespace' ],
+			[ 'page_namespace' => NS_WIKIA_FORUM_BOARD ],
+			__METHOD__
+		);
+
+		return TitleArray::newFromResult( $result );
 	}
 
 	/**
@@ -51,15 +108,15 @@ class Forum extends Walls {
 
 		// get board list
 		$result = (int)$dbw->selectField(
-			array( 'page' ),
-			array( 'count(*) as cnt' ),
-			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
+			[ 'page' ],
+			[ 'count(*) as cnt' ],
+			[ 'page_namespace' => NS_WIKIA_FORUM_BOARD ],
 			__METHOD__,
-			array()
+			[ ]
 		);
 
-		wfProfileOut(__METHOD__);
-		return $result['cnt'];
+		wfProfileOut( __METHOD__ );
+		return $result[ 'cnt' ];
 	}
 
 	/**
@@ -75,12 +132,13 @@ class Forum extends Walls {
 		if ( $totalThreads === false ) {
 			$db = wfGetDB( DB_SLAVE );
 
-			$sqlWhere = array(
+			$sqlWhere = [
 				'parent_comment_id' => 0,
+				'archived' => 0,
 				'deleted' => 0,
 				'removed' => 0,
 				'page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD
-			);
+			];
 
 			// active threads
 			if ( !empty( $days ) ) {
@@ -88,12 +146,12 @@ class Forum extends Walls {
 			}
 
 			$row = $db->selectRow(
-				array( 'comments_index', 'page' ),
-				array( 'count(*) cnt' ),
+				[ 'comments_index', 'page' ],
+				[ 'count(*) cnt' ],
 				$sqlWhere,
 				__METHOD__,
-				array(),
-				array( 'page' => array( 'LEFT JOIN', array( 'page_id=comment_id' ) ) )
+				[ ],
+				[ 'page' => [ 'LEFT JOIN', [ 'page_id=comment_id' ] ] ]
 			);
 
 			$totalThreads = 0;
@@ -133,17 +191,17 @@ class Forum extends Walls {
 		$this->clearCacheTotalThreads( self::ACTIVE_DAYS );
 	}
 
-	public function hasAtLeast( $ns, $count ) {
+	public function hasMoreThan( $ns, $count ) {
 		wfProfileIn( __METHOD__ );
 
-		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
+		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasMoreThan', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
 			$db = wfGetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php
-			$result = $db->select( array( 'page' ), array( 'page_id' ), array( 'page_namespace' => $ns ), __METHOD__, array( 'LIMIT' => $count + 1 ) );
+			$result = $db->select( [ 'page' ], [ 'page_id' ], [ 'page_namespace' => $ns ], __METHOD__, [ 'LIMIT' => $count + 1 ] );
 
 			$rowCount = $db->numRows( $result );
-			//string value is a work around for false value problem in memc
+			// string value is a work around for false value problem in memc
 			if ( $rowCount > $count ) {
 				return "YES";
 			} else {
@@ -156,7 +214,7 @@ class Forum extends Walls {
 	}
 
 	public function haveOldForums() {
-		return $this->hasAtLeast( NS_FORUM, 5 );
+		return $this->hasMoreThan( NS_FORUM, 5 );
 	}
 
 	public function swapBoards( $boardId1, $boardId2 ) {
@@ -182,10 +240,10 @@ class Forum extends Walls {
 
 		// get board list
 		$result = $dbw->select(
-			array( 'page' ),
-			array( 'page_id, page_title' ),
-			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
-			__METHOD__, array( 'ORDER BY' => 'page_title' )
+			[ 'page' ],
+			[ 'page_id, page_title' ],
+			[ 'page_namespace' => NS_WIKIA_FORUM_BOARD ],
+			__METHOD__, [ 'ORDER BY' => 'page_title' ]
 		);
 
 		while ( $row = $dbw->fetchObject( $result ) ) {
@@ -200,38 +258,29 @@ class Forum extends Walls {
 	 */
 
 	public function createBoard( $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->createOrEditBoard( null, $titletext, $body, $bot );
-
-		wfProfileOut( __METHOD__ );
+		return $this->createOrEditBoard( null, $titletext, $body, $bot );
 	}
 
 	public function editBoard( $id, $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->createOrEditBoard( $id, $titletext, $body, $bot );
-
-		wfProfileOut( __METHOD__ );
+		return $this->createOrEditBoard( $id, $titletext, $body, $bot );
 	}
 
 	/**
 	 *  create or edit board, if $board = null then we are creating new one
+	 * @param ForumBoard|null $board
+	 * @param $titletext
+	 * @param $body
+	 * @param bool $bot
+	 * @return Status
+	 * @throws MWException
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
-		$id = null;
-		if ( !empty( $board ) ) {
-			$id = $board->getId();
-		}
+		$id = ( $board instanceof ForumBoard ) ? $board->getId() : null;
 
-		if ( strlen( $titletext ) < 4 || strlen( $body ) < 4 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		if ( strlen( $body ) > 255 || strlen( $titletext ) > 40 ) {
-			wfProfileOut( __METHOD__ );
+		if (
+			self::LEN_OK !== $this->validateLength( $titletext, 'title' ) ||
+			self::LEN_OK !== $this->validateLength( $body, 'desc' )
+		) {
 			return false;
 		}
 
@@ -249,10 +298,12 @@ class Forum extends Walls {
 		$article = new Article( $title );
 		$editPage = new EditPage( $article );
 
-		$editPage->edittime = $article->getTimestamp();
+		$editPage->edittime = $article->getPage()->getTimestamp();
 		$editPage->textbox1 = $body;
+		// Maintain the "watch" status for the page after the edit
+		$editPage->watchthis = $article->getTitle()->userIsWatching();
 
-		$result = array();
+		$result = [ ];
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
 		if ( $id == null ) {
@@ -264,11 +315,53 @@ class Forum extends Walls {
 
 		Forum::$allowToEditBoard = false;
 
-		wfProfileOut( __METHOD__ );
+		// clear the cache only when we're editing an existing board
+		if ( $board instanceof ForumBoard ) {
+			$board->clearCacheBoardInfo();
+		}
+
+		return $retval;
+	}
+
+	/**
+	 * @desc Returns length limit of a field; if not set in Forum::$fieldsLengths returns 0
+	 *
+	 * @param String $type one of: 'min' or 'max'
+	 * @param String $field fields defined in Forum::$fieldsLengths
+	 *
+	 * @return int
+	 */
+	public function getLengthLimits( $type, $field ) {
+		return ( isset( $this->fieldsLengths[ $field ] ) && isset( $this->fieldsLengths[ $field ][ $type ] ) ) ?
+			(int)$this->fieldsLengths[ $field ][ $type ] :
+			0;
+	}
+
+	/**
+	 * @desc Returns Forum::LEN_OK, Forum::LEN_TOO_SMALL_ERR or Forum::LEN_TOO_BIG_ERR depends if the length is valid
+	 *
+	 * @param String $input data to be validated
+	 * @param String $field field with defined length's limits in Forum::$fieldsLengths array
+	 *
+	 * @return string
+	 */
+	public function validateLength( $input, $field ) {
+		$min = $this->getLengthLimits( 'min', $field );
+		$max = $this->getLengthLimits( 'max', $field );
+		$out = self::LEN_OK;
+
+		if ( mb_strlen( $input ) < $min ) {
+			$out = self::LEN_TOO_SMALL_ERR;
+		} else if ( mb_strlen( $input ) > $max ) {
+			$out = self::LEN_TOO_BIG_ERR;
+		}
+
+		return $out;
 	}
 
 	/**
 	 * delete board
+	 * @param ForumBoard $board
 	 */
 
 	public function deleteBoard( $board ) {
@@ -284,11 +377,14 @@ class Forum extends Walls {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @deprecated Remove as soon as SUS-302 and SUS-303 are completed
+	 */
 	public function createDefaultBoard() {
 		wfProfileIn( __METHOD__ );
 		$app = F::App();
-		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
-			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
+		if ( !$this->hasMoreThan( NS_WIKIA_FORUM_BOARD, 0 ) ) {
+			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasMoreThan', NS_WIKIA_FORUM_BOARD, 0 ) );
 			/* the wgUser swap is the only way to create page as other user then current */
 			$tmpUser = $app->wg->User;
 			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );

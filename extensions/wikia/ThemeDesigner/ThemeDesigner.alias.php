@@ -1,21 +1,45 @@
 <?php
 /**
- * aliases for special pages
+ * Aliases for special pages
  *
  * @file
  * @ingroup Extensions
  */
 
-$specialPageAliases = array();
+$specialPageAliases = [];
 
-/** English */
-$specialPageAliases['en'] = array(
-	'ThemeDesigner' => array( 'ThemeDesigner' ),
-	'ThemeDesignerPreview' => array( 'ThemeDesignerPreview' ),
-);
+/**
+ * English (English)
+ */
+$specialPageAliases['en'] = [
+	'ThemeDesigner' => [ 'ThemeDesigner' ],
+	'ThemeDesignerPreview' => [ 'ThemeDesignerPreview' ],
+];
 
-/** Polish (Polski) */
-$specialPageAliases['pl'] = array(
-	'ThemeDesigner' => array( 'Kreator motywu' ),
-);
+/**
+ * Korean (한국어)
+ */
+$specialPageAliases['ko'] = [
+	'ThemeDesigner' => [ '테마디자이너' ],
+	'ThemeDesignerPreview' => [ '테마디자이너미리보기' ],
+];
 
+/**
+ * Polish (Polski)
+ */
+$specialPageAliases['pl'] = [
+	'ThemeDesigner' => [ 'Kreator motywu' ],
+];
+
+/**
+ * Vietnamese (Tiếng Việt)
+ */
+$specialPageAliases['vi'] = [
+	'ThemeDesigner' => [ 'Thiết_kế_chủ_đề' ],
+	'ThemeDesignerPreview' => [ 'Mẫu_chủ_đề' ],
+];
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = [
+	'ThemeDesigner' => [ 'テーマデザイナー' ]
+];

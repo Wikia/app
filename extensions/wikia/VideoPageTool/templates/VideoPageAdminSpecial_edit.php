@@ -4,9 +4,13 @@
 	'VideoPageAdminSpecial',
 	'Header',
 	array(
-		'publishDate' => $publishDate,
 		'section' => $section,
 		'language' => $language,
+		'savedBy' => $savedBy,
+		'lastSavedOn' => $lastSavedOn,
+		'publishDate' => $publishDate,
+		'publishedBy' => $publishedBy,
+		'programDate' => $programDate
 	)
 ) ?>
 
@@ -29,7 +33,9 @@
 	</div>
 	<div class="publish">
 		<form class="WikiaForm" method="post" action="<?= $publishUrl ?>">
-			<button type="submit" class="big" name="action" value="publish" <?= $publishButton ?>><?= wfMessage( 'videopagetool-publish-button' )->text() ?></button>
+			<button type="submit" class="big" name="action" value="publish" <?= $publishButton ?>>
+				<?= wfMessage( 'videopagetool-publish-button' )->escaped() ?>
+			</button>
 		</form>
 	</div>
 </div>

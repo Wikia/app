@@ -37,7 +37,8 @@ $chev-color: rgb(157,157,157);
 	display: inline-block;
 
 	video, iframe, object, embed {
-		width: 70%;
+		width: 75%;
+		min-height: 50%;
 		height: auto;
 	}
 }
@@ -149,7 +150,7 @@ $chev-color: rgb(157,157,157);
 	margin-left: -25px;
 	width: 50px;
 	height: 30px;
-	background-image: url('/extensions/wikia/WikiaMobile/images/gallery_gray.png'); /* base64 */
+	background-image: url('/extensions/wikia/WikiaMobile/images/gallery_gray.png'); /* inline */
 	background-size: 40%;
 	background-repeat: no-repeat;
 	background-position: center;

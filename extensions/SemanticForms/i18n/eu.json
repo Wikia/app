@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"An13sa",
+			"Kobazulo",
+			"Xabier Armendaritz",
+			"Subi"
+		]
+	},
+	"createproperty": "Propietatea sortu",
+	"sf_createproperty_propname": "Ezaugarriaren izena:",
+	"sf_createproperty_proptype": "Mota:",
+	"templates": "Txantiloiak",
+	"createtemplate": "Txantiloia sortu",
+	"sf_createtemplate_namelabel": "Txantiloiaren izena:",
+	"sf_createtemplate_displaylabel": "Etiketa erakutsi:",
+	"sf_createtemplate_deletefield": "Ezabatu",
+	"sf_createform_template": "Txantiloia:",
+	"sf_createform_removetemplate": "Txantiloia kendu",
+	"sf_createform_addtemplate": "Txantiloia gehitu:",
+	"sf_createform_add": "Gehitu",
+	"createcategory": "Kategoria sortu",
+	"sf_createcategory_name": "Kategoriaren izena:",
+	"sf_createclass_create": "Sortu",
+	"sf_formstart_createoredit": "Sortu edo aldatu",
+	"sf_formedit_createtitle": "$1 aldatu: $2",
+	"sf_editsource": "Aldatu iturburu kodea",
+	"sf_formedit_edittitle": "$1 aldatu: $2",
+	"sf_formedit_remove": "Instantzia hau kendu",
+	"sf_formedit_addanother": "Beste bat gehitu",
+	"sf_deletionlog": "Ezabaketa erregistroa",
+	"sf_form_freetextlabel": "Testu askea",
+	"sf_blank_namespace": "Nagusia"
+}

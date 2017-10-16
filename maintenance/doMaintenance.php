@@ -31,6 +31,8 @@ if ( !defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
 	exit( 1 );
 }
 
+$wgMaintenanceStartTime = microtime( true );
+
 // Wasn't included from the file scope, halt execution (probably wanted the class)
 // If a class is using commandLine.inc (old school maintenance), they definitely
 // cannot be included and will proceed with execution
@@ -44,6 +46,7 @@ if ( !$maintClass || !class_exists( $maintClass ) ) {
 }
 
 // Get an object to start us off
+/** @var Maintenance $maintenance */
 $maintenance = new $maintClass();
 
 // Basic sanity checks and such
@@ -64,6 +67,9 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 # Stub the profiler
 require_once( MWInit::compiledPath( 'includes/profiler/Profiler.php' ) );
+// Wikia change - begin - use normal profiler
+require_once( "$IP/StartProfiler.php" );
+// Wikia change - end
 
 // Some other requires
 if ( !defined( 'MW_COMPILED' ) ) {
@@ -90,6 +96,19 @@ if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	require( $maintenance->loadSettings() );
 }
 
+// Wikia change - begin - attach sink to the profiler (copied from WebStart.php)
+if ( $wgProfiler instanceof Profiler ) {
+	if ( empty($wgProfilerSendViaScribe) ) {
+		$sink = new ProfilerDataUdpSink();
+	} else {
+		$sink = new ProfilerDataScribeSink();
+	}
+	$wgProfiler->addSink( $sink );
+}
+Transaction::setEntryPoint(Transaction::ENTRY_POINT_MAINTENANCE);
+Transaction::setAttribute(Transaction::PARAM_MAINTENANCE_SCRIPT, $maintClass);
+// Wikia change - end
+
 if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&
 	is_readable( "$IP/AdminSettings.php" ) )
 {
@@ -102,14 +121,42 @@ require_once( MWInit::compiledPath( 'includes/Setup.php' ) );
 // Much much faster startup than creating a title object
 $wgTitle = null;
 
+\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass started.");
+
+function getMaintenanceRuntimeStatistics( $exception = null ) {
+	global $wgMaintenanceStartTime, $maintenance;
+
+	$logContext = [ ];
+	if ( is_callable( [ $maintenance, 'getRuntimeStatistics' ] ) ) {
+		$logContext = array_merge( $logContext, $maintenance->getRuntimeStatistics() );
+	}
+	$logContext['status_bool'] = !$exception;
+	$logContext['total_time_float'] = microtime( true ) - $wgMaintenanceStartTime;
+	if ( $exception ) {
+		$logContext['exception'] = $exception;
+	}
+
+	return $logContext;
+}
+
 // Do the work
 try {
 	$maintenance->execute();
 
 	// Potentially debug globals
 	$maintenance->globals();
+
+	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass finished successfully.",
+		getMaintenanceRuntimeStatistics() );
 } catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
+	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
+		getMaintenanceRuntimeStatistics( $mwe ) );
 	exit( 1 );
+} catch ( Exception $e ) {
+	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
+		getMaintenanceRuntimeStatistics( $e ) );
+	throw $e;
 }
 
+Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre

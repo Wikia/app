@@ -60,6 +60,13 @@ class LocalFile extends File {
 
 	protected $repoClass = 'LocalRepo';
 
+	/** @var int UNIX timestamp of last markVolatile() call */
+	private $lastMarkedVolatile = 0;
+
+	const LOAD_VIA_SLAVE = 2; // integer; use a slave to load the data
+
+	const VOLATILE_TTL = 300; // integer; seconds
+
 	/**
 	 * Create a LocalFile from a title
 	 * Do not call this except from inside a repo class.
@@ -160,6 +167,8 @@ class LocalFile extends File {
 	/**
 	 * Get the memcached key for the main data for this file, or false if
 	 * there is no access to the shared cache.
+	 *
+	 * @return string|bool
 	 */
 	function getCacheKey() {
 		$hashedName = md5( $this->getName() );
@@ -227,15 +236,6 @@ class LocalFile extends File {
 			}
 		}
 
-		/* Wikia change begin */
-		// If there's no timestamp with this file don't cache it, its a soon
-		// to be uploaded file that hasn't been fully saved yet.
-		if ( empty($cache['timestamp']) ) {
-			$wgMemc->delete( $key );
-			return;
-		}
-		/* Wikia change end */
-
 		$wgMemc->set( $key, $cache, 60 * 60 * 24 * 7 ); // A week
 	}
 
@@ -270,7 +270,7 @@ class LocalFile extends File {
 	/**
 	 * Load file metadata from the DB
 	 */
-	function loadFromDB() {
+	function loadFromDB($flags = 0 ) {
 		# Polymorphic function name to distinguish foreign and local fetches
 		$fname = get_class( $this ) . '::' . __FUNCTION__;
 		wfProfileIn( $fname );
@@ -278,7 +278,9 @@ class LocalFile extends File {
 		# Unconditionally set loaded=true, we don't want the accessors constantly rechecking
 		$this->dataLoaded = true;
 
-		$dbr = $this->repo->getMasterDB();
+		$dbr = ( $flags & self::LOAD_VIA_SLAVE )
+			? $this->repo->getSlaveDB()
+			: $this->repo->getMasterDB();
 
 		$row = $dbr->selectRow( 'image', $this->getCacheFields( 'img_' ),
 			array( 'img_name' => $this->getName() ), $fname );
@@ -286,11 +288,6 @@ class LocalFile extends File {
 		if ( $row ) {
 			$this->loadFromRow( $row );
 		} else {
-			/* Wikia Change Start @author garthwebb */
-			$info = 'URI: '.(empty($_SERVER["REQUEST_URI"]) ? 'N/A' : $_SERVER["REQUEST_URI"]).
-				 ' - REF: '.(empty($_SERVER['HTTP_REFERER']) ? 'N/A' : $_SERVER['HTTP_REFERER']);
-			Wikia::Log(__METHOD__, false, "[$info] Setting fileExists to false for '".$this->getName()."'");
-			/* Wikia Change End */
 			$this->fileExists = false;
 		}
 
@@ -344,6 +341,12 @@ class LocalFile extends File {
 			$this->$name = $value;
 		}
 
+		/* Wikia change begin */
+		if ( array_key_exists( 'user', $array ) ) {
+			$this->user_text = User::getUsername( $array['user'], $array['user_text'] );
+		}
+		/* Wikia change end */
+
 		$this->fileExists = true;
 		$this->maybeUpgradeRow();
 	}
@@ -351,10 +354,10 @@ class LocalFile extends File {
 	/**
 	 * Load file metadata from cache or DB, unless already loaded
 	 */
-	function load() {
+	function load( $flags = 0 ) {
 		if ( !$this->dataLoaded ) {
 			if ( !$this->loadFromCache() ) {
-				$this->loadFromDB();
+				$this->loadFromDB( $this->isVolatile() ? 0 : self::LOAD_VIA_SLAVE );
 				$this->saveToCache();
 			}
 			$this->dataLoaded = true;
@@ -701,12 +704,13 @@ class LocalFile extends File {
 		$this->purgeThumbnails( $options );
 
 		// Purge squid cache for this file
-/**
-		SquidUpdate::purge( array( $this->getURL() ) );
-**/
-		// Wikia purge the base thumbnail url
-		SquidUpdate::purge( array( $this->getURL(), $this->getThumbUrl() ) );
+		// Wikia change - begin
+		// @author macbre / BAC-1206
+		$urls = array( $this->getURL() );
+		Hooks::run( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
 
+		SquidUpdate::purge( $urls );
+		// Wikia change - end
 	}
 
 	/**
@@ -721,7 +725,7 @@ class LocalFile extends File {
 		$this->purgeThumbList( $dir, $files );
 
 		// Purge any custom thumbnail caches
-		wfRunHooks( 'LocalFilePurgeThumbnails', array( $this, $archiveName ) );
+		Hooks::run( 'LocalFilePurgeThumbnails', array( $this, $archiveName ) );
 
 		// Purge the squid
 		if ( $wgUseSquid ) {
@@ -754,7 +758,7 @@ class LocalFile extends File {
 		$this->purgeThumbList( $dir, $files );
 
 		// Purge any custom thumbnail caches
-		wfRunHooks( 'LocalFilePurgeThumbnails', array( $this, false ) );
+		Hooks::run( 'LocalFilePurgeThumbnails', array( $this, false ) );
 
 		// Purge the squid
 		if ( $wgUseSquid ) {
@@ -762,6 +766,8 @@ class LocalFile extends File {
 			foreach( $files as $file ) {
 				$urls[] = $this->getThumbUrl( $file );
 			}
+
+			Hooks::run( 'LocalFilePurgeThumbnailsUrls', [ $this, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 	}
@@ -781,11 +787,9 @@ class LocalFile extends File {
 		$purgeList = array();
 		$purgeList = array( $this->getThumbUrl( ) ); # wikia change
 		foreach ( $files as $file ) {
-			# Check that the base file name is part of the thumb name
-			# This is a basic sanity check to avoid erasing unrelated directories
-			if ( strpos( $file, $this->getName() ) !== false ) {
-				$purgeList[] = "{$dir}/{$file}";
-			}
+			# Wikia change - remove all thumbnails in all formats (PLATFORM-441)
+			# e.g. PNG file can have a WebP thumbnail
+			$purgeList[] = "{$dir}/{$file}";
 		}
 
 		# Delete the thumbnails
@@ -836,8 +840,14 @@ class LocalFile extends File {
 		$opts['ORDER BY'] = "oi_timestamp $order";
 		$opts['USE INDEX'] = array( 'oldimage' => 'oi_name_timestamp' );
 
-		wfRunHooks( 'LocalFile::getHistory', array( &$this, &$tables, &$fields,
-			&$conds, &$opts, &$join_conds ) );
+		Hooks::run( 'LocalFile::getHistory', [
+			$this,
+			&$tables,
+			&$fields,
+			&$conds,
+			&$opts,
+			&$join_conds,
+		] );
 
 		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $opts, $join_conds );
 		$r = array();
@@ -986,11 +996,14 @@ class LocalFile extends File {
 	function recordUpload2(
 		$oldver, $comment, $pageText, $props = false, $timestamp = false, $user = null
 	) {
+		global $wgCityId;
+
 		if ( is_null( $user ) ) {
 			global $wgUser;
 			$user = $wgUser;
 		}
 
+		/* @var DatabaseBase $dbw */
 		$dbw = $this->repo->getMasterDB();
 		$dbw->begin();
 
@@ -1008,15 +1021,11 @@ class LocalFile extends File {
 		$props['timestamp'] = wfTimestamp( TS_MW, $timestamp ); // DB -> TS_MW
 		$this->setProps( $props );
 
-		# Delete thumbnails
-		$this->purgeThumbnails();
-
-		# The file is already on its final location, remove it from the squid cache
-		SquidUpdate::purge( array( $this->getURL() ) );
-
 		# Fail now if the file isn't there
 		if ( !$this->fileExists ) {
 			wfDebug( __METHOD__ . ": File " . $this->getRel() . " went missing!\n" );
+			$dbw->rollback( __METHOD__ );
+
 			return false;
 		}
 
@@ -1053,6 +1062,7 @@ class LocalFile extends File {
 				# and pass an empty $oldver. Allow this bogus value so we can displace the
 				# `image` row to `oldimage`, leaving room for the new current file `image` row.
 				#throw new MWException( "Empty oi_archive_name. Database and storage out of sync?" );
+				Wikia::logBacktrace(__METHOD__ . "::oi_archive_name - [{$this->getName()}]"); // Wikia change (BAC-1068)
 			}
 			$reupload = true;
 			# Collision, this is an update of a file
@@ -1099,17 +1109,7 @@ class LocalFile extends File {
 				array( 'img_name' => $this->getName() ),
 				__METHOD__
 			);
-		} else {
-			# This is a new file
-			# Update the image count
-			$dbw->begin( __METHOD__ );
-			$dbw->update(
-				'site_stats',
-				array( 'ss_images = ss_images+1' ),
-				'*',
-				__METHOD__
-			);
-			$dbw->commit( __METHOD__ );
+
 		}
 
 		$descTitle = $this->getTitle();
@@ -1133,8 +1133,15 @@ class LocalFile extends File {
 			if (!is_null($nullRevision)) {
 				$nullRevision->insertOn( $dbw );
 
-				wfRunHooks( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
+				Hooks::run( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
+			}
+			else {
+				\Wikia\Logger\WikiaLogger::instance()->warning('PLATFORM-1311', [
+					'reason' => 'LocalFile no nullRevision',
+					'page_id' => $descTitle->getArticleId(),
+					'exception' => new Exception()
+				]);
 			}
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
@@ -1146,6 +1153,21 @@ class LocalFile extends File {
 			$wikiPage->doEdit( $pageText, $comment, EDIT_NEW | EDIT_SUPPRESS_RC, false, $user );
 		}
 
+		/* wikia change - begin (VID-1568) */
+		// Update/Insert video info
+		try {
+			\VideoInfoHooksHelper::upsertVideoInfo( $this, $reupload );
+		} catch ( \Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+				'reason' => 'LocalFile rollback',
+				'exception' => $e
+			]);
+
+			$dbw->rollback();
+			return false;
+		}
+		/* wikia change - end (VID-1568) */
+
 		# Commit the transaction now, in case something goes wrong later
 		# The most important thing is that files don't get lost, especially archives
 		$dbw->commit();
@@ -1156,19 +1178,46 @@ class LocalFile extends File {
 		# which in fact doesn't really exist (bug 24978)
 		$this->saveToCache();
 
+		if ( $reupload ) {
+			# Delete old thumbnails
+			wfProfileIn( __METHOD__ . '-purge' );
+			$this->purgeThumbnails();
+			wfProfileOut( __METHOD__ . '-purge' );
+
+			# Remove the old file from the squid cache
+			SquidUpdate::purge( array( $this->getURL() ) );
+
+			/* wikia change - begin (VID-1568) */
+			\VideoInfoHooksHelper::purgeVideoInfoCache( $this );
+			/* wikia change - end (VID-1568) */
+		}
+		else {
+			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => 1 ] ) );
+		}
+
 		# Hooks, hooks, the magic of hooks...
-		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
+		Hooks::run( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
 		# Invalidate cache for all pages using this file
-		$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
-		$update->doUpdate();
+		// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $this->getTitle() );
+		$task->call( 'purge', 'imagelinks' );
+		$task->queue();
+		// Wikia change end
 
 		# Invalidate cache for all pages that redirects on this page
 		$redirs = $this->getTitle()->getRedirectsHere();
 
 		foreach ( $redirs as $redir ) {
-			$update = new HTMLCacheUpdate( $redir, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $redir );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia change end
 		}
 
 		return true;
@@ -1257,13 +1306,16 @@ class LocalFile extends File {
 
 		$batch = new LocalFileMoveBatch( $this, $target );
 		$batch->addCurrent();
-		$batch->addOlds();
-
+		$archiveNames = $batch->addOlds();
 		$status = $batch->execute();
+		$this->unlock(); // done
+
 		wfDebugLog( 'imagemove', "Finished moving {$this->name}" );
 
 		$this->purgeEverything();
-		$this->unlock(); // done
+		foreach ( $archiveNames as $archiveName ) {
+			$this->purgeOldThumbnails( $archiveName );
+		}
 
 		if ( $status->isOk() ) {
 			// Now switch the object
@@ -1303,31 +1355,37 @@ class LocalFile extends File {
 
 		# Get old version relative paths
 		$dbw = $this->repo->getMasterDB();
-		$result = $dbw->select( 'oldimage',
+		$result = $dbw->select(
+			'oldimage',
 			array( 'oi_archive_name' ),
-			array( 'oi_name' => $this->getName() ) );
+			array( 'oi_name' => $this->getName() )
+		);
+		$archiveNames = [];
 		foreach ( $result as $row ) {
 			$batch->addOld( $row->oi_archive_name );
-			$this->purgeOldThumbnails( $row->oi_archive_name );
+			$archiveNames[] = $row->oi_archive_name;
 		}
 		$status = $batch->execute();
 
 		if ( $status->ok ) {
-			// Update site_stats
-			$site_stats = $dbw->tableName( 'site_stats' );
-			$dbw->query( "UPDATE $site_stats SET ss_images=ss_images-1", __METHOD__ );
-			$this->purgeEverything();
+			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => -1 ] ) );
 		}
-
 		$this->unlock(); // done
 
-		if ( $wgUseSquid ) {
-			// Purge the squid
-			$purgeUrls = array();
-			foreach ($archiveNames as $archiveName ) {
-				$purgeUrls[] = $this->getArchiveUrl( $archiveName );
+		if ( $status->ok ) {
+			$this->purgeEverything();
+			foreach ( $archiveNames as $archiveName ) {
+				$this->purgeOldThumbnails( $archiveName );
 			}
-			SquidUpdate::purge( $purgeUrls );
+
+			if ( $wgUseSquid ) {
+				// Purge the squid
+				$purgeUrls = array();
+				foreach ( $archiveNames as $archiveName ) {
+					$purgeUrls[] = $this->getArchiveUrl( $archiveName );
+				}
+				SquidUpdate::purge( $purgeUrls );
+			}
 		}
 
 		return $status;
@@ -1424,7 +1482,7 @@ class LocalFile extends File {
 	 */
 	function getDescriptionText() {
 		global $wgParser;
-		$revision = Revision::newFromTitle( $this->title );
+		$revision = Revision::newFromTitle( $this->title, false, Revision::READ_NORMAL );
 		if ( !$revision ) return false;
 		$text = $revision->getText();
 		if ( !$text ) return false;
@@ -1477,6 +1535,8 @@ class LocalFile extends File {
 			$this->locked++;
 		}
 
+		$this->markVolatile(); // file may change soon
+
 		return $dbw->selectField( 'image', '1', array( 'img_name' => $this->getName() ), __METHOD__ );
 	}
 
@@ -1495,13 +1555,64 @@ class LocalFile extends File {
 	}
 
 	/**
+	 * Mark a file as about to be changed
+	 *
+	 * This sets a cache key that alters master/slave DB loading behavior
+	 *
+	 * @return bool Success
+	 */
+	protected function markVolatile() {
+		global $wgMemc;
+		$key = $this->repo->getSharedCacheKey( 'file-volatile', md5( $this->getName() ) );
+		if ( $key ) {
+			$this->lastMarkedVolatile = time();
+			return $wgMemc->set( $key, $this->lastMarkedVolatile, self::VOLATILE_TTL );
+		}
+		return true;
+	}
+
+	/**
+	 * Check if a file is about to be changed or has been changed recently
+	 *
+	 * @see LocalFile::isVolatile()
+	 * @return bool Whether the file is volatile
+	 */
+	protected function isVolatile() {
+		global $wgMemc;
+		$key = $this->repo->getSharedCacheKey( 'file-volatile', md5( $this->getName() ) );
+		if ( $key ) {
+			if ( $this->lastMarkedVolatile && ( time() - $this->lastMarkedVolatile ) <= self::VOLATILE_TTL ) {
+				return true; // sanity
+			}
+			return ( $wgMemc->get( $key ) !== false );
+		}
+		return false;
+	}
+
+	/**
 	 * Roll back the DB transaction and mark the image unlocked
 	 */
 	function unlockAndRollback() {
+		\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+			'reason' => 'LocalFile::unlockAndRollback',
+			'exception' => new Exception(),
+			'name' => $this->getName(),
+		]);
+
 		$this->locked = false;
 		$dbw = $this->repo->getMasterDB();
 		$dbw->rollback();
 	}
+
+	/* wikia change - begin (VID-1568) */
+	/**
+	 * Check if file data is loaded
+	 * @return bool
+	 */
+	public function isDataLoaded() {
+		return $this->dataLoaded;
+	}
+	/* wikia change - end (VID-1568) */
 } // LocalFile class
 
 # ------------------------------------------------------------------------------
@@ -1785,6 +1896,7 @@ class LocalFileDeleteBatch {
 				$urlRel = str_replace( '%2F', '/', rawurlencode( $srcRel ) );
 				$urls[] = $this->file->repo->getZoneUrl( 'public' ) . '/' . $urlRel;
 			}
+			Hooks::run( 'LocalFileExecuteUrls', [ $this->file, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 
@@ -1976,8 +2088,9 @@ class LocalFileRestoreBatch {
 
 				// The live (current) version cannot be hidden!
 				if ( !$this->unsuppress && $row->fa_deleted ) {
-					$storeBatch[] = array( $deletedUrl, 'public', $destRel );
-					$this->cleanupBatch[] = $row->fa_storage_key;
+					$status->fatal( 'undeleterevdel' );
+					$this->file->unlock();
+					return $status;
 				}
 			} else {
 				$archiveName = $row->fa_archive_name;
@@ -2080,9 +2193,7 @@ class LocalFileRestoreBatch {
 			if ( !$exists ) {
 				wfDebug( __METHOD__ . " restored {$status->successCount} items, creating a new current\n" );
 
-				// Update site_stats
-				$site_stats = $dbw->tableName( 'site_stats' );
-				$dbw->query( "UPDATE $site_stats SET ss_images=ss_images+1", __METHOD__ );
+				DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => 1 ] ) );
 
 				$this->file->purgeEverything();
 			} else {
@@ -2093,7 +2204,6 @@ class LocalFileRestoreBatch {
 		}
 
 		$this->file->unlock();
-
 		return $status;
 	}
 
@@ -2195,6 +2305,7 @@ class LocalFileMoveBatch {
 	 */
 	var $target;
 
+	/* @var $db Database */
 	var $cur, $olds, $oldCount, $archive, $db;
 
 	function __construct( File $file, Title $target ) {
@@ -2223,6 +2334,7 @@ class LocalFileMoveBatch {
 		$archiveBase = 'archive';
 		$this->olds = array();
 		$this->oldCount = 0;
+		$archiveNames = array();
 
 		$result = $this->db->select( 'oldimage',
 			array( 'oi_archive_name', 'oi_deleted' ),
@@ -2231,6 +2343,7 @@ class LocalFileMoveBatch {
 		);
 
 		foreach ( $result as $row ) {
+			$archiveNames[] = $row->oi_archive_name;
 			$oldName = $row->oi_archive_name;
 			$bits = explode( '!', $oldName, 2 );
 
@@ -2258,6 +2371,8 @@ class LocalFileMoveBatch {
 				"{$archiveBase}/{$this->newHash}{$timestamp}!{$this->newName}"
 			);
 		}
+
+		return $archiveNames;
 	}
 
 	/**
@@ -2328,6 +2443,28 @@ class LocalFileMoveBatch {
 			return $status;
 		}
 
+		// Wikia change - begin
+		// @author macbre (PLATFORM-238)
+		$rowsWithEmptyArchiveName = $dbw->selectField(
+			'oldimage',
+			'count(*)',
+			array(
+				'oi_name' => $this->oldName,
+				'oi_archive_name = ""',
+			),
+			__METHOD__
+		);
+
+		if ( $rowsWithEmptyArchiveName > 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'Empty oi_archive_name' , [
+				'oi_name' => $this->oldName,
+				'new_name' => $this->newName,
+				'count' => $rowsWithEmptyArchiveName
+			] );
+		}
+
+		// Wikia change - end
+
 		// Update old images
 		$dbw->update(
 			'oldimage',
@@ -2335,12 +2472,15 @@ class LocalFileMoveBatch {
 				'oi_name' => $this->newName,
 				'oi_archive_name = ' . $dbw->strreplace( 'oi_archive_name', $dbw->addQuotes( $this->oldName ), $dbw->addQuotes( $this->newName ) ),
 			),
-			array( 'oi_name' => $this->oldName ),
+			array(
+				'oi_name' => $this->oldName,
+				'oi_archive_name <> ""', // Wikia change - @author macbre (PLATFORM-238)
+			),
 			__METHOD__
 		);
 
-		$affected = $dbw->affectedRows();
-		$total = $this->oldCount;
+		$affected = $dbw->affectedRows() + $rowsWithEmptyArchiveName; // Wikia change - @author macbre (PLATFORM-238)
+		$total = $this->oldCount + $rowsWithEmptyArchiveName; // Wikia change - @author macbre (PLATFORM-238)
 		$status->successCount += $affected;
 		$status->failCount += $total - $affected;
 		if ( $status->failCount ) {

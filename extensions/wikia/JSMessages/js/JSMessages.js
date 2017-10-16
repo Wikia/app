@@ -33,9 +33,10 @@
 	 */
 	function JSMessages(nirvana, $, window) {
 		var JSMessages = function(){
-			// get the first function parameter
-			// then the rest are parameters to a message
-			var key = shift.call(arguments),
+			// get the first function parameter then the rest are parameters to a message.
+			// trim to avoid misses when newlines or spaces got added to the
+			// argument ie. in multiline conditions in mustache templates.
+			var key = (shift.call(arguments) || '').trim(),
 			// default value to be returned
 				ret = key;
 

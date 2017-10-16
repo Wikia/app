@@ -1,9 +1,8 @@
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/reset";
-@import "skins/oasis/css/core/sprite";
-@import "skins/oasis/css/core/GlobalHeader";
-
+@import "skins/shared/styles/sprite";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 //colors variables
 $main-bgcolor: #ffffff;
@@ -21,7 +20,6 @@ $darkGray-c5: #333333;
 }
 
 @mixin buttons {
-	-moz-border-radius: 2px;
 	background-color: $blue-c1;
 	border: solid 1px $blue-c1;
 	border-radius: 2px;
@@ -31,7 +29,6 @@ $darkGray-c5: #333333;
 }
 
 @mixin inputs {
-	-moz-border-radius: 2px;
 	border: solid 1px $midGray-c3;
 	border-radius: 2px;
 	color: $darkGray-c5;
@@ -43,7 +40,7 @@ $darkGray-c5: #333333;
 
 body {
 	color: $gray-c4;
-	font-family: Helvetica-Light, Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 14px;
 	font-weight: light;
 	overflow-y: scroll; // otherwise we will have jump effect durring slidedown
@@ -74,7 +71,7 @@ select {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	background-color: #ffffff;
-	background-image: url(/extensions/wikia/ApiDocs/files/arrow-01.png); /* base64 */
+	background-image: url(/extensions/wikia/ApiDocs/files/arrow-01.png); /* inline */
 	background-position: 134px 10px;
 	background-repeat: no-repeat;
 	overflow: hidden;
@@ -93,11 +90,11 @@ select {
 
 .resource.active div.heading .collapse-expand-button,
 .endpoint.active .collapse-expand-button {
-	background-image: url(/extensions/wikia/ApiDocs/files/collapse_up.png); /* base64 */
+	background-image: url(/extensions/wikia/ApiDocs/files/collapse_up.png); /* inline */
 }
 
 .collapse-expand-button {
-	background-image: url(/extensions/wikia/ApiDocs/files/collapse_down.png); /* base64 */
+	background-image: url(/extensions/wikia/ApiDocs/files/collapse_down.png); /* inline */
 }
 
 h1 {
@@ -109,9 +106,32 @@ h1 {
 }
 
 
+html {
+	height:100%;
+}
+
+body {
+	min-height: 100%;
+	position: relative;
+}
+
+a {
+	color: $blue-c1;
+}
+
+a:hover,
+a:active {
+	text-decoration: underline;
+}
+a:visited {
+	color: #462f91;
+ }
+
 @import "ApiDocsBox";
+@import "ApiDocsWarning";
 @import "ApiDocsEndpoint";
-@import "ApiDocsHeader";
+@import "ApiDocsMessage";
+@import "ApiDocsIcons";
 @import "ApiDocsParameter";
 @import "ApiDocsResponseClass";
 @import "ApiDocsResponseType";
@@ -119,5 +139,4 @@ h1 {
 @import "ApiDocsTry";
 @import "ApiDocsHighlight";
 @import "ApiDocsButtons";
-@import "ApiDocsFooter";
 

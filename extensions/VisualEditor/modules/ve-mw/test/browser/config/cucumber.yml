@@ -1,2 +1,0 @@
-ci: --format Cucumber::Formatter::Sauce --out reports/junit
-default: --format progress

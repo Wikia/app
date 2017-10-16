@@ -1,5 +1,5 @@
 <?php
-class PageStatsService extends Service {
+class PageStatsService {
 
 	const CACHE_TTL = 86400;
 
@@ -46,9 +46,22 @@ class PageStatsService extends Service {
 	 * Refresh cache when article is edited
 	 *
 	 * @param WikiPage $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param Status $status
+	 * @param $baseRevId
+	 * @return bool
 	 */
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 
 		wfProfileIn(__METHOD__);
 
@@ -66,8 +79,15 @@ class PageStatsService extends Service {
 
 	/**
 	 * Refresh cache when article is deleted
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @param $reason
+	 * @param $articleId
+	 * @return bool
 	 */
-	static function onArticleDeleteComplete(&$article, &$user, $reason, $articleId) {
+	static function onArticleDeleteComplete(
+		WikiPage $article, User $user, $reason, $articleId
+	): bool {
 		wfProfileIn(__METHOD__);
 
 		$title = $article->getTitle();
@@ -256,7 +276,7 @@ class PageStatsService extends Service {
 
 				if (!empty($user)) {
 					// remove bots and blocked users
-					$res = !$user->isBlocked() && !$user->isAllowed('bot');
+					$res = !$user->isBlocked( true, false ) && !$user->isAllowed('bot');
 				}
 			}
 

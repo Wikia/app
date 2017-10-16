@@ -10,21 +10,25 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'User Wall',
-	'author' => array( 'Tomek Odrobny', 'Christian Williams', "Andrzej 'nAndy' Lukaszewski", 'Piotr Bablok' ),
-	'url' => 'http://www.wikia.com',
+	'author' => [ 'Tomek Odrobny', 'Christian Williams', "Andrzej 'nAndy' Lukaszewski", 'Piotr Bablok' ],
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Wall',
 	'descriptionmsg' => 'wall-desc',
-);
+];
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
-include($dir . '/WallNamespaces.php');
+include( $dir . '/WallNamespaces.php' );
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
+$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
+$wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
+$wgAutoloadClasses['CommentsIndexHooks'] = __DIR__ . '/index/CommentsIndexHooks.class.php';
+$wgAutoloadClasses['CommentsIndexEntryNotFoundException'] = __DIR__ . '/index/CommentsIndexEntryNotFoundException.php';
+
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
-$wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
 $wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
 
 $wgAutoloadClasses['WallMessage'] =  $dir . '/WallMessage.class.php';
@@ -40,19 +44,18 @@ $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.ph
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
+$wgAutoloadClasses['WallTabsRenderer'] = __DIR__ . '/WallTabsRenderer.php';
 
-// register task in task manager
-if (function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask(dirname(__FILE__)."/WallCopyFollowsTask.class.php", "wallcopyfollows", "WallCopyFollowsTask");
-}
+$wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
+$wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
+$wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
 
-
-include($dir . '/notification/WallNotifications.setup.php');
-
+$wgAutoloadClasses['InappropriateContentException'] = __DIR__ . '/exceptions/InappropriateContentException.class.php';
+$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/exceptions/WallBuilderException.class.php';
+$wgAutoloadClasses['WallBuilderGenericException'] = __DIR__ . '/exceptions/WallBuilderGenericException.class.php';
 
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
-$wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';
 $wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
 $wgHooks['SkinTemplateTabs'][] = 'WallHooksHelper::onSkinTemplateTabs';
 $wgHooks['AlternateEdit'][] = 'WallHooksHelper::onAlternateEdit';
@@ -64,13 +67,12 @@ $wgHooks['PersonalUrls'][] = 'WallHooksHelper::onPersonalUrls';
 $wgHooks['UserPagesHeaderModuleAfterGetTabs'][] = 'WallHooksHelper::onUserPagesHeaderModuleAfterGetTabs';
 $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'WallHooksHelper::onSkinSubPageSubtitleAfterTitle';
 $wgHooks['SkinTemplateContentActions'][] = 'WallHooksHelper::onSkinTemplateContentActions';
-$wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'WallHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
 $wgHooks['BlockIpCompleteWatch'][] = 'WallHooksHelper::onBlockIpCompleteWatch';
 $wgHooks['UserIsBlockedFrom'][] = 'WallHooksHelper::onUserIsBlockedFrom';
 
 $wgHooks['ArticleRobotPolicy'][] = 'WallHooksHelper::onArticleRobotPolicy';
 
-//wall history in toolbar
+// wall history in toolbar
 $wgHooks['BeforeToolbarMenu'][] = 'WallHooksHelper::onBeforeToolbarMenu';
 $wgHooks['BeforePageHistory'][] = 'WallHooksHelper::onBeforePageHistory';
 $wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription';
@@ -78,9 +80,7 @@ $wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription'
 $wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageChange';
 $wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
-//recent changes adjusting
-
-$wgHooks['AC_RecentChange_Save'][] = 'WallHooksHelper::onRecentChangeSave';
+// recent changes adjusting
 $wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
 $wgHooks['ChangesListInsertArticleLink'][] = 'WallHooksHelper::onChangesListInsertArticleLink';
 $wgHooks['ChangesListInsertDiffHist'][] = 'WallHooksHelper::onChangesListInsertDiffHist';
@@ -99,36 +99,33 @@ $wgHooks['ArticleDeleteComplete'][] = 'WallHooksHelper::onArticleDeleteComplete'
 $wgHooks['FilePageImageUsageSingleLink'][] = 'WallHooksHelper::onFilePageImageUsageSingleLink';
 
 $wgHooks['getUserPermissionsErrors'][] = 'WallHooksHelper::onGetUserPermissionsErrors';
-$wgHooks['ComposeCommonBodyMail'][] = 'WallHooksHelper::onComposeCommonBodyMail';
 
-//Special:Contributions adjusting
+// Special:Contributions adjusting
 $wgHooks['ContributionsLineEnding'][] = 'WallHooksHelper::onContributionsLineEnding';
 
-//Special:Whatlinkshere adjustinb
+// Special:Whatlinkshere adjustinb
 $wgHooks['SpecialWhatlinkshere::renderWhatLinksHereRow'][] = 'WallHooksHelper::onRenderWhatLinksHereRow';
 $wgHooks['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLinks';
 
-//watchlist
+// watchlist
 $wgHooks['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
-//$wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
-//$wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
+// $wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
+$wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
-//diff page adjusting
+// diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
-$wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
-$wgHooks['DiffLoadText'][] = 'WallHooksHelper::onDiffLoadText';
 
-//right rail adjusting
+// right rail adjusting
 $wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
 
-//handmade links to message wall adjusting
+// handmade links to message wall adjusting
 $wgHooks['LinkBegin'][] = 'WallHooksHelper::onLinkBegin';
 $wgHooks['LinkerUserTalkLinkAfter'][] = 'WallHooksHelper::onLinkerUserTalkLinkAfter';
 
-//saving user talk archive redirects to user talk archive
+// saving user talk archive redirects to user talk archive
 $wgHooks['ArticleSaveComplete'][] = 'WallHooksHelper::onArticleSaveComplete';
 
-//cancel API vote adding
+// cancel API vote adding
 $wgHooks['ArticleBeforeVote'][] = 'WallHooksHelper::onArticleBeforeVote';
 
 // vote invalidation
@@ -157,7 +154,24 @@ $wgHooks['SkinTemplateToolboxEnd'][] = 'WallHooksHelper::onBuildMonobookToolbox'
 // Hook for code that wants a beautified title and URL given the not very readable Wall/Forum title
 $wgHooks['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 
-JSMessages::registerPackage('Wall', array(
+// Fix URLs when purging after adding a thread/post
+$wgHooks['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
+$wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
+
+// Fix User_talk links for profile page diff on wall enabled wikis
+// VOLDEV-66
+$wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
+
+// SUS-260: Prevent moving pages within, into or out of Wall namespaces
+$wgHooks['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
+
+// handle MediaWiki delete flow and comments_index updates
+$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'CommentsIndexHooks::onArticleDoDeleteArticleBeforeLogEntry';
+$wgHooks['ArticleUndelete'][] = 'CommentsIndexHooks::onArticleUndelete';
+
+$wgHooks['AfterPageHeaderPageSubtitle'][] = 'WallHooksHelper::onAfterPageHeaderPageSubtitle';
+
+JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',
 	'wall-notifications-reminder',
 	'wall-notifications-wall-disabled',
@@ -180,86 +194,40 @@ JSMessages::registerPackage('Wall', array(
 	'wall-button-to-preview-comment',
 	'wall-votes-modal-title',
 	'wall-button-done-source',
-	'wall-preview-modal-title',
-	'wall-preview-modal-button-back',
-	'wall-preview-modal-button-publish',
 	'wall-action-*',
 	'wall-message-source',
 	'wall-confirm-monobook-*',
-	'wall-preview-modal-title'
-));
+	'wall-posting-message-failed-title',
+	'wall-posting-message-failed-body',
+	'wall-posting-message-failed-filter-title',
+	'wall-posting-message-failed-filter-body',
+	'preview',
+	'savearticle',
+	'back',
+] );
 
 /**
  * extension related configuration
  */
 
 
-define( 'WALL_EMAIL_NOEMAIL', -1);
-define( 'WALL_EMAIL_EVERY', 1);
-define( 'WALL_EMAIL_SINCEVISITED', 2);
-define( 'WALL_EMAIL_REMINDER', 3);
+define( 'WALL_EMAIL_NOEMAIL', -1 );
+define( 'WALL_EMAIL_EVERY', 1 );
+define( 'WALL_EMAIL_SINCEVISITED', 2 );
+define( 'WALL_EMAIL_REMINDER', 3 );
 
 $wgDefaultUserOptions['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
 $wgDefaultUserOptions['wallshowsource'] = false;
 $wgDefaultUserOptions['walldelete'] = false;
 
-$wgUserProfileNamespaces = array(
+$wgUserProfileNamespaces = [
 	NS_USER, NS_USER_TALK, NS_USER_WALL
-);
+];
 
-define( 'WH_EDIT', 0);
-define( 'WH_NEW', 1);
-define( 'WH_DELETE', 2);
-define( 'WH_REMOVE', 4);
-define( 'WH_RESTORE', 5);
-define( 'WH_ARCHIVE', 6);
-define( 'WH_REOPEN', 7);
-
-
-//wall
-$wgGroupPermissions['*']['walldelete'] = false;
-$wgGroupPermissions['util']['walldelete'] = true;
-
-$wgGroupPermissions['*']['walladmindelete'] = false;
-$wgGroupPermissions['staff']['walladmindelete'] = true;
-$wgGroupPermissions['vstf']['walladmindelete'] = true;
-$wgGroupPermissions['helper']['walladmindelete'] = true;
-$wgGroupPermissions['sysop']['walladmindelete'] = true;
-
-$wgGroupPermissions['*']['wallarchive'] = false;
-$wgGroupPermissions['staff']['wallarchive'] = true;
-$wgGroupPermissions['vstf']['wallarchive'] = true;
-$wgGroupPermissions['helper']['wallarchive'] = true;
-$wgGroupPermissions['sysop']['wallarchive'] = true;
-
-$wgGroupPermissions['*']['wallremove'] = false;
-$wgGroupPermissions['user']['wallremove'] = true;
-
-$wgGroupPermissions['*']['walledit'] = false;
-$wgGroupPermissions['staff']['walledit'] = true;
-$wgGroupPermissions['vstf']['walledit'] = true;
-$wgGroupPermissions['helper']['walledit'] = true;
-$wgGroupPermissions['sysop']['walledit'] = true;
-
-$wgGroupPermissions['*']['editwallarchivedpages'] = false;
-$wgGroupPermissions['sysop']['editwallarchivedpages'] = true;
-$wgGroupPermissions['vstf']['editwallarchivedpages'] = true;
-$wgGroupPermissions['staff']['editwallarchivedpages'] = true;
-$wgGroupPermissions['helper']['editwallarchivedpages'] = true;
-
-$wgGroupPermissions['*']['wallshowwikiaemblem'] = false;
-$wgGroupPermissions['staff']['wallshowwikiaemblem'] = true;
-
-$wgGroupPermissions['*']['notifyeveryone'] = false;
-$wgGroupPermissions['sysop']['notifyeveryone'] = true;
-$wgGroupPermissions['vstf']['notifyeveryone'] = true;
-$wgGroupPermissions['staff']['notifyeveryone'] = true;
-$wgGroupPermissions['helper']['notifyeveryone'] = true;
-
-$wgGroupPermissions['*']['wallfastadmindelete'] = false;
-$wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
-$wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
-$wgGroupPermissions['staff']['wallfastadmindelete'] = true;
-
-$wgGroupPermissions['*']['wallmessagemove'] = false;
-$wgGroupPermissions['user']['wallmessagemove'] = true;
+define( 'WH_EDIT', 0 );
+define( 'WH_NEW', 1 );
+define( 'WH_DELETE', 2 );
+define( 'WH_REMOVE', 4 );
+define( 'WH_RESTORE', 5 );
+define( 'WH_ARCHIVE', 6 );
+define( 'WH_REOPEN', 7 );

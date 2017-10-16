@@ -1103,7 +1103,7 @@ abstract class FileBackendStore extends FileBackend {
 		wfProfileIn( __METHOD__ );
 		$stat = $this->getFileStat( $params );
 		wfProfileOut( __METHOD__ );
-		return $stat ? $stat['mtime'] : false;
+		return is_array( $stat ) ? $stat['mtime'] : false;
 	}
 
 	/**
@@ -1113,14 +1113,20 @@ abstract class FileBackendStore extends FileBackend {
 		wfProfileIn( __METHOD__ );
 		$stat = $this->getFileStat( $params );
 		wfProfileOut( __METHOD__ );
-		return $stat ? $stat['size'] : false;
+		return is_array( $stat ) ? $stat['size'] : false;
 	}
 
 	/**
 	 * @see FileBackend::getFileStat()
 	 */
+
 	// Wikia change - begin
-	// @author Moli
+	/**
+	 * @author Moli
+	 *
+	 * @param array $params
+	 * @return Array|string|false|null
+	 */
 	final public function getFileStat( array $params ) {
 		wfProfileIn( __METHOD__ );
 		$path = self::normalizeStoragePath( $params['src'] );
@@ -1130,13 +1136,17 @@ abstract class FileBackendStore extends FileBackend {
 		}
 		$latest = !empty( $params['latest'] );
 		if ( isset( $this->cache[$path]['stat'] ) ) {
+			$stat = $this->cache[$path]['stat'];
 			// If we want the latest data, check that this cached
 			// value was in fact fetched with the latest available data.
-			if ( !$latest || !empty( $this->cache[$path]['stat']['latest'] ) ) {
-				wfProfileOut( __METHOD__ );
-				return $this->cache[$path]['stat'];
-			} elseif ( in_array( $this->cache[$path]['stat'], array( 'NOT_EXIST', 'NOT_EXIST_LATEST' ) ) ) {
-				if ( !$latest || $this->cache[$path]['stat'] === 'NOT_EXIST_LATEST' ) {
+			if ( is_array( $stat ) ) {
+				if ( !$latest || $stat['latest'] ) {
+					wfProfileOut( __METHOD__ );
+					return $stat;
+				}
+			} elseif ( in_array( $stat, array( 'NOT_EXIST', 'NOT_EXIST_LATEST' ) ) ) {
+				if ( !$latest || $stat === 'NOT_EXIST_LATEST' ) {
+					wfProfileOut( __METHOD__ );
 					return false;
 				}
 			}

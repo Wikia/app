@@ -1,6 +1,6 @@
 /*
  * Author: Inez Korczynski, Bartek Lapinski
- * Converted from YUI to jQuery by Hyun
+ * Converted from YUI to jQuery by Hyun (except for the slider)
  */
 
 /**
@@ -98,6 +98,17 @@ if( 'view' == wgAction ) {
 	window.user_protected = false;
 }
 
+// PLATFORM-1531: helper function for sending AJAX requests to WMU backend (with edit token attached)
+function WMU_ajax(method, data, callback) {
+	var url = window.wgScriptPath + '/index.php?action=ajax&rs=WMU&method=' + encodeURIComponent(method);
+
+	data = data || {};
+	data.token = window.mw.user.tokens.get('editToken'); // always pass the edit token to prevent CSRF
+
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.post(url, data, callback);
+}
+
 function WMU_setSkip(){
 	WMU_skipDetails = true;
 }
@@ -112,8 +123,8 @@ function WMU_loadDetails() {
 	$('#ImageUploadMain').hide();
 	WMU_indicator(1, true);
 
-	var callback = function(o) {
-		WMU_displayDetails(o.responseText);
+	var callback = function(responseText) {
+		WMU_displayDetails(responseText);
 
 		$('#ImageUploadBack').hide();
 
@@ -161,16 +172,10 @@ function WMU_loadDetails() {
 		}
 	};
 
-	WMU_jqXHR.abort();
-
-	var params = new Array();
-	params.push('sourceId=0');
-	params.push('itemId=' + encodeURIComponent(FCK.wysiwygData[WMU_refid].href.split(":")[1]));
-
-	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), {
-		method: 'get',
-		complete: callback
-	});
+	WMU_ajax('chooseImage', {
+		sourceId: 0,
+		itemId: FCK.wysiwygData[WMU_refid].href.split(":")[1]
+	}, callback);
 }
 
 // macbre: move back button inside dialog content and add before provided selector (Oasis changes)
@@ -346,11 +351,6 @@ function WMU_loadMainFromView() {
 				$('#ImageUploadTextCont').hide();
 				$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
 			}
-
-			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').length ) {
-				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
-			}
 		}
 	}
 
@@ -360,10 +360,29 @@ function WMU_loadMainFromView() {
 }
 
 
-function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+//function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+function WMU_show( event, options ) {
+	var track = options && options.track;
+
 	WMU_track({
 		action: Wikia.Tracker.ACTIONS.OPEN
 	});
+
+	// WikiaEditor sends options via event.data so see if tracking is sent that way too.
+	if (!track && event && event.data && event.data.track) {
+		track = event.data.track;
+	}
+
+	// Any extra tracking
+	if (track) {
+		Wikia.Tracker.track({
+			action: track.action || Wikia.Tracker.ACTIONS.OPEN,
+			category: track.category || 'vet',
+			label: track.label || '',
+			value: track.value || null,
+			trackingMethod: track.method || 'analytics'
+		});
+	}
 
 	// reset mode to support normal editor usage
 	WMU_openedInEditor = true;
@@ -390,39 +409,39 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	WMU_wysiwygStart = 1;
 	WMU_gallery = -1;
 
-	if(typeof gallery != "undefined") {
+	if (options && options.gallery) {
 		// if in preview mode, go away
-		if ($( '#editform' ).length && (typeof e != 'number') ) {
+		if ($( '#editform' ).length && (typeof event != 'number') ) {
 			alert( wmu_no_preview );
 			return false;
 		}
-		WMU_gallery = gallery;
-		WMU_box = box;
+		WMU_gallery = options.gallery;
+		WMU_box = options.box;
 		// they only are given when the gallery is given...
-		if(typeof align != "undefined") {
-			WMU_align = align;
+		if(options.align) {
+			WMU_align = options.align;
 		}
 
-		if(typeof thumb != "undefined") {
-			WMU_thumb = thumb;
+		if (options.thumb) {
+			WMU_thumb = options.thumb;
 		}
 
-		if(typeof size != "undefined") {
-			WMU_size = size;
+		if (options.size) {
+			WMU_size = options.size;
 		}
 
-		if(typeof caption != "undefined") {
-			WMU_caption = caption;
+		if (options.caption) {
+			WMU_caption = options.caption;
 		}
 
-		if(typeof link != "undefined") {
-			WMU_link = link;
+		if (options.link) {
+			WMU_link = options.link;
 		}
 	}
 
 	// TODO: FCK support - to be removed after full switch to RTE
-	if(typeof e == 'number') {
-		WMU_refid = e;
+	if(typeof event == 'number') {
+		WMU_refid = event;
 		if(WMU_refid != -1) {
 			if( (typeof(FCK) != 'undefined') && FCK.wysiwygData[WMU_refid].exists) {
 				// go to details page
@@ -432,16 +451,15 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			}
 		}
 
-	} else if( typeof e == 'object' ) { // for Opera and Chrome
-		// macbre: CK support
-		if (typeof e.type != 'undefined' && e.type == 'rte') {
+	} else if( typeof event == 'object' ) {
+		if (typeof event.type != 'undefined' && event.type == 'rte') {
 			// get image from event data
-			window.WMU_RTEImage = e.data.element;
+			window.WMU_RTEImage = event.data.element;
 			if (window.WMU_RTEImage) {
 				// edit an image
 				var data = window.WMU_RTEImage.getData();
 
-				if (e.data.isPlaceholder) {
+				if (event.data.isPlaceholder) {
 					// image placeholder
 					RTE.log('image placeholder clicked');
 
@@ -530,11 +548,6 @@ function WMU_loadMain() {
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 			$('#ImageUploadTextCont').hide();
 			$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
-		}
-
-		// macbre: RT #19150
-		if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
-			$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
 		}
 	}
 	WMU_indicator(1, true);
@@ -688,19 +701,16 @@ function WMU_indicator(id, show) {
 }
 
 function WMU_chooseImage(sourceId, itemId) {
-	var callback = function(o) {
-		WMU_displayDetails(o.responseText);
-	};
-
 	WMU_track({
 		label: 'add-recent-photo'
 	});
 
 	WMU_indicator(1, true);
-	WMU_jqXHR.abort();
-	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, {
-		method: 'get',
-		complete: callback
+	WMU_ajax('chooseImage', {
+		sourceId: sourceId,
+		itemId: itemId
+	}, function(resp) {
+		WMU_displayDetails(resp);
 	});
 }
 
@@ -840,6 +850,7 @@ function WMU_displayDetails(responseText) {
 		}
 		var thumbSize = [image.width(), image.height()];
 		WMU_orgThumbSize = null;
+		// TODO: switch to jQuery slider, remove YUI!
 		WMU_slider = YAHOO.widget.Slider.getHorizSlider('ImageUploadSlider', 'ImageUploadSliderThumb', 0, 200);
 		WMU_slider.initialRound = true;
 		WMU_slider.getRealValue = function() {
@@ -921,8 +932,6 @@ function WMU_insertPlaceholder( box ) {
 	WMU_box_filled.push(box);
 	var to_update = $( '#WikiaImagePlaceholder' + box );
 	to_update.html($( '#ImageUploadCode' ).html());
-	//the class would need to be different if we had here the full-size...
-	to_update.className = '';
 	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 }
 
@@ -1015,7 +1024,7 @@ function WMU_insertImage(type) {
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
 		if( WMU_refid != null ) {
-			params.push( 'fck=true' );
+			params.push( 'ck=true' );
 		}
 	}
 
@@ -1031,7 +1040,7 @@ function WMU_insertImage(type) {
 		}
 	}
 
-	var callback = function(o) {
+	var callback = function(resp) {
 		var screenType = WMU_jqXHR.getResponseHeader('X-screen-type');
 		if(typeof screenType == "undefined") {
 			screenType = WMU_jqXHR.getResponseHeader('X-Screen-Type');
@@ -1039,13 +1048,13 @@ function WMU_insertImage(type) {
 
 		switch($.trim(screenType)) {
 			case 'error':
-				o.responseText = o.responseText.replace(/<script.*script>/, "" );
-				alert(o.responseText);
+				resp = resp.replace(/<script.*script>/, "" );
+				alert(resp);
 				WMU_switchScreen('Summary');
 				break;
 			case 'conflict':
 				WMU_switchScreen('Conflict');
-				$('#ImageUpload' + WMU_curScreen).html(o.responseText);
+				$('#ImageUpload' + WMU_curScreen).html(resp);
 				break;
 			case 'summary':
 				WMU_switchScreen('Summary');
@@ -1054,7 +1063,7 @@ function WMU_insertImage(type) {
 				}
 
 				$('#ImageUploadBack').hide();
-				$('#ImageUpload' + WMU_curScreen).html(o.responseText);
+				$('#ImageUpload' + WMU_curScreen).html(resp);
 
 				var event = jQuery.Event("imageUploadSummary");
 				$("body").trigger(event, [$('#ImageUpload' + WMU_curScreen)]);
@@ -1063,7 +1072,7 @@ function WMU_insertImage(type) {
 				}
 
 				// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
-				var $responseHTML = $(o.responseText),
+				var $responseHTML = $(resp),
 					wmuData = {
 					imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
 					imageWikiText: $responseHTML.find('#ImageUploadTag').val()
@@ -1144,7 +1153,7 @@ function WMU_insertImage(type) {
 				}
 				break;
 			case 'existing':
-				WMU_displayDetails(o.responseText);
+				WMU_displayDetails(resp);
 				break;
 		}
 		WMU_indicator(1, false);
@@ -1158,10 +1167,12 @@ function WMU_insertImage(type) {
 
 	WMU_indicator(1, true);
 	WMU_jqXHR.abort();
-	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), {
-		method: 'get',
-		complete: callback
-	});
+	WMU_jqXHR = $.post(
+		wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), {
+			token: window.mw.user.tokens.get('editToken')
+		},
+		callback
+	);
 }
 
 function WMU_box_in_article() {
@@ -1244,7 +1255,13 @@ function WMU_switchScreen(to) {
 		WMU_loadMain();
 	}
 	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $('#ImageUploadName').length) {
-		$.get('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $('#ImageUploadMWname').val() + '&tempid=' + $( '#ImageUploadTempid' ).val());
+		$.get(wgScriptPath + '/index.php', {
+		    action: 'ajax',
+		    rs: 'WMU',
+		    method: 'clean',
+		    mwname: $('#ImageUploadMWname').val(),
+		    tempid: $( '#ImageUploadTempid' ).val()
+		});
 	}
 
 	// macbre: move back button on Oasis
@@ -1318,5 +1335,5 @@ var WMU_uploadCallback = {
 var WMU_track = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 	action: Wikia.Tracker.ACTIONS.CLICK,
 	category: 'photo-tool',
-	trackingMethod: 'both'
+	trackingMethod: 'analytics'
 });

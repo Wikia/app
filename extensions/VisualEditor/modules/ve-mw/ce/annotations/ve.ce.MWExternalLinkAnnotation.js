@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWExternalLinkAnnotation class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -12,20 +12,20 @@
  * @extends ve.ce.LinkAnnotation
  * @constructor
  * @param {ve.dm.MWExternalLinkAnnotation} model Model to observe
+ * @param {ve.ce.ContentBranchNode} [parentNode] Node rendering this annotation
  * @param {Object} [config] Configuration options
  */
-ve.ce.MWExternalLinkAnnotation = function VeCeMWExternalLinkAnnotation( model, config ) {
+ve.ce.MWExternalLinkAnnotation = function VeCeMWExternalLinkAnnotation() {
 	// Parent constructor
-	ve.ce.LinkAnnotation.call( this, model, config );
+	ve.ce.MWExternalLinkAnnotation.super.apply( this, arguments );
 
 	// DOM changes
-	this.$.addClass( 've-ce-mwExternalLinkAnnotation' );
-	this.$.attr( 'title', model.getAttribute( 'href' ) );
+	this.$element.addClass( 'external' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWExternalLinkAnnotation, ve.ce.LinkAnnotation );
+OO.inheritClass( ve.ce.MWExternalLinkAnnotation, ve.ce.LinkAnnotation );
 
 /* Static Properties */
 

@@ -1,10 +1,8 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/core/color";
-@import "../mixins/divider";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/color";
 
 $input-width: 230px;
 
@@ -41,19 +39,6 @@ $input-width: 230px;
 			width: $input-width + 18px;
 		}
 	}
-	> .sso-login {
-		margin: 0 auto;
-		text-align: center;
-		width: $input-width;
-		> .sso-login-divider {
-			@include divider;
-			margin-top: 24px;
-			> span {
-				top: -17px;
-				line-height: 30px;
-			}
-		}
-	}
 	.subheading {
 		border-bottom: 0;
 		font-size: 16px;
@@ -71,8 +56,6 @@ $input-width: 230px;
 	}
 }
 
-.WikiaPageHeader {
-	h2 {
-		display: none;
-	}
+.hidden {
+	display: none;
 }

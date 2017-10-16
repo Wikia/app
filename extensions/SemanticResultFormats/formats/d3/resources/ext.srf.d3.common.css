@@ -1,0 +1,31 @@
+/**
+ * CSS for SRF D3 module
+ *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @since: 1.8
+ *
+ * @release: 0.1
+ */
+.srf-d3-chart-title {
+	text-align:center;
+	font-weight: bold;
+	color:grey;
+	margin-left:10px;
+	margin-bottom:5px;
+	display:block;
+	position:relative;
+	font-size:110%;
+}
+
+.srf-d3-chart-text {
+	color:grey;
+	display:block;
+	position:relative;
+	font-size:90%;
+}
+
+.d3-chart-common {
+	margin: 10px 0px 10px 10px;
+}

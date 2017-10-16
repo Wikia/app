@@ -23,10 +23,6 @@ class AssetsManagerController extends WikiaController {
 	 * @requestParam string scripts - comma-separated list of AssetsManager groups
 	 * @requestParam string messages - comma-separated list of JSMessages packages
 	 * @requestParam integer ttl - cache period for varnish and browser (in seconds),
-	 * no caching will be used if not specified or 0, this value is overridden by varnishTTL
-	 * and browserTTL respectively for the Varnish part and the Browser part
-	 * @requestParam integer varnishTTL - cache period for varnish (in seconds)
-	 * @requestParam integer browserTTL - cache period for varnish (in seconds)
 	 *
 	 * @responseParam array templates - rendered templates (either HTML or JSON encoded string)
 	 * @responseParam array styles - minified styles
@@ -45,9 +41,7 @@ class AssetsManagerController extends WikiaController {
 		$scripts = $this->request->getVal( 'scripts', null );
 		$messages = $this->request->getVal( 'messages', null );
 		$mustache = $this->request->getVal( 'mustache', null );
-		$ttl = $this->request->getInt( 'ttl', 0 );
-		$varnishTTL = $this->request->getInt( 'varnishTTL', $ttl );
-		$browserTTL = $this->request->getInt( 'browserTTL', $ttl );
+		$sassParams = $this->request->getVal( 'sassParams', null );
 
 		// handle templates via sendRequest
 		if ( !is_null( $templates ) ) {
@@ -60,7 +54,7 @@ class AssetsManagerController extends WikiaController {
 				$params = !empty( $template['params'] ) ? $template['params'] : array();
 
 				if ( !empty( $template['controller'] ) && !empty( $template['method'] ) ) {
-					$res = $this->sendRequest( $template['controller'], $template['method'], $params );
+					$res = $this->sendExternalRequest( $template['controller'], $template['method'], $params );
 					$templatesOutput["{$template['controller']}_{$template['method']}"] = $res->__toString();
 				} else {
 					$templatesOutput[] = "Controller or method not given";
@@ -76,7 +70,7 @@ class AssetsManagerController extends WikiaController {
 			$profileId = __METHOD__ . "::styles::{$styles}";
 			wfProfileIn( $profileId );
 
-			$key = $this->getComponentMemcacheKey( $styles );
+			$key = $this->getComponentMemcacheKey( $styles, $sassParams );
 			$data = $this->wg->Memc->get( $key );
 
 			if ( empty( $data ) ) {
@@ -87,7 +81,10 @@ class AssetsManagerController extends WikiaController {
 					$builder = $this->getBuilder( 'sass', $styleFile );
 
 					if ( !is_null( $builder ) ) {
-						 $data .= $builder->getContent();
+						if ( !empty( $sassParams ) ) {
+							$builder->addParams( $sassParams );
+						}
+						$data .= $builder->getContent();
 					}
 				}
 
@@ -137,40 +134,33 @@ class AssetsManagerController extends WikiaController {
 		}
 
 		// handle mustache templates (BugId:30841)
-		if ( !is_null( $mustache ) ) {
-			$profileId = __METHOD__ . "::mustache::{$mustache}";
+		foreach (['mustache'] as $templateLanguage) {
+			$template = $$templateLanguage;
+
+			if ( is_null( $template ) ) {
+				continue;
+			}
+
+			$profileId = __METHOD__ . "::$templateLanguage::$template";
 			wfProfileIn( $profileId );
 
-			$mustacheTemplates = explode( ',', $mustache );
+			$templates = explode( ',', $template );
 
-			$this->response->setVal( 'mustache', $this->getMustacheTemplates($mustacheTemplates));
+			$this->response->setVal( $templateLanguage, $this->getTemplates($templates, $templateLanguage));
 			wfProfileOut( $profileId );
 		}
 
-		// handle cache time
-		if ( $varnishTTL > 0 ) {
-			$this->response->setCacheValidity( $varnishTTL, $varnishTTL, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
-		}
-
-		if ( $browserTTL > 0 ) {
-			$this->response->setCacheValidity( $browserTTL, $browserTTL, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
-		}
+		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
 
 		$this->response->setFormat( 'json' );
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getComponentMemcacheKey( $par ) {
+	private function getComponentMemcacheKey( $par, $sassParams = null ) {
+		if ( $sassParams ) {
+			$par = json_encode( [ $par, $sassParams ] );
+		}
 		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion;
-	}
-
-	/**
-	 * Purges Varnish and Memcached data mapping to the specified set of paramenters
-	 *
-	 * @param array $options @see getMultiTypePackage
-	 */
-	public function purgeMultiTypePackageCache( Array $options ) {
-		SquidUpdate::purge( array ( AssetsManager::getInstance()->getMultiTypePackageURL( $options ) ) );
 	}
 
 	/**
@@ -205,23 +195,24 @@ class AssetsManagerController extends WikiaController {
 	 * @return array templates content
 	 * @throws WikiaException
 	 */
-	private function getMustacheTemplates($mustacheTemplates) {
+	private function getTemplates($templates, $templateSystem = 'mustache') {
 		wfProfileIn(__METHOD__);
 
 		$IP = $this->app->getGlobal('IP');
 		$ret = array();
 
-		foreach($mustacheTemplates as $mustachePath) {
-			$path = $IP . '/' . ltrim($mustachePath, '/');
+		foreach($templates as $templatePath) {
+			$path = $IP . '/' . ltrim($templatePath, '/');
+			$extLength = strlen($templateSystem) + 1;
 
 			// check file validity
 			if (!is_readable($path)) {
-				throw new WikiaException("Mustache template not found: '{$mustachePath}'");
+				throw new WikiaException("{$templateSystem} template not found: '{$templatePath}'");
 			}
 
 			// check file extension
-			if (substr($path, -9) != '.mustache') {
-				throw new WikiaException("Mustache template has incorrect extension: '{$mustachePath}'");
+			if (substr($path, -$extLength) != '.' . $templateSystem) {
+				throw new WikiaException("{$templateSystem} template has incorrect extension: '{$templatePath}'");
 			}
 
 			$ret[] = file_get_contents($path);
@@ -229,5 +220,18 @@ class AssetsManagerController extends WikiaController {
 
 		wfProfileOut(__METHOD__);
 		return $ret;
+	}
+
+	/**
+	 * Returns the current style version (cache buster) in a Nirvana's response.
+	 *
+	 * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
+	 */
+	public function getStyleVersion() {
+		wfProfileIn( __METHOD__ );
+		$this->response->setVal( 'styleVersion', $this->app->wg->StyleVersion );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
+		$this->response->setFormat( 'json' );
+		wfProfileOut( __METHOD__ );
 	}
 }

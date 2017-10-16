@@ -1,30 +1,64 @@
 <?php
 
+use Wikia\Service\Gateway\ConsulUrlProvider;
+use Wikia\Rabbit\ConnectionBase;
+use Wikia\Service\Gateway\KubernetesUrlProvider;
+use Wikia\Service\Gateway\UrlProvider;
+
 /**
- * @method setLimit
- * @method setUser
+ * @method PhalanxService setLimit( int $limit )
+ * @method PhalanxService setUser( User $user )
  */
-class PhalanxService extends Service {
-	/* limit of blocks */
+class PhalanxService {
+
+	use \Wikia\Logger\Loggable;
+
+	// limit of blocks
 	private $limit = 1;
-	/* @var User */
+	/** @var User */
 	private $user = null;
+
+	/** @var UrlProvider $urlProvider */
+	private $urlProvider;
 
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
+	const PHALANX_LOG_PARAM_LENGTH_LIMIT = 64;
+	const ROUTING_KEY = 'onUpdate';
+
+	// number of retries for phalanx POST requests
+	const PHALANX_SERVICE_TRIES_LIMIT = 3;
+
+	// delay between retries - 0.2s
+	const PHALANX_SERVICE_TRY_USLEEP = 20000;
+
+	/**
+	 * @Inject
+	 * @param KubernetesUrlProvider $urlProvider
+	 */
+	public function __construct( KubernetesUrlProvider $urlProvider ) {
+		$this->urlProvider = $urlProvider;
+	}
+
+	protected function getLoggerContext() {
+		return [
+			'class' => __CLASS__
+		];
+	}
 
 	/**
 	 * @param $name
 	 * @param $args
 	 * @return null|PhalanxService
+	 * @throws WikiaException
 	 */
-	public function __call($name, $args) {
-		$method = substr($name, 0, 3);
-		$key = strtolower( substr( $name, 3 ) );
+	public function __call( $name, $args ) {
+		$method = substr( $name, 0, 3 );
+		$key = lcfirst( substr( $name, 3 ) );
 
 		$result = null;
-		switch($method) {
+		switch( $method ) {
 			case 'get':
 				if ( isset( $this->$key ) ) {
 					$result = $this->$key;
@@ -35,7 +69,7 @@ class PhalanxService extends Service {
 				$result = $this;
 				break;
 			default:
-				throw new WikiaException('PhalanxService::_call supports getters and setters only');
+				throw new WikiaException( 'PhalanxService::_call supports getters and setters only' );
 		}
 		return $result;
 	}
@@ -44,53 +78,55 @@ class PhalanxService extends Service {
 	 * check service status
 	 */
 	public function status() {
-		return $this->sendToPhalanxDaemon( "status", array() );
+		return $this->sendToPhalanxDaemon( "status", [] );
 	}
 
 	/**
 	 * service for check function
 	 *
-	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
-	 * @param string $content  text to be checked
-	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
+	 * @param string $type one of: content, summary, title, user, question_title, recent_questions,
+	 *                     wiki_creation, cookie, email
+	 * @param string $content text to be checked
+	 * @return mixed
 	 */
-	public function check( $type, $content, $lang = "" ) {
-		wfProfileIn( __METHOD__  );
-		$result =  $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		wfProfileOut( __METHOD__  );
+	public function check( string $type, string $content ) {
+		wfProfileIn( __METHOD__ );
+
+		$result = $this->sendToPhalanxDaemon( 'check', [ 'type' => $type, 'content' => $content ] );
+
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
 	/**
 	 * service for match function
 	 *
-	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
-	 * @param string/Array $content  text to be checked
-	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
+	 * @param string $type one of: content, summary, title, user, question_title, recent_questions,
+	 *                     wiki_creation, cookie, email
+	 * @param string|array $content text to be checked
+	 * @return mixed
 	 */
-	public function match( $type, $content, $lang = "" ) {
-		wfProfileIn( __METHOD__  );
-		if (is_array($content)) {
-			$content = array_unique($content);
+	public function match( string $type, $content ) {
+		wfProfileIn( __METHOD__ );
+		if ( is_array( $content ) ) {
+			$content = array_unique( $content );
 		}
-		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		wfProfileOut( __METHOD__  );
+
+		$result = $this->sendToPhalanxDaemon( 'match', [ 'type' => $type, 'content' => $content ] );
+
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
 	/**
-	 * service for reload function
-	 *
-	 * @example curl "http://localhost:8080/reload?changed=1,2,3"
-	 *
-	 * @param array $changed -- list of rules to reload, default empty array so reload all
-	 *
+	 * Instruct Phalanx nodes to load a set of rules (identified by ID) from the database
+	 * @param int[] $changed -- list of rules to reload
 	 */
-	public function reload( $changed = array() ) {
-		wfProfileIn( __METHOD__  );
-		$result = $this->sendToPhalanxDaemon( "reload", is_array( $changed ) && sizeof( $changed ) ? array( "changed" => implode( ",", $changed ) ) : array() );
-		wfProfileOut( __METHOD__  );
-		return $result;
+	public function reload( $changed = [] ) {
+		global $wgPhalanxQueue;
+
+		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
+		$rabbitConnection->publish( self::ROUTING_KEY, implode( ",", $changed ) );
 	}
 
 	/**
@@ -100,76 +136,59 @@ class PhalanxService extends Service {
 	 *
 	 * @param $regex String
 	 *
+	 * @return int|mixed
 	 */
 	public function validate( $regex ) {
-		wfProfileIn( __METHOD__  );
-		$result =  $this->sendToPhalanxDaemon( "validate", array( "regex" => $regex ) );
-		wfProfileOut( __METHOD__  );
-		return $result;
-	}
-
-	/**
-	 * service for stats method
-	 *
-	 * @example curl "http://localhost:8080/stats"
-	 *
-	 */
-	public function stats() {
-		wfProfileIn( __METHOD__  );
-		$result = $this->sendToPhalanxDaemon( "stats", array() );
-		wfProfileOut( __METHOD__  );
+		wfProfileIn( __METHOD__ );
+		$result = $this->sendToPhalanxDaemon( "validate", [ "regex" => $regex ] );
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
 	/**
 	 * Send prepared request request to phalanx daemon
 	 *
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * @access private
-	 *
-	 * @param $action String type of action
-	 * @param $parameters Array additional parameters as hash table
-	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
+	 * @param string $action String type of action
+	 * @param array $parameters additional parameters as hash table
+	 * @return integer|mixed data of blocks applied or numeric value
+	 *         (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		
-		$baseurl = F::app()->wg->PhalanxServiceUrl;
 		$options = F::app()->wg->PhalanxServiceOptions;
 
-		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
+		$url = $this->getPhalanxUrl( $action );
+		$loggerPostParams = [];
+		$tries = 1;
 		/**
 		 * for status we're sending GET
 		 */
-		if( $action == "status" ) {
+		if ( $action == "status" ) {
 			wfDebug( __METHOD__ . ": calling $url\n" );
+			$requestTime = microtime( true );
 			$response = Http::get( $url, 'default', $options );
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}
 		/**
 		 * for any other we're sending POST
 		 */
 		else {
-			/**
-			 * city_id should be always known
-			 */
-			$parameters[ 'wiki' ] = F::app()->wg->CityId;
+			global $wgCityId, $wgLanguageCode;
 
-			if( ( $action == "match" || $action == "check") ) {
-				if( !is_null( $this->user ) ) {
-					$parameters[ 'user' ][] = $this->user->getName();
-				}
-				else {
-					/**
-					 * it will be IP in worst case scenario
-					 */
-					global $wgUser;
-					$parameters[ 'user' ][] = $wgUser->getName();
-				}
+			// Specify wiki ID parameter, for Phalanx Stats logging
+			$parameters[ 'wiki' ] = $wgCityId;
+
+			// SUS-2759: pass on content language code to the service
+			$parameters[ 'lang' ] = $wgLanguageCode;
+
+			if ( ( $action == "match" || $action == "check" ) && !empty( $this->user ) ) {
+				$parameters[ 'user' ][] = $this->user->getName();
 			}
-			if ($action == "match" && $this->limit != 1) {
+
+			if ( $action == "match" && $this->limit != 1 ) {
 				$parameters['limit'] = $this->limit;
 			}
 
-			$postData = array();
+			$postData = [];
 			if ( !empty( $parameters ) ) {
 				foreach ( $parameters as $key => $values ) {
 					if ( is_array( $values ) ) {
@@ -179,29 +198,71 @@ class PhalanxService extends Service {
 					} else {
 						$postData[] = urlencode( $key ) . '=' . urlencode( $values );
 					}
+					$loggerPostParams[ $key ] = substr(
+						json_encode( $values ),
+						0,
+						self::PHALANX_LOG_PARAM_LENGTH_LIMIT
+					);
 				}
 			}
 
 			$options["postData"] = implode( "&", $postData );
-			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
-			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
-			$response = Http::post( $url, $options);
+
+			$requestTime = microtime( true );
+
+			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
+			// it's better to do the retry than maintain the PHP fallback for that
+			$url = $this->getPhalanxUrl( $action );
+			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
+				$response = Http::post( $url, $options );
+				if ( false !== $response ) {
+					break;
+				}
+				// don't wait after the last try
+				if ( $tries < self::PHALANX_SERVICE_TRIES_LIMIT ) {
+					// wait for 0.02 second
+					usleep( self::PHALANX_SERVICE_TRY_USLEEP );
+				}
+				$tries++;
+
+				$this->error( "Phalanx service error - retrying...", [
+					"phalanxUrl" => $url,
+					'postParams' => json_encode( $loggerPostParams ),
+					'tries' => $tries,
+					'exception' => new Exception( $action ),
+				] );
+			}
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}
 
 		if ( $response === false ) {
 			/* service doesn't work */
 			$res = false;
 
+			$this->error( "Phalanx service failed", [
+				"phalanxUrl" => $url,
+				'requestTime' => $requestTime,
+				'postParams' => json_encode( $loggerPostParams ),
+				'tries' => $tries,
+				'exception' => new Exception( $action ),
+			] );
+
 			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
 			wfDebug( __METHOD__ . " - received '{$response}'\n" );
+
+			$this->debug( "Phalanx service success", [
+				"phalanxUrl" => $url,
+				'requestTime' => $requestTime,
+				'tries' => $tries
+			] );
 
 			switch ( $action ) {
 				case "stats":
 					$res = ( is_null( $response ) ) ? false : $response;
 					break;
 				case "status":
-					$res = ( stripos( $response, self::RES_STATUS  ) !== false ) ? true : false;
+					$res = ( stripos( $response, self::RES_STATUS ) !== false ) ? true : false;
 					break;
 				case "match" :
 					$ret = json_decode( $response );
@@ -209,7 +270,7 @@ class PhalanxService extends Service {
 						$res = false;
 					}
 					else {
-						if (count($ret)>0 && $this->limit != 0) {
+						if ( count( $ret ) > 0 && $this->limit != 0 ) {
 							if ( $this->limit == 1 ) {
 							  $res = $ret[0];
 							} else {
@@ -221,7 +282,7 @@ class PhalanxService extends Service {
 					}
 					break;
 				default:
-					if ( stripos( $response, self::RES_OK  ) !== false ) {
+					if ( stripos( $response, self::RES_OK ) !== false ) {
 						$res = 1;
 					} elseif ( stripos( $response, self::RES_FAILURE ) !== false ) {
 						$res = 0;
@@ -233,5 +294,18 @@ class PhalanxService extends Service {
 			}
 		}
 		return $res;
+	}
+
+	private function getPhalanxUrl( $action ) {
+		global $wgPhalanxServiceUrl;
+
+		if ( !empty( $wgPhalanxServiceUrl ) ) {
+			// e.g. "localhost:4666"
+			$baseurl = $wgPhalanxServiceUrl;
+		} else {
+			$baseurl = $this->urlProvider->getUrl( 'phalanx' );
+		}
+
+		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
 	}
 };

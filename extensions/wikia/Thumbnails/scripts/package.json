@@ -1,0 +1,15 @@
+{
+	"name": "Thumbnails",
+	"version": "0.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": ""
+	},
+	"author": "",
+	"license": "BSD-2-Clause",
+	"dependencies": {
+		"grunt-mustache": "~0.1.5",
+		"grunt": "~0.4.2"
+	}
+}

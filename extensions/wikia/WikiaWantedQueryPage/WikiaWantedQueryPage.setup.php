@@ -11,6 +11,13 @@
 * @var WikiaApp
 */
 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'WantedPagesPageWikia',
+	'author' => 'Jacek Jursza <jacek at wikia-inc.com>',
+	'descriptionmsg' => 'wantedquerypage-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WantedPagesPageWikia',
+);
+
 $dir = dirname( __FILE__ );
 $wgAutoloadClasses[ 'WantedPagesPageWikia'] = 		$dir . '/WantedPagesPageWikia.class.php' ;
 $wgAutoloadClasses[ 'WantedFilesPageWikia'] = 		$dir . '/WantedFilesPageWikia.class.php' ;

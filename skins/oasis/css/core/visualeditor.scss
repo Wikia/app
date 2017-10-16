@@ -1,0 +1,42 @@
+// Keep this file small. This is only for things that need styles before
+// VisualEditor takes care of loading everything it needs.
+@import "skins/shared/color";
+@import "skins/shared/mixins/blackout";
+@import "skins/shared/mixins/flexbox";
+
+.ve-spinner {
+	@include align-items( center );
+	@include blackout();
+	@include flexbox();
+	@include justify-content( center );
+	opacity: 0;
+
+	&.visible {
+		z-index: $zTop + 1;
+	}
+
+	.content {
+		@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
+		@include flexbox();
+		@include flex-direction( column );
+		background-color: $color-page;
+		box-sizing: border-box;
+		border: 1px solid $color-page-border;
+		color: $color-text;
+		padding: 20px;
+		position: relative;
+	}
+
+	.loading {
+		background: url(/skins/common/images/ajax.gif) no-repeat scroll center $color-page; /* $wgCdnStylePath */
+		height: 16px;
+		margin: 0 auto;
+		opacity: .75;
+		width: 16px;
+	}
+
+	.message {
+		display: none;
+		margin-top: 10px;
+	}
+}

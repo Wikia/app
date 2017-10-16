@@ -9,7 +9,7 @@ namespace Wikia\ApiDocs\Services;
  */
 class ApiDocsService implements IApiDocsService {
 	/**
-	 * @var \Swagger\Swagger
+	 * @var \Swagger
 	 * Original swagger object
 	 */
 	private $swagger;
@@ -19,15 +19,18 @@ class ApiDocsService implements IApiDocsService {
 	 * i.e. function( $x ) { return "/wikia.php?controller=ApiDocs&method=api&api=" . $x; }
 	 */
 	private $pathBuilder;
+	
+	private $pathPrefix;
 
 
 	/**
-	 * @param /Swagger/Swagger $swagger
+	 * @param \Swagger $swagger
 	 * @param callable $pathBuilder
 	 */
-	function __construct( $swagger, $pathBuilder ) {
+	function __construct( $swagger, $pathBuilder, $pathPrefix) {
 		$this->swagger = $swagger;
 		$this->pathBuilder = $pathBuilder;
+		$this->pathPrefix = $pathPrefix;
 	}
 
 	/**
@@ -45,7 +48,7 @@ class ApiDocsService implements IApiDocsService {
 					'apis' => []
 				];
 			}
-			/** @var \Swagger\Annotations\Resource $resource  */
+			/** @var \SwaggerResource $resource  */
 			$cb = $this->pathBuilder;
 			$path = $cb( $resource->resourcePath );
 
@@ -64,18 +67,11 @@ class ApiDocsService implements IApiDocsService {
 	 * @return array
 	 */
 	function getDoc( $name ) {
-		return $this->swagger->getResource( $name, false, false );
+		$result = $this->swagger->getResource( $name );
+		foreach ($result['apis'] as &$api) {
+			$api['path'] = $this->pathPrefix . $api['path'];
+		}
+		return $result;
 	}
 }
 
-/*
-$errors = [];
-
-\Swagger\Logger::getInstance()->log = function ($entry, $type) use (&$errors) {
-	$type = $type === E_USER_NOTICE ? 'INFO' : 'WARN';
-	if ($entry instanceof \Exception) {
-		$entry = $entry->getMessage();
-	}
-	$errors[] = '[' . $type . '] ' . $entry . "\n";
-};
-*/

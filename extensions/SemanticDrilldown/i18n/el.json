@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Consta",
+			"Crazymadlover",
+			"Omnipaedista",
+			"Protnet",
+			"ZaDiak"
+		]
+	},
+	"browsedata": "Δεδομένα πλοήγησης",
+	"sd_browsedata_choosecategory": "Επιλέξτε μια κατηγορία",
+	"sd_browsedata_viewcategory": "προβολή κατηγορίας",
+	"sd_browsedata_subcategory": "Υποκατηγορία",
+	"sd_browsedata_other": "Άλλος",
+	"sd_browsedata_none": "Κανένα",
+	"sd_browsedata_filterbyvalue": "Φιλτράρισμα βάσει αυτής της αξίας",
+	"sd_browsedata_filterbysubcategory": "Φιλτράρισμα βάσει αυτής της υποκατηγορίας",
+	"sd_browsedata_or": "ή",
+	"sd_browsedata_removefilter": "ΑΦαίρεσυ αυτού του φίλτρου",
+	"sd_browsedata_resetfilters": "Επαναφορά φίλτρων",
+	"sd_browsedata_addanothervalue": "Κάνετε κλικ στο τόξο για την προσθήκη και άλλης αξίας",
+	"sd_browsedata_daterangestart": "Έναρξη:",
+	"sd_browsedata_daterangeend": "Λήξη:"
+}

@@ -1,5 +1,0 @@
-= Uniwiki Release Notes =
-
-== GenericEditPage ==
-* Added $wgAlwaysShowIntroSection to force the editor to always show the
-  introduction section, even if there is no content inside of it already.

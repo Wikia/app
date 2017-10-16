@@ -16,12 +16,11 @@ class Interwiki {
 	protected static $smCache = array();
 	const CACHE_LIMIT = 100; // 0 means unlimited, any other value is max number of entries.
 
-	protected $mPrefix, $mURL, $mAPI, $mWikiID, $mLocal, $mTrans;
+	protected $mPrefix, $mURL, $mWikiID, $mLocal, $mTrans;
 
-	public function __construct( $prefix = null, $url = '', $api = '', $wikiId = '', $local = 0, $trans = 0 ) {
+	public function __construct( $prefix = null, $url = '', $wikiId = '', $local = 0, $trans = 0 ) {
 		$this->mPrefix = $prefix;
 		$this->mURL = $url;
-		$this->mAPI = $api;
 		$this->mWikiID = $wikiId;
 		$this->mLocal = $local;
 		$this->mTrans = $trans;
@@ -143,7 +142,7 @@ class Interwiki {
 		global $wgMemc, $wgInterwikiExpiry;
 
 		$iwData = false;
-		if ( !wfRunHooks( 'InterwikiLoadPrefix', array( $prefix, &$iwData ) ) ) {
+		if ( !Hooks::run( 'InterwikiLoadPrefix', array( $prefix, &$iwData ) ) ) {
 			return Interwiki::loadFromArray( $iwData );
 		}
 
@@ -170,7 +169,6 @@ class Interwiki {
 		if ( $iw ) {
 			$mc = array(
 				'iw_url' => $iw->mURL,
-				'iw_api' => $iw->mAPI,
 				'iw_local' => $iw->mLocal,
 				'iw_trans' => $iw->mTrans
 			);
@@ -195,8 +193,6 @@ class Interwiki {
 			$iw->mURL = $mc['iw_url'];
 			$iw->mLocal = isset( $mc['iw_local'] ) ? $mc['iw_local'] : 0;
 			$iw->mTrans = isset( $mc['iw_trans'] ) ? $mc['iw_trans'] : 0;
-			$iw->mAPI = isset( $mc['iw_api'] ) ? $mc['iw_api'] : '';
-			$iw->mWikiID = isset( $mc['iw_wikiid'] ) ? $mc['iw_wikiid'] : '';
 
 			return $iw;
 		}
@@ -275,6 +271,7 @@ class Interwiki {
 	 * @since 1.19
 	 */
 	protected static function getAllPrefixesDB( $local ) {
+		global $wgMemc, $wgInterwikiExpiry; // Wikia change
 		$db = wfGetDB( DB_SLAVE );
 
 		$where = array();
@@ -287,14 +284,27 @@ class Interwiki {
 			}
 		}
 
+		// Wikia change - begin
+		// cache all prefixes in memcache
+		// @see PLATFORM-1207
+		$key = wfMemcKey( 'interwiki', 'all_prefixes',  isset( $where['iw_local'] ) ? $where['iw_local'] : 'all' );
+
+		$retval = $wgMemc->get( $key );
+		if ( is_array( $retval ) ) {
+			return $retval;
+		}
+		// Wikia change - end
+
 		$res = $db->select( 'interwiki',
-			array( 'iw_prefix', 'iw_url', 'iw_api', 'iw_wikiid', 'iw_local', 'iw_trans' ),
+			array( 'iw_prefix', 'iw_url', 'iw_local', 'iw_trans' ),
 			$where, __METHOD__, array( 'ORDER BY' => 'iw_prefix' )
 		);
 		$retval = array();
 		foreach ( $res as $row ) {
 			$retval[] = (array)$row;
 		}
+
+		$wgMemc->set( $key, $retval, $wgInterwikiExpiry ); // Wikia change
 		return $retval;
 	}
 
@@ -330,15 +340,6 @@ class Interwiki {
 			$url = str_replace( "$1", wfUrlencode( $title ), $url );
 		}
 		return $url;
-	}
-
-	/**
-	 * Get the API URL for this wiki
-	 *
-	 * @return String: the URL
-	 */
-	public function getAPI() {
-		return $this->mAPI;
 	}
 
 	/**

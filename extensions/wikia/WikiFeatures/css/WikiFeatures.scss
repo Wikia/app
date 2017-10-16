@@ -1,11 +1,10 @@
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/transform";
-@import "../../../../skins/oasis/css/mixins/transition";
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/transform";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
 
 .WikiFeatures {
 	padding: 10px;
@@ -23,7 +22,7 @@
 	>.creative {
 		font-size: 16px;
 		line-height: 26px;
-		margin-top: 15px;
+		margin: 15px 0 30px;
 	}
 	.features {
 		margin: 0;
@@ -31,23 +30,30 @@
 		list-style: none;
 		.feature {
 			@include clearfix;
-			border-top: 1px solid $color-page-border;
-			padding: 30px 0 30px 0;
+			max-height: 300px;
+			overflow-y: hidden;
+			padding-bottom: 30px;
+			transition-property: all;
+			transition-duration: 1s;
+			transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
 			h3 {
 				border-bottom: 1px solid $color-page-border;
 				font-size: 20px;
-				margin: 0;
+				margin: 0 0 20px 0;
 				padding: 0 0 5px 0;
 			}
 			&:first-child {
 				border-top: 0;
 			}
+			&.faded {
+				max-height: 0;
+				padding-bottom: 0;
+			}
 			.representation {
 				border: 1px solid $color-page-border;
-				float: left;
-				height: 100px;
+				float: right;
 				position: relative;
-				width: 150px;
 				.promo-text {
 					color: red;
 					display: block;
@@ -77,47 +83,47 @@
 						width: 93px;
 					}
 				}
+				.feature-image-wrapper {
+					height: 200px;
+					overflow: hidden;
+					width: 300px;
+				}
 			}
 
 			.details {
-				margin: 0 190px 0 165px;
+				margin-right: 315px;
 			}
 			.actions {
-				float: right;
+				float: left;
+				margin-top: 10px;
 				.slider {
-					@include border-radius(14px);
 					@include box-shadow(0, 2px, 5px, #999, true);
 					background-color: #eeeded;
 					border: 1px solid #a6a6a6;
+					border-radius: 14px;
 					cursor: pointer;
 					display: block;
+					float: left;
 					height: 26px;
+					min-width: 107px;
 					position: relative;
-					width: 107px;
 					.texton {
-						color: #FFFFFF;
+						color: #FFF;
 						display: none;
 						font-weight: bold;
-						margin-left: 5px;
-						position: absolute;
-						text-align: center;
-						top: 2px;
-						width: 70px;
+						margin: 2px 35px 0 10px;
 					}
 					.textoff {
 						color: #000;
+						display: block;
 						font-weight: bold;
-						margin-left: 32px;
-						position: absolute;
-						text-align: center;
-						top: 2px;
-						width: 70px;
+						margin: 2px 10px 0 35px;
 					}
 					.button {
-						@include border-radius(14px);
 						@include linear-gradient(#f2f2f2, top, #F2F2F2, 35%, #D8D8D8, 65%);
 						@include transition-shorthand(left 350ms);
 						border: 1px solid #a6a6a6;
+						border-radius: 14px;
 						display: block;
 						height: 26px;
 						left: -1px;
@@ -136,27 +142,28 @@
 							display: none;
 						}
 						.button {
-							left: 80px;
+							left: 100%;
+							margin-left: -27px;
 						}
 					}
 				}
 				.feedback {
-					margin-top: 5px;
+					margin: 4px 0 0 15px;
 					>img {
 						position: relative;
 						top: -1px;
 					}
 				}
-				.active-on {
-					font-size: 11px;
-				}
+			}
+			.active-on {
+				font-size: 13px;
+				margin-left: 5px;
 			}
 		}
 	}
 }
 
 .FeedbackDialog {
-	display: none;
 	.feature-highlight {
 		float: right;
 		margin-left: 30px;
@@ -169,6 +176,7 @@
 		img {
 			border: 1px solid black;
 			width: 300px;
+			height: 214px;
 		}
 	}
 
@@ -186,12 +194,18 @@
 		label {
 			clear: both;
 			float: left;
+			margin: 10px 0;
 		}
+	}
+
+	.comment-character-count {
+		margin-top: 2px;
+		text-align: right;
 	}
 
 	textarea {
 		height: 10em;
-		width: 660px;
+		width: 100%;
 		&.invalid {
 			border: 1px solid #f00;
 			&:focus {
@@ -238,12 +252,12 @@
 .star-rating {
 	@include clearfix;
 	>img {
-		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* base64 */
+		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* inline */
 		height: 16px;
 		float: left;
 		width: 16px;
 		&.active {
-			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* base64 */
+			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* inline */
 		}
 	}
 }

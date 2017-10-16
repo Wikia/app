@@ -1,0 +1,31 @@
+{
+  "name": "Wikia-app",
+  "description": "Main Wikia application",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "test": "cd tests/ && ./js-all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Wikia/app.git"
+  },
+  "author": "",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/Wikia/app/issues"
+  },
+  "homepage": "https://github.com/Wikia/app",
+  "devDependencies": {
+    "istanbul": "latest",
+    "jasmine-core": "latest",
+    "karma": "latest",
+    "karma-chrome-launcher": "latest",
+    "karma-coverage": "latest",
+    "karma-jasmine": "latest",
+    "karma-junit-reporter": "latest",
+    "karma-requirejs": "latest",
+    "requirejs": "latest",
+    "jscs-jsdoc": "latest"
+  }
+}

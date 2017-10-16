@@ -1,13 +1,16 @@
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/transition";
-@import "../mixins/divider";
+@import "skins/oasis/css/core/layout";
+@import "skins/shared/mixins/transition";
+
+#blackout_userForceLoginModal {
+	z-index: $zTop + 5000; // Login page must show over other modals - see VID-473
+}
 
 .UserLoginModal {
 	@include transition-shorthand(200ms opacity ease-in-out);
-	@include opacity(100);
 	height: auto;
-	margin: 0 auto 15px;
-	padding: 10px 0 0 0;
+	margin: 0 auto;
+	opacity: 1;
+	padding: 0;
 	width: 264px;
 	input[type=text],
 	input[type=password] {
@@ -33,11 +36,5 @@
 	}
 	.general-errors {
 		display: none;
-	}
-	.sso-login {
-		text-align: center;
-		> .sso-login-divider {
-			@include divider;
-		}
 	}
 }

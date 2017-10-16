@@ -32,17 +32,7 @@ echo wfMessage( 'specialcontact-intro-account-issue' )->parseAsBlock();
 
 <p>
 <label for="wpScreenshot1"><?= wfMessage( 'specialcontact-label-screenshot' )->escaped() ?></label>
-<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" />
-</p>
-
-<p class="additionalScreenShot">
-<label for="wpScreenshot2"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
-<input id="wpScreenshot2" name="wpScreenshot[]" type="file" accept="image/*" />
-</p>
-
-<p class="additionalScreenShot">
-<label for="wpScreenshot3"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
-<input id="wpScreenshot3" name="wpScreenshot[]" type="file" accept="image/*" />
+<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" multiple />
 </p>
 
 <?php
@@ -67,7 +57,8 @@ if ( $isLoggedIn && $hasEmail ) {
 }
 ?>
 
-<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= htmlspecialchars( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
+<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= Sanitizer::encodeAttribute( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
+<input type="hidden" name="wpEditToken" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>" />
 </form>
 

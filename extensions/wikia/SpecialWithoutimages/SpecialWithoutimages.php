@@ -3,6 +3,13 @@
  * @file
  * @ingroup SpecialPage
  */
+ 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'SpecialWithoutimages',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'withoutimages-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialWithoutimages',
+);
 
 $dir = dirname(__FILE__) . '/';
 

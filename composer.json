@@ -1,0 +1,41 @@
+{
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/Wikia/fluent-sql-php"
+    }
+  ],
+  "config": {
+    "vendor-dir": "lib/composer",
+    "prepend-autoloader": false,
+    "optimize-autoloader": true
+  },
+  "require": {
+    "wikia/fluent-sql-php": "1.0.*",
+    "monolog/monolog": "^1.23",
+    "phpunit/phpunit": "^6.4",
+    "cssjanus/cssjanus": "1.1.*",
+    "tijsverkoyen/css-to-inline-styles": "1.5.2",
+    "php-di/php-di": "^5.0",
+    "doctrine/annotations": "~1.2",
+    "doctrine/cache": "~1.0",
+    "ocramius/proxy-manager": "~1.0",
+    "sensiolabs/consul-php-sdk": "^1.0",
+    "wikia/phpflickr": "^3.1",
+    "param-processor/param-processor": "~1.2",
+    "data-values/geo": "~1.0",
+    "ooyala/v2-api": "^2.0",
+    "pear/Mail_Mime": "^1.10",
+    "pear/archive_tar": "^1.4",
+    "wikia/mail2": "^0.1.1",
+    "wikia/net_socket2": "^0.1.1",
+    "wikia/net_smtp2": "^0.1.0",
+    "wikia/simplehtmldom": "^1.6",
+    "simplepie/simplepie": "^1.5",
+    "php-amqplib/php-amqplib": "^2.6",
+    "wikia/file_ogg": "^1.0",
+    "wikia/semantic-media-wiki": "^2.4",
+    "wikia/maps": "^3.5",
+    "wikia/semantic-scribunto": "^1.1"
+  }
+}

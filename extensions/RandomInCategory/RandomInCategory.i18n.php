@@ -1,28 +1,15 @@
 <?php
-/**
- * Internationalisation file for extension RandomInCategory.
- *
- * @file
- * @ingroup Extensions
- */
-
 $messages = array();
 
 $messages['en'] = array(
-	'randomincategory'                => 'Random page in category',
-	'randomincategory-desc'           => '[[Special:Randomincategory|Special page]] to get a random page in category',
-	'randomincategory-toolbox'        => 'Random page',
-	'randomincategory-nocategory'     => 'Category $1 does not exist or is empty',
-	'randomincategory-label'          => 'Category:',
-	'randomincategory-submit'         => 'Go',
+	'randomincategory' => 'Random page in category',
+	'randomincategory-desc' => '[[Special:Randomincategory|Special page]] to get a random page in category',
+	'randomincategory-toolbox' => 'Random page',
+	'randomincategory-nocategory' => 'Category $1 does not exist or is empty',
+	'randomincategory-label' => 'Category:',
+	'randomincategory-submit' => 'Go',
 );
 
-/** Message documentation (Message documentation)
- * @author Jon Harald Søby
- * @author Purodha
- * @author SPQRobin
- * @author The Evil IP address
- */
 $messages['qqq'] = array(
 	'randomincategory' => 'Part of the "RandomInCategory" extension. This message is the title of the special page [[Special:Randomincategory]].',
 	'randomincategory-desc' => '{{desc}}',
@@ -38,34 +25,16 @@ $messages['qqq'] = array(
 {{Identical|Go}}',
 );
 
-/** Niuean (ko e vagahau Niuē)
- * @author Jose77
- */
-$messages['niu'] = array(
-	'randomincategory-toolbox' => 'Lau fifili',
-	'randomincategory-submit' => 'Fano',
-);
-
-/** Afrikaans (Afrikaans)
- * @author Arnobarnard
- * @author Naudefj
- */
 $messages['af'] = array(
 	'randomincategory-toolbox' => 'Lukrake bladsy',
 	'randomincategory-label' => 'Kategorie:',
 	'randomincategory-submit' => 'Laat waai',
 );
 
-/** Amharic (አማርኛ)
- * @author Codex Sinaiticus
- */
 $messages['am'] = array(
 	'randomincategory-label' => 'መደብ:',
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
 $messages['ar'] = array(
 	'randomincategory' => 'صفحة عشوائية في التصنيف',
 	'randomincategory-desc' => '[[Special:Randomincategory|صفحة خاصة]] للحصول على صفحة عشوائية في تصنيف',
@@ -75,11 +44,6 @@ $messages['ar'] = array(
 	'randomincategory-submit' => 'اذهب',
 );
 
-/** Aramaic (ܐܪܡܝܐ)
- * @author 334a
- * @author Basharh
- * @author Michaelovic
- */
 $messages['arc'] = array(
 	'randomincategory' => 'ܦܐܬܐ ܚܘܚܬܐ ܒܣܕܪܐ',
 	'randomincategory-toolbox' => 'ܡܓܠܬܐ ܚܘܝܚܬܐ',
@@ -87,9 +51,6 @@ $messages['arc'] = array(
 	'randomincategory-submit' => 'ܙܠ',
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
 $messages['arz'] = array(
 	'randomincategory' => 'صفحة عشوائية فى التصنيف',
 	'randomincategory-desc' => '[[Special:Randomincategory|صفحة خاصة]] للحصول على صفحة عشوائية فى تصنيف',
@@ -99,9 +60,6 @@ $messages['arz'] = array(
 	'randomincategory-submit' => 'اذهب',
 );
 
-/** Asturian (Asturianu)
- * @author Xuacu
- */
 $messages['ast'] = array(
 	'randomincategory' => 'Páxina de la categoría al debalu',
 	'randomincategory-desc' => "[[Special:Randomincategory|Páxina especial]] p'abrir una páxina de la categoría al debalu",
@@ -111,24 +69,14 @@ $messages['ast'] = array(
 	'randomincategory-submit' => 'Dir',
 );
 
-/** Azerbaijani (Azərbaycanca)
- * @author Cekli829
- */
 $messages['az'] = array(
 	'randomincategory-label' => 'Kateqoriya:',
 );
 
-/** Belarusian (Беларуская)
- * @author Тест
- */
 $messages['be'] = array(
 	'randomincategory-label' => 'Катэгорыя:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- */
 $messages['be-tarask'] = array(
 	'randomincategory' => 'Выпадковая старонка ў катэгорыі',
 	'randomincategory-desc' => '[[Special:Randomincategory|Спэцыяльная старонка]] для атрыманьня выпадковай старонкі ў катэгорыі',
@@ -138,9 +86,6 @@ $messages['be-tarask'] = array(
 	'randomincategory-submit' => 'Перайсьці',
 );
 
-/** Bulgarian (Български)
- * @author DCLXVI
- */
 $messages['bg'] = array(
 	'randomincategory' => 'Случайна страница в категорията',
 	'randomincategory-desc' => '[[Special:Randomincategory|Специална страница]] за извличане на случайна страница от категория',
@@ -150,18 +95,12 @@ $messages['bg'] = array(
 	'randomincategory-submit' => 'Отваряне',
 );
 
-/** Bengali (বাংলা)
- * @author Bellayet
- */
 $messages['bn'] = array(
 	'randomincategory-toolbox' => 'অজানা পাতা',
 	'randomincategory-label' => 'বিশয়শ্রেণী:',
 	'randomincategory-submit' => 'যাও',
 );
 
-/** Breton (Brezhoneg)
- * @author Fulup
- */
 $messages['br'] = array(
 	'randomincategory' => 'Ur bajenn dre zegouezh er rummad',
 	'randomincategory-desc' => '[[Special:Randomincategory|Pajenn dibar]] da gaout ur bajenn dre zegouezh er rummad',
@@ -171,9 +110,6 @@ $messages['br'] = array(
 	'randomincategory-submit' => 'Mont',
 );
 
-/** Bosnian (Bosanski)
- * @author CERminator
- */
 $messages['bs'] = array(
 	'randomincategory' => 'Slučajna stranica u kategoriji',
 	'randomincategory-desc' => '[[Special:Randomincategory|Posebna stranica]] za prikaz slučajne stranice u kategoriji',
@@ -183,30 +119,20 @@ $messages['bs'] = array(
 	'randomincategory-submit' => 'Idi',
 );
 
-/** Catalan (Català)
- * @author SMP
- */
 $messages['ca'] = array(
 	'randomincategory-label' => 'Categoria:',
 	'randomincategory-submit' => 'Vés-hi',
 );
 
-/** Chamorro (Chamoru)
- * @author Jatrobat
- */
 $messages['ch'] = array(
 	'randomincategory-submit' => 'Hånao',
 );
 
-/** Sorani (کوردی) */
 $messages['ckb'] = array(
 	'randomincategory-label' => 'پۆل:',
 	'randomincategory-submit' => 'بڕۆ',
 );
 
-/** Czech (Česky)
- * @author Danny B.
- */
 $messages['cs'] = array(
 	'randomincategory' => 'Náhodná stránka v kategorii',
 	'randomincategory-desc' => '[[Special:Randomincategory|Speciální stránka]] na výběr náhodné stránky z kategorie',
@@ -216,17 +142,11 @@ $messages['cs'] = array(
 	'randomincategory-submit' => 'Jít na',
 );
 
-/** Danish (Dansk)
- * @author Jon Harald Søby
- */
 $messages['da'] = array(
 	'randomincategory-toolbox' => 'Tilfældig side',
 	'randomincategory-label' => 'Kategori:',
 );
 
-/** German (Deutsch)
- * @author Raimond Spekking
- */
 $messages['de'] = array(
 	'randomincategory' => 'Zufällige Seite in einer Kategorie',
 	'randomincategory-desc' => '[[Special:Randomincategory|Spezialseite]], um eine zufällige Seite auf einer Kategorie zu holen',
@@ -236,9 +156,6 @@ $messages['de'] = array(
 	'randomincategory-submit' => 'OK',
 );
 
-/** Lower Sorbian (Dolnoserbski)
- * @author Michawiki
- */
 $messages['dsb'] = array(
 	'randomincategory' => 'Pśipadny bok w kategoriji',
 	'randomincategory-desc' => '[[Special:Randomincategory|Specialny bok]], aby se pśipórał pśipadny bok w kategoriji',
@@ -248,16 +165,10 @@ $messages['dsb'] = array(
 	'randomincategory-submit' => 'W pórěźe',
 );
 
-/** Ewe (Eʋegbe) */
 $messages['ee'] = array(
 	'randomincategory-submit' => 'Yi',
 );
 
-/** Greek (Ελληνικά)
- * @author Consta
- * @author Omnipaedista
- * @author ZaDiak
- */
 $messages['el'] = array(
 	'randomincategory' => 'Τυχαία σελίδα στην κατηγορία',
 	'randomincategory-desc' => '[[Special:Randomincategory|Ειδική σελίδα]] για την λήψη τυχαίας σελίδας στην κατηγορία',
@@ -267,9 +178,6 @@ $messages['el'] = array(
 	'randomincategory-submit' => 'Πήγαινε',
 );
 
-/** Esperanto (Esperanto)
- * @author Yekrats
- */
 $messages['eo'] = array(
 	'randomincategory' => 'Hazarda paĝo en kategorio',
 	'randomincategory-desc' => '[[Special:Randomincategory|Speciala paĝo]] por iri al hazarda paĝo en kategorio',
@@ -279,13 +187,6 @@ $messages['eo'] = array(
 	'randomincategory-submit' => 'Ek!',
 );
 
-/** Spanish (Español)
- * @author Crazymadlover
- * @author Fitoschido
- * @author Imre
- * @author Jatrobat
- * @author Sanbec
- */
 $messages['es'] = array(
 	'randomincategory' => 'Página aleatoria en categoría',
 	'randomincategory-desc' => '[[Special:Randomincategory|página especial]] para obtener una página al azar en una categoría',
@@ -295,21 +196,17 @@ $messages['es'] = array(
 	'randomincategory-submit' => 'Ir',
 );
 
-/** Basque (Euskara)
- * @author An13sa
- */
 $messages['eu'] = array(
 	'randomincategory-toolbox' => 'Ausazko orria',
 	'randomincategory-label' => 'Kategoria:',
 	'randomincategory-submit' => 'Joan',
 );
 
-/** Finnish (Suomi)
- * @author Cimon Avaro
- * @author Crt
- * @author Mobe
- * @author Str4nd
- */
+$messages['fa'] = array(
+	'randomincategory-toolbox' => 'صفحهٔ تصادفی',
+	'randomincategory' => 'صفحهٔ تصادفی در رده',
+);
+
 $messages['fi'] = array(
 	'randomincategory' => 'Satunnainen sivu luokassa',
 	'randomincategory-desc' => '[[Special:Randomincategory|Toimintosivu]], josta saa luokkakohtaisen satunnaisen sivun.',
@@ -319,11 +216,6 @@ $messages['fi'] = array(
 	'randomincategory-submit' => 'Siirry',
 );
 
-/** French (Français)
- * @author Cedric31
- * @author Grondin
- * @author Louperivois
- */
 $messages['fr'] = array(
 	'randomincategory' => 'Page au hasard dans la catégorie',
 	'randomincategory-desc' => '[[Special:Randomincategory|Page spéciale]] pour obtenir une page au hasard dans une catégorie',
@@ -333,10 +225,6 @@ $messages['fr'] = array(
 	'randomincategory-submit' => 'Lancer',
 );
 
-/** Franco-Provençal (Arpetan)
- * @author Cedric31
- * @author ChrisPtDe
- */
 $messages['frp'] = array(
 	'randomincategory' => 'Pâge a l’hasârd dens la catègorie',
 	'randomincategory-toolbox' => 'Pâge a l’hasârd',
@@ -345,24 +233,14 @@ $messages['frp'] = array(
 	'randomincategory-submit' => 'Lanciér',
 );
 
-/** Western Frisian (Frysk)
- * @author Snakesteuben
- */
 $messages['fy'] = array(
 	'randomincategory-label' => 'Kategory:',
 );
 
-/** Irish (Gaeilge)
- * @author Moilleadóir
- */
 $messages['ga'] = array(
 	'randomincategory-label' => 'Catagóir:',
 );
 
-/** Galician (Galego)
- * @author Alma
- * @author Toliño
- */
 $messages['gl'] = array(
 	'randomincategory' => 'Páxina aleatoria na categoría',
 	'randomincategory-desc' => '[[Special:Randomincategory|Páxina especial]] para obter unha páxina aleatoria dentro dunha categoría',
@@ -372,17 +250,11 @@ $messages['gl'] = array(
 	'randomincategory-submit' => 'Adiante',
 );
 
-/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
- * @author Crazymadlover
- */
 $messages['grc'] = array(
 	'randomincategory-label' => 'Κατηγορία:',
 	'randomincategory-submit' => 'Ἱέναι',
 );
 
-/** Swiss German (Alemannisch)
- * @author Als-Holder
- */
 $messages['gsw'] = array(
 	'randomincategory' => 'Zuefelligi Syte in ere Kategorii',
 	'randomincategory-desc' => '[[Special:Randomincategory|Spezialsyte]] zum e zuefelligi Syte in ere Kategorii z hole',
@@ -392,32 +264,21 @@ $messages['gsw'] = array(
 	'randomincategory-submit' => 'Gang',
 );
 
-/** Manx (Gaelg)
- * @author MacTire02
- */
 $messages['gv'] = array(
 	'randomincategory-toolbox' => 'Duillag gyn tort',
 	'randomincategory-label' => 'Ronney:',
 	'randomincategory-submit' => 'Gow',
 );
 
-/** Hausa (هَوُسَ) */
 $messages['ha'] = array(
 	'randomincategory-label' => 'Rukuni:',
 );
 
-/** Hawaiian (Hawai`i)
- * @author Singularity
- */
 $messages['haw'] = array(
 	'randomincategory-toolbox' => 'Akikala kaulele',
 	'randomincategory-label' => 'Mahele:',
 );
 
-/** Hebrew (עברית)
- * @author Agbad
- * @author Rotemliss
- */
 $messages['he'] = array(
 	'randomincategory' => 'דף אקראי בקטגוריה',
 	'randomincategory-desc' => '[[Special:Randomincategory|דף מיוחד]] לקבלת דף אקראי בקטגוריה',
@@ -427,9 +288,6 @@ $messages['he'] = array(
 	'randomincategory-submit' => 'הצגה',
 );
 
-/** Hindi (हिन्दी)
- * @author Kaustubh
- */
 $messages['hi'] = array(
 	'randomincategory' => 'श्रेणीमें से कोईभी पन्ना',
 	'randomincategory-toolbox' => 'अविशिष्ट पृष्ठ',
@@ -437,10 +295,6 @@ $messages['hi'] = array(
 	'randomincategory-submit' => 'जायें',
 );
 
-/** Hiligaynon (Ilonggo)
- * @author Jose77
- * @author Tagimata
- */
 $messages['hil'] = array(
 	'randomincategory' => 'Lagpatan nga pahina sa kategorya',
 	'randomincategory-desc' => '[[Special:Randomincategory|Special page]] para makuha ang palagpat nga pahina sa kategorya',
@@ -450,16 +304,10 @@ $messages['hil'] = array(
 	'randomincategory-submit' => 'Lakat',
 );
 
-/** Croatian (Hrvatski)
- * @author Dalibor Bosits
- */
 $messages['hr'] = array(
 	'randomincategory-submit' => 'Kreni',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
- * @author Michawiki
- */
 $messages['hsb'] = array(
 	'randomincategory' => 'Připadna strona w kategoriji',
 	'randomincategory-desc' => '[[Special:Randomincategory|Specialna strona]], zo by připadnu stronu do kategorije přewzała',
@@ -469,10 +317,6 @@ $messages['hsb'] = array(
 	'randomincategory-submit' => 'W porjadku',
 );
 
-/** Hungarian (Magyar)
- * @author Dani
- * @author Glanthor Reviol
- */
 $messages['hu'] = array(
 	'randomincategory' => 'Véletlen lap egy kategóriából',
 	'randomincategory-desc' => '[[Special:Randomincategory|Speciális lap]] véletlen lap eléréséhez adott kategóriában',
@@ -482,9 +326,6 @@ $messages['hu'] = array(
 	'randomincategory-submit' => 'Menj',
 );
 
-/** Armenian (Հայերեն)
- * @author Pandukht
- */
 $messages['hy'] = array(
 	'randomincategory' => 'Կատեգորիայի պատահական էջ',
 	'randomincategory-desc' => '[[Special:Randomincategory|Սպասարկող էջ]] կատեգորիայի պատահական էջի ստացման համար',
@@ -494,9 +335,6 @@ $messages['hy'] = array(
 	'randomincategory-submit' => 'Անցնել',
 );
 
-/** Interlingua (Interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'randomincategory' => 'Pagina aleatori in categoria',
 	'randomincategory-desc' => '[[Special:Randomincategory|Pagina special]] pro obtener un pagina aleatori in un categoria',
@@ -506,10 +344,6 @@ $messages['ia'] = array(
 	'randomincategory-submit' => 'Va',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Bennylin
- * @author Rex
- */
 $messages['id'] = array(
 	'randomincategory' => 'Halaman sembarang di kategori',
 	'randomincategory-desc' => '[[Special:Randomincategory|Halaman istimewa]] untuk melihat halaman sembarang di kategori',
@@ -519,30 +353,18 @@ $messages['id'] = array(
 	'randomincategory-submit' => 'Tuju ke',
 );
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
 $messages['ig'] = array(
 	'randomincategory-submit' => 'Gá',
 );
 
-/** Ido (Ido)
- * @author Wyvernoid
- */
 $messages['io'] = array(
 	'randomincategory-toolbox' => 'Hazarda pagino',
 );
 
-/** Icelandic (Íslenska)
- * @author S.Örvarr.S
- */
 $messages['is'] = array(
 	'randomincategory-label' => 'Flokkur:',
 );
 
-/** Italian (Italiano)
- * @author Darth Kule
- */
 $messages['it'] = array(
 	'randomincategory' => 'Pagina casuale in una categoria',
 	'randomincategory-desc' => "[[Special:Randomincategory|Pagina speciale]] che dà una pagina casuale all'interno di una categoria",
@@ -552,11 +374,6 @@ $messages['it'] = array(
 	'randomincategory-submit' => 'Vai',
 );
 
-/** Japanese (日本語)
- * @author Fryed-peach
- * @author Hosiryuhosi
- * @author 青子守歌
- */
 $messages['ja'] = array(
 	'randomincategory' => 'カテゴリ中のランダムなページ',
 	'randomincategory-desc' => 'カテゴリ中からページを無作為抽出するための[[Special:Randomincategory|特別ページ]]',
@@ -566,9 +383,6 @@ $messages['ja'] = array(
 	'randomincategory-submit' => '表示',
 );
 
-/** Javanese (Basa Jawa)
- * @author Meursault2004
- */
 $messages['jv'] = array(
 	'randomincategory' => 'Sembarang kaca ing kategori',
 	'randomincategory-toolbox' => 'Kaca sembarang',
@@ -577,10 +391,6 @@ $messages['jv'] = array(
 	'randomincategory-submit' => 'Tumuju',
 );
 
-/** Khmer (ភាសាខ្មែរ)
- * @author Chhorran
- * @author Lovekhmer
- */
 $messages['km'] = array(
 	'randomincategory' => 'ទំព័រព្រាវ ក្នុងចំណាត់ក្រុម',
 	'randomincategory-desc' => '[[Special:Randomincategory|ទំព័រពិសេស]] ដើម្បីទទួលបាន ទំព័រព្រាវ ក្នុងចំណាត់ក្រុម',
@@ -590,32 +400,29 @@ $messages['km'] = array(
 	'randomincategory-submit' => 'ទៅ',
 );
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- */
 $messages['kn'] = array(
 	'randomincategory-label' => 'ವರ್ಗ:',
 	'randomincategory-submit' => 'ಹೋಗು',
 );
 
-/** Krio (Krio)
- * @author Jose77
- */
+$messages['ko'] = array(
+	'randomincategory-label' => '분류:',
+	'randomincategory-nocategory' => '"$1" 분류가 존재하지 않거나 비어 있습니다',
+	'randomincategory-submit' => '실행',
+	'randomincategory' => '분류 중 임의 문서',
+	'randomincategory-desc' => '[[Special:Randomincategory|Special page]] to get a random page in category',
+	'randomincategory-toolbox' => 'Random page',
+);
+
 $messages['kri'] = array(
 	'randomincategory-submit' => 'Go to am',
 );
 
-/** Kinaray-a (Kinaray-a)
- * @author Jose77
- */
 $messages['krj'] = array(
 	'randomincategory-label' => 'Kategorya:',
 	'randomincategory-submit' => 'Agto',
 );
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = array(
 	'randomincategory' => '{{int:randompage}} en ene Saachjrupp',
 	'randomincategory-desc' => '[[Special:Randomincategory|Söndersigg]], öm en zofälleje Sigg uß ene Saachjrupp ze krijje.',
@@ -625,16 +432,10 @@ $messages['ksh'] = array(
 	'randomincategory-submit' => 'Lohß Jonn!',
 );
 
-/** Cornish (Kernowek)
- * @author Kw-Moon
- */
 $messages['kw'] = array(
 	'randomincategory-toolbox' => 'Folen dre jons',
 );
 
-/** Latin (Latina)
- * @author UV
- */
 $messages['la'] = array(
 	'randomincategory' => 'Pagina fortuita in categoria',
 	'randomincategory-toolbox' => 'Pagina fortuita',
@@ -643,9 +444,6 @@ $messages['la'] = array(
 	'randomincategory-submit' => 'Ire',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = array(
 	'randomincategory' => 'Zoufälleg Säit an där Kategorie',
 	'randomincategory-desc' => '[[Special:Randomincategory|Spezialsäit]], fir eng zoufälleg Säite vun enger Kategorie ze weisen',
@@ -655,17 +453,20 @@ $messages['lb'] = array(
 	'randomincategory-submit' => 'Lass',
 );
 
-/** Lumbaart (Lumbaart)
- * @author Dakrismeno
- */
 $messages['lmo'] = array(
 	'randomincategory-toolbox' => 'Una pagina a cas',
 	'randomincategory-nocategory' => "La categuria $1 o l'esista mia o l'è vöda",
 );
 
-/** Lithuanian (Lietuvių)
- * @author Homo
- */
+$messages['lol'] = array(
+	'randomincategory' => 'crwdns65060:0crwdne65060:0',
+	'randomincategory-desc' => 'crwdns65061:0crwdne65061:0',
+	'randomincategory-toolbox' => 'crwdns65062:0crwdne65062:0',
+	'randomincategory-nocategory' => 'crwdns65063:0crwdne65063:0',
+	'randomincategory-label' => 'crwdns65064:0crwdne65064:0',
+	'randomincategory-submit' => 'crwdns65065:0crwdne65065:0',
+);
+
 $messages['lt'] = array(
 	'randomincategory' => 'Atsitiktinis kategorijos puslapis',
 	'randomincategory-desc' => '[[Special:Randomincategory|Specialusis puslapis]], skirtas gauti atsitiktinį kategorijos puslapį',
@@ -675,16 +476,10 @@ $messages['lt'] = array(
 	'randomincategory-submit' => 'Eiti',
 );
 
-/** Eastern Mari (Олык Марий)
- * @author Сай
- */
 $messages['mhr'] = array(
 	'randomincategory-toolbox' => 'Вучыдымо (случайный) статья',
 );
 
-/** Macedonian (Македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = array(
 	'randomincategory' => 'Случајна страница во категорија',
 	'randomincategory-desc' => '[[Special:Randomincategory|Специјална страница]] за добивање на случајна страница во категорија',
@@ -694,25 +489,16 @@ $messages['mk'] = array(
 	'randomincategory-submit' => 'Оди',
 );
 
-/** Malayalam (മലയാളം)
- * @author Shijualex
- */
 $messages['ml'] = array(
 	'randomincategory-nocategory' => '$1 എന്ന വർഗ്ഗം നിലവിലില്ല അല്ലെങ്കിൽ ശൂന്യമാണ്‌',
 	'randomincategory-label' => 'വർഗ്ഗം:',
 	'randomincategory-submit' => 'പോകൂ',
 );
 
-/** Mongolian (Монгол)
- * @author Chinneeb
- */
 $messages['mn'] = array(
 	'randomincategory-submit' => 'Явах',
 );
 
-/** Marathi (मराठी)
- * @author Kaustubh
- */
 $messages['mr'] = array(
 	'randomincategory' => 'वर्गातील अविशिष्ट पान',
 	'randomincategory-desc' => 'वर्गातील अविशिष्ट पान मिळविण्यासाठीचे [[Special:Randomincategory|विशेष पान]]',
@@ -722,33 +508,19 @@ $messages['mr'] = array(
 	'randomincategory-submit' => 'चला',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- * @author Aurora
- */
 $messages['ms'] = array(
 	'randomincategory-label' => 'Kategori:',
 	'randomincategory-submit' => 'Pergi',
 );
 
-/** Maltese (Malti)
- * @author Chrisportelli
- */
 $messages['mt'] = array(
 	'randomincategory-submit' => 'Mur',
 );
 
-/** Erzya (Эрзянь)
- * @author Botuzhaleny-sodamo
- */
 $messages['myv'] = array(
 	'randomincategory-submit' => 'Адя',
 );
 
-/** Nahuatl (Nāhuatl)
- * @author Fluence
- * @author Teòtlalili
- */
 $messages['nah'] = array(
 	'randomincategory' => 'Sâsaìntlèn tlaìxtlapalli ìpan tlaìxmatkàtlàlilòtl',
 	'randomincategory-desc' => '[[Special:Randomincategory|nonkuâkiski tlaìxtlapalli]] tlèn ìka mànas sè saìntlèn tlaìxtlapalli ìpan tlaìxmatkàtlàlilòtl',
@@ -758,10 +530,6 @@ $messages['nah'] = array(
 	'randomincategory-submit' => 'Yāuh',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Harald Khan
- * @author Jon Harald Søby
- */
 $messages['nb'] = array(
 	'randomincategory' => 'Tilfeldig side fra en kategori',
 	'randomincategory-desc' => '[[Special:Randomincategory|Spesialside]] for å få en tilfeldig side fra en kategori',
@@ -771,17 +539,15 @@ $messages['nb'] = array(
 	'randomincategory-submit' => '{{int:Go}}',
 );
 
-/** Nepali (नेपाली)
- * @author RajeshPandey
- */
 $messages['ne'] = array(
 	'randomincategory-submit' => 'जाउ',
 );
 
-/** Dutch (Nederlands)
- * @author SPQRobin
- * @author Siebrand
- */
+$messages['niu'] = array(
+	'randomincategory-toolbox' => 'Lau fifili',
+	'randomincategory-submit' => 'Fano',
+);
+
 $messages['nl'] = array(
 	'randomincategory' => 'Willekeurige pagina in een categorie',
 	'randomincategory-desc' => '[[Special:Randomincategory|Speciale pagina]] om een willekeurige pagina in een categorie weer te geven',
@@ -791,10 +557,6 @@ $messages['nl'] = array(
 	'randomincategory-submit' => 'OK',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
- * @author Harald Khan
- * @author Jon Harald Søby
- */
 $messages['nn'] = array(
 	'randomincategory' => 'Tilfeldig sida frå ein kategori',
 	'randomincategory-desc' => 'Ei [[Special:Randomincategory|spesialsida]] for å få ei tilfeldig sida frå ein kategori',
@@ -804,16 +566,10 @@ $messages['nn'] = array(
 	'randomincategory-submit' => 'Gå',
 );
 
-/** Northern Sotho (Sesotho sa Leboa)
- * @author Mohau
- */
 $messages['nso'] = array(
 	'randomincategory-submit' => 'Sepela',
 );
 
-/** Occitan (Occitan)
- * @author Cedric31
- */
 $messages['oc'] = array(
 	'randomincategory' => "Pagina a l'azard dins la categoria",
 	'randomincategory-desc' => "[[Special:Randomincategory|Pagina especiala]] per obténer una pagina a l'azard dins una categoria.",
@@ -823,25 +579,15 @@ $messages['oc'] = array(
 	'randomincategory-submit' => 'Amodar',
 );
 
-/** Ossetic (Ирон)
- * @author Amikeco
- */
 $messages['os'] = array(
 	'randomincategory-label' => 'Категори',
 );
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = array(
 	'randomincategory-label' => 'Abdeeling:',
 	'randomincategory-submit' => 'OK',
 );
 
-/** Polish (Polski)
- * @author Maikking
- * @author Sp5uhe
- */
 $messages['pl'] = array(
 	'randomincategory' => 'Losowa strona w kategorii',
 	'randomincategory-desc' => '[[Special:Randomincategory|Strona specjalna]] zwracająca losową stronę z kategorii',
@@ -851,9 +597,6 @@ $messages['pl'] = array(
 	'randomincategory-submit' => 'Dalej',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'randomincategory' => 'Pàgina a cas ant na categorìa',
 	'randomincategory-desc' => '[[Special:Randomincategory|Pàgina special]] për pijé na pàgina a cas ant na categorìa',
@@ -863,9 +606,6 @@ $messages['pms'] = array(
 	'randomincategory-submit' => 'Va',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'randomincategory' => 'په وېشنيزه کې ناټاکلی مخ',
 	'randomincategory-toolbox' => 'ناټاکلی مخ',
@@ -873,10 +613,6 @@ $messages['ps'] = array(
 	'randomincategory-submit' => 'ورځه',
 );
 
-/** Portuguese (Português)
- * @author Lijealso
- * @author Malafaya
- */
 $messages['pt'] = array(
 	'randomincategory' => 'Página aleatória na categoria',
 	'randomincategory-desc' => '[[Special:Randomincategory|Página especial]] para obter uma página aleatória na categoria',
@@ -886,28 +622,10 @@ $messages['pt'] = array(
 	'randomincategory-submit' => 'Ir',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
- * @author Eduardo.mps
- */
-$messages['pt-br'] = array(
-	'randomincategory' => 'Página aleatória na categoria',
-	'randomincategory-desc' => '[[Special:Randomincategory|Página especial]] para obter uma página aleatória na categoria',
-	'randomincategory-toolbox' => 'Página aleatória',
-	'randomincategory-nocategory' => 'A categoria $1 não existe ou está vazia',
-	'randomincategory-label' => 'Categoria:',
-	'randomincategory-submit' => 'Ir',
-);
-
-/** Tarifit (Tarifit)
- * @author Jose77
- */
 $messages['rif'] = array(
 	'randomincategory-submit' => 'Raḥ ɣa',
 );
 
-/** Romanian (Română)
- * @author KlaudiuMihaila
- */
 $messages['ro'] = array(
 	'randomincategory' => 'Pagină aleatorie în categorie',
 	'randomincategory-toolbox' => 'Pagină aleatorie',
@@ -915,9 +633,6 @@ $messages['ro'] = array(
 	'randomincategory-label' => 'Categorie:',
 );
 
-/** Tarandíne (Tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = array(
 	'randomincategory' => "Pàggene a uecchije jndr'à categorije",
 	'randomincategory-desc' => "[[Special:Randomincategory|Pàgena speciale]] pe pigghià 'na pàgene a uecchije jndr'à categorije",
@@ -927,9 +642,6 @@ $messages['roa-tara'] = array(
 	'randomincategory-submit' => 'Veje',
 );
 
-/** Russian (Русский)
- * @author Александр Сигачёв
- */
 $messages['ru'] = array(
 	'randomincategory' => 'Случайная страница категории',
 	'randomincategory-desc' => '[[Special:Randomincategory|Служебная страница]] для получения случайной страницы категории',
@@ -939,10 +651,6 @@ $messages['ru'] = array(
 	'randomincategory-submit' => 'Перейти',
 );
 
-/** Slovak (Slovenčina)
- * @author Helix84
- * @author Michawiki
- */
 $messages['sk'] = array(
 	'randomincategory' => 'Náhodná stránka v kategórii',
 	'randomincategory-desc' => '[[Special:Randomincategory|Špeciálna stránka]] na výber náhodnej stránky z kategórie',
@@ -952,19 +660,11 @@ $messages['sk'] = array(
 	'randomincategory-submit' => 'Vykonať',
 );
 
-/** Somali (Soomaaliga)
- * @author Maax
- */
 $messages['so'] = array(
 	'randomincategory-nocategory' => 'Qeybta $1 ma jiro ama waa ebar',
 	'randomincategory-label' => 'Qeybta:',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
- * @author Rancher
- * @author Жељко Тодоровић
- * @author Михајло Анђелковић
- */
 $messages['sr-ec'] = array(
 	'randomincategory' => 'Случајна страница у категорији',
 	'randomincategory-desc' => '[[Special:Randomincategory|Посебна страница]] за преузимање случајне странице у категорији',
@@ -974,10 +674,6 @@ $messages['sr-ec'] = array(
 	'randomincategory-submit' => 'Иди',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
- * @author Michaello
- * @author Жељко Тодоровић
- */
 $messages['sr-el'] = array(
 	'randomincategory' => 'Slučajna stranica u kategoriji',
 	'randomincategory-desc' => '[[Special:Randomincategory|Posebna stranica]] za preuzimanje slučajne stranice u kategoriji',
@@ -987,9 +683,6 @@ $messages['sr-el'] = array(
 	'randomincategory-submit' => 'Idi',
 );
 
-/** Seeltersk (Seeltersk)
- * @author Pyt
- */
 $messages['stq'] = array(
 	'randomincategory' => 'Toufällige Siede in ne Kategorie',
 	'randomincategory-desc' => '[[Special:Randomincategory|Spezioalsiede]], uum ne toufällige Siede ap ne Kategorie tou hoaljen',
@@ -999,18 +692,10 @@ $messages['stq'] = array(
 	'randomincategory-submit' => 'OK',
 );
 
-/** Sundanese (Basa Sunda)
- * @author Irwangatot
- */
 $messages['su'] = array(
 	'randomincategory-label' => 'Kategori:',
 );
 
-/** Swedish (Svenska)
- * @author Jon Harald Søby
- * @author M.M.S.
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
 	'randomincategory' => 'Slumpsida i kategori',
 	'randomincategory-desc' => '[[Special:Randomincategory|Specialsida]] för att få en slumpsida från en kategori',
@@ -1020,9 +705,6 @@ $messages['sv'] = array(
 	'randomincategory-submit' => 'Gå',
 );
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = array(
 	'randomincategory' => 'వర్గంలోని యాదృచ్చిక పేజీ',
 	'randomincategory-desc' => 'ఓ వర్గంలోని యాదృచ్ఛిక పేజీని పొందడానికై [[Special:Randomincategory|ప్రత్యేక పేజీ]]',
@@ -1032,17 +714,11 @@ $messages['te'] = array(
 	'randomincategory-submit' => 'వెళ్ళు',
 );
 
-/** Tetum (Tetun)
- * @author MF-Warburg
- */
 $messages['tet'] = array(
 	'randomincategory-label' => 'Kategoria:',
 	'randomincategory-submit' => 'Bá',
 );
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
- * @author Ibrahim
- */
 $messages['tg-cyrl'] = array(
 	'randomincategory' => 'Саҳифаи тасодуфӣ дар гурӯҳ',
 	'randomincategory-desc' => '[[Special:Randomincategory|Саҳифаи вижа]] барои гирифтани саҳифаи тасодуфӣ дар гурӯҳ',
@@ -1052,9 +728,6 @@ $messages['tg-cyrl'] = array(
 	'randomincategory-submit' => 'Бирав',
 );
 
-/** Tajik (Latin script) (tojikī)
- * @author Liangent
- */
 $messages['tg-latn'] = array(
 	'randomincategory' => 'Sahifai tasodufī dar gurūh',
 	'randomincategory-desc' => '[[Special:Randomincategory|Sahifai viƶa]] baroi giriftani sahifai tasodufī dar gurūh',
@@ -1064,17 +737,11 @@ $messages['tg-latn'] = array(
 	'randomincategory-submit' => 'Birav',
 );
 
-/** Turkmen (Türkmençe)
- * @author Hanberke
- */
 $messages['tk'] = array(
 	'randomincategory-label' => 'Kategoriýa:',
 	'randomincategory-submit' => 'Git',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'randomincategory' => 'Alin mang pahina sa loob ng kaurian',
 	'randomincategory-desc' => '[[Special:Randomincategory|Natatanging pahina]] upang makakuha ng alin mang pahinang nasa loob ng kaurian',
@@ -1084,11 +751,6 @@ $messages['tl'] = array(
 	'randomincategory-submit' => 'Gawin na',
 );
 
-/** Turkish (Türkçe)
- * @author Joseph
- * @author Karduelis
- * @author Vito Genovese
- */
 $messages['tr'] = array(
 	'randomincategory' => 'Kategoriye göre rastgele sayfa',
 	'randomincategory-desc' => 'Kategoride rasgele bir sayfa için [[Special:Randomincategory|özel sayfa]]',
@@ -1098,40 +760,23 @@ $messages['tr'] = array(
 	'randomincategory-submit' => 'Git',
 );
 
-/** Uyghur (Arabic script) (ئۇيغۇرچە)
- * @author Alfredie
- */
 $messages['ug-arab'] = array(
 	'randomincategory-submit' => 'كۆچۈش',
 );
 
-/** Uyghur (Latin script) (Uyghurche‎)
- * @author Jose77
- */
 $messages['ug-latn'] = array(
 	'randomincategory-submit' => 'Köchüsh',
 );
 
-/** Ukrainian (Українська)
- * @author Prima klasy4na
- * @author Тест
- */
 $messages['uk'] = array(
 	'randomincategory-toolbox' => 'Випадкова сторінка',
 	'randomincategory-label' => 'Категорія:',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
- */
 $messages['vep'] = array(
 	'randomincategory-label' => 'Kategorii:',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Minh Nguyen
- * @author Vinhtantran
- */
 $messages['vi'] = array(
 	'randomincategory' => 'Trang ngẫu nhiên trong thể loại',
 	'randomincategory-desc' => '[[Special:Randomincategory|Trang đặc biệt]] để xem một trang ngẫu nhiên trong thể loại',
@@ -1141,38 +786,29 @@ $messages['vi'] = array(
 	'randomincategory-submit' => 'Xem',
 );
 
-/** Volapük (Volapük)
- * @author Malafaya
- */
 $messages['vo'] = array(
 	'randomincategory-label' => 'Klad:',
 );
 
-/** Yiddish (ייִדיש)
- * @author פוילישער
- */
 $messages['yi'] = array(
 	'randomincategory-label' => 'קאַטעגאריע:',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
- * @author Gzdavidwong
- * @author Xiaomingyan
- */
 $messages['zh-hans'] = array(
 	'randomincategory-toolbox' => '随机页面',
 	'randomincategory-label' => '分类：',
 	'randomincategory-submit' => '提交',
+	'randomincategory' => '特定分类中的随机页面',
+	'randomincategory-desc' => '[[Special:Randomincategory|Special page]] to get a random page in category',
+	'randomincategory-nocategory' => 'Category $1 does not exist or is empty',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
- * @author Gzdavidwong
- * @author Mark85296341
- * @author Wrightbus
- */
 $messages['zh-hant'] = array(
 	'randomincategory-toolbox' => '隨機頁面',
 	'randomincategory-label' => '分類：',
 	'randomincategory-submit' => '進入',
+	'randomincategory' => '特定分類中的隨機頁面',
+	'randomincategory-desc' => '[[Special:Randomincategory|Special page]] to get a random page in category',
+	'randomincategory-nocategory' => 'Category $1 does not exist or is empty',
 );
 

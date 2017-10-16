@@ -53,8 +53,21 @@ class SpecialTags extends SpecialPage {
 		$res = $dbr->select( 'change_tag', array( 'ct_tag', 'count(*) AS hitcount' ),
 			array(), __METHOD__, array( 'GROUP BY' => 'ct_tag', 'ORDER BY' => 'hitcount DESC' ) );
 
+		$used_tags = [];
 		foreach ( $res as $row ) {
-			$html .= $this->doTagRow( $row->ct_tag, $row->hitcount );
+			$used_tags []= [
+				'ct_tag' => $row->ct_tag,
+				'hitcount' => $row->hitcount
+			];
+		}
+
+		Hooks::run( 'SpecialTags::UsedTags', [ &$used_tags ] );
+
+		// SUS-2752: Temporarily keep edit tags hidden until cleanup
+		$used_tags = array_diff( $used_tags, ChangeTags::$tagBlacklist );
+
+		foreach ( $used_tags as $used_tag ) {
+			$html .= $this->doTagRow( $used_tag['ct_tag'], $used_tag['hitcount'] );
 		}
 
 		foreach( ChangeTags::listDefinedTags() as $tag ) {

@@ -17,17 +17,19 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 	//data provider for testGetUrl
 	public function getUrlProvider() {
 		return [
-			// methodName, params, encodedParams
-			['test', null, null],
-			['testParamsOrdered', ['a' => 1, 'b' => 2], '&a=1&b=2'],
-			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], '&a=2&b=3&c=1']
+			// methodName, params, format, encodedParams
+			['test', null, null, null],
+			['testParamsOrdered', ['a' => 1, 'b' => 2], null, '&a=1&b=2'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], null, '&a=2&b=3&c=1'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSON, '&a=2&b=3&c=1&format=json'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSONP, '&a=2&b=3&c=1&format=jsonp'],
 		];
 	}
 
 	/**
 	 * @dataProvider getUrlProvider
 	 */
-	public function testGetUrl( $methodName, $params, $encodedParams ) {
+	public function testGetUrl( $methodName, $params, $format, $encodedParams ) {
 		$className = get_class( $this->dispatchableMock );
 		$serverName = "test-server";
 		$scriptPath = "/test-path";
@@ -36,9 +38,38 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgServer', $serverName );
 		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
 
-		$this->assertEquals( $requestURI, $className::getUrl( $methodName, $params ) );
+		$this->assertEquals( $requestURI, $className::getUrl( $methodName, $params, $format ) );
 	}
 
+	/**
+	 * @dataProvider getUrlProvider
+	 */
+	public function testGetLocalUrl( $methodName, $params, $format, $encodedParams ) {
+		$className = get_class( $this->dispatchableMock );
+		$requestURI = "/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
+
+		$this->assertEquals( $requestURI, $className::getLocalUrl( $methodName, $params, $format ) );
+	}
+
+	/**
+	 * @dataProvider getUrlProvider
+	 */
+	public function testGetNoCookieUrl( $methodName, $params, $format, $encodedParams ) {
+		$className = get_class( $this->dispatchableMock );
+		$mockCdnApiUrl = "api.nocookie.test-server";
+		$scriptPath = "/test-path";
+		$requestURI = "{$mockCdnApiUrl}{$scriptPath}/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
+
+		$this->mockGlobalVariable( 'wgCdnApiUrl', $mockCdnApiUrl );
+		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
+
+		$this->assertEquals( $requestURI, $className::getNoCookieUrl( $methodName, $params, $format ) );
+	}
+
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0102 ms
+	 */
 	public function testPurgeUrl() {
 		$className = get_class( $this->dispatchableMock );
 		$serverName = "test-server";
@@ -77,5 +108,58 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 			[$baseURI . 'testMultiple3', $baseURI . 'testMultiple4'],
 			$className::purgeMethods( ['testMultiple3', 'testMultiple4'] )
 		);
+	}
+
+	/**
+	 * @dataProvider checkWriteRequestProvider
+	 */
+	public function testCheckWriteRequest( $params, $wasPosted, $isInternal, $token, $exceptionExpected ) {
+		$requestMock = $this->getMockBuilder( WikiaRequest::class )
+			->setMethods( [ 'wasPosted', 'isInternal' ] )
+			->setConstructorArgs( [ $params ] )
+			->getMock();
+
+		$requestMock->expects( !$isInternal ? $this->once() : $this->never() )
+			->method( 'wasPosted' )
+			->will( $this->returnValue( $wasPosted ) );
+
+		$requestMock->expects( $this->once() )
+			->method( 'isInternal' )
+			->will( $this->returnValue( $isInternal ) );
+
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'getEditToken' ] )
+			->getMock();
+
+		$userMock->expects( $this->any() )
+			->method( 'getEditToken' )
+			->will( $this->returnValue( $token ) );
+
+		$dispatchableObjectMock = $this->getMockBuilder( 'WikiaDispatchableObject' )
+			->disableOriginalConstructor()
+			->getMockForAbstractClass();
+
+		$app = new WikiaApp( new WikiaLocalRegistry() );
+		$app->wg->User = $userMock;
+
+		$dispatchableObjectMock->setRequest( $requestMock );
+		$dispatchableObjectMock->setApp( $app );
+
+		if ( $exceptionExpected ) {
+			$this->expectException( BadRequestException::class );
+		}
+
+		$dispatchableObjectMock->checkWriteRequest();
+	}
+
+	public function checkWriteRequestProvider() {
+		return [
+			[ [ 'token' => '1234' ], true, false, '1234', false ],
+			[ [], true, false, '1234', true ],
+			[ [], false, false, '1234', true ],
+			[ [ 'token' => '4321' ], true, false, '1234', true ],
+			[ [ 'token' => '1234' ], false, false, '1234', true ],
+			[ [], true, true, '1234', false ]
+		];
 	}
 }

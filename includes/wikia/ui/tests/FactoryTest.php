@@ -25,10 +25,11 @@ class FactoryTest extends WikiaBaseTest {
 		'dependencies' => [
 			'js' => [],
 			'css' => [],
+			'components' => [ 'Other component' ]
 		]
 	];
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		global $IP;
@@ -51,7 +52,7 @@ class FactoryTest extends WikiaBaseTest {
 
 		$fullPath = $method->invoke( $this->instance, 'component' );
 
-		$this->assertEquals( $fullPath, '/usr/wikia/source/wiki/resources/wikia/ui_components/component/component_config.json' );
+		$this->assertStringEndsWith( '/resources/wikia/ui_components/component/component_config.json', $fullPath );
 	}
 
 	/**
@@ -82,7 +83,7 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testAddAssetDataProvider
+	 * @dataProvider addAssetDataProvider
 	 */
 	public function testAddAsset($asset, $type) {
 		// test private method
@@ -111,7 +112,7 @@ class FactoryTest extends WikiaBaseTest {
 		$addAssetMethod->invoke( $this->instance, $asset );
 	}
 
-	public function testAddAssetDataProvider() {
+	public function addAssetDataProvider() {
 		return [
 			[
 				'assetName' => 'testAsset.css',
@@ -129,9 +130,10 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 	public function testInitForOneComponent() {
-		$UIComponentMock = $this->getMock('Wikia\UI\Component', [ 'setTemplateVarsConfig', 'addAsset' ]);
+		$UIComponentMock = $this->getMock('Wikia\UI\Component', [ 'setTemplateVarsConfig', 'addAsset', 'setComponentDependencies' ]);
 		$UIComponentMock->expects( $this->once() )->method( 'setTemplateVarsConfig' );
 		$UIComponentMock->expects( $this->never() )->method( 'addAsset' );
+		$UIComponentMock->expects( $this->once() )->method( 'setComponentDependencies' )->with( [ 'Other component' ]);
 		
 		$UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [
 			'getComponentInstance', 
@@ -148,8 +150,11 @@ class FactoryTest extends WikiaBaseTest {
 		
 		$UIFactoryMock->expects( $this->once() )->method( 'getComponentsBaseTemplatePath' );
 		
-		/** @var $UIFactoryMock Wikia\UI\Factory */
-		$UIFactoryMock->init( 'component' );
+		/** @var $UIFactoryMock \Wikia\UI\Factory */
+		$component = $UIFactoryMock->init( 'component' );
+
+		// make sure the dependencies are not in the assets
+		$this->assertEquals( [ 'js' => [], 'css' => [] ], $component->getAssets());
 	}
 
 	public function testLoadComponentTemplateContent() {
@@ -176,7 +181,7 @@ class FactoryTest extends WikiaBaseTest {
 	public function testGetComponentAssetsUrls() {
 		$componentMock = $this->getMock( 'Wikia\UI\Component', [ 'getAssets' ] );
 		$componentMock->expects( $this->once() )->method( 'getAssets' )->will( $this->returnValue(
-            [ 'js' => ['1.js','2.js'], 'css' => ['3.css','4.css'] ]
+            [ 'js' => [ '1.js', '2.js' ], 'css' => [ '3.css', '4.css' ] ]
         ) );
 
         $UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [
@@ -192,8 +197,82 @@ class FactoryTest extends WikiaBaseTest {
 		        [ '4.css', [ [ 'url4' ], \Wikia\UI\Factory::ASSET_TYPE_CSS ] ],
 	        ] ) );
 
-        /** @var $UIFactoryMock Wikia\UI\Factory */
-        $this->assertEquals( [ 'js' => [ 'url1', 'url2' ], 'css' => [ 'url3', 'url4' ] ], $UIFactoryMock->getComponentAssetsUrls( $componentMock ));
+        /** @var $UIFactoryMock \Wikia\UI\Factory */
+        $this->assertEquals( [ 'js' => [ 'url1', 'url2' ], 'css' => [ 'url3', 'url4' ] ], $UIFactoryMock->getComponentAssetsUrls( $componentMock ) );
+	}
+
+	public function testLoadSingleDependency() {
+		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c1ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c2' ] ) );
+
+		$c2ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c2ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [] ) );
+
+		$UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [ 'initComponent', '__wakeup' ], [], '', false );
+		$UIFactoryMock->expects( $this->exactly( 2 ) )->method( 'initComponent' )->will( $this->returnValueMap( [
+			[ 'c1', [], $c1ComponentMock ],
+			[ 'c2', [], $c2ComponentMock ]
+		] ) );
+
+
+		$dep = [];
+		$res = $UIFactoryMock->init( [ 'c1' ], false, $dep );
+
+		$this->assertEquals( $c1ComponentMock, $res );
+		$this->assertEquals( [ 'c2' => $c2ComponentMock ], $dep );
+	}
+
+	public function testLoadDependencyJustOnce() {
+		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c1ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c4' ] ) );
+
+		$c2ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c2ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c3' ] ) );
+
+		$c3ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c3ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c4' ] ) );
+
+		$c4ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c4ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ ] ) );
+
+		$UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [ 'initComponent', '__wakeup' ], [], '', false );
+		$UIFactoryMock->expects( $this->exactly( 4 ) )->method( 'initComponent' )->will( $this->returnValueMap( [
+			[ 'c1', [], $c1ComponentMock ],
+			[ 'c2', [], $c2ComponentMock ],
+			[ 'c3', [], $c3ComponentMock ],
+			[ 'c4', [], $c4ComponentMock ]
+		] ) );
+
+		$dep = [];
+		$res = $UIFactoryMock->init( [ 'c1', 'c2', 'c4' ], false, $dep );
+
+		$this->assertEquals( [ $c1ComponentMock, $c2ComponentMock, $c4ComponentMock ], $res );
+		$this->assertEquals( [ 'c3' => $c3ComponentMock, 'c4' => $c4ComponentMock ], $dep );
+
+
+	}
+
+	public function testCircularDependencies() {
+		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c1ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c2' ] ) );
+
+		$c2ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c2ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c3' ] ) );
+
+		$c3ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c3ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c1' ] ) );
+
+		$UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [ 'initComponent', '__wakeup' ], [], '', false );
+		$UIFactoryMock->expects( $this->exactly( 3 ) )->method( 'initComponent' )->will( $this->returnValueMap( [
+			[ 'c1', [], $c1ComponentMock ],
+			[ 'c2', [], $c2ComponentMock ],
+			[ 'c3', [], $c3ComponentMock ]
+		] ) );
+
+		$dep = [];
+		$res = $UIFactoryMock->init( [ 'c1' ], false, $dep );
+		$this->assertEquals( $c1ComponentMock, $res );
+		$this->assertEquals( [ 'c1' => $c1ComponentMock, 'c2' => $c2ComponentMock, 'c3' => $c3ComponentMock ], $dep );
 	}
 
 }

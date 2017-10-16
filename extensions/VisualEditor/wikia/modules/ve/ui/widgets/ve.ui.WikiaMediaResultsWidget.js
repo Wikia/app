@@ -4,7 +4,7 @@
 
 /**
  * @class
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -12,29 +12,28 @@
  */
 ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	ve.ui.WikiaMediaResultsWidget.super.call( this, config );
 
 	// Properties
-	this.results = new ve.ui.WikiaMediaSelectWidget( { '$$': this.$$ } );
-	this.size = config.size || 160;
+	this.results = new ve.ui.WikiaMediaSelectWidget( { $: this.$ } );
+	this.size = config.size || 158;
 
 	// Events
 	this.results.connect( this, {
-		'highlight': 'onResultsHighlight',
-		'select': 'onResultsSelect',
-		'check': 'onResultsCheck'
+		highlight: 'onResultsHighlight',
+		select: 'onResultsSelect'
 	} );
-	this.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
+	this.$element.on( 'scroll', this.onResultsScroll.bind( this ) );
 
 	// Initialization
-	this.$
+	this.$element
 		.addClass( 've-ui-wikiaMediaResultsWidget' )
-		.append( this.results.$ );
+		.append( this.results.$element );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaMediaResultsWidget, OO.ui.Widget );
 
 /* Events */
 
@@ -50,8 +49,43 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
  * @method
  * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
-ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
-	this.emit( 'check', item.getModel() );
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsPreview = function ( item ) {
+	this.emit( 'preview', item );
+};
+
+/**
+ * Handle metadata event
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item that fired the event
+ * @param {jQuery.Event} event jQuery Event
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsMetadata = function ( item, event ) {
+	this.emit( 'metadata', item, event );
+};
+
+/**
+ * Handle label event
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item that fired the event
+ * @param {jQuery.Event} event jQuery Event
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsLabel = function ( item, event ) {
+	this.emit( 'label', item, event );
+};
+
+/**
+ * Handle selecting results.
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
+	if ( item ) {
+		this.results.selectItem( null );
+		this.emit( 'select', item );
+	}
 };
 
 /**
@@ -61,15 +95,19 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
  * @param {Array} items An array of items to add.
  */
 ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
-	var i,
+	var i, optionWidget,
 		results = [];
-
 	for ( i = 0; i < items.length; i++ ) {
+		optionWidget = ve.ui.WikiaMediaOptionWidget.newFromData( { $: this.$, size: this.size, data: items[i] } );
+		optionWidget.connect( this, {
+			preview: 'onResultsPreview',
+			metadata: 'onResultsMetadata',
+			label: 'onResultsLabel'
+		} );
 		results.push(
-			new ve.ui.WikiaMediaOptionWidget( items[i], { '$$': this.$$, 'size': this.size } )
+			optionWidget
 		);
 	}
-
 	this.results.addItems( results );
 };
 
@@ -77,7 +115,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
  * Get the results.
  *
  * @method
- * @returns {ve.ui.SelectWidget} The results widget.
+ * @returns {OO.ui.SelectWidget} The results widget.
  */
 ve.ui.WikiaMediaResultsWidget.prototype.getResults = function () {
 	return this.results;
@@ -90,8 +128,8 @@ ve.ui.WikiaMediaResultsWidget.prototype.getResults = function () {
  * @fires nearingEnd
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsScroll = function () {
-	var position = this.$.scrollTop() + this.$.outerHeight(),
-		threshold = this.results.$.outerHeight() - this.size;
+	var position = this.$element.scrollTop() + this.$element.outerHeight(),
+		threshold = this.results.$element.outerHeight() - this.size;
 	if ( position > threshold ) {
 		this.emit( 'nearingEnd' );
 	}
@@ -101,16 +139,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsScroll = function () {
  * Handle highlighting results.
  *
  * @method
- * @see {@link ve.ui.SearchWidget.prototype.onResultsHighlight}
+ * @see {@link OO.ui.SearchWidget.prototype.onResultsHighlight}
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsHighlight =
-	ve.ui.SearchWidget.prototype.onResultsHighlight;
-
-/**
- * Handle selecting results.
- *
- * @method
- * @see {@link ve.ui.SearchWidget.prototype.onResultsSelect}
- */
-ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect =
-	ve.ui.SearchWidget.prototype.onResultsSelect;
+	OO.ui.SearchWidget.prototype.onResultsHighlight;

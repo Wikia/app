@@ -1,0 +1,21 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'skins/shared/mixins/box-shadow';
+
+.wds-banner-notification__container {
+	margin: 0 auto;
+	transition: top 200ms linear;
+	width: 958px;
+
+	&.float {
+		left: 50%;
+		margin-left: -515px;
+		position: fixed;
+	}
+}
+
+.banner-notifications-placeholder {
+	position: relative;
+	z-index: $zTop;
+}

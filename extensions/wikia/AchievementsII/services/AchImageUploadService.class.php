@@ -7,9 +7,22 @@ class AchImageUploadService {
 	 * This is a function like imagecopymerge but it handle alpha channel well!!!
 	 **/
 
-	// A fix to get a function like imagecopymerge WITH ALPHA SUPPORT
-	// Main script by aiden dot mail at freemail dot hu
-	// Transformed to imagecopymerge_alpha() by rodrigo dot polo at gmail dot com
+	/**
+	 * A fix to get a function like imagecopymerge WITH ALPHA SUPPORT
+	 * Main script by aiden dot mail at freemail dot hu
+	 * Transformed to imagecopymerge_alpha() by rodrigo dot polo at gmail dot com
+	 *
+	 * @param $dst_im
+	 * @param $src_im
+	 * @param $dst_x
+	 * @param $dst_y
+	 * @param $src_x
+	 * @param $src_y
+	 * @param $src_w
+	 * @param $src_h
+	 * @param $pct
+	 * @return bool
+	 */
 	private static function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
 		if(!isset($pct)){
 			return false;
@@ -51,6 +64,7 @@ class AchImageUploadService {
 		}
 		// The image copy
 		imagecopy($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
+		return true;
 	}
 
 	private static function merge_images($dest, $src) {
@@ -88,7 +102,8 @@ class AchImageUploadService {
 	}
 
 	public static function uploadBadge($destinationFileName, $badgeLevel) {
-		global $wgRequest, $wgUser;
+		/* @var WebRequest $wgRequest */
+		global $wgRequest, $wgBadgeNoFrame;
 
 		$upload = new UploadAchievementsFromFile();
 		$upload->initialize( $destinationFileName, $wgRequest->getUpload( 'wpUploadFile' ) );
@@ -167,43 +182,47 @@ class AchImageUploadService {
 		imagedestroy($badgeImage);
 		$badgeImage = $tmp;
 
-		// load images
-		$badgesFragments = dirname(__FILE__) . '/../images/badges/fragments';
+		if ( !empty( $wgBadgeNoFrame ) ) {
+			// save badge as is
+			imagepng($badgeImage, $badgeFile, 9, PNG_ALL_FILTERS);
+		} else {
+			//load images
+			$badgesFragments = dirname(__FILE__) . '/../images/badges/fragments';
 
-		$badgeBottom = "{$badgesFragments}/{$badgeLevel}-bottom-128.png";
-		$badgeTop = "{$badgesFragments}/{$badgeLevel}-top-128.png";
+			$badgeBottom = "{$badgesFragments}/{$badgeLevel}-bottom-128.png";
+			$badgeTop = "{$badgesFragments}/{$badgeLevel}-top-128.png";
 
-		$img = array(
-			'bottom' => imagecreatefrompng($badgeBottom),
-			'top' => imagecreatefrompng($badgeTop),
-			'user' => $badgeImage,
-		);
+			$img = array(
+				'bottom' => imagecreatefrompng($badgeBottom),
+				'top' => imagecreatefrompng($badgeTop),
+				'user' => $badgeImage,
+			);
 
-		// create image for badge
-		$badge = imagecreatetruecolor(128, 128);
+			// create image for badge
+			$badge = imagecreatetruecolor(128, 128);
 
-		// put bottom layer
-		self::merge_images($badge, $img['bottom']);
+			// put bottom layer
+			self::merge_images($badge, $img['bottom']);
 
-		// put user's image
-		self::merge_images($badge, $img['user']);
+			// put user's image
+			self::merge_images($badge, $img['user']);
 
-		// put top layer
-		self::merge_images($badge, $img['top']);
+			// put top layer
+			self::merge_images($badge, $img['top']);
 
-		// now let's fix badge transparency
-		self::merge_alphamask($badge, $img['top'], $img['bottom']);
+			// now let's fix badge transparency
+			self::merge_alphamask($badge, $img['top'], $img['bottom']);
 
-		// save badge
-		$ret = imagepng($badge, $badgeFile, 9, PNG_ALL_FILTERS);
+			// save badge
+			imagepng($badge, $badgeFile, 9, PNG_ALL_FILTERS);
 
-		wfDebug(__METHOD__ . ": generated badge saved as {$badgeFile}\n");
+			wfDebug(__METHOD__ . ": generated badge saved as {$badgeFile}\n");
 
-		// collect garbage
-		imagedestroy($badge);
-
-		foreach($img as $i) {
-			imagedestroy($i);
+			// collect garbage
+			imagedestroy($badge);
+			foreach($img as $i) {
+				imagedestroy($i);
+			}
 		}
 
 		// upload generated badge
@@ -212,10 +231,15 @@ class AchImageUploadService {
 			RepoGroup::singleton()->getLocalRepo()
 		);
 		$file->upload( $badgeFile, '/* comment */', '/* page text */' );
+
+		// SUS-3048 | push an upload to image review queue
+		Hooks::run( 'AchievementsImageUpload', [ $file->getTitle() ] );
+
 		return $file;
 	}
 
 	public static function uploadHover( $destinationFileName ) {
+		/* @var WebRequest $wgRequest */
 		global $wgRequest, $wgUser;
 		$upload = new UploadAchievementsFromFile();
 		$upload->initialize( $destinationFileName, $wgRequest->getUpload( 'wpUploadFile' ) );

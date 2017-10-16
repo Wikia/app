@@ -1,11 +1,11 @@
 <div class="UserLogin ChangePassword">
-<? if(!empty($pageHeading)) { ?>
-	<h1><?= $pageHeading ?></h1>
-<? } ?>
-<? if(!empty($subheading)) { ?>
-	<h2 class="subheading"><?= $subheading ?></h2>
-<? } ?>
-<?
+	<? if ( !empty( $pageHeading ) ) { ?>
+		<h1><?= $pageHeading ?></h1>
+	<? } ?>
+	<? if ( !empty( $subheading ) ) { ?>
+		<h2 class="subheading"><?= $subheading ?></h2>
+	<? } ?>
+	<?
 	$form = array(
 		'method' => 'post',
 		'action' => $formPostAction,
@@ -13,61 +13,59 @@
 			array(
 				'type' => 'hidden',
 				'name' => 'editToken',
-				'value' => $editToken
-
+				'value' => htmlspecialchars( $editToken )
+			),
+			array(
+				'type' => 'hidden',
+				'name' => 'loginToken',
+				'value' => htmlspecialchars( $loginToken ),
 			),
 			array(
 				'type' => 'hidden',
 				'name' => 'username',
-				'value' => htmlspecialchars($username)
+				'value' => htmlspecialchars( $username )
 			),
 			array(
 				'type' => 'hidden',
 				'name' => 'returnto',
-				'value' => $returnto
+				'value' => Sanitizer::encodeAttribute( $returnto ),
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<label>'.wfMessage('yourname')->escaped().'</label><p class="username">'.htmlspecialchars($username).'</p>'
+				'output' => '<label>' . wfMessage( 'yourname' )->escaped() . '</label><p class="username">' . htmlspecialchars( $username ) . '</p>'
 			),
 			array(
 				'type' => 'password',
 				'name' => 'password',
 				'id' => 'password',
-				'label' => wfMessage('userlogin-oldpassword')->escaped(),
-				'value' => htmlspecialchars($password),
-				'isInvalid' => !empty($errParam) && $errParam === 'password',
-				'errorMsg' => !empty($msg) ? $msg : ''
+				'label' => wfMessage( 'userlogin-oldpassword' )->escaped(),
+				'value' => htmlspecialchars( $password ),
 			),
 			array(
 				'type' => 'password',
 				'name' => 'newpassword',
 				'id' => 'newpassword',
-				'label' => wfMessage('userlogin-newpassword')->escaped(),
-				'isInvalid' => !empty($errParam) && $errParam === 'newpassword',
-				'errorMsg' => !empty($msg) ? $msg : ''
+				'label' => wfMessage( 'userlogin-newpassword' )->escaped(),
 			),
 			array(
 				'type' => 'password',
 				'name' => 'retype',
 				'id' => 'retype',
-				'label' => wfMessage('userlogin-retypenew')->escaped(),
-				'isInvalid' => !empty($errParam) && $errParam === 'retype',
-				'errorMsg' => !empty($msg) ? $msg : ''
+				'label' => wfMessage( 'userlogin-retypenew' )->escaped(),
 			)
 		),
 		'submits' => array(
 			array(
-				'value' => wfMessage('resetpass_submit')->escaped(),
+				'value' => wfMessage( 'resetpass_submit' )->escaped(),
 				'name' => 'action',
 				'class' => 'big login-button'
 			)
 		)
 	);
 
-	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
-	$form['errorMsg'] = !empty($msg) ? $msg : '';
+	$form['isInvalid'] = !empty( $result ) && $result == 'error';
+	$form['errorMsg'] = !empty( $msg ) ? $msg : '';
 
-	echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
-?>
+	echo F::app()->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) );
+	?>
 </div>

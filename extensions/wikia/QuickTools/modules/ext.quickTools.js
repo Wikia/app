@@ -3,159 +3,170 @@
  *
  * @author Grunny
  */
-/*global jQuery, mediaWiki, window, alert */
-( function( $, mw ) {
+/*global jQuery, mediaWiki, alert */
+(function ($, mw, window) {
 	'use strict';
 
 	var QuickTools = {
-		init: function() {
-			var $quickToolsLink = $( '#contentSub' ).find( '#quicktools-link' );
-			if ( $quickToolsLink.length ) {
-				$quickToolsLink.click( QuickTools.showModal );
+		init: function () {
+			var $quickToolsLink = $('#contentSub').find('#quicktools-link');
+			if ($quickToolsLink.length) {
+				this.userName = $quickToolsLink.data('username');
+				$quickToolsLink.click(this.showModal.bind(this));
 			}
 		},
 
-		showModal: function( e ) {
-			var userName = $( e.target ).attr( 'data-username' );
-			$.nirvana.sendRequest( {
+		showModal: function () {
+			$.nirvana.sendRequest({
 				controller: 'QuickToolsController',
 				method: 'quickToolsModal',
 				format: 'html',
 				data: {
-					username: userName
+					username: this.userName
 				},
-				callback: function( data ) {
-					var	$quickToolsModalWrapper = $( data ).makeModal( {
+				callback: function (data) {
+					var $quickToolsModalWrapper = $(data).makeModal({
 							'width': 320
-						} ),
-						$quickToolsModal = $quickToolsModalWrapper.find( '#QuickToolsModal' );
-					$quickToolsModal.find( '#quicktools-rollback-all' ).click( function() {
-						QuickTools.doRevert( 1, 0 );
-						$quickToolsModalWrapper.closeModal();
-					} );
-					$quickToolsModal.find( '#quicktools-delete-all' ).click( function() {
-						QuickTools.doRevert( 0, 1 );
-						$quickToolsModalWrapper.closeModal();
-					} );
-					$quickToolsModal.find( '#quicktools-revert-all' ).click( function() {
-						QuickTools.doRevert( 1, 1 );
-						$quickToolsModalWrapper.closeModal();
-					} );
-					$quickToolsModal.find( '#quicktools-block' ).click( function() {
-						QuickTools.doBlock();
-						$quickToolsModalWrapper.closeModal();
-					} );
-					$quickToolsModal.find( '#quicktools-block-and-revert' ).click( function() {
-						QuickTools.doRevert( 1, 1 );
-						QuickTools.doBlock();
-						$quickToolsModalWrapper.closeModal();
-					} );
-					$quickToolsModal.find( '#quicktools-bot' ).click( function( e ) {
-						QuickTools.botFlag( e );
-						if ( $( this ).attr( 'data-bot' ) === 'remove' ) {
+						}),
+						$quickToolsModal = $quickToolsModalWrapper.find('#QuickToolsModal');
+
+					$quickToolsModal.find('.quicktools-action').click(function (e) {
+						var $action = $(e.target),
+							doRollback = $action.data('rollback') === 1,
+							doDelete = $action.data('delete') === 1,
+							doBlock = $action.data('block') === 1,
+							addOrRemoveBot = $action.data('bot');
+
+						if (addOrRemoveBot) {
+							this.botFlag(addOrRemoveBot);
+						}
+						if (doRollback || doDelete) {
+							this.doRevert(doRollback, doDelete);
+						}
+						if (doBlock) {
+							this.doBlock();
+						}
+						if (addOrRemoveBot !== 'add') {
 							$quickToolsModalWrapper.closeModal();
 						}
-					} );
-				}
-			} );
+					}.bind(this));
+				}.bind(this)
+			});
 		},
 
-		doRevert: function( dorollback, dodeletes ) {
-			var	$quickToolsModal = $( '#QuickToolsModal' ),
-				userName = $quickToolsModal.attr( 'data-username' ),
-				time = $quickToolsModal.find( '#quicktools-time' ).val(),
-				summary = $quickToolsModal.find( '#quicktools-reason' ).val(),
-				botRevert = mw.util.getParamValue( 'bot' ),
+		doRevert: function (doRollback, doDeletes) {
+			var $quickToolsModal = $('#QuickToolsModal'),
+				time = $quickToolsModal.find('#quicktools-time').val(),
+				summary = $quickToolsModal.find('#quicktools-reason').val(),
+				botRevert = mw.util.getParamValue('bot'),
 				data = {
-					target: userName,
+					target: this.userName,
 					time: time,
 					summary: summary,
-					dorollback: dorollback,
-					dodeletes: dodeletes,
-					markbot: botRevert
+					dorollback: doRollback,
+					dodeletes: doDeletes,
+					markbot: botRevert,
+					token: mw.user.tokens.get('editToken')
 				};
-			QuickTools.sendRequest( 'revertAll', data );
+
+			this.sendRequest('revertAll', data);
 		},
 
-		doBlock: function() {
-			var	$quickToolsModal = $( '#QuickToolsModal' ),
-				userName = $quickToolsModal.attr( 'data-username' ),
-				blockLength = $quickToolsModal.find( '#quicktools-block-length' ).val(),
-				summary = $quickToolsModal.find( '#quicktools-reason' ).val(),
+		doBlock: function () {
+			var $quickToolsModal = $('#QuickToolsModal'),
+				blockLength = $quickToolsModal.find('#quicktools-block-length').val(),
+				summary = $quickToolsModal.find('#quicktools-reason').val(),
 				data = {
-					target: userName,
+					target: this.userName,
 					length: blockLength,
-					summary: summary
+					summary: summary,
+					token: mw.user.tokens.get('editToken')
 				};
-			QuickTools.sendRequest( 'blockUser', data );
+
+			this.sendRequest('blockUser', data);
 		},
 
-		sendRequest: function( methodName, data ) {
-			$.nirvana.sendRequest( {
+		sendRequest: function (methodName, data) {
+			$.nirvana.sendRequest({
 				controller: 'QuickToolsController',
 				method: methodName,
 				data: data,
-				callback: function( data ) {
-					if ( data.success === true && data.message ) {
-						alert( data.message );
-						QuickTools.refreshContribContent();
-					} else if ( data.error ) {
-						alert( data.error );
+				callback: function (data) {
+					if (data.success === true && data.message) {
+						alert(data.message);
+						this.refreshContribContent();
+					} else if (data.error) {
+						alert(data.error);
 					}
-				}
-			} );
+				}.bind(this)
+			});
 		},
 
-		botFlag: function( e ) {
-			var	$quickToolsModal = $( '#QuickToolsModal' ),
-				userName = mw.config.get( 'wgUserName' ),
-				addOrRemove = $( e.target ).attr( 'data-bot' ),
-				addRights = ( addOrRemove === 'add' ? 'bot' : '' ),
-				removeRights = ( addOrRemove === 'remove' ? 'bot' : '' );
-			$.getJSON( mw.util.wikiScript( 'api' ), {
+		botFlag: function (addOrRemove) {
+			var userName = mw.config.get('wgUserName'),
+				addRights = (addOrRemove === 'add' ? 'bot' : ''),
+				removeRights = (addOrRemove === 'remove' ? 'bot' : '');
+
+			this.changeRights(userName, addRights, removeRights, mw.msg('quicktools-bot-reason'));
+		},
+
+		getUserRightsToken: function (userName) {
+			var deferred = $.Deferred(),
+				token;
+
+			$.getJSON(mw.util.wikiScript('api'), {
 				action: 'query',
 				list: 'users',
 				ususers: userName,
 				ustoken: 'userrights',
 				format: 'json'
-			} ).done( function ( data ) {
-				var	urToken = data.query.users[0].userrightstoken;
-				QuickTools.changeRights( userName, urToken, addRights, removeRights, mw.msg( 'quicktools-bot-reason' ) );
-			} );
+			}).done(function (data) {
+				token = data.query.users[0].userrightstoken;
+				deferred.resolve(token);
+			});
+
+			return deferred.promise();
 		},
 
-		changeRights: function( userName, token, addRights, removeRights, summary ) {
-			$.ajax( {
-				type: 'POST',
-				url: mw.util.wikiScript( 'api' ),
-				dataType: 'json',
-				data: {
-					action: 'userrights',
-					user: userName,
-					add: addRights,
-					remove: removeRights,
-					reason: summary,
-					format: 'json',
-					token: token
-				}
-			} ).done( function ( data ) {
-				if ( data.error ) {
-					alert( mw.msg( 'quicktools-adopt-error' ) );
-				} else {
-					alert( mw.msg( 'quicktools-adopt-success' ) );
-					if ( addRights === 'bot' ) {
-						$( '#QuickToolsModal' ).find( '#quicktools-bot' ).attr( 'data-bot', 'remove' ).text( mw.msg( 'quicktools-botflag-remove' ) );
+		changeRights: function (userName, addRights, removeRights, summary) {
+			this.getUserRightsToken(userName).done(function (token) {
+				$.ajax({
+					type: 'POST',
+					url: mw.util.wikiScript('api'),
+					dataType: 'json',
+					data: {
+						action: 'userrights',
+						user: userName,
+						add: addRights,
+						remove: removeRights,
+						reason: summary,
+						format: 'json',
+						token: token
 					}
-				}
-			} ).fail( function ( data ) {
-				alert( mw.msg( 'quicktools-adopt-error' ) );
-			} );
+				}).done(function (data) {
+					if (data.error) {
+						alert(mw.message('quicktools-adopt-error').escaped());
+					} else {
+						alert(mw.message('quicktools-adopt-success').escaped());
+						if (addRights === 'bot') {
+							$('#QuickToolsModal')
+								.find('#quicktools-bot')
+								.attr('data-bot', 'remove')
+								.text(mw.msg('quicktools-botflag-remove'));
+						}
+					}
+				}).fail(function () {
+					alert(mw.message('quicktools-adopt-error').escaped());
+				});
+			});
 		},
 
-		refreshContribContent: function() {
-			$( '#mw-content-text' ).load( window.location.href + ' #mw-content-text > *' );
+		refreshContribContent: function () {
+			$('#mw-content-text').load(window.location.href + ' #mw-content-text > *');
 		}
 	};
 
-	$( QuickTools.init );
-}( jQuery, mediaWiki ) );
+	$(function () {
+		QuickTools.init();
+	});
+}(jQuery, mediaWiki, this));

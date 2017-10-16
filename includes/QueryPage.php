@@ -14,47 +14,42 @@
  */
 global $wgQueryPages; // not redundant
 $wgQueryPages = array(
-//         QueryPage subclass           Special page name         Limit (false for none, none for the default)
+//         QueryPage subclass           Special page name         Limit (false for none, none for the default - $wgQueryCacheLimit)
 // ----------------------------------------------------------------------------
-	array( 'AncientPagesPage',              'Ancientpages'                  ),
-	array( 'BrokenRedirectsPage',           'BrokenRedirects'               ),
-	array( 'DeadendPagesPage',              'Deadendpages'                  ),
-	array( 'DisambiguationsPage',           'Disambiguations'               ),
-	array( 'DoubleRedirectsPage',           'DoubleRedirects'               ),
-	array( 'FileDuplicateSearchPage',       'FileDuplicateSearch'           ),
-	array( 'LinkSearchPage',                'LinkSearch'                    ),
-	array( 'ListredirectsPage',             'Listredirects'                 ),
-	array( 'LonelyPagesPage',               'Lonelypages'                   ),
-	array( 'LongPagesPage',                 'Longpages'                     ),
-	array( 'MIMEsearchPage',                'MIMEsearch'                    ),
-	array( 'MostcategoriesPage',            'Mostcategories'                ),
-	array( 'MostimagesPage',                'Mostimages'                    ),
-	array( 'MostlinkedCategoriesPage',      'Mostlinkedcategories'          ),
-	array( 'MostlinkedtemplatesPage',       'Mostlinkedtemplates'           ),
-	array( 'MostlinkedPage',                'Mostlinked'                    ),
-	array( 'MostrevisionsPage',             'Mostrevisions'                 ),
-	array( 'FewestrevisionsPage',           'Fewestrevisions'               ),
-	array( 'ShortPagesPage',                'Shortpages'                    ),
-	array( 'UncategorizedCategoriesPage',   'Uncategorizedcategories'       ),
-	array( 'UncategorizedPagesPage',        'Uncategorizedpages'            ),
-	array( 'UncategorizedImagesPage',       'Uncategorizedimages'           ),
-	array( 'UncategorizedTemplatesPage',    'Uncategorizedtemplates'        ),
-	array( 'UnusedCategoriesPage',          'Unusedcategories'              ),
-	array( 'UnusedimagesPage',              'Unusedimages'                  ),
-	array( 'WantedCategoriesPage',          'Wantedcategories'              ),
-	array( 'WantedFilesPage',               'Wantedfiles'                   ),
-	array( 'WantedPagesPage',               'Wantedpages'                   ),
-	array( 'WantedTemplatesPage',           'Wantedtemplates'               ),
-	array( 'UnwatchedPagesPage',            'Unwatchedpages'                ),
-	array( 'UnusedtemplatesPage',           'Unusedtemplates'               ),
-	array( 'WithoutInterwikiPage',          'Withoutinterwiki'              ),
+	[ 'AncientPagesPage',              'Ancientpages'                  ],
+	[ 'BrokenRedirectsPage',           'BrokenRedirects'               ],
+	[ 'DeadendPagesPage',              'Deadendpages'                  ],
+	[ 'DisambiguationsPage',           'Disambiguations'               ],
+	[ 'DoubleRedirectsPage',           'DoubleRedirects'               ],
+	[ 'FileDuplicateSearchPage',       'FileDuplicateSearch'           ],
+	[ 'LinkSearchPage',                'LinkSearch'                    ],
+	[ 'ListredirectsPage',             'Listredirects',                5000 /* SUS-1675 */ ],
+	[ 'LonelyPagesPage',               'Lonelypages'                   ],
+	[ 'LongPagesPage',                 'Longpages'                     ],
+	[ 'MIMEsearchPage',                'MIMEsearch'                    ],
+	[ 'MostcategoriesPage',            'Mostcategories'                ],
+	[ 'MostimagesPage',                'Mostimages'                    ],
+	[ 'MostlinkedCategoriesPage',      'Mostlinkedcategories'          ],
+	[ 'MostlinkedTemplatesPage',       'Mostlinkedtemplates'           ],
+	[ 'MostlinkedPage',                'Mostlinked',                   5000 /* SUS-1675 */ ],
+	[ 'MostrevisionsPage',             'Mostrevisions'                 ],
+	[ 'FewestrevisionsPage',           'Fewestrevisions'               ],
+	[ 'ShortPagesPage',                'Shortpages'                    ],
+	[ 'UncategorizedCategoriesPage',   'Uncategorizedcategories'       ],
+	[ 'UncategorizedPagesPage',        'Uncategorizedpages'            ],
+	[ 'UncategorizedImagesPage',       'Uncategorizedimages'           ],
+	[ 'UncategorizedTemplatesPage',    'Uncategorizedtemplates'        ],
+	[ 'UnusedCategoriesPage',          'Unusedcategories'              ],
+	[ 'UnusedimagesPage',              'Unusedimages'                  ],
+	[ 'WantedCategoriesPage',          'Wantedcategories'              ],
+	[ 'WantedFilesPage',               'Wantedfiles'                   ],
+	[ 'WantedPagesPage',               'Wantedpages'                   ],
+	[ 'WantedTemplatesPage',           'Wantedtemplates'               ],
+	[ 'UnwatchedpagesPage',            'Unwatchedpages'                ],
+	[ 'UnusedtemplatesPage',           'Unusedtemplates'               ],
+	[ 'WithoutInterwikiPage',          'Withoutinterwiki'              ],
 );
-wfRunHooks( 'wgQueryPages', array( &$wgQueryPages ) );
-
-global $wgDisableCounters;
-if ( !$wgDisableCounters )
-	$wgQueryPages[] = array( 'PopularPagesPage', 'Popularpages' );
-
+Hooks::run( 'wgQueryPages', array( &$wgQueryPages ) );
 
 /**
  * This is a class for doing query pages; since they're almost all the same,
@@ -292,6 +287,16 @@ abstract class QueryPage extends SpecialPage {
 		# Do query
 		$res = $this->reallyDoQuery( $limit, false );
 		$num = false;
+
+		/**
+		 * Wikia change begin
+		 * @author <adamk@wikia-inc.com>
+		 */
+		Hooks::run( 'QueryPageUseResultsBeforeRecache', [ $this, $dbr, $res ] );
+		/**
+		 * Wikia change end
+		 */
+
 		if ( $res ) {
 			$num = $dbr->numRows( $res );
 			# Fetch results
@@ -433,11 +438,44 @@ abstract class QueryPage extends SpecialPage {
 	}
 
 	/**
+	 * Get max number of results we can return.
+	 *
+	 * Most QueryPage subclasses use $wgQueryCacheLimit as a default value, but this can be customized.
+	 *
+	 * @author macbre
+	 * @see SUS-1675
+	 *
+	 * @return int
+	 */
+	protected function getMaxResults() {
+		global $wgQueryCacheLimit, $wgQueryPages;
+
+		// that's our default return value
+		$limit = $wgQueryCacheLimit;
+
+		// get the $wgQueryPages entry for the current QueryPage class
+		$currentQueryPage = get_class( $this );
+		$entries = array_values( array_filter(
+			$wgQueryPages,
+			function( array $item ) use ( $currentQueryPage ) {
+				// class name should match
+				return $item[0] === $currentQueryPage;
+			}
+		) );
+
+		if ( is_array( $entries ) && !empty( $entries[0][2] ) ) {
+			$limit = $entries[0][2];
+		}
+
+		return $limit;
+	}
+
+	/**
 	 * This is the actual workhorse. It does everything needed to make a
 	 * real, honest-to-gosh query page.
 	 */
 	function execute( $par ) {
-		global $wgQueryCacheLimit, $wgDisableQueryPageUpdate;
+		global $wgDisableQueryPageUpdate;
 
 		$user = $this->getUser();
 		if ( !$this->userCanExecute( $user ) ) {
@@ -472,7 +510,7 @@ abstract class QueryPage extends SpecialPage {
 				# Fetch the timestamp of this update
 				$ts = $this->getCachedTimestamp();
 				$lang = $this->getLanguage();
-				$maxResults = $lang->formatNum( $wgQueryCacheLimit );
+				$maxResults = $lang->formatNum( $this->getMaxResults() );
 
 				if ( $ts ) {
 					$updated = $lang->userTimeAndDate( $ts, $user );

@@ -384,7 +384,7 @@ class AtomFeed extends ChannelFeed {
 
 	/**
 	 * Output a given item.
-	 * @param $item
+	 * @param $item FeedItem: item to be output
 	 */
 	function outItem( $item ) {
 		global $wgMimeType;

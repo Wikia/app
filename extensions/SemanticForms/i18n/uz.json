@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"CoderSI",
+			"Sociologist"
+		]
+	},
+	"createproperty": "Xossa yaratish",
+	"sf-createproperty-with-name": "Xossa yaratish: $1",
+	"sf_createproperty_propname": "Xossa nomi:",
+	"sf_createproperty_proptype": "Turi:",
+	"templates": "Andozalar",
+	"sf_templates_docu": "Quyidagi andozalar vikida bor.",
+	"sf-createtemplate-with-name": "Andoza yaratish: $1",
+	"sf_createtemplate_namelabel": "Andoza nomi:",
+	"sf_createtemplate_displaylabel": "Koʻrsatiladigan yozuv:",
+	"sf_createtemplate_semanticproperty": "Semantik xossa",
+	"sf_createtemplate_standardformat": "Jadval",
+	"forms": "Shakllar",
+	"createform": "Shakl yaratish",
+	"sf_createform_add": "Qoʻshish",
+	"sf_createclass_nameinput": "Shakl nomi",
+	"sf_createclass_create": "Yaratish",
+	"formstart": "Shaklni boshlash",
+	"sf_formstart_createoredit": "Yaratish yoki tahrirlash",
+	"formedit": "Shakl bilan tahrirlash",
+	"sf_formedit_createtitle": "Yaratish — $1: $2",
+	"sf_formedit_createtitlenotarget": "\"$1\"ni yaratish",
+	"sf_formcreate": "Shakl bilan yaratish",
+	"sf_viewform": "Shaklni koʻrish",
+	"sf_editsource": "Manbasini tahrirlash",
+	"sf_formedit_edittitle": "Tahrirlash — $1: $2"
+}

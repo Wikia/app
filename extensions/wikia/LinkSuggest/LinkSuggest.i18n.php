@@ -1,440 +1,288 @@
 <?php
+/** Internationalization file for /extensions/wikia/LinkSuggest/LinkSuggest extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'linksuggest-desc' => 'Suggests links to editors on edit view',
 	'tog-disablelinksuggest' => 'Do not show link suggest in Source mode',
-	'tog-redirected-from' => '&ndash; redirected from $1'
-);
+	'tog-redirected-from' => '&ndash; redirected from $1',
+];
 
-/** Message documentation (Message documentation)
- * @author Hamilton Abreu
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'tog-disablelinksuggest' => '{{Related|Source mode (wikia)}}',
-);
+];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
+$messages['af'] = [
 	'tog-disablelinksuggest' => 'Moenie skakel-voorstelle in bron-modus wys nie',
-);
+];
 
-/** Arabic (العربية)
- * @author Achraf94
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'linksuggest-desc' => 'يقوم باقتراح وصلات للمحررين أثناء التحرير',
 	'tog-disablelinksuggest' => 'عدم إظهار إقتراح الوصلات في وضع المصدر',
 	'tog-redirected-from' => '&ndash; إعادة توجيه من $1',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author PPerviz
- * @author Wertuose
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'tog-disablelinksuggest' => 'İlkin kod rejimində keçid təklifini göstərmə',
-);
+];
 
-/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
- * @author EugeneZelenko
- */
-$messages['be-tarask'] = array(
-	'tog-disablelinksuggest' => 'Не паказваць прапановы спасылак', # Fuzzy
-);
+$messages['be-tarask'] = [
+	'tog-disablelinksuggest' => 'Не паказваць прапановы спасылак',
+];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- * @author Gwenn-Ael
- */
-$messages['br'] = array(
-	'linksuggest-desc' => "Kinnig a ra liammoù d'ar skridaozerien, er prenestr skridaozañ.",
+$messages['br'] = [
+	'linksuggest-desc' => 'Kinnig a ra liammoù d\'ar skridaozerien, er prenestr skridaozañ.',
 	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget er mod tarzh',
 	'tog-redirected-from' => '&ndash; adkaset adalek $1',
-);
+];
 
-/** Catalan (català)
- * @author Marcmpujol
- * @author Paucabot
- */
-$messages['ca'] = array(
-	'linksuggest-desc' => "Suggereix enllaços als editors en mode d'edició",
-	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços en mode font",
+$messages['ca'] = [
+	'linksuggest-desc' => 'Suggereix enllaços als editors en mode d\'edició',
+	'tog-disablelinksuggest' => 'No mostris suggeriments d\'enllaços en mode font',
 	'tog-redirected-from' => '&ndash; redirigit des de $1',
-);
+];
 
-/** Czech (česky)
- * @author Darth Daron
- * @author Jezevec
- * @author Mormegil
- */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'linksuggest-desc' => 'Navrhuje editorům odkazy při editování',
 	'tog-disablelinksuggest' => 'Nezobrazovat návrhy odkazů ve zdrojovém módu',
 	'tog-redirected-from' => '&ndash; přesměrováno z $1',
-);
+];
 
-/** German (Deutsch)
- * @author DaSch
- * @author Metalhead64
- * @author PtM
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'linksuggest-desc' => 'Schlägt Autoren Links in der Bearbeitungsansicht vor',
-	'tog-disablelinksuggest' => 'Keine Link-Vorschläge im Quellcodemodus anzeigen',
+	'tog-disablelinksuggest' => 'Keine Link-Vorschläge anzeigen',
 	'tog-redirected-from' => '&ndash; Weitergeleitet von $1',
-);
+];
 
-/** Spanish (español)
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'linksuggest-desc' => 'Sugiere enlaces a los editores en modo de edición',
-	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos en modo fuente.',
+	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos',
 	'tog-redirected-from' => '&ndash; redirigido desde $1',
-);
+];
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Nedergard
- * @author VezonThunder
- */
-$messages['fi'] = array(
+$messages['fa'] = [
+	'linksuggest-desc' => 'پیوندهای پیشنهادشده به ویراستاران برای نمایش ویرایش',
+];
+
+$messages['fi'] = [
 	'linksuggest-desc' => 'Ehdottaa linkkejä muokkaajille muokkausikkunassa',
 	'tog-disablelinksuggest' => 'Älä näytä linkkiehdotusta lähdekooditilassa',
 	'tog-redirected-from' => '&ndash; ohjaus sivulta $1',
-);
+];
 
-/** French (français)
- * @author Gomoko
- * @author Wyz
- */
-$messages['fr'] = array(
-	'linksuggest-desc' => 'Propose des liens aux contributeurs en édition',
+$messages['fr'] = [
+	'linksuggest-desc' => 'Suggère des liens aux contributeurs en modification',
 	'tog-disablelinksuggest' => 'Ne pas afficher la suggestion de lien en mode source',
 	'tog-redirected-from' => '&ndash; Redirigé depuis $1',
-);
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'linksuggest-desc' => 'Suxire ligazóns aos editores no modo de edición',
 	'tog-disablelinksuggest' => 'Non mostrar as ligazón suxeridas no modo fonte',
 	'tog-redirected-from' => '&ndash; redirixido desde "$1"',
-);
+];
 
-/** Manx (Gaelg)
- * @author MacTire02
- */
-$messages['gv'] = array(
-	'tog-disablelinksuggest' => 'Ny taishbyney kiangley-choyrlaghey', # Fuzzy
-);
+$messages['gv'] = [
+	'tog-disablelinksuggest' => 'Ny taishbyney kiangley-choyrlaghey',
+];
 
-/** Hebrew (עברית)
- * @author Rotemliss
- */
-$messages['he'] = array(
-	'tog-disablelinksuggest' => 'ביטול הצגת הצעות לקישורים', # Fuzzy
-);
+$messages['he'] = [
+	'tog-disablelinksuggest' => 'ביטול הצגת הצעות לקישורים',
+];
 
-/** Upper Sorbian (hornjoserbsce)
- * @author Michawiki
- */
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'tog-disablelinksuggest' => 'Žadyn wotkazowy namjet w modusu žórłoweho koda pokazać',
-);
+];
 
-/** Hungarian (magyar)
- * @author Glanthor Reviol
- * @author Misibacsi
- * @author TK-999
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'linksuggest-desc' => 'Hivatkozásokat javasol a szerkesztőknek a szerkesztési nézetben',
 	'tog-disablelinksuggest' => 'Ne jelenítse meg a hivatkozás-javaslatot forráskódndash;nézetben',
 	'tog-redirected-from' => '&ndash; Az $1 szócikkből átirányítva',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'tog-disablelinksuggest' => 'Non monstrar suggestiones de ligamines in modo codice-fonte',
 	'tog-redirected-from' => '&ndash; redirigite ab $1',
-);
+];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- * @author Bennylin
- * @author C5st4wr6ch
- */
-$messages['id'] = array(
+$messages['id'] = [
+	'linksuggest-desc' => 'Menyarankan pranala kepada editor pada tampilan suntingan',
 	'tog-disablelinksuggest' => 'Jangan menampilkan saran pranala',
 	'tog-redirected-from' => '&ndash; dialihkan dari $1',
-);
+];
 
-/** Italian (italiano)
- * @author Civvì
- * @author Leviathan 89
- * @author Viscontino
- * @author Ximo17
- */
-$messages['it'] = array(
-	'linksuggest-desc' => "Propone collegamenti ai contributori nell'interfaccia di modifica",
+$messages['it'] = [
+	'linksuggest-desc' => 'Propone collegamenti ai contributori nell\'interfaccia di modifica',
 	'tog-disablelinksuggest' => 'Non mostrare i link suggeriti nel codice sorgente',
 	'tog-redirected-from' => '&ndash; reindirizzamento da $1',
-);
+];
 
-/** Japanese (日本語)
- * @author Tommy6
- */
-$messages['ja'] = array(
-	'tog-disablelinksuggest' => 'ソースモードでの編集時のリンク補完を使わない',
-);
+$messages['ja'] = [
+	'linksuggest-desc' => '編集画面で編集者に対しリンクの提案を行う',
+	'tog-disablelinksuggest' => 'ソースモードでの編集時リンク補完を使わない',
+	'tog-redirected-from' => '&ndash; $1からのリダイレクト',
+];
 
-/** Khmer (ភាសាខ្មែរ)
- * @author គីមស៊្រុន
- */
-$messages['km'] = array(
-	'tog-disablelinksuggest' => 'កុំបង្ហាញសំណើតំណភ្ជាប់', # Fuzzy
-);
+$messages['km'] = [
+	'tog-disablelinksuggest' => 'កុំបង្ហាញសំណើតំណភ្ជាប់',
+];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
-$messages['ksh'] = array(
+$messages['ko'] = [
+	'tog-disablelinksuggest' => '소스 모드에서 링크 제안을 보이지 않기',
+	'tog-redirected-from' => '&ndash; $1에서 넘어옴',
+];
+
+$messages['ksh'] = [
 	'tog-disablelinksuggest' => 'Donn en dä Quälle-Aat kein Vörschlääsch för Lenks aanzeije',
 	'tog-redirected-from' => '&ndash; ömjeleidt vun $1',
-);
+];
 
-/** Kyrgyz (Кыргызча)
- * @author Growingup
- */
-$messages['ky'] = array(
+$messages['ky'] = [
 	'tog-disablelinksuggest' => 'Баштапкы код режиминен шилтеме сунушун көрсөтпөө',
-);
+];
 
-/** Ladino (Ladino)
- */
-$messages['lad'] = array(
-	'tog-disablelinksuggest' => 'No amostrar avisos de atadijos', # Fuzzy
-);
+$messages['lad'] = [
+	'tog-disablelinksuggest' => 'No amostrar avisos de atadijos',
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'tog-disablelinksuggest' => 'Déi proposéiert Linken am Quellcode-Modus net weisen',
-);
+];
 
-/** Latvian (latviešu)
- * @author Papuass
- * @author Xil
- */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus izejas koda režīmā',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'linksuggest-desc' => 'Предлага врски на уредниците при уредување',
 	'tog-disablelinksuggest' => 'Не прикажувај предложени врски во Изворен режим',
 	'tog-redirected-from' => '&ndash; Пренасочено од $1',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'linksuggest-desc' => 'Mencadangkan pautan kepada editor dalam paparan penyuntingan',
 	'tog-disablelinksuggest' => 'Jangan paparkan cadangan pautan dalam mod Sumber',
 	'tog-redirected-from' => '&ndash; Dilencongkan dari $1',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'linksuggest-desc' => 'Foreslår lenker til bidragsytere på redigeringsvisningen',
 	'tog-disablelinksuggest' => 'Ikke vis lenkeforslag i kildemodus',
 	'tog-redirected-from' => '&ndash; Omdirigert fra $1',
-);
+];
 
-/** Dutch (Nederlands)
- * @author SPQRobin
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'linksuggest-desc' => 'Koppelingen voorstellen tijdens het bewerken',
 	'tog-disablelinksuggest' => 'Geen koppelingensuggesties weergeven in bronmodus',
 	'tog-redirected-from' => '&ndash; Doorverwezen vanaf $1',
-);
+];
 
-/** Norwegian Nynorsk (norsk nynorsk)
- * @author Harald Khan
- */
-$messages['nn'] = array(
-	'tog-disablelinksuggest' => 'Ikkje vis lenkjeframlegg', # Fuzzy
-);
+$messages['nn'] = [
+	'tog-disablelinksuggest' => 'Ikkje vis lenkjeframlegg',
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'linksuggest-desc' => 'Prepausa de ligams als contributors en edicion',
 	'tog-disablelinksuggest' => 'Afichar pas la suggestion de ligam en mòde font',
 	'tog-redirected-from' => '&ndash; Redirigit dempuèi $1',
-);
+];
 
-/** Polish (polski)
- * @author Sovq
- * @author Sp5uhe
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'linksuggest-desc' => 'Sugeruje linki w trakcie edycji',
 	'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków w trybie źródłowym.',
 	'tog-redirected-from' => '&ndash; przekierowano z $1',
-);
+];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
-$messages['pms'] = array(
-	'linksuggest-desc' => "A sugeriss dj'anliure a j'editor ant la fnestra dle modìfiche",
-	'tog-disablelinksuggest' => "Nen ësmon-e ij sugeriment ëd j'anliure an modalità Sorgiss",
+$messages['pms'] = [
+	'linksuggest-desc' => 'A sugeriss dj\'anliure a j\'editor ant la fnestra dle modìfiche',
+	'tog-disablelinksuggest' => 'Nen ësmon-e ij sugeriment ëd j\'anliure an modalità Sorgiss',
 	'tog-redirected-from' => '&ndash; ridiressionà da $1',
-);
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'tog-disablelinksuggest' => 'د تړنې وړانديز د سرچينې په بڼه مه ښکاره کوه',
-);
+];
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- */
-$messages['pt'] = array(
+$messages['pt'] = [
+	'linksuggest-desc' => 'Sugere links para editor no modo de edição',
 	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo Fonte',
-);
+	'tog-redirected-from' => '&ndash; redirecionado de $1',
+];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Daemorris
- * @author JM Pessanha
- * @author 555
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'linksuggest-desc' => 'Sugere links para editores na visualização de edição',
 	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo de exibição de código',
 	'tog-redirected-from' => '&ndash; redirecionado de $1',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
-	'linksuggest-desc' => "Suggerisce le collegaminde a le editure sus 'a viste d'u cangiamende",
-	'tog-disablelinksuggest' => "No fà vedè 'u collegamende suggerite jndr'à 'u mode Sorgende",
+$messages['roa-tara'] = [
+	'linksuggest-desc' => 'Suggerisce le collegaminde a le editure sus \'a viste d\'u cangiamende',
+	'tog-disablelinksuggest' => 'No fà vedè \'u collegamende suggerite jndr\'à \'u mode Sorgende',
 	'tog-redirected-from' => '&ndash; redirezionate da $1',
-);
+];
 
-/** Russian (русский)
- * @author DCamer
- * @author Kuzura
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'linksuggest-desc' => 'Предлагает ссылки на редакторы в режиме редактирования',
-	'tog-disablelinksuggest' => 'Не показывать предложения ссылок в режиме Исходного кода',
+	'tog-disablelinksuggest' => 'Не показывать предложения ссылок',
 	'tog-redirected-from' => '&ndash; перенаправление с $1',
-);
+];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Rancher
- * @author Verlor
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'tog-disablelinksuggest' => 'Не приказуј предложену везу у изворном режиму',
-);
+];
 
-/** Sundanese (Basa Sunda)
- * @author Kandar
- */
-$messages['su'] = array(
-	'tog-disablelinksuggest' => 'Sumputkeun usulan tutumbu', # Fuzzy
-);
+$messages['su'] = [
+	'tog-disablelinksuggest' => 'Sumputkeun usulan tutumbu',
+];
 
-/** Swedish (svenska)
- * @author Sertion
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'linksuggest-desc' => 'Föreslår länkar till redigerarna i redigeringsvyn',
 	'tog-disablelinksuggest' => 'Visa inte länkförslag i källäge',
 	'tog-redirected-from' => '&ndash; omdirigerad från $1',
-);
+];
 
-/** Thai (ไทย)
- * @author Akkhaporn
- */
-$messages['th'] = array(
+$messages['te'] = [
+	'tog-redirected-from' => '&ndash; $1 నుండి దారిమార్పు చెందింది',
+];
+
+$messages['th'] = [
 	'tog-disablelinksuggest' => 'การเชื่อมโยงไม่แสดงให้เห็นในโหมดต้นแบบ',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'tog-disablelinksuggest' => 'Huwag ipakitang nasa gawi ng Pinagmulan ang mungkahing kawing',
 	'tog-redirected-from' => '&ndash; pinalitan ang kapupuntahan magmula sa $1',
-);
+];
 
-/** Turkish (Türkçe)
- * @author Manco Capac
- */
-$messages['tr'] = array(
-	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme', # Fuzzy
-);
+$messages['tr'] = [
+	'tog-disablelinksuggest' => 'Kaynak modu bağlantısını gösterme',
+];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ильнар
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'tog-disablelinksuggest' => 'Сылтамаларның тәкъдимнәрен күрсәтмәү',
-);
+];
 
-/** Ukrainian (українська)
- * @author Ua2004
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'linksuggest-desc' => 'Пропонує редакторам посилання в режимі редагування',
-	'tog-disablelinksuggest' => 'Не показувати пропозицій посилань у режимі Вихідного коду',
+	'tog-disablelinksuggest' => 'Не показувати підказки з посиланнями у режимі вихідного коду',
 	'tog-redirected-from' => '&ndash; перенаправлено з $1',
-);
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Anakmalaysia
- * @author Dimension
- * @author Hydra
- */
-$messages['zh-hans'] = array(
+$messages['vi'] = [
+	'linksuggest-desc' => 'Đề nghị liên kết đến các biên tập viên chỉnh sửa quan',
+	'tog-disablelinksuggest' => 'Không hiển thị các liên kết đề nghị trong chế độ nguồn',
+	'tog-redirected-from' => '&ndash; đổi hướng từ $1',
+];
+
+$messages['zh-hans'] = [
 	'linksuggest-desc' => '在编辑视图上提供给编辑者一些连接建议',
 	'tog-disablelinksuggest' => '源代码模式中勿显示链接建议',
 	'tog-redirected-from' => '&ndash;重定向自$1',
-);
+];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Frankou
- * @author Lauhenry
- */
-$messages['zh-hant'] = array(
-	'tog-disablelinksuggest' => '源代碼模式時不顯示鏈接建議',
-);
+$messages['zh-hant'] = [
+	'linksuggest-desc' => '在編輯畫面中提供編輯者一些連結建議',
+	'tog-disablelinksuggest' => '原始碼模式時不顯示連結建議',
+	'tog-redirected-from' => '&ndash;重定向自$1',
+];
+

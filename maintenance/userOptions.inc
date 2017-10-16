@@ -154,7 +154,7 @@ class userOptions {
 					exit;
 				}
 
-				$userValue = $user->getOption( $this->mAnOption );
+				$userValue = $user->getGlobalPreference( $this->mAnOption );
 				if ( $userValue <> $defaultOptions[$this->mAnOption] ) {
 					@$ret[$this->mAnOption][$userValue]++;
 				}
@@ -162,7 +162,7 @@ class userOptions {
 			} else {
 
 				foreach ( $defaultOptions as $name => $defaultValue ) {
-					$userValue = $user->getOption( $name );
+					$userValue = $user->getGlobalPreference( $name );
 					if ( $userValue <> $defaultValue ) {
 						@$ret[$name][$userValue]++;
 					}
@@ -196,7 +196,7 @@ class userOptions {
 
 			$user = User::newFromId( $id->user_id );
 
-			$curValue = $user->getOption( $this->mAnOption );
+			$curValue = $user->getGlobalPreference( $this->mAnOption );
 			$username = $user->getName();
 
 			if ( $curValue == $this->mOldValue ) {
@@ -206,7 +206,7 @@ class userOptions {
 				}
 
 				// Change value
-				$user->setOption( $this->mAnOption, $this->mNewValue );
+				$user->setGlobalPreference( $this->mAnOption, $this->mNewValue );
 
 				// Will not save the settings if run with --dry
 				if ( !$this->mDry ) {

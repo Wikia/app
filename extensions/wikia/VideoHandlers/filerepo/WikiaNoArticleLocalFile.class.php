@@ -12,6 +12,8 @@ class WikiaNoArticleLocalFile extends WikiaLocalFile {
 	 */
 	function recordUpload2( $oldver, $comment, $pageText, $props = false, $timestamp = false, $user = null )
 	{
+		global $wgCityId;
+
 		if( is_null( $user ) ) {
 			global $wgUser;
 			$user = $wgUser;
@@ -73,8 +75,6 @@ class WikiaNoArticleLocalFile extends WikiaLocalFile {
 		);
 
 		if( $dbw->affectedRows() == 0 ) {
-			$reupload = true;
-
 			# Collision, this is an update of a file
 			# Insert previous contents into oldimage
 			$dbw->insertSelect( 'oldimage', 'image',
@@ -129,8 +129,12 @@ class WikiaNoArticleLocalFile extends WikiaLocalFile {
 		$dbw->commit();
 
 		# Invalidate cache for all pages using this file
-		$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
-		$update->doUpdate();
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $this->getTitle() );
+		$task->call( 'purge', 'imagelinks' );
+		$task->queue();
+
 		return true;
 	}
 }

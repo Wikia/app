@@ -17,8 +17,24 @@ class DBError extends MWException {
 	 * @param $error String A simple error message to be used for debugging
 	 */
 	function __construct( DatabaseBase &$db, $error ) {
+		global $wgDBcluster;
+
 		$this->db = $db;
 		parent::__construct( $error );
+
+		$isMaster = !is_null( $db->getLBInfo( 'master' ) );
+
+		// Wikia change - @author macbre - MAIN-2304
+		\Wikia\Logger\WikiaLogger::instance()->error('DBError', [
+			'name'        => $db->getDBname(),
+			'cluster'     => $wgDBcluster,
+			'server'      => $db->getServer(),
+			'server_role' => $isMaster ? 'master' : 'slave',
+			'db_user'     => $db->getLBInfo( 'user' ),
+			'errno'       => $db->lastErrno(),
+			'err'         => $db->lastError(),
+			'exception'   => $this,
+		]);
 	}
 
 	/**

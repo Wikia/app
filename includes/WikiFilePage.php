@@ -45,7 +45,7 @@ class WikiFilePage extends WikiPage {
 			$this->mFile = wfFindFile( $this->mTitle );
 
 			/** Wikia change start (@author Garth Webb) */
-			wfRunHooks('WikiFilePageCheckFile', [&$this->mFile]);
+			Hooks::run('WikiFilePageCheckFile', [&$this->mFile]);
 			/** Wikia change end */
 
 			if ( !$this->mFile ) {
@@ -57,12 +57,13 @@ class WikiFilePage extends WikiPage {
 	}
 
 	/**
+	 * @param int $flags a bit field; may be Title::GAID_FOR_UPDATE to use master db
 	 * @return mixed|null|Title
 	 */
-	public function getRedirectTarget() {
+	public function getRedirectTarget( $flags = 0 ) {
 		$this->loadFile();
 		if ( $this->mFile->isLocal() ) {
-			return parent::getRedirectTarget();
+			return parent::getRedirectTarget( $flags );
 		}
 		// Foreign image page
 		$from = $this->mFile->getRedirected();
@@ -155,11 +156,19 @@ class WikiFilePage extends WikiPage {
 	 * Override handling of action=purge
 	 */
 	public function doPurge() {
+		global $wgCityId;
+
 		$this->loadFile();
 		if ( $this->mFile->exists() ) {
 			wfDebug( 'ImagePage::doPurge purging ' . $this->mFile->getName() . "\n" );
-			$update = new HTMLCacheUpdate( $this->mTitle, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $this->mTitle );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+
+			// Wikia Change End
 			$this->mFile->upgradeRow();
 			$this->mFile->purgeCache( array( 'forThumbRefresh' => true ) );
 		} else {

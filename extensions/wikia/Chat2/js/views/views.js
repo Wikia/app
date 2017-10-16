@@ -1,4 +1,3 @@
-
 //
 //Views
 //
@@ -14,11 +13,11 @@ var ChatView = Backbone.View.extend({
 		_.bindAll(this, 'render');
 		if (this.model) this.model.bind('all', this.render);
 		// Load the mapping of emoticons.  This wiki has priority, then falls back to Messaging.  If both of those fail, uses some hardcoded fallback.
-		this.emoticonMapping.loadFromWikiText( EMOTICONS );
+		this.emoticonMapping.loadFromWikiText( window.wgChatEmoticons );
 	},
 
 	/**
-	 * All messages that are recieved are processed here before being displayed. This
+	 * All messages that are received are processed here before being displayed. This
 	 * will escape html/js, build links, and process emoticons.
 	 */
 	processText: function( text, allowHtml ){
@@ -29,7 +28,8 @@ var ChatView = Backbone.View.extend({
 			text = text.replace(/>/g, "&gt;");
 		}
 
-		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
+		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function?
+		// (it seems like it could be called a bunch of times in rapid succession).
 
 		// Prepare a regexp we use to match local wiki links
 		var localWikiLinkReg = '^' + wgServer + wgArticlePath;
@@ -51,11 +51,15 @@ var ChatView = Backbone.View.extend({
 				// (BugId:97945) Invalid URIs can throw "URIError: URI malformed"
 				try {
 					linkName = decodeURIComponent(linkName);
-				} catch( e ) {}
+				} catch( e ) {
+					return '';
+				}
 
-				linkName = linkName.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-				linkName = linkName.replace(/>/g, "&gt;");
-				return '<a href="'+link+'">'+linkName+'</a>';
+				var a = document.createElement('a');
+				a.href = link;
+				a.textContent = linkName;
+
+				return a.outerHTML;
 			});
 		}
 
@@ -64,15 +68,18 @@ var ChatView = Backbone.View.extend({
 			article = article.replace(/ /g, "_");
 			linkText = linkText.replace(/_/g, " ");
 			linkText = unescape( linkText );
-			linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-			linkText = linkText.replace(/>/g, "&gt;");
 
 			var path = wgServer + wgArticlePath;
 			article = encodeURIComponent( article );
 			article = article.replace(/%2f/ig, "/"); // make slashes more human-readable (they don't really need to be escaped)
 			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
 			var url = path.replace("$1", article);
-			return '<a href="' + url + '">' + linkText + '</a>';
+
+			var a = document.createElement('a');
+			a.href = url;
+			a.textContent = linkText;
+
+			return a.outerHTML;
 		}
 
 		// Linkify [[Pipes|Pipe-notation]] in bracketed links.
@@ -109,19 +116,15 @@ var ChatView = Backbone.View.extend({
 
 		// Inline Alerts have may have i18n messages in them. If so (and they don't have 'text' yet), process the message and cache it in 'text'.
 		// This needs to be done before the template processing below so that 'text' will be set by then.
-
-
 		if(this.model.get('text') == ''){
 			var params = this.model.get('msgParams'),
 				msgId = this.model.get('wfMsg');
-			if (!params || !msgId) {
+			if (!msgId) {
 				return this;
 			}
-			$().log("Found an i18n message with msg name " + msgId + " and params: " + params);
 			params.unshift(msgId);
-			var i18nText = $.msg.apply(null, params);
+			var i18nText = mw.message.apply(null, params).text();
 			this.model.set({text: i18nText});
-			$().log("Message translated to: " + i18nText);
 		}
 
 		var msg = this.model.toJSON();
@@ -141,7 +144,7 @@ var ChatView = Backbone.View.extend({
 				msg.text = msg.text.substr(4);
 				var originalTemplate = this.template;
 				this.template = this.meMessageTemplate;
-				$(this.el).html(this.template(msg));
+				$(this.el).html(this.template(msg)).addClass('me-message-line');
 				this.template = originalTemplate;
 			} else {
 				if (msg.text.indexOf('//me ') == 0) {
@@ -213,13 +216,15 @@ var UserView = Backbone.View.extend({
 	},
 
 	render: function(){
-		//$().log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
+		var model = this.model.toJSON(),
+			groups = this.model.get('groups');
 
-		var model = this.model.toJSON();
-		$().log(model, model.name);
-		if(model['since']) {
-			model['since'] = wgLangtMonthAbbreviation[model['since']['mon']] + ' ' + model['since']['year'];
+		if (model.since) {
+			model.since = window.wgChatLangMonthAbbreviations[model.since.mon] + ' ' + model.since.year
+			model.since = mw.message('chat-member-since', model.since).escaped();
 		}
+
+		model.editCount = mw.message('chat-edit-count', model.editCount).escaped();
 
 		$(this.el).html( this.template(model) );
 
@@ -228,18 +233,17 @@ var UserView = Backbone.View.extend({
 		$(this.el).attr('id', this.liId());
 		$(this.el).attr('data-user', this.model.get('name'));
 
-		// If this is a chat moderator, add the chat-mod class so that kick-ban links don't show up, etc.
-		if(this.model.get('isModerator') === true){
-			$(this.el).addClass('chat-mod');
+		// Check user groups so that kick-ban links don't show up, etc. & user gets a proper badge
+		if(groups.indexOf("chatmoderator") !== -1){
+			$(this.el).addClass('chatmoderator');
 		}
 
-		if(this.model.get('isStaff') === true){
+		if(groups.indexOf("staff") !== -1){
 			$(this.el).addClass('staff');
 		}
 
-
 		// If the user is away, add a certain class to them, if not, remove the away class.
-		if(this.model.get('statusState') == STATUS_STATE_AWAY){
+		if(this.model.get('statusState') === STATUS_STATE_AWAY){
 			$(this.el).addClass('away');
 		} else {
 			$(this.el).removeClass('away');
@@ -327,7 +331,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		 		$('#ChatHeader .private').hide();
 			} else {
 		 		$('#ChatHeader .public').hide();
-		 		$('#ChatHeader .private').text($.msg('chat-private-headline').replace('$1', status.get('privateUser').get('name'))).show();
+		 		$('#ChatHeader .private').text(mw.message('chat-private-headline').text().replace('$1', status.get('privateUser').get('name'))).show();
 			}
 		} else {
 			room.removeClass('selected');
@@ -416,8 +420,6 @@ var NodeChatDiscussion = Backbone.View.extend({
 });
 //TODO: rename it to frame NodeChatFrame ?
 var NodeChatUsers = Backbone.View.extend({
-	actionTemplate: _.template( $('#user-action-template').html() ),
-	actionTemplateNoUrl: _.template( $('#user-action-template-no-url').html() ),
 	initialize: function(options) {
 		this.model.users.bind('add', $.proxy(this.addUser,this));
 		this.model.users.bind('remove', $.proxy(this.removeUser, this));
@@ -432,9 +434,11 @@ var NodeChatUsers = Backbone.View.extend({
 
 		this.delegateEventsToTrigger(this.triggerEvents, function(e) {
     		e.preventDefault();
+    		// handle click on opened dropdown menu
     		var name = $(e.target).closest('.UserStatsMenu').find('.username').text();
-    		if(!(name.length > 0)) {
-    			name = $(e.target).closest('li').find('.username').first().text();
+    		if (!name) {
+    			// handle click on right rail user item
+    			name = $(e.target).closest('li.User').data('user');
     		}
     		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')};
 		});
@@ -459,17 +463,12 @@ var NodeChatUsers = Backbone.View.extend({
 	triggerEvents: {
 			"click .kick": "kick",
 			"click .ban": "ban",
-			"click .give-chat-mod": "giveChatMod",
 			"click .private-block": "blockPrivateMessage",
 			"click .private-allow": "allowPrivateMessage",
 			"click .private": "showPrivateMessage",
 			"click #WikiChatList li": "mainListClick",
 			"click #PrivateChatList li": "privateListClick"
 	},
-
- 	clearPrivateChatActive: function() {
- 		$("#PrivateChatList li").removeClass('selected');
- 	},
 
 	addUser: function(user) {
 		var view = new UserView({model: user}),
@@ -489,11 +488,11 @@ var NodeChatUsers = Backbone.View.extend({
 		if (list.children().length) {
 			// The list is not empty. Arrange alphabetically.
 			var compareA = el.data('user');
-			if ( typeof(compareA)=='string' )  compareA = compareA.toUpperCase();
+			if ( typeof(compareA) == 'string' ) compareA = compareA.toUpperCase();
 			var wasAdded = false;
 			list.children().each(function(idx, itm) {
-				compareB = $(itm).data('user');
-				if ( typeof(compareB)=='string' )  compareB = compareB.toUpperCase();
+				var compareB = $(itm).data('user');
+				if ( typeof(compareB) == 'string' ) compareB = compareB.toUpperCase();
 				//TODO: check it
 				if (compareA == compareB) {
 					return false;
@@ -546,13 +545,16 @@ var NodeChatUsers = Backbone.View.extend({
 	},
 
 	showMenu: function(element, actions) {
-		var i, l, action, actionsUl, location,
+		var location,
 			$element = $(element),
 			offset = $element.offset(),
-			menu = $('#UserStatsMenu').html($(element).find('.UserStatsMenu').html()),
+			menu = $('#UserStatsMenu').html($element.find('.UserStatsMenu').html()),
 			menuActions = menu.find('.actions'),
-			username = menu.find('.username').text(),
+			username = $element.data('user'),
 			ul = $('<ul>');
+
+		// SUS-1695: add username to menu
+		menu.find('.username').data('name', username);
 
 		// position menu
 		menu.css('right', $('#Rail').outerWidth()).css('top', offset.top);
@@ -561,23 +563,25 @@ var NodeChatUsers = Backbone.View.extend({
 		if (actions.regular && actions.regular.length) {
 			var regularActions = ul.clone().addClass('regular-actions');
 			for (var i in actions.regular) {
-				var action = actions.regular[i];
+				var action = actions.regular[i],
+					template = _.template( $('#user-action-'+action+'-template').html() );
+
 				if (action == 'profile') {
-					action = /Message_Wall/.test(pathToProfilePage) ? 'message-wall' : 'talk-page';
-					location = pathToProfilePage.replace('$1', username);
+					action = /Message_Wall/.test(window.wgChatPathToProfilePage) ? 'message-wall' : 'talk-page';
+					location = window.wgChatPathToProfilePage.replace('$1', username);
 
 				} else if (action == 'contribs') {
-					location = pathToContribsPage.replace('$1', username);
+					location = window.wgChatPathToContribsPage.replace('$1', username);
 
 				} else {
 					location = null;
 				}
 
 				regularActions.append(
-					this[ location ? 'actionTemplate' : 'actionTemplateNoUrl' ]({
+					template({
 						actionUrl: location,
 						actionName: action,
-						actionDesc: $.msg('chat-user-menu-' + action)
+						actionDesc: mw.message('chat-user-menu-' + action).escaped()
 					})
 				);
 			}
@@ -589,11 +593,12 @@ var NodeChatUsers = Backbone.View.extend({
 		if (actions.admin && actions.admin.length) {
 			var adminActions = ul.clone().addClass('admin-actions');
 			for (var i in actions.admin) {
-				var action = actions.admin[i];
+				var action = actions.admin[i],
+					template = _.template( $('#user-action-'+action+'-template').html() );
 				adminActions.append(
-					this.actionTemplateNoUrl({
+					template({
 						actionName: action,
-						actionDesc: $.msg('chat-user-menu-' + action)
+						actionDesc: mw.message('chat-user-menu-' + action).escaped()
 					})
 				);
 			}
@@ -608,7 +613,9 @@ var NodeChatUsers = Backbone.View.extend({
 		}
 
 		// Add chat-mod class if necessary
-		$element.hasClass('chat-mod') ? menu.addClass('chat-mod') : menu.removeClass('chat-mod');
+		$element.hasClass('chatmoderator') ?
+			menu.addClass('chatmoderator') :
+			menu.removeClass('chatmoderator');
 
 		menu.show();
 
@@ -618,25 +625,6 @@ var NodeChatUsers = Backbone.View.extend({
 				$('#UserStatsMenu').hide();
 				$('body').unbind('.menuclose');
 			};
-		});
-
-		// Handle clicking the profile and contrib links
-
-		menu.find('.talk-page').add('.contribs').add('.message-wall').click(function(event) {
-			event.preventDefault();
-			var target = $(event.currentTarget);
-			var menu = target.closest('.UserStatsMenu');
-			var username = menu.find('.username').text();
-			var location = '';
-
-			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {
-				location = pathToProfilePage.replace('$1', username);
-			} else if (target.hasClass('contribs')) {
-				location = pathToContribsPage.replace('$1', username);
-			}
-
-			window.open(location);
-			menu.hide();
 		});
 	},
 	hideMenu: function() {

@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgHooks['getUserPermissionsErrors'][] = 'fnForumIndexProtector';
 
-function fnForumIndexProtector( Title &$title, User &$user, $action, &$result) {
+function fnForumIndexProtector( Title $title, User $user, string $action, &$result ): bool {
 
 	if( $user->isLoggedIn() ) {
 		#this doesnt apply to logged in users, bail, but keep going

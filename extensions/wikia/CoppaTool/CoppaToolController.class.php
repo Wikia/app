@@ -29,7 +29,7 @@ class CoppaToolController extends WikiaController {
 
 		$errorMessage = null;
 		$errorMessage2 = null;
-		$res = EditAccount::closeAccount( $userObj, wfMessage( 'coppatool-reason' )->plain(), $errorMessage, $errorMessage2 );
+		$res = EditAccount::closeAccount( $userObj, wfMessage( 'coppatool-reason' )->plain(), $errorMessage, $errorMessage2, /*$keepEmail = */false );
 		if ( $res === false ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', $errorMessage );
@@ -65,7 +65,7 @@ class CoppaToolController extends WikiaController {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		$userIdentityBox = new UserIdentityBox( $this->app, $userObj, UserProfilePageController::MAX_TOP_WIKIS );
+		$userIdentityBox = new UserIdentityBox( $userObj );
 
 		$userIdentityBox->resetUserProfile();
 
@@ -112,8 +112,9 @@ class CoppaToolController extends WikiaController {
 			'suppress' => true,
 		];
 
-		$batchDeleteTask = new MultiDeleteTask( $taskParams );
-		$batchDeleteTaskId = $batchDeleteTask->submitForm();
+		$task = new \Wikia\Tasks\Tasks\MultiTask();
+		$task->call('delete', $taskParams);
+		$batchDeleteTaskId = $task->queue();
 
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'resultMsg', wfMessage( 'coppatool-delete-user-pages-success', $batchDeleteTaskId )->plain() );
@@ -138,28 +139,23 @@ class CoppaToolController extends WikiaController {
 		}
 
 		$ipAddr = IP::sanitizeIP( $ipAddr );
-		$newIpAddr = '0.0.0.0';
 
 		$wikiIDs = RenameUserHelper::lookupIPActivity( $ipAddr );
 
-		$task = new UserRenameLocalTask();
-		$task->createTask(
-			[
-				'city_ids' => $wikiIDs,
-				'requestor_id' => $this->wg->User->getID(),
-				'requestor_name' => $this->wg->User->getName(),
-				'rename_user_id' => 0,
-				'rename_old_name' => $ipAddr,
-				'rename_new_name' => $newIpAddr,
-				'rename_ip' => true,
-				'notify_renamed' => false,
-				'reason' => wfMessage( 'coppatool-reason' )->plain(),
-			],
-			TASK_QUEUED,
-			BatchTask::PRIORITY_HIGH
-		);
-
-		$taskID = $task->getID();
+		$taskParams = [
+			'requestor_id' => $this->wg->User->getID(),
+			'requestor_name' => $this->wg->User->getName(),
+			'rename_user_id' => 0,
+			'rename_old_name' => $ipAddr,
+			'rename_new_name' => NON_ROUTABLE_IPV6,
+			'rename_ip' => true,
+			'notify_renamed' => false,
+			'reason' => wfMessage( 'coppatool-reason' )->plain(),
+		];
+		$task = ( new UserRenameTask() )
+			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
+		$task->call('renameUser', $wikiIDs, $taskParams);
+		$taskID = $task->queue();
 
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'resultMsg', wfMessage( 'coppatool-rename-ip-success', $taskID )->plain() );

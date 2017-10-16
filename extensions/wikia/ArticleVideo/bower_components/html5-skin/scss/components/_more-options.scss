@@ -1,0 +1,37 @@
+.oo-more-options-items {
+  position: absolute;
+  left: 50%;
+  @include vendor-prefixes(transform, translate(-50%, -50%));
+  top: 100%;
+  opacity: 0;
+  list-style: none;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  @include vendor-prefixes(user-select, none);
+  font-size: 30px;
+
+  a.oo-control-bar-item {
+    background-color: transparent;
+    border:0;
+    outline: none;
+  }
+
+  .oo-control-bar-item {
+    height: 100%;
+    font-weight: bold;
+    text-align: center;
+    padding-left: 13px;
+    padding-right: 13px;
+    margin: 0 auto;
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+.oo-more-options-items.oo-animate-more-options {
+  top: 50%;
+  opacity: 1;
+  @include vendor-prefixes(transition, all 0.7s ease);
+}

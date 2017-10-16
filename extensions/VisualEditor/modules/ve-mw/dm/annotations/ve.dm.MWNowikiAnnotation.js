@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWNowikiAnnotation class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -23,7 +23,7 @@ ve.dm.MWNowikiAnnotation = function VeDmMWNowikiAnnotation( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWNowikiAnnotation, ve.dm.Annotation );
+OO.inheritClass( ve.dm.MWNowikiAnnotation, ve.dm.Annotation );
 
 /* Static Properties */
 
@@ -33,9 +33,9 @@ ve.dm.MWNowikiAnnotation.static.matchRdfaTypes = [ 'mw:Nowiki' ];
 
 ve.dm.MWNowikiAnnotation.static.toDataElement = function ( domElements ) {
 	return {
-		'type': 'mwNowiki',
-		'attributes': {
-			'originalDomElements': ve.copy( domElements )
+		type: this.name,
+		attributes: {
+			originalDomElements: ve.copy( domElements )
 		}
 	};
 };

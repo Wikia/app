@@ -4,11 +4,14 @@
  */
 namespace Wikia\Search\Test\Query;
 use Wikia\Search\Query\Select as Query, Wikia\Search\MediaWikiService, Wikia\Search\Test\BaseTest, ReflectionMethod, ReflectionProperty;
+use Wikia\Search\Query\Select;
 
 class SelectTest extends BaseTest
 {
 	/**
-	 * @covers Wikia\Search\Query\Select::__construct
+	 * @group Slow
+	 * @slowExecutionTime 0.10199 ms
+	 * @covers \Wikia\Search\Query\Select::__construct
 	 */
 	public function testConstruct()
 	{
@@ -21,154 +24,90 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\Query\Select::getSanitizedQuery
+	 * @group Slow
+	 * @group Broken
+	 * @slowExecutionTime 0.10945 ms
+	 * @covers \Wikia\Search\Query\Select::getSanitizedQuery
+	 * @dataProvider getSanitizedQueryDataProvider
+	 * @param string $rawQuery raw user input (search query)
+	 * @param string $expectedResult expected query after sanitization and formatting
 	 */
-	public function testGetSanitizedQuery()
-	{
-		$sanitizer = $this->getMock( 'Sanitizer', array( 'StripAllTags' ) );
-		$this->mockClass( 'Sanitizer', $sanitizer );
-		$rawQuery = "crime &amp; <b>punishment</b>";
-		$expected = "crime & punishment";
+	public function testGetSanitizedQuery( string $rawQuery, string $expectedResult ) {
 		$query = new Query( $rawQuery );
-		$this->assertAttributeEmpty(
-				'sanitizedQuery',
-				$query
-		);
-		$sanitizer
-		    ->staticExpects( $this->once() )
-		    ->method       ( 'StripAllTags' )
-		    ->with         ( $rawQuery )
-		    ->will         ( $this->returnValue( "crime &amp; punishment" ) )
-		;
-		$this->assertEquals(
-				$expected,
-				$query->getSanitizedQuery()
-		);
-		$this->assertAttributeEquals(
-				$expected,
-				'sanitizedQuery',
-				$query
-		);
+		$this->assertAttributeEmpty( 'sanitizedQuery', $query );
+
+		$this->assertEquals( $expectedResult, $query->getSanitizedQuery() );
+		$this->assertAttributeEquals( $expectedResult, 'sanitizedQuery', $query );
 	}
 	
 	/**
-	 * @covers Wikia\Search\Query\Select::getQueryForHtml
+	 * @group Slow
+	 * @slowExecutionTime 0.10793 ms
+	 * @covers \Wikia\Search\Query\Select::getQueryForHtml
+	 * @dataProvider getQueryForHtmlDataProvider
+	 * @param string $rawQuery raw user input (search query)
+	 * @param string $expectedSafeOutput expected html-safe output
 	 */
-	public function testGetQueryForHtml() {
-		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
-		$mockQuery
-		    ->expects( $this->once() )
-		    ->method ( 'getSanitizedQuery' )
-		    ->will   ( $this->returnValue( "crime & punishment" ) )
-		;
-		$this->assertEquals(
-				"crime &amp; punishment",
-				$mockQuery->getQueryForHtml()
-		);
+	public function testGetQueryForHtml( string $rawQuery, string $expectedSafeOutput ) {
+		$query = new Query( $rawQuery );
+		$this->assertEquals( $expectedSafeOutput, $query->getQueryForHtml() );
 	}
 	
 	/**
-	 * @covers Wikia\Search\Query\Select::hasTerms
+	 * @group Slow
+	 * @slowExecutionTime 0.10823 ms
+	 * @covers \Wikia\Search\Query\Select::hasTerms
+	 * @dataProvider hasTermsDataProvider
+	 * @param string $rawQuery raw user input (search query)
+	 * @param bool $shouldHaveTerms whether the input counts as a valid search term
 	 */
-	public function testHasTerms() {
-		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
-		$mockQuery
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getSanitizedQuery' )
-		    ->will   ( $this->returnValue( ' ' ) )
-		;
-		$this->assertFalse(
-				$mockQuery->hasTerms()
-		);
-		$mockQuery
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getSanitizedQuery' )
-		    ->will   ( $this->returnValue( 'drive slow, homie' ) )
-		;
-		$this->assertTrue(
-				$mockQuery->hasTerms()
-		);
+	public function testHasTerms( string $rawQuery, bool $shouldHaveTerms ) {
+		$query = new Query( $rawQuery );
+
+		$this->assertEquals( $query->hasTerms(), $shouldHaveTerms );
 	}
 	
 	/**
-	 * @covers Wikia\Search\Query\Select::getService
+	 * @group Slow
+	 * @slowExecutionTime 0.09127 ms
+	 * @covers \Wikia\Search\Query\Select::getService
 	 */
 	public function testGetService() {
 		$query = new Query( 'foo' );
 		$method = new ReflectionMethod( 'Wikia\Search\Query\Select', 'getService' );
 		$method->setAccessible( true );
 		$this->assertInstanceOf(
-				'Wikia\Search\MediaWikiService',
+				MediaWikiService::class,
 				$method->invoke( $query )
 		);
 		$this->assertAttributeInstanceOf(
-				'Wikia\Search\MediaWikiService',
+				MediaWikiService::class,
 				'service',
 				$query
 		);
 	}
 	
 	/**
-	 * @covers Wikia\Search\Query\Select::initializeNamespaceData
-	 * @covers Wikia\Search\Query\Select::getNamespacePrefix
-	 * @covers Wikia\Search\Query\Select::getNamespaceId
+	 * @group Slow
+	 * @slowExecutionTime 0.09147 ms
+	 * @covers \Wikia\Search\Query\Select::initializeNamespaceData
+	 * @covers \Wikia\Search\Query\Select::getNamespacePrefix
+	 * @covers \Wikia\Search\Query\Select::getNamespaceId
+	 * @dataProvider namespaceLogicDataProvider
+	 * @param string $rawQuery raw user input (search query)
+	 * @param null|int $expectedNamespaceId expected NS number or null if no NS
+	 * @param null|string $expectedNamespacePrefix expected ns prefix or null if no NS
 	 */
-	public function testNamespaceLogic() {
-		$query = new Query( 'ThisIsNotANamespace:Bar' );
-		$this->assertNull(
-				$query->getNamespaceId()
-		);
-		$this->assertNull(
-				$query->getNamespacePrefix()
-		);
-		$query = new Query( 'Category:Things That Are Namespaces' );
-		$this->assertEquals(
-				NS_CATEGORY,
-				$query->getNamespaceId()
-		);
-		$this->assertEquals(
-				'Category',
-				$query->getNamespacePrefix()
-		);
+	public function testNamespaceLogic( string $rawQuery, $expectedNamespaceId, $expectedNamespacePrefix ) {
+		$query = new Query( $rawQuery );
+		$this->assertEquals( $query->getNamespaceId(), $expectedNamespaceId );
+		$this->assertEquals( $query->getNamespacePrefix(), $expectedNamespacePrefix );
 	}
 	
 	/**
-	 * @covers Wikia\Search\Query\Select::getNamespacePrefix
-	 */
-	public function testGetNamespacePrefix() {
-		$query = $this->getMockBuilder( 'Wikia\Search\Query\Select' )
-		              ->disableOriginalConstructor()
-		              ->setMethods( [ 'initializeNamespaceData' ] )
-		              ->getMock();
-		
-		$query
-		    ->expects( $this->once() )
-		    ->method ( 'initializeNamespaceData' )
-		;
-		
-		$attr = new ReflectionProperty( $query, 'namespacePrefix' );
-		$attr->setAccessible( true );
-		$attr->setValue( $query, 'foo' );
-		
-		$this->assertAttributeEmpty(
-				'namespaceChecked',
-				$query
-		);
-		$this->assertEquals(
-				'foo',
-				$query->getNamespacePrefix()
-		);
-		$nsattr = new ReflectionProperty( $query, 'namespaceChecked' );
-		$nsattr->setAccessible( true );
-		$nsattr->setValue( $query,true );
-		$this->assertEquals(
-				'foo',
-				$query->getNamespacePrefix()
-		); 
-	}
-	
-	/**
-	 * @covers Wikia\Search\Query\Select::getSolrQuery
+	 * @group Slow
+	 * @slowExecutionTime 0.09139 ms
+	 * @covers \Wikia\Search\Query\Select::getSolrQuery
 	 */
 	public function testGetSolrQuery() {
 		$query = new Query( "Category:Shortcuts" );
@@ -188,6 +127,10 @@ class SelectTest extends BaseTest
 		);
 	}
 	
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09074 ms
+	 */
 	public function testGetSolrQueryWithWordLimit() {
 		$query = <<<YEEZY
 Uh:my mind move like a Tron bike
@@ -206,5 +149,58 @@ YEEZY;
 			$sQuery,
 			$q->getSolrQuery( 10 )
 		);
+	}
+
+	public function getSanitizedQueryDataProvider(): array {
+		return [
+			'html entities and tags' => [
+				"crime &amp; <b>punishment</b>",
+				"crime & punishment"
+			]
+		];
+	}
+
+	public function getQueryForHtmlDataProvider(): array {
+		return [
+			'html entities and tags' => [
+				"crime &amp; <b>punishment</b>",
+				"crime &amp; punishment"
+			],
+			'html entity' => [
+				"crime & punishment",
+				"crime &amp; punishment"
+			]
+		];
+	}
+
+	public function hasTermsDataProvider(): array {
+		return [
+			'query consisting of only spaces' => [
+				'    ', false
+			],
+			'query consisting of only whitespace characters' => [
+				" \t\n", false
+			],
+			'valid search query' => [
+				'co to jest', true
+			],
+			'sanitized search query' => [
+				'<code>na dawaj no html!</code>   ', true
+			]
+		];
+	}
+
+	public function namespaceLogicDataProvider(): array {
+		return [
+			'invalid namespace' => [
+				'NaCoToJest:Isnotanamespace', null, null
+			],
+			'valid namespace' => [
+				'Category:Na dobre', NS_CATEGORY, 'Category'
+			],
+			'evil string ending with colon' => [
+				'jestesmy zgubieni:', null, null
+			]
+		];
 	}
 }

@@ -84,7 +84,7 @@
  * If you want to use a different language:
  *
  * @code
- *    $userLanguage = $user->getOption( 'language' );
+ *    $userLanguage = $user->getGlobalPreference( 'language' );
  *    wfMessage( 'email-header' )
  *         ->inLanguage( $userLanguage )
  *         ->plain();
@@ -547,6 +547,15 @@ class Message {
 				"Invalid message parameter: " . htmlspecialchars( serialize( $param ) ),
 				E_USER_WARNING
 			);
+
+			// Wikia change - start (@author macbre)
+			// log more details for PLATFORM-733
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => new Exception( 'Invalid message parameter' ),
+				'param' => serialize( $param ),
+			]);
+			// Wikia change - end
+
 			return array( 'before', '[INVALID]' );
 		}
 	}
@@ -557,7 +566,17 @@ class Message {
 	 * @return string Wikitext parsed into HTML
 	 */
 	protected function parseText( $string ) {
-		return MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language )->getText();
+		// Wikia change - start
+		// MessageCache::parse can return a string (PLATFORM-807)
+		$parserOutput = MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language );
+		Wikia\Util\Assert::true( $parserOutput instanceof ParserOutput,
+			'Message::parseText: parse() did not return ParserOutput',
+			[
+				'parser_output_value' => wfGetValueExcerpt( $parserOutput )
+			] );
+
+		return $parserOutput->getText();
+		// Wikia change - end
 	}
 
 	/**
@@ -608,4 +627,52 @@ class Message {
 		return $this->message;
 	}
 
+}
+
+/**
+ * Variant of the Message class.
+ *
+ * Rather than treating the message key as a lookup
+ * value (which is passed to the MessageCache and
+ * translated as necessary), a RawMessage key is
+ * treated as the actual message.
+ *
+ * All other functionality (parsing, escaping, etc.)
+ * is preserved.
+ *
+ * @since 1.21
+ * Backported by Adam Karmiński <adamk@wikia-inc.com>
+ */
+class RawMessage extends Message {
+	/**
+	 * Call the parent constructor, then store the key as
+	 * the message.
+	 *
+	 * @see Message::__construct
+	 *
+	 * @param string $text Message to use.
+	 * @param array $params Parameters for the message.
+	 *
+	 * @throws InvalidArgumentException
+	 */
+	public function __construct( $text, $params = array() ) {
+		if ( !is_string( $text ) ) {
+			throw new InvalidArgumentException( '$text must be a string' );
+		}
+		parent::__construct( $text, $params );
+		// The key is the message.
+		$this->message = $text;
+	}
+	/**
+	 * Fetch the message (in this case, the key).
+	 *
+	 * @return string
+	 */
+	public function fetchMessage() {
+		// Just in case the message is unset somewhere.
+		if ( $this->message === null ) {
+			$this->message = $this->key;
+		}
+		return $this->message;
+	}
 }

@@ -85,14 +85,14 @@ class ApiLogin extends ApiBase {
 			case LoginForm::SUCCESS:
 				$user = $context->getUser();
 				$this->getContext()->setUser( $user );
-				$user->setOption( 'rememberpassword', 1 );
+				$user->setGlobalPreference( 'rememberpassword', 1 );
 				$user->setCookies( $this->getRequest() );
 
 				// Run hooks.
 				// @todo FIXME: Split back and frontend from this hook.
 				// @todo FIXME: This hook should be placed in the backend
 				$injected_html = '';
-				wfRunHooks( 'UserLoginComplete', array( &$user, &$injected_html ) );
+				Hooks::run( 'UserLoginComplete', array( &$user, &$injected_html ) );
 
 				$result['result'] = 'Success';
 				$result['lguserid'] = intval( $user->getId() );

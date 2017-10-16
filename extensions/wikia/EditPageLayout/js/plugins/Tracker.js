@@ -15,7 +15,7 @@
 	WikiaEditor.plugins.tracker = $.createClass( WikiaEditor.plugin, {
 		config: {
 			action: Wikia.Tracker.ACTIONS.CLICK,
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		},
 
 		init: function() {
@@ -28,8 +28,11 @@
 
 			// Track edit page views and page type
 			if ( !isMiniEditor ) {
+				if ( window.veTrack ) {
+					veTrack( { action: 'ck-edit-page-start' } );
+				}
 				this.track({
-					action: Wikia.Tracker.ACTIONS.VIEW,
+					action: Wikia.Tracker.ACTIONS.IMPRESSION,
 					label: 'edit-page'
 				});
 			}

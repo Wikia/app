@@ -60,7 +60,7 @@
 
 .sb-icon {
 	position: absolute;
-	left: 30px;
+	left: 25px;
 	top: 10px;
 	display: block;
 	width: 57px;
@@ -85,7 +85,7 @@
 
 .sb-info {
 	position: absolute;
-	left: 98px;
+	left: 90px;
 	top: 18px;
 	width: 44%;
 	font-size: 11px;
@@ -103,7 +103,7 @@
 
 .sb-button {
 	position: absolute;
-	right: 20px;
+	right: 15px;
 	top: 24px;
 	border: 1px solid #bfbfbf;
 	padding: 0 10px;
@@ -121,11 +121,15 @@
 	&:active, &:hover {
 		background: -webkit-linear-gradient(top, gainsboro 0%, #efefef 100%);
 	}
+
+	span {
+		pointer-events: none;
+	}
 }
 
 .android {
 	border-color: #212228;
-	background: #3d3d3d url('/extensions/wikia/WikiaMobile/SmartBanner/dark_background_stripes.gif'); /* base64 */
+	background: #3d3d3d url('/extensions/wikia/WikiaMobile/SmartBanner/dark_background_stripes.gif'); /* inline */
 
 	.sb-close {
 		border-color: #000;
@@ -163,6 +167,7 @@
 			background-image: -moz-linear-gradient(top, #42b6c9, #39a9bb);
 			text-shadow: none;
 			pointer-events: none;
+			line-height: 100%;
 
 			height: 100%;
 			padding: 0 5px;

@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"LNDDYL"
+		]
+	},
+	"createproperty": "建立屬性",
+	"createform": "建立表單",
+	"sf-createform-with-name": "建立表單：$1",
+	"sf_createform_addelements": "新增元素",
+	"sf_createform_additembeforesave": "在您儲存之前，您必須新增至少一個模板或頁面章節到表單。",
+	"createclass": "建立類別"
+}

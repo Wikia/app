@@ -41,14 +41,14 @@ class CategoryPage extends Article {
 		$request = $this->getContext()->getRequest();
 		$diff = $request->getVal( 'diff' );
 		$diffOnly = $request->getBool( 'diffonly',
-			$this->getContext()->getUser()->getOption( 'diffonly' ) );
+			$this->getContext()->getUser()->getGlobalPreference( 'diffonly' ) );
 
 		if ( isset( $diff ) && $diffOnly ) {
 			parent::view();
 			return;
 		}
 
-		if ( !wfRunHooks( 'CategoryPageView', array( &$this ) ) ) {
+		if ( !Hooks::run( 'CategoryPageView', [ $this ] ) ) {
 			return;
 		}
 

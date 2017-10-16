@@ -1,0 +1,52 @@
+{
+	"plugins": [
+		"jscs-jsdoc"
+	],
+	"requireCurlyBraces": ["if", "else", "for", "while", "do"],
+	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "case", "catch", "return", "function"],
+	"requireParenthesesAroundIIFE": true,
+	"requireSpacesInConditionalExpression": {
+		"afterTest": true,
+		"beforeConsequent": true,
+		"afterConsequent": true,
+		"beforeAlternate": true
+	},
+	"requireSpacesInFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"requireMultipleVarDecl": true,
+	"disallowEmptyBlocks": true,
+	"disallowSpacesInsideArrayBrackets": true,
+	"disallowSpacesInsideParentheses": true,
+	"disallowSpaceAfterObjectKeys": true,
+	"requireCommaBeforeLineBreak": true,
+	"requireOperatorBeforeLineBreak": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+	"disallowSpaceAfterBinaryOperators": ["!"],
+	"disallowSpaceBeforeBinaryOperators": [","],
+	"disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~"],
+	"disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
+	"requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+	"requireSpaceAfterBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+	"disallowKeywords": [ "with" ],
+	"disallowMultipleLineStrings": true,
+	"disallowMultipleLineBreaks": true,
+	"validateLineBreaks": "LF",
+	"validateQuoteMarks": "'",
+	"disallowTrailingWhitespace": true,
+	"disallowKeywordsOnNewLine": ["else"],
+	"requireLineFeedAtFileEnd": true,
+	"maximumLineLength": 120,
+	"requireCapitalizedConstructors": true,
+	"safeContextKeyword": "self",
+	"requireDotNotation": true,
+	"jsDoc": {
+		"checkParamNames": true,
+		"checkRedundantParams": true,
+		"requireParamTypes": true
+	},
+	"excludeFiles": [
+		"**/node_modules/**",
+		"**/lib/**",
+		"**/*.mustache.js"
+	]
+}

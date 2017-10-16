@@ -55,10 +55,10 @@ class SpecialWatchlist extends SpecialPage {
 		}
 
 		// Add feed links
-		$wlToken = $user->getOption( 'watchlisttoken' );
+		$wlToken = $user->getGlobalAttribute( 'watchlisttoken' );
 		if ( !$wlToken ) {
 			$wlToken = MWCryptRand::generateHex( 40 );
-			$user->setOption( 'watchlisttoken', $wlToken );
+			$user->setGlobalAttribute( 'watchlisttoken', $wlToken );
 			$user->saveSettings();
 		}
 
@@ -91,9 +91,11 @@ class SpecialWatchlist extends SpecialPage {
 			return;
 		}
 
-		if( ( $wgEnotifWatchlist || $wgShowUpdatedMarker ) && $request->getVal( 'reset' ) &&
-			$request->wasPosted() )
-		{
+		if ( ( $wgEnotifWatchlist || $wgShowUpdatedMarker )
+			&& $request->getVal( 'reset' )
+			&& $request->wasPosted()
+			&& $user->matchEditToken( $request->getVal( 'token' ) )
+		) {
 			$user->clearAllNotifications();
 			$output->redirect( $this->getTitle()->getFullUrl() );
 			return;
@@ -107,31 +109,31 @@ class SpecialWatchlist extends SpecialPage {
 
 		// @TODO: use FormOptions!
 		$defaults = array(
-		/* float */ 'days'      => floatval( $user->getOption( 'watchlistdays' ) ), /* 3.0 or 0.5, watch further below */
-		/* bool  */ 'hideMinor' => (int)$user->getBoolOption( 'watchlisthideminor' ),
-		/* bool  */ 'hideBots'  => (int)$user->getBoolOption( 'watchlisthidebots' ),
-		/* bool  */ 'hideAnons' => (int)$user->getBoolOption( 'watchlisthideanons' ),
-		/* bool  */ 'hideLiu'   => (int)$user->getBoolOption( 'watchlisthideliu' ),
-		/* bool  */ 'hidePatrolled' => (int)$user->getBoolOption( 'watchlisthidepatrolled' ),
-		/* bool  */ 'hideOwn'   => (int)$user->getBoolOption( 'watchlisthideown' ),
+		/* float */ 'days'      => floatval( $user->getGlobalPreference( 'watchlistdays' ) ), /* 3.0 or 0.5, watch further below */
+		/* bool  */ 'hideMinor' => (int)$user->getGlobalPreference( 'watchlisthideminor' ),
+		/* bool  */ 'hideBots'  => (int)$user->getGlobalPreference( 'watchlisthidebots' ),
+		/* bool  */ 'hideAnons' => (int)$user->getGlobalPreference( 'watchlisthideanons' ),
+		/* bool  */ 'hideLiu'   => (int)$user->getGlobalPreference( 'watchlisthideliu' ),
+		/* bool  */ 'hidePatrolled' => (int)$user->getGlobalPreference( 'watchlisthidepatrolled' ),
+		/* bool  */ 'hideOwn'   => (int)$user->getGlobalPreference( 'watchlisthideown' ),
 		/* ?     */ 'namespace' => 'all',
 		/* ?     */ 'invert'    => false,
 		);
 		$this->customFilters = array();
-		wfRunHooks( 'SpecialWatchlistFilters', array( $this, &$this->customFilters ) );
+		Hooks::run( 'SpecialWatchlistFilters', array( $this, &$this->customFilters ) );
 		foreach( $this->customFilters as $key => $params ) {
 			$defaults[$key] = $params['msg'];
 		}
 
 		# Extract variables from the request, falling back to user preferences or
 		# other default values if these don't exist
-		$prefs['days']      = floatval( $user->getOption( 'watchlistdays' ) );
-		$prefs['hideminor'] = $user->getBoolOption( 'watchlisthideminor' );
-		$prefs['hidebots']  = $user->getBoolOption( 'watchlisthidebots' );
-		$prefs['hideanons'] = $user->getBoolOption( 'watchlisthideanons' );
-		$prefs['hideliu']   = $user->getBoolOption( 'watchlisthideliu' );
-		$prefs['hideown' ]  = $user->getBoolOption( 'watchlisthideown' );
-		$prefs['hidepatrolled' ] = $user->getBoolOption( 'watchlisthidepatrolled' );
+		$prefs['days']      = floatval( $user->getGlobalPreference( 'watchlistdays' ) );
+		$prefs['hideminor'] = (bool)$user->getGlobalPreference( 'watchlisthideminor' );
+		$prefs['hidebots']  = (bool)$user->getGlobalPreference( 'watchlisthidebots' );
+		$prefs['hideanons'] = (bool)$user->getGlobalPreference( 'watchlisthideanons' );
+		$prefs['hideliu']   = (bool)$user->getGlobalPreference( 'watchlisthideliu' );
+		$prefs['hideown' ]  = (bool)$user->getGlobalPreference( 'watchlisthideown' );
+		$prefs['hidepatrolled' ] = (bool)$user->getGlobalPreference( 'watchlisthidepatrolled' );
 
 		# Get query variables
 		$values = array();
@@ -223,8 +225,8 @@ class SpecialWatchlist extends SpecialPage {
 		}
 
 		# Toggle watchlist content (all recent edits or just the latest)
-		if( $user->getOption( 'extendwatchlist' ) ) {
-			$limitWatchlist = intval( $user->getOption( 'wllimit' ) );
+		if( $user->getGlobalPreference( 'extendwatchlist' ) ) {
+			$limitWatchlist = intval( $user->getGlobalPreference( 'wllimit' ) );
 			$usePage = false;
 		} else {
 			# Top log Ids for a page are not stored
@@ -245,7 +247,7 @@ class SpecialWatchlist extends SpecialPage {
 		# Show watchlist header
 		$form .= $this->msg( 'watchlist-details' )->numParams( $nitems )->parse();
 
-		if( $user->getOption( 'enotifwatchlistpages' ) && $wgEnotifWatchlist) {
+		if( $user->getGlobalPreference( 'enotifwatchlistpages' ) && $wgEnotifWatchlist) {
 			$form .= $this->msg( 'wlheader-enotif' )->parseAsBlock() . "\n";
 		}
 		if( $wgShowUpdatedMarker ) {
@@ -254,6 +256,7 @@ class SpecialWatchlist extends SpecialPage {
 						'id' => 'mw-watchlist-resetbutton' ) ) .
 					$this->msg( 'wlheader-showupdated' )->parse() . ' ' .
 					Xml::submitButton( $this->msg( 'enotif_reset' )->text(), array( 'name' => 'dummy' ) ) .
+					Html::hidden( 'token', $user->getEditToken() ) .
 					Html::hidden( 'reset', 'all' ) .
 					Xml::closeElement( 'form' );
 		}
@@ -281,8 +284,25 @@ class SpecialWatchlist extends SpecialPage {
 			}
 		}
 
+		// Log entries with DELETED_ACTION must not show up unless the user has
+		// the necessary rights.
+		if ( !$user->isAllowed( 'deletedhistory' ) ) {
+			$bitmask = LogPage::DELETED_ACTION;
+		} elseif ( !$user->isAllowed( 'suppressrevision' ) ) {
+			$bitmask = LogPage::DELETED_ACTION | LogPage::DELETED_RESTRICTED;
+		} else {
+			$bitmask = 0;
+		}
+		if ( $bitmask ) {
+			$conds[] = $dbr->makeList( array(
+				'rc_type != ' . RC_LOG,
+				$dbr->bitAnd( 'rc_deleted', $bitmask ) . " != $bitmask",
+			), LIST_OR );
+		}
+
+
 		ChangeTags::modifyDisplayQuery( $tables, $fields, $conds, $join_conds, $options, '' );
-		wfRunHooks('SpecialWatchlistQuery', array(&$conds,&$tables,&$join_conds,&$fields) );
+		Hooks::run('SpecialWatchlistQuery', array(&$conds,&$tables,&$join_conds,&$fields) );
 
 		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $options, $join_conds );
 		$numRows = $dbr->numRows( $res );
@@ -352,7 +372,7 @@ class SpecialWatchlist extends SpecialPage {
 		/* Do link batch query */
 		$linkBatch = new LinkBatch;
 		foreach ( $res as $row ) {
-			$userNameUnderscored = str_replace( ' ', '_', $row->rc_user_text );
+			$userNameUnderscored = str_replace( ' ', '_', User::getUsername( $row->rc_user, $row->rc_user_text ) ); // SUS-812
 			if ( $row->rc_user != 0 ) {
 				$linkBatch->add( NS_USER, $userNameUnderscored );
 			}
@@ -379,7 +399,7 @@ class SpecialWatchlist extends SpecialPage {
 				$updated = false;
 			}
 
-			if ( $wgRCShowWatchingUsers && $user->getOption( 'shownumberswatching' ) ) {
+			if ( $wgRCShowWatchingUsers && $user->getGlobalPreference( 'shownumberswatching' ) ) {
 				$rc->numberofWatchingusers = $dbr->selectField( 'watchlist',
 					'COUNT(*)',
 					array(

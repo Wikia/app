@@ -1,9 +1,0 @@
-/*
- * Group-level based edit page access for MediaWiki. Monitors current edit sessions.
- * Version 0.4.2
- *
- */
-
-div#editconflict_notify { text-align:left; font-size:9pt; }
-div#editconflict_notify span.closelink { cursor:pointer; text-align:left; font-style:normal; }
-div#editconflict_popup { position:absolute; top:0px; left:0px; text-align:center; padding:5px; border:1px solid black; background:IndianRed; color:white; width:auto; height:auto; font-size:9pt; font-weight:bold; visibility:hidden; z-index:1000; }

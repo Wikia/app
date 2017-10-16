@@ -164,7 +164,7 @@ class DateFormatter
 			
 			// Another horrible hack
 			$this->mLinked = $linked;
-			$text = preg_replace_callback( $regex, array( &$this, 'replace' ), $text );
+			$text = preg_replace_callback( $regex, [ $this, 'replace' ], $text );
 			unset($this->mLinked);
 		}
 		return $text;

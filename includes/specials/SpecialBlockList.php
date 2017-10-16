@@ -163,7 +163,7 @@ class SpecialBlockList extends SpecialPage {
 
 		# Check for other blocks, i.e. global/tor blocks
 		$otherBlockLink = array();
-		wfRunHooks( 'OtherBlockLogLink', array( &$otherBlockLink, $this->target ) );
+		Hooks::run( 'OtherBlockLogLink', array( &$otherBlockLink, $this->target ) );
 
 		$out = $this->getOutput();
 
@@ -247,7 +247,6 @@ class BlockListPager extends TablePager {
 		if ( $msg === null ) {
 			$msg = array(
 				'anononlyblock',
-				'createaccountblock',
 				'noautoblockblock',
 				'emailblock',
 				'blocklist-nousertalk',
@@ -324,7 +323,7 @@ class BlockListPager extends TablePager {
 					$formatted = Linker::userLink( $value, $row->by_user_name );
 					$formatted .= Linker::userToolLinks( $value, $row->by_user_name );
 				} else {
-					$formatted = htmlspecialchars( $row->ipb_by_text ); // foreign user?
+					$formatted = htmlspecialchars( \User::getUsername( $row->ipb_by, $row->ipb_by_text ) ); // foreign user?
 				}
 				break;
 
@@ -337,9 +336,7 @@ class BlockListPager extends TablePager {
 				if ( $row->ipb_anon_only ) {
 					$properties[] = $msg['anononlyblock'];
 				}
-				if ( $row->ipb_create_account ) {
-					$properties[] = $msg['createaccountblock'];
-				}
+
 				if ( $row->ipb_user && !$row->ipb_enable_autoblock ) {
 					$properties[] = $msg['noautoblockblock'];
 				}
@@ -359,7 +356,6 @@ class BlockListPager extends TablePager {
 				$formatted = "Unable to format $name";
 				break;
 		}
-
 		return $formatted;
 	}
 
@@ -377,7 +373,6 @@ class BlockListPager extends TablePager {
 				'ipb_timestamp',
 				'ipb_auto',
 				'ipb_anon_only',
-				'ipb_create_account',
 				'ipb_enable_autoblock',
 				'ipb_expiry',
 				'ipb_range_start',

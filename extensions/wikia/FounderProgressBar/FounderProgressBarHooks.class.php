@@ -10,9 +10,13 @@ class FounderProgressBarHooks {
 	/**
 	 * @desc Counts actions involve adding or editing articles
 	 *
-	 * @param Article $article
+	 * @param WikiPage $article
+	 * @return bool
 	 */
-	public static function onArticleSaveComplete (&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public static function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status $status, $baseRevId
+	): bool {
 
 		// Quick exit if we are already done with Founder Progress Bar (memcache key set for 30 days)
 		if (self::allTasksComplete()) {
@@ -36,10 +40,6 @@ class FounderProgressBarHooks {
 			// if blogpost
 			if ($app->wg->EnableBlogArticles && $title->getNamespace() == NS_BLOG_ARTICLE) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_BLOGPOST_ADD']));
-			}
-			// if topten list
-			if ($app->wg->EnableTopListsExt && $title->getNamespace() == NS_TOPLIST) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_TOPTENLIST_ADD']));
 			}
 
 			// edit profile page X
@@ -109,9 +109,10 @@ class FounderProgressBarHooks {
 	 * @desc Counts the following actions
 	 *
 	 * Adding a photo
-	 *
+	 * @param UploadBase $image
+	 * @return bool
 	 */
-	public static function onUploadComplete (&$image) {
+	public static function onUploadComplete ( UploadBase $image ): bool {
 		// Quick exit if tasks are all completed
 		if (self::allTasksComplete()) {
 			return true;
@@ -167,21 +168,6 @@ class FounderProgressBarHooks {
 			self::initRecords($params['city_id']);
 		}
 
-		return true;
-	}
-
-	/**
-	 * @desc Sends a request to update facebook connect founder progress bar task
-	 *
-	 * @return bool true because it's a hook
-	 */
-	public static function onFacebookConnect() {
-		// Quick exit if tasks are all completed
-		if( self::allTasksComplete() ) {
-			return true;
-		}
-
-		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_FB_CONNECT']));
 		return true;
 	}
 

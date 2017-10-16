@@ -65,5 +65,5 @@ foreach ($databases as $city_id => $database) {
 	if (!$quiet) {
 		echo "Removed rights for wiki (ID:$city_id, dbname:$database)\n";
 	}
-	wfWaitForSlaves(5);
+	wfWaitForSlaves();
 }

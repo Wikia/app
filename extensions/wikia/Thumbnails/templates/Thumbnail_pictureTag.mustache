@@ -1,0 +1,15 @@
+<picture>
+
+	{{! Images for smaller screens }}
+	<source
+		media="(max-width: {{breakPoint}}px)"
+		srcset="{{smallUrl}}">
+
+	{{! Images for larger screens }}
+	<source
+		srcset="{{imgSrc}}">
+
+	{{! Fall back to img tag for browsers that don't support picture tag yet }}
+	{{>Thumbnail_imgTag}}
+
+</picture>

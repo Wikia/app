@@ -3,7 +3,17 @@
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'ImageLazyLoad',
+	'author' => 'Piotr Bablok',
+	'descriptionmsg' => 'imagelazyload-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageLazyLoad',
+);
+
 $dir = dirname(__FILE__) . '/';
+
+//i18n
+$wgExtensionMessagesFiles['ImageLazyLoad'] = $dir . 'i18n/ImageLazyLoad.i18n.php';
 
 $wgAutoloadClasses[ 'ImageLazyLoad'] =  $dir . 'ImageLazyLoad.class.php' ;
 

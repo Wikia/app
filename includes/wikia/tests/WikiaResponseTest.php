@@ -1,8 +1,10 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaResponseTest extends PHPUnit_Framework_TestCase {
+class WikiaResponseTest extends TestCase {
 
 	const TEST_HEADER_NAME = 'X-WikiaResponseTest';
 	const TEST_HEADER_VALUE1 = 'TestValue1';
@@ -10,20 +12,17 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	const TEST_VAL_NAME = 'testMsg';
 	const TEST_VAL_VALUE = 'This is a test value!';
 
-	protected $app = null;
-
 	/**
 	 * @var WikiaResponse
 	 */
 	protected $object = null;
 
 	protected function setUp() {
-		$this->app = F::app();
-		$this->object = $this->getMock( 'WikiaResponse', array( 'sendHeader' ), array( 'html' ) );
-	}
+		$this->object = $this->getMockBuilder( WikiaResponse::class )
+			->setMethods( [ 'sendHeader' ] )
+			->setConstructorArgs( [ 'html' ] )
+			->getMock();
 
-	protected function tearDown() {
-		F::setInstance( 'App', $this->app );
 	}
 
 	public function settingHeadersDataProvider() {
@@ -71,18 +70,18 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 			}
 		}
 
-		// there is one additional header to be send, content-type
-		$headersNum = $replace ? 2 : $headersNum + 1;
+		// there are two additional headers to be sent, content-type and vary
+		$headersNum = $replace ? 3 : $headersNum + 2;
 
 		$this->object->expects( $this->exactly( $headersNum ))->method( 'sendHeader' );
 		$this->object->sendHeaders();
 	}
 
 	/**
-	 * By default we send content-type header, plus response code in this test
+	 * By default we send content-type and vary headers, plus response code in this test
 	 */
 	public function testSettingResponseCode() {
-		$this->object->expects( $this->exactly(2) )->method( 'sendHeader' );
+		$this->object->expects( $this->exactly( 3 ) )->method( 'sendHeader' );
 		$this->object->setCode(200);
 		$this->object->sendHeaders();
 	}
@@ -136,32 +135,90 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider formatDataProvider
 	 */
 	public function testView( $format ) {
-		$this->object->setFormat( $format );
-		$this->object->getView()->setTemplatePath( dirname( __FILE__ ) . '/_fixtures/TestTemplate.php' );
-		$this->object->setVal( self::TEST_VAL_NAME, self::TEST_VAL_VALUE );
-		if( $format == 'json' ) {
-			$this->object->setException( new WikiaException('TestException') );
-		}
-
-		$this->object->sendHeaders();
+		$response = new WikiaResponse( $format );
+		$response->getView()->setTemplatePath( dirname( __FILE__ ) . '/_fixtures/TestTemplate.php' );
+		$response->setVal( self::TEST_VAL_NAME, self::TEST_VAL_VALUE );
 
 		ob_start();
-		print $this->object;
+		$response->render();
 		$buffer = ob_get_contents();
 		ob_end_clean();
 
-		if( $format == 'html' ) {
-			$this->assertEquals( self::TEST_VAL_VALUE, $buffer );
+		switch ( $format ) {
+			case WikiaResponse::FORMAT_HTML:
+				$this->assertEquals( self::TEST_VAL_VALUE, $buffer );
+				break;
+			case WikiaResponse::FORMAT_JSON:
+				$expectedJson = json_encode( [ static::TEST_VAL_NAME => static::TEST_VAL_VALUE ] );
+				$this->assertJsonStringEqualsJsonString( $expectedJson, $buffer );
+				break;
+			case WikiaResponse::FORMAT_INVALID:
+			default:
+				$this->fail( 'Invalid output format given to WikiaResponse' );
 		}
 	}
 
 	public function testViewDefaultRender() {
 		$this->object->setView( (new WikiaView) );
-		$this->object->setFormat( 'raw' );
+		$this->object->setFormat( 'json' );
 
 		$output = $this->object->getView()->render( $this->object );
 
-		$this->assertStringStartsWith( '<pre>', $output );
+		$this->assertStringStartsWith( '[]', $output );
 	}
 
+	/**
+	 * @dataProvider cachingHeadersProvider
+	 */
+	public function testCachingHeaders($varnishTTL, $clientTTL, $cachingPolicy, $expectedValue, $passExpectedValue) {
+		$this->object->setCachePolicy($cachingPolicy);
+		$this->object->setCacheValidity( $varnishTTL, $clientTTL );
+
+		$cacheControlValue = $this->object->getHeader( 'Cache-Control' )[0]['value'];
+		$passCacheControlValue = $this->object->getHeader( 'X-Pass-Cache-Control' )[0]['value'];
+
+		$this->assertEquals( $expectedValue, $cacheControlValue, 'Cache-Control header should match the expected value' );
+		$this->assertEquals( $passExpectedValue, $passCacheControlValue, 'X-Pass-Cache-Control header should match the expected value' );
+	}
+
+	public function cachingHeadersProvider() {
+		return [
+			// no caching, but Varnish would still cache it for 5 seconds
+			[
+				WikiaResponse::CACHE_DISABLED, false,
+				WikiaResponse::CACHE_PUBLIC,
+				's-maxage=5', null
+			],
+			// cache on Varnish only
+			[
+				60, WikiaResponse::CACHE_DISABLED,
+				WikiaResponse::CACHE_PUBLIC,
+				's-maxage=60', null
+			],
+			// cache on both
+			[
+				60, false,
+				WikiaResponse::CACHE_PUBLIC,
+				's-maxage=60', 'public, max-age=60'
+			],
+			// cache on both (different TTLs)
+			[
+				WikiaResponse::CACHE_STANDARD, 60,
+				WikiaResponse::CACHE_PUBLIC,
+				's-maxage=86400', 'public, max-age=60'
+			],
+			// Varnish caching disabled, private caching
+			[
+				WikiaResponse::CACHE_DISABLED, false,
+				WikiaResponse::CACHE_PRIVATE,
+				'private, s-maxage=0', null
+			],
+			// only private caching
+			[
+				WikiaResponse::CACHE_DISABLED, WikiaResponse::CACHE_STANDARD,
+				WikiaResponse::CACHE_PRIVATE,
+				'private, s-maxage=0', 'private, max-age=86400'
+			],
+		];
+	}
 }

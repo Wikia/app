@@ -11,7 +11,7 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 		} else {
 			$called = true;
 		}
-		
+
 		$tag = <<<EOT
 <script type="text/javascript">
   var _qevents = _qevents || [];
@@ -23,7 +23,7 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
    elem.async = true;
    elem.type = "text/javascript";
    var scpt = document.getElementsByTagName('script')[0];
-   scpt.parentNode.insertBefore(elem, scpt);  
+   scpt.parentNode.insertBefore(elem, scpt);
   })();
 </script>
 
@@ -38,14 +38,14 @@ EOT;
 				$tag = <<<EOT
 <script type="text/javascript">
 var quantcastLabels = "";
-if (window.cityShort) {
-	quantcastLabels += cityShort;
+if (window.wgWikiVertical) {
+	quantcastLabels += wgWikiVertical;
 	if (window.wgDartCustomKeyValues) {
 		var keyValues = wgDartCustomKeyValues.split(';');
 		for (var i=0; i<keyValues.length; i++) {
 			var keyValue = keyValues[i].split('=');
 			if (keyValue.length >= 2) {
-				quantcastLabels += ',' + cityShort + '.' + keyValue[1];
+				quantcastLabels += ',' + wgWikiVertical + '.' + keyValue[1];
 			}
 		}
 	}

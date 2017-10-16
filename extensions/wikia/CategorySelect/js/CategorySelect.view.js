@@ -11,7 +11,7 @@
 		var articleId = window.wgArticleId,
 			loaded = false,
 			namespace = 'categorySelectView',
-			$wrapper = $( '#WikiaArticleCategories' );
+			$wrapper = $( '#articleCategories' );
 
 		// User can't edit, no need to bind anything
 		if ( !$wrapper.hasClass( 'userCanEdit' ) ) {
@@ -28,11 +28,13 @@
 				loaded = true;
 
 				$.when(
-					mw.loader.use( 'jquery.ui.autocomplete' ),
-					mw.loader.use( 'jquery.ui.sortable' ),
+					mw.loader.using( 'jquery.ui.autocomplete' ),
+					mw.loader.using( 'jquery.ui.sortable' ),
 					$.getResources([
 						wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js',
-						wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js'
+						wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js',
+						wgResourceBasePath + '/resources/wikia/modules/uifactory.js',
+						wgResourceBasePath + '/resources/wikia/modules/uicomponent.js'
 					])
 
 				).done(function( response ) {
@@ -47,12 +49,15 @@
 							items: '.new',
 							revert: 200
 						}
-
 					}).on( 'add', function( event, cs, data ) {
 						$wrapper
 							.find( '.last' )
 							.before( data.element );
 					}).on( 'click.' + namespace, '.cancel', function() {
+						track({
+							label: 'cancel-edit'
+						});
+
 						$wrapper
 							.removeClass( 'editMode' )
 							.trigger( 'reset' )
@@ -60,24 +65,27 @@
 							.remove();
 
 					}).on( 'click.' + namespace, '.save', function() {
-						var $container = $wrapper.find( '.container' ).startThrobbing(),
-							$saveButton = $( this ).attr( 'disabled', true );
-						
+						track({
+							label: 'submit-save'
+						});
+
+						var $container = $wrapper.find( '.container' ).startThrobbing();
+
+						$( this ).attr( 'disabled', true );
+
 						$.nirvana.sendRequest({
 							controller: 'CategorySelectController',
 							data: {
 								articleId: articleId,
-								categories: $wrapper.data( 'categorySelect' ).getData( '.new' )
+								categories: $wrapper.data( 'categorySelect' ).getData( '.new' ),
+								token: mw.user.tokens.get('editToken')
 							},
 							method: 'save'
-
 						}).done(function( response ) {
 							$container.stopThrobbing();
 
-							// TODO: don't use alert
 							if ( response.error ) {
-								alert( response.error );
-
+								throw 'Saving error: ' + response.error;
 							} else {
 								$wrapper
 									.removeClass( 'editMode' )
@@ -91,11 +99,14 @@
 									.find( '.input' )
 									.val( '' );
 							}
-						});
+						}).fail(function (response) {
+							$container.stopThrobbing();
 
+							throw 'Saving error: ' + response.responseText
+						});
 					}).on( 'update', function() {
 						var modified = $wrapper.find( '.category.new' ).length > 0;
-						
+
 						$wrapper
 							.toggleClass( 'modified', modified )
 							.find( '.save' )
@@ -104,6 +115,15 @@
 				});
 			}
 		});
+
+		/**
+		 * Helper method for tracking clicks on buttons like save or cancel
+		 */
+		var track = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+			action: Wikia.Tracker.ACTIONS.CLICK,
+			category: 'category-tool',
+			trackingMethod: 'analytics'
+		})
 	});
 
 })( window, window.jQuery, window.mw );

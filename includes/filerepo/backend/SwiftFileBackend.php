@@ -6,6 +6,8 @@
  * @author Aaron Schulz
  */
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class for an OpenStack Swift based file backend.
  *
@@ -251,7 +253,7 @@ class SwiftFileBackend extends FileBackendStore {
 			// The MD5 here will be checked within Swift against its own MD5.
 			$obj->set_etag( md5_file( $params['src'] ) );
 			// Use the same content type as StreamFile for security
-			$obj->content_type = StreamFile::contentTypeFromPath( $params['dst'] );
+			$obj->content_type = $this->getFileProps($params)['mime']; // Wikia cnange: use the same logic as for DB row (BAC-1199)
 			// Actually write the object in Swift
 			$obj->load_from_filename( $params['src'], True ); // calls $obj->write()
 		} catch ( BadContentTypeException $e ) {
@@ -268,7 +270,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
-		wfRunHooks( 'SwiftFileBackend::doStoreInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doStoreInternal', array( $params, &$status ) );
 
 		return $status;
 	}
@@ -329,7 +331,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 		
-		wfRunHooks( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
 
 		return $status;
 	}
@@ -366,7 +368,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
-		wfRunHooks( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
 		
 		return $status;
 	}
@@ -571,7 +573,15 @@ class SwiftFileBackend extends FileBackendStore {
 			return true; //nothing to do
 		}
 		wfProfileIn( __METHOD__ );
-		trigger_error( "$path was not stored with SHA-1 metadata.", E_USER_WARNING );
+
+		WikiaLogger::instance()->warning(
+			__METHOD__ . ' - file was not stored with SHA-1 metadata',
+			[
+				'path' => $path,
+				'object' => $obj->container->name
+			]
+		);
+
 		$status = Status::newGood();
 		$scopeLockS = $this->getScopedFileLocks( array( $path ), LockManager::LOCK_UW, $status );
 		if ( $status->isOK() ) {
@@ -586,7 +596,15 @@ class SwiftFileBackend extends FileBackendStore {
 				}
 			}
 		}
-		trigger_error( "Unable to set SHA-1 metadata for $path", E_USER_WARNING );
+
+		WikiaLogger::instance()->warning(
+			__METHOD__ . ' - unable to set SHA-1 metadata',
+			[
+				'path' => $path,
+				'object' => $obj->container->name
+			]
+		);
+
 		$obj->setMetadataValues( array( 'Sha1base36' => false ) );
 		wfProfileOut( __METHOD__ );
 		return false; // failed
@@ -884,7 +902,11 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @return string
 	 */
 	private function getCredsCacheKey( $username ) {
-		return wfMemcKey( 'backend', $this->getName(), 'usercreds', $username );
+		// Wikia change - begin
+		global $wgFSSwiftServer;
+		// Wikia change - end
+
+		return wfForeignMemcKey(__CLASS__, $wgFSSwiftServer, 'usercreds', $username );
 	}
 
 	/**
@@ -962,6 +984,8 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function logException( Exception $e, $func, $params ) {
 		// Wikia change - begin
+		global $wgFSSwiftServer;
+
 		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
 			$this->closeConnection(); // force a re-connect and re-auth next time
 		}
@@ -970,14 +994,12 @@ class SwiftFileBackend extends FileBackendStore {
 			return;
 		}
 
-		\Wikia\SwiftStorage::log(
-			__CLASS__ . '::exception',
-			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
-				( $e instanceof InvalidResponseException
-					? ": {$e->getMessage()}"
-					: ""
-				)
-		);
+		\Wikia\Logger\WikiaLogger::instance()->error( __CLASS__, [
+			'exception' => $e,
+			'func' => $func,
+			'params' => $params,
+			'swift_server' => $wgFSSwiftServer
+		]);
 		// Wikia change - end
 	}
 	

@@ -1,2 +1,6 @@
-<div id="drawerBackground_{{side}}" class="blackout" />
-<div id="drawer-{{side}}" class="drawer {{side}} {{class}}">{{{content}}}</div>
+<div id="drawer-blackout-{{side}}" class="drawer-blackout"></div>
+<div id="drawer-{{side}}" class="drawer {{side}} {{class}}">
+    <div id="drawer-close-button-{{side}}" class="close-button">{{closeText}}</div>
+    {{{content}}}
+</div>
+<div id="subdrawer-{{side}}" class="subdrawer hidden {{side}} {{class}}">{{{subcontent}}}</div>

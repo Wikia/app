@@ -1,462 +1,161 @@
 /*!
  * VisualEditor user interface MWMetaDialog class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw*/
-
 /**
- * Dialog for editing MediaWiki page meta information.
+ * Dialog for editing MediaWiki page information.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.FragmentDialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWMetaDialog = function VeUiMWMetaDialog( surface, config ) {
+ve.ui.MWMetaDialog = function VeUiMWMetaDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
-
-	// Properties
-	this.metaList = surface.getModel().metaList;
-	this.defaultSortKeyChanged = false;
-	this.fallbackDefaultSortKey = mw.config.get( 'wgTitle' );
-
-	// Events
-	this.metaList.connect( this, {
-		'insert': 'onMetaListInsert',
-		'remove': 'onMetaListRemove'
-	} );
+	ve.ui.MWMetaDialog.super.call( this, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWMetaDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWMetaDialog, ve.ui.FragmentDialog );
 
 /* Static Properties */
 
 ve.ui.MWMetaDialog.static.name = 'meta';
 
-ve.ui.MWMetaDialog.static.titleMessage = 'visualeditor-dialog-meta-title';
+ve.ui.MWMetaDialog.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialog-meta-title' );
 
-ve.ui.MWMetaDialog.static.icon = 'settings';
+ve.ui.MWMetaDialog.static.icon = 'window';
+
+ve.ui.MWMetaDialog.static.size = 'large';
+
+ve.ui.MWMetaDialog.static.actions = [
+	{
+		action: 'apply',
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-apply' ),
+		flags: [ 'progressive', 'primary' ]
+	},
+	{
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
+		flags: 'safe'
+	}
+];
 
 /* Methods */
 
-/** */
-ve.ui.MWMetaDialog.prototype.initialize = function () {
-	var languagePromise;
+/**
+ * @inheritdoc
+ */
+ve.ui.MWMetaDialog.prototype.getBodyHeight = function () {
+	return 400;
+};
 
+/**
+ * @inheritdoc
+ */
+ve.ui.MWMetaDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.MWMetaDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.pagedOutlineLayout = new ve.ui.PagedOutlineLayout( { '$$': this.frame.$$ } );
-	this.categoriesFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-meta-categories-data-label' ),
-		'icon': 'tag'
-	} );
-	this.categoryOptionsFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-meta-categories-options' ),
-		'icon': 'settings'
-	} );
-	this.categoryWidget = new ve.ui.MWCategoryWidget( {
-		'$$': this.frame.$$, '$overlay': this.$overlay
-	} );
-	this.defaultSortInput = new ve.ui.TextInputWidget( {
-		'$$': this.frame.$$, 'placeholder': this.fallbackDefaultSortKey
-	} );
-	this.defaultSortLabel = new ve.ui.InputLabelWidget( {
-		'$$': this.frame.$$,
-		'input': this.defaultSortInput,
-		'label': ve.msg( 'visualeditor-dialog-meta-categories-defaultsort-label' )
-	} );
-	this.languagesFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-meta-languages-label' ),
-		'icon': 'language'
-	} );
-	this.applyButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$, 'label': ve.msg( 'visualeditor-dialog-action-apply' ), 'flags': ['primary']
-	} );
-
-	// Events
-	this.categoryWidget.connect( this, {
-		'newCategory': 'onNewCategory',
-		'updateSortkey': 'onUpdateSortKey'
-	} );
-	this.defaultSortInput.connect( this, {
-		'change': 'onDefaultSortChange'
-	} );
-	this.applyButton.connect( this, { 'click': [ 'close', 'apply' ] } );
+	this.panels = new OO.ui.StackLayout( { $: this.$ } );
+	this.bookletLayout = new OO.ui.BookletLayout( { $: this.$, outlined: true } );
+	this.settingsPage = new ve.ui.MWSettingsPage(
+		'settings',
+		{
+			$: this.$,
+			$overlay: this.$overlay
+		}
+	);
+	this.advancedSettingsPage = new ve.ui.MWAdvancedSettingsPage(
+		'advancedSettings',
+		{ $: this.$ }
+	);
+	this.categoriesPage = new ve.ui.MWCategoriesPage(
+		'categories',
+		{
+			$: this.$,
+			$overlay: this.$overlay,
+			$popupOverlay: this.$innerOverlay
+		}
+	);
+	this.languagesPage = new ve.ui.MWLanguagesPage(
+		'languages',
+		{ $: this.$ }
+	);
 
 	// Initialization
-	this.categoryWidget.addItems( this.getCategoryItems() );
-
-	this.$body.append( this.pagedOutlineLayout.$ );
-	this.$foot.append( this.applyButton.$ );
-
-	this.pagedOutlineLayout.addPage( 'categories', {
-		'$content': [ this.categoriesFieldset.$, this.categoryOptionsFieldset.$ ],
-		'label': ve.msg( 'visualeditor-dialog-meta-categories-section' ),
-		'icon': 'tag'
-	} ).addPage( 'languages', {
-		'$content': this.languagesFieldset.$,
-		'label': ve.msg( 'visualeditor-dialog-meta-languages-section' ),
-		'icon': 'language'
-	} );
-
-	this.categoriesFieldset.$.append( this.categoryWidget.$ );
-	this.categoryOptionsFieldset.$.append( this.defaultSortLabel.$, this.defaultSortInput.$ );
-	this.languagesFieldset.$.append(
-		this.frame.$$( '<span>' )
-			.text( ve.msg( 'visualeditor-dialog-meta-languages-readonlynote' ) )
-	);
-
-	languagePromise = this.getAllLanguageItems();
-	languagePromise.done( ve.bind( function ( languages ) {
-		var i, $languagesTable = this.frame.$$( '<table>' ), languageslength = languages.length;
-
-		$languagesTable
-			.addClass( 've-ui-mwMetaDialog-languages-table' )
-			.append( this.frame.$$( '<tr>' )
-				.append(
-					this.frame.$$( '<th>' )
-						.append( ve.msg( 'visualeditor-dialog-meta-languages-code-label' ) )
-				)
-				.append(
-					this.frame.$$( '<th>' )
-						.append( ve.msg( 'visualeditor-dialog-meta-languages-link-label' ) )
-				)
-			);
-
-		for ( i = 0; i < languageslength; i++ ) {
-			languages[i].safelang = languages[i].lang;
-			languages[i].dir = 'auto';
-			if ( $.uls ) {
-				// site codes don't always represent official language codes
-				// using real language code instead of a dummy ('redirect' in ULS' terminology)
-				languages[i].safelang = $.uls.data.isRedirect( languages[i].lang ) || languages[i].lang;
-				languages[i].dir = $.uls.data.getDir( languages[i].safelang );
-			}
-			$languagesTable
-				.append( this.frame.$$( '<tr>' )
-					.append( this.frame.$$( '<td>' ).append( languages[i].lang ) )
-					.append( this.frame.$$( '<td>' ).append( languages[i].title )
-						.attr( 'lang', languages[i].safelang )
-						.attr( 'dir', languages[i].dir ) )
-				);
-		}
-
-		this.languagesFieldset.$.append( $languagesTable );
-	}, this ) );
+	this.$body.append( this.panels.$element );
+	this.panels.addItems( [ this.bookletLayout ] );
+	this.bookletLayout.addPages( [
+		this.settingsPage,
+		this.advancedSettingsPage,
+		this.categoriesPage,
+		this.languagesPage
+	] );
 };
 
-/** */
-ve.ui.MWMetaDialog.prototype.onOpen = function () {
-	var surfaceModel = this.surface.getModel(),
-		categoryWidget = this.categoryWidget,
-		defaultSortKeyItem = this.getDefaultSortKeyItem();
+/**
+ * @inheritdoc
+ */
+ve.ui.MWMetaDialog.prototype.getActionProcess = function ( action ) {
+	var surfaceModel = this.getFragment().getSurface();
 
-	// Parent method
-	ve.ui.MWDialog.prototype.onOpen.call( this );
-
-	this.defaultSortInput.setValue(
-		defaultSortKeyItem ? defaultSortKeyItem.getAttribute( 'content' ) : ''
-	);
-	this.defaultSortKeyChanged = false;
-
-	// Force all previous transactions to be separate from this history state
-	surfaceModel.breakpoint();
-	surfaceModel.stopHistoryTracking();
-
-	// Update input position once visible
-	setTimeout( function () {
-		categoryWidget.fitInput();
-	} );
-};
-
-/** */
-ve.ui.MWMetaDialog.prototype.onClose = function ( action ) {
-	var hasTransactions, newDefaultSortKeyItem, newDefaultSortKeyItemData,
-		surfaceModel = this.surface.getModel(),
-		currentDefaultSortKeyItem = this.getDefaultSortKeyItem();
-
-	// track 'apply changes' event
 	if ( action === 'apply' ) {
-		ve.track( {
-			'action': ve.track.actions.CLICK,
-			'label': 'dialog-page-settings-button-save'
-		} );
+		return new OO.ui.Process( function () {
+			surfaceModel.applyStaging();
+			this.close( { action: action } );
+		}, this );
 	}
 
-	// Parent method
-	ve.ui.MWDialog.prototype.onClose.call( this );
+	return ve.ui.MWMetaDialog.super.prototype.getActionProcess.call( this, action )
+		.next( function () {
+			surfaceModel.popStaging();
+		}, this );
+};
 
-	// Place transactions made while dialog was open in a common history state
-	hasTransactions = surfaceModel.breakpoint();
+/**
+ * @inheritdoc
+ */
+ve.ui.MWMetaDialog.prototype.getSetupProcess = function ( data ) {
+	data = data || {};
+	return ve.ui.MWMetaDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			var surfaceModel = this.getFragment().getSurface();
 
-	// Undo everything done in the dialog and prevent redoing those changes
-	if ( action === 'cancel' && hasTransactions ) {
-		surfaceModel.undo();
-		surfaceModel.truncateUndoStack();
-	}
-
-	if ( this.defaultSortKeyChanged ) {
-		if ( this.defaultSortInput.getValue() !== '' ) {
-			newDefaultSortKeyItemData = {
-				'type': 'mwDefaultSort',
-				'attributes': { 'content': this.defaultSortInput.getValue() }
-			};
-			if ( currentDefaultSortKeyItem ) {
-				newDefaultSortKeyItem = new ve.dm.MWDefaultSortMetaItem(
-					ve.extendObject( {}, currentDefaultSortKeyItem.getElement(), newDefaultSortKeyItemData )
-				);
-				currentDefaultSortKeyItem.replaceWith( newDefaultSortKeyItem );
-			} else {
-				newDefaultSortKeyItem = new ve.dm.MWDefaultSortMetaItem( newDefaultSortKeyItemData );
-				this.metaList.insertMeta( newDefaultSortKeyItem );
+			if ( data.page && this.bookletLayout.getPage( data.page ) ) {
+				this.bookletLayout.setPage( data.page );
 			}
-		} else if ( currentDefaultSortKeyItem ) {
-			currentDefaultSortKeyItem.remove();
-		}
-	}
 
-	// Return to normal tracking behavior
-	surfaceModel.startHistoryTracking();
+			// Force all previous transactions to be separate from this history state
+			surfaceModel.pushStaging();
+
+			// Let each page set itself up ('languages' page doesn't need this yet)
+			this.settingsPage.setup( surfaceModel.metaList, data );
+			this.advancedSettingsPage.setup( surfaceModel.metaList, data );
+			this.categoriesPage.setup( surfaceModel.metaList, data );
+		}, this );
 };
 
 /**
- * Get default sort key item.
- *
- * @returns {string} Default sort key item
+ * @inheritdoc
  */
-ve.ui.MWMetaDialog.prototype.getDefaultSortKeyItem = function () {
-	var items = this.metaList.getItemsInGroup( 'mwDefaultSort' );
-	return items.length ? items[0] : null;
-};
-
-/**
- * Get array of category items from meta list
- *
- * @method
- * @returns {Object[]} items
- */
-ve.ui.MWMetaDialog.prototype.getCategoryItems = function () {
-	var i,
-		items = [],
-		categories = this.metaList.getItemsInGroup( 'mwCategory' );
-
-	// Loop through MwCategories and build out items
-	for ( i = 0; i < categories.length; i++ ) {
-		items.push( this.getCategoryItemFromMetaListItem( categories[i] ) );
-	}
-	return items;
-};
-
-/**
- * Gets category item from meta list item
- *
- * @method
- * @param {Object} ve.dm.MWCategoryMetaItem
- * @returns {Object} item
- */
-ve.ui.MWMetaDialog.prototype.getCategoryItemFromMetaListItem = function ( metaItem ) {
-	var title, value = '';
-	try {
-		title = new mw.Title( metaItem.element.attributes.category );
-		value = title.getMainText();
-	} catch ( e ) { }
-	return {
-		'name': metaItem.element.attributes.category,
-		'value': value,
-		// TODO: sortkey is lcase, make consistent throughout CategoryWidget
-		'sortKey': metaItem.element.attributes.sortkey,
-		'metaItem': metaItem
-	};
-};
-
-/**
- * Get metaList like object to insert from item
- *
- * @method
- * @param {Object} item category widget item
- * @param {Object} [oldData] Metadata object that was previously associated with this item, if any
- * @returns {Object} metaBase
- */
-ve.ui.MWMetaDialog.prototype.getCategoryItemForInsertion = function ( item, oldData ) {
-	var newData = {
-		'attributes': { 'category': item.name, 'sortkey': item.sortKey || '' },
-		'type': 'mwCategory'
-	};
-	if ( oldData ) {
-		return ve.extendObject( {}, oldData, newData );
-	}
-	return newData;
-};
-
-/**
- * Gets language item from meta list item
- *
- * @method
- * @param {Object} ve.dm.MWLanguageMetaItem
- * @returns {Object} item
- */
-ve.ui.MWMetaDialog.prototype.getLanguageItemFromMetaListItem = function ( metaItem ) {
-	// TODO: get real values from metaItem once Parsoid actually provides them - bug 48970
-	return {
-		'lang': 'lang',
-		'title': 'title',
-		'metaItem': metaItem
-	};
-};
-
-/**
- * Get array of language items from meta list
- *
- * @method
- * @returns {Object[]} items
- */
-ve.ui.MWMetaDialog.prototype.getLocalLanguageItems = function () {
-	var i,
-		items = [],
-		languages = this.metaList.getItemsInGroup( 'mwLanguage' ),
-		languageslength = languages.length;
-
-	// Loop through MWLanguages and build out items
-
-	for ( i = 0; i < languageslength; i++ ) {
-		items.push( this.getLanguageItemFromMetaListItem( languages[i] ) );
-	}
-	return items;
-};
-
-/**
- * Get array of language items from meta list
- *
- * @method
- * @returns {jQuery.Promise}
- */
-ve.ui.MWMetaDialog.prototype.getAllLanguageItems = function () {
-	var deferred = $.Deferred();
-	// TODO: Detect paging token if results exceed limit
-	$.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'action': 'query',
-			'prop': 'langlinks',
-			'lllimit': 500,
-			'titles': mw.config.get( 'wgTitle' ),
-			'indexpageids': 1,
-			'format': 'json'
-		},
-		'dataType': 'json',
-		'type': 'POST',
-		// Wait up to 100 seconds before giving up
-		'timeout': 100000,
-		'cache': 'false',
-		'success': ve.bind( this.onAllLanuageItemsSuccess, this, deferred ),
-		'error': ve.bind( this.onAllLanuageItemsError, this, deferred )
-	} );
-	return deferred.promise();
-};
-
-/** */
-ve.ui.MWMetaDialog.prototype.onAllLanuageItemsSuccess = function ( deferred, response ) {
-	var i, iLen, languages = [], langlinks = response.query.pages[response.query.pageids[0]].langlinks;
-	if ( langlinks ) {
-		for ( i = 0, iLen = langlinks.length; i < iLen; i++ ) {
-			languages.push( {
-				'lang': langlinks[i].lang,
-				'title': langlinks[i]['*'],
-				'metaItem': null
-			} );
-		}
-	}
-	deferred.resolve( languages );
-};
-
-// TODO: This error function should probably not be empty.
-ve.ui.MWMetaDialog.prototype.onAllLanuageItemsError = function () {};
-
-/**
- * Handle category default sort change events.
- *
- * @param {string} value Default sort value
- */
-ve.ui.MWMetaDialog.prototype.onDefaultSortChange = function ( value ) {
-	this.categoryWidget.setDefaultSortKey( value === '' ? this.fallbackDefaultSortKey : value );
-	this.defaultSortKeyChanged = true;
-};
-
-/**
- * Inserts new category into meta list
- *
- * @method
- * @param {Object} item
- */
-ve.ui.MWMetaDialog.prototype.onNewCategory = function ( item ) {
-	// Insert new metaList item
-	this.insertMetaListItem( this.getCategoryItemForInsertion( item ) );
-};
-
-/**
- * Removes and re-inserts updated category widget item
- *
- * @method
- * @param {Object} item
- */
-ve.ui.MWMetaDialog.prototype.onUpdateSortKey = function ( item ) {
-	// Replace meta item with updated one
-	item.metaItem.replaceWith( this.getCategoryItemForInsertion( item, item.metaItem.getElement() ) );
-};
-
-/**
- * Bound to MetaList insert event for adding meta dialog components.
- *
- * @method
- * @param {Object} ve.dm.MetaItem
- */
-ve.ui.MWMetaDialog.prototype.onMetaListInsert = function ( metaItem ) {
-	// Responsible for adding UI components
-	if ( metaItem.element.type === 'mwCategory' ) {
-		this.categoryWidget.addItems(
-			[ this.getCategoryItemFromMetaListItem( metaItem ) ],
-			this.metaList.findItem( metaItem.getOffset(), metaItem.getIndex(), 'mwCategory' )
-		);
-	}
-};
-
-/**
- * Bound to MetaList insert event for removing meta dialog components.
- *
- * @method
- * @param {Object} ve.dm.MetaItem
- */
-ve.ui.MWMetaDialog.prototype.onMetaListRemove = function ( metaItem ) {
-	var item;
-
-	if ( metaItem.element.type === 'mwCategory' ) {
-		item = this.getCategoryItemFromMetaListItem( metaItem );
-		this.categoryWidget.removeItems( [item.value] );
-	}
-};
-
-/**
- * Inserts a meta list item
- *
- * @param {Object} metaBase meta list insert object
- */
-ve.ui.MWMetaDialog.prototype.insertMetaListItem = function ( metaBase ) {
-	this.metaList.insertMeta( metaBase );
+ve.ui.MWMetaDialog.prototype.getTeardownProcess = function ( data ) {
+	data = data || {};
+	return ve.ui.MWMetaDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			// Let each page tear itself down ('languages' page doesn't need this yet)
+			this.settingsPage.teardown( { action: data.action } );
+			this.advancedSettingsPage.teardown( { action: data.action } );
+			this.categoriesPage.teardown( { action: data.action } );
+		}, this );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.MWMetaDialog );
+ve.ui.windowFactory.register( ve.ui.MWMetaDialog );

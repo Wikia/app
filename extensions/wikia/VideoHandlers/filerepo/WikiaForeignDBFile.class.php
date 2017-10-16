@@ -9,7 +9,7 @@
  */
 
 class WikiaForeignDBFile extends ForeignDBFile {
-	
+
 	protected $oLocalFileLogic = null; // Leaf object
 
 	static function newFromTitle( $title, $repo, $unused = null ) {
@@ -40,7 +40,7 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	 */
 	function __construct( $title, $repo ) {
 		parent::__construct( $title, $repo );
-		
+
 	}
 
 	function  __call( $name, $arguments ) {
@@ -74,6 +74,22 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $this->oLocalFileLogic;
 	}
 
+	public function getBucket() {
+		$wikiDbName = $this->repo->getDBName();
+		$wikiId = WikiFactory::DBtoID( $wikiDbName );
+		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $wikiId );
+
+		return VignetteRequest::parseBucket( $wikiUploadPath );
+	}
+
+	function getPathPrefix() {
+		$wikiDbName = $this->repo->getDBName();
+		$wikiId = WikiFactory::DBtoID( $wikiDbName );
+		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $wikiId );
+
+		return VignetteRequest::parsePathPrefix( $wikiUploadPath );
+	}
+
 	// Not everything can be transparent, because __call skips already defined methods.
 	// These methods work as a layer of communication between this class and SharedLogic
 
@@ -86,12 +102,12 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	public function getUser( $type = 'text' ) {
 		// Try to get video info for this file
 		$info = VideoInfo::newFromTitle( $this->getName() );
-		if ( !empty($info) ) {
+		if ( !empty( $info ) ) {
 			$addedBy = $info->getAddedBy();
 		}
 
 		// If we got an addedBy user ID, use that otherwise fall back to the parent method
-		if ( !empty($addedBy) ) {
+		if ( !empty( $addedBy ) ) {
 			if ( $type == 'text' ) {
 				$user = User::newFromId( $addedBy );
 				if ( $user instanceof User ) {

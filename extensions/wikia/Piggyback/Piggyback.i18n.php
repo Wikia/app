@@ -1,47 +1,40 @@
 <?php
+/** Internationalization file for /extensions/wikia/Piggyback/Piggyback extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'piggybac-desc' => 'Allows logging on as another user',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Other username:',
-	'piggyback-nosuchuser'  => 'There is no user by the name "$1".
+	'piggyback-nosuchuser' => 'There is no user by the name "$1".
 User names are case sensitive.
 Check your spelling.',
 	'piggyback-wronguser' => '$1 is not your user name',
-	'piggyback-loginprompt' => 'Please re-enter your username and password.',
+	'piggyback-loginprompt' => 'Please re-enter your username and password. Warning: This will run ALL custom user-account CSS and JS on your machine. Be careful!',
 	'piggyback-firstlogout' => 'Please first logout back to your account.',
 	'piggyback-itisyou' => 'You cannot piggyback yourself.',
 	'piggyback-issysopto' => 'You cannot piggyback a user with the right to piggyback.',
 	'action-piggyback' => 'log on as another user',
 	'log-name-piggyback' => 'Piggyback log',
 	'log-description-piggyback' => 'This log is a record of account piggybacks.',
-);
+	'right-piggyback' => 'Allows access to Special:Piggyback',
+];
 
-/** Message documentation (Message documentation)
- * @author Shirayuki
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'action-piggyback' => '{{doc-action|piggyback}}',
 	'log-name-piggyback' => '{{doc-logpage}}',
 	'log-description-piggyback' => 'Appears on top of Special:Log/piggyback.',
-);
+];
 
-/** Afrikaans (Afrikaans)
- */
-$messages['af'] = array(
+$messages['af'] = [
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Ander gebruikersnaam:',
 	'piggyback-wronguser' => '$1 is nie u gebruikersnaam nie',
 	'piggyback-loginprompt' => 'Verskaf weer u gebruikersnaam en wagwoord.',
 	'piggyback-itisyou' => 'U kan nie piggyback op uself gebruik nie.',
-);
+];
 
-/** Arabic (العربية)
- * @author Achraf94
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'piggybac-desc' => 'تسمح بتسجيل الدخول كمستخدم آخر',
 	'piggyback' => 'استعارة حساب',
 	'piggyback-otherusername' => 'اسم المستخدم الآخر:',
@@ -56,22 +49,32 @@ $messages['ar'] = array(
 	'action-piggyback' => 'قم بتسجيل الدخول كمستخدم آخر',
 	'log-name-piggyback' => 'سجل استعارة الحساب',
 	'log-description-piggyback' => 'هذا السجل يبين الحسابات المستعارة',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'piggyback-otherusername' => 'Anv implijer all',
-	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
-	'piggyback-loginprompt' => "Adebarzhit hoc'h anv implijer hag ho ker-tremen, mar plij.",
-);
+	'piggyback-wronguser' => 'N\'eo ket $1 ho anv implijer',
+	'piggyback-loginprompt' => 'Adebarzhit hoc\'h anv implijer hag ho ker-tremen, mar plij.',
+	'action-piggyback' => 'Kevreañ gant ur gont implijer all',
+];
 
-/** Czech (česky)
- * @author Dontlietome7
- * @author Reaperman
- */
-$messages['cs'] = array(
+$messages['ca'] = [
+	'piggybac-desc' => 'Permet entrar com a un altre usuari.',
+	'piggyback' => 'Personificar',
+	'piggyback-otherusername' => 'Una altre nom d\'usuari:',
+	'piggyback-nosuchuser' => 'No hi ha cap d\'usuari amb el nom "$1".
+Les majúscules i les minúscules compten, revisa l\'escriptura!',
+	'piggyback-wronguser' => '$1 no és el teu nom d\'usuari.',
+	'piggyback-loginprompt' => 'Si us plau, torneu a introduir el vostre nom d\'usuari i contrasenya.',
+	'piggyback-firstlogout' => 'Si us plau, surt de la teva sessió i torna a entrar.',
+	'piggyback-itisyou' => 'No et pots personificar.',
+	'piggyback-issysopto' => 'No pots personificar un usuari amb el dret de personificar.',
+	'action-piggyback' => 'registre a un altre usuari',
+	'log-name-piggyback' => 'Registre de personificacions',
+	'log-description-piggyback' => 'Aquesta pàgina és un registre de personificacions a comptes.',
+];
+
+$messages['cs'] = [
 	'piggybac-desc' => 'Umožňuje přihlásit se jako jiný uživatel',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Uživatelské jméno cílového účtu:',
@@ -85,13 +88,10 @@ Zkontrolujte správné zadání jména.',
 	'piggyback-issysopto' => 'Nemůžete provést piggyback uživateli s právem piggyback.',
 	'action-piggyback' => 'přihlásit se jako jiný uživatel',
 	'log-name-piggyback' => 'Záznamy užití piggyback',
-);
+	'log-description-piggyback' => 'Tento log obsahuje záznamy "piggybacků".',
+];
 
-/** German (Deutsch)
- * @author LWChris
- * @author PtM
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'piggybac-desc' => 'Als anderer Benutzer anmelden',
 	'piggyback' => 'Huckepack',
 	'piggyback-otherusername' => 'Anderer Benutzername:',
@@ -105,21 +105,14 @@ Bitte Schreibweise überprüfen.',
 	'piggyback-issysopto' => 'Du kannst keinen Benutzer mit dem Huckepack-Recht Huckepack nehmen.',
 	'action-piggyback' => 'als anderer Benutzer anmelden',
 	'log-name-piggyback' => 'Huckepack-Logbuch',
-	'log-description-piggyback' => "Dieses Logbuch zeigt ''Huckepack''-Kontoübernahmen.",
-);
+	'log-description-piggyback' => 'Dieses Logbuch zeigt \'\'Huckepack\'\'-Kontoübernahmen.',
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'piggyback' => 'Piggyback',
-);
+];
 
-/** Spanish (español)
- * @author Armando-Martin
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'piggybac-desc' => 'Permite iniciar sesión con la cuenta de otro usuario',
 	'piggyback' => 'Personificar',
 	'piggyback-otherusername' => 'Otro nombre de usuario:',
@@ -134,41 +127,31 @@ Verifica tu escritura.',
 	'action-piggyback' => 'Iniciar sesión como otro usuario',
 	'log-name-piggyback' => 'Registro de personificaciones',
 	'log-description-piggyback' => 'Esta página es un registro de personificaciones a cuentas de usuario.',
-);
+];
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Tofu II
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'piggyback-otherusername' => 'Toinen käyttäjätunnus:',
 	'piggyback-wronguser' => '$1 ei ole sinun käyttäjätunnuksesi',
-);
+];
 
-/** French (français)
- * @author Wyz
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'piggybac-desc' => 'Permet de s’identifier avec le compte d’un autre utilisateur',
 	'piggyback' => 'Accès superposé',
 	'piggyback-otherusername' => 'Autre nom d’utilisateur :',
-	'piggyback-nosuchuser' => "Il n'existe pas d’utilisateur nommé « $1 ».
+	'piggyback-nosuchuser' => 'Il n\'existe pas d’utilisateur nommé « $1 ».
 Les noms d’utilisateur sont sensibles à la casse.
-Vérifiez l'orthographe.",
-	'piggyback-wronguser' => "$1 n’est pas votre nom d'utilisateur",
+Vérifiez l\'orthographe.',
+	'piggyback-wronguser' => '$1 n’est pas votre nom d\'utilisateur',
 	'piggyback-loginprompt' => 'Veuillez re-saisir vos nom d’utilisateur et mot de passe.',
 	'piggyback-firstlogout' => 'Veuillez d’abord vous déconnecter de votre compte.',
 	'piggyback-itisyou' => 'Vous ne pouvez pas vous connecter de manière superposée sur votre propre compte.',
 	'piggyback-issysopto' => 'Vous ne pouvez pas vous connecter de manière superposée sur le compte d’un utilisateur ayant lui-même ce droit.',
-	'action-piggyback' => 'se connecter sous un autre compte utilisateur',
+	'action-piggyback' => 'vous connecter sous un autre compte utilisateur',
 	'log-name-piggyback' => 'Journal d’accès superposé',
 	'log-description-piggyback' => 'Ce journal est une liste des accès superposés à des comptes.',
-);
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'piggybac-desc' => 'Permite iniciar sesión como outro usuario',
 	'piggyback' => 'Acceso autorizado',
 	'piggyback-otherusername' => 'Outro nome de usuario:',
@@ -183,12 +166,9 @@ Comprobe a ortografía.',
 	'action-piggyback' => 'conectarse como outro usuario',
 	'log-name-piggyback' => 'Rexistro de accesos autorizados',
 	'log-description-piggyback' => 'Este rexistro contén os accesos autorizados a contas.',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'piggybac-desc' => 'Permitte aperir session como altere usator',
 	'piggyback' => 'Portacontos',
 	'piggyback-otherusername' => 'Altere nomine de usator:',
@@ -203,22 +183,15 @@ Verifica le orthographia.',
 	'action-piggyback' => 'aperir session como un altere usator',
 	'log-name-piggyback' => 'Registro del Portacontos',
 	'log-description-piggyback' => 'Iste registro es un historia de personificationes autorisate per le Portacontos.',
-);
+];
 
-/** Indonesian (Bahasa Indonesia)
- * @author C5st4wr6ch
- */
-$messages['id'] = array(
+$messages['id'] = [
 	'piggyback-nosuchuser' => 'Tidak ada pengguna dengan nama "$1".
 Nama pengguna adalah case sensitive.
 Periksa ejaan Anda.',
-);
+];
 
-/** Italian (italiano)
- * @author Nemo bis
- * @author Sannita
- */
-$messages['it'] = array(
+$messages['it'] = [
 	'piggybac-desc' => 'Permette di accedere come un altro utente',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Altro nome utente:',
@@ -229,35 +202,25 @@ Controlla se ci sono errori.',
 	'piggyback-loginprompt' => 'Per favore, inserisci nuovamente il tuo nome utente e la password.',
 	'piggyback-firstlogout' => 'Per favore, esegui il logout sul tuo account.',
 	'action-piggyback' => 'Entra come altro utente.',
-);
+];
 
-/** Japanese (日本語)
- * @author Tommy6
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'piggyback-nosuchuser' => '「$1」という利用者は存在しません。
 利用者名の大文字小文字は区別されます。
 入力に間違いがないか確認してください。',
-);
+	'piggyback' => 'ピギーバック',
+	'log-name-piggyback' => 'ピギーバックのログ',
+];
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author George Animal
- */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'piggyback-otherusername' => 'Navê bikarhêner ê din:',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'piggyback-otherusername' => 'Anere Benotzernumm:',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'piggybac-desc' => 'Овозможува да се најавите како друг корисник („на ушка“)',
 	'piggyback' => 'На ушка',
 	'piggyback-otherusername' => 'Друго корисничко име:',
@@ -272,20 +235,14 @@ $messages['mk'] = array(
 	'action-piggyback' => 'најава како друг корисник',
 	'log-name-piggyback' => 'Дневник на качувања на ушка',
 	'log-description-piggyback' => 'Овој дневник е записник за качувања на ушка на сметки.',
-);
+];
 
-/** Malayalam (മലയാളം)
- * @author Praveenp
- */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'piggyback-otherusername' => 'മറ്റ് ഉപയോക്തൃനാമം:',
 	'piggyback-wronguser' => '$1 താങ്കളുടെ ഉപയോക്തൃനാമം അല്ല',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'piggybac-desc' => 'Membenarkan log masuk sebagai pengguna lain',
 	'piggyback' => 'Gendong',
 	'piggyback-otherusername' => 'Nama pengguna lain:',
@@ -300,12 +257,9 @@ Sila semak ejaan anda.',
 	'action-piggyback' => 'log masuk sebagai pengguna lain',
 	'log-name-piggyback' => 'Log gendong',
 	'log-description-piggyback' => 'Log ini merupakan rekod gendongan akaun.',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'piggybac-desc' => 'Tillater å logge på som en annen bruker',
 	'piggyback' => 'Operer som annen bruker',
 	'piggyback-otherusername' => 'Annet brukernavn:',
@@ -320,32 +274,12 @@ Sjekk stavemåten.',
 	'action-piggyback' => 'logg på som en annen bruker',
 	'log-name-piggyback' => 'Logg over operasjoner som annen bruker',
 	'log-description-piggyback' => 'Denne loggen er en oppføring av operasjoner som andre kontoer.',
-);
+];
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'piggybac-desc' => 'Maakt het mogelijk aan te melden als een andere gebruiker',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Andere gebruikersnaam:',
-	'piggyback-nosuchuser' => 'De gebruiker "$1" bestaat niet.
-Gebruikersnamen zijn hoofdlettergevoelig.
-Controleer uw schrijfwijze.',
-	'piggyback-wronguser' => '$1 is niet uw gebruikersnaam',
-	'piggyback-loginprompt' => 'Voer uw gebruikersnaam en wachtwoord opnieuw in.',
-	'piggyback-firstlogout' => 'Meld eerst af om weer te werken met uw eigen gebruiker.',
-	'piggyback-itisyou' => 'U kunt piggyback niet op uzelf gebruiken.',
-	'piggyback-issysopto' => 'U kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
-	'action-piggyback' => 'aanmelden als een andere gebruiker',
-	'log-name-piggyback' => 'Logboek piggyback',
-	'log-description-piggyback' => 'Dit logboek bevat een overzicht van alle piggybackhandelingen.',
-);
-
-/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
- * @author Siebrand
- */
-$messages['nl-informal'] = array(
 	'piggyback-nosuchuser' => 'De gebruiker "$1" bestaat niet.
 Gebruikersnamen zijn hoofdlettergevoelig.
 Controleer je schrijfwijze.',
@@ -354,33 +288,40 @@ Controleer je schrijfwijze.',
 	'piggyback-firstlogout' => 'Meld eerst af om weer te werken met je eigen gebruiker.',
 	'piggyback-itisyou' => 'Je kunt piggyback niet op jezelf gebruiken.',
 	'piggyback-issysopto' => 'Je kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
-);
+	'action-piggyback' => 'aanmelden als een andere gebruiker',
+	'log-name-piggyback' => 'Logboek piggyback',
+	'log-description-piggyback' => 'Dit logboek bevat een overzicht van alle piggybackhandelingen.',
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
+$messages['nl-informal'] = [
+	'piggyback-nosuchuser' => 'De gebruiker "$1" bestaat niet.
+Gebruikersnamen zijn hoofdlettergevoelig.
+Controleer je schrijfwijze.',
+	'piggyback-wronguser' => '$1 is niet jouw gebruikersnaam',
+	'piggyback-loginprompt' => 'Voer je gebruikersnaam en wachtwoord opnieuw in.',
+	'piggyback-firstlogout' => 'Meld eerst af om weer te werken met je eigen gebruiker.',
+	'piggyback-itisyou' => 'Je kunt piggyback niet op jezelf gebruiken.',
+	'piggyback-issysopto' => 'Je kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
+];
+
+$messages['oc'] = [
 	'piggybac-desc' => 'Permet de s’identificar amb lo compte d’un autre utilizaire',
 	'piggyback' => 'Accès superpausat',
 	'piggyback-otherusername' => 'Autre nom d’utilizaire :',
-	'piggyback-nosuchuser' => "Existís pas cap d’utilizaire nomenat « $1 ».
+	'piggyback-nosuchuser' => 'Existís pas cap d’utilizaire nomenat « $1 ».
 Los noms d’utilizaire son sensibles a la cassa.
-Verificatz l'ortografia.",
-	'piggyback-wronguser' => "$1 es pas vòstre nom d'utilizaire",
+Verificatz l\'ortografia.',
+	'piggyback-wronguser' => '$1 es pas vòstre nom d\'utilizaire',
 	'piggyback-loginprompt' => 'Tornatz picar vòstres nom d’utilizaire e senhal.',
-	'piggyback-firstlogout' => "D'en primièr desconnectatz-vos de vòstre compte.",
-	'piggyback-itisyou' => "Vos podètz pas connectar d'un biais superpausat sus vòstre pròpri compte.",
-	'piggyback-issysopto' => "Vos podètz pas connectar d'un biais superpausat sul compted'un utilizaire qu'a el meteis aquel drech.",
-	'action-piggyback' => "se connectar jos un autre compte d'utilizaire",
+	'piggyback-firstlogout' => 'D\'en primièr desconnectatz-vos de vòstre compte.',
+	'piggyback-itisyou' => 'Vos podètz pas connectar d\'un biais superpausat sus vòstre pròpri compte.',
+	'piggyback-issysopto' => 'Vos podètz pas connectar d\'un biais superpausat sul compted\'un utilizaire qu\'a el meteis aquel drech.',
+	'action-piggyback' => 'se connectar jos un autre compte d\'utilizaire',
 	'log-name-piggyback' => 'Jornal d’accès superpausat',
 	'log-description-piggyback' => 'Aqueste jornal es una lista dels accèsses superpausats a de comptes.',
-);
+];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sovq
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'piggybac-desc' => 'Umożliwia zalogowanie się jako inny użytkownik',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Inna nazwa użytkownika:',
@@ -395,39 +336,31 @@ Sprawdź poprawność wpisanej nazwy.',
 	'action-piggyback' => 'zaloguj się jako inny użytkownik',
 	'log-name-piggyback' => 'Rejestr Piggyback',
 	'log-description-piggyback' => 'Ten rejestr zawiera wszystkie logowania z użyciem piggyback.',
-);
+	'right-piggyback' => 'Logowanie jako inny użytkownik',
+];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
-$messages['pms'] = array(
-	'piggybac-desc' => "A përmët d'intré com n'àutr utent",
+$messages['pms'] = [
+	'piggybac-desc' => 'A përmët d\'intré com n\'àutr utent',
 	'piggyback' => 'Acess mùltipl',
 	'piggyback-otherusername' => 'Àutr ëstranòm:',
 	'piggyback-nosuchuser' => 'A-i é gnun utent con lë stranòm "$1".
 Ij nòm utent a fan cas a minùscol/majùscol.
 Ch\'a contròla l\'ortografìa.',
-	'piggyback-wronguser' => "$1 a l'é pa tò nòm utent",
-	'piggyback-loginprompt' => "Për piasì, ch'a buta torna sò stranòm e soa ciav.",
+	'piggyback-wronguser' => '$1 a l\'é pa tò nòm utent',
+	'piggyback-loginprompt' => 'Për piasì, ch\'a buta torna sò stranòm e soa ciav.',
 	'piggyback-firstlogout' => 'Për piasì prima torna intré an tò cont.',
 	'piggyback-itisyou' => 'A peul pa fé na conession mùltipla con sò pròpi cont.',
-	'piggyback-issysopto' => "A peul pa fé na conession mùltipla ansima al cont ëd n'utent con ël drit ëd fé dle conession mùltiple.",
-	'action-piggyback' => "intré ant ël sistema con n'àutr cont utent",
+	'piggyback-issysopto' => 'A peul pa fé na conession mùltipla ansima al cont ëd n\'utent con ël drit ëd fé dle conession mùltiple.',
+	'action-piggyback' => 'intré ant ël sistema con n\'àutr cont utent',
 	'log-name-piggyback' => 'Registr Piggyback',
-	'log-description-piggyback' => "Ës registr a l'é na lista dj'intrade ant ël sistema con vàire cont.",
-);
+	'log-description-piggyback' => 'Ës registr a l\'é na lista dj\'intrade ant ël sistema con vàire cont.',
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'piggyback-otherusername' => 'بل کارن نوم:',
-);
+];
 
-/** Portuguese (português)
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'piggybac-desc' => 'Permite a autenticação em nome de outro utilizador',
 	'piggyback' => 'Personificação',
 	'piggyback-otherusername' => 'Nome de outro utilizador:',
@@ -439,48 +372,35 @@ Verifique a soletração.',
 	'piggyback-firstlogout' => 'Saia primeiro de volta à sua conta, por favor.',
 	'piggyback-itisyou' => 'Não se pode personificar a si mesmo.',
 	'piggyback-issysopto' => 'Não pode personificar um utilizador que tem o direito de personificação.',
-);
+];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Aristóbulo
- * @author JM Pessanha
- */
-$messages['pt-br'] = array(
-	'piggybac-desc' => 'Permite a autenticação em nome de outro utilizador',
+$messages['pt-br'] = [
+	'piggybac-desc' => 'Permite a autenticação em nome de outro usuário',
 	'piggyback' => 'Personificação',
-	'piggyback-otherusername' => 'Nome de outro utilizador:',
-	'piggyback-nosuchuser' => 'Não existe um utilizador com o nome "$1".
-Os nomes de utilizador são sensíveis a maiúsculas e minúsculas.
+	'piggyback-otherusername' => 'Outro nome de usuário:',
+	'piggyback-nosuchuser' => 'Não existe um usuário com o nome "$1".
+Os nomes de usuário são sensíveis a maiúsculas e minúsculas.
 Verifique a ortografia.',
-	'piggyback-wronguser' => '$1 não é o seu nome de utilizador',
-	'piggyback-loginprompt' => 'Reintroduza o seu nome de utilizador e a senha.',
+	'piggyback-wronguser' => '$1 não é o seu nome de usuário',
+	'piggyback-loginprompt' => 'Reintroduza o seu nome de usuário e a senha.',
 	'piggyback-firstlogout' => 'Saia primeiro de volta à sua conta, por favor.',
 	'piggyback-itisyou' => 'Não se pode personificar a si mesmo.',
-	'piggyback-issysopto' => 'Não pode personificar um utilizador que tem o direito de personificação.',
+	'piggyback-issysopto' => 'Não pode personificar um usuário que tem o direito de personificação.',
 	'action-piggyback' => 'Fazer logon como outro usuário',
 	'log-name-piggyback' => 'Registro de sobreposto',
 	'log-description-piggyback' => 'Este log é um registro de conta sobreposta.',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
-	'piggybac-desc' => "Permette de trasè sus a 'n'otre utende",
+$messages['roa-tara'] = [
+	'piggybac-desc' => 'Permette de trasè sus a \'n\'otre utende',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Otre nome utende:',
-	'piggyback-wronguser' => "$1 non g'è 'u nome utende tune",
+	'piggyback-wronguser' => '$1 non g\'è \'u nome utende tune',
 	'piggyback-itisyou' => 'Non ge te puè piggybeccà.',
 	'log-name-piggyback' => 'Archivije de piggyback',
-);
+];
 
-/** Russian (русский)
- * @author DCamer
- * @author Kaganer
- * @author Kuzura
- * @author MaxSem
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'piggybac-desc' => 'Позволяет войти в качестве другого пользователя',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Имя другого участника:',
@@ -495,13 +415,9 @@ $messages['ru'] = array(
 	'action-piggyback' => 'войти как другой участник',
 	'log-name-piggyback' => 'Журнал Piggyback',
 	'log-description-piggyback' => 'Этот журнал активности piggyback.',
-);
+];
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'piggybac-desc' => 'Tillåter att logga in som en annan användare',
 	'piggyback' => 'Ryggridning',
 	'piggyback-otherusername' => 'Annat användarnamn:',
@@ -516,19 +432,14 @@ Kontrollera stavningen.',
 	'action-piggyback' => 'logga in som en annan användare',
 	'log-name-piggyback' => 'Logg för ryggridning',
 	'log-description-piggyback' => 'Denna logg är en dokumentering av konto-ryggridning.',
-);
+];
 
-/** Telugu (తెలుగు)
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'piggyback-otherusername' => 'ఇతర వాడుకరిపేరు:',
 	'piggyback-wronguser' => '$1 అన్నది మీ వాడుకరి పేరు కాదు',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'piggybac-desc' => 'Nagpapahintulot na lumagda bilang ibang tagagamit',
 	'piggyback' => 'Pakikisakay sa likod',
 	'piggyback-otherusername' => 'Ibang pangalan ng tagagamit:',
@@ -543,39 +454,65 @@ Suriin ang iyong pagbabaybay.',
 	'action-piggyback' => 'lumagdang papasok bilang ibang tagagamit',
 	'log-name-piggyback' => 'Talaan ng pag-angkas sa likod',
 	'log-description-piggyback' => 'Ang talaang ito ay isang rekord ng mga pag-angkas sa likod ng akawnt.',
-);
+];
 
-/** Ukrainian (українська)
- * @author Andriykopanytsia
- * @author Wildream
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'piggybac-desc' => 'Дозволяє ввійти в систему, як інший користувач',
 	'piggyback' => 'Комбінований',
 	'piggyback-otherusername' => 'Інше ім’я користувача',
 	'piggyback-nosuchuser' => 'Не існує користувача з ім\'ям "$1".
 Імена користувачів вводяться з урахуванням регістру.
 Перевірте правильність написання.',
-	'piggyback-wronguser' => "$1Це не ваше ім'я користувача",
-	'piggyback-loginprompt' => "Будь ласка, повторно введіть ім'я користувача та пароль.",
+	'piggyback-wronguser' => '$1Це не ваше ім\'я користувача',
+	'piggyback-loginprompt' => 'Будь ласка, повторно введіть ім\'я користувача та пароль.',
 	'piggyback-firstlogout' => 'Спочатку вийдіть з поверненням у свій обліковий запис.',
 	'piggyback-itisyou' => 'Ви не можете підключитися до самого себе.',
 	'piggyback-issysopto' => 'Ви не можете підключитися під користувача з правом на piggyback (підключення до інших).',
 	'action-piggyback' => 'увійти до системи як інший користувач',
 	'log-name-piggyback' => 'Журнал Piggyback',
 	'log-description-piggyback' => 'Цей журнал містить записи входів через облікові записи piggyback.',
-);
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Hydra
- * @author Hzy980512
- */
-$messages['zh-hans'] = array(
+$messages['vi'] = [
+	'piggybac-desc' => 'Cho phép đăng nhập như người dùng khác',
+	'piggyback' => 'Piggyback',
+	'piggyback-otherusername' => 'Tên người dùng khác:',
+	'piggyback-nosuchuser' => 'Không có người nào sử dụng tên tài khoản "$1".
+Tên người dùng là trường hợp nhạy cảm.
+Hãy kiểm tra lại hoặc bạn có thể đăng ký tài khoản này.',
+	'piggyback-wronguser' => '$1 không phải là tên người dùng của bạn',
+	'piggyback-loginprompt' => 'Vui lòng nhập lại tên người dùng và mật khẩu của bạn.',
+	'piggyback-firstlogout' => 'Xin vui lòng đăng xuất đầu tiên trở lại tài khoản của bạn.',
+	'piggyback-itisyou' => 'Bạn không thể piggyback chính mình.',
+	'piggyback-issysopto' => 'Bạn không thể piggyback người dùng với quyền piggyback.',
+	'action-piggyback' => 'đăng nhập như người dùng khác',
+	'log-name-piggyback' => 'Nhật trình Piggyback',
+	'log-description-piggyback' => 'Nhật ký này là một kỷ lục của tài khoản piggybacks.',
+];
+
+$messages['zh-hans'] = [
+	'piggybac-desc' => '允许作为其他用户登录',
 	'piggyback' => '转接',
 	'piggyback-otherusername' => '其他用户名：',
 	'piggyback-nosuchuser' => '没有名为“$1”的用户。用户名区分大小写，请再检查一遍。',
 	'piggyback-wronguser' => '$1 不是您的用户名',
 	'piggyback-loginprompt' => '请再输入一次您的用户名和密码。',
+	'piggyback-firstlogout' => '请先注销您当前的账户。',
 	'piggyback-itisyou' => '您不能转接自己。',
+	'piggyback-issysopto' => '您不能搭载已经搭载权限的用户。',
 	'action-piggyback' => '用其他账户登录',
-);
+	'log-name-piggyback' => 'Piggyback日志',
+	'log-description-piggyback' => '此日志记录账户搭载。',
+];
+
+$messages['no'] = [
+	'piggyback-firstlogout' => 'Vennligst logg ut tilbake til brukeren din først',
+	'piggyback-issysopto' => 'Du kan ikke transportere brukere med transportrettigheter',
+	'piggyback-itisyou' => 'Du kan ikke transportere deg selv',
+	'piggyback-loginprompt' => 'Vennligst skriv ditt brukernavn og passord igjen',
+	'piggyback-nosuchuser' => 'Det er ingen bruker med navnet «$1». Brukernavnet reagerer på store/små bokstaver. Sjekk rettskrivingen din.',
+	'piggyback-otherusername' => 'Annet brukernavn:',
+	'piggyback-wronguser' => '$1 er ikke brukernavnet ditt',
+	'piggyback' => 'Transporter',
+];
+

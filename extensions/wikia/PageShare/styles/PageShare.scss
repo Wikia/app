@@ -1,0 +1,22 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+.page-share-modal-dialog {
+	section {
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(center);
+	}
+
+	footer {
+		display: none;
+	}
+}
+
+.page-share-toolbar {
+	@include flexbox();
+
+	li:not(:last-child) {
+		margin-right: 6px;
+	}
+}

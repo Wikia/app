@@ -1,13 +1,12 @@
 <?php
-
 $messages = array();
 
 $messages['en'] = array(
 	'stafflog-desc' => 'Centralised logging for staff',
 	'stafflog' => 'StaffLog',
 	'stafflog-blockmsg' => '$1 $2 tried to block staff user $3 on wiki $4. Reason: $5',
-	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3', // @todo FIXME: event contains 4 parameters.
-	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 acount', // @todo FIXME: event contains 4 parameters.
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 account',
 	'right-stafflog' => 'Can view the stafflog',
 	'stafflog-wiki-status-change' => '$1 changed the status of $2 to $3. Reason: $4',
 	'stafflog-filter-label' => 'Filter',
@@ -21,10 +20,6 @@ $messages['en'] = array(
 	'action-stafflog' => 'view the centralized staff log',
 );
 
-/** Message documentation (Message documentation)
- * @author Erdemaslancan
- * @author Shirayuki
- */
 $messages['qqq'] = array(
 	'stafflog-desc' => '{{desc}}',
 	'stafflog' => 'Log name.',
@@ -52,12 +47,14 @@ $messages['qqq'] = array(
 * $4 is the reason of the change.',
 	'stafflog-filter-label' => '{{Identical|Filter}}',
 	'stafflog-filter-user' => '{{Identical|User}}',
+	'stafflog-filter-apply' => '{{Identical|Apply filter}}',
 	'action-stafflog' => '{{doc-action|stafflog}}',
 );
 
-/** Arabic (العربية)
- * @author Achraf94
- */
+$messages['ang'] = array(
+	'stafflog-filter-user' => 'Brūcend:',
+);
+
 $messages['ar'] = array(
 	'stafflog-desc' => 'تسجيل مركزي للموظفين',
 	'stafflog' => 'سجل فريق العمل',
@@ -74,21 +71,25 @@ $messages['ar'] = array(
 	'stafflog-filter-type-piggyback' => 'استعارة حساب',
 	'stafflog-filter-type-renameuser' => 'إعادة تسمية المستخدم',
 	'stafflog-filter-type-wikifactory' => 'حالة الويكي',
+	'action-stafflog' => 'رؤية سجل العاملين المركزي',
 );
 
-/** Breton (brezhoneg)
- * @author Y-M D
- */
+$messages['az'] = array(
+	'stafflog-filter-label' => 'Süzgəc',
+	'stafflog-filter-user' => 'İstifadəçi:',
+	'stafflog-filter-type' => 'Tipi:',
+);
+
 $messages['br'] = array(
+	'stafflog' => 'StaffLog',
 	'stafflog-filter-label' => 'Sil',
 	'stafflog-filter-user' => 'Implijer :',
 	'stafflog-filter-type' => 'Seurt :',
 	'stafflog-filter-apply' => 'Arloañ ar sil',
 	'stafflog-filter-type-block' => 'Stankadennoù',
+	'stafflog-filter-type-wikifactory' => 'Statud ar wiki',
 );
 
-/** Bosnian (bosanski)
- */
 $messages['bs'] = array(
 	'stafflog-desc' => 'Centralizirani zapisnik za osoblje',
 	'stafflog' => 'ZapisnikOsoblja',
@@ -97,10 +98,6 @@ $messages['bs'] = array(
 	'stafflog-piggybacklogoutmsg' => '$1 nosilac - korisnik $2 odjava sa $3 računa',
 );
 
-/** Catalan (català)
- * @author Alvaro Vidal-Abarca
- * @author Marcmpujol
- */
 $messages['ca'] = array(
 	'stafflog-desc' => 'Registre centralitzat pel personal',
 	'stafflog' => 'Registre del personal',
@@ -120,10 +117,6 @@ $messages['ca'] = array(
 	'action-stafflog' => "mostra l'historial centralitzat",
 );
 
-/** Czech (česky)
- * @author Chmee2
- * @author Dontlietome7
- */
 $messages['cs'] = array(
 	'stafflog-desc' => 'Centralizované protokolování pro zaměstnance',
 	'stafflog' => 'Protokol zaměstnanců',
@@ -139,19 +132,13 @@ $messages['cs'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wiki status',
 );
 
-/** German (Deutsch)
- * @author Alphakilo
- * @author Claudia Hattitten
- * @author Metalhead64
- * @author PtM
- */
 $messages['de'] = array(
 	'stafflog-desc' => 'Zentralisiertes Mitarbeiter-Logbuch',
 	'stafflog' => 'Mitarbeiter-Logbuch',
 	'stafflog-blockmsg' => '$1 $2 versuchte Mitarbeiter „$3“ auf Wiki „$4“ zu sperren. Grund: $5',
 	'stafflog-piggybackloginmsg' => '$1 Huckepack - $2-Anmeldung als $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Huckepack - $2-Abmeldung von $3-Benutzerkonto',
-	'right-stafflog' => 'Kann das Staff-Log einsehen',
+	'right-stafflog' => 'Kann das Mitarbeiterlogbuch einsehen',
 	'stafflog-wiki-status-change' => '$1 veränderte den Status des  $2 zu $3. Grund:$4',
 	'stafflog-filter-label' => 'Filter',
 	'stafflog-filter-user' => 'Benutzer:',
@@ -164,10 +151,6 @@ $messages['de'] = array(
 	'action-stafflog' => 'das zentralisierte Mitarbeiter-Log zu betrachten',
 );
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Mirzali
- */
 $messages['diq'] = array(
 	'stafflog-filter-label' => 'Avrêc',
 	'stafflog-filter-user' => 'Karber:',
@@ -176,17 +159,11 @@ $messages['diq'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wiki weziyet',
 );
 
-/** British English (British English)
- * @author Shirayuki
- */
 $messages['en-gb'] = array(
 	'stafflog-desc' => 'Centralised logging for staff',
 	'action-stafflog' => 'view the centralised staff log',
 );
 
-/** Spanish (español)
- * @author VegaDark
- */
 $messages['es'] = array(
 	'stafflog-desc' => 'Registro centralizado para el personal',
 	'stafflog' => 'Registro del personal',
@@ -206,13 +183,35 @@ $messages['es'] = array(
 	'action-stafflog' => 'ver el registro del staff centralizado',
 );
 
-/** French (français)
- * @author Gomoko
- * @author Peter17
- * @author Wyz
- */
+$messages['fa'] = array(
+	'stafflog-filter-label' => 'پالایه',
+	'stafflog-filter-user' => 'کاربر:',
+	'stafflog-filter-type' => 'نوع:',
+	'stafflog-filter-apply' => 'اعمال پالایش',
+	'stafflog-filter-type-block' => 'بلوک‌ها',
+);
+
+$messages['fi'] = array(
+	'stafflog-desc' => 'Centralised logging for staff',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 tried to block staff user $3 on wiki $4. Reason: $5',
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 account',
+	'right-stafflog' => 'Can view the stafflog',
+	'stafflog-wiki-status-change' => '$1 changed the status of $2 to $3. Reason: $4',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'User:',
+	'stafflog-filter-type' => 'Type:',
+	'stafflog-filter-apply' => 'Apply filter',
+	'stafflog-filter-type-block' => 'Blocks',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'User renames',
+	'stafflog-filter-type-wikifactory' => 'Wiki status',
+	'action-stafflog' => 'view the centralized staff log',
+);
+
 $messages['fr'] = array(
-	'stafflog-desc' => 'Identification centralisée pour le personnel',
+	'stafflog-desc' => 'Connexion centralisée pour le staff',
 	'stafflog' => 'StaffLog',
 	'stafflog-blockmsg' => '$1 $2 a essayé de bloquer l’employé $3 sur le wiki $4. Motif : $5',
 	'stafflog-piggybackloginmsg' => '$1 Accès superposé - utilisateur $2 connecté en tant que $3',
@@ -230,9 +229,10 @@ $messages['fr'] = array(
 	'action-stafflog' => 'voir le journal de l’équipe d’administration',
 );
 
-/** Galician (galego)
- * @author Toliño
- */
+$messages['fy'] = array(
+	'stafflog-filter-user' => 'Brûker:',
+);
+
 $messages['gl'] = array(
 	'stafflog-desc' => 'Rexistro centralizado para o persoal',
 	'stafflog' => 'Rexistro do persoal',
@@ -252,9 +252,6 @@ $messages['gl'] = array(
 	'action-stafflog' => 'ver o rexistro centralizado do persoal',
 );
 
-/** Hungarian (magyar)
- * @author TK-999
- */
 $messages['hu'] = array(
 	'stafflog-desc' => 'Központosított naplózás a személyzetnek',
 	'stafflog' => 'Személyzeti napló',
@@ -270,9 +267,6 @@ $messages['hu'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wiki állapota',
 );
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'stafflog-desc' => 'Registros centralisate pro le personal',
 	'stafflog' => 'Registro del personal',
@@ -291,9 +285,6 @@ $messages['ia'] = array(
 	'stafflog-filter-type-wikifactory' => 'Stato del wiki',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- */
 $messages['id'] = array(
 	'stafflog-desc' => 'Logging terpusat untuk staf',
 	'stafflog' => 'StaffLog',
@@ -303,16 +294,110 @@ $messages['id'] = array(
 	'right-stafflog' => 'Dapat melihat stafflog',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- */
+$messages['it'] = array(
+	'stafflog-desc' => 'Centralised logging for staff',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 tried to block staff user $3 on wiki $4. Reason: $5',
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 account',
+	'right-stafflog' => 'Can view the stafflog',
+	'stafflog-wiki-status-change' => '$1 changed the status of $2 to $3. Reason: $4',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'User:',
+	'stafflog-filter-type' => 'Type:',
+	'stafflog-filter-apply' => 'Apply filter',
+	'stafflog-filter-type-block' => 'Blocks',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'User renames',
+	'stafflog-filter-type-wikifactory' => 'Wiki status',
+	'action-stafflog' => 'view the centralized staff log',
+);
+
+$messages['ja'] = array(
+	'stafflog-desc' => 'Centralised logging for staff',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 tried to block staff user $3 on wiki $4. Reason: $5',
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 account',
+	'right-stafflog' => 'Can view the stafflog',
+	'stafflog-wiki-status-change' => '$1 changed the status of $2 to $3. Reason: $4',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'User:',
+	'stafflog-filter-type' => 'Type:',
+	'stafflog-filter-apply' => 'Apply filter',
+	'stafflog-filter-type-block' => 'Blocks',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'User renames',
+	'stafflog-filter-type-wikifactory' => 'Wiki status',
+	'action-stafflog' => 'view the centralized staff log',
+);
+
+$messages['kn'] = array(
+	'stafflog-filter-label' => 'ಶೋಧಕ',
+	'stafflog-filter-user' => 'ಬಳಕೆದಾರ:',
+	'stafflog-filter-type' => 'ನಮೂನೆ:',
+	'stafflog-filter-type-renameuser' => 'ಬಳಕೆದಾರ ಹೆಸರುಗಳು',
+);
+
+$messages['ko'] = array(
+	'stafflog' => '스태프 로그',
+	'right-stafflog' => '스태프 로그 열람',
+	'stafflog-filter-label' => '필터',
+	'stafflog-filter-user' => '사용자:',
+	'stafflog-filter-type' => '유형:',
+	'stafflog-filter-apply' => '필터 적용',
+	'stafflog-filter-type-block' => '차단',
+	'stafflog-filter-type-wikifactory' => '위키 통계',
+	'stafflog-desc' => 'Centralised logging for staff',
+	'stafflog-blockmsg' => '$1 $2 tried to block staff user $3 on wiki $4. Reason: $5',
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 account',
+	'stafflog-wiki-status-change' => '$1 changed the status of $2 to $3. Reason: $4',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'User renames',
+	'action-stafflog' => 'view the centralized staff log',
+);
+
+$messages['ku-latn'] = array(
+	'stafflog-filter-label' => 'Fîltre',
+	'stafflog-filter-user' => 'Bikarhêner:',
+	'stafflog-filter-type' => 'Cure:',
+);
+
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'Benotzer:',
 );
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
+$messages['lol'] = array(
+	'stafflog-desc' => 'crwdns65720:0crwdne65720:0',
+	'stafflog' => 'crwdns65721:0crwdne65721:0',
+	'stafflog-blockmsg' => 'crwdns65722:0crwdne65722:0',
+	'stafflog-piggybackloginmsg' => 'crwdns65723:0crwdne65723:0',
+	'stafflog-piggybacklogoutmsg' => 'crwdns65724:0crwdne65724:0',
+	'right-stafflog' => 'crwdns65725:0crwdne65725:0',
+	'stafflog-wiki-status-change' => 'crwdns65726:0crwdne65726:0',
+	'stafflog-filter-label' => 'crwdns65727:0crwdne65727:0',
+	'stafflog-filter-user' => 'crwdns65728:0crwdne65728:0',
+	'stafflog-filter-type' => 'crwdns65729:0crwdne65729:0',
+	'stafflog-filter-apply' => 'crwdns65730:0crwdne65730:0',
+	'stafflog-filter-type-block' => 'crwdns65731:0crwdne65731:0',
+	'stafflog-filter-type-piggyback' => 'crwdns65732:0crwdne65732:0',
+	'stafflog-filter-type-renameuser' => 'crwdns65733:0crwdne65733:0',
+	'stafflog-filter-type-wikifactory' => 'crwdns65734:0crwdne65734:0',
+	'action-stafflog' => 'crwdns65735:0crwdne65735:0',
+);
+
+$messages['lrc'] = array(
+	'stafflog-filter-label' => 'فيلتر',
+	'stafflog-filter-user' => 'کاریار',
+	'stafflog-filter-type' => 'نوع:',
+	'stafflog-filter-apply' => 'وه کار بسن فیلتر',
+	'stafflog-filter-type-block' => 'بهرجایا',
+);
+
 $messages['mk'] = array(
 	'stafflog-desc' => 'Централизирано најавување за персонал',
 	'stafflog' => 'ДневникНаПерсонал',
@@ -332,9 +417,6 @@ $messages['mk'] = array(
 	'action-stafflog' => 'преглед на централизираниот девник на персоналот',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = array(
 	'stafflog-desc' => 'Pengelogan terpusat untuk kakitangan',
 	'stafflog' => 'Nama Log',
@@ -354,9 +436,6 @@ $messages['ms'] = array(
 	'action-stafflog' => 'melihat log kakitangan terpusat',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- */
 $messages['nb'] = array(
 	'stafflog-desc' => 'Sentralisert loggføring for ledelse',
 	'stafflog' => 'Ledelseslogg',
@@ -375,10 +454,6 @@ $messages['nb'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wiki-status',
 );
 
-/** Dutch (Nederlands)
- * @author Saruman
- * @author Siebrand
- */
 $messages['nl'] = array(
 	'stafflog-desc' => 'Gecentraliseerd logboek voor medewerkers',
 	'stafflog' => 'Medewerkerslogboek',
@@ -398,9 +473,6 @@ $messages['nl'] = array(
 	'action-stafflog' => 'het gecentraliseerde staflogboek te bekijken',
 );
 
-/** Occitan (occitan)
- * @author Cedric31
- */
 $messages['oc'] = array(
 	'stafflog-desc' => 'Identificacion centralizada pel personal',
 	'stafflog' => 'StaffLog',
@@ -420,19 +492,13 @@ $messages['oc'] = array(
 	'action-stafflog' => 'veire lo jornal de l’equipa d’administracion',
 );
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Nandy
- * @author Odder
- * @author Sovq
- */
 $messages['pl'] = array(
 	'stafflog-desc' => 'Scentralizowane logowanie dla personelu',
 	'stafflog' => 'StaffLog',
 	'stafflog-blockmsg' => '$1 $2 próbował zablokować użytkownika z grupy Staff $3 na wiki $4. Powód: $5',
 	'stafflog-piggybackloginmsg' => 'Podłączenie $1 - użytkownik $2 zalogowany jako $3',
 	'stafflog-piggybacklogoutmsg' => 'Podłączenie $1 - użytkownik $2 wylogowany z konta $3',
-	'right-stafflog' => 'Może wyświetlić stafflog',
+	'right-stafflog' => 'Może wyświetlać Staff-Log',
 	'stafflog-wiki-status-change' => '$1 zmienił status  $2  na  $3 . Przyczyna: $4',
 	'stafflog-filter-label' => 'Filtr',
 	'stafflog-filter-user' => 'Użytkownik:',
@@ -445,10 +511,6 @@ $messages['pl'] = array(
 	'action-stafflog' => 'Wyświetlanie centralnego staff-logu',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'stafflog-desc' => "Argistrassion sentralisà për l'echip",
 	'stafflog' => 'StaffLog',
@@ -467,9 +529,6 @@ $messages['pms'] = array(
 	'stafflog-filter-type-wikifactory' => 'Stat dla Wiki',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'stafflog-filter-label' => 'چاڼگر',
 	'stafflog-filter-user' => 'کارن:',
@@ -477,36 +536,7 @@ $messages['ps'] = array(
 	'stafflog-filter-type-wikifactory' => 'ويکي دريځ',
 );
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- * @author Luckas
- * @author Malafaya
- */
 $messages['pt'] = array(
-	'stafflog-desc' => 'Registo centralizado para a equipa',
-	'stafflog' => 'Registo da Equipa',
-	'stafflog-blockmsg' => '$1 $2 tentou bloquear o utilizador da equipa $3 na wiki $4. Motivo: $5',
-	'stafflog-piggybackloginmsg' => 'Personificação $1 - utilizador $2 autenticou-se como $3',
-	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - utilizador $2 saiu da conta $3',
-	'right-stafflog' => 'Pode ver o Registo da Equipa',
-	'stafflog-wiki-status-change' => '$1 alterou o estado da $2 para $3. Motivo: $4',
-	'stafflog-filter-label' => 'Filtro',
-	'stafflog-filter-user' => 'Utilizador:',
-	'stafflog-filter-type' => 'Tipo:',
-	'stafflog-filter-apply' => 'Aplicar filtro',
-	'stafflog-filter-type-block' => 'Bloqueios',
-	'stafflog-filter-type-piggyback' => 'Personificação',
-	'stafflog-filter-type-renameuser' => 'Alterações do nome',
-	'stafflog-filter-type-wikifactory' => 'Estado da wiki',
-	'action-stafflog' => 'ver o Registo da Equipa',
-);
-
-/** Brazilian Portuguese (português do Brasil)
- * @author JM Pessanha
- * @author Luckas
- * @author Luckas Blade
- */
-$messages['pt-br'] = array(
 	'stafflog-desc' => 'Registro centralizado para a equipe',
 	'stafflog' => 'Registro da Equipe',
 	'stafflog-blockmsg' => '$1 $2 tentou bloquear o usuário da equipe $3 na wiki $4. Motivo: $5',
@@ -519,11 +549,12 @@ $messages['pt-br'] = array(
 	'stafflog-filter-type' => 'Tipo:',
 	'stafflog-filter-apply' => 'Aplicar filtro',
 	'stafflog-filter-type-block' => 'Bloqueios',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'User renames',
+	'stafflog-filter-type-wikifactory' => 'Wiki status',
+	'action-stafflog' => 'view the centralized staff log',
 );
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = array(
 	'stafflog-desc' => 'Trasute cendralizzate pe staff',
 	'stafflog' => 'StaffLog',
@@ -543,12 +574,6 @@ $messages['roa-tara'] = array(
 	'action-stafflog' => "'mdruche l'archivije cendralizzate d'u staff",
 );
 
-/** Russian (русский)
- * @author DCamer
- * @author Eleferen
- * @author Kuzura
- * @author Okras
- */
 $messages['ru'] = array(
 	'stafflog-desc' => 'Централизованное ведение журнала для сотрудников',
 	'stafflog' => 'Журнал сотрудника',
@@ -568,10 +593,6 @@ $messages['ru'] = array(
 	'action-stafflog' => 'посмотреть централизованный штатный журнал',
 );
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
 	'stafflog-desc' => 'Centraliserad loggning för personal',
 	'stafflog' => 'Personallogg',
@@ -591,9 +612,6 @@ $messages['sv'] = array(
 	'action-stafflog' => 'visa centraliserade personalloggen',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'stafflog-desc' => 'Nakagitnang paglagda para sa tauhan',
 	'stafflog' => 'Talaan ng Tauhan',
@@ -612,12 +630,6 @@ $messages['tl'] = array(
 	'stafflog-filter-type-wikifactory' => 'Katayuan ng wiki',
 );
 
-/** Ukrainian (українська)
- * @author Andriykopanytsia
- * @author Steve.rusyn
- * @author SteveR
- * @author Тест
- */
 $messages['uk'] = array(
 	'stafflog-desc' => 'Централізоване журналювання для співробітників',
 	'stafflog' => 'Журнал співробітника',
@@ -637,17 +649,60 @@ $messages['uk'] = array(
 	'action-stafflog' => 'переглядати журнал централізованого персоналу',
 );
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Dimension
- * @author StephDC
- * @author Yfdyh000
- */
+$messages['vi'] = array(
+	'stafflog-desc' => 'Chức năng ghi tập trung cho nhân viên',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 cố gắng để chặn nhân viên người dùng $3 trên wiki $4 .Lý do: $5',
+	'stafflog-piggybackloginmsg' => '$1 Piggyback – người sử dụng $2 đăng nhập như $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback – người dùng $2 đăng xuất từ tài khoản $3',
+	'right-stafflog' => 'Có thể xem stafflog',
+	'stafflog-wiki-status-change' => '$1 thay đổi trạng thái của $2 để $3. Lý do:$4',
+	'stafflog-filter-label' => 'Bộ lọc',
+	'stafflog-filter-user' => 'Thành viên:',
+	'stafflog-filter-type' => 'Loại:',
+	'stafflog-filter-apply' => 'Áp dụng bộ lọc',
+	'stafflog-filter-type-block' => 'Cấm',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'Tên người dùng:',
+	'stafflog-filter-type-wikifactory' => 'Tình trạng wiki',
+	'action-stafflog' => 'Xem sổ ghi tập trung nhân viên',
+);
+
 $messages['zh-hans'] = array(
+	'stafflog-desc' => '用于工作人员的集中登录',
+	'stafflog' => '工作人员日志',
 	'stafflog-blockmsg' => '$1 $2 试图封禁在维基系统 $4 上面的员工用户 $3，理由为 $5',
+	'stafflog-piggybackloginmsg' => '$1搭载——用户$2作为$3登录',
+	'stafflog-piggybacklogoutmsg' => '$1搭载——用户$2从账户$3退出',
+	'right-stafflog' => '可以查看stafflog',
+	'stafflog-wiki-status-change' => '$1 更改 $2 的状态到 $3。理由：$4',
 	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
 	'stafflog-filter-type' => '类型：',
 	'stafflog-filter-apply' => '应用过滤器',
+	'stafflog-filter-type-block' => '封禁',
+	'stafflog-filter-type-piggyback' => '搭载',
 	'stafflog-filter-type-renameuser' => '重命名用户',
 	'stafflog-filter-type-wikifactory' => 'Wiki状态',
+	'action-stafflog' => '查看集中式的员工日志',
 );
+
+$messages['zh-hant'] = array(
+	'stafflog-filter-label' => '篩選器',
+	'stafflog-filter-user' => '使用者：',
+	'stafflog-desc' => 'Centralised logging for staff',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 tried to block staff user $3 on wiki $4. Reason: $5',
+	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 account',
+	'right-stafflog' => 'Can view the stafflog',
+	'stafflog-wiki-status-change' => '$1 changed the status of $2 to $3. Reason: $4',
+	'stafflog-filter-type' => 'Type:',
+	'stafflog-filter-apply' => 'Apply filter',
+	'stafflog-filter-type-block' => 'Blocks',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'User renames',
+	'stafflog-filter-type-wikifactory' => 'Wiki status',
+	'action-stafflog' => 'view the centralized staff log',
+);
+

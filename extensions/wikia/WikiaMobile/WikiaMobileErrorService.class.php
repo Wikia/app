@@ -7,6 +7,11 @@
 	 */
 class WikiaMobileErrorService extends WikiaService {
 	/**
+	 * Used by WikiaMobileHooks and SharedHelp
+	 * @var bool
+	 */
+	static public $displayErrorPage = false;
+	/**
 	 * Page Not Found
 	 *
 	 * Get 20 most recent edited page

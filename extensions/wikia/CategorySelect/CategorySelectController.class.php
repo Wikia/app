@@ -20,13 +20,13 @@ class CategorySelectController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		// Template rendering cancelled by hook
-		if ( !wfRunHooks( 'CategorySelectArticlePage' ) ) {
+		if ( !Hooks::run( 'CategorySelectArticlePage' ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		$categories = $this->wg->out->getCategories();
-		$showHidden = $this->wg->User->getBoolOption( 'showhiddencats' );
+		$showHidden = (bool)$this->wg->User->getGlobalPreference( 'showhiddencats' );
 		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelectHelper::isEditable() );
 
 		// There are no categories present and user can't edit, skip rendering
@@ -46,6 +46,9 @@ class CategorySelectController extends WikiaController {
 
 		$categoriesLink = Linker::link( Title::newFromText( $categoriesLinkPage ), $categoriesLinkText, $categoriesLinkAttributes );
 
+		Wikia::addAssetsToOutput( 'category_select_css' );
+		Wikia::addAssetsToOutput( 'category_select_js' );
+
 		$this->response->setVal( 'categories', $categories );
 		$this->response->setVal( 'categoriesLink', $categoriesLink );
 		$this->response->setVal( 'showHidden', $showHidden );
@@ -60,6 +63,10 @@ class CategorySelectController extends WikiaController {
 	public function categories() {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
+
 		$categories = $this->request->getVal( 'categories', array() );
 		$data = array();
 
@@ -71,16 +78,20 @@ class CategorySelectController extends WikiaController {
 			$name = is_array( $category ) ? $category[ 'name' ] : $category;
 			$originalName = $name;
 			$title = Title::makeTitleSafe( NS_CATEGORY, $name );
-			$this->wg->ContLang->findVariantLink( $name, $title, true );
-			if ( $name != $originalName && array_key_exists( $name, $data ) ) {
-				continue;
+			if ( $title != null ) {
+				$this->wg->ContLang->findVariantLink( $name, $title, true );
+				if ( $name != $originalName && array_key_exists( $name, $data ) ) {
+					continue;
+				}
+				$text = $this->wg->ContLang->convertHtml( $title->getText() );
+				$data[ $name ] = array(
+					'link' => Linker::link( $title, $text ),
+					'name' => $text,
+					'type' => CategoryHelper::getCategoryType( $originalName ),
+				);
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->warning( "Unsafe category provided", [ 'name' => $name ] );
 			}
-			$text = $this->wg->ContLang->convertHtml( $title->getText() );
-			$data[ $name ] = array(
-				'link' => Linker::link( $title, $text ),
-				'name' => $text,
-				'type' => CategoryHelper::getCategoryType( $originalName ),
-			);
 		}
 
 		$this->response->setVal( 'categories', $data );
@@ -92,6 +103,10 @@ class CategorySelectController extends WikiaController {
 	 * The template for a category in the category list.
 	 */
 	public function category() {
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
+
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'edit', wfMessage( 'categoryselect-category-edit' )->text() );
 		$this->response->setVal( 'link', $this->request->getVal( 'link', '' ) );
@@ -128,7 +143,7 @@ class CategorySelectController extends WikiaController {
 	 */
 	public function editPageMetadata() {
 		$categories = '';
-		$data = CategoryHelper::getExtractedCategoryData();
+		$data = $this->getVal('categories', CategoryHelper::getExtractedCategoryData());
 
 		if ( isset( $data ) && !empty( $data[ 'categories' ] ) ) {
 			$categories = htmlspecialchars( CategoryHelper::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
@@ -179,6 +194,8 @@ class CategorySelectController extends WikiaController {
 	 */
 	public function save() {
 		wfProfileIn( __METHOD__ );
+
+		$this->checkWriteRequest();
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$categories = $this->request->getVal( 'categories', array() );
@@ -239,6 +256,7 @@ class CategorySelectController extends WikiaController {
 					$response[ 'html' ] = $this->app->renderView( 'CategorySelectController', 'categories', array(
 						'categories' => $categories
 					));
+					Hooks::run( 'CategorySelectSave', array( $title, $newCategories ) );
 					break;
 
 				case EditPage::AS_SPAM_ERROR:

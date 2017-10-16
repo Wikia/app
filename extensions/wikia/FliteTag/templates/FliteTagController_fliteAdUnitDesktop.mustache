@@ -1,0 +1,15 @@
+<div class="flite-tag-extension">
+	<script>
+		(function() {
+			var o = window;
+			var guid="{{guid}}";
+
+			o.FLITE=o.FLITE || {};
+			o.FLITE.config = o.FLITE.config || {};
+			o.FLITE.config[guid] = o.FLITE.config[guid] || {};
+			o.FLITE.config[guid].ts = (+ new Date());
+		})();
+	</script>
+	<script src="//s.flite.com/syndication/combo.js" async="async" data-instance="{{guid}}" data-width="{{width}}" data-height="{{height}}"></script>
+	<noscript><a style="text-decoration:none;display:block;border:0;" href="//r.flite.com/syndication/backuplink/i/{{guid}}?ct=" target="_blank"><img border="0" src="//r.flite.com/syndication/backupimage/i/{{guid}}?at=" /></a></noscript>
+</div>

@@ -3,151 +3,182 @@
  * Class definition for Wikia\Search\QueryService\Select\AbstractSelect
  */
 namespace Wikia\Search\QueryService\Select;
+
 use Wikia\Search\QueryService\DependencyContainer, Wikia\Search\Config, \Solarium_Client, Wikia\Search\ResultSet, Wikia\Search\Utilities, \Solarium_Query_Select, \Solarium_Result_Select;
+
 /**
  * Abstract class responsible for controlling the flow of logic of a search select query.
  * The workflow for a search includes preparation of the query, sending of the query, and preparation of results.
+ *
  * @author relwell
  * @package Search
  * @subpackage QueryService
  */
-abstract class AbstractSelect
-{
+abstract class AbstractSelect {
 	/**
 	 * Snippets should be 150 characters long, by default.
+	 *
 	 * @var int
 	 */
 	const HL_FRAG_SIZE = 150;
-	
+
 	/**
 	 * This should be prepended to matches in Solr snippets.
+	 *
 	 * @var string
 	 */
 	const HL_MATCH_PREFIX = '<span class="searchmatch">';
-	
+
 	/**
 	 * This should be appended to matches in Solr snippets.
+	 *
 	 * @var string
 	 */
 	const HL_MATCH_POSTFIX = '</span>';
-	
+
 	/**
 	 * Maximum number of words to use when querying solr
+	 *
 	 * @var int
 	 */
 	const MAX_QUERY_WORDS = 10;
-	
+
 	/**
 	 * Sets max collation tries when spellchecking
+	 *
 	 * @var int
 	 */
 	const SPELLING_MAX_COLLATION_TRIES = 20;
-	
+
 	/**
 	 * Sets max collations when spellchecking
+	 *
 	 * @var int
 	 */
 	const SPELLING_MAX_COLLATIONS = 5;
-	
+
 	/**
 	 * Sets the max number of results to return when spellchecking
+	 *
 	 * @var int
 	 */
 	const SPELLING_RESULT_COUNT = 20;
-	
+
 	/**
 	 * This is the core path for articles as documents
+	 *
 	 * @var string
 	 */
 	const SOLR_CORE_MAIN = 'main';
-	
+
 	/**
 	 * This is the core path for cross-wiki, or wikis as documents
+	 *
 	 * @var string
 	 */
 	const SOLR_CORE_CROSSWIKI = 'xwiki';
-	
+
+	/**
+	 * Number of articles found to set WikiMatch
+	 *
+	 * @var int
+	 */
+	const ARTICLES_NUM_WIKIMATCH = 50;
+
 	/**
 	 * Used for tracking
+	 *
 	 * @var string
 	 */
 	protected $searchType;
-	
+
 	/**
 	 * Which "core" we're using in Solr -- xwiki or main
+	 *
 	 * @var string
 	 */
 	protected $core = 'main';
-	
+
 	/**
 	 * Boost functions, used by child classes to increase a document's score based on specific document values
+	 *
 	 * @var array
 	 */
-	protected $boostFunctions = array();
-	
+	protected $boostFunctions = [];
+
 	/**
 	 * Default time allowed for a query.
+	 *
 	 * @var int
 	 */
 	protected $timeAllowed = 5000;
-	
+
 	/**
 	 * The field used for highlighting
-	 * @var unknown_type
+	 *
+	 * @var string
 	 */
 	protected $highlightingField = 'html';
-	
+
 	/**
 	 * Responsible for storing configuration values for a search.
-	 * @var Wikia\Search\Config
+	 *
+	 * @var \Wikia\Search\Config
 	 */
 	protected $config;
-	
+
 	/**
 	 * Responsible for encapsulating logic that interacts with MediaWiki classes.
-	 * @var Wikia\Search\MediaWikiService
+	 *
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
-	
+
 	/**
 	 * Responsible for sending search requests to Solr.
+	 *
 	 * @var \Solarium_Client
 	 */
 	protected $client;
-	
+
 	/**
 	 * A little pre-processing since the client needs to know the core before it's properly configured.
+	 *
 	 * @var bool
 	 */
 	protected $coreSetInClient = false;
-	
+
 	/**
-	 * Default requested fields for a main-core search service. 
+	 * Default requested fields for a main-core search service.
+	 *
 	 * @var array
 	 */
 	protected $requestedFields = [
-				'id',
-				'pageid',
-				'wikiarticles',
-				'wikititle',
-				'url',
-				'wid',
-				'canonical',
-				'host',
-				'ns',
-				'indexed',
-				'backlinks',
-				'title',
-				'score',
-				'created',
-				'views',
-				'categories',
-				'hub',
-				'lang',
-			];
-	
+		'id',
+		'pageid',
+		'wikiarticles',
+		'wikititle',
+		'url',
+		'wid',
+		'canonical',
+		'host',
+		'ns',
+		'indexed',
+		'backlinks',
+		'title',
+		'score',
+		'created',
+		'views',
+		'categories',
+		'hub',
+		'lang',
+		'article_quality_i',
+		'article_type_s'
+	];
+
 	/**
 	 * Handles dependency injection for all child classes.
+	 *
 	 * @param DependencyContainer $container
 	 */
 	public function __construct( DependencyContainer $container ) {
@@ -156,172 +187,196 @@ abstract class AbstractSelect
 		$this->config = $container->getConfig();
 		$this->service = $container->getService();
 	}
-	
+
 	/**
 	 * Performs a select query on Solr.
-	 * A match is instantiated if available, and then the search request 
+	 * A match is instantiated if available, and then the search request
 	 * is prepared and sent. The response, upon receipt, is used to create a ResultSet.
 	 * This is fault-tolerant, and will return an instance of Wikia\Search\ResultSet\EmptySet
 	 * in the event of no results or an internal exception.
-	 * @return Wikia\Search\ResultSet\AbstractResultSet
+	 *
+	 * @return \Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function search() {
 		$this->getMatch();
-		$this->prepareRequest()
-		     ->prepareResponse( $this->sendSearchRequestToClient() )
-		;
+		$this->prepareRequest()->prepareResponse( $this->sendSearchRequestToClient() );
+
 		return $this->getConfig()->getResults();
 	}
-	
+
 	/**
 	 * Allows us to get an array from search results rather than search result objects.
+	 *
 	 * @param array $fields allows us to apply a mapping
+	 * @param bool $metadata
+	 * @param string $keyField
+	 *
 	 * @return array
 	 */
-	public function searchAsApi( $fields = null, $metadata = false ) {
+	public function searchAsApi( $fields = null, $metadata = false, $keyField = null ) {
 		$resultSet = $this->search();
 		$config = $this->getConfig();
+
 		if ( $metadata ) {
 			$total = $config->getResultsFound();
 			$numPages = $config->getNumPages();
 			$limit = $config->getLimit();
 			$response = [
-					'total' => $total,
-					'batches' => $total > 0 ? $numPages : 0,
-					'currentBatch' => $total > 0 ? $config->getPage() : 0,
-					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
-					'items' => $resultSet->toArray( $fields )
-					];
+				'total' => $total,
+				'batches' => $total > 0 ? $numPages : 0,
+				'currentBatch' => $total > 0 ? $config->getPage() : 0,
+				'next' => 0,
+				'items' => $resultSet->toArray( $fields, $keyField )
+			];
+			if ( $total > 0 ) {
+				$response['next'] =
+					min( [ $numPages * $limit, $config->getStart() + $limit ] ) + $config->mustAddMatchedRecords() + 1;
+			}
 		} else if ( $fields ) {
-			$response = $resultSet->toArray( $fields );
+			$response = $resultSet->toArray( $fields, $keyField );
 		} else {
-			$response = $resultSet->toArray();
+			$response = $resultSet->toArray( null, $keyField );
 		}
+
 		return $response;
 	}
-	
+
 	/**
-	 * Retrieves an existing match, or forces the child class to retrieve a match. 
-	 * @return Ambigous <\Wikia\Search\Match\Article, \Wikia\Search\Match\Wiki, \Wikia\Search\false, boolean>
+	 * Retrieves an existing match, or forces the child class to retrieve a match.
+	 *
+	 * @return \Wikia\Search\Match\Article|\Wikia\Search\Match\Wiki|boolean
 	 */
 	public function getMatch() {
 		$config = $this->getConfig();
 		if ( $config->hasMatch() ) {
 			return $config->getMatch();
 		}
+
 		return $this->extractMatch();
 	}
-	
+
 	/**
-	 * This hook should be overidden by children to access the appropriate kind of match.
-	 * @return NULL
+	 * This hook should be overridden by children to access the appropriate kind of match.
+	 *
+	 * @return null
 	 */
 	protected function extractMatch() {
 		return null;
 	}
-	
+
 	/**
 	 * Creates an instance of Solarium_Query_Select configured by searchconfig.
+	 *
 	 * @return \Solarium_Query_Select
 	 */
 	protected function getSelectQuery() {
 		$query = $this->getClient()->createSelect();
 		$query->setDocumentClass( '\Wikia\Search\Result' );
-		$this->registerQueryParams( $query )
-		     ->registerComponents( $query );
+		$this->registerQueryParams( $query )->registerComponents( $query );
+
 		return $query->setQuery( $this->getQuery() );
 	}
-	
+
 	/**
 	 * This is abstract because the dismax and lucene query services behave differently here.
+	 *
 	 * @return string
 	 */
 	abstract protected function getQuery();
-	
+
 	/**
 	 * Allows us to configure components in child instances.
+	 *
 	 * @param \Solarium_Query_Select $query
+	 *
 	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerComponents( Solarium_Query_Select $query ) {
 		return $this;
 	}
-	
+
 	/**
 	 * Registers meta-parameters for the query
+	 *
 	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 *
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
 		$sort = $config->getSort();
-		$query->addFields      ( $this->getRequestedFields() )
-		      ->removeField    ('*')
-		      ->setStart       ( $config->getStart() )
-		      ->setRows        ( $config->getLength() )
-		      ->addSort        ( $sort[0], $sort[1] )
-		      ->addParam       ( 'timeAllowed', $this->timeAllowed )
-		;
+		$query->addFields( $this->getRequestedFields() )->removeField( '*' )->setStart( $config->getStart() )->setRows(
+			$config->getLength()
+		)->addSort( $sort[0], $sort[1] )->addParam( 'timeAllowed', $this->timeAllowed );
+
 		return $this;
 	}
-	
+
 	/**
 	 * For now, this is the union of the default requested fields (usually required for minimum functionality),
 	 * and any fields specifically added by the client code.
+	 *
 	 * @todo Add support for _removing_ requested fields?
 	 * @return array
 	 */
 	protected function getRequestedFields() {
 		$fields = [];
-		foreach ( array_merge( $this->requestedFields, $this->getConfig()->getRequestedFields() ) as $field ) {
-			$fields[] = Utilities::field( $field );
+		$config = $this->getConfig();
+		$language = $config->getLanguageCode();
+		foreach ( array_merge( $this->requestedFields, $config->getRequestedFields() ) as $field ) {
+			$fields[] = Utilities::field( $field, $language );
 		}
+
 		return $fields;
 	}
-	
+
 	/**
 	 * Configures filter queries to, for instance, prevent duplicate results from PTT, or enable better caching.
+	 *
 	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 *
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueries( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
 		$config->setFilterQuery( $this->getFilterQueryString() );
 		$this->registerFilterQueryForMatch();
 		$query->addFilterQueries( $config->getFilterQueries() );
+
 		return $this;
 	}
-	
+
 	/**
 	 * Used to register a filter query based on settings in the config.
 	 * Children can override this method optionally.
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 *
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueryForMatch() {
 		return $this;
 	}
-	
+
 	/**
 	 * Configures result snippet highlighting
+	 *
 	 * @param Solarium_Query_Select $query
+	 *
 	 * @return AbstractSelect
 	 */
 	protected function registerHighlighting( Solarium_Query_Select $query ) {
 		$highlighting = $query->getHighlighting();
-		$highlighting->addField                     ( Utilities::field( $this->highlightingField ) )
-		             ->setSnippets                  ( 1 )
-		             ->setRequireFieldMatch         ( true )
-		             ->setFragSize                  ( self::HL_FRAG_SIZE )
-		             ->setSimplePrefix              ( self::HL_MATCH_PREFIX )
-		             ->setSimplePostfix             ( self::HL_MATCH_POSTFIX )
-		             ->setAlternateField            ( 'nolang_txt' )
-		             ->setMaxAlternateFieldLength   ( 100 )
-		;
+		$highlighting->addField( Utilities::field( $this->highlightingField ) )->setSnippets( 1 )->setRequireFieldMatch(
+			true
+		)->setFragSize( self::HL_FRAG_SIZE )->setSimplePrefix( self::HL_MATCH_PREFIX )->setSimplePostfix(
+			self::HL_MATCH_POSTFIX
+		)->setAlternateField( 'nolang_txt' )->setMaxAlternateFieldLength( 100 );
+
 		return $this;
 	}
-	
+
 	/**
 	 * Responsible for the initial query to Solr, with some error handling built in
+	 *
 	 * @return Solarium_Result_Select
 	 */
 	protected function sendSearchRequestToClient() {
@@ -330,88 +385,97 @@ abstract class AbstractSelect
 		} catch ( \Exception $e ) {
 			if ( $this->config->getError() !== null ) {
 				$this->config->setError( $e );
+
 				return new \Solarium_Result_Select_Empty();
 			} else {
-				$this->config->setSkipBoostFunctions( true )
-				             ->setError( $e );
+				$this->config->setSkipBoostFunctions( true )->setError( $e );
 
 				return $this->sendSearchRequestToClient();
 			}
 		}
 	}
-	
+
 	/**
 	 * This is a hook for child classes to optionally extend
+	 *
 	 * @return AbstractSelect
 	 */
 	protected function prepareRequest() {
 		$config = $this->getConfig();
 		if ( $config->getPage() > 1 ) {
-			$config->setStart( ( $config->getPage() - 1 ) * $config->getLength() );
+			$start = ( ( $config->getPage() - 1 ) * $config->getLimit() ) - $config->mustAddMatchedRecords();
+			$config->setStart( $start );
 		}
+
 		return $this;
 	}
-	
+
 	/**
 	 * Allows us to re-search for a collated spellcheck
+	 *
 	 * @param Solarium_Result_Select $result
-	 * @return Ambigous <Solarium_Result_Select, \Solarium_Result_Select_Empty>
+	 *
+	 * @return Solarium_Result_Select|\Solarium_Result_Select_Empty
 	 */
 	protected function spellcheckResult( Solarium_Result_Select $result ) {
 		// re-search for spellchecked phrase in the absence of results
 		$service = $this->getService();
 		$config = $this->getConfig();
-		if ( $service->getGlobal( 'WikiaSearchSpellcheckActivated' ) 
-				&& $result->getNumFound() == 0
-				&& !$config->hasMatch() ) {
+		if ( $service->getGlobal( 'WikiaSearchSpellcheckActivated' ) &&
+			$result->getNumFound() == 0 &&
+			!$config->hasMatch()
+		) {
 			if ( $collation = $result->getSpellcheck()->getCollation() ) {
 				$config->setQuery( $collation->getQuery() );
 				$result = $this->sendSearchRequestToClient();
 			}
 		}
+
 		return $result;
 	}
-	
+
 	/**
 	 * This is a hook for child classes to optionally extend.
-	 * It creates result sets based on the response from Solr, encapsulated in 
+	 * It creates result sets based on the response from Solr, encapsulated in
 	 * an instance of Solarium_Result_Select.
+	 *
 	 * @param Solarium_Result_Select $result
 	 */
 	protected function prepareResponse( Solarium_Result_Select $result ) {
 		$this->spellcheckResult( $result );
 		$config = $this->getConfig();
-		$container = new ResultSet\DependencyContainer( array( 'result' => $result, 'config' => $config ) );
-		$results = (new ResultSet\Factory)->get( $container );
+		$container = new ResultSet\DependencyContainer( [ 'result' => $result, 'config' => $config ] );
+		$results = ( new ResultSet\Factory )->get( $container );
 		$config->setResults( $results );
 	}
-	
+
 	/**
 	 * Builds the string used with filter queries based on search config
+	 *
 	 * @return string
 	 */
-	protected function getFilterQueryString()
-	{
+	protected function getFilterQueryString() {
 		return '';
 	}
-	
+
 	/**
-	 * @return Wikia\Search\Config
+	 * @return \Wikia\Search\Config
 	 */
 	protected function getConfig() {
 		return $this->config;
 	}
-	
+
 	/**
-	 * @return Wikia\Search\MediaWikiService
+	 * @return \Wikia\Search\MediaWikiService
 	 */
 	protected function getService() {
 		return $this->service;
 	}
-	
+
 	/**
 	 * Reusable logic for storing matches on a wiki basis. Used in InterWiki and OnWiki Query Services.
-	 * @return Wikia\Search\Match\Wiki|null
+	 *
+	 * @return \Wikia\Search\Match\Wiki|null
 	 */
 	protected function extractWikiMatch() {
 		$config = $this->getConfig();
@@ -419,41 +483,87 @@ abstract class AbstractSelect
 		$domain = preg_replace(
 			'/[^a-zA-Z0-9]/',
 			'',
-			strtolower( $query ) 
+			strtolower( $query )
 		);
 		$service = $this->getService();
-		$wikiMatch = $service->getWikiMatchByHost( $domain, $config->getLanguageCode() );
-		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
-			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
+		$langs = $config->getLanguageCode();
+		$langs = is_array( $langs ) ? $langs : [ $langs ];
+		foreach ( $langs as $lang ) {
+			$wikiMatch = $service->getWikiMatchByHost( $domain, $lang );
+			//if found exit, we look only for first match
+			if ( !empty( $wikiMatch ) ) {
+				break;
+			}
+		}
+		if ( !empty( $wikiMatch ) &&
+			( $wikiMatch->getId() !== $service->getWikiId() ) &&
+			( !( $config->getCommercialUse() ) ||
+				( new \LicensedWikisService )->isCommercialUseAllowedById( $wikiMatch->getId() ) )
+		) {
 			$result = $wikiMatch->getResult();
-			if ( $result['articles_i'] >= 50 ) {
+			if ( $this->isValidExactMatch( $result ) ) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}
+
 		return $config->getWikiMatch();
 	}
-	
+
+	/**
+	 * @param $result
+	 *
+	 * @return bool
+	 */
+	protected function isValidExactMatch( $result ) {
+		$config = $this->getConfig();
+		$hub = $config->getHub();
+		if ( !empty( $hub ) ) {
+			if ( strtolower( $result['hub_s'] ) !== strtolower( $hub ) ) {
+				return false;
+			}
+		}
+		$hubs = $config->getHubs();
+		if ( !empty( $hubs ) ) {
+			$found = false;
+			foreach ( $hubs as $hub ) {
+				if ( strtolower( $result['hub_s'] ) === strtolower( trim( $hub ) ) ) {
+					$found = true;
+				}
+			}
+			if ( !$found ) {
+				return false;
+			}
+		}
+
+		return $result['articles_i'] >= 50;
+	}
+
 	/**
 	 * This allows internal manipulation of the specific core being queried by this service.
-	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular dependency.
+	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular
+	 * dependency.
+	 *
 	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function setCoreInClient() {
 		$options = $this->client->getOptions();
-		$options['adapteroptions']['path'] = '/solr/'.$this->core;
+		$options['adapteroptions']['path'] = '/solr/' . $this->core;
 		$this->client->setOptions( $options, true );
 		$this->coreSetInClient = true;
+
 		return $this;
 	}
-	
+
 	/**
 	 * Allows lazy loading of internal configuration through accessor method
+	 *
 	 * @return Solarium_Client
 	 */
 	protected function getClient() {
-		if (! $this->coreSetInClient ) {
+		if ( !$this->coreSetInClient ) {
 			$this->setCoreInClient();
 		}
+
 		return $this->client;
 	}
 }

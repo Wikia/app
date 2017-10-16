@@ -1,0 +1,259 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/chevron';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
+
+.portable-infobox {
+	background-color: $infobox-background;
+	clear: right;
+	float: right;
+	margin: 0 0 $infobox-margin $infobox-margin;
+	width: $infobox-width;
+}
+
+// **********  Overwrite styles from article  ********** //
+// (placing it within portable-infobox class makes it strong enough) //
+
+.portable-infobox {
+
+	@include wikiaArticleOverwrites;
+
+	// overwrite default article styles for children of data value
+	.pi-data-value {
+		> *,
+		li {
+			margin: 0;
+		}
+
+		ol,
+		ul {
+			list-style-position: inside;
+		}
+
+		li {
+			line-height: 19px;
+		}
+	}
+}
+
+@include commonElementsStyles;
+@include individualElementsStyles;
+
+// **********  Special styles for HORIZONTAL group  ********** //
+
+.pi-horizontal-group {
+	border-spacing: 0;
+	table-layout: fixed;
+	text-align: center;
+	width: 100%;
+
+	.pi-header {
+		text-align: left;
+	}
+
+	.pi-horizontal-group-item {
+		vertical-align: top;
+
+		&:not(:first-child) {
+			border-left-style: solid;
+			border-left-width: 1px;
+		}
+	}
+
+	.pi-data-label {
+		padding-bottom: 0;
+	}
+}
+
+// **********  Special styles for SMART WRAP group (row-items attribute provided)  ********** //
+
+.pi-smart-data-value, .pi-smart-data-label {
+	&:not(:first-child) {
+		border-color: $infobox-section-header-background;
+		border-left-style: solid;
+		border-left-width: 1px;
+	}
+}
+
+.pi-smart-group {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+
+	&:last-child {
+		border-bottom: 0;
+	}
+
+	.pi-smart-data-label {
+		padding-bottom: 0;
+	}
+
+	.pi-smart-data-label,
+	.pi-smart-data-value {
+		box-sizing: border-box;
+		flex-basis: auto;
+		padding: $infobox-item-margin $infobox-item-margin * 2;
+	}
+}
+
+.pi-smart-group-body {
+	display: flex;
+}
+
+.pi-smart-group-head {
+	display: flex;
+}
+
+// **********  Overwrite default infobox styles for STACKED layout type  ********** //
+
+.pi-layout-stacked {
+	.pi-data {
+		display: block;
+	}
+
+	.pi-data-value {
+		padding-left: $infobox-item-margin * 2;
+	}
+}
+
+// **********  Collapsible groups  ********** //
+
+.pi-collapse .pi-header:first-child {
+	@include collapsibleChevron;
+}
+
+.pi-collapse-closed {
+	border-bottom: none;
+
+	.pi-header:first-child::after {
+		@include transform-rotate(135deg);
+		margin-top: -($infobox-chevron-size / 2);
+	}
+
+	> *:nth-child(n+2) {
+		display: none;
+	}
+
+	.pi-horizontal-group {
+		thead,
+		tbody {
+			display: none;
+		}
+	}
+}
+
+// **********  Image Collection  ********** //
+
+ul.pi-image-collection-tabs {
+	list-style: none;
+	margin: 0 -1px -1px 0;
+	overflow: hidden;
+	padding: 0;
+	text-align: center;
+
+	li {
+		border: 1px solid $infobox-section-header-background;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: inline-block;
+		margin: -1px -1px 0 0;
+		max-width: 50%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+		white-space: nowrap;
+
+		&.current {
+			background: $infobox-section-header-background;
+			font-weight: bold;
+		}
+	}
+}
+
+.pi-image-collection-tab-content {
+	background-color: $infobox-background;
+	display: none;
+
+	.video-thumbnail {
+		display: block;
+	}
+}
+
+.pi-image-collection-tab-content.current {
+	display: inherit;
+}
+
+// **********  Error handling styles  ********** //
+
+.WikiaArticle {
+	.pi-error-info {
+		background-color: $color-error;
+		color: $infobox-debug-error-msg-color;
+		font-size: 18px;
+		line-height: 28px;
+		margin: 0;
+		padding: $infobox-margin * 2 $infobox-debug-line-number-width;
+	}
+
+	.pi-debug {
+		background-color: $color-unified-module-background;
+		font-family: monospace;
+		list-style: none;
+		margin: 0;
+		width: 100%;
+
+		li {
+			margin: 0;
+		}
+
+		.error {
+			font-size: inherit;
+		}
+	}
+}
+
+.pi-debug-line {
+	@include flexbox();
+}
+
+.pi-debug-line-number,
+.pi-debug-line-code {
+	box-sizing: border-box;
+}
+
+.pi-debug-line-number {
+	@include flex-basis($infobox-debug-line-number-width);
+	@include flex-shrink(0);
+	padding-left: $infobox-item-margin * 2;
+}
+
+.pi-debug-error-message {
+	background-color: $infobox-debug-error-msg-bg;
+	color: $infobox-debug-error-msg-color;
+	font-family: Helvetica, Arial, sans-serif;
+	margin: 20px 0 10px 25px;
+	padding: $infobox-item-margin * 2 $infobox-item-margin * 3;
+	position: relative;
+	width: 400px;
+
+	&:before {
+		border-bottom: $infobox-margin solid $infobox-debug-error-msg-bg;
+		border-left: $infobox-margin solid transparent;
+		border-right: $infobox-margin solid transparent;
+		content: '';
+		display: block;
+		height: 0;
+		left: 25px;
+		position: absolute;
+		top: -$infobox-margin;
+		width: 0;
+	}
+
+	.pi-debug-error-message-item {
+		margin: $infobox-item-margin 0;
+	}
+}

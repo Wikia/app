@@ -2,11 +2,9 @@
  * @brief Styles comments as speech bubbles
  * @details Used by both ArticleComments and Wall
  */
-@import "color";
-@import "../mixins/bodytext";
-@import "../mixins/border-radius";
-@import "../mixins/box-sizing";
-@import "../mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/clearfix";
 
 .SpeechBubble {
 	@include clearfix;
@@ -17,9 +15,9 @@
 	}
 
 	.speech-bubble-message {
-		@include border-radius(5px);
 		background: $color-speech-bubble;
 		border: 1px solid $color-page-border;
+		border-radius: 5px;
 		margin: 0 0 0 75px;
 		padding: 15px 10px 10px 15px;
 		position: relative;
@@ -52,9 +50,19 @@
 			overflow: hidden;
 			width: 553px;
 		}
-        .toc ul {
-            list-style-type: none;
-        }
+
+		.toc ul {
+			list-style-type: none;
+		}
+
+		div, figure {
+			max-width: 100%;
+		}
+
+		.image > img {
+			height: auto;
+			max-width: 100%;
+		}
 	}
 
 	.speech-bubble-message:before {
@@ -81,7 +89,7 @@
 		width: 0;
 	}
 
-	&.even, &.owner { 
+	&.even, &.owner {
 		.speech-bubble-message {
 			background: $color-speech-bubble-alt;
 
@@ -104,7 +112,7 @@
 	}
 
 	textarea {
-		@include box-sizing;
+		box-sizing: border-box;
 		line-height: 21px;
 		font-family: "Helvetica", "Arial", sans-serif;
 		font-size: 11px;
@@ -118,6 +126,7 @@
 
 	.stafflogo {
 		img {
+			height:1.25em;
 			vertical-align:text-bottom;
 		}
 	}

@@ -7,13 +7,12 @@ class IgnFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IgnApiWrapper';
 	protected static $PROVIDER = 'ign';
 	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2&app_id=$3&app_key=$4';
-	protected static $CLIP_TYPE_BLACKLIST = array();
-	protected static $CLIP_FILTER = array(
-		'*' => array(
+	protected static $CLIP_FILTER = [
+		'*' => [
 			'/IGN Daily/i',
 			'/IGN Weekly/i',
-		),
-	);
+		]
+	];
 
 	/**
 	 * Given a start date and an end date, download the set of matching videos from IGN
@@ -26,12 +25,11 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$url = $this->initFeedUrl( $startDate, $endDate );
 
-		print("Connecting to $url...\n");
+		print( "Connecting to $url...\n" );
 
 		$content = $this->getUrlContent( $url );
-
 		if ( !$content ) {
-			print( "ERROR: problem downloading content!\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -47,38 +45,28 @@ class IgnFeedIngester extends VideoFeedIngester {
 	 * @param array $params - A list of additional parameters that affect import
 	 * @return int - Returns the number of video created
 	 */
-	public function import( $content='', $params=array() ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
-
-		$debug = !empty( $params['debug'] );
-		$ignoreRecent = empty( $params['ignorerecent'] ) ? 0 : $params['ignorerecent'];
 
 		$articlesCreated = 0;
 
-		$content = json_decode( $content, true );
-		if ( empty( $content ) ) {
-			$content = array();
+		$videos = json_decode( $content, true );
+		if ( empty( $videos ) ) {
+			$videos = [];
 		}
 
-		$i = 0;
-		foreach ( $content as $video ) {
-			$i++;
-			$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
+		$this->logger->videoFound( count( $videos ) );
 
-			if ( $debug ) {
+		foreach ( $videos as $video ) {
+
+			if ( $this->debugMode() ) {
 				print "\nraw data: \n";
 				foreach( explode( "\n", var_export( $video, 1 ) ) as $line ) {
 					print ":: $line\n";
 				}
 			}
 
-			$clipData = array();
-
-			// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
-			if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $video['videoId'], $this->filterByProviderVideoId ) ) {
-				continue;
-			}
-
+			$clipData = [];
 			$clipData['titleName'] = $video['metadata']['name'];
 			$clipData['published'] = strtotime( $video['metadata']['publishDate'] );
 			$clipData['videoId'] = $video['videoId'];
@@ -89,7 +77,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 			$clipData['type'] = '';
 			if ( !empty( $video['metadata']['classification'] ) ) {
-				$clipData['type'] = $this->getStdType( $video['metadata']['classification'] );
+				$clipData['type'] = $this->getType( $video['metadata']['classification'] );
 			}
 
 			$clipData['gameContent'] = $video['metadata']['gameContent'];
@@ -105,7 +93,8 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
 
 			// get name
-			$name = array();
+
+			$name = [];
 			foreach ( $video['objectRelations'] as $obj ) {
 				$name[$obj['objectName']] = true;
 			}
@@ -113,10 +102,10 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['name'] = implode( ', ', $name );
 
 			// add name to page categories
-			$addlCategories = array_merge( $addlCategories, $name );
+			$addlCategories = $name;
 
 			// add tags to keywords
-			$keywords = array();
+			$keywords = [];
 			foreach ( $video['tags'] as $obj ) {
 				if ( array_key_exists( 'slug', $obj ) ) {
 					$keywords[$obj['slug']] = true;
@@ -125,14 +114,8 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$keywords = array_keys( $keywords );
 			$clipData['keywords'] = implode( ", ", $keywords );
 
-			$msg = '';
-			$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'ignorerecent' => $ignoreRecent );
-			$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-			if ( $msg ) {
-				print "ERROR: $msg\n";
-			}
+			$articlesCreated += $this->createVideo( $clipData, $addlCategories );
 		}
-		echo "Feed size: $i\n";
 
 		wfProfileOut( __METHOD__ );
 
@@ -141,41 +124,34 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data
-	 * @param array $categories
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( $data, $categories ) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = 'IGN';
+		$addlCategories[] = 'IGN';
 
-		if ( empty( $data['gameContent'] ) ) {
-			$categories[] = 'IGN_entertainment';
-			$categories[] = 'Entertainment';
+		if ( empty( $this->videoData['gameContent'] ) ) {
+			$addlCategories[] = 'IGN_entertainment';
+			$addlCategories[] = 'Entertainment';
 		} else {
-			$categories[] = 'IGN_games';
-			$categories[] = 'Games';
+			$addlCategories[] = 'IGN_games';
+			$addlCategories[] = 'Games';
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $categories;
+		return $addlCategories;
 	}
 
 	/**
-	 * generate meatadata
-	 * @param array $data
-	 * @param string $errorMsg
-	 * @return array|integer $metadata or zero on error
+	 * generate metadata
+	 * @return array
 	 */
-	public function generateMetadata( $data, &$errorMsg ) {
-		$metadata = parent::generateMetadata( $data, $errorMsg );
-		if ( empty( $metadata ) ) {
-			return 0;
-		}
-
-		$metadata['videoUrl'] = empty( $data['videoUrl'] ) ? '' : $data['videoUrl'];
+	public function generateMetadata() {
+		$metadata = parent::generateMetadata();
+		$metadata['videoUrl'] = $this->getVideoData( 'videoUrl' );
 
 		return $metadata;
 	}
@@ -183,9 +159,10 @@ class IgnFeedIngester extends VideoFeedIngester {
 	/**
 	 * Make an HTTP request to the URL given and return the content
 	 * @param $url - URL to request
+	 * @param $options - Not actually used. Just to keep consistent method signature with base class.
 	 * @return mixed|string
 	 */
-	protected function getUrlContent( $url ) {
+	protected function getUrlContent( $url, $options = [] ) {
 		global $wgIgnApiConfig;
 		echo( "Creating request\n" );
 		$req = curl_init();

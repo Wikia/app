@@ -1,4 +1,4 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 
 /**
  * The functionality of Forum Thread is exactly the same as Wall.
@@ -52,20 +52,6 @@
 		.MiniEditorWrapper.active {
 			.edited-by {
 				margin: 0;
-			}
-		}
-	}
-}
-
-/* oasis only styles */
-body.skin-monobook {
-	#Wall.Thread {
-		.comments >.message {
-			>.speech-bubble-message {
-				.edited-by {
-					left: 0;
-					top: 0;
-				}
 			}
 		}
 	}

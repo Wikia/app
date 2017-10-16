@@ -36,9 +36,6 @@ Version 0.1.1  ????-??-??
 
 if(!defined('MEDIAWIKI')) die();
 
-// this is so that only sysops can do batch moves
-$wgAvailableRights[] = 'batchmove';
-$wgGroupPermissions['sysop']['batchmove'] = true;
 
 require_once "extras.php";
 
@@ -61,7 +58,11 @@ class Batchmove extends SpecialPage{
 		parent::__construct('Batchmove');
 	}
 
-	function execute() {
+	/**
+	 *
+	 * @param $par String subpage string, if one was specified
+	 */
+	function execute( $par ){
 		global $wgOut;
 		global $wgRequest, $wgUser;
 

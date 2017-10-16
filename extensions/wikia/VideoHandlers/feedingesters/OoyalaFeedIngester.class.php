@@ -7,22 +7,22 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	protected static $PROVIDER = 'ooyala';
 	protected static $FEED_URL = 'https://api.ooyala.com';
 
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		$params['now'] = time();
 
 		// by created date
-		$params['cond'] = array(
+		$params['cond'] = [
 			"created_at >= '$params[startDate]'",
 			"created_at < '$params[endDate]'",
-		);
+		];
 		$articlesCreated = $this->importVideos( $params );
 
 		// by time restrictions
-		$params['cond'] = array(
+		$params['cond'] = [
 			"created_at < '$params[startDate]'",
 			"time_restrictions.start_date >= '$params[startDate]'",
 			"time_restrictions.start_date < '".gmdate( 'Y-m-d H:i:s', $params['now'] )."'",
-		);
+		];
 		$articlesCreated += $this->importVideos( $params );
 
 		return $articlesCreated;
@@ -33,56 +33,36 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	 * @param array $params
 	 * @return integer $articlesCreated
 	 */
-	public function importVideos( $params = array() ) {
+	public function importVideos( $params = [] ) {
 		wfProfileIn( __METHOD__ );
-
-		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
-		$debug = !empty( $params['debug'] );
 
 		$articlesCreated = 0;
 		$nextPage = '';
 
-		// ingest only live video
-		$cond = array_merge( array( "status = 'live'" ), $params['cond'] );
-
-		$apiParams = array(
-			'limit' => self::API_PAGE_SIZE,
-			'where' => implode( ' AND ', $cond ),
-		);
-
 		do {
-			$numVideos = 0;
-
 			// connect to provider API
-			$url = $this->initFeedUrl( $apiParams, $nextPage );
+			$url = OoyalaAsset::getApiUrlAssets( self::API_PAGE_SIZE, $nextPage, $params['cond'] );
 			print( "Connecting to $url...\n" );
 
-			$req = MWHttpRequest::factory( $url );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
-			if ( $status->isGood() ) {
-				$response = $req->getContent();
-			} else {
-				print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
+			$response = OoyalaAsset::getApiContent( $url );
+			if ( $response === false ) {
+				$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 				wfProfileOut( __METHOD__ );
-
 				return 0;
 			}
 
-			// parse response
-			$response = json_decode( $response, true );
-
-			$videos = empty( $response['items'] ) ? array() : $response['items'] ;
+			$videos = empty( $response['items'] ) ? [] : $response['items'] ;
 			$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;
 
-			$numVideos = count( $videos );
-			print( "Found $numVideos videos...\n" );
+			$this->logger->videoFound( count( $videos ) );
 
 			foreach ( $videos as $video ) {
 				if ( !empty( $video['time_restrictions']['start_date'] ) && strtotime( $video['time_restrictions']['start_date'] ) > $params['now'] ) {
+					$this->logger->videoSkipped( "Skipping {$video['name']} (Id:{$video['embed_code']}). Time restriction.\n" );
 					continue;
 				}
 
-				$clipData = array();
+				$clipData = [];
 				$clipData['titleName'] = trim( $video['name'] );
 				$clipData['videoId'] = $video['embed_code'];
 				$clipData['thumbnail'] = $video['preview_image_url'];
@@ -90,7 +70,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['published'] = empty( $video['metadata']['published'] ) ? '' : strtotime( $video['metadata']['published'] );
 				$clipData['name'] = empty( $video['metadata']['name'] ) ? '' : $video['metadata']['name'];
 				$clipData['type'] = empty( $video['metadata']['type'] ) ? '' : $video['metadata']['type'];
-				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $video['metadata']['category'];
+				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $this->getCategory( $video['metadata']['category'] );
 				$clipData['keywords'] = empty( $video['metadata']['keywords'] ) ? '' : $video['metadata']['keywords'];
 				$clipData['description'] = trim( $video['description'] );
 
@@ -107,7 +87,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['categoryName'] = OoyalaApiWrapper::getProviderName( $video['labels'] );
 				// check for videos under '/Providers/' labels
 				if ( empty( $clipData['categoryName'] ) ) {
-					print "Skipping {$clipData['titleName']} - {$clipData['description']}. No provider name.\n";
+					$this->logger->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. No provider name.\n" );
 					continue;
 				}
 				$clipData['provider'] = OoyalaApiWrapper::formatProviderName( $clipData['categoryName'] );
@@ -117,7 +97,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['genres'] = empty( $video['metadata']['genres'] ) ? '' : $video['metadata']['genres'];
 				$clipData['actors'] = empty( $video['metadata']['actors'] ) ? '' : $video['metadata']['actors'];
 				$clipData['startDate'] = empty( $video['time_restrictions']['start_date'] ) ? '' : strtotime( $video['time_restrictions']['start_date'] );
-				$clipData['expirationDate'] = empty( $video['metadata']['expirationdate'] ) ? '' : strtotime( $video['metadata']['expirationdate'] );
+				$clipData['expirationDate'] = empty( $video['time_restrictions']['end_date'] ) ? '' : strtotime( $video['time_restrictions']['end_date'] );
+				$clipData['regionalRestrictions'] = empty( $video['metadata']['regional_restrictions'] ) ? '' : strtoupper( $video['metadata']['regional_restrictions'] );
 				$clipData['targetCountry'] = empty( $video['metadata']['targetcountry'] ) ? '' : $video['metadata']['targetcountry'];
 				$clipData['source'] = empty( $video['metadata']['source'] ) ? '' : $video['metadata']['source'];
 				$clipData['sourceId'] = empty( $video['metadata']['sourceid'] ) ? '' : $video['metadata']['sourceid'];
@@ -127,16 +108,27 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['characters'] = empty( $video['metadata']['characters'] ) ? '' : $video['metadata']['characters'];
 				$clipData['resolution'] = empty( $video['metadata']['resolution'] ) ? '' : $video['metadata']['resolution'];
 				$clipData['aspectRatio'] = empty( $video['metadata']['aspectratio'] ) ? '' : $video['metadata']['aspectratio'];
-
-				// For page categories only. Not store in metadata.
+				$clipData['distributor'] = empty( $video['metadata']['distributor'] ) ? '' : $video['metadata']['distributor'];
 				$clipData['pageCategories'] = empty( $video['metadata']['pagecategories'] ) ? '' : $video['metadata']['pagecategories'];
 
-				$msg = '';
-				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
-				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-				if ( $msg ) {
-					print "ERROR: $msg\n";
+				// Howdini has specific metadata which we want to map to our own
+				if ( $clipData['provider'] == "ooyala/howdini" ) {
+					$clipData["genres"] = $this->getHowdiniGenre( $video['metadata']['category'] );
+					$clipData["category"] = "Lifestyle";
+					$clipData["type"] = "How To";
+					$clipData["pageCategories"] = "Lifestyle, Howdini, How To";
+
+					// Genres need to be applied to categories VID-1787
+					if ( !empty( $clipData['genres'] ) ) {
+						$clipData["pageCategories"] .= ', ' . $clipData['genres'];
+					}
+
+					$ooyalaAsset = new OoyalaAsset();
+					// Make sure all Howdini assets use the Howdini ad set
+					$ooyalaAsset->setAdSet( $clipData["videoId"], F::app()->wg->OoyalaApiConfig['adSetHowdini'] );
 				}
+
+				$articlesCreated += $this->createVideo( $clipData );
 			}
 		} while ( !empty( $nextPage ) );
 
@@ -154,9 +146,9 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	private function initFeedUrl( $params, $nextPage ) {
 		$method = 'GET';
 		$reqPath = '/v2/assets';
-		if ( !empty($nextPage) ) {
+		if ( !empty( $nextPage ) ) {
 			$parsed = explode( "?", $nextPage );
-			parse_str( array_pop($parsed), $params );
+			parse_str( array_pop( $parsed ), $params );
 		}
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
@@ -167,56 +159,92 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create list of category names to add to the new file page
-	 * @param array $data
-	 * @param array $categories
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( $data, $categories ) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $data['name'] ) ) {
-			$categories += array_map( 'trim', explode( ',', $data['name'] ) );
+		if ( !empty( $this->videoData['name'] ) ) {
+			$addlCategories = array_merge( $addlCategories, array_map( 'trim', explode( ',', $this->videoData['name'] ) ) );
 		}
 
-		if ( !empty( $data['pageCategories'] ) ) {
-			$categories += array_map( 'trim', explode( ',', $data['pageCategories'] ) );
+		if ( !empty( $this->videoData['pageCategories'] ) ) {
+			$stdCategories = array_map( array( $this , 'getPageCategory'), explode( ',', $this->videoData['pageCategories'] ) );
+			$addlCategories = array_merge( $addlCategories, $stdCategories );
 		}
 
 		// remove 'the' category
-		$key = array_search( 'the', array_map( 'strtolower', $categories ) );
+		$key = array_search( 'the', array_map( 'strtolower', $addlCategories ) );
 		if ( $key !== false ) {
-			unset( $categories[$key] );
+			unset( $addlCategories[$key] );
 		}
 
-		if ( !empty( $data['categoryName'] ) ) {
-			$categories[] = $data['categoryName'];
+		if ( !empty( $this->videoData['categoryName'] ) ) {
+			$addlCategories[] = $this->videoData['categoryName'];
 		}
 
-		$categories[] = 'Ooyala';
+		$addlCategories = array_merge( $addlCategories, $this->getAdditionalPageCategories( $addlCategories ) );
+
+		$addlCategories[] = 'Ooyala';
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->getUniqueArray( $categories );
+		return wfGetUniqueArrayCI( $addlCategories );
 	}
 
 	/**
-	 * generate meatadata
-	 * @param array $data
-	 * @param string $errorMsg
-	 * @return array|integer $metadata or zero on error
+	 * generate metadata
+	 * @return array
 	 */
-	public function generateMetadata( $data, &$errorMsg ) {
-		$metadata = parent::generateMetadata( $data, $errorMsg );
-		if ( empty( $metadata ) ) {
-			return 0;
-		}
-
-		$metadata['startDate'] = empty( $data['startDate'] ) ? '' :  $data['startDate'];
-		$metadata['source'] = empty( $data['source'] ) ? '' :  $data['source'];
-		$metadata['sourceId'] = empty( $data['sourceId'] ) ? '' :  $data['sourceId'];
-		$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' :  $data['pageCategories'];
+	public function generateMetadata() {
+		$metadata = parent::generateMetadata();
+		$metadata['startDate'] = $this->getVideoData( 'startData' );
+		$metadata['source'] = $this->getVideoData( 'source' );
+		$metadata['sourceId'] = $this->getVideoData( 'sourceId' );
+		$metadata['distributor'] = $this->getVideoData( 'distributor' );
+		$metadata['pageCategories'] = $this->getVideoData( 'pageCategories' );
 
 		return $metadata;
+	}
+
+	/**
+	 * Returns a genre based off of the category. This is specific to the Howdini provider. The details of this
+	 * mapping can be found in Jira VID-1691
+	 * @param $category
+	 * @return string
+	 */
+	function getHowdiniGenre( $category ) {
+
+		$category = strtolower( trim( $category ) );
+		switch( $category ) {
+			case "celebrations":
+				$genre = "Variety";
+				break;
+			case "family":
+				$genre = "Family";
+				break;
+			case "food":
+				$genre = "Food and Drink";
+				break;
+			case "health":
+				$genre = "Health";
+				break;
+			case "living":
+				$genre = "Home";
+				break;
+			case "style":
+				$genre = "Fashion";
+				break;
+			case "tech":
+				$genre = "Tech";
+				break;
+			default:
+				$genre = ucfirst( $category );
+				break;
+		}
+
+		return $genre;
 	}
 
 }

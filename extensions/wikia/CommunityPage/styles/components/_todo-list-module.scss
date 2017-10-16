@@ -1,0 +1,69 @@
+@import 'variables';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+$edit-icon-size: 16px;
+$module-header-line-height: 28px;
+
+.community-page-todo-list-module {
+	box-sizing: border-box;
+	margin-bottom: 34px;
+	padding-right: $content-spacing-small;
+
+	.community-page-todo-list-module-header-wrapper {
+		line-height: $module-header-line-height;
+		margin-bottom: $content-spacing-small;
+	}
+
+	.community-page-todo-list-module-header {
+		display: inline-block;
+		font-size: $wds-typescale-size-plus-2;
+		font-weight: bold;
+		padding-right: 32px;
+	}
+
+	.community-page-todo-list-module-edit {
+		display: inline-block;
+		font-size: $wds-typescale-size-base;
+	}
+
+	.community-page-todo-list-module-edit-icon {
+		fill: $wds-color-light-gray;
+		float: left;
+		height: $module-header-line-height;
+		margin-right: $content-spacing-xxsmall;
+		width: $edit-icon-size;
+	}
+
+	.community-page-todo-list-module-description {
+		clear: both;
+	}
+
+	.community-page-todo-list-module-content,
+	.community-page-todo-list-module-zerostate {
+		border-left: thick solid $color-buttons;
+		clear: both;
+		margin-top: $content-spacing-xsmall;
+	}
+
+	.community-page-todo-list-module-content {
+		padding: 0 $content-spacing-xsmall;
+	}
+
+	.community-page-todo-list-module-zerostate {
+		font-weight: bold;
+		padding: $content-spacing-xxsmall $content-spacing-xsmall;
+	}
+}
+
+@media #{$breakpoint-medium-up} {
+	.community-page-todo-list-module {
+		padding-right: $content-spacing-regular;
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-todo-list-module {
+		padding-right: $content-spacing-xsmall;
+	}
+}

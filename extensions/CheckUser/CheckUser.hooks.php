@@ -174,15 +174,12 @@ class CheckUserHooks {
 	 * @return bool
 	 */
 	protected static function logUserAccountCreation( User $user, $actiontext ) {
+		/** @var WebRequest $wgRequest */
 		global $wgRequest;
 
 		// Get IP
-		$ip = wfGetIP();
-		// Get XFF header
-		$xff = $wgRequest->getHeader( 'X-Forwarded-For' );
-		list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
-		// Get agent
-		$agent = $wgRequest->getHeader( 'User-Agent' );
+		$ip = $wgRequest->getIP();
+
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 		$rcRow = array(
@@ -201,9 +198,9 @@ class CheckUserHooks {
 			'cuc_timestamp'  => $dbw->timestamp( wfTimestampNow() ),
 			'cuc_ip'         => IP::sanitizeIP( $ip ),
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-			'cuc_xff'        => !$isSquidOnly ? $xff : '',
-			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
+			'cuc_xff'        => '',
+			'cuc_xff_hex'    => null,
+			'cuc_agent'      => ''
 		);
 		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 
@@ -368,5 +365,35 @@ class CheckUserHooks {
 		}
 
 		return false; // autoblock handled
+	}
+
+	/**
+	 * Register tables that need to be updated when a user is renamed
+	 *
+	 * @param DatabaseBase $dbw
+	 * @param int $userId
+	 * @param string $oldUsername
+	 * @param string $newUsername
+	 * @param UserRenameProcess $process
+	 * @param int $wgCityId
+	 * @param array $tasks
+	 * @return bool
+	 */
+	public static function onUserRenameLocal( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
+		$tasks[] = array(
+			'table' => 'cu_log',
+			'userid_column' => 'cul_user',
+			'username_column' => 'cul_user_text',
+		);
+		$tasks[] = array(
+			'table' => 'cu_log',
+			'userid_column' => 'cul_target_id',
+			'username_column' => 'cul_target_text',
+			'conds' => array(
+				'cul_type' => array( 'useredits', 'userips' ),
+			),
+		);
+
+		return true;
 	}
 }

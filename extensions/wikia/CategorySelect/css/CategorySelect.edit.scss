@@ -1,7 +1,6 @@
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/box-sizing";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/ellipses";
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/ellipses";
 
 // FIXME: including styles from EditPageLayout is pretty janky.
 // When we refactor common colors/mixins into skins/oasis these should be removed.
@@ -32,7 +31,7 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 
 	.category,
 	.categories .placeholder {
-		@include border-radius( 4px );
+		border-radius: 4px;
 		display: block;
 		padding: 0 5px;
 	}

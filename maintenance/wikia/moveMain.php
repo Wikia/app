@@ -39,7 +39,7 @@ $target = isset( $options['t'] ) ? $options['t'] : $wgSitename;
 
 $wgUser = User::newFromName( $userName );
 if ( !$wgUser ) {
-	print "Invalid username\n";
+	Wikia::log( "moveMain", false, "Invalid username: $userName" );
 	exit( 1 );
 }
 if ( $wgUser->isAnon() ) {

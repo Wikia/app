@@ -60,7 +60,7 @@ while( false !== ( $file = readdir( $dir ) ) ) {
 
 	$importer = new $importerClass( $text );
 
-	wfWaitForSlaves( 5 );
+	wfWaitForSlaves();
 	$importer->parse();
 
 	$article->doEdit( $importer->parse(), $comment, 0, false, $importer->getUser() );

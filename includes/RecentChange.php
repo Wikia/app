@@ -150,7 +150,7 @@ class RecentChange {
 			# resetArticleID clears this memcached key when its likely we
 			# just set it earlier in this request.  BugID 42735
 			global $wgEnableFastLinkCache;
-			if (!$wgEnableFastLinkCache) {
+			if (empty($wgEnableFastLinkCache)) {
 				# Make sure the correct page ID is process cached
 				$this->mTitle->resetArticleID( $this->mAttribs['rc_cur_id'] );
 			}
@@ -207,7 +207,7 @@ class RecentChange {
 
 		/* Wikia change begin - @author: Macbre */
 		/* Wysiwyg: add extra data before row is added */
-		wfRunHooks( 'RecentChange_beforeSave', array( &$this ) );
+		Hooks::run( 'RecentChange_beforeSave', [ $this ] );
 		/* Wikia change end */
 
 		# Insert new row
@@ -217,7 +217,7 @@ class RecentChange {
 		$this->mAttribs['rc_id'] = $dbw->insertId();
 
 		# Notify extensions
-		wfRunHooks( 'RecentChange_save', array( &$this ) );
+		Hooks::run( 'RecentChange_save', [ $this ] );
 
 		# Notify external application via UDP
 		if ( !$noudp ) {
@@ -239,13 +239,14 @@ class RecentChange {
 			$title = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
 
 			# @todo FIXME: This would be better as an extension hook
-			$enotif = new EmailNotification();
-			$status = $enotif->notifyOnPageChange( $editor, $title,
+			$enotif = new EmailNotification( $editor, $title,
 				$this->mAttribs['rc_timestamp'],
 				$this->mAttribs['rc_comment'],
 				$this->mAttribs['rc_minor'],
+				$this->mAttribs['rc_this_oldid'],
 				$this->mAttribs['rc_last_oldid'],
 				$this->mAttribs['rc_log_action'] );
+			$enotif->notifyOnPageChange();
 		}
 
 		// temporary code begin /Inez
@@ -357,7 +358,7 @@ class RecentChange {
 		// Automatic patrol needs "autopatrol", ordinary patrol needs "patrol"
 		$right = $auto ? 'autopatrol' : 'patrol';
 		$errors = array_merge( $errors, $this->getTitle()->getUserPermissionsErrors( $right, $user ) );
-		if( !wfRunHooks('MarkPatrolled', array($this->getAttribute('rc_id'), &$user, false)) ) {
+		if( !Hooks::run('MarkPatrolled', array($this->getAttribute('rc_id'), &$user, false)) ) {
 			$errors[] = array('hookaborted');
 		}
 		// Users without the 'autopatrol' right can't patrol their
@@ -376,7 +377,7 @@ class RecentChange {
 		$this->reallyMarkPatrolled();
 		// Log this patrol event
 		PatrolLog::record( $this, $auto, $user );
-		wfRunHooks( 'MarkPatrolledComplete', array($this->getAttribute('rc_id'), &$user, false) );
+		Hooks::run( 'MarkPatrolledComplete', array($this->getAttribute('rc_id'), &$user, false) );
 		return array();
 	}
 
@@ -642,7 +643,7 @@ class RecentChange {
 			'rc_timestamp' => wfTimestamp(TS_MW, $row->rev_timestamp),
 			'rc_cur_time' => $row->rev_timestamp,
 			'rc_user' => $row->rev_user,
-			'rc_user_text' => $row->rev_user_text,
+			'rc_user_text' => User::getUsername( $row->rev_user, $row->rev_user_text ),
 			'rc_namespace' => $row->page_namespace,
 			'rc_title' => $row->page_title,
 			'rc_comment' => $row->rev_comment,
@@ -734,7 +735,7 @@ class RecentChange {
 				$query .= '&rcid=' . $this->mAttribs['rc_id'];
 			}
 			// HACK: We need this hook for WMF's secure server setup
-			wfRunHooks( 'IRCLineURL', array( &$url, &$query ) );
+			Hooks::run( 'IRCLineURL', array( &$url, &$query ) );
 			$url .= $query;
 		}
 

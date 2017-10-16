@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Pyt"
+		]
+	},
+	"semanticdrilldown-desc": "Ne Drilldown-Benutsersnitsteede, uum truch semantiske Doaten tou navigierjen",
+	"specialpages-group-sd_group": "Semantisk Drill-Down",
+	"browsedata": "Doaten bekiekje",
+	"sd_browsedata_choosecategory": "Wääl ne Kategorie",
+	"sd_browsedata_viewcategory": "Kategorie bekiekje",
+	"sd_browsedata_docu": "Klik ap een of moorere fon do Sieuwen uum dät Resultoat ientoutuunjen.",
+	"sd_browsedata_subcategory": "Unnerkategorie",
+	"sd_browsedata_other": "Uur",
+	"sd_browsedata_none": "Neen",
+	"sd_browsedata_filterbyvalue": "Sieuwe foar dissen Wäid",
+	"sd_browsedata_filterbysubcategory": "Sieuwe foar disse Subkategorie",
+	"sd_browsedata_otherfilter": "Wies Sieden mäd n uur Wäid foar disse Sieuwe",
+	"sd_browsedata_nonefilter": "Wies Sieden mäd naan Wäid foar disse Sieuwe",
+	"sd_browsedata_or": "of",
+	"sd_browsedata_removefilter": "Läskje disse Sieuwe",
+	"sd_browsedata_removesubcategoryfilter": "Läskje disse Subkategorie-Sieuwe",
+	"sd_browsedata_resetfilters": "Sieuwen touräächsätte",
+	"sd_browsedata_addanothervalue": "Uur Wäid bietouföigje",
+	"sd_browsedata_daterangestart": "Ounfang:",
+	"sd_browsedata_daterangeend": "Eende:",
+	"sd_createfilter_usepropertyvalues": "Ferweend aal Wäide fon dit Attribut foar ju Sieuwe.",
+	"sd_createfilter_usecategoryvalues": "Ferweend do Wäide foar ju Sieuwe fon disse Kategorie:",
+	"sd_createfilter_requirefilter": "Eer disse Sieuwe anwiesd wäd, mout foulgjende uur Sieuwe sät weese:"
+}

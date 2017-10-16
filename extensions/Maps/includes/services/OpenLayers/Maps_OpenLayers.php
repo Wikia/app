@@ -6,9 +6,6 @@
  * 
  * @since 0.1
  * 
- * @file Maps_OpenLayers.php
- * @ingroup MapsOpenLayers
- *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
@@ -19,7 +16,7 @@ class MapsOpenLayers extends MapsMappingService {
 	 * 
 	 * @since 0.6.6
 	 */	
-	function __construct( $serviceName ) {
+	public function __construct( $serviceName ) {
 		parent::__construct(
 			$serviceName,
 			array( 'layers', 'openlayer' )
@@ -33,36 +30,68 @@ class MapsOpenLayers extends MapsMappingService {
 	 */	
 	public function addParameterInfo( array &$params ) {
 		global $egMapsOLLayers, $egMapsOLControls, $egMapsResizableByDefault;
-		
-		$params['zoom']->setRange( 0, 19 );
-		$params['zoom']->setDefault( self::getDefaultZoom() );
-		
-		$params['controls'] = new ListParameter( 'controls' );
-		$params['controls']->setDefault( $egMapsOLControls );
-		$params['controls']->addCriteria( new CriterionInArray( self::getControlNames() ) );
-		$params['controls']->addManipulations(
-			new ParamManipulationFunctions( 'strtolower' )
-		);
-		$params['controls']->setMessage( 'maps-openlayers-par-controls' );
-		
-		$params['layers'] = new ListParameter( 'layers' );
-		$params['layers']->addManipulations( new MapsParamOLLayers() );
-		$params['layers']->setDoManipulationOfDefault( true );
-		$params['layers']->addCriteria( new CriterionOLLayer() );
-		$params['layers']->setDefault( $egMapsOLLayers );
-		$params['layers']->setMessage( 'maps-openlayers-par-layers' );
-		
-		$params['resizable'] = new Parameter( 'resizable', Parameter::TYPE_BOOLEAN );
-		$params['resizable']->setDefault( $egMapsResizableByDefault, false );	
-		$params['resizable']->setMessage( 'maps-par-resizable' );
 
-		$params['searchmarkers'] = new Parameter(
-			'searchmarkers' ,
-			Parameter::TYPE_STRING
+		$params['zoom'] = array(
+			'type' => 'integer',
+			'range' => array( 0, 19 ),
+			'default' => self::getDefaultZoom(),
+			'message' => 'maps-openlayers-par-zoom',
 		);
-		$params['searchmarkers']->setDefault( '' );
-		$params['searchmarkers']->addCriteria( new CriterionSearchMarkers() );
-		$params['searchmarkers']->setDoManipulationOfDefault( false );
+
+		$params['controls'] = array(
+			'default' => $egMapsOLControls,
+			'values' => self::getControlNames(),
+			'message' =>'maps-openlayers-par-controls',
+			'islist' => true,
+			'tolower' => true,
+		);
+
+		$params['layers'] = array(
+			'default' => $egMapsOLLayers,
+			'message' =>'maps-openlayers-par-layers',
+			'manipulatedefault' => true,
+			'islist' => true,
+			'tolower' => true,
+			// TODO-customMaps: addCriteria( new CriterionOLLayer() );
+		);
+		
+		$params['resizable'] = array(
+			'type' => 'boolean',
+			'default' => false,
+			'manipulatedefault' => false,
+			'message' => 'maps-par-resizable',
+		);
+		
+		$params['overlays'] = array(
+			// Default empty array will end up in JS just right without manipulation.
+			'default' => array(),
+			'manipulatedefault' => false,
+			'message' => 'maps-openlayers-par-overlays',
+
+			// NOTE: code has moved into @see MapsDisplayMapRenderer
+			// TODO-customMaps: addCriteria( new CriterionOLLayer( ';' ) );
+			// TODO-customMaps: addManipulations( new MapsParamOLLayers() );
+		);
+
+		$params['resizable'] = array(
+			'type' => 'boolean',
+			'default' => $egMapsResizableByDefault,
+			'message' => 'maps-par-resizable',
+		);
+
+		$params['searchmarkers'] = array(
+			'default' => '',
+			'message' => 'maps-openlayers-par-searchmarkers',
+			'values' => array( 'title', 'all', '' ),
+			'tolower' => true,
+		);
+
+		$params['kml'] = array(
+			'default' => array(),
+			'message' => 'maps-openlayers-par-kml',
+			'islist' => true,
+			// new MapsParamFile() FIXME
+		);
 	}
 	
 	/**
@@ -164,7 +193,10 @@ class MapsOpenLayers extends MapsMappingService {
 	 * @return array
 	 */
 	public function getConfigVariables() {
-		return array_merge( parent::getConfigVariables(), array( 'egMapsScriptPath' => $GLOBALS['egMapsScriptPath'] ) );
+		return array_merge(
+			parent::getConfigVariables(),
+			array( 'egMapsScriptPath' => $GLOBALS['wgScriptPath'] . '/extensions/Maps/' )
+		);
 	}
 	
 }

@@ -17,8 +17,10 @@
 		Wikia = window.Wikia = (window.Wikia || {}),
 		config = Wikia.AbTestConfig || {},
 		logCache = {},
+		beacon = window.beacon_id || getCookie('wikia_beacon_id'),
 		serverTimeString = window.varnishTime,
-		serverTime = new Date( serverTimeString ).getTime() / 1000;
+		serverDate = serverTimeString ? new Date( serverTimeString ) : new Date(),
+		serverTime = serverDate.getTime() / 1000;
 
 	// Function to log different things (could not use Wikia.Log because it may not be available yet)
 	var log = (function( console ) {
@@ -59,7 +61,11 @@
 			log('init','UUID is not available, A/B testing will be disabled');
 		}
 		return ret;
-	})( window.beacon_id );
+	})( beacon );
+
+	AbTest.isExperimentActive = function( expName ) {
+		return expName in AbTest.experiments;
+	};
 
 	// Returns active group name for the given experiment
 	AbTest.getGroup = function( expName ) {
@@ -80,11 +86,17 @@
 		return !!(current && current.groups[groupName]);
 	};
 
-	// Returns the GA slot that tracking should be reported to
+	/**
+	 * Returns the GA slot that tracking should be reported to
+	 *
+	 * @param expName
+	 * @returns {Number|undefined}
+	 */
 	AbTest.getGASlot = function( expName ) {
 		var exp = getExperiment(expName,'getGASlot'),
-			current = exp && exp.current;
-		return current && current.gaSlot;
+			current = exp && exp.current,
+			gaSlot = current && current.gaSlot;
+		return parseInt(gaSlot,10) || undefined;
 	};
 
 	// Returns list of active experiments with IDs and names of them and groups that user fell in
@@ -199,6 +211,9 @@
 	// Returns true if value falls into provided ranges
 	function isInRanges( value, ranges ) {
 		var i, range;
+		if ( !ranges || !ranges.length ) {
+			return false;
+		}
 		for ( i = 0; i < ranges.length; i++ ) {
 			range = ranges[ i ];
 
@@ -211,6 +226,12 @@
 		return false;
 	}
 
+	// From https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+	function getCookie(name) {
+		if (!name) { return null; }
+		return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(name).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+	}
+
 	/* ----------------------------------------- */
 	/* Initialization and configuration handling */
 
@@ -219,24 +240,26 @@
 		var expName, exp, versions, version, i, activeExperiments = {}, count = 0;
 
 		for ( expName in experiments ) {
-			exp = experiments[expName];
-			versions = exp.versions;
+			if ( experiments.hasOwnProperty( expName ) ) {
+				exp = experiments[expName];
+				versions = exp.versions;
 
-			// Check if any given version is active now
-			for ( i = 0; i < versions.length; i++ ) {
-				version = versions[ i ];
+				// Check if any given version is active now
+				for ( i = 0; i < versions.length; i++ ) {
+					version = versions[ i ];
 
-				// If this version is active remember this information
-				if ( serverTime >= version.startTime && serverTime < version.endTime ) {
-					exp.current = version;
-					exp.flags = version.flags;
-					count++;
-					break;
+					// If this version is active remember this information
+					if ( serverTime >= version.startTime && serverTime < version.endTime ) {
+						exp.current = version;
+						exp.flags = version.flags;
+						count++;
+						break;
+					}
 				}
-			}
 
-			if ( exp.current ) {
-				activeExperiments[expName] = exp;
+				if ( exp.current ) {
+					activeExperiments[expName] = exp;
+				}
 			}
 		}
 
@@ -296,9 +319,11 @@
 				externalIds.push(exp.name+'.'+exp.current.id+'.'+exp.group.id);
 			}
 		}
-		if ( externalIds.length > 0 ) {
+
+		//external AB test scripts are currently not supported by Mercury
+		if ( externalIds.length > 0 && !window.Mercury ) {
 			log('init', 'Loading external configuration');
-			var url = '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
+			var url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
 			url += externalIds.join(',');
 			document.write('<scr'+'ipt src="'+encodeURI(url)+'"></script>');
 		}
@@ -325,5 +350,4 @@
 
 	// Exports
 	Wikia.AbTest = AbTest;
-
 })( window );

@@ -1,14 +1,19 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/box-shadow";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
-@import "../mixins/menus";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/menus";
+
+.WikiaFooter {
+	margin-bottom: 30px;
+}
 
 .WikiaFooter, .WikiaBarWrapper {
 	clear: both;
 	padding-top: 23px;
 	position: relative;
+	width: 100%;
 	&.float{
 		z-index: $zTop;
 
@@ -37,7 +42,7 @@
 			vertical-align: middle;
 		}
 		.tools {
-			background-image: url(/skins/oasis/images/checkers.png); /* base64 */
+			background-image: url(/skins/oasis/images/checkers.png); /* inline */
 			display: block;
 			list-style: none;
 			padding: 0 10px;
@@ -115,7 +120,7 @@
 	}
 	.header-container {
 		@include clearfix;
-		h1 {
+		h2 {
 			font-size: 18px;
 			float: left;
 			margin:17px 0 17px 20px;
@@ -144,79 +149,6 @@
 		border-color: transparent transparent $color-header $color-header;
 		right: -5px;
 		top: -7px;
-	}
-}
-
-.CorporateFooter  {
-	clear: left;
-	font-size: 11px;
-	padding-bottom: 10px;
-	nav {
-		@include clearfix;
-		margin-top: 15px;
-		position: relative;
-		> h1 {
-			display: none;
-		}
-	}
-	.WikiaHubBranding {
-		background: transparent;
-		left: 10px;
-		padding: 1px;
-		position: absolute;
-		top: 0;
-		.wordmark {
-			float: left;
-			position: relative;
-			width: 66px;
-		}
-		.hub {
-			background: $color-page;
-			float: left;
-			height: 10px;
-			padding: 5px 6px 8px 6px;
-			.hub2,
-			.hub3,
-			.hub9 {
-				font-size: 10px;
-				font-weight: bold;
-				letter-spacing: -0.5px;
-				text-decoration: none;
-				text-transform: uppercase;
-			}
-			.hub2 {
-				color: $color-wikiahome-videogames;
-			}
-			.hub3 {
-				color: $color-wikiahome-entertainment;
-			}
-			.hub9 {
-				color: $color-wikiahome-lifestyle;
-			}
-		}
-	}
-	.HubBrandingBlackBackground {
-		background: black;
-	}
-	ul {
-		list-style: none;
-		margin: 0 0 8px 167px;
-		text-align: right;
-
-		li {
-			border-left: solid 1px $color-links;
-			display: inline-block;
-			margin-top: 8px;
-			padding: 0 8px;
-
-			&:first-child {
-				border: none;
-			}
-
-			a {
-				color: $color-links;
-			}
-		}
 	}
 }
 

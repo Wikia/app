@@ -4,34 +4,24 @@
 
 @import "core/layout";
 
-// Mixins (http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#mixins) These files are in oasis/css/mixins/(name).scss //
-@import "mixins/border-radius";
-@import "mixins/box-shadow";
-@import "mixins/clearfix";
-@import "mixins/gradient";
-@import "mixins/menus";
-@import "mixins/opacity";
-@import "mixins/forms";
-@import "mixins/wordmark";
+// Mixins (http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#mixins) These files are in skins/shared/mixins/(name).scss //
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/menus";
+@import "skins/shared/mixins/forms";
+@import "skins/shared/mixins/wordmark";
 
 // Oasis Core //
+@import "skins/shared/color";
 @import "core/sprite";
-@import "core/color";
 @import "core/reset";
 @import "core/Search";
 
 // Oasis Features //
-@import "core/buttons";
+@import "skins/shared/buttons";
 
 // main //
-
-/*
-** Modified version of MediaWiki 'chick' style sheet
-** Copyright Timwi
-** License: GPL (http://www.gnu.org/copyleft/gpl.html)
-**
-** Loosely based on Monobook by Gabriel Wicke
-*/
 
 body {
     font-family: sans-serif;

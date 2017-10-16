@@ -1,296 +1,215 @@
 <?php
-/**
- * Messages file for the CentralHelpSearch extension
- *
- * @file
- * @ingroup Extensions
- */
+/** Internationalization file for /extensions/wikia/SharedHelp/CentralHelpSearch extension. */
+$messages = [];
 
-$messages = array();
+$messages['en'] = [
+	'centralhelpsearch-desc' => 'Allow inclusion of a form to search Community Central Help',
+	'centralhelpsearch-placeholder' => 'Search Help...',
+];
 
-$messages['en'] = array(
-	'centralhelpsearch-desc'        => 'Allow inclusion of a form to search Community Central Help',
-	'centralhelpsearch-placeholder' => 'Search Help...'
-);
-
-/** Arabic (العربية)
- * @author Achraf94
- * @author Mutarjem horr
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'centralhelpsearch-desc' => 'يسمح بإدراج نموذج للبحث في مركز ويكيا العربية',
 	'centralhelpsearch-placeholder' => 'مساعدة على البحث...',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author AZISS
- */
-$messages['az'] = array(
+$messages['ast'] = [
+	'centralhelpsearch-desc' => 'Permite la inclusión d\'un formulariu pa guetar na Ayuda Central de la Comunidá',
+	'centralhelpsearch-placeholder' => 'Guetar na Ayuda...',
+];
+
+$messages['az'] = [
 	'centralhelpsearch-placeholder' => 'Arayış üzrə axtarış...',
-);
+];
 
-/** Bengali (বাংলা)
- * @author Aftab1995
- */
-$messages['bn'] = array(
+$messages['bn'] = [
 	'centralhelpsearch-placeholder' => 'সাহায্য অনুসন্ধান করুন...',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Gwenn-Ael
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'centralhelpsearch-placeholder' => 'Klask er skoazell...',
-);
+];
 
-/** Catalan (català)
- * @author Marcmpujol
- */
-$messages['ca'] = array(
-	'centralhelpsearch-desc' => "Permèt la inclusió d'un formulari per buscar ajuda en Community Central",
-	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
-);
+$messages['ca'] = [
+	'centralhelpsearch-desc' => 'Permet la inclusió d\'un formulari per buscar ajuda a la Comunitat Central',
+	'centralhelpsearch-placeholder' => 'Buscar Ajuda...',
+];
 
-/** Czech (česky)
- * @author Chmee2
- * @author Darth Daron
- */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'centralhelpsearch-desc' => 'Povolit vložení formuláře vyhledávání v nápovědě komunitní cetrály',
 	'centralhelpsearch-placeholder' => 'Hledat v nápovědě',
-);
+];
 
-/** German (Deutsch)
- * @author PtM
- * @author Quedel
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'centralhelpsearch-desc' => 'Ermöglicht das Hinzufügen eines Suchfeldes für die Community-Hilfe',
 	'centralhelpsearch-placeholder' => 'Durchsuche die Hilfe...',
-);
+];
 
-/** Spanish (español)
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['el'] = [
+	'centralhelpsearch-placeholder' => 'Αναζήτηση στη Βοήθεια...',
+];
+
+$messages['es'] = [
 	'centralhelpsearch-desc' => 'Permite la insersión de un formulario para buscar ayuda en Community Central',
 	'centralhelpsearch-placeholder' => 'Buscar en Ayuda...',
-);
+];
 
-/** Finnish (suomi)
- * @author Ilkea
- */
-$messages['fi'] = array(
+$messages['fa'] = [
+	'centralhelpsearch-placeholder' => 'کمک جستجو...',
+];
+
+$messages['fi'] = [
 	'centralhelpsearch-desc' => 'Sallii lomakkeen sisällyttämisen etsintää Community Central Help',
 	'centralhelpsearch-placeholder' => 'Etsi ohjeita...',
-);
+];
 
-/** Faroese (føroyskt)
- * @author EileenSanda
- */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'centralhelpsearch-desc' => 'Loyv innlimanina av einum formulari fyri at leita í Community Central Help',
 	'centralhelpsearch-placeholder' => 'Leita í Help...',
-);
+];
 
-/** French (français)
- * @author Gomoko
- * @author Wyz
- */
-$messages['fr'] = array(
-	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulaire pour rechercher dans l'Aide centrale de la communauté",
-	'centralhelpsearch-placeholder' => "Rechercher dans l'aide...",
-);
+$messages['fr'] = [
+	'centralhelpsearch-desc' => 'Permet l\'inclusion d\'un formulaire pour rechercher dans l\'Aide centrale de la communauté',
+	'centralhelpsearch-placeholder' => 'Rechercher dans l\'aide...',
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'centralhelpsearch-desc' => 'Permite a inclusión dun formulario para buscar na axuda central da comunidade',
 	'centralhelpsearch-placeholder' => 'Procurar na axuda&hellip;',
-);
+];
 
-/** Hungarian (magyar)
- * @author TK-999
- */
-$messages['hu'] = array(
+$messages['he'] = [
+	'centralhelpsearch-placeholder' => 'חיפוש עזרה...',
+];
+
+$messages['hu'] = [
 	'centralhelpsearch-desc' => 'Lehetővé teszi egy, a Community Central dokumentációján kereső űrlap beillesztését',
 	'centralhelpsearch-placeholder' => 'Keresési segítség...',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'centralhelpsearch-desc' => 'Permitter le inclusion de un formulario pro cercar in le adjuta del Centro del Communitate',
 	'centralhelpsearch-placeholder' => 'Cercar adjuta&hellip;',
-);
+];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- */
-$messages['id'] = array(
+$messages['id'] = [
 	'centralhelpsearch-desc' => 'Perbolehkan masuknya formulir untuk pencarian bantuan komunitas pusat',
 	'centralhelpsearch-placeholder' => 'Cari Bantuan ...',
-);
+];
 
-/** Italian (italiano)
- * @author Leviathan 89
- */
-$messages['it'] = array(
-	'centralhelpsearch-desc' => "Permetti l'inclusione di un form per cercare su Community Central Help",
-	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
-);
+$messages['it'] = [
+	'centralhelpsearch-desc' => 'Permetti l\'inclusione di un form per cercare su Community Central Help',
+	'centralhelpsearch-placeholder' => 'Cerca aiuto...',
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['ja'] = [
+	'centralhelpsearch-placeholder' => 'ヘルプを検索...',
+];
+
+$messages['kn'] = [
+	'centralhelpsearch-placeholder' => 'ಸಹಾಯವನ್ನು ಹುಡುಕಿ...',
+];
+
+$messages['ko'] = [
+	'centralhelpsearch-placeholder' => '검색 도움말...',
+];
+
+$messages['lb'] = [
 	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
-);
+];
 
-/** Lithuanian (lietuvių)
- * @author Eitvys200
- */
-$messages['lt'] = array(
+$messages['lrc'] = [
+	'centralhelpsearch-placeholder' => 'پی جوری هومیاری',
+];
+
+$messages['lt'] = [
 	'centralhelpsearch-placeholder' => 'Ieškoti Pagalbos...',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'centralhelpsearch-desc' => 'Дозволи вклучување на образец за пребарување на Помошта на Центарот на заедницата',
 	'centralhelpsearch-placeholder' => 'Пребарај помош&hellip;',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'centralhelpsearch-desc' => 'Bolehkan penyertaan borang untuk mencari dalam Bantuan Pusat Komuniti',
 	'centralhelpsearch-placeholder' => 'Cari Bantuan&hellip;',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'centralhelpsearch-desc' => 'Tillat inkludering av et skjema for søk i Community Centrals hjelperegister',
 	'centralhelpsearch-placeholder' => 'Søk Hjelp&hellip;',
-);
+];
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'centralhelpsearch-desc' => 'Opname van een formulier om Community Central Help te doorzoeken toestaan',
 	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
-);
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
-	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulari per recercar dins l'Ajuda centrala de la comunautat",
-	'centralhelpsearch-placeholder' => "Recercar dins l'ajuda&hellip;",
-);
+$messages['oc'] = [
+	'centralhelpsearch-desc' => 'Permet l\'inclusion d\'un formulari per recercar dins l\'Ajuda centrala de la comunautat',
+	'centralhelpsearch-placeholder' => 'Recercar dins l\'ajuda&hellip;',
+];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sovq
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'centralhelpsearch-desc' => 'Umożliwia włączenie formularza służącego do wyszukiwania w Centrum Pomocy',
-	'centralhelpsearch-placeholder' => 'Wyszukiwanie w Centrum Pomocy...',
-);
+	'centralhelpsearch-placeholder' => 'Przeszukaj strony pomocy...',
+];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- */
-$messages['pms'] = array(
-	'centralhelpsearch-desc' => "Përmëtte l'anclusion d'un formolari për sërché ant l'Agiut sentral ëd la comunità",
-	'centralhelpsearch-placeholder' => "Arserché ant l'Agiut...",
-);
+$messages['pms'] = [
+	'centralhelpsearch-desc' => 'Përmëtte l\'anclusion d\'un formolari për sërché ant l\'Agiut sentral ëd la comunità',
+	'centralhelpsearch-placeholder' => 'Arserché ant l\'Agiut...',
+];
 
-/** Portuguese (português)
- * @author SandroHc
- */
-$messages['pt'] = array(
-	'centralhelpsearch-desc' => 'Permite a inclusão de um formulário para procura na Central de Ajuda da Comunidade',
-	'centralhelpsearch-placeholder' => 'Procurar Ajuda...',
-);
-
-/** Brazilian Portuguese (português do Brasil)
- * @author TheGabrielZaum
- */
-$messages['pt-br'] = array(
+$messages['pt'] = [
 	'centralhelpsearch-desc' => 'Permitir a inclusão de um formulário para pesquisar ajuda na Central da Comunidade',
 	'centralhelpsearch-placeholder' => 'Procurar em Ajuda...',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
-	'centralhelpsearch-desc' => "Permette 'nglusiune de 'nu module pe cercà 'a Comunitate Cendrale d'Aijute",
+$messages['roa-tara'] = [
+	'centralhelpsearch-desc' => 'Permette \'nglusiune de \'nu module pe cercà \'a Comunitate Cendrale d\'Aijute',
 	'centralhelpsearch-placeholder' => 'Cirche aijute...',
-);
+];
 
-/** Russian (русский)
- * @author AZISS
- * @author Kuzura
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'centralhelpsearch-desc' => 'Разрешить включение формы для поиска по Справке Вики Сообщества',
 	'centralhelpsearch-placeholder' => 'Поиск по Справке...',
-);
+];
 
-/** Swedish (svenska)
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'centralhelpsearch-desc' => 'Låter införandet av ett formulär för att söka i Community Central Help',
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['te'] = [
+	'centralhelpsearch-placeholder' => 'వెతుకులాట సహాయం...',
+];
+
+$messages['tl'] = [
 	'centralhelpsearch-desc' => 'Pahintulutan ang pagsasama ng isang pormularyo upang makapaghanap ng Lunduyang Pantulong ng Pamayanan',
 	'centralhelpsearch-placeholder' => 'Maghanap ng Tulong...',
-);
+];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'centralhelpsearch-desc' => 'Вики Җәмгыяте Белешмәлеге буенча эзләү формасын кушуны рөхсәт итү',
 	'centralhelpsearch-placeholder' => 'Белешмәлек буенча эзләү ...',
-);
+];
 
-/** Ukrainian (українська)
- * @author Ua2004
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'centralhelpsearch-desc' => 'Дозволити включення форми для пошуку довідки',
 	'centralhelpsearch-placeholder' => 'Пошук довідки...',
-);
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'centralhelpsearch-desc' => 'Cho phép bao gồm một hình thức tìm kiếm cộng đồng Trung tâm trợ giúp',
 	'centralhelpsearch-placeholder' => 'Tìm kiếm trợ giúp...',
-);
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Dimension
- * @author Hydra
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'centralhelpsearch-desc' => '允许一个搜寻社区中央帮助网站的表格',
 	'centralhelpsearch-placeholder' => '搜索帮助……',
-);
+];
+
+$messages['zh-hant'] = [
+	'centralhelpsearch-placeholder' => '搜尋說明...',
+];
+

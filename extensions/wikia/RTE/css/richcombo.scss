@@ -2,9 +2,9 @@
  * Style CKeditor's combo panel
  */
 
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "skins/shared/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/shared/mixins/bodytext";
 @import "../ckeditor/_source/skins/wikia/panel";
 
 html.cke_skin_wikia_container {

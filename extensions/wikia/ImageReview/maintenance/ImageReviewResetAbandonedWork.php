@@ -1,6 +1,16 @@
 <?php
 
-require(  dirname(__FILE__ ) . '/../../../../maintenance/commandLine.inc'  );
+require_once( dirname(__FILE__ ) . '/../../../../maintenance/Maintenance.php' );
 
-$irh = new ImageReviewHelper();
-$irh->resetAbandonedWork();
+class ImageReviewResetAbandonedWork extends Maintenance {
+
+	public function execute() {
+		$oHelper = new ImageReviewHelper();
+		$sFrom = $oHelper->resetAbandonedWork();
+
+		$this->output( "\nReviews older than {$sFrom} reset.\n" );
+	}
+}
+
+$maintClass = "ImageReviewResetAbandonedWork";
+require_once( RUN_MAINTENANCE_IF_MAIN );

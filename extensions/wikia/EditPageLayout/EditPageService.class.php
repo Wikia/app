@@ -4,7 +4,7 @@
  * Service providing interface for generating previews and diffs
  */
 
-class EditPageService extends Service {
+class EditPageService {
 
 	private $app;
 
@@ -41,14 +41,14 @@ class EditPageService extends Service {
 		return Html::rawElement( 'div', $realBodyAttribs, $html );
 	}
 
-	public function getPreview($wikitext) {
-		// TODO: use wgParser here because some parser hooks initialize themselves on wgParser (should on provided parser instance)
+	public function getPreview( $wikitext ) {
+		/** @var Parser $wgParser */
 		global $wgParser, $wgUser, $wgRequest;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$wg = $this->app->wg;
 
-		$parserOptions = new ParserOptions($wgUser);
+		$parserOptions = new ParserOptions( $wgUser );
 
 		$originalWikitext = $wikitext;
 
@@ -59,24 +59,41 @@ class EditPageService extends Service {
 		}
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
-		$wikitext = $wgParser->preSaveTransform($wikitext, $this->mTitle, $this->app->getGlobal('wgUser'), $parserOptions);
+		$wikitext = $wgParser->preSaveTransform( $wikitext, $this->mTitle, $this->app->getGlobal( 'wgUser' ), $parserOptions );
 
 		// parse wikitext using MW parser
-		$html = $wgParser->parse($wikitext, $this->mTitle, $parserOptions)->getText();
+		$parserOutput = $wgParser->parse( $wikitext, $this->mTitle, $parserOptions );
 
-		$html = EditPageService::wrapBodyText($this->mTitle, $wgRequest, $html);
+		/**
+		 * Allow extensions to modify the ParserOutput
+		 */
+		Hooks::run( 'ArticlePreviewAfterParse', [ $parserOutput, $this->mTitle ] );
+
+		$html = $parserOutput->getText();
+
+		// MAIN-11309: parser output may contain RL modules so add them
+		$modules = $parserOutput->getModules();
+
+		if ( $modules ) {
+			$html .= Html::inlineScript(
+				ResourceLoader::makeLoaderConditionalScript(
+					Xml::encodeJsCall( 'mw.loader.load', [ $modules, null, true ] )
+				)
+			);
+		}
+
+		$html = EditPageService::wrapBodyText( $this->mTitle, $wgRequest, $html );
 
 		// we should also render categories and interlanguage links
-		$parserOutput = $wgParser->getOutput();
-		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
-		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
+		$catbox = $this->renderCategoryBoxFromParserOutput( $parserOutput );
+		$interlanglinks = $this->renderInterlangBoxFromParserOutput( $parserOutput );
 
 		/**
 		 * bugid: 47995 -- Treat JavaScript and CSS as raw text wrapped in <pre> tags
 		 * We still rely on the parser for other stuff
 		 */
 		if ( $this->mTitle->isCssOrJsPage() ) {
-			$html = '<pre>' . $originalWikitext . '</pre>';
+			$html = '<pre>' . htmlspecialchars( $originalWikitext ) . '</pre>';
 		}
 
 		wfProfileOut(__METHOD__);

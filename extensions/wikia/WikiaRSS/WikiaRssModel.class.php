@@ -1,4 +1,4 @@
-<?php 
+<?php
 class WikiaRssModel {
 	static private $staticId = 1;
 	private $id = 0;
@@ -7,7 +7,7 @@ class WikiaRssModel {
 	private $maxheads = 5;
 	private $short = false;
 	private $reverse = false;
-	private $dateFormat = false;
+	private $date = false;
 	private $highlight = array();
 	private $filter = array();
 	private $filterout = array();
@@ -21,7 +21,7 @@ class WikiaRssModel {
 
 	/**
 	 * @brief Returns a div with our class and short information
-	 * 
+	 *
 	 * @return String
 	 */
 	public function getPlaceholder() {
@@ -43,19 +43,19 @@ class WikiaRssModel {
 
 	/**
 	 * @brief Returns an array with attributes
-	 * 
+	 *
 	 * @desc Attributes are parsed from user defined options and from the model itself
-	 * 
+	 *
 	 * @return Array
 	 */
 	public function getRssAttributes() {
 		$attrs = array();
 
-		foreach(array('id', 'url', 'charset', 'maxheads', 'short', 'reverse', 'dateFormat', 'highlight', 'filter', 'filterout', 'nojs') as $attr) {
+		foreach(array('id', 'url', 'charset', 'maxheads', 'short', 'reverse', 'date', 'highlight', 'filter', 'filterout', 'nojs') as $attr) {
 			$attrs[$attr] = $this->$attr;
 		}
 
-		//most of our messages are passed 
+		//most of our messages are passed
 		//via php responses for ajax requests
 		//this is the only exception
 		$attrs['ajaxErrorMsg'] = wfMsg('wikia-rss-error-ajax-loading');
@@ -65,7 +65,7 @@ class WikiaRssModel {
 
 	/**
 	 * @brief Parses user's input and sets options of display
-	 * 
+	 *
 	 * @param String $input user's defined options passed with <rss> parser tag
 	 */
 	private function parseFields($input) {
@@ -111,12 +111,7 @@ class WikiaRssModel {
 			}
 
 			if( isset($args["date"]) ) {
-				$this->dateFormat = $args["date"];
-
-				if( empty($this->dateFormat) ) {
-				//TODO: maybe better is to get date format from user prefs?
-					$this->dateFormat = wfMsg('wikia-rss-date-format');
-				}
+				$this->date = true;
 			}
 
 			foreach(array('highlight', 'filter', 'filterout') as $option) {

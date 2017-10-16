@@ -1,0 +1,23 @@
+@import 'skins/shared/mixins/arrow';
+@import 'skins/shared/color';
+
+.useractivity-header {
+
+  .selected {
+	&.up {
+	  @include arrow(6px, $color-buttons, 'up');
+	}
+
+	&.down {
+	  @include arrow(6px, $color-buttons, 'down');
+	}
+  }
+
+  .sortable {
+	cursor: pointer;
+  }
+
+  th {
+	width: 25%;
+  }
+}

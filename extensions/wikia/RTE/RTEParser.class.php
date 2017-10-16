@@ -200,6 +200,9 @@ class RTEParser extends Parser {
 			return $ret;
 		}
 
+		$file = wfFindFile( $title );
+		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
+
 		// get and merge image parameters returned by Parser::makeImage
 		$params = array_merge(self::$imageParams['frame'], self::$imageParams['handler']);
 
@@ -293,7 +296,7 @@ class RTEParser extends Parser {
 		else if (isset($data['params']['thumbnail'])) {
 			// width not provided - get default for thumbs
 			global $wgUser, $wgThumbLimits;
-			$wopt = $wgUser->getOption('thumbsize');
+			$wopt = $wgUser->getGlobalPreference('thumbsize');
 
 			if(!isset($wgThumbLimits[$wopt])) {
 				$wopt = User::getDefaultOption('thumbsize');
@@ -314,7 +317,7 @@ class RTEParser extends Parser {
 		// add extra CSS classes
 		$imgClass = array('image');
 
-		if (isset($data['params']['thumbnail'])) {
+		if (isset($data['params']['thumbnail']) || $isVideo) {
 			$imgClass[] = 'thumb';
 		}
 		if (isset($data['params']['framed'])) {
@@ -351,8 +354,7 @@ class RTEParser extends Parser {
 
 		$mediaType = "image";
 
-		$file = wfFindFile( $title );
-		if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+		if ( $isVideo ) {
 			$mediaType = "video";
 		}
 
@@ -460,7 +462,7 @@ class RTEParser extends Parser {
 	 * Convert wikitext to HTML and add extra HTML attributes for RTE
 	 *
 	 * @param $text String: text we want to parse
-	 * @param $title A title object
+	 * @param $title Title A title object
 	 * @param $options ParserOptions
 	 * @param $linestart boolean
 	 * @param $clearState boolean

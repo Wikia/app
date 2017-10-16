@@ -9,20 +9,25 @@
  * @class
  * @extends ve.dm.WikiaBlockMediaNode
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.WikiaBlockImageNode = function VeDmWikiaBlockImageNode( length, element ) {
-	ve.dm.WikiaBlockMediaNode.call( this, 0, element );
+ve.dm.WikiaBlockImageNode = function VeDmWikiaBlockImageNode() {
+	// Parent constructor
+	ve.dm.WikiaBlockImageNode.super.apply( this, arguments );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.WikiaBlockImageNode, ve.dm.WikiaBlockMediaNode );
+OO.inheritClass( ve.dm.WikiaBlockImageNode, ve.dm.WikiaBlockMediaNode );
 
 /* Static Properties */
 
 ve.dm.WikiaBlockImageNode.static.name = 'wikiaBlockImage';
+
+ve.dm.WikiaBlockImageNode.static.childNodeTypes = [ 'wikiaImageCaption' ];
+
+ve.dm.WikiaBlockImageNode.static.captionNodeType = 'wikiaImageCaption';
 
 /* Registration */
 

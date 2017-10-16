@@ -1,15 +1,15 @@
 var ThemeDesignerPreview = {
 	init: function() {
-		$("#WikiaArticle .thumbinner")
+		$(".portable-infobox h2")
 			.first()
-			.attr("style", "width:302px")
-			.find("a")
-			.first()
-			.html(
-				'<img width="300" src="' + wgExtensionsPath + '/wikia/ThemeDesigner/images/aquarium.jpg">'
+			.after(
+				'<figure class="pi-item pi-image">'+
+				'<a href="#" class="image image-thumbnail" title="">' +
+				'<img width="100%" src="' + wgExtensionsPath + '/wikia/ThemeDesigner/images/aquarium.jpg">' +
+				'</a>' +
+				'</figure>'
 			);
 
-		$("#WikiaArticle .thumbinner").append('<div class="picture-attribution"><img width="16" height="16" class="avatar" src="' + wgExtensionsPath + '/wikia/ThemeDesigner/images/td-avatar.jpg">Added by <a>FunnyBunny</a></div>');
 		$("a.new").removeClass("new");
 
 		//no floating footer on preview
@@ -20,7 +20,14 @@ var ThemeDesignerPreview = {
 	},
 
 	loadSASS: function(settings) {
-		var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', settings);
+		var sassUrl = $.getSassesURL([
+			'/skins/oasis/css/oasis.scss',
+			'/extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
+			'/extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss',
+			'/extensions/wikia/PageHeader/styles/index.scss',
+			'/extensions/wikia/CommunityHeader/styles/index.scss'
+		], settings);
+
 		$("#clickmask").animate({"opacity": 0.65}, "fast", function() {
 			$.getCSS(sassUrl, function(link) {
 				$(ThemeDesignerPreview.link).remove();

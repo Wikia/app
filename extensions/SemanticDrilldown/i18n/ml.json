@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Praveenp",
+			"Shijualex"
+		]
+	},
+	"sd_browsedata_choosecategory": "ഒരു വർഗ്ഗം തിരഞ്ഞെടുക്കുക",
+	"sd_browsedata_viewcategory": "വർഗ്ഗം കാണുക",
+	"sd_browsedata_subcategory": "ഉപവർഗ്ഗം",
+	"sd_browsedata_other": "മറ്റുള്ളവ",
+	"sd_browsedata_none": "ഒന്നുമില്ല",
+	"sd_browsedata_filterbyvalue": "ഈ മൂല്യം ഉപയോഗിച്ച് അരിക്കുക",
+	"sd_browsedata_filterbysubcategory": "ഈ ഉപവർഗ്ഗം ഉപയോഗിച്ച് അരിക്കുക",
+	"sd_browsedata_otherfilter": "ഈ ഫിൽറ്റർ ഉപയോഗിച്ച് മറ്റൊരു മൂല്യത്തിലുള്ള താളുകൾ കാണിക്കുക",
+	"sd_browsedata_nonefilter": "മൂല്യമൊന്നും ചേർക്കാതെ ഈ ഫിൽറ്റർ ഉപയോഗിച്ച് താളുകൾ കാണിക്കുക",
+	"sd_browsedata_or": "അല്ലെങ്കിൽ",
+	"sd_browsedata_removefilter": "ഈ ഫിൽറ്റർ ഒഴിവാക്കുക",
+	"sd_browsedata_removesubcategoryfilter": "ഈ ഉപവർഗ്ഗ ഫിൽറ്റർ ഒഴിവാക്കുക",
+	"sd_browsedata_resetfilters": "അരിപ്പകൾ പുനഃക്രമീകരിക്കുക",
+	"sd_browsedata_addanothervalue": "മറ്റൊരു മൂല്യം ചേർക്കുക"
+}

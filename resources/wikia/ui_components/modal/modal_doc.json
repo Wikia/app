@@ -15,7 +15,8 @@
 					"value" : {
 						"0" : "small",
 						"1" : "medium",
-						"2" : "large"
+						"2" : "large",
+						"3" : "content-size"
 					},
 					"description" : "styleguide-description-modal-size"
 				},
@@ -34,10 +35,20 @@
 					"type" : "string",
 					"description" : "styleguide-description-modal-title"
 				},
-				"closeButton": {
-					"templateVar" : "closeButton",
+				"htmlTitle": {
+					"templateVar" : "htmlTitle",
+					"type" : "string",
+					"description" : "styleguide-description-modal-html-title"
+				},
+				"closeText": {
+					"templateVar" : "closeText",
+					"type" : "string",
+					"description" : "styleguide-description-modal-close-text"
+				},
+				"escapeToClose" : {
+					"templateVar" : "escapeToClose",
 					"type" : "boolean",
-					"description" : "styleguide-description-modal-close-button"
+					"description" : "styleguide-description-modal-escape-to-close"
 				},
 				"altLink" : {
 					"templateVar" : "altLink",
@@ -45,19 +56,15 @@
 					"objectVar" : {
 						"id": "string",
 						"href": "string",
-						"text": "string"
+						"text": "string",
+						"title": "string"
 					},
 					"description" : "styleguide-description-modal-alt-link"
 				},
-				"secondBtn" : {
-					"templateVar" : "secondBtn",
-					"type" : "string",
-					"description" : "styleguide-description-modal-secondary-button"
-				},
-				"primaryBtn" : {
-					"templateVar" : "primaryBtn",
-					"type" : "string",
-					"description" : "styleguide-description-modal-primary-button"
+				"buttons": {
+					"templateVar": "buttons",
+					"type" : "array",
+					"description" : "styleguide-description-modal-buttons"
 				}
 			}
 		}

@@ -1,28 +1,40 @@
 <div class="category-gallery-form">
-	<? if ( $displayType == 'exhibition' ) { ?>
-	<?=wfMsg('category-exhibition-sorttype'); ?>
-	<?
+	<? if ( $displayType == 'exhibition' ): ?>
+		<?= wfMessage( 'category-exhibition-sorttype' )->escaped(); ?>
+		<?
 		$dropdown = array();
-		foreach ($sortTypes as $sortType) {
+		foreach ( $sortTypes as $sortType ) {
 			$el = array();
-			if($current == $sortType) {
+			if ( $current == $sortType ) {
 				$el["class"] = "selected";
 			}
 			$el["href"] = "$path?sort=$sortType&display=$displayType";
-			$el["id"] = "category-exhibition-form-$sortType";
-			$el["text"] = wfMsg("category-exhibition-$sortType");
+			$el["id"] = Sanitizer::escapeId( "category-exhibition-form-$sortType" );
+			$el["text"] = wfMessage( "category-exhibition-$sortType" )->escaped();
 			$dropdown[] = $el;
 		}
-	?>
-	<?= F::app()->renderView('MenuButton',
+		?>
+		<?= F::app()->renderView( 'MenuButton',
 			'Index',
 			array(
-				'action' => array( "href" => $path, "text" => wfMsg('category-exhibition-'.$current), "id" => "category-exhibition-form-current" ),
+				'action' => array( "text" => wfMessage( 'category-exhibition-' . $current )->escaped(), "id" => "category-exhibition-form-current" ),
 				'class' => 'secondary',
 				'dropdown' => $dropdown,
 				'name' => 'sortType'
 			)
-		) ?>
-	<? } ?>
-	<a title="<?=wfMsg('category-exhibition-display-old'); ?>" id="category-exhibition-form-new" href="<?=$path; ?>?display=page&sort=<?=$current; ?>" ><div id="category-exhibition-display-old" <? if ( $displayType == 'page' ){ echo ' class="active"'; }?> ></div></a> | <a title="<?=wfMsg('category-exhibition-display-new'); ?>" id="category-exhibition-form-old" href="<?=$path; ?>?display=exhibition&sort=<?=$current; ?>" ><div id="category-exhibition-display-new" <? if ( $displayType == 'exhibition' ){ echo ' class="active"'; }?> ></div></a>
+		); ?>
+	<? endif; ?>
+	<a title="<?= wfMessage( 'category-exhibition-display-old' )->escaped(); ?>"
+	   id="category-exhibition-form-new"
+	   href="<?= Sanitizer::encodeAttribute( $path . '?display=page&sort=' . urlencode( $current ) ); ?>">
+		<div id="category-exhibition-display-old"
+			<? if ( $displayType == 'page' ): ?> class="active" <? endif; ?>
+		></div>
+	</a> | <a title="<?= wfMessage( 'category-exhibition-display-new' )->escaped(); ?>"
+			  id="category-exhibition-form-old"
+			  href="<?= Sanitizer::encodeAttribute( $path . '?display=exhibition&sort=' . urlencode( $current ) ); ?>">
+		<div id="category-exhibition-display-new"
+			<? if ( $displayType == 'exhibition' ): ?> class="active" <? endif; ?>
+		></div>
+	</a>
 </div>

@@ -1,12 +1,14 @@
 {
+	"jsWrapperModule": "wikia.ui.modal",
 	"templateVars": {
 		"default": {
-			"required": [ "id", "size", "content" ],
-			"optional": [ "classes", "title", "closeButton", "altLink", "secondBtn", "primaryBtn" ]
+			"required": [ "id", "size", "content", "closeText" ],
+			"optional": [ "classes", "title", "htmlTitle", "altLink", "buttons" ]
 		}
 	},
 	"dependencies": {
 		"js": [ "resources/wikia/ui_components/modal/js/modal.js" ],
-		"css": [ "resources/wikia/ui_components/modal/css/modal_default.scss" ]
+		"css": [ "resources/wikia/ui_components/modal/css/modal_default.scss" ],
+		"components": [ "button" ]
 	}
 }

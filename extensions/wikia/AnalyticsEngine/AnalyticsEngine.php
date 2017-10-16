@@ -33,22 +33,30 @@ class AnalyticsEngine {
 
 	private static function getProvider($provider) {
 		switch ($provider) {
-			case 'GA_Urchin':
-				return new AnalyticsProviderGAS();
 			case 'QuantServe':
 				return new AnalyticsProviderQuantServe();
 			case 'Comscore':
 				return new AnalyticsProviderComscore();
 			case 'Exelate':
 				return new AnalyticsProviderExelate();
-			case 'GAS':
-				return new AnalyticsProviderGAS();
-			case 'IVW':
-				return new AnalyticsProviderIVW();
-			case 'AmazonDirectTargetedBuy':
-				return new AnalyticsProviderAmazonDirectTargetedBuy();
+			case 'GoogleFundingChoices':
+				return new AnalyticsProviderGoogleFundingChoices();
+			case 'GoogleUA':
+				return new AnalyticsProviderGoogleUA();
+			case 'Krux':
+				return new AnalyticsProviderKrux();
+			case 'AmazonMatch':
+				return new AnalyticsProviderAmazonMatch();
+			case 'A9':
+				return new AnalyticsProviderA9();
+			case 'Nielsen':
+				return new AnalyticsProviderNielsen();
+			case 'Prebid':
+				return new AnalyticsProviderPrebid();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
+			case 'NetzAthleten':
+				return new AnalyticsProviderNetzAthleten();
 		}
 
 		return null;

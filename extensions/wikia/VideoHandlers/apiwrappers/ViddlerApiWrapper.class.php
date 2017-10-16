@@ -2,7 +2,7 @@
 
 class ViddlerApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_PHP;
-	protected static $API_URL = 'http://api.viddler.com/api/v2/viddler.videos.getDetails.php?key=$1&add_embed_code=1&url=';
+	protected static $API_URL = 'http://api.viddler.com/api/v2/viddler.videos.getDetails.php?add_embed_code=1&url=';
 	public static $WATCH_URL = 'http://www.viddler.com/v/$1';
 	public static $MAIN_URL = 'http://www.viddler.com/';
 	protected static $CACHE_KEY = 'viddlerapi';
@@ -101,9 +101,8 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 
 	protected function getApiUrl() {
-		global $wgViddlerApiKey;
 		$watchUrl = str_replace( '$1', trim($this->videoId, '/'), static::$WATCH_URL );
-		$apiUrl = str_replace( '$1', $wgViddlerApiKey, static::$API_URL ) . urlencode($watchUrl);
+		$apiUrl = static::$API_URL . urlencode($watchUrl);
 		return $apiUrl;
 	}
 
@@ -168,8 +167,13 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 		wfProfileIn( __METHOD__ );
 
-		$req = MWHttpRequest::factory( $url, array('timeout'=>'default', 'headersOnly'=>true) );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$options = array(
+			'timeout'=>'default',
+			'headersOnly'=>true,
+			'noProxy' => true,
+		);
+		$req = MWHttpRequest::factory( $url, $options );
+		$status = $req->execute();
 		$finalUrl = $req->getFinalUrl();
 
 		wfProfileOut( __METHOD__ );

@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Xqt"
+		]
+	},
+	"templates": "Moddle",
+	"sf_createtemplate_deletefield": "Verwische",
+	"sf_createform_template": "Moddel:",
+	"sf_createform_add": "Dezu duh",
+	"sf_formstart_createoredit": "Dezu duh odder ennere",
+	"sf_formedit_createtitle": "Duh $1: $2 dezu",
+	"sf_formedit_edittitle": "$1: $2 ennere",
+	"sf_formedit_addanother": "Weidere dezu duh",
+	"sf_formedit_none": "Ken",
+	"sf_blank_namespace": "Blatt",
+	"sf-datepicker-next": "Neegschte"
+}

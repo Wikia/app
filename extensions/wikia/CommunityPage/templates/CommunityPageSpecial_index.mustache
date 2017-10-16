@@ -1,0 +1,17 @@
+{{>pageHeader}}
+
+<div class="CommunityPageContainer">
+	<div class="CommunityPageMainContent">
+		{{>callToActionModule}}
+		{{>communityTodoListModule}}
+	</div>
+	<div class="community-page-rail">
+		{{>adminsModule}}
+		{{>moderatorsModule}}
+		{{#contributorsModuleEnabled}}
+			{{>contributorsModule}}
+		{{/contributorsModuleEnabled}}
+		{{>recentlyJoinedModule}}
+		{{>helpModule}}
+	</div>
+</div>

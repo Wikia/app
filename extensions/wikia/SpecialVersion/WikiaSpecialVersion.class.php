@@ -9,17 +9,20 @@ class WikiaSpecialVersion extends SpecialVersion {
 		global $IP;
 		return self::getVersionFromDir($IP);
 	}
-	
+
 	public static function getWikiaConfigVersion() {
-		return self::getVersionFromDir("/usr/wikia/conf/current"); # no global for config path :(
+		global $IP;
+		if ( file_exists( "$IP/../config" ) ) {
+			return self::getVersionFromDir("$IP/../config");
+		}
 	}
 
 	public static function getVersionFromDir($dir) {
-		$filename = $dir . '/VERSION';
+		$filename = $dir . '/wikia.version.txt';
 		if ( file_exists( $filename ) ) {
 			return file_get_contents( $filename );
 		}
-		return self::getGitBranch($dir);	
+		return self::getGitBranch($dir);
 	}
 
 	/**
@@ -27,8 +30,8 @@ class WikiaSpecialVersion extends SpecialVersion {
 	 * @return string
 	 * @todo use MW 1.20 functionality for Git-based version
 	 */
-	private function getGitBranch($dir) {	
-		return shell_exec("cd $dir ; git branch | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
+	private static function getGitBranch($dir) {
+		return shell_exec("cd $dir ; git branch 2> /dev/null | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
 	}
 
 	/**
@@ -48,7 +51,7 @@ class WikiaSpecialVersion extends SpecialVersion {
 	    $software[$dbr->getSoftwareLink()] = $dbr->getServerInfo();
 
 	    // Allow a hook to add/remove items.
-	    wfRunHooks( 'SoftwareInfo', array( &$software ) );
+	    Hooks::run( 'SoftwareInfo', array( &$software ) );
 
 		return $software;
 	}

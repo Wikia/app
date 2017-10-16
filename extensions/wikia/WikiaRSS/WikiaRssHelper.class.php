@@ -7,7 +7,7 @@ class WikiaRssHelper {
 	 *
 	 * @return String
 	 */
-	public function renderRssPlaceholder($input) {
+	public static function renderRssPlaceholder($input) {
 		$app = F::app();
 		$rss = new WikiaRssModel($input);
 
@@ -33,11 +33,13 @@ class WikiaRssHelper {
 	 * @brief Gets JavaScript code snippet to be loaded
 	 *
 	 * @param Array $options passed to callback javascript function
+	 *
+	 * @return string
 	 */
-	static private function getJSSnippet($options) {
+	private static function getJSSnippet($options) {
 		$html = JSSnippets::addToStack(
 			array(
-//				'/extensions/wikia/WikiaRSS/css/WikiaRss.scss', //it's empty; we don't need it here...
+				'/extensions/wikia/WikiaRSS/css/WikiaRss.scss',
 				'/extensions/wikia/WikiaRSS/js/WikiaRss.js',
 			),
 			array(),
@@ -48,4 +50,45 @@ class WikiaRssHelper {
 		return $html;
 	}
 
+	/**
+	 * @param string Feed url $url
+	 * @return array
+	 *	'errorMessageKey' - string| null error type message key - used for localizing error messages
+	 *	'error' - string|null raw error message returned by magpierss
+	 *	'rss' - null|MagpieRSS parsed feed data
+	 */
+	public static function getFeedData( $url ) {
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			'WikiaRSS calling RSS provider',
+			[ 'providerUrl' => $url ]
+		);
+
+		$status = null;
+		$rss = @fetch_rss( $url, $status );
+
+		$errorMessageKey = null;
+		$error = null;
+
+		if ( !is_null( $status ) && $status !== 200 ) {
+			$errorMessageKey = 'wikia-rss-error-wrong-status-' . $status;
+		} else if ( !is_object( $rss ) || !is_array($rss->items) ) {
+			$errorMessageKey = 'wikia-rss-empty';
+		} else if ( $rss->ERROR ) {
+			$errorMessageKey = 'wikia-rss-error';
+			$error = $rss->ERROR;
+		}
+
+		if ( !empty( $errorMessageKey ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'Error: WikiaRSS calling RSS provider ',
+				[ 'providerUrl' => $url, 'error' => $errorMessageKey ]
+			);
+		}
+
+		return [
+			'errorMessageKey' => $errorMessageKey,
+			'error' => $error,
+			'rss' => $rss
+		];
+	}
 }

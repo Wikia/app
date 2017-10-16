@@ -91,10 +91,17 @@ border: none;
     z-index: 9000;
 }
 
+#wf-category fieldset { border: 1px dotted lightgray; background: #f9f9f9; padding: 0.4em; }
+#wf-category label { display: inline-block; width: 75px; }
+
 .wf-variable-form .perror {color: #fe0000; font-weight: bold; }
 .wf-variable-form .success {color: darkgreen; font-weight: bold; }
 .wf-variable-form textarea { width: 90%; height: 8em; }
 .wf-variable-form input.input-string { width: 90%; }
+.wf-variable-form label { display: block; padding-top: 1em; }
+.wf-variable-form-inline-group { width: 45%; }
+.wf-variable-form-left { float: left; }
+.wf-variable-form-right { float: right; }
 
 .prompt {
 	color: #fe0000;
@@ -120,6 +127,7 @@ $Factory.Variable = {};
 
 var ajaxpath = wgServer + wgScript;
 $Factory.city_id = <?php echo $wiki->city_id ?>;
+$Factory.token = <?= Xml::encodeJsVar( F::app()->wg->User->getEditToken() ) ?>;
 
 
 $Factory.VariableCallback = {
@@ -185,6 +193,8 @@ $Factory.BusyCache = function (state) {
 $Factory.Domain.CRUD = function(mode, domain, addparams) {
 	$Factory.Busy(1);
 	var params = "&cityid=" + $Factory.city_id + "&domain=" + domain + addparams;
+	params += "&token=" + encodeURIComponent($Factory.token);
+
 	$.ajax({
     	type:"POST",
     	dataType: "json",
@@ -231,7 +241,9 @@ $Factory.Domain.listEvents = function(domain, key) {
 
 $Factory.Domain.add = function ( e ) {
     $Factory.Busy(1);
-    $Factory.Domain.CRUD("add", $( "#wk-domain-add" ).val(), "" );
+    var reason = $( "#wk-domain-reason" ).val();
+    var params = "&reason=" + encodeURIComponent(reason);
+    $Factory.Domain.CRUD("add", $( "#wk-domain-add" ).val(), params );
     return false;
 };
 
@@ -246,13 +258,20 @@ $Factory.Domain.change = function ( e, data ) {
     	.attr("size", 20)
     	.attr("maxlength", 255);
 
+    var reason = $("<input/>")
+		.attr('value', '')
+		.attr('type', 'text')
+		.attr('name', 'wk-change-reason')
+		.attr('size', 20)
+		.attr('id', 'wk-change-reason');
 
     var change = $("<input/>")
     	.attr('value', "Change")
     	.attr('type', "button")
     	.click(jQuery.proxy(function() {
             var newdomain = $( "#wk-change-input" ).val();
-            var params = "&newdomain="+newdomain;
+	    var reason = $( "#wk-change-reason" ).val();
+            var params = "&newdomain="+newdomain+"&reason="+encodeURIComponent(reason);
             $Factory.Domain.CRUD("change", this.domain, params);
 			return false;
 		}, this));
@@ -265,9 +284,12 @@ $Factory.Domain.change = function ( e, data ) {
 			return false;
     	});
 
+
     $("<span>New domain name: <span/>")
     	.attr("class","prompt")
 		.append(input)
+		.append('&nbsp;Reason:&nbsp;')
+		.append(reason)
 		.append(change)
 		.append(cancel)
 		.appendTo("#"+this.element);
@@ -283,11 +305,21 @@ $Factory.Domain.confirm = function(question,element,callback) {
 			}
     );
 
+    var reason = $("<input/>")
+		.attr('value', '')
+		.attr('type', 'text')
+		.attr('name', 'reason')
+		.attr('size', 20)
+		.attr('id', 'wk-remove-setmain-reason');
+
+
     var yes = $("<a>[Yes]</a>").click(callback);
 
     $("<span><span/>")
 		.html(question)
 		.attr("class","prompt")
+		.append('&nbsp;Reason:&nbsp;')
+		.append(reason)
 		.append(yes)
 		.append(cancel)
 		.appendTo("#"+element);
@@ -299,7 +331,9 @@ $Factory.Domain.remove = function ( e, data ) {
 		this.element,
 		jQuery.proxy(
 			function(e) {
-			    $Factory.Domain.CRUD("remove", this.domain, "");
+				var reason = $( "#wk-remove-setmain-reason" ).val();
+				var params = "&reason=" + encodeURIComponent(reason);
+				$Factory.Domain.CRUD("remove", this.domain, params);
 				return false;
 		}, this)
 	);
@@ -312,7 +346,9 @@ $Factory.Domain.setmain = function ( e, data ) {
 			this.element,
 			jQuery.proxy(
 				function(e) {
-				    $Factory.Domain.CRUD("setmain", this.domain, "");
+					var reason = $( "#wk-remove-setmain-reason" ).val();
+					var params = "&reason=" + encodeURIComponent(reason);
+					$Factory.Domain.CRUD("setmain", this.domain, params);
 					return false;
 			}, this)
 	);
@@ -361,6 +397,7 @@ $Factory.Variable.submitChangeVariable = function ( e, data ) {
 
 	// For restoring to the original form afterwards.
     values += "&wiki=" + $Factory.city_id;
+    values += "&token=" + encodeURIComponent($Factory.token);
 
 	$.ajax({
     	type:"POST",
@@ -388,6 +425,8 @@ $Factory.Variable.filter = function ( e ) {
     values += "&wiki=" + $Factory.city_id;
 	values += "&string=" + $( "#wfOnlyWithString" ).val();
 
+	values += "&token=" + encodeURIComponent($Factory.token);
+
     $.ajax({
     	type:"POST",
     	dataType: "json",
@@ -409,6 +448,9 @@ $Factory.Variable.filter = function ( e ) {
 $Factory.Variable.clear = function ( e ) {
     $Factory.BusyCache(1);
     var params = "&cityid=" + $Factory.city_id;
+
+	params += "&token=" + encodeURIComponent($Factory.token);
+
 	$.ajax({
     	type:"POST",
     	dataType: "json",
@@ -429,6 +471,8 @@ $Factory.Variable.post = function (form, mode) {
 
    $Factory.Busy(1);
    var params = $("#" + form).serialize();
+
+	params += "&token=" + encodeURIComponent($Factory.token);
 
 	$.ajax({
 		type:"POST",
@@ -473,7 +517,7 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 	 	  	type:"POST",
 	 	  	dataType: "json",
 	 	  	url: ajaxpath,
-	 	  	data: "action=ajax&rs=axWFactoryTagCheck&tagName="+tagName,
+			data: "action=ajax&rs=axWFactoryTagCheck&tagName="+tagName+"&token="+encodeURIComponent($Factory.token),
 			success: function( oResponse ) {
 				var data = oResponse;
 				if( data.wikiCount == 0 ) {
@@ -535,7 +579,8 @@ $(function() {
 					<th>database</th>
 					<th>cluster</th>
 					<th>language</th>
-					<th>hub</th>
+					<th>category(legacy)</th>
+					<th>vertical</th>
 					<th>status</th>
 				</tr>
 			</thead>
@@ -547,6 +592,11 @@ $(function() {
 				<td><?php
 					$wgHub = WikiFactory::getCategory( $wiki->city_id );
 					if ($wgHub) echo "<acronym title=\"id:{$wgHub->cat_id}\">{$wgHub->cat_name}</acronym>";
+				?></td>
+				<td><?php
+					$factory = new WikiFactoryHub();
+					$wgHub = $factory->getWikiVertical( $wiki->city_id );
+					if ($wgHub) echo "<acronym title=\"id:{$wgHub['id']}\">{$wgHub['name']}</acronym>";
 				?></td>
 				<td data-status="<?php echo $wiki->city_public; ?>"><?php echo "<acronym title=\"{$wiki->city_public}\">{$statuses[ $wiki->city_public ]}</acronym>" ?></td>
 			</tr>
@@ -591,9 +641,6 @@ $(function() {
 			</li>
 			<li <?php echo ( $tab === "clog" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "clog", $tab, $wiki->city_id ); ?>
-			</li>
-			<li <?php echo ( $tab === "google" ) ? 'class="selected"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "google", $tab, $wiki->city_id ); ?>
 			</li>
 			<li <?php echo ( $tab === "close" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "close", $tab, $wiki->city_id ); ?>
@@ -683,11 +730,6 @@ $(function() {
 
 			case "findtags":
 				include_once( "form-tags-find.tmpl.php" );
-				break;
-
-		# GOOGLE
-			case "google":
-				include_once( "form-google.tmpl.php" );
 				break;
 
 		# CLOSE

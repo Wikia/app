@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group LyricFindTracking
+ */
 class LyricFindTrackingTest extends WikiaBaseTest {
 
 	const TEST_NAMESPACE_TRACKED = 666;
@@ -20,10 +23,11 @@ class LyricFindTrackingTest extends WikiaBaseTest {
 	 * @param $expectedResult bool expected result
 	 */
 	public function testPageIsTrackable($ns, $action, $exists, $expectedResult) {
-		$title = $this->mockClassWithMethods('Title', [
+		/** @var Title $title */
+		$title = $this->createConfiguredMock( Title::class, [
 			'getNamespace' => $ns,
-			'exists' => $exists
-		]);
+			'exists' => $exists,
+		] );
 
 		$request = new WebRequest();
 		$request->setVal('action', $action);

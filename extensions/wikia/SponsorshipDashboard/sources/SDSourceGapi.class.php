@@ -493,7 +493,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 
 		// Metric's names from DB
 		if ( isset( $aParams[ self::SD_PARAMS_GAPI_METRICS_NAMES ] ) ) {
-			$tmpMetricNames = unserialize( $aParams[ self::SD_PARAMS_GAPI_METRICS_NAMES ] );
+			$tmpMetricNames = unserialize( $aParams[ self::SD_PARAMS_GAPI_METRICS_NAMES ], [ 'allowed_classes' => false ] );
 			if ( is_array( $tmpMetricNames ) ){
 				foreach( $tmpMetricNames as $key => $val){
 					$this->setMetricName( $key, $val );

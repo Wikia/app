@@ -1,0 +1,12 @@
+.checkboxSwitches {
+	display: block;
+	font-size: small;
+}
+
+.checkboxSwitch::before {
+	content: "[ ";
+}
+
+.checkboxSwitch::after {
+	content: " ]";
+}

@@ -1,5 +1,5 @@
 <?php
-class ErrorController extends WikiaController {
+class ErrorController extends WikiaService {
 
 	public function executeIndex($errors) {
 		if (isset($errors['controller'])) unset ($errors['controller']);

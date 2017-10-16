@@ -198,6 +198,14 @@ $specialPageAliases['tr'] = array(
 	'MultipleUpload' => array( 'ÇokluYükleme' ),
 );
 
+// begin wikia change
+// VOLDEV-94
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'MultipleUpload' => array( 'Tải_lên_nhiều_tệp' ),
+);
+// end wikia change
+
 /** Cantonese (粵語) */
 $specialPageAliases['yue'] = array(
 	'MultipleUpload' => array( '上傳多個檔案' ),

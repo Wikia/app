@@ -1,0 +1,38 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cwlin0416",
+			"Mark85296341",
+			"Oapbtommy",
+			"Roc michael",
+			"Wrightbus",
+			"LNDDYL"
+		]
+	},
+	"semanticdrilldown-desc": "用於在語義數據之中導航的鑽取界面",
+	"specialpages-group-sd_group": "語義鑽取",
+	"browsedata": "瀏覽資料",
+	"sd_browsedata_choosecategory": "選擇一個分類",
+	"sd_browsedata_viewcategory": "檢視分類",
+	"sd_browsedata_docu": "點擊下面的一個或多個項目來縮小您的結果。",
+	"sd_browsedata_subcategory": "子類別",
+	"sd_browsedata_other": "其他",
+	"sd_browsedata_none": "無",
+	"sd_browsedata_filterbyvalue": "按此值篩選",
+	"sd_browsedata_filterbysubcategory": "按此子類別篩選",
+	"sd_browsedata_otherfilter": "顯示具有該篩選器另一個取值的頁面",
+	"sd_browsedata_nonefilter": "顯示沒有該篩選器的取值的頁面",
+	"sd_browsedata_or": "或者",
+	"sd_browsedata_removefilter": "刪除此篩選器",
+	"sd_browsedata_removesubcategoryfilter": "刪除此子類別篩選器",
+	"sd_browsedata_resetfilters": "重置篩選器",
+	"sd_browsedata_addanothervalue": "單擊箭頭來添加另一個取值",
+	"sd_browsedata_daterangestart": "開始：",
+	"sd_browsedata_daterangeend": "結束：",
+	"sd_browsedata_novalues": "該篩選器沒有任何取值",
+	"sd_createfilter_usepropertyvalues": "對該篩選器使用此屬性的所有取值",
+	"sd_createfilter_usecategoryvalues": "從該類別當中為篩選器獲取取值：",
+	"sd_createfilter_requirefilter": "在顯示該篩選器之前，要求選擇另一個篩選器：",
+	"sd-pageschemas-filter": "篩選器",
+	"sd-pageschemas-values": "取值"
+}

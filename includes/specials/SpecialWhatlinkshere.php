@@ -168,7 +168,7 @@ class SpecialWhatLinksHere extends SpecialPage {
 
 		// hook by Wikia, Bartek Lapinski 30.03.2009, for videos and stuff
 		// should be deprecated (1.19 merge by MoLi)
-		wfRunHooks( 'SpecialWhatlinkshere::beforeImageQuery', array( &$hideimages, &$plConds, &$tlConds, &$ilConds ) );
+		Hooks::run( 'SpecialWhatlinkshere::beforeImageQuery', array( &$hideimages, &$plConds, &$tlConds, &$ilConds ) );
 
 		if( $fetchlinks ) {
 			$options['ORDER BY'] = 'pl_from';
@@ -263,7 +263,7 @@ class SpecialWhatLinksHere extends SpecialPage {
 		
 		foreach ( $rows as $row ) {
 			/** Start of Wikia change @author nAndy (1.19 MoLi) */
-			wfRunHooks( 'SpecialWhatlinkshere::renderWhatLinksHereRow', array(&$row, &$level, &$defaultRendering) );
+			Hooks::run( 'SpecialWhatlinkshere::renderWhatLinksHereRow', array(&$row, &$level, &$defaultRendering) );
 			if( ! $defaultRendering ) {
 				$defaultRendering = true; # reset the flag (BAC-476)
 				continue;

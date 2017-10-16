@@ -13,7 +13,9 @@ class TorBlock {
 	 * @param $result
 	 * @return bool
 	 */
-	public static function onGetUserPermissionsErrorsExpensive( &$title, &$user, $action, &$result ) {
+	public static function onGetUserPermissionsErrorsExpensive(
+		Title $title, User $user, string $action, &$result
+	): bool {
 		global $wgTorAllowedActions;
 		if (in_array( $action, $wgTorAllowedActions)) {
 			return true;
@@ -90,7 +92,7 @@ class TorBlock {
 		return true;
 	}
 
-	public static function onAbuseFilterFilterAction( &$vars, $title ) {
+	public static function onAbuseFilterFilterAction( $vars, $title ): bool {
 		$vars->setVar( 'tor_exit_node', self::isExitNode() ? 1 : 0 );
 		return true;
 	}
@@ -150,6 +152,11 @@ class TorBlock {
 
 		global $wgTorIPs, $wgMemc;
 
+		// we want to trace when the memcache entry expires and we generate new
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'TorBlock::loadExitNodes' );
+		}
+
 		// Set loading key, to prevent DoS of server.
 
 		$wgMemc->set( 'mw-tor-list-status', 'loading', 300 );
@@ -170,7 +177,7 @@ class TorBlock {
 
 	public static function loadNodesForIP( $ip ) {
 		$url = 'https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip='.$ip;
-		$data = Http::get( $url, 'default', array( 'sslVerifyCert' => false ) );
+		$data = ExternalHttp::get( $url, 'default', array( 'sslVerifyCert' => false ) );
 		$lines = explode("\n", $data);
 
 		$nodes = array();
@@ -198,7 +205,7 @@ class TorBlock {
 	 * @param $user User
 	 * @return bool
 	 */
-	public static function onGetBlockedStatus( &$user ) {
+	public static function onGetBlockedStatus( User $user ): bool {
 		global $wgTorDisableAdminBlocks;
 		if ( $wgTorDisableAdminBlocks && self::isExitNode() && $user->mBlock && $user->mBlock->getType() != Block::TYPE_USER ) {
 			wfDebug( "User using Tor node. Disabling IP block as it was probably targetted at the tor node." );
@@ -210,7 +217,7 @@ class TorBlock {
 		return true;
 	}
 
-	public static function onAbortAutoblock( $autoblockip, &$block ) {
+	public static function onAbortAutoblock( $autoblockip, Block $block ): bool {
 		return !self::isExitNode( $autoblockip );
 	}
 

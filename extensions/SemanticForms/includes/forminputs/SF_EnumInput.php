@@ -19,33 +19,41 @@ abstract class SFEnumInput extends SFFormInput {
 		return array( 'enumeration', '_boo' );
 	}
 
+	public static function getOtherCargoTypesHandled() {
+		return array( 'Enumeration', 'Boolean' );
+	}
+
 	public static function getValuesParameters() {
 		$params = array();
 		$params[] = array(
 			'name' => 'values',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_values' )
+			'description' => wfMessage( 'sf_forminputs_values' )->text()
 		);
-		$params[] = array(
-			'name' => 'values from property',
-			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_valuesfromproperty' )
-		);
+		if ( defined( 'SMW_VERSION' ) ) {
+			$params[] = array(
+				'name' => 'values from property',
+				'type' => 'string',
+				'description' => wfMessage( 'sf_forminputs_valuesfromproperty' )->text()
+			);
+		}
 		$params[] = array(
 			'name' => 'values from category',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_valuesfromcategory' )
+			'description' => wfMessage( 'sf_forminputs_valuesfromcategory' )->text()
 		);
 		$params[] = array(
 			'name' => 'values from namespace',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_valuesfromnamespace' )
+			'description' => wfMessage( 'sf_forminputs_valuesfromnamespace' )->text()
 		);
-		$params[] = array(
-			'name' => 'values from concept',
-			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_valuesfromconcept' )
-		);
+		if ( defined( 'SMW_VERSION' ) ) {
+			$params[] = array(
+				'name' => 'values from concept',
+				'type' => 'string',
+				'description' => wfMessage( 'sf_forminputs_valuesfromconcept' )->text()
+			);
+		}
 		return $params;
 	}
 
@@ -55,7 +63,7 @@ abstract class SFEnumInput extends SFFormInput {
 		$params[] = array(
 			'name' => 'show on select',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_showonselect' )
+			'description' => wfMessage( 'sf_forminputs_showonselect' )->text()
 		);
 		return $params;
 	}

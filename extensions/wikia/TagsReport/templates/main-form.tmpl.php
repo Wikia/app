@@ -9,7 +9,7 @@
 <label>
 	<span style="vertical-align: middle;"><?= Xml::radio('target', $tag, ($tag == $mTag)); ?></span>
 	<span style="vertical-align: middle; font-family: monospace;" class="tagname"><?=$tag ?></span>
-	<span style="vertical-align: middle;" class="tagcount"><?=wfMsg('tagsreportpages', $cnt); ?></span>
+	<span style="vertical-align: middle;" class="tagcount"><?=wfMsgExt('tagsreportpages', 'parsemag', $cnt); ?></span>
 </label>
 </div>
 <? } ?>

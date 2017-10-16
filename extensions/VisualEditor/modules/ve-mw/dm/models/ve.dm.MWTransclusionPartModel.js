@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTransclusionPartModel class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,14 +9,14 @@
  * MediaWiki transclusion part model.
  *
  * @class
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  * @param {ve.dm.MWTransclusionModel} transclusion Transclusion
  */
 ve.dm.MWTransclusionPartModel = function VeDmMWTransclusionPartModel( transclusion ) {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.transclusion = transclusion;
@@ -25,14 +25,19 @@ ve.dm.MWTransclusionPartModel = function VeDmMWTransclusionPartModel( transclusi
 
 /* Inheritance */
 
-ve.mixinClass( ve.dm.MWTransclusionPartModel, ve.EventEmitter );
+OO.mixinClass( ve.dm.MWTransclusionPartModel, OO.EventEmitter );
+
+/* Events */
+
+/**
+ * @event change
+ */
 
 /* Methods */
 
 /**
  * Get transclusion part is in.
  *
- * @method
  * @returns {ve.dm.MWTransclusionModel} Transclusion
  */
 ve.dm.MWTransclusionPartModel.prototype.getTransclusion = function () {
@@ -50,8 +55,6 @@ ve.dm.MWTransclusionPartModel.prototype.getId = function () {
 
 /**
  * Remove part from transclusion.
- *
- * @method
  */
 ve.dm.MWTransclusionPartModel.prototype.remove = function () {
 	this.transclusion.removePart( this );
@@ -60,9 +63,17 @@ ve.dm.MWTransclusionPartModel.prototype.remove = function () {
 /**
  * Get serialized representation of transclusion part.
  *
- * @method
  * @returns {Mixed} Serialized representation, or undefined if empty
  */
 ve.dm.MWTransclusionPartModel.prototype.serialize = function () {
 	return undefined;
+};
+
+/**
+ * Get the wikitext for this part.
+ *
+ * @returns {string} Wikitext
+ */
+ve.dm.MWTransclusionPartModel.prototype.getWikitext = function () {
+	return '';
 };

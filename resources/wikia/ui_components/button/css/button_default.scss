@@ -1,8 +1,7 @@
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
+@import "skins/shared/color";
+@import "skins/shared/styles/sprite";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/gradient";
 
 // Primary & Secondary Wikia Buttons
 // These buttons are used everywhere on our wikis.
@@ -12,9 +11,10 @@ input[type="reset"],
 input[type="button"],
 .button,
 button {
-	@include border-radius(4px);
 	@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 	border: 1px solid $color-buttons;
+	border-radius: 4px;
+	box-sizing: content-box;
 	color: $color-button-text;
 	cursor: pointer;
 	display: inline-block;
@@ -26,6 +26,7 @@ button {
 	padding: 0 10px;
 	text-decoration: none;
 	white-space: nowrap;
+
 	&:hover {
 		@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
 		text-decoration: none;
@@ -68,7 +69,7 @@ button {
 	}
 	&.big {
 		font-size: 18px;
-		line-height: 40px;
+		line-height: 23px;
 		height: 40px;
 	}
 }

@@ -19,7 +19,7 @@ $wgSpecialPages[ "CategoryIntersection" ] = "SpecialCategoryIntersection";
 $wgExtensionMessagesFiles['CategoryIntersection'] = dirname( __FILE__ ) . '/SpecialCategoryIntersection.i18n.php';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CategoryIntersection',
-	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo', // TODO: Update with a link to appropriate extension info page (such as MediaWiki.org) if this extension gets committed upstream.
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialCategoryIntersection', // TODO: Update with a link to appropriate extension info page (such as MediaWiki.org) if this extension gets committed upstream.
 	'author' => '[http://www.seancolombo.com Sean Colombo]',
 	'descriptionmsg' => 'categoryintersection-desc',
 	'version' => '1.0',
@@ -45,8 +45,10 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 	public function getDocumentationUrl(){
 		// TODO: Ideally, we should create documentation for the extension on MediaWiki.org, then instead of this function, we should use a static member var (string) for the URL.
-		global $wgServer;
-		return $wgServer."/api.php";
+		//global $wgServer;
+		//return $wgServer."/api.php";
+		//As long as there is no documentation made by FANDOM
+		return 'https://www.mediawiki.org/wiki/Extension:CategoryIntersection';
 	}
 
 	/**

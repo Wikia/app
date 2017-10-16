@@ -87,7 +87,8 @@ var SponsorshipDashboard = function(){
 		//bindings
 		self.choiceContainer.find('input').add('#sponsorshipDashboardShowTrends').click(self.plotAccordingToChoices);
 
-		$('#sponsorshipDashboardDownloadChart').click(self.downloadChart);
+		$('#sponsorshipDashboardDownloadChartPNG').click(self.downloadChartPNG);
+        $('#sponsorshipDashboardDownloadChartCSV').click(self.downloadChartCSV);
 		
 		$('#placeholder' + self.chartId)
 			.bind('plothover', self.onPlotHover)
@@ -189,14 +190,148 @@ var SponsorshipDashboard = function(){
 		self.plotAccordingToChoices(true, borderTicks);
 	};
 
-	this.downloadChart = function(e) {
-		e.preventDefault();
-		var canvas = self.plot.getCanvas();
-		var imageData = canvas.toDataURL();
-		$.showModal('SponsorshipDashboard', '<div style="text-align: center"><img src="' + imageData + '" width="' + canvas.width + '" height="' + canvas.height + '"></div>');
-//		imageData = imageData.replace('image/png', 'image/octet-stream');
-//		document.location.href = imageData;
+	this.downloadChartPNG = function( e ) {
+
+        e.preventDefault();
+
+        var canvas = self.plot.getCanvas();
+
+        var imageData = canvas.toDataURL();
+		imageData = imageData.replace( 'image/png', 'image/octet-stream' );
+
+        self.downloadGeneratedContent( imageData, 'metrics.png' );
 	};
+
+    this.downloadChartCSV = function( e ) {
+
+        e.preventDefault();
+
+        var table = [ ];
+
+        var header = [ 'date', 'created' ];
+        table.push( header );
+
+        // Pick date bounds from UI
+        var datesInterval = self.getDatesInterval();
+
+        // Iterate over all existing data
+        for ( var i in self.fullTicks ) {
+
+            // Using existing data structure to get the date
+            var date = self.fullTicks[ i ][ 0 ];
+
+            // But pick only that points, which fits into specified dates interval
+            if ( self.intervalContainsDate( datesInterval, date ) ) {
+
+                // Looks like not very nice way of getting number of created Wikias
+                // but I am just reusing existing data structures
+                var index = self.fullTicks[ i ][ 1 ];
+                var createdWikias = self.data[ 0 ][ 'data' ][ index ][ 1 ];
+
+                var row = [ date, createdWikias ];
+
+                table.push( row );
+            }
+        }
+
+        var csvString = self.tableToCSVString( table );
+
+        self.downloadGeneratedContent( 'data:attachment/csv,' + csvString, 'metrics.csv' );
+    }
+
+    /**
+     * Returns object, which contains date bounds
+     * @returns object with fields: startDate, endDate, startDateAsInt, endDateAsInt. All values are strings
+     */
+    this.getDatesInterval = function() {
+
+        // Generating starting and ending date from existing UI controls
+        var startDate = $( '#sd-year-from' ).val() + '-' + $( '#sd-month-from' ).val();
+        var endDate = $( '#sd-year-to' ).val() + '-' + $( '#sd-month-to' ).val();
+        if ( !self.monthly ) {
+            startDate = startDate + '-' + $( '#sd-day-from' ).val();
+            endDate = endDate + '-' + $( '#sd-day-to' ).val();
+        }
+
+        var startDateAsInt = self.dateStringAsInt( startDate );
+        var endDateAsInt = self.dateStringAsInt( endDate );
+
+        return {
+            startDate : startDate,
+            endDate : endDate,
+            startDateAsInt : startDateAsInt,
+            endDateAsInt : endDateAsInt
+        };
+    }
+
+    /**
+     * Check, if given date fits into the given interval of dates
+     * @param datesInterval - must be produced by function self::getDatesInterval()
+     * @param date - string in format Y-m-d
+     * @returns {boolean}
+     */
+    this.intervalContainsDate = function( datesInterval, date ) {
+        var startDateAsInt = datesInterval[ 'startDateAsInt' ];
+        var endDateAsInt = datesInterval[ 'endDateAsInt' ];
+        var dateAsInt = self.dateStringAsInt( date );
+
+        return ( dateAsInt >= startDateAsInt ) && ( dateAsInt <= endDateAsInt );
+    }
+
+    /**
+     * "2014-07-14" -> "20140714"
+     * @param dateString in format Y-m-d
+     * @returns string without dashes
+     */
+    this.dateStringAsInt = function( dateString ) {
+        // Here described alternative ways of transforming date to number:
+        // http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript
+        // But, for consistency with existing code - the following solution is used:
+        return dateString.replace( /-/gi, '' );
+    }
+
+    /**
+     * Transforms given table to CSV string
+     * @param table - 2 dimensional array, where all rows have the same length
+     * @returns string in CSV format
+     */
+    this.tableToCSVString = function( table ) {
+        var csvRows = [ ];
+
+        var comma = ',';
+
+        for( var i = 0, l = table.length; i < l; ++i ){
+            var row = table[ i ];
+            var csvRow = row.join( comma );
+            csvRows.push( csvRow );
+        }
+
+        var rowsSeparator = "%0A";
+
+        var csvString = csvRows.join( rowsSeparator );
+
+        return csvString;
+    }
+
+    /**
+     * Ability to download content, which serialized to string.
+     * Using HTML5 download attribute, which allows to define name of downloaded content.
+     * see: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction/17836529#17836529
+     *
+     * @param content - string of serialized data
+     * @param name - name of downloaded file
+     */
+    this.downloadGeneratedContent = function( content, name ) {
+
+        var a = document.createElement( 'a' );
+        a.href = content;
+        a.target = '_blank';
+        a.download = name;
+
+        document.body.appendChild( a );
+
+        a.click();
+    }
 
 	this.plotAccordingToChoices = function(stopRedrawOverview, borderTicks) {
 		self.log('plotAccordingToChoices');

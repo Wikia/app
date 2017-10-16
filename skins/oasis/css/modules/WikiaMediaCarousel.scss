@@ -1,7 +1,6 @@
-@import "../mixins/border-radius";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
-@import "../core/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/color";
 
 @mixin arrow-style {
 	border-style: solid;
@@ -14,9 +13,9 @@
 	position: relative;
 	width: 480px;
 	.previous, .next {
-		@include border-radius(4px);
 		@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
 		border: 1px solid #ccc;
+		border-radius: 4px;
 		height: 64px;
 		position: absolute;
 		width: 32px;

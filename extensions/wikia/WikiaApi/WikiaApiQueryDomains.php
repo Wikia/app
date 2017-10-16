@@ -15,7 +15,6 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	 * constructor
 	 */
 	public function __construct($query, $moduleName) {
-		$this->defLimit = 1000;
 		parent :: __construct($query, $moduleName, "wk");
 	}
 
@@ -28,7 +27,9 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	 * main function
 	 */
 	public function execute() {
-		$wikia = null;
+		$wikia = false;
+		$to = false;
+		$from = false;
 
 		extract( $this->extractRequestParams() );
 
@@ -59,16 +60,35 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			if ( !empty($from) ) {
 				if ($from && is_int($from)) $this->addWhere('city_id >= '.intval($from));
 			}
+
+			if ( !empty( $from ) && !empty ( $to ) ) {
+				$settings = $this->getAllowedParams();
+
+				if ( $this->getMain()->canApiHighLimits() ) {
+					$maxLimit = $settings['limit'][ApiBase::PARAM_MAX2];
+				} else {
+					$maxLimit = $settings['limit'][ApiBase::PARAM_MAX];
+				}
+
+				$requested = 1 + $to - $from;
+				if ( $requested > $maxLimit ) {
+					$this->setWarning( "Count of results must not be over $maxLimit (set to $requested)" );
+				}
+				else if ( $requested < 1 ) {
+					$this->dieUsage( 'wkto should be equal or greater than wkfrom', '' );
+				}
+
+				$limit = min( $requested, $maxLimit );
+			}
 		}
 
-		if (!empty($lang)) {
-			global $wgLanguageNames;
-			if (!array_key_exists($lang, $wgLanguageNames)) {
+		if ( !empty( $lang ) ) {
+			if ( !Language::isValidBuiltInCode( $lang ) ) {
 				// FIXME add proper error msg
-				$this->dieUsageMsg(array("invalidtitle", $lang));
+				$this->dieUsageMsg( array( 'invalidtitle', $lang ) );
 			}
-		
-			$this->addWhereFld("city_lang", $lang);
+
+			$this->addWhereFld( 'city_lang', $lang );
 		}
 
 		if ( isset( $countonly ) ) {
@@ -86,6 +106,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		} else {
 			$this->addFields(array('city_id', 'city_url', 'city_lang'));
 			$this->addOption( "ORDER BY ", "city_id" );
+			$this->addOption( 'LIMIT', $limit );
 
 			#--- result builder
 			$data = array();
@@ -119,46 +140,53 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	}
 
 	public function getAllowedParams() {
-		return array (
-			"wikia" => array(
+		return [
+			"wikia" => [
 				ApiBase :: PARAM_TYPE => 'integer'
-			),
-			"active" => array(
+			],
+			"active" => [
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MAX => 1,
 				ApiBase :: PARAM_MIN => 0,
-			),
-			"from" => array(
+			],
+			"from" => [
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
 				ApiBase :: PARAM_DFLT => 1,
-			),
-			"to" => array(
+			],
+			"to" => [
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
-				ApiBase :: PARAM_DFLT => $this->defLimit,
-			),
-			"countonly" => array(
+			],
+			"countonly" => [
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
-			),
+			],
 			"lang" => null,
-		);
+			'limit' => [
+				ApiBase::PARAM_TYPE => 'limit',
+				ApiBase::PARAM_DFLT => 10,
+				ApiBase::PARAM_MIN => 1,
+				ApiBase::PARAM_MAX => 100,
+				ApiBase::PARAM_MAX2 => 1000
+			]
+		];
 	}
 
 	public function getParamDescription() {
-		return array (
+		return [
 			"wikia" => "Identifier in Wiki Factory",
 			"active" => "Get only active domains [optional]",
 			"from" => "Begin of range - identifier in Wiki Factory",
 			"to" => "end of range - identifier in Wiki Factory",
 			"lang" => "Wiki language",
+			'limit' => 'How many results to return - default 10, max 100 for standard user, 1000 for bots',
 			"countonly" => "return only number of Wikis"
-		);
+		];
 	}
 
 	public function getExamples() {
-		return array (
+		return [
 			"api.php?action=query&list=wkdomains",
 			"api.php?action=query&list=wkdomains&wkactive=1",
 			"api.php?action=query&list=wkdomains&wkwikia=177",
@@ -166,6 +194,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"api.php?action=query&list=wkdomains&wkfrom=10000&wkto=15000&wklang=de",
 			"api.php?action=query&list=wkdomains&wkcountonly=1",
 			"api.php?action=query&list=wkdomains&wkactive=1&wkcountonly=1",
-		);
+			'api.php?action=query&list=wkdomains&wkactive=1&wklimit=25',
+		];
 	}
-};
+}

@@ -22,9 +22,12 @@ if (!defined('MEDIAWIKI')) {
 	exit( 1 ) ;
 }
 
-$wgAvailableRights[] = 'WhereIsExtension';
-$wgGroupPermissions['staff']['WhereIsExtension'] = true;
-$wgGroupPermissions['util']['WhereIsExtension'] = true;
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'WhereIsExtension',
+	'author' => 'Maciej Błaszkowski (Marooned) <marooned@wikia.com>',
+	'descriptionmsg' => 'whereisextension-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WhereIsExtension',
+);
 
 $wgExtensionMessagesFiles['WhereIsExtension'] = dirname(__FILE__) . '/SpecialWhereIsExtension.i18n.php';
 

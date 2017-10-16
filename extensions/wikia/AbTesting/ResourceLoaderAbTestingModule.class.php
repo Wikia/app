@@ -34,4 +34,13 @@ class ResourceLoaderAbTestingModule extends ResourceLoaderModule {
 		return $modifiedTime;
 	}
 
+	/**
+	 * Load abtesting module from the shared domain
+	 *
+	 * @return String
+	 */
+	public function getSource() {
+		return 'common';
+	}
+
 }

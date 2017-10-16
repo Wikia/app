@@ -138,6 +138,11 @@ class FileDeleteForm {
 		/* @var LocalFile $file */
 		if( $oldimage ) {
 			$page = null;
+
+			// Wikia change @author Ryba
+			$oi_timestamp = OldLocalFile::newFromArchiveName( $title, RepoGroup::singleton()->getLocalRepo(), $oldimage )->getTimestamp();
+			// Wikia change end
+
 			$status = $file->deleteOld( $oldimage, $reason, $suppress );
 			if( $status->ok ) {
 				// Need to do a log item
@@ -147,6 +152,10 @@ class FileDeleteForm {
 					$logComment .= wfMsgForContent( 'colon-separator' ) . $reason;
 				}
 				$log->addEntry( 'delete', $title, $logComment );
+
+				// Wikia change @author Ryba
+				Hooks::run( 'OldFileDeleteComplete', [ $title, $oi_timestamp ] );
+				// Wikia change end
 			}
 		} else {
 			$status = Status::newFatal( 'cannotdelete',
@@ -173,7 +182,7 @@ class FileDeleteForm {
 		}
 
 		if ( $status->isOK() ) {
-			wfRunHooks( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
+			Hooks::run( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
 		}
 
 		return $status;
@@ -197,7 +206,7 @@ class FileDeleteForm {
 			$suppress = '';
 		}
 
-		$checkWatch = $wgUser->getBoolOption( 'watchdeletion' ) || $this->title->userIsWatching();
+		$checkWatch = (bool)$wgUser->getGlobalPreference( 'watchdeletion' ) || $this->title->userIsWatching();
 		$form = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getAction(),
 			'id' => 'mw-img-deleteconfirm' ) ) .
 			Xml::openElement( 'fieldset' ) .

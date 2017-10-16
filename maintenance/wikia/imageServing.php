@@ -41,6 +41,20 @@ class ImageServingScript extends Maintenance {
 
 		$this->output("\nImages found: " . count($images) . "\n\n");
 		$this->output(implode("\n", $images) . "\n");
+
+		// get filtered list of images
+		global $wgAllowMemcacheReads;
+		$wgAllowMemcacheReads = false;
+
+		$im = new ImageServing( array( $title->getArticleID() ), 32, 32 );
+		$ret = $im->getImages(20);
+		$images = reset($ret);
+
+		$this->output("\nImages list as returned by ImageServing (min size: 32x32 px):\n");
+
+		foreach($images as $image) {
+			$this->output("* {$image['name']}\n");
+		}
 	}
 }
 

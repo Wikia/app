@@ -31,13 +31,13 @@ $wgExtensionCredits['other'][] =
 		),
 		'descriptionmsg' => 'abtesting-desc',
 		'version' => '1.0',
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AbTesting',
 	);
 
 /**
  * classes
  */
 $wgAutoloadClasses['AbTesting'] = "{$dir}/AbTesting.class.php";
-$wgAutoloadClasses['AbExperiment'] = "{$dir}/AbTesting.class.php";
 $wgAutoloadClasses['AbTestingData'] = "{$dir}/AbTestingData.class.php";
 $wgAutoloadClasses['ResourceLoaderAbTestingModule'] = "{$dir}/ResourceLoaderAbTestingModule.class.php";
 $wgAutoloadClasses['SpecialAbTestingController'] = "{$dir}/SpecialAbTestingController.class.php";
@@ -50,6 +50,7 @@ $wgExtensionMessagesFiles['AbTesting'] = "{$dir}/AbTesting.i18n.php";
 
 // Embed the experiment/treatment config in the head scripts.
 $wgHooks['WikiaSkinTopScripts'][] =  'AbTesting::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopShortTTLModules'][] =  'AbTesting::onWikiaSkinTopShortTTLModules';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
 // Add js code in Oasis
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AbTesting::onOasisSkinAssetGroupsBlocking';
@@ -57,6 +58,12 @@ $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AbTesting::onOasisSkinAssetGroupsB
 // Register Resource Loader module
 $wgResourceModules['wikia.ext.abtesting'] = array(
 	'class' => 'ResourceLoaderAbTestingModule',
+);
+
+$wgResourceModules['wikia.ext.abtest'] = array(
+	'scripts' => array(
+		'extensions/wikia/AbTesting/js/AbTest.js',
+	)
 );
 
 $wgResourceModules['wikia.ext.abtesting.edit.styles'] = array(
@@ -91,9 +98,3 @@ $wgResourceModules['wikia.ext.abtesting.edit'] = array(
 
 $wgSpecialPages[ 'AbTesting'] = 'SpecialAbTestingController';
 
-
-/*
- * permissions setup
- */
-$wgGroupPermissions['*']['abtestpanel'] = false;
-$wgGroupPermissions['staff']['abtestpanel'] = true;

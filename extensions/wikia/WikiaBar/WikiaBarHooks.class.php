@@ -62,9 +62,10 @@ class WikiaBarHooks {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 		if( $app->wg->user->isAnon() ) {
 			if (
-				RequestContext::getMain()->getSkin()->getSkinName() == 'oasis'
+				($skin == 'oasis')
 				&& $app->wg->request->getText('action', 'view') == 'view'
 				&& array_search($app->wg->dBname, self::$PROHIBITED_DBNAMES) === FALSE
 			) {

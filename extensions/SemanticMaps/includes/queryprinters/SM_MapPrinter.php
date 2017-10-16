@@ -2,12 +2,12 @@
 
 /**
  * Query printer for maps. Is invoked via SMMapper.
- * Can be overriden per service to have custom output.
+ * Can be overridden per service to have custom output.
  *
  * @file SM_MapPrinter.php
  * @ingroup SemanticMaps
  *
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class SMMapPrinter extends SMWResultPrinter {
@@ -31,13 +31,11 @@ class SMMapPrinter extends SMWResultPrinter {
 	 * 
 	 * @param $format String
 	 * @param $inline
-	 * @param $service iMappingService
 	 */
-	public function __construct( $format, $inline, iMappingService $service ) {
-		$this->service = $service;
+	public function __construct( $format, $inline = true ) {
+		$this->service = MapsMappingServices::getValidServiceInstance( $format, 'qp' );
 		
 		parent::__construct( $format, $inline );
-		$this->useValidator = true;
 	}
 
 	/**
@@ -49,31 +47,22 @@ class SMMapPrinter extends SMWResultPrinter {
 	 */
 	protected function getParameterInfo() {
 		global $egMapsDefaultLabel, $egMapsDefaultTitle;
-		global $smgQPForceShow, $smgQPShowTitle, $smgQPTemplate;
+		global $smgQPForceShow, $smgQPShowTitle, $smgQPTemplate, $smgQPHideNamespace;
 		
-		$params = MapsMapper::getCommonParameters();
-		$this->service->addParameterInfo( $params );		
+		$params = ParamDefinition::getCleanDefinitions( MapsMapper::getCommonParameters() );
+
+		$this->service->addParameterInfo( $params );
 		
 		$params['zoom']->setDefault( false );		
 		$params['zoom']->setDoManipulationOfDefault( false );		
 		
 		$params['staticlocations'] = new ListParameter( 'staticlocations', ';' );
-		$params['staticlocations']->addAliases( 'locations' );
+		$params['staticlocations']->addAliases( 'locations', 'points' );
 		$params['staticlocations']->addCriteria( new CriterionIsLocation( '~' ) );
-		$params['staticlocations']->addManipulations( new MapsParamLocation( '~' ) );		
+		$params['staticlocations']->addManipulations( new MapsParamLocation( '~' ) );
 		$params['staticlocations']->setDefault( array() );
 		$params['staticlocations']->setMessage( 'semanticmaps-par-staticlocations' );
-		
-		$params['centre'] = new Parameter( 'centre' );
-		$params['centre']->setDefault( false );
-		$params['centre']->addAliases( 'center' );
-		$params['centre']->addCriteria( new CriterionIsLocation() );
-		$params['centre']->setDoManipulationOfDefault( false );
-		$manipulation = new MapsParamLocation();
-		$manipulation->toJSONObj = true;
-		$params['centre']->addManipulations( $manipulation );
-		$params['centre']->setMessage( 'semanticmaps-par-centre' );
-		
+
 		$params['icon'] = new Parameter(
 			'icon',
 			Parameter::TYPE_STRING,
@@ -84,6 +73,17 @@ class SMMapPrinter extends SMWResultPrinter {
 			)
 		);
 		$params['icon']->setMessage( 'maps-displaypoints-par-icon' );
+
+		$params['visitedicon'] = new Parameter(
+			'visitedicon',
+			Parameter::TYPE_STRING,
+			'',
+			array(),
+			array(
+				New CriterionNotEmpty()
+			)
+		);
+		$params['visitedicon']->setMessage( 'maps-displaymap-par-visitedicon' );
 		
 		$params['forceshow'] = new Parameter(
 			'forceshow',
@@ -100,7 +100,15 @@ class SMMapPrinter extends SMWResultPrinter {
 			array( 'show title' )
 		);
 		$params['showtitle']->setMessage( 'semanticmaps-par-showtitle' );
-		
+
+		$params['hidenamespace'] = new Parameter(
+			'hidenamespace',
+			Parameter::TYPE_BOOLEAN,
+			$smgQPHideNamespace,
+			array( 'hide namespace' )
+		);
+		$params['hidenamespace']->setMessage( 'semanticmaps-par-hidenamespace' );
+
 		$params['template'] = new Parameter(
 			'template',
 			Parameter::TYPE_STRING,
@@ -127,9 +135,43 @@ class SMMapPrinter extends SMWResultPrinter {
 			array( 'text' )
 		);
 		$params['label']->setMessage( 'maps-displaypoints-par-label' );
+
+		$params['lines'] = array(
+			'default' => array(),
+			'message' => 'maps-displaypoints-par-lines', // TODO
+			'criteria' => new CriterionLine( '~' ),
+			'manipulations' => new MapsParamLine( '~' ),
+			'delimiter' => ';',
+			'islist' => true,
+		);
+
+		$params['polygons'] = array(
+			'default' => array(),
+			'message' => 'maps-displaypoints-par-polygons', // TODO
+			'criteria' => new CriterionPolygon( '~' ), // TODO
+			'manipulations' => new MapsParamPolygon( '~' ), // TODO
+			'delimiter' => ';',
+			'islist' => true,
+		);
+
+		$params['circles'] = array(
+			'default' => array(),
+			'message' => 'maps-displaypoints-par-circles', // TODO
+			'manipulations' => new MapsParamCircle( '~' ), // TODO
+			'delimiter' => ';',
+			'islist' => true,
+		);
+
+		$params['rectangles'] = array(
+			'default' => array(),
+			'message' => 'maps-displaypoints-par-rectangles', // TODO
+			'manipulations' => new MapsParamRectangle( '~' ), // TODO
+			'delimiter' => ';',
+			'islist' => true,
+		);
 		
 		return $params;
-	}	
+	}
 	
 	/**
 	 * Builds up and returns the HTML for the map, with the queried coordinate data on it.
@@ -148,8 +190,9 @@ class SMMapPrinter extends SMWResultPrinter {
 			$queryHandler = new SMQueryHandler( $res, $outputmode );
 			$queryHandler->setShowSubject( $params['showtitle'] );
 			$queryHandler->setTemplate( $params['template'] );
+			$queryHandler->setHideNamespace( $params['hidenamespace'] );
 			
-			$this->handleMarkerData( $params, $queryHandler->getLocations() );
+			$this->handleMarkerData( $params, $queryHandler );
 			$locationAmount = count( $params['locations'] );
 			
 			if ( $params['forceshow'] || $locationAmount > 0 ) {
@@ -175,83 +218,63 @@ class SMMapPrinter extends SMWResultPrinter {
 				foreach ( $this->service->getResourceModules() as $resourceModule ) {
 					SMWOutputs::requireResource( $resourceModule );
 				}
-				
-				$result = $this->getMapHTML( $params, $wgParser, $mapName ) . $this->getJSON( $params, $wgParser, $mapName );
-				
-				return array(
-					$result,
-					'noparse' => true, 
-					'isHTML' => true
-				);				
+
+				if ( array_key_exists( 'source', $params ) ) {
+					unset( $params['source'] );
+				}
+
+				return $this->getMapHTML( $params, $wgParser, $mapName );
 			}
 			else {
-				return '';
+				return $params['default'];
 			}
 		}
 		else {
 			return $this->fatalErrorMsg;
 		}
 	}
-	
+
 	/**
 	 * Returns the HTML to display the map.
-	 * 
-	 * @since 1.0
-	 * 
+	 *
+	 * @since 1.1
+	 *
 	 * @param array $params
 	 * @param Parser $parser
 	 * @param string $mapName
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function getMapHTML( array $params, Parser $parser, $mapName ) {
-		return Html::element(
+		return Html::rawElement(
 			'div',
 			array(
 				'id' => $mapName,
 				'style' => "width: {$params['width']}; height: {$params['height']}; background-color: #cccccc; overflow: hidden;",
+				'class' => 'maps-map maps-' . $this->service->getName()
 			),
-			wfMsg( 'maps-loading-map' )
-		);
-	}	
-	
-	/**
-	 * Returns the JSON with the maps data.
-	 *
-	 * @since 1.0
-	 *
-	 * @param array $params
-	 * @param Parser $parser
-	 * @param string $mapName
-	 * 
-	 * @return string
-	 */	
-	protected function getJSON( array $params, Parser $parser, $mapName ) {
-		$object = $this->getJSONObject( $params, $parser );
-		
-		if ( $object === false ) {
-			return '';
-		}
-		
-		return Html::inlineScript(
-			MapsMapper::getBaseMapJSON( $this->service->getName() )
-			. "mwmaps.{$this->service->getName()}.{$mapName}=" . json_encode( $object ) . ';'
+			wfMessage( 'maps-loading-map' )->inContentLanguage()->escaped() .
+				Html::element(
+					'div',
+					array( 'style' => 'display:none', 'class' => 'mapdata' ),
+					FormatJson::encode( $this->getJSONObject( $params, $parser ) )
+				)
 		);
 	}
-	
+
 	/**
 	 * Returns a PHP object to encode to JSON with the map data.
 	 *
-	 * @since 1.0
+	 * @since 1.1
 	 *
 	 * @param array $params
 	 * @param Parser $parser
-	 * 
+	 *
 	 * @return mixed
-	 */	
+	 */
 	protected function getJSONObject( array $params, Parser $parser ) {
 		return $params;
-	}	
+	}
 	
 	/**
 	 * Converts the data in the coordinates parameter to JSON-ready objects.
@@ -260,19 +283,21 @@ class SMMapPrinter extends SMWResultPrinter {
 	 * @since 1.0
 	 * 
 	 * @param array &$params
-	 * @param array $queryLocations
+	 * @param $queryHandler
 	 */
-	protected function handleMarkerData( array &$params, array $queryLocations ) {
+	protected function handleMarkerData( array &$params, $queryHandler ) {
+		$queryShapes = $queryHandler->getShapes();
 		global $wgParser;
 
 		$parser = version_compare( $GLOBALS['wgVersion'], '1.18', '<' ) ? $wgParser : clone $wgParser;
 		
 		$iconUrl = MapsMapper::getFileUrl( $params['icon'] );
+		$visitedIconUrl = MapsMapper::getFileUrl( $params['visitedicon'] );
 		$params['locations'] = array();
 
 		foreach ( $params['staticlocations'] as $location ) {
 			if ( $location->isValid() ) {
-				$jsonObj = $location->getJSONObject( $params['title'], $params['label'], $iconUrl );
+				$jsonObj = $location->getJSONObject( $params['title'], $params['label'], $iconUrl, '', '', $visitedIconUrl );
 				
 				$jsonObj['title'] = $parser->parse( $jsonObj['title'], $parser->getTitle(), new ParserOptions() )->getText();
 				$jsonObj['text'] = $parser->parse( $jsonObj['text'], $parser->getTitle(), new ParserOptions() )->getText();
@@ -285,31 +310,26 @@ class SMMapPrinter extends SMWResultPrinter {
 			}
 		}
 		
-		foreach ( $queryLocations as $location ) {
+		foreach ( $queryShapes['locations'] as $location ) {
 			if ( $location->isValid() ) {
-				$jsonObj = $location->getJSONObject( $params['title'], $params['label'], $iconUrl );
+				$jsonObj = $location->getJSONObject( $params['title'], $params['label'], $iconUrl, '', '', $visitedIconUrl );
 				
 				$jsonObj['title'] = strip_tags( $jsonObj['title'] );
 				
 				$params['locations'][] = $jsonObj;				
 			}
 		}
-		
 		unset( $params['staticlocations'] );
-	}	
-	
-	/**
-	 * Reads the parameters and gets the query printers output.
-	 * 
-	 * @param SMWQueryResult $results
-	 * @param array $params
-	 * @param $outputmode
-	 * 
-	 * @return array
-	 */
-	public final function getResult( SMWQueryResult $results, array $params, $outputmode ) {
-		$this->handleParameters( $params, $outputmode );
-		return $this->getResultText( $results, SMW_OUTPUT_HTML );
+		foreach ( $queryShapes['lines'] as $line ) {
+			$jsonObj = $line->getJSONObject( $params['title'], $params['label'] );
+			$params['lines'][] = $jsonObj;				
+		}
+		foreach ( $queryShapes['polygons'] as $polygon ) {
+			$jsonObj = $polygon->getJSONObject( $params['title'], $params['label'] );
+			$params['polygons'][] = $jsonObj;				
+		}
+
+
 	}
 
 	/**
@@ -318,7 +338,7 @@ class SMMapPrinter extends SMWResultPrinter {
 	 * @return string
 	 */
 	public final function getName() {
-		return wfMsg( 'maps_' . $this->service->getName() );
+		return wfMessage( 'maps_' . $this->service->getName() )->text();
 	}
 	
 	/**
@@ -338,27 +358,4 @@ class SMMapPrinter extends SMWResultPrinter {
 
 		return $params;
     }
-    
-    /**
-     * Takes in an element of the Parameter::TYPE_ enum and turns it into an SMW type (string) indicator.
-     * 
-     * @since 1.0
-     * 
-     * @param Parameter::TYPE_ $type
-     * 
-     * @return string
-     */
-    protected function getMappedParamType( $type ) {
-    	static $typeMap = array(
-    		Parameter::TYPE_STRING => 'string',
-    		Parameter::TYPE_BOOLEAN => 'boolean',
-    		Parameter::TYPE_CHAR => 'int',
-    		Parameter::TYPE_FLOAT => 'int',
-    		Parameter::TYPE_INTEGER => 'int',
-    		Parameter::TYPE_NUMBER => 'int',
-    	);
-    	
-    	return $typeMap[$type];
-    }
-	
 }

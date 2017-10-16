@@ -304,7 +304,13 @@ class CategoryHelper {
 		wfProfileIn( __METHOD__ );
 
 		$args = func_get_args();
-		$categories = call_user_func_array( 'array_merge', $args );
+		// Make sure no argument is unsuitable for array_merge
+		$categoryArrays = [];
+		foreach ( $args as $argument ) {
+			$categoryArrays [] = (array)$argument;
+		}
+
+		$categories = call_user_func_array( 'array_merge', $categoryArrays );
 
 		$categoryNames = array();
 		$uniqueCategories = array();

@@ -1,0 +1,67 @@
+/*
+	Stylesheet for the value filter
+*/
+
+.filtered-filters .filtered-distance { 
+	overflow: visible;
+	border: 1px solid #aaa;
+	padding: 1em 1em 0.5em;
+	margin: 1em;
+}
+
+.filtered-filters .filtered-distance .filtered-distance-label {
+	height: 0;
+}
+
+.filtered-filters .filtered-distance .filtered-distance-label span { 
+	background-color: white;
+	font-weight: bold;
+
+	position: relative;
+	top: -1.8em;
+	left: 0;
+	
+	padding: 0 1em;
+}
+
+.filtered-filters .filtered-distance .filtered-distance-slider-cell { 
+	width: 100%;
+}
+
+.filtered-filters .filtered-distance .ui-slider-handle {
+	outline: none;
+	text-decoration: none;
+	width: 0;
+	padding: 0 0.6em;
+}
+
+.filtered-filters .filtered-distance .filtered-distance-readout { 
+	margin: 0;
+	text-align: center;
+	position: relative;
+	top: 10px;
+	left: -50px;
+	width: 100px;
+	color: #000;
+}
+
+.filtered-filters .filtered-distance .filtered-distance-table { 
+	border-collapse: collapse;
+}
+
+.filtered-filters .filtered-distance .filtered-distance-slider-cell { 
+	width: 100%;
+}
+
+.filtered-filters .filtered-distance .filtered-distance-slider { 
+	border: 1px solid #aaa;
+	border-radius: 3px;
+	background: #f1f2ff;
+	margin: 0 1em;
+}
+
+.filtered-filters .filtered-distance .filtered-distance-unit-cell { 
+	height: 2.2em;
+	text-align: center;
+	vertical-align: bottom;
+}

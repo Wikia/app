@@ -1,0 +1,25 @@
+/**
+ * Fixes colorization of table rows on Special:AllMessages on dark wikis
+ */
+@import "skins/shared/color";
+
+$background-default-message: $color-page;
+$background-current-message: darken($background-default-message, 15%);
+
+/* to override core MW's overly verbose selectors */
+#mw-content-text #mw-allmessagestable tr.allmessages-customised {
+	td.am_default {
+		background-color: $background-default-message;
+	}
+
+	td.am_actual {
+		background-color: $background-current-message;
+	}
+
+	&:hover {
+		td.am_default,
+		td.am_actual {
+			background-color: lighten($background-default-message, 15%);
+		}
+	}
+}

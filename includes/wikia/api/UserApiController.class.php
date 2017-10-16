@@ -24,9 +24,12 @@ class UserApiController extends WikiaApiController {
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
 		$ids =  $this->request->getVal( 'ids' );
+
 		if ( empty( $ids ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new InvalidParameterApiException( 'ids' );
 		}
+
 		$ids = explode( ',', trim( $ids ) );
 		$size = $this->request->getInt( 'size', static::AVATAR_DEFAULT_SIZE );
 
@@ -34,29 +37,45 @@ class UserApiController extends WikiaApiController {
 		$ids = array_slice( $ids, 0, static::USER_LIMIT );
 		//users are cached inside the service
 		$users = (new UserService())->getUsers( $ids );
+
 		$items = array();
+
 		foreach ( $users as $user ) {
+			$userName = $user->getName();
+			$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $user ) )->getTypesForUser();
 
 			$item = array(
 				'user_id' => $user->getId(),
 				'title' => $user->getTitleKey(),
-				'name' => $user->getName(),
-				'url' => AvatarService::getUrl( $user->getName() ),
-				'numberofedits' => $user->getEditCountLocal()
+				'name' => $userName,
+				'url' => AvatarService::getUrl( $userName ),
+				'numberofedits' => (int) $user->getEditCount()
 			);
+
+			if ( !empty( $powerUserTypes ) ) {
+				$item['poweruser_types'] = $powerUserTypes;
+			}
+
 			//add avatar url if size !== 0
 			if ( $size > 0 ) {
 				$item[ 'avatar' ] = AvatarService::getAvatarUrl( $user, $size );
 			}
+
 			$items[] = $item;
 		}
+
 		if ( !empty( $items ) ) {
-			$this->response->setVal( 'items', $items );
-			$this->response->setVal( 'basepath', $this->wg->Server );
+
+			$this->setResponseData(
+				[ 'basepath' => $this->wg->Server, 'items' => $items ],
+				[ 'imgFields'=> 'avatar', 'urlFields' => [ 'avatar', 'url' ] ],
+				WikiaResponse::CACHE_STANDARD
+			);
+
 		} else {
+			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException();
 		}
 		wfProfileOut( __METHOD__ );
 	}
-
 }

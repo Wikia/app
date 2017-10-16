@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="cite-web" style="opacity:0.75;fill:white;">
+        <path id="laptop" d="M22.78 19.46l-1.78-2.46v-12h-18v12l-1.757 2.463c-.252.286-.314.695-.157 1.043.157.347.533.494.914.494h20c.382 0 .783-.148.94-.496.156-.348.093-.758-.16-1.044zm-18.78-.46l1-2v-10h14v10l1 2h-16z"/>
+        <path id="window" d="M7 17h10v-8h-10v8zm2-2v-3h6v3h-6z"/>
+    </g>
+</svg>

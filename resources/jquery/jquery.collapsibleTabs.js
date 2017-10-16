@@ -112,6 +112,10 @@
 			$moving.detach().insertAfter( data.prevElement ).data( 'collapsibleTabsSettings', data );
 			dataExp.shifting = false;
 			$.collapsibleTabs.handleResize();
+
+			// Wikia change - trigger scroll to lazy-load any images
+			var scrollEvent = new CustomEvent('scroll');
+			window.dispatchEvent(scrollEvent);
 		}
 	};
 } )( jQuery );

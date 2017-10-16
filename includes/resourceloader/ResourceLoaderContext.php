@@ -212,6 +212,10 @@ class ResourceLoaderContext {
 		return $this->version;
 	}
 
+	public function getSassParams() {
+		return $this->sassParams;
+	}
+
 	/**
 	 * @return bool
 	 */

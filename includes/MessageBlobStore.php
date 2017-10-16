@@ -44,6 +44,26 @@ class MessageBlobStore {
 			wfProfileOut( __METHOD__ );
 			return array();
 		}
+
+		/* Wikia change begin: @author mklucsarits */
+		// Caching messages in the database has been found to be unreliable. Instead of fetching
+		// messages from the DB here, fetch them normally.
+		$blobs = array();
+		foreach ( $modules as $moduleName => $module ) {
+			$messages = array();
+			foreach ( $module->getMessages() as $key ) {
+				$messages[$key] = wfMessage( $key )->inLanguage( $lang )->plain();
+			}
+
+			if ( !empty( $messages) ) {
+				$blobs[$moduleName] = json_encode( $messages );
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $blobs;
+
+		/* Wikia - commented out entire block:
+
 		// Try getting from the DB first
 		$blobs = self::getFromDB( $resourceLoader, array_keys( $modules ), $lang );
 
@@ -58,6 +78,9 @@ class MessageBlobStore {
 
 		wfProfileOut( __METHOD__ );
 		return $blobs;
+		*/
+
+		/* Wikia change end */
 	}
 
 	/**

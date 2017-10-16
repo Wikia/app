@@ -55,12 +55,11 @@ class Parser_LinkHooks extends Parser {
 
 		wfProfileIn( __METHOD__ );
 
-		$this->setHook( 'pre', array( $this, 'renderPreTag' ) );
 		CoreParserFunctions::register( $this );
 		CoreLinkFunctions::register( $this );
 		$this->initialiseVariables();
 
-		wfRunHooks( 'ParserFirstCallInit', array( &$this ) );
+		Hooks::run( 'ParserFirstCallInit', [ $this ] );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -130,8 +129,8 @@ class Parser_LinkHooks extends Parser {
 		$holders = new LinkHolderArray( $this );
 		
 		if( is_null( $this->mTitle ) ) {
-			wfProfileOut( __METHOD__ );
 			wfProfileOut( __METHOD__.'-setup' );
+			wfProfileOut( __METHOD__ );
 			throw new MWException( __METHOD__.": \$this->mTitle is null\n" );
 		}
 
@@ -139,7 +138,8 @@ class Parser_LinkHooks extends Parser {
 		
 		$offset = 0;
 		$offsetStack = array();
-		$markers = new LinkMarkerReplacer( $this, $holders, array( &$this, 'replaceInternalLinksCallback' ) );
+		$markers =
+			new LinkMarkerReplacer( $this, $holders, [ $this, 'replaceInternalLinksCallback' ] );
 		while( true ) {
 			$startBracketOffset = strpos( $s, '[[', $offset );
 			$endBracketOffset   = strpos( $s, ']]', $offset );
@@ -211,6 +211,7 @@ class Parser_LinkHooks extends Parser {
 		# PROTO: where PROTO is a valid URL protocol; these
 		# should be external links.
 		if( preg_match('/^\b(?:' . wfUrlProtocols() . ')/', $titleText) ) {
+			wfProfileOut( __METHOD__."-misc" );
 			wfProfileOut( __METHOD__ );
 			return $wt;
 		}
@@ -292,7 +293,8 @@ class LinkMarkerReplacer {
 	}
 	
 	function expand( $string ) {
-		return StringUtils::delimiterReplaceCallback( "<!-- LINKMARKER ", " -->", array( &$this, 'callback' ), $string );
+		return StringUtils::delimiterReplaceCallback( "<!-- LINKMARKER ", " -->",
+			[ $this, 'callback' ], $string );
 	}
 	
 	function callback( $m ) {

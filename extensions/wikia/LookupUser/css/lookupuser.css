@@ -1,3 +1,7 @@
 tr .red-background {
 	background-color: #f66;
 }
+
+#lookupuser-table tr th {
+	white-space: nowrap;
+}

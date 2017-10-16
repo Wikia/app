@@ -33,7 +33,7 @@ class RawAction extends FormlessAction {
 	}
 
 	function onView() {
-		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType;
+		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType, $wgUseXVO;
 
 		$this->getOutput()->disable();
 		$request = $this->getRequest();
@@ -73,12 +73,32 @@ class RawAction extends FormlessAction {
 
 		$maxage = $request->getInt( 'maxage', $wgSquidMaxage );
 
+		if ( Wikia::isUsingSafeJs()
+			&& $contentType == $wgJsMimeType
+			&& $this->page->getTitle()->inNamespace( NS_MEDIAWIKI )
+			&& ( new \Wikia\ContentReview\Helper() )->isContentReviewTestModeEnabled()
+		) {
+			$maxage = 0;
+			$smaxage = 0;
+		}
+
 		$response = $request->response();
+
+		// Set standard Vary headers so cache varies on cookies and such (T125283)
+		$response->header( $this->getOutput()->getVaryHeader() );
+		if ( $wgUseXVO ) {
+			$response->header( $this->getOutput()->getXVO() );
+		}
 
 		$response->header( 'Content-type: ' . $contentType . '; charset=UTF-8' );
 		# Output may contain user-specific data;
 		# vary generated content for open sessions on private wikis
 		$privateCache = !$wgGroupPermissions['*']['read'] && ( $smaxage == 0 || session_id() != '' );
+		// Bug 53032 - make this private if user is logged in,
+		// so we don't accidentally cache cookies
+		if ( !$privateCache ) {
+			$privateCache = $this->getUser()->isLoggedIn();
+		}
 		# allow the client to cache this for 24 hours
 		$mode = $privateCache ? 'private' : 'public';
 		$response->header( 'Cache-Control: ' . $mode . ', s-maxage=' . $smaxage . ', max-age=' . $maxage );
@@ -93,7 +113,7 @@ class RawAction extends FormlessAction {
 			$response->header( 'HTTP/1.x 404 Not Found' );
 		}
 
-		if ( !wfRunHooks( 'RawPageViewBeforeOutput', array( &$this, &$text ) ) ) {
+		if ( !Hooks::run( 'RawPageViewBeforeOutput', [ $this, &$text ] ) ) {
 			wfDebug( __METHOD__ . ": RawPageViewBeforeOutput hook broke raw page output.\n" );
 		}
 
@@ -140,9 +160,11 @@ class RawAction extends FormlessAction {
 			}
 		}
 
-		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' ) {
+		// Wikia change begin: author: lukaszk
+		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' && !$title->isJsPage() ) {
 			$text = $wgParser->preprocess( $text, $title, ParserOptions::newFromContext( $this->getContext() ) );
 		}
+		// Wikia change end;
 
 		return $text;
 	}

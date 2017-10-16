@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Игорь Бродский"
+		]
+	},
+	"sf_createproperty_propname": "Ičendan nimi:",
+	"sf_createproperty_proptype": "Tip:",
+	"templates": "Šablonad",
+	"sf_templates_docu": "Wikiš om ningoižid šablonoid:",
+	"sf_templates_definescat": "märhapaneb kategorijan: $1",
+	"createtemplate": "Säta šablon",
+	"sf_createtemplate_namelabel": "Šablonan nimi:",
+	"sf_createtemplate_categorylabel": "Kategorii, kudamban märhapaneb šablon (opcionaližikš):",
+	"sf_createtemplate_templatefields": "Šablonan pöudod:",
+	"sf_createtemplate_outputformat": "Lähtmižformat:",
+	"sf_createtemplate_standardformat": "Standartine",
+	"sf_createtemplate_addfield": "Läžata pöud",
+	"sf_createtemplate_deletefield": "Čuta poiš",
+	"forms": "Formad",
+	"createform": "Säta form",
+	"sf_createform_nameinput": "Forman nimi",
+	"sf_createform_template": "Šablon:",
+	"sf_createform_field": "Pöud:",
+	"sf_createform_hidden": "Peittud",
+	"sf_createform_add": "Ližata",
+	"createcategory": "Säta kategorii",
+	"sf_createcategory_name": "Kategorijan nimi:",
+	"sf_createcategory_defaultform": "Form augotižjärgendusen mödhe:",
+	"sf_formstart_createoredit": "Ližada vai redaktirui",
+	"sf_editsource": "Redaktiruida purde",
+	"sf_formedit_remove": "Čuta poiš",
+	"sf_formedit_addanother": "Ližata völ",
+	"sf_form_freetextlabel": "Joudai tekst"
+}

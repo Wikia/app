@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chinneeb",
+			"Munkhzaya.E"
+		]
+	},
+	"sf_createform_add": "Нэмэх",
+	"sf_deletionlog": "Устгалын лог",
+	"sf-regexp-wrongformat": "Буруу формат"
+}

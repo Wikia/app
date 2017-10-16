@@ -402,7 +402,7 @@ class AFComputedVariable {
 				}
 				break;
 			default:
-				if ( wfRunHooks( 'AbuseFilter-computeVariable',
+				if ( Hooks::run( 'AbuseFilter-computeVariable',
 									array( $this->mMethod, $vars ) ) ) {
 					throw new AFPException( 'Unknown variable compute type ' . $this->mMethod );
 				}

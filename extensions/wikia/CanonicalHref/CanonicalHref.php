@@ -12,31 +12,35 @@ $wgExtensionCredits['specialpage'][] = array(
         'name' => 'Canonical Href',
 		'version' => '1.1',
         'author' => array('Nick Sullivan nick at wikia-inc.com', 'Maciej Brencz', '[http://seancolombo.com Sean Colombo]'),
-        'description' => 'This extension prints a link type="canonical" tag with a canonical representation of the url, which is used by Google, MSN, and Yahoo! to funnel PageRank.'
+        'descriptionmsg' => 'canonicalhref-desc',
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CanonicalHref'
 );
+
+//i18n
+$wgExtensionMessagesFiles['CanonicalHref'] = __DIR__ . '/CanonicalHref.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
 /**
  * @param OutputPage $out
- * @param $sk
+ * @param Skin $skin
  * @return bool
+ * @internal param $sk
  */
-function wfCanonicalHref(&$out, &$sk) {
-	global $wgTitle;
-
-	if ( !($wgTitle instanceof Title) ) {
+function wfCanonicalHref( OutputPage $out, Skin $skin ): bool {
+	// No canonical on pages with pagination -- they should have the link rel="next/prev" instead
+	if ( $out->getRequest()->getVal( 'page' ) ) {
 		return true;
 	}
 
-	$canonicalUrl = $wgTitle->getFullURL();
+	$canonicalUrl = $out->getTitle()->getFullURL();
 
 	// Allow hooks to change the canonicalUrl that will be used in the page.
-	wfRunHooks( 'WikiaCanonicalHref', array( &$canonicalUrl ) );
+	Hooks::run( 'WikiaCanonicalHref', [ &$canonicalUrl ] );
 
-	$out->addLink(array(
+	$out->addLink( [
 		'rel' => 'canonical',
 		'href' => $canonicalUrl,
-	));
+	] );
 
 	return true;
 }

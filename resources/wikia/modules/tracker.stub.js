@@ -42,8 +42,23 @@
 				// Clicking okay in a confirmation modal
 				CONFIRM: 'confirm',
 
+				// Generic disable
+				DISABLE: 'disable',
+
+				// Generic enable
+				ENABLE: 'enable',
+
 				// Generic error (generally AJAX)
 				ERROR: 'error',
+
+				// Flow start
+				FLOW_START: 'flow-start',
+
+				// Flow intermediary step
+				FLOW_MID_STEP: 'flow-mid-step',
+
+				// Flow end
+				FLOW_END: 'flow-end',
 
 				// Generic hover
 				HOVER: 'hover',
@@ -111,7 +126,7 @@
 		 *
 		 *     var track = Wikia.Tracker.buildTrackingFunction({
 		 *         category: 'myCategory',
-		 *         trackingMethod: 'ga'
+		 *         trackingMethod: 'analytics'
 		 *     });
 		 *
 		 *     track({
@@ -154,7 +169,77 @@
 	window.Wikia.Tracker = tracker( window );
 
 	if ( window.define && window.define.amd ) {
-		window.define( 'wikia.tracker', [ 'wikia.window' ], tracker );
+		window.define( 'wikia.tracker', function() {
+			// Returning Wikia.Tracker instance, in order to spooled events to work with AMD module.
+			return Wikia.Tracker;
+		});
 	}
 
 })( window, undefined );
+
+// Temporary code for tracking VE and CK related events in Kibana.
+function veTrack( data ) {
+	if ( ! window.syslogReport ) {
+		return;
+	}
+	var defaultData = {}, uri, finalData;
+	try {
+		// isAnonymous
+		try {
+			//defaultData.isAnonymous = mw.user.anonymous() ? 'yes' : 'no';
+			defaultData.isAnonymous = !wgUserName ? 'yes' : 'no';
+		} catch ( e ) {
+			defaultData.isAnonymous = 'unknown';
+		}
+
+		// isRedlink
+		try {
+			uri = new mw.Uri( location.href );
+			defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no';
+		} catch ( e ) {
+			defaultData.isRedlink = 'unknown';
+		}
+
+		defaultData.referrer = document.referrer;
+
+		// contentLanguage
+		try {
+			defaultData.contentLanguage = mw.config.get( 'wgContentLanguage' );
+		} catch ( e ) {
+			defaultData.contentLanguage = 'unknown';
+		}
+
+		// userLanguage
+		try {
+			defaultData.userLanguage = mw.config.get( 'wgUserLanguage' );
+		} catch ( e ) {
+			defaultData.userLanguage = 'unknown';
+		}
+
+		// Orientation dialog
+		if ( window.veOrientationEnabled === undefined ) {
+			defaultData.orientationEnabled = 'unknown';
+		} else {
+			defaultData.orientationEnabled = !!window.veOrientationEnabled ? 'yes' : 'no';
+		}
+
+		// anon edit warning
+		if ( window.anoneditwarning === undefined ) {
+			defaultData.anonEditWarning = 'unknown';
+		} else {
+			defaultData.anonEditWarning = !!window.anoneditwarning ? 'yes' : 'no';
+		}
+
+		// new/old VE
+		try {
+			defaultData.whichVE = ( 'showLoading' in mw.libs.ve ) ? 'new' : 'old';
+		} catch ( e ) {
+			defaultData.whichVE = 'unknown';
+		}
+
+		finalData = $.extend( {}, defaultData, data );
+	} catch( e ) {
+		finalData = { failed: true };
+	}
+	syslogReport( 6, 'veTrack-v6', finalData );
+}

@@ -13,6 +13,8 @@
 abstract class WikiaRegistry implements ArrayAccess {
 
 	protected function validatePropertyName( $propertyName ) {
+		// body of this method is also copied/inlined in WikiaGlobalRegistry::__get()
+		// don't forget to update it as well if you modify this one
 		if ( empty( $propertyName ) || is_numeric( $propertyName ) ) {
 			throw new WikiaException( "WikiaProperty - invalid or empty property name ({$propertyName})" );
 		}

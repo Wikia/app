@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Paginator\Paginator;
+
 class WAMPageController extends WikiaController
 {
 	const DEFAULT_LANG_CODE = 'en';
@@ -28,50 +30,41 @@ class WAMPageController extends WikiaController
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
 			$this->redirectIfMisspelledWamMainPage($title);
-
-			$this->subpageText = $title->getSubpageText();
-			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
-
-			$this->redirectIfUnknownTab($currentTabIndex, $title);
-			$this->redirectIfFirstTab($currentTabIndex, $this->subpageText);
-
-			$this->subpageText = $this->model->getSubpageTextByIndex($currentTabIndex, $this->subpageText);
 		}
 
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
-		$this->tabs = $this->model->getTabs($currentTabIndex, $this->filterParams);
-		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
+		$this->visualizationWikis = $this->model->getVisualizationWikis( $this->selectedVerticalId );
 
-		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
+		$this->indexWikis = $this->model->getIndexWikis( $this->getIndexParams() );
 
-		$total = ( empty($this->indexWikis['wam_results_total']) ) ? 0 : $this->indexWikis['wam_results_total'];
+		$total = ( empty( $this->indexWikis['wam_results_total'] ) ) ? 0 : $this->indexWikis['wam_results_total'];
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
-			$paginator->setActivePage( $this->page - 1 );
-			$this->paginatorBar = $paginator->getBarHTML( $this->getUrlWithAllParams() );
+			$paginator = new Paginator( $total, $itemsPerPage, $this->getUrlForPagination() );
+			$paginator->setActivePage( $this->page );
+			$this->paginatorBar = $paginator->getBarHTML();
+			$this->wg->Out->addHeadItem( 'Pagination', $paginator->getHeadItem() );
 		}
 	}
 
 	protected function collectRequestParameters() {
-		$this->filterLanguages = $this->model->getCorporateWikisLanguages();
 		$this->filterVerticals = $this->model->getVerticals();
+		$this->verticalsShorts = $this->model->getVerticalsShorts();
+		$this->verticalsNamesMsgKeys = $this->model->generateVerticalsNamesMsgKeys( $this->verticalsShorts );
 
-		$this->searchPhrase = htmlspecialchars($this->getVal('searchPhrase', null));
-		$this->selectedVerticalId = $this->getVal('verticalId', null);
-		$this->selectedLangCode = $this->getVal('langCode', null);
-		$this->selectedDate = $this->getVal('date', null);
+		$this->searchPhrase = htmlspecialchars( $this->getVal( 'searchPhrase', null ) );
+		$this->selectedVerticalId = intval( $this->getVal( 'verticalId', null ) );
+		$this->selectedLangCode = $this->getVal( 'langCode', null );
+		$this->selectedDate = $this->getVal( 'date', null );
 
-		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
-		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
-		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
+		$this->selectedVerticalId = ( $this->selectedVerticalId !== '' ) ? $this->selectedVerticalId : null;
+		$this->selectedLangCode = ( $this->selectedLangCode !== '' ) ? $this->selectedLangCode : null;
+		$this->selectedDate = ( $this->selectedDate !== '' ) ? $this->selectedDate : null;
 
-		$this->page = $this->getVal('page', $this->model->getFirstPage());
+		$this->isSingleVertical = ( $this->selectedVerticalId != WikiFactoryHub::VERTICAL_ID_OTHER );
 
-		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
-		if (!$langValidator->isValid($this->selectedLangCode)) {
-			$this->selectedLangCode = null;
-		}
+		$this->page = intval( $this->getVal( 'page', $this->model->getFirstPage() ) );
+
 		$verticalValidator = new WikiaValidatorSelect(array('allowed' => array_keys($this->filterVerticals)));
 		if (!$verticalValidator->isValid($this->selectedVerticalId)) {
 			$this->selectedVerticalId = null;
@@ -84,8 +77,9 @@ class WAMPageController extends WikiaController
 				'wamFilterDateFormat' => $this->getJsDateFormat()
 			]
 		);
+
 		if (!empty($this->selectedDate)) {
-			$timestamp = $this->getTimestampFromLocalDate($this->selectedDate);
+			$timestamp = $this->selectedDate;
 
 			if (!empty($filterMinMaxDates['min_date'])) {
 				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
@@ -100,6 +94,16 @@ class WAMPageController extends WikiaController
 					$this->selectedDate = null;
 				}
 			}
+		} else {
+			// DE-1673 default to two days ago because we might not have data for today
+			$this->selectedDate = strtotime( '00:00 -2 day');
+		}
+
+		$this->filterLanguages = $this->model->getWAMLanguages( $this->selectedDate );
+
+		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
+		if (!$langValidator->isValid($this->selectedLangCode)) {
+			$this->selectedLangCode = null;
 		}
 
 		// combine all filter params to array
@@ -117,71 +121,20 @@ class WAMPageController extends WikiaController
 	}
 
 	protected function getIndexParams($forPaginator = false) {
-		if( $forPaginator ) {
-			$date = isset($this->selectedDate) ? $this->selectedDate : null;
-			$page = '%s';
-		} else {
-			$date = isset($this->selectedDate) ? strtotime($this->selectedDate) : null;
-			$page = $this->page;
-		}
-
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
-			'verticalId' => $this->selectedVerticalId,
+			'verticalId' => Sanitizer::encodeAttribute( $this->selectedVerticalId ),
 			'langCode' => $this->selectedLangCode,
-			'date' => $date,
-			'page' => $page,
+			'date' => isset( $this->selectedDate ) ? $this->selectedDate : null,
 		];
+		if ( !$forPaginator ) {
+			$indexParams['page'] = Sanitizer::encodeAttribute( $this->page );
+		}
 
 		return $indexParams;
 	}
 
-	/**
-	 * Convert date local language into timestamp (workaround for not existing locales)
-	 *
-	 * @param $localDate
-	 * @return int
-	 */
-	protected function getTimestampFromLocalDate($localDate) {
-		$engMonthNames = array_map(
-			'mb_strtolower',
-			Language::factory(self::DEFAULT_LANG_CODE)->getMonthNamesArray()
-		);
-
-		$localMonthNames = array_map(
-			'mb_strtolower',
-			$this->wg->Lang->getMonthNamesArray()
-		);
-
-		$monthMap = array_combine($localMonthNames, $engMonthNames);
-		// remove first element because it's always empty
-		array_shift($monthMap);
-
-		// get month short version
-		$engShortMonthNames = array_map(
-			'mb_strtolower',
-			Language::factory(self::DEFAULT_LANG_CODE)->getMonthAbbreviationsArray()
-		);
-
-		$localShortMonthNames = array_map(
-			'mb_strtolower',
-			$this->wg->Lang->getMonthAbbreviationsArray()
-		);
-
-		$shortMonthMap = array_combine($localShortMonthNames, $engShortMonthNames);
-		// remove first element because it's always empty
-		array_shift($shortMonthMap);
-
-		$monthMap += $shortMonthMap;
-
-		$engDate = strtr(mb_strtolower($localDate), $monthMap);
-
-		$timestamp = strtotime($engDate);
-
-		return $timestamp;
-	}
-
-	protected function getUrlWithAllParams() {
+	protected function getUrlForPagination() {
 		$url = '#';
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
@@ -231,4 +184,3 @@ class WAMPageController extends WikiaController
 		$this->wamPageUrl = $this->model->getWAMMainPageUrl();
 	}
 }
-

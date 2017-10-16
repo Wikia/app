@@ -12,24 +12,27 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AssetsManager',
-	'author' => 'Inez Korczyński'
+	'author' => 'Inez Korczyński',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AssetsManager',
+	'descriptionmsg' => 'assestsmanager-desc',
 );
 
-$dir = dirname(__FILE__).'/';
+//i18n
+$wgExtensionMessagesFiles['AssetsManager'] = __DIR__ . '/i18n/AssetsManager.i18n.php';
 
-$wgAutoloadClasses['AssetsManagerBaseBuilder'] = $dir.'builders/AssetsManagerBaseBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerGroupBuilder'] = $dir.'builders/AssetsManagerGroupBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = $dir.'builders/AssetsManagerGroupsBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerSassesBuilder'] = $dir.'builders/AssetsManagerSassesBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerServer'] = $dir.'AssetsManagerServer.class.php';
+$wgAutoloadClasses['AssetsManagerBaseBuilder'] = __DIR__ . '/builders/AssetsManagerBaseBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerOneBuilder'] = __DIR__ . '/builders/AssetsManagerOneBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerGroupBuilder'] = __DIR__ . '/builders/AssetsManagerGroupBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = __DIR__ . '/builders/AssetsManagerGroupsBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerSassBuilder'] = __DIR__ . '/builders/AssetsManagerSassBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerSassesBuilder'] = __DIR__ . '/builders/AssetsManagerSassesBuilder.class.php';
 
-$wgAutoloadClasses['AssetsManagerController'] = $dir.'AssetsManagerController.class.php';
+$wgAutoloadClasses['AssetsManagerServer'] = __DIR__ . '/AssetsManagerServer.class.php';
+
+$wgAutoloadClasses['AssetsManagerController'] = __DIR__ . '/AssetsManagerController.class.php';
 
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
-$wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
 $wgHooks['UserGetRights'][] = 'onUserGetRights';
 
 /**
@@ -44,22 +47,10 @@ function onUserGetRights( $user, &$aRights ) {
 	return true;
 }
 
-/**
- * @param User $user
- * @param $result
- * @return bool
- */
-function AssetsManagerClearCookie( $user, &$result ) {
-	global $wgRequest;
-	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint'
-			&& !AssetsConfig::isUserDependent( $wgRequest->getVal('oid') ) ) {
-		$result = new User();
-	}
-	return true;
-}
-
 function AssetsManagerEntryPoint() {
 	global $wgRequest;
 	AssetsManagerServer::serve($wgRequest);
+
+	Hooks::run('RestInPeace');
 	exit();
 }

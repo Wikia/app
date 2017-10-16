@@ -6,18 +6,14 @@ class SpecialThemeDesigner extends UnlistedSpecialPage {
 		parent::__construct( 'ThemeDesigner', 'themedesigner' );
 	}
 
-	public function execute() {
-		wfProfileIn( __METHOD__ );
-
+	public function execute( $par ) {
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {
 			$this->displayRestrictionError();
-			wfProfileOut( __METHOD__ );
+
 			return;
 		}
 
 		Wikia::setVar( 'OasisEntryControllerName', 'ThemeDesigner' );
-
-		wfProfileOut( __METHOD__ );
 	}
 }

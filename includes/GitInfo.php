@@ -241,7 +241,7 @@ class GitInfo {
 
 		if ( self::$viewers === false ) {
 			self::$viewers = $wgGitRepositoryViewers;
-			wfRunHooks( 'GitViewers', array( &self::$viewers ) );
+			Hooks::run( 'GitViewers', array( &self::$viewers ) );
 		}
 
 		return self::$viewers;

@@ -1,0 +1,132 @@
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/color';
+
+$recirculation-horizontal-border-size: 2px;
+$recirculation-horizontal-border-color: rgba($color-headline-border, .5);
+
+.recirculation-horizontal {
+	box-sizing: border-box;
+	clear: both;
+	margin: 30px auto -30px;
+	padding-bottom: 42px;
+	position: relative;
+
+	h3,
+	h4 {
+		margin: 0;
+	}
+
+	h4 {
+		font-size: 12px;
+		line-height: 14px;
+	}
+
+	.items {
+		@include flexbox();
+		@include justify-content(space-between);
+	}
+
+	.item a {
+		color: $color-text;
+	}
+
+	.thumbnail {
+		margin-bottom: 5px;
+		overflow: hidden;
+		text-align: center;
+
+		img {
+			max-height: 100%;
+			max-width: 100%;
+		}
+	}
+}
+
+$recirculation-incontent-thumbnail-width: 160px;
+$recirculation-incontent-thumbnail-height: 90px;
+
+.recirculation-horizontal.recirculation-incontent {
+	border-bottom: $recirculation-horizontal-border-size solid $recirculation-horizontal-border-color;
+	padding: 40px 30px 25px;
+	width: 90%;
+
+	h3 {
+		@include flexbox();
+
+		color: lighten($color-text, 10%);
+		font-size: 14px;
+		font-weight: bold;
+		left: -10px;
+		position: absolute;
+		right: -10px;
+		text-align: center;
+		top: 0;
+
+		&::before,
+		&::after {
+			@include align-self(center);
+			@include flex(1 0 0);
+
+			background-color: $recirculation-horizontal-border-color;
+			content: ' ';
+			display: block;
+			height: $recirculation-horizontal-border-size;
+			margin: 0 10px;
+		}
+	}
+
+	.item {
+		min-width: $recirculation-incontent-thumbnail-width;
+		width: $recirculation-incontent-thumbnail-width;
+	}
+
+	.thumbnail {
+		height: $recirculation-incontent-thumbnail-height;
+		width: $recirculation-incontent-thumbnail-width;
+	}
+}
+
+$recirculation-footer-thumbnail-width: 200px;
+$recirculation-footer-thumbnail-height: 110px;
+
+.recirculation-horizontal.recirculation-footer {
+	h3 {
+		font-family: "Helvetica Neue", sans-serif;
+		font-size: 20px;
+		font-weight: bold;
+		line-height: 22px;
+		border-top: 1px solid #cccccc;
+		padding-top: 30px;
+	}
+
+	h4 {
+		font-family: "Helvetica Neue", sans-serif;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.items {
+		padding: 10px 0;
+	}
+
+	.item {
+		flex: 1;
+		padding: 0 0.5rem;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&:last-child {
+			padding-right: 0;
+		}
+	}
+
+	.thumbnail {
+		width: 100%;
+
+		img {
+			width: 100%;
+		}
+	}
+}

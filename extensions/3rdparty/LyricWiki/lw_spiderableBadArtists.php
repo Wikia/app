@@ -37,22 +37,24 @@ function wfSpiderableBadArtists(){
 ////
 // Given a title, gives us a chance to create an article for it before MediaWiki takes its normal approach.
 ////
-function wfSpiderableBadArtists_outputPage(&$out, &$text){
-	GLOBAL $wgTitle;
-
+function wfSpiderableBadArtists_outputPage( OutputPage $out, &$text ) {
 	// For "virtual pages" that the spiders can index.
 	if(isset($_GET['virtPage'])){
-		$subTitle = $out->mSubtitle;
+		$subTitle = $out->getSubtitle();
 		$matches = array();
-		if(0 < preg_match("/Redirected from <a href=\"[^\"]+&amp;redirect=no\" title=\"([^\"]+)\"/i", $subTitle, $matches)){
-			$redirFrom = $matches[1];
+		if(0 < preg_match("/Redirected from <a href=\"[^\"]+(&amp;|\?)redirect=no\" title=\"([^\"]+)\"/i", $subTitle, $matches)){
+			$redirFrom = $matches[2];
 			if(false === strpos($redirFrom, ":")){
 				$redirFrom = str_replace(" ", "_", $redirFrom);
 				$redirFrom = urlencode($redirFrom);
-				$from = $wgTitle->mUrlform;
+				$from = $out->getTitle()->mUrlform;
 				if(strtolower($from) != strtolower($redirFrom)){
-					$text = str_replace("\"/$from", "\"/$redirFrom", $text);
-					$text = str_replace("\"$from", "\"$redirFrom", $text);
+					// Replaces just the links (taking into account wgArticlePath.
+					global $wgArticlePath;
+					$fromLink = str_replace("$1", $from, $wgArticlePath);
+					$toLink = str_replace("$1", $redirFrom, $wgArticlePath);
+					$text = str_replace("\"/$fromLink", "\"/$toLink", $text);
+					$text = str_replace("\"$fromLink", "\"$toLink", $text);
 				}
 			}
 		}

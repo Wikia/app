@@ -8,11 +8,11 @@ describe('WikiaDartHelper', function(){
 				toString: function() {return expected;}
 			},
 			dartUrlMock = {urlBuilder: function() {return urlBuilderMock;}},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {return {}},
 				getCustomKeyValues: function() {return ''}
 			},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock),
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock),
 			actual = dartHelper.getUrl({
 				slotsize: '100x200',
 				slotname: 'SLOT_NAME',
@@ -33,7 +33,7 @@ describe('WikiaDartHelper', function(){
 				addString: function() {}
 			},
 			dartUrlMock = {urlBuilder: function() {return urlBuilderMock;}},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {
 					return {
 						key1: 'value1',
@@ -46,7 +46,7 @@ describe('WikiaDartHelper', function(){
 					return '';
 				}
 			},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock);
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock);
 
 		paramsPassed = {};
 		dartHelper.getUrl({});
@@ -58,7 +58,7 @@ describe('WikiaDartHelper', function(){
 
 	it('getUrl builds properly the domain and prefix', function() {
 		var logMock = function() {},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {
 					return {
 						s0: 'vertical',
@@ -80,7 +80,7 @@ describe('WikiaDartHelper', function(){
 					return urlBuilderMock;
 				}
 			},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock);
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock);
 
 		dartHelper.getUrl({
 			subdomain: 'sub'
@@ -92,7 +92,7 @@ describe('WikiaDartHelper', function(){
 
 	it('getUrl passes slot params correctly', function() {
 		var logMock = function() {},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {return {};},
 				getCustomKeyValues: function() {return '';}
 			},
@@ -104,7 +104,7 @@ describe('WikiaDartHelper', function(){
 				addString: function() {}
 			},
 			dartUrlMock = {urlBuilder: function() {return urlBuilderMock;}},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock);
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock);
 
 		dartHelper.getUrl({
 			slotsize: '100x200',
@@ -120,7 +120,7 @@ describe('WikiaDartHelper', function(){
 
 	it('getUrl sets global params correctly', function() {
 		var logMock = function() {},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {return {};},
 				getCustomKeyValues: function() {return '';}
 			},
@@ -133,7 +133,7 @@ describe('WikiaDartHelper', function(){
 			},
 			dartUrlMock = {urlBuilder: function() {return urlBuilderMock;}},
 			documentMock = {documentElement: {}, body: {clientWidth: 1300}},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock);
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock);
 
 		dartHelper.getUrl({});
 
@@ -162,11 +162,11 @@ describe('WikiaDartHelper', function(){
 					return urlBuilderMock;
 				}
 			},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {return {};},
 				getCustomKeyValues: function() {return '';}
 			},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock),
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock),
 			params = {
 				slotsize: '100x200',
 				slotname: 'SLOT_NAME',
@@ -228,7 +228,7 @@ describe('WikiaDartHelper', function(){
 					return urlBuilderMock;
 				}
 			},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {
 					return {
 						s0: 'hub',
@@ -237,15 +237,14 @@ describe('WikiaDartHelper', function(){
 						dmn: 'wikiacom',
 						hostpre: 'www',
 						lang: 'en',
-						dis: 'large',
-						hasp: 'yes'
+						dis: 'large'
 					};
 				},
 				getCustomKeyValues: function() {
 					return '';
 				}
 			},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock);
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock);
 
 		dartHelper.getUrl({
 			ord: 7,
@@ -262,7 +261,6 @@ describe('WikiaDartHelper', function(){
 		expect(paramsPassed.pos).toBe('SLOT_NAME');
 		expect(paramsPassed.lang).toBe('en');
 		expect(paramsPassed.dis).toBe('large');
-		expect(paramsPassed.hasp).toBe('yes');
 		expect(paramsPassed.src).toBe('driver');
 		expect(paramsPassed.sz).toBe('100x200');
 		expect(paramsPassed.tile).toBe(3);
@@ -286,7 +284,7 @@ describe('WikiaDartHelper', function(){
 					return urlBuilderMock;
 				}
 			},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {
 					return {
 						s0: 'hub',
@@ -295,15 +293,14 @@ describe('WikiaDartHelper', function(){
 						dmn: 'wikiacom',
 						hostpre: 'www',
 						lang: 'en',
-						dis: 'large',
-						hasp: 'yes'
+						dis: 'large'
 					};
 				},
 				getCustomKeyValues: function() {
 					return '';
 				}
 			},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock);
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock);
 
 		dartHelper.getUrl({
 			ord: 7,
@@ -320,7 +317,6 @@ describe('WikiaDartHelper', function(){
 		expect(paramsPassed.pos).toBe('SLOT_NAME');
 		expect(paramsPassed.lang).toBe('en');
 		expect(paramsPassed.dis).toBe('large');
-		expect(paramsPassed.hasp).toBe('yes');
 		expect(paramsPassed.src).toBe('driver');
 		expect(paramsPassed.sz).toBe('100x200');
 		expect(paramsPassed.tile).toBe(3);
@@ -344,7 +340,7 @@ describe('WikiaDartHelper', function(){
 					return urlBuilderMock;
 				}
 			},
-			adLogicPageLevelParamsMock = {
+			adLogicPageParamsMock = {
 				getPageLevelParams: function() {
 					return {
 						s0: 'hub',
@@ -353,15 +349,14 @@ describe('WikiaDartHelper', function(){
 						dmn: 'wikiacom',
 						hostpre: 'www',
 						lang: 'en',
-						dis: 'large',
-						hasp: 'yes'
+						dis: 'large'
 					};
 				},
 				getCustomKeyValues: function() {
 					return '';
 				}
 			},
-			dartHelper = WikiaDartHelper(logMock, adLogicPageLevelParamsMock, dartUrlMock);
+			dartHelper = modules['ext.wikia.adEngine.dartHelper'](logMock, adLogicPageParamsMock, dartUrlMock);
 
 		dartHelper.getUrl({
 			ord: 7,
@@ -379,7 +374,6 @@ describe('WikiaDartHelper', function(){
 		expect(paramsPassed.pos).toBe('SLOT_NAME');
 		expect(paramsPassed.lang).toBe('en');
 		expect(paramsPassed.dis).toBe('large');
-		expect(paramsPassed.hasp).toBe('yes');
 		expect(paramsPassed.src).toBe('driver');
 		expect(paramsPassed.sz).toBe('100x200');
 		expect(paramsPassed.tile).toBe(3);

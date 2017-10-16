@@ -5,83 +5,58 @@
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery', 'sloth'], function(sections, media, cache, loader, lazyload, $, sloth) {
+require( ['sections', 'media', require.optional( 'wikia.cache' ), 'wikia.loader', 'lazyload', 'jquery', 'sloth', 'topbar'],
+function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 	'use strict';
 
-	//init sections
-	sections.init();
-
 	var d = document,
-		images = d.getElementsByClassName('media'),
-		selector = 'table:not(.toc):not(.infobox)',
-		tables = d.querySelectorAll(selector),
-		tablesProcessedSections = [],
-		tablesModule,
+		selector = 'table:not(.toc):not(.infobox):not(.infobox-table)',
+		tables = d.querySelectorAll( selector ),
 		tablesKey = 'wideTables',
 		ttl = 604800, //7days
 		assets,
-		process = function(res){
-			!assets && cache && cache.setVersioned(tablesKey, res, ttl);
+		lazyImages,
+		process = function ( res ) {
+			!assets && cache && cache.setVersioned( tablesKey, res, ttl );
 
-			if(res) {
-				var scripts = res.scripts,
-					l = scripts.length,
-					i = 0;
-
-				loader.processStyle(res.styles);
-
-				for(; i < l; i++ ){
-					loader.processScript(scripts[i]);
-				}
+			if ( res ) {
+				loader.processStyle( res.styles );
+				loader.processScript( res.scripts );
 			}
 
-			require([require.optional('tables')], function(t){
-				t && t.process($(selector).not('.artSec table, table table'));
-
-				//make it available for sections on open so tables can be processed as well
-				tablesModule = t;
-			});
+			require( [ 'tables' ], function ( tables ) {
+				tables.process( $( selector ).not( 'table table, fake' ) );
+			} );
 		};
 
-	$(document).on('sections:open', function(event, section){
-		var index = ~~section.attr('data-index');
-
-		if(tablesModule && !tablesProcessedSections[index]){
-			//without fake I get DOM Exception 12
-			tablesModule.process(section.find(selector).not('table table,fake'));
-
-			tablesProcessedSections[index] = true;
-		}
-
-		sloth();
-	});
-
 	//tables
-	if(tables && tables.length > 0){
-		assets = cache && cache.getVersioned(tablesKey);
+	if ( tables && tables.length > 0 ) {
+		assets = cache && cache.getVersioned( tablesKey );
 
-		if(Features.gameguides || assets){
+		if ( Features.gameguides || assets ) {
 			//if gameguides or we already have all our asses
-			process(assets);
-		}else{
+			process( assets );
+		} else {
 			//when we need to load assets
-			loader({
+			loader( {
 				type: loader.MULTI,
 				resources: {
-					scripts: 'wikiamobile_tables_js' + (Features.overflow ? '' : ',wikiamobile_scroll_js'),
-					styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
-					ttl: ttl
+					scripts: 'wikiamobile_tables_js',
+					styles: '/extensions/wikia/WikiaMobile/css/tables.scss'
 				}
-			}).done(process);
+			} ).done( process );
 		}
 	}
 
 	//init media
-	media.init(images);
+	media.init( d.getElementsByClassName( 'media' ) );
 
-	sloth({
-		on: document.getElementsByClassName('lazy'),
-		threshold: 300,
+	lazyImages = d.getElementsByClassName( 'lazy' );
+	lazyload.fixSizes( lazyImages );
+
+	sloth( {
+		on: lazyImages,
+		threshold: 400,
 		callback: lazyload
-	});
-});
+	} );
+} );

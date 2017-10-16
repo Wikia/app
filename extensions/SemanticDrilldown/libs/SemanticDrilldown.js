@@ -68,6 +68,11 @@
 				text: false
 			}).removeClass("ui-corner-all")
 			.addClass("ui-corner-right ui-button-icon")
+			// Need to do some hardcoded CSS here, to override
+			// pesky jQuery UI settings!
+			// Unfortunately, calling .css() won't work, because
+			// it ignores "!important".
+			.attr("style", "width: 2.4em; margin: 0 !important; border-radius: 0")
 			.click(function() {
 				// close if already visible
 				if (input.autocomplete("widget").is(":visible")) {
@@ -82,3 +87,22 @@
 	});
 
 })(jQuery);
+
+jQuery.fn.toggleValuesDisplay = function() {
+	$valuesDiv = jQuery(this).closest(".drilldown-filter")
+		.find(".drilldown-filter-values");
+	if ($valuesDiv.css("display") == "none") {
+		$valuesDiv.css("display", "block");
+		var downArrowImage = mw.config.get( 'sdgDownArrowImage' );
+		this.find("img").attr( "src", downArrowImage );
+        } else {
+		$valuesDiv.css("display", "none");
+		var rightArrowImage = mw.config.get( 'sdgRightArrowImage' );
+		this.find("img").attr( "src", rightArrowImage );
+        }
+};
+
+jQuery(document).ready(function() {
+	jQuery(".semanticDrilldownCombobox").combobox();
+        jQuery(".drilldown-values-toggle").click( function() {jQuery(this).toggleValuesDisplay();} );
+});

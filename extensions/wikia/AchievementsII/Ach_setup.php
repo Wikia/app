@@ -53,28 +53,6 @@ if( !empty( $wgEnableAchievementsExt ) ) {
     $wgSpecialPages['AchievementsSharing'] = 'SpecialAchievementsSharing';
 }
 
-// RIGHTS
-$wgAvailableRights[] = 'platinum';
-$wgGroupPermissions['*']['platinum'] = false;
-$wgGroupPermissions['staff']['platinum'] = true;
-$wgGroupPermissions['helper']['platinum'] = true;
-
-$wgAvailableRights[] = 'sponsored-achievements';
-$wgGroupPermissions['*']['sponsored-achievements'] = false;
-$wgGroupPermissions['staff']['sponsored-achievements'] = true;
-
-$wgAvailableRights[] = 'achievements-exempt';
-$wgGroupPermissions['*']['achievements-exempt'] = false;
-$wgGroupPermissions['helper']['achievements-exempt'] = true;
-$wgGroupPermissions['staff']['achievements-exempt'] = true;
-$wgGroupPermissions['vstf']['achievements-exempt'] = true;
-
-// overrides acievements-exempt
-$wgAvailableRights[] = 'achievements-explicit';
-$wgGroupPermissions['*']['achievements-explicit'] = false;
-$wgGroupPermissions['sysop']['achievements-explicit'] = true;
-$wgGroupPermissions['bureaucrat']['achievements-explicit'] = true;
-
 // AUTOLOADS
 
 // config
@@ -107,7 +85,7 @@ $wgAutoloadClasses[ 'UploadAchievementsFromFile' ] = "{$dir}UploadAchievementsFr
 $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
 
 // I18N
-$wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
+$wgExtensionMessagesFiles['AchievementsII'] = $dir.'AchievementsII.i18n.php';
 $wgExtensionMessagesFiles['AchievementsIIAliases'] = $dir.'AchievementsII.alias.php' ;
 
 // Michał Roszka (Mix) <michal@wikia-inc.com>
@@ -129,7 +107,6 @@ function Ach_Setup() {
 	$wgHooks['ArticleSaveComplete'][] = 'Ach_ArticleSaveComplete';
 	$wgHooks['GetHTMLAfterBody'][] = 'Ach_GetHTMLAfterBody';
 	$wgHooks['UploadVerification'][] = 'Ach_UploadVerification';
-	$wgHooks['Masthead::editCounter'][] = 'Ach_MastheadEditCounter';
 
 	//hooks for user preferences
 	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
@@ -141,52 +118,33 @@ function Ach_Setup() {
 	wfProfileOut(__METHOD__);
 }
 
-function Ach_GetMenu(&$nodes) {
+function Ach_GetMenu( array &$nodes ): bool {
 	$nodes[0]['children'][] = count($nodes);
-	$nodes[] = array(
-		//'original' => 'achievementsleaderboard',
+	$nodes[] = [
 		//the message is stored in /languages/messages/wikia/MessagesEn.php to avoid loading the i18n for the extension
-		'text' => wfMsg('achievements-leaderboard-navigation-item'),
-		'href' => Skin::makeSpecialUrl("Leaderboard"),
-  		//'depth' => 1,
-		//'parentIndex' => 0
-	);
+		'text' => wfMsg( 'achievements-leaderboard-navigation-item' ),
+		'href' => Skin::makeSpecialUrl( "Leaderboard" ),
+	];
 
-	return true;
-}
-
-function Ach_MastheadEditCounter(&$editCounter, $user) {
-	if ($user instanceof User) {
-		global $wgUser;
-
-		if(!($wgUser->getId() == $user->getId() && $wgUser->getOption('hidepersonalachievements'))) {
-			$dbr = wfGetDB(DB_SLAVE);
-			$editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
-
-			$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
-		}
-	} else {
-		$editCounter = '';
-	}
 	return true;
 }
 
 function Ach_UploadVerification($destName, $tempPath, &$error) {
 	if (Ach_isBadgeImage($destName, true /* check user right to upload sponsored badge */ )) {
 
-		$error = wfMsgExt('achievements-upload-not-allowed', array('parse'));
+		$error = wfMessage('achievements-upload-not-allowed' )->parse();
 		return false;
 	}
 	return true;
 }
 
-function Ach_ArticleSaveComplete(	&$article, &$user, $text,
-					$summary, $minoredit, $watchthis,
-					$sectionanchor, &$flags, $revision,
-					&$status, $baseRevId) {
+function Ach_ArticleSaveComplete(
+	WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags,
+	$revision, Status &$status, $baseRevId
+): bool {
 	wfProfileIn(__METHOD__);
 
-	if($status instanceof Status && $status->ok == true && count($status->errors) == 0) {
+	if ( $status->isOK() && $revision instanceof Revision ) {
 		// handle only successful edits and page creations
 
 		$awardingService = new AchAwardingService();
@@ -197,25 +155,25 @@ function Ach_ArticleSaveComplete(	&$article, &$user, $text,
 	return true;
 }
 
-function Ach_GetHTMLAfterBody($skin, &$html) {
+function Ach_GetHTMLAfterBody( Skin $skin, &$html ): bool {
 	wfProfileIn(__METHOD__);
 
-	global $wgOut, $wgTitle, $wgUser;
+	$user = $skin->getUser();
 
-	if($wgUser->isLoggedIn() && !($wgUser->getOption('hidepersonalachievements'))) {
-		if ($wgTitle->getNamespace() == NS_SPECIAL && array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())) == 'MyHome') {
+	if ($user->isLoggedIn() && !( $user->getGlobalPreference( 'hidepersonalachievements' ) ) ) {
+		if( $skin->getTitle()->isSpecial( 'MyHome' ) ) {
 			$awardingService = new AchAwardingService();
-			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
+			$awardingService->awardCustomNotInTrackBadge( $user, BADGE_WELCOME );
 		}
 
-		if((!empty($_SESSION['achievementsNewBadges']) || 5 == rand(1, 20)) && get_class(RequestContext::getMain()->getSkin()) != 'SkinMonobook') {
+		if ( ( !empty( $_SESSION['achievementsNewBadges'] ) || 5 == rand( 1, 20 ) ) && $skin->getSkinName() !== 'monobook' ) {
 			// this works only for Wikia and only in current varnish configuration
 			if (!headers_sent()) {
 				header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');
 			}
 
-			$notificationService = new AchNotificationService($wgUser);
-			$wgOut->addHTML($notificationService->getNotificationHTML());
+			$notificationService = new AchNotificationService( $user );
+			$skin->getOutput()->addHTML($notificationService->getNotificationHTML());
 			if( isset($_SESSION['achievementsNewBadges']) )
 				unset($_SESSION['achievementsNewBadges']);
 		}
@@ -235,20 +193,10 @@ function AchAjax() {
 		$response->setContentType('text/html; charset=utf-8');
 		return $response;
 	}
-	/*elseif ($method == 'takeRankingSnapshot') {
-		ob_start();
-		Ach_TakeRankingSnapshot($wgRequest->getVal('force'));
-		$result = ob_get_clean();
-
-		$response = new AjaxResponse($result);
-		$response->setContentType('text/html; charset=utf-8');
-		return $response;
-	}*/
-
 }
 
 
-function Ach_UserPreferences( $user, &$preferences ) {
+function Ach_UserPreferences( User $user, array &$preferences ): bool {
 	global $wgEnableUserPreferencesV2Ext;
 	$section = (!empty($wgEnableUserPreferencesV2Ext)) ? 'under-the-hood/advanced-displayv2' : 'misc';
 
@@ -264,105 +212,32 @@ function Ach_UserPreferences( $user, &$preferences ) {
 }
 
 /*
- * Used in the mantainance/wikia/takeAchievementsRankingSnapshot.php script
+ * Used in maintenance/wikia/takeAchievementsRankingSnapshot.php script
  */
 function Ach_TakeRankingSnapshot($force = false) {
 	global $wgCityId;
 	$dbw = WikiFactory::db( DB_MASTER );
 
-	$res = $dbw->select('ach_ranking_snapshots', array('date'), array('wiki_id' => $wgCityId));
+	$res = $dbw->select('ach_ranking_snapshots', array('date'), array('wiki_id' => $wgCityId), __METHOD__);
 	$rankingService = new AchRankingService();
 
 	if($row = $dbw->fetchObject($res)) {
 		if(strtotime($row->date) <= (time() - (60*60*24)) || $force) {
-			$dbw->update('ach_ranking_snapshots', array('date' => date('Y-m-d H:i:s'), 'data' => $rankingService->serialize()), array('wiki_id' => $wgCityId));
+			$dbw->update('ach_ranking_snapshots', array('date' => date('Y-m-d H:i:s'), 'data' => $rankingService->serialize()), array('wiki_id' => $wgCityId), __METHOD__);
 			echo("\t* Snapshot for the wiki with ID {$wgCityId} has been updated\n");
-			$dbw->commit();
+			$dbw->commit(__METHOD__);
 		}
 			else {
 			echo("\t* A user ranking snapshot already exists for the wiki with ID {$wgCityId} and is still valid (taken on {$row->date})\n");
 		}
 	}
 	else {
-		$dbw->insert('ach_ranking_snapshots', array('wiki_id' => $wgCityId, 'date' => date('Y-m-d H:m:s'), 'data' => $rankingService->serialize()));
+		$dbw->insert('ach_ranking_snapshots', array('wiki_id' => $wgCityId, 'date' => date('Y-m-d H:m:s'), 'data' => $rankingService->serialize()), __METHOD__);
 		echo("\t* Snapshot for the wiki with ID {$wgCityId} has been taken\n");
-		$dbw->commit();
+		$dbw->commit(__METHOD__);
 	}
 
 	$dbw->freeResult($res);
-}
-
-##
-## TESTING ONLY
-##
-//$wgAjaxExportList[] = 'AchTest';
-function AchTest() {
-
-	global $wgUser, $wgExternalSharedDB;
-
-	set_time_limit(5000);
-
-		// test 1
-		// Expect: badges for edits, categories, pictures, at least one lucky edit and eventually welcome
-
-		// 2000 edits
-		for($i = 0; $i < 500; $i++) {
-
-			$content = date('H:i:s');
-
-			// 2000 category edits
-			$content .= '[[Category:cat'.$i.']]';
-			$content .= '[[Category:Moja testowa]]';
-
-			// 1000 picture uploads
-			if($i % 2 == 0) {
-				$content .= '[[Image:Wiki.png]]';
-			}
-
-			$title = Title::newFromText('CArticle_'.$i);
-			$article = new Article($title);
-			$article->doEdit($content, 'test summary');
-		}
-
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-		$dbw->commit();
-
-		$dbw = wfGetDB(DB_MASTER);
-		$dbw->commit();
-
-
-/*
-		// test 2
-		// Expect: badges for blogposts
-
-		// 2000 edits
-		for($i = 0; $i < 2000; $i++) {
-			$content = date('H:i:s');
-
-			$title = Title::newFromText('AArticle_'.$i);
-			$article = new Article($title);
-			$article->doEdit($content, 'test summary');
-		}
-
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-		$dbw->commit();
-
-		$dbw = wfGetDB(DB_MASTER);
-		$dbw->commit();
-*/
-
-
-	//
-	//
-	/*
-	$flags = false;
-	$revision = Revision::newFromId($article->getRevIdFetched());
-	$status = new Status();
-	Ach_ArticleSaveComplete($article, $wgUser, 'text', 'summary', false, false, false, $flags, $revision, $status, false);
-	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-	$dbw->commit();
-	exit('exit');
-	*/
 }
 
 /**

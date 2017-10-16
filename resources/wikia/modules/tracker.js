@@ -44,9 +44,9 @@
 				'ga_label',
 				'ga_value'
 			],
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
-			gaTrackAdEvent = window.gaTrackAdEvent,
-			gaTrackEvent = window.gaTrackEvent,
+			// @see /extensions/wikia/AnalyticsEngine/js/universal_analytics.js
+			guaTrackEvent = window.guaTrackEvent,
+			guaTrackAdEvent = window.guaTrackAdEvent || window.gaTrackAdEvent,
 			logGroup = 'Wikia.Tracker',
 			// These keys will be removed from tracking data before it gets sent to
 			// GA or the internal datawarehouse.
@@ -108,15 +108,13 @@
 		 *
 		 * @param string event Name of event
 		 * @param object data Extra parameters to track
-		 * @param object successCallback callback function on success (optional)
-		 * @param object errorCallback callback function on failure (optional)
+		 * @param function onComplete callback function when tracking is completed (or fails)
 		 * @param integer timeout How long to wait before declaring the tracking request as failed (optional)
 		 */
-		function internalTrack( event, data, successCallback /* unused */, errorCallback /* unused */, timeout ) {
+		function internalTrack( event, data, onComplete, timeout ) {
 			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
 					script = document.createElement( 'script' ),
-					callbackDelay = 200,
-					requestUrl = 'http://a.wikia-beacon.com/__track/special/' + encodeURIComponent( event ),
+					requestUrl = 'https://beacon.wikia-services.com/__track/special/' + encodeURIComponent( event ),
 					requestParameters = [],
 					p,
 					params;
@@ -176,11 +174,8 @@
 					// Dereference the script
 					script = undefined;
 
-					if ( !abort && typeof successCallback === 'function' ) {
-						setTimeout( successCallback, callbackDelay );
-
-					} else if ( abort && typeof errorCallback === 'function' ) {
-						setTimeout( errorCallback, callbackDelay );
+					if ( typeof(onComplete) === 'function' ) {
+						onComplete();
 					}
 				}
 			};
@@ -206,11 +201,11 @@
 		 *        A key-value hash of parameters.
 		 *
 		 *        keys: (Please ping tracking team leads before adding new ones)
-		 *            action (required for GA tracking)
+		 *            action (required for analytics tracking)
 		 *                One of the values in Wikia.Tracker.ACTIONS.
 		 *            browserEvent (optional)
 		 *                The browser event object that triggered this tracking call.
-		 *            category (required for GA tracking)
+		 *            category (required for analytics tracking)
 		 *                The category for the event.
 		 *            eventName (optional)
 		 *                The name of the event. Defaults to "trackingevent".
@@ -219,12 +214,17 @@
 		 *                The href string for a link. This was used by outbound links
 		 *                to ensure tracking execution. Where posible, bind to "mousedown" instead of "click"
 		 *                to prevent navigation before tracking calls go through.
-		 *            label (optional for GA tracking)
+		 *            label (optional for analytics tracking)
 		 *                The label for the event.
 		 *            trackingMethod (required)
-		 *                Where to track the event to ("ad", "both", "ga", "internal").
-		 *            value (optional for GA tracking)
+		 *                Where to track the event to ("ad", "analytics", "internal").
+		 *                (WARNING: that "analytics" includes "internal" but not "ad")
+		 *            value (optional for analytics tracking)
 		 *                The integer value for the event.
+		 *            callbacks (optional)
+		 *                object containing callback data, keys are:
+		 *                	timeout (int)
+		 *                	complete (function)
 		 *
 		 * @param {...Object} [optionsN]
 		 *        Any number of additional hashes that will be merged into the first.
@@ -232,7 +232,7 @@
 		 * @example
 		 *
 		 *     var defaults = {
-		 *         trackingMethod: 'ga',
+		 *         trackingMethod: 'analytics',
 		 *         category: 'myCategory'
 		 *     };
 		 *
@@ -245,12 +245,13 @@
 				browserEvent = window.event,
 				data = {},
 				eventName = 'trackingevent',
-				gaqArgs = [],
+				analyticsArgs = [],
 				i,
 				key,
 				l,
 				tracking = {},
 				trackingMethod = 'none',
+				callbacks = {},
 				value;
 
 			// Merge options
@@ -266,17 +267,16 @@
 				}
 			}
 
+			callbacks = data.callbacks || callbacks;
 			browserEvent = data.browserEvent || browserEvent;
 			eventName = data.eventName || eventName;
 			trackingMethod = data.trackingMethod || trackingMethod;
 			tracking[ trackingMethod ] = true;
 
-			if ( tracking.both ) {
-				tracking.ga = tracking.internal = true;
-			}
+			delete data.callbacks;
 
-			if ( tracking.none || ( tracking.ga &&
-				// Category and action are compulsory for GA tracking
+			if ( tracking.none || ( tracking.analytics &&
+				// Category and action are compulsory for analytics tracking
 				( !data.ga_category || !data.ga_action || !trackerStub.ACTIONS_REVERSE[ data.ga_action ] )
 			) ) {
 				Wikia.log( 'Missing or invalid parameters', 'error', logGroup );
@@ -289,28 +289,32 @@
 				delete data[ purgeFromData[ i ] ];
 			}
 
-			// Enqueue GA parameters in the proper order
+			// Enqueue analytics parameters in the proper order
 			for ( i = 0, l = gaPushOrder.length; i < l; i++ ) {
-				gaqArgs.push( data[ gaPushOrder[ i ] ] );
+				analyticsArgs.push( data[ gaPushOrder[ i ] ] );
 			}
 
 			Wikia.log( eventName + ' ' +
-				gaqArgs.join( '/' ).replace( rDoubleSlash, '/' ) +
+				analyticsArgs.join( '/' ).replace( rDoubleSlash, '/' ) +
 				' [' + trackingMethod + ' track]', 'info', logGroup );
 
 			// No-interactive = true
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
-			gaqArgs.push( true );
+			// @see /extensions/wikia/AnalyticsEngine/js/universal_analytics.js
+			analyticsArgs.push( true );
 
-			if ( tracking.ad && gaTrackAdEvent ) {
-				gaTrackAdEvent.apply( null, gaqArgs );
+			if ( tracking.ad ) {
+				if ( guaTrackAdEvent ) {
+					guaTrackAdEvent.apply( null, analyticsArgs );
+				}
 			} else {
-				if ( tracking.ga && gaTrackEvent ) {
-					gaTrackEvent.apply( null, gaqArgs );
+				if ( tracking.analytics ) {
+					if ( guaTrackEvent ) {
+						guaTrackEvent.apply( null, analyticsArgs );
+					}
 				}
 
-				if ( tracking.internal ) {
-					internalTrack( eventName, data );
+				if ( tracking.analytics || tracking.internal ) {
+					internalTrack(eventName, data, callbacks.complete, callbacks.timeout);
 				}
 			}
 
@@ -343,12 +347,7 @@
 		};
 	}
 
-	// UMD
+	// Extending Wikia.Tracker, which is also exported as the AMD module
 	extend( trackerStub, tracker( window ) );
-
-	// AMD
-	require( [ 'wikia.tracker' ], function( trackerStub ) {
-		extend( trackerStub, tracker( window ) );
-	});
 
 }(window, undefined));

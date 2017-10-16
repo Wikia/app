@@ -1,85 +1,114 @@
-var Follow = {};
+(function (window, $, mw) {
 
-Follow.hover = function(e) {
-    $(e.target).closest("LI").find(".otherNs,.ajax-unwatch").css('visibility', 'visible');
-}
+	var follow = {
 
+		hover: function (e) {
+			$(e.target).closest('LI')
+				.find('.otherNs, .ajax-unwatch')
+				.css('visibility', 'visible');
+		},
 
-Follow.unhover = function(e) {
-    $(".otherNs,.ajax-unwatch").css('visibility', 'hidden');
-}
+		unhover: function () {
+			$('.otherNs, .ajax-unwatch').css('visibility', 'hidden');
+		},
 
+		uwatch: function (e) {
+			var target = $(e.target),
+				title = target.closest('A').attr('title'),
+				li = target.closest('LI'),
+				api = new mw.Api();
 
-Follow.uwatch = function(e) {
-    var target = $(e.target);
+			// there has to be a callback supplied in the case of success although this returns
+			// a promise, hence the use of $.noop
+			// @todo remove second arg on completion of MAIN-2490 (backporting updates to mediawiki.api.watch)
+			api.unwatch(title, $.noop).done(function () {
+				li.remove();
+			});
 
-    var title = target.closest("A").attr("title");
-    var ul = target.closest("UL");
-    var li = target.closest("LI");
+			return false;
+		},
 
-	api = new mw.Api();
-	api['unwatch'](
-        title,
-        // Success
-        function( watchResponse ) {
-        	li.remove();
-        }, function( ) {}
-	);
-    return false;
-}
+		loadStatus: {},
 
-Follow.loadStatus = [];
+		showMore: function (e) {
+			var $target = $(e.target),
+				head = $target.data('ns'),
+				user_id = $target.data('userid'),
+				key = head.split('-')[3],
+				cTime = new Date(),
+				valueKey;
 
-Follow.showMore = function(e) {
-    var eid = $(e.target).attr("id");
-    var msg = eid.split("-");
-    var key = msg[4];
-    var head = eid.replace('more-', '');
+			// this used to compare against undefined and null
+			// so just use non-strict comparison and check for both at the same time
+			if (follow.loadStatus[key] == null) {
+				valueKey = 'count-' + head;
+				follow.loadStatus[key] = {
+					loaded: wgFollowedPagesPagerLimit,
+					toload: $('#' + valueKey).val()
+				};
+			}
 
-    if(typeof(Follow.loadStatus[key]) == 'undefined' || Follow.loadStatus[key] === null ) {
-        var valueKey = 'count-' + head;
-        Follow.loadStatus[key] = {'loaded' : wgFollowedPagesPagerLimit,'toload' : $('#'+valueKey).val()};
-    }
-    var cTime = new Date();
-    var url = $(e.target).attr("href") + '&from=' + Follow.loadStatus[key].loaded + '&cb=' + cTime.getTime();
-    $.ajax({
-              url: url,
-              success: function(data) {
-                    Follow.loadStatus[key].loaded += wgFollowedPagesPagerLimitAjax;
-                    if (Follow.loadStatus[key].loaded >= Follow.loadStatus[key].toload) {
-                        $(e.target).hide();
-                    }
+			$.ajax({
+				url: mw.util.wikiScript(),
+				data: {
+					action: 'ajax',
+					rs: 'FollowHelper::showAll',
+					head: head,
+					user_id: user_id,
+					from: follow.loadStatus[key].loaded,
+					cb: cTime.getTime()
+				},
+				success: function (data) {
+					follow.loadStatus[key].loaded += wgFollowedPagesPagerLimitAjax;
+					if (follow.loadStatus[key].loaded >= follow.loadStatus[key].toload) {
+						$target.hide();
+					}
 
-                    $( "#" + head ).append(data);
-                    var lis = $( "#wikiafollowedpages-special-heading-article" ).find('li');
-                    lis.unbind().hover( Follow.hover,Follow.unhover );
-                    lis.find('.ajax-unwatch').click(Follow.uwatch);
-              }
-            });
-    return false;
-}
+					$('#' + head).append(data);
+					// VOLDEV-55
+					// previously only checked for mainspace, this checks for every prefixed id
+					var lis = $('[id^="wikiafollowedpages-special-heading-"]').find('li');
+					lis.off().hover(follow.hover, follow.unhover);
+					lis.find('.ajax-unwatch').click(follow.uwatch);
+				}
+			});
 
-Follow.syncUserPrefsEvent = function(e) {
-	Follow.syncUserPrefs($(e.target));
-}
+			return false;
+		},
 
-Follow.syncUserPrefs = function(target) {
-    var syncArray  = [];
-    syncArray[ 'mw-input-enotifminoredits' ] = 'mw-input-enotiffollowedminoredits';
-    syncArray[ 'mw-input-enotifwatchlistpages' ] = 'mw-input-enotiffollowedpages';
-    syncArray[ 'mw-input-enotiffollowedminoredits' ] = 'mw-input-enotifminoredits';
-    syncArray[ 'mw-input-enotiffollowedpages' ] =  'mw-input-enotifwatchlistpages';
-    var dst = $( '#' + syncArray[target.attr('id')] );
-    dst.attr('checked', target.attr('checked'));
-}
+		syncUserPrefsEvent: function (e) {
+			follow.syncUserPrefs($(e.target));
+		},
 
-$(function(){
-    $('.ajax-unwatch').click(Follow.uwatch);
-    $('.ajax-show-more').click(Follow.showMore);
-    $('.ajax-show-more').show();
+		syncUserPrefs: function ($target) {
+			var sync = {};
 
-    $('#mw-input-enotiffollowedminoredits,#mw-input-enotiffollowedpages,#mw-input-enotifminoredits,#mw-input-enotifwatchlistpages').click(Follow.syncUserPrefsEvent);
-    Follow.syncUserPrefs($('#mw-input-enotifminoredits'));
-    Follow.syncUserPrefs($('#mw-input-enotifwatchlistpages'));
-    $('.watched-list li').hover( Follow.hover,Follow.unhover );
-});
+			sync['mw-input-enotifminoredits'] = 'mw-input-enotiffollowedminoredits';
+			sync['mw-input-enotifwatchlistpages'] = 'mw-input-enotiffollowedpages';
+			sync['mw-input-enotiffollowedminoredits'] = 'mw-input-enotifminoredits';
+			sync['mw-input-enotiffollowedpages'] = 'mw-input-enotifwatchlistpages';
+
+			$('#' + sync[$target.attr('id')]).prop('checked', $target.prop('checked'));
+		}
+	};
+
+	$(function () {
+		var ids = [
+			'#mw-input-enotiffollowedminoredits',
+			'#mw-input-enotiffollowedpages',
+			'#mw-input-enotifminoredits',
+			'#mw-input-enotifwatchlistpages'
+		].join(',');
+
+		$('.ajax-unwatch').click(follow.uwatch);
+		$('.ajax-show-more').click(follow.showMore).show();
+
+		$(ids).click(follow.syncUserPrefsEvent);
+		follow.syncUserPrefs($('#mw-input-enotifminoredits'));
+		follow.syncUserPrefs($('#mw-input-enotifwatchlistpages'));
+		$('.watched-list li').hover(follow.hover, follow.unhover);
+	});
+
+	window.follow = follow;
+
+}(this, jQuery, mediaWiki));

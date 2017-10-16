@@ -106,8 +106,9 @@ class TitleBlacklist {
 					return $article->getContent();
 				}
 			}
-		} elseif( $source['type'] == TBLSRC_URL && count( $source ) >= 2 ) {
-			return self::getHttp( $source['src'] );
+		} elseif( $source['type'] == TBLSRC_GLOBALPAGE && count( $source ) >= 2 ) {
+			list( $title, $ns, $wikia ) = $source['src'];
+			return GlobalTitle::newFromText( $title, $ns, $wikia )->getContent();
 		} elseif( $source['type'] == TBLSRC_FILE && count( $source ) >= 2 ) {
 			if( file_exists( $source['src'] ) ) {
 				return file_get_contents( $source['src'] );
@@ -227,26 +228,6 @@ class TitleBlacklist {
 			$this->loadWhitelist();
 		}
 		return $this->mWhitelist;
-	}
-
-	/**
-	 * Get the text of a blacklist source via HTTP
-	 *
-	 * @param $url string URL of the blacklist source
-	 * @return string The content of the blacklist source as a string
-	 */
-	private static function getHttp( $url ) {
-		global $messageMemc, $wgTitleBlacklistCaching;
-		$key = "title_blacklist_source:" . md5( $url ); // Global shared
-		$warnkey = wfMemcKey( "titleblacklistwarning", md5( $url ) );
-		$result = $messageMemc->get( $key );
-		$warn = $messageMemc->get( $warnkey );
-		if ( !is_string( $result ) || ( !$warn && !mt_rand( 0, $wgTitleBlacklistCaching['warningchance'] ) ) ) {
-			$result = Http::get( $url );
-			$messageMemc->set( $warnkey, 1, $wgTitleBlacklistCaching['warningexpiry'] );
-			$messageMemc->set( $key, $result, $wgTitleBlacklistCaching['expiry'] );
-		}
-		return $result;
 	}
 
 	/**

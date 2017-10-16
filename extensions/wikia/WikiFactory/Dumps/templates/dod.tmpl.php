@@ -42,7 +42,8 @@
 		<td style="border-left: 0">
 			<form>
 				<?php if ( $available ) { ?>
-				<input type="submit" value="<?php $this->msg( 'dump-database-request-submit' ) ?>" />
+					<input type="hidden" name="editToken" value="<?php echo $editToken ?>" />
+					<input type="submit" value="<?php $this->msg( 'dump-database-request-submit' ) ?>" />
 				<?php } else { ?>
 				<input type="submit" value="<?php $this->msg( 'dump-database-request-already-submitted' ) ?>" disabled="disabled" />
 				<?php } ?>

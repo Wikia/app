@@ -1,3 +1,5 @@
+@import "skins/shared/color";
+
 // Page
 $color-ve-hover: darken($color-page, 10%);
 $color-ve-page-secondary: darken($color-page, 10%);
@@ -27,4 +29,9 @@ $color-ve-gradient-shadow: darken($color-ve-gradient, 20%);
 	$color-ve-gradient-dark: darken($color-ve-gradient, 5%);
 	$color-ve-gradient-light: lighten($color-ve-gradient, 5%);
 	$color-ve-gradient-shadow: darken($color-ve-gradient, 10%);
+}
+
+$color-page-opposite: black;
+@if $is-dark-wiki {
+	$color-page-opposite: white;
 }

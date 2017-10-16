@@ -31,7 +31,9 @@ class Http {
 	 *		                    to avoid attacks on intranet services accessible by HTTP.
 	 *    - userAgent           A user agent, if you want to override the default
 	 *                          MediaWiki/$wgVersion
-	 * @return Mixed: (bool)false on failure or a string on success
+	 *    - headers             Additional headers for request
+	 *    - returnInstance      If set the method will return MWHttpRequest instance instead of string|boolean
+	 * @return Mixed: (bool)false on failure or a string on success or MWHttpRequest instance if returnInstance option is set
 	 */
 	public static function request( $method, $url, $options = array() ) {
 		$fname = __METHOD__ . '::' . $method;
@@ -44,14 +46,78 @@ class Http {
 			$options['timeout'] = 'default';
 		}
 
+		// Wikia change - start
+		// @see PLATFORM-1856
+		$isExternal = !empty( $options[ 'external' ] );
+		if ( $isExternal ) {
+			$options[ 'noProxy' ] = true;
+		}
+		// Wikia change - end
+
 		$req = MWHttpRequest::factory( $url, $options );
+		// Wikia change - @author: suchy - begin
+		if ( isset( $options[ 'headers' ] ) && is_array( $options[ 'headers' ] ) ) {
+			foreach ( $options[ 'headers' ] as $name => $value ) {
+				$req->setHeader( $name, $value );
+			}
+		}
+
+		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
 		}
+
+		// Wikia change - @author: mech - begin
+		$requestTime = microtime( true );
+		// Wikia change - end
+
 		$status = $req->execute();
 
-		if ( $status->isOK() ) {
+		// Wikia change - @author: mech - begin
+		// log all the requests we make
+		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService', 'Solarium_Client', 'Solarium_Client_Adapter_Curl', 'ExternalHttp' ] );
+		$isOk = $status->isOK();
+
+		Hooks::run( 'AfterHttpRequest', [ $method, $url, $caller, $requestTime, $req ] ); # Wikia change
+
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
+			$backendTime = $req->getResponseHeader('x-backend-response-time') ?: 0;
+
+			$params = [
+				'statusCode' => $req->getStatus(),
+				'served-by' => $req->getResponseHeader('x-served-by') ?: '',
+				'reqMethod' => $method,
+				'reqUrl' => $url,
+				'caller' => $caller,
+				'isOk' => $isOk,
+				'isExternal' => $isExternal,
+				'requestTimeMS' => $requestTime,
+				'backendTimeMS' => intval( 1000 * $backendTime),
+			];
+			if ( !$isOk ) {
+				$params[ 'responseHeaders' ] = $req->getResponseHeaders();
+				$params[ 'reqStatus' ] = $status;
+				$params[ 'exception' ] = new Exception( $url, $req->getStatus() );
+				$level = 'error';
+				$message = "HTTP request failed - {$caller}";
+			}
+			else {
+				$level = 'debug';
+				$message = 'Http request';
+			}
+
+			\Wikia\Logger\WikiaLogger::instance()->$level( $message, $params );
+		}
+
+		// Wikia change - @author: nAndy - begin
+		// Introduced new returnInstance options to return MWHttpRequest instance instead of string-bool mix
+		if( !empty( $options['returnInstance'] ) ) {
+			$ret = $req;
+		} else if( $isOk ) {
 			$ret = $req->getContent();
+			// Wikia change - end
 		} else {
 			$ret = false;
 		}
@@ -67,7 +133,7 @@ class Http {
 	 * @param $url
 	 * @param $timeout string
 	 * @param $options array
-	 * @return string
+	 * @return string|bool|MWHttpRequest
 	 */
 	public static function get( $url, $timeout = 'default', $options = array() ) {
 		$options['timeout'] = $timeout;
@@ -80,7 +146,7 @@ class Http {
 	 *
 	 * @param $url
 	 * @param $options array
-	 * @return string
+	 * @return string|bool|MWHttpRequest
 	 */
 	public static function post( $url, $options = array() ) {
 		return Http::request( 'POST', $url, $options );
@@ -200,6 +266,17 @@ class MWHttpRequest {
 	protected $respStatus = "200 Ok";
 	protected $respHeaders = array();
 
+	// Wikia change - begin - @author: wladek
+	/**
+	 * Send X-Request-Id and X-Request-Origin-Host headers
+	 * @var bool
+	 */
+	protected $internalRequest = false;
+	// Wikia change - end
+
+	/**
+	 * @var Status
+	 */
 	public $status;
 
 	/**
@@ -230,6 +307,7 @@ class MWHttpRequest {
 		// Wikia change - @author: wladek - begin
 		// allow overriding of curl options
 		$members[] = "curlOptions";
+		$members[] = "internalRequest";
 		// Wikia change - end
 
 		foreach ( $members as $o ) {
@@ -416,7 +494,8 @@ class MWHttpRequest {
 		}
 
 		if ( is_object( $wgTitle ) && !isset( $this->reqHeaders['Referer'] ) ) {
-			$this->setReferer( wfExpandUrl( $wgTitle->getFullURL(), PROTO_CURRENT ) );
+			$referer = ( $wgTitle->isLocal() ) ? $wgTitle->getFullURL() : $_SERVER['REQUEST_URI'];
+			$this->setReferer( wfExpandUrl( $referer, PROTO_CURRENT ) );
 		}
 
 		if ( !$this->noProxy ) {
@@ -430,6 +509,10 @@ class MWHttpRequest {
 		if ( !isset( $this->reqHeaders['User-Agent'] ) ) {
 			$this->setUserAgent( Http::userAgent() );
 		}
+
+		// Wikia change - begin - @author: wladek
+		\Wikia\Tracer\WikiaTracer::instance()->setRequestHeaders( $this->reqHeaders, /* bool */$this->internalRequest );
+		// Wikia change - end
 	}
 
 	/**
@@ -688,6 +771,10 @@ class CurlHttpRequest extends MWHttpRequest {
 		return strlen( $content );
 	}
 
+	/**
+	 * @return Status
+	 * @throws MWException
+	 */
 	public function execute() {
 		parent::execute();
 
@@ -695,7 +782,19 @@ class CurlHttpRequest extends MWHttpRequest {
 			return $this->status;
 		}
 
-		$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+		// Wikia change PLATFORM-1298 michal@wikia-inc.com
+		if ( $this->parsedUrl['scheme'] == 'https' ) {
+			$this->proxy = null;
+		}
+
+		// PLATFORM-1317: only set when the proxy is not an empty value [macbre]
+		if ( $this->proxy && !$this->noProxy ) {
+			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+
+			wfDebug( sprintf( "%s: setting a proxy to '%s'\n", __METHOD__, $this->proxy ) );
+		}
+		// End of Wikia change
+
 		$this->curlOptions[CURLOPT_TIMEOUT] = $this->timeout;
 		$this->curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
 		$this->curlOptions[CURLOPT_WRITEFUNCTION] = $this->callback;
@@ -736,13 +835,42 @@ class CurlHttpRequest extends MWHttpRequest {
 			// Wikia change - end
 		}
 
+		// Wikia change - begin
+		// remove CURLOPT_TIMEOUT if CURLOPT_TIMEOUT_MS is set
+		if ( isset( $this->curlOptions[CURLOPT_TIMEOUT_MS] ) ) {
+			unset( $this->curlOptions[CURLOPT_TIMEOUT] );
+		}
+		// Wikia change - end
+
 		$this->curlOptions[CURLOPT_HTTPHEADER] = $this->getHeaderList();
 
 		$curlHandle = curl_init( $this->url );
 
-		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
-			throw new MWException( "Error setting curl options." );
+		// Wikia change - begin
+		/**
+		 * @author Michał Roszka <michal@wikia-inc.com>
+		 * @author macbre
+		 * @see PLATFORM-1317
+		 * @see PLATFORM-1308
+		 */
+		foreach ( $this->curlOptions as $option => $value ) {
+			if ( !curl_setopt( $curlHandle, $option, $value ) ) {
+				$e = new MWException( "Error setting curl options." );
+				if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+					\Wikia\Logger\WikiaLogger::instance()->error(
+						'PLATFORM-1317' ,
+						[
+							'option'     => $option,
+							'value'      => bin2hex( serialize( $value ) ),
+							'value_raw'  => $value,
+							'exception'  => $e
+						]
+					);
+				}
+				throw $e;
+			}
 		}
+		// Wikia change - end
 
 		if ( $this->followRedirects && $this->canFollowRedirects() ) {
 			wfSuppressWarnings();
@@ -756,7 +884,9 @@ class CurlHttpRequest extends MWHttpRequest {
 		}
 
 		if ( false === curl_exec( $curlHandle ) ) {
-			$code = curl_error( $curlHandle );
+			// Wikia changes - begin
+			$code = curl_errno( $curlHandle );
+			// Wikia change - end
 
 			if ( isset( self::$curlMessageMap[$code] ) ) {
 				$this->status->fatal( self::$curlMessageMap[$code] );
@@ -929,5 +1059,55 @@ class PhpHttpRequest extends MWHttpRequest {
 		fclose( $fh );
 
 		return $this->status;
+	}
+}
+
+
+/**
+ * Wikia change
+ *
+ * Use ExternalHttp to make external HTTP requests. This will by-pass the Wikia HTTP proxy and skip adding our custom HTTP headers used for tracing requests.
+ *
+ * @see PLATFORM-1856
+ */
+class ExternalHttp {
+
+	/**
+	 * Simple wrapper for Http::request( 'GET' )
+	 * @see Http::request()
+	 *
+	 * @param $url
+	 * @param $timeout string
+	 * @param $options array
+	 * @return string|bool|MWHttpRequest
+	 */
+	public static function get( $url, $timeout = 'default', array $options = array() ) {
+		$options['timeout'] = $timeout;
+		return self::request( 'GET', $url, $options );
+	}
+
+	/**
+	 * Simple wrapper for Http::request( 'POST' )
+	 * @see Http::request()
+	 *
+	 * @param $url
+	 * @param $options array
+	 * @return string|bool|MWHttpRequest
+	 */
+	public static function post( $url, array $options = array() ) {
+		return self::request( 'POST', $url, $options );
+	}
+
+	/**
+	 * Let Http::request perform the request and pass 'external' flag in request's options.
+	 *
+	 * @param string $method
+	 * @param string $url
+	 * @param array $options
+	 * @return string|bool|MWHttpRequest
+	 */
+	public static function request( $method, $url, array $options = array() ) {
+		$options[ 'external' ] = true; # @see PLATFORM-1856
+		return Http::request( $method, $url, $options );
 	}
 }

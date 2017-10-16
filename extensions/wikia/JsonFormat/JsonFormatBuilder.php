@@ -40,9 +40,8 @@ class JsonFormatBuilder {
 			array_pop($this->jsonStack);
 			$this->currentContainer = $this->jsonStack[sizeof($this->jsonStack)-1];
 		} else {
-			var_dump($keyValueNode);
-			var_dump($this->jsonStack);
-			die();
+			# log invalid instead of failing
+			\Wikia\Logger\WikiaLogger::instance()->debug('Invalid infobox');
 		}
 	}
 

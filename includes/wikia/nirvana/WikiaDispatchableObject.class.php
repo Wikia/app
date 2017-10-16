@@ -10,10 +10,12 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  */
 abstract class WikiaDispatchableObject extends WikiaObject {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_PHP;
+	const NIRVANA_API_PATH = '/wikia.php';
 
 	/**
 	 * Mediawiki RequestContext object
-	 * @var $context RequestContext
+	 * @var IContextSource $context
 	 */
 	protected $context = null;
 
@@ -82,17 +84,34 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	}
 
 	/**
-	 * send request to another controller/method
+	 * send request to another controller/method, mark as internal by default
 	 *
 	 * @param string $controllerName
 	 * @param string $methodName
 	 * @param array $params
+	 * @param bool $internal
 	 * @return WikiaResponse
 	 */
-	protected function sendRequest( $controllerName, $methodName, $params = array() ) {
-		return $this->app->sendRequest( $controllerName, $methodName, $params );
+	protected function sendRequest( $controllerName, $methodName, $params = array(), $internal = true ) {
+		return $this->app->sendRequest( $controllerName, $methodName, $params, $internal );
 	}
 
+	/**
+	 * Send request to another controller/method, mark as external
+	 *
+	 * @param $controllerName
+	 * @param $methodName
+	 * @param array $params
+	 * @param int $exceptionMode exception mode
+	 * @return WikiaResponse
+	 */
+	protected function sendExternalRequest( $controllerName, $methodName, $params = array(), $exceptionMode = null ) {
+		return $this->app->sendExternalRequest( $controllerName, $methodName, $params, $exceptionMode );
+	}
+
+	protected function sendRequestAcceptExceptions( $controllerName, $methodName, $params = [] ) {
+		return $this->app->sendRequest( $controllerName, $methodName, $params, true, WikiaRequest::EXCEPTION_MODE_RETURN );
+	}
 	/**
 	 * Convenience method for sending requests to the same controller
 	 *
@@ -107,7 +126,8 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	/**
 	 * Convenience method for getting a value from the request object
 	 * @param string $key
-	 * @param string $value
+	 * @param string $default
+	 * @return mixed
 	 */
 
 	protected function getVal($key, $default = null) {
@@ -137,10 +157,10 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 
 	/**
 	 * set context
-	 * @param RequestContext $context
+	 * @param IContextSource $context
 	 */
 
-	public function setContext(RequestContext $context) {
+	public function setContext( IContextSource $context ) {
 		$this->context = $context;
 	}
 
@@ -178,6 +198,27 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 */
 	public function getResponse() {
 		return $this->response;
+	}
+
+	/**
+	 * Check write requests were correctly POSTed and passed a valid edit
+	 * token.
+	 *
+	 * @throws BadRequestException If the request either wasn't POSTed or didn't provide
+	 *                             a valid edit token.
+	 */
+	public function checkWriteRequest() {
+		// skip internal requests, write access should be checked when direct user interaction happen
+		if ( !$this->request->isInternal() ) {
+			$this->request->assertValidWriteRequest( $this->wg->User );
+		}
+	}
+
+	protected function setTokenMismatchError() {
+		$this->response->setValues( [
+			'status' => 'error',
+			'errormsg' => wfMessage( 'sessionfailure' )->escaped(),
+		] );
 	}
 
 	// Magic setting of template variables so we don't have to do $this->response->setVal
@@ -221,32 +262,78 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	}
 
 	/**
-	 * Returns the URL that would be used for an Ajax or API call (Nirvana) to access this method
+	 * Alias: WikiaDispatchableObject::getFullUrl
+	 *
+	 * Returns the full URL that would be used for an Ajax or API call (Nirvana) to access this method
 	 *
 	 * @param string $method The method name
 	 * @param array $params An hash with the parameters for the request and their possible values,
 	 * schema ['paramName' => 'value', ...]
+	 * @param string $format Response format - Constants defined in WikiaResponse
 	 *
 	 * @return string The absolute URL
 	 */
-	public static function getUrl( $method, Array $params = null ) {
-		$app = F::app();
-		$basePath = wfExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
+	public static function getUrl( $method, array $params = null, $format = null ) {
+		return self::getFullUrl( $method, $params, $format );
+	}
 
-		$baseParams = array(
-			'controller' => preg_replace( "/Controller$/", '', get_called_class() ),
-			'method' => $method
-		);
+	/**
+	 * Returns the local URL that would be used for an Ajax or API call (Nirvana) to access this method
+	 *
+	 * @param string $method The method name
+	 * @param array $params An hash with the parameters for the request and their possible values,
+	 * schema ['paramName' => 'value', ...]
+	 * @param string $format Response format - Constants defined in WikiaResponse
+	 *
+	 * @return string The absolute URL
+	 */
+	public static function getLocalUrl( $method, $params = null, $format = null ) {
+		$baseParams = array( 'controller' => preg_replace( "/Controller$/", '', get_called_class() ), 'method' => $method );
 
-		if ( !empty( $params ) ) {
+		if ( !empty( $format ) ) {
+			$params['format'] = $format;
+		}
+
+		if ( ! empty( $params ) ) {
 			//WikiaAPI requests accept only sorted params
 			//to cut down caching variants
 			ksort( $params );
 			$baseParams = array_merge( $baseParams, $params );
 		}
 
-		return wfAppendQuery( $basePath, $baseParams );
+		return wfAppendQuery( self::NIRVANA_API_PATH, $baseParams );
 	}
+
+	/**
+	 * Returns the full URL that would be used for an Ajax or API call (Nirvana) to access this method
+	 *
+	 * @param string $method The method name
+	 * @param array $params An hash with the parameters for the request and their possible values,
+	 * schema ['paramName' => 'value', ...]
+	 * @param string $format Response format - Constants defined in WikiaResponse
+	 *
+	 * @return string The absolute URL
+	 */
+	public static function getFullUrl( $method, $params = null, $format = null ) {
+		$app = F::app();
+		return wfExpandUrl( $app->wg->Server . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
+	}
+
+	/**
+	 * Returns the nocookie URL that would be used for an API call (Nirvana) to access this method
+	 *
+	 * @param string $method The method name
+	 * @param array $params An hash with the parameters for the request and their possible values,
+	 * schema ['paramName' => 'value', ...]
+	 * @param string $format Response format - Constants defined in WikiaResponse
+	 *
+	 * @return string The absolute URL
+	 */
+	public static function getNoCookieUrl( $method, $params = null, $format = null ) {
+		$app = F::app();
+		return wfExpandUrl( $app->wg->CdnApiUrl . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
+	}
+
 
 	/**
 	 * Purges URL's for multiple methods at once
@@ -314,5 +401,16 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		}
 
 		return self::purgeMethods( $map );
+	}
+
+	/**
+	 * Allow dispatchable objects to define an alternate location for where templates can be found.
+	 * This base definition returns null so by default WikiaView.class.php will determine
+	 * this directory.
+	 *
+	 * @return null
+	 */
+	public static function getTemplateDir() {
+		return null;
 	}
 }

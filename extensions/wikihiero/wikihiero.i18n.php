@@ -1,14 +1,8 @@
 <?php
-/**
- * Internationalisation file for Wikihiero extension.
- *
- * @file
- * @ingroup Extensions
- */
+/** Internationalization file for /extensions/wikihiero/wikihiero extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'wikihiero-desc' => 'Adds <code>&lt;hiero&gt;</code> tag to display [[Special:Hieroglyphs|hieroglyphs]]',
 	'hieroglyphs' => 'Try hieroglyph markup',
 	'wikihiero-special-page-text' => 'Use this page to try out WikiHiero markup.
@@ -55,16 +49,9 @@ See [//en.wikipedia.org/wiki/Help:WikiHiero_syntax here] for markup description.
 	'wikihiero-category-Y' => 'Y: Writings, games, music',
 	'wikihiero-category-Z' => 'Z: Strokes, geometrical figures, etc.',
 	'wikihiero-category-Aa' => 'Aa: Unclassified',
-);
+];
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- * @author MaxSem
- * @author Raimond Spekking
- * @author Raymond
- * @author Yekrats
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wikihiero-desc' => '{{desc}}
 Wikihiero is a markup language to render hieroglyphics. See [//www.mediawiki.org/wiki/Extension:WikiHiero Extension:WikiHiero] for more information.',
 	'hieroglyphs' => 'WikiHiero is a markup language to render Hieroglyphics. See [//www.mediawiki.org/wiki/Extension:WikiHiero Extension:WikiHiero] for more information.',
@@ -73,14 +60,10 @@ Wikihiero is a markup language to render hieroglyphics. See [//www.mediawiki.org
 	'wikihiero-th-code' => '{{Identical|Code}}',
 	'wikihiero-th-result' => '{{Identical|Result}}',
 	'wikihiero-comment' => '{{Identical|Comment}}',
-);
+];
 
-/** Afrikaans (Afrikaans)
- * @author Ansumang
- * @author Naudefj
- */
-$messages['af'] = array(
-	'wikihiero-desc' => "Maak 'n <code>&lt;hiero&gt;</code> etiket beskikbaar vir die vertoon van [[Special:Hieroglyphs|hierogliewe]]",
+$messages['af'] = [
+	'wikihiero-desc' => 'Maak \'n <code>&lt;hiero&gt;</code> etiket beskikbaar vir die vertoon van [[Special:Hieroglyphs|hierogliewe]]',
 	'wikihiero-input' => 'Invoerteks',
 	'wikihiero-result' => 'Resultaat',
 	'wikihiero-syntax' => 'Sintaks',
@@ -90,28 +73,17 @@ $messages['af'] = array(
 	'wikihiero-load-error' => 'Fout met die laai!',
 	'wikihiero-category-A' => 'A: Die man en sy beroepe',
 	'wikihiero-category-Aa' => 'Aa: Ongeklassifiseerd',
-);
+];
 
-/** Gheg Albanian (Gegë)
- * @author Mdupont
- */
-$messages['aln'] = array(
+$messages['aln'] = [
 	'wikihiero-desc' => 'Adds <code><hiero></code> tag për të shfaqur [[Special:Hieroglyphs|hieroglifet]]',
-);
+];
 
-/** Aragonese (Aragonés)
- * @author Juanpabl
- */
-$messages['an'] = array(
+$messages['an'] = [
 	'wikihiero-desc' => 'Adibe a etiqueta <code>&lt;hiero&gt;</code> ta mostrar [[[[Special:Hieroglyphs|cheroglifos]]',
-);
+];
 
-/** Arabic (العربية)
- * @author Meno25
- * @author روخو
- * @author زكريا
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wikihiero-desc' => 'يضيف الوسم <code>&lt;hiero&gt;</code> لعرض الهيروغليفية',
 	'hieroglyphs' => 'جرب ترميز الهيرغليفية',
 	'wikihiero-special-page-text' => 'استخدم هذه الصفحة لتجربة ترميز ويكي هييرو.
@@ -127,44 +99,29 @@ $messages['ar'] = array(
 	'wikihiero-eol' => 'نهاية السطر',
 	'wikihiero-comment' => 'تعليق',
 	'wikihiero-load-error' => 'خطأ تحميل!',
-);
+];
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Ramsis II
- */
-$messages['arz'] = array(
+$messages['arz'] = [
 	'wikihiero-desc' => 'بيضيف تاج ال <code>&lt;hiero&gt;</code> علشان يعرض الهيروغليفي',
-);
+];
 
-/** Asturian (Asturianu)
- * @author Esbardu
- * @author Xuacu
- */
-$messages['ast'] = array(
-	'wikihiero-desc' => "Amiesta la etiqueta <code>&lt;hiero&gt;</code> p'amosar [[Special:Hieroglyphs|xeroglíficos]]",
-	'hieroglyphs' => "Prueba'l formatu xeroglíficu",
+$messages['ast'] = [
+	'wikihiero-desc' => 'Amiesta la etiqueta <code>&lt;hiero&gt;</code> p\'amosar [[Special:Hieroglyphs|xeroglíficos]]',
+	'hieroglyphs' => 'Prueba\'l formatu xeroglíficu',
 	'wikihiero-special-page-text' => 'Usa esta páxina pa probar el formatu WikiHiero.
 Llee [//en.wikipedia.org/wiki/Help:WikiHiero_syntax equí] la descripción del formatu.',
-	'wikihiero-input' => "Testu d'entrada",
+	'wikihiero-input' => 'Testu d\'entrada',
 	'wikihiero-result' => 'Resultáu',
 	'wikihiero-load-error' => '¡Fallu al cargar!',
-);
+];
 
-/** Azerbaijani (Azərbaycanca)
- * @author Cekli829
- * @author Sortilegus
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'wikihiero-desc' => '[[Special:Hieroglyphs|Heroqlifləri]] göstərmək üçün <code>&lt;hiero&gt;</code> teqini əlavə edir',
 	'wikihiero-comment' => 'Şərh',
 	'wikihiero-category-G' => 'G: Quşlar',
-);
+];
 
-/** Bashkir (Башҡортса)
- * @author Assele
- * @author Haqmar
- */
-$messages['ba'] = array(
+$messages['ba'] = [
 	'wikihiero-desc' => '[[Special:Hieroglyphs|Иероглифтарҙы]] күрһәтеү өсөн <code>&lt;hiero&gt;</code> билдәһен өҫтәй',
 	'wikihiero-input' => 'Инеш тексты:',
 	'wikihiero-result' => 'Һөҙөмтә',
@@ -177,28 +134,17 @@ $messages['ba'] = array(
 	'wikihiero-eol' => 'Юл аҙағы',
 	'wikihiero-superposition' => 'Вертикаль группалау',
 	'wikihiero-juxtaposition' => 'Горизонталь группалау',
-);
+];
 
-/** Bavarian (Boarisch)
- * @author Man77
- */
-$messages['bar'] = array(
-	'wikihiero-desc' => "Fügt s'<code>&lt;hiero&gt;</code>-Tag zum Formatian vu [[Special:Hieroglyphs|Hieroglyphn]] dazua",
-);
+$messages['bar'] = [
+	'wikihiero-desc' => 'Fügt s\'<code>&lt;hiero&gt;</code>-Tag zum Formatian vu [[Special:Hieroglyphs|Hieroglyphn]] dazua',
+];
 
-/** Southern Balochi (بلوچی مکرانی)
- * @author Mostafadaneshvar
- */
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'wikihiero-desc' => 'هور کنت <code>&lt;hiero&gt;</code> برچسپء په پیشدارگ هیروگلیف',
-);
+];
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- * @author Renessaince
- */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'wikihiero-desc' => 'Дадае тэг <code>&lt;hiero&gt;</code> для адлюстраваньня [[Special:Hieroglyphs|гіерогліфаў]]',
 	'hieroglyphs' => 'Паспрабуйце герагліфічную разьметку',
 	'wikihiero-special-page-text' => 'Выкарыстоўвайце гэтую старонку, каб паспрабаваць разьметку WikiHiero.
@@ -245,13 +191,9 @@ $messages['be-tarask'] = array(
 	'wikihiero-category-Y' => 'Пісьмо, гульні, музыка',
 	'wikihiero-category-Z' => 'Крэсьленьне, геамэтрычныя фігуры і т. п.',
 	'wikihiero-category-Aa' => 'Неклясыфікаванае',
-);
+];
 
-/** Bulgarian (Български)
- * @author DCLXVI
- * @author Spiritia
- */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wikihiero-desc' => 'Добавя етикет <code>&lt;hiero&gt;</code> за показване на [[Special:Hieroglyphs|йероглифи]]',
 	'wikihiero-result' => 'Резултат',
 	'wikihiero-syntax' => 'Синтаксис',
@@ -291,44 +233,37 @@ $messages['bg'] = array(
 	'wikihiero-category-Y' => 'Y: Литературни произведения, игри, музика',
 	'wikihiero-category-Z' => 'Z: Линии, геометрични фигури и т.н.',
 	'wikihiero-category-Aa' => 'Aa: Некласифицирани',
-);
+];
 
-/** Bengali (বাংলা)
- * @author Bellayet
- */
-$messages['bn'] = array(
+$messages['bn'] = [
 	'wikihiero-result' => 'ফলাফল',
 	'wikihiero-th-code' => 'কোড',
 	'wikihiero-th-result' => 'ফলাফল',
-);
+];
 
-/** Breton (Brezhoneg)
- * @author Fulup
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'wikihiero-desc' => 'Ouzhpennañ a ra ar valizenn <code>&lt;hiero&gt;</code> evit embann ar [[Special:Hieroglyphs|hieroglifoù]].',
 	'hieroglyphs' => 'Un taol esae gant ur balizennañ dre hieroglif',
 	'wikihiero-special-page-text' => 'Grit gant ar bajenn-mañ evit arnodiñ ar balizennañ WikiHiero.
 Gwelet [//en.wikipedia.org/wiki/Help:WikiHiero_syntax amañ] evit deskrivadur ar balizennañ.',
 	'wikihiero-input' => 'Testenn merket',
-	'wikihiero-result' => "Disoc'h",
+	'wikihiero-result' => 'Disoc\'h',
 	'wikihiero-syntax' => 'Ereadur',
 	'wikihiero-th-code' => 'Kod',
 	'wikihiero-th-meaning' => 'Ster',
-	'wikihiero-th-example' => "Skouer ur c'hod",
-	'wikihiero-th-result' => "Disoc'h",
+	'wikihiero-th-example' => 'Skouer ur c\'hod',
+	'wikihiero-th-result' => 'Disoc\'h',
 	'wikihiero-separator' => 'Dispartier',
 	'wikihiero-eol' => 'Dibenn al linenn',
 	'wikihiero-superposition' => 'Isrann',
 	'wikihiero-juxtaposition' => 'Kenstok',
 	'wikihiero-mirror' => 'Sevel skeud ur hieroglif',
-	'wikihiero-void' => "Bloc'had goullo klok e led.",
-	'wikihiero-half-void' => "Bloc'had goullo hanter led.",
+	'wikihiero-void' => 'Bloc\'had goullo klok e led.',
+	'wikihiero-half-void' => 'Bloc\'had goullo hanter led.',
 	'wikihiero-comment' => 'Evezhiadenn',
 	'wikihiero-load-error' => 'Fazi kargañ !',
 	'wikihiero-category-A' => 'A: An dud hag o obererezh',
-	'wikihiero-category-B' => "A: Ar merc'hed hag o obererezh",
+	'wikihiero-category-B' => 'A: Ar merc\'hed hag o obererezh',
 	'wikihiero-category-C' => 'C: Doueoù denheñvel',
 	'wikihiero-category-D' => 'D: Rann eus korf an den',
 	'wikihiero-category-E' => 'E: Bronneged',
@@ -345,34 +280,28 @@ Gwelet [//en.wikipedia.org/wiki/Help:WikiHiero_syntax amañ] evit deskrivadur ar
 	'wikihiero-category-Q' => 'Q: Pezhioù arrebeuri ti ha bez',
 	'wikihiero-category-R' => 'R: Pezhioù arrebeuri relijiel hag arouezioù sakr',
 	'wikihiero-category-S' => 'S: Kurunennoù, saeoù, bizhier, h.a.',
-	'wikihiero-category-T' => "T: Brezel, hemolc'h, kigerezh",
+	'wikihiero-category-T' => 'T: Brezel, hemolc\'h, kigerezh',
 	'wikihiero-category-U' => 'U: Gounezerezh, artizanerezh ha micherioù',
 	'wikihiero-category-V' => 'V: Kordenn, gwienn, paneroù, seier, h.a.',
 	'wikihiero-category-W' => 'W: Listri mein ha pri-poazh',
 	'wikihiero-category-X' => 'X: Bara ha gwestell',
-	'wikihiero-category-Y' => "Y: Skrivañ, c'hoarioù, sonerezh",
+	'wikihiero-category-Y' => 'Y: Skrivañ, c\'hoarioù, sonerezh',
 	'wikihiero-category-Z' => 'Z: Tresoù, lunioù mentoniel, h.a.',
 	'wikihiero-category-Aa' => 'Aa: Dirumm',
-);
+];
 
-/** Bosnian (Bosanski)
- * @author CERminator
- */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'wikihiero-desc' => 'Dodaje <code>&lt;hiero&gt;</code> tag za prikazivanje [[Special:Hieroglyphs|hieroglifa]]',
-);
+];
 
-/** Catalan (Català)
- * @author Paucabot
- */
-$messages['ca'] = array(
-	'wikihiero-desc' => "Afegeix l'etiqueta <code>&lt;hiero&gt;</code> per a visualitzar [[Special:Hieroglyphs|jeroglífics]]",
+$messages['ca'] = [
+	'wikihiero-desc' => 'Afegeix l\'etiqueta <code>&lt;hiero&gt;</code> per a visualitzar [[Special:Hieroglyphs|jeroglífics]]',
 	'wikihiero-syntax' => 'Sintaxi',
 	'wikihiero-separator' => 'Separador',
 	'wikihiero-eol' => 'Fi de línia',
 	'wikihiero-superposition' => 'Subdivisió',
 	'wikihiero-juxtaposition' => 'Juxtaposició',
-	'wikihiero-category-A' => "A: L'home i les seves ocupacions",
+	'wikihiero-category-A' => 'A: L\'home i les seves ocupacions',
 	'wikihiero-category-B' => 'B: La dona i les seves ocupacions',
 	'wikihiero-category-C' => 'C: Deitats antropomòrfiques',
 	'wikihiero-category-D' => 'D: Parts del cos humà',
@@ -385,13 +314,9 @@ $messages['ca'] = array(
 	'wikihiero-category-L' => 'L: Invertebrats i petits animals',
 	'wikihiero-category-Z' => 'Z: Traços, figures geomètriques, etc.',
 	'wikihiero-category-Aa' => 'Aa: no classificat',
-);
+];
 
-/** Czech (Česky)
- * @author Matěj Grabovský
- * @author Mormegil
- */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wikihiero-desc' => 'Přidává značku <code>&lt;hiero&gt;</code> pro zobrazování [[Special:Hieroglyphs|hieroglyfů]]',
 	'hieroglyphs' => 'Vyzkoušet značení hieroglyfů',
 	'wikihiero-special-page-text' => 'Na této stránce si můžete vyzkoušet jazyk WikiHiero.
@@ -437,14 +362,9 @@ Popis jazyka najdete v [//en.wikipedia.org/wiki/Help:WikiHiero_syntax nápověd�
 	'wikihiero-category-Y' => 'Y: Spisy, hry, hudba',
 	'wikihiero-category-Z' => 'Z: Linie, geometrické obrazce atd.',
 	'wikihiero-category-Aa' => 'Aa: Nezařazeno',
-);
+];
 
-/** Danish (Dansk)
- * @author Byrial
- * @author Jan Friberg
- * @author Peter Alberti
- */
-$messages['da'] = array(
+$messages['da'] = [
 	'wikihiero-desc' => 'Tilføjer tagget <code>&lt;hiero&gt;</code> for at vise [[Special:Hieroglyphs|hieroglyffer]]',
 	'hieroglyphs' => 'Afprøv hieroglyfkode',
 	'wikihiero-special-page-text' => 'Brug denne side til at afprøve WikiHiero-kode.
@@ -491,14 +411,9 @@ Se [//en.wikipedia.org/wiki/Help:WikiHiero_syntax her] for en beskrivelse af kod
 	'wikihiero-category-Y' => 'Y: Skrifter, spil, musik',
 	'wikihiero-category-Z' => 'Z: Streger, geometriske figurer osv.',
 	'wikihiero-category-Aa' => 'Aa: Uklassificeret',
-);
+];
 
-/** German (Deutsch)
- * @author Kghbln
- * @author Metalhead64
- * @author Raimond Spekking
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'wikihiero-desc' => 'Ergänzt das Tag <code>&lt;hiero&gt;</code> zur Anzeige von [[Special:Hieroglyphs|Hieroglyphen]]',
 	'hieroglyphs' => 'Hieroglyphen-Markup testen',
 	'wikihiero-special-page-text' => 'Verwende diese Seite, um das WikiHiero-Markup zu testen.
@@ -545,45 +460,29 @@ Siehe [//en.wikipedia.org/wiki/Help:WikiHiero_syntax hier] für eine Markup-Besc
 	'wikihiero-category-Y' => 'Y: Schriften, Spiele, Musik',
 	'wikihiero-category-Z' => 'Z: Linien, geometrische Figuren, usw.',
 	'wikihiero-category-Aa' => 'Aa: Nicht klassifiziert',
-);
+];
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author Kghbln
- */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'wikihiero-special-page-text' => 'Verwenden Sie diese Seite, um das WikiHiero-Markup zu testen.
 Siehe [//en.wikipedia.org/wiki/Help:WikiHiero_syntax hier] für eine Markup-Beschreibung.',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Aspar
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'wikihiero-desc' => 'qey ra motışê [[Special:Hieroglyphs|hiyerooglifi]], ninan têare keno <code>&lt;hiero&gt;</code>',
-);
+];
 
-/** Lower Sorbian (Dolnoserbski)
- * @author Michawiki
- */
-$messages['dsb'] = array(
+$messages['dsb'] = [
 	'wikihiero-desc' => 'Pśidawa toflicku <code>&lt;hiero&gt;</code> za zwobraznjenje [[Special:Hieroglyphs|hieroglyfow]]',
-);
+];
 
-/** Greek (Ελληνικά)
- * @author Dead3y3
- * @author ZaDiak
- */
-$messages['el'] = array(
+$messages['el'] = [
 	'wikihiero-desc' => 'Προσθέτει την ετικέτα <code>&lt;hiero&gt;</code> για την εμφάνιση [[Special:Hieroglyphs|ιερογλυφικών]]',
 	'wikihiero-input' => 'Κείμενο εισόδου',
 	'wikihiero-result' => 'Αποτέλεσμα',
 	'wikihiero-load-error' => 'Σφάλμα φόρτωσης!',
-);
+];
 
-/** Esperanto (Esperanto)
- * @author Yekrats
- */
-$messages['eo'] = array(
+$messages['eo'] = [
 	'wikihiero-desc' => 'Aldonas etikedon <code>&lt;hiero&gt;</code> por montri [[Special:Hieroglyphs|hieroglifon]]',
 	'hieroglyphs' => 'Provi hieroglifan marklingvon',
 	'wikihiero-special-page-text' => 'Uzu ĉi tiu paĝo por provi WikiHiero-marklingvo.
@@ -627,13 +526,9 @@ Vidu [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ĉi tie] por priskribo de ma
 	'wikihiero-category-Y' => 'Y: Skribaĵoj, ludoj, muziko',
 	'wikihiero-category-Z' => 'Z: Strekoj, Geometriaj Figuroj, ktp.',
 	'wikihiero-category-Aa' => 'Aa: Neklasifikita',
-);
+];
 
-/** Spanish (Español)
- * @author Imre
- * @author Remember the dot
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'wikihiero-desc' => 'Añade elemento <code>&lt;hiero&gt;</code> para mostrar un [[Special:Hieroglyphs|jeroglífico]]',
 	'wikihiero-input' => 'Texto a expandir',
 	'wikihiero-result' => 'Resultado',
@@ -667,12 +562,10 @@ $messages['es'] = array(
 	'wikihiero-category-Y' => 'Y: Escritos, juegos, música',
 	'wikihiero-category-Z' => 'Z: Trazos, figuras geométricas, etc.',
 	'wikihiero-category-Aa' => 'Aa: Sin clasificar',
-);
+	'hieroglyphs' => 'Jeroglíficos',
+];
 
-/** Estonian (Eesti)
- * @author Pikne
- */
-$messages['et'] = array(
+$messages['et'] = [
 	'wikihiero-desc' => 'Lisab [[Special:Hieroglyphs|hieroglüüfide]] kuvamiseks <code>&lt;hiero&gt;</code>-märgendi.',
 	'hieroglyphs' => 'Hieroglüüfide proovimine',
 	'wikihiero-special-page-text' => 'Kasuta seda lehekülge, et katsetada WikiHiero märke.
@@ -719,22 +612,13 @@ Märkide kirjeldused leiad [//en.wikipedia.org/wiki/Help:WikiHiero_syntax siit].
 	'wikihiero-category-Y' => 'Y: Kirjutamine, mängud, muusika',
 	'wikihiero-category-Z' => 'Z: Jooned, geomeetrilised kujundid jne',
 	'wikihiero-category-Aa' => 'Aa: Liigitamata',
-);
+];
 
-/** Basque (Euskara)
- * @author Theklan
- */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'wikihiero-desc' => '[[Special:Hieroglyphs|Jeroglifikoak]] jarri ahal izateko <code>&lt;hiero&gt;</code> etiketa gehitzen du',
-);
+];
 
-/** Persian (فارسی)
- * @author Ebraminio
- * @author Huji
- * @author Mjbmr
- * @author ZxxZxxZ
- */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'wikihiero-desc' => 'برچسب <code>&lt;hiero&gt;</code> را برای نمایش هیروگلیف می‌افزاید',
 	'hieroglyphs' => 'نشانه گذاری هیروگلیف را امتحان کنید',
 	'wikihiero-special-page-text' => 'برای امتحان نشانه‌گذاری ویکی‌هیرو از این صفحه استفاده کنید.
@@ -770,15 +654,9 @@ $messages['fa'] = array(
 	'wikihiero-category-Y' => 'Y: نوشته‌ها، بازی‌ها، موسیقی',
 	'wikihiero-category-Z' => 'Z: سکته‌های مغزی، شکل‌های جغرافیایی، و غیره.',
 	'wikihiero-category-Aa' => 'Aa: طبقه‌بندی نشده',
-);
+];
 
-/** Finnish (Suomi)
- * @author Crt
- * @author Nedergard
- * @author Nike
- * @author Olli
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'wikihiero-desc' => 'Lisää <code>&lt;hiero&gt;</code>-elementin [[Special:Hieroglyphs|hieroglyfien]] esittämiseksi.',
 	'hieroglyphs' => 'Kokeile hieroglyfien merkintäkieltä',
 	'wikihiero-special-page-text' => 'Käytä tätä sivua WikiHiero-merkintäkielen kokeilemiseen.
@@ -825,15 +703,9 @@ $messages['fi'] = array(
 	'wikihiero-category-Y' => 'Y: Kirjoitukset, pelit, musiikki',
 	'wikihiero-category-Z' => 'Z: Viivat, geometriset kuviot jne.',
 	'wikihiero-category-Aa' => 'Aa: Luokittelematon',
-);
+];
 
-/** French (Français)
- * @author Gomoko
- * @author Grondin
- * @author Hashar
- * @author PieRRoMaN
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wikihiero-desc' => 'Ajoute la balise <code>&lt;hiero&gt;</code> pour afficher des [[Special:Hieroglyphs|hiéroglyphes]]',
 	'hieroglyphs' => 'Essayer un balisage par hiéroglyphe',
 	'wikihiero-special-page-text' => 'Utiliser cette page pour tester le balisage de WikiHiero.
@@ -849,7 +721,7 @@ Voyez [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ici] la description du bali
 	'wikihiero-eol' => 'Fin de ligne',
 	'wikihiero-superposition' => 'Subdivision',
 	'wikihiero-juxtaposition' => 'Juxtaposition',
-	'wikihiero-mirror' => "Faire le reflet d'un hiéroglyphe",
+	'wikihiero-mirror' => 'Faire le reflet d\'un hiéroglyphe',
 	'wikihiero-void' => 'Bloc vide de largeur complète',
 	'wikihiero-half-void' => 'Bloc de vide de demie-largeur',
 	'wikihiero-comment' => 'Commentaire',
@@ -861,7 +733,7 @@ Voyez [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ici] la description du bali
 	'wikihiero-category-E' => 'E: Animaux mammifères',
 	'wikihiero-category-F' => 'F: Parties de mammifères',
 	'wikihiero-category-G' => 'G: Oiseaux',
-	'wikihiero-category-H' => "H: Parties d'oiseaux",
+	'wikihiero-category-H' => 'H: Parties d\'oiseaux',
 	'wikihiero-category-I' => 'I: Amphibiens, reptiles, etc.',
 	'wikihiero-category-K' => 'K: Poissons et parties de poissons',
 	'wikihiero-category-L' => 'L: Invertébrés et animals petits',
@@ -880,12 +752,9 @@ Voyez [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ici] la description du bali
 	'wikihiero-category-Y' => 'Y: Écrits, jeux, musique',
 	'wikihiero-category-Z' => 'Z: Traits et formes géométriques',
 	'wikihiero-category-Aa' => 'Aa: Signes non classés',
-);
+];
 
-/** Franco-Provençal (Arpetan)
- * @author ChrisPtDe
- */
-$messages['frp'] = array(
+$messages['frp'] = [
 	'wikihiero-desc' => 'Apond la balisa <code>&lt;hiero&gt;</code> por fâre vêre los [[Special:Hieroglyphs|hièroglifos]].',
 	'hieroglyphs' => 'Èprovar un balisâjo per hièroglifo',
 	'wikihiero-special-page-text' => 'Utilisâd ceta pâge por èprovar lo balisâjo de VouiquiHièrô.
@@ -932,20 +801,13 @@ Vêde [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ique] la dèscripcion du ba
 	'wikihiero-category-Y' => 'Y : ècrits, juès, musica',
 	'wikihiero-category-Z' => 'Z : trèts, figures g·eomètriques, etc.',
 	'wikihiero-category-Aa' => 'Aa : pas rengiê',
-);
+];
 
-/** Western Frisian (Frysk)
- * @author SK-luuut
- */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'wikihiero-desc' => 'Foegt mark <code>&lt;hiero&gt;</code> ta foar [[Special:Hieroglyphs|hiëroglyfwerjefte]].',
-);
+];
 
-/** Galician (Galego)
- * @author MetalBrasil
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wikihiero-desc' => 'Engade a etiqueta <code>&lt;hiero&gt;</code> para mostrar [[Special:Hieroglyphs|xeróglifos]]',
 	'hieroglyphs' => 'Probe o formato dos xeróglifos',
 	'wikihiero-special-page-text' => 'Empregue esta páxina para probar o formato dos xeróglifos.
@@ -992,13 +854,9 @@ Olle [//en.wikipedia.org/wiki/Help:WikiHiero_syntax aquí] a descrición do form
 	'wikihiero-category-Y' => 'Y: Escritos, xogos, música',
 	'wikihiero-category-Z' => 'Z: Trazos, figuras xeométricas etc.',
 	'wikihiero-category-Aa' => 'Aa: Sen clasificar',
-);
+];
 
-/** Swiss German (Alemannisch)
- * @author Als-Chlämens
- * @author Als-Holder
- */
-$messages['gsw'] = array(
+$messages['gsw'] = [
 	'wikihiero-desc' => 'Fiegt s <code>&lt;hiero&gt;</code>-Tag fir d Formatierig vu [[Special:Hieroglyphs|Hieroglyphe]] yy',
 	'hieroglyphs' => 'Hieroglyphe-Markup ussprobiere',
 	'wikihiero-special-page-text' => 'Bruuch die Syte, zume s WikiHiero-Markup z teschte.
@@ -1045,14 +903,9 @@ Lueg uff [//en.wikipedia.org/wiki/Help:WikiHiero_syntax] für e Beschrybig vum M
 	'wikihiero-category-Y' => 'Y: Schrifte, Spiil, Musik',
 	'wikihiero-category-Z' => 'Z: Linie, geometrischi Figure, usw.',
 	'wikihiero-category-Aa' => 'Aa: Nit klassifiziert',
-);
+];
 
-/** Hebrew (עברית)
- * @author Amire80
- * @author Dan Elharrar
- * @author Rotem Liss
- */
-$messages['he'] = array(
+$messages['he'] = [
 	'wikihiero-desc' => 'הוספת תג <code>&lt;hiero&gt;</code> להצגת [[Special:Hieroglyphs|היירוגליפים]]',
 	'hieroglyphs' => 'לנסות סימון היירוגליפים',
 	'wikihiero-special-page-text' => 'בדף הזה אפשר לנסות את אפשרויות הסימון של ויקיהיירו.
@@ -1081,7 +934,7 @@ $messages['he'] = array(
 	'wikihiero-category-F' => 'F: חלקי גוף של יונקים',
 	'wikihiero-category-G' => 'G: עופות',
 	'wikihiero-category-H' => 'H: חלקי גוף של עופות',
-	'wikihiero-category-I' => "I: דו־חיים, זוחלים, וכו'",
+	'wikihiero-category-I' => 'I: דו־חיים, זוחלים, וכו\'',
 	'wikihiero-category-K' => 'K: דגים וחלקי גוף של דגים',
 	'wikihiero-category-L' => 'L: רמשים וחיות פחותות',
 	'wikihiero-category-M' => 'M: עצים וצמחים',
@@ -1090,22 +943,18 @@ $messages['he'] = array(
 	'wikihiero-category-P' => 'P: ספינות, סירות וחלקיהן',
 	'wikihiero-category-Q' => 'Q: כלי בית ורהיטי קבורה',
 	'wikihiero-category-R' => 'R: רהיטי מקדש וסמלים מקודשים',
-	'wikihiero-category-S' => "S: כתרים, ביגוד, שרביטים, וכו'",
+	'wikihiero-category-S' => 'S: כתרים, ביגוד, שרביטים, וכו\'',
 	'wikihiero-category-T' => 'T: לוחמה, ציד, שחיטה',
 	'wikihiero-category-U' => 'U: חקלאות, אומנויות ומקצועות',
-	'wikihiero-category-V' => "V: חבלים, שקים, סלים, סיבים וכו'",
+	'wikihiero-category-V' => 'V: חבלים, שקים, סלים, סיבים וכו\'',
 	'wikihiero-category-W' => 'W: כלים מאבן ומחרס',
 	'wikihiero-category-X' => 'X: לחמים ועוגות',
 	'wikihiero-category-Y' => 'Y: כתיבה, משחק, מוזיקה',
-	'wikihiero-category-Z' => "Z: קווים, צורות גאומטריות, וכו'",
+	'wikihiero-category-Z' => 'Z: קווים, צורות גאומטריות, וכו\'',
 	'wikihiero-category-Aa' => 'Aa: לא ממוין',
-);
+];
 
-/** Hindi (हिन्दी)
- * @author Ansumang
- * @author Kaustubh
- */
-$messages['hi'] = array(
+$messages['hi'] = [
 	'wikihiero-desc' => 'हाइरोग्लिफ दर्शाने के लिये <code>&lt;hiero&gt;</code> टैग देता हैं',
 	'wikihiero-input' => 'इनपुट पाठ',
 	'wikihiero-result' => 'परिणाम',
@@ -1117,26 +966,17 @@ $messages['hi'] = array(
 	'wikihiero-eol' => 'लाइन की अंत',
 	'wikihiero-comment' => 'टिप्पणी',
 	'wikihiero-load-error' => 'लोड त्रुटि!',
-);
+];
 
-/** Hiligaynon (Ilonggo)
- * @author Tagimata
- */
-$messages['hil'] = array(
+$messages['hil'] = [
 	'wikihiero-desc' => 'Nagadugang <code>&lt;hiero&gt;</code> tag to para makit-an ang [[Special:Hieroglyphs|hayroglifs]]',
-);
+];
 
-/** Croatian (Hrvatski)
- * @author Dnik
- */
-$messages['hr'] = array(
+$messages['hr'] = [
 	'wikihiero-desc' => 'Dodaje oznaku <code>&lt;hiero&gt;</code> za prikaz [[Special:Hieroglyphs|hijeroglifa]]',
-);
+];
 
-/** Upper Sorbian (Hornjoserbsce)
- * @author Michawiki
- */
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'wikihiero-desc' => 'Přidawa tafličku <code>&lt;hiero&gt;</code> za zwobraznjenje [[Special:Hieroglyphs|hieroglyfow]]',
 	'hieroglyphs' => 'Hieroglyfowy markup testować',
 	'wikihiero-special-page-text' => 'Wužij tutu stronu, zo by WikiHiero-markup testował.
@@ -1183,13 +1023,9 @@ Hlej [//en.wikipedia.org/wiki/Help:WikiHiero_syntax tu] za markup-wopisanje.',
 	'wikihiero-category-Y' => 'Y: Spisy, hry, hudźba',
 	'wikihiero-category-Z' => 'Z: Linije, geometriske figury atd.',
 	'wikihiero-category-Aa' => 'Aa: Njeklasifikowany',
-);
+];
 
-/** Hungarian (Magyar)
- * @author Dani
- * @author Dj
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'wikihiero-desc' => '<code>&lt;hiero&gt;</code> tag [[Special:Hieroglyphs|hieroglifák]] megjelenítéséhez',
 	'hieroglyphs' => 'Próbálja ki a hieroglifák leírását!',
 	'wikihiero-special-page-text' => 'Ezen a lapon kipróbálhatja a hieroglifák megjelenítését.
@@ -1236,12 +1072,9 @@ A részletes leírás [//en.wikipedia.org/wiki/Help:WikiHiero_syntax itt] talál
 	'wikihiero-category-Y' => 'Y: Írás, játékok, zene',
 	'wikihiero-category-Z' => 'Z: Vonalak, geometriai alakzatok, stb.',
 	'wikihiero-category-Aa' => 'Aa: Kategorizálatlan',
-);
+];
 
-/** Interlingua (Interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wikihiero-desc' => 'Adde le etiquetta <code>&lt;hiero&gt;</code> pro inserer [[Special:Hieroglyphs|hieroglyphos]]',
 	'hieroglyphs' => 'Testar marcation hieroglyphic',
 	'wikihiero-special-page-text' => 'Usa iste pagina pro testar le linguage de marcation WikiHiero.
@@ -1288,12 +1121,9 @@ Vide [//en.wikipedia.org/wiki/Help:WikiHiero_syntax hic] pro le description del 
 	'wikihiero-category-Y' => 'Y: Scriptos, jocos, musica',
 	'wikihiero-category-Z' => 'Z: Tractos, figuras geometric, etc.',
 	'wikihiero-category-Aa' => 'Aa: Non classificate',
-);
+];
 
-/** Indonesian (Bahasa Indonesia)
- * @author IvanLanin
- */
-$messages['id'] = array(
+$messages['id'] = [
 	'wikihiero-desc' => 'Menambahkan tag <code>&lt;hiero&gt;</code> untuk menampilkan [[Special:Hieroglyphs|hieroglyph]]',
 	'wikihiero-category-A' => 'A: Le homine e su occupationes',
 	'wikihiero-category-B' => 'B: Le femina e su occupationes',
@@ -1308,21 +1138,13 @@ $messages['id'] = array(
 	'wikihiero-category-L' => 'L: Invertebratos',
 	'wikihiero-category-Z' => 'Z: Tractos e formas geometric',
 	'wikihiero-category-Aa' => 'Aa: Signos non classificate',
-);
+];
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
-$messages['ig'] = array(
+$messages['ig'] = [
 	'wikihiero-desc' => 'Nè tí <code>&lt;hiero&gt;</code> Í zí nsé',
-);
+];
 
-/** Italian (Italiano)
- * @author Beta16
- * @author BrokenArrow
- * @author F. Cosoleto
- */
-$messages['it'] = array(
+$messages['it'] = [
 	'wikihiero-desc' => 'Aggiunge il tag <code>&lt;hiero&gt;</code> per la visualizzazione dei [[Special:Hieroglyphs|geroglifici]]',
 	'wikihiero-input' => 'Inserisci il testo',
 	'wikihiero-result' => 'Risultato',
@@ -1337,7 +1159,7 @@ $messages['it'] = array(
 	'wikihiero-juxtaposition' => 'Giustapposizione',
 	'wikihiero-comment' => 'Commento',
 	'wikihiero-load-error' => 'Errore di caricamento!',
-	'wikihiero-category-A' => "A: L'uomo e le sue occupazioni",
+	'wikihiero-category-A' => 'A: L\'uomo e le sue occupazioni',
 	'wikihiero-category-B' => 'B: La donna e le sue occupazioni',
 	'wikihiero-category-C' => 'C: Divinità antropomorfe',
 	'wikihiero-category-D' => 'D: Parti del corpo umano',
@@ -1363,15 +1185,9 @@ $messages['it'] = array(
 	'wikihiero-category-Y' => 'Y: letteratura, giochi, musica',
 	'wikihiero-category-Z' => 'Z: Linee e forme geometriche',
 	'wikihiero-category-Aa' => 'Aa: Segni non classificati',
-);
+];
 
-/** Japanese (日本語)
- * @author Aotake
- * @author Fryed-peach
- * @author JtFuruhata
- * @author Schu
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wikihiero-desc' => ' [[Special:Hieroglyphs|ヒエログリフ]]を表示する <code>&lt;hiero&gt;</code> タグを追加します。',
 	'hieroglyphs' => '象形文字マークアップを試行',
 	'wikihiero-special-page-text' => 'WikiHieroマークアップを試すためにこのページを使用してください。
@@ -1415,31 +1231,21 @@ $messages['ja'] = array(
 	'wikihiero-category-Y' => 'Y：筆記、ゲーム、音楽',
 	'wikihiero-category-Z' => 'Z：字画、ヒエラティック由来の記号、幾何学的図形',
 	'wikihiero-category-Aa' => 'Aa：未分類',
-);
+];
 
-/** Jutish (Jysk)
- * @author Huslåke
- */
-$messages['jut'] = array(
+$messages['jut'] = [
 	'wikihiero-desc' => 'Gæv <code>&lt;hiero&gt;</code> tag til displæ [[Special:Hieroglyphs|hiærågliifer]]',
-);
+];
 
-/** Javanese (Basa Jawa)
- * @author Meursault2004
- */
-$messages['jv'] = array(
+$messages['jv'] = [
 	'wikihiero-desc' => 'Nambahaké tag <code>&lt;hiero&gt;</code> kanggo nuduhaké [[Special:Hieroglyphs|hieroglif]]',
-);
+];
 
-/** Georgian (ქართული)
- * @author გიორგიმელა
- */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'wikihiero-desc' => 'ჰმატებს თეგ <code>&lt;hiero&gt;</code> იეროგიფების საჩვენებლად',
-);
+];
 
-/** Kazakh (Қазақша) */
-$messages['kk'] = array(
+$messages['kk'] = [
 	'wikihiero-syntax' => 'Синтаксис',
 	'wikihiero-separator' => 'Айырғыш',
 	'wikihiero-eol' => 'Жол аяғы',
@@ -1458,31 +1264,21 @@ $messages['kk'] = array(
 	'wikihiero-category-L' => 'L: Омыртқасыздар мен ұсақ жануарлар',
 	'wikihiero-category-Z' => 'Z: Сызықтар, геометрия пішіндер.',
 	'wikihiero-category-Aa' => 'Aa: Таңбаланбағандар',
-);
+];
 
-/** Khmer (ភាសាខ្មែរ)
- * @author Lovekhmer
- */
-$messages['km'] = array(
+$messages['km'] = [
 	'wikihiero-desc' => 'ដាក់បន្ថែមប្លាក <code>&lt;hiero&gt;</code> ដើម្បីបង្ហាញអក្សររូបភាព',
-);
+];
 
-/** Korean (한국어)
- * @author ToePeu
- */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'wikihiero-desc' => '히에로글리프 표현을 위해 <code>&lt;hiero&gt;</code>태그를 추가',
-);
+];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'wikihiero-desc' => 'Deiht dat <code>&lt;hiero&gt;</code> zum Parser dobei, womet mer [[Special:Hieroglyphs|Hirojlüüfe]] em Wiki bruche kann.',
-);
+];
 
-/** Latin (Latina) */
-$messages['la'] = array(
+$messages['la'] = [
 	'wikihiero-syntax' => 'Syntaxis',
 	'wikihiero-separator' => 'Separator',
 	'wikihiero-eol' => 'Finis versus',
@@ -1501,12 +1297,9 @@ $messages['la'] = array(
 	'wikihiero-category-L' => 'L: Invertebrata et animala parvula',
 	'wikihiero-category-Z' => 'Z: Liniae, figurae geometricae, etc.',
 	'wikihiero-category-Aa' => 'Aa: In classes non distributum',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'wikihiero-desc' => 'Setzt den Tag <code>&lt;hiero&gt;</code> derbäi fir [[Special:Hieroglyphs|Hieroglyphen]] unzeweisen',
 	'hieroglyphs' => 'Hieroglyphen-Markup testen',
 	'wikihiero-input' => 'Text aginn',
@@ -1537,21 +1330,13 @@ $messages['lb'] = array(
 	'wikihiero-category-W' => 'W: Objeten aus Toun a Keramik',
 	'wikihiero-category-Y' => 'Y: Schrëften, Spiller, Musek',
 	'wikihiero-category-Aa' => 'Aa: Net klassifizéiert',
-);
+];
 
-/** Limburgish (Limburgs)
- * @author Matthias
- */
-$messages['li'] = array(
+$messages['li'] = [
 	'wikihiero-desc' => 'Voegt de tag <code>&lt;hiero&gt;</code> toe veur de weergave van [[Special:Hieroglyphs|hiërogliefe]]',
-);
+];
 
-/** Lithuanian (Lietuvių)
- * @author Eitvys200
- * @author Garas
- * @author Hugo.arg
- */
-$messages['lt'] = array(
+$messages['lt'] = [
 	'wikihiero-desc' => 'Prideda <code>&lt;hiero&gt;</code> gaires rodyti [[Special:Hieroglyphs|hieroglifus]]',
 	'wikihiero-result' => 'Rezultatas',
 	'wikihiero-syntax' => 'Sintaksė',
@@ -1569,20 +1354,14 @@ $messages['lt'] = array(
 	'wikihiero-category-N' => 'N: Dangus, žemė, vanduo',
 	'wikihiero-category-O' => 'O: Pastatai, pastatų dalys ir t.t.',
 	'wikihiero-category-P' => 'P: Laivai ir laivų dalys',
-);
+];
 
-/** Latvian (Latviešu)
- * @author Papuass
- */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'wikihiero-comment' => 'Komentārs',
 	'wikihiero-load-error' => 'Ielādes kļūda!',
-);
+];
 
-/** Macedonian (Македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wikihiero-desc' => 'Додава ознака <code>&lt;hiero&gt;</code> за прикажување на [[Special:Hieroglyphs|хиероглифи]]',
 	'hieroglyphs' => 'Пробајте ја синтаксата за хиероглифи',
 	'wikihiero-special-page-text' => 'На оваа страница испробајте ја синтаксата на ВикиХиеро за претставување на египетски хиероглифи како слики во PNG формат (бидејќи засега Уникод пружа само делумна поддршка на ова писмо).
@@ -1629,12 +1408,9 @@ $messages['mk'] = array(
 	'wikihiero-category-Y' => 'Y: Писарство, игри, музика',
 	'wikihiero-category-Z' => 'Z: Потези, геометриски фигури и тн.',
 	'wikihiero-category-Aa' => 'Aa: Некласифицирани',
-);
+];
 
-/** Malayalam (മലയാളം)
- * @author Praveenp
- */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'wikihiero-desc' => 'ചിത്രാക്ഷരങ്ങൾ പ്രദർശിപ്പിക്കാനായി <code>&lt;hiero&gt;</code> എന്ന റ്റാഗ് കൂട്ടിച്ചേർക്കുന്നു',
 	'hieroglyphs' => 'ഹൈറോഗ്ലിഫ് അടയാളപ്പെടുത്തലുകൾ പരീക്ഷിക്കുക',
 	'wikihiero-special-page-text' => 'വിക്കിഹൈറോ അടയാളപ്പെടുത്തലുകൾ പരീക്ഷിക്കാൻ ഈ താൾ ഉപയോഗിക്കുക.
@@ -1679,26 +1455,18 @@ $messages['ml'] = array(
 	'wikihiero-category-Y' => 'ഷ: എഴുത്തുകൾ, കളികൾ, സംഗീതം',
 	'wikihiero-category-Z' => 'സ: വരകൾ, ജ്യാമിതീയ രൂപങ്ങൾ മുതലായവ.',
 	'wikihiero-category-Aa' => 'ഹ: വർഗ്ഗീകരിക്കപ്പെടാത്തവ',
-);
+];
 
-/** Marathi (मराठी)
- * @author Mahitgar
- * @author Tusharawate
- */
-$messages['mr'] = array(
+$messages['mr'] = [
 	'wikihiero-desc' => 'hieroग्लिफ दाखवण्याकरिता  <code>&lt;hiero&gt;</code> खूण जोडते',
 	'wikihiero-syntax' => 'वाक्य रचना',
 	'wikihiero-th-meaning' => 'अर्थ',
 	'wikihiero-th-example' => 'उदाहरण कोड',
 	'wikihiero-eol' => 'ओळीचा शेवट',
 	'wikihiero-superposition' => 'उपशाखा',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- * @author Aviator
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wikihiero-desc' => 'Menambah tag <code>&lt;hiero&gt;</code> untuk menghasilkan [[Special:Hieroglyphs|hieroglif]]',
 	'hieroglyphs' => 'Cuba penanda tulisan hieroglif',
 	'wikihiero-special-page-text' => 'Gunakan laman ini untuk mencuba penanda WikiHiero.
@@ -1745,33 +1513,21 @@ Rujuk keterangan penanda [//en.wikipedia.org/wiki/Help:WikiHiero_syntax di sini]
 	'wikihiero-category-Y' => 'Y: Penulisan, permainan, muzik',
 	'wikihiero-category-Z' => 'Z: Lejang, bentuk geometri, dsb.',
 	'wikihiero-category-Aa' => 'Aa: Tidak dikelaskan',
-);
+];
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wikihiero-desc' => 'Legger til taggen <code>&lt;hiero&gt;</code> for å vise [[Special:Hieroglyphs|hieroglyfer]]',
-);
+];
 
-/** Low German (Plattdüütsch)
- * @author Slomox
- */
-$messages['nds'] = array(
+$messages['nds'] = [
 	'wikihiero-desc' => 'Föögt dat <code>&lt;hiero&gt;</code>-Tag för dat Formateren vun [[Special:Hieroglyphs|Hieroglyphen]] to',
-);
+];
 
-/** Nedersaksisch (Nedersaksisch)
- * @author Servien
- */
-$messages['nds-nl'] = array(
+$messages['nds-nl'] = [
 	'wikihiero-desc' => 'Zet de tekste <code>&lt;hiero&gt;</code> derbie veur de weergave van [[Special:Hieroglyphs|hiërogliefen]]',
-);
+];
 
-/** Nepali (नेपाली)
- * @author RajeshPandey
- */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'wikihiero-input' => 'इनपुट पाठ',
 	'wikihiero-result' => 'परिणाम',
 	'wikihiero-syntax' => 'वाक्यविन्यास',
@@ -1814,12 +1570,9 @@ $messages['ne'] = array(
 	'wikihiero-category-Y' => 'म: लेखहरू, खेलहरु, संगीत',
 	'wikihiero-category-Z' => 'य: धर्साहरू, ज्यामितीय आकारहरू, आदि।',
 	'wikihiero-category-Aa' => 'र: अवर्गीकृत',
-);
+];
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wikihiero-desc' => 'Voegt de tag <code>&lt;hiero&gt;</code> toe voor de weergave van [[Special:Hieroglyphs|hiërogliefen]]',
 	'hieroglyphs' => 'Hiërogliefopmaak uitproberen',
 	'wikihiero-special-page-text' => 'Gebruik deze pagina om de opmaak met WikiHiero uit te proberen.
@@ -1866,26 +1619,17 @@ Zie ook de [//en.wikipedia.org/wiki/Help:WikiHiero_syntax gebruiksaanwijzing].',
 	'wikihiero-category-Y' => 'Y: geschriften, spel, muziek',
 	'wikihiero-category-Z' => 'Z: Lijnen, geometrische figuren, etc.',
 	'wikihiero-category-Aa' => 'Aa: Niet geclassificeerd',
-);
+];
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
- * @author Frokor
- */
-$messages['nn'] = array(
+$messages['nn'] = [
 	'wikihiero-desc' => 'Legg til taggen <code>&lt;hiero&gt;</code> for å vise [[Special:Hieroglyphs|hieroglyfar]]',
-);
+];
 
-/** Occitan (Occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'wikihiero-desc' => 'Apond la balisa <code>&lt;hiero&gt;</code> per afichar los [[Special:Hieroglyphs|ieroglifes]]',
-);
+];
 
-/** Oriya (ଓଡ଼ିଆ)
- * @author Ansumang
- */
-$messages['or'] = array(
+$messages['or'] = [
 	'wikihiero-result' => 'ପରିଣାମ',
 	'wikihiero-th-code' => 'କୋଡ଼',
 	'wikihiero-th-meaning' => 'ମାନେ',
@@ -1893,24 +1637,17 @@ $messages['or'] = array(
 	'wikihiero-comment' => 'ମତାମତ',
 	'wikihiero-load-error' => 'ଲୋଡ଼ ତ୍ରୁଟି!',
 	'wikihiero-category-G' => 'G: ପକ୍ଷୀ',
-);
+];
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'wikihiero-category-G' => 'G: Veggel',
 	'wikihiero-category-M' => 'M: Beem unn Blanze',
 	'wikihiero-category-N' => 'N: Himmel, Erd, Wasser',
-);
+];
 
-/** Polish (Polski)
- * @author Sp5uhe
- * @author Woytecr
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wikihiero-desc' => 'Dodaje znacznik <code>&lt;hiero&gt;</code> umożliwiający wyświetlanie [[Special:Hieroglyphs|hieroglifów]]',
-	'hieroglyphs' => 'Spróbuj znaczników hieroglifów',
+	'hieroglyphs' => 'Hieroglify',
 	'wikihiero-special-page-text' => 'Użyj tej strony, by wypróbować znaczniki WikiHiero.
 Opisy znaczników znajdziesz [//en.wikipedia.org/wiki/Help:WikiHiero_syntax tutaj].',
 	'wikihiero-input' => 'Tekst wejściowy',
@@ -1955,23 +1692,19 @@ Opisy znaczników znajdziesz [//en.wikipedia.org/wiki/Help:WikiHiero_syntax tuta
 	'wikihiero-category-Y' => 'Y: Piśmiennictwo, gry, muzyka',
 	'wikihiero-category-Z' => 'Z: Obrysy, figury geometryczne, itp.',
 	'wikihiero-category-Aa' => 'Aa: Niesklasyfikowane',
-);
+];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'wikihiero-desc' => 'A gionta ël tag <code>&lt;hiero&gt;</code> për visualisé dij [[Special:Hieroglyphs|geroglif]]',
 	'hieroglyphs' => 'Prové na marcadura con geroglif',
-	'wikihiero-special-page-text' => "Dovré costa pàgina për prové ël marcador WikiHiero.
-Ch'a bèica [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ambelessì] për la descrission dël marcador.",
+	'wikihiero-special-page-text' => 'Dovré costa pàgina për prové ël marcador WikiHiero.
+Ch\'a bèica [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ambelessì] për la descrission dël marcador.',
 	'wikihiero-input' => 'Test butà',
 	'wikihiero-result' => 'Arzultà',
 	'wikihiero-syntax' => 'Sintassi',
 	'wikihiero-th-code' => 'Còdes',
 	'wikihiero-th-meaning' => 'Sens',
-	'wikihiero-th-example' => "Còdes d'esempi",
+	'wikihiero-th-example' => 'Còdes d\'esempi',
 	'wikihiero-th-result' => 'Arzultà',
 	'wikihiero-separator' => 'Separador',
 	'wikihiero-eol' => 'Fin ëd linia',
@@ -1982,14 +1715,14 @@ Ch'a bèica [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ambelessì] për la d
 	'wikihiero-half-void' => 'Blòch ëd veuid ëd mesa grandëssa',
 	'wikihiero-comment' => 'Coment',
 	'wikihiero-load-error' => 'Eror ëd cariament!',
-	'wikihiero-category-A' => "A: L'òm e soe ocupassion",
+	'wikihiero-category-A' => 'A: L\'òm e soe ocupassion',
 	'wikihiero-category-B' => 'A: La fomna e soe ocupassion',
 	'wikihiero-category-C' => 'C: Divinità antropomòrfe',
 	'wikihiero-category-D' => 'D: Part dël còrp uman',
 	'wikihiero-category-E' => 'E: Mamìfer',
 	'wikihiero-category-F' => 'F: Part dij Mamìfer',
 	'wikihiero-category-G' => 'G: Osej',
-	'wikihiero-category-H' => "H: Part dj'osej",
+	'wikihiero-category-H' => 'H: Part dj\'osej',
 	'wikihiero-category-I' => 'I: Anfibi, Rétij e via fòrt',
 	'wikihiero-category-K' => 'K: Pess e part dij pess',
 	'wikihiero-category-L' => 'L: Anvërtebrà e animaj pi cit',
@@ -2008,12 +1741,9 @@ Ch'a bèica [//en.wikipedia.org/wiki/Help:WikiHiero_syntax ambelessì] për la d
 	'wikihiero-category-Y' => 'Y: Scrit, gieugh, mùsica',
 	'wikihiero-category-Z' => 'Z: Linie, figure geométriche e via fòrt',
 	'wikihiero-category-Aa' => 'Aa: Pa classificà',
-);
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wikihiero-result' => 'پايله',
 	'wikihiero-th-code' => 'کوډ',
 	'wikihiero-th-meaning' => 'مانا',
@@ -2028,15 +1758,9 @@ $messages['ps'] = array(
 	'wikihiero-category-K' => 'K: کب او د کب برخې',
 	'wikihiero-category-M' => 'M: ونې او بوټي',
 	'wikihiero-category-N' => 'N: اسمان، زمکه، اوبه',
-);
+];
 
-/** Portuguese (Português)
- * @author Hamilton Abreu
- * @author Malafaya
- * @author MetalBrasil
- * @author SandroHc
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wikihiero-desc' => 'Adiciona o elemento <code>&lt;hiero&gt;</code> para apresentar [[Special:Hieroglyphs|hieróglifos]]',
 	'hieroglyphs' => 'Tente marcação hieroglífica',
 	'wikihiero-special-page-text' => 'Use esta página para experimentar a marcação wikihiero. Veja [//en.wikipedia.org/wiki/Help:WikiHiero_syntax here] para descrição de marcação.',
@@ -2078,14 +1802,9 @@ $messages['pt'] = array(
 	'wikihiero-category-Y' => 'Y: Escritos, jogos, música',
 	'wikihiero-category-Z' => 'Z: Traços e formas geométricas',
 	'wikihiero-category-Aa' => 'Aa: Signos não classificados',
-);
+];
 
-/** Brazilian Portuguese (Português do Brasil)
- * @author Eduardo.mps
- * @author Giro720
- * @author MetalBrasil
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wikihiero-desc' => 'Adiciona a marca <code>&lt;hiero&gt;</code> para exibir [[Special:Hieroglyphs|hieróglifos]]',
 	'hieroglyphs' => 'Tente a marcação hieróglifo',
 	'wikihiero-special-page-text' => 'Use esta página para experimentar a marcação wikihiero.
@@ -2119,21 +1838,13 @@ Acesse [//en.wikipedia.org/wiki/Help:WikiHiero_syntax here] para descrição de 
 	'wikihiero-category-Y' => 'Y: Escritos, jogos, música',
 	'wikihiero-category-Z' => 'Z: Traços, figuras geométricas, etc.',
 	'wikihiero-category-Aa' => 'Aa: Não classificado',
-);
+];
 
-/** Quechua (Runa Simi)
- * @author AlimanRuna
- */
-$messages['qu'] = array(
+$messages['qu'] = [
 	'wikihiero-desc' => '<code>&lt;hiero&gt;</code> unanchachata yapan hirulliphikuta rikuchinapaq',
-);
+];
 
-/** Romanian (Română)
- * @author Firilacroco
- * @author KlaudiuMihaila
- * @author Minisarm
- */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'wikihiero-desc' => 'Adaugă tagul <code>&lt;hiero&gt;</code> pentru a afișa [[Special:Hieroglyphs|hieroglife]]',
 	'wikihiero-input' => 'Text introdus',
 	'wikihiero-result' => 'Rezultat',
@@ -2174,33 +1885,30 @@ $messages['ro'] = array(
 	'wikihiero-category-Y' => 'Y: Scrieri, jocuri, muzică',
 	'wikihiero-category-Z' => 'Z: Caracteristici, figuri geometrice, etc.',
 	'wikihiero-category-Aa' => 'Aa: Neclasificat',
-);
+];
 
-/** Tarandíne (Tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
-	'wikihiero-desc' => "Ause 'u tag <code>&lt;hiero&gt;</code> pe visualizzà 'a [[Special:Hieroglyphs|hieroglife]]",
-	'hieroglyphs' => "Pruève 'u markup de geroglifece",
-	'wikihiero-special-page-text' => "Ause sta pàgene pe pruvà 'u UicchiHiero markup.
-Vide [//en.wikipedia.org/wiki/Help:WikiHiero_syntax aqquà] pe 'na descrizione d'u markup.",
+$messages['roa-tara'] = [
+	'wikihiero-desc' => 'Ause \'u tag <code>&lt;hiero&gt;</code> pe visualizzà \'a [[Special:Hieroglyphs|hieroglife]]',
+	'hieroglyphs' => 'Pruève \'u markup de geroglifece',
+	'wikihiero-special-page-text' => 'Ause sta pàgene pe pruvà \'u UicchiHiero markup.
+Vide [//en.wikipedia.org/wiki/Help:WikiHiero_syntax aqquà] pe \'na descrizione d\'u markup.',
 	'wikihiero-input' => 'Teste de input:',
 	'wikihiero-result' => 'Resultate',
 	'wikihiero-syntax' => 'Sindasse',
 	'wikihiero-th-code' => 'Codece',
 	'wikihiero-th-meaning' => 'Significate',
-	'wikihiero-th-example' => "Codece d'esembie",
+	'wikihiero-th-example' => 'Codece d\'esembie',
 	'wikihiero-th-result' => 'Resultate',
 	'wikihiero-separator' => 'Separatore',
-	'wikihiero-eol' => "Fine d'a linèe",
+	'wikihiero-eol' => 'Fine d\'a linèe',
 	'wikihiero-superposition' => 'Suddivisione',
 	'wikihiero-juxtaposition' => 'Giustapposizzione',
 	'wikihiero-comment' => 'Commende',
 	'wikihiero-load-error' => 'Errore de carecamende!',
-	'wikihiero-category-A' => "A: L'omme e l'occupaziune sue",
-	'wikihiero-category-B' => "A: 'A femmene e l'occupaziune sue",
+	'wikihiero-category-A' => 'A: L\'omme e l\'occupaziune sue',
+	'wikihiero-category-B' => 'A: \'A femmene e l\'occupaziune sue',
 	'wikihiero-category-C' => 'C: Divinità andropomorfeche',
-	'wikihiero-category-D' => "D: Parte d'u cuèrpe umane",
+	'wikihiero-category-D' => 'D: Parte d\'u cuèrpe umane',
 	'wikihiero-category-E' => 'E: Mammifere',
 	'wikihiero-category-F' => 'F: Parte de mammifere',
 	'wikihiero-category-G' => 'G: Acidde',
@@ -2223,15 +1931,9 @@ Vide [//en.wikipedia.org/wiki/Help:WikiHiero_syntax aqquà] pe 'na descrizione d
 	'wikihiero-category-Y' => 'Y: Scretture, sciuèche, museche',
 	'wikihiero-category-Z' => 'Z: Linèe, figure sciumetrece, etc.',
 	'wikihiero-category-Aa' => 'Aa: None classifecate',
-);
+];
 
-/** Russian (Русский)
- * @author Alexandr Efremov
- * @author Dim Grits
- * @author MaxSem
- * @author Александр Сигачёв
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wikihiero-desc' => 'Добавляет тег <code>&lt;hiero&gt;</code> для показа [[Special:Hieroglyphs|иероглифов]]',
 	'hieroglyphs' => 'Попробуйте иероглифическую разметку',
 	'wikihiero-special-page-text' => 'Используйте эту страницу для опробования разметки WikiHiero.
@@ -2278,12 +1980,9 @@ $messages['ru'] = array(
 	'wikihiero-category-Y' => 'Y: Письмо, игры, музыка',
 	'wikihiero-category-Z' => 'Z: Линии, геометрические фигуры и т. п.',
 	'wikihiero-category-Aa' => 'Aa: Неклассифицированные',
-);
+];
 
-/** Rusyn (Русиньскый)
- * @author Gazeb
- */
-$messages['rue'] = array(
+$messages['rue'] = [
 	'wikihiero-desc' => 'Додавать значку <code>&lt;hiero&gt;</code> про зобразованя [[Special:Hieroglyphs|гєроґліфів]]',
 	'hieroglyphs' => 'Спробуйте єроґліфічне писмо',
 	'wikihiero-special-page-text' => 'На тій сторінцї можне спробовати WikiHiero позначку.
@@ -2326,42 +2025,28 @@ $messages['rue'] = array(
 	'wikihiero-category-Y' => 'Y: Писаня, гры, музика',
 	'wikihiero-category-Z' => 'Z: Ґеометрічны фіґуры і тягы ітд.',
 	'wikihiero-category-Aa' => 'Аа: Некласіфікованы',
-);
+];
 
-/** Sanskrit (संस्कृतम्)
- * @author Ansumang
- */
-$messages['sa'] = array(
+$messages['sa'] = [
 	'wikihiero-result' => 'परिणामम्',
 	'wikihiero-th-result' => 'परिणामम्',
 	'wikihiero-comment' => 'टिप्पणी',
-);
+];
 
-/** Sakha (Саха тыла)
- * @author HalanTul
- */
-$messages['sah'] = array(
+$messages['sah'] = [
 	'wikihiero-desc' => '[[Special:Hieroglyphs|Иероглифтары]] көрдөрөргө анаан <code>&lt;hiero&gt;</code> тиэги эбэр',
-);
+];
 
-/** Sicilian (Sicilianu)
- * @author Aushulz
- * @author Santu
- */
-$messages['scn'] = array(
+$messages['scn'] = [
 	'wikihiero-desc' => 'Juncìricci lu tag <code>&lt;hiero&gt;</code> pi la visualizzazzioni di li [[Special:Hieroglyphs|giruglìfici]]',
 	'wikihiero-category-G' => 'G: Aceddi',
-	'wikihiero-category-H' => "H: Parti d'aceddi",
+	'wikihiero-category-H' => 'H: Parti d\'aceddi',
 	'wikihiero-category-K' => 'K: Pisci e parti di pisci',
 	'wikihiero-category-M' => 'M: Arvuli e rasti',
 	'wikihiero-category-N' => 'N: Celu, terra, aqua',
-);
+];
 
-/** Sinhala (සිංහල)
- * @author Calcey
- * @author පසිඳු කාවින්ද
- */
-$messages['si'] = array(
+$messages['si'] = [
 	'wikihiero-desc' => 'හයිරෝරේඛනය ප්‍රදර්ශනය කිරීමට <code>&lt;hiero&gt;</code> ටැගය එකතු කරයි',
 	'hieroglyphs' => 'රූපාක්ෂර අධිකය අත්හදා බලන්න',
 	'wikihiero-special-page-text' => 'විකිවීර අධිකය අත්හදා බැලීම සඳහා මෙම පිටුව භාවිතා කරන්න.
@@ -2408,12 +2093,9 @@ $messages['si'] = array(
 	'wikihiero-category-Y' => 'Y: ලේඛන, ක්‍රීඩා, සංගීතය',
 	'wikihiero-category-Z' => 'Z: වැදීම්, ජ්‍යාමිතික සංඛ්‍යා, ආදී වශයෙන්.',
 	'wikihiero-category-Aa' => 'Aa: වර්ග නොකළ',
-);
+];
 
-/** Slovak (Slovenčina)
- * @author Helix84
- */
-$messages['sk'] = array(
+$messages['sk'] = [
 	'wikihiero-desc' => 'Pridáva značku <code>&lt;hiero&gt;</code> na zobrazovanie [[Special:Hieroglyphs|hieroglyfov]]',
 	'wikihiero-syntax' => 'Syntax',
 	'wikihiero-separator' => 'Oddeľovač',
@@ -2433,12 +2115,9 @@ $messages['sk'] = array(
 	'wikihiero-category-L' => 'L: Bezstavovce a nižšie druhy',
 	'wikihiero-category-Z' => 'Z: Ťahy, geometrické obrazce atď.',
 	'wikihiero-category-Aa' => 'Aa: Nezaradené',
-);
+];
 
-/** Slovenian (Slovenščina)
- * @author Dbc334
- */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'wikihiero-desc' => 'Doda etiketo <code>&lt;hiero&gt;</code> za prikaz [[Special:Hieroglyphs|hieroglifov]]',
 	'hieroglyphs' => 'Preizkusite označevanje hieroglifov',
 	'wikihiero-special-page-text' => 'Uporabite to stran za preizkus označevanja WikiHiero.
@@ -2485,27 +2164,17 @@ Opis označevanje si oglejte [//en.wikipedia.org/wiki/Help:WikiHiero_syntax tuka
 	'wikihiero-category-Y' => 'Y: Pisana dela, igre, glasba',
 	'wikihiero-category-Z' => 'Z: Poteze, geometrijski liki itn.',
 	'wikihiero-category-Aa' => 'Aa: Nerazvrščeno',
-);
+];
 
-/** Lower Silesian (Schläsch)
- * @author Jonny84
- */
-$messages['sli'] = array(
+$messages['sli'] = [
 	'wikihiero-desc' => 'Fügt doas <code>&lt;hiero&gt;</code>-Tag zur Formatierung vo [[Special:Hieroglyphs|Hieroglyphen]] hinzu',
-);
+];
 
-/** Albanian (Shqip)
- * @author Puntori
- */
-$messages['sq'] = array(
+$messages['sq'] = [
 	'wikihiero-desc' => 'Vendosë kodin <code>&lt;hiero&gt;</code> për të shfaqur [[Special:Hieroglyphs|hieroglifë]]',
-);
+];
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
- * @author Millosh
- * @author Rancher
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'wikihiero-desc' => 'Додаје <code>&lt;hiero&gt;</code> ознаку за приказ [[Special:Hieroglyphs|хијероглифа]].',
 	'wikihiero-syntax' => 'Синтакса',
 	'wikihiero-separator' => 'Раздвајач',
@@ -2525,12 +2194,9 @@ $messages['sr-ec'] = array(
 	'wikihiero-category-L' => 'L: Бескичмењаци и ситне животиње',
 	'wikihiero-category-Z' => 'Z: Линије, геометријске фигуре итд.',
 	'wikihiero-category-Aa' => 'Aa: Некласификовано',
-);
+];
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
- * @author Michaello
- */
-$messages['sr-el'] = array(
+$messages['sr-el'] = [
 	'wikihiero-desc' => 'Dodaje <code>&lt;hiero&gt;</code> oznaku za prikaz [[Special:Hieroglyphs|hijeroglifa]].',
 	'wikihiero-syntax' => 'Sintaksa',
 	'wikihiero-separator' => 'Razdvajač',
@@ -2550,28 +2216,17 @@ $messages['sr-el'] = array(
 	'wikihiero-category-L' => 'L: Beskičmenjaci',
 	'wikihiero-category-Z' => 'Z: Linije, geometrijske figure',
 	'wikihiero-category-Aa' => 'Aa: Neklasifikovano',
-);
+];
 
-/** Seeltersk (Seeltersk)
- * @author Pyt
- */
-$messages['stq'] = array(
+$messages['stq'] = [
 	'wikihiero-desc' => 'Föiget dät <code>&lt;hiero&gt;</code>-Tag tou ju Formatierenge fon [[Special:Hieroglyphs|Hieroglyphen]] bietou',
-);
+];
 
-/** Sundanese (Basa Sunda)
- * @author Kandar
- */
-$messages['su'] = array(
+$messages['su'] = [
 	'wikihiero-desc' => 'Nambahkeun tag <code>&lt;hiero&gt;</code> pikeun némbongkeun [[Special:Hieroglyphs|hiroglip]]',
-);
+];
 
-/** Swedish (Svenska)
- * @author Lejonel
- * @author Lokal Profil
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wikihiero-desc' => 'Lägger till taggen <code>&lt;hiero&gt;</code> för att visa [[Special:Hieroglyphs|hieroglyfer]]',
 	'wikihiero-input' => 'Inmatningstext',
 	'wikihiero-result' => 'Resultat',
@@ -2611,19 +2266,13 @@ $messages['sv'] = array(
 	'wikihiero-category-Y' => 'Y: Skrifter, spel, musik',
 	'wikihiero-category-Z' => 'Z: Linjer, geometriska figurer o.dyl.',
 	'wikihiero-category-Aa' => 'Aa: Övrigt',
-);
+];
 
-/** Silesian (Ślůnski)
- * @author Lajsikonik
- */
-$messages['szl'] = array(
+$messages['szl'] = [
 	'wikihiero-desc' => 'Dodowo znaczńik <code>&lt;hiero&gt;</code> kery dozwalo wyśwjetlać [[Special:Hieroglyphs|hjeroglify]]',
-);
+];
 
-/** Tamil (தமிழ்)
- * @author Shanmugamp7
- */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'wikihiero-input' => 'உள்ளீட்டு உரை',
 	'wikihiero-result' => 'முடிவு',
 	'wikihiero-syntax' => 'சொற்றொடரியல்',
@@ -2662,73 +2311,45 @@ $messages['ta'] = array(
 	'wikihiero-category-Y' => 'Y:எழுத்துக்கள், விளையாட்டுகள், இசை',
 	'wikihiero-category-Z' => 'Z: சிறுவீச்சுக்கள்,வடிவியல் புள்ளிவிவரங்கள், முதலியன',
 	'wikihiero-category-Aa' => 'Aa: வகைப்படுத்தாதது',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'wikihiero-desc' => 'హీయెరోగ్లిఫ్&zwnj;ని చూపించడానికై <code>&lt;hiero&gt;</code> అనే టాగుని చేరుస్తుంది',
 	'wikihiero-result' => 'ఫలితం',
 	'wikihiero-th-result' => 'ఫలితం',
 	'wikihiero-comment' => 'వ్యాఖ్య',
-);
+];
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
- * @author Ibrahim
- */
-$messages['tg-cyrl'] = array(
+$messages['tg-cyrl'] = [
 	'wikihiero-desc' => 'Бачасби <code>&lt;hiero&gt;</code>-ро барои намоиши [[Special:Hieroglyphs|ҳироглиф]] илова мекунад',
-);
+];
 
-/** Tajik (Latin script) (tojikī)
- * @author Liangent
- */
-$messages['tg-latn'] = array(
+$messages['tg-latn'] = [
 	'wikihiero-desc' => 'Bacasbi <code>&lt;hiero&gt;</code>-ro baroi namoişi [[Special:Hieroglyphs|hiroglif]] ilova mekunad',
-);
+];
 
-/** Thai (ไทย)
- * @author Passawuth
- */
-$messages['th'] = array(
+$messages['th'] = [
 	'wikihiero-desc' => 'เพิ่มแท็ก <code>&lt;hiero&gt;</code> เพื่อแสดงอักษรเฮียโรกลิฟิกส์',
-);
+];
 
-/** Turkmen (Türkmençe)
- * @author Hanberke
- */
-$messages['tk'] = array(
+$messages['tk'] = [
 	'wikihiero-desc' => '[[Special:Hieroglyphs|Ieroglifleri]] görkezmek üçin <code>&lt;hiero&gt;</code> tegini goşýar',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'wikihiero-desc' => 'Nagdaragdag ng tatak na <code>&lt;hiero&gt;</code> upang mapalitaw ang mga hiroglipikong panitik ([[Special:Hieroglyphs|hiroglip]])',
-);
+];
 
-/** Turkish (Türkçe)
- * @author Cekli829
- * @author Emperyan
- * @author Joseph
- */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'wikihiero-desc' => '[[Special:Hieroglyphs|Hiyeroglifleri]] görüntülemek için <code>&lt;hiero&gt;</code> etiketini ekler',
 	'hieroglyphs' => 'Hiyeroglif biçimlendirmeyi deneyin',
 	'wikihiero-special-page-text' => 'WikiHiero biçimlendirmesini denemek için bu sayfayı kullanın.
 Biçimlendirme açıklaması için [//en.wikipedia.org/wiki/Help:WikiHiero_syntax buraya] bakınız.',
 	'wikihiero-result' => 'Sonuç',
 	'wikihiero-th-code' => 'Kod',
-);
+];
 
-/** Ukrainian (Українська)
- * @author Ahonc
- * @author Dim Grits
- * @author Тест
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'wikihiero-desc' => 'Додає тег <code>&lt;hiero&gt;</code> для відображення [[Special:Hieroglyphs|ієрогліфів]]',
 	'hieroglyphs' => 'Спробуйте ієрогліфічне письмо',
 	'wikihiero-special-page-text' => 'На цій сторінці можна спробувати WikiHiero розмітку.
@@ -2773,27 +2394,17 @@ $messages['uk'] = array(
 	'wikihiero-category-Y' => 'Y: Письмо, ігри, музика',
 	'wikihiero-category-Z' => 'Z: Геометричні фігури та візерунки',
 	'wikihiero-category-Aa' => 'Аа: Некласифіковані',
-);
+];
 
-/** Vèneto (Vèneto)
- * @author Candalua
- */
-$messages['vec'] = array(
+$messages['vec'] = [
 	'wikihiero-desc' => 'Zonta el tag <code>&lt;hiero&gt;</code> par la visualizazion dei [[Special:Hieroglyphs|geroglifici]]',
-);
+];
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
+$messages['vep'] = [
 	'wikihiero-desc' => 'Ližadab <code>&lt;hiero&gt;</code>-virgan, miše ozutada [[Special:Hieroglyphs|ieroglifid]]',
-);
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Minh Nguyen
- * @author Vinhtantran
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'wikihiero-desc' => 'Thêm thẻ <code>&lt;hiero&gt;</code> để hiển thị chữ tượng hình',
 	'hieroglyphs' => 'Thử mã chữ tượng hình',
 	'wikihiero-special-page-text' => 'Thử mã chữ tượng hình WikiHiero tại trang này.
@@ -2840,53 +2451,40 @@ Xem [//en.wikipedia.org/wiki/Help:WikiHiero_syntax hướng dẫn về cú pháp
 	'wikihiero-category-Y' => 'Y: Văn bản, trò chơi, âm nhạc',
 	'wikihiero-category-Z' => 'Z: Nét, hình hình học, v.v.',
 	'wikihiero-category-Aa' => 'Aa: Không phân loại',
-);
+];
 
-/** Walloon (Walon) */
-$messages['wa'] = array(
+$messages['wa'] = [
 	'wikihiero-syntax' => 'Sintacse',
 	'wikihiero-separator' => 'Separateur',
-	'wikihiero-eol' => "Fén d' roye",
-	'wikihiero-category-A' => "A: L' ome et ses fijhaedjes",
+	'wikihiero-eol' => 'Fén d\' roye',
+	'wikihiero-category-A' => 'A: L\' ome et ses fijhaedjes',
 	'wikihiero-category-B' => 'B: Li feme et ses fijhaedjes',
 	'wikihiero-category-C' => 'C: Dius',
 	'wikihiero-category-D' => 'D: Bokets do coir',
 	'wikihiero-category-E' => 'E: Biesses ås tetes',
-	'wikihiero-category-F' => "F: Bokets d' biesses ås tetes",
+	'wikihiero-category-F' => 'F: Bokets d\' biesses ås tetes',
 	'wikihiero-category-G' => 'G: Oujheas',
-	'wikihiero-category-H' => "H: Bokets d' oujheas",
+	'wikihiero-category-H' => 'H: Bokets d\' oujheas',
 	'wikihiero-category-I' => 'I: Anfibeyes, crålants, evnd.',
-	'wikihiero-category-K' => "K: Pexhons et bokets d' pexhons",
+	'wikihiero-category-K' => 'K: Pexhons et bokets d\' pexhons',
 	'wikihiero-category-L' => 'L: Sicrijhaedje, amuzmints, muzike',
 	'wikihiero-category-Z' => 'Z: Royes et cognes djeyometrikes',
 	'wikihiero-category-Aa' => 'Aa: Des ôtes (nén classifyî)',
-);
+];
 
-/** Yiddish (ייִדיש)
- * @author Imre
- * @author פוילישער
- */
-$messages['yi'] = array(
+$messages['yi'] = [
 	'wikihiero-result' => 'רעזולטאט',
 	'wikihiero-th-code' => 'קאד',
 	'wikihiero-th-meaning' => 'באדייט',
 	'wikihiero-th-example' => 'ביישפיל קאד',
 	'wikihiero-th-result' => 'רעזולטאט',
-);
+];
 
-/** Cantonese (粵語)
- * @author Shinjiman
- */
-$messages['yue'] = array(
+$messages['yue'] = [
 	'wikihiero-desc' => '加 <code>&lt;hiero&gt;</code> 標籤去顯示象形文字',
-);
+];
 
-/** Simplified Chinese (‪中文(简体)‬)
- * @author Anakmalaysia
- * @author Shinjiman
- * @author Xiaomingyan
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wikihiero-desc' => '添加“<code>&lt;hiero&gt;</code>”标签以显示[[Special:Hieroglyphs|象形文字]]',
 	'hieroglyphs' => '尝试象形文字标记',
 	'wikihiero-special-page-text' => '使用此页可以试试 WikiHiero 标记。
@@ -2933,13 +2531,9 @@ $messages['zh-hans'] = array(
 	'wikihiero-category-Y' => 'Y：书写、游戏、音乐',
 	'wikihiero-category-Z' => 'Z：笔划、 几何图形等',
 	'wikihiero-category-Aa' => 'Aa：未分类',
-);
+];
 
-/** Traditional Chinese (‪中文(繁體)‬)
- * @author Anakmalaysia
- * @author Shinjiman
- */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'wikihiero-desc' => '加入 <code>&lt;hiero&gt;</code> 標籤去顯示象形文字',
 	'hieroglyphs' => '嘗試象形文字標記',
 	'wikihiero-special-page-text' => '使用此頁可以試試 WikiHiero 標記。
@@ -2986,5 +2580,5 @@ $messages['zh-hant'] = array(
 	'wikihiero-category-Y' => 'Y：著作、遊戲、音樂',
 	'wikihiero-category-Z' => 'Z：筆劃、幾何圖形等',
 	'wikihiero-category-Aa' => 'Aa：未分類',
-);
+];
 

@@ -1,4 +1,4 @@
-<nav class="WikiaArticleCategories CategorySelect articlePage<?= $userCanEdit ? ' userCanEdit' : '' ?>" id="WikiaArticleCategories">
+<nav class="article-categories CategorySelect articlePage<?= $userCanEdit ? ' userCanEdit' : '' ?>" id="articleCategories">
 	<div class="container">
 		<div class="special-categories"><?= $categoriesLink ?>:</div>
 		<ul class="categories<?= $showHidden ? ' showHidden' : '' ?>">

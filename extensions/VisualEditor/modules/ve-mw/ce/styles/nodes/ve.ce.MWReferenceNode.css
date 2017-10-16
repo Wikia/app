@@ -1,0 +1,20 @@
+/*!
+ * VisualEditor ContentEditable MediaWiki MWReferenceNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ce-mwReferenceNode-missingref {
+	cursor: not-allowed;
+}
+
+/* HACK: Hide Ref errors in templates */
+.mw-ext-cite-error {
+	display: none;
+}
+
+/* In IE, force hasLayout so the <sup>'s box gets measured correctly */
+.ve-init-target-ie .ve-ce-mwReferenceNode {
+	display: inline-block;
+}

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated
+ */
 class GameGuidesSpecialPreviewController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct( 'GameGuidesPreview', '', false );

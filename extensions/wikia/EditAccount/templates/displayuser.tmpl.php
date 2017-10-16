@@ -1,19 +1,48 @@
-<!-- s:<?= __FILE__ ?> -->
-<small><a href="<?php print $returnURL; ?>">Return</a><?= wfMessage( 'pipe-separator' )->plain() . $logLink ?></small>
-<?php if (!is_null($status)) { ?>
-<fieldset>
-	<legend><?php echo wfMsg('editaccount-status') ?></legend>
-	<?php echo $status ? Wikia::successmsg($statusMsg) : Wikia::errormsg($statusMsg) ?>
-	<?php if( !empty($statusMsg2) ){ echo Wikia::errormsg($statusMsg2); } ?>
-</fieldset>
+<?php
+/**
+ * @var $status
+ * @var $statusMsg
+ * @var $statusMsg2
+ * @var $user
+ * @var $userEmail
+ * @var $userRealName
+ * @var $userEncoded
+ * @var $user_hsc
+ * @var $userId
+ * @var $userReg
+ * @var $isUnsub
+ * @var $isDisabled
+ * @var $isAdopter
+ * @var $isFanContributor
+ * @var $returnURL
+ * @var $logLink
+ * @var $userStatus
+ * @var $emailStatus
+ * @var $disabled
+ * @var $changeEmailRequested
+ * @var $editToken
+ * @var $mailLogLink
+ * @var $isClosureRequested
+ */
+?>
+
+<small><a href="<?php print $returnURL; ?>">Return</a>
+<?= wfMessage( 'pipe-separator' )->escaped() . $logLink ?>
+<?= wfMessage( 'pipe-separator' )->escaped() . $mailLogLink ?></small>
+<?php if ( !is_null( $status ) ) { ?>
+	<fieldset>
+		<legend><?= wfMessage( 'editaccount-status' )->escaped(); ?></legend>
+		<?php echo $status ? Wikia::successmsg( $statusMsg ) : Wikia::errormsg( $statusMsg ) ?>
+		<?php if ( !empty( $statusMsg2 ) ) { echo Wikia::errormsg( $statusMsg2 ); } ?>
+	</fieldset>
 <?php } ?>
 <fieldset>
-	<legend><?php echo wfMsg('editaccount-frame-account', $user) ?></legend>
+	<legend><?= wfMessage( 'editaccount-frame-account', $user )->escaped(); ?></legend>
 	<?php echo $userEncoded ?><br />
 	ID: <?php echo $userId; ?><br />
 	Reg: <?php echo $userReg ; ?><br />
-	<?= wfMsg('editaccount-labal-account-status') ?>: <?php echo $userStatus; ?><br />
-	<?= wfMsg('editaccount-labal-email-status') ?>: <?php echo $emailStatus; ?><br />
+	<?= wfMessage( 'editaccount-labal-account-status' )->escaped(); ?>: <?php echo $userStatus; ?><br />
+	<?= wfMessage( 'editaccount-labal-email-status' )->escaped(); ?>: <?php echo $emailStatus; ?><br />
 	<?= $changeEmailRequested; ?><br />
 	<form method="post" action="" id="EditAccountForm">
 		<div>
@@ -57,23 +86,62 @@
 		</div>
 
 		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 
 </fieldset>
+
 <fieldset>
-	<legend><?php echo wfMsg('editaccount-frame-close', $user) ?></legend>
-	<p><?php echo wfMsg('editaccount-usage-close') ?></p>
+	<legend><?= wfMessage( 'editaccount-frame-fan-contributor', $user )-> escaped(); ?></legend>
+	<?php if ( $isFanContributor ) : ?>
+		<p><?= wfMessage( 'editaccount-fan-contributor-exists' )->escaped(); ?></p>
+	<?php else: ?>
+		<p><?= wfMessage( 'editaccount-usage-fan-contributor' )-> escaped(); ?></p>
+		<form method="post" action="">
+			<input type="submit" value="<?= wfMessage( 'editaccount-submit-fan-contributor' )->escaped(); ?>" <?= $disabled; ?> />
+			<input type="hidden" name="wpAction" value="fan-contributor" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
+			<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
+		</form>
+	<?php endif; ?>
+</fieldset>
+
+<fieldset>
+	<legend><?= wfMessage( 'editaccount-frame-logout', $user )->escaped(); ?></legend>
+	<p><?= wfMessage( 'editaccount-usage-logout' )->escaped(); ?></p>
 	<form method="post" action="">
-		<input type="submit" value="<?php echo wfMsg('editaccount-submit-close') ?>" <?= $disabled; ?> />
+		<input type="submit" value="<?= wfMessage( 'editaccount-submit-logout' )->escaped(); ?>" <?= $disabled; ?> />
+		<input type="hidden" name="wpAction" value="logout" />
+		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend><?= wfMessage( 'editaccount-frame-close', $user )->escaped(); ?></legend>
+<?php if ( $isClosureRequested ) { ?>
+	<?= wfMessage( 'editaccount-closure-requested' )->parseAsBlock(); ?>
+	<form method="post" action="">
+		<input type="submit" value="<?= wfMessage( 'editaccount-submit-clearclosurerequest' )->escaped(); ?>" <?= $disabled; ?> />
+		<input type="hidden" name="wpAction" value="clearclosurerequest" />
+		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
+	</form>
+<?php } ?>
+	<p><?= wfMessage( 'editaccount-usage-close' )->escaped(); ?></p>
+	<form method="post" action="">
+		<input type="submit" value="<?= wfMessage( 'editaccount-submit-close' )->escaped(); ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="closeaccount" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 <?php if( $isDisabled ) { ?>
-<?= wfMsg('edit-account-closed-flag'); ?>
+<?= wfMessage( 'edit-account-closed-flag' )->parse(); ?>
 	<form method="post" action="">
-		<input type="submit" value="<?php echo wfMsg('editaccount-submit-cleardisable') ?>" <?= $disabled; ?> />
+		<input type="submit" value="<?= wfMessage( 'editaccount-submit-cleardisable' )->escaped(); ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="cleardisable" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 <?php } //end undisable ?>
 </fieldset>

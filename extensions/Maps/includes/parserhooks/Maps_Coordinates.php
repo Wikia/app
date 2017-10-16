@@ -1,4 +1,5 @@
 <?php
+use DataValues\Geo\Formatters\GeoCoordinateFormatter;
 
 /**
  * Class for the 'coordinates' parser hooks, 
@@ -6,22 +7,11 @@
  * 
  * @since 0.7
  * 
- * @file Maps_Coordinates.php
- * @ingroup Maps
- *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsCoordinates extends ParserHook {
-	/**
-	 * No LSB in pre-5.3 PHP *sigh*.
-	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
-	 */	
-	public static function staticInit( Parser &$parser ) {
-		$instance = new self;
-		return $instance->init( $parser );
-	}	
-	
+
 	/**
 	 * Gets the name of the parser hook.
 	 * @see ParserHook::getName
@@ -48,37 +38,29 @@ class MapsCoordinates extends ParserHook {
 		global $egMapsCoordinateDirectional;
 		
 		$params = array();
-		
-		$params['location'] = new Parameter(
-			'location',
-			Parameter::TYPE_STRING,
-			null,
-			array(),
-			array(
-				new CriterionIsLocation(),
-			)	
+
+		$params['location'] = array(
+			'type' => 'coordinate',
 		);
-		$params['location']->setMessage( 'maps-coordinates-par-location' );
-		
-		$params['format'] = new Parameter(
-			'format',
-			Parameter::TYPE_STRING,
-			$egMapsCoordinateNotation,
-			array( 'notation' ),
-			array(
-				new CriterionInArray( $egMapsAvailableCoordNotations ),
-			)			
-		);	
-		$params['format']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
-		$params['format']->setMessage( 'maps-coordinates-par-format' );
-		
-		$params['directional'] = new Parameter(
-			'directional',
-			Parameter::TYPE_BOOLEAN,
-			$egMapsCoordinateDirectional			
+
+		$params['format'] = array(
+			'default' => $egMapsCoordinateNotation,
+			'values' => $egMapsAvailableCoordNotations,
+			'aliases' => 'notation',
+			'tolower' => true,
 		);
-		$params['directional']->setMessage( 'maps-coordinates-par-directional' );
-		
+
+		$params['directional'] = array(
+			'type' => 'boolean',
+			'default' => $egMapsCoordinateDirectional,
+		);
+
+		// Give grep a chance to find the usages:
+		// maps-coordinates-par-location, maps-coordinates-par-format, maps-coordinates-par-directional
+		foreach ( $params as $name => &$param ) {
+			$param['message'] = 'maps-coordinates-par-' . $name;
+		}
+
 		return $params;
 	}
 	
@@ -105,15 +87,16 @@ class MapsCoordinates extends ParserHook {
 	 * @return string
 	 */
 	public function render( array $parameters ) {
-		$parsedCoords = MapsCoordinateParser::parseCoordinates( $parameters['location'] );
-		
-		if ( $parsedCoords ) {
-			$output = MapsCoordinateParser::formatCoordinates( $parsedCoords, $parameters['format'], $parameters['directional'] );
-		} else {
-			// The coordinates should be valid when this method gets called.
-			throw new MWException( 'Attempt to format an invalid set of coordinates' );
-		}
-		
+		$options = new \ValueFormatters\FormatterOptions( array(
+			GeoCoordinateFormatter::OPT_FORMAT => $parameters['format'],
+			GeoCoordinateFormatter::OPT_DIRECTIONAL => $parameters['directional'],
+			GeoCoordinateFormatter::OPT_PRECISION => 1 / 360000
+		) );
+
+		$coordinateFormatter = new GeoCoordinateFormatter( $options );
+
+		$output = $coordinateFormatter->format( $parameters['location'] );
+
 		return $output;		
 	}
 	

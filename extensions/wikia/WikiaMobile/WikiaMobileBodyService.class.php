@@ -5,6 +5,7 @@
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
+
 class WikiaMobileBodyService extends WikiaService {
 	public function index() {
 		$bodyContent = $this->request->getVal( 'bodyText', '' );
@@ -15,20 +16,20 @@ class WikiaMobileBodyService extends WikiaService {
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
-		wfRunHooks( 'GetHTMLAfterBody', array ( RequestContext::getMain()->getSkin(), &$afterBodyHtml ) );
+		Hooks::run( 'GetHTMLAfterBody', array ( RequestContext::getMain()->getSkin(), &$afterBodyHtml ) );
 
 		// this hook is needed for SMW's factbox
-		if ( !wfRunHooks('SkinAfterContent', array( &$afterContentHookText ) ) ) {
+		if ( !Hooks::run('SkinAfterContent', array( &$afterContentHookText ) ) ) {
 			$afterContentHookText = '';
 		}
 
 		/* Dont show header if user profile page */
 		if( !$this->wg->Title->inNamespace( NS_USER ) ){
 			$this->response->setVal( 'pageHeaderContent', $this->app->renderView( 'WikiaMobilePageHeaderService', 'index' ));
-		}else{
+		} else {
 			$this->response->setVal( 'pageHeaderContent', '');
 		}
-		$this->response->setVal('bodyContent', $bodyContent);
+		$this->response->setVal( 'bodyContent', $bodyContent );
 
 		$this->response->setVal(
 			'categoryLinks',
@@ -39,7 +40,12 @@ class WikiaMobileBodyService extends WikiaService {
 			)
 		);
 
+		//Render Trending Articles
+		$trendingArticles = $this->sendRequest( 'WikiaMobileTrendingArticlesService', 'index' )->toString();
+
+		$this->response->setVal( 'trendingArticles', $trendingArticles );
 		$this->response->setVal( 'afterBodyContent', $afterBodyHtml );
 		$this->response->setVal( 'afterContentHookText', $afterContentHookText );
+
 	}
 }

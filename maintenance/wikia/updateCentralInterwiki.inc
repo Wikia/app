@@ -11,7 +11,7 @@
 class Site {
 	var $suffix, $lateral, $url;
 
-	function Site( $s, $l, $u ) {
+	function __construct( $s, $l, $u ) {
 		$this->suffix = $s;
 		$this->lateral = $l;
 		$this->url = $u;

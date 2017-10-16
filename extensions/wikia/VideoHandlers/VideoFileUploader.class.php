@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Class VideoFileUploader
@@ -65,8 +66,10 @@ class VideoFileUploader {
 			'wpUploadFileURL' => $urlFrom
 		);
 
+		$request = new FauxRequest( $data, true );
+
 		$upload = (new UploadFromUrl); /* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest( new FauxRequest( $data, true ) );
+		$upload->initializeFromRequest( $request );
 		wfProfileOut( __METHOD__ );
 		return $upload;
 	}
@@ -79,44 +82,72 @@ class VideoFileUploader {
 	 *
 	 * @param $oTitle - A title object that will be set if this call is successful
 	 * @return FileRepoStatus|Status - A status object representing the result of this call
+	 * @throws Exception
 	 */
 	public function upload( &$oTitle ) {
+		$apiWrapper = $this->getApiWrapper();
+		$thumbnailUrl = null;
+		if ( method_exists( $apiWrapper, 'getThumbnailUrl' ) ) {
+			// Some providers will sometimes return error codes when attempting
+			// to fetch a thumbnail
+			try {
+				$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+			} catch ( Exception $e ) {
+				WikiaLogger::instance()->error('Video upload failed', [
+					'targetFile' => $this->sTargetTitle,
+					'externalURL' => $this->sExternalUrl,
+					'videoID' => $this->sVideoId,
+					'provider' => $this->sProvider,
+					'exception' => $e
+				]);
+				return Status::newFatal($e->getMessage());
+			}
+		} else {
+			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
+				'targetFile' => $this->sTargetTitle,
+				'overrideMetadata' => $this->aOverrideMetadata,
+				'externalURL' => $this->sExternalUrl,
+				'videoID' => $this->sVideoId,
+				'provider' => $this->sProvider,
+				'apiWrapper' => get_class( $apiWrapper )
+			]);
+		}
+		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
-		wfProfileIn(__METHOD__);
-
-		// Some providers will sometimes return error codes when attempting
-		// to fetch a thumbnnail
-		try {
-			$upload = $this->uploadBestThumbnail();
-		} catch ( Exception $e ) {
-			Wikia::Log(__METHOD__, false, $e->getMessage());
-
-			wfProfileOut(__METHOD__);
-			return Status::newFatal( $e->getMessage() );
+		if ( $oTitle === null ) {
+			throw new Exception ( wfMessage ('videohandler-unknown-title')->inContentLanguage()->text() );
 		}
 
-		/* create a reference to article that will contain uploaded file */
-		$titleText =  $this->getDestinationTitle();
-		if ( !($this->getApiWrapper()->isIngestion() ) ) {
-			// only sanitize name for external uploads
-			// video ingestion handles sanitization by itself
-			$titleText = self::sanitizeTitle( $titleText );
+		// Check if the user has the proper permissions
+		// Mimicks Special:Upload's behavior
+		$user = F::app()->wg->User;
+		$permErrors = $oTitle->getUserPermissionsErrors( 'edit', $user );
+		$permErrorsUpload = $oTitle->getUserPermissionsErrors( 'upload', $user );
+		if ( !$oTitle->exists() ) {
+			$permErrorsCreate = $oTitle->getUserPermissionsErrors( 'create', $user );
+		} else {
+			$permErrorsCreate = [];
 		}
-		$oTitle = Title::newFromText( $titleText, NS_FILE );
+
+		if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
+			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
+			$msgKey = array_shift( $permErrors[0] );
+			throw new Exception( wfMessage( $msgKey, $permErrors[0] )->parse()  );
+		}
 
 		if ( $oTitle->exists() ) {
-			// @TODO
-			// if video already exists make sure that we are in fact changing something
-			// before generating upload (for now this only works for edits)
-			$article = Article::newFromID( $oTitle->getArticleID() );
+			$article = new Article( $oTitle );
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
 			if ( $content != $newcontent ) {
-				$article->doEdit( $newcontent, 'update' );
+				$article->doEdit( $newcontent, wfMessage( 'videos-update-edit-summary' )->inContentLanguage()->text() );
 			}
 		}
 
 		$class = !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile';
+
+		/** @var WikiaLocalFile $file */
 		$file = new $class(
 				$oTitle,
 				RepoGroup::singleton()->getLocalRepo()
@@ -128,43 +159,108 @@ class VideoFileUploader {
 
 		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
 		if ( $this->getApiWrapper()->isIngestion() ) {
-			$meta = $this->getApiWrapper()->getMetadata();
-			$file->forceMetadata( serialize($meta) );
+			$file->forceMetadata( serialize( $this->getNormalizedMetadata() ) );
+		}
+
+
+		$forceMime = $file->forceMime;
+
+		$file->getMetadata();
+
+		//In case of video replacement - Title already exists - preserve forceMime value.
+		//By default it is changed to false in WikiaLocalFileShared::afterSetProps method
+		//which is called by $file->getMetadata().
+		if ( $oTitle->exists() ) {
+			$file->forceMime = $forceMime;
 		}
 
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
 			wfMessage( 'videos-initial-upload-edit-summary' )->inContentLanguage()->text(),
-			$this->getDescription(),
+			\UtfNormal::toNFC( $this->getDescription() ),
 			File::DELETE_SOURCE
 		);
 
-		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
+		Hooks::run('AfterVideoFileUploaderUpload', array($file, $result));
 
-		wfProfileOut(__METHOD__);
+		// SUS-1195: make sure the file cache is up to date shortly after the video upload
+		if ( $result->isOK() ) {
+			$file->saveToCache();
+		}
+
 		return $result;
 	}
 
 	/**
-	 * Reset the thumbnail for this video to its original from the provider
+	 * Get the normalized composed version of ApiWrapper metadata
 	 *
+	 * @return string
+	 */
+	public function getNormalizedMetadata() {
+		$metadata = $this->getApiWrapper()->getMetadata();
+
+		// Flatten metadata, normalize it, and restore in original structure
+		$metadata = json_encode( $metadata );
+		$metadata = \UtfNormal::toNFC( $metadata );
+
+		return json_decode( $metadata, true );
+	}
+
+	/**
+	 * Get the normalized composed version of the title
+	 *
+	 * @return string
+	 */
+	public function getNormalizedDestinationTitle() {
+		return \UtfNormal::toNFC( $this->getSanitizedTitleText() );
+	}
+
+	/**
+	 * Get the sanitized title caption
+	 *
+	 * @return string
+	 */
+	public function getSanitizedTitleText() {
+		$isIngestion = $this->getApiWrapper()->isIngestion();
+		// Create a reference to article that will contain uploaded file
+		$titleText = $this->getDestinationTitle();
+		if ( !$isIngestion ) {
+			// only sanitize name for external uploads
+			// video ingestion handles sanitization by itself
+			$titleText = self::sanitizeTitle( $titleText );
+		}
+
+		return $titleText;
+	}
+
+	/**
+	 * Reset the thumbnail for this video to its original from the provider
 	 * @param File $file
+	 * @param string $thumbnailUrl
+	 * @param int $delayIndex See VideoHandlerHelper->resetVideoThumb for more info
 	 * @return FileRepoStatus
 	 */
-	public function resetThumbnail( File &$file ) {
+	public function resetThumbnail( File &$file, $thumbnailUrl, $delayIndex = 0 ) {
 		wfProfileIn(__METHOD__);
 
 		// Some providers will sometimes return error codes when attempting
 		// to fetch a thumbnail
 		try {
-			$upload = $this->uploadBestThumbnail();
+			$upload = $this->uploadBestThumbnail( $thumbnailUrl, $delayIndex );
+
+			// Publish the thumbnail file (some filerepo classes do not support write operations)
+			$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
 		} catch ( Exception $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'thumbnailUrl' => $thumbnailUrl,
+				'delayIndex' => $delayIndex,
+				'file_obj' => $file,
+				'exception' => $e
+			]);
+			wfProfileOut(__METHOD__);
 			return Status::newFatal($e->getMessage());
 		}
-
-		// Publish the thumbnail file
-		$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
 
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -173,39 +269,50 @@ class VideoFileUploader {
 	/**
 	 * Try to upload the best thumbnail for this file, starting with the one the provider
 	 * gives and falling back to the default thumb
-	 *
+	 * @param string $thumbnailUrl
+	 * @param int $delayIndex See VideoHandlerHelper->resetVideoThumb for more info
 	 * @return UploadFromUrl
 	 */
-	protected function uploadBestThumbnail( ) {
-		wfProfileIn(__METHOD__);
+	protected function uploadBestThumbnail( $thumbnailUrl, $delayIndex = 0 ) {
+		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-
-		// reset proxy to blank
-		$originalProxy = $app->wg->HTTPProxy;
-		$app->wg->HTTPProxy = '';
-
+		// disable proxy
+		F::app()->wg->DisableProxy = true;
 		// Try to upload the thumbnail for this video
-		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
+		$upload = $this->uploadThumbnailFromUrl( $thumbnailUrl );
 
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {
 			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
+			$this->scheduleJob( $delayIndex );
 		}
 
-		// set proxy to original value
-		$app->wg->HTTPProxy = $originalProxy;
-
 		// If we still don't have anything, give up.
-		if ( empty($upload) ) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $upload ) ) {
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 
 		$this->adjustThumbnailToVideoRatio( $upload );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
+
 		return $upload;
+	}
+
+	/**
+	 * @param $delayIndex
+	 */
+	private function scheduleJob( $delayIndex ) {
+		$provider = $this->oApiWrapper->getProvider();
+		if ( $delayIndex < UpdateThumbnailTask::getDelayCount( $provider ) ) {
+			$delay = UpdateThumbnailTask::getDelay( $provider, $delayIndex );
+			$task = ( new UpdateThumbnailTask() )->wikiId( F::app()->wg->CityId );
+			$task->delay( $delay );
+			$task->dupCheck();
+			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider, $this->sVideoId );
+			$task->queue();
+		}
 	}
 
 	/**
@@ -274,7 +381,7 @@ class VideoFileUploader {
 
 	}
 
-	protected function getApiWrapper( ) {
+	public function getApiWrapper( ) {
 		wfProfileIn( __METHOD__ );
 		if ( !empty( $this->oApiWrapper ) ) {
 			wfProfileOut( __METHOD__ );
@@ -424,25 +531,33 @@ class VideoFileUploader {
 	 * @return null|Title
 	 */
 	public static function URLtoTitle( $url, $sTitle = '', $sDescription = '' ) {
-
 		wfProfileIn( __METHOD__ );
 		$oTitle = null;
 		$oUploader = new self();
 		$oUploader->setExternalUrl( $url );
 		$oUploader->setTargetTitle( $sTitle );
-		if ( !empty($sDescription) ) {
-			$categoryVideosTxt = self::getCategoryVideosWikitext();
-			if ( strpos( $sDescription, $categoryVideosTxt ) === false ) {
-				$sDescription .= $categoryVideosTxt;
+		if ( !empty( $oUploader->getApiWrapper() ) ) {
+			if ( !empty($sDescription) ) {
+				$categoryVideosTxt = self::getCategoryVideosWikitext();
+				if ( strpos( $sDescription, $categoryVideosTxt ) === false ) {
+					$sDescription .= $categoryVideosTxt;
+				}
+				$oUploader->setDescription( $sDescription );
 			}
-			$oUploader->setDescription( $sDescription );
+
+			$status = $oUploader->upload( $oTitle );
+			if ( $status->isOK() ) {
+				wfProfileOut( __METHOD__ );
+				return $oTitle;
+			}
 		}
 
-		$status = $oUploader->upload( $oTitle );
-		if ( $status->isOK() ) {
-			wfProfileOut( __METHOD__ );
-			return $oTitle;
-		}
+		\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - video upload failed', [
+			'video_url' => (string) $url,
+			'provider_name' => (string) $oUploader->sProvider,
+			'upload_status' => isset( $status ) ? $status : Status::newFatal( 'api-wrapper-not-found' )
+		] );
+
 		wfProfileOut( __METHOD__ );
 		return null;
 	}

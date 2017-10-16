@@ -1,4 +1,5 @@
 {
+	"jsWrapperModule": "wikia.ui.drawer",
 	"templateVars": {
 		"default": {
 			"required": ["side", "content"],

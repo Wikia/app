@@ -47,13 +47,13 @@ class SponsorshipDashboard extends SpecialPage {
 
 	function execute( $subpage = false ) {
 
-		global $wgSupressPageSubtitle;
+		global $wgSuppressPageSubtitle;
 
 		$wgOut = F::app()->getGlobal('wgOut');
 
 		$wgOut->setHTMLTitle( wfMsg( 'sponsorship-dashboard-default-page-title' ) );
 		$subPageParams = explode( '/', $subpage );
-		$wgSupressPageSubtitle = true;
+		$wgSuppressPageSubtitle = true;
 
 		// admin panel
 

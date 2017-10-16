@@ -1,40 +1,40 @@
 <?php
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Theme designer',
-	'author' => array( 'Christian Williams', 'Inez Korczyński', 'Maciej Brencz' ),
+	'author' => [ 'Christian Williams', 'Inez Korczyński', 'Maciej Brencz' ],
 	'descriptionmsg' => 'themedesigner-desc',
-);
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ThemeDesigner'
+];
 
-$dir = dirname( __FILE__ );
+$dir = __DIR__;
 
 // autoloads
-$wgAutoloadClasses[ 'UploadBackgroundFromFile' ] = "{$dir}/UploadBackgroundFromFile.class.php";
-$wgAutoloadClasses[ 'UploadFaviconFromFile' ] = "{$dir}/UploadFaviconFromFile.class.php";
-$wgAutoloadClasses[ 'UploadWordmarkFromFile' ] = "{$dir}/UploadWordmarkFromFile.class.php";
+$wgAutoloadClasses['UploadBackgroundFromFile'] = "{$dir}/UploadBackgroundFromFile.class.php";
+$wgAutoloadClasses['UploadFaviconFromFile'] = "{$dir}/UploadFaviconFromFile.class.php";
+$wgAutoloadClasses['UploadWordmarkFromFile'] = "{$dir}/UploadWordmarkFromFile.class.php";
 $wgAutoloadClasses['ThemeDesignerController'] = "$dir/ThemeDesignerController.class.php";
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
 $wgAutoloadClasses['SpecialThemeDesignerPreview'] = "$dir/SpecialThemeDesignerPreview.class.php";
-$wgAutoloadClasses['Theme'] = "$dir/SpecialThemeDesignerPreview.class.php";
 $wgAutoloadClasses['ThemeDesignerHooks'] = "$dir/ThemeDesignerHooks.class.php";
 
 // special pages
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgSpecialPages['ThemeDesignerPreview'] = 'SpecialThemeDesignerPreview';
+
 // i18n
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
 $wgExtensionMessagesFiles['ThemeDesignerAliases'] = "$dir/ThemeDesigner.alias.php";
 
-// Ability to access ThemeDesigner.
-$wgAvailableRights[] = 'themedesigner';
-$wgGroupPermissions['*']['themedesigner'] = false;
-$wgGroupPermissions['sysop']['themedesigner'] = true;
-$wgGroupPermissions['helper']['themedesigner'] = true;
-$wgGroupPermissions['staff']['themedesigner'] = true;
-
-JSMessages::registerPackage('ThemeDesigner', array(
+JSMessages::registerPackage( 'ThemeDesigner', [
 	'themedesigner-wordmark-preview-error'
-));
+] );
 
-$wgHooks['RevisionInsertComplete'][] = 'ThemeDesignerHooks::onRevisionInsertComplete';
+// hooks
 $wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComplete';
+$wgHooks['RevisionInsertComplete'][] = 'ThemeDesignerHooks::onRevisionInsertComplete';
+$wgHooks['UploadComplete'][] = 'ThemeDesignerHooks::onUploadComplete';
+$wgHooks['UploadVerification'][] = 'ThemeDesignerHooks::onUploadVerification';
+$wgHooks['PageHeaderActionButtonShouldDisplay'][] = 'SpecialThemeDesignerPreview::onPageHeaderActionButtonShouldDisplay';
+$wgHooks['BeforePrepareActionButtons'][] = 'SpecialThemeDesignerPreview::onBeforePrepareActionButtons';
+

@@ -9,7 +9,8 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "1";
 
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = empty( $options['isInline'] ) ? false : !empty( $options['autoplay'] );
 		// YouTube parameters: http://code.google.com/apis/youtube/player_parameters.html
 		$height =  $this->getHeight( $width );
 		$playerVars = array(
@@ -17,21 +18,20 @@ class YoutubeVideoHandler extends VideoHandler {
 			'wmode' => 'opaque',
 			'allowfullscreen' => 1,
 		);
+
 		if ( $autoplay ) {
 			$playerVars[self::$autoplayParam] = self::$autoplayValue;
 		}
+
 		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
-		$html = <<<EOT
-<div id="youtubeVideoPlayer" $sizeString></div>
-EOT;
 		return array(
-			'html' => $html,
+			'html' => "<div id='youtubeVideoPlayer' {$sizeString}></div>",
+			'width' => $width,
+			'height' => $height,
 			'init' => 'wikia.videohandler.youtube',
 			'jsParams' => array(
-				'width' => $width,
-				'height' => $height,
-				'videoId'=> $this->videoId,
+				'videoId' => $this->videoId,
 				'playerVars' => $playerVars,
 			),
 			'scripts' => array(

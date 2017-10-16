@@ -24,7 +24,7 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Photo Gallery',
 	'version' => '4.0',
-	'url' => 'http://www.wikia.com/wiki/c:help:Help:Gallery',
+	'url' => 'http://community.wikia.com/wiki/Help:Gallery',
 	'author' => array( '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]', 'Maciej Brencz' ),
 	'descriptionmsg' => 'wikiaphotogallery-desc',
 );
@@ -36,7 +36,6 @@ $wgAutoloadClasses['WikiaPhotoGallery'] = "$dir/WikiaPhotoGallery.class.php";
 $wgAutoloadClasses['WikiaPhotoGalleryAjax'] = "$dir/WikiaPhotoGalleryAjax.class.php";
 $wgAutoloadClasses['WikiaPhotoGalleryHelper'] = "$dir/WikiaPhotoGalleryHelper.class.php";
 $wgAutoloadClasses['WikiaPhotoGalleryUpload'] = "$dir/WikiaPhotoGalleryUpload.class.php";
-$wgAutoloadClasses['WikiaPhotoGalleryRSS'] = "$dir/WikiaPhotoGalleryRSS.class.php";
 
 // hooks
 $wgHooks['renderImageGallerySetup'][] = 'WikiaPhotoGalleryHelper::setup';
@@ -46,7 +45,11 @@ $wgHooks['EditPage::showEditForm:initial2'][] = 'WikiaPhotoGalleryHelper::setupE
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaPhotoGalleryHelper::fetchTemplateAndTitle';
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 $wgHooks['MakeGlobalVariablesScript'][] = 'WikiaPhotoGalleryHelper::makeGlobalVariablesScriptForWikiaGrid';
+$wgHooks['EditPage::importFormData'][] = 'WikiaPhotoGalleryHelper::onImportFormData';
 /* end temp transistion code */
+// This is temporary for the prototype stage of media gallery
+// TODO: Remove this hook once media gallery is ready to be fully deployed
+$wgHooks[ 'PageRenderingHash' ][] = 'WikiaPhotoGalleryHelper::addMediaGalleryCacheKey';
 
 // i18n
 $wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/WikiaPhotoGallery.i18n.php';

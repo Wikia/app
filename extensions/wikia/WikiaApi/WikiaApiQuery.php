@@ -10,7 +10,7 @@
  */
 
 define ('WIKIA_API_QUERY_LIMIT', 	25);
-define ('WIKIA_API_QUERY_MIN_LIMIT',	0);
+define ('WIKIA_API_QUERY_MIN_LIMIT',	1);
 
 define ('WIKIA_API_QUERY_OFFSET',	0);
 define ('WIKIA_API_QUERY_MIN_OFFSET',	0);
@@ -57,7 +57,7 @@ class WikiaApiQuery extends ApiQueryBase {
      */
 	public function __construct($query, $moduleName) {
 		$this->mAction = $query->getModuleName();
-		$this->mUser = User::newFromSession();
+		$this->mUser = $this->getContext()->getUser();
 		$this->mBrowser = $this->getUniqueBrowserId();
 		$this->mIndexTagName = 'item';
 		parent :: __construct($query, $moduleName, "wk");
@@ -84,9 +84,11 @@ class WikiaApiQuery extends ApiQueryBase {
 			$allowParams = array_merge($allowParams, array (
 				'limit' => array (
 					ApiBase :: PARAM_ISMULTI => 0,
-					ApiBase :: PARAM_TYPE => 'integer',
+					ApiBase::PARAM_TYPE => 'limit',
 					ApiBase :: PARAM_DFLT => WIKIA_API_QUERY_LIMIT,
 					ApiBase :: PARAM_MIN => WIKIA_API_QUERY_MIN_LIMIT,
+					ApiBase::PARAM_MAX => ApiBase::LIMIT_SML1,
+					ApiBase::PARAM_MAX2 => ApiBase::LIMIT_SML2,
 				),
 				'offset' => array (
 					ApiBase :: PARAM_ISMULTI => 0,
@@ -645,7 +647,7 @@ class WikiaApiQueryError extends MWException {
 
 	/**
 	 * Construct a database error
-	 * @param Database $db The database object which threw the error
+	 * @param DatabaseBase $db The database object which threw the error
 	 * @param string $error A simple error message to be used for debugging
 	 */
 	function __construct( $faultcode, $error = '') {

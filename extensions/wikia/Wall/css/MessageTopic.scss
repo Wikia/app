@@ -1,10 +1,8 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/box-sizing";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/menus";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/transform";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/menus";
+@import "skins/shared/mixins/transform";
 
 @import "../../Wall/css/WallColors";
 
@@ -17,11 +15,11 @@
 		margin-bottom: 5px;
 	}
 	input[type=text] {
-		@include box-sizing;
 		background-color: $color-wall-input-new;
 		border: 1px solid $color-page-border;
+		box-sizing: border-box;
 		color: $color-text;
-		
+
 		// Chrome needs this to get rid of empty space below textarea
 		display: block;
 		font-size: 13px;
@@ -69,14 +67,14 @@
 		padding: 0;
 		margin: 5px 0 0;
 		.topic {
-			@include opacity(80);
 			float: left;
 			margin-right: 10px;
+			opacity: .8;
 			padding-right: 15px;
 			position: relative;
-			
+
 			&:hover {
-				@include opacity(100);
+				opacity: 1;
 				.remove-swatch {
 					background-color: $color-text;
 				}
@@ -88,7 +86,7 @@
 				}
 				@include transform(scale(0.8));
 				background-color: $color-remove-swatch;
-				background-image: url('/skins/oasis/images/icon_close.png'); /* $base64 */
+				background-image: url('/skins/oasis/images/icon_close.png'); /* inline */
 				background-position: -2px -2px;
 				cursor: pointer;
 				height: 12px;

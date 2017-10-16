@@ -36,9 +36,6 @@
 	 			</div>
 			</div>
 		</div>
-		<? if($showAdModalRectangle) { ?>
-			<div id="MODAL_RECTANGLE" class="wikia-ad noprint"></div>
-		<? } ?>
 	</div>
 
 	<div class="more-info">
@@ -52,7 +49,7 @@
 	</script>
 
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
-		<button class="share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></button>
+		<a href="#" class="wikia-button share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></a>
 		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
 
 		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
@@ -62,7 +59,6 @@
 
 		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
-		<span class="video-views">{{{views}}}</span>
 		<div class="user-details caption">
 			{{#caption}}<p>{{caption}}</p>{{/caption}}
 			<img class="avatar" src="{{userThumbUrl}}">
@@ -81,9 +77,11 @@
 
 	<script id="LightboxCarouselThumbs" type="text/template">
 		{{#thumbs}}
-			<li{{#liClass}} class="{{liClass}}"{{/liClass}}>
-				{{{playButtonSpan}}}
-				<img class="thumb" src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}" data-caption="{{caption}}" width="90" height="55">
+			<li data-backfill="{{backfill}}">
+				<a class="{{thumbWrapperClass}}">
+					{{{playButtonSpan}}}
+					<img class="thumb" src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}" data-caption="{{caption}}" width="90" height="55">
+				</a>
 			</li>
 		{{/thumbs}}
 	</script>
@@ -95,7 +93,7 @@
 	</script>
 
 	<script id="LightboxCarouselProgressTemplate" type="text/template">
-		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{{total}}}")); ?>
+		<?= wfMessage( 'lightbox-carousel-progress' )->rawParams( '{{idx1}}', '{{idx2}}', '{{{total}}}' )->parse(); ?>
 	</script>
 
 	<script id="LightboxShareTemplate" type="text/template">
@@ -145,18 +143,6 @@
 						);
 					?>
 					<?php
-						$formEmbed = array (
-							'inputs' => array (
-						        array(
-						            'label' => wfMsg('lightbox-embed-url'),
-						            'type' => 'text',
-						            'name' => 'lightbox-embed-url',
-					                'value' => "{{embedMarkup}}",
-						        ),
-						    ),
-						);
-					?>
-					<?php
 						$formFilePage = array (
 							'inputs' => array (
 						        array(
@@ -169,9 +155,6 @@
 						);
 					?>
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formHeader)); ?>
-					{{#embedMarkup}}
-						<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formEmbed)); ?>
-					{{/embedMarkup}}
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formFilePage)); ?>
 				</div>
 				<div class="email">

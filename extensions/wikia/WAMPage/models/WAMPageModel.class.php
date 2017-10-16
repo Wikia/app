@@ -9,9 +9,6 @@ class WAMPageModel extends WikiaModel {
 
 	const TAB_INDEX_TOP_WIKIS = 0;
 	const TAB_INDEX_BIGGEST_GAINERS = 1;
-	const TAB_INDEX_GAMING = 2;
-	const TAB_INDEX_ENTERTAINMENT = 3;
-	const TAB_INDEX_LIFESTYLE = 4;
 
 	/**
 	 * @desc Cache for config array from WikiFactory
@@ -27,24 +24,21 @@ class WAMPageModel extends WikiaModel {
 	 */
 	protected $pagesMap = null;
 
-	static protected $failoverTabsNames = [
-		self::TAB_INDEX_TOP_WIKIS => 'Top wikias',
-		self::TAB_INDEX_BIGGEST_GAINERS => 'The biggest gainers',
-		self::TAB_INDEX_GAMING => 'Top video games wikias',
-		self::TAB_INDEX_ENTERTAINMENT => 'Top entertainment wikias',
-		self::TAB_INDEX_LIFESTYLE => 'Top lifestyle wikias'
-	];
-
 	static protected $verticalIds = [
-		WikiFactoryHub::CATEGORY_ID_GAMING,
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+		WikiFactoryHub::VERTICAL_ID_OTHER,
+		WikiFactoryHub::VERTICAL_ID_COMICS,
+		WikiFactoryHub::VERTICAL_ID_TV,
+		WikiFactoryHub::VERTICAL_ID_MOVIES,
+		WikiFactoryHub::VERTICAL_ID_MUSIC,
+		WikiFactoryHub::VERTICAL_ID_BOOKS,
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES,
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
 	];
 
 	public function __construct() {
 		parent::__construct();
 
-		if( is_null($this->config) ) {
+		if ( is_null( $this->config ) ) {
 			$this->config = $this->app->wg->WAMPageConfig;
 		}
 	}
@@ -71,21 +65,26 @@ class WAMPageModel extends WikiaModel {
 	 * @param int $tabIndex
 	 * @return mixed
 	 */
-	public function getVisualizationWikis($tabIndex) {
-		if( !empty($this->app->wg->DevelEnvironment) ) {
-			$WAMData = $this->getMockedDataForDev();
-		} else {
-			switch($tabIndex) {
-				case self::TAB_INDEX_BIGGEST_GAINERS: $params = $this->getVisualizationParams( null, 'wam_change' ); break;
-				case self::TAB_INDEX_GAMING: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_GAMING ); break;
-				case self::TAB_INDEX_ENTERTAINMENT: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT ); break;
-				case self::TAB_INDEX_LIFESTYLE: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_LIFESTYLE ); break;
-				default: $params = $this->getVisualizationParams(); break;
-			}
+	public function getVisualizationWikis( $iVerticalId ) {
+		$aParams = $this->getVisualizationParams( $iVerticalId );
+		$WAMData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', $aParams )->getData();
 
-			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
-		}
-		return $this->prepareIndex($WAMData['wam_index'], $tabIndex);
+		return $this->prepareIndex( $WAMData[ 'wam_index' ], self::TAB_INDEX_BIGGEST_GAINERS );
+	}
+
+
+	protected function getVisualizationParams( $iVerticalId = 0 ) {
+		$aParams = [
+			'vertical_id' => intval( $iVerticalId ),
+			'sort_column' => 'wam_change',
+			'limit' => $this->getVisualizationItemsCount(),
+			'sort_direction' => 'DESC',
+			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
+			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
+			'fetch_wiki_images' => true,
+		];
+
+		return $aParams;
 	}
 
 	/**
@@ -99,37 +98,35 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	public function getIndexWikis($params) {
-		$params = $this->getIndexParams($params);
-
-		if( !empty($this->app->wg->DevelEnvironment) ) {
-			$WAMData = $this->getMockedDataForDev();
-		} else {
-			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
-		}
-
-		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS);
-		$WAMData['wam_index'] = $this->calculateFilterIndex($WAMData['wam_index'], $params);
+	public function getIndexWikis( Array $aParams ) {
+		$aParams = $this->getIndexParams( $aParams );
+		$WAMData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', $aParams )->getData();
+		$WAMData['wam_index'] = $this->prepareIndex( $WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS );
 
 		return $WAMData;
 	}
 
 	public function getMinMaxIndexDate() {
-		$dates = $this->app->sendRequest('WAMApi', 'getMinMaxWamIndexDate')->getData();
-		if (isset($dates['min_max_dates'])) {
-			$dates = $dates['min_max_dates'];
+		$aDates = $this->app->sendRequest( 'WAMApi', 'getMinMaxWamIndexDate' )->getData();
+		if ( isset( $aDates['min_max_dates'] ) ) {
+			$aDates = $aDates['min_max_dates'];
 
-			// Set min date as next day, because we don't have previous data
-			if (!empty($dates['min_date'])) {
-				$dates['min_date'] += 60 * 60 * 24;
+			// Add 1 to min_date, because we don't have older data
+			if ( !empty( $aDates['min_date'] ) ) {
+				$aDates['min_date'] += 60 * 60 * 24;
+			}
+
+			// Subtract 1 from max_date because we don't have future data
+			if ( !empty( $aDates['max_date'] ) ) {
+				$aDates['max_date'] -= 60 * 60 * 24;
 			}
 		} else {
-			$dates = [
+			$aDates = [
 				'min_date' => null,
-				'max_date' => null
+				'max_date' => null,
 			];
 		}
-		return $dates;
+		return $aDates;
 	}
 
 	public function getWAMMainPageName() {
@@ -176,87 +173,24 @@ class WAMPageModel extends WikiaModel {
 		return mb_strtolower($title->getText()) === mb_strtolower($this->getWAMFAQPageName());
 	}
 
-	public function getTabsNamesArray() {
-		$config = $this->getConfig();
-		return !empty($config['tabsNames']) ? $config['tabsNames'] : $this->getDefaultTabsNames();
-	}
-
-	public function getTabIndexBySubpageText($subpageText) {
-		return array_search($subpageText, $this->getTabsNamesArray());
-	}
-
-	public function getTabNameByIndex($tabIndex) {
-		$tabNames = $this->getTabsNamesArray();
-		return array_key_exists($tabIndex, $tabNames) ? $tabNames[$tabIndex] : false;
-	}
-
-	/**
-	 * @desc Return proper string for subtitleText - it's same as in tabs.
-	 *
-	 * @param int $tabIndex tab index
-	 * @param string $defaultTitle fallback title
-	 *
-	 * @return string
-	 */
-	public function getSubpageTextByIndex($tabIndex, $defaultTitle) {
-		$tabs = $this->getTabs();
-		$tabIndex = (int)$tabIndex; // first tab has 'false' as tabIndex
-
-		// we don't have that index - return default title
-		return isset($tabs[$tabIndex]['name']) ? $tabs[$tabIndex]['name'] : $defaultTitle;
-	}
-
-	/**
-	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
-	 *
-	 * @param int $selectedIdx array index of selected tab
-	 * @params array $filterParams filter params
-	 */
-	public function getTabs($selectedIdx = 0, $filterParams = array()) {
-		$tabs = [];
-		$pageName = $this->getWAMMainPageName();
-		$tabsNames = $this->getTabsNamesArray();
-		$filterParamsQueryString = $this->getParamsAsQuery($filterParams);
-
-		foreach($tabsNames as $tabName) {
-			$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
-			$tabUrl = $tabTitle->getLocalURL() . $filterParamsQueryString;
-			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
-		}
-
-		if( !empty($tabs[$selectedIdx]) ) {
-			$tabs[$selectedIdx]['selected'] = true;
-		}
-
-		return $tabs;
-	}
-
 	public function getWamPagesDbKeysMap() {
-		if( is_null($this->pagesMap) ) {
+		if( is_null( $this->pagesMap ) ) {
 			$this->pagesMap = [];
 			$pageName = $this->getWAMMainPageName();
-
-			foreach($this->getTabsNamesArray() as $tabName) {
-				$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
-				$this->pagesMap[mb_strtolower($tabTitle->getDBKey())] = $tabTitle->getDBKey();
-			}
-
-			$this->pagesMap[mb_strtolower($pageName)] = $pageName;
-			$this->pagesMap[mb_strtolower($this->getWAMFAQPageName())] = $this->getWAMFAQPageName();
+			$this->pagesMap[mb_strtolower( $pageName )] = $pageName;
+			$this->pagesMap[mb_strtolower( $this->getWAMFAQPageName() )] = $this->getWAMFAQPageName();
 		}
-
 		return $this->pagesMap;
 	}
 
 	/**
-	 * Get corporate wikis languages for filters
+	 * Get all WAM languages for a specified day for filters
 	 *
 	 * @return array
 	 */
-	public function getCorporateWikisLanguages() {
-		$visualizationModel = new CityVisualization();
-		$wikisData = $visualizationModel->getVisualizationWikisData();
-		return array_keys($wikisData);
+	public function getWAMLanguages( $date ) {
+		$result = $this->app->sendRequest( 'WAMApi', 'getWAMLanguages', [ 'wam_day' => $date ] )->getData();
+		return $result[ 'languages' ];
 	}
 
 	/**
@@ -272,66 +206,77 @@ class WAMPageModel extends WikiaModel {
 		return $verticals;
 	}
 
-	protected function getDefaultTabsNames() {
-		return self::$failoverTabsNames;
-	}
-
-	protected function prepareIndex($wamWikis, $tabIndex) {
-		$wamScoreName = ($tabIndex != self::TAB_INDEX_BIGGEST_GAINERS) ? 'wam' : 'wam_change';
-		foreach ($wamWikis as &$wiki) {
-			$wamScore = $wiki[$wamScoreName];
-			$wiki['change'] = $this->getScoreChangeName($wiki['wam'], $wiki['wam_change']);
-			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
-			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
-		}
-
-		return $wamWikis;
-	}
-
-	protected function calculateFilterIndex($wamWikis, $params) {
-		$i = 1;
-		foreach ($wamWikis as &$wiki) {
-			$wiki['index'] = $params['offset'] + $i++;
-		}
-		return $wamWikis;
-	}
-
-	protected function getScoreChangeName($score, $change) {
-		$prevScore = $score - $change;
-		$score = round($score, self::SCORE_ROUND_PRECISION);
-		$prevScore = round($prevScore, self::SCORE_ROUND_PRECISION);
-		$wamChange = $score - $prevScore;
-
-		if($wamChange > 0) {
-			$out = 'up';
-		} elseif($wamChange < 0) {
-			$out = 'down';
-		} else {
-			$out = 'eq';
-		}
-
-		return $out;
-	}
-
-	protected function getVerticalName($verticalId) {
-		/** @var WikiFactoryHub $wikiFactoryHub */
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return wfMessage('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
-	}
-
-	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {
-		$params = [
-			'vertical_id' => $verticalId,
-			'sort_column' => $sortColumn,
-			'limit' => $this->getVisualizationItemsCount(),
-			'sort_direction' => 'DESC',
-			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
-			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
-			'fetch_wiki_images' => true,
+	/**
+	 * Get verticals' machine-friendly names
+	 * @return array  An [ id => short ] array
+	 */
+	public function getVerticalsShorts() {
+		$aVerticalsShorts = [
+			WikiFactoryHub::VERTICAL_ID_OTHER => 'all',
 		];
+		$oWikiFactoryHub = WikiFactoryHub::getInstance();
+		$aVerticals = $oWikiFactoryHub->getAllVerticals();
+		foreach ( $aVerticals as $iVerticalId => $aVerticalData ) {
+			if ( $iVerticalId !== WikiFactoryHub::VERTICAL_ID_OTHER ) {
+				$aVerticalsShorts[$iVerticalId] = $aVerticalData['short'];
+			}
+		}
+		return $aVerticalsShorts;
+	}
 
-		return $params;
+	/**
+	 * Generate message keys from verticals' short names:
+	 * wam-all, wam-tv, wam-games, wam-books, wam-comics, wam-lifestyle,
+	 * wam-music, wam-movies (see WAMPage.i18n.php)
+	 * @param  Array  $aShorts An array of verticals' short names
+	 * @return Array           An array of message keys
+	 */
+	public function generateVerticalsNamesMsgKeys( $aShortNames ) {
+		$aMsgKeys = [];
+		foreach ( $aShortNames as $iCityId => $sShortName ) {
+			$aMsgKeys[$iCityId] = "wam-{$sShortName}";
+		}
+		return $aMsgKeys;
+	}
+
+	protected function prepareIndex( $aWamWikis, $iTabIndex ) {
+		$sWamScoreName = ( $iTabIndex != self::TAB_INDEX_BIGGEST_GAINERS ) ? 'wam' : 'wam_change';
+		foreach ( $aWamWikis as &$aWiki ) {
+			$fWamScore = $aWiki[ $sWamScoreName ];
+			$aWiki['change'] = $this->getScoreChangeName( $aWiki['wam'], $aWiki['wam_change'] );
+			$aWiki['wam'] = round( $fWamScore, self::SCORE_ROUND_PRECISION );
+			$aWiki['verticalId'] = $this->getVerticalName( $aWiki['vertical_id'] );
+		}
+
+		return $aWamWikis;
+	}
+
+	protected function getScoreChangeName($fScore, $fChange) {
+		$fPrevScore = $fScore - $fChange;
+		$fScore = round( $fScore, self::SCORE_ROUND_PRECISION );
+		$fPrevScore = round( $fPrevScore, self::SCORE_ROUND_PRECISION );
+		$fWamChange = $fScore - $fPrevScore;
+
+		if( $fWamChange > 0 ) {
+			$sOut = 'up';
+		} elseif( $fWamChange < 0 ) {
+			$sOut = 'down';
+		} else {
+			$sOut = 'eq';
+		}
+
+		return $sOut;
+	}
+
+	protected function getVerticalName( $iVerticalId ) {
+		$oWikiFactoryHub = WikiFactoryHub::getInstance();
+		$aAllVerticals = $oWikiFactoryHub->getAllVerticals();
+		if ( isset( $aAllVerticals[ $iVerticalId ] ) ) {
+			$aVertical = $aAllVerticals[ $iVerticalId ];
+			return wfMessage( 'wam-' . $aVertical['short'] )->inContentLanguage()->escaped();
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -345,26 +290,26 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	protected function getIndexParams($params) {
-		$itemsPerPage = $this->getItemsPerPage();
-		$firstPageNo = $this->getFirstPage();
-		$page = !empty($params['page']) ? intval($params['page']) : $firstPageNo;
-		$offset = ($page > $firstPageNo) ? (($page - 1) * $itemsPerPage) : 0;
+	protected function getIndexParams( Array $aParams ) {
+		$iItemsPerPage = $this->getItemsPerPage();
+		$iFirstPageNo = $this->getFirstPage();
+		$iPage = !empty( $aParams['page'] ) ? intval( $aParams['page'] ) : $iFirstPageNo;
+		$iOffset = ( $iPage > $iFirstPageNo ) ? ( ($iPage - 1) * $iItemsPerPage ) : 0;
 
-		$apiParams = [
+		$aApiParams = [
 			'avatar_size' => 21,
 			'fetch_admins' => true,
-			'limit' => $itemsPerPage,
-			'offset' => $offset,
+			'limit' => $iItemsPerPage,
+			'offset' => $iOffset,
 			'sort_column' => 'wam_index',
 			'sort_direction' => 'DESC',
-			'wiki_word' => isset($params['searchPhrase']) ? $params['searchPhrase'] : null,
-			'vertical_id' => isset($params['verticalId']) ? $params['verticalId'] : null,
-			'wiki_lang' =>  isset($params['langCode']) ? $params['langCode'] : null,
-			'wam_day' => isset($params['date']) ? $params['date'] : null,
+			'wiki_word' => isset( $aParams['searchPhrase'] ) ? $aParams['searchPhrase'] : null,
+			'vertical_id' => isset( $aParams['verticalId'] ) ? $aParams['verticalId'] : null,
+			'wiki_lang' =>  isset( $aParams['langCode'] ) ? $aParams['langCode'] : null,
+			'wam_day' => isset( $aParams['date'] ) ? $aParams['date'] : null,
 		];
 
-		return $apiParams;
+		return $aApiParams;
 	}
 
 	/**
@@ -374,234 +319,37 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return string
 	 */
-	private function getParamsAsQuery($filterParams) {
-		$queryParams = array();
+	private function getParamsAsQuery( $filterParams ) {
+		$sQueryParams = [];
 
 		foreach ( $filterParams as $key => $value ) {
-			if ( !empty($value) ) {
-				$queryParams[$key] = $value;
+			if ( !empty( $value ) ) {
+				$sQueryParams[ $key ] = $value;
 			}
 		}
 
-		return count($queryParams) ? '?'.http_build_query($queryParams) : '';
+		return count( $sQueryParams ) ? '?' . http_build_query( $sQueryParams ) : '';
 	}
 
 	/**
 	 * Check if title is WAM page or subPage
 	 *
-	 * @param $title
+	 * @param $oTitle
 	 * @return bool
 	 */
-	public function isWAMPage($title) {
-		wfProfileIn(__METHOD__);
+	public function isWAMPage( $oTitle ) {
+		wfProfileIn( __METHOD__ );
 		$dbKey = null;
 
-		if( $title instanceof Title ) {
-			$dbKey = mb_strtolower( $title->getDBKey() );
-		}
-
-		wfProfileOut(__METHOD__);
-		return in_array($dbKey, array_keys($this->getWamPagesDbKeysMap()));
-	}
-
-	/**
-	 * Get title where user should be redirected for given title
-	 * Redirection list is kept in $wgWAMRedirects
-	 *
-	 * @param $title
-	 * @return null|Title
-	 */
-	public function getWAMRedirect( $title ) {
-		wfProfileIn( __METHOD__ );
-		$newTabTitle = null;
-
-		if( $title instanceof Title && $title->isSubpage() ) {
-			$titleText = mb_strtolower( $title->getSubpageText() );
-
-			$wamRedirects = $this->getWAMRedirectsList();
-			if ( isset( $wamRedirects[$titleText] ) ) {
-				$newTabTitle = $this->getTitleFromText( $this->getWAMMainPageName() . '/' . $wamRedirects[$titleText] );
-			}
+		if( $oTitle instanceof Title ) {
+			$dbKey = mb_strtolower( $oTitle->getDBKey() );
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $newTabTitle;
+		return in_array( $dbKey, array_keys($this->getWamPagesDbKeysMap() ) );
 	}
 
-	protected function getWAMRedirectsList() {
-		wfProfileIn( __METHOD__ );
-		global $wgWAMRedirects;
-
-		$out = [];
-		if ( is_array( $wgWAMRedirects ) ) {
-			foreach ( $wgWAMRedirects as $oldTitle => $newTitle ) {
-				$out[mb_strtolower( $oldTitle )] = $newTitle;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return $out;
-	}
-
-	/**
-	 * MOCKED data for devboxes for testing
-	 * because we don't have wam data on devboxes
-	 *
-	 * @return array
-	 */
-	protected function getMockedDataForDev() {
-		return ['wam_results_total' => 3147, 'wam_index' => [
-			304 => [
-				'wiki_id' => '304',
-				'wam'=> '98.499',
-				'wam_rank' => '1',
-				'hub_wam_rank' => '1',
-				'peak_wam_rank' => '1',
-				'peak_hub_wam_rank' => '1',
-				'top_1k_days' => '431',
-				'top_1k_weeks' => '62',
-				'first_peak' => '2012-01-03',
-				'last_peak' => '2013-03-06',
-				'title' => 'RuneScape Wiki',
-				'url' => 'runescape.wikia.com',
-				'hub_id' => '2',
-				'wam_change' => '0.0045',
-				'admins' => [
-						0 => [
-							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-							'edits' => 0,
-							'name' => 'Merovingian',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Merovingian',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Merovingian',
-							'since' => 'Apr 2005'
-						],
-						2 => [
-							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-							'edits' => 0,
-							'name' => 'Oddlyoko',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Oddlyoko',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Oddlyoko',
-							'since' => 'Oct 2005'
-						],
-						3 => [
-							'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
-							'edits' => 0,
-							'name' => 'Vimescarrot',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
-							'since' => 'Feb 2006'
-						],
-						4 => [
-							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-							'edits' => 0,
-							'name' => 'Eucarya',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Eucarya',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Eucarya',
-							'since' => 'May 2006'
-						],
-						5 => [
-							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-							'edits' => 0,
-							'name' => 'Hyenaste',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Hyenaste',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Hyenaste',
-							'since' => 'Jul 2006'
-						]
-				],
-				'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png',
-			],
-			14764 => [
-				'wiki_id' => '14764',
-				'wam'=> '99.8767',
-				'wam_rank' => '2',
-				'hub_wam_rank' => '2',
-				'peak_wam_rank' => '1',
-				'peak_hub_wam_rank' => '1',
-				'top_1k_days' => '431',
-				'top_1k_weeks' => '62',
-				'first_peak' => '2012-04-21',
-				'last_peak' => '2013-02-18',
-				'title' => 'League of Legends Wiki',
-				'url' => 'leagueoflegends.wikia.com',
-				'hub_id' => '3',
-				'wam_change' => '0.0039',
-				'admins' => [
-					2 => [
-						'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-						'edits' => 0,
-						'name' => 'Oddlyoko',
-						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Oddlyoko',
-						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Oddlyoko',
-						'since' => 'Oct 2005'
-					],
-					3 => [
-						'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
-						'edits' => 0,
-						'name' => 'Vimescarrot',
-						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
-						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
-						'since' => 'Feb 2006'
-					],
-					4 => [
-						'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-						'edits' => 0,
-						'name' => 'Eucarya',
-						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Eucarya',
-						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Eucarya',
-						'since' => 'May 2006'
-					]
-				],
-				'wiki_image' => 'http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg',
-			],
-			1706 => [
-				'wiki_id' => '1706',
-				'wam'=> '99.7942',
-				'wam_rank' => '4',
-				'hub_wam_rank' => '3',
-				'peak_wam_rank' => '1',
-				'peak_hub_wam_rank' => '1',
-				'top_1k_days' => '431',
-				'top_1k_weeks' => '62',
-				'first_peak' => '2012-01-01',
-				'last_peak' => '2013-02-13',
-				'title' => 'Elder Scrolls',
-				'url' => 'elderscrolls.wikia.com',
-				'hub_id' => '2',
-				'wam_change' => '-0.0016',
-				'admins' => [
-					3 => [
-						'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
-						'edits' => 0,
-						'name' => 'Vimescarrot',
-						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
-						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
-						'since' => 'Feb 2006'
-					]
-				],
-				'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png',
-			],
-			3035 => [
-				'wiki_id' => '3035',
-				'wam'=> '99.6520',
-				'wam_rank' => '9',
-				'hub_wam_rank' => '4',
-				'peak_wam_rank' => '4',
-				'peak_hub_wam_rank' => '3',
-				'top_1k_days' => '431',
-				'top_1k_weeks' => '62',
-				'first_peak' => '2012-01-02',
-				'last_peak' => '2013-09-11',
-				'title' => 'Fallout Wiki',
-				'url' => 'fallout.wikia.com',
-				'hub_id' => '9',
-				'wam_change' => '0.0001',
-				'admins' => [],
-				'wiki_image' => null,
-			],
-		]];
-	}
-
-	protected function getTitleFromText($text) {
-		return Title::newFromText($text);
+	protected function getTitleFromText( $text ) {
+		return Title::newFromText( $text );
 	}
 }

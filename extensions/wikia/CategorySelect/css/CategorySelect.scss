@@ -1,6 +1,4 @@
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
+@import "skins/shared/mixins/clearfix";
 
 // These styles are for view pages only
 .CategorySelect.articlePage {
@@ -30,8 +28,7 @@
 	}
 
 	.add {
-		@include clear-linear-gradient();
-		background-color: $color-speech-bubble;
+		@include clear-linear-gradient($color-speech-bubble);
 	}
 
 	.categories {
@@ -100,15 +97,15 @@
 
 	.category.new,
 	.placeholder {
-		@include border-radius( 4px );
 		background-color: $color-speech-bubble;
 		border: 1px solid $color-page-border;
+		border-radius: 4px;
 		padding: 2px 6px;
 		margin-top: 0;
 	}
 
 	.placeholder {
-		@include opacity( 35 );
+		opacity: .35;
 	}
 
 	.special-categories {
@@ -132,6 +129,10 @@
 			border-left: 0;
 			padding-left: 0;
 		}
+
+		&.delete {
+			background-position: -1191px -18px;
+		}
 	}
 
 	.toolbar {
@@ -151,13 +152,13 @@
 }
 
 // Need to use ID here for specificity
-#CategorySelectEditModal {
+#categorySelectEditModal {
 	.WikiaForm {
 		@include clearfix;
 
 		input,
 		.input-group {
-			@include box-sizing( border-box );
+			box-sizing: border-box;
 			width: 100%;
 		}
 	}

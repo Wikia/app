@@ -21,28 +21,47 @@ class SFFormLinker {
 	static $mLinkedPages = array();
 	static $mLinkedPagesRetrieved = false;
 
+	static function getDefaultForm( $title ) {
+		// The title passed in can be null in at least one
+		// situation: if the "namespace page" is being checked, and
+		// the project namespace alias contains any non-ASCII
+		// characters. There may be other cases too.
+		// If that happens, just exit.
+		if ( is_null( $title ) ) {
+			return null;
+		}
+
+		$pageID = $title->getArticleID();
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'page_props',
+			array(
+				'pp_value'
+			),
+			array(
+				'pp_page' => $pageID,
+				'pp_propname' => 'SFDefaultForm'
+			)
+		);
+
+		if ( $row = $dbr->fetchRow( $res ) ) {
+			return $row['pp_value'];
+		}
+	}
+
 	/**
 	 * Gets the set of all properties that point to this page, anywhere
 	 * in the wiki.
 	 */
 	static function getIncomingProperties( $title ) {
-		$store = smwfGetStore();
-		// SMW 1.6+
-		if ( class_exists( 'SMWDataItem' ) ) {
-			$value = SMWDIWikiPage::newFromTitle( $title );
-		} else {
-			$title_text = SFUtils::titleString( $title );
-			$value = SMWDataValueFactory::newTypeIDValue( '_wpg', $title_text );
+		$store = SFUtils::getSMWStore();
+		if ( is_null( $store ) ) {
+			return array();
 		}
+		$value = SMWDIWikiPage::newFromTitle( $title );
 		$properties = $store->getInProperties( $value );
 		$propertyNames = array();
 		foreach ( $properties as $property ) {
-			// SMW 1.6+
-			if ( $property instanceof SMWDIProperty ) {
-				$property_name = $property->getKey();
-			} else {
-				$property_name = $property->getWikiValue();
-			}
+			$property_name = $property->getKey();
 			if ( !empty( $property_name ) ) {
 				$propertyNames[] = $property_name;
 			}
@@ -57,7 +76,12 @@ class SFFormLinker {
 		if ( self::$mLinkedPagesRetrieved ) {
 			return;
 		}
-		$store = smwfGetStore();
+
+		$store = SFUtils::getSMWStore();
+		if ( $store == null ) {
+			self::$mLinkedPagesRetrieved = true;
+			return;
+		}
 		if ( class_exists( 'SMWDataItem' ) ) {
 			$value = SMWDIWikiPage::newFromTitle( $title );
 		} else {
@@ -67,6 +91,7 @@ class SFFormLinker {
 		foreach ( $data->getProperties() as $property ) {
 			$propertyValues = $data->getPropertyValues( $property );
 			foreach ( $propertyValues as $propertyValue ) {
+				$propertyName = null;
 				$linkedPageName = null;
 				if ( $propertyValue instanceof SMWDIWikiPage ) {
 					$propertyName = $property->getKey();
@@ -134,15 +159,21 @@ class SFFormLinker {
 
 		global $sfgContLang;
 
-		$store = smwfGetStore();
+		$store = SFUtils::getSMWStore();
 		$subject = Title::makeTitleSafe( $page_namespace, $page_name );
-		$form_names = SFUtils::getSMWPropertyValues( $store, $subject, $prop_smw_id );
+		$form_names = SFValuesUtils::getSMWPropertyValues( $store, $subject, $prop_smw_id );
 
 		// If we're using a non-English language, check for the English
 		// string as well.
 		if ( ! class_exists( 'SF_LanguageEn' ) || ! $sfgContLang instanceof SF_LanguageEn ) {
-			$backup_form_names = SFUtils::getSMWPropertyValues( $store, $subject, $backup_prop_smw_id );
+			$backup_form_names = SFValuesUtils::getSMWPropertyValues( $store, $subject, $backup_prop_smw_id );
 			$form_names = array_merge( $form_names, $backup_form_names );
+		}
+
+		// These form names will all start with "Form:" - remove the
+		// namespace prefix.
+		foreach ( $form_names as $i => $form_name ) {
+			$form_names[$i] = preg_replace( '/^Form:/', '', $form_name );
 		}
 		// Add this data to the "cache".
 		self::$mLinkedForms[$page_key][$form_connection_type] = $form_names;
@@ -150,44 +181,71 @@ class SFFormLinker {
 	}
 
 	/**
-	 * Automatically creates a page that's red-linked from the page being
-	 * viewed, if there's a property pointing from anywhere to that page
-	 * that's defined with the 'Creates pages with form' special property
+	 * Automatically creates a page that's red-linked from the page
+	 * being viewed, if there's a property pointing from anywhere to
+	 * that page that's defined with the 'Creates pages with form'
+	 * special property.
+	 *
+	 * @deprecated since SF 3.4.
 	 */
-	static function createLinkedPage( $title, $incoming_properties ) {
-		// if we're in a 'special' page, just exit - this is to prevent
-		// constant additions being made from the 'Special:RecentChanges'
-		// page, which shows pages that were previously deleted as red
-		// links, even if they've since been recreated. The same might
-		// hold true for other special pages.
+	static function createLinkedPage( $title, $incomingProperties ) {
+		// If we're in a 'special' page, just exit - this is to
+		// prevent constant additions being made from the
+		// 'Special:RecentChanges' page, which shows pages that
+		// were previously deleted as red links, even if they've
+		// since been recreated. The same might hold true for
+		// other special pages.
 		global $wgTitle;
-		if ( empty( $wgTitle ) )
+		if ( empty( $wgTitle ) ) {
 			return false;
-		if ( $wgTitle->getNamespace() == NS_SPECIAL )
+		}
+		if ( $wgTitle->getNamespace() == NS_SPECIAL ) {
 			return false;
+		}
 
-		foreach ( $incoming_properties as $property_name ) {
-			$auto_create_forms = self::getFormsThatPagePointsTo( $property_name, SMW_NS_PROPERTY, self::AUTO_CREATE_FORM );
-			if ( count( $auto_create_forms ) > 0 ) {
-				global $sfgFormPrinter;
-				$form_name = $auto_create_forms[0];
-				$form_title = Title::makeTitleSafe( SF_NS_FORM, $form_name );
-				$form_article = new Article( $form_title );
-				$form_definition = $form_article->getContent();
-				list ( $form_text, $javascript_text, $data_text, $form_page_title, $generated_page_name ) =
-					$sfgFormPrinter->formHTML( $form_definition, false, false, null, null, 'Some very long page name that will hopefully never get created ABCDEF123', null );
-				$params = array();
-				global $wgUser;
-				$params['user_id'] = $wgUser->getId();
-				$params['page_text'] = $data_text;
-				$job = new SFCreatePageJob( $title, $params );
-				Job::batchInsert( array( $job ) );
-
+		foreach ( $incomingProperties as $propertyName ) {
+			$autoCreateForms = self::getFormsThatPagePointsTo( $propertyName, SMW_NS_PROPERTY, self::AUTO_CREATE_FORM );
+			if ( count( $autoCreateForms ) > 0 ) {
+				self::createPageWithForm( $title, $autoCreateForms[0] );
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public static function createPageWithForm( $title, $formName ) {
+		global $sfgFormPrinter;
+
+		$formTitle = Title::makeTitleSafe( SF_NS_FORM, $formName );
+		$formDefinition = SFUtils::getPageText( $formTitle );
+		$preloadContent = null;
+
+		// Allow outside code to set/change the preloaded text.
+		Hooks::run( 'sfEditFormPreloadText', array( &$preloadContent, $title, $formTitle ) );
+
+		list ( $formText, $pageText, $formPageTitle, $generatedPageName ) =
+			$sfgFormPrinter->formHTML( $formDefinition, false, false, null, $preloadContent, 'Some very long page name that will hopefully never get created ABCDEF123', null );
+		$params = array();
+
+		// Get user "responsible" for all auto-generated
+		// pages from red links.
+		$userID = 1;
+		global $sfgAutoCreateUser;
+		if ( !is_null( $sfgAutoCreateUser ) ) {
+			$user = User::newFromName( $sfgAutoCreateUser );
+			if ( !is_null( $user ) ) {
+				$userID = $user->getId();
+			}
+		}
+		$params['user_id'] = $userID;
+		$params['page_text'] = $pageText;
+
+		// wikia change start - jobqueue migration
+		$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+		$task->call( 'createPage', $title, $params );
+		$task->queue();
+		// wikia change end
 	}
 
 	/**
@@ -204,13 +262,15 @@ class SFFormLinker {
 			return null;
 		}
 
-		$fe = SFUtils::getSpecialPage( 'FormEdit' );
+		$fe = SpecialPageFactory::getPage( 'FormEdit' );
 
 		$fe_url = $fe->getTitle()->getLocalURL();
 		if ( count( $default_forms ) > 0 ) {
 			$form_edit_url = $fe_url . "/" . $default_forms[0] . "/" . SFUtils::titleURLString( $target_page_title );
 		} else {
-			$form_edit_url = $fe_url . "/" . SFUtils::titleURLString( $target_page_title );
+			$form_edit_url = $fe_url;
+			$form_edit_url .= ( strpos( $form_edit_url, "?" ) ) ? "&" : "?";
+			$form_edit_url .= 'target=' . urlencode( SFUtils::titleString( $target_page_title ) );
 		}
 		foreach ( $alt_forms as $i => $alt_form ) {
 			$form_edit_url .= ( strpos( $form_edit_url, "?" ) ) ? "&" : "?";
@@ -245,7 +305,7 @@ class SFFormLinker {
 		if ( '' === $namespace_name ) {
 			// If it's in the main (blank) namespace, check for the
 			// file named with the word for "Main" in this language.
-			$namespace_name = wfMsgForContent( 'sf_blank_namespace' );
+			$namespace_name = wfMessage( 'sf_blank_namespace' )->inContentLanguage()->text();
 		}
 		if ( $form_edit_link = self::getFormEditLinkForPage( $title, $namespace_name, NS_PROJECT ) ) {
 			return $form_edit_link;
@@ -260,7 +320,7 @@ class SFFormLinker {
 	 */
 	static function setBrokenLink( $linker, $target, $options, $text, &$attribs, &$ret ) {
 		// If it's not a broken (red) link, exit.
-		if ( !in_array( 'broken', $options ) ) {
+		if ( !in_array( 'broken', $options, true ) ) {
 			return true;
 		}
 		// If the link is to a special page, exit.
@@ -288,7 +348,17 @@ class SFFormLinker {
 		$link = self::formEditLink( $target, $incoming_properties );
 		if ( !is_null( $link ) ) {
 			$attribs['href'] = $link;
+			return true;
 		}
+
+		global $sfgLinkAllRedLinksToForms;
+		// Don't do this is it it's a category page - it probably
+		// won't have an associated form.
+		if ( $sfgLinkAllRedLinksToForms && $target->getNamespace() != NS_CATEGORY ) {
+			$attribs['href'] = $target->getLinkURL( array( 'action' => 'formedit', 'redlink' => '1' ) );
+			return true;
+		}
+
 		return true;
 	}
 
@@ -302,16 +372,25 @@ class SFFormLinker {
 	static function getDefaultFormsForPage( $title ) {
 		// See if the page itself has a default form (or forms), and
 		// return it/them if so.
+		// (Disregard category pages for this check.)
+		if ( $title->getNamespace() != NS_CATEGORY ) {
+			$default_form = self::getDefaultForm( $title );
+			if ( $default_form != '' ) {
+				return array( $default_form );
+			}
+		}
+
 		$default_forms = self::getFormsThatPagePointsTo( $title->getText(), $title->getNamespace(), self::PAGE_DEFAULT_FORM );
 		if ( count( $default_forms ) > 0 ) {
 			return $default_forms;
 		}
+
 		// If this is not a category page, look for a default form
 		// for its parent category or categories.
 		$namespace = $title->getNamespace();
 		if ( NS_CATEGORY !== $namespace ) {
 			$default_forms = array();
-			$categories = SFUtils::getCategoriesForPage( $title );
+			$categories = SFValuesUtils::getCategoriesForPage( $title );
 			foreach ( $categories as $category ) {
 				if ( class_exists( 'PSSchema' ) ) {
 					// Check the Page Schema, if one exists.
@@ -323,10 +402,17 @@ class SFFormLinker {
 						}
 					}
 				}
+				$categoryPage = Title::makeTitleSafe( NS_CATEGORY, $category );
+				$defaultFormForCategory = self::getDefaultForm( $categoryPage );
+				if ( $defaultFormForCategory != '' ) {
+					$default_forms[] = $defaultFormForCategory;
+				}
 				$default_forms = array_merge( $default_forms, self::getFormsThatPagePointsTo( $category, NS_CATEGORY, self::DEFAULT_FORM ) );
 			}
 			if ( count( $default_forms ) > 0 ) {
-				return $default_forms;
+				// It is possible for two categories to have the same default form, so purge any
+				// duplicates from the array to avoid a "more than one default form" warning.
+				return array_unique( $default_forms );
 			}
 		}
 
@@ -342,14 +428,20 @@ class SFFormLinker {
 		if ( NS_MAIN === $namespace ) {
 			// If it's in the main (blank) namespace, check for the
 			// file named with the word for "Main" in this language.
-			$namespace_label = wfMsgForContent( 'sf_blank_namespace' );
+			$namespace_label = wfMessage( 'sf_blank_namespace' )->inContentLanguage()->text();
 		} else {
 			global $wgContLang;
 			$namespace_labels = $wgContLang->getNamespaces();
 			$namespace_label = $namespace_labels[$namespace];
 		}
+
+		$namespacePage = Title::makeTitleSafe( NS_PROJECT, $namespace_label );
+		$default_form = self::getDefaultForm( $namespacePage );
+		if ( $default_form != '' ) {
+			return array( $default_form );
+		}
+
 		$default_forms = self::getFormsThatPagePointsTo( $namespace_label, NS_PROJECT, self::DEFAULT_FORM );
 		return $default_forms;
 	}
-
 }

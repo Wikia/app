@@ -1,0 +1,10 @@
+{{> greeting}}
+<table>
+	{{#avatarAndDetailsList}}
+		{{> userDetailSection}}
+	{{/avatarAndDetailsList}}
+	{{> button}}
+	{{# hasContentFooterMessages}}
+		{{> contentFooterMessages}}
+	{{/ hasContentFooterMessages}}
+</table>

@@ -5,7 +5,7 @@ var WikiaNotificationsApp = {
 
 	track: Wikia.Tracker.buildTrackingFunction({
 		category: 'sitewidemessages',
-		trackingMethod: 'internal'
+		trackingMethod: 'analytics'
 	}),
 
 	init: function() {

@@ -1,3 +1,0 @@
-<ul id="searchedKeywords">
-</ul>
-

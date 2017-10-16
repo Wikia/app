@@ -13,21 +13,25 @@ return [
 	// shared AMD modules loaded on each page
 	'amd.shared' => [
 		'dependencies' => [
+			'wikia.instantGlobals',
 			'wikia.cache',
 			'wikia.cookies',
 			'wikia.document',
 			'wikia.geo',
+			'wikia.fbLocale',
 			'wikia.loader',
-			'wikia.localStorage',
 			'wikia.location',
 			'wikia.log',
 			'wikia.mw',
 			'wikia.nirvana',
 			'wikia.querystring',
+			'wikia.history',
 			'wikia.throbber',
 			'wikia.thumbnailer',
 			'wikia.tracker',
 			'wikia.window',
+			'wikia.abTest',
+			'underscore',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
@@ -41,7 +45,6 @@ return [
 		'scripts' => 'resources/wikia/modules/cache.js',
 		'dependencies' => [
 			'amd',
-			'wikia.localStorage',
 			'wikia.window',
 		],
 	],
@@ -54,13 +57,6 @@ return [
 	],
 	'wikia.location' => [
 		'scripts' => 'resources/wikia/modules/location.js',
-		'dependencies' => [
-			'amd',
-			'wikia.window',
-		],
-	],
-	'wikia.localStorage' => [
-		'scripts' => 'resources/wikia/modules/localStorage.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window',
@@ -79,6 +75,12 @@ return [
 			'wikia.window',
 		],
 	],
+	'wikia.fbLocale' => [
+		'scripts' => 'resources/wikia/modules/facebookLocale.js',
+		'dependencies' => [
+			'wikia.geo',
+		],
+	],
 	'wikia.loader' => [
 		'scripts' => 'resources/wikia/modules/loader.js',
 		'dependencies' => [
@@ -86,10 +88,18 @@ return [
 			'wikia.window',
 			'wikia.mw',
 			'wikia.nirvana',
+			'wikia.fbLocale',
 		],
 	],
 	'wikia.querystring' => [
 		'scripts' => 'resources/wikia/modules/querystring.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+		],
+	],
+	'wikia.history' => [
+		'scripts' => 'resources/wikia/modules/history.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window',
@@ -110,6 +120,20 @@ return [
 			'wikia.cookies',
 		],
 	],
+	'wikia.abTest' => [
+		'scripts' => 'resources/wikia/modules/abTest.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		],
+	],
+	'wikia.instantGlobals' => [
+		'scripts' => 'resources/wikia/modules/instantGlobals.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		],
+	],
 	'wikia.thumbnailer' => [
 		'scripts' => 'resources/wikia/modules/thumbnailer.js',
 		'dependencies' => 'amd',
@@ -119,6 +143,7 @@ return [
 		'dependencies' => [
 			'amd',
 			'wikia.cookies',
+			'wikia.querystring'
 		],
 	],
 	'wikia.tracker' => [
@@ -139,6 +164,12 @@ return [
 	],
 	'wikia.throbber' => [
 		'scripts' => 'resources/wikia/modules/throbber.js',
+		'dependencies' => [
+			'amd',
+		],
+	],
+	'underscore' => [
+		'scripts' => 'resources/wikia/libraries/underscore/underscore-min.js',
 		'dependencies' => [
 			'amd',
 		],
@@ -168,9 +199,23 @@ return [
 		'dependencies' => 'amd',
 	],
 
-	'wikia.stringhelper' => [
-		'scripts' => 'resources/wikia/modules/stringhelper.js',
-		'dependencies' => 'amd',
+	// libraries and jQuery plugins
+	'wikia.underscore' => [
+		'scripts' => 'resources/wikia/modules/underscore.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+		]
+	],
+
+	'wikia.stickyElement' => [
+		'scripts' => 'resources/wikia/modules/stickyElement.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+			'wikia.document',
+			'wikia.underscore',
+		]
 	],
 
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
@@ -203,6 +248,10 @@ return [
 		'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
 	],
 
+	'jquery.dataTables' => [
+		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
+	],
+
 	// moved here from AssetsManager by wladek
 	'wikia.yui' => [
 		'scripts' => [
@@ -232,5 +281,21 @@ return [
 			'resources/wikia/libraries/yui/tabview/assets/tabview.css',
 			'extensions/wikia/RelatedPages/RelatedPages.monobook.css',
 		],
+	],
+
+	'wikia.importScript' => [
+		'scripts' => [
+			'resources/wikia/modules/importScript.js',
+			'resources/wikia/modules/importScriptHelper.js'
+		]
+	],
+
+	'wikia.article.edit' => [
+		'scripts' => [
+			'resources/wikia/modules/articleEditTracking.js',
+		],
+		'dependencies' => [
+			'wikia.tracker',
+		]
 	],
 ];

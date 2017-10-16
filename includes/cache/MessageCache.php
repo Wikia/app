@@ -115,6 +115,10 @@ class MessageCache {
 	function getParserOptions() {
 		if ( !$this->mParserOptions ) {
 			$this->mParserOptions = new ParserOptions;
+			// Wikia change - begin - @author: TK-999
+			// Backporting upstream fix https://git.wikimedia.org/commit/mediawiki%2Fcore.git/ac97386173bde921e4c53c343bc7b40fcfb4d2b9
+			$this->mParserOptions->setEditSection( false );
+			// Wikia change - end
 		}
 		return $this->mParserOptions;
 	}
@@ -509,7 +513,7 @@ class MessageCache {
 		global $wgContLang;
 		MessageBlobStore::updateMessage( $wgContLang->lcfirst( $msg ) );
 
-		wfRunHooks( 'MessageCacheReplace', array( $title, $text ) );
+		Hooks::run( 'MessageCacheReplace', array( $title, $text ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -646,8 +650,6 @@ class MessageCache {
 		}
 
 		# wikia change start
-		wfRunHooks( 'MsgGetFromNamespaceAfter', array( $lckey, $langcode, &$message, $useDB ) );
-
 		# Try the extension array
 		if ( $message === false && isset( $this->mExtensionMessages[$langcode][$lckey] ) ) {
 			$message = $this->mExtensionMessages[$langcode][$lckey];
@@ -733,7 +735,7 @@ class MessageCache {
 		} else {
 			// XXX: This is not cached in process cache, should it?
 			$message = false;
-			wfRunHooks( 'MessagesPreLoad', array( $title, &$message ) );
+			Hooks::run( 'MessagesPreLoad', array( $title, &$message ) );
 			if ( $message !== false ) {
 				return $message;
 			}
@@ -924,7 +926,7 @@ class MessageCache {
 	 * @param $linestart bool
 	 * @param $interface bool
 	 * @param $language
-	 * @return ParserOutput
+	 * @return ParserOutput|string
 	 */
 	public function parse( $text, $title = null, $linestart = true, $interface = false, $language = null  ) {
 		if ( $this->mInParser ) {

@@ -22,7 +22,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * //Wikia Change End
  */
 abstract class Skin extends ContextSource {
-	protected $skinname = 'standard';
+	protected $skinname = 'oasis';
 	protected $mRelevantTitle = null;
 	protected $mRelevantUser = null;
 
@@ -57,6 +57,21 @@ abstract class Skin extends ContextSource {
 			}
 			$skinDir->close();
 			$skinsInitialised = true;
+
+			ksort($wgValidSkinNames); // Wikia change - BAC-1154
+
+			# PLATFORM-1652 Remove legacy skins
+			# Michał 'Mix' Roszka <mix@wikia.com>
+			# I am wondering how often we do these file system scans.
+			# I see room for improvement here.
+			# I log therefore I am.
+			if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+				Wikia\Logger\WikiaLogger::instance()->info(
+					'PLATFORM-1652 getSkinNames',
+					[ 'wgValidSkinNames' => $wgValidSkinNames ]
+				);
+			}
+
 			wfProfileOut( __METHOD__ . '-init' );
 		}
 		return $wgValidSkinNames;
@@ -96,7 +111,7 @@ abstract class Skin extends ContextSource {
 	 * Normalize a skin preference value to a form that can be loaded.
 	 * If a skin can't be found, it will fall back to the configured
 	 * default (or the old 'Classic' skin if that's broken).
-	 * @param $key String: 'monobook', 'standard', etc.
+	 * @param $key String: 'monobook', etc.
 	 * @return string
 	 */
 	static function normalizeKey( $key ) {
@@ -117,9 +132,7 @@ abstract class Skin extends ContextSource {
 		// Older versions of the software used a numeric setting
 		// in the user preferences.
 		$fallback = array(
-			0 => $wgDefaultSkin,
-			1 => 'nostalgia',
-			2 => 'cologneblue'
+			0 => $wgDefaultSkin
 		);
 
 		if ( isset( $fallback[$key] ) ) {
@@ -131,13 +144,13 @@ abstract class Skin extends ContextSource {
 		} elseif ( isset( $skinNames[$wgDefaultSkin] ) ) {
 			return $wgDefaultSkin;
 		} else {
-			return 'vector';
+			return 'oasis';
 		}
 	}
 
 	/**
 	 * Factory method for loading a skin of a given type
-	 * @param $key String: 'monobook', 'standard', etc.
+	 * @param $key String: 'monobook', etc.
 	 * @return Skin
 	 */
 	static function &newFromKey( $key ) {
@@ -168,9 +181,9 @@ abstract class Skin extends ContextSource {
 				# except by SQL manipulation if a previously valid skin name
 				# is no longer valid.
 				wfDebug( "Skin class does not exist: $className\n" );
-				$className = 'SkinVector';
+				$className = 'SkinOasis';
 				if ( !defined( 'MW_COMPILED' ) ) {
-					require_once( "{$wgStyleDirectory}/Vector.php" );
+					require_once( "{$wgStyleDirectory}/Oasis.php" );
 				}
 			}
 		}
@@ -204,7 +217,7 @@ abstract class Skin extends ContextSource {
 		$titles = array( $user->getUserPage(), $user->getTalkPage() );
 
 		// Other tab link
-		if ( $this->getTitle()->isSpecialPage() ) {
+		if ( $this->getTitle()->isSpecialPage() || $this->getTitle()->getNamespace() == NS_MEDIA ) {
 			// nothing
 		} elseif ( $this->getTitle()->isTalkPage() ) {
 			$titles[] = $this->getTitle()->getSubjectPage();
@@ -389,7 +402,7 @@ abstract class Skin extends ContextSource {
 		// Wikia change begin - @author: macbre
 		// allow extensions to change body tag attributes (RT #14017)
 		$classes = '';
-		wfRunHooks( 'SkinGetPageClasses', array( &$classes ) );
+		Hooks::run( 'SkinGetPageClasses', array( &$classes ) );
 		// Wikia change end
 
 		return "$numeric $type $name $classes";
@@ -423,7 +436,7 @@ abstract class Skin extends ContextSource {
 
 		/* Wikia change begin - @author: Marcin, #BugId: 30443 */
 		$alternativeCategoryLinks = null;
-		if( !wfRunHooks( 'Skin::getCategoryLinks::begin', array( &$alternativeCategoryLinks ) ) ) {
+		if( !Hooks::run( 'Skin::getCategoryLinks::begin', array( &$alternativeCategoryLinks ) ) ) {
 			return $alternativeCategoryLinks;
 		}
 		/* Wikia change end */
@@ -461,7 +474,7 @@ abstract class Skin extends ContextSource {
 
 		# Hidden categories
 		if ( isset( $allCats['hidden'] ) ) {
-			if ( $this->getUser()->getBoolOption( 'showhiddencats' ) ) {
+			if ( (bool)$this->getUser()->getGlobalPreference( 'showhiddencats' ) ) {
 				$class = ' mw-hidden-cats-user-shown';
 			} elseif ( $this->getTitle()->getNamespace() == NS_CATEGORY ) {
 				$class = ' mw-hidden-cats-ns-shown';
@@ -493,7 +506,7 @@ abstract class Skin extends ContextSource {
 		}
 
 		/* Wikia change begin - @author: Marcin, #BugId: 30443 */
-		wfRunHooks( 'Skin::getCategoryLinks::end', array( &$s ) );
+		Hooks::run( 'Skin::getCategoryLinks::end', array( &$s ) );
 		/* Wikia change end */
 
 		return $s;
@@ -536,7 +549,7 @@ abstract class Skin extends ContextSource {
 
 		// Check what we're showing
 		$allCats = $out->getCategoryLinks();
-		$showHidden = $this->getUser()->getBoolOption( 'showhiddencats' ) ||
+		$showHidden = (bool)$this->getUser()->getGlobalPreference( 'showhiddencats' ) ||
 						$this->getTitle()->getNamespace() == NS_CATEGORY;
 
 		if ( empty( $allCats['normal'] ) && !( !empty( $allCats['hidden'] ) && $showHidden ) ) {
@@ -563,7 +576,7 @@ abstract class Skin extends ContextSource {
 	protected function afterContentHook() {
 		$data = '';
 
-		if ( wfRunHooks( 'SkinAfterContent', array( &$data, $this ) ) ) {
+		if ( Hooks::run( 'SkinAfterContent', array( &$data, $this ) ) ) {
 			// adding just some spaces shouldn't toggle the output
 			// of the whole <div/>, so we use trim() here
 			if ( trim( $data ) != '' ) {
@@ -664,7 +677,7 @@ abstract class Skin extends ContextSource {
 		// OutputPage::getBottomScripts() which takes a Skin param. This should be cleaned
 		// up at some point
 		$bottomScriptText = $this->getOutput()->getBottomScripts();
-		wfRunHooks( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
+		Hooks::run( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
 
 		return $bottomScriptText;
 	}
@@ -722,7 +735,7 @@ abstract class Skin extends ContextSource {
 		$out = $this->getOutput();
 		$subpages = '';
 
-		if ( !wfRunHooks( 'SkinSubPageSubtitle', array( &$subpages, $this, $out ) ) ) {
+		if ( !Hooks::run( 'SkinSubPageSubtitle', array( &$subpages, $this, $out ) ) ) {
 			return $subpages;
 		}
 
@@ -834,7 +847,7 @@ abstract class Skin extends ContextSource {
 		// Allow for site and per-namespace customization of copyright notice.
 		$forContent = true;
 
-		wfRunHooks( 'SkinCopyrightFooter', array( $this->getTitle(), $type, &$msg, &$link, &$forContent ) );
+		Hooks::run( 'SkinCopyrightFooter', array( $this->getTitle(), $type, &$msg, &$link, &$forContent ) );
 
 		$msgObj = $this->msg( $msg )->rawParams( $link );
 		if ( $forContent ) {
@@ -886,7 +899,7 @@ abstract class Skin extends ContextSource {
 
 		$url = htmlspecialchars( "$wgStylePath/common/images/poweredby_mediawiki_88x31.png" );
 		$text = '<a href="//www.mediawiki.org/"><img src="' . $url . '" height="31" width="88" alt="Powered by MediaWiki" /></a>';
-		wfRunHooks( 'SkinGetPoweredBy', array( &$text, $this ) );
+		Hooks::run( 'SkinGetPoweredBy', array( &$text, $this ) );
 		return $text;
 	}
 
@@ -1232,7 +1245,7 @@ abstract class Skin extends ContextSource {
 		$bar = array();
 		$this->addToSidebar( $bar, 'sidebar' );
 
-		wfRunHooks( 'SkinBuildSidebar', array( $this, &$bar ) );
+		Hooks::run( 'SkinBuildSidebar', array( $this, &$bar ) );
 		if ( $wgEnableSidebarCache ) {
 			$wgMemc->set( $key, $bar, $wgSidebarCacheExpiry );
 		}
@@ -1501,7 +1514,7 @@ abstract class Skin extends ContextSource {
 		wfProfileIn( __METHOD__ );
 		$siteNotice = '';
 
-		if ( wfRunHooks( 'SiteNoticeBefore', array( &$siteNotice, $this ) ) ) {
+		if ( Hooks::run( 'SiteNoticeBefore', array( &$siteNotice, $this ) ) ) {
 			if ( is_object( $this->getUser() ) && $this->getUser()->isLoggedIn() ) {
 				$siteNotice = $this->getCachedNotice( 'sitenotice' );
 			} else {
@@ -1517,7 +1530,7 @@ abstract class Skin extends ContextSource {
 			}
 		}
 
-		wfRunHooks( 'SiteNoticeAfter', array( &$siteNotice, $this ) );
+		Hooks::run( 'SiteNoticeAfter', array( &$siteNotice, $this ) );
 		wfProfileOut( __METHOD__ );
 		return $siteNotice;
 	}
@@ -1550,6 +1563,7 @@ abstract class Skin extends ContextSource {
 			array( 'noclasses', 'known' )
 		);
 
+
 		# Run the old hook.  This takes up half of the function . . . hopefully
 		# we can rid of it someday.
 		$attribs = '';
@@ -1558,23 +1572,39 @@ abstract class Skin extends ContextSource {
 			$attribs = " title=\"$attribs\"";
 		}
 		$result = null;
-		wfRunHooks( 'EditSectionLink', array( &$this, $nt, $section, $attribs, $link, &$result, $lang ) );
+		Hooks::run( 'EditSectionLink',
+			[ $this, $nt, $section, $attribs, $link, &$result, $lang ] );
+
 		if ( !is_null( $result ) ) {
 			# For reverse compatibility, add the brackets *after* the hook is
 			# run, and even add them to hook-provided text.  (This is the main
 			# reason that the EditSectionLink hook is deprecated in favor of
 			# DoEditSectionLink: it can't change the brackets or the span.)
-			$result = wfMsgExt( 'editsection-brackets', array( 'escape', 'replaceafter', 'language' => $lang ), $result );
-			return "<span class=\"editsection\">$result</span>";
+			return $this->getWrappedEditSectionLink( $result, $lang );
 		}
 
 		# Add the brackets and the span, and *then* run the nice new hook, with
 		# clean and non-redundant arguments.
-		$result = wfMsgExt( 'editsection-brackets', array( 'escape', 'replaceafter', 'language' => $lang ), $link );
-		$result = "<span class=\"editsection\">$result</span>";
+		$result = $this->getWrappedEditSectionLink( $link, $lang );
 
-		wfRunHooks( 'DoEditSectionLink', array( $this, $nt, $section, $tooltip, &$result, $lang ) );
+		Hooks::run( 'DoEditSectionLink', array( $this, $nt, $section, $tooltip, &$result, $lang ) );
 		return $result;
+	}
+
+	/**
+	 * Wrap edit-section link in brackets (if needed) and span tag
+	 *
+	 * @param $link string Link markup
+	 * @param $langCode string Language code
+	 * @return string Updated link markup
+	 */
+	protected function getWrappedEditSectionLink( $link, $langCode ) {
+		// Wrap in brackets
+		$link = wfMessage( 'editsection-brackets' )
+			->rawParams( $link )
+			->inLanguage( $langCode )
+			->escaped();
+		return "<span class=\"editsection\">$link</span>";
 	}
 
 	/**

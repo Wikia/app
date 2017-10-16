@@ -17,11 +17,12 @@ $dir = dirname( __FILE__ );
 $wgExtensionCredits['other'][] =
 	array(
 		"name" => "WikiaMobile",
-		"description" => "Mobile Skin for Wikia",
+		"descriptionmsg" => "wikiamobile-desc",
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
 			'Jakub Olek <jakubolek(at)wikia-inc.com>'
-		)
+		),
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaMobile'
 	);
 
 /**
@@ -38,7 +39,7 @@ $wgAutoloadClasses['WikiaMobileHooks'] = "{$dir}/WikiaMobileHooks.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryItem'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryItemsCollection'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryContents'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
-$wgAutoloadClasses['ResourceVariablesGetter'] = "{$dir}/ResourceVariablesGetter.class.php";
+$wgAutoloadClasses['ResourceVariablesGetter'] = "includes/wikia/resourceloader/ResourceVariablesGetter.class.php";
 
 /**
  * services
@@ -53,6 +54,7 @@ $wgAutoloadClasses['WikiaMobileCategoryService'] = "{$dir}/WikiaMobileCategorySe
 $wgAutoloadClasses['WikiaMobileSharingService'] = "{$dir}/WikiaMobileSharingService.class.php";
 $wgAutoloadClasses['WikiaMobileErrorService'] = "{$dir}/WikiaMobileErrorService.class.php";
 $wgAutoloadClasses['WikiaMobileMediaService'] = "{$dir}/WikiaMobileMediaService.class.php";
+$wgAutoloadClasses['WikiaMobileTrendingArticlesService'] = "{$dir}/WikiaMobileTrendingArticlesService.class.php";
 
 /**
  * models
@@ -74,7 +76,9 @@ $wgAutoloadClasses['WikiaMobileController'] = "{$dir}/WikiaMobileController.clas
  */
 $wgExtensionMessagesFiles['WikiaMobile'] = "{$dir}/WikiaMobile.i18n.php";
 
-JSMessages::registerPackage( 'WkMbl', array(
+// initialize i18ns
+JSMessages::registerPackage( 'WkMbl', [
+	'adengine-advertisement',
 	'wikiamobile-hide-section',
 	'wikiamobile-sharing-media-image',
 	'wikiamobile-sharing-page-text',
@@ -84,8 +88,8 @@ JSMessages::registerPackage( 'WkMbl', array(
 	'wikiamobile-video-not-friendly',
 	'wikiamobile-video-not-friendly-header',
 	'wikiamobile-ad-label',
-	'wikiamobile-shared-file-not-available',
-) );
+	'wikiamobile-shared-file-not-available'
+] );
 
 JSMessages::registerPackage( 'SmartBanner', [
 	'wikiasmartbanner-appstore',
@@ -104,6 +108,7 @@ $wgHooks['MakeHeadline'][] = 'WikiaMobileHooks::onMakeHeadline';
 $wgHooks['LinkBegin'][] = 'WikiaMobileHooks::onLinkBegin';
 $wgHooks['CategoryPageView'][] = 'WikiaMobileHooks::onCategoryPageView';
 $wgHooks['ArticlePurge'][] = 'WikiaMobileHooks::onArticlePurge';
+$wgHooks['DoEditSectionLink'][] = 'WikiaMobileHooks::onDoEditSectionLink';
 
 //404 Pages
 $wgHooks['BeforeDisplayNoArticleText'][] = 'WikiaMobileHooks::onBeforeDisplayNoArticleText';
@@ -121,10 +126,10 @@ if ( empty($wgWikiaMobileGlobalNavigationMenu ) ) {
 
 //list of special pages (canonical names) to strip out from the navigation menu
 if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
-	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles' );
+	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles', 'Images' );
 }
 
-//black list of JS globals
+// white list of JS globals
 if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 	$wgWikiaMobileIncludeJSGlobals =
 		[
@@ -133,13 +138,25 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgEnableKruxTargeting',
 			'wgKruxCategoryId',
 			'cscoreCat',
+			'wgGaStaging',
 
 			//ads
+			'ads',
+			'wgGaHasAds',
+
+			//ads legacy -- should be removed at some point
+			'adEnginePageType',
+			'wgAdDriverUseAdsAfterInfobox',
+			'wgAdDriverWikiIsTop1000',
 			'wgDartCustomKeyValues',
-			'cityShort',
+			'wgShowAds',
+			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',
-			'wgAdVideoTargeting',
+
+			//vertical&categories
+			'wgWikiVertical',
+			'wgWikiCategories',
 
 			//server/wiki
 			'wgServer',
@@ -150,7 +167,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgCdnRootUrl',
 			'wgAssetsManagerQuery',
 			'wgContentLanguage',
-			'wgMedusaSlot',
 			'wgResourceBasePath',
 			'wgMainPageTitle',
 			'wgSitename',
@@ -159,6 +175,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgDisableAnonymousEditing',
 			'wgNamespaceIds',
 			'wgExtensionsPath',
+			'wikiaPageIsCorporate',
 
 			//article
 			'wgArticlePath',
@@ -186,21 +203,18 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			//skin
 			'skin',
 
-			//facebook login
+			//login
 			'fbAppId',
-			'fbUseMarkup'
-		];
-}
+			'wgLoginToken',
 
-//list of Videos provides that we support
-if ( empty( $wgWikiaMobileSupportedVideos ) ) {
-	$wgWikiaMobileSupportedVideos = [
-		'screenplay',
-		'ign',
-		'ooyala',
-		'youtube',
-		'dailymotion',
-		'vimeo',
-		'bliptv'
-	];
+			//signup
+			'wgUserSignupDisableCaptcha',
+
+			//AbTesting
+			'wgCdnApiUrl',
+
+			// performance
+			'wgWeppyConfig',
+			'wgTransactionContext',
+		];
 }

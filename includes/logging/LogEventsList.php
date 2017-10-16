@@ -48,6 +48,8 @@ class LogEventsList {
 	 */
 	protected $mDefaultQuery;
 
+	const WARN_BOX_DIV_CLASS = 'mw-warning-with-logexcerpt';
+
 	public function __construct( $skin, $out, $flags = 0 ) {
 		$this->skin = $skin;
 		$this->out = $out;
@@ -214,6 +216,11 @@ class LogEventsList {
 	}
 
 	public function getContext() {
+		if ( !is_object( $this->out ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'LogEventsList getContext not an object', [
+				'exception' => new Exception(),
+			]);
+		}
 		return $this->out->getContext();
 	}
 
@@ -495,7 +502,7 @@ class LogEventsList {
 			}
 		// Do nothing. The implementation is handled by the hook modifiying the passed-by-ref parameters.
 		} else {
-			wfRunHooks( 'LogLine', array( $row->log_type, $row->log_action, $title, $paramArray,
+			Hooks::run( 'LogLine', array( $row->log_type, $row->log_action, $title, $paramArray,
 				&$comment, &$revert, $row->log_timestamp ) );
 		}
 		if( $revert != '' ) {
@@ -670,7 +677,7 @@ class LogEventsList {
 		$s = '';
 		if( $logBody ) {
 			if ( $msgKey[0] ) {
-				$s = '<div class="mw-warning-with-logexcerpt">';
+				$s = '<div class="'.LogEventsList::WARN_BOX_DIV_CLASS.'">';
 
 				if ( count( $msgKey ) == 1 ) {
 					$s .= wfMsgExt( $msgKey[0], array( 'parse' ) );
@@ -719,7 +726,7 @@ class LogEventsList {
 		}
 
 		/* hook can return false, if we don't want the message to be emitted (Wikia BugId:7093) */
-		if ( wfRunHooks( 'LogEventsListShowLogExtract', array( &$s, $types, $page, $user, $param ) ) ) {
+		if ( Hooks::run( 'LogEventsListShowLogExtract', array( &$s, $types, $page, $user, $param ) ) ) {
 			// $out can be either an OutputPage object or a String-by-reference
 			if ( $out instanceof OutputPage ){
 				$out->addHTML( $s );

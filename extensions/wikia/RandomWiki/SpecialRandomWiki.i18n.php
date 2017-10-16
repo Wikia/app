@@ -31,6 +31,14 @@ $messages['ar'] = array(
 	'randomwiki' => 'ويكي عشوائية',
 );
 
+/** Avaric (авар)
+ * @author Gazimagomedov
+ */
+$messages['av'] = array(
+	'randomwiki-desc' => 'ХӀалтӀизабулчагӀазе цебе ккараб вики балагьезе кумек гьабула',
+	'randomwiki' => 'Цебе ккараб вики',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
@@ -66,7 +74,7 @@ $messages['ca'] = array(
 	'randomwiki' => "Wiki a l'atzar",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -184,12 +192,26 @@ $messages['kn'] = array(
 	'randomwiki' => 'ಯಾದೃಚ್ಛಿಕ ವಿಕಿ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'randomwiki' => '임의 위키 보기',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'randomwiki-desc' => 'Löht de Metmaacher e zohfällesh Wiki ußprobeere.',
 	'randomwiki' => 'Zohfällesh Wiki',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'randomwiki' => 'Wîkiyek ketober',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -254,7 +276,7 @@ $messages['oc'] = array(
 	'randomwiki' => "Un wiki a l'azard",
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -281,6 +303,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'randomwiki-desc' => 'کارنانو ته د يوې ناټاکلې ويکي د سپړلو اسانتيا وربرابروي',
 	'randomwiki' => 'ناټاکلې ويکي',
 );
 
@@ -294,10 +317,21 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author Guilhermemau
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
-	'randomwiki-desc' => 'Permite que os usuários explorem uma wiki aleatória',
-	'randomwiki' => 'Wiki Aleatória',
+	'randomwiki-desc' => 'Permite que os usuários explorem uma wikia aleatória',
+	'randomwiki' => 'Wikia Aleatória',
+);
+
+/** Romanian (română)
+ * @author Hedwig
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'randomwiki-desc' => 'Permite utilizatorilor să exploreze un wiki aleatoriu',
+	'randomwiki' => 'Wiki aleatoriu',
 );
 
 /** tarandíne (tarandíne)
@@ -324,11 +358,20 @@ $messages['sah'] = array(
 	'randomwiki' => 'Үлүбээй биики',
 );
 
+/** Slovak (slovenčina)
+ * @author Sudo77(new)
+ */
+$messages['sk'] = array(
+	'randomwiki-desc' => 'Umožňuje používateľom prejsť na náhodnú wiki',
+	'randomwiki' => 'Náhodná wiki',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Nikola Smolenski
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'randomwiki' => 'Насумична викија',
+	'randomwiki' => 'Насумични вики',
 );
 
 /** Swedish (svenska)
@@ -353,6 +396,14 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'randomwiki-desc' => 'Nagpapahintulot sa mga tagagamit na magalugat ang alin mang wiki',
 	'randomwiki' => 'Alinmang Wiki',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'randomwiki-desc' => 'Kullanıcıların rastgele bir wiki keşfetmesini sağlar',
+	'randomwiki' => 'Rastgele Wiki',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -398,9 +449,10 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Horacewai2
+ * @author LNDDYL
  * @author Waihorace
  */
 $messages['zh-hant'] = array(
-	'randomwiki-desc' => '容許用戶去訪問一個隨機的維基',
+	'randomwiki-desc' => '容許使用者去探索一個隨機的 wiki',
 	'randomwiki' => '隨機維基',
 );

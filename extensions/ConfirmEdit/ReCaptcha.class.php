@@ -1,69 +1,59 @@
 <?php
 
 class ReCaptcha extends SimpleCaptcha {
-	// reCAPTHCA error code returned from recaptcha_check_answer
-	private $recaptcha_error = null;
+
+	const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
 
 	/**
 	 * Displays the reCAPTCHA widget.
-	 * If $this->recaptcha_error is set, it will display an error in the widget.
-	 *
 	 */
 	function getForm() {
-		global $wgReCaptchaPublicKey, $wgReCaptchaTheme;
+		$siteKey = F::app()->wg->ReCaptchaPublicKey;
+		$theme = SassUtil::isThemeDark() ? 'dark' : 'light';
 
-		$useHttps = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' );
-		$js = 'var RecaptchaOptions = ' . Xml::encodeJsVar( array( 'theme' => $wgReCaptchaTheme, 'tabindex' => 1  ) );
-
-		return Html::inlineScript( $js ) . recaptcha_get_html( $wgReCaptchaPublicKey, $this->recaptcha_error, $useHttps );
+		return '<div class="g-recaptcha" data-sitekey="' . $siteKey . '" data-theme="' . $theme . '"></div>';
 	}
 
 	/**
-	 * Calls the library function recaptcha_check_answer to verify the users input.
-	 * Sets $this->recaptcha_error if the user is incorrect.
-	 * @return boolean
+	 * Calls the API method siteverify to verify the users input.
 	 *
+	 * @return boolean
 	 */
-	function passCaptcha() {
-		global $wgReCaptchaPrivateKey, $wgRequest;
+	public function passCaptcha() {
+		$verifyUrl = $this->getVerifyUrl();
 
-		// API is hardwired to return wpCaptchaId and wpCaptchaWord, so use that if the standard two are empty
-		$challenge = $wgRequest->getVal( 'recaptcha_challenge_field', $wgRequest->getVal( 'wpCaptchaId' ) );
-		$response = $wgRequest->getVal( 'recaptcha_response_field', $wgRequest->getVal( 'wpCaptchaWord' ) );
+		$responseObj = Http::get( $verifyUrl, 'default', [
+			'noProxy' => true,
+			'returnInstance' => true
+		] );
 
-		if ( $response === null ) {
-			// new captcha session
-			return false;
+		if ( $responseObj->getStatus() === 200 ) {
+			$response = json_decode( $responseObj->getContent() );
+
+			if ( $response->success === true ) {
+				return true;
+			}
 		}
 
-		// Compat: WebRequest::getIP is only available since MW 1.19.
-		$ip = method_exists( $wgRequest, 'getIP' ) ? $wgRequest->getIP() : wfGetIP();
-
-		$recaptcha_response = recaptcha_check_answer(
-			$wgReCaptchaPrivateKey,
-			$ip,
-			$challenge,
-			$response
-		);
-
-		if ( !$recaptcha_response->is_valid ) {
-			$this->recaptcha_error = $recaptcha_response->error;
-			return false;
-		}
-
-		$recaptcha_error = null;
-
-		return true;
-
+		return false;
 	}
 
-	function addCaptchaAPI( &$resultArr ) {
-		global $wgReCaptchaPublicKey;
+	protected function getVerifyUrl() {
+		$wg = F::app()->wg;
+		$secret = $wg->ReCaptchaPrivateKey;
+		$response = $wg->Request->getText( 'g-recaptcha-response' );
+		$ip = $wg->Request->getIP();
 
+		return self::VERIFY_URL .
+			'?secret=' . $secret .
+			'&response=' . $response .
+			'&remoteip=' . $ip;
+	}
+
+	public function addCaptchaAPI( &$resultArr ) {
 		$resultArr['captcha']['type'] = 'recaptcha';
 		$resultArr['captcha']['mime'] = 'image/png';
-		$resultArr['captcha']['key'] = $wgReCaptchaPublicKey;
-		$resultArr['captcha']['error'] = $this->recaptcha_error;
+		$resultArr['captcha']['key'] = F::app()->wg->ReCaptchaPublicKey;
 	}
 
 	/**
@@ -73,20 +63,20 @@ class ReCaptcha extends SimpleCaptcha {
 	 * @param $action Action being performed
 	 * @return string
 	 */
-	function getMessage( $action ) {
+	public function getMessage( $action ) {
+		// Possible keys for easy grepping: recaptcha-edit, recaptcha-addurl, recaptcha-createaccount, recaptcha-create
 		$name = 'recaptcha-' . $action;
-		$text = wfMsg( $name );
+		$text = wfMessage( $name )->escaped();
 
-		# Obtain a more tailored message, if possible, otherwise, fall back to
-		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMsg( 'recaptcha-edit' ) : $text;
+		// Obtain a more tailored message, if possible, otherwise, fall back to the default for edits
+		return wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
 	}
 
-	public function APIGetAllowedParams( &$module, &$params ) {
+	public function APIGetAllowedParams( ApiBase $module, &$params ): bool {
 		return true;
 	}
 
-	public function APIGetParamDescription( &$module, &$desc ) {
+	public function APIGetParamDescription( ApiBase $module, &$desc ): bool {
 		return true;
 	}
 }

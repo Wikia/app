@@ -1,12 +1,12 @@
 <?php
-
 $messages = array();
 
 $messages['en'] = array(
+	'editpagelayout-desc' => 'Applies updated layout for edit pages',
 	'editpagelayout-more' => 'more',
 	'editpagelayout-less' => 'less',
 	'editpagelayout-helpLink-url' => 'Help:Editing',
-	'editpagelayout-helpLink' => 'Need [[{{MediaWiki:Editpagelayout-helpLink-url}}|Help?]]',
+	'editpagelayout-helpLink' => '[[Help:Editing|Need help editing?]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notification|Notifications}}',
 	'editpagelayout-notificationsLink-none' => 'Notifications',
 	'editpagelayout-edit-title' => 'Edit title',
@@ -22,16 +22,14 @@ $messages['en'] = array(
 	'editpagelayout-pageControls-back' => 'Back to editor',
 	'editpagelayout-pageControls-changes' => 'Changes',
 	'editpagelayout-blocked-user' => 'Your user name or IP address has been blocked',
-	'editpagelayout-edit-summary-label' => 'Edit Summary',
+	'editpagelayout-edit-summary-label' => 'Edit summary',
 	'editpagelayout-subject-headline-label' => 'Subject/headline:',
-
 	'wikia-editor-media-image' => 'Photo',
 	'wikia-editor-media-gallery' => 'Gallery',
 	'wikia-editor-media-slideshow' => 'Slideshow',
 	'wikia-editor-media-slider' => 'Slider',
 	'wikia-editor-media-video' => 'Video',
 	'wikia-editor-media-mut' => 'Video',
-
 	'wikia-editor-media-image-tooltip' => 'Add Photo',
 	'wikia-editor-media-gallery-tooltip' => 'Add Gallery',
 	'wikia-editor-media-slideshow-tooltip' => 'Add Slideshow',
@@ -41,7 +39,6 @@ $messages['en'] = array(
 	'wikia-editor-source-bold-tooltip' => 'Bold',
 	'wikia-editor-source-italic-tooltip' => 'Italic',
 	'wikia-editor-source-link-tooltip' => 'Add Link',
-
 	'wikia-editor-modules-templates-title' => 'Templates',
 	'wikia-editor-modules-templates-add-tooltip' => 'Add "$1" Template',
 	'wikia-editor-modules-templates-otherTemplates' => 'Add other templates',
@@ -53,60 +50,51 @@ $messages['en'] = array(
 	'wikia-editor-modules-license-text' => '$1 Contributions licensed as $3. <a href="$2">More details.</a>',
 	'wikia-editor-modules-insert-title' => 'Add features and media',
 	'wikia-editor-modules-categories-title' => 'Categories',
-
 	'wikia-editor-loadingStates-loading' => 'Loading editor',
 	'wikia-editor-loadingStates-toSource' => 'Switching to source mode...',
 	'wikia-editor-loadingStates-toVisual' => 'Switching to visual mode...',
 	'wikia-editor-loadingStates-saving' => 'Publishing your edit',
-
 	'wikia-editor-edittools-caption' => 'more',
 	'wikia-editor-edittools-dialog-title' => 'Wikitext shortcuts',
-
 	'wikia-editor-notices-dialog-title' => 'Notification details',
-
-	'wikia-editor-preview-editSummary' => 'Edit Summary: $1',
-
+	'wikia-editor-preview-editSummary' => "'''Edit Summary:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'You have made some unpublished edits. Are you sure you want to leave without publishing them?',
-
-	// Short notices
 	'nonunicodebrowser-notice' => "'''Warning: Your browser is not Unicode compliant.'''",
 	'rev-deleted-text-notice' => "Warning: This page revision has been '''deleted'''. [More info]",
 	'readonlywarning-notice' => "'''Warning: The database has been locked for maintenance.''' Editing will return once this is complete. [More info]",
 	'anoneditwarning-notice' => '',
 	'longpagewarning-notice' => '',
-	'userinvalidcssjstitle-notice' => "'''Warning:''' There is no skin \"$1\". [More info]",
-	'semiprotectedpagewarning-notice' => "'''Note:''' This page has been locked so that only registered users can edit it. You may need to log in to edit. [More info]",
-	'protectedpagewarning-notice' => "'''Note:''' This page has been locked so that only admins can edit it. Local admins can change this status. [More info]",
+	'userinvalidcssjstitle-notice' => "'''Warning:''' There is no skin \"\$1\". [More info]",
+	'semiprotectedpagewarning-notice' => "'''Note:''' This page has been protected so that only registered users can edit it. You may need to log in to edit. [More info]",
+	'protectedpagewarning-notice' => "'''Note:''' This page has been protected so that only users with certain privileges can edit it. [More info]",
 	'titleprotectedwarning-notice' => "'''Note:''' This page has been locked so that only certain users (either admins or registered users) can create it. [More info]",
 	'recreate-moveddeleted-warn-notice' => "'''Note:''' You are recreating a page that was previously deleted. [More info]",
 	'restore-edits-notice' => "Welcome back! We've restored some changes you had not published. <a class='notice-action restoreeditlink'>Delete my changes and start a new edit</a>",
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
-	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page]].",
+	'mainpagewarning-notice' => 'Learn more about [[w:c:community:Help:Main_page|editing the main page]].',
 	'explainconflict-notice' => "'''Warning!''' Someone else has changed this page since you started editing it! [More info]",
 	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere on the page or hover over the thumbnail and click "modify" for embed options.',
 	'wikia-editor-add-file-notice-no-wysiwyg' => 'Your $1 has been added.',
-
-	// "editing" preferences sections
 	'prefs-general' => 'General',
 	'prefs-starting-an-edit' => 'Starting an edit',
 	'prefs-editing-experience' => 'Editing experience',
 	'prefs-monobook-layout' => 'MonoBook layout only',
 	'prefs-editarea-size' => 'Size of editing window (MonoBook layout only)',
-
 	'tog-editsection' => 'Show section edit links',
 	'tog-editwidth' => 'Widen the Source mode edit box to fill the entire screen',
 	'tog-minordefault' => 'Mark all edits as "minor" by default',
 	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
+	'tog-disablesyntaxhighlighting' => 'Do not show syntax highlighting in Source mode',
+	'editpagelayout-preview-label-desktop' => 'Desktop',
+	'editpagelayout-preview-label-mobile' => 'Mobile',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Mobile',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Tablet Portrait',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Desktop',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop XL',
 );
 
-/** Message documentation (Message documentation)
- * @author Claudia Hattitten
- * @author McDutchie
- * @author Shirayuki
- * @author Siebrand
- * @author TK-999
- */
 $messages['qqq'] = array(
+	'editpagelayout-desc' => '{{desc}}',
 	'editpagelayout-more' => '{{Identical|More}}',
 	'editpagelayout-helpLink-url' => 'See interwiki links (below categories) on http://help.wikia.com/wiki/Help:Editing for eventually an appropiate page name. {{doc-important|Do not change the "<tt>Help:</tt>" part.}}',
 	'editpagelayout-notificationsLink-none' => '{{Identical|Notification}}',
@@ -141,11 +129,20 @@ $messages['qqq'] = array(
 	'prefs-general' => '{{Identical|General}}',
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
+	'wikia-editor-preview-editSummary' => 'A text showed on the bottom of preview window when the edit summary was added, the parameter is the added summary',
+	'tog-editsection' => 'A label for checkbox to enable showing section edit links',
+	'tog-editwidth' => 'A label for checkbox to widen the Source mode edit box to fill the entire screen',
+	'tog-minordefault' => 'A label for checkbox to mark all edits as "minor" by default',
+	'tog-forceeditsummary' => 'A label for checkbox to prompt user if leave a blank edit summary',
+	'tog-disablesyntaxhighlighting' => 'A label for checkbox to dont show syntax highlighting in source mode',
+	'editpagelayout-preview-label-desktop' => 'A label shown under the desktop icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers the desktop icon',
+	'editpagelayout-preview-label-mobile' => 'A label shown under the mobile icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers over the mobile icon',
+	'editpagelayout-preview-dropdown-item-mobile' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-tablet' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-desktop' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
 );
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
 $messages['az'] = array(
 	'wikia-editor-media-image' => 'Şəkil',
 	'wikia-editor-media-gallery' => 'Qalereya',
@@ -158,9 +155,6 @@ $messages['az'] = array(
 	'prefs-general' => 'Ümumi',
 );
 
-/** Bavarian (Boarisch)
- * @author Mucalexx
- */
 $messages['bar'] = array(
 	'editpagelayout-more' => 'merer',
 	'editpagelayout-less' => 'weeniger',
@@ -214,14 +208,14 @@ $messages['bar'] = array(
 	'wikia-editor-edittools-caption' => 'merer',
 	'wikia-editor-edittools-dialog-title' => 'Wikitext-Vurlong',
 	'wikia-editor-notices-dialog-title' => 'Hihweis-Details',
-	'wikia-editor-preview-editSummary' => 'Zaummfossung: $1',
+	'wikia-editor-preview-editSummary' => "'''Zaummfossung:''' $1",
 	'nonunicodebrowser-notice' => "'''Ówocht: Deih Browser is néd Unicode-kompatiwé.'''",
-	'rev-deleted-text-notice' => "Dé Versión is '''gléscht''' worn. [Merer Informaziónen]", # Fuzzy
-	'readonlywarning-notice' => "'''Ówocht: Dé Daatenbånk is wéng Wartungsorweiten gsperrd worn.''' [Merer Informaziónen]", # Fuzzy
+	'rev-deleted-text-notice' => "Dé Versión is '''gléscht''' worn. [Merer Informaziónen]",
+	'readonlywarning-notice' => "'''Ówocht: Dé Daatenbånk is wéng Wartungsorweiten gsperrd worn.''' [Merer Informaziónen]",
 	'userinvalidcssjstitle-notice' => "'''Ówocht:''' Dén Skin \"\$1\" gibts nimmer. [Merer Informaziónen]",
-	'semiprotectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is fyr nédågmödte Beorweiter gsperrd worn. [Merer Informaziónen]", # Fuzzy
-	'protectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is gsperrd worn und kå netter voh Administraatorn beorweitt wern. [Merer Informaziónen]", # Fuzzy
-	'titleprotectedwarning-notice' => "'''Hihweis:''' Dé Seiten is gsperrd worn und kå netter voh ausgwöde Benutzer beorweitt wern. [Merer Informaziónen]", # Fuzzy
+	'semiprotectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is fyr nédågmödte Beorweiter gsperrd worn. [Merer Informaziónen]",
+	'protectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is gsperrd worn und kå netter voh Administraatorn beorweitt wern. [Merer Informaziónen]",
+	'titleprotectedwarning-notice' => "'''Hihweis:''' Dé Seiten is gsperrd worn und kå netter voh ausgwöde Benutzer beorweitt wern. [Merer Informaziónen]",
 	'recreate-moveddeleted-warn-notice' => "'''Hihweis:''' Du erstöst a Seiten, dé schoh friarer gléscht worn is.  [Merer Informaziónen]",
 	'prefs-general' => 'Oigmoah',
 	'prefs-starting-an-edit' => 'Beorweitung åfånger',
@@ -234,9 +228,6 @@ $messages['bar'] = array(
 	'tog-forceeditsummary' => "Wornen, wånn beim Speichern d' Zåmmenfossung föd",
 );
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = array(
 	'editpagelayout-more' => 'повече',
 	'editpagelayout-less' => 'по-малко',
@@ -248,13 +239,9 @@ $messages['bg'] = array(
 	'wikia-editor-modules-templates-title' => 'Шаблони',
 	'wikia-editor-modules-templates-otherTemplates' => 'Добавяне на други шаблони',
 	'wikia-editor-modules-categories-title' => 'Категории',
+	'tog-forceeditsummary' => 'Уведомяване, когато полето "Резюне" не е попълнено',
 );
 
-/** Breton (brezhoneg)
- * @author Fulup
- * @author Gwenn-Ael
- * @author Y-M D
- */
 $messages['br'] = array(
 	'editpagelayout-more' => "muioc'h",
 	'editpagelayout-less' => "nebeutoc'h",
@@ -306,19 +293,16 @@ $messages['br'] = array(
 	'wikia-editor-edittools-caption' => "muioc'h",
 	'wikia-editor-edittools-dialog-title' => 'Berradennoù wikitext',
 	'wikia-editor-notices-dialog-title' => 'Munudoù an alioù',
-	'wikia-editor-preview-editSummary' => "Diverrañ ar c'hemmoù : $1",
+	'wikia-editor-preview-editSummary' => "'''Diverrañ ar c'hemmoù :''' $1",
 	'wikia-editor-leaveconfirm-message' => "Graet ho peus kemmoù n'int ket bet embannet. Ha sur eo ho peus c'hoant da guitaat hep embann anezho?",
 	'nonunicodebrowser-notice' => "'''Diwallit : ho merdeer na embreg ket Unicode.'''",
-	'rev-deleted-text-notice' => "'''Diverket''' eo bet ar stumm-mañ eus ar bajenn. [Muioc'h a ditouroù]", # Fuzzy
-	'readonlywarning-notice' => "'''Diwallit : prennet eo bet an diaz roadennoù evit ar c'has en-dro.''' [Muioc'h a ditouroù]", # Fuzzy
+	'rev-deleted-text-notice' => "'''Diverket''' eo bet ar stumm-mañ eus ar bajenn. [Muioc'h a ditouroù]",
+	'readonlywarning-notice' => "'''Diwallit : prennet eo bet an diaz roadennoù evit ar c'has en-dro.''' [Muioc'h a ditouroù]",
 	'userinvalidcssjstitle-notice' => "'''Diwallit:''' N'eus ket eus an neuz \"\$1\". [Muioc'h a ditouroù]",
 	'prefs-general' => 'Hollek',
 	'prefs-editing-experience' => 'O kemmañ an arnod',
 );
 
-/** Catalan (català)
- * @author BroOk
- */
 $messages['ca'] = array(
 	'editpagelayout-more' => 'més',
 	'editpagelayout-less' => 'menys',
@@ -374,7 +358,7 @@ $messages['ca'] = array(
 	'wikia-editor-edittools-caption' => 'més',
 	'wikia-editor-edittools-dialog-title' => 'Dreceres del Wikitext',
 	'wikia-editor-notices-dialog-title' => 'Detalls de la notificació',
-	'wikia-editor-preview-editSummary' => "Resum de l'edició: $1",
+	'wikia-editor-preview-editSummary' => "'''Resum de l'edició:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Has fet algunes modificacions sense guardar. Estàs segur que vols sortir sense guardar?',
 	'nonunicodebrowser-notice' => "'''Atenció: El teu navegador no és compatible amb Unicode.'''",
 	'rev-deleted-text-notice' => "Avís: Aquesta revisió de la pàgina ha estat '''eliminada'''. [Més informació]",
@@ -382,7 +366,7 @@ $messages['ca'] = array(
 	'userinvalidcssjstitle-notice' => "'''Atenció:''' No hi ha pell \"\$1\". [Més informació]",
 	'semiprotectedpagewarning-notice' => "''' Nota:''' Aquesta pàgina s'ha bloquejat i només els usuaris registrats poden editar-la. Necessites connectar-te per a editar. [Més informació]",
 	'protectedpagewarning-notice' => "'''Nota:''' Aquesta pàgina s'ha bloquejat i només els administradors poden editar-la. Els administradors locals poden canviar aquest estatus. [Més informació]",
-	'titleprotectedwarning-notice' => "'''Nota:''' Aquesta pàgina s'ha bloquejat i només els administradors poden crear-la. Els administradors locals poden canviar aquest estatus. [Més informació]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Nota:''' Aquesta pàgina s'ha bloquejat i només els administradors poden crear-la. Els administradors locals poden canviar aquest estatus. [Més informació]",
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Estàs recreant una pàgina que abans va ser eliminada. [Més informació]",
 	'restore-edits-notice' => "Benvingut de nou! Hem restaurat alguns canvis que no havies publicat. <a class='notice-action restoreeditlink'>Suprimeix els meus canvis i comença una nova edició</a>",
 	'restore-edits-diff-notice' => "Benvingut de nou! Hem restaurat alguns canvis que no havies publicat. No obstant això, aquesta pàgina s'ha actualitzat des d'aleshores. Vols: <a class='notice-action restoreeditlink'>Suprimir els meus canvis i començar amb l'últim text</a> o <a class='notice-action difflink'>Veure una comparació dels canvis amb l'última pàgina</a>",
@@ -399,11 +383,6 @@ $messages['ca'] = array(
 	'tog-forceeditsummary' => "Pregunta'm si deixo en blanc el resum d'edició",
 );
 
-/** Czech (česky)
- * @author Chmee2
- * @author Jezevec
- * @author Vks
- */
 $messages['cs'] = array(
 	'editpagelayout-more' => 'více',
 	'editpagelayout-less' => 'méně',
@@ -433,27 +412,16 @@ $messages['cs'] = array(
 	'wikia-editor-modules-categories-title' => 'Kategorie',
 	'wikia-editor-loadingStates-loading' => 'Načítám editor',
 	'wikia-editor-edittools-caption' => 'více',
-	'wikia-editor-preview-editSummary' => 'Shrnutí editace: $1',
+	'wikia-editor-preview-editSummary' => "'''Shrnutí editace:''' $1",
 	'prefs-general' => 'Obecné',
 );
 
-/** German (Deutsch)
- * @author Claudia Hattitten
- * @author Geitost
- * @author LWChris
- * @author MF-Warburg
- * @author Metalhead64
- * @author MtaÄ
- * @author PtM
- * @author SVG
- * @author Tiin
- */
 $messages['de'] = array(
 	'editpagelayout-more' => 'mehr',
 	'editpagelayout-less' => 'weniger',
 	'editpagelayout-helpLink-url' => 'Help:Bearbeiten',
-	'editpagelayout-helpLink' => '[[{{MediaWiki:Editpagelayout-helpLink-url}}|Hilfe nötig?]]',
-	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Benachrichtigung|Benachrichtigungen}}',
+	'editpagelayout-helpLink' => '[[Hilfe:Bearbeiten|Hilfe nötig?]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span> Benachrichtigungen',
 	'editpagelayout-notificationsLink-none' => 'Benachrichtigungen',
 	'editpagelayout-edit-title' => 'Titel bearbeiten',
 	'editpagelayout-edit-info' => 'Info bearbeiten',
@@ -463,7 +431,7 @@ $messages['de'] = array(
 	'editpagelayout-captcha-title' => 'Captcha',
 	'editpagelayout-pageControls-pageLink' => 'Zurück zur Seite',
 	'editpagelayout-pageControls-minorEdit' => 'Kleine Änderung',
-	'editpagelayout-pageControls-summaryLabel' => 'Eine Zusammenfassung der Änderungen angeben',
+	'editpagelayout-pageControls-summaryLabel' => 'Eine Änderungszusammenfassung angeben',
 	'editpagelayout-pageControls-newSectionLabel' => 'Eine Abschnittsüberschrift angeben',
 	'editpagelayout-pageControls-back' => 'Zurück zum Editor',
 	'editpagelayout-pageControls-changes' => 'Änderungen',
@@ -476,7 +444,7 @@ $messages['de'] = array(
 	'wikia-editor-media-slider' => 'Slider',
 	'wikia-editor-media-video' => 'Video',
 	'wikia-editor-media-mut' => 'Video',
-	'wikia-editor-media-image-tooltip' => 'Foto hinzufügen',
+	'wikia-editor-media-image-tooltip' => 'Bild hinzufügen',
 	'wikia-editor-media-gallery-tooltip' => 'Galerie hinzufügen',
 	'wikia-editor-media-slideshow-tooltip' => 'Diashow hinzufügen',
 	'wikia-editor-media-slider-tooltip' => 'Slider hinzufügen',
@@ -493,7 +461,7 @@ $messages['de'] = array(
 	'wikia-editor-modules-templates-makeLayout' => 'Neues Layout aus dieser Seite',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Nach dieser Seite ein Layout erstellen',
 	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Du verlässt nun den Bearbeitungsmodus, um ein Layout basierend auf dieser Seite zu erstellen. Alle ungespeicherten Bearbeitungen gehen verloren.',
-	'wikia-editor-modules-license-text' => '$1 Beiträge werden unter $3 lizenziert (<a href="$2">Weitere Details</a>).',
+	'wikia-editor-modules-license-text' => 'Beiträge werden unter $3 gestellt (<a href="$2">Details</a>).',
 	'wikia-editor-modules-insert-title' => 'Medien und Extras hinzufügen',
 	'wikia-editor-modules-categories-title' => 'Kategorien',
 	'wikia-editor-loadingStates-loading' => 'Lade Editor…',
@@ -503,8 +471,8 @@ $messages['de'] = array(
 	'wikia-editor-edittools-caption' => 'mehr',
 	'wikia-editor-edittools-dialog-title' => 'Wikitext-Vorlagen',
 	'wikia-editor-notices-dialog-title' => 'Hinweis-Details',
-	'wikia-editor-preview-editSummary' => 'Zusammenfassung: $1',
-	'wikia-editor-leaveconfirm-message' => 'Du hast einige unveröffentlichte Bearbeitungen getätigt. Bis du sicher, dass du gehen willst, ohne sie zu veröffentlichen?',
+	'wikia-editor-preview-editSummary' => "'''Zusammenfassung:''' $1",
+	'wikia-editor-leaveconfirm-message' => 'Du hast einige unveröffentlichte Bearbeitungen getätigt. Bist du sicher, dass du gehen willst, ohne sie zu veröffentlichen?',
 	'nonunicodebrowser-notice' => "'''Achtung: Dein Browser ist nicht Unicode-kompatibel.'''",
 	'rev-deleted-text-notice' => "Warnung: Diese Version wurde '''gelöscht.''' [Mehr Informationen]",
 	'readonlywarning-notice' => "'''Warnung: Die Datenbank wurde wegen Wartungsarbeiten gesperrt.''' Wenn diese beendet sind, werden Bearbeitungen wieder möglich sein. [Mehr Informationen]",
@@ -515,7 +483,7 @@ $messages['de'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Hinweis:''' Du erstellst eine Seite, die zuvor gelöscht wurde. [Mehr Informationen]",
 	'restore-edits-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die du nicht veröffentlicht hattest. <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und eine neue Bearbeitung beginnen.</a>",
 	'restore-edits-diff-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die du nicht veröffentlicht hattest. Allerdings ist seitdem die Seite aktualisiert worden. Was möchtest du tun?: <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und mit der aktuellen Textversion beginnen</a> oder <a class='notice-action difflink'>einen Vergleich der Änderungen mit der aktuellen Seite ansehen.</a>",
-	'mainpagewarning-notice' => 'Mehr über [[w:c:community:Help:Main_page|das Bearbeiten der Hauptseite]] erfahren.',
+	'mainpagewarning-notice' => 'Mehr über [[w:c:de.community:Hilfe:Hauptseite|das Bearbeiten der Hauptseite]] erfahren.',
 	'explainconflict-notice' => "'''Warnung!''' Jemand hat diese Seite geändert, seit du begonnen hast, sie zu bearbeiten! [Mehr Informationen]",
 	'prefs-general' => 'Allgemein',
 	'prefs-starting-an-edit' => 'Bearbeitung beginnen',
@@ -526,21 +494,26 @@ $messages['de'] = array(
 	'tog-editwidth' => 'Quelltext-Bearbeitungs-Fenster auf volle Breite',
 	'tog-minordefault' => 'Eigene Änderungen standardmäßig als geringfügig markieren',
 	'tog-forceeditsummary' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
+	'editpagelayout-preview-label-desktop' => 'Desktop',
+	'editpagelayout-preview-label-mobile' => 'Mobil',
+	'tog-disablesyntaxhighlighting' => 'Keine Syntaxhervorhebung im Quelltext-Mode anzeigen',
+	'wikia-editor-add-file-notice-no-wysiwyg' => '$1 wurde hinzugefügt.',
+	'wikia-editor-add-file-notice' => 'Dein $1 wurde hinzugefügt. Platziere das $1 überall auf der Seite oder bewege den Mauszeier auf das $1, um über "Bearbeiten" die Anzeigeoptionen des $1s zu bearbeiten.',
+	'editpagelayout-desc' => 'Applies updated layout for edit pages',
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Mobile Geräte',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Tablet-Porträtansicht',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Desktop-Ansicht',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop-XL-Ansicht',
 );
 
-/** German (formal address) (Deutsch (Sie-Form)‎)
- * @author Geitost
- */
 $messages['de-formal'] = array(
 	'semiprotectedpagewarning-notice' => "'''Hinweis:''' Diese Seite wurde für unangemeldete Bearbeiter gesperrt. Melden Sie sich bitte an, um sie zu bearbeiten. [Mehr Informationen]",
 	'restore-edits-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die Sie nicht veröffentlicht hatten. <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und eine neue Bearbeitung beginnen.</a>",
 	'restore-edits-diff-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die Sie nicht veröffentlicht hatten. Allerdings ist seitdem die Seite aktualisiert worden. Was möchten Sie tun?: <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und mit der aktuellen Textversion beginnen</a> oder <a class='notice-action difflink'>einen Vergleich der Änderungen mit der aktuellen Seite ansehen.</a>",
 );
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Mirzali
- */
 $messages['diq'] = array(
 	'editpagelayout-more' => 'dehana vêşi',
 	'editpagelayout-less' => 'dehana tayn',
@@ -578,20 +551,19 @@ $messages['diq'] = array(
 	'prefs-general' => 'Bıngeh',
 );
 
-/** Spanish (español)
- * @author Armando-Martin
- * @author Benfutbol10
- * @author Ciencia Al Poder
- * @author DJ Nietzsche
- * @author VegaDark
- * @author Vivaelcelta
- */
+$messages['el'] = array(
+	'prefs-editarea-size' => 'Μέγεθος του παραθύρου επεξεργασίας (Μόνο για επιφάνεια MonoBook)',
+	'prefs-editing-experience' => 'Εμπειρία επεξεργασιών',
+	'prefs-general' => 'Γενικά',
+	'prefs-starting-an-edit' => 'Ξεκινώντας μία επεξεργασία',
+);
+
 $messages['es'] = array(
 	'editpagelayout-more' => 'más',
 	'editpagelayout-less' => 'menos',
 	'editpagelayout-helpLink-url' => 'Help:Editando páginas',
 	'editpagelayout-helpLink' => '¿Necesitas [[{{MediaWiki:Editpagelayout-helpLink-url}}|ayuda]]?',
-	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notificación|Notificaciones}}',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Aviso|Avisos}}',
 	'editpagelayout-notificationsLink-none' => 'Notificaciones',
 	'editpagelayout-edit-title' => 'Editar título',
 	'editpagelayout-edit-info' => 'Editar información',
@@ -606,20 +578,20 @@ $messages['es'] = array(
 	'editpagelayout-pageControls-back' => 'Volver al editor',
 	'editpagelayout-pageControls-changes' => 'Cambios',
 	'editpagelayout-blocked-user' => 'Tu nombre de usuario o dirección IP ha sido bloqueado',
-	'editpagelayout-edit-summary-label' => 'Resumen',
+	'editpagelayout-edit-summary-label' => 'Editar resumen',
 	'editpagelayout-subject-headline-label' => 'Asunto/encabezado:',
 	'wikia-editor-media-image' => 'Imagen',
 	'wikia-editor-media-gallery' => 'Galería',
 	'wikia-editor-media-slideshow' => 'Presentación de diapositivas',
-	'wikia-editor-media-slider' => 'Deslizador',
-	'wikia-editor-media-video' => 'Vídeo',
-	'wikia-editor-media-mut' => 'Vídeo',
+	'wikia-editor-media-slider' => 'Diapositiva',
+	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Añadir imagen',
 	'wikia-editor-media-gallery-tooltip' => 'Añadir galería',
 	'wikia-editor-media-slideshow-tooltip' => 'Añadir presentación',
 	'wikia-editor-media-slider-tooltip' => 'Añadir diapositiva',
-	'wikia-editor-media-video-tooltip' => 'Añadir vídeo',
-	'wikia-editor-media-mut-tooltip' => 'Añadir vídeo (beta)',
+	'wikia-editor-media-video-tooltip' => 'Añadir video',
+	'wikia-editor-media-mut-tooltip' => 'Añadir video (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Negrita',
 	'wikia-editor-source-italic-tooltip' => 'Itálica',
 	'wikia-editor-source-link-tooltip' => 'Añadir enlace',
@@ -631,7 +603,7 @@ $messages['es'] = array(
 	'wikia-editor-modules-templates-makeLayout' => 'Hacer un diseño nuevo desde esta página',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Crear un diseño desde esta página',
 	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Esto te llevará fuera de la página para crear un diseño desde esta página. Sin embargo, perderás todos los cambios no guardados.',
-	'wikia-editor-modules-license-text' => '$1 Todas las contribuciones están hechas bajo la licencia $3. <a href="$2">Más detalles.</a>',
+	'wikia-editor-modules-license-text' => '$1 Todas las contribuciones están hechas bajo la licencia CC-BY-SA. <a href="http://es.wikia.com/Licencia">Más detalles</a>.',
 	'wikia-editor-modules-insert-title' => 'Añadir características y media',
 	'wikia-editor-modules-categories-title' => 'Categorías',
 	'wikia-editor-loadingStates-loading' => 'Cargando editor...',
@@ -641,8 +613,8 @@ $messages['es'] = array(
 	'wikia-editor-edittools-caption' => 'más',
 	'wikia-editor-edittools-dialog-title' => 'Accesos directos de wikitexto',
 	'wikia-editor-notices-dialog-title' => 'Detalles de avisos',
-	'wikia-editor-preview-editSummary' => 'Resumen de Edición: $1',
-	'wikia-editor-leaveconfirm-message' => 'Has hecho algunas ediciones sin publicar. ¿Estás seguro que quieres salir sin publicarlas?',
+	'wikia-editor-preview-editSummary' => "'''Resumen de Edición:''' $1",
+	'wikia-editor-leaveconfirm-message' => 'Tienes algunas ediciones sin publicar. ¿Estás seguro de que quieres dejar la ventana de edición sin publicarlas?',
 	'nonunicodebrowser-notice' => "'''Aviso: Tu navegador no es compatible con Unicode'''.",
 	'rev-deleted-text-notice' => "Advertencia: Esta revisión ha sido '''borrada'''. [Más información]",
 	'readonlywarning-notice' => "'''Aviso: La base de datos ha sido bloqueada por mantenimiento'''. Se habilitará la edición de nuevo cuando éste finalice. [Más información]",
@@ -653,7 +625,7 @@ $messages['es'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Estás creando una página que fue borrada previamente. [Más información]",
 	'restore-edits-notice' => "¡Bienvenido! Hemos restaurado algunos cambios que no has publicado. <a class='notice-action restoreeditlink'>Borrar mis cambios y comenzar una nueva edición</a>",
 	'restore-edits-diff-notice' => "¡Bienvenido! Hemos restaurado algunos cambios que no has publicado. Sin embargo, la página se ha actualizado desde entonces. ¿Te gustaría <a class='notice-action restoreeditlink'>borrar mis cambios y comenzar con el texto más reciente</a> o <a class='notice-action difflink'>ver una comparación de los cambios con la última página</a>?",
-	'mainpagewarning-notice' => 'Aprende más acerca de cómo [[w:c:demo-portada:Demostración_de_Portada|editar la portada]].', # Fuzzy
+	'mainpagewarning-notice' => 'Aprende más acerca de cómo [[w:c:demo-portada:Demostración_de_Portada|editar la portada]].',
 	'explainconflict-notice' => "'''Aviso''' Alguien ha cambiado esta página desde que empezaste a editar. [Más info]",
 	'prefs-general' => 'General',
 	'prefs-starting-an-edit' => 'Comenzar una edición',
@@ -664,12 +636,20 @@ $messages['es'] = array(
 	'tog-editwidth' => 'Ampliar el cuadro de edición para llenar toda la pantalla',
 	'tog-minordefault' => 'Marcar todas las ediciones como menores por defecto',
 	'tog-forceeditsummary' => 'Alertar al grabar sin resumen de edición.',
+	'editpagelayout-preview-label-desktop' => 'Escritorio',
+	'editpagelayout-preview-label-mobile' => 'Móvil',
+	'tog-disablesyntaxhighlighting' => 'No mostrar el resaltado de sintaxis en Modo fuente',
+	'editpagelayout-desc' => 'Applies updated layout for edit pages',
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere on the page or hover over the thumbnail and click "modify" for embed options.',
+	'wikia-editor-add-file-notice-no-wysiwyg' => 'Your $1 has been added.',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Resolución de móvil',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Resolución de una tableta',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Resolución del escritorio',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Resolución máxima de escritorio',
 );
 
-/** Persian (فارسی)
- * @author Mehran
- * @author MehranVB
- */
 $messages['fa'] = array(
 	'editpagelayout-more' => 'بیشتر',
 	'editpagelayout-less' => 'کمتر',
@@ -683,16 +663,10 @@ $messages['fa'] = array(
 	'wikia-editor-edittools-caption' => 'بیشتر',
 );
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Ilkea
- * @author Nedergard
- * @author Nike
- */
 $messages['fi'] = array(
 	'editpagelayout-more' => 'lisää',
 	'editpagelayout-less' => 'vähemmän',
-	'editpagelayout-helpLink-url' => 'Help:Editing',
+	'editpagelayout-helpLink-url' => 'Ohje:Muokkaaminen',
 	'editpagelayout-helpLink' => 'Tarvitsetko [[{{MediaWiki:Editpagelayout-helpLink-url}}|apua?]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Ilmoitus|Ilmoitukset}}',
 	'editpagelayout-notificationsLink-none' => 'Ilmoitukset',
@@ -741,23 +715,24 @@ $messages['fi'] = array(
 	'prefs-starting-an-edit' => 'Muokkauksen aloittaminen',
 	'tog-editsection' => 'Näytä osion muokkauslinkit',
 	'tog-minordefault' => 'Muutokset ovat oletuksena pieniä',
+	'prefs-editarea-size' => 'Muokkausikkunan koko (vain MonoBook -ulkoasu)',
+	'prefs-editing-experience' => 'Muokkauskokemus',
+	'prefs-monobook-layout' => 'Vain MonoBook -ulkoasu',
+	'tog-disablesyntaxhighlighting' => 'Poista koodin väritys käytöstä lähdekooditilassa',
+	'tog-editwidth' => 'Levitä lähdekooditilassa muokkausruutu koko näytön levyiseksi',
+	'tog-forceeditsummary' => 'Ilmoita minulle, jos olen tallentamassa sivua ilman muokkausyhteenvetoa',
 );
 
-/** French (français)
- * @author Gomoko
- * @author Verdy p
- * @author Wyz
- */
 $messages['fr'] = array(
 	'editpagelayout-more' => 'plus',
 	'editpagelayout-less' => 'moins',
-	'editpagelayout-helpLink-url' => 'Help:Modifier',
-	'editpagelayout-helpLink' => 'Besoin d’[[{{MediaWiki:Editpagelayout-helpLink-url}}|Aide ?]]',
+	'editpagelayout-helpLink-url' => 'w:fr:Aide:Modifier',
+	'editpagelayout-helpLink' => '[[{{int:Editpagelayout-helpLink-url}}|Besoin d’aide pour modifier ?]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span> notification{{PLURAL:$1||s}}',
 	'editpagelayout-notificationsLink-none' => 'Notifications',
 	'editpagelayout-edit-title' => 'Modifier le titre',
 	'editpagelayout-edit-info' => 'Informations de modification',
-	'editpagelayout-diff-header-url' => 'Help:Diff',
+	'editpagelayout-diff-header-url' => 'w:c:communaute:Aide:Diff',
 	'editpagelayout-diff-header' => 'Les différences ([[{{MediaWiki:Editpagelayout-diff-header-url}}|aide]])',
 	'editpagelayout-myedit-header' => 'Voici votre modification. Copiez vos changements vers la boîte ci-dessus !',
 	'editpagelayout-captcha-title' => 'Vérificateur anti-robot Captcha',
@@ -766,7 +741,7 @@ $messages['fr'] = array(
 	'editpagelayout-pageControls-summaryLabel' => 'Ajouter un résumé de vos modifications',
 	'editpagelayout-pageControls-newSectionLabel' => 'Ajouter le titre de section',
 	'editpagelayout-pageControls-back' => 'Retour à la page de modification',
-	'editpagelayout-pageControls-changes' => 'Changements',
+	'editpagelayout-pageControls-changes' => 'Modifications',
 	'editpagelayout-blocked-user' => 'Votre nom d’utilisateur ou adresse IP a été bloqué',
 	'editpagelayout-edit-summary-label' => 'Résumé',
 	'editpagelayout-subject-headline-label' => 'Sujet/Titre',
@@ -801,9 +776,9 @@ $messages['fr'] = array(
 	'wikia-editor-loadingStates-toVisual' => 'Basculement en mode visuel...',
 	'wikia-editor-loadingStates-saving' => 'Publication de votre modification !',
 	'wikia-editor-edittools-caption' => 'plus',
-	'wikia-editor-edittools-dialog-title' => 'Raccourcis wikitext',
+	'wikia-editor-edittools-dialog-title' => 'Raccourcis wikitexte',
 	'wikia-editor-notices-dialog-title' => 'Notifications',
-	'wikia-editor-preview-editSummary' => 'Résumé de la modification : $1',
+	'wikia-editor-preview-editSummary' => "'''Résumé de la modification :''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Vous avez effectué des modifications qui n’ont pas été publiées. Êtes-vous sûr(e) de vouloir quitter sans les publier ?',
 	'nonunicodebrowser-notice' => "'''Attention : votre navigateur n’est pas compatible Unicode.'''",
 	'rev-deleted-text-notice' => "Attention: Cette version de la page a été '''supprimée'''. [Plus d’infos]",
@@ -815,7 +790,7 @@ $messages['fr'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Note :''' vous êtes en train de recréer une page qui a été précédemment supprimée. [Plus d’infos]",
 	'restore-edits-notice' => "Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. <a class='notice-action restoreeditlink'>Supprimez mes modifications et recommencer</a>",
 	'restore-edits-diff-notice' => "Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. Toutefois, la page a été mise à jour depuis. Que souhaitez-vous faire : <a class='notice-action restoreeditlink'>Supprimer mes modifications et commencer avec la dernière version à date</a> or <a class='notice-action difflink'>Afficher une comparaison des modifications avec la dernière version à date</a>",
-	'mainpagewarning-notice' => 'En savoir plus sur [[w:c:community:Help:Main_page|la modification de la page principale.]]',
+	'mainpagewarning-notice' => "En savoir plus sur [[w:c:aide:Aide:Page d'accueil|la modification de la page d'accueil]].",
 	'explainconflict-notice' => "'''Attention !''' Quelqu’un d’autre a modifié cette page depuis que vous avez commencé à la modifier ! [Plus d’informations]",
 	'prefs-general' => 'Général',
 	'prefs-starting-an-edit' => 'Commencer à modifier',
@@ -826,11 +801,20 @@ $messages['fr'] = array(
 	'tog-editwidth' => 'Élargir la zone de modification en mode source afin de remplir la totalité de l’écran',
 	'tog-minordefault' => 'Marquer mes modifications comme « mineures » par défaut',
 	'tog-forceeditsummary' => 'M’avertir si je n’ai laissé aucun résumé de modification',
+	'editpagelayout-preview-label-desktop' => 'Bureau',
+	'editpagelayout-preview-label-mobile' => 'Mobile',
+	'editpagelayout-desc' => 'Applique la mise en page mise à jour pour les pages de modification',
+	'tog-disablesyntaxhighlighting' => 'Ne pas afficher la coloration syntaxique en mode source',
+	'wikia-editor-add-file-notice-no-wysiwyg' => '$1 a été ajouté.',
+	'wikia-editor-add-file-notice' => "$1 a été ajouté. Glissez-déposez $1 n'importe où sur la page ou placez le curseur au dessus de la miniature et cliquez sur « modifier » pour les options d'incorporation.",
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Mobile',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Tablette en mode portrait',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Bureau',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Bureau grand format',
 );
 
-/** Galician (galego)
- * @author Toliño
- */
 $messages['gl'] = array(
 	'editpagelayout-more' => 'máis',
 	'editpagelayout-less' => 'menos',
@@ -886,7 +870,7 @@ $messages['gl'] = array(
 	'wikia-editor-edittools-caption' => 'máis',
 	'wikia-editor-edittools-dialog-title' => 'Atallos de texto wiki',
 	'wikia-editor-notices-dialog-title' => 'Detalles dos avisos',
-	'wikia-editor-preview-editSummary' => 'Resumo de edición: $1',
+	'wikia-editor-preview-editSummary' => "'''Resumo de edición:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Fixo algunhas edicións que non están publicadas. Está seguro de saír sen gardalas?',
 	'nonunicodebrowser-notice' => "'''Atención: O seu navegador é compatible con Unicode.'''",
 	'rev-deleted-text-notice' => "Atención: Esta revisión da páxina foi '''borrada'''. [Máis información]",
@@ -911,9 +895,6 @@ $messages['gl'] = array(
 	'tog-forceeditsummary' => 'Avisádeme cando o campo resumo estea baleiro',
 );
 
-/** Hebrew (עברית)
- * @author שומבלע
- */
 $messages['he'] = array(
 	'editpagelayout-more' => 'עוד',
 	'editpagelayout-less' => 'פחות',
@@ -958,14 +939,14 @@ $messages['he'] = array(
 	'wikia-editor-edittools-caption' => 'עוד',
 	'wikia-editor-edittools-dialog-title' => 'קיצורי ויקיטקסט',
 	'wikia-editor-notices-dialog-title' => 'פרטי הודעה',
-	'wikia-editor-preview-editSummary' => 'תקציר עריכה: $1',
+	'wikia-editor-preview-editSummary' => "'''תקציר עריכה:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'ביצעת מספר עריכות שלא פורסמו. האם לצאת מבלי לפרסם אותן?',
 	'nonunicodebrowser-notice' => "'''אזהרה: הדפדפן שלך אינו תואם יוניקוד'''.",
-	'rev-deleted-text-notice' => "הגרסה בדף זה כבר '''נמחקה'''. [מידע נוסף]", # Fuzzy
-	'readonlywarning-notice' => "'''אזהרה: מסד הנתונים ננעל לצורך תחזוקה''' [מידע נוסף]", # Fuzzy
-	'semiprotectedpagewarning-notice' => "'''הערה:''' דף זה ננעל כך שרק משתמשים רשומים יכולים לערוך אותו. [מידע נוסף]", # Fuzzy
-	'protectedpagewarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים עם הרשאות מסוימות יכולים לערוך אותו. [מידע נוסף]", # Fuzzy
-	'titleprotectedwarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים מסוימים יכולים ליצור אותו. [מידע נוסף]", # Fuzzy
+	'rev-deleted-text-notice' => "הגרסה בדף זה כבר '''נמחקה'''. [מידע נוסף]",
+	'readonlywarning-notice' => "'''אזהרה: מסד הנתונים ננעל לצורך תחזוקה''' [מידע נוסף]",
+	'semiprotectedpagewarning-notice' => "'''הערה:''' דף זה ננעל כך שרק משתמשים רשומים יכולים לערוך אותו. [מידע נוסף]",
+	'protectedpagewarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים עם הרשאות מסוימות יכולים לערוך אותו. [מידע נוסף]",
+	'titleprotectedwarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים מסוימים יכולים ליצור אותו. [מידע נוסף]",
 	'recreate-moveddeleted-warn-notice' => "'''הערה:''' שחזרת עמוד שנמחק בעבר. [מידע נוסף]",
 	'prefs-general' => 'כללי',
 	'prefs-starting-an-edit' => 'התחלת עריכה',
@@ -978,9 +959,6 @@ $messages['he'] = array(
 	'tog-forceeditsummary' => 'הצגת אזהרה בהכנסת תקציר עריכה ריק',
 );
 
-/** Hungarian (magyar)
- * @author TK-999
- */
 $messages['hu'] = array(
 	'editpagelayout-more' => 'több',
 	'editpagelayout-less' => 'kevesebb',
@@ -1034,7 +1012,7 @@ $messages['hu'] = array(
 	'wikia-editor-edittools-caption' => 'több',
 	'wikia-editor-edittools-dialog-title' => 'Wikiszöveg parancsikonok',
 	'wikia-editor-notices-dialog-title' => 'Értesítés részletei',
-	'wikia-editor-preview-editSummary' => 'Szerkesztés összefoglalója: $1',
+	'wikia-editor-preview-editSummary' => "'''Szerkesztés összefoglalója:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Néhány el nem mentett módosítást végeztél. Biztosan mentés nélkül szeretnél távozni?',
 	'nonunicodebrowser-notice' => "'''Figyelem: a böngészõd nem Unicode-kompatibilis.'''",
 	'rev-deleted-text-notice' => "Figyelem: Az oldal ezen változatát '''törölték'''. [További információ]",
@@ -1042,7 +1020,7 @@ $messages['hu'] = array(
 	'userinvalidcssjstitle-notice' => "'''Figyelem:''' Nincs \"\$1\" felület. [További információ]",
 	'semiprotectedpagewarning-notice' => "'''Megjegyzés:''' Az oldal védelem alatt áll, csak regisztrált felhasználók szerkeszthetik. A szerkesztéshez lehet, hogy be kell lépned. [További információ]",
 	'protectedpagewarning-notice' => "'''Megjegyzés:''' Az oldal védelem alatt áll, csak adminisztrátorok szerkeszthetik. A helyi adminisztrátorok módosíthatják ezt az állapotot. [További információ]",
-	'titleprotectedwarning-notice' => "'''Note:''' Az oldal védelem alatt áll, csak adminisztrátorok hozhatják létre. A helyi adminisztrátorok módosíthatják ezt az állapotot. [További információ]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Note:''' Az oldal védelem alatt áll, csak adminisztrátorok hozhatják létre. A helyi adminisztrátorok módosíthatják ezt az állapotot. [További információ]",
 	'recreate-moveddeleted-warn-notice' => "'''Megjegyzés:''' Egy korábban már törölt oldalt fogsz újra létrehozni. [További információ]",
 	'restore-edits-notice' => "Üdv újra! Visszaállítottunk náhány általad nem mentett módosítást. <a class='notice-action restoreeditlink'>Változtatásaim törlése és új szerkesztés kezdése</a>",
 	'restore-edits-diff-notice' => "Üdv újra! Visszaállítottunk néhány általad nem mentett módosítást. Az oldal azonban változott azóta. Mit szeretnél tenni: <a class='notice-action restoreeditlink'>törölni a változtatásaidat és új szerkesztés kezdése a friss szöveggel</a> vagy <a class='notice-action difflink'>összevetni a változtatásaidat az új oldallal</a>?",
@@ -1057,9 +1035,6 @@ $messages['hu'] = array(
 	'tog-forceeditsummary' => 'Figyelmeztessen, ha nem adok meg szerkesztési összefoglalót',
 );
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'editpagelayout-more' => 'plus',
 	'editpagelayout-less' => 'minus',
@@ -1115,7 +1090,7 @@ $messages['ia'] = array(
 	'wikia-editor-edittools-caption' => 'plus',
 	'wikia-editor-edittools-dialog-title' => 'Accessos directe de wikitexto',
 	'wikia-editor-notices-dialog-title' => 'Detalios de avisos',
-	'wikia-editor-preview-editSummary' => 'Summario del modification: $1',
+	'wikia-editor-preview-editSummary' => "'''Summario del modification:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Tu ha facite modificationes non publicate. Es tu secur de voler quitar sin publicar los?',
 	'nonunicodebrowser-notice' => "'''Attention: Tu navigator non es compatibile con Unicode.'''",
 	'rev-deleted-text-notice' => "Attention: Iste version del pagina ha essite '''delite'''. [Plus info]",
@@ -1123,7 +1098,7 @@ $messages['ia'] = array(
 	'userinvalidcssjstitle-notice' => "'''Attention:''' Le apparentia \"\$1\" non existe. [Plus info]",
 	'semiprotectedpagewarning-notice' => "'''Nota:''' Iste pagina ha essite protegite de sorta que solmente usatores registrate pote modificar lo. Per favor aperi session pro modificar lo. [Plus info]",
 	'protectedpagewarning-notice' => "'''Nota:''' Iste pagina ha essite protegite de sorta que solmente administratores pote modificar lo. Administratores local pote cambiar iste stato. [Plus info]",
-	'titleprotectedwarning-notice' => "'''Nota:''' Iste pagina ha essite blocate de sorta que solmente administratores pote crear lo. Administratores local pote cambiar iste stato. [Plus info]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Nota:''' Iste pagina ha essite blocate de sorta que solmente administratores pote crear lo. Administratores local pote cambiar iste stato. [Plus info]",
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Tu es super le puncto de recrear un pagina que ha essite previemente delite. [Plus info]",
 	'restore-edits-notice' => "Benvenite retro! Nos ha restaurate alcun cambios que tu non habeva publicate. <a class='notice-action restoreeditlink'>Deler mi cambios e comenciar un nove modification</a>",
 	'restore-edits-diff-notice' => "Benvenite retro! Nos ha restaurate alcun cambiamentos que tu non habeva publicate. Nonobstante, le pagina ha essite actualisate postea. Vole tu: <a class='notice-action restoreeditlink'>Deler mi cambiamentos e comenciar con le ultime texto</a> o <a class='notice-action difflink'>Vider un comparation de cambiamentos con le ultime pagina</a>",
@@ -1138,9 +1113,6 @@ $messages['ia'] = array(
 	'tog-forceeditsummary' => 'Avisar me si io non entra un summario de modification',
 );
 
-/** Ingush (ГӀалгӀай)
- * @author Sapral Mikail
- */
 $messages['inh'] = array(
 	'editpagelayout-pageControls-changes' => 'Хувцамаш',
 	'wikia-editor-media-image' => 'Сурт',
@@ -1149,46 +1121,41 @@ $messages['inh'] = array(
 	'wikia-editor-modules-categories-title' => 'Цатегаш',
 );
 
-/** Italian (italiano)
- * @author Lexaeus 94
- * @author Minerva Titani
- * @author Viscontino
- */
 $messages['it'] = array(
-	'editpagelayout-more' => 'altro',
-	'editpagelayout-less' => 'meno',
-	'editpagelayout-helpLink-url' => 'Help:Modifica',
-	'editpagelayout-helpLink' => 'Bisogno di [[{{MediaWiki:Editpagelayout-helpLink-url}}|Aiuto?]]',
+	'editpagelayout-more' => 'mostra',
+	'editpagelayout-less' => 'nascondi',
+	'editpagelayout-helpLink-url' => 'Aiuto:Modifica',
+	'editpagelayout-helpLink' => '[[{{MediaWiki:Editpagelayout-helpLink-url/it}}|Aiuto]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notifica|Notifiche}}',
 	'editpagelayout-notificationsLink-none' => 'Notifiche',
-	'editpagelayout-edit-title' => 'Modifica il titolo',
-	'editpagelayout-edit-info' => 'Modifica info',
+	'editpagelayout-edit-title' => 'Modifica titolo',
+	'editpagelayout-edit-info' => 'Info sulla modifica',
 	'editpagelayout-diff-header-url' => 'Help:Diff',
-	'editpagelayout-diff-header' => 'Le differenze ([[{{MediaWiki:Editpagelayout-diff-header-url}}|aiutano]])',
-	'editpagelayout-myedit-header' => "Questa è la tua modifica. Copia i tuoi cambiamenti nell'area di testo qui sopra!",
+	'editpagelayout-diff-header' => 'Le differenze ([[{{MediaWiki:Editpagelayout-diff-header-url}}|aiuto]])',
+	'editpagelayout-myedit-header' => 'Questa è la tua modifica. Copiala nella finestra qui sopra!',
 	'editpagelayout-captcha-title' => 'Captcha',
-	'editpagelayout-pageControls-pageLink' => 'Ritorna alla pagina',
+	'editpagelayout-pageControls-pageLink' => 'ritorna alla pagina',
 	'editpagelayout-pageControls-minorEdit' => 'Modifica minore',
-	'editpagelayout-pageControls-summaryLabel' => 'Aggiungi una descrizione della tua modifica',
-	'editpagelayout-pageControls-back' => 'Torna alla pagina di modifica',
-	'editpagelayout-pageControls-changes' => 'Modifiche',
-	'editpagelayout-blocked-user' => 'Il tuo nome utente o indirizzo IP è stato bloccato',
+	'editpagelayout-pageControls-summaryLabel' => 'Inserisci un riassunto della modifica',
+	'editpagelayout-pageControls-back' => "Ritorna all'editor",
+	'editpagelayout-pageControls-changes' => 'Cambiamenti',
+	'editpagelayout-blocked-user' => 'Il tuo username o indirizzo IP è stato bloccato',
 	'editpagelayout-edit-summary-label' => 'Riassunto della modifica',
-	'wikia-editor-media-image' => 'Foto',
+	'wikia-editor-media-image' => 'Immagine',
 	'wikia-editor-media-gallery' => 'Galleria',
-	'wikia-editor-media-slideshow' => 'Presentazione',
+	'wikia-editor-media-slideshow' => 'Slideshow',
 	'wikia-editor-media-video' => 'Video',
 	'wikia-editor-media-mut' => 'Video',
-	'wikia-editor-media-image-tooltip' => 'Aggiungi una foto',
-	'wikia-editor-media-gallery-tooltip' => 'Aggiungi una galleria',
-	'wikia-editor-media-slideshow-tooltip' => 'Aggiungi una presentazione',
-	'wikia-editor-media-video-tooltip' => 'Aggiungi un video',
+	'wikia-editor-media-image-tooltip' => 'Inserisci Immagine',
+	'wikia-editor-media-gallery-tooltip' => 'Inserisci Galleria',
+	'wikia-editor-media-slideshow-tooltip' => 'Inserisci Slideshow',
+	'wikia-editor-media-video-tooltip' => 'Inserisci Video',
 	'wikia-editor-source-bold-tooltip' => 'Grassetto',
 	'wikia-editor-source-italic-tooltip' => 'Corsivo',
-	'wikia-editor-source-link-tooltip' => 'Aggiungi un collegamento',
+	'wikia-editor-source-link-tooltip' => 'Inserisci link',
 	'wikia-editor-modules-categories-title' => 'Categorie',
-	'wikia-editor-loadingStates-saving' => 'Pubblicazione della tua modifica',
-	'wikia-editor-edittools-caption' => 'altro',
+	'wikia-editor-loadingStates-saving' => 'Salvataggio della modifica',
+	'wikia-editor-edittools-caption' => 'mostra',
 	'wikia-editor-notices-dialog-title' => 'Dettagli della notifica',
 	'nonunicodebrowser-notice' => "'''Attenzione! Il tuo browser non supporta la codifica Unicode.'''",
 	'rev-deleted-text-notice' => "Attenzione: questa versione della voce è stata '''cancellata'''. [Maggiori informazioni]",
@@ -1196,20 +1163,56 @@ $messages['it'] = array(
 	'semiprotectedpagewarning-notice' => "'''Nota:''' questa voce è stata bloccata in modo che solo gli utenti registrati possano modificarla. Si prega di accedere per modificare.",
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' stai ricreando una voce che è stata cancellata in precedenza. [Maggiori informazioni]",
 	'prefs-general' => 'Generale',
-	'prefs-starting-an-edit' => 'Opzioni di modifica',
-	'prefs-editing-experience' => 'Opzioni di modifica avanzate',
+	'prefs-starting-an-edit' => 'Iniziare una modifica',
+	'prefs-editing-experience' => 'Opzioni di modifica',
 	'prefs-monobook-layout' => 'Solo skin Monobook',
 	'prefs-editarea-size' => 'Dimensioni della finestra di modifica (solo skin Monobook)',
 	'tog-editsection' => 'Abilita la modifica delle sezioni tramite i link di modifica',
 	'tog-editwidth' => 'Estendi la finestra di modifica in modalità Codice sorgente allo schermo intero',
 	'tog-minordefault' => 'Contrassegna di default tutte le modifiche come "minori"',
 	'tog-forceeditsummary' => 'Avvisami se lascio vuoto il riassunto della modifica',
+	'editpagelayout-preview-label-desktop' => 'Desktop',
+	'editpagelayout-preview-label-mobile' => 'Mobile',
+	'editpagelayout-pageControls-newSectionLabel' => 'Aggiungi un titolo di sezione',
+	'editpagelayout-subject-headline-label' => 'Oggetto/titolo:',
+	'protectedpagewarning-notice' => "'''Nota:''' Questa pagina è stata protetta in modo che solo gli amministratori possano modificarla. Gli amministratori locali possono cambiare questo stato. [Maggiori informazioni]",
+	'tog-disablesyntaxhighlighting' => 'Non mostrare il syntax highlighting nel codice sorgente',
+	'userinvalidcssjstitle-notice' => "'''Attenzione:''' Non esiste alcuna skin \"\$1\". [Altre info]",
+	'wikia-editor-edittools-dialog-title' => 'Scorciatoie Wikitext',
+	'wikia-editor-leaveconfirm-message' => 'Hai fatto delle modifiche che non hai salvato. Sei sicuro di voler uscire senza salvarle?',
+	'wikia-editor-loadingStates-loading' => 'Editor in caricamento',
+	'wikia-editor-loadingStates-toSource' => 'Passaggio alla modalità codice sorgente...',
+	'wikia-editor-loadingStates-toVisual' => 'Passaggio alla modalità visuale...',
+	'wikia-editor-media-slider-tooltip' => 'Inserisci Slider',
+	'wikia-editor-media-slider' => 'Slider',
+	'wikia-editor-modules-insert-title' => 'Inserisci elementi grafici',
+	'wikia-editor-modules-license-text' => '$1 Contributi con licenza $3. <a href="$2">Altri dettagli.</a>',
+	'wikia-editor-modules-templates-add-tooltip' => "Inserisci il Template '$1'",
+	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Questa azione ti farà uscire dalla pagina di modifica per creare un layout da questa pagina. Ogni modifica non salvata andrà persa.',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Crea un layout da questa pagina',
+	'wikia-editor-modules-templates-makeLayout' => 'Crea un nuovo layout da questa pagina',
+	'wikia-editor-modules-templates-otherTemplates' => 'Inserisci altri template',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lista dei template usati',
+	'wikia-editor-modules-templates-showUsedList' => 'Mostra template usati',
+	'wikia-editor-modules-templates-title' => 'Template',
+	'wikia-editor-preview-editSummary' => 'Riassunto della modifica: $1',
+	'editpagelayout-desc' => 'Applies updated layout for edit pages',
+	'wikia-editor-media-mut-tooltip' => 'Add Video (beta)',
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'titleprotectedwarning-notice' => "'''Note:''' This page has been locked so that only certain users (either admins or registered users) can create it. [More info]",
+	'restore-edits-notice' => "Welcome back! We've restored some changes you had not published. <a class='notice-action restoreeditlink'>Delete my changes and start a new edit</a>",
+	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
+	'mainpagewarning-notice' => 'Learn more about [[w:c:community:Help:Main_page|editing the main page]].',
+	'explainconflict-notice' => "'''Warning!''' Someone else has changed this page since you started editing it! [More info]",
+	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere on the page or hover over the thumbnail and click "modify" for embed options.',
+	'wikia-editor-add-file-notice-no-wysiwyg' => 'Your $1 has been added.',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Mobile',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Modalità ritratto tablet',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Desktop',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop XL',
 );
 
-/** Japanese (日本語)
- * @author Shirayuki
- * @author Tommy6
- */
 $messages['ja'] = array(
 	'editpagelayout-more' => '続き',
 	'editpagelayout-less' => '折り畳む',
@@ -1248,39 +1251,60 @@ $messages['ja'] = array(
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用しているテンプレートの一覧',
 	'wikia-editor-modules-templates-makeLayout' => 'このページから新規レイアウトを作成',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'このページからレイアウトを作成',
-	'wikia-editor-modules-license-text' => '$1 投稿は CC-BY-SA ライセンスの下に置かれます。<a href="$2">詳細情報</a>', # Fuzzy
+	'wikia-editor-modules-license-text' => '$1 投稿は $3 ライセンスのもとに置かれます。<a href="$2">詳細情報。</a>',
 	'wikia-editor-modules-insert-title' => '機能とメディアを追加',
 	'wikia-editor-modules-categories-title' => 'カテゴリ',
 	'wikia-editor-loadingStates-loading' => 'エディタを読み込んでいます',
 	'wikia-editor-loadingStates-toSource' => 'ソースモードに切り替えています',
 	'wikia-editor-loadingStates-toVisual' => 'ビジュアルモードに切り替えています',
 	'wikia-editor-loadingStates-saving' => '編集を保存しています',
-	'wikia-editor-edittools-caption' => 'ショートカットをさらに表示', # Fuzzy
+	'wikia-editor-edittools-caption' => 'ショートカットをさらに表示',
 	'wikia-editor-edittools-dialog-title' => 'ウィキテキストショートカット',
 	'wikia-editor-notices-dialog-title' => '通知の詳細',
 	'wikia-editor-preview-editSummary' => '編集内容の要約: $1',
 	'nonunicodebrowser-notice' => "'''警告:''' 使用中のブラウザがUnicodeに対応していません。",
-	'rev-deleted-text-notice' => "この版は'''削除されています'''。[詳細]", # Fuzzy
-	'readonlywarning-notice' => "'''警告:''' データベースがメンテナンスのためにロックされています。[詳細]", # Fuzzy
+	'rev-deleted-text-notice' => "この版は'''削除されています'''。[詳細]",
+	'readonlywarning-notice' => "'''警告:''' データベースがメンテナンスのためにロックされています。[詳細]",
 	'userinvalidcssjstitle-notice' => "'''警告:''' 「$1」というスキンはありません。[詳細]",
-	'semiprotectedpagewarning-notice' => "'''注意:''' このページは保護されているため、登録利用者しか編集できません。[詳細]", # Fuzzy
-	'protectedpagewarning-notice' => "'''警告:''' このページは保護されているため、管理者しか編集できません。[詳細]", # Fuzzy
-	'titleprotectedwarning-notice' => "'''警告:''' このページは保護されているため、作成には特定の権限が必要です。[詳細]", # Fuzzy
+	'semiprotectedpagewarning-notice' => "'''注意:''' このページは保護されているため、登録利用者しか編集できません。[詳細]",
+	'protectedpagewarning-notice' => "'''警告:''' このページは保護されているため、管理者しか編集できません。[詳細]",
+	'titleprotectedwarning-notice' => "'''警告:''' このページは保護されているため、作成には特定の権限が必要です。[詳細]",
 	'recreate-moveddeleted-warn-notice' => "'''注意:''' 以前に削除されたページを再作成しようとしています。[詳細]",
 	'prefs-general' => '全般',
 	'prefs-starting-an-edit' => '編集の開始',
 	'prefs-editing-experience' => '編集補助',
 	'prefs-monobook-layout' => 'MonoBook のみ',
 	'prefs-editarea-size' => '編集ウィンドウのサイズ（MonoBook のみ）',
-	'tog-editsection' => '[編集]リンクから節を編集できるようにする',
+	'tog-editsection' => '「編集」リンクから節を編集できるようにする',
 	'tog-editwidth' => 'ソースモード時の編集ボックスを画面いっぱいに広げる',
 	'tog-minordefault' => '細部の編集を既定でチェックする',
 	'tog-forceeditsummary' => '要約欄が空欄の場合に警告する',
+	'editpagelayout-preview-label-desktop' => 'PC',
+	'editpagelayout-preview-label-mobile' => 'モバイル',
+	'mainpagewarning-notice' => '[[w:c:ja.community:ヘルプ:メインページ|メインページの編集]]についてもっと詳しく知る。',
+	'tog-disablesyntaxhighlighting' => 'ソースモードでの編集時シンタックスハイライトを使わない',
+	'wikia-editor-add-file-notice-no-wysiwyg' => '$1 が追加されました。',
+	'wikia-editor-add-file-notice' => '$1 が追加されました。 $1 をページの任意の場所にドラッグ＆ドロップするか、サムネイルの上にマウスカーソルを載せて埋め込みオプションの「修正」(modify) をクリックしてください。',
+	'wikia-editor-leaveconfirm-message' => 'まだ公開されていない編集があります。本当にその編集を公開しないまま離れますか？',
+	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'これは編集ページから離れてこのページのレイアウトを作成します。ただし、保存されていない編集は失われます。',
+	'editpagelayout-desc' => '編集ページの更新されたレイアウトを適用します',
+	'editpagelayout-edit-title' => 'タイトルを編集',
+	'editpagelayout-edit-info' => '情報を編集',
+	'editpagelayout-diff-header-url' => 'Help:差分',
+	'editpagelayout-diff-header' => '差分（[[{{MediaWiki:Editpagelayout-diff-header-url}}|ヘルプ]]）',
+	'editpagelayout-myedit-header' => 'あなたが行った編集です。変更をコピーして上のボックスに貼り付けてください。',
+	'wikia-editor-media-mut-tooltip' => 'ビデオを追加 (ベータ)',
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'restore-edits-notice' => "あなたの未公開の変更を復元しました。<a class='notice-action restoreeditlink'>変更を破棄して新しい編集を開始</a>",
+	'restore-edits-diff-notice' => "あなたの未公開の変更を復元しました。ただし、その後ページが更新されています。<a class='notice-action restoreeditlink'>変更を破棄して最新のテキストで編集を開始</a>しますか、それとも<a class='notice-action difflink'>最新のページと変更を比較</a>しますか？",
+	'explainconflict-notice' => "'''警告''' あなたが編集を開始した後に、別のユーザーがこのページに変更を加えました。[詳細]",
+	'editpagelayout-preview-dropdown-item-mobile' => 'モバイル',
+	'editpagelayout-preview-dropdown-item-tablet' => 'タブレットのポートレート',
+	'editpagelayout-preview-dropdown-item-desktop' => 'PC',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'デスクトップXL',
 );
 
-/** Khmer (ភាសាខ្មែរ)
- * @author វ័ណថារិទ្ធ
- */
 $messages['km'] = array(
 	'editpagelayout-more' => 'បន្ថែម',
 	'editpagelayout-less' => 'តិចជាងនេះ',
@@ -1294,11 +1318,6 @@ $messages['km'] = array(
 	'prefs-general' => 'ទូទៅ​',
 );
 
-/** Korean (한국어)
- * @author Freebiekr
- * @author Infinity
- * @author 아라
- */
 $messages['ko'] = array(
 	'editpagelayout-more' => '더 보기',
 	'editpagelayout-less' => '간단히',
@@ -1306,10 +1325,10 @@ $messages['ko'] = array(
 	'editpagelayout-helpLink' => '[[{{MediaWiki:Editpagelayout-helpLink-url}}|도움]]이 필요하신가요?',
 	'editpagelayout-notificationsLink' => '<span>$1</span> 알림',
 	'editpagelayout-notificationsLink-none' => '알림',
-	'editpagelayout-edit-title' => '제목 편집',
-	'editpagelayout-edit-info' => '설명 편집',
+	'editpagelayout-edit-title' => '제목 수정',
+	'editpagelayout-edit-info' => '편집 정보',
 	'editpagelayout-diff-header-url' => 'Help:비교',
-	'editpagelayout-diff-header' => '차이점 ([[{{MediaWiki:Editpagelayout-diff-header-url}}|도움말]])',
+	'editpagelayout-diff-header' => '차이 보기 ([[{{MediaWiki:Editpagelayout-diff-header-url}}|도움말]])',
 	'editpagelayout-myedit-header' => '내 편집입니다. 위 상자에 바뀜을 복사하세요!',
 	'editpagelayout-captcha-title' => '보안 문자',
 	'editpagelayout-pageControls-pageLink' => '문서로 돌아가기',
@@ -1318,7 +1337,7 @@ $messages['ko'] = array(
 	'editpagelayout-pageControls-newSectionLabel' => '문단 제목 넣기',
 	'editpagelayout-pageControls-back' => '에디터로 돌아가기',
 	'editpagelayout-pageControls-changes' => '차이',
-	'editpagelayout-blocked-user' => '자신의 사용자 이름이나 IP 주소가 차단되어 있습니다.',
+	'editpagelayout-blocked-user' => '차단된 사용자 계정 또는 IP 주소입니다.',
 	'editpagelayout-edit-summary-label' => '편집 요약',
 	'editpagelayout-subject-headline-label' => '주제/제목:',
 	'wikia-editor-media-image' => '그림',
@@ -1326,26 +1345,26 @@ $messages['ko'] = array(
 	'wikia-editor-media-slideshow' => '슬라이드 쇼',
 	'wikia-editor-media-slider' => '슬라이더',
 	'wikia-editor-media-video' => '동영상',
-	'wikia-editor-media-image-tooltip' => '사진 추가',
-	'wikia-editor-media-gallery-tooltip' => '그림 방 추가',
+	'wikia-editor-media-image-tooltip' => '그림 추가',
+	'wikia-editor-media-gallery-tooltip' => '갤러리 추가',
 	'wikia-editor-media-slideshow-tooltip' => '슬라이드 쇼 추가',
 	'wikia-editor-media-slider-tooltip' => '슬라이더 추가',
-	'wikia-editor-media-video-tooltip' => '비디오 추가',
-	'wikia-editor-source-bold-tooltip' => '굵은 글씨',
-	'wikia-editor-source-italic-tooltip' => '기울인 글씨',
+	'wikia-editor-media-video-tooltip' => '동영상 추가',
+	'wikia-editor-source-bold-tooltip' => '굵게',
+	'wikia-editor-source-italic-tooltip' => '이탤릭',
 	'wikia-editor-source-link-tooltip' => '링크 추가',
 	'wikia-editor-modules-templates-title' => '틀',
-	'wikia-editor-modules-templates-add-tooltip' => '"$1" 틀 추가',
+	'wikia-editor-modules-templates-add-tooltip' => "'$1' 틀 삽입",
 	'wikia-editor-modules-templates-otherTemplates' => '다른 틀 삽입',
 	'wikia-editor-modules-templates-showUsedList' => '사용중인 틀 목록 보기',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => '사용중인 틀 목록',
 	'wikia-editor-modules-templates-makeLayout' => '이 문서에서 새 레이아웃 만들기',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => '이 문서로 새 레이아웃 만들기',
 	'wikia-editor-modules-templates-makeLayout-confirmation-text' => '레이아웃을 만들기 위해 이 페이지를 떠납니다. 저장되지 않은 편집을 잃을 수 있습니다.',
-	'wikia-editor-modules-license-text' => '$1 기여한 것에는 $3 라이선스가 부여됩니다. <a href="$2">자세히 보기</a>',
+	'wikia-editor-modules-license-text' => '$1 기여한 내용은 $3 라이선스로 배포됩니다. <a href="$2">자세히 보기</a>',
 	'wikia-editor-modules-insert-title' => '기능 및 미디어 추가',
 	'wikia-editor-modules-categories-title' => '분류',
-	'wikia-editor-loadingStates-loading' => '편집기 불러오기',
+	'wikia-editor-loadingStates-loading' => '편집기 불러오는 중...',
 	'wikia-editor-loadingStates-toSource' => '소스 모드로 전환하는 중...',
 	'wikia-editor-loadingStates-toVisual' => '에디터 모드로 전환하는 중...',
 	'wikia-editor-loadingStates-saving' => '편집을 저장하는 중...',
@@ -1353,19 +1372,19 @@ $messages['ko'] = array(
 	'wikia-editor-edittools-dialog-title' => '위키 문법 단축',
 	'wikia-editor-notices-dialog-title' => '알림 상세 정보',
 	'wikia-editor-preview-editSummary' => '편집 요약: $1',
-	'wikia-editor-leaveconfirm-message' => '편집한 것을 게시하지 않았습니다.  그냥  종료하시겠습니까?',
+	'wikia-editor-leaveconfirm-message' => '아직 저장하지 않은 내용이 있습니다. 정말로 이 페이지를 벗어나시겠습니까?',
 	'nonunicodebrowser-notice' => "'''경고: 사용하시고 계신 웹 브라우저는 유니코드를 완벽하게 지원하지 않습니다.'''",
 	'rev-deleted-text-notice' => "경고: 이 문서 개정판은 '''삭제'''되었습니다.  [자세한 정보]",
 	'readonlywarning-notice' => "'''경고: 데이터베이스가 서버 관리 작업 때문에 잠겨 있습니다.''' 이 작업이 끝나면 편집할 수 있을 것입니다. [자세한 정보]",
 	'userinvalidcssjstitle-notice' => "'''경고:''' \"\$1\"(이)라는 이름을 가진 스킨은 존재하지 않습니다. [상세 정보]",
-	'semiprotectedpagewarning-notice' => "'''알림:''' 이 문서는 등록된 사용자만 편집할 수 있도록 잠겨 있습니다.  로그인하여 편집하십시오. [자세한 정보]",
+	'semiprotectedpagewarning-notice' => "'''알림:''' 이 문서는 등록된 사용자만 편집할 수 있도록 잠겨 있습니다. 로그인한 상태에서만 편집이 가능합니다. [자세한 정보]",
 	'protectedpagewarning-notice' => "'''알림:''' 이 문서는 관리자만 편집할 수 있도록 잠겨 있습니다. 여기 관리자가 이 설정을 바꿀 수 있습니다. [자세한 정보]",
-	'titleprotectedwarning-notice' => "'''알림:''' 이 문서는 관리자만 만들 수 있도록 잠겨 있습니다. 여기 관리자가 이 설정을 바꿀 수 있습니다. [자세한 정보]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''알림:''' 이 문서는 관리자만 만들 수 있도록 잠겨 있습니다. 여기 관리자가 이 설정을 바꿀 수 있습니다. [자세한 정보]",
 	'recreate-moveddeleted-warn-notice' => "'''알림:''' 이전에 삭제된 문서를 다시 만들려고 합니다. [상세 정보]",
-	'restore-edits-notice' => "돌아왔습니다! 당신이 편집한 후에 게시하지 않은 것을 복구했습니다. <a class='notice-action restoreeditlink'>자신이 바꾼 것을 지우고 새로 편집하십시오</a>",
-	'restore-edits-diff-notice' => "돌아왔습니다! 당신이 편집한 후에 게시하지 않은 것을 복구했습니다. 그런데 문서가 그 이후에 업데이트되었습니다. 다음 둘 중에 선택하십시오: <a class='notice-action restoreeditlink'>자신이 바꾼 것을 지우고 새로 편집합니다</a> 또는 <a class='notice-action difflink'>최신판과 비교합니다</a>",
+	'restore-edits-notice' => "지난번에 저장하지 않은 편집 내역을 복구했습니다. <a class='notice-action restoreeditlink'>복구된 내용을 지우고 새로 편집하기</a>",
+	'restore-edits-diff-notice' => "지난번에 저장하지 않은 편집 내역을 복구했습니다. 그러나 그 이후로 문서가 바뀌었다는 점에 유의해주세요. <a class='notice-action restoreeditlink'>복구된 내용을 지우고 최신 판에서 편집</a>하거나 <a class='notice-action difflink'>최신 판과의 차이를 비교</a>할 수 있습니다.",
 	'prefs-general' => '일반',
-	'prefs-starting-an-edit' => '편집 시작',
+	'prefs-starting-an-edit' => '편집 설정',
 	'prefs-editing-experience' => '편집기 설정',
 	'prefs-monobook-layout' => '모노북 스킨 전용',
 	'prefs-editarea-size' => '편집 창 크기 (모노북 스킨 전용)',
@@ -1373,11 +1392,14 @@ $messages['ko'] = array(
 	'tog-editwidth' => '소스 모드 사용시에 전체 화면으로 편집하기',
 	'tog-minordefault' => '‘사소한 편집’을 기본적으로 선택하기',
 	'tog-forceeditsummary' => '편집 요약을 쓰지 않았을 때 알려주기',
+	'editpagelayout-preview-label-desktop' => '데스크톱',
+	'editpagelayout-preview-label-mobile' => '모바일',
+	'mainpagewarning-notice' => '대문 편집에 대한 더 많은 정보는 이곳을 참고하세요: [[w:c:ko.community:도움말:대문|도움말:대문]]',
+	'tog-disablesyntaxhighlighting' => '소스 모드에서 구문 강조 기능 사용하지 않기',
+	'wikia-editor-media-mut-tooltip' => '동영상 추가',
+	'wikia-editor-media-mut' => '동영상',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = array(
 	'editpagelayout-more' => 'méi',
 	'editpagelayout-less' => 'manner',
@@ -1396,9 +1418,6 @@ $messages['lb'] = array(
 	'tog-forceeditsummary' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
 );
 
-/** Lithuanian (lietuvių)
- * @author Eitvys200
- */
 $messages['lt'] = array(
 	'editpagelayout-more' => 'daugiau',
 	'editpagelayout-less' => 'mažiau',
@@ -1418,9 +1437,6 @@ $messages['lt'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Pridėti Skaidrių peržiūrą',
 );
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = array(
 	'editpagelayout-more' => 'повеќе',
 	'editpagelayout-less' => 'помалку',
@@ -1476,7 +1492,7 @@ $messages['mk'] = array(
 	'wikia-editor-edittools-caption' => 'повеќе',
 	'wikia-editor-edittools-dialog-title' => 'Кратенки за викитекст',
 	'wikia-editor-notices-dialog-title' => 'Подробно за известувањата',
-	'wikia-editor-preview-editSummary' => 'Опис на уредувањето: $1',
+	'wikia-editor-preview-editSummary' => "'''Опис на уредувањето:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Извршивте уредувања, но не ги објавивте. Дали сте сигурни дека сакате да си заминете без да ги објавите?',
 	'nonunicodebrowser-notice' => "'''Предупредување: Вашиот прелистувач не поддржува Уникод.'''",
 	'rev-deleted-text-notice' => "Предупредување: Оваа ревизија на страницата е '''избришана'''. [Повеќе инфо]",
@@ -1501,9 +1517,6 @@ $messages['mk'] = array(
 	'tog-forceeditsummary' => 'Извести ме кога нема опис на промените',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = array(
 	'editpagelayout-more' => 'lagi',
 	'editpagelayout-less' => 'kurang',
@@ -1559,7 +1572,7 @@ $messages['ms'] = array(
 	'wikia-editor-edittools-caption' => 'lagi',
 	'wikia-editor-edittools-dialog-title' => 'Kekunci pintas teks wiki',
 	'wikia-editor-notices-dialog-title' => 'Butiran pemberitahuan',
-	'wikia-editor-preview-editSummary' => 'Ringkasan Suntingan: $1',
+	'wikia-editor-preview-editSummary' => "'''Ringkasan Suntingan:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Anda telah membuat beberapa suntingan yang belum diterbitkan. Adakah anda benar-benar mahu keluar tanpa menerbitkannya?',
 	'nonunicodebrowser-notice' => "'''Amaran: Pelayar anda tidak mematuhi Unicode.'''",
 	'rev-deleted-text-notice' => "Amaran: Semakan laman ini telah '''dihapuskan'''. [Maklumat lanjut]",
@@ -1584,11 +1597,6 @@ $messages['ms'] = array(
 	'tog-forceeditsummary' => 'Ingatkan saya jika ringkasan suntingan kosong',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- * @author EvenT
- * @author Nghtwlkr
- */
 $messages['nb'] = array(
 	'editpagelayout-more' => 'mer',
 	'editpagelayout-less' => 'mindre',
@@ -1644,7 +1652,7 @@ $messages['nb'] = array(
 	'wikia-editor-edittools-caption' => 'mer',
 	'wikia-editor-edittools-dialog-title' => 'Wikitekst-snarveier',
 	'wikia-editor-notices-dialog-title' => 'Legger merke til detaljer',
-	'wikia-editor-preview-editSummary' => 'Redigeringssammendrag: $1',
+	'wikia-editor-preview-editSummary' => "'''Redigeringssammendrag:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Du har gjort noen upubliserte redigeringer. Er du sikker på at du vil forlate siden uten å publisere dem?',
 	'nonunicodebrowser-notice' => "'''Advarsel: Nettleseren din er ikke Unicode-kompatibel.'''",
 	'rev-deleted-text-notice' => "Advarsel: Denne revisjonen har blitt '''slettet'''. [Mer info]",
@@ -1652,11 +1660,11 @@ $messages['nb'] = array(
 	'userinvalidcssjstitle-notice' => "'''Advarsel:''' Det er ikke noe utseende ved navn «$1». [Mer info]",
 	'semiprotectedpagewarning-notice' => "'''Merk:''' Denne siden har blitt låst slik at kun registrerte brukere kan redigere den. Vennligst logg inn for å redigere. [Mer info]",
 	'protectedpagewarning-notice' => "'''Merk:''' Denne siden har blitt låst slik at kun administratorer kan redigere den. Lokale administratorer kan endre denne statusen. [Mer info]",
-	'titleprotectedwarning-notice' => "'''Merk:''' Denne siden har blitt låst slik at kun administratorer kan opprette den. Lokale administratorer kan endre denne statusen. [Mer info]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Merk:''' Denne siden har blitt låst slik at kun administratorer kan opprette den. Lokale administratorer kan endre denne statusen. [Mer info]",
 	'recreate-moveddeleted-warn-notice' => "'''Merk:''' Du er i ferd med å opprette en side som tidligere har blitt slettet. [Mer info]",
 	'restore-edits-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. <a class='notice-action restoreeditlink'>Slett endringene mine og begynn å redigere på nytt</a>",
 	'restore-edits-diff-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. Siden har imidlertid blirr oppdatert siden den gang. Ønsker du å: <a class='notice-action restoreeditlink'>Slette endringene mine og begynne med den siste teksten</a> eller <a class='notice-action difflink'>Vise en sammenligning av endringer med den siste siden</a>",
-	'mainpagewarning-notice' => 'Her kan du lese om [[w:c:Community:Help:Main_page|redigering av hovedsiden.]]', # Fuzzy
+	'mainpagewarning-notice' => 'Her kan du lese om [[w:c:Community:Help:Main_page|redigering av hovedsiden.]]',
 	'prefs-general' => 'Generelt',
 	'prefs-starting-an-edit' => 'Starter en redigering',
 	'prefs-editing-experience' => 'Redigeringserfaring',
@@ -1668,13 +1676,6 @@ $messages['nb'] = array(
 	'tog-forceeditsummary' => 'Advar meg hvis jeg oppgir en blank redigeringsforklaring.',
 );
 
-/** Dutch (Nederlands)
- * @author AvatarTeam
- * @author McDutchie
- * @author SPQRobin
- * @author Siebrand
- * @author Tjcool007
- */
 $messages['nl'] = array(
 	'editpagelayout-more' => 'meer',
 	'editpagelayout-less' => 'minder',
@@ -1730,7 +1731,7 @@ $messages['nl'] = array(
 	'wikia-editor-edittools-caption' => 'meer',
 	'wikia-editor-edittools-dialog-title' => 'Sneltoetsen voor wikitekst',
 	'wikia-editor-notices-dialog-title' => 'Detailsgegevens over mededelingen',
-	'wikia-editor-preview-editSummary' => 'Bewerkingssamenvatting: $1',
+	'wikia-editor-preview-editSummary' => "'''Bewerkingssamenvatting:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'U hebt een aantal ongepubliceerde wijzigingen aangebracht. Weet u zeker dat u de pagina wilt verlaten zonder ze te publiceren?',
 	'nonunicodebrowser-notice' => "'''Waarschuwing: Uw browser is niet compatibel met Unicode.'''",
 	'rev-deleted-text-notice' => "Waarschuwing: Deze paginaversie is '''verwijderd'''. [Meer informatie]",
@@ -1755,11 +1756,6 @@ $messages['nl'] = array(
 	'tog-forceeditsummary' => 'Een melding geven bij een lege bewerkingssamenvatting',
 );
 
-/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
- * @author MarkvA
- * @author McDutchie
- * @author Siebrand
- */
 $messages['nl-informal'] = array(
 	'editpagelayout-myedit-header' => 'Dit is jouw bewerking. Kopieer je wijzigingen naar het bovenstaande vak!',
 	'editpagelayout-pageControls-summaryLabel' => 'Een samenvatting van je bewerking toevoegen',
@@ -1769,12 +1765,6 @@ $messages['nl-informal'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Let op:''' Je maakt een pagina opnieuw aan die voorheen is verwijderd. [Meer info]",
 );
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Cloudissimo
- * @author Sovq
- * @author Sp5uhe
- */
 $messages['pl'] = array(
 	'editpagelayout-more' => 'więcej',
 	'editpagelayout-less' => 'mniej',
@@ -1830,7 +1820,7 @@ $messages['pl'] = array(
 	'wikia-editor-edittools-caption' => 'więcej',
 	'wikia-editor-edittools-dialog-title' => 'Skróty wikitekstu',
 	'wikia-editor-notices-dialog-title' => 'Szczegóły powiadomienia',
-	'wikia-editor-preview-editSummary' => 'Opis zmian: $1',
+	'wikia-editor-preview-editSummary' => "'''Opis zmian:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Wykonano edycje na tej stronie. Czy na pewno chcesz opuścić edytor bez zapisania zmian?',
 	'nonunicodebrowser-notice' => "'''Uwaga: Twoja przeglądarka nie jest zgodna ze standardem Unicode.'''",
 	'rev-deleted-text-notice' => "Ostrzeżenie: Ta wersja strony została '''usunięta'''. [Więcej informacji]",
@@ -1842,22 +1832,31 @@ $messages['pl'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Uwaga:''' Odtwarzasz stronę, która została wcześniej usunięta. [Więcej informacji]",
 	'restore-edits-notice' => "Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. <a class='notice-action restoreeditlink'>Anuluj moje zmiany i rozpocznij edytowanie na nowo</a>",
 	'restore-edits-diff-notice' => "Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. Jednak strona była edytowana w tym czasie. <a class='notice-action restoreeditlink'>Anulować moje zmiany i rozpocząć edytowanie na nowo w obecnej wersji</a> czy <a class='notice-action difflink'>zobaczyć porównanie zmian z najnowszą wersją</a>.",
-	'mainpagewarning-notice' => 'Dowiedz się więcej o [[w:c:community:Help:Main_page|edytowaniu strony głównej.]]',
+	'mainpagewarning-notice' => 'Dowiedz się więcej o [[w:c:spolecznosc:Pomoc:Strona_główna|edytowaniu strony głównej.]]',
 	'explainconflict-notice' => "'''Uwaga!''' Ktoś inny zmienił tą stronę od czasu rozpoczęcia edycji. [Więcej]",
 	'prefs-general' => 'Ogólne',
-	'prefs-starting-an-edit' => 'Rozpoczęcie edytowania',
-	'prefs-editing-experience' => 'Doświadczenie edytowania',
+	'prefs-starting-an-edit' => 'Rozpoczynanie edycji',
+	'prefs-editing-experience' => 'Doświadczenie',
 	'prefs-monobook-layout' => 'Tylko w skórce Monobook',
 	'prefs-editarea-size' => 'Rozmiar okna edycji (tylko MonoBook)',
 	'tog-editsection' => 'Włącz edycję sekcji poprzez linki edycji',
 	'tog-editwidth' => 'Rozszerz ekran trybu źródłowego na cały ekran',
 	'tog-minordefault' => 'Wszystkie zmiany oznaczaj domyślnie jako drobne',
 	'tog-forceeditsummary' => 'Poinformuj mnie gdy zostawię puste pole opisu zmian',
+	'editpagelayout-preview-label-desktop' => 'Komputer',
+	'editpagelayout-preview-label-mobile' => 'Mobilny',
+	'tog-disablesyntaxhighlighting' => 'Nie podświetlaj składni wikitekstu w trybie źródłowym',
+	'editpagelayout-desc' => 'Applies updated layout for edit pages',
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere on the page or hover over the thumbnail and click "modify" for embed options.',
+	'wikia-editor-add-file-notice-no-wysiwyg' => 'Your $1 has been added.',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Skórka mobilna',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Tablet w pionie',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Monitor',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Monitor XL',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'editpagelayout-more' => 'ëd pi',
 	'editpagelayout-less' => 'men',
@@ -1913,7 +1912,7 @@ $messages['pms'] = array(
 	'wikia-editor-edittools-caption' => 'ëd pi',
 	'wikia-editor-edittools-dialog-title' => 'Scurse wikitext',
 	'wikia-editor-notices-dialog-title' => 'Detaj ëd notìfica',
-	'wikia-editor-preview-editSummary' => 'Resumé ëd Modìfica: $1',
+	'wikia-editor-preview-editSummary' => "'''Resumé ëd Modìfica:''' $1",
 	'wikia-editor-leaveconfirm-message' => "It l'has fàit quaich modìfiche pa publicà. It ses-to sigur ëd vorej-je lassé sensa publicheje?",
 	'nonunicodebrowser-notice' => "'''Avis: Tà navigador a l'é pa compatìbil Unicode.'''",
 	'rev-deleted-text-notice' => "Avis: Sta revision ëd pagina a l'é stàita '''scanselà'''. [Për savèjne ëd pi]",
@@ -1921,7 +1920,7 @@ $messages['pms'] = array(
 	'userinvalidcssjstitle-notice' => "'''Avis:''' A-i é gnun skin \"\$1\". [Për savèjne ëd pi]",
 	'semiprotectedpagewarning-notice' => "'''Nòta:''' Sta pagina a l'é stàita blocà parèj mach j'utent registrà a peulo modifichela. It deuve intré për modifiché. [Për savèjne ëd pi]",
 	'protectedpagewarning-notice' => "'''Nòta:''' Sta pagina a l'é stàita blocà parèj mach j'aministrador a peulo modifichela. J'aministrador locaj a peulo cangé sto stat. [Për savèjne ëd pi]",
-	'titleprotectedwarning-notice' => "'''Nòta:''' Sta pagina a l'é stàita blocà parèj mach j'aministrador a peulo creela. J'aministrador locaj a peulo cangé sto stat. [Për savèjne ëd pi]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Nòta:''' Sta pagina a l'é stàita blocà parèj mach j'aministrador a peulo creela. J'aministrador locaj a peulo cangé sto stat. [Për savèjne ëd pi]",
 	'recreate-moveddeleted-warn-notice' => "'''Nòta:''' It të stas ricreand na pagina che a l'é stàita scanselà an precedensa. [Për savèjne ëd pi]",
 	'restore-edits-notice' => "Bin ëvnù andré! I l'oma ripristinà quaich cambi che it l'has pa publicà. <a class='notice-action restoreeditlink'>Scansela ij mè cambi e ancamin-a na neuva modìfica.</a>",
 	'restore-edits-diff-notice' => "Bin ëvnù andré! I l'oma ripristinà quaich cambi che it l'has pa publicà. An tùit ij cas, le pagina a l'é stàita agiornà da antlora. It veus-to: a class='notice-action restoreeditlink'>Scanselé ij mè cambi e ancaminé con l'ùltim test</a> o <a class='notice-action difflink'>Vardé na comparassion dij cambi con l'ùltima pagina</a>",
@@ -1938,9 +1937,6 @@ $messages['pms'] = array(
 	'tog-forceeditsummary' => 'Ciam-me se i lasso un somari dla modìfica bianch',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'editpagelayout-more' => 'نور مالومات',
 	'editpagelayout-notificationsLink-none' => 'يادګيرنې',
@@ -1963,99 +1959,7 @@ $messages['ps'] = array(
 	'prefs-general' => 'ټولګړی',
 );
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- * @author Malafaya
- * @author Rhaijin
- * @author SandroHc
- */
 $messages['pt'] = array(
-	'editpagelayout-more' => 'mais',
-	'editpagelayout-less' => 'menos',
-	'editpagelayout-helpLink-url' => 'Help:Editar',
-	'editpagelayout-helpLink' => 'Precisa de [[{{MediaWiki:Editpagelayout-helpLink-url}}|ajuda?]]',
-	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notificação|Notificações}}',
-	'editpagelayout-notificationsLink-none' => 'Notificações',
-	'editpagelayout-edit-title' => 'Editar título',
-	'editpagelayout-edit-info' => 'Editar informação',
-	'editpagelayout-diff-header-url' => 'Help:Diferenças',
-	'editpagelayout-diff-header' => 'As diferenças ([[{{MediaWiki:Editpagelayout-diff-header-url}}|ajuda]])',
-	'editpagelayout-myedit-header' => 'Esta é a sua edição. Copie as alterações para a caixa acima!',
-	'editpagelayout-captcha-title' => 'Captcha',
-	'editpagelayout-pageControls-pageLink' => 'voltar à página',
-	'editpagelayout-pageControls-minorEdit' => 'Edição menor',
-	'editpagelayout-pageControls-summaryLabel' => 'Adicionar um resumo da edição',
-	'editpagelayout-pageControls-newSectionLabel' => 'Adicionar o cabeçalho da secção',
-	'editpagelayout-pageControls-back' => 'Voltar ao editor',
-	'editpagelayout-pageControls-changes' => 'Alterações',
-	'editpagelayout-blocked-user' => 'O seu nome de utilizador, ou o endereço IP, foi bloqueado',
-	'editpagelayout-edit-summary-label' => 'Editar Sumário',
-	'editpagelayout-subject-headline-label' => 'Assunto/cabeçalho:',
-	'wikia-editor-media-image' => 'Fotografia',
-	'wikia-editor-media-gallery' => 'Galeria',
-	'wikia-editor-media-slideshow' => 'Apresentação de Diapositivos',
-	'wikia-editor-media-slider' => 'Apresentador de Diapositivos',
-	'wikia-editor-media-video' => 'Vídeo',
-	'wikia-editor-media-mut' => 'Vídeo',
-	'wikia-editor-media-image-tooltip' => 'Adicionar Fotografia',
-	'wikia-editor-media-gallery-tooltip' => 'Adicionar Galeria',
-	'wikia-editor-media-slideshow-tooltip' => 'Adicionar Apresentação de Diapositivos',
-	'wikia-editor-media-slider-tooltip' => 'Adicionar Apresentador de Diapositivos',
-	'wikia-editor-media-video-tooltip' => 'Adicionar Vídeo',
-	'wikia-editor-media-mut-tooltip' => 'Adicionar Vídeo (beta)',
-	'wikia-editor-source-bold-tooltip' => 'Negrito',
-	'wikia-editor-source-italic-tooltip' => 'Itálico',
-	'wikia-editor-source-link-tooltip' => 'Adicionar link',
-	'wikia-editor-modules-templates-title' => 'Predefinições',
-	'wikia-editor-modules-templates-add-tooltip' => "Adicionar Predefinição '$1'",
-	'wikia-editor-modules-templates-otherTemplates' => 'Adicionar outras predefinições',
-	'wikia-editor-modules-templates-showUsedList' => 'Mostrar lista das predefinições usadas',
-	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lista das predefinições usadas',
-	'wikia-editor-modules-templates-makeLayout' => 'Criar uma composição nova para esta página',
-	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Criar uma composição nova a partir desta página',
-	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Isto irá conduzi-lo para fora da página de edição, para criar uma composição a partir desta página. Todas as edições que não foram gravadas serão perdidas.',
-	'wikia-editor-modules-license-text' => '$1 Contribuições licenciadas como $3. <a href="$2">Mais detalhes.</a>',
-	'wikia-editor-modules-insert-title' => 'Adicionar características e ficheiros multimédia',
-	'wikia-editor-modules-categories-title' => 'Categorias',
-	'wikia-editor-loadingStates-loading' => 'A carregar o editor...',
-	'wikia-editor-loadingStates-toSource' => 'A mudar para o modo de código...',
-	'wikia-editor-loadingStates-toVisual' => 'A mudar para o modo visual...',
-	'wikia-editor-loadingStates-saving' => 'A publicar a sua edição!',
-	'wikia-editor-edittools-caption' => 'mais',
-	'wikia-editor-edittools-dialog-title' => 'Atalhos para a notação wiki',
-	'wikia-editor-notices-dialog-title' => 'Detalhes de avisos',
-	'wikia-editor-preview-editSummary' => 'Editar Sumário: $1',
-	'wikia-editor-leaveconfirm-message' => 'Você fez algumas alterações não publicadas. Você tem a certeza que quer sair sem as publicar?',
-	'nonunicodebrowser-notice' => "'''Aviso: O seu browser não é compatível com o Unicode.'''",
-	'rev-deleted-text-notice' => "Esta revisão foi '''eliminada'''. [Mais informações]",
-	'readonlywarning-notice' => "'''Aviso: A base de dados está bloqueada para manutenção.''' As edições irão voltar ao normal assim que a manutenção acabar [Mais informações]",
-	'userinvalidcssjstitle-notice' => "'''Aviso:''' O tema \"\$1\" não existe. [Mais informações]",
-	'semiprotectedpagewarning-notice' => "'''Nota:''' Esta página foi protegida para só poder ser editada por utilizadores registados. [Mais informações]",
-	'protectedpagewarning-notice' => "'''Aviso:''' Esta página foi protegida para só poder ser editada por administradores. [Mais informações]",
-	'titleprotectedwarning-notice' => "'''Nota:''' Esta página foi protegida para que só administradores a possam criar. Os administradores locais podem alterar este estado. [Mais informações]", # Fuzzy
-	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Está a recriar uma página que já tinha sido eliminada. [Mais informações]",
-	'restore-edits-notice' => "Bem vindo de volta! Restauramos algumas da alterações que você não publicou. <a class='notice-action restoreeditlink'>Eliminar as minhas alterações e começar uma nova edição</a>",
-	'restore-edits-diff-notice' => "Bem vindo de volta! Restauramos algumas da alterações que você não publicou. No entanto, a página foi atualizada desde essa altura. Você gostaria de: <a class='notice-action restoreeditlink'>Eliminar as minhas alterações e começar com o último texto</a> ou <a class='notice-action difflink'>Comparar as alterações com o último texto</a>",
-	'prefs-general' => 'Geral',
-	'prefs-starting-an-edit' => 'Começar uma edição',
-	'prefs-editing-experience' => 'Experiência de edição',
-	'prefs-monobook-layout' => 'Composição só para o tema MonoBook',
-	'prefs-editarea-size' => 'Tamanho da janela de edição (só para o tema MonoBook)',
-	'tog-editsection' => 'Possibilitar a edição de secções com links [editar]',
-	'tog-editwidth' => 'Aumentar a caixa de edição no modo de código para preenchar todo o ecrã',
-	'tog-minordefault' => 'Por omissão, marcar todas as edições como menores',
-	'tog-forceeditsummary' => 'Avisar-me se deixar o resumo da edição vazio',
-);
-
-/** Brazilian Portuguese (português do Brasil)
- * @author Caio1478
- * @author JM Pessanha
- * @author Luckas Blade
- * @author TheGabrielZaum
- * @author Tuliouel
- * @author 555
- */
-$messages['pt-br'] = array(
 	'editpagelayout-more' => 'mais',
 	'editpagelayout-less' => 'menos',
 	'editpagelayout-helpLink-url' => 'Help:Editando',
@@ -2110,7 +2014,7 @@ $messages['pt-br'] = array(
 	'wikia-editor-edittools-caption' => 'mais',
 	'wikia-editor-edittools-dialog-title' => 'Atalhos de Wikitexto',
 	'wikia-editor-notices-dialog-title' => 'Detalhes das notificações',
-	'wikia-editor-preview-editSummary' => 'Editar sumário: $1',
+	'wikia-editor-preview-editSummary' => "'''Editar sumário:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Você fez edições que não foram publicadas. Você tem certeza que você quer sair sem publicá-las?',
 	'nonunicodebrowser-notice' => "'''Aviso: Seu navegador não é compatível com o Unicode.'''",
 	'rev-deleted-text-notice' => "Aviso: Essa revisão da página foi '''deletada'''. [Mais informação]",
@@ -2122,8 +2026,6 @@ $messages['pt-br'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Atenção:''' Você está recriando uma página anteriormente eliminada. [Mais informação]",
 	'restore-edits-notice' => "Bem-vindo(a) de volta! Nós restauramos algumas alterações que você ainda não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
 	'restore-edits-diff-notice' => "Bem-vindo de volta! Nós restauramos algumas mudanças que você não publicou. Apesar disso, a página foi atualizada desde então. Gostaria de: <a class='notice-action restoreeditlink'>Deletar minhas mudanças e começar com o último texto</a> ou <a class='notice-action difflink'>Ver uma comparação das mudanças com a última página</a>",
-	'mainpagewarning-notice' => 'Aprenda mais sobre [[w:c:community:Help:Main_page|editar a página principal.]]',
-	'explainconflict-notice' => "'''Atenção!''' Alguém modificou a página desde que você começou a editá-la! [Mais informações]",
 	'prefs-general' => 'Geral',
 	'prefs-starting-an-edit' => 'Começar uma edição',
 	'prefs-editing-experience' => 'Experiência de edição',
@@ -2133,11 +2035,22 @@ $messages['pt-br'] = array(
 	'tog-editwidth' => 'Ampliar o modo de edição "Fonte" para encher toda a tela',
 	'tog-minordefault' => 'Marcar todas as edições como "menor" por padrão',
 	'tog-forceeditsummary' => 'Avisar-me se eu deixar um sumário em branco',
+	'tog-disablesyntaxhighlighting' => 'Não mostre realce de sintaxe no modo código',
+	'editpagelayout-desc' => 'Applies updated layout for edit pages',
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'mainpagewarning-notice' => 'Aprenda mais sobre [[w:c:community:Help:Main_page|editar a página principal.]]',
+	'explainconflict-notice' => "'''Atenção!''' Alguém modificou a página desde que você começou a editá-la! [Mais informações]",
+	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere on the page or hover over the thumbnail and click "modify" for embed options.',
+	'wikia-editor-add-file-notice-no-wysiwyg' => 'Your $1 has been added.',
+	'editpagelayout-preview-label-desktop' => 'Computador',
+	'editpagelayout-preview-label-mobile' => 'Dispositivo Móvel',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Dispositivo Móvel',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Modo Retrato (Tablet)',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Área de Trabalho',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Área de trabalho GG',
 );
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = array(
 	'editpagelayout-more' => 'de cchiù',
 	'editpagelayout-less' => 'de mene',
@@ -2151,11 +2064,6 @@ $messages['roa-tara'] = array(
 	'wikia-editor-source-italic-tooltip' => 'Corsive',
 );
 
-/** Russian (русский)
- * @author DCamer
- * @author Express2000
- * @author Kuzura
- */
 $messages['ru'] = array(
 	'editpagelayout-more' => 'больше',
 	'editpagelayout-less' => 'меньше',
@@ -2178,7 +2086,7 @@ $messages['ru'] = array(
 	'editpagelayout-blocked-user' => 'Ваше имя участника или IP-адрес был заблокирован',
 	'editpagelayout-edit-summary-label' => 'Описание изменений',
 	'editpagelayout-subject-headline-label' => 'Тема/заголовок:',
-	'wikia-editor-media-image' => 'Изображение',
+	'wikia-editor-media-image' => 'Фото',
 	'wikia-editor-media-gallery' => 'Галерея',
 	'wikia-editor-media-slideshow' => 'Слайдшоу',
 	'wikia-editor-media-slider' => 'Слайдер',
@@ -2201,7 +2109,7 @@ $messages['ru'] = array(
 	'wikia-editor-modules-templates-makeLayout' => 'Создать новый макет на этой странице',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Создание макета на этой страницы',
 	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Сделав это, вы перейдёте со страницы редактирования на страницу создания макета и потеряете все несохранённые правки.',
-	'wikia-editor-modules-license-text' => '$1 вклад находится под лицензией $3. <a href="$2">Подробнее</a>',
+	'wikia-editor-modules-license-text' => '$1 вклад находится под лицензией $3. <a href="$2">Подробнее.</a>',
 	'wikia-editor-modules-insert-title' => 'Добавление файлов, видео, галерей',
 	'wikia-editor-modules-categories-title' => 'Категории',
 	'wikia-editor-loadingStates-loading' => 'Загрузка редактора',
@@ -2211,7 +2119,7 @@ $messages['ru'] = array(
 	'wikia-editor-edittools-caption' => 'подробнее',
 	'wikia-editor-edittools-dialog-title' => 'Вставка викитекста',
 	'wikia-editor-notices-dialog-title' => 'Уведомления',
-	'wikia-editor-preview-editSummary' => 'Краткое описание изменений: $1',
+	'wikia-editor-preview-editSummary' => "'''Краткое описание изменений:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Вы сделали несколько изменений, которые не были записаны. Вы уверены, что хотите уйти, не записав их?',
 	'nonunicodebrowser-notice' => "'''Внимание! Ваш браузер не поддерживает кодировку Юникод.'''",
 	'rev-deleted-text-notice' => "Внимание: эта версия страницы была '''удалена'''. [Подробнее]",
@@ -2223,7 +2131,7 @@ $messages['ru'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Примечание.''' Вы пытаетесь создать страницу, которая ранее удалялась. [Подробнее]",
 	'restore-edits-notice' => "С возвращением! Ваши правки, которые не были опубликованы, были восстановлены. <a class='notice-action restoreeditlink'>Удалить мои изменения и начать новое редактирование</a>",
 	'restore-edits-diff-notice' => "С возвращением! Правки, которые не были опубликованы, были восстановлены. Однако с тех пор была обновлена страница. Вы хотите: <a class='notice-action restoreeditlink'>удалить изменения и начать с последнего варианта текста</a> или <a class='notice-action difflink'>сравнить изменения с момента обновления страницы</a>",
-	'mainpagewarning-notice' => 'Узнайте больше о [[w:c:community:Help:Main_page|редактировании Заглавной страницы.]]',
+	'mainpagewarning-notice' => 'Узнайте больше о [[w:c:ru.community:Справка:Заглавная страница|редактировании Заглавной страницы.]]',
 	'explainconflict-notice' => '"\'Внимание!"\' Кто-то отредактировал эту страницу, пока вы редактировали ее! [Подробнее]',
 	'prefs-general' => 'Общее',
 	'prefs-starting-an-edit' => 'Начало редактирования',
@@ -2234,11 +2142,20 @@ $messages['ru'] = array(
 	'tog-editwidth' => 'В режиме исходного кода расширить поле редактирования на весь экран',
 	'tog-minordefault' => 'Отметить все правки, как малые по умолчанию',
 	'tog-forceeditsummary' => 'Предупреждать, когда не заполнено поле описания правки',
+	'editpagelayout-preview-label-desktop' => 'Монитор ПК',
+	'editpagelayout-preview-label-mobile' => 'Мобильный',
+	'tog-disablesyntaxhighlighting' => 'Не показывать подсветку викитекста в Исходном коде',
+	'editpagelayout-desc' => 'Applies updated layout for edit pages',
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'wikia-editor-add-file-notice' => 'Your $1 has been added. Drag and drop the $1 anywhere on the page or hover over the thumbnail and click "modify" for embed options.',
+	'wikia-editor-add-file-notice-no-wysiwyg' => 'Your $1 has been added.',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Мобильный',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Планшет',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Монитор ПК',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Широкоэкранный монитор',
 );
 
-/** Swedish (svenska)
- * @author WikiPhoenix
- */
 $messages['sv'] = array(
 	'editpagelayout-more' => 'mer',
 	'editpagelayout-less' => 'mindre',
@@ -2294,7 +2211,7 @@ $messages['sv'] = array(
 	'wikia-editor-edittools-caption' => 'mer',
 	'wikia-editor-edittools-dialog-title' => 'Wikitext-genvägar',
 	'wikia-editor-notices-dialog-title' => 'Meddelandedetaljer',
-	'wikia-editor-preview-editSummary' => 'Redigeringssammanfattning: $1',
+	'wikia-editor-preview-editSummary' => "'''Redigeringssammanfattning:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Du har gjort några opublicerade redigeringar. Är du säker på att du vill lämna sidan utan att publicera dem?',
 	'nonunicodebrowser-notice' => "'''Varning: Din webbläsare saknar stöd för unicode.'''",
 	'rev-deleted-text-notice' => "Varning: Denna version av sidan har '''tagits bort'''. [Mer info]",
@@ -2319,10 +2236,6 @@ $messages['sv'] = array(
 	'tog-forceeditsummary' => 'Påminn mig om jag lämnar en tom redigeringskommentar',
 );
 
-/** Telugu (తెలుగు)
- * @author Jprmvnvijay5
- * @author Veeven
- */
 $messages['te'] = array(
 	'editpagelayout-helpLink-url' => 'Help:దిద్దుబాటు',
 	'editpagelayout-notificationsLink-none' => 'చూడవలసినవి',
@@ -2360,9 +2273,6 @@ $messages['te'] = array(
 	'prefs-general' => 'సాధారణం',
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'editpagelayout-more' => 'mas marami',
 	'editpagelayout-less' => 'mas kaunti',
@@ -2418,7 +2328,7 @@ $messages['tl'] = array(
 	'wikia-editor-edittools-caption' => 'marami pa',
 	'wikia-editor-edittools-dialog-title' => 'Mga mas madadaling mga paraan sa teksto ng wiki',
 	'wikia-editor-notices-dialog-title' => 'Mga detalye ng pagpapabatid',
-	'wikia-editor-preview-editSummary' => 'Buod ng Pamamatnugot: $1',
+	'wikia-editor-preview-editSummary' => "'''Buod ng Pamamatnugot:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Gumawa ka ng ilang mga pagbabagong hindi nailathala. Nakakatiyak ka bang nais mong lumisan na hindi nailalathala ang mga ito?',
 	'nonunicodebrowser-notice' => "'''Babala: Ang pantingin-tingin mo ay hindi alinsunod sa Unikodigo.'''",
 	'rev-deleted-text-notice' => "Babala: Ang pagbabago sa pahinang ito ay '''nabura'''. [Marami pang kabatiran]",
@@ -2426,7 +2336,7 @@ $messages['tl'] = array(
 	'userinvalidcssjstitle-notice' => "'''Babala:''' Walang pabalat na \"\$1\". [Marami pang kabatiran]",
 	'semiprotectedpagewarning-notice' => "'''Babala:''' Ikinandado ang pahinang ito upang nakarehistrong mga tagagamit lamang ang makakapamatnugot nito. Maaaring kailanganin mong lumagdang papasok upang makapamatnugot. [Marami pang kabatiran]",
 	'protectedpagewarning-notice' => "'''Paunawa:''' Ikinandado ang pahinang ito upang mga tagapangasiwa lamang ang makapamatnugot nito. Mababago ng katutubong mga tagapangasiwa ang katayuang ito. [Marami pang kabatiran]",
-	'titleprotectedwarning-notice' => "'''Paunawa:''' Ikinandao ang pahinang ito upang mga tagapangasiwa lamang ang makalikha nito. Mababago ng katutubong mga tagapangasiwa ang katayuang ito. [Marami pang kabatiran]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Paunawa:''' Ikinandao ang pahinang ito upang mga tagapangasiwa lamang ang makalikha nito. Mababago ng katutubong mga tagapangasiwa ang katayuang ito. [Marami pang kabatiran]",
 	'recreate-moveddeleted-warn-notice' => "'''Paunawa:''' Muli mong nililikha ang isang pahina na nabura na dati. [Marami pang kabatiran]",
 	'restore-edits-notice' => "Maligayang pagbabalik! Nagpanumbalik kami ng ilan sa mga pagbabagong hindi mo inilathala. <a class='notice-action restoreeditlink'>Burahin ang mga binago ko at magsimula ng isang bagong pamamatnugot</a>",
 	'restore-edits-diff-notice' => "Maligayang pagbabalik! Nagpanumbalik kami ng ilan sa mga pagbabagong hindi mo inilathala. Subalit, naisapanahon na ang pahina magmula noon. Nais mo bang: <a class='notice-action restoreeditlink'>Burahin ang mga binago ko at magsimula sa pamamagitan ng pinaka huling teksto</a> o <a class='notice-action difflink'>Tingnan ang isang paghahambing ng mga pagbabago sa pamamagitan ng pinaka huling pahina</a>",
@@ -2441,9 +2351,6 @@ $messages['tl'] = array(
 	'tog-forceeditsummary' => 'Udyukin ako kapag nakapag-iwan ako ng isang buod sa pamamatnugot na walang laman',
 );
 
-/** толышә зывон (толышә зывон)
- * @author Гусейн
- */
 $messages['tly'] = array(
 	'editpagelayout-edit-title' => 'Номи сәрост кардеј',
 	'editpagelayout-edit-info' => 'Мәлумоти сәрост кардеј',
@@ -2456,25 +2363,15 @@ $messages['tly'] = array(
 	'wikia-editor-modules-templates-showUsedList' => 'Нишо дој око доә быә ғәлибон сијоһи',
 );
 
-/** Turkish (Türkçe)
- * @author Suelnur
- */
 $messages['tr'] = array(
 	'editpagelayout-pageControls-changes' => 'Değişiklikler',
 	'prefs-general' => 'Genel',
 );
 
-/** Tati (Tati)
- * @author Erdemaslancan
- */
 $messages['ttt'] = array(
 	'editpagelayout-captcha-title' => 'Captcha',
 );
 
-/** Ukrainian (українська)
- * @author A1
- * @author Steve.rusyn
- */
 $messages['uk'] = array(
 	'editpagelayout-edit-title' => 'Редагувати назву',
 	'editpagelayout-pageControls-changes' => 'Зміни',
@@ -2490,11 +2387,9 @@ $messages['uk'] = array(
 	'wikia-editor-source-bold-tooltip' => 'Жирний',
 	'wikia-editor-source-italic-tooltip' => 'Курсив',
 	'wikia-editor-modules-categories-title' => 'Категорії',
+	'editpagelayout-pageControls-minorEdit' => 'Незначне редагування',
 );
 
-/** Veps (vepsän kel’)
- * @author Игорь Бродский
- */
 $messages['vep'] = array(
 	'editpagelayout-pageControls-changes' => 'Toižetused',
 	'wikia-editor-media-image' => 'Fotokuva',
@@ -2508,9 +2403,6 @@ $messages['vep'] = array(
 	'wikia-editor-edittools-caption' => 'völ',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- */
 $messages['vi'] = array(
 	'editpagelayout-more' => 'chi tiết',
 	'editpagelayout-less' => 'ngắn gọn',
@@ -2550,25 +2442,25 @@ $messages['vi'] = array(
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Danh sách bản mẫu thường dùng',
 	'wikia-editor-modules-templates-makeLayout' => 'Tạo mẫu trang mới từ trang này',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Tạo một mẫu trang từ trang này',
-	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Điều này sẽ đưa bạn rời khỏi sửa đổi trang để tạo một mẫu mới từ trang này. Tuy nhiên, bạn sẽ mất những sửa đổi chưa được lưu',
-	'wikia-editor-modules-license-text' => '$1 đóng góp theo giấy phép $3. <a href="$2">Xem thêm chi tiết.</a>',
+	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Điều này sẽ đưa bạn rời khỏi sửa đổi trang để tạo một mẫu mới từ trang này. Tuy nhiên, bạn sẽ mất những sửa đổi chưa được lưu.',
+	'wikia-editor-modules-license-text' => '$1 đóng góp theo giấy phép $3. <a href="http://congdong.wikia/com/wiki/Giấy_phép">Xem thêm chi tiết.</a>',
 	'wikia-editor-modules-insert-title' => 'Chèn tính năng và phương tiện',
 	'wikia-editor-modules-categories-title' => 'Thể loại',
 	'wikia-editor-loadingStates-loading' => 'Đang tải biên tập',
-	'wikia-editor-loadingStates-toSource' => 'Chuyển sang chế độ nguồn ...',
-	'wikia-editor-loadingStates-toVisual' => 'Chuyển sang chế độ trực quan ...',
+	'wikia-editor-loadingStates-toSource' => 'Chuyển sang chế độ nguồn...',
+	'wikia-editor-loadingStates-toVisual' => 'Chuyển sang chế độ trực quan...',
 	'wikia-editor-loadingStates-saving' => 'Lưu sửa đổi của bạn',
 	'wikia-editor-edittools-caption' => 'chi tiết',
-	'wikia-editor-edittools-dialog-title' => 'Phím tắt văn bản Wiki',
+	'wikia-editor-edittools-dialog-title' => 'Phím tắt mã wiki',
 	'wikia-editor-notices-dialog-title' => 'Thông báo chi tiết',
-	'wikia-editor-preview-editSummary' => 'Sửa đổi Tóm lược: $1',
+	'wikia-editor-preview-editSummary' => "'''Tóm lược sửa đổi:''' $1",
 	'wikia-editor-leaveconfirm-message' => 'Bạn đã tạo ra sửa đổi chưa được lưu. Bạn có chắc rằng bạn muốn rời khỏi và bỏ qua việc lưu lại?',
 	'nonunicodebrowser-notice' => "'''Cảnh báo: Trình duyệt của bạn không tuân thủ Unicode.'''",
 	'rev-deleted-text-notice' => "Cảnh báo: Những phiên bản của trang này đã bị '''xóa'''. [Thông tin chi tiết]",
 	'readonlywarning-notice' => "'''Cảnh báo: Cơ sở dữ liệu đã bị khóa để bảo trì.''' Sửa đổi sẽ khả dụng trở lại khi hoàn thành xong. [Thông tin chi tiết]",
 	'semiprotectedpagewarning-notice' => "'''Lưu ý:''' Trang này đã bị khóa và chỉ thành viên đăng nhập mới có thể sửa đổi. Bạn có lẽ cần đăng nhập để sửa đổi [Thông tin chi tiết]",
 	'protectedpagewarning-notice' => "'''Lưu ý:''' Trang này đã bị khóa và chỉ có bảo quản viên mới có thể sửa đổi. Bảo quản viên tại đây có thể thay đổi trạng thái này. [Thông tin chi tiết]",
-	'titleprotectedwarning-notice' => "'''Lưu ý:''' Trang này đã bị khóa và chỉ có bảo quản viên mới có thể tạo ra nó. Bảo quản viên tại đây có thể thay đổi trạng thái này. [Thông tin chi tiết]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Lưu ý:''' Trang này đã bị khóa và chỉ có bảo quản viên mới có thể tạo ra nó. Bảo quản viên tại đây có thể thay đổi trạng thái này. [Thông tin chi tiết]",
 	'recreate-moveddeleted-warn-notice' => "'''Lưu ý:''' Bạn đang tái tạo một trang đã bị xóa trước đây. [Thông tin chi tiết]",
 	'restore-edits-notice' => "Chào mừng bạn đã trở lại! Chúng tôi đã khôi phục lại một vài thay đổi mà bạn chưa lưu. <a class='notice-action restoreeditlink'>Xóa thay đổi của tôi và bắt đầu sửa đổi mới</a>",
 	'restore-edits-diff-notice' => "Chào mừng bạn đã trở lại! Chúng tôi đã khôi phục lại một vài thay đổi mà bạn chưa lưu. Tuy nhiên, trang cũng đã được cập nhật mới từ lúc đó. Bạn có muốn: <a class='notice-action restoreeditlink'>Xóa thay đổi của tôi và bắt đầu với phiên bản gần đây nhất</a> hoặc <a class='notice-action difflink'>Xem một sự so sánh của những thay đổi với phiên bản gần đây nhất</a>",
@@ -2581,27 +2473,31 @@ $messages['vi'] = array(
 	'tog-editwidth' => 'Mở rộng hộp soạn thảo chế độ nguồn để lấp đầy toàn bộ màn hình',
 	'tog-minordefault' => 'Đánh dấu tất cả các sửa đổi là "nhỏ" theo mặc định',
 	'tog-forceeditsummary' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Máy tính',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Máy tính bàn',
+	'editpagelayout-preview-dropdown-item-mobile' => 'Điện thoại',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Máy tính bảng',
+	'editpagelayout-preview-label-desktop' => 'Máy tính',
+	'editpagelayout-preview-label-mobile' => 'Điện thoại',
+	'wikia-editor-add-file-notice-no-wysiwyg' => 'Tập tin $1 đã được thêm vào.',
+	'wikia-editor-add-file-notice' => 'Tập tin $1 đã được thêm vào. Kéo và thả nó ở bất kỳ đâu trên trang hoặc hoặc bọc lại trong khung ảnh và nhấp vào "chỉnh sửa" để tùy chọn thiết đặt.',
+	'wikia-editor-media-mut-tooltip' => 'Thêm đoạn phim (beta)',
+	'wikia-editor-media-mut' => 'Đoạn phim',
+	'wikia-editor-source-bold-tooltip' => 'Tô đậm',
+	'wikia-editor-source-italic-tooltip' => 'In nghiêng',
+	'wikia-editor-source-link-tooltip' => 'Thêm liên kết',
 );
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Anakmalaysia
- * @author Dimension
- * @author Hydra
- * @author Hzy980512
- * @author Sam Wang
- * @author Yfdyh000
- * @author 乌拉跨氪
- */
 $messages['zh-hans'] = array(
 	'editpagelayout-more' => '更多',
 	'editpagelayout-less' => '更少',
 	'editpagelayout-helpLink-url' => 'Help:编辑',
-	'editpagelayout-helpLink' => '需要[[{{MediaWiki:Editpagelayout-helpLink-url}}|帮助？]]',
+	'editpagelayout-helpLink' => '[[Help:Editing|需要帮忙编辑？]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span>条{{PLURAL:$1|通知|通知}}',
 	'editpagelayout-notificationsLink-none' => '通知',
 	'editpagelayout-edit-title' => '编辑标题',
 	'editpagelayout-edit-info' => '编辑信息',
-	'editpagelayout-diff-header-url' => 'Help:差距',
+	'editpagelayout-diff-header-url' => 'Help:Diff',
 	'editpagelayout-diff-header' => '差异（[[{{MediaWiki:Editpagelayout-diff-header-url}}|帮助]]）',
 	'editpagelayout-myedit-header' => '以下是您的编辑。将您的更改复制到上面的编辑框中！',
 	'editpagelayout-captcha-title' => '验证码',
@@ -2614,14 +2510,14 @@ $messages['zh-hans'] = array(
 	'editpagelayout-blocked-user' => '您的用户名或IP地址已被封禁',
 	'editpagelayout-edit-summary-label' => '编辑摘要',
 	'editpagelayout-subject-headline-label' => '标题：',
-	'wikia-editor-media-image' => '照片',
-	'wikia-editor-media-gallery' => '图库',
+	'wikia-editor-media-image' => '图片',
+	'wikia-editor-media-gallery' => '图片册',
 	'wikia-editor-media-slideshow' => '幻灯片',
 	'wikia-editor-media-slider' => '滑块',
 	'wikia-editor-media-video' => '视频',
 	'wikia-editor-media-mut' => '视频',
-	'wikia-editor-media-image-tooltip' => '添加照片',
-	'wikia-editor-media-gallery-tooltip' => '添加图库',
+	'wikia-editor-media-image-tooltip' => '添加图片',
+	'wikia-editor-media-gallery-tooltip' => '添加图片册',
 	'wikia-editor-media-slideshow-tooltip' => '添加幻灯片',
 	'wikia-editor-media-slider-tooltip' => '添加滑块',
 	'wikia-editor-media-video-tooltip' => '添加视频',
@@ -2629,42 +2525,150 @@ $messages['zh-hans'] = array(
 	'wikia-editor-source-bold-tooltip' => '粗体',
 	'wikia-editor-source-italic-tooltip' => '斜体',
 	'wikia-editor-source-link-tooltip' => '添加链接',
-	'wikia-editor-modules-templates-title' => '模板',
-	'wikia-editor-modules-templates-add-tooltip' => '添加模板" $1 "',
-	'wikia-editor-modules-templates-otherTemplates' => '添加其他模板',
-	'wikia-editor-modules-templates-showUsedList' => '显示曾使用的模板列表',
-	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用过的模板 列表',
-	'wikia-editor-modules-templates-makeLayout' => '从此页面做新布局',
-	'wikia-editor-modules-templates-makeLayout-confirmation-title' => '创建基于此页面的布局',
-	'wikia-editor-modules-license-text' => '$1贡献授权为$3。<a href="$2">更多细节。</a>',
+	'wikia-editor-modules-templates-title' => '模版',
+	'wikia-editor-modules-templates-add-tooltip' => '添加模版"$1"',
+	'wikia-editor-modules-templates-otherTemplates' => '添加其他模版',
+	'wikia-editor-modules-templates-showUsedList' => '显示本页使用的模版列表',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用的模版列表',
+	'wikia-editor-modules-templates-makeLayout' => '在此页面创建新的布局',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => '在此页面创建布局',
+	'wikia-editor-modules-license-text' => '$1贡献内容以$3授权。<a href="$2">详细参见。</a>',
 	'wikia-editor-modules-insert-title' => '添加功能和媒体',
 	'wikia-editor-modules-categories-title' => '分类',
 	'wikia-editor-loadingStates-loading' => '正在载入编辑器',
-	'wikia-editor-loadingStates-toSource' => '切换到源模式...',
-	'wikia-editor-loadingStates-toVisual' => '切换到预览模式...',
+	'wikia-editor-loadingStates-toSource' => '切换至源代码编辑模式...',
+	'wikia-editor-loadingStates-toVisual' => '切换到可视编辑模式...',
 	'wikia-editor-loadingStates-saving' => '发布您的编辑',
 	'wikia-editor-edittools-caption' => '更多',
 	'wikia-editor-notices-dialog-title' => '通知详情',
-	'wikia-editor-preview-editSummary' => '编辑摘要：$1',
-	'wikia-editor-leaveconfirm-message' => '您做的一些编辑还未发布。您确定要离开而不发布它们吗。',
-	'nonunicodebrowser-notice' => "'''警告：您的浏览器不兼容Unicode。'''",
-	'rev-deleted-text-notice' => "警告：本项页面修订已被'''删除'''。[详细内容]",
+	'wikia-editor-preview-editSummary' => "'''编辑摘要:''' $1",
+	'wikia-editor-leaveconfirm-message' => '您做的一些编辑还未发布。您确定要离开并且取消发布吗？',
+	'nonunicodebrowser-notice' => "'''警告：您的浏览器与Unicode不兼容。'''",
+	'rev-deleted-text-notice' => "警告：本页面修订已被'''删除'''。[详细内容]",
 	'readonlywarning-notice' => "'''警告：数据库已被锁定以进行维护。'''一旦完成，编辑将会恢复。[更多信息]",
-	'userinvalidcssjstitle-notice' => "'''警告：''' 皮肤\"\$1\"不存在。 [更多信息]",
-	'semiprotectedpagewarning-notice' => "'''注：''' 本页面已被锁定，仅注册用户可以编辑。您可能需要登录以进行编辑。[详细内容]",
+	'userinvalidcssjstitle-notice' => "'''警告：'''界面\"\$1\"不存在。 [更多信息]",
+	'semiprotectedpagewarning-notice' => "'''注：''' 本页面已被锁定，仅注册用户可以编辑。您可能需要登录才能进行编辑。[详细内容]",
 	'protectedpagewarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以编辑。本地管理员可以更改此状态。[详细内容]",
 	'titleprotectedwarning-notice' => "'''注：''' 本页面已被锁定，只有特定用户（管理员、注册用户）可以创建。[详细内容]",
 	'recreate-moveddeleted-warn-notice' => "'''注：'''您正在重新创建一个已删除页面。[详细内容]",
 	'restore-edits-notice' => "欢迎回来！我们保存了一些您尚未发布的更改。<a class='notice-action restoreeditlink'>删除我的更改，开始新的编辑</a>",
-	'mainpagewarning-notice' => '了解更多关于[[w:c:community:Help:Main_page|编辑主页]]的内容。',
+	'mainpagewarning-notice' => '了解更多关于[[w:c:zh.community:Help:Main_page|如何编辑主页]]。',
 	'explainconflict-notice' => "'''警告!'''其他用户在您开始编辑后已对此页做出了改动！[详细信息]",
-	'prefs-general' => '简单介绍',
+	'prefs-general' => '常规',
 	'prefs-starting-an-edit' => '开始编辑',
-	'prefs-editing-experience' => '编辑经验',
+	'prefs-editing-experience' => '编辑体验',
 	'prefs-monobook-layout' => '仅MonoBook布局',
-	'prefs-editarea-size' => '编辑窗口的大小（仅MonoBook布局）',
+	'prefs-editarea-size' => '编辑窗口的大小（仅限MonoBook布局）',
 	'tog-editsection' => '显示章节编辑链接',
-	'tog-editwidth' => '扩宽源代码模式的编辑框填满整个屏幕',
+	'tog-editwidth' => '扩宽源代码模式的编辑框以铺满整个屏幕',
 	'tog-minordefault' => '默认将所有编辑标为“小编辑”',
-	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
+	'tog-forceeditsummary' => '在我未填写编辑摘要时提示我',
+	'editpagelayout-preview-label-desktop' => '桌面',
+	'editpagelayout-preview-label-mobile' => '移动设备',
+	'tog-disablesyntaxhighlighting' => '在源代码模式中不显示句法突出',
+	'editpagelayout-desc' => '使用更新的编辑页面布局',
+	'wikia-editor-modules-templates-makeLayout-confirmation-text' => '这将让你退出编辑页面后创建一个新的布局。但是，你将丢失所有未保存的编辑。',
+	'wikia-editor-edittools-dialog-title' => 'Wikitext的快捷方式',
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'restore-edits-diff-notice' => "欢迎回来！我们已经保存了一些你还没有发布的内容。但是，页面已经被更改。你希望：<a class='notice-action restoreeditlink'>删除更改回到之前的文本状态</a>还是<a class='notice-action difflink'>查看新旧页面的内容对比</a>",
+	'wikia-editor-add-file-notice' => '$1已经添加。在页面上拖拽$1或悬停在缩略图上点击"修改"查看更多选项。',
+	'wikia-editor-add-file-notice-no-wysiwyg' => '$1已添加。',
+	'editpagelayout-preview-dropdown-item-mobile' => '移动设备',
+	'editpagelayout-preview-dropdown-item-tablet' => '平板电脑视图',
+	'editpagelayout-preview-dropdown-item-desktop' => '桌面',
+	'editpagelayout-preview-dropdown-item-desktopxl' => '超大尺寸桌面',
 );
+
+$messages['zh-hant'] = array(
+	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
+	'prefs-editing-experience' => '編輯體驗',
+	'prefs-starting-an-edit' => '開始編輯',
+	'tog-disablesyntaxhighlighting' => '在源代碼模式中不顯示語法突出',
+	'tog-editsection' => '顯示章節編輯鏈接',
+	'tog-editwidth' => '使源代碼模式的編輯框變寬至整個銀幕',
+	'tog-minordefault' => '預設將所有的編輯標為「小編輯」',
+	'wikia-editor-leaveconfirm-message' => '您做的一些編輯未發布。您確定要離開而不發佈它們嗎？',
+	'wikia-editor-loadingStates-loading' => '正在載入編輯器',
+	'wikia-editor-loadingStates-saving' => '正在發佈您的編輯',
+	'wikia-editor-loadingStates-toSource' => '切換到源代碼模式…',
+	'wikia-editor-loadingStates-toVisual' => '切換到可視編輯模式...',
+	'wikia-editor-media-gallery-tooltip' => '增加圖片冊',
+	'wikia-editor-media-gallery' => '圖片冊',
+	'wikia-editor-media-image-tooltip' => '增加圖片',
+	'wikia-editor-media-image' => '圖片',
+	'wikia-editor-media-mut-tooltip' => '添加影片（測試版）',
+	'wikia-editor-media-mut' => '影片',
+	'wikia-editor-media-slider-tooltip' => '增加滑塊',
+	'wikia-editor-media-slider' => '滑塊',
+	'wikia-editor-media-slideshow-tooltip' => '增加幻燈片',
+	'wikia-editor-media-slideshow' => '幻燈片',
+	'wikia-editor-media-video-tooltip' => '增加影片',
+	'wikia-editor-media-video' => '影片',
+	'wikia-editor-modules-categories-title' => '分類',
+	'wikia-editor-modules-insert-title' => '添加功能和媒體',
+	'wikia-editor-modules-license-text' => '$1貢獻內容以$3授權。<a href="$2">詳細參見。</a>',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用模板列表',
+	'wikia-editor-modules-templates-showUsedList' => '顯示已使用模板列表',
+	'wikia-editor-notices-dialog-title' => '注意說明',
+	'wikia-editor-preview-editSummary' => "'''編輯摘要：''' $1",
+	'editpagelayout-desc' => '使用更新的編輯頁面版式',
+	'editpagelayout-more' => '更多',
+	'editpagelayout-less' => '較少',
+	'editpagelayout-helpLink-url' => 'Help:如何編輯頁面',
+	'editpagelayout-helpLink' => '[[Help:Editing|需要編輯說明？]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span>條{{PLURAL:$1|通知|通知}}',
+	'editpagelayout-notificationsLink-none' => '注意',
+	'editpagelayout-edit-title' => '編輯標題',
+	'editpagelayout-edit-info' => '編輯訊息',
+	'editpagelayout-diff-header-url' => 'Help:Diff',
+	'editpagelayout-diff-header' => '差異([[{{MediaWiki:Editpagelayout-diff-header-url}}|幫助]])',
+	'editpagelayout-myedit-header' => '這是您的編輯。將您的更改複製到上面的框中！',
+	'editpagelayout-captcha-title' => '驗證碼',
+	'editpagelayout-pageControls-pageLink' => '返回到頁面',
+	'editpagelayout-pageControls-minorEdit' => '這是一個小修改',
+	'editpagelayout-pageControls-summaryLabel' => '添加編輯摘要',
+	'editpagelayout-pageControls-newSectionLabel' => '添加段落標題',
+	'editpagelayout-pageControls-back' => '回到編輯器',
+	'editpagelayout-pageControls-changes' => '更改',
+	'editpagelayout-blocked-user' => '您的用戶名或IP位址已被封禁',
+	'editpagelayout-edit-summary-label' => '編輯摘要',
+	'editpagelayout-subject-headline-label' => '段落標題：',
+	'wikia-editor-source-bold-tooltip' => '粗體',
+	'wikia-editor-source-italic-tooltip' => '斜體',
+	'wikia-editor-source-link-tooltip' => '增加連結',
+	'wikia-editor-modules-templates-title' => '模板',
+	'wikia-editor-modules-templates-add-tooltip' => '增加"$1"模板',
+	'wikia-editor-modules-templates-otherTemplates' => '增加其他模板',
+	'wikia-editor-modules-templates-makeLayout' => '在此頁面做新的佈局',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => '在此頁面創建一個佈局',
+	'wikia-editor-modules-templates-makeLayout-confirmation-text' => '這將讓你退出編輯頁面後創建一個新的佈局。但是，你將丟失所有未保存的編輯。',
+	'wikia-editor-edittools-caption' => '更多',
+	'wikia-editor-edittools-dialog-title' => 'Wikitext的快捷鍵',
+	'nonunicodebrowser-notice' => "'''警告：您的瀏覽器與Unicode不相容。 '''",
+	'rev-deleted-text-notice' => "警告：本頁面修訂已被'''刪除'''。 [詳細內容]",
+	'readonlywarning-notice' => "'''警告：資料庫已被鎖定以進行維護。'''一旦維護完成，將會恢復為可編輯。[更多資訊]",
+	'anoneditwarning-notice' => '',
+	'longpagewarning-notice' => '',
+	'userinvalidcssjstitle-notice' => "'''警告：'''皮膚\"\$1\"不存在。 [更多訊息]",
+	'semiprotectedpagewarning-notice' => "'''注：''' 本頁面已被半保護，僅註冊使用者可以編輯。您可能需要登入以進行編輯。 [詳細訊息]",
+	'protectedpagewarning-notice' => "'''注：''' 本頁面已被保護，只有管理員以上權限者可以編輯。 [詳細訊息]",
+	'titleprotectedwarning-notice' => "'''注：''' 本頁面已被鎖定，只有特定使用者（管理員、註冊使用者）可以創建。[詳細內容]",
+	'recreate-moveddeleted-warn-notice' => "'''注：'''您正在重新創建一個已刪除的頁面。[詳細訊息]",
+	'restore-edits-notice' => "歡迎回來！ 我們保存了一些您尚未發佈的修改。<a class='notice-action restoreeditlink'>刪除我的修改，開始新的編輯</a>",
+	'restore-edits-diff-notice' => "歡迎回來！ 我們已經保存了一些你還沒有發佈的修改內容。但是，頁面已經被更改。你希望：<a class='notice-action restoreeditlink'>刪除自己的修改內容並進入最新的版本</a>還是<a class='notice-action difflink'>查看新舊頁面的內容對比</a>",
+	'explainconflict-notice' => "'''警告!''' 其他使用者在您開始編輯後已對此頁做出了改動！ [詳細訊息]",
+	'wikia-editor-add-file-notice' => '您已經增加$1。可將$1拖放至此頁面的任何位置，或懸停在縮圖上並點擊「修改」查看更多選項。',
+	'wikia-editor-add-file-notice-no-wysiwyg' => '您已添加$1。',
+	'prefs-general' => '一般',
+	'prefs-monobook-layout' => '僅限MonoBook佈局',
+	'prefs-editarea-size' => '編輯視窗的大小（僅限MonoBook佈局）',
+	'tog-forceeditsummary' => '在我未填寫編輯摘要時提醒我',
+	'editpagelayout-preview-label-desktop' => '桌上電腦',
+	'editpagelayout-preview-label-mobile' => '行動裝置',
+	'editpagelayout-preview-dropdown-item-mobile' => '行動裝置',
+	'editpagelayout-preview-dropdown-item-tablet' => '平板電腦',
+	'editpagelayout-preview-dropdown-item-desktop' => '桌上電腦',
+	'editpagelayout-preview-dropdown-item-desktopxl' => '大銀幕桌上電腦',
+);
+

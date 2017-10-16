@@ -10,6 +10,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/JsonFormat/JsonFormat.setup.php";
+		$this->mockGlobalVariable( 'wgTitle', Title::newFromText( 'TestPageDoesNotExist' ) );
 		parent::setUp();
 	}
 
@@ -17,18 +18,23 @@ class JsonFormatTest extends WikiaBaseTest {
 		global $wgHooks;
 		if ( $value ) {
 			if ( isset( $this->hooks ) ) {
-				$wgHooks['ThumbnailImageHTML'] = $this->hooks;
+				$wgHooks[ 'ThumbnailImageHTML' ] = $this->hooks;
 				unset( $this->hooks );
 			}
 			//else leave it as it is
 		} else {
-			$this->hooks = $wgHooks['ThumbnailImageHTML'];
-			unset( $wgHooks['ThumbnailImageHTML'] );
+			if ( array_key_exists( 'ThumbnailImageHTML', $wgHooks ) ) {
+				$this->hooks = $wgHooks[ 'ThumbnailImageHTML' ];
+				unset( $wgHooks[ 'ThumbnailImageHTML' ] );
+			}
 		}
 	}
 
 	/* Main tests */
 	/**
+	 * @group Slow
+	 * @group ContractualResponsibilitiesValidation
+	 * @slowExecutionTime 0.21435 ms
 	 * @dataProvider StructureProvider
 	 */
 	public function testStructureMatching( $wikiText, $expectedStructure = null ) {
@@ -41,6 +47,9 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @group ContractualResponsibilitiesValidation
+	 * @slowExecutionTime 0.1468 ms
 	 * @dataProvider StructureProvider
 	 */
 	public function testStructureMatchingWithLazyLoad( $wikiText, $expectedStructure = null ) {
@@ -55,6 +64,8 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
+	 * @group ContractualResponsibilitiesValidation
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatching( $wikiText, $expectedContent ) {
@@ -66,6 +77,8 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
+	 * @group ContractualResponsibilitiesValidation
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatchingWithLazyLoad( $wikiText, $expectedContent ) {
@@ -82,8 +95,12 @@ class JsonFormatTest extends WikiaBaseTest {
 	protected function checkContent( $data, $content ) {
 		foreach ( $content as $key => $params ) {
 			if ( is_numeric( $key ) ) {
-				$element = $data[ $key ];
-				$this->checkContent( $element, $params );
+				if ( empty( $data[ $key ] ) ) {
+					$this->fail( "Key $key not found in data.  Expecting: " . print_r( [ $key => $params ], true ) );
+				} else {
+					$element = $data[ $key ];
+					$this->checkContent( $element, $params );
+				}
 			} else {
 				//do assertion
 				if ( $key == 'child' ) {
@@ -101,7 +118,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	protected function checkClassStructure( $data, $structure ) {
 		foreach ( $structure as $class => $params ) {
 			$classInfo = explode( ':', $class );
-			$this->assertInstanceOf( $classInfo[ 0 ], $data );
+			$this->assertInstanceOf( $classInfo[ 0 ], $data, sprintf('Instance check failed for %s', $class) );
 			$i = 0;
 			foreach ( $params as $keyOrClass => $element ) {
 				if ( is_numeric( $keyOrClass ) || !method_exists( $data, 'getChildren' ) ) {
@@ -110,8 +127,8 @@ class JsonFormatTest extends WikiaBaseTest {
 						$values = $data->toArray();
 					}
 					$val = is_string( $values[ $element ] ) ? trim( $values[ $element ] ) : $values[ $element ];
-					$this->assertNotNull( $val, 'Value not set. '.$keyOrClass.' => '.$element."\n".print_r( $params, true )."\n".print_r( $values, true ) );
-					$this->assertNotEmpty( $val, 'Empty element found. '.$keyOrClass.' => '.$element."\n".print_r( $params, true )."\n".print_r( $values, true ) );
+					$this->assertNotNull( $val, 'Value not set. ' . $keyOrClass . ' => ' . $element . "\n" . print_r( $params, true ) . "\n" . print_r( $values, true ) );
+					$this->assertNotEmpty( $val, 'Empty element found. ' . $keyOrClass . ' => ' . $element . "\n" . print_r( $params, true ) . "\n" . print_r( $values, true ) );
 				} else {
 					if ( !isset( $children ) ) {
 						$children = $data->getChildren();
@@ -124,23 +141,27 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	protected function getParsedOutput( $wikitext ) {
-		global $wgOut;
-		if ( !isset( $this->parser ) ) {
-			$this->parser = new Parser();
-		}
-		$htmlOutput = $this->parser->parse( $wikitext, new Title(), $wgOut->parserOptions() );
+		return $this->memCacheDisabledSection( function () use ( $wikitext ) {
+			global $wgOut, $wgWikiaEnvironment;
+			$parser = ParserPool::get();
+			$htmlOutput = $parser->parse( $wikitext, new Title(), $wgOut->parserOptions() );
 
-		//check for empty result
-		if ( !empty( $wikitext ) ) {
-			$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
-		}
+			//check for empty result
+			if ( !empty( $wikitext ) ) {
+				$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
+				\Wikia\Logger\WikiaLogger::instance()->info(
+					'JsonFormatTest::getParsedOutput', [
+						'wikitext' => $wikitext,
+						'html_output' => $htmlOutput->getText()
+					]
+				);
+			}
 
-		if ( !isset( $this->htmlParser ) ) {
-			$this->htmlParser = new \Wikia\JsonFormat\HtmlParser();
-		}
-		$jsonOutput = $this->htmlParser->parse( $htmlOutput->getText() );
+			$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+			$jsonOutput = $htmlParser->parse( $htmlOutput->getText() );
 
-		return $jsonOutput;
+			return $jsonOutput;
+		} );
 	}
 
 	/* Test providers */
@@ -148,21 +169,21 @@ class JsonFormatTest extends WikiaBaseTest {
 		return [
 			[ '==Section heading==
 Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo.',
-				[
-					0 => [
-						'level' => 2,
-						'title' => 'Section heading',
-						'child' => [
-							1 => [
-								'child' => [
-									0 => [
-										'text' => "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo."
-									]
-								]
-							]
-						]
-					]
-				]
+			  [
+				  0 => [
+					  'level' => 2,
+					  'title' => 'Section heading',
+					  'child' => [
+						  1 => [
+							  'child' => [
+								  0 => [
+									  'text' => "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo. "
+								  ]
+							  ]
+						  ]
+					  ]
+				  ]
+			  ]
 			],
 			[
 				'mollis in sollicitudin non',
@@ -170,7 +191,7 @@ Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis met
 					0 => [
 						'child' => [
 							0 => [
-								'text' => "mollis in sollicitudin non"
+								'text' => "mollis in sollicitudin non "
 							]
 						]
 					]
@@ -219,8 +240,6 @@ width: 310px; padding: 10px; text-align: left; float: right; margin-bottom:15px;
 | valign=top | \'\'\'ISBN\'\'\'&nbsp; || Lis
 |}<noinclude>
 <br clear="all">
-
-{{Quote|Write the first paragraph of your page here.}}
 
 =Test article=
 <div class="coolStyling">
@@ -283,136 +302,214 @@ anything here -->
 
 		end
 </div>',
-				[ 'JsonFormatRootNode' => [
-					'JsonFormatTextNode' => [],
-					'JsonFormatInfoboxNode' => [
-						'JsonFormatInfoboxKeyValueNode' => [
-							'key', 'value'
-						],
-						'JsonFormatInfoboxKeyValueNode:1' => [
-							'key', 'value'
-						],
-						'JsonFormatInfoboxKeyValueNode:2' => [
-							'key', 'value'
-						],
-						'JsonFormatInfoboxKeyValueNode:3' => [
-							'key', 'value'
-						],
-						'JsonFormatInfoboxKeyValueNode:4' => [
-							'key', 'value'
-						],
-						'JsonFormatInfoboxKeyValueNode:5' => [
-							'key', 'value'
-						]
-					],
-					'JsonFormatParagraphNode' => [
-						'JsonFormatTextNode' => []
-					],
-					'JsonFormatTextNode:1' => [],
-					'JsonFormatQuoteNode' => [ 'text', 'author' ],
-					'JsonFormatSectionNode' => [
-						'level', 'title',
-						'JsonFormatTextNode' => [],
-						'JsonFormatSectionNode' => [
-							'level', 'title',
-							'JsonFormatTextNode' => [],
-							'JsonFormatParagraphNode' => [
-								'JsonFormatTextNode' => [ 'text' ]
+			  [ 'JsonFormatRootNode' => [
+				  'JsonFormatTextNode' => [ ],
+				  'JsonFormatInfoboxNode' => [
+					  'JsonFormatInfoboxKeyValueNode' => [
+						  'key', 'value'
+					  ],
+					  'JsonFormatInfoboxKeyValueNode:1' => [
+						  'key', 'value'
+					  ],
+					  'JsonFormatInfoboxKeyValueNode:2' => [
+						  'key', 'value'
+					  ],
+					  'JsonFormatInfoboxKeyValueNode:3' => [
+						  'key', 'value'
+					  ],
+					  'JsonFormatInfoboxKeyValueNode:4' => [
+						  'key', 'value'
+					  ],
+					  'JsonFormatInfoboxKeyValueNode:5' => [
+						  'key', 'value'
+					  ]
+				  ],
+				  'JsonFormatParagraphNode' => [
+					  'JsonFormatTextNode' => [ ]
+				  ],
+				  'JsonFormatTextNode:1' => [ ],
+				  'JsonFormatSectionNode' => [
+					  'level', 'title',
+					  'JsonFormatTextNode' => [ ],
+					  'JsonFormatSectionNode' => [
+						  'level', 'title',
+						  'JsonFormatTextNode' => [ ],
+						  'JsonFormatParagraphNode' => [
+							  'JsonFormatTextNode' => [ 'text' ]
+						  ],
+						  'JsonFormatTextNode:1' => [ ],
+						  'JsonFormatImageFigureNode' => [ 'src', 'caption' ],
+						  'JsonFormatParagraphNode:1' => [
+							  'JsonFormatImageNode' => [ 'src' ],
+							  'JsonFormatTextNode' => [ ]
+						  ],
+						  'JsonFormatTextNode:2' => [ ],
+						  'JsonFormatImageFigureNode:1' => [ 'src', 'caption' ],
+						  'JsonFormatImageFigureNode:2' => [ 'src', 'caption' ],
+						  'JsonFormatImageFigureNode:3' => [ 'src', 'caption' ],
+						  'JsonFormatTextNode:3' => [ ],
+						  'JsonFormatParagraphNode:2' => [
+							  'JsonFormatTextNode' => [ ]
+						  ],
+						  'JsonFormatTextNode:4' => [ ]
+					  ],
+					  'JsonFormatSectionNode:1' => [
+						  'level', 'title',
+						  'JsonFormatTextNode' => [ ],
+						  'JsonFormatParagraphNode' => [
+							  'JsonFormatTextNode' => [ 'text' ],
+							  'JsonFormatLinkNode' => [ 'text', 'url' ],
+							  'JsonFormatTextNode:1' => [ 'text' ],
+						  ],
+						  'JsonFormatTextNode:1' => [ ],
+						  'JsonFormatTableNode' => [
+							  'JsonFormatTableRowNode' => [
+								  'JsonFormatTableCellNode' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ],
+								  'JsonFormatTableCellNode:1' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ]
+							  ],
+							  'JsonFormatTableRowNode:1' => [
+								  'JsonFormatTableCellNode' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ],
+								  'JsonFormatTableCellNode:1' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ]
+							  ]
+						  ],
+						  'JsonFormatTextNode:2' => [ ],
+						  'JsonFormatSectionNode' => [
+							  'level', 'title',
+							  'JsonFormatTextNode' => [ ],
+							  'JsonFormatLinkNode' => [ 'text', 'url' ],
+							  'JsonFormatTextNode:1' => [ ],
+							  'JsonFormatParagraphNode' => [
+								  'JsonFormatLinkNode' => [ 'text', 'url' ],
+								  'JsonFormatTextNode' => [ ]
+							  ],
+							  'JsonFormatTextNode:2' => [ ]
+						  ],
+						  'JsonFormatSectionNode:1' => [
+							  'level', 'title',
+							  'JsonFormatTextNode' => [ ],
+							  'JsonFormatParagraphNode' => [
+								  'JsonFormatTextNode' => [ ]
+							  ],
+							  'JsonFormatTextNode:1' => [ ]
+						  ],
+						  'JsonFormatSectionNode:2' => [
+							  'level', 'title',
+							  'JsonFormatTextNode' => [ ],
+							  'JsonFormatListNode' => [
+								  'JsonFormatListItemNode' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ],
+							  ],
+							  'JsonFormatListNode:1' => [
+								  'JsonFormatListItemNode' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ],
+								  'JsonFormatListItemNode:1' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ]
+							  ],
+							  'JsonFormatListNode:2' => [
+								  'JsonFormatListItemNode' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ],
+							  ],
+							  'JsonFormatListNode:3' => [
+								  'JsonFormatListItemNode' => [
+									  'JsonFormatTextNode' => [ 'text' ]
+								  ]
+							  ],
+							  'JsonFormatTextNode:1' => [ ]
+						  ]
+					  ]
+				  ]
+			  ]
+			  ]
+			],
+			[ '
+{| class="infobox" style="clear: right; border: solid #aaa 1px; margin: 0 0 1em 1em; background: #f9f9f9; color:black;
+width: 310px; padding: 10px; text-align: left; float: right; margin-bottom:15px;"
+|- class="hiddenStructure"
+| valign=top nowrap=nowrap | \'\'\'Written by\'\'\'&nbsp; || Lorem
+|- class="hiddenStructure"
+| valign=top | \'\'\'Illustrator\'\'\'&nbsp; || Ipsum
+|- class="hiddenStructure"
+| valign=top |\'\'\'Published\'\'\'&nbsp; || Kra
+|- class="hiddenStructure"
+| valign=top |\'\'\'Publisher\'\'\'&nbsp; || Kre
+|- class="hiddenStructure"
+| valign=top | \'\'\'Series\'\'\'&nbsp; || Mija
+|- class="hiddenStructure"
+| valign=top | \'\'\'ISBN\'\'\'&nbsp; || Lis
+|}
+',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatInfoboxNode' => [
+							'JsonFormatInfoboxKeyValueNode' => [
+								'key', 'value'
 							],
-							'JsonFormatTextNode:1' => [],
-							'JsonFormatImageFigureNode' => [ 'src', 'caption' ],
-							'JsonFormatParagraphNode:1' => [
-								'JsonFormatImageNode' => [ 'src' ],
-								'JsonFormatTextNode' => []
+							'JsonFormatInfoboxKeyValueNode:1' => [
+								'key', 'value'
 							],
-							'JsonFormatTextNode:2' => [],
-							'JsonFormatImageFigureNode:1' => [ 'src', 'caption' ],
-							'JsonFormatImageFigureNode:2' => [ 'src', 'caption' ],
-							'JsonFormatImageFigureNode:3' => [ 'src', 'caption' ],
-							'JsonFormatTextNode:3' => [],
-							'JsonFormatParagraphNode:2' => [
-								'JsonFormatTextNode' => []
+							'JsonFormatInfoboxKeyValueNode:2' => [
+								'key', 'value'
 							],
-							'JsonFormatTextNode:4' => []
-						],
-						'JsonFormatSectionNode:1' => [
-							'level', 'title',
-							'JsonFormatTextNode' => [],
-							'JsonFormatParagraphNode' => [
-								'JsonFormatTextNode' => [ 'text' ],
-								'JsonFormatLinkNode' => [ 'text', 'url' ],
-								'JsonFormatTextNode:1' => [ 'text' ],
+							'JsonFormatInfoboxKeyValueNode:3' => [
+								'key', 'value'
 							],
-							'JsonFormatTextNode:1' => [],
-							'JsonFormatTableNode' => [
-								'JsonFormatTableRowNode' => [
-									'JsonFormatTableCellNode' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									],
-									'JsonFormatTableCellNode:1' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									]
-								],
-								'JsonFormatTableRowNode:1' => [
-									'JsonFormatTableCellNode' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									],
-									'JsonFormatTableCellNode:1' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									]
-								]
+							'JsonFormatInfoboxKeyValueNode:4' => [
+								'key', 'value'
 							],
-							'JsonFormatTextNode:2' => [],
-							'JsonFormatSectionNode' => [
-								'level', 'title',
-								'JsonFormatTextNode' => [],
-								'JsonFormatLinkNode' => [ 'text', 'url' ],
-								'JsonFormatTextNode:1' => [],
-								'JsonFormatParagraphNode' => [
-									'JsonFormatLinkNode' => [ 'text', 'url' ],
-									'JsonFormatTextNode' => []
-								],
-								'JsonFormatTextNode:2' => []
-							],
-							'JsonFormatSectionNode:1' => [
-								'level', 'title',
-								'JsonFormatTextNode' => [],
-								'JsonFormatParagraphNode' => [
-									'JsonFormatTextNode' => []
-								],
-								'JsonFormatTextNode:1' => []
-							],
-							'JsonFormatSectionNode:2' => [
-								'level', 'title',
-								'JsonFormatTextNode' => [],
-								'JsonFormatListNode' => [
-									'JsonFormatListItemNode' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									],
-								],
-								'JsonFormatListNode:1' => [
-									'JsonFormatListItemNode' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									],
-									'JsonFormatListItemNode:1' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									]
-								],
-								'JsonFormatListNode:2' => [
-									'JsonFormatListItemNode' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									],
-								],
-								'JsonFormatListNode:3' => [
-									'JsonFormatListItemNode' => [
-										'JsonFormatTextNode' => [ 'text' ]
-									]
-								],
-								'JsonFormatTextNode:1' => []
+							'JsonFormatInfoboxKeyValueNode:5' => [
+								'key', 'value'
 							]
 						]
 					]
 				]
+			],
+			[
+				'Text',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatParagraphNode' => [
+							'JsonFormatTextNode' => [ ]
+						],
+					]
+				]
+			],
+			[
+				'[[Image:Firefly_logo.png]]
+[[File:Firefly_logo.png|thumb|200px|adsfadsfasd]]',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatParagraphNode' => [
+							'JsonFormatImageNode' => [ 'src' ],
+						],
+						'JsonFormatTextNode' => [ ],
+						'JsonFormatImageFigureNode' => [ 'src', 'caption' ]
+					]
+				]
+			],
+			[
+				'',
+				[
+					'JsonFormatRootNode' => []
+				]
+			],
+			[
+				'=h1=',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatSectionNode' => [ 'level', 'title' ]
+					]
 				]
 			]
 		];

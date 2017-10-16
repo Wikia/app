@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTemplatePlaceholderModel class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -21,4 +21,4 @@ ve.dm.MWTemplatePlaceholderModel = function VeDmMWTemplatePlaceholderModel( tran
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWTemplatePlaceholderModel, ve.dm.MWTransclusionPartModel );
+OO.inheritClass( ve.dm.MWTemplatePlaceholderModel, ve.dm.MWTransclusionPartModel );

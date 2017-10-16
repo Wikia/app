@@ -21,14 +21,6 @@ $wgExtensionCredits['antispam'][] = array(
  */
 $wgAntiSpoofAccounts = true;
 
-/**
- * Allow sysops and bureaucrats to override the spoofing checks
- * and create accounts for people which hit false positives.
- */
-$wgGroupPermissions['sysop']['override-antispoof'] = true;
-$wgGroupPermissions['bureaucrat']['override-antispoof'] = true;
-$wgAvailableRights[] = 'override-antispoof';
-
 $dir = dirname( __FILE__ );
 
 $wgExtensionMessagesFiles['AntiSpoof'] = "$dir/AntiSpoof.i18n.php";
@@ -43,3 +35,7 @@ $wgHooks['AbortNewAccount'][] = 'AntiSpoofHooks::asAbortNewAccountHook';
 $wgHooks['UserCreateForm'][] = 'AntiSpoofHooks::asUserCreateFormHook';
 $wgHooks['AddNewAccount'][] = 'AntiSpoofHooks::asAddNewAccountHook';
 $wgHooks['RenameUserComplete'][] = 'AntiSpoofHooks::asAddRenameUserHook';
+
+// Wikia Change
+$wgHooks['UserRename::AfterGlobal'][] = 'AntiSpoofHooks::asAfterWikiaRenameUserHook';
+// Wikia Change end

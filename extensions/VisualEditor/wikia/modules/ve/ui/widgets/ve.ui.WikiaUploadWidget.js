@@ -6,7 +6,7 @@
 
 /**
  * @class
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -15,50 +15,93 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	var uploadButtonConfig;
 
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	ve.ui.WikiaUploadWidget.super.call( this, config );
 
 	uploadButtonConfig = {
-		'$$': this.$$,
-		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
-		'flags': ['constructive']
+		$: this.$,
+		label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
+		flags: ['primary']
 	};
-	if ( !config.hideIcon ) {
+	if ( config.icon ) {
 		uploadButtonConfig.icon = 'upload-small';
 	}
 
 	// Properties
-	this.$uploadIcon = this.$$( '<span>' )
-		.addClass( 've-ui-icon-upload' );
+	this.$uploadIcon = this.$( '<span>' )
+		.addClass( 'oo-ui-icon-upload' );
 
-	this.$uploadLabel = this.$$( '<span>' )
+	this.$uploadLabel = this.$( '<span>' )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-label' ) );
 
-	this.uploadButton = new ve.ui.ButtonWidget( uploadButtonConfig );
+	this.uploadButton = new OO.ui.ButtonWidget( uploadButtonConfig );
 
-	this.$form = this.$$( '<form>' );
-	this.$file = this.$$( '<input>' ).attr( {
-		'type': 'file',
-		'name': 'file'
-		} );
+	this.$form = this.$( '<form>' );
+	this.$file = this.$( '<input>' ).attr( {
+		type: 'file',
+		name: 'file'
+	} );
 
 	// Events
-	this.$.on( 'click', ve.bind( this.onClick, this ) );
-	this.uploadButton.on( 'click', ve.bind( this.onClick, this ) );
-	this.$file.on( 'change', ve.bind( this.onFileChange, this ) );
+	this.$element.on( 'click', this.onClick.bind( this ) );
+	this.uploadButton.on( 'click', this.onClick.bind( this ) );
+	this.$file.on( 'change', this.onFileChange.bind( this ) );
 
 	// Initialization
 	this.$form.append( this.$file );
-	this.$
+	this.$element
 		.addClass( 've-ui-wikiaUploadButtonWidget' )
 		.append( this.$uploadIcon )
 		.append( this.$uploadLabel )
-		.append( this.uploadButton.$ )
+		.append( this.uploadButton.$element )
 		.append( this.$form );
+
+	if ( mw.user.anonymous() ) {
+		this.setupForLoggedOut();
+	}
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaUploadWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaUploadWidget, OO.ui.Widget );
+
+/* Events */
+
+/**
+ * @event change
+ */
+
+/**
+ * @event upload
+ * @param {Object} data The API response data.
+ */
+
+/* Static methods */
+
+/**
+ * Check file for size and filetype errors
+ * @method
+ * @param {File} file File object containing properties of user uploaded file
+ * @returns {Array} Array of error strings. May return empty array
+ */
+ve.ui.WikiaUploadWidget.static.validateFile = function ( file ) {
+	var errors = [],
+		maxUploadSize = mw.config.get( 'wgMaxUploadSize' ),
+		fileExtensions = mw.config.get( 'wgFileExtensions' ),
+		filetype = fileExtensions[ ve.indexOf( file.type.substr( file.type.indexOf( '/' ) + 1 ), fileExtensions ) ];
+
+	if ( ve.isPlainObject( maxUploadSize ) ) {
+		maxUploadSize = maxUploadSize[ maxUploadSize[ filetype ] ? filetype : '*' ];
+	}
+	if ( file.size > maxUploadSize ) {
+		// Convert maxUploadSize from bytes to MB rounded to two decimals.
+		errors.push( [ 'size', Math.round( maxUploadSize / 1048576 * 100 ) / 100 ] );
+	}
+	if ( !filetype ) {
+		errors.push( [ 'filetype',  fileExtensions.join( ', ' ) ] );
+	}
+
+	return errors;
+};
 
 /* Methods */
 
@@ -68,31 +111,63 @@ ve.inheritClass( ve.ui.WikiaUploadWidget, ve.ui.Widget );
  * @method
  */
 ve.ui.WikiaUploadWidget.prototype.onClick = function () {
-	this.$file[0].click();
+	if ( !mw.user.anonymous() ) {
+		this.$file[0].click();
+	}
 };
 
 /**
  * Handle input file change event
  *
  * @method
+ * @fires success
  */
-ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
-	if ( !this.$file[0].files[0] ) {
+ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
+	var fileErrors,
+		form,
+		BannerNotification;
+
+	file = file || this.$file[0].files[0];
+	if ( !file ) {
 		return;
 	}
-	var formData = new FormData( this.$form[0] );
-	$.ajax( {
-		'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',
-		'type': 'post',
-		'cache': false,
-		'contentType': false,
-		'processData': false,
-		'data': formData,
-		'success': ve.bind( this.onUploadSuccess, this ),
-		'error': ve.bind( this.onUploadError, this )
-	} );
-	this.showUploadAnimation();
+
+	fileErrors = this.constructor.static.validateFile( file );
+
+	if ( fileErrors.length ) {
+		BannerNotification = mw.config.get( 'BannerNotification' );
+		new BannerNotification(
+			// show filetype message first if multiple errors exist
+			ve.msg(
+				'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ][ 0 ],
+				fileErrors[ fileErrors.length - 1 ][ 1 ]
+			),
+			'error',
+			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
+		).show();
+	} else {
+		form = new FormData( document.createElement( 'form' ) );
+		form.append( 'file', file );
+		form.append( 'action', 'addmediatemporary' );
+		form.append( 'format', 'json' );
+		form.append( 'type', 'image' );
+		form.append( 'token', mw.user.tokens.get( 'editToken' ) );
+
+		$.ajax( {
+			url: mw.util.wikiScript( 'api' ),
+			type: 'post',
+			cache: false,
+			contentType: false,
+			processData: false,
+			data: form,
+			success: this.onUploadSuccess.bind( this ),
+			error: this.onUploadError.bind( this )
+		} );
+
+		this.showUploadAnimation();
+	}
 	this.$file.attr( 'value', '' );
+	this.emit( 'change' );
 };
 
 /**
@@ -112,7 +187,8 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
 	}
 
 	// Success
-	this.emit( 'upload', data.apitempupload );
+	// TODO: this should probably fire 'success' not 'upload'
+	this.emit( 'upload', data.addmediatemporary );
 };
 
 /**
@@ -125,14 +201,13 @@ ve.ui.WikiaUploadWidget.prototype.onUploadError = function () {
 	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error' ) );
 };
 
-
 /*
  * Shows upload animation
  *
  * @method
  */
 ve.ui.WikiaUploadWidget.prototype.showUploadAnimation = function () {
-	this.$.addClass( 've-ui-texture-pending' );
+	this.$element.addClass( 've-ui-texture-pending' );
 };
 
 /*
@@ -141,5 +216,65 @@ ve.ui.WikiaUploadWidget.prototype.showUploadAnimation = function () {
  * @method
  */
 ve.ui.WikiaUploadWidget.prototype.hideUploadAnimation = function () {
-	this.$.removeClass( 've-ui-texture-pending' );
+	this.$element.removeClass( 've-ui-texture-pending' );
+};
+
+/**
+ * Getter for upload button.
+ * @returns the upload button
+ */
+ve.ui.WikiaUploadWidget.prototype.getUploadButton = function () {
+	return this.uploadButton;
+};
+
+ve.ui.WikiaUploadWidget.prototype.setupForLoggedOut = function () {
+	var loginButtonConfig = {
+			$: this.$,
+			label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-button' ),
+			flags: ['primary']
+		},
+		registerButtonConfig = {
+			$: this.$,
+			classes: [ 've-ui-wikiaRegisterButton' ],
+			label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-register-button' ),
+			flags: ['primary']
+		};
+
+	this.logInButton = new OO.ui.ButtonWidget( loginButtonConfig );
+	this.registerButton = new OO.ui.ButtonWidget( registerButtonConfig );
+
+	this.$logInLabel = this.$( '<span>' )
+		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-log-in-notice' ) );
+
+	this.logInButton.on( 'click', function () {
+		this.emit( 'logInButtonClicked' );
+	}.bind( this ) );
+
+	this.registerButton.on( 'click', function () {
+		this.emit( 'registerButtonClicked' );
+	}.bind( this ) );
+
+	this.$uploadLabel.hide();
+	this.uploadButton.$element.hide();
+
+	this.$element
+		.addClass( 've-ui-wikiaUploadButtonWidgetLogIn' )
+		.append( this.$logInLabel, this.logInButton.$element, this.registerButton.$element );
+};
+
+ve.ui.WikiaUploadWidget.prototype.onLogInSuccess = function ( keepUploadLabelHidden ) {
+	this.$element
+		.removeClass( 've-ui-wikiaUploadButtonWidgetLogIn' );
+
+	this.$logInLabel.remove();
+	this.logInButton.$element.remove();
+	this.registerButton.$element.remove();
+
+	// There is a CSS rule that hides the label when this widget is used in the WikiaMediaQueryWidget
+	// We don't want to show it in this case
+	if ( keepUploadLabelHidden !== true ) {
+		this.$uploadLabel.show();
+	}
+
+	this.uploadButton.$element.show();
 };

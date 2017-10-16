@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWNowikiAnnotation class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -19,12 +19,12 @@ ve.ce.MWNowikiAnnotation = function VeCeMWInternalLinkAnnotation( model, config 
 	ve.ce.Annotation.call( this, model, config );
 
 	// DOM changes
-	this.$.addClass( 've-ce-mwNowikiAnnotation' );
+	this.$element.addClass( 've-ce-mwNowikiAnnotation' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWNowikiAnnotation, ve.ce.Annotation );
+OO.inheritClass( ve.ce.MWNowikiAnnotation, ve.ce.Annotation );
 
 /* Static Properties */
 

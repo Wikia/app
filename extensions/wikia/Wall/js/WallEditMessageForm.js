@@ -22,7 +22,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 			this.showSourceTextArea(msg, data.htmlorwikitext);
 			$('.edit-buttons.sourceview', msg).first().show();
 		}
-		
+
 		msg.find('.buttonswrapper').hide();
 
 		$('.follow', msg).hide();
@@ -82,7 +82,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 
 		/* restore html to state from before edit */
 		this.insertOldHTML(id, bubble);
-		
+
 		msg.find('.buttonswrapper').show();
 
 		if( window.skin && window.skin != "monobook" ) {
@@ -95,7 +95,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 	getNewBody: function(container) {
 		return $('.msg-body textarea.body', container).val();
 	},
-	
+
 	getNewTitle: function(container) {
 		return $('.msg-title textarea.title', container).val();
 	},
@@ -114,7 +114,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 			this.saveEdit(e);
 		}));
 	},
-	
+
 	saveEdit: function(e) {
 		var target = $(e.target);
 		var buttons = target.parent().children('.wikia-button');
@@ -127,35 +127,57 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 
 		buttons.attr('disabled', true);
 
-		this.model.saveEdit( this.page, id, newtitle, newbody, isreply, format, this.proxy(function(data) {
-			var bubble = $('.speech-bubble-message', msg).first();
+		this.model.saveEdit(
+			this.page,
+			id,
+			newtitle,
+			newbody,
+			isreply,
+			format,
+			//success callback
+			this.proxy(function (data) {
+				var $bubble, $body, $timestamp, $editor;
 
-			this.resetHTMLAfterEdit(id, bubble);
+				$bubble = $('.speech-bubble-message', msg).first();
+				this.resetHTMLAfterEdit(id, $bubble);
 
-			$('.msg-title', msg).first().html(data.msgTitle);
-			var body = $('.msg-body', msg).first().html(data.body);
+				$('.msg-title', msg).first().html(data.msgTitle);
+				$body = $('.msg-body', msg).first().html(data.body);
 
-			var timestamp = $(bubble).find('.timestamp');
+				// fire event when new article comment is/will be added to DOM
+				mw.hook('wikipage.content').fire($body);
 
-			var editor = timestamp.find('.username');
-			if(editor.exists()) {
-				timestamp.find('.username').html(data.username).attr('href', data.userUrl);
-			} else {
-				timestamp.prepend($($.msg('wall-message-edited', data.userUrl, data.username, data.historyUrl)));
-			}
+				$timestamp = $bubble.find('.timestamp');
+				$editor = $timestamp.find('.username');
+				if ($editor.exists()) {
+					$timestamp.find('.username').html(data.username).attr('href', data.userUrl);
+				} else {
+					$timestamp.prepend($($.msg('wall-message-edited', data.userUrl, data.username, data.historyUrl)));
+				}
 
-			timestamp.find('.timeago').attr('title', data.isotime).timeago();
-			timestamp.find('.timeago-fmt').html(data.fulltime);
+				$timestamp.find('.timeago').attr('title', data.isotime).timeago();
+				$timestamp.find('.timeago-fmt').html(data.fulltime);
 
-			if(window.skin && window.skin != "monobook") {
-				WikiaButtons.init(msg);
-			}
+				if (window.skin && window.skin != "monobook") {
+					WikiaButtons.init(msg);
+				}
 
-			//$('.SpeechBubble .timestamp .permalink')
-			buttons.removeAttr('disabled');
-			
-			msg.find('.buttonswrapper').show();
-		}));
+				buttons.removeAttr('disabled');
+
+				msg.find('.buttonswrapper').show();
+			}),
+			//fail callback
+			this.proxy(function (data) {
+				var dataJson = JSON.parse(data.responseText);
+				buttons.removeAttr('disabled');
+
+				if (dataJson['reason'] == "badcontent") {
+					$.showModal($.msg('wall-posting-message-failed-filter-title'), $.msg('wall-posting-message-failed-filter-body') + "\n" + dataJson['blockInfo']);
+				} else {
+					$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
+				}
+			})
+		);
 	},
 
 	resetHTMLAfterEdit: function(id, bubble){

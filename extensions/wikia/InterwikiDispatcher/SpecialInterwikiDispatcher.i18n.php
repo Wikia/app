@@ -68,7 +68,7 @@ $messages['ca'] = array(
 	'interwikidispatcher-desc' => 'Resol els enllaços interwiki per reduir els redireccionaments Apache',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -241,10 +241,11 @@ $messages['pms'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  */
 $messages['pt'] = array(
 	'interwikidispatcher' => 'Expedidor interwikis',
-	'interwikidispatcher-desc' => 'Resolve os links interwikis para reduzir os reencaminhamentos do servidor Apache',
+	'interwikidispatcher-desc' => 'Resolve as ligações interwikis para reduzir os reencaminhamentos do servidor Apache',
 );
 
 /** Brazilian Portuguese (português do Brasil)

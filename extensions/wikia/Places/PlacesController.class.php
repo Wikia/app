@@ -6,6 +6,20 @@ class PlacesController extends WikiaController {
 	private static $mapId = 1;
 
 	/**
+	 * @throws UnauthorizedException
+	 */
+	public function init() {
+		$method = $this->request->getVal( 'method' );
+		if ( !$this->request->isInternal() && !in_array( $method, $this->allowedExternalMethods() ) ) {
+			throw new UnauthorizedException();
+		}
+	}
+
+	protected function allowedExternalMethods() {
+		return [ 'getMarkersRelatedToCurrentTitle', 'saveNewPlaceToArticle' ];
+	}
+
+	/**
 	 * Render static map from given set of attributes
 	 *
 	 * Used to render <place> parser hook
@@ -79,12 +93,16 @@ class PlacesController extends WikiaController {
 			$this->setVal('markers', $this->prepareMarkers($aMarkers));
 
 			// generate modal caption
-			$this->setVal('caption', wfMsgExt('places-modal-go-to-special', array('parseinline', 'parsemag'), count($this->markers)));
+			$this->setVal('caption', wfMessage('places-modal-go-to-special',
+					count($this->markers))->parse());
 		}
 	}
 
 	/**
 	 * Internal method used to render tooltip for each marker
+	 *
+	 * @param PlaceModel[] $aMarkers
+	 * @return array
 	 */
 	protected function prepareMarkers( Array $aMarkers ) {
 		$markers = array();
@@ -128,6 +146,17 @@ class PlacesController extends WikiaController {
 	 * Create a new place based on geo data provided and store it in the database
 	 */
 	public function saveNewPlaceToArticle(){
+		// SUS-1638: verify edit token
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $badRequestException ) {
+			$this->response->setValues( [
+				'success' => false,
+				'error' => wfMessage( 'sessionfailure' )->escaped()
+			] );
+			return;
+		}
+
 		$oPlaceModel = new PlaceModel();
 		$oPlaceModel->setPageId( $this->getVal( 'articleId', 0 ) );
 
@@ -242,7 +271,7 @@ class PlacesController extends WikiaController {
 
 		// use user default
 		if ( empty( $iWidth ) ){
-			$wopt = $this->app->wg->user->getOption( 'thumbsize' );
+			$wopt = $this->app->wg->user->getGlobalPreference( 'thumbsize' );
 			if( !isset( $this->app->wg->thumbLimits[ $wopt ] ) ) {
 				$wopt = User::getDefaultOption( 'thumbsize' );
 			}

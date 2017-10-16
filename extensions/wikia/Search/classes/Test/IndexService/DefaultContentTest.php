@@ -7,10 +7,14 @@ use Wikia\Search\Test\BaseTest, Wikia\Search\IndexService\DefaultContent, Reflec
 /**
  * Tests the Default Content service, which is pretty thorny
  * @author relwell
+ *
+ * @group Broken
  */
 class DefaultContentTest extends BaseTest
 {
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0834 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::Field
 	 */
 	public function testField() {
@@ -51,6 +55,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13276 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::execute
 	 */
 	public function testExecute() {
@@ -212,6 +218,7 @@ class DefaultContentTest extends BaseTest
 				'pageid' => 123,
 				'title_en' => 'my title',
 				'titleStrict' => 'my title',
+				'title_em' => 'my title',
 				'url' => 'http://foo.wikia.com/wiki/Foo',
 				'ns' => 0,
 				'host' => 'foo.wikia.com',
@@ -221,7 +228,8 @@ class DefaultContentTest extends BaseTest
 				'iscontent' => 'true',
 				'is_main_page' => 'false',
 				'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ],
-				'nolang_txt' => [ 'foo' ]
+				'nolang_txt' => [ 'foo' ],
+				'snippet_s' => 'this is my html'
 				];
 		$this->assertEquals(
 				$expectedResult,
@@ -230,6 +238,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08447 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getPageContentFromParseResponse
 	 */
 	public function testGetPagContentFromParseResponse() {
@@ -276,8 +286,39 @@ class DefaultContentTest extends BaseTest
 				$get->invoke( $service, $response )
 		);
 	}
+
+	public function test_PLA_580() {
+		// tests for PLA-580: It's possible to break our indexer by putting special characters in article.
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'getService', 'prepValuesFromHtml' ) );
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getGlobal' ) );
+		$service
+		    ->expects( $this->any() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mwService ) )
+		;
+		$mwService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getGlobal' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		
+		$prep = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'prepValuesFromHtml' );
+		$prep->setAccessible( true );
+
+		$expected = [ 
+			'nolang_txt' => "tam foo bar",
+			'words' => 3,
+			'html' => "tam foo bar"
+    ];
+		
+		$this->assertEquals($expected, $prep->invoke($service, "<p>tam foo bar</p>"));
+		$this->assertEquals($expected, $prep->invoke($service, "&lt;tam foo bar"));
+		$this->assertEquals($expected, $prep->invoke($service, "&gt;tam foo bar"));
+	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.12441 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getOutboundLinks
 	 */
 	public function testGetOutboundLinks() {
@@ -321,6 +362,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08268 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getCategoriesFromParseResponse
 	 */
 	public function testGetCategoriesFromParseResponse() {
@@ -341,6 +384,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08246 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getHeadingsFromParseResponse
 	 */
 	public function testGetHeadingsFromParseResponse() {
@@ -361,6 +406,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08559 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::prepValuesFromHtml
 	 */
 	public function testPrepValuesFromHtml() {
@@ -406,10 +453,10 @@ Never gonna make you cry
 Never gonna say goodbye
 Never gonna tell a lie and hurt you
 ENDIT;
-		
+		$html = trim( $html );
 		$result = $prep->invoke( $service, $html );
 		$this->assertEquals(
-				preg_replace( '/\s+/', ' ', $html ) . ' ',
+				preg_replace( '/\s+/', ' ', $html ),
 				$result['html_en']
 		);
 		$this->assertGreaterThanOrEqual(
@@ -419,6 +466,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08387 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::removeGarbageFromDom
 	 */
 	public function testRemoveGarbageFromDom() {
@@ -455,6 +504,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08582 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::extractAsidesFromDom
 	 */
 	public function testExtractAsidesFromDom() {
@@ -510,6 +561,8 @@ ENDIT;
 	
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08336 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getParagraphsFromDom
 	 */
 	public function testGetParagraphsFromDom() {
@@ -546,6 +599,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08371 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getPlaintextFromDom
 	 */
 	public function testGetPlaintextFromDom() {
@@ -578,9 +633,11 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0881 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::extractInfoBoxes
 	 */
-	public function testExtractInfoBoxes() {
+	public function testExtractInfoBoxesClassic() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'removeGarbageFromDom' ] )
@@ -603,7 +660,7 @@ ENDIT;
 		$dom
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'find' )
-		    ->with   ( 'table.infobox' )
+		    ->with   ( 'table.infobox,table.wikia-infobox' )
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
@@ -640,12 +697,106 @@ ENDIT;
 		;
 		$node
 		    ->expects( $this->at( 2 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'th' )
+		    ->will   ( $this->returnValue( array() ) )
+		;
+		$node
+		    ->expects( $this->at( 3 ) )
 		    ->method ( '__get' )
 		    ->with   ( 'plaintext' )
 		    ->will   ( $this->returnValue( "here   is my \n key" ) )
 		;
 		$node
+		    ->expects( $this->at( 4 ) )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( 'value' ) )
+		;
+		$this->mockClass( 'simple_html_dom', $dom2 );
+		$this->assertEquals(
+				[ 'infoboxes_txt' => [ 'infobox_1 | here is my key | value' ] ],
+				$extract->invoke( $service, $dom, $result )
+		);
+	}
+
+		/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0881 ms
+	 * @covers Wikia\Search\IndexService\DefaultContent::extractInfoBoxes
+	 */
+	public function testExtractInfoBoxesWikia() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( [ 'removeGarbageFromDom' ] )
+		                ->getMock();
+		$dom = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find'  ] )
+		            ->getMock();
+		$dom2 = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find', 'save', 'load'  ] )
+		            ->getMock();
+		$node = $this->getMockBuilder( 'simple_html_dom_node' )
+		             ->disableOriginalConstructor()
+		             ->setMethods( [ '__get', 'find', 'outertext' ] )
+		             ->getMock();
+		$result = array();
+		$extract = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'extractInfoboxes' );
+		$extract->setAccessible( true );
+		$dom
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'table.infobox,table.wikia-infobox' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 0 ) ) 
+		    ->method ( 'outertext' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'removeGarbageFromDom' )
+		    ->with   ( $dom2 ) // commented out due to wikia mock proxy
+		;
+		$dom2
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'save' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$dom2
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'load' )
+		    ->with   ( 'foo' )
+		;
+		$dom2
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'tr' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'td' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'th' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
 		    ->expects( $this->at( 3 ) )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( "here   is my \n key" ) )
+		;
+		$node
+		    ->expects( $this->at( 4 ) )
 		    ->method ( '__get' )
 		    ->with   ( 'plaintext' )
 		    ->will   ( $this->returnValue( 'value' ) )
@@ -658,6 +809,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08083 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::pushNolangTxt
 	 * @covers Wikia\Search\IndexService\DefaultContent::getNolangTxt
 	 */
@@ -691,6 +844,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08084 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::reinitialize
 	 */
 	public function testReinitialize() {

@@ -5,12 +5,12 @@
  *
  * This script assumes that:
  * - hooks names in hooks.txt are at the beginning of a line and single quoted.
- * - hooks names in code are the first parameter of wfRunHooks.
+ * - hooks names in code are the first parameter of Hooks::run.
  *
  * if --online option is passed, the script will compare the hooks in the code
  * with the ones at http://www.mediawiki.org/wiki/Manual:Hooks
  *
- * Any instance of wfRunHooks that doesn't meet these parameters will be noted.
+ * Any instance of Hooks::run that doesn't meet these parameters will be noted.
  *
  * Copyright © Antoine Musso
  *
@@ -163,7 +163,7 @@ class FindHooks extends Maintenance {
 	private function getHooksFromFile( $file ) {
 		$content = file_get_contents( $file );
 		$m = array();
-		preg_match_all( '/(?:wfRunHooks|Hooks\:\:run)\(\s*([\'"])(.*?)\1/', $content, $m );
+		preg_match_all( '/(?:Hooks::run|Hooks\:\:run)\(\s*([\'"])(.*?)\1/', $content, $m );
 		return $m[2];
 	}
 
@@ -189,13 +189,13 @@ class FindHooks extends Maintenance {
 	/**
 	 * Get bad hooks (where the hook name could not be determined) from a PHP file
 	 * @param $file Full filename to the PHP file.
-	 * @return array of bad wfRunHooks() lines
+	 * @return array of bad Hooks::run() lines
 	 */
 	private function getBadHooksFromFile( $file ) {
 		$content = file_get_contents( $file );
 		$m = array();
-		# We want to skip the "function wfRunHooks()" one.  :)
-		preg_match_all( '/(?<!function )wfRunHooks\(\s*[^\s\'"].*/', $content, $m );
+		# We want to skip the "function Hooks::run()" one.  :)
+		preg_match_all( '/(?<!function )Hooks::run\(\s*[^\s\'"].*/', $content, $m );
 		$list = array();
 		foreach ( $m[0] as $match ) {
 			$list[] = $match . "(" . $file . ")";
@@ -206,14 +206,14 @@ class FindHooks extends Maintenance {
 	/**
 	 * Get bad hooks from the source code.
 	 * @param $path Directory where the include files can be found
-	 * @return array of bad wfRunHooks() lines
+	 * @return array of bad Hooks::run() lines
 	 */
 	private function getBadHooksFromPath( $path ) {
 		$hooks = array();
 		$dh = opendir( $path );
 		if ( $dh ) {
 			while ( ( $file = readdir( $dh ) ) !== false ) {
-				# We don't want to read this file as it contains bad calls to wfRunHooks()
+				# We don't want to read this file as it contains bad calls to Hooks::run()
 				if ( filetype( $path . $file ) == 'file' && !$path . $file == __FILE__ ) {
 					$hooks = array_merge( $hooks, $this->getBadHooksFromFile( $path . $file ) );
 				}

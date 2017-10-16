@@ -23,8 +23,6 @@
  * @file
  */
 
-class MWHookException extends MWException {}
-
 /**
  * Hooks class.
  *
@@ -89,19 +87,17 @@ class Hooks {
 	 * in here than would normally be necessary.
 	 *
 	 * @param $event String: event name
-	 * @param $args Array: parameters passed to hook functions
-	 * @return Boolean True if no handler aborted the hook
+	 * @param $args array: parameters passed to hook functions
+	 * @return bool True if no handler aborted the hook
+	 * @throws FatalError if a hook handler returns string
+	 * @throws MWException if the hook handler setup for this hook is invalid
 	 */
 	public static function run( $event, $args = array() ) {
-		wfProfileIn(__METHOD__.'-hook-'.$event);
-		wfProfileIn(__METHOD__);
 		// Wikia change - begin - @author: wladek
 		// optimized hooks execution
 
 		// Return quickly in the most common case
 		if ( !isset( self::$handlers[$event] ) ) {
-			wfProfileOut(__METHOD__);
-			wfProfileOut(__METHOD__.'-hook-'.$event);
 			return true;
 		}
 
@@ -119,7 +115,6 @@ class Hooks {
 			$data = null;
 			$have_data = false;
 			$closure = false;
-			$badhookmsg = false;
 
 			/**
 			 * $hook can be: a function, an object, an array of $function and
@@ -161,7 +156,7 @@ class Hooks {
 				$func = $hook;
 			} elseif ( is_object( $hook ) ) {
 				$object = $hook; # Wikia
-				if ( $object instanceof Closure ) {
+				if ( is_callable( $object ) ) {
 					$closure = true;
 				} else {
 					$method = "on" . $event;
@@ -179,9 +174,7 @@ class Hooks {
 
 			if ( $closure ) {
 				$callback = $object;
-				$func = "hook-$event-closure";
 			} elseif ( isset( $object ) ) {
-				$func = get_class( $object ) . '::' . $method;
 				$callback = array( $object, $method );
 			} else {
 				$callback = $func;
@@ -209,69 +202,20 @@ class Hooks {
 			 * problem here.
 			 */
 			$retval = null;
-			set_error_handler( 'Hooks::hookErrorHandler' );
-			wfProfileOut(__METHOD__);
-			wfProfileIn( $func );
-			try {
-				$retval = call_user_func_array( $callback, $hook_args );
-			} catch ( MWHookException $e ) {
-				$badhookmsg = $e->getMessage();
-			}
-			wfProfileOut( $func );
-			wfProfileIn(__METHOD__);
-			restore_error_handler();
 
-			/* String return is an error; false return means stop processing. */
+			$retval = call_user_func_array( $callback, $hook_args );
+
+			// Process the return value.
 			if ( is_string( $retval ) ) {
+				// String returned means error.
 				throw new FatalError( $retval );
-			} elseif( $retval === null ) {
-				if ( $closure ) {
-					$prettyFunc = "$event closure";
-				} elseif( is_array( $callback ) ) {
-					if( is_object( $callback[0] ) ) {
-						$prettyClass = get_class( $callback[0] );
-					} else {
-						$prettyClass = strval( $callback[0] );
-					}
-					$prettyFunc = $prettyClass . '::' . strval( $callback[1] );
-				} else {
-					$prettyFunc = strval( $callback );
-				}
-				if ( $badhookmsg ) {
-					throw new MWException(
-						'Detected bug in an extension! ' .
-						"Hook $prettyFunc has invalid call signature; " . $badhookmsg
-					);
-				} else {
-					throw new MWException(
-						'Detected bug in an extension! ' .
-						"Hook $prettyFunc failed to return a value; " .
-						'should return true to continue hook processing or false to abort.'
-					);
-				}
-			} elseif ( !$retval ) {
-				wfProfileOut(__METHOD__);
-				wfProfileOut(__METHOD__.'-hook-'.$event);
+			} elseif ( $retval === false ) {
+				// False was returned. Stop processing, but no error.
 				return false;
 			}
 		}
 
-		wfProfileOut(__METHOD__);
-		wfProfileOut(__METHOD__.'-hook-'.$event);
 		return true;
 	}
 
-	/**
-	 * This REALLY should be protected... but it's public for compatibility
-	 *
-	 * @param $errno Unused
-	 * @param $errstr String: error message
-	 * @return Boolean: false
-	 */
-	public static function hookErrorHandler( $errno, $errstr ) {
-		if ( strpos( $errstr, 'expected to be a reference, value given' ) !== false ) {
-			throw new MWHookException( $errstr );
-		}
-		return false;
-	}
 }

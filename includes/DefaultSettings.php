@@ -33,7 +33,7 @@ $wgConf = new SiteConfiguration;
 /** @endcond */
 
 /** MediaWiki version number */
-$wgVersion = '1.19.8';
+$wgVersion = '1.19.24';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -116,14 +116,6 @@ $wgScriptExtension  = '.php';
  * Will default to "{$wgScriptPath}/index{$wgScriptExtension}" in Setup.php
  */
 $wgScript = false;
-
-/**
- * The URL path to redirect.php. This is a script that is used by the Nostalgia
- * skin.
- *
- * Will default to "{$wgScriptPath}/redirect{$wgScriptExtension}" in Setup.php
- */
-$wgRedirectScript = false;
 
 /**
  * The URL path to load.php.
@@ -448,11 +440,6 @@ $wgCacheSharedUploads = true;
 * The timeout for copy uploads is set by $wgHTTPTimeout.
 */
 $wgAllowCopyUploads = false;
-/**
- * Allow asynchronous copy uploads.
- * This feature is experimental and broken as of r81612.
- */
-$wgAllowAsyncCopyUploads = false;
 
 /**
  * Max size for uploads, in bytes. If not set to an array, applies to all
@@ -526,7 +513,7 @@ $wgHashedSharedUploadDirectory = true;
  *
  * Please specify the namespace, as in the example below.
  */
-$wgRepositoryBaseUrl = "http://commons.wikimedia.org/wiki/File:";
+$wgRepositoryBaseUrl = "https://commons.wikimedia.org/wiki/File:";
 
 /**
  * This is the list of preferred extensions for uploading files. Uploading files
@@ -675,6 +662,14 @@ $wgImageMagickTempDir = false;
  * Leave as false to skip this.
  */
 $wgCustomConvertCommand = false;
+
+ /**
+ * Minimum upload chunk size, in bytes. When using chunked upload, non-final
+ * chunks smaller than this will be rejected. May be reduced based on the
+ * 'upload_max_filesize' or 'post_max_size' PHP settings.
+ * @since 1.26
+ */
+$wgMinUploadChunkSize = 1024; # 1KB
 
 /**
  * Some tests and extensions use exiv2 to manipulate the EXIF metadata in some image formats.
@@ -1073,27 +1068,6 @@ $wgEnableEmail = true;
 $wgEnableUserEmail = true;
 
 /**
- * Set to true to put the sending user's email in a Reply-To header
- * instead of From. ($wgEmergencyContact will be used as From.)
- *
- * Some mailers (eg sSMTP) set the SMTP envelope sender to the From value,
- * which can cause problems with SPF validation and leak recipient addressses
- * when bounces are sent to the sender.
- */
-$wgUserEmailUseReplyTo = false;
-
-/**
- * Minimum time, in hours, which must elapse between password reminder
- * emails for a given account. This is to prevent abuse by mail flooding.
- */
-$wgPasswordReminderResendTime = 24;
-
-/**
- * The time, in seconds, when an emailed temporary password expires.
- */
-$wgNewPasswordExpiry = 3600 * 24 * 7;
-
-/**
  * The time, in seconds, when an email confirmation email expires
  */
 $wgUserEmailConfirmationTokenExpiry = 7 * 24 * 60 * 60;
@@ -1143,6 +1117,11 @@ $wgEmailAuthentication = true;
 $wgEnotifWatchlist = false;
 
 /**
+ * Allow users to enable email notification ("enotif") on Discussions changes.
+ */
+$wgEnotifDiscussions = true;
+
+/**
  * Allow users to enable email notification ("enotif") when someone edits their
  * user talk page.
  */
@@ -1174,12 +1153,6 @@ $wgEnotifImpersonal = false;
  * match the limit on your mail server.
  */
 $wgEnotifMaxRecips = 500;
-
-/**
- * Send mails via the job queue. This can be useful to reduce the time it
- * takes to save a page that a lot of people are watching.
- */
-$wgEnotifUseJobQ = false;
 
 /**
  * Use real name instead of username in e-mail "from" field.
@@ -1348,9 +1321,6 @@ $wgDBClusterTimeout = 10;
  */
 $wgDBAvgStatusPoll = 2000;
 
-/** Set to true if using InnoDB tables */
-$wgDBtransactions = false;
-
 /**
  * Set to true to engage MySQL 4.1/5.0 charset-related features;
  * for now will just cause sending of 'SET NAMES=utf8' on connect.
@@ -1443,7 +1413,7 @@ $wgDefaultExternalStore = false;
  *
  * Set to 0 to disable, or number of seconds before cache expiry.
  */
-$wgRevisionCacheExpiry = 0;
+$wgRevisionCacheExpiry = 86400 * 30; // a month
 
 /** @} */ # end text storage }
 
@@ -1624,7 +1594,7 @@ $wgMemCachedPersistent = false;
 /**
  * Read/write timeout for MemCached server communication, in microseconds.
  */
-$wgMemCachedTimeout = 100000;
+$wgMemCachedTimeout = 500000;
 
 /**
  * Set this to true to make a local copy of the message cache, for use in
@@ -1923,6 +1893,7 @@ $wgDummyLanguageCodes = array(
 	'be-x-old' => 'be-tarask',
 	'bh' => 'bho',
 	'fiu-vro' => 'vro',
+	'lol' => 'lol', # Used for In Context Translations
 	'no' => 'nb',
 	'qqq' => 'qqq', # Used for message documentation.
 	'qqx' => 'qqx', # Used for viewing message keys.
@@ -2260,24 +2231,6 @@ $wgAllowMicrodataAttributes = false;
 $wgCleanupPresentationalAttributes = true;
 
 /**
- * Should we try to make our HTML output well-formed XML?  If set to false,
- * output will be a few bytes shorter, and the HTML will arguably be more
- * readable.  If set to true, life will be much easier for the authors of
- * screen-scraping bots, and the HTML will arguably be more readable.
- *
- * Setting this to false may omit quotation marks on some attributes, omit
- * slashes from some self-closing tags, omit some ending tags, etc., where
- * permitted by HTML5.  Setting it to true will not guarantee that all pages
- * will be well-formed, although non-well-formed pages should be rare and it's
- * a bug if you find one.  Conversely, setting it to false doesn't mean that
- * all XML-y constructs will be omitted, just that they might be.
- *
- * Because of compatibility with screen-scraping bots, and because it's
- * controversial, this is currently left to true by default.
- */
-$wgWellFormedXml = true;
-
-/**
  * Permit other namespaces in addition to the w3.org default.
  * Use the prefix for the key and the namespace for the value. For
  * example:
@@ -2312,11 +2265,6 @@ $wgSiteNotice = '';
 $wgExtraSubtitle	= '';
 
 /**
- * If this is set, a "donate" link will appear in the sidebar. Set it to a URL.
- */
-$wgSiteSupportPage	= '';
-
-/**
  * Validate the overall output using tidy and refuse
  * to display the page if it's not valid.
  */
@@ -2328,15 +2276,13 @@ $wgValidateAllHtml = false;
  * This has to be completely lowercase; see the "skins" directory for the list
  * of available skins.
  */
-$wgDefaultSkin = 'vector';
+$wgDefaultSkin = 'oasis';
 
 /**
  * Specify the name of a skin that should not be presented in the list of
  * available skins.  Use for blacklisting a skin which you do not want to
  * remove from the .../skins/ directory
  */
-$wgSkipSkin = '';
-/** Array for more like $wgSkipSkin. */
 $wgSkipSkins = array();
 
 /**
@@ -2346,7 +2292,6 @@ $wgSkipSkins = array();
  * stylesheet, which is specified for 'screen' media.
  *
  * Can be a complete URL, base-relative path, or $wgStylePath-relative path.
- * Try 'chick/main.css' to apply the Chick styles to the MonoBook HTML.
  *
  * Will also be switched in when 'handheld=yes' is added to the URL, like
  * the 'printable=yes' mode for print media.
@@ -2493,20 +2438,6 @@ $wgFooterIcons = array(
  * false = split login and create account into two separate links
  */
 $wgUseCombinedLoginLink = true;
-
-/**
- * Search form behavior for Vector skin only
- * true = use an icon search button
- * false = use Go & Search buttons
- */
-$wgVectorUseSimpleSearch = false;
-
-/**
- * Watch and unwatch as an icon rather than a link for Vector skin only
- * true = use an icon watch/unwatch button
- * false = use watch/unwatch text link
- */
-$wgVectorUseIconWatch = false;
 
 /**
  * Display user edit counts in various prominent places.
@@ -2688,6 +2619,27 @@ $wgResourceLoaderValidateStaticJS = false;
  */
 $wgResourceLoaderExperimentalAsyncLoading = false;
 
+/**
+ * Whether to allow site-wide CSS (MediaWiki:Common.css and friends) on
+ * restricted pages like Special:UserLogin or Special:Preferences where
+ * JavaScript is disabled for security reasons. As it is possible to
+ * execute JavaScript through CSS, setting this to true opens up a
+ * potential security hole. Some sites may "skin" their wiki by using
+ * site-wide CSS, causing restricted pages to look unstyled and different
+ * from the rest of the site.
+ *
+ * @since 1.25
+ */
+$wgAllowSiteCSSOnRestrictedPages = false;
+
+/**
+ * When OutputHandler is used, mangle any output that contains
+ * <cross-domain-policy>. Without this, an attacker can send their own
+ * cross-domain policy unless it is prevented by the crossdomain.xml file at
+ * the domain root.
+ */
+$wgMangleFlashPolicy = true;
+
 /** @} */ # End of resource loader settings }
 
 
@@ -2793,7 +2745,7 @@ $wgLocalInterwiki = false;
 /**
  * Expiry time for cache of interwiki table
  */
-$wgInterwikiExpiry = 10800;
+$wgInterwikiExpiry = 86400;
 
 /** Interwiki caching settings.
 	$wgInterwikiCache specifies path to constant database file
@@ -3146,15 +3098,6 @@ $wgArticleCountMethod = null;
 $wgUseCommaCount = false;
 
 /**
- * wgHitcounterUpdateFreq sets how often page counters should be updated, higher
- * values are easier on the database. A value of 1 causes the counters to be
- * updated on every hit, any higher value n cause them to update *on average*
- * every n hits. Should be set to either 1 or something largish, eg 1000, for
- * maximum efficiency.
- */
-$wgHitcounterUpdateFreq = 1;
-
-/**
  * How many days user must be idle before he is considered inactive. Will affect
  * the number shown on Special:Statistics and Special:ActiveUsers special page.
  * You might want to leave this as the default value, to provide comparable
@@ -3168,9 +3111,6 @@ $wgActiveUserDays = 30;
  * @name   User accounts, authentication
  * @{
  */
-
-/** For compatibility with old installations set to false */
-$wgPasswordSalt = true;
 
 /**
  * Specifies the minimal length of a user password. If set to 0, empty pass-
@@ -3303,7 +3243,7 @@ $wgHiddenPrefs = array();
  * This is used in a regular expression character class during
  * registration (regex metacharacters like / are escaped).
  */
-$wgInvalidUsernameCharacters = '@';
+$wgInvalidUsernameCharacters = '@:';
 
 /**
  * Character used as a delimiter when testing for interwiki userrights
@@ -3337,16 +3277,6 @@ $wgExternalAuthType = null;
  * info on what to put here.
  */
 $wgExternalAuthConf = array();
-
-/**
- * When should we automatically create local accounts when external accounts
- * already exist, if using ExternalAuth?  Can have three values: 'never',
- * 'login', 'view'.  'view' requires the external database to support cookies,
- * and implies 'login'.
- *
- * TODO: Implement 'view' (currently behaves like 'login').
- */
-$wgAutocreatePolicy = 'login';
 
 /**
  * Policies for how each preference is allowed to be changed, in the presence
@@ -3405,12 +3335,19 @@ $wgSysopEmailBans = true;
  * Limits on the possible sizes of range blocks.
  *
  * CIDR notation is hard to understand, it's easy to mistakenly assume that a
- * /1 is a small range and a /31 is a large range. Setting this to half the
- * number of bits avoids such errors.
+ * /1 is a small range and a /31 is a large range. For IPv4, setting a limit of
+ * half the number of bits avoids such errors, and allows entire ISPs to be
+ * blocked using a small number of range blocks.
+ *
+ * For IPv6, RFC 3177 recommends that a /48 be allocated to every residential
+ * customer, so range blocks larger than /64 (half the number of bits) will
+ * plainly be required. RFC 4692 implies that a very large ISP may be
+ * allocated a /19 if a generous HD-Ratio of 0.8 is used, so we will use that
+ * as our limit. As of 2012, blocking the whole world would require a /4 range.
  */
 $wgBlockCIDRLimit = array(
 	'IPv4' => 16, # Blocks larger than a /16 (64k addresses) will not be allowed
-	'IPv6' => 64, # 2^64 = ~1.8x10^19 addresses
+	'IPv6' => 19,
 );
 
 /**
@@ -3469,150 +3406,6 @@ $wgEmailConfirmToEdit = false;
  *
  * This replaces $wgWhitelistAccount and $wgWhitelistEdit
  */
-$wgGroupPermissions = array();
-
-/** @cond file_level_code */
-// Implicit group for all visitors
-$wgGroupPermissions['*']['createaccount']    = true;
-$wgGroupPermissions['*']['read']             = true;
-$wgGroupPermissions['*']['edit']             = true;
-$wgGroupPermissions['*']['createpage']       = true;
-$wgGroupPermissions['*']['createtalk']       = true;
-$wgGroupPermissions['*']['writeapi']         = true;
-//$wgGroupPermissions['*']['patrolmarks']      = false; // let anons see what was patrolled
-
-// Implicit group for all logged-in accounts
-$wgGroupPermissions['user']['move']             = true;
-$wgGroupPermissions['user']['move-subpages']    = true;
-$wgGroupPermissions['user']['move-rootuserpages'] = true; // can move root userpages
-// $wgGroupPermissions['user']['movefile']         = true; // Disabled for now due to possible bugs and security concerns
-$wgGroupPermissions['user']['read']             = true;
-$wgGroupPermissions['user']['edit']             = true;
-$wgGroupPermissions['user']['createpage']       = true;
-$wgGroupPermissions['user']['createtalk']       = true;
-$wgGroupPermissions['user']['writeapi']         = true;
-$wgGroupPermissions['user']['upload']           = true;
-$wgGroupPermissions['user']['reupload']         = true;
-$wgGroupPermissions['user']['reupload-shared']  = true;
-$wgGroupPermissions['user']['minoredit']        = true;
-$wgGroupPermissions['user']['purge']            = true; // can use ?action=purge without clicking "ok"
-$wgGroupPermissions['user']['sendemail']        = true;
-
-// Implicit group for accounts that pass $wgAutoConfirmAge
-$wgGroupPermissions['autoconfirmed']['autoconfirmed'] = true;
-
-// Users with bot privilege can have their edits hidden
-// from various log pages by default
-$wgGroupPermissions['bot']['bot']              = true;
-$wgGroupPermissions['bot']['autoconfirmed']    = true;
-$wgGroupPermissions['bot']['nominornewtalk']   = true;
-$wgGroupPermissions['bot']['autopatrol']       = true;
-$wgGroupPermissions['bot']['suppressredirect'] = true;
-$wgGroupPermissions['bot']['apihighlimits']    = true;
-$wgGroupPermissions['bot']['writeapi']         = true;
-#$wgGroupPermissions['bot']['editprotected']    = true; // can edit all protected pages without cascade protection enabled
-
-// Most extra permission abilities go to this group
-$wgGroupPermissions['sysop']['block']            = true;
-$wgGroupPermissions['sysop']['createaccount']    = true;
-$wgGroupPermissions['sysop']['delete']           = true;
-$wgGroupPermissions['sysop']['bigdelete']        = true; // can be separately configured for pages with > $wgDeleteRevisionsLimit revs
-$wgGroupPermissions['sysop']['deletedhistory']   = true; // can view deleted history entries, but not see or restore the text
-$wgGroupPermissions['sysop']['deletedtext']      = true; // can view deleted revision text
-$wgGroupPermissions['sysop']['undelete']         = true;
-$wgGroupPermissions['sysop']['editinterface']    = true;
-$wgGroupPermissions['sysop']['editusercss']      = true;
-$wgGroupPermissions['sysop']['edituserjs']       = true;
-$wgGroupPermissions['sysop']['import']           = true;
-$wgGroupPermissions['sysop']['importupload']     = true;
-$wgGroupPermissions['sysop']['move']             = true;
-$wgGroupPermissions['sysop']['move-subpages']    = true;
-$wgGroupPermissions['sysop']['move-rootuserpages'] = true;
-$wgGroupPermissions['sysop']['patrol']           = true;
-$wgGroupPermissions['sysop']['autopatrol']       = true;
-$wgGroupPermissions['sysop']['protect']          = true;
-$wgGroupPermissions['sysop']['proxyunbannable']  = true;
-$wgGroupPermissions['sysop']['rollback']         = true;
-$wgGroupPermissions['sysop']['upload']           = true;
-$wgGroupPermissions['sysop']['reupload']         = true;
-$wgGroupPermissions['sysop']['reupload-shared']  = true;
-$wgGroupPermissions['sysop']['unwatchedpages']   = true;
-$wgGroupPermissions['sysop']['autoconfirmed']    = true;
-$wgGroupPermissions['sysop']['upload_by_url']    = true;
-$wgGroupPermissions['sysop']['ipblock-exempt']   = true;
-$wgGroupPermissions['sysop']['blockemail']       = true;
-$wgGroupPermissions['sysop']['markbotedits']     = true;
-$wgGroupPermissions['sysop']['apihighlimits']    = true;
-$wgGroupPermissions['sysop']['browsearchive']    = true;
-$wgGroupPermissions['sysop']['noratelimit']      = true;
-$wgGroupPermissions['sysop']['movefile']         = true;
-$wgGroupPermissions['sysop']['unblockself']      = true;
-$wgGroupPermissions['sysop']['suppressredirect'] = true;
-#$wgGroupPermissions['sysop']['mergehistory']     = true;
-
-// Permission to change users' group assignments
-$wgGroupPermissions['bureaucrat']['userrights']  = true;
-$wgGroupPermissions['bureaucrat']['noratelimit'] = true;
-// Permission to change users' groups assignments across wikis
-#$wgGroupPermissions['bureaucrat']['userrights-interwiki'] = true;
-// Permission to export pages including linked pages regardless of $wgExportMaxLinkDepth
-#$wgGroupPermissions['bureaucrat']['override-export-depth'] = true;
-
-#$wgGroupPermissions['sysop']['deleterevision']  = true;
-// To hide usernames from users and Sysops
-#$wgGroupPermissions['suppress']['hideuser'] = true;
-// To hide revisions/log items from users and Sysops
-#$wgGroupPermissions['suppress']['suppressrevision'] = true;
-// For private suppression log access
-#$wgGroupPermissions['suppress']['suppressionlog'] = true;
-
-/**
- * The developer group is deprecated, but can be activated if need be
- * to use the 'lockdb' and 'unlockdb' special pages. Those require
- * that a lock file be defined and creatable/removable by the web
- * server.
- */
-# $wgGroupPermissions['developer']['siteadmin'] = true;
-
-/** @endcond */
-
-/**
- * Permission keys revoked from users in each group.
- * This acts the same way as wgGroupPermissions above, except that
- * if the user is in a group here, the permission will be removed from them.
- *
- * Improperly setting this could mean that your users will be unable to perform
- * certain essential tasks, so use at your own risk!
- */
-$wgRevokePermissions = array();
-
-/**
- * Implicit groups, aren't shown on Special:Listusers or somewhere else
- */
-$wgImplicitGroups = array( '*', 'user', 'autoconfirmed' );
-
-/**
- * A map of group names that the user is in, to group names that those users
- * are allowed to add or revoke.
- *
- * Setting the list of groups to add or revoke to true is equivalent to "any group".
- *
- * For example, to allow sysops to add themselves to the "bot" group:
- *
- *    $wgGroupsAddToSelf = array( 'sysop' => array( 'bot' ) );
- *
- * Implicit groups may be used for the source group, for instance:
- *
- *    $wgGroupsRemoveFromSelf = array( '*' => true );
- *
- * This allows users in the '*' group (i.e. any user) to remove themselves from
- * any group that they happen to be in.
- *
- */
-$wgGroupsAddToSelf = array();
-
-/** @see $wgGroupsAddToSelf */
-$wgGroupsRemoveFromSelf = array();
 
 /**
  * Set of available actions that can be restricted via action=protect
@@ -3706,56 +3499,6 @@ $wgAutopromote = array(
 		array( APCOND_AGE, &$wgAutoConfirmAge ),
 	),
 );
-
-/**
- * Automatically add a usergroup to any user who matches certain conditions.
- * Does not add the user to the group again if it has been removed.
- * Also, does not remove the group if the user no longer meets the criteria.
- *
- * The format is
- *	array( event => criteria, ... )
- * where event is
- *	'onEdit' (when user edits) or 'onView' (when user views the wiki)
- * and criteria has the same format as $wgAutopromote
- *
- * @see $wgAutopromote
- * @since 1.18
- */
-$wgAutopromoteOnce = array(
-	'onEdit' => array(),
-	'onView' => array()
-);
-
-/**
- * Put user rights log entries for autopromotion in recent changes?
- * @since 1.18
- */
-$wgAutopromoteOnceLogInRC = true;
-
-/**
- * $wgAddGroups and $wgRemoveGroups can be used to give finer control over who
- * can assign which groups at Special:Userrights.  Example configuration:
- *
- * @code
- * // Bureaucrat can add any group
- * $wgAddGroups['bureaucrat'] = true;
- * // Bureaucrats can only remove bots and sysops
- * $wgRemoveGroups['bureaucrat'] = array( 'bot', 'sysop' );
- * // Sysops can make bots
- * $wgAddGroups['sysop'] = array( 'bot' );
- * // Sysops can disable other sysops in an emergency, and disable bots
- * $wgRemoveGroups['sysop'] = array( 'sysop', 'bot' );
- * @endcode
- */
-$wgAddGroups = array();
-/** @see $wgAddGroups */
-$wgRemoveGroups = array();
-
-/**
- * A list of available rights, in addition to the ones defined by the core.
- * For extensions only.
- */
-$wgAvailableRights = array();
 
 /**
  * Optional to restrict deletion of pages with higher revision counts
@@ -3857,6 +3600,12 @@ $wgRateLimits = array(
 		'ip'     => null, // for each anon and recent account
 		'subnet' => null, // ... with final octet removed
 		),
+	'upload' => array(
+		'user'   => null,
+		'newbie' => null,
+		'ip'     => null,
+		'subnet' => null,
+	),
 	'move' => array(
 		'user'   => null,
 		'newbie' => null,
@@ -3984,17 +3733,6 @@ $wgCookiePrefix = false;
  * XSS attack.
  */
 $wgCookieHttpOnly = true;
-
-/**
- * If the requesting browser matches a regex in this blacklist, we won't
- * send it cookies with HttpOnly mode, even if $wgCookieHttpOnly is on.
- */
-$wgHttpOnlyBlacklist = array(
-	// Internet Explorer for Mac; sometimes the cookies work, sometimes
-	// they don't. It's difficult to predict, as combinations of path
-	// and expiration options affect its parsing.
-	'/^Mozilla\/4\.0 \(compatible; MSIE \d+\.\d+; Mac_PowerPC\)/',
-);
 
 /** A list of cookies that vary the cache (for use by extensions) */
 $wgCacheVaryCookies = array();
@@ -4195,10 +3933,15 @@ $wgStatsMethod = 'cache';
  */
 $wgAggregateStatsID = false;
 
-/** Whereas to count the number of time an article is viewed.
- * Does not work if pages are cached (for example with squid).
+/**
+ * Set this to an integer to only do synchronous site_stats updates
+ * one every *this many* updates. The other requests go into pending
+ * delta values in $wgMemc. Make sure that $wgMemc is a global cache.
+ * If set to -1, updates *only* go to $wgMemc (useful for daemons).
+ *
+ * @see PLATFORM-2275
  */
-$wgDisableCounters = false;
+$wgSiteStatsAsyncFactor = 1;
 
 /**
  * Parser test suite files to be run by parserTests.php when no specific
@@ -4543,6 +4286,14 @@ $wgUpgradeKey = false;
  * Default: 13 weeks = about three months
  */
 $wgRCMaxAge = 13 * 7 * 24 * 3600;
+
+/**
+ * Wikia change: Recentchanges items are periodically purged; keep the number of rows at the stable level
+ *
+ * @see PLATFORM-1393
+ * @see PLATFORM-1460
+ */
+$wgRCMaxRows = 20000;
 
 /**
  * Filter $wgRCLinkDays by $wgRCMaxAge to avoid showing links for numbers
@@ -4926,14 +4677,7 @@ $wgHooks = &Hooks::getHandlersArray();
  * can add to this to provide custom jobs
  */
 $wgJobClasses = array(
-	'refreshLinks' => 'RefreshLinksJob',
-	'refreshLinks2' => 'RefreshLinksJob2',
-	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
-	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
-	'sendMail' => 'EmaillingJob',
-	'enotifNotify' => 'EnotifNotifyJob',
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
-	'uploadFromUrl' => 'UploadFromUrlJob',
 );
 
 /**
@@ -4952,9 +4696,10 @@ $wgJobTypesExcludedFromDefaultQueue = array();
  * Additional functions to be performed with updateSpecialPages.
  * Expensive Querypages are already updated.
  */
-$wgSpecialPageCacheUpdates = array(
-	'Statistics' => array( 'SiteStatsUpdate', 'cacheUpdate' )
-);
+$wgSpecialPageCacheUpdates = [
+	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ], # PLATFORM-2275
+	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
+];
 
 /**
  * Hooks that are used for outputting exceptions.  Format is:
@@ -5539,7 +5284,9 @@ $wgAjaxLicensePreview = true;
  );
  *
  */
-$wgCrossSiteAJAXdomains = array();
+$wgCrossSiteAJAXdomains = [
+	"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
+];
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -5559,7 +5306,7 @@ $wgCrossSiteAJAXdomainExceptions = array();
 /**
  * Maximum amount of virtual memory available to shell processes under linux, in KB.
  */
-$wgMaxShellMemory = 102400;
+$wgMaxShellMemory = 0; // Wikia change - OPS-8226
 
 /**
  * Maximum file size created by shell processes under linux, in KB
@@ -5593,8 +5340,13 @@ $wgShellLocale = 'en_US.utf8';
 
 /**
  * Timeout for HTTP requests done internally
+ *
+ * Let's use different values when running a maintenance script (that includes Wikia Tasks)
+ * and when serving HTTP request
+ *
+ * @see PLATFORM-2385
  */
-$wgHTTPTimeout = 25;
+$wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
 
 /**
  * Timeout for Asynchronous (background) HTTP requests
@@ -5610,7 +5362,6 @@ $wgHTTPProxy = false;
 
 /************************************************************************//**
  * @name   Job queue
- * See also $wgEnotifUseJobQ.
  * @{
  */
 
@@ -5720,6 +5471,7 @@ $wgMaximumMovedPages = 100;
 /**
  * Fix double redirects after a page move.
  * Tends to conflict with page move vandalism, use only on a private wiki.
+ * TODO: if this is ever set to true, make sure to migrate includes/job/DoubleRedirectJob.php over to using the new job queue system!
  */
 $wgFixDoubleRedirects = false;
 

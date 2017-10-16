@@ -1,0 +1,25 @@
+/*!
+ * VisualEditor MediaWiki Initialization Target styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* Dialogs */
+
+/* Override overflow: hidden; from MW styles */
+.ve-ui-commandHelpDialog-section h3 {
+	overflow: visible;
+}
+
+/* IE hacks */
+
+/* Undo overflow: hidden; from MW CSS to work around hasLayout issue */
+.ve-init-target-ie .ve-ce-surface h1,
+.ve-init-target-ie .ve-ce-surface h2,
+.ve-init-target-ie .ve-ce-surface h3,
+.ve-init-target-ie .ve-ce-surface h4,
+.ve-init-target-ie .ve-ce-surface h5,
+.ve-init-target-ie .ve-ce-surface h6 {
+	overflow: visible;
+}

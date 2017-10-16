@@ -1,0 +1,24 @@
+.oo-ad-screen {
+  cursor: default;
+
+  .oo-action-icon {
+    span.oo-icon {
+      opacity: 0;
+    }
+  }
+
+  .oo-action-icon.oo-icon-hidden {
+    z-index: $zindex-action-icon-pause-hidden;
+    visibility: hidden;
+  }
+
+  .oo-action-icon-pause.oo-animate-pause {
+    z-index: $zindex-action-icon-pause-animate;
+    cursor: default;
+    pointer-events: none; // Allow click to pass through
+  }
+}
+
+.oo-ad-screen.oo-hidden {
+  cursor: none;
+}

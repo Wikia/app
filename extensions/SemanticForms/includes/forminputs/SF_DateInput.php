@@ -20,16 +20,26 @@ class SFDateInput extends SFFormInput {
 		return array( '_dat' => array() );
 	}
 
+	public static function getDefaultCargoTypes() {
+		return array( 'Date' => array() );
+	}
+
 	public static function monthDropdownHTML( $cur_month, $input_name, $is_disabled ) {
 		global $sfgTabIndex, $wgAmericanDates;
 
 		$optionsText = '';
 		$month_names = SFFormUtils::getMonthNames();
+		// Add a "null" value at the beginning.
+		array_unshift( $month_names, null );
 		foreach ( $month_names as $i => $name ) {
-			// pad out month to always be two digits
-			$month_value = ( $wgAmericanDates == true ) ? $name : str_pad( $i + 1, 2, '0', STR_PAD_LEFT );
+			if ( is_null( $name ) ) {
+				$month_value = null;
+			} else {
+				// Pad out month to always be two digits.
+				$month_value = ( $wgAmericanDates == true ) ? $name : str_pad( $i, 2, '0', STR_PAD_LEFT );
+			}
 			$optionAttrs = array ( 'value' => $month_value );
-			if ( $name == $cur_month || ( $i + 1 ) == $cur_month ) {
+			if ( $name == $cur_month || $i == $cur_month ) {
 				$optionAttrs['selected'] = 'selected';
 			}
 			$optionsText .= Html::element( 'option', $optionAttrs, $name );
@@ -46,8 +56,48 @@ class SFDateInput extends SFFormInput {
 		return $text;
 	}
 
+	static function parseDate( $date ) {
+		// Special handling for 'default=now'.
+		if ( $date == 'now' ) {
+			global $wgLocaltimezone;
+			if ( isset( $wgLocaltimezone ) ) {
+				$serverTimezone = date_default_timezone_get();
+				date_default_timezone_set( $wgLocaltimezone );
+			}
+			$year = date( 'Y' );
+			$month = date( 'm' );
+			$day = date( 'j' );
+			if ( isset( $wgLocaltimezone ) ) {
+				date_default_timezone_set( $serverTimezone );
+			}
+			return array( $year, $month, $day );
+		}
+
+		// All other dates.
+		if ( ctype_digit( $date ) ) {
+			return array( $date, null, null );
+		}
+
+		$seconds = strtotime( $date );
+		$year = date( 'Y', $seconds );
+		$month = date( 'm', $seconds );
+		// Determine if there's a month but no day. There's no ideal
+		// way to do this, so: we'll just look for the total
+		// number of spaces, slashes and dashes, and if there's
+		// exactly one altogether, we'll guess that it's a month only.
+		$numSpecialChars = substr_count( $date, ' ' ) + substr_count( $date, '/' ) + substr_count( $date, '-' );
+		if ( $numSpecialChars == 1 ) {
+			return array( $year, $month, null );
+		}
+
+		$day = date( 'j', $seconds );
+		return array( $year, $month, $day );
+	}
+
 	public static function getMainHTML( $date, $input_name, $is_mandatory, $is_disabled, $other_args ) {
 		global $sfgTabIndex, $wgAmericanDates;
+
+		$year = $month = $day = null;
 
 		if ( $date ) {
 			// Can show up here either as an array or a string,
@@ -58,34 +108,10 @@ class SFDateInput extends SFFormInput {
 				$month = $date['month'];
 				$day = $date['day'];
 			} else {
-				// handle 'default=now'
-				if ( $date == 'now' ) {
-					global $wgLocaltimezone;
-					if ( isset( $wgLocaltimezone ) ) {
-						$serverTimezone = date_default_timezone_get();
-						date_default_timezone_set( $wgLocaltimezone );
-					}
-					$date = date( 'Y/m/d' );
-					if ( isset( $wgLocaltimezone ) ) {
-						date_default_timezone_set( $serverTimezone );
-					}
-				}
-				$actual_date = new SMWTimeValue( '_dat' );
-				$actual_date->setUserValue( $date );
-				$year = $actual_date->getYear();
-				// TODO - the code to convert from negative to
-				// BC notation should be in SMW itself.
-				if ( $year < 0 ) {
-					$year = ( $year * - 1 + 1 ) . ' BC';
-				}
-				$month = $actual_date->getMonth();
-				$day = $actual_date->getDay();
+				list( $year, $month, $day ) = self::parseDate( $date );
 			}
 		} else {
-			$cur_date = getdate();
-			$year = $cur_date['year'];
-			$month = $cur_date['month'];
-			$day = null; // no need for day
+			// Just keep everything at null.
 		}
 		$text = "";
 		$disabled_text = ( $is_disabled ) ? 'disabled' : '';

@@ -1,8 +1,6 @@
 <?php
-/**
- * @file
- * @ingroup SMWDataValues
- */
+
+use SMW\DataTypeRegistry;
 
 /**
  * This datavalue implements special processing suitable for defining types of
@@ -38,29 +36,34 @@ class SMWTypesValue extends SMWDataValue {
 	}
 
 	protected function parseUserValue( $value ) {
-		global $wgContLang;
+		global $wgContLang, $smwgHistoricTypeNamespace;
 
 		if ( $this->m_caption === false ) {
 			$this->m_caption = $value;
 		}
 
 		$valueParts = explode( ':', $value, 2 );
-		if ( count( $valueParts ) > 1 ) {
+		if ( $smwgHistoricTypeNamespace && count( $valueParts ) > 1 ) {
 			$namespace = smwfNormalTitleText( $valueParts[0] );
 			$value = $valueParts[1];
 			$typeNamespace = $wgContLang->getNsText( SMW_NS_TYPE );
 			if ( $namespace != $typeNamespace ) {
-				$this->addError( wfMsgForContent( 'smw_wrong_namespace', $typeNamespace ) );
+				$this->addError( wfMessage( 'smw_wrong_namespace', $typeNamespace )->inContentLanguage()->text() );
 			}
 		}
 
-		$this->m_givenLabel = smwfNormalTitleText( $value );
-		$this->m_typeId = SMWDataValueFactory::findTypeID( $this->m_givenLabel );
+		if ( $value{0} === '_' ) {
+			$this->m_typeId = $value;
+		} else {
+			$this->m_givenLabel = smwfNormalTitleText( $value );
+			$this->m_typeId = DataTypeRegistry::getInstance()->findTypeId( $this->m_givenLabel );
+		}
+
 		if ( $this->m_typeId === '' ) {
-			$this->addError( wfMsgForContent( 'smw_unknowntype', $this->m_givenLabel ) );
+			$this->addError( wfMessage( 'smw_unknowntype', $this->m_givenLabel )->inContentLanguage()->text() );
 			$this->m_realLabel = $this->m_givenLabel;
 		} else {
-			$this->m_realLabel = SMWDataValueFactory::findTypeLabel( $this->m_typeId );
+			$this->m_realLabel = DataTypeRegistry::getInstance()->findTypeLabel( $this->m_typeId );
 		}
 		$this->m_isAlias = ( $this->m_realLabel === $this->m_givenLabel ) ? false : true;
 
@@ -68,7 +71,7 @@ class SMWTypesValue extends SMWDataValue {
 			$this->m_dataitem = self::getTypeUriFromTypeId( $this->m_typeId );
 		} catch ( SMWDataItemException $e ) {
 			$this->m_dataitem = self::getTypeUriFromTypeId( 'notype' );
-			$this->addError( wfMsgForContent( 'smw_parseerror' ) );
+			$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
 		}
 	}
 
@@ -83,7 +86,7 @@ class SMWTypesValue extends SMWDataValue {
 		     ( $dataItem->getQuery() === '' ) ) {
 			$this->m_isAlias = false;
 			$this->m_typeId = $dataItem->getFragment();
-			$this->m_realLabel = SMWDataValueFactory::findTypeLabel( $this->m_typeId );
+			$this->m_realLabel = DataTypeRegistry::getInstance()->findTypeLabel( $this->m_typeId );
 			$this->m_caption = $this->m_givenLabel = $this->m_realLabel;
 			$this->m_dataitem = $dataItem;
 			return true;
@@ -134,18 +137,13 @@ class SMWTypesValue extends SMWDataValue {
 
 	/**
 	 * Gets the title text for the types special page.
-	 * Takes care of compatibility changes in MW 1.17 and 1.18.
-	 * 1.17 introduces SpecialPageFactory
-	 * 1.18 deprecates SpecialPage::getLocalNameFor
 	 *
 	 * @since 1.6
 	 *
 	 * @return string
 	 */
 	protected function getSpecialPageTitleText() {
-		return is_callable( array( 'SpecialPageFactory', 'getLocalNameFor' ) ) ?
-			SpecialPageFactory::getLocalNameFor( 'Types', $this->m_realLabel )
-			: SpecialPage::getLocalNameFor( 'Types', $this->m_realLabel );
+		return SpecialPageFactory::getLocalNameFor( 'Types', $this->m_realLabel );
 	}
 
 	public function getWikiValue() {
@@ -162,7 +160,7 @@ class SMWTypesValue extends SMWDataValue {
 	 * @return string
 	 */
 	public function getDBkey() {
-		return ( $this->isValid() ) ? SMWDataValueFactory::findTypeID( $this->m_realLabel ) : '';
+		return ( $this->isValid() ) ? DataTypeRegistry::getInstance()->findTypeID( $this->m_realLabel ) : '';
 	}
 
 	/**

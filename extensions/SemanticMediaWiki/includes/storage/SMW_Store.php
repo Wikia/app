@@ -1,12 +1,13 @@
 <?php
-/**
- * Basic abstract classes for SMW's storage abstraction layer.
- *
- * @file
- * @ingroup SMWStore
- *
- * @author Markus Krötzsch
- */
+
+namespace SMW;
+
+use SMWDataItem;
+use SMWQuery;
+use SMWQueryResult;
+use SMWRequestOptions;
+use SMWSemanticData;
+use Title;
 
 /**
  * This group contains all parts of SMW that relate to storing and retrieving
@@ -18,117 +19,6 @@
  */
 
 /**
- * Small data container class for describing filtering conditions on the string
- * label of some entity. States that a given string should either be prefix,
- * postfix, or some arbitrary part of labels.
- *
- * @ingroup SMWStore
- *
- * @author Markus Krötzsch
- */
-class SMWStringCondition {
-	const STRCOND_PRE = 0;
-	const STRCOND_POST = 1;
-	const STRCOND_MID = 2;
-
-	/**
-	 * String to match.
-	 */
-	public $string;
-
-	/**
-	 * Condition. One of STRCOND_PRE (string matches prefix),
-	 * STRCOND_POST (string matches postfix), STRCOND_MID
-	 * (string matches to some inner part).
-	 */
-	public $condition;
-
-	public function __construct( $string, $condition ) {
-		$this->string = $string;
-		$this->condition = $condition;
-	}
-}
-
-/**
- * Container object for various options that can be used when retrieving
- * data from the store. These options are mostly relevant for simple,
- * direct requests -- inline queries may require more complex options due
- * to their more complex structure.
- * Options that should not be used or where default values should be used
- * can be left as initialised.
- *
- * @ingroup SMWStore
- *
- * @author Markus Krötzsch
- */
-class SMWRequestOptions {
-
-	/**
-	 * The maximum number of results that should be returned.
-	 */
-	public $limit = -1;
-
-	/**
-	 * A numerical offset. The first $offset results are skipped.
-	 * Note that this does not imply a defined order of results
-	 * (see SMWRequestOptions->$sort below).
-	 */
-	public $offset = 0;
-
-	/**
-	 * Should the result be ordered? The employed order is defined
-	 * by the type of result that are requested: wiki pages and strings
-	 * are ordered alphabetically, whereas other data is ordered
-	 * numerically. Usually, the order should be fairly "natural".
-	 */
-	public $sort = false;
-
-	/**
-	 * If SMWRequestOptions->$sort is true, this parameter defines whether
-	 * the results are ordered in ascending or descending order.
-	 */
-	public $ascending = true;
-
-	/**
-	 * Specifies a lower or upper bound for the values returned by the query.
-	 * Whether it is lower or upper is specified by the parameter "ascending"
-	 * (true->lower, false->upper).
-	 */
-	public $boundary = null;
-
-	/**
-	 * Specifies whether or not the requested boundary should be returned
-	 * as a result.
-	 */
-	public $include_boundary = true;
-
-	/**
-	 * An array of string conditions that are applied if the result has a
-	 * string label that can be subject to those patterns.
-	 */
-	private $stringcond = array();
-
-	/**
-	 * Set a new string condition applied to labels of results (if available).
-	 *
-	 * @param $string string to match
-	 * @param $condition integer type of condition, one of STRCOND_PRE, STRCOND_POST, STRCOND_MID
-	 */
-	public function addStringCondition( $string, $condition ) {
-		$this->stringcond[] = new SMWStringCondition( $string, $condition );
-	}
-
-	/**
-	 * Return the specified array of SMWStringCondition objects.
-	 */
-	public function getStringConditions() {
-		return $this->stringcond;
-	}
-
-}
-
-
-/**
  * The abstract base class for all classes that implement access to some
  * semantic store. Besides the relevant interface, this class provides default
  * implementations for some optional methods, which inform the caller that
@@ -138,7 +28,17 @@ class SMWRequestOptions {
  *
  * @author Markus Krötzsch
  */
-abstract class SMWStore {
+abstract class Store {
+
+	/**
+	 * @var boolean
+	 */
+	private $updateJobsEnabledState = true;
+
+	/**
+	 * @var ConnectionManager
+	 */
+	protected $connectionManager = null;
 
 ///// Reading methods /////
 
@@ -153,45 +53,54 @@ abstract class SMWStore {
 	 * @note There is no guarantee that the store does not retrieve more
 	 * data than requested when a filter is used. Filtering just ensures
 	 * that only necessary requests are made, i.e. it improves performance.
+	 *
+	 * @param DIWikiPage $subject
+	 * @param string[]|bool $filter
 	 */
-	public abstract function getSemanticData( SMWDIWikiPage $subject, $filter = false );
+	public abstract function getSemanticData( DIWikiPage $subject, $filter = false );
 
 	/**
 	 * Get an array of all property values stored for the given subject and
-	 * property. The result is an array of SMWDataItem objects.
+	 * property. The result is an array of DataItem objects.
 	 *
 	 * If called with $subject == null, all values for the given property
 	 * are returned.
 	 *
 	 * @param $subject mixed SMWDIWikiPage or null
-	 * @param $property SMWDIProperty
+	 * @param $property DIProperty
 	 * @param $requestoptions SMWRequestOptions
 	 *
 	 * @return array of SMWDataItem
 	 */
-	public abstract function getPropertyValues( $subject, SMWDIProperty $property, $requestoptions = null );
+	public abstract function getPropertyValues( $subject, DIProperty $property, $requestoptions = null );
 
 	/**
 	 * Get an array of all subjects that have the given value for the given
-	 * property. The result is an array of SMWDIWikiPage objects. If null
+	 * property. The result is an array of DIWikiPage objects. If null
 	 * is given as a value, all subjects having that property are returned.
+	 *
+	 * @return DIWikiPage[]
 	 */
-	public abstract function getPropertySubjects( SMWDIProperty $property, $value, $requestoptions = null );
+	public abstract function getPropertySubjects( DIProperty $property, $value, $requestoptions = null );
 
 	/**
 	 * Get an array of all subjects that have some value for the given
-	 * property. The result is an array of SMWDIWikiPage objects.
+	 * property. The result is an array of DIWikiPage objects.
+	 *
+	 * @return DIWikiPage[]
 	 */
-	public abstract function getAllPropertySubjects( SMWDIProperty $property, $requestoptions = null );
+	public abstract function getAllPropertySubjects( DIProperty $property, $requestoptions = null );
 
 	/**
 	 * Get an array of all properties for which the given subject has some
-	 * value. The result is an array of SMWDIProperty objects.
+	 * value. The result is an array of DIProperty objects.
 	 *
-	 * @param $subject SMWDIWikiPage denoting the subject
-	 * @param $requestoptions SMWRequestOptions optionally defining further options
+	 * @param DIWikiPage $subject denoting the subject
+	 * @param SMWRequestOptions|null $requestOptions optionally defining further options
+	 *
+	 * @return SMWDataItem
 	 */
-	public abstract function getProperties( SMWDIWikiPage $subject, $requestoptions = null );
+	public abstract function getProperties( DIWikiPage $subject, $requestOptions = null );
 
 	/**
 	 * Get an array of all properties for which there is some subject that
@@ -208,11 +117,11 @@ abstract class SMWStore {
 	 * the MediaWiki database entry about a Title objects sortkey. If no
 	 * sortkey is stored, the default sortkey (title string) is returned.
 	 *
-	 * @param $wikiPage SMWDIWikiPage to find the sortkey for
+	 * @param $wikiPage DIWikiPage to find the sortkey for
 	 * @return string sortkey
 	 */
-	public function getWikiPageSortKey( SMWDIWikiPage $wikiPage ) {
-		$sortkeyDataItems = $this->getPropertyValues( $wikiPage, new SMWDIProperty( '_SKEY' ) );
+	public function getWikiPageSortKey( DIWikiPage $wikiPage ) {
+		$sortkeyDataItems = $this->getPropertyValues( $wikiPage, new DIProperty( '_SKEY' ) );
 
 		if ( count( $sortkeyDataItems ) > 0 ) {
 			return end( $sortkeyDataItems )->getString();
@@ -222,8 +131,29 @@ abstract class SMWStore {
 	}
 
 	/**
-	 * Convenience method to find the redirect target of an SMWDIWikiPage
-	 * or SMWDIProperty object. Returns a dataitem of the same type that
+	 * Convenience method to find last modified MW timestamp for a subject that
+	 * has been added using the storage-engine.
+	 *
+	 * @since 2.3
+	 *
+	 * @param DIWikiPage $wikiPage
+	 *
+	 * @return integer
+	 */
+	public function getWikiPageLastModifiedTimestamp( DIWikiPage $wikiPage ) {
+
+		$dataItems = $this->getPropertyValues( $wikiPage, new DIProperty( '_MDAT' ) );
+
+		if ( $dataItems !== array() ) {
+			return end( $dataItems )->getMwTimestamp( TS_MW );
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Convenience method to find the redirect target of a DIWikiPage
+	 * or DIProperty object. Returns a dataitem of the same type that
 	 * the input redirects to, or the input itself if there is no redirect.
 	 *
 	 * @param $dataItem SMWDataItem to find the redirect for.
@@ -238,19 +168,32 @@ abstract class SMWStore {
 		} elseif ( $dataItem->getDIType() == SMWDataItem::TYPE_WIKIPAGE ) {
 			$wikipage = $dataItem;
 		} else {
-			throw new InvalidArgumentException( 'SMWStore::getRedirectTarget() expects an object of type SMWDIProperty or SMWDIWikiPage.' );
+			throw new InvalidArgumentException( 'SMWStore::getRedirectTarget() expects an object of type IProperty or SMWDIWikiPage.' );
 		}
 
-		$redirectDataItems = $this->getPropertyValues( $wikipage, new SMWDIProperty( '_REDI' ) );
-		if ( count( $redirectDataItems ) > 0 ) {
-			if ( $dataItem->getDIType() == SMWDataItem::TYPE_PROPERTY ) {
-				return new SMWDIProperty( end( $redirectDataItems )->getDBkey() );
-			} else {
-				return end( $redirectDataItems );
-			}
-		} else {
-			return $dataItem;
+		$hash = $wikipage->getHash();
+		$poolCache = InMemoryPoolCache::getInstance()->getPoolCacheFor( 'store.redirectTarget.lookup' );
+
+		if ( $poolCache->contains( $hash ) ) {
+			return $poolCache->fetch( $hash );
 		}
+
+		$redirectDataItems = $this->getPropertyValues( $wikipage, new DIProperty( '_REDI' ) );
+
+		if ( count( $redirectDataItems ) > 0 ) {
+
+			$redirectDataItem = end( $redirectDataItems );
+
+			if ( $dataItem->getDIType() == SMWDataItem::TYPE_PROPERTY && $redirectDataItem instanceof DIWikiPage ) {
+				$dataItem = DIProperty::newFromUserLabel( $redirectDataItem->getDBkey() );
+			} else {
+				$dataItem = $redirectDataItem;
+			}
+
+			$poolCache->save( $hash, $dataItem );
+		}
+
+		return $dataItem;
 	}
 
 ///// Writing methods /////
@@ -267,50 +210,60 @@ abstract class SMWStore {
 
 	/**
 	 * Update the semantic data stored for some individual. The data is
-	 * given as a SMWSemanticData object, which contains all semantic data
+	 * given as a SemanticData object, which contains all semantic data
 	 * for one particular subject.
 	 *
-	 * @param SMWSemanticData $data
+	 * @param SemanticData $data
 	 */
-	public abstract function doDataUpdate( SMWSemanticData $data );
+	protected abstract function doDataUpdate( SemanticData $data );
 
 	/**
 	 * Update the semantic data stored for some individual. The data is
-	 * given as a SMWSemanticData object, which contains all semantic data
+	 * given as a SemanticData object, which contains all semantic data
 	 * for one particular subject.
 	 *
-	 * @param $data SMWSemanticData
+	 * @param SemanticData $semanticData
 	 */
-	public function updateData( SMWSemanticData $data ) {
-		wfRunHooks( 'SMWStore::updateDataBefore', array( $this, $data ) );
+	public function updateData( SemanticData $semanticData ) {
 
-		// Invalidate the page, so data stored on it gets displayed immediately in queries.
-		global $smwgAutoRefreshSubject;
-		if ( $smwgAutoRefreshSubject && !wfReadOnly() ) {
-			$title = Title::makeTitle( $data->getSubject()->getNamespace(), $data->getSubject()->getDBkey() );
-			$dbw = wfGetDB( DB_MASTER );
+		if ( !ApplicationFactory::getInstance()->getSettings()->get( 'smwgSemanticsEnabled' ) ) {
+			return;
+		}
 
-			$dbw->update(
-				'page',
-				array( 'page_touched' => $dbw->timestamp( time() + 4 ) ),
-				$title->pageCond(),
-				__METHOD__
-			);
+		$subject = $semanticData->getSubject();
 
-			HTMLFileCache::clearFileCache( $title );
-	    }
+		$dispatchContext = EventHandler::getInstance()->newDispatchContext();
+		$dispatchContext->set( 'subject', $subject );
 
-		$this->doDataUpdate( $data );
+		EventHandler::getInstance()->getEventDispatcher()->dispatch(
+			'on.before.semanticdata.update.complete',
+			$dispatchContext
+		);
 
-		wfRunHooks( 'SMWStore::updateDataAfter', array( $this, $data ) );
+		/**
+		 * @since 1.6
+		 */
+		\Hooks::run( 'SMWStore::updateDataBefore', array( $this, $semanticData ) );
+
+		$this->doDataUpdate( $semanticData );
+
+		/**
+		 * @since 1.6
+		 */
+		\Hooks::run( 'SMWStore::updateDataAfter', array( $this, $semanticData ) );
+
+		EventHandler::getInstance()->getEventDispatcher()->dispatch(
+			'on.after.semanticdata.update.complete',
+			$dispatchContext
+		);
 	}
 
 	/**
 	 * Clear all semantic data specified for some page.
 	 *
-	 * @param SMWDIWikiPage $di
+	 * @param DIWikiPage $di
 	 */
-	public function clearData( SMWDIWikiPage $di ) {
+	public function clearData( DIWikiPage $di ) {
 		$this->updateData( new SMWSemanticData( $di ) );
 	}
 
@@ -329,6 +282,9 @@ abstract class SMWStore {
 ///// Query answering /////
 
 	/**
+	 * @note Change the signature in 3.* to avoid for subclasses to manage the
+	 * hooks; keep the current signature to adhere semver for the 2.* branch
+	 *
 	 * Execute the provided query and return the result as an
 	 * SMWQueryResult if the query was a usual instance retrieval query. In
 	 * the case that the query asked for a plain string (querymode
@@ -341,17 +297,35 @@ abstract class SMWStore {
 	 */
 	public abstract function getQueryResult( SMWQuery $query );
 
+	/**
+	 * @note Change the signature to abstract for the 3.* branch
+	 *
+	 * @since  2.1
+	 *
+	 * @param SMWQuery $query
+	 *
+	 * @return SMWQueryResult
+	 */
+	protected function fetchQueryResult( SMWQuery $query ) {
+	}
+
 ///// Special page functions /////
 
 	/**
 	 * Return all properties that have been used on pages in the wiki. The
-	 * result is an array of arrays, each containing a property title and a
-	 * count. The expected order is alphabetical w.r.t. to property title
-	 * texts.
+	 * result is an array of arrays, each containing a property data item
+	 * and a count. The expected order is alphabetical w.r.t. to property
+	 * names.
+	 *
+	 * If there is an error on creating some property object, then a
+	 * suitable SMWDIError object might be returned in its place. Even if
+	 * there are errors, the function should always return the number of
+	 * results requested (otherwise callers might assume that there are no
+	 * further results to ask for).
 	 *
 	 * @param SMWRequestOptions $requestoptions
 	 *
-	 * @return array
+	 * @return array of array( DIProperty|SMWDIError, integer )
 	 */
 	public abstract function getPropertiesSpecial( $requestoptions = null );
 
@@ -361,9 +335,15 @@ abstract class SMWStore {
 	 * properties that have been given a type if they have no efficient
 	 * means of accessing the set of all pages in the property namespace.
 	 *
+	 * If there is an error on creating some property object, then a
+	 * suitable SMWDIError object might be returned in its place. Even if
+	 * there are errors, the function should always return the number of
+	 * results requested (otherwise callers might assume that there are no
+	 * further results to ask for).
+	 *
 	 * @param SMWRequestOptions $requestoptions
 	 *
-	 * @return array of SMWDIProperty
+	 * @return array of DIProperty|SMWDIError
 	 */
 	public abstract function getUnusedPropertiesSpecial( $requestoptions = null );
 
@@ -375,7 +355,7 @@ abstract class SMWStore {
 	 *
 	 * @param SMWRequestOptions $requestoptions
 	 *
-	 * @return array of array( SMWDIProperty, int )
+	 * @return array of array( DIProperty, int )
 	 */
 	public abstract function getWantedPropertiesSpecial( $requestoptions = null );
 
@@ -385,6 +365,11 @@ abstract class SMWStore {
 	 * - 'PROPUSES': Number of property instances (value assignments) in the datatbase
 	 * - 'USEDPROPS': Number of properties that are used with at least one value
 	 * - 'DECLPROPS': Number of properties that have been declared (i.e. assigned a type)
+	 * - 'OWNPAGE': Number of properties with their own page
+	 * - 'QUERY': Number of inline queries
+	 * - 'QUERYSIZE': Represents collective query size
+	 * - 'CONCEPTS': Number of declared concepts
+	 * - 'SUBOBJECTS': Number of declared subobjects
 	 *
 	 * @return array
 	 */
@@ -408,6 +393,8 @@ abstract class SMWStore {
 	 * linebreaks and weak markup.
 	 *
 	 * @param boolean $verbose
+	 *
+	 * @return boolean Success indicator
 	 */
 	public abstract function setup( $verbose = true );
 
@@ -444,50 +431,90 @@ abstract class SMWStore {
 	 * @param $namespaces mixed array or false
 	 * @param $usejobs boolean
 	 *
-	 * @return decimal between 0 and 1 to indicate the overall progress of the refreshing
+	 * @return float between 0 and 1 to indicate the overall progress of the refreshing
 	 */
 	public abstract function refreshData( &$index, $count, $namespaces = false, $usejobs = true );
 
 	/**
-	 * Generate textual debug output that shows an arbitrary list of
-	 * informative fields. Used for formatting query debug output.
+	 * Setup the store.
 	 *
-	 * @note All strings given must be usable and safe in wiki and HTML
-	 * contexts.
+	 * @since 1.8
 	 *
-	 * @param $storeName string name of the storage backend for which this is generated
-	 * @param $entries array of name => value of informative entries to display
-	 * @param $query SMWQuery or null, if given add basic data about this query as well
-	 * @return string
+	 * @param bool $verbose
+	 *
+	 * @return boolean Success indicator
 	 */
-	public static function formatDebugOutput( $storeName, array $entries, $query = null ) {
-		if ( !is_null( $query ) ) {
-			$preEntries = array();
-			$preEntries['Generated Wiki-Query'] = '<pre>' . str_replace( '[', '&#x005B;', $query->getDescription()->getQueryString() ) . '</pre>';
-			$preEntries['Query Metrics'] = 'Query-Size:' . $query->getDescription()->getSize() . '<br />' .
-						'Query-Depth:' . $query->getDescription()->getDepth();
-			$entries = array_merge( $preEntries, $entries );
-
-			$errors = '';
-			foreach ( $query->getErrors() as $error ) {
-				$errors .= $error . '<br />';
-			}
-			if ( $errors === '' ) {
-				$errors = 'None';
-			}
-			$entries['Errors and Warnings'] = $errors;
-		}
-
-		$result = '<div style="border: 5px dotted #A1FB00; background: #FFF0BD; padding: 20px; ">' .
-		          "<h3>Debug Output by $storeName</h3>";
-		foreach ( $entries as $header => $information ) {
-			$result .= "<h4>$header</h4>";
-			if ( $information !== '' ) {
-				$result .= "$information";
-			}
-		}
-		$result .= '</div>';
+	public static function setupStore( $verbose = true ) {
+		$result = StoreFactory::getStore()->setup( $verbose );
+		\Hooks::run( 'smwInitializeTables' );
 		return $result;
+	}
+
+	/**
+	 * Returns the tables that should be added via the
+	 * https://www.mediawiki.org/wiki/Manual:Hooks/ParserTestTables
+	 * hook when it's run.
+	 *
+	 * @since 1.8
+	 *
+	 * @return array
+	 */
+	public function getParserTestTables() {
+		return array();
+	}
+
+	/**
+	 * @since 2.0
+	 */
+	public function clear() {
+		$this->connectionManager->releaseConnections();
+		InMemoryPoolCache::getInstance()->resetPoolCacheFor( 'store.redirectTarget.lookup' );
+	}
+
+	/**
+	 * @since 2.1
+	 *
+	 * @param boolean $status
+	 */
+	public function setUpdateJobsEnabledState( $status ) {
+		$this->updateJobsEnabledState = $status;
+	}
+
+	/**
+	 * @since 2.1
+	 *
+	 * @return boolean
+	 */
+	public function getUpdateJobsEnabledState() {
+		return $this->updateJobsEnabledState && $GLOBALS['smwgEnableUpdateJobs'];
+	}
+
+	/**
+	 * @since 2.1
+	 *
+	 * @param ConnectionManager $connectionManager
+	 *
+	 * @return Store
+	 */
+	public function setConnectionManager( ConnectionManager $connectionManager ) {
+		$this->connectionManager = $connectionManager;
+		return $this;
+	}
+
+	/**
+	 * @since 2.1
+	 *
+	 * @param string $connectionTypeId
+	 *
+	 * @return mixed
+	 */
+	public function getConnection( $connectionTypeId ) {
+
+		if ( $this->connectionManager === null ) {
+			$this->setConnectionManager( new ConnectionManager() );
+		}
+
+		return $this->connectionManager->getConnection( $connectionTypeId );
 	}
 
 }

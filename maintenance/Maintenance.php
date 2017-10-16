@@ -49,6 +49,14 @@ if ( !function_exists( 'version_compare' ) || version_compare( PHP_VERSION, '5.2
  */
 abstract class Maintenance {
 
+	// For use with the second argument to addOption()
+	const PARAM_REQUIRED = true;
+	const PARAM_OPTIONAL = false;
+
+	// For use with the third argument to addOption()
+	const PARAM_HAS_ARG = true;
+	const PARAM_IS_FLAG = false;
+
 	/**
 	 * Constants for DB access type
 	 * @see Maintenance::getDbType()
@@ -111,6 +119,8 @@ abstract class Maintenance {
 	 */
 	protected static $mCoreScripts = null;
 
+	private $runtimeStatistics = [];
+
 	/**
 	 * Default constructor. Children should call this *first* if implementing
 	 * their own constructors
@@ -160,11 +170,11 @@ abstract class Maintenance {
 	 * Add a parameter to the script. Will be displayed on --help
 	 * with the associated description
 	 *
-	 * @param $name String: the name of the param (help, version, etc)
-	 * @param $description String: the description of the param to show on --help
-	 * @param $required Boolean: is the param required?
-	 * @param $withArg Boolean: is an argument required with this option?
-	 * @param $shortName String: character to use as short name
+	 * @param string $name : the name of the param (help, version, etc)
+	 * @param string $description : the description of the param to show on --help
+	 * @param bool $required : is the param required?
+	 * @param bool $withArg : is an argument required with this option?
+	 * @param string|bool $shortName : character to use as short name
 	 */
 	protected function addOption( $name, $description, $required = false, $withArg = false, $shortName = false ) {
 		$this->mParams[$name] = array( 'desc' => $description, 'require' => $required, 'withArg' => $withArg, 'shortName' => $shortName );
@@ -493,7 +503,7 @@ abstract class Maintenance {
 		}
 
 		# Make sure we can handle script parameters
-		if ( !function_exists( 'hphp_thread_set_warmup_enabled' ) && !ini_get( 'register_argc_argv' ) ) {
+		if ( !defined( 'HHVM_VERSION' ) && !ini_get( 'register_argc_argv' ) ) {
 			$this->error( 'Cannot get command line arguments, register_argc_argv is set to false', true );
 		}
 
@@ -838,6 +848,20 @@ abstract class Maintenance {
 	}
 
 	/**
+	 * Override this method to use a dedicated mysql user / pass for running your maintenance script
+	 *
+	 * Wikia change
+	 *
+	 * @author macbre
+	 * @see PLATFORM-2025
+	 * @return array consisting of mysql user and pass
+	 */
+	protected function getDatabaseCredentials() {
+		global $wgDBmaintuser, $wgDBmaintpass;
+		return [ $wgDBmaintuser, $wgDBmaintpass ];
+	}
+
+	/**
 	 * Handle some last-minute setup here.
 	 */
 	public function finalSetup() {
@@ -852,6 +876,17 @@ abstract class Maintenance {
 		# Same with these
 		$wgCommandLineMode = true;
 
+		/**
+		 * Wikia change - begin
+		 *
+		 * PLATFORM-2025: use a dedicated mysql user when running maintenance scripts
+		 * Force "wikia_maint" user only when we do not need an admin account
+		 */
+		if ( $this->getDbType() < self::DB_ADMIN && is_array( $this->getDatabaseCredentials() ) ) {
+			list( $this->mDbUser, $this->mDbPass ) = $this->getDatabaseCredentials();
+		}
+		// Wikia change - end
+
 		# Override $wgServer
 		if( $this->hasOption( 'server') ) {
 			$wgServer = $this->getOption( 'server', $wgServer );
@@ -865,7 +900,9 @@ abstract class Maintenance {
 			$wgDBadminpassword = $this->mDbPass;
 		}
 
-		if ( $this->getDbType() == self::DB_ADMIN && isset( $wgDBadminuser ) ) {
+		if ( /* $this->getDbType() == self::DB_ADMIN && */ isset( $wgDBadminuser ) ) { # Wikia change: PLATFORM-2025:
+			wfDebug( sprintf( "%s: forcing '%s' DB user\n", __METHOD__, $wgDBadminuser ) );
+
 			$wgDBuser = $wgDBadminuser;
 			$wgDBpassword = $wgDBadminpassword;
 
@@ -1061,12 +1098,8 @@ abstract class Maintenance {
 	 *
 	 * @return DatabaseBase
 	 */
-	protected function &getDB( $db, $groups = array(), $wiki = false ) {
-		if ( is_null( $this->mDb ) ) {
-			return wfGetDB( $db, $groups, $wiki );
-		} else {
-			return $this->mDb;
-		}
+	protected function getDB( $db, $groups = array(), $wiki = false ) {
+		return $this->mDb ?? wfGetDB( $db, $groups, $wiki );
 	}
 
 	/**
@@ -1244,6 +1277,13 @@ abstract class Maintenance {
 		}
 		print $prompt;
 		return fgets( STDIN, 1024 );
+	}
+
+	public function addRuntimeStatistics( array $runtimeStatistics ) {
+		$this->runtimeStatistics = array_merge($this->runtimeStatistics, $runtimeStatistics );
+	}
+	public function getRuntimeStatistics() {
+		return $this->runtimeStatistics;
 	}
 }
 

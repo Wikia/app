@@ -1,380 +1,304 @@
 <?php
+/** Internationalization file for /extensions/wikia/Paginator/i18n/Paginator extension. */
+$messages = [];
 
-$messages = array();
+$messages['en'] = [
+	'paginator-desc' => 'Paginator extension',
+	'paginator-next' => 'Next',
+	'paginator-back' => 'Back',
+];
 
-$messages['en'] = array(
-	'paginator-next'	=> 'Next',
-	'paginator-back'	=> 'Back',
-);
-
-/** Message documentation (Message documentation)
- * @author Shirayuki
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
+	'paginator-desc' => '{{desc}}',
 	'paginator-next' => '{{Identical|Next}}',
-);
+	'paginator-back' => '{{Identical|Back}}',
+];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
+$messages['af'] = [
 	'paginator-next' => 'Volgende',
 	'paginator-back' => 'Vorige',
-);
+];
 
-/** Arabic (العربية)
- * @author Meno25
- * @author OsamaK
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'paginator-next' => 'التالي',
 	'paginator-back' => 'رجوع',
-);
+];
 
-/** Asturian (asturianu)
- * @author Xuacu
- */
-$messages['ast'] = array(
+$messages['ast'] = [
 	'paginator-next' => 'Próximu',
 	'paginator-back' => 'Anterior',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'paginator-next' => 'Sonrakı',
 	'paginator-back' => 'Əvvəlki',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Y-M D
- */
-$messages['br'] = array(
-	'paginator-next' => "War-lerc'h",
+$messages['br'] = [
+	'paginator-next' => 'War-lerc\'h',
 	'paginator-back' => 'Distreiñ',
-);
+];
 
-/** Catalan (català)
- * @author BroOk
- */
-$messages['ca'] = array(
+$messages['ca'] = [
+	'paginator-desc' => 'Extensió de paginació',
 	'paginator-next' => 'Següent',
 	'paginator-back' => 'Enrere',
-);
+];
 
-/** Chechen (нохчийн)
- * @author Умар
- */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'paginator-next' => 'Кхин дӀа',
-);
+];
 
-/** Czech (česky)
- * @author Dontlietome7
- */
-$messages['cs'] = array(
+$messages['cs'] = [
+	'paginator-desc' => 'Rozšíření Paginator',
 	'paginator-next' => 'Další',
 	'paginator-back' => 'Zpět',
-);
+];
 
-/** Welsh (Cymraeg)
- */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'paginator-next' => 'Nesaf',
 	'paginator-back' => 'Yn ôl',
-);
+];
 
-/** German (Deutsch)
- */
-$messages['de'] = array(
+$messages['de'] = [
+	'paginator-desc' => 'Paginator-Erweiterung',
 	'paginator-next' => 'Vor',
 	'paginator-back' => 'Zurück',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'paginator-next' => 'Bahdoyên',
 	'paginator-back' => 'Peyser',
-);
+];
 
-/** Spanish (español)
- */
-$messages['es'] = array(
+$messages['es'] = [
+	'paginator-desc' => 'Extensión de paginación',
 	'paginator-next' => 'Siguiente',
-	'paginator-back' => 'Atrás',
-);
+	'paginator-back' => 'Anterior',
+];
 
-/** Finnish (suomi)
- * @author Centerlink
- */
-$messages['fi'] = array(
+$messages['eu'] = [
+	'paginator-next' => 'Hurrengoa',
+	'paginator-back' => 'Atzera',
+];
+
+$messages['fa'] = [
+	'paginator-next' => 'بعدی',
+	'paginator-back' => 'عقب',
+];
+
+$messages['fi'] = [
 	'paginator-next' => 'Seuraava',
 	'paginator-back' => 'Takaisin',
-);
+];
 
-/** French (français)
- * @author Wyz
- */
-$messages['fr'] = array(
+$messages['fr'] = [
+	'paginator-desc' => 'Extension de pagination',
 	'paginator-next' => 'Suivant',
 	'paginator-back' => 'Précédent',
-);
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['fy'] = [
+	'paginator-next' => 'Folgjende',
+	'paginator-back' => 'Foarige',
+];
+
+$messages['gl'] = [
 	'paginator-next' => 'Seguinte',
 	'paginator-back' => 'Volver',
-);
+];
 
-/** Hebrew (עברית)
- */
-$messages['he'] = array(
+$messages['he'] = [
 	'paginator-next' => 'הבא',
 	'paginator-back' => 'הקודם',
-);
+];
 
-/** Hungarian (magyar)
- * @author Dani
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'paginator-next' => 'Következő',
 	'paginator-back' => 'Vissza',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'paginator-next' => 'Sequente',
 	'paginator-back' => 'Retornar',
-);
+];
 
-/** Italian (italiano)
- * @author Pietrodn
- */
-$messages['it'] = array(
+$messages['it'] = [
 	'paginator-next' => 'Successivo',
 	'paginator-back' => 'Indietro',
-);
+];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
-$messages['ksh'] = array(
+$messages['ja'] = [
+	'paginator-next' => '次へ',
+	'paginator-back' => '戻る',
+];
+
+$messages['kn'] = [
+	'paginator-next' => 'ನಂತರ',
+	'paginator-back' => 'ಹಿಂದಕ್ಕೆ',
+];
+
+$messages['ko'] = [
+	'paginator-next' => '다음',
+	'paginator-back' => '이전',
+];
+
+$messages['ksh'] = [
 	'paginator-next' => 'Vörahn',
 	'paginator-back' => 'Zeröck',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- */
-$messages['lb'] = array(
+$messages['ku-latn'] = [
+	'paginator-next' => 'Pêşve',
+	'paginator-back' => 'Paşve',
+];
+
+$messages['lb'] = [
 	'paginator-next' => 'Weider',
 	'paginator-back' => 'Zréck',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['lrc'] = [
+	'paginator-next' => 'نها',
+	'paginator-back' => 'دما',
+];
+
+$messages['mk'] = [
+	'paginator-desc' => 'Додаток „Страничар“',
 	'paginator-next' => 'Следна',
 	'paginator-back' => 'Назад',
-);
+];
 
-/** Malayalam (മലയാളം)
- * @author Praveenp
- */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'paginator-next' => 'അടുത്തത്',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
+	'paginator-desc' => 'Sambungan Paginator',
 	'paginator-next' => 'Seterusnya',
 	'paginator-back' => 'Kembali',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'paginator-next' => 'Neste',
 	'paginator-back' => 'Tilbake',
-);
+];
 
-/** Nepali (नेपाली)
- * @author Bhawani Gautam
- * @author Bhawani Gautam Rhk
- */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'paginator-next' => 'अर्को',
 	'paginator-back' => 'अघिल्लो',
-);
+];
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'paginator-next' => 'Volgende',
 	'paginator-back' => 'Vorige',
-);
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'paginator-next' => 'Seguent',
 	'paginator-back' => 'Precedent',
-);
+];
 
-/** Pälzisch (Pälzisch)
- * @author Manuae
- */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'paginator-next' => 'Negschd',
 	'paginator-back' => 'Zrigg',
-);
+];
 
-/** Polish (polski)
- * @author Shareif
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'paginator-next' => 'Dalej',
 	'paginator-back' => 'Wstecz',
-);
+];
 
-/** Piedmontese (Piemontèis)
- */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'paginator-next' => 'Anans',
 	'paginator-back' => 'André',
-);
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'paginator-next' => 'راتلونکی',
 	'paginator-back' => 'پر شا کېدل',
-);
+];
 
-/** Portuguese (português)
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'paginator-next' => 'Seguinte',
 	'paginator-back' => 'Voltar',
-);
+];
 
-/** Brazilian Portuguese (português do Brasil)
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'paginator-next' => 'Seguinte',
 	'paginator-back' => 'Voltar',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
+	'paginator-desc' => 'Estenzione de paginatore',
 	'paginator-next' => 'Prossime',
 	'paginator-back' => 'Rrete',
-);
+];
 
-/** Russian (русский)
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'paginator-next' => 'Далее',
 	'paginator-back' => 'Назад',
-);
+];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Rancher
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'paginator-next' => 'Следеће',
 	'paginator-back' => 'Назад',
-);
+];
 
-/** Swedish (svenska)
- * @author Tobulos1
- */
-$messages['sv'] = array(
+$messages['sv'] = [
+	'paginator-desc' => 'Tillägget Paginator',
 	'paginator-next' => 'Nästa',
 	'paginator-back' => 'Tillbaka',
-);
+];
 
-/** Swahili (Kiswahili)
- */
-$messages['sw'] = array(
+$messages['sw'] = [
 	'paginator-next' => 'Ijayo',
 	'paginator-back' => 'Rudi',
-);
+];
 
-/** Tamil (தமிழ்)
- * @author Karthi.dr
- */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'paginator-next' => 'அடுத்து',
 	'paginator-back' => 'பின் செல்',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['te'] = [
+	'paginator-next' => 'తరువాతి',
+	'paginator-back' => 'వెనక్కి',
+];
+
+$messages['tl'] = [
 	'paginator-next' => 'Susunod',
 	'paginator-back' => 'Bumalik',
-);
+];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'paginator-next' => 'Киләсе',
 	'paginator-back' => 'Артка',
-);
+];
 
-/** Ukrainian (українська)
- * @author A1
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'paginator-next' => 'Далі',
 	'paginator-back' => 'Назад',
-);
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'paginator-next' => 'Tiếp theo',
 	'paginator-back' => 'Quay lại',
-);
+];
 
-/** Walloon (walon)
- * @author Srtxg
- */
-$messages['wa'] = array(
+$messages['wa'] = [
 	'paginator-next' => 'Shuvant',
 	'paginator-back' => 'En erî',
-);
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Hydra
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
+	'paginator-desc' => '分页器扩展',
 	'paginator-next' => '下一步',
 	'paginator-back' => '前一步',
-);
+];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Lauhenry
- */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'paginator-next' => '下一頁',
 	'paginator-back' => '上一頁',
-);
+];
+

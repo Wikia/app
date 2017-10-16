@@ -30,13 +30,9 @@ $wgExtensionCredits['specialpage'][] = array(
 		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 		'[http://www.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	),
-	'description' => 'This extension provides an interface for sending messages seen on all wikis.'
+	'descriptionmsg' => 'sidewidemessages-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SiteWideMessages'
 );
-//Allow group STAFF to use this extension.
-$wgAvailableRights[] = 'messagetool';
-$wgGroupPermissions['*']['messagetool'] = false;
-$wgGroupPermissions['staff']['messagetool'] = true;
-$wgGroupPermissions['util']['messagetool'] = true;
 
 $wgExtensionFunctions[] = 'SiteWideMessagesInit';
 $wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname(__FILE__) . '/SpecialSiteWideMessages.i18n.php';
@@ -44,12 +40,17 @@ $wgAjaxExportList[] = 'SiteWideMessagesAjaxDismiss';
 
 if ( empty( $wgSWMSupportedLanguages ) ) $wgSWMSupportedLanguages = array( 'en' );
 
-//Register special page
-if (!function_exists('extAddSpecialPage')) {
-	require("$IP/extensions/ExtensionFunctions.php");
-}
-extAddSpecialPage(dirname(__FILE__) . '/SpecialSiteWideMessages_body.php', 'SiteWideMessages', 'SiteWideMessages');
+$wgAutoloadClasses['SiteWideMessages'] = __DIR__ . '/SpecialSiteWideMessages_body.php';
+$wgSpecialPages['SiteWideMessages'] = 'SiteWideMessages';
 $wgSpecialPageGroups['SiteWideMessages'] = 'wikia';
+
+$wgAutoloadClasses['SiteWideMessagesController'] =  __DIR__ . '/SiteWideMessagesController.class.php';
+
+$wgResourceModules['ext.siteWideMessages.anon'] = array(
+	'localBasePath' => __DIR__ . '/js',
+	'remoteExtPath' => 'wikia/SiteWideMessages/js',
+	'scripts' => 'SiteWideMessages.anon.js',
+);
 
 /**
  * Initialize hooks
@@ -128,29 +129,36 @@ function SiteWideMessagesSiteNoticeAfter( &$siteNotice ) {
  * Show notification (in Oasis)
  *
  * @author macbre
+ * @param Skin $skin
+ * @param QuickTemplate $tpl
+ * @return bool
  */
-function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
-	global $wgOut, $wgUser, $wgExtensionsPath;
+function SiteWideMessagesAddNotifications( Skin $skin, QuickTemplate $tpl ): bool {
+	global $wgExtensionsPath;
 	wfProfileIn(__METHOD__);
 
-	if ( F::app()->checkSkin( 'oasis' ) ) {
+	if ( $skin->getSkinName() === 'oasis' ) {
 		// Add site wide notifications that haven't been dismissed
-		if ( $wgUser->isLoggedIn() ) {
-			$msgs = SiteWideMessages::getAllUserMessages( $wgUser, false, false );
-		} else {
-			$msgs = SiteWideMessages::getAllAnonMessages( $wgUser, false, false );
+		if ( !$skin->getUser()->isLoggedIn() ) {
+			$skin->getOutput()->addModuleScripts( 'ext.siteWideMessages.anon' );
+			wfProfileOut( __METHOD__ );
+			return true;
 		}
+
+		$msgs = SiteWideMessages::getAllUserMessages( $skin->getUser(), false, false );
 
 		if ( !empty( $msgs ) ) {
 			wfProfileIn( __METHOD__ . '::parse' );
+			$out = $skin->getOutput();
+
 			foreach ( $msgs as &$data ) {
-				$data['text'] = $wgOut->parse( $data['text'] );
+				$data['text'] = $out->parse( $data['text'] );
 			}
 			wfProfileOut( __METHOD__ . '::parse' );
 
-			wfRunHooks( 'SiteWideMessagesNotification', array( $msgs ) );
+			Hooks::run( 'SiteWideMessagesNotification', [ $msgs, $skin ] );
 
-			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
+			$out->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
 		}
 	}
 

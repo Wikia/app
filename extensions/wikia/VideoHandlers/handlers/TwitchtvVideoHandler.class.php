@@ -7,7 +7,8 @@ class TwitchtvVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.twitch.tv/$1';
 	protected static $providerHomeUrl = 'http://www.twitch.tv';
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
 		$height = $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
 		$autoplayStr = $autoplay ? 'true' : 'false';
@@ -23,7 +24,11 @@ class TwitchtvVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }

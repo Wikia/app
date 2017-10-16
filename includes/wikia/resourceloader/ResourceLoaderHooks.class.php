@@ -6,13 +6,16 @@
  * @author macbre
  * @author Wladyslaw Bodzek
  */
+use Wikia\Logger\WikiaLogger;
+
 class ResourceLoaderHooks {
+
+	const TIMESTAMP_PRECISION = 900; // 15 minutes
 
 	static protected $resourceLoaderInstance;
 	static protected $assetsManagerGroups = array(
 //		'skins.oasis.blocking' => 'oasis_blocking',
 //		'skins.oasis.core' => 'oasis_shared_core',
-//		'wikia.ads.adengine2' => 'adengine2_js',
 	);
 
 	/**
@@ -47,7 +50,7 @@ class ResourceLoaderHooks {
 		$sources = $resourceLoader->getSources();
 
 		// staff and internal special case
-		if ( $wgCityId === null ) {
+		if ( $wgCityId === null || $wgCityId === 11 ) {
 			$resourceLoader->addSource('common',$sources['local']);
 			return true;
 		}
@@ -165,10 +168,11 @@ class ResourceLoaderHooks {
 	 * @return bool
 	 */
 	public static function onResourceLoaderSiteModuleGetPages( $module, $context, &$pages ) {
-		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS;
+		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS, $wgLoadCommonCSS;
 
 		// handle skin name changes
 		$skinName = $context->getSkin();
+
 		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
 			$mappedName = $wgResourceLoaderAssetsSkinMapping[$skinName];
 			$mapping = array(
@@ -182,7 +186,8 @@ class ResourceLoaderHooks {
 
 		// Wikia doesn't include Mediawiki:Common.css in Oasis
 		// lower-case skin name is returned by getSkin()
-		if ( $skinName == 'oasis' && empty( $wgOasisLoadCommonCSS ) ) {
+		// TODO: Remove $wgOasisLoadCommonCSS after renaming it to $wgLoadCommonCSS in WF after release
+		if ( ( $skinName === 'oasis' ) && empty( $wgOasisLoadCommonCSS ) && empty( $wgLoadCommonCSS ) ) {
 			unset($pages['MediaWiki:Common.css']);
 		}
 
@@ -215,6 +220,7 @@ class ResourceLoaderHooks {
 			$pages = Wikia::renameArrayKeys($pages,$mapping);
 		}
 
+
 		// todo: add user-defined user scripts here
 
 		return true;
@@ -222,8 +228,6 @@ class ResourceLoaderHooks {
 
 	public static function onResourceLoaderCacheControlHeaders( $context, $maxage, $smaxage, $exp ) {
 		header( "X-Pass-Cache-Control: public, max-age=$maxage, s-maxage=$smaxage" );
-		header( 'X-Pass-Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
-
 		return true;
 	}
 
@@ -266,16 +270,10 @@ class ResourceLoaderHooks {
 			$params = urlencode(http_build_query($loadQuery));
 			$url = $loadScript . "$params/$modules";
 			$url = wfExpandUrl( $url, PROTO_RELATIVE );
-
-			// apply domain sharding
-			$url = wfReplaceAssetServer( $url );
 		} else {
 			// just a copy&paste from ResourceLoader::makeLoaderURL :-(
 			$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
 		}
-
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
 
 		return false;
 	}
@@ -314,56 +312,84 @@ class ResourceLoaderHooks {
 	}
 
 	/**
+	 * Customize caching policy for RL modules
+	 *
+	 * * cache "static" modules for 30 days when cb param in the URL matches $wgStyleVersion
+	 * * cache "dynamic" modules for 30 days when version param is present in the URL and matches $mtime timestamp
+	 * * otherwise fallback to caching for 5 minutes
+	 *
+	 * @see BAC-1241
+	 *
+	 * @param ResourceLoader $rl
 	 * @param ResourceLoaderContext $context
-	 * @param $mtime string timestamp from module(s) calculated from filesystem
+	 * @param $mtime int UNIX timestamp from module(s) calculated from filesystem
 	 * @param $maxage int UNIX timestamp for maxage
 	 * @param $smaxage int UNIX timestamp for smaxage
 	 * @return bool it's a hook
 	 */
-	public static function onResourceLoaderModifyMaxAge(ResourceLoaderContext $context, $mtime, &$maxage, &$smaxage) {
+	public static function onResourceLoaderModifyMaxAge(ResourceLoader $rl, ResourceLoaderContext $context, $mtime, &$maxage, &$smaxage) {
 		global $wgStyleVersion, $wgResourceLoaderMaxage;
 
-		// need to cache RL manifest for longer
+		// parse cb and version provided as URL parameters
+		// version%3D123456-20140220T090000Z
+		// cb%3D123456%26
+		$version = explode('-', (string) $context->getVersion(), 2);
+
+		if (count($version) === 2) {
+			list($cb, $ts) = $version;
+			$ts = strtotime($ts); // convert MW to UNIX timestamp
+		}
+		else {
+			$cb = $context->getRequest()->getVal('cb', false);
+			$ts = 0;
+		}
+
+		// check if at least one of required modules serves dynamic content
+		$hasDynamicModule = false;
 		$modules = $context->getModules();
-		if ( count($modules) == 1 && $modules[0] == 'startup' ) {
-			$maxage  = $wgResourceLoaderMaxage['versioned']['client'];
-			$smaxage = $wgResourceLoaderMaxage['versioned']['server'];
 
-			$modules = implode(',', $context->getModules());
-			Wikia::log(__METHOD__, false, "longer TTL set for {$modules}", true);
-			return true;
+		foreach($modules as $moduleName) {
+			if (!($rl->getModule($moduleName) instanceof ResourceLoaderFileModule) ) {
+				$hasDynamicModule = true;
+				break;
+			}
 		}
 
-		// if we have already short TTL set, there's no need to do further checks
-		if ( $maxage == $wgResourceLoaderMaxage['unversioned']['client']
-			&& $smaxage == $wgResourceLoaderMaxage['unversioned']['server']
-		) {
-			return true;
+		if ($hasDynamicModule) {
+			// use long TTL when version value matches $mtime passed to the hook
+			$useLongTTL = !empty($ts) && ($ts <= $mtime);
+		}
+		else {
+			// use long TTL when cache buster value from URL matches $wgStyleVersion
+			$useLongTTL = !empty($cb) && ($cb <= $wgStyleVersion);
 		}
 
-		$forceShortTTL = false;
-
-		$version = explode('-',(string)($context->getVersion()),2);
-		if ( !is_array($version) || count($version) != 2 ) { // if version format different than "CB-TS"
-			$forceShortTTL = true;
+		// modify caching times
+		if (!$useLongTTL) {
+			WikiaLogger::instance()->info( 'rl.shortTTL', [
+				'modules' => join(',', $modules),
+				'cb' => $cb,
+				'ts' => $ts ?: 0,
+			]);
 		}
 
-		if ( !$forceShortTTL ) {
-			list( $styleVersionFromRequest, $timestampFromRequest ) = $version;
-			$timestampFromRequest = strtotime($timestampFromRequest); // parse timestamp from request
-			$forceShortTTL = $styleVersionFromRequest > $wgStyleVersion
-				|| $timestampFromRequest > $mtime;
-		}
-
-		// request wants to get module(s) newer than on those on server - set shorter caching period
-		if ( $forceShortTTL ) {
-			$maxage  = $wgResourceLoaderMaxage['unversioned']['client'];
-			$smaxage = $wgResourceLoaderMaxage['unversioned']['server'];
-
-			$modules = implode(',', $context->getModules());
-			Wikia::log(__METHOD__, false, "shorter TTL set for {$modules}", true);
-		}
+		$cachingTimes = $wgResourceLoaderMaxage[$useLongTTL ? 'versioned' : 'unversioned'];
+		$maxage  = $cachingTimes['client'];
+		$smaxage = $cachingTimes['server'];
 
 		return true;
+	}
+
+	/**
+	 * Round timestamps to 15 minutes to make Varnish entries consistent across nodes
+	 *
+	 * @param $timestamp int timestamp to normalize
+	 * @return int normalized timestamp
+	 *
+	 * @author macbre
+	 * @see BAC-1153
+	 */
+	public static function normalizeTimestamp($timestamp) {
+		return intval( floor( $timestamp / self::TIMESTAMP_PRECISION ) * self::TIMESTAMP_PRECISION );
 	}
 }

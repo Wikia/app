@@ -9,11 +9,9 @@
 	if (empty($wgEnableUploads)) {
 		echo wfMessage( 'vet-uploaddisabled' )->text();
 	} else if ( !$wgUser->isAllowed( 'upload' ) ) {
-		if( !$wgUser->isLoggedIn() ) {
-			echo '<a id="VideoEmbedLoginMsg">' .wfMsg( 'vet-notlogged' ) . '</a>';
-		} else {
-			echo wfMsg( 'vet-notallowed' );
-		}
+		// handles not logged in and not allowed, although it should be impossible to get to this point
+		// if the user is not logged in. See VET_Loader.js
+		echo wfMsg( 'vet-notallowed' );
 	} else {
 		if ($error) { ?>
 		<span id="VET_error_box" class="VET_error_box"><?= $error ?></span>

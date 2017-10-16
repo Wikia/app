@@ -1,0 +1,4282 @@
+{
+  "swagger": "2.0",
+  "host": "www.wikia.com",
+  "basePath": "/api/v1",
+  "schemes": [
+    "http"
+  ],
+  "info": {
+    "version": "1",
+    "title": "Title was not specified"
+  },
+  "tags": [
+    {
+      "name": "activity",
+      "description": "Activity API"
+    },
+    {
+      "name": "articles",
+      "description": "Articles API"
+    },
+    {
+      "name": "flags",
+      "description": "Flags API"
+    },
+    {
+      "name": "mercury",
+      "description": "Mercury API"
+    },
+    {
+      "name": "navigation",
+      "description": "Navigation API"
+    },
+    {
+      "name": "palantir",
+      "description": "Palantir API"
+    },
+    {
+      "name": "relatedPages",
+      "description": "Related Pages API"
+    },
+    {
+      "name": "search",
+      "description": "Search API"
+    },
+    {
+      "name": "searchSuggestions",
+      "description": "Search Suggestions API"
+    },
+    {
+      "name": "user",
+      "description": "User API"
+    },
+    {
+      "name": "wam",
+      "description": "WAM API"
+    },
+    {
+      "name": "wikiaHubs",
+      "description": "Wikia Hubs API"
+    },
+    {
+      "name": "wikis",
+      "description": "Wikis API"
+    }
+  ],
+  "paths": {
+    "/Activity/LatestActivity": {
+      "get": {
+        "tags": ["activity"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ActivityResponseResult"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "description": "Get information about the latest user activity on the current wiki",
+        "summary": "Get latest activity information",
+        "operationId": "getLatestActivity",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": "0"
+          },
+          {
+            "in": "query",
+            "description": "Set if duplicate values of an article's revisions made by the same user are not allowed",
+            "name": "allowDuplicates",
+            "required": false,
+            "type": "boolean",
+            "default": "true"
+          }
+        ]
+      }
+    },
+    "/Activity/RecentlyChangedArticles": {
+      "get": {
+        "tags": ["activity"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ActivityResponseResult"
+            }
+          }
+        },
+        "description": "",
+        "summary": "Get recently changed articles",
+        "operationId": "getRecentlyChangedArticles",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": "0"
+          },
+          {
+            "in": "query",
+            "description": "Set if duplicates of articles are not allowed",
+            "name": "allowDuplicates",
+            "required": false,
+            "type": "boolean",
+            "default": "true"
+          }
+        ]
+      }
+    },
+    "/Articles/AsSimpleJson": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ContentResult"
+            }
+          },
+          "400": {
+            "description": "Invalid ID parameter"
+          },
+          "404": {
+            "description": "Article not found"
+          }
+        },
+        "description": "",
+        "summary": "Get simplified article contents",
+        "operationId": "getAsSimpleJson",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "A single article ID",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "default": 50
+          }
+        ]
+      }
+    },
+    "/Articles/Details": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Missing ids parameter or abstract out of range"
+          }
+        },
+        "description": "",
+        "summary": "Get details about one or more articles",
+        "operationId": "getDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma-separated list of article ids",
+            "name": "ids",
+            "required": true,
+            "type": "string",
+            "default": "50"
+          },
+          {
+            "in": "query",
+            "description": "Titles with underscores instead of spaces, comma-separated",
+            "name": "titles",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "The desired length for the article's abstract",
+            "name": "abstract",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 100,
+            "maximum": 500,
+            "minimum": 0
+          },
+          {
+            "in": "query",
+            "description": "The desired width for the thumbnail",
+            "name": "width",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 200
+          },
+          {
+            "in": "query",
+            "description": "The desired height for the thumbnail",
+            "name": "height",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 200
+          }
+        ]
+      }
+    },
+    "/Articles/List": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "UnexpandedListArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Namespaces or category parameter is invalid"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get articles list in alphabetical order",
+        "operationId": "getList",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Return only articles belonging to the provided valid category title",
+            "name": "category",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "Lexicographically minimal article title.",
+            "name": "offset",
+            "required": false,
+            "type": "string",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Articles/List?expand=1": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedListArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Namespaces or category parameter is invalid"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get a list of pages on the current wiki",
+        "operationId": "getListExpanded",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Return only articles belonging to the provided valid category title",
+            "name": "category",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "Lexicographically minimal article title.",
+            "name": "offset",
+            "required": false,
+            "type": "string",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Articles/MostLinked": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "UnexpandedMostLinkedResultSet"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter or category"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get the most linked articles on this wiki",
+        "operationId": "getTop"
+      }
+    },
+    "/Articles/MostLinked?expand=1": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedMostLinkedResultSet"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter or category"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get the most linked articles on this wiki (expanded results)",
+        "operationId": "getTopExpanded"
+      }
+    },
+    "/Articles/New": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "NewArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter or category"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get list of new articles on this wiki",
+        "operationId": "getNew",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of result - maximum limit is 100",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 20
+          },
+          {
+            "in": "query",
+            "description": "Minimal value of article quality. Ranges from 0 to 99",
+            "name": "minArticleQuality",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10,
+            "maximum": 99,
+            "minimum": 0
+          }
+        ]
+      }
+    },
+    "/Articles/Popular": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "PopularListArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Limit parameter is invalid"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get popular articles for the current wiki (from the beginning of time)",
+        "operationId": "getPopular",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Limit the number of result - maximum limit is 10",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Trending and popular related to article with given id",
+            "name": "baseArticleId",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Articles/Popular?expand=1": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Limit parameter is invalid"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get popular articles for the current wiki (from the beginning of time)",
+        "operationId": "getPopularExpanded",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Limit the number of result - maximum limit is 10",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Trending and popular related to article with given id",
+            "name": "baseArticleId",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Articles/Top": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "UnexpandedArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter or category"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get the most viewed articles on this wiki",
+        "operationId": "getTop",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Return only articles belonging to the provided valid category title",
+            "name": "category",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of result - maximum limit is 250",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Trending and popular related to article with given id",
+            "name": "baseArticleId",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Articles/Top?expand=1": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter or category"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get the most viewed articles for this wiki (expanded results)",
+        "operationId": "getTopExpanded",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Return only articles belonging to the provided valid category title",
+            "name": "category",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of result - maximum limit is 250",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Trending and popular related to article with given id",
+            "name": "baseArticleId",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Articles/TopByHub": {
+      "get": {
+        "tags": ["articles"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "HubArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Missing 'hub' parameter, number of languages exceeded or not on www.wikia.com domain"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get the top articles by pageviews for a hub",
+        "operationId": "getTopByHub",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The name of the vertical (e.g. Gaming)",
+            "name": "hub",
+            "required": true,
+            "type": "string",
+            "default": "gaming"
+          },
+          {
+            "in": "query",
+            "description": "Comma separated language codes (e.g. en,de,fr)",
+            "name": "lang",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Flags/FlagsForPage": {
+      "get": {
+        "tags": ["flags"],
+        "responses": {
+          "200": {
+            "description": "List of flags with flag_type_id values as indexes"
+          },
+          "400": {
+            "description": "Page ID is not set or is invalid"
+          }
+        },
+        "description": "",
+        "summary": "Retrieve all data for flags assigned to the given page.",
+        "operationId": "getFlagsForPage",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Used to override the default wiki ID.",
+            "name": "wiki_id",
+            "required": false,
+            "type": "int",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "ID of the page for which to get the flags.",
+            "name": "page_id",
+            "required": true,
+            "type": "int",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Flags/FlagsForPageForEdit": {
+      "get": {
+        "tags": ["flags"],
+        "responses": {
+          "200": {
+            "description": "List of flags with flag_type_id values as indexes"
+          },
+          "400": {
+            "description": "Page ID is not set or is invalid"
+          }
+        },
+        "description": "It returns the types with instances on the page first and then all other types sorted alphabetically.",
+        "summary": "Retrieves all data for all flag types available on the given wikia.",
+        "operationId": "getFlagsForPageForEdit",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Used to override the default wiki ID.",
+            "name": "wiki_id",
+            "required": false,
+            "type": "int",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "ID of the page for which to get the flags.",
+            "name": "page_id",
+            "required": true,
+            "type": "int",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Flags/FlagTypes": {
+      "get": {
+        "tags": ["flags"],
+        "responses": {
+          "200": {
+            "description": "List of flag types with flag_type_id values as indexes"
+          }
+        },
+        "description": "",
+        "summary": "Retrieve all flag types for given wiki.",
+        "operationId": "getFlagTypes",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Used to override the default wiki ID.",
+            "name": "wiki_id",
+            "required": false,
+            "type": "int",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Flags/FlagTypeIdByTemplate": {
+      "get": {
+        "tags": ["flags"],
+        "responses": {
+          "200": {
+            "description": "Flag type ID."
+          },
+          "400": {
+            "description": "View name is not set or is empty."
+          }
+        },
+        "description": "",
+        "summary": "Get flag type id by template (view) name",
+        "operationId": "getFlagTypeIdByTemplate",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Used to override the default wiki ID.",
+            "name": "wiki_id",
+            "required": false,
+            "type": "int",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "View name.",
+            "name": "flag_view",
+            "required": true,
+            "type": "string",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Mercury/WikiVariables": {
+      "get": {
+        "tags": ["mercury"],
+        "responses": {
+          "200": {
+            "description": "Wiki dariable data",
+            "schema": {
+              "$ref": "WikiDataContainer"
+            }
+          }
+        },
+        "description": "",
+        "summary": "get wiki data, including key values, navigation data, and more",
+        "operationId": "getWikiData"
+      }
+    },
+    "/Navigation/Data": {
+      "get": {
+        "tags": ["navigation"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "NavigationResultSet"
+            }
+          }
+        },
+        "description": "",
+        "summary": "Get wiki navigation links (the main menu of given wiki)",
+        "operationId": "getData"
+      }
+    },
+    "/Palantir/NearbyQuests": {
+      "get": {
+        "tags": ["palantir"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedPalantirListArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Latitude/longitude parameter is invalid"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get a list of nearby quests (pages) on the current wiki",
+        "operationId": "getNearbyQuests",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The latitude of the point of interest",
+            "name": "latitude",
+            "required": true,
+            "type": "string",
+            "default": "1"
+          },
+          {
+            "in": "query",
+            "description": "The longitude of the point of interest",
+            "name": "longitude",
+            "required": true,
+            "type": "string",
+            "default": "1"
+          },
+          {
+            "in": "query",
+            "description": "How far the point can be from the point of interest (in kilometers)",
+            "name": "radius",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Region ID",
+            "name": "region",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          }
+        ]
+      }
+    },
+    "/Palantir/QuestDetails": {
+      "get": {
+        "tags": ["palantir"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedPalantirListArticleResultSet"
+            }
+          },
+          "400": {
+            "description": "Latitude/longitude parameter is invalid"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get quest details",
+        "operationId": "getQuestDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Fingerprint ID",
+            "name": "fingerprint_id",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Quest ID",
+            "name": "quest_id",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Return only articles belonging to the provided valid category title",
+            "name": "category",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          }
+        ]
+      }
+    },
+    "/RelatedPages/List": {
+      "get": {
+        "tags": ["relatedPages"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "RelatedPages"
+            }
+          },
+          "400": {
+            "description": "Ids param should not be empty. Comma separated numbers only"
+          },
+          "404": {
+            "description": "Related Pages extension not available on this domain"
+          }
+        },
+        "description": "",
+        "summary": "Get pages related to a given article ID",
+        "operationId": "getList",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma-separated list of article ids",
+            "name": "ids",
+            "required": true,
+            "type": "string",
+            "default": "50"
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 3
+          }
+        ]
+      }
+    },
+    "/Search/Combined": {
+      "get": {
+        "tags": ["search"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "CombinedSearchResultSet"
+            }
+          },
+          "400": {
+            "description": "Query parameter is missing"
+          }
+        },
+        "description": "",
+        "summary": "Get results for combined (wiki and cross-wiki) search",
+        "operationId": "getCombined",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Search query",
+            "name": "query",
+            "required": true,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma separated language codes (e.g. en,de,fr)",
+            "name": "langs",
+            "required": false,
+            "type": "string",
+            "default": "en"
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated list of verticals (e.g. Gaming, Entertainment, Lifestyle)",
+            "name": "hubs",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": "0,14"
+          },
+          {
+            "in": "query",
+            "description": "Will limit number of articles returned to given number",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 6,
+            "maximum": 15,
+            "minimum": 0
+          },
+          {
+            "in": "query",
+            "description": "Minimal value of article quality. Ranges from 0 to 99",
+            "name": "minArticleQuality",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 80,
+            "maximum": 99,
+            "minimum": 0
+          }
+        ]
+      }
+    },
+    "/Search/CrossWiki": {
+      "get": {
+        "tags": ["search"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "CrossWikiSearchResultSet"
+            }
+          },
+          "400": {
+            "description": "Query or lang parameters missing"
+          }
+        },
+        "description": "",
+        "summary": "Get results for cross-wiki search",
+        "operationId": "getCrossWiki",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Search query",
+            "name": "query",
+            "required": true,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated list of verticals (e.g. Gaming, Entertainment, Lifestyle)",
+            "name": "hub",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma separated language codes (e.g. en,de,fr)",
+            "name": "lang",
+            "required": false,
+            "type": "string",
+            "default": "en"
+          },
+          {
+            "in": "query",
+            "description": "The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest",
+            "name": "rank",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "The batch (page) of results to fetch",
+            "name": "batch",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          }
+        ]
+      }
+    },
+    "/Search/CrossWiki?expand=1": {
+      "get": {
+        "tags": ["search"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedCrossWikiaResultSet"
+            }
+          },
+          "400": {
+            "description": "Query or lang parameters missing"
+          }
+        },
+        "description": "",
+        "summary": "Get results for cross-wiki search (extended response)",
+        "operationId": "getCrossWikiExpanded",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Search query",
+            "name": "query",
+            "required": true,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma-separated list of verticals (e.g. Gaming, Entertainment, Lifestyle)",
+            "name": "hub",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Comma separated language codes (e.g. en,de,fr)",
+            "name": "lang",
+            "required": false,
+            "type": "string",
+            "default": "en"
+          },
+          {
+            "in": "query",
+            "description": "The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest",
+            "name": "rank",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "The batch (page) of results to fetch",
+            "name": "batch",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The desired height for the thumbnail",
+            "name": "height",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "The desired width for the thumbnail",
+            "name": "width",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "Maximum number of words returned in description",
+            "name": "snippet",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ]
+      }
+    },
+    "/Search/List": {
+      "get": {
+        "tags": ["search"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "LocalWikiSearchResultSet"
+            }
+          },
+          "400": {
+            "description": "Query parameter is missing or namespaces parameter is not numeric"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Do search for given phrase",
+        "operationId": "getList",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Search query",
+            "name": "query",
+            "required": true,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "The search type, either articles (default) or videos. For 'videos' value, this parameter should be used with namespaces parameter (namespaces needs to be set to 6)",
+            "name": "type",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest",
+            "name": "rank",
+            "required": false,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "Limit the number of results",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "Minimal value of article quality. Ranges from 0 to 99",
+            "name": "minArticleQuality",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10,
+            "maximum": 99,
+            "minimum": 0
+          },
+          {
+            "in": "query",
+            "description": "The batch (page) of results to fetch",
+            "name": "batch",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "Page namespace number, see more: http://community.wikia.com/wiki/Help:Namespaces",
+            "name": "namespaces",
+            "required": false,
+            "type": "string",
+            "default": "0,14"
+          }
+        ]
+      }
+    },
+    "/SearchSuggestions/List": {
+      "get": {
+        "tags": ["searchSuggestions"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "SearchSuggestionsPhrases"
+            }
+          },
+          "400": {
+            "description": "Query parameter is missing"
+          },
+          "404": {
+            "description": "Search Suggestions extension not available or results not found"
+          }
+        },
+        "description": "",
+        "summary": "Find suggested phrases for chosen query",
+        "operationId": "getList",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Search query",
+            "name": "query",
+            "required": true,
+            "type": "string",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/User/Details": {
+      "get": {
+        "tags": ["user"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "UserResultSet"
+            }
+          },
+          "400": {
+            "description": "Ids parameter is missing"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get details about selected users",
+        "operationId": "getDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma-separated list of user ids. Maximum size of id list is 100.",
+            "name": "ids",
+            "required": true,
+            "type": "string",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "The desired width (and height, because it is a square) for the thumbnail, defaults to 100, 0 for no thumbnail",
+            "name": "size",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/WAM/MinMaxWamIndexDate": {
+      "get": {
+        "tags": ["wam"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "MinMaxResultSet"
+            }
+          }
+        },
+        "description": "",
+        "summary": "Get WAM score starting and last available dates",
+        "operationId": "getMinMaxWamIndexDate"
+      }
+    },
+    "/WAM/WAMIndex": {
+      "get": {
+        "tags": ["wam"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "WAMResultSet"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters passed"
+          }
+        },
+        "description": "",
+        "summary": "Get WAM index (list of wikis with their WAM ranks)",
+        "operationId": "getWAMIndex",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "day for which the WAM scores are displayed",
+            "name": "wam_day",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "day from which the difference in WAM scores is calculated",
+            "name": "wam_previous_day",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "vertical for which wiki list is to be pulled",
+            "name": "vertical_id",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 2
+          },
+          {
+            "in": "query",
+            "description": "Language code if narrowing the results to specific language",
+            "name": "wiki_lang",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "Id of specific wiki to pull",
+            "name": "wiki_id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "Fragment of url to search for amongst wikis",
+            "name": "wiki_word",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "Determines if exclude blacklisted wikis (with Content Warning enabled)",
+            "name": "exclude_blacklist",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "description": "Column by which to sort",
+            "name": "sort_column",
+            "required": false,
+            "type": "string",
+            "default": "wam"
+          },
+          {
+            "in": "query",
+            "description": "Sort direction",
+            "name": "sort_direction",
+            "required": false,
+            "type": "string",
+            "default": "ASC"
+          },
+          {
+            "in": "query",
+            "description": "offset from the beginning of data",
+            "name": "offset",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          },
+          {
+            "in": "query",
+            "description": "limit on fetched number of wikis",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 20,
+            "maximum": 20,
+            "minimum": 0
+          },
+          {
+            "in": "query",
+            "description": "Determines if admins of each wiki are to be returned",
+            "name": "fetch_admins",
+            "required": false,
+            "type": "boolean",
+            "default": "0"
+          },
+          {
+            "in": "query",
+            "description": "Size of admin avatars in pixels if fetch_admins is enabled",
+            "name": "avatar_size",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "Determines if image of each wiki is to be returned",
+            "name": "fetch_wiki_images",
+            "required": false,
+            "type": "boolean",
+            "default": "false"
+          },
+          {
+            "in": "query",
+            "description": "Width of wiki image in pixels if fetch_wiki_images is enabled",
+            "name": "wiki_image_width",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "Height of wiki image in pixels if fetch_wiki_images is enabled. You can pass here -1 to keep aspect ratio",
+            "name": "wiki_image_height",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ]
+      }
+    },
+    "/WAM/WAMLanguages": {
+      "get": {
+        "tags": ["wam"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "WAMLanguagesSet"
+            }
+          }
+        },
+        "description": "",
+        "summary": "Get language codes of the wikis that are in the WAM ranking for a given day",
+        "operationId": "getWAMLanguages",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Unix timestamp (in seconds) of the day for the requested language code list",
+            "name": "wam_day",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ]
+      }
+    },
+    "/WikiaHubs/HubsV3List": {
+      "get": {
+        "tags": ["wikiaHubs"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "WikiaHubsListResultSet"
+            }
+          }
+        },
+        "description": "",
+        "summary": "Get Hubs list",
+        "operationId": "getHubsV3List",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Language",
+            "name": "lang",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/WikiaHubs/ModuleData": {
+      "get": {
+        "tags": ["wikiaHubs"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "WikiaHubsResultSet"
+            }
+          },
+          "400": {
+            "description": "Module, city or timestamp not valid"
+          }
+        },
+        "description": "",
+        "summary": "Get explore module data from given date and wiki",
+        "operationId": "getModuleData",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Module id",
+            "name": "module",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "City id",
+            "name": "city",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "The Unix timestamp (in seconds)",
+            "name": "ts",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ]
+      }
+    },
+    "/WikiaHubs/ModuleDataV3": {
+      "get": {
+        "tags": ["wikiaHubs"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "WikiaHubsResultSet"
+            }
+          },
+          "400": {
+            "description": "Module, city or timestamp not valid"
+          }
+        },
+        "description": "",
+        "summary": "Get explore module data from given date and wiki",
+        "operationId": "getModuleDataV3",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Module id",
+            "name": "module",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "City id",
+            "name": "city",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "The Unix timestamp (in seconds)",
+            "name": "ts",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ]
+      }
+    },
+    "/Wikis/ByString": {
+      "get": {
+        "tags": ["wikis"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "UnexpandedWikiaResultSet"
+            }
+          },
+          "400": {
+            "description": "Number of languages exceeded or keyword is missing"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get wikis which name or topic match a keyword",
+        "operationId": "getByString",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Search term",
+            "name": "string",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+            "name": "hub",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter",
+            "name": "lang",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The maximum number of results to fetch",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "The batch/page index to retrieve",
+            "name": "batch",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "Whether to include wikis' domains as search targets or not",
+            "name": "includeDomain",
+            "required": false,
+            "type": "boolean",
+            "default": "false"
+          }
+        ]
+      }
+    },
+    "/Wikis/ByString?expand=1": {
+      "get": {
+        "tags": ["wikis"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedWikiaResultSet"
+            }
+          },
+          "400": {
+            "description": "Number of languages exceeded or keyword is missing"
+          },
+          "404": {
+            "description": "Results not found"
+          }
+        },
+        "description": "",
+        "summary": "Get wikis which name or topic match a keyword (extended response)",
+        "operationId": "getByStringExpanded",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Search term",
+            "name": "string",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+            "name": "hub",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter",
+            "name": "lang",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The maximum number of results to fetch",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "The batch/page index to retrieve",
+            "name": "batch",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "Whether to include wikis' domains as search targets or not",
+            "name": "includeDomain",
+            "required": false,
+            "type": "boolean",
+            "default": "false"
+          }
+        ]
+      }
+    },
+    "/Wikis/Details": {
+      "get": {
+        "tags": ["wikis"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "WikiaDetailsResultSet"
+            }
+          },
+          "400": {
+            "description": "Ids parameter is missing"
+          }
+        },
+        "description": "",
+        "summary": "Get information about wikis",
+        "operationId": "getDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma-separated list of wiki ids that will be fetched",
+            "name": "ids",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "Thumbnail height in pixels",
+            "name": "height",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "Thumbnail width in pixels",
+            "name": "width",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "description": "Maximum number of words returned in description",
+            "name": "snippet",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ]
+      }
+    },
+    "/Wikis/List": {
+      "get": {
+        "tags": ["wikis"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "UnexpandedWikiaResultSet"
+            }
+          },
+          "400": {
+            "description": "Number of languages exceeded"
+          }
+        },
+        "description": "",
+        "summary": "Get the top wikis by pageviews",
+        "operationId": "getList",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+            "name": "hub",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter",
+            "name": "lang",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The maximum number of results to fetch",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "The batch/page index to retrieve",
+            "name": "batch",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          }
+        ]
+      }
+    },
+    "/Wikis/List?expand=1": {
+      "get": {
+        "tags": ["wikis"],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "ExpandedWikiaResultSet"
+            }
+          },
+          "400": {
+            "description": "Number of languages exceeded"
+          }
+        },
+        "description": "",
+        "summary": "Get the top wikis by pageviews (extended response)",
+        "operationId": "getListExpanded",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+            "name": "hub",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter",
+            "name": "lang",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The maximum number of results to fetch",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 25
+          },
+          {
+            "in": "query",
+            "description": "The batch/page index to retrieve",
+            "name": "batch",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "ActivityResponseResult": {
+      "id": "ActivityResponseResult",
+      "name": "",
+      "required": [
+        "items",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/ActivityResponseItem"
+          }
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "ActivityResponseItem": {
+      "id": "ActivityResponseItem",
+      "name": "",
+      "required": [
+        "article",
+        "user",
+        "revisionId",
+        "timestamp"
+      ],
+      "properties": {
+        "article": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The ID of the article acted upon"
+        },
+        "user": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The ID of the user performing the action"
+        },
+        "revisionId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The ID of the revision created from this event"
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The Unix timestamp (in seconds) that the revision was made"
+        }
+      }
+    },
+    "HubArticleResult": {
+      "id": "HubArticleResult",
+      "name": "",
+      "required": [
+        "wiki",
+        "articles"
+      ],
+      "properties": {
+        "wiki": {
+          "$ref": "#/definitions/Wikia",
+          "description": "Wikia info object"
+        },
+        "articles": {
+          "type": "array",
+          "description": "Article list",
+          "items": {
+            "$ref": "#/definitions/HubArticle"
+          }
+        }
+      }
+    },
+    "UnexpandedArticle": {
+      "id": "UnexpandedArticle",
+      "name": "",
+      "required": [
+        "id",
+        "title",
+        "url",
+        "ns"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        },
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        },
+        "ns": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The namespace value of the given article"
+        }
+      }
+    },
+    "HubArticleResultSet": {
+      "id": "HubArticleResultSet",
+      "name": "",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/HubArticleResult"
+          }
+        }
+      }
+    },
+    "HubArticle": {
+      "id": "HubArticle",
+      "name": "",
+      "required": [
+        "id",
+        "ns"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "ns": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The namespace value of the given article"
+        }
+      }
+    },
+    "PopularArticle": {
+      "id": "PopularArticle",
+      "name": "",
+      "required": [
+        "id",
+        "title",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        },
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        }
+      }
+    },
+    "Section": {
+      "id": "Section",
+      "name": "",
+      "required": [
+        "title",
+        "level",
+        "content",
+        "images"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Article section title"
+        },
+        "level": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Section nesting level"
+        },
+        "content": {
+          "type": "array",
+          "description": "Section content",
+          "items": {
+            "$ref": "#/definitions/SectionContent"
+          }
+        },
+        "images": {
+          "type": "array",
+          "description": "Images list in section",
+          "items": {
+            "$ref": "#/definitions/SectionImages"
+          }
+        }
+      }
+    },
+    "UnexpandedArticleResultSet": {
+      "id": "UnexpandedArticleResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/UnexpandedArticle"
+          }
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "NewArticleResultSet": {
+      "id": "NewArticleResultSet",
+      "name": "",
+      "required": [
+        "id",
+        "ns",
+        "title",
+        "abstract",
+        "quality",
+        "url",
+        "creation_date"
+      ],
+      "properties": {
+        "quality": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+        },
+        "original_dimensions": {
+          "$ref": "#/definitions/OriginalDimension",
+          "description": "The original dimensions of the thumbnail for the article, if available"
+        },
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        },
+        "ns": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The namespace value of the given article"
+        },
+        "abstract": {
+          "type": "string",
+          "description": "A snippet of text from the beginning of the article"
+        },
+        "creator": {
+          "$ref": "#/definitions/Creator",
+          "description": "Data about the author of the article (creator of the first revision)"
+        },
+        "thumbnail": {
+          "type": "string",
+          "description": "The absolute URL of the thumbnail"
+        },
+        "creation_date": {
+          "type": "string",
+          "description": "Date of the first revision of the article"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        }
+      }
+    },
+    "Creator": {
+      "id": "Creator",
+      "name": "",
+      "required": [
+        "avatar",
+        "name"
+      ],
+      "properties": {
+        "avatar": {
+          "type": "string",
+          "description": "Url for user avatar"
+        },
+        "name": {
+          "type": "string",
+          "description": "User name"
+        }
+      }
+    },
+    "OriginalDimension": {
+      "id": "OriginalDimension",
+      "name": "",
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Original width of the thumbnail, in pixels"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Original height of the thumbnail, in pixels"
+        }
+      }
+    },
+    "Revision": {
+      "id": "Revision",
+      "name": "",
+      "required": [
+        "id",
+        "user",
+        "user_id",
+        "timestamp"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Revision"
+        },
+        "user": {
+          "type": "string",
+          "description": "The name of the user who made the revision"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for User"
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The Unix timestamp (in seconds) that the revision was made"
+        }
+      }
+    },
+    "Wikia": {
+      "id": "Wikia",
+      "name": "",
+      "required": [
+        "id",
+        "name",
+        "language",
+        "domain"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Wikia"
+        },
+        "name": {
+          "type": "string",
+          "description": "Wikia name"
+        },
+        "language": {
+          "type": "string",
+          "description": "Wikia language"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Wikia base URL"
+        }
+      }
+    },
+    "ExpandedMostLinked": {
+      "id": "ExpandedMostLinked",
+      "name": "",
+      "required": [
+        "id",
+        "title",
+        "url",
+        "ns",
+        "revision",
+        "comments",
+        "type",
+        "abstract",
+        "backlink_cnt"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        },
+        "ns": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The namespace value of the given article"
+        },
+        "abstract": {
+          "type": "string",
+          "description": "A snippet of text from the beginning of the article"
+        },
+        "revision": {
+          "$ref": "#/definitions/Revision",
+          "description": "The latest revision for this article"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        },
+        "type": {
+          "type": "string",
+          "description": "The functional type of the document (e.g. article, file, category)"
+        },
+        "backlink_cnt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of backlinks for the article"
+        },
+        "comments": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of comments on this article"
+        }
+      }
+    },
+    "ExpandedArticle": {
+      "id": "ExpandedArticle",
+      "name": "",
+      "required": [
+        "id",
+        "title",
+        "ns",
+        "url",
+        "revision",
+        "comments",
+        "type",
+        "abstract"
+      ],
+      "properties": {
+        "original_dimensions": {
+          "$ref": "#/definitions/OriginalDimension",
+          "description": "The original dimensions of the thumbnail for the article, if available"
+        },
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        },
+        "ns": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The namespace value of the given article"
+        },
+        "abstract": {
+          "type": "string",
+          "description": "A snippet of text from the beginning of the article"
+        },
+        "thumbnail": {
+          "type": "string",
+          "description": "The absolute URL of the thumbnail"
+        },
+        "revision": {
+          "$ref": "#/definitions/Revision",
+          "description": "The latest revision for this article"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        },
+        "type": {
+          "type": "string",
+          "description": "The functional type of the document (e.g. article, file, category)"
+        },
+        "comments": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of comments on this article"
+        }
+      }
+    },
+    "ExpandedMostLinkedResultSet": {
+      "id": "ExpandedMostLinkedResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/ExpandedMostLinked"
+          }
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "SectionContent": {
+      "id": "SectionContent",
+      "name": "",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Content element type can be paragraph or list"
+        },
+        "text": {
+          "type": "string",
+          "description": "Cleaned up paragraph text"
+        },
+        "elements": {
+          "type": "array",
+          "description": "Array containing list elements",
+          "items": {
+            "$ref": "#/definitions/ListElement"
+          }
+        }
+      }
+    },
+    "SectionImages": {
+      "id": "SectionImages",
+      "name": "",
+      "required": [
+        "src",
+        "caption"
+      ],
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Full image URL"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Image description"
+        }
+      }
+    },
+    "UnexpandedListArticleResultSet": {
+      "id": "UnexpandedListArticleResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "offset",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/UnexpandedArticle"
+          }
+        },
+        "offset": {
+          "type": "string",
+          "description": "Offset to start next batch of data"
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "ListElement": {
+      "id": "ListElement",
+      "name": "",
+      "required": [
+        "text",
+        "elements"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Cleaned up list element text"
+        },
+        "elements": {
+          "type": "array",
+          "description": "Array containing nested list elements",
+          "items": {
+            "$ref": "#/definitions/ListElement"
+          }
+        }
+      }
+    },
+    "ExpandedArticleResultSet": {
+      "id": "ExpandedArticleResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/ExpandedArticle"
+          }
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "ExpandedListArticleResultSet": {
+      "id": "ExpandedListArticleResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "offset",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/ExpandedArticle"
+          }
+        },
+        "offset": {
+          "type": "string",
+          "description": "Offset value of next datum (used for pagination in subsequent requests)"
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "UnexpandedMostLinkedResultSet": {
+      "id": "UnexpandedMostLinkedResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/UnexpandedMostLinked"
+          }
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "PopularListArticleResultSet": {
+      "id": "PopularListArticleResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/PopularArticle"
+          }
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "ContentResult": {
+      "id": "ContentResult",
+      "name": "",
+      "required": [
+        "sections"
+      ],
+      "properties": {
+        "sections": {
+          "type": "array",
+          "description": "Article section data container",
+          "items": {
+            "$ref": "#/definitions/Section"
+          }
+        }
+      }
+    },
+    "UnexpandedMostLinked": {
+      "id": "UnexpandedMostLinked",
+      "name": "",
+      "required": [
+        "id",
+        "title",
+        "url",
+        "ns",
+        "backlink_cnt"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        },
+        "ns": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The namespace value of the given article"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        },
+        "backlink_cnt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of backlinks for the article"
+        }
+      }
+    },
+    "NavigationResultSet": {
+      "id": "NavigationResultSet",
+      "name": "",
+      "required": [
+        "navigation"
+      ],
+      "properties": {
+        "navigation": {
+          "$ref": "#/definitions/NavigationItem",
+          "description": "Wrapper for navigation objects"
+        }
+      }
+    },
+    "NavigationItem": {
+      "id": "NavigationItem",
+      "name": "",
+      "required": [
+        "wikia",
+        "wiki"
+      ],
+      "properties": {
+        "wikia": {
+          "type": "array",
+          "description": "On the wiki navigation bar data",
+          "items": {
+            "$ref": "#/definitions/WikiaItem"
+          }
+        },
+        "wiki": {
+          "type": "array",
+          "description": "User set navigation bars",
+          "items": {
+            "$ref": "#/definitions/WikiaItem"
+          }
+        }
+      }
+    },
+    "WikiDataContainer": {
+      "id": "WikiDataContainer",
+      "name": "",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/WikiData",
+          "description": "wiki data"
+        }
+      }
+    },
+    "WikiData": {
+      "id": "WikiData",
+      "name": "",
+      "required": [
+        "cacheBuster",
+        "dbName",
+        "defaultSkin",
+        "id",
+        "language",
+        "namespaces",
+        "sitename",
+        "mainPageTitle",
+        "wikiCategories",
+        "navData",
+        "vertical",
+        "basePath",
+        "isGASpecialWiki",
+        "articlePath",
+        "facebookAppId"
+      ],
+      "properties": {
+        "cacheBuster": {
+          "type": "integer",
+          "format": "int32",
+          "description": "current wiki cachebuster value"
+        },
+        "dbName": {
+          "type": "string"
+        },
+        "defaultSkin": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "language": {
+          "$ref": "#/definitions/WikiLanguageData"
+        },
+        "namespaces": {
+          "type": "object",
+          "properties": {},
+          "patternProperties": {
+            "^(-?[0-9]+)$": {}
+          }
+        },
+        "sitename": {
+          "type": "string"
+        },
+        "mainPageTitle": {
+          "type": "string"
+        },
+        "wikiCategories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "navData": {
+          "$ref": "#/definitions/NavigationResultSet"
+        },
+        "vertical": {
+          "type": "string"
+        },
+        "basePath": {
+          "type": "string"
+        },
+        "isGASpecialWiki": {
+          "type": "boolean"
+        },
+        "articlePath": {
+          "type": "string"
+        },
+        "facebookAppId": {
+          "type": "string"
+        }
+      }
+    },
+    "WikiLanguageData": {
+      "id": "WikiLanguageData",
+      "name": "",
+      "required": [
+        "user",
+        "userDir",
+        "content",
+        "contentDir"
+      ],
+      "properties": {
+        "user": {
+          "type": "string"
+        },
+        "userDir": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "contentDir": {
+          "type": "string"
+        }
+      }
+    },
+    "WikiaItem": {
+      "id": "WikiaItem",
+      "name": "",
+      "required": [
+        "text",
+        "href",
+        "children"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "On wiki navigation bar text"
+        },
+        "href": {
+          "type": "string",
+          "description": "The relative URL of the Page. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        },
+        "children": {
+          "type": "array",
+          "description": "Children collection containing article or special pages data",
+          "items": {
+            "$ref": "#/definitions/ChildrenItem"
+          }
+        }
+      }
+    },
+    "ChildrenItem": {
+      "id": "ChildrenItem",
+      "name": "",
+      "required": [
+        "text",
+        "href"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Article or special page title"
+        },
+        "href": {
+          "type": "string",
+          "description": "The relative URL of the Page. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        }
+      }
+    },
+    "Metadata": {
+      "id": "Metadata",
+      "name": "",
+      "properties": {
+        "ability_id": {
+          "type": "string",
+          "description": "The ID of the ability"
+        },
+        "fingerprints": {
+          "type": "array",
+          "description": "An array of fingerprint IDs",
+          "items": {
+            "type": "string"
+          }
+        },
+        "quest_id": {
+          "type": "string",
+          "description": "The ID of the quest"
+        },
+        "map_location": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MapLocation"
+          }
+        }
+      }
+    },
+    "MapLocation": {
+      "id": "MapLocation",
+      "name": "",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "float",
+          "description": "Latitude of the POI"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "float",
+          "description": "Longitude of the POI"
+        },
+        "region": {
+          "type": "string",
+          "description": "Region ID"
+        }
+      }
+    },
+    "ExpandedPalantirListArticleResultSet": {
+      "id": "ExpandedPalantirListArticleResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "offset",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/ExpandedPalantirArticle"
+          }
+        },
+        "offset": {
+          "type": "string",
+          "description": "Offset value of next datum (used for pagination in subsequent requests)"
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "ExpandedPalantirArticle": {
+      "id": "ExpandedPalantirArticle",
+      "name": "",
+      "required": [
+        "id",
+        "title",
+        "ns",
+        "url",
+        "revision",
+        "comments",
+        "type",
+        "categories",
+        "abstract"
+      ],
+      "properties": {
+        "original_dimensions": {
+          "$ref": "#/definitions/OriginalDimension",
+          "description": "The original dimensions of the thumbnail for the article, if available"
+        },
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        },
+        "ns": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The namespace value of the given article"
+        },
+        "abstract": {
+          "type": "string",
+          "description": "A snippet of text from the beginning of the article"
+        },
+        "thumbnail": {
+          "type": "string",
+          "description": "The absolute URL of the thumbnail"
+        },
+        "revision": {
+          "$ref": "#/definitions/Revision",
+          "description": "The latest revision for this article"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "categories": {
+          "type": "array",
+          "description": "Array of strings - category names",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Metadata"
+          }
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        },
+        "type": {
+          "type": "string",
+          "description": "The functional type of the document (e.g. article, file, category)"
+        },
+        "comments": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of comments on this article"
+        }
+      }
+    },
+    "Media": {
+      "id": "Media",
+      "name": "",
+      "required": [
+        "thumbUrl"
+      ],
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Video duration (only for video type recommendations)"
+        },
+        "originalWidth": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Original image width"
+        },
+        "thumbUrl": {
+          "type": "string",
+          "description": "URL to thumbnail"
+        },
+        "videoKey": {
+          "type": "string",
+          "description": "Video title"
+        },
+        "originalHeight": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Original image height"
+        }
+      }
+    },
+    "RelatedPages": {
+      "id": "RelatedPages",
+      "name": "",
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/RelatedPage"
+          }
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "RelatedPage": {
+      "id": "RelatedPage",
+      "name": "",
+      "required": [
+        "url",
+        "title",
+        "id"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response"
+        },
+        "text": {
+          "type": "string",
+          "description": "Snippet of the article"
+        },
+        "imgUrl": {
+          "type": "string",
+          "description": "The absolute URL of the image"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "title": {
+          "type": "string",
+          "description": "Formatted article title"
+        }
+      }
+    },
+    "ExpandedCrossWikiaItem": {
+      "id": "ExpandedCrossWikiaItem",
+      "name": "",
+      "required": [
+        "id",
+        "lang",
+        "title",
+        "url",
+        "stats",
+        "topUsers",
+        "headline",
+        "flags",
+        "desc",
+        "image",
+        "original_dimensions",
+        "wordmark",
+        "wam_score"
+      ],
+      "properties": {
+        "headline": {
+          "type": "string",
+          "description": "Wikia headline"
+        },
+        "desc": {
+          "type": "string",
+          "description": "Description about Wikia content"
+        },
+        "stats": {
+          "$ref": "#/definitions/WikiaStats",
+          "description": "Wikia title"
+        },
+        "original_dimensions": {
+          "$ref": "#/definitions/ImageDimensions",
+          "description": "Object containing original image dimensions"
+        },
+        "url": {
+          "type": "string",
+          "description": "The absolute URL of the Wikia"
+        },
+        "image": {
+          "type": "string",
+          "description": "The absolute URL of the Wikia image"
+        },
+        "flags": {
+          "type": "array",
+          "description": "Array with flags",
+          "items": {
+            "type": "string"
+          }
+        },
+        "wam_score": {
+          "type": "number",
+          "format": "float",
+          "description": "Wiki WAM score"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Wikia"
+        },
+        "topUsers": {
+          "type": "array",
+          "description": "Array with ten top contributors",
+          "items": {
+            "type": "string"
+          }
+        },
+        "wordmark": {
+          "type": "string",
+          "description": "Wiki wordmark image URL, might be empty"
+        },
+        "title": {
+          "type": "string",
+          "description": "Wikia title"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Wikia language"
+        }
+      }
+    },
+    "CrossWikiSearchResult": {
+      "id": "CrossWikiSearchResult",
+      "name": "",
+      "required": [
+        "id",
+        "language"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Wikia"
+        },
+        "language": {
+          "type": "string",
+          "description": "Language of the site"
+        }
+      }
+    },
+    "CombinedSearchArticlesResultSet": {
+      "id": "CombinedSearchArticlesResultSet",
+      "name": "",
+      "required": [
+        "wikiId",
+        "articleId",
+        "title",
+        "url",
+        "lang",
+        "quality",
+        "snippet",
+        "image"
+      ],
+      "properties": {
+        "quality": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to the article"
+        },
+        "image": {
+          "type": "string",
+          "description": "The URL of the image"
+        },
+        "snippet": {
+          "type": "string",
+          "description": "Text snippet for the article"
+        },
+        "wikiId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID of Wikia site"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Language of the article"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of article ( book | character | comic_book | location | movie | person | tv_episode | tv_season | tv_series | other | video_game )"
+        },
+        "articleId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID of the article on the Wikia site"
+        }
+      }
+    },
+    "WikiasResultSet": {
+      "id": "WikiasResultSet",
+      "name": "",
+      "required": [
+        "wikiId",
+        "name",
+        "url",
+        "lang",
+        "snippet",
+        "wordmark"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of Wikia site"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to the main page"
+        },
+        "snippet": {
+          "type": "string",
+          "description": "Description of the Wikia site"
+        },
+        "wikiId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "ID of Wikia site"
+        },
+        "wordmark": {
+          "type": "string",
+          "description": "URL for Wikia site logo"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Language of the Wikia site"
+        }
+      }
+    },
+    "CrossWikiSearchResultSet": {
+      "id": "CrossWikiSearchResultSet",
+      "name": "",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/CrossWikiSearchResult"
+          }
+        }
+      }
+    },
+    "ExpandedCrossWikiaResultSet": {
+      "id": "ExpandedCrossWikiaResultSet",
+      "name": "",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/ExpandedCrossWikiaItem"
+          }
+        }
+      }
+    },
+    "LocalWikiSearchResultSet": {
+      "id": "LocalWikiSearchResultSet",
+      "name": "",
+      "required": [
+        "total",
+        "batches",
+        "currentBatch",
+        "next",
+        "items"
+      ],
+      "properties": {
+        "batches": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of batches (pages) of results"
+        },
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/LocalWikiSearchResult"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Total number of results"
+        },
+        "currentBatch": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The index of the current batch (page)"
+        },
+        "next": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The amount of items in the next batch (page)"
+        }
+      }
+    },
+    "CombinedSearchResultSet": {
+      "id": "CombinedSearchResultSet",
+      "name": "",
+      "required": [
+        "wikias",
+        "articles"
+      ],
+      "properties": {
+        "wikias": {
+          "type": "array",
+          "description": "Container for wikias collection (list)",
+          "items": {
+            "$ref": "#/definitions/WikiasResultSet"
+          }
+        },
+        "articles": {
+          "type": "array",
+          "description": "Container for articles collection (list)",
+          "items": {
+            "$ref": "#/definitions/CombinedSearchArticlesResultSet"
+          }
+        }
+      }
+    },
+    "ImageDimensions": {
+      "id": "ImageDimensions",
+      "name": "",
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Original image width"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Original image height"
+        }
+      }
+    },
+    "LocalWikiSearchResult": {
+      "id": "LocalWikiSearchResult",
+      "name": "",
+      "required": [
+        "id",
+        "title",
+        "url",
+        "ns",
+        "quality",
+        "snippet"
+      ],
+      "properties": {
+        "quality": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+        },
+        "url": {
+          "type": "string",
+          "description": "The absolute URL of the Article"
+        },
+        "ns": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Page namespace number, see more: http://community.wikia.com/wiki/Help:Namespaces"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Article"
+        },
+        "title": {
+          "type": "string",
+          "description": "Article title"
+        },
+        "snippet": {
+          "type": "string",
+          "description": "snippet with highlighted match (HTML format)"
+        }
+      }
+    },
+    "WikiaStats": {
+      "id": "WikiaStats",
+      "name": "",
+      "required": [
+        "edits",
+        "articles",
+        "pages",
+        "users",
+        "activeUsers",
+        "images",
+        "videos",
+        "admins"
+      ],
+      "properties": {
+        "users": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of total users on Wikia"
+        },
+        "articles": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of total articles on Wikia"
+        },
+        "pages": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of total pages on Wikia"
+        },
+        "admins": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of total admins on Wikia"
+        },
+        "activeUsers": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of total active users on Wikia"
+        },
+        "edits": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of total edits for Wikia"
+        },
+        "videos": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of total videos on Wikia"
+        },
+        "images": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of total images on Wikia"
+        }
+      }
+    },
+    "SearchSuggestionsPhrases": {
+      "id": "SearchSuggestionsPhrases",
+      "name": "",
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/SearchSuggestionsItems"
+          }
+        }
+      }
+    },
+    "SearchSuggestionsItems": {
+      "id": "SearchSuggestionsItems",
+      "name": "",
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Searching article title"
+        }
+      }
+    },
+    "UserResultSet": {
+      "id": "UserResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "basepath"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/UserElement"
+          }
+        },
+        "basepath": {
+          "type": "string",
+          "description": "Common URL prefix for relative URLs"
+        }
+      }
+    },
+    "UserElement": {
+      "id": "UserElement",
+      "name": "",
+      "required": [
+        "user_id",
+        "title",
+        "name",
+        "url",
+        "numberofedits",
+        "avatar"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Wikia user name (it can contain space characters)"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "The absolute URL of the user avatar image"
+        },
+        "url": {
+          "type": "string",
+          "description": "The relative URL of the User page. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for User"
+        },
+        "numberofedits": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Total number of edits made by user on the current wiki"
+        },
+        "title": {
+          "type": "string",
+          "description": "Wikia user login"
+        }
+      }
+    },
+    "MinMaxResultSet": {
+      "id": "MinMaxResultSet",
+      "name": "",
+      "required": [
+        "min_max_dates"
+      ],
+      "properties": {
+        "min_max_dates": {
+          "$ref": "#/definitions/MinMaxDatesItem",
+          "description": "Object containing minimal and maximal dates for wam index results"
+        }
+      }
+    },
+    "MinMaxDatesItem": {
+      "id": "MinMaxDatesItem",
+      "name": "",
+      "required": [
+        "max_date",
+        "min_date"
+      ],
+      "properties": {
+        "max_date": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Unix timestamp (in seconds) for maximal date of index"
+        },
+        "min_date": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Unix timestamp (in seconds) for minimal date of index"
+        }
+      }
+    },
+    "WAMResultSet": {
+      "id": "WAMResultSet",
+      "name": "",
+      "required": [
+        "wam_index",
+        "wam_results_total",
+        "wam_index_date"
+      ],
+      "properties": {
+        "wam_index": {
+          "type": "array",
+          "description": "Collection of WAM index ordered by ranking",
+          "items": {
+            "$ref": "#/definitions/WAMItem"
+          }
+        },
+        "wam_results_total": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The total count of wikis available for provided params"
+        },
+        "wam_index_date": {
+          "type": "integer",
+          "format": "int32",
+          "description": "date of received list"
+        }
+      }
+    },
+    "WAMItem": {
+      "id": "WAMItem",
+      "name": "",
+      "required": [
+        "wiki_id",
+        "wam",
+        "wam_rank",
+        "hub_wam_rank",
+        "peak_wam_rank",
+        "peak_hub_wam_rank",
+        "top_1k_days",
+        "top_1k_weeks",
+        "first_peak",
+        "last_peak",
+        "hub_name",
+        "title",
+        "url",
+        "vertical_id",
+        "wam_change",
+        "wam_is_new"
+      ],
+      "properties": {
+        "wam": {
+          "type": "number",
+          "format": "float",
+          "description": "WAM score"
+        },
+        "top_1k_weeks": {
+          "type": "integer",
+          "format": "int32",
+          "description": "the number of weeks that the Wiki has been in the top 1000 Wikis"
+        },
+        "hub_wam_rank": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Wiki WAM rank within its hub"
+        },
+        "wam_rank": {
+          "type": "integer",
+          "format": "int32",
+          "description": "WAM ranking"
+        },
+        "first_peak": {
+          "type": "string",
+          "description": "the first date that the Wiki achieved its peak_wam_rank"
+        },
+        "url": {
+          "type": "string",
+          "description": "The absolute URL of the Wikia"
+        },
+        "hub_name": {
+          "type": "string",
+          "description": "hub name"
+        },
+        "last_peak": {
+          "type": "string",
+          "description": "the last date that the Wiki was at its peak_wam_rank"
+        },
+        "wiki_image": {
+          "type": "string",
+          "description": "The absolute URL of the Wikia image"
+        },
+        "admins": {
+          "type": "array",
+          "description": "Wiki admins list",
+          "items": {
+            "$ref": "#/definitions/AdminItem"
+          }
+        },
+        "wam_is_new": {
+          "type": "integer",
+          "format": "int32",
+          "description": "1 if wiki was not classified on $wam_previous_day, 0 if this wiki was in index"
+        },
+        "peak_wam_rank": {
+          "type": "integer",
+          "format": "int32",
+          "description": "the peak WAM Rank achieved by this Wiki"
+        },
+        "wam_change": {
+          "type": "number",
+          "format": "float",
+          "description": "WAM score change from wam_previous_day"
+        },
+        "top_1k_days": {
+          "type": "integer",
+          "format": "int32",
+          "description": "the number of days that the Wiki has been in the top 1000 Wikis"
+        },
+        "peak_hub_wam_rank": {
+          "type": "integer",
+          "format": "int32",
+          "description": "peak WAM Rank within its Hub"
+        },
+        "wiki_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Wikia"
+        },
+        "title": {
+          "type": "string",
+          "description": "Wiki title"
+        },
+        "vertical_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for a Vertical"
+        }
+      }
+    },
+    "AdminItem": {
+      "id": "AdminItem",
+      "name": "",
+      "required": [
+        "avatarUrl",
+        "edits",
+        "name",
+        "userPageUrl",
+        "userContributionsUrl",
+        "userId",
+        "since"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Admin name"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "description": "The absolute URL of the User avatar image"
+        },
+        "edits": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of edits"
+        },
+        "userContributionsUrl": {
+          "type": "string",
+          "description": "The absolute URL of the User contributions page"
+        },
+        "userPageUrl": {
+          "type": "string",
+          "description": "The absolute URL of the User page"
+        },
+        "userId": {
+          "type": "string",
+          "description": "An internal identification number for User"
+        },
+        "since": {
+          "type": "string",
+          "description": "Join date"
+        }
+      }
+    },
+    "WAMLanguagesSet": {
+      "id": "WAMLanguagesSet",
+      "name": "",
+      "required": [
+        "languages"
+      ],
+      "properties": {
+        "languages": {
+          "type": "array",
+          "description": "Object containing list of language codes of the wikis that are in the WAM ranking for a given day",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SlideItem": {
+      "id": "SlideItem",
+      "name": "",
+      "required": [
+        "photoUrl",
+        "strapline",
+        "shortDesc",
+        "longDesc",
+        "url",
+        "photoName"
+      ],
+      "properties": {
+        "photoUrl": {
+          "type": "string",
+          "description": "The absolute URL of the image"
+        },
+        "url": {
+          "type": "string",
+          "description": "The absolute URL of the page"
+        },
+        "longDesc": {
+          "type": "string",
+          "description": "Long description"
+        },
+        "shortDesc": {
+          "type": "string",
+          "description": "Short description"
+        },
+        "strapline": {
+          "type": "string",
+          "description": "Headline text"
+        },
+        "photoName": {
+          "type": "string",
+          "description": "Image name"
+        }
+      }
+    },
+    "WikiaHubsListResultSet": {
+      "id": "WikiaHubsListResultSet",
+      "name": "",
+      "required": [
+        "HubInfo"
+      ],
+      "properties": {
+        "HubInfo": {
+          "type": "array",
+          "description": "Hubs collection",
+          "items": {
+            "$ref": "#/definitions/HubInfo"
+          }
+        }
+      }
+    },
+    "HubsData": {
+      "id": "HubsData",
+      "name": "",
+      "required": [
+        "slides"
+      ],
+      "properties": {
+        "slides": {
+          "type": "array",
+          "description": "Slides collection",
+          "items": {
+            "$ref": "#/definitions/SlideItem"
+          }
+        }
+      }
+    },
+    "HubInfo": {
+      "id": "HubInfo",
+      "name": "",
+      "required": [
+        "id",
+        "name",
+        "url",
+        "language"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "City ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "City name"
+        },
+        "url": {
+          "type": "string",
+          "description": "The absolute URL of the hub"
+        },
+        "language": {
+          "type": "string",
+          "description": "Hub language code"
+        }
+      }
+    },
+    "WikiaHubsResultSet": {
+      "id": "WikiaHubsResultSet",
+      "name": "",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/HubsData",
+          "description": "Wrapping object"
+        }
+      }
+    },
+    "ExpandedWikiaResultSet": {
+      "id": "ExpandedWikiaResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "next",
+        "total",
+        "batches",
+        "currentBatch"
+      ],
+      "properties": {
+        "batches": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Total number of batches"
+        },
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/ExpandedWikiaItem"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Total number of results"
+        },
+        "currentBatch": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Current batch number"
+        },
+        "next": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of elements in next batch"
+        }
+      }
+    },
+    "ExpandedWikiaItem": {
+      "id": "ExpandedWikiaItem",
+      "name": "",
+      "required": [
+        "id",
+        "name",
+        "hub",
+        "lang",
+        "topic",
+        "domain",
+        "title",
+        "url",
+        "stats",
+        "topUsers",
+        "headline",
+        "flags",
+        "desc",
+        "image",
+        "original_dimensions",
+        "wordmark",
+        "wam_score"
+      ],
+      "properties": {
+        "headline": {
+          "type": "string",
+          "description": "Wikia headline"
+        },
+        "desc": {
+          "type": "string",
+          "description": "Description about Wikia content"
+        },
+        "name": {
+          "type": "string",
+          "description": "Wikia name"
+        },
+        "stats": {
+          "$ref": "#/definitions/WikiaStats",
+          "description": "Wikia title"
+        },
+        "original_dimensions": {
+          "$ref": "#/definitions/ImageDimensions",
+          "description": "Object containing original image dimensions"
+        },
+        "url": {
+          "type": "string",
+          "description": "The absolute URL of the Wikia"
+        },
+        "image": {
+          "type": "string",
+          "description": "The absolute URL of the Wikia image"
+        },
+        "flags": {
+          "type": "array",
+          "description": "Array with flags",
+          "items": {
+            "type": "string"
+          }
+        },
+        "domain": {
+          "type": "string",
+          "description": "The absolute URL of the Wikia domain"
+        },
+        "wam_score": {
+          "type": "number",
+          "format": "float",
+          "description": "Wiki WAM score"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Wikia"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Wikia language"
+        },
+        "topUsers": {
+          "type": "array",
+          "description": "Array with ten top contributors",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hub": {
+          "type": "string",
+          "description": "Hub to which wikia belongs"
+        },
+        "wordmark": {
+          "type": "string",
+          "description": "Wiki wordmark image URL, might be empty"
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topics describing Wikia content"
+        },
+        "title": {
+          "type": "string",
+          "description": "Wikia title"
+        }
+      }
+    },
+    "UnexpandedWikiaResultSet": {
+      "id": "UnexpandedWikiaResultSet",
+      "name": "",
+      "required": [
+        "items",
+        "next",
+        "total",
+        "batches",
+        "currentBatch"
+      ],
+      "properties": {
+        "batches": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Total number of batches"
+        },
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/UnexpandedWikiaItem"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Total number of results"
+        },
+        "currentBatch": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Current batch number"
+        },
+        "next": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of elements in next batch"
+        }
+      }
+    },
+    "UnexpandedWikiaItem": {
+      "id": "UnexpandedWikiaItem",
+      "name": "",
+      "required": [
+        "id",
+        "name",
+        "hub",
+        "language",
+        "topic",
+        "domain"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Wikia name"
+        },
+        "domain": {
+          "type": "string",
+          "description": "The absolute URL of the Wikia domain"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "An internal identification number for Wikia"
+        },
+        "language": {
+          "type": "string",
+          "description": "Wikia language"
+        },
+        "hub": {
+          "type": "string",
+          "description": "Hub to which wikia belongs"
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topics describing Wikia content"
+        }
+      }
+    },
+    "WikiaDetailsResultSet": {
+      "id": "WikiaDetailsResultSet",
+      "name": "",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Standard container name for element collection (list)",
+          "items": {
+            "$ref": "#/definitions/ExpandedWikiaItem"
+          }
+        }
+      }
+    }
+  }
+}

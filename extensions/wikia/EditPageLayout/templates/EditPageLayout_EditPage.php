@@ -17,9 +17,14 @@
 			<h1>
 				<a href="<?= htmlspecialchars($title->getLocalUrl()) ?>" class="<?= $hideTitle ? 'hiddenTitle' : '' ?>" title="<?= htmlspecialchars($titleText) ?>"><?= htmlspecialchars($titleText) ?></a>
 			</h1>
-			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMsg('editpagelayout-edit-title') ?>">
+			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMessage('editpagelayout-edit-title')->escaped() ?>">
 				<img class="sprite edit-pencil-small" src="<?= $wg->BlankImgUrl ?>">
 			</a>
+			<?php if ( !empty( $extraHeaderHtml ) ) : ?>
+				<div class="editpage-extra-header-html">
+					<?= $extraHeaderHtml ?>
+				</div>
+			<?php endif; ?>
 			<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>
 			<aside id="HelpLink" class="HelpLink"><?= $helpLink ?></aside>
 			<aside id="NotificationsLink" class="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
@@ -62,7 +67,7 @@
 												</div>
 											</div>
 											<a class="expand">
-												<label><?= wfMsg('editpagelayout-more') ?></label>
+												<label><?= wfMessage('editpagelayout-more')->escaped() ?></label>
 												<span>+</span>
 											</a>
 										</div>
@@ -87,63 +92,49 @@
 					</noscript>
 					<div class="module module_page_controls">
 						<div class="module_content">
-							<div class="checkboxes">
-								<?php foreach( $customCheckboxes as $i=>$checkbox ): ?>
-									<label class="<?= $checkbox['name'] ?>">
-										<input type="checkbox" name="<?= $checkbox['name'] ?>" tabindex="<?= $i + 2 ?>" id="<?= $checkbox['name'] ?>" <?= $checkbox['checked'] ? ' checked="checked"' : '' ?> />
-										<?= $checkbox['label'] ?>
-									</label>
-								<?php endforeach ?>
-								<?php if ( $canMinorEdit ): ?>
-									<label class="wpMinoredit">
-										<input type="checkbox" tabindex="21" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
-										<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
-									</label>
-								<?php endif ?>
+							<div class="wpSummaryFields">
+								<div class="checkboxes">
+									<?php foreach ( $customCheckboxes as $i => $checkbox ): ?>
+										<label class="<?= $checkbox['name'] ?>">
+											<input type="checkbox" name="<?= $checkbox['name'] ?>" tabindex="<?= $i + 2 ?>" id="<?= $checkbox['name'] ?>" <?= $checkbox['checked'] ? ' checked="checked"' : '' ?> />
+											<?= $checkbox['label'] ?>
+										</label>
+									<?php endforeach ?>
+									<?php if ( $canMinorEdit ): ?>
+										<label class="wpMinoredit">
+											<input type="checkbox" tabindex="21" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMessage('accesskey-minoredit')->escaped() ;?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
+											<span><?= wfMessage('editpagelayout-pageControls-minorEdit')->escaped() ?></span>
+										</label>
+									<?php endif ?>
+								</div>
+								<label <?php if ( $canMinorEdit ): ?>class="wpSummary_canMinorEdit"<?php endif ?> for="wpSummary"><?= $wpSummaryLabelText ?></label>
+								<div id="wpSummaryLabel">
+									<?= $summaryBox ?>
+								</div>
 							</div>
-							<label <?php if ( $canMinorEdit ): ?>class="wpSummary_canMinorEdit"<?php endif ?> for="wpSummary"><?= $wpSummaryLabelText ?></label>
-							<div id="wpSummaryLabel">
-								<?= $summaryBox ?>
-							</div>
+							<?php if ( $showMobilePreview ): ?>
+								<div class="preview_box">
+									<h3 class="preview-header"><?= wfMessage( 'preview' )->escaped() ?></h3>
+									<a id="wpPreviewMobile" class="preview_mobile preview_icon" href="#">
+										<svg xmlns="http://www.w3.org/2000/svg" version="1.0" x="0px" y="0px" viewBox="0 0 32 48" xml:space="preserve">
+											<path d="M28 0C26.5 0 5.4 0 4 0C2.1 0 0 2.2 0 4c0 37.9 0 2.6 0 40c0 2 2.2 4 4 4c2 0 22.2 0 24 0 c1.8 0 3.9-2 3.9-4C31.9 30.2 32 5.2 32 4C32 1.9 29.8 0 28 0z M16 46c-1.1 0-2-0.9-2-2c0-1.1 0.9-2 2-2s2 0.9 2 2 C18 45.1 17.1 46 16 46z M28 40H4c0 0 0-25.7 0-36c7.1 0 24 0 24 0V40z"/>
+										</svg>
+										<p><?= wfMessage('editpagelayout-preview-label-mobile')->escaped() ?></p>
+									</a>
+									<a accesskey="e" id="wpPreview" class="preview_desktop preview_icon" href="#">
+										<svg xmlns="http://www.w3.org/2000/svg" version="1.0" x="0px" y="0px" viewBox="0 0 48 40" xml:space="preserve">
+											<path d="M48 34V0H0.1L0 34h18v4h-8v2h28v-2c0 0-8 0.3-8 0v-4H48z M2 30 V2h44v28H2z"/>
+										</svg>
+										<p><?= wfMessage('editpagelayout-preview-label-desktop')->escaped() ?></p>
+									</a>
+								</div>
+							<?php endif ?>
 							<nav class="buttons">
-								<?php foreach ( $buttons as $button ): ?>
-									<?php
-									 	$buttonType = !empty($button['type']) ? $button['type'] : 'button';
-										$buttonClasses = 'control-button'
-											. ($button['seqNo'] % 2 == 1 ? ' even' : '')
-											. (!empty($button['className']) ? ' ' . $button['className'] : '');
-									?>
-									<?php switch( $buttonType ):
-										// The odd formatting here is intentional, see: https://bugs.php.net/bug.php?id=36729
-										case 'save': ?>
-											<input class="<?=$buttonClasses?>" tabindex="22" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
-											<!-- If JavaScript is enabled, disable the save button immediately. -->
-											<script type="text/javascript">document.getElementById('wpSave').disabled=true;</script>
-										<?php break ?>
-										<?php case 'preview': ?>
-											<?php
-												$dropdown = array(array(
-													"id" => "wpDiff",
-													"accesskey" => wfMsg('accesskey-diff'),
-													"text" => wfMsg('showdiff')
-												));
-											?>
-											<?= $app->renderView( 'MenuButton', 'Index', array(
-												'action' => array(
-													'href' => '#',
-													'text' => wfMsg( 'preview' ),
-													'id' => 'wpPreview',
-													'tabindex' => 23
-												),
-												'class' => 'secondary '.$buttonClasses,
-												'dropdown' => $dropdown
-											)) ?>
-										<?php break ?>
-										<?php default: ?>
-											<input class="<?=$buttonClasses?>"<?= !empty($button['disabled']) ? ' disabled="disabled"' : '' ?> id="<?=$button['name']?>" name="<?=$button['name']?>" type="<?=$buttonType?>" value="<?=$button['caption']?>" />
-										<?php break ?>
-									<?php endswitch ?>
-								<?php endforeach ?>
+								<?php if ( $showPreview ): ?>
+									<?= $app->renderView( 'EditPageLayout', 'Buttons', [ 'showMobilePreview' => $showMobilePreview ]); ?>
+								<?php else: ?>
+									<?= $app->renderView( 'EditPageLayout', 'CodeButtons'); ?>
+								<?php endif ?>
 							</nav>
 						</div>
 					</div>
