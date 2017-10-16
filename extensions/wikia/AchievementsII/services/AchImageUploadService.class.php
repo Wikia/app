@@ -7,9 +7,22 @@ class AchImageUploadService {
 	 * This is a function like imagecopymerge but it handle alpha channel well!!!
 	 **/
 
-	// A fix to get a function like imagecopymerge WITH ALPHA SUPPORT
-	// Main script by aiden dot mail at freemail dot hu
-	// Transformed to imagecopymerge_alpha() by rodrigo dot polo at gmail dot com
+	/**
+	 * A fix to get a function like imagecopymerge WITH ALPHA SUPPORT
+	 * Main script by aiden dot mail at freemail dot hu
+	 * Transformed to imagecopymerge_alpha() by rodrigo dot polo at gmail dot com
+	 *
+	 * @param $dst_im
+	 * @param $src_im
+	 * @param $dst_x
+	 * @param $dst_y
+	 * @param $src_x
+	 * @param $src_y
+	 * @param $src_w
+	 * @param $src_h
+	 * @param $pct
+	 * @return bool
+	 */
 	private static function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
 		if(!isset($pct)){
 			return false;
@@ -51,6 +64,7 @@ class AchImageUploadService {
 		}
 		// The image copy
 		imagecopy($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
+		return true;
 	}
 
 	private static function merge_images($dest, $src) {
@@ -88,7 +102,8 @@ class AchImageUploadService {
 	}
 
 	public static function uploadBadge($destinationFileName, $badgeLevel) {
-		global $wgRequest, $wgUser, $wgBadgeNoFrame;
+		/* @var WebRequest $wgRequest */
+		global $wgRequest, $wgBadgeNoFrame;
 
 		$upload = new UploadAchievementsFromFile();
 		$upload->initialize( $destinationFileName, $wgRequest->getUpload( 'wpUploadFile' ) );
@@ -220,6 +235,7 @@ class AchImageUploadService {
 	}
 
 	public static function uploadHover( $destinationFileName ) {
+		/* @var WebRequest $wgRequest */
 		global $wgRequest, $wgUser;
 		$upload = new UploadAchievementsFromFile();
 		$upload->initialize( $destinationFileName, $wgRequest->getUpload( 'wpUploadFile' ) );
