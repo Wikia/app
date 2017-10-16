@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.template.modal', [
 				}
 			},
 			modalHandler = modalHandlerFactory.create(),
-			lightboxParams = modalHandler.getExpansionModel(),
+			lightboxParams,
 			slot;
 
 		if (modalHandler === null) {
@@ -84,6 +84,7 @@ define('ext.wikia.adEngine.template.modal', [
 			}
 		}
 
+		lightboxParams = modalHandler.getExpansionModel();
 		adIframe.style.maxWidth = 'none';
 		adContainer.appendChild(adIframe);
 
