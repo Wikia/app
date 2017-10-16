@@ -20,11 +20,13 @@ $wgExtensionCredits['specialpage'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialMultipleLookup',
 ];
 
+$wgAutoloadClasses['MultiLookupHooks'] = __DIR__ . '/MultiLookupHooks.php';
 $wgAutoloadClasses['MultiLookupPager'] = __DIR__ . '/MultiLookupPager.php';
 $wgAutoloadClasses['MultiLookupRowFormatter'] = __DIR__ . '/MultiLookupRowFormatter.php';
 $wgAutoloadClasses['SpecialMultiLookup'] = __DIR__ . '/SpecialMultiLookup.php';
 
-$wgHooks['ContributionsToolLinks'][] = 'SpecialMultiLookup::onContributionsToolLinks';
+$wgHooks['ContributionsToolLinks'][] = 'MultiLookupHooks::onContributionsToolLinks';
+$wgHooks['RecentChange_save'][] = 'MultiLookupHooks::onRecentChangeSave';
 
 $wgExtensionMessagesFiles["MultiLookup"] = dirname( __FILE__ ) . '/SpecialMultipleLookup.i18n.php';
 $wgExtensionMessagesFiles['MultiLookupAliases'] = __DIR__ . '/SpecialMultipleLookup.aliases.php';
