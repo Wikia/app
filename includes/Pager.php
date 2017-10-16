@@ -173,7 +173,8 @@ abstract class IndexPager extends ContextSource implements Pager {
 		$this->mResult = $this->reallyDoQuery(
 			$this->mOffset,
 			$queryLimit,
-			$descending
+			$descending,
+			$this->getQueryInfo()
 		);
 		$this->extractResultInfo( $this->mOffset, $queryLimit, $this->mResult );
 		$this->mQueryDone = true;
@@ -284,20 +285,22 @@ abstract class IndexPager extends ContextSource implements Pager {
 	 * @param $descending Boolean: query direction, false for ascending, true for descending
 	 * @return ResultWrapper
 	 */
-	function reallyDoQuery( $offset, $limit, $descending ) {
+	function reallyDoQuery( $offset, $limit, $descending, $info = [] ) {
 		$fname = __METHOD__ . ' (' . $this->getSqlComment() . ')';
-		$info = $this->getQueryInfo();
+		if ( !isset( $info ) ) {
+			$info = $this->getQueryInfo();
+		}
 		$tables = $info['tables'];
 		$fields = $info['fields'];
-		$conds = isset( $info['conds'] ) ? $info['conds'] : array();
-		$options = isset( $info['options'] ) ? $info['options'] : array();
-		$join_conds = isset( $info['join_conds'] ) ? $info['join_conds'] : array();
-		$sortColumns = array_merge( array( $this->mIndexField ), $this->mExtraSortFields );
+		$conds = isset( $info['conds'] ) ? $info['conds'] : [];
+		$options = isset( $info['options'] ) ? $info['options'] : [];
+		$join_conds = isset( $info['join_conds'] ) ? $info['join_conds'] : [];
+		$sortColumns = array_merge( [ $this->mIndexField ], $this->mExtraSortFields );
 		if ( $descending ) {
 			$options['ORDER BY'] = implode( ',', $sortColumns );
 			$operator = '>';
 		} else {
-			$orderBy = array();
+			$orderBy = [];
 			foreach ( $sortColumns as $col ) {
 				$orderBy[] = $col . ' DESC';
 			}
@@ -309,7 +312,45 @@ abstract class IndexPager extends ContextSource implements Pager {
 		}
 		$options['LIMIT'] = intval( $limit );
 		$res = $this->mDb->select( $tables, $fields, $conds, $fname, $options, $join_conds );
+
 		return new ResultWrapper( $this->mDb, $res );
+	}
+
+	/**
+	 * Fetch user names from ExternalSharedDB.
+	 * @see SUS-2990
+	 * @return array
+	 */
+	protected function fetchUsersForHistoryPage() {
+		global $wgExternalSharedDB;
+		$info = $this->getQueryInfo();
+		$info['fields'] = [ 'DISTINCT rev_user' ];
+
+		$descending = ( $this->mIsBackwards == $this->mDefaultDirection );
+		# Plus an extra row so that we can tell the "next" link should be shown
+		$queryLimit = $this->mLimit + 1;
+
+		$res = $this->reallyDoQuery(
+			$this->mOffset,
+			$queryLimit,
+			$descending,
+			$info
+		);
+
+		$ids = [];
+		while ( $row = $res->fetchObject() ) {
+			$ids[] = $row->rev_user;
+		}
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$users = $dbr->select( '`user`', [ 'user_id', 'user_name' ], [ 'user_id' => $ids ], __METHOD__ );
+
+		$ret = [];
+		while ( $row = $users->fetchObject() ) {
+			$ret[$row->user_id] = $row->user_name;
+		}
+
+		return $ret;
 	}
 
 	/**
@@ -340,10 +381,12 @@ abstract class IndexPager extends ContextSource implements Pager {
 
 		$s = $this->getStartBody();
 		if ( $numRows ) {
+			$users = $this->fetchUsersForHistoryPage();
 			if ( $this->mIsBackwards ) {
 				for ( $i = $numRows - 1; $i >= 0; $i-- ) {
 					$this->mResult->seek( $i );
 					$row = $this->mResult->fetchObject();
+					$row->user_name = $users[$row->rev_user];
 					$s .= $this->formatRow( $row );
 				}
 			} else {

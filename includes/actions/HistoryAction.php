@@ -352,14 +352,11 @@ class HistoryPager extends ReverseChronologicalPager {
 
 	function getQueryInfo() {
 		$queryInfo = [
-			'tables' => [ 'revision', 'user' ],
-			'fields' => array_merge( Revision::selectFields(), Revision::selectUserFields() ),
+			'tables' => [ 'revision' ],
+			'fields' => array_merge( Revision::selectFields() ),
 			'conds' => array_merge( [ 'rev_page' => $this->getWikiPage()->getId() ], $this->conds ),
 			'options' => [
 				'USE INDEX' => [ 'revision' => 'page_timestamp' ]
-			],
-			'join_conds' => [
-				'user' => Revision::userJoinCond(),
 			],
 		];
 
@@ -395,7 +392,7 @@ class HistoryPager extends ReverseChronologicalPager {
 		$this->mResult->seek( 0 );
 		$batch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
-			if( !is_null( $row->user_name ) ) {
+			if( !empty( $row->user_name ) ) {
 				$batch->add( NS_USER, $row->user_name );
 				$batch->add( NS_USER_TALK, $row->user_name );
 			} else { # for anons or usernames of imported revisions
