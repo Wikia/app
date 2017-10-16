@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-specials-slave.query.consul    Database: specials
 -- ------------------------------------------------------
--- Server version	5.6.24-72.2-log
+-- Server version	5.7.18-15-log
 
 
 --
@@ -98,13 +98,10 @@ DROP TABLE IF EXISTS `multilookup`;
 CREATE TABLE `multilookup` (
   `ml_city_id` int(9) unsigned NOT NULL,
   `ml_ip_bin` varbinary(16) NOT NULL DEFAULT '',
-  `ml_count` int(6) unsigned NOT NULL DEFAULT '0',
   `ml_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ml_city_id`,`ml_ip_bin`),
   KEY `multilookup_ts_inx` (`ml_ts`),
-  KEY `multilookup_cnt_ts_inx` (`ml_count`,`ml_ts`),
-  KEY `multilookup_ip_bin_ts_inx` (`ml_ip_bin`,`ml_ts`),
-  KEY `multilookup_ip_bin_cnt_ts_inx` (`ml_ip_bin`,`ml_count`,`ml_ts`)
+  KEY `multilookup_ip_bin_ts_inx` (`ml_ip_bin`,`ml_ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
@@ -140,4 +137,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-06 12:23:06
+-- Dump completed on 2017-10-16 14:47:40

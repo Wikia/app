@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-archive-slave.query.consul    Database: dataware
 -- ------------------------------------------------------
--- Server version	5.6.24-72.2-log
+-- Server version	5.7.18-15-log
 
 
 --
@@ -521,4 +521,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-10-06 12:23:05
+-- Dump completed on 2017-10-16 14:47:39
