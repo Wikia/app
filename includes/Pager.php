@@ -97,6 +97,9 @@ abstract class IndexPager extends ContextSource implements Pager {
 	public $mIsFirst;
 	public $mIsLast;
 
+	/** User names associated with the result */
+	private $mUsers;
+
 	protected $mLastShown, $mFirstShown, $mPastTheEndIndex, $mDefaultQuery, $mNavigationBar;
 
 	/**
@@ -177,6 +180,7 @@ abstract class IndexPager extends ContextSource implements Pager {
 			$this->getQueryInfo()
 		);
 		$this->extractResultInfo( $this->mOffset, $queryLimit, $this->mResult );
+		$this->mUsers = $this->fetchUsersForHistoryPage();
 		$this->mQueryDone = true;
 
 		$this->preprocessResults( $this->mResult );
@@ -381,12 +385,11 @@ abstract class IndexPager extends ContextSource implements Pager {
 
 		$s = $this->getStartBody();
 		if ( $numRows ) {
-			$users = $this->fetchUsersForHistoryPage();
 			if ( $this->mIsBackwards ) {
 				for ( $i = $numRows - 1; $i >= 0; $i-- ) {
 					$this->mResult->seek( $i );
 					$row = $this->mResult->fetchObject();
-					$row->user_name = $users[$row->rev_user];
+					$row->user_name = $this->mUsers[$row->rev_user];
 					$s .= $this->formatRow( $row );
 				}
 			} else {
