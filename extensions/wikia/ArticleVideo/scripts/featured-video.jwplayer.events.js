@@ -2,7 +2,7 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 	var state = getNewState(),
 		wasAlreadyUnmuted = false,
 		depth = 0,
-		wasStartTracked = false,
+		wasStartEventFired = false,
 		prefixes = {
 			ad: 'ad',
 			video: 'video'
@@ -15,8 +15,8 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 			wasMidPointTriggered: false,
 			wasThirdQuartileTriggered: false,
 			progress: {
-				durationTracked: 0,
-				percentTracked: 0
+				durationWatched: 0,
+				percentWatched: 0
 			}
 		}
 	}
@@ -32,11 +32,11 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 		var positionFloor = Math.floor(data.position),
 			percentPlayed = Math.floor(positionFloor * 100 / data.duration);
 
-		if (positionFloor > state[prefix].progress.durationTracked && positionFloor % 5 === 0) {
+		if (positionFloor > state[prefix].progress.durationWatched && positionFloor % 5 === 0) {
 			playerInstance.trigger(prefix + 'SecondsPlayed', { value: positionFloor });
 			console.log(prefix, positionFloor);
 
-			state[prefix].progress.durationTracked = positionFloor;
+			state[prefix].progress.durationWatched = positionFloor;
 		}
 
 		if (percentPlayed >= 25 && !state[prefix].wasFirstQuartileTriggered) {
@@ -54,10 +54,10 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 			state[prefix].wasThirdQuartileTriggered = true;
 		}
 
-		if (percentPlayed > state[prefix].progress.percentTracked && percentPlayed % 10 === 0) {
+		if (percentPlayed > state[prefix].progress.percentWatched && percentPlayed % 10 === 0) {
 			playerInstance.trigger(prefix + 'PercentPlayed', { value: percentPlayed });
 
-			state[prefix].progress.percentTracked = percentPlayed;
+			state[prefix].progress.percentWatched = percentPlayed;
 		}
 	}
 
@@ -85,14 +85,14 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 		});
 
 		playerInstance.on('play', function () {
-			if (wasStartTracked) {
+			if (wasStartEventFired) {
 				playerInstance.trigger('videoResumed');
 			} else {
 				if (depth === 0) {
 					playerInstance.trigger('videoStart', { auto: willAutoplay });
 				}
 
-				wasStartTracked = true;
+				wasStartEventFired = true;
 			}
 		});
 
