@@ -216,6 +216,10 @@ module.exports = function (config) {
 			// Article Video
 			'extensions/wikia/ArticleVideo/scripts/*.js',
 			'extensions/wikia/ArticleVideo/scripts/spec/*.spec.js',
+
+			// Tabber
+			'extensions/3rdparty/tabber/tabber.js',
+			'extensions/3rdparty/tabber/spec/tabber.spec.js',
 		]
 	});
 };
