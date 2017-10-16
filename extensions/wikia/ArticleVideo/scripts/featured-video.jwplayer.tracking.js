@@ -28,6 +28,32 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 		window.guaSetCustomDimension(36, currentVideo.tags);
 	}
 
+	/**
+	 * Comscore Video Metrix tracking, sends tracking request with 3 Comscore parameters:
+	 * C1 (identifier of content) = 1
+	 * C2 (client ID) = 6177433 for Fandom
+	 * C5 (video type identifier) = 04 for featured videos
+	 * We need to track it at each video playback
+	 */
+	function trackComscoreVideoMetrix() {
+		//Do not track to comscore on dev env
+		if (window.wgDevelEnvironment) {
+			return;
+		}
+
+		var scriptId = 'comscoreVideoMetrixTrack',
+			mountedScript = document.getElementById(scriptId);
+
+		if (mountedScript) {
+			mountedScript.parentElement.removeChild(mountedScript)
+		}
+
+		var script = document.createElement('script');
+		script.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
+		script.id = scriptId;
+		document.head.appendChild(script);
+	}
+
 	function track(gaData) {
 		if (!gaData.label) {
 			throw new Error('No tracking label provided');
@@ -96,6 +122,8 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 					label: 'recommended-video-depth-' + depth,
 					action: 'impression'
 				});
+
+				trackComscoreVideoMetrix();
 			});
 		});
 
@@ -122,6 +150,8 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 					gaData = willAutoplay ?
 						{ label:'autoplay-start', action: 'impression' } :
 						{ label: 'user-start' };
+
+					trackComscoreVideoMetrix();
 				}
 
 				playerInstance.trigger('videoStart');
