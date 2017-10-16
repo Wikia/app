@@ -76,6 +76,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			videoDepth = 0;
 
 		if (adContext.get('opts.showAds')) {
+			player.on('adBlock', function () {
+				trackingParams.adProduct = 'featured-video';
+			});
+
 			player.on('videoStart', function () {
 				log('Preroll position reached', log.levels.info, logGroup);
 
