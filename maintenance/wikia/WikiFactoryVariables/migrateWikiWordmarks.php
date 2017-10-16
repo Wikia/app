@@ -7,7 +7,9 @@
 * - remove variable from the wiki
 * - get the variable value
 * This is one time use script
-* @author Saipetch Kongkatong
+* @usage
+* 	# this will migrate wordmark-image-url for wiki with ID 119:
+* 	migrateWikiWordmarks -d --wikiId 119 --verbose --keyName wordmark-image-url
 */
 
 ini_set( 'display_errors', 'stderr' );
@@ -25,7 +27,6 @@ class MigrateWikiWordmarks extends Maintenance {
 	protected $dryRun  = false;
 	protected $verbose = false;
 	protected $keyName = '';
-	protected $action = '';
 	protected $success = 0;
 	const WIKI_FACTORY_VARIABLE = "wgOasisThemeSettings";
 
@@ -35,34 +36,25 @@ class MigrateWikiWordmarks extends Maintenance {
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 		$this->addOption( 'keyName', 'Key in WikiFactory variable which should be migrated to https', true, true, 'k' );
-		$this->addOption( 'wikiId', 'Wiki Id', false, true, 'i' );
-		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
 		$this->addOption( 'reason', 'Reason to provide when setting a variable', false, true );
 	}
 
 	public function execute() {
+		global $wgCityId;
 		$this->dryRun  = $this->hasOption( 'dry-run' );
 		$this->verbose = $this->hasOption( 'verbose' );
 		$this->keyName = $this->getOption( 'keyName', '' );
-		$wikiId        = $this->getOption( 'wikiId', '' );
-		$file          = $this->getOption( 'file', '');
 		$reason        = $this->getOption( 'reason' );
 
 		if ( empty( $this->keyName ) ) {
-			die( "Error: Empty key name.\n" );
+			$this->error( "Error: Empty key name.\n" );
+			return false;
 		}
 
-		if ( !empty( $wikiId ) ) {
-			$wikiIds = explode(',', $wikiId);
-		} else if ( !empty( $file ) ) {
-			$wikiIds = file( $file );
-		} else {
-			die( "Error: wiki id is empty or the file is invalid.\n" );
-		}
-
-		$varData = (array) WikiFactory::getVarByName( self::WIKI_FACTORY_VARIABLE, $wikiId, true );
+		$varData = (array) WikiFactory::getVarByName( self::WIKI_FACTORY_VARIABLE, $wgCityId, true );
 		if ( empty( $varData['cv_id'] ) ) {
-			die( "Error: " . self::WIKI_FACTORY_VARIABLE . " not found.\n" );
+			$this->error( "Error: " . self::WIKI_FACTORY_VARIABLE . " not found.\n" );
+			return false;
 		}
 
 		echo "Variable: " . self::WIKI_FACTORY_VARIABLE . " (Id: $varData[cv_id])" . PHP_EOL;
@@ -72,51 +64,39 @@ class MigrateWikiWordmarks extends Maintenance {
 		$wg->User = User::newFromName( Wikia::BOT_USER );
 		$wg->User->load();
 
-		$cnt = 0;
-		$total = count( $wikiIds );
 
-		foreach ( $wikiIds as $id ) {
-			$cnt++;
-			$id = trim( $id );
+		echo "Updating {$this->keyName} in " . self::WIKI_FACTORY_VARIABLE . PHP_EOL;
+		$prevValue = unserialize($varData['cv_value']);
+		$keyValue = $prevValue[$this->keyName];
 
-			echo "Wiki $id [$cnt of $total]: " . PHP_EOL;
-
-			echo "Updating {$this->keyName} in " . self::WIKI_FACTORY_VARIABLE . PHP_EOL;
-			$prevValue = unserialize($varData['cv_value']);
-			$keyValue = $prevValue[$this->keyName];
-
-			if ( empty( $keyValue ) ) {
-				echo "Key is empty - skipping" . PHP_EOL;
-				continue;
-			}
-
-			if ( strpos( $keyValue,"http://" ) !== 0 ) {
-				echo "Value doesn't start with 'http://' " . $keyValue .  " - skipping " .PHP_EOL;
-				continue;
-			}
-
-			$replacements = 0;
-			$keyValue = preg_replace( '#^http://#', "https://", $keyValue, 1, $replacements );
-
-			if ( $replacements !== 1 ) {
-				echo "Value not changed " . $keyValue . "- skipping" . PHP_EOL;
-				continue;
-			}
-
-			$newValue = array_filter(array_unique(array_merge($prevValue, [ $this->keyName => $keyValue ])));
-			$this->debug("Setting " . self::WIKI_FACTORY_VARIABLE . " to " . var_export( $newValue, true ) );
-			$status = $this->setVariable( $id, $newValue, $reason );
-
-			if ( $this->dryRun || $status ) {
-				echo " ... DONE.\n";
-				$this->success++;
-			} else {
-				echo " ... FAILED.\n";
-			}
+		if ( empty( $keyValue ) ) {
+			echo "Key is empty - skipping" . PHP_EOL;
+			return false;
 		}
 
-		echo "\nTotal wikis: $total, Success: {$this->success}, Failed: ".( $total - $this->success )."\n\n";
+		if ( strpos( $keyValue,"http://" ) !== 0 ) {
+			echo "Value doesn't start with 'http://' " . $keyValue .  " - skipping " .PHP_EOL;
+			return false;
+		}
 
+		$replacements = 0;
+		$keyValue = preg_replace( '#^http://#', "https://", $keyValue, 1, $replacements );
+
+		if ( $replacements !== 1 ) {
+			echo "Value not changed " . $keyValue . "- skipping" . PHP_EOL;
+			return false;
+		}
+
+		$newValue = array_filter(array_unique(array_merge($prevValue, [ $this->keyName => $keyValue ])));
+		$this->debug("Setting " . self::WIKI_FACTORY_VARIABLE . " to " . var_export( $newValue, true ) );
+		$status = $this->setVariable( $wgCityId, $newValue, $reason );
+
+		if ( $this->dryRun || $status ) {
+			echo " ... DONE.\n";
+			$this->success++;
+		} else {
+			echo " ... FAILED.\n";
+		}
 	}
 
 	/**
