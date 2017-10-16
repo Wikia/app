@@ -2,6 +2,12 @@ define('wikia.articleVideo.featuredVideo.adsTracking', [
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker'
 ], function (eventDispatcher, tracker) {
+	function clearParams(params) {
+		params.lineItemId = undefined;
+		params.creativeId = undefined;
+		params.contentType = undefined;
+	}
+
 	function updateParams(params, currentAd) {
 		var wrapperCreativeId,
 			wrapperId;
@@ -27,13 +33,11 @@ define('wikia.articleVideo.featuredVideo.adsTracking', [
 		tracker.track(params, 'init');
 
 		player.on('adComplete', function () {
-			params.lineItemId = undefined;
-			params.creativeId = undefined;
-			params.contentType = undefined;
+			clearParams(params);
 		});
 
 		player.on('adError', function () {
-			updateParams(params);
+			clearParams(params);
 		});
 
 		player.on('adRequest', function (event) {
