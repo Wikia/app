@@ -110,7 +110,8 @@ class WAMApiController extends WikiaApiController {
 			[
 				'wam_index' => $wamIndex[ 'wam_index' ],
 				'wam_results_total' => $wamIndex[ 'wam_results_total' ],
-				'wam_index_date' => $wamIndex[ 'wam_index_date' ]
+				'wam_index_date' => $wamIndex[ 'wam_index_date' ],
+                'wam_actual_date' => $options['currentTimestamp']
 			],
 			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
 			self::WAM_RESPONSE_CACHE_VALIDITY

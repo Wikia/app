@@ -58,6 +58,22 @@ WAMPage.prototype = {
 				var minDate = new Date(window.wamFilterMinMaxDates.min_date * 1000),
 					maxDate = new Date(window.wamFilterMinMaxDates.max_date * 1000);
 
+				var filterWam = function () {
+                    var $date = $('#WamFilterDate'),
+                        timestamp = parseInt($date.val(), 10);
+                    //Conversion to second epoch, which is necessary if date hasn't changed as internally ms are stored
+                    if (timestamp > 9999999999) {
+                        timestamp = timestamp / 1000;
+                    }
+                    $date.val(timestamp - new Date().getTimezoneOffset() * 60);
+                    WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
+                        null, {
+                            lang: wgContentLanguage,
+                            filter: 'date'
+                        });
+                    WAMPage.filterWamIndex($date);
+                };
+
 				minDate.setMinutes(minDate.getMinutes() + minDate.getTimezoneOffset());
 				maxDate.setMinutes(maxDate.getMinutes() + maxDate.getTimezoneOffset());
 
@@ -69,18 +85,8 @@ WAMPage.prototype = {
 					altField: '#WamFilterDate',
 					altFormat: '@',
 					dateFormat: window.wamFilterDateFormat,
-					onSelect: $.proxy(function () {
-						var $date = $('#WamFilterDate'),
-							timestamp = parseInt($date.val(), 10),
-							currentTimezoneOffset = (new Date(timestamp)).getTimezoneOffset();
-						$date.val((timestamp / 1000) - currentTimezoneOffset * 60);
-						WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
-							null, {
-								lang: wgContentLanguage,
-								filter: 'date'
-							});
-						WAMPage.filterWamIndex($date);
-					}, this)
+					onClose: $.proxy(filterWam, this),
+					onSelect: $.proxy(filterWam, this)
 				});
 			}, this)
 		);
