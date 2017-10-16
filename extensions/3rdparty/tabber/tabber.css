@@ -18,6 +18,7 @@ ul.tabbernav li a {
  border-bottom: none;
  background: #F2F7FF;
  text-decoration: none;
+ white-space: pre;
 }
 
 ul.tabbernav li a:link {

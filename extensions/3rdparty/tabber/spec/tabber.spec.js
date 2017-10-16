@@ -30,18 +30,4 @@ describe('Tabber', function () {
 
 		expect($tabber.find('li+wbr').length).toBe(3);
 	});
-
-	it('replaces spaces in tab titles with non-breaking spaces', function () {
-		var tabber = '<div class="tabber">' +
-			'<div class="tabbertab" title="Tab Title 1"></div>' +
-			'<div class="tabbertab" title="Tab Title 2"></div>' +
-			'<div class="tabbertab" title="Tab Title 3"></div>' +
-			'</div>';
-
-		var $tabber = $(tabber).tabber();
-
-		$tabber.find('ul.tabbernav li').each(function (i) {
-			expect($(this).text()).toBe('Tab\u00A0Title\u00A0' + (i+1));
-		});
-	});
 });
