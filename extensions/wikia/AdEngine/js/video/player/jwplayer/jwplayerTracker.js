@@ -15,7 +15,6 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 			adFirstQuartile: 'first_quartile',
 			adMidPoint: 'midpoint',
 			adThirdQuartile: 'third_quartile',
-			adPause: 'paused',
 			adComplete: 'completed',
 			adSkipped: 'skipped',
 			videoStart: 'content_started',
