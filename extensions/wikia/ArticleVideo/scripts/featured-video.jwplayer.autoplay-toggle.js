@@ -18,11 +18,11 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 	}
 
 	return function () {
-		var $player = $('#featured-video__player'),
-			$settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
+		var $player = $('#featured-video__player');
 
 		if (featuredVideoAutoplay.inAutoplayCountries) {
 			$player.one('click', '.jw-settings-submenu-button', function () {
+				var $settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
 				addAutoplayToggle($settingsTopbar);
 			});
 		}
