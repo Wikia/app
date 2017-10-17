@@ -1,31 +1,40 @@
 define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function (tracker) {
-	var state = getDefaultState(),
-		defaultGACategory = 'featured-video',
+	var defaultGACategory = 'featured-video',
 		//This will replace 'trackingevent' in internal tracker url path
 		eventName = 'videoplayerevent',
-		wasAlreadyUnmuted = false,
-		depth = 0,
-
 		gaCategory,
 		playerInstance;
-
-	function getDefaultState() {
-		return {
-			wasStartTracked: false,
-			wasFirstQuartileTriggered: false,
-			wasMidPointTriggered: false,
-			wasThirdQuartileTriggered: false,
-			progress: {
-				durationTracked: 0,
-				percentTracked: 0
-			}
-		}
-	}
 
 	function updateVideoCustomDimensions(currentVideo) {
 		window.guaSetCustomDimension(34, currentVideo.mediaid);
 		window.guaSetCustomDimension(35, currentVideo.title);
 		window.guaSetCustomDimension(36, currentVideo.tags);
+	}
+
+	/**
+	 * Comscore Video Metrix tracking, sends tracking request with 3 Comscore parameters:
+	 * C1 (identifier of content) = 1
+	 * C2 (client ID) = 6177433 for Fandom
+	 * C5 (video type identifier) = 04 for featured videos
+	 * We need to track it at each video playback
+	 */
+	function trackComscoreVideoMetrix() {
+		//Do not track to comscore on dev env
+		if (window.wgDevelEnvironment) {
+			return;
+		}
+
+		var scriptId = 'comscoreVideoMetrixTrack',
+			mountedScript = document.getElementById(scriptId);
+
+		if (mountedScript) {
+			mountedScript.parentElement.removeChild(mountedScript)
+		}
+
+		var script = document.createElement('script');
+		script.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
+		script.id = scriptId;
+		document.head.appendChild(script);
 	}
 
 	function track(gaData) {
@@ -66,69 +75,49 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 				label: 'load',
 				action: 'impression'
 			});
-
-			var relatedPlugin = playerInstance.getPlugin('related');
-
-			relatedPlugin.on('open', function () {
-				track({
-					label: 'recommended-video',
-					action: 'impression'
-				});
-
-				state = getDefaultState();
-			});
-
-			relatedPlugin.on('play', function (data) {
-				depth++;
-
-				updateVideoCustomDimensions(
-					data.item
-				);
-
-				var labelPrefix = data.auto ? 'recommended-video-autoplay-' : 'recommended-video-select-';
-
-				track({
-					label: labelPrefix + data.position,
-					action: 'impression'
-				});
-
-				track({
-					label: 'recommended-video-depth-' + depth,
-					action: 'impression'
-				});
-			});
 		});
 
-		playerInstance.once('firstFrame', function () {
-			if (!willAutoplay || state.wasStartTracked || depth > 0) {
-				return;
-			}
-
+		playerInstance.on('relatedVideoImpression', function () {
 			track({
-				label: 'autoplay-start',
+				label: 'recommended-video',
 				action: 'impression'
 			});
 		});
 
-		playerInstance.on('play', function () {
-			var gaData;
+		playerInstance.on('relatedVideoPlay', function (data) {
+			updateVideoCustomDimensions(
+				data.item
+			);
 
-			if (state.wasStartTracked) {
-				gaData = {
-					label: 'play-resumed'
-				}
-			} else {
-				if (depth === 0) {
-					gaData = willAutoplay ?
-						{ label:'autoplay-start', action: 'impression' } :
-						{ label: 'user-start' };
-				}
+			var labelPrefix = data.auto ? 'recommended-video-autoplay-' : 'recommended-video-select-';
 
-				playerInstance.trigger('videoStart');
-				state.wasStartTracked = true;
-			}
+			track({
+				label: labelPrefix + data.position,
+				action: 'impression'
+			});
 
-			gaData && track(gaData);
+			track({
+				label: 'recommended-video-depth-' + data.depth,
+				action: 'impression'
+			});
+
+			trackComscoreVideoMetrix();
+		});
+
+		playerInstance.on('videoResumed', function () {
+			track({
+				label: 'play-resumed'
+			})
+		});
+
+		playerInstance.on('playerStart', function (data) {
+			var gaData = data.auto ?
+				{ label:'autoplay-start', action: 'impression' } :
+				{ label: 'user-start' };
+
+			track(gaData);
+
+			trackComscoreVideoMetrix();
 		});
 
 		playerInstance.on('pause', function () {
@@ -137,52 +126,24 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 			});
 		});
 
-		playerInstance.on('mute', function () {
-			if (!playerInstance.getMute() && !wasAlreadyUnmuted) {
-				track({
-					label: 'unmuted'
-				});
-
-				wasAlreadyUnmuted = true;
-			}
+		playerInstance.on('firstUnmute', function () {
+			track({
+				label: 'unmuted'
+			});
 		});
 
-		playerInstance.on('time', function (data) {
-			var positionFloor = Math.floor(data.position),
-				percentPlayed = Math.floor(positionFloor * 100 / data.duration);
+		playerInstance.on('videoSecondsPlayed', function (data) {
+			track({
+				label: 'played-seconds-' + data.value,
+				action: 'view'
+			});
+		});
 
-			if (positionFloor > state.progress.durationTracked && positionFloor % 5 === 0) {
-				track({
-					label: 'played-seconds-' + positionFloor,
-					action: 'view'
-				});
-
-				state.progress.durationTracked = positionFloor;
-			}
-
-			if (percentPlayed >= 25 && !state.wasFirstQuartileTriggered) {
-				playerInstance.trigger('videoFirstQuartile');
-				state.wasFirstQuartileTriggered = true;
-			}
-
-			if (percentPlayed >= 50 && !state.wasMidPointTriggered) {
-				playerInstance.trigger('videoMidPoint');
-				state.wasMidPointTriggered = true;
-			}
-
-			if (percentPlayed >= 75 && !state.wasThirdQuartileTriggered) {
-				playerInstance.trigger('videoThirdQuartile');
-				state.wasThirdQuartileTriggered = true;
-			}
-
-			if (percentPlayed > state.progress.percentTracked && percentPlayed % 10 === 0) {
-				track({
-					label: 'played-percentage-' + percentPlayed,
-					action: 'view'
-				});
-
-				state.progress.percentTracked = percentPlayed;
-			}
+		playerInstance.on('videoPercentPlayed', function (data) {
+			track({
+				label: 'played-percentage-' + data.value,
+				action: 'view'
+			});
 		});
 
 		playerInstance.on('complete', function () {

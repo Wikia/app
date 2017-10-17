@@ -22,10 +22,13 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 			$settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
 
 		if (featuredVideoAutoplay.inAutoplayCountries) {
-			addAutoplayToggle($settingsTopbar);
+			$settingsTopbar.length && addAutoplayToggle($settingsTopbar);
 
 			playerInstance.on('resize', function (data) {
-				if (data.width > 600 && !$settingsTopbar.contains('#featuredVideoAutoplayToggle')) {
+				if (data.width > 600 &&
+					$settingsTopbar.length &&
+					!$settingsTopbar.contains('#featuredVideoAutoplayToggle')
+				) {
 					addAutoplayToggle($settingsTopbar);
 				}
 			});

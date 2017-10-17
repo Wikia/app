@@ -8,6 +8,10 @@
 		}
 	}
 
+	.jw-submenu-sharing {
+		display: none;
+	}
+
 	// resets wikia button styling
 	button {
 		background-image: initial;
@@ -21,11 +25,16 @@
 		}
 	}
 
+
 	.jw-controlbar {
 		.jw-icon-inline {
 			&.jw-text {
 				margin-top: -4px;
 			}
 		}
+	}
+
+	&.jw-flag-small-player .jw-title-primary {
+		display: none;
 	}
 }
