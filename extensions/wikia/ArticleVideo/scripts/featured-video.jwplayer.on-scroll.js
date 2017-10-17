@@ -102,7 +102,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			collapsingDisabled = false;
 		});
 
-		relatedPlugin.on('play', updateTitleAndDuration);
+		playerInstance.getPlugin('related').on('play', updateTitleAndDuration);
 
 		return unbindEvents;
 	}
