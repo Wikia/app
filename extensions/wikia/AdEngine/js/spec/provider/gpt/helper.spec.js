@@ -19,6 +19,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			},
 			adContext: {
 				addCallback: noop,
+				get: noop,
 				getContext: function () {
 					return mocks.context;
 				}
@@ -404,5 +405,56 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('premium');
+	});
+
+	it('pass provided src param', function () {
+		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'xyz'}, {});
+		expect(mocks.slotTargetingData.src).toBe('xyz');
+
+		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, {});
+		expect(mocks.slotTargetingData.src).toBe('abc');
+	});
+
+	it('adds test- prefix for test wiki', function () {
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
+
+		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'xyz'}, {});
+
+		expect(mocks.slotTargetingData.src).toBe('test-xyz');
+	});
+
+	it('overrides src for test wiki if is passed in extra params', function () {
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
+
+		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'xyz'}, {testSrc: 'extraSrc'});
+
+		expect(mocks.slotTargetingData.src).toBe('extraSrc');
+	});
+
+	it('overrides src=premium for test wiki', function () {
+		mocks.context.opts.premiumOnly = true;
+
+		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, {});
+		expect(mocks.slotTargetingData.src).toBe('premium');
+
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
+		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, {});
+		expect(mocks.slotTargetingData.src).toBe('test-abc');
+	});
+
+	it('overrides src=rec for test wiki', function () {
+		spyOn(mocks.pageFair, 'isEnabled');
+		var extra = {
+			isPageFairRecoverable: true
+		};
+
+		mocks.pageFair.isEnabled.and.returnValue(true);
+
+		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, extra);
+		expect(mocks.slotTargetingData.src).toBe('rec');
+
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
+		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, extra);
+		expect(mocks.slotTargetingData.src).toBe('test-abc');
 	});
 });

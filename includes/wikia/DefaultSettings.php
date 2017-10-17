@@ -1154,6 +1154,12 @@ $wgNielsenApid = 'FIXME';
 $wgEnableNetzAthleten = true;
 
 /**
+ * @name $wgAdDriverIsTestWiki
+ * Enables test targeting parameters for wiki.
+ */
+$wgAdDriverIsAdTestWiki = false;
+
+/**
  * @name $wgAdDriverNetzAthletenCountries
  * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
