@@ -36,7 +36,7 @@ require([
 	}
 
 	function canPlayVideo(willAutoplay) {
-		return !document.hidden && willAutoplay && ['playing', 'paused'].indexOf(playerInstance.getState()) === -1;
+		return !document.hidden && willAutoplay && ['playing', 'paused', 'complete'].indexOf(playerInstance.getState()) === -1;
 	}
 
 	function setupPlayer(bidParams) {
