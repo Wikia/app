@@ -22,3 +22,6 @@ $wgHooks['ThemeDesignerSaveImage'][] = 'ImageReviewEventsHooks::addTitleToTheQue
 $wgHooks['VisualEditorAddMedia'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
 $wgHooks['WikiaMiniUploadInsertImage'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
 $wgHooks['WikiaPhotoGalleryUpload'][] = 'ImageReviewEventsHooks::addTitleToTheQueue';
+
+// Image Review information on file pages
+$wgHooks['ImagePageAfterImageLinks'][] = 'ImageReviewEventsHooks::onImagePageAfterImageLinks';
