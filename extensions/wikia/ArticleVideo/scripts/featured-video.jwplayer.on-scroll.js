@@ -1,9 +1,12 @@
 define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 'wikia.articleVideo.whichTransitionEvent'], function (onScroll, whichTransitionEvent) {
 	return function (playerInstance, $featuredVideo, $playerContainer) {
-		var videoCollapsed = false,
-			collapsingDisabled = false,
-			$closeBtn = $('.featured-video__close'),
-			transitionEvent = whichTransitionEvent();
+		var collapsingDisabled = false,
+			relatedPlugin = playerInstance.getPlugin('related'),
+			transitionEvent = whichTransitionEvent(),
+			videoCollapsed = false,
+			$title = $('.featured-video__title'),
+			$duration = $('.featured-video__time'),
+			$closeBtn = $('.featured-video__close');
 
 		function isVideoInFullScreenMode() {
 			return playerInstance.getFullscreen();
@@ -69,11 +72,12 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			playerInstance.pause(true);
 			uncollapseVideo();
 			collapsingDisabled = true;
-			// TODO tracking
-			// track({
-			// 	action: tracker.ACTIONS.CLOSE,
-			// 	label: 'featured-video-collapsed'
-			// });
+			playerInstance.trigger('onScrollClosed');
+		}
+
+		function updateTitleAndDuration(data) {
+			$title.text(data.item.title);
+			$duration.text(data.item.duration);
 		}
 
 		function onVideoResized(event) {
@@ -97,6 +101,8 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 		playerInstance.on('play', function () {
 			collapsingDisabled = false;
 		});
+
+		relatedPlugin.on('play', updateTitleAndDuration);
 
 		return unbindEvents;
 	}
