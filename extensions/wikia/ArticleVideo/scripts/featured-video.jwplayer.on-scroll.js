@@ -72,11 +72,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			playerInstance.pause(true);
 			uncollapseVideo();
 			collapsingDisabled = true;
-			// TODO tracking
-			// track({
-			// 	action: tracker.ACTIONS.CLOSE,
-			// 	label: 'featured-video-collapsed'
-			// });
+			playerInstance.trigger('onScrollClosed');
 		}
 
 		function updateTitleAndDuration(data) {

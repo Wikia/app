@@ -152,5 +152,12 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 				action: 'impression'
 			});
 		});
+
+		playerInstance.on('onScrollClosed', function () {
+			track({
+				label: 'collapsed',
+				action: 'close'
+			});
+		});
 	}
 });
