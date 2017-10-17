@@ -149,8 +149,7 @@ $.fn.makeCollapsible = function() {
 
 					// Wikia change - trigger scroll to lazy-load any images (but these animations are async :/)
 					setTimeout(function () {
-						var scrollEvent = new CustomEvent('scroll');
-						window.dispatchEvent(scrollEvent);
+						$(window).trigger('scroll');
 					}, 250);
 				}
 			},

@@ -28,8 +28,7 @@
 				nav.find('a[title="' + title + '"]').parent().addClass('tabberactive');
 
 				// Wikia change begin - trigger scroll event to lazy load any new images
-				var scrollEvent = new CustomEvent('scroll');
-				window.dispatchEvent(scrollEvent);
+				$(window).trigger('scroll');
 				// Wikia change end
 
 				return true;
