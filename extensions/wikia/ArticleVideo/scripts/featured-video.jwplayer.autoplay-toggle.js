@@ -21,9 +21,12 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 		var $player = $('#featured-video__player');
 
 		if (featuredVideoAutoplay.inAutoplayCountries) {
-			$player.one('click', '.jw-settings-submenu-button', function () {
-				var $settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
-				addAutoplayToggle($settingsTopbar);
+			$player.on('click', '.jw-settings-submenu-button', function () {
+				if (!$('#featuredVideoAutoplayToggle').length) {
+					var $settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
+
+					addAutoplayToggle($settingsTopbar);
+				}
 			});
 		}
 	}
