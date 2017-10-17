@@ -18,12 +18,14 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 	}
 
 	return function () {
-		var $player = $('#featured-video__player');
+		// we need to get player container instead of #featured-video__player,
+		// because we think jwplayer replaces this element and we lost on click listener
+		var $playerContainer = $('.featured-video__player-container');
 
 		if (featuredVideoAutoplay.inAutoplayCountries) {
-			$player.on('click', '.jw-settings-submenu-button', function () {
+			$playerContainer.on('click', '.jw-settings-submenu-button', function () {
 				if (!$('#featuredVideoAutoplayToggle').length) {
-					var $settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
+					var $settingsTopbar = $playerContainer.find('.jw-settings-menu .jw-settings-topbar');
 
 					addAutoplayToggle($settingsTopbar);
 				}
