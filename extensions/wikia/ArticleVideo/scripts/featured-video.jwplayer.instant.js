@@ -63,7 +63,7 @@ require([
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
 		handleTabNotActive(willAutoplay);
-		playerIcons.init(document.querySelector('.featured-video'), playerInstance);
+		playerIcons(document.querySelector('.featured-video'), playerInstance);
 	}
 
 	if (a9 && adContext.get('bidders.a9Video')) {
