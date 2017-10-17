@@ -31,10 +31,10 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 			mountedScript.parentElement.removeChild(mountedScript)
 		}
 
-		var script = document.createElement('script');
-		script.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
-		script.id = scriptId;
-		document.head.appendChild(script);
+		var img = document.createElement('img');
+		img.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
+		img.id = scriptId;
+		document.body.appendChild(img);
 	}
 
 	function track(gaData) {
