@@ -17,7 +17,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 			});
 	}
 
-	return function (playerInstance) {
+	return function () {
 		var $player = $('#featured-video__player'),
 			$settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
 

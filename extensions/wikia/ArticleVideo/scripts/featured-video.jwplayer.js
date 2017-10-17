@@ -17,7 +17,7 @@ require([
 
 	var unbindOnScrollEvents = jwPlayerOnScroll(playerInstance, $featuredVideo, $playerContainer);
 	jwPlayerVideoFeedback(playerInstance);
-	jwPlayerAutoplayToggle(playerInstance);
+	jwPlayerAutoplayToggle();
 
 	// remove player if VisualEditor is loaded
 	mw.hook('ve.activationComplete').add(function () {
