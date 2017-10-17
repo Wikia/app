@@ -7,16 +7,14 @@ require([
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.events',
 	require.optional('ext.wikia.adEngine.lookup.a9')
-], function (
-	adContext,
-	playerInstance,
-	videoDetails,
-	featuredVideoAds,
-	featuredVideoAutoplay,
-	featuredVideoTracking,
-	featuredVideoEvents,
-	a9
-) {
+], function (adContext,
+			 playerInstance,
+			 videoDetails,
+			 featuredVideoAds,
+			 featuredVideoAutoplay,
+			 featuredVideoTracking,
+			 featuredVideoEvents,
+			 a9) {
 	if (!videoDetails) {
 		return;
 	}
@@ -25,18 +23,27 @@ require([
 		inNextVideoAutoplayCountries = featuredVideoAutoplay.inNextVideoAutoplayCountries,
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
-		willAutoplay = featuredVideoAutoplay.willAutoplay;
+		willAutoplay = featuredVideoAutoplay.willAutoplay,
+		pausedOnRelated = false;
 
 	function handleTabNotActive(willAutoplay) {
 		document.addEventListener('visibilitychange', function () {
 			if (canPlayVideo(willAutoplay)) {
 				playerInstance.play(true);
+				pausedOnRelated = false;
 			}
 		}, false);
+
+		playerInstance.on('relatedVideoPlay', function () {
+			if (document.hidden) {
+				playerInstance.pause();
+				pausedOnRelated = true;
+			}
+		});
 	}
 
 	function canPlayVideo(willAutoplay) {
-		return !document.hidden && willAutoplay && ['playing', 'paused', 'complete'].indexOf(playerInstance.getState()) === -1;
+		return !document.hidden && willAutoplay && (['playing', 'paused', 'complete'].indexOf(playerInstance.getState()) === -1 || pausedOnRelated);
 	}
 
 	function setupPlayer(bidParams) {
@@ -51,7 +58,7 @@ require([
 			playlist: videoDetails.playlist,
 			related: {
 				autoplaytimer: 5,
-				file: 'https://cdn.jwplayer.com/v2/playlists/'+ recommendedPlaylist +'?related_media_id=' + videoId,
+				file: 'https://cdn.jwplayer.com/v2/playlists/' + recommendedPlaylist + '?related_media_id=' + videoId,
 				oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show'
 			},
 			title: videoDetails.title
