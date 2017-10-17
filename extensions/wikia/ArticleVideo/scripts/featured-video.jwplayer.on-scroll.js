@@ -1,7 +1,6 @@
 define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 'wikia.articleVideo.whichTransitionEvent'], function (onScroll, whichTransitionEvent) {
 	return function (playerInstance, $featuredVideo, $playerContainer) {
 		var collapsingDisabled = false,
-			relatedPlugin = playerInstance.getPlugin('related'),
 			transitionEvent = whichTransitionEvent(),
 			videoCollapsed = false,
 			$title = $('.featured-video__title'),
@@ -102,7 +101,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			collapsingDisabled = false;
 		});
 
-		relatedPlugin.on('play', updateTitleAndDuration);
+		playerInstance.on('relatedVideoPlay', updateTitleAndDuration);
 
 		return unbindEvents;
 	}
