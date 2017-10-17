@@ -20,4 +20,12 @@
 			background-color: initial;
 		}
 	}
+
+	.jw-controlbar {
+		.jw-icon-inline {
+			&.jw-text {
+				margin-top: -4px;
+			}
+		}
+	}
 }
