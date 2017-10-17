@@ -7,6 +7,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.veles', function () {
 
 	var mocks = {
 		adContext: {
+			get: noop,
 			getContext: function () {
 				return mocks.context;
 			}

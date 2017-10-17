@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		var slotParams = bidParams || {};
 
 		slotParams.pos = 'FEATURED';
-		slotParams.src = 'premium';
+		slotParams.src = adContext.get('opts.isAdTestWiki') ? 'test' : 'premium';
 		slotParams.rv = rv;
 
 		var options = {

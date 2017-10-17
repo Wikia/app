@@ -129,12 +129,20 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.veles', [
 		}
 	}
 
+	function getSrc(skin) {
+		if (skin === 'oasis') {
+			return adContext.get('opts.isAdTestWiki') ? 'test' : 'gpt';
+		} else {
+			return adContext.get('opts.isAdTestWiki') ? 'test-mobile' : 'mobile';
+		}
+	}
+
 	function requestVast(bidderRequest) {
 		var request = new win.XMLHttpRequest(),
 			skin = adContext.getContext().targeting.skin,
 			vastUrl = vastUrlBuilder.build(640 / 480, {
 				pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'OUTSTREAM' : Object.keys(getSlots(skin))),
-				src: skin === 'oasis' ? 'gpt' : 'mobile',
+				src: getSrc(skin),
 				passback: bidderName
 			}, {
 				numberOfAds: 1
