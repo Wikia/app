@@ -389,8 +389,12 @@ class HistoryPager extends ReverseChronologicalPager {
 		}
 
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$users =
-			$dbr->select( '`user`', [ 'user_id', 'user_name' ], [ 'user_id' => array_unique( $ids ) ], __METHOD__ );
+		$users = $dbr->select(
+			'`user`',
+			[ 'user_id', 'user_name' ],
+			[ 'user_id' => array_unique( $ids ) ],
+			__METHOD__
+		);
 
 		foreach ( $users as $row ) {
 			$this->mUsers[$row->user_id] = $row->user_name;
@@ -432,7 +436,7 @@ class HistoryPager extends ReverseChronologicalPager {
 		$this->mResult->seek( 0 );
 		$batch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
-			if( !empty( $row->user_name ) ) {
+			if( !isset( $row->user_name ) ) {
 				$batch->add( NS_USER, $row->user_name );
 				$batch->add( NS_USER_TALK, $row->user_name );
 			} else { # for anons or usernames of imported revisions
