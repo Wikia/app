@@ -17,7 +17,7 @@ require([
 	featuredVideoTracking,
 	playerIcons,
 	featuredVideoEvents,
-	a9,
+	a9
 ) {
 	if (!videoDetails) {
 		return;
