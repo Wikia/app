@@ -220,6 +220,10 @@ module.exports = function (config) {
 			// Tabber
 			'extensions/3rdparty/tabber/tabber.js',
 			'extensions/3rdparty/tabber/spec/tabber.spec.js',
+
+			// Image Lazy Loading
+			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+			'extensions/wikia/ImageLazyLoad/spec/ImgLzy.spec.js'
 		]
 	});
 };

@@ -114,8 +114,7 @@
 			$.collapsibleTabs.handleResize();
 
 			// Wikia change - trigger scroll to lazy-load any images
-			var scrollEvent = new CustomEvent('scroll');
-			window.dispatchEvent(scrollEvent);
+			$(window).trigger('scroll');
 		}
 	};
 } )( jQuery );
