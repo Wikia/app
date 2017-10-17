@@ -63,8 +63,11 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 	return function (providedPlayerInstance, willAutoplay) {
 		playerInstance = providedPlayerInstance;
 
+		console.log('playerInstance create ready!!');
 		playerInstance.once('ready', function () {
+			console.log('playerInstance ready!!');
 			var relatedPlugin = playerInstance.getPlugin('related');
+			console.log('relatedPlugin', relatedPlugin);
 
 			relatedPlugin.on('open', function () {
 				playerInstance.trigger('relatedVideosImpression');
