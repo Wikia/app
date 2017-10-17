@@ -4,6 +4,7 @@ require([
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.autoplay',
+	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.events',
 	require.optional('ext.wikia.adEngine.lookup.a9')
@@ -13,6 +14,7 @@ require([
 	videoDetails,
 	featuredVideoAds,
 	featuredVideoAutoplay,
+	featuredVideoMoatTracking,
 	featuredVideoTracking,
 	featuredVideoEvents,
 	a9
@@ -60,6 +62,7 @@ require([
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
+		featuredVideoMoatTracking(playerInstance);
 		handleTabNotActive(willAutoplay);
 	}
 
