@@ -3,10 +3,11 @@ define('ext.wikia.adEngine.video.player.porvata', [
 	'ext.wikia.adEngine.video.player.porvata.googleIma',
 	'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 	'ext.wikia.adEngine.video.player.porvata.porvataTracker',
+	'wikia.document',
 	'wikia.log',
 	'wikia.viewportObserver',
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
-], function (googleIma, porvataPlayerFactory, tracker, log, viewportObserver, floater) {
+], function (googleIma, porvataPlayerFactory, tracker, doc, log, viewportObserver, floater) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata';
 
@@ -61,9 +62,15 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				return porvataPlayerFactory.create(videoSettings, ima);
 			}).then(function (video) {
+				var viewportHook = params.container;
+
 				video.wasInViewport = false;
 				log(['porvata video player created', video], log.levels.debug, logGroup);
 				tracker.register(video, params);
+
+				if (params.viewportHookSelector) {
+					viewportHook = doc.querySelector(params.viewportHookSelector) || viewportHook;
+				}
 
 				function shouldResume(isVisible) {
 					// Don't resume when video was paused manually
@@ -113,7 +120,7 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				video.addEventListener('start', function () {
 					video.ima.dispatchEvent('wikiaAdPlay');
 					if (!viewportListener) {
-						viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+						viewportListener = viewportObserver.addListener(viewportHook, inViewportCallback);
 					}
 
 					tryEnablingFloating(video, inViewportCallback);
@@ -137,10 +144,10 @@ define('ext.wikia.adEngine.video.player.porvata', [
 				}
 
 				video.addEventListener('wikiaAdsManagerLoaded', function () {
-					viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+					viewportListener = viewportObserver.addListener(viewportHook, inViewportCallback);
 				});
 				video.addEventListener('wikiaEmptyAd', function () {
-					viewportListener = viewportObserver.addListener(params.container, inViewportCallback);
+					viewportListener = viewportObserver.addListener(viewportHook, inViewportCallback);
 				});
 
 				return video;
