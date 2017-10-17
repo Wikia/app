@@ -119,19 +119,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		function setAdditionalTargeting(slotTargetingData) {
 			var abId;
 
-			if (!adContext.get('opts.isAdTestWiki')) {
-				if (shouldSetSrcPremium()) {
-					slotTargetingData.src = 'premium';
-				} else if (adShouldBeRecovered) {
-					slotTargetingData.src = 'rec';
-				}
+			if (shouldSetSrcPremium() && !adContext.get('opts.isAdTestWiki')) {
+				slotTargetingData.src = 'premium';
+			} else if (adShouldBeRecovered) {
+				slotTargetingData.src = 'rec';
 			}
 
 			if (instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking()) {
-
-				if (!adContext.get('opts.isAdTestWiki')) {
-					slotTargetingData.src = 'rec';
-				}
+				slotTargetingData.src = 'rec';
 				slotTargetingData.requestSource = 'instartLogic';
 			}
 

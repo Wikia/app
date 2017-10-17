@@ -455,6 +455,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		spyOn(mocks.adContext, 'get').and.returnValue(true);
 		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, extra);
-		expect(mocks.slotTargetingData.src).toBe('test-abc');
+		expect(mocks.slotTargetingData.src).toBe('test-rec');
 	});
 });
