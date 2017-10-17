@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -91,6 +91,11 @@ class AssertTest extends TestCase
         $this->expectException(AssertionFailedError::class);
 
         $this->assertContainsOnlyInstancesOf(\Book::class, $test2);
+    }
+
+    public function testAssertContainsEmptyStringInString()
+    {
+        $this->assertContains('', 'test');
     }
 
     public function testAssertArrayHasKeyThrowsExceptionForInvalidFirstArgument()

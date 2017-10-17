@@ -81,21 +81,16 @@ class ApiQueryUsers extends ApiQueryBase {
 			$this->prop = array();
 		}
 
-		$users = (array)$params['users'];
-		$goodNames = $done = array();
-		$result = $this->getResult();
+		// Port of T34494: allow lookup by user ID
+		$this->requireMaxOneParameter( [ 'users', 'ids' ] );
 
-		// Wikia change - begin
-		// @see PLATFORM-1561
+		$users = (array)$params['users'];
 		$ids = (array)$params['ids'];
 
-		foreach( $ids as $id ) {
-			$u = User::newFromId( $id );
-			if ( !$u->isAnon() ) { # do not add anons as IP addresses
-				$users[] = $u->getName();
-			}
-		}
-		// Wikia change - end
+		$useNames = !empty( $users );
+
+		$goodNames = $done = array();
+		$result = $this->getResult();
 
 		// Canonicalize user names
 		foreach ( $users as $u ) {
@@ -116,113 +111,108 @@ class ApiQueryUsers extends ApiQueryBase {
 			}
 		}
 
+		$parameters = $useNames ? $goodNames : $ids;
+
 		$result = $this->getResult();
 
-		if ( count( $goodNames ) ) {
-			$this->addTables( 'user' );
-			$this->addFields( 'user_id' );
-			$this->addWhereFld( 'user_name', $goodNames );
+		$data = [];
+		/* Wikia change begin - SUS-2989 */
+		$res = $this->getUserRows( $goodNames, $ids );
+		/* Wikia change end - SUS-2989 */
 
-			// Wikia: there's no point in querying a per-cluster user table for IP blocks
-			#$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
+		foreach ( $res as $row ) {
+			$user = User::newFromRow( $row );
+			$key = $useNames ? $user->getName() : $user->getId();
 
-			$data = array();
-			$res = $this->select( __METHOD__ );
+			$data[$key]['userid'] = $user->getId();
+			$data[$key]['name'] = $user->getName();
 
-			foreach ( $res as $row ) {
-				$user = User::newFromId( $row->user_id );
-				$name = $user->getName();
+			if ( isset( $this->prop['editcount'] ) ) {
+				$data[$key]['editcount'] = intval( $user->getEditCount() );
+			}
 
-				$data[$name]['userid'] = $user->getId();
-				$data[$name]['name'] = $name;
+			if ( isset( $this->prop['registration'] ) ) {
+				$data[$key]['registration'] = wfTimestampOrNull( TS_ISO_8601, $user->getRegistration() );
+			}
 
-				if ( isset( $this->prop['editcount'] ) ) {
-					$data[$name]['editcount'] = intval( $user->getEditCount() );
-				}
+			if ( isset( $this->prop['groups'] ) ) {
+				$data[$key]['groups'] = $user->getEffectiveGroups();
+			}
 
-				if ( isset( $this->prop['registration'] ) ) {
-					$data[$name]['registration'] = wfTimestampOrNull( TS_ISO_8601, $user->getRegistration() );
-				}
+			if ( isset( $this->prop['implicitgroups'] ) && !isset( $data[$key]['implicitgroups'] ) ) {
+				$data[$key]['implicitgroups'] =  self::getAutoGroups( $user );
+			}
 
-				if ( isset( $this->prop['groups'] ) ) {
-					$data[$name]['groups'] = $user->getEffectiveGroups();
-				}
+			if ( isset( $this->prop['rights'] ) ) {
+				$data[$key]['rights'] = $user->getRights();
+			}
+			if ( isset( $row->ipb_deleted ) /* Wikia change */ && $row->ipb_deleted ) {
+				$data[$key]['hidden'] = '';
+			}
 
-				if ( isset( $this->prop['implicitgroups'] ) && !isset( $data[$name]['implicitgroups'] ) ) {
-					$data[$name]['implicitgroups'] =  self::getAutoGroups( $user );
-				}
+			/* Wikia change begin - SUS-92 */
+			if ( isset( $this->prop['blockinfo'] ) || isset( $this->prop['localblockinfo'] ) ) {
+				$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] ) && $this->canViewGlobalBlockInfo();
+				$blockInfo = $user->getBlock( true, false /* don't log in Phalanx stats */, $isGlobalBlockCheck );
 
-				if ( isset( $this->prop['rights'] ) ) {
-					$data[$name]['rights'] = $user->getRights();
-				}
-				if ( isset( $row->ipb_deleted ) /* Wikia change */ && $row->ipb_deleted ) {
-					$data[$name]['hidden'] = '';
-				}
+				if ( $user->isBlockedGlobally() ) {
+					// SUS-1456: We're performing a global block check, and request is authorized
+					// (internal request from service, or user who can view phalanx)
 
-				/* Wikia change begin - SUS-92 */
-				if ( isset( $this->prop['blockinfo'] ) || isset( $this->prop['localblockinfo'] ) ) {
-					$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] ) && $this->canViewGlobalBlockInfo();
-					$blockInfo = $user->getBlock( true, false /* don't log in Phalanx stats */, $isGlobalBlockCheck );
+					// For Phalanx blocks, use separate fields...
+					$data[$key]['phalanxblockedby'] = $blockInfo->getByName();
+					$data[$key]['phalanxblockreason'] = $blockInfo->mReason;
+					$data[$key]['phalanxblockexpiry'] = $blockInfo->getExpiry();
 
-					if ( $user->isBlockedGlobally() ) {
-						// SUS-1456: We're performing a global block check, and request is authorized
-						// (internal request from service, or user who can view phalanx)
+					// reset fields so that we can load info for local block
+					$user->clearBlockInfo();
 
-						// For Phalanx blocks, use separate fields...
-						$data[$name]['phalanxblockedby'] = $blockInfo->getByName();
-						$data[$name]['phalanxblockreason'] = $blockInfo->mReason;
-						$data[$name]['phalanxblockexpiry'] = $blockInfo->getExpiry();
-
-						// reset fields so that we can load info for local block
-						$user->clearBlockInfo();
-
-						// load info for local block and display it in its own fields
-						$localBlockInfo = $user->getBlock( true, false, false /* check only local blocks */ );
-						if ( $localBlockInfo ) {
-							$data[$name]['blockedby'] = $localBlockInfo->getByName();
-							$data[$name]['blockreason'] = $localBlockInfo->mReason;
-							$data[$name]['blockexpiry'] = $localBlockInfo->getExpiry();
-						}
-					} elseif ( $user->isBlocked() ) {
-						// user is not blocked globally, but is blocked locally
-						// or request is not authorized
-
-						$data[$name]['blockedby'] = $blockInfo->getByName();
-						$data[$name]['blockreason'] = $blockInfo->mReason;
-						$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
+					// load info for local block and display it in its own fields
+					$localBlockInfo = $user->getBlock( true, false, false /* check only local blocks */ );
+					if ( $localBlockInfo ) {
+						$data[$key]['blockedby'] = $localBlockInfo->getByName();
+						$data[$key]['blockreason'] = $localBlockInfo->mReason;
+						$data[$key]['blockexpiry'] = $localBlockInfo->getExpiry();
 					}
-				}
-				/* Wikia change end */
+				} elseif ( $user->isBlocked() ) {
+					// user is not blocked globally, but is blocked locally
+					// or request is not authorized
 
-				if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {
-					$data[$name]['emailable'] = '';
+					$data[$key]['blockedby'] = $blockInfo->getByName();
+					$data[$key]['blockreason'] = $blockInfo->mReason;
+					$data[$key]['blockexpiry'] = $blockInfo->getExpiry();
 				}
+			}
+			/* Wikia change end */
 
-				if ( isset( $this->prop['gender'] ) ) {
-					$gender = $user->getGlobalAttribute( 'gender' );
-					if ( strval( $gender ) === '' ) {
-						$gender = 'unknown';
-					}
-					$data[$name]['gender'] = $gender;
+			if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {
+				$data[$key]['emailable'] = '';
+			}
+
+			if ( isset( $this->prop['gender'] ) ) {
+				$gender = $user->getGlobalAttribute( 'gender' );
+				if ( strval( $gender ) === '' ) {
+					$gender = 'unknown';
 				}
+				$data[$key]['gender'] = $gender;
+			}
 
-				if ( !is_null( $params['token'] ) ) {
-					$tokenFunctions = $this->getTokenFunctions();
-					foreach ( $params['token'] as $t ) {
-						$val = call_user_func( $tokenFunctions[$t], $user );
-						if ( $val === false ) {
-							$this->setWarning( "Action '$t' is not allowed for the current user" );
-						} else {
-							$data[$name][$t . 'token'] = $val;
-						}
+			if ( !is_null( $params['token'] ) ) {
+				$tokenFunctions = $this->getTokenFunctions();
+				foreach ( $params['token'] as $t ) {
+					$val = call_user_func( $tokenFunctions[$t], $user );
+					if ( $val === false ) {
+						$this->setWarning( "Action '$t' is not allowed for the current user" );
+					} else {
+						$data[$key][$t . 'token'] = $val;
 					}
 				}
 			}
 		}
 
 		// Second pass: add result data to $retval
-		foreach ( $goodNames as $u ) {
-			if ( !isset( $data[$u] ) ) {
+		foreach ( $parameters as $u ) {
+			if ( !isset( $data[$u] ) && $useNames ) {
 				$data[$u] = array( 'name' => $u );
 				$urPage = new UserrightsPage;
 				$iwUser = $urPage->fetchUser( $u );
@@ -260,8 +250,13 @@ class ApiQueryUsers extends ApiQueryBase {
 			$fit = $result->addValue( array( 'query', $this->getModuleName() ),
 					null, $data[$u] );
 			if ( !$fit ) {
-				$this->setContinueEnumParameter( 'users',
+				if ( $useNames ) {
+					$this->setContinueEnumParameter( 'users',
 						implode( '|', array_diff( $users, $done ) ) );
+				} else {
+					$this->setContinueEnumParameter( 'ids',
+						implode( '|', array_diff( $ids, $done ) ) );
+				}
 				break;
 			}
 			$done[] = $u;
@@ -303,11 +298,11 @@ class ApiQueryUsers extends ApiQueryBase {
 	}
 
 	public function getAllowedParams() {
-		return array(
-			'prop' => array(
+		return [
+			'prop' => [
 				ApiBase::PARAM_DFLT => null,
 				ApiBase::PARAM_ISMULTI => true,
-				ApiBase::PARAM_TYPE => array(
+				ApiBase::PARAM_TYPE => [
 					'blockinfo',
 					'localblockinfo',
 					'groups',
@@ -317,19 +312,35 @@ class ApiQueryUsers extends ApiQueryBase {
 					'registration',
 					'emailable',
 					'gender',
-				)
-			),
-			'users' => array(
-				ApiBase::PARAM_ISMULTI => true
-			),
-			'ids' => array(
-				ApiBase::PARAM_ISMULTI => true
-			),
-			'token' => array(
+				],
+			],
+			'users' => [
+				ApiBase::PARAM_ISMULTI => true,
+			],
+			'ids' => [
+				ApiBase::PARAM_ISMULTI => true,
+				ApiBase::PARAM_TYPE => 'integer',
+			],
+			'token' => [
 				ApiBase::PARAM_TYPE => array_keys( $this->getTokenFunctions() ),
-				ApiBase::PARAM_ISMULTI => true
-			),
-		);
+				ApiBase::PARAM_ISMULTI => true,
+			],
+		];
+	}
+
+	private function getUserRows( $userNames, $userIds ) {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+		if ( !empty( $userIds ) ) {
+			return $dbr->select('`user`', [ 'user_id', 'user_name' ], [ 'user_id' => $userIds ], __METHOD__);
+		}
+
+		if ( !empty( $userNames ) ) {
+			return $dbr->select('`user`', [ 'user_id', 'user_name' ], [ 'user_name' => $userNames ], __METHOD__);
+		}
+
+		return [];
 	}
 
 	public function getParamDescription() {

@@ -113,7 +113,7 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 				$r = array(
 					'name' => $row->dup_name,
 					// SUS-808: single source of truth for user name
-					'user' => User::getUsername( $row->dup_user, $row->dup_user_text ),
+					'user' => User::getUsername( $row->img_user, $row->dup_user_text ),
 					'timestamp' => wfTimestamp( TS_ISO_8601, $row->dup_timestamp )
 				);
 				$fit = $this->addPageSubItem( $images[$row->orig_name], $r );
