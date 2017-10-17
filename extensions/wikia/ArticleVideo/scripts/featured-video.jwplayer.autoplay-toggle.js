@@ -21,6 +21,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.autoplayToggle', ['wikia.artic
 		var $player = $('#featured-video__player'),
 			$settingsTopbar = $player.find('.jw-settings-menu .jw-settings-topbar');
 
+		console.log('autoplayCountry?', featuredVideoAutoplay.inAutoplayCountries);
 		if (featuredVideoAutoplay.inAutoplayCountries) {
 			$player.one('click', '.jw-settings-submenu-button', function () {
 				addAutoplayToggle($settingsTopbar);
