@@ -25,18 +25,29 @@ require([
 		inNextVideoAutoplayCountries = featuredVideoAutoplay.inNextVideoAutoplayCountries,
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
-		willAutoplay = featuredVideoAutoplay.willAutoplay;
+		willAutoplay = featuredVideoAutoplay.willAutoplay,
+		pausedOnRelated = false;
 
 	function handleTabNotActive(willAutoplay) {
 		document.addEventListener('visibilitychange', function () {
 			if (canPlayVideo(willAutoplay)) {
 				playerInstance.play(true);
+				pausedOnRelated = false;
 			}
 		}, false);
+
+		playerInstance.on('ready', function () {
+			jwplayer().getPlugin('related').on('play', function () {
+				if (document.hidden) {
+					playerInstance.pause();
+					pausedOnRelated = true;
+				}
+			});
+		});
 	}
 
 	function canPlayVideo(willAutoplay) {
-		return !document.hidden && willAutoplay && ['playing', 'paused', 'complete'].indexOf(playerInstance.getState()) === -1;
+		return !document.hidden && willAutoplay && (['playing', 'paused', 'complete'].indexOf(playerInstance.getState()) === -1 || pausedOnRelated);
 	}
 
 	function setupPlayer(bidParams) {
