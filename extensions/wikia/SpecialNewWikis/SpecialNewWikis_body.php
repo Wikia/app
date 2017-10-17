@@ -169,11 +169,10 @@ class NewWikisPage extends AlphabeticPager {
 	}
 	/* need to be overwrite because of not unique col name (city_id) */
 
-	function reallyDoQuery( $offset, $limit, $descending, $info = [] ) {
+	function reallyDoQuery( $offset, $limit, $descending ) {
 		$fname = __METHOD__ . ' (' . get_class( $this ) . ')';
-		if ( !isset( $info ) ) {
-			$info = $this->getQueryInfo();
-		}
+		$info = $this->getQueryInfo();
+
 		$tables = $info['tables'];
 		$fields = $info['fields'];
 		$conds = isset( $info['conds'] ) ? $info['conds'] : array();

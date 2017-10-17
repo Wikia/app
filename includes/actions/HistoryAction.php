@@ -328,6 +328,8 @@ class HistoryPager extends ReverseChronologicalPager {
 	public $lastRow = false, $counter, $historyPage, $buttons, $conds;
 	protected $oldIdChecked;
 	protected $preventClickjacking = false;
+	/** User names associated with the result */
+	private $mUsers = [];
 
 	function __construct( $historyPage, $year = '', $month = '', $tagFilter = '', $conds = array() ) {
 		parent::__construct( $historyPage->getContext() );
@@ -369,21 +371,59 @@ class HistoryPager extends ReverseChronologicalPager {
 		return $queryInfo;
 	}
 
+	/**
+	 * Fetch user names from ExternalSharedDB.
+	 * @see SUS-2990
+	 * @return array
+	 */
+
+	function reallyDoQuery( $offset, $limit, $descending ) {
+		global $wgExternalSharedDB;
+		$res = parent::reallyDoQuery( $offset, $limit, $descending );
+
+		$ids = [];
+		foreach ( $res as $row ) {
+			if ( $row->rev_user ) {
+				$ids[] = $row->rev_user;
+			}
+		}
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$users =
+			$dbr->select( '`user`', [ 'user_id', 'user_name' ], [ 'user_id' => array_unique( $ids ) ], __METHOD__ );
+
+		foreach ( $users as $row ) {
+			$this->mUsers[$row->user_id] = $row->user_name;
+		}
+
+		$res->rewind();
+
+		return $res;
+	}
+
 	function getIndexField() {
 		return 'rev_timestamp';
 	}
 
 	function formatRow( $row ) {
+		$row->user_name = $this->mUsers[$row->rev_user];
+
 		if ( $this->lastRow ) {
 			$latest = ( $this->counter == 1 && $this->mIsFirst );
 			$firstInList = $this->counter == 1;
 			$this->counter++;
-			$s = $this->historyLine( $this->lastRow, $row,
-				$this->getTitle()->getNotificationTimestamp( $this->getUser() ), $latest, $firstInList );
+			$s = $this->historyLine(
+				$this->lastRow,
+				$row,
+				$this->getTitle()->getNotificationTimestamp( $this->getUser() ),
+				$latest,
+				$firstInList
+			);
 		} else {
 			$s = '';
 		}
 		$this->lastRow = $row;
+
 		return $s;
 	}
 

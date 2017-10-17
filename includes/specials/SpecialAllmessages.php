@@ -291,7 +291,7 @@ class AllmessagesTablePager extends TablePager {
 	 *  This function normally does a database query to get the results; we need
 	 * to make a pretend result using a FakeResultWrapper.
 	 */
-	function reallyDoQuery( $offset, $limit, $descending, $info = [] ) {
+	function reallyDoQuery( $offset, $limit, $descending ) {
 		$result = new FakeResultWrapper( array() );
 
 		$messageNames = $this->getAllMessages( $descending );
