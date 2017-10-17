@@ -47,21 +47,16 @@ class ImageReviewEventsHooks {
 		return true;
 	}
 
-	public static function onUploadComplete( UploadBase $form ) {
-		// $form->getTitle() returns Title object with not updated latestRevisionId when uploading new revision
-		// of the file
-		$title = Title::newFromID( $form->getTitle()->getArticleID() );
-
-		self::actionCreate( $title ?? $form->getTitle() );
-
-		return true;
-	}
-
 	/**
-	 * Report all uploads
+	 * Push all uploads to image review queue.
+	 *
+	 * This binds to FileUpload hook and handles all uploads instead of custom hooks introduced on-per feature basis.
+	 *
+	 * self::actionCreate is still going to perform a check if uploaded file is an image that should pass the review.
 	 *
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/FileUpload
 	 * @see SUS-2988
+	 * @see SUS-3045
 	 *
 	 * @param LocalFile $file
 	 * @return bool
@@ -76,6 +71,8 @@ class ImageReviewEventsHooks {
 				'file_class' => get_class( $file ),
 			]
 		);
+
+		self::actionCreate( $file->getTitle() );
 
 		return true;
 	}
