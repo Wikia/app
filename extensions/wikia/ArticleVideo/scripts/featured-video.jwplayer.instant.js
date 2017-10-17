@@ -7,14 +7,16 @@ require([
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.events',
 	require.optional('ext.wikia.adEngine.lookup.a9')
-], function (adContext,
-			 playerInstance,
-			 videoDetails,
-			 featuredVideoAds,
-			 featuredVideoAutoplay,
-			 featuredVideoTracking,
-			 featuredVideoEvents,
-			 a9) {
+], function (
+	adContext,
+	playerInstance,
+	videoDetails,
+	featuredVideoAds,
+	featuredVideoAutoplay,
+	featuredVideoTracking,
+	featuredVideoEvents,
+	a9
+) {
 	if (!videoDetails) {
 		return;
 	}
