@@ -7,16 +7,14 @@ require([
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.events',
 	require.optional('ext.wikia.adEngine.lookup.a9')
-], function (
-	adContext,
-	playerInstance,
-	videoDetails,
-	featuredVideoAds,
-	featuredVideoAutoplay,
-	featuredVideoTracking,
-	featuredVideoEvents,
-	a9
-) {
+], function (adContext,
+			 playerInstance,
+			 videoDetails,
+			 featuredVideoAds,
+			 featuredVideoAutoplay,
+			 featuredVideoTracking,
+			 featuredVideoEvents,
+			 a9) {
 	if (!videoDetails) {
 		return;
 	}
@@ -36,13 +34,11 @@ require([
 			}
 		}, false);
 
-		playerInstance.on('ready', function () {
-			jwplayer().getPlugin('related').on('play', function () {
-				if (document.hidden) {
-					playerInstance.pause();
-					pausedOnRelated = true;
-				}
-			});
+		playerInstance.on('relatedVideoPlay', function () {
+			if (document.hidden) {
+				playerInstance.pause();
+				pausedOnRelated = true;
+			}
 		});
 	}
 
@@ -62,7 +58,7 @@ require([
 			playlist: videoDetails.playlist,
 			related: {
 				autoplaytimer: 5,
-				file: 'https://cdn.jwplayer.com/v2/playlists/'+ recommendedPlaylist +'?related_media_id=' + videoId,
+				file: 'https://cdn.jwplayer.com/v2/playlists/' + recommendedPlaylist + '?related_media_id=' + videoId,
 				oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show'
 			},
 			title: videoDetails.title
