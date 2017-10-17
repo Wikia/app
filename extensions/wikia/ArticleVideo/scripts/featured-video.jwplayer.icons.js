@@ -1,7 +1,7 @@
 define(
 	'wikia.articleVideo.featuredVideo.jwplayer.icons',
-	['wikia.articleVideo.featuredVideo.jwplayer.instance'],
-	function (playerInstance) {
+	[],
+	function () {
 		var icons = {
 			play: '<path d="M14.767 9.437L3.858 16.903a.553.553 0 0 1-.565.037.531.531 0 0 1-.293-.473V1.533c0-.199.113-.381.293-.473a.557.557 0 0 1 .565.036l10.91 7.467A.53.53 0 0 1 15 9a.53.53 0 0 1-.233.437z" fill-rule="evenodd"/>\n',
 			pause: '<g fill-rule="evenodd">\n' +
