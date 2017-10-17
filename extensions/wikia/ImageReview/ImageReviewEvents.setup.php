@@ -6,8 +6,9 @@
 
 $wgAutoloadClasses['ImageReviewEventsHooks'] = __DIR__ . '/ImageReviewEventsHooks.class.php';
 
+// SUS-3045 | Push all uploads to image review queue
 $wgHooks['FileUpload'][] = 'ImageReviewEventsHooks::onFileUpload';
-$wgHooks['UploadComplete'][] = 'ImageReviewEventsHooks::onUploadComplete';
+
 $wgHooks['FileRevertComplete'][] = 'ImageReviewEventsHooks::onFileRevertComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'ImageReviewEventsHooks::onArticleDeleteComplete';
 $wgHooks['ArticleUndelete'][] = 'ImageReviewEventsHooks::onArticleUndelete';
