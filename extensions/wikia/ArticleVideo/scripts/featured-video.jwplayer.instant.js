@@ -60,10 +60,7 @@ require([
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoTracking(playerInstance, willAutoplay);
 		handleTabNotActive(willAutoplay);
-
-		playerInstance.on('ready', function () {
-			playerIcons.init(document.querySelector('.featured-video'));
-		});
+		playerIcons.init(document.querySelector('.featured-video'), playerInstance);
 	}
 
 	if (a9 && adContext.get('bidders.a9Video')) {
