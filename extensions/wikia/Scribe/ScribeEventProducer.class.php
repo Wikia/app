@@ -372,11 +372,6 @@ class ScribeEventProducer {
 
 	}
 
-	/**
-	 * Sends a unified ImageReviewLog message
-	 * @param  string $sLogMessage  A log message
-	 * @return void
-	 */
 	private function logSendScribeMessage() {
 		WikiaLogger::instance()->info( 'SendScribeMessage', [
 			'method' => __METHOD__,
