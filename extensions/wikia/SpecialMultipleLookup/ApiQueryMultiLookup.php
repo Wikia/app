@@ -69,7 +69,7 @@ class ApiQueryMultiLookup extends ApiQueryBase {
 	protected function getDB() {
 		if ( empty( $this->db ) ) {
 			global $wgSpecialsDB;
-			$this->db = wfGetDB( DB_SLAVE , 'api', $wgSpecialsDB );
+			$this->db = wfGetDB( DB_SLAVE , [ 'api' ], $wgSpecialsDB );
 		}
 
 		return $this->db;
