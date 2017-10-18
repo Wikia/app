@@ -3,14 +3,10 @@
 /* Lazy loading for images inside articles (skips wikiamobile)
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
-define('wikia.ImgLzy', ['jquery', 'wikia.log'], function ($, log) {
+define('wikia.ImgLzy', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
 	var ImgLzy;
-
-	function logger(msg) {
-		log(msg, log.levels.info, 'ImgLzy');
-	}
 
 	ImgLzy = {
 		// load an image if it is within this many pixels from the edge of the viewport
@@ -27,12 +23,10 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log'], function ($, log) {
 			this.onScroll();
 
 			// Scan & load images every 250 ms if the user is scrolling
-			window.addEventListener('scroll', throttled);
+			$(window).on('scroll', throttled);
 
 			// If a sortable table is sorted, it might change the order of images in the table
 			document.addEventListener('tablesorter_sortComplete', proxy);
-
-			logger('initialized');
 		},
 
 		/**

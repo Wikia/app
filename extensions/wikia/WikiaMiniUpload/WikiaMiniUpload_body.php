@@ -508,10 +508,6 @@ class WikiaMiniUpload {
 						$file_mwname->delete('');
 						$this->tempFileClearInfo( $tempid );
 						$newFile = false;
-
-						// SUS-3042 | push an upload to image review queue
-						Hooks::run( 'WikiaMiniUploadInsertImage', [ $file_name->getTitle() ] );
-
 					} else if ( $type == 'existing' ) {
 						$file = wfFindFile( Title::newFromText( $name, 6 ) );
 
@@ -589,9 +585,6 @@ class WikiaMiniUpload {
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
 					$this->tempFileClearInfo( $tempid );
-
-					// SUS-3042 | push an upload to image review queue
-					Hooks::run( 'WikiaMiniUploadInsertImage', [ $file->getTitle() ] );
 				}
 
 				if ( $wgUser->getGLobalPreference( 'watchdefault' ) || ( $newFile && $wgUser->getGlobalPreference( 'watchcreations' ) ) ) {
