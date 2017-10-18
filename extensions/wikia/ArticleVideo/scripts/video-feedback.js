@@ -6,8 +6,9 @@ define('wikia.articleVideo.videoFeedbackBox', ['wikia.window', 'wikia.tracker'],
 			trackingMethod: 'analytics'
 		});
 
-	function VideoFeedbackBox(selector) {
+	function VideoFeedbackBox(selector, jwplayerInstance) {
 		this.feedback = $(selector);
+		this.jwplayerInstance = jwplayerInstance;
 
 		var closeFeedback = this.feedback.find('.video-feedback-close'),
 			thumbUp = this.feedback.find('.video-thumb-up'),
@@ -17,28 +18,40 @@ define('wikia.articleVideo.videoFeedbackBox', ['wikia.window', 'wikia.tracker'],
 		this.isActive = false;
 
 		closeFeedback.click(function () {
-			track({
-				action: tracker.ACTIONS.CLICK,
-				label: 'featured-video-feedback-closed'
-			});
+			if (self.jwplayerInstance) {
+				self.jwplayerInstance.trigger('videoFeedbackClosed');
+			} else {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-feedback-closed'
+				});
+			}
 			self.hide();
 			self.isActive = false;
 		});
 
 		thumbUp.click(function () {
-			track({
-				action: tracker.ACTIONS.CLICK,
-				label: 'featured-video-feedback-thumb-up'
-			});
+			if (self.jwplayerInstance) {
+				self.jwplayerInstance.trigger('videoFeedbackThumbUp');
+			} else {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-feedback-thumb-up'
+				});
+			}
 			self.hide();
 			self.isActive = false;
 		});
 
 		thumbDown.click(function () {
-			track({
-				action: tracker.ACTIONS.CLICK,
-				label: 'featured-video-feedback-thumb-down'
-			});
+			if (self.jwplayerInstance) {
+				self.jwplayerInstance.trigger('videoFeedbackThumbDown');
+			} else {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'featured-video-feedback-thumb-down'
+				});
+			}
 			self.hide();
 			self.isActive = false;
 		});
@@ -59,10 +72,14 @@ define('wikia.articleVideo.videoFeedbackBox', ['wikia.window', 'wikia.tracker'],
 	VideoFeedbackBox.prototype.init = function () {
 		this.isActive = true;
 		this.show();
-		track({
-			action: tracker.ACTIONS.IMPRESSION,
-			label: 'featured-video-feedback'
-		});
+		if (this.jwplayerInstance) {
+			this.jwplayerInstance.trigger('videoFeedbackImpression');
+		} else {
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'featured-video-feedback'
+			});
+		}
 	};
 
 	return VideoFeedbackBox;
