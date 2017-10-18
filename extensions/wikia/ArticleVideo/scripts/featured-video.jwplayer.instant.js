@@ -49,6 +49,7 @@ require([
 	}
 
 	function setupPlayer(bidParams) {
+		console.info('jwplayer setupPlayer');
 		playerInstance.setup({
 			advertising: {
 				client: 'googima'
@@ -65,6 +66,7 @@ require([
 			},
 			title: videoDetails.title
 		});
+		console.info('jwplayer after setup');
 
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);

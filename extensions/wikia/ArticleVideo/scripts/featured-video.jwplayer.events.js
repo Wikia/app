@@ -63,15 +63,19 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 	return function (providedPlayerInstance, willAutoplay) {
 		playerInstance = providedPlayerInstance;
 
+		console.info('jwplayer before ready');
 		playerInstance.once('ready', function () {
+			console.info('jwplayer player ready');
 			var relatedPlugin = playerInstance.getPlugin('related');
 
 			relatedPlugin.on('open', function () {
+				console.info('jwplayer related plugin open');
 				playerInstance.trigger('relatedVideosImpression');
 				state[prefixes.video] = getDefaultState();
 			});
 
 			relatedPlugin.on('play', function (data) {
+				console.info('jwplayer related plugin play');
 				depth++;
 
 				playerInstance.trigger('relatedVideoPlay', {
@@ -86,12 +90,15 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 		playerInstance.on('play', function () {
 			if (wasStartEventFired) {
 				playerInstance.trigger('videoResumed');
+				console.info('jwplayer videoResumed tiggered');
 			} else {
 				if (depth === 0) {
 					playerInstance.trigger('playerStart', { auto: willAutoplay });
+					console.info('jwplayer playerStart tiggered');
 				}
 
 				playerInstance.trigger('videoStart');
+				console.info('jwplayer videoStart tiggered');
 				wasStartEventFired = true;
 			}
 		});
