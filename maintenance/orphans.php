@@ -44,16 +44,14 @@ class Orphans extends Maintenance {
 		$wgTitle = Title::newFromText( 'Orphan revision cleanup script' );
 		$this->checkOrphans( $this->hasOption( 'fix' ) );
 		$this->checkSeparation( $this->hasOption( 'fix' ) );
-		# Does not work yet, do not use
-		# $this->checkWidows( $this->hasOption( 'fix' ) );
 	}
 
 	/**
 	 * Lock the appropriate tables for the script
 	 * @param $db DatabaseBase object
-	 * @param $extraTable String The name of any extra tables to lock (eg: text)
+	 * @param $extraTable Array The name of any extra tables to lock (eg: text)
 	 */
-	private function lockTables( $db, $extraTable = array() ) {
+	private function lockTables( $db, $extraTable = [] ) {
 		$tbls = array( 'page', 'revision', 'redirect' );
 		if ( $extraTable ) {
 			$tbls = array_merge( $tbls, $extraTable );
@@ -83,16 +81,20 @@ class Orphans extends Maintenance {
 		$orphans = $dbw->numRows( $result );
 		if ( $orphans > 0 ) {
 			global $wgContLang;
+			$formatString = "%10s %10s %14s %14s %20s %s\n";
+
 			$this->output( "$orphans orphan revisions...\n" );
-			$this->output( sprintf( "%10s %10s %14s %20s %s\n", 'rev_id', 'rev_page', 'rev_timestamp', 'rev_user_text', 'rev_comment' ) );
+			$this->output( sprintf( $formatString, 'rev_id', 'rev_page', 'rev_timestamp', 'rev_user', 'rev_user_text', 'rev_comment' ) );
+
 			foreach ( $result as $row ) {
 				$comment = ( $row->rev_comment == '' )
 					? ''
 					: '(' . $wgContLang->truncate( $row->rev_comment, 40 ) . ')';
-				$this->output( sprintf( "%10d %10d %14s %20s %s\n",
+				$this->output( sprintf( $formatString,
 					$row->rev_id,
 					$row->rev_page,
 					$row->rev_timestamp,
+					$wgContLang->truncate( $row->rev_user, 17 ),
 					$wgContLang->truncate( $row->rev_user_text, 17 ),
 					$comment ) );
 				if ( $fix ) {
@@ -104,53 +106,6 @@ class Orphans extends Maintenance {
 			}
 		} else {
 			$this->output( "No orphans! Yay!\n" );
-		}
-
-		if ( $fix ) {
-			$dbw->unlockTables( __METHOD__ );
-		}
-	}
-
-	/**
-	 * @param $fix bool
-	 * @todo DON'T USE THIS YET! It will remove entries which have children,
-	 *       but which aren't properly attached (eg if page_latest is bogus
-	 *       but valid revisions do exist)
-	 */
-	private function checkWidows( $fix ) {
-		$dbw = wfGetDB( DB_MASTER );
-		$page = $dbw->tableName( 'page' );
-		$revision = $dbw->tableName( 'revision' );
-
-		if ( $fix ) {
-			$this->lockTables( $dbw );
-		}
-
-		$this->output( "\nChecking for childless page table entries... (this may take a while on a large wiki)\n" );
-		$result = $dbw->query( "
-			SELECT *
-			FROM $page LEFT OUTER JOIN $revision ON page_latest=rev_id
-			WHERE rev_id IS NULL
-		" );
-		$widows = $dbw->numRows( $result );
-		if ( $widows > 0 ) {
-			$this->output( "$widows childless pages...\n" );
-			$this->output( sprintf( "%10s %11s %2s %s\n", 'page_id', 'page_latest', 'ns', 'page_title' ) );
-			foreach ( $result as $row ) {
-				printf( "%10d %11d %2d %s\n",
-					$row->page_id,
-					$row->page_latest,
-					$row->page_namespace,
-					$row->page_title );
-				if ( $fix ) {
-					$dbw->delete( 'page', array( 'page_id' => $row->page_id ) );
-				}
-			}
-			if ( !$fix ) {
-				$this->output( "Run again with --fix to remove these entries automatically.\n" );
-			}
-		} else {
-			$this->output( "No childless pages! Yay!\n" );
 		}
 
 		if ( $fix ) {
