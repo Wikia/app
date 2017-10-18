@@ -43,6 +43,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
+		$vars[] = 'wgAdDriverDisableSraCountries';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';
@@ -70,6 +71,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries';

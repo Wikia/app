@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 /**
  * @method PhalanxModel setBlock( $block )
  * @method object getBlock
@@ -31,7 +33,7 @@ abstract class PhalanxModel extends WikiaObject {
 		parent::__construct();
 
 		$this->user = $this->wg->user;
-		$this->service = new PhalanxService();
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 		$this->ip = $this->wg->request->getIp();
 	}
 

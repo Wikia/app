@@ -52,7 +52,7 @@ class UserRegistrationTask extends BaseTask {
 			$this->sendConfirmationEmail( $user, $userRegistrationInfo );
 		}
 
-		$this->updateUserCreationLog( $user, $userRegistrationInfo );
+		$this->updateUserCreationLog( $user );
 
 		// For Facebook etc. registrations, the user already has a valid confirmed email
 		$byEmail = $userRegistrationInfo->isEmailConfirmed();
@@ -92,16 +92,9 @@ class UserRegistrationTask extends BaseTask {
 		}
 	}
 
-	private function updateUserCreationLog( User $user, UserRegistrationInfo $userRegistrationInfo ) {
+	private function updateUserCreationLog( User $user ) {
 		$logPage = new LogPage( 'newusers', false );
 
-		// Normal user registration
-		if ( !$userRegistrationInfo->isEmailConfirmed() ) {
-			$logPage->addEntry( 'create', $user->getUserPage(), '', [ $user->getId() ], $user );
-			return;
-		}
-
-		// Special case - e.g. Facebook Connect
-		$logPage->addEntry( 'create2', $user->getUserPage(), '', [ $user->getId() ], null );
+		$logPage->addEntry( 'create', $user->getUserPage(), '', [ $user->getId() ], $user );
 	}
 }

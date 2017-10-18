@@ -414,7 +414,6 @@ $wgAutoloadClasses['UserAllowedRequirementTrait'] = $IP . '/includes/wikia/trait
 $wgAutoloadClasses['UserAllowedRequirementThrowsErrorTrait'] = $IP . '/includes/wikia/traits/UserAllowedRequirementTrait.php';
 $wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/IncludeMessagesTrait.php';
 $wgAutoloadClasses['PowerUserTrait'] = $IP . '/includes/wikia/traits/PowerUserTrait.php';
-$wgAutoloadClasses['GlobalUserDataTrait'] = $IP . '/includes/wikia/traits/GlobalUserDataTrait.php';
 $wgAutoloadClasses['TitleTrait'] = $IP . '/includes/wikia/traits/TitleTrait.php';
 
 // Profiler classes
@@ -686,7 +685,6 @@ $wgExtensionsPath = false; /// defaults to "{$wgScriptPath}/extensions"
 /**
  * Auxiliary variables for CreateWikiTask
  */
-$wgHubCreationVariables = array();
 $wgLangCreationVariables = array();
 
 /**
@@ -1907,8 +1905,9 @@ include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
-/**
- * SUS-2164: Include Facebook extensions - enabled globally
- */
+// SUS-2164: Include Facebook extensions - enabled globally
 require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
 require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
+
+// SUS-2956: Include MultiLookup extension
+require_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";

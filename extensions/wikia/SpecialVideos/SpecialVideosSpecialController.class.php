@@ -85,13 +85,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$addVideo = 1;
 
 		// get videos
-		$params = [
-			'page' => $page,
-			'category' => $category,
-			'provider' => $providers,
-		];
-		$response = $this->sendSelfRequest( 'getVideos', $params );
-		$videos = $response->getVal( 'videos', [] );
+		$helper = new SpecialVideosHelper();
+		$videos = $helper->getVideos( $page, 'all', $providers, $category, [
+			'getThumbnail' => true
+		] );
 
 		$message = '';
 		$paginationBar = '';
@@ -102,7 +99,11 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 				$this->loadMore = wfMessage( 'specialvideos-btn-load-more' )->text();
 			}
 		} else {
-			$pagination = $helper->getPagination( $params, $addVideo );
+			$pagination = $helper->getPagination( [
+				'page' => $page,
+				'category' => $category,
+				'provider' => $providers
+			], $addVideo );
 			$paginationBar = $pagination[ 'body' ];
 			$this->wg->Out->addHeadItem( 'Pagination', $pagination[ 'head' ] );
 		}
@@ -131,6 +132,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videos - list of videos
 	 */
 	public function getVideos() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$page = $this->request->getVal( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		$providers = $this->request->getVal( 'provider', '' );

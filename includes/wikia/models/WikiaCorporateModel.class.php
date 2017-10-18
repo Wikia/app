@@ -2,7 +2,6 @@
 
 class WikiaCorporateModel extends WikiaModel {
 
-	// taken from wgEnableWikiaHomePageExt
 	const LANG_TO_WIKI_ID = [
 		'en' => Wikia::CORPORATE_WIKI_ID,
 		'de' => 111264,
@@ -10,6 +9,10 @@ class WikiaCorporateModel extends WikiaModel {
 		'pl' => 435095,
 		'es' => 637291,
 		'ja' => 875569,
+		'pt-br' => 993754,
+		'ru' => 1169860,
+		'zh' => 1187214,
+		'zh-tw' => 1187219,
 	];
 
 	/**
