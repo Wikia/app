@@ -287,7 +287,7 @@ class DPLForum {
 		$sRevTable = $dbr->tableName( 'revision' );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
 		$sSqlSelectFrom = "SELECT page_namespace, page_title,"
-			. " r.rev_user_text, r.rev_timestamp";
+			. " r.rev_user, r.rev_user_text, r.rev_timestamp";
 		$arg = " FROM $sPageTable INNER JOIN $sRevTable"
 			. " AS r ON page_latest = r.rev_id";
 
@@ -296,7 +296,7 @@ class DPLForum {
 		} elseif ( ( $this->bAddAuthor || $this->bAddCreationDate ||
 		( $sOrder == 'first_time' ) ) && ( ( !$this->restrictNamespace ) ||
 		( $iNamespace >= 0 && !in_array( $iNamespace, $this->restrictNamespace ) ) ) ) {
-			$sSqlSelectFrom .= ", o.rev_user_text AS first_user, o.rev_timestamp AS"
+			$sSqlSelectFrom .= ", o.rev_user as first_user, o.rev_user_text AS first_user_text, o.rev_timestamp AS"
 			. " first_time" . $arg . " INNER JOIN $sRevTable AS o"
 			. " ON o.rev_id =( SELECT MIN(q.rev_id) FROM $sRevTable"
 			. " AS q WHERE q.rev_page = page_id )";
@@ -377,25 +377,38 @@ class DPLForum {
 					$first_time = '';
 				}
 
-				if( isset( $row->first_user ) ) {
-					$first_user = $row->first_user;
-				} else {
-					$first_user = '';
+				$first_user = '';
+				if( isset( $row->first_user ) || isset( $row->first_user_text )) {
+					$first_user = User::getUsername( $row->first_user, $row->first_user_text );
 				}
 
 				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 				$output .= $sStartItem;
-				$output .= $this->buildOutput( $title, $title, $row->rev_timestamp,
-					$row->rev_user_text, $first_user, $first_time );
+				$output .= $this->buildOutput(
+					$title,
+					$title,
+					$row->rev_timestamp,
+					User::getUsername( $row->rev_user, $row->rev_user_text ),
+					$first_user,
+					$first_time
+				);
 				$output .= $sEndItem . "\n";
 			}
 		} else {
 			$output .= $sStartItem;
 			if ( $row = $dbr->fetchObject( $res ) ) {
-				$output .= $this->buildOutput( Title::makeTitle( $row->page_namespace,
-					$row->page_title ), $title, $row->rev_timestamp, $row->rev_user_text );
+				$output .= $this->buildOutput(
+					Title::makeTitle( $row->page_namespace, $row->page_title ),
+					$title,
+					$row->rev_timestamp,
+					User::getUsername( $row->rev_user, $row->rev_user_text )
+				);
 			} else {
-				$output .= $this->buildOutput( null, $title, $this->msg( 'dplforum-never' ) );
+				$output .= $this->buildOutput(
+					null,
+					$title,
+					$this->msg( 'dplforum-never' )
+				);
 			}
 			$output .= $sEndItem . "\n";
 		}
