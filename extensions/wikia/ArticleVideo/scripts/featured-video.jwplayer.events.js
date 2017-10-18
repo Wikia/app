@@ -70,7 +70,7 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 
 			relatedPlugin.on('open', function () {
 				console.info('jwplayer related plugin open');
-				playerInstance.trigger('relatedVideosImpression');
+				playerInstance.trigger('relatedVideoImpression');
 				state[prefixes.video] = getDefaultState();
 			});
 
