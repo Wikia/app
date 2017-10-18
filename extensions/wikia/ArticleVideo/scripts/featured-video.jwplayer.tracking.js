@@ -187,5 +187,11 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 				action: 'close'
 			});
 		});
+
+		playerInstance.on('autoplayToggle', function (data) {
+			track({
+				label: 'autoplay-' + (data.willAutoplay ? 'enabled' : 'disabled')
+			});
+		});
 	}
 });
