@@ -148,11 +148,11 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	desktop('regular ad', 'INVISIBLE_SKIN', { isEmpty: false, size: [1000, 1000] }, {}, 'success');
 	desktop('regular ad', 'ANYTHING', { isEmpty: false, size: [100, 100] }, {}, 'success');
 
-	desktop('empty ad', 'SLOT_NAME', { isEmpty: true }, {}, 'hop');
+	desktop('empty ad', 'SLOT_NAME', { isEmpty: true }, {}, 'collapse');
 	// If isEmpty, then shouldn't really check the size:
-	desktop('empty ad', 'SLOT_NAME', { isEmpty: true, size: null }, {}, 'hop');
-	desktop('empty ad', 'SLOT_NAME', { isEmpty: true, size: [1, 1] }, {}, 'hop');
-	desktop('empty ad', 'SLOT_NAME', { isEmpty: true, size: [100, 100] }, {}, 'hop');
+	desktop('empty ad', 'SLOT_NAME', { isEmpty: true, size: null }, {}, 'collapse');
+	desktop('empty ad', 'SLOT_NAME', { isEmpty: true, size: [1, 1] }, {}, 'collapse');
+	desktop('empty ad', 'SLOT_NAME', { isEmpty: true, size: [100, 100] }, {}, 'collapse');
 
 	desktop('1x1 ad', 'SLOT_NAME', { isEmpty: false, size: [1, 1] }, {}, 'hop');
 	desktop('1x1 ad', 'INVISIBLE_SKIN', { isEmpty: false, size: [1, 1] }, {}, 'hop');
@@ -196,15 +196,15 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 
 	mobile('non-1x1 ad with empty contents', 'SLOT_NAME', { isEmpty: false, size: [320, 50] }, 0, false, 'hop');
 
-	mobile('empty ad', 'SLOT_NAME', { isEmpty: true }, 0, false, 'hop');
+	mobile('empty ad', 'SLOT_NAME', { isEmpty: true }, 0, false, 'collapse');
 	// If isEmpty, then shouldn't really check the size:
-	mobile('empty ad', 'SLOT_NAME', { isEmpty: true }, 100, false, 'hop');
-	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: null }, 0, false, 'hop');
-	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: null }, 100, false, 'hop');
-	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: [1, 1] }, 0, false, 'hop');
-	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: [1, 1] }, 100, false, 'hop');
-	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: [100, 100] }, 0, false, 'hop');
-	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: [100, 100] }, 100, false, 'hop');
+	mobile('empty ad', 'SLOT_NAME', { isEmpty: true }, 100, false, 'collapse');
+	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: null }, 0, false, 'collapse');
+	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: null }, 100, false, 'collapse');
+	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: [1, 1] }, 0, false, 'collapse');
+	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: [1, 1] }, 100, false, 'collapse');
+	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: [100, 100] }, 0, false, 'collapse');
+	mobile('empty ad', 'SLOT_NAME', { isEmpty: true, size: [100, 100] }, 100, false, 'collapse');
 
 	mobile('1x1 ad', 'SLOT_NAME', { isEmpty: false, size: [1, 1] }, 0, false, 'hop');
 	// If isEmpty, then shouldn't really check the size:
@@ -216,7 +216,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	// Special ads
 	mobile('Special ad (Celtra, etc)', 'SLOT_NAME', { isEmpty: false, size: [300, 250] }, 0, true, 'success');
 	mobile('Special ad (Celtra, etc) 1x1', 'SLOT_NAME', { isEmpty: false, size: [1, 1] }, 0, true, 'hop');
-	mobile('Special ad (Celtra, etc) empty', 'SLOT_NAME', { isEmpty: true, size: [300, 250] }, 0, true, 'hop');
+	mobile('Special ad (Celtra, etc) empty', 'SLOT_NAME', { isEmpty: true, size: [300, 250] }, 0, true, 'collapse');
 
 	// TODO: test for absolute positioned images
 	// (like the AdSense ads in desktop browser pretending to be a mobile browser)
