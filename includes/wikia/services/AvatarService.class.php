@@ -255,15 +255,13 @@ class AvatarService {
 				$url = self::vignetteCustomUrl( $width, $relativePath, $timestamp );
 			} else { // wikia-provided avatars
 				$hash = FileRepo::getHashPathForLevel( $relativePath, 2 );
-				$bucket = VignetteRequest::parseBucket( Masthead::DEFAULT_PATH );
+				$bucket = VignetteRequest::parseBucket( Masthead::getAvatarDefaultPath() );
 				$relativePath = $hash . $relativePath;
 				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
 			}
 		} else { // default avatar
-			$legacyDefaultUrl = $masthead->getDefaultAvatars( 'thumb/' )[0];
-			$bucket = VignetteRequest::parseBucket( $legacyDefaultUrl );
-			$relativePath = VignetteRequest::parseRelativePath( $legacyDefaultUrl );
-			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
+			$defaultAvatarUrl = $masthead->getDefaultAvatars()[0];
+			$url = ImagesService::getThumbUrlFromFileUrl( $defaultAvatarUrl, $width );
 		}
 
 		return $url;

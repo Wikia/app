@@ -3,7 +3,6 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
-	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
@@ -15,12 +14,12 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window'
 ], function (
 	adContext,
 	adEngineRunner,
-	adInfoTracker,
 	pageLevelParams,
 	slotStateMonitor,
 	adConfigDesktop,
@@ -32,6 +31,7 @@ require([
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
+	adInfoListener,
 	adBlockDetection,
 	win
 ) {
@@ -55,7 +55,7 @@ require([
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
-		adInfoTracker.run();
+		adInfoListener.run();
 		slotStateMonitor.run();
 
 		// Ads
@@ -109,6 +109,7 @@ require([
 
 	if (context.opts.premiumAdLayoutEnabled && premiumSlots.indexOf('BOTTOM_LEADERBOARD') >= 0) {
 		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
+		win.addEventListener('wikia.blocking', bottomLeaderboard.init);
 	}
 
 	if (doc.readyState === 'complete') {

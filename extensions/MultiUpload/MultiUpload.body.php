@@ -98,19 +98,22 @@ class MultipleUpload extends SpecialUpload {
 				|| $request->getCheck( 'wpUploadIgnoreWarning' ) );
 
 		if ( !$fromSession ) {
+			$canUploadByUrl = UploadFromUrl::isEnabled() && $this->getUser()->isAllowed( 'upload_by_url' );
 			for ( $i = 0; $i < $maxUploadFiles; $i++ ) {
 				$this->mDesiredDestNames[$i] = $request->getText( 'wpDestFile'. $i );
 				if( !$this->mDesiredDestNames[$i] && $request->getFileName( 'wpUploadFile' . $i ) !== null ) {
 					$this->mDesiredDestNames[$i] = $request->getFileName( 'wpUploadFile' . $i );
 				}
-				wfSuppressWarnings();
-				$request->setVal( 'wpUploadFile', $_FILES['wpUploadFile' . $i] );
-				wfRestoreWarnings();
-				$request->setVal( 'wpDestFile', $request->getVal( 'wpDestFile' . $i ) );
 				move_uploaded_file( 'wpUploadFile' . $i, 'wpUploadFile' );
 				wfSuppressWarnings();
+				$request->setVal( 'wpUploadFile', $_FILES['wpUploadFile' . $i] );
 				$_FILES['wpUploadFile'] = $_FILES['wpUploadFile' . $i];
 				wfRestoreWarnings();
+				$request->setVal( 'wpDestFile', $request->getVal( 'wpDestFile' . $i ) );
+				$request->setVal( 'wpSourceType', $request->getVal( 'wpSourceType' . $i ) );
+				if ( $canUploadByUrl ) {
+					$request->setVal( 'wpUploadFileURL', $request->getVal( 'wpUploadFileURL' . $i ) );
+				}
 				$up = UploadBase::createFromRequest( $request );
 				if ( $up ) {
 					$this->mUploads[] = $up;
@@ -294,8 +297,8 @@ class MultipleUpload extends SpecialUpload {
 					$this->mUploadSuccessful = false; // reset
 					parent::processUpload();
 					if ( $this->mUploadSuccessful ) {
-						$this->mSuccesses[] = "<ul><li><a href='" . $this->mLocalFile->getTitle()->getFullURL() .
-							"' target='new'>{$this->mLocalFile->getTitle()->getFullText()}: " .
+						$this->mSuccesses[] = '<ul><li><a href="' . $this->mLocalFile->getTitle()->getFullURL() .
+							'" target="new">' . $this->mLocalFile->getTitle()->getFullText() . ': ' .
 							wfMsg( 'multiupload-fileuploaded' ) . '</a></li></ul>';
 					}
 				}
@@ -466,8 +469,7 @@ class MultiUploadForm extends UploadForm {
 		}
 
 		$canUploadByUrl = UploadFromUrl::isEnabled() && $this->getUser()->isAllowed( 'upload_by_url' );
-		$radio = $canUploadByUrl;
-		$selectedSourceType = strtolower( $this->getRequest()->getText( 'wpSourceType', 'File' ) );
+		$selectedSourceType = strtolower( $this->getRequest()->getText( 'wpSourceType', 'file' ) );
 
 		$descriptor = array();
 		if ( $this->mTextTop ) {
@@ -481,13 +483,14 @@ class MultiUploadForm extends UploadForm {
 
 		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
 			$descriptor['UploadFile' . $i] = array(
-				'class' => 'UploadSourceField',
+				'class' => 'MultipleUploadSourceField',
 				'section' => 'source',
 				'type' => 'file',
 				'id' => 'wpUploadFile' . $i,
 				'label-message' => 'sourcefilename',
 				'upload-type' => 'File',
-				'radio' => &$radio,
+				'radio' => &$canUploadByUrl,
+				'ref' => $i,
 				'checked' => $selectedSourceType == 'file',
 			);
 			$descriptor['DestFile' . $i] = array(
@@ -503,13 +506,14 @@ class MultiUploadForm extends UploadForm {
 
 			if ( $canUploadByUrl ) {
 				global $wgMaxUploadSize;
-				$descriptor['UploadFileURL'] = array(
-					'class' => 'UploadSourceField',
+				$descriptor['UploadFileURL' . $i] = array(
+					'class' => 'MultipleUploadSourceField',
 					'section' => 'source',
-					'id' => 'wpUploadFileURL',
+					'id' => 'wpUploadFileURL' . $i,
 					'label-message' => 'sourceurl',
 					'upload-type' => 'url',
-					'radio' => &$radio,
+					'radio' => &$canUploadByUrl,
+					'ref' => $i,
 					'help' => wfMsgExt( 'upload-maxfilesize',
 							array( 'parseinline', 'escapenoentities' ),
 							$this->getLang()->formatSize( $wgMaxUploadSize )
@@ -567,4 +571,30 @@ class MultiUploadForm extends UploadForm {
 		$out->addScript( Skin::makeVariablesScript( $newscriptVars ) );
 	}
 
+}
+
+class MultipleUploadSourceField extends UploadSourceField {
+	/**
+	 * @param $cellAttributes array
+	 * @return string
+	 */
+	function getLabelHtml( $cellAttributes = array() ) {
+		$id = 'wpSourceType' . $this->mParams['upload-type'] . $this->mParams['ref'];
+		$label = Html::rawElement( 'label', array( 'for' => $id ), $this->mLabel );
+
+		if ( !empty( $this->mParams['radio'] ) ) {
+			$attribs = array(
+				'name' => 'wpSourceType' . $this->mParams['ref'],
+				'type' => 'radio',
+				'id' => $id,
+				'value' => $this->mParams['upload-type'],
+			);
+			if ( !empty( $this->mParams['checked'] ) ) {
+				$attribs['checked'] = 'checked';
+			}
+			$label .= Html::element( 'input', $attribs );
+		}
+
+		return Html::rawElement( 'td', array( 'class' => 'mw-label' ) + $cellAttributes, $label );
+	}
 }
