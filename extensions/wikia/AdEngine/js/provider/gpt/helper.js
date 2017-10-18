@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.provider.gpt.targeting',
 	'ext.wikia.adEngine.slot.service.passbackHandler',
+	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
@@ -32,6 +33,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	googleSlots,
 	gptTargeting,
 	passbackHandler,
+	srcProvider,
 	slotTargeting,
 	adBlockDetection,
 	adBlockRecovery,
@@ -54,6 +56,33 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;
+	}
+
+	function isRecoverableByIL() {
+		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
+	}
+
+	function shouldSetSrcPremium() {
+		return adContext.getContext().opts.premiumOnly;
+	}
+
+	function getSrc(originalSrc, extra) {
+		if (shouldSetSrcPremium() && !adContext.get('opts.isAdTestWiki')) {
+			originalSrc = 'premium';
+		} else if (isRecoverableByPF(extra) || isRecoverableByIL()) {
+			originalSrc = 'rec';
+		}
+
+		return adContext.get('opts.isAdTestWiki') ? (extra.testSrc || 'test-' + originalSrc) : originalSrc;
+	}
+
+	function isRecoverableByPF(extra) {
+		var isBlocking = adBlockDetection.isBlocking(),
+			isRecoveryEnabled = adBlockRecovery.isEnabled(),
+			adIsRecoverable = extra.isPageFairRecoverable ||
+				extra.isSourcePointRecoverable ||
+				extra.isInstartLogicRecoverable;
+		return isRecoveryEnabled && isBlocking && adIsRecoverable;
 	}
 
 	/**
@@ -112,28 +141,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.addSlot(element);
 		}
 
-		function shouldSetSrcPremium() {
-			return adContext.getContext().opts.premiumOnly;
-		}
-
 		function setAdditionalTargeting(slotTargetingData) {
 			var abId;
 
-			if (shouldSetSrcPremium() && !adContext.get('opts.isAdTestWiki')) {
-				slotTargetingData.src = 'premium';
-			} else if (adShouldBeRecovered) {
-				slotTargetingData.src = 'rec';
-			}
-
-			if (instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking()) {
-				slotTargetingData.src = 'rec';
+			if (isRecoverableByIL()) {
 				slotTargetingData.requestSource = 'instartLogic';
 			}
 
-			if (adContext.get('opts.isAdTestWiki')) {
-				slotTargetingData.src = extra.testSrc || 'test-' + slotTargetingData.src;
-			}
-
+			slotTargetingData.src = getSrc(slotTargetingData.src, extra);
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';

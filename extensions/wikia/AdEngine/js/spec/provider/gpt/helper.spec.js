@@ -58,8 +58,13 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				getUapId: noop
 			},
 			passbackHandler: {
-				get: function() {
+				get: function () {
 					return 'unknown';
+				}
+			},
+			srcProvider: {
+				get: function () {
+					return 'gpt';
 				}
 			},
 			slotTargetingHelper: {
@@ -98,11 +103,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 						getAttribute: function () {
 							return '{uap: "none"}';
 						}
-					}
+					};
 				}
 			},
 			geo: {
-				isProperGeo: function() {
+				isProperGeo: function () {
 					return false;
 				}
 			},
@@ -122,6 +127,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.googleSlots,
 			mocks.gptTargeting,
 			mocks.passbackHandler,
+			mocks.srcProvider,
 			mocks.slotTargetingHelper,
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
@@ -405,41 +411,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('premium');
-	});
-
-	it('pass provided src param', function () {
-		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'xyz'}, {});
-		expect(mocks.slotTargetingData.src).toBe('xyz');
-
-		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, {});
-		expect(mocks.slotTargetingData.src).toBe('abc');
-	});
-
-	it('adds test- prefix for test wiki', function () {
-		spyOn(mocks.adContext, 'get').and.returnValue(true);
-
-		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'xyz'}, {});
-
-		expect(mocks.slotTargetingData.src).toBe('test-xyz');
-	});
-
-	it('overrides src for test wiki if is passed in extra params', function () {
-		spyOn(mocks.adContext, 'get').and.returnValue(true);
-
-		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'xyz'}, {testSrc: 'extraSrc'});
-
-		expect(mocks.slotTargetingData.src).toBe('extraSrc');
-	});
-
-	it('overrides src=premium for test wiki', function () {
-		mocks.context.opts.premiumOnly = true;
-
-		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, {});
-		expect(mocks.slotTargetingData.src).toBe('premium');
-
-		spyOn(mocks.adContext, 'get').and.returnValue(true);
-		getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {src: 'abc'}, {});
-		expect(mocks.slotTargetingData.src).toBe('test-abc');
 	});
 
 	it('overrides src=rec for test wiki', function () {
