@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.slot.service.srcProvider',  [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
-	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery')
 ], function (
 	adContext,
 	adBlockDetection,
@@ -12,13 +12,12 @@ define('ext.wikia.adEngine.slot.service.srcProvider',  [
 ) {
 	'use strict';
 
+	function adIsRecoverable(extra) {
+		return extra && (extra.isPageFairRecoverable || extra.isInstartLogicRecoverable);
+	}
+
 	function isRecoverableByPF(extra) {
-		var isBlocking = adBlockDetection.isBlocking(),
-			isRecoveryEnabled = adBlockRecovery.isEnabled(),
-			adIsRecoverable = extra && (extra.isPageFairRecoverable ||
-				extra.isSourcePointRecoverable ||
-				extra.isInstartLogicRecoverable);
-		return isRecoveryEnabled && isBlocking && adIsRecoverable;
+		return adBlockRecovery.isEnabled() && adBlockDetection.isBlocking() && adIsRecoverable(extra);
 	}
 
 	function isRecoverableByIL() {

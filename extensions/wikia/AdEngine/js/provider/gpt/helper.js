@@ -62,29 +62,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
 	}
 
-	function shouldSetSrcPremium() {
-		return adContext.getContext().opts.premiumOnly;
-	}
-
-	function getSrc(originalSrc, extra) {
-		if (shouldSetSrcPremium() && !adContext.get('opts.isAdTestWiki')) {
-			originalSrc = 'premium';
-		} else if (isRecoverableByPF(extra) || isRecoverableByIL()) {
-			originalSrc = 'rec';
-		}
-
-		return adContext.get('opts.isAdTestWiki') ? (extra.testSrc || 'test-' + originalSrc) : originalSrc;
-	}
-
-	function isRecoverableByPF(extra) {
-		var isBlocking = adBlockDetection.isBlocking(),
-			isRecoveryEnabled = adBlockRecovery.isEnabled(),
-			adIsRecoverable = extra.isPageFairRecoverable ||
-				extra.isSourcePointRecoverable ||
-				extra.isInstartLogicRecoverable;
-		return isRecoveryEnabled && isBlocking && adIsRecoverable;
-	}
-
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
@@ -103,9 +80,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		var element,
 			isBlocking = adBlockDetection.isBlocking(),
 			isRecoveryEnabled = adBlockRecovery.isEnabled(),
-			adIsRecoverable = extra.isPageFairRecoverable ||
-				extra.isSourcePointRecoverable ||
-				extra.isInstartLogicRecoverable,
+			adIsRecoverable = extra.isPageFairRecoverable || extra.isInstartLogicRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
 			slotName = slot.name,
@@ -148,7 +123,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.requestSource = 'instartLogic';
 			}
 
-			slotTargetingData.src = getSrc(slotTargetingData.src, extra);
+			slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
