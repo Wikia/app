@@ -111,43 +111,43 @@ class ApiQueryUsers extends ApiQueryBase {
 			}
 		}
 
-		$parameters = $useNames ? $goodNames : $ids;
-
 		$result = $this->getResult();
 
-		$data = [];
 		/* Wikia change begin - SUS-2989 */
 		$res = $this->getUserRows( $goodNames, $ids );
 		/* Wikia change end - SUS-2989 */
 
 		foreach ( $res as $row ) {
 			$user = User::newFromRow( $row );
-			$key = $useNames ? $user->getName() : $user->getId();
+			$data = [];
 
-			$data[$key]['userid'] = $user->getId();
-			$data[$key]['name'] = $user->getName();
+			$data['userid'] = $user->getId();
+			$data['name'] = $user->getName();
 
 			if ( isset( $this->prop['editcount'] ) ) {
-				$data[$key]['editcount'] = intval( $user->getEditCount() );
+				$data['editcount'] = intval( $user->getEditCount() );
 			}
 
 			if ( isset( $this->prop['registration'] ) ) {
-				$data[$key]['registration'] = wfTimestampOrNull( TS_ISO_8601, $user->getRegistration() );
+				$data['registration'] = wfTimestampOrNull( TS_ISO_8601, $user->getRegistration() );
 			}
 
 			if ( isset( $this->prop['groups'] ) ) {
-				$data[$key]['groups'] = $user->getEffectiveGroups();
+				$data['groups'] = $user->getEffectiveGroups();
+				$result->setIndexedTagName( $data['groups'], 'g' );
 			}
 
-			if ( isset( $this->prop['implicitgroups'] ) && !isset( $data[$key]['implicitgroups'] ) ) {
-				$data[$key]['implicitgroups'] =  self::getAutoGroups( $user );
+			if ( isset( $this->prop['implicitgroups'] ) && !isset( $data['implicitgroups'] ) ) {
+				$data['implicitgroups'] = self::getAutoGroups( $user );
+				$result->setIndexedTagName( $data['implicitgroups'], 'g' );
 			}
 
 			if ( isset( $this->prop['rights'] ) ) {
-				$data[$key]['rights'] = $user->getRights();
+				$data['rights'] = $user->getRights();
+				$result->setIndexedTagName( $data['rights'], 'r' );
 			}
 			if ( isset( $row->ipb_deleted ) /* Wikia change */ && $row->ipb_deleted ) {
-				$data[$key]['hidden'] = '';
+				$data['hidden'] = '';
 			}
 
 			/* Wikia change begin - SUS-92 */
@@ -160,9 +160,9 @@ class ApiQueryUsers extends ApiQueryBase {
 					// (internal request from service, or user who can view phalanx)
 
 					// For Phalanx blocks, use separate fields...
-					$data[$key]['phalanxblockedby'] = $blockInfo->getByName();
-					$data[$key]['phalanxblockreason'] = $blockInfo->mReason;
-					$data[$key]['phalanxblockexpiry'] = $blockInfo->getExpiry();
+					$data['phalanxblockedby'] = $blockInfo->getByName();
+					$data['phalanxblockreason'] = $blockInfo->mReason;
+					$data['phalanxblockexpiry'] = $blockInfo->getExpiry();
 
 					// reset fields so that we can load info for local block
 					$user->clearBlockInfo();
@@ -170,23 +170,23 @@ class ApiQueryUsers extends ApiQueryBase {
 					// load info for local block and display it in its own fields
 					$localBlockInfo = $user->getBlock( true, false, false /* check only local blocks */ );
 					if ( $localBlockInfo ) {
-						$data[$key]['blockedby'] = $localBlockInfo->getByName();
-						$data[$key]['blockreason'] = $localBlockInfo->mReason;
-						$data[$key]['blockexpiry'] = $localBlockInfo->getExpiry();
+						$data['blockedby'] = $localBlockInfo->getByName();
+						$data['blockreason'] = $localBlockInfo->mReason;
+						$data['blockexpiry'] = $localBlockInfo->getExpiry();
 					}
 				} elseif ( $user->isBlocked() ) {
 					// user is not blocked globally, but is blocked locally
 					// or request is not authorized
 
-					$data[$key]['blockedby'] = $blockInfo->getByName();
-					$data[$key]['blockreason'] = $blockInfo->mReason;
-					$data[$key]['blockexpiry'] = $blockInfo->getExpiry();
+					$data['blockedby'] = $blockInfo->getByName();
+					$data['blockreason'] = $blockInfo->mReason;
+					$data['blockexpiry'] = $blockInfo->getExpiry();
 				}
 			}
 			/* Wikia change end */
 
 			if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {
-				$data[$key]['emailable'] = '';
+				$data['emailable'] = '';
 			}
 
 			if ( isset( $this->prop['gender'] ) ) {
@@ -194,7 +194,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				if ( strval( $gender ) === '' ) {
 					$gender = 'unknown';
 				}
-				$data[$key]['gender'] = $gender;
+				$data['gender'] = $gender;
 			}
 
 			if ( !is_null( $params['token'] ) ) {
@@ -204,56 +204,12 @@ class ApiQueryUsers extends ApiQueryBase {
 					if ( $val === false ) {
 						$this->setWarning( "Action '$t' is not allowed for the current user" );
 					} else {
-						$data[$key][$t . 'token'] = $val;
+						$data[$t . 'token'] = $val;
 					}
 				}
 			}
-		}
 
-		// Second pass: add result data to $retval
-		foreach ( $parameters as $u ) {
-			if ( !isset( $data[$u] ) ) {
-				if ( $useNames ) {
-					$data[$u] = [ 'name' => $u ];
-					$urPage = new UserrightsPage;
-					$iwUser = $urPage->fetchUser( $u );
-
-					if ( $iwUser instanceof UserRightsProxy ) {
-						$data[$u]['interwiki'] = '';
-
-						if ( !is_null( $params['token'] ) ) {
-							$tokenFunctions = $this->getTokenFunctions();
-
-							foreach ( $params['token'] as $t ) {
-								$val = call_user_func( $tokenFunctions[$t], $iwUser );
-								if ( $val === false ) {
-									$this->setWarning( "Action '$t' is not allowed for the current user" );
-								} else {
-									$data[$u][$t . 'token'] = $val;
-								}
-							}
-						}
-					} else {
-						$data[$u]['missing'] = '';
-					}
-				} else {
-					$data[$u]['missing'] = '';
-				}
-			} else {
-				if ( isset( $this->prop['groups'] ) && isset( $data[$u]['groups'] ) ) {
-					$result->setIndexedTagName( $data[$u]['groups'], 'g' );
-				}
-				if ( isset( $this->prop['implicitgroups'] ) && isset( $data[$u]['implicitgroups'] ) ) {
-					$result->setIndexedTagName( $data[$u]['implicitgroups'], 'g' );
-				}
-				if ( isset( $this->prop['rights'] ) && isset( $data[$u]['rights'] ) ) {
-					$result->setIndexedTagName( $data[$u]['rights'], 'r' );
-				}
-			}
-
-			$fit = $result->addValue( array( 'query', $this->getModuleName() ),
-					null, $data[$u] );
-			if ( !$fit ) {
+			if ( !$result->addValue( [ 'query', $this->getModuleName() ], null, $data ) ) {
 				if ( $useNames ) {
 					$this->setContinueEnumParameter( 'users',
 						implode( '|', array_diff( $users, $done ) ) );
@@ -263,9 +219,9 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 				break;
 			}
-			$done[] = $u;
 		}
-		return $result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
+
+		return $result->setIndexedTagName_internal( [ 'query', $this->getModuleName() ], 'user' );
 	}
 
 	/**
