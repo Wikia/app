@@ -6,7 +6,7 @@ class MultiLookupHooks {
 
 		if ( $id == 0 && $user->isAllowed( 'multilookup' ) ) {
 			$attribs = [
-				'href' => 'http://community.wikia.com/wiki/Special:MultiLookup?target=' . urlencode( $nt->getText() ),
+				'href' => 'http://community.wikia.com/wiki/Special:MultiLookup?wptarget=' . urlencode( $nt->getText() ),
 				'title' => wfMessage( 'multilookupselectuser' )->text(),
 			];
 

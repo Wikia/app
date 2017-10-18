@@ -24,6 +24,7 @@ $wgAutoloadClasses['MultiLookupHooks'] = __DIR__ . '/MultiLookupHooks.php';
 $wgAutoloadClasses['MultiLookupPager'] = __DIR__ . '/MultiLookupPager.php';
 $wgAutoloadClasses['MultiLookupRowFormatter'] = __DIR__ . '/MultiLookupRowFormatter.php';
 $wgAutoloadClasses['SpecialMultiLookup'] = __DIR__ . '/SpecialMultiLookup.php';
+$wgAutoloadClasses['ApiQueryMultiLookup'] = __DIR__ . '/ApiQueryMultiLookup.php';
 
 $wgHooks['ContributionsToolLinks'][] = 'MultiLookupHooks::onContributionsToolLinks';
 $wgHooks['RecentChange_save'][] = 'MultiLookupHooks::onRecentChangeSave';
@@ -33,6 +34,8 @@ $wgExtensionMessagesFiles['MultiLookupAliases'] = __DIR__ . '/SpecialMultipleLoo
 
 $wgSpecialPages['MultiLookup'] = 'SpecialMultiLookup';
 $wgSpecialPageGroups['MultiLookup'] = 'users';
+
+$wgAPIListModules['multilookup'] = ApiQueryMultiLookup::class;
 
 $wgResourceModules['ext.wikia.multiLookup'] = [
 	'scripts' => [],

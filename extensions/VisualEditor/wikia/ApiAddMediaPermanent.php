@@ -38,10 +38,6 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			}
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 			$file->upload( $tempFile->getPath(), '', $pageText ? $pageText : '' );
-
-			// Wikia change - notify extension when file is added via VisualEditor
-			// Standard FileUpload hook is not fired for these uploads
-			Hooks::run( 'VisualEditorAddMedia', [ $file->getTitle() ] );
 		}
 
 		return [
