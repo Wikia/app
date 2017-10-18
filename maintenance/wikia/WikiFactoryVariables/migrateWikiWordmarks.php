@@ -9,7 +9,9 @@
 * This is one time use script
 * @usage
 * 	# this will migrate wordmark-image-url for wiki with ID 119:
-* 	migrateWikiWordmarks -d --wikiId 119 --verbose --keyName wordmark-image-url
+* 	migrateWikiWordmarks --dry-run --wiki 119 --verbose --keyName wordmark-image-url
+*   # or
+*   /usr/wikia/backend/bin/run_maintenance '--script=migrateWikiWordmarks.php --dry-run --verbose --keyName wordmark-image-url' --id=119
 */
 
 ini_set( 'display_errors', 'stderr' );
@@ -56,7 +58,7 @@ class MigrateWikiWordmarks extends Maintenance {
 			return false;
 		}
 
-		echo "Variable: " . self::WIKI_FACTORY_VARIABLE . " (Id: $varData[cv_id])" . PHP_EOL;
+		$this->output( "Variable: " . self::WIKI_FACTORY_VARIABLE . " (Id: $varData[cv_id])" . PHP_EOL );
 		$this->debug( "Variable data: " . json_encode( $varData ) . PHP_EOL );
 
 		$wg = F::app()->wg;
@@ -64,7 +66,7 @@ class MigrateWikiWordmarks extends Maintenance {
 		$wg->User->load();
 
 
-		echo "Updating {$this->keyName} in " . self::WIKI_FACTORY_VARIABLE . PHP_EOL;
+		$this->output( "Updating {$this->keyName} in " . self::WIKI_FACTORY_VARIABLE . PHP_EOL );
 		$prevValue = unserialize($varData['cv_value']);
 		$keyValue = $prevValue[$this->keyName];
 
