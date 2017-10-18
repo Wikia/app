@@ -31,7 +31,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'use strict';
 
 	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
-		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
