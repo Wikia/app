@@ -47,17 +47,17 @@ class PHPUnit_Framework_MockObject_Generator
     /**
      * Returns a mock object for the specified class.
      *
-     * @param array|string $type
-     * @param array        $methods
-     * @param array        $arguments
-     * @param string       $mockClassName
-     * @param bool         $callOriginalConstructor
-     * @param bool         $callOriginalClone
-     * @param bool         $callAutoload
-     * @param bool         $cloneArguments
-     * @param bool         $callOriginalMethods
-     * @param object       $proxyTarget
-     * @param bool         $allowMockingUnknownTypes
+     * @param string|string[] $type
+     * @param array           $methods
+     * @param array           $arguments
+     * @param string          $mockClassName
+     * @param bool            $callOriginalConstructor
+     * @param bool            $callOriginalClone
+     * @param bool            $callAutoload
+     * @param bool            $cloneArguments
+     * @param bool            $callOriginalMethods
+     * @param object          $proxyTarget
+     * @param bool            $allowMockingUnknownTypes
      *
      * @return PHPUnit_Framework_MockObject_MockObject
      *
@@ -318,11 +318,11 @@ class PHPUnit_Framework_MockObject_Generator
                 $callAutoload,
                 $cloneArguments
             );
-        } else {
-            throw new PHPUnit_Framework_MockObject_RuntimeException(
-                sprintf('Class "%s" does not exist.', $originalClassName)
-            );
         }
+
+        throw new PHPUnit_Framework_MockObject_RuntimeException(
+            sprintf('Class "%s" does not exist.', $originalClassName)
+        );
     }
 
     /**
@@ -533,9 +533,8 @@ class PHPUnit_Framework_MockObject_Generator
                         strpos($method, ')') - $nameEnd - 1
                     )
                 );
-                $numArgs = count($args);
 
-                for ($i = 0; $i < $numArgs; $i++) {
+                foreach (range(0, count($args) - 1) as $i) {
                     $args[$i] = substr($args[$i], strpos($args[$i], '$'));
                 }
 
@@ -826,7 +825,7 @@ class PHPUnit_Framework_MockObject_Generator
         if ($className == '') {
             do {
                 $className = $prefix . $type . '_' .
-                             substr(md5(microtime()), 0, 8);
+                             substr(md5(mt_rand()), 0, 8);
             } while (class_exists($className, false));
         }
 
@@ -1067,9 +1066,9 @@ class PHPUnit_Framework_MockObject_Generator
             if ($parameter->isVariadic()) {
                 if ($forCall) {
                     continue;
-                } else {
-                    $name = '...' . $name;
                 }
+
+                $name = '...' . $name;
             }
 
             $nullable        = '';
@@ -1079,7 +1078,7 @@ class PHPUnit_Framework_MockObject_Generator
 
             if (!$forCall) {
                 if ($parameter->hasType() && (string) $parameter->getType() !== 'self') {
-                    if (version_compare(PHP_VERSION, '7.1', '>=') && $parameter->allowsNull() && !$parameter->isVariadic()) {
+                    if (version_compare(PHP_VERSION, '7.1', '>=') && $parameter->allowsNull()) {
                         $nullable = '?';
                     }
 

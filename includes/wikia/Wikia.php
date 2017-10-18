@@ -31,8 +31,6 @@ $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 $wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
 $wgHooks['getUserPermissionsErrors'] [] = 'Wikia::canEditInterfaceWhitelistErrors';
 
-# changes in recentchanges (MultiLookup)
-$wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
@@ -1091,59 +1089,6 @@ class Wikia {
 	static function link($target, $text = null, $customAttribs = array(), $query = array(), $options = array()) {
 		$linker = self::getLinker();
 		return $linker->link($target, $text, $customAttribs, $query, $options);
-	}
-
-	/**
-	 * recentChangesSave -- hook
-	 * Send information to the backend script, when new record was added to the recentchanges table
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param RecentChange $oRC
-	 *
-	 * @author Piotr Molski (MoLi)
-	 * @return bool true
-	 */
-	static public function recentChangesSave( $oRC ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport, $wgRequest;
-
-		if ( empty( $wgEnableScribeReport ) ) {
-			return true;
-		}
-
-		if ( !is_object( $oRC ) ) {
-			return true;
-		}
-
-		$rc_ip = $oRC->getAttribute( 'rc_ip' );
-		if ( is_null( $rc_ip ) ) {
-			return true;
-		}
-
-		if ( !User::isIP( $rc_ip ) ) {
-			return true;
-		}
-
-		$params = array(
-			'dbname'	=> $wgDBname,
-			'wiki_id'	=> $wgCityId,
-			'ip'		=> $rc_ip
-		);
-
-		try {
-			$message = array(
-				'method' => 'ipActivity',
-				'params' => $params
-			);
-			$data = json_encode( $message );
-			WScribeClient::singleton('trigger')->send($data);
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
-
-		return true;
 	}
 
 	/**

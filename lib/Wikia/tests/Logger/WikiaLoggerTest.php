@@ -12,9 +12,9 @@ class WikiaLoggerTest extends TestCase {
 
 	function testInstance() {
 		$logger = WikiaLogger::instance();
-		$this->assertTrue($logger instanceof WikiaLogger);
-		$this->assertTrue($logger->getSyslogHandler() instanceof SyslogHandler);
-		$this->assertTrue($logger->getWebProcessor() instanceof WebProcessor);
+		$this->assertInstanceOf( WikiaLogger::class,$logger );
+		$this->assertInstanceOf( SyslogHandler::class, WikiaLogger::getSyslogHandler('foo-test') );
+		$this->assertInstanceOf( WebProcessor::class, $logger->getWebProcessor() );
 	}
 
 	function testLogger() {

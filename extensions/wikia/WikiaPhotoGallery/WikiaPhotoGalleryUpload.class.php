@@ -16,11 +16,10 @@ class WikiaPhotoGalleryUpload extends WikiaTempFilesUpload{
  	 * Returns array with uploaded files details or error details
 	 */
 	public function uploadImage( $uploadFieldName = self::DEFAULT_FILE_FIELD_NAME, $destFileName = null, $forceOverwrite = false ) {
-		global $IP, $wgRequest, $wgUser;
+		/* @var WebRequest $wgRequest */
+		global $wgRequest, $wgUser;
 
 		wfProfileIn(__METHOD__);
-
-		$ret = false;
 
 		// check whether upload is enabled (RT #53714)
 		if (!WikiaPhotoGalleryHelper::isUploadAllowed()) {

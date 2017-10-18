@@ -1,5 +1,5 @@
 <?php
-use PhpUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runClassInSeparateProcess
@@ -14,7 +14,7 @@ class Issue2591_SeparateClassPreserveTest extends TestCase
 
     public function testChangedGlobalString()
     {
-        $GLOBALS['globalString'] = "Hello!";
+        $GLOBALS['globalString'] = 'Hello!';
         $this->assertEquals('Hello!', $GLOBALS['globalString']);
     }
 

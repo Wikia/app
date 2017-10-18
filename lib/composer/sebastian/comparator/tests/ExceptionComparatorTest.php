@@ -16,6 +16,9 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass SebastianBergmann\Comparator\ExceptionComparator
+ * @uses SebastianBergmann\Comparator\Comparator
+ * @uses SebastianBergmann\Comparator\Factory
+ * @uses SebastianBergmann\Comparator\ComparisonFailure
  */
 class ExceptionComparatorTest extends TestCase
 {
@@ -50,8 +53,8 @@ class ExceptionComparatorTest extends TestCase
         $exception1 = new Exception;
         $exception2 = new Exception;
 
-        $exception3 = new RunTimeException('Error', 100);
-        $exception4 = new RunTimeException('Error', 100);
+        $exception3 = new RuntimeException('Error', 100);
+        $exception4 = new RuntimeException('Error', 100);
 
         return [
           [$exception1, $exception1],
@@ -70,8 +73,8 @@ class ExceptionComparatorTest extends TestCase
         $exception2 = new Exception('Error', 101);
         $exception3 = new Exception('Errors', 101);
 
-        $exception4 = new RunTimeException('Error', 100);
-        $exception5 = new RunTimeException('Error', 101);
+        $exception4 = new RuntimeException('Error', 100);
+        $exception5 = new RuntimeException('Error', 101);
 
         return [
           [$exception1, $exception2, $equalMessage],

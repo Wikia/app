@@ -13,18 +13,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 			filterSlotMap: function (map) {
 				return map;
 			}
-		},
-		instartLogic: {
-			isBlocking: function() {
-				return false;
-			}
 		}
 	};
 
 	function getIndexExchange() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'](
 			mocks.slotsContext,
-			mocks.instartLogic,
 			mocks.geo,
 			mocks.instantGlobals
 		);

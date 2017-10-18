@@ -38,6 +38,8 @@ class WAMPageController extends WikiaController
 		$this->indexWikis = $this->model->getIndexWikis( $this->getIndexParams() );
 
 		$total = ( empty( $this->indexWikis['wam_results_total'] ) ) ? 0 : $this->indexWikis['wam_results_total'];
+		$this->selectedDate = $this->indexWikis['wam_actual_date'];
+
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
 			$paginator = new Paginator( $total, $itemsPerPage, $this->getUrlForPagination() );
@@ -78,25 +80,20 @@ class WAMPageController extends WikiaController
 			]
 		);
 
-		if (!empty($this->selectedDate)) {
-			$timestamp = $this->selectedDate;
+		$timestamp = $this->selectedDate;
 
-			if (!empty($filterMinMaxDates['min_date'])) {
-				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
-				if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['min_date']])) {
-					$this->selectedDate = null;
-				}
+		if (!empty($filterMinMaxDates['min_date'])) {
+			$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
+			if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['min_date']])) {
+				$this->selectedDate = null;
 			}
+		}
 
-			if (!empty($filterMinMaxDates['max_date'])) {
-				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::LESS_THAN_EQUAL]);
-				if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['max_date']])) {
-					$this->selectedDate = null;
-				}
+		if (!empty($filterMinMaxDates['max_date'])) {
+			$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::LESS_THAN_EQUAL]);
+			if (!$dateValidator->isValid([$timestamp, $filterMinMaxDates['max_date']])) {
+				$this->selectedDate = null;
 			}
-		} else {
-			// DE-1673 default to two days ago because we might not have data for today
-			$this->selectedDate = strtotime( '00:00 -2 day');
 		}
 
 		$this->filterLanguages = $this->model->getWAMLanguages( $this->selectedDate );
@@ -143,27 +140,6 @@ class WAMPageController extends WikiaController
 		}
 
 		return $url;
-	}
-
-	private function redirectIfUnknownTab($currentTabIndex, $title) {
-		// we don't check here if $title is instance of Title
-		// because this method is called after this check and isWAMPage() check
-
-		if( $title->isSubpage() && !$currentTabIndex ) {
-			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), 301);
-		}
-	}
-
-	private function redirectIfFirstTab($tabIndex, $subpageText) {
-		// we don't check here if $title is instance of Title
-		// because this method is called after this check and isWAMPage() check
-
-		$isFirstTab = ($tabIndex === WAMPageModel::TAB_INDEX_TOP_WIKIS && !empty($subpageText));
-		$mainWAMPageUrl = $this->model->getWAMMainPageUrl($this->filterParams);
-
-		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
-			$this->wg->Out->redirect($mainWAMPageUrl, 301);
-		}
 	}
 
 	private function redirectIfMisspelledWamMainPage($title) {
