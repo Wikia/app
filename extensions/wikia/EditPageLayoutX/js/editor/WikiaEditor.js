@@ -675,8 +675,7 @@
 			this.toolbars = {};
 		},
 
-		renderToolbars: function() {
-			debugger;	
+		renderToolbars: function() {	
 			// Find all toolbars
 			var spaces = this.editor.getSpaces();
 			var toolbars = this.toolbars = {};
@@ -1173,7 +1172,6 @@
 		},
 
 		createElement: function( name ) {
-			debugger;
 			var ck = this.editor.ck, ui = this.editor.ck.ui, item;
 			if (ui._.items[name] && (item = ui.create(name)) ) {
 				var output = [];

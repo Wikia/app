@@ -49,6 +49,7 @@
 }
 
 #wpTextbox1.highlighted {
+	textarea {
 	border: 1px inset gray;
 	box-sizing: border-box;
 	line-height: 140%;
@@ -61,4 +62,4 @@
 	top: 0;
 	visibility: visible;
 	width: 100%;
-}
+}}
