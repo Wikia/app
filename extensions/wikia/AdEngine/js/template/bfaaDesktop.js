@@ -105,7 +105,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			runOnReady(iframe, params, videoSettings);
 			wrapper.style.opacity = '';
 
-			if (!context.opts.disableSra && params.loadMedrecFromBTF) {
+			if (!adContext.get('opts.disableSra') && params.loadMedrecFromBTF) {
 				// refresh after uapContext.setUapId if in SRA environment
 				helper.refreshSlot(medrecSlotName);
 			}
