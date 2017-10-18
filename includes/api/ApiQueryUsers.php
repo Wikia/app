@@ -212,25 +212,29 @@ class ApiQueryUsers extends ApiQueryBase {
 
 		// Second pass: add result data to $retval
 		foreach ( $parameters as $u ) {
-			if ( !isset( $data[$u] ) && $useNames ) {
-				$data[$u] = array( 'name' => $u );
-				$urPage = new UserrightsPage;
-				$iwUser = $urPage->fetchUser( $u );
+			if ( !isset( $data[$u] ) ) {
+				if ( $useNames ) {
+					$data[$u] = [ 'name' => $u ];
+					$urPage = new UserrightsPage;
+					$iwUser = $urPage->fetchUser( $u );
 
-				if ( $iwUser instanceof UserRightsProxy ) {
-					$data[$u]['interwiki'] = '';
+					if ( $iwUser instanceof UserRightsProxy ) {
+						$data[$u]['interwiki'] = '';
 
-					if ( !is_null( $params['token'] ) ) {
-						$tokenFunctions = $this->getTokenFunctions();
+						if ( !is_null( $params['token'] ) ) {
+							$tokenFunctions = $this->getTokenFunctions();
 
-						foreach ( $params['token'] as $t ) {
-							$val = call_user_func( $tokenFunctions[$t], $iwUser );
-							if ( $val === false ) {
-								$this->setWarning( "Action '$t' is not allowed for the current user" );
-							} else {
-								$data[$u][$t . 'token'] = $val;
+							foreach ( $params['token'] as $t ) {
+								$val = call_user_func( $tokenFunctions[$t], $iwUser );
+								if ( $val === false ) {
+									$this->setWarning( "Action '$t' is not allowed for the current user" );
+								} else {
+									$data[$u][$t . 'token'] = $val;
+								}
 							}
 						}
+					} else {
+						$data[$u]['missing'] = '';
 					}
 				} else {
 					$data[$u]['missing'] = '';
