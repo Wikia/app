@@ -60,7 +60,7 @@ require([
 			mute: willAutoplay,
 			playlist: videoDetails.playlist,
 			related: {
-				autoplaytimer: 5,
+				autoplaytimer: 3,
 				file: 'https://cdn.jwplayer.com/v2/playlists/' + recommendedPlaylist + '?related_media_id=' + videoId,
 				oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show'
 			},
