@@ -6,7 +6,7 @@
 
 define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.log'], function (window, document, log) {
 	'use strict';
-
+	debugger;
 	// Variables that are preserved between function calls
 	var highlightSyntaxIfNeededIntervalId,
 		highlightSyntaxInputTimeoutId,
@@ -89,6 +89,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	// both :before and :after are used because using two pseudo-elements per span is significantly faster
 	// than doubling the number of spans required
 	function writeText (text, color) {
+		debugger;
 		// No need to use another span if using the same color
 		if (color !== lastColor) {
 			// Whitespace is omitted in the hope of increasing performance
@@ -113,6 +114,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function highlightSyntax () {
+		debugger;
 		var startTime, endTime, diffTime,
 			fragment;
 		lastText = wpTextbox1.value;
@@ -179,6 +181,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function resetHighlightSyntax(diffTime) {
+		debugger;
 		if (initialized) {
 
 			clearInterval(highlightSyntaxIfNeededIntervalId);
@@ -198,6 +201,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function highlightBlock (color, breakerRegex) {
+		debugger;
 		var match, endIndexOfLastColor,
 			tagEnd, tagName,
 			stopAfter, endIndex;
@@ -410,14 +414,17 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function syncScrollX () {
+		debugger;
 		wpTextbox0.scrollLeft = wpTextbox1.scrollLeft;
 	}
 
 	function syncScrollY () {
+		debugger;
 		wpTextbox0.scrollTop = wpTextbox1.scrollTop;
 	}
 
 	function debouncedHighlightSyntax(e) {
+		debugger;
 		var key = e.which;
 
 		if (highlightSyntaxInputTimeoutId) {
@@ -438,6 +445,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	 * informed
 	 */
 	function highlightSyntaxIfNeeded () {
+		debugger;
 		if (wpTextbox1.value !== lastText) {
 			highlightSyntax();
 		}
@@ -453,6 +461,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function setup (textarea) {
+		debugger;
 		var focus,
 			scrollTop,
 			syntaxStyleElement,
@@ -526,12 +535,14 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function queueSetup (textarea) {
+		debugger;
 		setTimeout(function () {
 			setup(textarea);
 		}, 0);
 	}
 
 	function init (textarea, config) {
+		debugger;
 		maxSpanNumber = -1;
 
 		defaultBreakerRegex = new RegExp(breakerRegexBase, 'gm');

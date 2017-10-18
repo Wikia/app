@@ -147,21 +147,22 @@ The visual representation of a rich combo widget looks as follows:
 }
 
 /* The arrow which is displayed inside of the .cke_combo_open handler. */
-.cke_combo_arrow
+/*.cke_combo_arrow
 {
 	margin: 9px 0 0;
 	float: left;
 	opacity: 0.70;
 
 	/* Pure CSS Arrow */
-	height: 0;
+/*	height: 0;
 	width: 0;
 	font-size: 0;
 	border-left: 3px solid transparent;
 	border-right: 3px solid transparent;
 	border-top: 3px solid #2f2f2f;
 }
-
+*/
+/*
 .cke_hc .cke_combo_arrow
 {
 	font-size: 10px;
@@ -169,7 +170,7 @@ The visual representation of a rich combo widget looks as follows:
 	border: 0;
 	margin-top: 4px;
 }
-
+*/
 /* Disabled combo button styles. */
 .cke_combo_disabled .cke_combo_inlinelabel,
 .cke_combo_disabled .cke_combo_open

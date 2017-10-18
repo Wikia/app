@@ -236,6 +236,12 @@ CKEDITOR.plugins.add( 'richcombo', {
 				if ( this._.panel )
 					return;
 
+				debugger;
+				//Not Working
+				if (editor.config.richcomboCss != '' ) {
+					this._.panelDefinition.css = [editor.config.richcomboCss];
+				}
+
 				var panelDefinition = this._.panelDefinition,
 					panelBlockDefinition = this._.panelDefinition.block,
 					panelParentElement = panelDefinition.parent || CKEDITOR.document.getBody(),
@@ -414,3 +420,15 @@ CKEDITOR.plugins.add( 'richcombo', {
 	};
 
 } )();
+
+
+
+/**
+ * CSS to be loaded for richcombo dropdown (added by Wikia)
+ * @type string
+ * @default ''
+*/
+CKEDITOR.config.richcomboCss = '';
+
+
+

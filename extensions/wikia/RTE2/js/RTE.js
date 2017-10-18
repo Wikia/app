@@ -92,7 +92,7 @@
 			//readOnly: true,
 			toolbarCanCollapse: false,
 			resize_enabled: false,
-		//	richcomboCss: $.getSassCommonURL('extensions/wikia/RTE2/css/richcombo.scss'), depracated
+			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE2/css/richcombo.scss'),
 			skin: 'kama',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
 	//			theme: 'wikia'
@@ -261,7 +261,7 @@
 			$(window).trigger('rteready', editor);
 			GlobalTriggers.fire('rteready', editor);
 
-			
+	
 			// preload format dropdown (BugId:4592)
 			/*var formatDropdown = editor.ui.create('Format');
 			if (formatDropdown) {
@@ -375,11 +375,12 @@ CKEDITOR.on('instanceCreated', function(event) {
 // editor is loaded
 CKEDITOR.on('instanceReady', RTE.onEditorReady);
 //Kacper Olek
-CKEDITOR.on('instanceReady', function() {
-WikiaEditor.instances.wpTextbox1.plugins.ckeditor.themeLoaded();
-WikiaEditor.instances.wpTextbox1.plugins['ui-ckeditor'].ckReady();
-console.trace('Editor Ready!');
-});
+//CKEDITOR.on('instanceReady', function() {
+//WikiaEditor.instances.wpTextbox1.plugins.ckeditor.themeLoaded();
+//WikiaEditor.instances.wpTextbox1.plugins['ui-ckeditor'].ckReady();
+//console.trace('Editor Ready!');
+//});
+
 //
 // CKEDITOR.dtd fixes
 //

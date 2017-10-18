@@ -38,6 +38,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	},
 
 	modeSwitch: function(ev) {
+		debugger;
 		var editor = ev.editor,
 			wikiaEditor = WikiaEditor.getInstance(editor.name),
 			content = editor.getData();
@@ -73,18 +74,15 @@ CKEDITOR.plugins.add('rte-modeswitch',
 					editor.setMode('source');
 					editor.setData(data.wikitext, function() {
 						
-						//Kacper olek Temporary fix(?)
-						//editor.getSelection().removeAllRanges();
-						//$(editor.document.$).scrollTop(0);
-						
-						//editor.textarea.$.scrollTop = 0;
-						//editor.textarea.$.setSelectionRange(0, 0); selectionRange is automatically reset, so why the hell is this even here
+						this.editable().$.scrollTop = 0;
+						this.editable().$.setSelectionRange(0,0);
 					});
 				});
 				break;
 
 			case 'source':
 				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
+					debugger;
 					if (!data) {
 						onError();
 						return;

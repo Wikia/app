@@ -6,7 +6,6 @@
 
 define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.log'], function (window, document, log) {
 	'use strict';
-
 	// Variables that are preserved between function calls
 	var highlightSyntaxIfNeededIntervalId,
 		highlightSyntaxInputTimeoutId,
@@ -113,11 +112,11 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function highlightSyntax () {
+		debugger;
 		var startTime, endTime, diffTime,
 			fragment;
-
+		wpTextbox1.value = CKEDITOR.instances.wpTextbox1.getData();
 		lastText = wpTextbox1.value;
-		lastText = CKEDITOR.instances.wpTextbox1.getData();
 		/* Backslashes and apostrophes are CSS-escaped at the beginning and all
 		parsing regexes and functions are designed to match. On the other hand,
 		newlines are not escaped until written so that in the regexes ^ and $

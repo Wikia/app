@@ -25,14 +25,16 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 /* Editable regions */
 textarea.cke_source
 {
-	font-family: 'Courier New', Monospace;
-	font-size: small;
-	background-color: #fff;
+	border: 0;
+	color: #D5D4D4;
+	font-family: monospace;
+	font-size: 13px;
+	line-height: 140%;
+	background-color: #000000;
 	white-space: pre-wrap;
-	border: none;
-	padding: 0;
-	margin: 0;
-	display: block;
+	overflow: auto;
+
+
 }
 
 .cke_wysiwyg_frame, .cke_wysiwyg_div
