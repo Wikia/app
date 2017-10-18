@@ -486,8 +486,10 @@ class User implements JsonSerializable {
 	 * @return User object, or null
 	 */
 	public static function newFromConfirmationCode( $code ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'user', 'user_id', array(
+		global $wgExternalSharedDB;
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$id = $dbr->selectField( "`user`", 'user_id', array(
 			'user_email_token' => md5( $code ),
 			'user_email_token_expires > ' . $dbr->addQuotes( $dbr->timestamp() ),
 		) );
