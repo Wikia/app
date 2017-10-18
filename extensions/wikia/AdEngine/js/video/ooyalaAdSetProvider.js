@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
+	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.video.vastUrlBuilder')
-], function (megaAdUnitBuilder, adContext, vastUrlBuilder) {
+], function (srcProvider, megaAdUnitBuilder, adContext, vastUrlBuilder) {
 	'use strict';
 
 	var FEATURED_VIDEO_RATIO = 640 / 480,
@@ -34,7 +35,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		var slotParams = bidParams || {};
 
 		slotParams.pos = 'FEATURED';
-		slotParams.src = adContext.get('opts.isAdTestWiki') ? 'test' : 'premium';
+		slotParams.src = srcProvider.get('gpt', 'test');
 		slotParams.rv = rv;
 
 		var options = {
