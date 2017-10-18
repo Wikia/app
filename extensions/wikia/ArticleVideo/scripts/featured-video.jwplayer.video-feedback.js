@@ -5,7 +5,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.videoFeedback', ['wikia.articl
 
 		function videoFeedbackInit(event) {
 			if (event.position >= 5 && !videoFeedbackBox && playerInstance.getState() === 'playing') {
-				videoFeedbackBox = new VideoFeedbackBox('.featured-video .video-feedback');
+				videoFeedbackBox = new VideoFeedbackBox('.featured-video .video-feedback', playerInstance);
 				videoFeedbackBox.init();
 				playerInstance.off('time', videoFeedbackInit)
 			}
