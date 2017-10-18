@@ -69,6 +69,8 @@ class PopulateLogUsertext extends LoggedUpdateMaintenance {
 				$ids[] = $row->log_user;
 			}
 
+			$res->rewind();
+
 			$users = User::whoAre( $ids );
 
 			$db->begin();
