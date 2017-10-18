@@ -592,6 +592,40 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 *
+	 * @param $ids Array User IDs
+	 * @return Array User ID to User name mapping
+	 */
+	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
+		global $wgExternalSharedDB;
+		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
+		$res = $sdb->select(
+			'`user`',
+			[ 'DISTINCT user_id', 'user_name' ],
+			[ 'user_id' => $ids ],
+			__METHOD__
+		);
+
+		// Pre-fill the returned array with empty strings
+		// so that missing users are not skipped.
+		// It makes further iterating over the array
+		// and handling anons and missing users a little
+		// bit easier.
+		$users = array_fill_keys( $ids, '' );
+
+		// This is optional, let's decide whether it is actually
+		// convenient to handle it here or programmers using
+		// this method should handle it themselves.
+		$users[0] = wfMessage( 'oasis-anon-user' )->escaped();
+
+		foreach ( $res as $row ) {
+			$users[ $row->user_id ] = (string) $row->user_name;
+		}
+
+		return $users;
+	}
+
+	/**
 	 * Get the real name of a user given their user ID
 	 *
 	 * @param $id Int User ID
