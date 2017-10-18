@@ -76,7 +76,7 @@ class ApiQueryMultiLookup extends ApiQueryBase {
 	}
 
 	private function getActivityOnWiki( $dbName, $ipAddress ) {
-		$cacheKey = wfSharedMemcKey( 'multilookup', $this->target, $dbName );
+		$cacheKey = wfSharedMemcKey( 'multilookup', $ipAddress, $dbName );
 
 		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $ipAddress ) {
 			$dbr = wfGetDB( DB_SLAVE, [], $dbName );
