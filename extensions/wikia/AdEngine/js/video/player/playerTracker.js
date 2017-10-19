@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'position': params.slotName || emptyValue.string,
 				'event_name': eventName,
 				'ad_error_code': errorCode || emptyValue.int,
-				'content_type': contentType || emptyValue.string,
+				'content_type': params.contentType || contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
 				'price': emptyValue.price,
