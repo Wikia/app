@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -161,7 +161,7 @@ class IsEqual extends Constraint
             }
 
             return \sprintf(
-                'is equal to <string:%s>',
+                'is equal to "%s"',
                 $this->value
             );
         }

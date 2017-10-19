@@ -110,6 +110,21 @@ class MultiLookupPager extends TablePager {
 	}
 
 	/**
+	 * Ensure that results are sortable by timestamp
+	 *
+	 * @param String $field
+	 * @param String $value
+	 * @return array
+	 */
+	function getCellAttrs( $field, $value ) {
+		if ( $field === static::ML_TIMESTAMP ) {
+			return [ 'data-sort-value' => wfTimestamp( TS_UNIX, $value ) ];
+		}
+
+		return [];
+	}
+
+	/**
 	 * Format a table cell. The return value should be HTML, but use an empty
 	 * string not &#160; for empty cells. Do not include the <td> and </td>.
 	 *
@@ -138,6 +153,14 @@ class MultiLookupPager extends TablePager {
 	 */
 	function getDefaultSort() {
 		return static::ML_TIMESTAMP;
+	}
+
+	/**
+	 * Ensure that results are sorted descending by default
+	 * @return bool true
+	 */
+	protected function getDefaultDirections() {
+		return true;
 	}
 
 	/**

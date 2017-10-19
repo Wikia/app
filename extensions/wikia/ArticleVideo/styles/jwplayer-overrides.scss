@@ -25,12 +25,25 @@
 		}
 	}
 
+
+	.jw-controlbar .jw-icon-inline.jw-text {
+		margin-top: -4px;
+	}
+
 	&.jw-flag-small-player .jw-title-primary {
 		display: none;
 	}
 
 	&.jw-reset, .jw-reset {
 		font-family: inherit;
+	}
+
+	// this is temporary because there was a bug in jwplayer dashboard where we couldn't disable casting
+	// these styles can be removed after jwplayer fix their defect
+	&.jw-flag-cast-available {
+		.jw-icon-cast, .jw-icon-airplay {
+			display: none !important;
+		}
 	}
 }
 

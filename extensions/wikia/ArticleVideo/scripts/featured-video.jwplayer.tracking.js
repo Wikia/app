@@ -159,5 +159,39 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 				action: 'close'
 			});
 		});
+
+		playerInstance.on('videoFeedbackImpression', function () {
+			track({
+				label: 'feedback',
+				action: 'impression'
+			});
+		});
+
+		playerInstance.on('videoFeedbackThumbUp', function () {
+			track({
+				label: 'feedback-thumb-up',
+				action: 'click'
+			});
+		});
+
+		playerInstance.on('videoFeedbackThumbDown', function () {
+			track({
+				label: 'feedback-thumb-down',
+				action: 'click'
+			});
+		});
+
+		playerInstance.on('videoFeedbackClosed', function () {
+			track({
+				label: 'feedback',
+				action: 'close'
+			});
+		});
+
+		playerInstance.on('autoplayToggle', function (data) {
+			track({
+				label: 'autoplay-' + (data.willAutoplay ? 'enabled' : 'disabled')
+			});
+		});
 	}
 });

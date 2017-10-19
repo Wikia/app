@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaDesktop', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.provider.gpt.helper',
@@ -13,6 +14,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.tweaker')
 ], function (
+	adContext,
 	btfBlocker,
 	googleSlots,
 	helper,
@@ -102,8 +104,8 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			runOnReady(iframe, params, videoSettings);
 			wrapper.style.opacity = '';
 
-			if (params.loadMedrecFromBTF) {
-				// refresh after uapContext.setUapId
+			if (!adContext.get('opts.disableSra') && params.loadMedrecFromBTF) {
+				// refresh after uapContext.setUapId if in SRA environment
 				helper.refreshSlot(medrecSlotName);
 			}
 		});

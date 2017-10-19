@@ -4,7 +4,9 @@ require([
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.autoplay',
+	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.tracking',
+	'wikia.articleVideo.featuredVideo.jwplayer.icons',
 	'wikia.articleVideo.featuredVideo.events',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
@@ -13,7 +15,9 @@ require([
 	videoDetails,
 	featuredVideoAds,
 	featuredVideoAutoplay,
+	featuredVideoMoatTracking,
 	featuredVideoTracking,
+	playerIcons,
 	featuredVideoEvents,
 	a9
 ) {
@@ -60,7 +64,7 @@ require([
 			mute: willAutoplay,
 			playlist: videoDetails.playlist,
 			related: {
-				autoplaytimer: 5,
+				autoplaytimer: 3,
 				file: 'https://cdn.jwplayer.com/v2/playlists/' + recommendedPlaylist + '?related_media_id=' + videoId,
 				oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show'
 			},
@@ -71,7 +75,9 @@ require([
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
+		featuredVideoMoatTracking(playerInstance);
 		handleTabNotActive(willAutoplay);
+		playerIcons(document.querySelector('.featured-video'), playerInstance);
 	}
 
 	if (a9 && adContext.get('bidders.a9Video')) {
