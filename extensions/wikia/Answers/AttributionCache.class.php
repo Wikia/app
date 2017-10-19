@@ -148,13 +148,19 @@ class AttributionCache {
 	 * rebuild and cache contributors list for an article
 	 */
 	private function rebuildArticleContribs(Title $title) {
-		global $wgAnswerHelperIDs, $wgMemc;
+		global $wgAnswerHelperIDs;
 		wfProfileIn(__METHOD__);
 
 		$results = array();
 
 		$dbs = wfGetDB( DB_MASTER );
-		$res = $dbs->select( 'revision', array( 'rev_user', 'rev_user_text' ), array( 'rev_page' => $title->getArticleID() ), __METHOD__, array( 'GROUP BY' => 'rev_user' ) );
+		$res = $dbs->select(
+			'revision',
+			[ 'rev_user', 'rev_user_text' ],
+			[ 'rev_page' => $title->getArticleID() ],
+			__METHOD__,
+			[ 'GROUP BY' => 'rev_user' ]
+		);
 
 		$firstRevisionUserId = $this->getFirstRevisionUserId($title);
 		while($row = $dbs->fetchObject($res)) {
@@ -179,7 +185,11 @@ class AttributionCache {
 						continue;
 					}
 				}
-				$results[] = $this->getContribsEntry($row->rev_user, $this->getUserEditPoints($row->rev_user), $row->rev_user_text);
+				$results[] = $this->getContribsEntry(
+					$row->rev_user,
+					$this->getUserEditPoints($row->rev_user),
+					User::getUsername( $row->rev_user, $row->rev_user_text )
+				);
 			}
 		}
 
@@ -395,7 +405,11 @@ class AttributionCache {
                         );
                         // set to 1 if anon, as only one person can actually "ask" the question..
                         $editsNum = !empty($s->rev_user) ? $this->getUserEditPoints($s->rev_user) : 1;
-                        $num1 = $this->getContribsEntry($s->rev_user, $editsNum, $s->rev_user_text);
+                        $num1 = $this->getContribsEntry(
+                        	$s->rev_user,
+													$editsNum,
+													User::getUsername( $s->rev_user, $s->rev_user_text )
+												);
                         $wgMemc->set( $key, $num1, 60 * 60 );
                 }
                 else {
