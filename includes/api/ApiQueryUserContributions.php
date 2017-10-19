@@ -35,7 +35,7 @@ class ApiQueryContributions extends ApiQueryBase {
 		parent::__construct( $query, $moduleName, 'uc' );
 	}
 
-	private $params, $prefixMode, $userprefix, $multiUserMode, $usernames;
+	private $params, $multiUserMode, $usernames;
 	private $fld_ids = false, $fld_title = false, $fld_timestamp = false,
 			$fld_comment = false, $fld_parsedcomment = false, $fld_flags = false,
 			$fld_patrolled = false, $fld_tags = false, $fld_size = false;
@@ -59,24 +59,17 @@ class ApiQueryContributions extends ApiQueryBase {
 		// TODO: if the query is going only against the revision table, should this be done?
 		$this->selectNamedDB( 'contributions', DB_SLAVE, 'contributions' );
 
-		if ( isset( $this->params['userprefix'] ) ) {
-			$this->prefixMode = true;
-			$this->multiUserMode = true;
-			$this->userprefix = $this->params['userprefix'];
-		} else {
-			$this->usernames = array();
-			if ( !is_array( $this->params['user'] ) ) {
-				$this->params['user'] = array( $this->params['user'] );
-			}
-			if ( !count( $this->params['user'] ) ) {
-				$this->dieUsage( 'User parameter may not be empty.', 'param_user' );
-			}
-			foreach ( $this->params['user'] as $u ) {
-				$this->prepareUsername( $u );
-			}
-			$this->prefixMode = false;
-			$this->multiUserMode = ( count( $this->params['user'] ) > 1 );
+		$this->usernames = array();
+		if ( !is_array( $this->params['user'] ) ) {
+			$this->params['user'] = array( $this->params['user'] );
 		}
+		if ( !count( $this->params['user'] ) ) {
+			$this->dieUsage( 'User parameter may not be empty.', 'param_user' );
+		}
+		foreach ( $this->params['user'] as $u ) {
+			$this->prepareUsername( $u );
+		}
+		$this->multiUserMode = ( count( $this->params['user'] ) > 1 );
 
 		$this->prepareQuery();
 
@@ -115,16 +108,16 @@ class ApiQueryContributions extends ApiQueryBase {
 	}
 
 	/**
-	 * Validate the 'user' parameter and set the value to compare
-	 * against `revision`.`rev_user_text`
+	 * Validate the 'user' parameter and add user name
+	 * to $this->usernames[] array
 	 *
 	 * @param $user string
 	 */
 	private function prepareUsername( $user ) {
 		if ( !is_null( $user ) && $user !== '' ) {
-			$name = User::isIP( $user )
-				? $user
-				: User::getCanonicalName( $user, 'valid' );
+			$name = User::isIP( $user ) ?
+				$user :
+				User::getCanonicalName( $user, 'valid' );
 			if ( $name === false ) {
 				$this->dieUsage( "User name {$user} is not valid", 'param_user' );
 			} else {
@@ -156,34 +149,37 @@ class ApiQueryContributions extends ApiQueryBase {
 			$encUser = $this->getDB()->strencode( $continue[0] );
 			$encTS = wfTimestamp( TS_MW, $continue[1] );
 			$op = ( $this->params['dir'] == 'older' ? '<' : '>' );
-			$this->addWhere(
-				"rev_user_text $op '$encUser' OR " .
-				"(rev_user_text = '$encUser' AND " .
-				"rev_timestamp $op= '$encTS')"
+			// SUS-807
+			$this->addWhereOr(
+				[
+					"rev_user > 0 AND (
+					rev_user $op '$encUser' OR " .
+					"(rev_user = '$encUser' AND " .
+					"rev_timestamp $op= '$encTS'))",
+					"rev_user_text $op '$encUser' OR " .
+					"(rev_user_text = '$encUser' AND " .
+					"rev_timestamp $op= '$encTS')"
+				]
 			);
 		}
 
 		if ( !$user->isAllowed( 'hideuser' ) ) {
 			$this->addWhere( $this->getDB()->bitAnd( 'rev_deleted', Revision::DELETED_USER ) . ' = 0' );
 		}
-		// We only want pages by the specified users.
-		if ( $this->prefixMode ) {
-			$this->addWhere( 'rev_user_text' . $this->getDB()->buildLike( $this->userprefix, $this->getDB()->anyString() ) );
-		} else {
-			// SUS-807
-			$ids = [];
-			$ips = [];
-			foreach ( $this->usernames as $userName ) {
-				$id = User::idFromName( $userName );
-				if ( $id ) {
-					$ids[] = $id;
-				} else {
-					$ips[] = $userName;
-				}
+		// We only want pages by the specified users...
+		// SUS-807
+		$ids = [];
+		$ips = [];
+		foreach ( $this->usernames as $userName ) {
+			$id = User::idFromName( $userName );
+			if ( $id ) {
+				$ids[] = $id;
+			} else {
+				$ips[] = $userName;
 			}
-
-			$this->addWhereOr(['rev_user' => $ids, 'rev_user_text' => $ips]);
 		}
+		$this->addWhereOr(['rev_user' => $ids, 'rev_user_text' => $ips]);
+
 		// ... and in the specified timeframe.
 		// Ensure the same sort order for rev_user_text and rev_timestamp
 		// so our query is indexed
@@ -398,7 +394,6 @@ class ApiQueryContributions extends ApiQueryBase {
 			'user' => array(
 				ApiBase::PARAM_ISMULTI => true
 			),
-			'userprefix' => null,
 			'dir' => array(
 				ApiBase::PARAM_DFLT => 'older',
 				ApiBase::PARAM_TYPE => array(
@@ -449,7 +444,6 @@ class ApiQueryContributions extends ApiQueryBase {
 			'end' => 'The end timestamp to return to',
 			'continue' => 'When more results are available, use this to continue',
 			'user' => 'The users to retrieve contributions for',
-			'userprefix' => "Retrieve contibutions for all users whose names begin with this value. Overrides {$p}user",
 			'dir' => $this->getDirectionDescription( $p ),
 			'namespace' => 'Only list contributions in these namespaces',
 			'prop' => array(
@@ -486,8 +480,7 @@ class ApiQueryContributions extends ApiQueryBase {
 
 	public function getExamples() {
 		return array(
-			'api.php?action=query&list=usercontribs&ucuser=YurikBot',
-			'api.php?action=query&list=usercontribs&ucuserprefix=217.121.114.',
+			'api.php?action=query&list=usercontribs&ucuser=YurikBot'
 		);
 	}
 
