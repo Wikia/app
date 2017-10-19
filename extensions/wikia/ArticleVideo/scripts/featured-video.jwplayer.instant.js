@@ -4,6 +4,7 @@ require([
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.autoplay',
+	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.jwplayer.icons',
 	'wikia.articleVideo.featuredVideo.events',
@@ -14,6 +15,7 @@ require([
 	videoDetails,
 	featuredVideoAds,
 	featuredVideoAutoplay,
+	featuredVideoMoatTracking,
 	featuredVideoTracking,
 	playerIcons,
 	featuredVideoEvents,
@@ -73,6 +75,7 @@ require([
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
+		featuredVideoMoatTracking(playerInstance);
 		handleTabNotActive(willAutoplay);
 		playerIcons(document.querySelector('.featured-video'), playerInstance);
 	}
