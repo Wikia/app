@@ -196,20 +196,6 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 		var testCases = [
 				{
 					targeting: {
-						hb_bidder: 'veles',
-						hb_pb: '13.00'
-					},
-					outstream: 've1300'
-				},
-				{
-					targeting: {
-						hb_bidder: 'veles',
-						hb_pb: '00.00'
-					},
-					outstream: 've0000'
-				},
-				{
-					targeting: {
 						hb_bidder: 'rubicon',
 						hb_pb: '0000'
 					},
