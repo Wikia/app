@@ -95,7 +95,7 @@ class RTE {
 	 *
 	 * @author Inez KorczyDski, Macbre
 	 */
-	public static function init( &$form ) {
+	public static function init( $form ) {
 		global $wgOut, $wgHooks, $wgAllInOne, $wgRequest;
 
 		wfProfileIn(__METHOD__);
@@ -151,7 +151,7 @@ class RTE {
 	/**
 	 * Parse wikitext of edited article, so CK can be provided with HTML
 	 */
-	public static function init2( &$form, OutputPage &$out ) {
+	public static function init2( $form, OutputPage $out ) {
 		wfProfileIn(__METHOD__);
 
 		// add hidden edit form field
