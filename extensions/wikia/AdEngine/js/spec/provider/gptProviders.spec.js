@@ -186,7 +186,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		var expectedSizes = {
 			BOTTOM_LEADERBOARD: '728x90',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_PLAYER: null,
+			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
