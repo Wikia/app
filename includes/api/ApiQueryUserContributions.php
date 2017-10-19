@@ -59,7 +59,7 @@ class ApiQueryContributions extends ApiQueryBase {
 		// TODO: if the query is going only against the revision table, should this be done?
 		$this->selectNamedDB( 'contributions', DB_SLAVE, 'contributions' );
 
-		$this->usernames = array();
+		$this->usernames = [];
 		if ( !is_array( $this->params['user'] ) ) {
 			$this->params['user'] = array( $this->params['user'] );
 		}
@@ -93,7 +93,7 @@ class ApiQueryContributions extends ApiQueryBase {
 			}
 
 			$vals = $this->extractRowInfo( $row );
-			$fit = $this->getResult()->addValue( array( 'query', $this->getModuleName() ), null, $vals );
+			$fit = $this->getResult()->addValue( [ 'query', $this->getModuleName() ], null, $vals );
 			if ( !$fit ) {
 				if ( $this->multiUserMode ) {
 					$this->setContinueEnumParameter( 'continue', $this->continueStr( $row ) );
@@ -181,9 +181,10 @@ class ApiQueryContributions extends ApiQueryBase {
 		$this->addWhereOr(['rev_user' => $ids, 'rev_user_text' => $ips]);
 
 		// ... and in the specified timeframe.
-		// Ensure the same sort order for rev_user_text and rev_timestamp
+		// Ensure the same sort order for rev_user, rev_user_text and rev_timestamp
 		// so our query is indexed
 		if ( $this->multiUserMode ) {
+			$this->addWhereRange( 'rev_user', $this->params['dir'], null, null );
 			$this->addWhereRange( 'rev_user_text', $this->params['dir'], null, null );
 		}
 		$this->addTimestampWhereRange( 'rev_timestamp',
@@ -287,17 +288,17 @@ class ApiQueryContributions extends ApiQueryBase {
 	 * @return array
 	 */
 	private function extractRowInfo( $row ) {
-		$vals = array();
+		$vals = [];
+
 
 		$vals['userid'] = $row->rev_user;
-		$vals['user'] = $row->rev_user_text;
+		$vals['user'] = User::getUsername( $row->rev_user, $row->rev_user_text );
 		if ( $row->rev_deleted & Revision::DELETED_USER ) {
 			$vals['userhidden'] = '';
 		}
 		if ( $this->fld_ids ) {
 			$vals['pageid'] = intval( $row->rev_page );
 			$vals['revid'] = intval( $row->rev_id );
-			// $vals['textid'] = intval( $row->rev_text_id ); // todo: Should this field be exposed?
 		}
 
 		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -365,7 +366,9 @@ class ApiQueryContributions extends ApiQueryBase {
 	}
 
 	private function continueStr( $row ) {
-		return $row->rev_user_text . '|' .
+		$userStr = User::getUsername( $row->rev_user, $row->rev_user_text );
+
+		return $userStr . '|' .
 			wfTimestamp( TS_ISO_8601, $row->rev_timestamp );
 	}
 
