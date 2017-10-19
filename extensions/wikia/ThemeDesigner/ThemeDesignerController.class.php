@@ -307,6 +307,8 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	/**
+	 * Upload a temporary file. It will be made "permanent" by ThemeDesigner::saveImage method.
+	 *
 	 * @param UploadBackgroundFromFile|UploadFaviconFromFile|UploadWordmarkFromFile $upload
 	 * @return array
 	 */

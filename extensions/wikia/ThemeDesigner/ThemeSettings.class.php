@@ -244,6 +244,8 @@ class ThemeSettings {
 		}
 
 		$file->repo->forceMaster();
+
+		/* @var OldLocalFile[] $history */
 		$history = $file->getHistory( 1 );
 
 		if ( count( $history ) == 1 ) {

@@ -6,10 +6,6 @@ define('ext.wikia.adEngine.lookup.prebid.bidHelper',
 	function transformPriceFromBid(bid) {
 		var maxSupportedCpm = 20;
 
-		if (bid.bidder === 'veles') {
-			maxSupportedCpm = 50;
-		}
-
 		return priceGranularityHelper.transformPriceFromCpm(bid.cpm, maxSupportedCpm);
 	}
 
