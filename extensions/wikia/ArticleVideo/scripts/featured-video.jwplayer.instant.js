@@ -5,6 +5,7 @@ require([
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.tracking',
+	'wikia.articleVideo.featuredVideo.jwplayer.icons',
 	'wikia.articleVideo.featuredVideo.events',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
@@ -14,6 +15,7 @@ require([
 	featuredVideoAds,
 	featuredVideoAutoplay,
 	featuredVideoTracking,
+	playerIcons,
 	featuredVideoEvents,
 	a9
 ) {
@@ -72,6 +74,7 @@ require([
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
 		handleTabNotActive(willAutoplay);
+		playerIcons(document.querySelector('.featured-video'), playerInstance);
 	}
 
 	if (a9 && adContext.get('bidders.a9Video')) {
