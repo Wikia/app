@@ -86,7 +86,9 @@ $namespaceAliases = array(
 	'Discussioni_immagine' => NS_FILE_TALK,
 );
 
-$separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
+// SUS-2218 | Change the default MediaWiki thousands separator for Italian from a "space" to a "dot"
+// e.g. 12345 will be rendered as 12.345 (instead of 12 345)
+$separatorTransformTable = array( ',' => '.', '.' => ',' );
 
 $dateFormats = array(
 	'mdy time' => 'H:i',

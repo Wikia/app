@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
@@ -11,7 +12,8 @@ define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 			'TOP_LEADERBOARD',
 			'TOP_RIGHT_BOXAD',
 			'LEFT_SKYSCRAPER_2',
-			'LEFT_SKYSCRAPER_3'
+			'LEFT_SKYSCRAPER_3',
+			'BOTTOM_LEADERBOARD'
 		];
 
 	function isEnabled() {
@@ -29,7 +31,7 @@ define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 	}
 
 	function isBlocking() {
-		var isBlocking = !!(win.ads && win.ads.runtime.pf && win.ads.runtime.pf.blocking);
+		var isBlocking = !!(win.ads && win.ads.runtime.pf && win.ads.runtime.pf.recovering);
 
 		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
 		return isBlocking;

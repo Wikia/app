@@ -7,7 +7,8 @@ define('ext.wikia.adEngine.context.uapContext', [
 
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.context.uapContext',
-		mainSlotName = 'TOP_LEADERBOARD';
+		mainSlotName = 'TOP_LEADERBOARD',
+		uapTypes = ['uap', 'vuap'];
 
 	function setUapId(uap) {
 		context.uapId = uap;
@@ -17,8 +18,26 @@ define('ext.wikia.adEngine.context.uapContext', [
 		return context.uapId;
 	}
 
+	function setType(type) {
+		context.type = type;
+	}
+
+	function getType() {
+		return context.type;
+	}
+
 	function isUapLoaded() {
+		var isUapType = uapTypes.indexOf(context.type) !== -1;
+
+		return !!context.uapId && isUapType;
+	}
+
+	function isBfaaLoaded() {
 		return !!context.uapId;
+	}
+
+	function isRoadblockLoaded() {
+		return !!context.uapId && context.type === 'ruap';
 	}
 
 	function reset() {
@@ -39,9 +58,13 @@ define('ext.wikia.adEngine.context.uapContext', [
 
 	return {
 		dispatchEvent: dispatchEvent,
+		getType: getType,
 		getUapId: getUapId,
+		isBfaaLoaded: isBfaaLoaded,
 		isUapLoaded: isUapLoaded,
+		isRoadblockLoaded: isRoadblockLoaded,
 		reset: reset,
+		setType: setType,
 		setUapId: setUapId,
 		shouldDispatchEvent: shouldDispatchEvent
 	};

@@ -39,12 +39,12 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
 
-		setStatus('PREFOOTER_MIDDLE_BOXAD', isHome);
+		setStatus('PREFOOTER_MIDDLE_BOXAD', !isPremiumAdLayoutEnabled && isHome);
 		setStatus('LEFT_SKYSCRAPER_2', !isPremiumAdLayoutEnabled && !isHome);
 		setStatus('LEFT_SKYSCRAPER_3', !isPremiumAdLayoutEnabled && !isHome);
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
-		setStatus('INVISIBLE_HIGH_IMPACT_2', !isPremiumAdLayoutEnabled && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
+		setStatus('INVISIBLE_HIGH_IMPACT_2', !context.targeting.hasFeaturedVideo && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
 		setStatus('PREFOOTER_RIGHT_BOXAD', !isPremiumAdLayoutEnabled && !context.opts.overridePrefootersSizes);
 		setStatus('PREFOOTER_LEFT_BOXAD', !isPremiumAdLayoutEnabled);
 
@@ -53,7 +53,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		// so we can safely set it to false (for non premium) and don't wait for uap response
 		setStatus('BOTTOM_LEADERBOARD', isPremiumAdLayoutEnabled);
 
-		log(['Disabled slots:', slots], 'info', logGroup);
+		log(['Slots:', slots], log.levels.info, logGroup);
 	}
 
 	function isApplicable(slotName) {

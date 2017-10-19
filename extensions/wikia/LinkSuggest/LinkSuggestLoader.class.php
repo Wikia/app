@@ -41,7 +41,7 @@ class LinkSuggestLoader {
 	 * @param Skin $skin
 	 * @return bool true because it's a hook handler
 	 */
-	public function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+	public function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		// only add the module if there are elements that need it and the user enabled LinkSuggest
 		if ( count( $this->selectors ) && !$out->getUser()->getGlobalPreference( 'disablelinksuggest' ) ) {
 			$out->addJsConfigVars( [ 'wgLinkSuggestElements' => $this->selectors ] );

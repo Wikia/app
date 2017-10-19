@@ -270,16 +270,10 @@ class ResourceLoaderHooks {
 			$params = urlencode(http_build_query($loadQuery));
 			$url = $loadScript . "$params/$modules";
 			$url = wfExpandUrl( $url, PROTO_RELATIVE );
-
-			// apply domain sharding
-			$url = wfReplaceAssetServer( $url );
 		} else {
 			// just a copy&paste from ResourceLoader::makeLoaderURL :-(
 			$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
 		}
-
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
 
 		return false;
 	}
@@ -375,7 +369,7 @@ class ResourceLoaderHooks {
 			WikiaLogger::instance()->info( 'rl.shortTTL', [
 				'modules' => join(',', $modules),
 				'cb' => $cb,
-				'ts' => $ts,
+				'ts' => $ts ?: 0,
 			]);
 		}
 

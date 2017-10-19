@@ -1,0 +1,7 @@
+@function community-header-text-color($header-background-color) {
+	$text-color: $wds-color-white;
+	@if luminance($header-background-color) > .3 {
+		$text-color: $wds-color-black;
+	}
+	@return $text-color;
+}

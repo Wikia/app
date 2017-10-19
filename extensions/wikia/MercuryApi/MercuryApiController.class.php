@@ -59,7 +59,7 @@ class MercuryApiController extends WikiaController {
 		} else {
 			$localNavigation = $navData['navigation']['wiki'];
 		}
-    
+
 		return $localNavigation;
 	}
 
@@ -191,6 +191,11 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
+		(new CrossOriginResourceSharingHeaderHelper())
+		  ->allowWhitelistedOrigins()
+		  ->setAllowMethod( [ 'GET' ] )
+		  ->setHeaders($this->response);
+
 		$wikiVariables = $this->prepareWikiVariables();
 
 		$this->response->setVal( 'data', $wikiVariables );
@@ -248,7 +253,8 @@ class MercuryApiController extends WikiaController {
 		$dimensions[18] = $wikiCategoryNames;
 		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
-		$dimensions[28] = !empty($adContext['targeting']['hasPortableInfobox']) ? 'yes' : 'no';
+		$dimensions[28] = !empty( $adContext['targeting']['hasPortableInfobox'] ) ? 'yes' : 'no';
+		$dimensions[29] = !empty( $adContext['targeting']['hasFeaturedVideo'] ) ? 'yes' : 'no';
 
 		if ( !empty( $this->request->getBool( 'isanon' ) ) ) {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -419,6 +425,8 @@ class MercuryApiController extends WikiaController {
 					}
 				}
 			}
+
+			\Hooks::run( 'MercuryPageData', [ $title, &$data ] );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 

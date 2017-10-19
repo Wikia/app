@@ -71,8 +71,6 @@ What do you want to do?
 * Search existing articles for <span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
 * Create article <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>
 }}",
-	'noarticletext-nopermission' => '{{int:noarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'note' => "'''Note:'''",
 	'nonunicodebrowser' => "'''Warning: Your browser is not unicode compliant.'''
 A workaround is in place to allow you to safely edit pages: Non-ASCII characters will appear in the edit box as hexadecimal codes.",
@@ -220,10 +218,7 @@ Parameters:
 	'nosuchsectiontext' => 'This message is displayed when a user tries to edit a section that does not exist.',
 	'newarticle' => '{{Identical|New}}',
 	'newarticletext' => "Text displayed above the edit box in editor when trying to create a new page.<br />'''Very important:''' leave <tt><nowiki>{{MediaWiki:Helppage}}</nowiki></tt> exactly as it is!",
-	'noarticletext' => 'This is the message that you get if you search for a term that has not yet got any entries on the wiki.
-
-See also {{msg-mw|Noarticletext-nopermission}}.',
-	'noarticletext-nopermission' => 'See also {{msg-mw|Noarticletext}}.',
+	'noarticletext' => 'This is the message that you get if you search for a term that has not yet got any entries on the wiki.',
 	'next' => 'Link in page history
 
 {{Identical|Next}}',
@@ -448,8 +443,6 @@ As u per ongeluk hier uitgekom het, gebruik u blaaier se '''terug'''-knoppie.",
 U kan [[Special:Search/{{PAGENAME}}|vir die bladsytitel in ander bladsye soek]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} die verwante logboeke deursoek]
 of [{{fullurl:{{FULLPAGENAME}}|action=edit}} hierdie bladsy wysig]</span>.',
-	'noarticletext-nopermission' => 'Daar is tans geen teks in hierdie bladsy nie. U kan vir die bladsytitel [[Special:Search/{{PAGENAME}}|in ander bladsye soek]] of
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} die verwante logboeke deursoek]</span>.',
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''Waarskuwing: U webblaaier ondersteun nie Unikode nie.'''
 Die MediaWiki-sagteware hou hiermee rekening sodat u bladsye veilig kan wysig: nie-ASCII karakters word in die wysigingsvenster as heksadesimale kodes weergegee.",
@@ -872,9 +865,6 @@ Talment bell un l'haiga moviu u borrau entre que vusté vesitaba a pachina.",
 Ta creyar a pachina, prencipie a escribir en a caixa d'abaixo (mire-se l'[[{{MediaWiki:Helppage}}|aduya]] ta más información).
 Si ye plegau por error, punche o botón \"enta zaga\" d'o suyo navegador.",
 	'noarticletext' => 'Por agora no bi ha garra texto en ista pachina. Puet [[Special:Search/{{PAGENAME}}|mirar o títol d\'ista pachina]] en atras pachinas, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mirar os rechistros relacionatos] u [{{fullurl:{{FULLPAGENAME}}|action=edit}} escribir ista pachina]</span>.',
-	'noarticletext-nopermission' => 'Por l\'inte no i hai garra texto en ista pachina.
-Puet [[Special:Search/{{PAGENAME}}|mirar iste títol]] en atras páginas,
-u bien <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mirar en os rechistros relacionatos]</span>.',
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''Pare cuenta: O suyo navegador no cumple a norma Unicode. S'ha activato un sistema d'edición alternativo que li premitirá d'editar articlos con seguridat: os carácters no ASCII aparixerán en a caixa d'edición como codigos hexadecimals.'''",
 	'nocreatetitle' => "S'ha restrinchito a creyación de pachinas",
@@ -1130,7 +1120,6 @@ $messages['ar'] = array(
 يمكنك [[Special:Search/{{PAGENAME}}|البحث عن عنوان هذه الصفحة]] في الصفحات الأخرى،
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} البحث في السجلات المتعلقة]،
 أو [{{fullurl:{{FULLPAGENAME}}|action=edit}} تعديل هذه الصفحة]</span>.',
-	'noarticletext-nopermission' => 'لا يوجد حاليا أي نص في هذه الصفحة.يمكنك [[Special:Search/{{PAGENAME}}|البحث عن عنوان هذه الصفحة]] في الصفحات الأخرى,أو <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} بحث السجلات المتصلة]</span>.',
 	'note' => "'''ملاحظة:'''",
 	'nonunicodebrowser' => "'''تحذير: متصفحك لا يتوافق مع الترميز الموحد.
 تمت معالجة هذا لكي تتمكن من تحرير الصفحات بأمان: الحروف التي ليست ASCII سوف تظهر في صندوق التحرير كأكواد سداسي عشرية.'''",
@@ -1304,15 +1293,12 @@ $messages['arn'] = array(
 	'nowiki_sample' => 'Üchaftukun ngenochumngen reke chi wirin tüfa mew.',
 	'nowiki_tip' => 'Kimfanuel wiki ñi chumkünuwe',
 	'newarticle' => '(We)',
-	'newarticletext' => 'Ngelay wirin tüfachi wülngiñ mew. 
+	'newarticletext' => 'Ngelay wirin tüfachi wülngiñ mew.
 Pepillituam tüfachi wülngiñ, wirintuaymi nagpüle (pen [[{{MediaWiki:Helppage}}|kellu wülngiñ]] nieael doy kimdungu).
 Welule tami küpan, wiñotunge rupachi wülngiñ.',
 	'noarticletext' => 'Iney no rume wirilay tüfachi wülngiñ mew. Eymi [[Special:Search/{{PAGENAME}}|pepikintuymi tüfachi üy]] kake wülngiñ mew,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} kintuymi koneltuyelelu wirintukun],
 kam [{{fullurl:{{FULLPAGENAME}}|action=edit}} kümeelaymi tüfachi wülngiñ]</span>.',
-	'noarticletext-nopermission' => 'Iney no rume wirilay tüfachi wülngiñ mew. 
-Eymi [[Special:Search/{{PAGENAME}}|pepikintuymi tüfachi üy]] kake wülngiñ mew,
-kam <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} kintuymi koneltuyelelu wirintukun]</span>.',
 	'nextrevision' => 'Kangelu malün →',
 	'nextn' => 'kangelu {{PLURAL:$1|$1}}',
 	'nextn-title' => 'Kangelu $1 {{PLURAL:$1|tripalu}}',
@@ -1399,10 +1385,6 @@ yqdr ikon ṫnql wlla ṫḫyyd mlli knṫi kaṫċof had ṣfḫa.',
 Baċ ṫsayeb had ṣ-ṣefḫa, bda ṫekṫeb fe ṣ-ṣendoq li l-ṫeḫṫ (ċof ila bġiṫi [[{{MediaWiki:Helppage}}|ṣ-ṣefḫa de l-mosaĝada]] le l-mazid de l-meĝlomaṫ).
 Ila wṣelṫi hnaya ĝla ġefla, brek ĝla l-boton '''rjeĝ''' dyal n-navigaṫør internet dyalek.",
 	'noarticletext' => 'Ma kayen fe had s-saĝa ḫṫa neṣ fe had ṣ-ṣefḫa.
-Imken lek [[Special:Search/{{PAGENAME}}|ṫqelleb ĝla ṣefḫa be had l-ĝonwan]] fe ṣ-ṣefḫaṫ l-ĥrin,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ṫqelleb fe l-ĝamaliyaṫ l-mlaqyin]
-ola [{{fullurl:{{FULLPAGENAME}}|action=edit}} ṫsayeb ṣ-ṣefḫa]</span>.',
-	'noarticletext-nopermission' => 'Ma kayen fe had s-saĝa ḫṫa neṣ fe had ṣ-ṣefḫa.
 Imken lek [[Special:Search/{{PAGENAME}}|ṫqelleb ĝla ṣefḫa be had l-ĝonwan]] fe ṣ-ṣefḫaṫ l-ĥrin,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ṫqelleb fe l-ĝamaliyaṫ l-mlaqyin]
 ola [{{fullurl:{{FULLPAGENAME}}|action=edit}} ṫsayeb ṣ-ṣefḫa]</span>.',
@@ -1530,9 +1512,6 @@ $messages['arz'] = array(
 ممكن [[Special:Search/{{PAGENAME}}|تدور على عنوان الصفحه دى]] فى صفح تانيه,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} تدور فى السجلات اللى ليها علاقه],
 او [{{fullurl:{{FULLPAGENAME}}|action=edit}} تعدل الصفحه دى]</span>.',
-	'noarticletext-nopermission' => 'مفيش اى نص دلوقتى فى الصفحه دى.
-ممكن [[Special:Search/{{PAGENAME}}|تدور على عنوان الصفحه دى]] فى الصفحات التانيه,
-او <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} تدور فى السجلات بتاعتها]</span>.',
 	'note' => "'''ملحوظه:'''",
 	'nonunicodebrowser' => "'''تحذير: البراوزر بتاعك مش متوافق مع اليونيكود.
 اتعالج الموضوع دا علشان تقدر تعدل الصفحة بامان: الحروف اللى مش ASCII ح تظهر فى صندوق التحرير كأكواد سداسية عشرية.'''",
@@ -1664,9 +1643,6 @@ $messages['as'] = array(
 আপুনি আন পৃষ্ঠাত [[Special:Search/{{PAGENAME}}| এই শিৰোনামা অনুসন্ধান কৰিব পাৰে]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} সম্পৰ্কীয় অভিলেখ অনুসন্ধান কৰিব পাৰে],
 বা [{{fullurl:{{FULLPAGENAME}}|action=edit}} এই পৃষ্ঠা সম্পাদনা কৰিব পাৰে]</span>',
-	'noarticletext-nopermission' => 'এই পৃষ্ঠাত বৰ্তমান কোনো পাঠ্য নাই ।
-আপুনি আন পৃষ্ঠাত [[Special:Search/{{PAGENAME}}| এই শিৰোণামা অনুসন্ধান কৰিব পাৰে]],
-বা <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} সম্পৰ্কিয় লগ অনুসন্ধান কৰিব পাৰে ।]</span>',
 	'note' => "'''টোকা:'''",
 	'nonunicodebrowser' => "'''সতৰ্কবাণী: আপোনাৰ ব্ৰাউজাৰ ইউনিক’ড-ভাৱাপন্ন নহয় ।'''
 আপুনি ঠিকমতে সম্পাদনা কৰিব পৰাকৈ সমাধান আছে: non-ASCII কেৰেক্টাৰবোৰ সম্পাদনা ক্ষেত্ৰত hexadecimal ক’ড হিছাপে দেখা যাব ।",
@@ -1799,9 +1775,6 @@ Si llegasti equí por enquivocu, calca nel botón '''atrás''' del to navegador.
 Pues [[Special:Search/{{PAGENAME}}|buscar esti títulu de páxina]] n\'otres páxines,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar los rexistros rellacionaos],
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} editar ésta equí]</span>.',
-	'noarticletext-nopermission' => 'Anguaño nun hai testu nesta páxina.
-Pues [[Special:Search/{{PAGENAME}}|buscar esti títulu de páxina]] n\'otres páxines,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar los rexistros rellacionaos]</span>.',
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''AVISU: El to navegador nun cumple la norma unicode. Hai un sistema alternativu que te permite editar páxines de forma segura: los carauteres non-ASCII apaecerán na caxa d'edición como códigos hexadecimales.'''",
 	'nocreatetitle' => 'Creación de páxines limitada',
@@ -2067,9 +2040,6 @@ Həmin alt səhifə ola bilsin siz səhifəyə baxan zaman silinib.',
 	'noarticletext' => 'Hal-hazırda bu səhifə boşdur. Başqa səhifələrdə eyni adda səhifəni [[Special:Search/{{PAGENAME}}| axtara]], əlaqəli qeydlərə
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} baxa],
 və ya səhifəni [{{fullurl:{{FULLPAGENAME}}|action=edit}} redaktə]</span> edə bilərsiniz.',
-	'noarticletext-nopermission' => 'Hal-hazırda bu səhifə boşdur. Başqa səhifələrdə eyni adda səhifəni [[Special:Search/{{PAGENAME}}| axtara]], əlaqəli qeydlərə
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} baxa],
-və ya səhifəni [{{fullurl:{{FULLPAGENAME}}|action=edit}} redaktə]</span> edə bilərsiniz.',
 	'note' => "'''Qeyd:'''",
 	'nocreatetitle' => 'Səhifə yaratma məhdudlaşdırılıb.',
 	'nocreatetext' => '{{SITENAME}} saytında yeni səhifələrin yaradılması imkanları məhdudlaşdırılıb.
@@ -2192,9 +2162,6 @@ $messages['ba'] = array(
 Һеҙ [[Special:Search/{{PAGENAME}}|был исемде башҡа биттәрҙә эҙләй]],
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} тап килгән журнал яҙмаларын таба]
 йәки '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} бындай исемле яңы бит яһай]'''</span> алаһығыҙ.",
-	'noarticletext-nopermission' => 'Хәҙерге ваҡытта был биттә текст юҡ.
-Һеҙ башҡа мәҡәләләрҙә [[Special:Search/{{PAGENAME}}|был исемде]] йәки
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} журналдағы яҙмаларҙы] эҙләй алаһығыҙ.</span>',
 	'note' => "'''Иҫкәрмә:'''",
 	'nonunicodebrowser' => "'''КИҪӘТЕҮ: Һеҙҙең браузер Юникод кодировкаһын танымай.'''
 Мәҡәләләрҙе мөхәррирләгән ваҡытта ASCII булмаған символдар махсус уналтылы кодтарға әйләндереләсәк.",
@@ -2314,9 +2281,6 @@ Bist du föschlicherweis dodan, dånn druck dé '''Zruck'''-Schoitflächen voh d
 	'noarticletext' => 'De Saiten enthoit zua Zaid koan Text ned.
 Du kååst an Titl vo derer Saiten auf de åndern Saiten [[Special:Search/{{PAGENAME}}|suacha]],
 <span class="plainlinks"> in de dazuagheraden [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} Logbiache suacha] oder de Saiten [{{fullurl:{{FULLPAGENAME}}|action=edit}} beorwaiten]</span>.',
-	'noarticletext-nopermission' => 'Dé Seiten enthoit im Moment nó koan Text néd.
-Du derfst an Titel auf åndre Seiten [[Special:Search/{{PAGENAME}}|suachen]]
-óder dé zuaghering <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbiachén åschaung].</span>',
 	'nocreatetitle' => 'De Erstöiung vo naiche Saiten is aigschränkt.',
 	'nocreate-loggedin' => "Du host koah Berechtigung, neiche Seiten z' erstön.",
 	'nextrevision' => 'Nextjyngerne Version →',
@@ -2408,9 +2372,6 @@ Bist du föschlicherweis dodan, dånn druck dé '''Zruck'''-Schoitflächen voh d
 	'noarticletext' => 'De Saiten enthoit zua Zaid koan Text ned.
 Du kååst an Titl vo derer Saiten auf de åndern Saiten [[Special:Search/{{PAGENAME}}|suacha]],
 <span class="plainlinks"> in de dazuagheraden [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} Logbiache suacha] oder de Saiten [{{fullurl:{{FULLPAGENAME}}|action=edit}} beorwaiten]</span>.',
-	'noarticletext-nopermission' => 'Dé Seiten enthoit im Moment nó koan Text néd.
-Du derfst an Titel auf åndre Seiten [[Special:Search/{{PAGENAME}}|suachen]]
-óder dé zuaghering <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbiachén åschaung].</span>',
 	'nocreatetitle' => 'De Erstöiung vo naiche Saiten is aigschränkt.',
 	'nocreate-loggedin' => "Du host koah Berechtigung, neiche Seiten z' erstön.",
 	'nextrevision' => 'Nextjyngerne Version →',
@@ -2730,9 +2691,6 @@ $messages['be'] = array(
 	'newarticletext' => 'Вы перайшлі да старонкі, якой яшчэ няма, і таму трапілі сюды. Каб пачаць новую старонку, пішыце яе тэкст у ніжэйпаказаным акне рэдагавання (падрабязнасці бач у [[{{MediaWiki:Helppage}}|даведцы]]). Калі вы тут выпадкова, проста націсніце "назад" у браўзеры.',
 	'noarticletext' => 'Старонка не ўтрымлівае тэксту. Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць гэтакай назвы]] ў іншых старонках ці <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ў журналах],
 або [{{fullurl:{{FULLPAGENAME}}|action=edit}} папрацаваць з гэтай старонкай]</span>.',
-	'noarticletext-nopermission' => 'Старонка не ўтрымлівае тэксту.
-Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць гэтакай назвы]] ў іншых старонках,
-ці <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ў журналах]</span>.',
 	'note' => "'''Заўвага:'''",
 	'nonunicodebrowser' => "'''УВАГА: ваш браўзер не працуе з Унікодам. Каб вы маглі карэктна  правіць старонкі, ужываецца такая штука, што знакі з па-за абсягу ASCII паказваюцца ў рэдактарскім акне як шаснаццаткавыя коды.'''",
 	'nocreatetitle' => 'Стварэнне старонак абмежавана',
@@ -2863,8 +2821,6 @@ $messages['be-tarask'] = array(
 	'noarticletext' => 'Цяпер тэкст на гэтай старонцы адсутнічае.
 Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць гэтую назву]] ў іншых старонках, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пашукаць у адпаведных журналах падзеяў]
 альбо [{{fullurl:{{NAMESPACE}}:{{PAGENAME}}|action=edit}} рэдагаваць гэтую старонку]</span>.',
-	'noarticletext-nopermission' => 'Цяпер на гэтай старонцы тэкст адсутнічае.
-Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць назву гэтай старонкі]] на іншых старонках, альбо <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пашукаць зьвязаныя запісы ў журналах]</span>.',
 	'note' => "'''Заўвага: '''",
 	'nonunicodebrowser' => "'''ПАПЯРЭДЖАНЬНЕ: Ваш браўзэр не працуе з кадаваньнем UTF-8 (Unicode).
 У выніку гэтага ўсе сымбалі ня ўключаныя ў ASCII будуць замененыя на іх шаснаццаткавыя коды.'''",
@@ -2996,8 +2952,6 @@ $messages['be-x-old'] = array(
 	'noarticletext' => 'Цяпер тэкст на гэтай старонцы адсутнічае.
 Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць гэтую назву]] ў іншых старонках, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пашукаць у адпаведных журналах падзеяў]
 альбо [{{fullurl:{{NAMESPACE}}:{{PAGENAME}}|action=edit}} рэдагаваць гэтую старонку]</span>.',
-	'noarticletext-nopermission' => 'Цяпер на гэтай старонцы тэкст адсутнічае.
-Вы можаце [[Special:Search/{{PAGENAME}}|пашукаць назву гэтай старонкі]] на іншых старонках, альбо <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пашукаць зьвязаныя запісы ў журналах]</span>.',
 	'note' => "'''Заўвага: '''",
 	'nonunicodebrowser' => "'''ПАПЯРЭДЖАНЬНЕ: Ваш браўзэр не працуе з кадаваньнем UTF-8 (Unicode).
 У выніку гэтага ўсе сымбалі ня ўключаныя ў ASCII будуць замененыя на іх шаснаццаткавыя коды.'''",
@@ -3121,9 +3075,6 @@ $messages['bg'] = array(
 За да я създадете, просто започнете да пишете в долната текстова кутия
 (вижте [[{{MediaWiki:Helppage}}|помощната страница]] за повече информация).',
 	'noarticletext' => 'Тази страница все още не съществува. Можете да [[Special:Search/{{PAGENAME}}|потърсите за заглавието на страницата]] в други страници, да <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} потърсите в дневниците] или [{{fullurl:{{FULLPAGENAME}}|action=edit}} да я създадете]</span>.',
-	'noarticletext-nopermission' => 'Понастоящем в тази страница няма текст.
-Можете да [[Special:Search/{{PAGENAME}}|потърсите заглавието на тази страница ]] в други страници или
-да <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} потърсите в съответните дневници]</span>.',
 	'note' => "'''Забележка:'''",
 	'nonunicodebrowser' => "'''ВНИМАНИЕ: Браузърът ви не поддържа Уникод. За да можете спокойно да редактирате страници, всички знаци, невключени в ASCII-таблицата, ще бъдат заменени с шестнадесетични кодове.'''",
 	'nocreatetitle' => 'Създаването на страници е ограничено',
@@ -3249,9 +3200,6 @@ $messages['bh'] = array(
 За да я създадете, просто започнете да пишете в долната текстова кутия
 (вижте [[{{MediaWiki:Helppage}}|помощната страница]] за повече информация).',
 	'noarticletext' => 'Тази страница все още не съществува. Можете да [[Special:Search/{{PAGENAME}}|потърсите за заглавието на страницата]] в други страници, да <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} потърсите в дневниците] или [{{fullurl:{{FULLPAGENAME}}|action=edit}} да я създадете]</span>.',
-	'noarticletext-nopermission' => 'Понастоящем в тази страница няма текст.
-Можете да [[Special:Search/{{PAGENAME}}|потърсите заглавието на тази страница ]] в други страници или
-да <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} потърсите в съответните дневници]</span>.',
 	'note' => "'''Забележка:'''",
 	'nonunicodebrowser' => "'''ВНИМАНИЕ: Браузърът ви не поддържа Уникод. За да можете спокойно да редактирате страници, всички знаци, невключени в ASCII-таблицата, ще бъдат заменени с шестнадесетични кодове.'''",
 	'nocreatetitle' => 'Създаването на страници е ограничено',
@@ -3459,9 +3407,6 @@ Pinanya ini sudah diugahakan atawa dihapus parhatan Pian maniringi tungkaran nan
 Pian kawa [[Special:Search/{{PAGENAME}}|manggagai gasan judul ini]] pintang tungkaran lain,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} manggagai log barait].</span>,
 atawa [{{fullurl:{{FULLPAGENAME}}|action=edit}} mambabak tungkaran ini]</span>.',
-	'noarticletext-nopermission' => 'Parhatan ini kadada naskah di tungkaran ini.
-Pian kawa [[Special:Search/{{PAGENAME}}|manggagai gasan judul ini]] pintang tungkaran lain,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} manggagai log barait].</span>.',
 	'note' => "'''Catatan:'''",
 	'nonunicodebrowser' => "'''Paringatan: Panjalajah web Pian kada manyukung unicode.'''
 Sabuah pambulatan gawian di wadah ini mambulihakan Pian aman mambabak tutungkaran: karaktir non-ASCII akan cungul pada kutak babakan sawagai kudi hiksadisimal.",
@@ -3598,9 +3543,6 @@ $messages['bn'] = array(
 আপনি যদি ভুল করে এখানে এসে থাকেন, তাহলে আপনার ব্রাউজারের '''back''' বোতাম ক্লিক করুন।",
 	'noarticletext' => 'বর্তমানে এই পাতায় কোন লেখা নেই।
 আপনি চাইলে অন্যান্য পাতায় [[Special:Search/{{PAGENAME}}| এই শিরোনামটি অনুসন্ধান করতে পারেন]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} এ সম্পর্কিত লগ অনুসন্ধান করতে পারেন], কিংবা [{{fullurl:{{FULLPAGENAME}}|action=edit}} এই পাতাটি সম্পাদনা করতে পারেন]</span>।',
-	'noarticletext-nopermission' => 'বর্তমানে এই পাতায় কোন লেখা নেই।
-আপনি চাইলে অন্য পাতায় [[Special:Search/{{PAGENAME}}| শিরোনামটি অনুসন্ধান করতে পারেন]],
-অথবা <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} সম্পর্কিত লগ অনুসন্ধান করতে পারেন]</span>।',
 	'note' => "'''নোট:'''",
 	'nonunicodebrowser' => "'''সতর্কীকরণ: আপনার ব্রাউজার ইউনিকোড-বন্ধুভাবাপন্ন নয়। আপনি যাতে বিপদ ছাড়াই পাতা সম্পাদনা করতে পারেন, সে জন্য সমাধান আছে: অ-আস্কি ক্যারেক্টারগুলি হেক্সাডেসিমাল কোড হিসেবে দেখানো হবে।'''",
 	'nocreatetitle' => 'পাতা তৈরি নিয়ন্ত্রণ করা হয়েছে',
@@ -3776,9 +3718,6 @@ $messages['bpy'] = array(
 তি চেইলে তলর বক্সগত বিষয়হানর বারে খানি ইকরিয়া ইতুকরে পারর বারো নিবন্ধহান অকরে পারর (আরাকউ হারপানিরকা [[{{MediaWiki:Helppage}}|পাঙলাক পাতা]] চা) পারর।
 যদি হারনাপেয়া এহাত আহিয়া থার অতা ইলে ব্রাউজারর ব্যাক গুতমগত ক্লিক করিয়া আগর পাতাত আল পারর।',
 	'noarticletext' => 'এপাগা এরে পাতাত কোন লেখা নেই। তি মনেইলে হের পাতাহান [[Special:Search/{{PAGENAME}}|এরে চিঙনাঙল বিসারা পারর]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} এহানর বারে লগ বিসারা পারর], নাইলে [{{fullurl:{{FULLPAGENAME}}|action=edit}} এরে পাতা এহান পতা পারর।]',
-	'noarticletext-nopermission' => 'এপাগাউ কোন মেয়েক নেই পাতা এহাত।
-তি [[Special:Search/{{PAGENAME}}|এরে পাতার চিঙনাঙ এহানল বিসারা]] হের পাতা অতাত,
-নাইলে <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} মিল আসে লগ অতাত বিসারা]</span>।',
 	'note' => "'''নোট:'''",
 	'nonunicodebrowser' => "'''সিঙুইস: তর ব্রউসারগই ইউনিকোড সমর্থন নাকরের। তি কোন বেরা নেয়া পাতাহান পতা পারর, অহানর সমাধানহান: অ-আস্কি ক্যারেক্টার অতা হেক্সাডেসিমাল কোড বুলিয়া দেখা দেনা অইতই।'''",
 	'nocreatetitle' => 'পাতা হঙকরানি নিয়ন্ত্রণ করানি অসে',
@@ -3927,9 +3866,6 @@ M'emaoc'h en em gavet amañ dre fazi, klikit war bouton '''kent''' ho merdeer ev
 	'noarticletext' => 'N\'eus tamm skrid ebet war ar bajenn-mañ evit poent.
 Gallout a rit [[Special:Search/{{PAGENAME}}|klask an titl anezhi]] e pajennoù all,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} klask en oberiadennoù liammet], pe [{{fullurl:{{FULLPAGENAME}}|action=edit}} krouiñ ar bajenn]</span>.',
-	'noarticletext-nopermission' => 'N\'eus, evit ar mare, tamm testenn ebet war ar bajenn-mañ.
-Gallout a rit [[Special:Search/{{PAGENAME}}|klask titl ar bajenn-mañ]] war pajennoù all,
-pe <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} klask er marilhoù kar]</span>.',
 	'note' => "'''Notenn :'''",
 	'nonunicodebrowser' => "'''DIWALLIT: N'eo ket skoret an Unicode gant ho merdeer. Un diskoulm da c'hortoz zo bet kavet evit ma c'hallfec'h kemmañ pennadoù : dont a raio war wel an arouezennoù an-ASCII er prenestr skridaozañ evel kodoù eizhdekvedennel.'''",
 	'nocreatetitle' => "Strishaet eo bet ar c'hrouiñ pajennoù",
@@ -4028,9 +3964,6 @@ Aga dáŕe radínk aŧ bassunus, to ''browser'' ná '''padí''' baŧŧańŕ e xa
 Elo panna ģáteŧí [[Special:Search/{{PAGENAME}}|dá sarhál e paŧŧa]],
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} đek kunoká ''log'' áte paŧŧa],
 yá [{{fullurl:{{FULLPAGENAME}}|action=edit}} dá panna ŧí radbadal kar]</span>.",
-	'noarticletext-nopermission' => "Dáiskán dá panna ŧí icc nivişta aff.
-Elo panna ģáteŧí [[Special:Search/{{PAGENAME}}|dá sarhál e paŧŧa]],
-yá <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} đek kunoká ''log'' áte paŧŧa].",
 	'nextrevision' => 'Púskuná badal droşum →',
 	'notitlematches' => 'Dá pin aná icco panna ná sarhál allav',
 	'notextmatches' => 'Icco panna nivişt dá vaŕ aná allav',
@@ -4113,8 +4046,6 @@ Možda je pomjerena ili obrisana dok ste pregledavali stranicu.',
 	'noarticletext' => 'Na ovoj stranici trenutno nema teksta.
 Možete [[Special:Search/{{PAGENAME}}|tražiti naslov ove stranice]] na drugim stranicama.
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tražiti u povezanim zapisima] ili [{{fullurl:{{FULLPAGENAME}}|action=edit}} urediti ovu stranicu]</span>.',
-	'noarticletext-nopermission' => 'Trenutno nema teksta na ovoj stranici.
-Možete [[Special:Search/{{PAGENAME}}|tražiti ovaj naslov stranice]] na drugim stranicama ili <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pretražiti povezane zapisnike]</span>.',
 	'note' => "'''Pažnja:'''",
 	'nonunicodebrowser' => "'''UPOZORENJE: Vaš preglednik ne podržava Unicode zapis znakova.
 Molimo Vas promijenite ga prije sljedećeg uređivanja članaka. Znakovi koji nisu po ASCII standardu će se u prozoru za izmjene pojaviti kao heksadecimalni kodovi.'''",
@@ -4272,8 +4203,6 @@ Si sou ací per error, simplement cliqueu al botó «Enrere» del vostre navegad
 Podeu [[Special:Search/{{PAGENAME}}|cercar aquest títol]] en altres pàgines,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercar en els registres]
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} crear-la ara]</span>.',
-	'noarticletext-nopermission' => 'Actualment no hi ha text en aquesta pàgina.
-Podeu [[Special:Search/{{PAGENAME}}|cercar aquest títol]] en altres pàgines o bé <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercar en els registres relacionats]</span>.',
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''Alerta: El vostre navegador no és compatible amb unicode.'''
 S'ha activat una alternativa que us permetrà modificar pàgines amb seguretat: el caràcters que no són ASCII us apareixeran en la caixa d'edició com a codis hexadecimals.",
@@ -4443,9 +4372,6 @@ $messages['ce'] = array(
 Шуьга далундерг [[Special:Search/{{PAGENAME}}|лахар ишта хьехош йолу цlе]] кхечу яззамашкахь,
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} лахар кхечу тептаршкахь],
 йа '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} кхолла ишта цlе йолу агlо]'''</span>.",
-	'noarticletext-nopermission' => 'Хlокх хан чохь кху агlонца йоза дац.
-Шуьга далундерг [[Special:Search/{{PAGENAME}}|лахар ишта хьехош йолу цlе]] кхечу яззамашкахь,
-йа <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} лаха оцуьнах терадерг кхечу тептаршкахь].</span>',
 	'note' => "'''Билгалдаккхар:'''",
 	'nextrevision' => 'Тlаьхьайогlург →',
 	'next' => 'кхин',
@@ -4841,9 +4767,6 @@ Kung ari ka diya tungod sa sala, pinduton ang ('''back''') nga buton sang imo ng
 Sarang mo [[Special:Search/{{PAGENAME}}|pangitaon ang titulo sang mini nga pahina]] sa iban pa nga mga pahina,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mangita ka sang pareho nga mga lilistahan],
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} bag-uhon ang mini nga pahina]</span>.',
-	'noarticletext-nopermission' => 'Wala sang teksto yanda sa mini nga pahina.
-Pwede mo nga [[Special:Search/{{PAGENAME}}|pulupangitaon ang titulo sang mini nga pahina]] sa iban nga mga pahina,
-ukon <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} magpangita sa kaangot nga mga listahan]</span>.',
 	'nextrevision' => 'Mas bag-o nga pagbag-o →',
 	'notitlematches' => 'Wala sang pareho nga titulo sang pahina',
 	'notextmatches' => 'Wala sang pahina sang teksto nga pareho',
@@ -4914,9 +4837,6 @@ Kung ari ka diya tungod sa sala, pinduton ang ('''back''') nga buton sang imo ng
 Sarang mo [[Special:Search/{{PAGENAME}}|pangitaon ang titulo sang mini nga pahina]] sa iban pa nga mga pahina,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mangita ka sang pareho nga mga lilistahan],
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} bag-uhon ang mini nga pahina]</span>.',
-	'noarticletext-nopermission' => 'Wala sang teksto yanda sa mini nga pahina.
-Pwede mo nga [[Special:Search/{{PAGENAME}}|pulupangitaon ang titulo sang mini nga pahina]] sa iban nga mga pahina,
-ukon <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} magpangita sa kaangot nga mga listahan]</span>.',
 	'nextrevision' => 'Mas bag-o nga pagbag-o →',
 	'notitlematches' => 'Wala sang pareho nga titulo sang pahina',
 	'notextmatches' => 'Wala sang pahina sang teksto nga pareho',
@@ -4991,7 +4911,6 @@ $messages['crh-cyrl'] = array(
 	'newarticle' => '(Янъы)',
 	'newarticletext' => "Сиз бу багълантынен шимдилик ёкъ олгъан саифеге авуштынъыз. Янъы бир саифе яратмакъ ичюн ашагъыда булунгъан пенджереге метин язынъыз (тафсилятлы малюмат алмакъ ичюн [[{{MediaWiki:Helppage}}|ярдым саифесине]] бакъынъыз). Бу саифеге тесадюфен авушкъан олсанъыз, браузеринъиздеки '''кери''' дёгмесине басынъыз.",
 	'noarticletext' => 'Бу саифе шимди боштыр. Бу серлеваны башкъа саифелерде [[Special:Search/{{PAGENAME}}|къыдырып оласынъыз]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} багълы журнал къайдларыны къыдырып оласынъыз] я да бу саифени озюнъиз [{{fullurl:{{FULLPAGENAME}}|action=edit}} язып оласынъыз]</span>.',
-	'noarticletext-nopermission' => 'Бу саифе шимди боштыр. Бу серлеваны башкъа саифелерде [[Special:Search/{{PAGENAME}}|къыдыра биле]] я да <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} багълы журналларны козьден кечире билесинъиз]</span>.',
 	'note' => "'''Ихтар:'''",
 	'nonunicodebrowser' => "'''ТЕНБИ: Браузеринъизде Unicode кодламасы танылмаз. Саифелер денъиштиргенде бутюн ASCII олмагъан ишаретлернинъ ерине оларнынъ оналтылыкъ коду язылыр.'''",
 	'nocreatetitle' => 'Саифе яратув сынъырлыдыр',
@@ -5099,7 +5018,6 @@ Siz saifeni oquğanda o avuştırılğan ya da yoq etilgen ola bile.',
 	'newarticle' => '(Yañı)',
 	'newarticletext' => "Siz bu bağlantınen şimdilik yoq olğan saifege avuştıñız. Yañı bir saife yaratmaq içün aşağıda bulunğan pencerege metin yazıñız (tafsilâtlı malümat almaq içün [[{{MediaWiki:Helppage}}|yardım saifesine]] baqıñız). Bu saifege tesadüfen avuşqan olsañız, brauzeriñizdeki '''keri''' dögmesine basıñız.",
 	'noarticletext' => 'Bu saife şimdi boştır. Bu serlevanı başqa saifelerde [[Special:Search/{{PAGENAME}}|qıdırıp olasıñız]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} bağlı jurnal qaydlarını qıdırıp olasıñız] ya da bu saifeni özüñiz [{{fullurl:{{FULLPAGENAME}}|action=edit}} yazıp olasıñız]</span>.',
-	'noarticletext-nopermission' => 'Bu saife şimdi boştır. Bu serlevanı başqa saifelerde [[Special:Search/{{PAGENAME}}|qıdıra bile]] ya da <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} bağlı jurnallarnı közden keçire bilesiñiz]</span>.',
 	'note' => "'''İhtar:'''",
 	'nonunicodebrowser' => "'''TENBİ: Brauzeriñizde Unicode kodlaması tanılmaz. Saifeler deñiştirgende bütün ASCII olmağan işaretlerniñ yerine olarnıñ onaltılıq kodu yazılır.'''",
 	'nocreatetitle' => 'Saife yaratuv sıñırlıdır',
@@ -5210,8 +5128,6 @@ Pokud ji chcete vytvořit, napište text do rámečku níže a stiskněte tlač�
 Pokud jste zde omylem, stiskněte ve svém prohlížeči tlačítko ''Zpět''.",
 	'noarticletext' => 'Tato stránka zatím neobsahuje žádný text.
 Můžete [[Special:Search/{{PAGENAME}}|zkusit tento název vyhledat]] na jiných stránkách, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} prohlédnout si příslušné protokolovací záznamy] nebo [{{fullurl:{{FULLPAGENAME}}|action=edit}} tuto stránku založit]</span>.',
-	'noarticletext-nopermission' => 'Tato stránka zatím neobsahuje žádný text.
-Můžete [[Special:Search/{{PAGENAME}}|zkusit tento název vyhledat]] na jiných stránkách nebo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} si prohlédnout příslušné protokolovací záznamy]</span>.',
 	'note' => "'''Poznámka:'''&nbsp;",
 	'nonunicodebrowser' => "'''UPOZORNĚNÍ: Váš prohlížeč není schopen pracovat se znaky Unicode. Abyste mohli tuto stránku bezpečně editovat, je použita pomůcka: všechny znaky mimo ASCII jsou zobrazeny v hexadecimálních kódech.'''",
 	'nocreatetitle' => 'Vytváření nových stránek je omezeno',
@@ -5383,9 +5299,6 @@ $messages['cu'] = array(
 [[Special:Search/{{PAGENAME}}|си страницѧ имѧ искати]] дроугꙑ страницѧ ·
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} съвѧꙁанꙑ їсторїѩ видѣти] ·
 или [{{fullurl:{{FULLPAGENAME}}|action=edit}} ѭжє исправити]</span> можєши',
-	'noarticletext-nopermission' => 'нꙑнѣ с̑ьдє ничєсожє нє напьсано ѥстъ ⁙
-[[Special:Search/{{PAGENAME}}|си страницѧ имѧ искати]] дроугꙑ страницѧ или
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} съвѧꙁанꙑ їсторїѩ видѣти]</span> можєши',
 	'note' => "'''НАРОЧИТО:'''",
 	'nchanges' => '$1 {{PLURAL:$1|мѣна|мѣнꙑ|мѣнъ}}',
 	'newpageletter' => 'н҃в',
@@ -5533,8 +5446,6 @@ I greu'r dudalen, dechreuwch deipio yn y blwch isod (gweler y [[{{MediaWiki:Help
 Os daethoch yma ar ddamwain, cliciwch botwm '''n&ocirc;l''' y porwr.",
 	'noarticletext' => "Mae'r dudalen hon yn wag ar hyn o bryd.
 Gallwch [[Special:Search/{{PAGENAME}}|chwilio am y teitl hwn]] ar dudalennau eraill, <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} chwilio drwy'r logiau perthnasol], neu [{{fullurl:{{FULLPAGENAME}}|action=edit}} golygu'r dudalen]</span>.",
-	'noarticletext-nopermission' => 'Mae\'r dudalen hon yn wag ar hyn o bryd.
-Gallwch [[Special:Search/{{PAGENAME}}|chwilio am y teitl hwn]] ar dudalennau eraill, neu gallwch <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} chwilio drwy\'r logiau perthnasol]</span>.',
 	'note' => "'''Dalier sylw:'''",
 	'nonunicodebrowser' => "'''RHYBUDD: Nid yw eich porwr yn cydymffurfio ag Unicode. Serch hyn, mae modd i chi olygu tudalennau: bydd nodau sydd ddim yn rhan o ASCII yn ymddangos yn y blwch golygu fel codau hecsadegol.'''",
 	'nocreatetitle' => 'Cyfyngwyd ar greu tudalennau',
@@ -5662,9 +5573,6 @@ Hvis du er her ved en fejl, så tryk på din browsers '''tilbage'''-knap.",
 Du kan [[Special:Search/{{PAGENAME}}|søge efter sidenavnet]] på andre sider,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} søge i relaterede logger]
 eller [{{fullurl:{{FULLPAGENAME}}|action=edit}} oprette siden]</span>.',
-	'noarticletext-nopermission' => 'Der er i øjeblikket ikke noget tekst på denne side.
-Du kan [[Special:Search/{{PAGENAME}}|søge efter denne sides titel]] på andre sider,
-eller <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} se de relaterede loglister]</span>.',
 	'note' => "'''Bemærk:'''",
 	'nonunicodebrowser' => "'''Advarsel: Din browser er ikke unicode-kompatibel, skift eller opdater din browser før du redigerer en artikel.'''",
 	'nocreatetitle' => 'Oprettelse af nye sider er begrænset.',
@@ -5786,13 +5694,13 @@ Vermutlich wurde er verschoben oder gelöscht, nachdem du die Seite aufgerufen h
 	'newarticletext' => "Du bist einem Link zu einer Seite gefolgt, die nicht vorhanden ist.
 Um diese Seite anzulegen, trage deinen Text in das untenstehende Bearbeitungsfeld ein (siehe die [[{{MediaWiki:Helppage}}|Hilfeseite]] für weitere Informationen).
 Sofern du fälschlicherweise hier bist, klicke auf die Schaltfläche '''Zurück''' deines Browsers.",
-	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''Diese Seite braucht Informationen. <br>Du kannst uns helfen, indem du einen Satz oder ein Bild einfügst!'''</p>
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''Der Artikel {{FULLPAGENAME}} konnte nicht gefunden werden.''' ===
 
-<center><span class=\"wikia-button big\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Erstelle diese Seite!</span>]</span></center>  
-<br>",
-	'noarticletext-nopermission' => 'Diese Seite enthält momentan noch keinen Text.
-Du kannst ihren Titel auf anderen Seiten [[Special:Search/{{PAGENAME}}|suchen]]
-oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbücher betrachten].</span>',
+Was möchtest du tun?
+
+* In bestehenden Artikeln nach <span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span> suchen
+* Den Artikel <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span> erstellen}}",
 	'note' => "'''Hinweis:'''",
 	'nonunicodebrowser' => "'''Achtung:''' Dein Browser kann Unicode-Zeichen nicht richtig verarbeiten. Bitte verwende einen anderen Browser um Seiten zu bearbeiten.",
 	'nocreatetitle' => 'Die Erstellung neuer Seiten ist eingeschränkt.',
@@ -5874,7 +5782,6 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'nontabbedsearch' => 'Non-tabbed search',
@@ -5909,9 +5816,6 @@ Sind Sie fälschlicherweise hier, klicken Sie die '''Zurück'''-Schaltfläche Ih
 	'noarticletext' => 'Diese Seite enthält momentan noch keinen Text.
 Sie können diesen Titel auf den anderen Seiten [[Special:Search/{{PAGENAME}}|suchen]],
 <span class="plainlinks">in den zugehörigen [{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbüchern suchen] oder diese Seite [{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbeiten]</span>.',
-	'noarticletext-nopermission' => 'Diese Seite enthält momentan noch keinen Text.
-Sie können diesen Titel auf den anderen Seiten [[Special:Search/{{PAGENAME}}|suchen]]
-oder in den zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbüchern suchen]</span>.',
 	'nonunicodebrowser' => "'''Achtung:''' Ihr Browser kann Unicode-Zeichen nicht richtig verarbeiten. Bitte verwenden Sie einen anderen Browser um Seiten zu bearbeiten.",
 	'nocreatetext' => 'Auf {{SITENAME}} wurde das Erstellen neuer Seiten eingeschränkt. Sie können bestehende Seiten ändern oder sich [[Special:UserLogin|anmelden]].',
 	'nocreate-loggedin' => 'Sie haben keine Berechtigung, neue Seiten zu erstellen.',
@@ -6102,9 +6006,6 @@ Eka tı ita semed yew heta ra amey, ser gocekê '''back'''i klik bıkin.",
 Tı şenay zerreyê pelanê binan de [[Special:Search/{{PAGENAME}}|seba sernamey ena pele cı geyre]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cıkewtışê aidi rê cı geyre],
 ya zi [{{fullurl:{{FULLPAGENAME}}|action=edit}} ena pele bıvurne]</span>.',
-	'noarticletext-nopermission' => 'No pel nıka veng o.
-No sernuşte şıma [[Special:Search/{{PAGENAME}}|pelanê binan de eşkeni bıgeri]]
-ya zi <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} itara eşekeni bıgere].</span>',
 	'note' => "'''Not:'''",
 	'nonunicodebrowser' => "'''DİQET: Browserê şıma u unicode yewbini nêgeni. Qey izin dayişê vurnayişê pelan: Karakteri ke ASCII niyê; zerreyê qutiyê vurnayişi de kodi (cod) şiyes-şiyes aseni.'''",
 	'nocreatetitle' => 'Vıraştışê pele mehcuro',
@@ -6226,9 +6127,6 @@ Jo se snaź pśesunuł abo wulašował, mjaztym až woglědujoš se bok.',
 	'newarticletext' => "Sy slědował wótkaz na bok, kótaryž hyšći njeeksistěrujo.
 Aby bok napórał, zapiš do kašćika dołojce (glědaj [[{{MediaWiki:Helppage}}|bok pomocy]] za dalšne informacije). Jolic sy zamólnje how, klikni na tłocašk '''Slědk'' w swójom wobglědowaku.",
 	'noarticletext' => 'Dotychměst toś ten bok hyšći njewopśimujo žeden tekst. Móžoš w drugich bokach [[Special:Search/{{PAGENAME}}|titel togo boka pytaś]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} wótpowědne protokole pytaś] abo [{{fullurl:{{FULLPAGENAME}}|action=edit}} toś ten bok wobźěłaś]</span>.',
-	'noarticletext-nopermission' => 'Tuchylu njejo žeden tekst na toś tom boku.
-Móžoš [[Special:Search/{{PAGENAME}}|toś ten bokowy titel]] na drugich bokach pytaś
-abo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} wótpowědne protokole pytaś]</span>.',
 	'note' => "'''Pokazka:'''",
 	'nonunicodebrowser' => "'''Glědaj:''' Twój browser njamóžo unicodowe znamuška pšawje pśeźěłaś. Pšosym wužywaj hynakšy browser.",
 	'nocreatetitle' => 'Załožowanje nowych bokow jo se wobgranicowało.',
@@ -6362,9 +6260,6 @@ Nung nakaansau ko do hiti, tonsoko ot butang '''gumuli''' id pogigihumnu.",
 Milo ko nogi do [[Special:Search/{{PAGENAME}}|mogihum do tuluhon bolikon diti]] id bolikon suai,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mogihum kokomoi log-log],
 toi [{{fullurl:{{FULLPAGENAME}}|action=edit}} mongidit bolikon diti]</span>.',
-	'noarticletext-nopermission' => 'Maso po do ingaa tik id bolikon diti.
-Milo ko nogi do [[Special:Search/{{PAGENAME}}|mogihum do tuluhon bolikon diti]] id bolikon suai, toi
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mogihum kokomoi log-log] </span>.',
 	'note' => "'''Pasoniba:'''",
 	'nonunicodebrowser' => "'''Pononsunudan: Pogigihumnu okon ko unikod komplaion.'''
 Iso panalasaian id kinoyonon it papasaga dia do otingolig mongidit bobolikon: pimato okon-ASCII maan pokitono id kutak mongidit sobaagi do tongokod pihopodomonom.",
@@ -6559,9 +6454,6 @@ $messages['el'] = array(
 	'noarticletext' => 'Δεν υπάρχει προς το παρόν κείμενο σε αυτή τη σελίδα. Μπορείτε να [[Special:Search/{{PAGENAME}}|αναζητήσετε αυτόν τον τίτλο σελίδας]] σε άλλες σελίδες,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} να αναζητήσετε τα σχετικά ιστορικά],
 ή να [{{fullurl:{{FULLPAGENAME}}|action=edit}} επεξεργαστείτε τη σελίδα αυτή]</span>.',
-	'noarticletext-nopermission' => 'Δεν υπάρχει κείμενο σε αυτή τη σελίδα αυτή τη στιγμή.
-Μπορείτε να [[Special:Search/{{PAGENAME}}|αναζητήσετε αυτόν τον τίτλο]] σε άλλες σελίδες,
-ή <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} να αναζητήσετε τα σχετικά αρχεία]</span>.',
 	'note' => "'''Προσοχή: '''",
 	'nonunicodebrowser' => "'''ΠΡΟΣΟΧΗ! Ο φυλλομετρητής σας δεν είναι συμβατός με το unicode.'''
 Μία προσωρινή λύση διατίθεται για να μπορέσετε να επεξεργαστείτε σελίδες με ασφάλεια: μη-ASCII χαρακτήρες θα φαίνονται στο πλαίσιο επεξεργασίας ως δεκαεξαδικοί κωδικοί.",
@@ -6698,9 +6590,6 @@ Kontrolu vian literumadon, aŭ [[Special:UserLogin/signup|kreu novan konton]].',
 Vi povas [[Special:Search/{{PAGENAME}}|serĉi ĉi tiun paĝtitolon]] en aliaj paĝoj,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} serĉi la rilatajn protokolojn],
 aŭ [{{fullurl:{{FULLPAGENAME}}|action=edit}} redakti ĉi tiun paĝon]</span>.',
-	'noarticletext-nopermission' => 'Estas neniom da teksto en ĉi tiu paĝo.
-Vi povas [[Special:Search/{{PAGENAME}}|serĉi ĉi tiun paĝan titolon]] en aliaj paĝoj,
-aŭ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} serĉi la rilatajn protokolojn]</span>.',
 	'note' => "'''Noto:'''",
 	'nonunicodebrowser' => "'''ATENTU: Via foliumilo ne eltenas unikodon, bonvolu ŝanĝi ĝin antaŭ ol redakti artikolon.'''",
 	'nocreatetitle' => 'Paĝa kreado estas limigita',
@@ -6829,13 +6718,13 @@ Quizá ha sido movida o borrada mientras visitabas la página.',
 '''Estás comenzando un nuevo artículo. Genial, ¿no?''' 
 * Revisa '''[[Ayuda:Edición]]''' para conocer más información sobre cómo editar páginas wiki.
 * ¡No olvides '''categorizar este artículo''' añadiendo <nowiki>[[Categoría:Nombre]]</nowiki> al final de esta página! Puedes encontrar una lista de categorías en [[Special:Categories|Especial:Categorías]].<br/><br/>",
-	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''¡Recórcholis! Esta página está vacía... ¡Añade una imagen o alguna frase para que deje de estarlo!'''</p>
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''Artículo {{FULLPAGENAME}} no se ha encontrado''' ===
 
-<center><span class=\"wikia-button big plainlinks\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Edita esta página</span>]<br />o<br />[[Special:Search/{{PAGENAME}}|busca otra con un nombre similar]]</span></center>  
-<br />",
-	'noarticletext-nopermission' => 'Actualmente no hay texto en esta página.
-Puedes [[Special:Search/{{PAGENAME}}|buscar este título de página]] en otras páginas,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar en los registros relacionados]</span>.',
+¿Qué quieres hacer?
+
+* Buscar artículos existentes de <span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
+* Crear artículo <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>}}",
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''Atención: Tu navegador no cumple la norma Unicode.'''
 Se ha activado un sistema de edición alternativo que te permitirá editar artículos con seguridad: los caracteres no ASCII aparecerán en la caja de edición como códigos hexadecimales.",
@@ -6912,7 +6801,6 @@ Prueba a usar el prefijo ''all:'' para buscar en todo el contenido (incluyendo p
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',
@@ -6988,9 +6876,6 @@ Kui sattusid siia kogemata, klõpsa võrgulehitseja ''tagasi''-nupule.",
 	'noarticletext' => 'Käesoleval leheküljel hetkel teksti ei ole.
 Võid [[Special:Search/{{PAGENAME}}|otsida pealkirjaks olevat fraasi]] teistelt lehtedelt,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} uurida asjassepuutuvaid logisid] või [{{fullurl:{{FULLPAGENAME}}|action=edit}} puuduva lehekülje ise luua]</span>.',
-	'noarticletext-nopermission' => 'Sellel leheküljel ei ole teksti.
-Sa võid [[Special:Search/{{PAGENAME}}|otsida lehekülje nime]] teistelt lehekülgedelt
-või <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} otsida lehekülje nime logidest]</span>.',
 	'note' => "'''Meeldetuletus:'''",
 	'nonunicodebrowser' => "'''HOIATUS: Sinu brauser ei toeta unikoodi.'''
 Probleemist möödahiilimiseks, selleks et saaksid lehekülgi turvaliselt redigeerida, näidatakse mitte-ASCII sümboleid toimetuskastis kuueteistkümnendsüsteemi koodidena.",
@@ -7121,9 +7006,6 @@ Baliteke orrialdea begiratzen zenuen bitartean norbaitek ezabatu edo izenburua a
 Beste orrialde batzuetan [[Special:Search/{{PAGENAME}}|bilatu dezakezu izenburu hau]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} bilatu lotutako logak],
 edo [{{fullurl:{{FULLPAGENAME}}|action=edit}} berau aldatu ere egin dezakezu]</span>.',
-	'noarticletext-nopermission' => 'Une honetan ez dago texturik orri honetan.
-Beste orrietan [[Special:Search/{{PAGENAME}}|testua bilatu dezakezu]],
-edo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} erlazionatutako erregistroak ikusi]</span>.',
 	'note' => "'''Oharra:'''",
 	'nonunicodebrowser' => "'''OHARRA: Zure nabigatzailea ez dator Unicode arauarekin bat. Artikuluak modu seguruan aldatu ahal izateko beste sistema bat gaitu da: ASCII ez diren karaktereak kode hamaseitar bezala agertuko dira aldaketa koadroan.'''",
 	'nocreatetitle' => 'Orrialdeak sortzea mugatuta',
@@ -7368,11 +7250,8 @@ $messages['fa'] = array(
 اگر به اشتباه اینجا آمده‌اید، دکمهٔ «بازگشت» مرورگرتان را بزنید.',
 	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''این صفحه نیاز به مطلب دارد. شما می‌توانید با اضافه کردن چند جمله و یا یک عکس کمک کنید!'''</p>
 
-<center><span class=\"wikia-button big\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>ایجاد مقاله!</span>]</span></center>  
+<center><span class=\"wikia-button big\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>ایجاد مقاله!</span>]</span></center>
 <br>",
-	'noarticletext-nopermission' => 'این صفحه هم‌اکنون متنی ندارد.
-شما می‌توانید در دیگر صفحه‌ها [[Special:Search/{{PAGENAME}}|این عنوان را جستجو کنید]]،
-یا <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} سیاهه‌های مرتبط را بگردید]</span>.',
 	'note' => "'''نکته:'''",
 	'nonunicodebrowser' => "'''هشدار: مرورگر شما با استانداردهای یونیکد سازگار نیست.'''
 راه حلی به کار گرفته شده تا شما بتوانید صفحه‌ها را با امنیت ویرایش کنید: کاراکترهای غیر ASCII به صورت کدهایی در مبنای شانزده به شما نشان داده می‌شوند.",
@@ -7504,9 +7383,6 @@ Voit luoda sivun kirjoittamalla tekstiä allaolevaan kenttään (katso [[{{Media
 	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Tämä sivu kaipaa sisältöä. Voit auttaa lisäämällä muutaman lauseen tai kuvan!\'\'\'</p>
 
 <center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Muokkaa tätä sivua!</span>]<br />tai<br />[[Special:Search/{{PAGENAME}}|etsi sivua "{{PAGENAME}}"]]</span></center><br />',
-	'noarticletext-nopermission' => 'Tällä hetkellä tällä sivulla ei ole tekstiä.
-Voit [[Special:Search/{{PAGENAME}}|etsiä sivun nimellä]] muilta sivuilta
-tai <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hakea aiheeseen liittyviä lokeja]</span>',
 	'note' => "'''Huomautus:'''",
 	'nonunicodebrowser' => "'''Selaimesi ei ole Unicode-yhteensopiva. Ole hyvä ja vaihda selainta, ennen kuin muokkaat sivua.'''",
 	'nocreatetitle' => 'Sivujen luominen on rajoitettu',
@@ -7558,7 +7434,7 @@ Kokeile lisätä haun alkuun ''all:'', niin haku kohdistuu kaikkeen sisältöön
 	'nolinkshere-ns' => 'Sivulle <strong>[[:$1]]</strong> ei ole linkkejä valitussa nimiavaruudessa.',
 	'noautoblockblock' => 'ei automaattista IP-osoitteiden estoa',
 	'newtitle' => 'Uusi nimi sivulle',
-	'nonfile-cannot-move-to-file' => 'Sivuja ei voi siirtää tiedostonimiavaruuteen.',
+	'nonfile-cannot-move-to-file' => 'Siivuja ei voi siirtää tiedostonimiavaruuteen.',
 	'noscript.css' => '/* Tämä sivun tyylit muuttavat niiden käyttäjien tyylejä, joilla JavaScript ei ole käytössä */',
 	'notacceptable' => 'Wikipalvelin ei voi näyttää tietoja muodossa, jota ohjelmasi voisi lukea.',
 	'nocredits' => 'Tämän sivun tekijäluettelotietoja ei löydy.',
@@ -7642,9 +7518,6 @@ Jos et halua luoda sivua, käytä selaimen paluutoimintoa.',
 Voit [[Special:Search/{{PAGENAME}}|etsiä sivun nimellä]] muilta sivuilta,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hakea aiheeseen liittyviä lokeja]
 tai [{{fullurl:{{FULLPAGENAME}}|action=edit}} muokata tätä sivua]</span>.',
-	'noarticletext-nopermission' => 'Tällä hetkellä tällä sivulla ei ole tekstiä.
-Voit [[Special:Search/{{PAGENAME}}|etsiä sivun nimellä]] muilta sivuilta
-tai <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hakea aiheeseen liittyviä lokeja]</span>',
 	'note' => "'''Huomautus:'''",
 	'nonunicodebrowser' => "'''Selaimesi ei ole Unicode-yhteensopiva. Ole hyvä ja vaihda selainta, ennen kuin muokkaat sivua.'''",
 	'nocreatetitle' => 'Sivujen luominen on rajoitettu',
@@ -7789,9 +7662,6 @@ Ert tú komin higar av einum mistaki, kanst tú trýsta á '''aftur'''-knøttin 
 Tú kanst [[Special:Search/{{PAGENAME}}|leita eftir hesum síðu heitinum]] á øðrum síðum,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} leita í líknandi loggum],
 ella [{{fullurl:{{FULLPAGENAME}}|action=edit}} rætta hesa síðu]</span>.',
-	'noarticletext-nopermission' => 'Tað er í løtuni ongin tekstur á hesi síðu.
-Tú kanst [[Special:Search/{{PAGENAME}}|leita eftir hesum síðu heiti]] á øðrum siðum,
-ella <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} síggja viðkomandi logglistar]</span>.',
 	'note' => "'''Viðmerking:'''",
 	'nocreate-loggedin' => 'Tú hevur ikki loyvi til at upprætta nýggjar síður.',
 	'nohistory' => 'Eingin broytisøga er til hesa síðuna.',
@@ -7892,13 +7762,13 @@ Vérifiez l’orthographe, ou [[Special:UserLogin/signup|créez un nouveau compt
 Elle a peut-être été déplacée ou supprimée depuis que vous avez lu cette page.',
 	'newarticle' => '(Nouveau)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''Cette page a besoin de contenu. Vous pouvez aider en ajoutant une phrase ou une image.'''</p>
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''L'article {{FULLPAGENAME}} n'existe pas''' ===
 
-<center><span class=\"wikia-button big plainlinks\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit}} <span>Compléter cette page !</span>]<br />ou<br />[{{fullurl:Special:Search|search={{PAGENAME}}}} Rechercher « {{PAGENAME}} »]</span></center>  
-<br />",
-	'noarticletext-nopermission' => 'Il n’y a pour l’instant aucun texte sur cette page.
-Vous pouvez [[Special:Search/{{PAGENAME}}|faire une recherche sur ce titre]] dans les autres pages,
-ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} rechercher dans les journaux associés]</span>.',
+Que voulez-vous faire ?
+
+* Rechercher les articles existants contenant <span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
+* Créer l'article <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>}}",
 	'note' => "'''Note :'''",
 	'nonunicodebrowser' => "'''Attention : Votre navigateur ne supporte pas l’Unicode.'''
 Une solution de rechange a été trouvée pour vous permettre de modifier en toute sûreté une page : les caractères non-ASCII apparaîtront dans votre boîte de modification en tant que codes hexadécimaux. Vous devriez utiliser un navigateur plus récent.",
@@ -7974,7 +7844,6 @@ Essayez en utilisant le préfixe ''all:'' pour rechercher dans tout le contenu (
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',
@@ -8114,9 +7983,6 @@ Se vos éte arrevâ ice per èrror, clicâd sur lo boton '''Devant''' de voutron
 Vos pouede [[Special:Search/{{PAGENAME}}|fâre una rechèrche sur lo titro de la pâge]] dens les ôtres pâges,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} rechèrchiér dens los jornals liyês]
 ou ben [{{fullurl:{{FULLPAGENAME}}|action=edit}} fâre cela pâge]</span>.',
-	'noarticletext-nopermission' => 'Ora, y at gins de tèxto dens ceta pâge.
-Vos pouede [[Special:Search/{{PAGENAME}}|fâre una rechèrche sur lo titro de la pâge]] dens les ôtres pâges,
-ou ben <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} rechèrchiér dens los jornals liyês]</span>.',
 	'note' => "'''Nota :'''",
 	'nonunicodebrowser' => "'''ATENCION : voutron navigator recognêt pas l’Unicode.'''
 Una solucion de rechanjo at étâ trovâ por vos pèrmetre de changiér en tota suretât una pâge : los caractèros nan-ASCII aparètront dens voutra bouèta d’èdicion coment codes hèxadècimâls.
@@ -8249,9 +8115,6 @@ Bast üt fersiien heer, klik di '''tubääg'''-klänkfläche foon dan browser.",
 	'noarticletext' => 'Jüdeer sid önjhålt uugenblaklik nuch nån täkst.
 Dü koost dideere tiitel aw da ouder side [[Special:Search/{{PAGENAME}}|säke]],
 <span class="plainlinks">önj da deertuhiirende [{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} logböke säke] unti jüdeer sid [{{fullurl:{{FULLPAGENAME}}|action=edit}} beårbe]</span>.',
-	'noarticletext-nopermission' => 'Jüdeer sid önjhålt uugenblaklik nuch nån täkst.
-Dü koost dideere tiitel aw da oudre side [[Special:Search/{{PAGENAME}}|säke]],
-unti<span class="plainlinks">önj da deertuhiirende [{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} logböke säke] </span>.',
 	'note' => "'''Påås aw:'''",
 	'nonunicodebrowser' => "'''Påås aw:''' Dan browser koon unicode-tiikne ai rucht ferårbe. Brük hål en oudern browser am side tu ferårben.",
 	'nocreatetitle' => 'Dåt måågeb foon naie side as begränsed.',
@@ -8328,8 +8191,6 @@ Une liste des pagjinis speciâls validis a si pues cjatâ su [[Special:SpecialPa
 	'noarticletext' => 'Par cumò nol è nuie in cheste pagjine.
 Tu puedis [[Special:Search/{{PAGENAME}}|cirî chest titul]] in altris pagjinis o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cirî i regjistris leâts],
 o ben [{{fullurl:{{FULLPAGENAME}}|action=edit}} cambiâ cheste pagjine]</span>.',
-	'noarticletext-nopermission' => 'Par cumò nol è nuie in cheste pagjine.
-Tu puedis [[Special:Search/{{PAGENAME}}|cirî chest titul]] in altris pagjinis o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cirî i regjistris leâts].',
 	'note' => "'''Note:'''",
 	'nocreatetitle' => 'Creazion des pagjinis limitade',
 	'nocreatetext' => '{{SITENAME}} al à limitât la pussibilitât di creâ gnovis pagjinis ai utents regjistrâts. Tu puedis tornâ indaûr e cambiâ une pagjine che e esist o se no [[Special:UserLogin|jentrâ o creâ une gnove identitât]].',
@@ -8719,8 +8580,6 @@ $messages['gan-hans'] = array(
 若系汝伓系特事来到个首，捺吖浏览器𠮶「去还」键即得去还。',
 	'noarticletext' => '眼下个页哈冇内容，倷可以到别𠮶页面[[Special:Search/{{PAGENAME}}|寻吖个页𠮶标题]]，
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 寻吖有关日志]或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 编写个页]</span>。',
-	'noarticletext-nopermission' => '眼下个页哈冇内容，汝可以到别𠮶页面[[Special:Search/{{PAGENAME}}|寻吖个页𠮶标题]]，
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 寻吖有关日志]或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 编写个页]</span>。',
 	'note' => "'''注意:'''",
 	'nonunicodebrowser' => "'''警告：倷𠮶浏览器伓兼容Unicode。个度有只办法方便倷安全𠮶编写得正文章：伓系ASCII𠮶字符会到编辑框里度用十六进制编码显到。'''",
 	'nocreatetitle' => '新建页面拖限制',
@@ -8821,8 +8680,6 @@ $messages['gan-hant'] = array(
 要新開箇隻頁面，請到下首嗰方框裡頭編寫內容（望吖[[{{MediaWiki:Helppage}}|説明]]嗰細節）。
 若係汝伓係特事來到箇首，捺吖瀏覽器嗰「去還」鍵即得去還。',
 	'noarticletext' => '眼下箇頁哈冇內容，汝到別嗰頁面[[Special:Search/{{PAGENAME}}|尋得正箇頁嗰標題]]，
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 尋吖有關日誌]或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編寫箇頁]</span>。',
-	'noarticletext-nopermission' => '眼下箇頁哈冇內容，汝可以到別嗰頁面[[Special:Search/{{PAGENAME}}|尋吖箇頁嗰標題]]，
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 尋吖有關日誌]或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編寫箇頁]</span>。',
 	'note' => "'''注意:'''",
 	'nonunicodebrowser' => "'''警告：倷嗰瀏覽器伓兼容Unicode。箇度有隻辦法方便倷安全嗰編寫得正文章：伓係ASCII嗰字符會到編輯框裡度用十六進位編碼顯到。'''",
@@ -8938,9 +8795,6 @@ Mura robh dùil agad ris an duilleag seo a ruigsinn, briog air a' phutan '''air 
 \'S urrainn dhut [[Special:Search/{{PAGENAME}}|an tiotal seo a lorg]] ann an duilleagan eile,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} na logaichean co-cheangailte a rannsachadh],
 no [{{fullurl:{{FULLPAGENAME}}|action=edit}} an duilleag seo a dheasachadh]</span>.',
-	'noarticletext-nopermission' => 'Chan eil teacsa sam bith anns an duilleag seo an-dràsta.
-\'S urrainn dhut [[Special:Search/{{PAGENAME}}|an tiotal seo a lorg]] ann an duilleagan eile,
-no <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} na logaichean co-cheangailte a rannsachadh]</span>.',
 	'nohistory' => 'Chan eil eachdraidh deasachaidh aig an duilleag seo.',
 	'nextrevision' => 'Mùthadh nas ùire →',
 	'next' => 'ath',
@@ -9035,9 +8889,6 @@ Se chegou aquí por erro, simplemente prema no botón '''atrás''' do seu navega
 Pode [[Special:Search/{{PAGENAME}}|procurar polo título desta páxina]] noutras páxinas,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ollar os rexistros relacionados]
 ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} editar a páxina]</span>.',
-	'noarticletext-nopermission' => 'Actualmente non hai ningún texto nesta páxina.
-Pode [[Special:Search/{{PAGENAME}}|procurar polo título desta páxina]] noutras páxinas
-ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ollar os rexistros relacionados]</span>.',
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''Atención: O seu navegador non soporta o Unicode.'''
 Existe unha solución que lle permite editar páxinas con seguridade: os caracteres non incluídos no ASCII aparecerán na caixa de edición como códigos hexadecimais.",
@@ -9386,9 +9237,6 @@ Zum die Syte aalege, chasch do in däm Chaschte unte aafange schrybe (lueg [[{{M
 Wänn do nid hesch welle aane goh, no druck in Dyynem Browser uf '''Zruck'''.",
 	'noarticletext' => 'Uf däre Syte het s no kei Täxt. Du chasch uf andere Syte [[Special:Search/{{PAGENAME}}|dä Yytrag sueche]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} dr Logbuechyytrag sueche, wo dezue ghert],
 oder [{{fullurl:{{FULLPAGENAME}}|action=edit}} die Syte bearbeite]</span>.',
-	'noarticletext-nopermission' => 'In däre Syte het s zur Zyt no kei Text.
-Du chasch dää Titel uf andre Syte [[Special:Search/{{PAGENAME}}|sueche]]
-oder <span class="plainlinks">in dr zuegherige [{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbiecher sueche].</span>',
 	'note' => "'''Obacht: '''",
 	'nonunicodebrowser' => "'''Obacht:''' Dyy Browser cha Unicode-Zeiche nid richtig verschaffe. Bitte verwänd e andere Browser zum Syte bearbeite.",
 	'nocreatetitle' => 'S Aalege vu neje Syte isch yygschränkt.',
@@ -9520,9 +9368,6 @@ $messages['gu'] = array(
 <br />નવું પાનું બનાવવા માટે નીચે આપેલા ખાનામાં લખવાનું શરૂ કરો (વધુ માહિતિ માટે [[{{MediaWiki:Helppage}}|મદદ]] જુઓ).
 <br />જો આપ ભુલમાં અહીં આવી ગયા હોવ તો, આપનાં બ્રાઉઝર નાં '''બેક''' બટન પર ક્લિક કરીને પાછા વળો.",
 	'noarticletext' => 'આ પાનામાં હાલમાં કોઇ માહિતિ નથી.
-તમે  [[Special:Search/{{PAGENAME}}|આ શબ્દ]] ધરાવતાં અન્ય લેખો શોધી શકો છો, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} સંલગ્ન માહિતિ પત્રકોમાં શોધી શકો છો],
-અથવા  [{{fullurl:{{FULLPAGENAME}}|action=edit}} આ પાનામાં ફેરફાર કરી] માહિતિ ઉમેરવાનું શરૂ કરી શકો છો</span>.',
-	'noarticletext-nopermission' => 'આ પાનામાં હાલમાં કોઇ માહિતિ નથી.
 તમે  [[Special:Search/{{PAGENAME}}|આ શબ્દ]] ધરાવતાં અન્ય લેખો શોધી શકો છો, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} સંલગ્ન માહિતિ પત્રકોમાં શોધી શકો છો],
 અથવા  [{{fullurl:{{FULLPAGENAME}}|action=edit}} આ પાનામાં ફેરફાર કરી] માહિતિ ઉમેરવાનું શરૂ કરી શકો છો</span>.',
 	'note' => "'''નોંધ:'''",
@@ -9927,9 +9772,6 @@ $messages['he'] = array(
 באפשרותכם [[Special:Search/{{PAGENAME}}|לחפש את כותרת הדף]] בדפים אחרים,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} לחפש ביומנים הרלוונטיים],
 או [{{fullurl:{{FULLPAGENAME}}|action=edit}} לערוך דף זה]</span>.',
-	'noarticletext-nopermission' => 'אין כרגע טקסט בדף זה.
-באפשרותכם [[Special:Search/{{PAGENAME}}|לחפש את כותרת הדף]] בדפים אחרים,
-או <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} לחפש ביומנים הרלוונטיים].</span>',
 	'note' => "'''הערה:'''",
 	'nonunicodebrowser' => "'''אזהרה: הדפדפן שלכם אינו תואם לתקן יוניקוד.'''
 כדי למנוע בעיות הנוצרות כתוצאה מכך ולאפשר לכם לערוך דפים בבטחה, תווים שאינם ב־ASCII יוצגו בתיבת העריכה כקודים הקסדצימליים.",
@@ -10066,9 +9908,6 @@ $messages['hi'] = array(
 आप अन्यों पन्नों में [[Special:Search/{{PAGENAME}}|इस सामग्री की खोज]] कर सकते हैं,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} संबंधित चिट्ठों में खोज कर सकते हैं],
 या [{{fullurl:{{FULLPAGENAME}}|action=edit}} इस पन्ने को संपादित कर सकते हैं]</span>।',
-	'noarticletext-nopermission' => 'फ़िलहाल इस पन्ने पर कोई सामग्री नहीं है।
-आप अन्य पन्नों में [[Special:Search/{{PAGENAME}}|इस पन्ना शीर्षक की खोज]] कर सकते हैं,
-या <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} संबंधित चिट्ठों में खोज कर सकते हैं] </span>।',
 	'note' => "'''सूचना:'''",
 	'nonunicodebrowser' => "'''सावधान: आपका ब्राउज़र यूनिकोड आधारित नहीं हैं।
 आपके द्वारा सुयोग्य संपादन होने के लिये: ASCII न होने वाले चिन्ह षट्‍पदी कोड (hexadecimal) में दर्शायें जायेंगे।'''",
@@ -10207,9 +10046,6 @@ $messages['hif'] = array(
 आप अन्यों पन्नों में [[Special:Search/{{PAGENAME}}|इस सामग्री की खोज]] कर सकते हैं,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} संबंधित चिट्ठों में खोज कर सकते हैं],
 या [{{fullurl:{{FULLPAGENAME}}|action=edit}} इस पन्ने को संपादित कर सकते हैं]</span>।',
-	'noarticletext-nopermission' => 'फ़िलहाल इस पन्ने पर कोई सामग्री नहीं है।
-आप अन्य पन्नों में [[Special:Search/{{PAGENAME}}|इस पन्ना शीर्षक की खोज]] कर सकते हैं,
-या <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} संबंधित चिट्ठों में खोज कर सकते हैं] </span>।',
 	'note' => "'''सूचना:'''",
 	'nonunicodebrowser' => "'''सावधान: आपका ब्राउज़र यूनिकोड आधारित नहीं हैं।
 आपके द्वारा सुयोग्य संपादन होने के लिये: ASCII न होने वाले चिन्ह षट्‍पदी कोड (hexadecimal) में दर्शायें जायेंगे।'''",
@@ -10347,9 +10183,6 @@ Agar jo aap hian par galti se aae hai tab aapan browser ke '''back''' button pe 
 Aap saktaa hai [[Special:Search/{{PAGENAME}}|ii panna ke title khoje]] duusra panna me,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} search the related logs],
 nai to [{{fullurl:{{FULLPAGENAME}}|action=edit}} ii panna ke badlo]</span>.',
-	'noarticletext-nopermission' => 'Abhi ii panna pe koi chij likha nai hae.
-Aap sakta hae [[Special:Search/{{PAGENAME}}|ii panna ke title ke khoje]] duusra panna me,
-nai to <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} search the related logs]</span>.',
 	'note' => "'''Dhyan rakkho:'''",
 	'nonunicodebrowser' => "'''CHETAUNI: Aap ke browser unicode ke nai maane hae.
 Ek workaround uu jagah hae jahan pe aap thik se panna ke badle sakta hae: non-ASCII akchhar edit box me hexadecimal codes dekhai.'''",
@@ -10490,9 +10323,6 @@ Pero kung nakasulod nga aksidente lamang, palihog lang i-klik sa imo internet ng
 Pwede ka [[Special:Search/{{PAGENAME}}|mangita para sa titulo sang ini nga pahina]] sa iban man nga pahina,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mangita ka sang kaparehas nga logs],
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} islan ini nga pahina]</span>.',
-	'noarticletext-nopermission' => 'Wala subong sang teksto ang ini nga panid.
-Pwede ka [[Special:Search/{{PAGENAME}}|mangita para sa titulo sang ini nga panid]] sa iban man nga panid,
-ukon <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mangita ka sang kaparehas nga logs]</span>.',
 	'note' => "'''Pansinon:'''",
 	'nonunicodebrowser' => "'''Pahibalo: Ang imo brawser wala nagahando sa unicode.'''
 May nagakatabo nga paghulag agod nga masugtan ka sang pa-ilis nga may paghalong: ang mga indi ASCII nga mga letra maga-paita sa kahon sang pag-ilis bilang kodigo nga heksadesimal.",
@@ -10584,7 +10414,6 @@ Ako ste ovamo dospjeli slučajno, kliknite gumb '''natrag''' (back) u svom pregl
 Možete [[Special:Search/{{PAGENAME}}|potražiti ovaj naslov]] na drugim stranicama,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pretražiti povezane evidencije]
 ili [{{fullurl:{{FULLPAGENAME}}|action=edit}} urediti ovu stranicu]</span>.',
-	'noarticletext-nopermission' => 'Možete [[Special:Search/{{PAGENAME}}|tražiti naslov ove stranice]] na drugim stranicama ili <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pretražiti povezane evidencije]</span>.',
 	'note' => "'''Napomena:'''",
 	'nonunicodebrowser' => "'''UPOZORENJE: Vaš preglednik ne podržava Unicode zapis znakova, molimo promijenite ga prije sljedećeg uređivanja članaka.'''",
 	'nocreatetitle' => 'Otvaranje novih stranica ograničeno',
@@ -10710,8 +10539,6 @@ Móžno, zo je so přesunył abo zhašał, mjeztym zo sej wobhladuješ stronu.',
 	'newarticle' => '(Nowy)',
 	'newarticletext' => 'Sy wotkaz k stronje slědował, kotraž hišće njeeksistuje. Zo by stronu wutworił, wupjelń slědowace tekstowe polo (hlej [[{{MediaWiki:Helppage}}|stronu pomocy]] za dalše informacije). Jeli sy zmylnje tu, klikń prosće na tłóčatko <b>Wróćo</b> we swojim wobhladowaku.',
 	'noarticletext' => 'Tuchwilu tuta strona žadyn tekst njewobsahuje. Móžeš [[Special:Search/{{PAGENAME}}|tutón titul strony na druhich stronach pytać]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} wotpowědne protokole pytać] abo [{{fullurl:{{FULLPAGENAME}}|action=edit}} tutu stronu wobdźěłać]</span>.',
-	'noarticletext-nopermission' => 'Tuchwilu žadyn tekst na tutej stronje njeje.
-Móžeš [[Special:Search/{{PAGENAME}}|tutón titul strony]] na druhich stronach pytać abo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pytaj wotpowědne protokole]</span>.',
 	'note' => "'''Kedźbu:'''",
 	'nonunicodebrowser' => "'''KEDŹBU: Twój wobhladowak z Unikodu kompatibelny njeje. Prošu wužiwaj hinaši wobhladowak.'''",
 	'nocreatetitle' => 'Wutworjenje stron je wobmjezowane.',
@@ -10836,8 +10663,6 @@ Pou ou kapab kreye paj sa a, komanse ekri nan bwat ki anba (gade [[{{MediaWiki:H
 Si se paske ou fè yon erè ke ou rive nan paj sa a, klike anlè bouton '''fè back''' nan navigatè ou a.",
 	'noarticletext' => 'Poko genyen tèks nan paj sa a.
 Ou mèt [[Special:Search/{{PAGENAME}}|fè yon rechèch, fouye ak non paj sa a]] nan lòt paj yo, oubyen <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} chache jounal modifikasyon yo ki an relasyon ak paj sa] oubyen tou [{{fullurl:{{FULLPAGENAME}}|action=edit}} modifye paj sa]</span>.',
-	'noarticletext-nopermission' => 'Poko genyen tèks nan paj sa a.
-Ou mèt [[Special:Search/{{PAGENAME}}|fè yon rechèch, fouye ak non paj sa a]] nan lòt paj yo, oubyen <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} chache jounal modifikasyon yo ki an relasyon ak paj sa].',
 	'note' => "'''Nòt :'''",
 	'nonunicodebrowser' => "'''Atansyon: Navigatè ou an pa ka mache ak Unicode lan.'''
 Nou fè yon jan pou pèmèt ou fè modifikasyon nan paj yo: karaktè ki pa nan ASCII yo pral ekri ak kòd ekzadesimal.",
@@ -10936,8 +10761,6 @@ Ha tévedésből jutottál ide, kattints a böngésződ '''vissza''' vagy '''bac
 [[Special:Search/{{PAGENAME}}|Rákereshetsz erre a címszóra]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} megtekintheted a kapcsolódó naplókat],
 vagy [{{fullurl:{{FULLPAGENAME}}|action=edit}} szerkesztheted a lapot].</span>',
-	'noarticletext-nopermission' => 'Ez a lap jelenleg nem tartalmaz szöveget.
-[[Special:Search/{{PAGENAME}}|Rákereshetsz a lap címére]] más lapok tartalmában, vagy <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} megtekintheted a kapcsolódó naplófájlokat]</span>.',
 	'note' => "'''Megjegyzés:'''",
 	'nonunicodebrowser' => "'''Figyelem: A böngésződ nem Unicode kompatibilis. Egy kerülő megoldásként biztonságban szerkesztheted a cikkeket: a nem ASCII karakterek a szerkesztőablakban hexadeciális kódokként jelennek meg.'''",
 	'nocreatetitle' => 'Az oldallétrehozás korlátozva van',
@@ -11061,8 +10884,6 @@ $messages['hy'] = array(
 	'newarticletext' => "Դուք հղվել եք դեռևս գոյություն չունեցող էջի։ Էջը ստեղծելու համար սկսեք տեքստի մուտքագրումը ներքևի արկղում (այցելեք [[{{MediaWiki:Helppage}}|օգնության էջը]]՝ մանրամասն տեղեկությունների համար)։ Եթե դուք սխալմամբ եք այստեղ հայտնվել, ապա մատնահարեք ձեր զննարկիչի '''back''' կոճակը։",
 	'noarticletext' => 'Ներկայումս այս էջում որևէ տեքստ չկա։
 Դուք կարող եք [[Special:Search/{{PAGENAME}}|որոնել այս անվանումը]] այլ էջերում, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} որոնել համապատասխան տեղեկամատյանները] կամ [{{fullurl:{{FULLPAGENAME}}|action=edit}} ստեղծել նոր էջ այս անվանմամբ]</span>։',
-	'noarticletext-nopermission' => 'Ներկայումս այս էջում որևէ տեքստ չկա։
-Դուք կարող եք [[Special:Search/{{PAGENAME}}|որոնել այս անվանունը]] այլ էջերում կամ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} որոնել այն տեղեկամատյաններում]</span>։',
 	'note' => "'''Ծանուցում.'''",
 	'nonunicodebrowser' => "'''ԶԳՈՒՇԱՑՈՒՄ. Ձեր զննարկիչը չունի Յունիկոդ ապահովում։ Հոդվածներ խմբագրելիս բոլոր ոչ-ASCII սիմվլոները փոխարինվելու են իրենց տասնվեցական կոդերով։'''",
 	'nocreatetitle' => 'Էջերի ստեղծումը սահմանափակված է',
@@ -11181,9 +11002,6 @@ Si tu ha arrivate a iste pagina per error, clicca le button '''Retornar''' de tu
 Tu pote [[Special:Search/{{PAGENAME}}|cercar le titulo de iste pagina]] in altere paginas,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercar in le registros pertinente],
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} modificar iste pagina]</span>.',
-	'noarticletext-nopermission' => 'Al momento il non ha texto in iste pagina.
-Tu pote [[Special:Search/{{PAGENAME}}|cercar le titulo de iste pagina]] in altere paginas,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercar in le registros pertinente].</span>',
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''Attention: Tu utilisa un navigator non compatibile con le characteres Unicode.'''
 Un systema de modification alternative ha essite activate, que te permitte modificar articulos con securitate: le characteres non ASCII apparera in le quadro de modification como codices hexadecimal.",
@@ -11311,8 +11129,6 @@ Subbagian ini mungkin dipindahkan atau dihapus ketika Anda membukanya.',
 	'newarticletext' => "Anda mengikuti pranala ke halaman yang belum tersedia. Untuk membuat halaman tersebut, ketiklah isi halaman di kotak di bawah ini (lihat [[{{MediaWiki:Helppage}}|halaman bantuan]] untuk informasi lebih lanjut). Jika Anda tanpa sengaja sampai ke halaman ini, klik tombol '''back''' di penjelajah web anda.",
 	'noarticletext' => 'Saat ini tidak ada teks di halaman ini.
 Anda dapat [[Special:Search/{{PAGENAME}}|melakukan pencarian untuk judul halaman ini]] di halaman-halaman lain, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mencari log terkait], atau [{{fullurl:{{FULLPAGENAME}}|action=edit}} menyunting halaman ini]</span>.',
-	'noarticletext-nopermission' => 'Saat ini tidak ada teks di halaman ini.
-Anda dapat [[Special:Search/{{PAGENAME}}|melakukan pencarian untuk judul halaman ini]] di halaman-halaman lain, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mencari log terkait], atau [{{fullurl:{{FULLPAGENAME}}|action=edit}} menyunting halaman ini]</span>.',
 	'note' => "'''Catatan:'''",
 	'nonunicodebrowser' => "'''Peringatan: Penjelajah web Anda tidak mendukung unicode.'''
 Telah terdapat sebuah solusi agar Anda dapat menyunting halaman dengan aman: karakter non-ASCII akan muncul dalam kotak edit sebagai kode heksadesimal.",
@@ -11416,9 +11232,6 @@ Si vu es ci per errore, clacca in li buton '''retornar''' in tui navigator.",
 	'noarticletext' => 'Vi currentmen ne textu in ti págine.
 Vu posse [[Special:Search/{{PAGENAME}}|serchar por ti titul de págine]] in altri págines,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} serchar li diariumes relatet], o [{{fullurl:{{FULLPAGENAME}}|action=edit}} redacter ti págine]</span>.',
-	'noarticletext-nopermission' => 'Vi currentmen ne textu in ti págine.
-Vu posse [[Special:Search/{{PAGENAME}}|serchar por titul de ti págine]] in altri págines,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} serchar li diariumes relatet]</span>.',
 	'nextrevision' => 'Revision sequent →',
 	'next' => 'prox',
 	'nextn' => 'proxim {{PLURAL:$1|$1}}',
@@ -11501,7 +11314,7 @@ mà [{{fullurl:{{FULLPAGENAME}}|action=edit}} Í nwèríkí rü nà ihü á]</sp
 	'notitlematches' => 'Ọ díghì íshí ihü dí kà nke á hù',
 	'notextmatches' => 'Mkpụrụ édémédé enwéghị ihü ȯ dị na',
 	'nextn' => '{{PLURAL:$1|$1}} nke ozor',
-	'nextn-title' => '{{PLURAL:$1|Ihe fútárá|Ihe fútárá}} nke sò nke $1',
+	'nextn-title' => '{{PLURAL:$1|Ihe fútárrá|Ihe fútárá}} nke sò nke $1',
 	'nonefound' => "'''Mà kwá''': Náni áhàama ótù dìkàrì Í tuó ya na áká onwe.
 Nwàné ótù okwu íshí na ihe Í nè tú jí ''háníle:'' Í tuó ihe nílé (bu kwá ihü okwu, àtụ, échétá ma échetàghị), ma Í gi ji áhàama Í chọrọ màkà ótù okwu íshí.",
 	'nchanges' => '$1 {{PLURAL:$1|gbanwere|gbanwere}}',
@@ -11654,10 +11467,6 @@ Naiyalis ngatan wenno naikkat idi kitkitaen dayta a panid.',
 Mabalinmo ti [[Special:Search/{{PAGENAME}}|agsapul iti kastoy a titulo ti panid]] iti sabsabali a pampanid,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} agbirukka],
 wenno [{{fullurl:{{NAMESPACE}}:{{PAGENAME}}|action=edit}} urnosem daytoy a panid].',
-	'noarticletext-nopermission' => 'Awan pay ti  nagyan na daytoy a panid.
-Mabalinmo ti [[Special:Search/{{PAGENAME}}|agsapul iti kastoy a titulo ti panid]] iti sabsabali a pampanid,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} agbirukka],
-wenno <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} agbiruk ka kadagiti maikabagian a listaan]</span>.',
 	'note' => "'''Paammo:'''",
 	'nonunicodebrowser' => "'''Ballaag: Ti  pabasabasam ket saan a kasla unicode .'''
 Adda sabali a mausar tapno makaurnos ka kadagiti panid: Ti saan nga-ASCII a kababalin ket agparang iti pagurnosan a kahon a kas dagiti heksadesimal a kodigo.",
@@ -11762,8 +11571,6 @@ $messages['inh'] = array(
 [[Special:Search/{{PAGENAME}}|цу тайпара цӀи дувцам кораде]] кхыдола йоазувашкахь йийша я шун, вешта
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} тара дола таптарий йоазо карае], е
 '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} изза мо цӀи йоалаш оагӀув ела]'''</span>.",
-	'noarticletext-nopermission' => 'Укх сахьате укх оагӀув тӀа яздам дац.
-Шун йийшая, кхыдола йоазувнашкахь [[Special:Search/{{PAGENAME}}|дола цӀерий хаттам корае]] е <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} нийсамий тептара йоазувнаш корае].</span>',
 	'note' => "'''ХӀамоалар:'''",
 	'nextrevision' => 'TӀадоагӀа →',
 	'next' => 'тӀехь.',
@@ -11943,9 +11750,6 @@ Ef þú hefur óvart villst hingað geturðu notað '''til baka'''-hnappinn í v
 	'noarticletext' => 'Enginn texti er á þessari síðu enn sem komið er.
 Þú getur [[Special:Search/{{PAGENAME}}|leitað í öðrum síðum]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} leitað í tengdum skrám], eða [{{fullurl:{{FULLPAGENAME}}|action=edit}} breytt henni sjálfur]</span>.',
-	'noarticletext-nopermission' => 'Enginn texti er á þessari síðu enn sem komið er.
-Þú getur [[Special:Search/{{PAGENAME}}|leitað í öðrum síðum]],
-eða <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} leitað í tengdum skrám]</span>.',
 	'note' => "'''Athugið:'''",
 	'nonunicodebrowser' => "'''Viðvörun: Vafrarinn þinn styður ekki unicode.'''
 Lausn er í gildi sem leyfir þér að breyta síðum: Stafatákn sem eru ekki í ASCII kerfinu birtast í breytingarglugganum eins og sextándakóðar.",
@@ -12066,11 +11870,14 @@ Assicurati di avere attivato i cookie, ricarica questa pagina e riprova.",
 Potrebbe essere stata spostata o eliminata mentre si stava visionando la pagina.',
 	'newarticle' => '(Nuovo)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''Questa pagina ha bisogno di contenuti. Puoi contribuire inserendo una frase o un'immagine!'''</p>
+	'noarticletext' => '{{#ifeq: {{NAMESPACE}} ||
+=== \'\'\'La pagina "{{FULLPAGENAME}}" non è stata trovata\'\'\' ===
 
-<center><span class=\"wikia-button big plainlinks\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Modifica questa pagina</span>]<br />oppure<br />[[Special:Search/{{PAGENAME}}|cerca \"{{PAGENAME}}\"]]</span></center>  
-<br />",
-	'noarticletext-nopermission' => 'In questo momento la pagina richiesta è vuota. È possibile [[Special:Search/{{PAGENAME}}|cercare questo titolo]] nelle altre pagine del sito o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercare nei registri correlati]</span>.',
+Cosa desideri fare?
+
+* Cercare "{{PAGENAME}}" <span class="plainlinks">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} tra le pagine esistenti]</span>.
+* Creare la pagina <span class="plainlinks">"[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]"</span>.
+}}',
 	'note' => "'''NOTA:'''",
 	'nonunicodebrowser' => "'''Attenzione: si sta utilizzando un browser non compatibile con i caratteri Unicode. Per consentire la modifica delle pagine senza creare inconvenienti, i caratteri non ASCII vengono visualizzati nella casella di modifica sotto forma di codici esadecimali.'''",
 	'nocreatetitle' => 'Creazione delle pagine limitata',
@@ -12144,7 +11951,6 @@ Potrebbe essere stata spostata o eliminata mentre si stava visionando la pagina.
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -12216,7 +12022,6 @@ Potrebbe essere stata spostata o eliminata mentre si stava visionando la pagina.
 Se vuoi creare la pagina ora, basta cominciare a scrivere il testo nella casella qui sotto (vedi la [[{{MediaWiki:Helppage}}|pagina di aiuto]] per maggiori informazioni).
 Se il collegamento è stato aperto per errore, è sufficiente fare clic sul pulsante '''Indietro''' del proprio browser.",
 	'noarticletext' => 'In questo momento la pagina richiesta è vuota. È possibile [[Special:Search/{{PAGENAME}}|cercare questo titolo]] nelle altre pagine del sito, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercare nei registri correlati] oppure [{{fullurl:{{FULLPAGENAME}}|action=edit}} modificare la pagina ora]</span>.',
-	'noarticletext-nopermission' => 'In questo momento la pagina richiesta è vuota. È possibile [[Special:Search/{{PAGENAME}}|cercare questo titolo]] nelle altre pagine del sito o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercare nei registri correlati]</span>.',
 	'note' => "'''NOTA:'''",
 	'nonunicodebrowser' => "'''Attenzione: si sta utilizzando un browser non compatibile con i caratteri Unicode. Per consentire la modifica delle pagine senza creare inconvenienti, i caratteri non ASCII vengono visualizzati nella casella di modifica sotto forma di codici esadecimali.'''",
 	'nocreatetitle' => 'Creazione delle pagine limitata',
@@ -12344,11 +12149,13 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 ページを閲覧している間に移動あるいは削除された可能性があります。',
 	'newarticle' => '（新）',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''このページはコンテンツを必要としています。文や画像を追加することでコンテンツを充実させることができます！'''</p>
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''{{FULLPAGENAME}}という記事は見つかりませんでした。''' ===
 
-<center><span class=\"wikia-button big plainlinks\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>このページを作成する！</span>]<br />または<br />[[Special:Search/{{PAGENAME}}|「{{PAGENAME}}」で検索する]]</span></center>  
-<br />",
-	'noarticletext-nopermission' => '現在このページには内容がありません。他のページに含まれる[[Special:Search/{{PAGENAME}}|このページ名を検索する]]か、もしくは<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 関連記録を検索する]</span>ことができます。',
+下記のことが可能です、お選びください。
+
+* 既存の記事の中から<span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>を検索する
+* <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>}}の記事を作成する",
 	'note' => "'''お知らせ：'''",
 	'nonunicodebrowser' => "'''警告：使用中のブラウザがUnicodeに対応していません。'''
 安全にページを編集する回避策が表示されています：編集ボックス中の非ASCII文字は16進数文字コードによって表現されます。",
@@ -12428,7 +12235,6 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -12789,9 +12595,6 @@ $messages['ka'] = array(
 თქვენ შეგიძლიათ [[Special:Search/{{PAGENAME}}|მოძებნოთ ამ გვერდის სათაური]] სხვა გვერდებზე,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} მოძებნოთ შესაბამისი ჟურნალები],
 ან [{{fullurl:{{FULLPAGENAME}}|action=edit}} დაიწყოთ ამ გვერდის რედაქტირება]</span>.',
-	'noarticletext-nopermission' => 'ამ დროისთვის ეს გვერდი ცარიელია.
-ქვენ შეგიძლიათ [[Special:Search/{{PAGENAME}}|მოძებნოთ ეს სიტყვა]] სხვა გვერდებზე,
-ან <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} შესაბამის ჟურნალებში]</span>',
 	'note' => "'''შენიშვნა:'''",
 	'nonunicodebrowser' => "'''გაფრთხილება: თქვენი ბრაუზერი უნიკოდთან თავსებადი არ არის. ჩვენ ვცდილობთ ამ პრობლემის გადაჭრას, რათა თქვენ შეძლოთ უსაფრთხოდ შეიტანოთ ცვლილებები გვერდებზე: არა-ASCII ნიშნები რედაქტირების ფანჯარაში გამოჩნდება როგორც ჰექსადეციმალური კოდები.'''",
 	'nocreatetitle' => 'გვერდის შექმნა ლიმიტირებულია',
@@ -13221,9 +13024,6 @@ URL щиптхэм хэукъуэгъуэ быщӀа хъунщ иэ техэп�
 ГъуэщэгъуэкӀэ мыбым утехуамэ, уи браузерым гъэзэжыгъуэ иӀэм текъузи зэфэкащ.',
 	'noarticletext' => "Иджыпсту мы напэкӀуэцӀыр нэщӀ.
 Узхуэныкъуэм [[Special:Search/{{PAGENAME}}|игугъ бгъуэтыфыну]] нэгъуэщӀ напэкӀуэцӀхэм, <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} тхылъхэм абым теухуа тхыгъэхэм], иэ '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} апхуэдэцӀэ зиӀэ напэкӀуцӀ быщӀыфынущ]'''</span>.",
-	'noarticletext-nopermission' => 'Джыпсту мы напэкӀуэцӀыр нэщӀу щытщ.
-Узхуэныкъуэм [[Special:Search/{{PAGENAME}}|и гугъ бгъуэтыфыну]] нэгъуэщӀ напэкӀуэцӀхэм,
-иэ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} абым теухуа тхъыгъэхэр].</span>',
 	'note' => "'''Гулъытыгъуэ:'''",
 	'nonunicodebrowser' => "'''Хуэсакъ: Уи браузерым Йуникодыр къыштэкъым. Тхыгъэхэм я гъэтэрэзыгъуэм дежь мы ASCII щыту хъуа дэмыгъэхэр я кодкӀэ зэхъуэкӀауэ щытынухэ.'''",
 	'nocreatetitle' => 'НапэкӀуэцӀ щӀыныр тубыдащ',
@@ -13321,9 +13121,6 @@ $messages['khw'] = array(
 	'noarticletext' => ' ھیہ صفحہا فی الحال کیہ متن موجود نیکی.
 تو دیگر صفحاتا [[Special:Search/{{PAGENAME}}|ھیہ صفحہو عنوانو بچے تلاش کوریکو بوس]]، <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} متعلقہ نوشتہ جات تلاش کوریکو بوس],
 یا [{{fullurl:{{FULLPAGENAME}}|action=edit}} تو ھیہ صفحہا ترمیم کوریکو بوس]</span>',
-	'noarticletext-nopermission' => 'ھیہ صفحہا فی الحال کیہ متن موجود نیکی.
-تو دیگر صفحاتا [[Special:Search/{{PAGENAME}}|ھیہ صفحہو عنوانو بچے تلاش کوریکو بوس]]، <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} متعلقہ نوشتہ جات تلاش کوریکو بوس],
-یا [{{fullurl:{{FULLPAGENAME}}|action=edit}} تو ھیہ صفحہا ترمیم کوریکو بوس]</span>',
 	'note' => "'''نوٹ:'''",
 	'nextrevision' => '→پروشٹیو اعادہ',
 	'notitlematches' => 'کیہ دی مماثل عنوان صفحہ ملاو نو ھوی',
@@ -13411,9 +13208,6 @@ Eke be ğeletêni ama ita, wa gozaga '''peyser'''i programê ho de bıteqne.",
 Tı şikina zerrê pelunê binu de [[Special:Search/{{PAGENAME}}|serba sernamê na pele cı feteliye]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cıkotena aide rê cı feteliye],
 ya ki [{{fullurl:{{FULLPAGENAME}}|action=edit}} na pele bıvurne]</span>.',
-	'noarticletext-nopermission' => 'Na pele de hona thowa çino.
-Tı şikina zerrê pelunê binu de [[Special:Search/{{PAGENAME}}|seba sernamê na pele cıfeteliyê]],
-ya ki <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cıkotena aide rê cıfeteliyê].</span>',
 	'note' => "'''Not:'''",
 	'nextrevision' => 'Tekrardiyaiso newêr →',
 	'next' => 'badên',
@@ -14230,9 +14024,6 @@ $messages['km'] = array(
 	'noarticletext' => 'បច្ចុប្បន្នគ្មានអត្ថបទក្នុងទំព័រនេះទេ។
 
 អ្នកអាច [[Special:Search/{{PAGENAME}}|ស្វែងរក​ចំណងជើង​នៃទំព័រនេះ]]ក្នុងទំព័រដទៃទៀត​​ ឬ [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ស្វែង​រក​កំណត់​ហេតុ​ដែល​ពាក់ព័ន្ធ] ឬ [{{fullurl:{{FULLPAGENAME}}|action=edit}} កែប្រែ​ទំព័រនេះ]។',
-	'noarticletext-nopermission' => 'បច្ចុប្បន្ន គ្មានអត្ថបទណាមួយក្នុងទំព័រនេះទេ។
-
-អ្នកអាច [[Special:Search/{{PAGENAME}}|ស្វែងរក​ចំណងជើង​នៃទំព័រនេះ]] ក្នុងទំព័រ​ផ្សេងៗ ឬ<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ស្វែង​រក​កំណត់​ហេតុ​ដែល​ពាក់ព័ន្ធ]</span>។',
 	'note' => "'''ចំណាំ៖'''",
 	'nonunicodebrowser' => "​'''ប្រយ័ត្ន​៖ កម្មវិធី​រុករក​របស់​អ្នក​មិន​គាំ​ទ្រ​ដល់​អក្សរ​ពុម្ព​យូនីកូដ​ទេ​។'''
 មាន​ដំណោះ​ស្រាយ​មួយ​ដែល​អនុញ្ញាត​ឲ្យ​អ្នក​កែ​ប្រែ​ទំព័រ​ដោយ​សុវត្ថិភាព​៖ តួ​អក្សរមិន​មែន​ ASCII ​(non-ASCII) នឹង​បង្ហាញ​នៅ​ក្នុង​ប្រអប់​កែ​ប្រែ​ជា​កូដ​គោល១៦ ។",
@@ -14465,8 +14256,6 @@ $messages['ko'] = array(
 만약 잘못 찾아온 문서라면, 웹 브라우저의 '''뒤로''' 버튼을 눌러 주세요.",
 	'noarticletext' => '이 문서가 존재하지 않습니다.
 이 문서와 제목이 비슷한 문서가 있는지 [[Special:Search/{{PAGENAME}}|검색]]하거나, 이 문서에 관련된 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 기록]을 확인하거나, 문서를 직접 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 편집]</span>할 수 있습니다.',
-	'noarticletext-nopermission' => '‘{{FULLPAGENAME}}’ 문서가 존재하지 않습니다.
-이 문서와 제목이 비슷한 문서가 있는지 [[Special:Search/{{PAGENAME}}|검색]]하거나, 이 문서에 관련된 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 기록]을 확인할 수 있습니다.</span>',
 	'note' => "'''주의:'''",
 	'nonunicodebrowser' => "'''주의: 당신의 웹 브라우저가 유니코드를 완벽하게 지원하지 않습니다. 몇몇 문자가 16진수 코드로 나타날 수 있습니다.'''",
 	'nocreatetitle' => '문서 생성 제한',
@@ -14594,8 +14383,6 @@ $messages['ko-kp'] = array(
 만약 잘못 찾아온 문서라면, 웹 브라우저의 '''뒤로''' 버튼을 눌러 주세요.",
 	'noarticletext' => '이 문서가 존재하지 않습니다.
 이 문서와 제목이 비슷한 문서가 있는지 [[Special:Search/{{PAGENAME}}|검색]]하거나, 이 문서에 관련된 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 기록]을 확인하거나, 문서를 직접 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 편집]</span>할 수 있습니다.',
-	'noarticletext-nopermission' => '‘{{FULLPAGENAME}}’ 문서가 존재하지 않습니다.
-이 문서와 제목이 비슷한 문서가 있는지 [[Special:Search/{{PAGENAME}}|검색]]하거나, 이 문서에 관련된 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 기록]을 확인할 수 있습니다.</span>',
 	'note' => "'''주의:'''",
 	'nonunicodebrowser' => "'''주의: 당신의 웹 브라우저가 유니코드를 완벽하게 지원하지 않습니다. 몇몇 문자가 16진수 코드로 나타날 수 있습니다.'''",
 	'nocreatetitle' => '문서 생성 제한',
@@ -14683,7 +14470,7 @@ $messages['koi'] = array(
 	'nowiki_tip' => 'Игнорируйтны вики-форматируйтöм',
 	'newarticle' => '(Виль)',
 	'newarticletext' => "Ыстöт кузя тэ шедiн листбок вылö,  кöдa абу на. Мед аркмöтны сiйö,  гиж тексттö улiсь öшынöко (унажык  видзöт: [[{{MediaWiki:Helppage}}|отсасян листбок]]). Шедiн кö татчö сорасьöмöн,  нырышт браузерсит '''бöрлань''' личкöт.",
-	'noarticletext' => 'Öнi этiя листбок вылын текстыс абу. 
+	'noarticletext' => 'Öнi этiя листбок вылын текстыс абу.
 Но  [[Special:Search/{{PAGENAME}}|сы ним]] казьтывсьö мöдiк листбоккез вылын, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{urlencode:{{FULLPAGENAME}}}}}} кошшыны лöсялана гижöттэз], нето [{{fullurl:{{FULLPAGENAME}}|action=edit}} кутчисьны этiя листбок бердö]</span>.',
 	'nextrevision' => 'Вильжык версия',
 	'notitlematches' => 'Листбоккез ниммезын абу öткодь торрез',
@@ -14761,9 +14548,6 @@ $messages['krc'] = array(
 Джангылыб кирген эсегиз а уа бери, браузеригизни '''артха''' тиегин басыгъызда къоюгъуз.",
 	'noarticletext' => "Бусагъатда бу бетде текст джокъду.
 Сиз [[Special:Search/{{PAGENAME}}|бу атны башха статьялада]] излерге , <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} журналлагъа къараргъа], неда '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} быллай атлы джангы бет къураргъа боллукъсуз]'''</span>.",
-	'noarticletext-nopermission' => 'Бусагъатда бу бетде текст джокъду.
-Сиз [[Special:Search/{{PAGENAME}}|бу атны таныгъан]] башха статьяланы,
-неда <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} журналлада джазылгъанланы]</span> табаргъа боллукъсуз.',
 	'note' => "'''Белги:'''",
 	'nonunicodebrowser' => "'''Эсгертиу: сизни браузеригиз Юникод кодировканы танымайдв.'''
 Бетлени тюрлендирген сагъатда ASCII болмагъан символла оналтылыкъ кодларына алышдырыллыкъдыла.",
@@ -14959,9 +14743,6 @@ Et künnt noh woh anders hen ömjetrockwe woode sin, udder eruß jenumme, zig d�
 Luur op de [[{{MediaWiki:Helppage}}|Sigge met Hölp]] noh, wann De mieh dodrüvver wesse wells.
 Wann De jar nit heh hen kumme wollts, dann jangk zeröck op die Sigg, wo De herjekumme bes, Dinge Brauser hät ene Knopp doför.',
 	'noarticletext' => '<span class="plainlinks">Em Momang es keine Tex op dä Sigg. Jangk en de Texte vun ander Sigge [[Special:Search/{{PAGENAME}}|noh däm Titel söke]], odder [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} donn en de Logböcher donoh loore], oder [{{FULLURL:{{FULLPAGENAME}}|action=edit}} fang die Sigg aan] ze schrieve, oder jangk zeröck wo de her koms. Do hät Dinge Brauser ene Knopp för.</span>',
-	'noarticletext-nopermission' => 'Op dä Sigg es em Momang nix drop.
-Do kanns noh däm Tittel vun heh dä Sigg [[Special:Search/{{PAGENAME}}|em Tex op ander Sigge söhke]],
-udder en dä zopaß <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} Logbööscher nohloore]</span>.',
 	'note' => "'''Opjepass:'''",
 	'nonunicodebrowser' => "'''Opjepass:'''
 Dinge Brauser kann nit öntlich met däm Unicode un singe Buchstave ömjonn.
@@ -15097,9 +14878,6 @@ Et künnt noh woh anders hen ömjetrockwe woode sin, udder eruß jenumme, zig d�
 Luur op de [[{{MediaWiki:Helppage}}|Sigge met Hölp]] noh, wann De mieh dodrüvver wesse wells.
 Wann De jar nit heh hen kumme wollts, dann jangk zeröck op die Sigg, wo De herjekumme bes, Dinge Brauser hät ene Knopp doför.',
 	'noarticletext' => '<span class="plainlinks">Em Momang es keine Tex op dä Sigg. Jangk en de Texte vun ander Sigge [[Special:Search/{{PAGENAME}}|noh däm Titel söke]], odder [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} donn en de Logböcher donoh loore], oder [{{FULLURL:{{FULLPAGENAME}}|action=edit}} fang die Sigg aan] ze schrieve, oder jangk zeröck wo de her koms. Do hät Dinge Brauser ene Knopp för.</span>',
-	'noarticletext-nopermission' => 'Op dä Sigg es em Momang nix drop.
-Do kanns noh däm Tittel vun heh dä Sigg [[Special:Search/{{PAGENAME}}|em Tex op ander Sigge söhke]],
-udder en dä zopaß <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} Logbööscher nohloore]</span>.',
 	'note' => "'''Opjepass:'''",
 	'nonunicodebrowser' => "'''Opjepass:'''
 Dinge Brauser kann nit öntlich met däm Unicode un singe Buchstave ömjonn.
@@ -15221,8 +14999,6 @@ Hemû rûpelên taybet dikarin di [[Special:SpecialPages|lîsteya rûpelên tayb
 Ji bo alîkariyê binêre: [[{{MediaWiki:Helppage}}|Alîkarî]].<br />
 Heke tu bi şaşîtî hatî, bizîvire rûpela berê.",
 	'noarticletext' => 'Ev rûpel niha vala ye, tu dikarî [[Special:Search/{{PAGENAME}}|Di nav gotarên din de li "{{PAGENAME}}" bigere]] an [{{fullurl:{{FULLPAGENAME}}|action=edit}} vê rûpelê biguherînî].',
-	'noarticletext-nopermission' => 'Ev rûpel niha vala ye, tu dikarî [[Special:Search/{{PAGENAME}}|Di nav gotarên din de li "{{PAGENAME}}" bigere]] an [{{fullurl:{{FULLPAGENAME}}|action=edit}} vê rûpelê biguherînî].
-Ev rûpel niha vala ye, tu dikarî [[Special:Search/{{PAGENAME}}|Di nav gotarên din de li "{{PAGENAME}}" bigere]] an [{{fullurl:{{FULLPAGENAME}}|action=edit}} vê rûpelê biguherînî].',
 	'note' => "'''Nîşe:'''",
 	'nohistory' => 'Dîroka guherandina vê rûpelê nîne.',
 	'nextrevision' => 'Guhertoya nûtir→',
@@ -15377,12 +15153,9 @@ $messages['ky'] = array(
 Бул баракты ачуу үчүн, ылдый жактагы терезечеге жаза баштаңыз (кошумча маалымат алуу үчүн [[{{MediaWiki:Helppage}}|жардам барагы]] караңыз).
 Эгерде Сиз бул жерге жаңылыштык менен кирип калсаңыз, анда браузериңизде '''артка''' баскычын басыңыз.",
 	'noarticletext' => "Азыр бул баракта текст жок.
-Сиз [[Special:Search/{{PAGENAME}}|ушул аталыш менен баракты изде]] башка барактарда 
+Сиз [[Special:Search/{{PAGENAME}}|ушул аталыш менен баракты изде]] башка барактарда
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} тийиштүү жазууларды таба аласыз],
 же '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} ошондой аталыш менен барак ача аласыз].'''</span>.",
-	'noarticletext-nopermission' => 'Азыр бул баракта текст жок.
-Сиз башка барактардан [[Special:Search/{{PAGENAME}}|ушул аталыш менен баракты издөө]] салып,
-же <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} тийиштүү жазууларды таба аласыз]</span>.',
 	'nextrevision' => 'Жаңыраак версиясы →',
 	'next' => 'кийинки',
 	'nextn' => 'кийинки{{PLURAL:$1|$1}}',
@@ -15548,9 +15321,6 @@ Si venites aquí por yerro, torna a la hoja de antes.',
 Puedes [[Special:Search/{{PAGENAME}}|buscar el títůlo de esta hoja]] en otras hojas,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar en los rējistros relatados],
 ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} trocar esta hoja]</span>.',
-	'noarticletext-nopermission' => 'No ay teksto oy día en esta hoja.
-Puedes [[Special:Search/{{PAGENAME}}|buscar este títůlo de hoja]] en otras hojas,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar en los rejistros relasyonados]</span>.',
 	'note' => "'''Nota:'''",
 	'nocreate-loggedin' => 'No tienes el permisso de creas hojas nuevas.',
 	'nextrevision' => 'Rêvisión venidera →',
@@ -15638,9 +15408,6 @@ Et ka sinn datt e geännert oder geläscht gouf iwwerdm wou Dir d'Säit gekuckt 
 	'noarticletext' => 'Dës Säit huet momentan keen Text.
 Dir kënnt op anere Säiten no [[Special:Search/{{PAGENAME}}|dësem Säitentitel sichen]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} an den entspriechende Logbicher nokucken] oder [{{fullurl:{{FULLPAGENAME}}|action=edit}} esou eng Säit uleeën]</span>.',
-	'noarticletext-nopermission' => 'Elo ass keen Text op dëser Säit.
-Dir kënnt op anere Säiten [[Special:Search/{{PAGENAME}}|no dësem Sàitentitel sichen]],
-oder <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} an de Logbicher sichen]</span>.',
 	'note' => "'''Notiz:'''",
 	'nonunicodebrowser' => "'''OPGEPASST:''' Äre Browser ass net Unicode kompatibel. Ännert dat w.e.g. éier Dir eng Säit ännert.",
 	'nocreatetitle' => "D'Uleeë vun neie Säiten ass limitéiert.",
@@ -15743,16 +15510,13 @@ $messages['lez'] = array(
 	'nowiki_tip' => 'Викидин форматун гьисаба кьамир',
 	'nosuchsectiontitle' => 'Пай жугъуриз жезвач',
 	'newarticle' => '(ЦIийи)',
-	'newarticletext' => 'Куьне гьеле авачир ччиниз элячlнава.  
+	'newarticletext' => 'Куьне гьеле авачир ччиниз элячlнава.
 Ам туькlуьрун патал агъадихъ галай дакlарда текст гьадра. (гегьеншдиз [[{{MediaWiki:Helppage}}|куьмекдин ччина]] килигиз жеда).
 Куьне инал гъалатlдин гъиляй элячlнаватlа, кьу браузердин "кьулухъ"" дуьгмедал илиса.',
 	'noarticletext' => 'Исятда и  ччинда са текстни авач.
 Квевай [[Special:Search/{{PAGENAME}}| и тlвар алай ччин]] муькуь ччинра жугъуриз,
 <span class="plainlinks"> [{{fullurl: {{# Special:Log}} | ччин = {{FULLPAGENAMEE}}}} журналрин талукь тир кхьей затIар жугъуриз],
 ва я [{{fullurl: {{FULLPAGENAME}} | action=edit}} и тlвар алай ччин туькIуьриз жеда] </span>.',
-	'noarticletext-nopermission' => 'Исятда и  ччина са текстни авач.
-Квевай [[Special:Search/{{PAGENAME}}| и тlвар алай ччин]] муькуь ччинра жугъуриз ва я
-<span class="plainlinks"> [{{fullurl: {{# Special:Log}} | page = {{FULLPAGENAMEE}}}} журналрин талукь тир кхьей затIар жугъуриз] жеда.',
 	'nextrevision' => 'Мадни цlийи жуьре →',
 	'next' => 'къведайди',
 	'notitlematches' => 'Ччинрин тIварара ацалтунар авач',
@@ -15907,9 +15671,6 @@ Bw'obanga tewagenderedde kutuuka wano, nyigabunyizi eppeesa ery'omu kalambula-ne
 erya '''ddayo'''.",
 	'noarticletext' => "Wano tewali kyawandikidwawo.<br />
 Ky'obadde onoonya osobola [[Special:Search/{{PAGENAME}}| okukinoonyeza]] ku mpapula ndala oba oyinza [{{fullurl:{{FULLPAGENAME}}|action=edit}} gwe okukiwandikako] wano.",
-	'noarticletext-nopermission' => 'Wano tewali kyawandikidwawo.<br />
-Ky\'obadde onoonya osobola [[Special:Search/{{PAGENAME}}| okukinoonyeza]] ku mpapula ndala oba
-oyinza <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} okukinoonyeza mu nkalala z\'ebifuddeyo ebyekuusana nakyo]</span>.',
 	'note' => "'''Okunnyonyola:'''",
 	'nonunicodebrowser' => "'''Kulabula: Kalambulaneti yo tekwatagana bulungi n'enkola ya unicode.'''<br />
 Okuvvuunuka obuzibu buno osobole okukyusa mu mpapula, buli lw'on'owandikawo<br />
@@ -16001,9 +15762,6 @@ Type in de box hiejónger óm de pazjena te beginne (zuug de [[{{MediaWiki:Helpp
 Es te hie per óngelök terech bis gekómme, klik dan op de '''trök'''-knóp van diene browser.",
 	'noarticletext' => 'Dees pagina bevat gein teks.
 De kèns [[Special:Search/{{PAGENAME}}|nao deze term zeuke]] in anger pagina\'s, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logbeuk doorzeuke] of [{{fullurl:{{FULLPAGENAME}}|action=edit}} dees pagina bewirke]</span>.',
-	'noarticletext-nopermission' => 'Dees pagina bevat gein teks.
-De kans [[Special:Search/{{PAGENAME}}|nao dees term zeuke]] in anger pagina\'s of
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logbeuk doorzeuke]</span>.',
 	'note' => "'''Opmirking:'''",
 	'nonunicodebrowser' => "'''WAARSJUWING: Diene browser is voldit neet aan de unicode sjtandaarde, gebroek estebleef inne angere browser veurdas e artikele gis bewirke.'''",
 	'nocreatetitle' => "'t Aanmake van pazjena's is beperk",
@@ -16108,7 +15866,6 @@ Se o se vêu creâ a pàgina òua, o se pêu comensâ a scrive o testo into spà
 
 Se t'ê intròu inte sto colegaménto pe sbàlio, o basta sciaccâ '''Inderê''' into navegatô.",
 	'noarticletext' => "Inte sto momento a pagina çercâ a l'è vêua. O l'è poscibbile [[Special:Search/{{PAGENAME}}|çercâ 'sto tittolo]] inte âtre pagine do scîto opû [{{fullurl:{{FULLPAGENAME}}|action=edit}} cangiâ a pagina òua].",
-	'noarticletext-nopermission' => "Òua a pàgina çercâ a l'è vêua. O l'è poscìbile [[Special:Search/{{PAGENAME}}|çercâ sto tìtolo]] inte âtre pàgine do scîto opû [{{fullurl:{{FULLPAGENAME}}|action=edit}} cangiâ a pàgina òua].",
 	'nocreatetext' => "A poscibilitæ de creâ nêuve paggine insce {{SITENAME}} a l'è stæta limitâ solo a-i ûtenti registræ.
 O se pêu tornâ inderê e modificâ 'na paggina escistente, oppûre [[Special:UserLogin|intrâ ò creâ 'n accesso nêuvo]].",
 	'nextrevision' => 'Revixon ciù nêuva →',
@@ -16158,14 +15915,10 @@ $messages['liv'] = array(
 	'nowiki_sample' => 'Kēratigid tǟnõ tekstõ bäz formātõ',
 	'nowiki_tip' => 'Bäz vikipēdij formātõ',
 	'newarticle' => '(Ūž)',
-	'newarticletext' => "Līedtõ, kus siḑīm sīnda vīž, äb ūo vel. 
-Līedpūol lūomizõks täddõn um tǟnõ alīzõ kastõz kēratimist (mū tieut [[{{MediaWiki:Helppage}}|opātõksõst]]). 
+	'newarticletext' => "Līedtõ, kus siḑīm sīnda vīž, äb ūo vel.
+Līedpūol lūomizõks täddõn um tǟnõ alīzõ kastõz kēratimist (mū tieut [[{{MediaWiki:Helppage}}|opātõksõst]]).
 Až jutīztõ tǟnõ mõţmõt, glõbž brauzer '''tāgiž''' - knīepkiz pǟlõ.",
 	'noarticletext' => 'Sīesõ līeds paldīž tekstõ äb ūo.
-Sa võid [[Special:Search/{{PAGENAME}}|vȯtšõ pēļizkēra frāzõ]] mūšti lēḑist,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} vȯtšõ tämstõ log failidi],
-agā [{{fullurl:{{FULLPAGENAME}}|action=edit}} sīe līed īž lūodõ]</span>.',
-	'noarticletext-nopermission' => 'Sīesõ līeds paldīž tekstõ äb ūo.
 Sa võid [[Special:Search/{{PAGENAME}}|vȯtšõ pēļizkēra frāzõ]] mūšti lēḑist,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} vȯtšõ tämstõ log failidi],
 agā [{{fullurl:{{FULLPAGENAME}}|action=edit}} sīe līed īž lūodõ]</span>.',
@@ -16505,9 +16258,6 @@ Jei patekote čia per klaidą, paprasčiausiai spustelkite  naršyklės mygtuką
 Jūs galite [[Special:Search/{{PAGENAME}}|ieškoti šio puslapio pavadinimo]] kituose puslapiuose,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ieškoti susijusių įrašų],
 arba [{{fullurl:{{FULLPAGENAME}}|action=edit}} redaguoti šį puslapį]</span>.',
-	'noarticletext-nopermission' => 'Šiuo metu šiame puslapyje nėra jokio teksto.
-Jūs galite [[Special:Search/{{PAGENAME}}|ieškoti šio puslapio pavadinimo]] kituose puslapiuose,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ieškoti susijusių įrašų]</span>.',
 	'note' => "'''Pastaba:'''",
 	'nonunicodebrowser' => "'''ĮSPĖJIMAS: Jūsų naršyklė nepalaiko unikodo. Kad būtų saugu redaguoti puslapį, ne ASCII simboliai redagavimo lauke bus rodomi kaip šešioliktainiai kodai.'''",
 	'nocreatetitle' => 'Puslapių kūrimas apribotas',
@@ -16676,9 +16426,6 @@ Tā var būt pārvietota vai dzēsta, kamēr jūs apskatījāt lapu.',
 Lai izveidotu lapu, sāc rakstīt teksta logā apakšā (par teksta formatēšanu un sīkākai informācija skatīt [[{{MediaWiki:Helppage}}|palīdzības lapu]]).
 Ja tu šeit nonāci kļūdas pēc, vienkārši uzspied '''back''' pogu pārlūkprogrammā.",
 	'noarticletext' => 'Šajā lapā šobrīd nav nekāda teksta, tu vari [[Special:Search/{{PAGENAME}}|meklēt citās lapās pēc šīs lapas nosaukuma]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} meklēt saistītos reģistru ierakstos] vai arī [{{fullurl:{{FULLPAGENAME}}|action=edit}} sākt rediģēt šo lapu]</span>.',
-	'noarticletext-nopermission' => 'Šajā lapā pašlaik nav nekāda teksta.
-Tu vari [[Special:Search/{{PAGENAME}}|meklēt šīs lapas nosaukumu]] citās lapās,
-vai <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} meklēt saistītus reģistru ierakstus]</span>.',
 	'note' => "'''Piezīme: '''",
 	'nonunicodebrowser' => "'''Brīdinājums: Tavs pārlūks neatbalsta unikodu.
 Ir pieejams risinājums, kas ļaus tev droši rediģēt lapas: zīmes, kas nav ASCII, parādīsies izmaiņu logā kā heksadecimāli kodi.'''",
@@ -16801,7 +16548,6 @@ $messages['lzh'] = array(
 	'noarticletext' => '查無此文。[[Special:Search/{{PAGENAME}}|尋題]]，
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 尋誌]，
 或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 纂頁]</span>。',
-	'noarticletext-nopermission' => '查無此文。[[Special:Search/{{PAGENAME}}|尋題]]，或<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 尋誌]</span>。',
 	'note' => "'''註'''",
 	'nonunicodebrowser' => "'''警示：覽器不識萬國碼，以十六進位數代之，以保纂可也。'''",
 	'nocreatetitle' => '新題謝焉',
@@ -16978,8 +16724,6 @@ $messages['mai'] = array(
 अहाँ [[Special:Search/{{PAGENAME}}|ऐ पन्नाक शीर्षकेँ ताकू]] आन पन्नापर,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} सम्बन्धी वृत्तलेख ताकू],
 आकि [{{fullurl:{{FULLPAGENAME}}|action=edit}} ऐ पन्नाकेँ सम्पादित करू]</span>.',
-	'noarticletext-nopermission' => 'अखन ऐ पन्नापर कोनो पाठ नै अछि।
-अहाँ [[Special:Search/{{PAGENAME}}|ऐ पन्ना शीर्षक लेल ताकू]]',
 	'note' => "'''टिप्पणी:'''",
 	'nonunicodebrowser' => "'''चेतौनी: अहाँक गवेषक सार्वत्रिकाक्षरकूट सहयोगी नै अछि।'''
 एकटा अस्थायी-परोक्ष तंत्रांश अहाँकेँ सुरक्षित रूपेँ पन्नाक सम्पादनमे मदति करत: गएर-अस्की अक्षर सभ षोडशमान पद्धतिमे सम्पादन बक्सामे आएत।",
@@ -17114,9 +16858,6 @@ Angger Rika ora nguja gutul kene, klik baen tombol ''back'' nang panjlajah web R
 Rika teyeng [[Special:Search/{{PAGENAME}}|nggoleti judul kaca kiye]] nang kaca-kaca liyane,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} goleti log sing ana gandengane],
 utawa [{{fullurl:{{FULLPAGENAME}}|action=edit}} nyunting kaca kiye]</span>.',
-	'noarticletext-nopermission' => 'Sekiye ora ana teks nang kaca kiye.
-Rika teyeng [[Special:Search/{{PAGENAME}}|nggoleti judul kaca kiye]] nang kaca-kaca liyane,
-utawa <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} goleti log sing ana gandengane]</span>.',
 	'note' => "'''Cathetan:'''",
 	'nocreatetitle' => 'Panggawéan kaca anyar diwatesi',
 	'nocreatetext' => '{{SITENAME}} wis mbatesi panggawean kaca anyar.
@@ -17338,9 +17079,6 @@ Raha toa moa ka tsy nieritreritra ny hamorona ity takelaka ity ianao dia miveren
 	'noarticletext' => "'''Tsy mbola nisy namorona io lahatsoratra io.
 Azonao atao ny [[Special:Search/{{PAGENAME}}||Tadiavo ny momba ny {{PAGENAME}}]].'''
 * '''[{{SERVER}}{{localurl:{{NAMESPACE}}:{{PAGENAME}}|action=edit}} Na forony eto ny lahatsoratra momba ny {{PAGENAME}}]'''.",
-	'noarticletext-nopermission' => "Mbola tsy misy lahatsoratra ao amin'io pejy io.
-
-Azonao atao ny [[Special:Search/{{PAGENAME}}|Mikaroka momba ny lohatenin'io pejy io]] ao amin'ny pejy hafa, mitady <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} anatin'ny laogy mikasika azy]</span>",
 	'note' => "'''Fanamarihana:'''",
 	'nonunicodebrowser' => "'''FAMPITANDREMANA: Tsy mifanaraka tanteraka amin'ny unicode ny navigateur-nao. Misy ihany anefa fika napetraka hahafahanao manova ny lahatsoratra: Ny litera tsy ASCII dia hiseho amin'ny fango isa ta-enina ambin'ny folo.'''",
 	'nocreatetitle' => 'Voafetra ny famoronana pejy',
@@ -17541,8 +17279,6 @@ Jiko awak indak sangajo sampai ka laman ko, klik tombol '''back''' pado penjelaj
 Awak dapek [[Special:Search/{{PAGENAME}}|mancari judul laman ko]] pado laman lain,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mancari log nan bakaik],
 atau [{{fullurl:{{FULLPAGENAME}}|action=edit}} suntiang laman ko]</span>.',
-	'noarticletext-nopermission' => 'Kini ko indak ado teks dalam laman iko.
-Sanak dapek [[Special:Search/{{PAGENAME}}|malakukan pancaharian untuak judul laman iko]] di laman-laman lain, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mancahari log takaik], atau [{{fullurl:{{FULLPAGENAME}}|action=edit}} manyuntiang laman iko]</span>.',
 	'note' => "'''Catatan:'''",
 	'nonunicodebrowser' => "'''Paringatan: Panjalajah web Sanak indak mandukung unicode.'''
 Alah tadapek sabuah solusi agar Sanak dapek manyuntiang laman jo aman: karakter non-ASCII akan muncua dalam kotak edit sabagai kode heksadesimal.",
@@ -17640,9 +17376,6 @@ $messages['mk'] = array(
 Можете да направите [[Special:Search/{{PAGENAME}}|пребарување за овој наслов на страница]] во други страници,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пребарување во дневниците],
 или [{{fullurl:{{FULLPAGENAME}}|action=edit}} да ја уредите оваа страница]</span>.',
-	'noarticletext-nopermission' => 'Нема текст на оваа страница.
-Можете да го [[Special:Search/{{PAGENAME}}|пребарате овој наслов]] во други страници,
-или да ги <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пребарате соодветните дневници]</span>.',
 	'note' => "'''Напомена:'''",
 	'nonunicodebrowser' => "'''ПРЕДУПРЕДУВАЊЕ: Вашиот прелистувач не поддржува Уникод.
 Постои решение што овозможува безбедно да уредување страници: во полето за уредување не-ASCII знаците ќе се јавуваат како хексадецимални кодови.",
@@ -17770,9 +17503,6 @@ $messages['ml'] = array(
 	'newarticletext' => 'ഇതുവരെ നിലവിലില്ലാത്ത ഒരു താൾ സൃഷ്ടിക്കാനുള്ള ശ്രമത്തിലാണ് താങ്കൾ. അതിനായി താഴെ ആവശ്യമുള്ള വിവരങ്ങൾ എഴുതിച്ചേർത്ത് സേവ് ചെയ്യുക (കൂടുതൽ വിവരങ്ങൾക്ക് [[{{MediaWiki:Helppage}}|സഹായം താൾ]] കാണുക). താങ്കളിവിടെ അബദ്ധത്തിൽ വന്നതാണെങ്കിൽ ബ്രൗസറിന്റെ ബാക്ക് ബട്ടൺ ഞെക്കിയാൽ തിരിച്ചുപോകാം.',
 	'noarticletext' => 'ഈ താളിൽ ഇതുവരെ ഉള്ളടക്കം ആയിട്ടില്ല.
 താങ്കൾക്ക് മറ്റുതാളുകളിൽ [[Special:Search/{{PAGENAME}}|ഇതേക്കുറിച്ച് അന്വേഷിക്കുകയോ]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ബന്ധപ്പെട്ട രേഖകൾ പരിശോധിക്കുകയോ], [{{fullurl:{{FULLPAGENAME}}|action=edit}} ഈ താൾ തിരുത്തുകയോ ചെയ്യാവുന്നതാണ്]</span>.',
-	'noarticletext-nopermission' => 'ഇപ്പോൾ ഈ താളിൽ എഴുത്തുകളൊന്നും ഇല്ല.
-താങ്കൾക്ക് മറ്റു താളുകളിൽ [[Special:Search/{{PAGENAME}}|ഈ താളിന്റെ തലക്കെട്ടിനായി തിരയാവുന്നതാണ്‌]],
-അല്ലെങ്കിൽ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ബന്ധപ്പെട്ട രേഖകൾ പരിശോധിക്കാവുന്നതാണ്‌]</span>.',
 	'note' => "'''പ്രത്യേക ശ്രദ്ധയ്ക്ക്:'''",
 	'nonunicodebrowser' => "'''മുന്നറിയിപ്പ്: താങ്കളുടെ ബ്രൗസർ യൂണീകോഡിനു സജ്ജമല്ല. താളുകൾ സുരക്ഷിതമായി തിരുത്താനുള്ള സൗകര്യം ഒരുക്കിയിട്ടുണ്ട്: ASCII അല്ലാത്ത അക്ഷരങ്ങൾ ഹെക്സാഡെസിമൽ കോഡായി തിരുത്തുവാനുള്ള പെട്ടിയിൽ പ്രത്യക്ഷപ്പെടുന്നതാണ്.'''",
 	'nocreatetitle' => 'താളുകൾ സൃഷ്ടിക്കുന്നത് പരിമിതപ്പെടുത്തിയിരിക്കുന്നു',
@@ -17906,8 +17636,6 @@ $messages['mn'] = array(
 	'noarticletext' => 'Одоогийн байдлаар энэ хуудсанд текст алга.
 Та нэг бол энэ хуудасны нэрээр бусад хуудсуудад [[Special:Search/{{PAGENAME}}|хайлт хийх]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} холбоотой логуудад хайлт хийх],
 эсвэл [{{fullurl:{{FULLPAGENAME}}|action=edit}} энэ хуудсыг засварлаж болно]</span>.',
-	'noarticletext-nopermission' => 'Одоогийн байдлаар энэ хуудсанд текст алга.
-Та энэхүү [[Special:Search/{{PAGENAME}}|гарчигийг бусад хуудсуудаас хайх]],  эсвэл <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} холбогдох логуудаас хайж болно]</span>.',
 	'note' => "'''Анхааруулга:'''",
 	'nonunicodebrowser' => "'''АНХААР: Таны броузер юникод стандартыг дагадаггүй юм байна. ASCII-биш үсгүүд засварлах талбарт код байдалтай харагдана. Иймээс броузераа тохируулах, эсвэл өөрчилнө үү.'''",
 	'nocreatetitle' => 'Хуудасны үүсгэл хязгаарлагдсан байна',
@@ -18064,9 +17792,6 @@ $messages['mr'] = array(
 
 जर येथे चुकून आला असाल तर ब्राउझरच्या बॅक (back) कळीवर टिचकी द्या.',
 	'noarticletext' => 'या लेखात सध्या काहीही मजकूर नाही.
-तुम्ही विकिपीडियावरील इतर लेखांमध्ये या [[Special:Search/{{PAGENAME}}|मथळ्याच्या शोध घेऊ शकता]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} इतर याद्या शोधा],
-किंवा हा लेख [{{fullurl:{{FULLPAGENAME}}|action=edit}} लिहू शकता]</span>.',
-	'noarticletext-nopermission' => 'या लेखात सध्या काहीही मजकूर नाही.
 तुम्ही विकिपीडियावरील इतर लेखांमध्ये या [[Special:Search/{{PAGENAME}}|मथळ्याच्या शोध घेऊ शकता]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} इतर याद्या शोधा],
 किंवा हा लेख [{{fullurl:{{FULLPAGENAME}}|action=edit}} लिहू शकता]</span>.',
 	'note' => "'''सूचना:'''",
@@ -18232,9 +17957,6 @@ Untuk mencipta laman ini, sila taip dalam kotak di bawah
 (lihat [[{{MediaWiki:Helppage}}|laman bantuan]] untuk maklumat lanjut).
 Jika anda tiba di sini secara tak sengaja, hanya klik butang '''back''' pada pelayar anda.",
 	'noarticletext' => 'Tiada teks dalam laman ini pada masa sekarang. Anda boleh [[Special:Search/{{PAGENAME}}|mencari tajuk bagi laman ini]] dalam laman-laman lain, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mencari log-log yang berkaitan], atau [{{fullurl:{{FULLPAGENAME}}|action=edit}} menyunting laman ini]</span>.',
-	'noarticletext-nopermission' => 'Tiada teks dalam laman ini ketika ini.
-Anda boleh [[Special:Search/{{PAGENAME}}|mencari tajuk laman ini]] dalam laman lain,
-atau <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mencari log yang berkaitan]</span>.',
 	'note' => "'''Catatan:'''",
 	'nonunicodebrowser' => "'''AMARAN: Pelayar anda tidak mematuhi Unicode. Aksara-aksara bukan ASCII akan dipaparkan dalam kotak sunting sebagai kod perenambelasan.'''",
 	'nocreatetitle' => 'Penciptaan laman dihadkan',
@@ -18363,7 +18085,6 @@ Sabiex toħloq il-paġna, ikteb fil-kaxxa li tinsab hawn taħt (ara [[{{MediaWik
 Jekk wasalt hawn biż-żball, agħfas il-buttuna '''lura''' (''back'') fuq il-browser tiegħek.",
 	'noarticletext' => "Bħalissa m'hemm l-ebda test f'din il-paġna.
 Inti tista' [[Special:Search/{{PAGENAME}}|tfittex it-titlu ta' din il-paġna]] f'paġni oħra, jew <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tfittex ir-reġistri relatati], jew [{{fullurl:{{FULLPAGENAME}}|action=edit}} timmodifika din il-paġna]</span>.",
-	'noarticletext-nopermission' => "Bħalissa m'hemm l-ebda test f'din il-paġna. Inti tista' [[Special:Search/{{PAGENAME}}|tfittex għal dan it-titlu tal-paġna]] f'paġni oħra, jew <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} fittex ir-reġistri relatati]</span>.",
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''TWISSIJA: Il-Browser tiegħek m'għandux sapport għal unicode.
 Hemm xogħol sabiex iħallik tagħmel modifiki lil paġni mingħajr periklu ta' xejn: karratri li m'humiex ASCII se jidhru fil-kaxxa tal-modifika bħala kodiċi hexadeċimali.'''",
@@ -18548,8 +18269,6 @@ $messages['my'] = array(
 မတော်တဆရောက်လာခြင်း ဖြစ်ပါက ဘရောက်ဆာ၏ နောက်ပြန်ပြန်သွားသော'''back''' ခလုတ်ကို နှိပ်ပါ။",
 	'noarticletext' => 'ဤစာမျက်နှာတွင် ယခုလက်ရှိတွင် မည်သည့်စာသားမှ မရှိပါ။
 သင်သည် အခြားစာမျက်နှာများတွင် [[Special:Search/{{PAGENAME}}|ဤစာမျက်နှာ၏ ခေါင်းစဉ်ကို ရှာနိုင်သည်]]၊ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ဆက်စပ်ရာ Logs များကို ရှာနိုင်သည်]၊ သို့မဟုတ် [{{fullurl:{{FULLPAGENAME}}|action=edit}} ဤစာမျက်နှာကို တည်းဖြတ်နိုင်သည်]</span>။',
-	'noarticletext-nopermission' => 'ဤစာမျက်နှာတွင် ယခုလက်ရှိတွင် မည်သည့်စာသားမှ မရှိပါ။
-သင်သည် အခြားစာမျက်နှာများတွင် [[Special:Search/{{PAGENAME}}|ဤစာမျက်နှာ၏ ခေါင်းစဉ်ကို ရှာနိုင်သည်]]၊ သို့မဟုတ် <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ဆက်စပ်ရာ Logs များကို ရှာနိုင်သည်]</span>။',
 	'note' => "'''မှတ်ချက် -'''",
 	'nocreate-loggedin' => 'သင်သည် စာမျက်နှာအသစ် ဖန်တီးခွင့်မရှိပါ။',
 	'nohistory' => 'ဤစာမျက်နှာတွင် တည်းဖြတ်မှု ရာဇဝင်မရှိပါ',
@@ -18898,9 +18617,6 @@ Tùi khoàⁿ-māi,  lí phah--ê.',
 你會使佇別頁[[Special:Search/{{PAGENAME}}|搜揣這頁標題]]，
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜揣有關的記錄]，
 抑是[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編輯這頁]</span>。',
-	'noarticletext-nopermission' => '這頁這馬無內容，
-你會使佇別頁[[Special:Search/{{PAGENAME}}|揣這頁標題]]，
-抑是<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}揣有關的記錄]</span>。',
 	'note' => "'''Chù-ì:'''",
 	'nonunicodebrowser' => "'''提醒：你的瀏覽器佮Unicode編碼袂合。''
 遮有一个工作區會使予你通安全編輯頁面:
@@ -19045,8 +18761,6 @@ Om du havnet her ved en feil, trykk '''tilbake''' i nettleseren.",
 Du kan [[Special:Search/{{PAGENAME}}|søke etter denne sidetittelen]] på andre sider,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} søke i relaterte logger],
 eller [{{fullurl:{{FULLPAGENAME}}|action=edit}} opprette siden]</span>.',
-	'noarticletext-nopermission' => 'Det er ingen tekst på denne siden.
-Du kan [[Special:Search/{{PAGENAME}}|søke etter sidens tittel]] i andre sider, eller <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} søke i relevante logger]</span>.',
 	'note' => "'''Merk:'''",
 	'nonunicodebrowser' => "'''Advarsel: Nettleseren din har ikke Unicode-støtte.'''
 For å unngå problemer blir som ikke er med i ASCII vist som heksadesimale kode i redigeringsruten.",
@@ -19175,9 +18889,6 @@ Wenn du disse Sied opstellen wullt, schriev dien Text in dat Finster ünnen  (ki
 Wenn du de Sied gornich ännern wullst, denn klick op den '''Trügg'''-Knoop in dien Webkieker.",
 	'noarticletext' => 'Dor is opstunns keen Text op disse Sied. Du kannst [[Special:Search/{{PAGENAME}}|na dissen Utdruck in annere Sieden söken]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} in de Logböker söken],
 oder [{{fullurl:{{FULLPAGENAME}}|action=edit}} disse Sied ännern]</span>.',
-	'noarticletext-nopermission' => 'Disse Sied hett opstunns keen Text.
-Du kannst in annere Sieden [[Special:Search/{{PAGENAME}}|na dissen Titel söken]]
-oder <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} in de Logböker söken]</span>.',
 	'note' => "'''Wohrschau:'''",
 	'nonunicodebrowser' => "'''Wohrschau: Dien Browser kann keen Unicode, bruuk en annern Browser, wenn du en Siet ännern wist.'''",
 	'nocreatetitle' => 'Opstellen vun ne’e Sieden is inschränkt.',
@@ -19303,9 +19014,6 @@ A'j hier per ongelok terechtekeumen bin gebruuk dan de knoppe '''veurige''' um w
 Je kunnen [[Special:Search/{{PAGENAME}}|de titel opzeuken]] in aandere pagina\'s,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} zeuken in de logboeken],
 of [{{fullurl:{{FULLPAGENAME}}|action=edit}} disse pagina bewarken]</span>.',
-	'noarticletext-nopermission' => 'Op disse pagina steet gien tekste.
-Je kunnen [[Special:Search/{{PAGENAME}}|zeuken naor disse term]] in aandere pagina\'s of
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboeken deurzeuken]</span>.',
 	'note' => "'''Opmarking:'''",
 	'nonunicodebrowser' => "'''Waorschuwing: de webkieker kan niet goed overweg mit unikode, schakel over op n aandere webkieker um de wiezigingen an te brengen!'''",
 	'nocreatetitle' => "t Anmaken van pagina's is beteund",
@@ -19433,9 +19141,6 @@ $messages['ne'] = array(
 तपाईले अन्य पृष्ठमा [[Special:Search/{{PAGENAME}}|यस पृष्ठको शीर्षकको लागि खोज]] गर्न सक्नुहुन्छ ।
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} पृष्ठ संबंधित ढड्डामा खोज],
 वा [{{fullurl:{{FULLPAGENAME}}|action=edit}}  यसै पृष्ठलाई संपादन गर्ने]</span>.',
-	'noarticletext-nopermission' => 'यस लेखमा अहिले केहि पनि पाठ छैन ।
-तपाईंले अन्य पृष्ठमा [[Special:Search/{{PAGENAME}}|यस पृष्ठको शीर्षकको लागि खोज]] गर्न सक्नुहुन्छ,
-अथवा <span class="plainlinks">[{{fullurl:{{#Special:Log}}|पृष्ठ={{FULLPAGENAMEE}}}} सम्बन्धित लगहरु खोज्न सक्नुहुनेछ ]</span>.',
 	'note' => "'''सुझाव:'''",
 	'nocreatetitle' => 'पृष्ठ सृजना सीमित गरिएको',
 	'nocreatetext' => '{{SITENAME}} ले नयाँ पृष्ठ शृजना गर्नसक्ने क्षमतामा रोक लगाएको छ।
@@ -19609,12 +19314,14 @@ Wellicht is het verplaatst of verwijderd terwijl je de pagina aan het bekijken w
 	'newarticletext' => "Deze pagina bestaat niet.
 Typ in het onderstaande veld om de pagina aan te maken (meer informatie staat op de [[{{MediaWiki:Helppage}}|hulppagina]]).
 Gebruik de knop '''vorige''' in je browser als je hier per ongeluk terecht bent gekomen.",
-	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Deze pagina heeft tekst nodig. Je kan meehelpen door tekst of een afbeelding toe te voegen!\'\'\'</p>
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''Article {{FULLPAGENAME}} was not found''' ===
 
-<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Voeg tekst toe aan deze pagina!</span>]<br />of<br />[{{fullurl:Special:Search|search={{PAGENAMEE}}}} Zoek "{{PAGENAME}}" op!]</span></center>',
-	'noarticletext-nopermission' => 'Deze pagina bevat geen tekst.
-Je kunt [[Special:Search/{{PAGENAME}}|naar deze term zoeken]] in andere pagina\'s of
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboeken doorzoeken]</span>.',
+What do you want to do?
+
+* Search existing articles for <span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
+* Create article <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>
+}}",
 	'note' => "'''Opmerking:'''",
 	'nonunicodebrowser' => "'''WAARSCHUWING: Je browser kan niet goed overweg met unicode.
 Hiermee wordt door de MediaWiki-software rekening gehouden zodat je toch zonder problemen pagina's kunt bewerken: niet-ASCII karakters worden in het bewerkingsveld weergegeven als hexadecimale codes.'''",
@@ -19690,7 +19397,6 @@ Je kunt ook een naamruimte als voorvoegsel gebruiken.",
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -19732,9 +19438,6 @@ Typ in het onderstaande veld om de pagina aan te maken (meer informatie staat op
 Gebruik de knop '''vorige''' in je browser als je hier per ongeluk terecht bent gekomen.",
 	'noarticletext' => 'Deze pagina bevat geen tekst.
 Je kunt [[Special:Search/{{PAGENAME}}|naar deze term zoeken]] in andere pagina\'s, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboeken doorzoeken] of [{{fullurl:{{FULLPAGENAME}}|action=edit}} deze pagina bewerken]</span>.',
-	'noarticletext-nopermission' => 'Deze pagina bevat geen tekst.
-Je kunt [[Special:Search/{{PAGENAME}}|naar deze term zoeken]] in andere pagina\'s of
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboeken doorzoeken]</span>.',
 	'nonunicodebrowser' => "'''WAARSCHUWING: Je browser kan niet goed overweg met unicode.
 Hiermee wordt door de MediaWiki-software rekening gehouden zodat je toch zonder problemen pagina's kunt bewerken: niet-ASCII karakters worden in het bewerkingsveld weergegeven als hexadecimale codes.'''",
 	'nocreatetext' => "{{SITENAME}} heeft de mogelijkheid om nieuwe pagina's te maken beperkt.
@@ -19811,9 +19514,6 @@ Han kan ha vorten flytta eller sletta medan du såg på sida.',
 	'noarticletext' => 'Det er nett no ikkje noko tekst på denne sida.
 Du kan [[Special:Search/{{PAGENAME}}|søkja etter denne sidetittelen]] i andre sider, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} søkja i dei relaterte loggane]
 eller [{{fullurl:{{FULLPAGENAME}}|action=edit}} endra denne sida]</span>.',
-	'noarticletext-nopermission' => 'Der er nett no ikkje noko tekst på denne sida.
-Du kan [[Special:Search/{{PAGENAME}}|søkja etter tittelen på denne sida]] på andre sider,
-eller <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} sjå loggføringar med tilknytting]</span>.',
 	'note' => "'''Merk:'''",
 	'nonunicodebrowser' => "'''ÅTVARING: Nettlesaren din støttar ikkje «Unicode».
 For å omgå problemet blir teikn utanfor ASCII-standarden viste som heksadesimale kodar.'''<br />",
@@ -19942,9 +19642,6 @@ Han kan ha vorten flytta eller sletta medan du såg på sida.',
 	'noarticletext' => 'Det er nett no ikkje noko tekst på denne sida.
 Du kan [[Special:Search/{{PAGENAME}}|søkja etter denne sidetittelen]] i andre sider, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} søkja i dei relaterte loggane]
 eller [{{fullurl:{{FULLPAGENAME}}|action=edit}} endra denne sida]</span>.',
-	'noarticletext-nopermission' => 'Der er nett no ikkje noko tekst på denne sida.
-Du kan [[Special:Search/{{PAGENAME}}|søkja etter tittelen på denne sida]] på andre sider,
-eller <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} sjå loggføringar med tilknytting]</span>.',
 	'note' => "'''Merk:'''",
 	'nonunicodebrowser' => "'''ÅTVARING: Nettlesaren din støttar ikkje «Unicode».
 For å omgå problemet blir teikn utanfor ASCII-standarden viste som heksadesimale kodar.'''<br />",
@@ -20083,14 +19780,14 @@ Lebele mopeleto wa gago goba [[Special:UserLogin/signup|o tlhome mošomiši yo m
 	'nowiki_sample' => "Tsenya ditlhaka tša go sebe le ''format'' mo",
 	'nowiki_tip' => "Hlokomologa tselangwalo (''formatting'') ya  wiki",
 	'nosuchsectiontitle' => 'Sekgao ga se humanege',
-	'nosuchsectiontext' => 'O lekile go fetola sekgao seo se sego gona. 
+	'nosuchsectiontext' => 'O lekile go fetola sekgao seo se sego gona.
 Se, se ka hlolwa ke ge letlakala le phumulwa goba la hudušwa ge wena o sa le lebeletše.',
 	'newarticle' => '(mpsha)',
 	'newarticletext' => "O latetše hlomaganyo go letlakala leo le sego gona ka se sebaka.
 Go tlhola letlakala, thoma go ngwalo lepokising le letelago
 (lebelela [[{{MediaWiki:Helppage}}|letlakala la thušo]] go hwetša šedi).
 Ga eba o le fa ka phošo, o ka boela morago ka go šumiša konopo ya '''back''' go ''browser'' ya gago.",
-	'noarticletext' => 'Ga gona ditlhaka letlakaleng le, 
+	'noarticletext' => 'Ga gona ditlhaka letlakaleng le,
 oka [[Special:Search/{{PAGENAME}}|fetleka liena la letlakala]] matlakaleng a mangwe,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} fetleka "logs"],
  goba [{{fullurl:{{FULLPAGENAME}}|action=edit}} wa fetola letlakala le]</span>.',
@@ -20221,9 +19918,6 @@ Se sètz arribat(ada) aicí per error, clicatz sul boton '''retorn''' de vòstre
 podètz [[Special:Search/{{PAGENAME}}|aviar una recèrca sul títol d\'aqueste títol de pagina]] dins las autras pagina,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} recercar dins las operacions ligadas]
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} crear aquesta pagina]</span>.',
-	'noarticletext-nopermission' => 'Actualament i a pas cap de tèxte dins aquesta pagina.
-Podètz [[Special:Search/{{PAGENAME}}|far una recèrca sul títol de la pagina]] dins las autras paginas,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} recercar dins los jornals associats]</span>.',
 	'note' => "'''Nòta :'''",
 	'nonunicodebrowser' => "'''Atencion : Vòstre navigador supòrta pas l’unicode. Una solucion temporària es estada trobada per vos permetre de modificar un article en tota seguretat : los caractèrs non-ASCII apareisseràn dins vòstra bóstia de modificacion en tant que còdes exadecimals. Deuriatz utilizar un navigador mai recent.'''",
 	'nocreatetitle' => 'Creacion de pagina limitada',
@@ -20362,10 +20056,6 @@ $messages['or'] = array(
 ଆପଣ [[Special:Search/{{PAGENAME}}|ଏହି ଲେଖାଟିର ନାଆଁ]] ବାକି ପୃଷ୍ଠାମାନଙ୍କରେ ଖୋଜି ପାରନ୍ତି,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}ରେ ଯୋଡ଼ାଯାଇଥିବା ବାକି ପୃଷ୍ଠାସବୁକୁ ଖୋଜି ପାରନ୍ତି],
 କିମ୍ବା [{{fullurl:{{FULLPAGENAME}}|action=edit}} ଏହି ପୃଷ୍ଠାଟିକୁ ବଦଳାଇ ପାରନ୍ତି]</span> ।',
-	'noarticletext-nopermission' => 'ଏହି ପୃଷ୍ଠାଟିରେ କିଛି ବି ଲେଖା ନାହିଁ ।
-ଆପଣ [[Special:Search/{{PAGENAME}}|ଏହି ଲେଖାଟିର ନାଆଁ]] ବାକି ପୃଷ୍ଠାମାନଙ୍କରେ ଖୋଜି ପାରନ୍ତି,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}ରେ ଯୋଡ଼ାଯାଇଥିବା ବାକି ପୃଷ୍ଠାସବୁକୁ ଖୋଜି ପାରନ୍ତି],
-କିମ୍ବା [{{fullurl:{{FULLPAGENAME}}|action=edit}} ଏହି ପୃଷ୍ଠାଟିକୁ ବଦଳାଇ ପାରନ୍ତି]</span> ।',
 	'note' => "'''ଟୀକା:'''",
 	'nonunicodebrowser' => "'''ଚେତାବନୀ: ଆପଣଙ୍କ ବ୍ରାଉଜରରେ ଇଉନିକୋଡ଼ ସଚଳ କରାଯାଇନାହିଁ ।'''
 ଏକ ୱର୍କାଆରାଉଣ୍ଡ ଏକ ଏହିପରି ଜାଗା ଯାହା ଆପଣଙ୍କୁ ନିରାପଦ ଭାବରେ ପୃଷ୍ଠା ସମ୍ପାଦନ କରିବାରେ ସାହାଯ୍ୟ କରିଥାଏ: ଅଣ-ASCII ଅକ୍ଷରସମୂହ ସମ୍ପାଦନା ଘରେ ହେକ୍ସାଡେସିମାଲ କୋଡ଼ ରୂପେ ଦେଖାଯିବ ।",
@@ -20472,9 +20162,6 @@ $messages['os'] = array(
 Дæ бон у [[Special:Search/{{PAGENAME}}|бацагурын ацы фарсы ном]] æндæр фæрсты,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} агурын йæ кой логты],
 кæнæ [{{fullurl:{{FULLPAGENAME}}|action=edit}} скæнын ацы фарс]</span>.',
-	'noarticletext-nopermission' => 'Ацы фарсы нырмæ текст нæй.
-Дæ бон у [[Special:Search/{{PAGENAME}}|бацагурын ацы фарсы ном]] æндæр фæрсты
-кæнæ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} агурын йæ кой логты]</span>.',
 	'note' => "'''Бафиппай:'''",
 	'nohistory' => 'Ацы фарсæн иввдзинæдты истори нæй.',
 	'nextrevision' => 'Ногдæр фæлтæр →',
@@ -20547,9 +20234,6 @@ A list of valid special pages can be found at [[Special:SpecialPages]].',
 	'nosuchsectiontitle' => 'ਇੰਝ ਦਾ ਕੋਈ ਸ਼ੈਕਸ਼ਨ ਨਹੀਂ ਹੈ।',
 	'newarticle' => '(ਨਵਾਂ)',
 	'noarticletext' => 'ਫਿਲਹਾਲ ਇਸ ਪੰਨੇ ਤੇ ਐਸਾ ਕੋਈ ਪਾਠ ਨਹੀਂ ਹੈ।ਤੁਸੀਂ ਦੂਸਰੇ ਪੰਨਿਆਂ ਤੇ [[Special:Search/{{PAGENAME}}|ਇਸ ਪਾਠ ਦੀ ਖੋਜ]] ਕਰ ਸਕਦੇ ਹੋ।,<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ਸੰਭੰਧਿਤ ਖਾਤਿਆਂ ਵਿਚ ਖੋਜ ਸਕਦੇ ਹੋ],
-ਯਾ [{{fullurl:{{FULLPAGENAME}}|action=edit}} ਇਸ ਪੰਨੇ ਨੂੰ ਸੰਪਾਦਨ ਕਰ ਸਕਦੇ ਹੋ]</span>।',
-	'noarticletext-nopermission' => '↓
-ਫਿਲਹਾਲ ਇਸ ਪੰਨੇ ਤੇ ਐਸਾ ਕੋਈ ਪਾਠ ਨਹੀਂ ਹੈ।ਤੁਸੀਂ ਦੂਸਰੇ ਪੰਨਿਆਂ ਤੇ [[Special:Search/{{PAGENAME}}|ਇਸ ਪਾਠ ਦੀ ਖੋਜ]] ਕਰ ਸਕਦੇ ਹੋ।,<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ਸੰਬੰਧਿਤ ਖਾਤਿਆਂ ਵਿਚ ਖੋਜ ਸਕਦੇ ਹੋ],
 ਯਾ [{{fullurl:{{FULLPAGENAME}}|action=edit}} ਇਸ ਪੰਨੇ ਨੂੰ ਸੰਪਾਦਨ ਕਰ ਸਕਦੇ ਹੋ]</span>।',
 	'note' => "'''ਨੋਟ:'''",
 	'nextrevision' => 'ਨਵਾਂ ਰੀਵਿਜ਼ਨ→',
@@ -20996,13 +20680,12 @@ Sprawdź poprawność pisowni.',
 Mogła zostać przeniesiona lub usunięta podczas przeglądania tej strony.',
 	'newarticle' => '(Nowy)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''Ta strona potrzebuje zawartości. Możesz pomóc poprzez dodanie treści.'''</p>
-
-<div style=\"text-align:center; font-size:90%; font-weight:bold\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} Edytuj tę stronę!] &bull; [{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}|QUERY}}}} Szukaj „{{PAGENAME}}” na innych stronach] &bull; [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} Przeszukaj rejestry]</div>
-<br>",
-	'noarticletext-nopermission' => 'Na tej stronie nie ma jeszcze artykułu.
-Możesz [[Special:Search/{{PAGENAME}}|wyszukać ten tytuł]] w treści innych stron
-lub <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} przeszukać powiązane logi].</span>',
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||<div class=\"plainlinks\">
+=== '''Artykuł {{FULLPAGENAME}} nie istnieje''' ===
+* Szukaj frazy „[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}|QUERY}}}} {{PAGENAME}}]” na innych stronach.
+* Utwórz artykuł [{{fullurl:{{FULLPAGENAME}}|action=edit&redlink=1}} {{FULLPAGENAME}}].
+* Zobacz rejestr dla strony [{{fullurl:Special:Log|page={{FULLPAGENAMEE}}}} {{FULLPAGENAME}}].
+</div>}}",
 	'note' => "'''Uwaga:'''",
 	'nonunicodebrowser' => "'''Uwaga! Twoja przeglądarka nie rozpoznaje poprawnie kodowania UTF‐8 (Unicode).
 Z tego powodu wszystkie znaki, których przeglądarka nie rozpoznaje, zostały zastąpione ich kodami szesnastkowymi.'''",
@@ -21079,7 +20762,6 @@ Możesz edytować istniejące strony bądź też [[Special:UserLogin|zalogować 
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'newuserlog-create-entry' => 'New user account',
@@ -21156,9 +20838,6 @@ S'it ses sì për eror, sgnaca ël boton '''andaré''' ëd tò navigador.",
 	'noarticletext' => 'Al moment costa pàgina a l\'é veuida.
 It peule [[Special:Search/{{PAGENAME}}|sërché costa vos]] andrinta a d\'àutre pàgine, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} sërché ant ij registr colegà],
 o purament [{{fullurl:{{FULLPAGENAME}}|action=edit}} modìfiché la pàgina adess]</span>.',
-	'noarticletext-nopermission' => 'Al moment a-i é pa gnun test an sta pàgina-sì.
-It peule [[Special:Search/{{PAGENAME}}|sërché sto tìtol ëd pàgina-sì]] an d\'àutre pàgine,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} sërché j\'argistrassion colegà]</span>.',
 	'note' => "'''NÒTA:'''",
 	'nonunicodebrowser' => "'''A L'EUJ! Sò programa ëd navigassion (browser) a travaja pa giust con lë stàndard unicode. I soma obligà a dovré dij truschin përchè a peula salvesse sò artìcoj sensa problema: ij caràter che a son nen ASCII a jë s-ciairerà ant ël quàder ëd modìfica test coma còdes esadecimaj.'''",
 	'nocreatetitle' => 'Creassion ëd pàgine limità',
@@ -21292,9 +20971,6 @@ $messages['pnb'] = array(
 اس صفحہ بنانے آسطے تھلے دتے گۓ ڈبے وچ لکھنا شروع کر دیو(زیادہ رہنمائی آستے اے ویکھو [[{{MediaWiki:Helppage}}|<br />مدد دا صفحہ]])۔
 اگر تسی ایتھے غلطی نال پہنچے او تے اپنے کھوجی توں "بیک" دا بٹن دبا دیو۔',
 	'noarticletext' => 'اس ویلے اس صفحے تے کج نہیں لکھیا ہویا تسیں [[Special:Search/{{PAGENAME}}|اس صفحے دے ناں نوں دوجے صفحیاں تے کھوج سکدے او]] یا فیر [{{fullurl:{{FULLPAGENAME}}|action=edit}} اس صفحے نوں لکھ سکدے او۔]',
-	'noarticletext-nopermission' => 'ایس ویلے ایس صفے تے کوئی لکھت نئیں۔ 
-تسیں [[Special:Search/{{PAGENAME}}|search for this page title]] دوسریاں صفیاں تے،
-یا <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} search the related logs]</span>۔',
 	'note' => "'''نوٹ:'''",
 	'nonunicodebrowser' => "'''خبردار: تھواڈا براؤزر تے یونیکوڈ نئیں چلدا۔'''
 اک کم تھانوں ایس قابل کریگا جے بچت نال صفے بچا سکو: non-ASCII کیریکٹر تبدیلی ڈبے چ ہیکساڈیسیمل کوڈ دسن گے۔",
@@ -21632,9 +21308,6 @@ $messages['ps'] = array(
 تاسې کولای شی چې په نورو مخونو کې [[Special:Search/{{PAGENAME}}|د دې مخ د سرليک پلټنه]] يا
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} د اړوندو يادښتونو پلټنه] وکړی.
 او يا [{{fullurl:{{FULLPAGENAME}}|action=edit}} همدا مخ سم کړی]</span>.',
-	'noarticletext-nopermission' => 'دم مهال په دې مخ کې څه نشته.
-تاسې کولای شی چې [[Special:Search/{{PAGENAME}}|همدا سرليک په نورو مخونو کې وپلټۍ]],
-يا هم <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} اړونده يادښتونه وپلټۍ]</span>.',
 	'note' => "'''يادونه:'''",
 	'nocreatetitle' => 'د مخ جوړول بريد ټاکلی دی',
 	'nocreatetext' => '{{SITENAME}} د نوو مخونو د جوړولو وړتيا محدوده کړې.
@@ -21750,12 +21423,14 @@ Ela pode ter sido movida ou removido enquanto você estava vendo a página.',
 	'newarticletext' => "Você seguiu um link para uma página que ainda não existe.
 Para criá-la, comece escrevendo na caixa abaixo (veja [[{{MediaWiki:Helppage}}|a página de ajuda]] para mais informações).
 Se você chegou aqui por engano, clique no botão '''voltar''' do seu navegador.",
-	'noarticletext' => 'No momento, não há conteúdo nesta página.
-Você pode [[Special:Search/{{PAGENAME}}|pesquisar pelo título desta página]] em outras páginas, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar por registros relacionados],
-ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} criar esta página]</span>.',
-	'noarticletext-nopermission' => 'No momento, não há conteúdo nesta página
-Você pode [[Special:Search/{{PAGENAME}}|pesquisar pelo título desta página]] em outras páginas,
-ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar por registros relacionados] </span>.',
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''Artigo {{FULLPAGENAME}} não encontrado''' ===
+
+O que você quer fazer?
+
+* Buscar artigos existentes para <span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
+* Criar artigo <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>
+}}",
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''AVISO: O seu navegador não é compatível com as especificações unicode.'''
 Um contorno terá de ser utilizado para permitir que você possa editar as páginas com segurança: os caracteres não-ASCII aparecerão na caixa de edição no formato de códigos hexadecimais.",
@@ -21821,7 +21496,7 @@ Tente utilizar o prefixo ''all:'' em sua busca, para pesquisar por todos os cont
 	'namespacesall' => 'todos',
 	'newuserlog-byemail' => 'senha enviada por correio-eletrônico',
 	'not_you' => 'Não é você?',
-	'newly_changed' => 'Newly changed',
+	'newly_changed' => 'Alterado recentemente',
 	'number-shortening' => '$1K',
 	'number-shortening-millions' => '$1M',
 	'number-shortening-billions' => '$1B',
@@ -21829,24 +21504,21 @@ Tente utilizar o prefixo ''all:'' em sua busca, para pesquisar por todos os cont
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => 'No momento, não há conteúdo nesta página
-Você pode [[Special:Search/{{PAGENAME}}|pesquisar pelo título desta página]] em outras páginas,
-ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar por registros relacionados] </span>.',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
-	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',
-	'newuserlog-create-entry' => 'New user account',
-	'newuserlog-create2-entry' => 'created new account $1',
-	'newuserlog-autocreate-entry' => 'Account created automatically',
-	'nocontributors' => 'This page has no contributors',
-	'needhelp' => 'Need Help: Please edit [[MediaWiki:needhelp|this page]] to show pages here.',
-	'nontabbedsearch' => 'Non-tabbed search',
-	'nontabbedsearchold' => 'Non-tabbed search (use old title/text matches display)',
+	'noscript.css' => '/* CSS colocado aqui afetará usuários com o JavaScript desabilitado* /',
+	'newuserlog-create-entry' => 'Nova conta de usuário',
+	'newuserlog-create2-entry' => 'criou nova conta $1',
+	'newuserlog-autocreate-entry' => 'Conta criada automaticamente',
+	'nocontributors' => 'Esta página tem não contribuintes',
+	'needhelp' => 'Ajuda necessária: por favor, editar [[MediaWiki:needhelp|esta página]] para exibir as páginas aqui.',
+	'nontabbedsearch' => 'Pesquisa sem tabulações',
+	'nontabbedsearchold' => 'Pesquisa sem tabulações (usar o título antigo/exibição de correspondências de texto)',
 	'new_article' => 'Página nova',
-	'new_wiki' => 'New wiki',
-	'nodiff' => 'No changes',
-	'namespacedisabled' => 'Namespace disabled',
-	'namespacedisabledtext' => 'This namespace has been disabled.',
+	'new_wiki' => 'Nova wiki',
+	'nodiff' => 'Sem alterações',
+	'namespacedisabled' => 'Espaço nominal desabilitado',
+	'namespacedisabledtext' => 'Este espaço nominal foi desabilitado.',
 );
 
 $messages['qu'] = array(
@@ -21907,9 +21579,6 @@ Astasqachá icha qullusqachá qhawachkaptiyki.',
 	'newarticle' => '(Musuq)',
 	'newarticletext' => "Manaraq kachkaq p'anqatam llamk'apuchkanki. Musuq p'anqata kamariyta munaspaykiqa, qillqarillay. Astawan ñawiriyta munaspaykiqa, [[{{MediaWiki:Helppage}}|yanapana p'anqata]] qhaway. Mana munaspaykitaq, ñawpaq p'anqaman ripuy.",
 	'noarticletext' => "Kunanqa kay p'anqa ch'usaqmi. Kaytam rurayta atinkiman: kay p'anqap sutinta [[Special:Search/{{PAGENAME}}|huk p'anqakunapi maskay]], <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hallch'ankunapi maskay] icha [{{fullurl:{{FULLPAGENAME}}|action=edit}} kay p'anqata llamk'apuy]</span>.",
-	'noarticletext-nopermission' => "Kay p'anqaqa ch'usaqmi.
-Kay p'anqap sutintaqa [[Special:Search/{{PAGENAME}}|huk p'anqakunapi maskaytam atinki]],
-icha payman kapuq <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hallch'akunapi maskaykiman]</span>.",
 	'note' => "'''Musyay:'''",
 	'nonunicodebrowser' => "'''Paqtataq: Wamp'unaykiqa manam Unicode nisqawan llamk'anchu. Huk llamk'apuna llikam llamk'achkan p'anqakunata takyasqalla llamk'apunaykipaq: mana ASCII kaq sananchakunaqa chunka suqtayuqnintin huchha llikapim kanqa.'''",
 	'nocreatetitle' => "P'anqa kamariyqa saywachasqam",
@@ -21962,7 +21631,7 @@ icha payman kapuq <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{
 	'nolinkshere-ns' => "Manam kachkanchu '''[[:$1]]'''-man t'inkiq p'anqa akllasqa suti k'itipi.",
 	'noautoblockblock' => "kikinmanta hark'ayqa ama kachunchu",
 	'newtitle' => 'Kay musuq sutiman',
-	'nonfile-cannot-move-to-file' => "Manam atinichu mana willañiqi kaqta astayta willañiqipaq suti k'itiman",
+	'nonfile-cannot-mmove-to-file' => "Manam atinichu mana willañiqi kaqta astayta willañiqipaq suti k'itiman",
 	'notacceptable' => "Wiki sirwiqqa manam willakunata quyta atinchu mink'akuqniykip (wamp'unaykip) hap'iyta atisqan chantapi.",
 	'nocredits' => "Manam ima willasqapas kay p'anqap manuyninkunamantachu.",
 	'nextdiff' => "Qatiq llamk'apusqa →",
@@ -22006,13 +21675,12 @@ $messages['qug'] = array(
 	'newarticletext' => 'Shuk illak pankaman tinkita katirkapanki. Kay pankata kamankapak uraypi killkapay. Ashtawan yachakunkapak [[{{MediaWiki:Helppage}}|yanapana pankata]] rikupay. Mana chay pankata kamanata munakpika, ñawpa pankaman kutin ripay.',
 	'noarticletext' => 'Kunan pachapi, kay pankaka mana killkaykunata charin.
 Pakpak shutita [[Special:Search/{{PAGENAME}}|shuk pankakunapi maskanata]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} registroskunapi maskanata]pash ushankimi, kutin [{{fullurl:{{FULLPAGENAME}}|action=edit}} kay pankata kamarinata] ushankimi',
-	'noarticletext-nopermission' => 'Kunan pachapi kay pankaka mana killkashkakunata charinchu. Paypak shutita [[Special:Search/{{PAGENAME}}|shuk pankakunapi maskanata]] ushapankimi, shinalla <span class="plainlinks">pankakunapa wiñay kawsay kamupi [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tinkishka shukchiykunaka] maskana</span>',
 	'nextrevision' => 'Katik killkay',
 	'notitlematches' => 'Mana shina pankata tiyanchu',
 	'notextmatches' => 'Mana pankaka kay rimaykunata charin',
 	'nextn' => '{{PLURAL:$1|$1}} katik',
 	'nextn-title' => 'Katik $1 {{PLURAL:$1|maskashka panka|Maskashka pankakuna}}',
-	'nonefound' => "'''Musyay''': kikinka mana shina rimakpika, mana tukuy shuti-suyupi maskapanki. 
+	'nonefound' => "'''Musyay''': kikinka mana shina rimakpika, mana tukuy shuti-suyupi maskapanki.
 Icha ''all:'' rimaywan (icha shuk shutisuyupa rimaywan) kikinpa killkata kallarikpika taripankimi.",
 	'nchanges' => '$1 {{PLURAL:$1|killkay|killkaykuna}}',
 	'newpageletter' => 'M',
@@ -22193,9 +21861,6 @@ Ella è eventualmain vegnida spustada u stizzada durant che ti has contemplà la
 Ti pos [[Special:Search/{{PAGENAME}}|tschertgar il term]] sin in\'autra pagina,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tschertgar en ils logs],
 u [{{fullurl:{{FULLPAGENAME}}|action=edit}} crear questa pagina]</span>.',
-	'noarticletext-nopermission' => 'Questa pagina cuntegna actualmain nagin text.
-Ti pos [[Special:Search/{{PAGENAME}}|tschertgar il term]] sin in\'autra pagina,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tschertgar en ils logs]</span>.',
 	'note' => "'''Remartga:'''",
 	'nonunicodebrowser' => "'''Attenziun: Tes navigatur na sustegna betg unicode.'''
 Per che ti pos modifitgar las paginas senza ch'i dettia problems vegnan ils caracters betg ASCII mussads en tes champ d'endataziun sco codes exadecimals.",
@@ -22362,9 +22027,6 @@ Aceasta fie a fost mutată, fie a fost ștearsă în timp ce vizualizați pagina
 Puteți [[Special:Search/{{PAGENAME}}|căuta acest titlu]] în alte pagini,
 puteți <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} căuta înregistrări în jurnale]
 sau puteți [{{fullurl:{{FULLPAGENAME}}|action=edit}} crea această pagină]</span>.',
-	'noarticletext-nopermission' => 'Actualmente, această pagină este lipsită de conținut.
-Puteți [[Special:Search/{{PAGENAME}}|căuta acest titlu]] în alte pagini
-sau puteți <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} căuta înregistrări în jurnale]</span>.',
 	'note' => "'''Notă:'''",
 	'nonunicodebrowser' => "'''Atenție: Navigatorul dumneavoastră nu este compatibil cu Unicode.'''
 În schimb, există o soluție care vă permite să modificați paginile în siguranță: caracterele non-ASCII vor fi afișate în caseta de editare drept coduri hexazecimale.",
@@ -22514,9 +22176,6 @@ Pe ccrejà 'a pàgene, accuminze a scrivere jndr'à 'u scatole de sotte (vide 'a
 Ce tu te iacche aqquà e manghe tu 'u se purcè, allore cazze 'u buttone '''back''' d'u brauser.",
 	'noarticletext' => 'Non ge stè scritte ninde jndr\'à sta pàgene.
 Tu puè [[Special:Search/{{PAGENAME}}|cercà pe quiste titele]] jndr\'à otre pàggene, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}] oppure [{{fullurl:{{FULLPAGENAME}}|action=edit}} cange sta pàgene]</span>.',
-	'noarticletext-nopermission' => "Pe mò non ge stè teste jndr'à sta pàgene.
-Tu puè [[Special:Search/{{PAGENAME}}|cercà pe stu titele]]  jndr'à otre pàggene,
-o <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cirche jndr'à l'archivije cullegate]</span>.",
 	'note' => "'''Vide Bbuene:'''",
 	'nonunicodebrowser' => "'''FA ATTENZIO': 'U browser tue non ge capisce l'unicode.'''
 'Na fatije ste jndr'à stu poste ca te conzende de reggistrà senza probbleme 'a pàgene: le carattere ca non ge sonde ASCII le vide cumme a tanda scatele cumme a codece esadecimale.",
@@ -22592,85 +22251,80 @@ $messages['ru'] = array(
 	'november-gen' => 'ноября',
 	'nov' => 'ноя',
 	'noindex-category' => 'Неиндексируемые страницы',
-	'newwindow' => '(в новом окне)',
+	'newwindow' => '(открыть в новом окне)',
 	'navigation' => 'Навигация',
 	'namespaces' => 'Пространства имён',
 	'newpage' => 'Новая страница',
 	'newmessageslink' => 'новые сообщения',
 	'newmessagesdifflink' => 'последнее изменение',
 	'nstab-main' => 'Статья',
-	'nstab-user' => 'Участник',
-	'nstab-media' => 'Мультимедиа',
+	'nstab-user' => 'Страница участника',
+	'nstab-media' => 'Страница медиа-файла',
 	'nstab-special' => 'Служебная страница',
-	'nstab-project' => 'О проекте',
+	'nstab-project' => 'Страница проекта',
 	'nstab-image' => 'Файл',
 	'nstab-mediawiki' => 'Сообщение',
 	'nstab-template' => 'Шаблон',
-	'nstab-help' => 'Справка',
+	'nstab-help' => 'Страница справки',
 	'nstab-category' => 'Категория',
 	'nosuchaction' => 'Такого действия нет',
 	'nosuchactiontext' => 'Указанное в URL действие ошибочно.
 Возможно, вы допустили опечатку при наборе URL или перешли по ошибочной ссылке.
 Это может также указывать на ошибку в проекте {{SITENAME}}.',
 	'nosuchspecialpage' => 'Нет такой служебной страницы',
-	'nospecialpagetext' => '<strong>Запрошенной вами служебной страницы не существует.</strong>
-
-Список существующих служебных страниц: [[Special:SpecialPages|{{int:specialpages}}]].',
-	'namespaceprotected' => 'У вас нет разрешения редактировать страницы в пространстве имён «$1».',
-	'ns-specialprotected' => 'Страницы пространства имён «{{ns:special}}» не могут правиться.',
-	'nav-login-createaccount' => 'Представиться / зарегистрироваться',
+	'nospecialpagetext' => 'Запрошенной вами служебной страницы не существует на {{SITENAME}}. Список существующих служебных страниц: [[Special:SpecialPages|{{int:specialpages}}]].',
+	'namespaceprotected' => 'У вас нет прав редактировать страницы в пространстве имён «$1».',
+	'ns-specialprotected' => 'Служебные страницы нельзя редактировать.',
+	'nav-login-createaccount' => 'Войти / создать учётную запись',
 	'notloggedin' => 'Вы не представились системе',
-	'nologin' => "Нет учётной записи? '''$1'''.",
+	'nologin' => 'Нет учётной записи? $1.',
 	'nologinlink' => 'Зарегистрироваться',
-	'nocookiesnew' => 'Участник зарегистрирован, но не представлен. {{SITENAME}} использует «cookies» для представления участников. У вас «cookies» запрещены. Пожалуйста, разрешите их, а затем представьтесь со своиим новым именем участника и паролем.',
-	'nocookieslogin' => '{{SITENAME}} использует «cookies» для представления участников. Вы их отключили. Пожалуйста, включите их и попробуйте снова.',
+	'nocookiesnew' => 'Участник зарегистрирован, но не вошёл в систему. {{SITENAME}} использует «cookies» для зарегистрированных участников. У вас «cookies» запрещены. Пожалуйста, разрешите их, а затем войдите в систему со своим именем участника и паролем.',
+	'nocookieslogin' => '{{SITENAME}} использует «cookies» для участников. Вы их отключили. Пожалуйста, включите их и попробуйте снова.',
 	'nocookiesfornew' => 'Учётная запись участника не была создана из-за невозможности проверить её источник.
-Убедитесь, что включены «cookies», обновите страницу и попробуйте ещё раз.',
+Убедитесь, что у вас включены «cookies», обновите страницу и попробуйте ещё раз.',
 	'noname' => 'Вы не указали допустимого имени участника.',
-	'nosuchuser' => 'Участника с именем «$1» не существует.
-Имена участников чувствительны к регистру букв.
-Проверьте правильность написания имени или [[Special:UserLogin/signup|создайте новую учётную запись]].',
+	'nosuchuser' => 'Участника с именем «$1» не существует. Имена участников чувствительны к регистру букв. Проверьте правильность написания имени или создайте новую учётную запись.',
 	'nosuchusershort' => 'Не существует участника с именем «$1». Проверьте написание имени.',
 	'nouserspecified' => 'Вы должны указать имя участника.',
-	'noemail' => 'Для участника с именем $1 электронный адрес указан не был.',
+	'noemail' => 'Для участника с именем $1 не был указан адрес эл. почты.',
 	'noemailcreate' => 'Вам необходимо указать корректный адрес электронной почты',
-	'noemailprefs' => 'Адрес электронной почты не был указан, функции вики-движка по работе с эл. почтой отключены.',
+	'noemailprefs' => 'Укажите адрес электронной почты в настройках для работы этих функций.',
 	'newpassword' => 'Новый пароль:',
-	'nowiki_sample' => 'Вставьте сюда текст, который не нужно форматировать',
+	'nowiki_sample' => 'Вставьте не-форматированный текст',
 	'nowiki_tip' => 'Игнорировать вики-форматирование',
 	'nosuchsectiontitle' => 'Невозможно найти раздел',
 	'nosuchsectiontext' => 'Вы пытаетесь редактировать несуществующий раздел.
 Возможно, он был перемещён или удалён, пока вы просматривали эту страницу.',
 	'newarticle' => '(Новая)',
-	'newarticletext' => "Вы перешли по ссылке на страницу, которой пока не существует.
-Чтобы её создать, наберите текст в окне, расположенном ниже (подробнее см. [[{{MediaWiki:Helppage}}|справочную страницу]]).
-Если вы оказались здесь по ошибке, просто нажмите кнопку '''назад''' вашего браузера.",
-	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''В настоящий момент текст на данной странице отсутствует.<br>Вы можете наполнить её текстом и изображениями!'''</p>
+	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''Статья «{{FULLPAGENAME}}» не найдена''' ===
 
-<center><span class=\"wikia-button big plainlinks\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Создать эту статью!</span>]<br />или<br />[{{fullurl:Special:Search|search={{PAGENAMEE}}}} Найти похожую статью]</span></center>  
-<br>",
-	'noarticletext-nopermission' => 'В настоящее время на этой странице нет текста.
-Вы можете [[Special:Search/{{PAGENAME}}|найти упоминание данного названия]] в других статьях,
-или <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} найти соответствующие записи журналов].</span>',
+Что делать дальше?
+
+* Запустите поиск существующих статей о <span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
+* Создайте статью <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>}}",
 	'note' => "'''Примечание:'''",
-	'nonunicodebrowser' => "'''ПРЕДУПРЕЖДЕНИЕ: Ваш браузер не поддерживает кодировку Юникод. При редактировании статей все не-ASCII символы будут заменены на свои шестнадцатеричные коды.'''",
+	'nonunicodebrowser' => "'''ПРЕДУПРЕЖДЕНИЕ: Ваш браузер не поддерживает кодировку Юникод.'''
+При редактировании статей все не-ASCII символы будут заменены на свои шестнадцатеричные коды.",
 	'nocreatetitle' => 'Создание страниц ограничено',
-	'nocreatetext' => 'На этом сайте ограничена возможность создания новых страниц.
+	'nocreatetext' => 'На {{SITENAME}} ограничена возможность создания новых страниц.
 Вы можете вернуться назад и отредактировать существующую страницу, [[Special:UserLogin|представиться системе или создать новую учётную запись]].',
 	'nocreate-loggedin' => 'У вас нет разрешения создавать новые страницы.',
 	'nohistory' => 'Для этой страницы история изменений отсутствует.',
 	'nextrevision' => 'Следующая →',
 	'next' => 'след.',
-	'notitlematches' => 'Нет совпадений в названиях страниц',
-	'notextmatches' => 'Нет совпадений в текстах страниц',
+	'notitlematches' => '<div style="margin-top: -40px;" class="emptymwmsg mediawiki_notitlematches"></div>',
+	'notextmatches' => '<div style="margin-top: -40px;" class="emptymwmsg mediawiki_notextmatches"></div>',
 	'nextn' => '{{PLURAL:$1|следующая|следующие|следующие}} $1',
 	'nextn-title' => '{{PLURAL:$1|Следующая $1 запись|Следующие $1 записи|Следующие $1 записей}}',
-	'nonefound' => "'''Замечание:''' по умолчанию поиск производится не во всех пространствах имён. Используйте приставку ''all:'', чтобы искать во всех пространствах имён (включая обсуждения участников, шаблоны и пр.), или укажите требуемое пространство имён.",
+	'nonefound' => 'Поиск не дал результатов для этого слова.',
 	'nchanges' => '$1 {{PLURAL:$1|изменение|изменения|изменений}}',
 	'newpageletter' => 'Н',
 	'number_of_watching_users_pageview' => '[$1 {{PLURAL:$1|наблюдающий участник|наблюдающих участника|наблюдающих участников}}]',
 	'newsectionsummary' => '/* $1 */ новая тема',
-	'nolicense' => 'Отсутствует',
+	'nolicense' => 'Не выбрано',
 	'nolinkstoimage' => 'Нет страниц, ссылающихся на данный файл.',
 	'nbytes' => '$1 {{PLURAL:$1|байт|байта|байт}}',
 	'ncategories' => '$1 {{PLURAL:$1|категория|категории|категорий}}',
@@ -22688,28 +22342,27 @@ $messages['ru'] = array(
 	'nopagetext' => 'Указанной целевой страницы не существует.',
 	'nextpage' => 'Следующая страница ($1)',
 	'newuserlogpage' => 'Журнал регистрации участников',
-	'newuserlogpagetext' => 'Список недавно зарегистрировавшихся участников',
-	'noemailtitle' => 'Адрес электронной почты отсутствует',
+	'newuserlogpagetext' => 'Список зарегистрировавшихся участников.',
+	'noemailtitle' => 'Адрес эл. почты отсутствует',
 	'noemailtext' => 'Этот участник не указал действительный адрес электронной почты.',
 	'nowikiemailtitle' => 'Нет разрешения отправлять письма',
 	'nowikiemailtext' => 'Этот участник указал, что не желает получать письма от других участников.',
-	'nowatchlist' => 'Ваш список наблюдения пуст.',
+	'nowatchlist' => 'Ваш список отслеживания пуст.',
 	'notanarticle' => 'Не статья',
-	'notvisiblerev' => 'Версия была удалена',
+	'notvisiblerev' => 'Последняя версия страницы была удалена',
 	'namespace' => 'Пространство имён:',
 	'namespace_association' => 'Связанное пространство',
 	'nocontribs' => 'Изменений, соответствующих заданным условиям, найдено не было.',
 	'nolinkshere' => "На страницу '''[[:$1]]''' отсутствуют ссылки с других страниц.",
 	'nolinkshere-ns' => "В выбранном пространстве имён нет страниц, ссылающихся на '''[[:$1]]'''.",
 	'noautoblockblock' => 'автоблокировка отключена',
-	'newtitle' => 'Новое название',
-	'nonfile-cannot-move-to-file' => 'Невозможно переименовывать страницы в файлы',
+	'newtitle' => 'Новое название:',
+	'nonfile-cannot-move-to-file' => 'Невозможно переименовывать страницу в файл',
 	'noscript.css' => '/* Размещённый здесь CSS будет применяться для участников с отключенным JavaScript  */',
-	'notacceptable' => "Вики-сервер не может предоставить данные в формате, который мог бы прочитать ваш браузер.<br />
-The wiki server can't provide data in a format your client can read.",
+	'notacceptable' => 'Вики-сервер не может предоставить данные в формате, который мог бы прочитать ваш браузер.',
 	'nocredits' => 'Нет списка участников для этой статьи',
 	'nextdiff' => 'Следующая правка →',
-	'newimages' => 'Галерея новых файлов',
+	'newimages' => 'Новые файлы',
 	'newimages-summary' => '',
 	'newimages-legend' => 'Фильтр',
 	'newimages-label' => 'Имя файла (или его часть):',
@@ -22718,8 +22371,8 @@ The wiki server can't provide data in a format your client can read.",
 	'newuserlog-byemail' => 'пароль отправлен по эл. почте',
 	'not_you' => 'Не Вы?',
 	'newly_changed' => 'Недавно обновленные',
-	'number-shortening' => '$1K',
-	'number-shortening-millions' => '$1милл.',
+	'number-shortening' => '$1 тыс.',
+	'number-shortening-millions' => '$1 млн',
 	'number-shortening-billions' => '$1миллиард',
 	'namespacedisabled' => 'Пространство имён отключено',
 	'namespacedisabledtext' => 'Это пространство имён было отключено.',
@@ -22732,14 +22385,13 @@ The wiki server can't provide data in a format your client can read.",
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
-	'newuserlog-create-entry' => 'New user account',
-	'newuserlog-create2-entry' => 'created new account $1',
-	'newuserlog-autocreate-entry' => 'Account created automatically',
-	'nontabbedsearch' => 'Non-tabbed search',
-	'nontabbedsearchold' => 'Non-tabbed search (use old title/text matches display)',
+	'newuserlog-create-entry' => 'Новый участник',
+	'newuserlog-create2-entry' => 'создал новый аккаунт $1',
+	'newuserlog-autocreate-entry' => 'Учётная запись создана автоматически',
+	'nontabbedsearch' => 'Поиск не по вкладкам',
+	'nontabbedsearchold' => 'Поиск не по вкладкам (используется совпадение с заголовком)',
 );
 
 $messages['rue'] = array(
@@ -22805,9 +22457,6 @@ $messages['rue'] = array(
 Можете [[Special:Search/{{PAGENAME}}|глядати тоту назву]] в іншых сторінках,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} глядати в лоґах]
 або [{{fullurl:{{FULLPAGENAME}}|action=edit}} вытворити сторінку з таков назвов]</span>.',
-	'noarticletext-nopermission' => 'Теперь на тїй сторінцї не є текст.
-Можете [[Special:Search/{{PAGENAME}}|глядати тоту назву]] в іншых сторінках,
-або <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} глядати в лоґах]</span>.',
 	'note' => "'''Позначка:'''&nbsp;",
 	'nonunicodebrowser' => "'''Увага: Ваш переглядач не є способный працовати із знаками Unicode. Абы сьте могли тоту сторінку безпечно едітовати: вшыткы знакы мімо  ASCII суть зображены в гексадецімалных кодах.'''",
 	'nocreatetitle' => 'Створїня сторінок обмеджено',
@@ -23011,9 +22660,6 @@ $messages['sa'] = array(
 	'noarticletext' => 'अस्मिन् पृष्ठे अधुना किमपि न विद्यते। भवान् विकिपीडियावर्तिषु अन्येषु पृष्ठेषु इदं [[Special:Search/{{PAGENAME}}|शीर्षकम् अन्वेष्टुम्]]अर्हति अथवा इदं पृष्ठं
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}  सम्बद्धेषु पृष्ठेषु अन्वेष्टुम् अर्हति],
 अथवा [{{fullurl:{{FULLPAGENAME}}|action=edit}} इदं पृष्ठं सम्पादयितुम् अर्हति]</span>.',
-	'noarticletext-nopermission' => 'अस्मिन् पृष्ठे अधुना किमपि न विद्यते। भवान् विकिपीडियावर्तिषु अन्येषु पृष्ठेषु इदं [[Special:Search/{{PAGENAME}}|शीर्षकम् अन्वेष्टुम् अर्हति]]
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}  related logs अन्वेष्टुम् अर्हति],
-अथवा [{{fullurl:{{FULLPAGENAME}}|action=edit}} इदं पृष्ठं स्रष्टुम् अर्हति]</span>.',
 	'note' => "'''सूचना:'''",
 	'nonunicodebrowser' => "'''पूर्वसूचना: भवतः विचरकं यूनीकोड्-अनुकूलम् नास्ति।'''
 भवान् सुरक्षिततया सम्पादनं करोतु इत्येतदर्थं एका युक्तिः कृताऽस्ति: आस्की-इतराणि अक्षराणि सम्पादनपिटके षौडशिक(hexadecimal) कूटेषु द्रक्ष्यन्ते।",
@@ -23082,7 +22728,7 @@ $messages['sah'] = array(
 	'nologinlink' => 'Бэлиэтэнии',
 	'nocookiesnew' => 'Маннык ааттаах кыттааччы баар буолла гынан баран, систиэмэҕэ киирэ илик. {{SITENAME}} «cookies» туттар, оттон эн көмпүүтэргэр ону туһанар бобуллубут. Бука диэн «cookies» холбоо, онтон өссө киирэн көр.',
 	'nocookieslogin' => '{{SITENAME}} дьону билэргэ «cookies» туттар. Эн көмпүүтэргэр «cookies» бобуллубут. Ону холбоон баран өссө киирэн көр.',
-	'nocookiesfornew' => 'Аат кыайан бэлиэтэниллибэтэ. Төрүөтүнэн атын саайка сибидиэнньэ биэрии (CSRF) бобуллубута буолуон сөп. 
+	'nocookiesfornew' => 'Аат кыайан бэлиэтэниллибэтэ. Төрүөтүнэн атын саайка сибидиэнньэ биэрии (CSRF) бобуллубута буолуон сөп.
 Куукилар холбоно сылдьалларын көрөн баран өссө биирдэ боруобалаа.',
 	'noname' => 'Эн тиһилик билэр аатын киллэрбэтэххин.',
 	'nosuchuser' => 'Маннык - "$1" - ааттаах кыттааччы суох.
@@ -23108,9 +22754,6 @@ $messages['sah'] = array(
 Бу аат атын ыстатыйалга туттулларын [[Special:Search/{{PAGENAME}}|булуоххун сөп]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} сурунаалларга көрдүөххүн сөп],
 эбэтэр [{{fullurl:{{FULLPAGENAME}}|action=edit}} маннык ааттаах саҥа ыстатыйаны суруйуоххун] сөп</span>.',
-	'noarticletext-nopermission' => 'Билигин бу сирэй кураанах.
-Бу [[Special:Search/{{PAGENAME}}|тылы атын сирэйдэргэ көрдөөн көрүөххүн]] сөп,
-эбэтэр <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} сурунаалларга манна сыһыаннаах суруктары булуоххун сөп].</span>',
 	'note' => "'''Хос быһаарыы:'''",
 	'nonunicodebrowser' => "'''СЭРЭТИИ: Интэриниэтиҥ бырагырааммата Юникод кодировканы билиммэт эбит. Ыстатыйаны уларытаргар ASCII-тан атын бэлиэлэр шестнадцатиричнай кодка уларытыллыахтара.'''",
 	'nocreatetitle' => 'Сирэй оҥорор хааччахтаммыт',
@@ -23433,13 +23076,10 @@ Check yer spellin, or uise [[Special:UserLogin/signup|mak a new accoont]].',
 	'nosuchsectiontext' => 'Yer tryin tae edit a section that isnae there.',
 	'newarticle' => '(New)',
 	'newarticletext' => "Ye'v follaed an airtin til a page that disna exist yet. Tae create the page, stert typin in the box ablo (see the [[{{MediaWiki:Helppage}}|help page]] for mair info). Gin ye'r here by mistak, juist dab yer brouser's '''back''' button.",
-	'noarticletext' => 'The\'r nae text on this page the nou. 
+	'noarticletext' => 'The\'r nae text on this page the nou.
 Ye can [[Special:Search/{{PAGENAME}}|rake for this page teitle]] in ither pages,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} rake th\' related logs],
  or [{{fullurl:{{FULLPAGENAME}}|action=edit}} edit this page].</span>',
-	'noarticletext-nopermission' => 'The\'r nae text on this page the nou. 
-Ye ken [[Special:Search/{{PAGENAME}}|rake for this page teitle]] in ither pages,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} rake th\' related logs].',
 	'note' => "'''Mynd:'''",
 	'nonunicodebrowser' => "'''WARNIN: Yer brouser isna unicode compliant.  The'r a wirkaroond tae allou ye tae sauflie edit airticles: non-ASCII characters will kythe in the edit box as hexadecimal codes.'''",
 	'nocreatetitle' => 'Page makkin limitit',
@@ -23863,9 +23503,6 @@ Jēgo pakliovuot čė netīčiuom, paprastiausē paspauskėt naršīklės mīgto
 Tamsta galėt [[Special:Search/{{PAGENAME}}|ėiškuotė šėta poslapė pavadėnėma]] kėtūs poslapiūs,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ėiškuotė sosėjosiu regėstru],
 aba [{{fullurl:{{FULLPAGENAME}}|action=edit}} keistė ta poslapi]</span>.',
-	'noarticletext-nopermission' => 'Tuo čiesu tamė poslapī nier juokė teksta.
-Tamsta galėt [[Special:Search/{{PAGENAME}}|ėiškuotė šėta poslapė pavadėnėma]] kėtūs poslapiūs,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ėiškuotė sosėjosiu regėstru]</span>.',
 	'note' => "'''Pastebiejims:'''",
 	'nocreatetitle' => 'Poslapiu kūrims aprėbuots',
 	'nocreatetext' => '{{SITENAME}} aprėbuojė galėmībe kortė naujus poslapius.
@@ -23981,8 +23618,6 @@ Možda je premještena ili obrisana dok ste pregledavali stranicu.',
 Možete [[Special:Search/{{PAGENAME}}|tražiti naslov ove stranice]] u drugim stranicama,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pretraživati srodne registre],
 ili [{{fullurl:{{FULLPAGENAME}}|action=edit}} urediti ovu stranicu]</span>.',
-	'noarticletext-nopermission' => 'Trenutno nema teksta na ovoj stranici.
-Možete [[Special:Search/{{PAGENAME}}|tražiti ovaj naslov stranice]] na drugim stranicama ili <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pretražiti povezane registre]</span>.',
 	'note' => "'''Napomena:'''",
 	'nonunicodebrowser' => "'''UPOZORENJE: Vaš preglednik ne podržava Unicode zapis znakova.
 Molimo Vas promijenite ga prije sljedećeg uređivanja članaka. Znakovi koji nisu po ASCII standardu će se u prozoru za izmjene pojaviti kao heksadecimalni kodovi.'''",
@@ -24103,9 +23738,6 @@ Ivd tlkmt {{GENDER:||e|(e)}} ɣis bla trit, klikki f tajrrayt n '''urrir''' n im
 	'noarticletext' => 'ɣilad ur illa walu may ityuran  f tasnatad ad, tzdart at [[Special:Search/{{PAGENAME}}|search for this page title]] in other pages,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} search the related logs],
 ulla cabba  [{{fullurl:{{FULLPAGENAME}}|action=edit}} edit this page]</span>.',
-	'noarticletext-nopermission' => 'Ur illa may itt yuran ɣ tasna tad.
-Ẓr [[Special:Search/{{PAGENAME}}|search for this page title]] ɣ tisnatin yaḍnin,
-ulla <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}search the related logs]</span>.',
 	'note' => "'''molahada:'''",
 	'nextrevision' => '↓ Amẓr amaynu',
 	'next' => 'Imal (wad yuckan)',
@@ -24205,8 +23837,6 @@ $messages['si'] = array(
 අනෙකුත් පිටුවල  [[Special:Search/{{PAGENAME}}|මෙම පිටු ශීර්ෂය සඳහා ගවේශනය කිරීම]] හෝ,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} අදාළ ලඝු-සටහන් සඳහා ගවේෂණය කිරීම],
 හෝ [{{fullurl:{{FULLPAGENAME}}|action=edit}} මෙම පිටුව සංස්කරණය කිරීම] හෝ ඔබ විසින් සිදු කල හැක</span>.',
-	'noarticletext-nopermission' => 'දැනට මෙම පිටුවෙහි කිසිදු පෙළක් නොමැත.
-අනෙකුත් පිටුවල [[Special:Search/{{PAGENAME}}|මෙම පිටු ශීර්ෂය සඳහා ගවේශනය කිරීම]] හෝ, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}අදාළ ලඝු-සටහන් සඳහා ගවේෂණය කිරීම]</span>, හෝ මෙම පිටුව සංස්කරණය කිරීම හෝ ඔබට කල හැක.',
 	'note' => "'''සටහන:'''",
 	'nonunicodebrowser' => "'''අවවාදයයි: ඔබගේ බ්‍රවුසරය යුනිකේත  අනුකූල නොවේ.
 මෙම දුෂ්කරතාවය මගහැර පිටු සංස්කරණය  සුරක්ෂිතව සිදුකිරීමට ඔබට ඉඩ සලසන වක් මගක් ඇත: ASCII-නොවන අක්ෂර  සංස්කරණ කොටුවෙහි ෂඩ්දශක කේතයන් ලෙස පෙන්නුම් කෙරේ.'''",
@@ -24337,9 +23967,6 @@ Ak ste sa sem dostali nechtiac, iba kliknite na tlačidlo '''späť''' vo svojom
 Môžete [[Special:Search/{{PAGENAME}}|vyhľadávať názov tejto stránky]] v obsahu iných stránok,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} vyhľadávať v súvisiacich záznamoch],
 alebo [{{fullurl:{{FULLPAGENAME}}|action=edit}} upravovať túto stránku]</span>.',
-	'noarticletext-nopermission' => 'Táto stránka momentálne neobsahuje žiadny text.
-Môžete [[Special:Search/{{PAGENAME}}|hľadať názov tejto stránky]] v texte iných stránok
-alebo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} si pozrieť súvisiace záznamy]</span>.',
 	'note' => "'''Poznámka: '''",
 	'nonunicodebrowser' => "'''UPOZORNENIE: Váš prehliadač nepodporuje unicode. Dočasným riešením ako bezpečne upravovať stránky je, že ne-ASCII znaky sa v upravovacom textovom poli zobrazia ako zodpovedajúce hexadecimálne hodnoty.'''",
 	'nocreatetitle' => 'Tvorba nových stránok bola obmedzená',
@@ -24472,8 +24099,6 @@ Da bi stran ustvarili, vnesite v spodnji obrazec besedilo
 (za več informacij glej [[{{MediaWiki:Helppage}}|pomoč]]).
 Če ste sem prišli po pomoti, v svojem brskalniku kliknite gumb ''Nazaj''.",
 	'noarticletext' => 'Na tej strani ni trenutno nobenega besedila. Naslov strani lahko poskusite [[Special:Search/{{PAGENAME}}|poiskati]] na drugih straneh, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} v dnevniških zapisih] ali pa [{{fullurl:{{FULLPAGENAME}}|action=edit}} stran uredite]</span>.',
-	'noarticletext-nopermission' => 'Na tej strani ni trenutno nobenega besedila.
-Lahko poskusite [[Special:Search/{{PAGENAME}}|poiskati naslov te strani]] v drugih straneh, ali <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} poiskati v povezanih dnevniških zapisih]</span>.',
 	'note' => "'''Opomba:'''",
 	'nonunicodebrowser' => "'''Opozorilo: Vaš brskalnik ne podpira Unicode.'''
 Za obhod te težave se bodo ne-ASCII-znaki v urejevalnem polju spodaj pojavili kot šestnajstiške kode.",
@@ -24601,9 +24226,6 @@ Best du fälschlicherweise hier, klicke de '''Zerricke'''-Schaltfläche dennes B
 	'noarticletext' => 'Diese Seite enthält momentan noo kenn Text.
 Du koast diesen Tittel uffa andern Seita [[Special:Search/{{PAGENAME}}|sucha]],
 <span class="plainlinks"> ei dan zugeheeriga [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} Logbichern sucha] oder diese Seite [{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbta]</span>.',
-	'noarticletext-nopermission' => 'Diese Seite enthält momentan noo kenn Text.
-Du koast diesen Tittel uff dann andern Seita [[Special:Search/{{PAGENAME}}|sucha]]
-oder de zugehieriga <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbichern betrachta].</span>',
 	'nonunicodebrowser' => "'''Ochtiche:''' Dei Browser koan Unicode-Zeicha ne richtig verarbta. Bitte verwende anna andern Browser im Seita zu bearbta.",
 	'nocreatetitle' => 'De Erstellung neuer Seyta ies eengeschränkt.',
 	'nocreatetext' => 'Uff {{SITENAME}} wurde doas Erstalla neuer Seyta eengeschränkt. Du koast bestiehende Seyten ändern oder diech [[Special:UserLogin|oamelda]].',
@@ -24845,10 +24467,6 @@ Nëse ju keni mbërritur këtu gabimisht, atëherë klikoni butonin '''pas''' t�
 Ju mund [[Special:Search/{{PAGENAME}}|ta kërkoni këtë titull]] në faqe tjera,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} të kërkoni ngjarjet e ngjashme në regjistër],
 ose [{{fullurl:{{FULLPAGENAME}}|action=edit}} të redaktoni këtë faqe]</span>.',
-	'noarticletext-nopermission' => 'Momentalisht nuk ka tekst në këtë faqe.
-Ju mundeni [[Special:Search/{{PAGENAME}}|me kërku këtë titull]] në faqe tjera,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} me kërku në regjistrat tematikisht të afërm],
-apo [{{fullurl:{{FULLPAGENAME}}|action=edit}} me redaktu këtë faqe]</span>.',
 	'note' => "'''Shënim:'''",
 	'nonunicodebrowser' => "'''Kujdes: Shfletuesi juaj ka mospërputhje me standartin unicode.'''
 Ekziston një zgjidhje për redaktimin e sigurt të faqeve: Shkronjat jo-ASCII do të duken në kutinë e redaktimit si kod heksadecimal.",
@@ -24979,8 +24597,6 @@ $messages['sr-ec'] = array(
 	'noarticletext' => 'На овој страници тренутно нема садржаја.
 Можете [[Special:Search/{{PAGENAME}}|потражити овај наслов]] на другим страницама,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} претражити сродне извештаје] или [{{fullurl:{{FULLPAGENAME}}|action=edit}} уредити страницу]</span>.',
-	'noarticletext-nopermission' => 'На овој страници тренутно нема садржаја.
-Можете [[Special:Search/{{PAGENAME}}|потражити овај наслов]] на другим страницама или <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} претражити сродне извештаје]</span>.',
 	'note' => "'''Напомена:'''",
 	'nonunicodebrowser' => "'''Упозорење: ваш прегледач не подржава уникод.'''
 Промените га пре него што почнете с уређивањем.",
@@ -25350,9 +24966,6 @@ Bäst du hier bie Fersjoon, klik ju '''Tourääch'''-Skaltfläche fon din Browse
 	'noarticletext' => 'Deer is apstuuns naan Text ap disse Siede.
 Du koast dissen Tittel ap do uur Sieden [[Special:Search/{{PAGENAME}}|säike]],
 <span class="plainlinks"> in do touheerige [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} Logbouke säike] of disse Siede [{{fullurl:{{FULLPAGENAME}}|action=edit}} beoarbaidje]</span>.',
-	'noarticletext-nopermission' => 'Der is apstuuns noch naan Text ap disse Siede.
-Du koast dissen Tittel ap do uur Sieden [[Special:Search/{{PAGENAME}}|säike]]
-of <span class="plainlinks">in do touheerige [{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbouke säike].</span>',
 	'note' => "'''Waiwiesenge:'''",
 	'nonunicodebrowser' => "'''Oachtenge: Dien Browser kon Unicode-Teekene nit gjucht feroarbaidje. Benutse jädden n uur Browser uum Artikkele tou beoarbaidjen.'''",
 	'nocreatetitle' => 'Dät Moakjen fon näie Sieden is begränsed',
@@ -25478,9 +25091,6 @@ Mun anjeun ka dieu teu ngahaja, klik baé tombol '''back''' na panyungsi anjeun.
 Anjeun bisa [[Special:Search/{{PAGENAME}}|nyusud judul ieu kaca]] dina kaca séjén,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} nyusud log nu tumali],
 atawa [{{fullurl:{{FULLPAGENAME}}|action=edit}} ngédit ieu kaca]</span>.',
-	'noarticletext-nopermission' => 'Kiwari ieu kaca euweuh eusian.
-Anjeun bisa [[Special:Search/{{PAGENAME}}|milari judul ieu kaca]] di kaca séjén,
-atawa <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pilari log nu tumali]</span>.',
 	'note' => "'''Catetan:'''",
 	'nonunicodebrowser' => "'''AWAS: Panyungsi anjeung teu maké unicode, mangga robah heula méméh ngédit artikel.'''",
 	'nocreatetitle' => 'Nyieun kaca kakara diwatesan',
@@ -25601,11 +25211,8 @@ Det kan ha flyttats eller raderats medan du tittade på sidan.',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'noarticletext' => "<p style=\"font-size:140%;text-align: center\">'''Denna sida kräver innehåll. Du kan hjälpa till genom att lägga till en mening eller en bild!'''</p>
 
-<center><span class=\"wikia-button big\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Lägg till denna sida!</span>]</span></center>  
+<center><span class=\"wikia-button big\">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Lägg till denna sida!</span>]</span></center>
 <br>",
-	'noarticletext-nopermission' => 'Det finns för tillfället ingen text på denna sida.
-Du kan [[Special:Search/{{PAGENAME}}|söka efter denna sidas titel]] i andra sidor,
-eller <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} söka i relevanta loggar]</span>.',
 	'note' => "'''Obs!'''",
 	'nonunicodebrowser' => "'''VARNING: Din webbläsare saknar stöd för unicode. För att du ska kunna redigera sidor utan problem, så visas icke-ASCII-tecken som hexadecimala koder i redigeringsrutan.'''",
 	'nocreatetitle' => 'Skapande av sidor begränsat',
@@ -25734,9 +25341,6 @@ Labda ilihamishwa au ilifutwa endapo unatazama ukurasa.',
 	'newarticle' => '(Mpya)',
 	'newarticletext' => "Ukurasa unaotaka haujaandikwa bado. Ukipenda unaweza kuuandika wewe mwenyewe kwa kutumia sanduku la hapa chini (tazama [[{{MediaWiki:Helppage}}|Mwongozo]] kwa maelezo zaidi). Ukifika hapa kwa makosa, bofya kibonyezi '''back''' (nyuma) cha programu yako.",
 	'noarticletext' => 'Ukurasa huu haujaandikwa bado. [[Special:Search/{{PAGENAME}}|tafutia jina hili]] katika kurasa nyingine, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tafuta kumbukumbu zinazohusika], au [{{fullurl:{{FULLPAGENAME}}|action=edit}} hariri ukurasa huu]</span>.',
-	'noarticletext-nopermission' => 'Kwa sasa hakuna maandishi katika ukurasa huu.
-Unaweza [[Special:Search/{{PAGENAME}}|kutafuta jina la ukurasa huu]] katika kurasa nyingine,
-au <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tafuta ingizo linalofanana]</span>.',
 	'note' => "'''Taarifa:'''",
 	'nonunicodebrowser' => "'''Ilani: Kivinjari chako hakikubaliani na Unicode.'''
 Ili uweze kuhariri kurasa sawasawa, herufi zisizo za ASCII zitaonekana katika sanduku la kuhariri kama kodi za hexadecimali.",
@@ -25848,9 +25452,6 @@ Sprowdź szrajbůng, abo [[Special:UserLogin/signup|utwůrz nowe kůnto]].',
 	'newarticle' => '(Nowy)',
 	'newarticletext' => 'Ńy mo sam jeszcze artikla uo takijj titli. Eli chcesz go sprowjać, naszkryflej niżyj jego tekst (wjyncy informacyj nojdźesz [[{{MediaWiki:Helppage}}|na zajće půmocy]]). Eli żeś chćoł zrobić cosik inksze, naćiś ino knefel "Nazod".',
 	'noarticletext' => 'Ńy můmy zajta uo takij titli. Mogesz [{{fullurl:{{FULLPAGENAME}}|action=edit}} wćepać artikel {{FULLPAGENAME}}] abo [[Special:Search/{{PAGENAME}}|sznupać {{PAGENAME}} we inkszych]].',
-	'noarticletext-nopermission' => 'Na tyj zajće ńy mo jeszcze artikla.
-Mogesz [[Special:Search/{{PAGENAME}}|wysznupać ta titla]] we treśći inkszych zajtůw
-abo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} przesznupać powjůnzane logi].</span>',
 	'note' => "'''Pozůr:'''",
 	'nonunicodebrowser' => "'''Pozůr! Twoja přeglůndorka ńy umje poprowńy rozpoznować kodowańo UTF-8 (Unicode). Bestož wšyjske znoki, kerych Twoja přeglůndorka ńy umje rozpoznować, zamjeńůno na jejich kody heksadecymalne.'''",
 	'nocreatetitle' => 'Uograńičůno wćepywańy zajtůw',
@@ -25970,9 +25571,6 @@ $messages['ta'] = array(
 	'newarticle' => '(புதிது)',
 	'newarticletext' => 'ஒரு இணைப்பினூடாக நீங்கள் வந்துள்ள இப்பக்கம் இன்னும் உருவாக்கப்படவில்லை. பக்கத்தை உருவாக்குவதற்குக் கீழேயுள்ள கட்டத்துள் தட்டச்சிடத் தொடங்குங்கள். (மேலதிக விபரங்களுக்கு [[{{MediaWiki:Helppage}}|உதவிப் பக்கத்தைப்]] பார்க்கவும்). நீங்கள் தவறுதலாக இங்கே வந்திருந்தால், உங்கள் உலாவியின் பின் செல்வதற்கான பொத்தானைச் சொடுக்கவும்.',
 	'noarticletext' => 'இப் பக்கத்தில் தற்பொழுது உள்ளடக்கம் எதுவுமில்லை. நீங்கள் இப்பக்க [[Special:Search/{{PAGENAME}}|தலைப்பை வேறு பக்கங்களில் தேடவோ]] அல்லது [{{fullurl:{{FULLPAGENAME}}|action=edit}} இப்பக்கத்தை தொகுக்கவோ] முடியும்.',
-	'noarticletext-nopermission' => 'தற்பொழுது இப்பக்கத்தில் உரை எதுவும் இல்லை.
-நீங்கள் [[Special:Search/{{PAGENAME}}|பக்கத் தலைப்பை வைத்து]] அல்லது மற்ற பக்கங்களில்,
-or <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} அல்லது தேடுதல் தொடர்பான பதிவுகளில் தேடவும்.]</span>.',
 	'note' => "'''குறிப்பு:'''",
 	'nonunicodebrowser' => "'''எச்சரிக்கை: உங்களது உலாவி ஒருங்குக்குறியை ஆதரிக்கவில்லை. உங்கள் தொகுப்புக்களைத் பாதுகாப்பகத் தொடர்ந்துச் செய்ய வழிமுறையொன்றுள்ளது: அஸ்கியில்லாத எழுத்துகள் அடி பதினாறைக் கொண்ட குறிகளாக தொகுப்புக் கட்டத்தில் தென்படும்.'''",
 	'nocreatetitle' => 'பக்கத் தொடக்கம் மட்டுப்படுத்தப்பட்டுள்ளது',
@@ -26181,9 +25779,6 @@ $messages['te'] = array(
 వేరే పేజీలలో [[Special:Search/{{PAGENAME}}|ఈ పేజీ శీర్షిక కోసం వెతకవచ్చు]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} సంబంధిత చిట్టాలు చూడవచ్చు],
 లేదా [{{fullurl:{{FULLPAGENAME}}|action=edit}} ఈ పేజీని మార్చవచ్చు]</span>.',
-	'noarticletext-nopermission' => 'ప్రస్తుతం ఈ పేజీలో పాఠ్యమేమీ లేదు.
-మీరు ఇతర పేజీలలో [[Special:Search/{{PAGENAME}}|ఈ పేజీ శీర్షిక కోసం వెతకవచ్చు]],
-లేదా <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} సంబంధిత చిట్టాలలో వెతకండి]</span>.',
 	'note' => "'''గమనిక:'''",
 	'nonunicodebrowser' => "'''WARNING: Your browser is not unicode compliant. A workaround is in place to allow you to safely edit pages: non-ASCII characters will appear in the edit box as hexadecimal codes.'''",
 	'nocreatetitle' => 'పేజీని సృష్టించడాన్ని నియంత్రించాం.',
@@ -26649,9 +26244,6 @@ $messages['th'] = array(
 	'noarticletext' => 'ขณะนี้ไม่มีเนื้อหาในหน้านี้
 คุณสามารถ [[Special:Search/{{PAGENAME}}|ค้นหาชื่อบทความนี้]] ในหน้าอื่น
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ค้นหาบันทึกที่เกี่ยวข้อง] หรือ[{{fullurl:{{FULLPAGENAME}}|action=edit}} แก้ไขหน้านี้]</span>',
-	'noarticletext-nopermission' => 'ปัจจุบันไม่มีข้อความในหน้านี้
-คุณสามารถ [[Special:Search/{{PAGENAME}}|ค้นหาชื่อบทความนี้]] ในหน้าอื่น
-หรือ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ค้นหาปูมที่เกี่ยวข้อง]</span>',
 	'note' => "'''คำแนะนำ:'''",
 	'nonunicodebrowser' => "'''คำเตือน: เว็บเบราว์เซอร์นี้ไม่สนับสนุนการใช้งานแบบยูนิโคด ตัวอักษรที่ไม่ใช่แบบแอสกีจะแสดงในกล่องการแก้ไขในลักษณะรหัสเลขฐานสิบหก'''",
 	'nocreatetitle' => 'จำกัดการสร้างหน้าใหม่',
@@ -26800,9 +26392,6 @@ Sahypany görýän mahalayňyz onuň ady üýtgedilen ýa-da öçürilen bolmagy
 Bu ady başga sahypalarda [[Special:Search/{{PAGENAME}}|gözläp bilersiňiz]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} degişli gündeliklerde gözleg geçirip bilersiňiz],
 ýa-da bu sahypany [{{fullurl:{{FULLPAGENAME}}|action=edit}} redaktirläp bilersiňiz]</span>.',
-	'noarticletext-nopermission' => 'Häzirki wagtda bu sahypada tekst ýok.
-Bu sahypa adyny [[Special:Search/{{PAGENAME}}|başga sahypalarda gözläp]]
-ýa-da <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} degişli gündeliklerde gözleg geçirip bilersiňiz].</span>',
 	'note' => "'''Bellik:'''",
 	'nonunicodebrowser' => "'''Duvduryş: Brauzeriňiz unicode kodirowkasyny goldamaýar.'''
 Sahypalary howpsuz ýagdaýda rdaktirlemegiňiz şeýle aýlawly ýol bar: ASCII däl simwollar redaktirleme penjiresinde onaltylyk kodlar görnüşinde peýda bolar.",
@@ -26934,9 +26523,6 @@ Kung napunta ka rito dahil sa pagkakamali, pakipindot ang pinduntang '''balik'''
 Maaari mong [[Special:Search/{{PAGENAME}}|hanapin ang pamagat ng pahinang ito]] sa loob iba pang mga pahina,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} maghanap sa kaugnay na mga talaan],
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} baguhin ang pahinang ito]</span>.',
-	'noarticletext-nopermission' => 'Kasalukuyang walang teksto sa pahinang ito.
-Maaari mong [[Special:Search/{{PAGENAME}}|hanapin ang pamagat ng pahinang ito]] sa ibang mga pahina,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} maghanap sa kaugnay na mga talaan]</span>.',
 	'note' => "'''Paunawa:'''",
 	'nonunicodebrowser' => "'''Babala: Hindi sumusunod sa unicode ang browser mo.'''
 May ginawang solusyon para pahintulutan kang magbago ng mga pahina nang ligtas: ang mga 'di-ASCII na karakter ay magpapakita sa kahon ng pagbabago bilang mga kodigong heksadesimal.",
@@ -27200,9 +26786,6 @@ Buraya yanlışlıkla geldiyseniz tarayıcınızın '''geri''' tuşuna tıklayı
 Bu başlığı [[Special:Search/{{PAGENAME}}|diğer sayfalarda arayabilir]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ilgili kayıtları arayabilir],
 ya da bu sayfayı [{{fullurl:{{FULLPAGENAME}}|action=edit}} değiştirebilirsiniz]</span>.',
-	'noarticletext-nopermission' => 'Bu sayfa şu anda boştur.
-Bu başlığı [[Special:Search/{{PAGENAME}}|diğer sayfalarda arayabilir]]
-ya da <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ilgili kayıtları tarayabilirsiniz].</span>',
 	'note' => "'''Not: '''",
 	'nonunicodebrowser' => "'''UYARI: Tarayıcınız unicode uyumlu değil.
 Sayfaları güvenle değiştirmenize izin vermek için: ASCII olmayan karakterler değiştirme kutusunda onaltılık kodlar olarak görünecektir.'''",
@@ -27363,9 +26946,6 @@ $messages['tt-cyrl'] = array(
 Сез [[Special:Search/{{PAGENAME}}|бу исем кергән башка мәкаләләрне]],
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} көндәлекләрдәге язмаларны] таба
 яки '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} шушындый исемле яңа бит төзи]'''</span> аласыз.",
-	'noarticletext-nopermission' => 'Хәзерге вакытта бу биттә текст юк.
-Сез [[Special:Search/{{PAGENAME}}|бу исем кергән башка мәкаләләрне]],
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} көндәлекләрдәге язмаларны] таба аласыз.</span>',
 	'note' => "'''Искәрмә:'''",
 	'nonunicodebrowser' => "'''Кисәтү: Сезнең браузер Юникод кодлавын танымый.'''
 Үзгәртү вакытында ASCII булмаган символлар махсус уналтылы кодларга алыштырылачак.",
@@ -27475,9 +27055,6 @@ Yaña bit yasaw öçen astağı täräzädä mäqälä tekstın cıyığız ([[{
 Sez [[Special:Search/{{PAGENAME}}|bu isem kergän başqa mäqälälärne]],
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} köndäleklärdäge yazmalarnı] taba
 yäki '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} şuşındıy isemle yaña bit tözi]'''</span> alasız.",
-	'noarticletext-nopermission' => 'Xäzerge waqıtta bu bittä tekst yuq.
-Sez [[Special:Search/{{PAGENAME}}|bu isem kergän başqa mäqälälärne]],
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} köndäleklärdäge yazmalarnı] taba alasız.</span>',
 	'note' => "'''İskärmä:'''",
 	'nonunicodebrowser' => "'''Kisätü: Sezneñ brauzer Yünikod kodlawın tanımıy.'''
 Üzgärtü waqıtında ASCII bulmağan simvollar maxsus unaltılı kodlarğa alıştırılaçaq.",
@@ -27700,8 +27277,6 @@ URL نى خاتا كىرگۈزۈپ قالدىڭىز ياكى خاتا ئۇلان
  سىز باشقا بەتتە [[Special:Search/{{PAGENAME}}|بۇ بەتنىڭ ماۋزۇسىنى ئىزدىيەلەيسىز]] ياكى
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} مۇناسىۋەتلىك خاتىرىسىنى ئىزدىيەلەيسىز،],
 [{{fullurl:{{FULLPAGENAME}}|action=edit}} بۇ بەتنى تەھرىرلىيەلەيسىز]</span>',
-	'noarticletext-nopermission' => 'بۇ بەتتە ھازىرچە مەزمۇن يوق.
- سىز باشقا بەتتە [[Special:Search/{{PAGENAME}}|بۇ بەتنىڭ ماۋزۇسىنى ئىزدىيەلەيسىز]] ياكى <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}] مۇناسىۋەتلىك خاتىرىسىنى ئىزدىيەلەيسىز،</span>',
 	'note' => "'''ئىزاھات:'''",
 	'nonunicodebrowser' => "'''ئاگاھلاندۇرۇش: تور كۆرگۈڭىز يۇنىكودنى قوللىمايدۇ.'''
 بۇ جايدىكى خىزمەت رايونىدا بەتنى بىخەتەر ھالدا تەھرىرلىيەلەيسىز: غەيرى ASCII ھەرپلىرى ئون ئالتىلىك كودلىنىش بويىچە تېكست رامكىسىدا كۆرۈنىدۇ.",
@@ -27854,9 +27429,6 @@ $messages['uk'] = array(
 Ви можете [[Special:Search/{{PAGENAME}}|пошукати цю назву]] в інших сторінках,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пошукати в журналах]
 або [{{fullurl:{{FULLPAGENAME}}|action=edit}} створити сторінку з такою назвою]</span>.',
-	'noarticletext-nopermission' => 'Зараз на цій сторінці відсутній текст.
-Ви можете [[Special:Search/{{PAGENAME}}|пошукати такий заголовок]] серед інших сторінок,
-або <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} пошукати пов\'язані записи в журналах]</span>.',
 	'note' => "'''Зауваження:'''",
 	'nonunicodebrowser' => "'''ПОПЕРЕДЖЕННЯ: Ваш [[браузер]] не підтримує кодування [[Юнікод]]. При редагуванні статей всі не-ASCII символи будуть замінені на свої шіснадцяткові коди.'''",
 	'nocreatetitle' => 'Створення сторінок обмежено',
@@ -27992,8 +27564,6 @@ $messages['ur'] = array(
 	'noarticletext' => 'اِس صفحہ میں فی الحال کوئی متن موجود نہیں ہے.
 آپ دیگں صفحات میں [[Special:Search/{{PAGENAME}}|اِس صفحہ کے عنوان کیلئے تلاش کرسکتے ہیں]]، <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} متعلقہ نوشتہ جات تلاش کرسکتے ہیں],
 یا [{{fullurl:{{FULLPAGENAME}}|action=edit}} اِس صفحہ میں ترمیم کرسکتے ہیں]</span>',
-	'noarticletext-nopermission' => 'اِس صفحہ میں فی الحال کوئی متن موجود نہیں ہے.
-آپ دیگں صفحات میں [[Special:Search/{{PAGENAME}}|اِس صفحہ کے عنوان کیلئے]] یا <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} متعلقہ نوشتہ جات تلاش کرسکتے ہیں]</span>',
 	'note' => "'''نوٹ:'''",
 	'nocreatetitle' => 'تخلیقِ صفحہ محدود',
 	'nocreate-loggedin' => 'آپ کو نئے صفحات تخلیق کرنے کی اجازت نہیں ہے.',
@@ -28237,9 +27807,6 @@ Se te sì rivà qua par sbajo, basta che te struchi '''Indrìo''' sul to browser
 	'noarticletext' => 'In sto momento no ghe xe nissun testo su sta pagina.
 Te pol [[Special:Search/{{PAGENAME}}|sercar el titolo de sta pagina]] in altre pagine,
 o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} sercar in tei registri ligà a sta pagina] o se nò [{{fullurl:{{FULLPAGENAME}}|action=edit}} canbiar la pagina]</span>.',
-	'noarticletext-nopermission' => 'In sto momento no ghe xe nissun testo su sta pagina.
-Te pol [[Special:Search/{{PAGENAME}}|sercar el titolo de sta pagina]] in altre pagine,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} sercar in tei registri ligà a sta pagina]</span>.',
 	'note' => "'''Nota:'''",
 	'nonunicodebrowser' => "'''OCIO: Te stè doparando un browser mìa conpatibile coi caràteri Unicode. Par consentir la modifica de le pagine senza crear inconvenienti, i caràteri non ASCII i vien mostrà ne la casela de modifica soto forma de codici esadecimali.'''",
 	'nocreatetitle' => 'Creazion de le pagine limitada',
@@ -28365,9 +27932,6 @@ Ku tö olet petnus tänna tuldes, pingat teiden kaclimen '''tagaze'''-kingitimel
 Tö voit [[Special:Search/{{PAGENAME}}|ectä nece nimi]] toižil lehtpolil,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ectä pojavid aigkirjoiden kirjutesid],
 vai [{{fullurl:{{FULLPAGENAME}}|action=edit}} redaktiruida nece lehtpol\']</span>.',
-	'noarticletext-nopermission' => 'Necil lehtpolel ei ole nügüd\' tekstad.
-Tö voit [[Special:Search/{{PAGENAME}}|ectä necen lehtpolen nimi]] toižil lehtpolil,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} ectä pojavid aigkirjoiden kirjutesid]</span>.',
 	'note' => "'''Homaičend:'''",
 	'nonunicodebrowser' => "'''HOMAIKAT: Teiden kaclim ei kävuta Unikodad.'''
 Kirjutesiden redaktiruindan aigan kaikiden Unikod-simvoliden (kudambad ei olgoi ASCII:š) sijas ozutadas niiden geksadecimaližid ekvivalentoid.",
@@ -28488,9 +28052,6 @@ Có thể nó đã bị di chuyển hoặc xóa đi trong khi bạn đang xem tr
 	'noarticletext' => 'Trang này hiện chưa có nội dung.
 Bạn có thể [[Special:Search/{{PAGENAME}}|tìm kiếm tựa trang này]] trong các trang khác, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tìm trong các nhật trình liên quan],
 hoặc [{{fullurl:{{FULLPAGENAME}}|action=edit}} sửa đổi trang này]</span>.',
-	'noarticletext-nopermission' => 'Trang này hiện đang trống.
-Bạn có thể [[Special:Search/{{PAGENAME}}|tìm kiếm tựa trang này]] tại các trang khác,
-hoặc <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tìm kiếm các nhật trình liên quan]</span>.',
 	'note' => "'''Ghi chú:'''",
 	'nonunicodebrowser' => "'''CHU' Y': Tri`nh duye^.t cu?a ba.n kho^ng ho^~ tro+. unicode. Mo^.t ca'ch dde^? ba.n co' the^? su+?a ddo^?i an toa`n trang na`y: ca'c ky' tu+. kho^ng pha?i ASCII se~ xua^'t hie^.n trong ho^.p soa.n tha?o du+o+'i da.ng ma~ tha^.p lu.c pha^n.'''",
 	'nocreatetitle' => 'Khả năng tạo trang bị hạn chế',
@@ -29043,9 +28604,6 @@ Kitaa kun amo it im pagbaybay.',
 	'nosuchsectiontitle' => 'Waray kaagi-i an bahin',
 	'newarticle' => '(Bag-o)',
 	'newarticletext' => "Ginsunod mo an pakli nga waray pa kahihimo.  Para ighimo an pakli, tikanga pagmakinilya ha kahon nga aada ha ubos (kitaa an [[{{MediaWiki:Helppage}}|nabulig nga pakli]] para han kadugangan nga pananabutan).  Kun sayop an imo pagkanhi, igpidlit an imo kanan panngaykay (''browser'') '''balik''' (''back'') nga piridlitan.",
-	'noarticletext-nopermission' => 'Ha yana waray surat ini nga pakli.
-Puydi nimo [[Special:Search/{{PAGENAME}}|pamilngon ini nga titulo han pakli]] ha iba nga mga pakli,
-o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} pamilngon ha mga kasumpay nga talaan]</span>.',
 	'note' => "'''Pahibaro:'''",
 	'nocreate-loggedin' => 'Diri ka gintutugotan paghimo hin mga bag-o nga pakli.',
 	'nextrevision' => 'Burubag-o nga pagliwat →',
@@ -29133,9 +28691,6 @@ Ab limu xëti jagleel yépp, ma nees na koo gis ci [[Special:SpecialPages|{{int:
 	'newarticletext' => "Da ngaa topp ab lëkkalekaay buy jëme ci aw xët wu amagul. ngir sos xët wi léegi, duggalal sa mbind ci boyot bii ci suuf (man ngaa yër [[{{MediaWiki:Helppage}}|xëtu ndimbal wi]] ngir yeneeni xamle). Su fekkee njuumtee la fi indi cuqal ci '''dellu''' bu sa joowukaay.",
 	'noarticletext' => 'Fi mu ne ni amul menn mbind ci xët wii; man ngaa [[Special:Search/{{PAGENAME}}|seet koju xët wi]] ci yeneen xët, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} seet ci xëtu jagleel wi ],
 walla [{{fullurl:{{FULLPAGENAME}}|action=edit}} soppi xët wii]</span>.',
-	'noarticletext-nopermission' => 'Nii-nii amul menn mbind ci wii xët.
-Man nga [[Special:Search/{{PAGENAME}}|seet bii koj]] ci yeneen xët,
-walla <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} nga seet ci yéenekaay yees ko féetaleel]</span>.',
 	'note' => "'''Karmat :'''",
 	'nonunicodebrowser' => "'''Attention : Votre navigateur ne supporte pas l’unicode. Une solution temporaire a été trouvée pour vous permettre de modifier en tout sûreté un article : les caractères non-ASCII apparaîtront dans votre boîte de modification en tant que codes hexadécimaux. Vous devriez utiliser un navigateur plus récent.'''",
 	'nocreatetitle' => 'Digalu sosteefu xët',
@@ -29241,8 +28796,6 @@ $messages['wuu'] = array(
 要创建该页面呢，就勒下底个框框里向开始写（[[{{MediaWiki:Helppage}}|帮助页面]]浪有更加多个信息）。
 要是倷是弗用心到该搭个说话，只要点击倷浏览器个'''返回'''揿钮。",
 	'noarticletext' => '箇只页面目前呒没内容。侬可以垃拉其他页面高头[[Special:Search/{{PAGENAME}}|搜索此页标题]]、<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索相关日志]或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 编辑此页]。</span>',
-	'noarticletext-nopermission' => '箇只页面目前呒没内容，侬可以垃拉其它页[[Special:Search/{{PAGENAME}}|搜索此页标题]]，
-或<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有关日志]</span>。',
 	'note' => "'''注意：'''",
 	'nonunicodebrowser' => "'''警告：侬个浏览器弗兼容Unicode编码。'''箇搭有一只工作区将使侬可以安全编辑页面：非ASCII字符将以十六进制编码方式出现垃拉编辑框里向。",
 	'nocreatetitle' => '创建页面受限',
@@ -29384,12 +28937,10 @@ $messages['xmf'] = array(
 	'newarticletext' => "თქვა გეყ’უნელ რეთ ხასილაშ რცხის, ნამუთ დიო ვა რე დორცხუაფილ.
 ხასილაშ დარცხუაფალო გემიშეყ’ონით ტექსტ თუდონ ოჭკორიეშა. (ქოძირით[[{{MediaWiki:Helppage}}|მოხვარაშ ხასილა]] უმოს ინფორმაციაშო).
 თე ხასილას ჩილათირო მოხვადით–და, ქიგუნჭირით თქვან ბრაუზერიშ კონჭის '''უკახალე'''.\"",
-	'noarticletext' => 'ასე თე ხასილას ტექსტ ვა რე. 
+	'noarticletext' => 'ასე თე ხასილას ტექსტ ვა რე.
 თქვა შეილებუნა [[Special:Search/{{PAGENAME}}|გორათ ათე ხასილაშ ჯოხო]] შხვა ხასილეფს,
 <span class=\\"plainlinks\\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} დოგორათ მეხუჯაფილ ჟურნალეფ],
 ვარა [{{fullurl:{{FULLPAGENAME}}|action=edit}} დიჭყათ ათე ხასილაშ რედაქტირაფა]</span>.',
-	'noarticletext-nopermission' => '"ათე ხასჷლას ასე ტექსტი ვა რე. თქვა შეილებუნა [[Special:Search/{{PAGENAME}}|დოგორათ თე ხასჷლაშ დუდჯოხო]] შხვა ხასჷლეფს,
-ვარდა <span class=""plainlinks"">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} დოგორათ გინორცხილ ჟურნალეფი]</span>."',
 	'nocreatetext' => 'თე ხასილას ვა შილებე ახალ ხასილაშ გექიმინუა დორცხუაფილ ვარიაშ გეშა. თქვა შეგილებუნა კინორთა დო გექიმინელ ხასილაშ რედაქტირაფა, ვარა [[სპეციალურ:Userlogin|მიშულა დო ანგარიშიშ დორცხუაფა]]',
 	'nextrevision' => 'უახალაშ ვერსია→',
 	'notitlematches' => 'ვა უხუჯანს ნამუთინი ხასილაშ ჯოხო',
@@ -29483,9 +29034,6 @@ $messages['yi'] = array(
 איר קענט [[Special:Search/{{PAGENAME}}|זוכן דעם בלאט טיטל]] אין אנדערע בלעטער,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} זוכן די רעלעוואנטע לאגביכער],
 אדער [{{fullurl:{{FULLPAGENAME}}|action=edit}} רעדאַקטירן דעם בלאט]</span>.',
-	'noarticletext-nopermission' => 'דערווײַל איז נישט פאַראַן קיין שום טעקסט אין דעם בלאַט.
-איר קענט [[Special:Search/{{PAGENAME}}| זוכן דעם בלאט טיטל]] אין אנדערע בלעטער,
-אדער <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} נאָכזוכן די רעלעוואנטע לאגביכער]</span>.',
 	'note' => "'''באמערקונג:'''",
 	'nonunicodebrowser' => "'''ווארענונג: אייער בלעטערער איז נישט יוניקאד געהארכיק.
 אן ארום-ארבעט איז אין פלאץ אייך צו ערלויבן צו ענדערן בלעטער מיט זיכערקייט: non-ASCII אותיות וועלן ערשיינען אין די ענדערען קעסטל ווי hexadecimal קאדס.'''",
@@ -29616,9 +29164,6 @@ T'óbá sepé àsìse ló gbé yin dé bi, ẹ kọn bọ́tìnì ìpadàsẹ́y
 	'noarticletext' => 'Lọ́wọ́lọ́wọ́ kò sí ìkọ̀ nínú ojúewé yìí.
 Ẹ le [[Special:Search/{{PAGENAME}}|wá àkọlé ojúewé yìí]] nínú àwọn ojúewé mìíràn,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} wá àkọọ́lẹ̀ rẹ̀], tàbí [{{fullurl:{{FULLPAGENAME}}|action=edit}} kí ẹ ṣ\'àtúnṣe ojúewé òún]</span>.',
-	'noarticletext-nopermission' => 'Lọ́wọ́lọ́wọ́ kò sí ìkọ̀ nínú ojúewé yìí.
-Ẹ le [[Special:Search/{{PAGENAME}}|wá àkọlé ojúewé yìí]] nínú àwọn ojúewé mìíràn, tàbí
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} wá àwọn àkọọ́lẹ̀ tó bámu]</span>.',
 	'note' => "'''Àkíyèsí:'''",
 	'nocreatetitle' => 'Ìdènà ìdá ojúewé',
 	'nocreatetext' => "{{SITENAME}} ti pààlà ààyè láti ṣ'èdá ojúewé tuntun.
@@ -29733,8 +29278,6 @@ $messages['yue'] = array(
 	'noarticletext' => '喺呢一頁而家並冇任何嘅文字，你可以喺其它嘅頁面中[[Special:Search/{{PAGENAME}}|搵呢一頁嘅標題]]，
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搵有關嘅日誌]，
 或者[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編輯呢一版]</span>。',
-	'noarticletext-nopermission' => '喺呢一頁而家並冇任何嘅文字，你可以喺其它嘅頁面中[[Special:Search/{{PAGENAME}}|搵呢一頁嘅標題]]，
-或者<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搵有關嘅日誌]</span>。',
 	'note' => "'''留意:'''",
 	'nonunicodebrowser' => "'''警告：你嘅瀏覽器係唔係用緊 Unicode 。'''而家暫時有個解決方法，方便你可以安全咁編輯呢版：唔係 ASCII 嘅字元會喺編輯框裏面用十六進位編碼顯示。",
 	'nocreatetitle' => '頁面建立被限制',
@@ -29878,9 +29421,6 @@ Controleer de schriefwieze of [[Special:UserLogin/signup|mik een nieuwe gebruker
 Gebruuk de knoppe '''vorige''' in je browser as je ier per ongeluk terecht bin ekomm'n.",
 	'noarticletext' => "Deêze pagina bevat hin tekst.
 Je kan [[Special:Search/{{PAGENAME}}|ni deêze term zoeken]] in aore pagina's, <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboek'n deurzoek'n] of [{{fullurl:{{FULLPAGENAME}}|action=edit}} deêze pagina bewerken]</span>.",
-	'noarticletext-nopermission' => 'Deêze pagina bevat hin tekst.
-Jie kan [[Special:Search/{{PAGENAME}}|ni deêze term zoeken]] in aore pagina\'s of
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboeken deurzoeken]</span>.',
 	'note' => "'''Opmerkieng:'''",
 	'nonunicodebrowser' => "'''WAERSCHUWIENG: Je browser kan nie hoed overwig mie unicode.
 Iermie wor deur de MediaWiki-software rekenienge ehouwen zoda je toch zonder probleemn pagina's kan bewerken: nie-ASCII karakters worn in 't bewerkiengsveld weereheven as hexadecimale codes.'''",
@@ -29968,12 +29508,16 @@ $messages['zh-hans'] = array(
 '''您正准备开始撰写一个新页面'''
 * 如有编辑问题，欢迎参考[[help:content|帮助页面]]
 * 如果是不小心点击进入这里，可使用浏览器的按钮回到上一页。<br/><br/>",
-	'noarticletext' => '本页面目前不存在，你可以：
-*[[Special:Search/{{PAGENAME}}|搜寻]]这个词是否存在其他页面
-*<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 查找相关日志]
-*或 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 创建编辑这个页面]</span>。',
-	'noarticletext-nopermission' => '此页目前没有内容，您可以在其它页[[Special:Search/{{PAGENAME}}|搜索此页标题]]，
-或<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有关日志]</span>。',
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''文章{{FULLPAGENAME}}不存在''' ===
+
+下一步？
+
+* 搜索当前关于<span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>的文章
+* 创建文章<span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>
+}}
+ 
+",
 	'note' => "'''注意：'''",
 	'nonunicodebrowser' => "'''警告：您的浏览器不兼容Unicode编码。'''这里有一个工作区将使您能安全地编辑页面：非ASCII字符将以十六进制编码方式出现在编辑框中。",
 	'nocreatetitle' => '创建页面受限',
@@ -30043,7 +29587,6 @@ $messages['zh-hans'] = array(
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',
@@ -30121,12 +29664,16 @@ $messages['zh-hant'] = array(
 '''您正準備開始撰寫一個新頁面'''
 * 如有編輯問題，歡迎參考[[help:content|幫助頁面]]
 * 如果是不小心點擊進入這裡，可使用瀏覽器的按鈕回到上一頁。<br/><br/>",
-	'noarticletext' => '本頁面目前不存在，你可以：
-*[[Special:Search/{{PAGENAME}}|搜尋]]這個詞是否存在其他頁面
-*<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 查找相關日誌]
-*或 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 創建編輯這個頁面]</span>。',
-	'noarticletext-nopermission' => '此頁目前沒有內容，您可以在其它頁[[Special:Search/{{PAGENAME}}|搜索此頁標題]]，
-或<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有關日誌]</span>。',
+	'noarticletext' => "{{#ifeq:{{NAMESPACE}}||
+=== '''文章{{FULLPAGENAME}}不存在''' ===
+
+下一步？
+
+* 搜尋關於<span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>的文章
+* 創建文章<span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>
+}}
+ 
+",
 	'note' => "'''注意:'''",
 	'nonunicodebrowser' => "'''警告: 您的瀏覽器不兼容Unicode編碼。'''這裡有一個工作區將使您能安全地編輯頁面: 非ASCII字元將以十六進製編碼模式出現在編輯框中。",
 	'nocreatetitle' => '創建頁面受限',
@@ -30196,7 +29743,6 @@ $messages['zh-hant'] = array(
 	'newsectionheaderdefaultlevel' => '== $1 ==',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletextanon' => '{{int:noarticletext}}',
 	'number_of_watching_users_RCview' => '[$1]',
 	'newpages-summary' => '',
 	'noscript.css' => '/* CSS placed here will affect users with JavaScript disabled */',

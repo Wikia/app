@@ -35,13 +35,13 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 				'PREFOOTER_LEFT_BOXAD', 'PREFOOTER_MIDDLE_BOXAD', 'PREFOOTER_RIGHT_BOXAD', 'MOBILE_PREFOOTER',
 				'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD'
 			],
-			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT_2'],
+			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
-			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'OOYALA']
+			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'OOYALA']
 		};
 
 		// OTHER: 'INCONTENT_PLAYER'
-		return findSlotGroup(map, slotName) || 'OTHER';
+		return findSlotGroup(map, slotName.toUpperCase()) || 'OTHER';
 	}
 
 	function getDevice(params) {

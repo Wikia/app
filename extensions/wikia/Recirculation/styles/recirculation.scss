@@ -1,9 +1,13 @@
+@import 'skins/oasis/css/core/responsive-variables';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/color';
+
 @import 'horizontal';
 @import 'premium-rail';
 @import 'discussions';
-@import 'impact-footer';
+@import 'mixed-content-footer';
 
-@import 'skins/shared/color';
 
 
 // GOOGLE MATCHED CONTENT
@@ -31,15 +35,14 @@
 }
 
 .recirculation-unit {
-
 	.recirculation-sponsored-header {
-		position: absolute;
-		background: #666666;
-		z-index: 1;
-		padding: 6px 12px;
-		font-size: 12px;
-		font-family: "Helvetica Neue", sans-serif;
+		background: #666;
 		color: white;
+		font-family: "Helvetica Neue", sans-serif;
+		font-size: 12px;
+		padding: 6px 12px;
+		position: absolute;
+		z-index: 1;
 	}
 
 	.recirculation-wiki-header {

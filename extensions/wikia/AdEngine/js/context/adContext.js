@@ -3,7 +3,7 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'ext.wikia.adEngine.adLogicPageViewCounter',
+	'wikia.browserDetect',
 	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.adContext', [
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (pvCounter, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -40,6 +40,10 @@ define('ext.wikia.adEngine.adContext', [
 
 	function isPageType(pageType) {
 		return context.targeting.pageType === pageType;
+	}
+
+	function isInstartLogicSupportedBrowser() {
+		return browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
 	}
 
 	function isPageFairDetectionEnabled() {
@@ -71,13 +75,17 @@ define('ext.wikia.adEngine.adContext', [
 			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
 
 		// InstartLogic recovery
-		context.opts.instartLogicRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.instartLogicRecovery && geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries);
+		context.opts.instartLogicRecovery = serviceCanBeEnabled &&
+			!isRecoveryServiceAlreadyEnabled &&
+			context.opts.instartLogicRecovery &&
+			geo.isProperGeo(instantGlobals.wgAdDriverInstartLogicRecoveryCountries) &&
+			isInstartLogicSupportedBrowser();
 		isRecoveryServiceAlreadyEnabled |= context.opts.instartLogicRecovery;
 
 		// PageFair recovery
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries);
+			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries) &&
+			!browserDetect.isEdge();
 		isRecoveryServiceAlreadyEnabled |= context.opts.pageFairRecovery;
 
 		// SourcePoint recovery
@@ -91,25 +99,57 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 	}
 
+	function updateAdContextBidders(context) {
+		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
+
+		context.bidders.rubiconDisplay = geo.isProperGeo(instantGlobals.wgAdDriverRubiconDisplayPrebidCountries);
+
+		context.bidders.veles = geo.isProperGeo(instantGlobals.wgAdDriverVelesBidderCountries) &&
+			!hasFeaturedVideo;
+
+		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
+			!hasFeaturedVideo;
+
+		context.bidders.appnexusAst = geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
+			!hasFeaturedVideo;
+
+		context.bidders.a9Video = geo.isProperGeo(instantGlobals.wgAdDriverA9VideoBidderCountries);
+	}
+
+	function isMEGAEnabledForFVMobile(context) {
+		return context.targeting.skin === 'mercury' &&
+			context.targeting.hasFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+	}
+
+	function isMEGAEnabledForFVOasis(context, isEnabledOnDesktopFeaturedVideo) {
+		return context.targeting.hasFeaturedVideo && isEnabledOnDesktopFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+	}
+
 	function enableAdMixExperiment(context) {
-		var isEnabledOnFeaturedVideo = !!(
-				isPageType('article') &&
+		var isPALEnabledOnDesktopFeaturedVideo = !!(
 				context.targeting.skin === 'oasis' &&
 				context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
 			),
-			isEnabledOnRegularArticle = !!(
-				isPageType('article') &&
+			isPALEnabledOnRegularArticle = !!(
 				context.targeting.skin === 'oasis' &&
 				!context.targeting.hasFeaturedVideo &&
 				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
 			);
 
-		context.opts.premiumAdLayoutEnabled = isEnabledOnFeaturedVideo || isEnabledOnRegularArticle;
-		context.slots.premiumAdLayoutSlotsToUnblock = ['INCONTENT_BOXAD_1', 'BOTTOM_LEADERBOARD'];
+		context.opts.premiumAdLayoutEnabled = isPALEnabledOnDesktopFeaturedVideo || isPALEnabledOnRegularArticle;
+		context.slots.premiumAdLayoutSlotsToUnblock = [
+			'TOP_RIGHT_BOXAD',
+			'INVISIBLE_HIGH_IMPACT_2',
+			'INCONTENT_BOXAD_1',
+			'BOTTOM_LEADERBOARD'
+		];
 
-		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo && isEnabledOnFeaturedVideo &&
-			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
+		context.opts.megaAdUnitBuilderEnabled = isMEGAEnabledForFVOasis(context, isPALEnabledOnDesktopFeaturedVideo) ||
+			isMEGAEnabledForFVMobile(context);
 
 		if (!context.targeting.hasFeaturedVideo) {
 			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
@@ -130,6 +170,7 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
+			fvAdsFrequency = instantGlobals.wgAdDriverPlayAdsOnNextFVFrequency,
 			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
 
 		// Note: consider copying the value, not the reference
@@ -140,6 +181,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
+		context.bidders = context.bidders || {};
 		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
 
@@ -159,6 +201,8 @@ define('ext.wikia.adEngine.adContext', [
 		updateDetectionServicesAdContext(context, noExternals);
 		updateAdContextRecoveryServices(context, noExternals);
 
+		updateAdContextBidders(context);
+
 		// showcase.*
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
 			context.opts.showcase = true;
@@ -176,11 +220,6 @@ define('ext.wikia.adEngine.adContext', [
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
-		}
-
-		if (context.providers.rubiconFastlane) {
-			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
 		}
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
@@ -216,9 +255,21 @@ define('ext.wikia.adEngine.adContext', [
 		);
 
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
+		context.opts.porvataMoatTrackingEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
 
 		enableAdMixExperiment(context);
 
+		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
+		context.opts.premiumAdLayoutAppNexusTagsEnabled = context.opts.premiumAdLayoutEnabled &&
+			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutAppNexusTagsCountries);
+
+		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
+		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
+		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
+		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
+		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
@@ -234,13 +285,22 @@ define('ext.wikia.adEngine.adContext', [
 		callbacks.push(callback);
 	}
 
-	setContext(w.ads ? w.ads.context : {});
+	function get(path) {
+		var isPathValid = path !== undefined && path !== '',
+			nextElement = getContext(),
+			nodes = (path || '').split('.');
 
-	if (context.targeting.skin && context.targeting.skin !== 'mercury') {
-		pvCounter.increment();
+		while (isPathValid && nodes.length > 0 && typeof nextElement === 'object') {
+			nextElement = nextElement[nodes.shift()];
+		}
+
+		return nextElement;
 	}
 
+	setContext(w.ads ? w.ads.context : {});
+
 	return {
+		get: get,
 		addCallback: addCallback,
 		getContext: getContext,
 		setContext: setContext

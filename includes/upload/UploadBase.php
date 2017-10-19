@@ -634,7 +634,7 @@ abstract class UploadBase {
 				$user->addWatch( $this->getLocalFile()->getTitle() );
 			}
 
-			Hooks::run( 'UploadComplete', array( &$this ) );
+			Hooks::run( 'UploadComplete', [ $this ] );
 		}
 
 		return $status;

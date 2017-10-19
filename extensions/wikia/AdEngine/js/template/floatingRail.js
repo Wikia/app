@@ -1,12 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floatingRail', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.utils.math',
 	'jquery',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
-], function (adContext, math, $, log, throttle, win) {
+], function (adContext, $, log, throttle, win) {
 	'use strict';
 
 	var $medrec = $('#TOP_RIGHT_BOXAD'),
@@ -24,7 +23,6 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		railWidth = 300,
 
 		availableSpace,
-		articleHeight,
 		floatingSpace,
 		scrollTop,
 		startPosition,
@@ -82,14 +80,6 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		return availableSpace;
 	}
 
-	function getArticleHeight() {
-		if (!articleHeight) {
-			articleHeight = $wikiaMainContent.height();
-			log(['getArticleHeight', articleHeight], 'debug', logGroup);
-		}
-		return articleHeight;
-	}
-
 	function show(params) {
 		var offset = params.offset || 0,
 			context = adContext.getContext(),
@@ -106,13 +96,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		win.addEventListener('resize', update);
 	}
 
-	function getArticleHeightParameter() {
-		var space = getArticleHeight();
-		return math.getBucket(space, 1500);
-	}
-
 	return {
-		getArticleHeightParameter: getArticleHeightParameter,
 		show: show
 	};
 });

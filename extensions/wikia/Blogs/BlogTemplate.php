@@ -342,7 +342,7 @@ class BlogTemplateClass {
 	/**
 	 * This method can be used by extensions to render blog listing
 	 */
-	public static function parseTag( $input, $params, &$parser, $frame = null, $returnPlainData = false ) {
+	public static function parseTag( $input, $params, $parser, $frame = null, $returnPlainData = false ) {
 		global $wgTitle;
 
 		/* parse input parameters */
@@ -358,7 +358,7 @@ class BlogTemplateClass {
 		return $res;
 	}
 
-	public static function parseTagWithTitle( $input, $params, &$parser, $oTitle ) {
+	public static function parseTagWithTitle( $input, $params, $parser, $oTitle ) {
 		self::$oTitle = $oTitle;
 		return self::parseTag( $input, $params, $parser );
 	}
@@ -636,7 +636,7 @@ class BlogTemplateClass {
 		return $text;
 	}
 
-	private static function __getCategories ( $aParamValues, &$parser ) {
+	private static function __getCategories ( $aParamValues, $parser ) {
 		self::$aCategoryNames = $aParamValues;
 		$aPages = array();
     	if ( !empty( $aParamValues ) ) {
@@ -947,7 +947,7 @@ class BlogTemplateClass {
 		return $aOutput;
 	}
 
-	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false ) {
+	private static function __parse( $aInput, $aParams, $parser, $returnPlainData = false ) {
 		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgOut;
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
@@ -1207,20 +1207,10 @@ class BlogTemplateClass {
 							unset( $result );
 							$result = self::__makeRssOutput( $aResult );
 						}
+					} elseif ( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE ) {
+						$result = wfMessage( 'blog-empty-user-blog' )->parseAsBlock();
 					} else {
-						if ( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE ) {
-							$result = wfMsgExt( 'blog-empty-user-blog', array( 'parse' ) );
-						}
-						else {
-							if ( self::$aOptions['type'] != 'array' ) {
-								// $sk = RequestContext::getMain()->getSkin();
-								$result = ""; // RT #69906
-								// $result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
-							}
-							else {
-								$result = "";
-							}
-						}
+						$result = "";
 					}
 				}
 			}

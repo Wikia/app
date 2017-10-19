@@ -1,11 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.service.slotRegistry',  [
-	'ext.wikia.adEngine.adContext'
-], function (adContext) {
+	'ext.wikia.adEngine.adContext',
+	'wikia.window'
+], function (adContext, win) {
 	'use strict';
 
 	var slots = {},
-		slotQueueCount = {};
+		slotQueueCount = {},
+		scrollYOnDfpRequest = {};
 
 	function incrementSlotQueueCount(slotName) {
 		slotQueueCount[slotName] = slotQueueCount[slotName] || 0;
@@ -68,10 +70,20 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 		slotQueueCount = {};
 	});
 
+	function storeScrollY(slotName) {
+		scrollYOnDfpRequest[slotName] = win.scrollY || win.pageYOffset;
+	}
+
+	function getScrollY(slotName) {
+		return scrollYOnDfpRequest[slotName];
+	}
+
 	return {
 		add: add,
 		get: get,
 		getRefreshCount: getRefreshCount,
-		reset: reset
+		getScrollY: getScrollY,
+		reset: reset,
+		storeScrollY: storeScrollY
 	};
 });

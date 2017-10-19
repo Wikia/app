@@ -53,7 +53,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		$out->addStyle( 'wikia/css/IE80Fixes.css', 'screen', 'IE 8' );
 	}
 
-	public function addWikiaVars( &$obj, BaseTemplate &$tpl ) {
+	public function addWikiaVars( Skin $skin, QuickTemplate $tpl ): bool {
 		// ads
 		$this->setupAds( $tpl );
 
@@ -119,8 +119,9 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	/**
 	 * Setup ads handling
+	 * @param QuickTemplate $tpl
 	 */
-	protected function setupAds( BaseTemplate &$tpl ) {
+	protected function setupAds( QuickTemplate $tpl ) {
 		$tpl->set( 'ads-column', '' );
 		$tpl->set( 'ads_top', '' );
 		$tpl->set( 'ads_topleft', '' );

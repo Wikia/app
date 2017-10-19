@@ -7,7 +7,7 @@
     "branch": "master",
     "commit": "122fb745ddc36c07483873ce7473c15efb9e436b"
   },
-  "_source": "https://github.com/Wikia/skin-config.git",
+  "_source": "git://github.com/Wikia/skin-config.git",
   "_target": "master",
   "_originalSource": "Wikia/skin-config"
 }

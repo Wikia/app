@@ -1,4 +1,5 @@
 <?php
+
 use Wikia\PageHeader\Button;
 
 /**
@@ -56,7 +57,9 @@ class BlogsHelper {
 	 * @see grep -r 'BugId:25123' *
 	 * @see doc/hooks.txt
 	 */
-	public static function OnParserBeforeInternalParse( &$oParser, &$sText, &$oStripState ) {
+	public static function OnParserBeforeInternalParse(
+		Parser $oParser, &$sText, &$oStripState
+	): bool {
 		wfProfileIn( __METHOD__ );
 		// The name of the bloglist tag is defined in a constant.
 		$sRegExp = sprintf( '/<%s[^>]*>(.*)<\/%s>/siU', BLOGTPL_TAG, BLOGTPL_TAG );
@@ -86,7 +89,7 @@ class BlogsHelper {
 	 * @see grep -r 'BugId:25123' *
 	 * @see doc/hooks.txt
 	 */
-	public static function OnArticleInsertComplete( &$oArticle ) {
+	public static function OnArticleInsertComplete( WikiPage $oArticle ): bool {
 		wfProfileIn( __METHOD__ );
 		// schedule a BloglistDeferredPurge job if the article is a blog article.
 		if ( NS_BLOG_ARTICLE == $oArticle->getTitle()->getNamespace() ) {

@@ -3,7 +3,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit(1);
 }
 
-//@{
 /**
  * @file
  * @ingroup Extensions
@@ -48,11 +47,6 @@ $wgAPIModules['titleblacklist'] = 'ApiQueryTitleBlacklist';
 
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'TitleBlacklistHooks::userCan';
 $wgHooks['AbortMove'][] = 'TitleBlacklistHooks::abortMove';
-//$wgHooks['AbortNewAccount'][] = 'TitleBlacklistHooks::abortNewAccount';
-//$wgHooks['AbortAutoAccount'][] = 'TitleBlacklistHooks::abortNewAccount';
 $wgHooks['CentralAuthAutoCreate'][] = 'TitleBlacklistHooks::centralAuthAutoCreate';
 $wgHooks['EditFilter'][] = 'TitleBlacklistHooks::validateBlacklist';
 $wgHooks['ArticleSaveComplete'][] = 'TitleBlacklistHooks::clearBlacklist';
-//$wgHooks['UserCreateForm'][] = 'TitleBlacklistHooks::addOverrideCheckbox';
-
-//@}

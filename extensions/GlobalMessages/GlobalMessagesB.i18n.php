@@ -14304,12 +14304,12 @@ $messages['pt'] = array(
 	'badaccess' => 'Erro de permissão',
 	'badaccess-group0' => 'Você não está autorizado a executar a ação requisitada.',
 	'badaccess-groups' => 'A ação que você tentou executar está limitada a usuários {{PLURAL:$2|do grupo|de um dos seguintes grupos}}: $1.',
-	'badarticleerror' => 'Esta ação não pode ser realizada nesta página.',
+	'badarticleerror' => 'Esta ação não pode ser executada nesta página. Nesta página pode ter sido excluída desde o envio do seu pedido.',
 	'badtitle' => 'Título inválido',
 	'badtitletext' => 'O título de página solicitado era inválido, vazio, ou um link interlínguas ou interwikis incorreto.
 Talvez contenha um ou mais caracteres que não podem ser usados em títulos.',
 	'badretype' => 'As senhas que você digitou não são iguais.',
-	'blocked-mailpassword' => 'O seu endereço de IP foi bloqueado de editar e, portanto, não será possível utilizar o lembrete de senha (para serem evitados envios abusivos a outras pessoas).',
+	'blocked-mailpassword' => 'O seu endereço de IP foi bloqueado para edições e, portanto, não será possível utilizar o lembrete de senha (para serem evitados envios abusivos a outras pessoas).',
 	'bold_sample' => 'Texto em negrito',
 	'bold_tip' => 'Texto em negrito',
 	'blockedtitle' => 'O usuário está bloqueado',
@@ -14434,8 +14434,8 @@ Avatar6.jpg',
 	'bitrate-exabits' => '$1Ebps',
 	'bitrate-zetabits' => '$1Zbps',
 	'bitrate-yottabits' => '$1Ybps',
-	'back' => 'Back',
-	'button-createpage' => 'Add a Page',
+	'back' => 'Voltar',
+	'button-createpage' => 'Adicionar uma página',
 );
 
 $messages['qu'] = array(

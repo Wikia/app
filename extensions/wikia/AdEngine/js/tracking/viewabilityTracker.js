@@ -21,9 +21,10 @@ define('ext.wikia.adEngine.tracking.viewabilityTracker', [
 			slotParams = JSON.parse(slotFirstChildData.gptSlotParams);
 
 		data = {
-			'pv_unique_id': win.adEnginePvUID,
+			'pv_unique_id': win.pvUID,
 			'wsi': slotParams.wsi || '',
 			'line_item_id': slotFirstChildData.gptLineItemId || '',
+			'creative_id': slotFirstChildData.gptCreativeId || '',
 			'rv': slotParams.rv || 1
 		};
 

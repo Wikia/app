@@ -13,7 +13,7 @@ class FilePageControllerTest extends WikiaBaseTest {
 		$res = $this->app->sendExternalRequest( FilePageController::class, 'fileList' );
 		$this->assertNull( $res->getCode(), 'FilePageController::fileList must be externally accessible' );
 
-		$internalMethods = [ 'fileUsage', 'relatedPages', 'videoCaption' ];
+		$internalMethods = [ 'fileUsage', 'videoCaption' ];
 		foreach ( $internalMethods as $methodName ) {
 			$res = $this->app->sendExternalRequest( FilePageController::class, $methodName );
 			$this->assertEquals( WikiaResponse::RESPONSE_CODE_FORBIDDEN, $res->getCode(), "FilePageController::$methodName must not be externally accessible" );

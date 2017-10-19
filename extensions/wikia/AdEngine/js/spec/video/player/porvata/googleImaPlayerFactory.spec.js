@@ -41,6 +41,36 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 			isAutoPlay: function() {
 				return false;
 			}
+		},
+		win: {
+			google: {
+				ima: {
+					AdEvent: {
+						Type: {
+							RESUMED: 'foo',
+							STARTED: 'foo',
+							PAUSED: 'foo',
+							COMPLETE: 'foo'
+						}
+					},
+					AdError: {
+						ErrorCode: {
+							VAST_EMPTY_RESPONSE: 1009
+						}
+					},
+					AdErrorEvent: {
+						Type: {
+							AD_ERROR: 'foo'
+						}
+					},
+					AdsManagerLoadedEvent: {
+						Type: {
+							ADS_MANAGER_LOADED: 'foo'
+						}
+					},
+					ViewMode: {}
+				}
+			}
 		}
 	};
 
@@ -51,7 +81,8 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 			mocks.imaSetup,
 			mocks.moatVideoTracker,
 			mocks.document,
-			mocks.log
+			mocks.log,
+			mocks.win
 		);
 	}
 

@@ -9,7 +9,9 @@ class ArchiveWikiForumHooks {
      * @param $useParserCache
      * @return bool
      */
-    public static function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
+	public static function onArticleViewHeader(
+		Article $article, bool &$outputDone, bool &$useParserCache
+	): bool {
         $title = $article->getTitle();
         if ( static::isForumNS( $title->getNamespace() ) ) {
             $app = F::app();
@@ -29,7 +31,9 @@ class ArchiveWikiForumHooks {
      * @param $result
      * @return bool
      */
-    public static function onGetUserPermissionsErrors( Title &$title, User &$user, $action, &$result ) {
+	public static function onGetUserPermissionsErrors(
+		Title $title, User $user, string $action, &$result
+	): bool {
         if ( $action == 'read' ) {
             return true;
         }

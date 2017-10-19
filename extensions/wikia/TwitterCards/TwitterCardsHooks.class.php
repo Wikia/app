@@ -11,9 +11,10 @@ class TwitterCardsHooks {
 	 * @param Skin $skin
 	 * @return bool
 	 */
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		$app = F::app();
-		if ( $app->wg->TwitterCardsMetaTagsLoaded ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
+		global $wgTwitterCardsMetaTagsLoaded;
+
+		if ( $wgTwitterCardsMetaTagsLoaded ) {
 			return true;
 		}
 
@@ -23,7 +24,7 @@ class TwitterCardsHooks {
 			$out->addMeta( $name, $value );
 		}
 
-		$app->wg->TwitterCardsMetaTagsLoaded = true;
+		$wgTwitterCardsMetaTagsLoaded = true;
 
 		return true;
 	}

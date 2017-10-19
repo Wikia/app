@@ -25,7 +25,7 @@ class ArticlePurge {
 	 *
 	 * @return true
 	 */
-	public function process( WikiPage &$wikiPage ) {
+	public function process( WikiPage $wikiPage ) {
 
 		$applicationFactory = ApplicationFactory::getInstance();
 

@@ -105,17 +105,16 @@ class ArticleCommentInit {
 	}
 
 	/**
-	 * @static
 	 * @param OutputPage $out
-	 * @param Skin $sk
+	 * @param Skin $skin
 	 * @return bool
 	 */
-	static public function ArticleCommentAddJS( OutputPage &$out, Skin &$sk ) {
+	static public function ArticleCommentAddJS( OutputPage $out, Skin $skin ): bool {
 		global $wgExtensionsPath;
 
 		if ( self::ArticleCommentCheck() ) {
 			// FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
-			if ( $sk instanceof SkinMonoBook ) {
+			if ( $skin->getSkinName() === 'monobook' ) {
 				$out->addExtensionStyle( "$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css" );
 			}
 		}

@@ -97,7 +97,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					$fit = $this->appendProtocols( $p );
 					break;
 				default:
-					Hooks::run( 'UseExternalQuerySiteInfo', array(&$this) );
+					Hooks::run( 'UseExternalQuerySiteInfo', [ $this ] );
 					if ( !isset($this->noErrors) ) {
 						ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
 					}
@@ -339,13 +339,9 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	}
 
 	protected function appendStatistics( $property ) {
-		global $wgDisableCounters;
 		$data = array();
 		$data['pages'] = intval( SiteStats::pages() );
 		$data['articles'] = intval( SiteStats::articles() );
-		if ( !$wgDisableCounters ) {
-			$data['views'] = intval( SiteStats::views() );
-		}
 		$data['edits'] = intval( SiteStats::edits() );
 		$data['images'] = intval( SiteStats::images() );
 		$data['users'] = intval( SiteStats::users() );

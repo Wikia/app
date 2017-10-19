@@ -1,11 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoFrequencyStore', [
-	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'ext.wikia.adEngine.utils.time',
 	'ext.wikia.adEngine.video.videoFrequencySettings',
 	'wikia.cache',
-	'wikia.log'
-], function (pageViewCounter, timeUtil, settings, cache, log) {
+	'wikia.log',
+	'wikia.window'
+], function (timeUtil, settings, cache, log, win) {
 	'use strict';
 
 	var cacheKey = 'adEngine_outstreamVideoFrequency',
@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.video.videoFrequencyStore', [
 	}
 
 	function numberOfVideosSeenInLastPageViews(numberOfCheckedPageViews) {
-		var minPV = pageViewCounter.get() - numberOfCheckedPageViews;
+		var minPV = win.pvNumber - numberOfCheckedPageViews;
 		log(['minPV calculated', minPV], log.levels.debug, logGroup);
 
 		return countAll(function (item) {

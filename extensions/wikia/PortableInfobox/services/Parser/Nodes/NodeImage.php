@@ -130,7 +130,8 @@ class NodeImage extends Node {
 			'name' => $titleObj ? $titleObj->getText() : '',
 			'key' => $titleObj ? $titleObj->getDBKey() : '',
 			'alt' => $alt,
-			'caption' => $caption,
+			'caption' => \SanitizerBuilder::createFromType( 'image' )
+				->sanitize( [ 'caption' => $caption ] )['caption'],
 			'isVideo' => false
 		];
 

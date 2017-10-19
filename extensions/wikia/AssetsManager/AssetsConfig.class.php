@@ -69,8 +69,8 @@ class AssetsConfig {
 
 		if ( !empty( $wgUseJQueryFromCDN ) && empty( $params['noexternals'] ) ) {
 			$url = $minify
-				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.min.js'
-				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.js';
+				? '#external_https://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.min.js'
+				: '#external_https://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.js';
 		} else {
 			$url = 'resources/jquery/jquery-' . static::JQUERY_VERSION . '.js';
 		}

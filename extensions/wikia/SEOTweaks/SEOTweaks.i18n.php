@@ -13,52 +13,52 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'seotweaks-image' => 'Image',
+	'seotweaks-image' => 'Bild',
 	'seotweaks-video' => 'Video',
 );
 
 $messages['es'] = array(
-	'seotweaks-image' => 'Image',
+	'seotweaks-image' => 'Imagen',
 	'seotweaks-video' => 'Video',
 );
 
 $messages['fr'] = array(
 	'seotweaks-image' => 'Image',
-	'seotweaks-video' => 'Video',
+	'seotweaks-video' => 'Vidéo',
 );
 
 $messages['it'] = array(
-	'seotweaks-image' => 'Image',
+	'seotweaks-image' => 'Immagine',
 	'seotweaks-video' => 'Video',
 );
 
 $messages['ja'] = array(
-	'seotweaks-image' => 'Image',
-	'seotweaks-video' => 'Video',
+	'seotweaks-image' => '画像',
+	'seotweaks-video' => '動画',
 );
 
 $messages['pl'] = array(
-	'seotweaks-image' => 'Image',
-	'seotweaks-video' => 'Video',
+	'seotweaks-image' => 'Obraz',
+	'seotweaks-video' => 'Film',
 );
 
 $messages['pt'] = array(
-	'seotweaks-image' => 'Image',
-	'seotweaks-video' => 'Video',
+	'seotweaks-image' => 'Imagem',
+	'seotweaks-video' => 'Vídeo',
 );
 
 $messages['ru'] = array(
-	'seotweaks-image' => 'Image',
-	'seotweaks-video' => 'Video',
+	'seotweaks-image' => 'Изображение',
+	'seotweaks-video' => 'Видео',
 );
 
 $messages['zh-hans'] = array(
-	'seotweaks-image' => 'Image',
-	'seotweaks-video' => 'Video',
+	'seotweaks-image' => '图像',
+	'seotweaks-video' => '视频',
 );
 
 $messages['zh-hant'] = array(
-	'seotweaks-image' => 'Image',
-	'seotweaks-video' => 'Video',
+	'seotweaks-image' => '圖像',
+	'seotweaks-video' => '影片',
 );
 

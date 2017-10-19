@@ -722,7 +722,7 @@ class EditPage {
 			$this->section === 'new' ? 'MediaWiki:addsection-editintro' : '' );
 
 		// Allow extensions to modify form data
-		Hooks::run( 'EditPage::importFormData', array( &$this, $request ) );
+		Hooks::run( 'EditPage::importFormData', [ $this, $request ] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -874,7 +874,7 @@ class EditPage {
 		}
 
 		# <Wikia>
-		Hooks::run( 'EditPage::getContent::end', array( &$this, &$text ) );
+		Hooks::run( 'EditPage::getContent::end', [ $this, &$text ] );
 		# </Wikia>
 
 		wfProfileOut( __METHOD__ );
@@ -1786,7 +1786,7 @@ class EditPage {
 			$previewOutput = $this->getPreviewText();
 		}
 
-		Hooks::run( 'EditPage::showEditForm:initial', array( &$this ) );
+		Hooks::run( 'EditPage::showEditForm:initial', [ $this ] );
 
 		$this->setHeaders();
 
@@ -1802,7 +1802,7 @@ class EditPage {
 		}
 
 		// wikia change begin
-		Hooks::run( 'EditPage::showEditForm:initial2', array( &$this ) ) ;
+		Hooks::run( 'EditPage::showEditForm:initial2', [ $this ] );
 		// wikia change end
 
 		$wgOut->addHTML( $this->editFormTextTop );
@@ -1829,10 +1829,10 @@ class EditPage {
 		/* Wikia change end */
 
 		if ( is_callable( $formCallback ) ) {
-			call_user_func_array( $formCallback, array( &$wgOut ) );
+			call_user_func_array( $formCallback, [ $wgOut ] );
 		}
 
-		Hooks::run( 'EditPage::showEditForm:fields', array( &$this, &$wgOut ) );
+		Hooks::run( 'EditPage::showEditForm:fields', [ $this, $wgOut ] );
 
 		// Put these up at the top to ensure they aren't lost on early form submission
 		$this->showFormBeforeText();
@@ -1878,14 +1878,14 @@ class EditPage {
 		}
 
 		// wikia change begin
-		Hooks::run ('EditForm:BeforeDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
+		Hooks::run( 'EditForm:BeforeDisplayingTextbox', [ $this ] );
 		// wikia change end
 
 		$wgOut->addHTML( $this->editFormTextBeforeContent );
 
 		/* Wikia change begin - @author: Marooned */
 		/* add possibility to add visible fields inside <form> but before toolbar - used in CreatePage  */
-		Hooks::run( 'EditPage::showEditForm:beforeToolbar', array( &$this, &$wgOut ) );
+		Hooks::run( 'EditPage::showEditForm:beforeToolbar', [ $this, &$wgOut ] );
 		/* Wikia change end */
 
 		/* Wikia change begin - @author: kflorence (BugId:40705) */
@@ -1910,7 +1910,7 @@ class EditPage {
 		}
 
 		// wikia change begin
-		Hooks::run ('EditForm:AfterDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
+		Hooks::run( 'EditForm:AfterDisplayingTextbox', [ $this ] );
 
 		$rows = intval($wgUser->getGlobalPreference( 'rows' ));
 		$cols = intval($wgUser->getGlobalPreference( 'cols' ));
@@ -1945,7 +1945,7 @@ class EditPage {
 		# </Wikia>
 
 		# <Wikia>
-		if ( Hooks::run( 'EditPage::CategoryBox', array( &$this ) ) ) {
+		if ( Hooks::run( 'EditPage::CategoryBox', [ $this ] ) ) {
 			$wgOut->addHTML( Html::rawElement( 'div', array( 'class' => 'hiddencats' ),
 				Linker::formatHiddenCategories( $this->mArticle->getHiddenCategories() ) ) );
 		}
@@ -2079,13 +2079,8 @@ class EditPage {
 					}
 
 					if ( !$revision->isCurrent() ) {
-						/* Wikia change begin - @author: Marooned */
-						/* Add new hook and condition to allow alternate message to be displayed when editing old revision */
-						if ( Hooks::run( 'EditPage::showEditForm:oldRevisionNotice', array( &$this ) ) ) {
-							$this->mArticle->setOldSubtitle( $revision->getId() );
-							$wgOut->addWikiMsg( 'editingold' );
-						}
-						// Wikia change end
+						$this->mArticle->setOldSubtitle( $revision->getId() );
+						$wgOut->addWikiMsg( 'editingold' );
 					}
 				} elseif ( $this->mTitle->exists() ) {
 					// Something went wrong
@@ -2531,7 +2526,7 @@ HTML
 			array( 'minor' => $this->minoredit, 'watch' => $this->watchthis ) );
 
 		// wikia change begin, @author eloy
-		Hooks::run ( 'EditPage::showEditForm:checkboxes', array ( &$this, &$checkboxes ) ) ;
+		Hooks::run( 'EditPage::showEditForm:checkboxes', [ $this, &$checkboxes ] );
 		// wikia change end
 
 		$wgOut->addHTML( "<div class='editCheckboxes'>" . implode( $checkboxes, "\n" ) . "</div>\n" );
@@ -2556,7 +2551,7 @@ HTML
 	 */
 	protected function showConflict() {
 		global $wgOut;
-		if ( Hooks::run( 'EditPageBeforeConflictDiff', array( &$this, &$wgOut ) ) ) {
+		if ( Hooks::run( 'EditPageBeforeConflictDiff', [ $this, $wgOut ] ) ) {
 			$wgOut->wrapWikiMsg( '<h2>$1</h2>', "yourdiff" );
 
 			$de = new DifferenceEngine( $this->mArticle->getContext() );
@@ -2626,26 +2621,26 @@ HTML
 
 	protected function getLastDelete() {
 		$dbr = wfGetDB( DB_SLAVE );
-		$data = $dbr->selectRow(
-			array( 'logging', 'user' ),
-			array( 'log_type',
-				   'log_action',
-				   'log_timestamp',
-				   'log_user',
-				   'log_namespace',
-				   'log_title',
-				   'log_comment',
-				   'log_params',
-				   'log_deleted',
-				   'user_name' ),
-			array( 'log_namespace' => $this->mTitle->getNamespace(),
-				   'log_title' => $this->mTitle->getDBkey(),
-				   'log_type' => 'delete',
-				   'log_action' => 'delete',
-				   'user_id=log_user' ),
-			__METHOD__,
-			array( 'LIMIT' => 1, 'ORDER BY' => 'log_timestamp DESC' )
-		);
+		$data = $dbr->selectRow( [ 'logging' ], [
+			'log_type',
+			'log_action',
+			'log_timestamp',
+			'log_user',
+			'log_namespace',
+			'log_title',
+			'log_comment',
+			'log_params',
+			'log_deleted',
+		], [
+			'log_namespace' => $this->mTitle->getNamespace(),
+			'log_title' => $this->mTitle->getDBkey(),
+			'log_type' => 'delete',
+			'log_action' => 'delete',
+		], __METHOD__, [
+			'LIMIT' => 1,
+			'ORDER BY' => 'log_timestamp DESC'
+		] );
+
 		// Quick paranoid permission checks...
 		if( is_object( $data ) ) {
 			if( $data->log_deleted & LogPage::DELETED_USER )
@@ -2653,6 +2648,11 @@ HTML
 			if( $data->log_deleted & LogPage::DELETED_COMMENT )
 				$data->log_comment = wfMsgHtml( 'rev-deleted-comment' );
 		}
+
+		// SUS-2779
+		$user = User::newFromId($data->log_user);
+		$data->user_name = $user->getName();
+
 		return $data;
 	}
 
@@ -3023,7 +3023,9 @@ HTML
 				Xml::expandAttributes( array( 'title' => Linker::titleAttrib( 'watch', 'withaccess' ) ) ) .
 				">{$watchLabel}</label>";
 		}
-		Hooks::run( 'EditPageBeforeEditChecks', array( &$this, &$checkboxes, &$tabindex ) );
+
+		Hooks::run( 'EditPageBeforeEditChecks', [ $this, &$checkboxes, &$tabindex ] );
+
 		return $checkboxes;
 	}
 
@@ -3073,7 +3075,8 @@ HTML
 		);
 		$buttons['diff'] = Xml::element( 'input', $temp, '' );
 
-		Hooks::run( 'EditPageBeforeEditButtons', array( &$this, &$buttons, &$tabindex ) );
+		Hooks::run( 'EditPageBeforeEditButtons', [ $this, &$buttons, &$tabindex ] );
+
 		return $buttons;
 	}
 
@@ -3151,7 +3154,9 @@ HTML
 		$wgOut->prepareErrorPage( wfMessage( 'nosuchsectiontitle' ) );
 
 		$res = wfMsgExt( 'nosuchsectiontext', 'parse', $this->section );
-		Hooks::run( 'EditPageNoSuchSection', array( &$this, &$res ) );
+
+		Hooks::run( 'EditPageNoSuchSection', [ $this, &$res ] );
+
 		$wgOut->addHTML( $res );
 
 		$wgOut->returnToMain( false, $this->mTitle );

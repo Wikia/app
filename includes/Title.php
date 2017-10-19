@@ -1415,7 +1415,8 @@ class Title {
 		# Finally, add the fragment.
 		$url .= $this->getFragmentForURL();
 
-		Hooks::run( 'GetFullURL', array( &$this, &$url, $query ) );
+		Hooks::run( 'GetFullURL', [ $this, &$url, $query ] );
+
 		return $url;
 	}
 
@@ -1456,7 +1457,7 @@ class Title {
 			$dbkey = wfUrlencode( $this->getPrefixedDBkey() );
 			if ( $query == '' ) {
 				$url = str_replace( '$1', $dbkey, $wgArticlePath );
-				Hooks::run( 'GetLocalURL::Article', array( &$this, &$url ) );
+				Hooks::run( 'GetLocalURL::Article', [ $this, &$url ] );
 			} else {
 				global $wgVariantArticlePath, $wgActionPaths;
 				$url = false;
@@ -1508,7 +1509,7 @@ class Title {
 				}
 			}
 
-			Hooks::run( 'GetLocalURL::Internal', array( &$this, &$url, $query ) );
+			Hooks::run( 'GetLocalURL::Internal', [ $this, &$url, $query ] );
 
 			// @todo FIXME: This causes breakage in various places when we
 			// actually expected a local URL and end up with dupe prefixes.
@@ -1516,7 +1517,8 @@ class Title {
 				$url = $wgServer . $url;
 			}
 		}
-		Hooks::run( 'GetLocalURL', array( &$this, &$url, $query ) );
+		Hooks::run( 'GetLocalURL', [ $this, &$url, $query ] );
+
 		return $url;
 	}
 
@@ -1595,7 +1597,8 @@ class Title {
 		$query = self::fixUrlQueryArgs( $query, $query2 );
 		$server = $wgInternalServer !== false ? $wgInternalServer : $wgServer;
 		$url = wfExpandUrl( $server . $this->getLocalURL( $query ), PROTO_HTTP );
-		Hooks::run( 'GetInternalURL', array( &$this, &$url, $query ) );
+		Hooks::run( 'GetInternalURL', [ $this, &$url, $query ] );
+
 		return $url;
 	}
 
@@ -1614,9 +1617,9 @@ class Title {
 	 */
 	public function getCanonicalURL( $query = '', $query2 = false ) {
 		$query = self::fixUrlQueryArgs( $query, $query2 );
-		$url = wfExpandUrl( $this->getLocalURL( $query ) . $this->getFragmentForURL(), PROTO_CANONICAL );
-		Hooks::run( 'GetCanonicalURL', array( &$this, &$url, $query ) );
-		return $url;
+
+		return wfExpandUrl( $this->getLocalURL( $query ) . $this->getFragmentForURL(),
+			PROTO_CANONICAL );
 	}
 
 	/**
@@ -1844,16 +1847,17 @@ class Title {
 	private function checkPermissionHooks( $action, $user, $errors, $doExpensiveQueries, $short ) {
 		// Use getUserPermissionsErrors instead
 		$result = '';
-		if ( !Hooks::run( 'userCan', array( &$this, &$user, $action, &$result ) ) ) {
-			return $result ? array() : array( array( 'badaccess-group0' ) );
+		if ( !Hooks::run( 'userCan', [ $this, $user, $action, &$result ] ) ) {
+			return $result ? [] : [ [ 'badaccess-group0' ] ];
 		}
 		// Check getUserPermissionsErrors hook
-		if ( !Hooks::run( 'getUserPermissionsErrors', array( &$this, &$user, $action, &$result ) ) ) {
+		if ( !Hooks::run( 'getUserPermissionsErrors', [ $this, $user, $action, &$result ] ) ) {
 			$errors = $this->resultToError( $errors, $result );
 		}
 		// Check getUserPermissionsErrorsExpensive hook
 		if ( $doExpensiveQueries && !( $short && count( $errors ) > 0 ) &&
-			 !Hooks::run( 'getUserPermissionsErrorsExpensive', array( &$this, &$user, $action, &$result ) ) ) {
+			 !Hooks::run( 'getUserPermissionsErrorsExpensive',
+				 [ $this, $user, $action, &$result ] ) ) {
 			$errors = $this->resultToError( $errors, $result );
 		}
 
@@ -3454,10 +3458,10 @@ class Title {
 
 
 	/**
-	 * Get a list of URLs to purge from the Squid cache when this
+	 * Get a list of URLs to purge from the CDN cache when this
 	 * page changes
 	 *
-	 * @return Array of String the URLs
+	 * @return string[] Array of String the URLs
 	 */
 	public function getSquidURLs() {
 		global $wgContLang;
@@ -3748,7 +3752,8 @@ class Title {
 
 		$dbw->commit();
 
-		Hooks::run( 'TitleMoveComplete', array( &$this, &$nt, &$wgUser, $pageid, $redirid ) );
+		Hooks::run( 'TitleMoveComplete', [ $this, $nt, $wgUser, $pageid, $redirid ] );
+
 		return true;
 	}
 
@@ -4184,13 +4189,10 @@ class Title {
 	/**
 	 * Check if this is a new page
 	 *
-	 * Wikia change, add possibility to use master - used in ArticleComment;
-	 * Wikia change: @author: Marooned
-	 *
 	 * @return bool
 	 */
-	public function isNewPage( $flags = 0 ) {
-		$dbr = ($flags & self::GAID_FOR_UPDATE) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+	public function isNewPage() {
+		$dbr = wfGetDB( DB_SLAVE );
 
 		return (bool)$dbr->selectField( 'page', 'page_is_new', $this->pageCond(), __METHOD__ );
 	}

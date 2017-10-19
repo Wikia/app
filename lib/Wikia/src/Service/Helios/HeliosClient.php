@@ -75,15 +75,4 @@ interface HeliosClient {
 	 * @return mixed
 	 */
 	public function deletePassword( $userId );
-
-	/**
-	 * Makes a password reset request which sends the reset token via email.
-	 *
-	 * @param $userId       int
-	 * @param $returnUrl    string
-	 * @param $tokenContext string
-	 *
-	 * @return mixed
-	 */
-	public function requestPasswordReset( $userId, $returnUrl, $tokenContext );
 }

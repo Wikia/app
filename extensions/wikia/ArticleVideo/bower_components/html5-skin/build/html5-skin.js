@@ -593,14 +593,14 @@ module.exports={
   "discoveryScreen": {
     "panelTitle": {
       "titleFont": {
-        "fontFamily": "Roboto Condensed",
+        "fontFamily": "Ooyala Roboto Condensed",
         "color": "white"
       }
     },
     "contentTitle": {
       "show": true,
       "font": {
-        "fontFamily": "Roboto Condensed",
+        "fontFamily": "Ooyala Roboto Condensed",
         "color": "white"
       }
     },
@@ -933,6 +933,7 @@ var AutoplaySwitch = React.createClass({displayName: "AutoplaySwitch",
 });
 
 module.exports = AutoplaySwitch;
+
 },{"classnames":59,"react":221}],9:[function(require,module,exports){
 var React = require('react'),
     Icon = require('../components/icon');
@@ -1331,6 +1332,7 @@ var ColorSelectionTab = React.createClass({displayName: "ColorSelectionTab",
 });
 
 module.exports = ColorSelectionTab;
+
 },{"../../constants/constants":44,"../colorSelector":21,"../utils":41,"./selectionContainer":19,"react":221}],15:[function(require,module,exports){
 var React = require('react'),
     ClassNames = require('classnames'),
@@ -1771,6 +1773,7 @@ var ConfigPanel = React.createClass({displayName: "ConfigPanel",
 });
 
 module.exports = ConfigPanel;
+
 },{"../constants/constants":44,"./autoplaySwitch":8,"./utils":41,"react":221}],23:[function(require,module,exports){
 /********************************************************************
   CONTROL BAR
@@ -1875,7 +1878,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
     if(this.props.responsiveView == this.props.skinConfig.responsive.breakpoints.xs.id) {
       this.props.controller.toggleScreen(CONSTANTS.SCREEN.VIDEO_QUALITY_SCREEN);
     } else {
-      this.toggleQualityPopover();
+      this.toggleQualityPopOver();
       this.closeCaptionPopover();
       this.closeConfigPopover();
     }
@@ -1901,7 +1904,7 @@ var ControlBar = React.createClass({displayName: "ControlBar",
 
   closeQualityPopover: function() {
     if(this.props.controller.state.videoQualityOptions.showVideoQualityPopover == true) {
-      this.toggleQualityPopover();
+      this.toggleQualityPopOver();
     }
   },
 
@@ -2320,6 +2323,7 @@ ControlBar.defaultProps = {
 };
 
 module.exports = ControlBar;
+
 },{"../constants/constants":44,"../views/popover":56,"./closed-caption/closedCaptionPopover":13,"./configPanel":22,"./icon":29,"./logo":30,"./scrubberBar":32,"./utils":41,"./videoQualityPanel":42,"classnames":59,"react":221,"react-dom":64}],24:[function(require,module,exports){
 /********************************************************************
   COUNT DOWN CLOCK
@@ -2370,6 +2374,9 @@ var CountDownClock = React.createClass({displayName: "CountDownClock",
       if(this.props.controller.state.screenToShow === CONSTANTS.SCREEN.DISCOVERY_SCREEN) {
         this.setState({hideClock: true});
         clearInterval(this.interval);
+        if(this.props.autoplayCanceled) {
+          this.props.autoplayCanceled();
+        }
       }
     }
   },
@@ -2741,6 +2748,7 @@ module.exports = DataSelector;
   return deepmerge
 
 }));
+
 },{}],27:[function(require,module,exports){
 var React = require('react'),
     Utils = require('./utils');
@@ -2807,6 +2815,7 @@ DiscoverItem.propTypes = {
 };
 
 module.exports = DiscoverItem;
+
 },{"./utils":41,"react":221}],28:[function(require,module,exports){
 /**
  * Panel component for Discovery Screen
@@ -2826,8 +2835,11 @@ var DiscoveryPanel = React.createClass({displayName: "DiscoveryPanel",
   mixins: [ResizeMixin],
 
   getInitialState: function() {
+    var willShowDiscoveryCountDown = this.props.skinConfig.discoveryScreen.showCountDownTimerOnEndScreen || this.props.forceCountDownTimer;
     return {
-      showDiscoveryCountDown: this.props.skinConfig.discoveryScreen.showCountDownTimerOnEndScreen || this.props.forceCountDownTimer,
+      // WIKIA CHANGE - allow recommended video autoplay only if tab is active
+      willShowDiscoveryCountDown: willShowDiscoveryCountDown,
+      showDiscoveryCountDown: !document.hidden && willShowDiscoveryCountDown,
       currentPage: 1,
       componentHeight: null
     };
@@ -2835,6 +2847,25 @@ var DiscoveryPanel = React.createClass({displayName: "DiscoveryPanel",
 
   componentDidMount: function () {
     this.detectHeight();
+    document.addEventListener('visibilitychange', this.showCountDown);
+  },
+
+  componentWillUnmount: function() {
+    document.removeEventListener('visibilitychange', this.showCountDown);
+  },
+
+  showCountDown: function () {
+    if(!document.hidden && !this.state.autoplayCanceled) {
+      this.setState({
+        showDiscoveryCountDown: this.state.willShowDiscoveryCountDown
+      });
+    }
+  },
+
+  autoplayCanceled: function () {
+    this.setState({
+      autoplayCanceled: true
+    });
   },
 
   handleResize: function(nextProps) {
@@ -2934,7 +2965,7 @@ var DiscoveryPanel = React.createClass({displayName: "DiscoveryPanel",
       React.createElement("div", {className: discoveryCountDownWrapperStyle}, 
         React.createElement("a", {className: "oo-discovery-count-down-icon-style", onClick: this.handleDiscoveryCountDownClick}, 
           React.createElement(CountDownClock, React.__spread({},  this.props, {timeToShow: this.props.skinConfig.discoveryScreen.countDownTime, 
-          ref: "CountDownClock"})), 
+          autoplayCanceled: this.autoplayCanceled, ref: "CountDownClock"})), 
           React.createElement(Icon, React.__spread({},  this.props, {icon: "pause"}))
         )
       )
@@ -3037,6 +3068,7 @@ DiscoveryPanel.defaultProps = {
 };
 
 module.exports = DiscoveryPanel;
+
 },{"../components/icon":29,"../constants/constants":44,"../mixins/resizeMixin":48,"./countDownClock":24,"./discoverItem":27,"classnames":59,"react":221,"react-dom":64}],29:[function(require,module,exports){
 var React = require('react'),
     Utils = require('./utils');
@@ -4029,6 +4061,7 @@ Tabs.Panel = React.createClass({
     );
   }
 });
+
 },{"./icon":29,"classnames":59,"react":221}],37:[function(require,module,exports){
 /**
  * Display component for video text tracks
@@ -4058,7 +4091,7 @@ var TextTrackPanel = React.createClass({displayName: "TextTrackPanel",
     "Monospaced Serif": '"Courier New", Courier, "Nimbus Mono L", "Cutive Mono", monospace',
     "Proportional Serif": '"Times New Roman", Times, Georgia, Cambria, "PT Serif Caption", serif',
     "Monospaced Sans-Serif": '"Deja Vu Sans Mono", "Lucida Console", Monaco, Consolas, "PT Mono", monospace',
-    "Proportional Sans-Serif": 'Roboto, "Arial Unicode Ms", Arial, Helvetica, Verdana, "PT Sans Caption", sans-serif',
+    "Proportional Sans-Serif": '"Ooyala Roboto", "Arial Unicode Ms", Arial, Helvetica, Verdana, "PT Sans Caption", sans-serif',
     "Casual": '"Comic Sans MS", Impact, Handlee, fantasy',
     "Cursive": '"Monotype Corsiva", "URW Chancery L", "Apple Chancery", "Dancing Script", cursive',
     "Small Capitals": '"Arial Unicode Ms", Arial, Helvetica, Verdana, "Marcellus SC", sans-serif'
@@ -5122,6 +5155,7 @@ var Utils = {
 };
 
 module.exports = Utils;
+
 },{"./deepMerge":26}],42:[function(require,module,exports){
 /**
  * Panel component for video quality selection
@@ -5151,7 +5185,7 @@ var VideoQualityPanel = React.createClass({displayName: "VideoQualityPanel",
       selected: selectedBitrateId
     });
     this.props.togglePopoverAction();
-    this.props.toggleVideoQualityPanel();
+    this.props.toggleVideoQualityPopOver();
   },
 
     handleBackClick: function() {
@@ -5666,6 +5700,7 @@ module.exports = {
     }
   }
 };
+
 },{}],45:[function(require,module,exports){
 /********************************************************************
  CONTROLLER
@@ -5683,7 +5718,7 @@ var React = require('react'),
     Fullscreen = require('screenfull'),
     Skin = require('./skin'),
     SkinJSON = require('../config/skin'),
-    Localization = ({"languageFiles":({"en":require("..\\config\\languageFiles\\en.json"),"es":require("..\\config\\languageFiles\\es.json"),"ja":require("..\\config\\languageFiles\\ja.json"),"zh":require("..\\config\\languageFiles\\zh.json")})}),
+    Localization = ({"languageFiles":({"en":require("../config/languageFiles/en.json"),"es":require("../config/languageFiles/es.json"),"ja":require("../config/languageFiles/ja.json"),"zh":require("../config/languageFiles/zh.json")})}),
     Cookies = require('js-cookie');
 
 OO.plugin("Html5Skin", function (OO, _, $, W) {
@@ -5695,7 +5730,7 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   if (OO.publicApi && OO.publicApi.VERSION) {
     // This variable gets filled in by the build script
-    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "a95258006d3a6b44536941e4282627c641b57425"};
+    OO.publicApi.VERSION.skin = {"releaseVersion": "4.14.8", "rev": "5c488853637c4fdeca3327475227255b3417ccb2"};
   }
 
   // WIKIA CHANGE - START
@@ -5940,13 +5975,15 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
       //initial DOM manipulation
       this.state.mainVideoContainer.addClass('oo-player-container');
       // WIKIA CHANGE - START
+      if (params.initialVolume === 0) {
+	    this.state.volumeState.muted = true;
+	    this.state.volumeState.volume = 0;
+	    this.state.volumeState.oldVolume = 1;
+	    this.setVolume(0);
+	  }
       if (params.autoplay && this.state.isMobile) {
         // set autoplay data attribute which is read by main_html5 plugin
         this.state.mainVideoInnerWrapper.attr('data-autoplay', 'autoplay');
-        this.state.volumeState.muted = true;
-        this.state.volumeState.volume = 0;
-        this.state.volumeState.oldVolume = 1;
-        this.setVolume(0);
       }
       // WIKIA CHANGE - END
       this.state.mainVideoInnerWrapper.addClass('oo-player');
@@ -6291,7 +6328,8 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
         this.state.upNextInfo.delayedSetEmbedCodeEvent = false;
         this.state.upNextInfo.delayedContentData = null;
       }
-      else if (this.state.discoveryData && this.skin.props.skinConfig.endScreen.screenToShowOnEnd === "discovery"
+      else if (this.state.discoveryData && this.state.discoveryData.relatedVideos &&
+          this.state.discoveryData.relatedVideos.length && this.skin.props.skinConfig.endScreen.screenToShowOnEnd === "discovery"
                && !(Utils.isIPhone() || (Utils.isIos() && this.state.fullscreen))) {
         OO.log("Should display DISCOVERY_SCREEN on end");
         this.sendDiscoveryDisplayEvent("endScreen");
@@ -7391,7 +7429,8 @@ OO.plugin("Html5Skin", function (OO, _, $, W) {
 
   return Html5Skin;
 });
-},{"../config/skin":5,"..\\config\\languageFiles\\en.json":1,"..\\config\\languageFiles\\es.json":2,"..\\config\\languageFiles\\ja.json":3,"..\\config\\languageFiles\\zh.json":4,"./components/accessibilityControls":6,"./components/deepMerge":26,"./components/utils":41,"./constants/constants":44,"./skin":50,"js-cookie":60,"react":221,"react-dom":64,"screenfull":222}],46:[function(require,module,exports){
+
+},{"../config/languageFiles/en.json":1,"../config/languageFiles/es.json":2,"../config/languageFiles/ja.json":3,"../config/languageFiles/zh.json":4,"../config/skin":5,"./components/accessibilityControls":6,"./components/deepMerge":26,"./components/utils":41,"./constants/constants":44,"./skin":50,"js-cookie":60,"react":221,"react-dom":64,"screenfull":222}],46:[function(require,module,exports){
 /**
  * Enables accessability controls.
  *
@@ -7838,6 +7877,7 @@ Skin.defaultProps = {
 };
 
 module.exports = Skin;
+
 },{"./components/closed-caption/closedCaptionPanel":12,"./components/closed-caption/onOffSwitch":18,"./components/discoveryPanel":28,"./components/moreOptionsPanel":31,"./components/sharePanel":33,"./components/spinner":35,"./components/utils":41,"./components/videoQualityPanel":42,"./constants/constants":44,"./mixins/responsiveManagerMixin":49,"./views/contentScreen":51,"./views/endScreen":52,"./views/errorScreen":53,"./views/pauseScreen":54,"./views/playingScreen":55,"./views/startScreen":57,"./views/wikiaAdScreen":58,"react":221}],51:[function(require,module,exports){
 var React = require('react'),
     CloseButton = require('../components/closeButton'),
@@ -7931,6 +7971,7 @@ ContentScreen.defaultProps = {
 };
 
 module.exports = ContentScreen;
+
 },{"../components/closeButton":9,"../components/icon":29,"../components/utils":41,"../components/watermark":43,"../constants/constants":44,"../mixins/accessibilityMixin":46,"react":221}],52:[function(require,module,exports){
 /********************************************************************
   END SCREEN
@@ -8405,6 +8446,7 @@ var PlayingScreen = React.createClass({displayName: "PlayingScreen",
   }
 });
 module.exports = PlayingScreen;
+
 },{"../components/adOverlay":7,"../components/controlBar":23,"../components/spinner":35,"../components/textTrackPanel":37,"../components/upNextPanel":40,"../components/watermark":43,"../mixins/resizeMixin":48,"classnames":59,"react":221,"react-dom":64}],56:[function(require,module,exports){
 var React = require('react');
 
@@ -8669,6 +8711,7 @@ var WikiaAdScreen = React.createClass({displayName: "WikiaAdScreen",
   }
 });
 module.exports = WikiaAdScreen;
+
 },{"../components/controlBar":23,"../constants/constants":44,"react":221}],59:[function(require,module,exports){
 /*!
   Copyright (c) 2016 Jed Watson.

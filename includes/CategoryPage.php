@@ -48,7 +48,7 @@ class CategoryPage extends Article {
 			return;
 		}
 
-		if ( !Hooks::run( 'CategoryPageView', array( &$this ) ) ) {
+		if ( !Hooks::run( 'CategoryPageView', [ $this ] ) ) {
 			return;
 		}
 

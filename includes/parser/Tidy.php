@@ -42,7 +42,7 @@ class MWTidyWrapper {
 		$this->mMarkerIndex = 0;
 
 		$wrappedtext = preg_replace_callback( ParserOutput::EDITSECTION_REGEX,
-			array( &$this, 'replaceEditSectionLinksCallback' ), $text );
+			[ $this, 'replaceEditSectionLinksCallback' ], $text );
 
 		$wrappedtext = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"'.
 			' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html>'.

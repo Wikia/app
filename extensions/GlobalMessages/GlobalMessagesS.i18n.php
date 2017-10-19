@@ -275,12 +275,12 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 	'specialpages-group-wikia' => 'FANDOM pages',
 	'seeeditcount' => 'See edit count',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:About About FANDOM]
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM is now hiring for several open positions]<br>',
 );
 
 $messages['qqq'] = array(
@@ -8346,10 +8346,10 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'sqlite-has-fts' => 'Version $1 mit Unterstützung für die Volltextsuche',
 	'sqlite-no-fts' => 'Version $1 ohne Unterstützung für die Volltextsuche',
 	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
-* [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über Wikia]
+* [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über FANDOM]
 * [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]
 * [[Special:Contact|Kontakt]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
+* [http://fandom.wikia.com/mediakit Auf FANDOM werben]',
 	'specialpages-group-wikia' => 'FANDOM-Seiten',
 	'save' => 'Speichern',
 	'searchsuggest' => 'Suchvorschläge',
@@ -8357,7 +8357,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'seeeditcount' => 'siehe Bearbeitungsstatistik',
 	'seemoredotdotdot' => 'Zeige mehr...',
 	'send' => 'Senden',
-	'shared-News_box' => '<!-- &nbsp; -->',
+	'shared-News_box' => '[http://www.wikia.com/Hiring Bei FANDOM sind derzeit verschiedene offene Stellen ausgeschrieben]<br>',
 	'showall' => 'Alle anzeigen',
 	'signup-mail' => 'E-Mail -',
 	'signup-moreinfo' => 'Hinweis',
@@ -9877,7 +9877,7 @@ Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:S
 	'sqlite-has-fts' => '$1 con soporte para búsqueda de texto completo',
 	'sqlite-no-fts' => '$1 sin soporte para búsqueda de texto completo',
 	'shared-Monobook-footer-wikia-links' => '* [http://es.wikia.com/Pol%C3%ADtica_de_Privacidad Política de Privacidad]
-* [http://es.wikia.com/Sobre_nosotros Sobre Wikia]
+* [http://es.wikia.com/Sobre_nosotros Sobre FANDOM]
 * [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
 * [[Special:Contact|Contactar]]
 * [http://mediakit.wikia.com/wiki/Contact Publicidad]',
@@ -9887,7 +9887,7 @@ Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:S
 	'seeeditcount' => 'Ver contador de ediciones',
 	'seemoredotdotdot' => 'Ver más...',
 	'send' => 'Enviar',
-	'shared-News_box' => 'Visita nuestra [[w:c:comunidad|Comunidad Central]]<br />',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM se encuentra contratando]<br>',
 	'shoutbox' => 'Chat',
 	'showall' => 'Mostrar todo',
 	'sidebar' => '* SEARCH
@@ -11521,8 +11521,8 @@ impossible de renommer une page sur elle-même.',
 	'specialpages-group-spam' => 'Outils anti-pourriel',
 	'sqlite-has-fts' => '$1 avec recherche en texte intégral supportée',
 	'sqlite-no-fts' => '$1 sans recherche en texte intégral supportée',
-	'shared-Monobook-footer-wikia-links' => "* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
-* [http://fr.wikia.com/À_propos À propos de Wikia]
+	'shared-Monobook-footer-wikia-links' => "* [http://fr.wikia.com/Politique_de_confidentialité Confidentialité]
+* [http://fr.wikia.com/À_propos À propos de FANDOM]
 * [http://fr.wikia.com/Conditions_d'utilisation Conditions d'utilisation]
 * [[Special:Contact|Nous contacter]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]",
@@ -11532,7 +11532,7 @@ impossible de renommer une page sur elle-même.',
 	'seeeditcount' => 'Voir le nombre de modifications',
 	'seemoredotdotdot' => 'Plus…',
 	'send' => 'Envoyer',
-	'shared-News_box' => 'Visitez le [[w:fr:Accueil|Centre des communautés]] pour de l’aide et les dernières nouvelles',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM recrute actuellement.]<br>',
 	'sidebar' => "* navigation
 ** mainpage|mainpage
 ** portal-url|Portail
@@ -17297,9 +17297,9 @@ Se pensi ci sia un errore, contattaci su [[w:c:vstf:Report:Spam filter problems|
 	'specialpages-group-spam' => 'Strumenti contro lo spam',
 	'sqlite-has-fts' => '$1 con la possibilità di ricerca completa nel testo',
 	'sqlite-no-fts' => '$1 senza la possibilità di ricerca completa nel testo',
-	'shared-Monobook-footer-wikia-links' => "* [http://it.community.wikia.com/wiki/Wiki_della_Community:Privacy Privacy]
+	'shared-Monobook-footer-wikia-links' => "* [[w:it:Project:Privacy|Privacy]]
 * [http://fandom.wikia.com/about?uselang=it Cos'è FANDOM]
-* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]
+* [[w:it:Project:Termini di utilizzo|Termini di utilizzo]]
 * [[Special:Contact|Contattaci]]
 * [http://fandom.wikia.com/mediakit Pubblicizzare]",
 	'specialpages-group-wikia' => 'Pagine di FANDOM',
@@ -17368,7 +17368,7 @@ Alcuni indirizzi IP cambiano periodicamente e possono essere condivisi da divers
 	'searchtype' => 'Cerca tipo front-end',
 	'seeeditcount' => 'Vedi conteggio modifiche',
 	'scarytranscludebadinterwiki' => 'Fornito interwiki non includibile.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM ha offerte di lavoro per diverse posizioni disponibili]<br/>',
 );
 
 $messages['iu'] = array(
@@ -17791,7 +17791,7 @@ $messages['ja'] = array(
 	'save' => '保存する',
 	'searchsuggest' => '検索候補',
 	'shared-Monobook-footer-wikia-links' => '* [http://ja.wikia.com/プライバシーポリシー プライバシー]
-* [http://ja.wikia.com/ウィキアについて ウィキアについて]
+* [http://fandom.wikia.com/about?uselang=ja FANDOMについて]
 * [http://ja.wikia.com/利用規約 利用規約]
 * [[Special:Contact|お問い合わせ]]
 * [http://www.wikia.com/Advertising 広告]',
@@ -17853,7 +17853,7 @@ IPアドレスは、時折変更されたり、複数人で共有されること
 	'send' => '送信',
 	'searchtype' => '検索のフロントエンド・タイプ',
 	'scarytranscludebadinterwiki' => 'トランスクルードできないインターウィキを指定しました。',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOMでは現在、複数の職種で人材を募集しております]<br>',
 );
 
 $messages['jam'] = array(
@@ -27787,7 +27787,7 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 	'sqlite-has-fts' => 'Versie $1 met ondersteuning voor "full-text" zoeken',
 	'sqlite-no-fts' => 'Versie $1 zonder ondersteuning voor "full-text" zoeken',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:About About FANDOM]
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
@@ -27855,7 +27855,7 @@ Some IP addresses change periodically, and may be shared by several users. If yo
 	'specialpages-group-wikia' => 'FANDOM pages',
 	'seeeditcount' => 'See edit count',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM is now hiring for several open positions]<br>',
 );
 
 $messages['nl-informal'] = array(
@@ -29661,15 +29661,15 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'sqlite-no-fts' => '$1 bez wsparcia pełnotekstowego wyszukiwania',
 	'shoutbox' => 'Shout Box',
 	'send' => 'Wyślij',
-	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_Prywatności Polityka Prywatności]
-* [http://pl.wikia.com/O_nas O Wikii]
-* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]
+	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_prywatno%C5%9Bci Polityka_prywatności]
+* [http://pl.wikia.com/O_nas O FANDOMIE]
+* [http://pl.wikia.com/Zasady_użytkowania Zasady użytkowania]
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/Advertising Reklama]',
 	'specialpages-group-wikia' => 'Strony portalu FANDOM',
 	'save' => 'Publikuj',
 	'scarytranscludebadinterwiki' => 'Użyto niewłaściwej składni transkluzji zewnętrznego szablonu.',
-	'shared-News_box' => 'Zajrzyj na [[w:c:spolecznosc:Specjalna:Forum|forum społeczności]].',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM szuka pracowników na następujące stanowiska]<br>',
 	'sidebar' => '* Nawigacja
 ** mainpage|mainpage-description
 ** randompage-url|randompage
@@ -30756,11 +30756,11 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 	'specialpages-group-spam' => 'Ferramentas anti-spam',
 	'sqlite-has-fts' => '$1 com suporte de pesquisa de texto completo',
 	'sqlite-no-fts' => '$1 sem suporte de pesquisa de texto completo',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacidade_Política de privacidade]
-* [http://www.wikia.com/wiki/Wikia:Sobre Sobre a Wikia]
-* [http://www.wikia.com/wiki/Wikia:Termos_de_uso Termos de uso]
+	'shared-Monobook-footer-wikia-links' => '* [http://pt-br.wikia.com/wiki/Política_de_Privacidade Política de Privacidade]
+* [http://fandom.wikia.com/about?uselang=pt-br Sobre o FANDOM]
+* [http://pt-br.wikia.com/wiki/Termos_de_Uso Termos de uso]
 * [[Special:Contact|Contato]]
-* [http://www.wikia.com/wiki/Wikia:Publicidade_na_Wikia Publicidade]',
+* [http://fandom.wikia.com/mediakit Publicidade]',
 	'specialpages-group-wikia' => 'Páginas do FANDOM',
 	'signup-password' => 'Senha - ',
 	'sidebar' => '* Content Navigation
@@ -30826,7 +30826,7 @@ Alguns endereços IP mudam periodicamente e podem ser compartilhados por vários
 	'searchtype' => 'Search frontend type',
 	'seeeditcount' => 'Veja a contagem de edições',
 	'scarytranscludebadinterwiki' => 'InterWikis non-transcludable fornecida.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://www.wikia.com/Hiring O FANDOM está contratando para várias posições abertas no momento] <br>',
 );
 
 $messages['qu'] = array(
@@ -32097,12 +32097,12 @@ $messages['ru'] = array(
 	'specialpages-group-spam' => 'Инструменты против спама',
 	'sqlite-has-fts' => '$1 с поддержкой полнотекстового поиска',
 	'sqlite-no-fts' => '$1 без поддержки полнотекстового поиска',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования]
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'specialpages-group-wikia' => 'Страницы Фэндома',
+	'shared-Monobook-footer-wikia-links' => '* [http://ru.wikia.com/wiki/Конфиденциальность Конфиденциальность]
+* [http://fandom.wikia.com/about?uselang=ru О нас]
+* [http://ru.wikia.com/Условия_использования Условия использования]
+* [http://ru.community.wikia.com/wiki/Служебная:Contact Обратная связь]
+* [http://fandom.wikia.com/mediakit Реклама на ФЭНДОМЕ]',
+	'specialpages-group-wikia' => 'Страницы ФЭНДОМА',
 	'save' => 'Сохранить',
 	'seeeditcount' => 'См. счётчик правок',
 	'seemoredotdotdot' => 'Подробнее...',
@@ -32163,7 +32163,7 @@ $messages['ru'] = array(
 	'shoutbox' => 'Shout Box',
 	'searchtype' => 'Тип интерфейса поиска',
 	'scarytranscludebadinterwiki' => 'Данная интервики не подлежит включению.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://fandom.wikia.com/careers Вакансии на ФЭНДОМЕ]<br>',
 );
 
 $messages['rue'] = array(
@@ -42187,11 +42187,11 @@ $messages['zh-hans'] = array(
 	'specialpages-group-spam' => '反垃圾链接工具',
 	'sqlite-has-fts' => '带全文搜索的版本$1',
 	'sqlite-no-fts' => '不带全文搜索的版本$1',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy 隐私政策]
+* [http://www.wikia.com/wiki/Wikia:About 关于FANDOM]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use 使用条款]
+* [[Special:Contact|联系我们]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia 广告合作]',
 	'specialpages-group-wikia' => 'Fandom页面',
 	'signup-password' => '密码：',
 	'sidebar' => '* Content Navigation
@@ -42257,7 +42257,7 @@ $messages['zh-hans'] = array(
 	'searchtype' => '搜索前端类型',
 	'seeeditcount' => '查看编辑统计',
 	'scarytranscludebadinterwiki' => '不提供非编码转换的wiki内链。',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM正在招聘许多职位]<br>',
 );
 
 $messages['zh-hant'] = array(
@@ -42466,11 +42466,11 @@ $messages['zh-hant'] = array(
 	'specialpages-group-spam' => '防垃圾訊息工具',
 	'sqlite-has-fts' => '支援全文搜尋的版本$1',
 	'sqlite-no-fts' => '不支援全文搜尋的版本$1',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+	'shared-Monobook-footer-wikia-links' => '* [http://zh-tw.wikia.com/wiki/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%96%B9%E9%87%9D 隱私政策]
+* [http://www.wikia.com/wiki/Wikia:About 關於FANDOM]
+* [http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE 使用條款]
+* [[Special:Contact|聯繫我們]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia 廣告投放]',
 	'specialpages-group-wikia' => 'FANDOM頁面',
 	'signup-password' => '密碼：',
 	'sidebar' => '* Content Navigation
@@ -42536,7 +42536,7 @@ $messages['zh-hant'] = array(
 	'searchtype' => '搜索前端類型',
 	'seeeditcount' => '參見編輯計數',
 	'scarytranscludebadinterwiki' => '不提供非編碼轉換的跨Wiki連結。',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
+	'shared-News_box' => '[http://www.wikia.com/Hiring FANDOM正在招聘多個職位]<br>',
 );
 
 $messages['zu'] = array(

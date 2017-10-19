@@ -101,6 +101,32 @@ Esta extensión ofrece algunos atajos de teclado y un explorador de acciones par
 	'global-shortcuts-welcome-hint' => 'Introduciendo nuestros nuevos y mejorados atajos de teclado.',
 );
 
+$messages['fi'] = array(
+	'global-shortcuts-description' => '
+Improve your browsing and editing experience using shortcut keys on Wikia.
+
+This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
+',
+	'global-shortcuts-caption-action-list' => 'Actions explorer',
+	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Keyboard shortcuts help',
+	'global-shortcuts-caption-open-discussions' => 'Open discussions',
+	'global-shortcuts-caption-search-for-a-page' => 'Search for a page',
+	'global-shortcuts-caption-start-a-new-wikia' => 'Start a new wiki',
+	'global-shortcuts-category-current-page' => 'Current page',
+	'global-shortcuts-category-current-wikia' => 'Current community',
+	'global-shortcuts-category-global' => 'Global',
+	'global-shortcuts-category-help' => 'Help',
+	'global-shortcuts-category-other' => 'Other',
+	'global-shortcuts-key-or' => 'or',
+	'global-shortcuts-key-then' => 'then',
+	'global-shortcuts-name' => 'Shortcuts',
+	'global-shortcuts-search-placeholder' => 'Type to search...',
+	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
+	'global-shortcuts-title-keyboard-shortcuts' => 'Keyboard shortcuts',
+	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
+);
+
 $messages['fr'] = array(
 	'global-shortcuts-caption-action-list' => "Explorateur d'actions",
 	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Aide sur les raccourcis clavier',
@@ -177,6 +203,32 @@ FANDOMでショートカットキーを使うと、閲覧や編集がしやす�
 	'global-shortcuts-name' => 'ショートカット',
 	'global-shortcuts-search-placeholder' => '検索キーワードを入力...',
 	'global-shortcuts-welcome-hint' => 'キーボード・ショートカットが改良され、新しくなりました。',
+);
+
+$messages['ko'] = array(
+	'global-shortcuts-description' => '
+Improve your browsing and editing experience using shortcut keys on Wikia.
+
+This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
+',
+	'global-shortcuts-caption-action-list' => '작업 탐색기',
+	'global-shortcuts-caption-keyboard-shortcuts-help' => '단축키 도움말',
+	'global-shortcuts-caption-open-discussions' => '토론방',
+	'global-shortcuts-caption-search-for-a-page' => '문서 검색',
+	'global-shortcuts-caption-start-a-new-wikia' => '새 위키 만들기',
+	'global-shortcuts-category-current-page' => '현재 문서',
+	'global-shortcuts-category-current-wikia' => '현재 커뮤니티',
+	'global-shortcuts-category-global' => '팬덤 전역',
+	'global-shortcuts-category-help' => '도움말',
+	'global-shortcuts-category-other' => 'Other',
+	'global-shortcuts-key-or' => '또는',
+	'global-shortcuts-key-then' => '다음에',
+	'global-shortcuts-name' => '바로 가기',
+	'global-shortcuts-search-placeholder' => '작업 검색',
+	'global-shortcuts-title-help-entry-point' => '단축키 도움말 보기 (?)',
+	'global-shortcuts-title-keyboard-shortcuts' => '바로 가기 모음',
+	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
+	'global-shortcuts-press-to-explore-shortcuts' => '수행 가능한 모든 작업 목록을 보시려면 $1 키를 눌러 주세요.',
 );
 
 $messages['nl'] = array(
@@ -281,6 +333,32 @@ $messages['ru'] = array(
 	'global-shortcuts-title-keyboard-shortcuts' => 'Сочетания клавиш',
 	'global-shortcuts-welcome-hint' => 'Представляем наши новые и улучшенные сочетания клавиш.',
 	'global-shortcuts-press-to-explore-shortcuts' => 'Нажмите $1, чтобы просмотреть все сочетания клавиш',
+);
+
+$messages['vi'] = array(
+	'global-shortcuts-description' => '
+Improve your browsing and editing experience using shortcut keys on Wikia.
+
+This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
+',
+	'global-shortcuts-caption-action-list' => 'Actions explorer',
+	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Keyboard shortcuts help',
+	'global-shortcuts-caption-open-discussions' => 'Open discussions',
+	'global-shortcuts-caption-search-for-a-page' => 'Search for a page',
+	'global-shortcuts-caption-start-a-new-wikia' => 'Start a new wiki',
+	'global-shortcuts-category-current-page' => 'Current page',
+	'global-shortcuts-category-current-wikia' => 'Current community',
+	'global-shortcuts-category-global' => 'Global',
+	'global-shortcuts-category-help' => 'Help',
+	'global-shortcuts-category-other' => 'Other',
+	'global-shortcuts-key-or' => 'or',
+	'global-shortcuts-key-then' => 'then',
+	'global-shortcuts-name' => 'Shortcuts',
+	'global-shortcuts-search-placeholder' => 'Type to search...',
+	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
+	'global-shortcuts-title-keyboard-shortcuts' => 'Keyboard shortcuts',
+	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
 );
 
 $messages['zh-hans'] = array(

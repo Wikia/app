@@ -9,6 +9,9 @@ error_reporting(E_ALL);
 
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 include_once( __DIR__ . '/ForumDumper.php' );
+include_once( __DIR__ . '/FollowsFinder.php' );
+include_once( __DIR__ . '/WallHistoryFinder.php' );
+
 
 class DumpForumData extends Maintenance {
 	/** @var  \Discussions\ForumDumper */
@@ -34,6 +37,8 @@ class DumpForumData extends Maintenance {
 		$this->dumpPages();
 		$this->dumpRevisions();
 		$this->dumpVotes();
+		$this->dumpFollows();
+		$this->dumpWallHistory();
 	}
 
 	private function setConnectinoEncoding() {
@@ -44,6 +49,8 @@ class DumpForumData extends Maintenance {
 		fwrite( $this->fh, "DELETE FROM import_page;\n" );
 		fwrite( $this->fh, "DELETE FROM import_revision;\n" );
 		fwrite( $this->fh, "DELETE FROM import_vote;\n" );
+		fwrite( $this->fh, "DELETE FROM import_follows;\n" );
+		fwrite( $this->fh, "DELETE FROM import_history;\n" );
 	}
 
 	private function dumpPages() {
@@ -86,10 +93,37 @@ class DumpForumData extends Maintenance {
 		}
 	}
 
+	private function dumpFollows() {
+		$follows = $this->dumper->getFollows();
+
+		foreach ( $follows as $data ) {
+			$insert = $this->createInsert(
+				'import_follows',
+				Discussions\FollowsFinder::COLUMNS_FOLLOWS,
+				$data
+			);
+			fwrite( $this->fh, $insert . "\n");
+		}
+	}
+
+	private function dumpWallHistory() {
+		$dumper = new Discussions\WallHistoryFinder( wfGetDB( DB_SLAVE ) );
+		$history = $dumper->find();
+
+		foreach ( $history as $data ) {
+			$insert = $this->createInsert(
+				'import_history',
+				Discussions\WallHistoryFinder::COLUMNS,
+				$data
+			);
+			fwrite( $this->fh, $insert . "\n");
+		}
+	}
+
 	private function createInsert( $table, $cols, $data ) {
 		$db = wfGetDB( DB_SLAVE );
 
-		$insert = "INSERT INTO $table (site_id, " .
+		$insert = "INSERT INTO $table (`site_id`, " .
 		          implode( ",", array_map( function ( $c ) use ( $db ) {
 			          return 	$db->addIdentifierQuotes( $c );
 		          }, $cols ) ) .

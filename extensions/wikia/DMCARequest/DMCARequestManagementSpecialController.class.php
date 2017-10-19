@@ -12,6 +12,7 @@ use DMCARequest\DMCARequestHelper;
 use DMCARequest\ChillingEffectsClient;
 
 class DMCARequestManagementSpecialController extends WikiaSpecialPageController {
+	use \Wikia\Logger\Loggable;
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -158,6 +159,11 @@ class DMCARequestManagementSpecialController extends WikiaSpecialPageController 
 		$response = $client->sendNotice( $preparedNoticeData );
 
 		if ( !$client->requestSuccessful( $response ) ) {
+			$this->error( 'Failed to send data to Chilling Effects API', [
+				'validation_result' => json_encode( $response->getContent() ),
+				'input_data' => $preparedNoticeData
+			] );
+			
 			$this->error = $this->msg( 'dmcarequestmanagement-error-submission' )->escaped();
 			return false;
 		}

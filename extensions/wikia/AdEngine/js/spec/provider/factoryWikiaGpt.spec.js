@@ -19,6 +19,11 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
 			}
 		},
+		extraUnitBuilder: {
+			build: function(slotName, src) {
+				return 'extra/' + src + '/' + slotName;
+			}
+		},
 		gptHelper: {
 			pushAd: function (slot) {
 				slot.success();
@@ -32,12 +37,13 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		slotRegistry: {
 			getRefreshCount: function () {
 				return 2;
-			}
+			},
+			storeScrollY: noop
 		},
-		beforeSuccess: noop,
-		beforeCollapse: noop,
+		afterSuccess: noop,
+		afterCollapse: noop,
 		window: {},
-		beforeHop: noop,
+		afterHop: noop,
 		btfBlocker: {
 			decorate: noop
 		}
@@ -48,7 +54,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			name: slotName,
 			success: noop,
 			hop: noop,
-			pre: function (name, callback) {
+			post: function (name, callback) {
 				callback();
 			}
 		};
@@ -103,34 +109,66 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		);
 	});
 
-	it('Call beforeSuccess on pushAd if is defined', function () {
-		spyOn(mocks, 'beforeSuccess');
+	it('Build slot path based on page params width extra ad unit builder', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
 
-		getProvider({
-			beforeSuccess: mocks.beforeSuccess
-		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+		var extra = {
+			getAdUnitBuilder: function () {
+				return mocks.extraUnitBuilder;
+			}
+		};
 
-		expect(mocks.beforeSuccess).toHaveBeenCalled();
+		getProvider(extra).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
+			'extra/testSource/TOP_LEADERBOARD'
+		);
 	});
 
-	it('Call beforeCollapse on pushAd if is defined', function () {
-		spyOn(mocks, 'beforeCollapse');
+	it('Build slot path based on page params width extra ad unit builder in function', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
 
-		getProvider({
-			beforeCollapse: mocks.beforeCollapse
-		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+		var extra = {
+			getAdUnitBuilder: function () {
+				return mocks.extraUnitBuilder;
+			}
+		};
 
-		expect(mocks.beforeCollapse).toHaveBeenCalled();
+		getProvider(extra).fillInSlot(createSlot('TOP_RIGHT_BOXAD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
+			'extra/testSource/TOP_RIGHT_BOXAD'
+		);
 	});
 
-	it('Call beforeHop on pushAd if is defined', function () {
-		spyOn(mocks, 'beforeHop');
+	it('Call afterSuccess on pushAd if is defined', function () {
+		spyOn(mocks, 'afterSuccess');
 
 		getProvider({
-			beforeHop: mocks.beforeHop
+			afterSuccess: mocks.afterSuccess
 		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
-		expect(mocks.beforeHop).toHaveBeenCalled();
+		expect(mocks.afterSuccess).toHaveBeenCalled();
+	});
+
+	it('Call afterCollapse on pushAd if is defined', function () {
+		spyOn(mocks, 'afterCollapse');
+
+		getProvider({
+			afterCollapse: mocks.afterCollapse
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.afterCollapse).toHaveBeenCalled();
+	});
+
+	it('Call afterHop on pushAd if is defined', function () {
+		spyOn(mocks, 'afterHop');
+
+		getProvider({
+			afterHop: mocks.afterHop
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.afterHop).toHaveBeenCalled();
 	});
 
 	it('Push slot with refresh count key val', function () {

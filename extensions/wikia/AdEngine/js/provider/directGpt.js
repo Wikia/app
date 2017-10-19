@@ -23,7 +23,16 @@ define('ext.wikia.adEngine.provider.directGpt', [
 ) {
 	'use strict';
 
-	var context = adContext.getContext();
+	var context = adContext.getContext(),
+		sraEnabled = !context.opts.disableSra,
+		atfSlots = [
+			'TOP_LEADERBOARD',
+			'GPT_FLUSH'
+		];
+
+	if (sraEnabled) {
+		atfSlots.push('TOP_RIGHT_BOXAD', 'INVISIBLE_SKIN');
+	}
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGpt',
@@ -48,15 +57,15 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			PREFOOTER_MIDDLE_BOXAD:     {size: '300x250', loc: 'footer'},
 			PREFOOTER_RIGHT_BOXAD:      {size: '300x250', loc: 'footer'},
 			TOP_LEADERBOARD:            {
-				size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
+				size: '3x3,728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 				loc: 'top'
 			},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'}
 		},
 		{
-			beforeSuccess: function (slotName) {
+			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (!uapContext.isUapLoaded()) {
+				if (!uapContext.isBfaaLoaded()) {
 					slotTweaker.removeTopButtonIfNeeded(slotName);
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
@@ -64,14 +73,11 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
-			sraEnabled: true,
-			atfSlots: [
-				'INVISIBLE_SKIN',
-				'TOP_LEADERBOARD',
-				'TOP_RIGHT_BOXAD',
-				'GPT_FLUSH'
-			],
-			adUnitBuilder: context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder,
+			sraEnabled: sraEnabled,
+			atfSlots: atfSlots,
+			getAdUnitBuilder: function () {
+				return context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
+			},
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
 				'INCONTENT_PLAYER',

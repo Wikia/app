@@ -373,7 +373,6 @@ ss_active_users  bigint INTEGER
 ss_good_articles bigint INTEGER
 ss_total_edits   bigint INTEGER
 ss_total_pages   bigint INTEGER
-ss_total_views   bigint INTEGER
 ss_users         bigint INTEGER
 
 ## True IP - keep an eye on these, coders tend to make textual assumptions

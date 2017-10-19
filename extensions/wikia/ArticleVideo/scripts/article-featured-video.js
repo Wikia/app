@@ -4,20 +4,28 @@ require([
 	'wikia.tracker',
 	'ooyala-player',
 	'wikia.cookies',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.articleVideo.videoFeedbackBox',
-	require.optional('ext.wikia.adEngine.adContext'),
-	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
-	require.optional('ext.wikia.adEngine.video.vastUrlBuilder')
+	'ext.wikia.adEngine.adContext',
+	'wikia.articleVideo.trackingQueue',
+	'wikia.articleVideo.ooyalaService',
+	require.optional('ext.wikia.adEngine.lookup.a9'),
+	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider')
 ], function (
 	window,
 	onScroll,
 	tracker,
 	OoyalaPlayer,
 	cookies,
+	geo,
+	instantGlobals,
 	VideoFeedbackBox,
 	adContext,
-	playerTracker,
-	vastUrlBuilder
+	TrackingQueue,
+	ooyalaService,
+	a9,
+	ooyalaAdSetProvider
 ) {
 
 	$(function () {
@@ -33,61 +41,95 @@ require([
 			$ooyalaVideo = $('#' + ooyalaVideoElementId),
 			videoCollapsed = false,
 			collapsingDisabled = false,
-			nextVideoPlayed = false,
 			playTime = -1,
 			percentagePlayTime = -1,
-			prerollSlotName = 'FEATURED_VIDEO',
-			playerTrackerParams = {
-				adProduct: 'featured-video-preroll',
-				slotName: prerollSlotName
-			},
-			track = tracker.buildTrackingFunction({
+			trackingQueue = new TrackingQueue({
 				category: 'article-video',
 				trackingMethod: 'analytics'
 			}),
+			track = trackingQueue.track.bind(trackingQueue),
 			collapsedVideoSize = {
 				width: 300,
 				height: 169
 			},
+			correlator = Math.round(Math.random() * 10000000000),
 			videoData = window.wgFeaturedVideoData,
 			videoId = videoData.videoId,
 			videoTitle = videoData.title,
 			videoLabels = (videoData.labels || '').join(','),
+			recommendedLabel = videoData.recommendedLabel,
 			videoFeedbackBox,
+			inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
+			inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 			autoplayCookieName = 'featuredVideoAutoplay',
-			autoplay = cookies.get(autoplayCookieName) !== '0';
+			willAutoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries,
+			autoplayOnLoad = willAutoplay && !document.hidden,
+			initialPlayTriggered = false,
+			recommendedVideoDepth = 0;
 
 		function initVideo(onCreate) {
-			var playerParams = window.wgOoyalaParams,
-				vastUrl,
+			var context = adContext.getContext(),
 				inlineSkinConfig = {
 					controlBar: {
-						autoplayCookieName: autoplayCookieName
+						autoplayCookieName: autoplayCookieName,
+						autoplayToggle: inAutoplayCountries
+					},
+					discoveryScreen: {
+						showCountDownTimerOnEndScreen: inNextVideoAutoplayCountries
 					}
+				},
+				options = {
+					adTrackingParams: {
+						adProduct: 'featured-video-preroll',
+						slotName: 'FEATURED'
+					},
+					autoplay: autoplayOnLoad,
+					inlineSkinConfig: inlineSkinConfig,
+					pcode: window.wgOoyalaParams.ooyalaPCode,
+					playerBrandingId: window.wgOoyalaParams.ooyalaPlayerBrandingId,
+					recommendedLabel: recommendedLabel,
+					videoId: videoId
 				};
 
-			if (vastUrlBuilder && adContext && adContext.getContext().opts.showAds) {
-				vastUrl = vastUrlBuilder.build(640/480, {
-					pos: (adContext.getContext().opts.megaAdUnitBuilderEnabled ? 'FEATURED' : prerollSlotName),
-					src: 'premium'
-				});
+			if (ooyalaAdSetProvider.canShowAds()) {
+				options.replayAds = ooyalaAdSetProvider.adsCanBePlayedOnNextVideoViews();
+
+				if (a9 && context.bidders && context.bidders.a9Video) {
+					a9.waitForResponse()
+						.then(function () { return a9.getSlotParams('FEATURED'); })
+						.catch(function () { return {}; })
+						.then(function (additionalSlotParams) { // finally
+							options.adSet = setupFirstAdSet(additionalSlotParams);
+							initPlayerWithTracking(options, onCreate);
+						});
+				} else {
+					options.adSet = setupFirstAdSet();
+					initPlayerWithTracking(options, onCreate);
+				}
+
 			} else {
-				playerTrackerParams.adProduct = 'featured-video-no-preroll';
+				options.adTrackingParams.adProduct = 'featured-video-no-preroll';
+				initPlayerWithTracking(options, onCreate);
 			}
 
-			if (playerTracker) {
-				playerTracker.track(playerTrackerParams, 'init');
-			}
+			document.addEventListener('visibilitychange', handleTabChange);
+		}
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(
-				ooyalaVideoElementId,
-				playerParams,
-				videoId,
-				onCreate,
-				autoplay,
-				vastUrl,
-				inlineSkinConfig
-			);
+		function initPlayerWithTracking(options, onCreate) {
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
+		}
+
+		function setupFirstAdSet(additionalSlotParams) {
+			return ooyalaAdSetProvider.get(1, correlator, {
+				contentSourceId: videoData.dfpContentSourceId,
+				videoId: videoId
+			}, additionalSlotParams);
+		}
+
+		function handleTabChange() {
+			if (!document.hidden && !initialPlayTriggered && willAutoplay) {
+				ooyalaVideoController.player.play();
+			}
 		}
 
 		function collapseVideo(videoOffset, videoHeight) {
@@ -204,19 +246,21 @@ require([
 			});
 		}
 
-		window.guaSetCustomDimension(34, videoId);
-		window.guaSetCustomDimension(35, videoTitle);
-		window.guaSetCustomDimension(36, videoLabels);
-		window.guaSetCustomDimension(37, autoplay ? 'Yes' : 'No');
+		function updateVideoCustomDimensions(videoId, videoTitle, videoLabels) {
+			window.guaSetCustomDimension(34, videoId);
+			window.guaSetCustomDimension(35, videoTitle);
+			window.guaSetCustomDimension(36, videoLabels);
+		}
+
+		updateVideoCustomDimensions(videoId, videoTitle, videoLabels);
+		window.guaSetCustomDimension(37, willAutoplay ? 'Yes' : 'No');
 
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
 
-			if (playerTracker) {
-				playerTracker.register(player, playerTrackerParams);
-			}
-
 			player.mb.subscribe(window.OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
+				initialPlayTriggered = true;
+
 				track({
 					action: tracker.ACTIONS.PLAY_VIDEO,
 					label: 'featured-video'
@@ -224,8 +268,9 @@ require([
 			});
 
 			player.mb.subscribe(window.OO.EVENTS.PLAYBACK_READY, 'ui-update', function () {
-				if (nextVideoPlayed) {
-					$onScrollVideoTitle.text(player.getTitle());
+				var title = player.getTitle();
+				if (recommendedVideoDepth > 0) {
+					$onScrollVideoTitle.text(title);
 					$onScrollVideoTime.text(
 						ooyalaVideoController.getFormattedDuration(player.getDuration())
 					);
@@ -327,17 +372,35 @@ require([
 			player.mb.subscribe(window.OO.EVENTS.REPORT_DISCOVERY_CLICK, 'featured-video', function (eventName, eventData) {
 				// bucket_info has '2' before the JSON string
 				var bucketInfo = JSON.parse(eventData.clickedVideo.bucket_info.substring(1)),
-					position = bucketInfo.position;
+					position = bucketInfo.position,
+					nextVideoData = eventData.clickedVideo || {},
+					nextVideoId = nextVideoData.embed_code;
 
-				nextVideoPlayed = true;
+				recommendedVideoDepth++;
 
 				track({
 					action: tracker.ACTIONS.VIEW,
 					label: 'recommended-video-' + position
 				});
+				track({
+					action: tracker.ACTIONS.VIEW,
+					label: 'recommended-video-depth-' + recommendedVideoDepth
+				});
 
-				// Don't play ads between videos
-				window.OO.Ads.unregisterAdManager('google-ima-ads-manager');
+				ooyalaVideoController.updateAdSet(ooyalaAdSetProvider.get(recommendedVideoDepth + 1, correlator, {
+					contentSourceId: videoData.dfpContentSourceId,
+					videoId: nextVideoId
+				}));
+				// we need to hold tracking until we update custom dimensions with next video data
+				trackingQueue.hold();
+				ooyalaService.getLabels(nextVideoId).done(function (data) {
+					videoLabels = data.labels.join(',');
+				}).fail(function () {
+					videoLabels = '';
+				}).always(function () {
+					updateVideoCustomDimensions(nextVideoId, nextVideoData.name, videoLabels);
+					trackingQueue.release();
+				});
 			});
 
 			track({

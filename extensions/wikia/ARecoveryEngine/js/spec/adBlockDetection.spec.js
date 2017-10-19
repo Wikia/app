@@ -21,7 +21,7 @@ describe('ext.wikia.aRecoveryEngine.adBlockDetection', function () {
 			lazyQueue: {
 				makeQueue: noop
 			},
-			sourcePoint: {
+			pageFair: {
 				isBlocking: noop,
 				isEnabled: noop
 			}
@@ -32,38 +32,37 @@ describe('ext.wikia.aRecoveryEngine.adBlockDetection', function () {
 	function getModule() {
 		return modules['ext.wikia.aRecoveryEngine.adBlockDetection'](
 			mocks.adContext,
-			mocks.sourcePoint,
 			null,
 			null,
 			mocks.lazyQueue,
 			mocks.log,
-			null
+			mocks.pageFair
 		);
 	}
 
-	it('isBlocking is true when sourcePointDetection is enabled and SP detects blocking', function () {
-		spyOn(mocks.sourcePoint, 'isBlocking');
+	it('isBlocking is true when pageFairRecovery is enabled and SP detects blocking', function () {
+		spyOn(mocks.pageFair, 'isBlocking');
 
-		mocks.context.opts.sourcePointDetection = true;
-		mocks.sourcePoint.isBlocking.and.returnValue(true);
+		mocks.context.opts.pageFairRecovery = true;
+		mocks.pageFair.isBlocking.and.returnValue(true);
 
 		expect(getModule().isBlocking()).toBeTruthy();
 	});
 
-	it('isBlocking is false when sourcePointDetection is enabled, SP does not detect blocking', function () {
-		spyOn(mocks.sourcePoint, 'isBlocking');
+	it('isBlocking is false when pageFairRecovery is enabled, SP does not detect blocking', function () {
+		spyOn(mocks.pageFair, 'isBlocking');
 
-		mocks.context.opts.sourcePointDetection = true;
-		mocks.sourcePoint.isBlocking.and.returnValue(false);
+		mocks.context.opts.pageFairRecovery = true;
+		mocks.pageFair.isBlocking.and.returnValue(false);
 
 		expect(getModule().isBlocking()).toBeFalsy();
 	});
 
-	it('isBlocking is false when sourcePointDetection is disabled, SP detects blocking', function () {
-		spyOn(mocks.sourcePoint, 'isBlocking');
+	it('isBlocking is false when pageFairRecovery is disabled, SP detects blocking', function () {
+		spyOn(mocks.pageFair, 'isBlocking');
 
-		mocks.context.opts.sourcePointDetection = false;
-		mocks.sourcePoint.isBlocking.and.returnValue(true);
+		mocks.context.opts.pageFairRecovery = false;
+		mocks.pageFair.isBlocking.and.returnValue(true);
 
 		expect(getModule().isBlocking()).toBeFalsy();
 	});

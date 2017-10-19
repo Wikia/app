@@ -33,7 +33,7 @@
 	"require": {
 		"php": ">=5.5",
 		"composer/installers": "1.*,>=1.0.1",
-		"mediawiki/semantic-media-wiki": "~2.4|~3.0"
+		"wikia/semantic-media-wiki": "~2.4"
 	},
 	"require-dev": {
 		"mediawiki/semantic-media-wiki": "@dev",

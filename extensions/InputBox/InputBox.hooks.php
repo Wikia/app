@@ -6,17 +6,11 @@
  * @ingroup Extensions
  */
 
-// InputBox hooks
 class InputBoxHooks {
 
-	/* Functions */
+	public static function register( Parser $parser ): bool {
+		$parser->setHook( 'inputbox', [ 'InputBoxHooks', 'render' ] );
 
-	// Initialization
-	public static function register( &$parser ) {
-		// Register the hook with the parser
-		$parser->setHook( 'inputbox', array( 'InputBoxHooks', 'render' ) );
-
-		// Continue
 		return true;
 	}
 

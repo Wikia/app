@@ -6,6 +6,15 @@ class DesignSystemApiController extends WikiaApiController {
 	const PARAM_LANG = 'lang';
 	const PRODUCT_WIKIS = 'wikis';
 
+	protected $cors;
+
+	public function __construct() {
+		parent::__construct();
+		$this->cors = new CrossOriginResourceSharingHeaderHelper();
+		$this->cors->allowWhitelistedOrigins();
+		$this->cors->setAllowCredentials( true );
+	}
+
 	public function getFooter() {
 		$params = $this->getRequestParameters();
 		$footerModel = new DesignSystemGlobalFooterModel(
@@ -14,6 +23,7 @@ class DesignSystemApiController extends WikiaApiController {
 			$params[static::PARAM_LANG]
 		);
 
+		$this->cors->setHeaders( $this->response );
 		$this->setResponseData( $footerModel->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
@@ -26,6 +36,7 @@ class DesignSystemApiController extends WikiaApiController {
 			$params[static::PARAM_LANG]
 		);
 
+		$this->cors->setHeaders( $this->response );
 		$this->setResponseData( $navigationModel->getData() );
 		$this->addCachingHeaders();
 	}
@@ -33,9 +44,11 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getCommunityHeader() {
 		$params = $this->getRequestParameters();
 		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
-			$params[static::PARAM_ID]
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
+		$this->cors->setHeaders( $this->response );
 		$this->setResponseData( $communityHeaderModel->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
@@ -61,9 +74,11 @@ class DesignSystemApiController extends WikiaApiController {
 		);
 
 		$communityHeaderModel = new DesignSystemCommunityHeaderModel(
-			$params[static::PARAM_ID]
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
+		$this->cors->setHeaders( $this->response );
 		$this->setResponseData(
 			[
 				'global-footer' => $footerModel->getData(),

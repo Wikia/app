@@ -98,7 +98,10 @@ define('wikia.videohandler.ooyala', [
 				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
 
-			return dartVideoHelper.getUrl();
+			return dartVideoHelper.getUrl([
+				'cmsid=' + params.dfpContentSourceId,
+				'vid=' + params.videoId
+			]);
 		}
 
 		if (adContext && adContext.getContext().opts.showAds) {

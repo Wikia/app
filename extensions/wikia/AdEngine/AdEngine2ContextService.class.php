@@ -26,7 +26,7 @@ class AdEngine2ContextService {
 
 			$pageFairDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.pf.detection' );
 			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $pageFairDetectionKey ], 'scripts' );
-			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'prebid_prod_js', $type );
+			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'pr3b1d_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
 
@@ -80,8 +80,7 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder,
-					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled()
+					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,

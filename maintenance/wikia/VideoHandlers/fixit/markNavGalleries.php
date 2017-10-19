@@ -60,7 +60,7 @@ class MarkAsNav extends Maintenance {
 
 		// Set the user to WikiaBot for methods that need $wgUser
 		global $wgUser;
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$pages = $this->getPages();
 

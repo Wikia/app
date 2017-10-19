@@ -237,7 +237,7 @@ class FollowHelper {
 	/**
 	 * saveListingRelation -- hook
 	 *
-	 * @param Article $article
+	 * @param WikiPage $article
 	 * @param User $user
 	 * @param $text
 	 * @param $summary
@@ -251,7 +251,10 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-	static public function watchBlogListing( &$article, &$user, $text, $summary, $minor, $undef1, $undef2, &$flags, $revision, &$status, $baseRevId ) {
+	static public function watchBlogListing(
+		WikiPage $article, User $user, $text, $summary, $minor, $undef1, $undef2, $flags,
+		$revision, Status &$status, $baseRevId
+	): bool {
 		if ( !$status->value['new'] ) {
 			return true;
 		}
@@ -321,59 +324,31 @@ class FollowHelper {
 	}
 
 	/**
-	 * Add link to Special:MyHome in Monaco user menu
-	 *
-	 * TODO: remove when support for Monaco will be finished
-	 *
-	 * @author Maciej Brencz <macbre@wikia-inc.com>
-	 *
-	 * @param $skin
-	 * @param $tpl
-	 * @param $custom_user_data
-	 *
-	 * @return bool
-	 */
-	public static function addToUserMenu( $skin, $tpl, $custom_user_data ) {
-
-		// don't touch anon users
-		global $wgUser;
-		if ( $wgUser->isAnon() ) {
-			return true;
-		}
-
-		$skin->data['userlinks']['watchlist'] = array(
-			'text' =>  wfMsg( 'wikiafollowedpages-special-title-userbar' ),
-			'href' => Skin::makeSpecialUrl( 'following' ),
-		);
-
-		return true;
-	}
-
-	/**
 	 * Add link to user dropdown in Oasis
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 *
-	 * @param $personal_urls
-	 * @param $title
+	 * @param array $personal_urls
+	 * @param Title $title
+	 * @param Skin $skin
 	 *
-	 * @return bool
+	 * @return bool true
 	 */
-	public static function addPersonalUrl( &$personal_urls, &$title ) {
+	public static function addPersonalUrl( array &$personal_urls, Title $title, Skin $skin ): bool {
 		// don't touch anon users
-		global $wgUser;
-		if ( $wgUser->isAnon() ) {
+		if ( $skin->getUser()->isAnon() ) {
 			return true;
 		}
 
 		// only for Oasis users
 		// replace 'watchlist' with 'followed pages'
-		if ( get_class( RequestContext::getMain()->getSkin() ) == 'SkinOasis' ) {
-			$personal_urls['watchlist'] = array(
-				'text' =>  wfMsg( 'wikiafollowedpages-special-title-userbar' ),
+		if ( $skin->getSkinName() === 'oasis' ) {
+			$personal_urls['watchlist'] = [
+				'text' => $skin->msg( 'wikiafollowedpages-special-title-userbar' )->text(),
 				'href' => Skin::makeSpecialUrl( 'following' ),
-			);
+			];
 		}
+
 		return true;
 	}
 
@@ -605,18 +580,6 @@ class FollowHelper {
 		return true;
 	}
 
-	static public function addExtraToggles( $extraToggles ) {
-		$extraToggles[] = 'hidefollowedpages';
-		$extraToggles[] = 'enotiffollowedpages';
-		$extraToggles[] = 'enotiffollowedminoredits';
-		global $wgEnableWallExt;
-		if ( $wgEnableWallExt ) {
-			$extraToggles[] = 'enotifwallthread';
-			$extraToggles[] = 'enotifmywall';
-		}
-		return true;
-	}
-
 	/**
 	 * getMasthead -- return masthead tab for followed pages
 	 *
@@ -781,9 +744,8 @@ class FollowHelper {
 	 *
 	 * @return bool
 	 */
-	static public function categoryIndexer( &$blogListing, $article ) {
-		global $wgRequest;
-		if ( $wgRequest->getVal( "makeindex", 0 ) != 1 ) {
+	static public function categoryIndexer( CreateBlogListingPage $blogListing, $article ): bool {
+		if ( $blogListing->getRequest()->getVal( "makeindex", 0 ) != 1 ) {
 			return true;
 		}
 

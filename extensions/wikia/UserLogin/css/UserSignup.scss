@@ -5,7 +5,6 @@
 @import 'skins/oasis/css/core/layout';
 @import 'skins/oasis/css/placeholders/bodytext';
 @import '../mixins/submitpane';
-@import '../mixins/divider';
 
 .WikiaSignup {
 	margin: 50px 25px 50px 15px;
@@ -124,26 +123,12 @@
 				form {
 					width: 332px;
 				}
-
-				.sso-login {
-					margin: 0;
-				}
 			}
 		}
 	}
 
 	.wordmark {
 		@include wordmark;
-	}
-
-	.sso-login {
-		margin: 0 auto;
-		text-align: center;
-		width: 332px;
-
-		.sso-login-divider {
-			@include divider;
-		}
 	}
 
 	.hidden {

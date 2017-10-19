@@ -3,7 +3,6 @@
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/bodytext";
 @import "skins/shared/color";
-@import "../mixins/divider";
 
 $input-width: 230px;
 
@@ -38,19 +37,6 @@ $input-width: 230px;
 		}
 		.error-msg {
 			width: $input-width + 18px;
-		}
-	}
-	> .sso-login {
-		margin: 0 auto;
-		text-align: center;
-		width: $input-width;
-		> .sso-login-divider {
-			@include divider;
-			margin-top: 24px;
-			> span {
-				top: -17px;
-				line-height: 30px;
-			}
 		}
 	}
 	.subheading {

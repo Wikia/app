@@ -434,11 +434,11 @@ class CheckStorage {
 
 		$source = new ImportStreamSource( $file );
 		$importer = new WikiImporter( $source );
-		$importer->setRevisionCallback( array( &$this, 'importRevision' ) );
+		$importer->setRevisionCallback( [ $this, 'importRevision' ] );
 		$importer->doImport();
 	}
 
-	function importRevision( &$revision, &$importer ) {
+	function importRevision( $revision, &$importer ) {
 		$id = $revision->getID();
 		$text = $revision->getText();
 		if ( $text === '' ) {

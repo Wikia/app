@@ -37,9 +37,7 @@ function wfSpiderableBadArtists(){
 ////
 // Given a title, gives us a chance to create an article for it before MediaWiki takes its normal approach.
 ////
-function wfSpiderableBadArtists_outputPage(&$out, &$text){
-	GLOBAL $wgTitle;
-
+function wfSpiderableBadArtists_outputPage( OutputPage $out, &$text ) {
 	// For "virtual pages" that the spiders can index.
 	if(isset($_GET['virtPage'])){
 		$subTitle = $out->getSubtitle();
@@ -49,7 +47,7 @@ function wfSpiderableBadArtists_outputPage(&$out, &$text){
 			if(false === strpos($redirFrom, ":")){
 				$redirFrom = str_replace(" ", "_", $redirFrom);
 				$redirFrom = urlencode($redirFrom);
-				$from = $wgTitle->mUrlform;
+				$from = $out->getTitle()->mUrlform;
 				if(strtolower($from) != strtolower($redirFrom)){
 					// Replaces just the links (taking into account wgArticlePath.
 					global $wgArticlePath;

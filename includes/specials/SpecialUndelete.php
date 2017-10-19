@@ -385,14 +385,14 @@ class PageArchive {
 
 		/* Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$hookAddedLogEntry = false;
-		Hooks::run('PageArchiveUndeleteBeforeLogEntry', array(&$this, &$log, &$this->title, $reason, &$hookAddedLogEntry));
+		Hooks::run( 'PageArchiveUndeleteBeforeLogEntry', [ $this, &$log, &$this->title, $reason, &$hookAddedLogEntry ] );
 		if( !$hookAddedLogEntry ) {
 			//if hook above didn't log anything log it as default
 			$log->addEntry( 'restore', $this->title, $reason );
 		}
 		/* Wikia change end */
 
-		Hooks::run( 'UndeleteComplete', array(&$this->title, &$wgUser, $reason ) );
+		Hooks::run( 'UndeleteComplete', [ $this->title, $wgUser, $reason ] );
 
 		return array( $textRestored, $filesRestored, $reason );
 	}
@@ -571,7 +571,7 @@ class PageArchive {
 			$revision->insertOn( $dbw );
 			$restored++;
 
-			Hooks::run( 'ArticleRevisionUndeleted', array( &$this->title, $revision, $row->ar_page_id ) );
+			Hooks::run( 'ArticleRevisionUndeleted', [ $this->title, $revision, $row->ar_page_id ] );
 		}
 		# Now that it's safely stored, take it out of the archive
 		$dbw->delete( 'archive',
@@ -622,7 +622,7 @@ class PageArchive {
 			$article->doEditUpdates( $revision, $user, array( 'created' => $created, 'oldcountable' => $oldcountable ) );
 		}
 
-		Hooks::run( 'ArticleUndelete', array( &$this->title, $created, $comment, $oldPageId ) );
+		Hooks::run( 'ArticleUndelete', [ $this->title, $created, $comment, $oldPageId ] );
 
 		if( $this->title->getNamespace() == NS_FILE ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)

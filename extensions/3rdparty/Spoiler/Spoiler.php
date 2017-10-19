@@ -74,7 +74,7 @@ function wfSpoilerJavaScript() {
 				"</script>\n";
 }
 
-function spoilerParserHook( &$parser , &$text ) {
+function spoilerParserHook( OutputPage $out , &$text ) {
 	$text = wfSpoilerJavaScript() . $text;
 	return true;
 }

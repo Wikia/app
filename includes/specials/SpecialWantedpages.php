@@ -85,7 +85,8 @@ class WantedPagesPage extends WantedQueryPage {
 			)
 		);
 		// Replacement for the WantedPages::getSQL hook
-		Hooks::run( 'WantedPages::getQueryInfo', array( &$this, &$query ) );
+		Hooks::run( 'WantedPages::getQueryInfo', [ $this, &$query ] );
+
 		return $query;
 	}
 }

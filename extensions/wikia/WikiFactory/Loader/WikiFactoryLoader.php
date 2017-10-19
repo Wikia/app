@@ -48,9 +48,10 @@ class WikiFactoryLoader {
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 	public $mSaveDefaults = false;
 	public $mCacheAnyway = array( "wgArticlePath" );
-	public $mCheckUpgrade = false;
 
 	private $mDBhandler, $mDBname;
+
+	const PER_CLUSTER_READ_ONLY_MODE_REASON = 'This cluster is running in read-only mode.';
 
 	/**
 	 * __construct
@@ -236,7 +237,7 @@ class WikiFactoryLoader {
 		 *
 		 * @author Sean Colombo
 		 */
-		if( !Hooks::run( 'WikiFactory::execute', array( &$this ) ) ) {
+		if ( !Hooks::run( 'WikiFactory::execute', [ $this ] ) ) {
 			wfProfileOut(__METHOD__);
 			return $this->mWikiID;
 		}
@@ -310,7 +311,8 @@ class WikiFactoryLoader {
 						"host" => $host,
 						"active" => $oRow->city_public,
 						"time" =>  $oRow->city_factory_timestamp,
-						"db" => $this->mCityDB
+						"db" => $this->mCityDB,
+						"cluster" => $oRow->city_cluster,
 					);
 				}
 			}
@@ -330,7 +332,8 @@ class WikiFactoryLoader {
 						"city_factory_timestamp",
 						"city_domain",
 						"city_url",
-						"city_dbname"
+						"city_dbname",
+						"city_cluster"
 					),
 					array(
 						"city_domains.city_id = city_list.city_id",
@@ -348,13 +351,15 @@ class WikiFactoryLoader {
 						$this->mIsWikiaActive = $oRow->city_public;
 						$this->mCityHost = $host;
 						$this->mCityDB   = $oRow->city_dbname;
+						$this->mCityCluster = $oRow->city_cluster;
 						$this->mTimestamp = $oRow->city_factory_timestamp;
 						$this->mDomain = array(
 							"id"     => $oRow->city_id,
 							"host"   => $host,
 							"active" => $oRow->city_public,
 							"time"   => $oRow->city_factory_timestamp,
-							"db"     => $oRow->city_dbname
+							"db"     => $oRow->city_dbname,
+							"cluster" => $oRow->city_cluster,
 						);
 					}
 				}
@@ -381,6 +386,7 @@ class WikiFactoryLoader {
 			$this->mIsWikiaActive = $this->mDomain["active"];
 			$this->mTimestamp = isset( $this->mDomain["time"] ) ? $this->mDomain["time"] : null;
 			$this->mCityDB = isset( $this->mDomain[ "db" ] ) ? $this->mDomain[ "db" ] : false;
+			$this->mCityCluster = $this->mDomain["cluster"];
 		}
 
 
@@ -552,7 +558,7 @@ class WikiFactoryLoader {
 				set_error_handler( "wfUnserializeHandler" );
 				$_variable_key = $oRow->cv_name;
 				$_variable_value = $oRow->cv_value;
-				$tUnserVal = unserialize( $oRow->cv_value );
+				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
 				if( !empty( $wgDevelEnvironment ) && $oRow->cv_name === "wgServer" ) {
@@ -623,21 +629,14 @@ class WikiFactoryLoader {
 			}
 			$this->debug( "reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ) );
 			wfProfileOut( __METHOD__."-varsdb" );
-
-			/**
-			 * maybe upgrade database to current schema
-			 */
-			if( $this->mCheckUpgrade === true ) {
-				$this->maybeUpgrade();
-			}
 		}
 
 		# take some WF variables values from city_list
 		$this->mVariables["wgDBname"] = $this->mCityDB;
-		$this->mVariables["wgDBCluster"] = $this->mCityCluster;
+		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
 
 		// @author macbre
-		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', array( &$this ) );
+		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
 
 		/**
 		 * transfer configuration variables from database to GLOBALS
@@ -746,7 +745,7 @@ class WikiFactoryLoader {
 			}
 		}
 
-		Hooks::run( 'WikiFactory::onExecuteComplete', array( &$this ) );
+		Hooks::run( 'WikiFactory::onExecuteComplete', [ $this ] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -869,8 +868,6 @@ class WikiFactoryLoader {
 	 * @access private
 	 *
 	 * @param	string	$message	log message
-	 *
-	 * @return nothing
 	 */
 	private function debug( $message ) {
 		wfDebug("wikifactory: {$message}", true);
@@ -880,34 +877,26 @@ class WikiFactoryLoader {
 	}
 
 	/**
-	 * maybeUpgrade
+	 * Check the value of "wgReadOnlyCluster" WikiFactory variable defined for community.wikia.com
+	 * that controls which DB cluster is in read-only mode.
 	 *
-	 * look for existence of some columns in database. If they are not exist
-	 * run database upgrade  on first request. Not very efficient for regular
-	 * usage but good for transition time
+	 * @author macbre
+	 * @see SUS-1634
+	 *
+	 * An example:
+	 * $wgReadOnlyCluster = "c1"; // this will turn on read-only mode on all c1 wikis
+	 *
+	 * @param string $cluster
+	 * @return bool if true is returned, the caller should set $wgReadOnly flag
 	 */
-	private function maybeUpgrade( ) {
-		wfProfileIn( __METHOD__ . "-upgradedb" );
-		$dbr = $this->getDB();
-
-		/**
-		 * look for rev_sha1 in revision table
-		 */
-		if( !$dbr->fieldExists( "revision", "rev_sha1", __METHOD__ ) ) {
-			$ret = true;
-			ob_start( array( $this, 'outputHandler' ) );
-			try {
-				$up = DatabaseUpdater::newForDB( $this->db );
-				$up->doUpdates();
-			} catch ( MWException $e ) {
-				$this->debug( "An error occured: " . $e->getText() );
-				$ret = false;
-			}
-			ob_end_flush();
-			wfProfileOut( __METHOD__ . "-upgradedb" );
-			return $ret;
+	public static function checkPerClusterReadOnlyFlag( string $cluster ) : bool {
+		// we're already in DB read-only mode (are we in Reston DC?), leave early
+		global $wgDBReadOnly;
+		if ( $wgDBReadOnly === true ) {
+			return false;
 		}
 
-		wfProfileOut( __METHOD__ . "-upgradedb" );
+		$readOnlyCluster = WikiFactory::getVarValueByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID );
+		return $readOnlyCluster === $cluster;
 	}
-};
+}

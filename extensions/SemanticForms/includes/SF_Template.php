@@ -344,7 +344,8 @@ class SFTemplate {
 	 * extension.
 	 */
 	public function createText() {
-		Hooks::run( 'SFCreateTemplateText', array( &$this ) );
+		Hooks::run( 'SFCreateTemplateText', [ $this ] );
+
 		$templateHeader = wfMessage( 'sf_template_docu', $this->mTemplateName )->inContentLanguage()->text();
 		$text = <<<END
 <noinclude>

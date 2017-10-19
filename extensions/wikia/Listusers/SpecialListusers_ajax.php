@@ -28,7 +28,6 @@ class ListusersAjax {
 		$offset		= $wgRequest->getVal('offset');
 		$loop		= $wgRequest->getVal('loop');
 		$order		= $wgRequest->getVal('order');
-		$numOrder	= $wgRequest->getVal('numOrder');
 
 		if ( !isset($edits) ) {
 			$edits = Listusers::DEF_EDITS;
@@ -59,7 +58,7 @@ class ListusersAjax {
 			}
 
 			if ( !empty( $records ) && is_array( $records ) ) {
-				$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
+				$result['iTotalRecords'] = intval( $limit );
 				$result['iTotalDisplayRecords'] = intval($records['cnt']);
 				$result['sColumns'] = $records['sColumns'];
 				$rows = array();
@@ -73,11 +72,6 @@ class ListusersAjax {
 
 						$groups = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['groups'] ) : $data['groups'];
 						$edits = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['rev_cnt'] ) : $data['rev_cnt'];
-						$last_logged = ( $data['blcked'] ) ? Xml::tags(
-							'span',
-							array( 'class' => 'listusers_blockeduser' ),
-							( isset( $data['last_login'] ) ? $data['last_login'] : "-" )
-						) : ( isset( $data['last_login'] ) ? $data['last_login'] : "-" );
 
 						$last_edited  = "-";
 						if ( $data['last_edit_ts'] && $data['last_edit_page'] ) {
@@ -97,18 +91,13 @@ class ListusersAjax {
 							$username, //User name
 							$groups, //Groups
 							$edits,//Revisions (edits)
-							$last_logged,//Last logged in
 							$last_edited//Last edited
 						);
 					}
 				}
 				$result['aaData'] = $rows;
-				#$result['nbr_records'] = ( isset( $records['cnt'] ) ) ? intval( $records['cnt'] ) : 0;
-				#$result['data'] = ( isset($records['data'] ) ) ? $records['data'] : '';
 			}
 		}
-
-		#return '{"sEcho": 1, "iTotalRecords": 57, "iTotalDisplayRecords": 57, "sColumns": "platform,engine,browser,grade,version","aaData": [ ["-","Other browsers","All others","U","-"],["Win XP","Trident","AOL browser (AOL desktop)","A","6"],["OSX.2+","Gecko","Camino 1.0","A","1.8"],["OSX.3+","Gecko","Camino 1.5","A","1.8"],["Embedded devices","Misc","Dillo 0.8","X","-"],["Gnome","Gecko","Epiphany 2.20","A","1.8"],["Win 98+ / OSX.2+","Gecko","Firefox 1.0","A","1.7"],["Win 98+ / OSX.2+","Gecko","Firefox 1.5","A","1.8"],["Win 98+ / OSX.2+","Gecko","Firefox 2.0","A","1.8"],["Win 2k+ / OSX.3+","Gecko","Firefox 3.0","A","1.9"]] }';
 
 		wfProfileOut( __METHOD__ );
 		return json_encode($result);

@@ -46,6 +46,10 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 				adUnit: '/5441/wka2a.PX/invisible_high_impact_2/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
+				slotName: 'INVISIBLE_HIGH_IMPACT',
+				adUnit: '/5441/wka2a.PX/invisible_high_impact/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
 				slotName: 'INVISIBLE_SKIN',
 				adUnit: '/5441/wka2a.PX/invisible_skin/tablet/oasis-home/_godofwar-gaming'
 			},
@@ -80,6 +84,10 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			{
 				slotName: 'UAP_BFAA',
 				adUnit: '/5441/wka2a.VIDEO/uap_bfaa/tablet/oasis-home/_godofwar-gaming'
+			},
+			{
+				slotName: 'ABCD',
+				adUnit: '/5441/wka2a.VIDEO/abcd/tablet/oasis-home/_godofwar-gaming'
 			}
 		],
 		testCasesForValidation = [

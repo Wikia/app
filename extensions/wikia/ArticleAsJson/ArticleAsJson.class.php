@@ -150,7 +150,8 @@ class ArticleAsJson {
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
-			'user' => $details['userName']
+			'user' => $details['userName'],
+			'mime' => $details['mime']
 		];
 
 		// Only images are allowed to be linked by user
@@ -350,7 +351,7 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function onParserAfterTidy( Parser &$parser, &$text ) {
+	public static function onParserAfterTidy( Parser $parser, &$text ): bool {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -411,7 +412,7 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function onShowEditLink( Parser &$parser, &$showEditLink ) {
+	public static function onShowEditLink( Parser $parser, &$showEditLink ): bool {
 		global $wgArticleAsJson;
 
 		//We don't have editing in this version

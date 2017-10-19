@@ -29,7 +29,7 @@ class ScribuntoHooks {
 	 * @param $parser Parser
 	 * @return bool
 	 */
-	public static function setupParserHook( &$parser ) {
+	public static function setupParserHook( Parser $parser ): bool {
 		$parser->setFunctionHook( 'invoke', 'ScribuntoHooks::invokeHook', SFH_OBJECT_ARGS );
 		return true;
 	}
@@ -40,7 +40,7 @@ class ScribuntoHooks {
 	 * @param $parser Parser
 	 * @return bool
 	 */
-	public static function clearState( &$parser ) {
+	public static function clearState( Parser $parser ): bool {
 		Scribunto::resetParserEngine( $parser );
 		return true;
 	}
@@ -51,7 +51,7 @@ class ScribuntoHooks {
 	 * @param $parser Parser
 	 * @return bool
 	 */
-	public static function parserCloned( $parser ) {
+	public static function parserCloned( Parser $parser ): bool {
 		$parser->scribunto_engine = null;
 		return true;
 	}
@@ -66,7 +66,7 @@ class ScribuntoHooks {
 	 * @throws ScribuntoException
 	 * @return string
 	 */
-	public static function invokeHook( &$parser, $frame, $args ) {
+	public static function invokeHook( Parser $parser, PPFrame $frame, array $args ): string {
 		if ( !@constant( get_class( $frame ) . '::SUPPORTS_INDEX_OFFSET' ) ) {
 			throw new MWException(
 				'Scribunto needs MediaWiki 1.20 or later (Preprocessor::SUPPORTS_INDEX_OFFSET)' );
@@ -229,10 +229,11 @@ class ScribuntoHooks {
 	/**
 	 * EditPageBeforeEditChecks hook
 	 * @param $editor EditPage
-	 * @param $checkboxes Checkbox array
-	 * @param $tabindex Current tabindex
+	 * @param $checkboxes array Checkbox array
+	 * @param $tabindex array Current tabindex
+	 * @return bool
 	 */
-	public static function beforeEditChecks( &$editor, &$checkboxes, &$tabindex ) {
+	public static function beforeEditChecks( EditPage $editor, &$checkboxes, &$tabindex ): bool {
 		if ( $editor->getTitle()->getNamespace() !== NS_MODULE ) {
 			return true;
 		}
@@ -260,10 +261,9 @@ class ScribuntoHooks {
 	 * Wikia change - Add modules and console in the editor in Oasis
 	 *
 	 * @param  EditPage $editPage
-	 * @param  Array   $hidden
 	 * @return bool
 	 */
-	public static function onAfterDisplayingTextbox( EditPage $editPage, &$hidden ) {
+	public static function onAfterDisplayingTextbox( EditPage $editPage ): bool {
 		$app = F::app();
 		if ( !$app->checkSkin( 'oasis' )
 			|| !( $editPage instanceof EditPageLayout )
@@ -283,10 +283,11 @@ class ScribuntoHooks {
 	/**
 	 * EditPageBeforeEditButtons hook
 	 * @param $editor EditPage
-	 * @param $buttons Button array
-	 * @param $tabindex Current tabindex
+	 * @param $buttons array Button array
+	 * @param $tabindex array Current tabindex
+	 * @return bool
 	 */
-	public static function beforeEditButtons( &$editor, &$buttons, &$tabindex ) {
+	public static function beforeEditButtons( EditPage $editor, &$buttons, &$tabindex ): bool {
 		if ( $editor->getTitle()->getNamespace() !== NS_MODULE ) {
 			return true;
 		}

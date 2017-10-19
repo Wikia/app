@@ -43,7 +43,7 @@
 	}
 
 	&.wds-is-current {
-		box-shadow: inset 0 -2px 0 0 $tab-default-color;
+		@include wds-box-underline($tab-default-color);
 		transition: box-shadow .1s;
 	}
 
@@ -63,7 +63,7 @@
 		}
 
 		&.wds-is-current {
-			box-shadow: inset 0 -2px 0 0 $tab-hover-color;
+			@include wds-box-underline($tab-hover-color);
 		}
 	}
 }

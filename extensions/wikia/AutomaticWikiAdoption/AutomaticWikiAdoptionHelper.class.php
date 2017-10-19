@@ -208,7 +208,7 @@ class AutomaticWikiAdoptionHelper {
 			Hooks::run( 'UserRights', array( &$user, $addGroups, array() ) );
 			//log
 			self::addLogEntry($user, $oldGroups, $newGroups);
-			WikiFactory::log(WikiFactory::LOG_STATUS, $user->getName()." adopted wiki ".  $wiki_name);
+			WikiFactory::log(WikiFactory::LOG_STATUS, htmlspecialchars( $user->getName()." adopted wiki ". $wiki_name ) );
 		}
 		//set date of adoption - this will be used to check when next adoption is possible
 		$user->setGlobalAttribute('LastAdoptionDate', time());
@@ -307,8 +307,6 @@ class AutomaticWikiAdoptionHelper {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	private static function addLogEntry($user, $oldGroups, $newGroups) {
-		global $wgRequest;
-
 		wfProfileIn(__METHOD__);
 		$log = new LogPage('rights');
 
@@ -328,17 +326,25 @@ class AutomaticWikiAdoptionHelper {
 	 * Display notification
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @param Skin $skin
+	 * @param QuickTemplate $tpl
+	 * @return bool
 	 */
-	static function onSkinTemplateOutputPageBeforeExec(&$skin, &$tpl) {
-		global $wgUser, $wgCityId, $wgScript, $wgSitename;
+	static function onSkinTemplateOutputPageBeforeExec( Skin $skin, QuickTemplate $tpl ): bool {
+		global $wgCityId, $wgScript, $wgSitename;
 		wfProfileIn(__METHOD__);
 
-		if ( F::app()->checkSkin( 'oasis' ) && (self::isAllowedToAdopt($wgCityId, $wgUser) == self::USER_ALLOWED )  && !self::getDismissNotificationState($wgUser)) {
+		$user = $skin->getUser();
+
+		if ( $skin->getSkinName() === 'oasis' &&
+			 ( self::isAllowedToAdopt( $wgCityId, $user ) == self::USER_ALLOWED ) &&
+			 !self::getDismissNotificationState( $user ) ) {
 
 			NotificationsController::addNotification(
-				wfMsg( 'wikiadoption-notification',
+				$skin->msg( 'wikiadoption-notification',
 						$wgSitename,
-						Wikia::SpecialPageLink( 'WikiAdoption','wikiadoption-adopt-inquiry' ) ),
+						Wikia::SpecialPageLink( 'WikiAdoption','wikiadoption-adopt-inquiry' ) )
+					->text(),
 				array(
 					'name' => 'AutomaticWikiAdoption',
 					'dismissUrl' => $wgScript . '?action=ajax&rs=AutomaticWikiAdoptionAjax&method=dismiss',
@@ -395,7 +401,7 @@ class AutomaticWikiAdoptionHelper {
 	 * @author Owen Davis
 	 *
 	 * @static
-	 * @param Article $article
+	 * @param WikiPage $article
 	 * @param User $user
 	 * @param $text
 	 * @param $summary
@@ -403,13 +409,15 @@ class AutomaticWikiAdoptionHelper {
 	 * @param $watchthis
 	 * @param $sectionanchor
 	 * @param $flags
-	 * @param $revision
-	 * @param $status
+	 * @param Revision $revision
+	 * @param Status $status
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 		global $wgCityId;
 		if (in_array('sysop', $user->getGroups())) {
 			WikiFactory::resetFlags($wgCityId, WikiFactory::FLAG_ADOPTABLE | WikiFactory::FLAG_ADOPT_MAIL_FIRST | WikiFactory::FLAG_ADOPT_MAIL_SECOND, true);

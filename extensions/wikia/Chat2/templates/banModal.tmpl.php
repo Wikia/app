@@ -8,7 +8,7 @@ $form = array(
 // cach shared html strings
 $optionsHtml = '';
 foreach ( $options as $label => $value ) {
-	$optionsHtml .= "<option value='" . $value . "'>" . $label . "</option>";
+	$optionsHtml .= "<option value='" . Sanitizer::encodeAttribute( $value ) . "'>" . htmlspecialchars( $label ) . "</option>";
 }
 $expiresLabel = '<label>' . wfMessage( 'chat-ban-modal-label-expires' )->escaped() . '</label>';
 
@@ -16,7 +16,7 @@ $expiresLabel = '<label>' . wfMessage( 'chat-ban-modal-label-expires' )->escaped
 if ( $isChangeBan ) {
 	$expiresRow = array(
 		'type' => 'custom',
-		'output' => $expiresLabel . '<p class="timeago" title="' . $isoTime . '" alt="' . $fmtTime . '">' . $fmtTime . '</p>',
+		'output' => $expiresLabel . '<p class="timeago" title="' . Sanitizer::encodeAttribute( $isoTime ) . '" alt="' . Sanitizer::encodeAttribute( $fmtTime ) . '">' . htmlspecialchars( $fmtTime ) . '</p>',
 	);
 	$changeToRow = array(
 		'type' => 'custom',

@@ -30,6 +30,11 @@ class ThemeDesignerController extends WikiaController {
 		// current settings
 		$this->themeSettings = $themeSettings->getSettings();
 
+		// SUS-2975: wordmark-text comes pre-escaped if set - decode any HTML entities
+		if ( !empty( $this->themeSettings['wordmark-text'] ) ) {
+			$this->themeSettings['wordmark-text'] = Sanitizer::decodeCharReferences( $this->themeSettings['wordmark-text'] );
+		}
+
 		// application theme settings (not user settable)
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
@@ -302,6 +307,8 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	/**
+	 * Upload a temporary file. It will be made "permanent" by ThemeDesigner::saveImage method.
+	 *
 	 * @param UploadBackgroundFromFile|UploadFaviconFromFile|UploadWordmarkFromFile $upload
 	 * @return array
 	 */
@@ -345,20 +352,41 @@ class ThemeDesignerController extends WikiaController {
 		return $uploadStatus;
 	}
 
-	public function executeSaveSettings() {
-		$wgRequest = RequestContext::getMain()->getRequest();
+	public function saveSettings() {
+		global $wgBlankImgUrl;
+
+		$this->checkWriteRequest();
 
 		// check rights
 		if ( !ThemeDesignerHelper::checkAccess() ) {
 			$this->displayRestrictionError( __METHOD__ );
 		}
 
-		$data = $wgRequest->getArray( 'settings' );
+		$data = $this->request->getArray( 'settings' );
 
-		if ( $wgRequest->wasPosted() ) {
-			$themeSettings = new ThemeSettings();
-			$themeSettings->saveSettings( $data );
+		// SUS-2942: this data is calculated from temporary file, should not be set directly
+		foreach ( ThemeSettings::IMAGES as $imageSource ) {
+			if ( !empty( $data["$imageSource-image-name"] ) && strpos( $data["$imageSource-image-name"],'Temp_file_' ) !== 0 ) {
+				unset( $data["$imageSource-image-name"] );
+			}
+
+			if ( !empty( $data["$imageSource-image"] ) ) {
+				unset( $data["$imageSource-image"] );
+			}
+
+			unset( $data["$imageSource-image-width"] );
+			unset( $data["$imageSource-image-height"] );
+
+			if ( isset( $data["$imageSource-image-url"] ) && $data["$imageSource-image-url"] !== $wgBlankImgUrl ) {
+				unset( $data["$imageSource-image-url"] );
+			}
+
+			unset( $data["user-$imageSource-image"] );
+			unset( $data["user-$imageSource-image-thumb"] );
 		}
+
+		$themeSettings = new ThemeSettings();
+		$themeSettings->saveSettings( $data );
 	}
 
 

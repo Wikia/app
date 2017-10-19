@@ -558,7 +558,8 @@ abstract class ApiBase extends ContextSource {
 	 */
 	public function getFinalParams() {
 		$params = $this->getAllowedParams();
-		Hooks::run( 'APIGetAllowedParams', array( &$this, &$params ) );
+		Hooks::run( 'APIGetAllowedParams', [ $this, &$params ] );
+
 		return $params;
 	}
 
@@ -570,7 +571,8 @@ abstract class ApiBase extends ContextSource {
 	 */
 	public function getFinalParamDescription() {
 		$desc = $this->getParamDescription();
-		Hooks::run( 'APIGetParamDescription', array( &$this, &$desc ) );
+		Hooks::run( 'APIGetParamDescription', [ $this, &$desc ] );
+
 		return $desc;
 	}
 
@@ -582,7 +584,8 @@ abstract class ApiBase extends ContextSource {
 	 */
 	public function getFinalDescription() {
 		$desc = $this->getDescription();
-		Hooks::run( 'APIGetDescription', array( &$this, &$desc ) );
+		Hooks::run( 'APIGetDescription', [ $this, &$desc ] );
+
 		return $desc;
 	}
 
@@ -1597,7 +1600,7 @@ abstract class ApiBase extends ContextSource {
 				continue;
 			}
 
-			$logContext[$paramName] = $paramValue;
+			$logContext[$paramName] = json_encode( $paramValue );
 		}
 
 		$logContext['module_name'] = $this->getModuleName();

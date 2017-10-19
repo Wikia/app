@@ -4,6 +4,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
 
 	private $productInstanceId;
+	private $langCode;
 	private $themeSettings;
 	private $settings;
 	private $mainPageUrl;
@@ -15,10 +16,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
-	public function __construct( string $cityId ) {
+	public function __construct( string $cityId, string $langCode ) {
 		parent::__construct();
 
 		$this->productInstanceId = $cityId;
+		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $cityId );
 		$this->settings = $this->themeSettings->getSettings( $cityId );
 		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
@@ -31,11 +33,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		];
 
 		if ( !empty( $this->getBackgroundImageUrl() ) ) {
-			$data['background_image'] = $this->getBackgroundImageUrl();
+			$data[ 'background_image' ] = $this->getBackgroundImageUrl();
 		}
 
 		if ( !empty( $this->getWordmarkData() ) ) {
-			$data['wordmark'] = $this->getWordmarkData();
+			$data[ 'wordmark' ] = $this->getWordmarkData();
 		}
 
 		return $data;
@@ -45,7 +47,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		if ( $this->wordmarkData === null ) {
 			$this->wordmarkData = [];
 
-			if ( $this->settings['wordmark-type'] === self::WORDMARK_TYPE_GRAPHIC ) {
+			if ( $this->settings[ 'wordmark-type' ] === self::WORDMARK_TYPE_GRAPHIC ) {
 				$imageTitle = Title::newFromText( ThemeSettings::WordmarkImageName, NS_IMAGE );
 
 				if ( $imageTitle instanceof Title ) {
@@ -63,7 +65,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							],
 							'title' => [
 								'type' => 'text',
-								'value' => $this->themeSettings->getSettings()['wordmark-text'],
+								'value' => $this->themeSettings->getSettings()[ 'wordmark-text' ],
 							],
 							'tracking_label' => 'wordmark-image',
 						];
@@ -81,7 +83,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'text',
-					'value' => $this->themeSettings->getSettings()['wordmark-text']
+					'value' => $this->themeSettings->getSettings()[ 'wordmark-text' ]
 				],
 				'href' => $this->mainPageUrl,
 				'tracking_label' => 'sitename'
@@ -112,23 +114,30 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getWikiLocalNavigation( $wikitext = null ): array {
+		global $wgCityId;
+
 		if ( $this->wikiLocalNavigation === null ) {
 			if ( empty( $wikitext ) ) {
-				$navigationMessage = GlobalTitle::newFromText(
-					NavigationModel::WIKI_LOCAL_MESSAGE,
-					NS_MEDIAWIKI,
-					$this->productInstanceId
-				);
+				$navigationMessage = GlobalTitle::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId );
+
 				$wikitext = $navigationMessage->getContent();
 			}
 
-			$this->wikiLocalNavigation = $this->formatLocalNavData(
-				( new NavigationModel() )->getFormattedWiki(
-					NavigationModel::WIKI_LOCAL_MESSAGE,
-					$wikitext
-				)['wiki'],
-				1
-			);
+			//No need for foreignCall if we're getting data for the same wiki
+			if ( $this->productInstanceId == $wgCityId ) {
+				$localNavData = ( new NavigationModel() )->getFormattedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext )[ 'wiki' ];
+
+			} else {
+				//Navigation is created by parsing a message to do that properly
+				//we need full context of a wiki that we generate navigation for
+				$localNavData = ApiService::foreignCall( WikiFactory::getWikiByID( $this->productInstanceId )->city_dbname, [
+					'controller' => 'NavigationApi',
+					'method' => 'getData',
+					'uselang' => $this->langCode
+				], ApiService::WIKIA )[ 'navigation' ][ 'wiki' ];
+			}
+
+			$this->wikiLocalNavigation = $this->formatLocalNavData( $localNavData, 1 );
 		}
 
 		return $this->wikiLocalNavigation;
@@ -190,28 +199,19 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-explore-tiny'
 				],
-				'items' => array_map(
-					function ( $item ) {
-						return [
-							'type' => 'link-text',
-							'title' => [
-								'type' => 'translatable-text',
-								'key' => $item['key'],
-							],
-							'href' => GlobalTitle::newFromText( $item['title'], NS_SPECIAL, $this->productInstanceId )
-								->getFullURL(),
-							'tracking_label' => $item['tracking']
-						];
-					},
-					array_values(
-						array_filter(
-							$exploreItems,
-							function ( $item ) {
-								return $item['include'];
-							}
-						)
-					)
-				)
+				'items' => array_map( function ( $item ) {
+					return [
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => $item[ 'key' ],
+						],
+						'href' => GlobalTitle::newFromText( $item[ 'title' ], NS_SPECIAL, $this->productInstanceId )->getFullURL(),
+						'tracking_label' => $item[ 'tracking' ]
+					];
+				}, array_values( array_filter( $exploreItems, function ( $item ) {
+					return $item[ 'include' ];
+				} ) ) )
 			];
 		}
 
@@ -231,7 +231,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				$url = '/d/f';
 				$key = 'community-header-discuss';
 				$tracking = 'discuss';
-			} elseif ( !empty( $wgEnableForumExt ) ) {
+			} else if ( !empty( $wgEnableForumExt ) ) {
 				$url = GlobalTitle::newFromText( 'Forum', NS_SPECIAL, $this->productInstanceId )->getFullURL();
 				$key = 'community-header-forum';
 				$tracking = 'forum';
@@ -256,25 +256,22 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	private function formatLocalNavData( array $items, int $nestingLevel ): array {
-		return array_map(
-			function ( $item ) use ( $nestingLevel ) {
-				$ret = [
-					'type' => isset( $item['children'] ) ? 'dropdown' : 'link-text',
-					'title' => [
-						'type' => 'text',
-						'value' => $item['text']
-					],
-					'href' => $item['href'],
-					'tracking_label' => 'custom-level-' . $nestingLevel,
-				];
+		return array_map( function ( $item ) use ( $nestingLevel ) {
+			$ret = [
+				'type' => isset( $item[ 'children' ] ) ? 'dropdown' : 'link-text',
+				'title' => [
+					'type' => 'text',
+					'value' => $item[ 'text' ]
+				],
+				'href' => $item[ 'href' ],
+				'tracking_label' => 'custom-level-' . $nestingLevel,
+			];
 
-				if ( isset( $item['children'] ) ) {
-					$ret['items'] = $this->formatLocalNavData( $item['children'], $nestingLevel + 1 );
-				}
+			if ( isset( $item[ 'children' ] ) ) {
+				$ret[ 'items' ] = $this->formatLocalNavData( $item[ 'children' ], $nestingLevel + 1 );
+			}
 
-				return $ret;
-			},
-			$items
-		);
+			return $ret;
+		}, $items );
 	}
 }

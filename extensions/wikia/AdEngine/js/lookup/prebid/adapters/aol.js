@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (slotsContext, geo, instantGlobals) {
+], function (slotsContext, instartLogic, geo, instantGlobals) {
 	'use strict';
 
 	var bidderName = 'aol',
@@ -103,7 +104,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverAolBidderCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverAolBidderCountries) && !instartLogic.isBlocking();
 	}
 
 	function getSlots(skin) {

@@ -70,7 +70,6 @@ class VignetteRequestTest extends WikiaBaseTest {
 			'relative-path' => 'a/ab/filename.jpg',
 			'bucket' => 'tests',
 			'timestamp' => '123',
-			'domain-shard-count' => 2,
 		]);
 		$actual = VignetteRequest::applyLegacyThumbDefinition($generator, $legacyDefinition)->url();
 

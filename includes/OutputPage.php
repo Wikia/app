@@ -1221,7 +1221,7 @@ class OutputPage extends ContextSource {
 		}
 
 		# Add the remaining categories to the skin
-		if ( Hooks::run( 'OutputPageMakeCategoryLinks', array( &$this, $categories, &$this->mCategoryLinks ) ) ) {
+		if ( Hooks::run( 'OutputPageMakeCategoryLinks', [ $this, $categories, &$this->mCategoryLinks ] ) ) {
 			foreach ( $categories as $category => $type ) {
 				$origcategory = $category;
 				$title = Title::makeTitleSafe( NS_CATEGORY, $category );
@@ -1641,7 +1641,7 @@ class OutputPage extends ContextSource {
 			}
 		}
 
-		Hooks::run( 'OutputPageParserOutput', array( &$this, $parserOutput ) );
+		Hooks::run( 'OutputPageParserOutput', [ $this, $parserOutput ] );
 	}
 
 	/**
@@ -1653,7 +1653,7 @@ class OutputPage extends ContextSource {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
 
-		Hooks::run( 'OutputPageBeforeHTML', array( &$this, &$text ) );
+		Hooks::run( 'OutputPageBeforeHTML', [ $this, &$text ] );
 
 		$this->addHTML( $text );
 	}
@@ -2127,14 +2127,14 @@ class OutputPage extends ContextSource {
 
 			// Hook that allows last minute changes to the output page, e.g.
 			// adding of CSS or Javascript by extensions.
-			Hooks::run( 'BeforePageDisplay', array( &$this, &$sk ) );
+			Hooks::run( 'BeforePageDisplay', [ $this, $sk ] );
 
 			wfProfileIn( 'Output-skin' );
 			$sk->outputPage();
 			wfProfileOut( 'Output-skin' );
 		}
 
-		Hooks::run( 'BeforeSendCacheControl', array( &$this ) ); // Wikia change
+		Hooks::run( 'BeforeSendCacheControl', [ $this ] ); // Wikia change
 
 		$this->sendCacheControl();
 		ob_end_flush();
@@ -2626,16 +2626,14 @@ $templates
 		}
 
 		MWDebug::addModules( $this );
-		$skin = $this->getSkin();
 
 		// Add various resources if required
 		if ( $wgUseAjax ) {
 			# macbre: following files are part of merged JS for following skins - don't load them from here
-			$skinName = get_class( $skin );
 
 			$this->addModules( 'mediawiki.legacy.ajax' );
 
-			Hooks::run( 'AjaxAddScript', array( &$this ) );
+			Hooks::run( 'AjaxAddScript', [ $this ] );
 
 
 			if( $wgAjaxWatch && $this->getUser()->isLoggedIn() ) {

@@ -211,17 +211,22 @@ class SEOTweaksHooksHelper {
 	/**
 	 * Prepends alt text for an image if that image does not have that option set
 	 * @param  Parser $parser
-	 * @param  Title  $title
-	 * @param  Array  $options
-	 * @param  bool   $descQuery
+	 * @param  Title $title
+	 * @param $parts
+	 * @param $params
+	 * @param $time
+	 * @param  bool $descQuery
+	 * @param  array $options
 	 * @return bool
 	 */
 	static public function onBeforeParserMakeImageLinkObjOptions( $parser, $title, &$parts, &$params, &$time, &$descQuery, $options ) {
-		$grepped = preg_grep( '/^alt=/', (array) $parts);
-		if ( $title->getNamespace() == NS_FILE && empty( $grepped ) ) {
-			$text = $title->getText();
-			$alt = implode( '.', array_slice( explode( '.', $text ), 0, -1 ) ); // lop off text after the ultimate dot (e.g. JPG)
-			$parts[] = "alt={$alt}";
+		if ( !isset( $params['frame']['alt'] ) && $title->inNamespace( NS_FILE ) ) {
+			$fileName = $title->getText();
+			$finalDotPosition = strrpos( $fileName, '.' );
+
+			// lop off text after the ultimate dot (e.g. JPG)
+			$params['frame']['alt'] = $finalDotPosition ? substr( $fileName, 0,
+					$finalDotPosition ) : $fileName;
 		}
 
 		return true;
@@ -233,8 +238,9 @@ class SEOTweaksHooksHelper {
 	 * @param Article $article
 	 * @param bool $outputDone
 	 * @param bool $pcache
+	 * @return bool
 	 */
-	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
+	static public function onArticleViewHeader( Article $article, bool &$outputDone, bool &$pcache ): bool {
 		global $wgEnableCustom404PageExt;
 
 		if ( !empty( $wgEnableCustom404PageExt ) ) {
@@ -270,7 +276,7 @@ class SEOTweaksHooksHelper {
 	 * @param CategoryPage $categoryPage
 	 * @return bool
 	 */
-	public static function onCategoryPageView( &$categoryPage ) {
+	public static function onCategoryPageView( CategoryPage $categoryPage ): bool {
 		$title = $categoryPage->getTitle();
 		if ( $title->getNamespace() === NS_CATEGORY ) {
 			$app = F::app();

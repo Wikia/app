@@ -28,11 +28,9 @@ function HomePageListAjax() {
 	}
 }
 
-function wfHomePageList() {
-	global $wgParser;
-
-	$wgParser->setHook("homepage_new_questions", array("HomePageList", "homepage_new_questions_tag"));
-	$wgParser->setHook("homepage_recently_answered_questions", array("HomePageList", "homepage_recently_answered_questions_tag"));
+function wfHomePageList( Parser $parser ): bool {
+	$parser->setHook( "homepage_new_questions", [ "HomePageList", "homepage_new_questions_tag" ] );
+	$parser->setHook( "homepage_recently_answered_questions", [ "HomePageList", "homepage_recently_answered_questions_tag" ] );
 
 	return true;
 }

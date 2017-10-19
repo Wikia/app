@@ -2,7 +2,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
 	'wikia.geo',
@@ -11,7 +10,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, zoneParams, doc, geo, loc, log, win, abTest, krux) {
+], function (adContext, zoneParams, doc, geo, loc, log, win, abTest, krux) {
 	'use strict';
 
 	var context = {},
@@ -156,8 +155,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		log('getPageLevelParams', 9, logGroup);
 
 		var params,
-			targeting = context.targeting,
-			pvs = pvCounter.get();
+			targeting = context.targeting;
 
 		options = options || {};
 
@@ -181,8 +179,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			geo: geo.getCountryCode() || 'none'
 		};
 
-		if (pvs) {
-			params.pv = pvs.toString();
+		if (win.pvNumber) {
+			params.pv = win.pvNumber.toString();
 		}
 
 		if (options.includeRawDbName) {

@@ -623,7 +623,8 @@ class ContribsPager extends ReverseChronologicalPager {
 			$this->tagFilter
 		);
 
-		Hooks::run( 'ContribsPager::getQueryInfo', array( &$this, &$queryInfo ) );
+		Hooks::run( 'ContribsPager::getQueryInfo', [ $this, &$queryInfo ] );
+
 		return $queryInfo;
 	}
 
@@ -871,7 +872,7 @@ class ContribsPager extends ReverseChronologicalPager {
 		$ret .= " $tagSummary";
 
 		// Let extensions add data
-		Hooks::run( 'ContributionsLineEnding', array( &$this, &$ret, $row ) );
+		Hooks::run( 'ContributionsLineEnding', [ $this, &$ret, $row ] );
 
 		$classes = implode( ' ', $classes );
 		$ret = "<li class=\"$classes\">$ret</li>\n";

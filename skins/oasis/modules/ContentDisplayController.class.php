@@ -8,8 +8,11 @@
 class ContentDisplayController extends WikiaController {
 	/**
 	 * Show section edit link for anons (RT #79897)
+	 * @param Parser $parser
+	 * @param bool $showEditLink
+	 * @return bool
 	 */
-	static function onShowEditLink(&$parser, &$showEditLink) {
+	static function onShowEditLink( Parser $parser, bool &$showEditLink ): bool {
 		global $wgUser;
 		wfProfileIn(__METHOD__);
 
@@ -23,13 +26,20 @@ class ContentDisplayController extends WikiaController {
 
 	/**
 	 * Modify edit section link markup (for Oasis only)
+	 * @param Skin $skin
+	 * @param Title $title
+	 * @param $section
+	 * @param $tooltip
+	 * @param $result
+	 * @param bool $lang
+	 * @return bool
 	 */
-	public static function onDoEditSectionLink( $skin, Title $title, $section, $tooltip, &$result, $lang = false ) {
-		global $wgBlankImgUrl, $wgUser;
+	public static function onDoEditSectionLink( Skin $skin, Title $title, $section, $tooltip, &$result, $lang = false ): bool {
+		global $wgBlankImgUrl;
 		wfProfileIn(__METHOD__);
 
 		// modify Oasis only (BugId:8444)
-		if (!$skin instanceof SkinOasis) {
+		if ( $skin->getSkinName() !== 'oasis' ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -59,13 +69,22 @@ class ContentDisplayController extends WikiaController {
 
 	/**
 	 * Modify section headline markup (for Oasis only)
+	 * @param Skin $skin
+	 * @param $level
+	 * @param $attribs
+	 * @param $anchor
+	 * @param $text
+	 * @param $link
+	 * @param $legacyAnchor
+	 * @param $ret
+	 * @return bool
 	 */
-	static public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ) {
+	static public function onMakeHeadline( Skin $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ): bool {
 		global $wgRTEParserEnabled;
 		wfProfileIn(__METHOD__);
 
 		// modify Oasis only (BugId:8444)
-		if ((!$skin instanceof SkinOasis) || !empty($wgRTEParserEnabled)) {
+		if ( $skin->getSkinName() !== 'oasis' || !empty( $wgRTEParserEnabled ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}

@@ -216,9 +216,6 @@ CREATE TABLE /*_*/page (
   -- can move or edit the page.
   page_restrictions tinyblob NOT NULL,
 
-  -- Number of times this page has been viewed.
-  page_counter bigint unsigned NOT NULL default 0,
-
   -- 1 indicates the article is a redirect.
   page_is_redirect tinyint unsigned NOT NULL default 0,
 
@@ -654,9 +651,6 @@ CREATE TABLE /*_*/site_stats (
   -- The single row should contain 1 here.
   ss_row_id int unsigned NOT NULL,
 
-  -- Total number of page views, if hit counters are enabled.
-  ss_total_views bigint unsigned default 0,
-
   -- Total number of edits performed.
   ss_total_edits bigint unsigned default 0,
 
@@ -685,19 +679,6 @@ CREATE TABLE /*_*/site_stats (
 
 -- Pointless index to assuage developer superstitions
 CREATE UNIQUE INDEX /*i*/ss_row_id ON /*_*/site_stats (ss_row_id);
-
-
---
--- Stores an ID for every time any article is visited;
--- depending on $wgHitcounterUpdateFreq, it is
--- periodically cleared and the page_counter column
--- in the page table updated for all the articles
--- that have been visited.)
---
-CREATE TABLE /*_*/hitcounter (
-  hc_id int unsigned NOT NULL
-) ENGINE=HEAP MAX_ROWS=25000;
-
 
 --
 -- The internet is full of jerks, alas. Sometimes it's handy
@@ -1344,6 +1325,7 @@ CREATE TABLE /*_*/updatelog (
 
 -- A table to track tags for revisions, logs and recent changes.
 CREATE TABLE /*_*/change_tag (
+  ct_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
   -- RCID for the change
   ct_rc_id int NULL,
   -- LOGID for the change
@@ -1366,6 +1348,7 @@ CREATE INDEX /*i*/change_tag_tag_id ON /*_*/change_tag (ct_tag,ct_rc_id,ct_rev_i
 -- Rollup table to pull a LIST of tags simply without ugly GROUP_CONCAT
 -- that only works on MySQL 4.1+
 CREATE TABLE /*_*/tag_summary (
+  ts_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
   -- RCID for the change
   ts_rc_id int NULL,
   -- LOGID for the change

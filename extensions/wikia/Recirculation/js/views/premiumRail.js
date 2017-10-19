@@ -35,7 +35,8 @@ define('ext.wikia.recirculation.views.premiumRail', [
 		return function (data) {
 			data.title = data.title || $.msg('recirculation-fandom-title');
 			data.items = data.items.slice(0, 5);
-			return utils.renderTemplate(templateName, data);
+			data.fandomHeartSvg = utils.fandomHeartSvg;
+			return utils.renderTemplateByName(templateName, data);
 		};
 	}
 
@@ -56,7 +57,8 @@ define('ext.wikia.recirculation.views.premiumRail', [
 
 		return {
 			render: render,
-			setupTracking: setupTracking
+			setupTracking: setupTracking,
+			itemsSelector: '.premium-recirculation-rail .item'
 		};
 	};
 });

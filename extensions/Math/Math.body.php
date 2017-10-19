@@ -158,7 +158,7 @@ class MathRenderer {
 				$this->hash = substr( $contents, 1, 32 );
 			}
 
-			Hooks::run( 'MathAfterTexvc', array( &$this, &$errmsg ) );
+			Hooks::run( 'MathAfterTexvc', [ $this, &$errmsg ] );
 
 			if ( $errmsg ) {
 				return $errmsg;

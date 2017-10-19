@@ -17,6 +17,6 @@ return array(
     '5a494680c593293bd6035e42e2a6825c' => $vendorDir . '/data-values/geo/Geo.php',
     'c3ae67574219cc56cab6c30ef8877b85' => $baseDir . '/extensions/Validator/Validator.php',
     'bbf73f3db644d3dced353b837903e74c' => $vendorDir . '/php-di/php-di/src/DI/functions.php',
-    '9ebf2cbcc0b7687b276c44d77096b002' => $baseDir . '/extensions/Maps/Maps.php',
     '679670650e5628b8e655cb72d74ae35b' => $vendorDir . '/ooyala/v2-api/OoyalaApi.php',
+    'cc7fdba6ccbdf8a9ed7028cb59f8bb6f' => $baseDir . '/extensions/Maps/Maps.php',
 );

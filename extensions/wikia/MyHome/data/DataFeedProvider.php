@@ -292,7 +292,11 @@ class DataFeedProvider {
 				$item['title'] = $res['title'];
 				$item['url'] = Title::newFromText( $title->getBaseText(), NS_BLOG_ARTICLE )->getLocalURL();
 			}
-		} elseif ( !empty( $wgWallNS ) && in_array( MWNamespace::getSubject( $res['ns'] ), $wgWallNS ) && $this->proxyType == self::ACTIVITY_FEED ) {
+		} elseif (
+			!empty( $wgWallNS ) &&
+			in_array( MWNamespace::getSubject( $res['ns'] ), $wgWallNS ) &&
+			MWNamespace::isTalk( $res['ns'] ) &&
+			$this->proxyType == self::ACTIVITY_FEED ) {
 			$wh = ( new WallHelper );
 			$item = $wh->wikiActivityFilterMessageWall( $title, $res );
 		}

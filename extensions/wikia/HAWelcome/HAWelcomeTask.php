@@ -6,10 +6,6 @@ use Wikia\Util\GlobalStateWrapper;
 class HAWelcomeTask extends BaseTask {
 	use IncludeMessagesTrait;
 
-	/** @type String The default user to send welcome messages. */
-	const DEFAULT_WELCOMER = 'Wikia';
-
-
 	/**
 	 * Default switches to enable features, explained below.
 	 *
@@ -103,7 +99,7 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 	protected function getDefaultWelcomerUser() {
-		return User::newFromName( self::DEFAULT_WELCOMER );
+		return User::newFromName( Wikia::USER, false );
 	}
 
 	public function getUserFeatureFlags() {
@@ -153,9 +149,10 @@ class HAWelcomeTask extends BaseTask {
 		if ( ! $recipientProfile->exists() ) {
 			$this->info( sprintf( "creating welcome user page for %s",
 				$this->recipientObject->getName() ) );
+
 			$recipientProfile->doEdit(
 				$this->getWelcomePageTemplateForRecipient(),
-				false,
+				$this->getTextVersionOfMessage( 'welcome-message-log' ),
 				$this->integerFlags,
 				false,
 				$this->getDefaultWelcomerUser()
@@ -265,7 +262,7 @@ class HAWelcomeTask extends BaseTask {
 		}
 
 		// This should not happen. Fall back to the default welcomer.
-		$this->senderObject = User::newFromName( HAWelcomeTask::DEFAULT_WELCOMER );
+		$this->senderObject = User::newFromName( Wikia::USER );
 		return;
 	}
 
@@ -367,8 +364,8 @@ class HAWelcomeTask extends BaseTask {
 		// Sets the sender of the message when the actual message
 		// was posted by the welcome bot
 		if ( $wallMessage ) {
+			/** @var WallMessage $wallMessage */
 			$wallMessage->setPostedAsBot( $this->senderObject );
-			$wallMessage->sendNotificationAboutLastRev();
 		}
 
 		return $wallMessage;

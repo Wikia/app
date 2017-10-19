@@ -31,8 +31,6 @@ $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 $wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
 $wgHooks['getUserPermissionsErrors'] [] = 'Wikia::canEditInterfaceWhitelistErrors';
 
-# changes in recentchanges (MultiLookup)
-$wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
@@ -74,7 +72,7 @@ $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 
-use \Wikia\Tracer\WikiaTracer;
+use Wikia\Tracer\WikiaTracer;
 
 /**
  * This class has only static methods so they can be used anywhere
@@ -85,8 +83,10 @@ class Wikia {
 
 	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
+	const CORPORATE_WIKI_ID = 80433; // www.wikia.com
 
-	const BOT_USER = 'FandomBot';
+	const USER = 'FANDOM';
+	const BOT_USER = 'FANDOMbot';
 
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
@@ -1092,59 +1092,6 @@ class Wikia {
 	}
 
 	/**
-	 * recentChangesSave -- hook
-	 * Send information to the backend script, when new record was added to the recentchanges table
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param RecentChange $oRC
-	 *
-	 * @author Piotr Molski (MoLi)
-	 * @return bool true
-	 */
-	static public function recentChangesSave( $oRC ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport, $wgRequest;
-
-		if ( empty( $wgEnableScribeReport ) ) {
-			return true;
-		}
-
-		if ( !is_object( $oRC ) ) {
-			return true;
-		}
-
-		$rc_ip = $oRC->getAttribute( 'rc_ip' );
-		if ( is_null( $rc_ip ) ) {
-			return true;
-		}
-
-		if ( !User::isIP( $rc_ip ) ) {
-			return true;
-		}
-
-		$params = array(
-			'dbname'	=> $wgDBname,
-			'wiki_id'	=> $wgCityId,
-			'ip'		=> $rc_ip
-		);
-
-		try {
-			$message = array(
-				'method' => 'ipActivity',
-				'params' => $params
-			);
-			$data = json_encode( $message );
-			WScribeClient::singleton('trigger')->send($data);
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Purge Common and Wikia and User css/js when those files are edited
 	 * Uses $wgOut->makeResourceLoaderLink which was protected, but has lots of logic we don't want to duplicate
 	 * This was rewritten from scratch as part of BAC-895
@@ -1186,6 +1133,13 @@ class Wikia {
 				$urls[]= $matches[1];
 			}
 		}
+
+		// purge Special:RecentChanges too (SUS-2595)
+		$rcTitle = SpecialPage::getTitleFor('RecentChanges');
+
+		$urls[] = $rcTitle->getInternalURL();
+		$urls[] = $rcTitle->getInternalURL('feed=rss');
+		$urls[] = $rcTitle->getInternalURL('feed=atom');
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -1287,46 +1241,6 @@ class Wikia {
 				'source' => $requestSource
 			] );
 			$request->response()->header( 'X-Wikia-Is-Internal-Request: ' . $requestSource );
-		}
-
-		return true;
-	}
-
-	/**
-	 * informJobQueue
-	 * Send information to the backend script what job was added
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param Integer count of job params
-	 *
-	 * @author Piotr Molski (MoLi)
-	 * @return true
-	 */
-	static public function informJobQueue( /*Integer*/ $job_count = 1 ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport;
-
-		if ( empty( $wgEnableScribeReport ) ) {
-			return true;
-		}
-
-		$params = array(
-			'dbname'	=> $wgDBname,
-			'wiki_id'	=> $wgCityId,
-			'jobs'		=> $job_count
-		);
-
-		try {
-			$message = array(
-				'method' => 'jobqueue',
-				'params' => $params
-			);
-			$data = json_encode( $message );
-			WScribeClient::singleton('trigger')->send($data);
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
 
 		return true;
@@ -1912,7 +1826,9 @@ class Wikia {
 	 * usually return true to allow processing other hooks
 	 * return false stops permissions processing and we are totally decided (nothing later can override)
 	 */
-	static function canEditInterfaceWhitelist ( &$title, &$wgUser, $action, &$result ) {
+	static function canEditInterfaceWhitelist(
+		Title $title, User $wgUser, string $action, &$result
+	): bool {
 		global $wgEditInterfaceWhitelist;
 
 		// Allowed actions at this point
@@ -1998,10 +1914,8 @@ class Wikia {
 		$title = $out->getTitle();
 
 		if ( !$wgUseSiteJs && $title->isJsPage() ) {
-			\BannerNotificationsController::addConfirmation(
-				wfMessage( 'usesitejs-disabled-warning' )->escaped(),
-				\BannerNotificationsController::CONFIRMATION_NOTIFY
-			);
+			\BannerNotificationsController::addConfirmation( wfMessage( 'usesitejs-disabled-warning' )->parse(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY );
 		}
 
 		return true;

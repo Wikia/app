@@ -25,6 +25,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		kiloAdUnitBuilder: {
 			build: function () {}
 		},
+		megaAdUnitBuilder: {
+			build: function () {}
+		},
 		gptHelper: {
 			pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
 				extra.success();
@@ -38,7 +41,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		slotRegistry: {
 			getRefreshCount: function () {
 				return 3;
-			}
+			},
+			storeScrollY: noop
 		},
 		slotTweaker: {
 			removeDefaultHeight: noop,
@@ -50,8 +54,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		},
 		lazyQueue: {},
 		window: {},
-		beforeSuccess: noop,
-		beforeHop: noop,
+		afterSuccess: noop,
+		afterHop: noop,
 		btfBlocker: {
 			decorate: function (fillInSlot) {
 				return fillInSlot;
@@ -101,6 +105,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
 					mocks.kiloAdUnitBuilder,
+					mocks.megaAdUnitBuilder,
 					getFactory()
 				);
 			case 'remnantGptMobile':
@@ -159,7 +164,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
 			PREFOOTER_LEFT_BOXAD: '300x250',
 			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
+			TOP_LEADERBOARD: '3x3,728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
 		};
 
@@ -187,7 +192,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
 			PREFOOTER_LEFT_BOXAD: '300x250',
 			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
+			TOP_LEADERBOARD: '3x3,728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
 		};
 

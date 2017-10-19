@@ -103,7 +103,7 @@ class LinksUpdate {
 
 		$this->mRecursive = $recursive;
 
-		Hooks::run( 'LinksUpdateConstructed', array( &$this ) );
+		Hooks::run( 'LinksUpdateConstructed', [ $this ] );
 	}
 
 	/**
@@ -112,13 +112,13 @@ class LinksUpdate {
 	public function doUpdate() {
 		global $wgUseDumbLinkUpdate;
 
-		Hooks::run( 'LinksUpdate', array( &$this ) );
+		Hooks::run( 'LinksUpdate', [ $this ] );
 		if ( $wgUseDumbLinkUpdate ) {
 			$this->doDumbUpdate();
 		} else {
 			$this->doIncrementalUpdate();
 		}
-		Hooks::run( 'LinksUpdateComplete', array( &$this ) );
+		Hooks::run( 'LinksUpdateComplete', [ $this ] );
 	}
 
 	protected function doIncrementalUpdate() {

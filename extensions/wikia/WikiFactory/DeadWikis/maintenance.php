@@ -37,6 +37,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 	const DELETE_NOW = 'deleteNow';
 	const DELETE_SOON = 'deleteSoon';
 
+	// The following email account is owned by SUS and has been created
+	// for automation purposes.
+	const EMAIL_SENDER = 'mholmes@fandom.com';
+
 	static protected $conditions = array(
 		self::DELETE_NOW => array(
 			'created' => array(
@@ -546,7 +550,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$count = count($this->deleted);
 		echo "Sending e-mail about $count deleted wikis...\n";
 		$this->sendEmail(
-			"wladek@wikia-inc.com",
+			self::EMAIL_SENDER,
+
+			// Warning: only active Google accounts can be used
+			// to post messages to mailing lists.
 			"wikis-deleted-l@wikia-inc.com",
 			"[dead wikis] {$dateNice} - $count wikis were deleted",
 			"{$count} wikis have been deleted today, full list of affected wikis is provided in the attachment.",
@@ -557,7 +564,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$count = count($this->toBeDeleted);
 		echo "Sending e-mail about $count wikis that may be deleted soon...\n";
 		$this->sendEmail(
-			"wladek@wikia-inc.com",
+			self::EMAIL_SENDER,
+			
+			// Warning: only active Google accounts can be used
+			// to post messages to mailing lists.
 			"wikis-to-be-deleted-l@wikia-inc.com",
 			"[dead wikis] {$dateNice} - $count wikis may be deleted soon",
 			"{$count} candidate wikis have been found that may be deleted soon, full list of affected wikis is provided in the attachment.",

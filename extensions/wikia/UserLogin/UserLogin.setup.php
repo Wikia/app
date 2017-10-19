@@ -18,15 +18,12 @@ $dir = dirname( __FILE__ ) . '/';
 // classes
 $wgAutoloadClasses['EmailConfirmationController'] =  $dir . 'EmailConfirmationController.class.php';
 $wgAutoloadClasses['EmailConfirmationHooks'] =  $dir . 'EmailConfirmationHooks.class.php';
-$wgAutoloadClasses['FacebookButtonController'] =  $dir . 'FacebookButtonController.class.php';
-$wgAutoloadClasses['FacebookSignupController'] =  $dir . 'FacebookSignupController.class.php';
 $wgAutoloadClasses['UserLoginSpecialController'] =  $dir . 'UserLoginSpecialController.class.php';
 $wgAutoloadClasses['UserSignupSpecialController'] =  $dir . 'UserSignupSpecialController.class.php';
 $wgAutoloadClasses['WikiaConfirmEmailSpecialController'] =  $dir . 'WikiaConfirmEmailSpecialController.class.php';
 $wgAutoloadClasses['UserLoginController'] =  $dir . 'UserLoginController.class.php';
 $wgAutoloadClasses['UserLoginHelper'] =  $dir . 'UserLoginHelper.class.php';
 $wgAutoloadClasses['UserLoginForm'] =  $dir . 'UserLoginForm.class.php';
-$wgAutoloadClasses['UserLoginFacebookForm'] =  $dir . 'UserLoginFacebookForm.class.php';
 $wgAutoloadClasses['UserLoginHooksHelper'] =  $dir . 'UserLoginHooksHelper.class.php';
 
 $wgWikiaApiControllers['EmailConfirmationController'] = $dir . 'EmailConfirmationController.class.php';

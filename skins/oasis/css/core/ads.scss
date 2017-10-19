@@ -12,45 +12,13 @@
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
-@import '../../../../extensions/wikia/ArticleVideo/styles/video-shared-variables';
+@import 'ads-mixin';
+@import 'ads-porvata';
 
 $wikia-top-ads-index: 2;
-
-$uap-progress-bar-color: #b7b7b7;
-$uap-progress-bar-current-time-color: #666;
 $uap-video-animation-duration: 0.4s;
-$uap-video-player-button-size: 24px;
-
-$floating-ad-margin: 20px;
-$floating-ad-index: $wikia-top-ads-index + 10;
-$floating-ad-video-width: 320px;
-$floating-ad-animation-speed: $video-collapse-animation-speed;
-$floating-ad-featured-video-gap: $video-container-width;
-
 $navbar-size-for-sticky-element: 65px;
-
-$video-control-bar-padding: 18px;
-$video-control-bar-items-margin: 12px;
-$video-control-panel-default-color: white;
-$video-control-panel-active-color: $video-player-blue;
-$video-control-panel-inactive-color: $video-player-volume-bar-off-color;
-$video-control-panel-item-size: 23px;
-$video-control-panel-item-size-extra-large: 86px;
-$video-control-panel-item-size-small: 17px;
-$video-control-panel-progress-bar-shadow-color: rgba(175, 175, 175, 0.5);
-$video-control-pause-shadow-animation-duration: 1s;
-$video-control-pause-shadow-animation-function: ease;
-
-$vpaid-z-index: 10;
-$video-interactive-area-z-index: $vpaid-z-index + 1;
-
-@mixin absolute-fill() {
-	height: 100%;
-	left: 0;
-	position: absolute;
-	width: 100%;
-	top: 0;
-}
+$global-navigation-and-sitewide-messages-index: 5000101;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -86,33 +54,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
-
-	&.floating {
-		z-index: $floating-ad-index;
-
-		.wikia-ad {
-			bottom: $wikia-bar-height + $floating-ad-margin;
-			margin-bottom: 0;
-			position: fixed;
-			right: $floating-ad-margin;
-			transition: margin-bottom $floating-ad-animation-speed;
-
-			.video-player, iframe {
-				width: $floating-ad-video-width;
-			}
-
-			.floating-close-button {
-				display: block;
-			}
-		}
-
-		&.with-article-video {
-			.wikia-ad {
-				margin-bottom: $floating-ad-featured-video-gap;
-				transition: margin-bottom $floating-ad-animation-speed;
-			}
-		}
-	}
 }
 
 .wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
@@ -132,31 +73,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			@include absolute-fill();
 		}
 	}
-
-	.video-overlay {
-		@include absolute-fill();
-	}
-
-	.video-display-wrapper {
-		background: #000;
-		height: 100%;
-		position: relative;
-		width: 100%;
-
-		video, &.vpaid-enabled > div {
-			@include absolute-fill();
-		}
-
-		&.vpaid-enabled video {
-			z-index: $vpaid-z-index;
-		}
-
-		.video-player {
-			background: #000;
-			margin: 0 auto;
-			pointer-events: auto;
-		}
-	}
 }
 
 .bfaa-template {
@@ -170,6 +86,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		margin-top: 0;
 		padding: 0;
 		width: 100%;
+		z-index: $global-navigation-and-sitewide-messages-index;
 	}
 
 	.WikiaTopAdsInner {
@@ -187,6 +104,11 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 			height: auto;
 			width: 100%;
 		}
+
+		.mobile-porvata .video-player > iframe {
+			// Hide Learn more text
+			z-index: -1;
+		}
 	}
 
 	.wds-community-header {
@@ -194,91 +116,12 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	}
 }
 
-.bfaa-template .ima-mute-div, .bfab-template .ima-mute-div {
-	/* remove Firefox's dotted outline on buttons and links */
-	:focus {outline:none;}
-	::-moz-focus-inner {border:0;}
-
-	bottom: 18px;
-	cursor: pointer;
-	position: absolute;
-	right: 10px;
-
-	.speaker {
-		&.mute {
-			background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_off_button.svg');
-		}
-
-		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg');
-		display: inline-block;
-		height: $uap-video-player-button-size;
-		overflow: hidden;
-		position: relative;
-		width: $uap-video-player-button-size;
-	}
-}
-
 .bfab-template {
 	position: relative;
-}
 
-.wikia-ad .replay-overlay {
-	background: rgba(0,0,0,0.3) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat;
-	cursor: pointer;
-	height: 100%;
-	position: absolute;
-	z-index: 1;
-}
-
-.video-player {
-	position: relative;
-
-	&#{&}-left, &#{&}-right {
-		z-index: $wikia-top-ads-index;
-	}
-
-	&#{&}-right {
-		right: 0;
-	}
-
-	video {
-		left: 0;
-	}
-
-	.progress-bar {
-		background: $uap-progress-bar-color;
-		bottom: 0;
-		height: 8px;
-		left: 0;
-		position: absolute;
-		width: 100%;
-	}
-
-	.current-time {
-		@include transition(width, 1s, linear, 0);
-		background: $uap-progress-bar-current-time-color;
-		height: 100%;
-		max-width: 100%;
-		width: 0;
-	}
-
-	.pause-overlay {
-		cursor: pointer;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
-
-	.close-ad {
-		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg');
-		cursor: pointer;
-		height: $uap-video-player-button-size;
-		margin: 10px 10px 30px 30px;
-		position: absolute;
-		right: 0;
-		top: 0;
-		width: $uap-video-player-button-size;
+	.mobile-porvata .video-player > iframe {
+		// Hide Learn more text
+		z-index: -1;
 	}
 }
 
@@ -345,12 +188,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	#WikiaRail.small-left-skyscraper-3-present {
 		padding-bottom: 260px;
 	}
-}
-
-#INCONTENT_WRAPPER {
-	font-size: 0;
-	line-height: 0;
-	text-align: center;
 }
 
 #LEFT_SKYSCRAPER_2 {
@@ -523,19 +360,6 @@ body > a > img[src$="noad.gif"] {
 	}
 }
 
-.wikia-ad-interactive-map {
-	height: 50px;
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	width: 320px;
-
-	& > iframe {
-		width: 320px;
-		height: 50px;
-	}
-}
-
 #ext-wikia-adEngine-template-modal {
 	> section {
 		overflow: hidden;
@@ -561,191 +385,4 @@ body > a > img[src$="noad.gif"] {
 
 #WikiaArticleMsg {
 	display: none;
-}
-
-/** Floating ads **/
-
-/*** Incontent ***/
-#WikiaArticle {
-	&.floating {
-		z-index: initial;
-
-		.wikia-ad {
-			bottom: $wikia-bar-height + $floating-ad-margin;
-			margin-bottom: 0;
-			position: fixed;
-			right: $floating-ad-margin;
-			transition: margin-bottom $floating-ad-animation-speed;
-			width: $floating-ad-video-width;
-			z-index: $floating-ad-index;
-
-			.provider-container {
-				padding-bottom: 0 !important; // has to be !important because o inline style
-				width: $floating-ad-video-width;
-			}
-
-			.floating-close-button {
-				display: block;
-			}
-		}
-
-		&.with-article-video {
-			.wikia-ad {
-				margin-bottom: $floating-ad-featured-video-gap;
-				transition: margin-bottom $floating-ad-animation-speed;
-			}
-		}
-	}
-}
-
-.floating-close-button {
-	cursor: pointer;
-	display: none;
-	left: 0;
-	position: absolute;
-	top: 0;
-	z-index: $video-interactive-area-z-index;
-
-	img {
-		padding: 7px;
-	}
-}
-
-.interactive-area {
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	width: 100%;
-	z-index: $video-interactive-area-z-index;
-
-	.control-bar {
-		padding: 0 $video-control-bar-padding;
-
-		.progress-bar {
-			background-color: $video-control-panel-progress-bar-shadow-color;
-			border-radius: 3px;
-			bottom: initial;
-			height: 4.2px;
-			left: initial;
-			position: static;
-			width: 100%;
-
-			.current-time {
-				background-color: $video-control-panel-active-color;
-				border-radius: 3px;
-			}
-		}
-
-		.control-bar-items {
-			display: flex;
-			margin: $video-control-bar-items-margin 0;
-		}
-
-		.control-bar-item {
-			cursor: pointer;
-			display: block;
-			padding: 0 6px;
-			width: $video-control-panel-item-size;
-		}
-
-		.play-pause-button {
-			padding-left: 0;
-		}
-
-		.sound-control {
-			display: flex;
-		}
-
-		.sound-bars-container {
-			display: flex;
-		}
-
-		.sound-bar {
-			background-clip:content-box;
-			background-color: $video-control-panel-default-color;
-			cursor: pointer;
-			height: $video-control-panel-item-size;
-			padding-left: 7px;
-			width: 2px;
-
-			&.unlit {
-				background-color: $video-control-panel-inactive-color;
-			}
-		}
-	}
-
-	svg {
-		fill: white;
-		height: $video-control-panel-item-size;
-
-		&:hover {
-			fill: $video-control-panel-active-color;
-		}
-	}
-}
-
-.floating {
-	.interactive-area {
-		.control-bar {
-			.control-bar-item {
-				width: $video-control-panel-item-size-small;
-			}
-
-			.sound-bar {
-				height: $video-control-panel-item-size-small;
-				padding-left: 3px;
-			}
-		}
-
-		svg {
-			height: $video-control-panel-item-size-small;
-		}
-	}
-}
-
-@keyframes show-then-hide {
-	from {
-		animation-timing-function: $video-control-pause-shadow-animation-function;
-		height: $video-control-panel-item-size;
-		opacity: 1;
-		visibility: visible;
-		width: $video-control-panel-item-size;
-	}
-
-	to {
-		height: $video-control-panel-item-size-extra-large;
-		opacity: 0;
-		visibility: hidden;
-		width: $video-control-panel-item-size-extra-large;
-	}
-}
-
-.pause-shadow {
-	bottom: 0;
-	height: $video-control-panel-item-size;
-	left: 0;
-	margin: auto;
-	opacity: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-	visibility: hidden;
-	width: $video-control-panel-item-size;
-	z-index: $video-interactive-area-z-index;
-
-	svg {
-		fill: $video-control-panel-default-color;
-		height: $video-control-panel-item-size;
-		width: $video-control-panel-item-size;
-	}
-
-	&.animate {
-		animation: show-then-hide $video-control-pause-shadow-animation-duration;
-
-		svg {
-			height: $video-control-panel-item-size-extra-large;
-			transition: all $video-control-pause-shadow-animation-duration $video-control-pause-shadow-animation-function;
-			width: $video-control-panel-item-size-extra-large;
-		}
-	}
 }

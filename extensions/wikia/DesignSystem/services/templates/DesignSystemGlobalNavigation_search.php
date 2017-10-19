@@ -1,4 +1,9 @@
 <form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['module']['results']['url'] ); ?>">
+	<? if ( isset( $model['module']['hiddenFields'] ) ): ?>
+		<? foreach ( $model['module']['hiddenFields'] as $name => $value ): ?>
+			<input type="hidden" name="<?= Sanitizer::encodeAttribute( $name ); ?>" value="<?= Sanitizer::encodeAttribute( $value ); ?>">
+		<? endforeach; ?>
+	<? endif; ?>
 	<div id="searchInputWrapper" class="wds-dropdown wds-global-navigation__search-input-wrapper">
 		<label class="wds-global-navigation__search-label">
 			<?= DesignSystemHelper::renderSvg(

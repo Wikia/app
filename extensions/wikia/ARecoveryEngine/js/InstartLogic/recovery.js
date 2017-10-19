@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
@@ -16,18 +17,15 @@ define('ext.wikia.aRecoveryEngine.instartLogic.recovery', [
 	}
 
 	/**
-	 * When IL detects that user is blocking, it sets src=rec on page level params
+	 * When IL detects that user is blocking, the I11C.Morph is equal 1
 	 *
 	 * @returns {boolean}
 	 */
 	function isBlocking() {
-		var gptLibSrcKeyVal = win.googletag.pubads && win.googletag.pubads() &&
-				win.googletag.pubads().getTargeting('src'),
+		var isBlocking = !!(win.I11C && win.I11C.Morph);
 
-			isParamSet = gptLibSrcKeyVal && gptLibSrcKeyVal.indexOf('rec') > -1;
-
-		log(['isBlocking', isParamSet], log.levels.debug, logGroup);
-		return isParamSet;
+		log(['isBlocking', isBlocking], log.levels.debug, logGroup);
+		return isEnabled() && isBlocking;
 	}
 
 	return {

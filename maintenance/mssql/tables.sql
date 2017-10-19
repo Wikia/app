@@ -98,7 +98,6 @@ CREATE TABLE /*$wgDBprefix*/page (
    page_namespace INT          NOT NULL,
    page_title     NVARCHAR(255)  NOT NULL,
    page_restrictions NVARCHAR(255) NULL,
-   page_counter BIGINT            NOT NULL DEFAULT 0,
    page_is_redirect BIT           NOT NULL DEFAULT 0,
    page_is_new BIT                NOT NULL DEFAULT 0,
    page_random NUMERIC(15,14)     NOT NULL DEFAULT RAND(),
@@ -351,7 +350,6 @@ CREATE UNIQUE INDEX /*$wgDBprefix*/iwl_prefix ON /*$wgDBprefix*/iwlinks(iwl_pref
 --
 CREATE TABLE /*$wgDBprefix*/site_stats (
    ss_row_id        INT  NOT NULL DEFAULT 1 PRIMARY KEY,
-   ss_total_views   BIGINT DEFAULT 0,
    ss_total_edits   BIGINT DEFAULT 0,
    ss_good_articles BIGINT DEFAULT 0,
    ss_total_pages   BIGINT DEFAULT -1,
@@ -362,17 +360,6 @@ CREATE TABLE /*$wgDBprefix*/site_stats (
 );
 
 -- INSERT INTO site_stats DEFAULT VALUES;
-
---
--- Stores an ID for every time any article is visited;
--- depending ON $wgHitcounterUpdateFreq, it is
--- periodically cleared and the page_counter column
--- in the page table updated for the all articles
--- that have been visited.)
---
-CREATE TABLE /*$wgDBprefix*/hitcounter (
-   hc_id BIGINT NOT NULL
-);
 
 --
 -- The Internet is full of jerks, alas. Sometimes it's handy

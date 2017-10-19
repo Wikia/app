@@ -1775,22 +1775,22 @@ $messages['kn'] = array(
 );
 
 $messages['ko'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 생성 마법사]]',
+	'createnewwiki-desc' => 'Wiki creation wizard',
 	'cnw-next' => '다음',
 	'cnw-back' => '이전',
 	'cnw-title' => '새 위키 만들기',
 	'cnw-name-wiki-headline' => '새 위키 만들기',
-	'cnw-name-wiki-creative' => '위키아는 웹사이트를 만들고 회원님께서 선호하시는 주제에 대한 공동체를 성장시키는 데 매우 적합한 곳입니다.',
+	'cnw-name-wiki-creative' => '모든 커뮤니티는 기본적으로 이름과 주소가 있어야 합니다. 커뮤니티의 주제와 목적을 잘 드러내는 위키 이름 및 주소를 정해 주세요!',
 	'cnw-name-wiki-label' => '위키 이름',
 	'cnw-name-wiki-domain-label' => '위키 주소',
 	'cnw-name-wiki-submit-error' => '모든 빈칸을 채워주셔야 다음 단계로 진행할 수 있습니다.',
 	'cnw-desc-headline' => '무엇에 대한 위키인가요?',
 	'cnw-desc-creative' => '위키에서 다루고자 하는 주제에 대해 간단히 서술해주세요.',
-	'cnw-desc-placeholder' => '여기에 입력하시는 글은 만드신 위키의 대문에 보여질 것입니다.',
+	'cnw-desc-placeholder' => '여기에 입력하신 글은 위키 대문에 표시됩니다.',
 	'cnw-desc-select-vertical' => '허브 분류 선택',
 	'cnw-desc-select-categories' => '추가 분류 선택',
 	'cnw-desc-select-one' => '선택해주세요',
-	'cnw-desc-all-ages' => '어린이들이 볼 수 있는 위키인가요?',
+	'cnw-desc-all-ages' => '만들고자 하는 위키가 13세 미만의 어린이들을 위한 위키인가요?',
 	'cnw-desc-lang' => '언어',
 	'cnw-desc-wiki-submit-error' => '분류를 선택해주세요.',
 	'cnw-theme-headline' => '테마 선택하기',
@@ -1822,10 +1822,42 @@ $messages['ko'] = array(
 	'autocreatewiki-empty-field' => '이 상자를 채워주세요.',
 	'autocreatewiki-empty-wikiname' => '위키 이름을 입력하셔야 합니다.',
 	'autocreatewiki-invalid-wikiname' => '위키 이름에는 $나 @와 같은 특수 문자가 포함될 수 없으며 공백이 없어야 합니다.',
-	'autocreatewiki-language-top' => '상위 $1 언어',
+	'autocreatewiki-language-top' => 'Supported languages',
 	'autocreatewiki-name-too-long' => '위키 이름이 너무 깁니다. 50자를 넘지 않는 범위 내에서 위키 이름을 입력해주세요.',
 	'autocreatewiki-name-too-short' => '위키 이름이 너무 짧습니다. 위키 이름에는 적어도 3글자 이상이 들어가야 합니다.',
 	'autocreatewiki-violate-policy' => '위키 이름에 위키아의 정책에 반하는 단어가 포함되어 있습니다.',
+	'cnw-next-create-wiki' => '위키 만들기',
+	'cnw-name-wiki-language' => '',
+	'cnw-theme-loading-state' => '위키를 생성하고 있습니다. 기다리시는 동안 위키 테마를 변경하실 수 있습니다.',
+	'cnw-theme-show-wiki' => '생성된 위키로 이동',
+	'autocreatewiki-welcometalk-log' => 'Welcome Message',
+	'autocreatewiki-regex-error-comment' => 'used in wiki $1 (whole text: $2)',
+	'autocreatewiki-protect-reason' => 'Part of the official interface',
+	'autocreatewiki-welcometalk-wall-title' => '환영합니다!',
+	'autocreatewiki-welcometalk-wall' => '안녕하세요, 팬덤 커뮤니티 지원팀입니다! 먼저 {{subst:SITENAME}} 생성을 진심으로 축하드립니다. 귀하의 성공적인 위키 운영을 위해 도움이 될 만한 팁들을 가져왔습니다. 지금 바로 확인해 보세요!
+
+*[[특수기능:위키기능|위키 기능 관리 페이지]]에서 사용 가능한 기능들을 확인해 보세요. 문서 댓글부터 채팅까지 다양한 기능들을 지원하고 있습니다.
+*[[특수기능:테마디자이너|테마 디자이너]]에서 위키를 꾸며보세요.
+*[[w:ko:|팬덤 중앙 커뮤니티]]에 방문해 보세요. [[w:ko:블로그:팬덤_뉴스|스태프 블로그]]에서 최신 업데이트 소식을 알아보거나, [[w:ko:특수기능:포럼|포럼]]에서 다른 사용자들과 도움을 주고받아 보세요.
+*[[도움말:콘텐츠|도움말 문서]]에서 팬덤 사용법을 익혀 보세요.
+
+그럼 즐거운 위키 이용 되시기 바랍니다!',
+	'autocreatewiki-welcometalk' => '==환영합니다!==
+안녕하세요, $4 생성을 진심으로 축하드립니다! 귀하의 성공적인 위키 운영을 위해 도움이 될 만한 팁들을 가져왔습니다. 지금 바로 확인해 보세요!
+
+*[[특수기능:위키기능|위키 기능 관리 페이지]]에서 사용 가능한 기능들을 확인해 보세요. 문서 댓글부터 채팅까지 다양한 기능들을 지원하고 있습니다.
+*[[w:ko:|팬덤 중앙 커뮤니티]]에 방문해 보세요. [[w:ko:블로그:팬덤_뉴스|스태프 블로그]]에서 최신 업데이트 소식을 알아보거나, [[w:ko:특수기능:포럼|포럼]]에서 다른 사용자들과 도움을 주고받아 보세요.
+*[[도움말:콘텐츠|도움말 문서]]에서 팬덤 사용법을 익혀 보세요.
+
+그럼 즐거운 위키 이용 되시기 바랍니다!
+
+-- [[User:$2|$3]] <staff />',
+	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
+The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
+We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">FANDOM Help</a>.<br /><br />
+Good luck with the project,<br /><br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+FANDOM Community Team<br /></p>',
 );
 
 $messages['krc'] = array(

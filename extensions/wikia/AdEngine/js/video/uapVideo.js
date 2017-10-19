@@ -16,7 +16,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.video.uapVideo',
-		positionVideoPlayerClassName = 'video-player-';
+		positionVideoPlayerClassName = 'video-player-',
+		uapTypesToMegaMap = {
+			'abcd': true
+		};
 
 	function getVideoSize(slot, params, videoSettings) {
 		var width = slot.clientWidth;
@@ -33,6 +36,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			width: width,
 			height: width / params.videoAspectRatio
 		};
+	}
+
+	function shouldUseMegaAdUnitBuilder(type) {
+		return uapTypesToMegaMap[type];
 	}
 
 	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {
@@ -69,7 +76,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
 				}
 
-				video.addEventListener('allAdsCompleted', function () {
+				video.addEventListener('wikiaAdCompleted', function () {
 					video.reload();
 				});
 
@@ -116,6 +123,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		var params = videoSettings.getParams(),
 			loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
+			uapType = uapContext.getType(),
 			videoContainer = providerContainer.parentNode,
 			size;
 
@@ -124,11 +132,11 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		size = getVideoSize(videoContainer, params, videoSettings);
 		params.width = size.width;
 		params.height = size.height;
-		params.adProduct = 'vuap';
+		params.useMegaAdUnitBuilder = shouldUseMegaAdUnitBuilder(uapType);
 		params.vastTargeting = {
 			src: params.src,
 			pos: params.slotName,
-			passback: 'vuap',
+			passback: uapType,
 			uap: uapContext.getUapId()
 		};
 
@@ -146,10 +154,10 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				video.play(videoSize.width, videoSize.height);
 			}
 
-			win.addEventListener('resize', throttle(function () {
+			function resizeVideo() {
 				var videoSize = getVideoSize(videoContainer, params, videoSettings);
 				video.resize(videoSize.width, videoSize.height);
-			}));
+			}
 
 			if (params.videoTriggerElement) {
 				params.videoTriggerElement.addEventListener('click', playVideo);
@@ -158,6 +166,9 @@ define('ext.wikia.adEngine.video.uapVideo', [
 					trigger.addEventListener('click', playVideo);
 				});
 			}
+
+			win.addEventListener('resize', throttle(resizeVideo));
+			video.addEventListener('play', resizeVideo);
 
 			return video;
 		});

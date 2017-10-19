@@ -51,7 +51,7 @@ $wgExtensionMessagesFiles['Timeline'] = dirname(__FILE__) . '/Timeline.i18n.php'
  * @param $parser Parser
  * @return bool
  */
-function wfTimelineExtension( &$parser ) {
+function wfTimelineExtension( Parser $parser ): bool {
 	$parser->setHook( 'timeline', 'wfRenderTimeline' );
 	return true;
 }

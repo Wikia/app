@@ -6,7 +6,19 @@ describe('Evolve2 Provider targeting', function () {
 		noop = function () {},
 		mocks = {
 			adContext: {
-				addCallback: noop
+				addCallback: noop,
+				getContext: function () {
+					return {
+						targeting: {
+							skin: 'oasis'
+						}
+					};
+				}
+			},
+			btfBlocker: {
+				decorate: function (callback) {
+					return callback;
+				}
 			},
 			eventDispatcher: {
 				dispatch: noop
@@ -31,6 +43,7 @@ describe('Evolve2 Provider targeting', function () {
 	function getEvolve2Provider() {
 		return modules['ext.wikia.adEngine.provider.evolve2'](
 			mocks.adContext,
+			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.slotTweaker,
 			mocks.zoneParams,

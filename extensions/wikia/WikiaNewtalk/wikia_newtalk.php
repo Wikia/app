@@ -23,11 +23,11 @@ function wfWikiaNewTalkMemcKey( User $user ) {
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com> (changes)
  * @access public
  *
- * @param Article $article: edited article
+ * @param WikiPage $article: edited article
  *
  * @return false: don't go to next hook
  */
-function wfSetWikiaNewtalk( &$article ) {
+function wfSetWikiaNewtalk( WikiPage $article ): bool {
 	global $wgMemc, $wgExternalSharedDB;
 	$name = $article->mTitle->getDBkey();
 	$other = User::newFromName( $name );

@@ -67,7 +67,6 @@ class UserLoginHelper extends WikiaModel {
 			$title->isSpecial( 'Userlogout' ) ||
 			$title->isSpecial( 'Signup' ) ||
 			$title->isSpecial( 'Connect' ) ||
-			$title->isSpecial( 'FacebookConnect' ) ||
 			$title->isSpecial( 'UserLogin' )
 		);
 	}
@@ -470,38 +469,6 @@ class UserLoginHelper extends WikiaModel {
 		return true;
 	}
 
-	/**
-	 * @desc This function is a workaround for validating user with 'AbortNewAccount' hook without captcha validation.
-	 *
-	 * Currently this is used for both Facebook registrations and Phalanx validation, where the captcha is not
-	 * present. The captcha check is performed in \SimpleCaptcha::confirmUserCreate and is currently bypassed
-	 * by setting $wgCaptchaTriggers['createaccount'] to false.
-	 * After the custom callable is executed, $wgCaptchaTriggers['createaccount'] is reverted to its previous issue.
-	 *
-	 * @param callable $function - custom function to execute with disabled captcha chedk
-	 * @param array $params - array to be passed to the callable function
-	 * @return mixed - result, returned by the callable function
-	 */
-	public static function callWithCaptchaDisabled( $function, $params = array() ) {
-		global $wgCaptchaTriggers;
-
-		// Dissable captcha check
-		$oldValue = $wgCaptchaTriggers;
-		$wgCaptchaTriggers['createaccount'] = false;
-
-		// Execute custom callable
-		if ( is_callable( $function ) ) {
-			$result = $function( $params );
-		} else {
-			$result = null;
-		}
-
-		// and bring back the old value
-		$wgCaptchaTriggers = $oldValue;
-
-		return $result;
-	}
-
 	public function getNewAuthUrl( $page = '/join' ) {
 		$requestUrl = $this->getCurrentUrlOrMainPageIfOnUserLogout();
 		parse_str( parse_url( $page, PHP_URL_QUERY ), $queryParams );
@@ -527,23 +494,6 @@ class UserLoginHelper extends WikiaModel {
 	private function getUselangParam() {
 		$lang = $this->wg->ContLang->mCode;
 		return $lang == 'en' ? '' : '&uselang=' . $lang;
-	}
-
-	/**
-	 * Set the cookies for the newly connected user.
-	 *
-	 * @param User the user that has been authenticated via facebook.
-	 */
-	public static function setCookiesForFacebookUser( \User $user, \Wikia\HTTP\Response $response ) {
-		$user->setCookies();
-		self::getCookieHelper()->setAuthenticationCookieWithUserId( $user->getId(), $response );
-	}
-
-	/**
-	 * @return \Wikia\Service\User\Auth\CookieHelper
-	 */
-	private static function getCookieHelper() {
-		return Injector::getInjector()->get(CookieHelper::class);
 	}
 
 }

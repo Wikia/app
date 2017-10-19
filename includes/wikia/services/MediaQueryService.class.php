@@ -191,7 +191,7 @@ class MediaQueryService extends WikiaModel {
 	 * @param $changed
 	 * @return bool
 	 */
-	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
+	public static function onArticleEditUpdates( WikiPage $article, $editInfo, $changed ): bool {
 		// article links are updated, so we invalidate the cache
 		$title = $article->getTitle();
 		$mqs = new self( );

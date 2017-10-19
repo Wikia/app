@@ -5,12 +5,12 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	function noop() {
 	}
 
-	var REGULAR_AD_UNIT_QUERY_PARAM = '&iu=my\/ad\/unit&',
-		PREMIUM_AD_UNIT_QUERY_PARAM = '&iu=premium\/ad\/unit&',
+	var AD_UNIT_QUERY_PARAM = '&iu=',
+		REGULAR_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'my\/ad\/unit&',
 		mocks = {
 			adContext: {
-				getContext: function () {
-					return {opts: {}};
+				get: function () {
+					return false;
 				}
 			},
 			adUnitBuilder: {
@@ -20,7 +20,7 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			},
 			megaAdUnitBuilder: {
 				build: function () {
-					return 'premium/ad/unit';
+					return 'mega/ad/unit';
 				}
 			},
 			slotTargeting: {
@@ -56,8 +56,8 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
-			mocks.megaAdUnitBuilder,
 			mocks.slotTargeting,
+			mocks.megaAdUnitBuilder,
 			mocks.loc,
 			mocks.log
 		);
@@ -106,7 +106,13 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	it('Build VAST URL with referrer', function () {
 		var vastUrl = getModule().build(1, mocks.slotParams);
 
-		expect(vastUrl).toMatch(/&url=http:\/\/foo\.url/g);
+		expect(vastUrl).toMatch(/&url=http%3A%2F%2Ffoo\.url/g);
+	});
+
+	it('Build VAST URL with description_url', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams);
+
+		expect(vastUrl).toMatch(/&description_url=http%3A%2F%2Ffoo\.url/g);
 	});
 
 	it('Build VAST URL with numeric correlator', function () {
@@ -138,7 +144,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	});
 
 	it('Build VAST URL with regular ad unit for premium ad layout and without correct video pos name', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{premiumAdLayoutEnabled: true}});
 		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
@@ -150,11 +155,13 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
 	});
 
-	it('Build VAST URL with premium ad unit for premium ad layout and with correct video pos name', function () {
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
-		var vastUrl = getModule().build(1, mocks.slotParams, {},'featured');
+	it('Should override adUnit if is in options', function () {
+		var CUSTOM_AD_UNIT = 'THIS_IS_CUSTOM_AD_UNIT',
+			vastUrl = getModule().build(1, mocks.slotParams, {
+				adUnit: CUSTOM_AD_UNIT
+			});
 
-		expect(vastUrl).toMatch(PREMIUM_AD_UNIT_QUERY_PARAM);
+		expect(vastUrl).toContain(AD_UNIT_QUERY_PARAM + CUSTOM_AD_UNIT);
 	});
 
 	it('Build VAST URL with restricted number of ads', function () {
@@ -165,12 +172,53 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toMatch(/&pmad=1/);
 	});
 
-	it('Build VAST URL with restricted ads position', function () {
+	it('Build VAST URL with static correlator', function () {
+		spyOn(Math, 'random').and.returnValue(0.1111111111);
+		var vastUrlBuilder = getModule(),
+			dynamicCorrelator = vastUrlBuilder.build(1, mocks.slotParams),
+			staticCorrelator = vastUrlBuilder.build(1, mocks.slotParams, {correlator: 666});
+
+		expect(staticCorrelator).toContain('&correlator=666');
+		expect(dynamicCorrelator).not.toContain('&correlator=666');
+	});
+
+	it('Build VAST URL with correct vpos', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {vpos: 'preroll'});
+
+		expect(vastUrl).toContain('&vpos=preroll');
+	});
+
+	it('Build VAST URL and skip unsupported vpos', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {vpos: 'nonsupported'});
+
+		expect(vastUrl).not.toContain('&vpos=nonsupported');
+		expect(vastUrl).not.toContain('&vpos=preroll');
+		expect(vastUrl).not.toContain('&vpos');
+	});
+
+	it('Build VAST URL with content source and video ids', function () {
 		var vastUrl = getModule().build(1, mocks.slotParams, {
-			prerollOnly: true
+			contentSourceId: '123',
+			videoId: 'abc'
 		});
 
-		expect(vastUrl).toMatch(/&vpos=preroll/);
+		expect(vastUrl).toMatch(/&cmsid=123&vid=abc/);
+	});
+
+	it('Build VAST URL without content source and video ids when at least one is missing', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {
+			contentSourceId: '123'
+		});
+
+		expect(vastUrl).not.toMatch(/&cmsid=123/);
+	});
+
+	it('Build VAST URL without content source and video ids when at least one is missing', function () {
+		var vastUrl = getModule().build(1, mocks.slotParams, {
+			videoId: 'abc'
+		});
+
+		expect(vastUrl).not.toMatch(/&vid=abc/);
 	});
 });
 

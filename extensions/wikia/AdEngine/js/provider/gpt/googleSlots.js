@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	function getSlot(id) {
 		var slotId = id;
 
-		if (adBlockDetection.isBlocking() && win._sp_.getElementId) {
+		if (adBlockDetection.isBlocking() && win._sp_ && win._sp_.getElementId) {
 			slotId = win._sp_.getElementId(slotId);
 		}
 

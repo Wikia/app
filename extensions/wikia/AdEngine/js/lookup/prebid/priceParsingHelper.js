@@ -195,6 +195,7 @@ define('ext.wikia.adEngine.lookup.prebid.priceParsingHelper', [
 				vastInfo.adSystem,
 				vastInfo.id
 			].join(':');
+			result.vastUrl = vastRequest.responseURL;
 
 			logInvalidResponse(result, vastRequest);
 		}

@@ -1,4 +1,5 @@
 <?php
+
 use Wikia\Util\GlobalStateWrapper;
 
 /**
@@ -232,7 +233,8 @@ class ArticleService extends WikiaObject {
 		}
 
 		// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
-		Hooks::run( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->article, &$content, ArticleService::MAX_LENGTH ) );
+		Hooks::run( 'ArticleService::getTextSnippet::beforeStripping',
+			[ $this->article, &$content, ArticleService::MAX_LENGTH ] );
 
 		return $this->cleanArticleSnippet( $content );
 	}
@@ -373,7 +375,10 @@ class ArticleService extends WikiaObject {
 	/**
 	 * Clear the cache when the page is edited
 	 */
-	static public function onArticleSaveComplete( WikiPage &$page, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static public function onArticleSaveComplete(
+		WikiPage $page, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags,
+		$revision, Status &$status, $baseRevId
+	): bool {
 		/**
 		 * @var $service ArticleService
 		 */

@@ -40,11 +40,8 @@ $wgAjaxExportList[] = 'SiteWideMessagesAjaxDismiss';
 
 if ( empty( $wgSWMSupportedLanguages ) ) $wgSWMSupportedLanguages = array( 'en' );
 
-//Register special page
-if (!function_exists('extAddSpecialPage')) {
-	require("$IP/extensions/ExtensionFunctions.php");
-}
-extAddSpecialPage(dirname(__FILE__) . '/SpecialSiteWideMessages_body.php', 'SiteWideMessages', 'SiteWideMessages');
+$wgAutoloadClasses['SiteWideMessages'] = __DIR__ . '/SpecialSiteWideMessages_body.php';
+$wgSpecialPages['SiteWideMessages'] = 'SiteWideMessages';
 $wgSpecialPageGroups['SiteWideMessages'] = 'wikia';
 
 $wgAutoloadClasses['SiteWideMessagesController'] =  __DIR__ . '/SiteWideMessagesController.class.php';
@@ -132,31 +129,36 @@ function SiteWideMessagesSiteNoticeAfter( &$siteNotice ) {
  * Show notification (in Oasis)
  *
  * @author macbre
+ * @param Skin $skin
+ * @param QuickTemplate $tpl
+ * @return bool
  */
-function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
-	global $wgOut, $wgUser, $wgExtensionsPath;
+function SiteWideMessagesAddNotifications( Skin $skin, QuickTemplate $tpl ): bool {
+	global $wgExtensionsPath;
 	wfProfileIn(__METHOD__);
 
-	if ( F::app()->checkSkin( 'oasis' ) ) {
+	if ( $skin->getSkinName() === 'oasis' ) {
 		// Add site wide notifications that haven't been dismissed
-		if ( !$wgUser->isLoggedIn() ) {
-			$wgOut->addModuleScripts( 'ext.siteWideMessages.anon' );
+		if ( !$skin->getUser()->isLoggedIn() ) {
+			$skin->getOutput()->addModuleScripts( 'ext.siteWideMessages.anon' );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$msgs = SiteWideMessages::getAllUserMessages( $wgUser, false, false );
+		$msgs = SiteWideMessages::getAllUserMessages( $skin->getUser(), false, false );
 
 		if ( !empty( $msgs ) ) {
 			wfProfileIn( __METHOD__ . '::parse' );
+			$out = $skin->getOutput();
+
 			foreach ( $msgs as &$data ) {
-				$data['text'] = $wgOut->parse( $data['text'] );
+				$data['text'] = $out->parse( $data['text'] );
 			}
 			wfProfileOut( __METHOD__ . '::parse' );
 
-			Hooks::run( 'SiteWideMessagesNotification', array( $msgs ) );
+			Hooks::run( 'SiteWideMessagesNotification', [ $msgs, $skin ] );
 
-			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
+			$out->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
 		}
 	}
 

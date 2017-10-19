@@ -39,7 +39,7 @@ class ParserAfterTidy {
 	 * @param Parser $parser
 	 * @param string $text
 	 */
-	public function __construct( Parser &$parser, &$text ) {
+	public function __construct( Parser $parser, &$text ) {
 		$this->parser = $parser;
 		$this->text =& $text;
 	}

@@ -98,7 +98,7 @@ final class InfoboxBuilderHooks {
 	 * @return true (to proceed with hooks loading)
 	 */
 	public static function addInfoboxBuilderStyles( \EditPageLayoutController $controller ) {
-		$controller->wg->Out->addModuleStyles( 'ext.wikia.InfoboxBuilder' );
+		$controller->getContext()->getOutput()->addModuleStyles( 'ext.wikia.InfoboxBuilder' );
 		return true;
 	}
 }

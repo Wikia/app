@@ -100,7 +100,9 @@ class AbuseFilterHooks {
 		return $filter_result == '' || $filter_result === true;
 	}
 
-	public static function onArticleDelete( &$article, &$user, &$reason, &$error ) {
+	public static function onArticleDelete(
+		WikiPage $article, User $user, $reason, &$error
+	): bool {
 		$vars = new AbuseFilterVariableHolder;
 
 		global $wgUser;

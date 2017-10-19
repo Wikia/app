@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
 
 /**
@@ -155,7 +157,7 @@ class MigratePhalanxUserBlocks extends Maintenance {
 			return true;
 		}
 
-		$service = new PhalanxService();
+		$service = Injector::getInjector()->get( PhalanxService::class );
 		$res = $service->reload();
 
 		if ( $res ) {

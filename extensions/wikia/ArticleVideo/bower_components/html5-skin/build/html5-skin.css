@@ -270,7 +270,7 @@
 
 /* roboto condensed regular */
 @font-face {
-  font-family: 'Roboto Condensed';
+  font-family: 'Ooyala Roboto Condensed';
   font-style: normal;
   font-weight: 400;
   src: local("Roboto Condensed"), local("RobotoCondensed-Regular"), url("assets/fonts/RobotoCondensed-Regular.woff2") format("woff2"), url("assets/fonts/RobotoCondensed-Regular.woff") format("woff"), url("assets/fonts/RobotoCondensed-Regular.ttf") format("truetype");
@@ -278,7 +278,7 @@
 
 /* roboto condensed bold */
 @font-face {
-  font-family: 'Roboto Condensed Bold';
+  font-family: 'Ooyala Roboto Condensed Bold';
   font-style: normal;
   font-weight: 700;
   src: local("Roboto Condensed Bold"), local("RobotoCondensed-Bold"), url("assets/fonts/RobotoCondensed-Bold.woff2") format("woff2"), url("assets/fonts/RobotoCondensed-Bold.woff") format("woff"), url("assets/fonts/RobotoCondensed-Bold.ttf") format("truetype");
@@ -286,7 +286,7 @@
 
 /* roboto regular */
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Ooyala Roboto';
   font-style: normal;
   font-weight: 400;
   src: local("Roboto"), local("Roboto-Regular"), url("assets/fonts/Roboto-Regular.woff2") format("woff2"), url("assets/fonts/Roboto-Regular.ttf") format("truetype"), url("assets/fonts/Roboto-Regular.woff") format("woff");
@@ -294,7 +294,7 @@
 
 /* roboto bold */
 @font-face {
-  font-family: 'Roboto Bold';
+  font-family: 'Ooyala Roboto Bold';
   font-style: normal;
   font-weight: 700;
   src: local("Roboto Bold"), local("Roboto-Bold"), url("assets/fonts/Roboto-Bold.woff2") format("woff2"), url("assets/fonts/Roboto-Bold.ttf") format("truetype"), url("assets/fonts/Roboto-Bold.woff") format("woff");
@@ -357,7 +357,7 @@
   line-height: 1;
   font-weight: bold;
   font-size: 1.6em;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Ooyala Roboto Condensed", sans-serif;
   color: #fff; }
   .oo-player-container .oo-content-screen-title span.oo-icon {
     top: 1px;
@@ -440,14 +440,14 @@
     left: 5%; }
     .oo-player-container .oo-state-screen .oo-state-screen-info .oo-state-screen-title, .oo-player-container .oo-spinner-screen .oo-state-screen-info .oo-state-screen-title {
       font-size: 1.6em;
-      font-family: "Roboto Condensed", sans-serif;
+      font-family: "Ooyala Roboto Condensed", sans-serif;
       font-weight: bold;
       max-width: 70%;
       resize: none;
       margin-bottom: 15px; }
     .oo-player-container .oo-state-screen .oo-state-screen-info .oo-state-screen-description, .oo-player-container .oo-spinner-screen .oo-state-screen-info .oo-state-screen-description {
       font-size: 1.1em;
-      font-family: "Roboto Condensed", sans-serif;
+      font-family: "Ooyala Roboto Condensed", sans-serif;
       max-width: 70%;
       clear: both; }
   .oo-player-container .oo-state-screen .oo-info-panel-top, .oo-player-container .oo-spinner-screen .oo-info-panel-top {
@@ -519,7 +519,7 @@
     transform: translateY(-50%);
     word-wrap: break-word; }
     .oo-player-container .oo-error-screen .oo-error-content .oo-error-title {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Ooyala Roboto', sans-serif;
       font-weight: bold;
       margin-bottom: 30px;
       font-size: 1.7em; }
@@ -673,7 +673,7 @@
 .oo-player-container .oo-discovery-content-name {
   color: #fff;
   font-size: 1em;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Ooyala Roboto Condensed", sans-serif;
   width: 100%;
   display: inline-block;
   text-transform: capitalize;
@@ -754,14 +754,14 @@
     display: inline-block;
     color: #55595c;
     font-size: 1em;
-    font-family: "Roboto Condensed", sans-serif; }
+    font-family: "Ooyala Roboto Condensed", sans-serif; }
   .oo-player-container .oo-switch-container-autoplay .oo-switch-autoplay-on {
     right: 0; }
   .oo-player-container .oo-switch-container-autoplay .oo-switch-autoplay-off {
     left: 0; }
   .oo-player-container .oo-switch-container-autoplay .oo-switch-autoplay-active {
     color: #fff;
-    font-family: "Roboto Condensed Bold", sans-serif; }
+    font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
   .oo-player-container .oo-switch-container-autoplay .oo-switch-element-autoplay {
     display: inline-block;
     width: 26px;
@@ -833,7 +833,7 @@
     fill: #fff;
     margin-top: 10px; }
   .oo-player-container .oo-share-tab-panel .oo-social-action-text {
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: "Ooyala Roboto Condensed", sans-serif;
     font-size: 1.25em;
     font-weight: bold;
     margin-bottom: 15px; }
@@ -944,14 +944,14 @@
     display: inline-block;
     color: #55595c;
     font-size: 1em;
-    font-family: "Roboto Condensed", sans-serif; }
+    font-family: "Ooyala Roboto Condensed", sans-serif; }
   .oo-player-container .oo-switch-container .oo-switch-captions-on {
     right: 0; }
   .oo-player-container .oo-switch-container .oo-switch-captions-off {
     left: 0; }
   .oo-player-container .oo-switch-container .oo-switch-captions-active {
     color: #fff;
-    font-family: "Roboto Condensed Bold", sans-serif; }
+    font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
   .oo-player-container .oo-switch-container .oo-switch-element {
     display: inline-block;
     width: 33%;
@@ -1008,7 +1008,7 @@
       line-height: 27px;
       min-width: 140px;
       font-size: 0.9em;
-      font-family: "Roboto Condensed", sans-serif;
+      font-family: "Ooyala Roboto Condensed", sans-serif;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -1066,12 +1066,12 @@
     .oo-player-container .oo-color-selection-tab .oo-color-selection-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper {
       width: 245px; }
       .oo-player-container .oo-color-selection-tab .oo-color-selection-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-container-title {
-        font-family: "Roboto Condensed", sans-serif;
+        font-family: "Ooyala Roboto Condensed", sans-serif;
         font-size: 16px;
         color: #fff;
         margin-bottom: 26px; }
         .oo-player-container .oo-color-selection-tab .oo-color-selection-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-container-title .oo-selection-container-selection-text {
-          font-family: "Roboto Condensed Bold", sans-serif; }
+          font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
       .oo-player-container .oo-color-selection-tab .oo-color-selection-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-text-color-items-container {
         max-width: 200px; }
       .oo-player-container .oo-color-selection-tab .oo-color-selection-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container {
@@ -1142,13 +1142,13 @@
     .oo-player-container .oo-caption-opacity-tab .oo-caption-opacity-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper {
       width: 75%; }
       .oo-player-container .oo-caption-opacity-tab .oo-caption-opacity-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-container-title {
-        font-family: "Roboto Condensed", sans-serif;
+        font-family: "Ooyala Roboto Condensed", sans-serif;
         font-size: 16px;
         color: #fff;
         margin-bottom: 30px;
         height: 30px; }
         .oo-player-container .oo-caption-opacity-tab .oo-caption-opacity-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-container-title .oo-selection-container-selection-text {
-          font-family: "Roboto Condensed Bold", sans-serif; }
+          font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
       .oo-player-container .oo-caption-opacity-tab .oo-caption-opacity-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container {
         position: relative;
         height: 30px;
@@ -1218,12 +1218,12 @@
     .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper {
       width: 90%; }
       .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-container-title {
-        font-family: "Roboto Condensed", sans-serif;
+        font-family: "Ooyala Roboto Condensed", sans-serif;
         font-size: 16px;
         color: #fff;
         margin-bottom: 0px; }
         .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-container-title .oo-selection-container-selection-text {
-          font-family: "Roboto Condensed Bold", sans-serif; }
+          font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
       .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container {
         height: 100%; }
         .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-font-size-container {
@@ -1239,7 +1239,7 @@
             color: #fff;
             height: 100%;
             text-align: center;
-            font-family: "Roboto Condensed Bold", sans-serif; }
+            font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
           .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-font-size-container .oo-font-size-letter-Small {
             font-size: 50px;
             line-height: 157px; }
@@ -1253,7 +1253,7 @@
             font-size: 125px;
             line-height: 102px; }
           .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-font-size-container .oo-font-size-label {
-            font-family: "Roboto Condensed", sans-serif;
+            font-family: "Ooyala Roboto Condensed", sans-serif;
             font-size: 16px;
             color: #b3b3b3;
             width: 100%;
@@ -1263,7 +1263,7 @@
           .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-font-size-container .oo-font-size-selected {
             color: #448AFF; }
           .oo-player-container .oo-font-size-tab .oo-font-size-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-font-size-container .oo-font-size-label-selected {
-            font-family: "Roboto Condensed Bold", sans-serif; }
+            font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
 
 .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper {
   position: absolute;
@@ -1285,12 +1285,12 @@
     .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper {
       width: 90%; }
       .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-container-title {
-        font-family: "Roboto Condensed", sans-serif;
+        font-family: "Ooyala Roboto Condensed", sans-serif;
         font-size: 16px;
         color: #fff;
         margin-bottom: 0px; }
         .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-container-title .oo-selection-container-selection-text {
-          font-family: "Roboto Condensed Bold", sans-serif; }
+          font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
       .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container {
         height: 100%; }
         .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-text-enhancements-container {
@@ -1308,7 +1308,7 @@
             text-align: center;
             font-size: 100px;
             line-height: 120px;
-            font-family: "Roboto Condensed Bold", sans-serif; }
+            font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
           .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-text-enhancements-container .oo-text-enhancement-letter-Uniform {
             text-shadow: none; }
           .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-text-enhancements-container .oo-text-enhancement-letter-Depressed {
@@ -1320,7 +1320,7 @@
           .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-text-enhancements-container .oo-text-enhancement-letter-Shadow {
             text-shadow: 2px 2px 2px #1a1a1a; }
           .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-text-enhancements-container .oo-text-enhancement-label {
-            font-family: "Roboto Condensed", sans-serif;
+            font-family: "Ooyala Roboto Condensed", sans-serif;
             font-size: 16px;
             color: #b3b3b3;
             width: 100%;
@@ -1330,7 +1330,7 @@
           .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-text-enhancements-container .oo-text-enhancement-selected {
             color: #448AFF; }
           .oo-player-container .oo-text-enhancements-tab .oo-text-enhancements-inner-wrapper .oo-selection-container .oo-selection-inner-wrapper .oo-selection-items-container .oo-text-enhancements-container .oo-text-enhancement-label-selected {
-            font-family: "Roboto Condensed Bold", sans-serif; }
+            font-family: "Ooyala Roboto Condensed Bold", sans-serif; }
 
 .oo-player-container .oo-preview-panel {
   width: 100%;
@@ -1341,7 +1341,7 @@
   .oo-player-container .oo-preview-panel .oo-preview-caption {
     font-size: 16px;
     line-height: 0em;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: "Ooyala Roboto Condensed", sans-serif;
     color: white;
     text-shadow: 1px 1px 2px black; }
 
@@ -1649,7 +1649,7 @@
       height: 100%;
       color: #fff;
       opacity: 1;
-      font-family: "Roboto", sans-serif;
+      font-family: "Ooyala Roboto", sans-serif;
       font-size: 14px;
       padding-left: 7.5px;
       padding-right: 7.5px;
@@ -1836,7 +1836,7 @@
         background-color: transparent;
         color: #fff;
         font-size: 1.1em;
-        font-family: "Roboto", sans-serif;
+        font-family: "Ooyala Roboto", sans-serif;
         line-height: 1em;
         border-radius: 2px;
         border: 1px solid #55595c;
@@ -1855,7 +1855,7 @@
           font-weight: bold; }
       .oo-player-container .oo-quality-panel .oo-quality-screen-content ul li a.oo-quality-auto-btn {
         background-color: transparent;
-        font-family: "Roboto", sans-serif;
+        font-family: "Ooyala Roboto", sans-serif;
         line-height: 1;
         outline: none; }
         .oo-player-container .oo-quality-panel .oo-quality-screen-content ul li a.oo-quality-auto-btn:hover .oo-quality-auto-icon, .oo-player-container .oo-quality-panel .oo-quality-screen-content ul li a.oo-quality-auto-btn:hover .oo-quality-auto-label {
@@ -1921,7 +1921,7 @@
         background-color: transparent;
         color: #fff;
         font-size: 0.6em;
-        font-family: "Roboto", sans-serif;
+        font-family: "Ooyala Roboto", sans-serif;
         line-height: 1;
         outline: none;
         opacity: 1;
@@ -1939,7 +1939,7 @@
           font-size: 0.725em; }
       .oo-player-container .oo-popover .oo-quality-screen-content ul li a.oo-quality-auto-btn {
         background-color: transparent;
-        font-family: "Roboto", sans-serif;
+        font-family: "Ooyala Roboto", sans-serif;
         line-height: 1;
         outline: none;
         white-space: nowrap; }
@@ -1986,7 +1986,7 @@
   cursor: pointer;
   display: block;
   color: #fff;
-  font-family: "Roboto Condensed Bold", sans-serif;
+  font-family: "Ooyala Roboto Condensed Bold", sans-serif;
   font-size: 18px;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
@@ -2075,7 +2075,7 @@
   padding-left: 8%;
   padding-right: 8%;
   font-size: 16px;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Ooyala Roboto Condensed", sans-serif;
   left: 50%;
   -webkit-transform: translateX(-50%);
   -moz-transform: translateX(-50%);
@@ -2107,7 +2107,7 @@
   padding-left: 8%;
   padding-right: 8%;
   font-size: 14px;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Ooyala Roboto Condensed", sans-serif;
   left: 50%;
   -webkit-transform: translateX(-50%);
   -moz-transform: translateX(-50%);

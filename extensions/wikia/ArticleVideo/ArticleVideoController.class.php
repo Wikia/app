@@ -29,4 +29,16 @@ class ArticleVideoController extends WikiaController {
 			$this->skipRendering();
 		}
 	}
+
+	public function labels() {
+		$videoId = $this->getVal( 'videoId', null );
+
+		if ( empty( $videoId ) ) {
+			throw new MissingParameterApiException( 'videoId' );
+		}
+
+		$api = OoyalaBacklotApiService::getInstance();
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setVal( 'labels', $api->getLabels( $videoId ) );
+	}
 }

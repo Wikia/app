@@ -1,0 +1,40 @@
+<div class="mcf-card-article__link">
+    <a href="{{url}}" class="mcf-card mcf-card-article"
+	   data-tracking="{{trackingLabels}}"
+	   data-li-type="{{liType}}"
+       style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000), url({{thumbnail}});"
+       title="{{title}}">
+        {{^thumbnail}}
+			<div class="mcf-card-article__thumbnail-container">
+				{{{fandomHeartSvg}}}
+			</div>
+        {{/thumbnail}}
+        {{#video}}
+			<div class="mcf-card-article__video-container">
+				<div class="mcf-card-article__video">
+					<svg class="mcf-card-article__video-icon" width="34" height="34" viewBox="0 0 24 24"
+						 xmlns="http://www.w3.org/2000/svg">
+						<path d="M19.69 12.6L5.143 22.867a.722.722 0 0 1-.753.05.733.733 0 0 1-.391-.65V1.733c0-.274.15-.524.391-.65a.724.724 0 0 1 .753.05l14.545 10.266a.734.734 0 0 1 0 1.201z"
+							  fill-rule="evenodd"/>
+					</svg>
+				</div>
+			</div>
+        {{/video}}
+	    {{#presented_by}}
+		    <div class="mcf-card-article__sponsored-bagde">
+			    <span class="mcf-card-article__sponsored-text">Sponsored</span>
+		    </div>
+	    {{/presented_by}}
+        <span class="mcf-card-article__title">
+            {{shortTitle}}
+        </span>
+        <span class="mcf-card-article__subtitle">
+            {{site_name}}
+        </span>
+    </a>
+	{{#isPlista}}
+		<a href="https://www.plista.com/au">
+			<img class="mcf-card-article__plista" src="http://static.plista.com/images/powered_by_plista_logo.png">
+		</a>
+	{{/isPlista}}
+</div>

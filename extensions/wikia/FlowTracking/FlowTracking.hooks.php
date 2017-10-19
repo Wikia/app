@@ -48,7 +48,7 @@ class FlowTrackingHooks {
 	 * @return bool
 	 */
 	public static function onArticleInsertComplete( Page $page, User $user, $text, $summary, $minoredit,
-		$watchThis, $sectionAnchor, &$flags, Revision $revision ) {
+		$watchThis, $sectionAnchor, $flags, Revision $revision ) {
 		$title = $revision->getTitle();
 		if ( $title && $title->inNamespace( NS_MAIN ) ) {
 			$request = RequestContext::getMain()->getRequest();

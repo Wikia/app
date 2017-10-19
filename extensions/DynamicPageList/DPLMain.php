@@ -143,7 +143,7 @@ class DPLMain {
 			ExtDynamicPageList::$options['allowcachedresults']['default'] = 'true';
 		}
 		else {
-			ExtDynamicPageList::$options['ordermethod'] = array('default' => 'titlewithoutnamespace', 'counter', 'size', 'category', 'sortkey',
+			ExtDynamicPageList::$options['ordermethod'] = array('default' => 'titlewithoutnamespace', 'size', 'category', 'sortkey',
                                         'category,firstedit',  'category,lastedit', 'category,pagetouched', 'category,sortkey',
                                         'categoryadd', 'firstedit', 'lastedit', 'pagetouched', 'pagesel',
                                         'title', 'titlewithoutnamespace', 'user', 'user,firstedit', 'user,lastedit','none');
@@ -1790,7 +1790,6 @@ class DPLMain {
 
 
     // ###### BUILD SQL QUERY ######
-        $sSqlPage_counter = '';
         $sSqlPage_size = '';
         $sSqlPage_touched = '';
 		$sSqlCalcFoundRows = '';
@@ -2168,7 +2167,7 @@ class DPLMain {
 
         if ( $bAddContribution ) {
             $sSqlRCTable = $sRCTable . ' AS rc, ';
-            $sSqlSelPage .= ', SUM( ABS( rc.rc_new_len - rc.rc_old_len ) ) AS contribution, rc.rc_user_text AS contributor';
+            $sSqlSelPage .= ', SUM( ABS( rc.rc_new_len - rc.rc_old_len ) ) AS contribution, rc.rc_user_text AS contributor, rc.rc_user AS contributor_id'; // SUS-812
             $sSqlWhere   .= ' AND page.page_id=rc.rc_cur_id';
             if ($sSqlGroupBy != '') $sSqlGroupBy .= ', ';
             $sSqlGroupBy .= 'rc.rc_cur_id';
@@ -2246,8 +2245,6 @@ class DPLMain {
             //format cl_timestamp field (type timestamp) to string in same format AS rev_timestamp field
             //to make it compatible with $wgLang->date() function used in function DPLOutputListStyle() to show "firstcategorydate"
             $sSqlCl_timestamp = ", DATE_FORMAT(cl0.cl_timestamp, '%Y%m%d%H%i%s') AS cl_timestamp";
-        if ($bAddPageCounter)
-            $sSqlPage_counter = ", $sPageTable.page_counter AS page_counter";
         if ($bAddPageSize)
             $sSqlPage_size = ", $sPageTable.page_len AS page_len";
         if ($bAddPageTouchedDate && $sSqlPage_touched=='')
@@ -2275,7 +2272,7 @@ class DPLMain {
         	}
         else
 			$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . $sPageTable.'.page_namespace AS page_namespace,'.
-            					$sPageTable.'.page_title AS page_title,'.$sPageTable.'.page_id AS page_id' . $sSqlSelPage . $sSqlSortkey . $sSqlPage_counter .
+            					$sPageTable.'.page_title AS page_title,'.$sPageTable.'.page_id AS page_id' . $sSqlSelPage . $sSqlSortkey .
                                 $sSqlPage_size . $sSqlPage_touched . $sSqlRev_user .
                                 $sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp .
                                 ' FROM ' . $sSqlRevisionTable . $sSqlCreationRevisionTable . $sSqlNoCreationRevisionTable . $sSqlChangeRevisionTable . $sSqlRCTable . $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
@@ -2491,9 +2488,6 @@ class DPLMain {
                     case 'categoryadd':
                         $sSqlWhere .= 'cl0.cl_timestamp';
                         break;
-                    case 'counter':
-                        $sSqlWhere .= 'page_counter';
-                        break;
                     case 'size':
                         $sSqlWhere .= 'page_len';
                         break;
@@ -2698,10 +2692,6 @@ class DPLMain {
             // external link
             if (isset($row->el_to))	$dplArticle->mExternalLink = $row->el_to;
 
-            //SHOW PAGE_COUNTER
-            if( isset($row->page_counter) )
-                $dplArticle->mCounter = $row->page_counter;
-
             //SHOW PAGE_SIZE
             if( isset($row->page_len) )
                 $dplArticle->mSize = $row->page_len;
@@ -2751,7 +2741,7 @@ class DPLMain {
                 // CONTRIBUTION, CONTRIBUTOR
                 if($bAddContribution) {
                     $dplArticle->mContribution = $row->contribution;
-                    $dplArticle->mContributor  = $row->contributor;
+                    $dplArticle->mContributor  = User::getUsername( $row->contributor_id, $row->contributor ); // SUS-812
                     $dplArticle->mContrib      = substr('*****************',0,round(log($row->contribution)));
                 }
 

@@ -8,6 +8,7 @@ use SMW\EventHandler;
 use SMW\SemanticData;
 use SMW\MediaWiki\Jobs\UpdateDispatcherJob;
 use Title;
+use User;
 use WikiPage;
 
 /**
@@ -32,7 +33,7 @@ class ArticleDelete {
 	 *
 	 * @param WikiPage $wikiPage
 	 */
-	public function __construct( &$wikiPage, &$user, &$reason, &$error ) {
+	public function __construct( WikiPage $wikiPage, User $user, $reason, &$error ) {
 		$this->wikiPage = $wikiPage;
 	}
 

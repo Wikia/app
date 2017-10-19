@@ -23,11 +23,11 @@ class ChatWidget {
 
 	/**
 	 * @brief This function set parseTag hook
+	 * @param Parser $parser
+	 * @return bool
 	 */
-	public static function onParserFirstCallInit( Parser &$parser ) {
-		wfProfileIn( __METHOD__ );
+	public static function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( CHAT_TAG, [ __CLASS__, "parseTag" ] );
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -148,7 +148,6 @@ class ChatWidget {
 
 		wfProfileIn( __METHOD__ );
 
-		Chat::info( __METHOD__ . ': Method called' );
 		$chatters = [ ];
 		if ( empty( $wgReadOnly ) ) {
 			// cache the whole response

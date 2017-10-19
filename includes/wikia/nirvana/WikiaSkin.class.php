@@ -111,8 +111,6 @@ abstract class WikiaSkin extends SkinTemplate {
 				if ( !empty( $srcMatch[1] ) && $this->assetsManager->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
 					//fix HTML::inlineScript's expansion of ampersands in the src attribute
 					$url = str_replace( '&amp;', '&', $srcMatch[1] );
-					// apply domain sharding
-					$url = wfReplaceAssetServer($url);
 					$res[] = array( 'url' => $url, 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $srcMatch[1] ) && !$this->strictAssetUrlCheck ) {
 					//only non-strict skins accept inline elements
@@ -123,68 +121,6 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		wfProfileOut( __METHOD__ );
 		return $res;
-	}
-
-	/**
-	 * This method extracts script tags from $this->getScripts() method
-	 * and generates a single <script> tag to load all required AssetsManager
-	 * groups in a single HTTP request.
-	 *
-	 * Bottom scripts are added to the end of the output.
-	 *
-	 * Additionaly, all groups from $groups array will be loaded as well.
-	 *
-	 * Once this function ends its run $groups will be updated (via a reference)
-	 * with all AM groups extracted from getScripts().
-	 *
-	 * @param array $groups additional list of AM groups to load
-	 * @return string <script> tags with extracted JS files and the rest
-	 */
-	public function getScriptsWithCombinedGroups(Array &$groups) {
-		wfProfileIn(__METHOD__);
-		$scripts = $this->getScripts();
-		$bottomScripts = $this->bottomScripts();
-
-		// extract all <script> tags that load a single AssetsManager group
-		if ( is_array( $scripts ) ) {
-			foreach ( $scripts as $idx => $script ) {
-				if ( isset( $script['url'] ) ) {
-					if ( $this->assetsManager->isGroupURL( $script['url'] ) ) {
-						$groups[] = $this->assetsManager->getGroupNameFromUrl( $script['url'] );
-						unset( $scripts[$idx] );
-					}
-
-					// remove this entry from bottom scripts as it was extracted
-					// from there by $this->getScripts() call above
-					$bottomScripts = str_replace(Html::linkedScript($script['url']) . "\n" , '', $bottomScripts);
-				}
-			}
-		}
-
-		// render script tags
-		$scriptTags = '';
-
-		// load these groups with a skin check
-		foreach ( $this->assetsManager->getURL( $groups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this ) ) {
-				$scriptTags .= "<script src='{$src}'></script>\n";
-			}
-		}
-
-		// load all remaining scripts
-		foreach ( $scripts as $script ) {
-			if (isset($script['url'])) {
-				$scriptTags .= "<script src='{$script['url']}'></script>\n";
-			}
-		}
-
-		wfDebug( sprintf( "%s: combined %d JS groups\n", __METHOD__, count($groups) ) );
-
-		// append bottom scripts to the output
-		$scriptTags .= $bottomScripts;
-
-		wfProfileOut(__METHOD__);
-		return $scriptTags;
 	}
 
 	/**
@@ -215,8 +151,6 @@ abstract class WikiaSkin extends SkinTemplate {
 					//fix HTML::element's expansion of ampersands in the src attribute
 					// todo: do we really need this trick? I notice URLs that are not properly encoded in the head element
 					$url = str_replace( '&amp;', '&', $hrefMatch[1] );
-					// apply domain sharding
-					$url = wfReplaceAssetServer($url);
 					$res[] = array( 'url' => $url, 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $hrefMatch[1] ) && !$this->strictAssetUrlCheck ) {
 					$res[] = array( 'url' => null, 'tag' => $m );

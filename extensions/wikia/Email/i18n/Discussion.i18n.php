@@ -40,22 +40,22 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-discussion-reply-with-title-subject' => 'Es gibt es eine neue Antwort auf deinen Beitrag [$1 $2] Im [$3 $4] Wiki',
+	'emailext-discussion-reply-with-title-subject' => 'Es gibt eine neue Antwort zu [$1 $2] auf [$3 $4].',
 	'emailext-discussion-reply-subject' => 'Es gibt eine neue Antwort auf einen Beitrag, den du verfolgst auf [$1 $2]',
 	'emailext-discussion-button-text' => 'Komplette Diskussion',
-	'emailext-discussion-all-discussions' => '[$1 Alle Diskussionen im $2 Wiki]',
-	'emailext-discussion-5-upvote-subject-with-title' => 'Dein Beitrag $1 im Wiki $2 hat 5 Zustimmungen erhalten!',
-	'emailext-discussion-5-upvote-subject' => 'Dein Beitrag im Wiki $1 hat 5 Zustimmungen erhalten!',
-	'emailext-discussion-5-upvote-summary-with-title' => 'Dein Beitrag [$1 $2] im Wiki [$3 $4] hat 5 Zustimmungen erhalten!',
-	'emailext-discussion-5-upvote-summary' => 'Dein Beitrag im Wiki [$1 $2] hat 5 Zustimmungen erhalten!',
-	'emailext-discussion-25-upvote-subject-with-title' => 'Dein kometenhafter Aufstieg geht weiter! Dein Beitrag $1 im Wiki $2 hat 25 Zustimmungen erhalten!',
-	'emailext-discussion-25-upvote-subject' => 'Dein kometenhafter Aufstieg geht weiter! Dein Beitrag im Wiki $1 hat 25 Zustimmungen erhalten!',
-	'emailext-discussion-25-upvote-summary-with-title' => 'Dein Beitrag [$1 $2] im Wiki [$3 $4] hat 25 Zustimmungen erhalten!',
-	'emailext-discussion-25-upvote-summary' => 'Dein Beitrag im Wiki [$1 $2] hat 25 Zustimmungen erhalten!',
-	'emailext-discussion-100-upvote-subject-with-title' => 'Dein Beitrag $1 im Wiki $2 hat 100 Zustimmungen erhalten! Weiter so!',
-	'emailext-discussion-100-upvote-subject' => 'Dein Beitrag im Wiki $1 hat 100 Zustimmungen erhalten! Weiter so!',
-	'emailext-discussion-100-upvote-summary-with-title' => 'Dein Beitrag [$1 $2] im Wiki [$3 $4] hat 100 Zustimmungen erhalten!',
-	'emailext-discussion-100-upvote-summary' => 'Dein Beitrag im Wiki [$1 $2] hat 100 Zustimmungen erhalten!',
+	'emailext-discussion-all-discussions' => '[$1 Alle Diskussionen auf $2]',
+	'emailext-discussion-5-upvote-subject-with-title' => 'Dein Beitrag $1 auf $2 hat 5 Zustimmungen erhalten!',
+	'emailext-discussion-5-upvote-subject' => 'Dein Beitrag auf $1 hat 5 Zustimmungen erhalten!',
+	'emailext-discussion-5-upvote-summary-with-title' => 'Dein Beitrag [$1 $2] auf [$3 $4] hat 5 Zustimmungen erhalten!',
+	'emailext-discussion-5-upvote-summary' => 'Dein Beitrag auf [$1 $2] hat 5 Zustimmungen erhalten!',
+	'emailext-discussion-25-upvote-subject-with-title' => 'Dein kometenhafter Aufstieg geht weiter! Dein Beitrag $1 auf $2 hat 25 Zustimmungen erhalten!',
+	'emailext-discussion-25-upvote-subject' => 'Dein kometenhafter Aufstieg geht weiter! Dein Beitrag auf $1 hat 25 Zustimmungen erhalten!',
+	'emailext-discussion-25-upvote-summary-with-title' => 'Dein Beitrag [$1 $2] auf [$3 $4] hat 25 Zustimmungen erhalten!',
+	'emailext-discussion-25-upvote-summary' => 'Dein Beitrag auf [$1 $2] hat 25 Zustimmungen erhalten!',
+	'emailext-discussion-100-upvote-subject-with-title' => 'Dein Beitrag $1 auf $2 hat 100 Zustimmungen erhalten! Weiter so!',
+	'emailext-discussion-100-upvote-subject' => 'Dein Beitrag auf $1 hat 100 Zustimmungen erhalten! Weiter so!',
+	'emailext-discussion-100-upvote-summary-with-title' => 'Dein Beitrag [$1 $2] auf [$3 $4] hat 100 Zustimmungen erhalten!',
+	'emailext-discussion-100-upvote-summary' => 'Dein Beitrag auf [$1 $2] hat 100 Zustimmungen erhalten!',
 );
 
 $messages['es'] = array(
@@ -173,22 +173,22 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'emailext-discussion-reply-with-title-subject' => 'Há uma nova resposta para o seu post [$1 $2] na [$3 $4]',
+	'emailext-discussion-reply-with-title-subject' => 'Há uma nova resposta para [$1 $2] na [$3 $4]',
 	'emailext-discussion-reply-subject' => 'Há uma nova resposta para um post que você está seguindo na [$1 $2]',
 	'emailext-discussion-button-text' => 'Discussão completa',
 	'emailext-discussion-all-discussions' => '[$1 todas as discussões sobre $2]',
-	'emailext-discussion-5-upvote-subject-with-title' => 'Seu post $1 sobre $ 2 já atingiu 5 votos!',
-	'emailext-discussion-5-upvote-subject' => 'Seu post na $1 já atingiu 5 votos!',
-	'emailext-discussion-5-upvote-summary-with-title' => 'Seu post [$1 $2] na [$3 $4] já atingiu 5 votos!',
-	'emailext-discussion-5-upvote-summary' => 'Seu post na [$1 $2] já atingiu 5 votos!',
+	'emailext-discussion-5-upvote-subject-with-title' => 'A postagem $1 sobre $ 2 já atingiu 5 votos!',
+	'emailext-discussion-5-upvote-subject' => 'A postagem na $1 já atingiu 5 votos!',
+	'emailext-discussion-5-upvote-summary-with-title' => 'A postagem [$1 $2] na [$3 $4] já atingiu 5 votos!',
+	'emailext-discussion-5-upvote-summary' => 'A postagem na [$1 $2] já atingiu 5 votos!',
 	'emailext-discussion-25-upvote-subject-with-title' => 'Você está se saindo bem! Seu post $1 na $2 já atingiu 25 votos!',
 	'emailext-discussion-25-upvote-subject' => 'Você está se saindo bem! Seu post na $1 já atingiu 25 votos!',
-	'emailext-discussion-25-upvote-summary-with-title' => 'Seu post [$1 $2] na [$3 $4] já atingiu 25 votos!',
-	'emailext-discussion-25-upvote-summary' => 'Seu post na [$1 $2] já atingiu 25 votos!',
-	'emailext-discussion-100-upvote-subject-with-title' => 'Seu post $1 na $2 já atingiu 100 votos! Maravilha!',
-	'emailext-discussion-100-upvote-subject' => 'Seu post na $1 já atingiu 100 votos! Maravilha!',
-	'emailext-discussion-100-upvote-summary-with-title' => 'Seu post [$1 $2] sobre [$3 $4] já atingiu 100 votos!',
-	'emailext-discussion-100-upvote-summary' => 'Seu post na [$1 $2] já atingiu 100 votos!',
+	'emailext-discussion-25-upvote-summary-with-title' => 'A postagem [$1 $2] na [$3 $4] já atingiu 25 votos!',
+	'emailext-discussion-25-upvote-summary' => 'A postagem na [$1 $2] já atingiu 25 votos!',
+	'emailext-discussion-100-upvote-subject-with-title' => 'A postagem $1 na $2 já atingiu 100 votos! Maravilha!',
+	'emailext-discussion-100-upvote-subject' => 'A postagem na $1 já atingiu 100 votos! Maravilha!',
+	'emailext-discussion-100-upvote-summary-with-title' => 'A postagem [$1 $2] sobre [$3 $4] já atingiu 100 votos!',
+	'emailext-discussion-100-upvote-summary' => 'A postagem na [$1 $2] já atingiu 100 votos!',
 );
 
 $messages['ru'] = array(

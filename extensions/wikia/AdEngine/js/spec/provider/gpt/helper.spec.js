@@ -39,10 +39,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				isEnabled: noop,
 				addMarker: noop
 			},
-			sourcePoint: {
-				recoverSlots: noop,
-				isEnabled: noop
-			},
 			slotTweaker: {
 				show: noop,
 				hide: noop,
@@ -68,7 +64,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			slotTargetingHelper: {
 				getAbTestId: noop,
 				getOutstreamData: noop,
-				getPrebidSlotId: noop,
 				getWikiaSlotId: noop
 			},
 			googleTag: {
@@ -85,6 +80,25 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				addSlot: noop,
 				flush: noop,
 				setPageLevelParams: noop
+			},
+			googleSlots: {
+				getSlotByName: function () {
+					return {};
+				}
+			},
+			gptTargeting: {
+				getSlotLevelTargeting: function () {
+					return {};
+				}
+			},
+			doc: {
+				getElementById: function () {
+					return {
+						getAttribute: function () {
+							return '{uap: "none"}';
+						}
+					}
+				}
 			},
 			geo: {
 				isProperGeo: function() {
@@ -104,18 +118,20 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,
+			mocks.googleSlots,
+			mocks.gptTargeting,
 			mocks.passbackHandler,
 			mocks.slotTargetingHelper,
-			mocks.sourcePoint,
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
+			mocks.doc,
 			mocks.geo,
 			{},
 			mocks.log,
 			undefined,
-			undefined,
 			mocks.sraHelper,
+			undefined,
 			mocks.pageFair
 		);
 	}

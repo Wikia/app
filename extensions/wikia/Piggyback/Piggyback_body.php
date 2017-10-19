@@ -111,8 +111,8 @@ class PBLoginForm extends LoginForm {
 	private $mOtherName = '';
 	private $templateData = [];
 
-	function __construct( &$request ) {
-		global $wgUser;
+	function __construct( WebRequest $request ) {
+		parent::__construct( $request );
 
 		$this->titleObj = SpecialPage::getTitleFor( 'Piggyback' );
 
@@ -123,7 +123,7 @@ class PBLoginForm extends LoginForm {
 
 		$this->mType = 'login';
 		/* fake to don't change remember password */
-		$this->mRemember = (bool) $wgUser->getGlobalPreference( 'rememberpassword' );
+		$this->mRemember = (bool) $this->getUser()->getGlobalPreference( 'rememberpassword' );
 	}
 
 	function mainLoginForm( $msg, $msgtype = 'error', $errParam = '' ) {

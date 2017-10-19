@@ -56,56 +56,9 @@
 
 	// public methods
 
-	/**
-	 * Load the facebook JS library v2.x
-	 *
-	 * @returns {jQuery} Returns a jQuery promise
-	 * @see https://developers.facebook.com/docs/javascript/quickstart/v2.2
-	 */
-	$.loadFacebookSDK = function () {
-		// create our own deferred object to resolve after FB.init finishes
-		var $deferred = $.Deferred(),
-			url = window.fbScript || window.Wikia.fbLocale.getSdkUrl(window.wgUserLanguage);
-
-		// If the FB SDK successfully loads, show the fb login button
-		$deferred.done(function () {
-			$('.sso-login').removeClass('hidden');
-		});
-
-		if (typeof window.FB === 'object') {
-			// Since we have our own deferred object, we need to resolve it if FB is already loaded.
-			// We can't rely on the type check inside loadExternalLibrary.
-			$deferred.resolve();
-		} else {
-			// This is invoked by Facebook once the SDK is loaded.
-			window.fbAsyncInit = function () {
-				window.FB.init({
-					appId: window.fbAppId,
-					cookie: true,
-					version: 'v2.1'
-				});
-
-				// resolve after FB has finished inititalizing
-				$deferred.resolve();
-			};
-
-			$.when(loadExternalLibrary('FacebookSDK', url, typeof window.FB))
-				.fail(function () {
-					$deferred.reject();
-				});
-		}
-
-		return $deferred;
-	};
-
 	$.loadReCaptcha = function () {
 		var url = 'https://www.google.com/recaptcha/api.js?hl=' + window.wgUserLanguage;
 		return loadExternalLibrary('ReCaptcha', url, typeof window.grecaptcha);
 	};
 
-	$.loadGoogleSearchAPI = function (searchId) {
-		var url = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-				  '//cse.google.com/cse.js?cx=' + searchId;
-		return loadExternalLibrary('googleSearchUrl', url, typeof window.GoogleSearch );
-	};
 })(jQuery);

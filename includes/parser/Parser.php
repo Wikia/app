@@ -186,7 +186,7 @@ class Parser {
 	 * Wikia vars
 	 */
 
-	var $mIsMainParse;	# Is main article content currently parsed
+	public $mIsMainParse;	# Is main article content currently parsed
 	var $mFlagsParsed = false; # Have you already parsed the article's flags?
 
 	/**
@@ -256,7 +256,7 @@ class Parser {
 		CoreTagHooks::register( $this );
 		$this->initialiseVariables();
 
-		Hooks::run( 'ParserFirstCallInit', array( &$this ) );
+		Hooks::run( 'ParserFirstCallInit', [ $this ] );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -321,7 +321,7 @@ class Parser {
 			$this->mPreprocessor = null;
 		}
 
-		Hooks::run( 'ParserClearState', array( &$this ) );
+		Hooks::run( 'ParserClearState', [ $this ] );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -364,9 +364,9 @@ class Parser {
 			$this->mRevisionUser = null;
 		}
 
-		Hooks::run( 'ParserBeforeStrip', array( &$this, &$text, &$this->mStripState ) );
+		Hooks::run( 'ParserBeforeStrip', [ $this, &$text, &$this->mStripState ] );
 		# No more strip!
-		Hooks::run( 'ParserAfterStrip', array( &$this, &$text, &$this->mStripState ) );
+		Hooks::run( 'ParserAfterStrip', [ $this, &$text, &$this->mStripState ] );
 		$text = $this->internalParse( $text );
 
 		$text = $this->mStripState->unstripGeneral( $text );
@@ -437,7 +437,7 @@ class Parser {
 
 		$text = $this->mStripState->unstripNoWiki( $text );
 
-		Hooks::run( 'ParserBeforeTidy', array( &$this, &$text ) );
+		Hooks::run( 'ParserBeforeTidy', [ $this, &$text ] );
 
 		$text = $this->mStripState->unstripGeneral( $text );
 
@@ -477,7 +477,7 @@ class Parser {
 			$this->limitationWarn( 'expensive-parserfunction', $this->mExpensiveFunctionCount, $wgExpensiveParserFunctionLimit );
 		}
 
-		Hooks::run( 'ParserAfterTidy', array( &$this, &$text ) );
+		Hooks::run( 'ParserAfterTidy', [ $this, &$text ] );
 
 		// Wikia change begin - @author: wladek
 		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
@@ -529,8 +529,10 @@ class Parser {
 	 */
 	function recursiveTagParse( $text, $frame=false ) {
 		wfProfileIn( __METHOD__ );
-		Hooks::run( 'ParserBeforeStrip', array( &$this, &$text, &$this->mStripState ) );
-		Hooks::run( 'ParserAfterStrip', array( &$this, &$text, &$this->mStripState ) );
+
+		Hooks::run( 'ParserBeforeStrip', [ $this, &$text, &$this->mStripState ] );
+		Hooks::run( 'ParserAfterStrip', [ $this, &$text, &$this->mStripState ] );
+
 		$text = $this->internalParse( $text, false, $frame );
 		wfProfileOut( __METHOD__ );
 		return $text;
@@ -546,8 +548,10 @@ class Parser {
 		if ( $revid !== null ) {
 			$this->mRevisionId = $revid;
 		}
-		Hooks::run( 'ParserBeforeStrip', array( &$this, &$text, &$this->mStripState ) );
-		Hooks::run( 'ParserAfterStrip', array( &$this, &$text, &$this->mStripState ) );
+
+		Hooks::run( 'ParserBeforeStrip', [ $this, &$text, &$this->mStripState ] );
+		Hooks::run( 'ParserAfterStrip', [ $this, &$text, &$this->mStripState ] );
+
 		$text = $this->replaceVariables( $text );
 		$text = $this->mStripState->unstripBoth( $text );
 		wfProfileOut( __METHOD__ );
@@ -1179,10 +1183,13 @@ class Parser {
 	function internalParse( $text, $isMain = true, $frame = false ) {
 		wfProfileIn( __METHOD__ );
 
+		// Wikia change - let extensions know parser is currently not parsing main wikitext
+		$this->mIsMainParse = $isMain;
+
 		$origText = $text;
 
 		# Hook to suspend the parser in this state
-		if ( !Hooks::run( 'ParserBeforeInternalParse', array( &$this, &$text, &$this->mStripState ) ) ) {
+		if ( !Hooks::run( 'ParserBeforeInternalParse', [ $this, &$text, &$this->mStripState ] ) ) {
 			wfProfileOut( __METHOD__ );
 			return $text ;
 		}
@@ -1203,8 +1210,8 @@ class Parser {
 			$text = $this->replaceVariables( $text );
 		}
 
-		$text = Sanitizer::removeHTMLtags( $text, [ &$this, 'attributeStripCallback' ] );
-		Hooks::run( 'InternalParseBeforeLinks', array( &$this, &$text, &$this->mStripState ) );
+		$text = Sanitizer::removeHTMLtags( $text, [ $this, 'attributeStripCallback' ] );
+		Hooks::run( 'InternalParseBeforeLinks', [ $this, &$text, &$this->mStripState ] );
 
 		# Tables need to come after variable replacement for things to work
 		# properly; putting them before other transformations should keep
@@ -1262,7 +1269,7 @@ class Parser {
 					(?: [0-9]  [\ \-]? ){9} # 9 digits with opt. delimiters
 					[0-9Xx]                 # check digit
 					\b)
-			)!xu', array( &$this, 'magicLinkCallback' ), $text );
+			)!xu', [ $this, 'magicLinkCallback' ], $text );
 
 		if ( preg_last_error() !== 0 ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'PCRE error', [ 'preg_last_error' => preg_last_error() ] );
@@ -2867,14 +2874,14 @@ class Parser {
 		 * Some of these require message or data lookups and can be
 		 * expensive to check many times.
 		 */
-		if ( Hooks::run( 'ParserGetVariableValueVarCache', array( &$this, &$this->mVarCache ) ) ) {
+		if ( Hooks::run( 'ParserGetVariableValueVarCache', [ $this, &$this->mVarCache ] ) ) {
 			if ( isset( $this->mVarCache[$index] ) ) {
 				return $this->mVarCache[$index];
 			}
 		}
 
 		$ts = wfTimestamp( TS_UNIX, $this->mOptions->getTimestamp() );
-		Hooks::run( 'ParserGetVariableValueTs', array( &$this, &$ts ) );
+		Hooks::run( 'ParserGetVariableValueTs', [ $this, &$ts ] );
 
 		# Use the time zone
 		global $wgLocaltimezone;
@@ -3125,9 +3132,6 @@ class Parser {
 			case 'numberofedits':
 				$value = $pageLang->formatNum( SiteStats::edits() );
 				break;
-			case 'numberofviews':
-				$value = $pageLang->formatNum( SiteStats::views() );
-				break;
 			case 'currenttimestamp':
 				$value = wfTimestamp( TS_MW, $ts );
 				break;
@@ -3157,11 +3161,12 @@ class Parser {
 				return $wgLanguageCode;
 			default:
 				$ret = null;
-				if ( Hooks::run( 'ParserGetVariableValueSwitch', array( &$this, &$this->mVarCache, &$index, &$ret, &$frame ) ) ) {
+				if ( Hooks::run( 'ParserGetVariableValueSwitch',
+					[ $this, &$this->mVarCache, &$index, &$ret, &$frame ] ) ) {
 					return $ret;
-				} else {
-					return null;
 				}
+
+				return null;
 		}
 
 		if ( $index ) {
@@ -3481,7 +3486,7 @@ class Parser {
 				if ( $function ) {
 					wfProfileIn( __METHOD__ . '-pfunc-' . $function );
 					list( $callback, $flags ) = $this->mFunctionHooks[$function];
-					$initialArgs = array( &$this );
+					$initialArgs = array( $this );
 					$funcArgs = array( trim( substr( $part1, $colonPos + 1 ) ) );
 					if ( $flags & SFH_OBJECT_ARGS ) {
 						# Add a frame parameter, and pass the arguments as an array
@@ -3752,7 +3757,7 @@ class Parser {
 		}
 
 		# wikia start
-		Hooks::run( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text'], &$this ) );
+		Hooks::run( 'Parser::endBraceSubstitution', [ $originalTitle, &$ret['text'], $this ] );
 		# wikia end
 
 		wfProfileOut( __METHOD__ );
@@ -4177,7 +4182,8 @@ class Parser {
 					throw new MWException( "Tag hook for $name is not callable\n" );
 				}
 
-				$output = call_user_func_array( $callback, array( &$this, $frame, $content, $attributes ) );
+				$output =
+					call_user_func_array( $callback, [ $this, $frame, $content, $attributes ] );
 			} else {
 				$output = '<span class="error">Invalid tag extension name: ' .
 					htmlspecialchars( $name ) . '</span>';
@@ -4360,10 +4366,6 @@ class Parser {
 	function formatHeadings( $text, $origText, $isMain=true ) {
 		global $wgMaxTocLevel, $wgHtml5, $wgExperimentalHtmlIds;
 
-		// Wikia change start
-		$this->mIsMainParse = $isMain;
-		// Wikia change end
-
 		# Inhibit editsection links if requested in the page
 		if ( isset( $this->mDoubleUnderscores['noeditsection'] ) ) {
 			$maybeShowEditLink = $showEditLink = false;
@@ -4374,7 +4376,7 @@ class Parser {
 
 		/* Wikia change begin - @author: Macbre */
 		/* Allow extensions to force section edit link (RT #79897)*/
-		Hooks::run('Parser::showEditLink', array(&$this, &$showEditLink));
+		Hooks::run( 'Parser::showEditLink', [ $this, &$showEditLink ] );
 		/* Wikia change end */
 
 		if ( $showEditLink ) {
@@ -4412,7 +4414,7 @@ class Parser {
 
 		/* Wikia change begin - @author: nAndy/Rafal */
 		/* Allow extensions to force not generating mediawiki TOC */
-		Hooks::run('Parser::disableMWTOC', [ &$this, &$enoughToc ]);
+		Hooks::run( 'Parser::disableMWTOC', [ $this, &$enoughToc ] );
 		/* Wikia change end */
 
 		# headline counter
@@ -5258,7 +5260,7 @@ class Parser {
 
 		/* Wikia change begin */
 		/* Allow extensions to use their own "parser" for <gallery> tag content */
-		if ( !Hooks::run( 'BeforeParserrenderImageGallery', array( &$this, &$ig ) ) ) {
+		if ( !Hooks::run( 'BeforeParserrenderImageGallery', [ $this, &$ig ] ) ) {
 			Hooks::run( 'AfterParserParseImageGallery', [ $marker, $ig ] );
 			return $ig->toHTML();
 		}
@@ -5423,8 +5425,12 @@ class Parser {
 			'horizAlign' => array(), 'vertAlign' => array() );
 
 		# wikia start
-		if (!Hooks::run( 'BeforeParserMakeImageLinkObjOptions', array( &$this, &$title, &$parts, &$params, &$time, &$descQuery, $options ) ) ) {
-			$ret = Linker::makeImageLink2( $title, $file, $params['frame'], $params['handler'], $time, $descQuery );
+		if ( !Hooks::run( 'BeforeParserMakeImageLinkObjOptions',
+			[ $this, &$title, &$parts, &$params, &$time, &$descQuery, $options ] ) ) {
+			$ret =
+				Linker::makeImageLink2( $title, $file, $params['frame'], $params['handler'], $time,
+					$descQuery );
+
 			return $ret;
 		}
 		# wikia end

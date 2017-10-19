@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'user-identity-box-group-threadmoderator' => 'Discussions Moderator',
 	'user-identity-box-group-vanguard' => 'Vanguard',
 	'user-identity-box-group-content-moderator' => 'Content Moderator',
+	'user-identity-box-group-global-discussions-moderator' => 'Global Discussions Moderator',
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
 	'user-identity-box-zero-state-gender' => 'Gender',
@@ -218,6 +219,7 @@ Parameters:
 	'user-identity-box-group-threadmoderator' => 'Group name shown on user profile page next to user login for users who are "Discussions Moderator".',
 	'user-identity-box-group-content-moderator' => 'Group name shown on user profile page next to user login for users who are "Content Moderator".',
 	'user-identity-box-group-vanguard' => 'Group name shown on user profile page next to user login for users who are "Vanguard".',
+	'user-identity-box-group-global-discussions-moderator' => 'Group name shown on user profile page next to user login for users who are "Global Discussions Moderator".',
 	'user-identity-box-zero-state-location' => "Placeholder message on user profile page for user location when user didn't provide it.",
 	'user-identity-box-zero-state-birthday' => "Placeholder message on user profile page for user birthday when user didn't provide it.",
 	'user-identity-box-zero-state-gender' => "Placeholder message on user profile page for user gender when user didn't provide it.",
@@ -732,6 +734,7 @@ $messages['de'] = array(
 	'right-deleteprofilev3' => 'Benutzerseiten löschen',
 	'right-renameprofilev3' => 'Benutzerseiten verschieben',
 	'right-clearuserprofile' => 'Inhalte eines Nutzerprofils mit einem Klick löschen',
+	'user-identity-box-group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
 );
 
 $messages['de-ch'] = array(
@@ -912,6 +915,7 @@ $messages['es'] = array(
 	'right-deleteprofilev3' => 'Borrar páginas de usuario',
 	'right-renameprofilev3' => 'Mover páginas de usuario',
 	'right-clearuserprofile' => 'Borrar el contenido del perfil de un usuario en un clic',
+	'user-identity-box-group-global-discussions-moderator' => 'Moderador global de discusiones',
 );
 
 $messages['fa'] = array(
@@ -1159,6 +1163,7 @@ $messages['fr'] = array(
 	'right-deleteprofilev3' => 'Supprimer des pages utilisateur',
 	'right-renameprofilev3' => 'Déplacer des pages utilisateur',
 	'right-clearuserprofile' => "Supprimer en un clic le contenu du bandeau du profil d'un utilisateur",
+	'user-identity-box-group-global-discussions-moderator' => 'Modérateur global de discussions',
 );
 
 $messages['gl'] = array(
@@ -1492,6 +1497,140 @@ $messages['ia'] = array(
 	'user-identity-remove-fail' => 'Un problema occurreva con le remotion del avatar!',
 );
 
+$messages['iris-4622'] = array(
+	'userprofilepage-edit-modal-header' => '編輯個人資料',
+	'userprofilepage-question-caption' => '$2個問題之$1',
+	'userprofilepage-lightbox-interview-cancel' => '取消',
+	'userprofilepage-lightbox-interview-save' => '已經完成了，儲存',
+	'userprofilepage-interview-edit-new-summary' => '創建使用者訪談',
+	'userprofilepage-interview-edit-update-summary' => '使用者訪談已更新',
+	'userprofilepage-interview-save-error' => '保存訪談記錄失敗',
+	'userprofilepage-interview-save-internal-error' => '保存訪談記錄失敗-發生內部錯誤',
+	'userprofilepage-answers-stats-title' => '訪談統計',
+	'userprofilepage-add-question' => '增加新的問題',
+	'userprofilepage-question-save' => '保存提問',
+	'userprofilepage-question-list-title' => '$2個問題之$1',
+	'userprofilepage-interview-section-title' => '使用者採訪',
+	'userprofilepage-invalid-user' => '無效的使用者 ！您未登錄或沒有權限進行',
+	'userprofilepage-avatar-error-type' => '不正確MIME檔案類型。允許的檔案類型: $1',
+	'userprofilepage-avatar-error-resolution' => '使用者頭像最大解析度為2000×2000',
+	'user-identity-box-edit' => '編輯',
+	'user-identity-box-wikia-contributor' => 'FANDOM用戶',
+	'user-identity-box-edit-avatar' => '編輯頭像',
+	'user-identity-box-delete-avatar' => '刪除頭像',
+	'user-identity-box-avatar-upload-avatar' => '上傳頭像',
+	'user-identity-box-avatar-fb-import-avatar' => '從Facebook匯入我的頭像',
+	'user-identity-box-avatar-choose-avatar' => '選擇一個頭像',
+	'user-identity-box-avatar-save' => '已經完成了，儲存',
+	'user-identity-box-avatar-cancel' => '取消',
+	'user-identity-box-avatar-anon-user-error' => '您必須登錄以進行任何更改',
+	'user-identity-box-hide-edits-wikis' => '全部隱藏',
+	'user-identity-box-banned-from-chat' => '禁止聊天',
+	'user-identity-box-aka-label' => '<span>我是</span> $1',
+	'user-identity-box-my-twitter' => '我的 Twitter',
+	'user-identity-box-my-website' => '我的網站',
+	'user-identity-box-my-fb-page' => '我的 Facebook',
+	'user-identity-box-fav-wikis' => '我最喜歡的 wiki',
+	'user-identity-box-location' => '<span>我住在</span> $1',
+	'user-identity-box-was-born-on' => '<span>我的生日是</span> $1$2日',
+	'user-identity-box-was-born-in' => '<span>我出生於</span> $1',
+	'user-identity-box-occupation' => '<span>我的工作是</span> $1',
+	'user-identity-i-am' => '<span>我是</span> $1',
+	'user-identity-bio' => '<span>個人簡介</span> $1',
+	'user-identity-bio-show-more' => '顯示更多',
+	'user-identity-bio-modal-title' => '個人簡介',
+	'user-identity-box-edits-since-joining' => '次編輯<br/>於$1加入這個Wiki',
+	'user-identity-box-edits' => '<em>$1</em><span>次編輯</span>',
+	'user-identity-box-discussion-posts' => '討論版文章',
+	'user-identity-box-group-blocked' => '已封禁',
+	'user-identity-box-group-chatmoderator' => '聊天主持人',
+	'user-identity-box-group-sysop' => '管理員',
+	'user-identity-box-group-bureaucrat' => '行政員',
+	'user-identity-box-group-founder' => '創建者',
+	'user-identity-box-group-staff' => '職員',
+	'user-identity-box-group-helper' => '助手',
+	'user-identity-box-group-vstf' => 'VSTF',
+	'user-identity-box-group-authenticated' => '通過認證',
+	'user-identity-box-group-council' => '委員',
+	'user-identity-box-group-voldev' => '志願開發者',
+	'user-identity-box-group-threadmoderator' => '話題版主',
+	'user-identity-box-group-vanguard' => '先鋒',
+	'user-identity-box-group-content-moderator' => '內容版主',
+	'user-identity-box-group-global-discussions-moderator' => '全站話題版主',
+	'user-identity-box-zero-state-location' => '位置',
+	'user-identity-box-zero-state-birthday' => '生日',
+	'user-identity-box-zero-state-gender' => '性別',
+	'user-identity-box-zero-state-occupation' => '職業',
+	'user-identity-box-zero-state-twitter' => '我的 Twitter',
+	'user-identity-box-zero-state-website' => '我的網站',
+	'user-identity-box-zero-state-fb-page' => '我的 Facebook',
+	'user-identity-box-about-me' => '關於我',
+	'user-identity-box-avatar' => '頭像',
+	'user-identity-box-about-name' => '你叫什麼名字？',
+	'user-identity-box-about-location' => '你住在哪裡？',
+	'user-identity-box-about-birthday' => '你的生日是那一天？',
+	'user-identity-box-about-occupation' => '你的職業是什麼？',
+	'user-identity-box-about-gender' => '你的性別為何？',
+	'user-identity-box-about-website' => '你的個人網站為何？',
+	'user-identity-box-about-tweet' => '你的 Twitter 名字是什麼？',
+	'user-identity-box-about-fb-page' => '你的Facebook帳戶頁面連結是？',
+	'user-identity-box-about-fav-wikis' => '你已參與貢獻的wiki:',
+	'user-identity-box-about-fav-wikis-refresh' => '刷新',
+	'user-identity-box-join-more-wikis' => '加入更多的Wiki，它們將在這裡顯示！',
+	'user-identity-box-import-from-fb' => '從Facebook 匯入您的資訊',
+	'user-identity-box-connect-to-fb' => '與Facebook 連結',
+	'user-identity-box-unsyc-fb' => '與Facebook斷開連接',
+	'user-identity-box-fb-page' => '你的 Facebook 頁面是什麼？',
+	'user-identity-box-invalid-fb-id-error' => 'Facebook ID 無效',
+	'user-identity-box-fb-prefs' => 'Feed首選項',
+	'user-identity-box-avatar-error-nofile' => '錯誤： 未找到要上載的頭像檔案',
+	'user-identity-box-avatar-error-cantwrite' => '錯誤: 無法寫入臨時目錄',
+	'user-identity-box-avatar-error-size' => '錯誤: 頭像檔案太大 (最大 {{PLURAL:$1| $1 | $1}}KB)',
+	'user-identity-box-avatar-error' => '錯誤： 儲存頭像時發生內部錯誤',
+	'user-identity-box-clear' => '清除用戶檔案',
+	'user-identity-box-clear-confirmation' => '你確定你想要清除用戶檔案內容嗎？',
+	'user-identity-box-clear-success' => '已成功刪除用戶檔案',
+	'user-identity-box-clear-notarget' => '找不到指定的用戶',
+	'userprofilepage-lightbox-about-me-cancel' => '取消',
+	'userprofilepage-lightbox-about-me-save' => '已完成，儲存',
+	'user-identity-box-saving-error' => '儲存用戶資料失敗-您的資料應該要是純文字',
+	'user-identity-box-saving-internal-error' => '未能儲存用戶資料-發生內部錯誤',
+	'userprofilepage-closing-popup-header' => '退出個人資訊編輯器',
+	'userprofilepage-closing-popup-info' => '還有未儲存在您的個人檔案中的更改。你想要怎麼做？',
+	'userprofilepage-closing-popup-discard-and-quit' => '放棄更改並退出',
+	'userprofilepage-closing-popup-save-and-quit' => '保存並退出',
+	'userprofilepage-closing-popup-cancel' => '取消',
+	'user-action-menu-edit' => '編輯',
+	'user-action-menu-edit-profile' => '編輯個人資料',
+	'user-action-menu-leave-message' => '留言',
+	'user-action-menu-view-source' => '查看原始程式碼',
+	'user-action-menu-protect' => '保護',
+	'user-action-menu-unprotect' => '取消保護',
+	'user-action-menu-rename' => '重命名',
+	'user-action-menu-delete' => '刪除',
+	'user-action-menu-history' => '歷史記錄',
+	'usermasthead-log' => '使用者刊頭',
+	'usermasthead-log-message' => '添加個人檔案資訊',
+	'usermasthead-log-alt' => '使用者刊頭編輯日誌',
+	'useravatar-log' => '使用者頭像日誌',
+	'blog-avatar-changed-log' => '添加或更改頭像',
+	'blog-avatar-removed-log' => '刪除 $1 的頭像',
+	'blog-avatar-alt' => '關於使用者頭像添加和移除的日誌',
+	'user-identity-remove-confirmation' => '你確定你想要移除個人頭像嗎?',
+	'user-identity-remove-fail' => '移除個人頭像時遇到問題！',
+	'user-identity-avatars-maintenance' => '系統處於維護狀態，上傳和刪除頭像暫時不可用！',
+	'userprofilepage-edit-modal-error' => '發生未知錯誤',
+	'right-council' => '允許訪問社區委員會Wiki',
+	'right-voldev' => '在用戶檔案上標記用戶為「志願開發者」',
+	'right-authenticated' => '通過FANDOM認證的官方帳戶（比如，明星或遊戲開發商帳戶）',
+	'right-removeavatar' => '刪除用戶頭像圖示',
+	'right-loggedin' => '標記為已登入帳戶的用戶',
+	'right-editprofilev3' => '編輯其他用戶的檔案資料',
+	'right-deleteprofilev3' => '刪除用戶頁面',
+	'right-renameprofilev3' => '移動用戶頁面',
+	'right-clearuserprofile' => '點擊進行清除用戶頁面刊頭內容',
+);
+
 $messages['it'] = array(
 	'user-identity-box-fb-prefs' => 'Feed delle Preferenze',
 	'blog-avatar-changed-log' => 'Avatar utente aggiunto o aggiornato',
@@ -1512,7 +1651,7 @@ $messages['it'] = array(
 	'userprofilepage-avatar-error-type' => 'Tipo MIME non valido. Permesso: $1',
 	'userprofilepage-avatar-error-resolution' => "La risoluzione massima per l'avatar è 2000x2000",
 	'user-identity-box-edit' => 'Modifica',
-	'user-identity-box-wikia-contributor' => 'Un utente FANDOM',
+	'user-identity-box-wikia-contributor' => 'Un utente di FANDOM',
 	'user-identity-box-edit-avatar' => 'Modifica avatar',
 	'user-identity-box-delete-avatar' => 'Elimina avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Carica un avatar',
@@ -1617,13 +1756,14 @@ $messages['it'] = array(
 	'user-identity-box-clear-notarget' => "Impossibile trovare l'utente specificato",
 	'right-council' => 'Può accedere a Community Council Wiki',
 	'right-voldev' => 'Contrassegna utente come "Volunteer Developer" sul suo profilo',
-	'right-authenticated' => 'Un account verificato da FANDOM e ritenuto una fonte legittima del settore (ad esempio, una celebrità o uno sviluppatore)',
+	'right-authenticated' => 'Un account verificato da Fandom e ritenuto una fonte legittima del settore (ad esempio, una celebrità o uno sviluppatore)',
 	'right-removeavatar' => "Rimuovere l'avatar di un utente",
 	'right-loggedin' => "Contrassegna l'utente come avente eseguito l'accesso ad un account",
 	'right-editprofilev3' => 'Modificare i dati del profilo di altri utenti',
 	'right-deleteprofilev3' => 'Cancellare pagine utente',
 	'right-renameprofilev3' => 'Spostare pagine utente',
 	'right-clearuserprofile' => "Rimuovere i contenuti dell'intestazione del profilo di un utente in un click",
+	'user-identity-box-group-global-discussions-moderator' => 'Moderatore globale di Discussioni',
 );
 
 $messages['ja'] = array(
@@ -1759,6 +1899,7 @@ $messages['ja'] = array(
 	'right-deleteprofilev3' => 'ユーザーページを削除',
 	'right-renameprofilev3' => 'ユーザーページを移動',
 	'right-clearuserprofile' => 'ユーザーのプロフィール・マストヘッドのコンテンツをワンクリックで消去',
+	'user-identity-box-group-global-discussions-moderator' => 'グローバル・ディスカッション・モデレーター',
 );
 
 $messages['ko'] = array(
@@ -2384,6 +2525,7 @@ $messages['nl'] = array(
 	'right-deleteprofilev3' => 'Delete user pages',
 	'right-renameprofilev3' => 'Move user pages',
 	'right-clearuserprofile' => "Clear the contents of an user's profile masthead in one click",
+	'user-identity-box-group-global-discussions-moderator' => 'Global Discussions Moderator',
 );
 
 $messages['no'] = array(
@@ -2417,7 +2559,7 @@ $messages['pl'] = array(
 	'userprofilepage-avatar-error-type' => 'Nieprawidłowy typ MIME. Dozwolone: $1',
 	'userprofilepage-avatar-error-resolution' => 'Maksymalna rozdzielczość awatara to 2000×2000',
 	'user-identity-box-edit' => 'Edytuj',
-	'user-identity-box-wikia-contributor' => 'Użytkownik Fandomu',
+	'user-identity-box-wikia-contributor' => 'Użytkownik FANDOMU',
 	'user-identity-box-edit-avatar' => 'Edytuj awatar',
 	'user-identity-box-delete-avatar' => 'Usuń awatar',
 	'user-identity-box-avatar-upload-avatar' => 'Prześlij awatar',
@@ -2531,6 +2673,7 @@ $messages['pl'] = array(
 	'right-deleteprofilev3' => 'Usuwanie stron użytkowników',
 	'right-renameprofilev3' => 'Przenoszenie stron użytkowników',
 	'right-clearuserprofile' => 'Umożliwia czyszczenie profili użytkowników jednym kliknięciem',
+	'user-identity-box-group-global-discussions-moderator' => 'Globalny moderator Dyskusji',
 );
 
 $messages['pms'] = array(
@@ -2719,6 +2862,7 @@ $messages['pt'] = array(
 	'right-deleteprofilev3' => 'Excluir páginas de usuário',
 	'right-renameprofilev3' => 'Mover páginas de usuário',
 	'right-clearuserprofile' => 'Limpar o conteúdo do cabeçalho do perfil de um usuário com um clique',
+	'user-identity-box-group-global-discussions-moderator' => 'Moderador global de discussões',
 );
 
 $messages['roa-tara'] = array(
@@ -2864,6 +3008,7 @@ $messages['ru'] = array(
 	'right-deleteprofilev3' => 'Удалить страницы участника',
 	'right-renameprofilev3' => 'Переименовать страницы участника',
 	'right-clearuserprofile' => 'Удалить содержание профиля участника одним нажатием клавиши',
+	'user-identity-box-group-global-discussions-moderator' => 'Модератор Обсуждений Фэндома',
 );
 
 $messages['sr-ec'] = array(
@@ -3479,6 +3624,7 @@ $messages['zh-hans'] = array(
 	'right-deleteprofilev3' => '删除用户页面',
 	'right-renameprofilev3' => '移动用户页面',
 	'right-clearuserprofile' => '单击进行一次性清除用户主页标题内容',
+	'user-identity-box-group-global-discussions-moderator' => '全网话题版主',
 );
 
 $messages['zh-hant'] = array(
@@ -3613,5 +3759,6 @@ $messages['zh-hant'] = array(
 	'right-deleteprofilev3' => '刪除用戶頁面',
 	'right-renameprofilev3' => '移動用戶頁面',
 	'right-clearuserprofile' => '點擊進行清除用戶頁面刊頭內容',
+	'user-identity-box-group-global-discussions-moderator' => '全站話題版主',
 );
 

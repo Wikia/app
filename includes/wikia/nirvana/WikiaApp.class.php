@@ -376,7 +376,9 @@ class WikiaApp {
 	 * @return bool
 	 */
 
-	public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
+	public function onArticleViewHeader(
+		Article $article, bool &$outputDone, bool &$useParserCache
+	): bool {
 		$title = $article->getTitle();
 
 		$namespace = $title->getNamespace();
@@ -717,6 +719,9 @@ class WikiaApp {
 			 */
 			$factory = wfGetLBFactory();
 			$factory->commitMasterChanges();  // commits only if writes were done on connection
+
+			// SUS-2757: Execute any deferred updates
+			DeferredUpdates::doUpdates( 'commit' );
 		}
 	}
 }

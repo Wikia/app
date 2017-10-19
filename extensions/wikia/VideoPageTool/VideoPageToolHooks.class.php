@@ -31,7 +31,7 @@ class VideoPageToolHooks {
 	 * @param WikiPage $page
 	 * @return true
 	 */
-	public static function onArticlePurge( WikiPage &$page ) {
+	public static function onArticlePurge( WikiPage $page ): bool {
 		wfProfileIn( __METHOD__ );
 
 		$title = $page->getTitle();

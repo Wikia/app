@@ -91,7 +91,7 @@ class DefaultContent extends AbstractService {
 			'indexed' => gmdate( "Y-m-d\TH:i:s\Z" )
 		];
 
-		$returnValue = array_merge(
+		return array_merge(
 			$this->getPageContentFromParseResponse( $response ),
 			$this->getCategoriesFromParseResponse( $response ),
 			$this->getHeadingsFromParseResponse( $response ),
@@ -99,17 +99,10 @@ class DefaultContent extends AbstractService {
 			$pageFields,
 			$this->getNolangTxt()
 		);
-
-		$poiMetadata = $this->getPOIMetadata();
-		if ( is_array( $poiMetadata ) && count( $poiMetadata ) > 0 ) {
-			$returnValue = array_merge( $returnValue, $poiMetadata );
-		}
-
-		return $returnValue;
 	}
 
 	/**
-	 * @return Wikia\Search\IndexService\DefaultContent
+	 * @return \Wikia\Search\IndexService\DefaultContent
 	 */
 	protected function reinitialize() {
 		$this->nolang_txt = [];
@@ -389,24 +382,4 @@ class DefaultContent extends AbstractService {
 		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . ' ' . $tables ) );
 	}
 
-	protected function getPOIMetadata() {
-		$service = $this->getService();
-		$extensionEnabled = $service->getGlobal( 'EnablePOIExt' );
-		if ( $extensionEnabled ) {
-			$articleMetadata = new \ArticleMetadataModel( $this->currentPageId, true );
-			$solrMapping = $articleMetadata->getSolrMapping();
-			$metadata = $articleMetadata->getMetadata();
-
-			$output = [];
-			foreach ( $metadata as $field => $value ) {
-				if ( isset( $solrMapping[$field] ) ) {
-					$output[$solrMapping[$field]] = $value;
-				}
-			}
-
-			return $output;
-		}
-
-		return null;
-	}
 }

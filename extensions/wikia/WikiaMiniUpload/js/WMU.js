@@ -1255,7 +1255,13 @@ function WMU_switchScreen(to) {
 		WMU_loadMain();
 	}
 	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $('#ImageUploadName').length) {
-		$.get('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $('#ImageUploadMWname').val() + '&tempid=' + $( '#ImageUploadTempid' ).val());
+		$.get(wgScriptPath + '/index.php', {
+		    action: 'ajax',
+		    rs: 'WMU',
+		    method: 'clean',
+		    mwname: $('#ImageUploadMWname').val(),
+		    tempid: $( '#ImageUploadTempid' ).val()
+		});
 	}
 
 	// macbre: move back button on Oasis

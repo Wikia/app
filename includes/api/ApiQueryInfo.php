@@ -36,7 +36,7 @@ class ApiQueryInfo extends ApiQueryBase {
 		$fld_readable = false, $fld_watched = false,
 		$fld_preload = false, $fld_displaytitle = false;
 
-	private $params, $titles, $missing, $everything, $pageCounter;
+	private $params, $titles, $missing, $everything;
 
 	private $pageRestrictions, $pageIsRedir, $pageIsNew, $pageTouched,
 		$pageLatest, $pageLength;
@@ -54,17 +54,12 @@ class ApiQueryInfo extends ApiQueryBase {
 	 * @return void
 	 */
 	public function requestExtraData( $pageSet ) {
-		global $wgDisableCounters;
-
 		$pageSet->requestField( 'page_restrictions' );
 		// when resolving redirects, no page will have this field
 		if( !$pageSet->isResolvingRedirects() ) {
 			$pageSet->requestField( 'page_is_redirect' );
 		}
 		$pageSet->requestField( 'page_is_new' );
-		if ( !$wgDisableCounters ) {
-			$pageSet->requestField( 'page_counter' );
-		}
 		$pageSet->requestField( 'page_touched' );
 		$pageSet->requestField( 'page_latest' );
 		$pageSet->requestField( 'page_len' );
@@ -278,11 +273,6 @@ class ApiQueryInfo extends ApiQueryBase {
 			: array();
 		$this->pageIsNew = $pageSet->getCustomField( 'page_is_new' );
 
-		global $wgDisableCounters;
-
-		if ( !$wgDisableCounters ) {
-			$this->pageCounter = $pageSet->getCustomField( 'page_counter' );
-		}
 		$this->pageTouched = $pageSet->getCustomField( 'page_touched' );
 		$this->pageLatest = $pageSet->getCustomField( 'page_latest' );
 		$this->pageLength = $pageSet->getCustomField( 'page_len' );
@@ -329,13 +319,8 @@ class ApiQueryInfo extends ApiQueryBase {
 	private function extractPageInfo( $pageid, $title ) {
 		$pageInfo = array();
 		if ( $title->exists() ) {
-			global $wgDisableCounters;
-
 			$pageInfo['touched'] = wfTimestamp( TS_ISO_8601, $this->pageTouched[$pageid] );
 			$pageInfo['lastrevid'] = intval( $this->pageLatest[$pageid] );
-			$pageInfo['counter'] = $wgDisableCounters
-				? ""
-				: intval( $this->pageCounter[$pageid] );
 			$pageInfo['length'] = intval( $this->pageLength[$pageid] );
 
 			if ( isset( $this->pageIsRedir[$pageid] ) && $this->pageIsRedir[$pageid] ) {

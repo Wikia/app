@@ -56,6 +56,14 @@ class Category {
 				$this->mSubcats = 0;
 				$this->mFiles   = 0;
 
+				// SUS-1782: If the title exists but has no category table entry,
+				// schedule a task to create one
+				if ( $this->mTitle->exists() ) {
+					$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+					$task->call( 'refreshCounts', $this->mName );
+					$task->queue();
+				}
+
 				return true;
 			} else {
 				return false; # Fail
@@ -72,7 +80,10 @@ class Category {
 		# and should not be kept, and 2) we *probably* don't have to scan many
 		# rows to obtain the correct figure, so let's risk a one-time recount.
 		if ( $this->mPages < 0 || $this->mSubcats < 0 || $this->mFiles < 0 ) {
-			$this->refreshCounts();
+			// SUS-1782: Schedule a background task to update the bogus data
+			$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+			$task->call( 'refreshCounts', $this->mName );
+			$task->queue();
 		}
 
 		return true;
@@ -204,7 +215,7 @@ class Category {
 	 * @param $limit integer
 	 * @param $offset string
 	 * //Wikia Change - Jakub Olek - PHP Lint Helpers
-	 * @return Title[] object for category members.
+	 * @return TitleArray object for category members.
 	 * //Wikia Change End
 	 */
 	public function getMembers( $limit = false, $offset = '' ) {
@@ -242,70 +253,21 @@ class Category {
 	}
 
 	/**
-	 * Refresh the counts for this category.
+	 * Refresh the counts for this category synchronously.
 	 *
 	 * @return bool True on success, false on failure
+	 *
+	 * @deprecated Please use an async task instead
+	 * @see https://github.com/Wikia/app/pull/12600/files
 	 */
 	public function refreshCounts() {
 		if ( wfReadOnly() ) {
 			return false;
 		}
 
-		# Note, we must use names for this, since categorylinks does.
-		if ( $this->mName === null ) {
-			if ( !$this->initialize() ) {
-				return false;
-			}
-		}
+		$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+		$task->refreshCounts( $this->mName );
 
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin();
-
-		# Insert the row if it doesn't exist yet (e.g., this is being run via
-		# update.php from a pre-1.16 schema).  TODO: This will cause lots and
-		# lots of gaps on some non-MySQL DBMSes if you run populateCategory.php
-		# repeatedly.  Plus it's an extra query that's unneeded almost all the
-		# time.  This should be rewritten somehow, probably.
-		$seqVal = $dbw->nextSequenceValue( 'category_cat_id_seq' );
-		$dbw->insert(
-			'category',
-			array(
-				'cat_id' => $seqVal,
-				'cat_title' => $this->mName
-			),
-			__METHOD__,
-			'IGNORE'
-		);
-
-		$cond1 = $dbw->conditional( 'page_namespace=' . NS_CATEGORY, 1, 'NULL' );
-		$cond2 = $dbw->conditional( 'page_namespace=' . NS_FILE, 1, 'NULL' );
-		$result = $dbw->selectRow(
-			array( 'categorylinks', 'page' ),
-			array( 'COUNT(*) AS pages',
-				   "COUNT($cond1) AS subcats",
-				   "COUNT($cond2) AS files"
-			),
-			array( 'cl_to' => $this->mName, 'page_id = cl_from' ),
-			__METHOD__,
-			'LOCK IN SHARE MODE'
-		);
-		$ret = $dbw->update(
-			'category',
-			array(
-				'cat_pages' => $result->pages,
-				'cat_subcats' => $result->subcats,
-				'cat_files' => $result->files
-			),
-			array( 'cat_title' => $this->mName ),
-			__METHOD__
-		);
-		$dbw->commit();
-
-		# Now we should update our local counts.
-		$this->mPages   = $result->pages;
-		$this->mSubcats = $result->subcats;
-		$this->mFiles   = $result->files;
-
-		return $ret;
+		return true;
 	}
 }

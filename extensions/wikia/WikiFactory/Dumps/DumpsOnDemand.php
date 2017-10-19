@@ -22,12 +22,15 @@ class DumpsOnDemand {
 	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
 
 	/**
-	 * @access public
-	 * @static
+	 * @param SpecialStatistics $page
+	 * @param string $text
+	 * @return bool
 	 */
-	static public function customSpecialStatistics( &$specialpage, &$text ) {
-		global $wgDBname, $wgRequest, $wgTitle, $wgUser, $wgCityId;
+	static public function customSpecialStatistics( SpecialStatistics $page, string &$text ): bool {
+		global $wgDBname, $wgCityId;
 
+		$user = $page->getUser();
+		$request = $page->getRequest();
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		/**
@@ -36,15 +39,15 @@ class DumpsOnDemand {
 		$wiki = WikiFactory::getWikiByID( $wgCityId );
 		$available = strtotime( wfTimestampNow() ) - strtotime( $wiki->city_lastdump_timestamp )  > 7 * 24 * 60 * 60;
 
-		$tmpl->set( "title", $wgTitle );
-		$tmpl->set( "isAnon", $wgUser->isAnon() );
+		$tmpl->set( 'title', $page->getTitle() );
+		$tmpl->set( 'isAnon', $user->isAnon() );
 
 		$dumpInfo = self::getLatestDumpInfo( $wgCityId );
 		$sTimestamp = $dumpInfo ? $dumpInfo['timestamp'] : false;
 		$sDumpExtension = self::getExtensionFromCompression($dumpInfo ? $dumpInfo['compression'] : false);
 		$tmpl->set( 'nolink', false);
 		if ( empty( $sTimestamp ) ) {
-			$sTimestamp = wfMessage( 'dump-database-last-unknown' )->escaped();
+			$sTimestamp = $page->msg( 'dump-database-last-unknown' )->escaped();
 			$tmpl->set( 'nolink', true );
 		}
 
@@ -59,16 +62,16 @@ class DumpsOnDemand {
 		));
 
 		// The Community Central's value of the wgDumpRequestBlacklist variable contains an array of users who are not allowed to request dumps with this special page.
-		$aDumpRequestBlacklist = (array) unserialize( WikiFactory::getVarByName( 'wgDumpRequestBlacklist', WikiFactory::COMMUNITY_CENTRAL )->cv_value );
+		$aDumpRequestBlacklist = (array) unserialize( WikiFactory::getVarByName( 'wgDumpRequestBlacklist', WikiFactory::COMMUNITY_CENTRAL )->cv_value, [ 'allowed_classes' => false ] );
 
-		$bIsAllowed = $wgUser->isAllowed( 'dumpsondemand' ) && !in_array( $wgUser->getName(), $aDumpRequestBlacklist );
+		$bIsAllowed = $user->isAllowed( 'dumpsondemand' ) && !in_array( $user->getName(), $aDumpRequestBlacklist );
 		$tmpl->set( 'bIsAllowed', $bIsAllowed );
-		$tmpl->set( 'editToken', $wgUser->getEditToken());
+		$tmpl->set( 'editToken', $user->getEditToken());
 
-		if ( $wgRequest->wasPosted() && $available && $bIsAllowed && $wgUser->matchEditToken( $wgRequest->getVal( 'editToken' ) ) ) {
+		if ( $request->wasPosted() && $available && $bIsAllowed && $user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
 			self::queueDump( $wgCityId );
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
-			$text = Wikia::successbox( wfMessage( 'dump-database-request-requested' )->text() ) . $text;
+			$text = Wikia::successbox( $page->msg( 'dump-database-request-requested' )->text() ) . $text;
 			$available = false;
 		}
 
@@ -128,13 +131,13 @@ class DumpsOnDemand {
 				return null;
 			}
 
-			$aData = array(
+			$aData = [
 				'dump_wiki_id'	  => $iCityId,
 				'dump_wiki_dbname'  => $oWiki->city_dbname,
 				'dump_wiki_url'	 => $oWiki->city_url,
-				'dump_user_name'	=> $wgUser->getName(),
+				'dump_user_id' => $wgUser->getId(),
 				'dump_requested'	=> wfTimestampNow()
-			);
+			];
 
 			if ( $bHidden ) {
 				$aData['dump_hidden'] = 'Y';

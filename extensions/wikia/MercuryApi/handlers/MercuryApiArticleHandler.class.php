@@ -107,6 +107,7 @@ class MercuryApiArticleHandler {
 				'embed' => [
 					'provider' => 'ooyala-v4',
 					'jsParams' => [
+						'dfpContentSourceId' => F::app()->wg->AdDriverDfpOoyalaContentSourceId,
 						'videoId' => $featuredVideo['videoId']
 					]
 				],

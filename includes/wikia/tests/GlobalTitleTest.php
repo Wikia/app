@@ -125,6 +125,32 @@ class GlobalTitleTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider mainPageDataProvider
+	 */
+	function testNewMainPageUrls( $mediaWikiMainpageContent, $exists, $availableNamespaces, $expectedNamespace, $expectedText ) {
+		$this->mockProdEnv();
+
+		$globalTitleMock = $this->getMockBuilder( 'GlobalTitle' )->setMethods( [
+			'getContent',
+			'exists',
+			'loadNamespaceNames',
+			'loadAll',
+		    'getNsText'
+		] )->getMock();
+		$globalTitleMock->expects( $this->any() )->method( 'loadNamespaceNames' )->willReturn( $availableNamespaces );
+		$globalTitleMock->expects( $this->any() )->method( 'loadAll' )->willReturn( null );
+		$globalTitleMock->expects( $this->any() )->method( 'getNsText' )->willReturn( $expectedNamespace );
+		$globalTitleMock->expects( $this->any() )->method( 'exists' )->willReturn( $exists );
+		$globalTitleMock->expects( $this->any() )->method( 'getContent' )->willReturn( $mediaWikiMainpageContent );
+		$this->mockClass( GlobalTitle::class, $globalTitleMock );
+
+		$title = GlobalTitle::newMainPage( 177 ); // community.wikia.com
+
+		$this->assertEquals( $title->getNamespace(), $expectedNamespace );
+		$this->assertEquals( $title->getText(), $expectedText );
+	}
+
+	/**
 	 * @dataProvider stripArticlePathDataProvider
 	 */
 	public function testStripArticlePath( $path, $articlePath, $expResult ) {
@@ -163,6 +189,40 @@ class GlobalTitleTest extends WikiaBaseTest {
 			['/Aspatria_-_Bedford_Point_Expressway/subpage','/$1','Aspatria_-_Bedford_Point_Expressway/subpage'],
 			['/wiki/Manhattan_Research,_Inc./subpage','/wiki/$1','Manhattan_Research,_Inc./subpage'],
 			['/wiki/Ludovic_Hindman/subpage','/wiki/$1','Ludovic_Hindman/subpage'],
+		];
+	}
+
+	public function mainPageDataProvider() {
+		return [
+			[
+				'Whatever',
+				true,
+				[],
+				false,
+				'Whatever',
+			],
+			[
+				'Namespace:Test',
+				true,
+				[ '1' => 'Namespace' ],
+				1,
+				'Test',
+			],
+			[
+				'Namespace with spaces:Test',
+				true,
+				[ '1' => 'Namespace_with_spaces' ],
+				1,
+				'Test',
+			],
+			[
+				'Namespaces_with_underlines:Test',
+				true,
+				[ 2 => 'Namespaces_with_underlines' ],
+				2,
+				'Test',
+			],
+			[ 'Notexists', false, [], false, 'Main Page' ],
 		];
 	}
 }

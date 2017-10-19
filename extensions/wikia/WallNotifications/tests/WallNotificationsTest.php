@@ -27,13 +27,16 @@ class WallNotificationsTest extends WikiaBaseTest {
 	 */
 	public function testNotifyEveryoneForMainThread() {
 		/** @var PHPUnit_Framework_MockObject_MockObject|WallNotifications $wn */
-		$wn = $this->getMock( 'WallNotifications', [ 'sendEmails', 'addNotificationLinks' ] );
+		$wn = $this->getMockBuilder( WallNotifications::class )
+			->setMethods( [ 'sendEmails', 'addNotificationLinks' ] )
+			->getMock();
 
 		/** @var WallNotificationEntity $notification */
-		$notification = $this->getMock( 'WallNotificationEntity', [ 'isMain' ] );
+		$notification = $this->createMock( WallNotificationEntity::class );
 
 		$notification->data = new StdClass();
 
+		$notification->data->article_title_ns = NS_USER_WALL;
 		$notification->data->wall_userid = '123';
 		$notification->data->msg_author_id = '567';
 		$notification->data->wall_username = 'LoremIpsum';

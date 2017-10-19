@@ -1,5 +1,5 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('ext.wikia.adEngine.provider.directGpt', function () {
+describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 	'use strict';
 
 	var noop = function () {},
@@ -14,27 +14,19 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 				}
 			},
-			uapContext: {},
 			factory: {
 				createProvider: noop
 			},
 			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
-			megaAdUnitBuilder: {name: 'megaAdUnit'},
-			slotTweaker: {},
-			pageFairRecovery: {},
-			sourcePointRecovery: {}
+			megaAdUnitBuilder: {name: 'megaAdUnit'}
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.directGpt'](
+		return modules['ext.wikia.adEngine.provider.directGptMobile'](
 			mocks.adContext,
-			mocks.uapContext,
-			mocks.factory,
 			mocks.kiloAdUnitBuilder,
 			mocks.megaAdUnitBuilder,
-			mocks.slotTweaker,
-			mocks.pageFairRecovery,
-			mocks.sourcePointRecovery
+			mocks.factory
 		);
 	}
 
@@ -43,27 +35,17 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
 			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 
-	it('Return mega adUnit builder if there is premium ad layout set in context', function () {
+	it('Return MEGA adUnit if there is correct param turned on', function () {
 		spyOn(mocks.factory, 'createProvider');
 		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
 
 		getModule();
 
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
+		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
 			.toEqual(mocks.megaAdUnitBuilder);
-	});
-
-	it('Return kilo adUnit builder if there premium ad layout is turned off', function () {
-		spyOn(mocks.factory, 'createProvider');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: false}});
-
-		getModule();
-
-		expect(mocks.factory.createProvider.calls.argsFor(0)[4].adUnitBuilder)
-			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 });

@@ -145,7 +145,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	protected function save() {
-		global $wgOut, $wgUser, $wgContLang, $wgRequest;
+		global $wgOut, $wgRequest;
 
 		// CategorySelect compatibility (add categories to article body)
 		if ( $this->mCategorySelectEnabled ) {
@@ -203,7 +203,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	 * @param $result
 	 * @return bool
 	 */
-	public function wfCreatePageOnConfirmEdit( &$captcha, &$editPage, $newtext, $section, $merged, &$result ) {
+	public function wfCreatePageOnConfirmEdit( $captcha, $editPage, $newtext, $section, $merged, &$result ) {
 		global $wgTitle;
 		$canonspname = array_shift(SpecialPageFactory::resolveAlias( $wgTitle->getDBkey() ));
 		if ( $canonspname != 'CreatePage' ) {

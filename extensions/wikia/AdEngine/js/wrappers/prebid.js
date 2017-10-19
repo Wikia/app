@@ -31,6 +31,30 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		return bids.length ? bids[0] : null;
 	}
 
+	function getWinningVideoBidBySlotName(slotName, allowedBidders) {
+		var bids;
+
+		if (!win.pbjs || !win.pbjs.getBidResponsesForAdUnitCode) {
+			return null;
+		}
+
+		bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
+
+		return bids.filter(function (bid) {
+				var canUseThisBidder = !allowedBidders || allowedBidders.indexOf(bid.bidderCode) !== -1,
+					hasVast = bid.vastUrl || bid.vastContent;
+
+				return canUseThisBidder && hasVast && bid.cpm > 0;
+			})
+			.reduce(function (previousBid, currentBid) {
+				if (previousBid === null || currentBid.cpm > previousBid.cpm) {
+					return currentBid;
+				}
+
+				return previousBid;
+			}, null);
+	}
+
 	function push(callback) {
 		win.pbjs.que.push(callback);
 	}
@@ -40,6 +64,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		errorResponseStatusCode: errorResponseStatusCode,
 		get: get,
 		getBidByAdId: getBidByAdId,
+		getWinningVideoBidBySlotName: getWinningVideoBidBySlotName,
 		push: push
 	};
 });
