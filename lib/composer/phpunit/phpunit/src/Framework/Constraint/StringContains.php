@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -52,6 +52,10 @@ class StringContains extends Constraint
      */
     protected function matches($other)
     {
+        if ('' === $this->string) {
+            return true;
+        }
+
         if ($this->ignoreCase) {
             return \mb_stripos($other, $this->string) !== false;
         }

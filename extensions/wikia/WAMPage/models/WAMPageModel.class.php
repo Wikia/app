@@ -110,16 +110,6 @@ class WAMPageModel extends WikiaModel {
 		$aDates = $this->app->sendRequest( 'WAMApi', 'getMinMaxWamIndexDate' )->getData();
 		if ( isset( $aDates['min_max_dates'] ) ) {
 			$aDates = $aDates['min_max_dates'];
-
-			// Add 1 to min_date, because we don't have older data
-			if ( !empty( $aDates['min_date'] ) ) {
-				$aDates['min_date'] += 60 * 60 * 24;
-			}
-
-			// Subtract 1 from max_date because we don't have future data
-			if ( !empty( $aDates['max_date'] ) ) {
-				$aDates['max_date'] -= 60 * 60 * 24;
-			}
 		} else {
 			$aDates = [
 				'min_date' => null,

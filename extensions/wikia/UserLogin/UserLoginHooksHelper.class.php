@@ -151,8 +151,9 @@ class UserLoginHooksHelper {
 	 */
 	public static function getUsersPerEmailFromDB( $sEmail ) {
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_SLAVE );
-		$iCount = $dbw->selectField( 'user',
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$iCount = $dbw->selectField( '`user`',
 			'count(*)',
 			array(
 				'user_email' => $sEmail,

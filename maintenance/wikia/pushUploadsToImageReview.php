@@ -19,8 +19,8 @@ require_once( __DIR__ . '/../Maintenance.php' );
 class PushUploadsToImageReview extends Maintenance {
 
 	// perform push for uploads performed between these two timestamp
-	const TIMESTAMP_FROM = '2017-08-31';
-	const TIMESTAMP_TO = '2017-10-13';
+	const TIMESTAMP_FROM = '2017-07-24';
+	const TIMESTAMP_TO = '2017-10-15';
 
 	private $isDryRun = false;
 

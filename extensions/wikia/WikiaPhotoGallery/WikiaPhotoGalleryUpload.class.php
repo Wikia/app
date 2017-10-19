@@ -102,9 +102,6 @@ class WikiaPhotoGalleryUpload extends WikiaTempFilesUpload{
 				// perform upload
 				$result = $imageFile->upload( $imagePath, '' /* comment */, '' /* page text */);
 
-				// SUS-3043 | push an upload to image review queue
-				Hooks::run( 'WikiaPhotoGalleryUpload', [ $imageFile->getTitle() ] );
-
 				$this->log( __METHOD__, !empty( $result->ok ) ? 'upload successful' : 'upload failed' );
 
 				$ret = array(
