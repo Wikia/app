@@ -230,6 +230,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$customDartKvs = 'a=b;c=d';
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
+		// @todo(mech); change this once $wgEnableLocalResourceLoaderLinks is enabled globally
 		$expectedAdEngineResourceURLFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/%s';
 		$expectedPrebidBidderUrl = 'http://i2.john-doe.wikia-dev.com/__am/123/group/-/pr3b1d_prod_js';
 
