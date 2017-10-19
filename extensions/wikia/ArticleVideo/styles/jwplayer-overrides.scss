@@ -46,3 +46,14 @@
 		}
 	}
 }
+
+// if both .is-collapsed & is-collapsed-ready are added it means animation is in progress and we do not want to show title and controls
+.featured-video.is-collapsed.is-collapsed-ready {
+	.jw-title {
+		display: none;
+	}
+
+	.jw-controls > div {
+		display: none;
+	}
+}

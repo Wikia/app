@@ -82,6 +82,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 		function onVideoResized(event) {
 			if (event.propertyName === 'width') {
 				playerInstance.resize();
+				$featuredVideo.removeClass('is-collapsed-ready');
 			}
 		}
 
