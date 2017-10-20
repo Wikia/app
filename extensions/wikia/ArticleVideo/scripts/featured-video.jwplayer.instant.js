@@ -8,7 +8,7 @@ require([
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.jwplayer.icons',
 	'wikia.articleVideo.featuredVideo.events',
-	'wikia.articleVideo.featuredVideo.jwplayer.settings',
+	'wikia.articleVideo.featuredVideo.jwplayer.plugin.settings',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
 	adContext,

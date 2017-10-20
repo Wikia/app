@@ -1,4 +1,4 @@
-define('wikia.articleVideo.featuredVideo.jwplayer.settings', ['wikia.articleVideo.featuredVideo.autoplay'], function (featuredVideoAutoplay) {
+define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.articleVideo.featuredVideo.autoplay'], function (featuredVideoAutoplay) {
 
 	function WikiaJWPlayerSettings(player) {
 		this.player = player;
