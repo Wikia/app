@@ -70,16 +70,16 @@ constants :
 packages :
 	[
 		{
-			output : 'ckeditor.js',
+			output : //'ckeditor.js',
 			wrap : true,
 			files :
 				[
 
 				//order matters!
 
-				'ckeditor.js'
-				'config.js'
-				'core/loader.js'
+				//'ckeditor.js'
+				//'config.js'
+				//'core/loader.js'
 				'core/event.js'
 				'core/editor_basic.js'
 				'core/env.js'
