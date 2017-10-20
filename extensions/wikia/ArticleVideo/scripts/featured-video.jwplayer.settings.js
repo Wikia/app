@@ -86,13 +86,13 @@ define('wikia.articleVideo.featuredVideo.jwplayer.settings', ['wikia.articleVide
 
 		toggleInput.setAttribute('type', 'checkbox');
 		toggleInput.setAttribute('id', toggleID);
-		toggleInput.classList.add('wds-switch__input');
+		toggleInput.classList.add('wds-toggle__input');
 		if (featuredVideoAutoplay.isAutoplayEnabled()) {
 			toggleInput.setAttribute('checked', '');
 		}
 
 		toggleLabel.setAttribute('for', toggleID);
-		toggleLabel.classList.add('wds-switch__label');
+		toggleLabel.classList.add('wds-toggle__label');
 		toggleLabel.appendChild(document.createTextNode("Autoplay Videos"));
 		toggleLabel.addEventListener('click', function (event) {
 			featuredVideoAutoplay.toggleAutoplay(!event.target.previousSibling.checked);
