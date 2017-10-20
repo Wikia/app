@@ -1,6 +1,5 @@
+@import 'skins/shared/mixins/flexbox';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors';
-
-// TODO use flexbox mixins
 
 .wikia-jw-settings {
 	background-color: rgba(26, 26, 26, 0.8);
@@ -17,9 +16,9 @@
 		color: #fff;
 
 		li {
-			align-items: center;
+			@include align-items(center);
+			@include flexbox();
 			cursor: pointer;
-			display: flex;
 			padding: 3px;
 
 			.jw-svg-icon {
@@ -43,9 +42,9 @@
 			}
 
 			&.wikia-jw-settings__back {
-				align-items: center;
+				@include align-items(center);
+				@include flexbox();
 				border-top: solid 1px #cccccc;
-				display: flex;
 				margin-top: 5px;
 				padding-top: 11px;
 			}
