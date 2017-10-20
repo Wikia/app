@@ -51,8 +51,9 @@
 				'tabletools,' +
 				'undo,' +
 				'wysiwygarea,' +
-
-//				'toolbar,' +
+					
+				'notification,' +
+				'toolbar,' +
 //				'dialogui,' +
 //				'panel,' +
 //				'listblock,' +
