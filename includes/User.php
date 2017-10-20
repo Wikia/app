@@ -599,6 +599,10 @@ class User implements JsonSerializable {
 	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
 		global $wgExternalSharedDB;
 
+		if ( $ids == [] ) {
+			return [];
+		}
+
 		$ids = array_unique( $ids, SORT_NUMERIC );
 
 		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );

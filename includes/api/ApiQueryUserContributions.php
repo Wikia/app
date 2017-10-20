@@ -150,16 +150,15 @@ class ApiQueryContributions extends ApiQueryBase {
 			$encTS = wfTimestamp( TS_MW, $continue[1] );
 			$op = ( $this->params['dir'] == 'older' ? '<' : '>' );
 			// SUS-807
-			$this->addWhereOr(
-				[
-					"rev_user > 0 AND (
-					rev_user $op '$encUser' OR " .
-					"(rev_user = '$encUser' AND " .
-					"rev_timestamp $op= '$encTS'))",
-					"rev_user_text $op '$encUser' OR " .
-					"(rev_user_text = '$encUser' AND " .
-					"rev_timestamp $op= '$encTS')"
-				]
+			// example for $op = > and $encUser=abcxyz and $encTS=999999:
+			// user logged in (by ID): where rev_user > 0 AND ( rev_user > abcxyz OR (rev_user = abcxyz AND rev_timestamp > 999999 ))
+			// user not logged in (by IP): where rev_user_text > abcxyz OR (rev_user_text = abcxyz AND rev_timestamp > 999999)
+			$this->addWhere(
+				$this->getDB()->makeList(
+					[
+						"rev_user > 0 AND (rev_user $op '$encUser' OR (rev_user = '$encUser' AND rev_timestamp $op= '$encTS'))",
+						"rev_user_text $op '$encUser' OR (rev_user_text = '$encUser' AND rev_timestamp $op= '$encTS')"
+					], LIST_OR )
 			);
 		}
 
@@ -178,7 +177,14 @@ class ApiQueryContributions extends ApiQueryBase {
 				$ips[] = $userName;
 			}
 		}
-		$this->addWhereOr(['rev_user' => $ids, 'rev_user_text' => $ips]);
+
+		$this->addWhere(
+			$this->getDB()->makeList(
+				[
+					'rev_user' => $ids,
+					'rev_user_text' => $ips
+				], LIST_OR )
+		);
 
 		// ... and in the specified timeframe.
 		// Ensure the same sort order for rev_user, rev_user_text and rev_timestamp
@@ -493,22 +499,6 @@ class ApiQueryContributions extends ApiQueryBase {
 
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
-	}
-
-	private function addWhereOr( $conditions ) {
-		$where = [];
-		foreach ( $conditions as $name => $values ) {
-			if (is_array( $values ) && count($values) === 1) {
-				$values = $values[0];
-			}
-
-			$isEmptyArray = is_array( $values ) && count( $values ) === 0;
-			if ( $values && !$isEmptyArray ) {
-				$where[] = $this->createWhereCondition( $name, $values );
-			}
-		}
-
-		$this->addWhere( '(' . implode( ' OR ', $where ) . ')' );
 	}
 
 	private function normalizeValues( $values ) {
