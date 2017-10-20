@@ -234,7 +234,7 @@ class ApiQueryContributions extends ApiQueryBase {
 				// STRAIGHT_JOIN
 				$tables = array( 'revision', 'recentchanges', 'page' );
 				$this->addOption( 'STRAIGHT_JOIN' );
-				$this->addWhere( '(rc_user != 0 AND rc_user=rev_user OR rc_user_text=rev_user_text)' );
+				$this->addWhere( '((rc_user != 0 AND rc_user=rev_user) OR rc_user_text=rev_user_text)' );
 				$this->addWhere( 'rc_timestamp=rev_timestamp' );
 				$this->addWhere( 'rc_this_oldid=rev_id' );
 			} else {
@@ -517,7 +517,7 @@ class ApiQueryContributions extends ApiQueryBase {
 				return $value;
 			}
 
-			return "'$value'";
+			return $this->getDB()->addQuotes($value);
 		}, $values );
 	}
 

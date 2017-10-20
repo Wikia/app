@@ -371,16 +371,22 @@ class DPLForum {
 			}
 		} elseif ( is_null( $title ) ) {
 			while ( $row = $dbr->fetchObject( $res ) ) {
-				if( isset( $row->first_time ) ) {
+				if ( isset( $row->first_time ) ) {
 					$first_time = $row->first_time;
 				} else {
 					$first_time = '';
 				}
 
 				$first_user = '';
-				if( isset( $row->first_user ) || isset( $row->first_user_text )) {
-					$first_user = User::getUsername( $row->first_user, $row->first_user_text );
+				if ( isset( $row->first_user ) || isset( $row->first_user_text ) ) {
+					$firstUser = is_int( $row->first_user ) ? $row->first_user : 0;
+					$firstUserText = is_string( $row->first_user_text ) ? $row->first_user_text : '';
+					$first_user = User::getUsername( $firstUser, $firstUserText );
 				}
+
+				$revUser = is_int( $row->rev_user ) ? $row->rev_user : 0;
+				$revUserText = is_string( $row->rev_user_text ) ? $row->rev_user_text : '';
+				$userName = User::getUsername( $revUser, $revUserText );
 
 				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 				$output .= $sStartItem;
@@ -388,7 +394,7 @@ class DPLForum {
 					$title,
 					$title,
 					$row->rev_timestamp,
-					User::getUsername( $row->rev_user, $row->rev_user_text ),
+					$userName,
 					$first_user,
 					$first_time
 				);
@@ -397,11 +403,15 @@ class DPLForum {
 		} else {
 			$output .= $sStartItem;
 			if ( $row = $dbr->fetchObject( $res ) ) {
+				$revUser = is_int( $row->rev_user ) ? $row->rev_user : 0;
+				$revUserText = is_string( $row->rev_user_text ) ? $row->rev_user_text : '';
+				$userName = User::getUsername( $revUser, $revUserText );
+
 				$output .= $this->buildOutput(
 					Title::makeTitle( $row->page_namespace, $row->page_title ),
 					$title,
 					$row->rev_timestamp,
-					User::getUsername( $row->rev_user, $row->rev_user_text )
+					$userName
 				);
 			} else {
 				$output .= $this->buildOutput(

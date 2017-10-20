@@ -112,7 +112,7 @@ class InfoAction extends FormlessAction {
 
 		$authors = (int)$dbr->selectField(
 			'revision',
-			'COUNT(DISTINCT DISTINCT rev_user, rev_user_text)',
+			'COUNT(DISTINCT rev_user, rev_user_text)',
 			[ 'rev_page' => $id ],
 			__METHOD__
 		);
