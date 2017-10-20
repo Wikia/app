@@ -185,15 +185,6 @@ function wfClearWikiaNewtalk( User $user ) {
 	return true;
 }
 
-function WikiaNewtalkUserRenameGlobal( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
-	$tasks[] = array(
-		'table' => 'shared_newtalks',
-		'username_column' => 'sn_user_ip',
-		'userid_column' => 'sn_user_id',
-	);
-	return true;
-}
-
 /**
  * AJAX method to dismiss all shared messages for current user
  *
@@ -206,6 +197,7 @@ function wfDismissWikiaNewtalks() {
 	$result = false;
 
 	// this request should be posted
+	/* @var WebRequest $wgRequest */
 	if ($wgRequest->wasPosted()) {
 		// shared messages
 		Hooks::run( 'DismissWikiaNewtalks', array( $wgUser ) );
@@ -243,6 +235,4 @@ if( !empty( $wgExternalSharedDB ) ) {
 	$wgHooks['UserRetrieveNewTalks'][] = 'wfGetWikiaNewtalk';
 	$wgHooks['ArticleEditUpdateNewTalk'][] = 'wfSetWikiaNewtalk';
 	$wgHooks['UserClearNewTalkNotification'][] = 'wfClearWikiaNewtalk';
-
-	$wgHooks['UserRename::Global'][] = "WikiaNewtalkUserRenameGlobal";
 }
