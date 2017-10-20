@@ -12,9 +12,10 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 
 		document.addEventListener('click', this.documentClickHandler);
 
-		this.player.on("destroyPlugin", function () {
-			self.destroy();
-		});
+		// FIXME that causes removing video when related video is played
+		// this.player.on("destroyPlugin", function () {
+		// 	self.destroy();
+		// });
 	}
 
 	WikiaJWPlayerSettings.prototype.documentClickHandler = function (event) {
