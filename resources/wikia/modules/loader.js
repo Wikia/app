@@ -163,7 +163,7 @@ define('wikia.loader', [
 				}
 			},
 			googlemaps: {
-				file: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+				file: 'https://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
 				check: function () {
 					return typeof (window.google && window.google.maps);
 				},
