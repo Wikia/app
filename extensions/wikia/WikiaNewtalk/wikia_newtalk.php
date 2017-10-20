@@ -230,9 +230,6 @@ function wfDismissWikiaNewtalks() {
 /**
  * register Hooks
  */
-if( !empty( $wgExternalSharedDB ) ) {
-	global $wgHooks;
-	$wgHooks['UserRetrieveNewTalks'][] = 'wfGetWikiaNewtalk';
-	$wgHooks['ArticleEditUpdateNewTalk'][] = 'wfSetWikiaNewtalk';
-	$wgHooks['UserClearNewTalkNotification'][] = 'wfClearWikiaNewtalk';
-}
+$wgHooks['UserRetrieveNewTalks'][] = 'wfGetWikiaNewtalk';
+$wgHooks['ArticleEditUpdateNewTalk'][] = 'wfSetWikiaNewtalk';
+$wgHooks['UserClearNewTalkNotification'][] = 'wfClearWikiaNewtalk';
