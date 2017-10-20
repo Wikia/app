@@ -12,7 +12,7 @@ a,!1),b()):document.attachEvent&&"complete"===document.readyState&&(document.det
 !window.frameElement}catch(e){}if(document.documentElement.doScroll&&b){var d=function(){try{document.documentElement.doScroll("left")}catch(b){setTimeout(d,1);return}a()};d()}}}}()},d=window.CKEDITOR_GETURL;if(d){var g=b.getUrl;b.getUrl=function(a){return d.call(b,a)||g.call(b,a)}}return b}());
 /* jscs:enable */
 /* jshint ignore:end */
-
+/*
 	if ( CKEDITOR.loader ){
 	CKEDITOR.loader.load( 'ckeditor' );
 		
@@ -32,7 +32,7 @@ a,!1),b()):document.attachEvent&&"complete"===document.readyState&&(document.det
 	}
 
 }
-
+*/
 /**
  * The skin to load for all created instances, it may be the name of the skin
  * folder inside the editor installation path, or the name and the path separated
