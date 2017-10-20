@@ -56,6 +56,7 @@ require([
 		console.info('jwplayer setupPlayer');
 		playerInstance.setup({
 			advertising: {
+				autoplayadsmuted: willAutoplay,
 				client: 'googima'
 			},
 			autostart: willAutoplay && !document.hidden,
