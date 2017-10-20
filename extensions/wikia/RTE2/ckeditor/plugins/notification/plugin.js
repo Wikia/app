@@ -613,7 +613,9 @@ Area.prototype = {
 			editor = this.editor,
 			contentsRect = editor.ui.contentsElement.getClientRect(),
 			contentsPos = editor.ui.contentsElement.getDocumentPosition(),
-			top = editor.ui.space( 'top' ),
+			//Kacper Olek fix 
+			top = editor.ui.space( 'contents' ),
+
 			topRect = top.getClientRect(),
 			areaRect = area.getClientRect(),
 			notification,
