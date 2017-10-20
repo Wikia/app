@@ -4,26 +4,39 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 		this.player = player;
 		this.playerContainer = this.player.getContainer();
 		this.wikiaSettings = this.createWikiaSettinsElement();
+		this.buttonID = 'wikiaSettings';
+		this.documentClickHandler = this.documentClickHandler.bind(this);
 		var self = this,
 			// wds-icons-gear-small.svg
 			settingsIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon jw-svg-icon-wikia-settings" viewBox="0 0 24 24"><path d="M9 7.09a1.909 1.909 0 1 1 0 3.819A1.909 1.909 0 0 1 9 7.09m-4.702-.03a1.07 1.07 0 0 1-.99.667h-.672A.637.637 0 0 0 2 8.364v1.272c0 .352.285.637.636.637h.672c.436 0 .824.264.99.667l.006.013c.167.403.08.864-.229 1.172L3.6 12.6a.636.636 0 0 0 0 .9l.9.9a.636.636 0 0 0 .9 0l.475-.475a1.072 1.072 0 0 1 1.185-.223c.403.166.667.554.667.99v.672c0 .35.285.636.637.636h1.272a.637.637 0 0 0 .637-.636v-.672c0-.436.264-.824.667-.99l.013-.006a1.07 1.07 0 0 1 1.172.229l.475.475a.636.636 0 0 0 .9 0l.9-.9a.636.636 0 0 0 0-.9l-.475-.475a1.072 1.072 0 0 1-.229-1.172l.006-.013a1.07 1.07 0 0 1 .99-.667h.672A.637.637 0 0 0 16 9.636V8.364a.637.637 0 0 0-.636-.637h-.672a1.07 1.07 0 0 1-.996-.68 1.072 1.072 0 0 1 .229-1.172L14.4 5.4a.636.636 0 0 0 0-.9l-.9-.9a.636.636 0 0 0-.9 0l-.475.475c-.308.308-.77.396-1.172.229l-.013-.006a1.07 1.07 0 0 1-.667-.99v-.672A.637.637 0 0 0 9.636 2H8.364a.637.637 0 0 0-.637.636v.672a1.07 1.07 0 0 1-.68.996 1.07 1.07 0 0 1-1.172-.229L5.4 3.6a.636.636 0 0 0-.9 0l-.9.9a.636.636 0 0 0 0 .9l.475.475a1.072 1.072 0 0 1 .223 1.185" fill-rule="evenodd"/></svg>';
-		player.addButton(settingsIcon, 'Settings', function () {
+		this.player.addButton(settingsIcon, 'Settings', function () {
 			if (!self.wikiaSettings.style.display) {
 				self.open();
 			} else {
 				self.close();
 			}
-		}, 'wikiaSettings', 'wikia-jw-settings-button');
+		}, this.buttonID, 'wikia-jw-settings-button');
 
 		this.playerContainer.querySelector('.jw-controls').appendChild(this.wikiaSettings);
 
-		// TODO remove listener on destroy
-		document.addEventListener('click', function (event) {
-			if (!event.target.closest('.wikia-jw-settings, .wikia-jw-settings-button') && self.wikiaSettings.style.display) {
-				self.close();
-			}
+		document.addEventListener('click', this.documentClickHandler);
+
+		this.player.on("destroyPlugin", function () {
+			self.destroy();
 		});
 	}
+
+	WikiaJWPlayerSettings.prototype.documentClickHandler = function (event) {
+		if (!event.target.closest('.wikia-jw-settings, .wikia-jw-settings-button') && this.wikiaSettings.style.display) {
+			this.close();
+		}
+	};
+
+	WikiaJWPlayerSettings.prototype.destroy = function () {
+		document.removeEventListener('click', this.documentClickHandler);
+		this.wikiaSettings.remove();
+		this.player.removeButton(this.buttonID);
+	};
 
 	WikiaJWPlayerSettings.prototype.close = function () {
 		this.showSettingsList();
