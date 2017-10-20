@@ -1,58 +1,61 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors';
 
+// TODO use flexbox mixins
+
 .wikia-jw-settings {
+	background-color: rgba(26, 26, 26, 0.8);
+	border-radius: 4px;
+	bottom: 60px;
+	display: none;
+	font-size: 16px;
+	padding: 12px;
+	pointer-events: auto;
 	position: absolute;
 	right: 60px;
-	background-color: rgba(26, 26, 26, 0.8);
-	pointer-events: auto;
-	display: none;
-	border-radius: 4px;
-	padding: 12px;
-	bottom: 60px;
 
 	&__list {
 		color: #fff;
-		font-size: 12px;
 
 		li {
 			align-items: center;
 			cursor: pointer;
 			display: flex;
+			padding: 3px;
 
 			.jw-svg-icon {
-				margin-right: 17px;
+				margin: 0 17px 0 10px;
 			}
 		}
 	}
 
 	&__quality-levels {
+		color: #fff;
 		display: none;
 		text-align: center;
-		font-size: 11px;
-		color: #fff;
 
 		li {
 			cursor: pointer;
-			padding: 4px;
+			padding: 6px;
 
 			&.is-active {
-				font-weight: bold;
-				font-size: 13px;
 				color: $wds-color-link;
+				font-weight: bold;
+			}
+
+			&.wikia-jw-settings__back {
+				align-items: center;
+				border-top: solid 1px #cccccc;
+				display: flex;
+				margin-top: 5px;
+				padding-top: 11px;
 			}
 		}
 	}
 
+	// keep controlbar open when settings popover is open
 	&-open .jw-controlbar {
-		visibility: visible !important;
 		opacity: 1 !important;
-	}
-
-	&__back {
-		border-top: solid 1px #cccccc;
-		display: flex;
-		align-items: center;
-		padding-top: 6px;
+		visibility: visible !important;
 	}
 
 	&__back-icon {
@@ -61,6 +64,7 @@
 	}
 }
 
+// hide jw settings menu button
 .jw-settings-submenu-button {
 	display: none !important;
 }
