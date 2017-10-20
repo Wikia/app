@@ -598,10 +598,13 @@ class User implements JsonSerializable {
 	 */
 	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
 		global $wgExternalSharedDB;
+
+		$ids = array_unique( $ids, SORT_NUMERIC );
+
 		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
 		$res = $sdb->select(
 			'`user`',
-			[ 'DISTINCT user_id', 'user_name' ],
+			[ 'user_id', 'user_name' ],
 			[ 'user_id' => $ids ],
 			__METHOD__
 		);
@@ -613,9 +616,7 @@ class User implements JsonSerializable {
 		// bit easier.
 		$users = array_fill_keys( $ids, '' );
 
-		// This is optional, let's decide whether it is actually
-		// convenient to handle it here or programmers using
-		// this method should handle it themselves.
+		// Add the name used to indicate anonymous users.
 		$users[0] = wfMessage( 'oasis-anon-user' )->escaped();
 
 		foreach ( $res as $row ) {
