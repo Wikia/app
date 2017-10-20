@@ -391,7 +391,7 @@ class WikiExporter {
 					$userIds[] = $row->rev_user;
 				}
 
-				$userNames = User::getIndexedUserNames($userIds);
+				$userNames = User::whoAre( $userIds );
 
 				# Output dump results
 				$this->outputPageStream( $result, $userNames );

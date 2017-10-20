@@ -442,7 +442,7 @@ class HistoryPager extends ReverseChronologicalPager {
 			$ids[] = $row->rev_user;
 		}
 
-		$userNames = User::getIndexedUserNames( $ids);
+		$userNames = User::whoAre( $ids );
 
 		foreach ( $this->mResult as $row ) {
 			$userName = $row->rev_user && isset($userNames[$row->rev_user]) ?

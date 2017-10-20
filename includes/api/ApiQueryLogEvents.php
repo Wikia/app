@@ -156,7 +156,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 
 		// SUS-2779
 		$userIds = $this->getFieldFromResults( $res, 'log_user' );
-		$userNames = User::getIndexedUserNames( $userIds );
+		$userNames = User::whoAre( $userIds );
 
 		foreach ( $res as $row ) {
 			if ( ++ $count > $limit ) {
