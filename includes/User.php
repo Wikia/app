@@ -486,8 +486,10 @@ class User implements JsonSerializable {
 	 * @return User object, or null
 	 */
 	public static function newFromConfirmationCode( $code ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'user', 'user_id', array(
+		global $wgExternalSharedDB;
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$id = $dbr->selectField( "`user`", 'user_id', array(
 			'user_email_token' => md5( $code ),
 			'user_email_token_expires > ' . $dbr->addQuotes( $dbr->timestamp() ),
 		) );
@@ -587,6 +589,41 @@ class User implements JsonSerializable {
 	public static function whoIs( $id ) {
 		// Wikia change - @see SUS-1015
 		return self::newFromId( $id )->getName();
+	}
+
+	/**
+	 *
+	 * @param $ids Array User IDs
+	 * @return Array User ID to User name mapping
+	 */
+	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
+		global $wgExternalSharedDB;
+
+		$ids = array_unique( $ids, SORT_NUMERIC );
+
+		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
+		$res = $sdb->select(
+			'`user`',
+			[ 'user_id', 'user_name' ],
+			[ 'user_id' => $ids ],
+			__METHOD__
+		);
+
+		// Pre-fill the returned array with empty strings
+		// so that missing users are not skipped.
+		// It makes further iterating over the array
+		// and handling anons and missing users a little
+		// bit easier.
+		$users = array_fill_keys( $ids, '' );
+
+		// Add the name used to indicate anonymous users.
+		$users[0] = wfMessage( 'oasis-anon-user' )->escaped();
+
+		foreach ( $res as $row ) {
+			$users[ $row->user_id ] = (string) $row->user_name;
+		}
+
+		return $users;
 	}
 
 	/**

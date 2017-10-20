@@ -2201,6 +2201,12 @@ abstract class DatabaseBase implements DatabaseType {
 		 && in_array( $table, $wgSharedTables ) ) { # A shared table is selected
 			$database = $wgSharedDB;
 			$prefix   = isset( $wgSharedPrefix ) ? $wgSharedPrefix : $prefix;
+
+			// SUS-3063 | Log all cases where Database::tableName returns wikicities_cX.user
+			WikiaLogger::instance()->warning( __METHOD__ . '::addSharedPrefix', [
+				'table_name' => $table,
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, DatabaseMysqlBase::class, DatabaseMysqli::class ]  ),
+			] );
 		}
 
 		# Quote the $database and $table and apply the prefix if not quoted.
