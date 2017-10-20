@@ -188,9 +188,9 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 			});
 		});
 
-		playerInstance.on('autoplayToggle', function (data) {
+		playerInstance.on('autoplayToggle', function (autoplay) {
 			track({
-				label: 'autoplay-' + (data.willAutoplay ? 'enabled' : 'disabled')
+				label: 'autoplay-' + (autoplay ? 'enabled' : 'disabled')
 			});
 		});
 	}

@@ -1,0 +1,70 @@
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors';
+
+.wikia-jw-settings {
+	position: absolute;
+	right: 12px;
+	background-color: rgba(26, 26, 26, 0.8);
+	pointer-events: auto;
+	display: none;
+	border-radius: 4px;
+	padding: 12px;
+	bottom: 60px;
+
+	&__list {
+		color: #fff;
+		font-size: 12px;
+
+		li {
+			align-items: center;
+			cursor: pointer;
+			display: flex;
+
+			.jw-svg-icon {
+				margin-right: 17px;
+			}
+
+			.wds-switch__label {
+				margin-left: 0;
+			}
+		}
+	}
+
+	&__quality-levels {
+		display: none;
+		text-align: center;
+		font-size: 11px;
+		color: #fff;
+
+		li {
+			cursor: pointer;
+			padding: 4px;
+
+			&.is-active {
+				font-weight: bold;
+				font-size: 13px;
+				color: $wds-color-link;
+			}
+		}
+	}
+
+	&-open .jw-controlbar {
+		visibility: visible !important;
+		opacity: 1 !important;
+	}
+
+	&__back {
+		border-top: solid 1px #cccccc;
+		display: flex;
+		align-items: center;
+		padding-top: 6px;
+	}
+
+	&__back-icon {
+		fill: currentColor;
+		transform: rotate(-270deg);
+	}
+}
+
+.jw-settings-submenu-button {
+	display: none !important;
+}
