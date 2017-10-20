@@ -2837,439 +2837,439 @@ class DPLMain {
 							$aHeadings[ $username ] = isset( $aHeadings[ $username ] ) ? $aHeadings[ $username ] + 1 : 1;							if($row->rev_user == 0) { //anonymous user
 							$dplArticle->mParentHLink = '[[User:' . $username . '|' . $username . ']]';
 							break;
-						}
 					}
 				}
-
-				$aArticles[] = $dplArticle;
 			}
+
+			$aArticles[] = $dplArticle;
+		}
+		$dbr->freeResult( $res );
+		$rowcount = -1;
+		if ( $sSqlCalcFoundRows != '') {
+			$res = $dbr->query('SELECT FOUND_ROWS() AS rowcount');
+			$row = $dbr->fetchObject ( $res );
+			$rowcount = $row->rowcount;
 			$dbr->freeResult( $res );
-			$rowcount = -1;
-			if ( $sSqlCalcFoundRows != '') {
-				$res = $dbr->query('SELECT FOUND_ROWS() AS rowcount');
-				$row = $dbr->fetchObject ( $res );
-				$rowcount = $row->rowcount;
-				$dbr->freeResult( $res );
+		}
+
+		// backward scrolling: if the user specified titleLE we reverse the output order
+		if ($sTitleLE != '' && $sTitleGE =='' && $sOrder=='descending' ) $aArticles = array_reverse($aArticles);
+
+		// special sort for card suits (Bridge)
+		if ($bOrderSuitSymbols) self::cardSuitSort($aArticles);
+
+
+		// ###### SHOW OUTPUT ######
+
+		$listMode = new DPLListMode($sPageListMode, $aSecSeparators, $aMultiSecSeparators, $sInlTxt, $sListHtmlAttr,
+			$sItemHtmlAttr, $aListSeparators, $iOffset, $iDominantSection);
+
+		$hListMode = new DPLListMode($sHListMode, $aSecSeparators, $aMultiSecSeparators, '', $sHListHtmlAttr,
+			$sHItemHtmlAttr, $aListSeparators, $iOffset, $iDominantSection);
+
+		$dpl = new DPL($aHeadings, $bHeadingCount, $iColumns, $iRows, $iRowSize, $sRowColFormat, $aArticles,
+			$aOrderMethods[0], $hListMode, $listMode, $bEscapeLinks, $bAddExternalLink, $bIncPage, $iIncludeMaxLen,
+			$aSecLabels, $aSecLabelsMatch, $aSecLabelsNotMatch, $bIncParsed, $parser, $logger, $aReplaceInTitle,
+			$iTitleMaxLen, $defaultTemplateSuffix, $aTableRow, $bIncludeTrim, $iTableSortCol, $sUpdateRules, $sDeleteRules);
+
+		if ($rowcount == -1) $rowcount = $dpl->getRowCount();
+		$dplResult = $dpl->getText();
+		$header='';
+		if ($sOneResultHeader != '' && $rowcount==1) {
+			$header = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',1,$sOneResultHeader));
+		} else if ($rowcount==0) {
+			$header = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$dpl->getRowCount(),$sNoResultsHeader));
+			if ($sNoResultsHeader != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $header));
+			$footer = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$dpl->getRowCount(),$sNoResultsFooter));
+			if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $footer));
+			if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(ExtDynamicPageList::WARN_NORESULTS);
+		}
+		else {
+			if ($sResultsHeader != '')	$header = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$dpl->getRowCount(),$sResultsHeader));
+		}
+		$header = str_replace( '\n', "\n", str_replace( "¶", "\n", $header ));
+		$header = str_replace('%VERSION%', ExtDynamicPageList::$DPLVersion,$header);
+		$footer='';
+		if ($sOneResultFooter != '' && $rowcount==1) {
+			$footer = str_replace('%PAGES%',1,$sOneResultFooter);
+		} else {
+			if ($sResultsFooter != '')	$footer =  str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$dpl->getRowCount(),$sResultsFooter));
+		}
+		$footer = str_replace( '\n', "\n", str_replace( "¶", "\n", $footer ));
+		$footer = str_replace('%VERSION%', ExtDynamicPageList::$DPLVersion, $footer);
+
+		// replace %DPLTIME% by execution time and timestamp in header and footer
+		$nowTimeStamp = self::prettyTimeStamp(date('YmdHis'));
+		$dplElapsedTime= sprintf('%.3f sec.',microtime(true)-$dplStartTime);
+		$header = str_replace('%DPLTIME%', "$dplElapsedTime ($nowTimeStamp)", $header);
+		$footer = str_replace('%DPLTIME%', "$dplElapsedTime ($nowTimeStamp)", $footer);
+
+		// replace %LASTTITLE% / %LASTNAMESPACE% by the last title found in header and footer
+		if (($n=count($aArticles)) > 0) {
+			$firstNamespaceFound = str_replace(' ','_',$aArticles[0]->mTitle->getNamespace());
+			$firstTitleFound 	 = str_replace(' ','_',$aArticles[0]->mTitle->getText());
+			$lastNamespaceFound  = str_replace(' ','_',$aArticles[$n-1]->mTitle->getNamespace());
+			$lastTitleFound 	 = str_replace(' ','_',$aArticles[$n-1]->mTitle->getText());
+		}
+		$header = str_replace('%FIRSTNAMESPACE%', 	$firstNamespaceFound, $header);
+		$footer = str_replace('%FIRSTNAMESPACE%', 	$firstNamespaceFound, $footer);
+		$header = str_replace('%FIRSTTITLE%', 		$firstTitleFound, $header);
+		$footer = str_replace('%FIRSTTITLE%', 		$firstTitleFound, $footer);
+		$header = str_replace('%LASTNAMESPACE%', 	$lastNamespaceFound, $header);
+		$footer = str_replace('%LASTNAMESPACE%', 	$lastNamespaceFound, $footer);
+		$header = str_replace('%LASTTITLE%', 		$lastTitleFound, $header);
+		$footer = str_replace('%LASTTITLE%', 		$lastTitleFound, $footer);
+		$header = str_replace('%SCROLLDIR%', 		$scrollDir, $header);
+		$footer = str_replace('%SCROLLDIR%', 		$scrollDir, $footer);
+
+		$output .= $header . $dplResult . $footer;
+
+		self::defineScrollVariables($firstNamespaceFound,$firstTitleFound,$lastNamespaceFound,$lastTitleFound,
+			$scrollDir,$iCount,"$dplElapsedTime ($nowTimeStamp)",$rowcount,$dpl->getRowCount());
+
+		// save generated wiki text to dplcache page if desired
+		if ( $DPLCache != '' ) {
+			// save data in chosen storage
+			switch ($DPLCacheStorage) {
+				case 'files':
+					if ( !is_writeable( $cacheFile ) ) {
+						wfMkdirParents( dirname( $cacheFile ) );
+					} elseif ( ( $bDPLRefresh ||
+							$wgRequest->getVal( 'action', 'view' ) == 'submit' ) &&
+						strpos( $DPLCache, '/' ) > 0 && strpos( $DPLCache, '..' ) === false
+					) {
+						// if the cache file contains a path and the user requested a refresh (or saved the file) we delete all brothers
+						wfRecursiveRemoveDir( dirname( $cacheFile ) );
+						wfMkdirParents( dirname( $cacheFile ) );
+					}
+					$cFile = fopen( $cacheFile, 'w' );
+					fwrite( $cFile, $originalInput );
+					fwrite( $cFile, "+++\n" );
+					fwrite( $cFile, $output );
+					fclose( $cFile );
+					break;
+				case 'memcache':
+					// create the unique cache key (replace spaces with underscores)
+					$cacheKey = self::getMemcacheKey($DPLCache);
+					$cacheData = array(
+						'timestamp' => time(),
+						'input' => $originalInput,
+						'output' => $output,
+					);
+					$wgMemc->set($cacheKey,$cacheData,$iDPLCachePeriod);
+					break;
 			}
+			$cacheTimeStamp = self::prettyTimeStamp( date( 'YmdHis' ) );
+			$dplElapsedTime = time() - $dplStartTime;
+			if ( $logger->iDebugLevel >= 2 ) {
+				$output .= "{{Extension DPL cache|mode=update|page={{FULLPAGENAME}}|cache=$DPLCache|date=$cacheTimeStamp|age=0|now=" .
+					date( 'H:i:s' ) . "|dpltime=$dplElapsedTime|offset=$iOffset}}";
+			}
+			/** Wikia change begin - never disable parser cache (CE-1066) **/
+			// $parser->disableCache();
+			/** Wikia change end **/
+		}
 
-			// backward scrolling: if the user specified titleLE we reverse the output order
-			if ($sTitleLE != '' && $sTitleGE =='' && $sOrder=='descending' ) $aArticles = array_reverse($aArticles);
+		// update dependencies to CacheAPI if DPL is to respect the MW ParserCache and the page containing the DPL query is changed
 
-			// special sort for card suits (Bridge)
-			if ($bOrderSuitSymbols) self::cardSuitSort($aArticles);
+		if (ExtDynamicPageList::$useCacheAPI && $bAllowCachedResults && $wgRequest->getVal('action','view')=='submit') {
+			/*
+						CacheAPI::remDependencies( $parser->mTitle->getArticleID());
+
+						// add category dependencies
+
+						$conditionTypes = array ( CACHETYPE_CATEGORY );
+						$conditions = array();
+						$conditions[0] = array();
+						$categorylist = array();
+						foreach ($aIncludeCategories as $categorygroup) {
+							$c=0;
+							foreach ($categorygroup as $category) {
+								if ($c==0) $conditions[0][]= $category;
+								$c++;
+							}
+						}
+
+						// add template dependencies
+
+						// add link dependencies
+
+						// add general dependencies
+
+						// CacheAPI::addDependencies ( $parser->mTitle->getArticleID(), $conditionTypes, $conditions);
+			*/
+		}
 
 
-			// ###### SHOW OUTPUT ######
+		// The following requires an extra parser step which may consume some time
+		// we parse the DPL output and save all references found in that output in a global list
+		// in a final user exit after the whole document processing we eliminate all these links
+		// we use a local parser to avoid interference with the main parser
 
-			$listMode = new DPLListMode($sPageListMode, $aSecSeparators, $aMultiSecSeparators, $sInlTxt, $sListHtmlAttr,
-				$sItemHtmlAttr, $aListSeparators, $iOffset, $iDominantSection);
+		if ($bReset[4] || $bReset[5] || $bReset[6] || $bReset[7] ) {
+			// register a hook to reset links which were produced during parsing DPL output
+			global $wgHooks;
+			if (!isset($wgHooks['ParserAfterTidy']) ||
+				!(in_array('ExtDynamicPageList::endEliminate',$wgHooks['ParserAfterTidy']) ||
+					in_array( array( 'ExtDynamicPageList', 'endEliminate'),$wgHooks['ParserAfterTidy'],true))) {
+				$wgHooks['ParserAfterTidy'][]   = 'ExtDynamicPageList' . '__endEliminate';
+			}
+			$parserOutput= $localParser->parse($output,$parser->mTitle,$parser->mOptions);
+		}
+		if ($bReset[4]) {	// LINKS
+			// we trigger the mediawiki parser to find links, images, categories etc. which are contained in the DPL output
+			// this allows us to remove these links from the link list later
+			// If the article containing the DPL statement itself uses one of these links they will be thrown away!
+			ExtDynamicPageList::$createdLinks[0]=array();
+			foreach ($parserOutput->getLinks() as $nsp => $link) {
+				ExtDynamicPageList::$createdLinks[0][$nsp]=$link;
+			}
+		}
+		if ($bReset[5]) {	// TEMPLATES
+			ExtDynamicPageList::$createdLinks[1]=array();
+			foreach ($parserOutput->getTemplates() as $nsp => $tpl) {
+				ExtDynamicPageList::$createdLinks[1][$nsp]=$tpl;
+			}
+		}
+		if ($bReset[6]) {	// CATEGORIES
+			ExtDynamicPageList::$createdLinks[2] = $parserOutput->mCategories;
+		}
+		if ($bReset[7]) {	// IMAGES
+			ExtDynamicPageList::$createdLinks[3] = $parserOutput->mImages;
+		}
 
-			$hListMode = new DPLListMode($sHListMode, $aSecSeparators, $aMultiSecSeparators, '', $sHListHtmlAttr,
-				$sHItemHtmlAttr, $aListSeparators, $iOffset, $iDominantSection);
+		return $output;
+	}
 
-			$dpl = new DPL($aHeadings, $bHeadingCount, $iColumns, $iRows, $iRowSize, $sRowColFormat, $aArticles,
-				$aOrderMethods[0], $hListMode, $listMode, $bEscapeLinks, $bAddExternalLink, $bIncPage, $iIncludeMaxLen,
-				$aSecLabels, $aSecLabelsMatch, $aSecLabelsNotMatch, $bIncParsed, $parser, $logger, $aReplaceInTitle,
-				$iTitleMaxLen, $defaultTemplateSuffix, $aTableRow, $bIncludeTrim, $iTableSortCol, $sUpdateRules, $sDeleteRules);
 
-			if ($rowcount == -1) $rowcount = $dpl->getRowCount();
-			$dplResult = $dpl->getText();
-			$header='';
-			if ($sOneResultHeader != '' && $rowcount==1) {
-				$header = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',1,$sOneResultHeader));
-			} else if ($rowcount==0) {
-				$header = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$dpl->getRowCount(),$sNoResultsHeader));
-				if ($sNoResultsHeader != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $header));
-				$footer = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$dpl->getRowCount(),$sNoResultsFooter));
-				if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $footer));
-				if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(ExtDynamicPageList::WARN_NORESULTS);
+	// auxiliary functions ===============================================================================
+
+
+	// get a list of valid page names; returns true if valid args found
+	private static function getPageNameList($cmd, $text, &$aLinks, &$bSelectionCriteriaFound, $logger, $mustExist=true) {
+		$theLinks = array();
+		$errorMsg='';
+		$pages = explode('|', trim($text));
+		foreach($pages as $page) {
+			if (($page=trim($page))=='') continue;
+			// sequences like %1a would be translated to hex chars; we avoid this by escaping the cahr after the %
+			$page=str_replace('%','%\\',$page);
+			if ($page[strlen($page)-1]=='\\') $page=substr($page,0,strlen($page)-1);
+			if ($mustExist) {
+				if (!($theTitle = Title::newFromText($page))) {
+					$errorMsg .= $logger->msgWrongParam($cmd, $page)."<br/>\n";
+					continue;
+				}
+				$theLinks[] = $theTitle;
 			}
 			else {
-				if ($sResultsHeader != '')	$header = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$dpl->getRowCount(),$sResultsHeader));
-			}
-			$header = str_replace( '\n', "\n", str_replace( "¶", "\n", $header ));
-			$header = str_replace('%VERSION%', ExtDynamicPageList::$DPLVersion,$header);
-			$footer='';
-			if ($sOneResultFooter != '' && $rowcount==1) {
-				$footer = str_replace('%PAGES%',1,$sOneResultFooter);
-			} else {
-				if ($sResultsFooter != '')	$footer =  str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$dpl->getRowCount(),$sResultsFooter));
-			}
-			$footer = str_replace( '\n', "\n", str_replace( "¶", "\n", $footer ));
-			$footer = str_replace('%VERSION%', ExtDynamicPageList::$DPLVersion, $footer);
-
-			// replace %DPLTIME% by execution time and timestamp in header and footer
-			$nowTimeStamp = self::prettyTimeStamp(date('YmdHis'));
-			$dplElapsedTime= sprintf('%.3f sec.',microtime(true)-$dplStartTime);
-			$header = str_replace('%DPLTIME%', "$dplElapsedTime ($nowTimeStamp)", $header);
-			$footer = str_replace('%DPLTIME%', "$dplElapsedTime ($nowTimeStamp)", $footer);
-
-			// replace %LASTTITLE% / %LASTNAMESPACE% by the last title found in header and footer
-			if (($n=count($aArticles)) > 0) {
-				$firstNamespaceFound = str_replace(' ','_',$aArticles[0]->mTitle->getNamespace());
-				$firstTitleFound 	 = str_replace(' ','_',$aArticles[0]->mTitle->getText());
-				$lastNamespaceFound  = str_replace(' ','_',$aArticles[$n-1]->mTitle->getNamespace());
-				$lastTitleFound 	 = str_replace(' ','_',$aArticles[$n-1]->mTitle->getText());
-			}
-			$header = str_replace('%FIRSTNAMESPACE%', 	$firstNamespaceFound, $header);
-			$footer = str_replace('%FIRSTNAMESPACE%', 	$firstNamespaceFound, $footer);
-			$header = str_replace('%FIRSTTITLE%', 		$firstTitleFound, $header);
-			$footer = str_replace('%FIRSTTITLE%', 		$firstTitleFound, $footer);
-			$header = str_replace('%LASTNAMESPACE%', 	$lastNamespaceFound, $header);
-			$footer = str_replace('%LASTNAMESPACE%', 	$lastNamespaceFound, $footer);
-			$header = str_replace('%LASTTITLE%', 		$lastTitleFound, $header);
-			$footer = str_replace('%LASTTITLE%', 		$lastTitleFound, $footer);
-			$header = str_replace('%SCROLLDIR%', 		$scrollDir, $header);
-			$footer = str_replace('%SCROLLDIR%', 		$scrollDir, $footer);
-
-			$output .= $header . $dplResult . $footer;
-
-			self::defineScrollVariables($firstNamespaceFound,$firstTitleFound,$lastNamespaceFound,$lastTitleFound,
-				$scrollDir,$iCount,"$dplElapsedTime ($nowTimeStamp)",$rowcount,$dpl->getRowCount());
-
-			// save generated wiki text to dplcache page if desired
-			if ( $DPLCache != '' ) {
-				// save data in chosen storage
-				switch ($DPLCacheStorage) {
-					case 'files':
-						if ( !is_writeable( $cacheFile ) ) {
-							wfMkdirParents( dirname( $cacheFile ) );
-						} elseif ( ( $bDPLRefresh ||
-								$wgRequest->getVal( 'action', 'view' ) == 'submit' ) &&
-							strpos( $DPLCache, '/' ) > 0 && strpos( $DPLCache, '..' ) === false
-						) {
-							// if the cache file contains a path and the user requested a refresh (or saved the file) we delete all brothers
-							wfRecursiveRemoveDir( dirname( $cacheFile ) );
-							wfMkdirParents( dirname( $cacheFile ) );
-						}
-						$cFile = fopen( $cacheFile, 'w' );
-						fwrite( $cFile, $originalInput );
-						fwrite( $cFile, "+++\n" );
-						fwrite( $cFile, $output );
-						fclose( $cFile );
-						break;
-					case 'memcache':
-						// create the unique cache key (replace spaces with underscores)
-						$cacheKey = self::getMemcacheKey($DPLCache);
-						$cacheData = array(
-							'timestamp' => time(),
-							'input' => $originalInput,
-							'output' => $output,
-						);
-						$wgMemc->set($cacheKey,$cacheData,$iDPLCachePeriod);
-						break;
-				}
-				$cacheTimeStamp = self::prettyTimeStamp( date( 'YmdHis' ) );
-				$dplElapsedTime = time() - $dplStartTime;
-				if ( $logger->iDebugLevel >= 2 ) {
-					$output .= "{{Extension DPL cache|mode=update|page={{FULLPAGENAME}}|cache=$DPLCache|date=$cacheTimeStamp|age=0|now=" .
-						date( 'H:i:s' ) . "|dpltime=$dplElapsedTime|offset=$iOffset}}";
-				}
-				/** Wikia change begin - never disable parser cache (CE-1066) **/
-				// $parser->disableCache();
-				/** Wikia change end **/
-			}
-
-			// update dependencies to CacheAPI if DPL is to respect the MW ParserCache and the page containing the DPL query is changed
-
-			if (ExtDynamicPageList::$useCacheAPI && $bAllowCachedResults && $wgRequest->getVal('action','view')=='submit') {
-				/*
-							CacheAPI::remDependencies( $parser->mTitle->getArticleID());
-
-							// add category dependencies
-
-							$conditionTypes = array ( CACHETYPE_CATEGORY );
-							$conditions = array();
-							$conditions[0] = array();
-							$categorylist = array();
-							foreach ($aIncludeCategories as $categorygroup) {
-								$c=0;
-								foreach ($categorygroup as $category) {
-									if ($c==0) $conditions[0][]= $category;
-									$c++;
-								}
-							}
-
-							// add template dependencies
-
-							// add link dependencies
-
-							// add general dependencies
-
-							// CacheAPI::addDependencies ( $parser->mTitle->getArticleID(), $conditionTypes, $conditions);
-				*/
-			}
-
-
-			// The following requires an extra parser step which may consume some time
-			// we parse the DPL output and save all references found in that output in a global list
-			// in a final user exit after the whole document processing we eliminate all these links
-			// we use a local parser to avoid interference with the main parser
-
-			if ($bReset[4] || $bReset[5] || $bReset[6] || $bReset[7] ) {
-				// register a hook to reset links which were produced during parsing DPL output
-				global $wgHooks;
-				if (!isset($wgHooks['ParserAfterTidy']) ||
-					!(in_array('ExtDynamicPageList::endEliminate',$wgHooks['ParserAfterTidy']) ||
-						in_array( array( 'ExtDynamicPageList', 'endEliminate'),$wgHooks['ParserAfterTidy'],true))) {
-					$wgHooks['ParserAfterTidy'][]   = 'ExtDynamicPageList' . '__endEliminate';
-				}
-				$parserOutput= $localParser->parse($output,$parser->mTitle,$parser->mOptions);
-			}
-			if ($bReset[4]) {	// LINKS
-				// we trigger the mediawiki parser to find links, images, categories etc. which are contained in the DPL output
-				// this allows us to remove these links from the link list later
-				// If the article containing the DPL statement itself uses one of these links they will be thrown away!
-				ExtDynamicPageList::$createdLinks[0]=array();
-				foreach ($parserOutput->getLinks() as $nsp => $link) {
-					ExtDynamicPageList::$createdLinks[0][$nsp]=$link;
-				}
-			}
-			if ($bReset[5]) {	// TEMPLATES
-				ExtDynamicPageList::$createdLinks[1]=array();
-				foreach ($parserOutput->getTemplates() as $nsp => $tpl) {
-					ExtDynamicPageList::$createdLinks[1][$nsp]=$tpl;
-				}
-			}
-			if ($bReset[6]) {	// CATEGORIES
-				ExtDynamicPageList::$createdLinks[2] = $parserOutput->mCategories;
-			}
-			if ($bReset[7]) {	// IMAGES
-				ExtDynamicPageList::$createdLinks[3] = $parserOutput->mImages;
-			}
-
-			return $output;
-		}
-
-
-		// auxiliary functions ===============================================================================
-
-
-		// get a list of valid page names; returns true if valid args found
-		private static function getPageNameList($cmd, $text, &$aLinks, &$bSelectionCriteriaFound, $logger, $mustExist=true) {
-			$theLinks = array();
-			$errorMsg='';
-			$pages = explode('|', trim($text));
-			foreach($pages as $page) {
-				if (($page=trim($page))=='') continue;
-				// sequences like %1a would be translated to hex chars; we avoid this by escaping the cahr after the %
-				$page=str_replace('%','%\\',$page);
-				if ($page[strlen($page)-1]=='\\') $page=substr($page,0,strlen($page)-1);
-				if ($mustExist) {
-					if (!($theTitle = Title::newFromText($page))) {
-						$errorMsg .= $logger->msgWrongParam($cmd, $page)."<br/>\n";
-						continue;
-					}
-					$theLinks[] = $theTitle;
-				}
-				else {
-					$theLinks[] = $page;
-				}
-			}
-			if (!empty($theLinks)) {
-				$aLinks[] = $theLinks;
-				$bSelectionCriteriaFound=true;
-			}
-			return $errorMsg;
-		}
-
-		// create keys for TableRow which represent the structure of the "include=" arguments
-		private static function updateTableRowKeys(&$aTableRow,$aSecLabels) {
-			$tableRow = $aTableRow;
-			$aTableRow=array();
-			$groupNr=-1;
-			$t= -1;
-			foreach ($aSecLabels as $label) {
-				$t++;
-				$groupNr++;
-				$cols = explode('}:',$label);
-				if (count($cols)<=1) {
-					if (array_key_exists($t,$tableRow)) $aTableRow[$groupNr]=$tableRow[$t];
-				}
-				else {
-					$n=count( explode(':',$cols[1]));
-					$colNr=-1;
-					$t--;
-					for ($i=1;$i<=$n;$i++) {
-						$colNr++;
-						$t++;
-						if (array_key_exists($t,$tableRow)) $aTableRow[$groupNr.'.'.$colNr]=$tableRow[$t];
-					}
-				}
+				$theLinks[] = $page;
 			}
 		}
-
-		private static function validParametersList() {
-			$plist='';
-			foreach (ExtDynamicPageList::$validParametersForRichnessLevel as $level => $p) {
-				$plist .= $p;
-				if ($level >= ExtDynamicPageList::$functionalRichness) break;
-			}
-			return $plist;
+		if (!empty($theLinks)) {
+			$aLinks[] = $theLinks;
+			$bSelectionCriteriaFound=true;
 		}
-
-		private static function argBoolean($arg) {
-			return ($arg=='true' || $arg=='yes' || $arg=='1' || $arg=='on');
-		}
-
-		private static function getSubcategories($cat,$sPageTable,$depth) {
-			$dbr =& wfGetDB( DB_SLAVE );
-			$cats=$cat;
-			$res = $dbr->query("SELECT DISTINCT page_title FROM ".$dbr->tableName('page')." INNER JOIN "
-				.$dbr->tableName('categorylinks')." AS cl0 ON ".$sPageTable.".page_id = cl0.cl_from AND cl0.cl_to="
-				. $dbr->addQuotes(str_replace(' ','_',$cat))." WHERE page_namespace=".NS_CATEGORY); # Wikia change - PLATFORM-2422
-			foreach ($res as $row) {
-				if ($depth>1) {
-					$cats .= '|'. self::getSubcategories($row->page_title,$sPageTable,$depth -1) ;
-				}
-				else {
-					$cats .= '|'.$row->page_title;
-				}
-			}
-			$dbr->freeResult( $res );
-			return $cats;
-		}
-
-		private static function prettyTimeStamp($t) {
-			return substr($t,0,4).'/'.substr($t,4,2).'/'.substr($t,6,2).'  '.substr($t,8,2).':'.substr($t,10,2).':'.substr($t,12,2);
-		}
-
-		private static function durationTime($t) {
-			if ($t<60) return "00:00:".str_pad($t,2,"0",STR_PAD_LEFT);
-			if ($t<3600) return "00:".str_pad(floor($t/60),2,"0",STR_PAD_LEFT).':'.str_pad(floor(fmod($t,60)),2,"0",STR_PAD_LEFT);
-			if ($t<86400) return str_pad(floor($t/3600),2,"0",STR_PAD_LEFT).':'.str_pad(floor(fmod(floor($t/60),60)),2,"0",STR_PAD_LEFT).':'.str_pad(fmod($t,60),2,"0",STR_PAD_LEFT);
-			if ($t<2*86400) return "1 day";
-			return floor($t/86400). ' days';
-		}
-
-		private static function resolveUrlArg($input,$arg) {
-			global $wgRequest;
-			$dplArg = $wgRequest->getVal($arg,'');
-			if ($dplArg=='') {
-				$input=preg_replace('/\{%'.$arg.':(.*)%\}/U', '\1'    ,$input);
-				return str_replace('{%'.$arg.'%}', 		     ''       ,$input);
-			} else {
-				$input=preg_replace('/\{%'.$arg.':.*%\}/U  ', $dplArg ,$input);
-				return str_replace('{%'.$arg.'%}'           , $dplArg ,$input);
-			}
-		}
-
-		// this function uses the Variables extension to provide URL-arguments like &DPL_xyz=abc
-		// in the form of a variable which can be accessed as {{#var:xyz}} if ExtensionVariables is installed
-		private static function getUrlArgs() {
-			global $wgRequest, $wgExtVariables;
-			$args = $wgRequest->getValues();
-			foreach ($args as $argName => $argValue) {
-				DPLVariables::setVar(array('','',$argName,$argValue));
-			}
-			if (!isset($wgExtVariables)) return;
-			$args = $wgRequest->getValues();
-			$dummy='';
-			foreach ($args as $argName => $argValue) {
-				$wgExtVariables->vardefine($dummy,$argName,$argValue);
-			}
-		}
-
-		// this function uses the Variables extension to provide navigation aids like DPL_firstTitle, DPL_lastTitle, DPL_findTitle
-		// these variables can be accessed as {{#var:DPL_firstTitle}} etc. if ExtensionVariables is installed
-		private static function defineScrollVariables($firstNamespace,$firstTitle,$lastNamespace,$lastTitle,
-																									$scrollDir,$dplCount,$dplElapsedTime,$totalPages,$pages) {
-			global $wgExtVariables;
-			DPLVariables::setVar(array('','','DPL_firstNamespace',$firstNamespace));
-			DPLVariables::setVar(array('','','DPL_firstTitle',$firstTitle));
-			DPLVariables::setVar(array('','','DPL_lastNamespace',$lastNamespace));
-			DPLVariables::setVar(array('','','DPL_lastTitle',$lastTitle));
-			DPLVariables::setVar(array('','','DPL_scrollDir' ,$scrollDir));
-			DPLVariables::setVar(array('','','DPL_time' ,$dplElapsedTime));
-			DPLVariables::setVar(array('','','DPL_count' ,$dplCount));
-			DPLVariables::setVar(array('','','DPL_totalPages' ,$totalPages));
-			DPLVariables::setVar(array('','','DPL_pages' ,$pages));
-
-			if (!isset($wgExtVariables)) return;
-			$dummy='';
-			$wgExtVariables->vardefine($dummy,'DPL_firstNamespace',$firstNamespace);
-			$wgExtVariables->vardefine($dummy,'DPL_firstTitle',$firstTitle);
-			$wgExtVariables->vardefine($dummy,'DPL_lastNamespace',$lastNamespace);
-			$wgExtVariables->vardefine($dummy,'DPL_lastTitle',$lastTitle);
-			$wgExtVariables->vardefine($dummy,'DPL_scrollDir' ,$scrollDir);
-			$wgExtVariables->vardefine($dummy,'DPL_time' ,$dplElapsedTime);
-			$wgExtVariables->vardefine($dummy,'DPL_count' ,$dplCount);
-			$wgExtVariables->vardefine($dummy,'DPL_totalPages' ,$totalPages);
-			$wgExtVariables->vardefine($dummy,'DPL_pages' ,$pages);
-		}
-
-		/**
-		 * turn <html> -> &lt;html&gt;
-		 * older versions of DPL used $wgRawHtml; the current version does NOT use rawHtml,
-		 * so prevention against <html> is no longer needed. But should not do no harm anyway.
-		 * So it is left in here.
-		 * Note, $text should be from user. It should never contain <html> in it unless someone is
-		 * being naughty.
-		 */
-		private static function killHtmlTags( $text ) {
-			//escape <html>
-			$text = preg_replace('/<([^>]*[hH][tT][mM][lL][^>]*)>/', '&lt;$1&gt;', $text);
-			//if we still have <html>, someone is doing something weird, like double nesting to get
-			//around the escaping - just escape it all. <html> should never be here unless someone
-			// is being naughty, so it shouldn't cause problems.
-			if (preg_match('/<[^>]*[hH][tT][mM][lL][^>]*>/', $text)) {
-				$text = htmlspecialchars($text);
-			}
-			return $text;
-		}
-
-		private static function cardSuitSort(&$articles) {
-			$skey = array();
-			for ($a=0;$a<count($articles);$a++) {
-				$title = preg_replace('/.*:/','',$articles[$a]->mTitle);
-				$token = preg_split('/ - */',$title);
-				$newkey='';
-				foreach ($token as $tok) {
-					$initial = substr($tok,0,1);
-					if ($initial>='1' && $initial<='7') {
-						$newkey .= $initial;
-						$suit = substr($tok,1);
-						if ($suit=='♣')			$newkey .= '1';
-						else if ($suit=='♦')	$newkey .= '2';
-						else if ($suit=='♥')	$newkey .= '3';
-						else if ($suit=='♠')	$newkey .= '4';
-						else if ($suit=='sa' || $suit == 'SA' || $suit =='nt' || $suit == 'NT')	$newkey .= '5 ';
-						else 					$newkey .= $suit;
-					}
-					else if ($initial == 'P' || $initial == 'p')	$newkey .= '0 ';
-					else if ($initial == 'X' || $initial == 'x')	$newkey .= '8 ';
-					else											$newkey .= $tok;
-				}
-				$skey[$a] = "$newkey#$a";
-			}
-			for ($a=0;$a<count($articles);$a++) {
-				$cArticles[$a] = clone($articles[$a]);
-			}
-			sort($skey);
-			for ($a=0;$a<count($cArticles);$a++) {
-				$key=intval(preg_replace('/.*#/','',$skey[$a]));
-				$articles[$a] = $cArticles[$key];
-			}
-		}
-
-		// SUS-807
-		private static function getWhereStatementForUsername( $username, $dbr ) {
-			$res = [];
-			if ( User::isIP( $username ) ) {
-				$res[ 'user_text' ] = $dbr->addQuotes( $username );
-			} else {
-				$user = User::newFromName( $username );
-				$userId = $user->getId();
-				if ( $userId > 0 ) {
-					$res[ 'user_id' ] = $userId;
-				}
-			}
-
-			return $res;
-		}
-
-		private static function getMemcacheKey( $dplCacheId ) {
-			return wfMemcKey( 'dplcache', $dplCacheId );
-		}
-
+		return $errorMsg;
 	}
+
+	// create keys for TableRow which represent the structure of the "include=" arguments
+	private static function updateTableRowKeys(&$aTableRow,$aSecLabels) {
+		$tableRow = $aTableRow;
+		$aTableRow=array();
+		$groupNr=-1;
+		$t= -1;
+		foreach ($aSecLabels as $label) {
+			$t++;
+			$groupNr++;
+			$cols = explode('}:',$label);
+			if (count($cols)<=1) {
+				if (array_key_exists($t,$tableRow)) $aTableRow[$groupNr]=$tableRow[$t];
+			}
+			else {
+				$n=count( explode(':',$cols[1]));
+				$colNr=-1;
+				$t--;
+				for ($i=1;$i<=$n;$i++) {
+					$colNr++;
+					$t++;
+					if (array_key_exists($t,$tableRow)) $aTableRow[$groupNr.'.'.$colNr]=$tableRow[$t];
+				}
+			}
+		}
+	}
+
+	private static function validParametersList() {
+		$plist='';
+		foreach (ExtDynamicPageList::$validParametersForRichnessLevel as $level => $p) {
+			$plist .= $p;
+			if ($level >= ExtDynamicPageList::$functionalRichness) break;
+		}
+		return $plist;
+	}
+
+	private static function argBoolean($arg) {
+		return ($arg=='true' || $arg=='yes' || $arg=='1' || $arg=='on');
+	}
+
+	private static function getSubcategories($cat,$sPageTable,$depth) {
+		$dbr =& wfGetDB( DB_SLAVE );
+		$cats=$cat;
+		$res = $dbr->query("SELECT DISTINCT page_title FROM ".$dbr->tableName('page')." INNER JOIN "
+			.$dbr->tableName('categorylinks')." AS cl0 ON ".$sPageTable.".page_id = cl0.cl_from AND cl0.cl_to="
+			. $dbr->addQuotes(str_replace(' ','_',$cat))." WHERE page_namespace=".NS_CATEGORY); # Wikia change - PLATFORM-2422
+		foreach ($res as $row) {
+			if ($depth>1) {
+				$cats .= '|'. self::getSubcategories($row->page_title,$sPageTable,$depth -1) ;
+			}
+			else {
+				$cats .= '|'.$row->page_title;
+			}
+		}
+		$dbr->freeResult( $res );
+		return $cats;
+	}
+
+	private static function prettyTimeStamp($t) {
+		return substr($t,0,4).'/'.substr($t,4,2).'/'.substr($t,6,2).'  '.substr($t,8,2).':'.substr($t,10,2).':'.substr($t,12,2);
+	}
+
+	private static function durationTime($t) {
+		if ($t<60) return "00:00:".str_pad($t,2,"0",STR_PAD_LEFT);
+		if ($t<3600) return "00:".str_pad(floor($t/60),2,"0",STR_PAD_LEFT).':'.str_pad(floor(fmod($t,60)),2,"0",STR_PAD_LEFT);
+		if ($t<86400) return str_pad(floor($t/3600),2,"0",STR_PAD_LEFT).':'.str_pad(floor(fmod(floor($t/60),60)),2,"0",STR_PAD_LEFT).':'.str_pad(fmod($t,60),2,"0",STR_PAD_LEFT);
+		if ($t<2*86400) return "1 day";
+		return floor($t/86400). ' days';
+	}
+
+	private static function resolveUrlArg($input,$arg) {
+		global $wgRequest;
+		$dplArg = $wgRequest->getVal($arg,'');
+		if ($dplArg=='') {
+			$input=preg_replace('/\{%'.$arg.':(.*)%\}/U', '\1'    ,$input);
+			return str_replace('{%'.$arg.'%}', 		     ''       ,$input);
+		} else {
+			$input=preg_replace('/\{%'.$arg.':.*%\}/U  ', $dplArg ,$input);
+			return str_replace('{%'.$arg.'%}'           , $dplArg ,$input);
+		}
+	}
+
+	// this function uses the Variables extension to provide URL-arguments like &DPL_xyz=abc
+	// in the form of a variable which can be accessed as {{#var:xyz}} if ExtensionVariables is installed
+	private static function getUrlArgs() {
+		global $wgRequest, $wgExtVariables;
+		$args = $wgRequest->getValues();
+		foreach ($args as $argName => $argValue) {
+			DPLVariables::setVar(array('','',$argName,$argValue));
+		}
+		if (!isset($wgExtVariables)) return;
+		$args = $wgRequest->getValues();
+		$dummy='';
+		foreach ($args as $argName => $argValue) {
+			$wgExtVariables->vardefine($dummy,$argName,$argValue);
+		}
+	}
+
+	// this function uses the Variables extension to provide navigation aids like DPL_firstTitle, DPL_lastTitle, DPL_findTitle
+	// these variables can be accessed as {{#var:DPL_firstTitle}} etc. if ExtensionVariables is installed
+	private static function defineScrollVariables($firstNamespace,$firstTitle,$lastNamespace,$lastTitle,
+																								$scrollDir,$dplCount,$dplElapsedTime,$totalPages,$pages) {
+		global $wgExtVariables;
+		DPLVariables::setVar(array('','','DPL_firstNamespace',$firstNamespace));
+		DPLVariables::setVar(array('','','DPL_firstTitle',$firstTitle));
+		DPLVariables::setVar(array('','','DPL_lastNamespace',$lastNamespace));
+		DPLVariables::setVar(array('','','DPL_lastTitle',$lastTitle));
+		DPLVariables::setVar(array('','','DPL_scrollDir' ,$scrollDir));
+		DPLVariables::setVar(array('','','DPL_time' ,$dplElapsedTime));
+		DPLVariables::setVar(array('','','DPL_count' ,$dplCount));
+		DPLVariables::setVar(array('','','DPL_totalPages' ,$totalPages));
+		DPLVariables::setVar(array('','','DPL_pages' ,$pages));
+
+		if (!isset($wgExtVariables)) return;
+		$dummy='';
+		$wgExtVariables->vardefine($dummy,'DPL_firstNamespace',$firstNamespace);
+		$wgExtVariables->vardefine($dummy,'DPL_firstTitle',$firstTitle);
+		$wgExtVariables->vardefine($dummy,'DPL_lastNamespace',$lastNamespace);
+		$wgExtVariables->vardefine($dummy,'DPL_lastTitle',$lastTitle);
+		$wgExtVariables->vardefine($dummy,'DPL_scrollDir' ,$scrollDir);
+		$wgExtVariables->vardefine($dummy,'DPL_time' ,$dplElapsedTime);
+		$wgExtVariables->vardefine($dummy,'DPL_count' ,$dplCount);
+		$wgExtVariables->vardefine($dummy,'DPL_totalPages' ,$totalPages);
+		$wgExtVariables->vardefine($dummy,'DPL_pages' ,$pages);
+	}
+
+	/**
+	 * turn <html> -> &lt;html&gt;
+	 * older versions of DPL used $wgRawHtml; the current version does NOT use rawHtml,
+	 * so prevention against <html> is no longer needed. But should not do no harm anyway.
+	 * So it is left in here.
+	 * Note, $text should be from user. It should never contain <html> in it unless someone is
+	 * being naughty.
+	 */
+	private static function killHtmlTags( $text ) {
+		//escape <html>
+		$text = preg_replace('/<([^>]*[hH][tT][mM][lL][^>]*)>/', '&lt;$1&gt;', $text);
+		//if we still have <html>, someone is doing something weird, like double nesting to get
+		//around the escaping - just escape it all. <html> should never be here unless someone
+		// is being naughty, so it shouldn't cause problems.
+		if (preg_match('/<[^>]*[hH][tT][mM][lL][^>]*>/', $text)) {
+			$text = htmlspecialchars($text);
+		}
+		return $text;
+	}
+
+	private static function cardSuitSort(&$articles) {
+		$skey = array();
+		for ($a=0;$a<count($articles);$a++) {
+			$title = preg_replace('/.*:/','',$articles[$a]->mTitle);
+			$token = preg_split('/ - */',$title);
+			$newkey='';
+			foreach ($token as $tok) {
+				$initial = substr($tok,0,1);
+				if ($initial>='1' && $initial<='7') {
+					$newkey .= $initial;
+					$suit = substr($tok,1);
+					if ($suit=='♣')			$newkey .= '1';
+					else if ($suit=='♦')	$newkey .= '2';
+					else if ($suit=='♥')	$newkey .= '3';
+					else if ($suit=='♠')	$newkey .= '4';
+					else if ($suit=='sa' || $suit == 'SA' || $suit =='nt' || $suit == 'NT')	$newkey .= '5 ';
+					else 					$newkey .= $suit;
+				}
+				else if ($initial == 'P' || $initial == 'p')	$newkey .= '0 ';
+				else if ($initial == 'X' || $initial == 'x')	$newkey .= '8 ';
+				else											$newkey .= $tok;
+			}
+			$skey[$a] = "$newkey#$a";
+		}
+		for ($a=0;$a<count($articles);$a++) {
+			$cArticles[$a] = clone($articles[$a]);
+		}
+		sort($skey);
+		for ($a=0;$a<count($cArticles);$a++) {
+			$key=intval(preg_replace('/.*#/','',$skey[$a]));
+			$articles[$a] = $cArticles[$key];
+		}
+	}
+
+	// SUS-807
+	private static function getWhereStatementForUsername( $username, $dbr ) {
+		$res = [];
+		if ( User::isIP( $username ) ) {
+			$res[ 'user_text' ] = $dbr->addQuotes( $username );
+		} else {
+			$user = User::newFromName( $username );
+			$userId = $user->getId();
+			if ( $userId > 0 ) {
+				$res[ 'user_id' ] = $userId;
+			}
+		}
+
+		return $res;
+	}
+
+	private static function getMemcacheKey( $dplCacheId ) {
+		return wfMemcKey( 'dplcache', $dplCacheId );
+	}
+
+}
