@@ -21,6 +21,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/MultiTasks"
 );
 
+$wgExtensionMessagesFiles["Multiwikiedit"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
+$wgExtensionMessagesFiles['MultiwikieditAliases'] = __DIR__ . '/MultiTasks.aliases.php';
 
 require_once( $IP . "/extensions/wikia/TaskManager/BatchTask.php" );
 

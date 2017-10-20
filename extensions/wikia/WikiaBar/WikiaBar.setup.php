@@ -44,3 +44,4 @@ $wgHooks['WikiFactoryChanged'][] = 'WikiaBarHooks::onWikiFactoryVarChanged';
 $wgHooks['WikiFactoryVarSave::AfterErrorDetection'][] = 'WikiaBarHooks::onWFAfterErrorDetection';
 
 // i18n mapping
+$wgExtensionMessagesFiles['WikiaBar'] = $dir . 'WikiaBar.i18n.php';

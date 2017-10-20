@@ -26,6 +26,7 @@ $dir = dirname( __FILE__ );
 /**
  * messages file
  */
+$wgExtensionMessagesFiles["WikiFactory"] =  $dir . '/SpecialWikiFactory.i18n.php';
 
 /**
  * helper file

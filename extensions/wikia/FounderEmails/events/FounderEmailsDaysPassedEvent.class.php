@@ -78,7 +78,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		return $emailController;
 	}
 
-	public static function register( $wikiParams, $debugMode = false ) {
+	public static function createWikiCompleted( $wikiParams ) {
 		global $wgFounderEmailsEvents, $wgCityId;
 
 		$founderEmailObj = FounderEmails::getInstance();

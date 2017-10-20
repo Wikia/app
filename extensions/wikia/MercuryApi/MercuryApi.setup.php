@@ -17,6 +17,7 @@ $wgExtensionCredits['api'][] = [
 ];
 
 // i18n
+$wgExtensionMessagesFiles['MercuryApi'] = $dir . 'MercuryApi.i18n.php';
 
 // Load needed classes
 $wgAutoloadClasses['MercuryApiController'] = $dir . 'MercuryApiController.class.php';

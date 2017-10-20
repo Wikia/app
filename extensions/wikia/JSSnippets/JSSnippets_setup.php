@@ -26,6 +26,7 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 $dir = dirname(__FILE__);
 
 //i18n
+$wgExtensionMessagesFiles['JSSnippets'] = $dir . '/JSSnippets.i18n.php';
 
 // classes
 $wgAutoloadClasses['JSSnippets'] =  $dir . '/JSSnippets.class.php';

@@ -44,6 +44,7 @@ $wgHooks['LinkEnd'][] = 'RTELinkerHooks::onLinkEnd';
 $wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink';
 
 // i18n
+$wgExtensionMessagesFiles['RTE'] = __DIR__ . '/i18n/RTE.i18n.php';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'RTEAjax';

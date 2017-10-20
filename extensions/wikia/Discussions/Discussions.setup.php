@@ -51,6 +51,8 @@ if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
 }
 
 // message files
+$wgExtensionMessagesFiles['SpecialDiscussions'] = $dir . 'i18n/SpecialDiscussions.i18n.php';
+$wgExtensionMessagesFiles['StaffWelcomePost'] = $dir . 'i18n/StaffWelcomePost.i18n.php';
 
 // permissions
 $wgAvailableRights[] = 'specialdiscussions';

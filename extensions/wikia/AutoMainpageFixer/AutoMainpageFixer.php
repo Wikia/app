@@ -15,6 +15,7 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 //i18n
+$wgExtensionMessagesFiles['AutoMainpageFixer'] = __DIR__ . '/AutoMainpageFixer.i18n.php';
 
 $wgHooks['TitleMoveComplete'][] = 'fnAutoMWMainpageFixer';
 

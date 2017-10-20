@@ -15,3 +15,4 @@ $wgAutoloadClasses['GoogleFormTagController'] = __DIR__ . '/GoogleFormTagControl
 $wgHooks['ParserFirstCallInit'][] = 'GoogleFormTagController::onParserFirstCallInit';
 
 // i18n
+$wgExtensionMessagesFiles['GoogleFormTag'] = __DIR__ . '/GoogleFormTag.i18n.php';

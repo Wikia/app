@@ -135,7 +135,7 @@ class GenderCache {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		$table = [ '`user`', '`user_properties`' ];
+		$table = [ '`user`', 'user_properties' ];
 		$fields = [ 'user_name', 'up_value' ];
 		$conds = [ 'user_name' => $userNames ];
 		$joins = [

@@ -11,6 +11,7 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 );
 
 //i18n
+$wgExtensionMessagesFiles[ 'JSVariables' ] = __DIR__ . '/JSVariables.i18n.php';
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';

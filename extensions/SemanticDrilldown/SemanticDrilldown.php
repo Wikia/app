@@ -42,6 +42,9 @@ $sdgIP = dirname( __FILE__ );
 require_once( $sdgIP . '/languages/SD_Language.php' );
 
 $wgMessagesDirs['SemanticDrilldown'] = __DIR__ . '/i18n';
+$wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
+$wgExtensionMessagesFiles['SemanticDrilldownAlias'] = $sdgIP . '/languages/SD_Aliases.php';
+$wgExtensionMessagesFiles['SemanticDrilldownMagic'] = $sdgIP . '/languages/SemanticDrilldown.i18n.magic.php';
 
 // register all special pages and other classes
 $wgSpecialPages['BrowseData'] = 'SDBrowseData';

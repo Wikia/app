@@ -25,7 +25,8 @@ if (isset($options['help'])) {
 		  --maxwiki			maximum wiki id\n\n");
 }
 
-require_once( __DIR__.'/../../extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php' );
+$wgExtensionMessagesFiles['AutomaticWikiAdoption'] = $GLOBALS['IP'] . '/extensions/wikia/AutomaticWikiAdoption/AutomaticWikiAdoption.i18n.php';
+require_once( $GLOBALS['IP'].'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php' );
 
 $maintenance = new AutomaticWikiAdoptionGatherData();
 $maintenance->run($options);

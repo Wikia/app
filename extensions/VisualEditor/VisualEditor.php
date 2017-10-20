@@ -43,6 +43,7 @@ $wgAutoloadClasses['VisualEditorHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['VisualEditorDataModule'] = $dir . 'VisualEditorDataModule.php';
 $wgAutoloadClasses['VisualEditorViewPageTargetInitModule'] =
 	$dir . 'VisualEditorViewPageTargetInitModule.php';
+$wgExtensionMessagesFiles['VisualEditor'] = $dir . 'VisualEditor.i18n.php';
 $wgMessagesDirs['VisualEditor'] = array(
 	__DIR__ . '/lib/ve/i18n',
 	__DIR__ . '/modules/ve-mw/i18n',

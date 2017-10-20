@@ -54,8 +54,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		},
 		lazyQueue: {},
 		window: {},
-		beforeSuccess: noop,
-		beforeHop: noop,
+		afterSuccess: noop,
+		afterHop: noop,
 		btfBlocker: {
 			decorate: function (fillInSlot) {
 				return fillInSlot;

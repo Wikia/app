@@ -45,6 +45,8 @@ $wgHooks['EditPageLayoutExecute'][]       = '\InfoboxBuilder\InfoboxBuilderHooks
 /**
  * I18n files
  */
+$wgExtensionMessagesFiles['InfoboxBuilder']      = __DIR__ . '/InfoboxBuilder.i18n.php';
+$wgExtensionMessagesFiles['InfoboxBuilderMagic'] = __DIR__ . '/InfoboxBuilder.magic.i18n.php';
 
 /**
  * Register SCSS with the default theme for an infobox

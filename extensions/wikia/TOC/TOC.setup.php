@@ -19,6 +19,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //i18n
+$wgExtensionMessagesFiles['TOC'] = $dir . 'TOC.i18n.php';
 
 // register classes
 $wgAutoloadClasses['TOCController'] =  $dir . 'TOCController.class.php';

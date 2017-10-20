@@ -26,6 +26,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 #--- messages file
+$wgExtensionMessagesFiles["Newwikis"] = __DIR__ . '/SpecialNewWikis.i18n.php';
 
 #--- special pages
 $wgSpecialPageGroups['Newwikis'] = 'highuse';

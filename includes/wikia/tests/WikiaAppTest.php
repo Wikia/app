@@ -48,6 +48,30 @@ class WikiaAppTest extends TestCase {
 		$this->application->registerExtensionFunction($function);
 	}
 
+	public function testRegisteringExtensionMessageFileProxiesToMediaWikiRegistry() {
+		$path = 'filepath';
+		$name = 'name';
+
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
+		$registry->expects($this->once())
+		         ->method('set')
+		         ->with($this->equalTo('wgExtensionMessagesFiles'), $this->equalTo($path), $this->equalTo($name));
+		$this->application->setGlobalRegistry($registry);
+		$this->application->registerExtensionMessageFile($name, $path);
+	}
+
+	public function testRegisteringExtensionAliasFileProxiesToMediaWikiRegistry() {
+		$path = 'filepath';
+		$name = 'name';
+
+		$registry = $this->createMock( WikiaGlobalRegistry::class );
+		$registry->expects($this->once())
+		         ->method('set')
+		         ->with($this->equalTo('wgExtensionAliasesFiles'), $this->equalTo($path), $this->equalTo($name));
+		$this->application->setGlobalRegistry($registry);
+		$this->application->registerExtensionAliasFile($name, $path);
+	}
+
 	public function testRegisteringSpecialPageProxiesToMediaWikiRegistry() {
 		$name = 'name';
 		$class = 'SpecialPageClass';

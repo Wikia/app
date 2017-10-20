@@ -16,3 +16,4 @@ $wgAutoloadClasses['SpecialFinishCreate'] = $dir . 'SpecialFinishCreate.class.ph
 $wgSpecialPages['FinishCreate'] = 'SpecialFinishCreate';
 
 // i18n mapping
+$wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';

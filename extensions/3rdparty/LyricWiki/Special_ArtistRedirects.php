@@ -20,5 +20,6 @@ $wgExtensionCredits["specialpage"][] = array(
 );
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['ArtistRedirects'] = $dir . 'Special_ArtistRedirects.body.php'; # Tell MediaWiki to load the extension body.
+$wgExtensionMessagesFiles['ArtistRedirects'] = $dir . 'Special_ArtistRedirects.i18n.php';
 $wgSpecialPages['ArtistRedirects'] = 'ArtistRedirects'; # Let MediaWiki know about your new special page.
 

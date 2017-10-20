@@ -202,8 +202,8 @@ interface DatabaseType {
  */
 abstract class DatabaseBase implements DatabaseType {
 
-	// @const log 1% of queries
-	const QUERY_SAMPLE_RATE = 0.01;
+	// @const log 5% of queries (increased from 1% in SUS-2974)
+	const QUERY_SAMPLE_RATE = 0.05;
 
 	// @const log queries that took more than 15 seconds
 	const SLOW_QUERY_LOG_THRESHOLD = 15;
@@ -3753,6 +3753,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $sql the query
 	 * @param ResultWrapper|mysqli_result|bool $ret database results
 	 * @param string $fname the name of the function that made this query
+	 * @param float $elapsedTime time (in seconds) it took the query to complete
 	 * @param bool $isMaster is this against the master
 	 * @return void
 	 */
@@ -3797,12 +3798,14 @@ abstract class DatabaseBase implements DatabaseType {
 			'exception'   => new Exception(), // log the backtrace
 		];
 
+		/* @var WebRequest $wgRequest */
 		if ( $wgRequest && $wgRequest->getVal( 'action' ) == 'delete' ) {
 			$this->getWikiaLogger()->info( "SQL (action=delete) {$sql}", $context );
 		}
 
+		// SUS-2974 | send SQL logs to a separate ES index 'mediawiki-sql'
 		if ( $this->getSampler()->shouldSample() ) {
-			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
+			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
 		if ( $this->isWriteQuery($sql) &&

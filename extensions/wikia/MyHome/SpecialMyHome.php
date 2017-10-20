@@ -13,6 +13,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SpecialWikiActivity'] = $dir.'SpecialWikiActivity.class.php';
 $wgSpecialPages['WikiActivity'] = 'SpecialWikiActivity';
 $wgSpecialPageGroups['WikiActivity'] = 'changes';
+$wgExtensionMessagesFiles['WikiActivityAliases'] = "$dir/SpecialWikiActivity.alias.php";
 
 // hooks
 $wgHooks['InitialQueriesMainPage'][] = 'MyHome::getInitialMainPage';

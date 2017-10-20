@@ -16,6 +16,7 @@ $wgExtensionCredits[version_compare($wgVersion, '1.17alpha', '>=') ? 'antispam' 
 );
 
 $dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['SpamBlackList'] = $dir . 'SpamBlacklist.i18n.php';
 
 /**
  * Array of settings for blacklist classes

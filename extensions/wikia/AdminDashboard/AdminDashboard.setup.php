@@ -23,6 +23,9 @@ $wgAutoloadClasses['QuickStatsController'] =  __DIR__ . '/QuickStatsController.c
 $wgHooks['BeforeToolbarMenu'][] = 'AdminDashboardLogic::onBeforeToolbarMenu';
 
 // i18n mapping
+$wgExtensionMessagesFiles['AdminDashboard'] = __DIR__ . '/AdminDashboard.i18n.php';
+$wgExtensionMessagesFiles['QuickStats'] = __DIR__ . '/QuickStats.i18n.php';
+$wgExtensionMessagesFiles['AdminDashboardAliases'] = __DIR__ . '/AdminDashboard.alias.php';
 
 // special pages
 $wgSpecialPages[ 'AdminDashboard'] = 'AdminDashboardSpecialPageController';
