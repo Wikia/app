@@ -134,6 +134,7 @@ packages :
 				'core/dom/rangelist.js'
 				'core/skin.js'
 				'core/_bootstrap.js'			
+				'styles.js'
 
 				
 				
@@ -169,7 +170,7 @@ packages :
 				'plugins/sourcearea/plugin.js'
 
 				'plugins/toolbar/plugin.js'
-
+				'plugins/notification/plugin.js'
 
 
 				//wikia plugins below
@@ -200,7 +201,7 @@ packages :
 
 					//experimental!
 					'themes/wikia/theme.js'
-
+					'skins/kama/skin.js'
 					//language files
 					'lang/lang.js'			
 					'plugins/lang.js'
