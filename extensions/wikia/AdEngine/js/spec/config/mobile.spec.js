@@ -75,6 +75,13 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
+	it('getProviderList returns DirectGPT on premium-only page', function () {
+		context.opts.premiumOnly = true;
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock]);
+	});
+
 	it('getProviderLists returns [] when showAds is false', function () {
 		context.opts.showAds = false;
 		var adConfigMobile = getConfig();
@@ -131,42 +138,5 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock]);
-	});
-
-	it('getProviderLists returns RPFL when force provider is set', function () {
-		context.forcedProvider = 'rpfl';
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderRubiconFastlaneMock]);
-	});
-
-	it('getProviderLists returns Direct, Remnant when RPFL is disabled', function () {
-		spyOn(adProviderRubiconFastlaneMock, 'canHandleSlot').and.returnValue(false);
-		context.providers.rubiconFastlane = true;
-
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
-	});
-
-	it('getProviderLists returns Direct, Remnant, RubiconFastlane', function () {
-		context.providers.rubiconFastlane = true;
-
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo')).toEqual([
-			adProviderDirectMock,
-			adProviderRemnantMock,
-			adProviderRubiconFastlaneMock
-		]);
-	});
-
-	it('getProviderLists returns RubiconFastlane when wgSitewideDisableGpt is enabled', function () {
-		mocks.instantGlobals.wgSitewideDisableGpt = true;
-		context.providers.rubiconFastlane = true;
-
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderRubiconFastlaneMock]);
 	});
 });

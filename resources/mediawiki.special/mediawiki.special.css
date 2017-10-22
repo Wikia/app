@@ -31,6 +31,10 @@ table.mw-allpages-table-form tr {
 	vertical-align: top;
 }
 
+.allpagesredirect {
+	font-style: italic;
+}
+
 /**** Special:Block ****/
 tr.mw-block-hideuser {
 	font-weight: bold;
@@ -271,4 +275,9 @@ td.mw-statistics-numbers {
 table.mw-userrights-groups * td,
 table.mw-userrights-groups * th {
 	padding-right: 1.5em;
+}
+
+/**** Special:WatchList ****/
+.watchlistredir {
+	font-style: italic;
 }

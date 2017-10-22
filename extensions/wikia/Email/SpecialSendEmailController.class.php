@@ -47,7 +47,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	private function setTitle() {
 		$this->getContext()->getOutput()->setHTMLTitle( "Special Send Email" );
 		$this->getContext()->getOutput()->setPageTitle( "Special Send Email" );
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 	}
 
 	/**

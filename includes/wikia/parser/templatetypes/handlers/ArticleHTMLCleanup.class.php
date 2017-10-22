@@ -44,9 +44,12 @@ class ArticleHTMLCleanup {
 					$next = $next->nextSibling;
 				}
 				// remove if next node is header of same or higher level, or a last node
-				if ( ( in_array( $next->nodeName, self::$headersList )
-					   && $current->nodeName[ 1 ] >= $next->nodeName[ 1 ] )
-					 || $next === null
+				if (
+					is_null( $next ) ||
+				     (
+				     	in_array( $next->nodeName, self::$headersList ) &&
+				        $current->nodeName[ 1 ] >= $next->nodeName[ 1 ]
+				     )
 				) {
 					// remove empty siblings as well
 					HtmlHelper::removeNodes( array_merge( [ $current ], $emptySiblings ) );

@@ -94,6 +94,13 @@ class RunOnCluster extends Maintenance {
 	const PARAM_DB_NAME = 'dbName';
 	const PARAM_DB_MISSING = 'dbMissing';
 
+	// The default method to call in the class given by --file or --class
+	const DEFAULT_METHOD = "run";
+	// The default cluster to use when none is given by --cluster
+	const DEFAULT_CLUSTER = 1;
+	// Default class to use if none is given by --file or --class
+	const DEFAULT_CLASS = ClusterTestClass::class;
+
 	protected $verbose = false;
 	protected $test    = false;
 	protected $cluster = '1';
@@ -135,59 +142,14 @@ class RunOnCluster extends Maintenance {
 	public function execute() {
 		// Collect options
 		$this->readOptions();
+		$this->validateOptions();
 
 		$startTime = time();
 
-		if ( $this->test ) {
-			echo "== TEST MODE ==\n";
-		}
-		$this->debug( "(debugging output enabled)\n" );
+		$this->notifyOnSpecialOptions();
 
-		if ( $this->master ) {
-			echo "-- RUNNING ON MASTER --\n";
-		}
-
-		// If there's an include file, make sure it exists
-		if ( $this->file ) {
-			if ( !file_exists( $this->file ) ) {
-				die( "File '" . $this->file . "' does not exist\n" );
-			}
-			require_once( $this->file );
-		} else {
-			if ( $this->class ) {
-				echo "Warning: Argument --class given without --file; this is probably not correct\n";
-			} else {
-				// If there's no file or class given, use the default test class
-				$this->class = 'ClusterTestClass';
-			}
-		}
-
-		// Try to figure out what class was defined in the file given
-		if ( empty( $this->class ) ) {
-			// Look through each declared class
-			foreach ( get_declared_classes() as $class ) {
-				// Figure out where that class was defined
-				$reflector = new ReflectionClass( $class );
-				if ( realpath( $this->file ) == $reflector->getFileName() ) {
-					// Bingo, this is the class to use
-					$this->class = $class;
-					break;
-				}
-			}
-		}
-
-		// Make sure the class and method we're using exist
-		if ( !class_exists( $this->class ) ) {
-			die( "Class '" . $this->class . "' does not exist\n" );
-		}
-		if ( !method_exists( $this->class, $this->method ) ) {
-			die( "Method '" . $this->method . "' does not exist in class '" . $this->class . "'\n" );
-		}
-
-		// Basic cluster sanity check
-		if ( !preg_match( '/^[0-9]+$/', $this->cluster ) ) {
-			die( "Argument to --cluster must be an integer\n" );
-		}
+		$this->loadCodeToRun();
+		$this->verifyCodeToRun();
 
 		// Get all the wiki's on the current cluster
 		$clusterWikis = $this->getClusterWikis();
@@ -201,41 +163,12 @@ class RunOnCluster extends Maintenance {
 
 		// Loop through each dbName and run our code
 		foreach ( $clusterWikis as $cityId => $dbName ) {
-			// Catch connection errors and log them
-			try {
-				$result = $this->db->selectDB( $dbName );
-			} catch ( Exception $e ) {
-				fwrite( STDERR, "ERROR: ".$e->getMessage()."\n" );
+			if ( !$this->useSchema( $dbName ) ) {
+				// Skip this wiki if we can't connect to its schema on this DB
+				continue;
 			}
-			if ( empty( $result ) ) {
-				$this->dbMissing = true;
 
-				if ( $this->dbCheck ) {
-					$this->debug( "Could not find DB to use\n" );
-					continue;
-				}
-			}
-			$this->debug( "Processing: $dbName\n" );
-
-			// Call our method passing the connected DB handle and test flag
-			$class = $this->class;
-			$method = $this->method;
-			$params = [
-				self::PARAM_DB_NAME => $dbName,
-				self::PARAM_SITE_ID => $cityId,
-			    self::PARAM_DB_MISSING => $this->dbMissing,
-			];
-
-			try {
-				$class::$method( $this->db, $this->test, $this->verbose, $params );
-			} catch ( Exception $e ) {
-				fwrite(
-					STDERR,
-					"Could not run $class::$method for $dbName: " .
-					$e->getMessage() . "\n" .
-					$e->getTraceAsString() . "\n"
-				);
-			}
+			$this->runCodeOn( $cityId, $dbName );
 		}
 
 		$delta = F::app()->wg->Lang->formatTimePeriod( time() - $startTime );
@@ -243,12 +176,12 @@ class RunOnCluster extends Maintenance {
 	}
 
 	private function readOptions() {
-		$this->test = $this->hasOption( 'test' ) ? true : false;
-		$this->verbose = $this->hasOption( 'verbose' ) ? true : false;
-		$this->master = $this->hasOption( 'master' ) ? true : false;
-		$this->cluster = $this->getOption( 'cluster', '1' );
+		$this->test = $this->hasOption( 'test' );
+		$this->verbose = $this->hasOption( 'verbose' );
+		$this->master = $this->hasOption( 'master' );
+		$this->cluster = $this->getOption( 'cluster', self::DEFAULT_CLUSTER );
 		$this->class = $this->getOption( 'class' );
-		$this->method = $this->getOption( 'method', 'run' );
+		$this->method = $this->getOption( 'method', self::DEFAULT_METHOD );
 
 		$filter = $this->getOption( 'filter', 'public' );
 		if ( strtolower( $filter ) == 'all' ) {
@@ -266,6 +199,72 @@ class RunOnCluster extends Maintenance {
 		$this->dbCheck = ! $this->getOption( 'no-db-check', false );
 
 		$this->file = $this->getOption( 'file' );
+	}
+
+	private function validateOptions() {
+		if ( !$this->file && $this->class ) {
+			die( "Error: Argument --class given without --file; this is probably not correct\n" );
+		}
+
+		// Basic cluster sanity check
+		if ( !preg_match( '/^[0-9]+$/', $this->cluster ) ) {
+			die( "Argument to --cluster must be an integer\n" );
+		}
+	}
+
+	private function notifyOnSpecialOptions() {
+		if ( $this->test ) {
+			echo "== TEST MODE ==\n";
+		}
+		$this->debug( "(debugging output enabled)\n" );
+
+		if ( $this->master ) {
+			echo "-- RUNNING ON MASTER --\n";
+		}
+	}
+
+	private function loadCodeToRun() {
+		$this->loadFile();
+
+		// If a specific class has already been given, use that.
+		if ( !empty( $this->class ) ) {
+			return;
+		}
+
+		// Otherwise, try to figure it out by looking through each declared class
+		foreach ( get_declared_classes() as $class ) {
+			$reflector = new ReflectionClass( $class );
+			if ( realpath( $this->file ) == $reflector->getFileName() ) {
+				// If the class is defined in the filename given to use, this is the class to use.
+				$this->class = $class;
+				break;
+			}
+		}
+	}
+
+	private function loadFile() {
+		// If there's no file given, use the default test class
+		if ( !$this->file ) {
+			$this->class = self::DEFAULT_CLASS;
+			return;
+		}
+
+		if ( !file_exists( $this->file ) ) {
+			die( "File '" . $this->file . "' does not exist\n" );
+		}
+
+		require_once( $this->file );
+	}
+
+	private function verifyCodeToRun() {
+		// Make sure the class and method we're using exist
+		if ( !class_exists( $this->class ) ) {
+			die( "Class '" . $this->class . "' does not exist\n" );
+		}
+
+		if ( !method_exists( $this->class, $this->method ) ) {
+			die( "Method '" . $this->method . "' does not exist in class '" . $this->class . "'\n" );
+		}
 	}
 
 	/**
@@ -315,6 +314,49 @@ class RunOnCluster extends Maintenance {
 		$this->db = wfGetDB( $target, [], $name );
 
 		return $this->db ? true : false;
+	}
+
+	private function useSchema( $dbName ) {
+		// Catch connection errors and log them
+		try {
+			$result = $this->db->selectDB( $dbName );
+		} catch ( Exception $e ) {
+			fwrite( STDERR, "ERROR: ".$e->getMessage()."\n" );
+		}
+
+		$this->dbMissing = empty( $result );
+
+		// If the db can't be found and we care about that, return now.
+		if ( $this->dbMissing && $this->dbCheck ) {
+			$this->debug( "Could not find DB to use\n" );
+			return false;
+		}
+
+		$this->debug( "Processing: $dbName\n" );
+
+		return true;
+	}
+
+	private function runCodeOn( $cityId, $dbName ) {
+		// Call our method passing the connected DB handle and test flag
+		$class = $this->class;
+		$method = $this->method;
+		$params = [
+			self::PARAM_DB_NAME => $dbName,
+			self::PARAM_SITE_ID => $cityId,
+			self::PARAM_DB_MISSING => $this->dbMissing,
+		];
+
+		try {
+			$class::$method( $this->db, $this->test, $this->verbose, $params );
+		} catch ( Exception $e ) {
+			fwrite(
+				STDERR,
+				"Could not run $class::$method for $dbName: " .
+				$e->getMessage() . "\n" .
+				$e->getTraceAsString() . "\n"
+			);
+		}
 	}
 
 	/**

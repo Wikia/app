@@ -16,13 +16,17 @@ var ChatWidget = {
 		}
 
 		// make sure we start processing after ChatModule templates is loaded
-		if ($('.chat-module').length) {
+		// SUS-1202: refresh user list for in-content chat widget, the one on the right rail is always loaded fresh
+		if ($('.chat-module').not('.rail-module').length) {
 			if (!ChatWidget.loading) {
 				// if we're not loading yet - start it
 				ChatWidget.loading = true;
 				ChatWidget.loadDataAndInitializeModules();
 			}
 		}
+
+		// we do not need to wait for widgets to be initialized
+		ChatWidget.initializeChatModules();
 	},
 
 	openChat: function (event) {
@@ -53,8 +57,6 @@ var ChatWidget = {
 				// cache result
 				ChatWidget.users = users;
 			}
-
-			ChatWidget.initializeChatModules();
 		});
 	},
 
@@ -183,8 +185,7 @@ var ChatWidget = {
 			}
 		}).on('mouseenter', function () {
 			clearTimeout(popoverTimeout);
-			// this will remove all elements that has popover class, ticket created to fix it SUS-1993
-			$('.popover').remove();
+			$('body > .popover').remove();
 			$el.find('.UserStatsMenu img[data-src]').each(function () {
 				var image = $(this);
 				image.attr('src', image.attr('data-src')).removeAttr('data-src');

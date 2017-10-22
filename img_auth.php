@@ -105,7 +105,7 @@ function wfImageAuthMain() {
 	}
 
 	// Run hook for extension authorization plugins
-	if ( !wfRunHooks( 'ImgAuthBeforeStream', array( &$title, &$path, &$name, &$result ) ) ) {
+	if ( !Hooks::run( 'ImgAuthBeforeStream', array( &$title, &$path, &$name, &$result ) ) ) {
 		wfForbidden( $result[0], $result[1], array_slice( $result, 2 ) );
 		return;
 	}

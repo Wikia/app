@@ -1,5 +1,5 @@
 {{#viewedUsersInfo}}
-	<a href="{{userProfileUrl}}"
+	<a href="{{profileUrl}}"
 	   class="wds-avatar-stack__avatar{{#hasUsers}} chatter{{/hasUsers}}"{{^hasUsers}}
 	   title="{{username}}"{{/hasUsers}}>
 		<img class="wds-avatar" src="{{avatarUrl}}"/>
@@ -22,13 +22,13 @@
 			<div class="actions">
 				<ul class="regular-actions">
 					<li class="profilepage {{profileType}}">
-						<a href="{{profileUrl}}">
+						<a href="{{profileUrl}}" target="_blank">
 							{{{profileIcon}}}
 							<span class="label" data-msg-id="{{profileTypeMsg}}"></span>
 						</a>
 					</li>
 					<li class="contribs">
-						<a href="{{contribsUrl}}">
+						<a href="{{contribsUrl}}" target="_blank">
 							{{{contribIcon}}}
 							<span class="label" data-msg-id="chat-user-menu-contribs"> </span>
 						</a>

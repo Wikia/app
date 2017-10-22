@@ -3,7 +3,7 @@
 /**
  * Helper service to maintain new video logic / old video logic
  */
-class WikiaFileHelper extends Service {
+class WikiaFileHelper {
 
 	const maxWideoWidth = 1200;
 
@@ -280,6 +280,7 @@ class WikiaFileHelper extends Service {
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
 		$data = array(
 			'mediaType' => '',
+			'mime' => '',
 			'videoEmbedCode' => '',
 			'playerAsset' => '',
 			'imageUrl' => '',
@@ -310,6 +311,7 @@ class WikiaFileHelper extends Service {
 
 				$data['exists'] = true;
 				$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
+				$data['mime'] = $file->getMimeType();
 
 				$width = (int) $file->getWidth();
 				$height = (int) $file->getHeight();
@@ -635,7 +637,10 @@ class WikiaFileHelper extends Service {
 	public static function getByUserMsg( $userName, $addedAt ) {
 		// get link to user page
 		$link = AvatarService::renderLink( $userName );
-		$addedBy = wfMessage( 'thumbnails-added-by', $link, wfTimeFormatAgo( $addedAt, false ) )->text();
+		$addedBy = wfMessage( 'thumbnails-added-by' )
+			->rawParams( $link )
+			->params( wfTimeFormatAgo( $addedAt, false ) )
+			->escaped();
 
 		return $addedBy;
 	}

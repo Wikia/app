@@ -51,6 +51,6 @@ function AssetsManagerEntryPoint() {
 	global $wgRequest;
 	AssetsManagerServer::serve($wgRequest);
 
-	wfRunHooks('RestInPeace');
+	Hooks::run('RestInPeace');
 	exit();
 }

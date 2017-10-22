@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesD extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'december' => 'December',
 	'december-gen' => 'December',
 	'dec' => 'Dec',
@@ -40,9 +39,9 @@ Please report the above error [[Special:Contact/bug|using this form]]',
 	'disambiguations' => 'Pages linking to disambiguation pages',
 	'disambiguations-summary' => '',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'The following pages link to a \'\'\'disambiguation page\'\'\'.
+	'disambiguations-text' => "The following pages link to a '''disambiguation page'''.
 They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]',
+A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Double redirects',
 	'doubleredirects-summary' => '',
 	'doubleredirectstext' => 'This page lists pages which redirect to other redirect pages.
@@ -61,18 +60,18 @@ It now redirects to [[$2]].',
 	'deletepage' => 'Delete page',
 	'delete-confirm' => 'Delete "$1"',
 	'delete-legend' => 'Delete',
-	'deletedtext' => '\'\'\'"$1" has been deleted!\'\'\'
+	'deletedtext' => "'''\"\$1\" has been deleted!'''
 
-* Please note, some pages may still [[Special:WhatLinksHere/$1|link to this page]].
-* You can continue to view the deleted page [[Special:Undelete/$1|here]].
-* See the $2 for a record of recent deletions.
+* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
+* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
+* See the \$2 for a record of recent deletions.
 
 {{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
 <br />
-This page also has a \'\'\'[[{{TALKPAGENAME}}|talk page]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
-|}}}}}}',
+This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
+|}}}}}}",
 	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => 'Below is a list of the most recent deletions. If you don\'t agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.',
+	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
 	'deletionlog' => 'deletion log',
 	'deletecomment' => 'Reason:',
 	'deleteotherreason' => 'Other/additional reason:',
@@ -126,9 +125,9 @@ This site is experiencing technical difficulties.',
 	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
 	'defaultskin_choose' => 'Set the default theme for this wiki: ',
 	'discuss' => 'Discuss this page',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'december' => 'The twelfth month of the Gregorian calendar',
 	'december-gen' => 'The twelfth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
 	'dec' => 'Abbreviation of December, the twelfth month of the Gregorian calendar',
@@ -151,7 +150,7 @@ $messages['qqq'] = [
 * $4 - Error description',
 	'deletedhist' => 'Links to Special:Undelete at Special:RevisionDelete header together with links to the logs and page history.',
 	'difference' => 'Displayed under the title when viewing the difference between two or more edits.',
-	'diff-multi' => 'This message appears in the revision history of a page when comparing two versions which aren\'t consecutive.',
+	'diff-multi' => "This message appears in the revision history of a page when comparing two versions which aren't consecutive.",
 	'defaultns' => 'Used in [[Special:Preferences]], tab "Search".',
 	'default' => '{{Identical|Default}}',
 	'diff' => 'Short form of "differences". Used on [[Special:RecentChanges]], [[Special:Watchlist]], ...',
@@ -166,15 +165,15 @@ $messages['qqq'] = [
 	'disambiguationspage' => 'This message is the name of the template used for marking disambiguation pages. It is used by [[Special:Disambiguations]] to find all pages which link to disambiguation pages.
 
 {{doc-important|Don\'t translate the "Template:" part!}}',
-	'disambiguations-text' => 'This block of text is shown on [[:Special:Disambiguations]].
+	'disambiguations-text' => "This block of text is shown on [[:Special:Disambiguations]].
 
-* \'\'\'Note:\'\'\' Do not change the link [[MediaWiki:Disambiguationspage]], even because it is listed as problematic. Be sure the "D" is in uppercase, so not "d".
+* '''Note:''' Do not change the link [[MediaWiki:Disambiguationspage]], even because it is listed as problematic. Be sure the \"D\" is in uppercase, so not \"d\".
 
-* \'\'\'Background information:\'\'\' Beyond telling about links going to disambiguation pages, that they are generally bad, it should explain which pages in the article namespace are seen as diambiguations: [[MediaWiki:Disambiguationspage]] usually holds a list of diambiguation templates of the local wiki. Pages linking to one of them (by transclusion) will count as disambiguation pages. Pages linking to these disambiguation pages, instead to the disambiguated article itself, are listed on [[:Special:Disambiguations]].',
+* '''Background information:''' Beyond telling about links going to disambiguation pages, that they are generally bad, it should explain which pages in the article namespace are seen as diambiguations: [[MediaWiki:Disambiguationspage]] usually holds a list of diambiguation templates of the local wiki. Pages linking to one of them (by transclusion) will count as disambiguation pages. Pages linking to these disambiguation pages, instead to the disambiguated article itself, are listed on [[:Special:Disambiguations]].",
 	'doubleredirects' => 'Name of [[Special:DoubleRedirects]] displayed in [[Special:SpecialPages]]',
 	'doubleredirectstext' => 'Shown on top of [[Special:Doubleredirects]]',
 	'double-redirect-fixed-move' => 'This is the message in the log when the software (under the username {{msg|double-redirect-fixer}}) updates the redirects after a page move. See also {{msg|fix-double-redirects}}.',
-	'double-redirect-fixer' => 'This is the \'\'\'username\'\'\' of the user who updates the double redirects after a page move. A user is created with this username, so it is perhaps better to not change this message too often. See also {{msg|double-redirect-fixed-move}} and {{msg|fix-double-redirects}}.',
+	'double-redirect-fixer' => "This is the '''username''' of the user who updates the double redirects after a page move. A user is created with this username, so it is perhaps better to not change this message too often. See also {{msg|double-redirect-fixed-move}} and {{msg|fix-double-redirects}}.",
 	'deadendpages' => 'Name of special page displayed in [[Special:SpecialPages]]',
 	'deadendpagestext' => 'Introductory text for [[Special:DeadendPages]]',
 	'deletedcontributions' => 'The message is shown as a link on user contributions page (like [[Special:Contributions/User]]) to the corresponding [[Special:DeletedContributions]] page.
@@ -191,8 +190,8 @@ $1 = the name of the page',
 	'deletedtext' => 'Parameters:
 * $1 is a page that was deleted
 * $2 is {{msg-mw|deletionlog}}',
-	'deletedarticle' => 'This is a \'\'logentry\'\' message. Parameters:
-* $1 is deleted page name.',
+	'deletedarticle' => "This is a ''logentry'' message. Parameters:
+* $1 is deleted page name.",
 	'dellogpage' => 'The name of the deletion log. Used as heading on [[Special:Log/delete]] and in the drop down menu for selecting logs on [[Special:Log]].
 
 {{Identical|Deletion log}}',
@@ -217,16 +216,16 @@ $1 = the name of the page',
 	'dberr-again' => 'This message does not allow any wiki nor html markup.',
 	'dberr-info' => 'This message does not allow any wiki nor html markup.',
 	'dberr-usegoogle' => 'This message does not allow any wiki nor html markup.',
-	'dberr-outofdate' => 'In this sentence, \'\'\'their\'\'\' indexes refers to \'\'\'Google\'s\'\'\' indexes. This message does not allow any wiki nor html markup.',
-];
+	'dberr-outofdate' => "In this sentence, '''their''' indexes refers to '''Google's''' indexes. This message does not allow any wiki nor html markup.",
+);
 
-$messages['ab'] = [
+$messages['ab'] = array(
 	'december' => 'ҧхынҷкәын',
 	'december-gen' => 'ҧхынҷкәын',
 	'dec' => 'ҧхҷ',
-];
+);
 
-$messages['ace'] = [
+$messages['ace'] = array(
 	'december' => 'Buleuën Duwa Blah',
 	'december-gen' => 'Buleuën Duwa Blah',
 	'dec' => 'Dub',
@@ -247,9 +246,9 @@ $messages['ace'] = [
 	'deletecomment' => 'Choë:',
 	'deleteotherreason' => 'Nyang la’én/choë la’én:',
 	'deletereasonotherlist' => 'Choë la’én',
-];
+);
 
-$messages['af'] = [
+$messages['af'] = array(
 	'december' => 'Desember',
 	'december-gen' => 'Desember',
 	'dec' => 'Des',
@@ -280,18 +279,18 @@ Databasis gee foutboodskap: "$3: $4".',
 	'default' => 'verstek',
 	'diff' => 'verskil',
 	'destfilename' => 'Teikenlêernaam:',
-	'duplicatesoffile' => 'Die volgende {{PLURAL:$1|lêer is \'n duplikaat|$1 lêers is duplikate}} van die lêer ([[Special:FileDuplicateSearch/$2|meer details]]):',
+	'duplicatesoffile' => "Die volgende {{PLURAL:$1|lêer is 'n duplikaat|$1 lêers is duplikate}} van die lêer ([[Special:FileDuplicateSearch/$2|meer details]]):",
 	'download' => 'laai af',
 	'disambiguations' => 'Bladsye wat na dubbelsinnigheidsbladsye skakel',
 	'disambiguationspage' => 'Template:Dubbelsinnig',
-	'disambiguations-text' => 'Die volgende bladsye skakel na \'\'\'dubbelsinnigheidsbladsye\'\'\'.
+	'disambiguations-text' => "Die volgende bladsye skakel na '''dubbelsinnigheidsbladsye'''.
 Die bladsye moet gewysig word om eerder direk na die regte onderwerpe te skakel.<br />
-\'n Bladsy word beskou as \'n dubbelsinnigheidsbladsy as dit \'n sjabloon bevat wat geskakel is vanaf [[MediaWiki:Disambiguationspage]]',
+'n Bladsy word beskou as 'n dubbelsinnigheidsbladsy as dit 'n sjabloon bevat wat geskakel is vanaf [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dubbele aansture',
 	'doubleredirectstext' => 'Hierdie lys bevat bladsye wat aansture na ander aanstuurblaaie is.
 Elke ry bevat skakels na die eerste en die tweede aanstuur, asook die eerste reël van van die tweede aanstuur se teks, wat gewoonlik die "regte" teiken-bladsy gee waarna die eerste aanstuur behoort te wys.
 <del>Doodgekrapte reëls</del> dui aan dat die probleem reeds opgelos is.',
-	'double-redirect-fixed-move' => '[[$1]] was geskuif en is nou \'n deurverwysing na [[$2]].',
+	'double-redirect-fixed-move' => "[[$1]] was geskuif en is nou 'n deurverwysing na [[$2]].",
 	'double-redirect-fixed-maintenance' => 'Maak dubbele aanstuur vanaf [[$1]] na [[$2]] reg.',
 	'double-redirect-fixer' => 'Aanstuur hersteller',
 	'deadendpages' => 'Doodloopbladsye',
@@ -305,7 +304,7 @@ Elke ry bevat skakels na die eerste en die tweede aanstuur, asook die eerste re�
 	'deletedtext' => '"$1" is geskrap.
 Kyk na $2 vir \'n rekord van onlangse skrappings.',
 	'dellogpage' => 'Skraplogboek',
-	'dellogpagetext' => 'Hier onder is \'n lys van die mees onlangse skrappings. Alle tye is bedienertyd (UGT).',
+	'dellogpagetext' => "Hier onder is 'n lys van die mees onlangse skrappings. Alle tye is bedienertyd (UGT).",
 	'deletionlog' => 'skrappings-logboek',
 	'deletecomment' => 'Rede:',
 	'deleteotherreason' => 'Ander/ekstra rede:',
@@ -315,11 +314,11 @@ Kyk na $2 vir \'n rekord van onlangse skrappings.',
 ** Skending van kopieregte
 ** Vandalisme',
 	'delete-edit-reasonlist' => 'Wysig skrap redes',
-	'delete-toobig' => 'Die bladsy het \'n lang wysigingsgeskiedenis, meer as $1 {{PLURAL:$1|weergawe|weergawes}}.
-Verwydering van die soort blaaie is beperk om ontwrigting van {{SITENAME}} te voorkom.',
-	'delete-warning-toobig' => 'Hierdie bladsy het \'n lang wysigingsgeskiedenis; meer as $1 {{PLURAL:$1|wysiging|wysigings}}.
+	'delete-toobig' => "Die bladsy het 'n lang wysigingsgeskiedenis, meer as $1 {{PLURAL:$1|weergawe|weergawes}}.
+Verwydering van die soort blaaie is beperk om ontwrigting van {{SITENAME}} te voorkom.",
+	'delete-warning-toobig' => "Hierdie bladsy het 'n lang wysigingsgeskiedenis; meer as $1 {{PLURAL:$1|wysiging|wysigings}}.
 Deur weg te doen met hierdie bladsy mag dalk die werking van {{SITENAME}} versteur;
-Tree asseblief versigtig op.',
+Tree asseblief versigtig op.",
 	'databasenotlocked' => 'Die databasis is nie gesluit nie.',
 	'delete_and_move' => 'Skrap en skuif',
 	'delete_and_move_text' => '==Skrapping benodig==
@@ -331,23 +330,23 @@ Die teikenartikel "[[:$1]]" bestaan reeds. Wil u dit skrap om plek te maak vir d
 	'djvu_no_xml' => 'Die XML vir die DjVu-lêer kon nie bekom word nie',
 	'deletedrevision' => 'Ou weergawe $1 geskrap',
 	'days' => '{{PLURAL:$1|$1 dag|$1 dae}}',
-	'deletedwhileediting' => '\'\'\'Let op\'\'\': die bladsy is verwyder terwyl u besig was om dit te wysig!',
+	'deletedwhileediting' => "'''Let op''': die bladsy is verwyder terwyl u besig was om dit te wysig!",
 	'descending_abbrev' => 'af',
 	'duplicate-defaultsort' => 'Waarskuwing: Die standaardsortering "$2" kry voorrang voor die sortering "$1".',
-	'dberr-header' => 'Die wiki het \'n probleem',
+	'dberr-header' => "Die wiki het 'n probleem",
 	'dberr-problems' => 'Jammer! Die webwerf ondervind op die oomblik tegniese probleme.',
-	'dberr-again' => 'Wag \'n paar minute en probeer dan weer.',
+	'dberr-again' => "Wag 'n paar minute en probeer dan weer.",
 	'dberr-info' => '(Kan nie die databasisbediener kontak nie: $1)',
 	'dberr-usegoogle' => 'Tot tyd en wyl kan u inligting op Google soek.',
 	'dberr-outofdate' => 'Let daarop dat hulle indekse van ons inhoud moontlik verouderd mag wees.',
-	'dberr-cachederror' => 'Hierdie is \'n gekaste kopie van die aangevraagde blad, en dit mag moontlik nie op datum wees nie.',
-];
+	'dberr-cachederror' => "Hierdie is 'n gekaste kopie van die aangevraagde blad, en dit mag moontlik nie op datum wees nie.",
+);
 
-$messages['ak'] = [
+$messages['ak'] = array(
 	'december' => 'Ɔpenimma',
-];
+);
 
-$messages['aln'] = [
+$messages['aln'] = array(
 	'december' => 'dhetor',
 	'december-gen' => 'dhetorit',
 	'dec' => 'Dhe',
@@ -371,7 +370,7 @@ Databaza ktheu gabimin "$3: $4".',
 	'deletedhist' => 'Historiku i grisjeve',
 	'difference' => '(Dallimet midis verzioneve)',
 	'diff-multi' => '({{PLURAL:$1|Një redaktim ndërmjet nuk është|$1 redaktime ndërmjet nuk janë}} treguar.)',
-	'datedefault' => 'S\'ka parapëlqim',
+	'datedefault' => "S'ka parapëlqim",
 	'defaultns' => 'Përndryshe kërko në këto hapësina:',
 	'default' => 'e paracaktueme',
 	'diff' => 'ndrysh',
@@ -383,9 +382,9 @@ Shih $2 për regjistrin e fshimjeve të fundit.',
 	'deletecomment' => 'Arsyeja:',
 	'deleteotherreason' => 'Arsyet tjera/shtesë:',
 	'deletereasonotherlist' => 'Arsye tjetër',
-];
+);
 
-$messages['als'] = [
+$messages['als'] = array(
 	'december' => 'dhetor',
 	'december-gen' => 'dhetorit',
 	'dec' => 'Dhe',
@@ -409,7 +408,7 @@ Databaza ktheu gabimin "$3: $4".',
 	'deletedhist' => 'Historiku i grisjeve',
 	'difference' => '(Dallimet midis verzioneve)',
 	'diff-multi' => '({{PLURAL:$1|Një redaktim ndërmjet nuk është|$1 redaktime ndërmjet nuk janë}} treguar.)',
-	'datedefault' => 'S\'ka parapëlqim',
+	'datedefault' => "S'ka parapëlqim",
 	'defaultns' => 'Përndryshe kërko në këto hapësina:',
 	'default' => 'e paracaktueme',
 	'diff' => 'ndrysh',
@@ -421,9 +420,9 @@ Shih $2 për regjistrin e fshimjeve të fundit.',
 	'deletecomment' => 'Arsyeja:',
 	'deleteotherreason' => 'Arsyet tjera/shtesë:',
 	'deletereasonotherlist' => 'Arsye tjetër',
-];
+);
 
-$messages['am'] = [
+$messages['am'] = array(
 	'december' => 'ዲሴምበር',
 	'december-gen' => 'ዲሴምበር',
 	'dec' => 'ዲሴም.',
@@ -446,8 +445,8 @@ $messages['am'] = [
 	'download' => 'አውርድ',
 	'disambiguations' => 'ወደ መንታ መንገድ የሚያያይዝ',
 	'disambiguationspage' => 'Template:መንታ',
-	'disambiguations-text' => 'የሚከተሉት ጽሑፎች ወደ \'\'\'መንታ መንገድ\'\'\' እየተያያዙ ነውና ብዙ ጊዜ እንዲህ ሳይሆን ወደሚገባው ርዕስ ቢወስዱ ይሻላል። <br />
-መንታ መንገድ ማለት የመንታ መለጠፊያ ([[MediaWiki:Disambiguationspage]]) ሲኖርበት ነው።',
+	'disambiguations-text' => "የሚከተሉት ጽሑፎች ወደ '''መንታ መንገድ''' እየተያያዙ ነውና ብዙ ጊዜ እንዲህ ሳይሆን ወደሚገባው ርዕስ ቢወስዱ ይሻላል። <br />
+መንታ መንገድ ማለት የመንታ መለጠፊያ ([[MediaWiki:Disambiguationspage]]) ሲኖርበት ነው።",
 	'doubleredirects' => 'ድርብ መምሪያ መንገዶች',
 	'doubleredirectstext' => 'ይህ ድርብ መምሪያ መንገዶች ይዘርዘራል።
 
@@ -473,7 +472,7 @@ $messages['am'] = [
 ** በአቅራቢው ጥያቄ
 ** ማብዛቱ ያልተፈቀደለት ጽሑፍ
 ** ተንኮል',
-	'delete-edit-reasonlist' => '\'ተራ የማጥፋት ምክንያቶች\' ለማዘጋጀት',
+	'delete-edit-reasonlist' => "'ተራ የማጥፋት ምክንያቶች' ለማዘጋጀት",
 	'databasenotlocked' => 'መረጃ-ቤቱ የተቆለፈ አይደለም።',
 	'delete_and_move' => 'ማጥፋትና ማዛወር',
 	'delete_and_move_text' => '==ማጥፋት ያስፈልጋል==
@@ -482,18 +481,18 @@ $messages['am'] = [
 	'delete_and_move_confirm' => 'አዎን፣ ገጹ ይጥፋ',
 	'delete_and_move_reason' => 'ለመዛወሩ ሥፍራ እንዲገኝ ጠፋ',
 	'deletedrevision' => 'የቆየው ዕትም $1 አጠፋ',
-	'deletedwhileediting' => '\'\'\'ማስጠንቀቂያ\'\'\'፦ መዘጋጀት ከጀመሩ በኋላ ገጹ ጠፍቷል!',
-];
+	'deletedwhileediting' => "'''ማስጠንቀቂያ'''፦ መዘጋጀት ከጀመሩ በኋላ ገጹ ጠፍቷል!",
+);
 
-$messages['an'] = [
+$messages['an'] = array(
 	'december' => 'aviento',
-	'december-gen' => 'd\'aviento',
+	'december-gen' => "d'aviento",
 	'dec' => 'avi',
 	'delete' => 'Borrar',
 	'deletethispage' => 'Borrar ista pachina',
 	'disclaimers' => 'Alvertencias chenerals',
 	'disclaimerpage' => 'Project:Alvertencias chenerals',
-	'databaseerror' => 'Error d\'a base de datos',
+	'databaseerror' => "Error d'a base de datos",
 	'dberrortext' => 'Ha sucedito una error de sintaxi en una consulta a la base de datos.
 Isto podría marcar una error en o programa.
 A zaguera consulta estió:
@@ -509,49 +508,49 @@ A base de datos retornó a error "$3: $4"',
 	'deletedhist' => 'Historial de borrau',
 	'difference' => '(Esferencias entre versions)',
 	'difference-multipage' => '(Diferencia entre pachinas)',
-	'diff-multi' => '(No s\'amuestra {{PLURAL:$1|una edición entremeya feita|$1 edicions entremeyas feitas}} por {{PLURAL:$2|un usuario|$2 usuarios}}).',
-	'diff-multi-manyusers' => '(No s\'amuestra {{PLURAL:$1|una edición entremeya|$1 edicions entremeyas}} feitas por más {{PLURAL:$2|d\'un usuario|de $2 usuarios}})',
+	'diff-multi' => "(No s'amuestra {{PLURAL:$1|una edición entremeya feita|$1 edicions entremeyas feitas}} por {{PLURAL:$2|un usuario|$2 usuarios}}).",
+	'diff-multi-manyusers' => "(No s'amuestra {{PLURAL:$1|una edición entremeya|$1 edicions entremeyas}} feitas por más {{PLURAL:$2|d'un usuario|de $2 usuarios}})",
 	'datedefault' => 'Sin de preferencias',
 	'defaultns' => 'Si no, mirar en istos espacios de nombres:',
 	'default' => 'por defecto',
 	'diff' => 'dif',
-	'destfilename' => 'Nombre d\'o fichero de destín:',
-	'duplicatesoffile' => '{{PLURAL:$1|O siguient fichero ye un duplicato|Os siguients $1 fichers son duplicatos}} d\'iste fichero ([[Special:FileDuplicateSearch/$2|más detalles]]):',
+	'destfilename' => "Nombre d'o fichero de destín:",
+	'duplicatesoffile' => "{{PLURAL:$1|O siguient fichero ye un duplicato|Os siguients $1 fichers son duplicatos}} d'iste fichero ([[Special:FileDuplicateSearch/$2|más detalles]]):",
 	'download' => 'descargar',
 	'disambiguations' => 'Pachinas con vinclos enta pachinas de desambigación',
 	'disambiguationspage' => 'Template:Desambigación',
-	'disambiguations-text' => 'As siguients pachinas tienen vinclos ta una \'\'\'pachina de desambigación\'\'\'.
-Ixos vinclos habrían de ir millor t\'a pachina especifica apropiada.<br />
-Una pachina se considera pachina de desambigación si fa servir una plantilla provenient de  [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "As siguients pachinas tienen vinclos ta una '''pachina de desambigación'''.
+Ixos vinclos habrían de ir millor t'a pachina especifica apropiada.<br />
+Una pachina se considera pachina de desambigación si fa servir una plantilla provenient de  [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Reendreceras dobles',
-	'doubleredirectstext' => 'En ista pachina s\'amuestran as pachinas que son reendreceras enta atras pachinas reendrezatas.
-Cada ringlera contién o vinclo t\'a primer y segunda reendreceras, y tamién o destino d\'a segunda reendrecera, que ye a ormino a pachina obchectivo "reyal" a la que a primer pachina habría d\'endrezar.',
-	'double-redirect-fixed-move' => 'S\'ha tresladau [[$1]], agora ye una endrecera ta [[$2]]',
+	'doubleredirectstext' => "En ista pachina s'amuestran as pachinas que son reendreceras enta atras pachinas reendrezatas.
+Cada ringlera contién o vinclo t'a primer y segunda reendreceras, y tamién o destino d'a segunda reendrecera, que ye a ormino a pachina obchectivo \"reyal\" a la que a primer pachina habría d'endrezar.",
+	'double-redirect-fixed-move' => "S'ha tresladau [[$1]], agora ye una endrecera ta [[$2]]",
 	'double-redirect-fixed-maintenance' => 'Correchindo a doble reendrecera dende [[$1]] ta [[$2]].',
 	'double-redirect-fixer' => 'Apanyador de reendreceras',
 	'deadendpages' => 'Pachinas sin salida',
 	'deadendpagestext' => 'As siguients pachinas no tienen vinclos ta garra atra pachina de {{SITENAME}}.',
-	'deletedcontributions' => 'Contrebucions d\'usuario borratas',
-	'deletedcontributions-title' => 'Contrebucions d\'usuario borradas',
-	'defemailsubject' => 'Correu de {{SITENAME}} de l\'usuario $1',
+	'deletedcontributions' => "Contrebucions d'usuario borratas",
+	'deletedcontributions-title' => "Contrebucions d'usuario borradas",
+	'defemailsubject' => "Correu de {{SITENAME}} de l'usuario $1",
 	'deletepage' => 'Borrar ista pachina',
 	'delete-confirm' => 'Borrar "$1"',
 	'delete-legend' => 'Borrar',
 	'deletedtext' => 'S\'ha borrau "$1".
 Se veiga en $2 un rechistro d\'os borraus recients.',
 	'dellogpage' => 'Rechistro de borraus',
-	'dellogpagetext' => 'Contino se i amuestra una lista d\'os borraus más recients.',
+	'dellogpagetext' => "Contino se i amuestra una lista d'os borraus más recients.",
 	'deletionlog' => 'rechistro de borraus',
 	'deletecomment' => 'Razón:',
 	'deleteotherreason' => 'Otras/Más razons:',
 	'deletereasonotherlist' => 'Atra razón',
-	'deletereason-dropdown' => '*Razons comuns de borrau
-** A requesta d\'o mesmo autor
+	'deletereason-dropdown' => "*Razons comuns de borrau
+** A requesta d'o mesmo autor
 ** Trencar de copyright
-** Vandalismo',
-	'delete-edit-reasonlist' => 'Editar as razons d\'o borrau',
-	'delete-toobig' => 'Ista pachina tiene un historial d\'edicions prou largo, con mas de $1 {{PLURAL:$1|versión|versions}}. S\'ha restrinchito o borrau d\'ista mena de pachinas ta aprevenir d\'a corrompición accidental de {{SITENAME}}.',
-	'delete-warning-toobig' => 'Ista pachina tiene un historial d\'edición prou largo, con más de $1 {{PLURAL:$1|versión|versions}}. Si la borra podría corromper as operacions d\'a base de datos de {{SITENAME}}; contine con cuenta.',
+** Vandalismo",
+	'delete-edit-reasonlist' => "Editar as razons d'o borrau",
+	'delete-toobig' => "Ista pachina tiene un historial d'edicions prou largo, con mas de $1 {{PLURAL:$1|versión|versions}}. S'ha restrinchito o borrau d'ista mena de pachinas ta aprevenir d'a corrompición accidental de {{SITENAME}}.",
+	'delete-warning-toobig' => "Ista pachina tiene un historial d'edición prou largo, con más de $1 {{PLURAL:$1|versión|versions}}. Si la borra podría corromper as operacions d'a base de datos de {{SITENAME}}; contine con cuenta.",
 	'databasenotlocked' => 'A base de datos no ye trancata.',
 	'delete_and_move' => 'Borrar y tresladar',
 	'delete_and_move_text' => '==S\'amenista borrar a pachina==
@@ -559,23 +558,23 @@ Se veiga en $2 un rechistro d\'os borraus recients.',
 A pachina de destino ("[[:$1]]") ya existe. Quiere borrar-la ta premitir o treslau?',
 	'delete_and_move_confirm' => 'Sí, borrar a pachina',
 	'delete_and_move_reason' => 'Borrata ta permitir o treslau de "[[$1]]"',
-	'djvu_page_error' => 'Pachina DjVu difuera d\'o rango',
-	'djvu_no_xml' => 'No s\'ha puesto replegar o XML ta o fichero DjVu',
-	'deletedrevision' => 'S\'ha borrato a versión antiga $1',
+	'djvu_page_error' => "Pachina DjVu difuera d'o rango",
+	'djvu_no_xml' => "No s'ha puesto replegar o XML ta o fichero DjVu",
+	'deletedrevision' => "S'ha borrato a versión antiga $1",
 	'days' => '{{PLURAL:$1|un día|$1 días}}',
-	'deletedwhileediting' => 'Pare cuenta: Ista pachina s\'ha borrato dimpués de que vusté prencipiase a editar!',
+	'deletedwhileediting' => "Pare cuenta: Ista pachina s'ha borrato dimpués de que vusté prencipiase a editar!",
 	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => 'Pare cuenta: A clau d\'ordenación por defecto «$2» anula l\'anterior clau d\'ordenación por defecto «$1».',
+	'duplicate-defaultsort' => "Pare cuenta: A clau d'ordenación por defecto «$2» anula l'anterior clau d'ordenación por defecto «$1».",
 	'dberr-header' => 'Iste wiki tiene un problema',
 	'dberr-problems' => 'Lo sentimos. Iste sitio ye experimentando dificultatz tecnicas.',
 	'dberr-again' => 'Mire de recargar en bells menutos.',
-	'dberr-info' => '(No s\'ha puesto contactar con o servidor d\'a base de datos: $1)',
+	'dberr-info' => "(No s'ha puesto contactar con o servidor d'a base de datos: $1)",
 	'dberr-usegoogle' => 'Entremistanto puet preba a mirar a traviés de Google.',
-	'dberr-outofdate' => 'Pare cuenta que o suyo endice d\'o nuestro conteniu puet que no siga esviellau.',
-	'dberr-cachederror' => 'A siguient pachina ye una pachina alzada d\'a pachina solicitada, y podría no estar actualizada.',
-];
+	'dberr-outofdate' => "Pare cuenta que o suyo endice d'o nuestro conteniu puet que no siga esviellau.",
+	'dberr-cachederror' => "A siguient pachina ye una pachina alzada d'a pachina solicitada, y podría no estar actualizada.",
+);
 
-$messages['ang'] = [
+$messages['ang'] = array(
 	'december' => 'Ǣrra Ȝēola',
 	'december-gen' => 'Ǣrran Ȝēolan',
 	'dec' => 'Æf Ȝē',
@@ -602,9 +601,9 @@ Cȳþþuhord edƿende ƿōh "<tt>$3: $4</tt>"',
 	'deletecomment' => 'Racu:',
 	'deleteotherreason' => 'Ōðra/ēaca racu:',
 	'deletereasonotherlist' => 'Ōðru racu',
-];
+);
 
-$messages['anp'] = [
+$messages['anp'] = array(
 	'december' => 'दिसंबर',
 	'december-gen' => 'दिसंबर',
 	'dec' => 'दिसं.',
@@ -632,9 +631,9 @@ $messages['anp'] = [
 	'delete-warning-toobig' => 'इस लेख केरॊ संपादन इतिहास काफ़ी लंबा चौड़ा छै, ऐकरॊ $1 सॆं अधिक {{PLURAL:$1|संस्करण|संस्करण}} छै.
 एकरा हटैला सॆं {{SITENAME}} के आँकड़ाकोष के गतिविधियॊ मॆं व्यवधान आबॆ सकॆ छै;
 कृपया सोची समझी कॆ आगू बढ़ॊ.',
-];
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'december' => 'ديسمبر',
 	'december-gen' => 'ديسمبر',
 	'dec' => 'ديسمبر',
@@ -670,9 +669,9 @@ $messages['ar'] = [
 	'download' => 'تنزيل',
 	'disambiguations' => 'الصفحات التي ترتبط بصفحات توضيح',
 	'disambiguationspage' => 'Template:توضيح',
-	'disambiguations-text' => 'الصفحات التالية تصل إلى \'\'\'صفحة توضيح\'\'\'.
+	'disambiguations-text' => "الصفحات التالية تصل إلى '''صفحة توضيح'''.
 ينبغي في المقابل أن تصل إلى الصفحة الملائمة. <br />
-تعامل الصفحة كصفحة توضيح إذا كان بها قالب موجود في [[MediaWiki:Disambiguationspage]]',
+تعامل الصفحة كصفحة توضيح إذا كان بها قالب موجود في [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'تحويلات مزدوجة',
 	'doubleredirectstext' => 'هذه الصفحة تعرض الصفحات التي تحول إلى صفحات تحويل أخرى.
 كل سطر يحتوي على وصلات للتحويلة الأولى والثانية وهدف التحويلة الثانية، والذي عادة ما يشير إلى صفحة الهدف "الحقيقية"، التي من المفترض أن تحول إليها التحويلة الأولى.
@@ -717,7 +716,7 @@ $messages['ar'] = [
 	'djvu_no_xml' => 'لا يمكن جلب XML لملف DjVu',
 	'deletedrevision' => 'حذف المراجعة القديمة $1',
 	'days' => '{{PLURAL:$1||يوم واحد|يومين|$1 أيام|$1 يومًا|$1 يوم}}',
-	'deletedwhileediting' => '\'\'\'تحذير\'\'\': هذه الصفحة تم حذفها بعد أن بدأت أنت بتعديلها!',
+	'deletedwhileediting' => "'''تحذير''': هذه الصفحة تم حذفها بعد أن بدأت أنت بتعديلها!",
 	'descending_abbrev' => 'تنازلي',
 	'duplicate-defaultsort' => '\'\'\'تحذير:\'\'\' مفتاح الترتيب الافتراضي "$2" يتجاوز مفتاح الترتيب الافتراضي السابق "$1".',
 	'dberr-header' => 'هذا الويكي به مشكلة',
@@ -728,9 +727,9 @@ $messages['ar'] = [
 	'dberr-outofdate' => 'لاحظ أن فهارسهم لمحتوانا ربما تكون غير محدثة.',
 	'dberr-cachederror' => 'التالي نسخة مخزنة من الصفحة المطلوبة، وربما لا تكون محدثة.',
 	'discuss' => 'ناقش',
-];
+);
 
-$messages['arc'] = [
+$messages['arc'] = array(
 	'december' => 'ܟܢܘܢ ܩܕܡ',
 	'december-gen' => 'ܟܢܘܢ ܩܕܡ',
 	'dec' => 'ܟܢܘܢ ܩܕܡ',
@@ -767,9 +766,9 @@ $messages['arc'] = [
 	'delete_and_move' => 'ܫܘܦ ܘܫܢܝ',
 	'delete_and_move_confirm' => 'ܐܝܢ, ܫܘܦ ܦܐܬܐ',
 	'descending_abbrev' => 'ܡܚܬܐܝܬ',
-];
+);
 
-$messages['arn'] = [
+$messages['arn'] = array(
 	'december' => 'disiempüre küyeṉ',
 	'december-gen' => 'disiempüre küyeṉ',
 	'dec' => 'disiempüre',
@@ -791,14 +790,14 @@ $messages['arn'] = [
 	'delete_and_move' => 'Ñamümün ka nengümün',
 	'delete_and_move_confirm' => 'May, ñamümün pakina',
 	'duplicate-defaultsort' => '\'\'\'Ngüneltun:\'\'\' Wünezullin ñi kümeelgen lonkolelu "$2" nentutuy rupalu wünezullin ñi kümeelgen lonkolelu "$1".',
-];
+);
 
-$messages['ary'] = [
+$messages['ary'] = array(
 	'december' => 'Dojanbir',
 	'december-gen' => 'Dojanbir',
 	'dec' => 'Doj',
 	'delete' => 'Mḫi',
-	'deletethispage' => 'Suprimi had \'ṣ-ṣefḫa',
+	'deletethispage' => "Suprimi had 'ṣ-ṣefḫa",
 	'disclaimers' => 'Inḍaraṫ',
 	'disclaimerpage' => 'Project:Inḍaraṫ ĝammin',
 	'databaseerror' => 'khataaa f qaaaidat lbayanat',
@@ -840,7 +839,7 @@ daba ka ṫḫwwal l-[[$2]].',
 	'deletedcontributions' => 'mosahamaṫ mosṫĥdim memḫiya',
 	'deletedcontributions-title' => 'mosahamaṫ mosṫĥdim memḫiya',
 	'defemailsubject' => 'Imayl dyal {{SITENAME}}',
-	'deletepage' => 'Mḫi had \'ṣ-ṣefḫa',
+	'deletepage' => "Mḫi had 'ṣ-ṣefḫa",
 	'delete-confirm' => 'suprimi "$1"',
 	'delete-legend' => 'Suprimi',
 	'deletedtext' => '« $1 » ṫemḫa.
@@ -856,7 +855,7 @@ daba ka ṫḫwwal l-[[$2]].',
 	'delete_and_move' => 'Mḫi o neqqel',
 	'delete_and_move_confirm' => 'Ah, mḫi ṣ-ṣefḫa',
 	'djvu_no_xml' => 'ma ymkn-ċ ṫafḫḫoṣ XML l-milffaṫ DjVu',
-	'deletedwhileediting' => '\'\'\'attansyo\'\'\': had sfha tmshat bad ma bditi taadil dyalha',
+	'deletedwhileediting' => "'''attansyo''': had sfha tmshat bad ma bditi taadil dyalha",
 	'descending_abbrev' => 'tanazoli',
 	'duplicate-defaultsort' => '\'\'\'ṫḫdir:\'\'\' saroṫ ṫrṫib fṫiṛaḍi "$2" faṫ saroṫ ṫrṫib fṫiṛaḍi "$1".',
 	'dberr-header' => 'had lwiki fih chi mochkil',
@@ -866,9 +865,9 @@ daba ka ṫḫwwal l-[[$2]].',
 	'dberr-usegoogle' => 'imkn lik tqllb f Google f lwaqt lhadir',
 	'dberr-outofdate' => 'khssk tlahd anna lfahadriss dyalhom l lmohtawa dyalna iqdr matkonch met a jour',
 	'dberr-cachederror' => 'hadchi rah ghir nskha msjla, o iqdr matkonch a jour',
-];
+);
 
-$messages['arz'] = [
+$messages['arz'] = array(
 	'december' => 'ديسمبر',
 	'december-gen' => 'ديسمبر',
 	'dec' => 'ديسمبر',
@@ -902,9 +901,9 @@ $messages['arz'] = [
 	'download' => 'تنزيل',
 	'disambiguations' => 'صفحات التوضيح',
 	'disambiguationspage' => 'Template:توضيح',
-	'disambiguations-text' => 'الصفحات دى بتوصل لـ \'\'\'صفحة توضيح\'\'\'.
+	'disambiguations-text' => "الصفحات دى بتوصل لـ '''صفحة توضيح'''.
 المفروض على العكس انهم يوصلو ل للصفحات المناسبة. <br />
-أى صفحة بتتعامل على انها صفحة توضيح إذا كانت بتستعمل قالب موجود فى [[MediaWiki:Disambiguationspage]]',
+أى صفحة بتتعامل على انها صفحة توضيح إذا كانت بتستعمل قالب موجود فى [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'تحويلات مزدوجه',
 	'doubleredirectstext' => 'الصفحة دى فيها لستة الصفحات اللى فيها تحويلة لصفحة تانية فيها تحويلة.
 كل سطر فى اللستة دى  فيه لينك للتحويلة الأولانية والتانية و كمان للصفحة بتاعة التحويلة التانية و اللى غالبا هى الصفحة الاصلية اللى المفروض التحويلة الاولانية توصل ليها.
@@ -947,7 +946,7 @@ $messages['arz'] = [
 	'djvu_page_error' => 'صفحة DjVu بره النطاق',
 	'djvu_no_xml' => 'مش ممكن تجيب XML لملف DjVu',
 	'deletedrevision' => 'مسح النسخة القديمة $1',
-	'deletedwhileediting' => '\'\'\'تحذير\'\'\':  الصفحة دى اتمسحت بعد ما بدأت أنت  فى تحريرها!',
+	'deletedwhileediting' => "'''تحذير''':  الصفحة دى اتمسحت بعد ما بدأت أنت  فى تحريرها!",
 	'descending_abbrev' => 'نازل',
 	'duplicate-defaultsort' => 'تحزير: زرار الترتيب الاوتوماتيكي"$2" بيوقف زرار الترتيب الاوتوماتيكي"$1" القديم.',
 	'dberr-header' => 'الويكى دا فيه مشكله',
@@ -957,9 +956,9 @@ $messages['arz'] = [
 	'dberr-usegoogle' => 'ممكن تحاول تدور باستعمال جوجل دلوقتى.',
 	'dberr-outofdate' => 'خد بالك فهارس المحتوى بتاعنا اللى عندهم ممكن تكون مش متحدثه.',
 	'dberr-cachederror' => 'دى نسخه متخزنه من الصفحه المطلوبه، و ممكن ما تكونش متحدثه.',
-];
+);
 
-$messages['as'] = [
+$messages['as'] = array(
 	'december' => 'ডিচেম্বৰ',
 	'december-gen' => 'ডিচেম্বৰ',
 	'dec' => 'ডিচে:',
@@ -995,9 +994,9 @@ $messages['as'] = [
 	'download' => 'ডাউনল’ড কৰক',
 	'disambiguations' => 'দ্ব্যৰ্থতা-দূৰীকৰণ পৃষ্ঠাসমূহলৈ সংযোগ থকা পৃষ্ঠাসমূহ',
 	'disambiguationspage' => 'Template:দ্ব্যৰ্থতা-দূৰীকৰণ',
-	'disambiguations-text' => 'তলৰ পৃষ্ঠাখনসমূহত \'\'\'দ্ব্যৰ্থতা দূৰীকৰণ পৃষ্ঠা\'\'\'ৰ লগত সংযোগ আছে ।
+	'disambiguations-text' => "তলৰ পৃষ্ঠাখনসমূহত '''দ্ব্যৰ্থতা দূৰীকৰণ পৃষ্ঠা'''ৰ লগত সংযোগ আছে ।
 ইয়ে উপযুক্ত পৃষ্ঠাৰ লগত সংযোগ কৰিব পাৰে ।
-[[MediaWiki:Disambiguationspage]]ৰ পৰা সংযোগ থকা কোনো সাঁচ ব্যৱহাৰ কৰিলে এখন পৃষ্ঠাক দ্ব্যৰ্থতা দূৰীকৰণ পৃষ্ঠা হিছাপে গণ্য কৰা হ’ব ।',
+[[MediaWiki:Disambiguationspage]]ৰ পৰা সংযোগ থকা কোনো সাঁচ ব্যৱহাৰ কৰিলে এখন পৃষ্ঠাক দ্ব্যৰ্থতা দূৰীকৰণ পৃষ্ঠা হিছাপে গণ্য কৰা হ’ব ।",
 	'doubleredirects' => 'দ্বি-পুনঃনিৰ্দেশিত',
 	'doubleredirectstext' => 'আন পুনৰ্নিদেশনা পৃষ্ঠালৈ পুনৰ্নিৰ্দেশিত পৃষ্ঠাসমূহ এই তালিকাত দিয়া হৈছে ।
 প্ৰত্যেক পথালী শাৰীত প্ৰথম আৰু দ্বিতীয় পুনৰ্নিৰ্দেশনাৰ সংযোগৰ লগতে দ্বিতীয় পুনৰ্নিৰ্দেশনাৰ লক্ষ্য সংযোগ দিয়া আছে । এই লক্ষ্য সংযোগটো সাধাৰণতে "প্ৰকৃত" লক্ষ্য পৃষ্ঠা যাক প্ৰথম পুনৰ্নিৰ্দেশনাই আঙুলিয়াই দিয়ে ।
@@ -1017,7 +1016,7 @@ $messages['as'] = [
 	'deletedtext' => '"$1" ক বিলোপন কৰা হৈছে।
 সাম্প্ৰতিক বিলোপনসমূহৰ তালিকা চাবলৈ $2 চাওক।',
 	'dellogpage' => 'বাতিল কৰা সূচী',
-	'dellogpagetext' => 'তলত সাম্প্ৰতিক বিলোপনৰ তালিকা দিয়া হ\'ল ।',
+	'dellogpagetext' => "তলত সাম্প্ৰতিক বিলোপনৰ তালিকা দিয়া হ'ল ।",
 	'deletionlog' => 'বাতিল কৰা সূচী',
 	'deletecomment' => 'কাৰণ:',
 	'deleteotherreason' => 'আন/অতিৰিক্ত কাৰণ:',
@@ -1040,25 +1039,25 @@ $messages['as'] = [
 	'delete_and_move_confirm' => 'হয়, পৃষ্ঠাখন বিলোপ কৰক',
 	'delete_and_move_reason' => '"[[$1]]"ৰ পৰা স্থানান্তৰৰ স্বাৰ্থত বিলোপ কৰা হৈছে',
 	'djvu_page_error' => 'DjVu পৃষ্ঠা পৰিসীমাৰ বাহিৰত',
-	'djvu_no_xml' => 'DjVu ফাইলৰ বাবে XML আনিব পৰা নগ\'ল',
+	'djvu_no_xml' => "DjVu ফাইলৰ বাবে XML আনিব পৰা নগ'ল",
 	'deletedrevision' => 'পুৰণি সংশোধনী $1 বিলোপ কৰা হ’ল',
 	'days' => '{{PLURAL:$1|$1 দিন|$1 দিন}}',
-	'deletedwhileediting' => '\'\'\'সতৰ্কবাণী\'\'\': আপুনি সম্পাদনা আৰম্ভ কৰাৰ পিছত পৃষ্ঠাখন বিলোপ কৰা হৈছে !',
+	'deletedwhileediting' => "'''সতৰ্কবাণী''': আপুনি সম্পাদনা আৰম্ভ কৰাৰ পিছত পৃষ্ঠাখন বিলোপ কৰা হৈছে !",
 	'descending_abbrev' => 'অৱতৰণ',
 	'duplicate-defaultsort' => '\'\'\'সাৱধান!\'\'\' পূৰ্বনিৰ্ধাৰিত ক্ৰমসূচক "$2"-এ আগৰ ক্ৰমসূচক "$1"-অক বিস্থাপিত কৰিছে।',
 	'dberr-header' => 'এই ৱিকিত এটা সমস্যা হৈছে',
 	'dberr-problems' => 'দুঃখিত!
 চাইটটোত কিছু কাৰিকৰী সমস্যা হৈছে ।',
-	'dberr-again' => 'অলপ সময় অপেক্ষা কৰি পুনৰ আপল\'ডৰ চেষ্টা কৰক ।',
+	'dberr-again' => "অলপ সময় অপেক্ষা কৰি পুনৰ আপল'ডৰ চেষ্টা কৰক ।",
 	'dberr-info' => '(তথ্যকোষৰ চাৰ্ভাৰৰ লগত যোগাযোগ কৰিব নোৱাৰি: $1)',
 	'dberr-usegoogle' => 'এই পৰিস্থিতিত আপুনি গুগলৰ মাধ্যমেৰে অনুসন্ধান কৰিব পাৰে ।',
-	'dberr-outofdate' => 'মন কৰক যে, আমাৰ বিষয়বস্তু সম্পৰ্কে তেওঁলোকৰ সূচী পুৰণা হ\'ব পাৰে ।',
-	'dberr-cachederror' => 'এইখন অনুৰোধ কৰা পৃষ্ঠাৰ কেশ্ব্‌ড কপী, নবীকৰণ নকৰা হ\'ব পাৰে ।',
-];
+	'dberr-outofdate' => "মন কৰক যে, আমাৰ বিষয়বস্তু সম্পৰ্কে তেওঁলোকৰ সূচী পুৰণা হ'ব পাৰে ।",
+	'dberr-cachederror' => "এইখন অনুৰোধ কৰা পৃষ্ঠাৰ কেশ্ব্‌ড কপী, নবীকৰণ নকৰা হ'ব পাৰে ।",
+);
 
-$messages['ast'] = [
+$messages['ast'] = array(
 	'december' => 'avientu',
-	'december-gen' => 'd\'avientu',
+	'december-gen' => "d'avientu",
 	'dec' => 'avi',
 	'delete' => 'Desaniciar',
 	'deletethispage' => 'Desaniciar esta páxina',
@@ -1080,18 +1079,18 @@ La base de datos dió\'l fallu "$3: $4"',
 	'deletedhist' => 'Historial elimináu',
 	'difference' => '(Diferencia ente revisiones)',
 	'difference-multipage' => '(Diferencia ente páxines)',
-	'diff-multi' => '({{PLURAL:$1|Nun s\'amuesa 1 revisión intermedia|Nun s\'amuesen $1 revisiones intermedies}} {{PLURAL:$2|d\'un usuariu|de $2 usuarios}} )',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Nun s\'amuesa una revisión intermedia|Nun s\'amuesen $1 revisiones intermedies}} de más de $2 {{PLURAL:$2|usuariu|usuarios}})',
+	'diff-multi' => "({{PLURAL:$1|Nun s'amuesa 1 revisión intermedia|Nun s'amuesen $1 revisiones intermedies}} {{PLURAL:$2|d'un usuariu|de $2 usuarios}} )",
+	'diff-multi-manyusers' => "({{PLURAL:$1|Nun s'amuesa una revisión intermedia|Nun s'amuesen $1 revisiones intermedies}} de más de $2 {{PLURAL:$2|usuariu|usuarios}})",
 	'datedefault' => 'Ensin preferencia',
-	'defaultns' => 'D\'otra miente, guetar nestos espacios de nome:',
+	'defaultns' => "D'otra miente, guetar nestos espacios de nome:",
 	'default' => 'predetermináu',
 	'diff' => 'dif',
 	'destfilename' => 'Nome de destín:',
-	'duplicatesoffile' => '{{PLURAL:$1|El siguiente archivu ye un duplicáu|Los siguientes $1 archivos son duplicaos}} d\'esti archivu ([[Special:FileDuplicateSearch/$2|más detalles]]):',
+	'duplicatesoffile' => "{{PLURAL:$1|El siguiente archivu ye un duplicáu|Los siguientes $1 archivos son duplicaos}} d'esti archivu ([[Special:FileDuplicateSearch/$2|más detalles]]):",
 	'download' => 'descargar',
-	'disambiguations' => 'Páxines qu\'enllacen con páxines de dixebra',
+	'disambiguations' => "Páxines qu'enllacen con páxines de dixebra",
 	'disambiguationspage' => 'Template:dixebra',
-	'disambiguations-text' => 'Les siguientes páxines enllacien a una \'\'\'páxina de dixebra\'\'\'. En cuenta d\'ello habríen enllaciar al artículu apropiáu.<br />Una páxina considérase de dixebra si usa una plantía que tea enllaciada dende [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Les siguientes páxines enllacien a una '''páxina de dixebra'''. En cuenta d'ello habríen enllaciar al artículu apropiáu.<br />Una páxina considérase de dixebra si usa una plantía que tea enllaciada dende [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Redireiciones dobles',
 	'doubleredirectstext' => 'Esta páxina llista páxines que redireicionen a otres páxines de redireición.
 Cada filera contién enllaces a la primer y segunda redireición, asina como al oxetivu de la segunda redireición, que de vezu ye la páxina oxetivu "real", onde tendría d\'empobinar la primer redireición.
@@ -1101,8 +1100,8 @@ Les entraes <del>tachaes</del> tan resueltes.',
 	'double-redirect-fixer' => 'Iguador de redireiciones',
 	'deadendpages' => 'Páxines ensin salida',
 	'deadendpagestext' => 'Les páxines siguientes nun enllacien a páxina dala de {{SITENAME}}.',
-	'deletedcontributions' => 'Contribuciones d\'usuariu esborraes',
-	'deletedcontributions-title' => 'Contribuciones d\'usuariu desaniciaes',
+	'deletedcontributions' => "Contribuciones d'usuariu esborraes",
+	'deletedcontributions-title' => "Contribuciones d'usuariu desaniciaes",
 	'defemailsubject' => 'Corréu electrónicu del usuariu «$1» de {{SITENAME}}',
 	'deletepage' => 'Esborrar páxina',
 	'delete-confirm' => 'Desaniciar «$1»',
@@ -1115,16 +1114,16 @@ Mira en $2 la llista de les últimes páxines esborraes.',
 	'deletecomment' => 'Motivu:',
 	'deleteotherreason' => 'Motivu distintu/adicional:',
 	'deletereasonotherlist' => 'Otru motivu',
-	'deletereason-dropdown' => '*Motivos comunes d\'esborráu
+	'deletereason-dropdown' => "*Motivos comunes d'esborráu
 ** A pidimientu del autor
 ** Violación de Copyright
-** Vandalismu',
-	'delete-edit-reasonlist' => 'Editar los motivos d\'esborráu',
-	'delete-toobig' => 'Esta páxina tien un historial d\'ediciones grande, más de $1 {{PLURAL:$1|revisión|revisiones}}.
-Restrinxóse l\'esborráu d\'estes páxines pa evitar perturbaciones accidentales de {{SITENAME}}.',
-	'delete-warning-toobig' => 'Esta páxina tien un historial d\'ediciones grande, más de $1 {{PLURAL:$1|revisión|revisiones}}.
+** Vandalismu",
+	'delete-edit-reasonlist' => "Editar los motivos d'esborráu",
+	'delete-toobig' => "Esta páxina tien un historial d'ediciones grande, más de $1 {{PLURAL:$1|revisión|revisiones}}.
+Restrinxóse l'esborráu d'estes páxines pa evitar perturbaciones accidentales de {{SITENAME}}.",
+	'delete-warning-toobig' => "Esta páxina tien un historial d'ediciones grande, más de $1 {{PLURAL:$1|revisión|revisiones}}.
 Esborralu pue perturbar les operaciones de la base de datos de {{SITENAME}};
-obra con precaución.',
+obra con precaución.",
 	'databasenotlocked' => 'La base de datos nun ta candada.',
 	'delete_and_move' => 'Esborrar y treslladar',
 	'delete_and_move_text' => '==Necesítase esborrar==
@@ -1136,7 +1135,7 @@ La páxina de destín "[[:$1]]" yá esiste. ¿Quies esborrala pa dexar sitiu pal
 	'djvu_no_xml' => 'Nun se pudo obtener el XML pal archivu DjVu',
 	'deletedrevision' => 'Esborrada la reversión vieya $1',
 	'days' => '{{PLURAL:$1|$1 día|$1 díes}}',
-	'deletedwhileediting' => '\'\'\'Avisu\'\'\': ¡Esta páxina foi esborrada depués de qu\'entamaras a editala!',
+	'deletedwhileediting' => "'''Avisu''': ¡Esta páxina foi esborrada depués de qu'entamaras a editala!",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => 'Avisu: La clave d\'ordenación predeterminada "$2" anula la clave d\'ordenación anterior "$1".',
 	'dberr-header' => 'Esta wiki tien un problema',
@@ -1146,13 +1145,13 @@ La páxina de destín "[[:$1]]" yá esiste. ¿Quies esborrala pa dexar sitiu pal
 	'dberr-usegoogle' => 'Pues probar a guetar con Google mentanto.',
 	'dberr-outofdate' => 'Atalanta que los sos índices del nuesu conteníu seique nun tean actualizaos.',
 	'dberr-cachederror' => 'Esta ye una copia na caché de la páxina que se pidiera, y pue que nun tea actualizada.',
-];
+);
 
-$messages['av'] = [
+$messages['av'] = array(
 	'diff' => 'батӀалъи',
-];
+);
 
-$messages['avk'] = [
+$messages['avk'] = array(
 	'december' => 'santoleaksat',
 	'december-gen' => 'Santoleaksat',
 	'dec' => '12-at',
@@ -1183,7 +1182,7 @@ MySQL va « $3 : $4 » rokla al dimstakser.',
 	'disambiguations' => 'Bu dem milyoltaca yo',
 	'disambiguationspage' => '{{ns:template}}:Milyoltaca',
 	'doubleredirects' => 'Jontolafa graskara',
-	'doubleredirectstext' => '<b>Attention:</b> cette liste peut contenir des « faux positifs ». Dans ce cas, c\'est probablement la page du premier #REDIRECT contient aussi du texte.<br />Chaque ligne contient les liens à la 1re et 2e page de redirection, ainsi que la première ligne de cette dernière, qui donne normalement la « vraie » destination. Le premier #REDIRECT devrait lier vers cette destination.',
+	'doubleredirectstext' => "<b>Attention:</b> cette liste peut contenir des « faux positifs ». Dans ce cas, c'est probablement la page du premier #REDIRECT contient aussi du texte.<br />Chaque ligne contient les liens à la 1re et 2e page de redirection, ainsi que la première ligne de cette dernière, qui donne normalement la « vraie » destination. Le premier #REDIRECT devrait lier vers cette destination.",
 	'double-redirect-fixed-move' => 'arrundayan [[$1]], dure graskan kal [[$2]]',
 	'deadendpages' => 'Axodabueem',
 	'deadendpagestext' => 'Batu bu se tid gluyasikiiskafu gu aru bu koe {{SITENAME}}.',
@@ -1219,19 +1218,19 @@ Kas ta askira va darka ta arrundara va in djusulal ?',
 	'djvu_page_error' => 'DjVu bu dive kima',
 	'djvu_no_xml' => 'XML Vexalara va DjVu iyeltak tir merotisa',
 	'deletedrevision' => '$1 sulayan guazaf betaks',
-	'deletedwhileediting' => '\'\'\'Obral\'\'\' : Batu bu zo sulayar vielu toz betayal !',
+	'deletedwhileediting' => "'''Obral''' : Batu bu zo sulayar vielu toz betayal !",
 	'descending_abbrev' => 'tit-',
-];
+);
 
-$messages['ay'] = [
+$messages['ay'] = array(
 	'december' => 'jallu qallta phaxsi',
 	'december-gen' => 'jallu qallta phaxsi',
 	'dec' => 'jall',
 	'delete' => 'Pichaña',
 	'deletethispage' => 'Aka uñstawi phiskhuraña',
-];
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'december' => 'dekabr',
 	'december-gen' => 'dekabr',
 	'dec' => 'Dekabr',
@@ -1264,8 +1263,8 @@ Verilənlər bazasının göstərdiyi xəta "$3: $4"',
 	'download' => 'Yüklə',
 	'disambiguations' => 'Dəqiqləşdirmə səhifələrinə keçid verən səhifələr',
 	'disambiguationspage' => 'Template:dəqiqləşdirmə',
-	'disambiguations-text' => 'Aşağıdakı səhifələr \'\'\'dəqiqləşdirmə səhifələrinə\'\'\' keçid verir. Bunun əvəzinə onlar çox guman ki, müvafiq konkret bir məqaləni göstərməlidirlər.
-<br />Səhifə o zaman dəqiqləşdirmə səhifəsi hesab edilir ki, onda  [[MediaWiki:Disambiguationspage]]-dən keçid verilmiş şablon istifadə edilir.',
+	'disambiguations-text' => "Aşağıdakı səhifələr '''dəqiqləşdirmə səhifələrinə''' keçid verir. Bunun əvəzinə onlar çox guman ki, müvafiq konkret bir məqaləni göstərməlidirlər.
+<br />Səhifə o zaman dəqiqləşdirmə səhifəsi hesab edilir ki, onda  [[MediaWiki:Disambiguationspage]]-dən keçid verilmiş şablon istifadə edilir.",
 	'doubleredirects' => 'İkiqat istiqamətləndirmələr',
 	'double-redirect-fixed-move' => '[[$1]] dəyişdirilib.
 Hazırda [[$2]]-yə istiqamətlənib.',
@@ -1302,16 +1301,16 @@ Sonuncu silinmələrə bax: $2.',
 	'djvu_page_error' => 'DjVu səhifəsi əlçatmazdır',
 	'djvu_no_xml' => 'DjVu üçün XML faylı almaq mümkün deyil.',
 	'deletedrevision' => 'Köhnə versiyaları silindi $1.',
-	'deletedwhileediting' => '\'\'\'Diqqət!\'\'\' Bu səhifə siz redaktə etməyə başladıqdan sonra silinmişdir!',
+	'deletedwhileediting' => "'''Diqqət!''' Bu səhifə siz redaktə etməyə başladıqdan sonra silinmişdir!",
 	'descending_abbrev' => 'azalma sırasına görə',
 	'duplicate-defaultsort' => '\'\'\'Diqqət:\'\'\' Ehtimal edilən "$2" klassifikasiya açarı əvvəlki "$1" klassifikasiya açarını keçərsiz edir.',
 	'dberr-header' => 'Bu vikidə problem var',
 	'dberr-problems' => 'Üzr istəyirik!
 Bu saytda texniki problemlər var.',
 	'dberr-info' => '($1: Məlumat bazası ilə əlaqə yoxdur)',
-];
+);
 
-$messages['ba'] = [
+$messages['ba'] = array(
 	'december' => 'декабрь',
 	'december-gen' => 'декабрь',
 	'dec' => 'дек',
@@ -1346,9 +1345,9 @@ $1
 	'download' => 'күсереп яҙырға',
 	'disambiguations' => 'Күп мәғәнәле төшөнсәләр биттәренә һылтанған биттәр',
 	'disambiguationspage' => 'Template:Күп_мәғәнәлелек',
-	'disambiguations-text' => 'Түбәндәге биттәрҙән \'\'\'күп мәғәнәле биттәргә\'\'\' һылтанма яһалған.
+	'disambiguations-text' => "Түбәндәге биттәрҙән '''күп мәғәнәле биттәргә''' һылтанма яһалған.
 Бының урынына улар фәҡәт үҙенә кәрәкле мәҡәләгә һылтанырға тейеш.<br />
-Әгәр биттә исеме [[MediaWiki:Disambiguationspage]] битендә күрһәтелгән ҡалып ҡулланылһа, ул күп мәғәнәле тип иҫәпләнә.',
+Әгәр биттә исеме [[MediaWiki:Disambiguationspage]] битендә күрһәтелгән ҡалып ҡулланылһа, ул күп мәғәнәле тип иҫәпләнә.",
 	'doubleredirects' => 'Икеле йүнәлтеүҙәр',
 	'doubleredirectstext' => 'Был биттә икенсе йүнәлтеү биттәренә йүнәлткән биттәр исемлеге килтерелгән.
 Һәр юл беренсе һәм икенсе йүнәлтеүгә һылтанманан, шулай уҡ икенсе һылтанма йүнәлткән һәм беренсе йүнәлтмә һылтанма яһарға тейеш булған биттән  тора.
@@ -1392,7 +1391,7 @@ $1
 	'djvu_no_xml' => 'DjVu файлы өсөн XML сығарып булмай',
 	'deletedrevision' => 'Иҫке $1 өлгөһө юйылды',
 	'days' => '{{PLURAL:$1|$1 көн|$1 көн}}',
-	'deletedwhileediting' => '\'\'\'Иғтибар\'\'\': Был бит һеҙ мөхәррирләй башлар алдынан юйылған ине!',
+	'deletedwhileediting' => "'''Иғтибар''': Был бит һеҙ мөхәррирләй башлар алдынан юйылған ине!",
 	'descending_abbrev' => 'кәмеүгә табан',
 	'duplicate-defaultsort' => '\'\'\'Иҫкәртеү:\'\'\' "$2" ғәҙәттәге тәпртипкә килтереү асҡысы элекке "$1" ғәҙәттәге тәртипкә килтереү асҡысын үҙгәртә.',
 	'dberr-header' => 'Был вики проектта ҡыйынлыҡтар бар',
@@ -1403,9 +1402,9 @@ $1
 	'dberr-usegoogle' => 'Әлегә һеҙ Google ярҙамында эҙләп ҡарай алһығыҙ.',
 	'dberr-outofdate' => 'Әммә уның индекстары иҫекргән булыуы мөмкинлеген күҙ уңында тотоғоҙ.',
 	'dberr-cachederror' => 'Түбәндә һоралған биттең кэшта һаҡланған өлгөһө күрһәтелгән, унда аҙаҡҡы үҙгәртеүҙәр булмауы мөмкин.',
-];
+);
 
-$messages['bar'] = [
+$messages['bar'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezember',
 	'dec' => 'Dez.',
@@ -1414,28 +1413,28 @@ $messages['bar'] = [
 	'disclaimers' => 'Impressum',
 	'disclaimerpage' => 'Project:Impressum',
 	'databaseerror' => 'Feeler in da Daatenbånk',
-	'dberrortext' => 'Es is a Daatenbånkfeeler auftreeden!
+	'dberrortext' => "Es is a Daatenbånkfeeler auftreeden!
 Da Grund kå a Prógrammierfeeler seih.
-D\' létzde Daatenbånkobfrog wor:
+D' létzde Daatenbånkobfrog wor:
 <blockquote><tt>$1</tt></blockquote>
 aus da Funkzión „<tt>$2</tt>“.
-Dé Daatenbånk hod an Feeler „<tt>$3: $4</tt>“ gmödt.',
-	'dberrortextcl' => 'Tschuidigung! Es hod an Syntaxfeeler in da Daatenbånkobfrog geem.
-D\' letzte Daatenbånkobfrog hod  „$1“ aus da Funkzion „<tt>$2</tt>“ glautt.
-De Daatenbånk möidt \'n Feeler: „<tt>$3: $4</tt>“.',
+Dé Daatenbånk hod an Feeler „<tt>$3: $4</tt>“ gmödt.",
+	'dberrortextcl' => "Tschuidigung! Es hod an Syntaxfeeler in da Daatenbånkobfrog geem.
+D' letzte Daatenbånkobfrog hod  „$1“ aus da Funkzion „<tt>$2</tt>“ glautt.
+De Daatenbånk möidt 'n Feeler: „<tt>$3: $4</tt>“.",
 	'directorycreateerror' => 'As Vazeichnis „$1“ hod néd åglégt wern kenner.',
 	'deletedhist' => 'Gléschde Versiónen',
 	'difference' => '(Unterschiad zwischen dé Versiónen)',
 	'diff-multi' => '({{PLURAL:$1|A dazwischenliegerte Versión|$1 dazwischenliegende Versiónen}} vohram {{PLURAL:$2|Benutzer|$2 Benutzern}} {{PLURAL:$1|werd|wern}} néd åzoagt)',
 	'diff' => 'Unterschiad',
 	'destfilename' => 'Zünaum:',
-	'duplicatesoffile' => '{{PLURAL:$1|D\'foignde Datei is a Duplikat|De foigndn $1 Datein han Duplikate}} vu dea Datei ([[Special:FileDuplicateSearch/$2|weidare Deteus]]):',
+	'duplicatesoffile' => "{{PLURAL:$1|D'foignde Datei is a Duplikat|De foigndn $1 Datein han Duplikate}} vu dea Datei ([[Special:FileDuplicateSearch/$2|weidare Deteus]]):",
 	'download' => 'Owerlooden',
 	'disambiguationspage' => 'Template:Begriffsklärung',
-	'disambiguations-text' => 'D\' fóigernden Seiten valinken af a Seiten za ner Begiefsklärung. Du sóiderst stott dém af d\' oagerntlich gmoahde Seiten valinken.
+	'disambiguations-text' => "D' fóigernden Seiten valinken af a Seiten za ner Begiefsklärung. Du sóiderst stott dém af d' oagerntlich gmoahde Seiten valinken.
 
 A Seiten gijt ois Begriefsklärungsseiten, waunns oane vah dé af [[MediaWiki:Disambiguationspage]] afgfyrde Vurloog(ng) eihbindt.</br>
-Links as Naumensraim wern do néd afglistt.',
+Links as Naumensraim wern do néd afglistt.",
 	'doubleredirects' => 'Doppede Weiderloatungen',
 	'deadendpages' => 'Néd valinkende Seiten',
 	'deadendpagestext' => 'Dé fóigénden Seiten vaweisen néd auf aundre Seiten voh {{SITENAME}}.',
@@ -1462,13 +1461,13 @@ Links as Naumensraim wern do néd afglistt.',
 	'duplicate-defaultsort' => 'Ówocht: Da Sortiarungsschlyssel "$2" ywerschreibt dén vurher vawendten Schlyssel "$1".',
 	'dberr-header' => 'Dés Wiki hod a Próblém',
 	'dberr-problems' => 'Tschuidigung. Dé Seiten hod im Moment technische Próbléme.',
-	'dberr-again' => 'Wort a por Minuten und vasuachs dånn neich z\' loon.',
+	'dberr-again' => "Wort a por Minuten und vasuachs dånn neich z' loon.",
 	'dberr-info' => '(Kå koah Vabindung zum Daatenbånkserver herstön: $1)',
 	'dberr-usegoogle' => 'Du kunntersd dawei mid Google suachen.',
 	'dberr-outofdate' => 'Beochtt, daas da Suachindex voh inserne Inhoitt bei Google vaoiterd seih kunnt.',
-];
+);
 
-$messages['bat-smg'] = [
+$messages['bat-smg'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezember',
 	'dec' => 'Dez.',
@@ -1477,28 +1476,28 @@ $messages['bat-smg'] = [
 	'disclaimers' => 'Impressum',
 	'disclaimerpage' => 'Project:Impressum',
 	'databaseerror' => 'Feeler in da Daatenbånk',
-	'dberrortext' => 'Es is a Daatenbånkfeeler auftreeden!
+	'dberrortext' => "Es is a Daatenbånkfeeler auftreeden!
 Da Grund kå a Prógrammierfeeler seih.
-D\' létzde Daatenbånkobfrog wor:
+D' létzde Daatenbånkobfrog wor:
 <blockquote><tt>$1</tt></blockquote>
 aus da Funkzión „<tt>$2</tt>“.
-Dé Daatenbånk hod an Feeler „<tt>$3: $4</tt>“ gmödt.',
-	'dberrortextcl' => 'Tschuidigung! Es hod an Syntaxfeeler in da Daatenbånkobfrog geem.
-D\' letzte Daatenbånkobfrog hod  „$1“ aus da Funkzion „<tt>$2</tt>“ glautt.
-De Daatenbånk möidt \'n Feeler: „<tt>$3: $4</tt>“.',
+Dé Daatenbånk hod an Feeler „<tt>$3: $4</tt>“ gmödt.",
+	'dberrortextcl' => "Tschuidigung! Es hod an Syntaxfeeler in da Daatenbånkobfrog geem.
+D' letzte Daatenbånkobfrog hod  „$1“ aus da Funkzion „<tt>$2</tt>“ glautt.
+De Daatenbånk möidt 'n Feeler: „<tt>$3: $4</tt>“.",
 	'directorycreateerror' => 'As Vazeichnis „$1“ hod néd åglégt wern kenner.',
 	'deletedhist' => 'Gléschde Versiónen',
 	'difference' => '(Unterschiad zwischen dé Versiónen)',
 	'diff-multi' => '({{PLURAL:$1|A dazwischenliegerte Versión|$1 dazwischenliegende Versiónen}} vohram {{PLURAL:$2|Benutzer|$2 Benutzern}} {{PLURAL:$1|werd|wern}} néd åzoagt)',
 	'diff' => 'Unterschiad',
 	'destfilename' => 'Zünaum:',
-	'duplicatesoffile' => '{{PLURAL:$1|D\'foignde Datei is a Duplikat|De foigndn $1 Datein han Duplikate}} vu dea Datei ([[Special:FileDuplicateSearch/$2|weidare Deteus]]):',
+	'duplicatesoffile' => "{{PLURAL:$1|D'foignde Datei is a Duplikat|De foigndn $1 Datein han Duplikate}} vu dea Datei ([[Special:FileDuplicateSearch/$2|weidare Deteus]]):",
 	'download' => 'Owerlooden',
 	'disambiguationspage' => 'Template:Begriffsklärung',
-	'disambiguations-text' => 'D\' fóigernden Seiten valinken af a Seiten za ner Begiefsklärung. Du sóiderst stott dém af d\' oagerntlich gmoahde Seiten valinken.
+	'disambiguations-text' => "D' fóigernden Seiten valinken af a Seiten za ner Begiefsklärung. Du sóiderst stott dém af d' oagerntlich gmoahde Seiten valinken.
 
 A Seiten gijt ois Begriefsklärungsseiten, waunns oane vah dé af [[MediaWiki:Disambiguationspage]] afgfyrde Vurloog(ng) eihbindt.</br>
-Links as Naumensraim wern do néd afglistt.',
+Links as Naumensraim wern do néd afglistt.",
 	'doubleredirects' => 'Doppede Weiderloatungen',
 	'deadendpages' => 'Néd valinkende Seiten',
 	'deadendpagestext' => 'Dé fóigénden Seiten vaweisen néd auf aundre Seiten voh {{SITENAME}}.',
@@ -1525,13 +1524,13 @@ Links as Naumensraim wern do néd afglistt.',
 	'duplicate-defaultsort' => 'Ówocht: Da Sortiarungsschlyssel "$2" ywerschreibt dén vurher vawendten Schlyssel "$1".',
 	'dberr-header' => 'Dés Wiki hod a Próblém',
 	'dberr-problems' => 'Tschuidigung. Dé Seiten hod im Moment technische Próbléme.',
-	'dberr-again' => 'Wort a por Minuten und vasuachs dånn neich z\' loon.',
+	'dberr-again' => "Wort a por Minuten und vasuachs dånn neich z' loon.",
 	'dberr-info' => '(Kå koah Vabindung zum Daatenbånkserver herstön: $1)',
 	'dberr-usegoogle' => 'Du kunntersd dawei mid Google suachen.',
 	'dberr-outofdate' => 'Beochtt, daas da Suachindex voh inserne Inhoitt bei Google vaoiterd seih kunnt.',
-];
+);
 
-$messages['bcc'] = [
+$messages['bcc'] = array(
 	'december' => 'دسمبر',
 	'december-gen' => 'دسمبر',
 	'dec' => 'دس',
@@ -1564,9 +1563,9 @@ $messages['bcc'] = [
 	'download' => 'آیرگیزگ',
 	'disambiguations' => 'صفحات رفع ابهام',
 	'disambiguationspage' => 'Template:رفع ابهام',
-	'disambiguations-text' => 'جهلیگین صفحه لینک انت په یک \'\'\'صفحه رفع ابهام\'\'\'.
+	'disambiguations-text' => "جهلیگین صفحه لینک انت په یک '''صفحه رفع ابهام'''.
 شما بایدن په جاه آیی په یک مناسبین موضوعی لینک دهیت.<br />
-یک صفحه ای که په داب صفحه رفع ابهام چارگ بیت اگر آیء چه یک تمپلتی که لینک بیت چه [[MediaWiki:Disambiguationspage|صفحه رفع ابهام]] استفاده کنت.',
+یک صفحه ای که په داب صفحه رفع ابهام چارگ بیت اگر آیء چه یک تمپلتی که لینک بیت چه [[MediaWiki:Disambiguationspage|صفحه رفع ابهام]] استفاده کنت.",
 	'doubleredirects' => 'دوبل غیر مستقیم',
 	'doubleredirectstext' => 'ای صفحه لیست کنت صفحاتی که غیر مستقیم رونت په دگه صفحات. هر ردیف شامل لینکانی انت به اولی و دومی غیر مستقیم، و هدف دومی غیر مستقیم، که معمولا استفاده بیت "real" صفحه هدف، که بایدن اولی غیر مستقیم پیش داریت.',
 	'double-redirect-fixed-move' => '[[$1]] انتقال دهگ بوتت، و الان تغییر مسیری په [[$2]] انت',
@@ -1607,7 +1606,7 @@ $messages['bcc'] = [
 	'djvu_page_error' => 'صفحه Djvu در چه محدوده انت',
 	'djvu_no_xml' => 'نه تونیت XML بیاریت په فایل DjVu',
 	'deletedrevision' => 'قدیمی بازبینی $1 حذف بوت',
-	'deletedwhileediting' => '\'\'\'هوژاری\'\'\': ای صفحه حذف بوتت رند چه شمی اصلاح کتن شروه بیگ!',
+	'deletedwhileediting' => "'''هوژاری''': ای صفحه حذف بوتت رند چه شمی اصلاح کتن شروه بیگ!",
 	'descending_abbrev' => 'جهلادی',
 	'duplicate-defaultsort' => 'هژاری: ترتیب پیش فرض «$2» ترتیب پیش فرض پیشگین «$1» را باطل کنت.',
 	'dberr-header' => 'ای ویکی ءَ مشکل هستن',
@@ -1617,9 +1616,9 @@ $messages['bcc'] = [
 	'dberr-usegoogle' => 'شما تونید دان آ وهد گردگ ته گوگل ءَ آزمایش کنیت.',
 	'dberr-outofdate' => 'توجه ببینت که می ایندکس محتواءَ بلکین قدیمی ببنت.',
 	'dberr-cachederror' => 'آ چیزی که رندا کیت یک کپی ذخیره ای چه لوتگین صفحه انت و بلکین قدیمی ببیت',
-];
+);
 
-$messages['bcl'] = [
+$messages['bcl'] = array(
 	'december' => 'Desyembre',
 	'december-gen' => 'Desyembre',
 	'dec' => 'Des',
@@ -1646,13 +1645,13 @@ AnSQL ko nagbalik nin salâ na"$3: $4"',
 	'defaultns' => 'Maghilíng mûna sa ining mga ngaran-espacio:',
 	'default' => 'pwestong normal',
 	'diff' => 'ibá',
-	'destfilename' => '\'\'Filename\'\' kan destinasyón',
+	'destfilename' => "''Filename'' kan destinasyón",
 	'download' => 'ideskarga',
 	'disambiguations' => 'Mga pahinang klaripikasyon',
 	'disambiguationspage' => 'Template:clarip',
-	'disambiguations-text' => 'An mga nasunod na páhina nakatakod sa sarong \'\'\'páhina nin klaripikasyon\'\'\'.
+	'disambiguations-text' => "An mga nasunod na páhina nakatakod sa sarong '''páhina nin klaripikasyon'''.
 Imbis, kaipuhan na nakatakod sinda sa maninigong tema.<br />
-An páhina pigkokonsiderar na páhina nin klaripikasyon kun naggagamit ini nin templatong nakatakod sa [[MediaWiki:Disambiguationspage]]',
+An páhina pigkokonsiderar na páhina nin klaripikasyon kun naggagamit ini nin templatong nakatakod sa [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dobleng mga redirekta',
 	'doubleredirectstext' => 'Piglilista kaining pahina an mga pahinang minalikay sa ibang pahinang paralikay. Kada raya may mga takod sa primero asin segundang likay, buda an destino kan segundong likay, na puro-pirme sarong "tunay " na pahinang destino, na dapat duman nakaturo an primerong likay.',
 	'deadendpages' => 'Mga pahinang mayong luwasan',
@@ -1682,9 +1681,9 @@ Igwa nang páhina na "[[:$1]]". Gusto mong parâon ini tangarig maibalyó?',
 	'deletedrevision' => 'Pigparâ an lumang pagribay na $1.',
 	'deletedwhileediting' => 'Patanid: Pigparâ na an pahinang ini antes na nagpoon kan maghirá!',
 	'descending_abbrev' => 'ba',
-];
+);
 
-$messages['be'] = [
+$messages['be'] = array(
 	'december' => 'Снежань',
 	'december-gen' => 'снежня',
 	'dec' => 'Сне',
@@ -1716,13 +1715,13 @@ $messages['be'] = [
 	'default' => 'прадвызначэнні',
 	'diff' => 'розн.',
 	'destfilename' => 'Назва мэтавага файла:',
-	'duplicatesoffile' => 'Наступн{{PLURAL:$1|ы файл з\'яўляецца дублікатам|ыя $1 файлы з\'яўляюцца дублікатамі}} гэтага файла ([[Special:FileDuplicateSearch/$2|падрабязна]]):',
+	'duplicatesoffile' => "Наступн{{PLURAL:$1|ы файл з'яўляецца дублікатам|ыя $1 файлы з'яўляюцца дублікатамі}} гэтага файла ([[Special:FileDuplicateSearch/$2|падрабязна]]):",
 	'download' => 'узяць сабе',
 	'disambiguations' => 'Старонкі, якія спасылаюцца на старонкі вырашэння неадназначнасцяў',
 	'disambiguationspage' => 'Template:Неадназначнасць',
-	'disambiguations-text' => 'Гэтыя старонкі спасылаюцца на \'\'\'старонкі развязкі неадназначнасцяў\'\'\'.
+	'disambiguations-text' => "Гэтыя старонкі спасылаюцца на '''старонкі развязкі неадназначнасцяў'''.
 Лепей, каб яны спасылаліся на канкрэтныя тэматычныя старонкі.<br />
-Старонка лічыцца старонкай развязкі, калі ў яе ўлучаецца такі шаблон, на які спасылаецца [[MediaWiki:Disambiguationspage]]',
+Старонка лічыцца старонкай развязкі, калі ў яе ўлучаецца такі шаблон, на які спасылаецца [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Падвойныя перасылкі',
 	'doubleredirectstext' => 'Тут пералічаныя старонкі-перасылкі, якія паказваюць на іншыя перасылкі.
 Кожны радок утрымлівае спасылкі на першую і другую перасылкі, а таксама мэту другой перасылкі, якая звычайна і ёсць "сапраўдная" мэтавая старонка, на якую павінна была паказваць першая перасылка.
@@ -1764,7 +1763,7 @@ $messages['be'] = [
 	'djvu_no_xml' => 'Не ўдалося ўзяць XML для файла DjVu',
 	'deletedrevision' => 'Сцёрта старая версія $1',
 	'days' => '{{PLURAL:$1|$1 дзень|$1 дня|$1 дзён}}',
-	'deletedwhileediting' => '\'\'\'Увага\'\'\': гэтая старонка была сцёрта пасля таго, як вы пачалі з ёй працаваць!',
+	'deletedwhileediting' => "'''Увага''': гэтая старонка была сцёрта пасля таго, як вы пачалі з ёй працаваць!",
 	'descending_abbrev' => 'да менш.',
 	'duplicate-defaultsort' => 'Увага: прадвызначаная клавіша ўпарадкавання "$2" замяніла ранейшую такую клавішу "$1".',
 	'dberr-header' => 'Праблема на пляцоўцы',
@@ -1774,9 +1773,9 @@ $messages['be'] = [
 	'dberr-usegoogle' => 'Тымчасам можна паспрабаваць пошук праз Гугл.',
 	'dberr-outofdate' => 'Заўважце, што тамтэйшыя індэксы тутэйшага зместу могуць быць састарэлымі.',
 	'dberr-cachederror' => 'Гэта копія старонкі, узятая з кэшу, і, магчыма, састарэлая.',
-];
+);
 
-$messages['be-tarask'] = [
+$messages['be-tarask'] = array(
 	'december' => 'сьнежань',
 	'december-gen' => 'сьнежня',
 	'dec' => '12',
@@ -1811,9 +1810,9 @@ $messages['be-tarask'] = [
 	'download' => 'загрузіць',
 	'disambiguations' => 'Старонкі, якія спасылаюцца на старонкі-неадназначнасьці',
 	'disambiguationspage' => 'Template:Неадназначнасьць',
-	'disambiguations-text' => 'Наступныя старонкі спасылаюцца на \'\'\'старонкі-неадназначнасьці\'\'\'.
+	'disambiguations-text' => "Наступныя старонкі спасылаюцца на '''старонкі-неадназначнасьці'''.
 Замест гэтага, яны павінны спасылацца на пэўныя старонкі.<br />
-Старонка лічыцца шматзначнай, калі яна ўтрымлівае шаблён назва якога знаходзіцца на старонцы [[MediaWiki:Disambiguationspage]]',
+Старонка лічыцца шматзначнай, калі яна ўтрымлівае шаблён назва якога знаходзіцца на старонцы [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Двайныя перанакіраваньні',
 	'doubleredirectstext' => 'На гэтай старонцы пададзены сьпіс перанакіраваньняў на іншыя перанакіраваньні. Кожны радок утрымлівае спасылкі на першае і другое перанакіраваньне, а таксама мэтавую старонку другога перанакіраваньня, якая звычайна зьяўляецца «сапраўднай» мэтавай старонкай, куды павіннае спасылацца першае перанакіраваньне.
 <del>Закрэсьленыя</del> элемэнты былі выпраўленыя.',
@@ -1857,7 +1856,7 @@ $messages['be-tarask'] = [
 	'deletedrevision' => 'Выдаленая старая вэрсія $1',
 	'days-abbrev' => '$1 дз',
 	'days' => '$1 {{PLURAL:$1|дзень|дні|дзён}}',
-	'deletedwhileediting' => '\'\'\'Увага\'\'\': Гэтая старонка была выдаленая пасьля таго, як Вы пачалі яе рэдагаваньне!',
+	'deletedwhileediting' => "'''Увага''': Гэтая старонка была выдаленая пасьля таго, як Вы пачалі яе рэдагаваньне!",
 	'descending_abbrev' => 'зьмянш.',
 	'duplicate-defaultsort' => 'Папярэджаньне: Ключ сартыроўкі па змоўчваньні «$2» замяняе папярэдні ключ сартыроўкі па змоўчваньні «$1».',
 	'dberr-header' => 'Гэтая вікі не функцыянуе спраўна',
@@ -1867,9 +1866,9 @@ $messages['be-tarask'] = [
 	'dberr-usegoogle' => 'Вы можаце пакуль паспрабаваць пашукаць праз Google.',
 	'dberr-outofdate' => 'Увага, індэксы нашага зьместу могуць быць састарэлымі.',
 	'dberr-cachederror' => 'Наступная старонка была загружана з кэшу і можа быць састарэлай.',
-];
+);
 
-$messages['be-x-old'] = [
+$messages['be-x-old'] = array(
 	'december' => 'сьнежань',
 	'december-gen' => 'сьнежня',
 	'dec' => '12',
@@ -1904,9 +1903,9 @@ $messages['be-x-old'] = [
 	'download' => 'загрузіць',
 	'disambiguations' => 'Старонкі, якія спасылаюцца на старонкі-неадназначнасьці',
 	'disambiguationspage' => 'Template:Неадназначнасьць',
-	'disambiguations-text' => 'Наступныя старонкі спасылаюцца на \'\'\'старонкі-неадназначнасьці\'\'\'.
+	'disambiguations-text' => "Наступныя старонкі спасылаюцца на '''старонкі-неадназначнасьці'''.
 Замест гэтага, яны павінны спасылацца на пэўныя старонкі.<br />
-Старонка лічыцца шматзначнай, калі яна ўтрымлівае шаблён назва якога знаходзіцца на старонцы [[MediaWiki:Disambiguationspage]]',
+Старонка лічыцца шматзначнай, калі яна ўтрымлівае шаблён назва якога знаходзіцца на старонцы [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Двайныя перанакіраваньні',
 	'doubleredirectstext' => 'На гэтай старонцы пададзены сьпіс перанакіраваньняў на іншыя перанакіраваньні. Кожны радок утрымлівае спасылкі на першае і другое перанакіраваньне, а таксама мэтавую старонку другога перанакіраваньня, якая звычайна зьяўляецца «сапраўднай» мэтавай старонкай, куды павіннае спасылацца першае перанакіраваньне.
 <del>Закрэсьленыя</del> элемэнты былі выпраўленыя.',
@@ -1950,7 +1949,7 @@ $messages['be-x-old'] = [
 	'deletedrevision' => 'Выдаленая старая вэрсія $1',
 	'days-abbrev' => '$1 дз',
 	'days' => '$1 {{PLURAL:$1|дзень|дні|дзён}}',
-	'deletedwhileediting' => '\'\'\'Увага\'\'\': Гэтая старонка была выдаленая пасьля таго, як Вы пачалі яе рэдагаваньне!',
+	'deletedwhileediting' => "'''Увага''': Гэтая старонка была выдаленая пасьля таго, як Вы пачалі яе рэдагаваньне!",
 	'descending_abbrev' => 'зьмянш.',
 	'duplicate-defaultsort' => 'Папярэджаньне: Ключ сартыроўкі па змоўчваньні «$2» замяняе папярэдні ключ сартыроўкі па змоўчваньні «$1».',
 	'dberr-header' => 'Гэтая вікі не функцыянуе спраўна',
@@ -1960,9 +1959,9 @@ $messages['be-x-old'] = [
 	'dberr-usegoogle' => 'Вы можаце пакуль паспрабаваць пашукаць праз Google.',
 	'dberr-outofdate' => 'Увага, індэксы нашага зьместу могуць быць састарэлымі.',
 	'dberr-cachederror' => 'Наступная старонка была загружана з кэшу і можа быць састарэлай.',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'december' => 'декември',
 	'december-gen' => 'декември',
 	'dec' => 'дек',
@@ -1997,7 +1996,7 @@ MySQL върна грешка „$3: $4“',
 	'download' => 'сваляне',
 	'disambiguations' => 'Страници, сочещи към пояснителни страници',
 	'disambiguationspage' => 'Template:Пояснение',
-	'disambiguations-text' => 'Следните страници сочат към \'\'\'пояснителна страница\'\'\', вместо към истинската тематична страница.<br />Една страница се смята за пояснителна, ако ползва шаблон, към който се препраща от [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Следните страници сочат към '''пояснителна страница''', вместо към истинската тематична страница.<br />Една страница се смята за пояснителна, ако ползва шаблон, към който се препраща от [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Двойни пренасочвания',
 	'doubleredirectstext' => 'Тази страница съдържа списък със страници, които пренасочват към друга пренасочваща страница.
 Всеки ред съдържа препратки към първото и второто пренасочване, както и целта на второто пренасочване, която обикновено е „истинската“ целева страница, към която първото пренасочване би трябвало да сочи.
@@ -2038,7 +2037,7 @@ MySQL върна грешка „$3: $4“',
 	'djvu_no_xml' => 'Не е възможно вземането на XML за DjVu-файла',
 	'deletedrevision' => 'Изтрита стара версия $1',
 	'days' => '{{PLURAL:$1|$1 ден|$1 дни}}',
-	'deletedwhileediting' => '\'\'\'Внимание\'\'\': Страницата е била изтрита, след като сте започнали да я редактирате!',
+	'deletedwhileediting' => "'''Внимание''': Страницата е била изтрита, след като сте започнали да я редактирате!",
 	'descending_abbrev' => 'низх',
 	'duplicate-defaultsort' => 'Внимание: Ключът за сортиране по подразбиране „$2“ отменя по-ранния ключ „$1“.',
 	'dberr-header' => 'Това уики има проблем',
@@ -2048,9 +2047,9 @@ MySQL върна грешка „$3: $4“',
 	'dberr-usegoogle' => 'Междувременно опитайте да потърсите в Google.',
 	'dberr-outofdate' => 'Имайте предвид, че индексираното от Гугъл наше съдържание може вече да е неактуално.',
 	'dberr-cachederror' => 'Следва складирано копие на поисканата страница. Възможно е складираното копие да не е актуално.',
-];
+);
 
-$messages['bh'] = [
+$messages['bh'] = array(
 	'december' => 'декември',
 	'december-gen' => 'декември',
 	'dec' => 'дек',
@@ -2085,7 +2084,7 @@ MySQL върна грешка „$3: $4“',
 	'download' => 'сваляне',
 	'disambiguations' => 'Страници, сочещи към пояснителни страници',
 	'disambiguationspage' => 'Template:Пояснение',
-	'disambiguations-text' => 'Следните страници сочат към \'\'\'пояснителна страница\'\'\', вместо към истинската тематична страница.<br />Една страница се смята за пояснителна, ако ползва шаблон, към който се препраща от [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Следните страници сочат към '''пояснителна страница''', вместо към истинската тематична страница.<br />Една страница се смята за пояснителна, ако ползва шаблон, към който се препраща от [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Двойни пренасочвания',
 	'doubleredirectstext' => 'Тази страница съдържа списък със страници, които пренасочват към друга пренасочваща страница.
 Всеки ред съдържа препратки към първото и второто пренасочване, както и целта на второто пренасочване, която обикновено е „истинската“ целева страница, към която първото пренасочване би трябвало да сочи.
@@ -2126,7 +2125,7 @@ MySQL върна грешка „$3: $4“',
 	'djvu_no_xml' => 'Не е възможно вземането на XML за DjVu-файла',
 	'deletedrevision' => 'Изтрита стара версия $1',
 	'days' => '{{PLURAL:$1|$1 ден|$1 дни}}',
-	'deletedwhileediting' => '\'\'\'Внимание\'\'\': Страницата е била изтрита, след като сте започнали да я редактирате!',
+	'deletedwhileediting' => "'''Внимание''': Страницата е била изтрита, след като сте започнали да я редактирате!",
 	'descending_abbrev' => 'низх',
 	'duplicate-defaultsort' => 'Внимание: Ключът за сортиране по подразбиране „$2“ отменя по-ранния ключ „$1“.',
 	'dberr-header' => 'Това уики има проблем',
@@ -2136,9 +2135,9 @@ MySQL върна грешка „$3: $4“',
 	'dberr-usegoogle' => 'Междувременно опитайте да потърсите в Google.',
 	'dberr-outofdate' => 'Имайте предвид, че индексираното от Гугъл наше съдържание може вече да е неактуално.',
 	'dberr-cachederror' => 'Следва складирано копие на поисканата страница. Възможно е складираното копие да не е актуално.',
-];
+);
 
-$messages['bho'] = [
+$messages['bho'] = array(
 	'december' => 'दिसम्बर',
 	'december-gen' => 'दिसम्बर',
 	'dec' => 'दिस',
@@ -2151,15 +2150,15 @@ $messages['bho'] = [
 	'difference' => '(संशोधन के बीच अन्तर)',
 	'diff-multi' => '({{PLURAL:$1|एगो मध्यम संशोधन|$1 गो मध्यम संशोधन}} नईखे दिखावल)',
 	'diff' => 'अन्तर',
-];
+);
 
-$messages['bi'] = [
+$messages['bi'] = array(
 	'december' => 'Desemba',
 	'december-gen' => 'Desemba',
 	'dec' => 'Des',
-];
+);
 
-$messages['bjn'] = [
+$messages['bjn'] = array(
 	'december' => 'Disimbir',
 	'december-gen' => 'Disimbir',
 	'dec' => 'Dis',
@@ -2194,9 +2193,9 @@ Basisdata kasalahan  babulik "$3: $4".',
 	'download' => 'hunduh',
 	'disambiguations' => 'Tutungkaran disambigu',
 	'disambiguationspage' => 'Template:Disambigu',
-	'disambiguations-text' => 'Tutungkaran barikut bataut ka sabuah \'\'\'tungkaran disambigu\'\'\'.
+	'disambiguations-text' => "Tutungkaran barikut bataut ka sabuah '''tungkaran disambigu'''.
 Tutungkaran ngitu harusnya ka tupik nang sasuai.<br />
-Sabuah tungkaran dianggap sawagai tungkaran disambigu amun ngini mamuruk sabuah citakan nang tataut matan [[MediaWiki:Disambiguationspage]]',
+Sabuah tungkaran dianggap sawagai tungkaran disambigu amun ngini mamuruk sabuah citakan nang tataut matan [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Paugahan ganda',
 	'doubleredirectstext' => 'Tungkaran ngini mandaptar tutungkaran nang maugah ka tutungkaran ugahan lain.
 Tiap baris mangandung tautan ka ugahan panambaian wan kadua, sasarannya adalah ugahn kadua, nang biasanya tungkaran sasaran "sabujurnya", nang ugahan partama tuju.
@@ -2235,13 +2234,13 @@ jalanakan awan ba-a-awas.',
 	'delete_and_move_text' => '==pahapusan diparluakan==
 Tungkaran tatuju"[[:$1]]" sadauh tasadia.
 Pian handakkah hagan mahapus ngini maulah jalan gasan pamindahan?',
-	'delete_and_move_confirm' => 'I\'ih, hapus tungkaran ngini',
+	'delete_and_move_confirm' => "I'ih, hapus tungkaran ngini",
 	'delete_and_move_reason' => 'Dihapus hagan maulah jalan gasan pamindahan',
 	'djvu_page_error' => 'Tungkaran DJVu di luar jarak',
 	'djvu_no_xml' => 'Kada kawa kulihan XML gasan barakas DJVu',
 	'deletedrevision' => 'Raralatan lawas tahapus: $1',
 	'days' => '{{PLURAL:$1|$1 hari|$1 hahari}}',
-	'deletedwhileediting' => '\'\'\'Paringatan\'\'\': Tungkaran ngini sudah dihapus satalah Pian bamula mambabak!',
+	'deletedwhileediting' => "'''Paringatan''': Tungkaran ngini sudah dihapus satalah Pian bamula mambabak!",
 	'descending_abbrev' => 'turun',
 	'duplicate-defaultsort' => 'Paringatan: Sunduk pangurutan baku "$2" mangabaikan sunduk pangurutan baku "$1" sabalumnya.',
 	'dberr-header' => 'Wiki ngini baisi sabuah masalah',
@@ -2252,13 +2251,13 @@ Situs ngini mangalami kangalihan teknik.',
 	'dberr-usegoogle' => 'Pian kawa cuba manggagai lung Google wayah samantara ni.',
 	'dberr-outofdate' => 'Catat nang sidin indiks matan isi kami pina kawa kadaluarsa.',
 	'dberr-cachederror' => 'Ngini adalah sabuah rekap timbuluk tungkaran nang dipinta, wan pinanya kada pahanyarnya.',
-];
+);
 
-$messages['bm'] = [
+$messages['bm'] = array(
 	'disclaimers' => 'Kangari',
-];
+);
 
-$messages['bn'] = [
+$messages['bn'] = array(
 	'december' => 'ডিসেম্বর',
 	'december-gen' => 'ডিসেম্বর',
 	'dec' => 'ডিসেম্বর',
@@ -2291,7 +2290,7 @@ $messages['bn'] = [
 	'download' => 'ডাউনলোড',
 	'disambiguations' => 'দ্ব্যর্থতা-দূরীকরণ পাতাসমূহ',
 	'disambiguationspage' => 'Template:দ্ব্যর্থতা_নিরসন',
-	'disambiguations-text' => 'নিচের পাতাগুলি থেকে একটি \'\'\'দ্ব্যর্থতা নিরসন পাতা\'\'\'-তে সংযোগ আছে। এর পরিবর্তে এগুলি থেকে একটি উপযুক্ত বিষয়ে সংযোগ থাকা আবশ্যক।<br />যদি কোন পাতায় এমন কোন টেমপ্লেট থাকে যেটিতে [[MediaWiki:Disambiguationspage]] থেকে সংযোগ আছে, তবে সেই পাতাটিকে একটি দ্ব্যর্থতা নিরসন পাতা হিসেবে গণ্য করা হয়।',
+	'disambiguations-text' => "নিচের পাতাগুলি থেকে একটি '''দ্ব্যর্থতা নিরসন পাতা'''-তে সংযোগ আছে। এর পরিবর্তে এগুলি থেকে একটি উপযুক্ত বিষয়ে সংযোগ থাকা আবশ্যক।<br />যদি কোন পাতায় এমন কোন টেমপ্লেট থাকে যেটিতে [[MediaWiki:Disambiguationspage]] থেকে সংযোগ আছে, তবে সেই পাতাটিকে একটি দ্ব্যর্থতা নিরসন পাতা হিসেবে গণ্য করা হয়।",
 	'doubleredirects' => 'দুইবার করা পুনর্নির্দেশনাগুলি',
 	'doubleredirectstext' => 'এই পাতায় এমন পাতাগুলোর তালিকা আছে, যেগুলো অন্য কোন পুনর্নির্দেশনা পাতায় পুনর্নির্দেশিত হয়েছে। প্রতিটি সারিতে প্রথম ও দ্বিতীয় পুনর্নির্দেশনার জন্য সংযোগ আছে এবং দ্বিতীয় পুনর্নির্দেশনাটির লক্ষ্য সংযোগটিও দেওয়া আছে। এই লক্ষ্য সংযোগটিই সাধারণত "আসল" লক্ষ্য পাতা, যেটিতে প্রথম পুনর্নির্দেশনাটি থেকে সংযোগ থাকা উচিত।
 <del>কেটে দেওয়া</del> ভুক্তিগুলো ঠিক করা হয়েছে।',
@@ -2334,7 +2333,7 @@ $messages['bn'] = [
 	'djvu_no_xml' => 'DjVu ফাইলের জন্য XML আনতে পারা যায়নি।',
 	'deletedrevision' => 'মুছে ফেলা পুরাতন সংশোধন $1',
 	'days' => '{{PLURAL:$1|$1 দিন|$1 দিন}}',
-	'deletedwhileediting' => '\'\'\'সতর্কীকরণ\'\'\': আপনি পাতাটি সম্পাদনা শুরু করার পরে তা মুছে ফেলা হয়েছে!',
+	'deletedwhileediting' => "'''সতর্কীকরণ''': আপনি পাতাটি সম্পাদনা শুরু করার পরে তা মুছে ফেলা হয়েছে!",
 	'descending_abbrev' => 'অবতরণ',
 	'duplicate-defaultsort' => '\' \' \' সাবধান: \' \' \'  ডিফল্ট সাজানোর কীঃ "$2" পূর্বে ডিফল্ট সাজানোর কীঃ "$1" কে অগ্রাহ্য করে।',
 	'dberr-header' => 'এই উইকিতে কোন সমস্যা রয়েছে',
@@ -2345,9 +2344,9 @@ $messages['bn'] = [
 	'dberr-usegoogle' => 'এই পরিস্থিতিতে আপনি গুগলের মাধ্যমে অনুসন্ধান করার চেষ্টা করতে পারেন।',
 	'dberr-outofdate' => 'খেয়াল করুন যে, আমাদের বিষয়বস্তু সম্পর্কিত তাদের সূচি মেয়াদ উত্তীর্ণ হতে পারে।',
 	'dberr-cachederror' => 'এটি অনুরোধকৃত পাতার ক্যাশে লিপি, যা হালনাগাতকৃত নাও হতে পারে।',
-];
+);
 
-$messages['bo'] = [
+$messages['bo'] = array(
 	'december' => 'ཟླ་བཅུ་གཉིས་པ།',
 	'december-gen' => 'ཟླ་བཅུ་གཉིས་པ།',
 	'dec' => 'ཟླ་བཅུ་གཉིས་པ།',
@@ -2364,9 +2363,9 @@ $messages['bo'] = [
 	'deletecomment' => 'རྒྱུ་མཚན།',
 	'deleteotherreason' => 'རྒྱུ་མཚན་གཞན་པའམ་འཕར་མ།',
 	'deletereasonotherlist' => 'རྒྱུ་མཚན་གཞན།',
-];
+);
 
-$messages['bpy'] = [
+$messages['bpy'] = array(
 	'december' => 'ডিসেম্বর',
 	'december-gen' => 'ডিসেম্বর',
 	'dec' => 'ডিসে',
@@ -2416,9 +2415,9 @@ $messages['bpy'] = [
 	'dberr-usegoogle' => 'হের অহাত তি গুগুলসে বিসারা পারর।',
 	'dberr-outofdate' => 'সুচীক্রম অহান আপটুডেট নাইসে।',
 	'dberr-cachederror' => 'এহান ক্যাস পাতাহানে, অহানে আপটুডেট না থাইব।',
-];
+);
 
-$messages['bqi'] = [
+$messages['bqi'] = array(
 	'december' => 'دسامبر',
 	'december-gen' => 'دسامبر',
 	'dec' => 'دسامبر',
@@ -2438,9 +2437,9 @@ $messages['bqi'] = [
 	'deletecomment' => 'دلیل:',
 	'deleteotherreason' => 'دیه/دلیل اضافی:',
 	'deletereasonotherlist' => 'دلیل دیه',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'december' => 'Kerzu',
 	'december-gen' => 'Kerzu',
 	'dec' => 'Kzu',
@@ -2461,22 +2460,22 @@ adal an arc\'hwel "$2"
 Adkaset eo bet ar fazi "$3 : $4" gant ar bank roadennoù.',
 	'directorycreateerror' => 'N\'eus ket bet gallet krouiñ kavlec\'h "$1".',
 	'deletedhist' => 'Diverkañ an istor',
-	'difference' => '(Diforc\'hioù etre ar stummoù)',
-	'difference-multipage' => '(diforc\'h etre ar pajennoù)',
-	'diff-multi' => '({{PLURAL:$1|Ur reizhadenn da c\'hortoz|$1 reizhadenn da c\'hortoz}} gant {{PLURAL:$2|un implijer|$2 implijer}} kuzhet.)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Ur reizhadenn da c\'hortoz|$1 reizhadenn da c\'hortoz}} gant muioc\'h eget $2 {{PLURAL:$2|implijer|implijer}} kuzhet.)',
+	'difference' => "(Diforc'hioù etre ar stummoù)",
+	'difference-multipage' => "(diforc'h etre ar pajennoù)",
+	'diff-multi' => "({{PLURAL:$1|Ur reizhadenn da c'hortoz|$1 reizhadenn da c'hortoz}} gant {{PLURAL:$2|un implijer|$2 implijer}} kuzhet.)",
+	'diff-multi-manyusers' => "({{PLURAL:$1|Ur reizhadenn da c'hortoz|$1 reizhadenn da c'hortoz}} gant muioc'h eget $2 {{PLURAL:$2|implijer|implijer}} kuzhet.)",
 	'datedefault' => 'Dre ziouer',
 	'defaultns' => 'Klask en esaouennoù-anv a-hend-all :',
 	'default' => 'dre ziouer',
-	'diff' => 'diforc\'h',
+	'diff' => "diforc'h",
 	'destfilename' => 'Anv ma vo enrollet ar restr :',
-	'duplicatesoffile' => 'Un eil eus ar restr-mañ eo {{PLURAL:$1|ar restr da-heul|ar restroù da-heul}}, ([[Special:FileDuplicateSearch/$2|evit gouzout hiroc\'h]]) :',
+	'duplicatesoffile' => "Un eil eus ar restr-mañ eo {{PLURAL:$1|ar restr da-heul|ar restroù da-heul}}, ([[Special:FileDuplicateSearch/$2|evit gouzout hiroc'h]]) :",
 	'download' => 'pellgargañ',
 	'disambiguations' => 'Pajennoù enno liammoù war-zu pajennoù disheñvelout',
 	'disambiguationspage' => 'Template:Disheñvelout',
-	'disambiguations-text' => 'Liammet eo ar pajennoù da-heul ouzh ur \'\'\'bajenn disheñvelout\'\'\'.
-Padal e tlefent kas war-eeun d\'an danvez anezho.<br />
-Sellet e vez ouzh ur bajenn evel ouzh ur bajenn disheñvelout ma ra gant ur patrom liammet ouzh [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Liammet eo ar pajennoù da-heul ouzh ur '''bajenn disheñvelout'''.
+Padal e tlefent kas war-eeun d'an danvez anezho.<br />
+Sellet e vez ouzh ur bajenn evel ouzh ur bajenn disheñvelout ma ra gant ur patrom liammet ouzh [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Adkasoù doubl',
 	'doubleredirectstext' => 'Rollañ a ra ar bajenn-mañ ar pajennoù a adkas da bajennoù adkas all.
 War bep linenn ez eus liammoù war-du pajennoù an adkas kentañ hag en eil adkas, hag ivez war-du pajenn-dal an eil adkas zo sañset bezañ ar pal "gwirion" a zlefe an adkas kentañ kas di.
@@ -2485,7 +2484,7 @@ Diskoulmet eo bet an enmontoù <del>barrennet</del>.',
 	'double-redirect-fixed-maintenance' => 'O reizhañ an adkas doubl adalek [[$1]] war-zu [[$2]].',
 	'double-redirect-fixer' => 'Reizher adkasoù',
 	'deadendpages' => 'Pajennoù dall (hep liamm diabarzh)',
-	'deadendpagestext' => 'Ar pajennoù da-heul n\'int ket liammet ouzh pajenn ebet all eus {{SITENAME}}.',
+	'deadendpagestext' => "Ar pajennoù da-heul n'int ket liammet ouzh pajenn ebet all eus {{SITENAME}}.",
 	'deletedcontributions' => 'Degasadennoù diverket un implijer',
 	'deletedcontributions-title' => 'Degasadennoù diverket un implijer',
 	'defemailsubject' => 'Postel kaset eus {{SITENAME}} gant an implijer "$1"',
@@ -2500,40 +2499,40 @@ Sellet ouzh $2 evit roll an diverkadennoù diwezhañ.',
 	'deletecomment' => 'Abeg :',
 	'deleteotherreason' => 'Abegoù/traoù all :',
 	'deletereasonotherlist' => 'Abeg all',
-	'deletereason-dropdown' => '*Abegoù diverkañ boazetañ
+	'deletereason-dropdown' => "*Abegoù diverkañ boazetañ
 ** Goulenn gant saver ar pennad
-** Gaou ouzh ar gwirioù perc\'hennañ
-** Vandalerezh',
+** Gaou ouzh ar gwirioù perc'hennañ
+** Vandalerezh",
 	'delete-edit-reasonlist' => 'Kemmañ a ra an abegoù diverkañ',
 	'delete-toobig' => 'Bras eo istor ar bajenn-mañ, ouzhpenn $1 {{PLURAL:$1|stumm|stumm}} zo. Bevennet eo bet an diverkañ pajennoù a-seurt-se kuit da zegas reuz war {{SITENAME}} dre fazi .',
-	'delete-warning-toobig' => 'Bras eo istor ar bajenn-mañ, ouzhpenn {{PLURAL:$1|stumm|stumm}} zo.
-Diverkañ anezhi a c\'hallo degas reuz war mont en-dro diaz titouroù {{SITENAME}};
-taolit evezh bras.',
-	'databasenotlocked' => 'N\'eo ket prennet an diaz roadennoù.',
+	'delete-warning-toobig' => "Bras eo istor ar bajenn-mañ, ouzhpenn {{PLURAL:$1|stumm|stumm}} zo.
+Diverkañ anezhi a c'hallo degas reuz war mont en-dro diaz titouroù {{SITENAME}};
+taolit evezh bras.",
+	'databasenotlocked' => "N'eo ket prennet an diaz roadennoù.",
 	'delete_and_move' => 'Diverkañ ha sevel adkas',
-	'delete_and_move_text' => '==Ezhomm diverkañ==
+	'delete_and_move_text' => "==Ezhomm diverkañ==
 
-Savet eo ar pennad tal "[[:$1]]" c\'hoazh.
-Diverkañ anezhañ a fell deoc\'h ober evit reiñ lec\'h d\'an adkas ?',
+Savet eo ar pennad tal \"[[:\$1]]\" c'hoazh.
+Diverkañ anezhañ a fell deoc'h ober evit reiñ lec'h d'an adkas ?",
 	'delete_and_move_confirm' => 'Ya, diverkañ ar bajenn',
 	'delete_and_move_reason' => 'Diverket evit ober lec\'h d\'an adkas "[[$1]]"',
 	'djvu_page_error' => 'Pajenn DjVu er-maez ar bevennoù',
 	'djvu_no_xml' => 'Dibosupl da dapout an XML evit ar restr DjVu',
 	'deletedrevision' => 'Diverket stumm kozh $1.',
 	'days' => '{{PLURAL:$1|$1 deiz|$1 deiz}}',
-	'deletedwhileediting' => '\'\'\'Diwallit\'\'\' : Diverket eo bet ar bajenn-mañ bremañ ha krog e oac\'h da zegas kemmoù enni!',
+	'deletedwhileediting' => "'''Diwallit''' : Diverket eo bet ar bajenn-mañ bremañ ha krog e oac'h da zegas kemmoù enni!",
 	'descending_abbrev' => 'diskenn',
 	'duplicate-defaultsort' => 'Diwallit : Frikañ a ra an alc\'hwez dre ziouer "$2" an hini a oa a-raok "$1".',
 	'dberr-header' => 'Ur gudenn zo gant ar wiki-mañ',
-	'dberr-problems' => 'Ho tigarez ! Kudennoù teknikel zo gant al lec\'hienn-mañ.',
+	'dberr-problems' => "Ho tigarez ! Kudennoù teknikel zo gant al lec'hienn-mañ.",
 	'dberr-again' => 'Gortozit un nebeud munutennoù a-raok adkargañ.',
 	'dberr-info' => '(Dibosupl kevreañ ouzh servijer an diaz roadennoù: $1)',
-	'dberr-usegoogle' => 'E-keit-se esaeit klask dre c\'hGoogle.',
-	'dberr-outofdate' => 'Notit mat e c\'hall o menegerioù dezho bezañ dispredet e-keñver ar boued zo ganeomp.',
+	'dberr-usegoogle' => "E-keit-se esaeit klask dre c'hGoogle.",
+	'dberr-outofdate' => "Notit mat e c'hall o menegerioù dezho bezañ dispredet e-keñver ar boued zo ganeomp.",
 	'dberr-cachederror' => 'Un eilstumm memoret eus ar bajenn goulennet eo hemañ, gallout a ra bezañ dispredet.',
-];
+);
 
-$messages['brh'] = [
+$messages['brh'] = array(
 	'december' => 'Dasumbar',
 	'december-gen' => 'Dasumbar',
 	'dec' => 'Dasumbar',
@@ -2549,9 +2548,9 @@ Zút áteaŧ mesing átá lekav kin $2 e ur.',
 	'deletecomment' => 'Dalíl:',
 	'deleteotherreason' => 'Elo/pen dalíl:',
 	'deletereasonotherlist' => 'Elo dalíl',
-];
+);
 
-$messages['bs'] = [
+$messages['bs'] = array(
 	'december' => 'decembar',
 	'december-gen' => 'decembra',
 	'dec' => 'dec',
@@ -2584,9 +2583,9 @@ Baza podataka je vratila grešku "$3: $4".',
 	'download' => 'učitaj',
 	'disambiguations' => 'Stranice za čvor članke',
 	'disambiguationspage' => '{{ns:template}}:Čvor',
-	'disambiguations-text' => 'Slijedeće stranice su povezane sa \'\'\'čvor stranicom\'\'\'.
+	'disambiguations-text' => "Slijedeće stranice su povezane sa '''čvor stranicom'''.
 Po pravilu, one se trebaju povezati sa konkretnim člankom.<br />
-Stranica se smatra čvorom, ukoliko koristi šablon koji je povezan sa spiskom [[MediaWiki:Disambiguationspage|čvor stranica]]',
+Stranica se smatra čvorom, ukoliko koristi šablon koji je povezan sa spiskom [[MediaWiki:Disambiguationspage|čvor stranica]]",
 	'doubleredirects' => 'Dvostruka preusmjerenja',
 	'doubleredirectstext' => 'Ova stranica prikazuje stranice koje preusmjeravaju na druga preusmjerenja.
 Svaki red sadrži veze na prvo i drugo preusmjerenje, kao i na prvu liniju teksta drugog preusmjerenja, što obično daje "pravi" ciljni članak, na koji bi prvo preusmjerenje i trebalo da pokazuje.
@@ -2631,7 +2630,7 @@ Da li je želite obrisati kako bi ste mogli izvršiti premještanje?',
 	'djvu_no_xml' => 'Za XML-datoteku se ne može pozvati DjVu datoteka',
 	'deletedrevision' => 'Obrisana stara revizija $1',
 	'days' => '{{PLURAL:$1|$1 dan|$1 dana|$1 dana}}',
-	'deletedwhileediting' => '\'\'\'Upozorenje\'\'\': Ova stranica je obrisana prije nego što ste počeli uređivati!',
+	'deletedwhileediting' => "'''Upozorenje''': Ova stranica je obrisana prije nego što ste počeli uređivati!",
 	'descending_abbrev' => 'opad',
 	'duplicate-defaultsort' => 'Upozorenje: Postavljeni ključ sortiranja "$2" zamjenjuje raniji ključ "$1".',
 	'dberr-header' => 'Ovaj wiki ima problem',
@@ -2641,9 +2640,9 @@ Da li je želite obrisati kako bi ste mogli izvršiti premještanje?',
 	'dberr-usegoogle' => 'U međuvremenu, možete pokušati pretraživanje putem Google.',
 	'dberr-outofdate' => 'Zapamtite da njihovi indeksi našeg sadržaja ne moraju uvijek biti ažurni.',
 	'dberr-cachederror' => 'Slijedeći tekst je keširana kopija zahtjevane stranice i možda nije potpuno ažurirana.',
-];
+);
 
-$messages['bug'] = [
+$messages['bug'] = array(
 	'december' => 'Désémber',
 	'december-gen' => 'Désémber',
 	'delete' => 'Peddé',
@@ -2657,12 +2656,12 @@ $messages['bug'] = [
 	'delete_and_move_text' => '==Mapeddé riperelu==
 Leppa destinasi "[[:$1]]" purani eŋka.
 Eloko peddéï supaya weddiŋi mapalecé?',
-	'delete_and_move_confirm' => 'Iyé\', peddé iyaro leppa',
+	'delete_and_move_confirm' => "Iyé', peddé iyaro leppa",
 	'delete_and_move_reason' => 'Ripeddé supaya weddiŋi mapalecé',
 	'descending_abbrev' => 'no',
-];
+);
 
-$messages['ca'] = [
+$messages['ca'] = array(
 	'december' => 'desembre',
 	'december-gen' => 'de desembre',
 	'dec' => 'des',
@@ -2670,45 +2669,45 @@ $messages['ca'] = [
 	'deletethispage' => 'Elimina la pàgina',
 	'disclaimers' => 'Avís general',
 	'disclaimerpage' => 'Project:Avís general',
-	'databaseerror' => 'S\'ha produït un error en la base de dades',
-	'dberrortext' => 'S\'ha produït un error de sintaxi en una consulta a la base de dades.
+	'databaseerror' => "S'ha produït un error en la base de dades",
+	'dberrortext' => "S'ha produït un error de sintaxi en una consulta a la base de dades.
 Açò podria indicar un error en el programari.
-La darrera consulta que s\'ha intentat fer ha estat:
+La darrera consulta que s'ha intentat fer ha estat:
 <blockquote><tt>$1</tt></blockquote>
 des de la funció «<tt>$2</tt>».
-L\'error de retorn ha estat «<tt>$3: $4</tt>».',
-	'dberrortextcl' => 'S\'ha produït un error de sintaxi en una consulta a la base de dades.
-La darrera consulta que s\'ha intentat fer ha estat:
+L'error de retorn ha estat «<tt>$3: $4</tt>».",
+	'dberrortextcl' => "S'ha produït un error de sintaxi en una consulta a la base de dades.
+La darrera consulta que s'ha intentat fer ha estat:
 <blockquote><tt>$1</tt></blockquote>
 des de la funció «<tt>$2</tt>».
-L\'error de retorn ha estat «<tt>$3: $4</tt>».',
-	'directorycreateerror' => 'No s\'ha pogut crear el directori «$1».',
-	'deletedhist' => 'Historial d\'esborrat',
+L'error de retorn ha estat «<tt>$3: $4</tt>».",
+	'directorycreateerror' => "No s'ha pogut crear el directori «$1».",
+	'deletedhist' => "Historial d'esborrat",
 	'difference' => '(Diferència entre revisions)',
 	'difference-multipage' => '(Diferència entre pàgines)',
 	'diff-multi' => '({{PLURAL:$1|Hi ha una revisió intermèdia |Hi ha $1 revisions intermèdies}} sense mostrar fetes per {{PLURAL:$2|un usuari|$2 usuaris}})',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Hi ha una revisió intermèdia|Hi ha $1 revisions intermèdies}} sense mostrar fetes per més {{PLURAL:$2|d\'un usuari|de $2 usuaris}})',
+	'diff-multi-manyusers' => "({{PLURAL:$1|Hi ha una revisió intermèdia|Hi ha $1 revisions intermèdies}} sense mostrar fetes per més {{PLURAL:$2|d'un usuari|de $2 usuaris}})",
 	'datedefault' => 'Cap preferència',
 	'defaultns' => 'Cerca per defecte en els següents espais de noms:',
 	'default' => 'per defecte',
 	'diff' => 'dif',
 	'destfilename' => 'Nom del fitxer de destinació:',
-	'duplicatesoffile' => '{{PLURAL:$1|Aquest fitxer és un duplicat del que apareix a continuació|A continuació s\'indiquen els $1 duplicats d\'aquest fitxer}} ([[Special:FileDuplicateSearch/$2|vegeu-ne més detalls]]):',
+	'duplicatesoffile' => "{{PLURAL:$1|Aquest fitxer és un duplicat del que apareix a continuació|A continuació s'indiquen els $1 duplicats d'aquest fitxer}} ([[Special:FileDuplicateSearch/$2|vegeu-ne més detalls]]):",
 	'download' => 'baixada',
 	'disambiguations' => 'Pàgines que enllacen a pàgines de desambiguació',
 	'disambiguationspage' => 'Template:Desambiguació',
-	'disambiguations-text' => 'Les següents pàgines enllacen a una \'\'\'pàgina de desambiguació\'\'\'.
+	'disambiguations-text' => "Les següents pàgines enllacen a una '''pàgina de desambiguació'''.
 Per això, caldria que enllacessin al tema apropiat.<br />
-Una pàgina es tracta com de desambiguació si utilitza una plantilla que està enllaçada a [[MediaWiki:Disambiguationspage]]',
+Una pàgina es tracta com de desambiguació si utilitza una plantilla que està enllaçada a [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Redireccions dobles',
 	'doubleredirectstext' => 'Aquesta pàgina llista les pàgines que redirigeixen a altres pàgines de redirecció.
 Cada fila conté enllaços a la primera i segona redireccions, així com el destí de la segona redirecció, què generalment és la pàgina destí "real", a la què hauria d\'apuntar la primera redirecció.
 Les entrades <del>ratllades</del> s\'han resolt.',
-	'double-redirect-fixed-move' => 'S\'ha reanomenat [[$1]], ara és una redirecció a [[$2]]',
-	'double-redirect-fixed-maintenance' => 'S\'ha arreglat la redirecció doble [[$1]] - [[$2]].',
+	'double-redirect-fixed-move' => "S'ha reanomenat [[$1]], ara és una redirecció a [[$2]]",
+	'double-redirect-fixed-maintenance' => "S'ha arreglat la redirecció doble [[$1]] - [[$2]].",
 	'double-redirect-fixer' => 'Supressor de dobles redireccions',
 	'deadendpages' => 'Pàgines atzucac',
-	'deadendpagestext' => 'Aquestes pàgines no tenen enllaços a d\'altres pàgines del projecte {{SITENAME}}.',
+	'deadendpagestext' => "Aquestes pàgines no tenen enllaços a d'altres pàgines del projecte {{SITENAME}}.",
 	'deletedcontributions' => 'Contribucions esborrades',
 	'deletedcontributions-title' => 'Contribucions esborrades',
 	'defemailsubject' => 'Correu electrònic de l\'usuari "$1" de {{SITENAME}}',
@@ -2717,31 +2716,31 @@ Les entrades <del>ratllades</del> s\'han resolt.',
 	'delete-legend' => 'Elimina',
 	'deletedtext' => '«$1» ha estat esborrat.
 Vegeu $2 per a un registre dels esborrats més recents.',
-	'dellogpage' => 'Registre d\'eliminació',
+	'dellogpage' => "Registre d'eliminació",
 	'dellogpagetext' => 'Davall hi ha una llista dels esborraments més recents.',
-	'deletionlog' => 'Registre d\'esborrats',
+	'deletionlog' => "Registre d'esborrats",
 	'deletecomment' => 'Motiu:',
 	'deleteotherreason' => 'Motius diferents o addicionals:',
 	'deletereasonotherlist' => 'Altres motius',
-	'deletereason-dropdown' => '*Motius freqüents d\'esborrat
-** Demanada per l\'autor
+	'deletereason-dropdown' => "*Motius freqüents d'esborrat
+** Demanada per l'autor
 ** Violació del copyright
-** Vandalisme',
-	'delete-edit-reasonlist' => 'Edita els motius d\'eliminació',
-	'delete-toobig' => 'Aquesta pàgina té un historial d\'edicions molt gran, amb més de $1 {{PLURAL:$1|canvi|canvis}}. L\'eliminació d\'aquestes pàgines està restringida per a prevenir que hi pugui haver un desajustament seriós de la base de dades de tot el projecte {{SITENAME}} per accident.',
-	'delete-warning-toobig' => 'Aquesta pàgina té un historial d\'edicions molt gran, amb més de $1 {{PLURAL:$1|canvi|canvis}}. Eliminar-la podria suposar un seriós desajustament de la base de dades de tot el projecte {{SITENAME}}; aneu en compte abans dur a terme l\'acció.',
+** Vandalisme",
+	'delete-edit-reasonlist' => "Edita els motius d'eliminació",
+	'delete-toobig' => "Aquesta pàgina té un historial d'edicions molt gran, amb més de $1 {{PLURAL:$1|canvi|canvis}}. L'eliminació d'aquestes pàgines està restringida per a prevenir que hi pugui haver un desajustament seriós de la base de dades de tot el projecte {{SITENAME}} per accident.",
+	'delete-warning-toobig' => "Aquesta pàgina té un historial d'edicions molt gran, amb més de $1 {{PLURAL:$1|canvi|canvis}}. Eliminar-la podria suposar un seriós desajustament de la base de dades de tot el projecte {{SITENAME}}; aneu en compte abans dur a terme l'acció.",
 	'databasenotlocked' => 'La base de dades no està bloquejada.',
 	'delete_and_move' => 'Elimina i trasllada',
-	'delete_and_move_text' => '==Cal l\'eliminació==
+	'delete_and_move_text' => "==Cal l'eliminació==
 
-La pàgina de destinació, «[[:$1]]», ja existeix. Voleu eliminar-la per a fer lloc al trasllat?',
+La pàgina de destinació, «[[:$1]]», ja existeix. Voleu eliminar-la per a fer lloc al trasllat?",
 	'delete_and_move_confirm' => 'Sí, esborra la pàgina',
 	'delete_and_move_reason' => 'Suprimit per donar pas a pas de " [[$1]] "',
-	'djvu_page_error' => 'La pàgina DjVu està fora de l\'abast',
-	'djvu_no_xml' => 'No s\'ha pogut recollir l\'XML per al fitxer DjVu',
-	'deletedrevision' => 'S\'ha eliminat la revisió antiga $1.',
+	'djvu_page_error' => "La pàgina DjVu està fora de l'abast",
+	'djvu_no_xml' => "No s'ha pogut recollir l'XML per al fitxer DjVu",
+	'deletedrevision' => "S'ha eliminat la revisió antiga $1.",
 	'days' => '{{PLURAL:$1|$1 dia|$1 dies}}',
-	'deletedwhileediting' => '\'\'\'Avís\'\'\': S\'ha eliminat aquesta pàgina després que haguéssiu començat a modificar-la!',
+	'deletedwhileediting' => "'''Avís''': S'ha eliminat aquesta pàgina després que haguéssiu començat a modificar-la!",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => 'Atenció: La clau d\'ordenació per defecte "$2" invalida l\'anterior clau "$1".',
 	'dberr-header' => 'Aquest wiki té un problema',
@@ -2752,18 +2751,18 @@ La pàgina de destinació, «[[:$1]]», ja existeix. Voleu eliminar-la per a fer
 	'dberr-outofdate' => 'Tingueu en compte que la seva indexació del nostre contingut pot no estar actualitzada.',
 	'dberr-cachederror' => 'A continuació hi ha una còpia emmagatzemada de la pàgina demanada, que pot no estar actualitzada.',
 	'discuss' => 'Discussió',
-];
+);
 
-$messages['cbk-zam'] = [
+$messages['cbk-zam'] = array(
 	'december' => 'Diciembre',
 	'december-gen' => 'Diciembre',
 	'dec' => 'Dic',
 	'delete' => 'Bora',
 	'disclaimers' => 'Maga aviso legal',
 	'disclaimerpage' => 'Project:El maga limitacion general de maga responsabilidad',
-];
+);
 
-$messages['cdo'] = [
+$messages['cdo'] = array(
 	'december' => 'Sĕk-nê nguŏk',
 	'december-gen' => 'Sĕk-nê nguŏk',
 	'dec' => '12ng',
@@ -2793,9 +2792,9 @@ $messages['cdo'] = [
 	'deletedrevision' => 'Ī-gĭng chēng lâi gì bēng-buōng $1.',
 	'deletedwhileediting' => 'Gīng-gó̤: Cī miêng hiĕk găk nṳ̄ kī-chiū siŭ-gāi cĭ hâiu ké̤ṳk chēng lâi go̤ lāu!',
 	'descending_abbrev' => 'gáung',
-];
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'december' => 'огой бутт',
 	'december-gen' => 'огой бутт',
 	'dec' => 'огой бутт',
@@ -2829,9 +2828,9 @@ $messages['ce'] = [
 	'dberr-info' => '(аьтто ца хили зlе хlотта гlулкхдечуьнца бухара хаамашца: $1)',
 	'dberr-usegoogle' => 'Цlачун хьо хьажа лаха гlонца Google.',
 	'dberr-outofdate' => 'Хьуна хаалахь, цуьна йолу меттиг хила мега тишйелла черахь.',
-];
+);
 
-$messages['ceb'] = [
+$messages['ceb'] = array(
 	'december' => 'Disyembre',
 	'december-gen' => 'Disyembre',
 	'dec' => 'Dis',
@@ -2865,38 +2864,38 @@ Tan-awa ang $2 para sa rekord sa mga bag-ong napapas.',
 	'deletecomment' => 'Rason:',
 	'deleteotherreason' => 'Uban pa/dugang nga rason:',
 	'deletereasonotherlist' => 'Uban pang rason',
-];
+);
 
-$messages['ch'] = [
+$messages['ch'] = array(
 	'december' => 'Disiembre',
 	'december-gen' => 'Disiembre',
 	'dec' => 'Dis',
-	'delete' => 'Na\'suha',
-	'deletethispage' => 'Na\'suha i påhina',
+	'delete' => "Na'suha",
+	'deletethispage' => "Na'suha i påhina",
 	'disclaimers' => 'Diklarasion Inadahi',
 	'disclaimerpage' => 'Project:Diklarasion inadahi henerat',
 	'directorycreateerror' => 'Ti siña u fa\'tinas i direktorio "$1".',
-	'deletedhist' => 'Historia mana\'suha',
+	'deletedhist' => "Historia mana'suha",
 	'difference' => '(Diferensia siha gi tinilaika)',
-	'diff-multi' => '({{PLURAL:$1|Ti mana\'a\'annok unu na tinilaika gi talo\'|Ti manmana\'a\'annok $1 na tinilaika siha gi talo\'}}.)',
-	'datedefault' => 'Tåya\' prifirensia',
-	'defaultns' => 'Fanaligao hålom este na sågan nå\'an fine\'nena:',
+	'diff-multi' => "({{PLURAL:$1|Ti mana'a'annok unu na tinilaika gi talo'|Ti manmana'a'annok $1 na tinilaika siha gi talo'}}.)",
+	'datedefault' => "Tåya' prifirensia",
+	'defaultns' => "Fanaligao hålom este na sågan nå'an fine'nena:",
 	'default' => 'default',
 	'diff' => 'dif',
-	'disambiguations' => 'Ti mania\'abak na påhina siha',
+	'disambiguations' => "Ti mania'abak na påhina siha",
 	'disambiguationspage' => 'Template:disambig',
-	'doubleredirects' => 'Mandoble na inachetton ma\'dirihi siha',
+	'doubleredirects' => "Mandoble na inachetton ma'dirihi siha",
 	'deadendpages' => 'Påhina siha ni taiinachetton',
-	'deletepage' => 'Na\'suha i påhina',
+	'deletepage' => "Na'suha i påhina",
 	'deletedtext' => 'Mana\'suha "$1".
 Chek $2 para i historian muna\'suha gi halacha.',
-	'dellogpage' => 'Historian muna\'suha',
+	'dellogpage' => "Historian muna'suha",
 	'deletecomment' => 'Rason:',
 	'deleteotherreason' => 'Otru na rason:',
 	'deletereasonotherlist' => 'Otru rason',
-];
+);
 
-$messages['ckb'] = [
+$messages['ckb'] = array(
 	'december' => 'کانوونی یەکەم',
 	'december-gen' => 'کانوونی یەکەمی',
 	'dec' => 'كا١',
@@ -2928,9 +2927,9 @@ $messages['ckb'] = [
 	'download' => 'داگرتن',
 	'disambiguations' => 'پەڕەکانی جوداکردنەوە',
 	'disambiguationspage' => 'Template: خاوێن‌کردنەوەی ناوەڕۆک',
-	'disambiguations-text' => 'ئەم لاپەڕانە بەستەرن بۆ \'\'\'لاپەڕەی خاوێن‌کردنەوەی ناوەڕۆک\'\'\'.
+	'disambiguations-text' => "ئەم لاپەڕانە بەستەرن بۆ '''لاپەڕەی خاوێن‌کردنەوەی ناوەڕۆک'''.
 ئەوانە دەبێ لە جیاتی ئەوە بەستەر بن بۆ بابەتی گونجاو.<br />
-هەر لاپەڕەیەک کە لە داڕێژی بەستەر پێ‌دراو لە [[MediaWiki:Disambiguationspage]] کەڵک وەرگرێت وەک لاپەڕەی خاوێن‌کردنەوەی نوەڕۆک دەناسرێت.',
+هەر لاپەڕەیەک کە لە داڕێژی بەستەر پێ‌دراو لە [[MediaWiki:Disambiguationspage]] کەڵک وەرگرێت وەک لاپەڕەی خاوێن‌کردنەوەی نوەڕۆک دەناسرێت.",
 	'doubleredirects' => 'دووجار ڕەوانەکراوەکان',
 	'double-redirect-fixed-move' => '[[$1]] گوێسترایەوە.
 ئێستا ڕەوانکەرە بۆ [[$2]].',
@@ -2980,9 +2979,9 @@ $messages['ckb'] = [
 	'dberr-usegoogle' => 'دەتوانی هاوکات هەوڵی گەڕان بە گووگڵ بدەیت.',
 	'dberr-outofdate' => 'لەیادت بێ لەوانەیە پێرستەکەیان سەبارەت نە ناوەڕۆک ئەم ماڵپەڕە ماوە بەسەرچوو بێت.',
 	'dberr-cachederror' => 'ئەمە ڕوونووسێکی کاش‌کراوی لاپەڕەی داواکراوە و لەوانەیە بەڕۆژ نەبێت.',
-];
+);
 
-$messages['co'] = [
+$messages['co'] = array(
 	'december' => 'dicembre',
 	'december-gen' => 'dicembre',
 	'dec' => 'dic',
@@ -2994,9 +2993,9 @@ $messages['co'] = [
 	'delete-legend' => 'Supprimà',
 	'deletecomment' => 'Mutivu:',
 	'delete_and_move_confirm' => 'Iè, supprimà issa pagina',
-];
+);
 
-$messages['cps'] = [
+$messages['cps'] = array(
 	'december' => 'Disyembre',
 	'december-gen' => 'Disyembre',
 	'dec' => 'Dis',
@@ -3026,9 +3025,9 @@ Tan-awon ang $2 para sa nalista sang mga bag-o lang napanas.',
 	'deletecomment' => 'Rason:',
 	'deleteotherreason' => 'Iban pa/dugang nga rason:',
 	'deletereasonotherlist' => 'Iban nga rason',
-];
+);
 
-$messages['crh'] = [
+$messages['crh'] = array(
 	'december' => 'Disyembre',
 	'december-gen' => 'Disyembre',
 	'dec' => 'Dis',
@@ -3058,9 +3057,9 @@ Tan-awon ang $2 para sa nalista sang mga bag-o lang napanas.',
 	'deletecomment' => 'Rason:',
 	'deleteotherreason' => 'Iban pa/dugang nga rason:',
 	'deletereasonotherlist' => 'Iban nga rason',
-];
+);
 
-$messages['crh-cyrl'] = [
+$messages['crh-cyrl'] = array(
 	'december' => 'декабрь',
 	'december-gen' => 'декабрьнинъ',
 	'dec' => 'дек',
@@ -3092,9 +3091,9 @@ $messages['crh-cyrl'] = [
 	'download' => 'юкле',
 	'disambiguations' => 'Чокъ маналы терминлер саифелери',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'Ашагъыдыки саифелер \'\'\'чокъ маналы саифелер\'\'\'ге багъланты ола.
+	'disambiguations-text' => "Ашагъыдыки саифелер '''чокъ маналы саифелер'''ге багъланты ола.
 Бельки де олар бир конкрет саифеге багъланты олмалы.<br />
-Эгер саифеде, [[MediaWiki:Disambiguationspage]] саифесинде ады кечкен шаблон ерлештирильген олса, о саифе чокъ маналыдыр.',
+Эгер саифеде, [[MediaWiki:Disambiguationspage]] саифесинде ады кечкен шаблон ерлештирильген олса, о саифе чокъ маналыдыр.",
 	'doubleredirects' => 'Ёлламагъа олгъан ёлламалар',
 	'doubleredirectstext' => 'Бу саифеде дигер ёллама саифелерине ёлланма олгъан саифелери косьтериле.
 Эр сатырда биринджи ве экинджи ёлламагъа багълантылар да, экинджи ёлламанынъ макъсат саифеси (адетиндже о биринджи ёлламанынъ керекли макъсады ола) да бар.
@@ -3121,11 +3120,11 @@ $messages['crh-cyrl'] = [
 	'delete_and_move_confirm' => 'Эбет, бу саифени ёкъ эт',
 	'delete_and_move_reason' => 'Исим денъиштирип олмакъ ичюн ёкъ этильди',
 	'deletedrevision' => '$1 сайылы эски версия ёкъ этильди.',
-	'deletedwhileediting' => '\'\'\'Тенби\'\'\': Бу саифе сиз денъишиклик япмагъа башлагъандан сонъ ёкъ этильди!',
+	'deletedwhileediting' => "'''Тенби''': Бу саифе сиз денъишиклик япмагъа башлагъандан сонъ ёкъ этильди!",
 	'descending_abbrev' => 'буюктен кичикке',
-];
+);
 
-$messages['crh-latn'] = [
+$messages['crh-latn'] = array(
 	'december' => 'dekabr',
 	'december-gen' => 'dekabrniñ',
 	'dec' => 'dek',
@@ -3157,9 +3156,9 @@ Malümat bazasınıñ bildirgen hatası "$3: $4".',
 	'download' => 'yükle',
 	'disambiguations' => 'Çoq manalı terminler saifeleri',
 	'disambiguationspage' => '{{ns:template}}:disambig',
-	'disambiguations-text' => 'Aşağıdıki saifeler \'\'\'çoq manalı saifeler\'\'\'ge bağlantı ola.
+	'disambiguations-text' => "Aşağıdıki saifeler '''çoq manalı saifeler'''ge bağlantı ola.
 Belki de olar bir konkret saifege bağlantı olmalı.<br />
-Eger saifede, [[MediaWiki:Disambiguationspage]] saifesinde adı keçken şablon yerleştirilgen olsa, o saife çoq manalıdır.',
+Eger saifede, [[MediaWiki:Disambiguationspage]] saifesinde adı keçken şablon yerleştirilgen olsa, o saife çoq manalıdır.",
 	'doubleredirects' => 'Yollamağa olğan yollamalar',
 	'doubleredirectstext' => 'Bu saifede diger yollama saifelerine yollanma olğan saifeleri kösterile.
 Er satırda birinci ve ekinci yollamağa bağlantılar da, ekinci yollamanıñ maqsat saifesi (adetince o birinci yollamanıñ kerekli maqsadı ola) da bar.
@@ -3186,11 +3185,11 @@ yaqın zamanda yoq etilgenlerni körmek içün: $2.',
 	'delete_and_move_confirm' => 'Ebet, bu saifeni yoq et',
 	'delete_and_move_reason' => 'İsim deñiştirip olmaq içün yoq etildi',
 	'deletedrevision' => '$1 sayılı eski versiya yoq etildi.',
-	'deletedwhileediting' => '\'\'\'Tenbi\'\'\': Bu saife siz deñişiklik yapmağa başlağandan soñ yoq etildi!',
+	'deletedwhileediting' => "'''Tenbi''': Bu saife siz deñişiklik yapmağa başlağandan soñ yoq etildi!",
 	'descending_abbrev' => 'büyükten kiçikke',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'december' => 'prosinec',
 	'december-gen' => 'prosince',
 	'dec' => '12.',
@@ -3269,7 +3268,7 @@ Cílová stránka „[[:$1]]“ již existuje. Přejete si ji smazat pro uvolně
 	'djvu_no_xml' => 'Vytvoření XML pro soubor DjVu se nezdařilo.',
 	'deletedrevision' => 'Smazána stará revize $1',
 	'days' => '{{PLURAL:$1|$1 den|$1 dny|$1 dní}}',
-	'deletedwhileediting' => '\'\'\'Upozornění\'\'\': V průběhu vaší editace byla tato stránka smazána!',
+	'deletedwhileediting' => "'''Upozornění''': V průběhu vaší editace byla tato stránka smazána!",
 	'descending_abbrev' => 'sest.',
 	'duplicate-defaultsort' => 'Upozornění: Implicitní klíč řazení (DEFAULTSORTKEY) „$2“ přepisuje dříve nastavenou hodnotu „$1“.',
 	'dberr-header' => 'Tato wiki má nějaké potíže',
@@ -3288,9 +3287,9 @@ Cílová stránka „[[:$1]]“ již existuje. Přejete si ji smazat pro uvolně
 	'duration-decades' => '$1 {{PLURAL:$1|dekáda|dekády|dekád}}',
 	'duration-centuries' => '$1 {{PLURAL:$1|století}}',
 	'duration-millennia' => '$1 {{PLURAL:$1|tisíciletí}}',
-];
+);
 
-$messages['csb'] = [
+$messages['csb'] = array(
 	'december' => 'gòdnik',
 	'december-gen' => 'gòdnika',
 	'dec' => 'gòd',
@@ -3319,9 +3318,9 @@ $messages['csb'] = [
 	'deletereasonotherlist' => 'Jinszô przëczëna',
 	'delete_and_move' => 'Rëmôj ë przeniesë',
 	'delete_and_move_confirm' => 'Jo, rëmôj ną starnã',
-];
+);
 
-$messages['cu'] = [
+$messages['cu'] = array(
 	'december' => 'дєкємврїи',
 	'december-gen' => 'дєкємврїꙗ',
 	'dec' => 'дє҃к',
@@ -3341,9 +3340,9 @@ $messages['cu'] = [
 	'dellogpage' => 'поничьжєниꙗ їсторїꙗ',
 	'deletionlog' => 'поничьжєниꙗ їсторїꙗ',
 	'deletecomment' => 'какъ съмꙑслъ :',
-];
+);
 
-$messages['cv'] = [
+$messages['cv'] = array(
 	'december' => 'раштав',
 	'december-gen' => 'раштав уйăхĕн',
 	'dec' => 'раш',
@@ -3369,9 +3368,9 @@ MySQL çак йăнăша тавăрнă «$3: $4».',
 	'diff' => 'танл.',
 	'disambiguations' => 'Нумай пĕлтерĕшлĕ статьясене кăтартакан страницăсем',
 	'disambiguationspage' => 'Template:Disambig',
-	'disambiguations-text' => 'Çак статьясем \'\'\'нумай пĕлтерĕшле страницăсем\'\'\'çине куçараççĕ.
+	'disambiguations-text' => "Çак статьясем '''нумай пĕлтерĕшле страницăсем'''çине куçараççĕ.
 Унта куçарас вырăнне вĕсем кирлĕ страницăсем çине куçармалла пулĕ.<br />
-Енчен те страница çинче [[MediaWiki:Disambiguationspage]] страницăра кăтартнă шаблон ятне вырнаçтарнă пулсан вăл нумай пĕлтерĕшлĕ страница шутланать.',
+Енчен те страница çинче [[MediaWiki:Disambiguationspage]] страницăра кăтартнă шаблон ятне вырнаçтарнă пулсан вăл нумай пĕлтерĕшлĕ страница шутланать.",
 	'doubleredirects' => 'Икĕ хут куçаракансем',
 	'deadendpages' => 'Ниăçта та урăх ертмен страницăсем',
 	'deletepage' => 'Кăларса парахнă статьясем',
@@ -3388,9 +3387,9 @@ MySQL çак йăнăша тавăрнă «$3: $4».',
 	'delete_and_move_reason' => 'Урăх ят памашкăн кăларса парахнă',
 	'deletedrevision' => '$1 кивĕ версине кăларса парахнă.',
 	'deletedwhileediting' => 'Асăрхăр: эсир тӳрлетнĕ вăхăтра ку страницăна кăларса парахнă!',
-];
+);
 
-$messages['cy'] = [
+$messages['cy'] = array(
 	'december' => 'Rhagfyr',
 	'december-gen' => 'Rhagfyr',
 	'dec' => 'Rhag',
@@ -3417,24 +3416,24 @@ Rhoddwyd y côd gwall "$3: $4<".',
 	'diff-multi' => '(Ni ddangosir {{PLURAL:$1|yr $1 diwygiad|yr $1 diwygiad|y $1 ddiwygiad|y $1 diwygiad|y $1 diwygiad|y $1 diwygiad}} rhyngol gan {{PLURAL:$2||un defnyddiwr|$2 ddefnyddiwr|$2 defnyddiwr|$2 o ddefnyddwyr|$2 o ddefnyddwyr}}.)',
 	'diff-multi-manyusers' => '(Ni ddangosir {{PLURAL:$1|yr $1 diwygiad|yr $1 diwygiad|y $1 ddiwygiad|y $1 diwygiad|y $1 diwygiad|y $1 diwygiad}} rhyngol gan mwy na $2 {{PLURAL:$2|o ddefnyddwyr}}.)',
 	'datedefault' => 'Dim dewisiad',
-	'defaultns' => 'Neu chwilio\'r parthau isod:',
+	'defaultns' => "Neu chwilio'r parthau isod:",
 	'default' => 'rhagosodyn',
 	'diff' => 'gwahan',
 	'destfilename' => 'Enw ffeil y cyrchfan:',
-	'duplicatesoffile' => 'Mae\'r {{PLURAL:$1||ffeil|$1 ffeil|$1 ffeil|$1 ffeil|$1 ffeil}} canlynol yn union debyg i\'r ffeil hon ([[Special:FileDuplicateSearch/$2|rhagor o fanylion]]):',
+	'duplicatesoffile' => "Mae'r {{PLURAL:$1||ffeil|$1 ffeil|$1 ffeil|$1 ffeil|$1 ffeil}} canlynol yn union debyg i'r ffeil hon ([[Special:FileDuplicateSearch/$2|rhagor o fanylion]]):",
 	'download' => 'islwytho',
-	'disambiguations' => 'Tudalennau sy\'n cysylltu â thudalennau gwahaniaethu',
+	'disambiguations' => "Tudalennau sy'n cysylltu â thudalennau gwahaniaethu",
 	'disambiguationspage' => 'Template:Gwahaniaethu',
-	'disambiguations-text' => 'Mae\'r tudalennau canlynol yn cynnwys un neu ragor o gysylltau wici, sydd yn cysylltu â \'\'\'thudalennau gwahaniaethu\'\'\'. Yn hytrach dylent arwain yn syth at yr erthygl briodol.<br />
-Diffinir tudalen yn dudalen gwahaniaethu pan mae\'n cynnwys un o\'r nodiadau \'[[MediaWiki:Disambiguationspage|tudalen gwahaniaethu]]\'.',
+	'disambiguations-text' => "Mae'r tudalennau canlynol yn cynnwys un neu ragor o gysylltau wici, sydd yn cysylltu â '''thudalennau gwahaniaethu'''. Yn hytrach dylent arwain yn syth at yr erthygl briodol.<br />
+Diffinir tudalen yn dudalen gwahaniaethu pan mae'n cynnwys un o'r nodiadau '[[MediaWiki:Disambiguationspage|tudalen gwahaniaethu]]'.",
 	'doubleredirects' => 'Ailgyfeiriadau dwbl',
-	'doubleredirectstext' => 'Mae pob rhes yn cynnwys cysylltiad i\'r ddau ail-gyfeiriad cyntaf, ynghyd â chyrchfan yr ail ailgyfeiriad. Fel arfer bydd hyn yn rhoi\'r gwir dudalen y dylai\'r tudalennau cynt gyfeirio ati.
-Gosodwyd <del>llinell</del> drwy\'r eitemau sydd eisoes wedi eu datrys.',
-	'double-redirect-fixed-move' => 'Symudwyd [[$1]], a\'i droi\'n ailgyfeiriad at [[$2]]',
+	'doubleredirectstext' => "Mae pob rhes yn cynnwys cysylltiad i'r ddau ail-gyfeiriad cyntaf, ynghyd â chyrchfan yr ail ailgyfeiriad. Fel arfer bydd hyn yn rhoi'r gwir dudalen y dylai'r tudalennau cynt gyfeirio ati.
+Gosodwyd <del>llinell</del> drwy'r eitemau sydd eisoes wedi eu datrys.",
+	'double-redirect-fixed-move' => "Symudwyd [[$1]], a'i droi'n ailgyfeiriad at [[$2]]",
 	'double-redirect-fixed-maintenance' => 'Yn ailosod yr ailgyfeiriad dwbl o [[$1]] i [[$2]].',
 	'double-redirect-fixer' => 'Y bot ailgyfeirio',
 	'deadendpages' => 'Tudalennau heb gysylltiadau ynddynt',
-	'deadendpagestext' => 'Nid oes cysylltiad yn arwain at dudalen arall oddi wrth yr un o\'r tudalennau isod.',
+	'deadendpagestext' => "Nid oes cysylltiad yn arwain at dudalen arall oddi wrth yr un o'r tudalennau isod.",
 	'deletedcontributions' => 'Cyfraniadau defnyddiwr i dudalennau dilëedig',
 	'deletedcontributions-title' => 'Cyfraniadau defnyddiwr i dudalennau dilëedig',
 	'defemailsubject' => '{{SITENAME}} yn anfon e-bost oddi wrth y defnyddiwr "$1"',
@@ -3444,44 +3443,44 @@ Gosodwyd <del>llinell</del> drwy\'r eitemau sydd eisoes wedi eu datrys.',
 	'deletedtext' => 'Mae "$1" wedi\'i ddileu.
 Gwelwch y $2 am gofnod o\'r dileuon diweddar.',
 	'dellogpage' => 'Lòg dileuon',
-	'dellogpagetext' => 'Ceir rhestr isod o\'r dileadau diweddaraf.',
+	'dellogpagetext' => "Ceir rhestr isod o'r dileadau diweddaraf.",
 	'deletionlog' => 'lòg dileuon',
 	'deletecomment' => 'Rheswm:',
 	'deleteotherreason' => 'Rheswm arall:',
 	'deletereasonotherlist' => 'Rheswm arall',
-	'deletereason-dropdown' => '*Rhesymau arferol dros ddileu
+	'deletereason-dropdown' => "*Rhesymau arferol dros ddileu
 ** Ar gais yr awdur
-** Torri\'r hawlfraint
-** Fandaliaeth',
+** Torri'r hawlfraint
+** Fandaliaeth",
 	'delete-edit-reasonlist' => 'Golygu rhestr y rhesymau dros ddileu',
-	'delete-toobig' => 'Cafwyd dros $1 {{PLURAL:$1|o olygiadau}} i\'r dudalen hon.
-Cyfyngwyd ar y gallu i ddileu tudalennau sydd wedi eu golygu cymaint â hyn, er mwyn osgoi amharu ar weithrediad databas {{SITENAME}} yn ddamweiniol.',
-	'delete-warning-toobig' => 'Cafwyd dros $1 {{PLURAL:$1|o olygiadau}} i\'r dudalen hon.
-Gallai dileu tudalen, gyda hanes golygu cymaint â hyn iddi, beri dryswch i weithrediadau\'r databas ar {{SITENAME}}; ewch ati\'n ofalus.',
-	'databasenotlocked' => 'Nid yw\'r gronfa ddata ar glo.',
+	'delete-toobig' => "Cafwyd dros $1 {{PLURAL:$1|o olygiadau}} i'r dudalen hon.
+Cyfyngwyd ar y gallu i ddileu tudalennau sydd wedi eu golygu cymaint â hyn, er mwyn osgoi amharu ar weithrediad databas {{SITENAME}} yn ddamweiniol.",
+	'delete-warning-toobig' => "Cafwyd dros $1 {{PLURAL:$1|o olygiadau}} i'r dudalen hon.
+Gallai dileu tudalen, gyda hanes golygu cymaint â hyn iddi, beri dryswch i weithrediadau'r databas ar {{SITENAME}}; ewch ati'n ofalus.",
+	'databasenotlocked' => "Nid yw'r gronfa ddata ar glo.",
 	'delete_and_move' => 'Dileu a symud',
-	'delete_and_move_text' => '==Angen dileu==
+	'delete_and_move_text' => "==Angen dileu==
 
-Mae\'r erthygl "[[:$1]]" yn bodoli\'n barod. Ydych chi am ddileu\'r erthygl er mwyn cwblhau\'r symudiad?',
-	'delete_and_move_confirm' => 'Ie, dileu\'r dudalen',
+Mae'r erthygl \"[[:\$1]]\" yn bodoli'n barod. Ydych chi am ddileu'r erthygl er mwyn cwblhau'r symudiad?",
+	'delete_and_move_confirm' => "Ie, dileu'r dudalen",
 	'delete_and_move_reason' => 'Wedi\'i dileu er mwyn gallu symud y dudalen "[[$1]]" i gymryd ei lle',
 	'djvu_page_error' => 'Y dudalen DjVu allan o amrediad',
 	'djvu_no_xml' => 'Ddim yn gallu mofyn XML ar gyfer ffeil DjVu',
 	'deletedrevision' => 'Wedi dileu hen ddiwygiad $1.',
 	'days' => '{{PLURAL:$1||$1 diwrnod|$1 ddiwrnod|$1 diwrnod|$1 diwrnod|$1 diwrnod}}',
-	'deletedwhileediting' => '\'\'\'Rhybudd\'\'\': Dilëwyd y dudalen wedi i chi ddechrau ei golygu!',
+	'deletedwhileediting' => "'''Rhybudd''': Dilëwyd y dudalen wedi i chi ddechrau ei golygu!",
 	'descending_abbrev' => 'am lawr',
 	'duplicate-defaultsort' => 'Rhybudd: Mae\'r allwedd trefnu diofyn "$2" yn gwrthwneud yr allwedd trefnu diofyn blaenorol "$1".',
 	'dberr-header' => 'Mae problem gan y wici hwn',
-	'dberr-problems' => 'Mae\'n ddrwg gennym! Mae\'r wefan hon yn dioddef anawsterau technegol.',
+	'dberr-problems' => "Mae'n ddrwg gennym! Mae'r wefan hon yn dioddef anawsterau technegol.",
 	'dberr-again' => 'Oedwch am ychydig funudau cyn ceisio ail-lwytho.',
 	'dberr-info' => '(Ni ellir cysylltu â gweinydd y bas data: $1)',
 	'dberr-usegoogle' => 'Yn y cyfamser gallwch geisio chwilio gyda Google.',
-	'dberr-outofdate' => 'Sylwch y gall eu mynegeion o\'n cynnwys fod ar ei hôl hi.',
-	'dberr-cachederror' => 'Dyma gopi o\'r dudalen a ofynnwyd amdani, a dynnwyd o\'r celc. Mae\'n bosib nad y fersiwn diweddaraf yw\'r copi hwn.',
-];
+	'dberr-outofdate' => "Sylwch y gall eu mynegeion o'n cynnwys fod ar ei hôl hi.",
+	'dberr-cachederror' => "Dyma gopi o'r dudalen a ofynnwyd amdani, a dynnwyd o'r celc. Mae'n bosib nad y fersiwn diweddaraf yw'r copi hwn.",
+);
 
-$messages['da'] = [
+$messages['da'] = array(
 	'december' => 'december',
 	'december-gen' => 'decembers',
 	'dec' => 'dec',
@@ -3570,9 +3569,9 @@ hvorfor siden blev slettet. Hvis du gemmer siden bliver den oprettet igen.',
 	'dberr-usegoogle' => 'Du kan prøve at søge med Google imens.',
 	'dberr-outofdate' => 'Bemærk at deres indeks over vores sider kan være forældet.',
 	'dberr-cachederror' => 'Det følgende er en mellemlagret kopi af den forespurgte side. Den kan være forældet.',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezembers',
 	'dec' => 'Dez.',
@@ -3676,18 +3675,22 @@ Im [{{fullurl:{{#special:Log}}|type=delete&page={{FULLPAGENAMEE}}}} Lösch-Logbu
 	'defaultskin3' => 'Die Admins dieses Wikis haben keinen Standard-Skin gewählt. Benutzt wird der Standard-Skin von Wikia: <b>$1</b>.',
 	'defaultskin_choose' => 'Setze das Standard-Farbschema für dieses Wiki:',
 	'deletedarticle' => '"[[$1]]" gelöscht',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+);
 
-$messages['de-at'] = [
+$messages['de-at'] = array(
 	'december' => 'Dezember',
-];
+);
 
-$messages['de-ch'] = [
+$messages['de-ch'] = array(
 	'defaultns' => 'In diesen Namensräumen soll standardmässig gesucht werden:',
 	'djvu_page_error' => 'DjVu-Seite ausserhalb des Seitenbereichs',
-];
+);
 
-$messages['de-formal'] = [
+$messages['de-formal'] = array(
 	'deletedtext' => '„<nowiki>$1</nowiki>“ wurde gelöscht. Im $2 finden Sie eine Liste der letzten Löschungen.',
 	'delete_and_move_text' => '== Löschung erforderlich ==
 
@@ -3698,9 +3701,9 @@ Wenn Sie die Seite speichern, wird sie neu angelegt.',
 	'dberr-again' => 'Warten Sie einige Minuten und versuchen Sie dann neu zuladen.',
 	'dberr-usegoogle' => 'Sie könnten in der Zwischenzeit mit Google suchen.',
 	'dberr-outofdate' => 'Beachten Sie, dass der Suchindex unserer Inhalte bei Google veraltet sein kann.',
-];
+);
 
-$messages['de-weigsbrag'] = [
+$messages['de-weigsbrag'] = array(
 	'december' => 'Desemb',
 	'december-gen' => 'Desembs',
 	'dec' => 'Des.',
@@ -3774,9 +3777,9 @@ Dose Seid „[[$1]]“ schon geb. Wol dose lösch, das gön dose Seid werschieb?
 Schauddar in dose [{{fullurl:Special:Log|type=delete&page=}}{{FULLPAGENAMEE}} Lösch-Logbug],
 wies haddar lösch dose Seid. Wan dose Seid schbeig, dose neues anleg.</span>',
 	'descending_abbrev' => 'ab',
-];
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'december' => 'Kanun',
 	'december-gen' => 'Kanuni',
 	'dec' => 'Kan',
@@ -3851,7 +3854,7 @@ bı diqqet dewam kerê.',
 	'djvu_page_error' => 'pelê DjVuyi bêşumulo',
 	'djvu_no_xml' => 'Qe DjVu nieşkenî XML fetch bikî',
 	'deletedrevision' => 'Veriyono kihan $1 wederna',
-	'deletedwhileediting' => '\'\'\'Teme\'\'\': Ena pele  verniyê ti de eseteriyaya!',
+	'deletedwhileediting' => "'''Teme''': Ena pele  verniyê ti de eseteriyaya!",
 	'descending_abbrev' => 'nızm',
 	'duplicate-defaultsort' => '\'\'\'Teme:\'\'\' Tuşê default sort "$2" sero tuşê default sort "$1"î ra şino.',
 	'dberr-header' => 'Ena Wiki de yew ğelet esta',
@@ -3861,9 +3864,9 @@ bı diqqet dewam kerê.',
 	'dberr-usegoogle' => 'Ti eşkeno hem zi ser Google de bigêre.',
 	'dberr-outofdate' => 'Note bike ke belki îdeksê tedesteyî rocaniye niyo.',
 	'dberr-cachederror' => 'Pel ke ti wazeno yew kopyayê cacheyî ay esto, ay belki rocaniyeyo.',
-];
+);
 
-$messages['dsb'] = [
+$messages['dsb'] = array(
 	'december' => 'december',
 	'december-gen' => 'decembra',
 	'dec' => 'dec',
@@ -3945,7 +3948,7 @@ Bok „[[:$1]]“ južo eksistěrujo. Coš jen wulašowaś, aby mógał toś ten
 	'djvu_no_xml' => 'Njejo móžno, XML za DjVu-dataju wótwołaś.',
 	'deletedrevision' => 'wulašowana stara wersija: $1',
 	'days' => '{{PLURAL:$1|$1 dnjom|$1 dnjoma|$1 dnjami|$1 dnjami}}',
-	'deletedwhileediting' => '\'\'\'Warnowanje\'\'\': Toś ten bok se wulašujo, gaž zachopijoš jen wobźěłaś!',
+	'deletedwhileediting' => "'''Warnowanje''': Toś ten bok se wulašujo, gaž zachopijoš jen wobźěłaś!",
 	'descending_abbrev' => 'dołoj',
 	'duplicate-defaultsort' => 'Glědaj: Standardny sortěrowański kluc (DEFAULT SORT KEY) "$2" pśepišo pjerwjej wužyty kluc "$1".',
 	'dberr-header' => 'Toś ten wiki ma problem',
@@ -3964,9 +3967,9 @@ Bok „[[:$1]]“ južo eksistěrujo. Coš jen wulašowaś, aby mógał toś ten
 	'duration-decades' => '$1 {{PLURAL:$1|lětźasetk|lětźasetka|lětźasetki|lětźastkow}}',
 	'duration-centuries' => '$1 {{PLURAL:$1|stolěśe|stolěśi|stolěśa|stolěśow}}',
 	'duration-millennia' => '$1 {{PLURAL:$1|lěttysac|lěttysaca|lěttysace|lěttysacow}}',
-];
+);
 
-$messages['dtp'] = [
+$messages['dtp'] = array(
 	'december' => 'Tumomuhau',
 	'december-gen' => 'Momuhau',
 	'dec' => 'Hau',
@@ -4001,9 +4004,9 @@ Intaai $2 montok ruputan di wagu pinugas.',
 	'deleteotherreason' => 'Sabab suai/poinsungku:',
 	'deletereasonotherlist' => 'Sabab suai',
 	'duplicate-defaultsort' => '\'\'\'Panansarahan:\'\'\' Popoguli nuludan kunsi "$2" mongolon nuludan kunsi nokopogulu "$1".',
-];
+);
 
-$messages['dv'] = [
+$messages['dv'] = array(
 	'december' => 'ޑިސެމްބަރު',
 	'dec' => 'ޑިސެމްބަރ',
 	'delete' => 'ފޮހެލައްވާ',
@@ -4017,9 +4020,9 @@ $messages['dv'] = [
 	'delete_and_move' => 'ފޮހެލައްވާފައި އެހެންނަމަކަށްބަދަލުކުރައްވާ',
 	'delete_and_move_confirm' => 'އާދެ، މި ޞަފްޙާ ފޮހެލައްވާ',
 	'delete_and_move_reason' => 'އެހެންނަމަކަށް ބަދަލުކުރުމަށްޓަކައި ފޮހެލެވިއްޖެ',
-];
+);
 
-$messages['dz'] = [
+$messages['dz'] = array(
 	'december' => 'སྤྱི་ཟླ་བཅུ་གཉིས་པ།',
 	'december-gen' => 'སྤྱི་ཟླ་ ༡༢ པའི་',
 	'dec' => 'ཟླ་༡༢ པ།',
@@ -4039,9 +4042,9 @@ $messages['dz'] = [
 	'deletecomment' => 'རྒྱུ་མཚན:',
 	'deleteotherreason' => 'གཞན་/ཁ་སྐོང་ཅན་གྱི་རྒྱུ་མཚན།',
 	'deletereasonotherlist' => 'རྒྱུ་མཚན་གཞན།',
-];
+);
 
-$messages['ee'] = [
+$messages['ee'] = array(
 	'december' => 'Dzome',
 	'december-gen' => 'Dzome',
 	'dec' => 'Dzom',
@@ -4054,9 +4057,9 @@ $messages['ee'] = [
 	'delete-confirm' => 'Tutu "$1"',
 	'delete-legend' => 'Tutui',
 	'dellogpagetext' => 'Afisia wofia axa mamleawo siwo wotutu la',
-];
+);
 
-$messages['el'] = [
+$messages['el'] = array(
 	'december' => 'Δεκέμβριος',
 	'december-gen' => 'Δεκεμβρίου',
 	'dec' => 'Δεκ',
@@ -4091,9 +4094,9 @@ $messages['el'] = [
 	'download' => 'λήψη',
 	'disambiguations' => 'Σελίδες με συνδέσμους σε σελίδες αποσαφήνισης',
 	'disambiguationspage' => 'Project:Σύνδεσμοι_προς_τις_σελίδες_αποσαφήνισης',
-	'disambiguations-text' => 'Οι ακόλουθες σελίδες συνδέουν σε μια \'\'\'σελίδα αποσαφήνισης\'\'\'.
+	'disambiguations-text' => "Οι ακόλουθες σελίδες συνδέουν σε μια '''σελίδα αποσαφήνισης'''.
 Αντιθέτως πρέπει να συνδέουν στο κατάλληλο θέμα.<br />
-Μια σελίδα μεταχειρίζεται ως σελίδα αποσαφήνισης αν χρησιμοποιεί ένα πρότυπο το οποίο συνδέεται από το [[MediaWiki:Disambiguationspage]]',
+Μια σελίδα μεταχειρίζεται ως σελίδα αποσαφήνισης αν χρησιμοποιεί ένα πρότυπο το οποίο συνδέεται από το [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Διπλές ανακατευθύνσεις',
 	'doubleredirectstext' => 'Αυτή η σελίδα συγκαταλέγει σελίδες οι οποίες ανακατευθύνουν σε άλλες σελίδες ανακατεύθυνσης. Κάθε σειρά περιέχει συνδέσμους προς την πρώτη και τη δεύτερη σελίδα ανακατεύθυνσης, όπως επίσης και την πρώτη αράδα του κειμένου στη δεύτερη σελίδα ανακατεύθυνσης η οποία και είναι, κανονικά, ο πραγματικός προορισμός της ανακατεύθυνσης -εκεί δηλαδή όπου θα έπρεπε να είχατε οδηγηθεί από την αρχή. Τα <del>διεγραμμένα</del> λήμματα έχουν επιλυθεί.',
 	'double-redirect-fixed-move' => 'Η [[$1]] έχει μετακινηθεί, τώρα είναι ανακατεύθυνση στην [[$2]]',
@@ -4135,7 +4138,7 @@ $messages['el'] = [
 	'djvu_no_xml' => 'Αδυναμία προσκόμισης XML για το αρχείο DjVu',
 	'deletedrevision' => 'Η παλιά έκδοση της $1 διαγράφτηκε',
 	'days' => '{{PLURAL:$1|$1 μέρα|$1 μέρες}}',
-	'deletedwhileediting' => '\'\'\'Προσοχή\'\'\': Αυτή η σελίδα έχει διαγραφεί αφότου ξεκινήσατε την επεξεργασία!',
+	'deletedwhileediting' => "'''Προσοχή''': Αυτή η σελίδα έχει διαγραφεί αφότου ξεκινήσατε την επεξεργασία!",
 	'descending_abbrev' => 'φθιν',
 	'duplicate-defaultsort' => 'Προσοχή: Το προκαθορισμένο κλειδί ταξινόμησης "$2" υπερκαλύπτει το προηγούμενο "$1".',
 	'dberr-header' => 'Αυτό το βίκι έχει ένα πρόβλημα',
@@ -4146,9 +4149,9 @@ $messages['el'] = [
 	'dberr-outofdate' => 'Σημειώστε ότι οι ενδείξεις τους περί του περιεχομένου μας ενδέχεται να μην είναι ενημερωμένες.',
 	'dberr-cachederror' => 'Το ακόλουθο είναι ένα αντίγραφο από την μνήμη της σελίδας που ζητήσατε και ενδέχεται να μην είναι ενημερωμένο.',
 	'discuss' => 'Συζήτηση',
-];
+);
 
-$messages['eml'] = [
+$messages['eml'] = array(
 	'december' => 'Dzèmber',
 	'delete' => 'Dscanzèla',
 	'diff' => 'diferèinzi',
@@ -4156,9 +4159,9 @@ $messages['eml'] = [
 Guèrda $2 par vèdder la lésta d\'al pàgin ch\'i sun stèdi scanzlèdi di recèint.',
 	'dellogpage' => 'Regestér dal scanzladûri',
 	'deletionlog' => 'regéster dal scanzladûri',
-];
+);
 
-$messages['eo'] = [
+$messages['eo'] = array(
 	'december' => 'Decembro',
 	'december-gen' => 'Decembro',
 	'dec' => 'Dec',
@@ -4193,9 +4196,9 @@ Datumbazo liveris la erarmesaĝon "$3: $4".',
 	'download' => 'elŝuti',
 	'disambiguations' => 'Paĝoj ligitaj al apartigiloj',
 	'disambiguationspage' => 'Template:Apartigilo',
-	'disambiguations-text' => 'La jenaj paĝoj alligas \'\'\'apartigilon\'\'\'.
+	'disambiguations-text' => "La jenaj paĝoj alligas '''apartigilon'''.
 Ili devus anstataŭe alligi la ĝustan temon.<br />
-Paĝo estas traktata kiel apartigilo se ĝi uzas ŝablonon kiu estas ligita de [[MediaWiki:Disambiguationspage]]',
+Paĝo estas traktata kiel apartigilo se ĝi uzas ŝablonon kiu estas ligita de [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Duoblaj alidirektadoj',
 	'doubleredirectstext' => 'Ĉi tiu paĝo montras paĝojn kiuj alidirektas al aliaj alidirektiloj.
 Ĉiu vico enhavas ligilojn ĉe la unua kaj dua alidirektadoj, kaj la unua linio de la dua alidirektado, kiu ĝenerale montras la "veran" celpaĝon, kiu celu la unuan alidirektadon.
@@ -4238,7 +4241,7 @@ La celartikolo "[[:$1]]" jam ekzistas. Ĉu vi volas forigi ĝin por krei spacon 
 	'djvu_no_xml' => 'Ne povas akiri XML por DjVu dosiero',
 	'deletedrevision' => 'Forigita malnova versio $1',
 	'days' => '{{PLURAL:$1|$1 tago|$1 tagoj}}',
-	'deletedwhileediting' => '\'\'\'Averto\'\'\': Ĉi tiu paĝo estis forigita post vi ekredaktis!',
+	'deletedwhileediting' => "'''Averto''': Ĉi tiu paĝo estis forigita post vi ekredaktis!",
 	'descending_abbrev' => 'subn',
 	'duplicate-defaultsort' => '\'\'\'Averto:\'\'\' Defaŭlta ordiga ŝlosilo "$2" anstataŭigas pli fruan defaŭltan ordigan ŝlosilon "$1".',
 	'dberr-header' => 'Ĉi tiu vikio havas problemon',
@@ -4248,9 +4251,9 @@ La celartikolo "[[:$1]]" jam ekzistas. Ĉu vi volas forigi ĝin por krei spacon 
 	'dberr-usegoogle' => 'Vi povas serĉi Guglon dume.',
 	'dberr-outofdate' => 'Notu ke iliaj indeksoj de nia enhavo eble ne estas ĝisdatigaj.',
 	'dberr-cachederror' => 'Jen kaŝmemorigita kopio de la petita paĝo, kaj eble ne estas ĝisdatigita.',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'december' => 'diciembre',
 	'december-gen' => 'diciembre',
 	'dec' => 'dic',
@@ -4287,7 +4290,7 @@ Por favor, reporta el error anterior a través de [[Special:Contact/bug|este for
 	'download' => 'descargar',
 	'disambiguations' => 'Páginas que enlazan con páginas de desambiguación',
 	'disambiguationspage' => 'Template:Desambiguación',
-	'disambiguations-text' => 'Las siguientes páginas enlazan a una \'\'\'página de desambiguación\'\'\'. En lugar de ello deberían enlazar con el tema apropiado.<br />Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:disambiguationspage]].',
+	'disambiguations-text' => "Las siguientes páginas enlazan a una '''página de desambiguación'''. En lugar de ello deberían enlazar con el tema apropiado.<br />Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:disambiguationspage]].",
 	'doubleredirects' => 'Redirecciones dobles',
 	'doubleredirectstext' => '<b>Atención:</b> Esta lista puede contener enlaces falsos. Esto quiere decir normalmente que hay texto adicional con enlaces bajo el primer #REDIRECT.<br /> Cada fila contiene enlaces al segundo y tercer redirect, así como la primera línea del segundo redirect, en la que normalmente se encontrará el artículo "real" al que el primer redirect debería apuntar.',
 	'double-redirect-fixed-move' => '[[$1]] ha sido trasladado, ahora es una redirección a [[$2]]',
@@ -4301,16 +4304,16 @@ Por favor, reporta el error anterior a través de [[Special:Contact/bug|este for
 	'deletepage' => 'Borrar esta página',
 	'delete-confirm' => 'Borrar «$1»',
 	'delete-legend' => 'Borrar',
-	'deletedtext' => '\'\'\'"$1" ha sido borrado!\'\'\'
+	'deletedtext' => "'''\"\$1\" ha sido borrado!'''
 
-* Ten en cuenta que otras páginas pueden seguir [[Special:WhatLinksHere/$1|enlazando a esta página]].
-* Puedes seguir viendo la página borrada [[Special:Undelete/$1|aquí]].
-* Visita $2 para un registro de borrados recientes.
+* Ten en cuenta que otras páginas pueden seguir [[Special:WhatLinksHere/\$1|enlazando a esta página]].
+* Puedes seguir viendo la página borrada [[Special:Undelete/\$1|aquí]].
+* Visita \$2 para un registro de borrados recientes.
 
 {{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
 <br />
-Esta página tiene también una \'\'\'[[{{TALKPAGENAME}}|página de discusión]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=edit}} editar], [{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Página+de+discusión+de+un+borrado}} delete]</small>). Quizás quieras borrarla también.
-|}}}}}}',
+Esta página tiene también una '''[[{{TALKPAGENAME}}|página de discusión]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=edit}} editar], [{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Página+de+discusión+de+un+borrado}} delete]</small>). Quizás quieras borrarla también.
+|}}}}}}",
 	'dellogpage' => 'Registro de borrados',
 	'dellogpagetext' => 'Abajo hay una lista de los borrados más recientes.',
 	'deletionlog' => 'registro de borrados',
@@ -4335,9 +4338,9 @@ La página de destino ("[[:$1]]") ya existe. ¿Quiere borrarla para permitir al 
 	'djvu_no_xml' => 'Imposible obtener XML para el archivo DjVu',
 	'deletedrevision' => 'Borrada revisión antigua $1',
 	'days' => '{{PLURAL:$1|un día|$1 días}}',
-	'deletedwhileediting' => '\'\'\'Aviso\'\'\': ¡Esta página fue borrada después de que usted empezara a editar!',
+	'deletedwhileediting' => "'''Aviso''': ¡Esta página fue borrada después de que usted empezara a editar!",
 	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Atención:\'\'\' La clave de ordenamiento predeterminada «$2» anula la clave de ordenamiento anterior «$1».',
+	'duplicate-defaultsort' => "'''Atención:''' La clave de ordenamiento predeterminada «$2» anula la clave de ordenamiento anterior «$1».",
 	'dberr-header' => 'Este wiki tiene problemas',
 	'dberr-problems' => 'Lo sentimos.
 Este sitio está experimentando dificultades técnicas.',
@@ -4351,9 +4354,14 @@ Este sitio está experimentando dificultades técnicas.',
 	'defaultskin2' => 'Los administradores de este wiki han elegido <b>$1</b> como piel predeterminada. Haz clic <a href="$2">here</a> para ver el código.',
 	'defaultskin3' => 'Los administradores de este wiki no han elegido una piel predeterminada. Utilizando la predeterminada de Wikia: <b>$1</b>.',
 	'defaultskin_choose' => 'Configurar la piel predeterminada para este wiki:',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+);
 
-$messages['et'] = [
+$messages['et'] = array(
 	'december' => 'detsember',
 	'december-gen' => 'detsembri',
 	'dec' => 'dets',
@@ -4390,9 +4398,9 @@ Andmebaas tagastas veateate "$3: $4".',
 	'download' => 'laadi alla',
 	'disambiguations' => 'Leheküljed, mis lingivad täpsustuslehekülgedele',
 	'disambiguationspage' => 'Template:Täpsustuslehekülg',
-	'disambiguations-text' => 'Loetletud leheküljed viitavad \'\'\'täpsustusleheküljele\'\'\'.
+	'disambiguations-text' => "Loetletud leheküljed viitavad '''täpsustusleheküljele'''.
 Selle asemel peaks nad olema lingitud sobivasse artiklisse.
-Lehekülg loetakse täpsustusleheküljeks, kui see kasutab malli, millele viitab sõnum [[MediaWiki:Disambiguationspage]].',
+Lehekülg loetakse täpsustusleheküljeks, kui see kasutab malli, millele viitab sõnum [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Kahekordsed ümbersuunamised',
 	'doubleredirectstext' => 'Käesolev leht esitab loendi lehtedest, mis sisaldavad ümbersuunamisi teistele ümbersuunamislehtedele.
 Igal real on ära toodud esimene ja teine ümbersuunamisleht ning samuti teise ümbersuunamislehe sihtmärk, mis tavaliselt on esialgse ümbersuunamise tegelik siht, millele see otse osutama peakski.
@@ -4436,15 +4444,15 @@ Kas kustutad selle, et luua võimalus teisaldamiseks?',
 	'djvu_no_xml' => 'DjVu failist XML-i lugemine ebaõnnestus.',
 	'deletedrevision' => 'Kustutatud vanem versioon $1',
 	'days' => '{{PLURAL:$1|üks päev|$1 päeva}}',
-	'deletedwhileediting' => '\'\'\'Hoiatus\'\'\': Sel ajal, kui sina lehekülge redigeerisid, kustutas keegi selle ära!',
+	'deletedwhileediting' => "'''Hoiatus''': Sel ajal, kui sina lehekülge redigeerisid, kustutas keegi selle ära!",
 	'descending_abbrev' => 'laskuv',
 	'duplicate-defaultsort' => '\'\'\'Hoiatus:\'\'\' Järjestamisvõti "$2" tühistab eespool oleva järjestamisvõtme "$1".',
 	'dberr-header' => 'Selles vikis on probleem',
 	'dberr-problems' => 'Kahjuks on sellel saidil tehnilisi probleeme',
 	'dberr-again' => 'Oota mõni hetk ja laadi lehekülg uuesti.',
 	'dberr-info' => '(Ei saa ühendust andmebaasi serveriga: $1)',
-	'dberr-usegoogle' => 'Proovi vahepeal otsida Google\'ist.',
-	'dberr-outofdate' => 'Pane tähele, et Google\'is talletatud meie sisu võib olla iganenud.',
+	'dberr-usegoogle' => "Proovi vahepeal otsida Google'ist.",
+	'dberr-outofdate' => "Pane tähele, et Google'is talletatud meie sisu võib olla iganenud.",
 	'dberr-cachederror' => 'See koopia taotletud leheküljest on vahemälus ja ei pruugi olla ajakohane.',
 	'duration-seconds' => '$1 {{PLURAL:$1|sekundi}}',
 	'duration-minutes' => '$1 {{PLURAL:$1|minuti}}',
@@ -4455,9 +4463,9 @@ Kas kustutad selle, et luua võimalus teisaldamiseks?',
 	'duration-decades' => '$1 {{PLURAL:$1|kümnendi}}',
 	'duration-centuries' => '$1 {{PLURAL:$1|sajandi}}',
 	'duration-millennia' => '$1 {{PLURAL:$1|aastatuhande}}',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'december' => 'Abendua',
 	'december-gen' => 'Abendu',
 	'dec' => 'Abe',
@@ -4489,7 +4497,7 @@ Datu-baseak emandako errore informazioa: "$3: $4"',
 	'download' => 'jaitsi',
 	'disambiguations' => 'Argipen orrietara lotzen duten orriak',
 	'disambiguationspage' => 'Template:argipen',
-	'disambiguations-text' => 'Jarraian azaltzen diren orrialdeek \'\'\'argipen orrialde\'\'\' baterako lotura dute. Kasu bakoitzean dagokion artikulu zuzenarekin izan beharko lukete lotura.<br />Orrialde bat argipen motakoa dela antzeman ohi da [[MediaWiki:Disambiguationspage]] orrialdean agertzen den txantiloietako bat duenean.',
+	'disambiguations-text' => "Jarraian azaltzen diren orrialdeek '''argipen orrialde''' baterako lotura dute. Kasu bakoitzean dagokion artikulu zuzenarekin izan beharko lukete lotura.<br />Orrialde bat argipen motakoa dela antzeman ohi da [[MediaWiki:Disambiguationspage]] orrialdean agertzen den txantiloietako bat duenean.",
 	'doubleredirects' => 'Birzuzenketa bikoitzak',
 	'doubleredirectstext' => 'Lerro bakoitzean lehen eta bigarren birzuzenketetarako loturak ikus daitezke, eta baita edukia daukan edo eduki beharko lukeen orrialderako lotura ere. Lehen birzuzenketak azken honetara <del>zuzendu</del> beharko luke.',
 	'double-redirect-fixed-move' => '[[$1]] mugitu da eta orain [[$2]](e)ra birzuzenketa bat da',
@@ -4530,7 +4538,7 @@ kontu izan.',
 	'djvu_page_error' => 'DjVu orrialdea eremuz kanpo',
 	'djvu_no_xml' => 'Ezinezkoa izan da DjVu fitxategiaren XML lortzea',
 	'deletedrevision' => '$1 berrikuspen zaharra ezabatu da',
-	'deletedwhileediting' => '\'\'\'Oharra\'\'\': Zu aldaketak egiten hasi ondoren orrialdea ezabatua izan da!',
+	'deletedwhileediting' => "'''Oharra''': Zu aldaketak egiten hasi ondoren orrialdea ezabatua izan da!",
 	'descending_abbrev' => 'behe',
 	'duplicate-defaultsort' => 'Adi: Berezko "$2" antolatzeak aurreko berezko "$1" antolatzea gainditzen du.',
 	'dberr-header' => 'Wiki honek arazo bat du',
@@ -4540,9 +4548,9 @@ kontu izan.',
 	'dberr-usegoogle' => 'Bitartean Google bidez bilatzen saiatu zintezke.',
 	'dberr-outofdate' => 'Eduki hauek aurkibideak eguneratu gabe egon daitezke.',
 	'dberr-cachederror' => 'Ondorengoa eskatutako orriaren katxedun kopia da, eta eguneratu gabe egon daiteke.',
-];
+);
 
-$messages['ext'] = [
+$messages['ext'] = array(
 	'december' => 'Diciembri',
 	'december-gen' => 'Diciembri',
 	'dec' => 'Dic',
@@ -4574,7 +4582,7 @@ La bassi de datus degorvió el marru "$3: $4"',
 	'download' => 'descargal',
 	'disambiguations' => 'Páhinas de desambiguáncia',
 	'disambiguationspage' => 'Prantilla:desambiguáncia',
-	'disambiguations-text' => 'Las siguientis páhinas atihan a una \'\'\'páhina e desambiguáncia\'\'\'. Estas eberian atihal al artículu apropiau.<br />Una páhina se consiera e desambiguáncia si gasta una prantilla qu\'está atihá endi [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Las siguientis páhinas atihan a una '''páhina e desambiguáncia'''. Estas eberian atihal al artículu apropiau.<br />Una páhina se consiera e desambiguáncia si gasta una prantilla qu'está atihá endi [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Redirecionis dobris',
 	'deadendpages' => 'Callehonis',
 	'deadendpagestext' => 'Las siguientis páhinas nu atihan a otras páhinas desti güiqui.',
@@ -4592,12 +4600,12 @@ Consurta $2 pa vel los úrtimus esborraus.',
 	'deletecomment' => 'Razón:',
 	'deleteotherreason' => 'Otras razonis:',
 	'deletereasonotherlist' => 'Otra razón',
-	'deletereason-dropdown' => '*Motivus mas frecuentis d\'esborrau
+	'deletereason-dropdown' => "*Motivus mas frecuentis d'esborrau
 ** Pol solicitú el autol
 ** Violación el Copyright
-** Vandalismu',
+** Vandalismu",
 	'delete-edit-reasonlist' => 'Eital razonis del esborrau',
-	'delete-warning-toobig' => 'Esta páhina tieni un estorial d\'eicionis grandi, mas de $1 revisionis. Esborralu puei causal pobremas enas operacionis la basi e datus de {{SITENAME}}; atua con cudiau.',
+	'delete-warning-toobig' => "Esta páhina tieni un estorial d'eicionis grandi, mas de $1 revisionis. Esborralu puei causal pobremas enas operacionis la basi e datus de {{SITENAME}}; atua con cudiau.",
 	'databasenotlocked' => 'La basi e datus nu está atarugá.',
 	'delete_and_move' => 'Esborral i movel',
 	'delete_and_move_text' => '==Es mestel esborral==
@@ -4610,9 +4618,9 @@ Ya desisti la páhina "[[:$1]]". Te petaria esborrala pa premitil el treslau?',
 	'deletedrevision' => 'Esborrá la revisión antigua $1',
 	'deletedwhileediting' => 'Avisu: esta página á siu esborrá endispués de tu encetal a eitala!',
 	'dberr-header' => 'Marru ena wiki',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'december' => 'دسامبر',
 	'december-gen' => 'دسامبر',
 	'dec' => 'دسامبر',
@@ -4649,9 +4657,9 @@ $messages['fa'] = [
 	'download' => 'بارگیری',
 	'disambiguations' => 'صفحه‌های دارای پیوند به صفحه‌های ابهام‌زدایی',
 	'disambiguationspage' => 'Template:ابهام‌زدایی',
-	'disambiguations-text' => 'صفحه‌های زیر پیوندی به یک \'\'\'صفحهٔ ابهام‌زدایی\'\'\' هستند.
+	'disambiguations-text' => "صفحه‌های زیر پیوندی به یک '''صفحهٔ ابهام‌زدایی''' هستند.
 این صفحه‌ها باید در عوض به موضوعات مرتبط پیوند داده شوند.<br />
-یک صفحه هنگامی صفحهٔ ابهام‌زدایی در نظر گرفته می‌شود که در آن از الگویی که به [[MediaWiki:Disambiguationspage]] پیوند دارد استفاده شده باشد.',
+یک صفحه هنگامی صفحهٔ ابهام‌زدایی در نظر گرفته می‌شود که در آن از الگویی که به [[MediaWiki:Disambiguationspage]] پیوند دارد استفاده شده باشد.",
 	'doubleredirects' => 'تغییرمسیرهای دوتایی',
 	'doubleredirectstext' => 'این صفحه فهرستی از صفحه‌های تغییرمسیری را ارائه می‌کند که به صفحهٔ تغییرمسیر دیگری اشاره می‌کنند.
 هر سطر دربردارندهٔ پیوندهایی به تغییرمسیر اول و دوم و همچنین مقصد تغییرمسیر دوم است، که معمولاً صفحهٔ مقصد واقعی است و نخستین تغییرمسیر باید به آن اشاره کند.
@@ -4699,7 +4707,7 @@ $messages['fa'] = [
 	'djvu_no_xml' => 'امکان پیدا کردن پروندهٔ XML برای استفادهٔ DjVu وجود نداشت.',
 	'deletedrevision' => '$1 نسخهٔ حذف شدهٔ قدیمی',
 	'days' => '{{PLURAL: $1|روز|روز}}',
-	'deletedwhileediting' => '\'\'\'هشدار\'\'\': این صفحه پس از اینکه شما آغاز به ویرایش آن کرده‌اید، حذف شده است!',
+	'deletedwhileediting' => "'''هشدار''': این صفحه پس از اینکه شما آغاز به ویرایش آن کرده‌اید، حذف شده است!",
 	'descending_abbrev' => 'نزولی',
 	'duplicate-defaultsort' => 'هشدار: ترتیب پیش‌فرض «$2» ترتیب پیش‌فرض قبلی «$1» را باطل می‌کند.',
 	'dberr-header' => 'این ویکی یک ایراد دارد',
@@ -4710,9 +4718,9 @@ $messages['fa'] = [
 	'dberr-usegoogle' => 'شما در این مدت می‌توانید با استفاده از گوگل جستجو کنید.',
 	'dberr-outofdate' => 'توجه کنید که نمایه‌های آن‌ها از محتوای ما ممکن است به روز نباشد.',
 	'dberr-cachederror' => 'آن‌چه در ادامه می‌آید یک کپی از صفحهٔ درخواست شده است که در کاشه قرار دارد، و ممکن است به روز نباشد.',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'december' => 'joulukuu',
 	'december-gen' => 'joulukuun',
 	'dec' => 'joulukuu',
@@ -4743,7 +4751,7 @@ Tietokanta palautti virheen ”<tt>$3: $4</tt>”.',
 	'download' => 'lataa',
 	'disambiguations' => 'Linkit täsmennyssivuihin',
 	'disambiguationspage' => 'Template:Täsmennyssivu',
-	'disambiguations-text' => 'Seuraavat artikkelit linkittävät \'\'täsmennyssivuun\'\'. Täsmennyssivun sijaan niiden pitäisi linkittää asianomaiseen aiheeseen.<br />Sivua kohdellaan täsmennyssivuna jos se käyttää mallinetta, johon on linkki sivulta [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Seuraavat artikkelit linkittävät ''täsmennyssivuun''. Täsmennyssivun sijaan niiden pitäisi linkittää asianomaiseen aiheeseen.<br />Sivua kohdellaan täsmennyssivuna jos se käyttää mallinetta, johon on linkki sivulta [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Kaksinkertaiset ohjaukset',
 	'doubleredirectstext' => 'Tässä listassa on ohjaussivut, jotka ohjaavat toiseen ohjaussivuun.
 Jokaisella rivillä on linkit ensimmäiseen ja toiseen ohjaukseen sekä toisen ohjauksen kohteen ensimmäiseen riviin, eli yleensä ”oikeaan” kohteeseen, johon ensimmäisen ohjauksen pitäisi osoittaa.
@@ -4759,16 +4767,16 @@ Jokaisella rivillä on linkit ensimmäiseen ja toiseen ohjaukseen sekä toisen o
 	'deletepage' => 'Poista sivu',
 	'delete-confirm' => 'Sivun ”$1” poistaminen',
 	'delete-legend' => 'Sivun poisto',
-	'deletedtext' => '\'\'\'"$1" on poistettu!\'\'\'
+	'deletedtext' => "'''\"\$1\" on poistettu!'''
 
-* Ole hyvä ja muista, että jotkut sivut saattavat [[Special:WhatLinksHere/$1|linkittää tähän sivuun]].
-* Voit jatkaa poistetun sivun katsomista [[Special:Undelete/$1|täällä]].
-* Katso $2 saadaksesi tiedon tuoreista poistoista.
+* Ole hyvä ja muista, että jotkut sivut saattavat [[Special:WhatLinksHere/\$1|linkittää tähän sivuun]].
+* Voit jatkaa poistetun sivun katsomista [[Special:Undelete/\$1|täällä]].
+* Katso \$2 saadaksesi tiedon tuoreista poistoista.
 
 {{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
 <br />
-Tällä sivulla on myös \'\'\'[[{{TALKPAGENAME}}|keskustelusivu]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Poistetun+sivun+keskustelusivu}} poista]</small>). Voit halutessasi poistaa senkin.
-|}}}}}}',
+Tällä sivulla on myös '''[[{{TALKPAGENAME}}|keskustelusivu]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Poistetun+sivun+keskustelusivu}} poista]</small>). Voit halutessasi poistaa senkin.
+|}}}}}}",
 	'dellogpage' => 'Poistoloki',
 	'dellogpagetext' => 'Alla on loki viimeisimmistä poistoista.',
 	'deletionlog' => 'poistoloki',
@@ -4791,9 +4799,9 @@ Tällä sivulla on myös \'\'\'[[{{TALKPAGENAME}}|keskustelusivu]]\'\'\' (<small
 	'djvu_no_xml' => 'DjVu-tiedoston XML-vienti epäonnistui',
 	'deletedrevision' => 'Poistettiin vanha versio $1',
 	'days' => '{{PLURAL:$1|$1 päivä|$1 päivää}}',
-	'deletedwhileediting' => '\'\'\'Varoitus\'\'\': Tämä sivu on poistettu sen jälkeen, kun aloitit sen muokkaamisen!',
+	'deletedwhileediting' => "'''Varoitus''': Tämä sivu on poistettu sen jälkeen, kun aloitit sen muokkaamisen!",
 	'descending_abbrev' => 'laskeva',
-	'duplicate-defaultsort' => '\'\'\'Varoitus:\'\'\' Oletuslajitteluavain ”$2” korvaa aiemman oletuslajitteluavaimen ”$1”.',
+	'duplicate-defaultsort' => "'''Varoitus:''' Oletuslajitteluavain ”$2” korvaa aiemman oletuslajitteluavaimen ”$1”.",
 	'dberr-header' => 'Wikissä on tietokantaongelma',
 	'dberr-problems' => 'Tällä sivustolla on teknisiä ongelmia.',
 	'dberr-again' => 'Odota hetki ja lataa sivu uudelleen.',
@@ -4806,9 +4814,9 @@ Tällä sivulla on myös \'\'\'[[{{TALKPAGENAME}}|keskustelusivu]]\'\'\' (<small
 	'defaultskin2' => 'Tämän wikin ylläpitäjät ovat valinneet: <b>{{GRAMMAR:genitive|$1}}</b> oletusulkoasuksi. Klikkaa <a href="$2">tästä</a> nähdäksesi koodin.',
 	'defaultskin3' => 'Tämän wikin ylläpitäjät eivät ole valinneet oletusulkoasua. Käytetään Wikian oletusta: <b>$1</b>.',
 	'defaultskin_choose' => 'Aseta tämän wikin oletusteema:',
-];
+);
 
-$messages['fiu-vro'] = [
+$messages['fiu-vro'] = array(
 	'december' => 'joulukuu',
 	'december-gen' => 'joulukuun',
 	'dec' => 'joulukuu',
@@ -4839,7 +4847,7 @@ Tietokanta palautti virheen ”<tt>$3: $4</tt>”.',
 	'download' => 'lataa',
 	'disambiguations' => 'Linkit täsmennyssivuihin',
 	'disambiguationspage' => 'Template:Täsmennyssivu',
-	'disambiguations-text' => 'Seuraavat artikkelit linkittävät \'\'täsmennyssivuun\'\'. Täsmennyssivun sijaan niiden pitäisi linkittää asianomaiseen aiheeseen.<br />Sivua kohdellaan täsmennyssivuna jos se käyttää mallinetta, johon on linkki sivulta [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Seuraavat artikkelit linkittävät ''täsmennyssivuun''. Täsmennyssivun sijaan niiden pitäisi linkittää asianomaiseen aiheeseen.<br />Sivua kohdellaan täsmennyssivuna jos se käyttää mallinetta, johon on linkki sivulta [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Kaksinkertaiset ohjaukset',
 	'doubleredirectstext' => 'Tässä listassa on ohjaussivut, jotka ohjaavat toiseen ohjaussivuun.
 Jokaisella rivillä on linkit ensimmäiseen ja toiseen ohjaukseen sekä toisen ohjauksen kohteen ensimmäiseen riviin, eli yleensä ”oikeaan” kohteeseen, johon ensimmäisen ohjauksen pitäisi osoittaa.
@@ -4879,9 +4887,9 @@ Sivulla $2 on lista viimeaikaisista poistoista.',
 	'djvu_no_xml' => 'DjVu-tiedoston XML-vienti epäonnistui',
 	'deletedrevision' => 'Poistettiin vanha versio $1',
 	'days' => '{{PLURAL:$1|$1 päivä|$1 päivää}}',
-	'deletedwhileediting' => '\'\'\'Varoitus\'\'\': Tämä sivu on poistettu sen jälkeen, kun aloitit sen muokkaamisen!',
+	'deletedwhileediting' => "'''Varoitus''': Tämä sivu on poistettu sen jälkeen, kun aloitit sen muokkaamisen!",
 	'descending_abbrev' => 'laskeva',
-	'duplicate-defaultsort' => '\'\'\'Varoitus:\'\'\' Oletuslajitteluavain ”$2” korvaa aiemman oletuslajitteluavaimen ”$1”.',
+	'duplicate-defaultsort' => "'''Varoitus:''' Oletuslajitteluavain ”$2” korvaa aiemman oletuslajitteluavaimen ”$1”.",
 	'dberr-header' => 'Wikissä on tietokantaongelma',
 	'dberr-problems' => 'Tällä sivustolla on teknisiä ongelmia.',
 	'dberr-again' => 'Odota hetki ja lataa sivu uudelleen.',
@@ -4890,17 +4898,17 @@ Sivulla $2 on lista viimeaikaisista poistoista.',
 	'dberr-outofdate' => 'Googlen indeksi ei välttämättä ole ajan tasalla.',
 	'dberr-cachederror' => 'Alla on välimuistissa oleva sivun versio, joka ei välttämättä ole ajan tasalla.',
 	'discuss' => 'Keskustele',
-];
+);
 
-$messages['fj'] = [
+$messages['fj'] = array(
 	'december' => 'Tiseba',
 	'december-gen' => 'Tiseba',
 	'dec' => 'Tiseba',
 	'delete' => 'Vakarusa',
 	'defemailsubject' => '{{SITENAME}} I vola livaliva',
-];
+);
 
-$messages['fo'] = [
+$messages['fo'] = array(
 	'december' => 'desember',
 	'december-gen' => 'desember',
 	'dec' => 'des',
@@ -4952,9 +4960,9 @@ Grein við navninum "[[:$1]]" finst longu. Ynskir tú at strika hana til tess at
 	'delete_and_move_confirm' => 'Ja, strika hesa síðuna',
 	'delete_and_move_reason' => 'Er strikað fyri at gera pláss til flyting frá "[[$1]]"',
 	'duplicate-defaultsort' => '\'\'\'Ávaring:\'\'\' Standard sorteringslykilin "$2" yvirtekur fyrrverandi standard sorteringslykilin "$1".',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'december' => 'décembre',
 	'december-gen' => 'décembre',
 	'dec' => 'déc',
@@ -4979,7 +4987,7 @@ La base de données a renvoyé l’erreur « $3 : $4 ».',
 	'difference' => '(Différences entre les versions)',
 	'difference-multipage' => '(Différence entre les pages)',
 	'diff-multi' => '({{PLURAL:$1|Une révision intermédiaire|$1 révisions intermédiaires}} par {{PLURAL:$2|un utilisateur|$2 utilisateurs}} {{PLURAL:$1|est masquée|sont masquées}})',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Une révision intermédiaire|$1 révisions intermédiaires}} par plus {{PLURAL:$2|d\'un utilisateur|de $2 utilisateurs}} {{PLURAL:$1|est masquée|sont masquées}})',
+	'diff-multi-manyusers' => "({{PLURAL:$1|Une révision intermédiaire|$1 révisions intermédiaires}} par plus {{PLURAL:$2|d'un utilisateur|de $2 utilisateurs}} {{PLURAL:$1|est masquée|sont masquées}})",
 	'datedefault' => 'Aucune préférence',
 	'defaultns' => 'Rechercher par défaut dans ces espaces de noms :',
 	'default' => 'défaut',
@@ -4989,9 +4997,9 @@ La base de données a renvoyé l’erreur « $3 : $4 ».',
 	'download' => 'télécharger',
 	'disambiguations' => 'Pages ayant des liens vers des pages d’homonymie',
 	'disambiguationspage' => 'Template:Homonymie',
-	'disambiguations-text' => 'Les pages suivantes comportent un lien vers une \'\'\'page d’homonymie\'\'\'.
+	'disambiguations-text' => "Les pages suivantes comportent un lien vers une '''page d’homonymie'''.
 Ces liens ambigus devraient plutôt pointer vers le bon article.<br />
-Une page est considérée comme une page d’homonymie si elle inclut (directement ou récursivement) un des modèles listés sur [[MediaWiki:Disambiguationspage]].',
+Une page est considérée comme une page d’homonymie si elle inclut (directement ou récursivement) un des modèles listés sur [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Doubles redirections',
 	'doubleredirectstext' => 'Voici une liste des pages qui redirigent vers des pages qui sont elles-mêmes des pages de redirection.
 Chaque entrée contient des liens vers la première et la seconde redirections, ainsi que la première ligne de texte de la seconde page, ce qui fournit habituellement la « vraie » page cible, vers laquelle la première redirection devrait rediriger.
@@ -5036,7 +5044,7 @@ La page de destination « [[:$1]] » existe déjà.
 	'djvu_no_xml' => 'Impossible de récupérer le XML pour le fichier DjVu',
 	'deletedrevision' => 'Ancienne version $1 supprimée',
 	'days' => '{{PLURAL:$1|$1 jour|$1 jours}}',
-	'deletedwhileediting' => '\'\'\'Attention\'\'\' : cette page a été supprimée après que vous avez commencé à la modifier !',
+	'deletedwhileediting' => "'''Attention''' : cette page a été supprimée après que vous avez commencé à la modifier !",
 	'descending_abbrev' => 'décr.',
 	'duplicate-defaultsort' => 'Attention : la clé de tri par défaut « $2 » écrase la précédente « $1 ».',
 	'dberr-header' => 'Ce wiki a un problème',
@@ -5048,9 +5056,17 @@ La page de destination « [[:$1]] » existe déjà.
 	'dberr-cachederror' => 'Ceci est une copie cachée de la page demandée et peut être dépassée.',
 	'discuss' => 'Discuter',
 	'defaultskin_choose' => 'Choisir le thème par défaut pour ce wiki :',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+);
 
-$messages['frc'] = [
+$messages['frc'] = array(
 	'december' => 'de décembre',
 	'december-gen' => 'décembre',
 	'dec' => 'déc',
@@ -5058,7 +5074,7 @@ $messages['frc'] = [
 	'deletethispage' => 'Supprimer cette page',
 	'disclaimers' => 'Avertissements',
 	'disclaimerpage' => 'Project:Avertissements ordinaires',
-	'databaseerror' => 'Erreur de la base d\'information',
+	'databaseerror' => "Erreur de la base d'information",
 	'dberrortext' => 'Erreur de syntaxe dans la base d\'information.
 
 Ça pourrait vouloir dire qu\'y a une imperfection dans le software.<br />
@@ -5075,9 +5091,9 @@ MySQL a retourné l\'erreur "$3: $4".',
 	'directorycreateerror' => 'Impossible de créer le directoire "$1".',
 	'difference' => '(Différences entre les versions)',
 	'diff-multi' => '({{PLURAL:$1|Un changement moyen caché|$1 changements moyens cachés}})',
-];
+);
 
-$messages['frp'] = [
+$messages['frp'] = array(
 	'december' => 'de dècembro',
 	'december-gen' => 'de dècembro',
 	'dec' => 'dèc',
@@ -5114,9 +5130,9 @@ La bâsa de balyês at retornâ l’èrror « $3 : $4 ».',
 	'download' => 'Tèlèchargiér',
 	'disambiguations' => 'Pâges qu’ont des lims de vers des pâges d’homonimia',
 	'disambiguationspage' => 'Template:Homonimia',
-	'disambiguations-text' => 'Cetes pâges ont un lim de vers una \'\'\'pâge d’homonimia\'\'\'.
+	'disambiguations-text' => "Cetes pâges ont un lim de vers una '''pâge d’homonimia'''.
 Devriant pletout pouentar vers una pâge que vat avouéc.<br />
-Una pâge est trètâ coment una pâge d’homonimia s’encllut (tot drêt ou ben rècursivament) yon des modèlos listâs dessus [[MediaWiki:Disambiguationspage]].',
+Una pâge est trètâ coment una pâge d’homonimia s’encllut (tot drêt ou ben rècursivament) yon des modèlos listâs dessus [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Redirèccions dobles',
 	'doubleredirectstext' => 'Vê-que la lista de les pâges que redirijont vers des pâges que sont lor-mémes des pâges de redirèccion.
 Châque entrâ contint des lims de vers la premiére et la seconda redirèccion, et pués la premiére legne de tèxto de la seconda pâge, cen que balye habituèlament la « veré » pâge ciba, de vers laquinta la premiére redirèccion devrêt redirigiér.
@@ -5162,9 +5178,9 @@ La voléd-vos suprimar por pèrmetre lo changement de nom ?',
 	'deletedrevision' => 'La vielye vèrsion $1 at étâ suprimâ.',
 	'days-abbrev' => '$1j',
 	'days' => '$1 jorn{{PLURAL:$1||s}}',
-	'deletedwhileediting' => '\'\'\'Atencion :\'\'\' ceta pâge at étâ suprimâ aprés que vos vos éte betâ a la changiér !',
+	'deletedwhileediting' => "'''Atencion :''' ceta pâge at étâ suprimâ aprés que vos vos éte betâ a la changiér !",
 	'descending_abbrev' => 'que dècrêt',
-	'duplicate-defaultsort' => '\'\'\'Atencion :\'\'\' la cllâf de tri per dèfôt « $2 » ècllafe cela « $1 ».',
+	'duplicate-defaultsort' => "'''Atencion :''' la cllâf de tri per dèfôt « $2 » ècllafe cela « $1 ».",
 	'dberr-header' => 'Ceti vouiqui at un problèmo',
 	'dberr-problems' => 'Dèsolâ ! Ceti seto rencontre des dificultâts tècniques.',
 	'dberr-again' => 'Tâchiéd d’atendre doux-três menutes et pués rechargiéd.',
@@ -5181,9 +5197,9 @@ La voléd-vos suprimar por pèrmetre lo changement de nom ?',
 	'duration-decades' => '$1 dècèni{{PLURAL:$1|a|es}}',
 	'duration-centuries' => '$1 sièclo{{PLURAL:$1||s}}',
 	'duration-millennia' => '$1 milènèro{{PLURAL:$1||s}}',
-];
+);
 
-$messages['frr'] = [
+$messages['frr'] = array(
 	'december' => 'Detsämber',
 	'december-gen' => 'Detsämber',
 	'dec' => 'Det.',
@@ -5219,9 +5235,9 @@ Jü dootebånk mälded jü fäägel: „<tt>$3: $4</tt>“.',
 	'deleteotherreason' => 'Ouderen/tubaikaamenden grün:',
 	'deletereasonotherlist' => 'Ouderen grün',
 	'duplicate-defaultsort' => '\'\'\'Paase üüb:\'\'\' Di sortiarkai "$2" auerskraft di ual sortiarkai "$1"',
-];
+);
 
-$messages['fur'] = [
+$messages['fur'] = array(
 	'december' => 'Dicembar',
 	'december-gen' => 'Dicembar',
 	'dec' => 'Dic',
@@ -5258,14 +5274,14 @@ Cjale $2 par une liste des ultimis eliminazions.',
 	'delete_and_move' => 'Elimine e môf',
 	'delete_and_move_confirm' => 'Sì, elimine la pagjine',
 	'descending_abbrev' => 'disc',
-	'duplicate-defaultsort' => '\'\'\'Avîs:\'\'\' La clâf predeterminade par l\'ordenament "$2" invalide la clâf predeterminade precedente "$1".',
+	'duplicate-defaultsort' => "'''Avîs:''' La clâf predeterminade par l'ordenament \"\$2\" invalide la clâf predeterminade precedente \"\$1\".",
 	'dberr-header' => 'Cheste wiki e à un probleme',
 	'dberr-problems' => 'Nus displâs, chest sît web al è daûr a vê dificoltâts tecnichis.',
 	'dberr-again' => 'Prove a spietâ uns minûts e po torne a cjamâ la pagjine.',
 	'dberr-info' => '(No si pues contatâ il servidor de base di dâts: $1)',
-];
+);
 
-$messages['fy'] = [
+$messages['fy'] = array(
 	'december' => 'desimber',
 	'december-gen' => 'desimber',
 	'dec' => 'des',
@@ -5289,7 +5305,7 @@ MySQL joech fout "$3: $4"',
 	'difference' => '(Ferskil tusken ferzjes)',
 	'diff-multi' => '({{PLURAL:$1|Ien tuskenlizzende ferzje wurdt|$1 tuskenlizzende ferzjes wurde}} net sjen litten.)',
 	'datedefault' => 'Gjin foarkar',
-	'defaultns' => 'Nammeromten dy\'t normaal trochsocht wurde:',
+	'defaultns' => "Nammeromten dy't normaal trochsocht wurde:",
 	'default' => 'standert',
 	'diff' => 'ferskil',
 	'destfilename' => 'Triemnamme om op te slaan:',
@@ -5297,8 +5313,8 @@ MySQL joech fout "$3: $4"',
 	'download' => 'oanbiede',
 	'disambiguations' => 'Betsjuttingssiden',
 	'disambiguationspage' => 'Template:Neibetsjuttings',
-	'disambiguations-text' => 'De ûndersteande siden keppelje mei in \'\'\'Betsjuttingssiden\'\'\'.
-Se soenen mei de side sels keppele wurde moatte.<br /> In side wurdt sjoen as betsjuttingssiden, as de side ien berjocht fan [[MediaWiki:Disambiguationspage]] brûkt.',
+	'disambiguations-text' => "De ûndersteande siden keppelje mei in '''Betsjuttingssiden'''.
+Se soenen mei de side sels keppele wurde moatte.<br /> In side wurdt sjoen as betsjuttingssiden, as de side ien berjocht fan [[MediaWiki:Disambiguationspage]] brûkt.",
 	'doubleredirects' => 'Dûbelde synonimen',
 	'doubleredirectstext' => '<b>Let op!</b> Der kinne missen yn dizze list stean! Dat komt dan ornaris troch oare keppelings ûnder de "#REDIRECT". Eltse rigel jout keppelings nei it earste synonym, it twadde synonym en dan it werklike doel.',
 	'double-redirect-fixed-move' => '[[$1]] is ferplakt en is no in trochferwizing nei [[$2]]',
@@ -5329,9 +5345,9 @@ Sjoch "$2" foar in list fan wat resint wiske is.',
 De doelside "[[:$1]]" is der al. Moat dy wiske wurde om plak te meitsjen foar it werneamen?',
 	'delete_and_move_confirm' => 'Ja, wiskje de side',
 	'delete_and_move_reason' => 'Wiske om plak te meitsjen foar in werneamde side',
-];
+);
 
-$messages['ga'] = [
+$messages['ga'] = array(
 	'december' => 'Mí na Nollag',
 	'december-gen' => 'na Nollag',
 	'dec' => 'Noll',
@@ -5394,12 +5410,12 @@ Féach ar $2 chun cuntas na scriosiadh deireanacha a fháil.',
 Tá an leathanach sprice ("[[:$1]]") ann cheana féin.
 Ar mhaith leat é a scriosadh chun áit a dhéanamh don athainmniú?',
 	'delete_and_move_confirm' => 'Tá, scrios an leathanach',
-	'delete_and_move_reason' => 'Scriosta chun áit a dhéanamh d\'athainmniú',
+	'delete_and_move_reason' => "Scriosta chun áit a dhéanamh d'athainmniú",
 	'deletedrevision' => 'Scriosadh an seanleagan $1',
-	'deletedwhileediting' => '\'\'\'Aire\'\'\': scriosadh an leathanach seo nuair a bhí tu ag athrú é!',
-];
+	'deletedwhileediting' => "'''Aire''': scriosadh an leathanach seo nuair a bhí tu ag athrú é!",
+);
 
-$messages['gag'] = [
+$messages['gag'] = array(
 	'december' => 'Kırım ay',
 	'december-gen' => 'Kırım ay',
 	'dec' => 'Dek',
@@ -5421,9 +5437,9 @@ Yakın zamanda silinenleri görmää deyni: $2.',
 	'deletecomment' => 'Sebep',
 	'deleteotherreason' => 'Başka/ek sebep:',
 	'deletereasonotherlist' => 'Başka sebep',
-];
+);
 
-$messages['gan-hans'] = [
+$messages['gan-hans'] = array(
 	'december' => '12月',
 	'december-gen' => '十二月',
 	'dec' => '12月',
@@ -5455,8 +5471,8 @@ MySQL回到错误“$3: $4”。',
 	'download' => '下载',
 	'disambiguations' => '扤清楚页',
 	'disambiguationspage' => 'Template:扤清楚',
-	'disambiguations-text' => '底下𠮶页面都有到\'\'\'扤清楚页\'\'\'𠮶链接, 但系佢俚应当系连到正当𠮶标题。<br />
-如果一只页面系链接自[[MediaWiki:Disambiguationspage]]，佢会拖当成扤清楚页。',
+	'disambiguations-text' => "底下𠮶页面都有到'''扤清楚页'''𠮶链接, 但系佢俚应当系连到正当𠮶标题。<br />
+如果一只页面系链接自[[MediaWiki:Disambiguationspage]]，佢会拖当成扤清楚页。",
 	'doubleredirects' => '双重重定向页面',
 	'doubleredirectstext' => '底下𠮶重定向链接到别只重定向页面:',
 	'double-redirect-fixed-move' => '[[$1]]拕移动正，佢个下拕重定向到[[$2]]。',
@@ -5491,9 +5507,9 @@ MySQL回到错误“$3: $4”。',
 	'deletedwhileediting' => '警告: 倷编辑𠮶时间有人删卟嘞个页！',
 	'descending_abbrev' => '减',
 	'duplicate-defaultsort' => '\'\'\'警告：\'\'\'预设𠮶排序键 "$2" 覆蓋先头𠮶预设排序键 "$1"。',
-];
+);
 
-$messages['gan-hant'] = [
+$messages['gan-hant'] = array(
 	'december' => '12月',
 	'december-gen' => '十二月',
 	'dec' => '12月',
@@ -5525,8 +5541,8 @@ MySQL回到錯誤“$3: $4”。',
 	'download' => '下載',
 	'disambiguations' => '扤清楚頁',
 	'disambiguationspage' => 'Template:扤清楚',
-	'disambiguations-text' => '底下嗰頁面都有到\'\'\'扤清楚頁\'\'\'嗰連結, 但係佢俚應當係連到正當嗰標題。<br />
-如果一隻頁面係連結自[[MediaWiki:Disambiguationspage]]，佢會拕當成扤清楚頁。',
+	'disambiguations-text' => "底下嗰頁面都有到'''扤清楚頁'''嗰連結, 但係佢俚應當係連到正當嗰標題。<br />
+如果一隻頁面係連結自[[MediaWiki:Disambiguationspage]]，佢會拕當成扤清楚頁。",
 	'doubleredirects' => '雙重重定向頁面',
 	'doubleredirectstext' => '底下嗰重定向連結到別隻重定向頁面:',
 	'double-redirect-fixed-move' => '[[$1]]拕移動正，佢箇下拕重定向到[[$2]]。',
@@ -5561,9 +5577,9 @@ MySQL回到錯誤“$3: $4”。',
 	'deletedwhileediting' => '警告: 倷編輯嗰時間有人刪卟嘞箇頁！',
 	'descending_abbrev' => '減',
 	'duplicate-defaultsort' => '\'\'\'警告：\'\'\'預設嗰排序鍵 "$2" 覆蓋先頭嗰預設排序鍵 "$1"。',
-];
+);
 
-$messages['gd'] = [
+$messages['gd'] = array(
 	'december' => 'dhen Dùbhlachd',
 	'december-gen' => 'dhen Dùbhlachd',
 	'dec' => 'dùbh',
@@ -5599,17 +5615,17 @@ Seall air $2 airson clàr de dhuilleagan a chaidh a sguabadh às o chionn ghoiri
 	'deletecomment' => 'Adhbhar:',
 	'deleteotherreason' => 'Adhbhar eile/a bharrachd:',
 	'deletereasonotherlist' => 'Adhbhar eile',
-	'deletereason-dropdown' => '*Adhbharan cumanta airson sguabadh às
-** Dh\'iarr an t-ùghdar e
-** Tha e a\' briseadh na còrach-lethbhreac
-** Milleadh',
+	'deletereason-dropdown' => "*Adhbharan cumanta airson sguabadh às
+** Dh'iarr an t-ùghdar e
+** Tha e a' briseadh na còrach-lethbhreac
+** Milleadh",
 	'delete-edit-reasonlist' => 'Deasaich adhbharan sguabadh às',
 	'delete_and_move' => 'Sguab às agus gluais',
 	'delete_and_move_confirm' => 'Siuthad, sguab às an duilleag',
-	'duplicate-defaultsort' => '\'\'\'Rabhadh:\'\'\' Tha an iuchair seòrsachaidh bhunaiteach "$2" a\' dol thairis air seann iuchair eile, "$1".',
-];
+	'duplicate-defaultsort' => "'''Rabhadh:''' Tha an iuchair seòrsachaidh bhunaiteach \"\$2\" a' dol thairis air seann iuchair eile, \"\$1\".",
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'december' => 'decembro',
 	'december-gen' => 'decembro',
 	'dec' => 'dec',
@@ -5644,9 +5660,9 @@ A base de datos devolveu o erro "$3: $4"',
 	'download' => 'descargar',
 	'disambiguations' => 'Páxinas que ligan con páxinas de homónimos',
 	'disambiguationspage' => 'Template:Homónimos',
-	'disambiguations-text' => 'As seguintes páxinas ligan cunha \'\'\'páxina de homónimos\'\'\'.
+	'disambiguations-text' => "As seguintes páxinas ligan cunha '''páxina de homónimos'''.
 No canto de ligar cos homónimos deben apuntar cara á páxina apropiada.<br />
-Unha páxina trátase como páxina de homónimos cando nela se usa un modelo que está ligado desde [[MediaWiki:Disambiguationspage]].',
+Unha páxina trátase como páxina de homónimos cando nela se usa un modelo que está ligado desde [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Redireccións dobres',
 	'doubleredirectstext' => 'Esta lista contén as páxinas que redirixen cara a outras páxinas de redirección.
 Cada ringleira contén ligazóns cara á primeira e segunda redireccións, así como a primeira liña de texto da segunda páxina, que é frecuentemente o artigo "real", á que a primeira redirección debera apuntar.
@@ -5691,7 +5707,7 @@ Quérea eliminar para facer sitio para mover?',
 	'djvu_no_xml' => 'Non se puido obter o XML para o ficheiro DjVu',
 	'deletedrevision' => 'A revisión vella $1 foi borrada.',
 	'days' => '{{PLURAL:$1|$1 día|$1 días}}',
-	'deletedwhileediting' => '\'\'\'Aviso:\'\'\' Esta páxina foi borrada despois de que comezase a editala!',
+	'deletedwhileediting' => "'''Aviso:''' Esta páxina foi borrada despois de que comezase a editala!",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => '\'\'\'Aviso:\'\'\' A clave de ordenación por defecto "$2" anula a clave de ordenación anterior por defecto "$1".',
 	'dberr-header' => 'Este wiki ten un problema',
@@ -5702,30 +5718,30 @@ Quérea eliminar para facer sitio para mover?',
 	'dberr-outofdate' => 'Teña en conta que os índices de Google do noso contido poden non estar actualizados.',
 	'dberr-cachederror' => 'O seguinte contido é unha copia da memoria caché da páxina solicitada, polo que pode non estar actualizada.',
 	'discuss' => 'Discusión',
-];
+);
 
-$messages['glk'] = [
+$messages['glk'] = array(
 	'deletethispage' => 'اَ هنه‌شره پاکأ کون.',
-];
+);
 
-$messages['gn'] = [
+$messages['gn'] = array(
 	'december' => 'jasypakői',
 	'december-gen' => 'jasypakõi',
 	'dec' => 'jasypakõi',
-	'delete' => 'Mboje\'o',
+	'delete' => "Mboje'o",
 	'disclaimers' => 'Marandu leiguigua',
-	'difference' => '(Mba\'épe ojaovy oñemyatyrõva\'ekue)',
+	'difference' => "(Mba'épe ojaovy oñemyatyrõva'ekue)",
 	'diff-multi' => '($1 ediciones intermedias no se muestran.)',
 	'disambiguations' => 'Kuatiarogue mohesakãporãha',
 	'disambiguationspage' => 'Template:Disambig',
-	'doubleredirects' => 'Ñembohapejey jo\'apyre',
-	'deadendpages' => 'Kuatiarogue ñesẽ\'ỹva',
+	'doubleredirects' => "Ñembohapejey jo'apyre",
+	'deadendpages' => "Kuatiarogue ñesẽ'ỹva",
 	'dellogpage' => 'Ñemboguepyre ñonagatupy',
 	'deletionlog' => 'ñemboguepyre ñonagatupy',
-	'delete_and_move' => 'Mboje\'o ha guerova',
-];
+	'delete_and_move' => "Mboje'o ha guerova",
+);
 
-$messages['got'] = [
+$messages['got'] = array(
 	'december' => '𐌾𐌹𐌿𐌻𐌴𐌹𐍃',
 	'december-gen' => '𐌾𐌹𐌿𐌻𐌴𐌹𐍃',
 	'dec' => '𐌾𐌹𐌿',
@@ -5739,9 +5755,9 @@ $messages['got'] = [
 	'dellogpage' => '𐍄𐌰𐌹𐍂𐌰 𐌰𐌹𐍂𐍅𐌱𐍉𐌺𐌰',
 	'deleteotherreason' => '𐌰𐌽𐌸𐌰𐍂/𐌼𐌰𐌹𐍃 𐌼𐌹𐍄𐍉𐌽𐍃:',
 	'deletereasonotherlist' => '𐌰𐌽𐌸𐌰𐍂 𐌼𐌹𐍄𐍉𐌽𐍃',
-];
+);
 
-$messages['grc'] = [
+$messages['grc'] = array(
 	'december' => 'Δεκέμβριος',
 	'december-gen' => 'Δεκεμβρίου',
 	'dec' => 'Δεκ',
@@ -5809,7 +5825,7 @@ $messages['grc'] = [
 	'djvu_page_error' => 'Δέλτος DjVu ἐκτὸς ἐμβελείας',
 	'djvu_no_xml' => 'Ἀδύνατον τὸ προσκομίζειν τὴν XML διὰ τὸ DjVu-ἀρχεῖον',
 	'deletedrevision' => 'Προτέρα ἔκδοσις διαγραφεῖσα $1',
-	'deletedwhileediting' => '\'\'\'Εἴδησις\'\'\': Ἥδε ἡ δέλτος διεγράφη πρὸ τοῦ ἄρχειν ὑπἐσοῦ τὸ μεταγράφειν!',
+	'deletedwhileediting' => "'''Εἴδησις''': Ἥδε ἡ δέλτος διεγράφη πρὸ τοῦ ἄρχειν ὑπἐσοῦ τὸ μεταγράφειν!",
 	'descending_abbrev' => 'καταβ',
 	'duplicate-defaultsort' => 'Eἴδησις: Ἡ προκαθωρισμένη κλεὶς ταξινομήσεως "$2" ὑπερκαλύπτει προηγουμένην προκαθωρισμένην κλεῖδα ταξινομήσεως "$1".',
 	'dberr-header' => 'Τόδε τὸ βίκι ἔχει πρόβλημα',
@@ -5819,9 +5835,9 @@ $messages['grc'] = [
 	'dberr-usegoogle' => 'Ἐν τῷ μεταξὺ χρόνῳ πείρασον τῆν ζήτησιν μέσῳ τοῦ Google.',
 	'dberr-outofdate' => 'Αἱ ἐνδείξεις σφῶν περὶ τοῦ περιεχομένου ἡμῶν πιθανῶς ούκ είσὶ ἐνήμεραι.',
 	'dberr-cachederror' => 'Τόδε λανθάνον ἀντίγραφόν τι τῆς ἐζητημένης δέλτου ἐστίν, πιθανῶς μὴ ἐνήμερον.',
-];
+);
 
-$messages['gsw'] = [
+$messages['gsw'] = array(
 	'december' => 'Dezämber',
 	'december-gen' => 'Dezämber',
 	'dec' => 'Dez.',
@@ -5898,7 +5914,7 @@ D Syte „[[:$1]]“ gits scho. Wottsch du si lösche, zume Platz zum verschiebe
 	'djvu_no_xml' => 'XML-Date chönne für d DjVu-Datei nüt abgruefe werde',
 	'deletedrevision' => 'alti Version: $1',
 	'days' => '{{PLURAL:$1|1 Tag|$1 Täg}}',
-	'deletedwhileediting' => '\'\'\'Obacht\'\'\': Die Syte isch glescht wore, nochdäm Du aagfange hesch si z bearbeite!',
+	'deletedwhileediting' => "'''Obacht''': Die Syte isch glescht wore, nochdäm Du aagfange hesch si z bearbeite!",
 	'descending_abbrev' => 'ab',
 	'duplicate-defaultsort' => 'Obacht: Dr Sortierigsschlüssel „$2“ iberschrybt dr vorig brucht Schlüssel „$1“.',
 	'dberr-header' => 'Des Wiki het e Probläm',
@@ -5908,9 +5924,9 @@ D Syte „[[:$1]]“ gits scho. Wottsch du si lösche, zume Platz zum verschiebe
 	'dberr-usegoogle' => 'Du chenntsch in dr Zwischezyt mit Google sueche.',
 	'dberr-outofdate' => 'Obacht: Dr Suechindex vu unsere Syte chennt veraltet syy.',
 	'dberr-cachederror' => 'Des isch e Kopii vum Cache vu dr Syte, wu Du aagforderet hesch, un chennt veraltet syy.',
-];
+);
 
-$messages['gu'] = [
+$messages['gu'] = array(
 	'december' => 'ડિસેમ્બર',
 	'december-gen' => 'ડિસેમ્બર',
 	'dec' => 'ડિસે',
@@ -5945,9 +5961,9 @@ $messages['gu'] = [
 	'download' => 'ડાઉનલોડ',
 	'disambiguations' => 'સંદિગ્ધ શીર્ષકવાળાં પાનાં સાથે જોડાતાં પૃષ્ઠો',
 	'disambiguationspage' => 'Template:અસંદિગ્ધ',
-	'disambiguations-text' => 'નીચેના પાના  \'\'\'સંદિગ્ધ વાક્યો વાળા પાના\'\'\' સાથે કડી દ્વારા જોડાયેલા છે.
+	'disambiguations-text' => "નીચેના પાના  '''સંદિગ્ધ વાક્યો વાળા પાના''' સાથે કડી દ્વારા જોડાયેલા છે.
 તેના કરતા તેને યોગ્ય તે વિષ્ય સાથે જોડાયેલા હોવા જોઇએ.<br />
-આ પાનાને સંદિગ્ધ  વાક્યો વાળા પાના ત્યારે કહી શકાય જ્યારે તે [[MediaWiki:Disambiguationspage]] નામના ઢાંચા સાથે જોડાયેલા હોય.',
+આ પાનાને સંદિગ્ધ  વાક્યો વાળા પાના ત્યારે કહી શકાય જ્યારે તે [[MediaWiki:Disambiguationspage]] નામના ઢાંચા સાથે જોડાયેલા હોય.",
 	'doubleredirects' => 'બનણું દિશાનિર્દેશિત',
 	'doubleredirectstext' => 'આ પાનું દિશા નિર્દેશિત પાના પર થયેલા દિશા નિર્દેશિત પાનાની યાદિ બતાવે છે.
 દરેક લિટીમાં પાના પ્રથમ અને દ્વીતીય દિશા નિર્દેશન ક્ડી બતાવે છે, તે સિવાય દ્વીતીય દિશા નિર્દેશનનું લક્ષ્ય પણ બતાવે છે કે મોટે ભાગે મૂળ પાનું હોઇ શકે છેૢ જેના પર પ્રથમ દિશા નિર્દેશન લક્ષિત છે. <del>Crossed out</del> લિટીઓ  નો ઉત્તર મેળવાયો છે.',
@@ -5995,7 +6011,7 @@ Deleting it may disrupt database operations of {{SITENAME}};',
 	'djvu_no_xml' => 'DjVu ફાઇલ માટે XML લાવવા અસમર્થ',
 	'deletedrevision' => 'જુના સુધારા ભૂસો $1',
 	'days' => '{{PLURAL:$1|$1 દિવસ|$1 દિવસો}}',
-	'deletedwhileediting' => '\'\'\'ચેતવણી\'\'\': તમે ફેરફાર  કર્યા પછી આ પાનું હટાવી દેવાયું !',
+	'deletedwhileediting' => "'''ચેતવણી''': તમે ફેરફાર  કર્યા પછી આ પાનું હટાવી દેવાયું !",
 	'descending_abbrev' => 'ઉતરતો ક્ર્મ',
 	'duplicate-defaultsort' => '\'\'\'ચેતવણી:\'\'\'  કી "$2" આગળનામૂળે પ્રસ્થાપિત ક્રમિકાવર્ગીકરણ કી "$1"નું સ્થાન લઈ લેશે..',
 	'dberr-header' => 'આ વિકિમાં તકલીફ છે',
@@ -6006,9 +6022,9 @@ Deleting it may disrupt database operations of {{SITENAME}};',
 	'dberr-usegoogle' => 'તેસમયા દરમ્યાન તમે ગુગલ દ્વારા શોધી શકો',
 	'dberr-outofdate' => 'આપણી માહિતી સંબંધી તેમની સૂચિ કાલાતિત હોઇ શકે.',
 	'dberr-cachederror' => 'વિનંતિ કરેલ પાનાની આ એક સંગ્રહીત પ્રત માત્ર છે અને તે અધ્યતન ન પણ હોય.',
-];
+);
 
-$messages['gv'] = [
+$messages['gv'] = array(
 	'december' => 'Mee ny Nollick',
 	'december-gen' => 'Mee ny Nollick',
 	'dec' => 'Noll',
@@ -6040,9 +6056,9 @@ Jeeagh er $2 son recortys ny scryssaghyn magh jeianagh.',
 ** Cragheydys',
 	'delete_and_move' => 'Scryss as scughey',
 	'delete_and_move_confirm' => 'Ta, scryss magh y duillag',
-];
+);
 
-$messages['ha'] = [
+$messages['ha'] = array(
 	'december' => 'Disamba',
 	'december-gen' => 'Disamba',
 	'dec' => 'Dic',
@@ -6059,9 +6075,9 @@ Ku duba $2 ku ga rajistan soke-soke na baya-bayan nan.',
 	'deletecomment' => 'Dalili:',
 	'deleteotherreason' => 'Wani dalilin:',
 	'deletereasonotherlist' => 'Wani dalili',
-];
+);
 
-$messages['hak'] = [
+$messages['hak'] = array(
 	'december' => 'Sṳ̍p-ngi-ngie̍t',
 	'december-gen' => 'Sṳ̍p-ngi-ngie̍t',
 	'dec' => 'Sṳ̍p-ngi-ngie̍t',
@@ -6110,9 +6126,9 @@ Ngì khok-ngin sî-yeu chhù-thet ngièn hong-mien khi̍p chin-hàng yì-thung m
 	'deletedrevision' => 'Yí-kîn chhù-thet khiu-ke pán-pún $1.',
 	'deletedwhileediting' => 'Kín-ko: Chhṳ́-hong chhai ngì khôi-sṳ́ phiên-cho chṳ̂-heu yí-kîn pûn Chhù-thet!',
 	'descending_abbrev' => 'Suk-siá-kám',
-];
+);
 
-$messages['haw'] = [
+$messages['haw'] = array(
 	'december' => 'Kēkēmapa',
 	'december-gen' => 'Kēkēmapa',
 	'dec' => 'Kek',
@@ -6138,12 +6154,12 @@ E ʻike iā $2 no ka papa o nā kāpae ʻana hou.',
 	'delete-edit-reasonlist' => 'Ho‘opololei i nā kumu no ke kāpae ‘ana',
 	'delete_and_move' => 'E kāpae a e ho‘ololi i ka inoa',
 	'delete_and_move_confirm' => '‘Ae, e kāpae i ka ‘ao‘ao',
-];
+);
 
-$messages['he'] = [
+$messages['he'] = array(
 	'december' => 'דצמבר',
 	'december-gen' => 'בדצמבר',
-	'dec' => 'דצמ\'',
+	'dec' => "דצמ'",
 	'delete' => 'מחיקה',
 	'deletethispage' => 'מחיקת דף זה',
 	'disclaimers' => 'הבהרה משפטית',
@@ -6179,9 +6195,9 @@ $messages['he'] = [
 	'download' => 'הורדה',
 	'disambiguations' => 'דפים שמקשרים לדפי פירושונים',
 	'disambiguationspage' => 'Template:פירושונים',
-	'disambiguations-text' => 'הדפים הבאים מקשרים ל\'\'\'דפי פירושונים\'\'\'.
+	'disambiguations-text' => "הדפים הבאים מקשרים ל'''דפי פירושונים'''.
 עליהם לקשר לדף הנושא הרלוונטי במקום זאת.<br />
-הדף נחשב לדף פירושונים אם הוא משתמש בתבנית המקושרת מהדף [[MediaWiki:Disambiguationspage]].',
+הדף נחשב לדף פירושונים אם הוא משתמש בתבנית המקושרת מהדף [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'הפניות כפולות',
 	'doubleredirectstext' => 'בדף הזה מופיעה רשימת דפי הפניה שמפנים לדפי הפניה אחרים.
 כל שורה מכילה קישור לשתי ההפניות הראשונות, וכן את היעד של ההפניה השנייה, שהיא לרוב היעד ה"אמיתי" של ההפניה, שההפניה הראשונה אמורה להצביע אליו.
@@ -6222,7 +6238,7 @@ $messages['he'] = [
 	'djvu_no_xml' => 'לא ניתן היה לקבל את ה־XML עבור קובץ ה־DjVu',
 	'deletedrevision' => 'מחק גרסה ישנה $1',
 	'days' => '{{PLURAL:$1|יום|$1 ימים|יומיים}}',
-	'deletedwhileediting' => '\'\'\'אזהרה\'\'\': דף זה נמחק לאחר שהתחלתם לערוך!',
+	'deletedwhileediting' => "'''אזהרה''': דף זה נמחק לאחר שהתחלתם לערוך!",
 	'descending_abbrev' => 'יורד',
 	'duplicate-defaultsort' => '\'\'\'אזהרה:\'\'\' המיון הרגיל "$2" דורס את המיון הרגיל המוקדם ממנו "$1".',
 	'dberr-header' => 'בעיה בוויקי',
@@ -6242,9 +6258,9 @@ $messages['he'] = [
 	'duration-centuries' => '{{PLURAL:$1|מאה שנה|$1 מאות שנים|מאתיים שנה}}',
 	'duration-millennia' => '{{PLURAL:$1|אלף שנה|$1 אלפי שנים|אלפיים שנה}}',
 	'discuss' => 'שיחה',
-];
+);
 
-$messages['hi'] = [
+$messages['hi'] = array(
 	'december' => 'दिसंबर',
 	'december-gen' => 'दिसंबर',
 	'dec' => 'दिसं॰',
@@ -6277,9 +6293,9 @@ $messages['hi'] = [
 	'download' => 'डाउनलोड',
 	'disambiguations' => 'डिसऍम्बिग्वीशन पन्ने',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'निम्नांकित पृष्ठ \'\'\'असमंजश पृष्ठ\'\'\' से जुड़े हुए हैं।
+	'disambiguations-text' => "निम्नांकित पृष्ठ '''असमंजश पृष्ठ''' से जुड़े हुए हैं।
 वरन, ये पृष्ठ उपयुक्त विषय से जुड़े हुए होने चाहिए।<br />
-यदि कोई पृष्ठ ऐसे सांचे का प्रयोग करता है, जो की [[MediaWiki:Disambiguationspage]] से जुड़ा हुआ है, तो उसे असमंजश पृष्ठ समझा जाता है।',
+यदि कोई पृष्ठ ऐसे सांचे का प्रयोग करता है, जो की [[MediaWiki:Disambiguationspage]] से जुड़ा हुआ है, तो उसे असमंजश पृष्ठ समझा जाता है।",
 	'doubleredirects' => 'दुगुनी-अनुप्रेषिते',
 	'doubleredirectstext' => 'यह पन्ना उन पन्नों की सूची देता है जो अन्य पुनर्निर्देशित पन्नों की ओर पुनर्निर्देशित होते हैं।
 हर कतार में पहले और दूसरे पुनर्निर्देशन की कड़ियाँ, तथा दूसरे पुनर्निर्देशन का लक्ष्य भी है, आमतौर पर यही "वास्तविक" लक्ष्यित पृष्ठ होगा, और पहला पुनर्देशन वास्तव में इसी को लक्ष्यित होना चाहिए था।
@@ -6324,7 +6340,7 @@ $messages['hi'] = [
 	'djvu_page_error' => 'DjVu पन्ना रेंजके बाहर हैं',
 	'djvu_no_xml' => 'DjVu फ़ाईलके लिये XML नहीं मिल पाया',
 	'deletedrevision' => 'पुराना अवतरण $1 हटा दिया',
-	'deletedwhileediting' => '\'\'\'Warning\'\'\': आपने जब से संपादन शुरू किया है, उसके बाद से यह पन्ना ही मिटा दिया गया है!',
+	'deletedwhileediting' => "'''Warning''': आपने जब से संपादन शुरू किया है, उसके बाद से यह पन्ना ही मिटा दिया गया है!",
 	'descending_abbrev' => 'ज़ानकारी',
 	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' पुरानी मूल क्रमांकन कुंजी "$1" के बजाय अब मूल क्रमांकन कुंजी "$2" होगी।',
 	'dberr-header' => 'इस विकि को कुछ दिक्कत आ रही है',
@@ -6334,9 +6350,9 @@ $messages['hi'] = [
 	'dberr-usegoogle' => 'इस बीच आप गूगल से खोज करने की कोशिश कर सकते हैं।',
 	'dberr-outofdate' => 'ध्यान दे, हो सकता है कि हमारी सामग्री से संबंधित उनकी सूची बासी हो।',
 	'dberr-cachederror' => 'यह अनुरोधित पन्ने की संचित प्रति है, हो सकता है यह ताज़ी न हो।',
-];
+);
 
-$messages['hif'] = [
+$messages['hif'] = array(
 	'december' => 'दिसंबर',
 	'december-gen' => 'दिसंबर',
 	'dec' => 'दिसं॰',
@@ -6369,9 +6385,9 @@ $messages['hif'] = [
 	'download' => 'डाउनलोड',
 	'disambiguations' => 'डिसऍम्बिग्वीशन पन्ने',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'निम्नांकित पृष्ठ \'\'\'असमंजश पृष्ठ\'\'\' से जुड़े हुए हैं।
+	'disambiguations-text' => "निम्नांकित पृष्ठ '''असमंजश पृष्ठ''' से जुड़े हुए हैं।
 वरन, ये पृष्ठ उपयुक्त विषय से जुड़े हुए होने चाहिए।<br />
-यदि कोई पृष्ठ ऐसे सांचे का प्रयोग करता है, जो की [[MediaWiki:Disambiguationspage]] से जुड़ा हुआ है, तो उसे असमंजश पृष्ठ समझा जाता है।',
+यदि कोई पृष्ठ ऐसे सांचे का प्रयोग करता है, जो की [[MediaWiki:Disambiguationspage]] से जुड़ा हुआ है, तो उसे असमंजश पृष्ठ समझा जाता है।",
 	'doubleredirects' => 'दुगुनी-अनुप्रेषिते',
 	'doubleredirectstext' => 'यह पन्ना उन पन्नों की सूची देता है जो अन्य पुनर्निर्देशित पन्नों की ओर पुनर्निर्देशित होते हैं।
 हर कतार में पहले और दूसरे पुनर्निर्देशन की कड़ियाँ, तथा दूसरे पुनर्निर्देशन का लक्ष्य भी है, आमतौर पर यही "वास्तविक" लक्ष्यित पृष्ठ होगा, और पहला पुनर्देशन वास्तव में इसी को लक्ष्यित होना चाहिए था।
@@ -6416,7 +6432,7 @@ $messages['hif'] = [
 	'djvu_page_error' => 'DjVu पन्ना रेंजके बाहर हैं',
 	'djvu_no_xml' => 'DjVu फ़ाईलके लिये XML नहीं मिल पाया',
 	'deletedrevision' => 'पुराना अवतरण $1 हटा दिया',
-	'deletedwhileediting' => '\'\'\'Warning\'\'\': आपने जब से संपादन शुरू किया है, उसके बाद से यह पन्ना ही मिटा दिया गया है!',
+	'deletedwhileediting' => "'''Warning''': आपने जब से संपादन शुरू किया है, उसके बाद से यह पन्ना ही मिटा दिया गया है!",
 	'descending_abbrev' => 'ज़ानकारी',
 	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' पुरानी मूल क्रमांकन कुंजी "$1" के बजाय अब मूल क्रमांकन कुंजी "$2" होगी।',
 	'dberr-header' => 'इस विकि को कुछ दिक्कत आ रही है',
@@ -6426,9 +6442,9 @@ $messages['hif'] = [
 	'dberr-usegoogle' => 'इस बीच आप गूगल से खोज करने की कोशिश कर सकते हैं।',
 	'dberr-outofdate' => 'ध्यान दे, हो सकता है कि हमारी सामग्री से संबंधित उनकी सूची बासी हो।',
 	'dberr-cachederror' => 'यह अनुरोधित पन्ने की संचित प्रति है, हो सकता है यह ताज़ी न हो।',
-];
+);
 
-$messages['hif-latn'] = [
+$messages['hif-latn'] = array(
 	'december' => 'December',
 	'december-gen' => 'December',
 	'dec' => 'Dec',
@@ -6461,9 +6477,9 @@ Database ke galti sandes rahaa "$3: $4"',
 	'download' => 'download karo',
 	'disambiguations' => 'Disambiguation panna',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'Niche ke panna \'\'\'disambiguation panna\'\'\' se link hoe hai.
+	'disambiguations-text' => "Niche ke panna '''disambiguation panna''' se link hoe hai.
 They should link to the appropriate topic instead.<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]',
+A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dugna redirects',
 	'doubleredirectstext' => 'Ii panna uu panna ke suchi de hai jon ki duusra redirect panna pe redirect kare hai.
 Sab row me pahila aur duusra redirect ke jorr hae, aur isme duusra redirect ke nisana bhi hae, jon ki jaada kar ke "aslii" nisana waala panna, jon ki pahila redirect ke dekhae hae.
@@ -6507,9 +6523,9 @@ Ka aap mangta hai ki iske mitae dewa jaae, jisse ki ii naam se duusra paana ke s
 	'djvu_no_xml' => ' DjVu file ke XML ke nai paawe sakaa hae',
 	'deletedrevision' => 'Purana badlao ke mitae dia hai $1',
 	'dberr-header' => 'Ii wiki me kuchh garrbarr hae',
-];
+);
 
-$messages['hil'] = [
+$messages['hil'] = array(
 	'december' => 'Disyimbre',
 	'december-gen' => 'Disyimbre',
 	'dec' => 'Dis',
@@ -6547,9 +6563,9 @@ Lantawa $2 para sa mga lista sang mga bag-o lang ginkakas.',
 	'deletecomment' => 'Rason:',
 	'deleteotherreason' => 'Iban/dugang nga rason:',
 	'deletereasonotherlist' => 'Iban nga rason',
-];
+);
 
-$messages['hr'] = [
+$messages['hr'] = array(
 	'december' => 'prosinca',
 	'december-gen' => 'prosinca',
 	'dec' => 'pro',
@@ -6584,9 +6600,9 @@ Baza je vratila pogrešku "$3: $4"',
 	'download' => 'skidanje',
 	'disambiguations' => 'Stranice koje vode na razdvojbene stranice',
 	'disambiguationspage' => 'Template:Razdvojba',
-	'disambiguations-text' => 'Sljedeće stranice povezuju na \'\'\'razdvojbenu stranicu\'\'\'.
+	'disambiguations-text' => "Sljedeće stranice povezuju na '''razdvojbenu stranicu'''.
 Umjesto toga bi trebale povezivati na prikladnu temu.<br />
-Stranica se tretira kao razdvojbena stranica ako koristi predložak na kojega vodi [[MediaWiki:Disambiguationspage]]',
+Stranica se tretira kao razdvojbena stranica ako koristi predložak na kojega vodi [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dvostruka preusmjeravanja',
 	'doubleredirectstext' => 'Ova stranica sadrži popis stranica koje preusmjeravju na druge stranice za preusmjeravanje.
 Svaki redak sadrži poveznice na prvo i drugo preusmjeravanje, kao i odredište drugog preusmjeravanja
@@ -6626,11 +6642,11 @@ Sva vremena su prema poslužiteljevom vremenu.',
 Odredišni članak "[[:$1]]" već postoji. Želite li ga obrisati da biste napravili mjesto za premještaj?',
 	'delete_and_move_confirm' => 'Da, izbriši stranicu',
 	'delete_and_move_reason' => 'Obrisano kako bi se napravilo mjesta za premještaj, stari naziv "[[$1]]"',
-	'djvu_page_error' => 'DjVu stranica nije dohvatljiva (\'\'out of range\'\')',
+	'djvu_page_error' => "DjVu stranica nije dohvatljiva (''out of range'')",
 	'djvu_no_xml' => 'Ne mogu dohvatiti XML za DjVu datoteku',
 	'deletedrevision' => 'Izbrisana stara inačica $1',
 	'days' => '{{PLURAL:$1|$1 dan|$1 dana|$1 dana}}',
-	'deletedwhileediting' => '\'\'\'Upozorenje\'\'\': Ova stranica je obrisana nakon što ste počeli uređivati!',
+	'deletedwhileediting' => "'''Upozorenje''': Ova stranica je obrisana nakon što ste počeli uređivati!",
 	'descending_abbrev' => 'pad',
 	'duplicate-defaultsort' => '\'\'\'Upozorenje:\'\'\' Razvrstavanje po "$2" poništava ranije razvrstavanje po "$1".',
 	'dberr-header' => 'Ovaj wiki ima problem',
@@ -6641,9 +6657,9 @@ Odredišni članak "[[:$1]]" već postoji. Želite li ga obrisati da biste napra
 	'dberr-outofdate' => 'Imajte na umu da su njihova kazala našeg sadržaja možda zastarjela.',
 	'dberr-cachederror' => 'Sljedeće je dohvaćena kopija tražene stranice, te možda nije ažurirana.',
 	'discuss' => 'Raspravljaj',
-];
+);
 
-$messages['hsb'] = [
+$messages['hsb'] = array(
 	'december' => 'december',
 	'december-gen' => 'decembra',
 	'dec' => 'dec',
@@ -6677,7 +6693,7 @@ Datowa banka wróći zmylk "$3: $4"',
 	'download' => 'Sćahnyć',
 	'disambiguations' => 'Strony, kotrež na strony wjacezmyslnosće wotkazuja',
 	'disambiguationspage' => 'Template:Wjacezmyslnosć',
-	'disambiguations-text' => 'Slědowace strony na \'\'\'rozjasnjenje wjacezmyslnosće\'\'\' wotkazuja. Měli město toho na poprawnu stronu wotkazać.<br />Strona so jako rozjasnjenje wjacezmyslnosće zarjaduje, jeli předłohu wužiwa, na kotruž so wot [[MediaWiki:Disambiguationspage]] wotkazuje.',
+	'disambiguations-text' => "Slědowace strony na '''rozjasnjenje wjacezmyslnosće''' wotkazuja. Měli město toho na poprawnu stronu wotkazać.<br />Strona so jako rozjasnjenje wjacezmyslnosće zarjaduje, jeli předłohu wužiwa, na kotruž so wot [[MediaWiki:Disambiguationspage]] wotkazuje.",
 	'doubleredirects' => 'Dwójne daleposrědkowanja',
 	'doubleredirectstext' => 'Tuta strona nalistuje strony, kotrež k druhim daleposrědkowanskim stronam dale posrědkuja.
 Kóžda rjadka wobsahuje wotkazy k prěnjemu a druhemu daleposrědkowanju kaž tež cil druheho daleposrědkowanja, kotryž je zwjetša  "woprawdźita" cilowa strona, na kotruž prěnje daleposrědkowanje měło pokazać. <del>Přešmórnjene</del> zapiski su hižo sčinjene.',
@@ -6717,7 +6733,7 @@ Cilowa strona „[[:$1]]” hižo eksistuje. Chceš ju wušmórnyć, zo by so p�
 	'djvu_no_xml' => 'Daty XML njemóža so za dataju DjVU wotwołać',
 	'deletedrevision' => 'Stara wersija $1 wušmórnjena',
 	'days' => '{{PLURAL:$1|$1 dnjom|$1 dnjomaj|$1 dnjemi|$1 dnjemi}}',
-	'deletedwhileediting' => '\'\'\'Kedźbu\'\'\': Tuta strona bu wušmórnjena, po tym zo sy započał ju wobdźěłać!',
+	'deletedwhileediting' => "'''Kedźbu''': Tuta strona bu wušmórnjena, po tym zo sy započał ju wobdźěłać!",
 	'descending_abbrev' => 'zestupowacy',
 	'duplicate-defaultsort' => 'Warnowanje: Standardny sortěrowonski kluč (DEFAULTSORTKEY) "$2" přepisa prjedawšu sortěrowanski kluč "$1".',
 	'dberr-header' => 'Tutón wiki ma problem',
@@ -6727,9 +6743,9 @@ Cilowa strona „[[:$1]]” hižo eksistuje. Chceš ju wušmórnyć, zo by so p�
 	'dberr-usegoogle' => 'Mjeztym móžeš z pomocu Google pytać.',
 	'dberr-outofdate' => 'Wobkedźbuj, zo jich indeksy našeho wobsaha móhli zestarjene być.',
 	'dberr-cachederror' => 'Slědowaca je pufrowana kopija požadaneje strony a móhła zestarjena być.',
-];
+);
 
-$messages['ht'] = [
+$messages['ht'] = array(
 	'december' => 'desanm',
 	'december-gen' => 'desanm',
 	'dec' => 'des',
@@ -6764,9 +6780,9 @@ Gade $2 pou wè yon lis efasman resan.',
 	'deletecomment' => 'Rezon:',
 	'deleteotherreason' => 'Rezon an plis :',
 	'deletereasonotherlist' => 'Lòt rezon',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'december' => 'december',
 	'december-gen' => 'december',
 	'dec' => 'dec',
@@ -6799,9 +6815,9 @@ Az adatbázis ezzel a hibával tért vissza: „$3: $4”.',
 	'download' => 'letöltés',
 	'disambiguations' => 'Egyértelműsítő lapokra mutató lapok',
 	'disambiguationspage' => 'Template:Egyért',
-	'disambiguations-text' => 'A következő oldalak \'\'\'egyértelműsítő lapra\'\'\' mutató hivatkozást tartalmaznak.
+	'disambiguations-text' => "A következő oldalak '''egyértelműsítő lapra''' mutató hivatkozást tartalmaznak.
 A megfelelő szócikkre kellene mutatniuk inkább.<br />
-Egy oldal egyértelműsítő lapnak számít, ha tartalmazza a [[MediaWiki:Disambiguationspage]] oldalról belinkelt sablonok valamelyikét.',
+Egy oldal egyértelműsítő lapnak számít, ha tartalmazza a [[MediaWiki:Disambiguationspage]] oldalról belinkelt sablonok valamelyikét.",
 	'doubleredirects' => 'Dupla átirányítások',
 	'doubleredirectstext' => 'Ez a lap azokat a lapokat listázza, melyek átirányító lapokra irányítanak át.
 Minden sor tartalmaz egy hivatkozást az első, valamint a második átirányításra, valamint a második átirányítás céljára, ami általában a valódi céllap, erre kellene az első átirányításnak mutatnia.
@@ -6843,7 +6859,7 @@ Az átnevezés céljaként megadott „[[:$1]]” szócikk már létezik.  Ha az
 	'djvu_no_xml' => 'Nem olvasható ki a DjVu fájl XML-je',
 	'deletedrevision' => 'Régebbi változat törölve: $1',
 	'days' => '{{PLURAL:$1|egy|$1}} nappal',
-	'deletedwhileediting' => '\'\'\'Figyelmeztetés:\'\'\' A lapot a szerkesztés megkezdése után törölték!',
+	'deletedwhileediting' => "'''Figyelmeztetés:''' A lapot a szerkesztés megkezdése után törölték!",
 	'descending_abbrev' => 'csökk',
 	'duplicate-defaultsort' => 'Figyelem: a(z) „$2” rendezőkulcs felülírja a korábbit („$1”).',
 	'dberr-header' => 'A wikivel problémák vannak',
@@ -6853,9 +6869,9 @@ Az átnevezés céljaként megadott „[[:$1]]” szócikk már létezik.  Ha az
 	'dberr-usegoogle' => 'A probléma elmúlásáig próbálhatsz keresni a Google-lel.',
 	'dberr-outofdate' => 'Fontos tudnivaló, hogy az oldal tartalmáról készített indexeik elavultak lehetnek.',
 	'dberr-cachederror' => 'Lenn a kért oldal gyorsítótárazott változata látható, és lehet, hogy nem teljesen friss.',
-];
+);
 
-$messages['hy'] = [
+$messages['hy'] = array(
 	'december' => 'Դեկտեմբեր',
 	'december-gen' => 'Դեկտեմբերի',
 	'dec' => 'դեկ',
@@ -6925,9 +6941,9 @@ $messages['hy'] = [
 	'dberr-header' => 'Այս վիքիում խնդիրներ են առաջացել',
 	'dberr-problems' => 'Այս կայքում առաջացել են տեխնիկական խնդիրներ։ Հայցում ենք ձեր ներողությունը։',
 	'dberr-again' => 'Փորձեք մի քանի րոպե սպասել և վերաբեռնել էջը։',
-];
+);
 
-$messages['ia'] = [
+$messages['ia'] = array(
 	'december' => 'decembre',
 	'december-gen' => 'decembre',
 	'dec' => 'dec',
@@ -6962,9 +6978,9 @@ Le base de datos retornava le error "$3: $4"',
 	'download' => 'discargar',
 	'disambiguations' => 'Paginas con ligamines a paginas de disambiguation',
 	'disambiguationspage' => 'Template:Disambiguation',
-	'disambiguations-text' => 'Le sequente paginas ha ligamines a un \'\'\'pagina de disambiguation\'\'\'.
+	'disambiguations-text' => "Le sequente paginas ha ligamines a un '''pagina de disambiguation'''.
 Istes deberea esser reimplaciate con ligamines al topicos appropriate.<br />
-Un pagina se tracta como pagina de disambiguation si illo usa un patrono al qual [[MediaWiki:Disambiguationspage]] ha un ligamine.',
+Un pagina se tracta como pagina de disambiguation si illo usa un patrono al qual [[MediaWiki:Disambiguationspage]] ha un ligamine.",
 	'doubleredirects' => 'Redirectiones duple',
 	'doubleredirectstext' => 'Iste pagina lista paginas de redirection verso altere paginas de redirection.
 Cata linea contine ligamines al prime e al secunde redirection, con le destination del secunde redirection. Iste es normalmente le "ver" pagina de destination, al qual le prime redirection tamben deberea punctar.
@@ -7010,7 +7026,7 @@ Esque tu vole deler lo pro permitter le renomination?',
 	'djvu_no_xml' => 'Impossibile obtener XML pro file DjVu',
 	'deletedrevision' => 'Deleva le ancian version $1',
 	'days' => '{{PLURAL:$1|$1 die|$1 dies}}',
-	'deletedwhileediting' => '\'\'\'Attention:\'\'\' Iste pagina esseva delite post que tu comenciava a modificar lo!',
+	'deletedwhileediting' => "'''Attention:''' Iste pagina esseva delite post que tu comenciava a modificar lo!",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => 'Attention: Le clave de ordination predefinite "$2" supplanta le anterior clave de ordination predefinite "$1".',
 	'dberr-header' => 'Iste wiki ha un problema',
@@ -7020,9 +7036,9 @@ Esque tu vole deler lo pro permitter le renomination?',
 	'dberr-usegoogle' => 'Tu pote probar cercar con Google intertanto.',
 	'dberr-outofdate' => 'Nota que lor indices de nostre contento pote esser obsolete.',
 	'dberr-cachederror' => 'Lo sequente es un copia del cache del pagina requestate, e pote esser obsolete.',
-];
+);
 
-$messages['id'] = [
+$messages['id'] = array(
 	'december' => 'Desember',
 	'december-gen' => 'Desember',
 	'dec' => 'Des',
@@ -7057,9 +7073,9 @@ Basis data menghasilkan kesalahan "$3: $4".',
 	'download' => 'unduh',
 	'disambiguations' => 'Halaman yang terhubung ke halaman disambiguasi',
 	'disambiguationspage' => 'Template:Disambig',
-	'disambiguations-text' => 'Halaman-halaman berikut memiliki pranala ke suatu \'\'\'halaman disambiguasi\'\'\'.
+	'disambiguations-text' => "Halaman-halaman berikut memiliki pranala ke suatu '''halaman disambiguasi'''.
 Halaman-halaman tersebut seharusnya berpaut ke topik-topik yang sesuai.<br />
-Suatu halaman dianggap sebagai halaman disambiguasi apabila halaman tersebut menggunakan templat yang terhubung ke [[MediaWiki:Disambiguationspage]].',
+Suatu halaman dianggap sebagai halaman disambiguasi apabila halaman tersebut menggunakan templat yang terhubung ke [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Pengalihan ganda',
 	'doubleredirectstext' => 'Halaman ini memuat daftar halaman yang dialihkan ke halaman pengalihan yang lain.
 Setiap baris memuat pranala ke pengalihan pertama dan pengalihan kedua serta target dari pengalihan kedua yang umumnya adalah halaman yang "sebenarnya". Halaman peralihan pertama seharusnya dialihkan ke halaman yang bukan merupakan halaman peralihan.
@@ -7100,7 +7116,7 @@ Halaman yang dituju, "[[:$1]]", telah mempunyai isi. Apakah Anda hendak menghapu
 	'djvu_page_error' => 'Halaman DjVu di luar rentang',
 	'djvu_no_xml' => 'XML untuk berkas DjVu tak dapat diperoleh',
 	'deletedrevision' => 'Revisi lama yang dihapus $1',
-	'deletedwhileediting' => '\'\'\'Peringatan\'\'\': Halaman ini telah dihapus setelah Anda mulai melakukan penyuntingan!',
+	'deletedwhileediting' => "'''Peringatan''': Halaman ini telah dihapus setelah Anda mulai melakukan penyuntingan!",
 	'descending_abbrev' => 'turun',
 	'duplicate-defaultsort' => 'Peringatan: Kunci pengurutan baku "$2" mengabaikan kunci pengurutan baku "$1" sebelumnya.',
 	'dberr-header' => 'Wiki ini bermasalah',
@@ -7110,9 +7126,9 @@ Halaman yang dituju, "[[:$1]]", telah mempunyai isi. Apakah Anda hendak menghapu
 	'dberr-usegoogle' => 'Anda dapat mencoba pencarian melalui Google untuk sementara waktu.',
 	'dberr-outofdate' => 'Harap diperhatikan bahwa indeks mereka terhadap isi kami mungkin sudah kedaluwarsa.',
 	'dberr-cachederror' => 'Berikut adalah salinan tersimpan halaman yang diminta, dan mungkin bukan yang terbaru.',
-];
+);
 
-$messages['ie'] = [
+$messages['ie'] = array(
 	'december' => 'decembre',
 	'december-gen' => 'decembre',
 	'dec' => 'dec',
@@ -7132,9 +7148,9 @@ $messages['ie'] = [
 	'deleteotherreason' => 'Altri motive:',
 	'deletereasonotherlist' => 'Altri motive',
 	'duplicate-defaultsort' => '\'\'\'Advertiment:\'\'\' Clave de specie contumacie "$2" substitue temporanmen clave de specie contumacie "$1".',
-];
+);
 
-$messages['ig'] = [
+$messages['ig'] = array(
 	'december' => 'Önwa Iri na abụọ',
 	'december-gen' => 'Önwa Iri na abụọ',
 	'dec' => 'ÖIrinabụọ',
@@ -7143,7 +7159,7 @@ $messages['ig'] = [
 	'disclaimers' => 'Ihe anyí chọrọ ki ma',
 	'disclaimerpage' => 'Project:Ihe I kweshiri ma',
 	'databaseerror' => 'Nsogbu nọr na njikota ómárí',
-	'directorycreateerror' => 'Enwerịkị ké usoro \'\'$1\'\'.',
+	'directorycreateerror' => "Enwerịkị ké usoro ''$1''.",
 	'deletedhist' => 'Ákíkó mbu bakashịrị',
 	'difference' => '(Ihe dị íche na orü ndi á)',
 	'datedefault' => 'Otú é shị na dose ihe efù',
@@ -7172,9 +7188,9 @@ I chorí kàchafu ya ka uzor mepo maka mpuzie ne me?',
 	'dberr-header' => 'Wiki nka nwere nsogbu',
 	'dberr-problems' => 'Ndó!
 Ámá nka nwere nsogbu ime ime.',
-];
+);
 
-$messages['ike-cans'] = [
+$messages['ike-cans'] = array(
 	'december' => 'ᑎᓯᒻᐳᕆ',
 	'december-gen' => 'ᑎᓯᒻᐳᕆ',
 	'dec' => 'ᑎᓯᒻ',
@@ -7186,9 +7202,9 @@ $messages['ike-cans'] = [
 	'deletionlog' => 'ᓂᐸᖅ ᓂᐱ',
 	'delete_and_move' => 'ᓂᐸᖅᑎᐹ  ᐊᒻᒪ ᐅᐊᔪᖅ',
 	'deletedrevision' => 'ᓂᐸᖅ ᐅᑐᖃᖅ ᑎᑎᕋᖅᑕᐅᒋᐊᕐᖓᕈᑦ $1',
-];
+);
 
-$messages['ike-latn'] = [
+$messages['ike-latn'] = array(
 	'december' => 'tisimpuri',
 	'december-gen' => 'tisimpuri',
 	'delete' => 'nipaqtipaa',
@@ -7199,9 +7215,9 @@ $messages['ike-latn'] = [
 	'deletionlog' => 'nipaq nipi',
 	'delete_and_move' => 'nipaqtipaa amma uajuq',
 	'deletedrevision' => 'nipaq utuqaq titiraqtaugiarngarut $1',
-];
+);
 
-$messages['ilo'] = [
+$messages['ilo'] = array(
 	'december' => 'Disiembre',
 	'december-gen' => 'Disiembre',
 	'dec' => 'Dis',
@@ -7236,9 +7252,9 @@ Ti database ket nangipatulod ti biddut "$3: $4".',
 	'download' => 'Ikarga nga agpababa',
 	'disambiguations' => 'Dagiti panid a nakasilpo kadagiti panangilawlawag',
 	'disambiguationspage' => 'Template:pangipalpalawag',
-	'disambiguations-text' => 'Dagiti sumaganad a panid ket manilpo iti \'\'\'pagpalawag a panid\'\'\'.
+	'disambiguations-text' => "Dagiti sumaganad a panid ket manilpo iti '''pagpalawag a panid'''.
 Ngem agpasilpo da kuma ti husto a topiko.<br />
-Ti panid ket kas a pagpalawag a panid no agusar ti templeta a nakasilpo idiay [[MediaWiki:Disambiguationspage]]',
+Ti panid ket kas a pagpalawag a panid no agusar ti templeta a nakasilpo idiay [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dagiti naminduan a panangbaw-ing',
 	'doubleredirectstext' => 'Daytoy a panid ket ilista na dagiti panid nga agbaw-ing kadagiti sabsabali a baw-ing a pampanid.
 Iti maysanga aray ket adda nagyan na kadagiti panilpo iti umuna ken maikadua a baw-ing, ken iti puntaan iti maikadua a baw-ing, nga isu ti "pudno" a puntaan ti panid, nga ti umuna a baw-ing ket isu ti ipatudo na.
@@ -7284,7 +7300,7 @@ Kayatmo nga ikkaten  tapno makaiyalis ka?',
 	'djvu_no_xml' => 'Saan a naala ti XML iti DjVu a papeles',
 	'deletedrevision' => 'Naikkat ti daan a binaliwan $1',
 	'days' => '{{PLURAL:$1|$1 aldaw|$1 al-aldaw}}',
-	'deletedwhileediting' => '\'\'\'Ballaag\'\'\': Naikkaten daytoy a panid kalpasan a rinugiam nga agurnos!',
+	'deletedwhileediting' => "'''Ballaag''': Naikkaten daytoy a panid kalpasan a rinugiam nga agurnos!",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => '\'\'\'Ballaag:\'\'\' Kinasigud a pinagilasin ti "$2" ket sukatan na ti immuna a kinasigud a pinagilasin "$1".',
 	'dberr-header' => 'Adda ti pakirut na daytoy a wiki',
@@ -7295,9 +7311,9 @@ Daytoy a pagsaadan ket agdadama ti teknikal a pagrigrigatan.',
 	'dberr-usegoogle' => 'Padasem  ti agbiruk idiay Google tatta.',
 	'dberr-outofdate' => 'Palagip a dagiti listaan da kadagiti kukuami a nagyan ket baka nagpaso.',
 	'dberr-cachederror' => 'Daytoy ket cached a kopia ti kiniddaw mo a panid, ken baka saan pay a barbaro.',
-];
+);
 
-$messages['inh'] = [
+$messages['inh'] = array(
 	'december' => 'Чантар',
 	'december-gen' => 'Чантар бетт',
 	'dec' => 'Чант.',
@@ -7320,9 +7336,9 @@ $messages['inh'] = [
 	'deletereasonotherlist' => 'Кхыдола бахьан',
 	'duplicate-defaultsort' => 'Зем бе. Сатийна дIа-хьа хьоржама доагI "$2" хьалхара сатийна дIа-хьа хьоржама доагI "$1" хьахьоржа.',
 	'dberr-header' => 'Укх викис халонаш ловш латта',
-];
+);
 
-$messages['io'] = [
+$messages['io'] = array(
 	'december' => 'decembro',
 	'december-gen' => 'di decembro',
 	'dec' => 'dec',
@@ -7358,12 +7374,12 @@ Videz $2 por obtenar registro di recenta efaci.',
 ** Kopiyuro Violaco
 ** Korupto',
 	'delete_and_move_confirm' => 'Yes, efacez la pagino',
-	'deletedwhileediting' => '\'\'\'Averto\'\'\': Ta pagino efacesis pos ke vu redakteskis!',
+	'deletedwhileediting' => "'''Averto''': Ta pagino efacesis pos ke vu redakteskis!",
 	'descending_abbrev' => 'decen',
 	'dberr-header' => 'Ta wiki havas problemo',
-];
+);
 
-$messages['is'] = [
+$messages['is'] = array(
 	'december' => 'desember',
 	'december-gen' => 'desember',
 	'dec' => 'des',
@@ -7399,9 +7415,9 @@ MySQL skilar villuboðanum „$3: $4“',
 	'download' => 'Hlaða niður',
 	'disambiguations' => 'Síður sem tengja á aðgreiningarsíður',
 	'disambiguationspage' => 'Template:Aðgreining',
-	'disambiguations-text' => 'Þessar síður innihalda tengla á svokallaðar „\'\'\'aðgreiningarsíður\'\'\'“.
+	'disambiguations-text' => "Þessar síður innihalda tengla á svokallaðar „'''aðgreiningarsíður'''“.
 Laga ætti tenglanna og láta þá vísa á rétta síðu.<br />
-Farið er með síðu sem aðgreiningarsíðu ef að hún inniheldur snið sem vísað er í frá [[MediaWiki:Disambiguationspage]]',
+Farið er með síðu sem aðgreiningarsíðu ef að hún inniheldur snið sem vísað er í frá [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Tvöfaldar tilvísanir',
 	'doubleredirectstext' => 'Þessi síða er listi yfir skrár sem eru tilvísanir á aðrar tilvísanir.
 Hver lína inniheldur tengla á fyrstu og aðra tilvísun auk þeirrar síðu sem seinni tilvísunin beinist að, sem er oftast sú síða sem allar tilvísanirnar eiga að benda á.
@@ -7444,7 +7460,7 @@ Síðan „[[:$1]]“ er þegar til. Viltu eyða henni til þess að rýma til f
 	'delete_and_move_reason' => 'Eytt til að rýma til fyrir flutning frá "[[$1]]"',
 	'deletedrevision' => 'Eyddi gamla útgáfu $1',
 	'days' => '{{PLURAL:$1|einn dagur|$1 dagar}}',
-	'deletedwhileediting' => '\'\'\'Viðvörun\'\'\': Þessari síðu var eytt eftir að þú fórst að breyta henni!',
+	'deletedwhileediting' => "'''Viðvörun''': Þessari síðu var eytt eftir að þú fórst að breyta henni!",
 	'descending_abbrev' => 'lækkandi',
 	'duplicate-defaultsort' => '\'\'\'Viðvörun:\'\'\' Sjálfgildur flýtihnappur "$2" tekur yfir fyrri flýtihnapp "$1".',
 	'dberr-header' => 'Vandamál við þennan wiki',
@@ -7464,9 +7480,9 @@ Tæknilegir örðugleikar eru á þessari síðu.',
 	'duration-decades' => '$1 {{PLURAL:$1|áratugur|áratugir}}',
 	'duration-centuries' => '$1 {{PLURAL:$1|öld|aldir}}',
 	'discuss' => 'Spjall',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'december' => 'dicembre',
 	'december-gen' => 'dicembre',
 	'dec' => 'dic',
@@ -7501,7 +7517,7 @@ Il database ha restituito il seguente errore "$3: $4".',
 	'download' => 'scarica',
 	'disambiguations' => 'Pagine che si collegano a pagine di disambiguazione',
 	'disambiguationspage' => 'Template:Disambigua',
-	'disambiguations-text' => 'Le pagine nella lista che segue contengono dei collegamenti a \'\'\'pagine di disambiguazione\'\'\' e non all\'argomento cui dovrebbero fare riferimento.<br />Vengono considerate pagine di disambiguazione tutte quelle che contengono i template elencati in [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Le pagine nella lista che segue contengono dei collegamenti a '''pagine di disambiguazione''' e non all'argomento cui dovrebbero fare riferimento.<br />Vengono considerate pagine di disambiguazione tutte quelle che contengono i template elencati in [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Redirect doppi',
 	'doubleredirectstext' => 'In questa pagina sono elencate pagine che reindirizzano ad altre pagine di redirect.
 Ciascuna riga contiene i collegamenti al primo ed al secondo redirect, oltre alla prima riga di testo del secondo redirect che di solito contiene la pagina di destinazione "corretta" alla quale dovrebbe puntare anche il primo redirect.
@@ -7525,10 +7541,10 @@ Consultare il log delle $2 per un elenco delle pagine cancellate di recente.',
 	'deletecomment' => 'Motivo:',
 	'deleteotherreason' => 'Altra motivazione o motivazione aggiuntiva:',
 	'deletereasonotherlist' => 'Altra motivazione',
-	'deletereason-dropdown' => '*Motivazioni più comuni per la cancellazione
-** Richiesta dell\'autore
+	'deletereason-dropdown' => "*Motivazioni più comuni per la cancellazione
+** Richiesta dell'autore
 ** Violazione di copyright
-** Vandalismo',
+** Vandalismo",
 	'delete-edit-reasonlist' => 'Modifica i motivi di cancellazione',
 	'delete-toobig' => 'La cronologia di questa pagina è molto lunga (oltre $1 {{PLURAL:$1|revisione|revisioni}}). La sua cancellazione è stata limitata per evitare di creare accidentalmente dei problemi di funzionamento al database di {{SITENAME}}.',
 	'delete-warning-toobig' => 'La cronologia di questa pagina è molto lunga (oltre $1 {{PLURAL:$1|revisione|revisioni}}). La sua cancellazione può creare dei problemi di funzionamento al database di {{SITENAME}}; procedere con cautela.',
@@ -7540,10 +7556,10 @@ La pagina specificata come destinazione "[[:$1]]" esiste già. Vuoi cancellarla 
 	'delete_and_move_confirm' => 'Sì, sovrascrivi la pagina esistente',
 	'delete_and_move_reason' => 'Cancellata per rendere possibile lo spostamento da "[[$1]]"',
 	'djvu_page_error' => 'Numero di pagina DjVu errato',
-	'djvu_no_xml' => 'Impossibile ottenere l\'XML per il file DjVu',
+	'djvu_no_xml' => "Impossibile ottenere l'XML per il file DjVu",
 	'deletedrevision' => 'Cancellata la vecchia revisione di $1.',
 	'days' => '{{PLURAL:$1|un giorno|$1 giorni}}',
-	'deletedwhileediting' => '\'\'\'Attenzione\'\'\': questa pagina è stata cancellata dopo che hai cominciato a modificarla!',
+	'deletedwhileediting' => "'''Attenzione''': questa pagina è stata cancellata dopo che hai cominciato a modificarla!",
 	'descending_abbrev' => 'decresc',
 	'duplicate-defaultsort' => 'Attenzione: la chiave di ordinamento predefinita "$2" sostituisce la precedente "$1".',
 	'dberr-header' => 'Questa wiki ha un problema',
@@ -7553,9 +7569,19 @@ La pagina specificata come destinazione "[[:$1]]" esiste già. Vuoi cancellarla 
 	'dberr-usegoogle' => 'Puoi provare a cercare su Google nel frattempo.',
 	'dberr-outofdate' => 'Nota che la loro indicizzazione dei nostri contenuti potrebbe non essere aggiornata.',
 	'dberr-cachederror' => 'Quella che segue è una copia cache della pagina richiesta, e potrebbe non essere aggiornata.',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+	'discuss' => 'Discuss this page',
+);
 
-$messages['iu'] = [
+$messages['iu'] = array(
 	'december' => 'dicembre',
 	'december-gen' => 'dicembre',
 	'dec' => 'dic',
@@ -7590,7 +7616,7 @@ Il database ha restituito il seguente errore "$3: $4".',
 	'download' => 'scarica',
 	'disambiguations' => 'Pagine che si collegano a pagine di disambiguazione',
 	'disambiguationspage' => 'Template:Disambigua',
-	'disambiguations-text' => 'Le pagine nella lista che segue contengono dei collegamenti a \'\'\'pagine di disambiguazione\'\'\' e non all\'argomento cui dovrebbero fare riferimento.<br />Vengono considerate pagine di disambiguazione tutte quelle che contengono i template elencati in [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Le pagine nella lista che segue contengono dei collegamenti a '''pagine di disambiguazione''' e non all'argomento cui dovrebbero fare riferimento.<br />Vengono considerate pagine di disambiguazione tutte quelle che contengono i template elencati in [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Redirect doppi',
 	'doubleredirectstext' => 'In questa pagina sono elencate pagine che reindirizzano ad altre pagine di redirect.
 Ciascuna riga contiene i collegamenti al primo ed al secondo redirect, oltre alla prima riga di testo del secondo redirect che di solito contiene la pagina di destinazione "corretta" alla quale dovrebbe puntare anche il primo redirect.
@@ -7614,10 +7640,10 @@ Consultare il log delle $2 per un elenco delle pagine cancellate di recente.',
 	'deletecomment' => 'Motivo:',
 	'deleteotherreason' => 'Altra motivazione o motivazione aggiuntiva:',
 	'deletereasonotherlist' => 'Altra motivazione',
-	'deletereason-dropdown' => '*Motivazioni più comuni per la cancellazione
-** Richiesta dell\'autore
+	'deletereason-dropdown' => "*Motivazioni più comuni per la cancellazione
+** Richiesta dell'autore
 ** Violazione di copyright
-** Vandalismo',
+** Vandalismo",
 	'delete-edit-reasonlist' => 'Modifica i motivi di cancellazione',
 	'delete-toobig' => 'La cronologia di questa pagina è molto lunga (oltre $1 {{PLURAL:$1|revisione|revisioni}}). La sua cancellazione è stata limitata per evitare di creare accidentalmente dei problemi di funzionamento al database di {{SITENAME}}.',
 	'delete-warning-toobig' => 'La cronologia di questa pagina è molto lunga (oltre $1 {{PLURAL:$1|revisione|revisioni}}). La sua cancellazione può creare dei problemi di funzionamento al database di {{SITENAME}}; procedere con cautela.',
@@ -7629,10 +7655,10 @@ La pagina specificata come destinazione "[[:$1]]" esiste già. Vuoi cancellarla 
 	'delete_and_move_confirm' => 'Sì, sovrascrivi la pagina esistente',
 	'delete_and_move_reason' => 'Cancellata per rendere possibile lo spostamento da "[[$1]]"',
 	'djvu_page_error' => 'Numero di pagina DjVu errato',
-	'djvu_no_xml' => 'Impossibile ottenere l\'XML per il file DjVu',
+	'djvu_no_xml' => "Impossibile ottenere l'XML per il file DjVu",
 	'deletedrevision' => 'Cancellata la vecchia revisione di $1.',
 	'days' => '{{PLURAL:$1|un giorno|$1 giorni}}',
-	'deletedwhileediting' => '\'\'\'Attenzione\'\'\': questa pagina è stata cancellata dopo che hai cominciato a modificarla!',
+	'deletedwhileediting' => "'''Attenzione''': questa pagina è stata cancellata dopo che hai cominciato a modificarla!",
 	'descending_abbrev' => 'decresc',
 	'duplicate-defaultsort' => 'Attenzione: la chiave di ordinamento predefinita "$2" sostituisce la precedente "$1".',
 	'dberr-header' => 'Questa wiki ha un problema',
@@ -7642,9 +7668,9 @@ La pagina specificata come destinazione "[[:$1]]" esiste già. Vuoi cancellarla 
 	'dberr-usegoogle' => 'Puoi provare a cercare su Google nel frattempo.',
 	'dberr-outofdate' => 'Nota che la loro indicizzazione dei nostri contenuti potrebbe non essere aggiornata.',
 	'dberr-cachederror' => 'Quella che segue è una copia cache della pagina richiesta, e potrebbe non essere aggiornata.',
-];
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'december' => '12月',
 	'december-gen' => '12月',
 	'dec' => '12月',
@@ -7679,9 +7705,9 @@ $messages['ja'] = [
 	'download' => 'ダウンロード',
 	'disambiguations' => '曖昧さ回避ページにリンクしているページ',
 	'disambiguationspage' => 'Template:曖昧回避',
-	'disambiguations-text' => '以下のページは\'\'\'曖昧さ回避ページ\'\'\'へリンクしています。
+	'disambiguations-text' => "以下のページは'''曖昧さ回避ページ'''へリンクしています。
 これらのページは、より適した主題のページへリンクされるべきです。<br />
-[[MediaWiki:Disambiguationspage]]からリンクされたテンプレートを使用しているページは、曖昧さ回避ページと見なされます。',
+[[MediaWiki:Disambiguationspage]]からリンクされたテンプレートを使用しているページは、曖昧さ回避ページと見なされます。",
 	'doubleredirects' => '二重転送',
 	'doubleredirectstext' => 'これは他のリダイレクトページへのリダイレクトの一覧です。
 各行には、最初のリダイレクトと、その転送先のリダイレクト、そのまた転送先へのリンクが表示されています。多くの場合、最終の転送先が正しい転送先であり、最初のリダイレクトは直接最後の転送先に向けるべきです。
@@ -7739,9 +7765,9 @@ $messages['ja'] = [
 	'djvu_no_xml' => 'DjVuファイルのXMLデータを取得できません',
 	'deletedrevision' => '古い版$1を削除しました',
 	'days' => '{{PLURAL:$1|$1日}}',
-	'deletedwhileediting' => '\'\'\'警告：\'\'\'このページが、編集開始後に削除されました！',
+	'deletedwhileediting' => "'''警告：'''このページが、編集開始後に削除されました！",
 	'descending_abbrev' => '降順',
-	'duplicate-defaultsort' => '\'\'\'警告：\'\'\'既定の並び替えキー「$2」が、その前に書かれている既定の並び替えキー「$1」を上書きしています。',
+	'duplicate-defaultsort' => "'''警告：'''既定の並び替えキー「$2」が、その前に書かれている既定の並び替えキー「$1」を上書きしています。",
 	'dberr-header' => '問題発生中です',
 	'dberr-problems' => '申し訳ありません！
 このウェブサイトに技術的な問題が発生しています。',
@@ -7755,9 +7781,14 @@ $messages['ja'] = [
 	'defaultskin2' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。<a href="$2">ここ</a>をクリックすると、スタイルシートのコードを見ることが出来ます。',
 	'defaultskin3' => 'このウィキの管理者は、デフォルトの外装を選択していません。デフォルトを使う場合は、<b>$1</b>になります。',
 	'defaultskin_choose' => 'このウィキのデフォルトの外装:',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+);
 
-$messages['jam'] = [
+$messages['jam'] = array(
 	'december' => 'Disemba',
 	'december-gen' => 'Disemba',
 	'dec' => 'Dis',
@@ -7787,21 +7818,21 @@ Si $2 fi a rekaad a riisant diliishan.',
 	'deletecomment' => 'Riizn:',
 	'deleteotherreason' => 'Ada/adishanal riizn:',
 	'deletereasonotherlist' => 'Ada riizn',
-];
+);
 
-$messages['jbo'] = [
+$messages['jbo'] = array(
 	'december' => 'decmbero',
 	'december-gen' => 'la gaimast.',
 	'dec' => 'dec',
 	'delete' => 'daspo',
-	'disclaimers' => 'nunxusra lo za\'i na fuzme',
-	'disclaimerpage' => 'Project:kampu nunxusra be lo za\'i na fuzme',
+	'disclaimers' => "nunxusra lo za'i na fuzme",
+	'disclaimerpage' => "Project:kampu nunxusra be lo za'i na fuzme",
 	'diff' => 'te frica',
 	'dellogpage' => 'plivei fi loi nu daspo',
 	'deletionlog' => 'plivei fi loi nu daspo',
-];
+);
 
-$messages['jut'] = [
+$messages['jut'] = array(
 	'december' => 'desember',
 	'december-gen' => 'desembers',
 	'dec' => 'des',
@@ -7835,9 +7866,9 @@ MySQL æ returnerede fejl "$3: $4".',
 	'deletecomment' => 'Begrundelse:',
 	'deleteotherreason' => 'Anden/uddybende begrundelse:',
 	'deletereasonotherlist' => 'Anden begrundelse',
-];
+);
 
-$messages['jv'] = [
+$messages['jv'] = array(
 	'december' => 'Désèmber',
 	'december-gen' => 'Désèmber',
 	'dec' => 'Des',
@@ -7869,9 +7900,9 @@ Basis data ngasilaké kasalahan "$3: $4".',
 	'download' => 'undhuh',
 	'disambiguations' => 'Kaca disambiguasi',
 	'disambiguationspage' => 'Template:Disambig',
-	'disambiguations-text' => 'Kaca-kaca iki ndarbèni pranala menyang sawijining \'\'kaca disambiguasi\'\'.
+	'disambiguations-text' => "Kaca-kaca iki ndarbèni pranala menyang sawijining ''kaca disambiguasi''.
 Kaca-kaca iku sajatiné kuduné nyambung menyang topik-topik sing bener.<br />
-Sawijining kaca dianggep minangka kaca disambiguasi yèn kaca iku nganggo cithakan sing nyambung menyang [[MediaWiki:Disambiguationspage]].',
+Sawijining kaca dianggep minangka kaca disambiguasi yèn kaca iku nganggo cithakan sing nyambung menyang [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Pangalihan dobel',
 	'doubleredirectstext' => 'Kaca iki ngandhut daftar kaca sing ngalih ing kaca pangalihan liyané. 
 Saben baris ngandhut pranala menyang pangalihan kapisan lan kapindho, sarta tujuan saka pangalihan kapindho, sing biasané kaca tujuan sing "sajatiné", yakuwi pangalihan kapisan kuduné dialihaké menyang kaca tujuan iku.
@@ -7912,10 +7943,10 @@ Artikel sing dituju, "[[:$1]]", wis ana isiné.
 Apa panjenengan kersa mbusak iku supaya kacané bisa dialihaké?',
 	'delete_and_move_confirm' => 'Ya, busak kaca iku.',
 	'delete_and_move_reason' => 'Dibusak kanggo antisipasi pangalihan kaca',
-	'djvu_page_error' => 'Kaca DjVu ana ing sajabaning ranggèhan (\'\'range\'\')',
+	'djvu_page_error' => "Kaca DjVu ana ing sajabaning ranggèhan (''range'')",
 	'djvu_no_xml' => 'Ora bisa njupuk XML kanggo berkas DjVu',
 	'deletedrevision' => 'Revisi lawas sing dibusak $1.',
-	'deletedwhileediting' => '\'\'\'Pènget\'\'\': Kaca iki wis kabusak sawisé panjenengan miwiti nyunting!',
+	'deletedwhileediting' => "'''Pènget''': Kaca iki wis kabusak sawisé panjenengan miwiti nyunting!",
 	'descending_abbrev' => 'mudhun',
 	'duplicate-defaultsort' => 'Pènget: Kunci pilih asal (\'\'Default sort key\'\') "$2" nggantèkaké kunci pilih asal sadurungé "$1".',
 	'dberr-header' => 'Wiki iki duwé masalah',
@@ -7925,9 +7956,9 @@ Apa panjenengan kersa mbusak iku supaya kacané bisa dialihaké?',
 	'dberr-usegoogle' => 'Panjenengan bisa nyoba nggolèki nganggo Google kanggo sauntara wektu.',
 	'dberr-outofdate' => 'Perlu diweruhi yèn indhèks isi kita manawa wis kadaluwarsa.',
 	'dberr-cachederror' => 'Iki sawijining salinan kasimpen kaca sing dijaluk, lan manawa dudu sing paling anyar.',
-];
+);
 
-$messages['ka'] = [
+$messages['ka'] = array(
 	'december' => 'დეკემბერი',
 	'december-gen' => 'დეკემბრის',
 	'dec' => 'დეკ',
@@ -7960,9 +7991,9 @@ $messages['ka'] = [
 	'download' => 'გადმოტვირთვა',
 	'disambiguations' => 'მრავალმნიშვნელოვანი გვერდები',
 	'disambiguationspage' => 'Template:მრავალმნიშვნელოვანი',
-	'disambiguations-text' => 'შემდეგი გვერდები დაკავშირებულები არიან \'\'\'მრავალმნიშვნელობის გვერდთან\'\'\'.
+	'disambiguations-text' => "შემდეგი გვერდები დაკავშირებულები არიან '''მრავალმნიშვნელობის გვერდთან'''.
 ამის ნაცვლად იგი უნდა შეესაბამოს კონკრეტულ სტატიას.<br />
-გვერდი ითვლება მრავალმნიშვნელოვნად, თუ მასზე გამოყენებულია [[MediaWiki:Disambiguationspage|მითსათითებელი თარგი]].',
+გვერდი ითვლება მრავალმნიშვნელოვნად, თუ მასზე გამოყენებულია [[MediaWiki:Disambiguationspage|მითსათითებელი თარგი]].",
 	'doubleredirects' => 'ორმაგი გადამისამართება',
 	'doubleredirectstext' => 'ამ გვერდზე ჩამოთვლილია გვერდები, რომლებიც გადამისამართებულია სხვა გადამისამართების გვერდებზე.
 ყოველი მწკრივი შეიცავს ბმულებს პირველ და მეორე გადამისამართებაზე, აგრეთვე მეორე გადამისამართების ტექსტის პირველ სტრიქონს, რომელშიც ჩვეულებრივ მითითებულია რეალური “სამიზნე” გვერდის სათაური. საჭიროა, რომ პირველი გადამისამართებაც უთითებდეს ამ გვერდზე.
@@ -8005,9 +8036,9 @@ $messages['ka'] = [
 	'djvu_page_error' => 'DjVu გვერდის ნომერი',
 	'djvu_no_xml' => 'შეუძლებელია XML-ის მიღება DjVu-სთვის',
 	'deletedrevision' => 'წაშლილია ძველი ვერსია $1.',
-	'deletedwhileediting' => '\'\'\'ყურადღება\'\'\': ეს გვერდი წაიშალა მას შემდეგ, რაც თქვენ მისი რედაქტირება დაიწყეთ!',
+	'deletedwhileediting' => "'''ყურადღება''': ეს გვერდი წაიშალა მას შემდეგ, რაც თქვენ მისი რედაქტირება დაიწყეთ!",
 	'descending_abbrev' => 'აღწერა',
-	'duplicate-defaultsort' => '\'\'\'ყურადღება.\'\'\'სორტირების გასაღებს «$2»-ს გააჭრის წინა გასაღებს «$1»-ს.',
+	'duplicate-defaultsort' => "'''ყურადღება.'''სორტირების გასაღებს «$2»-ს გააჭრის წინა გასაღებს «$1»-ს.",
 	'dberr-header' => 'ეს ვიკი განიცდის პრობლემას',
 	'dberr-problems' => 'ბოდიში! საიტზე დროებითი ტექნიკური პრობლემებია',
 	'dberr-again' => 'ეცადეთ რამდენიმე წუთით დაცდა და ამ გვერდის გადატვირთვა',
@@ -8015,66 +8046,66 @@ $messages['ka'] = [
 	'dberr-usegoogle' => 'ამ დროს კი  შეგიძლიათ Google-ით ძიება',
 	'dberr-outofdate' => 'გაითვალისწინეთ, რომ თქვენი კონტენტის ინდექსები შეიძლება შეუსაბამო იყოს',
 	'dberr-cachederror' => 'ეს არის მოთხოვნილი გვერდის კეშირებული ვერსია, და შესაძლება მოძველდა.',
-];
+);
 
-$messages['kaa'] = [
+$messages['kaa'] = array(
 	'december' => 'Dekabr',
-	'december-gen' => 'dekabrdin\'',
+	'december-gen' => "dekabrdin'",
 	'dec' => 'Dek',
-	'delete' => 'O\'shiriw',
-	'deletethispage' => 'Usı betti o\'shiriw',
+	'delete' => "O'shiriw",
+	'deletethispage' => "Usı betti o'shiriw",
 	'disclaimers' => 'Juwapkershilikten bas tartıw',
 	'disclaimerpage' => 'Project:Juwapkershilikten bas tartıw',
-	'databaseerror' => 'Mag\'lıwmatlar bazası qa\'tesi',
-	'dberrortext' => 'Mag\'lıwmatlar bazası sorawında sintaksis qa\'tesi sa\'dir boldı.
-Bul bag\'darlamada qa\'te barlıg\'ın bildiriwi mu\'mkin.
-Aqırg\'ı soralg\'an mag\'lıwmatlar bazası sorawı:
-<blockquote><tt>$1</tt></blockquote>
-"<tt>$2</tt>" funktsiyasınan.
-Mag\'lıwmatlar bazası qaytarg\'an qa\'tesi "<tt>$3: $4</tt>".',
+	'databaseerror' => "Mag'lıwmatlar bazası qa'tesi",
+	'dberrortext' => "Mag'lıwmatlar bazası sorawında sintaksis qa'tesi sa'dir boldı.
+Bul bag'darlamada qa'te barlıg'ın bildiriwi mu'mkin.
+Aqırg'ı soralg'an mag'lıwmatlar bazası sorawı:
+<blockquote><tt>\$1</tt></blockquote>
+\"<tt>\$2</tt>\" funktsiyasınan.
+Mag'lıwmatlar bazası qaytarg'an qa'tesi \"<tt>\$3: \$4</tt>\".",
 	'dberrortextcl' => 'Mag\'lıwmatlar bazası sorawında sintaksis qa\'tesi sa\'dir boldı.
 Aqırg\'ı soralg\'an mag\'lıwmatlar bazası sorawı:
 "$1"
 funktsiya: "$2".
 Mag\'lıwmatlar bazası qaytarg\'an qa\'tesi "$3: $4".',
 	'directorycreateerror' => '"$1" papkası jaratılmadı.',
-	'deletedhist' => 'O\'shirilgenler tariyxı',
-	'difference' => '(Nusqalar arasındag\'ı ayırmashılıq)',
-	'diff-multi' => '({{PLURAL:$2|bir paydalanıwshı|$2 paydalanıwshı}} ta\'repinen {{PLURAL:$1|aralıq bir nusqa|aralıq $1 nusqa}} ko\'rsetilmeydi.)',
+	'deletedhist' => "O'shirilgenler tariyxı",
+	'difference' => "(Nusqalar arasındag'ı ayırmashılıq)",
+	'diff-multi' => "({{PLURAL:$2|bir paydalanıwshı|$2 paydalanıwshı}} ta'repinen {{PLURAL:$1|aralıq bir nusqa|aralıq $1 nusqa}} ko'rsetilmeydi.)",
 	'datedefault' => 'Hesh sazlawlarsız',
-	'defaultns' => 'Bolmasa usı isimler ko\'plikleri boyınsha izlew:',
+	'defaultns' => "Bolmasa usı isimler ko'plikleri boyınsha izlew:",
 	'default' => 'defolt',
 	'diff' => 'parq',
 	'destfilename' => 'Belgilengen fail atı:',
 	'download' => 'koshirip alıw',
-	'disambiguations' => 'Ko\'p ma\'nisli betler',
+	'disambiguations' => "Ko'p ma'nisli betler",
 	'disambiguationspage' => '{{ns:template}}:disambig',
 	'doubleredirects' => 'Qos burıwshılar',
-	'double-redirect-fixer' => 'Qayta bag\'ıtlawshılardı du\'zetiwshi',
-	'deadendpages' => 'Hesh betke siltemeytug\'ın betler',
-	'deadendpagestext' => 'To\'mendegi betler {{SITENAME}} proyektindegi basqa betlerge siltelmegen.',
-	'deletedcontributions' => 'Paydalanıwshının\' o\'shiriw u\'lesi',
+	'double-redirect-fixer' => "Qayta bag'ıtlawshılardı du'zetiwshi",
+	'deadendpages' => "Hesh betke siltemeytug'ın betler",
+	'deadendpagestext' => "To'mendegi betler {{SITENAME}} proyektindegi basqa betlerge siltelmegen.",
+	'deletedcontributions' => "Paydalanıwshının' o'shiriw u'lesi",
 	'defemailsubject' => '{{SITENAME}} e-mail',
-	'deletepage' => 'Betti o\'shir',
+	'deletepage' => "Betti o'shir",
 	'delete-confirm' => '"$1" o\'shiriw',
-	'delete-legend' => 'O\'shiriw',
-	'deletedtext' => '"$1" o\'shirildi.
-Aqırg\'ı o\'shirilgenlerdin\' dizimin ko\'riw ushin $2 ni qaran\'',
-	'dellogpage' => 'O\'shiriw jurnalı',
-	'dellogpagetext' => 'To\'mende en\' aqırg\'ı o\'shirilgenlerdin\' dizimi keltirilgen',
-	'deletionlog' => 'o\'shiriw jurnalı',
+	'delete-legend' => "O'shiriw",
+	'deletedtext' => "\"\$1\" o'shirildi.
+Aqırg'ı o'shirilgenlerdin' dizimin ko'riw ushin \$2 ni qaran'",
+	'dellogpage' => "O'shiriw jurnalı",
+	'dellogpagetext' => "To'mende en' aqırg'ı o'shirilgenlerdin' dizimi keltirilgen",
+	'deletionlog' => "o'shiriw jurnalı",
 	'deletecomment' => 'Sebep:',
 	'deleteotherreason' => 'Basqa/qosımsha sebep:',
 	'deletereasonotherlist' => 'Basqa sebep',
-	'databasenotlocked' => 'Mag\'lıwmatlar bazası qulplanbag\'an',
-	'delete_and_move' => 'O\'shiriw ha\'m ko\'shiriw',
-	'delete_and_move_confirm' => 'Awa, bul betti o\'shiriw',
-	'delete_and_move_reason' => 'Ko\'shiriwge jol beriw ushın o\'shirilgen',
-	'deletedrevision' => '$1 eski nusqasın o\'shirdi',
+	'databasenotlocked' => "Mag'lıwmatlar bazası qulplanbag'an",
+	'delete_and_move' => "O'shiriw ha'm ko'shiriw",
+	'delete_and_move_confirm' => "Awa, bul betti o'shiriw",
+	'delete_and_move_reason' => "Ko'shiriwge jol beriw ushın o'shirilgen",
+	'deletedrevision' => "$1 eski nusqasın o'shirdi",
 	'descending_abbrev' => 'kem.',
-];
+);
 
-$messages['kab'] = [
+$messages['kab'] = array(
 	'december' => 'Jember',
 	'december-gen' => 'Jember',
 	'dec' => 'Jember',
@@ -8104,7 +8135,7 @@ MySQL yerra-d agul "$3: $4"',
 	'download' => 'Ddem-it ɣer uselkim inek',
 	'disambiguations' => 'isebtar n usefham',
 	'disambiguationspage' => 'Template:Asefham',
-	'disambiguations-text' => 'Isebtar-agi sɛan azday ɣer \'\'\'usebter n usefham\'\'\'. Yessefk ad sɛun azday ɣer wezwel ṣaḥiḥ mačči ɣer usebter n usefham.',
+	'disambiguations-text' => "Isebtar-agi sɛan azday ɣer '''usebter n usefham'''. Yessefk ad sɛun azday ɣer wezwel ṣaḥiḥ mačči ɣer usebter n usefham.",
 	'doubleredirects' => 'Asemmimeḍ yeḍra snat tikwal',
 	'doubleredirectstext' => 'Mkull ajerriḍ yesɛa azday ɣer asmimeḍ amezwaru akk d wis sin, ajerriḍ amezwaru n uḍris n usebter wis sin daɣen, iwumi yefkan asmimeḍ ṣaḥiḥ i yessefk ad sɛan isebtar azday ɣur-s.',
 	'deadendpages' => 'isebtar mebla izdayen',
@@ -8126,9 +8157,9 @@ Anda tebɣiḍ tesmimeḍ "[[:$1]]" yella yagi. tebɣiḍ ad temḥuḍ iwakken 
 	'deletedrevision' => 'Tasiwelt taqdimt $1 tettumḥa.',
 	'deletedwhileediting' => 'Aɣtal: Asebter-agi yettumḥa qbel ad tebdiḍ a t-tbeddleḍ!',
 	'descending_abbrev' => 'akessar',
-];
+);
 
-$messages['kbd'] = [
+$messages['kbd'] = array(
 	'december' => 'Jember',
 	'december-gen' => 'Jember',
 	'dec' => 'Jember',
@@ -8158,7 +8189,7 @@ MySQL yerra-d agul "$3: $4"',
 	'download' => 'Ddem-it ɣer uselkim inek',
 	'disambiguations' => 'isebtar n usefham',
 	'disambiguationspage' => 'Template:Asefham',
-	'disambiguations-text' => 'Isebtar-agi sɛan azday ɣer \'\'\'usebter n usefham\'\'\'. Yessefk ad sɛun azday ɣer wezwel ṣaḥiḥ mačči ɣer usebter n usefham.',
+	'disambiguations-text' => "Isebtar-agi sɛan azday ɣer '''usebter n usefham'''. Yessefk ad sɛun azday ɣer wezwel ṣaḥiḥ mačči ɣer usebter n usefham.",
 	'doubleredirects' => 'Asemmimeḍ yeḍra snat tikwal',
 	'doubleredirectstext' => 'Mkull ajerriḍ yesɛa azday ɣer asmimeḍ amezwaru akk d wis sin, ajerriḍ amezwaru n uḍris n usebter wis sin daɣen, iwumi yefkan asmimeḍ ṣaḥiḥ i yessefk ad sɛan isebtar azday ɣur-s.',
 	'deadendpages' => 'isebtar mebla izdayen',
@@ -8180,9 +8211,9 @@ Anda tebɣiḍ tesmimeḍ "[[:$1]]" yella yagi. tebɣiḍ ad temḥuḍ iwakken 
 	'deletedrevision' => 'Tasiwelt taqdimt $1 tettumḥa.',
 	'deletedwhileediting' => 'Aɣtal: Asebter-agi yettumḥa qbel ad tebdiḍ a t-tbeddleḍ!',
 	'descending_abbrev' => 'akessar',
-];
+);
 
-$messages['kbd-cyrl'] = [
+$messages['kbd-cyrl'] = array(
 	'december' => 'Дыгъэгъазэм и',
 	'december-gen' => 'Дыгъэгъазэм и',
 	'dec' => 'Дгъз',
@@ -8213,18 +8244,18 @@ $1
 	'deletecomment' => 'Щхьэусыгъуэ:',
 	'deleteotherreason' => 'НэгъуэщӀ щхьэусыгъуэ/щӀыгъупхъэ:',
 	'deletereasonotherlist' => 'НэгъуэщӀ щхьэусыгъуэ',
-];
+);
 
-$messages['kg'] = [
+$messages['kg'] = array(
 	'december' => 'ngôida ya kûmi na zôle',
 	'december-gen' => 'ngônda ya kûmi na zôle',
 	'dec' => 'ng12',
 	'delete' => 'Kufwa',
 	'deletethispage' => 'Kufwa mukanda yayi',
 	'diff' => 'nsoba',
-];
+);
 
-$messages['khw'] = [
+$messages['khw'] = array(
 	'december' => 'دسمبر',
 	'december-gen' => 'دسمبار',
 	'dec' => 'دسمبر',
@@ -8256,9 +8287,9 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 	'deletecomment' => 'وجہ',
 	'deleteotherreason' => 'جوو/اِضافی وجہ',
 	'deletereasonotherlist' => 'جوو وجہ',
-];
+);
 
-$messages['kiu'] = [
+$messages['kiu'] = array(
 	'december' => 'Gağan',
 	'december-gen' => 'Gağani',
 	'dec' => 'Gağ',
@@ -8296,9 +8327,9 @@ Serba diyaena esterıteyunê peyênu $2 bıvêne.',
 	'deletecomment' => 'Sebeb:',
 	'deleteotherreason' => 'Sebebo bin/ilaweki:',
 	'deletereasonotherlist' => 'Sebebo bin',
-];
+);
 
-$messages['kk-arab'] = [
+$messages['kk-arab'] = array(
 	'december' => 'جەلتوقسان',
 	'december-gen' => 'جەلتوقساننىڭ',
 	'dec' => 'جەل',
@@ -8331,9 +8362,9 @@ MySQL قايتارعان قاتەسى «$3: $4»',
 	'download' => 'قوتارىپ الۋ',
 	'disambiguations' => 'ايرىقتى بەتتەر',
 	'disambiguationspage' => '{{ns:template}}:ايرىق',
-	'disambiguations-text' => 'كەلەسى بەتتەر \'\'\'ايرىقتى بەتكە\'\'\' سىلتەيدى.
+	'disambiguations-text' => "كەلەسى بەتتەر '''ايرىقتى بەتكە''' سىلتەيدى.
 بۇنىڭ ورنىنا بەلگىلى تاقىرىپقا سىلتەۋى كەرەك.<br />
-ەگەر [[MediaWiki:Disambiguationspage]] تىزىمىندەگى ۇلگى قولدانىلسا, بەت ايرىقتى دەپ سانالادى.',
+ەگەر [[MediaWiki:Disambiguationspage]] تىزىمىندەگى ۇلگى قولدانىلسا, بەت ايرىقتى دەپ سانالادى.",
 	'doubleredirects' => 'شىنجىرلى ايداعىشتار',
 	'doubleredirectstext' => 'بۇل بەتتە باسقا ايداتۋ بەتتەرگە سىلتەيتىن بەتتەر تىزىمدەلىنەدى. ٴاربىر جولاقتا ٴبىرىنشى جانە ەكىنشى ايداعىشقا سىلتەمەلەر بار, سونىمەن بىرگە ەكىنشى ايداعىش نىساناسى بار, ادەتتە بۇل ٴبىرىنشى ايداعىش باعىتتايتىن «ناقتى» نىسانا بەت اتاۋى بولۋى كەرەك.',
 	'deadendpages' => 'ەش بەتكە سىلتەمەيتىن بەتتەر',
@@ -8374,9 +8405,9 @@ MySQL قايتارعان قاتەسى «$3: $4»',
 	'deletedrevision' => 'ەسكى تۇزەتۋىن جويدى: $1',
 	'deletedwhileediting' => 'قۇلاقتاندىرۋ: بۇل بەتتى وڭدەۋىڭىزدى باستاعاندا, وسى بەت جويىلدى!',
 	'descending_abbrev' => 'كەمۋ',
-];
+);
 
-$messages['kk-cn'] = [
+$messages['kk-cn'] = array(
 	'december' => 'جەلتوقسان',
 	'december-gen' => 'جەلتوقساننىڭ',
 	'dec' => 'جەل',
@@ -8409,9 +8440,9 @@ MySQL قايتارعان قاتەسى «$3: $4»',
 	'download' => 'قوتارىپ الۋ',
 	'disambiguations' => 'ايرىقتى بەتتەر',
 	'disambiguationspage' => '{{ns:template}}:ايرىق',
-	'disambiguations-text' => 'كەلەسى بەتتەر \'\'\'ايرىقتى بەتكە\'\'\' سىلتەيدى.
+	'disambiguations-text' => "كەلەسى بەتتەر '''ايرىقتى بەتكە''' سىلتەيدى.
 بۇنىڭ ورنىنا بەلگىلى تاقىرىپقا سىلتەۋى كەرەك.<br />
-ەگەر [[MediaWiki:Disambiguationspage]] تىزىمىندەگى ۇلگى قولدانىلسا, بەت ايرىقتى دەپ سانالادى.',
+ەگەر [[MediaWiki:Disambiguationspage]] تىزىمىندەگى ۇلگى قولدانىلسا, بەت ايرىقتى دەپ سانالادى.",
 	'doubleredirects' => 'شىنجىرلى ايداعىشتار',
 	'doubleredirectstext' => 'بۇل بەتتە باسقا ايداتۋ بەتتەرگە سىلتەيتىن بەتتەر تىزىمدەلىنەدى. ٴاربىر جولاقتا ٴبىرىنشى جانە ەكىنشى ايداعىشقا سىلتەمەلەر بار, سونىمەن بىرگە ەكىنشى ايداعىش نىساناسى بار, ادەتتە بۇل ٴبىرىنشى ايداعىش باعىتتايتىن «ناقتى» نىسانا بەت اتاۋى بولۋى كەرەك.',
 	'deadendpages' => 'ەش بەتكە سىلتەمەيتىن بەتتەر',
@@ -8452,9 +8483,9 @@ MySQL قايتارعان قاتەسى «$3: $4»',
 	'deletedrevision' => 'ەسكى تۇزەتۋىن جويدى: $1',
 	'deletedwhileediting' => 'قۇلاقتاندىرۋ: بۇل بەتتى وڭدەۋىڭىزدى باستاعاندا, وسى بەت جويىلدى!',
 	'descending_abbrev' => 'كەمۋ',
-];
+);
 
-$messages['kk-cyrl'] = [
+$messages['kk-cyrl'] = array(
 	'december' => 'желтоқсан',
 	'december-gen' => 'желтоқсанның',
 	'dec' => 'жел',
@@ -8486,9 +8517,9 @@ $messages['kk-cyrl'] = [
 	'download' => 'қотарып алу',
 	'disambiguations' => 'Айрықты беттер',
 	'disambiguationspage' => '{{ns:template}}:Айрық',
-	'disambiguations-text' => 'Келесі беттер \'\'\'айрықты бетке\'\'\' сілтейді.
+	'disambiguations-text' => "Келесі беттер '''айрықты бетке''' сілтейді.
 Бұның орнына белгілі тақырыпқа сілтеуі керек.<br />
-Егер [[MediaWiki:Disambiguationspage]] тізіміндегі үлгі қолданылса, бет айрықты деп саналады.',
+Егер [[MediaWiki:Disambiguationspage]] тізіміндегі үлгі қолданылса, бет айрықты деп саналады.",
 	'doubleredirects' => 'Екі мәрте айдағыштар',
 	'doubleredirectstext' => 'Бұл бетте басқа айдату беттерге сілтейтін беттер тізімделінеді. Әрбір жолақта бірінші және екінші айдағышқа сілтемелер бар, сонымен бірге екінші айдағыш нысанасы бар, әдетте бұл бірінші айдағыш бағыттайтын «нақты» нысана бет атауы болуы керек.',
 	'deadendpages' => 'Еш бетке сілтемейтін беттер',
@@ -8529,9 +8560,9 @@ $messages['kk-cyrl'] = [
 	'deletedrevision' => 'Ескі түзетуін жойды: $1',
 	'deletedwhileediting' => 'Құлақтандыру: Бұл бетті өңдеуіңізді бастағанда, осы бет жойылды!',
 	'descending_abbrev' => 'кему',
-];
+);
 
-$messages['kk-kz'] = [
+$messages['kk-kz'] = array(
 	'december' => 'желтоқсан',
 	'december-gen' => 'желтоқсанның',
 	'dec' => 'жел',
@@ -8563,9 +8594,9 @@ $messages['kk-kz'] = [
 	'download' => 'қотарып алу',
 	'disambiguations' => 'Айрықты беттер',
 	'disambiguationspage' => '{{ns:template}}:Айрық',
-	'disambiguations-text' => 'Келесі беттер \'\'\'айрықты бетке\'\'\' сілтейді.
+	'disambiguations-text' => "Келесі беттер '''айрықты бетке''' сілтейді.
 Бұның орнына белгілі тақырыпқа сілтеуі керек.<br />
-Егер [[MediaWiki:Disambiguationspage]] тізіміндегі үлгі қолданылса, бет айрықты деп саналады.',
+Егер [[MediaWiki:Disambiguationspage]] тізіміндегі үлгі қолданылса, бет айрықты деп саналады.",
 	'doubleredirects' => 'Екі мәрте айдағыштар',
 	'doubleredirectstext' => 'Бұл бетте басқа айдату беттерге сілтейтін беттер тізімделінеді. Әрбір жолақта бірінші және екінші айдағышқа сілтемелер бар, сонымен бірге екінші айдағыш нысанасы бар, әдетте бұл бірінші айдағыш бағыттайтын «нақты» нысана бет атауы болуы керек.',
 	'deadendpages' => 'Еш бетке сілтемейтін беттер',
@@ -8606,9 +8637,9 @@ $messages['kk-kz'] = [
 	'deletedrevision' => 'Ескі түзетуін жойды: $1',
 	'deletedwhileediting' => 'Құлақтандыру: Бұл бетті өңдеуіңізді бастағанда, осы бет жойылды!',
 	'descending_abbrev' => 'кему',
-];
+);
 
-$messages['kk-latn'] = [
+$messages['kk-latn'] = array(
 	'december' => 'jeltoqsan',
 	'december-gen' => 'jeltoqsannıñ',
 	'dec' => 'jel',
@@ -8641,9 +8672,9 @@ MySQL qaýtarğan qatesi «$3: $4»',
 	'download' => 'qotarıp alw',
 	'disambiguations' => 'Aýrıqtı better',
 	'disambiguationspage' => '{{ns:template}}:Aýrıq',
-	'disambiguations-text' => 'Kelesi better \'\'\'aýrıqtı betke\'\'\' silteýdi.
+	'disambiguations-text' => "Kelesi better '''aýrıqtı betke''' silteýdi.
 Bunıñ ornına belgili taqırıpqa siltewi kerek.<br />
-Eger [[{{ns:mediawiki}}:Disambiguationspage]] tizimindegi ülgi qoldanılsa, bet aýrıqtı dep sanaladı.',
+Eger [[{{ns:mediawiki}}:Disambiguationspage]] tizimindegi ülgi qoldanılsa, bet aýrıqtı dep sanaladı.",
 	'doubleredirects' => 'Şınjırlı aýdağıştar',
 	'doubleredirectstext' => 'Bul bette basqa aýdatw betterge silteýtin better tizimdelinedi. Ärbir jolaqta birinşi jäne ekinşi aýdağışqa siltemeler bar, sonımen birge ekinşi aýdağış nısanası bar, ädette bul birinşi aýdağış bağıttaýtın «naqtı» nısana bet atawı bolwı kerek.',
 	'deadendpages' => 'Eş betke siltemeýtin better',
@@ -8684,9 +8715,9 @@ Jıljıtwğa jol berw üşin bunı joyasız ba?',
 	'deletedrevision' => 'Eski tüzetwin joýdı: $1',
 	'deletedwhileediting' => 'Qulaqtandırw: Bul betti öñdewiñizdi bastağanda, osı bet joýıldı!',
 	'descending_abbrev' => 'kemw',
-];
+);
 
-$messages['kk-tr'] = [
+$messages['kk-tr'] = array(
 	'december' => 'jeltoqsan',
 	'december-gen' => 'jeltoqsannıñ',
 	'dec' => 'jel',
@@ -8719,9 +8750,9 @@ MySQL qaýtarğan qatesi «$3: $4»',
 	'download' => 'qotarıp alw',
 	'disambiguations' => 'Aýrıqtı better',
 	'disambiguationspage' => '{{ns:template}}:Aýrıq',
-	'disambiguations-text' => 'Kelesi better \'\'\'aýrıqtı betke\'\'\' silteýdi.
+	'disambiguations-text' => "Kelesi better '''aýrıqtı betke''' silteýdi.
 Bunıñ ornına belgili taqırıpqa siltewi kerek.<br />
-Eger [[{{ns:mediawiki}}:Disambiguationspage]] tizimindegi ülgi qoldanılsa, bet aýrıqtı dep sanaladı.',
+Eger [[{{ns:mediawiki}}:Disambiguationspage]] tizimindegi ülgi qoldanılsa, bet aýrıqtı dep sanaladı.",
 	'doubleredirects' => 'Şınjırlı aýdağıştar',
 	'doubleredirectstext' => 'Bul bette basqa aýdatw betterge silteýtin better tizimdelinedi. Ärbir jolaqta birinşi jäne ekinşi aýdağışqa siltemeler bar, sonımen birge ekinşi aýdağış nısanası bar, ädette bul birinşi aýdağış bağıttaýtın «naqtı» nısana bet atawı bolwı kerek.',
 	'deadendpages' => 'Eş betke siltemeýtin better',
@@ -8762,9 +8793,9 @@ Jıljıtwğa jol berw üşin bunı joyasız ba?',
 	'deletedrevision' => 'Eski tüzetwin joýdı: $1',
 	'deletedwhileediting' => 'Qulaqtandırw: Bul betti öñdewiñizdi bastağanda, osı bet joýıldı!',
 	'descending_abbrev' => 'kemw',
-];
+);
 
-$messages['kl'] = [
+$messages['kl'] = array(
 	'december' => 'Decemberi',
 	'december-gen' => 'Decembari',
 	'dec' => 'Dec',
@@ -8774,9 +8805,9 @@ $messages['kl'] = [
 	'diff' => 'assigiinng',
 	'delete-confirm' => 'Peeruk "$1"',
 	'deletedtext' => '"$1" peerpoq. Takukkit $2 peerneqarsimasut kingulliit.',
-];
+);
 
-$messages['km'] = [
+$messages['km'] = array(
 	'december' => 'ខែធ្នូ',
 	'december-gen' => 'ខែធ្នូ',
 	'dec' => 'ធ្នូ',
@@ -8798,10 +8829,10 @@ $messages['km'] = [
 	'download' => 'ទាញយក',
 	'disambiguations' => 'ទំព័រដែលភ្ជាប់ទៅទំព័រមានចំណងជើងស្រដៀងគ្នា',
 	'disambiguationspage' => 'Template:ស្រដៀងគ្នា',
-	'disambiguations-text' => 'ទំព័រទាំងឡាយខាងក្រោមនេះភ្ជាប់ទៅកាន់\'\'\'ទំព័រពាក្យស្រដៀងគ្នា\'\'\'។
+	'disambiguations-text' => "ទំព័រទាំងឡាយខាងក្រោមនេះភ្ជាប់ទៅកាន់'''ទំព័រពាក្យស្រដៀងគ្នា'''។
 
 ទំព័រទាំងនេះគួរតែភ្ជាប់ទៅប្រធានបទត្រឹមត្រូវតែម្ដង។<br />
-ទំព័រមួយត្រូវចាត់ទុកជាទំព័រពាក្យស្រដៀងគ្នា ប្រសិនបើវាប្រើទំព័រគំរូដែលភ្ជាប់មកពី[[MediaWiki:Disambiguationspage]]',
+ទំព័រមួយត្រូវចាត់ទុកជាទំព័រពាក្យស្រដៀងគ្នា ប្រសិនបើវាប្រើទំព័រគំរូដែលភ្ជាប់មកពី[[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'ទំព័របញ្ជូនបន្តទ្វេដង',
 	'doubleredirectstext' => 'ទំព័រនេះរាយឈ្មោះទំព័រដែលបញ្ជូនបន្តទៅទំព័របញ្ជូនបន្ដផ្សេងទៀត។
 
@@ -8852,7 +8883,7 @@ $messages['km'] = [
 	'djvu_no_xml' => 'មិនអាចនាំយក XML សម្រាប់ឯកសារ DjVu',
 	'deletedrevision' => 'កំណែចាស់ដែលត្រូវបានលុបចេញ $1',
 	'days' => '{{PLURAL:$1|$1 ថ្ងៃ|$1 ថ្ងៃ}}',
-	'deletedwhileediting' => '\'\'\'ប្រយ័ត្ន\'\'\' ៖ ទំព័រនេះបានត្រូវលុបចោល បន្ទាប់ពីអ្នកបានចាប់ផ្តើមកែប្រែ!',
+	'deletedwhileediting' => "'''ប្រយ័ត្ន''' ៖ ទំព័រនេះបានត្រូវលុបចោល បន្ទាប់ពីអ្នកបានចាប់ផ្តើមកែប្រែ!",
 	'descending_abbrev' => 'លំដាប់ចុះ',
 	'dberr-header' => 'វិគីនេះមានបញ្ហា',
 	'dberr-problems' => 'សូមអភ័យទោស! វិបសាយនេះកំពុងជួបបញ្ហាបច្ចេកទេស។',
@@ -8861,9 +8892,9 @@ $messages['km'] = [
 	'dberr-usegoogle' => 'អ្នកអាចសាកស្វែងរកតាមរយៈហ្គូហ្គល(Google)ជាបណ្ដោះអាសន្នសិន។',
 	'dberr-outofdate' => 'សូមចំណាំ​​ថា​ លិបិក្រម​នៃ​មាតិការ​របស់យើងប្រហែលជាហួស​សម័យ​។​',
 	'dberr-cachederror' => 'នេះ​គឺ​ជា​ច្បាប់​ចម្លង​ដែលបាន​ដាក់ទៅសតិភ្ជាប់នៃ​ទំព័រ​ដែលបានស្នើសុំ​ និងប្រហែលជាមិនទាន់សម័យ។',
-];
+);
 
-$messages['kn'] = [
+$messages['kn'] = array(
 	'december' => 'ಡಿಸೆಂಬರ್',
 	'december-gen' => 'ಡಿಸೆಂಬರ್',
 	'dec' => 'ಡಿಸೆಂಬರ್',
@@ -8922,11 +8953,11 @@ MySQL ಹಿಂದಿರುಗಿಸಿದ ದೋಷ "$3: $4"',
 	'delete_and_move_confirm' => 'ಹೌದು, ಪುಟವನ್ನು ಅಳಿಸಿ',
 	'delete_and_move_reason' => 'ಸ್ಥಳಾಂತರಿಕೆಗೆ ಜಾಗ ಮಾಡಲು ಪುಟವನ್ನು ಅಳಿಸಲಾಯಿತು',
 	'deletedrevision' => 'ಹಳೆ ಆವೃತ್ತಿ $1 ಅನ್ನು ಅಳಿಸಲಾಗಿದೆ',
-	'deletedwhileediting' => '\'\'\'ಸೂಚನೆ\'\'\': ನೀವು ಸಂಪಾದನೆ ಪ್ರಾರಂಭಿಸಿದ ನಂತರ ಈ ಪುಟವನ್ನು ಅಳಿಸಲಾಗಿದೆ!',
+	'deletedwhileediting' => "'''ಸೂಚನೆ''': ನೀವು ಸಂಪಾದನೆ ಪ್ರಾರಂಭಿಸಿದ ನಂತರ ಈ ಪುಟವನ್ನು ಅಳಿಸಲಾಗಿದೆ!",
 	'descending_abbrev' => 'ಇಳಿ',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'december' => '12월',
 	'december-gen' => '12월',
 	'dec' => '12',
@@ -8961,9 +8992,9 @@ $messages['ko'] = [
 	'download' => '다운로드',
 	'disambiguations' => '동음이의어를 가리키는 문서 목록',
 	'disambiguationspage' => 'Template:Disambig',
-	'disambiguations-text' => '다음의 문서들은 \'\'\'동음이의 문서\'\'\'를 가리키고 있습니다.
+	'disambiguations-text' => "다음의 문서들은 '''동음이의 문서'''를 가리키고 있습니다.
 그 링크를 다른 적절한 문서로 연결해 주어야 합니다.<br />
-[[MediaWiki:Disambiguationspage]]에서 링크된 틀을 사용하는 문서를 동음이의 문서로 간주합니다.',
+[[MediaWiki:Disambiguationspage]]에서 링크된 틀을 사용하는 문서를 동음이의 문서로 간주합니다.",
 	'doubleredirects' => '이중 넘겨주기 목록',
 	'doubleredirectstext' => '이 문서는 다른 넘겨주기 문서로 넘겨주고 있는 문서의 목록입니다.
 매 줄에는 첫 번째 문서와 두 번째 문서의 링크가 있습니다. 그리고 보통 첫 번째 문서가 넘겨주어야 할 "실제" 문서인 두 번째 넘겨주기의 대상이 있습니다.
@@ -9007,7 +9038,7 @@ $messages['ko'] = [
 	'djvu_no_xml' => 'DjVu 파일의 XML 정보를 읽을 수 없음',
 	'deletedrevision' => '예전 버전 $1이(가) 삭제되었습니다.',
 	'days' => '$1일',
-	'deletedwhileediting' => '\'\'\'주의\'\'\': 당신이 이 문서를 편집하던 중에 이 문서가 삭제되었습니다.',
+	'deletedwhileediting' => "'''주의''': 당신이 이 문서를 편집하던 중에 이 문서가 삭제되었습니다.",
 	'descending_abbrev' => '내림차순',
 	'duplicate-defaultsort' => '\'\'\'경고:\'\'\' 기본 정렬 키 "$2"가 이전의 기본 정렬 키 "$1"를 덮어쓰고 있습니다.',
 	'dberr-header' => '이 위키에 문제가 있습니다.',
@@ -9021,9 +9052,9 @@ $messages['ko'] = [
 	'defaultskin2' => '이 위키의 관리자가 설정한 이 위키의 기본 테마는 <b>$1</b>입니다. <a href="$2">여기</a>를 클릭하시면 소스를 보실 수 있습니다.',
 	'defaultskin3' => '이 위키의 관리자가 이 위키의 기본 테마를 설정하지 않아 기본값으로 위키아의 기본 스킨이 적용되어 있습니다. 위키아의 기본 스킨은 <b>$1</b>입니다.',
 	'defaultskin_choose' => '이 위키의 기본 테마:',
-];
+);
 
-$messages['ko-kp'] = [
+$messages['ko-kp'] = array(
 	'december' => '12월',
 	'december-gen' => '12월',
 	'dec' => '12',
@@ -9058,9 +9089,9 @@ $messages['ko-kp'] = [
 	'download' => '다운로드',
 	'disambiguations' => '동음이의 문서를 가리키는 문서 목록',
 	'disambiguationspage' => 'Template:Disambig',
-	'disambiguations-text' => '다음의 문서들은 \'\'\'동음이의 문서\'\'\'를 가리키고 있습니다.
+	'disambiguations-text' => "다음의 문서들은 '''동음이의 문서'''를 가리키고 있습니다.
 그 링크를 다른 적절한 문서로 연결해 주어야 합니다.<br />
-[[MediaWiki:Disambiguationspage]]에서 링크된 틀을 사용하는 문서를 동음이의 문서로 간주합니다.',
+[[MediaWiki:Disambiguationspage]]에서 링크된 틀을 사용하는 문서를 동음이의 문서로 간주합니다.",
 	'doubleredirects' => '이중 넘겨주기 목록',
 	'doubleredirectstext' => '이 문서는 다른 넘겨주기 문서로 넘겨주고 있는 문서의 목록입니다.
 매 줄에는 첫 번째 문서와 두 번째 문서의 링크가 있습니다. 그리고 보통 첫 번째 문서가 넘겨주어야 할 "실제" 문서인 두 번째 넘겨주기의 대상이 있습니다.
@@ -9104,7 +9135,7 @@ $messages['ko-kp'] = [
 	'djvu_no_xml' => 'DjVu 파일의 XML 정보를 읽을 수 없음',
 	'deletedrevision' => '예전 버전 $1이(가) 삭제되었습니다.',
 	'days' => '$1일',
-	'deletedwhileediting' => '\'\'\'주의\'\'\': 당신이 이 문서를 편집하던 중에 이 문서가 삭제되었습니다.',
+	'deletedwhileediting' => "'''주의''': 당신이 이 문서를 편집하던 중에 이 문서가 삭제되었습니다.",
 	'descending_abbrev' => '내림차순',
 	'duplicate-defaultsort' => '\'\'\'경고:\'\'\' 기본 정렬 키 "$2"가 이전의 기본 정렬 키 "$1"를 덮어쓰고 있습니다.',
 	'dberr-header' => '이 위키에 문제가 있습니다.',
@@ -9114,9 +9145,9 @@ $messages['ko-kp'] = [
 	'dberr-usegoogle' => '그 동안 구글을 통해 검색할 수도 있습니다.',
 	'dberr-outofdate' => '참고로, 구글의 내용 개요는 오래된 것일 수도 있습니다.',
 	'dberr-cachederror' => '다음은 요청한 문서의 캐시된 복사본이며, 최신이 아닐 수도 있습니다.',
-];
+);
 
-$messages['koi'] = [
+$messages['koi'] = array(
 	'december' => 'Декаб',
 	'december-gen' => 'декаб',
 	'dec' => 'дек',
@@ -9135,9 +9166,9 @@ $messages['koi'] = [
 	'deletecomment' => 'Мыля:',
 	'deleteotherreason' => 'Эшö мыля чышкöм:',
 	'deletereasonotherlist' => 'Эшö мыля',
-];
+);
 
-$messages['krc'] = [
+$messages['krc'] = array(
 	'december' => 'декабрь',
 	'december-gen' => 'декабрь',
 	'dec' => 'дек',
@@ -9172,8 +9203,8 @@ $messages['krc'] = [
 	'download' => 'джюкле',
 	'disambiguations' => 'Кёб магъаналы ангыламланы бетлери',
 	'disambiguationspage' => 'Template:кёб магъаналылыкъ',
-	'disambiguations-text' => 'Бу бетле \'\'\'кёб магъаналы бетлеге\'\'\' джибериу этедиле. Аны орнуна ала белгили бир статьягъа джибериу этерге керек болурла.<br />
-[[MediaWiki:Disambiguationspage]] бетде аты салынган шаблон бетде болса, ол бет кёб магъаналы бетге саналады.',
+	'disambiguations-text' => "Бу бетле '''кёб магъаналы бетлеге''' джибериу этедиле. Аны орнуна ала белгили бир статьягъа джибериу этерге керек болурла.<br />
+[[MediaWiki:Disambiguationspage]] бетде аты салынган шаблон бетде болса, ол бет кёб магъаналы бетге саналады.",
 	'doubleredirects' => 'Джибериу болгъан джибериуле',
 	'doubleredirectstext' => 'Бу бетде башхы джибериулеге этилген джибериулени списогу барды.
 Хар тизгин биринчи неда экинчи джибериуню эмда асламысында бетни аты джазылгъан, биринчи джибериу кёргюзген, экинчи джибериуню нюзюр бети джазылады.
@@ -9215,7 +9246,7 @@ $messages['krc'] = [
 	'djvu_page_error' => 'DjVu бетге джетилелмез',
 	'djvu_no_xml' => 'DjVu файл ючюн XML алыналмайды',
 	'deletedrevision' => '$1 эски версия кетерилгенди.',
-	'deletedwhileediting' => '\'\'\'Эсериу\'\'\': Бу бет сиз тюрлендириб башлагъандан сора кетерилгенди!',
+	'deletedwhileediting' => "'''Эсериу''': Бу бет сиз тюрлендириб башлагъандан сора кетерилгенди!",
 	'descending_abbrev' => 'азалгъан',
 	'duplicate-defaultsort' => '\'\'\'Эсгериу:\'\'\' Бар саналгъан "$2" сыныфлама ачхыч, аллындагъы "$1" сыныфлама ачхычны джараусуз этеди.',
 	'dberr-header' => 'Бу викини проблемасы барды',
@@ -9225,9 +9256,9 @@ $messages['krc'] = [
 	'dberr-usegoogle' => 'Google сайтны болушлугъу бла излеб кёрюрге боллукъсуз.',
 	'dberr-outofdate' => 'Аны индекси эски болургъа боллугъун унутмагъыз.',
 	'dberr-cachederror' => 'Тюбюндеги бет, изленнген бетни кэш этилген версиясыды, эмда ахыр тюрлендириулени кёргюзмезге болур.',
-];
+);
 
-$messages['kri'] = [
+$messages['kri'] = array(
 	'december' => 'Disemba',
 	'december-gen' => 'Disemba',
 	'dec' => 'Dis',
@@ -9240,9 +9271,9 @@ $messages['kri'] = [
 	'deletepage' => 'Dilit dis pej-ya',
 	'delete-legend' => 'Dilit',
 	'dellogpage' => 'Dilishon Log',
-];
+);
 
-$messages['krj'] = [
+$messages['krj'] = array(
 	'december' => 'Disyembre',
 	'december-gen' => 'Disyembre',
 	'dec' => 'Dis',
@@ -9251,19 +9282,19 @@ $messages['krj'] = [
 	'disclaimers' => 'Mga Panginwala',
 	'disclaimerpage' => 'Project:Panginwala nga Pangtanan',
 	'databaseerror' => 'Sayup sa database',
-	'directorycreateerror' => 'Indi mahimo ang \'\'directory\'\' nga "$1".',
+	'directorycreateerror' => "Indi mahimo ang ''directory'' nga \"\$1\".",
 	'delete-legend' => 'Para',
-];
+);
 
-$messages['ks'] = [
+$messages['ks'] = array(
 	'december' => 'ڈیٚسَمبَر',
-];
+);
 
-$messages['ks-arab'] = [
+$messages['ks-arab'] = array(
 	'december' => 'ڈیٚسَمبَر',
-];
+);
 
-$messages['ksh'] = [
+$messages['ksh'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezember',
 	'dec' => 'Dez',
@@ -9348,8 +9379,8 @@ Di Sigg „[[:$1]]“ jitt et ald. Wollts De se fottschmieße, öm heh di Sigg �
 Em <span class="plainlinks">[{{fullurl:Special:Log|type=delete&page=}}{{FULLPAGENAMEE}} Logboch vum Sigge-Fottschmieße]</span> künnt der Jrund shtonn.
 Wann De de Sigg avspeichere deis, weed se widder aanjelaat.',
 	'descending_abbrev' => 'raffkaz zoteet',
-	'duplicate-defaultsort' => '\'\'\'Opjepaß:\'\'\'
-Dä Shtanndat-Zoot-Schlößel „$1“ övverschriif dä älldere Zoot-Schlößel „$2“.',
+	'duplicate-defaultsort' => "'''Opjepaß:'''
+Dä Shtanndat-Zoot-Schlößel „$1“ övverschriif dä älldere Zoot-Schlößel „$2“.",
 	'dberr-header' => 'Dat Wiki heh häd en Schwierischkeit',
 	'dberr-problems' => 'Deit uns leid, die Sigg heh häd för der Momang e teschnisch Problem.',
 	'dberr-again' => 'Versök eijfach en e paa Menutte, norr_ens die Sigg afzeroofe.',
@@ -9358,9 +9389,9 @@ Dä Shtanndat-Zoot-Schlößel „$1“ övverschriif dä älldere Zoot-Schlöße
 	'dberr-outofdate' => 'Müjjelesch, dat dat Verzeichnes vun uns Sigge do nit janß om neuste Shtannd es.',
 	'dberr-cachederror' => 'Wat heh noh kütt es en Kopi vum Zwescheshpeisher vun dä Sigg,
 die De häs han welle. Se künnt jet ällder un nit mieh aktoäll sin.',
-];
+);
 
-$messages['ku'] = [
+$messages['ku'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezember',
 	'dec' => 'Dez',
@@ -9445,8 +9476,8 @@ Di Sigg „[[:$1]]“ jitt et ald. Wollts De se fottschmieße, öm heh di Sigg �
 Em <span class="plainlinks">[{{fullurl:Special:Log|type=delete&page=}}{{FULLPAGENAMEE}} Logboch vum Sigge-Fottschmieße]</span> künnt der Jrund shtonn.
 Wann De de Sigg avspeichere deis, weed se widder aanjelaat.',
 	'descending_abbrev' => 'raffkaz zoteet',
-	'duplicate-defaultsort' => '\'\'\'Opjepaß:\'\'\'
-Dä Shtanndat-Zoot-Schlößel „$1“ övverschriif dä älldere Zoot-Schlößel „$2“.',
+	'duplicate-defaultsort' => "'''Opjepaß:'''
+Dä Shtanndat-Zoot-Schlößel „$1“ övverschriif dä älldere Zoot-Schlößel „$2“.",
 	'dberr-header' => 'Dat Wiki heh häd en Schwierischkeit',
 	'dberr-problems' => 'Deit uns leid, die Sigg heh häd för der Momang e teschnisch Problem.',
 	'dberr-again' => 'Versök eijfach en e paa Menutte, norr_ens die Sigg afzeroofe.',
@@ -9455,9 +9486,9 @@ Dä Shtanndat-Zoot-Schlößel „$1“ övverschriif dä älldere Zoot-Schlöße
 	'dberr-outofdate' => 'Müjjelesch, dat dat Verzeichnes vun uns Sigge do nit janß om neuste Shtannd es.',
 	'dberr-cachederror' => 'Wat heh noh kütt es en Kopi vum Zwescheshpeisher vun dä Sigg,
 die De häs han welle. Se künnt jet ällder un nit mieh aktoäll sin.',
-];
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'december' => 'Berfanbar',
 	'december-gen' => 'Berfanbar',
 	'dec' => 'ber',
@@ -9505,7 +9536,7 @@ MySQL ev şaşîtî hate dîtin: "<tt>$3: $4</tt>".',
 ** Vandalîzm',
 	'delete-edit-reasonlist' => 'Sedemên jêbirinê biguherîne',
 	'delete-toobig' => 'Dîroka vê rûpelê pir mezin e, zêdetirî $1 guherandin. Jêbirina van rûpelan hatîye sînorkirin, ji bo pir şaşbûn (error) di {{SITENAME}} da çênebin.',
-	'delete-warning-toobig' => 'Dîroka vê rûpelê pir mezin e, zêdetirî $1 guherandin. Jêbirina van rûpelan dikarin şaşbûnan di database\'ê {{SITENAME}} da çêkin; zandibe tu çi dikê!',
+	'delete-warning-toobig' => "Dîroka vê rûpelê pir mezin e, zêdetirî $1 guherandin. Jêbirina van rûpelan dikarin şaşbûnan di database'ê {{SITENAME}} da çêkin; zandibe tu çi dikê!",
 	'databasenotlocked' => 'Danegeh ne girtî ye.',
 	'delete_and_move' => 'Jêbibe û nav biguherîne',
 	'delete_and_move_text' => '== Jêbirin gireke ==
@@ -9515,10 +9546,10 @@ Rûpela "[[:$1]]" berê heye. Tu rast dixazê wê jêbibê ji bo navguherandinê
 	'delete_and_move_reason' => 'Jêbir ji bo navguherandinê',
 	'deletedrevision' => 'Guhertoya berê $1 hate jêbirin.',
 	'deletedwhileediting' => 'Hîşyar: Piştî te guherandinê xwe dest pê kir ev rûpela hate jêbirin!',
-	'dberr-header' => 'Problemeka vê wiki\'yê heye.',
-];
+	'dberr-header' => "Problemeka vê wiki'yê heye.",
+);
 
-$messages['kv'] = [
+$messages['kv'] = array(
 	'december' => 'ӧшым тӧлысь',
 	'december-gen' => 'ӧшым',
 	'delete' => 'Бырӧдны',
@@ -9529,9 +9560,9 @@ $messages['kv'] = [
 ** нарушение авторских прав
 * MediaWiki
 ** Дубликат сообщения с translatewiki.net',
-];
+);
 
-$messages['kw'] = [
+$messages['kw'] = array(
 	'december' => 'Kevardhu',
 	'december-gen' => 'Kevardhu',
 	'dec' => 'Kev',
@@ -9554,9 +9585,9 @@ Gwelowgh $2 rag covadh a dhileanjow a-dhiwedhes.',
 	'deletecomment' => 'Acheson:',
 	'deleteotherreason' => 'Acheson aral/keworansel:',
 	'deletereasonotherlist' => 'Acheson aral',
-];
+);
 
-$messages['ky'] = [
+$messages['ky'] = array(
 	'december' => 'Декабрь (Бештин айы)',
 	'december-gen' => 'Декабрь (Бештин айы)',
 	'dec' => 'Дек',
@@ -9573,9 +9604,9 @@ $messages['ky'] = [
 	'deletecomment' => 'Себеп',
 	'delete_and_move_confirm' => 'Ооба, бул баракты өчүр',
 	'duplicate-defaultsort' => '\'\'\'Абайлатуу:\'\'\' "$2" белгиленген ылгоочу ачкыч "$1" мурунку белгиленген ылгоочу ачкычты жокко чыгарат.',
-];
+);
 
-$messages['la'] = [
+$messages['la'] = array(
 	'december' => 'December',
 	'december-gen' => 'Decembris',
 	'dec' => 'Dec',
@@ -9600,9 +9631,9 @@ Basis datorum erratum reddidit "$3: $4"',
 	'download' => 'depromere',
 	'disambiguations' => 'Paginae quae ad paginas discretivas nectunt',
 	'disambiguationspage' => 'Template:Discretiva',
-	'disambiguations-text' => 'Paginae subter ad \'\'\'paginam discretivam\'\'\' nectunt.
+	'disambiguations-text' => "Paginae subter ad '''paginam discretivam''' nectunt.
 Eae ad aptas paginas magis nectendae sunt.<br />
-Pagina discretivam esse putatur si formulam adhibet ad quem [[MediaWiki:Disambiguationspage]] nectit.',
+Pagina discretivam esse putatur si formulam adhibet ad quem [[MediaWiki:Disambiguationspage]] nectit.",
 	'doubleredirects' => 'Redirectiones duplices',
 	'double-redirect-fixed-move' => '[[$1]] mota est et nunc redirigit ad [[$2]]',
 	'double-redirect-fixer' => 'Rectificator redirectionum',
@@ -9634,11 +9665,11 @@ Paginae nomen petitum "[[:$1]]" iam existit. Vin tu eam delere ut pagina illic m
 	'delete_and_move_reason' => 'Deleta ut moveatur ex "[[$1]]"',
 	'djvu_page_error' => 'Pagina DjVu extra latitudinem',
 	'deletedrevision' => 'Delevit emendationem $1 veterem',
-	'deletedwhileediting' => '\'\'\'Monitio:\'\'\' Haec pagina deleta est postquam inceperis eam recensere!',
+	'deletedwhileediting' => "'''Monitio:''' Haec pagina deleta est postquam inceperis eam recensere!",
 	'descending_abbrev' => 'desc',
-];
+);
 
-$messages['lad'] = [
+$messages['lad'] = array(
 	'december' => 'Diziembre',
 	'december-gen' => 'Diziembre',
 	'dec' => 'Diz',
@@ -9660,9 +9691,9 @@ Mira $2 para un registro de los efassados nuevos.',
 ** La demanda del criador de la hoja
 ** Violación de copyright
 ** Vandalismo',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezember',
 	'dec' => 'Dez.',
@@ -9727,21 +9758,21 @@ An all Rei sti Linken zur éischter an zweeter Viruleedung, souwéi d\'Zil vun d
 ** Verletzung vun engem Copyright
 ** Vandalismus',
 	'delete-edit-reasonlist' => 'Läschgrënn änneren',
-	'delete-toobig' => 'Dës Säit huet e laangen Historique, méi wéi $1 {{PLURAL:$1|Versioun|Versiounen}}.
-D\'Läsche vun esou Säite gouf limitéiert fir ongewollte Stéierungen op {{SITENAME}} ze verhënneren.',
-	'delete-warning-toobig' => 'Dës Säit huet eng laang Versiounsgeschicht, méi wéi $1 {{PLURAL:$1|Versioun|Versiounen}}.
-D\'Läschen dovun kann zu Stéierungen am Funktionnement vun {{SITENAME}} féieren;
-dës Aktioun soll mat Vierssiicht gemaach ginn.',
-	'databasenotlocked' => 'D\'Datebank ass net gespaart.',
+	'delete-toobig' => "Dës Säit huet e laangen Historique, méi wéi $1 {{PLURAL:$1|Versioun|Versiounen}}.
+D'Läsche vun esou Säite gouf limitéiert fir ongewollte Stéierungen op {{SITENAME}} ze verhënneren.",
+	'delete-warning-toobig' => "Dës Säit huet eng laang Versiounsgeschicht, méi wéi $1 {{PLURAL:$1|Versioun|Versiounen}}.
+D'Läschen dovun kann zu Stéierungen am Funktionnement vun {{SITENAME}} féieren;
+dës Aktioun soll mat Vierssiicht gemaach ginn.",
+	'databasenotlocked' => "D'Datebank ass net gespaart.",
 	'delete_and_move' => 'Läschen a réckelen',
 	'delete_and_move_text' => '== Läsche vun der Destinatiounssäit néideg == D\'Säit "[[:$1]]" existéiert schonn. Wëll der se läsche fir d\'Réckelen ze erméiglechen?',
-	'delete_and_move_confirm' => 'Jo, läsch d\'Destinatiounssäit',
+	'delete_and_move_confirm' => "Jo, läsch d'Destinatiounssäit",
 	'delete_and_move_reason' => 'Geläscht fir Plaz ze maache fir "[[$1]]" heihin ze réckelen',
 	'djvu_page_error' => 'DjVu-Säit baussent dem Säiteberäich',
 	'djvu_no_xml' => 'Den XML ka fir den DjVu-Fichier net ofgeruff ginn',
 	'deletedrevision' => 'Al, geläschte Versioun $1',
 	'days' => '{{PLURAL:$1|engem Dag|$1 Deeg}}',
-	'deletedwhileediting' => '\'\'\'Opgepasst\'\'\': Dës Säit gouf geläscht nodeems datt dir ugefaangen hutt se z\'änneren!',
+	'deletedwhileediting' => "'''Opgepasst''': Dës Säit gouf geläscht nodeems datt dir ugefaangen hutt se z'änneren!",
 	'descending_abbrev' => 'erof',
 	'duplicate-defaultsort' => 'Opgepasst: Den Zortéierschlëssel "$2" iwwerschreift de viregen Zortéierschlëssel "$1".',
 	'dberr-header' => 'Dës Wiki huet e Problem',
@@ -9751,9 +9782,9 @@ dës Aktioun soll mat Vierssiicht gemaach ginn.',
 	'dberr-usegoogle' => 'An der Tëschenzäit kënnt Dir probéiere mam Google ze sichen.',
 	'dberr-outofdate' => 'Denkt drunn, datt de Sichindex vun eisen Inhalte méiglecherweis net aktuell ass.',
 	'dberr-cachederror' => 'Dëst ass eng tëschegespäichert Kopie vun der gefroter Säit, a si kann eventuell net aktuell sinn.',
-];
+);
 
-$messages['lez'] = [
+$messages['lez'] = array(
 	'december' => 'ФaндукӀ',
 	'december-gen' => 'ФaндукӀ',
 	'dec' => 'Фaн',
@@ -9773,9 +9804,9 @@ $messages['lez'] = [
 	'deleteotherreason' => 'Масса/ ва мад кар',
 	'deletereasonotherlist' => 'Маса фагьум',
 	'duplicate-defaultsort' => '\'\'\'Дикъет:\'\'\' Авайд хьиз кьунвай жуьрейриз ччара авунин "$2" куьлег  виликан "$1" жуьрейриз ччара авунин куьлег гьич йийзва.',
-];
+);
 
-$messages['lfn'] = [
+$messages['lfn'] = array(
 	'december' => 'desembre',
 	'december-gen' => 'Desembre',
 	'dec' => 'des',
@@ -9797,16 +9828,16 @@ Vide $2 per un catalogo de sutraes resente.',
 	'deletecomment' => 'Razona:',
 	'deleteotherreason' => 'Otra/plu razona:',
 	'deletereasonotherlist' => 'Otra razona',
-];
+);
 
-$messages['lg'] = [
+$messages['lg'] = array(
 	'december' => 'Gwakkuminebiri',
 	'december-gen' => 'Gwakkuminebiri',
 	'dec' => 'Gw12',
 	'delete' => 'Gyawo olupapula luno',
 	'deletethispage' => 'Olupapula luno lugyewo',
-	'disclaimers' => 'Okutangaaza ku kkomo ery\'obuvunaaniro bwaffe obw\'omu mateeka',
-	'disclaimerpage' => 'Project:Okutangaaza ku kkomo ery\'obuvunaaniro bwaffe obw\'omu mateeka',
+	'disclaimers' => "Okutangaaza ku kkomo ery'obuvunaaniro bwaffe obw'omu mateeka",
+	'disclaimerpage' => "Project:Okutangaaza ku kkomo ery'obuvunaaniro bwaffe obw'omu mateeka",
 	'databaseerror' => 'Waliwo kiremya ku ggwanika lya data',
 	'dberrortext' => 'Waliwo kiremya avudde ku mpandika y\'ekiragiro ekinoonyeza mu ggwanika lya data.<br />
 Ayinza okuba nga azze lwa nsobi mu sofutiweya wa lyo.<br />
@@ -9820,7 +9851,7 @@ Ekiragiro ekinoonyeza mu ggwanika lya data ekisembye okuyisibwa kiri:<br />
 ekisangibwa mu mukolo gwa mu puloguramu "$2".<br />
 Obubaka obuvudde mu ggwanika lya data obufa ku kiremya buli "$3: $4"',
 	'directorycreateerror' => 'Nnemedwa okukolawo etterekero "$1".',
-	'difference' => '(Enjawulo mu mpandika ez\'olupapula)',
+	'difference' => "(Enjawulo mu mpandika ez'olupapula)",
 	'diff' => 'enjawulo',
 	'deletepage' => 'Gyawo olupapula',
 	'deletedtext' => 'Olupapula "$1" lugyidwawo.
@@ -9830,9 +9861,9 @@ Kebera olukalala $2 okumanya ebifa ku byakagyibwawo.',
 	'deletecomment' => 'Nsonga:',
 	'deleteotherreason' => 'Nsonga ndala:',
 	'deletereasonotherlist' => 'Nsonga ndala',
-];
+);
 
-$messages['li'] = [
+$messages['li'] = array(
 	'december' => 'december',
 	'december-gen' => 'december',
 	'dec' => 'dec',
@@ -9863,22 +9894,22 @@ Database brach fout "$3" nao veure: "$4"',
 	'default' => 'sjtandaard',
 	'diff' => 'vers',
 	'destfilename' => 'Doeltitel:',
-	'duplicatesoffile' => '{{PLURAL:$1|\'t Nègsvóggendj bestandj is|De $1 nègsvóggendje bestenj zeen}} identiek aan dit bestandj ([[Special:FileDuplicateSearch/$2|deper]]):',
+	'duplicatesoffile' => "{{PLURAL:$1|'t Nègsvóggendj bestandj is|De $1 nègsvóggendje bestenj zeen}} identiek aan dit bestandj ([[Special:FileDuplicateSearch/$2|deper]]):",
 	'download' => 'Downloade',
-	'disambiguations' => 'Links nao verdudelikingspazjena\'s',
+	'disambiguations' => "Links nao verdudelikingspazjena's",
 	'disambiguationspage' => 'Template:Verdudeliking',
-	'disambiguations-text' => 'Hiej onger staon pagina\'s die verwieze nao \'ne \'\'\'redirect\'\'\'.
-Deze heure waarsjienlik direct nao \'t zjuste ongerwerp te verwiezen.<br />
-\'ne pagina wörd gezeen es redirect wen d\'r \'n sjabloon op stuit det gelink is vanaaf [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Hiej onger staon pagina's die verwieze nao 'ne '''redirect'''.
+Deze heure waarsjienlik direct nao 't zjuste ongerwerp te verwiezen.<br />
+'ne pagina wörd gezeen es redirect wen d'r 'n sjabloon op stuit det gelink is vanaaf [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dobbel redirects',
-	'doubleredirectstext' => 'Dees lies haet paazjes mit redireks die nao anger redireks gaon.
+	'doubleredirectstext' => "Dees lies haet paazjes mit redireks die nao anger redireks gaon.
 Op eder raegel vings te de ierste redirectpazjena, de twiede redirectpazjena en de iesjte raegel van de twiede redirectpazjena. Meistes bevat dees litste de pazjena woe de iesjte redirect naotoe zouw mótte verwieze.
-<del>Dórchstreipinge</del> zègke det \'t al gedaon is.',
-	'double-redirect-fixed-move' => '[[$1]] is verplaats en is noe \'n doorverwiezing nao [[$2]]',
+<del>Dórchstreipinge</del> zègke det 't al gedaon is.",
+	'double-redirect-fixed-move' => "[[$1]] is verplaats en is noe 'n doorverwiezing nao [[$2]]",
 	'double-redirect-fixed-maintenance' => 'Correctie dóbbel redirek van [[$1]] nao [[$2]].',
 	'double-redirect-fixer' => 'Doorverwiezinge opsjone',
-	'deadendpages' => 'Doedloupende pazjena\'s',
-	'deadendpagestext' => 'De ongerstäönde pagina\'s verwieze neet nao anger pagina\'s in {{SITENAME}}.',
+	'deadendpages' => "Doedloupende pazjena's",
+	'deadendpagestext' => "De ongerstäönde pagina's verwieze neet nao anger pagina's in {{SITENAME}}.",
 	'deletedcontributions' => 'Eweggesjafde gebroekersbiedrages',
 	'deletedcontributions-title' => 'Eweggesjafde gebroekersbiedrages',
 	'defemailsubject' => 'E-mail van {{SITENAME}}-gebroeker "$1"',
@@ -9888,7 +9919,7 @@ Op eder raegel vings te de ierste redirectpazjena, de twiede redirectpazjena en 
 	'deletedtext' => '"$1" is eweggesjaf. Bekiek $2 veur \'n euverzich van recènt eweggesjafde pagina\'s.',
 	'deletedarticle' => '"[[$1]]" is eweggesjaf',
 	'dellogpage' => 'Wislogbook',
-	'dellogpagetext' => 'Hie volg \'n lies van de meis recènt eweggesjafde pagina\'s en besjtandje.',
+	'dellogpagetext' => "Hie volg 'n lies van de meis recènt eweggesjafde pagina's en besjtandje.",
 	'deletionlog' => 'Wislogbook',
 	'deletecomment' => 'Reeje:',
 	'deleteotherreason' => 'Angere/eventuele ree:',
@@ -9899,8 +9930,8 @@ Op eder raegel vings te de ierste redirectpazjena, de twiede redirectpazjena en 
 ** Gebroek es zandjbak
 ** Vandalisme/Sjeljerie',
 	'delete-edit-reasonlist' => 'Reeje veur verwiedering bewèrke',
-	'delete-toobig' => 'Dees pazjena haet \'ne lange bewerkingsgesjiedenis, mieë es $1 {{PLURAL:$1|versie|versies}}. \'t Wisse van dit saort pazjena\'s is mit rech beperk óm \'t próngelök versteure van de werking van {{SITENAME}} te veurkómme.',
-	'delete-warning-toobig' => 'Dees pazjena haet \'ne lange bewerkingsgesjiedenis, mieë es $1 {{PLURAL:$1|versie|versies}}. \'t Wisse van dees pazjena kan de werking van de database van {{SITENAME}} versteure. Bön veurzichtig.',
+	'delete-toobig' => "Dees pazjena haet 'ne lange bewerkingsgesjiedenis, mieë es $1 {{PLURAL:$1|versie|versies}}. 't Wisse van dit saort pazjena's is mit rech beperk óm 't próngelök versteure van de werking van {{SITENAME}} te veurkómme.",
+	'delete-warning-toobig' => "Dees pazjena haet 'ne lange bewerkingsgesjiedenis, mieë es $1 {{PLURAL:$1|versie|versies}}. 't Wisse van dees pazjena kan de werking van de database van {{SITENAME}} versteure. Bön veurzichtig.",
 	'databasenotlocked' => 'De database is neet geblokkeerd.',
 	'delete_and_move' => 'Wis en verplaats',
 	'delete_and_move_text' => '==Wisse vereis==
@@ -9909,27 +9940,27 @@ De doeltitel "[[:$1]]" besjteit al. Wils te dit artikel wisse óm ruumde te make
 	'delete_and_move_confirm' => 'Jao, wis de pazjena',
 	'delete_and_move_reason' => 'Gewis óm artikel [[$1]] te kónne verplaatse',
 	'djvu_page_error' => 'DjVu-pagina boete bereik',
-	'djvu_no_xml' => 'De XML veur \'t DjVu-bestandj kos neet opgehaald waere',
+	'djvu_no_xml' => "De XML veur 't DjVu-bestandj kos neet opgehaald waere",
 	'deletedrevision' => 'Aw versie $1 gewis',
 	'days' => '{{PLURAL:$1|$1 daag|$1 daag}}',
-	'deletedwhileediting' => '\'\'\'Waorsjoewing\'\'\': Dees pazjena is gewis naodats doe bis begós mit bewirke!',
+	'deletedwhileediting' => "'''Waorsjoewing''': Dees pazjena is gewis naodats doe bis begós mit bewirke!",
 	'descending_abbrev' => 'aaf.',
 	'duplicate-defaultsort' => 'Waarsjuwing: De standaardsortering "$2" krieg veurrang veur de sortering "$1".',
-	'dberr-header' => 'Deze wiki haet \'n probleem',
+	'dberr-header' => "Deze wiki haet 'n probleem",
 	'dberr-problems' => 'Os excuses. Deze site ongervindj op t moment technische probleme.',
 	'dberr-again' => 'Wach n aantal minute en probeer t daonao opnuuj.',
 	'dberr-info' => '(Kan gein verbinjing make mit de databaseserver: $1)',
 	'dberr-usegoogle' => 'Wellich kins se in de tussetied zeuke via Google.',
-	'dberr-outofdate' => 'Let op: häör indices ven os pagina\'s zeen wellich neet recent.',
+	'dberr-outofdate' => "Let op: häör indices ven os pagina's zeen wellich neet recent.",
 	'dberr-cachederror' => 'Deze pagina is n kopie oet de cache en is wellich neet de lèste versie.',
-];
+);
 
-$messages['lij'] = [
+$messages['lij'] = array(
 	'december' => 'Dexembre',
 	'december-gen' => 'Dexembre',
 	'dec' => 'Dex',
 	'delete' => 'Scancella',
-	'deletethispage' => 'Scassa \'sta paggina',
+	'deletethispage' => "Scassa 'sta paggina",
 	'disclaimers' => 'Avértense',
 	'disclaimerpage' => 'Project:Avertense generâli',
 	'databaseerror' => 'Errô da a base de i dæti',
@@ -9950,15 +9981,15 @@ $messages['lij'] = [
 	'dellogpage' => 'Registro de-e cose scassæ',
 	'deletecomment' => 'Raxon:',
 	'deleteotherreason' => 'Ûn âtro motivo',
-	'deletereasonotherlist' => 'Ûnn\'âtra raxon',
-	'databasenotlocked' => 'A base de i dæti a non l\'è serrâ.',
+	'deletereasonotherlist' => "Ûnn'âtra raxon",
+	'databasenotlocked' => "A base de i dæti a non l'è serrâ.",
 	'delete_and_move' => 'Scassa e mescia',
 	'delete_and_move_confirm' => 'Scì, scassa a pagina',
 	'delete_and_move_reason' => 'Levoö pe fâ röso pe un remescio',
 	'duplicate-defaultsort' => 'Atençión: a ciâve de ordinaménto predefinîa "$2" va in çimma a quella de prìmma "$1".',
-];
+);
 
-$messages['liv'] = [
+$messages['liv'] = array(
 	'december' => 'detsembõr',
 	'december-gen' => 'Detsembõr',
 	'dec' => 'dets',
@@ -9975,10 +10006,10 @@ $messages['liv'] = [
 	'deletecomment' => 'Sī:',
 	'deleteotherreason' => 'Mū agā jūrõ pandõb sī:',
 	'deletereasonotherlist' => 'Mū sī',
-	'duplicate-defaultsort' => '\'\'\'Kūondõks:\'\'\' Kõõrda-jadā võţīm \'\'$2\'\' tīeb tijāks jedsõ pūol vólbiz kõõrda-jadā võţīm \'\'$1\'\'.',
-];
+	'duplicate-defaultsort' => "'''Kūondõks:''' Kõõrda-jadā võţīm ''$2'' tīeb tijāks jedsõ pūol vólbiz kõõrda-jadā võţīm ''$1''.",
+);
 
-$messages['lmo'] = [
+$messages['lmo'] = array(
 	'december' => 'Dicember',
 	'december-gen' => 'Dizember',
 	'dec' => 'Dic',
@@ -9991,7 +10022,7 @@ $messages['lmo'] = [
 	'datedefault' => 'Nissüna preferenza',
 	'defaultns' => 'Tröva sempar in di caamp:',
 	'diff' => 'dif',
-	'destfilename' => 'Nomm da l\'archivi da destinazziun:',
+	'destfilename' => "Nomm da l'archivi da destinazziun:",
 	'disambiguations' => 'Pagin da disambiguazziún',
 	'doubleredirects' => 'Redirezziún dópi',
 	'deadendpages' => 'Pagin senza surtida',
@@ -10004,16 +10035,16 @@ $messages['lmo'] = [
 	'deletecomment' => 'Reson:',
 	'deleteotherreason' => 'Alter mutiv:',
 	'deletereasonotherlist' => 'Altra resón',
-	'deletereason-dropdown' => '*Mutiv cumün de scancelaziun
-** Richiesta de l\'aütur
+	'deletereason-dropdown' => "*Mutiv cumün de scancelaziun
+** Richiesta de l'aütur
 ** Viulaziun del copyright
-** Vandalism',
+** Vandalism",
 	'delete-edit-reasonlist' => 'Mudifega i mutiv del scancelament',
 	'delete_and_move' => 'Scancelá e mööf',
 	'deletedrevision' => 'Scancelada la revision vegia de $1.',
-];
+);
 
-$messages['ln'] = [
+$messages['ln'] = array(
 	'december' => 'sánzá ya zómi na míbalé',
 	'december-gen' => 'sánzá ya zómi na míbalé',
 	'dec' => 's12',
@@ -10035,9 +10066,9 @@ $messages['ln'] = [
 	'delete_and_move' => 'Kolímwisa mpé kobóngola nkómbó',
 	'delete_and_move_confirm' => 'Boye, kolímwisa lonkásá',
 	'delete_and_move_reason' => 'Ntína ya bolímwisi mpé bobóngoli bwa nkómbó',
-];
+);
 
-$messages['lo'] = [
+$messages['lo'] = array(
 	'december' => 'ທັນວາ',
 	'december-gen' => 'ທັນວາ',
 	'dec' => 'ທັນວາ',
@@ -10051,9 +10082,9 @@ $messages['lo'] = [
 	'defaultns' => 'ຄົ້ນຫາ ໃນ ຂອບເຂດຊື່ ນີ້ ເວລາບໍ່ມີການລະບຸ:',
 	'diff' => 'ສ່ວນຕ່າງ',
 	'disambiguations' => 'ໜ້າແກ້ຄວາມກຳກວມ',
-	'disambiguations-text' => 'ໜ້າຕໍ່ໄປນີ້ເຊື່ອມໂຍງໄປຍັງ \'\'\'ໜ້າແກ້ຄວາມກຳກວມ\'\'\'&nbsp;
+	'disambiguations-text' => "ໜ້າຕໍ່ໄປນີ້ເຊື່ອມໂຍງໄປຍັງ '''ໜ້າແກ້ຄວາມກຳກວມ'''&nbsp;
 ຊຶ່ງຄວນດັດແກ້ລິງຄ໌ໃຫ້ເຊື່ອມໂຍງໄປທີ່ໜ້າອື່ນທີ່ເໝາະສົມ<br />
-ໜ້າໃດທີ່ຮຽກໃຊ້ແມ່ແບບ [[MediaWiki:Disambiguationspage|ແກ້ກຳກວມ]] ໜ້າເຫຼ່ານັ້ນຖຶກເປັນໜ້າແກ້ຄວາມກຳກວມ',
+ໜ້າໃດທີ່ຮຽກໃຊ້ແມ່ແບບ [[MediaWiki:Disambiguationspage|ແກ້ກຳກວມ]] ໜ້າເຫຼ່ານັ້ນຖຶກເປັນໜ້າແກ້ຄວາມກຳກວມ",
 	'doubleredirects' => 'ໂອນໜ້າ 2 ຄັ້ງ',
 	'deadendpages' => 'ໜ້າບໍ່ການເຊື່ອມຕໍ່ຫາໜ້າອື່ນ',
 	'dellogpage' => 'ບັນທຶກ ການລຶບ',
@@ -10063,11 +10094,11 @@ $messages['lo'] = [
 	'delete_and_move' => 'ລຶບ ແລະ ຍ້າຍ',
 	'delete_and_move_confirm' => 'ແມ່ນແລ້ວ, ລຶບໜ້ານີ້',
 	'delete_and_move_reason' => 'ລຶບແລ້ວ ເພື່ອ ຍ້າຍໜ້າອື່ນ ມານີ້',
-];
+);
 
-$messages['loz'] = [
-	'december' => 'Ng\'ulule',
-	'december-gen' => 'Ng\'ulule',
+$messages['loz'] = array(
+	'december' => "Ng'ulule",
+	'december-gen' => "Ng'ulule",
 	'dec' => 'Ngu',
 	'delete' => 'Afi kulobala',
 	'deletethispage' => 'Afi kulobala bye petulo',
@@ -10083,8 +10114,8 @@ $messages['loz'] = [
 	'download' => 'dawnlodezi',
 	'disambiguations' => 'Disamebigasina',
 	'doubleredirects' => 'Petulo abezi sa dužemi',
-	'deadendpages' => 'Mukoloko di petulo-ni ling\'ki',
-	'deadendpagestext' => 'Bye petulo ni sa ling\'ki medi petulo di {{SITENAME}}.',
+	'deadendpages' => "Mukoloko di petulo-ni ling'ki",
+	'deadendpagestext' => "Bye petulo ni sa ling'ki medi petulo di {{SITENAME}}.",
 	'deletedcontributions' => 'Afina di sebelu bye sa afi kulobala',
 	'deletedcontributions-title' => 'Afina di sebelu bye sa afi kulobala',
 	'defemailsubject' => '{{SITENAME}} meli',
@@ -10096,9 +10127,9 @@ $messages['loz'] = [
 	'deletereasonotherlist' => 'Xetewi lyangutukezi',
 	'delete_and_move' => 'Afi kulobala alo-di nyanganyisize',
 	'descending_abbrev' => 'disendin',
-];
+);
 
-$messages['lt'] = [
+$messages['lt'] = array(
 	'december' => 'gruodžio',
 	'december-gen' => 'Gruodis',
 	'dec' => 'grd',
@@ -10133,9 +10164,9 @@ Duomenų bazė grąžino klaidą „$3: $4“',
 	'download' => 'parsisiųsti',
 	'disambiguations' => 'Puslapiai rodantys į daugiaprasmių žodžių puslapius',
 	'disambiguationspage' => 'Template:Daugiareikšmis',
-	'disambiguations-text' => 'Žemiau išvardinti puslapiai nurodo į \'\'\'daugiaprasmių žodžių puslapius\'\'\'.
+	'disambiguations-text' => "Žemiau išvardinti puslapiai nurodo į '''daugiaprasmių žodžių puslapius'''.
 Nuorodos turėtų būti patikslintos, kad rodytų į konkretų puslapį.<br />
-Puslapis laikomas daugiaprasmiu puslapiu, jei jis naudoja šabloną, kuris yra nurodomas iš [[MediaWiki:Disambiguationspage]].',
+Puslapis laikomas daugiaprasmiu puslapiu, jei jis naudoja šabloną, kuris yra nurodomas iš [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Dvigubi peradresavimai',
 	'doubleredirectstext' => 'Šiame puslapyje yra puslapių, kurie nukreipia į kitus peradresavimo puslapius, sąrašas.
 Kiekvienoje eilutėje yra nuorodos į pirmąjį ir antrąjį peradresavimą, taip pat antrojo peradresavimo paskirtis, kuris paprastai yra „tikrasis“ paskirties puslapis, į kurį pirmasis peradresavimas ir turėtų rodyti.
@@ -10187,9 +10218,9 @@ Paskirties puslapis „[[:$1]]“ jau yra. Ar norite jį ištrinti, kad galėtum
 	'dberr-usegoogle' => 'Šiuo metu jūs galite ieškoti per „Google“.',
 	'dberr-outofdate' => 'Mūsų turinio kopijos ten gali būti pasenusios.',
 	'dberr-cachederror' => 'Tai prašomo puslapio išsaugota kopija, ji gali būti pasenusi.',
-];
+);
 
-$messages['ltg'] = [
+$messages['ltg'] = array(
 	'december' => 'Dekabrs / Zīmys mieness',
 	'december-gen' => 'Dekabra / Zīmys mieneša',
 	'dec' => 'dek.',
@@ -10210,9 +10241,9 @@ Kab apsavērtu pādejuo iztreitū sarokstu, verīs $2.',
 	'deletereasonotherlist' => 'Cyta īmesle',
 	'delete_and_move' => 'Iztreit i puorceļt',
 	'delete_and_move_confirm' => 'Nui, iztreit puslopu',
-];
+);
 
-$messages['lv'] = [
+$messages['lv'] = array(
 	'december' => 'decembrī',
 	'december-gen' => 'Decembra',
 	'dec' => 'decembrī,',
@@ -10245,9 +10276,9 @@ Izdotā MySQL kļūda: "$3: $4"',
 	'download' => 'lejupielādēt',
 	'disambiguations' => 'Nozīmju atdalīšanas lapas',
 	'disambiguationspage' => 'Template:Disambig',
-	'disambiguations-text' => 'Šeit esošajās lapās ir saite uz \'\'\'nozīmju atdalīšanas lapu\'\'\'.
+	'disambiguations-text' => "Šeit esošajās lapās ir saite uz '''nozīmju atdalīšanas lapu'''.
 Šīs saites vajadzētu izlabot, lai tās vestu tieši uz attiecīgo lapu.<br />
-Lapu uzskata par nozīmju atdalīšanas lapu, ja tā satur veidni, uz kuru ir saite no [[MediaWiki:Disambiguationspage]].',
+Lapu uzskata par nozīmju atdalīšanas lapu, ja tā satur veidni, uz kuru ir saite no [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Divkāršas pāradresācijas lapas',
 	'doubleredirectstext' => 'Šajā lapā ir uzskaitītas pāradresācijas lapas, kuras pāradresē uz citām pāradresācijas lapām.
 Katrā rindiņā ir saites uz pirmo un otro pāradresācijas lapu, kā arī pirmā rindiņa no otrās pāradresācijas lapas teksta, kas parasti ir faktiskā "gala" lapa, uz kuru vajadzētu būt saitei pirmajā lapā.
@@ -10288,7 +10319,7 @@ Vai tu to gribi izdzēst, lai atbrīvotu vietu pārvietošanai?',
 	'djvu_no_xml' => 'Neizdevās ielādēt XML DjVu failam',
 	'deletedrevision' => 'Izdzēstā vecā versija $1',
 	'days' => '{{PLURAL:$1|$1 diena|$1 dienas}}',
-	'deletedwhileediting' => '\'\'\'Brīdinājums:\'\'\' Šī lapa tika izdzēsta, pēc tam, kad tu to sāki izmainīt!',
+	'deletedwhileediting' => "'''Brīdinājums:''' Šī lapa tika izdzēsta, pēc tam, kad tu to sāki izmainīt!",
 	'descending_abbrev' => 'dilst.',
 	'dberr-header' => 'Šim viki ir problēma',
 	'dberr-problems' => 'Atvainojiet!
@@ -10298,9 +10329,9 @@ Vai tu to gribi izdzēst, lai atbrīvotu vietu pārvietošanai?',
 	'dberr-usegoogle' => 'Pa to laiku Jūs varat izmantot Google meklēšanu.',
 	'dberr-outofdate' => 'Ņemiet vērā, ka mūsu satura indeksācija var būt novecojusi.',
 	'dberr-cachederror' => 'Šī ir lapas agrāk saglabātā kopija, tā var nebūt atjaunināta.',
-];
+);
 
-$messages['lzh'] = [
+$messages['lzh'] = array(
 	'december' => '十二月',
 	'december-gen' => '十二月',
 	'dec' => '十二月',
@@ -10370,9 +10401,9 @@ $messages['lzh'] = [
 	'deletedwhileediting' => '警：纂中見刪。',
 	'descending_abbrev' => '降冪',
 	'duplicate-defaultsort' => '警：預之排鍵「$2」蓋前之排鍵「$1」。',
-];
+);
 
-$messages['lzz'] = [
+$messages['lzz'] = array(
 	'december' => 'Xristʼana',
 	'december-gen' => 'Xristʼana',
 	'dec' => 'Xri',
@@ -10389,9 +10420,9 @@ Xolosi oras jileri na renanpe oz*iru şeni: $2.',
 	'deletecomment' => 'Muşen:',
 	'deleteotherreason' => 'Majurani/ilave sebebi:',
 	'deletereasonotherlist' => 'Majurani sebebepe',
-];
+);
 
-$messages['mai'] = [
+$messages['mai'] = array(
 	'december' => 'दिसंबर',
 	'december-gen' => 'दिसंबर',
 	'dec' => 'दिस.',
@@ -10426,9 +10457,9 @@ $messages['mai'] = [
 	'download' => 'अवारोपन',
 	'disambiguations' => 'स्पष्ट पन्नासँ लागिबला पन्ना',
 	'disambiguationspage' => 'नमूना: निवारण',
-	'disambiguations-text' => 'ई सभ पन्ना \'\'\'स्पष्ट कएल\'\'\' सँ लागिमे अछि।
+	'disambiguations-text' => "ई सभ पन्ना '''स्पष्ट कएल''' सँ लागिमे अछि।
 ओ सभ एकर बदला उचित वार्तापर लागि करथि।<br />
-[[MediaWiki:Disambiguationspage]] सँ लागिमे जँ नमूनाक प्रयोग करैत अछि तखने ओ  \'\'\'स्पष्ट कएल\'\'\'  पन्ना कहाएत।',
+[[MediaWiki:Disambiguationspage]] सँ लागिमे जँ नमूनाक प्रयोग करैत अछि तखने ओ  '''स्पष्ट कएल'''  पन्ना कहाएत।",
 	'doubleredirects' => 'द्वितीयक लागिबला बदलेन',
 	'doubleredirectstext' => 'ई पन्ना ओइ पन्ना सभक संकलन छी जे बदलेन करैए दोसर बदलेनबला पन्नासँ।
 प्रत्येक पाँती पहिल आ दोसर बदलेनक लागि रखने अछि आ संगे दोसर बदलेनक लक्ष्य सेहो, जे वास्तवमे "वास्तव" लक्ष्य पन्ना अछि, जकरापर पहिल बदलेनकेँ जेबाक चाही।
@@ -10475,7 +10506,7 @@ $messages['mai'] = [
 	'deletedrevision' => 'पुरान संशोधन $1 हटा देलौं',
 	'days-abbrev' => '$1d',
 	'days' => '{{PLURAL:$1|$1 दिन|$1 दिन}}',
-	'deletedwhileediting' => '\'\'\'Warning\'\'\': अहां जखन सें संपादन शुरू केने छी, ओकर बाद से ई पृष्ठ के मिटा देल गेल अछि.',
+	'deletedwhileediting' => "'''Warning''': अहां जखन सें संपादन शुरू केने छी, ओकर बाद से ई पृष्ठ के मिटा देल गेल अछि.",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => '\'\'\'चेतौनी:\'\'\' पूर्वनिर्धारित विन्यास चाभी "$2" पहिलुका पूर्वनिर्धारित विन्यास चाभी "$1" केँ खतम करैए।',
 	'dberr-header' => 'ऐ विकीमे एकटा समस्या अछि',
@@ -10486,9 +10517,9 @@ $messages['mai'] = [
 	'dberr-usegoogle' => 'ऐ बीचमे अहाँ गूगलसँ खोज कऽ सकै छी।',
 	'dberr-outofdate' => 'मोन राखू जे हमर सामिग्रीक ओकर सूची पुरान भऽ सकैए।',
 	'dberr-cachederror' => 'ई आग्रह कएल पन्नाक उपस्मृति संरक्षित द्वितीयक अछि, आ भऽ सकैए जे अद्यतन नै हुअए।',
-];
+);
 
-$messages['map-bms'] = [
+$messages['map-bms'] = array(
 	'december' => 'Desember',
 	'december-gen' => 'Desember',
 	'dec' => 'Des',
@@ -10515,10 +10546,10 @@ Basis data ngasilna kesalahan "<tt>$3: $4</tt>".',
 	'diff' => 'bédane',
 	'disambiguations' => 'Kaca sing nggandeng maring kaca disambiguasi',
 	'disambiguationspage' => 'Template:Disambig',
-	'disambiguations-text' => 'Kaca-kaca kiye nduwe pranala maring \'\'\'kaca disambiguasi\'\'\'.
+	'disambiguations-text' => "Kaca-kaca kiye nduwe pranala maring '''kaca disambiguasi'''.
 Kaca-kaca kuwe kudune nggandeng maring topik sing bener/pas.<br />
 Sawijining kaca bakal dianggep dadi kaca disambiguasi angger nggunakna cithakan sing nggandeng maring
-[[MediaWiki:Disambiguationspage]]',
+[[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Pangalihan dobel',
 	'doubleredirectstext' => 'Kaca kiye muat daftar kaca sing dialihna maring kaca pangalihan liyane.
 Saben barise nduwe pranala maring pangalihan pertama lan kepindho, lan tujuan sekang pengalihan kepindho sing biasane kuwe kaca tujuan sing "sebenere", sing kudune dadi tujuane kaca pangalihan pertama.
@@ -10555,10 +10586,10 @@ Kaca sing dituju "[[:$1]]" wis ana isine.
 Apa Rika kepengin mbusek kuwe ben teyeng dipindahna?',
 	'delete_and_move_confirm' => 'Ya, busek kaca kuwe',
 	'delete_and_move_reason' => 'Dibusek nggo gawe dalan nggo mindah sekang "[[$1]]"',
-	'duplicate-defaultsort' => '\'\'\'Pènget:\'\'\' Kunci baku sing nggo ngurutna (\'\'Default sort key\'\') yakuwe "$2" wis nggantèkna kunci baku sing nggo ngurutna sedurungé "$1".',
-];
+	'duplicate-defaultsort' => "'''Pènget:''' Kunci baku sing nggo ngurutna (''Default sort key'') yakuwe \"\$2\" wis nggantèkna kunci baku sing nggo ngurutna sedurungé \"\$1\".",
+);
 
-$messages['mdf'] = [
+$messages['mdf'] = array(
 	'december' => 'Кучкаков',
 	'december-gen' => 'Кучкаковонь',
 	'dec' => 'Куч',
@@ -10592,7 +10623,7 @@ $messages['mdf'] = [
 	'download' => 'тонгомс',
 	'disambiguations' => 'Лама смузьса лопат',
 	'disambiguationspage' => 'Template:лама смусть',
-	'disambiguations-text' => 'Ня лопатне сюлмафт \'\'\'лама смузень лопа\'\'\' мархта. Синьдеест эрявихть сюлмамс иля башка сёрмафкснень мархта.<br />Лопась лувови лама смузеннекс мъзярда сон сюлмаф [[MediaWiki:Disambiguationspage]] кепотькс мархта.',
+	'disambiguations-text' => "Ня лопатне сюлмафт '''лама смузень лопа''' мархта. Синьдеест эрявихть сюлмамс иля башка сёрмафкснень мархта.<br />Лопась лувови лама смузеннекс мъзярда сон сюлмаф [[MediaWiki:Disambiguationspage]] кепотькс мархта.",
 	'doubleredirects' => 'Кафонзаф умборондафтфксне',
 	'doubleredirectstext' => 'Тя лопань лувомаса няфтевихть умборондафтфксне сюлмафт иля умборондафтфкснень мархта. Эрь луфксса (строкаса) улихть васенце ди омбоце умборондафтфкснень сюлмафкссна, тяса тага ули омбоце умборондафтфксонь васенце киксонцты сюлмафкссь, тоса ули няфтемась лопань лемонц лангс конань мархта эряволь васенце умборондафтфксть сюлмафтомс.
 <del>Туркс кикс мархта</del> тяшксне латцефольхть.',
@@ -10630,12 +10661,12 @@ $messages['mdf'] = [
 	'djvu_page_error' => 'DjVu лопась аф сатови',
 	'djvu_no_xml' => 'Аш кода латцемс XML DjVu файлти',
 	'deletedrevision' => 'Нардаф сире илякстоптома $1',
-	'deletedwhileediting' => '\'\'\'Инголе кардама\'\'\': Тя лопась нардафоль ёт тон кармать петнеманза!',
+	'deletedwhileediting' => "'''Инголе кардама''': Тя лопась нардафоль ёт тон кармать петнеманза!",
 	'descending_abbrev' => 'тум.',
 	'duplicate-defaultsort' => 'Инголе мярьгома: Апак полафтт сортонь панжема "$2" апак полафтт сортонь панжема "$1"да вяре.',
-];
+);
 
-$messages['mg'] = [
+$messages['mg'] = array(
 	'december' => 'Desambra',
 	'december-gen' => 'Desambra',
 	'dec' => 'Des',
@@ -10643,39 +10674,39 @@ $messages['mg'] = [
 	'deletethispage' => 'Fafao ity pejy ity',
 	'disclaimers' => 'Fampitandremana',
 	'disclaimerpage' => 'Project:General disclaimer',
-	'databaseerror' => 'Tsy fetezana eo amin\'ny toby',
+	'databaseerror' => "Tsy fetezana eo amin'ny toby",
 	'dberrortext' => 'Nisy tsy fetezana ao amin\'ny fangatahana tany amin\'ny database.
 Inoana fa ny rindrankajy no misy olana (bug).
 Ny fangatahana farany dia:
 <blockquote><tt>$1</tt></blockquote>
 tao amin\'ny tao "<tt>$2</tt>".
 Toy izao no navalin\'ny MySQL "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'Ao amin\'ny fangatahana tao amin\'ny banky angona dia misy tsi-fetezana ara-pehezanteny.
+	'dberrortextcl' => "Ao amin'ny fangatahana tao amin'ny banky angona dia misy tsi-fetezana ara-pehezanteny.
 Ny fangatahana farany nalefa dia :
 « $1 »
-tao amin\'ny asa « $2 ».
-Ny banky angona dia namerina ny tsi-fetezana « $3 : $4 »',
-	'directorycreateerror' => 'Tsy afaka amboarina ny petra-drakitra (\'\'dossier, directory\'\') « $1 ».',
+tao amin'ny asa « $2 ».
+Ny banky angona dia namerina ny tsi-fetezana « $3 : $4 »",
+	'directorycreateerror' => "Tsy afaka amboarina ny petra-drakitra (''dossier, directory'') « $1 ».",
 	'deletedhist' => 'Tantara voafafa',
-	'difference' => '(Fahasamihafan\'ny pejy)',
-	'difference-multipage' => '(Fahasamihafan\'ny pejy)',
-	'diff-multi' => '({{PLURAL:$1|Famerenana tokana|Famerenana $1}} nataon\'ny {{PLURAL:$2|mpikambana iray|mpikambana $2}} tsy miseho)',
+	'difference' => "(Fahasamihafan'ny pejy)",
+	'difference-multipage' => "(Fahasamihafan'ny pejy)",
+	'diff-multi' => "({{PLURAL:$1|Famerenana tokana|Famerenana $1}} nataon'ny {{PLURAL:$2|mpikambana iray|mpikambana $2}} tsy miseho)",
 	'datedefault' => 'Tsy misy safidy',
-	'defaultns' => 'Fikarohana tsipalotra anatin\'ireo anaran-tsehatra ireo :',
+	'defaultns' => "Fikarohana tsipalotra anatin'ireo anaran-tsehatra ireo :",
 	'default' => 'tsipalotra',
 	'diff' => 'Fampitahana',
-	'destfilename' => 'Anaran\'ny rakitra:',
+	'destfilename' => "Anaran'ny rakitra:",
 	'download' => 'Hampidina',
 	'disambiguations' => 'pejina homonimia',
 	'disambiguationspage' => 'Template:homonimia',
 	'doubleredirects' => 'Fihodinana roa',
-	'double-redirect-fixed-move' => 'Ity fihodinana ity, nanana ny tanjona [[$1]] novaina anarana, dia mitondra mankany amin\'ny [[$2]].',
+	'double-redirect-fixed-move' => "Ity fihodinana ity, nanana ny tanjona [[$1]] novaina anarana, dia mitondra mankany amin'ny [[$2]].",
 	'double-redirect-fixer' => 'Mpanitsy fihodinana',
 	'deadendpages' => 'Pejy tsy mirohy',
-	'deadendpagestext' => 'Tsy misy rohy mitondra makany amin\'ny pejin\'ny wiki hafa ireo pejy ireo.',
-	'deletedcontributions' => 'Fandraisan\'anjara voafafa',
-	'deletedcontributions-title' => 'fandraisan\'anjara voafafa',
-	'defemailsubject' => 'imailaka avy amin\'ny sehatra {{SITENAME}}',
+	'deadendpagestext' => "Tsy misy rohy mitondra makany amin'ny pejin'ny wiki hafa ireo pejy ireo.",
+	'deletedcontributions' => "Fandraisan'anjara voafafa",
+	'deletedcontributions-title' => "fandraisan'anjara voafafa",
+	'defemailsubject' => "imailaka avy amin'ny sehatra {{SITENAME}}",
 	'deletepage' => 'Hamafa ny pejy',
 	'delete-confirm' => 'Hamafa ny « $1 »',
 	'delete-legend' => 'Fafao',
@@ -10687,16 +10718,16 @@ Jereo amin\'ny $2 ny lisitry ny famafana pejy faramparany.',
 	'deletecomment' => 'Antony :',
 	'deleteotherreason' => 'antony hafa miampyy:',
 	'deletereasonotherlist' => 'antony',
-	'deletereason-dropdown' => '* Antom-pamafana matetika miasa
-** Hataka avy amin\'ny tompony
+	'deletereason-dropdown' => "* Antom-pamafana matetika miasa
+** Hataka avy amin'ny tompony
 ** Tsi-fanajana ny zom-pamorona
-** Fandotoana',
+** Fandotoana",
 	'delete-edit-reasonlist' => 'Hanova ny antony amafana pejy',
 	'delete-toobig' => 'Ity pejy  ity dia manana tantaram-panovana be, mihoatra ny santiôna {{PLURAL:$1}} $1.
 Ny famafana ireo pejy ireto dia voafetra mba tsy hikorontana {{SITENAME}}.',
-	'delete-warning-toobig' => 'Lava be mihitsy ny tantaram-piovan\'ity pejy ity, mihoatra santiôna $1{{PLURAL:}}.
-Mety hitondra fikorontanana ao amin\'ny banky angon\'i {{SITENAME}} ny famafana azy ;
-ataovy am-pitandremana ity tao ity.',
+	'delete-warning-toobig' => "Lava be mihitsy ny tantaram-piovan'ity pejy ity, mihoatra santiôna $1{{PLURAL:}}.
+Mety hitondra fikorontanana ao amin'ny banky angon'i {{SITENAME}} ny famafana azy ;
+ataovy am-pitandremana ity tao ity.",
 	'databasenotlocked' => 'Tsy voaidy ny banky angona.',
 	'delete_and_move' => 'Ovay toerana dia fafao',
 	'delete_and_move_text' => '==Mila fafàna==
@@ -10704,21 +10735,21 @@ ataovy am-pitandremana ity tao ity.',
 Efa misy ny lahatsoratra hoe "[[:$1]]". Irinao ve ny hamafana azy mba hahafahana mamindra toerana ity lahatsoratra ity?',
 	'delete_and_move_confirm' => 'Eny, fafao io pejy io',
 	'delete_and_move_reason' => 'Fafao mba hamindrana toerana ny anankiray',
-	'djvu_page_error' => 'Pejy DjVu any ivelan\'ny fetra',
-	'djvu_no_xml' => 'Tsy afaka alaina ny XML ho an\'ny rakitra DjVu',
-	'deletedrevision' => 'Fanovana an\'i $1 taloha voafafa.',
+	'djvu_page_error' => "Pejy DjVu any ivelan'ny fetra",
+	'djvu_no_xml' => "Tsy afaka alaina ny XML ho an'ny rakitra DjVu",
+	'deletedrevision' => "Fanovana an'i $1 taloha voafafa.",
 	'deletedwhileediting' => 'Fampitandremana: Nisy namafa ity pejy ity raha mbola teo am-panovana azy ianao!',
 	'descending_abbrev' => 'mihid.',
 	'duplicate-defaultsort' => '\'\'\'Tandremo\'\'\' : manitsaka ny sort key taloha "$1" ilay sort key ankehitriny "$2".',
 	'dberr-header' => 'Misy olana io wiki io',
 	'dberr-problems' => 'Azafady Tompoko ! Manana olana ara-teknika ny sehatra.',
 	'dberr-again' => 'Miandrasa minitra vitsivitsy ary alefaso fanindroany',
-	'dberr-info' => '(Tsy afaka mifandray amin\'ny lohamilin\'ny database : $1)',
-	'dberr-usegoogle' => 'Afaka manandrana mikaroka eo amin\'ny Google ianao mandritra izay.',
+	'dberr-info' => "(Tsy afaka mifandray amin'ny lohamilin'ny database : $1)",
+	'dberr-usegoogle' => "Afaka manandrana mikaroka eo amin'ny Google ianao mandritra izay.",
 	'dberr-cachederror' => 'Izy io dia dika nasitriky ny pejy nangatahana ary mety efa tola.',
-];
+);
 
-$messages['mhr'] = [
+$messages['mhr'] = array(
 	'december' => 'Теле',
 	'december-gen' => 'Теле',
 	'dec' => 'Теле',
@@ -10740,14 +10771,14 @@ $messages['mhr'] = [
 	'deletecomment' => 'Амал:',
 	'deleteotherreason' => 'Вес/ешартыш амал:',
 	'deletereasonotherlist' => 'Вес амал',
-];
+);
 
-$messages['mi'] = [
+$messages['mi'] = array(
 	'december' => 'Hakihea',
 	'delete' => 'tangohia',
-];
+);
 
-$messages['min'] = [
+$messages['min'] = array(
 	'december' => 'Desember',
 	'december-gen' => 'Desember',
 	'dec' => 'Des',
@@ -10780,9 +10811,9 @@ Lihek $2 untuak rekam jejak laman yang lah dihapuih.',
 	'deleteotherreason' => 'Alasan lain/tambahan:',
 	'deletereasonotherlist' => 'Alasan lain',
 	'duplicate-defaultsort' => '\'\'\'Peringatan:\'\'\' Kunci panguruitan default "$2" sabalunnyo maabaikan kunci panguruitan default "$1".',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'december' => 'декември',
 	'december-gen' => 'декември',
 	'dec' => 'дек',
@@ -10817,9 +10848,9 @@ $messages['mk'] = [
 	'download' => 'преземи',
 	'disambiguations' => 'Страници што водат до страници за појаснување',
 	'disambiguationspage' => 'Template:Појаснување',
-	'disambiguations-text' => 'Следните страници имаат врски кои водат до \'\'\'страница за појаснување\'\'\'.
+	'disambiguations-text' => "Следните страници имаат врски кои водат до '''страница за појаснување'''.
 Наместо тоа тие треба да водат до соодветната тема.<br />
-Страница се третира како страница за појаснување ако таа го користи шаблонот кој е наведен [[MediaWiki:Disambiguationspage|тука]]',
+Страница се третира како страница за појаснување ако таа го користи шаблонот кој е наведен [[MediaWiki:Disambiguationspage|тука]]",
 	'doubleredirects' => 'Двојни пренасочувања',
 	'doubleredirectstext' => 'Оваа страница ги прикажува пренасочувачките страници до други пренасочувачки страници.
 Секој ред содржи врски кон првото и второто пренасочување, како и целта на второто пренасочување, кое обично ја посочува <i>вистинската</i> целна страница кон која првото пренасочување би требало да насочува.
@@ -10865,7 +10896,7 @@ $messages['mk'] = [
 	'deletedrevision' => 'Избришана стара ревизија $1.',
 	'days-abbrev' => '$1 д',
 	'days' => '{{PLURAL:$1|$1 ден|$1 дена}}',
-	'deletedwhileediting' => '\'\'\'Предупредување\'\'\': Оваа страница беше избришана откако почнавте со нејзино уредување!',
+	'deletedwhileediting' => "'''Предупредување''': Оваа страница беше избришана откако почнавте со нејзино уредување!",
 	'descending_abbrev' => 'опаѓ',
 	'duplicate-defaultsort' => 'Предупредување: Основниот клуч за подредување „$2“ го поништува претходниот основен клуч за подредување „$1“.',
 	'dberr-header' => 'Ова вики не функционира како што треба',
@@ -10875,9 +10906,9 @@ $messages['mk'] = [
 	'dberr-usegoogle' => 'Во меѓувреме можете да се обидете да пребарувате со Google.',
 	'dberr-outofdate' => 'Да напоменеме дека нивните индекси на нашата содржина можат да бидат застарени.',
 	'dberr-cachederror' => 'Следнава содржина е кеширана копија на бараната страница, која може да е застарена.',
-];
+);
 
-$messages['ml'] = [
+$messages['ml'] = array(
 	'december' => 'ഡിസംബർ',
 	'december-gen' => 'ഡിസംബർ',
 	'dec' => 'ഡിസം.',
@@ -10953,7 +10984,7 @@ $messages['ml'] = [
 	'djvu_no_xml' => 'DjVu പ്രമാണത്തിനു വേണ്ടി XML ശേഖരിക്കുവാൻ പറ്റിയില്ല',
 	'deletedrevision' => '$1 എന്ന പഴയ പതിപ്പ് മായ്ച്ചിരിക്കുന്നു',
 	'days' => '{{PLURAL:$1|ഒരു ദിവസം|$1 ദിവസം}}',
-	'deletedwhileediting' => '\'\'\'മുന്നറിയിപ്പ്\'\'\': താങ്കൾ തിരുത്തുവാൻ തുടങ്ങിയ ശേഷം താൾ മായ്ക്കപ്പെട്ടിരിക്കുന്നു!',
+	'deletedwhileediting' => "'''മുന്നറിയിപ്പ്''': താങ്കൾ തിരുത്തുവാൻ തുടങ്ങിയ ശേഷം താൾ മായ്ക്കപ്പെട്ടിരിക്കുന്നു!",
 	'descending_abbrev' => 'അവരോഹണം',
 	'duplicate-defaultsort' => '\'\'\'മുന്നറിയിപ്പ്:\'\'\' ക്രമപ്പെടുത്താനുള്ള ചാവിയായ "$2" മുമ്പ് ക്രമപ്പെടുത്താനുള്ള ചാവിയായിരുന്ന "$1" എന്നതിനെ അതിലംഘിക്കുന്നു.',
 	'dberr-header' => 'ഈ വിക്കിയിൽ പ്രശ്നമുണ്ട്',
@@ -10964,9 +10995,9 @@ $messages['ml'] = [
 	'dberr-usegoogle' => 'അതേസമയം താങ്കൾക്ക് ഗൂഗിൾ വഴി തിരയുവാൻ ശ്രമിക്കാവുന്നതാണ്.',
 	'dberr-outofdate' => 'അവരുടെ പക്കലുള്ള നമ്മുടെ ഉള്ളടക്കത്തിന്റെ സൂചികകൾ കാലഹരണപ്പെട്ടതാകാമെന്ന് ഓർക്കുക.',
 	'dberr-cachederror' => 'ആവശ്യപ്പെട്ട താളിന്റെ കാഷ് ചെയ്യപ്പെട്ട പകർപ്പാണിത്, ഇത് ഇപ്പോഴുള്ളതാകണമെന്നില്ല.',
-];
+);
 
-$messages['mn'] = [
+$messages['mn'] = array(
 	'december' => 'Арванхоёрдугаар сар',
 	'december-gen' => 'Арванхоёрдугаар сар',
 	'dec' => '12-р сар',
@@ -11001,9 +11032,9 @@ $messages['mn'] = [
 	'download' => 'Татаж авах',
 	'disambiguations' => 'Салаа утгатай үгнүүд',
 	'disambiguationspage' => 'Template:Салаа утгатай',
-	'disambiguations-text' => 'Дараах хуудсууд \'\'\'салаа утгатай үгнүүдийн хуудас\'\'\' руу холбогдоно.
+	'disambiguations-text' => "Дараах хуудсууд '''салаа утгатай үгнүүдийн хуудас''' руу холбогдоно.
 Тэдгээр нь зөв сэдэв руу холбогдох ёстой.<br />
-[[MediaWiki:Disambiguationspage]]-с холбогдсон загвар хэрэглэж байвал хуудас нь салаа утгатай үгнүүдийн хуудас гэж тооцогдоно.',
+[[MediaWiki:Disambiguationspage]]-с холбогдсон загвар хэрэглэж байвал хуудас нь салаа утгатай үгнүүдийн хуудас гэж тооцогдоно.",
 	'doubleredirects' => 'Давхар чиглүүлэгчүүд',
 	'doubleredirectstext' => 'Энэ хуудас нь өөр чиглүүлэгч хуудас руу чиглүүлдэг хуудсуудыг жагсаана.
 Мөр тус бүр нь эхний ба хоёр дахь чиглүүлэгч рүүх холбоосыг болон эхний чиглүүлэгчийн чиглэх ёстой, хоёр дахь чиглүүлэгчийн чиглэх "жинхэнэ" чиглэх ёстой хуудсыг заана.',
@@ -11055,9 +11086,9 @@ $messages['mn'] = [
 	'dberr-usegoogle' => 'Та одоохондоо Google-г ашиглан хайлтаа хийх боломжтой.',
 	'dberr-outofdate' => 'Энэ сайт дахь агуулгын гадны индекс хуучирсан байж болзошгүйг анхаарна уу.',
 	'dberr-cachederror' => 'Энэ нь таны хандах гэж буй хуудсын кэшлэгдсэн хувилбар. Иймд агуулга нь хуучирсан байж болзошгүй.',
-];
+);
 
-$messages['mo'] = [
+$messages['mo'] = array(
 	'december' => 'дечембрие',
 	'december-gen' => 'дечембрие',
 	'dec' => 'деч',
@@ -11073,9 +11104,9 @@ $messages['mo'] = [
 	'deletecomment' => 'Мотив:',
 	'deleteotherreason' => 'Мотив диферит/суплиментар:',
 	'deletereasonotherlist' => 'Алт мотив',
-];
+);
 
-$messages['mr'] = [
+$messages['mr'] = array(
 	'december' => 'डिसेंबर',
 	'december-gen' => 'डिसेंबर',
 	'dec' => 'डिसें.',
@@ -11110,7 +11141,7 @@ MySQL returned error "$3: $4".',
 	'download' => 'उतरवा',
 	'disambiguations' => 'नि:संदिग्धकरण पृष्ठे',
 	'disambiguationspage' => 'Template:नि:संदिग्धीकरण',
-	'disambiguations-text' => 'निम्नलिखीत पाने एका \'\'\'नि:संदिग्धकरण पृष्ठास\'\'\'जोडली जातात. त्याऐवजी ती सुयोग्य विषयाशी जोडली जावयास हवीत.<br /> जर जर एखादे पान [[MediaWiki:Disambiguationspage]]पासून जोडलेला साचा वापरत असेल तर ते पान \'\'\'नि:संदिग्धकरण पृष्ठ\'\'\' गृहीत धरले जाते',
+	'disambiguations-text' => "निम्नलिखीत पाने एका '''नि:संदिग्धकरण पृष्ठास'''जोडली जातात. त्याऐवजी ती सुयोग्य विषयाशी जोडली जावयास हवीत.<br /> जर जर एखादे पान [[MediaWiki:Disambiguationspage]]पासून जोडलेला साचा वापरत असेल तर ते पान '''नि:संदिग्धकरण पृष्ठ''' गृहीत धरले जाते",
 	'doubleredirects' => 'दुहेरी-पुनर्निर्देशने',
 	'doubleredirectstext' => 'हे पान अशा पानांची सूची पुरवते की जी पुर्ननिर्देशीत पाने दुसऱ्या पुर्ननिर्देशीत पानाकडे निर्देशीत झाली आहेत.प्रत्येक ओळीत पहिल्या आणि दुसऱ्या पुर्ननिर्देशनास दुवा दिला आहे सोबतच दुसरे पुर्ननिर्देशन ज्या पानाकडे पोहचते ते पण दिले आहे, जे की बरोबर असण्याची शक्यता आहे ,ते वस्तुतः पहिल्या पानापासूनचेही पुर्ननिर्देशन असावयास हवे.',
 	'double-redirect-fixed-move' => '[[$1]] हलवले गेले आहे.
@@ -11171,9 +11202,9 @@ MySQL returned error "$3: $4".',
 	'duration-years' => '$1 {{PLURAL:$1|वर्षापूर्वी|वर्षांपूर्वी}}',
 	'duration-decades' => '$1 {{PLURAL:$1|दशकापूर्वी|दशकांपूर्वी }}',
 	'duration-centuries' => '$1 {{PLURAL:$1|शतकापूर्वी|शतकांपूर्वी }}',
-];
+);
 
-$messages['mrj'] = [
+$messages['mrj'] = array(
 	'december' => 'декабрь',
 	'december-gen' => 'декабрьын',
 	'dec' => 'дек',
@@ -11189,9 +11220,9 @@ $messages['mrj'] = [
 	'deletecomment' => 'Ӓмӓлжӹ:',
 	'deleteotherreason' => 'Вес ӓмӓл/ынгылдарал:',
 	'deletereasonotherlist' => 'Вес ӓмӓл',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'december' => 'Disember',
 	'december-gen' => 'Disember',
 	'dec' => 'Dis',
@@ -11226,7 +11257,7 @@ Pangkalan data memulangkan ralat "$3: $4".',
 	'download' => 'muat turun',
 	'disambiguations' => 'Laman-laman yang berpaut dengan laman penyahkekaburan',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'Laman-laman berikut mengandungi pautan ke \'\'\'laman penyahtaksaan\'\'\'. Pautan ini sepatutnya ditujukan kepada topik yang sepatutnya.<br />Sesebuah laman dianggap sebagai laman penyahtaksaan jika ia menggunakan templat yang dipaut dari [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Laman-laman berikut mengandungi pautan ke '''laman penyahtaksaan'''. Pautan ini sepatutnya ditujukan kepada topik yang sepatutnya.<br />Sesebuah laman dianggap sebagai laman penyahtaksaan jika ia menggunakan templat yang dipaut dari [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Lencongan berganda',
 	'doubleredirectstext' => 'Yang berikut ialah senarai laman yang melencong ke laman lencongan lain. Setiap baris mengandungi pautan ke laman lencongan pertama dan kedua, serta baris pertama bagi teks lencongan kedua, lazimnya merupakan laman sasaran "sebenar", yang sepatutnya ditujui oleh lencongan pertama.
 Masukan yang <del>dipotong</del> telah diselesaikan.',
@@ -11268,7 +11299,7 @@ Laman destinasi "[[:$1]]" telah pun wujud. Adakah anda mahu menghapuskannya supa
 	'deletedrevision' => 'Menghapuskan semakan lama $1.',
 	'days-abbrev' => '$1h',
 	'days' => '$1 hari',
-	'deletedwhileediting' => '\'\'\'Amaran\'\'\': Laman ini dihapuskan ketika anda sedang menyuntingnya!',
+	'deletedwhileediting' => "'''Amaran''': Laman ini dihapuskan ketika anda sedang menyuntingnya!",
 	'descending_abbrev' => 'menurun',
 	'duplicate-defaultsort' => '\'\'\'Amaran\'\'\': Kunci susunan asali "$2" membatalkan kunci susunan asali "$1" yang sebelumnya.',
 	'dberr-header' => 'Wiki ini dilanda masalah',
@@ -11278,9 +11309,9 @@ Laman destinasi "[[:$1]]" telah pun wujud. Adakah anda mahu menghapuskannya supa
 	'dberr-usegoogle' => 'Buat masa ini, anda boleh cuba mencari melalui Google.',
 	'dberr-outofdate' => 'Sila ambil perhatian bahawa indeks mereka bagi kandungan kami mungkin sudah ketinggalan zaman.',
 	'dberr-cachederror' => 'Yang berikut ialah salinan bagi laman yang diminta yang diambil daripada cache, dan mungkin bukan yang terkini.',
-];
+);
 
-$messages['mt'] = [
+$messages['mt'] = array(
 	'december' => 'Diċembru',
 	'december-gen' => 'Diċembru',
 	'dec' => 'Diċ',
@@ -11307,24 +11338,24 @@ Id-databażi tat il-problema segwenti "$3: $4"',
 	'diff-multi' => '(Mhux qed {{PLURAL:$1|tintwera reviżjoni intermedja|jintwerew $1 reviżjonijit intermedji}} minn {{PLURAL:$2|utent|$2 utenti}})',
 	'diff-multi-manyusers' => '(Mhux qed {{PLURAL:$1|tintwera reviżjoni intermedja|jintwerew $1 reviżjonijit intermedji}} mingħand iktar minn $2 {{PLURAL:$2|utent|$2 utenti}})',
 	'datedefault' => 'L-ebda preferenza',
-	'defaultns' => 'Fil-każ kuntrarju, fittex f\'dawn l-ispazji tal-isem:',
+	'defaultns' => "Fil-każ kuntrarju, fittex f'dawn l-ispazji tal-isem:",
 	'default' => 'predefinit',
 	'diff' => 'diff',
 	'destfilename' => 'L-Isem tal-fajl tad-destinazzjoni:',
-	'duplicatesoffile' => '{{PLURAL:$1|Il-fajl segwenti huwa duplikat|Il-$1 fajls segwenti huma duplikati}} ta\' dan il-fajl ([[Special:FileDuplicateSearch/$2|aktar dettalji]]):',
+	'duplicatesoffile' => "{{PLURAL:$1|Il-fajl segwenti huwa duplikat|Il-$1 fajls segwenti huma duplikati}} ta' dan il-fajl ([[Special:FileDuplicateSearch/$2|aktar dettalji]]):",
 	'download' => 'niżżel',
-	'disambiguations' => 'Paġni ta\' diżambigwazzjoni',
+	'disambiguations' => "Paġni ta' diżambigwazzjoni",
 	'disambiguationspage' => 'Template:diżambig',
-	'disambiguations-text' => 'Il-Paġni li jinsabu f\'din lista huma parti minn \'\'\'paġna ta\' diżambigwazzjoni\'\'\' b\'hekk għandhom jiġu relatati mas-suġġett preċiż minflok. <br />
-Paġna tiġi stimata paġna ta\' diżambigwazzjoni dawk kollha li jagħmlu użu mit-template elenkat f\'[[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Il-Paġni li jinsabu f'din lista huma parti minn '''paġna ta' diżambigwazzjoni''' b'hekk għandhom jiġu relatati mas-suġġett preċiż minflok. <br />
+Paġna tiġi stimata paġna ta' diżambigwazzjoni dawk kollha li jagħmlu użu mit-template elenkat f'[[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Riindirizzi doppji',
 	'doubleredirectstext' => 'Din il-paġna telenka dawk il-paġni li jindirizzaw lejn paġna oħra ta\' riindirizzament.
 Kull filliera għandha ħolqa għall-ewwel u t-tieni riindirizz, kif ukoll fejn tirrindirizza t-tieni paġna, is-soltu magħrufa bħalha l-paġna "reali" fejn se twassal, fejn suppost l-ewwel riindirizz għandu jipponta.',
 	'double-redirect-fixed-move' => '[[$1]] ġie mmexxi awtomatikament, issa hu rindirizz għal [[$2]]',
-	'double-redirect-fixed-maintenance' => 'Tiswija ta\' rindirizz doppju minn [[$1]] għal [[$2]].',
-	'double-redirect-fixer' => 'Tiswija ta\' rindirizz',
+	'double-redirect-fixed-maintenance' => "Tiswija ta' rindirizz doppju minn [[$1]] għal [[$2]].",
+	'double-redirect-fixer' => "Tiswija ta' rindirizz",
 	'deadendpages' => 'Paġni bla ħruġ',
-	'deadendpagestext' => 'Il-Paġni segwenti m\'għandhomx link għal paġna oħra.',
+	'deadendpagestext' => "Il-Paġni segwenti m'għandhomx link għal paġna oħra.",
 	'deletedcontributions' => 'Kontribuzzjonijiet imħassra tal-utent',
 	'deletedcontributions-title' => 'Kontribuzzjonijiet imħassra tal-utent',
 	'defemailsubject' => 'Messaġ minn {{SITENAME}} mingħand l-utent "$1"',
@@ -11339,15 +11370,15 @@ Ikkonsulta r-$2 biex tara paġni li ġew imħassra riċentament.',
 	'deletecomment' => 'Raġuni:',
 	'deleteotherreason' => 'Raġunijiet oħra/addizzjonali:',
 	'deletereasonotherlist' => 'Raġuni oħra',
-	'deletereason-dropdown' => '*Raġunijiet ta\' tħassir komuni
+	'deletereason-dropdown' => "*Raġunijiet ta' tħassir komuni
 ** Rikjesta tal-awtur
 ** Vjolazzjoni tal-copyright
-** Vandaliżmu',
-	'delete-edit-reasonlist' => 'Immodifika r-raġunijiet ta\' tħassir',
-	'delete-toobig' => 'Din il-paġna għandha kronoloġija ta\' modifikar kbira, l-fuq minn $1 {{PLURAL:$1|reviżjoni|reviżjonijiet}}.
-Tħassir ta\' dawn il-paġni huwa limitat sabiex tnaqqas il-ħolqien aċċidentalment ta\' problemi fil-funżjoni tad-database ta\' {{SITENAME}}.',
-	'delete-warning-toobig' => 'Din il-paġna għandha kronoloġija ta\' modifikar kbira, l-fuq minn $1 {{PLURAL:$1|reviżjoni|reviżjonijiet}}.
-Tħassara tista\' toħloq problema ta\' funżjoni fid-database ta\' {{SITENAME}}; moħħok hemm.',
+** Vandaliżmu",
+	'delete-edit-reasonlist' => "Immodifika r-raġunijiet ta' tħassir",
+	'delete-toobig' => "Din il-paġna għandha kronoloġija ta' modifikar kbira, l-fuq minn $1 {{PLURAL:$1|reviżjoni|reviżjonijiet}}.
+Tħassir ta' dawn il-paġni huwa limitat sabiex tnaqqas il-ħolqien aċċidentalment ta' problemi fil-funżjoni tad-database ta' {{SITENAME}}.",
+	'delete-warning-toobig' => "Din il-paġna għandha kronoloġija ta' modifikar kbira, l-fuq minn $1 {{PLURAL:$1|reviżjoni|reviżjonijiet}}.
+Tħassara tista' toħloq problema ta' funżjoni fid-database ta' {{SITENAME}}; moħħok hemm.",
 	'databasenotlocked' => 'Id-Database mhux magħluq.',
 	'delete_and_move' => 'Ħassar u mexxi',
 	'delete_and_move_text' => '==Rikjesta ta\' tħassir==
@@ -11359,19 +11390,19 @@ Trid tħassara sabiex tkun tista\' tagħmel triq għal ċaqlieqa?',
 	'djvu_no_xml' => 'Impossibli ġġib il-XML għal fajl DjVu',
 	'deletedrevision' => 'Reviżjoni preċedenti, mħassra: $1',
 	'days' => '{{PLURAL:$1|ġurnata|$1 ġranet}}',
-	'deletedwhileediting' => '\'\'\'Twissija\'\'\': Din il-paġna ġiet imħassra wara li int bdejt timmodifikaha!',
+	'deletedwhileediting' => "'''Twissija''': Din il-paġna ġiet imħassra wara li int bdejt timmodifikaha!",
 	'descending_abbrev' => 'dixx',
 	'duplicate-defaultsort' => '\'\'\'Twissija:\'\'\' iċ-ċavetta tal-issortjar oriġinali "$2" tissostitwixxi dik preċedenti "$1".',
 	'dberr-header' => 'Din il-wiki għandha problema',
 	'dberr-problems' => 'Jiddispjaċina! Dan is-sit għandu diffikultajiet tekniċi.',
-	'dberr-again' => 'Prova stenna ftit minuti u erġa\' tella\' l-paġna.',
+	'dberr-again' => "Prova stenna ftit minuti u erġa' tella' l-paġna.",
 	'dberr-info' => '(Impossibbli li jsir kuntratt mas-server tad-databażi: $1)',
-	'dberr-usegoogle' => 'Fil-frattemp, tista\' tipprova tfittex permezz tal-Google.',
-	'dberr-outofdate' => 'Kun af li l-indiċi tagħhom tal-kontenut tagħna jista\' ma jkunx aġġornat.',
-	'dberr-cachederror' => 'Din hija kopja cache tal-paġna rikjesta, u tista\' tkun li mhijiex aġġornata.',
-];
+	'dberr-usegoogle' => "Fil-frattemp, tista' tipprova tfittex permezz tal-Google.",
+	'dberr-outofdate' => "Kun af li l-indiċi tagħhom tal-kontenut tagħna jista' ma jkunx aġġornat.",
+	'dberr-cachederror' => "Din hija kopja cache tal-paġna rikjesta, u tista' tkun li mhijiex aġġornata.",
+);
 
-$messages['mwl'] = [
+$messages['mwl'] = array(
 	'december' => 'Dezembro',
 	'december-gen' => 'Dezembre',
 	'dec' => 'Dez.',
@@ -11398,9 +11429,9 @@ Consulte $2 para um registo de eliminações recentes.',
 	'deleteotherreason' => 'Rezon adicional:',
 	'deletereasonotherlist' => 'Outra rezon',
 	'descending_abbrev' => 'decer',
-];
+);
 
-$messages['my'] = [
+$messages['my'] = array(
 	'december' => 'ဒီ​ဇင်​ဘာ​',
 	'december-gen' => 'ဒီ​ဇင်​ဘာ​',
 	'dec' => 'ဒီ',
@@ -11444,9 +11475,9 @@ $messages['my'] = [
 	'dberr-header' => 'ဤဝီကီတွင် ပြဿနာတစ်ခု ရှိနေသည်',
 	'dberr-problems' => 'ဝမ်းနည်းပါသည်။
 ဤဆိုက်သည် နည်းပညာပိုင်းဆိုင်ရာ အခက်အခဲများ ကြုံတွေ့နေရပါသည်။',
-];
+);
 
-$messages['myv'] = [
+$messages['myv'] = array(
 	'december' => 'Ацамков',
 	'december-gen' => 'Ацамковонь',
 	'dec' => 'Аца',
@@ -11492,9 +11523,9 @@ $messages['myv'] = [
 	'delete_and_move_reason' => 'Печтевтемга нардазь',
 	'deletedrevision' => 'Нардань ташто лиякстомтома $1',
 	'dberr-header' => 'Те викисэнть проблема',
-];
+);
 
-$messages['mzn'] = [
+$messages['mzn'] = array(
 	'december' => 'ده‌سـه‌مـبـر',
 	'december-gen' => 'ده‌سـه‌مـبـر',
 	'dec' => 'ده‌سه‌مبر',
@@ -11522,13 +11553,13 @@ $messages['mzn'] = [
 	'deletepage' => 'صفحه پاک هاکردن',
 	'dellogpage' => 'وه ره بییته‌ئون گوزارش',
 	'delete_and_move_confirm' => 'أره، پاک هاکه‌ن وه ره',
-];
+);
 
-$messages['na'] = [
+$messages['na'] = array(
 	'delete' => 'Iyababa',
-];
+);
 
-$messages['nah'] = [
+$messages['nah'] = array(
 	'december' => 'Pànketzalistli',
 	'december-gen' => 'ic mahtlāctetl omōme mētztli',
 	'dec' => 'ic mahtlāctli onōme',
@@ -11565,9 +11596,9 @@ Xiquitta $2 ic yancuīc tlapololiztli.',
 	'delete_and_move' => 'Ticpolōz auh ticzacāz',
 	'delete_and_move_confirm' => 'Quēmah, ticpolōz in zāzanilli',
 	'descending_abbrev' => 'temoa',
-];
+);
 
-$messages['nan'] = [
+$messages['nan'] = array(
 	'december' => '12-goe̍h',
 	'december-gen' => 'Cha̍p-jī-goe̍h',
 	'dec' => '12g',
@@ -11630,9 +11661,9 @@ Template:Khu-pia̍t-ia̍h',
 	'dberr-header' => '這个Wiki遇著問題',
 	'dberr-problems' => '失禮！
 這馬這个站有技術上的問題。',
-];
+);
 
-$messages['nap'] = [
+$messages['nap'] = array(
 	'december' => 'dicèmbre',
 	'december-gen' => 'dicembre',
 	'dec' => 'dic',
@@ -11640,7 +11671,7 @@ $messages['nap'] = [
 	'deletethispage' => 'Scancèlla chésta paggena',
 	'disclaimers' => 'Avvertimiènte',
 	'disclaimerpage' => 'Project:Avvertimiènte generale',
-	'disambiguations' => 'Paggene \'e disambigua',
+	'disambiguations' => "Paggene 'e disambigua",
 	'doubleredirects' => 'Redirect duppie',
 	'deletepage' => 'Scancella paggena',
 	'deletedtext' => 'Qauccheruno ha scancellata \'a paggena "$1".  Addumannà \'o $2 pe na lista d"e ppaggene scancellate urdemamente.',
@@ -11648,11 +11679,11 @@ $messages['nap'] = [
 	'deletionlog' => 'Log d"e scancellazione',
 	'deletecomment' => 'Raggióne',
 	'delete_and_move' => 'Scancèlla e spusta',
-	'delete_and_move_confirm' => 'Sì, suprascrivi \'a paggena asistente',
+	'delete_and_move_confirm' => "Sì, suprascrivi 'a paggena asistente",
 	'deletedwhileediting' => 'Attenziòne: quaccherùno have scancellàto chesta pàggena prìmma ca tu accuminciàste â scrìvere!',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'december' => 'desember',
 	'december-gen' => 'desember',
 	'dec' => 'des',
@@ -11687,9 +11718,9 @@ Databasen returnerte feilen «$3: $4».',
 	'download' => 'last ned',
 	'disambiguations' => 'Sider som lenker til artikler med flertydige titler',
 	'disambiguationspage' => 'Template:Peker',
-	'disambiguations-text' => 'Følgende sider lenker til en \'\'\'pekerside\'\'\'.
+	'disambiguations-text' => "Følgende sider lenker til en '''pekerside'''.
 De burde i stedet lenke til en passende innholdsside.<br />
-En side anses om en pekerside om den inneholder en mal som det lenkes til fra [[MediaWiki:Disambiguationspage]]',
+En side anses om en pekerside om den inneholder en mal som det lenkes til fra [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Doble omdirigeringer',
 	'doubleredirectstext' => 'Denne siden lister opp de sidene som er omdirigeringer til andre omdirigeringssider.
 Hver rad inneholder lenker til første og andre omdirigering, samt målet for den andre omdirigeringen, som vanligvis er den «virkelige» målsiden som den første omdirigeringen burde peke til.
@@ -11730,7 +11761,7 @@ Målsiden «[[:$1]]» finnes allerede. Vil du slette den så denne siden kan fly
 	'djvu_no_xml' => 'Klarte ikke å hente XML for DjVu-fil',
 	'deletedrevision' => 'Slettet gammel revisjon $1.',
 	'days' => '{{PLURAL:$1|$1 dag|$1 dager}}',
-	'deletedwhileediting' => '\'\'\'Advarsel:\'\'\' Denne siden har blitt slettet etter at du begynte å redigere den!',
+	'deletedwhileediting' => "'''Advarsel:''' Denne siden har blitt slettet etter at du begynte å redigere den!",
 	'descending_abbrev' => 'synk.',
 	'duplicate-defaultsort' => 'Advarsel: Standardsorteringen «$2» tar over for den tidligere sorteringen «$1».',
 	'dberr-header' => 'Wikien har et problem',
@@ -11740,9 +11771,9 @@ Målsiden «[[:$1]]» finnes allerede. Vil du slette den så denne siden kan fly
 	'dberr-usegoogle' => 'Du kan prøve å søke via Google imens.',
 	'dberr-outofdate' => 'Merk at deres indeks over våre sider kan være utdatert.',
 	'dberr-cachederror' => 'Følgende er en mellomlagret kopi av den etterspurte siden, og kan være foreldet.',
-];
+);
 
-$messages['nds'] = [
+$messages['nds'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezember',
 	'dec' => 'Dez',
@@ -11816,7 +11847,7 @@ De Siet „[[:$1]]“ gifft dat al. Wullt du ehr wegsmieten, dat disse Siet scha
 	'djvu_page_error' => 'DjVu-Siet buten de verföögboren Sieden',
 	'djvu_no_xml' => 'kunn de XML-Daten för de DjVu-Datei nich afropen',
 	'deletedrevision' => 'Löschte ole Version $1',
-	'deletedwhileediting' => '\'\'\'Wohrschau\'\'\': Disse Siet is wegsmeten worrn, wieldes du ehr graad ännert hest!',
+	'deletedwhileediting' => "'''Wohrschau''': Disse Siet is wegsmeten worrn, wieldes du ehr graad ännert hest!",
 	'descending_abbrev' => 'dal',
 	'duplicate-defaultsort' => 'Wohrschau: De DEFAULTSORTKEY „$2“ överschrifft den vörher bruukten Slötel „$1“.',
 	'dberr-header' => 'Dit Wiki hett en Problem',
@@ -11826,9 +11857,9 @@ De Siet „[[:$1]]“ gifft dat al. Wullt du ehr wegsmieten, dat disse Siet scha
 	'dberr-usegoogle' => 'Du kannst dat solang mit Google versöken.',
 	'dberr-outofdate' => 'Wees gewohr, dat de Söökindex, de se vun uns Inhold hebbt, oold wesen kann.',
 	'dberr-cachederror' => 'Dit is en Kopie ut’n Cache vun de opropen Sied un is villicht nich de ne’este Version.',
-];
+);
 
-$messages['nds-nl'] = [
+$messages['nds-nl'] = array(
 	'december' => 'desember',
 	'december-gen' => 'desember',
 	'dec' => 'des',
@@ -11853,7 +11884,7 @@ De databanke gaf de volgende foutmelding: "$3: $4"',
 	'directorycreateerror' => 'Map "$1" kon niet an-emaakt wörden.',
 	'deletedhist' => 'Geschiedenisse die vortehaold is',
 	'difference' => '(Verschil tussen bewarkingen)',
-	'difference-multipage' => '(Verschil tussen pagina\'s)',
+	'difference-multipage' => "(Verschil tussen pagina's)",
 	'diff-multi' => '(Hier {{PLURAL:$1|zit nog 1 versie|zitten nog $1 versies}} van {{PLURAL:$2|1 gebruker|$2 gebrukers}} tussen die der niet bie staon.)',
 	'diff-multi-manyusers' => '($1 tussenliggende {{PLURAL:$1|versie|versies}} deur meer as $2 {{PLURAL:$2|gebruker|gebrukers}} niet weeregeven)',
 	'datedefault' => 'Gien veurkeur',
@@ -11863,20 +11894,20 @@ De databanke gaf de volgende foutmelding: "$3: $4"',
 	'destfilename' => 'Opslaon as (optioneel)',
 	'duplicatesoffile' => '{{PLURAL:$1|t Volgende bestaand is|De volgende $1 bestaanden bin}} liek alleens as dit bestaand ([[Special:FileDuplicateSearch/$2|meer informasie]]):',
 	'download' => 'binnenhaolen',
-	'disambiguations' => 'Pagina\'s die verwiezen naor deurverwiespagina\'s',
+	'disambiguations' => "Pagina's die verwiezen naor deurverwiespagina's",
 	'disambiguationspage' => 'Template:Dv',
-	'disambiguations-text' => 'De onderstaonde pagina\'s verwiezen naor n \'\'\'deurverwiespagina\'\'\'. Disse verwiezingen mutten eigenliks rechtstreeks verwiezen naor t juuste onderwarp.
+	'disambiguations-text' => "De onderstaonde pagina's verwiezen naor n '''deurverwiespagina'''. Disse verwiezingen mutten eigenliks rechtstreeks verwiezen naor t juuste onderwarp.
 
-Pagina\'s wörden ezien as n deurverwiespagina, as de mal gebruukt wörden die vermeld steet op [[MediaWiki:Disambiguationspage]]',
+Pagina's wörden ezien as n deurverwiespagina, as de mal gebruukt wörden die vermeld steet op [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dubbele deurverwiezingen',
-	'doubleredirectstext' => 'Op disse lieste staon alle pagina\'s die deurverwiezen naor aandere deurverwiezingen.
+	'doubleredirectstext' => "Op disse lieste staon alle pagina's die deurverwiezen naor aandere deurverwiezingen.
 Op elke regel steet de eerste en de tweede deurverwiezing, daorachter steet de doelpagina van de tweede deurverwiezing.
-Meestentieds is leste pagina de gewunste doelpagina, waor oek de eerste pagina heer zol mutten liejen.',
+Meestentieds is leste pagina de gewunste doelpagina, waor oek de eerste pagina heer zol mutten liejen.",
 	'double-redirect-fixed-move' => '[[$1]] is herneumd en is noen n deurverwiezing naor [[$2]]',
 	'double-redirect-fixed-maintenance' => 'Verbeteren van dubbele deurverwiezing van [[$1]] naor [[$2]].',
 	'double-redirect-fixer' => 'Deurverwiezingsverbeteraar',
-	'deadendpages' => 'Pagina\'s zonder verwiezingen',
-	'deadendpagestext' => 'De onderstaonde pagina\'s verwiezen niet naor aandere pagina\'s in disse wiki.',
+	'deadendpages' => "Pagina's zonder verwiezingen",
+	'deadendpagestext' => "De onderstaonde pagina's verwiezen niet naor aandere pagina's in disse wiki.",
 	'deletedcontributions' => 'Vortedaone gebrukersbiedragen',
 	'deletedcontributions-title' => 'Vortedaone gebrukersbiedragen',
 	'defemailsubject' => 'Bericht van {{SITENAME}}-gebruker "$1"',
@@ -11885,18 +11916,18 @@ Meestentieds is leste pagina de gewunste doelpagina, waor oek de eerste pagina h
 	'delete-legend' => 'Vortdoon',
 	'deletedtext' => 't Artikel "$1" is vortedaon. Zie de "$2" veur n lieste van pagina\'s die as lest vortedaon bin.',
 	'dellogpage' => 'Vortdologboek',
-	'dellogpagetext' => 'Hieronder steet n lieste van pagina\'s en bestaanden die as lest vortedaon bin.',
+	'dellogpagetext' => "Hieronder steet n lieste van pagina's en bestaanden die as lest vortedaon bin.",
 	'deletionlog' => 'Vortdologboek',
 	'deletecomment' => 'Reden:',
 	'deleteotherreason' => 'Aandere/extra reden:',
 	'deletereasonotherlist' => 'Aandere reden',
-	'deletereason-dropdown' => '*Redens veur t vortdoon van pagina\'s
+	'deletereason-dropdown' => "*Redens veur t vortdoon van pagina's
 ** Op vrage van de auteur
 ** Schending van de auteursrechten
-** Vandelisme',
+** Vandelisme",
 	'delete-edit-reasonlist' => 'Redens veur t vortdoon bewarken',
-	'delete-toobig' => 'Disse pagina hef n lange bewarkingsgeschiedenisse, meer as $1 {{PLURAL:$1|versie|versies}}.
-t Vortdoon van dit soort pagina\'s is mit rechten bepark um t per ongelok versteuren van de warking van {{SITENAME}} te veurkoemen.',
+	'delete-toobig' => "Disse pagina hef n lange bewarkingsgeschiedenisse, meer as $1 {{PLURAL:$1|versie|versies}}.
+t Vortdoon van dit soort pagina's is mit rechten bepark um t per ongelok versteuren van de warking van {{SITENAME}} te veurkoemen.",
 	'delete-warning-toobig' => 'Disse pagina hef n lange bewarkingsgeschiedenisse, meer as $1 {{PLURAL:$1|versie|versies}}.
 Woart je: t vortdoon van disse pagina kan de warking van de databanke van {{SITENAME}} versteuren.
 Wees veurzichtig',
@@ -11910,19 +11941,19 @@ Wees veurzichtig',
 	'djvu_no_xml' => 'Kon de XML-gegevens veur t DjVu-bestaand niet oproepen',
 	'deletedrevision' => 'Vortedaone ouwe versie $1.',
 	'days' => '{{PLURAL:$1|$1 dag|$1 dagen}}',
-	'deletedwhileediting' => '\'\'\'Waorschuwing\'\'\': disse pagina is vortedaon terwiel jie t an t bewarken waren!',
+	'deletedwhileediting' => "'''Waorschuwing''': disse pagina is vortedaon terwiel jie t an t bewarken waren!",
 	'descending_abbrev' => 'opl.',
 	'duplicate-defaultsort' => 'Waorschuwing: de standardsortering "$2" krig veurrang veur de sortering "$1".',
 	'dberr-header' => 'Disse wiki hef n probleem',
 	'dberr-problems' => 't Spiet ons, mer disse webstee hef op t moment wat techniese problemen.',
 	'dberr-again' => 'Wach n paor minuten en probeer t daornao opniej.',
 	'dberr-info' => '(Kan gien verbiending maken mit de databankeserver: $1)',
-	'dberr-usegoogle' => 'Misschien ku\'j ondertussen zeuken via Google.',
-	'dberr-outofdate' => 'Let op: indexen die zee hebben van onze pagina\'s bin misschien niet aktueel.',
+	'dberr-usegoogle' => "Misschien ku'j ondertussen zeuken via Google.",
+	'dberr-outofdate' => "Let op: indexen die zee hebben van onze pagina's bin misschien niet aktueel.",
 	'dberr-cachederror' => 'Disse pagina is n kopie uut t tussengeheugen en is misschien niet aktueel.',
-];
+);
 
-$messages['ne'] = [
+$messages['ne'] = array(
 	'december' => 'डिसेम्बर',
 	'december-gen' => 'डिसेम्बर',
 	'dec' => 'डिसेम्बर',
@@ -11975,9 +12006,9 @@ $messages['ne'] = [
 	'delete_and_move_confirm' => 'हो, पृष्ठ मेट्नुहोस्',
 	'deletedrevision' => 'संशोधन/ट्याग प्रयोग गर्नुहोस्:',
 	'dberr-header' => 'यो विकिमा समस्या छ',
-];
+);
 
-$messages['new'] = [
+$messages['new'] = array(
 	'december' => 'डिसेम्बर',
 	'december-gen' => 'डिसेम्बर',
 	'dec' => 'डिस',
@@ -11990,16 +12021,16 @@ $messages['new'] = [
 "<tt>$2</tt>" फंक्सनया
 <blockquote><tt>$1</tt></blockquote> ख।
 MySQL नं इरर "<tt>$3: $4</tt>" क्यंगु दु।',
-];
+);
 
-$messages['niu'] = [
+$messages['niu'] = array(
 	'december' => 'Tesemo',
 	'december-gen' => 'Tesemo',
 	'delete' => 'Tamate',
 	'delete-legend' => 'Tamate',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'december' => 'december',
 	'december-gen' => 'december',
 	'dec' => 'dec',
@@ -12022,7 +12053,7 @@ De database gaf de volgende foutmelding: “$3: $4”',
 	'directorycreateerror' => 'Map “$1” kon niet aangemaakt worden.',
 	'deletedhist' => 'verwijderde geschiedenis',
 	'difference' => '(Verschil tussen bewerkingen)',
-	'difference-multipage' => '(Verschil tussen pagina\'s)',
+	'difference-multipage' => "(Verschil tussen pagina's)",
 	'diff-multi' => '({{PLURAL:$1|Eén tussenliggende versie|$1 tussenliggende versies}} door {{PLURAL:$2|één gebruiker|$2 gebruikers}} {{PLURAL:$1|wordt|worden}} niet weergegeven)',
 	'diff-multi-manyusers' => '($1 tussenliggende {{PLURAL:$1|versie|versies}} door meer dan $2 {{PLURAL:$2|gebruiker|gebruikers}}  worden niet weergegeven)',
 	'datedefault' => 'Geen voorkeur',
@@ -12032,21 +12063,21 @@ De database gaf de volgende foutmelding: “$3: $4”',
 	'destfilename' => 'Opslaan als:',
 	'duplicatesoffile' => '{{PLURAL:$1|Het volgende bestand is|De volgende $1 bestanden zijn}} identiek aan dit bestand ([[Special:FileDuplicateSearch/$2|meer details]]):',
 	'download' => 'downloaden',
-	'disambiguations' => 'Pagina\'s die verwijzen naar doorverwijspagina\'s',
+	'disambiguations' => "Pagina's die verwijzen naar doorverwijspagina's",
 	'disambiguationspage' => 'Template:Doorverwijspagina',
-	'disambiguations-text' => 'Hieronder staan pagina\'s die verwijzen naar een \'\'\'doorverwijspagina\'\'\'.
+	'disambiguations-text' => "Hieronder staan pagina's die verwijzen naar een '''doorverwijspagina'''.
 Deze horen waarschijnlijk direct naar het juiste onderwerp te verwijzen.
-<br />Een pagina wordt gezien als doorverwijspagina als er een sjabloon op staat dat opgenomen is op [[MediaWiki:Disambiguationspage]]',
+<br />Een pagina wordt gezien als doorverwijspagina als er een sjabloon op staat dat opgenomen is op [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dubbele doorverwijzingen',
-	'doubleredirectstext' => 'Deze lijst bevat pagina\'s die doorverwijzen naar andere doorverwijspagina\'s.
+	'doubleredirectstext' => "Deze lijst bevat pagina's die doorverwijzen naar andere doorverwijspagina's.
 Elke rij bevat verwijzingen naar de eerste en de tweede doorverwijspagina en een verwijzing naar de doelpagina van de tweede doorverwijspagina.
 Meestal is de laatste pagina het eigenlijke doel, waar de eerste pagina naar zou moeten doorverwijzen.
-<del>Doorgehaalde regels</del> geven aan dat het probleem al is opgelost.',
+<del>Doorgehaalde regels</del> geven aan dat het probleem al is opgelost.",
 	'double-redirect-fixed-move' => '[[$1]] is verplaatst en is nu een doorverwijzing naar [[$2]]',
 	'double-redirect-fixed-maintenance' => 'Correctie dubbele doorverwijzing van [[$1]] naar [[$2]].',
 	'double-redirect-fixer' => 'Doorverwijzingen opschonen',
-	'deadendpages' => 'Pagina\'s zonder verwijzingen',
-	'deadendpagestext' => 'De onderstaande pagina\'s verwijzen niet naar andere pagina\'s in deze wiki.',
+	'deadendpages' => "Pagina's zonder verwijzingen",
+	'deadendpagestext' => "De onderstaande pagina's verwijzen niet naar andere pagina's in deze wiki.",
 	'deletedcontributions' => 'Verwijderde bijdragen',
 	'deletedcontributions-title' => 'Verwijderde gebruikersbijdragen',
 	'defemailsubject' => 'E-mail van {{SITENAME}}-gebruiker "$1"',
@@ -12056,7 +12087,7 @@ Meestal is de laatste pagina het eigenlijke doel, waar de eerste pagina naar zou
 	'deletedtext' => '"$1" is verwijderd.
 Zie het $2 voor een overzicht van recente verwijderingen.',
 	'dellogpage' => 'Verwijderingslogboek',
-	'dellogpagetext' => 'Hieronder wordt een lijst met recent verwijderde pagina\'s en bestanden weergegeven.',
+	'dellogpagetext' => "Hieronder wordt een lijst met recent verwijderde pagina's en bestanden weergegeven.",
 	'deletionlog' => 'verwijderingslogboek',
 	'deletecomment' => 'Reden:',
 	'deleteotherreason' => 'Andere reden:',
@@ -12066,8 +12097,8 @@ Zie het $2 voor een overzicht van recente verwijderingen.',
 ** Schending van auteursrechten
 ** Vandalisme',
 	'delete-edit-reasonlist' => 'Redenen voor verwijderen bewerken',
-	'delete-toobig' => 'Deze pagina heeft een lange bewerkingsgeschiedenis, meer dan $1 {{PLURAL:$1|versie|versies}}.
-Het verwijderen van dit soort pagina\'s is met rechten beperkt om het per ongeluk verstoren van de werking van {{SITENAME}} te voorkomen.',
+	'delete-toobig' => "Deze pagina heeft een lange bewerkingsgeschiedenis, meer dan $1 {{PLURAL:$1|versie|versies}}.
+Het verwijderen van dit soort pagina's is met rechten beperkt om het per ongeluk verstoren van de werking van {{SITENAME}} te voorkomen.",
 	'delete-warning-toobig' => 'Deze pagina heeft een lange bewerkingsgeschiedenis, meer dan $1 {{PLURAL:$1|versie|versies}}.
 Het verwijderen van deze pagina kan de werking van de database van {{SITENAME}} verstoren.
 Wees voorzichtig.',
@@ -12082,7 +12113,7 @@ Wil je deze verwijderen om plaats te maken voor de te hernoemen pagina?',
 	'djvu_no_xml' => 'De XML voor het DjVu-bestand kon niet opgehaald worden',
 	'deletedrevision' => 'De oude versie $1 is verwijderd',
 	'days' => '{{PLURAL:$1|$1 dag|$1 dagen}}',
-	'deletedwhileediting' => '\'\'\'Let op\'\'\': deze pagina is verwijderd terwijl je bezig was met je bewerking!',
+	'deletedwhileediting' => "'''Let op''': deze pagina is verwijderd terwijl je bezig was met je bewerking!",
 	'descending_abbrev' => 'afl.',
 	'duplicate-defaultsort' => 'Waarschuwing: De standaardsortering "$2" krijgt voorrang voor de sortering "$1".',
 	'dberr-header' => 'Deze wiki heeft een probleem',
@@ -12090,20 +12121,29 @@ Wil je deze verwijderen om plaats te maken voor de te hernoemen pagina?',
 	'dberr-again' => 'Wacht een aantal minuten en probeer het daarna opnieuw.',
 	'dberr-info' => '(Kan geen verbinding maken met de databaseserver: $1)',
 	'dberr-usegoogle' => 'Wellicht kun je in de tussentijd zoeken via Google.',
-	'dberr-outofdate' => 'Let op: hun indexen van onze pagina\'s zijn wellicht niet recent.',
+	'dberr-outofdate' => "Let op: hun indexen van onze pagina's zijn wellicht niet recent.",
 	'dberr-cachederror' => 'Deze pagina is een kopie uit de cache en is wellicht niet de meest recente versie.',
 	'discuss' => 'Overleg',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+);
 
-$messages['nl-informal'] = [
+$messages['nl-informal'] = array(
 	'delete_and_move_text' => '==Verwijdering nodig==
 Onder de naam "[[:$1]]" bestaat al een pagina.
 Wil je deze verwijderen om plaats te maken voor de te hernoemen pagina?',
-	'deletedwhileediting' => '\'\'\'Let op\'\'\': deze pagina is verwijderd terwijl je bezig was met je bewerking!',
+	'deletedwhileediting' => "'''Let op''': deze pagina is verwijderd terwijl je bezig was met je bewerking!",
 	'dberr-usegoogle' => 'Wellicht kun je in de tussentijd zoeken via Google.',
-];
+);
 
-$messages['nn'] = [
+$messages['nn'] = array(
 	'december' => 'desember',
 	'december-gen' => 'desember',
 	'dec' => 'des',
@@ -12131,7 +12171,7 @@ Databasen returnerte feilen «$3: $4».',
 	'download' => 'last ned',
 	'disambiguations' => 'Sider som lenkjer til fleirtydingssider',
 	'disambiguationspage' => 'Template:Fleirtyding',
-	'disambiguations-text' => 'Sidene nedanfor har lenkje til ei \'\'\'fleirtydingsside\'\'\'. Dei bør ha lenkje til det rette oppslagsordet i staden for.<br />Sider vert handsama som fleirtydingssider dersom dei inneheld ein mal som har lenkje på [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Sidene nedanfor har lenkje til ei '''fleirtydingsside'''. Dei bør ha lenkje til det rette oppslagsordet i staden for.<br />Sider vert handsama som fleirtydingssider dersom dei inneheld ein mal som har lenkje på [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Doble omdirigeringar',
 	'doubleredirectstext' => 'Kvar line inneheld lenkjer til den første og den andre omdirigeringa, og den første lina frå den andre omdirigeringsteksten. Det gjev som regel den «rette» målartikkelen, som den første omdirigeringa skulle ha peikt på. <del>Overstrykne</del> liner har vorte retta på.',
 	'double-redirect-fixed-move' => '[[$1]] har blitt flytta, og er no ei omdirigering til [[$2]]',
@@ -12169,7 +12209,7 @@ Målsida «[[:$1]]» finst allereie. Vil du slette ho for å gje rom for flyttin
 	'djvu_page_error' => 'DjVu-sida er utanfor rekkjevidd',
 	'djvu_no_xml' => 'Klarte ikkje hente inn XML for DjVu-fila',
 	'deletedrevision' => 'Slett gammal versjon $1',
-	'deletedwhileediting' => '\'\'\'Åtvaring:\'\'\' Denne sida har vorte sletta etter du starta å endre henne!',
+	'deletedwhileediting' => "'''Åtvaring:''' Denne sida har vorte sletta etter du starta å endre henne!",
 	'descending_abbrev' => 'synkande',
 	'duplicate-defaultsort' => 'Åtvaring: Standarsorteringa «$2» tar over for den tidlegare sorteringa «$1».',
 	'dberr-header' => 'Denne wikien har eit problem',
@@ -12179,9 +12219,9 @@ Målsida «[[:$1]]» finst allereie. Vil du slette ho for å gje rom for flyttin
 	'dberr-usegoogle' => 'Du kan søkja gjennom Google i mellomtida.',
 	'dberr-outofdate' => 'Merk at versjonane deira av innhaldet vårt kan vera forelda.',
 	'dberr-cachederror' => 'Fylgjande er ein mellomlagra kopi av den etterspurde sida, og er, kan henda, ikkje den siste versjonen av ho.',
-];
+);
 
-$messages['no'] = [
+$messages['no'] = array(
 	'december' => 'desember',
 	'december-gen' => 'desember',
 	'dec' => 'des',
@@ -12209,7 +12249,7 @@ Databasen returnerte feilen «$3: $4».',
 	'download' => 'last ned',
 	'disambiguations' => 'Sider som lenkjer til fleirtydingssider',
 	'disambiguationspage' => 'Template:Fleirtyding',
-	'disambiguations-text' => 'Sidene nedanfor har lenkje til ei \'\'\'fleirtydingsside\'\'\'. Dei bør ha lenkje til det rette oppslagsordet i staden for.<br />Sider vert handsama som fleirtydingssider dersom dei inneheld ein mal som har lenkje på [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Sidene nedanfor har lenkje til ei '''fleirtydingsside'''. Dei bør ha lenkje til det rette oppslagsordet i staden for.<br />Sider vert handsama som fleirtydingssider dersom dei inneheld ein mal som har lenkje på [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Doble omdirigeringar',
 	'doubleredirectstext' => 'Kvar line inneheld lenkjer til den første og den andre omdirigeringa, og den første lina frå den andre omdirigeringsteksten. Det gjev som regel den «rette» målartikkelen, som den første omdirigeringa skulle ha peikt på. <del>Overstrykne</del> liner har vorte retta på.',
 	'double-redirect-fixed-move' => '[[$1]] har blitt flytta, og er no ei omdirigering til [[$2]]',
@@ -12247,7 +12287,7 @@ Målsida «[[:$1]]» finst allereie. Vil du slette ho for å gje rom for flyttin
 	'djvu_page_error' => 'DjVu-sida er utanfor rekkjevidd',
 	'djvu_no_xml' => 'Klarte ikkje hente inn XML for DjVu-fila',
 	'deletedrevision' => 'Slett gammal versjon $1',
-	'deletedwhileediting' => '\'\'\'Åtvaring:\'\'\' Denne sida har vorte sletta etter du starta å endre henne!',
+	'deletedwhileediting' => "'''Åtvaring:''' Denne sida har vorte sletta etter du starta å endre henne!",
 	'descending_abbrev' => 'synkande',
 	'duplicate-defaultsort' => 'Åtvaring: Standarsorteringa «$2» tar over for den tidlegare sorteringa «$1».',
 	'dberr-header' => 'Denne wikien har eit problem',
@@ -12262,9 +12302,9 @@ Målsida «[[:$1]]» finst allereie. Vil du slette ho for å gje rom for flyttin
 	'defaultskin2' => 'Ledelsen for denne wikien har valgt: <b>$1</b> som standardutseende. Trykk <a href="$2">her</a> for å se koden.',
 	'defaultskin3' => 'Ledelsen for denne wikien har ikke valgt et standardutseende. Bruker Wikiastandarden: <b>$1</b>.',
 	'defaultskin_choose' => 'Velg standardutseende for denne wikien:',
-];
+);
 
-$messages['nov'] = [
+$messages['nov'] = array(
 	'december' => 'desembre',
 	'december-gen' => 'de desembre',
 	'dec' => 'des',
@@ -12278,9 +12318,9 @@ $messages['nov'] = [
 	'delete_and_move' => 'Ekarta e mova',
 	'delete_and_move_confirm' => 'Yes, ekarta li pagine',
 	'delete_and_move_reason' => 'Ekartat por fa spatie por movo "[[$1]]"',
-];
+);
 
-$messages['nso'] = [
+$messages['nso'] = array(
 	'december' => 'Manthole',
 	'december-gen' => 'Manthole',
 	'dec' => 'Manthole',
@@ -12292,9 +12332,9 @@ $messages['nso'] = [
 	'difference' => '(Phapang magareng ga dipoeletšo)',
 	'diff-multi' => '({{PLURAL:$1|Phetogo ye kgolo|Diphetogo tše $1 tše kgolo}} gadi laetšwe.)',
 	'diff' => 'phapang',
-	'disambiguations' => 'Matlakala a \'\'Disambiguation\'\'',
-	'doubleredirects' => 'Di\'\'redirect\'\' goya go \'\'redirect\'\'',
-	'deadendpages' => 'Matlakala a seye felo(\'\'Dead-end\'\')',
+	'disambiguations' => "Matlakala a ''Disambiguation''",
+	'doubleredirects' => "Di''redirect'' goya go ''redirect''",
+	'deadendpages' => "Matlakala a seye felo(''Dead-end'')",
 	'deletedcontributions' => 'Diabe tša mošomiši tšeo di phumutšwego',
 	'deletedcontributions-title' => 'Diabe tša mošomiši tšeo di phumutšwego',
 	'deletepage' => 'Phumula letlakala',
@@ -12302,21 +12342,21 @@ $messages['nso'] = [
 	'deletedtext' => '"<nowiki>$1</nowiki>" e phumutšwe.
 Lebelela $2 go hweetša sedi ka diphulo tša bjale.',
 	'deletedarticle' => 'E phumutšwe "[[$1]]"',
-	'dellogpage' => '\'\'Log\'\' yago phumula',
+	'dellogpage' => "''Log'' yago phumula",
 	'deletecomment' => 'Lebaka:',
 	'deleteotherreason' => 'Mabaka a mangwe:',
 	'deletereasonotherlist' => 'Mabaka a mangwe',
 	'delete_and_move_confirm' => 'E, phumula letlakala le',
-];
+);
 
-$messages['nv'] = [
+$messages['nv'] = array(
 	'december' => 'Níłchʼitsoh',
 	'december-gen' => 'Níłchʼitsoh',
 	'dec' => 'Ntsx',
 	'delete' => 'sisxé (delete)',
-];
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'december' => 'de decembre',
 	'december-gen' => 'Decembre',
 	'dec' => 'de dec',
@@ -12325,12 +12365,12 @@ $messages['oc'] = [
 	'disclaimers' => 'Avertiments',
 	'disclaimerpage' => 'Project:Avertiments generals',
 	'databaseerror' => 'Error de la banca de donadas',
-	'dberrortext' => 'Una error de sintaxi de la requèsta dins la banca de donadas s\'es producha.
+	'dberrortext' => "Una error de sintaxi de la requèsta dins la banca de donadas s'es producha.
 Aquò pòt indicar una error dins lo logicial.
 La darrièra requèsta tractada per la banca de donadas èra :
 <blockquote><tt>$1</tt></blockquote>
 dempuèi la foncion « <tt>$2</tt> ».
-La banca de donadas a renviat l’error « <tt>$3 : $4</tt> ».',
+La banca de donadas a renviat l’error « <tt>$3 : $4</tt> ».",
 	'dberrortextcl' => 'Una requèsta dins la banca de donadas compòrta una error de sintaxi.
 La darrièra requèsta emesa èra :
 « $1 »
@@ -12347,20 +12387,20 @@ La banca de donadas a renviat l’error « $3 : $4 ».',
 	'default' => 'defaut',
 	'diff' => 'dif',
 	'destfilename' => 'Nom jolqual lo fichièr serà enregistrat&nbsp;:',
-	'duplicatesoffile' => '{{PLURAL:$1|Lo fichièr seguent es un duplicata|Los fichièrs seguents son de duplicatas}} d\'aqueste fichièr ([[Special:FileDuplicateSearch/$2|mai de detalhs]]):',
+	'duplicatesoffile' => "{{PLURAL:$1|Lo fichièr seguent es un duplicata|Los fichièrs seguents son de duplicatas}} d'aqueste fichièr ([[Special:FileDuplicateSearch/$2|mai de detalhs]]):",
 	'download' => 'telecargament',
-	'disambiguations' => 'Paginas d\'omonimia',
+	'disambiguations' => "Paginas d'omonimia",
 	'disambiguationspage' => 'Template:Omonimia',
-	'disambiguations-text' => 'Las paginas seguentas puntan cap a una \'\'\'pagina d’omonimia\'\'\'.
+	'disambiguations-text' => "Las paginas seguentas puntan cap a una '''pagina d’omonimia'''.
 Deurián puslèu puntar cap a una pagina apropriada.<br />
-Una pagina es tractada coma una pagina d’omonimia s\'utiliza un modèl qu\'es ligat a partir de [[MediaWiki:Disambiguationspage]]',
+Una pagina es tractada coma una pagina d’omonimia s'utiliza un modèl qu'es ligat a partir de [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Redireccions doblas',
 	'doubleredirectstext' => 'Vaquí una lista de las paginas que redirigisson cap a de paginas que son elas-meteissas de paginas de redireccion.
 Cada entrada conten de ligams cap a la primièra e la segonda redireccions, e mai la primièra linha de tèxte de la segonda pagina, çò que provesís, de costuma, la « vertadièra » pagina cibla, cap a la quala la primièra redireccion deuriá redirigir.
 Las entradas <del>barradas</del> son estadas resolgudas.',
 	'double-redirect-fixed-move' => '[[$1]] es estat renomenat, aquò es ara una redireccion cap a [[$2]]',
 	'double-redirect-fixer' => 'Corrector de redireccion',
-	'deadendpages' => 'Paginas sul camin d\'enlòc',
+	'deadendpages' => "Paginas sul camin d'enlòc",
 	'deadendpagestext' => 'Las paginas seguentas contenon pas cap de ligam cap a d’autras paginas de {{SITENAME}}.',
 	'deletedcontributions' => 'Contribucions suprimidas d’un utilizaire',
 	'deletedcontributions-title' => 'Contribucions suprimidas d’un utilizaire',
@@ -12376,16 +12416,16 @@ Vejatz $2 per una lista de las supressions recentas.',
 	'deletecomment' => 'Motiu :',
 	'deleteotherreason' => 'Motius suplementaris o autres :',
 	'deletereasonotherlist' => 'Autre motiu',
-	'deletereason-dropdown' => '*Motius de supression mai corrents
-** Demanda de l\'autor
-** Violacion dels dreches d\'autor
-** Vandalisme',
+	'deletereason-dropdown' => "*Motius de supression mai corrents
+** Demanda de l'autor
+** Violacion dels dreches d'autor
+** Vandalisme",
 	'delete-edit-reasonlist' => 'Modifica los motius de la supression',
-	'delete-toobig' => 'Aquesta pagina dispausa d\'un istoric important, depassant {{PLURAL:$1|revision|revisions}}.
-La supression de talas paginas es estada limitada per evitar de perturbacions accidentalas de {{SITENAME}}.',
-	'delete-warning-toobig' => 'Aquesta pagina dispausa d\'un istoric important, depassant {{PLURAL:$1|revision|revisions}}.
+	'delete-toobig' => "Aquesta pagina dispausa d'un istoric important, depassant {{PLURAL:$1|revision|revisions}}.
+La supression de talas paginas es estada limitada per evitar de perturbacions accidentalas de {{SITENAME}}.",
+	'delete-warning-toobig' => "Aquesta pagina dispausa d'un istoric important, depassant {{PLURAL:$1|revision|revisions}}.
 La suprimir pòt perturbar lo foncionament de la banca de donada de {{SITENAME}}.
-D\'efectuar amb prudéncia.',
+D'efectuar amb prudéncia.",
 	'databasenotlocked' => 'La banca de donadas es pas varrolhada.',
 	'delete_and_move' => 'Suprimir e tornar nomenar',
 	'delete_and_move_text' => '==Supression requerida==
@@ -12394,26 +12434,26 @@ Lo volètz suprimir per permetre lo cambiament de nom ?',
 	'delete_and_move_confirm' => 'Òc, accèpti de suprimir la pagina de destinacion per permetre lo cambiament de nom.',
 	'delete_and_move_reason' => 'Pagina suprimida per permetre un cambiament de nom',
 	'djvu_page_error' => 'Pagina DjVu fòra limits',
-	'djvu_no_xml' => 'Impossible d’obténer l\'XML pel fichièr DjVu',
+	'djvu_no_xml' => "Impossible d’obténer l'XML pel fichièr DjVu",
 	'deletedrevision' => 'La version anciana $1 es estada suprimida.',
-	'deletedwhileediting' => '\'\'\'Atencion\'\'\' : aquesta pagina es estada suprimida aprèp qu\'avètz començat de la modificar !',
+	'deletedwhileediting' => "'''Atencion''' : aquesta pagina es estada suprimida aprèp qu'avètz començat de la modificar !",
 	'descending_abbrev' => 'descreissent',
 	'duplicate-defaultsort' => 'Atencion : La clau de triada per defaut « $2 » espotís la mai recenta « $1 ».',
 	'dberr-header' => 'Aqueste wiki a un problèma',
 	'dberr-problems' => 'O planhèm ! Aqueste site rencontra de dificultats tecnicas.',
-	'dberr-again' => 'Ensajatz d\'esperar qualques minutas e tornatz cargar.',
+	'dberr-again' => "Ensajatz d'esperar qualques minutas e tornatz cargar.",
 	'dberr-info' => '(Se pòt pas connectar al servidor de la banca de donadas : $1)',
 	'dberr-usegoogle' => 'Podètz ensajar de cercar amb Google pendent aqueste temps.',
 	'dberr-outofdate' => 'Notatz que lors indèxes de nòstre contengut pòdon èsser depassats.',
 	'dberr-cachederror' => 'Aquò es una còpia amagada de la pagina demandada e pòt èsser depassada.',
-];
+);
 
-$messages['om'] = [
+$messages['om'] = array(
 	'december' => 'Muddee',
 	'deletecomment' => 'Sababa:',
-];
+);
 
-$messages['or'] = [
+$messages['or'] = array(
 	'december' => 'ଡିସେମ୍ବର',
 	'december-gen' => 'ଡିସେମ୍ବର',
 	'dec' => 'ଡିସେମ୍ବର',
@@ -12448,9 +12488,9 @@ $messages['or'] = [
 	'download' => 'ଡାଉନଲୋଡ଼',
 	'disambiguations' => 'ବହୁବିକଳ୍ପ ପୃଷ୍ଠାମାନଙ୍କ ସହ ଯୋଡ଼ା ପୃଷ୍ଠା',
 	'disambiguationspage' => 'Template:ବହୁବିକଳ୍ପ',
-	'disambiguations-text' => 'ତଲାଲିଖିତ ପୃଷ୍ଠାମାନ \'\'\'ବହୁବିକଳ୍ପ ପୃଷ୍ଠା\'\'\'କୁ ଯୋଡ଼ିଥାନ୍ତି ।
+	'disambiguations-text' => "ତଲାଲିଖିତ ପୃଷ୍ଠାମାନ '''ବହୁବିକଳ୍ପ ପୃଷ୍ଠା'''କୁ ଯୋଡ଼ିଥାନ୍ତି ।
 ସେହିସବୁ ଉପଯୁକ୍ତ ପ୍ରସଙ୍ଗ ସହ ଯୋଡ଼ାହେବା ଜରୁରୀ ।<br />
-A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]] ସହ ଯୋଡ଼ାଥିବା ଛାଞ୍ଚ ବ୍ୟବହାର କରୁଥିଲେ ପୃଷ୍ଠାଟିଏକୁ ବହୁବିକଳ୍ପ ପୃଷ୍ଠା ବୋଲି କୁହାଯାଏ',
+A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]] ସହ ଯୋଡ଼ାଥିବା ଛାଞ୍ଚ ବ୍ୟବହାର କରୁଥିଲେ ପୃଷ୍ଠାଟିଏକୁ ବହୁବିକଳ୍ପ ପୃଷ୍ଠା ବୋଲି କୁହାଯାଏ",
 	'doubleredirects' => 'ଯୋଡ଼ା ପୁନପ୍ରେରଣ',
 	'doubleredirectstext' => 'ଏହି ପୃଷ୍ଠା ବାକି ବହୁବିକଳ୍ପ ପୃଷ୍ଠାମାନଙ୍କ ସହ ଯୋଡ଼ିଥାଏ ।
 ପ୍ରତ୍ୟେକ ଧାଡ଼ିରେ ପ୍ରଥମ ଓ ଶେଷ ପୁନପ୍ରେରଣ ସହ ଯୋଡ଼ିବା ଲିଙ୍କ ରହିଥାଏ, ଆହୁରି ମଧ୍ୟ ଏଥିରେ ଦ୍ଵିତୀୟ ପୁନପ୍ରେରଣର ଲକ୍ଷ ସହ ଯୋଡ଼ିବାର ଲିଙ୍କ ଥାଏ , ଯାହାକି ସାଧାରଣତ "ପ୍ରକୃତ" ଲକ୍ଷ ପୃଷ୍ଠା ହୋଇଥାଏ, ଯାହାକୁ ପ୍ରଥମ ପୁନପ୍ରେରଣ ପୃଷ୍ଠା ଯୋଡ଼ିଥାଏ ।
@@ -12496,7 +12536,7 @@ A page is treated as disambiguation page if it uses a template which is linked f
 	'djvu_no_xml' => 'DjVu ଫାଇଲ ନିମନ୍ତେ XML ଆଣିବାରେ ବିଫଳ ହେଲୁଁ',
 	'deletedrevision' => 'ଲିଭାଯାଇଥିବା ପୁରୁଣା $1',
 	'days' => '{{PLURAL:$1|$1 ଦିନ|$1 ଦିନ}}',
-	'deletedwhileediting' => '\'\'\' ସାବଧାନ \'\'\' : ଆପଣ ବଦଳାଇବା ପାଇଁ ଆରମ୍ଭ କରିବା ପରେ ପରେ ହିଁ ଏହି ପୃଷ୍ଠାଟିକୁ ଲିଭାଇ ଦିଆଯାଇଛି !',
+	'deletedwhileediting' => "''' ସାବଧାନ ''' : ଆପଣ ବଦଳାଇବା ପାଇଁ ଆରମ୍ଭ କରିବା ପରେ ପରେ ହିଁ ଏହି ପୃଷ୍ଠାଟିକୁ ଲିଭାଇ ଦିଆଯାଇଛି !",
 	'descending_abbrev' => 'ବଖାଣ',
 	'duplicate-defaultsort' => '\'\'\'ସୂଚନା:\'\'\' ଆପେଆପେ କାମକରୁଥିବା "$2" ଆଗରୁ ଆପେ ଆପେ ସଜାଡୁଥିବା "$1"କୁ ବନ୍ଦ କରିଦେଇଛି ।',
 	'dberr-header' => 'ଏହି ଉଇକିରେ କିଛି ଅସୁବିଧା ଅଛି ।',
@@ -12507,9 +12547,9 @@ A page is treated as disambiguation page if it uses a template which is linked f
 	'dberr-usegoogle' => 'ଏହି ସମୟ ଭିତରେ ଆପଣ ଗୁଗଲରେ ଖୋଜି ପାରିବେ ।',
 	'dberr-outofdate' => 'ଜାଣିରଖନ୍ତୁ ଯେ ଆମ ବିଷୟବସ୍ତୁକୁ ନେଇ ସେମାନେ ତିଆରିଥିବା ସୂଚି ବହୁପୁରାତନ ହୋଇପାରେ ।',
 	'dberr-cachederror' => 'ଏହା ଅନୁରୋଧ କରାଯାଇଥିବା ପୃଷ୍ଠାର ଏକ ଆଗରୁ ସାଇତାଥିବା ନକଲ ଓ ସତେଜ ହୋଇ ନଥାଇପାରେ ।',
-];
+);
 
-$messages['os'] = [
+$messages['os'] = array(
 	'december' => 'декабрь',
 	'december-gen' => 'декабры',
 	'dec' => 'дек',
@@ -12532,9 +12572,9 @@ $messages['os'] = [
 	'deleteotherreason' => 'Æндæр кæнæ уæлæмхасæн аххос:',
 	'deletereasonotherlist' => 'Æндæр аххос',
 	'databasenotlocked' => 'Рарддон æхгæд неу.',
-];
+);
 
-$messages['pa'] = [
+$messages['pa'] = array(
 	'december' => 'ਦਸੰਬਰ',
 	'december-gen' => 'ਦਸੰਬਰ',
 	'dec' => 'ਦਸੰ',
@@ -12558,9 +12598,9 @@ $messages['pa'] = [
 	'deleteotherreason' => 'ਹੋਰ/ਵਾਧੂ ਕਾਰਨ:',
 	'deletereasonotherlist' => 'ਹੋਰ ਕਾਰਨ',
 	'delete_and_move' => 'ਹਟਾਓ ਅਤੇ ਮੂਵ ਕਰੋ',
-];
+);
 
-$messages['pag'] = [
+$messages['pag'] = array(
 	'delete' => 'Buralen',
 	'deletethispage' => 'Buralen so ayan page',
 	'difference' => '(Say niduma diad saray revision)',
@@ -12573,9 +12613,9 @@ Pinengneng so $2 para ed listaan na saray abural ran balo.',
 	'delete_and_move' => 'Buralen san iyales',
 	'delete_and_move_confirm' => 'On, buralen yan page',
 	'deletedwhileediting' => 'Pasakbay: Abural yan bolong nen ginapuan mon baloen!',
-];
+);
 
-$messages['pam'] = [
+$messages['pam'] = array(
 	'december' => 'Diciembri',
 	'december-gen' => 'Diciembri',
 	'dec' => 'Dic',
@@ -12607,10 +12647,10 @@ Ini ing pamagkamaling linto king MySQL - "$3: $4"',
 	'download' => 'ikuldas (download)',
 	'disambiguations' => 'Bulung a pamipalino',
 	'disambiguationspage' => 'Template:pamipalino',
-	'disambiguations-text' => 'Makasuglung la king \'\'\'bulung pamipalino\'\'\' (disambiguation page) deng makatuking bulung.
+	'disambiguations-text' => "Makasuglung la king '''bulung pamipalino''' (disambiguation page) deng makatuking bulung.
 Ing dapat, keta lang makatud a paksa makasuglung.<br />
 Tuturing yang bulung pamipalino ing metung a bulung nung gagamit yang modelung (template)  makasuglung manibat king
-[[MediaWiki:Disambiguationspage]]',
+[[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dobling pamanaliling direksiun',
 	'doubleredirectstext' => 'Pakalista la king bulung a ini deng bulung a makayalis direksiun (redirect) kareng aliwang bulung pamanalis direksiun. Atin yang suglung ing balang dane (row) king mumuna ampong kaduang pamanalis direksiun, ampo king tuturu (target) ning kaduang pamanalis direksiun, a keraklan ya ing "tagana" o "tutung" bulung a tuturu, nung nu ya dapat tambing makaturu ing mumunang pamanalis direksiun.',
 	'deadendpages' => 'Bulung a alang lualan (dead-end)',
@@ -12650,40 +12690,40 @@ Buri meng buran bang malaus ing pamanales?',
 	'djvu_no_xml' => 'E menikuang XML para king simpan (file) a DjVu file',
 	'deletedrevision' => 'Meburang matuang pamagbayu $1',
 	'deletedwhileediting' => 'Kapiadian: Mebura ya ing bulung ini kaibat mung migumpisang mag-edit!',
-];
+);
 
-$messages['pap'] = [
+$messages['pap'] = array(
 	'december' => 'desèmber',
 	'dec' => 'des',
 	'delete' => 'Kita',
 	'disclaimers' => 'Deklarashon di Liberashon for di Responsabilidatnan',
 	'disclaimerpage' => 'Project:Deklarashon di Liberashon for di Responsabilidat General',
 	'defemailsubject' => 'E-mail di {{SITENAME}}',
-];
+);
 
-$messages['pcd'] = [
+$messages['pcd'] = array(
 	'december' => 'ed Déchimbe',
 	'december-gen' => 'Déchimbe',
 	'dec' => 'Déc',
 	'delete' => 'Défacer',
-	'deletethispage' => 'Défacer chl\'pache lo',
+	'deletethispage' => "Défacer chl'pache lo",
 	'disclaimers' => 'Démintis',
 	'disclaimerpage' => 'Project:Déminti général',
-	'databaseerror' => 'Bérlurache din l\'database',
+	'databaseerror' => "Bérlurache din l'database",
 	'directorycreateerror' => 'Éj pux poin créer ch\'répértoère "$1".',
 	'difference' => '(Diférinche intre chés érvisions)',
 	'diff' => 'dif',
-	'deletepage' => 'Défacer l\'pache',
-	'deletedtext' => '« $1 » o té défacé.
-Vir $2 pou eune lisse d\'chés darinnes défachons.',
+	'deletepage' => "Défacer l'pache",
+	'deletedtext' => "« $1 » o té défacé.
+Vir $2 pou eune lisse d'chés darinnes défachons.",
 	'dellogpage' => 'jornal éd chés défacions',
 	'deletecomment' => 'Motif:',
 	'deleteotherreason' => 'Motif eute/suplémintère :',
 	'deletereasonotherlist' => 'Eute motif',
 	'dberr-header' => 'Ech wiki-lo il o dés problémes',
-];
+);
 
-$messages['pdc'] = [
+$messages['pdc'] = array(
 	'december' => 'Disember',
 	'december-gen' => 'Disember',
 	'dec' => 'Dis.',
@@ -12708,12 +12748,12 @@ Guck $2 fer e Lischt vun de letscht Leschunge.',
 	'deletecomment' => 'Grund:',
 	'deleteotherreason' => 'Annre Grind:',
 	'deletereasonotherlist' => 'Annerer Grund',
-	'delete-edit-reasonlist' => 'Grind fer\'s Lesche ennere',
+	'delete-edit-reasonlist' => "Grind fer's Lesche ennere",
 	'delete_and_move_confirm' => 'Ya, es Blatt lösche',
 	'descending_abbrev' => 'ab',
-];
+);
 
-$messages['pdt'] = [
+$messages['pdt'] = array(
 	'december' => 'Deetsamba',
 	'december-gen' => 'Deetsamba',
 	'dec' => 'Dez',
@@ -12732,9 +12772,9 @@ MySQL mald dem Fehla "<tt>$3: $4</tt>".',
 	'doubleredirects' => 'Dobbelt Wiedawiesinje',
 	'deleteotherreason' => 'Aundra Grunt:',
 	'deletereasonotherlist' => 'Aundre Grunt',
-];
+);
 
-$messages['pfl'] = [
+$messages['pfl'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezember',
 	'dec' => 'Dez',
@@ -12752,13 +12792,13 @@ Guck $2 fer e Lischt vun de letschte Leschunge.',
 	'deleteotherreason' => 'Annere/zusätzliche Grund:',
 	'deletereasonotherlist' => 'Annere Grund',
 	'delete_and_move' => 'Lesche un Verschiewe',
-];
+);
 
-$messages['pi'] = [
+$messages['pi'] = array(
 	'december' => 'दिसम्बर',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'december' => 'grudzień',
 	'december-gen' => 'grudnia',
 	'dec' => 'gru',
@@ -12794,9 +12834,9 @@ Baza danych zgłosiła błąd „$3: $4”',
 	'disambiguations' => 'Strony linkujące do stron ujednoznaczniających',
 	'disambiguationspage' => '* Template:disambig
 * Template:ujednoznacznienie',
-	'disambiguations-text' => 'Poniższe strony odwołują się do \'\'\'stron ujednoznaczniających\'\'\',
+	'disambiguations-text' => "Poniższe strony odwołują się do '''stron ujednoznaczniających''',
 a powinny odwoływać się bezpośrednio do stron treści.<br />
-Strona uznawana jest za ujednoznaczniającą, jeśli zawiera szablon linkowany przez stronę [[MediaWiki:Disambiguationspage]]',
+Strona uznawana jest za ujednoznaczniającą, jeśli zawiera szablon linkowany przez stronę [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Podwójne przekierowania',
 	'doubleredirectstext' => 'Lista zawiera strony z przekierowaniami do stron, które przekierowują do innej strony.
 Każdy wiersz zawiera linki do pierwszego i drugiego przekierowania oraz link, do którego prowadzi drugie przekierowanie. Ostatni link prowadzi zazwyczaj do strony, do której powinna w rzeczywistości przekierowywać pierwsza strona.
@@ -12842,7 +12882,7 @@ Czy chcesz ją usunąć, by zrobić miejsce dla przenoszonej strony?',
 	'djvu_no_xml' => 'Nie można pobrać danych w formacie XML dla pliku DjVu',
 	'deletedrevision' => 'Usunięto poprzednie wersje $1',
 	'days' => '{{PLURAL:$1|$1 dzień|$1 dni}}',
-	'deletedwhileediting' => '\'\'\'Uwaga!\'\'\' Ta strona została usunięta po tym, jak rozpoczął{{GENDER:|eś|aś|eś(‐aś)}} jej edycję!',
+	'deletedwhileediting' => "'''Uwaga!''' Ta strona została usunięta po tym, jak rozpoczął{{GENDER:|eś|aś|eś(‐aś)}} jej edycję!",
 	'descending_abbrev' => 'mal.',
 	'duplicate-defaultsort' => 'Uwaga: Domyślnym kluczem sortowania będzie „$2” i zastąpi on wcześniej wykorzystywany klucz „$1”.',
 	'dberr-header' => 'Ta wiki nie działa poprawnie',
@@ -12854,9 +12894,17 @@ Czy chcesz ją usunąć, by zrobić miejsce dla przenoszonej strony?',
 	'dberr-cachederror' => 'Strona została pobrana z pamięci podręcznej i może być nieaktualna.',
 	'discuss' => 'Dyskutuj',
 	'deletedarticle' => 'usunięto [[$1]]',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+);
 
-$messages['pms'] = [
+$messages['pms'] = array(
 	'december' => 'Dzèmber',
 	'december-gen' => 'Dzèmber',
 	'dec' => 'Dzè',
@@ -12880,54 +12928,54 @@ La base dat a l\'ha dane n\'eror "$3: $4"',
 	'deletedhist' => 'Stòria scancelà',
 	'difference' => '(Diferense antra revision)',
 	'difference-multipage' => '(Diferense tra pàgine)',
-	'diff-multi' => '({{PLURAL:$1|Na revision antërmedia|$1 revision antërmedie}} ëd {{PLURAL:$2|n\'utent|$2 utent}} pa mostrà)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Na revision antërmedia|$1 revision antërmedie}} da pi che $2 {{PLURAL:$2|n\'utent|utent}} pa mostrà)',
-	'datedefault' => 'Franch l\'istess',
+	'diff-multi' => "({{PLURAL:$1|Na revision antërmedia|$1 revision antërmedie}} ëd {{PLURAL:$2|n'utent|$2 utent}} pa mostrà)",
+	'diff-multi-manyusers' => "({{PLURAL:$1|Na revision antërmedia|$1 revision antërmedie}} da pi che $2 {{PLURAL:$2|n'utent|utent}} pa mostrà)",
+	'datedefault' => "Franch l'istess",
 	'defaultns' => 'Dësnò, sërché an costi spassi nominaj-sì:',
 	'default' => 'stàndard',
 	'diff' => 'dif.',
-	'destfilename' => 'Nòm dl\'archivi ëd destinassion:',
-	'duplicatesoffile' => '{{PLURAL:$1|L\'archivi sì-dapress a l\'é un|Ij $1 archivi sì-dapress a son dij}} duplicà ëd s\'archivi ([[Special:FileDuplicateSearch/$2|pì ëd detaj]]):',
+	'destfilename' => "Nòm dl'archivi ëd destinassion:",
+	'duplicatesoffile' => "{{PLURAL:$1|L'archivi sì-dapress a l'é un|Ij $1 archivi sì-dapress a son dij}} duplicà ëd s'archivi ([[Special:FileDuplicateSearch/$2|pì ëd detaj]]):",
 	'download' => 'dëscarié',
-	'disambiguations' => 'Pàgine ch\'a men-o vers dle pàgine d\'omonimìe',
-	'disambiguationspage' => 'Template:Gestion dj\'omonimìe',
-	'disambiguations-text' => 'Ste pàgine-sì a men-o a na \'\'\'pàgina ëd gestion dj\'omònim\'\'\', mach che a dovrìo ëmné bele drit a n\'artìcol.<br />
-Na pàgina as trata coma "pàgina ëd gestion dj\'omònim" se a deuvra në stamp dont l\'anliura as treuva ant ël [[MediaWiki:Disambiguationspage]]',
+	'disambiguations' => "Pàgine ch'a men-o vers dle pàgine d'omonimìe",
+	'disambiguationspage' => "Template:Gestion dj'omonimìe",
+	'disambiguations-text' => "Ste pàgine-sì a men-o a na '''pàgina ëd gestion dj'omònim''', mach che a dovrìo ëmné bele drit a n'artìcol.<br />
+Na pàgina as trata coma \"pàgina ëd gestion dj'omònim\" se a deuvra në stamp dont l'anliura as treuva ant ël [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Ridiression dobie',
-	'doubleredirectstext' => 'Sta pàgina-sì a a lista dle pàgine ch\'a armando a d\'àutre pàgine ëd ridiression.
-Vira riga a l\'ha andrinta j\'anliure a la prima e a la sconda ridiression, ant sël pat ëd la prima riga ëd test dla seconda ridiression, che për sòlit a l\'ha andrinta l\'artìcol ëd destinassion vèir, col andoa che a dovrìa ëmné ëdcò la prima ridiression.
-Le ridiression <del>sganfà</del> a son stàite arzolvùe.',
-	'double-redirect-fixed-move' => '[[$1]] a l\'é stàit spostà.
-Adess a l\'é na ridiression a [[$2]].',
+	'doubleredirectstext' => "Sta pàgina-sì a a lista dle pàgine ch'a armando a d'àutre pàgine ëd ridiression.
+Vira riga a l'ha andrinta j'anliure a la prima e a la sconda ridiression, ant sël pat ëd la prima riga ëd test dla seconda ridiression, che për sòlit a l'ha andrinta l'artìcol ëd destinassion vèir, col andoa che a dovrìa ëmné ëdcò la prima ridiression.
+Le ridiression <del>sganfà</del> a son stàite arzolvùe.",
+	'double-redirect-fixed-move' => "[[$1]] a l'é stàit spostà.
+Adess a l'é na ridiression a [[$2]].",
 	'double-redirect-fixed-maintenance' => 'Rangé le ridiression dobie da [[$1]] a [[$2]].',
 	'double-redirect-fixer' => 'Coretor ëd ridiression',
 	'deadendpages' => 'Pàgine che a men-o da gnun-a part',
-	'deadendpagestext' => 'Le pàgine ambelessì-sota a l\'han pa d\'anliure anvers a j\'àutre pàgine ëd {{SITENAME}}.',
+	'deadendpagestext' => "Le pàgine ambelessì-sota a l'han pa d'anliure anvers a j'àutre pàgine ëd {{SITENAME}}.",
 	'deletedcontributions' => 'Modìfiche faite da utent scancelà',
 	'deletedcontributions-title' => 'Modìfiche faite da utent scancelà',
 	'defemailsubject' => 'Mëssagi da l\'utent "$1"',
 	'deletepage' => 'Scancelé la pàgina',
 	'delete-confirm' => 'Scancelé «$1»',
 	'delete-legend' => 'Scancelé',
-	'deletedtext' => 'La pàgina «$1» a l\'é stàita scancelà.
-Che a varda $2 për na lista dle pàgine scancelà ant j\'ùltim temp.',
+	'deletedtext' => "La pàgina «$1» a l'é stàita scancelà.
+Che a varda $2 për na lista dle pàgine scancelà ant j'ùltim temp.",
 	'dellogpage' => 'Registr djë scancelament',
-	'dellogpagetext' => 'Ambelessì-sota a-i é na lista dle pàgine scancelà ant j\'ùltim temp.',
+	'dellogpagetext' => "Ambelessì-sota a-i é na lista dle pàgine scancelà ant j'ùltim temp.",
 	'deletionlog' => 'Registr djë scancelament',
 	'deletecomment' => 'Rason:',
 	'deleteotherreason' => 'Rason àutra/adissional:',
 	'deletereasonotherlist' => 'Àutra rason',
-	'deletereason-dropdown' => '*Rason sòlite ch\'a së scancela la ròba
-** A lo ciama l\'àutor
-** Violassion dij drit d\'autor
-** Vandalism',
+	'deletereason-dropdown' => "*Rason sòlite ch'a së scancela la ròba
+** A lo ciama l'àutor
+** Violassion dij drit d'autor
+** Vandalism",
 	'delete-edit-reasonlist' => 'Modifiché la rason dlë scancelament',
-	'delete-toobig' => 'Sta pàgina-sì a l\'ha na stòria motobin longa, bele pì che $1 {{PLURAL:$1|revision|revision}}.
-Lë scancelassion ëd pàgine parèj a l\'é stàita limità për evité ch\'as fasa darmagi për eror a {{SITENAME}}.',
-	'delete-warning-toobig' => 'Sta pàgina-sì a l\'ha na stòria motobin longa, bele pì che $1 {{PLURAL:$1|revision|revision}}.
-A scancelela as peul fesse darmagi a j\'operassion dla base ëd dat ëd {{SITENAME}};
-ch\'a daga da ment a lòn ch\'a fa.',
-	'databasenotlocked' => 'La base dat a l\'é nen blocà.',
+	'delete-toobig' => "Sta pàgina-sì a l'ha na stòria motobin longa, bele pì che $1 {{PLURAL:$1|revision|revision}}.
+Lë scancelassion ëd pàgine parèj a l'é stàita limità për evité ch'as fasa darmagi për eror a {{SITENAME}}.",
+	'delete-warning-toobig' => "Sta pàgina-sì a l'ha na stòria motobin longa, bele pì che $1 {{PLURAL:$1|revision|revision}}.
+A scancelela as peul fesse darmagi a j'operassion dla base ëd dat ëd {{SITENAME}};
+ch'a daga da ment a lòn ch'a fa.",
+	'databasenotlocked' => "La base dat a l'é nen blocà.",
 	'delete_and_move' => 'Scancela e tramuda',
 	'delete_and_move_text' => '==A fa da manca dë scancelé==
 
@@ -12935,22 +12983,22 @@ L\'artìcol ëd destinassion "[[:$1]]" a-i é già. Veul-lo scancelelo për avej
 	'delete_and_move_confirm' => 'É, scancela la pàgina',
 	'delete_and_move_reason' => 'Scancelà për liberé ël pòst për tramudé "[[$1]]"',
 	'djvu_page_error' => 'Pàgina DjVu fòra dij lìmit',
-	'djvu_no_xml' => 'As rièss pa a carié l\'XML për l\'archivi DjVu',
+	'djvu_no_xml' => "As rièss pa a carié l'XML për l'archivi DjVu",
 	'deletedrevision' => 'Veja version scancelà $1',
 	'days' => '{{PLURAL:$1|$1 di|$1 di}}',
-	'deletedwhileediting' => '\'\'\'Avertensa\'\'\': sta pàgina-sì a l\'é staita scancelà quand che chiel (chila) a l\'avìa già anandiasse a modifichela!',
+	'deletedwhileediting' => "'''Avertensa''': sta pàgina-sì a l'é staita scancelà quand che chiel (chila) a l'avìa già anandiasse a modifichela!",
 	'descending_abbrev' => 'a calé',
-	'duplicate-defaultsort' => '\'\'\'Atension:\'\'\' La ciav d\'ordinament ëd default "$2" a ven al pòst ëd cola ëd prima "$1"',
-	'dberr-header' => 'Sta wiki-sì a l\'ha un problema',
-	'dberr-problems' => 'Spiasent! Sto sit-sì a l\'ha dle dificoltà técniche.',
+	'duplicate-defaultsort' => "'''Atension:''' La ciav d'ordinament ëd default \"\$2\" a ven al pòst ëd cola ëd prima \"\$1\"",
+	'dberr-header' => "Sta wiki-sì a l'ha un problema",
+	'dberr-problems' => "Spiasent! Sto sit-sì a l'ha dle dificoltà técniche.",
 	'dberr-again' => 'Preuva a speté cheich minute e a torna carié.',
 	'dberr-info' => '(As peul pa contaté ël database server: $1)',
 	'dberr-usegoogle' => 'It peule prové a serché con Google ant ël mentre.',
 	'dberr-outofdate' => 'Nòta che la soa indicisassion dij nòst contnù a podrìa nen esse agiornà.',
 	'dberr-cachederror' => 'Sta sì a l\'ìé na còpia an "cache" ëd la pàgina ciamà, e a peul esse pa agiornà.',
-];
+);
 
-$messages['pnb'] = [
+$messages['pnb'] = array(
 	'december' => 'دسمبر',
 	'december-gen' => 'دسمبر',
 	'dec' => 'دسمبر',
@@ -12985,9 +13033,9 @@ $messages['pnb'] = [
 	'download' => 'فائل کاپی کرو',
 	'disambiguations' => 'اوہ صفے جیہڑے گنجل کھول صفیاں نال جڑدے نیں۔',
 	'disambiguationspage' => 'سانچہ: ڈسایمبگ',
-	'disambiguations-text' => 'تھلے دتے گۓ صفیاں دا اک \'\'\'گنجل کھول\'\'\' نال جوڑ اے۔
+	'disambiguations-text' => "تھلے دتے گۓ صفیاں دا اک '''گنجل کھول''' نال جوڑ اے۔
 ایدے بجاۓ ایدا جوڑ کسے ٹھیک سرناویں نال جوڑو<br />
-اک صفہ گنجل کھول صفے لئی منیا جائیگا  اگر اے اک ٹمپلیٹ ورتدا جیدا جوڑ [[MediaWiki:Disambiguationspage]] نال ہووے۔',
+اک صفہ گنجل کھول صفے لئی منیا جائیگا  اگر اے اک ٹمپلیٹ ورتدا جیدا جوڑ [[MediaWiki:Disambiguationspage]] نال ہووے۔",
 	'doubleredirects' => 'دوہری ریڈیرکٹس',
 	'doubleredirectstext' => 'ایس صفے تے اوناں صفیاں دی لسٹ اے جیہڑے ریڈائرکٹ کردے نیں دوجے ریڈائرکٹ صفیاں ول۔
 ہر قطار چ جوڑ نیں  پہلے تے دوجے ریڈائرکٹ نال ، نال دوجے دیڑائرکٹ ول دا تارگٹ نیں جیہڑا کے ٹھیک تارگٹ صفہ ہوندا اے جیہڑا کہ پہلے ریڈائرکٹ نوں اشارہ کرنا چائیدا اے۔
@@ -13033,7 +13081,7 @@ $messages['pnb'] = [
 	'djvu_no_xml' => 'DjVu  فائل لئی XML  ناں لیایا جاسکیا',
 	'deletedrevision' => 'پرانیاں مٹائیاں ریوین $1',
 	'days' => ' {{PLURAL:$1|دن|دناں}}',
-	'deletedwhileediting' => '\'\'\'خبردار\'\'\': تھواڈے لکھن مکرون اے صفہ مٹا دتا گیا!',
+	'deletedwhileediting' => "'''خبردار''': تھواڈے لکھن مکرون اے صفہ مٹا دتا گیا!",
 	'descending_abbrev' => 'ڈی ایایس سی',
 	'duplicate-defaultsort' => '\'\'\'خبردار:\'\'\' ڈیفالٹ چابی "$2" پہلی ڈیفالٹ چابی "$1" دے اتے لگ گئی اے۔',
 	'dberr-header' => 'ایس وکی چ کوئی مسلہ اے۔',
@@ -13044,9 +13092,9 @@ $messages['pnb'] = [
 	'dberr-usegoogle' => 'تسیں گوکل راہیں کھوج کر سکدے او۔',
 	'dberr-outofdate' => 'اے نوٹ کرو جے اوناں دے انڈیکس ساڈے مواد چوں پرانے ناں ہون۔',
 	'dberr-cachederror' => 'اے کاشے کاپی اے منگے ہوۓ صفے دی تے ہوسکدا اے پرانی ہووے۔',
-];
+);
 
-$messages['pnt'] = [
+$messages['pnt'] = array(
 	'december' => 'Χριστουγεννάρτς',
 	'december-gen' => 'Χριστουγενναρί',
 	'dec' => 'Χριστ',
@@ -13058,7 +13106,7 @@ $messages['pnt'] = [
 	'directorycreateerror' => 'Η κατηγορία "$1" \'κ εγέντον.',
 	'deletedhist' => 'Σβηγμένον ιστορίαν',
 	'difference' => '(Διαφορά μεταξύ τη μορφίων)',
-	'diff-multi' => '({{PLURAL:$1|Μίαν αλλαγήν|$1 αλλαγάς}} \'κ δεκνίζκουνταν.)',
+	'diff-multi' => "({{PLURAL:$1|Μίαν αλλαγήν|$1 αλλαγάς}} 'κ δεκνίζκουνταν.)",
 	'default' => 'προεπιλογήν',
 	'diff' => 'διαφορά',
 	'disambiguations' => 'Σελίδας εξηγησίων',
@@ -13069,17 +13117,17 @@ $messages['pnt'] = [
 	'delete-legend' => 'Σβήσεμαν',
 	'deletedtext' => 'Το "$1" εσβήγανατο.
 Τερέστεν το $2 και δεαβάστεν για τα υστερνά τα σβησίματα.',
-	'dellogpage' => 'Κατάλογον με τ\' ατά ντ\' ενεσβύγαν',
+	'dellogpage' => "Κατάλογον με τ' ατά ντ' ενεσβύγαν",
 	'deletionlog' => 'αρχείον ασπαλιγματίων',
 	'deletecomment' => 'Αιτία:',
 	'deleteotherreason' => 'Άλλον/αλλομίαν λόγον:',
 	'deletereasonotherlist' => 'Άλλον λόγον',
-	'databasenotlocked' => 'Η βάση δογμενίων \'κ εν ασπαλιγμένον.',
+	'databasenotlocked' => "Η βάση δογμενίων 'κ εν ασπαλιγμένον.",
 	'delete_and_move' => 'Σβήσον και ετεροχλάεψον',
 	'descending_abbrev' => 'κατεβ',
-];
+);
 
-$messages['prg'] = [
+$messages['prg'] = array(
 	'december' => 'sallaws',
 	'december-gen' => 'sallawas',
 	'dec' => 'sal',
@@ -13112,9 +13160,9 @@ Dātanbazi etwārtai wartinna blāndan "$3: $4".',
 	'download' => 'izkraūneis',
 	'disambiguations' => 'Ainapreslinsnas pāusai',
 	'disambiguationspage' => 'Template:Ainapreslinsna',
-	'disambiguations-text' => 'Zemmaišai pāusai autenginna prei \'\'\'ainapreslinsnas pāusan\'\'\'.
+	'disambiguations-text' => "Zemmaišai pāusai autenginna prei '''ainapreslinsnas pāusan'''.
 Tenēimans prawerru autengīntun entikriskai prei pāusas ēnturan. </br>
-Pāusan ast laikātan per ainapreslinsnan pāusan ik tennan tērpaui šablōnin prei kawīdan autenginna [[MediaWiki:Disambiguationspage]]',
+Pāusan ast laikātan per ainapreslinsnan pāusan ik tennan tērpaui šablōnin prei kawīdan autenginna [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dwigubbai prawessenei',
 	'doubleredirectstext' => 'Zemmais ast listi wisēisan pāusan sen prawessenins en pāusans, kawīdai prawedda en kittan pāusan.
 Erainā rindā turri ēn sen autengīnsenins en pirman be āntran prawessenin, tīt dīgi autengīnsenin kwēi wedda āntars prawessenis. Jāuku panzdaums autengīnsenin wedda en pāusan, en kawīdan prawerru prawestun pirmasmu pāusan.
@@ -13155,7 +13203,7 @@ Kwāitu āupausintun din, kāi segīlai deīktan per praskajjintan pāusan?',
 	'djvu_page_error' => 'DjVu pāusan per ebīmtan',
 	'djvu_no_xml' => 'Ni mazīngi kraūtun XML dātan per DjVu zūrbrukin',
 	'deletedrevision' => 'Āupausinā di panzdaumans wersiōnins stesse $1',
-	'deletedwhileediting' => '\'\'\'Ēmpirsergīsenis\'\'\': Šin pāusan pastāi āupausintan panzdau tū pagaūwa redigītun!',
+	'deletedwhileediting' => "'''Ēmpirsergīsenis''': Šin pāusan pastāi āupausintan panzdau tū pagaūwa redigītun!",
 	'descending_abbrev' => 'zemmai ēntei',
 	'dberr-header' => 'Šī wīki ni dīlai tikrōmiskai',
 	'dberr-again' => 'Bandais etkūmps kraūtun šin pāusan pa delli minūtins.',
@@ -13163,9 +13211,9 @@ Kwāitu āupausintun din, kāi segīlai deīktan per praskajjintan pāusan?',
 	'dberr-usegoogle' => 'En šissei kērdan tu mazzi laukītun sen Google.',
 	'dberr-outofdate' => 'Waīdais, kāi tenēi mazzi turītun niaktuālins nūsas ēnturas indicins.',
 	'dberr-cachederror' => 'Šin pāusan ast kitse pāusas kōpija iz rānkas minīsnan be mazzi būtwei niaktuālin.',
-];
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'december' => 'ډيسمبر',
 	'december-gen' => 'ډيسمبر',
 	'dec' => 'ډيسمبر',
@@ -13218,123 +13266,9 @@ $messages['ps'] = [
 	'dberr-problems' => 'اوبخښۍ!
 دم مهال دا وېبپاڼه د تخنيکي ستونزو سره مخامخ شوې.',
 	'dberr-usegoogle' => 'تاسې کولای شی چې هم مهاله د ګووګل له لخوا هم د پلټنې هڅه وکړۍ.',
-];
+);
 
-$messages['pt'] = [
-	'december' => 'Dezembro',
-	'december-gen' => 'Dezembro',
-	'dec' => 'Dez.',
-	'delete' => 'Eliminar',
-	'deletethispage' => 'Eliminar esta página',
-	'disclaimers' => 'Exoneração de responsabilidade',
-	'disclaimerpage' => 'Project:Aviso_geral',
-	'databaseerror' => 'Erro na base de dados',
-	'dberrortext' => 'Ocorreu um erro sintáctico na pesquisa à base de dados.
-Isto pode indicar um defeito neste programa.
-A última tentativa de consulta à base de dados foi:
-<blockquote><tt>$1</tt></blockquote>
-na função "<tt>$2</tt>".
-A base de dados devolveu o erro "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'Ocorreu um erro sintáctico na pesquisa à base de dados.
-A última tentativa de consulta à base de dados foi:
-"$1"
-na função "$2".
-A base de dados devolveu o erro "$3: $4"',
-	'directorycreateerror' => 'Não foi possível criar o directório "$1".',
-	'deletedhist' => 'Histórico de eliminações',
-	'difference' => '(Diferença entre edições)',
-	'difference-multipage' => '(Diferenças entre páginas)',
-	'diff-multi' => '({{PLURAL:$1|Uma edição intermédia|$1 edições intermédias}} de {{PLURAL:$2|um utilizador|$2 utilizadores}} {{PLURAL:$1|não apresentada|não apresentadas}})',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Uma edição intermédia|$1 edições intermédias}} de mais de {{PLURAL:$2|um utilizador|$2 utilizadores}} não {{PLURAL:$1|apresentada|apresentadas}})',
-	'datedefault' => 'Sem preferência',
-	'defaultns' => 'Por omissão, pesquisar nestes espaços nominais:',
-	'default' => 'padrão',
-	'diff' => 'dif',
-	'destfilename' => 'Nome do ficheiro de destino:',
-	'duplicatesoffile' => '{{PLURAL:$1|O seguinte ficheiro é duplicado|Os seguintes $1 ficheiros são duplicados}} deste ficheiro ([[Special:FileDuplicateSearch/$2|mais detalhes]]):',
-	'download' => 'download',
-	'disambiguations' => 'Páginas com ligações para páginas de desambiguação',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'As páginas abaixo contêm links para uma página de desambiguação.
-Estes links deviam ser desambiguados, apontando-os para a página apropriada.<br />
-Considera-se que uma página é de desambiguação se nela for utilizada uma predefinição que esteja definida em [[MediaWiki:Disambiguationspage]].',
-	'doubleredirects' => 'Redireccionamentos duplos',
-	'doubleredirectstext' => 'Esta página lista todas as páginas que redireccionam para outras páginas de redireccionamento.
-Cada linha contém links para o primeiro e segundo redireccionamentos, bem como o destino do segundo redireccionamento, geralmente contendo a verdadeira página de destino, que devia ser o destino do primeiro redireccionamento.
-<del>Entradas cortadas</del> já foram solucionadas.',
-	'double-redirect-fixed-move' => '[[$1]] foi movido.
-Agora redirecciona para [[$2]].',
-	'double-redirect-fixed-maintenance' => 'A corrigir redireccionamento duplo de [[$1]] para [[$2]].',
-	'double-redirect-fixer' => 'Corrector de redireccionamentos',
-	'deadendpages' => 'Páginas sem saída',
-	'deadendpagestext' => 'As seguintes páginas não contêm links para outras páginas na {{SITENAME}}.',
-	'deletedcontributions' => 'Edições eliminadas',
-	'deletedcontributions-title' => 'Edições eliminadas',
-	'defemailsubject' => '{{SITENAME}} e-mail do usuário "$1"',
-	'deletepage' => 'Eliminar página',
-	'delete-confirm' => 'Eliminar "$1"',
-	'delete-legend' => 'Eliminar',
-	'deletedtext' => '"<nowiki>$1</nowiki>" foi eliminada.
-Consulte $2 para um registro de eliminações recentes.
-
-
-\'\'\'"$1" foi apagada.!\'\'\'
-
-* Por favor, atente que algumas paginas ainda podem [[Special:WhatLinksHere/$1|ligar a esta pagina]].
-* Voce pode ver a pagina apagada [[Special:Undelete/$1|aqui]].
-* Veja  $2 para um registro de eliminações recentes.
-
-{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|Usuario||{{#ifexist:{{TALKPAGENAME}}|
-<br />
-Esta pagina tambem tem uma \'\'\'[[{{TALKPAGENAME}}|pagina de discussão]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Voce pode preferir apaga-la tambem.
-|}}}}}}',
-	'dellogpage' => 'Registo de eliminações',
-	'dellogpagetext' => 'Abaixo uma lista das eliminações mais recentes.',
-	'deletionlog' => 'registo de eliminações',
-	'deletecomment' => 'Motivo:',
-	'deleteotherreason' => 'Outro/motivo adicional:',
-	'deletereasonotherlist' => 'Outro motivo',
-	'deletereason-dropdown' => '* Motivos de eliminação comuns
-** Pedido do autor
-** Violação de direitos de autor
-** Vandalismo
-** SPAM 
-** Texto sem sentido
-** Duplicado
-** Obscenidade / Cconteudo inapropriado
-** O texto não é uma pergunta
-** Redirecionamento desnecessário
-** Atentado ortográfico',
-	'delete-edit-reasonlist' => 'Editar motivos de eliminação',
-	'delete-toobig' => 'Esta página tem um histórico longo, com mais de $1 {{PLURAL:$1|edição|edições}}.
-A eliminação de páginas como esta foi restringida na {{SITENAME}}, para evitar problemas acidentais.',
-	'delete-warning-toobig' => 'Esta página tem um histórico de edições longo, com mais de $1 {{PLURAL:$1|edição|edições}}.
-Eliminá-la poderá causar problemas na base de dados da {{SITENAME}};
-prossiga com precaução.',
-	'databasenotlocked' => 'A base de dados não está bloqueada.',
-	'delete_and_move' => 'Eliminar e mover',
-	'delete_and_move_text' => '==Eliminação necessária==
-A página de destino ("[[:$1]]") já existe. Deseja eliminá-la de modo a poder mover?',
-	'delete_and_move_confirm' => 'Sim, eliminar a página',
-	'delete_and_move_reason' => 'Eliminada para poder mover "[[$1]]" para este título',
-	'djvu_page_error' => 'página DjVu inacessível',
-	'djvu_no_xml' => 'Não foi possível aceder ao XML para o ficheiro DjVU',
-	'deletedrevision' => 'Apagou a versão antiga $1',
-	'days' => '{{PLURAL:$1|um dia|$1 dias}}',
-	'deletedwhileediting' => '\'\'\'Aviso\'\'\': Esta página foi eliminada após ter começado a editá-la!',
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => 'Aviso: A chave de ordenação padrão "$2" sobrepõe-se à anterior chave de ordenação padrão "$1".',
-	'dberr-header' => 'Esta wiki tem um problema',
-	'dberr-problems' => 'Desculpe! Este site está a experienciar dificuldades técnicas.',
-	'dberr-again' => 'Experimente esperar uns minutos e actualizar.',
-	'dberr-info' => '(Não foi possível contactar o servidor da base de dados: $1)',
-	'dberr-usegoogle' => 'Pode tentar pesquisar no Google entretanto.',
-	'dberr-outofdate' => 'Note que os seus índices relativos ao nosso conteúdo podem estar desactualizados.',
-	'dberr-cachederror' => 'A seguinte página é uma cópia em cache da página pedida e pode não estar actualizada.',
-	'discuss' => 'Discussão',
-];
-
-$messages['pt-br'] = [
+$messages['pt'] = array(
 	'december' => 'dezembro',
 	'december-gen' => 'dezembro',
 	'dec' => 'dez.',
@@ -13355,10 +13289,8 @@ A última tentativa de busca no banco de dados foi:
 na função "$2".
 O banco de dados retornou o erro "$3: $4".',
 	'directorycreateerror' => 'Não foi possível criar o diretório "$1".',
-	'defaultmessagetext' => 'Texto da mensagem padrão',
 	'deletedhist' => 'Histórico de eliminações',
-	'difference-title' => 'Mudanças entre as edições de "$1"',
-	'difference-title-multipage' => 'Mudanças entre as páginas "$1" e "$2"',
+	'difference' => '(Difference between revisions)',
 	'difference-multipage' => '(Diferenças entre páginas)',
 	'diff-multi' => '({{PLURAL:$1|Uma edição intermediária|$1 edições intermediárias}} de {{PLURAL:$2|um usuário|$2 usuários}} {{PLURAL:$1|não apresentada|não apresentadas}})',
 	'diff-multi-manyusers' => '({{PLURAL:$1|Uma edição intermediária|$1 edições intermediárias}} de mais de {{PLURAL:$2|um usuário|$2 usuário}} não {{PLURAL:$1|apresentada|apresentadas}})',
@@ -13435,7 +13367,7 @@ A página de destino ("[[:$1]]") já existe. Deseja eliminá-la de modo a poder 
 	'djvu_no_xml' => 'Não foi possível acessar o XML do arquivo DjVU',
 	'deletedrevision' => 'Apagou a versão antiga $1',
 	'days' => '{{PLURAL:$1|um dia|$1 dias}}',
-	'deletedwhileediting' => '\'\'\'Aviso\'\'\': Esta página foi eliminada após você ter começado a editar!',
+	'deletedwhileediting' => "'''Aviso''': Esta página foi eliminada após você ter começado a editar!",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => 'Aviso: A chave de ordenação padrão "$2" sobrepõe-se à anterior chave de ordenação padrão "$1".',
 	'dberr-header' => 'Este wiki tem um problema',
@@ -13445,23 +13377,24 @@ A página de destino ("[[:$1]]") já existe. Deseja eliminá-la de modo a poder 
 	'dberr-usegoogle' => 'Você pode tentar pesquisar no Google entretanto.',
 	'dberr-outofdate' => 'Note que os seus índices relativos ao nosso conteúdo podem estar desatualizados.',
 	'dberr-cachederror' => 'A seguinte página é uma cópia em cache da página pedida e pode não ser atual.',
-	'duration-seconds' => '$1 {{PLURAL:$1|segundo|segundos}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|minuto|minutos}}',
-	'duration-hours' => '$1 {{PLURAL:$1|hora|horas}}',
-	'duration-days' => '$1 {{PLURAL:$1|dia|dias}}',
-	'duration-weeks' => '$1 {{PLURAL:$1|semana|semanas}}',
-	'duration-years' => '$1 {{PLURAL:$1|ano|anos}}',
-	'duration-decades' => '$1 {{PLURAL:$1|década|décadas}}',
-	'duration-centuries' => '$1 {{PLURAL:$1|século|séculos}}',
-	'duration-millennia' => '$1 {{PLURAL:$1|milênio|milênios}}',
-];
+	'discuss' => 'Discuss this page',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+);
 
-$messages['qu'] = [
+$messages['qu'] = array(
 	'december' => 'disimri',
 	'december-gen' => 'disimri',
 	'dec' => 'dis',
 	'delete' => 'Qulluy',
-	'deletethispage' => 'Kay p\'anqata qulluy',
+	'deletethispage' => "Kay p'anqata qulluy",
 	'disclaimers' => 'Chiqakunamanta rikuchiy',
 	'disclaimerpage' => 'Project:Sapsilla saywachasqa paqtachiy',
 	'databaseerror' => 'Willañiqintin pantasqa',
@@ -13478,31 +13411,31 @@ MySQL-pa kutichisqan pantasqaqa karqan "$3: $4".',
 	'deletedhist' => 'Qullusqa wiñay kawsay',
 	'difference-title' => '$1 nisqapaq musuqchasqapura wakin kaynin',
 	'difference-title-multipage' => '$1, $2 sutiyuq willañiqipura wakin kaynin',
-	'difference-multipage' => '(P\'anqakunaqa manam kaqllachu)',
-	'diff-multi' => '({{PLURAL:$2|Huk ruraqpa|$2 ruraqpa}} {{PLURAL:$1|chawpipi huk llamk\'apusqanqa manam rikuchisqachu|chawpipi $1 llamk\'apusqankunaqa manam rikuchisqachu}})',
-	'diff-multi-manyusers' => '({{PLURAL:$2|Hukmanta|$2-manta}} aswan ruraqkunap {{PLURAL:$1|chawpipi huk llamk\'apusqanqa manam rikuchisqachu|chawpipi $1 llamk\'apusqankunaqa manam rikuchisqachu}})',
+	'difference-multipage' => "(P'anqakunaqa manam kaqllachu)",
+	'diff-multi' => "({{PLURAL:$2|Huk ruraqpa|$2 ruraqpa}} {{PLURAL:$1|chawpipi huk llamk'apusqanqa manam rikuchisqachu|chawpipi $1 llamk'apusqankunaqa manam rikuchisqachu}})",
+	'diff-multi-manyusers' => "({{PLURAL:$2|Hukmanta|$2-manta}} aswan ruraqkunap {{PLURAL:$1|chawpipi huk llamk'apusqanqa manam rikuchisqachu|chawpipi $1 llamk'apusqankunaqa manam rikuchisqachu}})",
 	'datedefault' => 'Kikinmanta allinkachina',
-	'defaultns' => 'Mana hinaptintaq kay suti k\'itikunapi maskay:',
+	'defaultns' => "Mana hinaptintaq kay suti k'itikunapi maskay:",
 	'default' => 'kikinmanta',
 	'diff' => 'dif',
 	'destfilename' => 'Tukuna willañiqip sutin:',
 	'duplicatesoffile' => 'Kay willañiqimanta iskaychasqa {{PLURAL:$1|willañiqim|$1 willañiqikunam}} kay qatiqpi ([[Special:FileDuplicateSearch/$2|astawan willachikuy]]):',
 	'download' => 'chaqnamuy',
-	'disambiguations' => 'Sut\'ichana qillqakunaman t\'inkimuq p\'anqakuna',
-	'disambiguationspage' => 'Template:Sut\'ichana qillqa',
-	'disambiguations-text' => 'Kay qatiq p\'anqakunam t\'inkimun \'\'\'sut\'ichana qillqaman\'\'\'. Chiqap, hukchanasqa p\'anqaman t\'inkichun.<br />Tukuy [[MediaWiki:Disambiguationspage]] plantillayuq p\'anqakunaqa sut\'ichana qillqam.',
+	'disambiguations' => "Sut'ichana qillqakunaman t'inkimuq p'anqakuna",
+	'disambiguationspage' => "Template:Sut'ichana qillqa",
+	'disambiguations-text' => "Kay qatiq p'anqakunam t'inkimun '''sut'ichana qillqaman'''. Chiqap, hukchanasqa p'anqaman t'inkichun.<br />Tukuy [[MediaWiki:Disambiguationspage]] plantillayuq p'anqakunaqa sut'ichana qillqam.",
 	'doubleredirects' => 'Iskaylla pusapunakuna',
-	'doubleredirectstext' => 'Kay p\'anqapiqa huk pusapuna p\'anqaman pusapuq p\'anqakunap sutinkunatam rikunki. Sapa sinrupiqa ñawpaq ñiqin, iskay ñiqinpas pusapunaman t\'inkikunam, iskay ñiqin pusapunap taripananpa qallariyninpas, sapsilla "chiqap" allin taripana qillqam, maymanchus ñawpaq ñiqin pusapuna p\'anqa pusachun.
-<del>Chakapusqa</del> taripasqakunaqa paskasqañam.',
+	'doubleredirectstext' => "Kay p'anqapiqa huk pusapuna p'anqaman pusapuq p'anqakunap sutinkunatam rikunki. Sapa sinrupiqa ñawpaq ñiqin, iskay ñiqinpas pusapunaman t'inkikunam, iskay ñiqin pusapunap taripananpa qallariyninpas, sapsilla \"chiqap\" allin taripana qillqam, maymanchus ñawpaq ñiqin pusapuna p'anqa pusachun.
+<del>Chakapusqa</del> taripasqakunaqa paskasqañam.",
 	'double-redirect-fixed-move' => '[[$1]] nisqaqa astasqam, kunantaq [[$2]] nisqaman pusapunam',
 	'double-redirect-fixed-maintenance' => '[[$1]]-manta [[$2]]-man iskaylla pusapunata allinchaspa.',
 	'double-redirect-fixer' => 'Pusapuna allinchaq',
-	'deadendpages' => 'Lluqsinannaq p\'anqakuna',
-	'deadendpagestext' => 'Kay p\'anqakunaqa mana ima p\'anqakunamanpas t\'inkimunchu.',
+	'deadendpages' => "Lluqsinannaq p'anqakuna",
+	'deadendpagestext' => "Kay p'anqakunaqa mana ima p'anqakunamanpas t'inkimunchu.",
 	'deletedcontributions' => 'Qullusqa ruraqpa hukchasqankuna',
 	'deletedcontributions-title' => 'Qullusqa ruraqpa hukchasqankuna',
 	'defemailsubject' => '{{SITENAME}} p\'anqamanta chaski "$1" sutiyuq ruraqmanta',
-	'deletepage' => 'Kay p\'anqata qulluy',
+	'deletepage' => "Kay p'anqata qulluy",
 	'delete-confirm' => '"$1"-ta qulluy',
 	'delete-legend' => 'Qulluy',
 	'deletedtext' => '"$1" qullusqañam.
@@ -13513,25 +13446,25 @@ $2 nisqa p\'anqata qhaway ñaqha qullusqakunata rikunaykipaq.',
 	'deletecomment' => 'Kayrayku:',
 	'deleteotherreason' => 'Huk rayku:',
 	'deletereasonotherlist' => 'Huk rayku',
-	'deletereason-dropdown' => '*Qulluypaq sapsi raykukuna
+	'deletereason-dropdown' => "*Qulluypaq sapsi raykukuna
 ** Kikin kamariqpa mañakusqan
-** Ruraqpa hayñinta k\'irisqa
-** Wandaluchasqa',
-	'delete-edit-reasonlist' => 'Qullusqapaq raykukunata llamk\'apuy',
-	'delete-toobig' => 'Kay p\'anqaqa ancha wiñay kawsaysapa, $1-manta aswan {{PLURAL:$1|musuqchasqayuq|musuqchasqayuq}}. Kay hina p\'anqakunata qulluyqa saywachasqam, {{SITENAME}}ta mana waqllinapaq.',
-	'delete-warning-toobig' => 'Kay p\'anqaqa ancha wiñay kawsaysapa, $1-manta aswan {{PLURAL:$1|musuqchasqayuq|musuqchasqayuq}}. Kay hina p\'anqata qulluspaykiqa, {{SITENAME}}ta waqllinkimanchá. Kay ruraymanta anchata yuyaychakuspa hamut\'ay.',
-	'databasenotlocked' => 'Willañiqintinqa manam hark\'asqachu.',
+** Ruraqpa hayñinta k'irisqa
+** Wandaluchasqa",
+	'delete-edit-reasonlist' => "Qullusqapaq raykukunata llamk'apuy",
+	'delete-toobig' => "Kay p'anqaqa ancha wiñay kawsaysapa, $1-manta aswan {{PLURAL:$1|musuqchasqayuq|musuqchasqayuq}}. Kay hina p'anqakunata qulluyqa saywachasqam, {{SITENAME}}ta mana waqllinapaq.",
+	'delete-warning-toobig' => "Kay p'anqaqa ancha wiñay kawsaysapa, $1-manta aswan {{PLURAL:$1|musuqchasqayuq|musuqchasqayuq}}. Kay hina p'anqata qulluspaykiqa, {{SITENAME}}ta waqllinkimanchá. Kay ruraymanta anchata yuyaychakuspa hamut'ay.",
+	'databasenotlocked' => "Willañiqintinqa manam hark'asqachu.",
 	'delete_and_move' => 'Qulluspa astay',
 	'delete_and_move_text' => '==Qullunam tiyan==
 
 Tukuna p\'anqaqa ("[[:$1]]") kachkañam. Astanapaq qulluyta munankichu?',
-	'delete_and_move_confirm' => 'Arí, kay p\'anqata qulluy',
+	'delete_and_move_confirm' => "Arí, kay p'anqata qulluy",
 	'delete_and_move_reason' => '"[[$1]]" nisqamanta astanapaq qullusqa',
-	'djvu_page_error' => 'DjVu nisqa p\'anqaqa nisyum',
+	'djvu_page_error' => "DjVu nisqa p'anqaqa nisyum",
 	'djvu_no_xml' => 'Manam atinichu XML-ta apamuy DjVu willañiqipaq',
-	'deletedrevision' => 'Qullusqam mawk\'a qhawakipasqa $1',
-	'days' => '{{PLURAL:$1|huk p\'unchaw|$1 p\'unchaw}}',
-	'deletedwhileediting' => '\'\'\'Paqtataq\'\'\': Kay p\'anqataqa qullurqankum qam llamk\'apuyta qallarirqaptiyki.',
+	'deletedrevision' => "Qullusqam mawk'a qhawakipasqa $1",
+	'days' => "{{PLURAL:$1|huk p'unchaw|$1 p'unchaw}}",
+	'deletedwhileediting' => "'''Paqtataq''': Kay p'anqataqa qullurqankum qam llamk'apuyta qallarirqaptiyki.",
 	'descending_abbrev' => 'uray',
 	'duplicate-defaultsort' => 'Paqtataq: Kikinmanta allinchana llawi «$2» ñawpaq kikinmanta allinchana llawitam «$1» huknachan.',
 	'dberr-header' => 'Kay wikiqa sasachakuyniyuqmi',
@@ -13539,20 +13472,20 @@ Tukuna p\'anqaqa ("[[:$1]]") kachkañam. Astanapaq qulluyta munankichu?',
 	'dberr-again' => 'Ratullata suyaspa musuqmanta chaqnaspa huk kutita ruraykachay.',
 	'dberr-info' => '(Manam atinichu willañiqintin sirwiqwan willanakuyta: $1)',
 	'dberr-usegoogle' => 'Hinaptinqa Google nisqawan maskayta atinkiman.',
-	'dberr-outofdate' => 'Musyariy, ñuqaykup samiqniykumanta yuyarisqankunaqa mawk\'ayasqañachá.',
-	'dberr-cachederror' => 'Kay qatiqpiqa mañakusqa p\'anqamanta hallch\'asqa iskaychasqam, mawk\'ayasqañachá.',
+	'dberr-outofdate' => "Musyariy, ñuqaykup samiqniykumanta yuyarisqankunaqa mawk'ayasqañachá.",
+	'dberr-cachederror' => "Kay qatiqpiqa mañakusqa p'anqamanta hallch'asqa iskaychasqam, mawk'ayasqañachá.",
 	'duration-seconds' => '$1 {{PLURAL:$1|sikundu|sikundukuna}}',
 	'duration-minutes' => '$1 {{PLURAL:$1|minutu|minutukuna}}',
 	'duration-hours' => '$1 {{PLURAL:$1|ura|urakuna}}',
-	'duration-days' => '{{PLURAL:$1|p\'unchaw|p\'unchawkuna}}',
+	'duration-days' => "{{PLURAL:$1|p'unchaw|p'unchawkuna}}",
 	'duration-weeks' => '{{PLURAL:$1|simana|simanakuna}}',
 	'duration-years' => '{{PLURAL:$1|wata|watakuna}}',
 	'duration-decades' => '{{PLURAL:$1|chunkawata|chunkawatakuna}}',
 	'duration-centuries' => '{{PLURAL:$1|pachakwata|pachakwatakuna}}',
 	'duration-millennia' => '{{PLURAL:$1|waranqawata|waranqawatakuna}}',
-];
+);
 
-$messages['qug'] = [
+$messages['qug'] = array(
 	'december' => 'Kapak',
 	'december-gen' => 'Kapak',
 	'dec' => 'Kap',
@@ -13573,17 +13506,17 @@ $2 rikpika, ima pankakunaka pichashkami kan yachakupanki.',
 	'deletecomment' => 'Imashpa:',
 	'deleteotherreason' => 'Yapa imashpa:',
 	'deletereasonotherlist' => 'Yapa imashpa',
-	'duplicate-defaultsort' => '\'\'\'Rikupay\'\'\': Kikinmanta ordenankapak llawita «$2» ñawpak pachamanta «$1» llawita pichankami.',
-];
+	'duplicate-defaultsort' => "'''Rikupay''': Kikinmanta ordenankapak llawita «$2» ñawpak pachamanta «$1» llawita pichankami.",
+);
 
-$messages['rgn'] = [
+$messages['rgn'] = array(
 	'december' => 'Dizèmbar',
 	'december-gen' => 'Dizèmbar',
 	'dec' => 'diz',
 	'delete' => 'Scanzèla',
 	'disclaimers' => 'Infurmaziòn legêli',
 	'disclaimerpage' => 'Project: Avìs generèl',
-	'difference' => '(Difarénza fra\'l versiòn)',
+	'difference' => "(Difarénza fra'l versiòn)",
 	'diff' => 'dif.',
 	'deletepage' => 'Scanzela la pàgina',
 	'deletedtext' => 'La pàgina "$1" l\'è stëda scanzlèda.
@@ -13592,9 +13525,9 @@ Guèrda $2 par avdé la lèsta daglj ultum scanzeladür.',
 	'deletecomment' => 'Rasòn:',
 	'deleteotherreason' => 'Ètar mutiv:',
 	'deletereasonotherlist' => 'Ètar mutiv',
-];
+);
 
-$messages['rif'] = [
+$messages['rif'] = array(
 	'december' => 'Dujanbir',
 	'december-gen' => 'Dujanbir',
 	'dec' => 'Dujanbir',
@@ -13615,9 +13548,9 @@ Xemm $2 i tikkas timaynutin.',
 	'deletecomment' => 'Ssebba:',
 	'deleteotherreason' => 'Ca n ssebba nniḍn:',
 	'deletereasonotherlist' => 'Ssebba nniḍn',
-];
+);
 
-$messages['rm'] = [
+$messages['rm'] = array(
 	'december' => 'december',
 	'december-gen' => 'december',
 	'dec' => 'dec',
@@ -13650,14 +13583,14 @@ La banca da datas ha rapportà l\'errur "$3: $4"',
 	'disambiguations' => 'Paginas per la decleraziun da noziuns',
 	'disambiguationspage' => 'Template:disambiguiziun',
 	'doubleredirects' => 'Renviaments dubels',
-	'doubleredirectstext' => 'Questa glista mussa renviaments che mainan puspè a renviaments.
-Mintga colonna cuntegna colliaziuns a l\'emprim ed al segund renviaments, sco era la pagina finala dal segund renviament che è probablamain la pagina a la quala duess vegnir renvià.
-Elements <del>stritgads</del> èn gia eliminads.',
+	'doubleredirectstext' => "Questa glista mussa renviaments che mainan puspè a renviaments.
+Mintga colonna cuntegna colliaziuns a l'emprim ed al segund renviaments, sco era la pagina finala dal segund renviament che è probablamain la pagina a la quala duess vegnir renvià.
+Elements <del>stritgads</del> èn gia eliminads.",
 	'double-redirect-fixed-move' => '[[$1]] è vegnì spustà.
 I renviescha uss a [[$2]].',
 	'double-redirect-fixer' => 'Bot da renviaments',
 	'deadendpages' => 'Artitgels senza colliaziuns internas',
-	'deletedcontributions' => 'Contribuziuns d\'utilisaders stidadas',
+	'deletedcontributions' => "Contribuziuns d'utilisaders stidadas",
 	'deletedcontributions-title' => 'Contribuziuns dad utilisaders stizzadas',
 	'defemailsubject' => '{{SITENAME}} e-mail da l\'utilisader "$1"',
 	'deletepage' => 'Stizzar la pagina',
@@ -13666,15 +13599,15 @@ I renviescha uss a [[$2]].',
 	'deletedtext' => '"$1" è vegnì stizzà.
 Sin $2 chattas ti ina glista dals davos artitgels stizzads.',
 	'dellogpage' => 'log dal stizzar',
-	'dellogpagetext' => 'Sutvart è ina glista dals elements stizzads l\'ultim.',
+	'dellogpagetext' => "Sutvart è ina glista dals elements stizzads l'ultim.",
 	'deletionlog' => 'log dal stizzar',
 	'deletecomment' => 'Motiv:',
 	'deleteotherreason' => 'Autra / supplementara raschun:',
 	'deletereasonotherlist' => 'Autra raschun:',
-	'deletereason-dropdown' => '*Motivs frequents per stizzar
-** Dumonda da l\'autur
-** Violaziun dals dretgs d\'autur
-** Vandalissem',
+	'deletereason-dropdown' => "*Motivs frequents per stizzar
+** Dumonda da l'autur
+** Violaziun dals dretgs d'autur
+** Vandalissem",
 	'delete-edit-reasonlist' => 'Midar ils motivs per il stizzar',
 	'databasenotlocked' => 'Questa banca da datas è betg bloccada.',
 	'delete_and_move' => 'Stizzar e spustar',
@@ -13684,9 +13617,9 @@ L\'artitgel da destinaziun "[[:$1]]" exista gia. Vul ti stizzar el per far plaz 
 	'delete_and_move_confirm' => 'Gea, stizzar il artitgel da destinaziun per spustar',
 	'delete_and_move_reason' => 'Stizzà per far plaz per spustar',
 	'djvu_page_error' => 'Pagina da DjVu è ordaifer la limita',
-	'djvu_no_xml' => 'Betg pussaivel da retschaiver l\'XML per la datoteca da DjVu',
+	'djvu_no_xml' => "Betg pussaivel da retschaiver l'XML per la datoteca da DjVu",
 	'deletedrevision' => 'Stizzà la versiun veglia $1.',
-	'deletedwhileediting' => '\'\'\'Attenziun:\'\'\' Questa pagina è vegnida stizzada suenter che ti has cumanzà a la modifitgar.',
+	'deletedwhileediting' => "'''Attenziun:''' Questa pagina è vegnida stizzada suenter che ti has cumanzà a la modifitgar.",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => '\'\'\'Attenziun:\'\'\' La clav da zavrar da standard "$2" remplazza la clav da zavrar da standard veglia "$1".',
 	'dberr-header' => 'Questa wiki ha in problem',
@@ -13697,9 +13630,9 @@ Questa pagina ha actualmain difficultads tecnicas.',
 	'dberr-usegoogle' => 'Ti pos empruvar da tschertgar cun Google en il fratemp.',
 	'dberr-outofdate' => 'Resguarda che lur index da noss cuntegn po esser antiquà.',
 	'dberr-cachederror' => 'Quai è ina copia or dal cache da questa pagina ed è eventualmain betg actuala.',
-];
+);
 
-$messages['rmy'] = [
+$messages['rmy'] = array(
 	'december' => 'deshuduitonai',
 	'dec' => 'ddui',
 	'delete' => 'Khosipen',
@@ -13717,9 +13650,9 @@ Dikh ando $2 ek patrinipen le palutne butyange khosle.',
 	'delete_and_move' => 'Khos thai inger',
 	'deletedrevision' => 'Khoslo o purano paruvipen $1',
 	'deletedwhileediting' => 'Dikh: Kadaya patrin sas khosli de kana shirdyas (astardyas) te editisares la!',
-];
+);
 
-$messages['ro'] = [
+$messages['ro'] = array(
 	'december' => 'decembrie',
 	'december-gen' => 'decembrie',
 	'dec' => 'dec',
@@ -13754,9 +13687,9 @@ Baza de date a returnat eroarea „$3: $4”',
 	'download' => 'descarcă',
 	'disambiguations' => 'Pagini care trimit către pagini de dezambiguizare',
 	'disambiguationspage' => 'Template:Dezambiguizare',
-	'disambiguations-text' => 'Paginile următoare conțin legături către o \'\'\'pagină de dezambiguizare\'\'\'.
+	'disambiguations-text' => "Paginile următoare conțin legături către o '''pagină de dezambiguizare'''.
 În locul acesteia ar trebui să conțină legături către un articol.<br />
-O pagină este considerată o pagină de dezambiguizare dacă folosește formate care apar la [[MediaWiki:Disambiguationspage]]',
+O pagină este considerată o pagină de dezambiguizare dacă folosește formate care apar la [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Redirecționări duble',
 	'doubleredirectstext' => 'Această listă conține pagini care redirecționează la alte pagini de redirecționare.
 Fiecare rând conține legături la primele două redirecționări, precum și ținta celei de-a doua redirecționări, care este de obicei pagina țintă "reală", către care ar trebui să redirecționeze prima pagină.
@@ -13801,9 +13734,9 @@ Pagina destinație „[[:$1]]” există deja. Doriți să o ștergeți pentru a
 	'djvu_no_xml' => 'Imposibil de obținut XML-ul pentru fișierul DjVu',
 	'deletedrevision' => 'A fost ștearsă vechea versiune $1.',
 	'days' => '{{PLURAL:$1|o zi|$1 zile|$1 de zile}}',
-	'deletedwhileediting' => '\'\'\'Atenție\'\'\': Această pagină a fost ștearsă după ce ați început s-o modificați!',
+	'deletedwhileediting' => "'''Atenție''': Această pagină a fost ștearsă după ce ați început s-o modificați!",
 	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Atenție:\'\'\' Cheia de sortare implicită („$2”) o înlocuiește pe precedenta („$1”).',
+	'duplicate-defaultsort' => "'''Atenție:''' Cheia de sortare implicită („$2”) o înlocuiește pe precedenta („$1”).",
 	'dberr-header' => 'Acest site are o problemă',
 	'dberr-problems' => 'Ne cerem scuze! Acest site întâmpină dificultăți tehnice.',
 	'dberr-again' => 'Așteaptă câteva minute și încearcă din nou.',
@@ -13812,16 +13745,16 @@ Pagina destinație „[[:$1]]” există deja. Doriți să o ștergeți pentru a
 	'dberr-outofdate' => 'De reținut ca indexarea conținutului nostru de către ei poate să nu fie actualizată.',
 	'dberr-cachederror' => 'Următoarea pagină este o copie în cache a paginii cerute, s-ar putea să nu fie actualizată.',
 	'discuss' => 'Discuţie',
-];
+);
 
-$messages['roa-rup'] = [
+$messages['roa-rup'] = array(
 	'december' => 'Andreulu',
 	'december-gen' => 'Andreulu',
 	'delete' => 'Ashcirdzire',
 	'disclaimers' => 'Nipricunuschire',
-];
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'december' => 'Decèmmre',
 	'december-gen' => 'Decèmmre',
 	'dec' => 'Dec',
@@ -13829,95 +13762,95 @@ $messages['roa-tara'] = [
 	'deletethispage' => 'Scangille sta pàgene',
 	'disclaimers' => 'No ne sacce ninde',
 	'disclaimerpage' => 'Project:Scareca uarrile',
-	'databaseerror' => 'Errore de l\'archivije',
-	'dberrortext' => 'Ha assute n\'errore de sindassi de \'na inderrogazione sus a \'u database.
-Quiste pò indicà \'nu bochere jndr\'à \'u software.
-L\'urteme tendative de inderrogazione sus a \'u database ha state:
-<blockquote><tt>$1</tt></blockquote>
-cu \'a funzione "<tt>$2</tt>".
-\'U database ha returnate l\'errore "<tt>$3: $4</tt>".',
+	'databaseerror' => "Errore de l'archivije",
+	'dberrortext' => "Ha assute n'errore de sindassi de 'na inderrogazione sus a 'u database.
+Quiste pò indicà 'nu bochere jndr'à 'u software.
+L'urteme tendative de inderrogazione sus a 'u database ha state:
+<blockquote><tt>\$1</tt></blockquote>
+cu 'a funzione \"<tt>\$2</tt>\".
+'U database ha returnate l'errore \"<tt>\$3: \$4</tt>\".",
 	'dberrortextcl' => 'A assute \'n\'errore de sindasse sus a \'n\'inderrogazione d\'u database.
 L\'urteme tendative de inderrogazione sus a \'u database ha state:
 "$1"
 ausanne \'a funzione "$2".
 \'U database ha returnate l\'errore "$3: $4"',
 	'directorycreateerror' => 'Non ge pozze ccrejà \'a cartelle "$1".',
-	'deletedhist' => 'Storie d\'u scangellamende',
-	'difference' => '(Differenze \'mbrà versiune)',
-	'difference-multipage' => '(Differenze \'mbrà le pàggene)',
-	'diff-multi' => '({{PLURAL:$1|\'na versione de mmienze|$1 cchiù versiune de mmienze}} de {{PLURAL:$2|\'n\'utende|$2 utinde}} non ge se vèdene)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|\'Na revisione de \'mmienze|$1 revisiune de \'mmienze}} non g\'è viste da cchiù de $2 {{PLURAL:$2|utende|utinde}})',
+	'deletedhist' => "Storie d'u scangellamende",
+	'difference' => "(Differenze 'mbrà versiune)",
+	'difference-multipage' => "(Differenze 'mbrà le pàggene)",
+	'diff-multi' => "({{PLURAL:$1|'na versione de mmienze|$1 cchiù versiune de mmienze}} de {{PLURAL:$2|'n'utende|$2 utinde}} non ge se vèdene)",
+	'diff-multi-manyusers' => "({{PLURAL:$1|'Na revisione de 'mmienze|$1 revisiune de 'mmienze}} non g'è viste da cchiù de $2 {{PLURAL:$2|utende|utinde}})",
 	'datedefault' => 'Nisciuna preferenze',
-	'defaultns' => 'Cirche jndr\'à chiste namespace:',
+	'defaultns' => "Cirche jndr'à chiste namespace:",
 	'default' => 'defolt',
 	'diff' => 'diff',
-	'destfilename' => 'Nome d\'u file de destinazione:',
-	'duplicatesoffile' => '{{PLURAL:$1|\'U seguende file ète \'nu|Le seguende $1 file sonde}} duplicate de stu file ([[Special:FileDuplicateSearch/$2|cchiù \'mbormaziune]]):',
+	'destfilename' => "Nome d'u file de destinazione:",
+	'duplicatesoffile' => "{{PLURAL:$1|'U seguende file ète 'nu|Le seguende $1 file sonde}} duplicate de stu file ([[Special:FileDuplicateSearch/$2|cchiù 'mbormaziune]]):",
 	'download' => 'scareche',
 	'disambiguations' => 'Pàggene collegate a le pàggene de disambiguazione',
 	'disambiguationspage' => 'Template:disambigue',
-	'disambiguations-text' => 'Le pàggene seguende appondene a \'na \'\'\'pàgene de disambiguazione\'\'\'.
-\'Nvece avessere appondà a \'a temateca appropriate.<br />
-\'Na pàgene jè trattate cumme pàgene de disambiguazione ce tu ause \'nu template ca è appundate da [[MediaWiki:Disambiguationspage|Pàggene de disambiguazione]]',
+	'disambiguations-text' => "Le pàggene seguende appondene a 'na '''pàgene de disambiguazione'''.
+'Nvece avessere appondà a 'a temateca appropriate.<br />
+'Na pàgene jè trattate cumme pàgene de disambiguazione ce tu ause 'nu template ca è appundate da [[MediaWiki:Disambiguationspage|Pàggene de disambiguazione]]",
 	'doubleredirects' => 'Ridirezionaminde a doppie',
-	'doubleredirectstext' => 'Sta pàgene elenghe le pàggene ca se ridirezionane sus a otre pàggene de ridirezionaminde.
-Ogne righe condene \'nu collegamende a \'u prime e a \'u seconde ridirezionamende pe fà vedè addò arrive \'u seconde ridirezionamende, \'u quale jè normalmende \'a pàgena de destinaziona "rèale", addò \'u prime ridirezionamende avesse appondà.
-Le situaziune de <del>ingrocie</del> onne state resolte.',
-	'double-redirect-fixed-move' => '[[$1]] ha state spustate.
-Mò s\'avène redirette a [[$2]].',
+	'doubleredirectstext' => "Sta pàgene elenghe le pàggene ca se ridirezionane sus a otre pàggene de ridirezionaminde.
+Ogne righe condene 'nu collegamende a 'u prime e a 'u seconde ridirezionamende pe fà vedè addò arrive 'u seconde ridirezionamende, 'u quale jè normalmende 'a pàgena de destinaziona \"rèale\", addò 'u prime ridirezionamende avesse appondà.
+Le situaziune de <del>ingrocie</del> onne state resolte.",
+	'double-redirect-fixed-move' => "[[$1]] ha state spustate.
+Mò s'avène redirette a [[$2]].",
 	'double-redirect-fixed-maintenance' => 'Aggiuste le doppie redirezionaminde da [[$1]] a [[$2]].',
 	'double-redirect-fixer' => 'Correttore de redirezionaminde',
 	'deadendpages' => 'Pàggene senza collegamende',
-	'deadendpagestext' => 'Le pàggene ca seguene non g\'appondute a otre pàggene sus a {{SITENAME}}.',
-	'deletedcontributions' => 'Condrebbute de l\'utende scangellete',
-	'deletedcontributions-title' => 'Condrebbute de l\'utende scangellate',
+	'deadendpagestext' => "Le pàggene ca seguene non g'appondute a otre pàggene sus a {{SITENAME}}.",
+	'deletedcontributions' => "Condrebbute de l'utende scangellete",
+	'deletedcontributions-title' => "Condrebbute de l'utende scangellate",
 	'defemailsubject' => 'e-mail de {{SITENAME}} da l\'utende "$1"',
-	'deletepage' => 'Scangille \'a pàgene',
+	'deletepage' => "Scangille 'a pàgene",
 	'delete-confirm' => 'Scangille "$1"',
 	'delete-legend' => 'Scangille',
 	'deletedtext' => '"$1" onne state scangillete.
 Vide $2 pe \'na reggistrazione de le scangellaziune recende.',
 	'dellogpage' => 'Archivie de le scangellaminde',
-	'dellogpagetext' => 'Sotte ste \'na liste de le cchiù recende scangellaziune.',
+	'dellogpagetext' => "Sotte ste 'na liste de le cchiù recende scangellaziune.",
 	'deletionlog' => 'Archivije de le scangellaminde',
 	'deletecomment' => 'Mutive:',
 	'deleteotherreason' => 'Otre mutive de cchiù:',
 	'deletereasonotherlist' => 'Otre mutive',
-	'deletereason-dropdown' => '*Mutive comune de scangellaminde
-** Richieste de l\'autore
-** Violazione d\'u Copyright
-** Vandalisme',
+	'deletereason-dropdown' => "*Mutive comune de scangellaminde
+** Richieste de l'autore
+** Violazione d'u Copyright
+** Vandalisme",
 	'delete-edit-reasonlist' => 'Mutive de scangellazione de le cangiaminde',
-	'delete-toobig' => 'Sta pàgene tène \'na storie de cangiaminde troppe longhe, sus a $1 {{PLURAL:$1|revisione|revisiune}}.
-\'U scangellamende de stuèzze de pàgene avène ristrette pe prevenì \'ngasinaminde accidentale de {{SITENAME}}.',
-	'delete-warning-toobig' => 'Sta pàgene tène \'na storie troppo longhe, sus a $1 {{PLURAL:$1|revisione|revisiune}}.
-Scangellanne pò ccreja casine sus a le operazione d\'u database de {{SITENAME}};
-và cunge cunge!',
-	'databasenotlocked' => '\'U database non g\'è blocchete.',
+	'delete-toobig' => "Sta pàgene tène 'na storie de cangiaminde troppe longhe, sus a $1 {{PLURAL:$1|revisione|revisiune}}.
+'U scangellamende de stuèzze de pàgene avène ristrette pe prevenì 'ngasinaminde accidentale de {{SITENAME}}.",
+	'delete-warning-toobig' => "Sta pàgene tène 'na storie troppo longhe, sus a $1 {{PLURAL:$1|revisione|revisiune}}.
+Scangellanne pò ccreja casine sus a le operazione d'u database de {{SITENAME}};
+và cunge cunge!",
+	'databasenotlocked' => "'U database non g'è blocchete.",
 	'delete_and_move' => 'Scangille e spuèste',
 	'delete_and_move_text' => '== Scangellazzione richieste ==
 \'A pàgene de destinazione "[[:$1]]" esiste già.
 Tu à vuè ccu scangille o vuè ccù iacchie \'nu mode pe spustarle?',
-	'delete_and_move_confirm' => 'Sine, scangille \'a pàggene',
+	'delete_and_move_confirm' => "Sine, scangille 'a pàggene",
 	'delete_and_move_reason' => '\'U scangellamende avène fatte pe spustà da "[[$1]]"',
 	'djvu_page_error' => 'Pàgene DjVu fore da le limite',
-	'djvu_no_xml' => 'Non ge riesche a esaminà l\'XML d\'u file DjVu',
+	'djvu_no_xml' => "Non ge riesche a esaminà l'XML d'u file DjVu",
 	'deletedrevision' => 'Vecchia revisione scangellete $1',
 	'days-abbrev' => '$1g',
 	'days' => '{{PLURAL: $1|$1 sciurne|$1 sciurne}}',
-	'deletedwhileediting' => '\'\'\'Fà attenziò\'\'\': Sta pàgene ha state scangellete apprime ca tu acumenzasse a fà \'u cangiamende!',
+	'deletedwhileediting' => "'''Fà attenziò''': Sta pàgene ha state scangellete apprime ca tu acumenzasse a fà 'u cangiamende!",
 	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => '\'\'\'Attenziò:\'\'\' \'A chiave de arrangamende de default "$2" sovrascrive quedda precedende "$1".',
-	'dberr-header' => 'Sta Uicchi tène \'nu probbleme',
-	'dberr-problems' => 'Simw spiacende! Stu site stè \'ngondre de le diffcoltà tecniche.',
+	'duplicate-defaultsort' => "'''Attenziò:''' 'A chiave de arrangamende de default \"\$2\" sovrascrive quedda precedende \"\$1\".",
+	'dberr-header' => "Sta Uicchi tène 'nu probbleme",
+	'dberr-problems' => "Simw spiacende! Stu site stè 'ngondre de le diffcoltà tecniche.",
 	'dberr-again' => 'Aspitte quacche minute e pò recareche.',
-	'dberr-info' => '(Non ge riuscime a condattà \'u server d\'u database: $1)',
+	'dberr-info' => "(Non ge riuscime a condattà 'u server d'u database: $1)",
 	'dberr-usegoogle' => 'Pu mumende tu puè pruvà a cercà cu Google.',
 	'dberr-outofdate' => 'Vide ca le indice lore de le condenute nuèstre ponne essere non aggiornate.',
-	'dberr-cachederror' => 'Queste jè \'na copie \'\'cache\'\' d\'a pàgene ca è cercate e allore non g\'à puè cangià.',
-];
+	'dberr-cachederror' => "Queste jè 'na copie ''cache'' d'a pàgene ca è cercate e allore non g'à puè cangià.",
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'december' => 'декабрь',
 	'december-gen' => 'декабря',
 	'dec' => 'дек',
@@ -13952,9 +13885,9 @@ $messages['ru'] = [
 	'download' => 'загрузить',
 	'disambiguations' => 'Страницы, ссылающиеся на страницы разрешения неоднозначности',
 	'disambiguationspage' => 'Template:Неоднозначность',
-	'disambiguations-text' => 'Следующие страницы ссылаются на \'\'\'многозначные страницы\'\'\'.
+	'disambiguations-text' => "Следующие страницы ссылаются на '''многозначные страницы'''.
 Вместо этого они, вероятно, должны указывать на соответствующую конкретную статью.<br />
-Страница считается многозначной, если на ней размещён шаблон, имя которого указано на странице [[MediaWiki:Disambiguationspage]].',
+Страница считается многозначной, если на ней размещён шаблон, имя которого указано на странице [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Двойные перенаправления',
 	'doubleredirectstext' => 'На этой странице представлен список перенаправлений на другие перенаправления.
 Каждая строка содержит ссылки на первое и второе перенаправления, а также целевую страницу второго перенаправления, в которой обычно указывается название страницы, куда должно ссылаться первое перенаправление.
@@ -14000,7 +13933,7 @@ $messages['ru'] = [
 	'deletedrevision' => 'Удалена старая версия $1',
 	'days-abbrev' => '$1 д',
 	'days' => '{{PLURAL:$1|$1 день|$1 дня|$1 дней}}',
-	'deletedwhileediting' => '\'\'\'Внимание\'\'\'. Эта страница была удалена после того, как вы начали её править!',
+	'deletedwhileediting' => "'''Внимание'''. Эта страница была удалена после того, как вы начали её править!",
 	'descending_abbrev' => 'убыв',
 	'duplicate-defaultsort' => 'Внимание. Ключ сортировки по умолчанию «$2» переопределяет прежний ключ сортировки по умолчанию «$1».',
 	'dberr-header' => 'Эта вики испытывает затруднения',
@@ -14012,9 +13945,16 @@ $messages['ru'] = [
 	'dberr-cachederror' => 'Ниже представлена закэшированная версия запрашиваемой страницы, возможно, она не отражает последних изменений.',
 	'discuss' => 'Обсудить',
 	'defaultskin_choose' => 'Установка оформления по-умолчанию:',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+);
 
-$messages['rue'] = [
+$messages['rue'] = array(
 	'december' => 'децембер',
 	'december-gen' => 'децембра',
 	'dec' => 'дец',
@@ -14049,7 +13989,7 @@ $messages['rue'] = [
 	'download' => 'скачати',
 	'disambiguations' => 'Сторінкы одказуючі на богатозначны статї',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'Одказы на наслїдуючіх сторінках ведуть на \'\'\'богатозначны сторінкы\'\'\'. (сторінкы котры обсягують дакотру з тых шаблон на [[MediaWiki:Disambiguationspage|списку шаблон про богатозначны сторінкы]]) намісто на дану статю.',
+	'disambiguations-text' => "Одказы на наслїдуючіх сторінках ведуть на '''богатозначны сторінкы'''. (сторінкы котры обсягують дакотру з тых шаблон на [[MediaWiki:Disambiguationspage|списку шаблон про богатозначны сторінкы]]) намісто на дану статю.",
 	'doubleredirects' => 'Двоїты напрямлїня',
 	'doubleredirectstext' => 'На тій сторінцї є список напрямлїн ведучіх на далшы напрямлїня.
 Каждый рядок обсягує одказ на перше і друге напрямлїня і ку тому ціль другого напрямлїня, котрый звычайно вказує мено „реалной“ цілёвой сторінкы, на котру бы ся мало перше напрямлїня одказовати.
@@ -14091,7 +14031,7 @@ $messages['rue'] = [
 	'djvu_no_xml' => 'Створїня XML про файл DjVu ся не подарило.',
 	'deletedrevision' => 'Змазана стара ревізія $1',
 	'days' => '{{PLURAL:$1|$1 день|$1 днї|$1 днїв}}',
-	'deletedwhileediting' => '\'\'\'Увага:\'\'\' почас вашой едітації была тота сторінка змазана!',
+	'deletedwhileediting' => "'''Увага:''' почас вашой едітації была тота сторінка змазана!",
 	'descending_abbrev' => 'спад',
 	'duplicate-defaultsort' => 'Увага: Імпліцітный ключ сортованя (DEFAULTSORTKEY) „$2“ переписує скоре наставлену годноту „$1“.',
 	'dberr-header' => 'Тота вікі має даякы проблемы',
@@ -14101,23 +14041,23 @@ $messages['rue'] = [
 	'dberr-usegoogle' => 'Можете спробовати поглядати за допомогов Google.',
 	'dberr-outofdate' => 'Майте на увазї, же ёго індексы можуть быти застарілыма.',
 	'dberr-cachederror' => 'Наслїдуюча сторінка є копія з кеш і не мусить быти актуалне.',
-];
+);
 
-$messages['rup'] = [
+$messages['rup'] = array(
 	'december' => 'Andreulu',
 	'december-gen' => 'Andreulu',
 	'delete' => 'Ashcirdzire',
 	'disclaimers' => 'Nipricunuschire',
-];
+);
 
-$messages['ruq'] = [
+$messages['ruq'] = array(
 	'december' => 'Andreulu',
 	'december-gen' => 'Andreulu',
 	'delete' => 'Ashcirdzire',
 	'disclaimers' => 'Nipricunuschire',
-];
+);
 
-$messages['ruq-cyrl'] = [
+$messages['ruq-cyrl'] = array(
 	'december' => 'децембри',
 	'december-gen' => 'децември',
 	'dec' => 'дец',
@@ -14125,9 +14065,9 @@ $messages['ruq-cyrl'] = [
 	'disclaimers' => 'Тајменулс',
 	'disclaimerpage' => 'Project:тајменул',
 	'diff' => 'диференћу',
-];
+);
 
-$messages['ruq-latn'] = [
+$messages['ruq-latn'] = array(
 	'december' => 'decembri',
 	'december-gen' => 'decembri',
 	'dec' => 'dec',
@@ -14135,9 +14075,9 @@ $messages['ruq-latn'] = [
 	'disclaimers' => 'tǎmenuls',
 	'disclaimerpage' => 'Project:tǎmenul',
 	'diff' => 'diferenţu',
-];
+);
 
-$messages['sa'] = [
+$messages['sa'] = array(
 	'december' => 'दशम्बर्',
 	'december-gen' => 'दशम्बर्',
 	'dec' => 'दशं॰',
@@ -14177,9 +14117,9 @@ $messages['sa'] = [
 	'duplicate-defaultsort' => '\'\'\'प्रबोधः\'\'\' पुरानी मूल क्रमांकन कुंजी "$1" के बजाय अब मूल क्रमांकन कुंजी "$2" होगी।',
 	'dberr-header' => 'अस्मिन् विकिमध्ये काचित् समस्या विद्यते',
 	'dberr-problems' => 'क्षम्यताम् ! अस्मिन् जालपुटे तान्त्रिकसमस्याः अनुभूयमानाः सन्ति ।',
-];
+);
 
-$messages['sah'] = [
+$messages['sah'] = array(
 	'december' => 'Ахсынньы',
 	'december-gen' => 'Ахсынньы',
 	'dec' => 'Ахс',
@@ -14214,7 +14154,7 @@ $messages['sah'] = [
 	'download' => 'хачайдаан ылыы',
 	'disambiguations' => 'Элбэх суолталаах өйдөбүллэргэ сигэнэр сирэйдэр',
 	'disambiguationspage' => 'Template:элбэх суолталаах өйдөбүллэр',
-	'disambiguations-text' => 'Маннык сирэйдэр \'\'\'омонимнар сирэйдэрин\'\'\' кытта сибээстээхтэр. Ол оннугар чуолаан теманы кытта сибээстэһиэхтээхтэр.<br />Өскө бу халыыбы [[MediaWiki:Disambiguationspage]] туттубут буоллахтарына, сирэй омонимнары суох оҥоруу курдук обработкаламмыт.',
+	'disambiguations-text' => "Маннык сирэйдэр '''омонимнар сирэйдэрин''' кытта сибээстээхтэр. Ол оннугар чуолаан теманы кытта сибээстэһиэхтээхтэр.<br />Өскө бу халыыбы [[MediaWiki:Disambiguationspage]] туттубут буоллахтарына, сирэй омонимнары суох оҥоруу курдук обработкаламмыт.",
 	'doubleredirects' => 'Хос көһөрөөһүн',
 	'doubleredirectstext' => 'Бу сирэйгэ атын сиргэ утаарар хос утаарыылар тиһиктэрэ көстөр.
 Хас устуруока аайы бастакы уонна иккис утаарыга сигэ баар, ону таһынан иккис утаарыыга баар сирэй аадырыһа (аата) баар, ол аата бастакы утаарыы дьиҥинэн ханна утаарыахтааҕа көстөр.
@@ -14256,7 +14196,7 @@ $messages['sah'] = [
 	'djvu_no_xml' => 'DjVu билэтигэр аналлаах XML кыайан ылыллыбата',
 	'deletedrevision' => '$1 урукку торума сотулунна',
 	'days' => '{{PLURAL:$1|$1 күн|$1 күн}}',
-	'deletedwhileediting' => '\'\'\'Болҕой\'\'\': Сирэйи көннөрө олордоххуна ким эрэ сотон кэбистэ!',
+	'deletedwhileediting' => "'''Болҕой''': Сирэйи көннөрө олордоххуна ким эрэ сотон кэбистэ!",
 	'descending_abbrev' => 'кыччат',
 	'duplicate-defaultsort' => 'Болҕой: Наардааһын «$2» күлүүһэ урукку «$1» күлүүһү сабар (Ключ сортировки переопределяет прежний ключ).',
 	'dberr-header' => 'Бу биики туга эрэ сатаммата',
@@ -14266,9 +14206,9 @@ $messages['sah'] = [
 	'dberr-usegoogle' => 'Онуоха-маныаха дылы Google көмөтүнэн көрдүөххүн сөп.',
 	'dberr-outofdate' => 'Индэксэ эргэрбит буолуон сөбүн умнума.',
 	'dberr-cachederror' => 'Сирэй кээштэммит барыла көстөр, баҕар эргэрбит буолуон сөп.',
-];
+);
 
-$messages['sc'] = [
+$messages['sc'] = array(
 	'december' => 'Nadale',
 	'december-gen' => 'Nadale',
 	'dec' => 'Nad',
@@ -14307,9 +14247,9 @@ Càstia su log $2 pro unu registru de is ùrtimas fuliaduras.',
 	'deletereasonotherlist' => 'Àteru motivu',
 	'databasenotlocked' => 'Su database no est bloccadu.',
 	'delete_and_move_confirm' => 'Eja, cantzella sa pàgina',
-];
+);
 
-$messages['scn'] = [
+$messages['scn'] = array(
 	'december' => 'Dicèmmiru',
 	'december-gen' => 'Dicèmmiru',
 	'dec' => 'Dic',
@@ -14342,13 +14282,13 @@ MySQL hà ristituitu lu siquenti erruri "$3: $4".',
 	'download' => 'scarica',
 	'disambiguations' => 'Pàggini cu liami ambìgui',
 	'disambiguationspage' => 'Template:Disambigua',
-	'disambiguations-text' => 'Li pàggini ntâ lista ca sequi cuntèninu dî culligamenti a \'\'\'pàggini di disambiguazzioni\'\'\' e nun a l\'argumentu cui avìssiru a fari rifirimentu.<br />
-Vèninu cunzidirati pàggini di disambiguazzioni tutti chiddi ca cuntèninu li template alincati \'n [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Li pàggini ntâ lista ca sequi cuntèninu dî culligamenti a '''pàggini di disambiguazzioni''' e nun a l'argumentu cui avìssiru a fari rifirimentu.<br />
+Vèninu cunzidirati pàggini di disambiguazzioni tutti chiddi ca cuntèninu li template alincati 'n [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Rinnirizzamenti duppi',
 	'doubleredirectstext' => 'Chista pàggina alenca li pàggini chi rinnirìzzanu a àutri pàggini di rinnirizzamentu.
 Ognuna riga cunteni li culligamenti a lu primu e a lu secunnu redirect, oltri â prima riga di testu dû secunnu redirect ca di sòlitu cunteni la pàggina di distinazzioni "curretta" â quali avissi a puntari macari lu primu redirect.
 Li redirect <del>cancillati</del> furunu curretti.',
-	'double-redirect-fixed-move' => '[[$1]] fu spustata \'n modu automàticu, ora è nu redirect a [[$2]]',
+	'double-redirect-fixed-move' => "[[$1]] fu spustata 'n modu automàticu, ora è nu redirect a [[$2]]",
 	'double-redirect-fixer' => 'Curritturi di redirect',
 	'deadendpages' => 'Pàggini senza nisciuta',
 	'deadendpagestext' => 'Li pàggini ndicati di sèquitu sunnu privi di culligamenti versu àutri pàggini dû situ.',
@@ -14366,10 +14306,10 @@ Talìa $2 pi na lista di cancillazzioni ricenti.',
 	'deletecomment' => 'Mutivu:',
 	'deleteotherreason' => 'Autra mutivazioni o mutivazioni in più:',
 	'deletereasonotherlist' => 'Autra mutivazioni',
-	'deletereason-dropdown' => '*Mutivazzioni cchiù cumuni pi la cancillazzioni
-** Dumanna di l\'auturi
+	'deletereason-dropdown' => "*Mutivazzioni cchiù cumuni pi la cancillazzioni
+** Dumanna di l'auturi
 ** Viulazzioni di copyright
-** Vannalismu',
+** Vannalismu",
 	'delete-edit-reasonlist' => 'Cancia li mutivazzioni pi la cancillazioni',
 	'delete-toobig' => 'La storia dî canciamenti di sta pàggina è assai longa (ortri $1 {{PLURAL:$1|rivisioni|rivisioni}}). La sò scancillazzioni vinni limitata pi scanzari la pussibbilitati di criari senza vulìrilu prubbremi di funziunamentu ô database di {{SITENAME}}.',
 	'delete-warning-toobig' => 'La storia di sta pàggina è assai longa (ortri $1 {{PLURAL:$1|rivisioni|rivisioni}}). La sò scancillazzioni pò dari prubbremi di funziunamentu ô database di {{SITENAME}}; prucèdiri cu attinzioni.',
@@ -14383,7 +14323,7 @@ La pàggina di distinazzioni "[[:$1]]" asisti già. S\'addisìa cancillàrila pi
 	'djvu_page_error' => 'Nùmmuru di pàggina DjVu erratu',
 	'djvu_no_xml' => 'Mpussibbili òtteniri lu XML pô file DjVu',
 	'deletedrevision' => 'Rivisioni pricidenti, cancillata: $1.',
-	'deletedwhileediting' => '\'\'\'Accura\'\'\': Sta pàggina vinni scancillata doppu c\'hai accuminzatu a scanciàrila!',
+	'deletedwhileediting' => "'''Accura''': Sta pàggina vinni scancillata doppu c'hai accuminzatu a scanciàrila!",
 	'descending_abbrev' => 'dicrisc',
 	'duplicate-defaultsort' => 'Accura: la chiavi priddifinuta d\'urdinamentu "$2" si sciarrìa cu chidda d\'antura "$1".',
 	'dberr-header' => 'Sta wiki havi nu prublema',
@@ -14393,9 +14333,9 @@ La pàggina di distinazzioni "[[:$1]]" asisti già. S\'addisìa cancillàrila pi
 	'dberr-usegoogle' => 'Poi pruvari a circari supra Google ammentri.',
 	'dberr-outofdate' => 'Nota ca la loru indicizzazioni dê nostri cuntintinuta po essiri nun aggiurnata.',
 	'dberr-cachederror' => 'Chista ca segui è na copia cache da pàggina richiesta, e putissi essiri nun aggiurnata.',
-];
+);
 
-$messages['sco'] = [
+$messages['sco'] = array(
 	'december' => 'December',
 	'december-gen' => 'Dizember',
 	'dec' => 'Diz',
@@ -14437,9 +14377,9 @@ The destination airticle "[[:$1]]" aareadies exists. Div ye want tae delete it f
 	'deletedrevision' => 'Deletit auld revision $1.',
 	'deletedwhileediting' => 'Warnin: This page haes been delete syne ye stertit editin!',
 	'duplicate-defaultsort' => '\'\'\'Wairnin:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
-];
+);
 
-$messages['sd'] = [
+$messages['sd'] = array(
 	'december' => 'ڊسمبر',
 	'december-gen' => 'ڊسمبر',
 	'dec' => 'ڊسمبر',
@@ -14464,9 +14404,9 @@ $messages['sd'] = [
 	'deletereasonotherlist' => 'ٻيو سبب',
 	'delete_and_move_confirm' => 'جي ها، صفحو ڊاهيو',
 	'delete_and_move_reason' => 'چورڻ جو عمل ممڪن بنائڻ لاءِ ڊاٺو ويو',
-];
+);
 
-$messages['sdc'] = [
+$messages['sdc'] = array(
 	'december' => 'Naddari',
 	'december-gen' => 'Naddari',
 	'dec' => 'Nad',
@@ -14497,7 +14437,7 @@ MySQL à turraddu lu sighenti errori "$3: $4".',
 	'download' => 'ischarriggamentu',
 	'disambiguations' => 'Pàgini cu lu matessi innòmmu',
 	'disambiguationspage' => 'Template:Matessi innòmmu',
-	'disambiguations-text' => 'Li pàgini i\' la sighenti listha cuntènani cullegamenti a \'\'\'pàgini cu\' lu matessi innòmmu\'\'\' e nò a la rasgiòni a chi dubaristhia fà rifirimentu.<br />So cunsidaraddi pàgini cu lu matessi innòmmu tutti chissi chi cuntènini li mudelli erencaddi in [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Li pàgini i' la sighenti listha cuntènani cullegamenti a '''pàgini cu' lu matessi innòmmu''' e nò a la rasgiòni a chi dubaristhia fà rifirimentu.<br />So cunsidaraddi pàgini cu lu matessi innòmmu tutti chissi chi cuntènini li mudelli erencaddi in [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Rinvii doppi',
 	'doubleredirectstext' => 'Inogghi v\'è una listha di li pàgini chi puntani a pàgini di rinviu. Ogna riga cunteni i cullegamenti a lu primmu e sigundu rinviu, cumenti a la disthinazioni di lu sigundu rinviu, che noimmaimmenti è la pàgina "curretta" a la quari dubia puntà puru lu primmu rinviu.',
 	'deadendpages' => 'Pàgini chena iscidda',
@@ -14513,10 +14453,10 @@ MySQL à turraddu lu sighenti errori "$3: $4".',
 	'deletecomment' => 'Mutibu di la canzilladdura:',
 	'deleteotherreason' => 'Althra mutibazioni o mutibazioni aggiuntiba:',
 	'deletereasonotherlist' => 'Althra mutibazioni',
-	'deletereason-dropdown' => '*Mutibazioni più cumuni pa la canzilladdura
-** Prigonta de l\'autori
-** Viorazioni di lu dirittu d\'autori
-** Vandarismu',
+	'deletereason-dropdown' => "*Mutibazioni più cumuni pa la canzilladdura
+** Prigonta de l'autori
+** Viorazioni di lu dirittu d'autori
+** Vandarismu",
 	'delete-edit-reasonlist' => 'Mudìfigga li mutibazioni pa la canzilladdura',
 	'databasenotlocked' => 'La bancadati nò è broccadda.',
 	'delete_and_move' => 'Canzella e ippustha',
@@ -14524,15 +14464,15 @@ MySQL à turraddu lu sighenti errori "$3: $4".',
 
 La pàgina di disthinazioni "[[:$1]]" isisthi già. Vói canzillalla pa rindì pussìbiri l\'ippusthamentu?',
 	'delete_and_move_confirm' => 'Emmo, sobbraischribì la pàgini',
-	'delete_and_move_reason' => 'Canzilladda pa rindì pussìbiri l\'ippusthamentu',
+	'delete_and_move_reason' => "Canzilladda pa rindì pussìbiri l'ippusthamentu",
 	'djvu_page_error' => 'Nùmaru di pàgina DjVu ibbagliaddu',
-	'djvu_no_xml' => 'Impussìbiri uttinì l\'XML pa lu file DjVu',
+	'djvu_no_xml' => "Impussìbiri uttinì l'XML pa lu file DjVu",
 	'deletedrevision' => 'Prizzidenti ribisioni canzilladda: $1',
-	'deletedwhileediting' => 'Attinzioni: Chistha pàgina è isthadda canzilladda daboi ch\'ài ischuminzaddu a mudìfiggarla!',
+	'deletedwhileediting' => "Attinzioni: Chistha pàgina è isthadda canzilladda daboi ch'ài ischuminzaddu a mudìfiggarla!",
 	'descending_abbrev' => 'miminan',
-];
+);
 
-$messages['se'] = [
+$messages['se'] = array(
 	'december' => 'juovlamánnu',
 	'december-gen' => 'juovlamánu',
 	'dec' => 'juovlamánnu',
@@ -14564,9 +14504,9 @@ Siiddus $2 lea listu maŋimus sihkomiin.',
 	'delete_and_move' => 'Sihko siiddu ja sirdde',
 	'delete_and_move_confirm' => 'Sihko siiddu',
 	'descending_abbrev' => 'vuolláneaddji',
-];
+);
 
-$messages['sei'] = [
+$messages['sei'] = array(
 	'december' => 'Tlamantilacuntöx',
 	'december-gen' => 'Tlamantilacuntöx',
 	'dec' => 'T12',
@@ -14601,9 +14541,9 @@ MySQL returnöx römj iti "$3: $4"',
 	'deletepage' => 'Delatar páhina',
 	'databasenotlocked' => 'Database zo necoccebj lockomöx.',
 	'delete_and_move' => 'Delatom ö yacom',
-];
+);
 
-$messages['sg'] = [
+$messages['sg'] = array(
 	'december' => 'Kakawuka',
 	'december-gen' => 'Kakawuka',
 	'dec' => 'Kak',
@@ -14611,9 +14551,9 @@ $messages['sg'] = [
 	'deletethispage' => 'Lungûla lêmbëtï sô',
 	'disclaimers' => 'Zïngö-lê',
 	'disclaimerpage' => 'Project:Zïngö-lê',
-];
+);
 
-$messages['sgs'] = [
+$messages['sgs'] = array(
 	'december' => 'groudė',
 	'december-gen' => 'Groudis',
 	'dec' => 'grd',
@@ -14663,9 +14603,9 @@ Paskėrties straipsnis „[[:$1]]“ jau īr. A nuorėt ana ėštrintė, kū gal
 	'deletedrevision' => 'Ėštrinta sena versėjė $1.',
 	'deletedwhileediting' => 'Diemesė: Šėts poslapis ėštrints po šėta, kumet pradiejot redagoutė!',
 	'descending_abbrev' => 'mažiejontė tvarka',
-];
+);
 
-$messages['sh'] = [
+$messages['sh'] = array(
 	'december' => 'decembar',
 	'december-gen' => 'decembar',
 	'dec' => 'dec',
@@ -14700,9 +14640,9 @@ MySQL je vratio grešku "$3: $4".',
 	'download' => 'učitaj',
 	'disambiguations' => 'Stranice do višeznačnih odrednica',
 	'disambiguationspage' => 'Template:Višeznačna odrednica',
-	'disambiguations-text' => 'Slijedeće stranice su povezane sa \'\'\'stranicom za razvrstavanje\'\'\'.
+	'disambiguations-text' => "Slijedeće stranice su povezane sa '''stranicom za razvrstavanje'''.
 Po pravilu, one se trebaju povezati sa konkretnim člankom.<br />
-Stranica se smatra stranicom za razvrstavanje, ukoliko koristi šablon koji je povezan sa spiskom [[MediaWiki:Disambiguationspage|stranica za razvrstavanje]]',
+Stranica se smatra stranicom za razvrstavanje, ukoliko koristi šablon koji je povezan sa spiskom [[MediaWiki:Disambiguationspage|stranica za razvrstavanje]]",
 	'doubleredirects' => 'Dvostruka preusmjerenja',
 	'doubleredirectstext' => 'Ova stranica prikazuje stranice koje preusmjeravaju na druga preusmjerenja.
 Svaki red sadrži veze na prvo i drugo preusmjerenje, kao i na prvu liniju teksta drugog preusmjerenja, što obično daje "pravi" ciljni članak, na koji bi prvo preusmjerenje i trebalo da pokazuje.
@@ -14747,7 +14687,7 @@ Da li je želite obrisati kako bi ste mogli izvršiti premještanje?',
 	'djvu_no_xml' => 'Za XML-datoteku se ne može pozvati DjVu datoteka',
 	'deletedrevision' => 'Obrisana stara revizija $1',
 	'days' => '{{PLURAL:$1|$1 dan|$1 dana|$1 dana}}',
-	'deletedwhileediting' => '\'\'\'Upozorenje\'\'\': Ova stranica je obrisana prije nego što ste počeli uređivati!',
+	'deletedwhileediting' => "'''Upozorenje''': Ova stranica je obrisana prije nego što ste počeli uređivati!",
 	'descending_abbrev' => 'opad',
 	'duplicate-defaultsort' => '\'\'\'Upozorenje\'\'\': Postavljeni ključ sortiranja "$2" zamjenjuje raniji ključ "$1".',
 	'dberr-header' => 'Ovaj wiki ima problem',
@@ -14757,9 +14697,9 @@ Da li je želite obrisati kako bi ste mogli izvršiti premještanje?',
 	'dberr-usegoogle' => 'U međuvremenu pokušajte pretraživati preko Googlea.',
 	'dberr-outofdate' => 'Uzmite u obzir da njihovi indeksi našeg sadržaja ne moraju uvijek biti ažurni.',
 	'dberr-cachederror' => 'Sljedeći tekst je keširana kopija tražene stranice i možda nije potpuno ažurirana.',
-];
+);
 
-$messages['shi'] = [
+$messages['shi'] = array(
 	'december' => 'Dujanbir',
 	'december-gen' => 'Dujanbir',
 	'dec' => 'Duj',
@@ -14791,9 +14731,9 @@ laffut d yurrin ɣ database "<tt>$3: $4</tt>".',
 	'deleteotherreason' => 'Wayyaḍ/ maf ittuykkas yaḍn',
 	'deletereasonotherlist' => 'Maf ittuykkas yaḍn',
 	'descending_abbrev' => 'aritgiiz',
-];
+);
 
-$messages['si'] = [
+$messages['si'] = array(
 	'december' => 'දෙසැම්බර්',
 	'december-gen' => 'දෙසැම්බර්',
 	'dec' => 'දෙසැ',
@@ -14828,9 +14768,9 @@ $messages['si'] = [
 	'download' => 'බාගතකිරීම',
 	'disambiguations' => 'නිරාකරණ පිටු සඳහා සබැදෙන පිටු',
 	'disambiguationspage' => 'Template:තේරුම් නිරාකරණය',
-	'disambiguations-text' => 'ඉදිරි පිටු \'\'\'වක්‍රෝත්තිහරණ පිටුව\'\'\'කට සබැ‍ඳේ.
+	'disambiguations-text' => "ඉදිරි පිටු '''වක්‍රෝත්තිහරණ පිටුව'''කට සබැ‍ඳේ.
 ඒවා ඒ වෙනුවට අනුරූප මාතෘකාවට සබැඳිය යුතුය.<br />
-යම් පිටුවක් වක්‍රෝත්තිහරණ පිටුවක් ලෙස සලකනුයේ එය [[MediaWiki:Disambiguationspage]] වෙතින් සබැඳුනු සැකිල්ලක් භාවිතා කරන්නේ නම්ය',
+යම් පිටුවක් වක්‍රෝත්තිහරණ පිටුවක් ලෙස සලකනුයේ එය [[MediaWiki:Disambiguationspage]] වෙතින් සබැඳුනු සැකිල්ලක් භාවිතා කරන්නේ නම්ය",
 	'doubleredirects' => 'ද්විත්ව යළි-යොමුකිරීම්',
 	'doubleredirectstext' => 'අනෙකුත් යළි-යොමුවීම් පිටුවලට යළි-යොමුවන පිටුවල ලැයිස්තුවක් මෙම පිටුවේ දැක්වේ.
 එක් එක් පේළියක අඩංගු වන්නේ පළමු හා දෙවන යළි-යොමුවීම් වලට සබැඳි හා ඒ සමග පළමු යළි-යොමුව එල්ල වන්නාවූ, සාමාන්‍යයෙන් "සත්‍ය" ඉලක්ක පිටුව වන, දෙවන යළි-යොමුවේ ඉලක්කයයි.<del>කපා හැරි</del> නිවේශිතයන් පිලිබඳ ගැටළු විසඳා ඇත.',
@@ -14874,7 +14814,7 @@ $messages['si'] = [
 	'djvu_no_xml' => 'XML හෝ  DjVu හෝ ගොනුව අත්කරගැනුමට නොහැකි විය',
 	'deletedrevision' => 'පැරැණි සංශෝධනය $1 මකාදමන ලදි',
 	'days' => '{{PLURAL:$1|$1 දවස|$1 දවස්}}',
-	'deletedwhileediting' => '\'\'\'අවවාදයයි\'\'\': ඔබ විසින් මෙම පිටුව සංස්කරණය ඇරැඹි පසුව එය මකා දමන ලදි!',
+	'deletedwhileediting' => "'''අවවාදයයි''': ඔබ විසින් මෙම පිටුව සංස්කරණය ඇරැඹි පසුව එය මකා දමන ලදි!",
 	'descending_abbrev' => 'අවරෝහණ',
 	'duplicate-defaultsort' => 'අවවාදයයි: "$2" පෙරනිමි සුබෙදුම් යතුර විසින් ‍පූර්ව පෙරනිමි සුබෙදුම් යතුර  වූ  "$1" අතික්‍රමණය කරයි.',
 	'dberr-header' => 'මෙම විකියෙහි ගැටළුවක් පවතියි',
@@ -14884,9 +14824,9 @@ $messages['si'] = [
 	'dberr-usegoogle' => 'මේ අතරතුර ගූගල් ඔස්සේ ගවේෂණය කිරීමට ඔබ විසින් යත්න දැරිය හැක.',
 	'dberr-outofdate' => 'අපගේ අන්තර්ගතයෙහි සූචියන් යල් පැන ගොස් තිබිය හැකි බව සටහන් කර ගන්න.',
 	'dberr-cachederror' => 'මෙය ඉල්ලා ඇති පිටුවෙහි පූර්වාපේක්ෂිත සංචිත පිටුවක් වන අතර එය යාවත්කාලින නොවිය හැකි බව සලකන්න.',
-];
+);
 
-$messages['sk'] = [
+$messages['sk'] = array(
 	'december' => 'december',
 	'december-gen' => 'decembra',
 	'dec' => 'dec',
@@ -14925,9 +14865,9 @@ Neudala vysvetlenie.',
 	'download' => 'stiahnuť',
 	'disambiguations' => 'Stránky odkazujúce na rozlišovacie stránky',
 	'disambiguationspage' => 'Template:Rozlišovacia stránka',
-	'disambiguations-text' => 'Nasledovné stránky odkazujú na \'\'\'rozlišovaciu stránku\'\'\'.
+	'disambiguations-text' => "Nasledovné stránky odkazujú na '''rozlišovaciu stránku'''.
 Mali by však odkazovať priamo na príslušnú tému.<br />
-Stránka sa považuje za rozlišovaciu, keď používa šablónu, na ktorú odkazuje [[MediaWiki:Disambiguationspage]]',
+Stránka sa považuje za rozlišovaciu, keď používa šablónu, na ktorú odkazuje [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dvojité presmerovania',
 	'doubleredirectstext' => 'Táto stránka obsahuje zoznam stránok, ktoré presmerovávajú na iné presmerovacie stránky.
 Každý riadok obsahuje odkaz na prvé a druhé presmerovanie a tiež prvý riadok z textu na ktorý odkazuje druhé presmerovanie, ktoré zvyčajne odkazuje na „skutočný“ cieľ, na ktorý má odkazovať prvé presmerovanie.
@@ -14969,7 +14909,7 @@ Cieľová stránka „[[:$1]]“ už existuje. Chcete ho vymazať a vytvoriť ta
 	'djvu_no_xml' => 'Nebolo možné priniesť XML DjVu súboru',
 	'deletedrevision' => 'Zmazať staré verzie $1',
 	'days' => '{{PLURAL:$1|$1 deň|$1 dni|$1 dní}}',
-	'deletedwhileediting' => '\'\'\'Upozornenie\'\'\': Táto stránka bola zmazaná potom ako ste začali s jej úpravami!',
+	'deletedwhileediting' => "'''Upozornenie''': Táto stránka bola zmazaná potom ako ste začali s jej úpravami!",
 	'descending_abbrev' => 'zostupne',
 	'duplicate-defaultsort' => 'Upozornenie: Štandardný kláves na zoraďovanie „$2“ nahrádza starý kláves „$1“.',
 	'dberr-header' => 'Táto wiki má problém',
@@ -14988,9 +14928,9 @@ Cieľová stránka „[[:$1]]“ už existuje. Chcete ho vymazať a vytvoriť ta
 	'duration-decades' => '$1 {{PLURAL:$1|dekáda|dekády|dekád}}',
 	'duration-centuries' => '$1 {{PLURAL:$1|storočie|storočia|storočí}}',
 	'duration-millennia' => '$1 {{PLURAL:$1|tisícročie|tisícročia|tisícročí}}',
-];
+);
 
-$messages['sl'] = [
+$messages['sl'] = array(
 	'december' => 'december',
 	'december-gen' => 'decembra',
 	'dec' => 'dec.',
@@ -15025,9 +14965,9 @@ Podatkovna zbirka je vrnila napako »$3: $4«.',
 	'download' => 'prenesi',
 	'disambiguations' => 'Strani s povezavami na razločitvene strani',
 	'disambiguationspage' => 'Template:Razločitev',
-	'disambiguations-text' => 'Naslednje strani se povezujejo na \'\'\'razločitvene strani\'\'\'.
+	'disambiguations-text' => "Naslednje strani se povezujejo na '''razločitvene strani'''.
 Namesto tega bi se naj povezovale na primerno temo.<br />
-Stran se obravnava kot razločitvena, če uporablja predloge povezane iz [[MediaWiki:Disambiguationspage]]',
+Stran se obravnava kot razločitvena, če uporablja predloge povezane iz [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Dvojne preusmeritve',
 	'doubleredirectstext' => 'Ta stran navaja strani, ki se preusmerjajo na druge preusmeritvene strani.
 Vsaka vrstica vsebuje povezavo do prve in druge preusmeritve, kakor tudi do cilja druge preusmeritve, ki je po navadi »prava« ciljna stran, na katero naj bi kazala prva preusmeritev.
@@ -15074,9 +15014,9 @@ Ciljna stran »[[:$1]]« že obstaja. Ali jo želite, da bi pripravili prostor z
 	'deletedrevision' => 'Prejšnja redakcija $1 je izbrisana',
 	'days-abbrev' => '$1 d',
 	'days' => '$1 {{PLURAL:$1|dan|dneva|dnevi|dni}}',
-	'deletedwhileediting' => '\'\'\'Opozorilo\'\'\': Med vašim urejanjem je bila stran izbrisana!',
+	'deletedwhileediting' => "'''Opozorilo''': Med vašim urejanjem je bila stran izbrisana!",
 	'descending_abbrev' => 'pad',
-	'duplicate-defaultsort' => '\'\'\'Opozorilo:\'\'\' Privzeti ključ razvrščanja »$2« prepiše prejšnji privzeti ključ razvrščanja »$1«.',
+	'duplicate-defaultsort' => "'''Opozorilo:''' Privzeti ključ razvrščanja »$2« prepiše prejšnji privzeti ključ razvrščanja »$1«.",
 	'dberr-header' => 'Ta wiki ima težavo',
 	'dberr-problems' => 'Oprostite!
 Ta stran se sooča s tehničnimi težavami.',
@@ -15086,9 +15026,9 @@ Ta stran se sooča s tehničnimi težavami.',
 	'dberr-outofdate' => 'Pomnite, da so njegovi imeniki naših vsebin lahko zastareli.',
 	'dberr-cachederror' => 'To je shranjena kopija zahtevane strani, ki morda ni najnovejša.',
 	'discuss' => 'Razpravljaj',
-];
+);
 
-$messages['sli'] = [
+$messages['sli'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezembers',
 	'dec' => 'Dez.',
@@ -15103,9 +15043,9 @@ De letzte Datenbankoabfroage lautete:
 <blockquote><tt>$1</tt></blockquote>
 aus dar Funksjonn „<tt>$2</tt>“.
 De Datenbank meldete dann Fahler „<tt>$3: $4</tt>“.',
-	'dberrortextcl' => 'Is goab an\'n Syntaxfahler ei dar Datenbankobfroage.
+	'dberrortextcl' => "Is goab an'n Syntaxfahler ei dar Datenbankobfroage.
 De letzte Datenbankobfroage lautete: „$1“ aus dar Funksjonn „<tt>$2</tt>“.
-De Datenbank meldete dann Fahler: „<tt>$3: $4</tt>“.',
+De Datenbank meldete dann Fahler: „<tt>$3: $4</tt>“.",
 	'deletedhist' => 'Geläschte Versiona',
 	'difference' => '(Underschied zwischa Versiona)',
 	'diff-multi' => '({{PLURAL:$1|Eine dazwischenliegende Version|$1 dazwischenliegende Versionen}} von {{PLURAL:$2|einem Benutzer|$2 Benutzern}} {{PLURAL:$1|wird|werden}} nicht angezeigt)',
@@ -15156,16 +15096,16 @@ Eim [{{fullurl:{{#special:Log}}|type=delete&page={{FULLPAGENAMEE}}}} Läsch-Logb
 	'descending_abbrev' => 'oab',
 	'duplicate-defaultsort' => 'Ochtiche: Dar Sortierungsschlissel „$2“ ieberschreibt dann vorher verwendeta Schlissel „$1“.',
 	'dberr-header' => 'Dieses Wiki hoot a Problem',
-];
+);
 
-$messages['sm'] = [
+$messages['sm'] = array(
 	'december' => 'Tesema',
 	'december-gen' => 'Tesema',
 	'dec' => 'Tesema',
 	'delete' => 'Tape',
-];
+);
 
-$messages['sma'] = [
+$messages['sma'] = array(
 	'december' => 'Goeve',
 	'december-gen' => 'Goeve',
 	'dec' => 'Goe',
@@ -15188,28 +15128,28 @@ Vuajna $2 ihke galtege bïjre männgan sihkojuvvonh.',
 	'deleteotherreason' => 'Jeatjebh/ehkstre gaavhtan:',
 	'deletereasonotherlist' => 'Jeatjebh gaavhtan',
 	'databasenotlocked' => 'Daatabaase lea ijje tjuevtedh.',
-];
+);
 
-$messages['sn'] = [
+$messages['sn'] = array(
 	'december' => 'Zvita',
 	'december-gen' => 'Zvita',
 	'delete' => 'Bharanura',
 	'disclaimers' => 'Matandanyadzi',
-];
+);
 
-$messages['so'] = [
+$messages['so'] = array(
 	'december' => 'Diseembar',
 	'december-gen' => 'Diseembar',
 	'dec' => 'Dis',
 	'delete' => 'Tirtir',
 	'deletethispage' => 'Tirtir bogaan',
 	'databaseerror' => 'Qalad ka dhacay database;ka',
-	'datedefault' => 'Ma\'jiro dooq',
+	'datedefault' => "Ma'jiro dooq",
 	'deadendpages' => 'Boggaga aanan la daba joogin',
 	'deadendpagestext' => 'Boggogaan linki lamalaha boggaga kale ee wikiga .',
-];
+);
 
-$messages['sq'] = [
+$messages['sq'] = array(
 	'december' => 'dhjetor',
 	'december-gen' => 'dhjetor',
 	'dec' => 'Dhje',
@@ -15246,13 +15186,13 @@ MySQL kthehu gabimin "$3: $4".',
 	'download' => 'shkarkim',
 	'disambiguations' => 'Faqet që lidhen te faqet kthjelluese',
 	'disambiguationspage' => 'Template:Kthjellim',
-	'disambiguations-text' => 'Faqet e mëposhtme lidhen tek një \'\'\'faqe kthjelluese\'\'\'.
+	'disambiguations-text' => "Faqet e mëposhtme lidhen tek një '''faqe kthjelluese'''.
 Ato duhet të kenë lidhje të drejtpërdrejtë tek artikujt e nevojshëm.<br />
-Një faqe trajtohet si faqe kthjelluese nëse përdor stampat e lidhura nga [[MediaWiki:Disambiguationspage]]',
+Një faqe trajtohet si faqe kthjelluese nëse përdor stampat e lidhura nga [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Përcjellime dopjo',
-	'doubleredirectstext' => 'Kjo faqe liston faqet përcjellëse tek faqet e tjera përcjellëse.
-Secili rresht përmban lidhjet tek përcjellimi i parë dhe përcjellimi i dytë, gjithashtu synimin e përcjellimit të dytë, që është zakonisht faqja synuese \'\'\'e vërtetë\'\'\', që faqja w parë duhej të ishte përcjellëse e kësaj faqeje.
-<del>Kalimet nga</del> hyrjet janë zgjidhur.',
+	'doubleredirectstext' => "Kjo faqe liston faqet përcjellëse tek faqet e tjera përcjellëse.
+Secili rresht përmban lidhjet tek përcjellimi i parë dhe përcjellimi i dytë, gjithashtu synimin e përcjellimit të dytë, që është zakonisht faqja synuese '''e vërtetë''', që faqja w parë duhej të ishte përcjellëse e kësaj faqeje.
+<del>Kalimet nga</del> hyrjet janë zgjidhur.",
 	'double-redirect-fixed-move' => '[[$1]] u zhvendos, tani është gjendet në [[$2]]',
 	'double-redirect-fixed-maintenance' => 'Duke zgjidhur përcjellimin e dyfishtë nga [[$1]] tek [[$2]].',
 	'double-redirect-fixer' => 'Rregullues zhvendosjesh',
@@ -15303,106 +15243,9 @@ Kjo faqe është duke përjetuar vështirësi teknike.',
 	'dberr-usegoogle' => 'Ju mund të provoni të kërkoni përmes Googles në ndërkohë.',
 	'dberr-outofdate' => 'Vini re se indekset e tyre të përmbajtjes tona mund të jetë e vjetëruar.',
 	'dberr-cachederror' => 'Kjo është një kopje e faqes së kërkuar dhe mund të jetë e vjetëruar.',
-];
+);
 
-$messages['sr'] = [
-	'december' => 'dhjetor',
-	'december-gen' => 'dhjetor',
-	'dec' => 'Dhje',
-	'delete' => 'Grise',
-	'deletethispage' => 'Grise këtë faqe',
-	'disclaimers' => 'Shfajësimet',
-	'disclaimerpage' => 'Project:Shfajësimet e përgjithshme',
-	'databaseerror' => 'Gabim në databazë',
-	'dberrortext' => 'Ka ndodhur një gabim me pyetjen e regjistrit.
-Kjo mund të ndodhi n.q.s. pyetja nuk është e vlehshme,
-ose mund të jetë një yçkël e softuerit.
-Pyetja e fundit që i keni bërë regjistrit ishte:
-<blockquote><tt>$1</tt></blockquote>
-nga funksioni "<tt>$2</tt>".
-MySQL kthehu gabimin "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'Ka ndodhur një gabim me sintaksën query në databazë.
-Query e fundit që i keni bërë regjistrit ishte:
-"$1"
-nga funksioni "$2".
-MySQL kthehu gabimin "$3: $4".',
-	'directorycreateerror' => 'I pamundur krijimi i direktorisë "$1".',
-	'deletedhist' => 'Historiku i grisjeve',
-	'difference' => '(Ndryshime midis versioneve)',
-	'difference-multipage' => '(Ndryshimi midis faqeve)',
-	'diff-multi' => '({{PLURAL:$1|Një version i ndërmjetshëm|$1 versione të ndërmjetshme}} nga {{PLURAL:$2|një përdorues|$2 përdorues}} i/të pashfaqur)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Një versioni i ndërmjetshëm|$1 versione të ndërmjetshme}} nga më shumë se $2 {{PLURAL:$2|përdorues|përdorues}} i/të pashfaqur)',
-	'datedefault' => 'Parazgjedhje',
-	'defaultns' => 'Kërko automatikisht vetëm në këto hapësira:',
-	'default' => 'parazgjedhje',
-	'diff' => 'ndrysh',
-	'destfilename' => 'Emri mbas dhënies:',
-	'duplicatesoffile' => 'Në vijim {{PLURAL:$1|skeda është identike|$1 janë idnetike}} me këtë skedë
-([[Special:FileDuplicateSearch/$2|më shumë detaje]]):',
-	'download' => 'shkarkim',
-	'disambiguations' => 'Faqet që lidhen te faqet kthjelluese',
-	'disambiguationspage' => 'Template:Kthjellim',
-	'disambiguations-text' => 'Faqet e mëposhtme lidhen tek një \'\'\'faqe kthjelluese\'\'\'.
-Ato duhet të kenë lidhje të drejtpërdrejtë tek artikujt e nevojshëm.<br />
-Një faqe trajtohet si faqe kthjelluese nëse përdor stampat e lidhura nga [[MediaWiki:Disambiguationspage]]',
-	'doubleredirects' => 'Përcjellime dopjo',
-	'doubleredirectstext' => 'Kjo faqe liston faqet përcjellëse tek faqet e tjera përcjellëse.
-Secili rresht përmban lidhjet tek përcjellimi i parë dhe përcjellimi i dytë, gjithashtu synimin e përcjellimit të dytë, që është zakonisht faqja synuese \'\'\'e vërtetë\'\'\', që faqja w parë duhej të ishte përcjellëse e kësaj faqeje.
-<del>Kalimet nga</del> hyrjet janë zgjidhur.',
-	'double-redirect-fixed-move' => '[[$1]] u zhvendos, tani është gjendet në [[$2]]',
-	'double-redirect-fixed-maintenance' => 'Duke zgjidhur përcjellimin e dyfishtë nga [[$1]] tek [[$2]].',
-	'double-redirect-fixer' => 'Rregullues zhvendosjesh',
-	'deadendpages' => 'Artikuj pa rrugëdalje',
-	'deadendpagestext' => 'Artikujt në vijim nuk kanë asnjë lidhje me artikuj e tjerë në këtë wiki.',
-	'deletedcontributions' => 'Kontribute të grisura',
-	'deletedcontributions-title' => 'Kontribute të grisura',
-	'defemailsubject' => '{{SITENAME}} posta elektronike nga përdoruesi "$1"',
-	'deletepage' => 'Grise faqen',
-	'delete-confirm' => 'Grise "$1"',
-	'delete-legend' => 'Grise',
-	'deletedtext' => '"$1" është grisur nga regjistri. Shikoni $2 për një pasqyrë të grisjeve së fundmi.',
-	'dellogpage' => 'Regjistri i grisjeve',
-	'dellogpagetext' => 'Më poshtë është një listë e grisjeve më të fundit.',
-	'deletionlog' => 'regjistrin e grisjeve',
-	'deletecomment' => 'Arsyeja:',
-	'deleteotherreason' => 'Arsye tjetër:',
-	'deletereasonotherlist' => 'Arsyeja tjetër',
-	'deletereason-dropdown' => '*Arsye për grisje:
-** Pa të drejtë autori
-** Kërkesë nga autori
-** Vandalizëm',
-	'delete-edit-reasonlist' => 'Ndrysho arsyet e grisjes',
-	'delete-toobig' => 'Kjo faqe ka një historik të madh redaktimesh, më shumë se $1 {{PLURAL:$1|version|versione}}.
-Grisja e faqeve të tilla ka qenë kufizuar për të parandaluar përçarjen aksidentale të {{SITENAME}}.',
-	'delete-warning-toobig' => 'Kjo faqe ka një historik të madh redaktimesh, më shumë se $1 {{PLURAL:$1|version|versione}}.
-Grisja e saj mund të ndërpresë operacionet e bazës së të dhënave të {{SITENAME}};
-vazhdoni me kujdes.',
-	'databasenotlocked' => 'Regjistri nuk është bllokuar.',
-	'delete_and_move' => 'Grise dhe zhvendose',
-	'delete_and_move_text' => '==Nevojitet grisje==
-
-Faqja "[[:$1]]" ekziston, dëshironi ta grisni për të mundësuar zhvendosjen?',
-	'delete_and_move_confirm' => 'Po, grise faqen',
-	'delete_and_move_reason' => 'U gris për të liruar vendin për përcjellim të "[[$1]]"',
-	'djvu_page_error' => 'Faqja DjVu jashtë renditjes',
-	'djvu_no_xml' => 'Nuk mund të gjendet XML për skedën DjVu',
-	'deletedrevision' => 'Gris versionin e vjetër $1',
-	'days' => '{{PLURAL:$1|$1 ditë|$1 ditë}}',
-	'deletedwhileediting' => 'Kujdes! Kjo faqe është grisur pasi keni filluar redaktimin!',
-	'descending_abbrev' => 'zbritje',
-	'duplicate-defaultsort' => '\'\'\'Kujdes:\'\'\' Renditja kryesore e çelësit "$2" refuzon renditjen e mëparshme kryesore të çelësit "$1".',
-	'dberr-header' => 'Kjo wiki ka një problem',
-	'dberr-problems' => 'Na vjen keq!
-Kjo faqe është duke përjetuar vështirësi teknike.',
-	'dberr-again' => 'Pritni disa minuta dhe provoni të ringarkoni faqen.',
-	'dberr-info' => '(Nuk mund të lidhet me serverin bazë e të dhënave : $1)',
-	'dberr-usegoogle' => 'Ju mund të provoni të kërkoni përmes Googles në ndërkohë.',
-	'dberr-outofdate' => 'Vini re se indekset e tyre të përmbajtjes tona mund të jetë e vjetëruar.',
-	'dberr-cachederror' => 'Kjo është një kopje e faqes së kërkuar dhe mund të jetë e vjetëruar.',
-	'discuss' => 'Diskutujte',
-];
-
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'december' => 'децембар',
 	'december-gen' => 'децембра',
 	'dec' => 'дец',
@@ -15437,9 +15280,9 @@ $messages['sr-ec'] = [
 	'download' => 'преузми',
 	'disambiguations' => 'Странице до вишезначних одредница',
 	'disambiguationspage' => 'Template:Вишезначна одредница',
-	'disambiguations-text' => 'Следеће странице су повезане с \'\'\'вишезначном одредницом\'\'\'.
+	'disambiguations-text' => "Следеће странице су повезане с '''вишезначном одредницом'''.
 Оне би требало бити упућене ка одговарајућем чланку.
-Страница се сматра вишезначном одредницом ако користи шаблон који је повезан са списком [[MediaWiki:Disambiguationspage]].',
+Страница се сматра вишезначном одредницом ако користи шаблон који је повезан са списком [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Двострука преусмерења',
 	'doubleredirectstext' => 'Ова страница приказује странице које преусмеравају на друга преусмерења.
 Сваки ред садржи везе према првом и другом преусмерењу, као и одредишну страницу другог преусмерења која је обично „прави“ чланак на кога прво преусмерење треба да упућује.
@@ -15456,8 +15299,8 @@ $messages['sr-ec'] = [
 	'deletepage' => 'Обриши страницу',
 	'delete-confirm' => 'Брисање странице „$1“',
 	'delete-legend' => 'Обриши',
-	'deletedtext' => 'Страница „$1“ је обрисана.
-Погледајте \'\'$2\'\' за више детаља.',
+	'deletedtext' => "Страница „$1“ је обрисана.
+Погледајте ''$2'' за више детаља.",
 	'dellogpage' => 'Дневник брисања',
 	'dellogpagetext' => 'Испод је списак последњих брисања.',
 	'deletionlog' => 'историја брисања',
@@ -15486,9 +15329,9 @@ $messages['sr-ec'] = [
 	'deletedrevision' => 'Обрисана стара измена $1.',
 	'days-abbrev' => '$1 д',
 	'days' => '{{PLURAL:$1|$1 дан|$1 дана|$1 дана}}',
-	'deletedwhileediting' => '\'\'\'Упозорење\'\'\': ова страница је обрисана након што сте почели с уређивањем!',
+	'deletedwhileediting' => "'''Упозорење''': ова страница је обрисана након што сте почели с уређивањем!",
 	'descending_abbrev' => 'опад.',
-	'duplicate-defaultsort' => '\'\'\'Упозорење:\'\'\' подразумевани кључ сврставања „$2“ мења некадашњи кључ „$1“.',
+	'duplicate-defaultsort' => "'''Упозорење:''' подразумевани кључ сврставања „$2“ мења некадашњи кључ „$1“.",
 	'dberr-header' => 'Овај вики не ради како треба',
 	'dberr-problems' => 'Дошло је до техничких проблема.',
 	'dberr-again' => 'Сачекајте неколико минута и поново учитајте страницу.',
@@ -15496,9 +15339,9 @@ $messages['sr-ec'] = [
 	'dberr-usegoogle' => 'У међувремену, покушајте да претражите помоћу Гугла.',
 	'dberr-outofdate' => 'Имајте на уму да њихови примерци нашег садржаја могу бити застарели.',
 	'dberr-cachederror' => 'Ово је привремено меморисан примерак стране који можда није ажуран.',
-];
+);
 
-$messages['sr-el'] = [
+$messages['sr-el'] = array(
 	'december' => 'decembar',
 	'december-gen' => 'decembra',
 	'dec' => 'dec',
@@ -15531,9 +15374,9 @@ Baza podataka je vratila grešku "$3: $4"',
 	'download' => 'Preuzmi',
 	'disambiguations' => 'Stranice za višeznačne odrednice',
 	'disambiguationspage' => '{{ns:template}}:Višeznačna odrednica',
-	'disambiguations-text' => 'Sledeće stranice imaju veze ka \'\'\'višeznačnim odrednicama\'\'\'. Potrebno je da upućuju na odgovarajući članak.
+	'disambiguations-text' => "Sledeće stranice imaju veze ka '''višeznačnim odrednicama'''. Potrebno je da upućuju na odgovarajući članak.
 
-Stranica se smatra višeznačnom odrednicom ako koristi šablon koji je upućen sa stranice [[MediaWiki:Disambiguationspage]].',
+Stranica se smatra višeznačnom odrednicom ako koristi šablon koji je upućen sa stranice [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Dvostruka preusmerenja',
 	'doubleredirectstext' => 'Ova strana pokazuje spisak strana koje preusmeravaju na druge strane preusmerenja.
 Svaki red sadrži veze prema prvom i drugom redirektu, kao i ciljanu stranu drugog redirekta, koja je obično „pravi“ članak, na koga prvo preusmerenje treba da pokazuje.
@@ -15577,9 +15420,9 @@ Ciljani članak "[[:$1]]" već postoji. Da li želite da ga obrišete da biste n
 	'djvu_page_error' => 'DjVu strana je van opsega.',
 	'djvu_no_xml' => 'Ne mogu preuzeti XML za DjVu fajl.',
 	'deletedrevision' => 'Obrisana stara revizija $1',
-	'deletedwhileediting' => '\'\'\'Upozorenje\'\'\': Ova stranica je obrisana nakon što ste počeli uređivanje!',
+	'deletedwhileediting' => "'''Upozorenje''': Ova stranica je obrisana nakon što ste počeli uređivanje!",
 	'descending_abbrev' => 'opad',
-	'duplicate-defaultsort' => '\'\'\'Upozorenje:\'\'\' Podrazumevani ključ sortiranja „$2“ prepisuje ranije podrazumevani ključ sortiranja „$1“.',
+	'duplicate-defaultsort' => "'''Upozorenje:''' Podrazumevani ključ sortiranja „$2“ prepisuje ranije podrazumevani ključ sortiranja „$1“.",
 	'dberr-header' => 'Ovaj viki ima problem',
 	'dberr-problems' => 'Žao nam je! Ovaj sajt ima tehničkih poteškoća.',
 	'dberr-again' => 'Sačekajte nekoliko minuta pre nego što ponovo učitate stranicu.',
@@ -15587,9 +15430,9 @@ Ciljani članak "[[:$1]]" već postoji. Da li želite da ga obrišete da biste n
 	'dberr-usegoogle' => 'U međuvremenu, pokušajte da pretražite pomoću Gugla.',
 	'dberr-outofdate' => 'Primetite da Guglov keš našeg sadržaja može biti neažuran.',
 	'dberr-cachederror' => 'Ovo je keširana kopija zahtevane strane, i možda nije ažurna.',
-];
+);
 
-$messages['srn'] = [
+$messages['srn'] = array(
 	'december' => 'fostwarfu mun',
 	'december-gen' => 'fostwarfu mun',
 	'dec' => 'twa',
@@ -15621,23 +15464,23 @@ $messages['srn'] = [
 	'deleteotherreason' => 'Trawan/okwan yesikrari:',
 	'deletereasonotherlist' => 'Trawan yesikrari',
 	'descending_abbrev' => 'afo.',
-];
+);
 
-$messages['ss'] = [
+$messages['ss'] = array(
 	'december' => 'iNgongoni',
 	'december-gen' => 'iNgongoni',
 	'dec' => 'iNgo',
 	'delete' => 'Sula',
 	'deletethispage' => 'Sula lelikhasi',
-];
+);
 
-$messages['st'] = [
+$messages['st'] = array(
 	'december' => 'Tshitwe',
 	'dec' => 'Tshitwe',
 	'download' => 'Jarolla',
-];
+);
 
-$messages['stq'] = [
+$messages['stq'] = array(
 	'december' => 'Dezember',
 	'december-gen' => 'Dezember',
 	'dec' => 'Dez',
@@ -15670,9 +15513,9 @@ Die Doatenboank mäldede dän Failer: „<tt>$3: $4</tt>“.',
 	'download' => 'Deelleede',
 	'disambiguations' => 'Begriepskläärengssieden',
 	'disambiguationspage' => 'Template:Begriepskläärenge',
-	'disambiguations-text' => 'Do foulgjende Sieden ferlinkje ap ne Siede tou ju \'\'\'Begriepskläärenge\'\'\'.
+	'disambiguations-text' => "Do foulgjende Sieden ferlinkje ap ne Siede tou ju '''Begriepskläärenge'''.
 Jie skuulen insteede deerfon ap ju eegentelk meende Siede ferlinkje.<br />
-Ne Siede wäd as Begriepskläärengssiede behonneld, wan [[MediaWiki:Disambiguationspage]] ap ju ferlinket.',
+Ne Siede wäd as Begriepskläärengssiede behonneld, wan [[MediaWiki:Disambiguationspage]] ap ju ferlinket.",
 	'doubleredirects' => 'Dubbelde Fäärelaitengen',
 	'doubleredirectstext' => 'Disse Lieste änthoalt Fääreleedengen, do der ap wiedere Fääreleedengen ferlinkje.
 Älke Riege änthoalt Links tou ju eerste un twäide Fääreleedenge as uk dät Siel fon ju twäide Fääreleedenge, wät foar gewöönelk ju wonskede Sielsiede is, ap ju al ju eerste Fääreleedenge wiese skuul.
@@ -15725,9 +15568,9 @@ wieruum ju Siede läsked wuude. Wan du ju Siede spiekerst, wäd ju näi anlaid.'
 	'dberr-usegoogle' => 'Du kuust in ju Twisketied mäd Google säike.',
 	'dberr-outofdate' => 'Beoachtje, dät die Säikindex fon uus Inhoolde ferallerd weese kon.',
 	'dberr-cachederror' => 'Dät Foulgjende is ne Kopie fon dän Cache fon ju anfoarderde Siede un kon ferallerd weese.',
-];
+);
 
-$messages['su'] = [
+$messages['su'] = array(
 	'december' => 'Désémber',
 	'december-gen' => 'Désémber',
 	'dec' => 'Dés',
@@ -15761,9 +15604,9 @@ ti antara fungsi "$2".
 	'download' => 'pulut',
 	'disambiguations' => 'Kaca disambiguasi',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'Kaca-kaca ieu ngabogaan tumbu ka hiji \'\'kaca disambiguasi\'\'.
+	'disambiguations-text' => "Kaca-kaca ieu ngabogaan tumbu ka hiji ''kaca disambiguasi''.
 Kaca eta sakuduna numbu ka topik-topik anu luyu.<br />
-Sahiji kaca dianggap minangka kaca disambiguasi lamun kaca kasebut ngagunakeun citakan anu nyambung ka [[MediaWiki:Disambiguationspage]].',
+Sahiji kaca dianggap minangka kaca disambiguasi lamun kaca kasebut ngagunakeun citakan anu nyambung ka [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Alihan ganda',
 	'doubleredirectstext' => 'Ieu kaca ngabéréndélkeun kaca-kaca alihan ka kaca alihan lianna. Unggal baris ngandung tutumbu ka alihan kahiji jeung kadua, ogé tujul alihan kadua anu biasana tujul kaca anu "bener", anu sakuduna dituju ku alihan kahiji. Ëntri nu <del>dicorét</del> geus diropéa.',
 	'double-redirect-fixed-move' => '[[$1]] geus pindah, dialihkeun ka [[$2]].',
@@ -15802,7 +15645,7 @@ Artikel nu dituju "[[:$1]]" geus aya. Badé dihapus baé sangkan bisa mindahkeun
 	'djvu_page_error' => 'Kaca DjVu teu kawadahan',
 	'djvu_no_xml' => 'XML keur koropak DjVu teu bisa dicokot',
 	'deletedrevision' => 'Révisi heubeul nu dihapus $1',
-	'deletedwhileediting' => '\'\'\'Awas\'\'\': ieu kaca geus dihapus nalika anjeun mitembeyan ngédit!',
+	'deletedwhileediting' => "'''Awas''': ieu kaca geus dihapus nalika anjeun mitembeyan ngédit!",
 	'descending_abbrev' => 'turun',
 	'duplicate-defaultsort' => '\'\'\'Awas\'\'\': Konci runtuyan asal "$2" ngalindih konci runtuyan asal "$1" anu saméméhna.',
 	'dberr-header' => 'Aya masalah dina ieu wiki',
@@ -15810,9 +15653,9 @@ Artikel nu dituju "[[:$1]]" geus aya. Badé dihapus baé sangkan bisa mindahkeun
 	'dberr-again' => 'Cobi antos sababaraha menit, lajeng dimuat ulang.',
 	'dberr-info' => '(Teu bisa nyambung jeung server pangkalan data: $1)',
 	'dberr-usegoogle' => 'Kanggo samentawis, tiasa dicobi milari di Google.',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'december' => 'december',
 	'december-gen' => 'decembers',
 	'dec' => 'dec',
@@ -15847,9 +15690,9 @@ Databasen svarade med felmeddelandet "$3: $4"',
 	'download' => 'ladda ner',
 	'disambiguations' => 'Sidor som länkar till förgreningssidor',
 	'disambiguationspage' => 'Template:Förgrening',
-	'disambiguations-text' => 'Följande sidor länkar till \'\'förgreningssidor\'\'.
+	'disambiguations-text' => "Följande sidor länkar till ''förgreningssidor''.
 Länkarna bör troligtvis ändras så att de länkar till en artikel istället.<br />
-En sida anses vara en förgreningssida om den inkluderar en mall som länkas till från [[MediaWiki:Disambiguationspage]].',
+En sida anses vara en förgreningssida om den inkluderar en mall som länkas till från [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Dubbla omdirigeringar',
 	'doubleredirectstext' => 'Det här är en lista över sidor som dirigerar om till andra omdirigeringssidor. Varje rad innehåller länkar till den första och andra omdirigeringsidan, samt till målet för den andra omdirigeringen. Målet för den andra omdirigeringen är ofta den "riktiga" sidan, som den första omdirigeringen egentligen ska leda till.
 <del>Stryk över</del> poster som har åtgärdats.',
@@ -15864,16 +15707,16 @@ En sida anses vara en förgreningssida om den inkluderar en mall som länkas til
 	'deletepage' => 'Ta bort sida',
 	'delete-confirm' => 'Radera "$1"',
 	'delete-legend' => 'Radera',
-	'deletedtext' => '\'\'\'"$1" har tagits bort!\'\'\'
+	'deletedtext' => "'''\"\$1\" har tagits bort!'''
 
-* Observera kan vissa sidor länkar fortfarande [[Special:WhatLinksHere/$1|till den här sidan]].
-* Du kan fortsätta att visa den borttagna sidan [[Special:Undelete/$1|här]].
-* Se $2 för en information om nyligen borttagna.
+* Observera kan vissa sidor länkar fortfarande [[Special:WhatLinksHere/\$1|till den här sidan]].
+* Du kan fortsätta att visa den borttagna sidan [[Special:Undelete/\$1|här]].
+* Se \$2 för en information om nyligen borttagna.
 
 {{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|Användare||{{#ifexist:{{TALKPAGENAME}}|
 <br />
-Sidan har även en \'\'\'[[{{TALKPAGENAME}}|diskussionsida]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Du kanske vill ta bort det också.
-|}}}}}}',
+Sidan har även en '''[[{{TALKPAGENAME}}|diskussionsida]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Du kanske vill ta bort det också.
+|}}}}}}",
 	'dellogpage' => 'Raderingslogg',
 	'dellogpagetext' => 'Nedan är en lista över de senaste raderingar. Om du inte håller med en radering eller tror att en sida var giltigt innehåll, kontakta [[Project:Administrators|administratören]] som tog bort det.',
 	'deletionlog' => 'raderingsloggen',
@@ -15910,9 +15753,9 @@ Den titel du vill flytta sidan till, "[[:$1]]", finns redan. Vill du radera den 
 	'dberr-outofdate' => 'Observera att deras index av vårt innehåll kan vara föråldrat.',
 	'dberr-cachederror' => 'Följande är en cachad kopia av den efterfrågade sidan, och kan vara föråldrad.',
 	'discuss' => 'Diskutera',
-];
+);
 
-$messages['sw'] = [
+$messages['sw'] = array(
 	'december' => 'Desemba',
 	'december-gen' => 'Desemba',
 	'dec' => 'Des',
@@ -15946,9 +15789,9 @@ Kihifadhidata kikarejesha tatizo "<tt>$3: $4</tt>".',
 	'download' => 'pakua',
 	'disambiguations' => 'Kurasa za kuainisha maneno',
 	'disambiguationspage' => 'Template:Maana',
-	'disambiguations-text' => 'Kurasa zinazofuata zina viungo vinavyoelekea \'\'\'kurasa ya kutofautishana maana\'\'\'.
+	'disambiguations-text' => "Kurasa zinazofuata zina viungo vinavyoelekea '''kurasa ya kutofautishana maana'''.
 Ni afadhali kiungo kiende makala inayostahili moja kwa moja.<br />
-Kurasa za kutofautishana maana ni zile zinazotumia kigezo kinachoorodheshwa katika ukurasa wa [[MediaWiki:Disambiguationspage]].',
+Kurasa za kutofautishana maana ni zile zinazotumia kigezo kinachoorodheshwa katika ukurasa wa [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Maelekezo mawilimawili',
 	'doubleredirectstext' => 'Ukurasa huu unaorodhesha kurasa zinazoelekeza kurasa zingine za kuelekeza.
 Katika kila mstari kuna viungo vinavyokwenda katika kurasa za kuelekeza zote mbili, pamoja na ukurasa wa mwishilio mwa elekezo la pili. Ukurasa huu wa mwishilio huwa ni ukurasa unaostahili kuelekezwa kutoka kwa ukurasa wa kuelekeza wa kwanza. Vitu <del>vilivyokatwa kwa mstari</del> vimeshatatuliwa.',
@@ -15986,7 +15829,7 @@ endelea kwa uangalifu.',
 	'delete_and_move_confirm' => 'Ndiyo, ukurasa ufutwe',
 	'deletedrevision' => 'Pitio la awali lililofutwa $1',
 	'days' => 'siku {{PLURAL:$1|$1}}',
-	'deletedwhileediting' => '\'\'\'Ilani\'\'\': Ukurasa huu ulifutwa ulipokwisha kuanza huuhariri!',
+	'deletedwhileediting' => "'''Ilani''': Ukurasa huu ulifutwa ulipokwisha kuanza huuhariri!",
 	'descending_abbrev' => 'shuk',
 	'duplicate-defaultsort' => '!\'\'\'Ilani:\'\'\' Neno msingi la kupanga "$2" linafunika neno msingi la kupanga la awali "$1".',
 	'dberr-header' => 'Wiki imekuta tatizo',
@@ -15997,9 +15840,9 @@ Tovuti hii inapata matatatizo wakati huu.',
 	'dberr-usegoogle' => 'Unaposubiri unaweza kujaribu kutafuta kwa kutumia Google.',
 	'dberr-outofdate' => 'Elewa kwamba fahirisi yao ya yaliyomo katika tovuti hii inaweza kuwa imepitwa na wakati.',
 	'dberr-cachederror' => 'Ifuatayo ni nakala ya kache ya ukurasa uliyoombwa, na huenda isiwe ya sasa.',
-];
+);
 
-$messages['szl'] = [
+$messages['szl'] = array(
 	'december' => 'grudźyń',
 	'december-gen' => 'grudńa',
 	'dec' => 'gru',
@@ -16031,8 +15874,8 @@ MySQL zguośiu feler "$3: $4"',
 	'download' => 'pobier',
 	'disambiguations' => 'Zajty ujydnoznačńajůnce',
 	'disambiguationspage' => '{{ns:template}}:disambig',
-	'disambiguations-text' => 'Artikle půńižej uodwouůjům śe do \'\'\'zajtůw ujydnoznačńajůncych\'\'\', a powinny uodwouywać śe bezpostředńo do hasua kere je zwjůnzane ze treśćům artikla.<br />
-Zajta uznawano je za ujydnoznačńajůnco kej zawiyro šablůn uokreślůny we [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Artikle půńižej uodwouůjům śe do '''zajtůw ujydnoznačńajůncych''', a powinny uodwouywać śe bezpostředńo do hasua kere je zwjůnzane ze treśćům artikla.<br />
+Zajta uznawano je za ujydnoznačńajůnco kej zawiyro šablůn uokreślůny we [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Podwůjne překierowańa',
 	'doubleredirectstext' => 'Na tyi liśće mogům znojdować śe překerowańo pozorne. Uoznača to, aže půńižej pjyrwšej lińii artikla, zawjerajůncyj "#REDIRECT ...", može znojdować śe dodotkowy tekst. Koždy wjerš listy zawjero uodwouańo do pjyrwšygo i drůgygo překerowańo a pjyrwšom lińjům tekstu drůgygo překerowańo. Uůmožliwjo to na ogůu uodnaleźyńy wuaśćiwygo artikla, do kerygo powinno śe překerowywać.',
 	'double-redirect-fixed-move' => 'zajta [[$1]] zostoła zastůmpjůno bez przekerowańy, skiż jeij przekludzyńo ku [[$2]]',
@@ -16071,12 +15914,12 @@ Zajta docelowo „[[:$1]]” juž sam jest.
 	'djvu_page_error' => 'Zajta DjVu poza zakresym',
 	'djvu_no_xml' => 'Ńy idźe pobrać danych we formaće XML do plika DjVu',
 	'deletedrevision' => 'Wyćepano popředńy wersyje $1',
-	'deletedwhileediting' => '\'\'\'Pozůr\'\'\': Ta zajta zostoła wyćepano po tym, jak żeś rozpoczůł jei sprowjańy!',
+	'deletedwhileediting' => "'''Pozůr''': Ta zajta zostoła wyćepano po tym, jak żeś rozpoczůł jei sprowjańy!",
 	'descending_abbrev' => 'mal.',
 	'duplicate-defaultsort' => 'Pozůr: Zmjarkowanym kluczym sortowańo bydźe "$2" a zastůmpi uůn zawczasu używany klucz "$1".',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'december' => 'டிசம்பர்',
 	'december-gen' => 'டிசம்பர்',
 	'dec' => 'டிச',
@@ -16108,7 +15951,7 @@ MySQL returned error "$3: $4".',
 	'download' => 'தரவிறக்கு',
 	'disambiguations' => 'வழிநெறிப்படுத்தல் பக்கங்களை இணைக்கும் பக்கங்கள்',
 	'disambiguationspage' => 'Template:பக்கவழி நெறிப்படுத்தல்',
-	'disambiguations-text' => 'பின்வரும் பக்கங்கள் \'\'\'பக்கவழி நெறிப்படுத்தல் பக்கத்துக்கு\'\'\' இணைக்கப்பட்டுள்ளன. மாறாக இவை பொருத்தமன தலைப்பிற்கு இணைக்கப்பட வேண்டும். <br />[[MediaWiki:Disambiguationspage|பக்கவழி நெறிப்படுத்தல் பக்கங்கத்தில்]] உள்ள வார்ப்புரு இணைக்கப்பட்ட பக்கங்கள்  பக்கவழி நெறிப்படுத்தல் பக்கங்கள் என் கருதப்படும்.',
+	'disambiguations-text' => "பின்வரும் பக்கங்கள் '''பக்கவழி நெறிப்படுத்தல் பக்கத்துக்கு''' இணைக்கப்பட்டுள்ளன. மாறாக இவை பொருத்தமன தலைப்பிற்கு இணைக்கப்பட வேண்டும். <br />[[MediaWiki:Disambiguationspage|பக்கவழி நெறிப்படுத்தல் பக்கங்கத்தில்]] உள்ள வார்ப்புரு இணைக்கப்பட்ட பக்கங்கள்  பக்கவழி நெறிப்படுத்தல் பக்கங்கள் என் கருதப்படும்.",
 	'doubleredirects' => 'இரட்டை வழிமாற்றுகள்',
 	'doubleredirectstext' => 'இந்தப் பட்டியல் போலியான நேர்மதிப்புக்களைக் கொண்டிருக்கக்கூடும். இது வழக்கமாக, இணைப்புடன் கூடிய மேலதிக உரை முதலாவது #வழிமாற்றுக்குக் கீழ் இருப்பதைக் குறிக்கும்.ஒவ்வொரு வரியும், முதலாம் இரண்டாம் வழிமாற்றுகளுக்கு இணைப்புகளைக் கொண்டிருப்பதுடன், இரண்டாவது வழிமாற்று உரையின் முதல் வரிக்கும் இணைப்பைக் கொண்டிருக்கும், இது வழக்கமாக முதலாவது வழிமாற்று குறித்துக் காட்ட வேண்டிய "உண்மையான" இலக்குக் கட்டுரையைக் கொடுக்கும்.',
 	'double-redirect-fixed-move' => '[[$1]] நகர்த்தப்பட்டுவிட்டது. இப்பொழுது [[$2]] உக்கு வழிமாற்று தருகின்றது.',
@@ -16144,14 +15987,14 @@ MySQL returned error "$3: $4".',
 
 நகர்த்தப்படவேண்டியப் பக்கம் "[[:$1]]" ஏற்கனவே உள்ளது. நகர்த்தலுக்கு வழி ஏற்படுத்த அப்பக்கத்தை நீக்க வேண்டுமா?',
 	'delete_and_move_confirm' => 'ஆம், இப்பக்கத்தை நீக்குக',
-	'delete_and_move_reason' => '\'\'[[$1]]\'\' லிருந்து நகர்த்துவதற்கு இடமளிப்பதற்காக நீக்கப்பட்டது',
+	'delete_and_move_reason' => "''[[$1]]'' லிருந்து நகர்த்துவதற்கு இடமளிப்பதற்காக நீக்கப்பட்டது",
 	'djvu_page_error' => 'DjVu பக்கம் வரம்பிற்கு வெளியே உள்ளது',
 	'djvu_no_xml' => 'DjVu கோப்பிற்க்காக XML ஐ எடுக்க இயலவில்லை',
 	'deletedrevision' => 'பழைய திருத்தம் $1 நீக்கப்பட்டது',
 	'days' => '{{PLURAL:$1|$1நாள்|$1 நாட்கள்}}',
-	'deletedwhileediting' => '\'\'\'எச்சரிக்கை\'\'\': நீங்கள் இப்பக்கத்தை தொகுக்க தொடங்கியப் பின் அது நீக்கப்பட்டுள்ளது!',
+	'deletedwhileediting' => "'''எச்சரிக்கை''': நீங்கள் இப்பக்கத்தை தொகுக்க தொடங்கியப் பின் அது நீக்கப்பட்டுள்ளது!",
 	'descending_abbrev' => 'இறங்கு',
-	'duplicate-defaultsort' => '\'\'\' எச்சரிக்கை:\'\'\' இயல்புநிலை வரிசைப்படுத்து விசை \'\'$2 " முன்னால் இயல்புநிலை வரிசைப்படுத்து விசை" $1 " ஐ மீறுகிறது.',
+	'duplicate-defaultsort' => "''' எச்சரிக்கை:''' இயல்புநிலை வரிசைப்படுத்து விசை ''\$2 \" முன்னால் இயல்புநிலை வரிசைப்படுத்து விசை\" \$1 \" ஐ மீறுகிறது.",
 	'dberr-header' => 'இந்த விக்கிக்குஒரு கோளாறு உள்ளது',
 	'dberr-problems' => 'மன்னிக்கவும்!
 இந்த தளம், தொழில்நுட்ப பிரச்சினைகளுக்கு உள்ளாகியுள்ளது..',
@@ -16160,9 +16003,9 @@ MySQL returned error "$3: $4".',
 	'dberr-usegoogle' => 'இதே நேரத்தில் நீங்கள் கூகிள் வழியாக தேட முயற்சிக்கலாம்.',
 	'dberr-outofdate' => 'கவனிக்கவும் எங்கள் உள்ளடக்கத்திற்க்கானஅவர்களின் குறியீடுகள் காலாவதியாகி இருக்கலாம் .',
 	'dberr-cachederror' => 'இது கோரிய பக்கத்தின் தற்காலிக நகல் , மற்றும் தற்போதைய  தேதி வரை இருக்காது.',
-];
+);
 
-$messages['tcy'] = [
+$messages['tcy'] = array(
 	'december' => 'ಡಿಸಂಬರ್',
 	'december-gen' => 'ಡಿಸೆಂಬರ್',
 	'dec' => 'ಡಿಸೆಂಬರ್',
@@ -16177,9 +16020,9 @@ $messages['tcy'] = [
 	'diff' => 'ವ್ಯತ್ಯಾಸ',
 	'disambiguationspage' => 'ದ್ವಂದ್ವ ನಿವಾರಣೆ',
 	'dellogpage' => 'ಡಿಲೀಟ್ ಮಲ್ತಿನ ಫೈಲ್’ಲೆದ ದಾಖಲೆ',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'december' => 'డిసెంబరు',
 	'december-gen' => 'డిసెంబరు',
 	'dec' => 'డిసెం',
@@ -16214,7 +16057,7 @@ $messages['te'] = [
 	'download' => 'డౌన్‌లోడు',
 	'disambiguations' => 'అయోమయ నివృత్తి పుటలకు లింకున్న పుటలు',
 	'disambiguationspage' => 'Template:అయోమయ నివృత్తి',
-	'disambiguations-text' => 'కింది పేజీలు \'\'\'అయోమయ నివృత్తి\'\'\' పేజీకి లింకవుతున్నాయి. కానీ అవి సంబంధిత పేజీకి నేరుగా లింకు అవాలి. <br /> [[MediaWiki:Disambiguationspage]] నుంది లింకు ఉన్న మూసను వాడే పేజీని అయోమయ నివృత్తి పేజీగా భావిస్తారు.',
+	'disambiguations-text' => "కింది పేజీలు '''అయోమయ నివృత్తి''' పేజీకి లింకవుతున్నాయి. కానీ అవి సంబంధిత పేజీకి నేరుగా లింకు అవాలి. <br /> [[MediaWiki:Disambiguationspage]] నుంది లింకు ఉన్న మూసను వాడే పేజీని అయోమయ నివృత్తి పేజీగా భావిస్తారు.",
 	'doubleredirects' => 'జంట దారిమార్పులు',
 	'doubleredirectstext' => 'ఇతర దారిమార్పు పుటలకి తీసుకెళ్ళే దారిమార్పులని ఈ పుట చూపిస్తుంది.
 ప్రతీ వరుసలో మొదటి మరియు రెండవ దారిమార్పులకు లంకెలు, ఆలానే రెండవ దారిమార్పు పుట యొక్క లక్ష్యం ఉన్నాయి. సాధారణంగా ఈ రెండవ దారిమార్పు యొక్క లక్ష్యమే "అసలైనది", అదే మొదటి దారిమార్పు యొక్క లక్ష్యంగా ఉండాలి.
@@ -16256,7 +16099,7 @@ $messages['te'] = [
 	'deletedrevision' => 'పాత సంచిక $1 తొలగించబడినది.',
 	'days-abbrev' => '$1రో',
 	'days' => '{{PLURAL:$1|ఒక రోజు|$1 రోజుల}}',
-	'deletedwhileediting' => '\'\'\'హెచ్చరిక\'\'\': మీరు మార్పులు చేయటం మొదలుపెట్టాక ఈ పేజీ తొలగించబడింది!',
+	'deletedwhileediting' => "'''హెచ్చరిక''': మీరు మార్పులు చేయటం మొదలుపెట్టాక ఈ పేజీ తొలగించబడింది!",
 	'descending_abbrev' => 'అవరోహణ',
 	'duplicate-defaultsort' => 'హెచ్చరిక: డిఫాల్టు పేర్చు కీ "$2", గత డిఫాల్టు పేర్చు కీ "$1" ని అతిక్రమిస్తుంది.',
 	'dberr-header' => 'ఈ వికీ సమస్యాత్మకంగా ఉంది',
@@ -16266,14 +16109,14 @@ $messages['te'] = [
 	'dberr-usegoogle' => 'ఈలోపు మీరు గూగుల్ ద్వారా వెతకడానికి ప్రయత్నించండి.',
 	'dberr-outofdate' => 'మా విషయం యొక్క వారి సూచీలు అంత తాజావి కావపోవచ్చని గమనించండి.',
 	'dberr-cachederror' => 'అభ్యర్థించిన పేజీ యొక్క కోశం లోని కాపీ ఇది, అంత తాజాది కాకపోవచ్చు.',
-];
+);
 
-$messages['tet'] = [
+$messages['tet'] = array(
 	'december' => 'Dezembru',
 	'december-gen' => 'Dezembru nian',
 	'dec' => 'Dez.',
 	'delete' => 'Halakon',
-	'deletethispage' => 'Halakon pájina ne\'e',
+	'deletethispage' => "Halakon pájina ne'e",
 	'disclaimers' => 'Avisu legál',
 	'disclaimerpage' => 'Project:Avisu legál',
 	'diff' => 'diferensa',
@@ -16289,15 +16132,15 @@ $messages['tet'] = [
 	'delete-edit-reasonlist' => 'Edita lista motivu nian',
 	'delete_and_move' => 'Halakon ho book',
 	'delete_and_move_confirm' => 'Sin, halakon pájina',
-	'dberr-header' => 'Wiki ne\'e iha problema',
-];
+	'dberr-header' => "Wiki ne'e iha problema",
+);
 
-$messages['tg'] = [
+$messages['tg'] = array(
 	'december' => 'Dezembru',
 	'december-gen' => 'Dezembru nian',
 	'dec' => 'Dez.',
 	'delete' => 'Halakon',
-	'deletethispage' => 'Halakon pájina ne\'e',
+	'deletethispage' => "Halakon pájina ne'e",
 	'disclaimers' => 'Avisu legál',
 	'disclaimerpage' => 'Project:Avisu legál',
 	'diff' => 'diferensa',
@@ -16313,10 +16156,10 @@ $messages['tg'] = [
 	'delete-edit-reasonlist' => 'Edita lista motivu nian',
 	'delete_and_move' => 'Halakon ho book',
 	'delete_and_move_confirm' => 'Sin, halakon pájina',
-	'dberr-header' => 'Wiki ne\'e iha problema',
-];
+	'dberr-header' => "Wiki ne'e iha problema",
+);
 
-$messages['tg-cyrl'] = [
+$messages['tg-cyrl'] = array(
 	'december' => 'Декабр',
 	'december-gen' => 'Декабри',
 	'dec' => 'Дек',
@@ -16348,7 +16191,7 @@ $messages['tg-cyrl'] = [
 	'download' => 'боргирӣ',
 	'disambiguations' => 'Саҳифаҳои ибҳомзудоӣ',
 	'disambiguationspage' => 'Template:ибҳомзудоӣ',
-	'disambiguations-text' => 'Саҳифаҳои зерин пайванд ба \'\'\'саҳифаи ибҳомзудоӣ\'\'\' доранд. Ин саҳифаҳо бояд ба мавзӯъи муносиби худ пайваст шаванд.<br />Саҳифа Ибҳомзудоӣ дар назар гирифта мешавад, ки дар он шаблоне, ки ба [[MediaWiki:Disambiguationspage]] пайванд дорад истифода шуда бошад',
+	'disambiguations-text' => "Саҳифаҳои зерин пайванд ба '''саҳифаи ибҳомзудоӣ''' доранд. Ин саҳифаҳо бояд ба мавзӯъи муносиби худ пайваст шаванд.<br />Саҳифа Ибҳомзудоӣ дар назар гирифта мешавад, ки дар он шаблоне, ки ба [[MediaWiki:Disambiguationspage]] пайванд дорад истифода шуда бошад",
 	'doubleredirects' => 'Тағйири масирҳои дутоӣ',
 	'doubleredirectstext' => 'Ҳар сатр дар бар дорандаи пайвандҳое ба тағйири масири аввал ва дувум ва ҳамчунин хати нахуст тагйири масири дувум аст. Маъмулан саҳифаи мақсади воқеъӣ, ки нахустин тағйири масир бояд ба он бошад ба ин гуна мушаххас мешавад.',
 	'double-redirect-fixer' => 'Таъмиркори тағйирмасирҳо',
@@ -16385,15 +16228,15 @@ $messages['tg-cyrl'] = [
 	'djvu_page_error' => 'Саҳифаи DjVu хориҷ аз ҳудуди саф',
 	'djvu_no_xml' => 'Барои истифодаи XML имкони пайдо кардани парвандаи DjVu вуҷуд надошт',
 	'deletedrevision' => 'Нусхаи ҳазфшудаи кӯҳнаи $1',
-	'deletedwhileediting' => '\'\'\'Огоҳӣ\'\'\': Ин саҳифа баъди ба вироиш шурӯъ кардани шумо ҳазф шуда буд!',
+	'deletedwhileediting' => "'''Огоҳӣ''': Ин саҳифа баъди ба вироиш шурӯъ кардани шумо ҳазф шуда буд!",
 	'descending_abbrev' => 'поёнӣ',
 	'dberr-info' => '(Имкони барқарори иртибот бо пойгоҳи дода вуҷуд надорад: $1)',
 	'dberr-usegoogle' => 'Дар ин муддат метавонед бо истифода аз Гугл ҷустуҷӯ кунед.',
 	'dberr-outofdate' => 'Таваҷҷӯҳ кунед, ки намояҳои онҳо аз мӯҳтавои мо мумкин аст барӯз набошад.',
 	'dberr-cachederror' => 'Ин як нусхаи саҳифаи дархостшуда аст, ки дар кэш қарор дорад ва шояд барӯз нест.',
-];
+);
 
-$messages['tg-latn'] = [
+$messages['tg-latn'] = array(
 	'december' => 'Dekabr',
 	'december-gen' => 'Dekabri',
 	'dec' => 'Dek',
@@ -16409,7 +16252,7 @@ In oxirin dasture bud ki baroi pojgohi doda firistoda şud:
 in dastur az daruni amalgir "<tt>$2</tt>".
 Pogohi doda in xatoro bozgardond "<tt>$3: $4</tt>".',
 	'directorycreateerror' => 'Imkoni eçodi pūşai "$1" vuçud nadorad.',
-	'deletedhist' => 'Ta\'rixi hazfşuda',
+	'deletedhist' => "Ta'rixi hazfşuda",
 	'difference' => '(Farqijati bajni nusxaho)',
 	'diff-multi' => '({{PLURAL:$1|viroişi mijonī|$1 viroişoti mijonī}} nişon doda naşudaast.)',
 	'datedefault' => 'Be tarçih',
@@ -16419,10 +16262,10 @@ Pogohi doda in xatoro bozgardond "<tt>$3: $4</tt>".',
 	'download' => 'borgirī',
 	'disambiguations' => 'Sahifahoi ibhomzudoī',
 	'disambiguationspage' => 'Template:ibhomzudoī',
-	'disambiguations-text' => 'Sahifahoi zerin pajvand ba \'\'\'sahifai ibhomzudoī\'\'\' dorand. In sahifaho bojad ba mavzū\'i munosibi xud pajvast şavand.<br />Sahifa Ibhomzudoī dar nazar girifta meşavad, ki dar on şablone, ki ba [[MediaWiki:Disambiguationspage]] pajvand dorad istifoda şuda boşad',
+	'disambiguations-text' => "Sahifahoi zerin pajvand ba '''sahifai ibhomzudoī''' dorand. In sahifaho bojad ba mavzū'i munosibi xud pajvast şavand.<br />Sahifa Ibhomzudoī dar nazar girifta meşavad, ki dar on şablone, ki ba [[MediaWiki:Disambiguationspage]] pajvand dorad istifoda şuda boşad",
 	'doubleredirects' => 'Taƣjiri masirhoi dutoī',
-	'double-redirect-fixer' => 'Ta\'mirkori taƣjirmasirho',
-	'deadendpages' => 'Sahifahoi bema\'no',
+	'double-redirect-fixer' => "Ta'mirkori taƣjirmasirho",
+	'deadendpages' => "Sahifahoi bema'no",
 	'deadendpagestext' => 'Sahifahoi zerin ba heç digar sahifae dar {{SITENAME}} pajvand nestand.',
 	'deletedcontributions' => 'Hissaguzorihoi hazfşudai korbar',
 	'deletedcontributions-title' => 'Hissaguzorihoi hazfşudai korbar',
@@ -16453,15 +16296,15 @@ Maqolai maqsad "[[:$1]]" vuçud dorad. Ojo mexohed onro hazf kuned to intiqol mu
 	'djvu_page_error' => 'Sahifai DjVu xoriç az hududi saf',
 	'djvu_no_xml' => 'Baroi istifodai XML imkoni pajdo kardani parvandai DjVu vuçud nadoşt',
 	'deletedrevision' => 'Nusxai hazfşudai kūhnai $1',
-	'deletedwhileediting' => '\'\'\'Ogohī\'\'\': In sahifa ba\'di ba viroiş şurū\' kardani şumo hazf şuda bud!',
+	'deletedwhileediting' => "'''Ogohī''': In sahifa ba'di ba viroiş şurū' kardani şumo hazf şuda bud!",
 	'descending_abbrev' => 'pojonī',
 	'dberr-info' => '(Imkoni barqarori irtibot bo pojgohi doda vuçud nadorad: $1)',
 	'dberr-usegoogle' => 'Dar in muddat metavoned bo istifoda az Gugl çustuçū kuned.',
 	'dberr-outofdate' => 'Tavaççūh kuned, ki namojahoi onho az mūhtavoi mo mumkin ast barūz naboşad.',
 	'dberr-cachederror' => 'In jak nusxai sahifai darxostşuda ast, ki dar keş qaror dorad va şojad barūz nest.',
-];
+);
 
-$messages['th'] = [
+$messages['th'] = array(
 	'december' => 'ธันวาคม',
 	'december-gen' => 'ธันวาคม',
 	'dec' => 'ธ.ค.',
@@ -16496,9 +16339,9 @@ $messages['th'] = [
 	'download' => 'ดาวน์โหลด',
 	'disambiguations' => 'หน้าแก้ความกำกวม',
 	'disambiguationspage' => 'Template:แก้กำกวม',
-	'disambiguations-text' => 'หน้าต่อไปนี้เชื่อมโยงไปยัง \'\'\'หน้าคำกำกวม\'\'\' ซึ่งเนื้อหาในหน้าเหล่านั้นควรถูกเชื่อมโยงไปยังหัวข้อที่เหมาะสมแทนที่<br />
+	'disambiguations-text' => "หน้าต่อไปนี้เชื่อมโยงไปยัง '''หน้าคำกำกวม''' ซึ่งเนื้อหาในหน้าเหล่านั้นควรถูกเชื่อมโยงไปยังหัวข้อที่เหมาะสมแทนที่<br />
 
-หน้าใดที่เรียกใช้ [[MediaWiki:Disambiguationspage]] หน้าเหล่านั้นจะถูกนับเป็นหน้าคำกำกวม',
+หน้าใดที่เรียกใช้ [[MediaWiki:Disambiguationspage]] หน้าเหล่านั้นจะถูกนับเป็นหน้าคำกำกวม",
 	'doubleredirects' => 'หน้าเปลี่ยนทางซ้ำซ้อน',
 	'doubleredirectstext' => 'หน้านี้แสดงรายการชื่อที่เปลี่ยนทางไปยังหน้าเปลี่ยนทางอื่น
 แต่ละแถวคือลิงก์ของการเปลี่ยนทางครั้งแรกและครั้งที่สอง พร้อมกับหน้าปลายทางของการเปลี่ยนทางครั้งที่สอง ซึ่งควรแก้ไขการเปลี่ยนทางครั้งแรกเป็นหน้าปลายทางดังกล่าว
@@ -16539,7 +16382,7 @@ $messages['th'] = [
 	'djvu_page_error' => 'หน้าเดจาวู (DjVu) เกินขนาด',
 	'djvu_no_xml' => 'ไม่สามารถส่งเอกซ์เอ็มแอล (XML) สำหรับไฟล์เดจาวู (DjVu)',
 	'deletedrevision' => 'รุ่นเก่าที่ถูกลบ $1',
-	'deletedwhileediting' => '\'\'\'คำเตือน\'\'\': หน้านี้ถูกลบไปแล้วในขณะที่คุณกำลังแก้ไข!',
+	'deletedwhileediting' => "'''คำเตือน''': หน้านี้ถูกลบไปแล้วในขณะที่คุณกำลังแก้ไข!",
 	'descending_abbrev' => 'หลังมาหน้า',
 	'duplicate-defaultsort' => 'คำเตือน: หลักเรียงลำดับปริยาย "$2" ได้ลบล้างหลักเรียงลำดับปริยาย "$1" ที่มีอยู่ก่อนหน้า',
 	'dberr-header' => 'วิกินี้กำลังประสบปัญหา',
@@ -16549,13 +16392,13 @@ $messages['th'] = [
 	'dberr-usegoogle' => 'คุณสามารถลองสืบค้นผ่านกูเกิลในระหว่างนี้',
 	'dberr-outofdate' => 'โปรดทราบว่าดัชนีเนื้อหาของเราในกูเกิลอาจล้าสมัยแล้ว',
 	'dberr-cachederror' => 'นี่คือข้อมูลคัดลอกชั่วคราวของหน้าที่ร้องขอ และอาจไม่เป็นปัจจุบัน',
-];
+);
 
-$messages['ti'] = [
+$messages['ti'] = array(
 	'december' => 'ታኅሣሥ',
-];
+);
 
-$messages['tk'] = [
+$messages['tk'] = array(
 	'december' => 'dekabr',
 	'december-gen' => 'dekabr',
 	'dec' => 'dek',
@@ -16589,9 +16432,9 @@ Maglumat bazasy tarapyndan yzyna gaýtarylan säwlik "$3: $4"',
 	'download' => 'düşür',
 	'disambiguations' => 'Dürli manyly sahypalar',
 	'disambiguationspage' => 'Template:Dürli manylar',
-	'disambiguations-text' => 'Aşakdaky sahypalar \'\'\'dürli manyly sahypa\'\'\' çykgyt berýär.
+	'disambiguations-text' => "Aşakdaky sahypalar '''dürli manyly sahypa''' çykgyt berýär.
 Olar muňa derek degişli anyk sahypa çykgyt bermelidir.<br />
-[[MediaWiki:Disambiguationspage]] sahypasyndan çykgyt berilýän bir şablony ulanýan bolsa, onda ol sahypa dürli manyly hökmünde çemeleşilýär.',
+[[MediaWiki:Disambiguationspage]] sahypasyndan çykgyt berilýän bir şablony ulanýan bolsa, onda ol sahypa dürli manyly hökmünde çemeleşilýär.",
 	'doubleredirects' => 'Jübüt gönükdirmeler',
 	'doubleredirectstext' => 'Bu sahypa başga gönükdirme sahypalaryna gönükdirýän sahypalaryň sanawyny görkezýär.
 Her bir hatar birinji we ikinji gönükdirmeleri, şeýle-de ikinji gönükdirmäniň maksady bolup durýan hem-de şol bir wagtyň özünde birinji gönükdirmäniň adatça barmaly ýeri bolan "hakyky" maksat edinilýän sahypany öz içine alýar.
@@ -16635,7 +16478,7 @@ Ady üýgetmek üçin ony öçürmek isleýärsiňizmi?',
 	'djvu_page_error' => 'DjVu sahypasy elýeterden daşda',
 	'djvu_no_xml' => 'DjVu faýly üçin XML alyp bolmaýar',
 	'deletedrevision' => '$1 köne wersiýasy öçürildi.',
-	'deletedwhileediting' => '\'\'\'Duýduryş\'\'\': Bu sahypa siz redaktirläp başlanyňyzdan soňra öçürildi!',
+	'deletedwhileediting' => "'''Duýduryş''': Bu sahypa siz redaktirläp başlanyňyzdan soňra öçürildi!",
 	'descending_abbrev' => 'uludan kiçä',
 	'duplicate-defaultsort' => '\'\'\'Duýduryş\'\'\': Gaýybana "$2" sortlaýyş açary mundan ozalky "$1" sortlaýyş açaryny aradan aýyrýar.',
 	'dberr-header' => 'Bu wikiniň bir problemasy bar',
@@ -16645,9 +16488,9 @@ Ady üýgetmek üçin ony öçürmek isleýärsiňizmi?',
 	'dberr-usegoogle' => 'Ýogsa-da, oňa çenli Google bilen gözleg geçirip bilersiňiz.',
 	'dberr-outofdate' => 'Olaryň biziň sahypalarymyz baradaky indeksi köne bolmagy mümkin.',
 	'dberr-cachederror' => 'Bu talap edilen sahypanyň keşirlenen nusgasy bolup, soňky üýtgeşmeleri görkezmezligi mümkin.',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'december' => 'Disyembre',
 	'december-gen' => 'Disyembre',
 	'dec' => 'Dis',
@@ -16679,12 +16522,12 @@ Ibinalik ng kalipunan ng datos ang kamaliang "$3: $4"',
 	'diff' => 'pagkakaiba',
 	'destfilename' => 'Pangalan ng patutunguhang talaksan:',
 	'duplicatesoffile' => 'Ang sumusunod na {{PLURAL:$1|file is a duplicate|$1 mga talaksan ay mga kapareho}} ng talaksang ito ([[Special:FileDuplicateSearch/$2|mas marami pang mga detalye]]):',
-	'download' => 'magkargang-pakuha ng talaksan (\'\'download\'\')',
+	'download' => "magkargang-pakuha ng talaksan (''download'')",
 	'disambiguations' => 'Mga pahina ng paglilinaw',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'Ang sumusunod ay mga pahinang may ugnay (link) sa isang \'\'\'pahinang naglilinaw\'\'\'.
+	'disambiguations-text' => "Ang sumusunod ay mga pahinang may ugnay (link) sa isang '''pahinang naglilinaw'''.
 Dapat silang umugnay sa tamang paksa<br />
-Tinuturing ang isang pahina bilang pahinang naglilinaw kung ginagamit nito ang isang suleras (template) na nakaugnay mula sa [[MediaWiki:Disambiguationspage]].',
+Tinuturing ang isang pahina bilang pahinang naglilinaw kung ginagamit nito ang isang suleras (template) na nakaugnay mula sa [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Mga dobleng karga',
 	'doubleredirectstext' => 'Nagtatala ang pahinang ito ng mga pahinang pumupunta sa iba pang mga pahinang nililipatan.  Naglalaman ang bawat hanay ng mga kawing sa una ang pangalawang kapupuntahan, maging ng puntiryang pangalawang kapupuntahan, na karaniwang "tunay" na puntiryang pahina, na dapat kinatuturuan ng unang pupuntahan.
 Nasugpo na ang mga ipinasok na <del>inekisan</del>.',
@@ -16692,7 +16535,7 @@ Nasugpo na ang mga ipinasok na <del>inekisan</del>.',
 	'double-redirect-fixed-maintenance' => 'Inaayos ang mga pagpapapuntang nagkadalawa magmula [[$1]] papunta sa [[$2]].',
 	'double-redirect-fixer' => 'Tagapagayos ng panuto/panturo',
 	'deadendpages' => 'Mga pahinang walang panloob na ugnay (internal link)',
-	'deadendpagestext' => 'Ang mga sumusunod na mga pahina\'y hindi umuugnay sa ibang mga pahina sa wiking ito.',
+	'deadendpagestext' => "Ang mga sumusunod na mga pahina'y hindi umuugnay sa ibang mga pahina sa wiking ito.",
 	'deletedcontributions' => 'Naburang ambag ng tagagamit',
 	'deletedcontributions-title' => 'Naburang ambag ng tagagamit',
 	'defemailsubject' => 'E-liham ng {{SITENAME}}',
@@ -16736,16 +16579,16 @@ Mayroon na ang pupuntahang artikulo na "[[$1]]". Nais mo bang burahin ito para m
 	'dberr-usegoogle' => 'Pansamantalang maaaring subukin mong maghanap muna sa pamamagitan ng Google.',
 	'dberr-outofdate' => 'Pakiunawang maaaring wala na sa panahon ang kanilang mga talatuntunan ng aming mga nilalaman.',
 	'dberr-cachederror' => 'Ang sumusunod ay isang nakatagong sipi ng hiniling na pahina, at maaaring wala na sa panahon.',
-];
+);
 
-$messages['tn'] = [
+$messages['tn'] = array(
 	'december' => 'Sedimonthole',
 	'december-gen' => 'Sedimonthole',
 	'delete' => 'Sutlha',
 	'disclaimers' => 'Tlhapa diatla',
-];
+);
 
-$messages['to'] = [
+$messages['to'] = array(
 	'december' => 'Tisema',
 	'december-gen' => 'Tisema',
 	'dec' => 'Tis',
@@ -16764,7 +16607,7 @@ $messages['to'] = [
 	'download' => 'hiki hifo',
 	'disambiguations' => 'Peesi fakaʻuhingakehe',
 	'disambiguationspage' => 'Template:Fakaʻuhingakehe',
-	'disambiguations-text' => 'ʻOku ʻi ai haʻanau fehokotaki ki ha \'\'\'Peesi fakaʻuhingakehe\'\'\' maʻa e ngaahi kupu ʻoku ʻasi ʻi lalo. ʻE taau ʻo ʻenau fehokotaki ki he kupu totonu. ʻOku kau ʻa e kupu ki he peesi fakaʻuhingakehe kapau ʻoku ngāueʻaki ha sīpinga ʻoku ʻasi ʻi he  [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "ʻOku ʻi ai haʻanau fehokotaki ki ha '''Peesi fakaʻuhingakehe''' maʻa e ngaahi kupu ʻoku ʻasi ʻi lalo. ʻE taau ʻo ʻenau fehokotaki ki he kupu totonu. ʻOku kau ʻa e kupu ki he peesi fakaʻuhingakehe kapau ʻoku ngāueʻaki ha sīpinga ʻoku ʻasi ʻi he  [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Ngaahi leʻeleʻei',
 	'doubleredirectstext' => 'ʻOku ʻasi ʻi he ʻotu kotoa pē ha ongo fehokotaki ki he leʻei, mo e leʻeleʻei, mo e kamataʻanga ʻo e leʻeleʻei, taimi ʻe niʻihi ko e peesi totonu ia, ʻoku taau ʻe tuhu ki ai ʻe he leʻei.',
 	'deadendpages' => 'Peesi ngata-mate',
@@ -16788,16 +16631,16 @@ Vakai ki he $2 maʻa e fakamatala ʻo e ngaahi toki tāmateʻi.',
 	'deletedrevision' => 'Kuo tāmateʻi he paaki motuʻa $1.',
 	'deletedwhileediting' => 'Tokanga: Naʻe tāmateʻi he pēsí ni ʻosi hoʻo kamataʻanga tohi!',
 	'descending_abbrev' => 'hifo',
-];
+);
 
-$messages['tokipona'] = [
+$messages['tokipona'] = array(
 	'december' => 'tenpo mun pi nanpa luka luka tu',
 	'delete' => 'o weka',
 	'deletethispage' => 'o weka e lipu ni',
 	'disclaimers' => 'wile ala',
-];
+);
 
-$messages['tpi'] = [
+$messages['tpi'] = array(
 	'december' => 'Disemba',
 	'december-gen' => 'Disemba',
 	'dec' => 'Dis',
@@ -16814,9 +16657,9 @@ $messages['tpi'] = [
 	'dellogpage' => 'Ripot long rausim ol pes',
 	'deletecomment' => 'As bilong en:',
 	'deletereasonotherlist' => 'Arapela as bilong en',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'december' => 'Aralık',
 	'december-gen' => 'Aralık',
 	'dec' => 'Ara',
@@ -16895,7 +16738,7 @@ dikkatle devam edin.',
 	'djvu_no_xml' => 'DjVu dosyası için XML alınamıyor',
 	'deletedrevision' => '$1 sayılı eski sürüm silindi.',
 	'days' => '{{PLURAL:$1|$1 gün|$1 gün}}',
-	'deletedwhileediting' => '\'\'\'Uyarı\'\'\': Bu sayfa siz değişiklik yapmaya başladıktan sonra silinmiş!',
+	'deletedwhileediting' => "'''Uyarı''': Bu sayfa siz değişiklik yapmaya başladıktan sonra silinmiş!",
 	'descending_abbrev' => 'azalan',
 	'duplicate-defaultsort' => '\'\'\'Uyarı:\'\'\' Varsayılan "$2" sınıflandırma anahtarı, önceki "$1" sınıflandırma anahtarını geçersiz kılıyor.',
 	'dberr-header' => 'Bu vikinin bir sorunu var',
@@ -16906,19 +16749,19 @@ dikkatle devam edin.',
 	'dberr-outofdate' => 'İçeriğimizin onların dizinlerinde güncel olmayabileceğini dikkate alın.',
 	'dberr-cachederror' => 'Aşağıdaki istenen sayfanın önbellekteki bir kopyasıdır, ve güncel olmayabilir.',
 	'discuss' => 'Tartış',
-];
+);
 
-$messages['ts'] = [
-	'december' => 'N\'wendzamhala',
+$messages['ts'] = array(
+	'december' => "N'wendzamhala",
 	'delete' => 'Sula',
 	'deletethispage' => 'Sula tluka leri',
 	'disclaimers' => 'Swi alanandzu',
 	'disclaimerpage' => 'Project:Swithsuxa nadzu hikuangara',
 	'databaseerror' => 'Xihoxo xo Database',
 	'deletedhist' => 'Matimu lamasuriweke',
-];
+);
 
-$messages['tt-cyrl'] = [
+$messages['tt-cyrl'] = array(
 	'december' => 'декабрь',
 	'december-gen' => 'декабрь',
 	'dec' => 'дек',
@@ -16976,9 +16819,9 @@ $messages['tt-cyrl'] = [
 	'dberr-problems' => 'Гафу итегез! Сайтта техник кыенлыклар чыкты.',
 	'dberr-again' => 'Сәхифәне берничә минуттан соң яңартып карагыз.',
 	'dberr-info' => '(Мәгълүматлар базасы серверы белән тоташырга мөмкин түгел: $1)',
-];
+);
 
-$messages['tt-latn'] = [
+$messages['tt-latn'] = array(
 	'december' => 'dekaber',
 	'december-gen' => 'dekaber',
 	'dec' => 'dek',
@@ -17033,16 +16876,16 @@ Soñğı beterelgän bitlärne kürer öçen, $2 qarağız.',
 	'descending_abbrev' => 'kimü',
 	'dberr-header' => 'Bu wiki awırlıq kiçerä',
 	'dberr-problems' => 'Ğafu itegez! Saytta texnik qıyınlıqlar çıqtı.',
-];
+);
 
-$messages['ty'] = [
+$messages['ty'] = array(
 	'december' => 'nō tītema',
 	'december-gen' => 'nō tītema',
 	'dec' => 'nō tītema',
 	'delete' => 'Fa’a’ore',
-];
+);
 
-$messages['tyv'] = [
+$messages['tyv'] = array(
 	'december' => 'Он ийи ай',
 	'december-gen' => 'Он ийи ай',
 	'dec' => '12.ай',
@@ -17060,25 +16903,25 @@ $messages['tyv'] = [
 	'deleteotherreason' => 'Өске/немелде чылдагаан:',
 	'deletereasonotherlist' => 'Өске чылдагаан',
 	'delete_and_move' => 'Ап каар болгаш шимчээр',
-];
+);
 
-$messages['udm'] = [
+$messages['udm'] = array(
 	'december' => 'толсур',
 	'december-gen' => 'толсурэ',
 	'dec' => 'тст',
 	'delete' => 'Быдтыны',
 	'delete_and_move' => 'Быдтыны но мукет интые выжтыны',
-];
+);
 
-$messages['ug'] = [
+$messages['ug'] = array(
 	'december' => 'толсур',
 	'december-gen' => 'толсурэ',
 	'dec' => 'тст',
 	'delete' => 'Быдтыны',
 	'delete_and_move' => 'Быдтыны но мукет интые выжтыны',
-];
+);
 
-$messages['ug-arab'] = [
+$messages['ug-arab'] = array(
 	'december' => 'كۆنەك',
 	'december-gen' => 'كۆنەك',
 	'dec' => 'كۆنەك',
@@ -17091,8 +16934,8 @@ $messages['ug-arab'] = [
 يۇمشاق دېتالنىڭ ئۆزىدىكى خاتالىقتىن كېلىپ چىققان بولۇشى مۇمكىن.
 ئاخىرقى قېتىملىق ساندان سۈرۈشتۈرۈش بۇيرۇقى:
 <blockquote><tt>$1</tt></blockquote>
- \"<tt>$2</tt>\"فۇنكسىيىدىن كەلگەن.
-MySQL قايتۇرغان خاتالىق \"<tt>$3: $4</tt>\".',
+ \\"<tt>$2</tt>\\"فۇنكسىيىدىن كەلگەن.
+MySQL قايتۇرغان خاتالىق \\"<tt>$3: $4</tt>\\".',
 	'dberrortextcl' => 'ساندان سۈرۈشتۈرۈشتە گرامماتىكىلىق خاتالىق يۈز بەردى.
 ئاخىرقى قېتىملىق ساندان سۈرۈشتۈرۈش بۇيرۇقى:
 "$1"
@@ -17113,13 +16956,13 @@ MySQL قايتۇرغان خاتالىقى"$3: $4"',
 	'download' => 'چۈشۈر',
 	'disambiguations' => 'ئىككى بىسلىق بەتنى يوقىتىش',
 	'disambiguationspage' => 'Template:ئىككى بىسلىق بەت',
-	'disambiguations-text' => 'تۆۋەندىكى بەت \'\'\'ئىككى بىسلىق بەت\'\'\'كە ئۇلانغان.
+	'disambiguations-text' => "تۆۋەندىكى بەت '''ئىككى بىسلىق بەت'''كە ئۇلانغان.
 ئەمما ئۇلار مۇۋاپىق ماۋزۇغا ئۇلىنىشى كېرەك ئىدى.<br />
-ئەگەر بىر بەت [[MediaWiki:Disambiguationspage]] غا ئۇلانغان بولسا ئىككى بىسلىق بەت دەپ قارىلىدۇ.',
+ئەگەر بىر بەت [[MediaWiki:Disambiguationspage]] غا ئۇلانغان بولسا ئىككى بىسلىق بەت دەپ قارىلىدۇ.",
 	'doubleredirects' => 'قوش قايتا نىشانلانغان بەت',
 	'doubleredirectstext' => 'بۇ بەتتە قايتا نىشانلانغان بەت يەنە بىر قايتا نىشانلانغان بەتنى نىشانغانلىق تىزىملىكى كۆرسىتىلدى.
 ھەر بىر قۇردا بىرىنچى ۋە ئىككىنچى قايتا نىشانلانغان بەتنىڭ ئۇلانمىسىنى شۇنداقلا ئىككىنچى قايتا نىشانلانغان بەتنىڭ نىشانىنى ئۆز ئىچىگە ئالىدۇ، ئادەتتە كۆرسىتىلىدىغىنى  "ھەقىقىي" نىشان بەت، مۇنداقچە ئېيتقاندا بىرىنچى نىشانلانغان بەت نىشانلايدىغان بەتتۇر.',
-	'double-redirect-fixed-move' => '[[$1]] يۆتكەلدى.\n
+	'double-redirect-fixed-move' => '[[$1]] يۆتكەلدى.\\n
 ھازىر [[$2]] نى قايتا نىشانلىدى.',
 	'double-redirect-fixed-maintenance' => '[[$1]] دىن [[$2]] غا قوش قايتا نىشانلاشنى ئوڭشاۋاتىدۇ.',
 	'double-redirect-fixer' => 'قايتا نىشانلانغان تۈزەتكۈچ',
@@ -17158,7 +17001,7 @@ MySQL قايتۇرغان خاتالىقى"$3: $4"',
 	'djvu_page_error' => 'DjVu بېتى دائىرىدىن ھالقىپ كەتتى',
 	'djvu_no_xml' => 'DjVu ھۆججىتىدىن XML گە ئېرىشەلمىدى',
 	'deletedrevision' => '$1 كونا تۈزىتىلگەن نەشرى ئۆچۈرۈلدى',
-	'deletedwhileediting' => '\'\'\'ئاگاھلاندۇرۇش\'\'\': بۇ بەت تەھرىرلەشكە باشلىغاندىن كېيىن ئۆچۈرۈلگەن!',
+	'deletedwhileediting' => "'''ئاگاھلاندۇرۇش''': بۇ بەت تەھرىرلەشكە باشلىغاندىن كېيىن ئۆچۈرۈلگەن!",
 	'descending_abbrev' => 'كېمەيگۈچى',
 	'duplicate-defaultsort' => '\'\'\'ئاگاھلاندۇرۇش:\'\'\' كۆڭۈلدىكى تەرتىپلەش كۇنۇپكىسى "$2" ئىلگىرىكى كۆڭۈلدىكى تەرتىپلەش كۇنۇپكىسى "$1" نى قاپلىۋېتىدۇ.',
 	'dberr-header' => 'بۇ wiki مەسىلىگە يولۇقتى',
@@ -17169,16 +17012,16 @@ MySQL قايتۇرغان خاتالىقى"$3: $4"',
 	'dberr-usegoogle' => 'بۇ ۋاقىتتا Google ئىزدىگۈچتىن ئىزدەشنى سىناپ بېقىڭ.',
 	'dberr-outofdate' => 'دىققەت ئۇلار ئىندىكېسلىغان مەزمۇن ئەڭ يېڭى بولماسلىقى مۇمكىن.',
 	'dberr-cachederror' => 'بۇ ئىلتىماس قىلغان بەتنىڭ غەملەنگەن كۆپەيتىلمىسى، ئەڭ يېڭىسى بولماسلىقى مۇمكىن.',
-];
+);
 
-$messages['ug-latn'] = [
+$messages['ug-latn'] = array(
 	'december' => 'Dékabr',
 	'december-gen' => 'Dékabr',
 	'dec' => '12-Ay',
 	'delete' => 'Yukhutush',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'december' => 'грудень',
 	'december-gen' => 'грудня',
 	'dec' => 'груд',
@@ -17214,7 +17057,7 @@ $messages['uk'] = [
 	'download' => 'завантажити',
 	'disambiguations' => 'Сторінки, що посилаються на сторінки неоднозначності.',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'Наступні сторінки посилаються на \'\'\'багатозначні сторінки\'\'\'. Однак вони, ймовірно, повинні вказувати на відповідну конкретну статтю.<br />Сторінка вважається багатозначною, якщо на ній розміщений шаблон, назва якого є на сторінці [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Наступні сторінки посилаються на '''багатозначні сторінки'''. Однак вони, ймовірно, повинні вказувати на відповідну конкретну статтю.<br />Сторінка вважається багатозначною, якщо на ній розміщений шаблон, назва якого є на сторінці [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Подвійні перенаправлення',
 	'doubleredirectstext' => 'На цій сторінці наведено список перенаправлень на інші перенаправлення.
 Кожен рядок містить посилання на перше та друге перенаправлення, а також перший рядок тексту другого перенаправлення, що зазвичай містить «реальне» перенаправлення на необхідну сторінку, куди повинно вказувати й перше перенаправлення.
@@ -17260,20 +17103,20 @@ $messages['uk'] = [
 	'deletedrevision' => 'Вилучена стара версія $1',
 	'days-abbrev' => '$1діб',
 	'days' => '{{PLURAL:$1|$1 день|$1 дні|$1 днів}}',
-	'deletedwhileediting' => '\'\'\'Увага:\'\'\' ця сторінка була вилучена після того, як ви розпочали редагування!',
+	'deletedwhileediting' => "'''Увага:''' ця сторінка була вилучена після того, як ви розпочали редагування!",
 	'descending_abbrev' => 'спад',
 	'duplicate-defaultsort' => 'Увага. Ключ сортування «$2» перекриває попередній ключ сортування «$1».',
 	'dberr-header' => 'Ця вікі має проблеми',
 	'dberr-problems' => 'Вибачте! На цьому сайті виникли технічні труднощі.',
 	'dberr-again' => 'Спробуйте оновити сторінку за кілька хвилин.',
-	'dberr-info' => '(неможливо з\'єднатися з сервером баз даних: $1)',
+	'dberr-info' => "(неможливо з'єднатися з сервером баз даних: $1)",
 	'dberr-usegoogle' => 'Можете спробувати пошукати за допомогою Google.',
 	'dberr-outofdate' => 'Майте на увазі, що його індекси можуть бути застарілими.',
 	'dberr-cachederror' => 'Нижче наведена закешована версія запитаної сторінки, можливо, вона не показує останні зміни.',
 	'discuss' => 'Обговорення',
-];
+);
 
-$messages['ur'] = [
+$messages['ur'] = array(
 	'december' => 'دسمبر',
 	'december-gen' => 'دسمبر',
 	'dec' => 'دسمبر',
@@ -17322,13 +17165,13 @@ MySQL نے جوابِ خطاء دیا "$3: $4"',
 	'delete_and_move_reason' => 'منتقلی کے سلسلے میں حذف',
 	'deletedrevision' => 'حذف شدہ پرانی ترمیم $1۔',
 	'deletedwhileediting' => 'انتباہ: آپ کے ترمیم شروع کرنے کے بعد یہ صفحہ حذف کیا جا چکا ہے!',
-];
+);
 
-$messages['uz'] = [
+$messages['uz'] = array(
 	'december' => 'dekabr',
 	'december-gen' => 'dekabrning',
 	'dec' => 'dek',
-	'delete' => 'O\'chirish',
+	'delete' => "O'chirish",
 	'disclaimers' => 'Ogohlantirishlar',
 	'disclaimerpage' => 'Project:Umumiy ogohlatirish',
 	'difference' => '(Koʻrinishlar orasidagi farq)',
@@ -17340,9 +17183,9 @@ Yaqinda sodir etilgan yoʻqotishlar uchun $2ni koʻring.',
 	'deletecomment' => 'Sabab:',
 	'deleteotherreason' => 'Boshqa/qoʻshimcha sabab:',
 	'deletereasonotherlist' => 'Boshqa sabab',
-];
+);
 
-$messages['val'] = [
+$messages['val'] = array(
 	'december' => 'decembre',
 	'december-gen' => 'decembre',
 	'dec' => 'dec',
@@ -17350,18 +17193,18 @@ $messages['val'] = [
 	'deletethispage' => 'Elimina la pàgina',
 	'disclaimers' => 'Avís general',
 	'disclaimerpage' => 'Proyecte:Avís general',
-	'databaseerror' => 'S\'ha produït un error en la base de dades',
-	'dberrortext' => 'S\'ha produït un error de sintaxis en una consulta a la base de dades.
+	'databaseerror' => "S'ha produït un error en la base de dades",
+	'dberrortext' => "S'ha produït un error de sintaxis en una consulta a la base de dades.
 Açò podria indicar un error en el programa.
-L\'última consulta que s\'ha intentat fer ha segut:
+L'última consulta que s'ha intentat fer ha segut:
 <blockquote><tt>$1</tt></blockquote>
 des de la funció «<tt>$2</tt>».
-L\'error de retorn de MySQL ha segut «<tt>$3: $4</tt>».',
-	'dberrortextcl' => 'S\'ha produït un error de sintaxis en una consulta a la base de dades.
-L\'última consulta que s\'ha intentat fer ha segut:
+L'error de retorn de MySQL ha segut «<tt>$3: $4</tt>».",
+	'dberrortextcl' => "S'ha produït un error de sintaxis en una consulta a la base de dades.
+L'última consulta que s'ha intentat fer ha segut:
 <blockquote><tt>$1</tt></blockquote>
 des de la funció «<tt>$2</tt>».
-L\'error de retorn de MySQL ha segut «<tt>$3: $4</tt>».',
+L'error de retorn de MySQL ha segut «<tt>$3: $4</tt>».",
 	'deletedrev' => '[suprimit]',
 	'difference' => '(Diferència entre revisions)',
 	'diff-multi' => '(Hi ha {{plural:$1|una revisió intermedia|$1 revisions intermedies}})',
@@ -17373,11 +17216,11 @@ L\'error de retorn de MySQL ha segut «<tt>$3: $4</tt>».',
 	'diff' => 'dif',
 	'destfilename' => 'Nom del ficher de destinació',
 	'deleteimg' => 'bor',
-	'deleteimgcompletely' => 'Borra totes les versions d\'este archiu',
+	'deleteimgcompletely' => "Borra totes les versions d'este archiu",
 	'download' => 'descarrega',
 	'disambiguations' => 'Pàgines de desambiguació',
 	'disambiguationspage' => 'Template:desambiguació',
-	'disambiguations-text' => 'Les següents pàgines enllacen a una \'\'\'pàgina de desambiguació\'\'\'. Per això, fa falta que enllacen al tema apropiat.<br />Una pàgina se tracta com de desambiguació si utilisa una plantilla que prové de [[MediaWiki:disambiguationspage]]',
+	'disambiguations-text' => "Les següents pàgines enllacen a una '''pàgina de desambiguació'''. Per això, fa falta que enllacen al tema apropiat.<br />Una pàgina se tracta com de desambiguació si utilisa una plantilla que prové de [[MediaWiki:disambiguationspage]]",
 	'doubleredirects' => 'Redireccions dobles',
 	'doubleredirectstext' => '<b>Atenció:</b> este llistat pot contindre falsos positius. Això normalment significa que hi ha text
 
@@ -17386,7 +17229,7 @@ Cada fila conté enllaços al segon i tercer redireccionament, així com la prim
 
 segon redireccionament, la qual cosa dòna normalment l\'artícul "real", al que el primer redireccionamet hauria d\'apuntar.',
 	'deadendpages' => 'Pàgines assucac',
-	'deadendpagestext' => 'Estes pàgines no tenen enllaços a d\'atres pàgines d\'esta mateixa wiki.',
+	'deadendpagestext' => "Estes pàgines no tenen enllaços a d'atres pàgines d'esta mateixa wiki.",
 	'data' => 'Dades',
 	'defemailsubject' => 'Direcció correu de {{SITENAME}}',
 	'deletepage' => 'Borra esta pàgina',
@@ -17404,13 +17247,13 @@ Mostra $2 per a un registre dels artículs borrats més recents.',
 
 L\'articul de destí, "[[$1]]",ya existix. Vols borrar-lo per fer lloc per al trasllat?',
 	'delete_and_move_confirm' => 'Sí, borra la pàgina',
-	'delete_and_move_reason' => 'S\'ha eliminat per a permetre el renomenament',
-	'deletedrevision' => 'S\'ha eliminat la revisió antiga $1.',
-	'deletedwhileediting' => 'Avís: S\'ha suprimit esta pàgina adés que hages començat a editar-la!',
+	'delete_and_move_reason' => "S'ha eliminat per a permetre el renomenament",
+	'deletedrevision' => "S'ha eliminat la revisió antiga $1.",
+	'deletedwhileediting' => "Avís: S'ha suprimit esta pàgina adés que hages començat a editar-la!",
 	'descending_abbrev' => 'desc',
-];
+);
 
-$messages['vec'] = [
+$messages['vec'] = array(
 	'december' => 'disenbre',
 	'december-gen' => 'disenbre',
 	'dec' => 'dis',
@@ -17445,8 +17288,8 @@ El database ga restituio el seguente erore "$3: $4".',
 	'download' => 'descarga',
 	'disambiguations' => 'Pagine de disanbigua',
 	'disambiguationspage' => 'Template:Disambigua',
-	'disambiguations-text' => 'Le pagine ne la lista che segue le contien dei colegamenti a \'\'\'pagine de disanbiguazion\'\'\' e no a l\'argomento a cui le dovarìà far riferimento.<br />
-Vien considerà pagine de disanbiguazion tute quele che contien i modèi elencà in [[MediaWiki:Disambiguationspage]]',
+	'disambiguations-text' => "Le pagine ne la lista che segue le contien dei colegamenti a '''pagine de disanbiguazion''' e no a l'argomento a cui le dovarìà far riferimento.<br />
+Vien considerà pagine de disanbiguazion tute quele che contien i modèi elencà in [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Redirect dopi',
 	'doubleredirectstext' => 'Sta pagina le elenca pagine che rimanda a altre pagine de rimando.
 Ogni riga la contien dei colegamenti al primo e al secondo rimando, oltre a la destinassion del secondo rimando, che de solito la xe la "vera" pagina de destinassion, a cui dovarìa pontar el primo rimando.
@@ -17461,32 +17304,32 @@ Le righe <del>sbarà</del> le xe xà stà sistemà.',
 	'deletepage' => 'Scancela pagina',
 	'delete-confirm' => 'Scancela "$1"',
 	'delete-legend' => 'Scancela',
-	'deletedtext' => '\'\'$1\'\' xe stà scanselà.
-Varda $2 par n\'elenco de le ultime pagine scanselà.',
+	'deletedtext' => "''$1'' xe stà scanselà.
+Varda $2 par n'elenco de le ultime pagine scanselà.",
 	'dellogpage' => 'Registro de scancelassion',
 	'dellogpagetext' => 'Qui de seguito ghe xe un ełenco de łe pàxene scancełae de reçente.',
 	'deletionlog' => 'Registro de scancełasión',
 	'deletecomment' => 'Motivassion:',
 	'deleteotherreason' => 'Altra motivazion o motivazion agiuntiva:',
 	'deletereasonotherlist' => 'Altra motivazion',
-	'deletereason-dropdown' => '*Motivazion piassè comuni par la scancelazion
-** Richiesta de l\'autor
+	'deletereason-dropdown' => "*Motivazion piassè comuni par la scancelazion
+** Richiesta de l'autor
 ** Violazion de copyright
-** Vandalismo',
+** Vandalismo",
 	'delete-edit-reasonlist' => 'Modifica le motivazion par la scancelazion',
 	'delete-toobig' => 'La cronologia de sta pagina la xe longa assè (oltre $1 {{PLURAL:$1|revision|revisioni}}). La so scancelazion la xe stà limità par evitar de crear acidentalmente dei problemi de funzionamento al database de {{SITENAME}}.',
 	'delete-warning-toobig' => 'La cronologia de sta pagina le xe longa assè (oltre $1 {{PLURAL:$1|revision|revisioni}}). La so scancelazion la pode crear dei problemi de funzionamento al database de {{SITENAME}}; procedi con cautela.',
-	'databasenotlocked' => 'El database no l\'è mìa blocà.',
+	'databasenotlocked' => "El database no l'è mìa blocà.",
 	'delete_and_move' => 'Scanceła e sposta',
 	'delete_and_move_text' => '==Scancełassion richiesta==
 
 La voxe specificà come destinassion "[[:$1]]" l\'esiste xà. Vóto scancełarla par proseguir con ło spostamento?',
 	'delete_and_move_confirm' => 'Sì, scancèla la pagina',
-	'delete_and_move_reason' => 'Scancelà par spostar n\'altra pagina a sto titolo',
+	'delete_and_move_reason' => "Scancelà par spostar n'altra pagina a sto titolo",
 	'djvu_page_error' => 'Nùmaro de pagina DjVu sbaglià',
-	'djvu_no_xml' => 'Inpossibile otegner l\'XML par el file DjVu',
+	'djvu_no_xml' => "Inpossibile otegner l'XML par el file DjVu",
 	'deletedrevision' => 'Vecia version scancełà $1',
-	'deletedwhileediting' => '\'\'\'Ocio\'\'\': Sta pàxena la xè stà scancełà dopo che te ghè scominzià a modificarla!',
+	'deletedwhileediting' => "'''Ocio''': Sta pàxena la xè stà scancełà dopo che te ghè scominzià a modificarla!",
 	'descending_abbrev' => 'decresc',
 	'duplicate-defaultsort' => 'Ocio: la ciave de ordinamento predefinìa "$2" la va in conflito co\' quela de prima "$1".',
 	'dberr-header' => 'Sta wiki la ga un problema',
@@ -17496,14 +17339,14 @@ La voxe specificà come destinassion "[[:$1]]" l\'esiste xà. Vóto scancełarla
 	'dberr-usegoogle' => 'Fin che te speti, te podi proar a sercar su Google.',
 	'dberr-outofdate' => 'Tien presente che la so indicixassion dei nostri contenuti la podarìa no èssar ajornà.',
 	'dberr-cachederror' => 'Quela che segue la xe na copia cache de la pàxena richiesta, e la podarìa no èssar mia ajornà.',
-];
+);
 
-$messages['vep'] = [
+$messages['vep'] = array(
 	'december' => 'tal’vku',
 	'december-gen' => 'tal’vkun',
 	'dec' => 'tal’vku',
 	'delete' => 'Čuta poiš',
-	'deletethispage' => 'Čuta nece lehtpol\'',
+	'deletethispage' => "Čuta nece lehtpol'",
 	'disclaimers' => 'Pučind vastusenpidandaspäi',
 	'disclaimerpage' => 'Project:Pučind vastusenpidandaspäi',
 	'databaseerror' => 'Andmusiden bazan petuz',
@@ -17515,7 +17358,7 @@ Andmusiden baz pördi petusen "$3: $4"',
 	'directorycreateerror' => 'Ei voi säta "$1"-failhodrad.',
 	'deletedhist' => 'Čudandoiden istorii',
 	'difference' => '(Erod versijoiden keskes)',
-	'diff-multi' => '({{PLURAL:$1|üks\' keskmäine versii ei ole|$1 keskmäšt versijad ei olgoi}} {{PLURAL:$2|one user|$2 users}} ozutadud)',
+	'diff-multi' => "({{PLURAL:$1|üks' keskmäine versii ei ole|$1 keskmäšt versijad ei olgoi}} {{PLURAL:$2|one user|$2 users}} ozutadud)",
 	'datedefault' => 'Augotižjärgendused',
 	'defaultns' => 'Toižiš statjoiš ectä neniš nimiavarusiš:',
 	'default' => 'augotižjärgendusen mödhe',
@@ -17526,14 +17369,14 @@ Andmusiden baz pördi petusen "$3: $4"',
 	'disambiguations' => 'Lehtpoled, kudambil om kosketusid lehtpolihe, kus om äiznamoičendusen laskendoid.',
 	'disambiguationspage' => 'Template:Äiznamoičenduz',
 	'doubleredirects' => 'Kaksitadud läbikosketused',
-	'double-redirect-fixed-move' => '[[$1]]-lehtpol\' om udesnimitadud. Se läbikosketab nügüd\' [[$2]]-lehtpolele.',
+	'double-redirect-fixed-move' => "[[$1]]-lehtpol' om udesnimitadud. Se läbikosketab nügüd' [[$2]]-lehtpolele.",
 	'double-redirect-fixer' => 'Läbikosketusiden kohendai',
 	'deadendpages' => 'Lehtpoled, kudambid ei kosketagoi toižed lehtpoled',
 	'deadendpagestext' => 'Nened lehtpoled ei kosketagoi toižid necen wikin lehtpolid.',
 	'deletedcontributions' => 'Čutud tond',
 	'deletedcontributions-title' => 'Čutud tond',
 	'defemailsubject' => '$1-kävutajan počt {{SITENAME}}-saitalpäi',
-	'deletepage' => 'Čuta lehtpol\' poiš',
+	'deletepage' => "Čuta lehtpol' poiš",
 	'delete-confirm' => '"$1"-lehtpolen čudand',
 	'delete-legend' => 'Čuta poiš',
 	'deletedtext' => '"$1" om čutud poiš.
@@ -17549,31 +17392,31 @@ Kc. $2, miše lugeda tantoižiden čudandoiden nimikirjutez.',
 ** Avtoran oiktusen murenduz
 ** Vandalizm',
 	'delete-edit-reasonlist' => 'Redaktiruida čudandan süiden nimikirjutez',
-	'delete-toobig' => 'Necil lehtpolel om avar redaktiruinadan istorii - enamba {{PLURAL:$1|versii|versijad}}.
-Mugoižiden lehtpoliden čudand om kel\'tud, miše sait radaiži normaližikš.',
+	'delete-toobig' => "Necil lehtpolel om avar redaktiruinadan istorii - enamba {{PLURAL:$1|versii|versijad}}.
+Mugoižiden lehtpoliden čudand om kel'tud, miše sait radaiži normaližikš.",
 	'delete-warning-toobig' => 'Necil lehtpolel om avar redaktiruinadan istorii - enamba $1 {{PLURAL:$1|versii|versijad}}.
 Mugoižiden lehtpoliden čudand voiži telustada {{SITENAME}}-saitan andmuzbazan normaližele radole.
 Tehkat kaik varumujandanke!',
 	'databasenotlocked' => 'Andmusiden baz ei ole luklostadud.',
 	'delete_and_move' => 'Čuta poiš da udesnimitada',
-	'delete_and_move_confirm' => 'Ka, čuta lehtpol\' poiš',
+	'delete_and_move_confirm' => "Ka, čuta lehtpol' poiš",
 	'delete_and_move_reason' => 'Čutud poiš "[[$1]]"n udesnimitamižen voimusen täht.',
 	'djvu_page_error' => 'En voi sadas DjVu-lehtpolen nomerhasai',
 	'djvu_no_xml' => 'Ei voi sada XMLad DjVu-failan täht',
 	'deletedrevision' => '$1-lehtpolen vanh versii om čutud',
-	'deletedwhileediting' => '\'\'\'Homaikat\'\'\': Nece lehtpol\' čutihe poiš jälges sidä, konz tö olit toižetaškanuded necidä lehtpol\'t!',
+	'deletedwhileediting' => "'''Homaikat''': Nece lehtpol' čutihe poiš jälges sidä, konz tö olit toižetaškanuded necidä lehtpol't!",
 	'descending_abbrev' => 'lask.',
 	'duplicate-defaultsort' => '\'\'\'Varutuz:\'\'\' Sortiruindan avadim äugotižjärgendusen mödhe "$2" toižetab edeližen avadimen äugotižjärgendusen mödhe "$1".',
 	'dberr-header' => 'Necil wikil om problemoid',
 	'dberr-problems' => 'Pakičem armahtust! Necil saital om tehnižid problemoid.',
-	'dberr-again' => 'Varastagat pordon aigad da udištagat lehtpol\'.',
+	'dberr-again' => "Varastagat pordon aigad da udištagat lehtpol'.",
 	'dberr-info' => '(Ei voi säta sidod admusiden baziden serveranke: $1)',
-	'dberr-usegoogle' => 'Täl aigal tö voit ectä Google\'an abul.',
-	'dberr-outofdate' => 'Google\'an indeks voib olda vanhtunuden.',
+	'dberr-usegoogle' => "Täl aigal tö voit ectä Google'an abul.",
+	'dberr-outofdate' => "Google'an indeks voib olda vanhtunuden.",
 	'dberr-cachederror' => 'Naku om ectud lehtpolen keširuidud versii. Voib olda, siš ei ole tantoižid toižetusid.',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'december' => 'tháng 12',
 	'december-gen' => 'tháng Mười hai',
 	'dec' => 'tháng 12',
@@ -17608,7 +17451,7 @@ Cơ sở dữ liệu báo lỗi “$3: $4”',
 	'download' => 'tải về',
 	'disambiguations' => 'Trang liên kết đến trang định hướng',
 	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'Các trang này có liên kết đến một \'\'\'trang định hướng\'\'\'. Nên sửa các liên kết này để chỉ đến một trang đúng nghĩa hơn.<br />Các trang định hướng là trang sử dụng những bản mẫu được liệt kê ở [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Các trang này có liên kết đến một '''trang định hướng'''. Nên sửa các liên kết này để chỉ đến một trang đúng nghĩa hơn.<br />Các trang định hướng là trang sử dụng những bản mẫu được liệt kê ở [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Đổi hướng kép',
 	'doubleredirectstext' => 'Trang này liệt kê các trang đổi hướng đến một trang đổi hướng khác.
 Mỗi hàng có chứa các liên kết đến trang đổi hướng thứ nhất và thứ hai, cũng như mục tiêu của trang đổi hướng thứ hai, thường là trang đích “thực sự”, là nơi mà trang đổi hướng đầu tiên nên trỏ đến.
@@ -17653,7 +17496,7 @@ Trang với tên “[[:$1]]” đã tồn tại. Bạn có muốn xóa nó để
 	'deletedrevision' => 'Đã xóa phiên bản cũ $1',
 	'days-abbrev' => '$1d',
 	'days' => '$1 ngày',
-	'deletedwhileediting' => '\'\'\'Cảnh báo\'\'\': Trang này đã bị xóa sau khi bắt đầu sửa đổi!',
+	'deletedwhileediting' => "'''Cảnh báo''': Trang này đã bị xóa sau khi bắt đầu sửa đổi!",
 	'descending_abbrev' => 'giảm',
 	'duplicate-defaultsort' => 'Cảnh báo: Từ khóa xếp mặc định “$2” ghi đè từ khóa trước, “$1”.',
 	'dberr-header' => 'Wiki này đang gặp trục trặc',
@@ -17663,9 +17506,9 @@ Trang với tên “[[:$1]]” đã tồn tại. Bạn có muốn xóa nó để
 	'dberr-usegoogle' => 'Bạn có thể thử tìm trên Google trong khi chờ đợi.',
 	'dberr-outofdate' => 'Chú ý rằng các chỉ mục của Google có thể đã lỗi thời.',
 	'dberr-cachederror' => 'Sau đây là bản sao được lưu bộ đệm của trang bạn muốn xem, và có thể đã lỗi thời.',
-];
+);
 
-$messages['vls'] = [
+$messages['vls'] = array(
 	'december' => 'december',
 	'december-gen' => 'december',
 	'dec' => 'dec',
@@ -17673,9 +17516,9 @@ $messages['vls'] = [
 	'deletethispage' => 'Da blad ier verwydern',
 	'disclaimers' => 'Aansprakelekeid',
 	'delete_and_move' => 'Wegdoen en ernoemn',
-];
+);
 
-$messages['vmf'] = [
+$messages['vmf'] = array(
 	'december' => 'Dädsembär',
 	'december-gen' => 'Fom Dädsembâr',
 	'dec' => 'Däds.',
@@ -17704,16 +17547,16 @@ aus dr fungdsjoon "<tt>$2</tt>". Un dôôdruf had dan di daadnbangg den feelâr 
 	'deletecomment' => 'Grund:',
 	'deleteotherreason' => 'Noch a Grund dâfiir:',
 	'deletereasonotherlist' => 'Andrâr Grund',
-	'deletereason-dropdown' => '* Iibliche Grind fir\'s Leschn
-** Wal\'s dr Audhoor woln had
-** Wal\'s uurheewâr-rechd iwârdreedn wôrn is
-** Wal anâr nôr ghausd had',
-	'delete-edit-reasonlist' => 'D\'grind fir\'s leschn ändârn',
-	'delete-toobig' => 'Dii sajdn had iiwâr $1 {{PLURAL:$1|Wersjoon|Wersjoon\'n}}, des is fiil. Solche sajdn däf mr nima miir nigs diir nigs leschn, damid dii seewâr ned in d\'gnii geen.',
-	'delete-warning-toobig' => 'Dii sajdn had mäa wii $1 {{PLURAL:$1|wärsjoon|wärsjoon\'n}}, des is fiil. Wem ma solchene leschd, ghan dr seerwâr fiir {{SITENAME}} ins scholbârn ghomn.',
-];
+	'deletereason-dropdown' => "* Iibliche Grind fir's Leschn
+** Wal's dr Audhoor woln had
+** Wal's uurheewâr-rechd iwârdreedn wôrn is
+** Wal anâr nôr ghausd had",
+	'delete-edit-reasonlist' => "D'grind fir's leschn ändârn",
+	'delete-toobig' => "Dii sajdn had iiwâr $1 {{PLURAL:$1|Wersjoon|Wersjoon'n}}, des is fiil. Solche sajdn däf mr nima miir nigs diir nigs leschn, damid dii seewâr ned in d'gnii geen.",
+	'delete-warning-toobig' => "Dii sajdn had mäa wii $1 {{PLURAL:$1|wärsjoon|wärsjoon'n}}, des is fiil. Wem ma solchene leschd, ghan dr seerwâr fiir {{SITENAME}} ins scholbârn ghomn.",
+);
 
-$messages['vo'] = [
+$messages['vo'] = array(
 	'december' => 'dekul',
 	'december-gen' => 'dekul',
 	'dec' => 'dek',
@@ -17746,9 +17589,9 @@ Nünodem ägesedon pökanuni: „$3: $4“',
 	'download' => 'donükön',
 	'disambiguations' => 'Telplänovapads',
 	'disambiguationspage' => 'Template:Telplänov',
-	'disambiguations-text' => 'Pads sököl payümons ad \'\'\'telplanövapad\'\'\'.
+	'disambiguations-text' => "Pads sököl payümons ad '''telplanövapad'''.
 Sötons plao payümon lü yeged pötik.<br />
-Pad palelogon telplänovapad if gebon samafomoti, lü kel payümon pad [[MediaWiki:Disambiguationspage]].',
+Pad palelogon telplänovapad if gebon samafomoti, lü kel payümon pad [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Lüodüköms telik',
 	'doubleredirectstext' => 'Kedet alik labon yümis lü lüodüköm balid e telid, ed i kedeti balid vödema lüodüköma telid, kel nomiko ninädon padi, ko kel lüodüköm balid söton payümön.',
 	'double-redirect-fixed-move' => 'Pad: [[$1]] petopätükon, anu binon lüodüköm lü pad: [[$2]]',
@@ -17788,7 +17631,7 @@ Yeged nulik "[[:$1]]" ya dabinon. Vilol-li moükön oni ad jafön spadi pro top�
 	'delete_and_move_reason' => 'Pemoükon ad jafön spadi pro topätükam',
 	'djvu_no_xml' => 'No eplöpos ad tuvön eli XML pro ragiv fomätü DjVu',
 	'deletedrevision' => 'Fomam büik: $1 pemoükon.',
-	'deletedwhileediting' => '\'\'\'Nuned\'\'\': Pad at pemoükon posä äprimol ad redakön oni!',
+	'deletedwhileediting' => "'''Nuned''': Pad at pemoükon posä äprimol ad redakön oni!",
 	'descending_abbrev' => 'donio',
 	'duplicate-defaultsort' => 'Nüned: Leodükamakik kösömik: „$2“ buon bu leodükamakik kösömik büik: „$1“.',
 	'dberr-header' => 'Vük at labon säkädi',
@@ -17797,9 +17640,9 @@ Yeged nulik "[[:$1]]" ya dabinon. Vilol-li moükön oni ad jafön spadi pro top�
 	'dberr-info' => '(No eplöpos ad kosikön ko dünanünöm nünodema: $1)',
 	'dberr-usegoogle' => 'Kanol sukön me el Google vütimo.',
 	'discuss' => 'Bespik',
-];
+);
 
-$messages['vot'] = [
+$messages['vot'] = array(
 	'december' => 'dekaabri',
 	'december-gen' => 'dekaabrii',
 	'dec' => 'dekaabri',
@@ -17815,9 +17658,9 @@ Tšüľľellä $2 on spiiska viimeiziss pühtšimühsiiss.',
 	'deletecomment' => 'Süü',
 	'deleteotherreason' => 'Muu vai lisä süü',
 	'deletereasonotherlist' => 'Muu süü',
-];
+);
 
-$messages['vro'] = [
+$messages['vro'] = array(
 	'december' => 'joulukuu',
 	'december-gen' => 'joulukuu',
 	'dec' => 'jouluk',
@@ -17848,9 +17691,9 @@ Teedüskogo and\' viateedüse "$3: $4".',
 	'download' => 'laat',
 	'disambiguations' => 'Lingiq, miä näütäseq täpsüstüslehekülgi pääle',
 	'disambiguationspage' => 'Template:Linke täpsüstüslehekülile',
-	'disambiguations-text' => 'Naaq leheq näütäseq \'\'\'täpsüstüslehti\'\'\' pääle.
-Tuu asõmal pidänüq nä näütämä as\'a sisu pääle.<br />
-Lehte peetäs täpsüstüslehes, ku timän om pruugit näüdüst, kohe näütäs link lehelt [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "Naaq leheq näütäseq '''täpsüstüslehti''' pääle.
+Tuu asõmal pidänüq nä näütämä as'a sisu pääle.<br />
+Lehte peetäs täpsüstüslehes, ku timän om pruugit näüdüst, kohe näütäs link lehelt [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Katõkõrdsõq ümbresaatmisõq',
 	'doubleredirectstext' => 'Egä ria pääl om ärq tuud edimäne ja tõõnõ ümbresaatmisleht ja niisama tõõsõ ümbresaatmislehe link, miä näütäs hariligult kotusõ pääle, kohe edimäne ümbersaatmisleht pidänüq õkva näütämä.',
 	'deadendpages' => 'Leheq, kon olõ-i linke',
@@ -17866,10 +17709,10 @@ Kelläaoq ummaq serveriao perrä.',
 	'deletecomment' => 'Põhjus:',
 	'deleteotherreason' => 'Muu põhjus vai täpsüstüs:',
 	'deletereasonotherlist' => 'Muu põhjus',
-	'deletereason-dropdown' => '*Hariliguq kistutamisõ põhjusõq
+	'deletereason-dropdown' => "*Hariliguq kistutamisõ põhjusõq
 ** Kirotaja hindä palvõl
 ** Tegijäõigusõ rikminõ
-** Lehe ts\'urkminõ',
+** Lehe ts'urkminõ",
 	'databasenotlocked' => 'Teedüskoko panda-s lukku.',
 	'delete_and_move' => 'Kistudaq tsihtlehekülg ärq ja panõq timä asõmalõ taa leht',
 	'delete_and_move_text' => 'Tsihtlehekülg  "[[:$1]]" om jo olõman, kas tahat tuu ärq kistutaq, et taa leht timä asõmalõ pandaq?',
@@ -17878,60 +17721,60 @@ Kelläaoq ummaq serveriao perrä.',
 	'djvu_page_error' => 'DjVu lehe viga',
 	'djvu_no_xml' => 'Saa-s DjVu-teedüstü jaos XML-i kätte',
 	'deletedrevision' => 'Kistutõdi ärq vana kujo $1.',
-	'deletedwhileediting' => '<center>\'\'\'Hoiatus\'\'\': taa leht om ärq kistutõt päält tuud, ku sa taad toimõndama naksit!</center>',
+	'deletedwhileediting' => "<center>'''Hoiatus''': taa leht om ärq kistutõt päält tuud, ku sa taad toimõndama naksit!</center>",
 	'descending_abbrev' => 'allapoolõ',
-];
+);
 
-$messages['wa'] = [
+$messages['wa'] = array(
 	'december' => 'decimbe',
 	'december-gen' => 'decimbe',
 	'dec' => 'dec',
 	'delete' => 'Disfacer',
-	'deletethispage' => 'Disfacer l\' pådje',
-	'databaseerror' => 'Åk n\' a nén stî avou l\' båze di dnêyes',
-	'dberrortext' => 'Åk n\' a nén stî avou l\' sintacse do cweraedje del båze di dnêyes.
-Çoula pout esse cåze d\' on bug dins l\' programe.
+	'deletethispage' => "Disfacer l' pådje",
+	'databaseerror' => "Åk n' a nén stî avou l' båze di dnêyes",
+	'dberrortext' => "Åk n' a nén stî avou l' sintacse do cweraedje del båze di dnêyes.
+Çoula pout esse cåze d' on bug dins l' programe.
 Li dierin cweraedje del båze di dnêyes di sayî esteut:
 <blockquote><tt>$1</tt></blockquote>
 a pårti del fonccion «<tt>$2</tt>».
-MySQL a rtourné l\' aroke «<tt>$3: $4</tt>».',
-	'dberrortextcl' => 'Åk n\' a nén stî avou l\' sintacse do cweraedje del båze di dnêyes.
+MySQL a rtourné l' aroke «<tt>$3: $4</tt>».",
+	'dberrortextcl' => "Åk n' a nén stî avou l' sintacse do cweraedje del båze di dnêyes.
 Li dierin cweraedje del båze di dnêyes di sayî esteut:
 «$1»
 a pårti del fonccion «$2».
-MySQL a rtourné l\' aroke «$3: $4».',
+MySQL a rtourné l' aroke «$3: $4».",
 	'directorycreateerror' => 'On n\' såreut askepyî l\' dossî "$1".',
 	'difference' => '(Diferinces inte les modêyes)',
 	'datedefault' => 'Nole preferince',
 	'defaultns' => 'Prémetous spåces di nos pol cweraedje:',
 	'default' => 'prémetou',
 	'diff' => 'dif.',
-	'destfilename' => 'No d\' fitchî a eployî so {{SITENAME}}:',
+	'destfilename' => "No d' fitchî a eployî so {{SITENAME}}:",
 	'download' => 'aberweter',
-	'disambiguations' => 'Pådjes d\' omonimeye',
+	'disambiguations' => "Pådjes d' omonimeye",
 	'disambiguationspage' => 'Template:Omonimeye',
 	'doubleredirects' => 'Dobes redjiblaedjes',
-	'doubleredirectstext' => 'Tchaeke roye a-st on loyén viè l\' prumî eyet l\' deujhinme redjiblaedje, avou on mostraedje del prumire roye do tecse do deujhinme redjiblaedje, çou ki å pus sovint dene li «vraiy» årtike såme, ki l\' prumî redjiblaedje divreut evoyî viè lu.',
+	'doubleredirectstext' => "Tchaeke roye a-st on loyén viè l' prumî eyet l' deujhinme redjiblaedje, avou on mostraedje del prumire roye do tecse do deujhinme redjiblaedje, çou ki å pus sovint dene li «vraiy» årtike såme, ki l' prumî redjiblaedje divreut evoyî viè lu.",
 	'deadendpages' => 'Pådjes sins nou loyén wiki',
 	'defemailsubject' => 'Emile da {{SITENAME}}',
-	'deletepage' => 'Disfacer l\' pådje',
+	'deletepage' => "Disfacer l' pådje",
 	'deletedtext' => 'Li pådje «$1» a stî disfacêye. Loukîz li $2 po ene
 djivêye des dierins disfaçaedjes.',
 	'dellogpage' => 'Djournå des disfaçaedjes',
-	'dellogpagetext' => 'Chal pa dzo c\' est l\' djivêye des dierins disfaçaedjes.',
+	'dellogpagetext' => "Chal pa dzo c' est l' djivêye des dierins disfaçaedjes.",
 	'deletionlog' => 'djournå des disfaçaedjes',
 	'deletecomment' => 'Råjhon:',
 	'delete_and_move' => 'Disfacer et displaecî',
-	'delete_and_move_text' => '==I gn a mezåjhe di disfacer==
+	'delete_and_move_text' => "==I gn a mezåjhe di disfacer==
 
-L\' årtike såme «[[:$1]]» egzistêye dedja. El voloz vs disfacer po vs permete di displaecî l\' ôte?',
-	'delete_and_move_confirm' => 'Oyi, disfacer l\' pådje',
+L' årtike såme «[[:$1]]» egzistêye dedja. El voloz vs disfacer po vs permete di displaecî l' ôte?",
+	'delete_and_move_confirm' => "Oyi, disfacer l' pådje",
 	'delete_and_move_reason' => 'Disfacé po permete on displaeçaedje',
 	'deletedrevision' => 'Viye modêye $1 disfacêye',
 	'deletedwhileediting' => 'Asteme: Cisse pådje ci a stî disfacêye sol tins ki vos scrijhîz!',
-];
+);
 
-$messages['war'] = [
+$messages['war'] = array(
 	'december' => 'Disyembre',
 	'december-gen' => 'han Disyembre',
 	'dec' => 'Dis',
@@ -17968,17 +17811,17 @@ Kitaa an $2 para hin talaan han mga gibag-ohi nga mga ginpamara.',
 	'dellogpage' => 'Talaan han mga ginpara',
 	'deletecomment' => 'Katadungan:',
 	'deletereasonotherlist' => 'Lain nga katadungan',
-	'deletereason-dropdown' => '*Agsob nga rason hin pagpara
+	'deletereason-dropdown' => "*Agsob nga rason hin pagpara
 ** Tugon han manunurat
-** Pagtalapas ha katungod hin pagtatag-iya (\'\'copyright\'\')
-** Bandalismo',
+** Pagtalapas ha katungod hin pagtatag-iya (''copyright'')
+** Bandalismo",
 	'databasenotlocked' => 'An database in diri nakatrangka.',
 	'delete_and_move' => 'Igapara ngan igbalhin',
 	'duplicate-defaultsort' => '\'\'\'Pahimatngon:\'\'\' An daan-aada nga paglainlain nga piridlitan nga "$2" in igsasapaw an durudaan nga daan-aada nga paglainlain nga piridlitan nga "$1".',
 	'dberr-header' => 'Ini nga wiki mayda problema',
-];
+);
 
-$messages['wo'] = [
+$messages['wo'] = array(
 	'december' => 'Deesàmbar',
 	'december-gen' => 'Disembar',
 	'dec' => 'Dis',
@@ -18011,12 +17854,12 @@ Dàttub njoxe bi delloo bii njuumte « $3 : $4 ».',
 	'download' => 'yebbi',
 	'disambiguations' => 'Xëti turandoo',
 	'disambiguationspage' => 'Template:turandoo',
-	'disambiguations-text' => 'Xët yii di toftal dañoo ëmb ay lëkkalekaay yuy jëme ciy \'\'\'xëti turandoo\'\'\'.
+	'disambiguations-text' => "Xët yii di toftal dañoo ëmb ay lëkkalekaay yuy jëme ciy '''xëti turandoo'''.
 Dañoo waroon a jublu ci jukki yu baax. <br />
-Xëti turandoo yi ñooy yi ëmb benn ci royuwaay yees def fii [[MediaWiki:Disambiguationspage]]',
+Xëti turandoo yi ñooy yi ëmb benn ci royuwaay yees def fii [[MediaWiki:Disambiguationspage]]",
 	'doubleredirects' => 'Jubluwaat ñaari yoon',
-	'doubleredirectstext' => 'Wii xët dafa ëmb mbooleem xët yees jubluwaatal ci yeneen xëti jubluwaat.
-Rëdd wu ne am na lëkkalekaay buy jëme ci bu njëkk ak ñaareelu jubluwaat bi, ak rëdduw mbind wu njëkk wu ñaareelu jubluwaat bi, biy ëmb xëtu jëmuwaay wu \'\'baax\'\' wi, wi jubluwaat bu njëkk bi war a jublu moom itam.',
+	'doubleredirectstext' => "Wii xët dafa ëmb mbooleem xët yees jubluwaatal ci yeneen xëti jubluwaat.
+Rëdd wu ne am na lëkkalekaay buy jëme ci bu njëkk ak ñaareelu jubluwaat bi, ak rëdduw mbind wu njëkk wu ñaareelu jubluwaat bi, biy ëmb xëtu jëmuwaay wu ''baax'' wi, wi jubluwaat bu njëkk bi war a jublu moom itam.",
 	'double-redirect-fixed-move' => '[[$1]] tuddewaat nañu ko.
 Léegi mi ngi jublu [[$2]].',
 	'double-redirect-fixer' => 'Jubbantikaayu jubluwaat',
@@ -18050,9 +17893,9 @@ Xët wi nga joge niki àgguwaay « [[:$1]] » am na fi.
 Dëgg-dëgg namm nga koo far ngir tuddewaat gi mana antu?',
 	'delete_and_move_confirm' => 'Waaw, faral xët wi',
 	'delete_and_move_reason' => 'Far nañu ko ngir mana amal tuddewaat gi',
-];
+);
 
-$messages['wuu'] = [
+$messages['wuu'] = array(
 	'december' => '12月',
 	'december-gen' => '十二月',
 	'dec' => '12月',
@@ -18087,9 +17930,9 @@ $messages['wuu'] = [
 	'delete_and_move_confirm' => '对哉，删脱该只页面',
 	'deletedrevision' => '拨删脱个旧修订 $1',
 	'descending_abbrev' => '降序',
-];
+);
 
-$messages['xal'] = [
+$messages['xal'] = array(
 	'december' => 'Бар сар',
 	'december-gen' => 'Бар сарин',
 	'dec' => 'Бар',
@@ -18121,15 +17964,15 @@ $2 шидрә һарһлһна төлә хәләтн.',
 	'deletecomment' => 'Учр:',
 	'deleteotherreason' => 'Талдан аль дәкәд учр:',
 	'deletereasonotherlist' => 'Талдан учр',
-];
+);
 
-$messages['xh'] = [
+$messages['xh'] = array(
 	'december' => 'Eyo Mnga',
 	'december-gen' => 'Eyo Mnga',
 	'delete' => 'Cima',
-];
+);
 
-$messages['xmf'] = [
+$messages['xmf'] = array(
 	'december' => 'ქირსეთუთა',
 	'december-gen' => 'ქირსეთუთაშ',
 	'dec' => 'ქირ.',
@@ -18142,16 +17985,16 @@ $messages['xmf'] = [
 	'diff' => 'შხვანერობა',
 	'disambiguationspage' => 'Template:ანდობურმნიშვნელიანი',
 	'deletepage' => 'ხასილაშ ლასუა',
-	'deletedtext' => '"$1\" ლასირქ იყ’უ.
+	'deletedtext' => '"$1\\" ლასირქ იყ’უ.
 ასერდე ლასირ ხასილეფიშ ერკებულ ქოძირით $2–ს.',
 	'dellogpage' => 'ლასირეფიშ ერკებულ',
 	'deletecomment' => 'სამანჯელ:',
 	'deleteotherreason' => 'შხვა/გეძინელ სამანჯელ:',
 	'deletereasonotherlist' => 'შხვა სამანჯელ',
 	'duplicate-defaultsort' => '\'\'გური ქუჩით:\'\'\' სტანდარტული დანწყუალაშ კილა "$2"-შო გინარჯგინანს ორდონი დონწყუალაშ კილა "$1"-ს.',
-];
+);
 
-$messages['yi'] = [
+$messages['yi'] = array(
 	'december' => 'דעצעמבער',
 	'december-gen' => 'דעצעמבער',
 	'dec' => 'דעצ׳',
@@ -18186,7 +18029,7 @@ $messages['yi'] = [
 	'download' => 'אַראָפלאָדן',
 	'disambiguations' => 'בלעטער וואס פֿארבינדן מיט באדייטן בלעטער',
 	'disambiguationspage' => 'Template:באדייטן',
-	'disambiguations-text' => 'די קומענדיגע בלעטער פארבינדען צו א \'\'\'באדייטן בלאט\'\'\'. זיי ברויכן ענדערשט פֿארבינדן צו דער רעלעוואנטער טעמע בלאט.<br />א בלאט ווערט פאררעכענט אלס א בלאט ווערט גערעכנט פאר א באדײַטן בלאט אויב ער באניצט זיך מיט א מוסטער וואס איז פארבינדען פון [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => "די קומענדיגע בלעטער פארבינדען צו א '''באדייטן בלאט'''. זיי ברויכן ענדערשט פֿארבינדן צו דער רעלעוואנטער טעמע בלאט.<br />א בלאט ווערט פאררעכענט אלס א בלאט ווערט גערעכנט פאר א באדײַטן בלאט אויב ער באניצט זיך מיט א מוסטער וואס איז פארבינדען פון [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'געטאפלטע ווײַטערפֿירונגען',
 	'doubleredirectstext' => 'דער בלאט רעכנט אויס בלעטער וואס פירן ווייטער צו אנדערע ווייטערפירן בלעטער.
 יעדע שורה אנטהאלט א לינק צום ערשטן און צווייטן ווייטערפירונג, ווי אויך די ציל פון דער צווייטער ווייטערפירונג, וואס רוב מאל געפינט זיך די ריכטיגע ציל וואו די ערשטע ווייטערפירונג זאל ווייזן.
@@ -18226,7 +18069,7 @@ $messages['yi'] = [
 	'delete_and_move_confirm' => 'יא, מעק אויס דעם בלאט',
 	'delete_and_move_reason' => 'אויסגעמעקט כדי צו קענען באוועגן פֿון "[[$1]]"',
 	'djvu_page_error' => 'DjVu בלאט ארויס פֿון גרייך',
-	'djvu_no_xml' => 'מ\'קען נישט באקומען דעם XML פֿאַר דער DjVu טעקע',
+	'djvu_no_xml' => "מ'קען נישט באקומען דעם XML פֿאַר דער DjVu טעקע",
 	'deletedrevision' => 'אויסגעמעקט אלטע ווערסיע $1.',
 	'deletedwhileediting' => 'ווארענונג: דער בלאט איז געווארן אויסגעמעקט נאכדעם וואס איר האט אנגעהויבן רעדאקטירן!',
 	'descending_abbrev' => 'נידערן',
@@ -18238,9 +18081,9 @@ $messages['yi'] = [
 	'dberr-usegoogle' => 'אינצווישנצײַט קענט איר פרובירן זוכן דורך גוגל.',
 	'dberr-outofdate' => 'גיט אַכט אַז זײַערע אינדעקסן פֿון אונזער אינהאַלט איז מעגלעך פֿאַרעלטערט.',
 	'dberr-cachederror' => 'דאָס איז אַן אײַנגעשפייכלערט קאפיע פֿון  דעם געפֿאדערטן בלאַט, און קען זײַן פֿאַרעלטערט.',
-];
+);
 
-$messages['yo'] = [
+$messages['yo'] = array(
 	'december' => 'Oṣù Kejìlá',
 	'december-gen' => 'Oṣù Kejìlá',
 	'dec' => 'Oṣù 12',
@@ -18290,9 +18133,9 @@ Ojúewé àdésí "[[:$1]]" wà tẹ́lẹ̀tẹ́lẹ̀.
 	'delete_and_move_confirm' => 'Bẹ́ẹ̀ni, pa ojúewé náà rẹ́',
 	'descending_abbrev' => 'relẹ̀',
 	'dberr-header' => 'Wiki yìí ní ìsòro',
-];
+);
 
-$messages['yue'] = [
+$messages['yue'] = array(
 	'december' => '12月',
 	'december-gen' => '十二月',
 	'dec' => '12月',
@@ -18328,7 +18171,7 @@ $messages['yue'] = [
 	'disambiguations' => '搞清楚頁',
 	'disambiguationspage' => 'Template:disambig
 Template:搞清楚',
-	'disambiguations-text' => '以下呢啲頁面連結去一個\'\'\'搞清楚頁\'\'\'。佢哋先至應該指去正確嘅主題。<br />如果一個頁面連結自[[MediaWiki:Disambiguationspage]]，噉就會當佢係搞清楚頁。',
+	'disambiguations-text' => "以下呢啲頁面連結去一個'''搞清楚頁'''。佢哋先至應該指去正確嘅主題。<br />如果一個頁面連結自[[MediaWiki:Disambiguationspage]]，噉就會當佢係搞清楚頁。",
 	'doubleredirects' => '雙重跳轉',
 	'doubleredirectstext' => '每一行都順次序寫住第一頁名，佢嘅目的頁，同埋目的頁再指去邊度。改嘅時候，應該將第一個跳轉頁轉入第三頁。
 <del>劃咗</del>嘅項目係已經解決咗嘅。',
@@ -18378,9 +18221,9 @@ Template:搞清楚',
 	'dberr-usegoogle' => '響現階段你可以用 Google 去搵嘢。',
 	'dberr-outofdate' => '留意佢哋索引嘅內容可能會過時。',
 	'dberr-cachederror' => '呢個係所要求版嘅快取複本，可能會過時。',
-];
+);
 
-$messages['za'] = [
+$messages['za'] = array(
 	'december' => 'Nin Cwbx Yeih',
 	'december-gen' => 'Cibngeih nyied',
 	'dec' => 'Cibngeihnyied',
@@ -18388,9 +18231,9 @@ $messages['za'] = [
 	'disclaimers' => 'gangjmingz mienxcwz',
 	'disclaimerpage' => 'Project:Itbuen mienxcwz',
 	'diff' => 'Faenbied',
-];
+);
 
-$messages['zea'] = [
+$messages['zea'] = array(
 	'december' => 'december',
 	'december-gen' => 'december',
 	'dec' => 'dec',
@@ -18399,31 +18242,31 @@ $messages['zea'] = [
 	'disclaimers' => 'Voebehoud',
 	'disclaimerpage' => 'Project:Alhemeên voebehoud',
 	'databaseerror' => 'Databasefout',
-	'dberrortext' => 'Der is een syntaxisfout in \'t databaseverzoek opetreeën.
+	'dberrortext' => "Der is een syntaxisfout in 't databaseverzoek opetreeën.
 Meuhlijk zit der een fout in de software.
-\'t Lèste verzoek an de database was:
+'t Lèste verzoek an de database was:
 <blockquote><tt>$1</tt></blockquote>
 vanuut de functie “<tt>$2</tt>”.
-MySQL haf de foutmeldieng “<tt>$3: $4</tt>”.',
-	'dberrortextcl' => 'Der is een syntaxisfout in \'t databaseverzoek opetreeën.
-\'t Lèste verzoek an de database was:
+MySQL haf de foutmeldieng “<tt>$3: $4</tt>”.",
+	'dberrortextcl' => "Der is een syntaxisfout in 't databaseverzoek opetreeën.
+'t Lèste verzoek an de database was:
 “$1”
 vanuut de functie “$2”.
-MySQL haf de volhende foutmeldieng: “$3: $4”',
+MySQL haf de volhende foutmeldieng: “$3: $4”",
 	'directorycreateerror' => 'Map “$1” kon nie anemikt worn.',
 	'deletedhist' => 'Verwiederde heschiedenisse',
 	'difference' => '(Verschil tussen bewerkiengen)',
 	'diff-multi' => 'Von {{PLURAL:$2|eên gebruker|$2 gebrukers}} ({{PLURAL:$1|wor eên tussenlihhende versie|worn $1 tussenlihhende versies}} nie weereheven)',
 	'datedefault' => 'Hin vòkeur',
-	'defaultns' => 'Standard in deêze naemruum\'n zoeken:',
+	'defaultns' => "Standard in deêze naemruum'n zoeken:",
 	'default' => 'standard',
 	'diff' => 'wiez',
 	'disambiguationspage' => 'Template:Deurverwiespagina',
 	'dellogpage' => 'Wislogboek',
 	'duplicate-defaultsort' => 'Waerschiewienge: De standaardsorterienge "$2" kriet vòrang vò de sorterienge "$1".',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'december' => '12月',
 	'december-gen' => '十二月',
 	'dec' => '12月',
@@ -18453,7 +18296,7 @@ $messages['zh-hans'] = [
 	'download' => '下载',
 	'disambiguations' => '链接到消歧义页的页面',
 	'disambiguationspage' => 'Template:消歧义',
-	'disambiguations-text' => '以下的页面都有到\'\'\'消歧义页\'\'\'的链接，但它们应该链接到适当的页面。<br />一个页面如果使用了[[MediaWiki:Disambiguationspage]]内的模板，则会被视为消歧义页。',
+	'disambiguations-text' => "以下的页面都有到'''消歧义页'''的链接，但它们应该链接到适当的页面。<br />一个页面如果使用了[[MediaWiki:Disambiguationspage]]内的模板，则会被视为消歧义页。",
 	'doubleredirects' => '双重重定向页',
 	'doubleredirectstext' => '此页列出了所有重定向到另一重定向页面的页面。每一行都包含有到第一和第二个重定向页面的链接，以及第二个重定向页面的目标——通常就是“真正的”目标页面，亦即是第一个重定向页面应该指向的页面。<del>已划去</del>的为已经解决的项目。',
 	'double-redirect-fixed-move' => '[[$1]]已被移动。它现在重定向至[[$2]]。',
@@ -18492,9 +18335,9 @@ $messages['zh-hans'] = [
 	'djvu_no_xml' => '无法在DjVu文件中获取XML',
 	'deletedrevision' => '已删除旧版本$1',
 	'days' => '$1天',
-	'deletedwhileediting' => '\'\'\'警告\'\'\'：此页在您开始编辑之后已经被删除！',
+	'deletedwhileediting' => "'''警告'''：此页在您开始编辑之后已经被删除！",
 	'descending_abbrev' => '降',
-	'duplicate-defaultsort' => '\'\'\'警告：\'\'\'默认排序关键字“$2”覆盖了之前的默认排序关键字“$1”。',
+	'duplicate-defaultsort' => "'''警告：'''默认排序关键字“$2”覆盖了之前的默认排序关键字“$1”。",
 	'dberr-header' => '本wiki出现了问题',
 	'dberr-problems' => '抱歉！
 本网站出现了一些技术问题。',
@@ -18505,9 +18348,17 @@ $messages['zh-hans'] = [
 	'dberr-cachederror' => '这是所请求页面的缓存副本，可能不是最新的。',
 	'defaultskin_choose' => '设定此站预设皮肤:',
 	'discuss' => '讨论这个页面',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'december' => '12月',
 	'december-gen' => '十二月',
 	'dec' => '12月',
@@ -18548,7 +18399,7 @@ Template:消歧义
 Template:消除歧义
 Template:消歧義
 Template:消除歧義',
-	'disambiguations-text' => '以下的頁面都有到\'\'\'消歧義頁\'\'\'的鏈接，但它們應該鏈接到適當的頁面。<br />一個頁面如果使用了[[MediaWiki:Disambiguationspage]]內的模板，則會被視為消歧義頁。',
+	'disambiguations-text' => "以下的頁面都有到'''消歧義頁'''的鏈接，但它們應該鏈接到適當的頁面。<br />一個頁面如果使用了[[MediaWiki:Disambiguationspage]]內的模板，則會被視為消歧義頁。",
 	'doubleredirects' => '雙重重定向頁面',
 	'doubleredirectstext' => '這一頁列出所有重定向頁面重定向到另一個重定向頁的頁面。每一行都包含到第一和第二個重定向頁面的連結，以及第二個重定向頁面的目標，通常顯示的都會是"真正"的目標頁面，也就是第一個重定向頁面應該指向的頁面。
 <del>已劃去</del>的為已經解決之項目。',
@@ -18601,109 +18452,17 @@ Template:消除歧義',
 	'dberr-cachederror' => '這個是所要求出來的快取複本，可能不是最新的。',
 	'defaultskin_choose' => '設定此站預設面板:',
 	'discuss' => '討論這個頁面',
-];
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+);
 
-$messages['zh-hk'] = [
-	'december' => '十二月',
-	'dberrortextcl' => '發生了一個數據庫查詢語法錯誤。
-最後一次的數據庫查詢是：
-“$1”
-來自于函數“$2”。
-MySQL返回錯誤“$3: $4”。',
-	'datedefault' => '默認值',
-	'deadendpages' => '斷鏈頁面',
-	'deadendpagestext' => '以下頁面没有鏈接到本站的其他頁面。',
-	'defaultskin_choose' => '設定此站預設面板:',
-	'defemailsubject' => '來自{{SITENAME}} 的用戶 "$1" 的電子郵件',
-	'delete_and_move' => '删除並移動',
-	'delete_and_move_confirm' => '確認删除本頁面',
-	'delete_and_move_reason' => '删除以便移動',
-	'delete_and_move_text' => '==删除請求==
-
-目標頁面 "[[$1]]"已經存在。你確認需要删除原頁面並以進行移動嗎？',
-	'deletedcontributions' => '被删除的用户貢獻',
-	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
-	'descending_abbrev' => '降序',
-	'disclaimerpage' => '{{ns:4}}:免責聲明',
-	'discuss' => '討論這個頁面',
-	'download' => '下載',
-];
-
-$messages['zh-min-nan'] = [
-	'december' => '十二月',
-];
-
-$messages['zh-mo'] = [
-	'december' => '十二月',
-];
-
-$messages['zh-my'] = [
-	'december' => '十二月',
-];
-
-$messages['zh-tw'] = [
-	'december' => '十二月',
-	'december-gen' => '十二月',
-	'dec' => '12月',
-	'delete' => '刪除',
-	'disclaimers' => '免責聲明',
-	'defaultns' => '預設搜尋的名字空間',
-	'disambiguations' => '消歧義',
-	'disambiguations-text' => '以下的頁面都有到<b>消歧義頁</b>的鏈接,
-但它們應該是連到適當的標題。<br />
-個頁面會被視為消含糊頁如果它是連自[[MediaWiki:Disambiguationspage]]。',
-	'deadendpagestext' => '以下頁面没有鏈接到本站的其他頁面。',
-	'deletedtext' => '「$1」已經被刪除。
-最近刪除的紀錄請參見$2。',
-	'dellogpagetext' => '以下是最近刪除的紀錄列表。
-所有的時間都是使用伺服器時間。',
-	'deletecomment' => '原因：',
-	'discuss' => '討論這個頁面',
-	'dberrortextcl' => '發生了一個數據庫查詢語法錯誤。
-最後一次的數據庫查詢是：
-“$1”
-來自于函數“$2”。
-MySQL返回錯誤“$3: $4”。',
-	'datedefault' => '默認值',
-	'deadendpages' => '斷鏈頁面',
-	'defaultskin1' => '管理員將<b>$1</b> 設為預設面板',
-	'defaultskin_choose' => '設定此站預設面板:',
-	'defemailsubject' => '來自{{SITENAME}} 的用戶 "$1" 的電子郵件',
-	'delete_and_move' => '删除並移動',
-	'delete_and_move_confirm' => '確認删除本頁面',
-	'delete_and_move_reason' => '删除以便移動',
-	'delete_and_move_text' => '==删除請求==
-
-目標頁面 "[[$1]]"已經存在。你確認需要删除原頁面並以進行移動嗎？',
-	'deletedcontributions' => '被删除的用户貢獻',
-	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
-	'descending_abbrev' => '降序',
-	'destfilename' => '重新命名檔案',
-	'disclaimerpage' => '{{ns:4}}:免責聲明',
-	'download' => '下載',
-];
-
-$messages['zh-yue'] = [
-	'december' => '十二月',
-	'december-gen' => '十二月',
-	'dec' => '12月',
-	'delete' => '刪除',
-	'disclaimers' => '免責聲明',
-	'defaultns' => '預設搜尋的名字空間',
-	'disambiguations' => '消歧義',
-	'disambiguations-text' => '以下的頁面都有到<b>消歧義頁</b>的鏈接,
-但它們應該是連到適當的標題。<br />
-個頁面會被視為消含糊頁如果它是連自[[MediaWiki:Disambiguationspage]]。',
-	'deadendpagestext' => '以下頁面沒有連結到這個wiki中的其它頁面。',
-	'deletedtext' => '「$1」已經被刪除。
-最近刪除的紀錄請參見$2。',
-	'dellogpagetext' => '以下是最近刪除的紀錄列表。
-所有的時間都是使用伺服器時間。',
-	'deletecomment' => '原因：',
-	'discuss' => '討論',
-];
-
-$messages['zu'] = [
+$messages['zu'] = array(
 	'december' => 'uDisemba',
 	'december-gen' => 'uDisemba',
 	'delete' => 'Sula',
@@ -18713,77 +18472,5 @@ $messages['zu'] = [
 	'databasenotlocked' => 'Idatabheyisi alikhiyiwi.',
 	'delete_and_move' => 'Sula futhi sunduza',
 	'delete_and_move_confirm' => 'Yebo, sula ikhasi',
-];
-
-$messages['zh'] = [
-	'dberrortextcl' => '发生了一个数据库查询语法错误。
-最后一次的数据库查询是：
-“$1”
-来自于函数“$2”。
-MySQL返回错误“$3: $4”。',
-	'deadendpages' => '斷鏈頁面',
-	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
-	'defemailsubject' => '来自{{SITENAME}} 的用户 "$1" 的电子邮件',
-	'delete' => '刪除',
-	'delete_and_move_confirm' => '确认删除本页面',
-	'delete_and_move_reason' => '删除以便移动',
-	'delete_and_move_text' => '==删除请求==
-
-目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
-	'deletedcontributions' => '被删除的用户贡献',
-	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
-	'descending_abbrev' => '降序',
-	'destfilename' => '重新命名档案',
-	'disclaimerpage' => '{{ns:4}}:免责声明',
-	'discuss' => '讨论这个页面',
-	'doubleredirectstext' => '此页列出了所有重新定向到另一页面的原始页面。每一行都包含第一个和第二个重定向页面的链接，以及第二个重定向页面的最终指向页面。也就是或，这个页面是最终的定向页面，同时也是第一个重定向页面最后指向的页面。<del>已划去</del>的为已经解决的条目。',
-];
-
-$messages['zh-cn'] = [
-	'dberrortextcl' => '发生了一个数据库查询语法错误。
-最后一次的数据库查询是：
-“$1”
-来自于函数“$2”。
-MySQL返回错误“$3: $4”。',
-	'datedefault' => '默认值',
-	'deadendpages' => '斷鏈頁面',
-	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
-	'defaultskin_choose' => '设定此站预设皮肤:',
-	'defemailsubject' => 'Wikia电子邮件',
-	'delete' => '刪除',
-	'delete_and_move' => '删除并移动',
-	'delete_and_move_confirm' => '确认删除本页面',
-	'delete_and_move_reason' => '删除以便移动',
-	'delete_and_move_text' => '==删除请求==
-
-目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
-	'deletedcontributions' => '被删除的用户贡献',
-	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
-	'descending_abbrev' => '降序',
-	'destfilename' => '重新命名档案',
-	'disclaimerpage' => '{{ns:4}}:免责声明',
-	'download' => '下载',
-];
-
-$messages['zh-sg'] = [
-	'dberrortextcl' => '发生了一个数据库查询语法错误。
-最后一次的数据库查询是：
-“$1”
-来自于函数“$2”。
-MySQL返回错误“$3: $4”。',
-	'datedefault' => '默认值',
-	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
-	'defemailsubject' => 'Wikia电子邮件',
-	'delete_and_move' => '删除并移动',
-	'delete_and_move_confirm' => '确认删除本页面',
-	'delete_and_move_reason' => '删除以便移动',
-	'delete_and_move_text' => '==删除请求==
-
-目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
-	'deletedcontributions' => '被删除的用户贡献',
-	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
-	'descending_abbrev' => '降序',
-	'disclaimerpage' => '{{ns:4}}:免责声明',
-	'download' => '下载',
-];
+);
 

@@ -13,6 +13,7 @@ $color-body: get_command_line_param('color-body', $color-body-default);
 $color-body-middle: get_command_line_param('color-body-middle', $color-body); // default: same as color-body
 $color-page: get_command_line_param('color-page', $color-white); // default: white
 $color-buttons: get_command_line_param('color-buttons', $color-links-default); // default: blue
+$color-community-header: get_command_line_param('color-community-header', $color-buttons); // default: blue as for buttons
 $color-links: get_command_line_param('color-links', $color-links-default); // default: blue
 $color-header: get_command_line_param('color-header', $color-header-default);
 $background-image: get_command_line_param('background-image', 'http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png'); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.

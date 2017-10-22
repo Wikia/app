@@ -34,8 +34,8 @@
 <? endif ?>
 
 <?= $topScripts ?>
-<?= $recoveryHeadBootstrapCode ?>	
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+<?= $recoveryHeadBootstrapCode ?>
 
 <!-- Make IE recognize HTML5 tags. -->
 <!--[if IE]>
@@ -59,6 +59,7 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
+<?= $instartLogic ?>
 <?= $recoveryTopBodyBootstrapCode ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
@@ -66,15 +67,12 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
-<?= $openXBidder ?>
+<?= $a9 ?>
 <?= $prebid ?>
-<?= $rubiconVulcan ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
-<?= $ivw3 ?>
 <?= $sourcePoint ?>
 <?= $gfc ?>
 

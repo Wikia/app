@@ -29,6 +29,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	public function execute() {
 		$wikia = false;
 		$to = false;
+		$from = false;
 
 		extract( $this->extractRequestParams() );
 
@@ -72,6 +73,9 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 				$requested = 1 + $to - $from;
 				if ( $requested > $maxLimit ) {
 					$this->setWarning( "Count of results must not be over $maxLimit (set to $requested)" );
+				}
+				else if ( $requested < 1 ) {
+					$this->dieUsage( 'wkto should be equal or greater than wkfrom', '' );
 				}
 
 				$limit = min( $requested, $maxLimit );

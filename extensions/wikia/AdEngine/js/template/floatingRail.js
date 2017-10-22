@@ -1,12 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floatingRail', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.utils.math',
 	'jquery',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window'
-], function (adContext, math, $, log, throttle, win) {
+], function (adContext, $, log, throttle, win) {
 	'use strict';
 
 	var $medrec = $('#TOP_RIGHT_BOXAD'),
@@ -18,13 +17,12 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		adsInRail = 2,
 		biggestAdSize = 600,
 		globalNavHeight = $('#globalNavigation').height(),
-		margin = 10,
+		margin = 15,
 		medrecDefaultSize = 250,
 		logGroup = 'ext.wikia.adEngine.template.floatingRail',
 		railWidth = 300,
 
 		availableSpace,
-		articleHeight,
 		floatingSpace,
 		scrollTop,
 		startPosition,
@@ -38,42 +36,48 @@ define('ext.wikia.adEngine.template.floatingRail', [
 			// Check if medrec has hidden class for handling tablet mode
 			if (scrollTop <= startPosition || $medrec.hasClass('hidden')) {
 				$rail.css({
-					position: 'relative',
+					position: 'static',
+					paddingTop: '0px',
 					top: '0px',
 					width: railWidth + 'px'
 				});
 			} else if (scrollTop > startPosition && scrollTop < stopPosition) {
 				$rail.css({
 					position: 'fixed',
+					paddingTop: '0px',
 					top: globalNavHeight + margin + 'px',
 					width: railWidth + 'px'
 				});
 			} else if (scrollTop >= stopPosition) {
 				$rail.css({
-					position: 'absolute',
-					top: floatingSpace + 2 * globalNavHeight + 'px',
+					position: 'static',
+					paddingTop: floatingSpace + 'px',
+					top: '0px',
 					width: railWidth + 'px'
 				});
 			}
 		}, 50);
 
+	function getChildrenHeight() {
+		var height = 0;
+
+		$rail.children().each(function () {
+			height += $(this).height();
+		});
+
+		return height;
+	}
+
 	function getAvailableSpace() {
 		if (!availableSpace) {
 			availableSpace =
-				$wikiaMainContent.height() - $railWrapper.height() + medrecDefaultSize - adsInRail * biggestAdSize;
+				$wikiaMainContent.height() - getChildrenHeight() + medrecDefaultSize - adsInRail * biggestAdSize;
 			availableSpace = Math.max(0, availableSpace);
 
 			log(['getAvailableSpace', availableSpace], 'debug', logGroup);
 		}
-		return availableSpace;
-	}
 
-	function getArticleHeight() {
-		if (!articleHeight) {
-			articleHeight = $wikiaMainContent.height();
-			log(['getArticleHeight', articleHeight], 'debug', logGroup);
-		}
-		return articleHeight;
+		return availableSpace;
 	}
 
 	function show(params) {
@@ -82,7 +86,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 			isPageSupported = context.targeting.skin === 'oasis' &&
 				context.targeting.pageType === 'article';
 
-		if(!isPageSupported || getAvailableSpace() === 0) {
+		if (!isPageSupported || getAvailableSpace() === 0) {
 			return;
 		}
 
@@ -92,13 +96,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		win.addEventListener('resize', update);
 	}
 
-	function getArticleHeightParameter() {
-		var space = getArticleHeight();
-		return math.getBucket(space, 1500);
-	}
-
 	return {
-		getArticleHeightParameter: getArticleHeightParameter,
 		show: show
 	};
 });

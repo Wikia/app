@@ -34,8 +34,6 @@ class Scribunto_LuaTitleLibraryTests extends Scribunto_LuaEngineTestBase {
 			$data = array(
 				'iw_prefix' => 'scribuntotitletest',
 				'iw_url'    => '//test.wikipedia.org/wiki/$1',
-				'iw_api'    => 1,
-				'iw_wikiid' => 0,
 				'iw_local'  => 0,
 				'iw_trans'  => 0,
 			);

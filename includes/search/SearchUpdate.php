@@ -104,7 +104,7 @@ class SearchUpdate implements DeferrableUpdate {
 		$text = preg_replace( "/''[']*/", " ", $text );
 		wfProfileOut( __METHOD__ . '-regexps' );
 
-		wfRunHooks( 'SearchUpdate', array( $this->mId, $this->mNamespace, $this->mTitle, &$text ) );
+		Hooks::run( 'SearchUpdate', array( $this->mId, $this->mNamespace, $this->mTitle, &$text ) );
 
 		# Perform the actual update
 		$search->update($this->mId, $search->normalizeText( Title::indexTitle( $this->mNamespace, $this->mTitle ) ),

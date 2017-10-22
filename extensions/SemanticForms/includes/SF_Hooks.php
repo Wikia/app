@@ -100,7 +100,7 @@ class SFHooks {
 	 * @param ResourceLoader &$resourceLoader The ResourceLoader object
 	 * @return bool Always true
 	 */
-	public static function registerModules( ResourceLoader &$resourceLoader ) {
+	public static function registerModules( ResourceLoader $resourceLoader ): bool {
 		if ( class_exists( 'WikiEditorHooks' ) ) {
 			$resourceLoader->register( array(
 				'ext.semanticforms.wikieditor' => array(
@@ -162,7 +162,7 @@ class SFHooks {
 		return true;
 	}
 
-	static function registerFunctions( &$parser ) {
+	static function registerFunctions( Parser $parser ): bool {
 		$parser->setFunctionHook( 'default_form', array( 'SFParserFunctions', 'renderDefaultForm' ) );
 		$parser->setFunctionHook( 'forminput', array( 'SFParserFunctions', 'renderFormInput' ) );
 		$parser->setFunctionHook( 'formlink', array( 'SFParserFunctions', 'renderFormLink' ) );
@@ -257,7 +257,7 @@ class SFHooks {
 		return true;
 	}
 
-	public static function addToAdminLinks( &$admin_links_tree ) {
+	public static function addToAdminLinks( $admin_links_tree ) {
 		$data_structure_label = wfMessage( 'smw_adminlinks_datastructure' )->text();
 		$data_structure_section = $admin_links_tree->getSection( $data_structure_label );
 		if ( is_null( $data_structure_section ) ) {

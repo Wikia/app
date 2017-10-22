@@ -42,7 +42,6 @@ class Ibm_db2Updater extends DatabaseUpdater {
 			// 1.17
 			array( 'addTable', 'iwlinks',                            'patch-iwlinks.sql' ),
 			array( 'addField', 'updatelog',     'ul_value',          'patch-ul_value.sql' ),
-			array( 'addField', 'interwiki',     'iw_api',            'patch-iw_api_and_wikiid.sql' ),
 			array( 'addField', 'categorylinks', 'cl_collation',      'patch-categorylinks-better-collation.sql' ),
 			array( 'addTable', 'msg_resource',                       'patch-msg_resource.sql' ),
 			array( 'addTable', 'msg_resource_links',                 'patch-msg_resource_links.sql' ),
@@ -50,8 +49,6 @@ class Ibm_db2Updater extends DatabaseUpdater {
 			array( 'addIndex', 'msg_resource',   'uq81_msg_resource', 'patch-uq_81_msg_resource.sql' ),
 			array( 'addTable', 'module_deps',                        'patch-module_deps.sql' ),
 			array( 'addIndex', 'module_deps',    'uq96_module_deps',  'patch-uq_96_module_deps.sql' ),
-			array( 'addField', 'interwiki',      'iw_api',            'patch-iw_api-field.sql' ),
-			array( 'addField', 'interwiki',      'iw_wikiid',         'patch-iw_wikiid-field.sql' ),
 			array( 'addField', 'categorylinks',  'cl_sortkey_prefix', 'patch-cl_sortkey_prefix-field.sql' ),
 			array( 'addField', 'categorylinks',  'cl_collation',      'patch-cl_collation-field.sql' ),
 			array( 'addField', 'categorylinks',  'cl_type',           'patch-cl_type-field.sql' ),

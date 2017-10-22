@@ -34,25 +34,4 @@ class QuickToolsHooksHelper {
 		return true;
 	}
 
-	/**
-	 * Add a link to create user page automagically to the account navigation dropdown
-	 * and add the create user page JS module
-	 *
-	 * @author grunny
-	 * @param  Array $possibleItems Allowed items that appear in the Oasis account navigation
-	 * @param  Array $personalUrls An array of items to go in the menu
-	 * @return boolean
-	 */
-	public static function onAccountNavigationModuleAfterDropdownItems( &$possibleItems, &$personalUrls ) {
-		$app = F::app();
-		if ( $app->wg->User->isAllowed( 'quicktools' ) ) {
-			$possibleItems[] = 'createuserpage';
-			$personalUrls['createuserpage'] = [
-				'href' => '#',
-				'text' => wfMessage( 'quicktools-createuserpage-link' )->escaped()
-			];
-			$app->wg->Out->addModules( 'ext.createUserPage' );
-		}
-		return true;
-	}
 }

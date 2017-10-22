@@ -25,7 +25,7 @@ $sth = $dbr->select(
 
 $DB_NAMES = array();
 while( $row = $dbr->fetchObject( $sth ) ) {
-	$db_name = unserialize($row->cv_value);
+	$db_name = unserialize( $row->cv_value, [ 'allowed_classes' => false ] );
 	if ( !empty($db_name) ) {
 		$DB_NAMES[$db_name] = 1;
 	}
@@ -100,7 +100,7 @@ $stha = $dba->select(
 	__FILE__
 );
 while( $row = $dba->fetchObject( $stha ) ) {
-	$dirs[ unserialize( $row->cv_value ) ] = $row->cv_city_id;
+	$dirs[ unserialize( $row->cv_value, [ 'allowed_classes' => false ] ) ] = $row->cv_city_id;
 }
 
 foreach( $dirs as $dir => $city_id ) {
@@ -149,7 +149,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	);
 
 	if( !empty( $variable->cv_value ) ) {
-		if( unserialize( $variable->cv_value ) !== $row->city_dbname ) {
+		if ( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ) !== $row->city_dbname ) {
 			print "wgDBname different than city_dbname in city_id={$row->city_id} city_public={$row->city_public}\n";
 		}
 		else {

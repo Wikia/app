@@ -104,22 +104,11 @@ class SquidUpdate {
 	static function purge( $urlArr ) {
 		global $wgSquidServers, $wgHTCPMulticastAddress, $wgHTCPPort;
 
-		/*if ( (@$wgSquidServers[0]) == 'echo' ) {
-			echo implode("<br />\n", $urlArr) . "<br />\n";
-			return;
-		}*/
-
 		if( !$urlArr ) {
 			return;
 		}
 
 		// wikia change start
-		global $wgPurgeSquidViaScribe;
-		if( $wgPurgeSquidViaScribe == true ) {
-			ScribePurge::purge( $urlArr );
-			return;
-		}
-
 		global $wgPurgeSquidViaCelery;
 		if ( $wgPurgeSquidViaCelery == true ) {
 			CeleryPurge::purge( $urlArr );

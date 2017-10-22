@@ -23,11 +23,11 @@ class ChatWidget {
 
 	/**
 	 * @brief This function set parseTag hook
+	 * @param Parser $parser
+	 * @return bool
 	 */
-	public static function onParserFirstCallInit( Parser &$parser ) {
-		wfProfileIn( __METHOD__ );
+	public static function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( CHAT_TAG, [ __CLASS__, "parseTag" ] );
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -44,7 +44,7 @@ class ChatWidget {
 			[
 				'username' => User::isIp( $wgUser->getName() )
 					? wfMessage( 'oasis-anon-user' )->escaped() : $wgUser->getName(),
-				'userProfileUrl' => $wgUser->getUserPage()->getLinkURL(),
+				'profileUrl' => $wgUser->getUserPage()->getLinkURL(),
 				'avatarUrl' => $myAvatarUrl,
 			],
 		];
@@ -68,9 +68,10 @@ class ChatWidget {
 		$usersCount = count( $usersInfo );
 		$buttonMessage = $usersCount ? 'chat-join-the-chat' : 'chat-start-a-chat';
 
-		$vars = [
+		return [
 			'blankImgUrl' => $wgBlankImgUrl,
 			'buttonText' => wfMessage( $buttonMessage )->text(),
+			'chatLiveText' => wfMessage( 'chat-live2' )->text(),
 			'buttonIcon' => DesignSystemHelper::renderSvg( 'wds-icons-reply-tiny' ),
 			'guidelinesText' => $guidelinesText->exists() ? $guidelinesText->parse() : null,
 			'fromParserTag' => $fromParserTag,
@@ -85,8 +86,6 @@ class ChatWidget {
 			'hasUsers' => $usersCount > 0,
 			'moreUsersCount' => $usersCount - self::CHAT_AVATARS_LIMIT > 0 ? $usersCount - self::CHAT_AVATARS_LIMIT : null,
 		];
-
-		return $vars;
 	}
 
 	/**
@@ -114,8 +113,7 @@ class ChatWidget {
 		$parser->getOutput()->addModuleMessages( 'ext.Chat2.ChatWidget' );
 
 		wfProfileOut( __METHOD__ );
-
-		return '<nowiki>' . $html . '</nowiki>';
+		return $html;
 	}
 
 	/**
@@ -140,8 +138,6 @@ class ChatWidget {
 	 * * username - chatter login
 	 * * avatarUrl - chatter avatar url
 	 * * editCount - number of chatter's edits
-	 * * showSince - flag indicating if we can display the information when the chatter joined the wiki
-	 * * since_year && since_month - month and year, when chatter joined this wiki
 	 * * since - since year and month in the form of string "MMM YYYY". Months are in wgLang and abbreviated
 	 * * profileUrl - link to chatter talk page (or message wall, if it's enabled)
 	 * * contribsUrl - link to chatter contribution page
@@ -152,7 +148,6 @@ class ChatWidget {
 
 		wfProfileIn( __METHOD__ );
 
-		Chat::info( __METHOD__ . ': Method called' );
 		$chatters = [ ];
 		if ( empty( $wgReadOnly ) ) {
 			// cache the whole response
@@ -182,6 +177,7 @@ class ChatWidget {
 			self::getUserInfoMemcKey( $userName ),
 			self::CHAT_USER_INFO_CACHE_TTL,
 			function () use ( $userName ) {
+				/* @var Language $wgLang */
 				global $wgEnableWallExt, $wgLang;
 
 				$chatter = [
@@ -192,7 +188,7 @@ class ChatWidget {
 				// get stats for edit count and member since
 				$user = User::newFromName( $userName );
 
-				if ( $user instanceof User ) {
+				if ( $user instanceof User && !$user->isAnon() ) {
 					$userStatsService = new UserStatsService( $user->getId() );
 					$stats = $userStatsService->getStats();
 
@@ -200,15 +196,11 @@ class ChatWidget {
 					$chatter['editCount'] = $stats['editcount'];
 
 					// member since
-					$chatter['showSince'] = $chatter['editCount'] != 0;
-					if ( $chatter['showSince'] ) {
-						$months = $wgLang->getMonthAbbreviationsArray();
-						$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
+					$months = $wgLang->getMonthAbbreviationsArray();
 
-						$chatter['since_year'] = $date['year'];
-						$chatter['since_month'] = $date['mon'];
-						$chatter['since'] = sprintf( '%s %s', $months[$chatter['since_month']], $chatter['since_year'] );
-					}
+					// SUS-1994 - fallback to user registration date if he has no contributions yet
+					$date = getdate( strtotime( $stats['firstContributionTimestamp'] ?: $user->getRegistration() ) );
+					$chatter['since'] = sprintf( '%s %s', $months[$date['mon']], $date['year'] );
 
 					$profileUrlNs = !empty( $wgEnableWallExt ) ? NS_USER_WALL : NS_USER_TALK;
 					$chatter['profileUrl'] = Title::makeTitle( $profileUrlNs, $chatter['username'] )->getFullURL();

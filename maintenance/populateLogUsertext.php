@@ -53,16 +53,34 @@ class PopulateLogUsertext extends LoggedUpdateMaintenance {
 		$end += $this->mBatchSize - 1;
 		$blockStart = $start;
 		$blockEnd = $start + $this->mBatchSize - 1;
+
 		while ( $blockEnd <= $end ) {
 			$this->output( "...doing log_id from $blockStart to $blockEnd\n" );
-			$cond = "log_id BETWEEN $blockStart AND $blockEnd AND log_user = user_id";
-			$res = $db->select( array( 'logging', 'user' ),
-				array( 'log_id', 'user_name' ), $cond, __METHOD__ );
+			$res = $db->select(
+				'logging',
+				[ 'log_id', 'log_user' ],
+				"log_id BETWEEN $blockStart AND $blockEnd",
+				__METHOD__
+			);
+
+			$ids = [];
+
+			foreach ( $res as $row ) {
+				$ids[] = $row->log_user;
+			}
+
+			$res->rewind();
+
+			$users = User::whoAre( $ids );
 
 			$db->begin();
 			foreach ( $res as $row ) {
-				$db->update( 'logging', array( 'log_user_text' => $row->user_name ),
-					array( 'log_id' => $row->log_id ), __METHOD__ );
+				$db->update(
+					'logging',
+					[ 'log_user_text' => $users[ $row->log_user ] ],
+					[ 'log_id' => $row->log_id ],
+					__METHOD__
+				);
 			}
 			$db->commit();
 			$blockStart += $this->mBatchSize;

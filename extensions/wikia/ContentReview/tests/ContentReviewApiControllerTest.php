@@ -22,11 +22,11 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 		$this->prepareControllerPropertiesMocks( $params );
 
-		if ( $params['title'] ) {
+		if ( isset( $params['title'] ) ) {
 			$this->prepareTitleMock( $params['title'] );
 		}
 
-		if ( $params['expectedException'] ) {
+		if ( isset( $params['expectedException'] ) ) {
 			$this->expectException( $params['expectedException'] );
 		}
 
@@ -170,8 +170,6 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 		$this->mockStaticMethod( '\Title', 'newFromId', 'Mocked title' );
 
-		$responseMock = $this->getMock( '\WikiaResponse' );
-
 		/**
 		 * Mock ContentReviewApiController
 		 * @var ContentReviewApiController
@@ -184,7 +182,9 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		] );
 
 		$apiControllerMock->setRequest( $requestMock );
-		$apiControllerMock->setResponse( $responseMock );
+		$apiControllerMock->setResponse(
+			new WikiaResponse( WikiaResponse::FORMAT_JSON, $requestMock )
+		);
 
 		$apiControllerMock->expects( $this->any() )
 			->method( 'getCurrentRevisionModel' )
@@ -486,6 +486,12 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 				[
 					'exception' => true,
 					'wasPosted' => false,
+					'requestToken' => $invalidToken,
+					'userEditToken' => $invalidToken,
+					'userIsAllowed' => false,
+					'hasPageApprovedId' => false,
+					'isDiffPageInReviewProcess' => false,
+					'inReviewRevision' => [],
 				],
 				$expected = 'BadRequestApiException',
 				$message = 'The request would be ok if it was POSTed.',
@@ -496,6 +502,10 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $invalidToken,
 					'userEditToken' => $validToken,
+					'userIsAllowed' => false,
+					'hasPageApprovedId' => false,
+					'isDiffPageInReviewProcess' => false,
+					'inReviewRevision' => [],
 				],
 				$expected = 'BadRequestApiException',
 				$message = 'An invalid editToken was sent in the request.',
@@ -506,7 +516,10 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'userIsAllowed' => false
+					'userIsAllowed' => false,
+					'hasPageApprovedId' => false,
+					'isDiffPageInReviewProcess' => false,
+					'inReviewRevision' => [],
 				],
 				$expected = 'PermissionsException',
 				$message = 'User does not have content-review rights.',

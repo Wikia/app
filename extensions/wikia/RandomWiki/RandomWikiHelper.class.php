@@ -104,7 +104,10 @@ class RandomWikiHelper {
 			}
 
 			self::$mData[ 'total' ] = $counter;
-			$wgMemc->set( $cacheKey, self::$mData, 3600 * self::CACHE_EXPIRY );
+
+			if ( !empty( $wikis ) ) {
+				$wgMemc->set( $cacheKey, self::$mData, 3600 * self::CACHE_EXPIRY );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );

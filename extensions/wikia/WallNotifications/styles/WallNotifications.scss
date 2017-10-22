@@ -3,10 +3,6 @@
 @import "skins/shared/mixins/menus";
 @import "skins/shared/mixins/box-shadow";
 
-#AccountNavigation.AccountNavigation {
-	right: 60px;
-}
-
 #WallNotifications {
   &.prehide {
     visibility:hidden;

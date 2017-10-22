@@ -67,6 +67,10 @@ define( 'IP_ADDRESS_STRING',
 	')'
 );
 
+// Wikia change: non-routable IP adresses
+define( 'NON_ROUTABLE_IPV4', '0.0.0.0' );
+define( 'NON_ROUTABLE_IPV6', '::' );
+
 /**
  * A collection of public static functions to play with IP address
  * and IP blocks.

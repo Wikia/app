@@ -87,7 +87,7 @@ class DiscussionsThreadModel {
 			} );
 		}
 
-		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
+		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=true" . $categoryKey;
 	}
 
 	private function getUpvoteRequestUrl() {

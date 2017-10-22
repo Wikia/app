@@ -81,6 +81,11 @@ $messages['de'] = array(
 	'portability-dashboard-language-filter-all' => 'alle',
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganisierte Vorlagen auf Spezial:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Nicht-portable Infoboxen auf Spezial:Insights',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['es'] = array(
@@ -105,6 +110,11 @@ $messages['es'] = array(
 	'portability-dashboard-language-filter-all' => 'todos',
 	'portability-dashboard-special-insights-template-without-title' => 'Plantillas desorganizadas en Especial:Sugerencias',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Infoboxes no portátiles en Especial:Sugerencias',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['fr'] = array(
@@ -129,6 +139,11 @@ $messages['fr'] = array(
 	'portability-dashboard-language-filter-all' => 'toutes',
 	'portability-dashboard-special-insights-template-without-title' => 'Modèles non classés dans Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Infoboxes non portables dans Special:Insights',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['it'] = array(
@@ -153,6 +168,11 @@ $messages['it'] = array(
 	'portability-dashboard-language-filter-all' => 'tutto',
 	'portability-dashboard-special-insights-template-without-title' => 'Modelli non organizzati in Speciale:Consigli',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Infobox non portatili in Speciale:Consigli',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['ja'] = array(
@@ -177,6 +197,11 @@ $messages['ja'] = array(
 	'portability-dashboard-language-filter-all' => 'すべて',
 	'portability-dashboard-special-insights-template-without-title' => '「特別:インサイト」における未整理のテンプレート',
 	'portability-dashboard-special-insights-custom-infobox-title' => '「特別:インサイト」における非ポータブル・インフォボックス',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['nl'] = array(
@@ -201,6 +226,11 @@ $messages['nl'] = array(
 	'portability-dashboard-language-filter-all' => 'all',
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['pl'] = array(
@@ -225,6 +255,11 @@ $messages['pl'] = array(
 	'portability-dashboard-language-filter-all' => 'wszystkie',
 	'portability-dashboard-special-insights-template-without-title' => 'Niezorganizowane szablony na Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Nieprzenośne infoboksy na Special:Insights',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['pt'] = array(
@@ -249,6 +284,11 @@ $messages['pt'] = array(
 	'portability-dashboard-language-filter-all' => 'todos',
 	'portability-dashboard-special-insights-template-without-title' => 'Predefinições não organizadas em Special: Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Infoboxes não portáteis em Special:Insights',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['ru'] = array(
@@ -273,6 +313,11 @@ $messages['ru'] = array(
 	'portability-dashboard-language-filter-all' => 'всё',
 	'portability-dashboard-special-insights-template-without-title' => 'Неклассифицированные шаблоны в Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Немультиплатформенные шаблоны в Special:Insights',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['zh-hans'] = array(
@@ -297,6 +342,11 @@ $messages['zh-hans'] = array(
 	'portability-dashboard-language-filter-all' => '所有',
 	'portability-dashboard-special-insights-template-without-title' => '在Special:Insights上显示的无效模板',
 	'portability-dashboard-special-insights-custom-infobox-title' => '在Special:Insights上显示的非移动式讯息框',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 
 $messages['zh-hant'] = array(
@@ -321,5 +371,10 @@ $messages['zh-hant'] = array(
 	'portability-dashboard-language-filter-all' => '所有',
 	'portability-dashboard-special-insights-template-without-title' => '在Special:Insights上顯示的無效模板',
 	'portability-dashboard-special-insights-custom-infobox-title' => '在Special:Insights上顯示的非移動式訊息框',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-search-headline' => 'Search for a Community',
+	'portability-dashboard-search-placeholder' => 'Community url',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-info' => 'No data available',
 );
 

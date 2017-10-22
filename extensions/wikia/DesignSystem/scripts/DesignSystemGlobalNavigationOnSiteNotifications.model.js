@@ -78,6 +78,10 @@ define('ext.wikia.design-system.on-site-notifications.model', [
 			setUnreadCount: function (count) {
 				this._unreadCount = count;
 				this.unreadCountChanged.notify(count);
+			},
+
+			getUnreadCount: function() {
+				return this._unreadCount;
 			}
 		};
 

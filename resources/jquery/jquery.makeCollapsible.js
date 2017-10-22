@@ -146,6 +146,11 @@ $.fn.makeCollapsible = function() {
 							}
 						}
 					}
+
+					// Wikia change - trigger scroll to lazy-load any images (but these animations are async :/)
+					setTimeout(function () {
+						$(window).trigger('scroll');
+					}, 250);
 				}
 			},
 			// Toggles collapsible and togglelink class and updates text label

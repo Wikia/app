@@ -91,15 +91,12 @@ abstract class FounderDigestController extends EmailController {
 class FounderActivityDigestController extends FounderDigestController {
 
 	protected $pageEdits;
-	protected $newUsers;
 
 	public function initEmail() {
 		$this->pageEdits = $this->request->getVal( 'pageEdits' );
-		$this->newUsers = $this->request->getVal( 'newUsers' );
 		// Parent method is called here so that assertion of parameters is done at the right time
 		parent::initEmail();
 		$this->pageEdits = $this->language->formatNum( $this->pageEdits );
-		$this->newUsers = $this->language->formatNum( $this->newUsers );
 	}
 
 	protected function getSubject() {
@@ -148,19 +145,7 @@ class FounderActivityDigestController extends FounderDigestController {
 
 	protected function assertValidParams() {
 		parent::assertValidParams();
-		$this->assertNewUsersSet();
 		$this->assertPageEditsSet();
-	}
-
-	/**
-	 * Asserts that the `newUsers` value is passed
-	 *
-	 * @throws \Email\Check
-	 */
-	protected function assertNewUsersSet() {
-		if ( empty( $this->newUsers ) && $this->newUsers !== '0' ) {
-			throw new Check( 'Invalid value passed for `newUsers`' );
-		}
 	}
 
 	/**
@@ -209,12 +194,6 @@ class FounderActivityDigestController extends FounderDigestController {
 	protected static function getEmailSpecificFormFields() {
 		$formFields = [
 			'inputs' => [
-				[
-					'type' => 'text',
-					'name' => 'newUsers',
-					'label' => 'New users',
-					'tooltip' => 'Number of new visitors to the wiki'
-				],
 				[
 					'type' => 'text',
 					'name' => 'pageEdits',

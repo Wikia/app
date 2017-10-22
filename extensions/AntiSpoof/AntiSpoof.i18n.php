@@ -5,26 +5,24 @@
  * @file
  * @ingroup Extensions
  */
-
 $messages = array();
 
 $messages['en'] = array(
-	'antispoof-desc'          => 'Blocks the creation of accounts with mixed-script, confusing and similar usernames',
-	'antispoof-conflict-top'  => 'The name "$1" is too similar to {{PLURAL:$2|the existing account|the following $2 accounts}}:',
-	'antispoof-conflict-item' => '$1', # do not translate or duplicate this message to other languages
+	'antispoof-desc' => 'Blocks the creation of accounts with mixed-script, confusing and similar usernames',
+	'antispoof-conflict-top' => 'The name "$1" is too similar to {{PLURAL:$2|the existing account|the following $2 accounts}}:',
+	'antispoof-conflict-item' => '$1',
 	'antispoof-conflict-bottom' => 'Please choose another name.',
-	'antispoof-name-illegal'  => 'The name "$1" is not allowed to prevent confusing or spoofed usernames: $2.
+	'antispoof-name-illegal' => 'The name "$1" is not allowed to prevent confusing or spoofed usernames: $2.
 Please choose another name.',
-	'antispoof-badtype'       => 'Bad data type',
-	'antispoof-empty'         => 'Empty string',
-	'antispoof-blacklisted'   => 'Contains blacklisted character',
-	'antispoof-combining'     => 'Begins with combining mark',
-	'antispoof-unassigned'    => 'Contains unassigned or deprecated character',
-	'antispoof-noletters'     => 'Does not contain any letters',
-	'antispoof-mixedscripts'  => 'Contains incompatible mixed scripts',
-	'antispoof-tooshort'      => 'Canonicalized name too short',
-	'antispoof-ignore'        => 'Ignore spoofing checks',
-
+	'antispoof-badtype' => 'Bad data type',
+	'antispoof-empty' => 'Empty string',
+	'antispoof-blacklisted' => 'Contains blacklisted character',
+	'antispoof-combining' => 'Begins with combining mark',
+	'antispoof-unassigned' => 'Contains unassigned or deprecated character',
+	'antispoof-noletters' => 'Does not contain any letters',
+	'antispoof-mixedscripts' => 'Contains incompatible mixed scripts',
+	'antispoof-tooshort' => 'Canonicalized name too short',
+	'antispoof-ignore' => 'Ignore spoofing checks',
 	'right-override-antispoof' => 'Override the spoofing checks',
 );
 
@@ -572,6 +570,7 @@ $messages['de'] = array(
 	'antispoof-tooshort' => 'Der kanonisierte Name ist zu kurz.',
 	'antispoof-ignore' => 'Ähnlichkeitsprüfung ignorieren',
 	'right-override-antispoof' => 'Außer Kraft setzen der Benutzernamens-Ähnlichkeitsprüfung',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -697,6 +696,7 @@ $messages['es'] = array(
 	'antispoof-tooshort' => 'Nombre en forma canónica demasiado corto',
 	'antispoof-ignore' => 'Ignorar comprobaciones contra suplantaciones',
 	'right-override-antispoof' => 'Anula las comprobaciones de suplantación',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Estonian (Eesti)
@@ -772,6 +772,7 @@ $messages['fi'] = array(
 	'antispoof-tooshort' => 'sen kanonisoitu muoto on liian lyhyt',
 	'antispoof-ignore' => 'Älä käytä hämäävien tunnusten tarkistusta',
 	'right-override-antispoof' => 'Ohittaa tarkastukset samankaltaisista tai epäilyttävistä käyttäjätunnuksista',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Faroese (Føroyskt)
@@ -817,6 +818,7 @@ Veuillez choisir un autre nom.',
 	'antispoof-tooshort' => 'Nom canonique trop court',
 	'antispoof-ignore' => 'Ignorer la vérification de similitude avec les utilisateurs existants',
 	'right-override-antispoof' => 'Court-circuiter les vérifications de tromperie',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Cajun French (Français cadien)
@@ -1177,6 +1179,7 @@ $messages['it'] = array(
 	'antispoof-tooshort' => 'Nome in forma canonica troppo corto',
 	'antispoof-ignore' => 'Ignora i controlli per spoofing',
 	'right-override-antispoof' => 'Ignora i controlli spoofing',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Japanese (日本語)
@@ -1201,6 +1204,7 @@ $messages['ja'] = array(
 	'antispoof-tooshort' => '正規化した名前が短すぎます',
 	'antispoof-ignore' => 'なりすましチェックを無効にします。',
 	'right-override-antispoof' => 'なりすましチェックを無視する',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Jutish (Jysk)
@@ -1351,6 +1355,7 @@ $messages['ko'] = array(
 	'antispoof-tooshort' => '고유 이름이 너무 짧습니다.',
 	'antispoof-ignore' => '안티스푸프 검사를 무시',
 	'right-override-antispoof' => '혼란을 줄 수 있는 계정 이름 금지(안티스푸프)를 무시',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Colognian (Ripoarisch)
@@ -1433,6 +1438,24 @@ $messages['lo'] = array(
 	'antispoof-noletters' => 'ບໍ່ມີໂຕໜັງສື',
 	'antispoof-mixedscripts' => 'ມີສະກຣິບປະປົນແບບບໍ່ຖືກຕ້ອງ',
 	'antispoof-tooshort' => 'ຊື່ຫຍໍ້ສັ້ນໂພດ',
+);
+
+$messages['lol'] = array(
+	'antispoof-desc' => 'crwdns64958:0crwdne64958:0',
+	'antispoof-conflict-top' => 'crwdns64959:0{PLURAL:$2|the existing account|the following $2 accounts}crwdne64959:0',
+	'antispoof-conflict-item' => 'crwdns64960:0crwdne64960:0',
+	'antispoof-conflict-bottom' => 'crwdns64961:0crwdne64961:0',
+	'antispoof-name-illegal' => 'crwdns64962:0crwdne64962:0',
+	'antispoof-badtype' => 'crwdns64963:0crwdne64963:0',
+	'antispoof-empty' => 'crwdns64964:0crwdne64964:0',
+	'antispoof-blacklisted' => 'crwdns64965:0crwdne64965:0',
+	'antispoof-combining' => 'crwdns64966:0crwdne64966:0',
+	'antispoof-unassigned' => 'crwdns64967:0crwdne64967:0',
+	'antispoof-noletters' => 'crwdns64968:0crwdne64968:0',
+	'antispoof-mixedscripts' => 'crwdns64969:0crwdne64969:0',
+	'antispoof-tooshort' => 'crwdns64970:0crwdne64970:0',
+	'antispoof-ignore' => 'crwdns64971:0crwdne64971:0',
+	'right-override-antispoof' => 'crwdns64972:0crwdne64972:0',
 );
 
 /** Lithuanian (Lietuvių)
@@ -1749,6 +1772,7 @@ Kies een andere naam.',
 	'antispoof-tooshort' => 'Afgekorte naam te kort',
 	'antispoof-ignore' => 'Controle op gelijkende gebruikersnamen negeren',
 	'right-override-antispoof' => 'Spoofcontroles negeren',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -1872,6 +1896,7 @@ $messages['pl'] = array(
 	'antispoof-tooshort' => 'Zbyt krótka nazwa użytkownika',
 	'antispoof-ignore' => 'Ignoruj podobieństwo do istniejących nazw',
 	'right-override-antispoof' => 'Brak ograniczenia przed zakładaniem kont o podobnych nazwach do już istniejących',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1926,34 +1951,12 @@ $messages['ps'] = array(
 	'antispoof-noletters' => 'هېڅ کوم توری نه شته',
 );
 
-/** Portuguese (Português)
- * @author Brunoy Anastasiya Seryozhenko
- * @author Hamilton Abreu
- * @author Malafaya
- */
-$messages['pt'] = array(
-	'antispoof-desc' => 'Impede a criação de contas com escrita mista, e nomes de utilizador confusos e semelhantes',
-	'antispoof-conflict-top' => 'O nome "$1" é demasiado semelhante {{PLURAL:$2|ao da seguinte conta já existente|aos das seguintes $2 contas}}:',
-	'antispoof-conflict-bottom' => 'Por favor, escolha outro nome.',
-	'antispoof-name-illegal' => 'O nome "$1" não é permitido para prevenir que seja confundido com outro (ou que seja feito algum trocadilho): já existe $2. Por favor, escolha outro nome.',
-	'antispoof-badtype' => 'Formato de dados incorreto',
-	'antispoof-empty' => 'Linha vazia',
-	'antispoof-blacklisted' => 'Contém caracteres proibidos',
-	'antispoof-combining' => 'Começa com um carácter de combinação',
-	'antispoof-unassigned' => 'Contém caracteres não reconhecidos ou depreciados',
-	'antispoof-noletters' => 'Não inclui nenhuma letra',
-	'antispoof-mixedscripts' => 'Contém scripts de escrita incompatíveis mesclados',
-	'antispoof-tooshort' => 'Nome canónico demasiado curto',
-	'antispoof-ignore' => 'Ignorar verificações de "spoofing"',
-	'right-override-antispoof' => 'Sobrepor verificações de spoofing',
-);
-
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
  * @author Helder.wiki
  * @author Heldergeovane
  */
-$messages['pt-br'] = array(
+$messages['pt'] = array(
 	'antispoof-desc' => 'Impede a criação de contas com escrita mista, e nomes de utilizador confusos e semelhantes',
 	'antispoof-conflict-top' => 'O nome "$1" é demasiado semelhante {{PLURAL:$2|ao da seguinte conta já existente|aos das seguintes $2 contas}}',
 	'antispoof-conflict-bottom' => 'Por favor, escolha outro nome.',
@@ -1969,6 +1972,7 @@ Por favor, escolha outro nome.',
 	'antispoof-tooshort' => 'Nome canônico curto demais',
 	'antispoof-ignore' => 'Ignorar verificações de "spoofing"',
 	'right-override-antispoof' => 'Sobrepor verificações de spoofing',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Quechua (Runa Simi)
@@ -2058,6 +2062,7 @@ $messages['ru'] = array(
 	'antispoof-tooshort' => 'слишком короткое',
 	'antispoof-ignore' => 'Игнорировать проверки на схожие имена',
 	'right-override-antispoof' => 'игнорирование проверок на схожие имена',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Rusyn (Русиньскый)
@@ -2572,6 +2577,7 @@ $messages['vi'] = array(
 	'antispoof-tooshort' => 'Tên chuẩn hóa quá ngắn',
 	'antispoof-ignore' => 'Không kiểm tra tên có gây nhầm lẫn',
 	'right-override-antispoof' => 'Bỏ qua kiểm tra tên',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Volapük (Volapük)
@@ -2677,6 +2683,7 @@ $messages['zh-hans'] = array(
 	'antispoof-tooshort' => '标准化后的用户名过短',
 	'antispoof-ignore' => '忽略欺诈检查',
 	'right-override-antispoof' => '无视欺诈检查',
+	'antispoof-conflict-item' => '$1',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
@@ -2700,16 +2707,6 @@ $messages['zh-hant'] = array(
 	'antispoof-tooshort' => '標準化後的用戶名過短',
 	'antispoof-ignore' => '略過欺詐檢查',
 	'right-override-antispoof' => '無視欺詐檢查',
-);
-
-/** Chinese (Hong Kong) (‪中文(香港)‬)
- * @author Oapbtommy
- */
-$messages['zh-hk'] = array(
-	'antispoof-conflict-bottom' => '請選擇另一個名稱。',
-	'antispoof-badtype' => '差的數據類型',
-	'antispoof-blacklisted' => '包含了已列入黑名單的字元',
-	'antispoof-combining' => '以結合標記開始',
-	'antispoof-noletters' => '沒有包含任何字母',
+	'antispoof-conflict-item' => '$1',
 );
 

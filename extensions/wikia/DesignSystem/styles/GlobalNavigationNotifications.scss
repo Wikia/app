@@ -3,6 +3,7 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/box-shadow';
 @import 'GlobalNavigationMixins';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
 $black-half-transparent: rgba(0, 0, 0, .6);
 $black-transparent: rgba(0, 0, 0, 0);
@@ -97,6 +98,7 @@ $white: #fff;
 #GlobalNavigationWallNotifications {
 	background-color: $white;
 	border: 1px solid $border-color;
+	border-radius: $wds-dropdown-border-radius;
 	border-top: 0;
 	display: none;
 	margin: 0;
@@ -331,5 +333,13 @@ $white: #fff;
 				opacity: 1;
 			}
 		}
+	}
+}
+
+// make DS dropdown content invisible for old notifications
+#notificationsEntryPoint {
+	.wds-dropdown__content {
+		border: 0;
+		background: none;
 	}
 }

@@ -11,10 +11,8 @@
 foreach ($aRows as $pageId => $aRow) {
 	$oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
 	if ( !$oTitle instanceof Title ) continue;
-	$isVoting = $isCommenting = 0;
-	if (isset($aRow['props']) && array_key_exists('voting', $aRow['props'])) {
-		$isVoting = $aRow['props']['voting'];
-	}
+	$isCommenting = 0;
+
 	if (isset($aRow['props']) && array_key_exists('commenting', $aRow['props'])) {
 		$isCommenting = $aRow['props']['commenting'];
 	}

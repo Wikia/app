@@ -11,12 +11,10 @@ namespace PHPUnit\Framework\Constraint;
 
 use PHPUnit\Util\RegularExpression as RegularExpressionUtil;
 
-/**
- */
 class ExceptionMessageRegularExpression extends Constraint
 {
     /**
-     * @var int
+     * @var string
      */
     protected $expectedMessageRegExp;
 
@@ -62,7 +60,7 @@ class ExceptionMessageRegularExpression extends Constraint
      */
     protected function failureDescription($other)
     {
-        return sprintf(
+        return \sprintf(
             "exception message '%s' matches '%s'",
             $other->getMessage(),
             $this->expectedMessageRegExp

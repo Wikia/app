@@ -75,14 +75,6 @@ $global-navigation-z-index: 5000101;
 		a {
 			cursor: pointer;
 		}
-
-		a:hover {
-			color: $wds-color-dark-blue-gray;
-		}
-
-		.wds-is-selected a {
-			color: $wds-color-link;
-		}
 	}
 }
 

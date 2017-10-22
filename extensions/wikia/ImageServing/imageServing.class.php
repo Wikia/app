@@ -180,7 +180,7 @@ class ImageServing {
 
 			if( empty( $out ) ) {
 				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $limit)? Seems like overkill.
-				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( &$this, $limit, &$out ) );
+				Hooks::run( 'ImageServing::fallbackOnNoResults', [ $this, $limit, &$out ] );
 			}
 
 			// apply limiting
@@ -282,8 +282,6 @@ class ImageServing {
 	 * @return  string url for image
 	 */
 	public function getUrl( $name, $width = 1, $height = 1 ) {
-		global $wgEnableVignette;
-
 		wfProfileIn( __METHOD__ );
 
 		if ( $name instanceof File || $name instanceof GlobalFile ) {
@@ -303,13 +301,7 @@ class ImageServing {
 			$this->tmpDeltaY = 0.5 - $H / $height / 2;
 		}
 
-		if ($wgEnableVignette) {
-			$url = $this->getVignetteUrl($img, $width, $height);
-		} else {
-			$url = $this->getLegacyUrl($img, $width, $height);
-		}
-
-		return $url;
+		return $this->getVignetteUrl($img, $width, $height);
 	}
 
 	/**
@@ -340,31 +332,6 @@ class ImageServing {
 		}
 
 		return $generator->url();
-	}
-
-	/**
-	 * @param File $img
-	 * @param $width
-	 * @param $height
-	 * @return String
-	 */
-	private function getLegacyUrl($img, $width, $height) {
-		$issvg = false;
-		$mime = strtolower( $img->getMimeType() );
-		if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-			$issvg = true;
-		}
-
-		$sPrefix = '';
-		if ( WikiaFileHelper::isVideoFile( $img ) ) {
-			// videos has different thumbnail markup
-			$sPrefix = 'v,000000,';
-		}
-
-		$url = wfReplaceImageServer( $img->getThumbUrl( $sPrefix . $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
-
-		wfProfileOut( __METHOD__ );
-		return $url;
 	}
 
 	/**

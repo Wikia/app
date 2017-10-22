@@ -291,7 +291,7 @@ class UserrightsPage extends SpecialPage {
 		WikiaLogger::instance()->debug( __METHOD__ . ' - Changing user groups',
 			[ 'old-groups' => $oldGroups, 'new-groups' => $newGroups ] );
 
-		wfRunHooks( 'UserRights', array( &$user, $validGroupsToAdd, $validGroupsToRemove ) );
+		Hooks::run( 'UserRights', array( &$user, $validGroupsToAdd, $validGroupsToRemove ) );
 
 		if( $newGroups != $oldGroups ) {
 			$this->addLogEntry( $user, $oldGroups, $newGroups, $reason );

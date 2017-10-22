@@ -429,7 +429,7 @@ class Sanitizer {
 		 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 		 * Allow modifying list of tags to avoid stripping
 		 */
-		wfRunHooks( 'SanitizerTagsLists', array( &$extratags, &$removetags ) );
+		Hooks::run( 'SanitizerTagsLists', array( &$extratags, &$removetags ) );
 		/** Wikia change end **/
 
 		# Populate $htmlpairs and $htmlelements with the $extratags and $removetags arrays
@@ -1765,7 +1765,7 @@ class Sanitizer {
 		 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 		 * Allow modifying list of attributes to avoid stripping
 		 */
-		wfRunHooks( 'SanitizerAttributesSetup', array( &$whitelist ) );
+		Hooks::run( 'SanitizerAttributesSetup', array( &$whitelist ) );
 		/** Wikia change end **/
 
 		return $whitelist;
@@ -1895,7 +1895,7 @@ class Sanitizer {
 	 */
 	public static function validateEmail( $addr ) {
 		$result = null;
-		if( !wfRunHooks( 'isValidEmailAddr', array( $addr, &$result ) ) ) {
+		if( !Hooks::run( 'isValidEmailAddr', array( $addr, &$result ) ) ) {
 			return $result;
 		}
 

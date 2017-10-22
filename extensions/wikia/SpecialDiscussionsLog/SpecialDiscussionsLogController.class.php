@@ -69,10 +69,10 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function constructKibanaUrl( $dayOffset ) {
 		global $wgConsulUrl;
 
-		$esUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, 'query', 'sjc' ) )->getUrl( 'es' );
+		$esUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, 'logs-prod', 'sjc' ) )->getUrl( 'es' );
 		$date = time() - ( $dayOffset * 24 * 60 * 60 );
 
-		return 'http://' . $esUrl . '/logstash-' . date( 'Y.m.d', $date ) . '/_search';
+		return 'http://' . $esUrl . '/logstash-discussion-' . date( 'Y.m.d', $date ) . '/_search';
 	}
 
 	private function getUserByUsername( $userName ) {

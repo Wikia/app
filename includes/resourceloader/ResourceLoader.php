@@ -236,7 +236,7 @@ class ResourceLoader {
 		$this->setSourceForStaticModules('common');
 		// Wikia - change end
 		// Register extension modules
-		wfRunHooks( 'ResourceLoaderRegisterModules', array( &$this ) );
+		Hooks::run( 'ResourceLoaderRegisterModules', [ $this ] );
 		$this->register( $wgResourceModules );
 
 		if ( $wgEnableJavaScriptTest === true ) {
@@ -316,7 +316,7 @@ class ResourceLoader {
 		$testModules = array();
 		$testModules['qunit'] = include( "$IP/tests/qunit/QUnitTestResources.php" );
 		// Get other test suites (e.g. from extensions)
-		wfRunHooks( 'ResourceLoaderTestModules', array( &$testModules, &$this ) );
+		Hooks::run( 'ResourceLoaderTestModules', [ &$testModules, $this ] );
 
 		// Add the testrunner (which configures QUnit) to the dependencies.
 		// Since it must be ready before any of the test suites are executed.
@@ -449,7 +449,7 @@ class ResourceLoader {
 	public function respond( ResourceLoaderContext $context ) {
 		global $wgCacheEpoch, $wgUseFileCache;
 
-		wfRunHooks('ResourceLoaderBeforeRespond',array($this,&$context));
+		Hooks::run('ResourceLoaderBeforeRespond',array($this,&$context));
 
 		// Use file cache if enabled and available...
 		if ( $wgUseFileCache ) {
@@ -519,7 +519,9 @@ class ResourceLoader {
 		wfProfileOut( __METHOD__.'-getModifiedTime' );
 
 		// Send content type and cache related headers
-		$this->sendResponseHeaders( $context, $mtime );
+		if ( $errors === '' ) {
+			$this->sendResponseHeaders($context, $mtime);
+		}
 
 		// If there's an If-Modified-Since header, respond with a 304 appropriately
 		if ( $this->tryRespondLastModified( $context, $mtime ) ) {
@@ -549,7 +551,7 @@ class ResourceLoader {
 		}
 		ob_clean();
 
-		wfRunHooks( 'ResourceLoaderAfterRespond',[ $this,&$context ] );
+		Hooks::run( 'ResourceLoaderAfterRespond',[ $this,&$context ] );
 		// Wikia change - end
 		echo $response;
 
@@ -589,7 +591,7 @@ class ResourceLoader {
 		}
 
 		// Wikia - change begin - @author: macbre
-		wfRunHooks( 'ResourceLoaderModifyMaxAge',[ $this, $context, $mtime, &$maxage, &$smaxage ] );
+		Hooks::run( 'ResourceLoaderModifyMaxAge',[ $this, $context, $mtime, &$maxage, &$smaxage ] );
 		// Wikia - change end
 
 		if ( $context->getOnly() === 'styles' ) {
@@ -607,7 +609,7 @@ class ResourceLoader {
 			$exp = min( $maxage, $smaxage );
 			header( 'Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
 			// Wikia - change begin - @author: wladek
-			wfRunHooks('ResourceLoaderCacheControlHeaders',array($context,$maxage,$smaxage,$exp));
+			Hooks::run('ResourceLoaderCacheControlHeaders',array($context,$maxage,$smaxage,$exp));
 			// Wikia - change end
 		}
 	}
@@ -722,6 +724,11 @@ class ResourceLoader {
 		\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
 			'exception' => $e
 		] );
+
+		// SUS-1900: emit a proper HTTP error code indicating that something went wrong
+		HttpStatus::header( 500 );
+		header( "X-MediaWiki-Exception: 1" );
+		header( "Content-Type: text/plain; charset=utf-8" );
 
 		if ( $wgShowExceptionDetails ) {
 			return $this->makeComment( $e->__toString() );
@@ -1126,7 +1133,7 @@ class ResourceLoader {
 	 */
 	public static function makeLoaderURL( $modules, $lang, $skin, $user = null, $version = null, $debug = false, $only = null,
 			$printable = false, $handheld = false, $extraQuery = array() ) {
-		global $wgLoadScript;
+		global $wgLoadScript, $wgEnableLocalResourceLoaderLinks;
 		wfProfileIn(__METHOD__);
 		$query = self::makeLoaderQuery( $modules, $lang, $skin, $user, $version, $debug,
 			$only, $printable, $handheld, $extraQuery
@@ -1135,7 +1142,7 @@ class ResourceLoader {
 		/* Wikia - change begin - @author: wladek */
 		$loadScript = $wgLoadScript;
 		$url = false;
-		if ( !wfRunHooks('AlternateResourceLoaderURL',array(&$loadScript,&$query,&$url,$modules)) || $url !== false ) {
+		if ( !Hooks::run('AlternateResourceLoaderURL',array(&$loadScript,&$query,&$url,$modules)) || $url !== false ) {
 			wfProfileOut(__METHOD__);
 			return $url;
 		}
@@ -1143,7 +1150,10 @@ class ResourceLoader {
 
 		// Prevent the IE6 extension check from being triggered (bug 28840)
 		// by appending a character that's invalid in Windows extensions ('*')
-		$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
+		$url = wfAppendQuery( $loadScript, $query ) . '&*';
+		if ( !$wgEnableLocalResourceLoaderLinks ) {
+			$url = wfExpandUrl( $url, PROTO_RELATIVE );
+		}
 		wfProfileOut(__METHOD__);
 		return $url;
 	}
@@ -1180,7 +1190,7 @@ class ResourceLoader {
 		$query += $extraQuery;
 
 		// Wikia - change begin - @author: wladek
-		wfRUnHooks( 'ResourceLoaderMakeQuery', array( $modules, &$query ) );
+		Hooks::run( 'ResourceLoaderMakeQuery', [ $modules, &$query ] );
 		// Wikia - change end
 
 		// Make queries uniform in order

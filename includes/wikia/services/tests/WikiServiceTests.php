@@ -16,6 +16,7 @@ class WikiServiceTests extends WikiaBaseTest {
 			->expects( $this->never() )
 			->method( 'wfMessage' );
 
+		/* @var WikiService $wikiService */
 		$wikiService = $this->getMock('WikiService', array( 'getDetails', 'getImageSrcByTitle' ));
 		$wikiService->expects($this->exactly(1))
 			->method('getDetails')
@@ -44,7 +45,6 @@ class WikiServiceTests extends WikiaBaseTest {
 			->will($this->returnValueMap([
 				[ 69, $image13, $imgSize, null, $image13Url ],
 				[ 69, $image42, $imgSize, null, $image42Url ]]));
-		$wikiService->setCityVisualizationObject($this->mockCityVisualisationObject( 69, 2 ));
 
 		$result = $wikiService->getWikiDescription( $ids, $imgSize );
 
@@ -73,6 +73,7 @@ class WikiServiceTests extends WikiaBaseTest {
 			->with( 'wikiasearch2-crosswiki-description', 'wiki42' )
 			->will( $this->returnValue( $MessageMock ) );
 
+		/* @var WikiService $wikiService */
 		$wikiService = $this->getMock('WikiService', array( 'getDetails','getImageSrcByTitle' ));
 		$wikiService->expects($this->exactly(1))
 			->method('getDetails')
@@ -100,7 +101,6 @@ class WikiServiceTests extends WikiaBaseTest {
 			->method('getImageSrcByTitle')
 			->will($this->returnValueMap([
 				[ 69, $image42, $imgSize, null, $image42Url ]]));
-		$wikiService->setCityVisualizationObject($this->mockCityVisualisationObject( 69, 1 ));
 
 		$result = $wikiService->getWikiDescription( $ids, $imgSize );
 

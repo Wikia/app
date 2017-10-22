@@ -66,7 +66,7 @@ class LoginForm extends SpecialPage {
 	/**
 	 * @param WebRequest $request
 	 */
-	public function __construct( &$request = null ) {
+	public function __construct( WebRequest $request = null ) {
 		parent::__construct( 'Userlogin' );
 
 		$this->mOverrideRequest = $request;
@@ -235,11 +235,11 @@ class LoginForm extends SpecialPage {
 			// which is needed or the personal links will be
 			// wrong.
 			$this->getContext()->setUser( $u );
-			wfRunHooks( 'AddNewAccount', array( $u, false ) );
+			Hooks::run( 'AddNewAccount', array( $u, false ) );
 			$u->addNewUserLogEntry();
 			if( $this->hasSessionCookie() ) {
 				$ret = $this->successfulCreation();
-				wfRunHooks( 'AddNewAccount2', array( $wgUser ) );
+				Hooks::run( 'AddNewAccount2', array( $wgUser ) );
 				return $ret;
 			} else {
 				return $this->cookieRedirectCheck( 'new' );
@@ -249,7 +249,7 @@ class LoginForm extends SpecialPage {
 			$out->setPageTitle( $this->msg( 'accountcreated' ) );
 			$out->addWikiMsg( 'accountcreatedtext', $u->getName() );
 			$out->returnToMain( false, $this->getTitle() );
-			wfRunHooks( 'AddNewAccount', array( $u, false ) );
+			Hooks::run( 'AddNewAccount', array( $u, false ) );
 			$u->addNewUserLogEntry( false, $this->mReason );
 			return true;
 		}
@@ -447,19 +447,19 @@ class LoginForm extends SpecialPage {
 		$u->setRealName( $this->mRealName );
 
 		$abortError = '';
-		if( !wfRunHooks( 'AbortNewAccount', array( $u, &$abortError ) ) ) {
+		if( !Hooks::run( 'AbortNewAccount', array( $u, &$abortError ) ) ) {
 			// Hook point to add extra creation throttles and blocks
 			wfDebug( "LoginForm::addNewAccountInternal: a hook blocked creation\n" );
 			/* Wikia change begin */
 			$errParam = '';
-			wfRunHooks( 'AbortNewAccountErrorMessage', array( &$abortError, &$errParam ) );
+			Hooks::run( 'AbortNewAccountErrorMessage', array( &$abortError, &$errParam ) );
 			$this->mainLoginForm( $abortError, 'error', $errParam );
 			/* Wikia change end */
 			return false;
 		}
 
 		// Hook point to check for exempt from account creation throttle
-		if ( !wfRunHooks( 'ExemptFromAccountCreationThrottle', array( $ip ) ) ) {
+		if ( !Hooks::run( 'ExemptFromAccountCreationThrottle', array( $ip ) ) ) {
 			wfDebug( "LoginForm::exemptFromAccountCreationThrottle: a hook allowed account creation w/o throttle\n" );
 		} else {
 			if ( ( $wgAccountCreationThrottle && $currentUser->isPingLimitable() ) ) {
@@ -633,7 +633,7 @@ class LoginForm extends SpecialPage {
 
 		// Give general extensions, such as a captcha, a chance to abort logins
 		$abort = self::ABORTED;
-		if( !wfRunHooks( 'AbortLogin', array( $u, $this->mPassword, &$abort, &$this->mAbortLoginErrorMsg ) ) ) {
+		if( !Hooks::run( 'AbortLogin', array( $u, $this->mPassword, &$abort, &$this->mAbortLoginErrorMsg ) ) ) {
 			return $abort;
 		}
 
@@ -659,7 +659,7 @@ class LoginForm extends SpecialPage {
 		}
 
 		if ( !in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
-			wfRunHooks( 'LoginFormAuthenticateModifyRetval', [ $this, $u->getName(), $this->mPassword, &$retval, $authResult ] );
+			Hooks::run( 'LoginFormAuthenticateModifyRetval', [ $this, $u->getName(), $this->mPassword, &$retval, $authResult ] );
 		}
 
 		switch ($retval) {
@@ -671,7 +671,7 @@ class LoginForm extends SpecialPage {
 				break;
 		}
 
-		wfRunHooks( 'LoginAuthenticateAudit', array( $u, $this->mPassword, $retval ) );
+		Hooks::run( 'LoginAuthenticateAudit', array( $u, $this->mPassword, $retval ) );
 		return $retval;
 	}
 
@@ -684,7 +684,7 @@ class LoginForm extends SpecialPage {
 		// which is needed or the personal links will be
 		// wrong.
 		$this->getContext()->setUser( $u );
-		wfRunHooks( 'AfterUserLogin', array( $u ) ); // Wikia change
+		Hooks::run( 'AfterUserLogin', array( $u ) ); // Wikia change
 
 		// Please reset throttle for successful logins, thanks!
 		if ( $throttleCount ) {
@@ -693,7 +693,7 @@ class LoginForm extends SpecialPage {
 
 		if ( $isAutoCreated ) {
 			// Must be run after $wgUser is set, for correct new user log
-			wfRunHooks( 'AuthPluginAutoCreate', array( $u ) );
+			Hooks::run( 'AuthPluginAutoCreate', array( $u ) );
 		}
 	}
 
@@ -805,7 +805,7 @@ class LoginForm extends SpecialPage {
 		}
 
 		$abortError = '';
-		if( !wfRunHooks( 'AbortAutoAccount', array( $user, &$abortError ) ) ) {
+		if( !Hooks::run( 'AbortAutoAccount', array( $user, &$abortError ) ) ) {
 			// Hook point to add extra creation throttles and blocks
 			wfDebug( "LoginForm::attemptAutoCreate: a hook blocked creation: $abortError\n" );
 			$this->mAbortLoginErrorMsg = $abortError;
@@ -924,7 +924,7 @@ class LoginForm extends SpecialPage {
 		# Run any hooks; display injected HTML if any, else redirect
 		$currentUser = $this->getUser();
 		$injected_html = '';
-		wfRunHooks( 'UserLoginComplete', array( &$currentUser, &$injected_html ) );
+		Hooks::run( 'UserLoginComplete', array( &$currentUser, &$injected_html ) );
 
 		if( $injected_html !== '' ) {
 			$this->displaySuccessfulLogin( 'loginsuccess', $injected_html );
@@ -956,14 +956,14 @@ class LoginForm extends SpecialPage {
 		$injected_html = '';
 		$welcome_creation_msg = 'welcomecreation';
 
-		wfRunHooks( 'UserLoginComplete', array( &$currentUser, &$injected_html ) );
+		Hooks::run( 'UserLoginComplete', array( &$currentUser, &$injected_html ) );
 
 		/**
 		 * Let any extensions change what message is shown.
 		 * @see https://www.mediawiki.org/wiki/Manual:Hooks/BeforeWelcomeCreation
 		 * @since 1.18
 		 */
-		wfRunHooks( 'BeforeWelcomeCreation', array( &$welcome_creation_msg, &$injected_html ) );
+		Hooks::run( 'BeforeWelcomeCreation', array( &$welcome_creation_msg, &$injected_html ) );
 
 		$this->displaySuccessfulLogin( $welcome_creation_msg, $injected_html );
 	}
@@ -1174,9 +1174,9 @@ class LoginForm extends SpecialPage {
 		// Give authentication and captcha plugins a chance to modify the form
 		$wgAuth->modifyUITemplate( $template, $this->mType );
 		if ( $this->mType == 'signup' ) {
-			wfRunHooks( 'UserCreateForm', array( &$template ) );
+			Hooks::run( 'UserCreateForm', array( &$template ) );
 		} else {
-			wfRunHooks( 'UserLoginForm', array( &$template ) );
+			Hooks::run( 'UserLoginForm', array( &$template ) );
 		}
 
 		$out = $this->getOutput();

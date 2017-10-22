@@ -23,6 +23,6 @@ class StaticAssetsUrlGenerator extends UrlGenerator {
 
 		$imagePath .= $this->modePath();
 
-		return $this->domainShard( $imagePath );
+		return $this->config->baseUrl() . '/' . $imagePath;
 	}
 }

@@ -38,7 +38,7 @@ class BeforePageDisplay {
 	 * @param OutputPage &$outputPage
 	 * @param Skin &$skin
 	 */
-	public function __construct( OutputPage &$outputPage, Skin &$skin ) {
+	public function __construct( OutputPage $outputPage, Skin $skin ) {
 		$this->outputPage = $outputPage;
 		$this->skin = $skin;
 	}

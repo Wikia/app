@@ -123,6 +123,9 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 		createdPlayer.reload();
 		expect(reloadSpy).toHaveBeenCalled();
 
+		createdPlayer.reload('foo');
+		expect(reloadSpy).toHaveBeenCalledWith('foo');
+
 		createdPlayer.resize(600, 600);
 		expect(resizeSpy).toHaveBeenCalledWith(600, 600);
 

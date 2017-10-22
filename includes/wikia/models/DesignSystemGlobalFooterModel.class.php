@@ -25,6 +25,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	public function getData() {
+		$mobileAppsTranslationKeys = self::getLocalizedAppTranslations( $this->lang );
+
 		$data = [
 			'header' => [
 				'type' => 'link-image',
@@ -159,12 +161,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'line-text',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-community-apps-header'
+						'key' => $mobileAppsTranslationKeys[ 'header' ]
 					]
 				],
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-community-apps-description'
+					'key' => $mobileAppsTranslationKeys[ 'description' ]
 				],
 				'links' => [
 					[
@@ -194,7 +196,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-footer-community-apps-link-google-play'
 						],
-						'href' => $this->getHref( 'google-play' ),
+						'href' => $this->getHref( 'google-play' ) . '&referrer=utm_source%3Dwikia%26utm_medium%3Dglobalfooter',
 						'tracking_label' => 'community-apps.google-play',
 					]
 				]
@@ -544,5 +546,19 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getSocialHrefs() {
 		return DesignSystemSharedLinks::getInstance()->getSocialHrefs( $this->lang );
+	}
+
+	private function getLocalizedAppTranslations( $lang ) {
+		if ( $lang === 'en' ) {
+			return [
+				'header' => 'global-footer-fandom-app-header',
+				'description' => 'global-footer-fandom-app-description'
+			];
+		}
+
+		return [
+			'header' => 'global-footer-community-apps-header',
+			'description' => 'global-footer-community-apps-description'
+		];
 	}
 }

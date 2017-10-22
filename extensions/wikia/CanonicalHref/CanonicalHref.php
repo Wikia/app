@@ -22,30 +22,25 @@ $wgExtensionMessagesFiles['CanonicalHref'] = __DIR__ . '/CanonicalHref.i18n.php'
 $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
 /**
  * @param OutputPage $out
- * @param $sk
+ * @param Skin $skin
  * @return bool
+ * @internal param $sk
  */
-function wfCanonicalHref(&$out, &$sk) {
-	global $wgTitle, $wgRequest;
-
-	if ( !($wgTitle instanceof Title) ) {
-		return true;
-	}
-
+function wfCanonicalHref( OutputPage $out, Skin $skin ): bool {
 	// No canonical on pages with pagination -- they should have the link rel="next/prev" instead
-	if ( $wgRequest->getVal( 'page' ) ) {
+	if ( $out->getRequest()->getVal( 'page' ) ) {
 		return true;
 	}
 
-	$canonicalUrl = $wgTitle->getFullURL();
+	$canonicalUrl = $out->getTitle()->getFullURL();
 
 	// Allow hooks to change the canonicalUrl that will be used in the page.
-	wfRunHooks( 'WikiaCanonicalHref', array( &$canonicalUrl ) );
+	Hooks::run( 'WikiaCanonicalHref', [ &$canonicalUrl ] );
 
-	$out->addLink(array(
+	$out->addLink( [
 		'rel' => 'canonical',
 		'href' => $canonicalUrl,
-	));
+	] );
 
 	return true;
 }

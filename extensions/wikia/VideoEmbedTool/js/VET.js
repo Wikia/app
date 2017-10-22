@@ -112,10 +112,10 @@ define('wikia.vet', [
 			controller: 'VideoEmbedTool',
 			method: 'editDescription',
 			type: 'POST',
-			format: 'json',
 			data: {
 				title: $('#VideoEmbedName').val(),
-				description: description
+				description: description,
+				token: mw.user.tokens.get('editToken')
 			}
 		}).done(function (json) {
 			var extraData, caption;

@@ -20,6 +20,8 @@ $wgAutoloadClasses['DiscussionsVarToggler'] = $dir . 'DiscussionsVarToggler.clas
 $wgAutoloadClasses['DiscussionsVarTogglerException'] = $dir . 'DiscussionsVarToggler.class.php';
 $wgAutoloadClasses['ThreadCreator'] = $dir . 'api/ThreadCreator.class.php';
 $wgAutoloadClasses['DiscussionsActivator'] = $dir . 'api/DiscussionsActivator.class.php';
+$wgAutoloadClasses['DiscussionsActivity'] = $dir . 'api/DiscussionsActivity.class.php';
+$wgAutoloadClasses['LegacyRedirect'] = $dir . 'api/LegacyRedirect.class.php';
 $wgAutoloadClasses['StaffWelcomePoster'] = $dir . 'maintenance/StaffWelcomePoster.class.php';
 
 // register special page
@@ -29,7 +31,23 @@ $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 // is enabled and Forums are disabled.
 if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
 	$wgAutoloadClasses['SpecialForumRedirectController'] = $dir . 'controllers/SpecialForumRedirectController.class.php';
+	$wgHooks['ArticleViewHeader'][] = 'SpecialForumRedirectController::onArticleViewHeader';
+	$wgHooks['BeforePageHistory'][] = 'SpecialForumRedirectController::onBeforePageHistory';
 	$wgSpecialPages['Forum'] = 'SpecialForumRedirectController';
+
+	// Make sure we recognize the Forum namespaces so we can redirect them if requested
+	$wgExtensionNamespacesFiles['Discussions'] = $dir . '../Forum/Forum.namespaces.php';
+	wfLoadExtensionNamespaces( 'Forum', [
+		NS_WIKIA_FORUM_BOARD,
+		NS_WIKIA_FORUM_BOARD_THREAD,
+		NS_WIKIA_FORUM_TOPIC_BOARD
+		]
+	);
+	$app->registerNamespaceController(
+		NS_WIKIA_FORUM_BOARD,
+		'SpecialForumRedirectController',
+		'redirectBoardToCategory'
+	);
 }
 
 // message files
@@ -48,17 +66,14 @@ $wgGroupPermissions['staff']['specialdiscussions'] = true;
 $wgHooks['WikiaSkinTopScripts'][] = 'addDiscussionJsVariable';
 
 /**
- * MW1.19 - ResourceLoaderStartUpModule class adds more variables
  * @param array $vars JS variables to be added at the bottom of the page
- * @param OutputPage $out
+ * @param $scripts
+ *
  * @return bool return true - it's a hook
  */
 function addDiscussionJsVariable(Array &$vars, &$scripts) {
-	wfProfileIn(__METHOD__);
-
 	$vars['wgDiscussionsApiUrl'] = F::app()->wg->DiscussionsApiUrl;
 
-	wfProfileOut(__METHOD__);
 	return true;
 }
 

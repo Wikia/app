@@ -36,13 +36,7 @@ describe('AdLogicPageParams', function () {
 			location: { origin: 'http://' + opts.hostname, hostname: opts.hostname },
 			amzn_targs: opts.amzn_targs,
 			wgCookieDomain: opts.hostname.substr(opts.hostname.indexOf('.')),
-		};
-	}
-
-	function mockPageViewCounter(pvCount) {
-		return {
-			get: function () { return pvCount || 0; },
-			increment: function () { return pvCount || 1; }
+			pvNumber: opts.pvNumber || 1
 		};
 	}
 
@@ -112,7 +106,6 @@ describe('AdLogicPageParams', function () {
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			mockAdContext(targeting),
-			mockPageViewCounter(opts.pvCount),
 			mockAdLogicZoneParams(),
 			windowMock.document,
 			geoMock,
@@ -239,13 +232,13 @@ describe('AdLogicPageParams', function () {
 	});
 
 	it('getPageLevelParams pv param - oasis', function () {
-		var params = getParams({skin: 'oasis'}, {pvCount: 13});
+		var params = getParams({skin: 'oasis'}, {pvNumber: 13});
 
 		expect(params.pv).toBe('13');
 	});
 
 	it('getPageLevelParams pv param - mercury', function () {
-		var params = getParams({skin: 'mercury'}, {pvCount: 13});
+		var params = getParams({skin: 'mercury'}, {pvNumber: 13});
 
 		expect(params.pv).toBe('13');
 	});

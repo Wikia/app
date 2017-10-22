@@ -12,14 +12,14 @@ class WikiaTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param LocalFile $fileMock
+	 * @param array $fileMockData
 	 * @param string $expectedUrl
 	 * @param string $expectedSize
 	 *
 	 * @dataProvider getWikiLogoMetadataDataProvider
 	 */
 	public function testGetWikiLogoMetadata( $fileMockData, $expectedUrl, $expectedSize ) {
-		$fileMock = $this->mockClassWithMethods( 'stdClass', $fileMockData );
+		$fileMock = $this->createConfiguredMock( LocalFile::class, $fileMockData );
 
 		$this->mockGlobalFunction( 'wfLocalFile', $fileMock );
 		$this->mockGlobalVariable( 'wgResourceBasePath', 'http://wikia.net/__cb123' );
@@ -57,102 +57,88 @@ class WikiaTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgStagingEnvironment', false);
 
-		$requestMock = $this->getRequestMock( 'externaltest' );
-		$outMock = $this->getOutputpageMock( 'once' );
-		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
-		$templateMock = $this->getTemplateMock();
+		$request = new FauxRequest();
+		$request->setHeader( 'X-Staging', 'externaltest' );
 
-		Wikia::onSkinTemplateOutputPageBeforeExec( $skinMock, $templateMock );
+		$context = new RequestContext();
+		$context->setTitle( new Title() );
+		$context->setRequest( $request );
+
+		$skinTemplate = new SkinTemplate();
+		$quickTemplate = new OasisTemplate();
+
+		$skinTemplate->setContext( $context );
+
+		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
+
+		$this->assertContains(
+			'<meta name="robots" content="noindex,nofollow" />',
+			$context->getOutput()->getHeadLinks()
+		);
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseDevbox() {
 		$this->mockGlobalVariable('wgDevelEnvironment', true);
 		$this->mockGlobalVariable('wgStagingEnvironment', false);
 
-		$requestMock = $this->getRequestMock( '' );
-		$outMock = $this->getOutputpageMock( 'once' );
-		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
-		$templateMock = $this->getTemplateMock();
+		$context = new RequestContext();
+		$context->setTitle( new Title() );
+		$context->setRequest( new FauxRequest() );
 
-		Wikia::onSkinTemplateOutputPageBeforeExec( $skinMock, $templateMock );
+		$skinTemplate = new SkinTemplate();
+		$quickTemplate = new OasisTemplate();
+
+		$skinTemplate->setContext( $context );
+
+		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
+
+		$this->assertContains(
+			'<meta name="robots" content="noindex,nofollow" />',
+			$context->getOutput()->getHeadLinks()
+		);
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseStaging() {
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgStagingEnvironment', true);
 
-		$requestMock = $this->getRequestMock( '' );
-		$outMock = $this->getOutputpageMock( 'once' );
-		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
-		$templateMock = $this->getTemplateMock();
+		$context = new RequestContext();
+		$context->setTitle( new Title() );
+		$context->setRequest( new FauxRequest() );
 
-		Wikia::onSkinTemplateOutputPageBeforeExec( $skinMock, $templateMock );
+		$skinTemplate = new SkinTemplate();
+		$quickTemplate = new OasisTemplate();
+
+		$skinTemplate->thisquery = '';
+		$skinTemplate->setContext( $context );
+
+		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
+
+		$this->assertContains(
+			'<meta name="robots" content="noindex,nofollow" />',
+			$context->getOutput()->getHeadLinks()
+		);
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_doesNotSetNoIndexNoFollow() {
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgStagingEnvironment', false);
-		$requestMock = $this->getRequestMock( '' );
-		$outMock = $this->getOutputpageMock( 'never' );
-		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
-		$templateMock = $this->getTemplateMock();
 
-		Wikia::onSkinTemplateOutputPageBeforeExec( $skinMock, $templateMock );
-	}
+		$context = new RequestContext();
+		$context->setTitle( new Title() );
+		$context->setRequest( new FauxRequest() );
 
-	private function getSkinTemplateMock( $request, $output ) {
-		$skinMock = $this->getMockBuilder( 'SkinTemplate' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getRequest', 'getOutput', 'getTitle', 'outputPage', 'setupSkinUserCss' ] )
-			->getMock();
-		$skinMock->expects( $this->once() )
-			->method('getRequest')
-			->willReturn( $request );
-		$skinMock->expects( $this->any() )
-			->method('getOutput')
-			->willReturn( $output );
-		$skinMock->expects( $this->once() )
-			->method('getTitle')
-			->willReturn(
-				$this->getMockBuilder('Title')
-					->disableOriginalConstructor()
-					->getMock()
-			);
+		$skinTemplate = new SkinTemplate();
+		$quickTemplate = new OasisTemplate();
 
-		$skinMock->expects( $this->any() )
-			->method('outputPage');
-		$skinMock->expects( $this->any() )
-			->method('setupSkinUserCss');
+		$skinTemplate->thisquery = '';
+		$skinTemplate->setContext( $context );
 
-		return $skinMock;
-	}
+		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
 
-	private function getRequestMock( $headerValue ) {
-		$requestMock = $this->getMockBuilder( 'WebRequest' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getHeader' ] )
-			->getMock();
-		$requestMock->expects( $this->once() )
-			->method( 'getHeader' )
-			->willReturn( $headerValue );
-
-		return $requestMock;
-	}
-
-	private function getOutputpageMock( $expects ) {
-		$outMock = $this->getMockBuilder('OutputPage')
-			->disableOriginalConstructor()
-			->setMethods( [ 'setRobotPolicy' ] )
-			->getMock();
-		$outMock->expects( $this->$expects() )
-			->method( 'setRobotPolicy' );
-
-		return $outMock;
-	}
-
-	private function getTemplateMock() {
-		return $this->getMockBuilder( 'QuickTemplate' )
-			->disableOriginalConstructor()
-			->getMock();
+		$this->assertNotContains(
+			'<meta name="robots" content="noindex,nofollow" />',
+			$context->getOutput()->getHeadLinks()
+		);
 	}
 }

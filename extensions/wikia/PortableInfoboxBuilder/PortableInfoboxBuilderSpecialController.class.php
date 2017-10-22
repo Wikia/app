@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Class WikiaMapsSpecialController
- * @desc Special:Maps controller
+ * Class PortableInfoboxBuilderSpecialController
+ * @desc Special:InfoboxBuilder controller
  */
 class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController {
 	const PAGE_NAME = 'InfoboxBuilder';

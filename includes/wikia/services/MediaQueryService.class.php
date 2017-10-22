@@ -5,7 +5,7 @@ use \Wikia\Cache\AsyncCache;
 /**
  * This service provides methods for querying for media
  */
-class MediaQueryService extends WikiaService {
+class MediaQueryService extends WikiaModel {
 
 	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';
@@ -191,7 +191,7 @@ class MediaQueryService extends WikiaService {
 	 * @param $changed
 	 * @return bool
 	 */
-	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
+	public static function onArticleEditUpdates( WikiPage $article, $editInfo, $changed ): bool {
 		// article links are updated, so we invalidate the cache
 		$title = $article->getTitle();
 		$mqs = new self( );

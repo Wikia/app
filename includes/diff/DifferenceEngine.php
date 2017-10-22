@@ -251,7 +251,7 @@ class DifferenceEngine extends ContextSource {
 			$samePage = true;
 			$oldHeader = '';
 		} else {
-			wfRunHooks( 'DiffViewHeader', array( $this, $this->mOldRev, $this->mNewRev ) );
+			Hooks::run( 'DiffViewHeader', array( $this, $this->mOldRev, $this->mNewRev ) );
 
 			if ( $this->mNewPage->equals( $this->mOldPage ) ) {
 				$out->setPageTitle( $this->mNewPage->getPrefixedText() );
@@ -397,7 +397,7 @@ class DifferenceEngine extends ContextSource {
 			 * @author adamk@wikia-inc.com
 			 * @see CE-2704
 			 */
-			if ( !wfRunHooks( 'ShowDiff', [ $this, &$notice ] ) ) {
+			if ( !Hooks::run( 'ShowDiff', [ $this, &$notice ] ) ) {
 				$out->addHTML( $notice );
 			} else {
 				$this->showDiff( $oldHeader, $newHeader, $notice );
@@ -437,8 +437,6 @@ class DifferenceEngine extends ContextSource {
 					$db = wfGetDB( DB_SLAVE );
 					$change = RecentChange::newFromConds(
 						array(
-						// Redundant user,timestamp condition so we can use the existing index
-							'rc_user_text'  => $this->mNewRev->getRawUserText(),
 							'rc_timestamp'  => $db->timestamp( $this->mNewRev->getTimestamp() ),
 							'rc_this_oldid' => $this->mNewid,
 							'rc_last_oldid' => $this->mOldid,
@@ -499,7 +497,7 @@ class DifferenceEngine extends ContextSource {
 		$out = $this->getOutput();
 		$revHeader = $this->getRevisionHeader( $this->mNewRev );
 
-		wfRunHooks( 'AfterDiffRevisionHeader', [ $this, $this->mNewRev, &$out ] );
+		Hooks::run( 'AfterDiffRevisionHeader', [ $this, $this->mNewRev, &$out ] );
 
 		# Add "current version as of X" title
 		$out->addHTML( "<hr class='diff-hr' />
@@ -511,7 +509,7 @@ class DifferenceEngine extends ContextSource {
 		// Wikia change - end
 
 		# Page content may be handled by a hooked call instead...
-		if ( wfRunHooks( 'ArticleContentOnDiff', array( $this, $out ) ) ) {
+		if ( Hooks::run( 'ArticleContentOnDiff', array( $this, $out ) ) ) {
 			$this->loadNewText();
 			$out->setRevisionId( $this->mNewid );
 			$out->setRevisionTimestamp( $this->mNewRev->getTimestamp() );
@@ -521,7 +519,7 @@ class DifferenceEngine extends ContextSource {
 				// Stolen from Article::view --AG 2007-10-11
 				// Give hooks a chance to customise the output
 				// @TODO: standardize this crap into one function
-				if ( wfRunHooks( 'ShowRawCssJs', array( $this->mNewtext, $this->mNewPage, $out ) ) ) {
+				if ( Hooks::run( 'ShowRawCssJs', array( $this->mNewtext, $this->mNewPage, $out ) ) ) {
 					// Wrap the whole lot in a <pre> and don't parse
 					$m = array();
 					preg_match( '!\.(css|js)$!u', $this->mNewPage->getText(), $m );
@@ -529,7 +527,7 @@ class DifferenceEngine extends ContextSource {
 					$out->addHTML( htmlspecialchars( $this->mNewtext ) );
 					$out->addHTML( "\n</pre>\n" );
 				}
-			} elseif ( !wfRunHooks( 'ArticleViewCustom', array( $this->mNewtext, $this->mNewPage, $out ) ) ) {
+			} elseif ( !Hooks::run( 'ArticleViewCustom', array( $this->mNewtext, $this->mNewPage, $out ) ) ) {
 				// Handled by extension
 			} else {
 				// Normal page
@@ -670,7 +668,7 @@ class DifferenceEngine extends ContextSource {
 		$difftext = $this->generateDiffBody( $this->mOldtext, $this->mNewtext );
 
 		// Save to cache for 7 days
-		if ( !wfRunHooks( 'AbortDiffCache', array( &$this ) ) ) {
+		if ( !Hooks::run( 'AbortDiffCache', [ $this ] ) ) {
 			wfIncrStats( 'diff_uncacheable' );
 		} elseif ( $key !== false && $difftext !== false ) {
 			wfIncrStats( 'diff_cache_miss' );
@@ -819,8 +817,8 @@ class DifferenceEngine extends ContextSource {
 	 * Replace line numbers with the text in the user's language
 	 */
 	function localiseLineNumbers( $text ) {
-		return preg_replace_callback( '/<!--LINE (\d+)-->/',
-		array( &$this, 'localiseLineNumbersCb' ), $text );
+		return
+			preg_replace_callback( '/<!--LINE (\d+)-->/', [ $this, 'localiseLineNumbersCb' ], $text );
 	}
 
 	function localiseLineNumbersCb( $matches ) {
@@ -1038,7 +1036,7 @@ class DifferenceEngine extends ContextSource {
 		} else {
 			$this->mOldid = intval( $old );
 			$this->mNewid = intval( $new );
-			wfRunHooks( 'NewDifferenceEngine', array( $this->getTitle(), &$this->mOldid, &$this->mNewid, $old, $new ) );
+			Hooks::run( 'NewDifferenceEngine', array( $this->getTitle(), &$this->mOldid, &$this->mNewid, $old, $new ) );
 		}
 	}
 
@@ -1133,7 +1131,7 @@ class DifferenceEngine extends ContextSource {
 			}
 		}
 
-		wfRunHooks( 'DiffLoadText', array( $this, &$this->mOldtext, &$this->mNewtext ) );
+		Hooks::run( 'DiffLoadText', array( $this, &$this->mOldtext, &$this->mNewtext ) );
 
 		return true;
 	}

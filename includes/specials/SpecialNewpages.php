@@ -61,7 +61,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 		$opts->add( 'tagfilter', '' );
 
 		$this->customFilters = array();
-		wfRunHooks( 'SpecialNewPagesFilters', array( $this, &$this->customFilters ) );
+		Hooks::run( 'SpecialNewPagesFilters', array( $this, &$this->customFilters ) );
 		foreach( $this->customFilters as $key => $params ) {
 			$opts->add( $key, $params['default'] );
 		}
@@ -492,8 +492,14 @@ class NewPagesPager extends ReverseChronologicalPager {
 
 		# $wgEnableNewpagesUserFilter - temp WMF hack
 		if( $wgEnableNewpagesUserFilter && $user ) {
-			$conds['rc_user_text'] = $user->getText();
-			$rcIndexes = 'rc_user_text';
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $user->getText() ) ) {
+				$conds['rc_user_text'] = $user->getText();
+				$rcIndexes = 'rc_user_text';
+			}
+			else {
+				$conds['rc_user'] = User::idFromName( $user->getText() );
+			}
 		# If anons cannot make new pages, don't "exclude logged in users"!
 		} elseif( $wgGroupPermissions['*']['createpage'] && $this->opts->getValue( 'hideliu' ) ) {
 			$conds['rc_user'] = 0;
@@ -515,13 +521,13 @@ class NewPagesPager extends ReverseChronologicalPager {
 		$fields = array(
 			'rc_namespace', 'rc_title', 'rc_cur_id', 'rc_user', 'rc_user_text',
 			'rc_comment', 'rc_timestamp', 'rc_patrolled','rc_id', 'rc_deleted',
-			'page_len AS length', 'page_latest AS rev_id', 'ts_tags', 'rc_this_oldid',
+			'page_len AS length', 'page_latest AS rev_id', 'rc_this_oldid',
 			'page_namespace', 'page_title'
 		);
 		$join_conds = array( 'page' => array( 'INNER JOIN', 'page_id=rc_cur_id' ) );
 
-		wfRunHooks( 'SpecialNewpagesConditions',
-			array( &$this, $this->opts, &$conds, &$tables, &$fields, &$join_conds ) );
+		Hooks::run( 'SpecialNewpagesConditions',
+			[ $this, $this->opts, &$conds, &$tables, &$fields, &$join_conds ] );
 
 		$info = array(
 			'tables' 	 => $tables,
@@ -531,13 +537,10 @@ class NewPagesPager extends ReverseChronologicalPager {
 			'join_conds' => $join_conds
 		);
 
-		// Empty array for fields, it'll be set by us anyway.
-		$fields = array();
-
 		// Modify query for tags
 		ChangeTags::modifyDisplayQuery(
 			$info['tables'],
-			$fields,
+			$info['fields'],
 			$info['conds'],
 			$info['join_conds'],
 			$info['options'],
@@ -559,8 +562,10 @@ class NewPagesPager extends ReverseChronologicalPager {
 		# Do a batch existence check on pages
 		$linkBatch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
-			$linkBatch->add( NS_USER, $row->rc_user_text );
-			$linkBatch->add( NS_USER_TALK, $row->rc_user_text );
+			$userName = User::getUsername( $row->rc_user, $row->rc_user_text ); // SUS-812
+
+			$linkBatch->add( NS_USER, $userName );
+			$linkBatch->add( NS_USER_TALK, $userName );
 			$linkBatch->add( $row->rc_namespace, $row->rc_title );
 		}
 		$linkBatch->execute();

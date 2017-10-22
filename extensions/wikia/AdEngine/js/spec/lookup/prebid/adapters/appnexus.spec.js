@@ -18,15 +18,19 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 			filterSlotMap: function (map) {
 				return map;
 			}
-		}
+		},
+		log: function() {}
 	};
+
+	mocks.log.levels = {};
 
 	function getAppNexus() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexus'](
 			mocks.slotsContext,
 			mocks.appNexusPlacements,
 			mocks.geo,
-			mocks.instantGlobals
+			mocks.instantGlobals,
+			mocks.log
 		);
 	}
 

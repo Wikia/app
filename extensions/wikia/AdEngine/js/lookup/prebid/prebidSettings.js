@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [
-	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper'
-], function (helper) {
+	'ext.wikia.adEngine.lookup.prebid.bidHelper'
+], function (bidHelper) {
 	'use strict';
 
 	/*
@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [
 				}, {
 					key: "hb_pb",
 					val: function(bidResponse) {
-						return helper.transformPriceFromCpm(bidResponse.cpm);
+						return bidHelper.transformPriceFromBid(bidResponse);
 					}
 				}, {
 					key: 'hb_size',

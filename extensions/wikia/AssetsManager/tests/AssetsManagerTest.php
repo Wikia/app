@@ -126,15 +126,14 @@ class AssetsManagerTest extends WikiaBaseTest {
 	 * @dataProvider checkAssetUrlForSkinDataProvider
 	 */
 	public function testCheckAssetUrlForSkin( $url, $isSkinStrict, $expectedValue ) {
-		$skinMock = $this->mockClassWithMethods('WikiaSkin', [
+		$skinMock = $this->createConfiguredMock( WikiaSkin::class, [
 			'isStrict' => $isSkinStrict,
-			'checkIfGroupForSkin' => false, // "block" all assets when in strict mode
-			'loadConfig' => null,
-		]);
+		] );
 
-		$assetsManagerMock = $this->getMock( 'AssetsManager', null, [], '', false );
+		$assetsManagerRefl = new ReflectionClass( AssetsManager::class );
+		$assetsManager = $assetsManagerRefl->newInstanceWithoutConstructor();
 
-		$this->assertEquals( $expectedValue, $assetsManagerMock->checkAssetUrlForSkin($url, $skinMock) );
+		$this->assertEquals( $expectedValue, $assetsManager->checkAssetUrlForSkin($url, $skinMock) );
 	}
 
 	public function checkAssetUrlForSkinDataProvider() {

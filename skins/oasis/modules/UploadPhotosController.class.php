@@ -20,7 +20,7 @@ class UploadPhotosController extends WikiaController {
 	 * This method hacks the normal nirvana dispatcher chain because of AIM and application/json mimetype incompatibility
 	 * Talk to Hyun or Inez
 	 */
-	public function executeUpload($params) {
+	public function upload() {
 		wfProfileIn(__METHOD__);
 		global $wgRequest, $wgUser;
 
@@ -28,6 +28,8 @@ class UploadPhotosController extends WikiaController {
 			echo 'Not logged in';
 			exit();
 		}
+
+		$this->checkWriteRequest();
 
 		$this->watchthis = $wgRequest->getBool('wpWatchthis') && $wgUser->isLoggedIn();
 		$this->license = $wgRequest->getText('wpLicense');

@@ -1,6 +1,6 @@
 <?php
 
-class ArticleAsJson extends WikiaService {
+class ArticleAsJson {
 	static $media = [ ];
 	static $users = [ ];
 	static $mediaDetailConfig = [
@@ -150,7 +150,8 @@ class ArticleAsJson extends WikiaService {
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
-			'user' => $details['userName']
+			'user' => $details['userName'],
+			'mime' => $details['mime']
 		];
 
 		// Only images are allowed to be linked by user
@@ -230,6 +231,10 @@ class ArticleAsJson extends WikiaService {
 				);
 				$details['context'] = self::MEDIA_CONTEXT_GALLERY_IMAGE;
 
+				if ( $details['exists'] === false ) {
+					continue;
+				}
+
 				$caption = $image['caption'];
 
 				if ( !empty( $caption ) ) {
@@ -302,6 +307,14 @@ class ArticleAsJson extends WikiaService {
 
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 
+			if ( $details['exists'] === false ) {
+				// Skip media when it doesn't exist
+
+				$res = '';
+
+				return false;
+			}
+
 			//information for mobile skins how they should display small icons
 			$details['context'] = self::isIconImage( $details, $handlerParams ) ? self::MEDIA_CONTEXT_ICON :
 				self::MEDIA_CONTEXT_ARTICLE_IMAGE;
@@ -338,7 +351,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onParserAfterTidy( Parser &$parser, &$text ) {
+	public static function onParserAfterTidy( Parser $parser, &$text ): bool {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -383,7 +396,7 @@ class ArticleAsJson extends WikiaService {
 				self::linkifyMediaCaption( $parser, $media );
 			}
 
-			wfRunHooks( 'ArticleAsJsonBeforeEncode', [ &$text ] );
+			Hooks::run( 'ArticleAsJsonBeforeEncode', [ &$text ] );
 
 			$text = json_encode(
 				[
@@ -399,7 +412,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onShowEditLink( Parser &$parser, &$showEditLink ) {
+	public static function onShowEditLink( Parser $parser, &$showEditLink ): bool {
 		global $wgArticleAsJson;
 
 		//We don't have editing in this version

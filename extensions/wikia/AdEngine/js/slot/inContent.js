@@ -1,59 +1,68 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.inContent', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'JSMessages',
+	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, msg, log, win) {
+], function (adTracker, slotsContext, videoFrequencyMonitor, msg, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
-		selector = '#mw-content-text > h2',
-		header;
+		selector = '#mw-content-text > h2';
+
+	function createInContentWrapper(slotName) {
+		var adHtml = doc.createElement('div'),
+			label = msg('adengine-advertisement');
+
+		adHtml.id = 'INCONTENT_WRAPPER';
+		adHtml.innerHTML = '<div id="' + slotName + '" class="wikia-ad hidden" data-label="' + label + '"></div>';
+
+		return adHtml;
+	}
+
+	function insertSlot(header, slotName, onSuccessCallback) {
+		var wrapper = createInContentWrapper(slotName);
+
+		log('insertSlot', 'debug', logGroup);
+		header.parentNode.insertBefore(wrapper, header);
+		win.adslots2.push({
+			slotName: slotName,
+			onSuccess: onSuccessCallback
+		});
+	}
 
 	/**
 	 * Adds dynamically new slot in the right place and sends tracking data
 	 */
 	function init(slotName, onSuccessCallback) {
-		var adHtml = '<div id="INCONTENT_WRAPPER"><div id="' + slotName + '" class="wikia-ad default-height" data-label="' + msg('adengine-advertisement') + '"></div></div>',
+		var header = doc.querySelectorAll(selector)[1],
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
-			$header,
-			slotNameGA;
-
-		if (!slotName) {
-			log('slotName is falsy', 'error', logGroup);
-			return;
-		}
-
-		slotNameGA = slotName.toLowerCase();
-
-		// take 2nd header from the article
-		header = $(selector)[1];
-		log(header, 'debug', logGroup);
+			slotNameGA = slotName.toLowerCase();
 
 		if (!header) {
-			logMessage = 'no second section in the article ' + logWikiData;
-			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
-			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
-			return;
+			logMessage = 'missing second section ' + logWikiData;
 		}
 
-		$header = $(header);
-		if ($header.width() < $('#mw-content-text').width()) {
+		if (!slotsContext.isApplicable(slotName)) {
 			logMessage = '2nd section in the article is not full width ' + logWikiData;
+		}
+
+		if (!videoFrequencyMonitor.videoCanBeLaunched()) {
+			logMessage = 'video frequency capping ' + logWikiData;
+		}
+
+		if (logMessage) {
 			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
 			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
 			return;
 		}
 
-		log('insertSlot()', 'debug', logGroup);
-		$header.before(adHtml);
+		insertSlot(header, slotName, onSuccessCallback);
 		adTracker.track('slot/' + slotNameGA + '/success');
-		win.adslots2.push({
-			slotName: slotName,
-			onSuccess: onSuccessCallback
-		});
 	}
 
 	return {

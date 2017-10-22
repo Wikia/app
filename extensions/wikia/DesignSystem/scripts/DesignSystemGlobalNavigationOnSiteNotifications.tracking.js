@@ -13,7 +13,8 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 				'discussion-upvote-post': 'discussion-upvote-post',
 				'discussion-reply': 'discussion-reply',
 				markAllAsRead: 'mark-all-as-read',
-				markAsRead: 'mark-as-read'
+				markAsRead: 'mark-as-read',
+				openMenu: 'open-menu'
 			};
 		}
 
@@ -30,6 +31,24 @@ define('ext.wikia.design-system.on-site-notifications.tracking', [
 				view.onNotificationClick.attach(function (_, id) {
 					this.notificationClick(id);
 				}.bind(this));
+				view.onDropDownClick.attach(function (_, event) {
+					// when drop down is closed the parent does not have wds-is-active
+					var active = $(event.currentTarget).parent('.wds-is-active');
+					if (active.length === 0) {
+						this.menuOpen();
+					}
+				}.bind(this));
+			},
+
+			menuOpen: function () {
+				try {
+					log('click - menu-open', log.levels.info, common.logTag);
+					this.trackClick(this.labels.openMenu,
+						{value: this.model.getUnreadCount()}
+					);
+				} catch (e) {
+					log(e, log.levels.error, common.logTag);
+				}
 			},
 
 			notificationImpression: function (id) {

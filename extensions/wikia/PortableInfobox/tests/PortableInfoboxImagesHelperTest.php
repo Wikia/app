@@ -139,7 +139,7 @@ class PortableInfoboxImagesHelperTest extends WikiaBaseTest {
 			->with( $this->logicalOr ( $this->equalTo( $thumbnailDimensions ), $this->equalTo( $thumbnail2xDimensions ) ) )
 			->will( $this->returnValue( $thumb ) );
 		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $file );
-		$this->mockGlobalFunction( 'wfRunHooks', true );
+		$this->mockStaticMethod( 'Hooks', 'run', true );
 
 		$globals = new \Wikia\Util\GlobalStateWrapper( [
 			'wgPortableInfoboxCustomImageWidth' => $customWidth

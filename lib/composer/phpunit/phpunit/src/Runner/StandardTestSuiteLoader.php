@@ -29,7 +29,7 @@ class StandardTestSuiteLoader implements TestSuiteLoader
      */
     public function load($suiteClassName, $suiteClassFile = '')
     {
-        $suiteClassName = str_replace('.php', '', $suiteClassName);
+        $suiteClassName = \str_replace('.php', '', $suiteClassName);
 
         if (empty($suiteClassFile)) {
             $suiteClassFile = Filesystem::classNameToFilename(
@@ -37,44 +37,41 @@ class StandardTestSuiteLoader implements TestSuiteLoader
             );
         }
 
-        if (!class_exists($suiteClassName, false)) {
-            $loadedClasses = get_declared_classes();
+        if (!\class_exists($suiteClassName, false)) {
+            $loadedClasses = \get_declared_classes();
 
             $filename = Fileloader::checkAndLoad($suiteClassFile);
 
-            $loadedClasses = array_values(
-                array_diff(get_declared_classes(), $loadedClasses)
+            $loadedClasses = \array_values(
+                \array_diff(\get_declared_classes(), $loadedClasses)
             );
         }
 
-        if (!class_exists($suiteClassName, false) && !empty($loadedClasses)) {
-            $offset = 0 - strlen($suiteClassName);
+        if (!\class_exists($suiteClassName, false) && !empty($loadedClasses)) {
+            $offset = 0 - \strlen($suiteClassName);
 
             foreach ($loadedClasses as $loadedClass) {
                 $class = new ReflectionClass($loadedClass);
-                if (substr($loadedClass, $offset) === $suiteClassName &&
-                    $class->getFileName() == $filename
-                ) {
+                if (\substr($loadedClass, $offset) === $suiteClassName &&
+                    $class->getFileName() == $filename) {
                     $suiteClassName = $loadedClass;
                     break;
                 }
             }
         }
 
-        if (!class_exists($suiteClassName, false) && !empty($loadedClasses)) {
+        if (!\class_exists($suiteClassName, false) && !empty($loadedClasses)) {
             $testCaseClass = TestCase::class;
 
             foreach ($loadedClasses as $loadedClass) {
                 $class     = new ReflectionClass($loadedClass);
                 $classFile = $class->getFileName();
 
-                if ($class->isSubclassOf($testCaseClass) &&
-                    !$class->isAbstract()
-                ) {
+                if ($class->isSubclassOf($testCaseClass) && !$class->isAbstract()) {
                     $suiteClassName = $loadedClass;
                     $testCaseClass  = $loadedClass;
 
-                    if ($classFile == realpath($suiteClassFile)) {
+                    if ($classFile == \realpath($suiteClassFile)) {
                         break;
                     }
                 }
@@ -82,13 +79,10 @@ class StandardTestSuiteLoader implements TestSuiteLoader
                 if ($class->hasMethod('suite')) {
                     $method = $class->getMethod('suite');
 
-                    if (!$method->isAbstract() &&
-                        $method->isPublic() &&
-                        $method->isStatic()
-                    ) {
+                    if (!$method->isAbstract() && $method->isPublic() && $method->isStatic()) {
                         $suiteClassName = $loadedClass;
 
-                        if ($classFile == realpath($suiteClassFile)) {
+                        if ($classFile == \realpath($suiteClassFile)) {
                             break;
                         }
                     }
@@ -96,16 +90,16 @@ class StandardTestSuiteLoader implements TestSuiteLoader
             }
         }
 
-        if (class_exists($suiteClassName, false)) {
+        if (\class_exists($suiteClassName, false)) {
             $class = new ReflectionClass($suiteClassName);
 
-            if ($class->getFileName() == realpath($suiteClassFile)) {
+            if ($class->getFileName() == \realpath($suiteClassFile)) {
                 return $class;
             }
         }
 
         throw new Exception(
-            sprintf(
+            \sprintf(
                 "Class '%s' could not be found in '%s'.",
                 $suiteClassName,
                 $suiteClassFile

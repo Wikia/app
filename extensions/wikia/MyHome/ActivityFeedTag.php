@@ -23,21 +23,27 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 	wfProfileIn(__METHOD__);
 
 	$parameters = ActivityFeedHelper::parseParameters($attributes);
+	$tagid = str_replace('.', '_', uniqid('activitytag_', true));	//jQuery might have a problem with . in ID
+	$parameters['tagid'] = $tagid;
 
-	$element =
-		renderElement( ActivityFeedHelper::getList( $parameters ), getAttributes( $parameters ),
-			getSnippets( $parameters ) );
+	$content = ActivityFeedHelper::getList( $parameters );
+	$attributes = getAttributes( $parameters );
+
 	wfProfileOut( __METHOD__ );
 
-	return $element;
-}
-
-function renderElement($content, $attributes, $jsSnippets) {
-	return Html::rawElement( 'div', $attributes, $content ) . $jsSnippets;
+	return Html::rawElement( 'div', $attributes, $content ) . getSnippets( $parameters );
 }
 
 function getAttributes( $parameters ) {
-	return empty($parameters['style']) ? [] : ['style' => $parameters['style']];
+	$attribs = [
+		'id' => $parameters['tagid']
+	];
+
+	if ( !empty( $parameters['style'] ) ) {
+		$attribs['style'] = $parameters['style'];
+	}
+
+	return $attribs;
 }
 
 function getSnippets( &$parameters ) {
@@ -46,9 +52,6 @@ function getSnippets( &$parameters ) {
 	$jsParams = "size={$parameters['maxElements']}";
 	if (!empty($parameters['includeNamespaces'])) $jsParams .= "&ns={$parameters['includeNamespaces']}";
 	if (!empty($parameters['flags'])) $jsParams .= '&flags=' . implode('|', $parameters['flags']);
-
-	$tagid = str_replace('.', '_', uniqid('activitytag_', true));	//jQuery might have a problem with . in ID
-	$parameters['tagid'] = $tagid;
 
 	$snippetsDependencies = array('/extensions/wikia/MyHome/ActivityFeedTag.js', '/extensions/wikia/MyHome/ActivityFeedTag.css');
 
@@ -61,7 +64,7 @@ function getSnippets( &$parameters ) {
 		null,
 		'ActivityFeedTag.initActivityTag',
 		array(
-			'tagid' => $tagid,
+			'tagid' => $parameters['tagid'],
 			'jsParams' => $jsParams,
 			'timestamp' => wfTimestampNow()
 		)

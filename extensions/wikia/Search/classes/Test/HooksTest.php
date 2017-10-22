@@ -12,7 +12,7 @@ class HooksTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08068 ms
-	 * @covers Wikia\Search\Hooks
+	 * @covers \Wikia\Search\Hooks
 	 */
 	public function testOnWikiaMobileAssetsPackages() {
 
@@ -42,7 +42,7 @@ class HooksTest extends BaseTest {
 				'As a hook, Wikia\Search\Hooks::onWikiaMobileAssetsPackages must return true.'
 		);
 		$this->assertEmpty(
-		        $jsBody,
+		        $jsExtension,
 		        'Wikia\Search\Hooks::onWikiaMobileAssetsPackages shoudl not append the value "wikiasearch_js_wikiamobile" to the jsBodyPackages array if the title is not special search.'
 		);
 		$this->assertEmpty(
@@ -50,12 +50,12 @@ class HooksTest extends BaseTest {
 		        'Wikia\Search\Hooks::onWikiaMobileAssetsPackages should not append the value "wikiasearch_scss_wikiamobile" to the jsBodyPackages array  if the title is not special search.'
 		);
 		$this->assertTrue(
-		        $hooks->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
+		        $hooks->onWikiaMobileAssetsPackages( $jsStatic, $jsExtension, $cssPkg ),
 		        'As a hook, Wikia\Search\Hooks::onWikiaMobileAssetsPackages must return true.'
 		);
 		$this->assertContains(
 				'wikiasearch_js_wikiamobile',
-				$jsBody,
+				$jsExtension,
 				'Wikia\Search\Hooks::onWikiaMobileAssetsPackages shoudl append the value "wikiasearch_js_wikiamobile" to the jsBodyPackages array.'
 		);
 		$this->assertContains(

@@ -11,14 +11,82 @@ class ArticleVideoContext {
 	public static function isFeaturedVideoEmbedded( $title ) {
 		$wg = F::app()->wg;
 
-		return $wg->enableArticleFeaturedVideo &&
-			isset( $wg->articleVideoFeaturedVideos[$title] ) &&
-			self::isFeaturedVideosValid( $wg->articleVideoFeaturedVideos[$title] ) &&
-			!WikiaPageType::isActionPage(); // Prevents to show video on ?action=history etc.;
+		if (!$wg->enableArticleFeaturedVideo) {
+			return false;
+		}
+
+		$featuredVideos = self::getFeaturedVideos();
+
+		return isset( $featuredVideos[$title] ) &&
+			self::isFeaturedVideosValid( $featuredVideos[$title] ) &&
+			// Prevents to show video on ?action=history etc.
+			!WikiaPageType::isActionPage();
+	}
+
+	/**
+	 * We are temporarily using two variables for storing the videos data
+	 * as we've run out of memory for one WF field. This will be replaced
+	 * soon by introducing a service to handle featured videos
+	 *
+	 * @return array
+	 */
+	public static function getFeaturedVideos() {
+		$wg = F::app()->wg;
+
+		return array_merge(
+			$wg->articleVideoFeaturedVideos,
+			$wg->articleVideoFeaturedVideos2
+		);
+	}
+
+	/**
+	 * Gets video id and labels for featured video
+	 *
+	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
+	 * @return array
+	 */
+	public static function getFeaturedVideoData( $title ) {
+		$wg = F::app()->wg;
+
+		if ( self::isFeaturedVideoEmbedded( $title ) ) {
+			$videoData = self::getFeaturedVideos()[$title];
+
+			if ( self::isJWPlayer( $videoData ) ) {
+				$details =
+					json_decode( Http::get( 'https://cdn.jwplayer.com/v2/media/' .
+					                        $videoData['mediaId'], 1 ), true );
+				if ( !empty( $details ) ) {
+					$videoData = array_merge( $videoData, $details );
+					$videoData['duration'] =
+						WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				}
+			} else {
+				$api = OoyalaBacklotApiService::getInstance();
+
+				$videoData['title'] = $api->getTitle( $videoData['videoId'] );
+				$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
+				$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
+			}
+
+			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
+			$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
+			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
+
+			return $videoData;
+		}
+
+		return [];
 	}
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
+		if ( self::isJWPlayer( $featuredVideo ) ) {
+			return isset( $featuredVideo['mediaId'] );
+		}
 		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
+	}
+
+	public static function isJWPlayer( $featuredVideo ) {
+		return isset( $featuredVideo['player'] ) && $featuredVideo['player'] === 'jwplayer';
 	}
 
 	/**
@@ -46,15 +114,5 @@ class ArticleVideoContext {
 		}
 
 		return [];
-	}
-
-	/**
-	 * Checks if related video is embedded on given article
-	 *
-	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
-	 * @return bool
-	 */
-	public static function isRelatedVideoEmbedded( $title ) {
-		return !empty( static::getRelatedVideoData( $title ) );
 	}
 }

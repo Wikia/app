@@ -5,6 +5,7 @@
 @import 'skins/shared/mixins/flexbox';
 @import "skins/shared/mixins/gradient";
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
 
 .full-screen-page {
 	&,
@@ -29,13 +30,6 @@
 	margin: 0 auto;
 	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
 	&.WikiaGrid {
-		.WikiaSearchHeader {
-			width: 330px;
-		}
-		.WikiaPageHeader {
-			margin-left: 0;
-			margin-right: 0;
-		}
 		.WikiaArticle {
 			padding: 0;
 		}
@@ -58,6 +52,9 @@
 	}
 	.WikiaPageContentWrapper {
 		@include clearfix;
+		@include flexbox();
+		@include flex-wrap(wrap);
+		@include justify-content(space-between);
 		position: relative;
 	}
 }
@@ -68,7 +65,6 @@
 }
 
 .WikiaMainContent {
-	float: left;
 	position: relative;
 	width: $width-outside - 320px;
 	z-index: 1;
@@ -117,8 +113,11 @@
 
 /* end temp transistion code */
 
+.wikia-rail-inner {
+	width: 100%;
+}
+
 .WikiaRail {
-	float: right;
 	padding: 0 $width-gutter;
 	width: $width-rail;
 	&.grid-2 {
@@ -129,6 +128,7 @@
 		height: 48px;
 		margin: 10px;
 		padding-top: 10px;
+		width: 100%;
 	}
 
 	.module {
@@ -221,7 +221,7 @@
 			border-bottom: 1px solid $color-page-border;
 			font-size: $wds-typescale-size-base;
 			font-weight: bold;
-			height: 30px;
+			min-height: 30px;
 			margin-bottom: 16px;
 			padding-left: 2px;
 
@@ -236,15 +236,11 @@
 			}
 		}
 
-		.wds-button.wds-is-secondary {
-			border-color: $color-links;
-			color: $color-links;
-			margin-left: 12px;
+		.wds-button {
+			@include button-theming($color-buttons, $color-button-text);
 
-			&:hover {
-				border-color: rgba($color-links, .75);
-				color: rgba($color-links, .75);
-				text-decoration: none;
+			&.wds-is-secondary {
+				margin-left: 12px;
 			}
 		}
 	}

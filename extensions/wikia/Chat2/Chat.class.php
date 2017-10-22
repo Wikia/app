@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Permissions\PermissionsService;
-
 /**
  * Class for managing a Chat (aka: chat-room)
  * This is for a demo & if the prototype works out, this will probably need to be thrown away and
@@ -37,35 +34,18 @@ class Chat {
 	const CHAT_ADMIN = 'chatadmin';
 
 	/**
-	 * @var PermissionsService
-	 */
-	private static $permissionsService;
-
-	/**
-	 * @return PermissionsService
-	 */
-	private static function permissionsService() {
-		if ( is_null( self::$permissionsService ) ) {
-			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
-		}
-
-		return self::$permissionsService;
-	}
-
-	/**
 	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
 	 * parameter sent with every chat request to the Node.js server.
 	 *
 	 * The key is then used by ChatAjax::getUserInfo() to load the info back from memcached.
 	 *
-	 * @return string
+	 * @return null|string
 	 */
 	public static function getSessionKey() {
-		self::info( __METHOD__ . ': Method called' );
 		$wg = F::app()->wg;
 
 		if ( !$wg->User->isLoggedIn() ) {
-			return '';
+			return null;
 		}
 		$key = 'Chat::cookies::' . sha1( $wg->User->getId() . "_" . microtime() . '_' . mt_rand() );
 		$wg->Memc->set( $key, [
@@ -88,12 +68,9 @@ class Chat {
 	 * @return true|string Returns true on success, returns an error message as a string on failure.
 	 */
 	public static function banUser( $subjectUserName, User $adminUser, $time, $reason ) {
-		self::info( __METHOD__ . ': Method called', [
-			'subjectUserName' => $subjectUserName,
-			'adminUser' => $adminUser,
-			'time' => $time,
-			'reason' => $reason,
-		] );
+		if ( $adminUser->isBlocked() ) {
+			return wfMessage( 'actionthrottled' )->text();
+		}
 
 		$subjectUser = User::newFromName( $subjectUserName );
 
@@ -108,8 +85,7 @@ class Chat {
 		if ( !self::canBan( $subjectUser, $adminUser ) ) {
 			return wfMessage( 'chat-ban-cant-ban-moderator' )->inContentLanguage()->text() . "\n";
 		}
-
-		$cityId = F::app()->wg->CityId;
+		
 		$action = $time != 0 ? self::BAN_ADD : self::BAN_REMOVE;
 
 		$subjectChatUser = new ChatUser( $subjectUser );
@@ -127,15 +103,6 @@ class Chat {
 			$timeLabel = $endOn = null;
 			$subjectChatUser->unban();
 		}
-
-		self::info( __METHOD__ . ': Method called', [
-			'cityId' => $cityId,
-			'subjectUser' => $subjectUser->getId(),
-			'adminUser' => $adminUser->getId(),
-			'time' => $time,
-			'reason' => $reason,
-			'action' => $action,
-		] );
 
 		Chat::addLogEntry(
 			$subjectUser,
@@ -159,12 +126,6 @@ class Chat {
 	 * @throws DBUnexpectedError
 	 */
 	public static function blockPrivate( $subjectUserName, $requestingUser, $dir = self::PRIVATE_BLOCK_ADD ) {
-		self::info( __METHOD__ . ': Method called', [
-			'subjectUserName' => $subjectUserName,
-			'dir' => $dir,
-			'requestingUser' => $requestingUser,
-		] );
-
 		$subjectUser = User::newFromName( $subjectUserName );
 
 		if ( !empty( $subjectUser ) && !$subjectUser->isAnon() && !$requestingUser->isAnon() ) {
@@ -205,8 +166,6 @@ class Chat {
 	 * @return array
 	 */
 	public static function getPrivateBlocks() {
-		self::info( __METHOD__ . ': Method called' );
-
 		$chatUser = ChatUser::newCurrent();
 
 		$blockedChatUsers = $chatUser->getBlockedUsers();
@@ -221,148 +180,11 @@ class Chat {
 	}
 
 	/**
-	 * Attempts to add the 'chatmoderator' group to the subject user
-	 *
-	 * @param string $subjectUserName
-	 * @param User $adminUser
-	 *
-	 * @return bool true on success, returns an error message as a string on failure.
-	 */
-	public static function promoteModerator( $subjectUserName, $adminUser ) {
-		self::info( __METHOD__ . ': Method called', [
-			'subjectUserName' => $subjectUserName,
-			'adminUser' => $adminUser
-		] );
-
-		$subjectUser = User::newFromName( $subjectUserName );
-
-		if ( !( $subjectUser instanceof User ) ) {
-			$errorMsg = wfMessage( 'chat-err-invalid-username-chatmod', $subjectUserName )->text();
-
-			return $errorMsg;
-		}
-
-		// Check if the userToPromote is already in the chatmoderator group.
-		$errorMsg = '';
-		if ( in_array( self::CHAT_MODERATOR, $subjectUser->getEffectiveGroups() ) ) {
-			$errorMsg = wfMessage( "chat-err-already-chatmod", $subjectUserName, self::CHAT_MODERATOR )->text();
-		} else if ( self::canPromoteModerator( $subjectUser, $adminUser ) ) {
-			self::doPromoteModerator( $adminUser, $subjectUser );
-		} else {
-			$errorMsg = wfMessage( "chat-err-no-permission-to-add-chatmod", self::CHAT_MODERATOR )->text();
-		}
-
-		return ( $errorMsg == "" ? true : $errorMsg );
-	}
-
-	/**
-	 * Promote given user to moderator and log that action. No permission checks are done here.
-	 *
-	 * @param User $adminUser
-	 * @param User $subjectUser
-	 */
-	private static function doPromoteModerator( User $adminUser, User $subjectUser ) {
-		// Add group
-		$oldGroups = $subjectUser->getGroups();
-		self::permissionsService()->addToGroup( $adminUser, $subjectUser, self::CHAT_MODERATOR );
-
-		// Run UserRights hook
-		$removegroups = [ ];
-		$addgroups = [ self::CHAT_MODERATOR ];
-		wfRunHooks( 'UserRights', [ &$subjectUser, $addgroups, $removegroups ] );
-
-		// Update user-rights log.
-		$newGroups = array_merge( $oldGroups, [ self::CHAT_MODERATOR ] );
-
-		// Log the rights-change.
-		Chat::addLogEntry( $subjectUser, $adminUser, [
-			Chat::makeGroupNameListForLog( $oldGroups ),
-			Chat::makeGroupNameListForLog( $newGroups )
-		], self::CHAT_MODERATOR );
-	}
-
-	/**
-	 * @param array $ids
-	 *
-	 * @return string
-	 */
-	public static function makeGroupNameListForLog( $ids ) {
-		if ( empty( $ids ) ) {
-			return '';
-		} else {
-			return Chat::makeGroupNameList( $ids );
-		}
-	}
-
-	/**
-	 * @param array $ids
-	 *
-	 * @return string
-	 */
-	public static function makeGroupNameList( $ids ) {
-		if ( empty( $ids ) ) {
-			return wfMessage( 'rightsnone' )->inContentLanguage()->text();
-		} else {
-			return implode( ', ', $ids );
-		}
-	}
-
-	/**
-	 * Logs to chatlog table that a user opened chat room
-	 *
-	 * Using chatlog table is temporary. It'll be last till event_type_description table will be done.
-	 * Now we have:
-	 * mysql> select * from event_type_details ;
-	 * +------------------------+------------+
-	 * | event_type_detail_text | event_type |
-	 * +------------------------+------------+
-	 * | EDIT_CATEGORY          |          1 |
-	 * | CREATEPAGE_CATEGORY    |          2 |
-	 * | DELETE_CATEGORY        |          3 |
-	 * | UNDELETE_CATEGORY      |          4 |
-	 * | UPLOAD_CATEGORY        |          5 |
-	 * +------------------------+------------+
-	 *
-	 * That's why I put as default 6 as a event_type value.
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public static function logChatWindowOpenedEvent() {
-		$wg = F::app()->wg;
-
-		self::addConnectionLogEntry();
-
-		if ( $wg->DevelEnvironment ) {
-			return;
-		}
-
-		$dbw = wfGetDB( DB_MASTER, [ ], $wg->StatsDB );
-
-		$wikiId = intval( $wg->CityId );
-		$userId = intval( $wg->User->GetId() );
-		if ( $wikiId > 0 && $userId > 0 ) {
-			$eventRow = [
-				'wiki_id' => $wg->CityId,
-				'user_id' => $wg->User->GetId(),
-				'event_type' => 6
-			];
-
-			if ( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
-				$dbw->insert( 'chatlog', $eventRow, __METHOD__ );
-			}
-		} else {
-			wfDebugLog( 'chat', 'User did open a chat room but it was not logged in chatlog' );
-		}
-
-	}
-
-	/**
 	 * Add a rights log entry for an action.
-	 * Partially copied from SpecialUserrights.php
 	 *
 	 * @param User $user
 	 * @param User $doer
-	 * @param Array $attr An array with parameters passed to LogPage::addEntry() according
+	 * @param array $attr An array with parameters passed to LogPage::addEntry() according
 	 *                    to description there these are parameters passed later to wfMsg.* functions
 	 * @param String $type
 	 * @param String|null $reason comment added to log
@@ -371,17 +193,7 @@ class Chat {
 		$doerName = $doer->getName();
 
 		$subtype = '';
-		if ( $type === self::CHAT_MODERATOR ) {
-			if ( empty( $reason ) ) {
-				$reason = wfMessage(
-					'chat-userrightslog-a-made-b-chatmod',
-					$doerName,
-					$user->getName()
-				)->inContentLanguage()->text();
-			}
-			$type = 'rights';
-			$subtype = $type;
-		} else if ( strpos( $type, 'ban' ) === 0 ) {
+		if ( strpos( $type, 'ban' ) === 0 ) {
 			if ( empty( $reason ) ) {
 				// Possible keys: chat-log-reason-banadd, chat-log-reason-banchane, chat-log-reason-banremove
 				$reason = wfMessage( 'chat-log-reason-' . $type, $doerName )->inContentLanguage()->text();
@@ -465,15 +277,6 @@ class Chat {
 	 * @return bool
 	 */
 	public static function canChat( User $subjectUser ) {
-		global $wgUser;
-
-		if ( !$subjectUser->equals($wgUser) ) {
-			self::info( __METHOD__ . ': Method called for arbitrary user', [
-				'wgUserName' => $wgUser->getName(),
-				'subjectUserName' => $subjectUser->getName(),
-			] );
-		}
-
 		$chatUser = new ChatUser( $subjectUser );
 
 		if ( $chatUser->isBanned() ||
@@ -492,13 +295,13 @@ class Chat {
 	}
 
 	/**
-	 * Can given admin user kick subject user from chat?
+	 * Can given admin user ban subject user from chat?
 	 *
 	 * @param User $subjectUser
 	 * @param User $adminUser
 	 * @return bool
 	 */
-	public static function canKick( User $subjectUser, User $adminUser ) {
+	public static function canBan( User $subjectUser, User $adminUser ) {
 		return (
 			// must be a chat moderator
 			$adminUser->isAllowed( self::CHAT_MODERATOR )
@@ -507,32 +310,6 @@ class Chat {
 				// moderators can be kicked only by chat staff/admins
 				|| $adminUser->isAllowedAny( self::CHAT_STAFF, self::CHAT_ADMIN )
 			) );
-	}
-
-	/**
-	 * Can given admin user ban subject user from chat?
-	 *
-	 * @param User $subjectUser
-	 * @param User $adminUser
-	 * @return bool
-	 */
-	public static function canBan( User $subjectUser, User $adminUser ) {
-		return self::canKick( $subjectUser, $adminUser );
-	}
-
-	/**
-	 * Can given admin user promote subject user to become moderator?
-	 *
-	 * @param User $subjectUser
-	 * @param User $adminUser
-	 * @return bool
-	 */
-	public static function canPromoteModerator( User $subjectUser, User $adminUser ) {
-		$changeableGroups = $adminUser->changeableGroups();
-		$isSelf = ( $subjectUser->getName() == $adminUser->getName() );
-		$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : [ ] );
-
-		return in_array( self::CHAT_MODERATOR, $addableGroups );
 	}
 
 	/**
@@ -574,13 +351,4 @@ class Chat {
 		// CONN-436: Invalidate Varnish cache for ChatRail:GetUsers
 		ChatRailController::purgeMethod( 'GetUsers', [ 'format' => 'json' ] );
 	}
-
-	public static function info( $message, Array $params = [ ] ) {
-		\Wikia\Logger\WikiaLogger::instance()->info( 'CHAT: ' . $message, $params );
-	}
-
-	public static function debug( $message, Array $params = [ ] ) {
-		\Wikia\Logger\WikiaLogger::instance()->debug( 'CHAT: ' . $message, $params );
-	}
-
 }

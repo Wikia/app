@@ -44,7 +44,7 @@ class ResourceLoaderTestModules {
 	 * @param  string $basePath
 	 * @param  string $installPath
 	 */
-	public function __construct( ResourceLoader &$resourceLoader, array &$testModules, $basePath, $installPath ) {
+	public function __construct( ResourceLoader $resourceLoader, array &$testModules, $basePath, $installPath ) {
 		$this->resourceLoader = $resourceLoader;
 		$this->testModules =& $testModules;
 		$this->basePath = $basePath;

@@ -132,7 +132,7 @@ class EmailNotification {
 			return;
 		}
 
-		if ( !wfRunHooks( 'AllowNotifyOnPageChange', [ $this->editor, $this->title ] ) ) {
+		if ( !Hooks::run( 'AllowNotifyOnPageChange', [ $this->editor, $this->title ] ) ) {
 			$this->logIgnore( "Hook AllowNotifyOnPageChange declined notification" );
 			return;
 		}
@@ -156,7 +156,7 @@ class EmailNotification {
 			if ( $watchers ) {
 				$this->updateWatchedItem( $watchers );
 			}
-			wfRunHooks( 'NotifyOnSubPageChange', [ $watchers, $this->title, $this->editor, $notificationTimeoutSql ] );
+			Hooks::run( 'NotifyOnSubPageChange', [ $watchers, $this->title, $this->editor, $notificationTimeoutSql ] );
 		}
 
 		if ( !$this->shouldSendEmail( $watchers ) ) {
@@ -328,7 +328,7 @@ class EmailNotification {
 
 			// Send mail to user when comment on his user talk has been added
 			$fakeUser = null;
-			wfRunHooks( 'UserMailer::NotifyUser', [ $this->title, &$fakeUser ] );
+			Hooks::run( 'UserMailer::NotifyUser', [ $this->title, &$fakeUser ] );
 			if ( $fakeUser instanceof User ) {
 				$this->logStep( "Sending email to owner of talk page/comment ");
 				$this->compose( $fakeUser );
@@ -484,7 +484,7 @@ class EmailNotification {
 
 		$keys['$ACTION'] = $this->action;
 		// Hook registered in FollowHelper -- used for blogposts and categoryAdd
-		wfRunHooks( 'MailNotifyBuildKeys', [ &$keys, $this->action, $this->otherParam ] );
+		Hooks::run( 'MailNotifyBuildKeys', [ &$keys, $this->action, $this->otherParam ] );
 
 		if ( $this->editor->isAnon() ) {
 			# real anon (user:xxx.xxx.xxx.xxx)
@@ -505,14 +505,14 @@ class EmailNotification {
 		// Now build message's subject and body
 		// ArticleComment -- updates subject and $keys['$PAGEEDITOR'] if anon editor
 		// EmailTemplatesHooksHelper -- updates subject if blogpost
-		wfRunHooks( 'ComposeCommonSubjectMail', [ $this->title, &$keys, &$subject, $this->editor ] );
+		Hooks::run( 'ComposeCommonSubjectMail', [ $this->title, &$keys, &$subject, $this->editor ] );
 		$subject = strtr( $subject, $keys );
 		$subject = MessageCache::singleton()->transform( $subject, false, null, $this->title );
 		$this->subject = strtr( $subject, $postTransformKeys );
 
 		// ArticleComment -- updates body and $keys['$PAGEEDITOR'] if anon editor
 		//     any watched page email coming from Community to a blog post (I think)
-		wfRunHooks( 'ComposeCommonBodyMail', [ $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ] );
+		Hooks::run( 'ComposeCommonBodyMail', [ $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ] );
 		$body = strtr( $body, $keys );
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
 		$this->body = wordwrap( strtr( $body, $postTransformKeys ), 72 );
@@ -553,7 +553,7 @@ class EmailNotification {
 			}
 		}
 
-		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
+		Hooks::run( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
 	}
 
 	private function getEmailExtensionController() {

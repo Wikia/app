@@ -37,8 +37,9 @@ $wgMainPageTag_count = 0;
 /**
  * Set hooks for each of the three parser tags
  * @param Parser $parser reference to MediaWiki Parser object
+ * @return bool
  */
-function wfMainPageTag( &$parser ) {
+function wfMainPageTag( Parser $parser ): bool {
 	$parser->setHook( 'mainpage-rightcolumn-start', 'wfMainPageTag_rcs' );
 	$parser->setHook( 'mainpage-leftcolumn-start', 'wfMainPageTag_lcs' );
 	$parser->setHook( 'mainpage-endcolumn', 'wfMainPageTag_ec' );
@@ -51,8 +52,9 @@ function wfMainPageTag( &$parser ) {
  * @param string $input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
  * @param array $args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
  * @param Parser $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
+ * @return string
  */
-function wfMainPageTag_rcs( $input, $args, $parser ) {
+function wfMainPageTag_rcs( $input, $args, $parser ): string {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
 
 	if ( !$wfMainPageTag_lcs_called ) {
@@ -73,8 +75,9 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
  * @param string $input Input between the <sample> and </sample> tags, or null if the tag is "closed", i.e. <sample />
  * @param array $args Tag arguments, which are entered like HTML tag attributes; this is an associative array indexed by attribute name.
  * @param array $parser The parent parser (a Parser object); more advanced extensions use this to obtain the contextual Title, parse wiki text, expand braces, register link relationships and dependencies, etc.
+ * @return string
  */
-function wfMainPageTag_lcs( $input, $args, $parser ) {
+function wfMainPageTag_lcs( $input, $args, $parser ): string {
 	global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called, $wgMainPageTag_count;
 
 	$wfMainPageTag_lcs_called = true;
@@ -117,7 +120,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
  * Inserts the necessary HTML to end either left or right column
  * only if there was a column start tag parsed
  */
-function wfMainPageTag_ec( $input, $args, $parser ) {
+function wfMainPageTag_ec( $input, $args, $parser ): string {
 	global $wgMainPageTag_count;
 
 	$html = '';

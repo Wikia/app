@@ -44,11 +44,11 @@ class TraversableContains extends Constraint
     {
         parent::__construct();
 
-        if (!is_bool($checkForObjectIdentity)) {
+        if (!\is_bool($checkForObjectIdentity)) {
             throw InvalidArgumentHelper::factory(2, 'boolean');
         }
 
-        if (!is_bool($checkForNonObjectIdentity)) {
+        if (!\is_bool($checkForNonObjectIdentity)) {
             throw InvalidArgumentHelper::factory(3, 'boolean');
         }
 
@@ -71,11 +71,13 @@ class TraversableContains extends Constraint
             return $other->contains($this->value);
         }
 
-        if (is_object($this->value)) {
+        if (\is_object($this->value)) {
             foreach ($other as $element) {
                 if ($this->checkForObjectIdentity && $element === $this->value) {
                     return true;
-                } elseif (!$this->checkForObjectIdentity && $element == $this->value) {
+                }
+
+                if (!$this->checkForObjectIdentity && $element == $this->value) {
                     return true;
                 }
             }
@@ -83,7 +85,9 @@ class TraversableContains extends Constraint
             foreach ($other as $element) {
                 if ($this->checkForNonObjectIdentity && $element === $this->value) {
                     return true;
-                } elseif (!$this->checkForNonObjectIdentity && $element == $this->value) {
+                }
+
+                if (!$this->checkForNonObjectIdentity && $element == $this->value) {
                     return true;
                 }
             }
@@ -99,11 +103,11 @@ class TraversableContains extends Constraint
      */
     public function toString()
     {
-        if (is_string($this->value) && strpos($this->value, "\n") !== false) {
+        if (\is_string($this->value) && \strpos($this->value, "\n") !== false) {
             return 'contains "' . $this->value . '"';
-        } else {
-            return 'contains ' . $this->exporter->export($this->value);
         }
+
+        return 'contains ' . $this->exporter->export($this->value);
     }
 
     /**
@@ -118,9 +122,9 @@ class TraversableContains extends Constraint
      */
     protected function failureDescription($other)
     {
-        return sprintf(
+        return \sprintf(
             '%s %s',
-            is_array($other) ? 'an array' : 'a traversable',
+            \is_array($other) ? 'an array' : 'a traversable',
             $this->toString()
         );
     }

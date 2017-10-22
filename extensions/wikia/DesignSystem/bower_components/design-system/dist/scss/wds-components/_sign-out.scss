@@ -13,14 +13,17 @@
 		width: auto;
 
 		.wds-is-linked & {
-			// wds-is-linked does this to <a>
+			box-sizing: border-box;
 			display: block;
-			padding: 11px 0;
+			padding: $wds-list-item-vertical-padding $wds-dropdown-padding / 2;
 			width: 100%;
 		}
 
+		&:hover {
+			@include wds-dropdown-linked-list-item-hover;
+		}
+
 		&:focus:not(:disabled),
-		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
 			background-color: transparent;

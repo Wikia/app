@@ -12,6 +12,7 @@ namespace PHPUnit\Util\Log;
 
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Exception;
+use PHPUnit\Framework\ExceptionWrapper;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Framework\TestSuite;
@@ -41,7 +42,7 @@ class TeamCity extends ResultPrinter
     private $startedTestName;
 
     /**
-     * @var string
+     * @var int|false
      */
     private $flowId;
 
@@ -120,17 +121,17 @@ class TeamCity extends ResultPrinter
             if ($comparisonFailure instanceof ComparisonFailure) {
                 $expectedString = $comparisonFailure->getExpectedAsString();
 
-                if (is_null($expectedString) || empty($expectedString)) {
+                if (null === $expectedString || empty($expectedString)) {
                     $expectedString = self::getPrimitiveValueAsString($comparisonFailure->getExpected());
                 }
 
                 $actualString = $comparisonFailure->getActualAsString();
 
-                if (is_null($actualString) || empty($actualString)) {
+                if (null === $actualString || empty($actualString)) {
                     $actualString = self::getPrimitiveValueAsString($comparisonFailure->getActual());
                 }
 
-                if (!is_null($actualString) && !is_null($expectedString)) {
+                if (null !== $actualString && null !== $expectedString) {
                     $parameters['type']     = 'comparisonFailure';
                     $parameters['actual']   = $actualString;
                     $parameters['expected'] = $expectedString;
@@ -184,7 +185,7 @@ class TeamCity extends ResultPrinter
         }
     }
 
-    public function printIgnoredTest($testName, Exception $e)
+    public function printIgnoredTest($testName, \Exception $e)
     {
         $this->printEvent(
             'testIgnored',
@@ -203,8 +204,8 @@ class TeamCity extends ResultPrinter
      */
     public function startTestSuite(TestSuite $suite)
     {
-        if (stripos(ini_get('disable_functions'), 'getmypid') === false) {
-            $this->flowId = getmypid();
+        if (\stripos(\ini_get('disable_functions'), 'getmypid') === false) {
+            $this->flowId = \getmypid();
         } else {
             $this->flowId = false;
         }
@@ -214,7 +215,7 @@ class TeamCity extends ResultPrinter
 
             $this->printEvent(
                 'testCount',
-                ['count' => count($suite)]
+                ['count' => \count($suite)]
             );
         }
 
@@ -226,13 +227,13 @@ class TeamCity extends ResultPrinter
 
         $parameters = ['name' => $suiteName];
 
-        if (class_exists($suiteName, false)) {
+        if (\class_exists($suiteName, false)) {
             $fileName                   = self::getFileName($suiteName);
             $parameters['locationHint'] = "php_qn://$fileName::\\$suiteName";
         } else {
-            $split = preg_split('/::/', $suiteName);
+            $split = \preg_split('/::/', $suiteName);
 
-            if (count($split) == 2 && method_exists($split[0], $split[1])) {
+            if (\count($split) == 2 && \method_exists($split[0], $split[1])) {
                 $fileName                   = self::getFileName($split[0]);
                 $parameters['locationHint'] = "php_qn://$fileName::\\$suiteName";
                 $parameters['name']         = $split[1];
@@ -257,10 +258,10 @@ class TeamCity extends ResultPrinter
 
         $parameters = ['name' => $suiteName];
 
-        if (!class_exists($suiteName, false)) {
-            $split = preg_split('/::/', $suiteName);
+        if (!\class_exists($suiteName, false)) {
+            $split = \preg_split('/::/', $suiteName);
 
-            if (count($split) == 2 && method_exists($split[0], $split[1])) {
+            if (\count($split) == 2 && \method_exists($split[0], $split[1])) {
                 $parameters['name'] = $split[1];
             }
         }
@@ -280,7 +281,7 @@ class TeamCity extends ResultPrinter
         $params                = ['name' => $testName];
 
         if ($test instanceof TestCase) {
-            $className              = get_class($test);
+            $className              = \get_class($test);
             $fileName               = self::getFileName($className);
             $params['locationHint'] = "php_qn://$fileName::\\$className::$testName";
         }
@@ -302,7 +303,7 @@ class TeamCity extends ResultPrinter
             'testFinished',
             [
                 'name'     => $test->getName(),
-                'duration' => (int) (round($time, 2) * 1000)
+                'duration' => (int) (\round($time, 2) * 1000)
             ]
         );
     }
@@ -328,21 +329,21 @@ class TeamCity extends ResultPrinter
     }
 
     /**
-     * @param Exception $e
+     * @param \Exception $e
      *
      * @return string
      */
-    private static function getMessage(Exception $e)
+    private static function getMessage(\Exception $e)
     {
         $message = '';
 
         if (!$e instanceof Exception) {
-            if (strlen(get_class($e)) != 0) {
-                $message = $message . get_class($e);
+            if (\strlen(\get_class($e)) != 0) {
+                $message .= \get_class($e);
             }
 
-            if (strlen($message) != 0 && strlen($e->getMessage()) != 0) {
-                $message = $message . ' : ';
+            if (\strlen($message) != 0 && \strlen($e->getMessage()) != 0) {
+                $message .= ' : ';
             }
         }
 
@@ -350,24 +351,26 @@ class TeamCity extends ResultPrinter
     }
 
     /**
-     * @param Exception $e
+     * @param \Exception $e
      *
      * @return string
      */
-    private static function getDetails(Exception $e)
+    private static function getDetails(\Exception $e)
     {
         $stackTrace = Filter::getFilteredStacktrace($e);
-        $previous   = $e->getPrevious();
+        $previous   = $e instanceof ExceptionWrapper ?
+            $e->getPreviousWrapped() : $e->getPrevious();
 
         while ($previous) {
             $stackTrace .= "\nCaused by\n" .
                 TestFailure::exceptionToString($previous) . "\n" .
                 Filter::getFilteredStacktrace($previous);
 
-            $previous = $previous->getPrevious();
+            $previous = $previous instanceof ExceptionWrapper ?
+                $previous->getPreviousWrapped() : $previous->getPrevious();
         }
 
-        return ' ' . str_replace("\n", "\n ", $stackTrace);
+        return ' ' . \str_replace("\n", "\n ", $stackTrace);
     }
 
     /**
@@ -377,15 +380,17 @@ class TeamCity extends ResultPrinter
      */
     private static function getPrimitiveValueAsString($value)
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return 'null';
-        } elseif (is_bool($value)) {
-            return $value == true ? 'true' : 'false';
-        } elseif (is_scalar($value)) {
-            return print_r($value, true);
         }
 
-        return;
+        if (\is_bool($value)) {
+            return $value == true ? 'true' : 'false';
+        }
+
+        if (\is_scalar($value)) {
+            return \print_r($value, true);
+        }
     }
 
     /**
@@ -395,12 +400,12 @@ class TeamCity extends ResultPrinter
      */
     private static function escapeValue($text)
     {
-        $text = str_replace('|', '||', $text);
-        $text = str_replace("'", "|'", $text);
-        $text = str_replace("\n", '|n', $text);
-        $text = str_replace("\r", '|r', $text);
-        $text = str_replace(']', '|]', $text);
-        $text = str_replace('[', '|[', $text);
+        $text = \str_replace('|', '||', $text);
+        $text = \str_replace("'", "|'", $text);
+        $text = \str_replace("\n", '|n', $text);
+        $text = \str_replace("\r", '|r', $text);
+        $text = \str_replace(']', '|]', $text);
+        $text = \str_replace('[', '|[', $text);
 
         return $text;
     }
@@ -413,8 +418,7 @@ class TeamCity extends ResultPrinter
     private static function getFileName($className)
     {
         $reflectionClass = new ReflectionClass($className);
-        $fileName        = $reflectionClass->getFileName();
 
-        return $fileName;
+        return $reflectionClass->getFileName();
     }
 }

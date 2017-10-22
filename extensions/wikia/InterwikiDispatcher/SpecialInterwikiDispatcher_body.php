@@ -127,7 +127,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	 *
 	 * @return string, url if could convert, empty string otherwise
 	 */
-	public static function getInterWikiaURL( Title &$title ): string {
+	public static function getInterWikiaURL( Title $title ): string {
 		$url = '';
 
 		if ( self::isSupportedPrefix( $title->mInterwiki ) ) {
@@ -183,7 +183,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	 *
 	 * @return bool
 	 */
-	public static function getInterWikiaURLHook( Title &$title, &$url, $query ) {
+	public static function getInterWikiaURLHook( Title $title, &$url, $query ): bool {
 		$interwikiUrl = self::getInterWikiaURL( $title );
 		$url = empty( $interwikiUrl ) ? $url : $interwikiUrl;
 

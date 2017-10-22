@@ -63,16 +63,16 @@ class LatestActivityController extends WikiaController {
 	}
 
 	static function onArticleSaveComplete(
-		&$article,
-		&$user,
+		WikiPage $article,
+		User $user,
 		$text,
 		$summary,
 		$minoredit,
 		$watchthis,
 		$sectionanchor,
-		&$flags,
+		$flags,
 		$revision,
-		&$status,
+		Status &$status,
 		$baseRevId
 	) {
 		global $wgMemc, $wgLang;

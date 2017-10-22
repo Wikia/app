@@ -17,52 +17,13 @@ class NavigationApiController extends WikiaApiController {
 
 	public function getData() {
 		$model = new NavigationModel();
-		$nav = $model->getWiki();
 
-		$ret = array();
-		foreach ( $nav as $type => $list ) {
-			$ret[$type] = $this->getChildren( $list );
-		}
+		$nav = $model->getFormattedWiki( NavigationModel::WIKI_LOCAL_MESSAGE );
 
 		$this->setResponseData(
-			[ 'navigation' => $ret ],
+			[ 'navigation' => $nav ],
 			[ 'urlFields' => 'href' ],
 			NavigationModel::CACHE_TTL
 		);
-	}
-
-	private function getChildren( $list, $i = 0 ) {
-		$children = [ ];
-		$next = [ ];
-
-		if ( isset ($list[$i]) ) {
-			$element = $list[$i];
-		} else {
-			return [ ];
-		}
-
-		if ( isset($element['children']) ) {
-			foreach ( $element['children'] as $child ) {
-				$children[] = $this->getChildren( $list, $child );
-			}
-		}
-
-		if ( isset($element['text']) ) {
-			$next = array(
-				'text' => $element['text'],
-				'href' => $element['href']
-			);
-
-			if ( !empty($children) ) {
-				$next['children'] = $children;
-			}
-
-		} else {
-			if ( !empty($children) ) {
-				$next = $children;
-			}
-		}
-
-		return $next;
 	}
 }

@@ -11,7 +11,9 @@
  *
  */
 
-.oo-player-container {
+// Use div to prevent Ooyala from overriding these styles
+// We can't easily change the order of loading files, see ArticleVideoHooks::onBeforePageDisplay
+div.oo-player-container {
 	.oo-scrubber-bar-container {
 		// Adjustment for smaller height on controlbar
 		height: 5px;
@@ -43,6 +45,8 @@
 
 	.oo-control-bar {
 		@include transition-shorthand(none);
+
+		height: 50px;
 
 		.oo-logo {
 			display: none !important;
@@ -92,31 +96,28 @@
 		.oo-icon:hover {
 			color: $video-player-blue !important;
 		}
-
-		.oo-icon-svg {
-			filter: none !important;
-
-			svg {
-				fill: #fff;
-				filter: none !important;
-			}
-
-			&:hover {
-				svg {
-					fill: $video-player-blue;
-				}
-			}
-		}
-
-
 	}
 
 	.oo-volume-bar {
 		padding-left: 6px;
 	}
 
-	// That overrides ooyala icons font. It prevents downloading the font.
+	.oo-close-button,
 	.oo-icon-svg {
+		filter: none !important;
+		// That overrides ooyala icons font. It prevents downloading the font.
 		font-family: $wds-font-family !important;
+		opacity: 1 !important;
+
+		svg {
+			fill: #fff;
+			filter: none !important;
+		}
+
+		&:hover {
+			svg {
+				fill: $video-player-blue;
+			}
+		}
 	}
 }

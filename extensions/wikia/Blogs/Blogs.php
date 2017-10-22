@@ -98,14 +98,13 @@ $wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
 $wgHooks[ 'AlternateEdit' ][] = 'BlogArticle::alternateEditHook';
 $wgHooks[ 'ArticleFromTitle' ][] = 'BlogArticle::ArticleFromTitle';
 $wgHooks[ 'onSkinTemplateNavigation' ][] = 'BlogArticle::skinTemplateTabs';
-$wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckboxes';
-$wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
 $wgHooks[ 'UnwatchArticleComplete' ][] = 'BlogArticle::UnwatchBlogComments';
 $wgHooks[ 'AfterCategoriesUpdate'][] = 'BlogArticle::clearCountCache';
 $wgHooks[ 'SpecialSearchProfiles' ][] = 'BlogsHelper::OnSpecialSearchProfiles';
 $wgHooks[ 'ParserBeforeInternalParse' ][] = 'BlogsHelper::OnParserBeforeInternalParse';
 $wgHooks[ 'ArticleInsertComplete' ][] = 'BlogsHelper::OnArticleInsertComplete';
 $wgHooks[ 'TitleMoveComplete' ][] = 'BlogsHelper::onTitleMoveComplete';
+$wgHooks[ 'PageHeaderActionButtonShouldDisplay' ][] = 'BlogsHelper::onPageHeaderActionButtonShouldDisplay';
 
 // Usages of images on blogs on file pages
 $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageSingleLink';
@@ -115,6 +114,8 @@ $wgHooks['BeforeDeletePermissionErrors'][] = 'BlogLockdown::onBeforeDeletePermis
 
 // SUS-260: Prevent moving pages into or out of Forum namespaces
 $wgHooks['AbortMove'][] = 'BlogsHelper::onAbortMove';
+
+$wgHooks['AfterPageHeaderButtons'][] = 'BlogsHelper::onAfterPageHeaderButtons';
 
 /**
  * load other parts

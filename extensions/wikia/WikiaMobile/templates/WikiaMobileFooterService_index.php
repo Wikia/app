@@ -3,7 +3,6 @@
  * @var $links String[]
  * @var $defaultSkin String
  * @var $centralUrl String
- * @var $wf WikiaFunctionWrapper
  * @var $copyrightLink String
  * @var $privacyLink String
  * @var $feedbackLink String
@@ -19,9 +18,9 @@
 		</ul>
 	<? endif ;?>
 	<ul>
-		<li><a href="?useskin=<?= $defaultSkin ?>" id=wkFllSite data-skin="<?= $defaultSkin ?>"><?= wfMsg('mobile-full-site') ;?></a></li>
+		<li><a href="?useskin=<?= $defaultSkin ?>" id=wkFllSite data-skin="<?= $defaultSkin ?>"><?= wfMessage( 'mobile-full-site' )->escaped(); ?></a></li>
 		<li><?= $copyrightLink ;?></li>
 		<li><?= $privacyLink ;?></li>
-		<li><a href="<?= $feedbackLink ;?>" target=_blank><?= wfMsg('wikiamobile-feedback') ;?></a></li>
+		<li><a href="<?= $feedbackLink ;?>" target=_blank><?= wfMessage('wikiamobile-feedback' )->escaped(); ?></a></li>
 	</ul>
 </footer>

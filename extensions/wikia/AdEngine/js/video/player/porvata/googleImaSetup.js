@@ -1,21 +1,48 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (vastUrlBuilder, sourcePoint, browserDetect, log, win) {
+], function (adContext, megaAdUnitBuilder, vastUrlBuilder, adBlockRecovery, browserDetect, log, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
+	function megaIsEnabled(params) {
+		return params.useMegaAdUnitBuilder !== false &&
+			(params.useMegaAdUnitBuilder || adContext.get('opts.megaAdUnitBuilderEnabled'));
+	}
+
+	function getPosBasedOnProduct(params) {
+		if (params.adProduct === 'abcd') {
+			return params.adProduct.toUpperCase();
+		}
+
+		if (params.adProduct === 'vuap') {
+			return 'UAP_' + params.type.toUpperCase();
+		}
+
+		return params.vastTargeting.pos;
+	}
+
 	function buildVastUrl(params) {
-		var vastUrl = params.vastUrl ||
-			vastUrlBuilder.build(params.width / params.height, params.vastTargeting);
+		var vastUrlBuilderOptions = {},
+			vastUrl;
+
+		if (megaIsEnabled(params)) {
+			vastUrlBuilderOptions.adUnit =
+				megaAdUnitBuilder.build(getPosBasedOnProduct(params), params.vastTargeting.src);
+		}
+
+		vastUrl = params.vastUrl ||
+			vastUrlBuilder.build(params.width / params.height, params.vastTargeting, vastUrlBuilderOptions);
 
 		log(['build vast url', vastUrl, params], log.levels.debug, logGroup);
 
-		return sourcePoint.getSafeUri(vastUrl);
+		return adBlockRecovery.getSafeUri(vastUrl);
 	}
 
 	function getOverriddenVast() {

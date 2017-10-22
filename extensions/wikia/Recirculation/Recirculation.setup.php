@@ -18,6 +18,7 @@ $wgAutoloadClasses['RecirculationApiController'] =  __DIR__ . '/RecirculationApi
 $wgAutoloadClasses['RecirculationHooks'] =  __DIR__ . '/RecirculationHooks.class.php';
 
 $wgAutoloadClasses['RecirculationContent'] =  __DIR__ . '/RecirculationContent.php';
+$wgAutoloadClasses['WikiRecommendations'] =  __DIR__ . '/WikiRecommendations.class.php';
 
 // Hooks
 $wgHooks['GetRailModuleList'][] = 'RecirculationHooks::onGetRailModuleList';

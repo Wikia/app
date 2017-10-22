@@ -79,13 +79,13 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 	wfHandleCrossSiteAJAXdomain(); // PLATFORM-1719
 
 	$response->sendHeaders();
-	wfRunHooks( 'NirvanaAfterRespond', [ $app, $response ] );
+	Hooks::run( 'NirvanaAfterRespond', [ $app, $response ] );
 
 	$response->render();
 
 	wfLogProfilingData();
 
-	wfRunHooks( 'RestInPeace' );
+	Hooks::run( 'RestInPeace' );
 
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );

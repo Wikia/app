@@ -102,10 +102,12 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 		$respMock = is_array($apiResponse) ? json_encode($apiResponse) : $apiResponse;
 
 		$this->mockStaticMethod('Http', 'request', $respMock);
-		$this->mockGlobalVariable('wgTitle', $this->mockClassWithMethods('Title', [
+
+		$titleMock = $this->createConfiguredMock( Title::class, [
 			'getArticleID' => 666,
-			'getText' => 'Paradise_Lost:Forever_Failure'
-		]));
+			'getText' => 'Paradise_Lost:Forever_Failure',
+		] );
+		$this->mockGlobalVariable('wgTitle', $titleMock );
 
 		$service = new LyricFindTrackingService();
 		$status = $service->track($amgId, 0, $this->app->wg->Title);

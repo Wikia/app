@@ -194,16 +194,25 @@ class LocalRepo extends FileRepo {
 		if( !$title instanceof Title ) {
 			return 0;
 		}
-		$dbr = $this->getSlaveDB();
-		$id = $dbr->selectField(
-			'page', // Table
-			'page_id',  //Field
-			array(  //Conditions
-				'page_namespace' => $title->getNamespace(),
-				'page_title' => $title->getDBkey(),
-			),
-			__METHOD__  //Function name
-		);
+
+		// Wikia change - begin
+		try {
+			$dbr = $this->getSlaveDB();
+			$id = $dbr->selectField(
+				'page', // Table
+				'page_id',  //Field
+				[  //Conditions
+					'page_namespace' => $title->getNamespace(),
+					'page_title' => $title->getDBkey(),
+				],
+				__METHOD__  //Function name
+			);
+		} catch ( DBConnectionError $e ) {
+			// gracefully handle "Unknown database 'somedbname' errors - SUS-2359
+			$id = 0;
+		}
+		// Wikia change end
+
 		return $id;
 	}
 

@@ -20,7 +20,6 @@ class GlobalFileTest extends WikiaBaseTest {
 		// assume we're in production environment
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgDevBoxImageServerOverride', false);
-		$this->mockGlobalVariable('wgEnableVignette', false);
 
 		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
 		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
@@ -48,7 +47,7 @@ class GlobalFileTest extends WikiaBaseTest {
 			}));
 
 		$this->mockGlobalVariable('wgCityId', $cityId);
-		$this->mockGlobalVariable('wgUploadPath', "http://images.wikia.com/{$path}/images");
+		$this->mockGlobalVariable('wgUploadPath', "https://images.wikia.com/{$path}/images");
 
 		$file = GlobalFile::newFromText('Gzik.jpg', $cityId);
 		$title = $file->getTitle();
@@ -60,7 +59,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->assertEquals($url, $file->getUrl());
 
 		if ($file->exists()) {
-			$this->assertContains("/{$path}/images/thumb/0/06/Gzik.jpg/{$crop}", $file->getCrop(200, 200));
+			$this->assertContains("/window-crop/width/200/", $file->getCrop(200, 200));
 		}
 
 		// metadata
@@ -87,7 +86,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => 450,
 				'crop' => '200px-76%2C527%2C0%2C450-Gzik.jpg',
 				'mime' => 'image/jpeg',
-				'url' => 'http://images3.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/poznan/pl/images/0/06/Gzik.jpg',
+				'url' => 'https://images.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/poznan/pl/images/0/06/Gzik.jpg',
 			],
 			// existing image from Muppet wiki
 			[
@@ -105,7 +104,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => 300,
 				'crop' => '200px-0%2C301%2C0%2C300-Gzik.jpg',
 				'mime' => 'image/png',
-				'url' => 'http://images4.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/muppet/images/0/06/Gzik.jpg',
+				'url' => 'https://images.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/muppet/images/0/06/Gzik.jpg',
 			],
 			// not existing image from Poznań wiki
 			[
@@ -117,7 +116,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => null,
 				'crop' => null,
 				'mime' => null,
-				'url' => 'http://images3.wikia.nocookie.net/__cb' . self::DEFAULT_CB . '/poznan/pl/images/0/06/Gzik.jpg', // contains default CB
+				'url' => 'https://images.wikia.nocookie.net/__cb' . self::DEFAULT_CB . '/poznan/pl/images/0/06/Gzik.jpg', // contains default CB
 			]
 		];
 	}

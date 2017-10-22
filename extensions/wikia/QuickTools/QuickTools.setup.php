@@ -76,4 +76,3 @@ $wgResourceModules['ext.quickAdopt'] = $qtResourceTemplate + array(
 );
 
 $wgHooks['ContributionsToolLinks'][] = 'QuickToolsHooksHelper::onContributionsToolLinks';
-$wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'QuickToolsHooksHelper::onAccountNavigationModuleAfterDropdownItems';

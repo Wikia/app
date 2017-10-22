@@ -1,4 +1,5 @@
-<?
+<?php
+
 class WikiaUploadStashFile extends UploadStashFile {
 	/**
 	 * Get the filename hash component of the directory including trailing slash,
@@ -29,23 +30,11 @@ class WikiaUploadStashFile extends UploadStashFile {
 	 *		Use our external thumbnailer for UploadStashFiles
 	 *		We need to look into temp directory while upload stash is saving file there
 	 *
-	 * @param String $suffix string that will be added at the end of path
+	 * @param string|bool $suffix string that will be added at the end of path
 	 * @return String: URL to access thumbnail, or URL with partial path
 	 */
 	public function getThumbUrl( $suffix = false ) {
-		global $wgEnableVignette;
-
-		if ($wgEnableVignette) {
-			$generator = VignetteRequest::applyLegacyThumbDefinition($this->getUrlGenerator(), $suffix);
-			$path = $generator->url();
-		} else {
-			$path = $this->repo->getZoneUrl( 'thumb' ) . '/temp/' . $this->getUrlRel();
-			if ( $suffix !== false ) {
-				$path .= '/' . rawurlencode( $suffix );
-			}
-		}
-
-		return $path;
+		return VignetteRequest::applyLegacyThumbDefinition($this->getUrlGenerator(), $suffix)->url();
 	}
 
 	/**
@@ -54,15 +43,7 @@ class WikiaUploadStashFile extends UploadStashFile {
 	 * @return string
 	 */
 	public function getOriginalFileUrl() {
-		global $wgEnableVignette;
-
-		if ($wgEnableVignette) {
-			$url = $this->getUrlGenerator()->url();
-		} else {
-			$url = $this->repo->getZoneUrl( 'temp' ) . '/' . $this->getUrlRel();
-		}
-
-		return $url;
+		return $this->getUrlGenerator()->url();
 	}
 
 	public function getUrlGenerator() {

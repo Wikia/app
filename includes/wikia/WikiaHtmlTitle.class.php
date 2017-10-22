@@ -22,10 +22,6 @@ class WikiaHtmlTitle {
 	public function __construct() {
 		$this->brandName = wfMessage( 'wikia-pagetitle-brand' );
 		$this->siteName = wfMessage( 'wikia-pagetitle-sitename' );
-
-		if ( WikiaPageType::isWikiaHomePage() ) {
-			$this->siteName = null;
-		}
 	}
 
 	/**
@@ -117,7 +113,7 @@ class WikiaHtmlTitle {
 
 		// Extra title for admin dashboard (and maybe other pages handled by extensions)
 		$parts = [];
-		wfRunHooks( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
+		Hooks::run( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
 		array_unshift( $parts, $name );
 
 		return $this->setParts( $parts );

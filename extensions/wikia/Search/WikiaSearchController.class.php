@@ -511,14 +511,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
 			$title = $article->getTitle();
 			if ( $this->useGoSearch() ) {
-				wfRunHooks( 'SpecialSearchIsgomatch', [ $title, $query ] );
+				Hooks::run( 'SpecialSearchIsgomatch', [ $title, $query ] );
 				$this->setVarnishCacheTime( WikiaResponse::CACHE_DISABLED );
 				$this->response->redirect( $title->getFullUrl() );
 			}
 		} else {
 			$title = Title::newFromText( $query );
 			if ( $title !== null ) {
-				wfRunHooks( 'SpecialSearchNogomatch', [ &$title ] );
+				Hooks::run( 'SpecialSearchNogomatch', [ &$title ] );
 			}
 		}
 
@@ -904,7 +904,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 
-		wfRunHooks( 'AdvancedBoxSearchableNamespaces', [ &$searchableNamespaces ] );
+		Hooks::run( 'AdvancedBoxSearchableNamespaces', [ &$searchableNamespaces ] );
 
 		$this->setVal( 'namespaces', $config->getNamespaces() );
 		$this->setVal( 'searchableNamespaces', $searchableNamespaces );

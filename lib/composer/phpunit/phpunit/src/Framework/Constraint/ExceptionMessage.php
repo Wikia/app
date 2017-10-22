@@ -36,7 +36,11 @@ class ExceptionMessage extends Constraint
      */
     protected function matches($other)
     {
-        return strpos($other->getMessage(), $this->expectedMessage) !== false;
+        if ($this->expectedMessage === '') {
+            return $other->getMessage() === '';
+        }
+
+        return \strpos($other->getMessage(), $this->expectedMessage) !== false;
     }
 
     /**
@@ -51,7 +55,14 @@ class ExceptionMessage extends Constraint
      */
     protected function failureDescription($other)
     {
-        return sprintf(
+        if ($this->expectedMessage === '') {
+            return \sprintf(
+                "exception message is empty but is '%s'",
+                $other->getMessage()
+            );
+        }
+
+        return \sprintf(
             "exception message '%s' contains '%s'",
             $other->getMessage(),
             $this->expectedMessage
@@ -63,6 +74,10 @@ class ExceptionMessage extends Constraint
      */
     public function toString()
     {
+        if ($this->expectedMessage === '') {
+            return 'exception message is empty';
+        }
+
         return 'exception message contains ';
     }
 }

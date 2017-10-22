@@ -79,7 +79,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			},
 			adaptersPricesTracker: {},
 			adaptersRegistry: {
-				setupCustomAdapters: noop
+				setupCustomAdapters: noop,
+				registerAliases: noop
 			},
 			prebidHelper: {
 				setupAdUnits: function () {

@@ -11,8 +11,15 @@ define('ext.wikia.adEngine.slot.skyScraper3', [
 
 	log('load', 'debug', logGroup);
 
-	function adjustSize($slot) {
-		$slot.css('top', (-1 * $slot.height()) + 'px');
+	function adjustSize($slot, $rail) {
+		var height = $slot.height();
+
+		$slot.css('top', (-1 * height) + 'px');
+		if (height === 250) {
+			$rail.addClass('small-left-skyscraper-3-present');
+		} else {
+			$rail.addClass('left-skyscraper-3-present');
+		}
 	}
 
 	function init() {
@@ -50,8 +57,7 @@ define('ext.wikia.adEngine.slot.skyScraper3', [
 		win.adslots2.push({
 			slotName: slotName,
 			onSuccess: function () {
-				adjustSize($slot);
-				$rail.addClass('left-skyscraper-3-present');
+				adjustSize($slot, $rail);
 			}
 		});
 	}

@@ -6,6 +6,11 @@ describe('ext.wikia.adEngine.slot.service.actionHandler', function () {
 
 	var handler,
 		mocks = {
+			abTest: {
+				getGroup: function () {
+					return false;
+				}
+			},
 			log: noop,
 			messageListener: {
 				callback: null,
@@ -65,6 +70,7 @@ describe('ext.wikia.adEngine.slot.service.actionHandler', function () {
 			mocks.messageListener,
 			mocks.slotTweaker,
 			mocks.viewabilityHandler,
+			mocks.abTest,
 			mocks.log
 		);
 	}

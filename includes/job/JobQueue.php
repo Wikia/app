@@ -263,7 +263,6 @@ abstract class Job {
 				$dbw->begin();
 				$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
 				$dbw->commit();
-				Wikia::informJobQueue( count( $rows ) );
 				$rows = array();
 			}
 		}
@@ -271,7 +270,6 @@ abstract class Job {
 			$dbw->begin();
 			$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
 			$dbw->commit();
-			Wikia::informJobQueue( count( $rows ) );
 		}
 		wfIncrStats( 'job-insert', count( $jobs ) );
 	}
@@ -295,13 +293,11 @@ abstract class Job {
 			$rows[] = $job->insertFields();
 			if ( count( $rows ) >= 500 ) {
 				$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
-				Wikia::informJobQueue( count( $rows ) );
 				$rows = array();
 			}
 		}
 		if ( $rows ) { // last chunk
 			$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
-			Wikia::informJobQueue( count( $rows ) );
 		}
 		wfIncrStats( 'job-insert', count( $jobs ) );
 	}
@@ -343,7 +339,6 @@ abstract class Job {
 			}
 		}
 		wfIncrStats( 'job-insert' );
-		Wikia::informJobQueue();
 		return $dbw->insert( 'job', $fields, __METHOD__ );
 	}
 

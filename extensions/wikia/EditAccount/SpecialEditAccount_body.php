@@ -21,7 +21,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Helios\HeliosClient;
 
-
 class EditAccount extends SpecialPage {
 	/** @var User */
 	var $mUser = null;
@@ -96,7 +95,7 @@ class EditAccount extends SpecialPage {
 				//
 				// 2) and copy the data from the shared to the local database
 				$oUser = User::newFromName( $userName );
-				wfRunHooks( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
+				Hooks::run( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
 
 				$id = 0;
 				$this->mUser = $oUser;
@@ -426,8 +425,7 @@ class EditAccount extends SpecialPage {
 			return false;
 		}
 
-		// if they are connected from facebook, disconnect them
-		self::disconnectFromFacebook( $user );
+		Hooks::run( 'CloseAccount', [ $user ] );
 
 		if ( $user->getEmail() == '' ) {
 			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
@@ -448,17 +446,6 @@ class EditAccount extends SpecialPage {
 			// There were errors...inform the user about those
 			$mStatusMsg = wfMessage( 'editaccount-error-close', $user->mName )->plain();
 			return false;
-		}
-	}
-
-	/**
-	 * Make sure a wikia user account is disconnected from their facebook account.
-	 *
-	 * @param  User $user The user account to disconnect
-	 */
-	public static function disconnectFromFacebook( User $user ) {
-		if ( !empty( F::app()->wg->EnableFacebookClientExt ) ) {
-			FacebookMapModel::deleteFromWikiaID( $user->getId() );
 		}
 	}
 

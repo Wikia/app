@@ -1,67 +1,104 @@
 <?php
-/** Internationalization file for /extensions/wikia/SpecialVersion/WikiaSpecialVersion extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
-	'wikia-version-desc' => 'Wikia\'s extension for Special:Version, in support of package-based deployment.',
-	'wikia-version-code' => 'Fandom code',
-	'wikia-version-config' => 'Fandom config',
-];
+$messages['en'] = array(
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+	'wikia-version-code' => 'FANDOM code',
+	'wikia-version-config' => 'FANDOM config',
+);
 
-$messages['fr'] = [
-	'wikia-version-code' => 'Code de Fandom',
-	'wikia-version-config' => 'Config de Fandom',
-	'wikia-version-desc' => 'Extension de Special:Version de Wikia, en soutien de déploiement à base de paquets',
-];
-
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'wikia-version-code' => 'Missing documentation',
 	'wikia-version-config' => 'Missing documentation',
-];
+);
 
-$messages['de'] = [
-	'wikia-version-code' => 'Fandom-Code',
-	'wikia-version-config' => 'Fandom-Config',
-];
+$messages['de'] = array(
+	'wikia-version-code' => 'FANDOM-Code',
+	'wikia-version-config' => 'FANDOM-Config',
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+);
 
-$messages['es'] = [
-	'wikia-version-code' => 'Código de Fandom',
-	'wikia-version-config' => 'Configuración de Fandom',
-];
+$messages['es'] = array(
+	'wikia-version-code' => 'Código de FANDOM',
+	'wikia-version-config' => 'Configuración de FANDOM',
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+);
 
-$messages['it'] = [
-	'wikia-version-code' => 'Codice Fandom',
-	'wikia-version-config' => 'Fandom config',
-];
+$messages['fi'] = array(
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+	'wikia-version-code' => 'FANDOM code',
+	'wikia-version-config' => 'FANDOM config',
+);
 
-$messages['ja'] = [
-	'wikia-version-code' => 'Fandomコード',
-	'wikia-version-config' => 'Fandom設定',
-];
+$messages['fr'] = array(
+	'wikia-version-code' => 'Code de FANDOM',
+	'wikia-version-config' => 'Config de FANDOM',
+	'wikia-version-desc' => 'Extension de Special:Version de Wikia, en soutien de déploiement à base de paquets',
+);
 
-$messages['pl'] = [
+$messages['it'] = array(
+	'wikia-version-code' => 'Codice FANDOM',
+	'wikia-version-config' => 'FANDOM config',
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+);
+
+$messages['ja'] = array(
+	'wikia-version-code' => 'FANDOMコード',
+	'wikia-version-config' => 'FANDOM設定',
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+);
+
+$messages['ko'] = array(
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+	'wikia-version-code' => 'FANDOM code',
+	'wikia-version-config' => 'FANDOM config',
+);
+
+$messages['lol'] = array(
+	'wikia-version-desc' => 'crwdns66502:0crwdne66502:0',
+	'wikia-version-code' => 'crwdns66503:0crwdne66503:0',
+	'wikia-version-config' => 'crwdns66504:0crwdne66504:0',
+);
+
+$messages['nl'] = array(
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+	'wikia-version-code' => 'FANDOM code',
+	'wikia-version-config' => 'FANDOM config',
+);
+
+$messages['pl'] = array(
 	'wikia-version-code' => 'Kod Fandomu',
 	'wikia-version-config' => 'Konfiguracja Fandomu',
 	'wikia-version-desc' => 'Rozszerzenie Wikia dla Specjalna:Wersja, wspierające wdrażanie pakietów.',
-];
+);
 
-$messages['pt'] = [
-	'wikia-version-code' => 'Código do Fandom',
-	'wikia-version-config' => 'Configuração do Fandom',
-];
+$messages['pt'] = array(
+	'wikia-version-code' => 'Código do FANDOM',
+	'wikia-version-config' => 'Configuração do FANDOM',
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'wikia-version-code' => 'Код Фэндома',
 	'wikia-version-config' => 'Конфигурации Фэндома',
-];
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+);
 
-$messages['zh-hans'] = [
-	'wikia-version-code' => 'Fandom代码',
-	'wikia-version-config' => 'Fandom配置',
-];
+$messages['vi'] = array(
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+	'wikia-version-code' => 'FANDOM code',
+	'wikia-version-config' => 'FANDOM config',
+);
 
-$messages['zh-hant'] = [
-	'wikia-version-code' => 'Fandom代碼',
-	'wikia-version-config' => 'Fandom配置',
-];
+$messages['zh-hans'] = array(
+	'wikia-version-code' => 'FANDOM代码',
+	'wikia-version-config' => 'FANDOM配置',
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+);
+
+$messages['zh-hant'] = array(
+	'wikia-version-code' => 'FANDOM代碼',
+	'wikia-version-config' => 'FANDOM配置',
+	'wikia-version-desc' => "Wikia's extension for Special:Version, in support of package-based deployment.",
+);
 

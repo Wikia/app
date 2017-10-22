@@ -45,16 +45,16 @@ function getLiftIgniterGlobalContext() {
 $p("init", "l9ehhrb6mtv75bp2", {
     config: {
         sdk: {
-            queryServer: "//query.fandommetrics.com"
+            queryServer: "//query.fandommetrics.com",
         },
         activity: {
-            activityServer: "//api.fandommetrics.com"
+            activityServer: "//query.fandommetrics.com"
         },
         inventory: {
-            inventoryServer: "//api.fandommetrics.com"
+            inventoryServer: "//query.fandommetrics.com"
         },
         globalCtx: getLiftIgniterGlobalContext()
     }
 });
 $p("send", "pageview");
-$p("setRequestFields", ["rank", "thumbnail", "title", "url", "presented_by", "author"]);
+$p("setRequestFields", ["rank", "thumbnail", "title", "url", "presented_by", "author", "site_name", "type"]);

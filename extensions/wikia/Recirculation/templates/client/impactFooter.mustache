@@ -20,7 +20,7 @@
             {{/thumbnail}}
           </div>
           <div class="recirc-footer-title-container">
-            <div class="title_pretext">
+            {{^isPlista}}<div class="title_pretext">
               <div class="featured-fandom-subtitle">
                 {{i18n.featuredFandomSubtitle}}
               </div>
@@ -30,46 +30,16 @@
                 </div>
               {{/presented_by}}
             </div>
-            <h4>{{title}}</h4>
+            {{/isPlista}}<h4>{{title}}</h4>
           </div>
         </a>
-      </div>
+      {{#isPlista}}
+					<a href="https://www.plista.com/au" class="recirculation-powered-plista">
+						<img src="http://static.plista.com/images/powered_by_plista_logo.png">
+					</a>
+				{{/isPlista}}</div>
     {{/items}}
   </div>
 
-  {{#discussions}}
-    <div class="discussion-module">
-      <div class="discussion-header">
-        <div class="discussion-header-alpha">
-          <h3>{{i18n.discussionsTitle}}</h3>
-          <a href="{{discussionsUrl}}">{{i18n.discussionsLinkText}} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12"><path class="arrow-path" fill-rule="evenodd" fill="#FFFFFF" d="m9.96924,0l-1.04453,1.04453l4.17812,4.17813l-13.10283,0l0,1.49218l13.10283,0l-4.17812,4.17813l1.04453,1.04453l5.96875,-5.96875l-5.96875,-5.96875z" /></svg></a>
-        </div>
-      </div>
 
-      <ul class="discussion-threads">
-        {{#posts}}
-          <li class="discussion-thread" data-index="{{index}}" data-source="{{source}}"><a class="track-discussions" href="{{url}}">
-            <div class="discussion-author">
-              <img src="{{meta.authorAvatarUrl}}" class="discussion-author-avatar" />
-              <h4>{{author}}</h4>
-              <span class="subtext">&#183; <time class="discussion-timestamp" datetime="{{pub_date}}"></time></span>
-            </div>
-            <p class="discussion-content">{{title}}</p>
-            <div class="discussion-meta">
-              <div class="discussion-upvotes-container">
-                <span class="subtext">{{meta.upvoteCount}} {{i18n.discussionsUpvotes}}</span>
-              </div>
-              <div class="discussion-comments-container">
-                <span class="subtext">{{meta.postCount}} {{i18n.discussionsReplies}}</span>
-              </div>
-            </div>
-          </a></li>
-        {{/posts}}
-      </ul>
-
-      <div class="discussion-footer">
-        <a href="{{discussionsUrl}}" class="button discussion-new">{{i18n.discussionsNew}}</a>
-      </div>
-    </div>
-  {{/discussions}}
 </section>

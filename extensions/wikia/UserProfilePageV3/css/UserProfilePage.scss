@@ -28,6 +28,10 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	@if $page-opacity == 1 {
 		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%);
 	}
+
+	padding-top: 20px;
+	width: 100%;
+
 	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
 		background: transparent;
 		padding: 0 10px 6px;
@@ -206,7 +210,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 	}
-	
+
 	.contributions-details {
 		a {
 			color: $color-text;
@@ -216,7 +220,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 	}
-	
+
 	.links {
 		@include clearfix;
 		li {

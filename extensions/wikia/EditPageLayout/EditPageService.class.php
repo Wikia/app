@@ -4,7 +4,7 @@
  * Service providing interface for generating previews and diffs
  */
 
-class EditPageService extends Service {
+class EditPageService {
 
 	private $app;
 
@@ -42,7 +42,7 @@ class EditPageService extends Service {
 	}
 
 	public function getPreview( $wikitext ) {
-		// TODO: use wgParser here because some parser hooks initialize themselves on wgParser (should on provided parser instance)
+		/** @var Parser $wgParser */
 		global $wgParser, $wgUser, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
@@ -67,9 +67,21 @@ class EditPageService extends Service {
 		/**
 		 * Allow extensions to modify the ParserOutput
 		 */
-		wfRunHooks( 'ArticlePreviewAfterParse', [ $parserOutput, $this->mTitle ] );
+		Hooks::run( 'ArticlePreviewAfterParse', [ $parserOutput, $this->mTitle ] );
 
 		$html = $parserOutput->getText();
+
+		// MAIN-11309: parser output may contain RL modules so add them
+		$modules = $parserOutput->getModules();
+
+		if ( $modules ) {
+			$html .= Html::inlineScript(
+				ResourceLoader::makeLoaderConditionalScript(
+					Xml::encodeJsCall( 'mw.loader.load', [ $modules, null, true ] )
+				)
+			);
+		}
+
 		$html = EditPageService::wrapBodyText( $this->mTitle, $wgRequest, $html );
 
 		// we should also render categories and interlanguage links

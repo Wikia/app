@@ -117,7 +117,7 @@ class CuratedContentValidator {
 			$errors[] = self::ERR_EMPTY_LABEL;
 		}
 
-		if ( strlen( $section[ 'label' ] ) > self::LABEL_MAX_LENGTH ) {
+		if ( !empty( $section['label'] ) && strlen( $section[ 'label' ] ) > self::LABEL_MAX_LENGTH ) {
 			$errors[] = self::ERR_TOO_LONG_LABEL;
 		}
 
@@ -163,7 +163,7 @@ class CuratedContentValidator {
 		$errors = [ ];
 
 		// validate items exist
-		if ( !self::areItemsCorrect( $section[ 'items' ] ) ) {
+		if ( !isset( $section['items'] ) || !self::areItemsCorrect( $section['items'] ) ) {
 			$errors[] = self::ERR_ITEMS_MISSING;
 		}
 
@@ -173,7 +173,7 @@ class CuratedContentValidator {
 		}
 
 		// validate each item
-		if ( is_array( $section[ 'items' ] ) ) {
+		if ( isset( $section['items'] ) && is_array( $section['items'] ) ) {
 			foreach ( $section[ 'items' ] as $item ) {
 				if ( !empty( self::validateSectionItem( $item ) ) ) {
 					$errors[] = self::ERR_OTHER_ERROR;
@@ -189,7 +189,7 @@ class CuratedContentValidator {
 	}
 
 	private static function validateItemsInFeatured( $section ) {
-		if ( !self::areItemsCorrect( $section[ 'items' ] ) ) {
+		if ( !isset( $section['items'] ) || !self::areItemsCorrect( $section['items'] ) ) {
 			return false;
 		}
 
@@ -202,7 +202,7 @@ class CuratedContentValidator {
 	}
 
 	private static function validateItemsInSection( $section ) {
-		if ( !self::areItemsCorrect( $section[ 'items' ] ) ) {
+		if ( !isset( $section['items'] ) || !self::areItemsCorrect( $section[ 'items' ] ) ) {
 			return false;
 		}
 

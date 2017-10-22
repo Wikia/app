@@ -254,18 +254,6 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
 	}
 
-	public function testSpecialImagesAllowed() {
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
-		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
-		$this->mockGlobalVariable( 'wgAllowSpecialImagesInRobots', true );
-
-		$robotsTxtMock = $this->getWikiaRobotsTxt();
-
-		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Images' ) );
-		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
-		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
-	}
-
 	/**
 	 * Test building robots.txt for blocked wiki
 	 *

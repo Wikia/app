@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 /**
  * @category Wikia
  * @group Integration
@@ -7,39 +9,20 @@
 class PhalanxServiceTest extends WikiaBaseTest {
 
 	/* @var PhalanxService */
-	public $service;
+	private $service;
 
-	/**
-	 * setup tests
-	 */
 	public function setUp() {
-		$this->setupFile =  dirname( __FILE__ ) . '/../Phalanx_setup.php';
+		$this->setupFile =  __DIR__ . '/../Phalanx_setup.php';
 		parent::setUp();
-		$this->checkPhalanxAlive();
-	}
 
-	public function checkPhalanxAlive( ) {
-		$this->service = new PhalanxService();
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 		if ( !$this->service->status() ) {
 			// Skip test if phalanx service is not available
-			throw new Exception( "Can't connect to phalanx service" );
-		}
-	}
-
-
-	/**
-	 * check for defined methods in service
-	 */
-	public function testPhalanxServiceMethod() {
-		error_log( __CLASS__ . '::' . __FUNCTION__ );
-		$this->service = new PhalanxService();
-		foreach ( array( "check", "match", "status", "reload", "validate", "stats" ) as $method ) {
-			$this->assertEquals( true, method_exists( $this->service, $method ), "Method '$method' doesnt exist in PhalanxService" );
+			$this->markTestSkipped( "Can't connect to phalanx service" );
 		}
 	}
 
 	public function testPhalanxServiceCheck() {
-		error_log( __CLASS__ . '::' . __FUNCTION__ );
 		$ret = $this->service->check( "content", "hello world" );
 		$this->assertEquals( $ret, 1 );
 
@@ -98,7 +81,6 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	}
 
 	public function testPhalanxServiceValidate() {
-
 		$ret = $this->service->validate( '^alamakota$' );
 		$this->assertEquals( 1, $ret, "Valid regex" );
 
@@ -106,11 +88,4 @@ class PhalanxServiceTest extends WikiaBaseTest {
 		$this->assertEquals( 0, $ret, "Invalid regex" );
 
 	}
-
-	public function testPhalanxServiceStats() {
-		$ret = $this->service->stats( );
-		// check for known strings
-		$this->assertRegexp( "/email|wiki_creation|summary/", $ret );
-	}
-
 }

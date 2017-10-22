@@ -11,6 +11,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			vertical: '320x480',
 			horizontal: '640x480'
 		},
+		availableVideoPositions = ['preroll', 'midroll', 'postroll'],
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
 		logGroup = 'ext.wikia.adEngine.video.vastUrlBuilder';
 
@@ -44,23 +45,46 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
-	function build(aspectRatio, slotParams) {
-		slotParams = slotParams || {};
-		var correlator = Math.round(Math.random() * 10000000000),
-			params = [
-				'output=vast',
-				'env=vp',
-				'gdfp_req=1',
-				'impl=s',
-				'unviewed_position_start=1',
-				'iu=' + adUnitBuilder.build(slotParams.pos, slotParams.src),
-				'sz=' + getSizeByAspectRatio(aspectRatio),
-				'url=' + loc.href,
-				'correlator=' + correlator,
-				'cust_params=' + getCustomParameters(slotParams)
-			],
-			url = baseUrl + params.join('&');
+	function getAdUnit(options, slotParams) {
+		return options.adUnit || adUnitBuilder.build(slotParams.pos, slotParams.src);
+	}
 
+	function build(aspectRatio, slotParams, options) {
+		options = options || {};
+		slotParams = slotParams || {};
+
+		var correlator = options.correlator || Math.round(Math.random() * 10000000000),
+			params,
+			url;
+
+		params = [
+			'output=vast',
+			'env=vp',
+			'gdfp_req=1',
+			'impl=s',
+			'unviewed_position_start=1',
+			'iu=' + getAdUnit(options, slotParams),
+			'sz=' + getSizeByAspectRatio(aspectRatio),
+			'url=' + encodeURIComponent(loc.href),
+			'description_url=' + encodeURIComponent(loc.href),
+			'correlator=' + correlator,
+			'cust_params=' + getCustomParameters(slotParams)
+		];
+
+		if (typeof options.numberOfAds !== 'undefined') {
+			params.push('pmad=' + options.numberOfAds);
+		}
+
+		if (options.vpos && availableVideoPositions.indexOf(options.vpos) > -1) {
+			params.push('vpos=' + options.vpos);
+		}
+
+		if (options.contentSourceId && options.videoId) {
+			params.push('cmsid=' + options.contentSourceId);
+			params.push('vid=' + options.videoId);
+		}
+
+		url = baseUrl + params.join('&');
 		log(['build', url], 'debug', logGroup);
 
 		return url;

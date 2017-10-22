@@ -92,18 +92,23 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		}
 	}
 
+	function getIframeOk(iframe, slotName) {
+		try {
+			return !!iframe.contentWindow.document.querySelector;
+		} catch (e) {
+			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
+			log(['getIframeOk', slotName, 'ad iframe not accessible (or not found)'], 'error', logGroup);
+		}
+
+		return false;
+	}
+
 	function getAdType(slotName, gptEvent, iframe) {
-		var status, height, gptEmpty, iframeOk = false;
+		var status, height, gptEmpty, iframeOk;
 
 		log(['getAdType', slotName], 'info', logGroup);
 
-		try {
-			iframeOk = !!iframe.contentWindow.document.querySelector;
-		} catch (e) {
-			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
-			log(['getAdType', slotName, 'ad iframe not accessible (or not found)'], 'error', logGroup);
-		}
-
+		iframeOk = getIframeOk(iframe, slotName);
 		if (iframeOk && iframe.contentWindow.AdEngine_adType) {
 			log(['getAdType', slotName, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
 
@@ -124,9 +129,14 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			return 'always_success';
 		}
 
-		if (gptEmpty || height <= 1) {
+		if (gptEmpty) {
 			log(['getAdType', slotName, 'ad is empty (GPT event)', 'empty'], 'info', logGroup);
 			return 'empty';
+		}
+
+		if (height <= 1) {
+			log(['getAdType', slotName, 'ad has no size', 'no_height'], 'info', logGroup);
+			return 'no_height';
 		}
 
 		if (!isMobile()) {
@@ -156,13 +166,26 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		return 'inspect_iframe';
 	}
 
+	function getAdProduct(slotName, iframe) {
+		var iframeOk = getIframeOk(iframe, slotName);
+
+		if (iframeOk && iframe.contentWindow.AdEngine_adProduct) {
+			log(['getAdProduct', slotName, 'iframe AdEngine_adProduct = ', iframe.contentWindow.AdEngine_adProduct], 'info', logGroup);
+
+			return iframe.contentWindow.AdEngine_adProduct;
+		}
+
+		return 'other';
+	}
+
 	function isPartnerAdType(adType) {
 		return (/^partner\/[a-zA-Z0-9]{1,30}$/).test(adType);
 	}
 
 	function onAdLoad(slot, gptEvent, iframe, forcedAdType) {
 
-		var adType = forcedAdType || getAdType(slot.name, gptEvent, iframe),
+		var adProduct = getAdProduct(slot.name, iframe),
+			adType = forcedAdType || getAdType(slot.name, gptEvent, iframe),
 			isCollapsed = false,
 			shouldPollForSuccess = false,
 			expectAsyncCollapse = false,
@@ -177,6 +200,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		function callAdCallback(adInfo) {
 			adInfo = adInfo || {};
 			adInfo.adType = adType;
+			adInfo.adProduct = adProduct;
 
 			clearTimeout(successTimer);
 			slot.success(adInfo);
@@ -185,6 +209,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		function callCollapseAdCallback(adInfo) {
 			adInfo = adInfo || {};
 			adInfo.adType = adType;
+			adInfo.adProduct = adProduct;
 
 			isCollapsed = true;
 			clearTimeout(successTimer);
@@ -194,6 +219,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		function callNoAdCallback(adInfo) {
 			adInfo = adInfo || {};
 			adInfo.adType = adType;
+			adInfo.adProduct = adProduct;
 
 			clearTimeout(successTimer);
 			slot.hop(adInfo);
@@ -249,7 +275,11 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			uapContext.dispatchEvent();
 		}
 
-		if (['openx', 'rubicon', 'saymedia', 'turtle', 'evolve2'].indexOf(adType) !== -1 || isPartnerAdType(adType)) {
+		if (adType === 'manual') {
+			return;
+		}
+
+		if (['rubicon', 'saymedia', 'turtle', 'evolve2'].indexOf(adType) !== -1 || isPartnerAdType(adType)) {
 			shouldPollForSuccess = true;
 			expectAsyncCollapse = true;
 			expectAsyncHop = true;
@@ -276,11 +306,11 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			return callAdCallback();
 		}
 
-		if (adType === 'collapse') {
+		if (adType === 'collapse' || adType === 'empty') {
 			return callCollapseAdCallback();
 		}
 
-		if (adType === 'empty') {
+		if (adType === 'no_height') {
 			return callNoAdCallback();
 		}
 

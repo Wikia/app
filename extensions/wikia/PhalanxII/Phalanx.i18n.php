@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'phalanx-type-email' => 'email',
 	'phalanx-type-question-title' => 'question title',
 	'phalanx-type-recent-questions' => 'recent questions',
+	'phalanx-type-device' => 'device',
 	'phalanx-type-wiki-creation' => 'SITENAME',
 	'phalanx-add-block' => 'Add filter',
 	'phalanx-modify-block' => 'Modify filter',
@@ -24,6 +25,7 @@ $messages['en'] = array(
 	'phalanx-expires-infinite' => 'Never expires',
 	'phalanx-expiries-select' => 'No change',
 	'phalanx-label-type' => 'Type:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Type of block...',
 	'phalanx-view-blocker' => 'Search by filter text:',
 	'phalanx-view-blocks' => 'Search filters',
@@ -46,7 +48,7 @@ $messages['en'] = array(
 	'phalanx-bulkmode' => 'Bulk mode',
 	'phalanx-singlemode' => 'Single mode',
 	'phalanx-block-success' => 'The block was successfully added',
-	'phalanx-block-failure' => 'There was an error during adding the block',
+	'phalanx-block-failure' => 'There was a problem with adding the block',
 	'phalanx-modify-success' => 'The block was successfully modified',
 	'phalanx-modify-failure' => 'There was an error modifying the block',
 	'phalanx-modify-warning' => 'You are editing block ID #$1.
@@ -83,20 +85,21 @@ It does not prevent those pages from being created.
 
 Note: works only on Answers-type wiks.',
 	'phalanx-help-type-email' => 'This filter prevents account creation using a blocked email address.',
-	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing across the entire Fandom network due to vandalism or other disruption by you or by someone who shares your IP address.
-If you believe this is in error, please [[Special:Contact|contact Fandom]].',
-	'phalanx-user-block-reason-exact' => 'This username or IP address is prevented from editing across the entire Fandom network due to vandalism or other disruption.
-If you believe this is in error, please [[Special:Contact|contact Fandom]].',
-	'phalanx-user-block-reason-similar' => 'This username is prevented from editing across the entire Fandom network due to vandalism or other disruption by a user with a similar name.
-Please [[Special:Contact|contact Fandom]] about the problem.',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing across the entire FANDOM network due to vandalism or other disruption by you or by someone who shares your IP address.
+If you believe this is in error, please [[Special:Contact|contact FANDOM]].',
+	'phalanx-user-block-reason-exact' => 'This username or IP address is prevented from editing across the entire FANDOM network due to vandalism or other disruption.
+If you believe this is in error, please [[Special:Contact|contact FANDOM]].',
+	'phalanx-user-block-reason-similar' => 'This username is prevented from editing across the entire FANDOM network due to vandalism or other disruption by a user with a similar name.
+Please [[Special:Contact|contact FANDOM]] about the problem.',
 	'phalanx-user-block-new-account' => 'Username is not available for registration. Please choose another one.',
 	'phalanx-email-block-new-account' => 'We can not complete your registration at this time.',
-	'phalanx-user-block-withreason-ip' => 'This IP address is prevented from editing across the entire Fandom network due to vandalism or other disruption by you or by someone who shares your IP address.
-If you believe this is in error, please [[Special:Contact|contact Fandom]].<br />The blocker also gave this additional reason: $1.',
-	'phalanx-user-block-withreason-exact' => '"This username or IP address is prevented from editing across the entire Fandom network due to vandalism or other disruption.
-If you believe this is in error, please [[Special:Contact|contact Fandom]].<br />The blocker also gave this additional reason: $1.',
-	'phalanx-user-block-withreason-similar' => 'This username is prevented from editing across the entire Fandom network due to vandalism or other disruption by a user with a similar name.
-Please [[Special:Contact|contact Fandom]] about the problem.<br />The blocker also gave this additional reason: $1.',
+	'phalanx-user-block-withreason-ip' => 'This IP address is prevented from editing across the entire FANDOM network due to vandalism or other disruption by you or by someone who shares your IP address.
+If you believe this is in error, please [[Special:Contact|contact FANDOM]].<br />The blocker also gave this additional reason: $1.',
+	'phalanx-user-block-withreason-exact' => '"This username or IP address is prevented from editing across the entire FANDOM network due to vandalism or other disruption.
+If you believe this is in error, please [[Special:Contact|contact FANDOM]].<br />The blocker also gave this additional reason: $1.',
+	'phalanx-user-block-withreason-similar' => 'This username is prevented from editing across the entire FANDOM network due to vandalism or other disruption by a user with a similar name.
+Please [[Special:Contact|contact FANDOM]] about the problem.<br />The blocker also gave this additional reason: $1.',
 	'phalanx-title-move-summary' => 'The reason you entered contained a blocked phrase.',
 	'phalanx-content-spam-summary' => "The text was found in the page's summary.",
 	'phalanx-stats-title' => 'Phalanx Stats',
@@ -109,6 +112,7 @@ Please [[Special:Contact|contact Fandom]] about the problem.<br />The blocker al
 	'phalanx-stats-table-exact' => 'Exact',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Case',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Reason (public)',
 	'phalanx-stats-table-comment' => 'Comment (private)',
@@ -137,7 +141,7 @@ Please [[Special:Contact|contact Fandom]] about the problem.<br />The blocker al
 	'phalanx-section-type-account-creation' => 'Account creation',
 	'phalanx-section-type-wiki-creation' => 'Wiki creation',
 	'phalanx-section-type-questions' => 'Questions',
-	'phalanx-sp-contributions-blocked-globally' => 'This user is currently blocked across the Fandom network.',
+	'phalanx-sp-contributions-blocked-globally' => 'This user is currently blocked across the FANDOM network.',
 	'phalanx-required-filter' => '*This field is required',
 	'phalanx-required-type' => '*At least one of checkboxes is required',
 );
@@ -148,6 +152,7 @@ $messages['qqq'] = array(
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
+	'phalanx-stats-table-language' => '{{Identical|Language}}',
 	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'action-phalanx' => '{{doc-action|phalanx}}',
@@ -167,10 +172,13 @@ $messages['qqq'] = array(
 	'phalanx-user-block-withreason-similar' => 'Missing documentation',
 	'phalanx-required-filter' => 'Error message for filter field',
 	'phalanx-required-type' => 'Error message for type checkboxes',
+	'phalanx-type-device' => 'Label for filter type checkbox',
+	'phalanx-help-type-device' => 'Info tooltip shown to user when hovering over the label',
 );
 
 $messages['ar'] = array(
 	'phalanx-label-reason' => 'السبب:',
+	'phalanx-label-lang' => 'اللغة:',
 	'phalanx-stats-table-reason' => 'السبب',
 );
 
@@ -178,8 +186,10 @@ $messages['az'] = array(
 	'phalanx-type-user' => 'istifadəçi',
 	'phalanx-label-reason' => 'Səbəb:',
 	'phalanx-label-type' => 'Tipi:',
+	'phalanx-label-lang' => 'Dil:',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-stats-table-type' => 'Tipi',
+	'phalanx-stats-table-language' => 'Dil',
 	'phalanx-stats-table-text' => 'Mətn',
 	'phalanx-stats-table-reason' => 'Səbəb',
 	'phalanx-stats-table-wiki-name' => 'Viki adı',
@@ -188,6 +198,8 @@ $messages['az'] = array(
 
 $messages['bg'] = array(
 	'phalanx-label-reason' => 'Причина:',
+	'phalanx-label-lang' => 'Език:',
+	'phalanx-stats-table-language' => 'Език',
 	'phalanx-stats-table-reason' => 'Причина',
 );
 
@@ -198,6 +210,7 @@ $messages['br'] = array(
 	'phalanx-label-reason' => 'Abeg :',
 	'phalanx-label-expiry' => 'Termen :',
 	'phalanx-label-type' => 'Seurt :',
+	'phalanx-label-lang' => 'Yezh :',
 	'phalanx-format-exact' => 'rik',
 	'phalanx-test-submit' => 'Amprouiñ',
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
@@ -207,6 +220,7 @@ $messages['br'] = array(
 	'phalanx-stats-table-id' => 'Stankañ an ID',
 	'phalanx-stats-table-type' => 'Seurt',
 	'phalanx-stats-table-create' => 'Krouet',
+	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
 	'phalanx-stats-table-wiki-name' => 'Anv ar wiki',
@@ -225,6 +239,7 @@ $messages['cs'] = array(
 	'phalanx-label-reason' => 'Důvod:',
 	'phalanx-label-expiry' => 'Čas vypršení:',
 	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Jazyk:',
 	'phalanx-view-type' => 'Typ bloku...',
 	'phalanx-view-blocks' => 'Vyhledávací filtry',
 	'phalanx-test-submit' => 'Test',
@@ -236,6 +251,7 @@ $messages['cs'] = array(
 	'phalanx-stats-table-create' => 'Vytvořeno',
 	'phalanx-stats-table-expire' => 'Vyprší',
 	'phalanx-stats-table-exact' => 'Přesný',
+	'phalanx-stats-table-language' => 'Jazyk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Důvod',
 	'phalanx-stats-table-wiki-id' => 'ID wiki',
@@ -261,6 +277,7 @@ $messages['de'] = array(
 	'phalanx-label-reason' => 'Grund:',
 	'phalanx-label-expiry' => 'Sperrdauer:',
 	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Art der Sperre...',
 	'phalanx-view-blocker' => 'Suche nach Filtertext:',
 	'phalanx-view-blocks' => 'Suchfilter',
@@ -273,7 +290,7 @@ $messages['de'] = array(
 	'phalanx-tab-main' => 'Filter verwalten',
 	'phalanx-tab-secondary' => 'Filter testen',
 	'phalanx-block-success' => 'Die Sperre wurde erfolgreich hinzugefügt',
-	'phalanx-block-failure' => 'Es gab einen Fehler beim Hinzufügen der Sperre',
+	'phalanx-block-failure' => 'Beim Hinzufügen der Sperre ist ein Fehler aufgetreten.',
 	'phalanx-modify-success' => 'Die Sperre wurde erfolgreich geändert',
 	'phalanx-modify-failure' => 'Es gab einen Fehler beim Ändern der Sperre',
 	'phalanx-modify-warning' => 'Du bearbeitest die Sperre mit der ID #$1.
@@ -304,17 +321,17 @@ Anmerkung: funktioniert nur für Wikis vom Typ Answers.',
 
 Anmerkung: funktioniert nur für Wikis vom Typ Answers.',
 	'phalanx-help-type-email' => 'Dieser Filter verhindert die Kontoerstellung über eine blockierte E-Mail-Adresse.',
-	'phalanx-user-block-reason-ip' => 'Es können über diese IP-Adresse im gesamten Fandom-Netzwerk keine Änderungen vorgenommen werden, da sie gesperrt ist aufgrund von Vandalismus oder anderen Störungen durch dich oder andere, die deine IP-Adresse mitbenutzen. 
-Wenn du der Meinung bist, dass diese Sperrung nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit Fandom]] auf.',
-	'phalanx-user-block-reason-exact' => 'Über diesen Benutzernamen oder diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen im gesamten Fandom-Netzwerk keine Änderungen vorgenommen werden. Wenn du der Meinung bist, dass diese Sperrung nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit Fandom]] auf.',
-	'phalanx-user-block-reason-similar' => 'Dieser Benutzername kann aufgrund von Vandalismus oder anderen Störungen durch einen Benutzer mit einem ähnlichen Namen im gesamten Fandom-Netzwerk keine Änderungen vornehmen.
-Nimm bitte [[Spezial:Kontakt|Kontakt mit Fandom]] auf, um dieses Problem zu lösen.',
+	'phalanx-user-block-reason-ip' => 'Es können über diese IP-Adresse im gesamten FANDOM-Netzwerk keine Änderungen vorgenommen werden, da sie gesperrt ist aufgrund von Vandalismus oder anderen Störungen durch dich oder andere, die deine IP-Adresse mitbenutzen. 
+Wenn du der Meinung bist, dass diese Sperrung nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf.',
+	'phalanx-user-block-reason-exact' => 'Über diesen Benutzernamen oder diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen im gesamten FANDOM-Netzwerk keine Änderungen vorgenommen werden. Wenn du der Meinung bist, dass diese Sperrung nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf.',
+	'phalanx-user-block-reason-similar' => 'Dieser Benutzername kann aufgrund von Vandalismus oder anderen Störungen durch einen Benutzer mit einem ähnlichen Namen im gesamten FANDOM-Netzwerk keine Änderungen vornehmen.
+Nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf, um dieses Problem zu lösen.',
 	'phalanx-user-block-new-account' => 'Dieser Benutzername ist zur Registrierung nicht verfügbar. Bitte wähle einen anderen.',
-	'phalanx-user-block-withreason-ip' => 'Über diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen durch dich oder andere, die deine IP-Adresse mitbenutzen, im gesamten Fandom-Netzwerk keine Änderungen vorgenommen werden. 
-Wenn du der Meinung bist, dass diese Sperre nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit Fandom]] auf.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
-	'phalanx-user-block-withreason-exact' => 'Über diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen im gesamten Fandom-Netzwerk keine Änderungen vorgenommen werden. Wenn du der Meinung bist, dass diese Sperre nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit Fandom]] auf.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
-	'phalanx-user-block-withreason-similar' => 'Dieser Benutzername kann aufgrund von Vandalismus oder anderen Störungen durch einen Benutzer mit einem ähnlichen Namen im gesamten Fandom-Netzwerk keine Änderungen vornehmen.
-Nimm bitte [[Spezial:Kontakt|Kontakt mit Fandom]] auf, um dieses Problem zu lösen.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
+	'phalanx-user-block-withreason-ip' => 'Über diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen durch dich oder andere, die deine IP-Adresse mitbenutzen, im gesamten FANDOM-Netzwerk keine Änderungen vorgenommen werden. 
+Wenn du der Meinung bist, dass diese Sperre nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
+	'phalanx-user-block-withreason-exact' => 'Über diese IP-Adresse können aufgrund von Vandalismus oder anderen Störungen im gesamten FANDOM-Netzwerk keine Änderungen vorgenommen werden. Wenn du der Meinung bist, dass diese Sperre nicht gerechtfertigt ist, nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
+	'phalanx-user-block-withreason-similar' => 'Dieser Benutzername kann aufgrund von Vandalismus oder anderen Störungen durch einen Benutzer mit einem ähnlichen Namen im gesamten FANDOM-Netzwerk keine Änderungen vornehmen.
+Nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf, um dieses Problem zu lösen.<br />Die Person, die die Sperre eingerichtet hat, gab außerdem folgende Begründung: $1.',
 	'phalanx-title-move-summary' => 'Der von dir eingegebene Grund enthält eine gesperrte Phrase.',
 	'phalanx-content-spam-summary' => 'Der Text wurde in der Zusammenfassung gefunden.',
 	'phalanx-stats-title' => 'Phalanx Statistik',
@@ -327,6 +344,7 @@ Nimm bitte [[Spezial:Kontakt|Kontakt mit Fandom]] auf, um dieses Problem zu lös
 	'phalanx-stats-table-exact' => 'Genau',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Groß-/Kleinschreibung',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Grund',
 	'phalanx-stats-row' => "$4 wurde '''$2''' auf '''$3''' von Filtertyp '''$1''' geblockt",
@@ -348,7 +366,7 @@ Nimm bitte [[Spezial:Kontakt|Kontakt mit Fandom]] auf, um dieses Problem zu lös
 	'right-phalanx' => 'Kann globale Benutzersperren und Spamfilter verwalten',
 	'right-phalanxexempt' => 'Von Phalanx-Regelungen ausgenommen',
 	'right-phalanxemailblock' => 'Kann E-Mail-bezogene Sperren ordnen, einsehen und bearbeiten',
-	'phalanx-sp-contributions-blocked-globally' => 'Dieser Benutzer ist derzeit im gesamten Fandom-Netzwerk gesperrt.',
+	'phalanx-sp-contributions-blocked-globally' => 'Dieser Benutzer ist derzeit im gesamten FANDOM-Netzwerk gesperrt.',
 	'phalanx-modify-block' => 'Filter ändern',
 	'phalanx-label-comment' => 'Kommentar (privat):',
 	'phalanx-expires' => 'Gültig bis $1',
@@ -379,6 +397,8 @@ Nachdem ein Filter entfernt wurde, kann auf ihn und alle verknüpften Aktionen v
 	'phalanx-section-type-questions' => 'Fragen',
 	'phalanx-required-filter' => '*Dies ist ein Pflichtfeld',
 	'phalanx-required-type' => '*Es muss mindestens ein Kontrollkästchen ausgewählt sein',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['de-formal'] = array(
@@ -397,6 +417,7 @@ $messages['diq'] = array(
 	'phalanx-test-submit' => 'Test',
 	'phalanx-stats-table-type' => 'Babet',
 	'phalanx-stats-table-create' => 'Vıraziya',
+	'phalanx-stats-table-language' => 'Zıwan',
 	'phalanx-stats-table-text' => 'nuşte',
 	'phalanx-stats-table-reason' => 'Sebeb',
 	'phalanx-stats-table-wiki-id' => 'Wiki ID',
@@ -422,6 +443,7 @@ $messages['es'] = array(
 	'phalanx-label-reason' => 'Motivo (público):',
 	'phalanx-label-expiry' => 'Expira:',
 	'phalanx-label-type' => 'Tipo:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Tipo de bloqueo...',
 	'phalanx-view-blocker' => 'Buscar por texto de filtro:',
 	'phalanx-view-blocks' => 'Buscar filtros',
@@ -434,7 +456,7 @@ $messages['es'] = array(
 	'phalanx-tab-main' => 'Administrar filtros',
 	'phalanx-tab-secondary' => 'Probar filtros',
 	'phalanx-block-success' => 'El bloqueo fue añadido satisfactoriamente.',
-	'phalanx-block-failure' => 'Ha ocurrido un error mientras se añadía el bloqueo.',
+	'phalanx-block-failure' => 'Ha ocurrido un error mientras se añadía el bloqueo',
 	'phalanx-modify-success' => 'El bloqueo fue modificado satisfactoriamente.',
 	'phalanx-modify-failure' => 'A ocurrido un error para modificar el bloqueo.',
 	'phalanx-modify-warning' => 'Estás editando el bloqueo ID #$1.
@@ -465,19 +487,19 @@ Nota: solo trabaja en wikis tipo answers.',
 
 Nota: solo trabaja en wikis tipo answers.',
 	'phalanx-help-type-email' => 'Este filtro evita el registro de cuentas usando un correo electrónico bloqueado.',
-	'phalanx-user-block-reason-ip' => 'Tu dirección IP ha sido bloqueado para editar en toda la red de Fandom debido a vandalismo, spam u otro problema hecho por ti o por alguien que comparte la misma dirección IP. 
-Si crees que es un error, por favor [[Especial:Contactar|contáctate con Fandom]].',
-	'phalanx-user-block-reason-exact' => 'Tu nombre de usuario o dirección IP ha sido bloqueado para editar en toda la red de Fandom debido a vandalismo, spam u otro problema. 
-Si crees que es un error, por favor [[Especial:Contactar|contáctate con Fandom]].',
-	'phalanx-user-block-reason-similar' => 'Tu nombre de usuario ha sido bloqueado para editar en toda la red de Fandom debido a vandalismo, spam u otro problema por un usuario con un nombre similar. 
-Por favor [[Especial:Contactar|contáctate con Fandom]] para hablar sobre este problema.',
+	'phalanx-user-block-reason-ip' => 'Tu dirección IP ha sido bloqueado para editar en toda la red de FANDOM debido a vandalismo, spam u otro problema hecho por ti o por alguien que comparte la misma dirección IP. 
+Si crees que es un error, por favor [[Especial:Contactar|contáctate con FANDOM]].',
+	'phalanx-user-block-reason-exact' => 'Tu nombre de usuario o dirección IP ha sido bloqueado para editar en toda la red de FANDOM debido a vandalismo, spam u otro problema. 
+Si crees que es un error, por favor [[Especial:Contactar|contáctate con FANDOM]].',
+	'phalanx-user-block-reason-similar' => 'Tu nombre de usuario ha sido bloqueado para editar en toda la red de FANDOM debido a vandalismo, spam u otro problema por un usuario con un nombre similar. 
+Por favor [[Especial:Contactar|contáctate con FANDOM]] para hablar sobre este problema.',
 	'phalanx-user-block-new-account' => 'El nombre de usuario no está disponible para su registro. Por favor, selecciona otro.',
-	'phalanx-user-block-withreason-ip' => 'Tu dirección IP ha sido bloqueado para editar en toda la red de Fandom debido a vandalismo, spam u otro problema hecho por ti o por alguien que comparte la misma dirección IP. 
-Si crees que es un error, por favor [[Especial:Contactar|contáctate con Fandom]].<br />El bloqueador colocó esta información adicional: $1.',
-	'phalanx-user-block-withreason-exact' => 'Tu nombre de usuario o dirección IP ha sido bloqueado para editar en toda la red de Fandom debido a vandalismo, spam u otro problema. 
-Si crees que es un error, por favor [[Especial:Contactar|contáctate con Fandom]].<br />El bloqueador colocó esta información adicional: $1.',
-	'phalanx-user-block-withreason-similar' => 'Tu nombre de usuario ha sido bloqueado para editar en toda la red de Fandom debido a vandalismo, spam u otro problema por un usuario con un nombre similar. 
-Por favor [[Especial:Contactar|contáctate con Fandom]] para hablar sobre este problema.<br />El bloqueador colocó esta información adicional: $1.',
+	'phalanx-user-block-withreason-ip' => 'Tu dirección IP ha sido bloqueado para editar en toda la red de FANDOM debido a vandalismo, spam u otro problema hecho por ti o por alguien que comparte la misma dirección IP. 
+Si crees que es un error, por favor [[Especial:Contactar|contáctate con FANDOM]].<br />El bloqueador colocó esta información adicional: $1.',
+	'phalanx-user-block-withreason-exact' => 'Tu nombre de usuario o dirección IP ha sido bloqueado para editar en toda la red de FANDOM debido a vandalismo, spam u otro problema. 
+Si crees que es un error, por favor [[Especial:Contactar|contáctate con FANDOM]].<br />El bloqueador colocó esta información adicional: $1.',
+	'phalanx-user-block-withreason-similar' => 'Tu nombre de usuario ha sido bloqueado para editar en toda la red de FANDOM debido a vandalismo, spam u otro problema por un usuario con un nombre similar. 
+Por favor [[Especial:Contactar|contáctate con FANDOM]] para hablar sobre este problema.<br />El bloqueador colocó esta información adicional: $1.',
 	'phalanx-title-move-summary' => 'El resumen que ingresaste contiene una frase bloqueada.',
 	'phalanx-content-spam-summary' => 'El texto fue encontrado en el resumen de la página.',
 	'phalanx-stats-title' => 'Estadísticas de Phalanx',
@@ -490,6 +512,7 @@ Por favor [[Especial:Contactar|contáctate con Fandom]] para hablar sobre este p
 	'phalanx-stats-table-exact' => 'Exacto',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Sensible',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Texto',
 	'phalanx-stats-table-reason' => 'Motivo',
 	'phalanx-stats-row' => "a las $4, el filtro '''$1''' bloqueó a '''$2''' en $3",
@@ -511,7 +534,7 @@ Por favor [[Especial:Contactar|contáctate con Fandom]] para hablar sobre este p
 	'right-phalanx' => 'Puede administrar bloqueos globales y filtros de spam',
 	'right-phalanxexempt' => 'Exento de las reglas de Phalanx',
 	'right-phalanxemailblock' => 'Crear, ver y administrar bloqueos de correos',
-	'phalanx-sp-contributions-blocked-globally' => 'Este usuario está actualmente bloqueado en toda la red de Fandom.',
+	'phalanx-sp-contributions-blocked-globally' => 'Este usuario está actualmente bloqueado en toda la red de FANDOM.',
 	'phalanx-bulkmode' => 'En masa',
 	'phalanx-display-row-expire-infinity' => 'nunca expira',
 	'phalanx-display-row-expire' => 'expira en $1',
@@ -542,6 +565,8 @@ Después de ser borrado, el filtro y todas sus acciones no serán accesibles des
 	'phalanx-modify-block' => 'Modificar filtro',
 	'phalanx-required-filter' => '*Este campo es requerido',
 	'phalanx-required-type' => '* Al menos una de las casillas de verificación es requerida',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['fi'] = array(
@@ -560,6 +585,7 @@ $messages['fi'] = array(
 	'phalanx-label-reason' => 'Syy:',
 	'phalanx-label-expiry' => 'Kesto:',
 	'phalanx-label-type' => 'Tyyppi:',
+	'phalanx-label-lang' => 'Kieli:',
 	'phalanx-view-type' => 'Eston tyyppi...',
 	'phalanx-view-blocks' => 'Hakusuodattimet',
 	'phalanx-view-id' => 'Hae suodatinta tunnisteella:',
@@ -586,6 +612,7 @@ Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wi
 	'phalanx-stats-table-user' => 'Lisääjä',
 	'phalanx-stats-table-type' => 'Tyyppi',
 	'phalanx-stats-table-create' => 'Luotu',
+	'phalanx-stats-table-language' => 'Kieli',
 	'phalanx-stats-table-text' => 'Teksti',
 	'phalanx-stats-table-reason' => 'Syy',
 	'phalanx-stats-table-wiki-id' => 'Wikin tunniste',
@@ -611,6 +638,7 @@ $messages['fr'] = array(
 	'phalanx-label-reason' => 'Motif (public) :',
 	'phalanx-label-expiry' => 'Expiration :',
 	'phalanx-label-type' => 'Type :',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Type de blocage...',
 	'phalanx-view-blocker' => 'Rechercher par filtrage de texte :',
 	'phalanx-view-blocks' => 'Filtres de recherche',
@@ -623,7 +651,7 @@ $messages['fr'] = array(
 	'phalanx-tab-main' => 'Gérer les filtres',
 	'phalanx-tab-secondary' => 'Tester les filtres',
 	'phalanx-block-success' => 'Le blocage a été ajouté avec succès',
-	'phalanx-block-failure' => 'Une erreur est survenue durant l’ajout du blocage',
+	'phalanx-block-failure' => "Un problème est survenu lors de l'ajout du blocage.",
 	'phalanx-modify-success' => 'Le blocage a été modifié avec succès',
 	'phalanx-modify-failure' => 'Une erreur est survenue durant la modification du blocage',
 	'phalanx-modify-warning' => 'Vous éditez le bloc d\'identifiant #$1.
@@ -649,19 +677,19 @@ En cliquant sur "{{int:phalanx-add-block}}" vos modifications seront enregistré
 	'phalanx-help-type-recent-questions' => "Ce filtre empêche l'affichage des questions (pages) dans un certain nombre de sorties (widgets, listes, énumérations générées par balise).
 Il n’empêche pas ces pages d’être créées. Note : cela ne fonctionne que sur les wikis de type Réponses.",
 	'phalanx-help-type-email' => 'Ce filtre empêche la création de compte en utilisant une adresse e-mail bloquée.',
-	'phalanx-user-block-reason-ip' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau Fandom via cette adresse IP en raison d'actes de vandalisme ou d'autres perturbations dont vous ou une autre personne partageant votre adresse IP êtes à l'origine.
-Si vous pensez qu'il s'agit d'une erreur, veuillez [[Special:Contact|contacter Fandom]].",
-	'phalanx-user-block-reason-exact' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau Fandom via ce nom d'utilisateur ou cette adresse IP en raison d'actes de vandalisme ou d'autres perturbations.
-Si vous pensez qu'il s'agit d'une erreur, veuillez [[Special:Contact|contacter Fandom]].",
-	'phalanx-user-block-reason-similar' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau Fandom via ce nom d'utilisateur en raison d'actes de vandalisme ou d'autres perturbations dont un utilisateur du même nom est à l'origine.
-Veuillez [[Special:Contact|contacter Fandom]] à ce sujet.",
+	'phalanx-user-block-reason-ip' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau FANDOM via cette adresse IP en raison d'actes de vandalisme ou d'autres perturbations dont vous ou une autre personne partageant votre adresse IP êtes à l'origine.
+Si vous pensez qu'il s'agit d'une erreur, veuillez [[Special:Contact|contacter FANDOM]].",
+	'phalanx-user-block-reason-exact' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau FANDOM via ce nom d'utilisateur ou cette adresse IP en raison d'actes de vandalisme ou d'autres perturbations.
+Si vous pensez qu'il s'agit d'une erreur, veuillez [[Special:Contact|contacter FANDOM]].",
+	'phalanx-user-block-reason-similar' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau FANDOM via ce nom d'utilisateur en raison d'actes de vandalisme ou d'autres perturbations dont un utilisateur du même nom est à l'origine.
+Veuillez [[Special:Contact|contacter FANDOM]] à ce sujet.",
 	'phalanx-user-block-new-account' => "Le nom d'utilisateur n'est pas disponible pour enregistrement. Veuillez en choisir un autre.",
-	'phalanx-user-block-withreason-ip' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau Fandom via cette adresse IP en raison d'actes de vandalisme ou d'autres perturbations dont vous ou une autre personne partageant votre adresse IP êtes à l'origine.
-Si vous pensez qu'il s'agit d'une erreur, veuillez [[Special:Contact|contacter Fandom]].<br />La personne responsable du blocage a fourni la raison supplémentaire suivante : $1.",
-	'phalanx-user-block-withreason-exact' => "\"Il est interdit d'effectuer des modifications sur l'ensemble du réseau Fandom via ce nom d'utilisateur ou cette adresse IP en raison d'actes de vandalisme ou d'autres perturbations.
-Si vous pensez qu'il s'agit d'une erreur, veuillez [[Special:Contact|contacter Fandom]].<br />La personne responsable du blocage a fourni la raison supplémentaire suivante : \$1.",
-	'phalanx-user-block-withreason-similar' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau Fandom via ce nom d'utilisateur en raison d'actes de vandalisme ou d'autres perturbations dont un utilisateur du même nom est à l'origine.
-Veuillez [[Special:Contact|contacter Fandom]] à ce sujet.<br />La personne responsable du blocage a fourni la raison supplémentaire suivante : $1.",
+	'phalanx-user-block-withreason-ip' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau FANDOM via cette adresse IP en raison d'actes de vandalisme ou d'autres perturbations dont vous ou une autre personne partageant votre adresse IP êtes à l'origine.
+Si vous pensez qu'il s'agit d'une erreur, veuillez [[Special:Contact|contacter FANDOM]].<br />La personne responsable du blocage a fourni la raison supplémentaire suivante : $1.",
+	'phalanx-user-block-withreason-exact' => "\"Il est interdit d'effectuer des modifications sur l'ensemble du réseau FANDOM via ce nom d'utilisateur ou cette adresse IP en raison d'actes de vandalisme ou d'autres perturbations.
+Si vous pensez qu'il s'agit d'une erreur, veuillez [[Special:Contact|contacter FANDOM]].<br />La personne responsable du blocage a fourni la raison supplémentaire suivante : \$1.",
+	'phalanx-user-block-withreason-similar' => "Il est interdit d'effectuer des modifications sur l'ensemble du réseau FANDOM via ce nom d'utilisateur en raison d'actes de vandalisme ou d'autres perturbations dont un utilisateur du même nom est à l'origine.
+Veuillez [[Special:Contact|contacter FANDOM]] à ce sujet.<br />La personne responsable du blocage a fourni la raison supplémentaire suivante : $1.",
 	'phalanx-title-move-summary' => 'Le motif que vous avez inscrit contenait une phrase bloquée.',
 	'phalanx-content-spam-summary' => 'Le texte a été trouvé dans le résumé de la page.',
 	'phalanx-stats-title' => 'Statistiques Phalanx',
@@ -674,6 +702,7 @@ Veuillez [[Special:Contact|contacter Fandom]] à ce sujet.<br />La personne resp
 	'phalanx-stats-table-exact' => 'Exact',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Casse',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Texte',
 	'phalanx-stats-table-reason' => 'Motif (public)',
 	'phalanx-stats-row' => "Le $4, le filtre '''$1''' a bloqué '''$2''' sur $3",
@@ -695,7 +724,7 @@ Veuillez [[Special:Contact|contacter Fandom]] à ce sujet.<br />La personne resp
 	'right-phalanx' => 'Peut gérer les blocages globaux et filtres de contenu indésirable',
 	'right-phalanxexempt' => 'Exonéré des règles Phalanx',
 	'right-phalanxemailblock' => 'Vous pouvez lister, voir et gérer les blocages basés sur les e-mails',
-	'phalanx-sp-contributions-blocked-globally' => "Cet utilisateur est actuellement bloqué sur l'ensemble du réseau Fandom.",
+	'phalanx-sp-contributions-blocked-globally' => "Cet utilisateur est actuellement bloqué sur l'ensemble du réseau FANDOM.",
 	'phalanx-bulkmode' => 'Mode multiple',
 	'phalanx-display-row-expire-infinity' => "n'expire jamais",
 	'phalanx-display-row-expire' => 'expire le $1',
@@ -726,6 +755,8 @@ Après retrait, un filtre et toutes les actions associées ne seront plus access
 	'phalanx-section-type-questions' => 'Questions',
 	'phalanx-required-filter' => '*Champ obligatoire',
 	'phalanx-required-type' => '*Au moins une case à cocher obligatoire',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['gl'] = array(
@@ -746,6 +777,7 @@ $messages['gl'] = array(
 	'phalanx-label-reason' => 'Motivo:',
 	'phalanx-label-expiry' => 'Duración:',
 	'phalanx-label-type' => 'Tipo:',
+	'phalanx-label-lang' => 'Lingua:',
 	'phalanx-view-type' => 'Tipo de bloqueo...',
 	'phalanx-view-blocker' => 'Procurar por texto de filtro:',
 	'phalanx-view-blocks' => 'Procurar nos filtros',
@@ -815,6 +847,7 @@ Se pensa que se trata dun erro, [[Special:Contact|póñase en contacto con Wikia
 	'phalanx-stats-table-exact' => 'Exacto',
 	'phalanx-stats-table-regex' => 'Expresión regular',
 	'phalanx-stats-table-case' => 'Maiúscula/minúscula',
+	'phalanx-stats-table-language' => 'Lingua',
 	'phalanx-stats-table-text' => 'Texto',
 	'phalanx-stats-table-reason' => 'Motivo',
 	'phalanx-stats-row' => "ás $4, o filtro do tipo '''$1''' bloqueou a '''$2''' en $3",
@@ -856,6 +889,7 @@ $messages['hu'] = array(
 	'phalanx-label-reason' => 'Ok:',
 	'phalanx-label-expiry' => 'Lejárat:',
 	'phalanx-label-type' => 'Típus:',
+	'phalanx-label-lang' => 'Nyelv:',
 	'phalanx-view-type' => 'Blokk típusa...',
 	'phalanx-view-blocker' => 'Keresés szűrt szöveg alapján:',
 	'phalanx-view-blocks' => 'Szűrők keresése',
@@ -927,6 +961,7 @@ A letiltó személy az alábbi indoklást adta: $1',
 	'phalanx-stats-table-exact' => 'Pontos',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Eset',
+	'phalanx-stats-table-language' => 'Nyelv',
 	'phalanx-stats-table-text' => 'Szöveg',
 	'phalanx-stats-table-reason' => 'Ok',
 	'phalanx-stats-row' => "a(z) '''$1''' típusú szűrő $4-kor blokkolta $2-t a(z) $3-n",
@@ -968,6 +1003,7 @@ $messages['ia'] = array(
 	'phalanx-label-reason' => 'Motivo:',
 	'phalanx-label-expiry' => 'Expiration:',
 	'phalanx-label-type' => 'Typo:',
+	'phalanx-label-lang' => 'Lingua:',
 	'phalanx-view-type' => 'Typo de blocada...',
 	'phalanx-view-blocker' => 'Cercar per texto de filtro:',
 	'phalanx-view-blocks' => 'Cercar in filtros',
@@ -1037,6 +1073,7 @@ Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.<br />
 	'phalanx-stats-table-exact' => 'Exacte',
 	'phalanx-stats-table-regex' => 'Expression regular',
 	'phalanx-stats-table-case' => 'Litteras',
+	'phalanx-stats-table-language' => 'Lingua',
 	'phalanx-stats-table-text' => 'Texto',
 	'phalanx-stats-table-reason' => 'Motivo',
 	'phalanx-stats-row' => "a $4, le typo de filtro ''$1''' blocava '''$2''' in $3",
@@ -1072,6 +1109,7 @@ $messages['is'] = array(
 	'phalanx-label-reason' => 'Ástæða:',
 	'phalanx-label-expiry' => 'Rennur út:',
 	'phalanx-label-type' => 'Gerð:',
+	'phalanx-label-lang' => 'Tungumál:',
 	'phalanx-view-type' => 'Gerð banns...',
 	'phalanx-view-id-submit' => 'Sækja síu',
 	'phalanx-format-regex' => 'regluleg segð',
@@ -1097,17 +1135,17 @@ Sían kemur ekki í veg fyrir breytingar á síðu sem er þegar til.',
 );
 
 $messages['it'] = array(
-	'phalanx-sp-contributions-blocked-globally' => 'Questo utente è attualmente bloccato su tutta la rete di Fandom.',
-	'phalanx-user-block-withreason-exact' => 'A questo nome utente o indirizzo IP è proibito eseguire modifiche su tutta la rete Fandom a causa di vandalismo o altro tipo di disturbo. Se ritieni che si tratti di un errore, per favore [[Special:Contact|contatta Fandom]].<br />Chi ha eseguito il blocco ha anche fornito questa motivazione aggiuntiva: $1.',
-	'phalanx-user-block-withreason-ip' => 'A questo indirizzo IP è proibito eseguire modifiche su tutta la rete Fandom a causa di vandalismo o altro tipo di disturbo causato da te o da qualcun altro che condivide il tuo indirizzo IP.
-Se ritieni che si tratti di un errore, per favore [[Special:Contact|contatta Fandom]].<br />Chi ha eseguito il blocco ha anche fornito questa motivazione aggiuntiva: $1.',
-	'phalanx-user-block-withreason-similar' => 'A questo nome utente è proibito eseguire modifiche su tutta la rete Fandom a causa di vandalismo o altro tipo di disturbo causato da un utente con un nome simile.
-Per favore, [[Special:Contact|contatta Fandom]] in merito al problema.<br />Chi ha eseguito il blocco ha anche fornito questa motivazione aggiuntiva: $1.',
-	'phalanx-user-block-reason-exact' => 'A questo nome utente o indirizzo IP è proibito eseguire modifiche su tutta la rete Fandom a causa di vandalismo o altro tipo di disturbo. Se ritieni che si tratti di un errore, per favore [[Special:Contact|contatta Fandom]].',
-	'phalanx-user-block-reason-ip' => 'A questo indirizzo IP è proibito eseguire modifiche su tutta la rete Fandom a causa di vandalismo o altro tipo di disturbo causato da te o da qualcun altro che condivide il tuo indirizzo IP.
-Se ritieni che si tratti di un errore, per favore [[Special:Contact|contatta Fandom]].',
-	'phalanx-user-block-reason-similar' => 'A questo nome utente è proibito eseguire modifiche su tutta la rete Fandom a causa di vandalismo o altro tipo di disturbo causato da un utente con un nome simile.
-Per favore, [[Special:Contact|contatta Fandom]] in merito al problema.',
+	'phalanx-sp-contributions-blocked-globally' => 'Questo utente è attualmente bloccato su tutta la rete di FANDOM.',
+	'phalanx-user-block-withreason-exact' => 'A questo nome utente o indirizzo IP è proibito eseguire modifiche su tutta la rete FANDOM a causa di vandalismo o altro tipo di disturbo. Se ritieni che si tratti di un errore, per favore [[Special:Contact|contatta FANDOM]].<br />Chi ha eseguito il blocco ha anche fornito questa motivazione aggiuntiva: $1.',
+	'phalanx-user-block-withreason-ip' => 'A questo indirizzo IP è proibito eseguire modifiche su tutta la rete FANDOM a causa di vandalismo o altro tipo di disturbo causato da te o da qualcun altro che condivide il tuo indirizzo IP.
+Se ritieni che si tratti di un errore, per favore [[Special:Contact|contatta FANDOM]].<br />Chi ha eseguito il blocco ha anche fornito questa motivazione aggiuntiva: $1.',
+	'phalanx-user-block-withreason-similar' => 'A questo nome utente è proibito eseguire modifiche su tutta la rete FANDOM a causa di vandalismo o altro tipo di disturbo causato da un utente con un nome simile.
+Per favore, [[Special:Contact|contatta FANDOM]] in merito al problema.<br />Chi ha eseguito il blocco ha anche fornito questa motivazione aggiuntiva: $1.',
+	'phalanx-user-block-reason-exact' => 'A questo nome utente o indirizzo IP è proibito eseguire modifiche su tutta la rete FANDOM a causa di vandalismo o altro tipo di disturbo. Se ritieni che si tratti di un errore, per favore [[Special:Contact|contatta FANDOM]].',
+	'phalanx-user-block-reason-ip' => 'A questo indirizzo IP è proibito eseguire modifiche su tutta la rete FANDOM a causa di vandalismo o altro tipo di disturbo causato da te o da qualcun altro che condivide il tuo indirizzo IP.
+Se ritieni che si tratti di un errore, per favore [[Special:Contact|contatta FANDOM]].',
+	'phalanx-user-block-reason-similar' => 'A questo nome utente è proibito eseguire modifiche su tutta la rete FANDOM a causa di vandalismo o altro tipo di disturbo causato da un utente con un nome simile.
+Per favore, [[Special:Contact|contatta FANDOM]] in merito al problema.',
 	'phalanx-desc' => 'Phalanx è un sistema di difesa integrato contro lo spam',
 	'phalanx' => 'Phalanx',
 	'phalanx-title' => 'Phalanx - Sistema di difesa integrato contro lo spam',
@@ -1152,7 +1190,7 @@ Per favore, [[Special:Contact|contatta Fandom]] in merito al problema.',
 	'phalanx-bulkmode' => 'Modalità in blocco',
 	'phalanx-singlemode' => 'Modalità singola',
 	'phalanx-block-success' => 'Il blocco è stato aggiunto con successo',
-	'phalanx-block-failure' => "Errore durante l'aggiunta del blocco",
+	'phalanx-block-failure' => "Si è verificato un problema con l'aggiunta del blocco.",
 	'phalanx-modify-success' => 'Il blocco è stato modificato con successo',
 	'phalanx-modify-failure' => 'Errore durante la modifica del blocco',
 	'phalanx-modify-warning' => 'Si sta modificando il blocco di ID #$1.
@@ -1232,6 +1270,10 @@ Nota: funziona solo su wiki-risposte.',
 	'phalanx-section-type-questions' => 'Domande',
 	'phalanx-required-filter' => '*Questo campo è obbligatorio',
 	'phalanx-required-type' => '*Occorre selezionare almeno una delle caselle di controllo',
+	'phalanx-type-device' => 'device',
+	'phalanx-label-lang' => 'Language:',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-stats-table-language' => 'Language',
 );
 
 $messages['ja'] = array(
@@ -1243,6 +1285,7 @@ $messages['ja'] = array(
 	'phalanx-label-filter' => 'フィルター:',
 	'phalanx-label-reason' => '理由:',
 	'phalanx-label-type' => '種類:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-format-text' => 'プレーンテキスト',
 	'phalanx-format-regex' => '正規表現',
 	'phalanx-format-case' => '大文字・小文字を区別',
@@ -1255,25 +1298,26 @@ $messages['ja'] = array(
 	'phalanx-stats-block-notfound' => 'ブロック ID が見つかりません',
 	'phalanx-stats-table-id' => 'ブロック ID',
 	'phalanx-stats-table-regex' => '正規表現',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'テキスト',
 	'phalanx-stats-table-reason' => '理由',
 	'phalanx-stats-table-wiki-id' => 'ウィキ ID',
 	'phalanx-stats-table-wiki-name' => 'ウィキ名',
 	'phalanx-stats-table-wiki-url' => 'ウィキの URL',
 	'phalanx-stats-table-wiki-last-edited' => '最終編集',
-	'phalanx-sp-contributions-blocked-globally' => 'このユーザーは現在、Fandom全体でブロックされています。',
+	'phalanx-sp-contributions-blocked-globally' => 'このユーザーは現在、FANDOM全体でブロックされています。',
 	'phalanx-user-block-reason-exact' => 'このユーザー名またはIPアドレスは、荒らし行為またはその他の不適切な行為のためにFandom全体で編集が禁止されています。
 こちらについて間違いであると思われる場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。',
-	'phalanx-user-block-reason-ip' => 'あなたとIPアドレスを共有する別のユーザー、もしくはあなた自身による荒らし行為またはその他の不適切な行為により、このIPアドレスからの編集はFandom全体で禁止されています。
-これについて間違いであると思われる場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。',
-	'phalanx-user-block-reason-similar' => 'このユーザーは、類似したユーザー名を持つ別ユーザーによる荒らし行為、またはその他の不適切な行為のために、Fandom全体での編集が禁止されています。
-この問題については、[[Special:Contact|Fandomにお問い合わせ]]ください。',
-	'phalanx-user-block-withreason-exact' => 'このユーザー名またはIPアドレスは、荒らし行為またはその他の不適切な行為のためにFandom全体で編集が禁止されています。
-こちらが間違いであると思われる場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
-	'phalanx-user-block-withreason-ip' => 'あなたとIPアドレスを共有する別のユーザー、もしくはあなた自身による荒らし行為またはその他の不適切な行為により、このIPアドレスからの編集はFandom全体で禁止されています。
-こちらについて間違いであると思われる場合は、[[Special:Contact|Fandomにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
-	'phalanx-user-block-withreason-similar' => 'このユーザーは、類似したユーザー名を持つ別ユーザーによる荒らし行為またはその他の不適切な行為のために、Fandom全体での編集が禁止されています。
-この問題については[[Special:Contact|Fandomにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
+	'phalanx-user-block-reason-ip' => 'あなたとIPアドレスを共有する別のユーザー、もしくはあなた自身による荒らし行為またはその他の不適切な行為により、このIPアドレスからの編集はFANDOM全体で禁止されています。
+これについて間違いであると思われる場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。',
+	'phalanx-user-block-reason-similar' => 'このユーザーは、類似したユーザー名を持つ別ユーザーによる荒らし行為、またはその他の不適切な行為のために、FANDOM全体での編集が禁止されています。
+この問題については、[[Special:Contact|FANDOMにお問い合わせ]]ください。',
+	'phalanx-user-block-withreason-exact' => 'このユーザー名またはIPアドレスは、荒らし行為またはその他の不適切な行為のためにFANDOM全体で編集が禁止されています。
+こちらが間違いであると思われる場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
+	'phalanx-user-block-withreason-ip' => 'あなたとIPアドレスを共有する別のユーザー、もしくはあなた自身による荒らし行為またはその他の不適切な行為により、このIPアドレスからの編集はFANDOM全体で禁止されています。
+こちらについて間違いであると思われる場合は、[[Special:Contact|FANDOMにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
+	'phalanx-user-block-withreason-similar' => 'このユーザーは、類似したユーザー名を持つ別ユーザーによる荒らし行為またはその他の不適切な行為のために、FANDOM全体での編集が禁止されています。
+この問題については[[Special:Contact|FANDOMにお問い合わせ]]ください。<br />なお、ブロックしたユーザーから次の理由も報告されています：$1',
 	'phalanx-email-rule-log-name' => 'ファランクス・メール・ルールのログ',
 	'phalanx-rule-log-name' => 'ファランクス・ルールのログ',
 	'phalanx-desc' => 'ファランクスは、包括的なスパム防御ツールです',
@@ -1307,7 +1351,7 @@ $messages['ja'] = array(
 	'phalanx-bulkmode' => '一括モード',
 	'phalanx-singlemode' => '単一モード',
 	'phalanx-block-success' => 'ブロックを追加しました',
-	'phalanx-block-failure' => 'ブロックの追加中にエラーが発生しました',
+	'phalanx-block-failure' => 'ブロックの追加で問題が発生しました。',
 	'phalanx-modify-success' => 'ブロックを変更しました',
 	'phalanx-modify-failure' => 'ブロックの変更中にエラーが発生しました',
 	'phalanx-modify-warning' => 'ブロックID#$1を編集しています。
@@ -1369,6 +1413,8 @@ $messages['ja'] = array(
 	'phalanx-section-type-questions' => '質問',
 	'phalanx-required-filter' => '*この項目は必須です',
 	'phalanx-required-type' => '*1つ以上のチェックボックスを選択する必要があります',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['km'] = array(
@@ -1385,6 +1431,7 @@ $messages['km'] = array(
 	'phalanx-label-reason' => 'មូលហេតុ៖',
 	'phalanx-label-expiry' => 'រយៈពេលផុតកំណត់៖',
 	'phalanx-label-type' => 'ប្រភេទ​៖',
+	'phalanx-label-lang' => 'ភាសា៖',
 	'phalanx-view-type' => 'ប្រភេទការរាំងខ្ទប់...',
 	'phalanx-view-blocker' => 'ស្វែងរកដោយអត្ថបទតំរង៖',
 	'phalanx-view-blocks' => 'ស្វែងរកតំរង',
@@ -1410,14 +1457,18 @@ $messages['km'] = array(
 
 $messages['ko'] = array(
 	'phalanx-label-type' => '유형:',
+	'phalanx-label-lang' => '언어:',
+	'phalanx-stats-table-language' => '언어',
 );
 
 $messages['lb'] = array(
 	'phalanx-type-user' => 'Benotzer',
 	'phalanx-label-filter' => 'Filter:',
 	'phalanx-label-reason' => 'Grond:',
+	'phalanx-label-lang' => 'Sprooch:',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-stats-table-type' => 'Typ',
+	'phalanx-stats-table-language' => 'Sprooch',
 	'phalanx-stats-table-text' => 'Text:',
 	'phalanx-stats-table-reason' => 'Grond',
 	'phalanx-stats-table-wiki-name' => 'Numm vun der Wiki',
@@ -1441,6 +1492,7 @@ $messages['mk'] = array(
 	'phalanx-label-reason' => 'Причина:',
 	'phalanx-label-expiry' => 'Истекува:',
 	'phalanx-label-type' => 'Тип:',
+	'phalanx-label-lang' => 'Јазик:',
 	'phalanx-view-type' => 'Тип на блок...',
 	'phalanx-view-blocker' => 'Пребарај по филтриран текст:',
 	'phalanx-view-blocks' => 'Пребарај филтри',
@@ -1510,6 +1562,7 @@ $messages['mk'] = array(
 	'phalanx-stats-table-exact' => 'Точно',
 	'phalanx-stats-table-regex' => 'Рег. израз',
 	'phalanx-stats-table-case' => 'Регистар',
+	'phalanx-stats-table-language' => 'Јазик',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Причина',
 	'phalanx-stats-row' => "во $4, филтерот од типот '''$1''' го блокирал корисникот '''$2''' на $3",
@@ -1543,9 +1596,11 @@ $messages['ml'] = array(
 	'phalanx-label-reason' => 'കാരണം:',
 	'phalanx-label-expiry' => 'കാലാവധി:',
 	'phalanx-label-type' => 'തരം:',
+	'phalanx-label-lang' => 'ഭാഷ:',
 	'phalanx-stats-table-type' => 'തരം',
 	'phalanx-stats-table-create' => 'സൃഷ്ടിച്ചത്',
 	'phalanx-stats-table-expire' => 'കാലാവധി',
+	'phalanx-stats-table-language' => 'ഭാഷ',
 	'phalanx-stats-table-text' => 'എഴുത്ത്',
 	'phalanx-stats-table-reason' => 'കാരണം',
 	'phalanx-stats-table-wiki-id' => 'വിക്കി ഐ.ഡി.',
@@ -1572,6 +1627,7 @@ $messages['ms'] = array(
 	'phalanx-label-reason' => 'Sebab:',
 	'phalanx-label-expiry' => 'Tamat:',
 	'phalanx-label-type' => 'Jenis:',
+	'phalanx-label-lang' => 'Bahasa:',
 	'phalanx-view-type' => 'Jenis sekatan...',
 	'phalanx-view-blocker' => 'Cari mengikut teks penapis:',
 	'phalanx-view-blocks' => 'Cari penapis',
@@ -1640,6 +1696,7 @@ Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga m
 	'phalanx-stats-table-exact' => 'Tepat',
 	'phalanx-stats-table-regex' => 'Ungkapan nalar',
 	'phalanx-stats-table-case' => 'Kes',
+	'phalanx-stats-table-language' => 'Bahasa',
 	'phalanx-stats-table-text' => 'Teks',
 	'phalanx-stats-table-reason' => 'Sebab',
 	'phalanx-stats-row' => "di $4, penapis jenis '''$1''' menyekat '''$2''' pada $3",
@@ -1681,6 +1738,7 @@ $messages['nb'] = array(
 	'phalanx-label-reason' => 'Årsak:',
 	'phalanx-label-expiry' => 'Utløpstid:',
 	'phalanx-label-type' => 'Type:',
+	'phalanx-label-lang' => 'Språk:',
 	'phalanx-view-type' => 'Blokkeringstype...',
 	'phalanx-view-blocker' => 'Søk etter filtrert tekst:',
 	'phalanx-view-blocks' => 'Søkefilter',
@@ -1750,6 +1808,7 @@ Vennligst [[Special:Contact|kontakt Wikia]] om problemet.<br />Blokkereren la i 
 	'phalanx-stats-table-exact' => 'Nøyaktig',
 	'phalanx-stats-table-regex' => 'Regulært uttrykk',
 	'phalanx-stats-table-case' => 'Sak',
+	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Tekst',
 	'phalanx-stats-table-reason' => 'Årsak',
 	'phalanx-stats-row' => "på $4, filtertype '''$1''' blokkerte '''$2''' på $3",
@@ -1791,6 +1850,7 @@ $messages['nl'] = array(
 	'phalanx-label-reason' => 'Reden:',
 	'phalanx-label-expiry' => 'Vervalt:',
 	'phalanx-label-type' => 'Type:',
+	'phalanx-label-lang' => 'Taal:',
 	'phalanx-view-type' => 'Type blokkade...',
 	'phalanx-view-blocker' => 'Zoeken op filtertekst:',
 	'phalanx-view-blocks' => 'Filters doorzoeken',
@@ -1860,6 +1920,7 @@ Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] 
 	'phalanx-stats-table-exact' => 'Precies',
 	'phalanx-stats-table-regex' => 'Reguliere expressie',
 	'phalanx-stats-table-case' => 'Hoofd- of kleine letters',
+	'phalanx-stats-table-language' => 'Taal',
 	'phalanx-stats-table-text' => 'Tekst',
 	'phalanx-stats-table-reason' => 'Reden',
 	'phalanx-stats-row' => "om $4 heeft filtertype '''$1''' '''$2''' geblokkeerd op $3",
@@ -1936,6 +1997,7 @@ $messages['pl'] = array(
 	'phalanx-expires-infinite' => 'nigdy',
 	'phalanx-expiries-select' => 'Bez zmian',
 	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Typ blokady...',
 	'phalanx-view-blocker' => 'Szukaj według filtru tekstu:',
 	'phalanx-view-blocks' => 'Filtry wyszukiwania',
@@ -1952,7 +2014,7 @@ $messages['pl'] = array(
 	'phalanx-validate-regexp-invalid' => 'Regex jest niepoprawny',
 	'phalanx-unblock-failure' => 'Wystąpił błąd podczas usuwania blokady',
 	'phalanx-block-success' => 'Pomyślnie dodano blokadę',
-	'phalanx-block-failure' => 'Wystąpił błąd podczas dodawania blokady',
+	'phalanx-block-failure' => 'Wystąpił problem z dodaniem blokady',
 	'phalanx-modify-success' => 'Blokada została pomyślnie zmodyfikowana',
 	'phalanx-modify-failure' => 'Wystąpił błąd podczas modyfikowania blokady',
 	'phalanx-modify-warning' => 'Edytujesz blokadę o ID #$1.
@@ -1990,18 +2052,18 @@ Nie uniemożliwia tworzenia takich stron.
 
 Uwaga: działa tylko na wiki typu Odpowiedzi.',
 	'phalanx-help-type-email' => 'Ten filtr zapobiega tworzeniu kont przy użyciu zablokowanego adresu e-mail.',
-	'phalanx-user-block-reason-ip' => 'Ten adres IP nie ma możliwości edytowania na całym portalu Fandom ze względu na wandalizm lub inny typ zakłócania porządku użytkownika o tym samym adresie IP.
+	'phalanx-user-block-reason-ip' => 'Ten adres IP nie ma możliwości edytowania na całym portalu FANDOM ze względu na wandalizm lub inny typ zakłócania porządku użytkownika o tym samym adresie IP.
 Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z Fandomem]], żeby wyjaśnić ten problem.',
-	'phalanx-user-block-reason-exact' => 'Ten adres IP lub użytkownik nie ma możliwości edytowania na całym portalu Fandom ze względu na wandalizm lub inny typ zakłócania porządku.
+	'phalanx-user-block-reason-exact' => 'Ten adres IP lub użytkownik nie ma możliwości edytowania na całym portalu FANDOM ze względu na wandalizm lub inny typ zakłócania porządku.
 Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z Fandomem]], żeby wyjaśnić ten problem.',
-	'phalanx-user-block-reason-similar' => 'Ten użytkownik nie ma możliwości edytowania na całym portalu Fandom ze względu na wandalizm lub inny typ zakłócania porządku użytkownika o podobnej nazwie.
+	'phalanx-user-block-reason-similar' => 'Ten użytkownik nie ma możliwości edytowania na całym portalu FANDOM ze względu na wandalizm lub inny typ zakłócania porządku użytkownika o podobnej nazwie.
 [[Special:Contact|Skontaktuj się z Fandomem]], żeby wyjaśnić ten problem.',
 	'phalanx-user-block-new-account' => 'Nazwa użytkownika nie jest dostępna do zarejestrowania. Proszę wybrać inną.',
-	'phalanx-user-block-withreason-ip' => 'Ten adres IP nie ma możliwości edytowania na całym portalu Fandom ze względu na wandalizm lub inny typ zakłócania porządku użytkownika o tym samym adresie IP.
+	'phalanx-user-block-withreason-ip' => 'Ten adres IP nie ma możliwości edytowania na całym portalu FANDOM ze względu na wandalizm lub inny typ zakłócania porządku użytkownika o tym samym adresie IP.
 Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z Fandomem]], żeby wyjaśnić ten problem.<br />Blokujący podał następujący powód blokady: $1.',
-	'phalanx-user-block-withreason-exact' => 'Ten adres IP lub użytkownik nie ma możliwości edytowania na całym portalu Fandom ze względu na wandalizm lub inny typ zakłócania porządku.
+	'phalanx-user-block-withreason-exact' => 'Ten adres IP lub użytkownik nie ma możliwości edytowania na całym portalu FANDOM ze względu na wandalizm lub inny typ zakłócania porządku.
 Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z Fandomem]], żeby wyjaśnić ten problem.<br />Blokujący podał następujący powód blokady: $1.',
-	'phalanx-user-block-withreason-similar' => 'Ten użytkownik nie ma możliwości edytowania na całym portalu Fandom ze względu na wandalizm lub inny typ zakłócania porządku użytkownika o podobnej nazwie.
+	'phalanx-user-block-withreason-similar' => 'Ten użytkownik nie ma możliwości edytowania na całym portalu FANDOM ze względu na wandalizm lub inny typ zakłócania porządku użytkownika o podobnej nazwie.
 [[Special:Contact|Skontaktuj się z Fandomem]], żeby wyjaśnić ten problem.<br />Blokujący podał następujący powód blokady: $1.',
 	'phalanx-title-move-summary' => 'Wybrany powód zawiera zabroniony zwrot.',
 	'phalanx-content-spam-summary' => 'Tekst został odnaleziony w opisie zmian.',
@@ -2015,6 +2077,7 @@ Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z 
 	'phalanx-stats-table-exact' => 'Dokładna',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Wielkość liter',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Tekst',
 	'phalanx-stats-table-reason' => 'Powód (publiczny)',
 	'phalanx-stats-table-comment' => 'Komentarz (prywatny)',
@@ -2043,7 +2106,7 @@ Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z 
 	'phalanx-section-type-account-creation' => 'Zakładanie konta',
 	'phalanx-section-type-wiki-creation' => 'Tworzenie wiki',
 	'phalanx-section-type-questions' => 'Wiki Answers',
-	'phalanx-sp-contributions-blocked-globally' => 'Ten użytkownik jest obecnie zablokowany w całej sieci Fandom.',
+	'phalanx-sp-contributions-blocked-globally' => 'Ten użytkownik jest obecnie zablokowany w całej sieci FANDOM.',
 	'phalanx-expire-durations' => '1 godzina,2 godziny,4 godziny,6 godzin,1 dzień,3 dni,1 tydzień,2 tygodnie,1 miesiąc,3 miesiące,6 miesięcy,1 rok,na zawsze',
 	'phalanx-expire-custom' => 'Inny okres',
 	'phalanx-expire-custom-tooltip' => '3 hours, 4 months...',
@@ -2052,6 +2115,8 @@ Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z 
 	'phalanx-email-block-new-account' => 'Nie możemy w tej chwili zakończyć rejestracji.',
 	'phalanx-required-filter' => 'To pole jest wymagane',
 	'phalanx-required-type' => 'Musisz zaznaczyć przynajmniej jedno pole',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['pms'] = array(
@@ -2072,6 +2137,7 @@ $messages['pms'] = array(
 	'phalanx-label-reason' => 'Rason:',
 	'phalanx-label-expiry' => 'Fin:',
 	'phalanx-label-type' => 'Sòrt:',
+	'phalanx-label-lang' => 'Lenga:',
 	'phalanx-view-type' => 'Sòrt ëd blòch...',
 	'phalanx-view-blocker' => 'Serca con test ëd filtr:',
 	'phalanx-view-blocks' => "Filtr d'arserca",
@@ -2141,6 +2207,7 @@ Për piasì [[Special:Contact|contata Wikia]] për parlé dël problema.<br />Ë
 	'phalanx-stats-table-exact' => 'Precis',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Cas',
+	'phalanx-stats-table-language' => 'Lenga',
 	'phalanx-stats-table-text' => 'Test',
 	'phalanx-stats-table-reason' => 'Rason',
 	'phalanx-stats-row' => "a $4, filtr sòrt '''$1''' blocà '''$2''' ai $3",
@@ -2174,9 +2241,11 @@ $messages['ps'] = array(
 	'phalanx-label-filter' => 'چاڼګر:',
 	'phalanx-label-reason' => 'سبب:',
 	'phalanx-label-type' => 'ډول:',
+	'phalanx-label-lang' => 'ژبه:',
 	'phalanx-test-submit' => 'آزمېښت',
 	'phalanx-test-results-legend' => 'آزمېښت پايلې',
 	'phalanx-stats-table-create' => 'جوړ شو',
+	'phalanx-stats-table-language' => 'ژبه',
 	'phalanx-stats-table-text' => 'متن',
 	'phalanx-stats-table-reason' => 'سبب',
 	'phalanx-stats-table-wiki-id' => 'ويکي پېژند',
@@ -2200,6 +2269,7 @@ $messages['pt'] = array(
 	'phalanx-label-reason' => 'Motivo:',
 	'phalanx-label-expiry' => 'Expiração:',
 	'phalanx-label-type' => 'Tipo:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Tipo de bloqueio...',
 	'phalanx-view-blocker' => 'Pesquisa por texto de filtro:',
 	'phalanx-view-blocks' => 'Pesquisar filtros',
@@ -2212,7 +2282,7 @@ $messages['pt'] = array(
 	'phalanx-tab-main' => 'Administrar filtros',
 	'phalanx-tab-secondary' => 'Testar filtros',
 	'phalanx-block-success' => 'O bloqueio foi adicionado com sucesso',
-	'phalanx-block-failure' => 'Ocorreu um erro durante a adição do bloqueio',
+	'phalanx-block-failure' => 'Houve um problema com a adição do bloqueio',
 	'phalanx-modify-success' => 'O bloqueio foi modificado com sucesso',
 	'phalanx-modify-failure' => 'Ocorreu um erro durante a alteração do bloqueio',
 	'phalanx-modify-warning' => 'Você está editando o bloqueio ID #$1. Clique em "{{int:phalanx-edit-block}}" para salvar as alterações!',
@@ -2241,18 +2311,18 @@ $messages['pt'] = array(
 	'phalanx-help-type-recent-questions' => 'Este filtro impede que perguntas (páginas) sejam exibidas em um número de saídas (widgets, listas, listas geradas por etiqueta). Não impede que as páginas sejam criadas.
 
 Nota: somente funciona com wikis do tipo resposta.',
-	'phalanx-user-block-reason-ip' => 'Este endereço de IP está proibido de editar em toda a rede Fandom devido a vandalismo ou outros problemas causados por você ou por alguém que compartilha seu endereço IP. Se você acredita que isto é um erro, por favor [[Especial:Contact|entre em contato com o Fandom]].',
-	'phalanx-user-block-reason-exact' => 'Este nome de usuário ou endereço IP está proibido de editar em toda a rede Fandom devido a vandalismo ou outros problemas.
-Se você acredita que isto é um erro, por favor [[Especial:Contact|entre em contato com o Fandom]].',
-	'phalanx-user-block-reason-similar' => 'Este nome de usuário está proibido de editar em toda a rede Fandom devido a vandalismo ou outros problemas causados por um usuário com nome semelhante.
-Por favor, [[Especial:Contact|entre em contato com o Fandom]] sobre este problema.',
+	'phalanx-user-block-reason-ip' => 'Este endereço de IP está proibido de editar em toda a rede FANDOM devido a vandalismo ou outros problemas causados por você ou por alguém que compartilha seu endereço IP. Se você acredita que isto é um erro, por favor [[Especial:Contact|entre em contato com o FANDOM]].',
+	'phalanx-user-block-reason-exact' => 'Este nome de usuário ou endereço IP está proibido de editar em toda a rede FANDOM devido a vandalismo ou outros problemas.
+Se você acredita que isto é um erro, por favor [[Especial:Contact|entre em contato com o FANDOM]].',
+	'phalanx-user-block-reason-similar' => 'Este nome de usuário está proibido de editar em toda a rede FANDOM devido a vandalismo ou outros problemas causados por um usuário com nome semelhante.
+Por favor, [[Especial:Contact|entre em contato com o FANDOM]] sobre este problema.',
 	'phalanx-user-block-new-account' => 'O nome de usuário não está disponível para registro. Por favor escolha outro.',
-	'phalanx-user-block-withreason-ip' => 'Este endereço IP está proibido de editar em toda a rede Fandom devido a vandalismo ou outros problemas causados por você ou por alguém com o mesmo endereço IP. 
-Se você acredita que isto é um erro, por favor [[Especial:Contact|entre em contato com o Fandom]].<br />A pessoa que fez o bloqueio também deu esta explicação adicional: $1.',
-	'phalanx-user-block-withreason-exact' => 'Este nome de usuário ou endereço de IP está proibido de editar em toda a rede Fandom devido a vandalismo ou outros problemas.
-Se você acredita que isto é um erro, por favor [[Especial:Contact|entre em contato com o Fandom]].<br />A pessoa que fez o bloqueio também deu esta explicação adicional: $1.',
-	'phalanx-user-block-withreason-similar' => 'Este nome de usuário está proibido de editar em toda a rede Fandom devido a vandalismo ou outros problemas causados por um usuário com nome semelhante.
-Por favor, [[Especial:Contact|entre em contato com o Fandom]] sobre este problema.<br />A pessoa que fez o bloqueio também deu esta explicação adicional: $1.',
+	'phalanx-user-block-withreason-ip' => 'Este endereço IP está proibido de editar em toda a rede FANDOM devido a vandalismo ou outros problemas causados por você ou por alguém com o mesmo endereço IP. 
+Se você acredita que isto é um erro, por favor [[Especial:Contact|entre em contato com o FANDOM]].<br />A pessoa que fez o bloqueio também deu esta explicação adicional: $1.',
+	'phalanx-user-block-withreason-exact' => 'Este nome de usuário ou endereço de IP está proibido de editar em toda a rede FANDOM devido a vandalismo ou outros problemas.
+Se você acredita que isto é um erro, por favor [[Especial:Contact|entre em contato com o FANDOM]].<br />A pessoa que fez o bloqueio também deu esta explicação adicional: $1.',
+	'phalanx-user-block-withreason-similar' => 'Este nome de usuário está proibido de editar em toda a rede FANDOM devido a vandalismo ou outros problemas causados por um usuário com nome semelhante.
+Por favor, [[Especial:Contact|entre em contato com o FANDOM]] sobre este problema.<br />A pessoa que fez o bloqueio também deu esta explicação adicional: $1.',
 	'phalanx-title-move-summary' => 'A razão oferecida continha uma frase bloqueada.',
 	'phalanx-content-spam-summary' => 'O texto foi encontrado no resumo da página.',
 	'phalanx-stats-title' => 'Estatísticas do Phalanx',
@@ -2265,6 +2335,7 @@ Por favor, [[Especial:Contact|entre em contato com o Fandom]] sobre este problem
 	'phalanx-stats-table-exact' => 'Exato',
 	'phalanx-stats-table-regex' => 'Expressão regular',
 	'phalanx-stats-table-case' => 'Caso',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Texto',
 	'phalanx-stats-table-reason' => 'Motivo',
 	'phalanx-stats-row' => "em $4, o filtro tipo '''$1''' bloqueou '''$2''' em $3",
@@ -2281,8 +2352,9 @@ Por favor, [[Especial:Contact|entre em contato com o Fandom]] sobre este problem
 	'phalanx-stats-table-wiki-last-edited' => 'Última edição',
 	'right-phalanx' => 'Pode gerenciar bloqueios globais e filtros de spam',
 	'right-phalanxexempt' => 'Isento de regras Phalanx',
-	'phalanx-sp-contributions-blocked-globally' => 'Este usuário está atualmente bloqueado na rede do Fandom.',
+	'phalanx-sp-contributions-blocked-globally' => 'Este usuário está atualmente bloqueado na rede do FANDOM.',
 	'phalanx-type-email' => 'e-mail',
+	'phalanx-type-device' => 'device',
 	'phalanx-modify-block' => 'Modificar o filtro',
 	'phalanx-label-comment' => 'Comentário (privado):',
 	'phalanx-expires' => 'Expira em $1',
@@ -2304,6 +2376,7 @@ Por favor, [[Especial:Contact|entre em contato com o Fandom]] sobre este problem
 
 Depois de ser removido, um filtro e todas as ações ligadas a ele não estarão mais acessíveis; a criação e exclusão de filtros é permanentemente registrada em [[$1 | página especial de log]].',
 	'phalanx-help-type-email' => 'Este filtro impede a criação de contas usando endereços de e-mail bloqueados.',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 	'phalanx-email-block-new-account' => 'Não podemos completar seu registro neste momento.',
 	'phalanx-stats-table-comment' => 'Comentário (privado)',
 	'phalanx-stats-not-implemented' => 'Este recurso ainda não foi implementado',
@@ -2321,57 +2394,14 @@ Depois de ser removido, um filtro e todas as ações ligadas a ele não estarão
 	'phalanx-required-type' => '*Pelo menos uma das caixas de seleção é necessária',
 );
 
-$messages['pt-br'] = array(
-	'phalanx' => 'Phalanx',
-	'phalanx-type-content' => 'conteúdo da página',
-	'phalanx-type-summary' => 'resumo da página',
-	'phalanx-type-title' => 'título da página',
-	'phalanx-type-user' => 'usuário',
-	'phalanx-type-question-title' => 'título da pergunta',
-	'phalanx-type-recent-questions' => 'perguntas recentes',
-	'phalanx-add-block' => 'Aplicar bloqueio',
-	'phalanx-edit-block' => 'Salvar bloqueio',
-	'phalanx-label-filter' => 'Filtro:',
-	'phalanx-label-reason' => 'Motivo:',
-	'phalanx-label-expiry' => 'Expiração:',
-	'phalanx-label-type' => 'Tipo:',
-	'phalanx-view-type' => 'Tipo de bloqueio...',
-	'phalanx-view-blocks' => 'Pesquisar filtros',
-	'phalanx-view-id' => 'Obter filtro por ID:',
-	'phalanx-view-id-submit' => 'Obter filtro',
-	'phalanx-format-text' => 'texto simples',
-	'phalanx-format-regex' => 'expressão regular',
-	'phalanx-format-case' => 'distinguir maiúsculas de minúsculas',
-	'phalanx-format-exact' => 'exato',
-	'phalanx-tab-secondary' => 'Testar filtros',
-	'phalanx-test-submit' => 'Testar',
-	'phalanx-test-results-legend' => 'Resultados do teste',
-	'phalanx-display-row-blocks' => 'bloqueios: $1',
-	'phalanx-display-row-created' => "criado por '''$1''' em $2",
-	'phalanx-link-unblock' => 'desbloquear',
-	'phalanx-link-modify' => 'modificar',
-	'phalanx-link-stats' => 'estatísticas',
-	'phalanx-reset-form' => 'Reiniciar o formulário',
-	'phalanx-legend-input' => 'Criar ou modificar filtro',
-	'phalanx-stats-table-user' => 'Adicionado por',
-	'phalanx-stats-table-type' => 'Tipo',
-	'phalanx-stats-table-create' => 'Criado',
-	'phalanx-stats-table-expire' => 'Expira',
-	'phalanx-stats-table-exact' => 'Exato',
-	'phalanx-stats-table-regex' => 'Expressão regular',
-	'phalanx-stats-table-case' => 'Caso',
-	'phalanx-stats-table-text' => 'Texto',
-	'phalanx-stats-table-reason' => 'Motivo',
-);
-
 $messages['ru'] = array(
 	'phalanx-desc' => 'Phalanx — это комплексный механизм обнаружения спама',
 	'phalanx' => 'Phalanx',
 	'phalanx-title' => 'Phalanx — это комплексный механизм обнаружения спама',
 	'phalanx-type-content' => 'содержание страницы',
-	'phalanx-type-summary' => 'краткое изложение страницы',
+	'phalanx-type-summary' => 'описание правки',
 	'phalanx-type-title' => 'название страницы',
-	'phalanx-type-user' => 'пользователь',
+	'phalanx-type-user' => 'участник',
 	'phalanx-type-email' => 'электронная почта',
 	'phalanx-type-question-title' => 'заголовок вопроса',
 	'phalanx-type-recent-questions' => 'свежие вопросы',
@@ -2382,6 +2412,7 @@ $messages['ru'] = array(
 	'phalanx-label-reason' => 'Причина (видна всем):',
 	'phalanx-label-expiry' => 'Срок действия:',
 	'phalanx-label-type' => 'Тип:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Тип блокировки...',
 	'phalanx-view-blocker' => 'Поиск по фильтру для текста:',
 	'phalanx-view-blocks' => 'Поиск фильтров',
@@ -2426,19 +2457,19 @@ $messages['ru'] = array(
 
 Примечание: работает только на вики для ответов.',
 	'phalanx-help-type-email' => 'Этот фильтр предотвращает создание учётной записи с использованием заблокированного электронного адреса.',
-	'phalanx-user-block-reason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
-	'phalanx-user-block-reason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
-	'phalanx-user-block-reason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
+	'phalanx-user-block-reason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
+	'phalanx-user-block-reason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
+	'phalanx-user-block-reason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМАа из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
 	'phalanx-user-block-new-account' => 'Это имя пользователя не доступно для регистрации. Пожалуйста, выберите другое.',
-	'phalanx-user-block-withreason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
-	'phalanx-user-block-withreason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
-	'phalanx-user-block-withreason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
 	'phalanx-title-move-summary' => 'Причина, по которой вы добавляете эту фразу для блокировки.',
 	'phalanx-content-spam-summary' => 'Текст, найденный в описании изменений.',
 	'phalanx-stats-title' => 'Статистика Phalanx',
@@ -2451,6 +2482,7 @@ $messages['ru'] = array(
 	'phalanx-stats-table-exact' => 'Строго',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'В случае',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Причина (видна всем)',
 	'phalanx-stats-row' => "в $4, тип фильтра '''$1''' заблокировал(а) '''$2''' на $3",
@@ -2472,14 +2504,14 @@ $messages['ru'] = array(
 	'right-phalanx' => 'Можно управлять глобальными блокировками и спам-фильтрами',
 	'right-phalanxexempt' => 'Освобождено от правил Phalanx',
 	'right-phalanxemailblock' => 'Можно просматривать и управлять блокировками по электронному адресу',
-	'phalanx-sp-contributions-blocked-globally' => 'В настоящее время этот участник заблокирован на всём пространстве Фэндома.',
+	'phalanx-sp-contributions-blocked-globally' => 'В настоящее время этот участник заблокирован на всём пространстве ФЭНДОМА.',
 	'phalanx-modify-block' => 'Изменить фильтр',
 	'phalanx-label-comment' => 'Комментарий (скрытый):',
 	'phalanx-expires' => 'Истекает $1',
 	'phalanx-expires-infinite' => 'Бессрочно',
 	'phalanx-expiries-select' => 'Без изменений',
-	'phalanx-expire-durations' => '1 час,2 часа,4 часа,6 часов,1 день,3дня,1 неделя,2 недели,1 месяц,3 месяца,6 месяцев,1 год,неограниченный срок',
-	'phalanx-expire-custom' => 'Настраиваемый',
+	'phalanx-expire-durations' => '1 час,2 часа,4 часа,6 часов,1 день,3 дня,1 неделя,2 недели,1 месяц,3 месяца,6 месяцев,1 год,бессрочно',
+	'phalanx-expire-custom' => 'выбрать срок',
 	'phalanx-expire-custom-tooltip' => '3 hours, 4 months, ...',
 	'phalanx-validate-regexp' => 'Проверить regex',
 	'phalanx-validate-regexp-valid' => 'Допустимый regex',
@@ -2503,11 +2535,14 @@ $messages['ru'] = array(
 	'phalanx-section-type-questions' => 'Вопросы',
 	'phalanx-required-filter' => '* Это поле является обязательным',
 	'phalanx-required-type' => '* Требуется по крайней мере одна галочка',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['saz'] = array(
 	'phalanx-type-user' => 'ꢮꢮ꣄ꢬꢸꢥꢵꢬ꣄',
 	'phalanx-label-filter' => 'ꢏꢜ꣄ꢗꢶ',
+	'phalanx-stats-table-language' => 'ꢩꢵꢰꣁ',
 );
 
 $messages['sr-ec'] = array(
@@ -2521,12 +2556,14 @@ $messages['sr-ec'] = array(
 	'phalanx-label-filter' => 'Филтер:',
 	'phalanx-label-expiry' => 'Истек:',
 	'phalanx-label-type' => 'Врста:',
+	'phalanx-label-lang' => 'Језик:',
 	'phalanx-view-type' => 'Врста забране...',
 	'phalanx-view-blocks' => 'Претражи филтере',
 	'phalanx-format-text' => 'чист текст',
 	'phalanx-link-modify' => 'измени',
 	'phalanx-stats-table-user' => 'Додао:',
 	'phalanx-stats-table-type' => 'Врста',
+	'phalanx-stats-table-language' => 'Језик',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Разлог',
 );
@@ -2549,6 +2586,7 @@ $messages['sv'] = array(
 	'phalanx-label-reason' => 'Orsak:',
 	'phalanx-label-expiry' => 'Varaktighet:',
 	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Språk:',
 	'phalanx-view-type' => 'Typ av blockering...',
 	'phalanx-view-blocker' => 'Sök med textfilter:',
 	'phalanx-view-blocks' => 'Sökfilter',
@@ -2617,6 +2655,7 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 	'phalanx-stats-table-exact' => 'Exakt',
 	'phalanx-stats-table-regex' => 'Reguljärt uttryck',
 	'phalanx-stats-table-case' => 'Händelse',
+	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Anledning',
 	'phalanx-stats-row' => "på $4, filtertyp '''$1''' blockerade '''$2''' den $3",
@@ -2648,9 +2687,11 @@ $messages['te'] = array(
 	'phalanx-type-recent-questions' => 'ఇటీవలి ప్రశ్నలు',
 	'phalanx-label-reason' => 'కారణం:',
 	'phalanx-label-type' => 'రకం:',
+	'phalanx-label-lang' => 'భాష:',
 	'phalanx-test-results-legend' => 'పరీక్షా ఫలితాలు',
 	'phalanx-link-stats' => 'గణాంకాలు',
 	'phalanx-stats-table-type' => 'రకం',
+	'phalanx-stats-table-language' => 'భాష',
 	'phalanx-stats-table-text' => 'పాఠ్యం',
 	'phalanx-stats-table-reason' => 'కారణం',
 	'phalanx-stats-table-wiki-name' => 'వికీ పేరు',
@@ -2674,6 +2715,7 @@ $messages['tl'] = array(
 	'phalanx-label-reason' => 'Dahilan:',
 	'phalanx-label-expiry' => 'Katapusan:',
 	'phalanx-label-type' => 'Uri:',
+	'phalanx-label-lang' => 'Wika:',
 	'phalanx-view-type' => 'Magmakinilya ng pagharang...',
 	'phalanx-view-blocker' => 'Maghanap sa pamamagitan ng teksto ng pagsala:',
 	'phalanx-view-blocks' => 'Maghanap sa mga pansala',
@@ -2738,6 +2780,7 @@ Paki [[Special:Contact|makipag-ugnayan sa Wikia]] hinggil sa suliranin.<br />Ang
 	'phalanx-stats-table-exact' => 'Lapat na lapat',
 	'phalanx-stats-table-regex' => 'Pangkaraniwang pagsasaad',
 	'phalanx-stats-table-case' => 'Sukat ng titik',
+	'phalanx-stats-table-language' => 'Wika',
 	'phalanx-stats-table-text' => 'Teksto',
 	'phalanx-stats-table-reason' => 'Dahilan',
 	'phalanx-stats-row' => "sa ganap na $4, uri ng pansalang '''$1''' hinadlangan ang '''$2''' noong $3",
@@ -2783,6 +2826,7 @@ $messages['uk'] = array(
 	'phalanx-label-reason' => 'Причина:',
 	'phalanx-label-expiry' => 'Термін дії:',
 	'phalanx-label-type' => 'Тип:',
+	'phalanx-label-lang' => 'Мова:',
 	'phalanx-view-type' => 'Тип блоку...',
 	'phalanx-view-blocker' => 'Шукати за фільтром для тексту:',
 	'phalanx-view-blocks' => 'Пошукові фільтри',
@@ -2820,8 +2864,150 @@ $messages['uk'] = array(
 	'phalanx-stats-table-expire' => 'Закінчується',
 	'phalanx-stats-table-exact' => 'Точно',
 	'phalanx-stats-table-case' => 'У разі',
+	'phalanx-stats-table-language' => 'Мова',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Причина',
+);
+
+$messages['xw-3171'] = array(
+	'phalanx-desc' => 'Phalanx是一種綜合的垃圾訊息防禦機制',
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - 綜合的垃圾訊息防禦機制',
+	'phalanx-type-content' => '頁面內容',
+	'phalanx-type-summary' => '頁面摘要',
+	'phalanx-type-title' => '頁面標題',
+	'phalanx-type-user' => '用戶名',
+	'phalanx-type-email' => '電子郵件',
+	'phalanx-type-question-title' => '問題標題',
+	'phalanx-type-recent-questions' => '最近的問題',
+	'phalanx-type-wiki-creation' => '站名',
+	'phalanx-add-block' => '添加過濾器',
+	'phalanx-modify-block' => '修改過濾器',
+	'phalanx-edit-block' => '保存封禁',
+	'phalanx-label-filter' => '過濾器：',
+	'phalanx-label-reason' => '原因（公開）：',
+	'phalanx-label-comment' => '評論 （私密）︰',
+	'phalanx-label-expiry' => '期限：',
+	'phalanx-expires' => '於$1到期',
+	'phalanx-expires-infinite' => '永不到期',
+	'phalanx-expiries-select' => '沒有變化',
+	'phalanx-label-type' => '類型︰',
+	'phalanx-view-type' => '封禁類型...',
+	'phalanx-view-blocker' => '透過過濾器文字搜索：',
+	'phalanx-view-blocks' => '搜索過濾器',
+	'phalanx-view-id' => '透過ID獲取過濾器：',
+	'phalanx-view-id-submit' => '獲取過濾器',
+	'phalanx-expire-durations' => '1小時,2小時,4小時,6小時,1天,3天,1周,2周,1個月,3個月,6 個月,1年,無限期',
+	'phalanx-expire-custom' => '自訂',
+	'phalanx-expire-custom-tooltip' => '3 hours, 4 months, ...',
+	'phalanx-format-text' => '純文本',
+	'phalanx-format-regex' => 'regex',
+	'phalanx-format-case' => '區分大小寫',
+	'phalanx-format-exact' => '精確的',
+	'phalanx-tab-main' => '管理過濾器',
+	'phalanx-tab-secondary' => '測試過濾器',
+	'phalanx-validate-regexp' => '驗證regex',
+	'phalanx-validate-regexp-valid' => 'Regex有效',
+	'phalanx-validate-regexp-invalid' => 'Regex無效',
+	'phalanx-unblock-failure' => '無法移除封禁',
+	'phalanx-no-results' => '未找到任何結果',
+	'phalanx-bulkmode' => '批量模式',
+	'phalanx-singlemode' => '單一模式',
+	'phalanx-block-success' => '已成功添加封禁',
+	'phalanx-block-failure' => '添加封禁時發生錯誤',
+	'phalanx-modify-success' => '已成功修改封禁',
+	'phalanx-modify-failure' => '修改封禁時出錯',
+	'phalanx-modify-warning' => '您正在編輯封禁ID#$1。
+按"{{int:phalanx-edit-block}}"將保存您的更改！',
+	'phalanx-test-description' => '針對當前封禁測試提供的文本',
+	'phalanx-test-submit' => '測試',
+	'phalanx-test-results-legend' => '測試結果',
+	'phalanx-display-row-blocks' => '封禁：$1',
+	'phalanx-display-row-created' => "上次在$2上的修改者為'''$1'''",
+	'phalanx-display-row-expire' => '於$1到期',
+	'phalanx-display-row-expire-infinity' => '永不到期',
+	'phalanx-link-unblock' => '移除',
+	'phalanx-link-modify' => '修改',
+	'phalanx-link-stats' => '統計資料',
+	'phalanx-reset-form' => '重置表單',
+	'phalanx-legend-input' => '創建或修改過濾器',
+	'phalanx-legend-listing' => '正在使用的過濾器',
+	'phalanx-filters-intro' => '這是目前正在使用的過濾器清單，使用下面表格篩選清單來進行查詢。
+
+在過濾器被移除後，所有與其相連的操作都將無法進行；創建和刪除過濾器將被永久記錄在[[$1|日誌特殊頁]]上。',
+	'phalanx-unblock-message' => '已成功移除ID#$1的封禁',
+	'phalanx-help-type-content' => '如果內容與被列入黑名單的任何詞語匹配，此過濾器將阻止保存編輯。',
+	'phalanx-help-type-summary' => '如果摘要與被列入黑名單的任何詞語匹配，此過濾器將阻止保存編輯。',
+	'phalanx-help-type-title' => '如果標題與被列入黑名單的任何詞語匹配，此過濾器將阻止對保存編輯。
+
+它無法阻止已經存在文章頁的編輯。',
+	'phalanx-help-type-user' => '如果使用者名或IP位址與被列入黑名單的任何使用者名或IP位址匹配，此過濾器將封禁使用者（和本地MediaWiki封禁完全相同）。',
+	'phalanx-help-type-wiki-creation' => ' 如果名稱或URL與被列入黑名單的任何詞語匹配，此過濾器將阻止wiki的創建。',
+	'phalanx-help-type-question-title' => '如果標題與被列入黑名單的任何詞語匹配，此過濾器將阻止一個問題（頁面）的創建。
+
+請注意：這個僅限於問答類型的wiki。',
+	'phalanx-help-type-recent-questions' => '此過濾器將阻止問題（頁面）透過一系列的輸出（小工具，清單，標記產生清單）顯示。
+它無法阻止頁面的創建。
+
+請注意：這個僅限於問答類型的wiki。',
+	'phalanx-help-type-email' => '此過濾器可以防止使用已被封禁的電子郵件創建帳戶。',
+	'phalanx-user-block-reason-ip' => '由於你或者使用你IP的用戶發布大量垃圾訊息對網站造成破壞，此IP地址已經被FANDOM全域封禁。
+如果您認為這個封禁有誤，請[[Special:Contact|聯繫我們]]。',
+	'phalanx-user-block-reason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被FANDOM全域封禁。
+如果您認為這個封禁有問題，請[[Special:Contact|聯絡我們]]。',
+	'phalanx-user-block-reason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被FANDOM全域封禁而禁止編輯。
+如果您有任何問題，請[[Special:Contact|聯繫我們]]。',
+	'phalanx-user-block-new-account' => '這個用戶名無法進行註冊。 請選擇其他用戶名。',
+	'phalanx-email-block-new-account' => '我們暫時無法完成你的註冊。',
+	'phalanx-user-block-withreason-ip' => '由於您或者使用您IP的用戶發布大量垃圾訊息對網站造成破壞，此IP位址已經被FANDOM全域封禁，無法編輯。
+如果您認為這封禁有問題，請[[Special:Contact|聯繫我們]]。 <br/>封禁原因如下：$1。',
+	'phalanx-user-block-withreason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被FANDOM全域封禁。
+如果您認為封禁有問題，請[[Special:Contact|聯繫我們]]。 <br/>封禁原因如下：$1。',
+	'phalanx-user-block-withreason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被FANDOM全域封禁而禁止編輯。
+如果您有任何問題，請[[Special:Contact|聯三我們]]。 <br/>封禁原因如下：$1。',
+	'phalanx-title-move-summary' => '您輸入的原因包含一個被禁用的詞語。',
+	'phalanx-content-spam-summary' => '在文章的摘要中找到了這個文字。',
+	'phalanx-stats-title' => 'Phalanx統計',
+	'phalanx-stats-block-notfound' => '找不到的封禁ID',
+	'phalanx-stats-table-id' => '封禁ID',
+	'phalanx-stats-table-user' => '添加者',
+	'phalanx-stats-table-type' => '類型',
+	'phalanx-stats-table-create' => '最後修改',
+	'phalanx-stats-table-expire' => '到期',
+	'phalanx-stats-table-exact' => '精確的',
+	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-case' => '案例',
+	'phalanx-stats-table-text' => '文字',
+	'phalanx-stats-table-reason' => '原因（公開）',
+	'phalanx-stats-table-comment' => '評論 （私密）',
+	'phalanx-stats-row' => "過濾器種類'''$1'''於$4在$3上封禁了'''$2'''。",
+	'phalanx-stats-row-per-wiki' => "用戶'''$2'''在'''$4'''上被過濾器ID'''$3'''（$5）封禁（類型：'''$1'''，來源：'''$6'''）",
+	'phalanx-stats-not-implemented' => '此功能尚未生效',
+	'phalanx-stats-results' => '封禁日誌',
+	'phalanx-rule-log-name' => 'Phalanx規則日誌',
+	'phalanx-rule-log-header' => '這裡記錄了phalanx規則的更改日誌。',
+	'phalanx-email-rule-log-name' => 'Phalanx的e-mail規則日誌',
+	'phalanx-email-rule-log-header' => '以下記錄了Phalanx對輸入e-mail規則的更改日誌。',
+	'phalanx-rule-log-add' => '添加Phalanx規則：$1',
+	'phalanx-rule-log-edit' => '編輯Phalanx規則：$1',
+	'phalanx-rule-log-delete' => '刪除Phalanx規則：$1',
+	'phalanx-rule-log-details' => '過濾器："$1"，類型："$2"，原因："$3"',
+	'phalanx-stats-table-wiki-id' => 'Wiki ID',
+	'phalanx-stats-table-wiki-name' => 'Wiki名稱',
+	'phalanx-stats-table-wiki-url' => 'Wiki URL',
+	'phalanx-stats-table-wiki-last-edited' => '上次編輯',
+	'phalanx-email-filter-hidden' => 'E-mail過濾器被隱藏。您沒有權限查看文本。',
+	'action-phalanx' => '使用綜合的垃圾訊息防禦機制',
+	'right-phalanx' => '可以管理全域封禁和垃圾訊息過濾器',
+	'right-phalanxexempt' => '不受Phalanx規則限制',
+	'right-phalanxemailblock' => '可以歸檔，查看和管理基於電子郵件地址的封禁',
+	'phalanx-section-type-page-edition' => '頁面編輯',
+	'phalanx-section-type-account-creation' => '帳戶創建',
+	'phalanx-section-type-wiki-creation' => 'Wiki創建',
+	'phalanx-section-type-questions' => '問題',
+	'phalanx-sp-contributions-blocked-globally' => '此用戶已被FANDOM全域封禁。',
+	'phalanx-required-filter' => '*此欄位不能為空',
+	'phalanx-required-type' => '*至少需要選擇一個方框',
 );
 
 $messages['zh-hans'] = array(
@@ -2832,26 +3018,28 @@ $messages['zh-hans'] = array(
 	'phalanx-label-reason' => '原因（公开）：',
 	'phalanx-label-expiry' => '截止日期：',
 	'phalanx-label-type' => '类型：',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-stats-table-type' => '类型',
 	'phalanx-stats-table-create' => '以创造',
 	'phalanx-stats-table-expire' => '到期',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => '文字',
 	'phalanx-stats-table-reason' => '原因',
 	'phalanx-stats-table-wiki-id' => '维基 ID',
 	'phalanx-stats-table-wiki-name' => '维基名字',
 	'phalanx-stats-table-wiki-url' => '维基 URL',
-	'phalanx-sp-contributions-blocked-globally' => '此用户被Fandom网站封禁。',
-	'phalanx-user-block-reason-exact' => '由于发布垃圾信息以及破坏行为，此用户名或IP已经被整个Fandom网站封禁。
+	'phalanx-sp-contributions-blocked-globally' => '此用户被FANDOM网站封禁。',
+	'phalanx-user-block-reason-exact' => '由于发布垃圾信息以及破坏行为，此用户名或IP已经被整个FANDOM网站封禁。
 如果您认为有任何问题，请[[Special:Contact|联系我们]]。',
-	'phalanx-user-block-reason-ip' => '由于你或者使用你IP的用户发布大量垃圾信息对网站造成破坏，此IP地址已经被Fandom全域封禁。
+	'phalanx-user-block-reason-ip' => '由于你或者使用你IP的用户发布大量垃圾信息对网站造成破坏，此IP地址已经被FANDOM全域封禁。
 如果您有任何问题，请[[Special:Contact|联系我们]]。',
-	'phalanx-user-block-reason-similar' => '由于使用类似名称的用户发布大量垃圾信息对网站造成破坏，此用户名已经被Fandom全域封禁并且中断编辑。
+	'phalanx-user-block-reason-similar' => '由于使用类似名称的用户发布大量垃圾信息对网站造成破坏，此用户名已经被FANDOM全域封禁并且中断编辑。
 如果您有任何问题，请[[Special:Contact|联系我们]]。',
-	'phalanx-user-block-withreason-exact' => '由于发布垃圾信息以及破坏行为，此用户名或IP已经被整个Fandom网站封禁。
+	'phalanx-user-block-withreason-exact' => '由于发布垃圾信息以及破坏行为，此用户名或IP已经被整个FANDOM网站封禁。
 如果您认为有任何问题，请[[Special:Contact|联系我们]]。<br/>封禁原因如下：$1。',
-	'phalanx-user-block-withreason-ip' => '由于你或者使用你IP的用户发布大量垃圾信息对网站造成破坏，此IP地址已经被Fandom全域封禁，中断编辑。
+	'phalanx-user-block-withreason-ip' => '由于你或者使用你IP的用户发布大量垃圾信息对网站造成破坏，此IP地址已经被FANDOM全域封禁，中断编辑。
 如果您有任何问题，请[[Special:Contact|联系我们]]。<br/>封禁原因如下：$1。',
-	'phalanx-user-block-withreason-similar' => '由于使用类似名称的用户发布大量垃圾信息对网站造成破坏，此用户名已经被Fandom全域封禁并且中断编辑。
+	'phalanx-user-block-withreason-similar' => '由于使用类似名称的用户发布大量垃圾信息对网站造成破坏，此用户名已经被FANDOM全域封禁并且中断编辑。
 如果您有任何问题，请[[Special:Contact|联系我们]]。<br/>封禁原因如下：$1。',
 	'phalanx-desc' => 'Phalanx是一种综合的垃圾信息防御机制',
 	'phalanx' => 'Phalanx',
@@ -2890,7 +3078,7 @@ $messages['zh-hans'] = array(
 	'phalanx-bulkmode' => '批量模式',
 	'phalanx-singlemode' => '单一模式',
 	'phalanx-block-success' => '已成功添加封禁',
-	'phalanx-block-failure' => '添加封禁过程出错',
+	'phalanx-block-failure' => '添加封禁时出错',
 	'phalanx-modify-success' => '已成功修改封禁',
 	'phalanx-modify-failure' => '修改封禁过程出错',
 	'phalanx-modify-warning' => '您正在编辑封禁ID#$1。
@@ -2963,21 +3151,23 @@ $messages['zh-hans'] = array(
 	'phalanx-section-type-questions' => '问题',
 	'phalanx-required-filter' => '*此区域不能为空',
 	'phalanx-required-type' => '*至少需要选择一个复选框',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['zh-hant'] = array(
-	'phalanx-sp-contributions-blocked-globally' => '此用戶已被Fandom全域封禁。',
-	'phalanx-user-block-reason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被Fandom全域封禁。
+	'phalanx-sp-contributions-blocked-globally' => '此用戶已被FANDOM全域封禁。',
+	'phalanx-user-block-reason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被FANDOM全域封禁。
 如果您認為這個封禁有問題，請[[Special:Contact|聯絡我們]]。',
-	'phalanx-user-block-reason-ip' => '由於你或者使用你IP的用戶發布大量垃圾訊息對網站造成破壞，此IP地址已經被Fandom全域封禁。
+	'phalanx-user-block-reason-ip' => '由於你或者使用你IP的用戶發布大量垃圾訊息對網站造成破壞，此IP地址已經被FANDOM全域封禁。
 如果您認為這個封禁有誤，請[[Special:Contact|聯繫我們]]。',
-	'phalanx-user-block-reason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被Fandom全域封禁而禁止編輯。
+	'phalanx-user-block-reason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被FANDOM全域封禁而禁止編輯。
 如果您有任何問題，請[[Special:Contact|聯繫我們]]。',
-	'phalanx-user-block-withreason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被Fandom全域封禁。
+	'phalanx-user-block-withreason-exact' => '由於發布垃圾訊息以及破壞行為，此用戶名或IP已經被FANDOM全域封禁。
 如果您認為封禁有問題，請[[Special:Contact|聯繫我們]]。 <br/>封禁原因如下：$1。',
-	'phalanx-user-block-withreason-ip' => '由於您或者使用您IP的用戶發布大量垃圾訊息對網站造成破壞，此IP位址已經被Fandom全域封禁，無法編輯。
+	'phalanx-user-block-withreason-ip' => '由於您或者使用您IP的用戶發布大量垃圾訊息對網站造成破壞，此IP位址已經被FANDOM全域封禁，無法編輯。
 如果您認為這封禁有問題，請[[Special:Contact|聯繫我們]]。 <br/>封禁原因如下：$1。',
-	'phalanx-user-block-withreason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被Fandom全域封禁而禁止編輯。
+	'phalanx-user-block-withreason-similar' => '由於使用類似名稱的用戶發布大量垃圾訊息對網站造成破壞，此用戶名已經被FANDOM全域封禁而禁止編輯。
 如果您有任何問題，請[[Special:Contact|聯三我們]]。 <br/>封禁原因如下：$1。',
 	'phalanx-desc' => 'Phalanx是一種綜合的垃圾訊息防禦機制',
 	'phalanx' => 'Phalanx',
@@ -3023,7 +3213,7 @@ $messages['zh-hant'] = array(
 	'phalanx-bulkmode' => '批量模式',
 	'phalanx-singlemode' => '單一模式',
 	'phalanx-block-success' => '已成功添加封禁',
-	'phalanx-block-failure' => '添加封禁時出錯',
+	'phalanx-block-failure' => '添加封禁時發生錯誤',
 	'phalanx-modify-success' => '已成功修改封禁',
 	'phalanx-modify-failure' => '修改封禁時出錯',
 	'phalanx-modify-warning' => '您正在編輯封禁ID#$1。
@@ -3104,5 +3294,9 @@ $messages['zh-hant'] = array(
 	'phalanx-section-type-questions' => '問題',
 	'phalanx-required-filter' => '*此欄位不能為空',
 	'phalanx-required-type' => '*至少需要選擇一個方框',
+	'phalanx-type-device' => 'device',
+	'phalanx-label-lang' => 'Language:',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-stats-table-language' => 'Language',
 );
 

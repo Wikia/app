@@ -1,0 +1,44 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors';
+
+.featured-video__attribution-container {
+	@include align-items(center);
+	@include flexbox();
+	@include justify-content(center);
+	border-bottom: 1px solid $color-page-border;
+	padding: 6px;
+}
+
+.featured-video__attribution-avatar {
+	height: 20px;
+	margin-right: 6px;
+	width: 20px;
+}
+
+.featured-video__attribution-username,
+.featured-video__attribution-icon {
+	color: rgba($color-text, .75);
+}
+
+.featured-video__attribution-icon {
+	line-height: 0;
+	margin-left: 6px;
+}
+
+.featured-video-wrapper .is-collapsed {
+	.featured-video__attribution-container {
+		@include justify-content(flex-start);
+		border-bottom: 0;
+		padding: 2px 0 0;
+	}
+
+	.featured-video__attribution-avatar {
+		display: none;
+	}
+
+	.featured-video__attribution-username,
+	.featured-video__attribution-icon {
+		color: $wds-color-light-gray;
+	}
+}

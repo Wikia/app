@@ -850,7 +850,7 @@ abstract class FormSpecialPage extends SpecialPage {
 		$this->alterForm( $form );
 
 		// Give hooks a chance to alter the form, adding extra fields or text etc
-		wfRunHooks( "Special{$this->getName()}BeforeFormDisplay", array( &$form ) );
+		Hooks::run( "Special{$this->getName()}BeforeFormDisplay", array( &$form ) );
 
 		return $form;
 	}

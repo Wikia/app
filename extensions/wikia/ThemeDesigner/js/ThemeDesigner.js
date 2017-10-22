@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, Vignette */
 (function (window) {
 	'use strict';
 	var ThemeDesigner = {
@@ -38,12 +38,17 @@
 			this.backgroundType = 0;
 
 			// handle navigation clicks - switching between tabs
-			$('#Navigation a').click(that.navigationClick);
+			$('#Navigation')
+				.find('a')
+				.click(that.navigationClick);
 
 			// handle "Save" and "Cancel" button clicks
-			$('#Toolbar').find('.save').click(that.saveClick)
-				.end().find('.cancel').click(that.cancelClick);
-
+			$('#Toolbar')
+				.find('.save')
+				.click(that.saveClick)
+				.end()
+				.find('.cancel')
+				.click(that.cancelClick);
 
 			this.checkBgImageIsSet();
 
@@ -63,7 +68,7 @@
 			// init Tool Bar
 			this.toolBarInit();
 
-			this.applySettings(false, false);
+			this.applySettings();
 
 			// init tooltips
 			this.initTooltips();
@@ -79,6 +84,10 @@
 
 			if (ThemeDesigner.settings['background-image'] === false) {
 				ThemeDesigner.settings['background-image'] = '';
+			}
+
+			if (ThemeDesigner.settings['community-header-background-image'] === false) {
+				ThemeDesigner.settings['community-header-background-image'] = '';
 			}
 		},
 
@@ -112,14 +121,15 @@
 
 		themeTabInit: function () {
 			var slideBy = ThemeDesigner.slideByDefaultWidth,
-				slideMax = -Math.floor($('#ThemeTab').find('.slider').find('ul').find('li').length /
-					ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
+				$themeTab = $('#ThemeTab'),
+				slideMax = -Math.floor($themeTab.find('.slider').find('ul').find('li').length /
+						ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
 
 			// click handler for next and previous arrows in theme slider
-			$('#ThemeTab .previous, #ThemeTab .next').click(function (event) {
+			$themeTab.find('.previous, .next').click(function (event) {
 				event.preventDefault();
 				if (!ThemeDesigner.isSliding) {
-					var list = $('#ThemeTab .slider ul'),
+					var list = $themeTab.find('.slider ul'),
 						arrow = $(this),
 						slideTo = null;
 
@@ -143,11 +153,11 @@
 
 					// calculate which buttons should be enabled
 					if (slideTo === slideMax) {
-						$('#ThemeTab .next').addClass('disabled');
-						$('#ThemeTab .previous').removeClass('disabled');
+						$themeTab.find('.next').addClass('disabled');
+						$themeTab.find('.previous').removeClass('disabled');
 					} else if (slideTo === 0) {
-						$('#ThemeTab .next').removeClass('disabled');
-						$('#ThemeTab .previous').addClass('disabled');
+						$themeTab.find('.next').removeClass('disabled');
+						$themeTab.find('.previous').addClass('disabled');
 					} else {
 						$('#ThemeTab .next, #ThemeTab .previous').removeClass('disabled');
 					}
@@ -155,56 +165,64 @@
 			});
 
 			// click handler for themes thumbnails
-			$('#ThemeTab').find('.slider').find('li').click(function () {
-				var targetObject = $(this);
+			$themeTab
+				.find('.slider')
+				.find('li')
+				.click(function () {
+					var targetObject = $(this);
 
-				// highlight selected theme
-				targetObject.parent().find('.selected').removeClass('selected').end().end().addClass('selected');
+					// highlight selected theme
+					targetObject.parent().find('.selected').removeClass('selected').end().end().addClass('selected');
 
-				ThemeDesigner.set('theme', targetObject.attr('data-theme'));
-				if (ThemeDesigner.checkBgImageIsSet()) {
-					ThemeDesigner.loadImage(ThemeDesigner.settings['background-image']);
-				} else {
-					ThemeDesigner.checkBgIsDynamic(0);
-				}
-				ThemeDesigner.resetPageOpacity();
-			});
-
-			// select current theme
-			$('#ThemeTab').find('[data-theme=' + ThemeDesigner.settings.theme + ']').addClass('selected');
+					ThemeDesigner.set('theme', targetObject.attr('data-theme'));
+					if (ThemeDesigner.checkBgImageIsSet()) {
+						ThemeDesigner.loadImage(ThemeDesigner.settings['background-image']);
+					} else {
+						ThemeDesigner.checkBgIsDynamic(0);
+					}
+					ThemeDesigner.resetPageOpacity();
+				})
+				// select current theme
+				.find('[data-theme=' + ThemeDesigner.settings.theme + ']')
+				.addClass('selected');
 		},
 
 		customizeTabInit: function () {
-			$('#CustomizeTab').find('li').find('img[id*="color"]').click(function (event) {
-				ThemeDesigner.showPicker(event, 'color');
-			});
+			$('#CustomizeTab')
+				.find('li img[id*="color"]')
+				.click(function (event) {
+					ThemeDesigner.showPicker(event, 'color');
+				});
+
 			$('#swatch-image-background').click(function (event) {
 				ThemeDesigner.showPicker(event, 'image');
 			});
 
-			$('#tile-background').change(function () {
-				ThemeDesigner.checkTiledBg(ThemeDesigner.splitOption);
-				ThemeDesigner.set('background-tiled', $(this).attr('checked') ? 'true' : 'false');
-			});
-			$('#fix-background').change(function () {
-				ThemeDesigner.set('background-fixed', $(this).attr('checked') ? 'true' : 'false');
+			$('#swatch-community-header-image-background').click(function (event) {
+				ThemeDesigner.showPicker(event, 'community-header');
 			});
 
-			$('#tile-background').attr('checked', ThemeDesigner.settings['background-tiled'] === 'true');
-			$('#fix-background').attr('checked', ThemeDesigner.settings['background-fixed'] === 'true');
+			$('#tile-background')
+				.change(function () {
+					ThemeDesigner.checkTiledBg(ThemeDesigner.splitOption);
+					ThemeDesigner.set('background-tiled', $(this).attr('checked') ? 'true' : 'false');
+				})
+				.attr('checked', ThemeDesigner.settings['background-tiled'] === 'true');
+
+			$('#fix-background')
+				.change(function () {
+					ThemeDesigner.set('background-fixed', $(this).attr('checked') ? 'true' : 'false');
+				})
+				.attr('checked', ThemeDesigner.settings['background-fixed'] === 'true');
 
 			// TODO: Remove IF statement after fluid layout global release
 			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-				$('#not-split-background').change(function () {
-					ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
-					if ($(this).attr('checked')) {
-						ThemeDesigner.splitOption = false;
-					} else {
-						ThemeDesigner.splitOption = true;
-					}
-				});
-
-				$('#not-split-background').attr('checked', ThemeDesigner.settings['background-dynamic'] === 'false');
+				$('#not-split-background')
+					.change(function () {
+						ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
+						ThemeDesigner.splitOption = !$(this).attr('checked');
+					})
+					.attr('checked', ThemeDesigner.settings['background-dynamic'] === 'false');
 
 				ThemeDesigner.middleColorSelect(ThemeDesigner.settings['background-dynamic'] === 'true');
 				ThemeDesigner.checkBgIsDynamic(
@@ -215,14 +233,18 @@
 				ThemeDesigner.setSplitOption();
 			}
 
-			// submit handler for uploading custom background image
 			$('#BackgroundImageForm').submit(function () {
 				$.AIM.submit(this, ThemeDesigner.backgroundImageUploadCallback);
+			});
+
+			$('#CommunityHeaderBackgroundImageForm').submit(function () {
+				$.AIM.submit(this, ThemeDesigner.communityHeaderBackgroundUploadCallback);
 			});
 
 			var currentVal = ThemeDesigner.settings['page-opacity'],
 				base = ThemeDesigner.basePageOpacity,
 				max = ThemeDesigner.maxPageOpacity;
+
 			ThemeDesigner.$slider = $('#OpacitySlider').slider({
 				value: max - ((base - currentVal) * (max / (base - max))),
 				stop: function (e, ui) {
@@ -232,6 +254,8 @@
 		},
 
 		wordmarkTabInit: function () {
+			var $wordmarkTab = $('#WordmarkTab');
+
 			// handle font family and font size menu change
 			$('#wordmark-font').change(function () {
 				ThemeDesigner.set('wordmark-font', $(this).val());
@@ -260,12 +284,12 @@
 			});
 
 			//graphic wordmark clicking
-			$('#WordmarkTab').find('.graphic').find('.preview').find('.wordmark').click(function () {
+			$wordmarkTab.find('.graphic').find('.preview').find('.wordmark').click(function () {
 				ThemeDesigner.set('wordmark-type', 'graphic');
 			});
 
 			//grapic wordmark button
-			$('#WordmarkTab').find('.graphic').find('.preview').find('a').click(function (event) {
+			$wordmarkTab.find('.graphic').find('.preview').find('a').click(function (event) {
 				event.preventDefault();
 				ThemeDesigner.set('wordmark-type', 'text');
 				ThemeDesigner.set('wordmark-image-url', window.wgBlankImgUrl);
@@ -274,18 +298,18 @@
 				$('#WordMarkUploadForm')[0].reset();
 			});
 
-			// submit handler for uploading custom logo image
-			$('#WordMarkUploadForm').submit(function () {
-				$.AIM.submit(this, ThemeDesigner.wordmarkUploadCallback);
-			});
-
 			//remove favicon link
-			$('#WordmarkTab').find('.favicon').find('.preview').find('a').click(function (event) {
+			$wordmarkTab.find('.favicon').find('.preview').find('a').click(function (event) {
 				event.preventDefault();
 				ThemeDesigner.set('favicon-image-url', window.wgBlankImgUrl);
 
 				// Can't use js to clear file input value so reseting form
 				$('#FaviconUploadForm')[0].reset();
+			});
+
+			// submit handler for uploading custom logo image
+			$('#WordMarkUploadForm').submit(function () {
+				$.AIM.submit(this, ThemeDesigner.wordmarkUploadCallback);
 			});
 
 			// submit handler for uploading favicon image
@@ -294,38 +318,19 @@
 			});
 		},
 
-		wordmarkShield: function () {
-			var shield = $('#wordmark-shield'),
-				parent;
-
-			if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-				parent = shield.parent();
-
-				shield
-					.css({
-						height: parent.outerHeight(true),
-						width: parent.outerWidth(true)
-					})
-					.show();
-			} else {
-				shield.hide();
-			}
-		},
-
 		toolBarInit: function () {
 			$('#Toolbar .history')
 				.click(function () {
 					$(this).find('ul').show();
 				})
-				.find('ul').mouseleave(function () {
+				.find('ul')
+				.mouseleave(function () {
 					$(this).hide();
 				})
 				.find('li').click(ThemeDesigner.revertToPreviousTheme);
 		},
 
 		showPicker: function (event, type) {
-			ThemeDesigner.hidePicker();
-			event.stopPropagation();
 			var swatch = $(event.currentTarget),
 				swatchName = event.currentTarget.className,
 				swatches,
@@ -333,6 +338,9 @@
 				swatchNodes,
 				expression,
 				i;
+
+			ThemeDesigner.hidePicker();
+			event.stopPropagation();
 
 			// check the type (color or image)
 			if (type === 'color') {
@@ -409,9 +417,9 @@
 
 				swatches = this.themeDesignerPicker.children('.image').find('.swatches');
 				// add admin background
-				if (ThemeDesigner.settings['user-background-image']) {
-					$('<li class="user"><img src="' + ThemeDesigner.settings['user-background-image-thumb'] +
-						'" data-image="' + ThemeDesigner.settings['user-background-image'] + '"></li>')
+				if (ThemeDesigner.settings['user-' + swatchName]) {
+					$('<li class="user"><img src="' + ThemeDesigner.settings['user-' + swatchName + '-thumb'] +
+						'" data-image="' + ThemeDesigner.settings['user-' + swatchName] + '"></li>')
 						.insertBefore(swatches.find('.no-image'));
 				}
 
@@ -420,14 +428,23 @@
 
 					//set correct image
 					if ($(this).attr('class') === 'no-image') {
-						ThemeDesigner.set('background-image', '');
+						ThemeDesigner.set(swatchName, '');
 						ThemeDesigner.changeDynamicBg(false);
 					} else {
-						ThemeDesigner.loadImage($(this).children('img').attr('data-image'));
+						ThemeDesigner.loadImage($(this).children('img').attr('data-image'), swatchName);
 					}
 
 					ThemeDesigner.hidePicker();
 				});
+			} else if (type === 'community-header') {
+				// click handling
+				this.themeDesignerPicker
+					.children('.community-header')
+					.find('.no-image')
+					.click(function () {
+						ThemeDesigner.set(swatchName, '');
+						ThemeDesigner.hidePicker();
+					});
 			}
 
 			// show picker
@@ -436,7 +453,7 @@
 					top: swatch.offset().top + 10,
 					left: swatch.offset().left + 10
 				})
-				.removeClass('color image')
+				.removeClass('color image community-header')
 				.addClass(type);
 
 			// clicking away will close picker
@@ -450,7 +467,7 @@
 			$('body').unbind('.picker');
 			$('#ColorNameForm').unbind();
 			this.themeDesignerPicker
-				.removeClass('color image')
+				.removeClass('color image community-header')
 				.find('.user').remove().end()
 				.find('.color li').remove().end()
 				.find('.image li').unbind('click');
@@ -494,7 +511,7 @@
 		},
 
 		changeDynamicBg: function (value) {
-			var val = !! value,
+			var val = !!value,
 				el = $('#not-split-background');
 
 			if (el.prop('checked') === val) {
@@ -511,17 +528,18 @@
 			}
 		},
 
-		loadImage: function (src) {
+		loadImage: function (src, name) {
 			var img = new Image();
 
 			img.onload = function () {
 				if (img.width && img.height) {
-					ThemeDesigner.set('background-image-width', img.width);
-					ThemeDesigner.set('background-image-height', img.height);
-					ThemeDesigner.set('background-image', src);
+					ThemeDesigner.set(name + '-width', img.width);
+					ThemeDesigner.set(name + '-height', img.height);
+					ThemeDesigner.set(name, src);
 					ThemeDesigner.checkBgIsDynamic(img.width, true);
 				}
 			};
+
 			img.src = src;
 		},
 
@@ -539,13 +557,15 @@
 			if (enable) {
 				$('#CustomizeTab').find('.wrap-middle-color').css({
 					opacity: 1
-				});
-				$('#CustomizeTab').find('.middle-color-mask').hide();
+				})
+					.find('.middle-color-mask')
+					.hide();
 			} else {
 				$('#CustomizeTab').find('.wrap-middle-color').css({
 					opacity: 0.3
-				});
-				$('#CustomizeTab').find('.middle-color-mask').show();
+				})
+					.find('.middle-color-mask')
+					.show();
 			}
 		},
 
@@ -555,13 +575,15 @@
 		set: function (setting, newValue) {
 			ThemeDesigner.settings[setting] = newValue;
 
-			if (setting === 'wordmark-image-name' || setting === 'background-image-name') {
+			if (
+				setting === 'wordmark-image-name' ||
+				setting === 'background-image-name' ||
+				setting === 'community-header-background-image-name'
+			) {
 				return;
 			}
 
-			var body = ThemeDesigner.previewFrame.contents().find('body'),
-				reloadCSS = false,
-				updateSkinPreview = false;
+			var body = ThemeDesigner.previewFrame.contents().find('body');
 
 			if (setting === 'background-tiled') {
 				if (newValue === 'true') {
@@ -591,21 +613,36 @@
 
 			if (setting === 'theme' && newValue !== 'custom') {
 				$.extend(ThemeDesigner.settings, ThemeDesigner.themes[newValue]);
-				reloadCSS = true;
+				ThemeDesigner.reloadCSS = true;
 			}
 
-			if (setting === 'color-body' || setting === 'color-body-middle' || setting === 'color-page' ||
-				setting === 'color-buttons' || setting === 'color-links' || setting === 'background-image' ||
-				setting === 'color-header' || setting === 'wordmark-font') {
-				reloadCSS = true;
+			if (['color-body',
+					'color-body-middle',
+					'color-page',
+					'color-buttons',
+					'color-community-header',
+					'color-links',
+					'background-image',
+					'color-header',
+					'wordmark-font'].indexOf(setting) > -1
+			) {
+				ThemeDesigner.reloadCSS = true;
 			}
 
-			if (setting === 'wordmark-font-size' || setting === 'wordmark-text' || setting === 'wordmark-type' ||
-				setting === 'page-opacity') {
-				updateSkinPreview = true;
+			if ([
+				'community-header-background-image',
+					'wordmark-font-size',
+					'page-opacity',
+					'wordmark-text',
+					'wordmark-type'].indexOf(setting) > -1
+			) {
+				ThemeDesigner.updateSkinPreview = true;
 			}
 
-			ThemeDesigner.applySettings(reloadCSS, updateSkinPreview);
+			//set function is run multiple times, we don't need to apply settings all the time
+			$.debounce(100, function () {
+				ThemeDesigner.applySettings();
+			})();
 		},
 
 		/**
@@ -618,11 +655,8 @@
 				var resp = JSON.parse(response);
 
 				if (resp.errors && resp.errors.length > 0) {
-
 					window.alert(resp.errors.join('\n'));
-
 				} else {
-
 					ThemeDesigner.set('wordmark-image-name', resp.wordmarkImageName);
 					ThemeDesigner.set('wordmark-image-url', resp.wordmarkImageUrl);
 					ThemeDesigner.set('wordmark-type', 'graphic');
@@ -670,6 +704,7 @@
 		backgroundImageUploadCallback: {
 			onComplete: function (response) {
 				var resp = JSON.parse(response);
+
 				if (resp.errors && resp.errors.length > 0) {
 
 					window.alert(resp.errors.join('\n'));
@@ -694,22 +729,50 @@
 		},
 
 		/**
+		 * Async callback for uploading community header background image
+		 */
+		communityHeaderBackgroundUploadCallback: {
+			onComplete: function (response) {
+				var resp = JSON.parse(response);
+
+				if (resp.errors && resp.errors.length > 0) {
+
+					window.alert(resp.errors.join('\n'));
+
+				} else {
+					$('#CommunityHeaderBackgroundImageUploadFile').val('');
+					ThemeDesigner.hidePicker();
+
+					ThemeDesigner.set('user-community-header-background-image', resp.backgroundImageUrl);
+					ThemeDesigner.set('user-community-header-background-image-thumb', resp.backgroundImageThumb);
+
+					ThemeDesigner.set('community-header-background-image-name', resp.backgroundImageName);
+					ThemeDesigner.set('community-header-background-image', resp.backgroundImageUrl);
+				}
+			}
+		},
+
+		/**
 		 * Background image upload button handler which cancel async request when image is not selected
 		 *
 		 * @author: Inez Korczynski
 		 */
 		backgroundImageUpload: function () {
 			return $('#BackgroundImageForm').find('input[type="file"]').val() !== '';
-
 		},
 
+		communityHeaderBackgroundImageUpload: function () {
+			return $('#CommunityHeaderBackgroundImageForm').find('input[type="file"]').val() !== '';
+		},
 
 		revertToPreviousTheme: function (event) {
 			event.preventDefault();
 			event.stopPropagation();
 			ThemeDesigner.settings = ThemeDesigner.history[$(this).index()].settings;
 
-			ThemeDesigner.applySettings(true, true);
+			ThemeDesigner.reloadCSS = true;
+			ThemeDesigner.updateSkinPreview = true;
+			ThemeDesigner.applySettings();
 		},
 
 		cancelClick: function (event) {
@@ -730,7 +793,8 @@
 				controller: 'ThemeDesigner',
 				method: 'SaveSettings',
 				data: {
-					settings: ThemeDesigner.settings
+					settings: ThemeDesigner.settings,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: function () {
 					// BugId:1349
@@ -754,11 +818,6 @@
 			clickedLink.parent().addClass('selected').siblings().removeClass('selected');
 			//show the correct panel
 			$('#' + command).show().siblings('section').hide();
-
-			//hide wordmark text side if necessary
-			if (command === 'WordmarkTab') {
-				ThemeDesigner.wordmarkShield();
-			}
 		},
 
 		resizeIframe: function () {
@@ -769,23 +828,33 @@
 		settings: false,
 		themes: false,
 
-		applySettings: function (reloadCSS, updateSkinPreview) {
-			var file, theme, settingsToLoad, wordmark;
+		applySettings: function () {
+			var file,
+				theme,
+				settingsToLoad,
+				wordmark,
+				wordmarkImg,
+				previewFrameContent = this.previewFrame.contents(),
+				$WordmarkTab = $('#WordmarkTab'),
+				isWordmarkGraphic = ThemeDesigner.settings['wordmark-type'] === 'graphic';
 
 			/*** Theme Tab ***/
 			if (ThemeDesigner.settings.theme === 'custom') {
-				$('#ThemeTab').find('.slider').find('.selected').removeClass('selected');
+				$('#ThemeTab').find('.slider .selected').removeClass('selected');
 			}
 
 			/*** Customize Tab ***/
 			// color swatches
 			$('#swatch-color-background').css('background-color', ThemeDesigner.settings['color-body']);
 			$('#swatch-color-background-middle').css('background-color', ThemeDesigner.settings['color-body-middle']);
+			$('#swatch-color-community-header')
+				.css('background-color', ThemeDesigner.settings['color-community-header']);
 			$('#swatch-color-buttons').css('background-color', ThemeDesigner.settings['color-buttons']);
 			$('#swatch-color-links').css('background-color', ThemeDesigner.settings['color-links']);
 			$('#swatch-color-page').css('background-color', ThemeDesigner.settings['color-page']);
 			$('#swatch-color-header').css('background-color', ThemeDesigner.settings['color-header']);
 
+			//Background image
 			if (ThemeDesigner.settings['background-image'] === '') {
 				//no background image
 				$('#swatch-image-background').attr('src', window.wgBlankImgUrl);
@@ -801,75 +870,98 @@
 				$('#swatch-image-background').attr('src', ThemeDesigner.settings['user-background-image-thumb']);
 			}
 
+			//Community header background image
+			if (ThemeDesigner.settings['community-header-background-image'] === '') {
+				//no background image
+				$('#swatch-community-header-image-background')
+					.attr('src', window.wgBlankImgUrl);
+			} else {
+				$('#swatch-community-header-image-background')
+					.attr('src', ThemeDesigner.settings['user-community-header-background-image-thumb']);
+			}
+
 			/*** Wordmark Tab ***/
 			// style wordmark preview
-			$('#wordmark').removeClass().addClass(ThemeDesigner.settings['wordmark-font'])
-				.addClass(ThemeDesigner.settings['wordmark-font-size']).text(ThemeDesigner.settings['wordmark-text']);
+			$('#wordmark')
+				.removeClass()
+				.addClass(ThemeDesigner.settings['wordmark-font'])
+				.addClass(ThemeDesigner.settings['wordmark-font-size'])
+				.text(ThemeDesigner.settings['wordmark-text']);
 
 			// populate wordmark editor
-			$('#wordmark-edit').find('input[type="text"]')
+			$('#wordmark-edit')
+				.find('input[type="text"]')
 				.val(ThemeDesigner.settings['wordmark-text']);
 
 			// select current font
-			$('#wordmark-font').find('[value="' + ThemeDesigner.settings['wordmark-font'] + '"]')
+			$('#wordmark-font')
+				.find('[value="' + ThemeDesigner.settings['wordmark-font'] + '"]')
 				.attr('selected', 'selected');
 
 			// select current size
-			$('#wordmark-size').find('[value="' + ThemeDesigner.settings['wordmark-font-size'] + '"]')
+			$('#wordmark-size')
+				.find('[value="' + ThemeDesigner.settings['wordmark-font-size'] + '"]')
 				.attr('selected', 'selected');
 
-			// wordmark image
-			$('#WordmarkTab .graphic .wordmark').attr('src', ThemeDesigner.settings['wordmark-image-url']);
 
+			$WordmarkTab
+				.find('.graphic .preview').toggleClass('active', isWordmarkGraphic)
+				.find('.wordmark').toggleClass('selected', isWordmarkGraphic)
+				.attr('src', ThemeDesigner.settings['wordmark-image-url']);
 
-			if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-				$('#WordmarkTab').find('.graphic')
-					.find('.preview').addClass('active')
-					.find('.wordmark').addClass('selected');
-				ThemeDesigner.wordmarkShield();
-			} else {
-				$('#WordmarkTab').find('.graphic')
-					.find('.preview').removeClass('active')
-					.find('.wordmark').removeClass('selected');
-				ThemeDesigner.wordmarkShield();
-			}
-
-			// favicon image
-			$('#WordmarkTab').find('.favicon').find('.preview').find('img')
+			$WordmarkTab
+				.find('.favicon .preview')
+				.toggleClass('active',
+					ThemeDesigner.settings['favicon-image-url'] !== window.wgBlankImgUrl
+				)
+				// favicon image
+				.find('img')
 				.attr('src', ThemeDesigner.settings['favicon-image-url']);
 
-			if (ThemeDesigner.settings['favicon-image-url'] === window.wgBlankImgUrl) {
-				$('#WordmarkTab').find('.favicon').find('.preview').removeClass('active');
-			} else {
-				$('#WordmarkTab').find('.favicon').find('.preview').addClass('active');
-			}
 
-			if (reloadCSS) {
+			if (ThemeDesigner.reloadCSS) {
 				settingsToLoad = $.extend({}, ThemeDesigner.settings, window.applicationThemeSettings);
 
 				document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(settingsToLoad);
 			}
 
-			if (updateSkinPreview) {
-				wordmark = this.previewFrame.contents().find('#WikiHeader').find('.wordmark');
+			if (ThemeDesigner.updateSkinPreview) {
+				previewFrameContent.find('.wds-community-header__sitename a')
+					.text(ThemeDesigner.settings['wordmark-text']);
 
-				if (ThemeDesigner.settings['wordmark-type'] === 'text') {
-					wordmark.removeClass().addClass('wordmark').addClass(ThemeDesigner.settings['wordmark-font-size'])
-						.find('a').text(ThemeDesigner.settings['wordmark-text']);
-				} else if (ThemeDesigner.settings['wordmark-type'] === 'graphic') {
-					wordmark.addClass('graphic')
-						.find('a').html('').append('<img src="' + ThemeDesigner.settings['wordmark-image-url'] + '">');
+				if (ThemeDesigner.settings['wordmark-type'] !== 'graphic') {
+					previewFrameContent.find('.wds-community-header__wordmark').remove();
+				} else {
+					wordmark = previewFrameContent.find('.wds-community-header__wordmark a');
+					wordmarkImg = '<img src="' + ThemeDesigner.settings['wordmark-image-url'] + '">';
+					if (wordmark.length) {
+						wordmark.html(wordmarkImg);
+					} else {
+						previewFrameContent.find('.wds-community-header')
+							.prepend('<div class="wds-community-header__wordmark"><a href="#">' + wordmarkImg + '</a></div>');
+					}
 				}
 
-				this.previewFrame.contents().find('#WikiaPageBackground')
+				previewFrameContent.find('header.wds-community-header').attr(
+					'style',
+					'background-image: url(' + Vignette.getThumbURL(
+						ThemeDesigner.settings['community-header-background-image'],
+						{
+							mode: Vignette.mode.zoomCrop,
+							width: 471,
+							height: 115
+						}
+					) + ');'
+				);
+
+				previewFrameContent.find('#WikiaPageBackground')
 					.css('opacity', ThemeDesigner.settings['page-opacity'] / ThemeDesigner.maxPageOpacity);
 
-				if (ThemeDesigner.settings['page-opacity'] < ThemeDesigner.maxPageOpacity) {
-					this.previewFrame.contents().find('#WikiHeader .shadow-mask').hide();
-				} else {
-					this.previewFrame.contents().find('#WikiHeader .shadow-mask').show();
-				}
 			}
+
+			//reset
+			ThemeDesigner.reloadCSS = false;
+			ThemeDesigner.updateSkinPreview = false;
 		},
 
 		/**
@@ -967,8 +1059,8 @@
 			// copy color-body swatches to color-body-middle
 			this.swatches['color-body-middle'] = this.swatches['color-body'];
 
-			// initialize color-button swatches
-			this.swatches['color-buttons'] = [
+			// initialize color-button and color-community-header swatches
+			this.swatches['color-community-header'] = this.swatches['color-buttons'] = [
 				'fec356',
 				'6699ff',
 				'6c93b1',

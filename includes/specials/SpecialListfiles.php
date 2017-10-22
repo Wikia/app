@@ -71,10 +71,18 @@ class ImageListPager extends TablePager {
 		$this->mIncluding = $including;
 
 		if ( $userName ) {
-			$nt = Title::newFromText( $userName, NS_USER );
-			if ( !is_null( $nt ) ) {
-				$this->mUserName = $nt->getText();
-				$this->mQueryConds['img_user_text'] = $this->mUserName;
+			$user = User::newFromName( $userName );
+
+			if ( $user ) {
+				$this->mUserName = $user->getName();
+
+				// SUS-808: Single source of truth for user name
+				$userId = User::idFromName( $userName );
+				if ( $userId > 0 ) {
+					$this->mQueryConds['img_user'] = $userId;
+				} else {
+					$this->mQueryConds['img_user_text'] = $this->mUserName;
+				}
 			}
 		}
 
@@ -184,7 +192,9 @@ class ImageListPager extends TablePager {
 			$this->mResult->seek( 0 );
 			foreach ( $this->mResult as $row ) {
 				if ( $row->img_user ) {
-					$lb->add( NS_USER, str_replace( ' ', '_', $row->img_user_text ) );
+					// SUS-808: Single source of truth for user name
+					$userName = User::getUsername( $row->img_user, $row->img_user_text );
+					$lb->add( NS_USER, str_replace( ' ', '_', $userName ) );
 				}
 			}
 			$lb->execute();
@@ -233,9 +243,11 @@ class ImageListPager extends TablePager {
 				}
 			case 'img_user_text':
 				if ( $this->mCurrentRow->img_user ) {
+					// SUS-808: Single source of truth for user name
+					$userName = User::getUsername( $this->mCurrentRow->img_user, $value );
 					$link = Linker::link(
-						Title::makeTitle( NS_USER, $value ),
-						htmlspecialchars( $value )
+						Title::makeTitle( NS_USER, $userName ),
+						htmlspecialchars( $userName )
 					);
 				} else {
 					$link = htmlspecialchars( $value );

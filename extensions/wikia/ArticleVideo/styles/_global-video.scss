@@ -2,7 +2,9 @@
 @import 'skins/shared/mixins/flexbox';
 @import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
-.oo-player-container {
+// Use div to prevent Ooyala from overriding these styles
+// We can't easily change the order of loading files, see ArticleVideoHooks::onBeforePageDisplay
+div.oo-player-container {
 	min-width: 0 !important;
 
 	.oo-player {
@@ -119,5 +121,13 @@
 
 	.oo-thumbnail-carousel-time, .oo-thumbnail-time {
 		font-family: $wds-font-family;
+	}
+
+	.oo-discovery-panel {
+		width: 100%;
+	}
+
+	.oo-xsmall .oo-discovery-panel .oo-discovery-image-wrapper-style:nth-last-child(2) {
+		margin-right: 20px !important;
 	}
 }

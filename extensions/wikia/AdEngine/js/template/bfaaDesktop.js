@@ -1,6 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaaDesktop', [
-	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.provider.gpt.helper',
@@ -12,20 +12,22 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
-], function (uapContext,
-			 btfBlocker,
-			 googleSlots,
-			 helper,
-			 resolvedState,
-			 slotTweaker,
-			 uapVideo,
-			 VideoSettings,
-			 doc,
-			 log,
-			 throttle,
-			 win,
-			 recoveryTweaker) {
+	require.optional('ext.wikia.aRecoveryEngine.tweaker')
+], function (
+	adContext,
+	btfBlocker,
+	googleSlots,
+	helper,
+	resolvedState,
+	slotTweaker,
+	uapVideo,
+	VideoSettings,
+	doc,
+	log,
+	throttle,
+	win,
+	recoveryTweaker
+) {
 	'use strict';
 
 	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
@@ -67,10 +69,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			updateNavBar(slotContainer.offsetHeight);
 		}, 100));
 
-		if (win.WikiaBar) {
-			win.WikiaBar.hideContainer();
-		}
-
 		if (spotlightFooter) {
 			spotlightFooter.parentNode.style.display = 'none';
 		}
@@ -97,7 +95,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
-		uapContext.setUapId(params.uap);
 
 		videoSettings = VideoSettings.create(params);
 		resolvedState.setImage(videoSettings);
@@ -107,13 +104,15 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			runOnReady(iframe, params, videoSettings);
 			wrapper.style.opacity = '';
 
-			if (params.loadMedrecFromBTF) {
-				// refresh after uapContext.setUapId
-				helper.refreshSlot(googleSlots.getSlotByName(medrecSlotName));
+			if (!adContext.get('opts.disableSra') && params.loadMedrecFromBTF) {
+				// refresh after uapContext.setUapId if in SRA environment
+				helper.refreshSlot(medrecSlotName);
 			}
 		});
 
-		unblockedSlots.forEach(btfBlocker.unblock);
+		if (params.adProduct !== 'abcd') {
+			unblockedSlots.forEach(btfBlocker.unblock);
+		}
 
 		log(['show', params.uap], log.levels.info, logGroup);
 	}

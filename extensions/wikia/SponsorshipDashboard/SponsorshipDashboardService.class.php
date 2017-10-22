@@ -4,7 +4,7 @@
  * Category service
  * @author Jakub Kurcek
  */
-class SponsorshipDashboardService extends Service {
+class SponsorshipDashboardService {
 
 	const SD_RETURNPARAM_TICKS = 'ticks';
 	const SD_RETURNPARAM_FULL_TICKS = 'fullTicks';

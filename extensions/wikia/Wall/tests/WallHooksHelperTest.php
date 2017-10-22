@@ -6,36 +6,29 @@ class WallHooksHelperTest extends WikiaBaseTest {
 	 *
 	 * @dataProvider wallGreetingRestrictionsDataProvider
 	 * @param bool $userCanWallEdit
-	 * @param bool $isUserWallOwner
+	 * @param string $userName
+	 * @param string $ownerName
+	 * @param bool $allow
 	 */
-	public function testWallGreetingRestrictions( bool $userCanWallEdit, bool $isUserWallOwner ) {
-		$titleMock = $this->getTitleMock( NS_USER_WALL_MESSAGE_GREETING );
+	public function testWallGreetingRestrictions(
+		bool $userCanWallEdit, string $userName, string $ownerName, bool $allow
 
-		$userMock = $this->getMock( User::class, [ 'isAllowed' ] );
+	) {
+		$title = Title::makeTitle( NS_USER_WALL_MESSAGE_GREETING, $ownerName );
+
+		$userMock = $this->createMock( User::class );
+		$userMock->expects( $this->any() )
+			->method( 'getName' )
+			->willReturn( $userName );
+
 		$userMock->expects( $this->once() )
 			->method( 'isAllowed' )
 			->with( 'walledit' )
 			->willReturn( $userCanWallEdit );
 
-		$wallMessageMock = $this->getMockBuilder( WallMessage::class )
-			->disableOriginalConstructor()
-			->setMethods( [ 'isWallOwner' ] )
-			->getMock();
-		if ( !$userCanWallEdit ) {
-			$wallMessageMock->expects( $this->once() )
-				->method( 'isWallOwner' )
-				->with( $userMock )
-				->willReturn( $isUserWallOwner );
-		} else {
-			$wallMessageMock->expects( $this->never() )
-				->method( $this->anything() );
-		}
-		$this->mockClass( WallMessage::class, $wallMessageMock );
-
 		$err = null;
-		$res = WallHooksHelper::onGetUserPermissionsErrors( $titleMock, $userMock, 'edit', $err );
+		$res = WallHooksHelper::onGetUserPermissionsErrors( $title, $userMock, 'edit', $err );
 
-		$allow = $userCanWallEdit || $isUserWallOwner;
 		if ( !$allow ) {
 			$this->assertFalse( $res );
 			$this->assertContains( 'badaccess-group0', $err );
@@ -83,10 +76,10 @@ class WallHooksHelperTest extends WikiaBaseTest {
 
 	public function wallGreetingRestrictionsDataProvider(): array {
 		return [
-			'user with no permissions' => [ false, false ],
-			'user with walledit permission' => [ true, false ],
-			'wall owner user' => [ false, true ],
-			'wall owner user with walledit permission' => [ true, true ],
+			'user with no permissions' => [ false, 'UserA', 'UserB', false ],
+			'user with walledit permission' => [ true, 'UserA', 'UserB', true ],
+			'wall owner user' => [ false, 'UserA', 'UserA', true ],
+			'wall owner user with walledit permission' => [ true, 'UserA', 'UserA', true ],
 		];
 	}
 
@@ -98,7 +91,7 @@ class WallHooksHelperTest extends WikiaBaseTest {
 			'user trying to delete Message Wall' => [ NS_USER_WALL, 'delete', false, false ],
 			'user trying to create thread manually' =>  [ NS_USER_WALL_MESSAGE, 'create', false, false ],
 			'user posting thread via Nirvana' => [ NS_USER_WALL_MESSAGE, 'create', true, true ],
-			'user editing thread manually' => [ NS_USER_WALL_MESSAGE, 'edit', false, true ],
+			'user editing thread manually' => [ NS_USER_WALL_MESSAGE, 'edit', false, false ],
 			'user editing thread via Nirvana' => [ NS_USER_WALL_MESSAGE, 'edit', true, true ],
 		];
 	}

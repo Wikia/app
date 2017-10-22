@@ -9,8 +9,6 @@
  */
 namespace PHPUnit\Runner\Filter;
 
-/**
- */
 class IncludeGroupFilterIterator extends GroupFilterIterator
 {
     /**
@@ -20,6 +18,6 @@ class IncludeGroupFilterIterator extends GroupFilterIterator
      */
     protected function doAccept($hash)
     {
-        return in_array($hash, $this->groupTests);
+        return \in_array($hash, $this->groupTests);
     }
 }

@@ -288,7 +288,6 @@ class CheckUser extends SpecialPage {
 			$block->mExpiry = $expiry;
 			$block->isHardblock( !IP::isIPAddress( $u->getName() ) );
 			$block->isAutoblocking( true );
-			$block->prevents( 'createaccount', true );
 			$block->prevents( 'sendemail', false );
 			$block->prevents( 'editownusertalk', false );
 
@@ -301,7 +300,6 @@ class CheckUser extends SpecialPage {
 				if ( $anonOnly ) {
 					$logParams[] = 'anononly';
 				}
-				$logParams[] = 'nocreate';
 				# Add log entry
 				$log->addEntry( 'block', $userTitle, $reason, $logParams );
 			}

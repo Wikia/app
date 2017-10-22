@@ -4,8 +4,6 @@
  * @author Inez Korczyński <korczynski@gmail.com>
  */
 
-use Wikia\Util\GlobalStateWrapper;
-
 class AssetsManagerBaseBuilder {
 
 	protected $mOid;
@@ -51,7 +49,7 @@ class AssetsManagerBaseBuilder {
 				$newContent = $this->minifyCSS( $this->mContent );
 
 			} else if ( $this->mContentType == AssetsManager::TYPE_JS ) {
-				$newContent = self::minifyJS( $this->mContent, ( $this->mOid == 'oasis_shared_js' || $this->mOid == 'rte' ) ? true : false );
+				$newContent = self::minifyJS( $this->mContent );
 			}
 		}
 
@@ -100,62 +98,26 @@ class AssetsManagerBaseBuilder {
 	}
 
 	/**
-	 * @param $content
-	 * @param bool $useYUI
+	 * @param $content string
 	 * @return string
 	 * @throws Exception
 	 */
-	public static function minifyJS($content, $useYUI = false) {
-		global $IP;
+	public static function minifyJS($content) {
 		wfProfileIn(__METHOD__);
+		$res = JavaScriptMinifier::minify($content);
 
-		$tempInFile = tempnam(sys_get_temp_dir(), 'AMIn');
-		file_put_contents($tempInFile, $content);
-
-		$retval = 1;
-
-		if($useYUI) {
-			wfProfileIn(__METHOD__ . '::yui');
-
-			$wrapper = new GlobalStateWrapper( [
-				'wgMaxShellMemory' => 0, // because Java is hungry
-			] );
-
-			$out = $wrapper->wrap( function () use ( $IP, &$retval, $tempInFile ) {
-				$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
-				$out = wfShellExec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile} 2>&1", $retval);
-
-				if ($retval === 0) {
-					$out = file_get_contents($tempOutFile);
-				}
-				unlink($tempOutFile);
-
-				return $out;
-			});
-
-			wfProfileOut(__METHOD__ . '::yui');
-		} else {
-			wfProfileIn(__METHOD__ . '::jsmin');
-			$jsmin = "{$IP}/lib/vendor/jsmin";
-			$out = wfShellExec("cat $tempInFile | $jsmin", $retval);
-			wfProfileOut(__METHOD__ . '::jsmin');
-		}
-
-		unlink($tempInFile);
-
-		if ( $retval !== 0 ) {
-			$e = new Exception( 'JS minification failed', $retval );
+		if ( !is_string( $res ) ) {
+			$e = new Exception( 'JS minification failed' );
 
 			\Wikia\Logger\WikiaLogger::instance()->error( 'AssetsManagerBaseBuilder::minifyJS failed', [
 				'exception' => $e,
-				'output' => $out,
 			]);
 
 			throw $e;
 		}
 
 		wfProfileOut(__METHOD__);
-		return $out;
+		return $res;
 	}
 
 	private function minifyCSS($content) {

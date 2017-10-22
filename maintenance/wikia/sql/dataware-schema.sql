@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-archive-slave.query.consul    Database: dataware
 -- ------------------------------------------------------
--- Server version	5.6.24-72.2-log
+-- Server version	5.7.18-15-log
 
 
 --
@@ -89,23 +89,8 @@ CREATE TABLE `ab_experiments` (
 DROP TABLE IF EXISTS `blobs`;
 CREATE TABLE `blobs` (
   `blob_id` int(10) NOT NULL AUTO_INCREMENT,
-  `rev_wikia_id` int(8) unsigned NOT NULL,
-  `rev_id` int(10) unsigned DEFAULT NULL,
-  `rev_page_id` int(10) unsigned NOT NULL,
-  `rev_namespace` int(10) unsigned NOT NULL DEFAULT '0',
-  `rev_user` int(10) unsigned NOT NULL DEFAULT '0',
-  `rev_user_text` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `rev_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `blob_text` mediumtext NOT NULL,
-  `rev_flags` tinyblob,
-  `rev_ip` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`blob_id`),
-  KEY `rev_page_id` (`rev_wikia_id`,`rev_page_id`,`rev_id`),
-  KEY `rev_namespace` (`rev_wikia_id`,`rev_page_id`,`rev_namespace`),
-  KEY `rev_user` (`rev_wikia_id`,`rev_user`,`rev_timestamp`),
-  KEY `rev_user_text` (`rev_wikia_id`,`rev_user_text`,`rev_timestamp`),
-  KEY `blobs_rev_timestamp` (`rev_timestamp`),
-  KEY `rev_ip` (`rev_ip`)
+  PRIMARY KEY (`blob_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 (PARTITION p0 VALUES LESS THAN (10388840) ENGINE = InnoDB,
  PARTITION p1 VALUES LESS THAN (20777680) ENGINE = InnoDB,
@@ -154,26 +139,6 @@ CREATE TABLE `email_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `emails_storage`
---
-
-DROP TABLE IF EXISTS `emails_storage`;
-CREATE TABLE `emails_storage` (
-  `entry_id` int(10) NOT NULL AUTO_INCREMENT,
-  `source_id` int(10) NOT NULL,
-  `page_id` int(10) NOT NULL,
-  `city_id` int(9) NOT NULL,
-  `email` tinytext,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  `beacon_id` char(10) DEFAULT NULL,
-  `feedback` varchar(255) DEFAULT NULL,
-  `timestamp` char(14) DEFAULT NULL,
-  PRIMARY KEY (`entry_id`),
-  KEY `emails_storage_entry_source` (`source_id`),
-  KEY `emails_storage_entry_timestamp` (`city_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `global_registry`
 --
 
@@ -215,62 +180,6 @@ CREATE TABLE `ignored_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `image_review`
---
-
-DROP TABLE IF EXISTS `image_review`;
-CREATE TABLE `image_review` (
-  `wiki_id` int(11) NOT NULL,
-  `page_id` int(11) NOT NULL,
-  `revision_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `reviewer_id` int(11) DEFAULT NULL,
-  `state` int(11) NOT NULL DEFAULT '0',
-  `priority` int(11) NOT NULL DEFAULT '0',
-  `flags` int(11) NOT NULL DEFAULT '0',
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `review_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `review_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `top_200` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`wiki_id`,`page_id`),
-  KEY `query_idx2` (`state`,`review_end`,`review_start`),
-  KEY `last_edited_priority` (`last_edited`,`priority`),
-  KEY `review_by_edit_prio` (`reviewer_id`,`review_start`,`priority`,`last_edited`),
-  KEY `image_list` (`wiki_id`,`top_200`),
-  KEY `image_list2` (`state`,`top_200`,`last_edited`,`priority`),
-  KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `image_review_stats`
---
-
-DROP TABLE IF EXISTS `image_review_stats`;
-CREATE TABLE `image_review_stats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reviewer_id` int(11) NOT NULL,
-  `wiki_id` int(11) NOT NULL,
-  `page_id` int(11) NOT NULL,
-  `review_state` int(11) NOT NULL DEFAULT '0',
-  `review_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `image_idx` (`wiki_id`,`page_id`),
-  KEY `state_date_idx` (`reviewer_id`,`review_state`,`review_end`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `image_review_wikis`
---
-
-DROP TABLE IF EXISTS `image_review_wikis`;
-CREATE TABLE `image_review_wikis` (
-  `wiki_id` int(11) NOT NULL,
-  `top200` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`wiki_id`),
-  KEY `top200` (`top200`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `pages`
 --
 
@@ -279,24 +188,13 @@ CREATE TABLE `pages` (
   `page_wikia_id` int(8) unsigned NOT NULL,
   `page_id` int(8) unsigned NOT NULL,
   `page_namespace` int(8) unsigned NOT NULL DEFAULT '0',
-  `page_title_lower` varchar(255) DEFAULT NULL,
   `page_title` varchar(255) NOT NULL,
-  `page_status` smallint(4) unsigned DEFAULT '0',
   `page_is_content` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `page_is_redirect` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `page_edits` int(8) unsigned NOT NULL DEFAULT '0',
   `page_latest` int(8) unsigned NOT NULL DEFAULT '0',
   `page_last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `page_last_indexed` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`page_wikia_id`,`page_id`),
-  KEY `page_namespace` (`page_wikia_id`,`page_namespace`,`page_title`),
-  KEY `page_title_lower_wikia` (`page_title_lower`,`page_wikia_id`,`page_namespace`),
-  KEY `page_wikia_title_lower` (`page_wikia_id`,`page_title_lower`,`page_namespace`),
-  KEY `page_latest` (`page_wikia_id`,`page_namespace`,`page_latest`),
-  KEY `page_last_indexed` (`page_wikia_id`,`page_last_indexed`,`page_id`),
-  KEY `page_title_lower_edits` (`page_title_lower`,`page_wikia_id`,`page_edits`),
-  KEY `page_wikia_edited` (`page_wikia_id`,`page_last_edited`,`page_title_lower`),
-  KEY `page_namespace_lower` (`page_wikia_id`,`page_namespace`,`page_title_lower`)
+  KEY `page_title_namespace_latest_idx` (`page_title`,`page_namespace`,`page_latest`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -567,4 +465,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-03-30  9:35:07
+-- Dump completed on 2017-10-16 14:47:39

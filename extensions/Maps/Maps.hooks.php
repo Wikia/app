@@ -28,7 +28,7 @@ final class MapsHooks {
 	 *
 	 * @return boolean
 	 */
-	public static function addToAdminLinks( ALTree &$admin_links_tree ) {
+	public static function addToAdminLinks( ALTree $admin_links_tree ) {
 		$displaying_data_section = $admin_links_tree->getSection( wfMessage( 'smw_adminlinks_displayingdata' )->text() );
 
 		// Escape if SMW hasn't added links.
@@ -124,7 +124,7 @@ final class MapsHooks {
 	 * @param $article WikiPage|Article (depending on MW version, WikiPage in 1.18+)
 	 * @return type
 	 */
-	public static function onArticlePurge( &$article ) {
+	public static function onArticlePurge( WikiPage $article ) {
 		self::$purgedBeforeStore = true;
 		return true;
 	}
@@ -139,7 +139,7 @@ final class MapsHooks {
 	 *
 	 * @return true
 	 */
-	public static function onParserAfterTidy( Parser &$parser, &$text ) {
+	public static function onParserAfterTidy( Parser $parser, &$text ) {
 
 		$title = $parser->getTitle();
 
@@ -167,7 +167,7 @@ final class MapsHooks {
 	 *
 	 * @return true
 	 */
-	public static function onLinksUpdateConstructed( LinksUpdate &$linksUpdate ) {
+	public static function onLinksUpdateConstructed( LinksUpdate $linksUpdate ) {
 		$title = $linksUpdate->getTitle();
 
 		self::processLayersStoreCandidate( $linksUpdate->mParserOutput, $title );
@@ -211,9 +211,8 @@ final class MapsHooks {
 	 *
 	 * @return true
 	 */
-	public static function onParserClearState( Parser &$parser ) {
+	public static function onParserClearState( Parser $parser ) {
 		$parser->getOutput()->mExtMapsLayers = null;
 		return true;
 	}
 }
-

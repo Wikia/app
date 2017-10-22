@@ -136,6 +136,12 @@ class ApiMain extends ApiBase {
 	private $mCacheControl = array();
 
 	/**
+	 * Wikia change - fix visualeditor api permissions
+	 * @var bool $shouldCheckWriteApiPermission
+	 */
+	private $shouldCheckWriteApiPermission = true;
+
+	/**
 	 * Constructs an instance of ApiMain that utilizes the module and format specified by $request.
 	 *
 	 * @param $context IContextSource|WebRequest - if this is an instance of FauxRequest, errors are thrown and no printing occurs
@@ -406,7 +412,7 @@ class ApiMain extends ApiBase {
 		global $wgUseXVO, $wgVaryOnXFP;
 		$response = $this->getRequest()->response();
 
-		wfRunHooks( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
+		Hooks::run( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
 
 		if ( $this->mCacheMode == 'private' ) {
 			$response->header( 'Cache-Control: private' );
@@ -652,6 +658,13 @@ class ApiMain extends ApiBase {
 	}
 
 	/**
+	 * @param bool $shouldCheckWriteApiPermission
+	 */
+	public function setShouldCheckWriteApiPermission( bool $shouldCheckWriteApiPermission ) {
+		$this->shouldCheckWriteApiPermission = $shouldCheckWriteApiPermission;
+	}
+
+	/**
 	 * Check for sufficient permissions to execute
 	 * @param $module ApiBase An Api module
 	 */
@@ -671,7 +684,7 @@ class ApiMain extends ApiBase {
 			if ( !$this->mEnableWrite ) {
 				$this->dieUsageMsg( 'writedisabled' );
 			}
-			if ( !$user->isAllowed( 'writeapi' ) ) {
+			if ( $this->shouldCheckWriteApiPermission && !$user->isAllowed( 'writeapi' ) ) {
 				$this->dieUsageMsg( 'writerequired' );
 			}
 			if ( wfReadOnly() ) {
@@ -725,7 +738,7 @@ class ApiMain extends ApiBase {
 		// Execute
 		$module->profileIn();
 		$module->execute();
-		wfRunHooks( 'APIAfterExecute', array( &$module ) );
+		Hooks::run( 'APIAfterExecute', array( &$module ) );
 		$module->profileOut();
 
 		$module->destroyLogContext(); // Wikia Change

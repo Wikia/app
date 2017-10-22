@@ -191,7 +191,7 @@ class Linker {
 
 		$ret = null;
 		wfProfileIn(__METHOD__.'-hooks');
-		if ( !wfRunHooks( 'LinkBegin', array( $dummy, $target, &$html,
+		if ( !Hooks::run( 'LinkBegin', array( $dummy, $target, &$html,
 		&$customAttribs, &$query, &$options, &$ret ) ) ) {
 			wfProfileOut(__METHOD__.'-hooks');
 			wfProfileOut( __METHOD__ );
@@ -240,7 +240,7 @@ class Linker {
 
 		$ret = null;
 		wfProfileIn(__METHOD__.'-hooks');
-		if ( wfRunHooks( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
+		if ( Hooks::run( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
 			wfProfileOut(__METHOD__.'-hooks');
 			$ret = Html::rawElement( 'a', $attribs, $html );
 		} else {
@@ -498,7 +498,7 @@ class Linker {
 			$alt = self::fnamePart( $url );
 		}
 		$img = '';
-		$success = wfRunHooks( 'LinkerMakeExternalImage', array( &$url, &$alt, &$img ) );
+		$success = Hooks::run( 'LinkerMakeExternalImage', array( &$url, &$alt, &$img ) );
 		if ( !$success ) {
 			wfDebug( "Hook LinkerMakeExternalImage changed the output of external image with url {$url} and alt text {$alt} to {$img}\n", true );
 			return $img;
@@ -546,7 +546,7 @@ class Linker {
 	{
 		$res = null;
 		$dummy = new DummyLinker;
-		if ( !wfRunHooks( 'ImageBeforeProduceHTML', array( &$dummy, &$title,
+		if ( !Hooks::run( 'ImageBeforeProduceHTML', array( &$dummy, &$title,
 			&$file, &$frameParams, &$handlerParams, &$time, &$res ) ) ) {
 			return $res;
 		}
@@ -697,7 +697,7 @@ class Linker {
 		/* Wikia change begin - @author: Federico "Lox" Lucignano */
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			/* Give extensions the ability to add HTML to full size unframed images */
-			wfRunHooks( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
+			Hooks::run( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
 		}
 		/* Wikia change end */
 
@@ -821,7 +821,7 @@ class Linker {
 				$srcWidth = $file->getWidth( $page );
 
 				/* Wikia change start - Jakub */
-				F::app()->runHook( 'LinkerMakeThumbLink2FileOriginalSize', array( $file, &$srcWidth ) );
+				Hooks::run( 'LinkerMakeThumbLink2FileOriginalSize', [ $file, &$srcWidth ] );
 				/* Wikia change end */
 
 				if ( $srcWidth && !$file->mustRender() && $hp['width'] > $srcWidth ) {
@@ -880,7 +880,7 @@ class Linker {
 
 		if ( $isMobile ) {
 			// Hook only used for mobile now
-			wfRunHooks( 'ThumbnailAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$origHTML ) );
+			Hooks::run( 'ThumbnailAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$origHTML ) );
 		} else {
 			// Render with controller for desktop
 			$params['html'] = $origHTML;
@@ -1058,7 +1058,7 @@ class Linker {
 			$text = htmlspecialchars( $text );
 		}
 		$link = '';
-		$success = wfRunHooks( 'LinkerMakeExternalLink',
+		$success = Hooks::run( 'LinkerMakeExternalLink',
 			array( &$url, &$text, &$link, &$attribs, $linktype ) );
 		if ( !$success ) {
 			wfDebug( "Hook LinkerMakeExternalLink changed the output of link with url {$url} and text {$text} to {$link}\n", true );
@@ -1072,7 +1072,7 @@ class Linker {
 	 * Make user link (or user contributions for unregistered users)
 	 * @param $userId   Integer: user id in database.
 	 * @param $userName String: user name in database.
-	 * @param $altUserName String: text to display instead of the user name (optional)
+	 * @param $altUserName string|bool text to display instead of the user name (optional)
 	 * @return String: HTML fragment
 	 * @since 1.19 Method exists for a long time. $displayText was added in 1.19.
 	 */
@@ -1117,7 +1117,8 @@ class Linker {
 			// check if the user has an edit
 			$attribs = array();
 			if ( $redContribsWhenNoEdits ) {
-				$count = !is_null( $edits ) ? $edits : User::edits( $userId );
+				$user = User::newFromId( $userId );
+				$count = !is_null( $edits ) || !$user ? $edits : $user->getEditCount();
 				if ( $count == 0 ) {
 					$attribs['class'] = 'new';
 				}
@@ -1134,7 +1135,7 @@ class Linker {
 			$items[] = self::emailLink( $userId, $userText );
 		}
 
-		wfRunHooks( 'UserToolLinksEdit', array( $userId, $userText, &$items ) );
+		Hooks::run( 'UserToolLinksEdit', array( $userId, $userText, &$items ) );
 
 		if ( $items ) {
 			return ' <span class="mw-usertoollinks">(' . $wgLang->pipeList( $items ) . ')</span>';
@@ -1169,7 +1170,7 @@ class Linker {
 			$userText = $userText->getName();
 		}
 
-		wfRunHooks('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
+		Hooks::run('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
 		/** End of Wikia change */
 
 		return $userTalkLink;
@@ -1679,7 +1680,7 @@ class Linker {
 			. "</ul>\n</td></tr></table>\n";
 
 		/* Create new entry point for JS generated TOC */
-		wfRunHooks('Linker::overwriteTOC', [ &$title, &$toc ]);
+		Hooks::run('Linker::overwriteTOC', [ &$title, &$toc ]);
 
 		return $toc;
 
@@ -1741,7 +1742,7 @@ class Linker {
 
 		/* Wikia change begin - @author: Macbre */
 		$skin = RequestContext::getMain()->getSkin();
-		wfRunHooks( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) );
+		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) );
 		/* Wikia change end */
 
 		return $ret;

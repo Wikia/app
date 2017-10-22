@@ -46,6 +46,7 @@ class PhalanxBlockTestPager extends PhalanxPager {
 			'p_exact' => $row->exact,
 			'p_case' => $row->caseSensitive,
 			'p_id' => $row->id,
+			'p_language' => $row->language,
 			'p_author_id' => $row->authorId,
 			'p_type' => $row->type
 		];

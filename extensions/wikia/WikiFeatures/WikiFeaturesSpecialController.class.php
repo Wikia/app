@@ -106,7 +106,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
 
-		wfRunHooks( 'WikiFeatures::onToggleFeature', [
+		Hooks::run( 'WikiFeatures::onToggleFeature', [
 			'name' => $feature,
 			'enabled' => $enabled
 		] );
@@ -145,7 +145,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		WikiFactory::clearCache( $this->wg->CityId );
 		$this->wg->Memc->delete( WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis( $feature ) );
 
-		wfRunHooks( 'WikiFeatures::afterToggleFeature', [ $feature, $enabled ] );
+		Hooks::run( 'WikiFeatures::afterToggleFeature', [ $feature, $enabled ] );
 
 		$this->setVal( 'result', 'ok' );
 	}

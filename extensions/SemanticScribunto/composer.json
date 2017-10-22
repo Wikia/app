@@ -1,0 +1,71 @@
+{
+	"name": "wikia/semantic-scribunto",
+	"type": "mediawiki-extension",
+	"description": "A Semantic Mediawiki extension to natively support the Scribunto extension",
+	"keywords": [
+		"smw",
+		"semantic mediawiki",
+		"wiki",
+		"mediawiki",
+		"Scribunto",
+		"Lua"
+	],
+	"homepage": "https://www.semantic-mediawiki.org/wiki/Extension:SemanticScribunto",
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "James Hong Kong",
+			"role": "Creator"
+		},
+		{
+			"name": "Tobias Oetterer",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"email": "semediawiki-user@lists.sourceforge.net",
+		"issues": "https://github.com/SemanticMediaWiki/SemanticScribunto/issues",
+		"irc": "irc://irc.freenode.net/semantic-mediawiki",
+		"forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
+		"wiki": "https://www.semantic-mediawiki.org/wiki/",
+		"source": "https://github.com/SemanticMediaWiki/SemanticScribunto"
+	},
+	"require": {
+		"php": ">=5.5",
+		"composer/installers": "1.*,>=1.0.1",
+		"wikia/semantic-media-wiki": "~2.4"
+	},
+	"require-dev": {
+		"mediawiki/semantic-media-wiki": "@dev",
+		"squizlabs/php_codesniffer": "~2.1",
+		"phpmd/phpmd": "~2.1"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.x-dev"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"SMW\\Scribunto\\": "src/"
+		}
+	},
+	"config": {
+		"prepend-autoloader": false,
+		"process-timeout": 0
+	},
+	"scripts":{
+		"phpunit": "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist",
+		"unit": "composer phpunit -- --testsuite semantic-scribunto-unit",
+		"integration": "composer phpunit -- --testsuite semantic-scribunto-integration",
+		"cs": [
+			"vendor/bin/phpcs src/* tests/* --standard=phpcs.xml --extensions=php -sp",
+			"vendor/bin/phpmd src/,tests/ text phpmd.xml"
+		],
+		"ci": [
+			"composer validate --no-interaction",
+			"composer phpunit",
+			"composer cs"
+		]
+	}
+}

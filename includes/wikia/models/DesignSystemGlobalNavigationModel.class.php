@@ -116,28 +116,13 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getSearchData() {
-		$isCorporatePage = WikiaPageType::isCorporatePage( $this->productInstanceId );
-
-		if ( $this->product === static::PRODUCT_FANDOMS && $this->lang === static::DEFAULT_LANG ) {
-			$searchUrl = '/';
-			$searchPlaceholderKey = 'global-navigation-search-placeholder-fandom';
-			$searchParamName = 's';
-		} else {
-			if ( $isCorporatePage || $this->product === static::PRODUCT_FANDOMS ) {
-				$searchUrl = $this->getCorporatePageSearchUrl();
-				$searchPlaceholderKey = 'global-navigation-search-placeholder-wikis';
-			} else {
-				$searchUrl = $this->getPageUrl( 'Search', NS_SPECIAL, [ 'fulltext' => 'Search' ] );
-				$searchPlaceholderKey = 'global-navigation-search-placeholder-in-wiki';
-			}
-			$searchParamName = 'query';
-		}
+		// We treat corporate pages and fandom the same way
+		$isCorporatePageOrFandom = WikiaPageType::isCorporatePage( $this->productInstanceId );
+		$isCorporatePageOrFandom = $isCorporatePageOrFandom || $this->product === static::PRODUCT_FANDOMS;
 
 		$search = [
 			'type' => 'search',
 			'results' => [
-				'url' => $searchUrl,
-				'param-name' => $searchParamName,
 				'tracking_label' => 'search',
 			],
 			'placeholder-inactive' => [
@@ -146,11 +131,28 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			],
 			'placeholder-active' => [
 				'type' => 'translatable-text',
-				'key' => $searchPlaceholderKey
 			]
 		];
 
-		if ( $this->product !== static::PRODUCT_FANDOMS && !$isCorporatePage ) {
+		if ( $isCorporatePageOrFandom && $this->lang === static::DEFAULT_LANG ) {
+			$search['results']['param-name'] = 's';
+			$search['results']['url'] = 'http://fandom.wikia.com/';
+			$search['placeholder-active']['key'] = 'global-navigation-search-placeholder-fandom';
+		} elseif ( $isCorporatePageOrFandom ) {
+			// Non-English Fandom or non-English corporate pages
+			$search['results']['param-name'] = 'query';
+			$search['results']['url'] = $this->getCorporatePageSearchUrl();
+			$search['placeholder-active']['key'] = 'global-navigation-search-placeholder-wikis';
+			$search['hiddenFields'] = [
+				'resultsLang' => $this->lang,
+				'uselang' => $this->lang,
+			];
+		} else {
+			// Regular wikis
+			$search['results']['param-name'] = 'query';
+			$search['results']['url'] = $this->getPageUrl( 'Search', NS_SPECIAL );
+			$search['placeholder-active']['key'] = 'global-navigation-search-placeholder-in-wiki';
+
 			$search['suggestions'] = [
 				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
 				'param-name' => 'query',
@@ -390,10 +392,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getCorporatePageSearchUrl() {
-		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, WikiService::WIKIAGLOBAL_CITY_ID )->getFullURL( [
-			'fulltext' => 'Search',
-			'resultsLang' => $this->lang
-		] );
+		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 	}
 
 	private function getCommunityCentralLink() {

@@ -20,7 +20,7 @@ class SpecialCreatePage extends SpecialEditPage {
 		global $wgUser, $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath;
 
 		if ( !empty( $par ) ) {
-			if ( !wfRunHooks('SpecialCreatePage::Subpage', array( $par )) ) {
+			if ( !Hooks::run('SpecialCreatePage::Subpage', array( $par )) ) {
 				return;
 			}
 		}
@@ -67,7 +67,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	protected function parseFormData() {
-		wfRunHooks( 'BlogsAlternateEdit', array( false ) );
+		Hooks::run( 'BlogsAlternateEdit', array( false ) );
 
 		$request = $this->getRequest();
 
@@ -145,7 +145,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	protected function save() {
-		global $wgOut, $wgUser, $wgContLang, $wgRequest;
+		global $wgOut, $wgRequest;
 
 		// CategorySelect compatibility (add categories to article body)
 		if ( $this->mCategorySelectEnabled ) {
@@ -203,7 +203,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	 * @param $result
 	 * @return bool
 	 */
-	public function wfCreatePageOnConfirmEdit( &$captcha, &$editPage, $newtext, $section, $merged, &$result ) {
+	public function wfCreatePageOnConfirmEdit( $captcha, $editPage, $newtext, $section, $merged, &$result ) {
 		global $wgTitle;
 		$canonspname = array_shift(SpecialPageFactory::resolveAlias( $wgTitle->getDBkey() ));
 		if ( $canonspname != 'CreatePage' ) {

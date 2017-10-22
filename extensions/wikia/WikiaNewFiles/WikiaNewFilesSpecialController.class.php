@@ -12,30 +12,13 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		parent::__construct( 'Images', '', false );
 	}
 
-	/**
-	 * If $wgAllowSpecialImagesInRobots is set, make the page discoverable by robots and cached.
-	 * If not set, the regular policy applies: page is not cached and disallowed for robots.
-	 * Logged in users should see the page non-cached.
-	 */
-	private function setupCachingAndRobots() {
-		global $wgAllowSpecialImagesInRobots, $wgUser;
-
-		if ( !empty( $wgAllowSpecialImagesInRobots ) ) {
-			if ( !empty( $wgUser ) && !$wgUser->isLoggedIn() ) {
-				$this->getContext()->getOutput()->setRobotPolicy( 'index,follow' );
-				$this->setVarnishCacheTime( WikiaResponse::CACHE_VERY_SHORT );
-			}
-		}
-	}
-
 	public function index() {
 		$this->setHeaders();
-		$this->setupCachingAndRobots();
 
 		$output = $this->getContext()->getOutput();
 		$request = $this->getRequest();
 
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_scss' );
@@ -55,7 +38,7 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		$output->addHeadItem( 'Paginator', $paginator->getHeadItem() );
 
 		// Hook for ContentFeeds::specialNewImagesHook
-		wfRunHooks( 'SpecialNewImages::beforeDisplay', array( $images ) );
+		Hooks::run( 'SpecialNewImages::beforeDisplay', array( $images ) );
 
 		// Construct gallery
 		$gallery = new WikiaNewFilesGallery( $this->specialPage->getSkin() );

@@ -14,8 +14,12 @@ $wgAutoloadClasses['PageFairBootstrapCode'] = __DIR__ . '/PageFairBootstrapCode.
 $wgAutoloadClasses['ARecoveryEngineApiController'] = __DIR__ . '/ARecoveryEngineApiController.class.php';
 $wgAutoloadClasses['ARecoveryModule'] = __DIR__ . '/ARecoveryModule.class.php';
 
+// PageFair
 $wgAutoloadClasses['ResourceLoaderAdEnginePageFairDetectionModule'] = __DIR__ . '/ResourceLoaders/PageFair/ResourceLoaderAdEnginePageFairDetectionModule.php';
 $wgAutoloadClasses['ResourceLoaderAdEnginePageFairRecoveryModule'] = __DIR__ . '/ResourceLoaders/PageFair/ResourceLoaderAdEnginePageFairRecoveryModule.php';
+
+// Instart Logic
+$wgAutoloadClasses['ResourceLoaderAdEngineInstartLogicModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineInstartLogicModule.php';
 
 $wgHooks['InstantGlobalsGetVariables'][] = 'ARecoveryEngineHooks::onInstantGlobalsGetVariables';
 

@@ -1,88 +1,68 @@
 /*global require*/
 require([
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.amazonMatch',
-	'ext.wikia.adEngine.lookup.openXBidder',
+	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
-	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
-	'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.service.actionHandler',
-	'ext.wikia.adEngine.provider.yavliTag',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
-	adContext,
-	adInfoTracker,
 	slotStateMonitor,
 	amazon,
-	oxBidder,
+	a9,
 	prebid,
-	rubiconFastlane,
-	rubiconVulcan,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
 	actionHandler,
-	yavliTag,
+	adInfoListener,
 	geo,
 	instantGlobals,
 	win
 ) {
 	'use strict';
-
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
-	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
-		amazon.call();
+	function callBiddersOnConsecutivePageView() {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
+		}
 	}
 
 	mercuryListener.onLoad(function () {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
-			rubiconFastlane.call();
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
-			oxBidder.call();
+		// TODO ADEN-5756 remove 'if' after A9 full roll out
+		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile) &&
+			!geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			amazon.call();
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconVulcanCountries)) {
-			rubiconVulcan.call();
-		}
-
-		if (adContext.getContext().opts.yavli) {
-			yavliTag.add();
-		}
-
-		adInfoTracker.run();
+		adInfoListener.run();
 		slotStateMonitor.run();
 		actionHandler.registerMessageListener();
 	});
 
-	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
-		mercuryListener.onEveryPageChange(function () {
-			prebid.call();
-		});
-	}
-
-	if (
-		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
-		geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneMercuryFixCountries)
-	) {
-		mercuryListener.onEveryPageChange(function () {
-			rubiconFastlane.call();
-		});
-	}
+	mercuryListener.afterPageWithAdsRender(function () {
+		callBiddersOnConsecutivePageView();
+	});
 });

@@ -132,7 +132,7 @@ class ExternalStoreDB {
 		}
 
 		// start wikia change
-		wfRunHooks( "ExternalStoreDB::fetchBlob", array($cluster, $id, $itemID, &$ret ) );
+		Hooks::run( "ExternalStoreDB::fetchBlob", array($cluster, $id, $itemID, &$ret ) );
 		// end wikia change
 		
 		if( $itemID !== false && $ret !== false ) {

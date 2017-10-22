@@ -458,21 +458,6 @@ $messages['pt'] = array(
 	'timeago-second-from-now' => 'daqui a um minuto',
 );
 
-$messages['pt-br'] = array(
-	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
-	'timeago-year' => '{{PLURAL:$1|um ano|$1 anos}} atrás',
-	'timeago-month' => '{{PLURAL:$1|um mês|$1 meses}} atrás',
-	'timeago-day' => '{{PLURAL:$1|um dia|$1 dias}} atrás',
-	'timeago-hour' => '{{PLURAL:$1|uma hora|$1 horas}} atrás',
-	'timeago-minute' => '{{PLURAL:$1|um minuto|$1 minutos}} atrás',
-	'timeago-second' => 'um minuto atrás',
-	'timeago-day-from-now' => 'daqui a {{PLURAL:$1|um dia|$1 dias}}',
-	'timeago-hour-from-now' => 'daqui a {{PLURAL:$1|uma hora|$1 horas}}',
-	'timeago-minute-from-now' => 'daqui a {{PLURAL:$1|um minuto|$1 minutos}}',
-	'timeago-month-from-now' => 'daqui a {{PLURAL:$1|um mês|$1 meses}}',
-	'timeago-second-from-now' => 'daqui a um minuto',
-);
-
 $messages['ro'] = array(
 	'timeago-second' => 'un minut în urmă',
 );

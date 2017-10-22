@@ -19,7 +19,7 @@ $wgExtensionMessagesFiles['AutoMainpageFixer'] = __DIR__ . '/AutoMainpageFixer.i
 
 $wgHooks['TitleMoveComplete'][] = 'fnAutoMWMainpageFixer';
 
-function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {
+function fnAutoMWMainpageFixer( Title $title, Title $newtitle, User $user, $oldid, $newid ): bool {
 	wfProfileIn(__METHOD__);
 
 	$mp = Title::newMainPage();
@@ -31,14 +31,14 @@ function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {
 
 	$title = Title::newFromText('Mainpage', NS_MEDIAWIKI);
 
-	$article = new Article($title);
+	$article = new WikiPage( $title );
 	$article_text = $newtitle;
 	$edit_summary = '';
 	#we REALLY dont want this to show up
 	$flags = EDIT_UPDATE + EDIT_NEW + EDIT_FORCE_BOT + EDIT_SUPPRESS_RC;
 
 	// VOLDEV-14: Non-admins should not be editing a MediaWiki page
-	$fauxUser = User::newFromName( 'Wikia' );
+	$fauxUser = User::newFromName( Wikia::USER );
 
 	$article->doEdit( $article_text, $edit_summary, $flags, false, $fauxUser );
 

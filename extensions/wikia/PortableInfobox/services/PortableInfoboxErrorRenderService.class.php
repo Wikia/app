@@ -1,6 +1,6 @@
 <?php
 
-class PortableInfoboxErrorRenderService extends WikiaService {
+class PortableInfoboxErrorRenderService {
 
 	const XML_DEBUG_TEMPLATE = 'PortableInfoboxMarkupDebug.mustache';
 	const XML_ERR_GENERAL = 'xml-parse-error';
@@ -24,7 +24,7 @@ class PortableInfoboxErrorRenderService extends WikiaService {
 	/* @var $templateEngine Wikia\Template\MustacheEngine */
 	private $templateEngine;
 
-	function __construct( $errorList ) {
+	public function __construct( $errorList ) {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
 			->setPrefix( dirname( __FILE__ ) . '/../templates' );
 		$this->errorList = $errorList;

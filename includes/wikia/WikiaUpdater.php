@@ -35,6 +35,7 @@ class WikiaUpdater {
 			array( 'addTable', 'wall_related_pages', $ext_dir . '/wikia/Wall/sql/wall_related_pages.sql', true ),
 			# fields
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
+			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
 
 			# indexes
 			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql', true ),
@@ -48,6 +49,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'validate' ),
 			array( 'WikiaUpdater::do_drop_table', 'cur' ),
 			array( 'WikiaUpdater::do_drop_table', 'searchindex', !empty( $wgCityId ) ),
+			array( 'WikiaUpdater::do_drop_table', 'spam_regex' ),
 			array( 'WikiaUpdater::do_drop_table', 'page_stats' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_board' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_points_monthly' ),
@@ -57,8 +59,12 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'user_register_track' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_board' ),
 			array( 'WikiaUpdater::do_drop_table', 'watchlist_old' ),
+			array( 'WikiaUpdater::do_drop_table', 'hidden' ), // SUS-2401
 			array( 'WikiaUpdater::do_clean_math_table' ),
-			array( 'WikiaUpdater::do_transcache_update' )
+			array( 'WikiaUpdater::do_transcache_update' ),
+			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
+			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
+			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {

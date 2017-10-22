@@ -17,6 +17,7 @@ class ImageServingDriverMainNSTest extends WikiaBaseTest {
 			->setUpImageIndex( [ $id => [ $imgName ] ] )
 			->setUpImagesPopularity( [ $imgName => 1 ] )
 			->setUpLoadImageMetadata( [ [ [ $imgName ], [ $imgName => $this->getDetails( $imgName ) ] ] ] )
+			->setUpInfoboxImages( [] )
 			->getDriver();
 
 		$driver->setArticles( [ $id => null ] );
@@ -32,6 +33,7 @@ class ImageServingDriverMainNSTest extends WikiaBaseTest {
 		$driver = $this->setUpMock()
 			->setUpImageIndex( [ ] )
 			->setUpLoadImageMetadata( [ [ [ $imgName ], [ $imgName => $this->getDetails( $imgName ) ] ] ] )
+			->setUpImagesPopularity( [] )
 			->setUpInfoboxImages( [ $imgName ] )
 			->getDriver();
 

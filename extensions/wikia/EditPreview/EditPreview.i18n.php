@@ -21,8 +21,8 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'wikia-editor-preview-current-width' => 'Desktop-Ansicht',
 	'wikia-editor-preview-min-width' => 'Tablet-Porträtansicht',
-	'wikia-editor-preview-max-width' => 'Desktop XL-Ansicht',
-	'wikia-editor-preview-type-tooltip' => 'Das Ändern dieser Option zeigt dir, wie dieser Artikel in in Browsern mit kleinen und großen Bildschirmen, auf Mobil-Geräten oder auf deinem jetzigen Bildschirm aussieht.',
+	'wikia-editor-preview-max-width' => 'Desktop-XL-Ansicht',
+	'wikia-editor-preview-type-tooltip' => 'Mithilfe dieser Optionen kannst du sehen, wie dieser Artikel im Browser auf kleinen und großen Bildschirmen, auf Mobil-Geräten oder auf deinem jetzigen Bildschirm aussehen wird.',
 	'wikia-editor-preview-desc' => 'Ermöglicht den Benutzern ihre Änderungen vor dem Speichern in der Vorschau anzusehen',
 	'wikia-editor-preview-mobile-width' => 'Mobile Geräte',
 	'wikia-editor-preview-best-practices-notice' => 'Wusstest du, dass 50% der Netzverkehrs von mobilen Geräten kommt? Es kann sein, dass einige der Vorlagen auf den mobilen Geräten nicht richtig angezeigt werden. Folge unseren Empfehlungen um sicherzugehen, dass alles gut aussieht für die Besucher.',
@@ -47,7 +47,7 @@ $messages['fr'] = array(
 	'wikia-editor-preview-min-width' => 'Tablette en mode portrait',
 	'wikia-editor-preview-max-width' => 'Bureau grand format',
 	'wikia-editor-preview-type-tooltip' => "Modifier cette option affichera l'article tel qu'il serait affiché sur un navigateur avec un écran petit, un écran large, un appareil mobile ou avec votre affichage actuel.",
-	'wikia-editor-preview-desc' => "Permet aux utilisateurs d'afficher un aperçu de leurs modifications avant de les publier",
+	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
 	'wikia-editor-preview-mobile-width' => 'Mobile',
 	'wikia-editor-preview-best-practices-notice' => "Saviez-vous que plus de 50 % des visiteurs sur Wikia consultent vos articles sur un appareil mobile ? Certains modèles personnalisés risquent de ne pas s'afficher correctement sur de tels appareils.  Pour que l'ensemble de vos visiteurs bénéficient de la meilleure expérience possible, nous vous invitons à suivre ces quelques bonnes pratiques.",
 	'wikia-editor-preview-best-practices-button' => 'Bonnes pratiques',
@@ -68,9 +68,9 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'wikia-editor-preview-current-width' => 'PC',
-	'wikia-editor-preview-min-width' => 'タブレット縦表示',
-	'wikia-editor-preview-max-width' => 'XLサイズPC',
-	'wikia-editor-preview-type-tooltip' => 'このオプションを変更すると、小さな画面、大きな画面、モバイルデバイス、現在お使いの画面で、それぞれ記事がどのように見えるかを表示します。',
+	'wikia-editor-preview-min-width' => '最小サイズ表示',
+	'wikia-editor-preview-max-width' => '最大サイズ表示',
+	'wikia-editor-preview-type-tooltip' => 'このオプションを変更すると記事が小さな画面、大きな画面、モバイル、または現在お使いの画面でそれぞれどのように見えるかを表示します。',
 	'wikia-editor-preview-desc' => '保存する前に編集をプレビューで見られるようにします',
 	'wikia-editor-preview-mobile-width' => 'モバイル',
 	'wikia-editor-preview-best-practices-notice' => 'ウィキア閲覧者の50%以上は、あなたが作ったコンテンツをモバイルデバイスから見ているということをご存知でしたか。独自のテンプレートを使うと、モバイルデバイスではうまく表示されないことがあります。誰が見ても見やすいコンテンツであるということを確実にするため、ベストプラクティスをご参照ください。',
@@ -99,11 +99,11 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'wikia-editor-preview-desc' => 'Umożliwia użytkownikom przejrzenie ich edycji przed zapisem',
+	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
 	'wikia-editor-preview-current-width' => 'Monitor',
 	'wikia-editor-preview-min-width' => 'Tablet w pionie',
 	'wikia-editor-preview-max-width' => 'Monitor XL',
-	'wikia-editor-preview-type-tooltip' => 'Zmiana tej opcji umożliwi Ci zobaczenie jak artykuł wyglądać będzie w skórce mobilnej lub w przeglądarce w małej, dużej lub obecnie wykorzystywanej przez Ciebie rozdzielczości.',
+	'wikia-editor-preview-type-tooltip' => 'Zmiana tej opcji umożliwi ci zobaczenie jak artykuł wyglądać będzie w skórce mobilnej lub w przeglądarce w małej, dużej lub obecnie wykorzystywanej przez ciebie rozdzielczości.',
 	'wikia-editor-preview-mobile-width' => 'Skórka mobilna',
 	'wikia-editor-preview-best-practices-notice' => 'Czy wiesz, że ponad 50% czytelników odwiedza Wikię na urządzeniach mobilnych? Niektóre szablony mogą nie wyświetlać się poprawnie na urządzeniach mobilnych. Aby upewnić się, że wszystko prezentuje się jak najlepiej dla wszystkich czytelników, podążaj za naszymi najlepszymi praktykami.',
 	'wikia-editor-preview-best-practices-button' => 'Najlepsze praktyki',
@@ -112,11 +112,11 @@ $messages['pl'] = array(
 
 $messages['pt'] = array(
 	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
-	'wikia-editor-preview-current-width' => 'Computador',
-	'wikia-editor-preview-min-width' => 'Modo Retrato (Tablete)',
+	'wikia-editor-preview-current-width' => 'Área de Trabalho',
+	'wikia-editor-preview-min-width' => 'Modo Retrato (Tablet)',
 	'wikia-editor-preview-max-width' => 'Área de trabalho GG',
 	'wikia-editor-preview-mobile-width' => 'Dispositivo Móvel',
-	'wikia-editor-preview-type-tooltip' => 'Alterar esta opção irá mostrar-lhe como este artigo será exibido em um navegador em telas pequenas e grandes, dispositivos móveis ou sua exibição atual.',
+	'wikia-editor-preview-type-tooltip' => 'Alterar esta opção irá mostrar-lhe como este artigo será exibido em um navegador em telas pequenas, grandes, dispositivos móveis ou sua exibição atual.',
 	'wikia-editor-preview-best-practices-notice' => 'Você sabia que mais de 50% dos visitantes da Wikia estão lendo o seu conteúdo no celular? Algumas predefinições personalizadas não aparecem corretamente em dispositivos móveis. Para certificar-se de que tudo fica ótimo para todos os visitantes, siga as nossas melhores práticas.',
 	'wikia-editor-preview-best-practices-button' => 'Melhores práticas',
 	'wikia-editor-preview-best-practices-button-link' => 'Ajuda: Wikitext_best_practices',
@@ -126,7 +126,7 @@ $messages['ru'] = array(
 	'wikia-editor-preview-current-width' => 'Монитор ПК',
 	'wikia-editor-preview-min-width' => 'Планшет',
 	'wikia-editor-preview-max-width' => 'Широкоэкранный монитор',
-	'wikia-editor-preview-type-tooltip' => 'Меняя значения в этом меню, вы можете проверить, как статья будет отображаться в браузере на маленьком и большом экранах, а также на вашем экране.',
+	'wikia-editor-preview-type-tooltip' => 'Меняя значения в этом меню, вы можете проверить, как статья будет отображаться в браузере на маленьком и большом экранах, а также на вашем текущем экране.',
 	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
 	'wikia-editor-preview-mobile-width' => 'Мобильный',
 	'wikia-editor-preview-best-practices-notice' => 'Знаете ли вы, что более 50% пользователей читают статьи вики с планшета или мобильного телефона? А многие шаблоны не всегда корректно отображаются на мобильных устройствах. Лучшие примеры Викия помогут вам форматировать содержимое страниц так, чтобы они выглядели великолепно на любом устройстве.',
@@ -142,18 +142,11 @@ $messages['vi'] = array(
 	'wikia-editor-preview-type-tooltip' => 'Thay đổi tùy chọn này sẽ cho bạn thấy bài viết sẽ trông như thế nào nếu nó hiển thị trên trình duyệt với màn ảnh nhỏ, màn ảnh lớn, thiết bị điện thoại hoặc hiển thị ở chế độ hiện tại.',
 );
 
-$messages['zh'] = array(
-	'wikia-editor-preview-current-width' => '桌上型电脑',
-	'wikia-editor-preview-min-width' => '平板电脑',
-	'wikia-editor-preview-max-width' => '大尺寸桌上型电脑',
-	'wikia-editor-preview-type-tooltip' => '更改这个选项将为您展示这篇文章在不同电脑屏幕、手机以及平板电脑上的样式。',
-);
-
 $messages['zh-hans'] = array(
 	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
 	'wikia-editor-preview-current-width' => '桌面',
 	'wikia-editor-preview-min-width' => '平板电脑视图',
-	'wikia-editor-preview-max-width' => '桌面XL',
+	'wikia-editor-preview-max-width' => '超大尺寸桌面',
 	'wikia-editor-preview-mobile-width' => '移动设备',
 	'wikia-editor-preview-type-tooltip' => '更改这个选项将为您展示这篇文章在不同电脑屏幕、手机以及平板电脑上的样式。',
 	'wikia-editor-preview-best-practices-notice' => '你知道吗？超过50%的Wikia访问用户都是通过手机或者平板电脑查阅内容的。某些模版在这些移动设备上或许不能正常显示。为了确保一切正常，请关注我们的最佳实践。',
@@ -162,31 +155,14 @@ $messages['zh-hans'] = array(
 );
 
 $messages['zh-hant'] = array(
-	'wikia-editor-preview-current-width' => '桌面',
-	'wikia-editor-preview-max-width' => '桌面XL',
-	'wikia-editor-preview-min-width' => '平板電腦視圖',
+	'wikia-editor-preview-current-width' => '桌上電腦',
+	'wikia-editor-preview-max-width' => '大銀幕桌面電腦',
+	'wikia-editor-preview-min-width' => '平板電腦',
 	'wikia-editor-preview-mobile-width' => '行動裝置',
-	'wikia-editor-preview-type-tooltip' => '更改這個選項將為您展示這篇文章在不同電腦銀幕、手機以及平板電腦上的樣式。',
+	'wikia-editor-preview-type-tooltip' => '更改這個選項將為您展示這篇文章在不同電腦銀幕、手機以及平板電腦上顯示的樣子。',
 	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
 	'wikia-editor-preview-best-practices-notice' => '你知道嗎？超過50%的Wikia訪問使用者都是通過手機或者平板電腦查閱內容的。某些模版在這些行動裝置上或許不能正常顯示。為了確保一切正常，請關注我們的最佳實踐。',
 	'wikia-editor-preview-best-practices-button' => '最佳實踐',
 	'wikia-editor-preview-best-practices-button-link' => 'Help:Wiki文本最佳實踐',
-);
-
-$messages['zh-hk'] = array(
-	'wikia-editor-preview-current-width' => '桌上電腦',
-	'wikia-editor-preview-max-width' => '大銀幕桌上電腦',
-	'wikia-editor-preview-min-width' => '平板電腦',
-	'wikia-editor-preview-mobile-width' => '行動設備',
-	'wikia-editor-preview-type-tooltip' => '更改這個選項將為您展示這篇文章在不同電腦銀幕、手機以及平板電腦上的樣子。',
-);
-
-$messages['zh-tw'] = array(
-	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
-	'wikia-editor-preview-current-width' => '桌上電腦',
-	'wikia-editor-preview-min-width' => '平板電腦',
-	'wikia-editor-preview-max-width' => '大銀幕桌上電腦',
-	'wikia-editor-preview-mobile-width' => '行動裝置',
-	'wikia-editor-preview-type-tooltip' => '更改這個選項將為您展示這篇文章在不同電腦銀幕、手機以及平板電腦上的樣式。',
 );
 

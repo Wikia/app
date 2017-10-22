@@ -29,23 +29,6 @@
 	}
 }
 
-.AccountNavigation {
-	display: none;
-}
-
-.tooltip-inner {
-	border: 0;
-	border-radius: 2px;
-	box-shadow: 0 0 10px 0 rgba(26, 26, 26, .2);
-	text-align: left;
-}
-
-.tooltip.top .tooltip-arrow {
-	border-width: 10px 10px 0;
-	bottom: -5px;
-	left: calc(50% - 5px);
-}
-
 #CreateNewWiki {
 	background: $wds-color-white;
 	border: 1px solid $wds-color-faint-gray;
@@ -258,17 +241,6 @@
 		min-height: $cnw-category-label-height;
 		padding: $content-spacing-xxsmall 0 $content-spacing-xxsmall $content-spacing-xxsmall;
 		page-break-inside: avoid;
-	}
-
-	.cnw-tooltip {
-		display: inline-block;
-		height: $cnw-tooltip-size;
-		padding: $content-spacing-xxsmall 0;
-		width: $cnw-tooltip-size;
-	}
-
-	.cnw-tooltip-icon {
-		fill: $wds-color-dark-c6;
 	}
 
 	.ThemeTab {

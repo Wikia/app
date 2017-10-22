@@ -175,10 +175,10 @@
 		 * Constructs complete thumbnailer url by appending parameters to url
 		 *
 		 * URL before:
-		 * http://vignette2.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest
+		 * http://vignette.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest
 		 *
 		 * URL after:
-		 * http://vignette2.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest/zoom-crop/width/240/height/240
+		 * http://vignette.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest/zoom-crop/width/240/height/240
 		 *
 		 * @private
 		 * @param {String} url

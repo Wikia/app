@@ -99,42 +99,42 @@ call_user_func( function() {
 	// Parser hooks
 
 	// Required for #coordinates.
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
 		$instance = new MapsCoordinates();
 		return $instance->init( $parser );
 	};
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
 		$instance = new MapsDisplayMap();
 		return $instance->init( $parser );
 	};
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
 		$instance = new MapsDistance();
 		return $instance->init( $parser );
 	};
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
 		$instance = new MapsFinddestination();
 		return $instance->init( $parser );
 	};
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
 		$instance = new MapsGeocode();
 		return $instance->init( $parser );
 	};
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
 		$instance = new MapsGeodistance();
 		return $instance->init( $parser );
 	};
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
 		$instance = new MapsMapsDoc();
 		return $instance->init( $parser );
 	};
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser &$parser ) {
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
 		$instance = new MapsLayerDefinition();
 		return $instance->init( $parser );
 	};

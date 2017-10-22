@@ -5,39 +5,62 @@
 describe('ext.wikia.adEngine.adEngine', function () {
 	'use strict';
 
-	var eventDispatcher = { dispatch: function () { return true; }},
-		noop = function () { return; },
+	var eventDispatcher = {
+			dispatch: function () {
+				return true;
+			}
+		},
+		noop = function () {
+			return;
+		},
 		originalLazyQueue = modules['wikia.lazyqueue'](),
-		adDecoratorLegacyParamFormatMock = function (fillInSlot) { return fillInSlot; },
-		adSlotMock = {
-			create: function (slotName, slotElement, callbacks) {
-				return {
-					name: slotName,
-					success: callbacks.success || noop,
-					hop: callbacks.hop || noop,
-					post: noop
-				};
+		adDecoratorLegacyParamFormatMock = function (fillInSlot) {
+			return fillInSlot;
+		},
+		mocks = {
+			adSlot: {
+				create: function (slotName, slotElement, callbacks) {
+					return {
+						name: slotName,
+						container: {
+							setAttribute: noop
+						},
+						success: callbacks.success || noop,
+						hop: callbacks.hop || noop,
+						post: noop
+					};
+				}
+			},
+			hooks: noop,
+			slotRegistry: {
+				add: noop,
+				reset: noop
+			},
+			slotTracker: function () {
+				return {track: noop};
+			},
+			slotTweaker: {
+				show: noop,
+				hide: noop,
+				isTopLeaderboard: noop
+			},
+			doc: {
+				getElementById: function () {
+					return {
+						childNodes: {}
+					};
+				}
+			},
+			log: noop,
+			pageFair: {
+				isSlotRecoverable: noop
+			},
+			viewabilityTracker: {
+				track: noop
 			}
-		},
-		hooksMock = noop,
-		slotRegistryMock = {
-			add: noop,
-			reset: noop
-		},
-		slotTrackerMock = function () { return { track: noop }; },
-		slotTweakerMock = {
-			show: noop,
-			hide: noop,
-			isTopLeaderboard: noop
-		},
-		docMock = {
-			getElementById: function () {
-				return {
-					childNodes: {}
-				};
-			}
-		},
-		logMock = noop;
+		};
+
+	mocks.log.levels = {};
 
 	function mockLazyQueue(startFunction) {
 		return {
@@ -66,14 +89,16 @@ describe('ext.wikia.adEngine.adEngine', function () {
 		return modules['ext.wikia.adEngine.adEngine'](
 			adDecoratorMock || adDecoratorLegacyParamFormatMock,
 			eventDispatcher,
-			adSlotMock,
-			slotRegistryMock,
-			slotTrackerMock,
-			slotTweakerMock,
-			hooksMock,
-			docMock,
+			mocks.adSlot,
+			mocks.slotRegistry,
+			mocks.slotTracker,
+			mocks.slotTweaker,
+			mocks.viewabilityTracker,
+			mocks.hooks,
+			mocks.doc,
 			lazyQueueMock,
-			logMock
+			mocks.log,
+			mocks.pageFair
 		);
 	}
 
@@ -136,7 +161,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			spyOn(fakeProvider, 'fillInSlot');
 			spyOn(fakeProvider, 'canHandleSlot').and.returnValue(true);
 
-			adDecoratorLegacyParamFormatMockLocal = modules['ext.wikia.adEngine.adDecoratorLegacyParamFormat'](logMock);
+			adDecoratorLegacyParamFormatMockLocal = modules['ext.wikia.adEngine.adDecoratorLegacyParamFormat'](mocks.log);
 			adEngine = getAdEngine(originalLazyQueue, adDecoratorLegacyParamFormatMockLocal);
 			adEngine.run(adConfigMock, ['slot1', 'slot2']);
 
@@ -229,7 +254,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 		spyOn(fakeProvider1, 'fillInSlot').and.callFake(callHop);
 		spyOn(fakeProvider2, 'fillInSlot').and.callFake(callHop);
 		spyOn(fakeProvider3, 'fillInSlot').and.callFake(callHop);
-		spyOn(slotTweakerMock, 'hide');
+		spyOn(mocks.slotTweaker, 'hide');
 		spyOn(fakeProvider1, 'canHandleSlot').and.returnValue(true);
 		spyOn(fakeProvider2, 'canHandleSlot').and.returnValue(true);
 		spyOn(fakeProvider3, 'canHandleSlot').and.returnValue(true);
@@ -240,6 +265,6 @@ describe('ext.wikia.adEngine.adEngine', function () {
 		expect(fakeProvider1.fillInSlot).toHaveBeenCalled();
 		expect(fakeProvider2.fillInSlot).toHaveBeenCalled();
 		expect(fakeProvider3.fillInSlot).toHaveBeenCalled();
-		expect(slotTweakerMock.hide).toHaveBeenCalled();
+		expect(mocks.slotTweaker.hide).toHaveBeenCalled();
 	});
 });

@@ -12,7 +12,7 @@ class PrefilledDefaultQuestion extends DefaultQuestion {
 			return false;
 		}
 
-		if ( !wfRunHooks( 'CreateDefaultQuestionPageFilter', array($this->title) ) ) {
+		if ( !Hooks::run( 'CreateDefaultQuestionPageFilter', array($this->title) ) ) {
 			return false;
 		}
 

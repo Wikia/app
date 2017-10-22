@@ -18,7 +18,7 @@ use Throwable;
  * Re-instantiates Exceptions thrown by user-space code to retain their original
  * class names, properties, and stack traces (but without arguments).
  *
- * Unlike PHPUnit_Framework_Exception, the complete stack of previous Exceptions
+ * Unlike PHPUnit\Framework_\Exception, the complete stack of previous Exceptions
  * is processed.
  */
 class ExceptionWrapper extends Exception
@@ -42,7 +42,7 @@ class ExceptionWrapper extends Exception
         // @see http://php.net/manual/en/class.pdoexception.php#95812
         parent::__construct($t->getMessage(), (int) $t->getCode());
 
-        $this->className = get_class($t);
+        $this->className = \get_class($t);
         $this->file      = $t->getFile();
         $this->line      = $t->getLine();
 

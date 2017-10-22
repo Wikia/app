@@ -74,7 +74,7 @@ function wfParserFunction_magic( &$magicWords, $langCode ) {
 	return true;
 }
 
-function upgradeYouTubeTag( $editpage, $request ) {
+function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 	$app = F::app();
 
 	// Don't convert <youtube> tags if the user is not logged in or is blocked.
@@ -199,7 +199,7 @@ function createRawOutput( $value ) {
  * @param Parser $parser
  * @return bool
  */
-function wfYouTube( $parser ) {
+function wfYouTube( Parser $parser ): bool {
 	global $wgAllowNonPremiumVideos;
 
 	if ( !$wgAllowNonPremiumVideos ) {

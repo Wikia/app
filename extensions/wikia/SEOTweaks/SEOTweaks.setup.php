@@ -13,11 +13,13 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SEOTweaksHooksHelper'] =  $dir . 'SEOTweaksHooksHelper.class.php';
 
 // hooks
-$wgHooks['BeforePageDisplay'][] = 'SEOTweaksHooksHelper::onBeforePageDisplay';
-$wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfterImageLinks';
-$wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions';
+$wgHooks['ArticleRobotPolicy'][] = 'SEOTweaksHooksHelper::onArticleRobotPolicy';
 $wgHooks['ArticleViewHeader'][] = 'SEOTweaksHooksHelper::onArticleViewHeader';
+$wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions';
 $wgHooks['CategoryPageView'][] = 'SEOTweaksHooksHelper::onCategoryPageView';
+$wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfterImageLinks';
+$wgHooks['OpenGraphMetaHeaders'][] = 'SEOTweaksHooksHelper::onOpenGraphMetaHeaders';
+$wgHooks['ShowMissingArticle'][] = 'SEOTweaksHooksHelper::onShowMissingArticle';
 
 // messages
 $wgExtensionMessagesFiles['SEOTweaks'] = $dir . 'SEOTweaks.i18n.php';

@@ -15,8 +15,13 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 
 			function fillArgs(message, args) {
 				return Object.keys(args).reduce(function (acc, key) {
-					return acc.replace('__' + key + '__', args[key])
+					return acc.replace('{' + key + '}', args[key])
 				}, message);
+			}
+
+			function getMessage(key) {
+				// TODO IRIS-4975 use mw.message(key).parse()
+				return window.mw.messages.get(key);
 			}
 
 			this.getText = function (notification) {
@@ -33,13 +38,13 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 
 			this._getReplyText = function (notification) {
 				var key = this._getReplyKey(notification.title, notification.totalUniqueActors),
-					message = window.mw.message(key).parse(),
+					message = getMessage(key),
 					args = {postTitle: bold(escape(notification.title))};
 
 				if (notification.totalUniqueActors > 2) {
 					args.mostRecentUser = escape(notification.latestActors[0].name);
 					args.number = escape(notification.totalUniqueActors - 1);
-				} else if (notification.totalUniqueActors == 2) {
+				} else if (notification.totalUniqueActors === 2) {
 					args.firstUser = escape(notification.latestActors[0].name);
 					args.secondUser = escape(notification.latestActors[1].name);
 				} else {
@@ -51,13 +56,13 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 
 			this._getReplyKey = function (title, totalUniqueActors) {
 				var user = totalUniqueActors <= 1 ? '' :
-					totalUniqueActors == 2 ? 'two-users-' : 'multiple-users-';
+					totalUniqueActors === 2 ? 'two-users-' : 'multiple-users-';
 				return 'notifications-replied-by-' + user + (title ? 'with-title' : 'no-title');
 			};
 
 			this._getPostUpvoteText = function (notification) {
 				var key = 'notifications-post-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
-				var message = window.mw.message(key).parse();
+				var message = getMessage(key);
 				return fillArgs(message, {
 					postTitle: bold(escape(notification.title)),
 					number: escape(notification.totalUniqueActors)
@@ -66,7 +71,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 
 			this._getReplyUpvoteText = function (notification) {
 				var key = 'notifications-reply-upvote' + this._getUpvoteKey(notification.title, notification.totalUniqueActors);
-				var message = window.mw.message(key).parse();
+				var message = getMessage(key);
 				return fillArgs(message, {
 					postTitle: bold(escape(notification.title)),
 					number: escape(notification.totalUniqueActors)

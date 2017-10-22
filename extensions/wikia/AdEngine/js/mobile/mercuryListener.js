@@ -8,7 +8,8 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 	var logGroup = 'ext.wikia.adEngine.mobile.mercuryListener',
 		onLoadQueue = [],
 		onPageChangeCallbacks = [],
-		onEveryPageChangeCallbacks = [];
+		onEveryPageChangeCallbacks = [],
+		afterPageWithAdsRenderCallbacks = [];
 
 	function onLoad(callback) {
 		onLoadQueue.push(callback);
@@ -20,6 +21,10 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 
 	function onEveryPageChange(callback) {
 		onEveryPageChangeCallbacks.push(callback);
+	}
+
+	function afterPageWithAdsRender(callback) {
+		afterPageWithAdsRenderCallbacks.push(callback);
 	}
 
 	function startOnLoadQueue() {
@@ -42,15 +47,24 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		});
 	}
 
+	function runAfterPageWithAdsRenderCallbacks() {
+		log(['runAfterPageWithAdsRenderCallbacks', afterPageWithAdsRenderCallbacks.length], 'info', logGroup);
+		afterPageWithAdsRenderCallbacks.forEach(function(callback) {
+			callback();
+		});
+	}
+
 	lazyQueue.makeQueue(onLoadQueue, function (callback) {
 		callback();
 	});
 
 	return {
+		afterPageWithAdsRender: afterPageWithAdsRender,
+		onEveryPageChange: onEveryPageChange,
 		onLoad: onLoad,
 		onPageChange: onPageChange,
-		onEveryPageChange: onEveryPageChange,
-		startOnLoadQueue: startOnLoadQueue,
-		runOnPageChangeCallbacks: runOnPageChangeCallbacks
+		runAfterPageWithAdsRenderCallbacks: runAfterPageWithAdsRenderCallbacks,
+		runOnPageChangeCallbacks: runOnPageChangeCallbacks,
+		startOnLoadQueue: startOnLoadQueue
 	};
 });

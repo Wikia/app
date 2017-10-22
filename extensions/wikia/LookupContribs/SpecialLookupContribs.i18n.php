@@ -1,16 +1,15 @@
 <?php
-/** Internationalization file for /extensions/wikia/LookupContribs/SpecialLookupContribs extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'lookupcontribs-desc' => 'Displays user contributions on multiple wikis',
 	'lookupcontribs' => 'Lookup Contribs',
 	'lookupcontribstitle' => 'Lookup Contribs',
 	'lookupcontribsrecentcontributions' => 'Recent contributions for $1',
 	'lookupcontribsfinalcontributions' => 'Final contributions for $1',
-	'lookupcontribshelp' => 'This special page can be used to display user\'s contributions on multiple wikis.
-For displaying the list, give username below.',
-	'lookupcontribusernotspecify' => 'You haven\'t specified a user yet',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
+	'lookupcontribusernotspecify' => "You haven't specified a user yet",
 	'lookupcontribsselectuser' => 'Select user:',
 	'lookupcontribsselectfor' => 'Select for:',
 	'lookupcontribsdisplaymode' => 'Display mode:',
@@ -36,7 +35,7 @@ Check given username for possible typos.</p>',
 	'lookupcontribscontribslink' => 'Contribs link',
 	'lookupcontribsdetails' => 'See details for:',
 	'lookupcontribslastedited' => 'Last edited',
-	'lookupcontribsrecordspager' => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records.',
+	'lookupcontribsrecordspager' => "Showing '''$1''' to '''$2''' of '''$3''' records.",
 	'lookupcontribsnbrresult' => 'Number of result:',
 	'lookupcontribsnext' => 'next',
 	'lookupcontribsprevious' => 'previous',
@@ -46,17 +45,17 @@ Check given username for possible typos.</p>',
 	'lookupcontribscontribs' => 'contribs',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'diff',
-	'right-lookupcontribs' => 'View user edits across all of Fandom',
+	'right-lookupcontribs' => 'View user edits across all of FANDOM',
 	'lookupcontribsshowpages' => 'All pages ($1 namespaces)',
 	'lookupcontribscontent' => 'content',
 	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'all',
-	'action-lookupcontribs' => 'lookup a user\'s contributions on multiple wikis',
-];
+	'action-lookupcontribs' => "lookup a user's contributions on multiple wikis",
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'lookupcontribs-desc' => '{{desc}}',
 	'lookupcontribslinks' => '{{Identical|Contribution link}}',
 	'lookupcontribsgo' => '{{Identical|Go}}',
@@ -78,14 +77,14 @@ $messages['qqq'] = [
 	'lookupcontribsnormal' => '{{Identical|Recent}}',
 	'lookupcontribsall' => '{{Identical|All}}',
 	'action-lookupcontribs' => '{{doc-action|lookupcontribs}}',
-];
+);
 
-$messages['af'] = [
+$messages['af'] = array(
 	'lookupcontribsrecentcontributions' => 'Onlangse bydraes vir $1',
 	'lookupcontribsselectuser' => 'Kies gebruiker:',
 	'lookupcontribsselectfor' => 'Kies vir:',
 	'lookupcontribsgo' => 'Gaan',
-	'lookupcontribsselectwikis' => 'Kies wiki\'s:',
+	'lookupcontribsselectwikis' => "Kies wiki's:",
 	'lookupcontribsnoresultfound' => 'Geen resultate gevind nie!',
 	'lookupcontribsinvalidresults' => 'Ongeldige resultate!',
 	'lookupcontribswiki' => 'Wiki',
@@ -110,9 +109,9 @@ $messages['af'] = [
 	'lookupcontribsnormal' => 'onlangs',
 	'lookupcontribsfinal' => 'laaste',
 	'lookupcontribsall' => 'alle',
-];
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'lookupcontribs' => 'البحث عن المساهمات',
 	'lookupcontribstitle' => 'البحث عن المساهمات',
 	'lookupcontribsrecentcontributions' => 'مساهمات $1 الحديثة',
@@ -145,7 +144,7 @@ $messages['ar'] = [
 	'lookupcontribscontribslink' => 'رابط المساهمات',
 	'lookupcontribsdetails' => 'راجع تفاصيل عن:',
 	'lookupcontribslastedited' => 'آخر تعديل',
-	'lookupcontribsrecordspager' => 'عرض من \'\'\'$1\'\'\' إلى \'\'\'$2\'\'\' من مجموع \'\'\'$3\'\'\' سجلا.',
+	'lookupcontribsrecordspager' => "عرض من '''$1''' إلى '''$2''' من مجموع '''$3''' سجلا.",
 	'lookupcontribsnbrresult' => 'عدد النتائج:',
 	'lookupcontribsnext' => 'التالي',
 	'lookupcontribsprevious' => 'سابق',
@@ -163,42 +162,42 @@ $messages['ar'] = [
 	'lookupcontribsfinal' => 'نهائي',
 	'lookupcontribsall' => 'الكل',
 	'action-lookupcontribs' => 'البحث عن مساهمات المستخدم في ويكيات متعددة',
-];
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'lookupcontribswiki' => 'Viki',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Başlıq',
 	'lookupcontribsnext' => 'növbəti',
 	'lookupcontribsfinal' => 'son',
 	'lookupcontribsall' => 'bütün',
-];
+);
 
-$messages['be-tarask'] = [
+$messages['be-tarask'] = array(
 	'lookupcontribswikidbname' => 'Назва базы зьвестак',
 	'lookupcontribscontent' => 'зьмест',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'lookupcontribswiki' => 'Уики',
 	'lookupcontribswikiurl' => 'Адрес',
 	'lookupcontribsall' => 'всички',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'lookupcontribs' => 'Klask degasadennoù',
 	'lookupcontribstitle' => 'Klask harpoù',
 	'lookupcontribsrecentcontributions' => 'Degasadennoù nevez $1',
 	'lookupcontribsfinalcontributions' => 'Degasadennoù dibenn $1',
-	'lookupcontribshelp' => 'Ar bajenn a-ratozh-se a c\'haller implijout evit diskouez degasadennoù an implijer war meur a wikia. Evit diskwel ar roll, roit un anv implijer amañ dindan.',
-	'lookupcontribusernotspecify' => 'N\'hoc\'h eus spisaet implijer ebet betek-henn',
+	'lookupcontribshelp' => "Ar bajenn a-ratozh-se a c'haller implijout evit diskouez degasadennoù an implijer war meur a wikia. Evit diskwel ar roll, roit un anv implijer amañ dindan.",
+	'lookupcontribusernotspecify' => "N'hoc'h eus spisaet implijer ebet betek-henn",
 	'lookupcontribsselectuser' => 'Diuzañ an implijer :',
 	'lookupcontribsselectfor' => 'Diuzañ evit :',
 	'lookupcontribsdisplaymode' => 'Mod diskwel :',
 	'lookupcontribsselectmodenormal' => 'Degasadennoù nevez evit an implijer-se',
 	'lookupcontribsselectmodefinal' => 'Degasadennoù dibenn  evit an implijer-se',
 	'lookupcontribsselectmodeall' => 'holl zegasadennoù an implijer-se',
-	'lookupcontribsfullurls' => 'Chomlec\'hioù URL klok',
+	'lookupcontribsfullurls' => "Chomlec'hioù URL klok",
 	'lookupcontribslinks' => 'liammoù war-du an degasadennoù',
 	'lookupcontribsgo' => 'Mont',
 	'lookupcontribsinvaliduser' => '<p class="error">N\'eus ket eus an implijer « <b>$1</b> ». Gwiriit an niver-anaout evit diguzhat fazioù a c\'hallfe bezañ.</p>',
@@ -206,8 +205,8 @@ $messages['br'] = [
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" n\'eo ket ur mod reizh.</p>',
 	'lookupcontribsselectwikis' => 'Diuzañ ar wikioù :',
 	'lookupcontribslistwikiainfo' => 'Roll ar wikioù pe pennadoù zo bet kemmet gant <b>$1</b>',
-	'lookupcontribsnoresultfound' => 'N\'eus bet kavet disoc\'h ebet',
-	'lookupcontribsinvalidresults' => 'Disoc\'hoù direizh !',
+	'lookupcontribsnoresultfound' => "N'eus bet kavet disoc'h ebet",
+	'lookupcontribsinvalidresults' => "Disoc'hoù direizh !",
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Anv an diaz roadennoù',
 	'lookupcontribswikiurl' => 'URL',
@@ -216,9 +215,9 @@ $messages['br'] = [
 	'lookupcontribscontribslink' => 'Liammoù war-du an degasadennoù',
 	'lookupcontribsdetails' => 'Gwelet ar munudoù evit :',
 	'lookupcontribslastedited' => 'Kemmet da ziwezhañ',
-	'lookupcontribsrecordspager' => 'Diskwel enrolladennoù \'\'\'$1\'\'\' da \'\'\'$2\'\'\' war \'\'\'$3\'\'\'.',
-	'lookupcontribsnbrresult' => 'Niver a zisoc\'hoù :',
-	'lookupcontribsnext' => 'war-lerc\'h',
+	'lookupcontribsrecordspager' => "Diskwel enrolladennoù '''$1''' da '''$2''' war '''$3'''.",
+	'lookupcontribsnbrresult' => "Niver a zisoc'hoù :",
+	'lookupcontribsnext' => "war-lerc'h",
 	'lookupcontribsprevious' => 'kent',
 	'lookupcontribspageremoved' => 'Dilamet :',
 	'lookupcontribsrestore' => 'assevel',
@@ -233,23 +232,23 @@ $messages['br'] = [
 	'lookupcontribsnormal' => 'nevez',
 	'lookupcontribsfinal' => 'dibenn',
 	'lookupcontribsall' => 'pep tra',
-];
+);
 
-$messages['ca'] = [
-	'lookupcontribs-desc' => 'Mostra les contribucions de l\'usuari en múltiples wikis',
+$messages['ca'] = array(
+	'lookupcontribs-desc' => "Mostra les contribucions de l'usuari en múltiples wikis",
 	'lookupcontribs' => 'Cerca contribucions',
 	'lookupcontribstitle' => 'Cerca contribucions',
 	'lookupcontribsrecentcontributions' => 'Contribucions recents de $1',
 	'lookupcontribsfinalcontributions' => 'Contribucions finals de $1',
-	'lookupcontribshelp' => 'Aquesta pàgina especial pot ser utilitzat per mostrar les contribucions dels usuaris en múltiples Wikias.
-Per visualitzar la llista, posa un nom d\'usuari sota.',
+	'lookupcontribshelp' => "Aquesta pàgina especial pot ser utilitzat per mostrar les contribucions dels usuaris en múltiples Wikias.
+Per visualitzar la llista, posa un nom d'usuari sota.",
 	'lookupcontribusernotspecify' => 'No he especificat un usuari encara',
-	'lookupcontribsselectuser' => 'Seleccioneu l\'usuari:',
+	'lookupcontribsselectuser' => "Seleccioneu l'usuari:",
 	'lookupcontribsselectfor' => 'Seleccioneu per a:',
-	'lookupcontribsdisplaymode' => 'Mode d\'exhibició:',
+	'lookupcontribsdisplaymode' => "Mode d'exhibició:",
 	'lookupcontribsselectmodenormal' => 'Contribucions recents per aquells usuari',
-	'lookupcontribsselectmodefinal' => 'Contribucions finals per a l\'usuari',
-	'lookupcontribsselectmodeall' => 'Totes les contribucions per a l\'usuari',
+	'lookupcontribsselectmodefinal' => "Contribucions finals per a l'usuari",
+	'lookupcontribsselectmodeall' => "Totes les contribucions per a l'usuari",
 	'lookupcontribsfullurls' => 'Enllaços Complets',
 	'lookupcontribslinks' => 'Enllaços de contribucions',
 	'lookupcontribsgo' => 'Anar',
@@ -269,7 +268,7 @@ Registre d\'entrada donat nom d\'usuari per possibles errors tipogràfics.</p>',
 	'lookupcontribscontribslink' => 'Enllaços de contribucions',
 	'lookupcontribsdetails' => 'Veure detalls a:',
 	'lookupcontribslastedited' => 'Última edició',
-	'lookupcontribsrecordspager' => 'S\'estan mostrant \' \' $1 \' \' per \' \' $2 \' \' de \' \' $3 \' \' records.',
+	'lookupcontribsrecordspager' => "S'estan mostrant ' ' $1 ' ' per ' ' $2 ' ' de ' ' $3 ' ' records.",
 	'lookupcontribsnbrresult' => 'Nombre de resultat:',
 	'lookupcontribsnext' => 'Següent',
 	'lookupcontribsprevious' => 'anterior',
@@ -279,17 +278,17 @@ Registre d\'entrada donat nom d\'usuari per possibles errors tipogràfics.</p>',
 	'lookupcontribscontribs' => 'Contribucions',
 	'lookupcontribshist' => 'Llista',
 	'lookupcontribsdiff' => 'diff',
-	'right-lookupcontribs' => 'Veure edicions global de l\'usuari',
+	'right-lookupcontribs' => "Veure edicions global de l'usuari",
 	'lookupcontribsshowpages' => 'Totes les pàgines (de l’espai de noms $1)',
 	'lookupcontribscontent' => 'Contingut',
-	'lookupcontribscontribtitleforuser' => 'Contribucions de l\'usuari:',
+	'lookupcontribscontribtitleforuser' => "Contribucions de l'usuari:",
 	'lookupcontribsnormal' => 'Recents',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'Tot',
-	'action-lookupcontribs' => 'Cerca les aportacions d\'un usuari en múltiples wikis',
-];
+	'action-lookupcontribs' => "Cerca les aportacions d'un usuari en múltiples wikis",
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'lookupcontribs' => 'Къинхьегаме хьажа',
 	'lookupcontribslinks' => 'къинхьегаме хьажорг',
 	'lookupcontribsgo' => 'Дехьа гӀо',
@@ -301,9 +300,9 @@ $messages['ce'] = [
 	'lookupcontribshist' => 'истори',
 	'lookupcontribscontent' => 'чулацам',
 	'lookupcontribsall' => 'массо',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'lookupcontribs-desc' => 'Zobrazení příspěvků uživatele na několika wiki najednou.',
 	'lookupcontribs' => 'Vyhledání příspěvků uživatele.',
 	'lookupcontribstitle' => 'Vyhledání příspěvků uživatele.',
@@ -346,23 +345,23 @@ Zkontrolujte dané uživatelské jméno pro případné překlepy.</p>',
 	'lookupcontribscontribtitleforuser' => 'Příspěvky uživatele:',
 	'lookupcontribsnormal' => 'nedávné',
 	'lookupcontribsall' => 'všechny',
-];
+);
 
-$messages['cy'] = [
+$messages['cy'] = array(
 	'lookupcontribswiki' => 'Wici',
 	'lookupcontribswikititle' => 'Teitl',
 	'lookupcontribsnext' => 'nesaf',
 	'lookupcontribsprevious' => 'blaenorol',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'lookupcontribs-desc' => 'Zeigt die Benutzerbeiträge auf mehreren Wikis an',
 	'lookupcontribs' => 'Beiträge ansehen',
 	'lookupcontribstitle' => 'Beiträge ansehen',
 	'lookupcontribsrecentcontributions' => 'Kürzliche Beiträge von $1',
 	'lookupcontribsfinalcontributions' => 'Letzte Beiträge von $1',
-	'lookupcontribshelp' => 'Diese Spezialseite kann verwendet werden, um Benutzerbeiträge in mehreren Wikias anzuzeigen.
-Gib zur Anzeige der Liste den Benutzernamen unten ein.',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
 	'lookupcontribusernotspecify' => 'Du hast noch keinen Benutzer angegeben',
 	'lookupcontribsselectuser' => 'Benutzer wählen:',
 	'lookupcontribsselectfor' => 'Auswählen für:',
@@ -389,7 +388,7 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribscontribslink' => 'Link zu Beiträgen',
 	'lookupcontribsdetails' => 'Weitere Details für:',
 	'lookupcontribslastedited' => 'Zuletzt bearbeitet',
-	'lookupcontribsrecordspager' => 'Zeige \'\'\'$1\'\'\' bis \'\'\'$2\'\'\' von \'\'\'$3\'\'\' Einträgen.',
+	'lookupcontribsrecordspager' => "Zeige '''$1''' bis '''$2''' von '''$3''' Einträgen.",
 	'lookupcontribsnbrresult' => 'Anzahl der Ergebnisse:',
 	'lookupcontribsnext' => 'Nächste',
 	'lookupcontribsprevious' => 'Vorherige',
@@ -399,7 +398,7 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribscontribs' => 'Beiträge',
 	'lookupcontribshist' => 'Versionen',
 	'lookupcontribsdiff' => 'Unterschied',
-	'right-lookupcontribs' => 'Globale Bearbeitungen des Benutzer anzeigen',
+	'right-lookupcontribs' => 'Alle Bearbeitungen eines Benutzers auf FANDOM ansehen',
 	'lookupcontribsshowpages' => 'Alle Seiten ($1 Namensräume)',
 	'lookupcontribscontent' => 'Inhalt',
 	'lookupcontribscontribtitleforuser' => 'Bearbeitungen für Benutzer:',
@@ -407,29 +406,29 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribsfinal' => 'letzte',
 	'lookupcontribsall' => 'alle',
 	'action-lookupcontribs' => 'Benutzerbeiträge auf mehreren Wikis einzusehen',
-];
+);
 
-$messages['de-formal'] = [
+$messages['de-formal'] = array(
 	'lookupcontribshelp' => 'Diese Spezialseite kann verwendet werden, um Benutzerbeiträge in mehreren Wikias anzuzeigen.
 Geben Sie zur Anzeige der Liste den Benutzernamen unten ein.',
 	'lookupcontribusernotspecify' => 'Sie haben noch keinen Benutzer angegeben',
 	'lookupcontribsinvaliduser' => '<p class="error">Der Benutzer "<b>$1</b>" existiert nicht.
 Bitte überprüfen Sie den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
-];
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'DB name',
 	'lookupcontribswikiurl' => 'GRE',
 	'lookupcontribswikititle' => 'Sername',
 	'lookupcontribswikioptions' => 'Weçinegi',
-	'lookupcontribsrecordspager' => '\'\'\'$1\'\'\' , \'\'\'$2\'\'\' u \'\'\'$3\'\'\' basnı',
+	'lookupcontribsrecordspager' => "'''$1''' , '''$2''' u '''$3''' basnı",
 	'lookupcontribsprevious' => 'verên',
 	'lookupcontribspageremoved' => 'Wedariya:',
 	'lookupcontribsall' => 'pêro',
-];
+);
 
-$messages['eo'] = [
+$messages['eo'] = array(
 	'lookupcontribsfullurls' => 'plenaj URL-oj',
 	'lookupcontribslinks' => 'ligiloj al la kontribuaj',
 	'lookupcontribsgo' => 'Ek',
@@ -446,15 +445,16 @@ $messages['eo'] = [
 	'lookupcontribscontribs' => 'kontribuoj',
 	'lookupcontribshist' => 'historio',
 	'lookupcontribsdiff' => 'malsamoj',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'lookupcontribs-desc' => 'Muestra las contribuciones de los usuarios en múltiples wikis',
 	'lookupcontribs' => 'Búsqueda de Contribuciones',
 	'lookupcontribstitle' => 'Búsqueda de Contribuciones',
 	'lookupcontribsrecentcontributions' => 'Contribuciones recientes para $1',
 	'lookupcontribsfinalcontributions' => 'Contribuciones finales para $1',
-	'lookupcontribshelp' => 'Esta página especial puede ser usada para mostrar las contribuciones de los usuarios en múltiples wikis. Para mostrar la lista, pon un nombre de usuario debajo.',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
 	'lookupcontribusernotspecify' => 'No has especificado un usuario aún',
 	'lookupcontribsselectuser' => 'Seleccionar usuario:',
 	'lookupcontribsselectfor' => 'Seleccionar para:',
@@ -480,7 +480,7 @@ $messages['es'] = [
 	'lookupcontribscontribslink' => 'Enlace a sus contribuciones',
 	'lookupcontribsdetails' => 'Ver detalles para:',
 	'lookupcontribslastedited' => 'Última edición',
-	'lookupcontribsrecordspager' => 'Mostrando \'\'\'$1\'\'\' a \'\'\'$2\'\'\' de \'\'\'$3\'\'\' registros.',
+	'lookupcontribsrecordspager' => "Mostrando '''$1''' a '''$2''' de '''$3''' registros.",
 	'lookupcontribsnbrresult' => 'Número de resultados:',
 	'lookupcontribsnext' => 'siguiente',
 	'lookupcontribsprevious' => 'Anterior',
@@ -498,17 +498,17 @@ $messages['es'] = [
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'todo',
 	'action-lookupcontribs' => 'Busca las contribuciones de un usuario en múltiples wikis',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Izenburua',
 	'lookupcontribswikioptions' => 'Aukerak',
 	'lookupcontribsnext' => 'hurrengoa',
 	'lookupcontribsprevious' => 'aurrekoa',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'lookupcontribsgo' => 'برو',
 	'lookupcontribswiki' => 'ویکی',
 	'lookupcontribswikiurl' => 'نشانی اینترنتی',
@@ -524,9 +524,9 @@ $messages['fa'] = [
 	'lookupcontribscontent' => 'محتوا',
 	'lookupcontribsnormal' => 'اخیر',
 	'lookupcontribsall' => 'همه',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'lookupcontribs' => 'Etsi muokkaukset',
 	'lookupcontribstitle' => 'Etsi muokkaukset',
 	'lookupcontribsrecentcontributions' => 'Käyttäjän $1 viimeaikaiset muokkaukset',
@@ -559,9 +559,9 @@ Syötä käyttäjänimi luettelon näkemiseksi.',
 	'lookupcontribsnormal' => 'äskettäinen',
 	'lookupcontribsfinal' => 'lopullinen',
 	'lookupcontribsall' => 'kaikki',
-];
+);
 
-$messages['fo'] = [
+$messages['fo'] = array(
 	'lookupcontribsrecentcontributions' => 'Nýggjastu íkøst hjá $1',
 	'lookupcontribsselectuser' => 'Vel brúkara:',
 	'lookupcontribsgo' => 'Far',
@@ -579,26 +579,27 @@ $messages['fo'] = [
 	'lookupcontribsdiff' => 'munur',
 	'lookupcontribsshowpages' => 'Allar síður ($1 navnarúm)',
 	'lookupcontribscontent' => 'innihald',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'lookupcontribs-desc' => 'Affiche les contributions de l’utilisateur sur plusieurs wikis',
 	'lookupcontribs' => 'Recherche de contributions',
 	'lookupcontribstitle' => 'Recherche de contributions',
 	'lookupcontribsrecentcontributions' => 'Contributions récentes de $1',
 	'lookupcontribsfinalcontributions' => 'Contributions finales de $1',
-	'lookupcontribshelp' => 'Cette page spéciale peut être utilisée pour afficher les contributions d\'un utilisateur sur plusieurs wikias. Pour afficher cette liste, entrez un nom d\'utilisateur ci-dessous.',
-	'lookupcontribusernotspecify' => 'Vous n\'avez pas encore spécifié d\'utilisateur',
-	'lookupcontribsselectuser' => 'Sélectionner l\'utilisateur :',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
+	'lookupcontribusernotspecify' => "Vous n'avez pas encore spécifié d'utilisateur",
+	'lookupcontribsselectuser' => "Sélectionner l'utilisateur :",
 	'lookupcontribsselectfor' => 'Sélectionner pour :',
-	'lookupcontribsdisplaymode' => 'Mode d\'affichage :',
+	'lookupcontribsdisplaymode' => "Mode d'affichage :",
 	'lookupcontribsselectmodenormal' => 'contributions récentes de cet utilisateur',
 	'lookupcontribsselectmodefinal' => 'contributions finales de cet utilisateur',
 	'lookupcontribsselectmodeall' => 'toutes les contributions de cet utilisateur',
 	'lookupcontribsfullurls' => 'URLs complètes',
 	'lookupcontribslinks' => 'liens vers les contributions',
 	'lookupcontribsgo' => 'Voir',
-	'lookupcontribsinvaliduser' => '<p class="error">L\'utilisateur « <b>$1</b> » n\'existe pas. Vérifiez l\'identifiant donné pour détecter d\'éventuelles erreurs.</p>',
+	'lookupcontribsinvaliduser' => "<p class=\"error\">L'utilisateur « <b>\$1</b> » n'existe pas. Vérifiez l'identifiant donné pour détecter d'éventuelles erreurs.</p>",
 	'lookupcontribsinvalidviewmode' => '<p class="error">« <b>$1</b> » n\'est pas un mode d\'affichage valide.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">« <b>$1</b> » n\'est pas un mode valide.</p>',
 	'lookupcontribsselectwikis' => 'Sélectionner les wikis :',
@@ -607,13 +608,13 @@ $messages['fr'] = [
 	'lookupcontribsinvalidresults' => 'Résultats invalides !',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Nom de la base de données',
-	'lookupcontribswikiurl' => 'Url',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titre',
 	'lookupcontribswikioptions' => 'Options',
 	'lookupcontribscontribslink' => 'Liens vers les contributions',
 	'lookupcontribsdetails' => 'Voir les détails pour :',
 	'lookupcontribslastedited' => 'Dernière modification',
-	'lookupcontribsrecordspager' => 'Affichage des enregistrements \'\'\'$1\'\'\' à \'\'\'$2\'\'\' sur \'\'\'$3\'\'\'.',
+	'lookupcontribsrecordspager' => "Affichage des enregistrements '''$1''' à '''$2''' sur '''$3'''.",
 	'lookupcontribsnbrresult' => 'Nombre de résultats :',
 	'lookupcontribsnext' => 'suivant',
 	'lookupcontribsprevious' => 'précédent',
@@ -623,7 +624,7 @@ $messages['fr'] = [
 	'lookupcontribscontribs' => 'contributions',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'diff',
-	'right-lookupcontribs' => 'Voir les modifications globales de l\'utilisateur',
+	'right-lookupcontribs' => "Voir les modifications globales de l'utilisateur",
 	'lookupcontribsshowpages' => 'Toutes les pages (espaces de noms $1)',
 	'lookupcontribscontent' => 'contenu',
 	'lookupcontribscontribtitleforuser' => 'Contributions de l’utilisateur :',
@@ -631,9 +632,9 @@ $messages['fr'] = [
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tout',
 	'action-lookupcontribs' => 'recherche des contributions d’un utilisateur sur plusieurs wikis',
-];
+);
 
-$messages['fy'] = [
+$messages['fy'] = array(
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titel',
 	'lookupcontribswikioptions' => 'Opsjes',
@@ -642,9 +643,9 @@ $messages['fy'] = [
 	'lookupcontribscontribs' => 'bydragen',
 	'lookupcontribshist' => 'skiednis',
 	'lookupcontribsdiff' => 'ferskil',
-];
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'lookupcontribs' => 'Procura de contribucións',
 	'lookupcontribstitle' => 'Procura de contribucións',
 	'lookupcontribsrecentcontributions' => 'Contribucións recentes de $1',
@@ -675,7 +676,7 @@ $messages['gl'] = [
 	'lookupcontribscontribslink' => 'Ligazón cara ás contribucións',
 	'lookupcontribsdetails' => 'Olle os detalles para:',
 	'lookupcontribslastedited' => 'Última edición',
-	'lookupcontribsrecordspager' => 'Mostrando os rexistros do \'\'\'$1\'\'\' ao \'\'\'$2\'\'\' dun total de \'\'\'$3\'\'\'.',
+	'lookupcontribsrecordspager' => "Mostrando os rexistros do '''$1''' ao '''$2''' dun total de '''$3'''.",
 	'lookupcontribsnbrresult' => 'Número de resultados:',
 	'lookupcontribsnext' => 'seguinte',
 	'lookupcontribsprevious' => 'anterior',
@@ -693,9 +694,9 @@ $messages['gl'] = [
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'todas',
 	'action-lookupcontribs' => 'procurar as contribucións dun usuario en varios wikis',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'lookupcontribs' => 'Közreműködések keresése',
 	'lookupcontribstitle' => 'Közreműködések keresése',
 	'lookupcontribsrecentcontributions' => '$1 legutóbbi közreműködései',
@@ -727,7 +728,7 @@ Ellenőrizd a megadott felhasználónevet a gépelési hibák kiszűrése véget
 	'lookupcontribscontribslink' => 'közreműködési oldal',
 	'lookupcontribsdetails' => 'Részletek:',
 	'lookupcontribslastedited' => 'Legutóbbi szerkesztés',
-	'lookupcontribsrecordspager' => '\'\'\'$1\'\'\'-tól \'\'\'$2\'\'\'-ig az összesen \'\'\'$3\'\'\' feljegyzésből',
+	'lookupcontribsrecordspager' => "'''$1'''-tól '''$2'''-ig az összesen '''$3''' feljegyzésből",
 	'lookupcontribsnbrresult' => 'Találatok száma:',
 	'lookupcontribsnext' => 'következő',
 	'lookupcontribsprevious' => 'előző',
@@ -744,9 +745,9 @@ Ellenőrizd a megadott felhasználónevet a gépelési hibák kiszűrése véget
 	'lookupcontribsnormal' => 'Legutóbbi',
 	'lookupcontribsfinal' => 'végső',
 	'lookupcontribsall' => 'összes',
-];
+);
 
-$messages['ia'] = [
+$messages['ia'] = array(
 	'lookupcontribs' => 'Recerca de contributiones',
 	'lookupcontribstitle' => 'Recerca de contributiones',
 	'lookupcontribsrecentcontributions' => 'Contributiones recente de $1',
@@ -777,7 +778,7 @@ $messages['ia'] = [
 	'lookupcontribscontribslink' => 'Ligamine al contributiones',
 	'lookupcontribsdetails' => 'Vider detalios pro:',
 	'lookupcontribslastedited' => 'Ultime modification',
-	'lookupcontribsrecordspager' => 'Monstra lineas \'\'\'$1\'\'\' a \'\'\'$2\'\'\' de \'\'\'$3\'\'\'.',
+	'lookupcontribsrecordspager' => "Monstra lineas '''$1''' a '''$2''' de '''$3'''.",
 	'lookupcontribsnbrresult' => 'Numero del resultato:',
 	'lookupcontribsnext' => 'sequente',
 	'lookupcontribsprevious' => 'precedente',
@@ -794,9 +795,9 @@ $messages['ia'] = [
 	'lookupcontribsnormal' => 'recente',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tote',
-];
+);
 
-$messages['id'] = [
+$messages['id'] = array(
 	'lookupcontribshelp' => 'Halaman khusus ini dapat digunakan untuk menampilkan kontribusi pengguna pada beberapa Wikia. Untuk menampilkan daftar, berikan nama pengguna di bawah ini.',
 	'lookupcontribsselectmodefinal' => 'kontribusi terakhir dari pengguna tersebut',
 	'lookupcontribsinvaliduser' => '<p class="error">Pengguna "<b>$1</b>" tidak ada. Periksa nama pengguna tersebut untuk kemungkinan kesalahan ketik.</p>',
@@ -804,17 +805,17 @@ $messages['id'] = [
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Judul',
-	'lookupcontribsrecordspager' => 'Menampilkan \'\'\'$1\'\'\' sampai \'\'\'$2\'\'\' dari \'\'\'$3\'\'\' catatan.',
+	'lookupcontribsrecordspager' => "Menampilkan '''$1''' sampai '''$2''' dari '''$3''' catatan.",
 	'lookupcontribsnext' => 'selanjutnya',
 	'lookupcontribsdiff' => 'beda',
 	'lookupcontribscontent' => 'isi',
-];
+);
 
-$messages['inh'] = [
+$messages['inh'] = array(
 	'lookupcontribswiki' => 'Масса',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'lookupcontribsgo' => 'Vai',
 	'lookupcontribsinvalidresults' => 'Risultati non validi!',
 	'lookupcontribswiki' => 'Wiki',
@@ -829,14 +830,52 @@ $messages['it'] = [
 	'lookupcontribshist' => 'cron',
 	'lookupcontribsdiff' => 'diff',
 	'lookupcontribscontent' => 'contenuto',
-];
+	'lookupcontribs-desc' => 'Displays user contributions on multiple wikis',
+	'lookupcontribs' => 'Lookup Contribs',
+	'lookupcontribstitle' => 'Lookup Contribs',
+	'lookupcontribsrecentcontributions' => 'Recent contributions for $1',
+	'lookupcontribsfinalcontributions' => 'Final contributions for $1',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
+	'lookupcontribusernotspecify' => "You haven't specified a user yet",
+	'lookupcontribsselectuser' => 'Select user:',
+	'lookupcontribsselectfor' => 'Select for:',
+	'lookupcontribsdisplaymode' => 'Display mode:',
+	'lookupcontribsselectmodenormal' => 'recent contributions for that user',
+	'lookupcontribsselectmodefinal' => 'final contributions for that user',
+	'lookupcontribsselectmodeall' => 'all contributions for that user',
+	'lookupcontribsfullurls' => 'full URLs',
+	'lookupcontribslinks' => 'contribs links',
+	'lookupcontribsinvaliduser' => '<p class="error">User "<b>$1</b>" does not exist.
+Check given username for possible typos.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" is not a valid view mode.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" is not a valid mode.</p>',
+	'lookupcontribsselectwikis' => 'Select wikis:',
+	'lookupcontribslistwikiainfo' => 'List of wikis where articles were edited by <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'No result found!',
+	'lookupcontribswikidbname' => 'DB name',
+	'lookupcontribscontribslink' => 'Contribs link',
+	'lookupcontribsrecordspager' => "Showing '''$1''' to '''$2''' of '''$3''' records.",
+	'lookupcontribsnbrresult' => 'Number of result:',
+	'lookupcontribspageremoved' => 'Removed:',
+	'lookupcontribsrestore' => 'restore',
+	'lookupcontribslog' => 'log',
+	'right-lookupcontribs' => 'Visualizzare le modifiche degli utenti su tutta FANDOM',
+	'lookupcontribsshowpages' => 'All pages ($1 namespaces)',
+	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
+	'lookupcontribsnormal' => 'recent',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'all',
+	'action-lookupcontribs' => "lookup a user's contributions on multiple wikis",
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'lookupcontribs' => '全体の投稿記録を見る',
 	'lookupcontribstitle' => '全体の投稿履歴を見る',
 	'lookupcontribsrecentcontributions' => '$1の最近の投稿記録',
 	'lookupcontribsfinalcontributions' => '$1の最後の投稿記録',
-	'lookupcontribshelp' => 'このページでは、複数のウィキにおけるユーザーの投稿記録が閲覧できます。下にユーザー名を入力してください。',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
 	'lookupcontribusernotspecify' => 'ユーザーが指定されていません',
 	'lookupcontribsselectuser' => 'ユーザー名を入力:',
 	'lookupcontribsselectmodenormal' => '最近の投稿記録',
@@ -849,7 +888,7 @@ $messages['ja'] = [
 	'lookupcontribswikioptions' => 'オプション',
 	'lookupcontribsdetails' => '詳細を見る:',
 	'lookupcontribslastedited' => '最終編集',
-	'lookupcontribsrecordspager' => '\'\'\'$3\'\'\'件中\'\'\'$1\'\'\'件目から\'\'\'$2\'\'\'件目を表示中',
+	'lookupcontribsrecordspager' => "'''$3'''件中'''$1'''件目から'''$2'''件目を表示中",
 	'lookupcontribsnbrresult' => '表示件数:',
 	'lookupcontribsnext' => '次',
 	'lookupcontribsprevious' => '前',
@@ -857,13 +896,34 @@ $messages['ja'] = [
 	'lookupcontribscontribs' => '投稿記録',
 	'lookupcontribshist' => '履歴',
 	'lookupcontribsdiff' => '差分',
-	'right-lookupcontribs' => '利用者のプロジェクト全体における投稿記録を見る',
+	'right-lookupcontribs' => 'ユーザーのFANDOM上でのすべての投稿記録を表示',
 	'lookupcontribsshowpages' => '全ページ（$1名前空間）',
 	'lookupcontribscontent' => 'コンテンツ',
 	'lookupcontribsall' => 'すべて',
-];
+	'lookupcontribs-desc' => 'Displays user contributions on multiple wikis',
+	'lookupcontribsselectfor' => 'Select for:',
+	'lookupcontribsdisplaymode' => 'Display mode:',
+	'lookupcontribsfullurls' => 'full URLs',
+	'lookupcontribslinks' => 'contribs links',
+	'lookupcontribsinvaliduser' => '<p class="error">User "<b>$1</b>" does not exist.
+Check given username for possible typos.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" is not a valid view mode.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" is not a valid mode.</p>',
+	'lookupcontribsselectwikis' => 'Select wikis:',
+	'lookupcontribsinvalidresults' => 'Invalid results!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'DB name',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribscontribslink' => 'Contribs link',
+	'lookupcontribspageremoved' => 'Removed:',
+	'lookupcontribsrestore' => 'restore',
+	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
+	'lookupcontribsnormal' => 'recent',
+	'lookupcontribsfinal' => 'final',
+	'action-lookupcontribs' => "lookup a user's contributions on multiple wikis",
+);
 
-$messages['kn'] = [
+$messages['kn'] = array(
 	'lookupcontribswiki' => 'ವಿಕಿ',
 	'lookupcontribswikititle' => 'ಶೀರ್ಷಿಕೆ',
 	'lookupcontribswikioptions' => 'ಆಯ್ಕೆಗಳು',
@@ -875,9 +935,9 @@ $messages['kn'] = [
 	'lookupcontribsdiff' => 'ವ್ಯತ್ಯಾಸ',
 	'lookupcontribscontent' => 'ಮಾಹಿತಿ',
 	'lookupcontribsall' => 'ಎಲ್ಲಾ',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'lookupcontribs' => '계정 활동 목록',
 	'lookupcontribstitle' => '계정 활동 목록',
 	'lookupcontribsfinalcontributions' => '$1 사용자의 가장 최근 편집',
@@ -890,7 +950,7 @@ $messages['ko'] = [
 	'lookupcontribswikititle' => '제목',
 	'lookupcontribswikioptions' => '설정',
 	'lookupcontribslastedited' => '마지막 편집',
-	'lookupcontribsrecordspager' => '전체 \'\'\'$3\'\'\'개 중 \'\'\'$1\'\'\'번부터 \'\'\'$2\'\'\'번까지 표시 중',
+	'lookupcontribsrecordspager' => "전체 '''$3'''개 중 '''$1'''번부터 '''$2'''번까지 표시 중",
 	'lookupcontribsnbrresult' => '결과 수:',
 	'lookupcontribsnext' => '다음',
 	'lookupcontribsprevious' => '이전',
@@ -902,9 +962,9 @@ $messages['ko'] = [
 	'right-lookupcontribs' => '사용자의 위키아 전체 기여를 조회',
 	'lookupcontribsshowpages' => '모든 문서 ($1 이름공간)',
 	'lookupcontribscontribtitleforuser' => '활동 기록:',
-];
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'lookupcontribsgo' => 'Biçe',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikiurl' => 'URL',
@@ -914,9 +974,9 @@ $messages['ku-latn'] = [
 	'lookupcontribscontent' => 'naverok',
 	'lookupcontribsnormal' => 'niha',
 	'lookupcontribsall' => 'hemû',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'lookupcontribsfinalcontributions' => 'Lescht Ännerung vum $1',
 	'lookupcontribusernotspecify' => 'Dir hutt nach kee Benotzer spezifizéiert',
 	'lookupcontribsselectuser' => 'Benotzer eraussichen:',
@@ -939,9 +999,9 @@ Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'lookupcontribsshowpages' => 'All Säiten ($1 Nummraim)',
 	'lookupcontribscontent' => 'Inhalt',
 	'lookupcontribsall' => 'All',
-];
+);
 
-$messages['lrc'] = [
+$messages['lrc'] = array(
 	'lookupcontribsselectfor' => 'انتخاب بيه سی:',
 	'lookupcontribsgo' => 'رو',
 	'lookupcontribswiki' => 'ويكی',
@@ -953,9 +1013,9 @@ $messages['lrc'] = [
 	'lookupcontribscontent' => 'مینونه',
 	'lookupcontribsnormal' => 'تازه باو',
 	'lookupcontribsall' => 'همه',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'lookupcontribs-desc' => 'Ги прикажува придонесите на корисникот на повеќе викија',
 	'lookupcontribs' => 'Проверка на придонеси',
 	'lookupcontribstitle' => 'Проверка на придонеси',
@@ -987,7 +1047,7 @@ $messages['mk'] = [
 	'lookupcontribscontribslink' => 'Врска за придонеси',
 	'lookupcontribsdetails' => 'Видете подробности за:',
 	'lookupcontribslastedited' => 'Последно уредување',
-	'lookupcontribsrecordspager' => 'Прикажувам \'\'\'$1\'\'\' до \'\'\'$2\'\'\' од вкупно \'\'\'$3\'\'\' записи.',
+	'lookupcontribsrecordspager' => "Прикажувам '''$1''' до '''$2''' од вкупно '''$3''' записи.",
 	'lookupcontribsnbrresult' => 'Број на резултатот:',
 	'lookupcontribsnext' => 'следно',
 	'lookupcontribsprevious' => 'претходно',
@@ -1005,9 +1065,9 @@ $messages['mk'] = [
 	'lookupcontribsfinal' => 'последни',
 	'lookupcontribsall' => 'сите',
 	'action-lookupcontribs' => 'проверка на придонесите на корисникот на повеќе викија',
-];
+);
 
-$messages['ml'] = [
+$messages['ml'] = array(
 	'lookupcontribsselectuser' => 'ഉപയോക്താവിനെ തിരഞ്ഞെടുക്കുക:',
 	'lookupcontribsgo' => 'പോകൂ',
 	'lookupcontribsnoresultfound' => 'ഒരു ഫലവും കണ്ടെത്തിയില്ല!',
@@ -1027,9 +1087,9 @@ $messages['ml'] = [
 	'lookupcontribsshowpages' => 'എല്ലാ താളുകളും ($1 നാമമേഖലകൾ)',
 	'lookupcontribscontent' => 'ഉള്ളടക്കം',
 	'lookupcontribsall' => 'എല്ലാം',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'lookupcontribs-desc' => 'Memaparkan sumbangan pengguna pada pelbagai wiki',
 	'lookupcontribs' => 'Carian Sumbangan',
 	'lookupcontribstitle' => 'Carian Sumbangan',
@@ -1063,7 +1123,7 @@ Tolong semak ejaan nama pengguna itu.</p>',
 	'lookupcontribscontribslink' => 'Pautan sumbangan',
 	'lookupcontribsdetails' => 'Lihat butiran untuk:',
 	'lookupcontribslastedited' => 'Suntingan terkini',
-	'lookupcontribsrecordspager' => 'Menunjukkan \'\'\'$1\'\'\' hingga \'\'\'$2\'\'\' daripada \'\'\'$3\'\'\' rekod.',
+	'lookupcontribsrecordspager' => "Menunjukkan '''$1''' hingga '''$2''' daripada '''$3''' rekod.",
 	'lookupcontribsnbrresult' => 'Jumlah hasil:',
 	'lookupcontribsnext' => 'berikutnya',
 	'lookupcontribsprevious' => 'sebelumnya',
@@ -1081,9 +1141,9 @@ Tolong semak ejaan nama pengguna itu.</p>',
 	'lookupcontribsfinal' => 'akhir',
 	'lookupcontribsall' => 'semua',
 	'action-lookupcontribs' => 'menyemak sumbangan seseorang pengguna pada pelbagai wiki',
-];
+);
 
-$messages['my'] = [
+$messages['my'] = array(
 	'lookupcontribsrecentcontributions' => '$1 အတွက် လတ်​တ​လော ပံ့ပိုးမှုများ',
 	'lookupcontribsfinalcontributions' => '$1 အတွက် နောက်ဆုံး ပံ့ပိုးမှုများ',
 	'lookupcontribsgo' => 'သွား​ပါ​',
@@ -1105,9 +1165,9 @@ $messages['my'] = [
 	'lookupcontribsshowpages' => 'စာမျက်နှာအားလုံး (အမည်ညွှန်း $1)',
 	'lookupcontribscontent' => 'မာတိကာ',
 	'lookupcontribsall' => 'အားလုံး',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'lookupcontribs' => 'Slå opp bidrag',
 	'lookupcontribstitle' => 'Slå opp bidrag',
 	'lookupcontribsrecentcontributions' => 'Nylige bidrag for $1',
@@ -1140,7 +1200,7 @@ Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
 	'lookupcontribscontribslink' => 'Bidragslenke',
 	'lookupcontribsdetails' => 'Se detaljer for:',
 	'lookupcontribslastedited' => 'Sist redigert',
-	'lookupcontribsrecordspager' => 'Viser \'\'\'$1\'\'\' til \'\'\'$2\'\'\' av \'\'\'$3\'\'\' oppføringer.',
+	'lookupcontribsrecordspager' => "Viser '''$1''' til '''$2''' av '''$3''' oppføringer.",
 	'lookupcontribsnbrresult' => 'Antall resultat:',
 	'lookupcontribsnext' => 'neste',
 	'lookupcontribsprevious' => 'forrige',
@@ -1158,15 +1218,15 @@ Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
 	'lookupcontribsfinal' => 'siste',
 	'lookupcontribsall' => 'alle',
 	'action-lookupcontribs' => 'slå opp en brukers bidrag på flere wikier',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'lookupcontribs' => 'Bijdragen opzoeken',
 	'lookupcontribstitle' => 'Bijdragen opzoeken',
 	'lookupcontribsrecentcontributions' => 'Recente bijdragen voor $1',
 	'lookupcontribsfinalcontributions' => 'Laatste bijdragen voor $1',
-	'lookupcontribshelp' => 'Deze speciale pagina kan gebruikt worden om gebruikersbijdragen op meerdere Wikia\'s weer te geven.
-Geef hieronder een gebruikersnaam op om de lijst weer te geven.',
+	'lookupcontribshelp' => "Deze speciale pagina kan gebruikt worden om gebruikersbijdragen op meerdere Wikia's weer te geven.
+Geef hieronder een gebruikersnaam op om de lijst weer te geven.",
 	'lookupcontribusernotspecify' => 'Je hebt nog geen gebruiker opgegeven',
 	'lookupcontribsselectuser' => 'Selecteer gebruiker:',
 	'lookupcontribsselectfor' => 'Selecteren voor:',
@@ -1174,15 +1234,15 @@ Geef hieronder een gebruikersnaam op om de lijst weer te geven.',
 	'lookupcontribsselectmodenormal' => 'recente bijdragen voor die gebruiker',
 	'lookupcontribsselectmodefinal' => 'laatste bijdragen voor die gebruiker',
 	'lookupcontribsselectmodeall' => 'alle bijdragen voor die gebruiker',
-	'lookupcontribsfullurls' => 'volledige URL\'s',
+	'lookupcontribsfullurls' => "volledige URL's",
 	'lookupcontribslinks' => 'koppeling naar bijdragen',
 	'lookupcontribsgo' => 'OK',
 	'lookupcontribsinvaliduser' => '<p class="error">Gebruiker "<b>$1</b>" bestaat niet.
 Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" is geen geldige weergavemodus.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" is geen geldige modus.</p>',
-	'lookupcontribsselectwikis' => 'Selecteer wiki\'s:',
-	'lookupcontribslistwikiainfo' => 'Lijst van wiki\'s waar pagina\'s door <b>$1</b> bewerkt zijn.',
+	'lookupcontribsselectwikis' => "Selecteer wiki's:",
+	'lookupcontribslistwikiainfo' => "Lijst van wiki's waar pagina's door <b>$1</b> bewerkt zijn.",
 	'lookupcontribsnoresultfound' => 'Geen resultaten gevonden!',
 	'lookupcontribsinvalidresults' => 'Ongeldige resultaten',
 	'lookupcontribswiki' => 'Wiki',
@@ -1193,7 +1253,7 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribscontribslink' => 'Koppeling naar bijdragen',
 	'lookupcontribsdetails' => 'Details bekijken voor:',
 	'lookupcontribslastedited' => 'Laatste bewerking',
-	'lookupcontribsrecordspager' => 'Regels \'\'\'$1\'\'\' tot \'\'\'$2\'\'\' van \'\'\'$3\'\'\' worden weergegeven.',
+	'lookupcontribsrecordspager' => "Regels '''$1''' tot '''$2''' van '''$3''' worden weergegeven.",
 	'lookupcontribsnbrresult' => 'Resultaatnummer:',
 	'lookupcontribsnext' => 'volgende',
 	'lookupcontribsprevious' => 'vorige',
@@ -1204,23 +1264,23 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribshist' => 'geschiedenis',
 	'lookupcontribsdiff' => 'verschil',
 	'right-lookupcontribs' => 'Globale bewerkingen van gebruiker bekijken',
-	'lookupcontribsshowpages' => 'Alle pagina\'s ($1 naamruimten)',
+	'lookupcontribsshowpages' => "Alle pagina's ($1 naamruimten)",
 	'lookupcontribscontent' => 'inhoud',
 	'lookupcontribscontribtitleforuser' => 'Bijdragen van gebruiker:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'laatste',
 	'lookupcontribsall' => 'alle',
 	'action-lookupcontribs' => 'globale bewerkingen van een gebruiker te bekijken',
-];
+);
 
-$messages['nl-informal'] = [
+$messages['nl-informal'] = array(
 	'lookupcontribusernotspecify' => 'Je hebt nog geen gebruiker opgegeven',
-];
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'lookupcontribs' => 'Recèrca de contribucions',
 	'lookupcontribstitle' => 'Recèrca de contribucions',
-	'lookupcontribsselectuser' => 'Seleccionar l\'utilizaire :',
+	'lookupcontribsselectuser' => "Seleccionar l'utilizaire :",
 	'lookupcontribsselectfor' => 'Seleccionar per :',
 	'lookupcontribsfullurls' => 'URLs completas',
 	'lookupcontribsgo' => 'Veire',
@@ -1242,32 +1302,32 @@ $messages['oc'] = [
 	'lookupcontribscontribs' => 'contribucions',
 	'lookupcontribshist' => 'ist',
 	'lookupcontribsdiff' => 'dif',
-	'right-lookupcontribs' => 'Veire las edicions globalas de l\'utilizaire',
+	'right-lookupcontribs' => "Veire las edicions globalas de l'utilizaire",
 	'lookupcontribsshowpages' => 'Totas las paginas ($1 espacis de nom)',
 	'lookupcontribscontent' => 'contengut',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tot',
-];
+);
 
-$messages['pdc'] = [
+$messages['pdc'] = array(
 	'lookupcontribsgo' => 'Zeige',
-];
+);
 
-$messages['pfl'] = [
+$messages['pfl'] = array(
 	'lookupcontribsrestore' => 'Widdaheaschdelle',
 	'lookupcontribsall' => 'alle',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'lookupcontribs-desc' => 'Pokazuje wkład użytkowników na wielu wiki',
 	'lookupcontribs' => 'LookupContribs',
 	'lookupcontribstitle' => 'LookupContribs',
 	'lookupcontribsrecentcontributions' => 'Najnowsze edycje $1',
 	'lookupcontribsfinalcontributions' => 'Ostatnie edycje $1',
 	'lookupcontribshelp' => 'Ta strona specjalna pozwala przejrzeć edycje danego użytkownika na wielu wiki.
-Aby wyświetlić listę, podaj nazwę użytokwnika.',
-	'lookupcontribusernotspecify' => 'Nie określono nazwy użytkownika',
+Aby wyświetlić listę, podaj nazwę użytkownika.',
+	'lookupcontribusernotspecify' => 'Nie podano nazwy użytkownika',
 	'lookupcontribsselectuser' => 'Wybierz użytkownika:',
 	'lookupcontribsselectfor' => 'Wybierz dla:',
 	'lookupcontribsdisplaymode' => 'Wyświetl jako:',
@@ -1275,12 +1335,12 @@ Aby wyświetlić listę, podaj nazwę użytokwnika.',
 	'lookupcontribsselectmodefinal' => 'ostateczne edycje tego użytkownika',
 	'lookupcontribsselectmodeall' => 'wszystkie edycje tego użytkownika',
 	'lookupcontribsfullurls' => 'pełne adresy URL',
-	'lookupcontribslinks' => 'edycje - linki',
-	'lookupcontribsgo' => 'Idź',
-	'lookupcontribsinvaliduser' => '<p class="error">Użytkownik "<b>$1</b>" nie istnieje.
+	'lookupcontribslinks' => 'Linki do wkładu',
+	'lookupcontribsgo' => 'Pokaż',
+	'lookupcontribsinvaliduser' => '<p class="error">Użytkownik „<b>$1</b>” nie istnieje.
 Sprawdź nazwę użytkownika.</p>',
-	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" nie jest poprawnym trybem wyświetlania.</p>',
-	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" nie jest poprawnym trybem.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">„<b>$1</b>” nie jest poprawnym trybem wyświetlania.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">„<b>$1</b>” nie jest poprawnym trybem.</p>',
 	'lookupcontribsselectwikis' => 'Wybierz wiki:',
 	'lookupcontribslistwikiainfo' => 'Lista wiki z edycjami $1',
 	'lookupcontribsnoresultfound' => 'Brak wyników!',
@@ -1290,81 +1350,81 @@ Sprawdź nazwę użytkownika.</p>',
 	'lookupcontribswikiurl' => 'Adres URL',
 	'lookupcontribswikititle' => 'Tytuł',
 	'lookupcontribswikioptions' => 'Opcje',
-	'lookupcontribscontribslink' => 'Edycje - link',
+	'lookupcontribscontribslink' => 'Link do wkładu',
 	'lookupcontribsdetails' => 'Zobacz szczegóły dotyczące:',
 	'lookupcontribslastedited' => 'Ostatnio edytowano',
-	'lookupcontribsrecordspager' => 'Wyniki od \'\'\'$1\'\'\' do \'\'\'$2\'\'\' z \'\'\'$3\'\'\'.',
+	'lookupcontribsrecordspager' => "Wyniki od '''$1''' do '''$2''' z '''$3'''.",
 	'lookupcontribsnbrresult' => 'Liczba wyników:',
 	'lookupcontribsnext' => 'następna',
 	'lookupcontribsprevious' => 'poprzednia',
 	'lookupcontribspageremoved' => 'Usunięto:',
 	'lookupcontribsrestore' => 'przywróć',
-	'lookupcontribslog' => 'log',
+	'lookupcontribslog' => 'rejestr',
 	'lookupcontribscontribs' => 'edycje',
-	'lookupcontribshist' => 'hist',
+	'lookupcontribshist' => 'hist.',
 	'lookupcontribsdiff' => 'różn.',
-	'right-lookupcontribs' => 'Wyświetlić globalne edycje użytkownika',
+	'right-lookupcontribs' => 'Może wyświetlać edycje użytkownika w całej sieci Fandomu',
 	'lookupcontribsshowpages' => 'Wszystkie strony (w przestrzeni nazw $1)',
-	'lookupcontribscontent' => 'zawartość',
+	'lookupcontribscontent' => 'treść',
 	'lookupcontribscontribtitleforuser' => 'Edycje użytkownika:',
 	'lookupcontribsnormal' => 'ostatnie',
 	'lookupcontribsfinal' => 'ostateczne',
 	'lookupcontribsall' => 'wszystko',
 	'action-lookupcontribs' => 'Przeglądanie edycji użytkownika na wielu wiki',
-];
+);
 
-$messages['pms'] = [
+$messages['pms'] = array(
 	'lookupcontribs' => 'Serca Contribù',
 	'lookupcontribstitle' => 'Serca Contribù',
 	'lookupcontribsrecentcontributions' => 'Contribussion recente për $1',
 	'lookupcontribsfinalcontributions' => 'Contribussion finaj për $1',
-	'lookupcontribshelp' => 'Sta pàgina special-sì a peul esse dovrà për visualisé le contribussion dj\'utent su wikia mùltiple. Për visualisé la lista, ch\'a buta ël nòm utent sì-sota.',
-	'lookupcontribusernotspecify' => 'It l\'has pa ancó spessificà n\'utent',
+	'lookupcontribshelp' => "Sta pàgina special-sì a peul esse dovrà për visualisé le contribussion dj'utent su wikia mùltiple. Për visualisé la lista, ch'a buta ël nòm utent sì-sota.",
+	'lookupcontribusernotspecify' => "It l'has pa ancó spessificà n'utent",
 	'lookupcontribsselectuser' => 'Selession-a utent:',
 	'lookupcontribsselectfor' => 'Selession-a për:',
 	'lookupcontribsdisplaymode' => 'Manera ëd visualisassion:',
 	'lookupcontribsselectmodenormal' => 'contribussion recente për col utent',
 	'lookupcontribsselectmodefinal' => 'contribussion finaj për col utent',
 	'lookupcontribsselectmodeall' => 'tute le contribussion për col utent',
-	'lookupcontribsfullurls' => 'adrësse dl\'aragnà complete',
+	'lookupcontribsfullurls' => "adrësse dl'aragnà complete",
 	'lookupcontribslinks' => 'colegament dij contribù',
 	'lookupcontribsgo' => 'Va',
 	'lookupcontribsinvaliduser' => '<p class="error">Utent "<b>$1</b>" a esist pa. Contròla ël nòm utent për possìbij eror tipogràfich.</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" a l\'é pa na manera ëd visualisassion bon-a.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" a l\'é pa na manera bon-a.</p>',
 	'lookupcontribsselectwikis' => 'Selession-a wiki:',
-	'lookupcontribslistwikiainfo' => 'Lista ëd wiki dont j\'artìcoj a son ëstàit modificà da <b>$1</b>',
+	'lookupcontribslistwikiainfo' => "Lista ëd wiki dont j'artìcoj a son ëstàit modificà da <b>$1</b>",
 	'lookupcontribsnoresultfound' => 'Pa gnun arzultà trovà!',
 	'lookupcontribsinvalidresults' => 'Arzultà pa bon!',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Nòm DB',
-	'lookupcontribswikiurl' => 'Adrëssa an sl\'aragnà',
+	'lookupcontribswikiurl' => "Adrëssa an sl'aragnà",
 	'lookupcontribswikititle' => 'Tìtol',
 	'lookupcontribswikioptions' => 'Opsion',
 	'lookupcontribscontribslink' => 'Colegament dij contribù',
 	'lookupcontribsdetails' => 'Varda detaj për:',
 	'lookupcontribslastedited' => 'Ùltima modìfica',
-	'lookupcontribsrecordspager' => 'Visualisassion dj\'argistrassion da \'\'\'$1\'\'\' a \'\'\'$2\'\'\' ëd \'\'\'$3\'\'\'.',
-	'lookupcontribsnbrresult' => 'Nùmer d\'arzultà:',
+	'lookupcontribsrecordspager' => "Visualisassion dj'argistrassion da '''$1''' a '''$2''' ëd '''$3'''.",
+	'lookupcontribsnbrresult' => "Nùmer d'arzultà:",
 	'lookupcontribsnext' => 'dapress',
 	'lookupcontribsprevious' => 'prima',
 	'lookupcontribspageremoved' => 'Gavà:',
-	'lookupcontribsrestore' => 'buté \'me ch\'a l\'era',
+	'lookupcontribsrestore' => "buté 'me ch'a l'era",
 	'lookupcontribslog' => 'registr',
 	'lookupcontribscontribs' => 'contribù',
 	'lookupcontribshist' => 'stòria',
 	'lookupcontribsdiff' => 'dif.',
-	'right-lookupcontribs' => 'varda modìfiche globaj dl\'utent',
+	'right-lookupcontribs' => "varda modìfiche globaj dl'utent",
 	'lookupcontribsshowpages' => 'Tute le pàgine (spassi nominal $1)',
 	'lookupcontribscontent' => 'contnù',
 	'lookupcontribscontribtitleforuser' => 'Contribussion për utent:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tuti',
-	'action-lookupcontribs' => 'serca le contribussion ëd n\'utent dzora vàire wiki',
-];
+	'action-lookupcontribs' => "serca le contribussion ëd n'utent dzora vàire wiki",
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'lookupcontribsselectuser' => 'کارن ټاکل:',
 	'lookupcontribsgo' => 'ورځه',
 	'lookupcontribsselectwikis' => 'ويکي گانې ټاکل:',
@@ -1382,71 +1442,19 @@ $messages['ps'] = [
 	'lookupcontribscontent' => 'منځپانگه',
 	'lookupcontribscontribtitleforuser' => 'د کارن لپاره ونډې:',
 	'lookupcontribsall' => 'ټول',
-];
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'lookupcontribs' => 'Procurar Contribuições',
 	'lookupcontribstitle' => 'Procurar Contribuições',
 	'lookupcontribsrecentcontributions' => 'Contribuições recentes de $1',
 	'lookupcontribsfinalcontributions' => 'Contribuições finais de $1',
-	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um utilizador em várias Wikias.
-Para apresentar a lista, forneça abaixo o nome do utilizador.',
-	'lookupcontribusernotspecify' => 'Ainda não especificou um utilizador',
-	'lookupcontribsselectuser' => 'Selecionar utilizador:',
-	'lookupcontribsselectfor' => 'Selecionar para:',
-	'lookupcontribsdisplaymode' => 'Modo de visionamento:',
-	'lookupcontribsselectmodenormal' => 'contribuições recentes do utilizador',
-	'lookupcontribsselectmodefinal' => 'contribuições finais do utilizador',
-	'lookupcontribsselectmodeall' => 'todas as contribuições do utilizador',
-	'lookupcontribsfullurls' => 'URLs completas',
-	'lookupcontribslinks' => 'links para as contribuições',
-	'lookupcontribsgo' => 'Mostrar',
-	'lookupcontribsinvaliduser' => '<p class="error">O utilizador "<b>$1</b>" não existe.
-Verifique se se enganou no nome do utilizador.</p>',
-	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" não é um modo de visionamento válido.</p>',
-	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" não é um modo válido.</p>',
-	'lookupcontribsselectwikis' => 'Selecionar wikis:',
-	'lookupcontribslistwikiainfo' => 'Lista de wikis com páginas editadas por <b>$1</b>',
-	'lookupcontribsnoresultfound' => 'Não foi encontrado nenhum resultado!',
-	'lookupcontribsinvalidresults' => 'Resultados são inválidos!',
-	'lookupcontribswiki' => 'Wiki',
-	'lookupcontribswikidbname' => 'Base de Dados',
-	'lookupcontribswikiurl' => 'URL',
-	'lookupcontribswikititle' => 'Título',
-	'lookupcontribswikioptions' => 'Opções',
-	'lookupcontribscontribslink' => 'Link para contribuições',
-	'lookupcontribsdetails' => 'Ver detalhes de:',
-	'lookupcontribslastedited' => 'Última edição',
-	'lookupcontribsrecordspager' => 'A mostrar os registos \'\'\'$1\'\'\' a \'\'\'$2\'\'\' de \'\'\'$3\'\'\'.',
-	'lookupcontribsnbrresult' => 'Nº do resultado:',
-	'lookupcontribsnext' => 'seguintes',
-	'lookupcontribsprevious' => 'anteriores',
-	'lookupcontribspageremoved' => 'Removidas:',
-	'lookupcontribsrestore' => 'recuperar',
-	'lookupcontribslog' => 'registo',
-	'lookupcontribscontribs' => 'contribuições',
-	'lookupcontribshist' => 'histórico',
-	'lookupcontribsdiff' => 'diferenças',
-	'right-lookupcontribs' => 'Ver as edições globais do utilizador',
-	'lookupcontribsshowpages' => 'Todas as páginas ($1 espaços nominais)',
-	'lookupcontribscontent' => 'conteúdo',
-	'lookupcontribscontribtitleforuser' => 'Contribuições do utilizador:',
-	'lookupcontribsnormal' => 'recentes',
-	'lookupcontribsfinal' => 'finais',
-	'lookupcontribsall' => 'todas',
-];
-
-$messages['pt-br'] = [
-	'lookupcontribs' => 'Procurar Contribuições',
-	'lookupcontribstitle' => 'Procurar Contribuições',
-	'lookupcontribsrecentcontributions' => 'Contribuições recentes de $1',
-	'lookupcontribsfinalcontributions' => 'Contribuições finais de $1',
-	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um usuário em várias Wikias.
+	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um usuário em várias wikis.
 Para apresentar a lista, forneça abaixo o nome do usuário.',
 	'lookupcontribusernotspecify' => 'Você ainda não especificou um usuário',
 	'lookupcontribsselectuser' => 'Selecionar usuário:',
 	'lookupcontribsselectfor' => 'Selecionar:',
-	'lookupcontribsdisplaymode' => 'Modo de visionamento:',
+	'lookupcontribsdisplaymode' => 'Modo de exibição:',
 	'lookupcontribsselectmodenormal' => 'contribuições recentes do usuário',
 	'lookupcontribsselectmodefinal' => 'contribuições finais do usuário',
 	'lookupcontribsselectmodeall' => 'todas as contribuições do usuário',
@@ -1454,8 +1462,8 @@ Para apresentar a lista, forneça abaixo o nome do usuário.',
 	'lookupcontribslinks' => 'links para as contribuições',
 	'lookupcontribsgo' => 'Mostrar',
 	'lookupcontribsinvaliduser' => '<p class="error">O usuário "<b>$1</b>" não existe.
-Verifique se se enganou com o nome do usuário.</p>',
-	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" não é um modo de visionamento válido.</p>',
+Verifique se você se enganou com o nome do usuário.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" não é um modo de exibição válido.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" não é um modo válido.</p>',
 	'lookupcontribsselectwikis' => 'Selecionar wikis:',
 	'lookupcontribslistwikiainfo' => 'Lista de wikis com páginas editadas por <b>$1</b>',
@@ -1469,9 +1477,9 @@ Verifique se se enganou com o nome do usuário.</p>',
 	'lookupcontribscontribslink' => 'Link para contribuições',
 	'lookupcontribsdetails' => 'Ver detalhes de:',
 	'lookupcontribslastedited' => 'Última edição',
-	'lookupcontribsrecordspager' => 'A mostrar os registos \'\'\'$1\'\'\' a \'\'\'$2\'\'\' de \'\'\'$3\'\'\'.',
+	'lookupcontribsrecordspager' => "A mostrar os registos '''$1''' a '''$2''' de '''$3'''.",
 	'lookupcontribsnbrresult' => 'N.º do resultado:',
-	'lookupcontribsnext' => 'seguintes',
+	'lookupcontribsnext' => 'próximos',
 	'lookupcontribsprevious' => 'anteriores',
 	'lookupcontribspageremoved' => 'Removidas:',
 	'lookupcontribsrestore' => 'recuperar',
@@ -1480,16 +1488,17 @@ Verifique se se enganou com o nome do usuário.</p>',
 	'lookupcontribshist' => 'histórico',
 	'lookupcontribsdiff' => 'diferenças',
 	'right-lookupcontribs' => 'Ver as edições globais do usuário',
-	'lookupcontribsshowpages' => 'Todas as páginas ($1 espaços nominais)',
+	'lookupcontribsshowpages' => 'Todas as páginas (espaço nominal $1)',
 	'lookupcontribscontent' => 'conteúdo',
 	'lookupcontribscontribtitleforuser' => 'Contribuições do usuário:',
 	'lookupcontribsnormal' => 'recentes',
 	'lookupcontribsfinal' => 'finais',
 	'lookupcontribsall' => 'todas',
+	'lookupcontribs-desc' => 'Mostrar as contribuições do usuário em múltiplas wikis',
 	'action-lookupcontribs' => 'pesquisar as contribuições de um usuário em múltiplas wikis',
-];
+);
 
-$messages['ro'] = [
+$messages['ro'] = array(
 	'lookupcontribsselectuser' => 'Selectează utilizatorul:',
 	'lookupcontribsdisplaymode' => 'Mod de afişare:',
 	'lookupcontribsnoresultfound' => 'Niciun rezultat găsit!',
@@ -1499,28 +1508,28 @@ $messages['ro'] = [
 	'lookupcontribswikititle' => 'Titlu',
 	'lookupcontribswikioptions' => 'Opţiuni',
 	'lookupcontribscontent' => 'conţinut',
-];
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'lookupcontribs' => 'Cirche Condrebbute',
 	'lookupcontribstitle' => 'Cirche Condrebbute',
 	'lookupcontribsrecentcontributions' => 'Condrebbute recende pe $1',
 	'lookupcontribsfinalcontributions' => 'Condrebbute finale pe $1',
-	'lookupcontribsselectuser' => 'Scacchie l\'utende:',
+	'lookupcontribsselectuser' => "Scacchie l'utende:",
 	'lookupcontribsselectfor' => 'Scacchie pe:',
 	'lookupcontribsfullurls' => 'URL comblete',
 	'lookupcontribsgo' => 'Veje',
 	'lookupcontribspageremoved' => 'Luate:',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'lookupcontribs-desc' => 'Показать вклад пользователя на нескольких вики',
 	'lookupcontribs' => 'Просмотр вклада',
 	'lookupcontribstitle' => 'Просмотр вклада',
 	'lookupcontribsrecentcontributions' => 'Недавний вклад $1',
 	'lookupcontribsfinalcontributions' => 'Заключительный вклад $1',
-	'lookupcontribshelp' => 'Эта служебная страница может быть использована для отображения вклада участника в различных вики.
-Для вывода списка укажите имя участника ниже.',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
 	'lookupcontribusernotspecify' => 'Вы ещё не указали участника',
 	'lookupcontribsselectuser' => 'Выберите участника:',
 	'lookupcontribsselectfor' => 'Выбор для:',
@@ -1547,7 +1556,7 @@ $messages['ru'] = [
 	'lookupcontribscontribslink' => 'Ссылка на вклад',
 	'lookupcontribsdetails' => 'Подробнее о:',
 	'lookupcontribslastedited' => 'Последняя правка',
-	'lookupcontribsrecordspager' => 'Показано от \'\'\'$1\'\'\' до \'\'\'$2\'\'\' из \'\'\'$3\'\'\' записей.',
+	'lookupcontribsrecordspager' => "Показано от '''$1''' до '''$2''' из '''$3''' записей.",
 	'lookupcontribsnbrresult' => 'Количество результатов:',
 	'lookupcontribsnext' => 'след.',
 	'lookupcontribsprevious' => 'пред.',
@@ -1557,7 +1566,7 @@ $messages['ru'] = [
 	'lookupcontribscontribs' => 'вклад',
 	'lookupcontribshist' => 'история',
 	'lookupcontribsdiff' => 'разн.',
-	'right-lookupcontribs' => 'просмотр глобальных правок участника',
+	'right-lookupcontribs' => 'Просмотр глобальных правок участника',
 	'lookupcontribsshowpages' => 'Все страницы ($1 пространств имён)',
 	'lookupcontribscontent' => 'содержимое',
 	'lookupcontribscontribtitleforuser' => 'Вклад участника:',
@@ -1565,9 +1574,9 @@ $messages['ru'] = [
 	'lookupcontribsfinal' => 'последняя',
 	'lookupcontribsall' => 'все',
 	'action-lookupcontribs' => 'поиск вклада участника на нескольких вики',
-];
+);
 
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'lookupcontribsselectuser' => 'Избор корисника:',
 	'lookupcontribsgo' => 'Иди',
 	'lookupcontribsnoresultfound' => 'Нема резултата!',
@@ -1588,9 +1597,9 @@ $messages['sr-ec'] = [
 	'lookupcontribshist' => 'ист',
 	'lookupcontribsdiff' => 'разл',
 	'lookupcontribscontent' => 'садржај',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'lookupcontribs-desc' => 'Visar en användares bidrag på flera wikis',
 	'lookupcontribs' => 'Kolla upp bidrag',
 	'lookupcontribstitle' => 'Kolla upp bidrag',
@@ -1624,7 +1633,7 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribscontribslink' => 'Bidragslänk',
 	'lookupcontribsdetails' => 'Se detaljer för:',
 	'lookupcontribslastedited' => 'Senast redigerad',
-	'lookupcontribsrecordspager' => 'Visar \'\'\'$1\'\'\' till \'\'\'$2\'\'\' av \'\'\'$3\'\'\' poster.',
+	'lookupcontribsrecordspager' => "Visar '''$1''' till '''$2''' av '''$3''' poster.",
 	'lookupcontribsnbrresult' => 'Antal resultat:',
 	'lookupcontribsnext' => 'nästa',
 	'lookupcontribsprevious' => 'föregående',
@@ -1642,25 +1651,25 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribsfinal' => 'sista',
 	'lookupcontribsall' => 'alla',
 	'action-lookupcontribs' => 'kolla upp en användares bidrag på flera wikis',
-];
+);
 
-$messages['sw'] = [
+$messages['sw'] = array(
 	'lookupcontribswikititle' => 'Cheo',
 	'lookupcontribsnext' => 'linalofuata',
 	'lookupcontribsprevious' => 'iliyotangulia',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'tofauti',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'lookupcontribsnext' => 'அடுத்தது',
 	'lookupcontribsprevious' => 'முந்தைய',
 	'lookupcontribspageremoved' => 'நீக்கப்பட்டது:',
 	'lookupcontribshist' => 'வரலாறு',
 	'lookupcontribsdiff' => 'வேறுபாடு',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'lookupcontribsrecentcontributions' => '$1 యొక్క ఇటీవలి మార్పుచేర్పులు',
 	'lookupcontribsfinalcontributions' => '$1 యొక్క చిట్టచివరి మార్పుచేర్పులు',
 	'lookupcontribusernotspecify' => 'మీరింకా వాడుకరి ఎవరినీ సూచించలేదు',
@@ -1683,7 +1692,7 @@ $messages['te'] = [
 	'lookupcontribswikioptions' => 'ఎంపికలు',
 	'lookupcontribsdetails' => 'దీని వివరాలు చూడండి:',
 	'lookupcontribslastedited' => 'చివరి మార్పు',
-	'lookupcontribsrecordspager' => 'మొత్తం \'\'\'$3\'\'\' రికార్డులలో \'\'\'$1\'\'\' నుండి \'\'\'$2\'\'\' వరకు చూపిస్తున్నాం.',
+	'lookupcontribsrecordspager' => "మొత్తం '''$3''' రికార్డులలో '''$1''' నుండి '''$2''' వరకు చూపిస్తున్నాం.",
 	'lookupcontribsnext' => 'తరువాతి',
 	'lookupcontribsprevious' => 'గత',
 	'lookupcontribspageremoved' => 'తొలిగించబడినది:',
@@ -1700,9 +1709,9 @@ $messages['te'] = [
 	'lookupcontribsfinal' => 'తుది',
 	'lookupcontribsall' => 'అన్నీ',
 	'action-lookupcontribs' => 'వివిధ వికీల్లో వాడుకరి రచనల కోసం చూసే',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'lookupcontribs' => 'Maghanap ng Mga Ambag',
 	'lookupcontribstitle' => 'Maghanap ng Mga Ambag',
 	'lookupcontribsrecentcontributions' => 'Kamakailang mga ambag para sa $1',
@@ -1735,7 +1744,7 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribscontribslink' => 'Kawing sa mga ambag',
 	'lookupcontribsdetails' => 'Tingnan ang mga detalye para sa:',
 	'lookupcontribslastedited' => 'Huling binago',
-	'lookupcontribsrecordspager' => 'Ipinapakita ang \'\'\'$1\'\'\' hanggang \'\'\'$2\'\'\' ng \'\'\'$3\'\'\' mga rekord.',
+	'lookupcontribsrecordspager' => "Ipinapakita ang '''$1''' hanggang '''$2''' ng '''$3''' mga rekord.",
 	'lookupcontribsnbrresult' => 'Bilang ng mga resulta:',
 	'lookupcontribsnext' => 'susunod',
 	'lookupcontribsprevious' => 'nakaraan',
@@ -1752,9 +1761,9 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribsnormal' => 'kamakailan',
 	'lookupcontribsfinal' => 'pangwakas',
 	'lookupcontribsall' => 'lahat',
-];
+);
 
-$messages['tly'] = [
+$messages['tly'] = array(
 	'lookupcontribswiki' => 'Вики',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Ном',
@@ -1762,9 +1771,9 @@ $messages['tly'] = [
 	'lookupcontribsnext' => 'думотоно шә',
 	'lookupcontribsprevious' => 'навынәни',
 	'lookupcontribsall' => 'һәммәј',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'lookupcontribsselectuser' => 'Kullanıcı seç:',
 	'lookupcontribsselectfor' => 'Seçmek için:',
 	'lookupcontribsdisplaymode' => 'Görüntü modu:',
@@ -1783,23 +1792,23 @@ $messages['tr'] = [
 	'lookupcontribsnext' => 'sonraki',
 	'lookupcontribsprevious' => 'önceki',
 	'lookupcontribsdiff' => 'fark',
-];
+);
 
-$messages['tt-cyrl'] = [
+$messages['tt-cyrl'] = array(
 	'lookupcontribsshowpages' => '«$1» исемнәр мәйданындагы барлык битләр',
 	'lookupcontribscontent' => 'эчтәлек',
 	'lookupcontribscontribtitleforuser' => 'Катнашучы кертеме:',
 	'lookupcontribsnormal' => 'соңгы',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'lookupcontribs-desc' => 'Показати внесок користувача на декількох вікі',
 	'lookupcontribs' => 'Перегляд внесків',
 	'lookupcontribstitle' => 'Перегляд внесків',
 	'lookupcontribsrecentcontributions' => 'Останні внески $1',
 	'lookupcontribsfinalcontributions' => 'Остаточні внески $1',
-	'lookupcontribshelp' => 'Цю спеціальну сторінку можна використовувати, щоб відобразити внески користувача на декілька вікій.
- Для відображення списку вкажіть нижче ім\'я користувача.',
+	'lookupcontribshelp' => "Цю спеціальну сторінку можна використовувати, щоб відобразити внески користувача на декілька вікій.
+ Для відображення списку вкажіть нижче ім'я користувача.",
 	'lookupcontribusernotspecify' => 'Ви не вказали користувача',
 	'lookupcontribsselectuser' => 'Виберіть користувача:',
 	'lookupcontribsselectfor' => 'Виберіть для:',
@@ -1826,7 +1835,7 @@ $messages['uk'] = [
 	'lookupcontribscontribslink' => 'Посилання на внески',
 	'lookupcontribsdetails' => 'Подробиці див. на:',
 	'lookupcontribslastedited' => 'Останнє редагування',
-	'lookupcontribsrecordspager' => 'Показано від \'\'\'$1\'\'\' до \'\'\'$2\'\'\' із \'\'\'$3\'\'\' записів.',
+	'lookupcontribsrecordspager' => "Показано від '''$1''' до '''$2''' із '''$3''' записів.",
 	'lookupcontribsnbrresult' => 'Число результатів:',
 	'lookupcontribsnext' => 'наступний',
 	'lookupcontribsprevious' => 'попередній',
@@ -1844,9 +1853,9 @@ $messages['uk'] = [
 	'lookupcontribsfinal' => 'остаточні',
 	'lookupcontribsall' => 'усі',
 	'action-lookupcontribs' => 'пошук внесків користувача на декількох вікі',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'lookupcontribs-desc' => 'Hiển thị các đóng góp của người dùng trên nhiều trang wiki khác nhau',
 	'lookupcontribs' => 'Tra cứu Contribs',
 	'lookupcontribstitle' => 'Tra cứu Contribs',
@@ -1891,19 +1900,20 @@ $messages['vi'] = [
 	'lookupcontribsfinal' => 'Cuối cùng',
 	'lookupcontribsall' => 'tất cả',
 	'action-lookupcontribs' => 'Tra các đóng góp của một người dùng trên nhiều trang wiki khác nhau',
-];
+);
 
-$messages['yi'] = [
+$messages['yi'] = array(
 	'lookupcontribscontent' => 'אינהאַלט',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'lookupcontribs-desc' => '显示多个wiki上的用户贡献',
 	'lookupcontribs' => '查阅维基贡献',
 	'lookupcontribstitle' => '查阅维基贡献',
 	'lookupcontribsrecentcontributions' => '最近$1的贡献',
 	'lookupcontribsfinalcontributions' => '对$1的最近贡献',
-	'lookupcontribshelp' => '此特殊页面可用于显示多个wikia的用户贡献。要显示列表，请在下方提供用户名。',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
 	'lookupcontribusernotspecify' => '您还没有指定一个用户',
 	'lookupcontribsselectuser' => '选择用户：',
 	'lookupcontribsselectfor' => '搜索：',
@@ -1930,7 +1940,7 @@ $messages['zh-hans'] = [
 	'lookupcontribscontribslink' => '贡献链接',
 	'lookupcontribsdetails' => '查看详情：',
 	'lookupcontribslastedited' => '最后编辑',
-	'lookupcontribsrecordspager' => '显示\'\'\'$1\'\'\'至\'\'\'$2\'\'\'项记录，总共\'\'\'$3\'\'\'项。',
+	'lookupcontribsrecordspager' => "显示'''$1'''至'''$2'''项记录，总共'''$3'''项。",
 	'lookupcontribsnbrresult' => '结果数量：',
 	'lookupcontribsnext' => '下一步',
 	'lookupcontribsprevious' => '前一步',
@@ -1940,7 +1950,7 @@ $messages['zh-hans'] = [
 	'lookupcontribscontribs' => '贡献',
 	'lookupcontribshist' => '历史',
 	'lookupcontribsdiff' => '不同',
-	'right-lookupcontribs' => '查看用户的全局编辑',
+	'right-lookupcontribs' => '查看用户在FANDOM上的所有编辑',
 	'lookupcontribsshowpages' => '所有页面（$1命名空间）',
 	'lookupcontribscontent' => '内容',
 	'lookupcontribscontribtitleforuser' => '对用户的贡献：',
@@ -1948,9 +1958,9 @@ $messages['zh-hans'] = [
 	'lookupcontribsfinal' => '最后',
 	'lookupcontribsall' => '全部',
 	'action-lookupcontribs' => '在多个wiki中查询用户的贡献',
-];
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'lookupcontribs' => '查詢貢獻',
 	'lookupcontribstitle' => '查詢貢獻',
 	'lookupcontribsrecentcontributions' => '$1最近的貢獻',
@@ -1961,7 +1971,7 @@ $messages['zh-hant'] = [
 	'lookupcontribscontribslink' => '貢獻連結',
 	'lookupcontribsdetails' => '查看詳細資料：',
 	'lookupcontribslastedited' => '最近編輯於：$1',
-	'lookupcontribsrecordspager' => '顯示第 \'\'\'$1\'\'\' 至 \'\'\'$2\'\'\' 筆，共 \'\'\'$3\'\'\' 筆記錄。',
+	'lookupcontribsrecordspager' => "顯示第 '''$1''' 至 '''$2''' 筆，共 '''$3''' 筆記錄。",
 	'lookupcontribsnbrresult' => '結果筆數：',
 	'lookupcontribsnext' => '下一頁',
 	'lookupcontribsprevious' => '上一頁',
@@ -1975,9 +1985,32 @@ $messages['zh-hant'] = [
 	'lookupcontribsnormal' => '最近',
 	'lookupcontribsfinal' => '最後',
 	'lookupcontribsall' => '全部',
-];
-
-$messages['zh'] = [
-	'lookupcontribsgo' => '查看',
-];
+	'lookupcontribs-desc' => 'Displays user contributions on multiple wikis',
+	'lookupcontribshelp' => "This special page can be used to display user's contributions on multiple wikis.
+For displaying the list, give username below.",
+	'lookupcontribusernotspecify' => "You haven't specified a user yet",
+	'lookupcontribsselectuser' => 'Select user:',
+	'lookupcontribsselectfor' => 'Select for:',
+	'lookupcontribsdisplaymode' => 'Display mode:',
+	'lookupcontribsselectmodenormal' => 'recent contributions for that user',
+	'lookupcontribsselectmodefinal' => 'final contributions for that user',
+	'lookupcontribsselectmodeall' => 'all contributions for that user',
+	'lookupcontribsfullurls' => 'full URLs',
+	'lookupcontribslinks' => 'contribs links',
+	'lookupcontribsgo' => 'Go',
+	'lookupcontribsinvaliduser' => '<p class="error">User "<b>$1</b>" does not exist.
+Check given username for possible typos.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" is not a valid view mode.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" is not a valid mode.</p>',
+	'lookupcontribsselectwikis' => 'Select wikis:',
+	'lookupcontribslistwikiainfo' => 'List of wikis where articles were edited by <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'No result found!',
+	'lookupcontribsinvalidresults' => 'Invalid results!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikiurl' => 'URL',
+	'right-lookupcontribs' => '查看用戶在FANDOM上的所有編輯',
+	'lookupcontribsshowpages' => 'All pages ($1 namespaces)',
+	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
+	'action-lookupcontribs' => "lookup a user's contributions on multiple wikis",
+);
 

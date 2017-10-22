@@ -2,7 +2,7 @@
 @import 'video-shared-variables';
 @import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/colors";
 
-.article-video {
+.article-video, .featured-video {
 	.video-feedback {
 		@include align-items(center);
 		background-color: rgba(255, 255, 255, 0.9);
@@ -54,7 +54,7 @@
 		}
 	}
 
-	&.collapsed .video-feedback {
+	&.is-collapsed .video-feedback {
 		display: none;
 	}
 }

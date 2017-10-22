@@ -154,6 +154,15 @@ class VideoEmbedToolController extends WikiaController {
 	 * @responseParam string errMsg
 	*/
 	public function editDescription() {
+		$this->response->setFormat( 'json' );
+
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
 		$title = urldecode( $this->request->getVal('title') );
 		$title = Title::newFromText($title, NS_FILE);
 

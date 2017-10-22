@@ -62,7 +62,7 @@ class ImagePage extends Article {
 		$this->fileLoaded = true;
 
 		$this->displayImg = $img = false;
-		wfRunHooks( 'ImagePageFindFile', array( $this, &$img, &$this->displayImg ) );
+		Hooks::run( 'ImagePageFindFile', array( $this, &$img, &$this->displayImg ) );
 		if ( !$img ) { // not set by hook?
 			$img = wfFindFile( $this->getTitle() );
 			if ( !$img ) {
@@ -142,7 +142,6 @@ class ImagePage extends Article {
 		if($showmeta) {
 			$this->imageMetadata($formattedMetadata);
 		}
-		$this->imageFooter();
 		/* End Wikia Change */
 
 		// Add remote Filepage.css
@@ -207,7 +206,7 @@ class ImagePage extends Article {
 
 		# Allow extensions to add something after the image links
 		$html = '';
-		wfRunHooks( 'ImagePageAfterImageLinks', array( $this, &$html ) );
+		Hooks::run( 'ImagePageAfterImageLinks', array( $this, &$html ) );
 		if ( $html ) {
 			$wgOut->addHTML( $html );
 		}
@@ -224,13 +223,6 @@ class ImagePage extends Article {
 		$wgOut->addWikiText( $this->makeMetadataTable( $formattedMetadata ) );
 		$wgOut->addModules( array( 'mediawiki.action.view.metadata' ) );
 	 }
-
-	/**
-	 * Wikia - called in view() function, so it can be used by ImagePageTabbed
-	 */
-	protected function imageFooter() {
-		// to be used by child classes
-	}
 
 	/**
 	 * Wikia - abstracted out part of view() function, so it can be overwritten by ImagePageTabbed
@@ -273,7 +265,7 @@ class ImagePage extends Article {
 			$r[] = '<li><a href="#metadata">' . wfMsgHtml( 'metadata' ) . '</a></li>';
 		}
 
-		wfRunHooks( 'ImagePageShowTOC', array( $this, &$r ) );
+		Hooks::run( 'ImagePageShowTOC', array( $this, &$r ) );
 
 		return '<ul id="filetoc">' . implode( "\n", $r ) . '</ul>';
 	}
@@ -372,7 +364,7 @@ class ImagePage extends Article {
 
 			$longDesc = wfMessage( 'parentheses', $this->displayImg->getLongDesc() )->escaped();
 
-			wfRunHooks( 'ImageOpenShowImageInlineBefore', array( &$this, &$wgOut ) );
+			Hooks::run( 'ImageOpenShowImageInlineBefore', [ $this, $wgOut ] );
 
 			if ( $this->displayImg->allowInlineDisplay() ) {
 				# image
@@ -799,7 +791,7 @@ EOT
 
 			$link = Linker::linkKnown( Title::makeTitle( $element->page_namespace, $element->page_title ) );
 			/* begin wikia change bugid:70406 Fix broken "Board Thread" link on File pages */
-			wfRunHooks( "FilePageImageUsageSingleLink", array(&$link, &$element) );
+			Hooks::run( "FilePageImageUsageSingleLink", array(&$link, &$element) );
 			/* end wikia change */
 			if ( !isset( $redirects[$element->page_title] ) ) {
 				$liContents = $link;
@@ -1012,11 +1004,11 @@ class ImageHistoryList {
 
 	/**
 	 * @param $iscur
-	 * @param $file File
+	 * @param $file File|OldLocalFile
 	 * @return string
 	 */
 	public function imageHistoryLine( $iscur, $file ) {
-		global $wgUser, $wgLang, $wgContLang, $wgEnableVignette;
+		global $wgUser, $wgLang, $wgContLang;
 
 		$timestamp = wfTimestamp( TS_MW, $file->getTimestamp() );
 		$img = $iscur ? $file->getName() : $file->getArchiveName();
@@ -1118,11 +1110,7 @@ class ImageHistoryList {
 			}
 			$row .= '<span class="history-deleted">' . $url . '</span>';
 		} else {
-			if ( $wgEnableVignette ) {
-				$url = $iscur ? $this->current->getUrl() : $file->getUrl();
-			} else {
-				$url = $iscur ? $this->current->getUrl() : $this->current->getArchiveUrl( $img );
-			}
+			$url = $iscur ? $this->current->getUrl() : $file->getUrl();
 			$row .= Xml::element( 'a', array( 'href' => $url ), $wgLang->timeanddate( $timestamp, true ) );
 		}
 		$row .= "</td>";
@@ -1161,7 +1149,7 @@ class ImageHistoryList {
 		}
 
 		$rowClass = null;
-		wfRunHooks( 'ImagePageFileHistoryLine', array( $this, $file, &$row, &$rowClass ) );
+		Hooks::run( 'ImagePageFileHistoryLine', array( $this, $file, &$row, &$rowClass ) );
 		$classAttr = $rowClass ? " class='$rowClass'" : '';
 
 		return "<tr{$classAttr}>{$row}</tr>\n";

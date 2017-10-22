@@ -15,7 +15,6 @@ class ImageServingCroppingTest extends WikiaBaseTest {
 		$this->setupFile =  __DIR__ . '/../imageServing.setup.php';
 		parent::setUp();
 
-		$this->mockGlobalVariable('wgEnableVignette', true);
 		$this->mockGlobalVariable('wgUploadPath', 'http://images.wikia.com/firefly/images');
 	}
 

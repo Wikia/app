@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/wikia/AdminDashboard/AdminDashboard extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'admindashboard-loading' => 'Loading…',
 	'admindashboard-title' => '{{SITENAME}} Dashboard',
@@ -52,9 +51,9 @@ $messages['en'] = [
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
 	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'admindashboard-desc' => '{{desc}}',
 	'admindashboard-title' => 'html <title> element displayed on admin dashboard pages',
 	'admindashboard-header' => 'page header for Admin Dashboard - html <h1> element',
@@ -99,17 +98,9 @@ $messages['qqq'] = [
 	'admindashboard-control-multiple-upload-tooltip' => 'tooltip/hover describing special:multipleupload',
 	'admindashboard-control-special-css-label' => 'Label for link to Special:CSS page',
 	'admindashboard-control-special-css-tooltip' => 'Tooltip/hover describing Special:CSS',
-];
+);
 
-$messages['hu-formal'] = [
-	'admindashboard-control-theme-designer-tooltip' => 'A tématervezővel megváltoztathatja a wiki színeit, hátterét és még sok mást.',
-	'admindashboard-control-user-list-tooltip' => 'A wikin részt vett felhasználók listájának megtekintése',
-	'admindashboard-control-user-rights-tooltip' => 'A wikin résztvevő felhasználók jogainak módosítása.',
-	'admindashboard-control-community-corner-tooltip' => 'Változtassa meg a wikid közösségi sarkát a felhasználók figyelmének felhívására.',
-	'admindashboard-control-add-blog-tooltip' => 'Blogbejegyzés hozzáadása a wikihez.',
-];
-
-$messages['ar'] = [
+$messages['ar'] = array(
 	'admindashboard-title' => 'لوحة إدارة {{SITENAME}}',
 	'admindashboard-header' => 'لوحة الإداريين',
 	'admindashboard-toolbar-link' => 'الادارة',
@@ -146,9 +137,9 @@ $messages['ar'] = [
 	'admindashboard-control-add-photo-tooltip' => 'أضف صورا جديدة إلى الويكي الخاص بك.',
 	'admindashboard-control-multiple-upload-label' => 'أضف صورا متعددة',
 	'admindashboard-back-to-dashboard' => 'العودة إلى لوحة التحكم',
-];
+);
 
-$messages['as'] = [
+$messages['as'] = array(
 	'admindashboard-toolbar-link' => 'প্ৰশাসক',
 	'admindashboard-tab-advanced' => 'উচ্চতৰ',
 	'admindashboard-tab-general' => 'সাধাৰণ',
@@ -161,9 +152,9 @@ $messages['as'] = [
 	'admindashboard-control-help-tooltip' => 'সাহায্য সন্ধান',
 	'admindashboard-control-categories-list-label' => 'সকলোবোৰ শ্ৰেণী',
 	'admindashboard-control-add-photo-label' => 'চিত্ৰ যোগ কৰক',
-];
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'admindashboard-control-recent-changes-label' => 'Təzə dəyişikliklər',
 	'admindashboard-control-user-list-label' => 'İstifadəçi siyahısı',
 	'admindashboard-control-invite-label' => 'Dəvət et',
@@ -174,9 +165,9 @@ $messages['az'] = [
 	'admindashboard-control-add-photo-label' => 'Şəkil əlavə et',
 	'admindashboard-control-add-photo-tooltip' => 'Öz vikinə yeni şəkil əlavə et',
 	'admindashboard-control-multiple-upload-label' => 'Çox sayda şəkil əlavə et',
-];
+);
 
-$messages['bar'] = [
+$messages['bar'] = array(
 	'admindashboard-title' => '{{SITENAME}} Ywersicht',
 	'admindashboard-header' => 'Admin-Ywersicht',
 	'admindashboard-toolbar-link' => 'Admin',
@@ -186,15 +177,15 @@ $messages['bar'] = [
 	'admindashboard-control-theme-designer-label' => 'Theme-Designer',
 	'admindashboard-control-theme-designer-tooltip' => 'Theme-Designer daméglichts da, Form, Hintergrynd und vie merer aun deih Wiki auhzpassen.',
 	'admindashboard-control-recent-changes-label' => 'Létzde Änderrungen',
-	'admindashboard-control-recent-changes-tooltip' => 'D\' Létzden Änderrungen zoagt olle Änderrungen an deim Wiki in aner oanzing Zeidleisten.',
+	'admindashboard-control-recent-changes-tooltip' => "D' Létzden Änderrungen zoagt olle Änderrungen an deim Wiki in aner oanzing Zeidleisten.",
 	'admindashboard-control-top-navigation-label' => 'Ówerre Navigazión',
-	'admindashboard-control-top-navigation-tooltip' => 'D\' Ówerre Navigazión dalaabt da \'s Navigaziónsmenue óm in deim Wiki auhzpassen.',
+	'admindashboard-control-top-navigation-tooltip' => "D' Ówerre Navigazión dalaabt da 's Navigaziónsmenue óm in deim Wiki auhzpassen.",
 	'admindashboard-control-wiki-features-label' => 'Wiki-Funkzióner',
-	'admindashboard-control-wiki-features-tooltip' => 'D\' Wiki-Funkzióner dalaam da, zuasétzliche Funkzióner fyr deih Wiki z\' aktiviern.',
+	'admindashboard-control-wiki-features-tooltip' => "D' Wiki-Funkzióner dalaam da, zuasétzliche Funkzióner fyr deih Wiki z' aktiviern.",
 	'admindashboard-control-page-layout-builder-label' => 'Seiten-Layout-Erstejer',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'admindashboard-loading' => 'Зареждане...',
 	'admindashboard-header' => 'Административно табло',
 	'admindashboard-toolbar-link' => 'Администратор',
@@ -208,9 +199,9 @@ $messages['bg'] = [
 	'admindashboard-control-categories-list-label' => 'Всички категории',
 	'admindashboard-control-add-page-label' => 'Добавяне на страница',
 	'admindashboard-control-add-photo-label' => 'Добавяне на снимка',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'admindashboard-loading' => 'O kargañ...',
 	'admindashboard-title' => '{{SITENAME}} - Taolenn-stur',
 	'admindashboard-header' => 'Taolenn-stur merour',
@@ -233,17 +224,17 @@ $messages['br'] = [
 	'admindashboard-controls-content-header' => 'Danvez',
 	'admindashboard-control-categories-list-label' => 'An holl rummadoù',
 	'admindashboard-control-add-page-label' => 'Ouzhpennañ ur bajenn',
-	'admindashboard-control-add-page-tooltip' => 'Ouzhpennañ ur bajenn nevez d\'ho wiki.',
+	'admindashboard-control-add-page-tooltip' => "Ouzhpennañ ur bajenn nevez d'ho wiki.",
 	'admindashboard-control-add-photo-label' => 'Ouzhpennañ ur skeudenn',
-	'admindashboard-control-add-photo-tooltip' => 'Ouzhpennañ pajennoù nevez d\'ho wiki.',
+	'admindashboard-control-add-photo-tooltip' => "Ouzhpennañ pajennoù nevez d'ho wiki.",
 	'admindashboard-control-multiple-upload-label' => 'Ouzhpennañ meur a skeudenn',
 	'admindashboard-control-multiple-upload-tooltip' => 'Enporzhiañ meur a skeudenn war un dro gant an ostilh enporzhier skeudennoù a vras.',
-	'admindashboard-back-to-dashboard' => 'Distreiñ d\'an daolenn-stur',
-];
+	'admindashboard-back-to-dashboard' => "Distreiñ d'an daolenn-stur",
+);
 
-$messages['ca'] = [
-	'admindashboard-title' => 'Panell d\'Administració de {{SITENAME}}',
-	'admindashboard-header' => 'Panell d\'administració',
+$messages['ca'] = array(
+	'admindashboard-title' => "Panell d'Administració de {{SITENAME}}",
+	'admindashboard-header' => "Panell d'administració",
 	'admindashboard-toolbar-link' => 'Administració',
 	'admindashboard-tab-advanced' => 'Avançat',
 	'admindashboard-tab-general' => 'General',
@@ -251,9 +242,9 @@ $messages['ca'] = [
 	'admindashboard-control-theme-designer-label' => 'Dissenyador de Temes',
 	'admindashboard-control-theme-designer-tooltip' => 'El Dissenyador de Temes et permet personalitzar els colors del wiki, el fons i molt més.',
 	'admindashboard-control-recent-changes-label' => 'Canvis Recents',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'admindashboard-header' => 'Administrátorský panel',
 	'admindashboard-toolbar-link' => 'Správce',
 	'admindashboard-tab-advanced' => 'Pokročilé',
@@ -278,9 +269,9 @@ $messages['cs'] = [
 	'admindashboard-control-add-blog-tooltip' => 'Přidat příspěvek blogu do vaší wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Přidat více fotografií',
 	'admindashboard-control-multiple-upload-tooltip' => 'Nahrát více než jednu fotografii současně pomocí nástroje hromadného vkládání fotek.',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'admindashboard-loading' => 'Lade…',
 	'admindashboard-title' => '{{SITENAME}} Übersicht',
 	'admindashboard-header' => 'Wiki-Verwaltung',
@@ -326,9 +317,13 @@ $messages['de'] = [
 	'admindashboard-back-to-dashboard' => 'Zurück zur Übersicht',
 	'admindashboard-control-add-video-label' => 'Neues Video',
 	'admindashboard-control-add-video-tooltip' => 'Füge neue Videos zu deinem Wiki hinzu.',
-];
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-control-special-css-label' => 'CSS',
+	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'admindashboard-loading' => 'Barêno...',
 	'admindashboard-title' => 'panoy {{SITENAME}}',
 	'admindashboard-header' => 'Panoy Admini',
@@ -356,14 +351,14 @@ $messages['diq'] = [
 	'admindashboard-control-add-blog-label' => 'Nuştey blog dekerê de',
 	'admindashboard-control-add-blog-tooltip' => 'Wiki da xo rê nuştey blog dekerê de',
 	'admindashboard-control-multiple-upload-label' => 'Zaf Fotraf Deke',
-];
+);
 
-$messages['el'] = [
+$messages['el'] = array(
 	'admindashboard-loading' => 'Φόρτωση...',
 	'admindashboard-control-invite-label' => 'Πρόσκληση',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'admindashboard-loading' => 'Cargando...',
 	'admindashboard-title' => 'Panel de {{SITENAME}}',
 	'admindashboard-header' => 'Panel de Administración',
@@ -410,9 +405,12 @@ $messages['es'] = [
 	'admindashboard-control-add-video-label' => 'Añadir un vídeo',
 	'admindashboard-control-add-video-tooltip' => 'Añade vídeos nuevos a tu wiki.',
 	'admindashboard-control-special-css-tooltip' => 'Personaliza tu comunidad con CSS local.',
-];
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-control-special-css-label' => 'CSS',
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'admindashboard-toolbar-link' => 'مدیر',
 	'admindashboard-tab-advanced' => 'پیشرفته',
 	'admindashboard-tab-general' => 'عمومی',
@@ -423,9 +421,9 @@ $messages['fa'] = [
 	'admindashboard-control-help-label' => 'راهنما',
 	'admindashboard-control-help-tooltip' => 'جستجوی راهنما',
 	'admindashboard-control-categories-list-label' => 'همهٔ رده‌ها',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'admindashboard-loading' => 'Ladataan...',
 	'admindashboard-title' => '{{GRAMMAR:genitive|{{SITENAME}}}} kojelauta',
 	'admindashboard-header' => 'Ylläpitäjän kojelauta',
@@ -469,9 +467,9 @@ $messages['fi'] = [
 	'admindashboard-control-multiple-upload-tooltip' => 'Lisää yhtä useampia kuvia samalla kertaa usean kuvan lataustyökalulla.',
 	'admindashboard-back-to-dashboard' => 'Takaisin kojelautaan',
 	'admindashboard-control-help-url' => 'http://yhteiso.wikia.com/wiki/Ohje:Sisällöt',
-];
+);
 
-$messages['fo'] = [
+$messages['fo'] = array(
 	'admindashboard-loading' => 'Tekur niður...',
 	'admindashboard-title' => '{{SITENAME}} Tólborð',
 	'admindashboard-header' => 'Tólborð fyri umboðsstjórar (administratorar)',
@@ -490,9 +488,9 @@ $messages['fo'] = [
 	'admindashboard-control-add-photo-label' => 'Legg eina mynd her',
 	'admindashboard-control-add-photo-tooltip' => 'Legg nýggjar myndir á tína wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Legg fleiri myndir her',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'admindashboard-loading' => 'Chargement…',
 	'admindashboard-title' => '{{SITENAME}} — Tableau de bord',
 	'admindashboard-header' => 'Tableau de bord administrateur',
@@ -518,7 +516,7 @@ $messages['fr'] = [
 	'admindashboard-control-group-rights-label' => 'Droits groupe',
 	'admindashboard-control-group-rights-tooltip' => 'Aperçu des droits pour les différents groupes utilisateur.',
 	'admindashboard-control-invite-label' => 'Inviter',
-	'admindashboard-control-invite-tooltip' => 'Inviter d\'autres personnes à utiliser ce wiki.',
+	'admindashboard-control-invite-tooltip' => "Inviter d'autres personnes à utiliser ce wiki.",
 	'admindashboard-control-help-label' => 'Aide',
 	'admindashboard-control-help-tooltip' => 'Trouver de l’aide.',
 	'admindashboard-control-community-corner-label' => 'Coin de la communauté',
@@ -533,15 +531,18 @@ $messages['fr'] = [
 	'admindashboard-control-add-blog-label' => 'Ajouter un billet de blog',
 	'admindashboard-control-add-blog-tooltip' => 'Ajouter un billet de blog à votre wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Ajouter plusieurs images',
-	'admindashboard-control-multiple-upload-tooltip' => 'Importer plus d’une image à la fois avec l’outil d\'importation d’importation d’images multiples.',
+	'admindashboard-control-multiple-upload-tooltip' => "Importer plus d’une image à la fois avec l’outil d'importation d’importation d’images multiples.",
 	'admindashboard-back-to-dashboard' => 'Retour au tableau de bord',
 	'admindashboard-control-add-video-label' => 'Ajouter une vidéo',
 	'admindashboard-control-add-video-tooltip' => 'Ajoutez de nouvelles vidéos sur votre wiki.',
 	'admindashboard-control-help-url' => 'http://communaute.wikia.com/wiki/Aide:Contenu',
-	'admindashboard-desc' => 'Un tableau de bord à destination des administrateurs pour qu\'ils aient un accès rapide à leurs outils',
-];
+	'admindashboard-desc' => "Un tableau de bord à destination des administrateurs pour qu'ils aient un accès rapide à leurs outils",
+	'admindashboard-control-special-css-label' => 'CSS',
+	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'admindashboard-loading' => 'Cargando…',
 	'admindashboard-title' => 'Taboleiro de {{SITENAME}}',
 	'admindashboard-header' => 'Taboleiro dos administradores',
@@ -584,9 +585,9 @@ $messages['gl'] = [
 	'admindashboard-control-multiple-upload-label' => 'Engadir varias fotografías',
 	'admindashboard-control-multiple-upload-tooltip' => 'Cargar máis dunha foto á vez coa ferramenta de subida múltiple de fotos.',
 	'admindashboard-back-to-dashboard' => 'Volver ao taboleiro',
-];
+);
 
-$messages['he'] = [
+$messages['he'] = array(
 	'admindashboard-toolbar-link' => 'מפעיל מערכת',
 	'admindashboard-tab-advanced' => 'Cמתקדם',
 	'admindashboard-tab-general' => 'כללי',
@@ -619,9 +620,9 @@ $messages['he'] = [
 	'admindashboard-control-add-blog-tooltip' => 'הוספת הודעת בלוג חדשה לוויקי שלך.',
 	'admindashboard-control-multiple-upload-label' => 'הוספת תמונות מרובות',
 	'admindashboard-control-multiple-upload-tooltip' => 'להוספת יותר מתמונה אחת בו זמניתת באמצעות כלי העלאת תמונות מרובות.',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'admindashboard-loading' => 'Betöltés…',
 	'admindashboard-title' => '{{SITENAME}} Műszerfal',
 	'admindashboard-header' => 'Adminisztrációs panel',
@@ -662,9 +663,17 @@ $messages['hu'] = [
 	'admindashboard-control-multiple-upload-label' => 'Több kép feltöltése',
 	'admindashboard-control-multiple-upload-tooltip' => 'Több kép egyidejű feltöltése.',
 	'admindashboard-back-to-dashboard' => 'Vissza a műszerfalhoz',
-];
+);
 
-$messages['ia'] = [
+$messages['hu-formal'] = array(
+	'admindashboard-control-theme-designer-tooltip' => 'A tématervezővel megváltoztathatja a wiki színeit, hátterét és még sok mást.',
+	'admindashboard-control-user-list-tooltip' => 'A wikin részt vett felhasználók listájának megtekintése',
+	'admindashboard-control-user-rights-tooltip' => 'A wikin résztvevő felhasználók jogainak módosítása.',
+	'admindashboard-control-community-corner-tooltip' => 'Változtassa meg a wikid közösségi sarkát a felhasználók figyelmének felhívására.',
+	'admindashboard-control-add-blog-tooltip' => 'Blogbejegyzés hozzáadása a wikihez.',
+);
+
+$messages['ia'] = array(
 	'admindashboard-loading' => 'Cargamento…',
 	'admindashboard-title' => 'Pannello de instrumentos de {{SITENAME}}',
 	'admindashboard-header' => 'Pannello de administration',
@@ -707,9 +716,9 @@ $messages['ia'] = [
 	'admindashboard-control-multiple-upload-label' => 'Adder multiple photos',
 	'admindashboard-control-multiple-upload-tooltip' => 'Incargar plure photos simultaneemente con le instrumento pro incargamento de multiple photos.',
 	'admindashboard-back-to-dashboard' => 'Retornar al pannello de instrumentos',
-];
+);
 
-$messages['id'] = [
+$messages['id'] = array(
 	'admindashboard-title' => '{{SITENAME}} Dasbor',
 	'admindashboard-header' => 'Admin Dasbor',
 	'admindashboard-toolbar-link' => 'Pengurus',
@@ -751,9 +760,9 @@ $messages['id'] = [
 	'admindashboard-control-multiple-upload-label' => 'Menambahkan beberapa foto',
 	'admindashboard-control-multiple-upload-tooltip' => 'Mengunggah lebih dari satu foto secara bersamaan dengan alat unggah foto secara bersamaan.',
 	'admindashboard-back-to-dashboard' => 'Kembali ke Dashboard',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'admindashboard-loading' => 'Caricamento in corso...',
 	'admindashboard-title' => '{{SITENAME}} - Pannello di controllo',
 	'admindashboard-header' => 'Pannello di controllo Admin',
@@ -789,7 +798,7 @@ $messages['it'] = [
 	'admindashboard-control-categories-list-tooltip' => 'Visualizza tutte le categorie presenti attualmente nella tua wiki.',
 	'admindashboard-control-add-page-label' => 'Crea una Pagina',
 	'admindashboard-control-add-page-tooltip' => 'Crea una nuova pagina nella tua wiki.',
-	'admindashboard-control-add-photo-label' => 'Carica un\'Immagine',
+	'admindashboard-control-add-photo-label' => "Carica un'Immagine",
 	'admindashboard-control-add-photo-tooltip' => 'Carica una nuova immagine nella tua wiki.',
 	'admindashboard-control-add-blog-label' => 'Aggiungi un post nel Blog',
 	'admindashboard-control-add-blog-tooltip' => 'Aggiungi un post nel Blog della tua wiki.',
@@ -801,9 +810,11 @@ $messages['it'] = [
 	'admindashboard-control-help-url' => 'http://it.community.wikia.com/wiki/Aiuto:Contenuti',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-special-css-tooltip' => 'Personalizza la tua wiki con il CSS locale.',
-];
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'admindashboard-title' => '{{SITENAME}} ダッシュボード',
 	'admindashboard-header' => '管理者ダッシュボード',
 	'admindashboard-toolbar-link' => '管理作業',
@@ -814,7 +825,7 @@ $messages['ja'] = [
 	'admindashboard-control-theme-designer-tooltip' => 'テーマデザイナでは、ウィキの各文字の色や背景などを設定できます。',
 	'admindashboard-control-recent-changes-label' => '最近の更新',
 	'admindashboard-control-recent-changes-tooltip' => '最近の更新では、このウィキで行われたすべての変更を確認できます。',
-	'admindashboard-control-top-navigation-label' => 'トップ<br />ナビゲーション',
+	'admindashboard-control-top-navigation-label' => 'トップナビゲーション',
 	'admindashboard-control-top-navigation-tooltip' => 'ウィキの上部にあるナビゲーションメニューを編集できます。',
 	'admindashboard-control-wiki-features-label' => 'ウィキ・フィーチャーズ',
 	'admindashboard-control-wiki-features-tooltip' => 'オプション扱いの拡張機能の有効・無効の切り替えを行います。',
@@ -827,18 +838,18 @@ $messages['ja'] = [
 	'admindashboard-control-user-rights-tooltip' => 'このウィキの利用者に対して、権限の付与・除去を行えます。',
 	'admindashboard-control-help-label' => 'ヘルプ',
 	'admindashboard-control-help-tooltip' => 'ヘルプを探します。',
-	'admindashboard-control-community-corner-label' => 'コミュニティ<br />コーナー',
+	'admindashboard-control-community-corner-label' => 'コミュニティコーナー',
 	'admindashboard-control-community-corner-tooltip' => '「コミュニティコーナー」を編集し、このウィキの利用者に対して通知を行うことができます。',
 	'admindashboard-controls-content-header' => 'コンテンツ',
 	'admindashboard-control-categories-list-label' => '全カテゴリ',
 	'admindashboard-control-categories-list-tooltip' => 'このウィキに現在ある全てのカテゴリを一覧で閲覧できます。',
 	'admindashboard-control-add-page-label' => 'ページを作成',
 	'admindashboard-control-add-page-tooltip' => '新しいページを作成します。',
-	'admindashboard-control-add-photo-label' => '画像を<br />アップロード',
+	'admindashboard-control-add-photo-label' => '画像をアップロード',
 	'admindashboard-control-add-photo-tooltip' => '新しい画像をアップロードします。',
 	'admindashboard-control-add-blog-label' => 'ブログ記事を投稿',
 	'admindashboard-control-add-blog-tooltip' => 'ブログ記事を投稿します。',
-	'admindashboard-control-multiple-upload-label' => '複数の画像を<br />アップロード',
+	'admindashboard-control-multiple-upload-label' => '複数の画像をアップロード',
 	'admindashboard-control-multiple-upload-tooltip' => '複数の画像を一度にアップロードできるツールです。',
 	'admindashboard-back-to-dashboard' => 'ダッシュボードに戻る',
 	'admindashboard-control-add-video-label' => '動画を追加',
@@ -846,9 +857,16 @@ $messages['ja'] = [
 	'admindashboard-control-help-url' => 'http://ja.community.wikia.com/wiki/%E3%83%98%E3%83%AB%E3%83%97:%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84',
 	'admindashboard-control-special-css-tooltip' => 'ローカルのCSSであなたのウィキアをカスタマイズします。',
 	'admindashboard-loading' => 'ロード中…',
-];
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-control-special-css-label' => 'CSS',
+	'admindashboard-control-group-rights-label' => 'Group Rights',
+	'admindashboard-control-group-rights-tooltip' => 'Overview of rights for the different user groups.',
+	'admindashboard-control-invite-label' => 'Invite',
+	'admindashboard-control-invite-tooltip' => 'Invite other people to use this wiki.',
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'admindashboard-loading' => '불러오는 중…',
 	'admindashboard-title' => '{{SITENAME}} 대시보드',
 	'admindashboard-header' => '관리 대시보드',
@@ -895,15 +913,15 @@ $messages['ko'] = [
 	'admindashboard-control-add-video-tooltip' => '위키에 새 동영상을 추가합니다.',
 	'admindashboard-control-help-url' => 'http://ko.wikia.com',
 	'admindashboard-control-special-css-tooltip' => '로컬 CSS로 이 위키를 꾸며 보세요.',
-];
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'admindashboard-control-help-label' => 'Alîkarî',
 	'admindashboard-controls-content-header' => 'Naverok',
 	'admindashboard-control-categories-list-label' => 'Hemû kategorî',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'admindashboard-tab-general' => 'Allgemeng',
 	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-recent-changes-label' => 'Rezent Ännerungen',
@@ -919,9 +937,9 @@ $messages['lb'] = [
 	'admindashboard-control-add-page-tooltip' => 'Eng nei Säit bei Är Wiki derbäisetzen.',
 	'admindashboard-control-add-photo-label' => 'Eng Foto derbäisetzen',
 	'admindashboard-control-multiple-upload-label' => 'Méi Fotoen derbäisetzen',
-];
+);
 
-$messages['lt'] = [
+$messages['lt'] = array(
 	'admindashboard-toolbar-link' => 'Administratorius',
 	'admindashboard-tab-advanced' => 'Išplėstinis',
 	'admindashboard-controls-wiki-header' => 'Wiki',
@@ -946,9 +964,9 @@ $messages['lt'] = [
 	'admindashboard-control-add-blog-tooltip' => 'Pridėti naują internetinio dienoraščio pranešimą į savo wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Pridėti kelias nuotraukas',
 	'admindashboard-control-multiple-upload-tooltip' => 'Įkelkite daugiau nei vieną nuotrauką iš karto su "the multiple photo upload tool".',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'admindashboard-loading' => 'Вчитувам...',
 	'admindashboard-title' => 'Табла на {{SITENAME}}',
 	'admindashboard-header' => 'Администраторска табла',
@@ -992,9 +1010,9 @@ $messages['mk'] = [
 	'admindashboard-control-multiple-upload-label' => 'Додај повеќе слики наеднаш',
 	'admindashboard-control-multiple-upload-tooltip' => 'Додајте повеќе слики наеднаш со алатката за повеќекратно подигање на слики.',
 	'admindashboard-back-to-dashboard' => 'Назад на Таблата',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'admindashboard-loading' => 'Sedang dimuatkan...',
 	'admindashboard-title' => 'Papan Pemuka {{SITENAME}}',
 	'admindashboard-header' => 'Papan Pemuka Pentadbir',
@@ -1037,9 +1055,9 @@ $messages['ms'] = [
 	'admindashboard-control-multiple-upload-label' => 'Tambah Berbilang Gambar',
 	'admindashboard-control-multiple-upload-tooltip' => 'Muat naik lebih daripada satu gambar sekali dengan alat muat naik berbilang gambar.',
 	'admindashboard-back-to-dashboard' => 'Kembali ke Papan Pemuka',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'admindashboard-loading' => 'Laster...',
 	'admindashboard-title' => '{{SITENAME}}-dashbord',
 	'admindashboard-header' => 'Dashbord for administratorer',
@@ -1083,9 +1101,9 @@ $messages['nb'] = [
 	'admindashboard-control-multiple-upload-label' => 'Legg til flere bilder',
 	'admindashboard-control-multiple-upload-tooltip' => 'Last opp mer enn ett bilde av gangen med verktøyet for opplasting av flere bilder.',
 	'admindashboard-back-to-dashboard' => 'Tilbake til dashbordet',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'admindashboard-loading' => 'Bezig met laden...',
 	'admindashboard-title' => '{{SITENAME}}-dashboard',
 	'admindashboard-header' => 'Beheerdersdashboard',
@@ -1102,7 +1120,7 @@ $messages['nl'] = [
 	'admindashboard-control-wiki-features-label' => 'Wikifuncties',
 	'admindashboard-control-wiki-features-tooltip' => 'Via Wikifuncties kunt u extra functionaliteit inschakelen voor uw wiki.',
 	'admindashboard-control-page-layout-builder-label' => 'Wizard voor paginavormgeving',
-	'admindashboard-control-page-layout-builder-tooltip' => 'Via de Wizard voor paginavormgeving kunt u sjablonen voor de vormgeving van pagina\'s maken waaruit gebruikers kunnen kiezen bij het aanmaken van nieuwe pagina\'s.',
+	'admindashboard-control-page-layout-builder-tooltip' => "Via de Wizard voor paginavormgeving kunt u sjablonen voor de vormgeving van pagina's maken waaruit gebruikers kunnen kiezen bij het aanmaken van nieuwe pagina's.",
 	'admindashboard-controls-community-header' => 'Gemeenschap',
 	'admindashboard-control-user-list-label' => 'Gebruikerslijst',
 	'admindashboard-control-user-list-tooltip' => 'De volledige lijst van gebruikers die aan uw wiki hebben meegewerkt bekijken.',
@@ -1128,18 +1146,18 @@ $messages['nl'] = [
 	'admindashboard-control-multiple-upload-label' => 'Meerdere afbeeldingen toevoegen',
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload meerdere afbeeldingen tegelijkertijd met dit uploadprogramma.',
 	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
-];
+);
 
-$messages['pfl'] = [
+$messages['pfl'] = array(
 	'admindashboard-toolbar-link' => 'Admin',
 	'admindashboard-controls-wiki-header' => 'Wiki',
-];
+);
 
-$messages['pi'] = [
+$messages['pi'] = array(
 	'admindashboard-controls-wiki-header' => 'विकि',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'admindashboard-loading' => 'Trwa ładowanie...',
 	'admindashboard-title' => 'Panel {{SITENAME}}',
 	'admindashboard-header' => 'Panel Administratora',
@@ -1187,9 +1205,11 @@ $messages['pl'] = [
 	'admindashboard-control-add-video-tooltip' => 'Dodaj nowe filmy do Twojej wiki.',
 	'admindashboard-control-special-css-tooltip' => 'Dostosuj skórkę wiki edytując lokalny kod CSS.',
 	'right-admindashboard' => 'Dostęp do Panelu Administratora',
-];
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-control-special-css-label' => 'CSS',
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'admindashboard-toolbar-link' => 'پازوال',
 	'admindashboard-tab-advanced' => 'پرمختللی',
 	'admindashboard-tab-general' => 'ټولګړی',
@@ -1209,54 +1229,9 @@ $messages['ps'] = [
 	'admindashboard-control-add-photo-label' => 'يو انځور ورګډول',
 	'admindashboard-control-add-photo-tooltip' => 'خپل ويکي ته نوي انځورونه ورګډ کړی.',
 	'admindashboard-control-multiple-upload-label' => 'ګڼ انځورونه ورډېرول',
-];
+);
 
-$messages['pt'] = [
-	'admindashboard-loading' => 'A carregar...',
-	'admindashboard-title' => 'Painel de administração da {{SITENAME}}',
-	'admindashboard-header' => 'Painel de administração',
-	'admindashboard-toolbar-link' => 'Administrador',
-	'admindashboard-tab-advanced' => 'Avançado',
-	'admindashboard-tab-general' => 'Geral',
-	'admindashboard-controls-wiki-header' => 'Wiki',
-	'admindashboard-control-theme-designer-label' => 'Compositor de Temas Visuais',
-	'admindashboard-control-theme-designer-tooltip' => 'O Compositor de Temas Visuais permite-te personalizar as cores da wiki, fundo, e muito mais.',
-	'admindashboard-control-recent-changes-label' => 'Mudanças Recentes',
-	'admindashboard-control-recent-changes-tooltip' => 'As Mudanças Recentes exibem todas as alterações feitas na sua wiki num certo período de tempo.',
-	'admindashboard-control-top-navigation-label' => 'Navegação Superior',
-	'admindashboard-control-top-navigation-tooltip' => 'A Navegação Superior permite-te personalizar o menu de navegação na parte superior da sua wiki.',
-	'admindashboard-control-wiki-features-label' => 'Funcionalidades Wiki',
-	'admindashboard-control-wiki-features-tooltip' => 'As Funcionalidades Wiki permitem-te ativar ferramentas adicionar na sua wiki.',
-	'admindashboard-control-page-layout-builder-label' => 'Criador de Designs',
-	'admindashboard-control-page-layout-builder-tooltip' => 'O Criador de Designs permite-te criar esquemas de páginas que os utilizadores possam escolher e utilizar para criar páginas novas.',
-	'admindashboard-controls-community-header' => 'Comunidade',
-	'admindashboard-control-user-list-label' => 'Lista de Utilizadores',
-	'admindashboard-control-user-list-tooltip' => 'Ver uma lista completa dos utilizadores que participaram na sua wiki.',
-	'admindashboard-control-user-rights-label' => 'Direitos de Utilizador',
-	'admindashboard-control-user-rights-tooltip' => 'Adicionar e remover direitos de grupos e permissões de utilizadores na sua wiki.',
-	'admindashboard-control-group-rights-label' => 'Direitos de Grupo',
-	'admindashboard-control-group-rights-tooltip' => 'Visão geral dos direitos para os grupos de utilizadores diferentes.',
-	'admindashboard-control-invite-label' => 'Convidar',
-	'admindashboard-control-invite-tooltip' => 'Convidar outras pessoas para esta wiki.',
-	'admindashboard-control-help-label' => 'Ajuda',
-	'admindashboard-control-help-tooltip' => 'Encontrar Ajuda.',
-	'admindashboard-control-community-corner-label' => 'Portal Comunitário',
-	'admindashboard-control-community-corner-tooltip' => 'Edita o Portal Comunitário da sua wiki e notifica todos os utilizadores.',
-	'admindashboard-controls-content-header' => 'Conteúdo',
-	'admindashboard-control-categories-list-label' => 'Todas as Categorias',
-	'admindashboard-control-categories-list-tooltip' => 'Ver todas as categorias atualmente listadas na sua wiki.',
-	'admindashboard-control-add-page-label' => 'Adicionar uma página',
-	'admindashboard-control-add-page-tooltip' => 'Adicionar uma nova página para a sua wiki.',
-	'admindashboard-control-add-photo-label' => 'Adicionar uma imagem',
-	'admindashboard-control-add-photo-tooltip' => 'Adicione novas fotos ao seu wiki.',
-	'admindashboard-control-add-blog-label' => 'Adicionar uma postagem de Blogue',
-	'admindashboard-control-add-blog-tooltip' => 'Adicionar uma postagem de Blogue para a sua wiki.',
-	'admindashboard-control-multiple-upload-label' => 'Adicionar várias imagens',
-	'admindashboard-control-multiple-upload-tooltip' => 'Envie mais do que uma imagem de cada vez com a nossa ferramenta de envio de imagens.',
-	'admindashboard-back-to-dashboard' => 'Voltar ao Painel de administração',
-];
-
-$messages['pt-br'] = [
+$messages['pt'] = array(
 	'admindashboard-title' => 'Painel de Administração da {{SITENAME}}',
 	'admindashboard-header' => 'Painel de administração',
 	'admindashboard-toolbar-link' => 'Administração',
@@ -1294,18 +1269,30 @@ $messages['pt-br'] = [
 	'admindashboard-control-add-blog-label' => 'Adicionar uma postagem de Blog',
 	'admindashboard-control-add-blog-tooltip' => 'Adicionar uma postagem de Blog para sua wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Adicionar várias imagens',
-];
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-loading' => 'Loading…',
+	'admindashboard-control-wiki-features-label' => 'Wiki Features',
+	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features lets you enable additional features on your wiki.',
+	'admindashboard-control-special-css-label' => 'CSS',
+	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
+	'admindashboard-control-help-url' => 'http://community.wikia.com/wiki/Help:Contents',
+	'admindashboard-control-add-video-label' => 'Add a Video',
+	'admindashboard-control-add-video-tooltip' => 'Add new videos to your wiki.',
+	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
+	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'admindashboard-tab-general' => 'Generale',
 	'admindashboard-controls-wiki-header' => 'Uicchi',
 	'admindashboard-controls-community-header' => 'Comunitate',
 	'admindashboard-controls-content-header' => 'Condenute',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'admindashboard-loading' => 'Загрузка...',
-	'admindashboard-title' => 'Кабинет администратора {{SITENAME}}',
+	'admindashboard-title' => '{{SITENAME}}: Кабинет администратора',
 	'admindashboard-header' => 'Кабинет администратора',
 	'admindashboard-toolbar-link' => 'Админ.',
 	'admindashboard-tab-advanced' => 'Расширенный',
@@ -1317,8 +1304,8 @@ $messages['ru'] = [
 	'admindashboard-control-recent-changes-tooltip' => 'На странице Свежих правок отображаются все изменения, сделанные на вики за последнее время',
 	'admindashboard-control-top-navigation-label' => 'Меню навигации',
 	'admindashboard-control-top-navigation-tooltip' => 'Это позволяет настроить меню навигации, которое расположено в верхней части вики',
-	'admindashboard-control-wiki-features-label' => 'Wiki Features',
-	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features позволяет вам подключать дополнительные расширения на вашей вики.',
+	'admindashboard-control-wiki-features-label' => 'Расширения вики',
+	'admindashboard-control-wiki-features-tooltip' => 'Расширения вики позволяют вам подключать дополнительные функции на вашей вики.',
 	'admindashboard-control-page-layout-builder-label' => 'Страница создания макетов',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Мастер создания макетов позволяет вам создавать макеты страниц. Участники смогут использовать их при создании новых страниц вики.',
 	'admindashboard-controls-community-header' => 'Сообщество',
@@ -1330,11 +1317,11 @@ $messages['ru'] = [
 	'admindashboard-control-group-rights-tooltip' => 'Обзор прав для различных групп участников',
 	'admindashboard-control-invite-label' => 'Пригласить',
 	'admindashboard-control-invite-tooltip' => 'Пригласить других людей редактировать эту вики.',
-	'admindashboard-control-help-label' => 'Помощь',
-	'admindashboard-control-help-tooltip' => 'Найти помощь.',
+	'admindashboard-control-help-label' => 'Справка',
+	'admindashboard-control-help-tooltip' => 'Найти в Справке',
 	'admindashboard-control-community-corner-label' => 'Уголок сообщества',
 	'admindashboard-control-community-corner-tooltip' => 'Изменить текст в Уголке сообщества, чтобы уведомить участников.',
-	'admindashboard-controls-content-header' => 'Содержимое Вики',
+	'admindashboard-controls-content-header' => 'Содержимое вики',
 	'admindashboard-control-categories-list-label' => 'Все категории',
 	'admindashboard-control-categories-list-tooltip' => 'Просмотреть все категории, которые существуют на вики в настоящий момент.',
 	'admindashboard-control-add-page-label' => 'Добавить страницу',
@@ -1343,23 +1330,26 @@ $messages['ru'] = [
 	'admindashboard-control-add-photo-tooltip' => 'Добавить новые изображения на вики.',
 	'admindashboard-control-add-blog-label' => 'Добавить сообщение в блоге',
 	'admindashboard-control-add-blog-tooltip' => 'Добавить новое сообщение в блоге на вики.',
-	'admindashboard-control-multiple-upload-label' => 'Добавить несколько фотографий',
+	'admindashboard-control-multiple-upload-label' => 'Добавить несколько изображений',
 	'admindashboard-control-multiple-upload-tooltip' => 'Загрузить несколько изображений одновременно с помощью специального инструмента.',
 	'admindashboard-back-to-dashboard' => 'Вернуться в Кабинет',
 	'admindashboard-control-add-video-label' => 'Добавить видео',
 	'admindashboard-control-add-video-tooltip' => 'Добавить новое видео на вики.',
-	'admindashboard-control-help-url' => 'http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5',
+	'admindashboard-control-help-url' => 'http://ru.community.wikia.com/wiki/Справка:Содержание',
 	'admindashboard-control-special-css-tooltip' => 'Измените свою вики с помощью локального CSS.',
-];
+	'admindashboard-desc' => 'Панель для администраторов с быстрым доступом к инструментам',
+	'admindashboard-control-special-css-label' => 'CSS',
+	'right-admindashboard' => 'Доступ к инструментам администратора через Special:AdminDashboard',
+);
 
-$messages['si'] = [
+$messages['si'] = array(
 	'admindashboard-toolbar-link' => 'පරිපාලක',
 	'admindashboard-tab-advanced' => 'ප්‍රගත',
 	'admindashboard-tab-general' => 'සාමාන්‍ය',
 	'admindashboard-controls-wiki-header' => 'විකි',
-];
+);
 
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'admindashboard-title' => 'Табла на {{SITENAME}}',
 	'admindashboard-header' => 'Администраторска табла',
 	'admindashboard-toolbar-link' => 'Администратор',
@@ -1390,9 +1380,9 @@ $messages['sr-ec'] = [
 	'admindashboard-control-add-blog-tooltip' => 'Додајте блоговску поруку на вики.',
 	'admindashboard-control-multiple-upload-label' => 'Додај више слика одједном',
 	'admindashboard-back-to-dashboard' => 'Назад на Таблу',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'admindashboard-loading' => 'Läser in...',
 	'admindashboard-title' => '{{SITENAME}}s instrumentpanel',
 	'admindashboard-header' => 'Instrumentpanel för administratörer',
@@ -1435,9 +1425,9 @@ $messages['sv'] = [
 	'admindashboard-control-multiple-upload-label' => 'Lägg till flera foton',
 	'admindashboard-control-multiple-upload-tooltip' => 'Ladda upp fler än ett foto på en gång med verktyget för överföring av flera foton.',
 	'admindashboard-back-to-dashboard' => 'Tillbaka till instrumentpanel',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'admindashboard-toolbar-link' => 'நிர்வாகி',
 	'admindashboard-tab-advanced' => 'மேம்பட்ட',
 	'admindashboard-tab-general' => 'பொது',
@@ -1451,17 +1441,17 @@ $messages['ta'] = [
 	'admindashboard-controls-content-header' => 'பொருளடக்கம்',
 	'admindashboard-control-categories-list-label' => 'அனைத்து பகுப்புகளும்',
 	'admindashboard-control-add-page-label' => 'ஒரு பக்கத்தை சேர்',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'admindashboard-tab-advanced' => 'ఉన్నతం',
 	'admindashboard-tab-general' => 'సాధారణం',
 	'admindashboard-controls-wiki-header' => 'వికీ',
 	'admindashboard-control-help-label' => 'సహాయం',
 	'admindashboard-control-categories-list-label' => 'అన్ని వర్గాలు',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'admindashboard-loading' => 'Ikinakarga…',
 	'admindashboard-title' => 'Tapalodo ng {{SITENAME}}',
 	'admindashboard-header' => 'Tapalodo ng Tagapangasiwa',
@@ -1485,7 +1475,7 @@ $messages['tl'] = [
 	'admindashboard-control-user-rights-label' => 'Mga Karapatan ng Tagagamit',
 	'admindashboard-control-user-rights-tooltip' => 'Magdagdag at mag-alis ng mga karapatan at mga kapahintulutan ng pangkat para sa mga tagagamit na nasa wiki mo.',
 	'admindashboard-control-group-rights-label' => 'Mga Karapatan ng Pangkat',
-	'admindashboard-control-group-rights-tooltip' => 'Pangkalahatang-ideya sa mga karapatan para sa iba\'t ibang mga pangkat ng tagagamit.',
+	'admindashboard-control-group-rights-tooltip' => "Pangkalahatang-ideya sa mga karapatan para sa iba't ibang mga pangkat ng tagagamit.",
 	'admindashboard-control-invite-label' => 'Anyayahan',
 	'admindashboard-control-invite-tooltip' => 'Mag-anyaya ng ibang mga tao na gamitin ang wiking ito.',
 	'admindashboard-control-help-label' => 'Tulong',
@@ -1505,9 +1495,9 @@ $messages['tl'] = [
 	'admindashboard-control-multiple-upload-label' => 'Magdagdag ng Maramihang mga Larawan',
 	'admindashboard-control-multiple-upload-tooltip' => 'Sabay-sabay na magkarga ng mahigit sa isang larawan sa pamamagitan ng kasangkapan na pangmaramihang larawan.',
 	'admindashboard-back-to-dashboard' => 'Magbalik sa Tapalodo',
-];
+);
 
-$messages['tly'] = [
+$messages['tly'] = array(
 	'admindashboard-controls-wiki-header' => 'Вики',
 	'admindashboard-control-recent-changes-label' => 'Ән нујә дәгишон',
 	'admindashboard-control-help-label' => 'Арајиш',
@@ -1516,9 +1506,9 @@ $messages['tly'] = [
 	'admindashboard-control-add-page-tooltip' => 'Тожә сәһифә зијод карде бә вики.',
 	'admindashboard-control-add-photo-label' => 'Шикил зијод карде',
 	'admindashboard-control-add-photo-tooltip' => 'Тожә шикилон зијод карде бә вики.',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'admindashboard-tab-general' => 'Genel',
 	'admindashboard-control-recent-changes-label' => 'Son Değişiklikler',
 	'admindashboard-controls-community-header' => 'Topluluk',
@@ -1527,9 +1517,9 @@ $messages['tr'] = [
 	'admindashboard-control-group-rights-label' => 'Grup Hakları',
 	'admindashboard-control-help-label' => 'Yardım',
 	'admindashboard-control-categories-list-label' => 'Tüm Kategoriler',
-];
+);
 
-$messages['tt-cyrl'] = [
+$messages['tt-cyrl'] = array(
 	'admindashboard-loading' => 'Йөкләү...',
 	'admindashboard-title' => '{{SITENAME}} идарәчесе бүлмәсе',
 	'admindashboard-header' => 'Идарәче бүлмәсе',
@@ -1573,9 +1563,9 @@ $messages['tt-cyrl'] = [
 	'admindashboard-control-multiple-upload-label' => 'Берничә сурәт өстәргә',
 	'admindashboard-control-multiple-upload-tooltip' => 'Махсус корал ярдәмендә бер юлы берничә сурәт  өстәргә.',
 	'admindashboard-back-to-dashboard' => 'Кабинетка кире кайтырга',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'admindashboard-title' => 'Панель адміністратора {{SITENAME}}',
 	'admindashboard-header' => 'Панель адміністратора',
 	'admindashboard-toolbar-link' => 'Адміністратор',
@@ -1620,9 +1610,9 @@ $messages['uk'] = [
 	'admindashboard-control-add-video-label' => 'Додати відео',
 	'admindashboard-control-add-video-tooltip' => 'Додати нові відео до цієї вікі.',
 	'admindashboard-loading' => 'Завантаження...',
-];
+);
 
-$messages['vep'] = [
+$messages['vep'] = array(
 	'admindashboard-toolbar-link' => 'Admin',
 	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-theme-designer-label' => 'Temiden dizainer',
@@ -1630,9 +1620,9 @@ $messages['vep'] = [
 	'admindashboard-control-invite-label' => 'Kucta',
 	'admindashboard-control-help-label' => 'Abu',
 	'admindashboard-control-help-tooltip' => 'Löuta abud',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'admindashboard-loading' => 'Đang tải...',
 	'admindashboard-title' => 'Bảng điều khiển {{SITENAME}}',
 	'admindashboard-header' => 'Bảng điều khiển bảo quản viên',
@@ -1680,9 +1670,9 @@ $messages['vi'] = [
 	'admindashboard-control-help-url' => 'http://congdong.wikia.com/wiki/Help:Mục_lục',
 	'admindashboard-control-special-css-tooltip' => 'Tùy chỉnh wikia của bạn với CSS.',
 	'admindashboard-desc' => 'Bảng điều khiển dành cho bảo quản viên với sự truy cập công cụ dễ dàng hơn',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'admindashboard-title' => '{{SITENAME}}面板',
 	'admindashboard-header' => '管理员控制面板',
 	'admindashboard-toolbar-link' => '管理员面板',
@@ -1729,9 +1719,12 @@ $messages['zh-hans'] = [
 	'admindashboard-control-user-list-tooltip' => '查看参与你的wiki的完整用户清单。',
 	'admindashboard-control-wiki-features-tooltip' => 'Wikia功能让你启用wiki上更多的功能',
 	'admindashboard-loading' => '载入中…',
-];
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-control-special-css-label' => 'CSS',
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'admindashboard-title' => '{{SITENAME}}面板',
 	'admindashboard-header' => '管理員控制面板',
 	'admindashboard-toolbar-link' => '管理員面板',
@@ -1777,46 +1770,9 @@ $messages['zh-hant'] = [
 	'admindashboard-control-page-layout-builder-tooltip' => '頁面布局生成器讓你創建頁面的輪廓給創建新頁面的用戶選擇。',
 	'admindashboard-control-special-css-tooltip' => '用CSS自訂你的wiki。',
 	'admindashboard-loading' => '載入中…',
-];
-
-$messages['zh'] = [
-	'admindashboard-control-add-video-label' => '添加视频',
-	'admindashboard-control-add-video-tooltip' => '在你的wiki上添加新视频',
-	'admindashboard-control-community-corner-label' => '社区讯息',
-	'admindashboard-control-community-corner-tooltip' => '编辑 wiki 的社区讯息来通知用户。',
-	'admindashboard-control-help-url' => 'http://zh.community.wikia.com/wiki/Help:内容',
-	'admindashboard-control-invite-tooltip' => '邀请其他人使用此 wiki。',
-	'admindashboard-control-multiple-upload-tooltip' => '利用多图上传工具，一次上传多张图片。',
-	'admindashboard-control-page-layout-builder-tooltip' => '页面布局生成器让你创建页面的轮廓给创建新页面的用户选择。',
-	'admindashboard-control-special-css-tooltip' => '用CSS自定义你的wiki。',
-	'admindashboard-control-user-list-tooltip' => '查看参与你的wiki的完整用户清单。',
-	'admindashboard-control-wiki-features-tooltip' => 'Wikia功能让你启用wiki上更多的功能',
-	'admindashboard-loading' => '载入中…',
-	'admindashboard-toolbar-link' => '管理员面板',
-];
-
-$messages['zh-hk'] = [
-	'admindashboard-control-add-video-label' => '增加影片',
-	'admindashboard-control-add-video-tooltip' => '在你的wiki上增加新影片。',
-	'admindashboard-control-community-corner-label' => '社區訊息',
-	'admindashboard-control-community-corner-tooltip' => '編輯 wiki 的社區訊息來通知用戶。',
-	'admindashboard-control-help-url' => 'http://zh.community.wikia.com/wiki/Help:内容',
-	'admindashboard-control-page-layout-builder-label' => '頁面布局生成器',
-	'admindashboard-control-page-layout-builder-tooltip' => '頁面布局生成器讓你創建頁面的輪廓給創建新頁面的用戶選擇。',
-	'admindashboard-control-special-css-tooltip' => '用CSS自訂你的wiki。',
-	'admindashboard-loading' => '載入中…',
-	'admindashboard-toolbar-link' => '管理員面板',
-];
-
-$messages['zh-tw'] = [
-	'admindashboard-control-add-video-label' => '增加影片',
-	'admindashboard-control-add-video-tooltip' => '在你的wiki上增加新影片。',
-	'admindashboard-control-community-corner-label' => '社區訊息',
-	'admindashboard-control-community-corner-tooltip' => '編輯 wiki 的社區訊息來通知用戶。',
-	'admindashboard-control-help-url' => 'http://zh.community.wikia.com/wiki/Help:内容',
-	'admindashboard-control-page-layout-builder-label' => '頁面布局生成器',
-	'admindashboard-control-page-layout-builder-tooltip' => '頁面布局生成器讓你創建頁面的輪廓給創建新頁面的用戶選擇。',
-	'admindashboard-control-special-css-tooltip' => '用CSS自訂你的wiki。',
-	'admindashboard-loading' => '載入中…',
-];
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-control-special-css-label' => 'CSS',
+	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+);
 

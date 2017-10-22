@@ -4,7 +4,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
@@ -12,8 +11,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	adContext,
 	btfBlocker,
 	gptHelper,
-	adUnitBuilder,
-	passbackHandler,
+	defaultAdUnitBuilder,
 	slotRegistry,
 	log,
 	lookups
@@ -27,10 +25,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
 			delete slotMap.PREFOOTER_RIGHT_BOXAD;
 		}
-
-		if (!!slotMap.INCONTENT_LEADERBOARD && context.opts.incontentLeaderboardAsOutOfPage) {
-			delete slotMap.INCONTENT_LEADERBOARD.size;
-		}
 	}
 
 	/**
@@ -41,10 +35,10 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {string} src          - src to set in slot targeting
 	 * @param {Object} slotMap      - slot map (slot name => targeting)
 	 * @param {Object} [extra]      - optional extra params
-	 * @param {function} [extra.adUnitBuilder]  - provider's ad unit builder object
-	 * @param {function} [extra.beforeSuccess]  - function to call before calling success
-	 * @param {function} [extra.beforeCollapse] - function to call before calling collapse
-	 * @param {function} [extra.beforeHop]      - function to call before calling hop
+	 * @param {function} [extra.getAdUnitBuilder]  - provider's ad unit builder function
+	 * @param {function} [extra.afterSuccess]  - function to call before calling success
+	 * @param {function} [extra.afterCollapse] - function to call before calling collapse
+	 * @param {function} [extra.afterHop]      - function to call before calling hop
 	 * @param {function} [extra.onSlotRendered] - function to call before calling renderEnded
 	 * @param {boolean}  [extra.sraEnabled]     - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
@@ -66,7 +60,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		function addHook(slot, hookName, callback) {
 			log([hookName, slot.name], 'debug', logGroup);
 
-			slot.pre(hookName, function (adInfo) {
+			slot.post(hookName, function (adInfo) {
 				if (typeof callback === 'function') {
 					callback(slot.name, adInfo);
 				}
@@ -74,22 +68,22 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function getAdUnit(slot) {
-			if (extra.adUnitBuilder) {
-				return extra.adUnitBuilder.build(slot.name, src, passbackHandler.get(slot.name));
+			if (extra.getAdUnitBuilder) {
+				return extra.getAdUnitBuilder().build(slot.name, src);
 			}
 
-			return adUnitBuilder.build(slot.name, src);
+			return defaultAdUnitBuilder.build(slot.name, src);
 		}
 
 		function fillInSlot(slot) {
-			log(['fillInSlot', slot.name], 'debug', logGroup);
+			log(['fillInSlot', slot.name, providerName], 'debug', logGroup);
 
 			var slotPath = getAdUnit(slot),
 				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])); // copy value
 
-			addHook(slot, 'success', extra.beforeSuccess);
-			addHook(slot, 'collapse', extra.beforeCollapse);
-			addHook(slot, 'hop', extra.beforeHop);
+			addHook(slot, 'success', extra.afterSuccess);
+			addHook(slot, 'collapse', extra.afterCollapse);
+			addHook(slot, 'hop', extra.afterHop);
 			addHook(slot, 'renderEnded', extra.onSlotRendered);
 
 			slotTargeting.pos = slotTargeting.pos || slot.name;
@@ -97,16 +91,18 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotTargeting.rv = slotRegistry.getRefreshCount(slot.name).toString();
 
 			if (lookups) {
+				lookups.storeRealSlotPrices(slot.name);
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
+				slotRegistry.storeScrollY(slot.name);
 			}
 
 			gptHelper.pushAd(slot, slotPath, slotTargeting, {
 				sraEnabled: extra.sraEnabled,
-				recoverableSlots: extra.recoverableSlots,
+				isInstartLogicRecoverable: extra.isInstartLogicRecoverable ? extra.isInstartLogicRecoverable(slot.name) : false,
 				isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slot.name) : false,
 				isSourcePointRecoverable: extra.isSourcePointRecoverable ? extra.isSourcePointRecoverable(slot.name) : false
 			});
-			log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
+			log(['fillInSlot', slot.name, providerName, 'done'], 'debug', logGroup);
 		}
 
 		return {

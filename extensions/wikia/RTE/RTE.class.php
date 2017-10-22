@@ -1,6 +1,9 @@
 <?php
 
 class RTE {
+	
+	const INIT_MODE_SOURCE = 'source';
+	const INIT_MODE_WYSIWYG = 'wysiwyg';
 
 	// unique editor instance ID
 	private static $instanceId = null;
@@ -12,13 +15,13 @@ class RTE {
 	private static $useWysiwyg = true;
 
 	// reason of fallback to source mode
-	private static $wysiwygDisabledReason = false;
+	private static $wysiwygDisabledReason = '';
 
 	// are we using development version of CK?
 	private static $devMode;
 
 	// mode in which CK editor should be stared
-	private static $initMode = 'wysiwyg';
+	private static $initMode = self::INIT_MODE_WYSIWYG;
 
 	// list of edgecases which occurred in parsed wikitext
 	public static $edgeCases = array();
@@ -31,8 +34,8 @@ class RTE {
 	 *
 	 * @param EditPage $form
 	 */
-	public static function reverse($form,  $out = null) {
-		global $wgRequest;
+	public static function reverse( $form,  $out = null ): bool {
+        	global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		if($wgRequest->wasPosted()) {
@@ -57,7 +60,7 @@ class RTE {
 	 *
 	 * @author: Inez KorczyDski
 	 */
-	public static function replacePlaceholder($var) {
+	public static function replacePlaceholder( $var ) {
 		$data = RTEData::get('placeholder', intval($var[1]));
 
 		if($data) {
@@ -70,7 +73,7 @@ class RTE {
 	 *
 	 * @author: Macbre
 	 */
-	public static function renderPlaceholder($label, $data) {
+	public static function renderPlaceholder( $label, $data ) {
 		// this is placeholder
 		$data['placeholder'] = 1;
 
@@ -91,8 +94,10 @@ class RTE {
 	 * Setup Rich Text Editor by loading needed JS/CSS files and adding hook(s)
 	 *
 	 * @author Inez KorczyDski, Macbre
+	 * @param EditPage $form
+	 * @return bool
 	 */
-	public static function init(&$form) {
+	public static function init( EditPage $form ): bool {
 		global $wgOut, $wgHooks, $wgAllInOne, $wgRequest;
 
 		wfProfileIn(__METHOD__);
@@ -146,8 +151,11 @@ class RTE {
 
 	/**
 	 * Parse wikitext of edited article, so CK can be provided with HTML
+	 * @param EditPage $form
+	 * @param OutputPage $out
+	 * @return bool
 	 */
-	public static function init2(&$form, OutputPage &$out) {
+	public static function init2( EditPage $form, OutputPage $out ): bool {
 		wfProfileIn(__METHOD__);
 
 		// add hidden edit form field
@@ -157,13 +165,13 @@ class RTE {
 		self::addTemporarySaveFields($out);
 
 		// let's parse wikitext (only for wysiwyg mode)
-		if (self::$initMode == 'wysiwyg') {
+		if (self::$initMode == self::INIT_MODE_WYSIWYG) {
 			$html = RTE::WikitextToHtml($form->textbox1);
 		}
 
 		// check for edgecases (found during parsing done above)
 		if (RTE::edgeCasesFound()) {
-			self::setInitMode('source');
+		 	self::$initMode = self::INIT_MODE_SOURCE; 
 
 			// get edgecase type and add it to JS variables
 			$edgeCaseType = Xml::encodeJsVar(self::getEdgeCaseType());
@@ -176,13 +184,10 @@ class RTE {
 		}
 
 		// parse wikitext using RTEParser (only for wysiwyg mode)
-		if (self::$initMode == 'wysiwyg') {
+		if (self::$initMode == self::INIT_MODE_WYSIWYG) {
 			// set editor textarea content
 			$form->textbox1 = $html;
 		}
-
-		// allow other extensions to add extra HTML to edit form
-		wfRunHooks('RTEAddToEditForm', array(&$form, &$out));
 
 		wfProfileOut(__METHOD__);
 
@@ -194,14 +199,14 @@ class RTE {
 	 *
 	 * @author Macbre
 	 */
-	public static function makeGlobalVariablesScript(&$vars) {
+	public static function makeGlobalVariablesScript( &$vars ) {
 		global $wgLegalTitleChars, $wgServer, $wgExtensionsPath;
 
 		wfProfileIn(__METHOD__);
 
 		// reason why wysiwyg is disabled
 		if (self::$useWysiwyg === false) {
-			if (!empty(self::$wysiwygDisabledReason)) {
+			if (self::$wysiwygDisabledReason != '') {
 				$vars['RTEDisabledReason'] = self::$wysiwygDisabledReason;
 			}
 
@@ -261,9 +266,6 @@ class RTE {
 		$vars['RTECookieDomain'] = $wgCookieDomain;
 		$vars['RTECookiePath'] = $wgCookiePath;
 
-		// allow other extensions to add extra global JS variables to edit form
-		wfRunHooks('RTEAddGlobalVariablesScript', array(&$vars));
-
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -271,7 +273,7 @@ class RTE {
 	/**
 	 * Add class to <body> tag
 	 */
-	public static function addBodyClass(&$classes) {
+	public static function addBodyClass( &$classes ) {
 		$classes .= ' rte';
 		return true;
 	}
@@ -279,7 +281,7 @@ class RTE {
 	/**
 	 * Removes default editor toolbar, so we can lazy load icons for source mode toolbar (RT #78393)
 	 */
-	public static function removeDefaultToolbar(&$toolbar) {
+	public static function removeDefaultToolbar( &$toolbar ) {
 		$toolbar = strtr($toolbar, array(
 			'<div id="toolbar">' => '',
 			'</div>' => '',
@@ -290,7 +292,7 @@ class RTE {
 	/**
 	 * Add fake form used by MW suggest in CK dialogs
 	 */
-	public static function onSkinAfterBottomScripts($skin, &$text) {
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		$text .= Xml::openElement('form', array('id' => 'RTEFakeForm')) . Xml::closeElement('form');
 		return true;
 	}
@@ -322,7 +324,7 @@ HTML
 	/**
 	 * Add fields to perform temporary save
 	 */
-	private static function addTemporarySaveFields(OutputPage $out) {
+	private static function addTemporarySaveFields( OutputPage $out ) {
 		$out->addHtml(
 			"\n".
 			Xml::element('input', array('type' => 'hidden', 'id' => 'RTETemporarySaveType', 'name' => 'RTETemporarySaveType')).
@@ -359,13 +361,13 @@ HTML
 					break;
 
 				case 'source':
-					self::setInitMode('source');
+		 			self::$initMode = self::INIT_MODE_SOURCE; 
 					break;
 
 				case 'wysiwyg':
 				case 'visual':
 					$forcedWysiwyg = true;
-					self::setInitMode('wysiwyg');
+					self::$initMode = self::INIT_MODE_WYSIWYG; 
 					break;
 			}
 		}
@@ -418,7 +420,7 @@ HTML
 		$mode = $wgRequest->getVal('RTEMode', false);
 		if ($action == 'submit' && $mode == 'source') {
 			RTE::log('POST triggered from source mode');
-			RTE::setInitMode('source');
+		 	self::$initMode = self::INIT_MODE_SOURCE;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -427,7 +429,7 @@ HTML
 	/**
 	 * Disable CK editor - MediaWiki editor will be loaded
 	 */
-	public static function disableEditor($reason = false) {
+	public static function disableEditor( string $reason ) {
 		self::$useWysiwyg = false;
 		self::$wysiwygDisabledReason = $reason;
 
@@ -435,18 +437,9 @@ HTML
 	}
 
 	/**
-	 * Set init mode of CK editor
-	 */
-	public static function setInitMode($mode) {
-		self::$initMode = ($mode == 'wysiwyg') ? 'wysiwyg' : 'source';
-
-		RTE::log(__METHOD__, self::$initMode);
-	}
-
-	/**
 	 * Add given edgecase to the list of found edgecases
 	 */
-	public static function edgeCasesPush($edgecase) {
+	public static function edgeCasesPush( $edgecase ) {
  		self::$edgeCases[] = $edgecase;
 	}
 
@@ -483,7 +476,7 @@ HTML
 	/**
 	 * Parse given wikitext to HTML for CK
 	 */
-	public static function WikitextToHtml($wikitext) {
+	public static function WikitextToHtml( $wikitext ) {
 		global $wgTitle;
 
 		wfProfileIn(__METHOD__);
@@ -506,7 +499,7 @@ HTML
 	/**
 	 * Parse given HTML from CK back to wikitext
 	 */
-	public static function HtmlToWikitext($html) {
+	public static function HtmlToWikitext( $html ) {
 		wfProfileIn(__METHOD__);
 
 		$RTEReverseParser = new RTEReverseParser();
@@ -522,7 +515,7 @@ HTML
 	 *
 	 * @author Macbre
 	 */
-	public static function log($msg, $var = NULL) {
+	public static function log( $msg, $var = NULL ) {
 		$debug = 'RTE: ';
 
 		if (is_string($msg)) {
@@ -535,17 +528,6 @@ HTML
 		if ($var !== NULL) {
 			$debug .= ' - >>' . print_r($var, true) . '<<';
 		}
-
-		wfDebug("{$debug}\n");
-	}
-
-	/**
-	 * Add hexdump of given variable to MW log
-	 *
-	 * @author Macbre
-	 */
-	public static function hex($method, $string) {
-		$debug = "RTE: {$method}\n" . Wikia::hex($string, false, false, true);
 
 		wfDebug("{$debug}\n");
 	}
@@ -579,7 +561,7 @@ HTML
 	/**
 	 * Return list of magic words ({{PAGENAME}}) and double underscores (__TOC__)
 	 */
-	public static function getMagicWords() {
+	public static function getMagicWords(): array {
 		wfProfileIn(__METHOD__);
 
 		// magic words list
@@ -626,7 +608,7 @@ HTML
 	/**
 	 * Get messages to be used in JS code
 	 */
-	static private function getMessages() {
+	static private function getMessages(): array {
 		/* @var $wgLang Language */
 		global $wgLang;
 
@@ -657,22 +639,22 @@ HTML
 	 * @return boolean true/false if we are in fancy edit mode
 	 */
 
-	static function isWysiwygModeEnabled() {
-		return (self::$useWysiwyg && self::$initMode == "wysiwyg");
+	static public function isWysiwygModeEnabled(): bool {
+		return ( self::$useWysiwyg && self::$initMode == self::INIT_MODE_WYSIWYG );
 	}
 
 	/**
 	 * This will be false if mediawiki editor is being used
 	 * @return boolean true/false if RTE is enabled
 	 */
-	static function isEnabled() {
+	static function isEnabled(): bool {
 		return self::$useWysiwyg;
 	}
 
 	/**
 	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 	 */
-	static function onEditingPreferencesBefore($user, &$preferences) {
+	static function onEditingPreferencesBefore( $user, &$preferences ): bool  {
 		// add JS to hide certain switches when wysiwyg is enabled
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
@@ -682,17 +664,20 @@ HTML
 	/**
 	 * Modify values returned by User::getGlobalPreference() when wysiwyg is enabled
 	 */
-	static public function userGetOption($options, $name, &$value) {
+	static public function userGetOption( $options, $name, &$value ): bool {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		$useEditor = $wgRequest->getVal('useeditor', false);
 
 		// do not continue if user didn't turn on wysiwyg in preferences
-		if ( ( $options['editor'] === '1' && empty( $useEditor ) )
-				|| ( $useEditor === 'source' || $useEditor === 'mediawiki' )
-		) {
+		if ( ( isset( $options['editor'] ) && $options['editor'] === '1' && empty( $useEditor ) ) ) {
 			wfProfileOut(__METHOD__);
+			return true;
+		}
+
+		if ( $useEditor === 'source' || $useEditor === 'mediawiki' ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -730,7 +715,7 @@ HTML
 	 * FCKeditor - The text editor for Internet - http://www.fckeditor.net
 	 * Copyright (C) 2003-2009 Frederico Caldeira Knabben
 	 */
-	private static function isCompatibleBrowser() {
+	private static function isCompatibleBrowser(): bool {
 		wfProfileIn(__METHOD__);
 
 		if ( isset( $_SERVER ) && isset($_SERVER['HTTP_USER_AGENT'])) {

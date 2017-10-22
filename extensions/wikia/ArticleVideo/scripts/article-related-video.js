@@ -4,15 +4,24 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 		var $video = $('#article-related-video'),
 			ooyalaVideoElementId = 'ooyala-article-related-video',
 			ooyalaVideoController,
-			track = tracker.buildTrackingFunction({
+			trackingOptions = {
 				category: 'article-video',
-				trackingMethod: 'analytics'
-			});
+				trackingMethod: 'analytics',
+				eventName: 'videoplayerevent',
+				player: 'ooyala',
+			},
+			track = tracker.buildTrackingFunction(trackingOptions);
 
 		function initVideo(ooyalaContainerId, videoId, onCreate) {
-			var playerParams = window.wgOoyalaParams;
+			var options = {
+				pcode: window.wgOoyalaParams.ooyalaPCode,
+				playerBrandingId: window.wgOoyalaParams.ooyalaPlayerBrandingId,
+				videoId: videoId
+			};
 
-			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaContainerId, playerParams, videoId, onCreate);
+			trackingOptions.videoId = videoId;
+
+			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaContainerId, options, onCreate);
 		}
 
 		function getCandidate($element) {
@@ -74,7 +83,6 @@ require(['wikia.window', 'wikia.tracker', 'ooyala-player'], function (window, tr
 					$video.find('.video-time').text(videoTime);
 
 					$video.show();
-					
 					track({
 						action: tracker.ACTIONS.IMPRESSION,
 						label: 'related-video'

@@ -6,20 +6,21 @@
  * @file
  * @ingroup Extensions
  */
-
 $messages = array();
 
-/* English */
 $messages['en'] = array(
 	'asirra-desc' => 'Asirra module for ConfirmEdit',
-	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:', 
+	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:',
 	'asirra-addurl' => 'Your edit includes new external links. To help protect against automated spam, please select just the cat photos in the box below:',
 	'asirra-badpass' => 'To help protect against automated password cracking, please select just the cat photos in the box below:',
 	'asirra-createaccount' => 'To help protect against automated account creation, please select just the cat photos in the box below:',
-	'asirra-createaccount-fail' => "Please correctly identify the cats.",
-	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:', 
-	'asirra-nojs' => '\'\'\'Please enable JavaScript and resubmit the page.\'\'\'',
+	'asirra-createaccount-fail' => 'Please correctly identify the cats.',
+	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:',
+	'asirra-nojs' => "'''Please enable JavaScript and resubmit the page.'''",
 	'asirra-failed' => 'Please identify all cat images',
+);
+
+$messages['qqq'] = array(
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -81,6 +82,18 @@ $messages['es'] = array(
 	'asirra-failed' => 'Identifique todas las imágenes de gatos',
 );
 
+$messages['fi'] = array(
+	'asirra-desc' => 'Asirra module for ConfirmEdit',
+	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:',
+	'asirra-addurl' => 'Your edit includes new external links. To help protect against automated spam, please select just the cat photos in the box below:',
+	'asirra-badpass' => 'To help protect against automated password cracking, please select just the cat photos in the box below:',
+	'asirra-createaccount' => 'To help protect against automated account creation, please select just the cat photos in the box below:',
+	'asirra-createaccount-fail' => 'Please correctly identify the cats.',
+	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:',
+	'asirra-nojs' => "'''Please enable JavaScript and resubmit the page.'''",
+	'asirra-failed' => 'Please identify all cat images',
+);
+
 /** French (Français)
  * @author Seb35
  */
@@ -93,6 +106,7 @@ $messages['fr'] = array(
 	'asirra-createaccount-fail' => 'Veuillez identifier correctement les chats.',
 	'asirra-create' => 'Pour nous aider à nous protéger contre la création automatique de pages, veuillez sélectionner uniquement les photos de chats dans la boîte ci-dessous :',
 	'asirra-nojs' => "'''Veuillez activer le JavaScript et re-soumettre la page.'''",
+	'asirra-failed' => 'Please identify all cat images',
 );
 
 /** Galician (Galego)
@@ -140,6 +154,42 @@ $messages['ia'] = array(
 	'asirra-failed' => 'Per favor identifica tote le imagines de cattos',
 );
 
+$messages['it'] = array(
+	'asirra-desc' => 'Asirra module for ConfirmEdit',
+	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:',
+	'asirra-addurl' => 'Your edit includes new external links. To help protect against automated spam, please select just the cat photos in the box below:',
+	'asirra-badpass' => 'To help protect against automated password cracking, please select just the cat photos in the box below:',
+	'asirra-createaccount' => 'To help protect against automated account creation, please select just the cat photos in the box below:',
+	'asirra-createaccount-fail' => 'Please correctly identify the cats.',
+	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:',
+	'asirra-nojs' => "'''Please enable JavaScript and resubmit the page.'''",
+	'asirra-failed' => 'Please identify all cat images',
+);
+
+$messages['ja'] = array(
+	'asirra-desc' => 'Asirra module for ConfirmEdit',
+	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:',
+	'asirra-addurl' => 'Your edit includes new external links. To help protect against automated spam, please select just the cat photos in the box below:',
+	'asirra-badpass' => 'To help protect against automated password cracking, please select just the cat photos in the box below:',
+	'asirra-createaccount' => 'To help protect against automated account creation, please select just the cat photos in the box below:',
+	'asirra-createaccount-fail' => 'Please correctly identify the cats.',
+	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:',
+	'asirra-nojs' => "'''Please enable JavaScript and resubmit the page.'''",
+	'asirra-failed' => 'Please identify all cat images',
+);
+
+$messages['ko'] = array(
+	'asirra-desc' => 'Asirra module for ConfirmEdit',
+	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:',
+	'asirra-addurl' => 'Your edit includes new external links. To help protect against automated spam, please select just the cat photos in the box below:',
+	'asirra-badpass' => 'To help protect against automated password cracking, please select just the cat photos in the box below:',
+	'asirra-createaccount' => 'To help protect against automated account creation, please select just the cat photos in the box below:',
+	'asirra-createaccount-fail' => 'Please correctly identify the cats.',
+	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:',
+	'asirra-nojs' => "'''Please enable JavaScript and resubmit the page.'''",
+	'asirra-failed' => 'Please identify all cat images',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -149,6 +199,18 @@ $messages['lb'] = array(
 	'asirra-createaccount-fail' => "Identifizéiert d'Kaze w.e.g. richteg.",
 	'asirra-nojs' => "'''Aktivéiert w.e.g. JavaScript a schéckt d'Säit nachemol.'''",
 	'asirra-failed' => 'Identifizéiert w.e.g. all Biller wou Kazen drop sinn',
+);
+
+$messages['lol'] = array(
+	'asirra-desc' => 'crwdns66275:0crwdne66275:0',
+	'asirra-edit' => 'crwdns66276:0crwdne66276:0',
+	'asirra-addurl' => 'crwdns66277:0crwdne66277:0',
+	'asirra-badpass' => 'crwdns66278:0crwdne66278:0',
+	'asirra-createaccount' => 'crwdns66279:0crwdne66279:0',
+	'asirra-createaccount-fail' => 'crwdns66280:0crwdne66280:0',
+	'asirra-create' => 'crwdns66281:0crwdne66281:0',
+	'asirra-nojs' => 'crwdns66282:0crwdne66282:0',
+	'asirra-failed' => 'crwdns66283:0crwdne66283:0',
 );
 
 /** Macedonian (Македонски)
@@ -239,6 +301,31 @@ $messages['pt'] = array(
 	'asirra-createaccount-fail' => 'Identifique correctamente os gatos, por favor.',
 	'asirra-create' => 'Como prevenção contra sistemas automatizados de criação de páginas, seleccione só as fotografias de gatos na caixa abaixo:',
 	'asirra-nojs' => "'''Possibilite o uso de JavaScript e reenvie a página, por favor.'''",
+	'asirra-failed' => 'Please identify all cat images',
+);
+
+$messages['ru'] = array(
+	'asirra-desc' => 'Asirra module for ConfirmEdit',
+	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:',
+	'asirra-addurl' => 'Your edit includes new external links. To help protect against automated spam, please select just the cat photos in the box below:',
+	'asirra-badpass' => 'To help protect against automated password cracking, please select just the cat photos in the box below:',
+	'asirra-createaccount' => 'To help protect against automated account creation, please select just the cat photos in the box below:',
+	'asirra-createaccount-fail' => 'Please correctly identify the cats.',
+	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:',
+	'asirra-nojs' => "'''Please enable JavaScript and resubmit the page.'''",
+	'asirra-failed' => 'Please identify all cat images',
+);
+
+$messages['vi'] = array(
+	'asirra-desc' => 'Asirra module for ConfirmEdit',
+	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:',
+	'asirra-addurl' => 'Your edit includes new external links. To help protect against automated spam, please select just the cat photos in the box below:',
+	'asirra-badpass' => 'To help protect against automated password cracking, please select just the cat photos in the box below:',
+	'asirra-createaccount' => 'To help protect against automated account creation, please select just the cat photos in the box below:',
+	'asirra-createaccount-fail' => 'Please correctly identify the cats.',
+	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:',
+	'asirra-nojs' => "'''Please enable JavaScript and resubmit the page.'''",
+	'asirra-failed' => 'Please identify all cat images',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
@@ -254,5 +341,17 @@ $messages['zh-hans'] = array(
 	'asirra-create' => '为了防止自动程序创建页面，请在下面的方框中选出猫的图片：',
 	'asirra-nojs' => "'''请启动JavaScript后再提交页面。'''",
 	'asirra-failed' => '请选出所有猫的图片',
+);
+
+$messages['zh-hant'] = array(
+	'asirra-desc' => 'Asirra module for ConfirmEdit',
+	'asirra-edit' => 'To help protect against automated edit spam, please select just the cat photos in the box below:',
+	'asirra-addurl' => 'Your edit includes new external links. To help protect against automated spam, please select just the cat photos in the box below:',
+	'asirra-badpass' => 'To help protect against automated password cracking, please select just the cat photos in the box below:',
+	'asirra-createaccount' => 'To help protect against automated account creation, please select just the cat photos in the box below:',
+	'asirra-createaccount-fail' => 'Please correctly identify the cats.',
+	'asirra-create' => 'To help protect against automated page creation, please select just the cat photos in the box below:',
+	'asirra-nojs' => "'''Please enable JavaScript and resubmit the page.'''",
+	'asirra-failed' => 'Please identify all cat images',
 );
 

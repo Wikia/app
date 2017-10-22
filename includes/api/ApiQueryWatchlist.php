@@ -186,10 +186,10 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			$this->dieUsage( 'user and excludeuser cannot be used together', 'user-excludeuser' );
 		}
 		if ( !is_null( $params['user'] ) ) {
-			$this->addWhereFld( 'rc_user_text', $params['user'] );
+			$this->addWhereFld( 'rc_user', User::newFromName( $params['user'] )->getId() );
 		}
 		if ( !is_null( $params['excludeuser'] ) ) {
-			$this->addWhere( 'rc_user_text != ' . $db->addQuotes( $params['excludeuser'] ) );
+			$this->addWhere( 'rc_user != ' . User::newFromName( $params['excludeuser'] )->getId() );
 		}
 
 		// This is an index optimization for mysql, as done in the Special:Watchlist page
@@ -270,7 +270,7 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 		if ( $this->fld_user || $this->fld_userid ) {
 
 			if ( $this->fld_user ) {
-				$vals['user'] = $row->rc_user_text;
+				$vals['user'] = User::getUsername( $row->rc_user, $row->rc_user_text );
 			}
 
 			if ( $this->fld_userid ) {

@@ -2965,17 +2965,19 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13325 ms
-	 * @covers Wikia\Search\MediaWikiService::invokeHook
+	 * @covers \Wikia\Search\MediaWikiService::invokeHook
 	 */
 	public function testInvokeHook() {
-		$service = $this->service->setMethods( null )->getMock();
-		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
+		$service = new MediaWikiService();
+
+		$mockRunHooks = $this->getStaticMethodMock( \Hooks::class, 'run' );
 		$mockRunHooks
 		    ->expects( $this->once() )
-		    ->method ( 'wfRunHooks' )
+		    ->method ( 'run' )
 		    ->with   ( 'onwhatever', [ 'foo', 123 ] )
 		    ->will   ( $this->returnValue( true ) )
 		;
+
 		$this->assertTrue(
 				$service->invokeHook( 'onwhatever', [ 'foo', 123 ] )
 		);

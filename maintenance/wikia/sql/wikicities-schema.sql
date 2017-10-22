@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-sharedb-slave.query.consul    Database: wikicities
 -- ------------------------------------------------------
--- Server version	5.6.24-72.2-log
+-- Server version	5.7.18-15-log
 
 
 --
@@ -121,8 +121,8 @@ CREATE TABLE `city_list` (
   `city_flags` int(10) unsigned NOT NULL DEFAULT '0',
   `city_cluster` varchar(255) DEFAULT NULL,
   `city_last_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `city_founding_ip` int(10) unsigned NOT NULL DEFAULT '0',
   `city_vertical` int(11) NOT NULL DEFAULT '0',
+  `city_founding_ip_bin` varbinary(16) DEFAULT NULL,
   PRIMARY KEY (`city_id`),
   UNIQUE KEY `urlidx` (`city_url`),
   UNIQUE KEY `city_dbname_idx` (`city_dbname`),
@@ -131,7 +131,7 @@ CREATE TABLE `city_list` (
   KEY `city_created` (`city_created`,`city_lang`),
   KEY `city_founding_user_inx` (`city_founding_user`),
   KEY `city_cluster` (`city_cluster`),
-  KEY `city_founding_ip` (`city_founding_ip`)
+  KEY `city_founding_ip_bin` (`city_founding_ip_bin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -258,121 +258,6 @@ CREATE TABLE `city_visualization` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `city_visualization_image_review_stats`
---
-
-DROP TABLE IF EXISTS `city_visualization_image_review_stats`;
-CREATE TABLE `city_visualization_image_review_stats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reviewer_id` int(11) NOT NULL,
-  `city_id` int(11) NOT NULL,
-  `page_id` int(11) NOT NULL,
-  `review_state` int(11) NOT NULL DEFAULT '0',
-  `review_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `reviewer_idx` (`reviewer_id`),
-  KEY `stats_idx` (`reviewer_id`,`review_state`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `city_visualization_images`
---
-
-DROP TABLE IF EXISTS `city_visualization_images`;
-CREATE TABLE `city_visualization_images` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city_id` int(11) NOT NULL,
-  `page_id` int(8) NOT NULL,
-  `city_lang_code` varchar(8) DEFAULT NULL,
-  `image_index` int(11) DEFAULT '1',
-  `image_name` varchar(255) NOT NULL,
-  `image_review_status` tinyint(3) unsigned DEFAULT NULL,
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `review_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `review_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `reviewer_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `city_visualization_images_ifbk_1` (`city_id`),
-  KEY `cvi_image_review_status` (`image_review_status`),
-  KEY `cvi_city_lang_code` (`city_lang_code`),
-  CONSTRAINT `city_visualization_images_ifbk_1` FOREIGN KEY (`city_id`) REFERENCES `city_visualization` (`city_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `city_visualization_images_xwiki`
---
-
-DROP TABLE IF EXISTS `city_visualization_images_xwiki`;
-CREATE TABLE `city_visualization_images_xwiki` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city_id` int(11) NOT NULL,
-  `city_lang_code` varchar(8) DEFAULT NULL,
-  `image_type` int(11) DEFAULT '0',
-  `image_index` int(11) DEFAULT '1',
-  `image_name` varchar(255) NOT NULL,
-  `image_review_status` tinyint(3) unsigned DEFAULT NULL,
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `review_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `review_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `reviewer_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `city_visualization_images_xwiki_ifbk_1` (`city_id`),
-  KEY `cvix_image_type` (`image_type`),
-  KEY `cvix_image_review_status` (`image_review_status`),
-  KEY `cvix_city_lang_code` (`city_lang_code`),
-  CONSTRAINT `city_visualization_images_xwiki_ifbk_1` FOREIGN KEY (`city_id`) REFERENCES `city_visualization_xwiki` (`city_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `city_visualization_xwiki`
---
-
-DROP TABLE IF EXISTS `city_visualization_xwiki`;
-CREATE TABLE `city_visualization_xwiki` (
-  `city_id` int(11) NOT NULL DEFAULT '0',
-  `city_lang_code` char(8) NOT NULL DEFAULT 'en',
-  `city_vertical` int(11) DEFAULT NULL,
-  `city_headline` varchar(255) DEFAULT NULL,
-  `city_description` text,
-  `city_flags` smallint(8) DEFAULT '0',
-  PRIMARY KEY (`city_id`,`city_lang_code`),
-  KEY `cvx_cid_cf_ce` (`city_id`,`city_flags`),
-  CONSTRAINT `city_visualization_xwiki_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `cu_changes`
---
-
-DROP TABLE IF EXISTS `cu_changes`;
-CREATE TABLE `cu_changes` (
-  `cuc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cuc_namespace` int(11) NOT NULL DEFAULT '0',
-  `cuc_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_user` int(11) NOT NULL DEFAULT '0',
-  `cuc_user_text` varchar(255) NOT NULL DEFAULT '',
-  `cuc_actiontext` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_comment` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_minor` tinyint(1) NOT NULL DEFAULT '0',
-  `cuc_page_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_this_oldid` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_last_oldid` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `cuc_timestamp` char(14) NOT NULL DEFAULT '',
-  `cuc_ip` varchar(255) DEFAULT '',
-  `cuc_ip_hex` varchar(255) DEFAULT NULL,
-  `cuc_xff` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT '',
-  `cuc_xff_hex` varchar(255) DEFAULT NULL,
-  `cuc_agent` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
-  PRIMARY KEY (`cuc_id`),
-  KEY `cuc_ip_hex_time` (`cuc_ip_hex`,`cuc_timestamp`),
-  KEY `cuc_xff_hex_time` (`cuc_xff_hex`,`cuc_timestamp`),
-  KEY `cuc_timestamp` (`cuc_timestamp`),
-  KEY `cuc_user_ip_time` (`cuc_user`,`cuc_ip`,`cuc_timestamp`),
-  KEY `cuc_user_time` (`cuc_user`,`cuc_timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `dmca_request`
 --
 
@@ -406,7 +291,7 @@ CREATE TABLE `dumps` (
   `dump_wiki_id` int(9) NOT NULL,
   `dump_wiki_dbname` varchar(64) NOT NULL,
   `dump_wiki_url` varchar(255) NOT NULL,
-  `dump_user_name` varchar(255) NOT NULL,
+  `dump_user_id` int(9) DEFAULT '0',
   `dump_hidden` enum('N','Y') DEFAULT 'N',
   `dump_closed` enum('N','Y') DEFAULT 'N',
   `dump_requested` datetime NOT NULL,
@@ -604,7 +489,8 @@ CREATE TABLE `shared_newtalks` (
   `sn_wiki` varchar(31) DEFAULT NULL,
   `sn_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `sn_user_id_sn_user_ip_sn_wiki_idx` (`sn_user_id`,`sn_user_ip`,`sn_wiki`)
+  KEY `idx_user_ip_wiki` (`sn_user_ip`,`sn_wiki`),
+  KEY `idx_user_id_wiki` (`sn_user_id`,`sn_wiki`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -647,6 +533,16 @@ CREATE TABLE `text` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `three_word_spam`
+--
+
+DROP TABLE IF EXISTS `three_word_spam`;
+CREATE TABLE `three_word_spam` (
+  `dbname` varchar(64) NOT NULL,
+  PRIMARY KEY (`dbname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
 -- Table structure for table `user`
 --
 
@@ -655,16 +551,13 @@ CREATE TABLE `user` (
   `user_id` int(5) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
   `user_real_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `user_password` tinyblob,
-  `user_newpassword` tinyblob,
   `user_email` tinytext NOT NULL,
   `user_touched` char(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `user_token` char(32) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+  `user_token` char(32) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT '',
   `user_email_authenticated` char(14) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
   `user_email_token` char(32) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
   `user_email_token_expires` char(14) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
   `user_registration` varchar(16) DEFAULT NULL,
-  `user_newpass_time` char(14) DEFAULT NULL,
   `user_editcount` int(11) DEFAULT NULL,
   `user_birthdate` date DEFAULT NULL,
   `user_options` blob NOT NULL,
@@ -746,56 +639,6 @@ CREATE TABLE `user_properties` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `wikia_homepage_collections`
---
-
-DROP TABLE IF EXISTS `wikia_homepage_collections`;
-CREATE TABLE `wikia_homepage_collections` (
-  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `lang_code` varchar(8) NOT NULL,
-  `sort` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL,
-  `sponsor_hero_image` varchar(255) DEFAULT NULL,
-  `sponsor_image` varchar(255) DEFAULT NULL,
-  `sponsor_url` varchar(255) DEFAULT NULL,
-  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `lang_code` (`lang_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `wikia_homepage_collections_city_visualization`
---
-
-DROP TABLE IF EXISTS `wikia_homepage_collections_city_visualization`;
-CREATE TABLE `wikia_homepage_collections_city_visualization` (
-  `collection_id` int(10) unsigned NOT NULL,
-  `city_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`city_id`,`collection_id`),
-  KEY `fk_wikia_homepage_collections` (`collection_id`),
-  CONSTRAINT `fk_wikia_homepage_collections` FOREIGN KEY (`collection_id`) REFERENCES `wikia_homepage_collections` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `wikia_hub_modules`
---
-
-DROP TABLE IF EXISTS `wikia_hub_modules`;
-CREATE TABLE `wikia_hub_modules` (
-  `city_id` int(11) NOT NULL DEFAULT '0',
-  `lang_code` varchar(8) NOT NULL,
-  `vertical_id` tinyint(4) NOT NULL,
-  `hub_date` date NOT NULL,
-  `module_id` tinyint(4) NOT NULL,
-  `module_data` blob,
-  `module_status` tinyint(4) NOT NULL DEFAULT '1',
-  `last_editor_id` int(11) DEFAULT NULL,
-  `last_edit_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`lang_code`,`vertical_id`,`hub_date`,`module_id`,`city_id`),
-  KEY `by_city_id` (`city_id`,`hub_date`,`module_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `wikia_tasks`
 --
 
@@ -832,4 +675,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-03-30  9:35:09
+-- Dump completed on 2017-10-20 14:09:30

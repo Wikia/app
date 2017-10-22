@@ -2125,7 +2125,7 @@ Esa imagen no funciona.
 Asegúrate de que es un archivo .jpg o .png.
 Si continúa sin funcionar, debe ser porque la imagen es demasiado grande.
 Por favor, inténtalo con otra imagen.',
-	'achievements-upload-not-allowed' => 'Los administradores pueden cambiar los nombres e imágenes de las Insignias visitando la página de [[{{Special:AchievementsCustomize}}|de personalización de insignias]].',
+	'achievements-upload-not-allowed' => 'Los administradores pueden cambiar los nombres e imágenes de las Insignias visitando la página de [[{{#Special:AchievementsCustomize}}|de personalización de insignias]].',
 	'achievements-non-existing-category' => 'La categoría especificada no existe.',
 	'achievements-edit-plus-category-track-exists' => 'La categoría especificada ya tiene una <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Ir al logro">insignia asociada</a>.',
 	'achievements-no-stub-category' => 'Por favor, no crees grupos de insignias para bocetos.',
@@ -2135,7 +2135,7 @@ Por favor, inténtalo con otra imagen.',
 	'achievements-gold' => 'Oro',
 	'achievements-silver' => 'Plata',
 	'achievements-bronze' => 'Bronce',
-	'achievements-gold-points' => '100<br /> pts',
+	'achievements-gold-points' => '100<br />pts',
 	'achievements-silver-points' => '50<br />pts',
 	'achievements-bronze-points' => '10<br />pts',
 	'achievements-you-must' => 'Necesitas $1 para conseguir esta insignia.',
@@ -2152,7 +2152,7 @@ Por favor, inténtalo con otra imagen.',
 	'achievements-track-name-sharing' => 'Seguimiento a Compartir',
 	'achievements-notification-title' => '¡Así se hace, $1!',
 	'achievements-notification-subtitle' => 'Acabas de conseguir la insignia "$1", $2',
-	'achievements-notification-link' => '<strong><big>¡[[{{Special:MyPage}}|Haz clic aquí para ver más insignias que puedes conseguir]]!</big></strong>',
+	'achievements-notification-link' => '<strong><big>¡[[{{#Special:MyPage}}|Haz clic aquí para ver más insignias que puedes conseguir]]!</big></strong>',
 	'achievements-points' => '$1 {{PLURAL:$1|punto|puntos}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|punto|puntos}}',
 	'achievements-earned' => 'Esta insignia ha sido conseguida por <br />{{PLURAL:$1|1 usuario|$1 usuarios}}.',
@@ -2163,7 +2163,7 @@ Por favor, inténtalo con otra imagen.',
 	'achievements-viewall' => 'Ver todos',
 	'achievements-viewless' => 'Cerrar',
 	'achievements-profile-title-oasis' => 'logro <br /> puntos',
-	'achievements-ranked-oasis' => '$1 está [[{{Special:Leaderboard}}|en el puesto #$2]] en este wiki',
+	'achievements-ranked-oasis' => '$1 está [[{{#Special:Leaderboard}}|en el puesto #$2]] en este wiki',
 	'achievements-viewall-oasis' => 'Ver todos',
 	'achievements-toggle-hide' => 'Ocultar mis logros en mi perfil para todo el mundo',
 	'leaderboard-intro-hide' => 'ocultar',
@@ -2402,7 +2402,7 @@ a {{PLURAL:$1|una categoría|varias categorías}}!',
 	'achievements-userprofile-no-badges-owner' => '¡Echa un vistazo a la lista de debajo para ver las insignias que puedes conseguir en este wiki!',
 	'achievements-userprofile-no-badges-visitor' => 'Este usuario no ha ganado ninguna insignia todavía.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> Logros<br />puntos',
-	'achievements-userprofile-ranked' => '[[{{Special:Leaderboard}}|Clasificación $1]]<br />en este wiki',
+	'achievements-userprofile-ranked' => '[[{{#Special:Leaderboard}}|Clasificación $1]]<br />en este wiki',
 	'action-platinum' => 'crear y editar insignias de Platino',
 	'achievements-next-oasis' => 'Siguiente',
 	'achievements-prev-oasis' => 'Anterior',
@@ -8091,308 +8091,6 @@ a {{PLURAL:$1|a $2 artigo|$2 artigos}}!',
 	'right-achievements-explicit' => 'O usuário está elegível para ganhar pontos de medalhas (anula a exceção)',
 );
 
-$messages['pt-br'] = array(
-	'achievementsii-desc' => 'Um sistema de recompensa através de medalhas para os usuários da wiki',
-	'achievements-upload-error' => 'Desculpe-nos!
-Essa imagem não funciona.
-Certifique-se de que se trata de um arquivo .jpg ou .png.
-Se ainda assim não funcionar, pode ser que a imagem seja grande demais.
-Por favor, tente usar outra imagem!',
-	'achievements-upload-not-allowed' => 'Os administradores podem trocar os nomes e imagens das medalhas visitando a página de [[Special:AchievementsCustomize|customização]].',
-	'achievements-non-existing-category' => 'A categoria especificada não existe.',
-	'achievements-edit-plus-category-track-exists' => 'A categoria especificada já possui um <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">caminho associado</a>.',
-	'achievements-no-stub-category' => 'Por favor, não crie caminhos para esboços.',
-	'right-platinum' => 'Crie e edite medalhas de Platina',
-	'right-sponsored-achievements' => 'Administrar objetivos patrocinados',
-	'achievements-platinum' => 'Platina',
-	'achievements-gold' => 'Ouro',
-	'achievements-silver' => 'Prata',
-	'achievements-bronze' => 'Bronze',
-	'achievements-gold-points' => '100<br />pts',
-	'achievements-silver-points' => '50<br />pts',
-	'achievements-bronze-points' => '10<br />pts',
-	'achievements-you-must' => 'Para ganhar essa medalha você deve $1.',
-	'leaderboard-button' => 'Tabela de liderança',
-	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|ponto|pontos}}</small>',
-	'achievements-profile-title-no' => 'As medalhas de $1',
-	'achievements-no-badges' => 'Dê uma olhada na lista abaixo para ver as medalhas que pode ganhar nessa wiki!',
-	'achievements-track-name-edit' => 'Caminho de Edição',
-	'achievements-track-name-picture' => 'Caminho de Imagens',
-	'achievements-track-name-category' => 'Caminho de Categorias',
-	'achievements-track-name-blogpost' => 'Caminho de Publicações em Blogues',
-	'achievements-track-name-blogcomment' => 'Caminho de Comentários em Blogues',
-	'achievements-track-name-love' => 'Caminho de Paixão Pela Wiki',
-	'achievements-track-name-sharing' => 'Trajeto de partilha',
-	'achievements-notification-title' => 'É isso ai, $1!',
-	'achievements-notification-subtitle' => 'Você acaba de ganhar a medalha "$1" $2',
-	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Veja mais medalhas que pode ganhar]]!</big></strong>',
-	'achievements-points' => '$1 {{PLURAL:$1|ponto|pontos}}',
-	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|ponto|pontos}}',
-	'achievements-earned' => '{{#ifeq: $1|0|Esta medalha não foi recebida por nenhum editor ainda.|Esta medalha foi recebida por {{PLURAL:$1|apenas 1 editor|$1 editores}}.}}',
-	'achievements-profile-title' => '{{PLURAL:$2|A medalha ganha|As $2 medalhas ganhas}} por $1',
-	'achievements-profile-title-challenges' => 'Mais medalhas que você pode adquirir!',
-	'achievements-profile-customize' => 'Personalizar medalhas',
-	'achievements-ranked' => 'Posição #$1 nesta wiki',
-	'achievements-viewall' => 'Ver tudo',
-	'achievements-viewless' => 'Fechar',
-	'achievements-profile-title-oasis' => 'pontos <br /> obtidos',
-	'achievements-ranked-oasis' => '$1 está na [[Special:Leaderboard|Posição #$2]] nesta wiki',
-	'achievements-viewall-oasis' => 'Ver tudo',
-	'achievements-toggle-hide' => 'Não mostrar pontos, distintivos e classificação em minha página de perfil
-Esconder as minhas conquistas no meu perfil de todos',
-	'leaderboard-intro-hide' => 'Ocultar',
-	'leaderboard-intro-open' => 'Mostrar',
-	'leaderboard-intro-headline' => 'O que são as Medalhas?',
-	'leaderboard-intro' => "Pode ganhar medalhas nesta wiki se editar páginas, fizer upload de imagens e deixar comentários. Com cada medalha recebe pontos - quanto mais pontos obtiver, melhor colocado ficará na tabela de liderança! Encontra a lista das medalhas que já ganhou, na página do seu [[$1|perfil de utilizador]].
-
-'''Quanto valem as medalhas?'''",
-	'leaderboard' => 'Tabela de liderança',
-	'achievements-title' => 'Objetivos',
-	'leaderboard-title' => 'Tabela de liderança',
-	'achievements-recent-earned-badges' => 'Medalhas Recebidas Recentemente',
-	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />recebida por <a href="$1">$2</a><br />$5',
-	'achievements-activityfeed-info' => 'ganhou a medalha <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
-	'achievements-leaderboard-disclaimer' => 'A tabela de liderança mostra as mudanças desde ontem',
-	'achievements-leaderboard-rank-label' => 'Posição',
-	'achievements-leaderboard-member-label' => 'Membro',
-	'achievements-leaderboard-points-label' => 'Pontos',
-	'achievements-leaderboard-points' => '{{PLURAL:$1|ponto|pontos}}',
-	'achievements-leaderboard-most-recently-earned-label' => 'Ganhas mais recentemente',
-	'achievements-send' => 'Salvar imagem',
-	'achievements-save' => 'Salvar alterações',
-	'achievements-reverted' => 'Medalha revertida para a original.',
-	'achievements-customize' => 'Personalizar imagem',
-	'achievements-customize-new-category-track' => 'Criar um trajeto para a categoria:',
-	'achievements-enable-track' => 'ativado',
-	'achievements-revert' => 'Reverter para o original',
-	'achievements-special-saved' => 'Alterações salvas.',
-	'achievements-special' => 'Recompensas especiais',
-	'achievements-secret' => 'Recompensas secretas',
-	'achievementscustomize' => 'Personalizar medalhas',
-	'achievements-about-title' => 'Sobre esta página...',
-	'achievements-about-content' => 'Os administradores desta wiki podem personalizar os nomes e imagens das medalhas.
-
-Pode fazer o upload de imagens nos formatos .jpg ou .png.
-As imagens são automaticamente ajustadas ao espaço disponível.
-Obtém os melhores resultados com imagens quadradas cuja parte mais importante esteja no centro.
-
-Pode usar imagens rectangulares, mas uma parte poderá ser cortada no enquadramento.
-Se tiver um editor de imagens, pode cortar a imagem de forma a que a parte mais importante fique ao centro.
-Se não tem um editor de imagens, tente usar várias imagens até encontrar as melhores para aquilo que pretende!
-Se não gostar da imagem que escolheu, clique "{{int:achievements-revert}}" para voltar à imagem original.
-
-Também pode alterar os nomes das medalhas, para adaptá-los à sua wiki.
-Depois de alterá-los, clique "{{int:achievements-save}}".
-Divirta-se!',
-	'achievements-edit-plus-category-track-name' => 'Trajeto de edição $1',
-	'achievements-create-edit-plus-category-title' => 'Criar um trajeto de edição novo',
-	'achievements-create-edit-plus-category-content' => 'Pode criar um conjunto de medalhas novas para premiar os utilizadores por editarem as páginas de uma categoria em particular, de forma a salientar uma área no site que os utilizadores deverão gostar de desenvolver.
-É possível configurar mais do que um trajecto de edição de categoria, por isso tente escolher categorias que ajudem os utilizadores a exibir os seus talentos!
-Crie uma rivalidade entre os utilizadores que editam páginas sobre Vampiros e os que editam páginas sobre Lobisomens, ou Magos e Druidas, ou Autobots e Decepticons.
-
-Para criar um trajecto de edição novo do tipo "Editar na categoria", introduza o nome da categoria no campo abaixo.
-O trajecto normal Editar continuará a existir, mas criará um trajecto separado, que pode personalizar individualmente.
-
-Quando o trajecto novo é criado, as medalhas aparecerão na lista à esquerda, por baixo do trajecto normal Editar.
-Personalize os nomes e as imagens das medalhas do trajecto novo, de forma a que os utilizadores notem a diferença entre trajectos!
-
-Quando terminar a personalização, clique a caixa de selecção "{{int:achievements-enable-track}}" para activar o trajecto novo e depois clique "{{int:achievements-save}}".
-Os utilizadores verão um trajecto novo no seu perfil de utilizador e podem começar a ganhar medalhas quando editarem páginas na categoria correspondente.
-Pode desactivar o trajecto mais tarde, se decidir que já não deseja salientar a categoria correspondente.
-Os utilizadores que já tiverem recebido medalhas desse trajecto continuarão a ter as suas medalhas, mesmo que o trajecto seja desactivado.
-
-Isto pode ajudar a criar um nível adicional de diversão no atingimento dos objectivos.
-Experimente!',
-	'achievements-create-edit-plus-category' => 'Criar este trajeto',
-	'platinum' => 'Platina',
-	'achievements-community-platinum-awarded-email-subject' => 'Você ganhou uma nova medalha de Platina!',
-	'achievements-community-platinum-awarded-email-body-text' => "Parabéns, $1!
-
-Você acabou de ganhar a medalha de Platina '$2' em $4 ($3).
-Isto acrescenta 250 pontos ao seu total!
-
-Dê uma olhada na sua nova medalha na sua página de perfil de usuário:
-
-$5",
-	'achievements-community-platinum-awarded-email-body-html' => '<strong>Parabéns, $1!</strong><br /><br />
-Acaba de ganhar a medalha de Platina \'<strong>$2</strong>\' na <a href="$3">$4</a>.
-Isto acrescenta 250 pontos ao seu total!<br /><br />
-Pode ver a medalha nova na sua <a href="$5">página de perfil do utilizador</a>.',
-	'achievements-community-platinum-awarded-for' => 'Ganha por:',
-	'achievements-community-platinum-how-to-earn' => 'Como ganhar:',
-	'achievements-community-platinum-awarded-for-example' => 'por exemplo, "por fazer..."',
-	'achievements-community-platinum-how-to-earn-example' => 'por exemplo, "fazer 3 edições..."',
-	'achievements-community-platinum-badge-image' => 'Imagem da medalha:',
-	'achievements-community-platinum-awarded-to' => 'Atribuída a:',
-	'achievements-community-platinum-current-badges' => 'Medalhas de platina actuais',
-	'achievements-community-platinum-create-badge' => 'Criar medalha',
-	'achievements-community-platinum-enabled' => 'ativado',
-	'achievements-community-platinum-show-recents' => 'mostrar nas medalhas recentes',
-	'achievements-community-platinum-edit' => 'editar',
-	'achievements-community-platinum-save' => 'salvar',
-	'achievements-community-platinum-cancel' => 'cancelar',
-	'achievements-community-platinum-sponsored-label' => 'Objectivo patrocinado',
-	'achievements-community-platinum-sponsored-hover-content-label' => 'Imagem Hover <small>(dimensão mínima: 270px x 100px)</small>:',
-	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'URL de seguimento para impressões de medalhas:',
-	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'URL de seguimento para impressões Hover:',
-	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Link para medalha <small>(URL do comando clique DART)</small>:',
-	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Clique para mais informações',
-	'achievements-badge-name-edit-0' => 'Fazendo a Diferença',
-	'achievements-badge-name-edit-1' => 'Apenas o Começo',
-	'achievements-badge-name-edit-2' => 'Deixando Sua Marca',
-	'achievements-badge-name-edit-3' => 'Amigo da Wiki',
-	'achievements-badge-name-edit-4' => 'Colaborador',
-	'achievements-badge-name-edit-5' => 'Construtor da Wiki',
-	'achievements-badge-name-edit-6' => 'Líder da Wiki',
-	'achievements-badge-name-edit-7' => 'Perito da Wiki',
-	'achievements-badge-name-picture-0' => 'Imagem',
-	'achievements-badge-name-picture-1' => 'Paparazzi',
-	'achievements-badge-name-picture-2' => 'Ilustrador',
-	'achievements-badge-name-picture-3' => 'Colecionador',
-	'achievements-badge-name-picture-4' => 'Amante da Arte',
-	'achievements-badge-name-picture-5' => 'Decorador',
-	'achievements-badge-name-picture-6' => 'Designer',
-	'achievements-badge-name-picture-7' => 'Curador',
-	'achievements-badge-name-category-0' => 'Estabelecer Ligações',
-	'achievements-badge-name-category-1' => 'Pioneiro',
-	'achievements-badge-name-category-2' => 'Explorador',
-	'achievements-badge-name-category-3' => 'Guia Turístico',
-	'achievements-badge-name-category-4' => 'Navegador',
-	'achievements-badge-name-category-5' => 'Construtor de Pontes',
-	'achievements-badge-name-category-6' => 'Planeador da Wiki',
-	'achievements-badge-name-blogpost-0' => 'Coisas Para Dizer',
-	'achievements-badge-name-blogpost-1' => 'Cinco Coisas Para Dizer',
-	'achievements-badge-name-blogpost-2' => 'Conversador',
-	'achievements-badge-name-blogpost-3' => 'Alma da Festa',
-	'achievements-badge-name-blogpost-4' => 'Orador Público',
-	'achievements-badge-name-blogcomment-0' => 'Comentador',
-	'achievements-badge-name-blogcomment-1' => 'E Mais Uma Coisa...',
-	'achievements-badge-name-love-0' => 'Essencial para a Wiki!',
-	'achievements-badge-name-love-1' => 'Duas Semanas na Wiki',
-	'achievements-badge-name-love-2' => 'Devoto',
-	'achievements-badge-name-love-3' => 'Dedicado',
-	'achievements-badge-name-love-4' => 'Viciado',
-	'achievements-badge-name-love-5' => 'Uma vida na Wiki',
-	'achievements-badge-name-love-6' => 'Herói da Wiki!',
-	'achievements-badge-name-sharing-0' => 'Partilhador',
-	'achievements-badge-name-sharing-1' => 'Trazer de volta',
-	'achievements-badge-name-sharing-2' => 'Porta-voz',
-	'achievements-badge-name-sharing-3' => 'Anunciador',
-	'achievements-badge-name-sharing-4' => 'Evangelizador',
-	'achievements-badge-name-welcome' => 'Bem-vindo(a) à Wiki',
-	'achievements-badge-name-introduction' => 'Introdução',
-	'achievements-badge-name-sayhi' => 'Parar Para Dizer Olá',
-	'achievements-badge-name-creator' => 'O Criador',
-	'achievements-badge-name-pounce' => 'Atacar!',
-	'achievements-badge-name-caffeinated' => 'Com cafeína',
-	'achievements-badge-name-luckyedit' => 'Edição afortunada',
-	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|partilhar link|conseguir que {{PLURAL:$1|uma pessoa|$1 pessoas}} cliquem o link que partilhou}}',
-	'achievements-badge-to-get-edit' => 'fazer $1 {{PLURAL:$1|edição|edições}} {{PLURAL:$1|numa página|de páginas}}',
-	'achievements-badge-to-get-edit-plus-category' => 'fazer {{PLURAL:$1|uma edição de uma página|$1 edições de páginas}} $2',
-	'achievements-badge-to-get-picture' => 'acrescentar $1 {{PLURAL:$1|imagem|imagens}} a {{PLURAL:$1|uma página|páginas}}',
-	'achievements-badge-to-get-category' => 'categorizar $1 {{PLURAL:$1|página|páginas}}',
-	'achievements-badge-to-get-blogpost' => 'publicar $1 {{PLURAL:$1|mensagem|mensagens}} de blogue',
-	'achievements-badge-to-get-blogcomment' => 'comentar {{PLURAL:$1|uma publicação num blogue|$1 publicações em blogues}}',
-	'achievements-badge-to-get-love' => 'colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}',
-	'achievements-badge-to-get-welcome' => 'juntar-se à wiki',
-	'achievements-badge-to-get-introduction' => 'adicionar à sua página de utilizador',
-	'achievements-badge-to-get-sayhi' => 'deixar uma mensagem na página de discussão de alguém',
-	'achievements-badge-to-get-creator' => 'ser o criador desta wiki',
-	'achievements-badge-to-get-pounce' => 'ser rápido',
-	'achievements-badge-to-get-caffeinated' => 'fazer {{PLURAL:$1|uma edição|$1 edições}} num único dia',
-	'achievements-badge-to-get-luckyedit' => 'ser sortudo',
-	'achievements-badge-to-get-sharing-details' => 'Partilhe links e consiga que outros os cliquem!',
-	'achievements-badge-to-get-edit-details' => 'Falta alguma coisa?
-Existe um erro?
-Não se acanhe.
-Clique no botão "{{int:edit}}" e você pode melhorar qualquer página!',
-	'achievements-badge-to-get-edit-plus-category-details' => 'As páginas <strong>$1</strong> precisam da sua ajuda!
-Para ajudar, clique o botão "{{int:edit}}" de qualquer página dessa categoria.
-Mostre o seu apoio às páginas $1!',
-	'achievements-badge-to-get-picture-details' => 'Clique o botão "{{int:edit}}" e depois o botão "{{int:rte-ck-image-add}}".
-Pode acrescentar uma imagem vinda do seu computador, ou de outra página da wiki.',
-	'achievements-badge-to-get-category-details' => 'As categorias são etiquetas que ajudam os leitores a encontrar páginas semelhantes.
-Clique o botão "{{int:categoryselect-addcategory-button}}" ao fundo da página, para colocar uma página numa categoria.',
-	'achievements-badge-to-get-blogpost-details' => 'Escreva as suas perguntas e opiniões!
-Clique "{{int:blogs-recent-url-text}}" na barra lateral e depois clique à esquerda para "{{int:create-blog-post-title}}".',
-	'achievements-badge-to-get-blogcomment-details' => 'Dê a sua opinião!
-Leia qualquer das entradas de blogue recentes e escreva a sua opinião na caixa de comentários.',
-	'achievements-badge-to-get-love-details' => 'O contador volta a zeros se faltar um dia, por isso tem de voltar à wiki todos os dias!',
-	'achievements-badge-to-get-welcome-details' => 'Clique o botão "{{int:oasis-signup}}" em cima à direita, para se juntar à comunidade. Pode começar a ganhar as suas próprias medalhas!',
-	'achievements-badge-to-get-introduction-details' => 'A sua página de utilizador está vazia?
-Para vê-la, clique o seu nome de utilizador no topo da página.
-Depois, clique "{{int:edit}}" para acrescentar informação sobre si!',
-	'achievements-badge-to-get-sayhi-details' => 'Pode deixar mensagens às restantes pessoas, clicando "{{int:tooltip-ca-addsection}}" na página de utilizador da pessoa. Peça-lhe ajuda, agradeça o trabalho dela, ou simplesmente diga olá!',
-	'achievements-badge-to-get-creator-details' => 'Esta medalha é atribuída á pessoa que fundou a wiki.
-Clique o botão "{{int:createwiki}}" no topo, para criar um site sobre o tema de que mais gosta!',
-	'achievements-badge-to-get-pounce-details' => 'Para ganhar esta medalha tem de ser rápido.
-Clique o botão "{{int:activityfeed}}" para ver as páginas novas que os utilizadores estão a criar!',
-	'achievements-badge-to-get-caffeinated-details' => 'Para ganhar esta medalha é preciso um dia de trabalho.
-Continue a editar!',
-	'achievements-badge-to-get-luckyedit-details' => 'Para ganhar esta medalha é preciso ter sorte.
-Continue a editar!',
-	'achievements-badge-to-get-community-platinum-details' => 'Esta é uma medalha especial de Platina disponível apenas por um período limitado!',
-	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|por partilhar um link|por conseguir que {{PLURAL:$1|uma pessoa clicasse|$1 pessoas clicassem}} links partilhados}}',
-	'achievements-badge-hover-desc-edit' => 'por fazer $1 {{PLURAL:$1|edição|edições}}<br />
-{{PLURAL:$1|a uma página|de páginas}}!',
-	'achievements-badge-hover-desc-edit-plus-category' => 'por fazer $1 {{PLURAL:$1|edição|edições}}<br />
-a {{PLURAL:$1|uma página $2|páginas $2}}!',
-	'achievements-badge-hover-desc-picture' => 'por acrescentar $1 {{PLURAL:$1|imagem|imagens}}<br />
-a {{PLURAL:$1|uma página|páginas}}!',
-	'achievements-badge-hover-desc-category' => 'por colocar $1 {{PLURAL:$1|página|páginas}}<br />
-{{PLURAL:$1|numa categoria|em categorias}}!',
-	'achievements-badge-hover-desc-blogpost' => 'Concedido por escrever $1 {{PLURAL:$1|entrada|entradas}} de blogue!',
-	'achievements-badge-hover-desc-blogcomment' => 'por escrever um comentário<br />
-{{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
-	'achievements-badge-hover-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
-	'achievements-badge-hover-desc-welcome' => 'por colaborar na wiki!',
-	'achievements-badge-hover-desc-introduction' => 'por acrescentar informação<br />
-à sua página de utilizador!',
-	'achievements-badge-hover-desc-sayhi' => 'por deixar uma mensagem na<br />
-página de discussão de outro utilizador!',
-	'achievements-badge-hover-desc-creator' => 'por criar a wiki!',
-	'achievements-badge-hover-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
-	'achievements-badge-hover-desc-caffeinated' => 'por fazer 100 edições num único dia!',
-	'achievements-badge-hover-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
-	'achievements-badge-hover-desc-community-platinum' => 'Esta é uma medalha especial de Platina, só disponível por um período limitado!',
-	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|por partilhar um link|por conseguir que {{PLURAL:$1|uma pessoa clicasse|$1 pessoas clicassem}} links partilhados}}',
-	'achievements-badge-your-desc-edit' => 'por fazer {{PLURAL:$1|a sua primeira edição|$1 edições}} de {{PLURAL:$1|uma página|páginas}}!',
-	'achievements-badge-your-desc-edit-plus-category' => 'por fazer {{PLURAL:$1|a sua primeira edição|$1 edições}} de {{PLURAL:$1|uma página $2|páginas $2}}!',
-	'achievements-badge-your-desc-picture' => 'por acrescentar {{PLURAL:$1|a sua primeira imagem|$1 imagens}} a {{PLURAL:$1|uma página|páginas}}!',
-	'achievements-badge-your-desc-category' => 'por acrescentar {{PLURAL:$1|a sua primeira página|$1 páginas}} a {{PLURAL:$1|uma categoria|categorias}}!',
-	'achievements-badge-your-desc-blogpost' => 'por escrever {{PLURAL:$1|a sua primeira entrada de blogue|$1 entradas de blogue}}!',
-	'achievements-badge-your-desc-blogcomment' => 'por escrever um comentário {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
-	'achievements-badge-your-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
-	'achievements-badge-your-desc-welcome' => 'por colaborar na wiki!',
-	'achievements-badge-your-desc-introduction' => 'por acrescentar informação à sua página de utilizador!',
-	'achievements-badge-your-desc-sayhi' => 'por deixar uma mensagem na página de discussão de outro utilizador!',
-	'achievements-badge-your-desc-creator' => 'por criar a wiki!',
-	'achievements-badge-your-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
-	'achievements-badge-your-desc-caffeinated' => 'por fazer 100 edições num único dia!',
-	'achievements-badge-your-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
-	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|por partilhar um link|por conseguir que {{PLURAL:$1|uma pessoa clicasse|$1 pessoas clicassem}} links partilhados}}',
-	'achievements-badge-desc-edit' => 'por fazer $1 {{PLURAL:$1|edição|edições}} de {{PLURAL:$1|uma página|páginas}}!',
-	'achievements-badge-desc-edit-plus-category' => 'por fazer $1 {{PLURAL:$1|edição|edições}} de {{PLURAL:$1|uma página $2|páginas $2}}!',
-	'achievements-badge-desc-picture' => 'por acrescentar $1 {{PLURAL:$1|imagem|imagens}} a {{PLURAL:$1|uma página|páginas}}!',
-	'achievements-badge-desc-category' => 'por acrescentar $1 {{PLURAL:$1|página|páginas}} a {{PLURAL:$1|uma categoria|categorias}}!',
-	'achievements-badge-desc-blogpost' => 'por escrever $1 {{PLURAL:$1|entrada|entradas}} de blogue!',
-	'achievements-badge-desc-blogcomment' => 'por escrever um comentário {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
-	'achievements-badge-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
-	'achievements-badge-desc-welcome' => 'por colaborar na wiki!',
-	'achievements-badge-desc-introduction' => 'por acrescentar informação à sua página de utilizador!',
-	'achievements-badge-desc-sayhi' => 'por deixar uma mensagem na página de discussão de outro utilizador!',
-	'achievements-badge-desc-creator' => 'por criar a wiki!',
-	'achievements-badge-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
-	'achievements-badge-desc-caffeinated' => 'por fazer 100 edições num único dia!',
-	'achievements-badge-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
-	'achievements-userprofile-title-no' => 'Medalhas Recebidas por $1',
-	'achievements-userprofile-title' => '{{PLURAL:$2|Medalha|Medalhas}} Recebidas por $1 ($2)',
-	'achievements-userprofile-no-badges-owner' => 'Veja na lista abaixo as medalhas que pode ganhar nesta wiki!',
-	'achievements-userprofile-no-badges-visitor' => 'Este utilizador ainda não ganhou nenhuma medalha.',
-	'achievements-userprofile-profile-score' => '<em>$1</em> Pontos<br />',
-	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Posição #$1]]<br />nesta wiki',
-);
-
 $messages['ro'] = array(
 	'achievementsii-desc' => 'Un sistem de medalii pentru reușitele utilizatorilor',
 	'achievements-upload-error' => 'Ne pare rău!
@@ -8799,9 +8497,9 @@ $messages['ru'] = array(
 	'leaderboard-intro-hide' => 'свернуть',
 	'leaderboard-intro-open' => 'развернуть',
 	'leaderboard-intro-headline' => 'Что такое достижения?',
-	'leaderboard-intro' => "Вы можете зарабатывать значки на этой вики, редактируя страницы, загружая фотографии и оставляя комментарии. Каждый значок даёт очки: чем больше очков вы получите, тем выше вы будете в таблице лидеров! Значки, которые вы заработали, можно просмотреть на [[$1|вашей странице]].
+	'leaderboard-intro' => "Вы можете зарабатывать значки на этой вики, редактируя страницы, загружая изображения и оставляя комментарии. Каждый значок даёт очки: чем больше очков вы получите, тем выше вы будете в таблице лидеров! Значки, которые вы заработали, можно просмотреть на [[$1|вашей странице]].
 
-	''Как оцениваются значки?'''",
+	'''Как оцениваются значки?'''",
 	'leaderboard' => 'Лидеры по наградам',
 	'achievements-title' => 'Достижения',
 	'leaderboard-title' => 'Таблица лидеров',
@@ -8809,11 +8507,11 @@ $messages['ru'] = array(
 	'achievements-recent-info' => '<a href="$1">$2</a> заработал(а) <strong>$3</strong><br />$4<br />$5',
 	'achievements-activityfeed-info' => 'заработал(а) значок <a href="$3" class="badgeName"><strong>$1</strong></a> за <br /> $2',
 	'achievements-leaderboard-disclaimer' => 'Таблица лидеров показывает изменения со вчерашнего дня',
-	'achievements-leaderboard-rank-label' => 'Рейтинг',
+	'achievements-leaderboard-rank-label' => 'Позиция',
 	'achievements-leaderboard-member-label' => 'Участник',
-	'achievements-leaderboard-points-label' => 'Очков',
-	'achievements-leaderboard-points' => '$1 {{PLURAL:$1|очко|очка|очков}}',
-	'achievements-leaderboard-most-recently-earned-label' => 'Недавно заработанные',
+	'achievements-leaderboard-points-label' => 'Очки',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|очко|очка|очков}}',
+	'achievements-leaderboard-most-recently-earned-label' => 'Последний полученный',
 	'achievements-send' => 'Сохранить изображение',
 	'achievements-save' => 'Сохранить изменения',
 	'achievements-reverted' => 'Значок возвращён к исходной версии.',
@@ -8960,7 +8658,7 @@ $5',
 	'achievements-badge-to-get-sharing-details' => 'Поделитесь ссылками и сделайте так, чтобы ими делились другие.',
 	'achievements-badge-to-get-edit-details' => 'Чего-то не хватает? Есть ошибки? Не стесняйтесь.<br />Нажмите на кнопку «{{int:edit}}»<br /> и отредактируйте страницу!',
 	'achievements-badge-to-get-edit-plus-category-details' => 'Страницам в категории «<strong>$1</strong>» нужна ваша помощь.
-Кликните по кнопке «{{int:edit}» на любой странице в категории, чтобы начать редактировать.
+Кликните по кнопке «{{int:edit}}» на любой странице в категории, чтобы начать редактировать.
 Помогите страницам в категории «$1»!',
 	'achievements-badge-to-get-picture-details' => 'Нажмите на кнопку «{{int:edit}}», а затем на «{{int:rte-ck-image-add}}». Вы можете добавить изображение с вашего компьютера или с другой страницы на вики.',
 	'achievements-badge-to-get-category-details' => 'Категории — это теги, которые помогают читателям найти похожие по теме страницы.
@@ -8972,7 +8670,7 @@ $5',
 	'achievements-badge-to-get-welcome-details' => 'Нажмите на кнопку «{{int:oasis-signup}}» в правом верхнем углу, чтобы присоединиться к сообществу.
 Вы можете начать зарабатывать собственные значки!',
 	'achievements-badge-to-get-introduction-details' => 'На вашей личной странице пусто? 
-Нажмите на имя аватар в верхней части экрана, чтобы открыть меню и перейти к вашей странице.
+Нажмите на аватар в верхней части экрана, чтобы открыть меню и перейти к вашей странице.
 Нажмите «{{int:edit}}», чтобы добавить информацию о себе.',
 	'achievements-badge-to-get-sayhi-details' => 'Вы можете оставить сообщения другим пользователям, нажав на кнопку «{{int:addsection}}» на их страницах обсуждения.
 Попросите их о помощи, поблагодарите их за работу или просто поздоровайтесь.',
@@ -9029,7 +8727,7 @@ $5',
 	'achievements-badge-desc-caffeinated' => 'Награда за 100 правок на страницах за один день.',
 	'achievements-badge-desc-luckyedit' => 'Награда за счастливую правку номер $1 на вики.',
 	'achievements-userprofile-title-no' => 'Заработанных участником $1 значков',
-	'achievements-userprofile-title' => '$1 заработал(а) {{PLURAL:$2|значок|значка|значков}} ($2)',
+	'achievements-userprofile-title' => '$1 заработал(а) $2 {{PLURAL:$2|значок|значка|значков}}',
 	'achievements-userprofile-no-badges-owner' => 'Просмотрите список, чтобы увидеть значки, которые можно заработать в этой вики!',
 	'achievements-userprofile-no-badges-visitor' => 'Этот участник ещё не заработал ни одного значка.',
 	'achievements-userprofile-profile-score' => '<em>$1</em>очков<br />достижений',
@@ -10365,98 +10063,6 @@ Hãy thử những ảnh khác!',
 	'achievements-badge-name-picture-1' => 'Tay săn ảnh',
 );
 
-$messages['zh'] = array(
-	'achievements-badge-to-get-sayhi-details' => '你可以在其他用户的讨论页上点击 "{{int:addsection}}" 来留言。
-求助、谢谢他们的贡献，或是打个招呼都行！',
-	'achievements-about-content' => '此维基上的管理员可以自定义成就徽章的名称和图片。
-
-您可以上载任何.jpg 或.png 的图片，图片将自动调整至框架内。最适合的图片是正方形，可以让图片中最主要的部分对齐中间。
-
-您也可以使用矩形的图片，但您可能会发现，有些部分突出框架。
-如果您有一个制图的程序，您可以裁剪图片把图像的重要部分放在中间。
-如果您没有制图程序，那么只好试验不同的图片，直到能找到适合的！
-如果您不喜欢所选择的图片，请点击"{{int:achievements-revert}}"恢复为默认的图片。
-
-您也可以给徽章可以反映维基主题的新名称。
-当更改了徽章名后，点击"{{int:achievements-save}}"保存您的更改。',
-	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|分享一个连结|让{{PLURAL:$1|1个人|$1 个人}} 点击分享的连结}}',
-	'achievements-badge-hover-desc-category' => '将 $1 {{PLURAL:$1|1篇文章|篇文章}}<br /> 加入
-{{PLURAL:$1|1个分类|个分类}}!',
-	'achievements-badge-hover-desc-community-platinum' => '这是一个特殊的铂金徽章，只有在特定的时间才能获得！',
-	'achievements-badge-hover-desc-creator' => '创建本维基的奖励！',
-	'achievements-badge-hover-desc-picture' => '帮{{PLURAL:$1|1篇文章|篇文章}}<br />
-增加$1张 {{PLURAL:$1|图片|图片}}！',
-	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|分享一个连结|使{{PLURAL:$1|1个人|$1个人}} 点击分享的连结}}',
-	'achievements-badge-name-blogpost-0' => '有话要说',
-	'achievements-badge-name-blogpost-3' => '群体生活',
-	'achievements-badge-name-category-1' => '開拓者',
-	'achievements-badge-name-category-2' => '探险者',
-	'achievements-badge-name-edit-0' => '做出一次编辑',
-	'achievements-badge-name-edit-2' => '留下您的标记',
-	'achievements-badge-name-love-1' => '维基上的两个星期',
-	'achievements-badge-name-love-2' => '全心投入',
-	'achievements-badge-name-love-3' => '专注於此',
-	'achievements-badge-name-picture-2' => '插画家',
-	'achievements-badge-name-picture-3' => '收藏家',
-	'achievements-badge-name-picture-5' => '装潢师',
-	'achievements-badge-name-picture-6' => '设计师',
-	'achievements-badge-name-pounce' => '飞扑！',
-	'achievements-badge-name-sharing-0' => '分享者',
-	'achievements-badge-name-sharing-2' => '演讲者',
-	'achievements-badge-to-get-blogcomment-details' => '发表你的看法！
-阅读任何最近的博客文章，并在评论栏中写下你的意见。',
-	'achievements-badge-to-get-blogpost-details' => '撰写你的意见与问题！
-点击边栏中的 "{{int:blogs-recent-url-text}}" 再连结到左边的"{{int:create-blog-post-title}}".',
-	'achievements-badge-to-get-caffeinated-details' => '要得到這個徽章會有個很忙的一天！
-繼續編輯!',
-	'achievements-badge-to-get-category-details' => '分类是帮助读者找到相关页面的标签。.
-点击页面底部的 "{{int:categoryselect-addcategory-button}}" 按钮将该页面加上分类。',
-	'achievements-badge-to-get-community-platinum-details' => '这一是个只有在特定时间才能获得的特别铂金徽章！',
-	'achievements-badge-to-get-creator-details' => '这个徽章是给予这个维基的创始人。
-点击页面顶部的 "{{int:createwiki}}" 按钮可以创建一个你最喜欢主题的站！',
-	'achievements-badge-to-get-edit-details' => '是不是缺少了什么?
-是不是哪里有错误?
-不要觉得羞怯.
-点击 "{{int:edit}}" 按钮, 你可以在任何页面添加内容!',
-	'achievements-badge-to-get-love-details' => '如果你漏掉了一天，计数器会重新开始，因此确定你每天都会来这个维基！',
-	'achievements-badge-to-get-picture-details' => '点击 "{{int:edit}}" 按钮，再点击"{{int:rte-ck-image-add}}" 按钮
-	你可以从你的计算机或这个维基上的其他页面中添加图片。',
-	'achievements-badge-to-get-welcome-details' => '点击右上角的"{{int:oasis-signup}}" 按钮来加入社群。
-你可以开始获得你自己的徽章！',
-	'achievements-badge-your-desc-category' => '您为{{PLURAL:$1|分类|分类}}添加{{PLURAL:$1|您的第一个条目|$1 条目}}',
-	'achievements-badge-your-desc-picture' => '奖励您在 {{PLURAL:$1|一篇文章|文章}}中，加上{{PLURAL:$1|您的第一张图片|$1 张图片}}！',
-	'achievements-badge-your-desc-sharing' => '奖励{{#ifeq:$1|0|分享一个连结|使 {{PLURAL:$1|一个人|$1 个人}}点击分享的连结}}',
-	'achievements-community-platinum-awarded-for-example' => '例如 "因为做了..."',
-	'achievements-community-platinum-awarded-for' => '获奖原因：',
-	'achievements-community-platinum-badge-image' => '徽章图像：',
-	'achievements-community-platinum-create-badge' => '创建徽章',
-	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => '追踪徽章外观的 URL：',
-	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => '追踪悬停图片的 URL：',
-	'achievements-community-platinum-sponsored-label' => '赞助的成就',
-	'achievements-create-edit-plus-category-content' => '
-你可以创建一系列奖励在特定类别编辑用户的徽章，来突显用户们会乐于贡献的领域。你可以设定超过一个以上的分类轨道，因此试着选择二个能帮助用户展现他们的特点的分类！激起编辑例如吸血鬼、狼人、巫师、麻瓜、机器人等不同信息用户之间的竞争。要创建一个新的「在分类中编辑」的轨道，在底下的区域打上分类名称。
-
-一般的编辑轨道仍会存在：新创建的会与原本的分开来设定。当轨道建立后，新的徽章就会出现在左边的格子里，就可以依一般的方式来自定义名称和图片。自定义新轨迹的名称和图片，这样用户们会看到差异所在！一旦你完成了自定，点击 "{{int:achievements-enable-track}}"的格子来开启这个新的轨道，并点击 "{{int:achievements-save}}", 用户们将会看到新轨道出现在他们的用户档案页，并开始依照这个类别的编辑而获得徽章。
-
-如果你决定不想要重视这个类别，你可以之后关闭这个轨道，只要把之前启用的格子中取消，再点击保存，就可以关闭。之后用户就不再会获得该类别的徽章，但之前获得的徽章还是会保留。这有助于为成就系统带来另一层次的乐趣！试试看吧！',
-	'achievements-create-edit-plus-category' => '创建此轨道',
-	'achievements-earned' => '
-此徽章有 {{PLURAL:$1|一个用户|$1个用户}}获得。',
-	'achievements-edit-plus-category-track-exists' => '这个指定的类别已经有<a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">个相关轨道</a>.',
-	'achievements-next-oasis' => '下一个',
-	'achievements-no-badges' => '查看下面这个列表，显示在这个维基上你可以获得的徽章 ！',
-	'achievements-notification-link' => '<strong><big>[[Special:MyPage|看更多你可以获得的徽章]] ！</big></strong>',
-	'achievements-notification-subtitle' => '你刚获得 "$1" 徽章 $2',
-	'achievements-points-with-break' => '$1<br />分',
-	'achievements-points' => '$1分',
-	'achievements-prev-oasis' => '前一个',
-	'achievements-ranked-oasis' => '$1在这个维基上排名[[Special:Leaderboard|#$2]]',
-	'achievements-track-name-picture' => '图片轨道',
-	'achievements-upload-not-allowed' => '管理员可以点击[[Special:AchievementsCustomize|自订成就]]页面来更改成就徽章的名称和图片。',
-	'achievements-you-must' => '您需要 $1 以获得此徽章。',
-	'platinum' => '白金徽章',
-);
-
 $messages['zh-hans'] = array(
 	'achievementsii-desc' => '一项为维基用户提供成就徽章的系统',
 	'achievements-upload-error' => '对不起！
@@ -11066,499 +10672,5 @@ $5",
 [[Special:Leaderboard|排名第$1]]',
 	'right-achievements-exempt' => '不能獲得成就積分',
 	'right-achievements-explicit' => '可獲得成就積分（會覆蓋其他無法獲得積分的用戶組的設定）',
-);
-
-$messages['zh-hk'] = array(
-	'achievements-non-existing-category' => '指定的類别不存在。',
-	'achievements-platinum' => '白金',
-	'achievements-gold' => '金',
-	'achievements-silver' => '銀',
-	'achievements-bronze' => '銅',
-	'leaderboard-button' => '成就排行榜',
-	'achievements-badge-to-get-sayhi-details' => '你可以在其他用戶的討論頁上點擊 "{{int:addsection}}" 來留言。
-求助、謝謝他們的貢獻，或是打個招呼都行！',
-	'achievements-about-content' => '此維基上的管理員可以自訂成就徽章的名稱和圖片。
-
-您可以上載任何.jpg 或.png 的圖片，圖片將自動調整至框架内。最適合的圖片是正方形，可以讓圖片中最主要的部分對齊中間。
-
-您也可以使用矩形的圖片，但您可能會發現，有些部分突出框架。
-如果您有一個製圖的程式，您可以裁剪圖片把圖像的重要部分放在中間。
-如果您没有製圖程式，那麼只好試驗不同的圖片，直到能找到適合的！
-如果您不喜歡所選擇的圖片，請點擊"{{int:achievements-revert}}"恢復為預設的圖片。
-
-您也可以給徽章可以反映維基主題的新名稱。
-當更改了徽章名後，點擊"{{int:achievements-save}}"保存您的更改。',
-	'achievements-activityfeed-info' => '獲得<strong><a href="$3" class="badgeName">$1</a></strong>徽章<br />$2',
-	'achievements-badge-desc-blogcomment' => '為{{PLURAL:$1|一篇博客|$1篇不同的博客}}撰寫評論!',
-	'achievements-badge-desc-blogpost' => '撰寫$1{{PLURAL:$1|篇博客|篇博客}}！',
-	'achievements-badge-desc-caffeinated' => '一天之内就對頁面做出一百個編輯！',
-	'achievements-badge-desc-category' => '為 $1 {{PLURAL:$1|篇文章|篇文章}} 添加 {{PLURAL:$1|一個分類|個分類}}',
-	'achievements-badge-desc-creator' => '創建本維基的獎勵！',
-	'achievements-badge-desc-edit-plus-category' => '為{{PLURAL:$1|一個$2条目|個$2條目}}作出$1{{PLURAL:$1|次編輯|次編輯}} !',
-	'achievements-badge-desc-edit' => '為{{PLURAL:$1|一個條目|個條目}}作出$1{{PLURAL:$1|次編輯|次編輯}} !',
-	'achievements-badge-desc-introduction' => '添加個人用戶頁的獎勵！',
-	'achievements-badge-desc-love' => '連續為本維基貢獻{{PLURAL:$1|一天|$1天}}！',
-	'achievements-badge-desc-luckyedit' => '幸運地做出本維基第$1次編輯！',
-	'achievements-badge-desc-picture' => '為{{PLURAL:$1|一篇文章|篇文章}}添加$1{{PLURAL:$1|一張圖片|張圖片}}!',
-	'achievements-badge-desc-pounce' => '在本頁建立的一個小時内為100個頁面執行編輯！',
-	'achievements-badge-desc-sayhi' => '在其他用戶的討論頁上留言！',
-	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|分享一個連結|讓{{PLURAL:$1|1個人|$1 個人}} 點擊分享的連結}}',
-	'achievements-badge-desc-welcome' => '加入本維基的獎勵！',
-	'achievements-badge-hover-desc-blogcomment' => '為{{PLURAL:$1|篇博客|篇博客}}撰寫評論!',
-	'achievements-badge-hover-desc-blogpost' => '撰寫$1{{PLURAL:$1|篇博客|篇博客}}！',
-	'achievements-badge-hover-desc-caffeinated' => '在一天之内對頁面做出共一百次編輯！',
-	'achievements-badge-hover-desc-category' => '將 $1 {{PLURAL:$1|1篇文章|篇文章}}<br /> 加入
-{{PLURAL:$1|1個分類|個分類}}!',
-	'achievements-badge-hover-desc-community-platinum' => '這是一個特殊的鉑金徽章，只有在特定的時間才能獲得！',
-	'achievements-badge-hover-desc-creator' => '創建本維基的獎勵！',
-	'achievements-badge-hover-desc-edit-plus-category' => '為{{PLURAL:$1|一個$2條目|個$2條目}}進行$1次{{PLURAL:$1|編輯|編輯}}!',
-	'achievements-badge-hover-desc-edit' => '對{{PLURAL:$1|一篇文章|篇文章}}進行$1{{PLURAL:$1|一次修改|次修改}}',
-	'achievements-badge-hover-desc-introduction' => '為自己的用戶頁添磚加瓦！',
-	'achievements-badge-hover-desc-love' => '連續為本維基貢獻{{PLURAL:$1|一天|$1天}}！',
-	'achievements-badge-hover-desc-luckyedit' => '幸運地做出本維基第$1次修改！',
-	'achievements-badge-hover-desc-picture' => '幫{{PLURAL:$1|1篇文章|篇文章}}<br />
-增加$1張 {{PLURAL:$1|圖片|圖片}}！',
-	'achievements-badge-hover-desc-pounce' => '在本頁建立的一個小時内為100個條目執行編輯！',
-	'achievements-badge-hover-desc-sayhi' => '在其他用戶的討論頁上留言！',
-	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|分享一個連結|使{{PLURAL:$1|1個人|$1個人}} 點擊分享的連結}}',
-	'achievements-badge-hover-desc-welcome' => '加入本維基的獎勵！',
-	'achievements-badge-name-blogcomment-0' => '固執己見',
-	'achievements-badge-name-blogcomment-1' => '還有一件事',
-	'achievements-badge-name-blogpost-0' => '有話要說',
-	'achievements-badge-name-blogpost-1' => '要說的五件事',
-	'achievements-badge-name-blogpost-3' => '群體生活',
-	'achievements-badge-name-category-0' => '建立連接',
-	'achievements-badge-name-category-1' => '開拓者',
-	'achievements-badge-name-category-2' => '探險者',
-	'achievements-badge-name-category-3' => '旅遊指南',
-	'achievements-badge-name-category-4' => '導航',
-	'achievements-badge-name-category-5' => '造橋者',
-	'achievements-badge-name-category-6' => '維基規劃師',
-	'achievements-badge-name-creator' => '創建者',
-	'achievements-badge-name-edit-0' => '做出一次編輯',
-	'achievements-badge-name-edit-1' => '僅僅是個開始',
-	'achievements-badge-name-edit-2' => '留下您的標記',
-	'achievements-badge-name-edit-3' => '維基的朋友',
-	'achievements-badge-name-edit-5' => '維基建造者',
-	'achievements-badge-name-edit-6' => '維基的領導者',
-	'achievements-badge-name-edit-7' => '維基專家',
-	'achievements-badge-name-introduction' => '介紹',
-	'achievements-badge-name-love-0' => '維基的關鍵！',
-	'achievements-badge-name-love-1' => '維基上的兩個星期',
-	'achievements-badge-name-love-2' => '全心投入',
-	'achievements-badge-name-love-3' => '專注於此',
-	'achievements-badge-name-love-4' => '成癮',
-	'achievements-badge-name-love-5' => '一個維基生活',
-	'achievements-badge-name-love-6' => '維基英雄！',
-	'achievements-badge-name-luckyedit' => '幸運編輯',
-	'achievements-badge-name-picture-1' => '狗仔隊',
-	'achievements-badge-name-picture-2' => '插畫家',
-	'achievements-badge-name-picture-3' => '收藏家',
-	'achievements-badge-name-picture-4' => '藝術愛好者',
-	'achievements-badge-name-picture-5' => '裝潢師',
-	'achievements-badge-name-picture-6' => '設計師',
-	'achievements-badge-name-pounce' => '飛撲！',
-	'achievements-badge-name-sayhi' => '停下來問好',
-	'achievements-badge-name-sharing-0' => '分享者',
-	'achievements-badge-name-sharing-1' => '把它帶回來',
-	'achievements-badge-name-sharing-2' => '演講者',
-	'achievements-badge-name-sharing-3' => '播音員',
-	'achievements-badge-name-sharing-4' => '傳播者',
-	'achievements-badge-name-welcome' => '歡迎到這個維基來',
-	'achievements-badge-to-get-blogcomment-details' => '發表你的看法！
-閱讀任何最近的網誌文章，並在評論欄中寫下你的意見。',
-	'achievements-badge-to-get-blogcomment' => '為{{PLURAL:$1|一篇網誌|$1篇不同的網誌}}撰寫評論!',
-	'achievements-badge-to-get-blogpost-details' => '撰寫你的意見與問題！
-點擊邊欄中的 "{{int:blogs-recent-url-text}}" 再連結到左邊的"{{int:create-blog-post-title}}".',
-	'achievements-badge-to-get-blogpost' => '撰寫 $1 {{PLURAL:$1|篇網誌|篇網誌}}',
-	'achievements-badge-to-get-caffeinated-details' => '要得到這個徽章會有個很忙的一天！
-繼續編輯!',
-	'achievements-badge-to-get-caffeinated' => '一天之内對各條目做出{{PLURAL:$1|一次編輯|$1次編輯}}',
-	'achievements-badge-to-get-category-details' => '分類是幫助讀者找到相關頁面的標籤。.
-點擊頁面底部的 "{{int:categoryselect-addcategory-button}}" 按鈕將該頁面加上分類。',
-	'achievements-badge-to-get-category' => '為 $1 {{PLURAL:$1|篇文章|篇文章}} 添加 {{PLURAL:$1|個分類|個分類}}',
-	'achievements-badge-to-get-community-platinum-details' => '這一是個只有在特定時間才能獲得的特別鉑金徽章！',
-	'achievements-badge-to-get-creator-details' => '這個徽章是給予這個維基的創始人。
-點擊頁面頂部的 "{{int:createwiki}}" 按鈕可以創建一個你最喜歡主題的站！',
-	'achievements-badge-to-get-creator' => '作為這個維基的創建者',
-	'achievements-badge-to-get-edit-details' => '是不是缺少了什麼?
-是不是哪裡有錯誤?
-不要覺得羞怯.
-點擊 "{{int:edit}}" 按鈕, 你可以為任何頁面增加內容!',
-	'achievements-badge-to-get-edit-plus-category-details' => '<strong>$1</strong>頁面需要您的幫助！
-在那個分類中的頁面點擊“{{int:edit}}”按鈕來幫助我們。
-為$1頁面展現您的支持！',
-	'achievements-badge-to-get-edit-plus-category' => '在{{PLURAL:$1|$2 條目|$2 條目}}中做出{{PLURAL:$1|一次編輯|$1 次編輯}}',
-	'achievements-badge-to-get-edit' => '對{{PLURAL:$1|一個條目|個條目}}做出$1{{PLURAL:$1|次編輯|次編輯}}',
-	'achievements-badge-to-get-introduction-details' => '您的用戶頁空空如也？
-點擊頁面頂部的用戶名來查看。
-點擊"{{int:edit}}"添加一些關於您的訊息吧！',
-	'achievements-badge-to-get-introduction' => '添加至您的用户頁',
-	'achievements-badge-to-get-love-details' => '如果你漏掉了一天，計數器會重新開始，因此確定你每天都會來這個維基！',
-	'achievements-badge-to-get-love' => '連續為本維基貢獻{{PLURAL:$1|一天|$1天}}',
-	'achievements-badge-to-get-luckyedit-details' => '您需要够幸連才能獲得這枚徽章。
-繼續努力吧！',
-	'achievements-badge-to-get-luckyedit' => '幸運',
-	'achievements-badge-to-get-picture-details' => '點擊 "{{int:edit}}" 按鈕，再點擊"{{int:rte-ck-image-add}}" 按鈕
-	你可以從你的電腦或這個維基上的其他頁面中添加圖片。',
-	'achievements-badge-to-get-picture' => '為{{PLURAL:$1|一篇文章|篇文章}}添加$1{{PLURAL:$1|一張圖片|張圖片}}',
-	'achievements-badge-to-get-pounce-details' => '要獲得這個徽章你得趕快啦。
-點擊“{{int:activityfeed}}”來查看用戶們正在創建的新頁面！',
-	'achievements-badge-to-get-sayhi' => '在某人的討論頁上留言',
-	'achievements-badge-to-get-sharing-details' => '分享鏈接, 讓其他人點擊它們!',
-	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|分享鏈接|獲得{{PLURAL:$1|一個人|$1個人}}點擊您分享的鏈接}}',
-	'achievements-badge-to-get-welcome-details' => '點擊右上角的"{{int:oasis-signup}}" 按鈕來加入社群。
-你可以開始獲得你自己的徽章！',
-	'achievements-badge-your-desc-blogcomment' => '為{{PLURAL:$1|一篇網誌|$1篇不同的網誌}}撰寫評論!',
-	'achievements-badge-your-desc-blogpost' => '已撰寫{{PLURAL:$1|您的第一篇網誌|$1 篇網誌}} ！',
-	'achievements-badge-your-desc-caffeinated' => '一天之内就對頁面做出一百次編輯！',
-	'achievements-badge-your-desc-category' => '您為{{PLURAL:$1|分類|分類}}添加{{PLURAL:$1|您的第一個條目|$1 條目}}',
-	'achievements-badge-your-desc-creator' => '創建本維基的獎勵！',
-	'achievements-badge-your-desc-edit-plus-category' => '為{{PLURAL:$1|一個$2條目|個$2條目}}作出{{PLURAL:$1|你的首次編輯|$1次編輯}} !',
-	'achievements-badge-your-desc-edit' => '為{{PLURAL:$1|一個條目|個條目}}作出{{PLURAL:$1|你的首次編輯|$1次編輯}} !',
-	'achievements-badge-your-desc-introduction' => '添加個人用戶頁的獎勵！',
-	'achievements-badge-your-desc-love' => '連續为本維基貢獻{{PLURAL:$1|一天|$1天}}！',
-	'achievements-badge-your-desc-luckyedit' => '幸運地做出本維基第$1次修改！',
-	'achievements-badge-your-desc-picture' => '獎勵您在 {{PLURAL:$1|一篇文章|文章}}中，加上{{PLURAL:$1|您的第一張圖片|$1 張圖片}}',
-	'achievements-badge-your-desc-pounce' => '在本頁建立的一個小時内為100個條目執行編輯！',
-	'achievements-badge-your-desc-sayhi' => '在其他用戶的討論頁上留言！',
-	'achievements-badge-your-desc-sharing' => '獎勵{{#ifeq:$1|0|分享一個連結|使 {{PLURAL:$1|一個人|$1 個人}}點擊分享的連結}}',
-	'achievements-badge-your-desc-welcome' => '加入本wiki的獎勵！',
-	'achievements-community-platinum-awarded-email-body-html' => '<strong>$1, 恭喜你！</strong><br /><br />
-
-你剛剛在<a href="$3">$4</a>被授予了一枚<strong>$2</strong>鉑徽章，
-它给你带來了 250 點積分！
-
-快去看看你<a href="$5">個人頁面</a>上的新徽章。',
-	'achievements-community-platinum-awarded-email-body-text' => "$1, 恭喜你!
-
-你剛剛在 $4 ($3) 被授予了一枚鉑徽章 '$2',
-它給你帶来了 250 點積分!
-
-快去看看你個人頁面上的新徽章:
-
-$5",
-	'achievements-community-platinum-awarded-email-subject' => '你被授予了一枚新的鉑徽章!',
-	'achievements-community-platinum-awarded-for-example' => '例如 "因為做..."',
-	'achievements-community-platinum-awarded-for' => '獲獎原因：',
-	'achievements-community-platinum-badge-image' => '徽章圖像：',
-	'achievements-community-platinum-create-badge' => '創建徽章',
-	'achievements-community-platinum-current-badges' => '當前白金徽章',
-	'achievements-community-platinum-edit' => '編輯',
-	'achievements-community-platinum-enabled' => '已啟用',
-	'achievements-community-platinum-how-to-earn-example' => '例如：“做出3個編輯…”',
-	'achievements-community-platinum-how-to-earn' => '如何獲得：',
-	'achievements-community-platinum-show-recents' => '在最近的徽章中顯示',
-	'achievements-community-platinum-sponsored-badge-click-url-label' => '徽章鏈接 <small>(DART click command URL)</small>:',
-	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => '追蹤徽章樣貌的 URL：',
-	'achievements-community-platinum-sponsored-hover-content-label' => '懸停圖片 <small>（懸停的最小大小：270px x 100px）</small>：',
-	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => '追蹤懸停圖片的 URL：',
-	'achievements-community-platinum-sponsored-label' => '贊助的成就',
-	'achievements-create-edit-plus-category-content' => '
-你可以創建一系列獎勵在特定類別編輯用戶的徽章，來突顯用戶們會樂於貢獻的領域。你可以設定超過一個以上的分類軌道，因此試著選擇二個能幫助用戶展現他們的特點的分類！激起編輯例如吸血鬼、狼人、巫師、麻瓜、機器人等不同資訊用戶之間的競爭。要創建一個新的「在分類中編輯」的軌道，在底下的區域打上分類名稱。
-
-一般的編輯軌道仍會存在：新創建的會與原本的分開來設定。當軌道建立後，新的徽章就會出現在左邊的格子裡，就可以依一般的方式來自訂名稱和圖片。自訂新軌道的名稱和圖片，這樣用戶們會看到差異所在！一旦你完成了自定，點擊 "{{int:achievements-enable-track}}"的格子來開啟這個新的軌道，並點擊 "{{int:achievements-save}}", 用戶們將會看到新軌道出現在他們的用戶檔案頁，並開始依照這個類別的編輯而獲得徽章。
-如果你決定不想要重視這個類別，你可以之後關閉這個軌道，只要把之前啟用的格子中取消，再點擊保存，就可以關閉。之後用戶就不再會獲得該類別的徽章，但之前獲得的徽章還是會保留。這有助於為成就系統帶來另一層次的樂趣！試試看吧！',
-	'achievements-create-edit-plus-category-title' => '創建一個新的編輯軌道',
-	'achievements-create-edit-plus-category' => '創建此軌道',
-	'achievements-customize-new-category-track' => '創建新類別的軌道：',
-	'achievements-customize' => '自定圖片',
-	'achievements-earned' => '此徽章有 {{PLURAL:$1|一個用戶|$1个用戶}}獲得。',
-	'achievements-edit-plus-category-track-exists' => '這個指定的類别已經有<a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">個相關軌道</a>.',
-	'achievements-edit-plus-category-track-name' => '$1 編輯軌道',
-	'achievements-enable-track' => '啟用',
-	'achievements-leaderboard-disclaimer' => '排行榜顯示自昨天以來的變化',
-	'achievements-leaderboard-member-label' => '成員',
-	'achievements-leaderboard-rank-label' => '級別',
-	'achievements-next-oasis' => '下一個',
-	'achievements-no-badges' => '查看下面這個列表，顯示在這個維基上你可以獲得的徽章 ！',
-	'achievements-no-stub-category' => '請不要創建小作品的軌道。',
-	'achievements-notification-link' => '<strong><big>[[Special:MyPage|看更多你可以獲得的徽章]] ！</big></strong>',
-	'achievements-notification-subtitle' => '你剛獲得 "$1" 徽章 $2',
-	'achievements-notification-title' => '$1，繼續加油！',
-	'achievements-points-with-break' => '$1<br />分',
-	'achievements-points' => '$1分',
-	'achievements-prev-oasis' => '前一個',
-	'achievements-profile-customize' => '自訂徽章',
-	'achievements-profile-title-challenges' => '更多你可以獲得的徽章！',
-	'achievements-profile-title-oasis' => '成就<br />分數',
-	'achievements-profile-title' => '$1 的 $2 獲得徽章',
-	'achievements-ranked-oasis' => '$1在這個維基上排名[[Special:Leaderboard|#$2]]',
-	'achievements-ranked' => '此維基上排名 #$1',
-	'achievements-recent-earned-badges' => '最近獲得的徽章',
-	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />由<a href="$1">$2</a><br />$5獲得',
-	'achievements-revert' => '還原到預設',
-	'achievements-reverted' => '回復為原來的徽章。',
-	'achievements-toggle-hide' => '向所有人隱藏我的成就',
-	'achievements-track-name-blogcomment' => '網誌評論軌道',
-	'achievements-track-name-blogpost' => '網誌發文軌道',
-	'achievements-track-name-category' => '分類軌道',
-	'achievements-track-name-edit' => '編輯軌道',
-	'achievements-track-name-love' => '維基愛軌道',
-	'achievements-track-name-picture' => '圖片軌道',
-	'achievements-track-name-sharing' => '分享軌道',
-	'achievements-upload-error' => '對不起！
-這張圖片無法使用。
-請確認它是一個 .jpg 或 .png 文件。
-如果它仍無法使用，那麼可能是因為圖片大小超過標準了。
-請嘗試另一個文件！',
-	'achievements-upload-not-allowed' => '管理員可以點擊[[Special:AchievementsCustomize|自訂成就]]頁面來更改成就徽章的名稱和圖片。',
-	'achievements-userprofile-no-badges-owner' => '查看下面的列表來瀏覽您在本維基上可以獲得的徽章！',
-	'achievements-userprofile-no-badges-visitor' => '這個用戶沒有得到任何徽章。',
-	'achievements-userprofile-profile-score' => '<em>$1</em>成就<br />分數',
-	'achievements-userprofile-ranked' => '在本維基上<br />[[Special:Leaderboard|排名第 #$1]]',
-	'achievements-userprofile-title-no' => '$1獲得的徽章',
-	'achievements-userprofile-title' => '$1已獲得{{PLURAL:$2|枚徽章|枚徽章}} ($2)',
-	'achievements-viewless' => '關閉',
-	'achievements-you-must' => '您需要 $1 以獲得此徽章。',
-	'achievementscustomize' => '自訂徽章',
-	'achievementsii-desc' => '一個為維基用戶提供的成就徽章系統',
-	'platinum' => '白金徽章',
-);
-
-$messages['zh-tw'] = array(
-	'achievements-community-platinum-edit' => '編輯',
-	'achievements-community-platinum-save' => '儲存',
-	'achievements-community-platinum-cancel' => '取消',
-	'achievements-badge-to-get-sayhi-details' => '你可以在其他用戶的討論頁上點擊 "{{int:addsection}}" 來留言。
-求助、謝謝他們的貢獻，或是打個招呼都行！',
-	'achievements-about-content' => '此維基上的管理員可以自訂成就徽章的名稱和圖片。
-
-您可以上載任何.jpg 或.png 的圖片，圖片將自動調整至框架内。最適合的圖片是正方形，可以讓圖片中最主要的部分對齊中間。
-
-您也可以使用矩形的圖片，但您可能會發現，有些部分突出框架。
-如果您有一個製圖的程式，您可以裁剪圖片把圖像的重要部分放在中間。
-如果您没有製圖程式，那麼只好試驗不同的圖片，直到能找到適合的！
-如果您不喜歡所選擇的圖片，請點擊"{{int:achievements-revert}}"恢復為預設的圖片。
-
-您也可以給徽章可以反映維基主題的新名稱。
-當更改了徽章名後，點擊"{{int:achievements-save}}"保存您的更改。',
-	'achievements-activityfeed-info' => '獲得<strong><a href="$3" class="badgeName">$1</a></strong>徽章<br />$2',
-	'achievements-badge-desc-blogcomment' => '為{{PLURAL:$1|一篇部落格文章|$1篇不同的部落格文章}}撰寫評論!',
-	'achievements-badge-desc-blogpost' => '撰寫$1{{PLURAL:$1|篇部落格|篇部落格}}！',
-	'achievements-badge-desc-caffeinated' => '一天之内就對頁面做出一百個編輯！',
-	'achievements-badge-desc-category' => '為 $1 {{PLURAL:$1|篇文章|篇文章}} 添加 {{PLURAL:$1|一個分類|個分類}}',
-	'achievements-badge-desc-creator' => '創建本維基的獎勵！',
-	'achievements-badge-desc-edit-plus-category' => '為{{PLURAL:$1|一個$2条目|個$2條目}}作出$1{{PLURAL:$1|次編輯|次編輯}} !',
-	'achievements-badge-desc-edit' => '為{{PLURAL:$1|一個條目|個條目}}作出$1{{PLURAL:$1|次編輯|次編輯}} !',
-	'achievements-badge-desc-introduction' => '添加個人用戶頁的獎勵！',
-	'achievements-badge-desc-love' => '連續為本維基貢獻{{PLURAL:$1|一天|$1天}}！',
-	'achievements-badge-desc-luckyedit' => '幸運地做出本維基第$1次編輯！',
-	'achievements-badge-desc-picture' => '為{{PLURAL:$1|一篇文章|篇文章}}添加$1{{PLURAL:$1|一張圖片|張圖片}}!',
-	'achievements-badge-desc-pounce' => '在本頁建立的一個小時内為100個頁面執行編輯！',
-	'achievements-badge-desc-sayhi' => '在其他用戶的討論頁上留言！',
-	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|分享一個連結|讓{{PLURAL:$1|1個人|$1 個人}} 點擊分享的連結}}',
-	'achievements-badge-desc-welcome' => '加入本維基的獎勵！',
-	'achievements-badge-hover-desc-blogcomment' => '為{{PLURAL:$1|篇部落格|篇部落格}}撰寫評論!',
-	'achievements-badge-hover-desc-blogpost' => '撰寫$1{{PLURAL:$1|篇部落格|篇部落格}}！',
-	'achievements-badge-hover-desc-caffeinated' => '在一天之内對頁面做出共一百次編輯！',
-	'achievements-badge-hover-desc-category' => '將 $1 {{PLURAL:$1|1篇文章|篇文章}}<br /> 加入
-{{PLURAL:$1|1個分類|個分類}}!',
-	'achievements-badge-hover-desc-community-platinum' => '這是一個特殊的鉑金徽章，只有在特定的時間才能獲得！',
-	'achievements-badge-hover-desc-creator' => '創建本維基的獎勵！',
-	'achievements-badge-hover-desc-edit-plus-category' => '為{{PLURAL:$1|一個$2條目|個$2條目}}進行$1次{{PLURAL:$1|編輯|編輯}}!',
-	'achievements-badge-hover-desc-edit' => '對{{PLURAL:$1|一篇文章|篇文章}}進行$1{{PLURAL:$1|一次修改|次修改}}',
-	'achievements-badge-hover-desc-introduction' => '為自己的用戶頁添磚加瓦！',
-	'achievements-badge-hover-desc-love' => '連續為本維基貢獻{{PLURAL:$1|一天|$1天}}！',
-	'achievements-badge-hover-desc-luckyedit' => '幸運地做出本維基第$1次修改！',
-	'achievements-badge-hover-desc-picture' => '幫{{PLURAL:$1|1篇文章|篇文章}}<br />
-增加$1張 {{PLURAL:$1|圖片|圖片}}！',
-	'achievements-badge-hover-desc-pounce' => '在本頁建立的一個小時内為100個條目執行編輯！',
-	'achievements-badge-hover-desc-sayhi' => '在其他用戶的討論頁上留言！',
-	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|分享一個連結|使{{PLURAL:$1|1個人|$1個人}} 點擊分享的連結}}',
-	'achievements-badge-hover-desc-welcome' => '加入本維基的獎勵！',
-	'achievements-badge-name-blogcomment-0' => '固執己見',
-	'achievements-badge-name-blogcomment-1' => '還有一件事',
-	'achievements-badge-name-blogpost-0' => '有話要說',
-	'achievements-badge-name-blogpost-1' => '要說的五件事',
-	'achievements-badge-name-blogpost-3' => '群體生活',
-	'achievements-badge-name-blogpost-4' => '在公眾場合講話',
-	'achievements-badge-name-category-0' => '建立連接',
-	'achievements-badge-name-category-1' => '開拓者',
-	'achievements-badge-name-category-2' => '探險者',
-	'achievements-badge-name-category-3' => '旅遊指南',
-	'achievements-badge-name-category-4' => '導航',
-	'achievements-badge-name-category-5' => '造橋者',
-	'achievements-badge-name-category-6' => '維基規劃師',
-	'achievements-badge-name-creator' => '創建者',
-	'achievements-badge-name-edit-0' => '做出一次編輯',
-	'achievements-badge-name-edit-1' => '僅僅是個開始',
-	'achievements-badge-name-edit-2' => '留下您的標記',
-	'achievements-badge-name-edit-3' => '維基的朋友',
-	'achievements-badge-name-edit-5' => '維基建造者',
-	'achievements-badge-name-edit-6' => '維基的領導者',
-	'achievements-badge-name-edit-7' => '維基專家',
-	'achievements-badge-name-introduction' => '介紹',
-	'achievements-badge-name-love-0' => '維基的關鍵！',
-	'achievements-badge-name-love-1' => '維基上的兩個星期',
-	'achievements-badge-name-love-2' => '全心投入',
-	'achievements-badge-name-love-3' => '專注於此',
-	'achievements-badge-name-love-4' => '成癮',
-	'achievements-badge-name-love-5' => '一個維基生活',
-	'achievements-badge-name-love-6' => '維基英雄！',
-	'achievements-badge-name-luckyedit' => '幸運編輯',
-	'achievements-badge-name-picture-1' => '狗仔隊',
-	'achievements-badge-name-picture-2' => '插畫家',
-	'achievements-badge-name-picture-3' => '收藏家',
-	'achievements-badge-name-picture-4' => '藝術愛好者',
-	'achievements-badge-name-picture-5' => '裝潢師',
-	'achievements-badge-name-picture-6' => '設計師',
-	'achievements-badge-name-pounce' => '飛撲！',
-	'achievements-badge-name-sayhi' => '停下來問好',
-	'achievements-badge-name-sharing-0' => '分享者',
-	'achievements-badge-name-sharing-1' => '把它帶回來',
-	'achievements-badge-name-sharing-2' => '演講者',
-	'achievements-badge-name-sharing-3' => '播音員',
-	'achievements-badge-name-sharing-4' => '傳播者',
-	'achievements-badge-name-welcome' => '歡迎到這個維基來',
-	'achievements-badge-to-get-blogcomment-details' => '發表你的看法！
-閱讀任何最近的部落格文章，並在評論欄中寫下你的意見。',
-	'achievements-badge-to-get-blogcomment' => '為{{PLURAL:$1|一篇部落格|$1篇不同的部落格}}撰寫評論!',
-	'achievements-badge-to-get-blogpost-details' => '撰寫你的意見與問題！
-點擊邊欄中的 "{{int:blogs-recent-url-text}}" 再連結到左邊的"{{int:create-blog-post-title}}".',
-	'achievements-badge-to-get-blogpost' => '撰寫 $1 {{PLURAL:$1|篇部落格|篇部落格}}',
-	'achievements-badge-to-get-caffeinated-details' => '要得到這個徽章會有個很忙的一天！
-繼續編輯!',
-	'achievements-badge-to-get-caffeinated' => '一天之内對各條目做出{{PLURAL:$1|一次編輯|$1次編輯}}',
-	'achievements-badge-to-get-category-details' => '分類是幫助讀者找到相關頁面的標籤。.
-點擊頁面底部的 "{{int:categoryselect-addcategory-button}}" 按鈕將該頁面加上分類。',
-	'achievements-badge-to-get-category' => '為 $1 {{PLURAL:$1|篇文章|篇文章}} 添加 {{PLURAL:$1|個分類|個分類}}',
-	'achievements-badge-to-get-community-platinum-details' => '這一是個只有在特定時間才能獲得的特別鉑金徽章！',
-	'achievements-badge-to-get-creator-details' => '這個徽章是給予這個維基的創始人。
-點擊頁面頂部的 "{{int:createwiki}}" 按鈕可以創建一個你最喜歡主題的站！',
-	'achievements-badge-to-get-creator' => '作為這個維基的創建者',
-	'achievements-badge-to-get-edit-details' => '是不是缺少了什麼?
-是不是哪裡有錯誤?
-不要覺得羞怯.
-點擊 "{{int:edit}}" 按鈕, 你可以為任何頁面增加內容!',
-	'achievements-badge-to-get-edit-plus-category-details' => '<strong>$1</strong>頁面需要您的幫助！
-在那個分類中的頁面點擊“{{int:edit}}”按鈕來幫助我們。
-為$1頁面展現您的支持！',
-	'achievements-badge-to-get-edit-plus-category' => '在{{PLURAL:$1|$2 條目|$2 條目}}中做出{{PLURAL:$1|一次編輯|$1 次編輯}}',
-	'achievements-badge-to-get-edit' => '對{{PLURAL:$1|一個條目|個條目}}做出$1{{PLURAL:$1|次編輯|次編輯}}',
-	'achievements-badge-to-get-introduction-details' => '您的用戶頁空空如也？
-點擊頁面頂部的用戶名來查看。
-點擊"{{int:edit}}"添加一些關於您的訊息吧！',
-	'achievements-badge-to-get-introduction' => '添加至您的用户頁',
-	'achievements-badge-to-get-love-details' => '如果你漏掉了一天，計數器會重新開始，因此確定你每天都會來這個維基！',
-	'achievements-badge-to-get-love' => '連續為本維基貢獻{{PLURAL:$1|一天|$1天}}',
-	'achievements-badge-to-get-luckyedit-details' => '您需要够幸連才能獲得這枚徽章。
-繼續努力吧！',
-	'achievements-badge-to-get-luckyedit' => '幸運',
-	'achievements-badge-to-get-picture-details' => '點擊 "{{int:edit}}" 按鈕，再點擊"{{int:rte-ck-image-add}}" 按鈕
-	你可以從你的電腦或這個維基上的其他頁面中添加圖片。',
-	'achievements-badge-to-get-picture' => '為{{PLURAL:$1|一篇文章|篇文章}}添加$1{{PLURAL:$1|一張圖片|張圖片}}',
-	'achievements-badge-to-get-pounce-details' => '要獲得這個徽章你得趕快啦。
-點擊“{{int:activityfeed}}”來查看用戶們正在創建的新頁面！',
-	'achievements-badge-to-get-sayhi' => '在某人的討論頁上留言',
-	'achievements-badge-to-get-sharing-details' => '分享鏈接, 讓其他人點擊它們!',
-	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|分享鏈接|獲得{{PLURAL:$1|一個人|$1個人}}點擊您分享的鏈接}}',
-	'achievements-badge-to-get-welcome-details' => '點擊右上角的"{{int:oasis-signup}}" 按鈕來加入社群。
-你可以開始獲得你自己的徽章！',
-	'achievements-badge-your-desc-blogcomment' => '為{{PLURAL:$1|一篇部落格|$1篇不同的部落格}}撰寫評論!',
-	'achievements-badge-your-desc-blogpost' => '已撰寫{{PLURAL:$1|您的第一篇部落格|$1 篇部落格}} ！',
-	'achievements-badge-your-desc-caffeinated' => '一天之内就對頁面做出一百次編輯！',
-	'achievements-badge-your-desc-category' => '您為{{PLURAL:$1|分類|分類}}添加{{PLURAL:$1|您的第一個條目|$1 條目}}',
-	'achievements-badge-your-desc-creator' => '創建本維基的獎勵！',
-	'achievements-badge-your-desc-edit-plus-category' => '為{{PLURAL:$1|一個$2條目|個$2條目}}作出{{PLURAL:$1|你的首次編輯|$1次編輯}} !',
-	'achievements-badge-your-desc-edit' => '為{{PLURAL:$1|一個條目|個條目}}作出{{PLURAL:$1|你的首次編輯|$1次編輯}} !',
-	'achievements-badge-your-desc-introduction' => '添加個人用戶頁的獎勵！',
-	'achievements-badge-your-desc-love' => '連續为本維基貢獻{{PLURAL:$1|一天|$1天}}！',
-	'achievements-badge-your-desc-luckyedit' => '幸運地做出本維基第$1次修改！',
-	'achievements-badge-your-desc-picture' => '獎勵您在 {{PLURAL:$1|一篇文章|文章}}中，加上{{PLURAL:$1|您的第一張圖片|$1 張圖片}}',
-	'achievements-badge-your-desc-pounce' => '在本頁建立的一個小時内為100個條目執行編輯！',
-	'achievements-badge-your-desc-sayhi' => '在其他用戶的討論頁上留言！',
-	'achievements-badge-your-desc-sharing' => '獎勵{{#ifeq:$1|0|分享一個連結|使 {{PLURAL:$1|一個人|$1 個人}}點擊分享的連結}}',
-	'achievements-badge-your-desc-welcome' => '加入本wiki的獎勵！',
-	'achievements-community-platinum-awarded-email-body-html' => '<strong>$1, 恭喜你！</strong><br /><br />
-
-你剛剛在<a href="$3">$4</a>被授予了一枚<strong>$2</strong>鉑徽章，
-它给你带來了 250 點積分！
-
-快去看看你<a href="$5">個人頁面</a>上的新徽章。',
-	'achievements-community-platinum-awarded-email-body-text' => "$1, 恭喜你!
-
-你剛剛在 $4 ($3) 被授予了一枚鉑徽章 '$2',
-它給你帶来了 250 點積分!
-
-快去看看你個人頁面上的新徽章:
-
-$5",
-	'achievements-community-platinum-awarded-email-subject' => '你被授予了一枚新的鉑徽章!',
-	'achievements-community-platinum-awarded-for-example' => '例如 "因為做..."',
-	'achievements-community-platinum-awarded-for' => '獲獎原因：',
-	'achievements-community-platinum-badge-image' => '徽章圖像：',
-	'achievements-community-platinum-create-badge' => '創建徽章',
-	'achievements-community-platinum-current-badges' => '當前白金徽章',
-	'achievements-community-platinum-enabled' => '已啟用',
-	'achievements-community-platinum-how-to-earn-example' => '例如：“做出3個編輯…”',
-	'achievements-community-platinum-how-to-earn' => '如何獲得：',
-	'achievements-community-platinum-show-recents' => '在最近的徽章中顯示',
-	'achievements-community-platinum-sponsored-badge-click-url-label' => '徽章鏈接 <small>(DART click command URL)</small>:',
-	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => '追蹤徽章樣貌的 URL：',
-	'achievements-community-platinum-sponsored-hover-content-label' => '懸停圖片 <small>（懸停的最小大小：270px x 100px）</small>：',
-	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => '追蹤懸停圖片的 URL：',
-	'achievements-community-platinum-sponsored-label' => '贊助的成就',
-	'achievements-create-edit-plus-category-content' => '你可以創建一系列獎勵在特定類別編輯用戶的徽章，來突顯用戶們會樂於貢獻的領域。你可以設定超過一個以上的分類軌道，因此試著選擇二個能幫助用戶展現他們的特點的分類！激起編輯例如吸血鬼、狼人、巫師、麻瓜、機器人等不同資訊用戶之間的競爭。要創建一個新的「在分類中編輯」的軌道，在底下的區域打上分類名稱。
-
-一般的編輯軌道仍會存在：新創建的會與原本的分開來設定。當軌道建立後，新的徽章就會出現在左邊的格子裡，就可以依一般的方式來自訂名稱和圖片。自訂新軌道的名稱和圖片，這樣用戶們會看到差異所在！一旦你完成了自定，點擊 "{{int:achievements-enable-track}}"的格子來開啟這個新的軌道，並點擊 "{{int:achievements-save}}", 用戶們將會看到新軌道出現在他們的用戶檔案頁，並開始依照這個類別的編輯而獲得徽章。
-
-如果你決定不想要重視這個類別，你可以之後關閉這個軌道，只要把之前啟用的格子中取消，再點擊保存，就可以關閉。之後用戶就不再會獲得該類別的徽章，但之前獲得的徽章還是會保留。這有助於為成就系統帶來另一層次的樂趣！試試看吧！',
-	'achievements-create-edit-plus-category-title' => '創建一個新的編輯軌道',
-	'achievements-create-edit-plus-category' => '創建此軌道',
-	'achievements-customize-new-category-track' => '創建新類別的軌道：',
-	'achievements-customize' => '自定圖片',
-	'achievements-earned' => '此徽章有 {{PLURAL:$1|一個用戶|$1个用戶}}獲得。',
-	'achievements-edit-plus-category-track-exists' => '這個指定的類别已經有<a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">個相關軌道</a>.',
-	'achievements-edit-plus-category-track-name' => '$1 編輯軌道',
-	'achievements-enable-track' => '啟用',
-	'achievements-leaderboard-disclaimer' => '排行榜顯示自昨天以來的變化',
-	'achievements-leaderboard-member-label' => '成員',
-	'achievements-leaderboard-rank-label' => '級別',
-	'achievements-next-oasis' => '下一個',
-	'achievements-no-badges' => '查看下面這個列表，顯示在這個維基上你可以獲得的徽章 ！',
-	'achievements-no-stub-category' => '請不要創建小作品的軌道。',
-	'achievements-non-existing-category' => '指定的類别不存在。',
-	'achievements-notification-link' => '<strong><big>[[Special:MyPage|看更多你可以獲得的徽章]] ！</big></strong>',
-	'achievements-notification-subtitle' => '你剛獲得 "$1" 徽章 $2',
-	'achievements-notification-title' => '$1，繼續加油！',
-	'achievements-points-with-break' => '$1<br />分',
-	'achievements-points' => '$1分',
-	'achievements-prev-oasis' => '前一個',
-	'achievements-profile-customize' => '自訂徽章',
-	'achievements-profile-title-challenges' => '更多你可以獲得的徽章！',
-	'achievements-profile-title-oasis' => '成就<br />分數',
-	'achievements-profile-title' => '$1 的 $2 獲得徽章',
-	'achievements-ranked-oasis' => '$1在這個維基上排名[[Special:Leaderboard|#$2]]',
-	'achievements-ranked' => '此維基上排名 #$1',
-	'achievements-recent-earned-badges' => '最近獲得的徽章',
-	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />由<a href="$1">$2</a><br />$5獲得',
-	'achievements-revert' => '還原到預設',
-	'achievements-reverted' => '回復為原來的徽章。',
-	'achievements-toggle-hide' => '向所有人隱藏我的成就',
-	'achievements-track-name-blogcomment' => '部落格評論軌道',
-	'achievements-track-name-blogpost' => '部落格發文軌道',
-	'achievements-track-name-category' => '分類軌道',
-	'achievements-track-name-edit' => '編輯軌道',
-	'achievements-track-name-love' => '維基愛軌道',
-	'achievements-track-name-picture' => '圖片軌道',
-	'achievements-track-name-sharing' => '分享軌道',
-	'achievements-upload-error' => '對不起！
-這張圖片無法使用。
-請確認它是一個 .jpg 或 .png 文件。
-如果它仍無法使用，那麼可能是因為圖片大小超過標準了。
-請嘗試另一個文件！',
-	'achievements-upload-not-allowed' => '管理員可以點擊[[Special:AchievementsCustomize|自訂成就]]頁面來更改成就徽章的名稱和圖片。',
-	'achievements-userprofile-no-badges-owner' => '查看下面的列表來瀏覽您在本維基上可以獲得的徽章！',
-	'achievements-userprofile-no-badges-visitor' => '這個用戶沒有得到任何徽章。',
-	'achievements-userprofile-profile-score' => '<em>$1</em>成就<br />分數',
-	'achievements-userprofile-ranked' => '在本維基上<br />[[Special:Leaderboard|排名第 #$1]]',
-	'achievements-userprofile-title-no' => '$1獲得的徽章',
-	'achievements-userprofile-title' => '$1已獲得{{PLURAL:$2|枚徽章|枚徽章}} ($2)',
-	'achievements-viewless' => '關閉',
-	'achievements-you-must' => '您需要 $1 以獲得此徽章。',
-	'achievementscustomize' => '自訂徽章',
-	'achievementsii-desc' => '一個為維基用戶提供的成就徽章系統',
-	'platinum' => '白金徽章',
 );
 

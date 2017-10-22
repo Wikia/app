@@ -16,6 +16,9 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 				};
 			}
 		},
+		abTest: {
+			getGroup: noop
+		},
 		breakpointsLayout: {
 			getLargeContentWidth: function () {
 				return 1238;
@@ -36,14 +39,25 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		getDocumentWidth: noop,
 		getContentWidth: noop,
 		overridePrefootersSizes: false,
-		log: noop
+		log: noop,
+		win: {
+			ads: {
+				context: {
+					targeting: {
+						hasFeaturedVideo: false
+					}
+				}
+			}
+		}
 	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](
 			mocks.adContext,
+			mocks.abTest,
 			mocks.getDocument(),
 			mocks.log,
+			mocks.win,
 			mocks.breakpointsLayout
 		);
 	}
@@ -82,6 +96,17 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
+	it('Remove 3x3 size from page with Featured Video', function () {
+		spyOn(mocks, 'getDocumentWidth').and.returnValue(2000);
+		mocks.win.ads.context.targeting.hasFeaturedVideo = true;
+
+		var sizesIn = [[3, 3], [728, 90], [1030, 130], [970, 365], [980, 150]],
+			sizesOut = [[728, 90], [1030, 130], [970, 365], [980, 150]];
+
+		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
+
 	it('Returns sizes unmodified for INVISIBLE_SKIN for screens >= 1240', function () {
 		spyOn(mocks, 'getDocumentWidth').and.returnValue(1245);
 
@@ -98,24 +123,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			sizesOut = [[1, 1]];
 
 		expect(getModule().filter('INVISIBLE_SKIN', sizesIn)).toEqual(sizesOut);
-	});
-
-	it('Returns sizes unmodified for INCONTENT_LEADERBOARD for large screens', function () {
-		spyOn(mocks, 'getContentWidth').and.returnValue(2000);
-
-		var sizesIn = [[728, 90], [468, 60], [300, 250]],
-			sizesOut = [[728, 90], [468, 60], [300, 250]];
-
-		expect(getModule().filter('INCONTENT_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-	});
-
-	it('Filter 728x90 size for INCONTENT_LEADERBOARD for small screens', function () {
-		spyOn(mocks, 'getContentWidth').and.returnValue(1000);
-
-		var sizesIn = [[728, 90], [468, 60], [300, 250]],
-			sizesOut = [[468, 60], [300, 250]];
-
-		expect(getModule().filter('INCONTENT_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
 	it('Returns sizes unmodified for PREFOOTER_LEFT_BOXAD for large screens' +

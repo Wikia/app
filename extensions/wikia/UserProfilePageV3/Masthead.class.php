@@ -5,7 +5,7 @@ class Masthead {
 	/**
 	 * default avatar path
 	 */
-	const DEFAULT_PATH = 'http://images.wikia.com/messaging/images/';
+	const DEFAULT_PATH = '/messaging/images/';
 
 	const DEFAULT_AVATAR_FILENAME = 'Avatar.jpg';
 
@@ -100,6 +100,29 @@ class Masthead {
 		return $Avatar;
 	}
 
+	public static function getAvatarDefaultPath( ) {
+		global $wgVignetteUrl;
+
+		return $wgVignetteUrl . self::DEFAULT_PATH;
+	}
+
+	/**
+	 * joinUrlPath -- utility function to properly concatenate url segments to avoid double '/'
+	 *
+	 * @param String|string[] ...$segments -- any number of parameters which should be concatenated together
+	 * @return string
+	 */
+	private static function joinUrlPath( string ...$segments ) {
+		$url = [];
+		foreach ( $segments as $segment ) {
+			$part = trim( $segment, '/' );
+			if ( $part !== "" ) {
+				$url[] = $part;
+			}
+		}
+		return implode( $url, '/' );
+	}
+
 	/**
 	 * getDefaultAvatars -- get avatars stored in mediawiki message and return as
 	 *    array
@@ -129,7 +152,8 @@ class Masthead {
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->mDefaultAvatars[] = static::DEFAULT_PATH . $thumb . $hash . $image;
+				$url = self::joinUrlPath( self::getAvatarDefaultPath(), $thumb, $hash, $image, "/revision/latest" );
+				$this->mDefaultAvatars[] = $url;
 			}
 		}
 
@@ -210,14 +234,16 @@ class Masthead {
 	 * Return a full avatar for a given default avatar
 	 *
 	 * @param string $avatar (e.g. Avatar3.jpg)
+	 * @param string $revision (e.g. latest)
 	 * @return string full URL (e.g. http://images.wikia.com/messaging/images/4/46/Avatar3.jpg)
 	 */
-	public static function getDefaultAvatarUrl( $avatar ) {
+	public static function getDefaultAvatarUrl( $avatar, $revision = 'latest' ) {
 		/**
 		 * default avatar, path from messaging.wikia.com
 		 */
 		$hash = FileRepo::getHashPathForLevel( $avatar, 2 );
-		return static::DEFAULT_PATH . $hash . $avatar;
+
+		return self::getAvatarDefaultPath() . $hash . $avatar . ($revision !== "" ? "/revision/$revision" : "");
 	}
 
 	/**
@@ -245,10 +271,10 @@ class Masthead {
 				 * uploaded file, we are adding common/avatars path
 				 */
 				// avatars selected from "samples" are stored as full URLs (BAC-1105)
-				// e.g http://vignette4.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
+				// e.g http://vignette.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
 				// e.g http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg
 				if ( !preg_match( '/^https?:\/\//', $url ) ) {
-					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url;
+					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url . '/revision/latest';
 				}
 			} else {
 				/**
@@ -284,9 +310,9 @@ class Masthead {
 	 */
 	public function getThumbnail( $width, $inPurgeFormat = false ) {
 		if ( $inPurgeFormat ) {
-			$url = $this->getPurgeUrl( '/thumb/' );
+			$url = $this->getPurgeUrl();
 		} else {
-			$url = $this->getUrl( '/thumb/' );
+			$url = $this->getUrl();
 		}
 
 		return ImagesService::getThumbUrlFromFileUrl( $url, $width );
@@ -435,7 +461,7 @@ class Masthead {
 		$url = $this->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 		if ( $url ) {
 			# all avatars (including the default ones) are always stored with a full URL
-			if ( startsWith( $url, 'http://' ) and preg_match('#/Avatar\d?.jpg$#', $url) ) {
+			if ( ( startsWith( $url, 'http://' ) || startsWith( $url, "https://" ) ) && preg_match('#/Avatar\d?.jpg$#', $url) ) {
 				return true;
 			}
 
@@ -730,7 +756,10 @@ class Masthead {
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	static public function userMastheadInvalidateCache( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static public function userMastheadInvalidateCache(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 		if ( !$user->isAnon() ) {
 			if ( count( $status->errors ) == 0 ) {
 				global $wgMemc;

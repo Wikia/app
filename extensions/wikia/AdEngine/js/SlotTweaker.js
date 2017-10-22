@@ -155,11 +155,16 @@ define('ext.wikia.adEngine.slotTweaker', [
 		});
 	}
 
-	function collapse(slotName) {
+	function collapse(slotName, skipAnimation) {
 		var slot = doc.getElementById(slotName);
 
-		slot.style.maxHeight = slot.scrollHeight + 'px';
-		DOMElementTweaker.forceRepaint(slot);
+		// make max-height consistent with expand()
+		if (!skipAnimation) {
+			slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
+			DOMElementTweaker.forceRepaint(slot);
+		}
+		DOMElementTweaker.removeClass(slot, 'expanded');
+		DOMElementTweaker.addClass(slot, 'collapsed');
 		DOMElementTweaker.addClass(slot, 'slot-animation');
 		slot.style.maxHeight = '0';
 	}
@@ -169,8 +174,11 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 		slot.style.maxHeight = slot.offsetHeight + 'px';
 		DOMElementTweaker.removeClass(slot, 'hidden');
+		DOMElementTweaker.removeClass(slot, 'collapsed');
+		DOMElementTweaker.addClass(slot, 'expanded');
 		DOMElementTweaker.addClass(slot, 'slot-animation');
-		slot.style.maxHeight = slot.scrollHeight + 'px';
+		// make some space for slot content after page resize
+		slot.style.maxHeight = 2 * slot.scrollHeight + 'px';
 	}
 
 	/**

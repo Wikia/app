@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeConverter', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeConverter';
 
-	function convertSize(slotSizes) {
+	function convertToArray(slotSizes) {
 		log(['convertSizeToGpt', slotSizes], 'debug', logGroup);
 		var tmp1 = slotSizes.split(','),
 			sizes = [],
@@ -23,6 +23,6 @@ define('ext.wikia.adEngine.provider.gpt.adSizeConverter', [
 	}
 
 	return {
-		convert: convertSize
+		toArray: convertToArray
 	};
 });

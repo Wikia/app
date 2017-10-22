@@ -10,7 +10,7 @@ require_once( 'commandLine.inc' );
 /**
  * get broken redirects
  */
-$wgUser = User::newFromName( "WikiaBot" );
+$wgUser = User::newFromName( Wikia::BOT_USER );
 $broken_redirects = array();
 $dbw = wfGetDB( DB_MASTER );
 $sql = "

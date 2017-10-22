@@ -1,34 +1,38 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper',
+	'ext.wikia.adEngine.lookup.prebid.bidHelper',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.log'
-], function (adaptersRegistry, priceGranularityHelper, prebid, log) {
+], function (adaptersRegistry, bidHelper, prebid, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker';
 
 	function getSlotBestPrice(slotName) {
-		var prebidCmd = prebid.get(),
-			slotBids = prebidCmd.getBidResponsesForAdUnitCode(slotName).bids || [],
+		var getBidResponsesFunction = prebid.get().getBidResponsesForAdUnitCode,
+			slotBids = [],
 			bestPrices = {};
 
-		adaptersRegistry.getAdapters().forEach(function(adapter) {
-			bestPrices[adapter.getName()] = '';
-		});
+		if (getBidResponsesFunction) {
+			slotBids = getBidResponsesFunction(slotName).bids || [];
 
-		log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
+			adaptersRegistry.getAdapters().forEach(function(adapter) {
+				bestPrices[adapter.getName()] = '';
+			});
 
-		slotBids.forEach(function(bid) {
-			if (isValidPrice(bid)) {
-				var bidderCode = bid.bidderCode,
-					cpmPrice = priceGranularityHelper.transformPriceFromCpm(bid.cpm);
+			log(['getSlotBestPrices slotBids', slotName, slotBids], 'debug', logGroup);
 
-				bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(cpmPrice)).toFixed(2).toString();
-				log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
-			}
+			slotBids.forEach(function(bid) {
+				if (isValidPrice(bid)) {
+					var bidderCode = bid.bidderCode,
+						cpmPrice = bidHelper.transformPriceFromBid(bid);
 
-		});
+					bestPrices[bidderCode] = Math.max(bestPrices[bidderCode] || 0, parseFloat(cpmPrice)).toFixed(2).toString();
+
+					log(['getSlotBestPrices best price for slot', slotName, bidderCode, bestPrices[bidderCode]], 'debug', logGroup);
+				}
+			});
+		}
 
 		return bestPrices;
 	}

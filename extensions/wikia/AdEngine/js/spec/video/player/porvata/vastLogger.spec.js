@@ -8,14 +8,13 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 	var mocks = {
 		instantGlobals: {
 			wgPorvataVastLoggerConfig: [
-				'1_2_error',
-				'78_34_init'
+				'2_error',
+				'34_init'
 			]
 		},
 		log: noop,
 		win: {
-			XMLHttpRequest: noop,
-			DOMParser: DOMParser
+			XMLHttpRequest: noop
 		},
 		request: {
 			post: noop
@@ -71,10 +70,12 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 	it('Do not log if advertiser and network is not listed in config', function () {
 		var logger = getVastLogger();
 
-		logger.logVast(null, {}, {
+		logger.logVast(null, {
+			bid: {
+				rubiconAdvertiserId: '5'
+			}
+		}, {
 			'event_name': 'error',
-			'vulcan_advertiser': '5',
-			'vulcan_network': '5',
 			'ad_error_code': '1000',
 			'position': 'TLB',
 			'browser': 'Foo'
@@ -86,10 +87,12 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 	it('Do not log if event name is not listed in config', function () {
 		var logger = getVastLogger();
 
-		logger.logVast(null, {}, {
+		logger.logVast(null, {
+			bid: {
+				rubiconAdvertiserId: '2'
+			}
+		}, {
 			'event_name': 'ready',
-			'vulcan_advertiser': '2',
-			'vulcan_network': '1',
 			'ad_error_code': '1000',
 			'position': 'TLB',
 			'browser': 'Foo'
@@ -102,10 +105,12 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 		var logger = getVastLogger(),
 			sentData;
 
-		logger.logVast(null, {}, {
+		logger.logVast(null, {
+			bid: {
+				rubiconAdvertiserId: '2'
+			}
+		}, {
 			'event_name': 'error',
-			'vulcan_advertiser': '2',
-			'vulcan_network': '1',
 			'ad_error_code': '1000',
 			'position': 'TLB',
 			'browser': 'Foo'
@@ -113,27 +118,27 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 
 		sentData = mocks.request.post.calls.mostRecent().args[0];
 		expect(sentData).toContain('advertiser_id=2');
-		expect(sentData).toContain('network_id=1');
 		expect(sentData).toContain('event_name=error');
 		expect(sentData).toContain('ad_error_code=1000');
 		expect(sentData).toContain('position=TLB');
 		expect(sentData).toContain('browser=Foo');
 	});
 
-	it('Log nested vast uri', function () {
+	it('Log vast URL', function () {
 		var logger = getVastLogger(),
 			sentData;
 
 		logger.logVast(null, {
-			vastResponse: '<Ad><VASTAdTagURI><![CDATA[//foo.link]]></VASTAdTagURI></Ad>'
+			vastUrl: '//foo.example',
+			bid: {
+				rubiconAdvertiserId: '34'
+			}
 		}, {
-			'event_name': 'init',
-			'vulcan_advertiser': '34',
-			'vulcan_network': '78'
+			'event_name': 'init'
 		});
 
 		sentData = mocks.request.post.calls.mostRecent().args[0];
-		expect(sentData).toContain('vast_url=%2F%2Ffoo.link');
+		expect(sentData).toContain('vast_url=%2F%2Ffoo.example');
 	});
 
 	it('Log ad info details', function () {
@@ -141,11 +146,12 @@ describe('ext.wikia.adEngine.video.player.porvata.vastLogger', function () {
 			sentData;
 
 		logger.logVast(getMockPlayerWithAd(), {
-			vastResponse: '<Ad><VASTAdTagURI><![CDATA[//foo.link]]></VASTAdTagURI></Ad>'
+			vastUrl: '//foo.example',
+			bid: {
+				rubiconAdvertiserId: '34'
+			}
 		}, {
-			'event_name': 'init',
-			'vulcan_advertiser': '34',
-			'vulcan_network': '78'
+			'event_name': 'init'
 		});
 
 		sentData = mocks.request.post.calls.mostRecent().args[0];

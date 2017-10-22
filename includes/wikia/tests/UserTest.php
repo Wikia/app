@@ -186,6 +186,11 @@ class UserTest extends WikiaBaseTest {
 			->with( $this->testUser->getId() )
 			->willReturn( $preferences );
 
+		$this->userAttributesMock->expects( $this->once() )
+			->method( 'getAttributes' )
+			->with( $this->testUser->getId() )
+			->willReturn( [] );
+
 		$options = $this->testUser->getOptions();
 
 		$this->assertEquals( "pl", $options[ "language" ] );
@@ -197,19 +202,12 @@ class UserTest extends WikiaBaseTest {
 		$this->assertEquals( 'anonName', User::getUsername( 0, 'anonName' ) );
 	}
 
-	public function testGetUsernameShouldReturnProvidedNameIfLookupIsDisabled() {
-		$this->mockGlobalVariable( 'wgEnableUsernameLookup', false );
-		$this->assertEquals( 'someName', User::getUsername( 123, 'someName' ) );
-	}
-
 	public function testGetUsernameShouldReturnNameFromWhoIsIfLookupIsEnabled() {
-		$this->mockGlobalVariable( 'wgEnableUsernameLookup', true );
 		$this->mockStaticMethod( 'User', 'whoIs', 'NameFromUserTable' );
 		$this->assertEquals( 'NameFromUserTable', User::getUsername( 123, 'notFromUserTableName' ) );
 	}
 
 	public function testGetUsernameShouldReturnDefaultValueIfUserIsNotFound() {
-		$this->mockGlobalVariable( 'wgEnableUsernameLookup', true );
 		$this->mockStaticMethod( 'User', 'whoIs', false );
 		$this->assertEquals( 'someName', User::getUsername( 123, 'someName' ) );
 	}

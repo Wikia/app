@@ -38,7 +38,12 @@ class SunsetProviderTest extends WikiaBaseTest {
 		$this->setupMocks( $isDryRun, $providerName, $providerVideos, $articleData );
 
 		$sunsetProvider = new SunsetProvider();
-		$sunsetProvider->loadParamsAndArgs( SunsetProvider::class, [ 'provider' => $providerName, 'dry-run' => $isDryRun ] );
+		$sunsetProvider->loadParamsAndArgs( SunsetProvider::class, [
+			'provider' => $providerName,
+			'dry-run' => $isDryRun,
+			'quiet' => true,
+		] );
+
 		$sunsetProvider->execute();
 	}
 
@@ -136,10 +141,10 @@ class SunsetProviderTest extends WikiaBaseTest {
 		$this->mockClass( Language::class, $languageMock, 'factory' );
 
 		// Wiki content language is Polish
-		$this->mockGlobalVariable( 'wgContLang', $this->mockClassWithMethods( Language::class, [
+		$this->mockGlobalVariable( 'wgContLang', $this->createConfiguredMock( Language::class, [
 			'getCode' => 'pl',
 			'getNsText' => 'Plik',
-		]));
+		] ) );
 
 		$this->mockStaticMethod( Hooks::class, 'run', true );
 	}

@@ -33,7 +33,7 @@ class GlobalUsageHooks {
 		$missingFiles = array_diff( $images, $localFiles );
 
 		/* Wikia change begin */
-		wfRunHooks( 'GlobalUsageLinksUpdateComplete', array( &$missingFiles ) );
+		Hooks::run( 'GlobalUsageLinksUpdateComplete', array( &$missingFiles ) );
 		/* Wikia change end */
 
 		global $wgUseDumbLinkUpdate;

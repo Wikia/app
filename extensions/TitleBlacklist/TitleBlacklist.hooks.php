@@ -105,17 +105,6 @@ class TitleBlacklistHooks {
 		return true;
 	}
 
-	/**
-	 * AbortNewAccount hook
-	 *
-	 * @param User $user
-	 */
-	public static function abortNewAccount( $user, &$message ) {
-		global $wgUser, $wgRequest;
-		$override = $wgRequest->getCheck( 'wpIgnoreTitleBlacklist' );
-		return self::acceptNewUserName( $user->getName(), $wgUser, $message, $override );
-	}
-
 	/** CentralAuthAutoCreate hook */
 	public static function centralAuthAutoCreate( $user, $userName ) {
 		$message = ''; # Will be ignored
@@ -177,24 +166,12 @@ class TitleBlacklistHooks {
 	 *
 	 * @param Article $article
 	 */
-	public static function clearBlacklist( &$article, &$user,
-		$text, $summary, $isminor, $iswatch, $section )
-	{
+	public static function clearBlacklist(
+		WikiPage $article, User $user, $text, $summary, $isminor, $iswatch, $section
+	): bool {
 		$title = $article->getTitle();
 		if( $title->getNamespace() == NS_MEDIAWIKI && $title->getDBkey() == 'Titleblacklist' ) {
 			TitleBlacklist::singleton()->invalidate();
-		}
-		return true;
-	}
-
-	/** UserCreateForm hook based on the one from AntiSpoof extension */
-	public static function addOverrideCheckbox( &$template ) {
-		global $wgRequest, $wgUser;
-
-		if ( TitleBlacklist::userCanOverride( $wgUser, 'new-account' ) ) {
-			$template->addInputItem( 'wpIgnoreTitleBlacklist',
-				$wgRequest->getCheck( 'wpIgnoreTitleBlacklist' ),
-				'checkbox', 'titleblacklist-override' );
 		}
 		return true;
 	}

@@ -31,7 +31,7 @@ function wfIsBadImage( $name, $contextTitle = false, $blacklist = null ) {
 
 	# Run the extension hook
 	$bad = false;
-	if( !wfRunHooks( 'BadImage', array( $name, &$bad ) ) ) {
+	if( !Hooks::run( 'BadImage', array( $name, &$bad ) ) ) {
 		wfProfileOut( __METHOD__ );
 		return $bad;
 	}

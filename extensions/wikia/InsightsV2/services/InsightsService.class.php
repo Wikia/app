@@ -1,7 +1,6 @@
 <?php
 
-
-class InsightsService extends WikiaService {
+class InsightsService {
 
 	/**
 	 * @param string $type type of model

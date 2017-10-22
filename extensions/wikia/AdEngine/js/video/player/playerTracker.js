@@ -8,9 +8,20 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan'),
+	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
-], function (adContext, pageLevel, adTracker, slotTargeting, browserDetect, geo, log, win, vulcan, floater) {
+], function (
+	adContext,
+	pageLevel,
+	adTracker,
+	slotTargeting,
+	browserDetect,
+	geo,
+	log,
+	win,
+	bidHelper,
+	floater
+) {
 	'use strict';
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.video.player.playerTracker',
@@ -24,12 +35,12 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 		return !!context.opts.playerTracking;
 	}
 
-	function prepareData(params, playerName, eventName, errorCode) {
+	function prepareData(params, playerName, eventName, errorCode, contentType) {
 		var pageLevelParams = pageLevel.getPageLevelParams(),
 			canFloat = floater && floater.canFloat(params) ? 'canFloat' : '',
 			floatingState = (params.floatingContext && params.floatingContext.state) || (canFloat ? 'never' : ''),
 			trackingData = {
-				'pv_unique_id': win.adEnginePvUID,
+				'pv_unique_id': win.pvUID,
 				'pv_number': pageLevelParams.pv,
 				'country': geo.getCountryCode(),
 				'skin': pageLevelParams.skin,
@@ -39,22 +50,28 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'position': params.slotName || emptyValue.string,
 				'event_name': eventName,
 				'ad_error_code': errorCode || emptyValue.int,
+				'content_type': params.contentType || contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
-				'vulcan_network': emptyValue.int,
-				'vulcan_advertiser': emptyValue.int,
-				'vulcan_price': emptyValue.price,
+				'price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,
 				'additional_2': floatingState
-			},
-			vulcanResponse;
+			};
 
-		if (vulcan && params.slotName && params.adProduct === 'vulcan') {
-			vulcanResponse = vulcan.getSingleResponse(params.slotName);
-			trackingData['vulcan_network'] = vulcanResponse.network || emptyValue.int;
-			trackingData['vulcan_advertiser'] = vulcanResponse.advertiser || emptyValue.int;
-			trackingData['vulcan_price'] = vulcan.getBestSlotPrice(params.slotName).vulcan || emptyValue.price;
+		if (bidHelper && params.bid) {
+			if (params.bid.bidderCode === 'rubicon') {
+				trackingData['vast_id'] = [
+					params.bid.rubiconAdvertiserId || emptyValue.string,
+					params.bid.rubiconAdId || emptyValue.string
+				].join(':');
+				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+			}
+
+			if (params.bid.bidderCode === 'appnexusAst') {
+				trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
+				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+			}
 		}
 
 		return trackingData;
@@ -71,8 +88,9 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	 * @param {string} playerName
 	 * @param {string} eventName
 	 * @param {int} [errorCode]
+	 * @param {string} contentType
 	 */
-	function track(params, playerName, eventName, errorCode) {
+	function track(params, playerName, eventName, errorCode, contentType) {
 		// Possibility to turn off tracking from single creative/player instance
 		if (!isEnabled() || params.trackingDisabled) {
 			log(['track', 'Tracking disabled', params], log.levels.debug, logGroup);
@@ -84,7 +102,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 			return;
 		}
 
-		var data = prepareData(params, playerName, eventName, errorCode);
+		var data = prepareData(params, playerName, eventName, errorCode, contentType);
 
 		log(['track', data], log.levels.debug, logGroup);
 		adTracker.trackDW(data, 'adengplayerinfo');

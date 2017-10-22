@@ -3,111 +3,10 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/shared/mixins/box-shadow';
 
-.banner-notification {
-	@include box-shadow(0, 2px, 5px, darken($color-page, 12%));
-	padding: 8px 10px;
-
-	&.confirm { // Green
-		background: #92CD8E;
-		border: 1px solid #7EB37D;
-		border-top-width: 0;
-		color: #28482E;
-
-		.close {
-			background-color: mix(#92CD8E , #000, 15%);
-		}
-
-		a {
-			color: mix(#92CD8E, #28482E, 20%);
-		}
-	}
-
-	&.notify { // Blue
-		background: #7ABFDD;
-		border: 1px solid #6DA8C1;
-		border-top-width: 0;
-		color: #22424F;
-
-		.close {
-			background-color: mix(#7ABFDD, #000, 15%);
-		}
-
-		a {
-			color: mix(#7ABFDD, #22424F, 20%);
-		}
-	}
-
-	&.error { // Red
-		background: #E56667;
-		border: 1px solid #C859CA;
-		border-top-width: 0;
-		color: #511616;
-
-		.close {
-			background-color: mix(#E56667, #000, 15%);
-		}
-
-		a {
-			color: mix(#E56667, #511616, 20%);
-		}
-	}
-
-	&.warn { // Yellow
-		background: #F2CF60;
-		border: 1px solid #D2B554;
-		border-top-width: 0;
-		color: #524616;
-
-		.close {
-			background-color: mix(#F2CF60, #000, 15%);
-		}
-
-		a {
-			color: mix(#F2CF60, #524616, 20%);
-		}
-	}
-
-	.msg {
-		font-size: 13px;
-		line-height: 16px;
-
-		a {
-			text-decoration: underline;
-		}
-	}
-
-	.close {
-		float: right;
-		height: 14px;
-		margin: 0;
-		width: 14px;
-
-		img {
-			background-image: url('/skins/oasis/images/icon_close.png'); /* inline */
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-size: 12px 11px;
-			content: "";
-			display: block;
-			height: 100%;
-			width: 100%;
-		}
-	}
-
-	&.non-dismissible .close {
-		display: none;
-	}
-
-	a.wikia-button {
-		text-decoration: none;
-	}
-}
-
-.banner-notifications-wrapper {
+.wds-banner-notification__container {
 	margin: 0 auto;
 	transition: top 200ms linear;
 	width: 958px;
-	z-index: $zTop + 1;
 
 	&.float {
 		left: 50%;
@@ -116,3 +15,7 @@
 	}
 }
 
+.banner-notifications-placeholder {
+	position: relative;
+	z-index: $zTop;
+}

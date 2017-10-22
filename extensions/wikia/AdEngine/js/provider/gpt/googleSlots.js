@@ -1,9 +1,9 @@
 /*global define, Array */
 define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'ext.wikia.aRecoveryEngine.recovery.sourcePoint',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window'
-], function (adUnitBuilder, sourcePoint, win) {
+], function (adUnitBuilder, adBlockDetection, win) {
 	'use strict';
 	var slots = {};
 
@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	function getSlot(id) {
 		var slotId = id;
 
-		if (sourcePoint.isBlocking() && win._sp_.getElementId) {
+		if (adBlockDetection.isBlocking() && win._sp_ && win._sp_.getElementId) {
 			slotId = win._sp_.getElementId(slotId);
 		}
 

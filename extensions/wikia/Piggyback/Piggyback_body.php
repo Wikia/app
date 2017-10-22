@@ -23,5 +23,4 @@ class Piggyback extends SpecialPage {
 			return $this->getRequest()->getVal( 'target' );
 		}
 	}
-
 }

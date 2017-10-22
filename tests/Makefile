@@ -14,8 +14,7 @@ CMD_PHPUNIT_COVERAGE=php -v && php -d xdebug.coverage_enable=1 -d opcache.enable
 # command to run karma
 CMD_KARMA=../node_modules/karma/bin/karma start \
 	--single-run \
-	--no-auto-watch \
-	--reporters progress,junit,coverage
+	--no-auto-watch
 
 # set up an environment
 export SERVER_DBNAME=firefly
@@ -119,14 +118,3 @@ phpunit-coverage: prepare
 		--exclude-group Broken \
 		--coverage-html build/coverage \
 		--coverage-clover build/coverage.xml
-
-#
-# CODE LINTING
-#
-codelint-js:
-	php ../maintenance/wikia/codelint.php \
-		--mode=js \
-		--dir=../skins/oasis,../skins/wikia,../resources/wikia,../extensions/wikia \
-		--blacklist=/CodeLint/examples/anticode.js,/resources/wikia/libraries/ghostwriter/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/,/tests/ \
-		--format=html \
-		--output=build/jslint.html

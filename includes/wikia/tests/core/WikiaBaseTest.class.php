@@ -43,40 +43,7 @@ abstract class WikiaBaseTest extends TestCase {
 	private $mockProxy = null;
 	private $mockMessageCacheGet = null;
 
-	private static $testRunTime = 0;
 	private static $numberSlowTests = 0;
-
-	/**
-	 * Print out currently run test
-	 */
-	public static function setUpBeforeClass() {
-		global $wgAnnotateTestSpeed;
-
-		error_reporting(E_ALL);
-		$testClass = get_called_class();
-		echo "\nRunning '{$testClass}'...";
-
-		self::$testRunTime = microtime( true );
-		self::$numberSlowTests = 0;
-
-		if ($wgAnnotateTestSpeed) {
-			WikiaTestSpeedAnnotator::initialize();
-		}
-	}
-
-	/**
-	 * Print out time it took to run all tests from current test class
-	 */
-	public static function tearDownAfterClass() {
-		global $wgAnnotateTestSpeed;
-
-		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
-		echo "done in {$time} ms [" . self::$numberSlowTests . ' slow tests]';
-
-		if ($wgAnnotateTestSpeed) {
-			WikiaTestSpeedAnnotator::execute();
-		}
-	}
 
 	protected function setUp() {
 		$this->startTime = microtime(true);
@@ -216,23 +183,6 @@ abstract class WikiaBaseTest extends TestCase {
 	}
 
 	/**
-	 * @param $className
-	 * @param array $methods
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
-	protected function getMockWithMethods($className, Array $methods = array()) {
-		$mock = $this->getMock($className, array_keys($methods));
-
-		foreach($methods as $methodName => $retVal) {
-			$mock->expects( $this->any() )
-				->method( $methodName )
-				->will( $this->returnValue( ( is_null( $retVal ) ) ? $mock : $retVal) );
-		}
-
-		return $mock;
-	}
-
-	/**
 	 * Create mocked object of a given class with list of methods and values they return provided
 	 *
 	 * @param string $className name of the class to be mocked
@@ -241,7 +191,7 @@ abstract class WikiaBaseTest extends TestCase {
 	 * @return PHPUnit_Framework_MockObject_MockObject mocked object
 	 */
 	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
-		$mock = $this->getMockWithMethods($className,$methods);
+		$mock = $this->createConfiguredMock( $className, $methods );
 
 		$this->mockClass($className, $mock, ($staticConstructor !== '') ? $staticConstructor : null);
 
@@ -337,16 +287,13 @@ abstract class WikiaBaseTest extends TestCase {
 	/**
 	 * Mock given message
 	 *
-	 * @param $messageKey
-	 * @param $messageContent string
-	 * @return PHPUnit_Framework_MockObject_MockObject
+	 * @param string $messageKey
+	 * @param string $messageContent
+	 * @param string $langCode
 	 */
-	protected function mockMessage($messageKey, $messageContent) {
-		$mock = $this->getMessageMock( $messageKey );
-		$mock->expects( $this->any() )
-			->method( 'get' )
-			->will( $this->returnValue( $messageContent ) );
-		return $mock;
+	protected function mockMessage($messageKey, $messageContent, $langCode = 'en') {
+		MessageCache::singleton()->mExtensionMessages[$langCode][lcfirst( $messageKey )] =
+			$messageContent;
 	}
 
 	/**
@@ -356,24 +303,10 @@ abstract class WikiaBaseTest extends TestCase {
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getDatabaseMock( $methods = [] ) {
-		return $this->getMock( 'DatabaseMysqli', $methods );
-	}
-
-	/**
-	 * Get a PHPUnit mock associated with class constructor
-	 *
-	 * Note: Use method name "__construct" when setting up expect rules.
-	 * Note: You cannot write assert rules on constructor parameters
-	 * due to technical limitations.
-	 *
-	 * @param $className string Class name
-	 * @return PHPUnit_Framework_MockObject_MockObject Mock
-	 */
-	protected function getConstructorMock( $className ) {
-		$mock = $this->getMock( 'stdClass', array( '__construct' ) );
-		$this->getMockProxy()->getClassConstructor($className)
-			->willCall(array($mock,'__construct'));
-		return $mock;
+		return
+			$this->getMockBuilder( DatabaseMysqli::class )
+				->setMethods( $methods )
+				->getMock();
 	}
 
 	/**
@@ -384,7 +317,11 @@ abstract class WikiaBaseTest extends TestCase {
 	 */
 	protected function getGlobalFunctionMock( $functionName ) {
 		list($namespace,$baseName) = WikiaMockProxy::parseGlobalFunctionName( $functionName );
-		$mock = $this->getMock( 'stdClass', array( $baseName ) );
+		$mock =
+			$this->getMockBuilder( stdClass::class )
+				->setMethods( [ $baseName ] )
+				->getMock();
+
 		$this->getMockProxy()->getGlobalFunction($functionName)
 			->willCall(array($mock,$baseName));
 		return $mock;
@@ -399,7 +336,11 @@ abstract class WikiaBaseTest extends TestCase {
 	 */
 	protected function getStaticMethodMock( $className, $methodName ) {
 		is_callable( "{$className}::{$methodName}" ); // autoload
-		$mock = $this->getMock( 'stdClass', array( $methodName ) );
+		$mock =
+			$this->getMockBuilder( stdClass::class )
+				->setMethods( [ $methodName ] )
+				->getMock();
+
 		$this->getMockProxy()->getStaticMethod($className,$methodName)
 			->willCall(array($mock,$methodName));
 		return $mock;
@@ -414,7 +355,11 @@ abstract class WikiaBaseTest extends TestCase {
 	 */
 	protected function getMethodMock( $className, $methodName ) {
 		is_callable( "{$className}::{$methodName}" ); // autoload
-		$mock = $this->getMock( 'stdClass', array( $methodName ) );
+		$mock =
+			$this->getMockBuilder( stdClass::class )
+				->setMethods( [ $methodName ] )
+				->getMock();
+
 		$this->getMockProxy()->getMethod($className,$methodName)
 			->willCall(array($mock,$methodName));
 		return $mock;
@@ -429,7 +374,10 @@ abstract class WikiaBaseTest extends TestCase {
 				->will( $this->returnCallback( array( $this, '__retrieveMessageMock' ) ) );
 		}
 
-		$mock = $this->getMock( 'stdClass', array( 'get' ) );
+		$mock =
+			$this->getMockBuilder( stdClass::class )
+				->setMethods( [ 'get' ] )
+				->getMock();
 		$this->mockedMessages[$messageKey] = $mock;
 		return $mock;
 	}
@@ -503,29 +451,6 @@ abstract class WikiaBaseTest extends TestCase {
 		}
 
 		return $this->callOriginalMethod( MessageCache::singleton(), 'get', func_get_args() );
-	}
-
-	/**
-	 * Mark this test as skipped. Puts extra information in the logs.
-	 *
-	 * @param string $message
-	 */
-	public static function markTestSkipped($message = '') {
-		$backtrace = wfDebugBacktrace(3);
-		$entry = $backtrace[1];
-
-		Wikia::log(wfFormatStackFrame($entry), false, "marked as skipped - $message");
-        parent::markTestSkipped($message);
-    }
-
-	/**
-	 * Mark this test as incomplete. Puts extra information in the logs.
-	 *
-	 * @param string $message
-	 */
-	public static function markTestIncomplete($message = '') {
-		Wikia::log(__METHOD__, '', $message);
-		parent::markTestIncomplete($message);
 	}
 
 	/**

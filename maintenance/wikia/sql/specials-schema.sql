@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-specials-slave.query.consul    Database: specials
 -- ------------------------------------------------------
--- Server version	5.6.24-72.2-log
+-- Server version	5.7.18-15-log
 
 
 --
@@ -29,21 +29,6 @@ CREATE TABLE `const_values` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `crosslink`
---
-
-DROP TABLE IF EXISTS `crosslink`;
-CREATE TABLE `crosslink` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `source_wiki` int(8) unsigned NOT NULL,
-  `source_page` int(8) unsigned NOT NULL,
-  `target_wiki` int(8) unsigned NOT NULL,
-  `target_page` int(8) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `source` (`source_wiki`,`source_page`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `discussion_reporting`
 --
 
@@ -65,7 +50,6 @@ CREATE TABLE `events_local_users` (
   `wiki_id` int(8) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   `user_name` varchar(255) NOT NULL DEFAULT '',
-  `last_ip` int(10) unsigned NOT NULL DEFAULT '0',
   `edits` int(11) unsigned NOT NULL DEFAULT '0',
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',
@@ -80,18 +64,6 @@ CREATE TABLE `events_local_users` (
   KEY `edits` (`edits`),
   KEY `wiki_id` (`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
-
---
--- Table structure for table `groups`
---
-
-DROP TABLE IF EXISTS `groups`;
-CREATE TABLE `groups` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `jobs_dirty`
@@ -125,12 +97,11 @@ CREATE TABLE `jobs_summary` (
 DROP TABLE IF EXISTS `multilookup`;
 CREATE TABLE `multilookup` (
   `ml_city_id` int(9) unsigned NOT NULL,
-  `ml_ip` int(10) unsigned NOT NULL,
-  `ml_count` int(6) unsigned NOT NULL DEFAULT '0',
+  `ml_ip_bin` varbinary(16) NOT NULL DEFAULT '',
   `ml_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`ml_city_id`,`ml_ip`),
-  KEY `multilookup_ts_inx` (`ml_ip`,`ml_ts`),
-  KEY `multilookup_cnt_ts_inx` (`ml_ip`,`ml_count`,`ml_ts`)
+  PRIMARY KEY (`ml_city_id`,`ml_ip_bin`),
+  KEY `multilookup_ts_inx` (`ml_ts`),
+  KEY `multilookup_ip_bin_ts_inx` (`ml_ip_bin`,`ml_ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
@@ -165,63 +136,5 @@ CREATE TABLE `script_log` (
   PRIMARY KEY (`logname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `searchdigest`
---
 
-DROP TABLE IF EXISTS `searchdigest`;
-CREATE TABLE `searchdigest` (
-  `sd_wiki` int(9) unsigned NOT NULL,
-  `sd_query` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sd_misses` int(9) unsigned NOT NULL,
-  `sd_lastseen` date DEFAULT NULL,
-  PRIMARY KEY (`sd_wiki`,`sd_query`),
-  KEY `sd_wikimisses` (`sd_wiki`,`sd_misses`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Table structure for table `user_groups`
---
-
-DROP TABLE IF EXISTS `user_groups`;
-CREATE TABLE `user_groups` (
-  `user_id` int(10) unsigned NOT NULL,
-  `group_id` int(10) unsigned NOT NULL,
-  `wiki_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`,`group_id`,`wiki_id`),
-  KEY `user_id` (`user_id`),
-  KEY `group_id` (`group_id`),
-  KEY `wiki_id` (`wiki_id`),
-  KEY `group_wikis` (`group_id`,`wiki_id`),
-  CONSTRAINT `user_groups_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `user_login_history`
---
-
-DROP TABLE IF EXISTS `user_login_history`;
-CREATE TABLE `user_login_history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(5) unsigned NOT NULL,
-  `city_id` int(9) unsigned DEFAULT '0',
-  `ulh_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ulh_from` tinyint(4) DEFAULT '0',
-  `ulh_rememberme` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_user_login_history_wikia_timestamp` (`city_id`,`user_id`,`ulh_timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `user_login_history_summary`
---
-
-DROP TABLE IF EXISTS `user_login_history_summary`;
-CREATE TABLE `user_login_history_summary` (
-  `user_id` int(8) unsigned NOT NULL,
-  `ulh_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
--- Dump completed on 2017-03-30  9:35:07
+-- Dump completed on 2017-10-16 14:47:40

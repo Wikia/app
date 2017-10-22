@@ -19,3 +19,6 @@ $wgExtensionMessagesFiles['PageShare'] = __DIR__ . '/PageShare.i18n.php';
 // controller classes
 $wgAutoloadClasses[ 'PageShareController' ] =  __DIR__ . '/PageShareController.class.php';
 $wgAutoloadClasses[ 'PageShareHelper' ] =  __DIR__ . '/PageShareHelper.class.php';
+$wgAutoloadClasses[ 'PageShareHooks' ] =  __DIR__ . '/PageShareHooks.class.php';
+
+$wgHooks['AfterPageHeaderButtons'][] = 'PageShareHooks::onAfterPageHeaderButtons';

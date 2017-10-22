@@ -63,7 +63,7 @@ class DPLForum {
 	var $sCreationDateFormat;
 	var $sLastEditFormat;
 
-	function cat( &$parser, $name ) {
+	function cat( Parser $parser, $name ) {
 		$cats = array();
 		if ( preg_match_all( "/^\s*$name\s*=\s*(.*)/mi", $this->sInput, $matches ) ) {
 			foreach ( $matches[1] as $cat ) {
@@ -90,7 +90,7 @@ class DPLForum {
 		return $value;
 	}
 
-	function link( &$parser, $count, $page = '', $text = '' ) {
+	function link( Parser $parser, $count, $page = '', $text = '' ) {
 		$count = intval( $count );
 		if ( $count < 1 ) {
 			return '';
@@ -161,7 +161,7 @@ class DPLForum {
 		return $wgLang->sprintfDate( $df, $ts );
 	}
 
-	function parse( &$input, &$parser ) {
+	function parse( &$input, Parser $parser ) {
 		global $wgContLang;
 
 		$this->sInput =& $input;

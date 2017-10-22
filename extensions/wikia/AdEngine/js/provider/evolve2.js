@@ -1,16 +1,22 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.utils.eventDispatcher',
-	'wikia.log',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
-], function (adContext, gptHelper, slotTweaker, zoneParams, eventDispatcher, log, openXHelper) {
+	'wikia.log'
+], function (adContext, btfBlocker, gptHelper, slotTweaker, zoneParams, eventDispatcher, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
+		atfSlots = [
+			'INVISIBLE_SKIN',
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD',
+			'EVOLVE_FLUSH'
+		],
 		posTargetingValue,
 		site = 'wikia_intl',
 		slotMap = {
@@ -95,9 +101,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
 		});
-		slot.pre('hop', function() {
-			openXHelper && openXHelper.addOpenXSlot(slot.name);
-		});
 		gptHelper.pushAd(
 			slot,
 			'/4403/ev/' + site + '/' + section + '/' + slot.name,
@@ -111,6 +114,16 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 	}
 
+	function decorateFillInSlot() {
+		if (adContext.getContext().targeting.skin === 'oasis') {
+			return btfBlocker.decorate(fillInSlot, {
+				atfSlots: atfSlots
+			});
+		}
+
+		return fillInSlot;
+	}
+
 	resetPosTargeting();
 	adContext.addCallback(function () {
 		resetPosTargeting();
@@ -119,6 +132,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	return {
 		name: 'Evolve2',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: fillInSlot
+		fillInSlot: decorateFillInSlot()
 	};
 });

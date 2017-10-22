@@ -40,12 +40,13 @@ class SiteStatus {
 	private $cityInfo;
 
 	private $status;
-	private $siteAvailable;
-	private $discussionsEnabled;
-	private $navigationEnabled;
-	private $forumsEnabled;
-	private $numThreadedForumPosts;
-	private $numWikiForumPosts;
+	private $siteAvailable = false;
+	private $discussionsEnabled = false;
+	private $navigationEnabled = false;
+	private $forumsEnabled = false;
+	private $numThreadedForumThreads = 0;
+	private $numThreadedForumPosts = 0;
+	private $numWikiForumPosts = 0;
 
 	/** @var \DateTime */
 	private $lastPageEdit;
@@ -131,6 +132,7 @@ class SiteStatus {
 		$this->discussionsEnabled = $row->discussions_enabled;
 		$this->navigationEnabled = $row->navigation_enabled;
 		$this->forumsEnabled = $row->forums_enabled;
+		$this->numThreadedForumThreads = $row->tf_threads;
 		$this->numThreadedForumPosts = $row->tf_posts;
 		$this->numWikiForumPosts = $row->wf_posts;
 
@@ -174,6 +176,9 @@ class SiteStatus {
 			$statement
 				->INSERT( self::TABLE_STATUS )
 				->SET( 'site_id', $this->siteId );
+		} else {
+			// If we don't meet either above conditions, skip writing this record.
+			return;
 		}
 
 		// Conditionally set these date columns only if we've found something
@@ -194,6 +199,7 @@ class SiteStatus {
 			->SET( 'discussions_enabled', $this->discussionsEnabled )
 			->SET( 'navigation_enabled', $this->navigationEnabled )
 			->SET( 'forums_enabled', $this->forumsEnabled )
+			->SET( 'tf_threads', $this->numThreadedForumThreads )
 			->SET( 'tf_posts', $this->numThreadedForumPosts )
 			->SET( 'wf_posts', $this->numWikiForumPosts )
 			->SET( 'last_updated', $now )
@@ -261,14 +267,15 @@ class SiteStatus {
 	private function updateWikiVariables() {
 		$this->debug( "Updating wiki variables." );
 
-		$this->forumsEnabled = $this->getVariableValue( 'wgEnableForumExt' );
+		// IRIS-4904 WF default is true, that's why we explicitly specify default = true
+		$this->forumsEnabled = $this->getVariableValue( 'wgEnableForumExt', true );
 		$this->discussionsEnabled = $this->getVariableValue( 'wgEnableDiscussions' );
 		$this->navigationEnabled = $this->getVariableValue( 'wgEnableDiscussionsNavigation' );
 	}
 
 	private function findLastEdit() {
 		if ( $this->dbMissing ) {
-			return '';
+			return;
 		}
 
 		$date = ( new \WikiaSQL() )
@@ -289,18 +296,27 @@ class SiteStatus {
 				''
 			);
 
-		$this->debug("\tfound $date as most recent edit" );
-		$this->lastPageEdit = new \DateTime( $date );
+		if ( empty( $date ) ) {
+			$this->debug("\tCould not determine date of most recent edit" );
+		} else {
+			$this->debug("\tfound $date as most recent edit" );
+			$this->lastPageEdit = new \DateTime( $date );
+		}
 	}
 
 	private function findExistingPosts() {
 		$this->debug( "Finding existing posts" );
 
-		$this->findExistingThreadedForumPosts();
-		$this->findExistingWikiForumPosts();
+		try {
+			$this->numThreadedForumThreads = $this->findExistingThreadedForumThreads();
+			$this->numThreadedForumPosts = $this->findExistingThreadedForumPosts();
+			$this->numWikiForumPosts = $this->findExistingWikiForumPosts();
+		} catch(\Exception $e) {
+			$this->debug("\tError finding existing posts: " . $e->getMessage() );
+		}
 	}
 
-	private function findExistingThreadedForumPosts() {
+	private function findExistingThreadedForumThreads() {
 		if ( $this->dbMissing ) {
 			return 0;
 		}
@@ -308,13 +324,13 @@ class SiteStatus {
 		$num = ( new \WikiaSQL() )
 			->SELECT( "count(*)" )->AS_( "num_posts" )
 			->FROM( self::TABLE_COMMENTS )
-				->LEFT_JOIN( self::TABLE_PAGE )
-				->ON( 'page_id', 'comment_id' )
+			->LEFT_JOIN( self::TABLE_PAGE )
+			->ON( 'page_id', 'comment_id' )
 			->WHERE( 'parent_comment_id' )->EQUAL_TO( 0 )
-				->AND_( 'archived' )->EQUAL_TO( 0 )
-				->AND_( 'deleted' )->EQUAL_TO( 0 )
-				->AND_( 'removed' )->EQUAL_TO( 0 )
-				->AND_( 'page_namespace' )->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
+			->AND_( 'archived' )->EQUAL_TO( 0 )
+			->AND_( 'deleted' )->EQUAL_TO( 0 )
+			->AND_( 'removed' )->EQUAL_TO( 0 )
+			->AND_( 'page_namespace' )->EQUAL_TO( NS_WIKIA_FORUM_BOARD_THREAD )
 			->run(
 				$this->localDbh,
 				function ( $result ) {
@@ -329,8 +345,36 @@ class SiteStatus {
 				0
 			);
 
-		$this->debug("\tfound $num threaded forum posts" );
-		$this->numThreadedForumPosts = $num;
+		$this->debug("\tfound $num threaded forum threads" );
+		return $num;
+	}
+
+	private function findExistingThreadedForumPosts() {
+		if ( $this->dbMissing ) {
+			return 0;
+		}
+
+		$num =
+			( new \WikiaSQL() )->SELECT( "count(*)" )
+				->AS_( "num_posts" )
+				->FROM( self::TABLE_PAGE )
+				->JOIN( self::TABLE_COMMENTS )
+				->ON( 'page_id', 'comment_id' )
+				->WHERE( 'page_namespace' )
+				->IN( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD )
+				->run( $this->localDbh, function ( $result ) {
+					/** @var \ResultWrapper|bool $result */
+					if ( !is_object( $result ) ) {
+						return 0;
+					}
+
+					$row = $result->fetchObject();
+
+					return $row ? $row->num_posts : 0;
+				}, 0 );
+
+		$this->debug( "\tfound $num threaded forum posts" );
+		return $num;
 	}
 
 	private function findExistingWikiForumPosts() {
@@ -339,8 +383,9 @@ class SiteStatus {
 		}
 
 		$num = ( new \WikiaSQL() )
-			->SELECT( "count(*)" )->AS_( "num_posts" )
+			->SELECT( "count(comment_id)" )->AS_( "num_posts" )
 			->FROM( self::TABLE_PAGE )
+			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
 			->WHERE( 'page_namespace' )->EQUAL_TO( NS_FORUM )
 			->run(
 				$this->localDbh,
@@ -358,7 +403,7 @@ class SiteStatus {
 			);
 
 		$this->debug("\tfound $num wiki forum posts" );
-		$this->numWikiForumPosts = $num;
+		return $num;
 	}
 
 	private function probeDiscussions() {
@@ -427,8 +472,8 @@ class SiteStatus {
 		return "$wgDiscussionsApiUrl/$this->siteId/threads";
 	}
 
-	private function getVariableValue( $name ) {
-		return \WikiFactory::getVarValueByName( $name, $this->siteId );
+	private function getVariableValue( $name, $default = false ) {
+		return \WikiFactory::getVarValueByName( $name, $this->siteId , false, $default );
 	}
 
 	public function statusIsComplete() {

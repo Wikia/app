@@ -406,7 +406,7 @@ QUnit.test( 'newFromInsertion', function ( assert ) {
 			// TODO test cases for (currently failing) unopened closings use case
 			// TODO analyze other possible cases (substrings of linmod data)
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length * 2 );
+	assert.expect( ve.getObjectKeys( cases ).length * 2 );
 	for ( key in cases ) {
 		for ( i = 0; i < cases[key].ops.length; i++ ) {
 			if ( cases[key].ops[i].remove ) {
@@ -732,7 +732,7 @@ QUnit.test( 'newFromRemoval', function ( assert ) {
 				]
 			}
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	for ( key in cases ) {
 		for ( i = 0; i < cases[key].ops.length; i++ ) {
 			store = cases[key].args[0].getStore();
@@ -793,7 +793,7 @@ QUnit.test( 'newFromReplacement', function ( assert ) {
 				]
 			}
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	for ( key in cases ) {
 		for ( i = 0; i < cases[key].ops.length; i++ ) {
 			if ( cases[key].ops[i].remove ) {
@@ -982,7 +982,7 @@ QUnit.test( 'newFromDocumentInsertion', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length * 3 );
+	assert.expect( cases.length * 3 );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		doc = ve.dm.example.createExampleDocument( cases[i].doc );
@@ -1069,7 +1069,7 @@ QUnit.test( 'newFromAttributeChanges', function ( assert ) {
 				exception: Error
 			}
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	runConstructorTests( assert, ve.dm.Transaction.newFromAttributeChanges, cases );
 } );
 
@@ -1334,7 +1334,7 @@ QUnit.test( 'newFromAnnotation', function ( assert ) {
 			}
 		};
 
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	runConstructorTests( assert, ve.dm.Transaction.newFromAnnotation, cases );
 } );
 
@@ -1493,7 +1493,7 @@ QUnit.test( 'newFromContentBranchConversion', function ( assert ) {
 				]
 			}
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	for ( key in cases ) {
 		for ( i = 0; i < cases[key].ops.length; i++ ) {
 			store = cases[key].args[0].getStore();
@@ -1675,7 +1675,7 @@ QUnit.test( 'newFromWrap', function ( assert ) {
 				exception: Error
 			}
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	for ( key in cases ) {
 		for ( i = 0; cases[key].ops && i < cases[key].ops.length; i++ ) {
 			if ( cases[key].ops[i].remove ) {
@@ -1727,7 +1727,7 @@ QUnit.test( 'translateOffset', function ( assert ) {
 		15: [18, 21],
 		16: 22
 	};
-	QUnit.expect( 2 * ve.getObjectKeys( mapping ).length );
+	assert.expect( 2 * ve.getObjectKeys( mapping ).length );
 	for ( offset in mapping ) {
 		expected = Array.isArray( mapping[offset] ) ? mapping[offset] : [ mapping[offset], mapping[offset] ];
 		assert.strictEqual( tx.translateOffset( Number( offset ) ), expected[1], offset );
@@ -1771,7 +1771,7 @@ QUnit.test( 'translateRange', function ( assert ) {
 			msg: 'wrapped range plus one on the right'
 		}
 	];
-	QUnit.expect( cases.length * 2 );
+	assert.expect( cases.length * 2 );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.equalRange( tx.translateRange( cases[i].before ), cases[i].after, cases[i].msg );
@@ -1869,7 +1869,7 @@ QUnit.test( 'getModifiedRange', function ( assert ) {
 			}
 		];
 
-	QUnit.expect( cases.length );
+	assert.expect( cases.length );
 	for ( i = 0, len = cases.length; i < len; i++ ) {
 		tx = new ve.dm.Transaction();
 		for ( j = 0; j < cases[i].calls.length; j++ ) {
@@ -1879,7 +1879,8 @@ QUnit.test( 'getModifiedRange', function ( assert ) {
 	}
 } );
 
-QUnit.test( 'pushRetain', 4, function ( assert ) {
+QUnit.test( 'pushRetain', function ( assert ) {
+	assert.expect( 4 );
 	var cases = {
 		retain: {
 			calls: [['pushRetain', 5]],
@@ -2003,7 +2004,7 @@ QUnit.test( 'pushReplace', function ( assert ) {
 				diff: 0
 			}
 		};
-	QUnit.expect( 2 * ve.getObjectKeys( cases ).length );
+	assert.expect( 2 * ve.getObjectKeys( cases ).length );
 	runBuilderTests( assert, cases );
 } );
 
@@ -2045,7 +2046,7 @@ QUnit.test( 'pushReplaceElementAttribute', function ( assert ) {
 			diff: 0
 		}
 	};
-	QUnit.expect( 2 * ve.getObjectKeys( cases ).length );
+	assert.expect( 2 * ve.getObjectKeys( cases ).length );
 	runBuilderTests( assert, cases );
 } );
 
@@ -2122,7 +2123,7 @@ QUnit.test( 'push*Annotating', function ( assert ) {
 			diff: 0
 		}
 	};
-	QUnit.expect( 2 * ve.getObjectKeys( cases ).length );
+	assert.expect( 2 * ve.getObjectKeys( cases ).length );
 	runBuilderTests( assert, cases );
 } );
 
@@ -2188,7 +2189,7 @@ QUnit.test( 'newFromMetadataInsertion', function ( assert ) {
 				]
 			}
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	runConstructorTests( assert, ve.dm.Transaction.newFromMetadataInsertion, cases );
 } );
 
@@ -2251,7 +2252,7 @@ QUnit.test( 'newFromMetadataRemoval', function ( assert ) {
 				exception: Error
 			}
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	runConstructorTests( assert, ve.dm.Transaction.newFromMetadataRemoval, cases );
 } );
 
@@ -2300,12 +2301,12 @@ QUnit.test( 'newFromMetadataElementReplacement', function ( assert ) {
 				exception: Error
 			}
 		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
+	assert.expect( ve.getObjectKeys( cases ).length );
 	runConstructorTests( assert, ve.dm.Transaction.newFromMetadataElementReplacement, cases );
 } );
 
 QUnit.test( 'isNoOp', function ( assert ) {
-	QUnit.expect( 3 * 8 - 2 );
+	assert.expect( 3 * 8 - 2 );
 	var doc = ve.dm.example.createExampleDocument(),
 		metaDoc = ve.dm.example.createExampleDocument( 'withMeta' ),
 		listMetaDoc = ve.dm.example.createExampleDocument( 'listWithMeta' ),

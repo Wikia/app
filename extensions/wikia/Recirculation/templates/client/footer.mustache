@@ -3,7 +3,7 @@
 
   <div class="items">
     {{#items}}
-      <div class="item" data-index="{{index}}" data-source="{{source}}">
+      <div class="item" data-index="{{index}}" data-source="{{source}}" {{#meta}}data-meta="{{meta}}"{{/meta}}>
         <a title="{{title}}" href="{{url}}">
           <div class="thumbnail">
             {{#isWiki}}

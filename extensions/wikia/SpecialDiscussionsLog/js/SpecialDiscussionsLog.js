@@ -1,7 +1,7 @@
 (function() {
 
     var ipCache = {};
-    var url = 'http://ipinfo.io/{IP}/json';
+    var url = 'https://ipinfo.io/{IP}/json';
 
     registerUniqueIPs();
 

@@ -36,7 +36,7 @@ class TasksModel {
 			}
 		}
 
-		wfRunHooks(self::EXTERNAL_TASK_HOOK_NAME, [&$taskClasses]);
+		Hooks::run(self::EXTERNAL_TASK_HOOK_NAME, [&$taskClasses]);
 		return $taskClasses;
 	}
 

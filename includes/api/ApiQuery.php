@@ -265,7 +265,7 @@ class ApiQuery extends ApiBase {
 			$module->setupLogContext($params); // Wikia Change
 			$module->profileIn();
 			$module->execute();
-			wfRunHooks( 'APIQueryAfterExecute', array( &$module ) );
+			Hooks::run( 'APIQueryAfterExecute', array( &$module ) );
 			$module->profileOut();
 			$module->destroyLogContext(); // Wikia Change
 		}
@@ -564,7 +564,7 @@ class ApiQuery extends ApiBase {
 		// populate resultPageSet with the generator output
 		$generator->profileIn();
 		$generator->executeGenerator( $resultPageSet );
-		wfRunHooks( 'APIQueryGeneratorAfterExecute', array( &$generator, &$resultPageSet ) );
+		Hooks::run( 'APIQueryGeneratorAfterExecute', array( &$generator, &$resultPageSet ) );
 		$resultPageSet->finishPageSetGeneration();
 		$generator->profileOut();
 

@@ -130,7 +130,7 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 					);
 				}
 
-				wfRunHooks( 'WebRequestPathInfoRouter', array( $router ) );
+				Hooks::run( 'WebRequestPathInfoRouter', array( $router ) );
 
 				$matches = $router->parse( $path );
 			}
@@ -558,7 +558,7 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 	 * @return Boolean
 	 */
 	public function wasPosted() {
-		wfRunHooks( 'WebRequestWasPosted' ); # Wikia change
+		Hooks::run( 'WebRequestWasPosted' ); # Wikia change
 
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
@@ -1086,13 +1086,17 @@ HTML;
 		}
 
 		# Allow extensions to improve our guess
-		wfRunHooks( 'GetIP', array( &$ip ) );
+		Hooks::run( 'GetIP', array( &$ip ) );
 
 		if ( !$ip ) {
 			throw new MWException( "Unable to determine IP" );
 		}
 
 		wfDebug( "IP: $ip\n" );
+		# Wikia change begin: Mix <mix@fandom.com>
+		# SUS-2005: unify system's internal format for IP (with IPv6 in mind)
+		$ip = IP::sanitizeIP( $ip );
+		# Wikia change end
 		$this->ip = $ip;
 		return $ip;
 	}
@@ -1103,7 +1107,7 @@ HTML;
 	 * @return void
 	 */
 	public function setIP( $ip ) {
-		$this->ip = $ip;
+		$this->ip = IP::sanitizeIP( $ip );
 	}
 	/* Wikia change end */
 

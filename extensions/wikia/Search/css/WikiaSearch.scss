@@ -4,6 +4,7 @@
 @import "skins/shared/mixins/bodytext";
 @import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/flexbox";
 @import "skins/shared/mixins/gradient";
 
 
@@ -696,9 +697,11 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 .Search.this-wiki {
 	.SearchAdsTopWrapper {
+		@include flex-direction(column);
 		//border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
 		overflow: hidden;
+		padding: 10px 0 0 10px;
 	}
 
 	.WikiaSearchAds {
@@ -722,10 +725,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 			font-weight: bold;
 			line-height: 18px;
 		}
-	}
-
-	.SearchAdsTopWrapper {
-		padding: 10px 0 0 10px;
 	}
 
 	.SearchAdsBottom {

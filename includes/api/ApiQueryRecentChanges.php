@@ -64,7 +64,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$this->tokenFunctions = array(
 			'patrol' => array( 'ApiQueryRecentChanges', 'getPatrolToken' )
 		);
-		wfRunHooks( 'APIQueryRecentChangesTokens', array( &$this->tokenFunctions ) );
+		Hooks::run( 'APIQueryRecentChangesTokens', array( &$this->tokenFunctions ) );
 		return $this->tokenFunctions;
 	}
 
@@ -188,22 +188,30 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 
 		if ( !is_null( $params['user'] ) ) {
-			$this->addWhereFld( 'rc_user_text', $params['user'] );
-			$index['recentchanges'] = 'rc_user_text';
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $params['user'] ) ) {
+				$this->addWhereFld( 'rc_user_text', $params['user'] );
+				$index['recentchanges'] = 'rc_user_text';
+			}
+			else {
+				$this->addWhereFld( 'rc_user', User::idFromName( $params['user'] ) );
+				$index['recentchanges'] = 'rc_user';
+			}
 		}
 
 		if ( !is_null( $params['excludeuser'] ) ) {
 			// We don't use the rc_user_text index here because
 			// * it would require us to sort by rc_user_text before rc_timestamp
 			// * the != condition doesn't throw out too many rows anyway
-			$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
-		}
 
-		//  *** Wikia change (@author ADi) *** /Begin
-		if(!is_null($params['user'])) {
-			$this->addWhereFld('rc_user_text', $this->prepareUsername( $params['user'] ));
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $params['excludeuser'] ) ) {
+				$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
+			}
+			else {
+				$this->addWhere( 'rc_user != ' . User::idFromName( $params['excludeuser'] ) );
+			}
 		}
-		// *** Wikia change (@author ADi) *** /End
 
 		/* Add the fields we're concerned with to our query. */
 		$this->addFields( array(
@@ -243,9 +251,16 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 
 		if ( $this->fld_tags ) {
-			$this->addTables( 'tag_summary' );
-			$this->addJoinConds( array( 'tag_summary' => array( 'LEFT JOIN', array( 'rc_id=ts_rc_id' ) ) ) );
-			$this->addFields( 'ts_tags' );
+			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'rc_id' );
+			$this->addFields( $tsTags );
+		}
+
+		if ( !is_null( $params['tag'] ) ) {
+			$this->addTables( 'change_tag' );
+			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rc_id=ct_rc_id' ) ) ) );
+			$this->addWhereFld( 'ct_tag' , $params['tag'] );
+			global $wgOldChangeTagsIndex;
+			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
 
 		if ( $params['toponly'] || $showRedirects ) {
@@ -256,14 +271,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			if ( $params['toponly'] ) {
 				$this->addWhere( 'rc_this_oldid = page_latest' );
 			}
-		}
-
-		if ( !is_null( $params['tag'] ) ) {
-			$this->addTables( 'change_tag' );
-			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rc_id=ct_rc_id' ) ) ) );
-			$this->addWhereFld( 'ct_tag' , $params['tag'] );
-			global $wgOldChangeTagsIndex;
-			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
 
 		$this->token = $params['token'];
@@ -309,32 +316,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'rc' );
 		} else {
 			$resultPageSet->populateFromTitles( $titles );
-		}
-	}
-
-	/**
-	 * (Wikia) Validate the 'user' parameter
-	 * @param string $userName user name
-	 * @author ADi
-	 */
-	private function prepareUsername( $userName ) {
-		if( $userName ) {
-			$userName = User::getCanonicalName( $userName, 'valid' );
-			if( $userName === false ) {
-				$this->dieUsage( "User name {$userName} is not valid", 'param_user' );
-			}
-			else {
-				$userId = User::idFromName( $userName );
-				if( empty( $userId ) ) {
-					$this->dieUsage( "User name {$userName} not found", 'param_user' );
-				}
-				else {
-					return $userName;
-				}
-			}
-		}
-		else {
-			$this->dieUsage( 'User parameter may not be empty', 'param_user' );
 		}
 	}
 
@@ -401,7 +382,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		if ( $this->fld_user || $this->fld_userid ) {
 
 			if ( $this->fld_user ) {
-				$vals['user'] = $row->rc_user_text;
+				$vals['user'] = User::getUsername( $row->rc_user, $row->rc_user_text );
 			}
 
 			if ( $this->fld_userid ) {
@@ -660,7 +641,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			'limit' => 'How many total changes to return',
 			'tag' => 'Only list changes tagged with this tag',
 			'toponly' => 'Only list changes which are the latest revision',
-			'user' => 'Filter results per user name',
 		);
 	}
 

@@ -1,12 +1,15 @@
 .CustomizeTab {
 	.background {
 		max-width: 430px;
+
 		.wrap-color {
-			max-width: 60px;
+			max-width: 50px;
 		}
+
 		.wrap-middle-color {
 			max-width: 80px;
-			position:relative;
+			position: relative;
+
 			.middle-color-mask {
 				display: none;
 				height: 52px;
@@ -15,8 +18,10 @@
 				width: 52px;
 			}
 		}
+
 		.wrap-background {
-			max-width: 200px;
+			max-width: 140px;
+
 			label {
 				display: block;
 				float: left;
@@ -25,17 +30,21 @@
 		.not-split-option {
 			display: none;
 			float: left;
+
 			.form-questionmark {
 				margin: 5px 0 0 5px;
 			}
 		}
 	}
+
 	.page {
-		padding-left: 40px;
+		max-width: 470px;
 	}
+
 	li {
 		float: left;
-		margin-right: 30px;
+		margin-right: 5px;
+
 		img {
 			border: 1px solid $color-borders;
 			cursor: pointer;
@@ -44,11 +53,24 @@
 			margin: 3px 0;
 			width: 50px;
 		}
-		.background-image {
-			height: 65px;
+
+		.background-image, .community-header-background-image {
 			width: 120px;
 		}
+
+		.background-image {
+			height: 65px;
+		}
+
+		.community-header-background-image {
+			height: 33px;
+		}
+
+		input {
+			vertical-align: middle;
+		}
 	}
+
 	ul {
 		@include clearfix;
 	}
@@ -57,4 +79,9 @@
 .OpacitySlider {
 	margin-top: 12px;
 	width: 84px;
+}
+
+.community-header-size-text {
+	font-style: italic;
+	text-align: center;
 }
