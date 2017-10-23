@@ -24,10 +24,10 @@ class ThemeSettingsTest extends TestCase {
 		$reflThemeSettingsPersistence->setValue( $this->themeSettings, $this->themeSettingsPersistence );
 	}
 
-	/**
-	 * Regression test for SUS-3104
-	 * All valid default setting keys must be settable even if their default value is falsy
-	 */
+	public function testGetCityId() {
+		$this->assertEquals( static::TEST_CITY_ID, $this->themeSettings->getCityId() );
+	}
+
 	public function testNotValidSettingKeysAreNotSet() {
 		$settings = [
 			'foo' => 'bar',
@@ -44,6 +44,10 @@ class ThemeSettingsTest extends TestCase {
 		$this->themeSettings->saveSettings( $settings );
 	}
 
+	/**
+	 * Regression test for SUS-3104
+	 * All valid default setting keys must be settable even if their default value is falsy
+	 */
 	public function testValidSettingKeysAreSet() {
 		$settings = [
 			'background-image-height' => 1000,
@@ -76,7 +80,7 @@ class ThemeSettingsTest extends TestCase {
 		$this->themeSettings->saveSettings( $settings );
 	}
 
-	public function provideOpacityValues() {
+	public function provideOpacityValues(): array {
 		return [
 			'valid opacity' => [ 75, 75 ],
 			'opacity below 50' => [ 25, 50 ],
@@ -84,5 +88,98 @@ class ThemeSettingsTest extends TestCase {
 		];
 	}
 
+	/**
+	 * @dataProvider provideEmptyWordmarkText
+	 * @param $userProvidedWordMarkValue
+	 */
+	public function testEmptyWordmarkTextIsNotValid( $userProvidedWordMarkValue ) {
+		$settings = [ 'wordmark-text' => $userProvidedWordMarkValue ];
 
+		$constraint = $this->logicalNot( new ArraySubset( $settings ) );
+
+		$this->themeSettingsPersistence->expects( $this->once() )
+			->method( 'saveSettings' )
+			->with( $constraint );
+
+		$this->themeSettings->saveSettings( $settings );
+	}
+
+	public function provideEmptyWordmarkText(): Generator {
+		yield [ '' ];
+		yield [ [] ];
+	}
+
+	/**
+	 * @dataProvider  provideValidColorVars
+	 *
+	 * @param $varName
+	 * @param $colorValue
+	 */
+	public function testValidColorsAreAcceptedForColorVars( $varName, $colorValue ) {
+		$settings = [ $varName => $colorValue ];
+
+		$this->themeSettingsPersistence->expects( $this->once() )
+			->method( 'saveSettings' )
+			->with( new ArraySubset( $settings ) );
+
+		$this->themeSettings->saveSettings( $settings );
+	}
+
+	public function provideValidColorVars(): Generator {
+		$validColors = ThemeDesignerHelper::COLORS + [ '#000', '#CCCCCC' ];
+
+		foreach ( ThemeDesignerHelper::getColorVars() as $varName => $defaultValue ) {
+			foreach ( $validColors as $colorValue ) {
+				yield [ $varName, $colorValue ];
+			}
+		}
+	}
+
+	/**
+	 * @dataProvider provideNotValidColorVars
+	 *
+	 * @param $varName
+	 * @param $defaultValue
+	 * @param $colorValue
+	 */
+	public function testNotValidColorsAreRejectedForColorVars( $varName, $defaultValue, $colorValue ) {
+		$settings = [ $varName => $colorValue ];
+
+		$this->themeSettingsPersistence->expects( $this->once() )
+			->method( 'saveSettings' )
+			->with( new ArraySubset( [ $varName => $defaultValue ] ) );
+
+		$this->themeSettings->saveSettings( $settings );
+	}
+
+	public function provideNotValidColorVars(): Generator {
+		$notValidColors = [ 'foo', 'bar', 'baz', 0, [] ];
+
+		foreach ( ThemeDesignerHelper::getColorVars() as $varName => $defaultValue ) {
+			foreach ( $notValidColors as $colorValue ) {
+				yield [ $varName, $defaultValue, $colorValue ];
+			}
+		}
+	}
+
+	public function testGetSettingsSetsSaneDefaultForVars() {
+		$settings = [
+			'color-body' => 'aliceblue',
+			'color-buttons' => 'ghostwhite',
+		];
+		
+		$this->themeSettingsPersistence->expects( $this->any() )
+			->method( 'getSettings' )
+			->willReturn( $settings );
+
+		$themeSettings = $this->themeSettings->getSettings();
+
+		$this->assertArrayHasKey( 'background-fixed', $themeSettings );
+		$this->assertFalse( $themeSettings['background-fixed'] );
+
+		$this->assertEquals( 'aliceblue', $themeSettings['color-body-middle'] );
+		$this->assertEquals( 100, $themeSettings['page-opacity'] );
+
+		$this->assertEquals( 'ghostwhite', $themeSettings['color-community-header'] );
+	}
 }

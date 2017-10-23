@@ -107,10 +107,7 @@ class ThemeSettings {
 
 	public function getSettings() {
 		$settings = $this->defaultSettings;
-		$wikiFactorySettings = WikiFactory::getVarValueByName(
-			self::WikiFactorySettings,
-			$this->cityId
-		);
+		$wikiFactorySettings = $this->themeSettingsPersistence->getSettings();
 
 		if ( !empty( $wikiFactorySettings ) ) {
 			$settings = array_merge( $settings, $wikiFactorySettings );

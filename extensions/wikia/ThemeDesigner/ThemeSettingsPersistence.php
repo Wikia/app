@@ -11,6 +11,13 @@ class ThemeSettingsPersistence {
 		$this->cityId = $themeSettings->getCityId();
 	}
 
+	public function getSettings() {
+		return WikiFactory::getVarValueByName(
+			ThemeSettings::WikiFactorySettings,
+			$this->cityId
+		);
+	}
+
 	public function saveSettings( $settings ) {
 		global $wgUser;
 		
