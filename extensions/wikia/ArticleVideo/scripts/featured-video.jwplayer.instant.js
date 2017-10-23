@@ -8,6 +8,7 @@ require([
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.jwplayer.icons',
 	'wikia.articleVideo.featuredVideo.events',
+	'wikia.articleVideo.featuredVideo.jwplayer.logger',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
 	adContext,
@@ -19,6 +20,7 @@ require([
 	featuredVideoTracking,
 	playerIcons,
 	featuredVideoEvents,
+	logger,
 	a9
 ) {
 	if (!videoDetails) {
@@ -53,7 +55,7 @@ require([
 	}
 
 	function setupPlayer(bidParams) {
-		console.info('jwplayer setupPlayer');
+		logger.info('jwplayer setupPlayer');
 		playerInstance.setup({
 			advertising: {
 				autoplayadsmuted: willAutoplay,
@@ -71,12 +73,13 @@ require([
 			},
 			title: videoDetails.title
 		});
-		console.info('jwplayer after setup');
+		logger.info('jwplayer after setup');
 
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
 		featuredVideoMoatTracking(playerInstance);
+		logger.subscribeToInternalPlayerErrors(playerInstance);
 		handleTabNotActive(willAutoplay);
 		playerIcons(document.querySelector('.featured-video'), playerInstance);
 	}
@@ -90,6 +93,7 @@ require([
 				return {};
 			})
 			.then(function (bidParams) {
+				debugger;
 				setupPlayer(bidParams);
 			});
 	} else {
