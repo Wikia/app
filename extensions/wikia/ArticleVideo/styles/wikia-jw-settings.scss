@@ -51,6 +51,10 @@
 		}
 	}
 
+	&.is-quality-list-empty &__quality-button {
+		display: none;
+	}
+
 	// keep controlbar open when settings popover is open
 	&-open .jw-controlbar {
 		opacity: 1 !important;
