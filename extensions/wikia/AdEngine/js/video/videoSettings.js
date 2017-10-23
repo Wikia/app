@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 				return params.moatTracking;
 			}
 
-			if ((params.bid && params.bid.moatTracking === 100) || sampling === 100) {
+			if (sampling === 100) {
 				return true;
 			}
 

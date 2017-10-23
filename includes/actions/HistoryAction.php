@@ -410,7 +410,7 @@ class HistoryPager extends ReverseChronologicalPager {
 	}
 
 	function formatRow( $row ) {
-		$row->user_name = $this->mUsers[$row->rev_user];
+		$row->rev_user_text = $this->mUsers[$row->rev_user] ?? $row->rev_user_text;
 
 		if ( $this->lastRow ) {
 			$latest = ( $this->counter == 1 && $this->mIsFirst );
