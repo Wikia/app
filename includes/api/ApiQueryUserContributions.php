@@ -510,16 +510,4 @@ class ApiQueryContributions extends ApiQueryBase {
 			return $this->getDB()->addQuotes($value);
 		}, $values );
 	}
-
-	private function createWhereCondition( $name, $values ): string {
-		if ( is_array( $values ) ) {
-			$operator = "IN";
-			$values = '(' . implode( ', ', $this->normalizeValues( $values ) ) . ')';
-		} else {
-			$operator = "=";
-			$values = "'{$values}'";
-		}
-
-		return "{$name} {$operator} {$values}";
-	}
 }
