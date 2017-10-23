@@ -17,13 +17,13 @@ define('ext.wikia.adEngine.video.vastDebugger', [
 			imaAd: imaAd
 		});
 
-		setAttribute(element, 'data-gpt-content-type', vastParams.contentType);
-		setAttribute(element, 'data-gpt-creative-id', vastParams.creativeId);
-		setAttribute(element, 'data-gpt-line-item-id', vastParams.lineItemId);
-		setAttribute(element, 'data-gpt-position', vastParams.position);
-		setAttribute(element, 'data-gpt-size', vastParams.size);
-		setAttribute(element, 'data-gpt-status', status);
-		setAttribute(element, 'data-gpt-vast-params', JSON.stringify(vastParams.customParams));
+		setAttribute(element, 'data-vast-content-type', vastParams.contentType);
+		setAttribute(element, 'data-vast-creative-id', vastParams.creativeId);
+		setAttribute(element, 'data-vast-line-item-id', vastParams.lineItemId);
+		setAttribute(element, 'data-vast-position', vastParams.position);
+		setAttribute(element, 'data-vast-size', vastParams.size);
+		setAttribute(element, 'data-vast-status', status);
+		setAttribute(element, 'data-vast-params', JSON.stringify(vastParams.customParams));
 	}
 
 	return {
