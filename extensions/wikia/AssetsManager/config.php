@@ -2689,6 +2689,7 @@ $config['jwplayer_scss'] = [
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss',
 		'//extensions/wikia/ArticleVideo/styles/jwplayer-overrides.scss',
+		'//extensions/wikia/ArticleVideo/styles/wikia-jw-settings.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss'
 	],
@@ -2702,7 +2703,6 @@ $config['jwplayer_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.on-scroll.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.video-feedback.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.autoplay-toggle.js',
 	    '//extensions/wikia/ArticleVideo/scripts/video-feedback.js'
 	],
 ];
