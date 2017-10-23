@@ -35,7 +35,7 @@ class ApiQueryContributions extends ApiQueryBase {
 		parent::__construct( $query, $moduleName, 'uc' );
 	}
 
-	private $params, $multiUserMode, $usernames;
+	private $params, $usernames;
 	private $fld_ids = false, $fld_title = false, $fld_timestamp = false,
 			$fld_comment = false, $fld_parsedcomment = false, $fld_flags = false,
 			$fld_patrolled = false, $fld_tags = false, $fld_size = false;
@@ -69,7 +69,6 @@ class ApiQueryContributions extends ApiQueryBase {
 		foreach ( $this->params['user'] as $u ) {
 			$this->prepareUsername( $u );
 		}
-		$this->multiUserMode = ( count( $this->params['user'] ) > 1 );
 
 		$this->prepareQuery();
 
@@ -83,23 +82,14 @@ class ApiQueryContributions extends ApiQueryBase {
 		// Fetch each row
 		foreach ( $res as $row ) {
 			if ( ++ $count > $limit ) {
-				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
-				if ( $this->multiUserMode ) {
-					$this->setContinueEnumParameter( 'continue', $this->continueStr( $row ) );
-				} else {
-					$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rev_timestamp ) );
-				}
+				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rev_timestamp ) );
 				break;
 			}
 
 			$vals = $this->extractRowInfo( $row );
 			$fit = $this->getResult()->addValue( [ 'query', $this->getModuleName() ], null, $vals );
 			if ( !$fit ) {
-				if ( $this->multiUserMode ) {
-					$this->setContinueEnumParameter( 'continue', $this->continueStr( $row ) );
-				} else {
-					$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rev_timestamp ) );
-				}
+				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rev_timestamp ) );
 				break;
 			}
 		}
@@ -139,29 +129,6 @@ class ApiQueryContributions extends ApiQueryBase {
 		$tables = array( 'page', 'revision' ); // Order may change
 		$this->addWhere( 'page_id=rev_page' );
 
-		// Handle continue parameter
-		if ( $this->multiUserMode && !is_null( $this->params['continue'] ) ) {
-			$continue = explode( '|', $this->params['continue'] );
-			if ( count( $continue ) != 2 ) {
-				$this->dieUsage( 'Invalid continue param. You should pass the original ' .
-					'value returned by the previous query', '_badcontinue' );
-			}
-			$encUser = $this->getDB()->strencode( $continue[0] );
-			$encTS = wfTimestamp( TS_MW, $continue[1] );
-			$op = ( $this->params['dir'] == 'older' ? '<' : '>' );
-			// SUS-807
-			// example for $op = > and $encUser=abcxyz and $encTS=999999:
-			// user logged in (by ID): where rev_user > 0 AND ( rev_user > abcxyz OR (rev_user = abcxyz AND rev_timestamp > 999999 ))
-			// user not logged in (by IP): where rev_user_text > abcxyz OR (rev_user_text = abcxyz AND rev_timestamp > 999999)
-			$this->addWhere(
-				$this->getDB()->makeList(
-					[
-						"rev_user > 0 AND (rev_user $op '$encUser' OR (rev_user = '$encUser' AND rev_timestamp $op= '$encTS'))",
-						"rev_user_text $op '$encUser' OR (rev_user_text = '$encUser' AND rev_timestamp $op= '$encTS')"
-					], LIST_OR )
-			);
-		}
-
 		if ( !$user->isAllowed( 'hideuser' ) ) {
 			$this->addWhere( $this->getDB()->bitAnd( 'rev_deleted', Revision::DELETED_USER ) . ' = 0' );
 		}
@@ -187,12 +154,6 @@ class ApiQueryContributions extends ApiQueryBase {
 		);
 
 		// ... and in the specified timeframe.
-		// Ensure the same sort order for rev_user, rev_user_text and rev_timestamp
-		// so our query is indexed
-		if ( $this->multiUserMode ) {
-			$this->addWhereRange( 'rev_user', $this->params['dir'], null, null );
-			$this->addWhereRange( 'rev_user_text', $this->params['dir'], null, null );
-		}
 		$this->addTimestampWhereRange( 'rev_timestamp',
 			$this->params['dir'], $this->params['start'], $this->params['end'] );
 		$this->addWhereFld( 'page_namespace', $this->params['namespace'] );
@@ -371,13 +332,6 @@ class ApiQueryContributions extends ApiQueryBase {
 		return $vals;
 	}
 
-	private function continueStr( $row ) {
-		$userStr = User::getUsername( $row->rev_user, $row->rev_user_text );
-
-		return $userStr . '|' .
-			wfTimestamp( TS_ISO_8601, $row->rev_timestamp );
-	}
-
 	public function getCacheMode( $params ) {
 		// This module provides access to deleted revisions and patrol flags if
 		// the requester is logged in
@@ -399,7 +353,6 @@ class ApiQueryContributions extends ApiQueryBase {
 			'end' => array(
 				ApiBase::PARAM_TYPE => 'timestamp'
 			),
-			'continue' => null,
 			'user' => array(
 				ApiBase::PARAM_ISMULTI => true
 			),
@@ -451,7 +404,6 @@ class ApiQueryContributions extends ApiQueryBase {
 			'limit' => 'The maximum number of contributions to return',
 			'start' => 'The start timestamp to return from',
 			'end' => 'The end timestamp to return to',
-			'continue' => 'When more results are available, use this to continue',
 			'user' => 'The users to retrieve contributions for',
 			'dir' => $this->getDirectionDescription( $p ),
 			'namespace' => 'Only list contributions in these namespaces',
