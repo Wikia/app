@@ -142,4 +142,15 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 
 		expect(getModule().get('abc', extra)).not.toBe('rec');
 	});
+
+	it('returns by default rec as src value for recovery', function () {
+		expect(getModule().getRecoverySrc()).toBe('rec');
+	});
+
+	it('returns by test-rec to recovery & test wikis', function () {
+		mockContext({
+			'opts.isAdTestWiki': true
+		});
+		expect(getModule().getRecoverySrc()).toBe('test-rec');
+	});
 });

@@ -24,6 +24,13 @@ define('ext.wikia.adEngine.slot.service.srcProvider',  [
 		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
 	}
 
+	function addTestPrefixForTestWiki(originalSrc, extra) {
+		if (adContext.get('opts.isAdTestWiki')) {
+			originalSrc = extra && extra.testSrc ? extra.testSrc : 'test-' + originalSrc;
+		}
+		return originalSrc;
+	}
+
 	function get(originalSrc, extra) {
 		if (adContext.get('opts.premiumOnly') && !adContext.get('opts.isAdTestWiki')) {
 			originalSrc = 'premium';
@@ -31,14 +38,15 @@ define('ext.wikia.adEngine.slot.service.srcProvider',  [
 			originalSrc = 'rec';
 		}
 
-		if (adContext.get('opts.isAdTestWiki')) {
-			return extra && extra.testSrc ? extra.testSrc : 'test-' + originalSrc;
-		}
+		return addTestPrefixForTestWiki(originalSrc, extra);
+	}
 
-		return originalSrc;
+	function getRecoverySrc() {
+		return addTestPrefixForTestWiki('rec');
 	}
 
 	return {
-		get: get
+		get: get,
+		getRecoverySrc: getRecoverySrc
 	};
 });
