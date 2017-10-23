@@ -9,6 +9,8 @@ class MultiLookupPager extends TablePager {
 	private $target;
 	/** @var MultiLookupRowFormatter $formatter */
 	private $formatter;
+	/** @var stdClass $currentRow */
+	private $currentRow;
 
 	public function __construct( IContextSource $context, $target ) {
 		global $wgSpecialsDB;
@@ -47,11 +49,14 @@ class MultiLookupPager extends TablePager {
 	 * @return string
 	 */
 	function formatRow( $row ) {
+		// needs to be set here
 		$wiki = WikiFactory::getWikiByID( $row->ml_city_id );
 
 		if ( $wiki ) {
 			$row->users = $this->getWikiUsers( $wiki->city_dbname );
 			$row->wiki_url = $wiki->city_url;
+
+			$this->currentRow = $row;
 
 			return parent::formatRow( $row );
 		}
@@ -142,7 +147,7 @@ class MultiLookupPager extends TablePager {
 			case static::ML_TIMESTAMP:
 				return $this->formatter->formatTimestamp( $value );
 			case static::USERS:
-				return $this->formatter->formatUsers( $this->mCurrentRow );
+				return $this->formatter->formatUsers( $this->currentRow );
 			default:
 				return '';
 		}
