@@ -88,9 +88,9 @@ class MigrateWikiWordmarks extends Maintenance {
 			return false;
 		}
 
-		$newValue = array_filter(array_unique(array_merge($prevValue, [ $this->keyName => $keyValue ])));
-		$this->debug("Setting " . self::WIKI_FACTORY_VARIABLE . " to " . var_export( $newValue, true ) . PHP_EOL );
-		$status = $this->setVariable( $wgCityId, $newValue, $reason );
+		$prevValue[$this->keyName] = $keyValue;
+		$this->debug("Setting " . self::WIKI_FACTORY_VARIABLE . " to " . var_export( $prevValue, true ) . PHP_EOL );
+		$status = $this->setVariable( $wgCityId, $prevValue, $reason );
 
 		if ( $this->dryRun || $status ) {
 			$this->output(" ... DONE." . PHP_EOL );
