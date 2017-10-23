@@ -3,10 +3,11 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.tracking.adInfoTracker',
+	'ext.wikia.adEngine.video.vastParser',
 	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
-], function (adContext, lookupServices, tracker, log, Querystring, win) {
+], function (adContext, lookupServices, tracker, vastParser, log, Querystring, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',
@@ -87,23 +88,21 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	}
 
 	function trackVideo(adInfo) {
-		var vastParams = new Querystring(adInfo.vastUrl),
-			customParams = '?' + vastParams.getVal('cust_params', null),
-			params = new Querystring(customParams).getVals(),
+		var vastInfo = vastParser.parse(adInfo.vastUrl),
 			slotPrices = {};
 
-		if (params.amznbid) {
-			slotPrices.a9 = params.amznbid;
+		if (vastInfo.amznbid) {
+			slotPrices.a9 = vastInfo.amznbid;
 		}
 
 		tracker.track(
-			params.pos,
-			params,
-			params,
+			vastInfo.pos,
+			vastInfo,
+			vastInfo,
 			{
-				adProduct: vastParams.getVal('vpos', null),
+				adProduct: vastInfo.position,
 				creativeId: adInfo.creativeId,
-				creativeSize: vastParams.getVal('sz', null),
+				creativeSize: vastInfo.size,
 				lineItemId: adInfo.lineItemId,
 				status: adInfo.status
 			},
