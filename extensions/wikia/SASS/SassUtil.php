@@ -90,10 +90,21 @@ class SassUtil {
 				// if not cached in theme settings
 				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
 				if ( !empty($bgImage) ) {
+					\Wikia\Logger\WikiaLogger::instance()->warning( 'Theme Designer background dimension not set', [
+						'backgroundImageTimestamp' => $bgImage->getTimestamp()
+					] );
+
 					$settings['background-image-width'] = $oasisSettings['background-image-width'] = $bgImage->getWidth();
 					$settings['background-image-height'] = $oasisSettings['background-image-height'] = $bgImage->getHeight();
 
-					$themeSettings->saveSettings($settings);
+					// SUS-3104: Do not run this in the context of the session user
+					$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+						'wgUser' => User::newFromName( Wikia::BOT_USER, false )
+					] );
+
+					$globalStateWrapper->wrap( function () use ( $themeSettings, $settings ) {
+						$themeSettings->saveSettings( $settings );
+					} );
 				}
 			}
 
