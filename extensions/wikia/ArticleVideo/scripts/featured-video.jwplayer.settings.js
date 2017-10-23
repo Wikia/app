@@ -94,9 +94,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 
 		qualityButton.classList.add('wikia-jw-settings__quality-button');
 		qualityButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon jw-svg-icon-quality-100" viewBox="0 0 240 240"><path d="M55,200H35c-3,0-5-2-5-4c0,0,0,0,0-1v-30c0-3,2-5,4-5c0,0,0,0,1,0h20c3,0,5,2,5,4c0,0,0,0,0,1v30C60,198,58,200,55,200L55,200z M110,195v-70c0-3-2-5-4-5c0,0,0,0-1,0H85c-3,0-5,2-5,4c0,0,0,0,0,1v70c0,3,2,5,4,5c0,0,0,0,1,0h20C108,200,110,198,110,195L110,195z M160,195V85c0-3-2-5-4-5c0,0,0,0-1,0h-20c-3,0-5,2-5,4c0,0,0,0,0,1v110c0,3,2,5,4,5c0,0,0,0,1,0h20C158,200,160,198,160,195L160,195z M210,195V45c0-3-2-5-4-5c0,0,0,0-1,0h-20c-3,0-5,2-5,4c0,0,0,0,0,1v150c0,3,2,5,4,5c0,0,0,0,1,0h20C208,200,210,198,210,195L210,195z"></path></svg> Video Quality';
-		qualityButton.addEventListener('click', function () {
-			self.showQualityLevelsList();
-		});
+		qualityButton.addEventListener('click', this.showQualityLevelsList.bind(this));
 
 		return qualityButton;
 	};
@@ -140,9 +138,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 		qualityLevelsList.classList.add('wikia-jw-settings__quality-levels');
 		backButton.classList.add('wikia-jw-settings__back');
 		backButton.innerHTML = '<svg class="wikia-jw-settings__back-icon" width="18" height="18" viewBox="0 0 18 18" data-reactid=".0.0.5.3.1.$quality.0.0.0.0.1.0"><path d="M9 14a.997.997 0 0 1-.707-.293l-7-7a.999.999 0 1 1 1.414-1.414L9 11.586l6.293-6.293a.999.999 0 1 1 1.414 1.414l-7 7A.997.997 0 0 1 9 14" data-reactid=".0.0.5.3.1.$quality.0.0.0.0.1.0.0"></path></svg> Back';
-		backButton.addEventListener('click', function () {
-			self.showSettingsList();
-		});
+		backButton.addEventListener('click', this.showSettingsList.bind(this));
 		qualityLevelsList.appendChild(backButton);
 
 		playerInstance.on('levels', function (data) {
@@ -153,9 +149,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 			self.updateQualityLevelsList(qualityLevelsList, data.levels, isActiveClass, backButton);
 		});
 
-		playerInstance.on('levelsChanged', function (data) {
-			self.updateCurrentQuality(qualityLevelsList, data.currentQuality, isActiveClass);
-		});
+		playerInstance.on('levelsChanged', this.updateCurrentQuality.bind(this, qualityLevelsList, isActiveClass));
 
 		return qualityLevelsList;
 	};
@@ -169,10 +163,12 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 		}
 		newLevels.forEach(function (level, index) {
 			var qualityLevelItem = document.createElement('li');
+
 			qualityLevelItem.addEventListener('click', function () {
 				playerInstance.setCurrentQuality(index);
 				self.close();
 			});
+
 			if (playerInstance.getCurrentQuality() === index) {
 				qualityLevelItem.classList.add(isActiveClass);
 			}
@@ -181,9 +177,9 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 		});
 	};
 
-	WikiaJWPlayerSettings.prototype.updateCurrentQuality = function (qualityLevelsList, currentQuality, isActiveClass) {
+	WikiaJWPlayerSettings.prototype.updateCurrentQuality = function (qualityLevelsList, isActiveClass, data) {
 		qualityLevelsList.childNodes.forEach(function (node, index) {
-			if (currentQuality === index) {
+			if (data.currentQuality === index) {
 				node.classList.add(isActiveClass);
 			} else {
 				node.classList.remove(isActiveClass);
