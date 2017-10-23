@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\Constraint\ArraySubset;
 use PHPUnit\Framework\TestCase;
 
 class ThemeSettingsTest extends TestCase {
@@ -34,11 +35,7 @@ class ThemeSettingsTest extends TestCase {
 			'karamba' => 5
 		];
 
-		$constraint = $this->logicalAnd(
-			$this->logicalNot( $this->arrayHasKey( 'foo' ) ),
-			$this->logicalNot( $this->arrayHasKey( 'baz' ) ),
-			$this->logicalNot( $this->arrayHasKey( 'karamba' ) )
-		);
+		$constraint = $this->logicalNot( new ArraySubset( $settings ) );
 
 		$this->themeSettingsPersistence->expects( $this->once() )
 			->method( 'saveSettings' )
@@ -56,7 +53,7 @@ class ThemeSettingsTest extends TestCase {
 
 		$this->themeSettingsPersistence->expects( $this->once() )
 			->method( 'saveSettings' )
-			->with( $settings );
+			->with( new ArraySubset( $settings ) );
 
 		$this->themeSettings->saveSettings( $settings );
 	}
@@ -64,17 +61,17 @@ class ThemeSettingsTest extends TestCase {
 	/**
 	 * @dataProvider provideOpacityValues
 	 *
-	 * @param int $userProvidedValue
+	 * @param mixed $userProvidedValue
 	 * @param int $expectedValue
 	 */
-	public function testOpacityValidation( int $userProvidedValue, int $expectedValue ) {
+	public function testOpacityValidation( $userProvidedValue, int $expectedValue ) {
 		$settings = [
 			'page-opacity' => $userProvidedValue
 		];
 
 		$this->themeSettingsPersistence->expects( $this->once() )
 			->method( 'saveSettings' )
-			->with( [ 'page-opacity' => $expectedValue ] );
+			->with( new ArraySubset( [ 'page-opacity' => $expectedValue ] ) );
 
 		$this->themeSettings->saveSettings( $settings );
 	}
