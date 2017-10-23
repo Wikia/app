@@ -17,6 +17,7 @@ define('ext.wikia.adEngine.video.vastDebugger', [
 			imaAd: imaAd
 		});
 
+		setAttribute(element, 'data-gpt-content-type', vastParams.contentType);
 		setAttribute(element, 'data-gpt-creative-id', vastParams.creativeId);
 		setAttribute(element, 'data-gpt-line-item-id', vastParams.lineItemId);
 		setAttribute(element, 'data-gpt-position', vastParams.position);
