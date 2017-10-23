@@ -11,7 +11,7 @@ require([
 	'wikia.articleVideo.featuredVideo.events',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
-	window,
+	win,
 	adContext,
 	playerInstance,
 	videoDetails,
@@ -99,15 +99,15 @@ require([
 	}
 
 	// XW-4157 PageFair causes pausing the video, as a workaround we play video again when it's paused
-	window.addEventListener('wikia.blocking', function () {
-		if(playerInstance) {
-			if(playerInstance.getState() === 'paused') {
+	win.addEventListener('wikia.blocking', function () {
+		if (playerInstance) {
+			if (playerInstance.getState() === 'paused') {
 				playerInstance.play();
 			} else {
 				playerInstance.once('pause', function (event) {
 					// when video is paused because of PageFair pauseReason is undefined,
 					// otherwise it's set to `interaction` when paused by user or `external` when paused by pause() function
-					if(!event.pauseReason) {
+					if (!event.pauseReason) {
 						playerInstance.play();
 					}
 				});
