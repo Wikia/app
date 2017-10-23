@@ -6,21 +6,22 @@ define('ext.wikia.adEngine.video.vastParser', [
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.vastParser';
 
-	function updateAdInfo(adInfo) {
-		var wrapperCreativeId,
+	function getAdInfo(imaAd) {
+		var adInfo = {},
+			wrapperCreativeId,
 			wrapperId;
 
-		if (adInfo.imaAd) {
-			adInfo.lineItemId = adInfo.imaAd.getAdId();
-			adInfo.creativeId = adInfo.imaAd.getCreativeId();
-			adInfo.contentType = adInfo.imaAd.getContentType();
+		if (imaAd) {
+			adInfo.lineItemId = imaAd.getAdId();
+			adInfo.creativeId = imaAd.getCreativeId();
+			adInfo.contentType = imaAd.getContentType();
 
-			wrapperId = adInfo.imaAd.getWrapperAdIds();
+			wrapperId = imaAd.getWrapperAdIds();
 			if (wrapperId.length) {
 				adInfo.lineItemId = wrapperId[0];
 			}
 
-			wrapperCreativeId = adInfo.imaAd.getWrapperCreativeIds();
+			wrapperCreativeId = imaAd.getWrapperCreativeIds();
 			if (wrapperCreativeId.length) {
 				adInfo.creativeId = wrapperCreativeId[0];
 			}
@@ -29,16 +30,21 @@ define('ext.wikia.adEngine.video.vastParser', [
 		return adInfo;
 	}
 
-	function parse(vastUrl, adInfo) {
-		adInfo = adInfo || {};
+	function parse(vastUrl, extra) {
+		extra = extra || {};
 
-		var vastParams = new Querystring(vastUrl),
+		var adInfo,
+			currentAd = getAdInfo(extra.imaAd),
+			vastParams = new Querystring(vastUrl),
 			customParams = '?' + vastParams.getVal('cust_params', '');
 
-		updateAdInfo(adInfo);
-
-		adInfo.customParams = new Querystring(customParams).getVals();
-		adInfo.size = vastParams.getVal('sz', null);
+		adInfo = {
+			contentType: currentAd.contentType || extra.contentType,
+			creativeId: currentAd.creativeId || extra.creativeId,
+			customParams:  new Querystring(customParams).getVals(),
+			lineItemId: currentAd.lineItemId || extra.lineItemId,
+			size: vastParams.getVal('sz', null)
+		};
 
 		log(['Parse VAST url', adInfo], log.levels.debug, logGroup);
 
@@ -46,6 +52,7 @@ define('ext.wikia.adEngine.video.vastParser', [
 	}
 
 	return {
+		getAdInfo: getAdInfo,
 		parse: parse
 	};
 });
