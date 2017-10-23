@@ -35,7 +35,7 @@ class ApiQueryContributions extends ApiQueryBase {
 		parent::__construct( $query, $moduleName, 'uc' );
 	}
 
-	private $params, $usernames;
+	private $params, $username, $userId, $userIp;
 	private $fld_ids = false, $fld_title = false, $fld_timestamp = false,
 			$fld_comment = false, $fld_parsedcomment = false, $fld_flags = false,
 			$fld_patrolled = false, $fld_tags = false, $fld_size = false;
@@ -59,17 +59,10 @@ class ApiQueryContributions extends ApiQueryBase {
 		// TODO: if the query is going only against the revision table, should this be done?
 		$this->selectNamedDB( 'contributions', DB_SLAVE, 'contributions' );
 
-		$this->usernames = [];
-		if ( !is_array( $this->params['user'] ) ) {
-			$this->params['user'] = array( $this->params['user'] );
-		}
-		if ( !count( $this->params['user'] ) ) {
+		if ( !isset( $this->params['user'] ) ) {
 			$this->dieUsage( 'User parameter may not be empty.', 'param_user' );
 		}
-		foreach ( $this->params['user'] as $u ) {
-			$this->prepareUsername( $u );
-		}
-
+		$this->prepareUsername( $this->params['user'] );
 		$this->prepareQuery();
 
 		// Do the actual query.
@@ -98,23 +91,29 @@ class ApiQueryContributions extends ApiQueryBase {
 	}
 
 	/**
-	 * Validate the 'user' parameter and add user name
-	 * to $this->usernames[] array
+	 * Validate the 'user' parameter
+	 * and save user name in $this->username,
+	 * $this->userId and $this->userIp
 	 *
 	 * @param $user string
 	 */
 	private function prepareUsername( $user ) {
 		if ( !is_null( $user ) && $user !== '' ) {
-			$name = User::isIP( $user ) ?
-				$user :
-				User::getCanonicalName( $user, 'valid' );
-			if ( $name === false ) {
-				$this->dieUsage( "User name {$user} is not valid", 'param_user' );
+			// anon
+			if ( User::isIP( $user ) ) {
+				$this->userIp = $user;
+				$this->username = $user;
 			} else {
-				$this->usernames[] = $name;
+				$name = User::getCanonicalName( $user, 'valid' );
+
+				if ( $name === false ) {
+					$this->dieUsage( "User name {$user} is not valid", 'param_user' );
+				} else {
+					// logged in user
+					$this->username = $name;
+					$this->userId = $id = User::idFromName( $name );
+				}
 			}
-		} else {
-			$this->dieUsage( 'User parameter may not be empty', 'param_user' );
 		}
 	}
 
@@ -132,26 +131,19 @@ class ApiQueryContributions extends ApiQueryBase {
 		if ( !$user->isAllowed( 'hideuser' ) ) {
 			$this->addWhere( $this->getDB()->bitAnd( 'rev_deleted', Revision::DELETED_USER ) . ' = 0' );
 		}
-		// We only want pages by the specified users...
+		// We only want pages by the specified user...
 		// SUS-807
-		$ids = [];
-		$ips = [];
-		foreach ( $this->usernames as $userName ) {
-			$id = User::idFromName( $userName );
-			if ( $id ) {
-				$ids[] = $id;
-			} else {
-				$ips[] = $userName;
-			}
+		// fon anons, search it by IP stored in rev_user_text
+		$columnName = 'rev_user_text';
+		$valueToFind = $this->username;
+
+		// if username is a name of logged in user, search it by id
+		if ( isset( $this->userId ) ) {
+			$columnName = 'rev_user';
+			$valueToFind = $this->userId;
 		}
 
-		$this->addWhere(
-			$this->getDB()->makeList(
-				[
-					'rev_user' => $ids,
-					'rev_user_text' => $ips
-				], LIST_OR )
-		);
+		$this->addWhereFld($columnName, $valueToFind);
 
 		// ... and in the specified timeframe.
 		$this->addTimestampWhereRange( 'rev_timestamp',
@@ -193,8 +185,7 @@ class ApiQueryContributions extends ApiQueryBase {
 			}
 
 			// Use a redundant join condition on both
-			// timestamp and ID so we can use the timestamp
-			// index
+			// timestamp and ID so we can use the timestamp index
 			$index['recentchanges'] = 'rc_user_text';
 			if ( isset( $show['patrolled'] ) || isset( $show['!patrolled'] ) ) {
 				// Put the tables in the right order for
@@ -208,7 +199,7 @@ class ApiQueryContributions extends ApiQueryBase {
 				$tables[] = 'recentchanges';
 				$this->addJoinConds( array( 'recentchanges' => array(
 					'LEFT JOIN', array(
-						'(rc_user != 0 AND rc_user=rev_user OR rc_user_text=rev_user_text)',
+						'(rc_user != 0 AND rc_user=rev_user) OR rc_user_text=rev_user_text',
 						'rc_timestamp=rev_timestamp',
 						'rc_this_oldid=rev_id' ) ) ) );
 			}
@@ -256,7 +247,6 @@ class ApiQueryContributions extends ApiQueryBase {
 	 */
 	private function extractRowInfo( $row ) {
 		$vals = [];
-
 
 		$vals['userid'] = $row->rev_user;
 		$vals['user'] = User::getUsername( $row->rev_user, $row->rev_user_text );
