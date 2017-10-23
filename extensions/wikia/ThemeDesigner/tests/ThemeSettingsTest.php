@@ -95,7 +95,7 @@ class ThemeSettingsTest extends TestCase {
 	public function testEmptyWordmarkTextIsNotValid( $userProvidedWordMarkValue ) {
 		$settings = [ 'wordmark-text' => $userProvidedWordMarkValue ];
 
-		$constraint = $this->logicalNot( new ArraySubset( $settings ) );
+		$constraint = $this->logicalNot( $this->arrayHasKey( 'wordmark-text' ) );
 
 		$this->themeSettingsPersistence->expects( $this->once() )
 			->method( 'saveSettings' )
@@ -127,8 +127,9 @@ class ThemeSettingsTest extends TestCase {
 
 	public function provideValidColorVars(): Generator {
 		$validColors = ThemeDesignerHelper::COLORS + [ '#000', '#CCCCCC' ];
+		$colorVars = array_slice( ThemeDesignerHelper::getColorVars(), 0, 5 );
 
-		foreach ( ThemeDesignerHelper::getColorVars() as $varName => $defaultValue ) {
+		foreach ( $colorVars as $varName => $defaultValue ) {
 			foreach ( $validColors as $colorValue ) {
 				yield [ $varName, $colorValue ];
 			}
@@ -154,8 +155,9 @@ class ThemeSettingsTest extends TestCase {
 
 	public function provideNotValidColorVars(): Generator {
 		$notValidColors = [ 'foo', 'bar', 'baz', 0, [] ];
+		$colorVars = array_slice( ThemeDesignerHelper::getColorVars(), 0, 5 );
 
-		foreach ( ThemeDesignerHelper::getColorVars() as $varName => $defaultValue ) {
+		foreach ( $colorVars as $varName => $defaultValue ) {
 			foreach ( $notValidColors as $colorValue ) {
 				yield [ $varName, $defaultValue, $colorValue ];
 			}
