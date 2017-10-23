@@ -134,7 +134,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 			backButton = document.createElement('li'),
 			playerInstance = this.player,
 			isActiveClass = 'is-active',
-			isQualityListEmpty = 'is-quality-list-empty';
+			isQualityListEmptyClass = 'is-quality-list-empty';
 			self = this;
 
 		qualityLevelsList.classList.add('wikia-jw-settings__quality-levels');
@@ -147,11 +147,9 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 
 		playerInstance.on('levels', function (data) {
 			// in Safari in data.levels array there is one element with label = '0'
-			if (!data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0')) {
-				self.wikiaSettingsElement.classList.add(isQualityListEmpty);
-			} else {
-				self.wikiaSettingsElement.classList.remove(isQualityListEmpty);
-			}
+			var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0');
+
+			self.wikiaSettingsElement.classList.toggle(isQualityListEmptyClass, isQualityListEmpty);
 			self.updateQualityLevelsList(qualityLevelsList, data.levels, isActiveClass, backButton);
 		});
 
