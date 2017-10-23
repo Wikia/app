@@ -81,7 +81,7 @@ class Orphans extends Maintenance {
 		$orphans = $dbw->numRows( $result );
 		if ( $orphans > 0 ) {
 			global $wgContLang;
-			$formatString = "%10s %10s %14s %14s %20s %s\n";
+			$formatString = "%10s %10s %14s %10s %20s %s\n";
 
 			$this->output( "$orphans orphan revisions...\n" );
 			$this->output( sprintf( $formatString, 'rev_id', 'rev_page', 'rev_timestamp', 'rev_user', 'rev_user_text', 'rev_comment' ) );
@@ -94,7 +94,7 @@ class Orphans extends Maintenance {
 					$row->rev_id,
 					$row->rev_page,
 					$row->rev_timestamp,
-					$wgContLang->truncate( $row->rev_user, 17 ),
+					$row->rev_user,
 					$wgContLang->truncate( $row->rev_user_text, 17 ),
 					$comment ) );
 				if ( $fix ) {

@@ -111,7 +111,7 @@ class ApiQueryContributions extends ApiQueryBase {
 				} else {
 					// logged in user
 					$this->username = $name;
-					$this->userId = $id = User::idFromName( $name );
+					$this->userId = User::idFromName( $name );
 				}
 			}
 		}
@@ -441,15 +441,5 @@ class ApiQueryContributions extends ApiQueryBase {
 
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
-	}
-
-	private function normalizeValues( $values ) {
-		return array_map( function ($value) {
-			if (is_numeric($value)) {
-				return $value;
-			}
-
-			return $this->getDB()->addQuotes($value);
-		}, $values );
 	}
 }
