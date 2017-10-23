@@ -106,42 +106,30 @@ class ThemeSettings {
 	}
 
 	public function getSettings() {
-		$settings = $this->defaultSettings;
 		$wikiFactorySettings = $this->themeSettingsPersistence->getSettings();
 
-		if ( !empty( $wikiFactorySettings ) ) {
-			$settings = array_merge( $settings, $wikiFactorySettings );
+		if ( empty( $wikiFactorySettings ) ) {
+			return $this->defaultSettings;
+		}
 
-			// if user didn't define community header background color, but defined buttons color, we use buttons color
-			// as default for community header background
-			if (
-				!isset( $wikiFactorySettings["color-community-header"] ) &&
-				isset( $wikiFactorySettings["color-buttons"]
-				)
-			) {
-				$settings["color-community-header"] = $settings["color-buttons"];
+		$settings = array_merge( $this->defaultSettings, $wikiFactorySettings );
+
+		// if user didn't define community header background color, but defined buttons color, we use buttons color
+		// as default for community header background
+		if (
+			!isset( $wikiFactorySettings["color-community-header"] ) &&
+			isset( $wikiFactorySettings["color-buttons"]
+			)
+		) {
+			$settings["color-community-header"] = $settings["color-buttons"];
+		}
+
+		// if any of the user set colors are invalid, use default
+		foreach ( ThemeDesignerHelper::getColorVars() as $colorKey => $defaultValue ) {
+			if ( !ThemeDesignerHelper::isValidColor( $settings[$colorKey] ) ) {
+				$settings = $this->defaultSettings;
+				break;
 			}
-
-			// if any of the user set colors are invalid, use default
-			foreach ( ThemeDesignerHelper::getColorVars() as $colorKey => $defaultValue ) {
-				if ( !ThemeDesignerHelper::isValidColor( $settings[$colorKey] ) ) {
-					$settings = $this->defaultSettings;
-					break;
-				}
-			}
-
-		}
-		// special check for color-body-middle
-		if ( !isset( $settings['color-body-middle'] ) || !ThemeDesignerHelper::isValidColor( $settings["color-body-middle"] ) ) {
-			$settings["color-body-middle"] = $settings["color-body"];
-		}
-
-		// add variables that might not be saved already in WF
-		if ( !isset( $settings['background-fixed'] ) ) {
-			$settings['background-fixed'] = false;
-		}
-		if ( !isset( $settings['page-opacity'] ) ) {
-			$settings['page-opacity'] = 100;
 		}
 
 		return $settings;

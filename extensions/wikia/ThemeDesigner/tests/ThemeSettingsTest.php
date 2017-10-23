@@ -167,7 +167,7 @@ class ThemeSettingsTest extends TestCase {
 			'color-body' => 'aliceblue',
 			'color-buttons' => 'ghostwhite',
 		];
-		
+
 		$this->themeSettingsPersistence->expects( $this->any() )
 			->method( 'getSettings' )
 			->willReturn( $settings );
@@ -176,9 +176,6 @@ class ThemeSettingsTest extends TestCase {
 
 		$this->assertArrayHasKey( 'background-fixed', $themeSettings );
 		$this->assertFalse( $themeSettings['background-fixed'] );
-
-		$this->assertEquals( 'aliceblue', $themeSettings['color-body-middle'] );
-		$this->assertEquals( 100, $themeSettings['page-opacity'] );
 
 		$this->assertEquals( 'ghostwhite', $themeSettings['color-community-header'] );
 	}
