@@ -5,7 +5,7 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 	function noop() {
 	}
 
-	var dummyVast = 'dummy.vast?sz=640x480&foo=bar&cust_params=foo1%3Dbar1%26foo2%3Dbar2',
+	var dummyVast = 'dummy.vast?sz=640x480&foo=bar&cust_params=foo1%3Dbar1%26foo2%3Dbar2&vpos=preroll',
 		mocks = {
 			log: noop
 		},
@@ -57,6 +57,12 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 		var adInfo = parser.parse(dummyVast);
 
 		expect(adInfo.size).toEqual('640x480');
+	});
+
+	it('Parse position from VAST url', function () {
+		var adInfo = parser.parse(dummyVast);
+
+		expect(adInfo.position).toEqual('preroll');
 	});
 
 	it('Current ad info is not set by default', function () {

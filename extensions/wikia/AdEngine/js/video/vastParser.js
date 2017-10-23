@@ -43,6 +43,7 @@ define('ext.wikia.adEngine.video.vastParser', [
 			creativeId: currentAd.creativeId || extra.creativeId,
 			customParams:  new Querystring(customParams).getVals(),
 			lineItemId: currentAd.lineItemId || extra.lineItemId,
+			position: vastParams.getVal('vpos', null),
 			size: vastParams.getVal('sz', null)
 		};
 
