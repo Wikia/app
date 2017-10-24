@@ -155,6 +155,8 @@ abstract class ApiFormatBase extends ApiBase {
 <!DOCTYPE HTML>
 <html>
 <head>
+	<!-- SUS-1697: robots have no reason to index this page -->
+	<meta name="robots" content="noindex,nofollow" />
 <?php if ( $this->mUnescapeAmps ) {
 ?>	<title>MediaWiki API</title>
 <?php } else {
