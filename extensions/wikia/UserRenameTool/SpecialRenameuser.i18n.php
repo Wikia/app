@@ -4,8 +4,17 @@ $messages = array();
 $messages['en'] = array(
 	'userrenametool' => "Change a user's name",
 	'renameuser' => 'Rename user',
-	'userrenametool-warning' => "<strong>Please read the following information carefully</strong>:<p>Before renaming a user, please make sure <strong>all the information is correct</strong>, and ensure that <strong>the user knows it may take some time to complete</strong>.
-<br />Please be aware that due to some external factors the first part of the process <strong>could result in a blank page</strong>, that doesn't mean the process won't be completed correctly.</p><p>You can track the progress of the process through [[Special:Stafflog|Staff log]], also <strong>the system will send an email to you as the whole rename procedure will be completed</strong>.</p>",
+	'userrenametool-warning' => "<strong>Please read the following information carefully</strong>:<p>On FANDOM, we allow users to rename their account once. Before making an account rename request, make sure that the new name is the one you’re sure you’ll want to use on FANDOM. This can be done through the form below. Once the form is completed, the rename will be final and no additional renames will be possible.
+<br /><br />You can not rename your account to:
+<ul>
+<li>a username another person has already registered</li>
+<li>an offensive username</li>
+<li>a blocked username</li>
+<li>a username that attempts to impersonate another FANDOM user</li>
+<li>a username that contains non-alphabetic characters, for example, card suit symbols or trademark signs</li>
+<li>a username that starts with an uncapitalized letter</li>
+</ul>
+<br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[w:c:Help:Rename my account|here]].",
 	'userrenametool-desc' => "Adds a [[Special:UserRenameTool|special page]] to rename a user (need ''renameuser'' right) and process all the related data",
 	'userrenametool-old' => 'Current username:',
 	'userrenametool-new' => 'New username:',
@@ -21,6 +30,7 @@ $messages['en'] = array(
 	'userrenametool-phalanx-matches' => 'Phalanx filters matching $1:',
 	'userrenametool-confirm' => 'Yes, rename the user',
 	'userrenametool-submit' => 'Change username',
+	'userrenametool-error-alreadyrenamed' => 'This account has already been renamed . As our [[w:c:Help:Rename my account|account rename help page]] states, FANDOM does not allow more than one rename per account, and this means you can not rename your account again.',
 	'userrenametool-error-antispoof-conflict' => 'AntiSpoof warning - there is already a username similar to "<nowiki>$1</nowiki>".',
 	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof is not installed.',
 	'userrenametool-errordoesnotexist' => 'The user "<nowiki>$1</nowiki>" does not exist.',
