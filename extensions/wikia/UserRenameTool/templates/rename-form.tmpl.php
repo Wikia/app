@@ -7,21 +7,21 @@
 		<table id='mw-renameuser-table'>
 			<tr>
 				<td class='mw-label'>
-					<label for='oldusername'><?= wfMessage( 'userrenametool-old' )->inContentLanguage()->escaped(); ?></label>
-				</td>
-				<td class='mw-input'>
-					<input type="text" name="oldusername" size="20" tabindex="1" value="<?= $oldusername_hsc; ?>"<?= ( $warnings ) ? ' disabled' : null; ?>/>
-					<? if ( $warnings ): ?><input type="hidden" name="oldusername" value="<?= $oldusername_hsc; ?>"/><? endif ?>
-				</td>
-			</tr>
-			<tr>
-				<td class='mw-label'>
 					<label for='newusername'><?= wfMessage( 'userrenametool-new' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
 					<input type="text" name="newusername" size="20" tabindex="2" value="<?= $newusername_hsc; ?>"<?= ( $warnings ) ? ' disabled' : null; ?>/>
 					<? if ( $warnings ): ?><input type="hidden" name="newusername" value="<?= $newusername_hsc; ?>"/><? endif ?>
 					<span id="newUsernameEncoded"><?= wfMessage( 'userrenametool-encoded' )->escaped(); ?> <strong></strong></span>
+				</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>
+					<label for='newusernamerepeat'><?= wfMessage( 'userrenametool-new-repeat' )->inContentLanguage()->escaped(); ?></label>
+				</td>
+				<td class='mw-input'>
+					<input type="text" name="newusernamerepeat" size="20" tabindex="2" value="<?= $newusername_hsc; ?>"<?= ( $warnings ) ? ' disabled' : null; ?>/>
+									<? if ( $warnings ): ?><input type="hidden" name="newusername" value="<?= $newusername_hsc; ?>"/><? endif ?>
 				</td>
 			</tr>
 			<tr>

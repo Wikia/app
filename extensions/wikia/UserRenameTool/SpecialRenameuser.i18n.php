@@ -16,8 +16,8 @@ $messages['en'] = array(
 </ul>
 <br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[w:c:Help:Rename my account|here]].",
 	'userrenametool-desc' => "Adds a [[Special:UserRenameTool|special page]] to rename a user (need ''renameuser'' right) and process all the related data",
-	'userrenametool-old' => 'Current username:',
 	'userrenametool-new' => 'New username:',
+	'userrenametool-new-repeat' => 'Repeat new username',
 	'userrenametool-encoded' => 'URL encoded:',
 	'userrenametool-reason' => 'Reason for rename:',
 	'userrenametool-move' => 'Move user and talk pages (and their subpages) to new name',
