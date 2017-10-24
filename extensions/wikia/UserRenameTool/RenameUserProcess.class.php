@@ -85,7 +85,6 @@ class RenameUserProcess {
 	private $mRequestorId = 0;
 	private $mRequestorName = '';
 	private $mReason = null;
-	private $mNotifyUser;
 
 	private $mErrors = array();
 	private $mWarnings = array();
@@ -127,7 +126,6 @@ class RenameUserProcess {
 		$this->mReason = $reason;
 		$this->mRequestorId = $wgUser ? $wgUser->getId() : 0;
 		$this->mRequestorName = $wgUser ? $wgUser->getName() : '';
-		$this->mNotifyUser = $notifyUser;
 
 		$this->addInternalLog( "construct: old={$oldUsername} new={$newUsername}" );
 	}
@@ -586,8 +584,7 @@ class RenameUserProcess {
 			'rename_new_name' => $this->mNewUsername,
 			'rename_fake_user_id' => $this->mFakeUserId,
 			'phalanx_block_id' => $this->mPhalanxBlockId,
-			'reason' => $this->mReason,
-			'notify_renamed' => $this->mNotifyUser,
+			'reason' => $this->mReason
 		);
 		$task = ( new UserRenameTask() )
 			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );

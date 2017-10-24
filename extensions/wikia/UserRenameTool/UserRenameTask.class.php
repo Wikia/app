@@ -133,10 +133,8 @@ class UserRenameTask extends BaseTask {
 			$renamedUser->setGlobalFlag( 'wasRenamed', true );
 			$renamedUser->saveSettings();
 
-			if ( $params['notify_renamed'] ) {
-				// send e-mail to the user that rename process has finished
-				$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
-			}
+			// send e-mail to the user that rename process has finished
+			$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
 		}
 
 		if ( $noErrors ) {

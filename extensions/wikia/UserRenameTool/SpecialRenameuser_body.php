@@ -46,11 +46,11 @@ class SpecialRenameuser extends SpecialPage {
 
 		// Get the request data
 		$request = $this->getRequest();
+		// TODO: in new version of userRenameTool we'll want to have here simply current user (SUS-2958)
 		$oldUsername = $request->getText( 'oldusername', $par );
 		$newUsername = $request->getText( 'newusername' );
 		$reason = $request->getText( 'reason' );
 		$token = $this->getUser()->getEditToken();
-		$notifyRenamed = $request->getBool( 'notify_renamed', false );
 		$confirmAction = false;
 
 		if ( $request->wasPosted() && $request->getInt( 'confirmaction' ) ) {
@@ -62,7 +62,7 @@ class SpecialRenameuser extends SpecialPage {
 		$info = [];
 
 		if ( $this->validRenameRequest() ) {
-			$process = new RenameUserProcess( $oldUsername, $newUsername, $confirmAction, $reason, $notifyRenamed );
+			$process = new RenameUserProcess( $oldUsername, $newUsername, $confirmAction, $reason );
 			$status = $process->run();
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
@@ -102,8 +102,7 @@ class SpecialRenameuser extends SpecialPage {
 				"errors"        	=> $errors,
 				"infos"         	=> $info,
 				"show_confirm"  	=> $showConfirm,
-				"token"         	=> $token,
-				"notify_renamed" 	=> $notifyRenamed,
+				"token"         	=> $token
 			]
 		);
 

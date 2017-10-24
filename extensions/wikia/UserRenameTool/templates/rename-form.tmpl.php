@@ -33,14 +33,6 @@
 					<? if ( $warnings ): ?><input type="hidden" name="reason" value="<?= $reason; ?>"/><? endif ?>
 				</td>
 			</tr>
-			<tr>
-				<td class='mw-label'>
-					<label for='notify_renamed'><?= wfMessage( 'userrenametool-notify-renamed' )->inContentLanguage()->escaped(); ?></label>
-				</td>
-				<td class="mw-input">
-					<input type="checkbox" name="notify_renamed" checked="<?= ($notify_renamed) ? '' : "checked"; ?>" />
-				</td>
-			</tr>
 			<? if ( $warnings ): ?>
 				<tr>
 					<td class='mw-label'><?= wfMessage( 'userrenametool-warnings' )->inContentLanguage()->escaped(); ?></td>
