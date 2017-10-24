@@ -58,22 +58,23 @@ class MigrateWikiWordmarks extends Maintenance {
 			return false;
 		}
 
-		$this->output( "Variable: " . self::WIKI_FACTORY_VARIABLE . " (Id: $varData[cv_id])" . PHP_EOL );
-		$this->debug( "Variable data: " . json_encode( $varData ) . PHP_EOL );
+		$themeSettings = new ThemeSettings( $wgCityId );
 
-		$wg = F::app()->wg;
-		$wg->User = User::newFromName( Wikia::BOT_USER );
-		$wg->User->load();
+		if ( empty( $themeSettings ) ) {
+			$this->output( "Could not load theme settings for city: " . $wgCityId . PHP_EOL );
+			return false;
+		}
 
+		$settings = $themeSettings->getSettings();
 
-		$this->output( "Updating {$this->keyName} in " . self::WIKI_FACTORY_VARIABLE . PHP_EOL );
-		$prevValue = unserialize($varData['cv_value']);
-		$keyValue = $prevValue[$this->keyName];
+		$keyValue = $settings[$this->keyName];
 
 		if ( empty( $keyValue ) ) {
 			$this->output( "Key is empty - skipping" . PHP_EOL );
 			return false;
 		}
+
+		$this->output( "Updating {$this->keyName} for " . $wgCityId . PHP_EOL );
 
 		if ( strpos( $keyValue,"http://" ) !== 0 ) {
 			$this->output( "Value doesn't start with 'http://' " . $keyValue .  " - skipping " . PHP_EOL );
@@ -88,36 +89,20 @@ class MigrateWikiWordmarks extends Maintenance {
 			return false;
 		}
 
-		$prevValue[$this->keyName] = $keyValue;
-		$this->debug("Setting " . self::WIKI_FACTORY_VARIABLE . " to " . var_export( $prevValue, true ) . PHP_EOL );
-		$status = $this->setVariable( $wgCityId, $prevValue, $reason );
+		$settings[$this->keyName] = $keyValue;
+		$this->debug("Setting " . $this->keyName . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
 
-		if ( $this->dryRun || $status ) {
-			$this->output(" ... DONE." . PHP_EOL );
-		} else {
-			$this->output( " ... FAILED." . PHP_EOL );
-		}
-	}
-
-	/**
-	 * Set the variable
-	 * @param integer $wikiId
-	 * @param mixed $varValue
-	 * @param string $reason
-	 * @return boolean
-	 */
-	protected function setVariable( $wikiId, $varValue, $reason ) {
-		$status = false;
 		if ( !$this->dryRun ) {
-			$status = WikiFactory::setVarByName( self::WIKI_FACTORY_VARIABLE, $wikiId, $varValue, $reason );
-			if ( $status ) {
-				WikiFactory::clearCache( $wikiId );
-			}
-		} else {
-			$this->output( "Dry run, not changing variable." . PHP_EOL );
-		}
+			$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+				'wgUser' => User::newFromName( Wikia::BOT_USER, false )
+			] );
 
-		return $status;
+			$globalStateWrapper->wrap( function () use ( $themeSettings, $settings ) {
+				$themeSettings->saveSettings( $settings );
+			} );
+		}
+		$this->output(" ... DONE." . PHP_EOL );
+
 	}
 
 	/**
