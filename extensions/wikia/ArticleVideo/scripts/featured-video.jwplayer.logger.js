@@ -15,7 +15,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.logger', [], function () {
 		request.open('POST', loggerUrl, true);
 		request.setRequestHeader('Content-type', 'application/json');
 
-		request.send(data);
+		request.send(JSON.stringify(data));
 	}
 
 	function info(name, description) {
