@@ -29,5 +29,6 @@ $wgResourceModules['ext.ArticleVideo.jw'] = [
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.tracking.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.logger.js',
+		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.settings.js',
 	],
 ];

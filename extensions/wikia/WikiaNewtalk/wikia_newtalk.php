@@ -77,11 +77,20 @@ function wfSetWikiaNewtalk( WikiPage $article ): bool {
         /**
 		 * then insert
 		 */
-		$dbw->insert(
-            "shared_newtalks",
-            wfBuildNewtalkWhereCondition( $other, true ),
-            __METHOD__
-        );
+	    $dbw->insert(
+		    "shared_newtalks",
+		    // TODO: bring back wfBuildNewtalkWhereCondition for anon as well, when the migration is completed (SUS-3089)
+		    $other->isAnon()
+		    ?
+		    [
+			    'sn_wiki' => wfWikiID(),
+			    'sn_user_ip' => $other->getName(),
+			    'sn_anon_ip' => inet_pton( $other->getName() ),
+		    ]
+		    :
+		    wfBuildNewtalkWhereCondition( $other, true ),
+		    __METHOD__
+	    );
         $dbw->commit();
 		$wgMemc->delete( wfWikiaNewTalkMemcKey( $other ) );
 	}
