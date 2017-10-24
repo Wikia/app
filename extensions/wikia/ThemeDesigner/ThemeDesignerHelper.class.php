@@ -55,7 +55,9 @@ class ThemeDesignerHelper {
 		// Last chance: array is not proper hash so maybe it is predefined color name
 		$isColorName = in_array( strtolower( $sColor ), static::COLORS );
 
-		Wikia::log( __METHOD__, "JKU", "[{$sColor}] is not a valid color name" );
+		if ( !$isColorName ) {
+			Wikia::log( __METHOD__, "JKU", "[{$sColor}] is not a valid color name" );
+		}
 
 		return $isColorName;
 	}
