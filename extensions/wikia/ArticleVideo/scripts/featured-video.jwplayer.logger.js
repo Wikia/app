@@ -27,7 +27,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.logger', [], function () {
 	}
 
 	function error(name, description) {
-		logErrorToService(prefix, name, description);
+		logErrorToService(name, description);
 	}
 
 	function subscribeToInternalPlayerErrors(playerInstance) {
