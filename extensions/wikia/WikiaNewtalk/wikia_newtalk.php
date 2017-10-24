@@ -28,7 +28,7 @@ function wfBuildNewtalkWhereCondition( User $user, $includeWikiId = false ) : ar
 	$wikiCondition = $includeWikiId ? [ 'sn_wiki' => wfWikiID() ] : [];
 
 	if ( $user->isAnon() ) {
-		return array_merge( $wikiCondition, [ 'sn_user_ip' => $user->getName() ] );
+		return array_merge( $wikiCondition, [ 'sn_anon_ip' => inet_pton( $user->getName() ) ] );
 	}
 	else {
 		return array_merge( $wikiCondition, [ 'sn_user_id' => $user->getID() ] );
@@ -79,15 +79,6 @@ function wfSetWikiaNewtalk( WikiPage $article ): bool {
 		 */
 	    $dbw->insert(
 		    "shared_newtalks",
-		    // TODO: bring back wfBuildNewtalkWhereCondition for anon as well, when the migration is completed (SUS-3089)
-		    $other->isAnon()
-		    ?
-		    [
-			    'sn_wiki' => wfWikiID(),
-			    'sn_user_ip' => $other->getName(),
-			    'sn_anon_ip' => inet_pton( $other->getName() ),
-		    ]
-		    :
 		    wfBuildNewtalkWhereCondition( $other, true ),
 		    __METHOD__
 	    );
