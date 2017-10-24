@@ -80,14 +80,13 @@ require([
 			}
 
 		});
-		logger.subscribeToPlayerSetupError(playerInstance);
-
 		logger.info('jwplayer after setup');
 
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
 		featuredVideoMoatTracking(playerInstance);
+		logger.subscribeToPlayerSetupError(playerInstance);
 		logger.subscribeToInternalPlayerErrors(playerInstance);
 		handleTabNotActive(willAutoplay);
 		playerIcons(document.querySelector('.featured-video'), playerInstance);
