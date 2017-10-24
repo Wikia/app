@@ -33,11 +33,11 @@ define('wikia.articleVideo.featuredVideo.jwplayer.logger', [], function () {
 
 	function subscribeToPlayerErrors(playerInstance) {
 		playerInstance.on('setupError', function (err) {
-			error(err.message, err.error);
+			error('setupError', err);
 		});
 
 		playerInstance.on('error', function (err) {
-			error(err.message, err.error);
+			error('error', err);
 		});
 	}
 
