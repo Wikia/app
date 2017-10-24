@@ -391,6 +391,7 @@ $config['oasis_jquery'] = [
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//resources/wikia/polyfills/array.js',
+		'//resources/wikia/polyfills/dom.js',
 
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
@@ -2689,6 +2690,7 @@ $config['jwplayer_scss'] = [
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss',
 		'//extensions/wikia/ArticleVideo/styles/jwplayer-overrides.scss',
+		'//extensions/wikia/ArticleVideo/styles/wikia-jw-settings.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss'
 	],
@@ -2702,7 +2704,6 @@ $config['jwplayer_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.on-scroll.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.video-feedback.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.autoplay-toggle.js',
 	    '//extensions/wikia/ArticleVideo/scripts/video-feedback.js'
 	],
 ];
