@@ -352,7 +352,7 @@ class SpecialContributions extends SpecialPage {
 		if ( !isset( $this->opts['associated'] ) ) {
 			$this->opts['associated'] = false;
 		}
-		
+
 		if ( !isset( $this->opts['year'] ) ) {
 			$this->opts['year'] = '';
 		}
