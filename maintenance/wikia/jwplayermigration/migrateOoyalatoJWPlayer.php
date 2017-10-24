@@ -62,8 +62,7 @@ class MigrateOoyalaVideos extends Maintenance {
 
 			try {
 				//uncomment to do update
-				var_dump($videoConfig);exit;
-				WikiFactory::setVarById($varId,  $wikiId, $videoConfig , 'Automatic migration of Ooyala videos to JWPlayer');
+				// WikiFactory::setVarById($varId,  $wikiId, $videoConfig , 'Automatic migration of Ooyala videos to JWPlayer');
 			} catch ( Exception $exception ) {
 				$this->output( 'Exception!!!!!!!!!!!' );
 			}
