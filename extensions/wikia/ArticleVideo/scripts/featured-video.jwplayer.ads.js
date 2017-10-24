@@ -2,14 +2,15 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'ext.wikia.adEngine.slot.service.srcProvider',
 	'wikia.articleVideo.featuredVideo.adsTracking',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, adsTracking, log) {
+], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, log) {
 
 	var aspectRatio = 640 / 480,
 		featuredVideoPassback = 'jwplayer',
 		featuredVideoSlotName = 'FEATURED',
-		featuredVideoSource = 'premium',
+		featuredVideoSource = srcProvider.get('gpt', {testSrc: 'test'}),
 		logGroup = 'wikia.articleVideo.featuredVideo.ads';
 
 	function calculateRV(depth) {
