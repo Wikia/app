@@ -374,9 +374,8 @@ class HistoryPager extends ReverseChronologicalPager {
 	/**
 	 * Fetch user names from ExternalSharedDB.
 	 * @see SUS-2990
-	 * @return array
+	 * @return iterable
 	 */
-
 	function reallyDoQuery( $offset, $limit, $descending ) {
 		global $wgExternalSharedDB;
 		$res = parent::reallyDoQuery( $offset, $limit, $descending );
@@ -388,16 +387,19 @@ class HistoryPager extends ReverseChronologicalPager {
 			}
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$users = $dbr->select(
-			'`user`',
-			[ 'user_id', 'user_name' ],
-			[ 'user_id' => array_unique( $ids ) ],
-			__METHOD__
-		);
+		// SUS-3103: It might happen that all contributors were anon - check if this was the case
+		if ( !empty( $ids ) ) {
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$users = $dbr->select(
+				'`user`',
+				[ 'user_id', 'user_name' ],
+				[ 'user_id' => array_unique( $ids ) ],
+				__METHOD__
+			);
 
-		foreach ( $users as $row ) {
-			$this->mUsers[$row->user_id] = $row->user_name;
+			foreach ( $users as $row ) {
+				$this->mUsers[$row->user_id] = $row->user_name;
+			}
 		}
 
 		$res->rewind();

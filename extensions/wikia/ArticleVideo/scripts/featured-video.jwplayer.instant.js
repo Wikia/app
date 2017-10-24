@@ -8,6 +8,7 @@ require([
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.jwplayer.icons',
 	'wikia.articleVideo.featuredVideo.events',
+	'wikia.articleVideo.featuredVideo.jwplayer.plugin.settings',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
 	adContext,
@@ -19,6 +20,7 @@ require([
 	featuredVideoTracking,
 	playerIcons,
 	featuredVideoEvents,
+	wikiaJWSettings,
 	a9
 ) {
 	if (!videoDetails) {
@@ -54,8 +56,10 @@ require([
 
 	function setupPlayer(bidParams) {
 		console.info('jwplayer setupPlayer');
+		wikiaJWSettings();
 		playerInstance.setup({
 			advertising: {
+				autoplayadsmuted: willAutoplay,
 				client: 'googima'
 			},
 			autostart: willAutoplay && !document.hidden,
@@ -68,7 +72,11 @@ require([
 				file: 'https://cdn.jwplayer.com/v2/playlists/' + recommendedPlaylist + '?related_media_id=' + videoId,
 				oncomplete: inNextVideoAutoplayCountries ? 'autoplay' : 'show'
 			},
-			title: videoDetails.title
+			title: videoDetails.title,
+			plugins: {
+				wikiaSettings: null
+			}
+
 		});
 		console.info('jwplayer after setup');
 

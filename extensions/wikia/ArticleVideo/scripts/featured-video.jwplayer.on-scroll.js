@@ -5,7 +5,8 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			videoCollapsed = false,
 			$title = $('.featured-video__title'),
 			$duration = $('.featured-video__time'),
-			$closeBtn = $('.featured-video__close');
+			$closeBtn = $('.featured-video__close'),
+			wikiaSettingsPlugin = playerInstance.getPlugin('wikiaSettings');
 
 		function isVideoInFullScreenMode() {
 			return playerInstance.getFullscreen();
@@ -25,6 +26,9 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 				'right': viewportWidth - videoOffset.left - videoWidth,
 				'width': videoWidth
 			});
+			if (wikiaSettingsPlugin) {
+				wikiaSettingsPlugin.hide();
+			}
 			setTimeout(function () {
 				if (videoCollapsed) { // we need to be sure video has not been uncollapsed yet
 					$featuredVideo.addClass('is-collapsed');
@@ -44,6 +48,9 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			});
 			$featuredVideo.removeClass('is-collapsed is-collapsed-ready');
 			playerInstance.resize();
+			if (wikiaSettingsPlugin) {
+				wikiaSettingsPlugin.show();
+			}
 		}
 
 		function toggleCollapse() {
