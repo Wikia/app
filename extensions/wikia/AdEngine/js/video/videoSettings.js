@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.utils.sampler',
+	'wikia.instantGlobals',
 	'wikia.window'
-], function (adContext, resolvedState, sampler, win) {
+], function (adContext, resolvedState, sampler, instantGlobals, win) {
 	'use strict';
 
 	function create(params) {
@@ -28,6 +29,10 @@ define('ext.wikia.adEngine.video.videoSettings', [
 
 			if (typeof params.moatTracking === 'boolean') {
 				return params.moatTracking;
+			}
+
+			if (params.moatTracking === 'useInstantGlobal') {
+				sampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling;
 			}
 
 			if (sampling === 100) {
