@@ -93,6 +93,7 @@ require([
 				return {};
 			})
 			.then(function (bidParams) {
+				logger.subscribeToPlayerSetupError(playerInstance);
 				debugger;
 				setupPlayer(bidParams);
 			});
