@@ -123,7 +123,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.requestSource = 'instartLogic';
 			}
 
-			slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
+			if (slotTargetingData.src) {
+				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
+			}
+
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
