@@ -91,10 +91,10 @@ define('wikia.articleVideo.featuredVideo.events', [
 			});
 		});
 
-		playerInstance.on('play', function (data) {
+		playerInstance.on('play', function () {
 			if (isPlayerPaused) {
 				playerInstance.trigger('videoResumed');
-				logger.info('jwplayer videoResumed tiggered');
+				logger.info('jwplayer videoResumed triggered');
 			}
 
 			isPlayerPaused = false;
@@ -107,11 +107,11 @@ define('wikia.articleVideo.featuredVideo.events', [
 		playerInstance.on('firstFrame', function () {
 			if (depth === 0) {
 				playerInstance.trigger('playerStart', { auto: willAutoplay });
-				logger.info('jwplayer playerStart tiggered');
+				logger.info('jwplayer playerStart triggered');
 			}
 
 			playerInstance.trigger('videoStart');
-			logger.info('jwplayer videoStart tiggered');
+			logger.info('jwplayer videoStart triggered');
 		});
 
 		playerInstance.on('mute', function () {
