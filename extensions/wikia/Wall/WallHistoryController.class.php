@@ -161,9 +161,6 @@ class WallHistoryController extends WallController {
 	}
 
 	private function getFormatedHistoryData( $history, $threadId = 0 ) {
-		// VOLDEV-39: Store whether Wall is enabled
-		$ns = $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK;
-
 		foreach ( $history as $key => $value ) {
 			$type = intval( $value['action'] );
 
@@ -179,8 +176,8 @@ class WallHistoryController extends WallController {
 			$user = $value['user'];
 			$username = $user->getName();
 
-			$userTalk = Title::newFromText( $username, $ns );
-			$url = $userTalk->getFullUrl();
+			$userTalk = $user->getTalkPage();
+			$url = $userTalk->getFullURL();
 
 			if ( $user->isAnon() ) {
 				$history[$key]['displayname'] = Linker::linkKnown( $userTalk, wfMessage( 'oasis-anon-user' )->escaped() );
@@ -218,7 +215,7 @@ class WallHistoryController extends WallController {
 				$history[$key]['msgurl'] = $messagePageUrl;
 
 				$msgUser = $wm->getUser();
-				$msgPage = Title::newFromText( $msgUser->getName(), $ns );
+				$msgPage = $msgUser->getTalkPage();
 				if ( empty( $msgPage ) ) {
 					// SOC-586, SOC-578 : There is an edge case where $msgUser->getName can be empty
 					// because of a rev_deleted flag on the revision loaded by ArticleComment via the
