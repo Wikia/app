@@ -17,6 +17,7 @@ $wgAutoloadClasses['ThemeDesignerController'] = "$dir/ThemeDesignerController.cl
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
 $wgAutoloadClasses['SpecialThemeDesignerPreview'] = "$dir/SpecialThemeDesignerPreview.class.php";
 $wgAutoloadClasses['ThemeDesignerHooks'] = "$dir/ThemeDesignerHooks.class.php";
+$wgAutoloadClasses['ThemeSettingsPersistence'] = "$dir/ThemeSettingsPersistence.php";
 
 // special pages
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
