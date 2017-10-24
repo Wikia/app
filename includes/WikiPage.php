@@ -2747,8 +2747,7 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		if ( $row ) { // $row is false if the only contributor is hidden
 			// SUS-807
-			$onlyAuthor = ( $row->rev_user > 0 ) ?
-				User::newFromId($row->rev_user) : $row->rev_user_text;
+			$onlyAuthor = User::getUsername( $row->rev_user, $row->rev_user_text );
 			// Try to find a second contributor
 			foreach ( $res as $row ) {
 				if ( $row->rev_user_text != $onlyAuthor ) { // Bug 22999
