@@ -56,6 +56,7 @@ require([
 
 	function setupPlayer(bidParams) {
 		logger.info('jwplayer setupPlayer');
+
 		playerInstance.setup({
 			advertising: {
 				autoplayadsmuted: willAutoplay,
@@ -73,6 +74,8 @@ require([
 			},
 			title: videoDetails.title
 		});
+		logger.subscribeToPlayerSetupError(playerInstance);
+
 		logger.info('jwplayer after setup');
 
 		featuredVideoAds(playerInstance, bidParams);
@@ -93,8 +96,6 @@ require([
 				return {};
 			})
 			.then(function (bidParams) {
-				logger.subscribeToPlayerSetupError(playerInstance);
-				debugger;
 				setupPlayer(bidParams);
 			});
 	} else {
