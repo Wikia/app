@@ -31,8 +31,8 @@ define('ext.wikia.adEngine.video.videoSettings', [
 				return params.moatTracking;
 			}
 
-			if (typeof params.moatTracking === 'string') {
-				sampling = instantGlobals[params.moatTracking];
+			if (params.moatTracking === 'useInstantGlobal') {
+				sampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling;
 			}
 
 			if (sampling === 100) {

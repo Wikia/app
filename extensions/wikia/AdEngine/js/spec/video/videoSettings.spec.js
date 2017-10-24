@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules, spyOn*/
+/*global beforeEach, describe, it, expect, modules, spyOn*/
 describe('ext.wikia.adEngine.video.videoSettings', function () {
 	'use strict';
 
@@ -8,10 +8,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 				return true;
 			}
 		},
-		instantGlobals: {
-			wgAdDriverPorvataMoatTrackingSampling: 100,
-			wgFlipCoin: 50,
-		},
+		instantGlobals: {},
 		resolvedState: {
 			isResolvedState: function () { return false; }
 		},
@@ -43,6 +40,10 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			mocks.win
 		).create(params);
 	}
+
+	beforeEach(function () {
+		mocks.instantGlobals.wgAdDriverPorvataMoatTrackingSampling = 100;
+	});
 
 	it('Should be not auto play without autoplay parameter', function () {
 		var videoSettings = getSettings();
@@ -149,7 +150,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
 
 		var videoSettings = getSettings({
-			moatTracking: 'wgAdDriverPorvataMoatTrackingSampling'
+			moatTracking: 'useInstantGlobal'
 		});
 
 		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
@@ -159,8 +160,9 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 	it('Should enable tracking based on instant global sampling (50%) and sampler', function () {
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
 
+		mocks.instantGlobals.wgAdDriverPorvataMoatTrackingSampling = 50;
 		getSettings({
-			moatTracking: 'wgFlipCoin'
+			moatTracking: 'useInstantGlobal'
 		});
 
 		expect(mocks.sampler.sample).toHaveBeenCalled();
