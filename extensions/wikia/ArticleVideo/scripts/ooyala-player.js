@@ -2,7 +2,8 @@ define('ooyala-player', [
 	'wikia.browserDetect',
 	require.optional('ext.wikia.adEngine.utils.eventDispatcher'),
 	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
-], function (browserDetect, eventDispatcher, ooyalaTracker) {
+	require.optional('ext.wikia.adEngine.video.vastParser')
+], function (browserDetect, eventDispatcher, ooyalaTracker, vastParser) {
 	'use strict';
 	var baseJSONSkinUrl = '/wikia.php?controller=OoyalaConfig&method=skin&cb=' + window.wgStyleVersion,
 	// TODO ooyala only supports font icons so we probably need to extract our DS icons to font
@@ -194,25 +195,13 @@ define('ooyala-player', [
 					IMAAdsManager.addEventListener('loaded', function (eventData) {
 						var player = html5Player.player,
 							adData = eventData.getAdData(),
-							currentAd = IMAAdsManager.getCurrentAd(),
-							wrapperCreativeId,
-							wrapperId;
+							currentAd;
 
-						if (adData) {
-							options.adTrackingParams.lineItemId = adData.adId;
-							options.adTrackingParams.creativeId = adData.creativeId;
-						}
+						if (adData && vastParser) {
+							currentAd = vastParser.getAdInfo(IMAAdsManager.getCurrentAd());
 
-						if (currentAd) {
-							wrapperId = currentAd.getWrapperAdIds();
-							if (wrapperId.length) {
-								options.adTrackingParams.lineItemId = wrapperId[0];
-							}
-
-							wrapperCreativeId = currentAd.getWrapperCreativeIds();
-							if (wrapperCreativeId.length) {
-								options.adTrackingParams.creativeId = wrapperCreativeId[0];
-							}
+							options.adTrackingParams.creativeId = currentAd.creativeId || adData.creativeId;
+							options.adTrackingParams.lineItemId = currentAd.lineItemId || adData.adId;
 						}
 
 						if (eventDispatcher && options.adSet && options.adSet[html5Player.adIndex]) {
