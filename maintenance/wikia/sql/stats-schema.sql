@@ -16,10 +16,7 @@ CREATE TABLE `city_used_tags` (
   `ct_namespace` int(8) unsigned NOT NULL,
   `ct_kind` varchar(50) NOT NULL DEFAULT '',
   `ct_timestamp` varchar(14) NOT NULL DEFAULT '19700101000000',
-  PRIMARY KEY (`ct_wikia_id`,`ct_page_id`,`ct_namespace`,`ct_kind`),
-  KEY `ct_wikia_id` (`ct_wikia_id`),
-  KEY `ct_page_id` (`ct_page_id`,`ct_namespace`),
-  KEY `ct_timestamp` (`ct_timestamp`)
+  PRIMARY KEY (`ct_wikia_id`,`ct_page_id`,`ct_namespace`,`ct_kind`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -79,4 +76,4 @@ CREATE TABLE `events` (
  PARTITION ev9999 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
 
 
--- Dump completed on 2017-10-16 14:47:40
+-- Dump completed on 2017-10-24 14:37:29

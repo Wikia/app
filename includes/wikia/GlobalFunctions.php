@@ -111,11 +111,12 @@ function print_pre( $param, $return = 0 )
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
-	global $wgWikiaNocookieDomain;
+	global $wgWikiaNocookieDomain, $wgMedusaHostPrefix;
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
 	if ( substr( strtolower( $url ), -4 ) != '.ogg' ) {
-		$url = str_replace("http://", "https://", $url );
+		$url = str_replace( 'http://', 'https://',
+			str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $url ) );
 		if ( strlen( $url ) > 8 && substr ( $url, 0, 8 ) == "https://" ) {
 			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
 			if ( $timestamp == "" ) {
