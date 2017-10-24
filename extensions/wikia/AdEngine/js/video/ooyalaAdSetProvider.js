@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		var slotParams = bidParams || {};
 
 		slotParams.pos = 'FEATURED';
-		slotParams.src = srcProvider.get('gpt', 'test');
+		slotParams.src = srcProvider.get('gpt', {testSrc: 'test'});
 		slotParams.rv = rv;
 
 		var options = {
