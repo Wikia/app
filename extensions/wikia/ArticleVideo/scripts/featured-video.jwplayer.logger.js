@@ -30,14 +30,12 @@ define('wikia.articleVideo.featuredVideo.jwplayer.logger', [], function () {
 		logErrorToService(name, description);
 	}
 
-	function subscribeToInternalPlayerErrors(playerInstance) {
-		playerInstance.on('error', function (err) {
+	function subscribeToPlayerErrors(playerInstance) {
+		playerInstance.on('setupError', function (err) {
 			error(err.message, err.error);
 		});
-	}
 
-	function subscribeToPlayerSetupError(playerInstance) {
-		playerInstance.on('setupError', function (err) {
+		playerInstance.on('error', function (err) {
 			error(err.message, err.error);
 		});
 	}
@@ -46,7 +44,6 @@ define('wikia.articleVideo.featuredVideo.jwplayer.logger', [], function () {
 		info: info,
 		warn: warn,
 		error: error,
-		subscribeToInternalPlayerErrors: subscribeToInternalPlayerErrors,
-		subscribeToPlayerSetupError: subscribeToPlayerSetupError
+		subscribeToPlayerErrors: subscribeToPlayerErrors
 	}
 });

@@ -82,12 +82,11 @@ require([
 		});
 		logger.info('jwplayer after setup');
 
+		logger.subscribeToPlayerErrors(playerInstance);
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
 		featuredVideoMoatTracking(playerInstance);
-		logger.subscribeToPlayerSetupError(playerInstance);
-		logger.subscribeToInternalPlayerErrors(playerInstance);
 		handleTabNotActive(willAutoplay);
 		playerIcons(document.querySelector('.featured-video'), playerInstance);
 	}
