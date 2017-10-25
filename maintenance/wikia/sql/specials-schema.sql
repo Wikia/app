@@ -59,10 +59,7 @@ CREATE TABLE `events_local_users` (
   `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
-  KEY `user_edits` (`user_id`,`edits`,`wiki_id`),
-  KEY `user_id` (`user_id`),
-  KEY `edits` (`edits`),
-  KEY `wiki_id` (`wiki_id`)
+  KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
@@ -137,4 +134,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-16 14:47:40
+-- Dump completed on 2017-10-24 14:37:28

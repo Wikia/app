@@ -492,7 +492,7 @@ CREATE TABLE `shared_newtalks` (
   PRIMARY KEY (`id`),
   KEY `idx_user_ip_wiki` (`sn_user_ip`,`sn_wiki`),
   KEY `idx_user_id_wiki` (`sn_user_id`,`sn_wiki`),
-  KEY `sn_user_id_sn_user_ip_sn_wiki_idx` (`sn_user_id`,`sn_user_ip`,`sn_wiki`)
+  KEY `idx_anon_ip_wiki` (`sn_anon_ip`,`sn_wiki`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -677,4 +677,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-23 14:46:55
+-- Dump completed on 2017-10-24 14:37:30
