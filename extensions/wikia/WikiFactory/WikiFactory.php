@@ -144,7 +144,7 @@ class WikiFactory {
 			return sprintf("`%s`.`%s`.`%s`", self::db, $table, $column );
 		}
 		else {
-			return sprintf("`%s`.`%s`", self::db, $table );N
+			return sprintf("`%s`.`%s`", self::db, $table );
 		}
 	}
 
