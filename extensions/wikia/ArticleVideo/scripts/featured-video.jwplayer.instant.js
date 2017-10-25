@@ -64,13 +64,13 @@ require([
 	}
 
 	function setupPlayer() {
-		wikiaJWPlayer('featured-video__player', {
+		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
 					tracker.track(data);
 				},
-				setCustomDimension: window.guaSetCustomDimension,
-				comscore: !window.wgDevelEnvironment
+				setCustomDimension: win.guaSetCustomDimension,
+				comscore: !win.wgDevelEnvironment
 			},
 			autoplay: {
 				showToggle: true,
