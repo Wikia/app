@@ -175,11 +175,9 @@ class SpecialContributions extends SpecialPage {
 			$message = 'sp-contributions-footer';
 			if ( IP::isIPAddress( $target ) ) {
 				$message = 'sp-contributions-footer-anon';
-			} else {
-				if ( $userObj->isAnon() ) {
-					// No message for non-existing users
-					return;
-				}
+			} elseif ( $userObj->isAnon() ) {
+				// There is no user account with this name - nothing to display
+				return;
 			}
 
 			if ( !$this->msg( $message, $target )->isDisabled() ) {
@@ -391,7 +389,7 @@ class SpecialContributions extends SpecialPage {
 		}
 
 		$targetSelection = Xml::tags( 'td', array( 'colspan' => 2 ),
-	Xml::label(
+		Xml::label(
 				$this->msg( 'sp-contributions-username' )->text(),
 				'target'
 			) . ' ' .
