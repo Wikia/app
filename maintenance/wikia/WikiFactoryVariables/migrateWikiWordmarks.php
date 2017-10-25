@@ -60,11 +60,6 @@ class MigrateWikiWordmarks extends Maintenance {
 
 		$themeSettings = new ThemeSettings( $wgCityId );
 
-		if ( empty( $themeSettings ) ) {
-			$this->output( "Could not load theme settings for city: " . $wgCityId . PHP_EOL );
-			return false;
-		}
-
 		$fh = false;
 		if ( $fileName ) {
 			$fh = fopen( $fileName, "a" );
