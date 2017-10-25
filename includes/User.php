@@ -1132,7 +1132,6 @@ class User implements JsonSerializable {
 			# Initialise user table data
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
-			$this->getEditCount(); // revalidation for nulls
 			return true;
 		} else {
 			# Invalid user_id

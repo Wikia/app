@@ -9,6 +9,7 @@ require([
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.jwplayer.icons',
 	'wikia.articleVideo.featuredVideo.events',
+	'wikia.articleVideo.featuredVideo.jwplayer.logger',
 	'wikia.articleVideo.featuredVideo.jwplayer.plugin.settings',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
@@ -22,6 +23,7 @@ require([
 	featuredVideoTracking,
 	playerIcons,
 	featuredVideoEvents,
+	logger,
 	wikiaJWSettings,
 	a9
 ) {
@@ -57,7 +59,7 @@ require([
 	}
 
 	function setupPlayer(bidParams) {
-		console.info('jwplayer setupPlayer');
+		logger.info('jwplayer setupPlayer');
 		wikiaJWSettings();
 		playerInstance.setup({
 			advertising: {
@@ -80,8 +82,9 @@ require([
 			}
 
 		});
-		console.info('jwplayer after setup');
+		logger.info('jwplayer after setup');
 
+		logger.subscribeToPlayerErrors(playerInstance);
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);

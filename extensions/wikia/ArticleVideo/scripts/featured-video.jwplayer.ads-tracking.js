@@ -1,32 +1,12 @@
 define('wikia.articleVideo.featuredVideo.adsTracking', [
 	'ext.wikia.adEngine.utils.eventDispatcher',
-	'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker'
-], function (eventDispatcher, tracker) {
+	'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker',
+	'ext.wikia.adEngine.video.vastParser'
+], function (eventDispatcher, tracker, vastParser) {
 	function clearParams(params) {
 		params.lineItemId = undefined;
 		params.creativeId = undefined;
 		params.contentType = undefined;
-	}
-
-	function updateParams(params, currentAd) {
-		var wrapperCreativeId,
-			wrapperId;
-
-		if (currentAd) {
-			params.lineItemId = currentAd.getAdId();
-			params.creativeId = currentAd.getCreativeId();
-			params.contentType = currentAd.getContentType();
-
-			wrapperId = currentAd.getWrapperAdIds();
-			if (wrapperId.length) {
-				params.lineItemId = wrapperId[0];
-			}
-
-			wrapperCreativeId = currentAd.getWrapperCreativeIds();
-			if (wrapperCreativeId.length) {
-				params.creativeId = wrapperCreativeId[0];
-			}
-		}
 	}
 
 	return function(player, params) {
@@ -41,7 +21,11 @@ define('wikia.articleVideo.featuredVideo.adsTracking', [
 		});
 
 		player.on('adRequest', function (event) {
-			updateParams(params, event.ima && event.ima.ad);
+			var currentAd = vastParser.getAdInfo(event.ima && event.ima.ad);
+
+			params.lineItemId = currentAd.lineItemId;
+			params.creativeId = currentAd.creativeId;
+			params.contentType = currentAd.contentType;
 		});
 
 		player.on('adImpression', function (event) {

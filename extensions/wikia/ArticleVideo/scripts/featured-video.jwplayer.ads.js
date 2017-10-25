@@ -3,10 +3,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
+	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.articleVideo.featuredVideo.adsTracking',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, log) {
-
+], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
 	var aspectRatio = 640 / 480,
 		featuredVideoPassback = 'jwplayer',
 		featuredVideoSlotName = 'FEATURED',
@@ -69,6 +69,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 	return function(player, bidParams) {
 		var correlator,
+			featuredVideoElement = document.querySelector('.featured-video'),
 			trackingParams = {
 				adProduct: 'featured-video',
 				slotName: featuredVideoSlotName,
@@ -109,6 +110,13 @@ define('wikia.articleVideo.featuredVideo.ads', [
 					trackingParams.adProduct = 'featured-video-postroll';
 					player.playAd(buildVastUrl('postroll', videoDepth, correlator));
 				}
+			});
+
+			player.on('adRequest', function (event) {
+				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'success', event.ima && event.ima.ad);
+			});
+			player.on('adError', function (event) {
+				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'error', event.ima && event.ima.ad);
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
