@@ -224,11 +224,11 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return array array of categories (empty if wiki is not in a category)
 	 */
 	public function getCategoryIds( $city_id, $active = 1 ) {
-		global $wgExternalSharedDB;
-		if( !$wgExternalSharedDB || empty($city_id) ) {
-			return array();
+		if( empty($city_id) ) {
+			return [];
 		}
 
+		// TODO: add caching
 		$categories = (new WikiaSQL())
 			->SELECT( "cat_id" )
 			->FROM( "city_cats" )
@@ -343,11 +343,7 @@ class WikiFactoryHub extends WikiaModel {
 
 	private function loadCategories() {
 
-		global $wgExternalSharedDB;
-		if( !$wgExternalSharedDB ) {
-			return array();
-		}
-
+		// TODO: add caching
 		$categories = (new WikiaSQL())
 			->SELECT()
 				->FIELD( "cat_id as id")

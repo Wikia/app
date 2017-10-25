@@ -140,14 +140,11 @@ class WikiFactory {
 	 * @return string - table name with database
 	 */
 	static public function table( $table, $column = false ) {
-		global $wgExternalSharedDB;
-
-		$database = !empty( $wgExternalSharedDB ) ? $wgExternalSharedDB : static::db;
-		if ( $column ) {
-			return sprintf("`%s`.`%s`.`%s`", $database, $table, $column );
+		if ( is_string( $column ) ) {
+			return sprintf("`%s`.`%s`.`%s`", self::db, $table, $column );
 		}
 		else {
-			return sprintf("`%s`.`%s`", $database, $table );
+			return sprintf("`%s`.`%s`", self::db, $table );N
 		}
 	}
 
