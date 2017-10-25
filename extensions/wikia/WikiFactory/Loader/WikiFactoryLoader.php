@@ -391,9 +391,8 @@ class WikiFactoryLoader {
 
 		/**
 		 * save default var values for Special:WikiFactory
-		 * @todo this should be smarter...
 		 */
-		if ( $this->mWikiID == 177 ) {
+		if ( $this->mWikiID == Wikia::COMMUNITY_WIKI_ID ) {
 			$this->mSaveDefaults = true;
 		}
 
