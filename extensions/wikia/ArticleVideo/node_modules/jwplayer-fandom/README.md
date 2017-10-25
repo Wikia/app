@@ -1,0 +1,2 @@
+# jwplayer-fandom
+JWPlayer configuration
