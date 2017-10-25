@@ -545,7 +545,7 @@ class EditAccount extends SpecialPage {
 		$user_name = "Not found";
 		$rows = [];
 
-		if ( $wgExternalSharedDB && $user_id ) {
+		if ( $user_id ) {
 			$user_name = User::newFromID( $user_id );
 
 			$dbr = wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
