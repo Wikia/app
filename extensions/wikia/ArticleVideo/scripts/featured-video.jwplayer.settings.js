@@ -129,7 +129,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.plugin.settings', ['wikia.arti
 		toggleLabel.appendChild(document.createTextNode("Autoplay Videos"));
 		toggleLabel.addEventListener('click', function (event) {
 			featuredVideoAutoplay.toggleAutoplay(!event.target.previousSibling.checked);
-			playerInstance.trigger('autoplayToggle', !event.target.previousSibling.checked);
+			playerInstance.trigger('autoplayToggle', { enabled: !event.target.previousSibling.checked });
 		});
 
 		autoplayToggle.appendChild(toggleInput);

@@ -3,7 +3,7 @@ define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo
 	var inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 		autoplayCookieName = 'featuredVideoAutoplay',
-		autoplayCookieExpireDays = 14,
+		autoplayCookieExpireDays = 1209600000, // 14 days in milliseconds
 		willAutoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
 
 	function toggleAutoplay(enableAutoplay) {
@@ -12,6 +12,7 @@ define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo
 		}
 
 		cookies.set(autoplayCookieName, enableAutoplay ? '1' : '0', {
+			path: '/',
 			domain: window.wgCookieDomain,
 			expires: autoplayCookieExpireDays
 		});
