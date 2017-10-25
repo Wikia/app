@@ -3,6 +3,7 @@ define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo
 	var inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 		autoplayCookieName = 'featuredVideoAutoplay',
+		autoplayCookieExpireDays = 14,
 		willAutoplay = cookies.get(autoplayCookieName) !== '0' && inAutoplayCountries;
 
 	function toggleAutoplay(enableAutoplay) {
@@ -10,7 +11,10 @@ define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo
 			enableAutoplay = !isAutoplayEnabled();
 		}
 
-		cookies.set(autoplayCookieName, enableAutoplay ? '1' : '0');
+		cookies.set(autoplayCookieName, enableAutoplay ? '1' : '0', {
+			domain: window.wgCookieDomain,
+			expires: autoplayCookieExpireDays
+		});
 
 		return enableAutoplay;
 	}
