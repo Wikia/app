@@ -202,10 +202,10 @@ $messages['vi'] = array(
 );
 
 $messages['xw-3171'] = array(
-	'bannernotifications-desc' => '顯示一個如AJAX失敗類似事件的系統通知',
-	'bannernotifications-general-ajax-failure' => '瀏覽器無法連接到FANDOM。請稍後再試。',
-	'bannernotifications-not-confirmed-email' => '您的電子郵件地址尚未獲得到認證。您的收件匣中應該已經收到了認證訊息。如果您需要我們重新發送一個郵件，請[[Special:ConfirmEmail|按一下此處]]。如需更改郵件地址，請至[[Special:Preferences#mw-prefsection-emailv2|個人設定頁面]]。',
-	'bannernotifications-no-email' => '您的帳戶沒有已認證的電子郵件地址。請在[[Special:Preferences#mw-prefsection-emailv2|個人設定頁面]]設置您的電子郵件。',
+	'bannernotifications-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
+	'bannernotifications-general-ajax-failure' => 'O navegador não pode se conectar ao FANDOM. Tente novamente mais tarde.',
+	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Se precisar que enviemos outra, por favor [[Special:ConfirmEmail|clique aqui e enviaremos novamente.]] Se você precisar alterar o seu e-mail, visite sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
+	'bannernotifications-no-email' => 'Sua conta não possui um endereço de e-mail confirmado. Por favor configure seu e-mail em sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
 );
 
 $messages['zh-hans'] = array(
