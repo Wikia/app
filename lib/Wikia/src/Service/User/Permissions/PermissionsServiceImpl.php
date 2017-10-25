@@ -156,7 +156,19 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $permissions;
 	}
 
-	public function getUsersInGroups( array $groups ): \UserArray {
+	/**
+	 * @param array $groups
+	 * @return array map of user IDs to user groups
+	 */
+	public function getUsersInGroups( array $groups ): array {
+		global $wgMemc;
+		$cacheKey = self::buildUserGroupMembersCacheKey( $groups );
+		$cachedValue = $wgMemc->get( $cacheKey);
+
+		if ( is_array( $cachedValue ) ) {
+			return $cachedValue;
+		}
+
 		$localGroups = [];
 		$globalGroups = [];
 
@@ -169,26 +181,48 @@ class PermissionsServiceImpl implements PermissionsService {
 			$localGroups[] = $groupName;
 		}
 
-		$userIds = [];
+		$groupMembers = [];
 
 		if ( !empty( $globalGroups) ) {
-			$userIds += $this->loadUsersInGroup( self::getSharedDB(), $globalGroups );
+			$globalGroupMembers = $this->loadUsersInGroup( self::getSharedDB(), $globalGroups );
+			foreach ( $globalGroupMembers as $userId => $userGroups ) {
+				$groupMembers[$userId] = $userGroups;
+			}
 		}
 
 		if ( !empty( $localGroups ) ) {
-			$userIds += $this->loadUsersInGroup( wfGetDB( DB_SLAVE ), $localGroups );
+			$localGroupMembers = $this->loadUsersInGroup( wfGetDB( DB_SLAVE ), $localGroups );
+			foreach ( $localGroupMembers as $userId => $userGroups ) {
+				$groupMembers[$userId] = $groupMembers[$userId] ?? [];
+				$groupMembers[$userId] = array_merge( $groupMembers[$userId], $userGroups );
+			}
 		}
 
-		return \UserArray::newFromIDs( $userIds );
+		$wgMemc->set( $cacheKey, $groupMembers, 86400 );
+
+		return $groupMembers;
+	}
+
+	private static function buildUserGroupMembersCacheKey( array $groups ) {
+		return wfMemcKey( 'user-group-members', implode( ':', $groups ) );
 	}
 
 	/**
 	 * @param \DatabaseBase $dbr
 	 * @param array $groups
-	 * @return int[] array of user IDs
+	 * @return array map of user IDs to user groups
 	 */
 	private function loadUsersInGroup( \DatabaseBase $dbr, array $groups ) {
-		return $dbr->selectFieldValues( 'user_groups', 'ug_user', [ 'ug_group' => $groups ] ) ?: [];
+		$res = $dbr->select( 'user_groups', [ 'ug_user', 'ug_group' ], [ 'ug_group' => $groups ], __METHOD__ );
+
+		$userMapping = [];
+
+		foreach ( $res as $row ) {
+			$userMapping[$row->ug_user] = $userMapping[$row->ug_user] ?? [];
+			$userMapping[$row->ug_user][] = $row->ug_group;
+		}
+
+		return $userMapping;
 	}
 
 	/**
@@ -348,6 +382,10 @@ class PermissionsServiceImpl implements PermissionsService {
 			$userToChange->invalidateCache(); // it calls $this->invalidateCache( $userToChange ); internally
 		}
 
+		// SUS-3109: Purge user group members cache
+		global $wgMemc;
+		$wgMemc->delete( self::buildUserGroupMembersCacheKey( $groupList ) );
+
 		return $result;
 	}
 
@@ -403,6 +441,11 @@ class PermissionsServiceImpl implements PermissionsService {
 		} finally {
 			$userToChange->invalidateCache(); // it calls $this->invalidateCache( $userToChange );
 		}
+
+		// SUS-3109: Purge user group members cache
+		global $wgMemc;
+		$wgMemc->delete( self::buildUserGroupMembersCacheKey( $groupList ) );
+
 		return $result;
 	}
 
