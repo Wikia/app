@@ -37,7 +37,7 @@ class MigrateWikiWordmarks extends Maintenance {
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 		$this->addOption( 'keyName', 'Key in WikiFactory variable which should be migrated to https', true, true, 'k' );
-		$this->addOption( 'reason', 'Reason to provide when setting a variable', false, true );
+		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
 	}
 
 	public function execute() {
@@ -45,7 +45,7 @@ class MigrateWikiWordmarks extends Maintenance {
 		$this->dryRun  = $this->hasOption( 'dry-run' );
 		$this->verbose = $this->hasOption( 'verbose' );
 		$this->keyName = $this->getOption( 'keyName', '' );
-		$reason        = $this->getOption( 'reason' );
+		$fileName = $this->getOption( 'file', false );
 
 		if ( empty( $this->keyName ) ) {
 			$this->error( "Error: Empty key name." . PHP_EOL );
@@ -65,12 +65,25 @@ class MigrateWikiWordmarks extends Maintenance {
 			return false;
 		}
 
+		$fh = false;
+		if ( $fileName ) {
+			$fh = fopen( $fileName, "a" );
+			if ( !$fh ) {
+				$this->error( "Could not open file '$fileName' for write!'" . PHP_EOL );
+				return false;
+			}
+		}
+
 		$settings = $themeSettings->getSettings();
 
-		$keyValue = $settings[$this->keyName];
+		$oldValue = $keyValue = $settings[$this->keyName];
 
 		if ( empty( $keyValue ) ) {
 			$this->output( "Key is empty - skipping" . PHP_EOL );
+
+			if ( $fh ) {
+				fclose( $fh );
+			}
 			return false;
 		}
 
@@ -78,6 +91,10 @@ class MigrateWikiWordmarks extends Maintenance {
 
 		if ( strpos( $keyValue,"http://" ) !== 0 ) {
 			$this->output( "Value doesn't start with 'http://' " . $keyValue .  " - skipping " . PHP_EOL );
+
+			if ( $fh ) {
+				fclose( $fh );
+			}
 			return false;
 		}
 
@@ -86,11 +103,18 @@ class MigrateWikiWordmarks extends Maintenance {
 
 		if ( $replacements !== 1 ) {
 			$this->output( "Value not changed " . $keyValue . "- skipping" . PHP_EOL );
+
+			if ( $fh ) {
+				fclose( $fh );
+			}
 			return false;
 		}
 
 		$settings[$this->keyName] = $keyValue;
 		$this->debug("Setting " . $this->keyName . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
+		if ( $fh ) {
+			fwrite( $fh, sprintf("%d, \"%s\", \"%s\"\n", $wgCityId, $oldValue, $keyValue));
+		}
 
 		if ( !$this->dryRun ) {
 			$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
@@ -101,8 +125,12 @@ class MigrateWikiWordmarks extends Maintenance {
 				$themeSettings->saveSettings( $settings );
 			} );
 		}
-		$this->output(" ... DONE." . PHP_EOL );
 
+		if ( $fh ) {
+			fclose( $fh );
+		}
+
+		$this->output(" ... DONE." . PHP_EOL );
 	}
 
 	/**
