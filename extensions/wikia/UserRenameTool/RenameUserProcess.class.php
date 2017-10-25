@@ -1,6 +1,7 @@
 <?php
 
 class RenameUserProcess {
+	const EMAIL_CONTROLLER = \Email\Controller\UserNameChangeController::class;
 
 	const RENAME_TAG = 'renamed_to';
 	const PROCESS_TAG = 'rename_in_progress';
@@ -11,25 +12,6 @@ class RenameUserProcess {
 	const LOG_STANDARD = 'standard';
 	const LOG_BATCH_TASK = 'task';
 	const LOG_OUTPUT = 'output';
-
-	// Define what needs changing in core MW tables
-	/*
-	 * Task definition format:
-	 *	 'table' => (string) table name
-	 *   'userid_column' => (string) column name with user ID or null if none
-	 *   'username_column' => (string) column name with user name
-	 *   'conds' => (array) additional conditions for the query
-	 */
-	/**
-	 * Stores the predefined tasks to do for global (wikicities) database.
-	 * Here should be mentioned all core tables not connected to any extension.
-	 *
-	 * @var $mGlobalDefaults array
-	 */
-	static private $mGlobalDefaults = array(
-		// user table is processed separately
-//		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
-	);
 
 	/**
 	 * Stores the predefined tasks to do for every local wiki database.
@@ -572,10 +554,6 @@ class RenameUserProcess {
 
 		$this->invalidateUser( $this->mOldUsername );
 
-		// process global tables
-		$this->addLog( "Initializing update of global shared DB's." );
-		$this->updateGlobal();
-
 		$callParams = array(
 			'requestor_id' => $this->mRequestorId,
 			'requestor_name' => $this->mRequestorName,
@@ -586,39 +564,8 @@ class RenameUserProcess {
 			'phalanx_block_id' => $this->mPhalanxBlockId,
 			'reason' => $this->mReason
 		);
-		$task = ( new UserRenameTask() )
-			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
-		$task->call( 'renameUser', $wikiIDs, $callParams );
-		$this->mUserRenameTaskId = $task->queue();
 
-		return true;
-	}
-
-	/**
-	 * Processes shared database (wikicities) and makes all needed changes
-	 */
-	public function updateGlobal() {
-		// wikicities
-		$this->addLog( "Updating global shared database: wikicities." );
-		$dbw = WikiFactory::db( DB_MASTER );
-		$dbw->begin();
-		$tasks = self::$mGlobalDefaults;
-
-		$hookName = 'UserRename::Global';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ) );
-
-		foreach ( $tasks as $task ) {
-			$this->addLog( "Updating {$task['table']}.{$task['username_column']}." );
-			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
-		}
-
-		$hookName = 'UserRename::AfterGlobal';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ) );
-
-		$dbw->commit();
-		$this->addLog( "Finished updating shared database: wikicities." );
+		return $this->renameUser($callParams);
 	}
 
 	/**
@@ -1077,6 +1024,130 @@ class RenameUserProcess {
 		$o->addLog( "newFromData(): Requestor id={$o->mRequestorId} name={$o->mRequestorName}" );
 
 		return $o;
+	}
+
+
+	/**
+	 * Marshal & execute the RenameUserProcess functions to rename a user
+	 *
+	 * @param array $params
+	 *		requestor_id => ID of the user requesting this rename action
+	 *		requestor_name => Name of the user requesting this rename action
+	 *		rename_user_id => ID of the user to rename
+	 *		rename_old_name => Current username of the user to rename
+	 *		rename_new_name => New username for the user to rename
+	 *		reason => Reason for requesting username change
+	 *		rename_fake_user_id => Repeated rename process special case (TODO: Don't know what this is)
+	 *		phalanx_block_id => Phalanx login block ID
+	 * @return bool
+	 */
+	public function renameUser( array $params ) {
+		$renameIP = !empty( $params['rename_ip'] );
+
+		$process = RenameUserProcess::newFromData( $params );
+		$process->setLogDestination( \RenameUserProcess::LOG_BATCH_TASK, $this );
+		$process->setRequestorUser();
+
+		$noErrors = true;
+
+		// ComSup wants the StaffLogger to keep track of renames...
+		$this->staffLog(
+			'start',
+			$params,
+			\RenameUserLogFormatter::start(
+				$params['requestor_name'],
+				$params['rename_old_name'],
+				$params['rename_new_name'],
+				$params['reason'],
+				[ '' ]
+			)
+		);
+
+		// clean up pre-process setup
+		$process->cleanup();
+
+		$this->notifyUser(
+			\User::newFromId( $params['requestor_id'] ),
+			$params['rename_old_name'],
+			$params['rename_new_name']
+		);
+
+		if ( !$renameIP ) {
+			// mark user as renamed
+			$renamedUser = \User::newFromName( $params['rename_new_name'] );
+			$renamedUser->setGlobalFlag( 'wasRenamed', true );
+			$renamedUser->saveSettings();
+
+			// send e-mail to the user that rename process has finished
+			$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
+		}
+
+		if ( $noErrors ) {
+			$this->staffLog(
+				'finish',
+				$params,
+				\RenameUserLogFormatter::finish(
+					$params['requestor_name'],
+					$params['rename_old_name'],
+					$params['rename_new_name'],
+					$params['reason'],
+					[ ]
+				)
+			);
+		} else {
+			$this->staffLog(
+				'fail',
+				$params,
+				\RenameUserLogFormatter::fail(
+					$params['requestor_name'],
+					$params['rename_old_name'],
+					$params['rename_new_name'],
+					$params['reason'],
+					[ ]
+				)
+			);
+		}
+
+		return $noErrors;
+	}
+
+	/**
+	 * Curry the StaffLogger function
+	 *
+	 * @param string $action Which action to log ('start', 'complete', 'fail', 'log')
+	 * @param array $params The params given to `#renameUser`
+	 * @param string $text The text to log
+	 */
+	protected function staffLog( $action, array $params, $text ) {
+		\StaffLogger::log(
+			'renameuser',
+			$action,
+			$params['requestor_id'],
+			$params['requestor_name'],
+			$params['rename_user_id'],
+			$params['rename_new_name'],
+			$text
+		);
+	}
+
+	/**
+	 * Send an email to a user notifying them that a rename action completed
+	 *
+	 * @param User $user
+	 * @param string $oldUsername
+	 * @param string $newUsername
+	 */
+	protected function notifyUser( $user, $oldUsername, $newUsername ) {
+		if ( $user->getEmail() != null ) {
+			F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', [
+				'targetUser' => $user,
+				'oldUserName' => $oldUsername,
+				'newUserName' => $newUsername
+			] );
+			$this->addLog( "rename user with email notification ({$oldUsername} => {$newUsername}), email: {$user->getEmail()}");
+		} else {
+			$this->addWarning( "no email address set for user ({$oldUsername} => {$newUsername})");
+		}
 	}
 
 

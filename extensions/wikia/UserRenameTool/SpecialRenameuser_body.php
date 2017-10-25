@@ -33,11 +33,7 @@ class SpecialRenameuser extends SpecialPage {
 		$this->checkPermissions();
 
 		$out = $this->getOutput();
-		$this->getOutput()->addScript(
-			Html::linkedScript(
-				AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' )
-			)
-		);
+		$this->addJSFiles();
 
 		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$out->readOnlyPage();
@@ -46,8 +42,7 @@ class SpecialRenameuser extends SpecialPage {
 
 		// Get the request data
 		$request = $this->getRequest();
-		// TODO: in new version of userRenameTool we'll want to have here simply current user (SUS-2958)
-		$oldUsername = $request->getText( 'oldusername', $par );
+		$oldUsername = $this->getUser()->getName();
 		$newUsername = $request->getText( 'newusername' );
 		$reason = $request->getText( 'reason' );
 		$token = $this->getUser()->getEditToken();
@@ -61,8 +56,8 @@ class SpecialRenameuser extends SpecialPage {
 		$errors = [];
 		$info = [];
 
-		if ( $this->validRenameRequest() ) {
-			$process = new RenameUserProcess( $oldUsername, $newUsername, $confirmAction, $reason );
+		if ( $this->validRenameRequest( $request ) ) {
+			$process = new RenameUserProcess( $this->getUser()->getName(), $newUsername, $confirmAction, $reason );
 			$status = $process->run();
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
@@ -75,16 +70,8 @@ class SpecialRenameuser extends SpecialPage {
 
 		// note: errors and info beyond this point are non-blocking
 
-		if ( !empty( $oldUsername ) ) {
-			$oldUser = User::newFromName( $oldUsername );
-			if ( $oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
-				$info[] = $this->msg( 'userrenametool-requested-rename', $oldUsername )->escaped();
-			} else {
-				$errors[] = $this->msg( 'userrenametool-did-not-request-rename', $oldUsername )->escaped();
-			}
-			if ( $oldUser->getGlobalFlag( 'wasRenamed', 0 ) ) {
-				$errors[] = $this->msg( 'userrenametool-previously-renamed', $oldUsername )->escaped();
-			}
+		if ( $this->getUser()->getGlobalFlag( 'wasRenamed', 0 ) ) {
+			$errors[] = $this->msg( 'userrenametool-error-alreadyrenamed' );
 		}
 
 		$template = new EasyTemplate( __DIR__ . '/templates/' );
@@ -112,9 +99,7 @@ class SpecialRenameuser extends SpecialPage {
 		return;
 	}
 
-	private function validRenameRequest() {
-		$request = $this->getRequest();
-
+	private function validRenameRequest( WebRequest $request ) {
 		if ( !$request->wasPosted() ) {
 			return false;
 		}
@@ -124,6 +109,19 @@ class SpecialRenameuser extends SpecialPage {
 			return false;
 		}
 
+		if ( !$this->isUsernameRepeatedCorrectly( $request ) ) {
+			return false;
+		}
+
 		return $this->getUser()->matchEditToken( $token );
+	}
+
+	private function isUsernameRepeatedCorrectly( WebRequest $request ): bool {
+		return $request->getText( 'newusername' ) === $request->getText( 'newusernamerepeat' );
+	}
+
+	private function addJSFiles() {
+		$this->getOutput()->addScript( Html::linkedScript( AssetsManager::getInstance()
+			->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' ) ) );
 	}
 }
