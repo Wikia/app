@@ -51,6 +51,11 @@ class OracleUpdater extends DatabaseUpdater {
 			array( 'doPageRestrictionsPKUKFix' ),
 			array( 'modifyField', 'user_former_groups', 'ufg_group', 'patch-ufg_group-length-increase.sql' ),
 
+			// 1.24 - SUS-2561
+			array( 'dropTable', 'hitcounter' ),
+			array( 'dropField', 'site_stats', 'ss_total_views', 'patch-drop-ss_total_views.sql' ),
+			array( 'dropField', 'page', 'page_counter', 'patch-drop-page_counter.sql' ),
+
 			// KEEP THIS AT THE BOTTOM!!
 			array( 'doRebuildDuplicateFunction' ),
 
@@ -123,7 +128,6 @@ class OracleUpdater extends DatabaseUpdater {
 			'page_id' => 0,
 			'page_namespace' => 0,
 			'page_title' => ' ',
-			'page_counter' => 0,
 			'page_is_redirect' => 0,
 			'page_is_new' => 0,
 			'page_random' => 0,

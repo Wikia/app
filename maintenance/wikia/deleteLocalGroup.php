@@ -21,7 +21,7 @@ class DeleteLocalGroupMaintenance extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgDBname, $wgDBCluster;
+		global $wgDBname, $wgDBcluster;
 
 		$group = $this->getOption( "group" );
 		$delete = $this->getOption( "delete", false );
@@ -31,7 +31,7 @@ class DeleteLocalGroupMaintenance extends Maintenance {
 
 		$then = microtime( true );
 		if ( !$delete ) {
-			$this->output( "Getting entries count for group on {$wgDBname} ({$wgDBCluster})\n" );
+			$this->output( "Getting entries count for group on {$wgDBname} ({$wgDBcluster})\n" );
 			$dbw = $this->getDB( DB_SLAVE );
 
 			$count = $dbw->selectField(
@@ -43,7 +43,7 @@ class DeleteLocalGroupMaintenance extends Maintenance {
 
 			$this->output( "Row count: " . $count . "\n" );
 		} else {
-			$this->output( "Deleting group on {$wgDBname} ({$wgDBCluster})\n" );
+			$this->output( "Deleting group on {$wgDBname} ({$wgDBcluster})\n" );
 			$dbw = $this->getDB( DB_MASTER );
 			$dbw->begin();
 			$dbw->delete(
@@ -56,7 +56,7 @@ class DeleteLocalGroupMaintenance extends Maintenance {
 		$took = microtime( true ) - $then;
 
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'cluster' => $wgDBCluster,
+			'cluster' => $wgDBcluster,
 			'took' => round( $took, 6 ),
 		] );
 

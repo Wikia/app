@@ -33,6 +33,8 @@ class AdminDashboardController extends WikiaController {
 		$this->adminDashboardUrl = $this->wg->Title->getFullURL( [ 'tab' => $this->tab ] );
 		$this->adminDashboardUrlGeneral = $this->wg->Title->getFullURL( [ 'tab' => 'general' ] );
 		$this->adminDashboardUrlAdvanced = $this->wg->Title->getFullURL( [ 'tab' => 'advanced' ] );
+
+		$this->app->wg->SuppressPageHeader = true;
 	}
 
 	/**

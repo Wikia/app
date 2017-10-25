@@ -26,7 +26,7 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 
 		$variables = [];
 
-		wfRunHooks( 'InstantGlobalsGetVariables', [&$variables] );
+		Hooks::run( 'InstantGlobalsGetVariables', [&$variables] );
 
 		foreach ( $variables as $name ) {
 			// Use the value on community but override with the $wgInstantGlobalsOverride

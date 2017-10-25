@@ -49,7 +49,7 @@ function GetLinksArrayFromMessage( $messagename ) { // feel free to suggest bett
 					$text = $line[1];
 				if ( wfEmptyMsg( $line[0], $link ) )
 					$link = $line[0];
-					if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+				if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 					$href = $link;
 				} else {
 					$title = Title::newFromText( $link );
@@ -104,31 +104,20 @@ function print_pre( $param, $return = 0 )
  *
  * @author Inez Korczyński <inez@wikia-inc.com>
  *
- * @param String $url -- old url
- * @param String $timestamp -- last change timestamp
+ * @param string $url -- old url
+ * @param string|false $timestamp -- last change timestamp
  *
- * @return String -- new url
+ * @return string -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
-
-	// Override image server location for Wikia development environment
-	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
-	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
-	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
-	if ( $overrideServer ) {
-		$url = preg_replace( "/\\/\\/(.*?)wikia-dev\\.com\\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
-	}
+	global $wgWikiaNocookieDomain, $wgMedusaHostPrefix;
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
-	if ( substr( strtolower( $url ), -4 ) != '.ogg' && isset( $wg->ImagesServers ) && is_int( $wg->ImagesServers ) ) {
-		if ( strlen( $url ) > 7 && substr( $url, 0, 7 ) == 'http://' ) {
-			$hash = sha1( $url );
-			$inthash = ord ( $hash );
-
-			$serverNo = $inthash % ( $wg->ImagesServers -1 );
-			$serverNo++;
-
+	if ( substr( strtolower( $url ), -4 ) != '.ogg' ) {
+		$url = str_replace( 'http://', 'https://',
+			str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $url ) );
+		if ( strlen( $url ) > 8 && substr ( $url, 0, 8 ) == "https://" ) {
 			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
 			if ( $timestamp == "" ) {
 				$matches = array();
@@ -146,53 +135,11 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
-			if ( $overrideServer ) {
-				// Dev boxes
-				// TODO: support domains sharding on devboxes
-				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->DevBoxImageServerOverride}/%s", $cb ), $url );
-			} else {
-				// Production
-				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->ImagesDomainSharding}/%s", $serverNo, $cb ), $url );
-			}
+			// Production
+			$nocookieDomainEscaped = preg_quote($wgWikiaNocookieDomain);
+			$url = preg_replace( "#https://images.wikia.(?:com|{$nocookieDomainEscaped})/#", sprintf( "https://images.{$wgWikiaNocookieDomain}/%s", $cb ), $url );
 		}
-	} else if ( $overrideServer ) {
-		$url = str_replace( 'http://images.wikia.com/', "http://{$wg->DevBoxImageServerOverride}/", $url );
 	}
-
-	return $url;
-}
-
-/**
- * Returns a link to the same asset after applying domain sharding
- *
- * @see wfReplaceImageServer
- * @author Władysław Bodzek
- * @param $url string URL to an asset
- * @return string URL after applying domain sharding
- */
-function wfReplaceAssetServer( $url ) {
-	global $wgImagesServers, $wgDevelEnvironment;
-
-	$matches = array();
-
-	if ( preg_match( "#^(?<a>(https?:)?//(slot[0-9]+\\.)?images)(?<b>\\.wikia\\.nocookie\\.net/.*)\$#", $url, $matches ) ) {
-		$hash = sha1( $url );
-		$inthash = ord( $hash );
-
-		$serverNo = $inthash % ( $wgImagesServers -1 );
-		$serverNo++;
-
-		$url = $matches['a'] . ( $serverNo ) . $matches['b'];
-	} elseif ( !empty( $wgDevelEnvironment ) && preg_match( '/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.com\/(.*))$/', $url, $matches ) ) {
-		$hash = sha1( $url );
-		$inthash = ord( $hash );
-
-		$serverNo = $inthash % ( $wgImagesServers -1 );
-		$serverNo++;
-
-		$url = "{$matches[1]}i{$serverNo}.{$matches[3]}";
-	}
-
 	return $url;
 }
 
@@ -658,26 +605,6 @@ function isMsgEmpty( $key ) {
 }
 
 /**
- * Get a list of language names available for wiki request
- * (possibly filter some)
- *
- * @author nef@wikia-inc.com
- * @return array
- *
- * @see Language::getLanguageNames()
- * @see RT#11870
- */
-function wfGetFixedLanguageNames() {
-	$languages = Language::getLanguageNames();
-
-	$filter_languages = explode( ',', wfMsgForContent( 'requestwiki-filter-language' ) );
-	foreach ( $filter_languages as $key ) {
-		unset( $languages[$key] );
-	}
-	return $languages;
-}
-
-/**
  * @brief: Get a shared cache key
  * @details: this function is used for creating keys for information that
  * 	should be shared among wikis. Function uses func_get_arrays
@@ -824,7 +751,7 @@ function wfMsgHTMLwithLanguage( $key, $lang, $options = array(), $params = array
  */
 function wfMsgHTMLwithLanguageAndAlternative( $key, $keyAlternative, $lang, $options = array(), $params = array(), $wantHTML = true ) {
 	// inserted here for external i18n add-on, adjust params if needed
-	wfRunHooks( 'MsgHTMLwithLanguageAndAlternativeBefore' );
+	Hooks::run( 'MsgHTMLwithLanguageAndAlternativeBefore' );
 
 	list ( $msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback ) = wfMsgHTMLwithLanguage( $key, $lang, $options, $params, $wantHTML );
 	list ( $msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback ) = wfMsgHTMLwithLanguage( $keyAlternative, $lang, $options, $params, $wantHTML );
@@ -1061,9 +988,9 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
  * @author uberfuzzy
  * @return string
  */
-function wfGenerateUnsubToken( $email, $timestamp ) {
+function wfGenerateUnsubToken( $email ) {
 	global $wgUnsubscribeSalt;
-	$token = sha1( $timestamp . $email . $wgUnsubscribeSalt );
+	$token = sha1( $email . $wgUnsubscribeSalt );
 	return $token;
 }
 
@@ -1480,7 +1407,7 @@ function wfGetNamespaces() {
 	global $wgContLang;
 
 	$namespaces = $wgContLang->getFormattedNamespaces();
-	wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
+	Hooks::run( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
 
 	return $namespaces;
 }

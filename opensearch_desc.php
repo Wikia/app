@@ -76,7 +76,7 @@ if( $wgEnableAPI ) {
 
 // Allow hooks to override the suggestion URL settings in a more
 // general way than overriding the whole search engine...
-wfRunHooks( 'OpenSearchUrls', array( &$urls ) );
+Hooks::run( 'OpenSearchUrls', array( &$urls ) );
 
 foreach( $urls as $attribs ) {
 	print Xml::element( 'Url', $attribs );

@@ -34,7 +34,7 @@ class UserPasswordTest extends WikiaBaseTest {
 	private function setupAndInjectServiceMocks() {
 		$this->heliosClientMock = $this->getMock( HeliosClient::class,
 			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken',
-				'setPassword', 'validatePassword', 'deletePassword' ] );
+				'setPassword', 'validatePassword', 'deletePassword', 'requestPasswordReset' ] );
 
 		$container = ( new InjectorBuilder() )
 			->bind( HeliosClient::class )->to( $this->heliosClientMock )

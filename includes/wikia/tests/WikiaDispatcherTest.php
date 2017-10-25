@@ -17,6 +17,9 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @expectedException ControllerNotFoundException
+	 */
 	public function testDispatchUnknownOrEmptyController() {
 		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
 		$app->expects( $this->any() )
@@ -36,7 +39,6 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$this->assertEquals(WikiaResponse::RESPONSE_CODE_NOT_FOUND, $response->getCode());
 		
 		$request->setInternal(true);
-		$this->setExpectedException('ControllerNotFoundException');
 		$response = $this->object->dispatch( $app, $request );
 	}
 

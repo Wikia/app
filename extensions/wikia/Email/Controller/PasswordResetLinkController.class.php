@@ -9,7 +9,8 @@ use Email\Fatal;
  * Class PasswordResetLinkController
  *
  * @requestParam int targetUserId : The user id to send the password reset link email to
- * @requestParam string token : The token by which a user will be identified
+ * @requestParam string reset_token : The token by which a user will be identified
+ * @requestParam string return_url : The url user will be redirected to after setting a password
  *
  * @package      Email\Controller
  */
@@ -19,9 +20,7 @@ class PasswordResetLinkController extends EmailController {
 	protected $returnUrl;
 	const MAX_LINK_LENGTH = 40;
 
-	// TODO: use real page address, also differentiate between dev and prod envs.
-	const URL_NO_RETURN = 'http://dummy-address/?user=%s&token=%s';
-	const URL_WITH_RETURN = 'http://dummy-address/?user=%s&token=%s&return_url=%s';
+	const RESET_URL = 'https://www.wikia.com/reset-password';
 
 	/**
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
@@ -61,7 +60,7 @@ class PasswordResetLinkController extends EmailController {
 			'passwordIntro'    => $this->getIntro(),
 			'resetLink'        => $url,
 			'resetLinkCaption' => $this->getResetLinkCaption( $url ),
-			'instructions'     => $this->getMessage( 'emailext-password-unrequested' )->text(),
+			'instructions'     => $this->getInstructions(),
 			'questions'        => $this->getMessage( 'emailext-password-questions' )->parse(),
 			'signature'        => $this->getMessage( 'emailext-password-signature' )->text(),
 		] );
@@ -69,17 +68,16 @@ class PasswordResetLinkController extends EmailController {
 
 	protected function getResetLink() {
 		$query = [
-			urlencode( $this->getTargetUserName() ),
-			urlencode( $this->token ),
+			'username' => $this->getTargetUserName(),
+			'token' => $this->token,
+			'uselang' => $this->targetLang
 		];
-		$url = self::URL_NO_RETURN;
 
 		if ( !empty( $this->returnUrl ) ) {
-			$query[] = urlencode( $this->returnUrl );
-			$url = self::URL_WITH_RETURN;
+			$query['redirect'] = $this->returnUrl;
 		}
 
-		return vsprintf( $url, $query );
+		return wfAppendQuery( $this->getResetURL(), $query );
 	}
 
 	protected function getResetLinkCaption( $resetLink ) {
@@ -94,5 +92,24 @@ class PasswordResetLinkController extends EmailController {
 
 	protected function getIntro() {
 		return $this->getMessage( 'emailext-password-reset-link-intro' )->text();
+	}
+
+
+	protected function getInstructions() {
+		return $this->getMessage( 'emailext-password-unrequested' )->text();
+	}
+
+	private function getResetURL() {
+		global $wgDevelEnvironment;
+
+		if ( !empty( $wgDevelEnvironment ) && !empty( $this->returnUrl ) ) {
+			$parts = wfParseUrl( $this->returnUrl );
+			if ( !empty( $parts ) &&
+				preg_match( '/\.wikia-dev\.(com|us|pl)$/', $parts['host'] )
+			) {
+				return "{$parts['scheme']}://{$parts['host']}/reset-password";
+			}
+		}
+		return self::RESET_URL;
 	}
 }

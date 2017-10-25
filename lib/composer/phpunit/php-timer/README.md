@@ -1,36 +1,25 @@
+[![Build Status](https://travis-ci.org/sebastianbergmann/php-timer.svg?branch=master)](https://travis-ci.org/sebastianbergmann/php-timer)
+
 # PHP_Timer
 
 Utility class for timing things, factored out of PHPUnit into a stand-alone component.
 
 ## Installation
 
-You can use the [PEAR Installer](http://pear.php.net/manual/en/guide.users.commandline.cli.php) or [Composer](http://getcomposer.org/) to download and install this package as well as its dependencies.
+You can add this library as a local, per-project dependency to your project using [Composer](https://getcomposer.org/):
 
-### PEAR Installer
+    composer require phpunit/php-timer
 
-The following two commands (which you may have to run as `root`) are all that is required to install this package using the PEAR Installer:
+If you only need this library during development, for instance to run your project's test suite, then you should add it as a development-time dependency:
 
-    pear config-set auto_discover 1
-    pear install pear.phpunit.de/PHP_Timer
+    composer require --dev phpunit/php-timer
 
-### Composer
+## Usage
 
-To add this package as a local, per-project dependency to your project, simply add a dependency on `phpunit/php-timer` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a dependency on PHP_Timer:
-
-    {
-        "require": {
-            "phpunit/php-timer": "*"
-        }
-    }
-
-### Usage
-
-#### Basic Timing
+### Basic Timing
 
 ```php
 PHP_Timer::start();
-
-$timer->start();
 
 // ...
 
@@ -45,7 +34,7 @@ The code above yields the output below:
     double(1.0967254638672E-5)
     0 ms
 
-#### Resource Consumption Since PHP Startup
+### Resource Consumption Since PHP Startup
 
 ```php
 print PHP_Timer::resourceUsage();
@@ -53,4 +42,4 @@ print PHP_Timer::resourceUsage();
 
 The code above yields the output below:
 
-    Time: 0 ms, Memory: 0.50Mb
+    Time: 0 ms, Memory: 0.50MB

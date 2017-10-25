@@ -8,10 +8,6 @@ if (!empty($aRows)) {
 	<?php
 	foreach ($aRows as $pageId => $aRow) {
 		$oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
-		$isVoting = 0;
-		if (isset($aRow['props']) && array_key_exists('voting', $aRow['props'])) {
-			$isVoting = $aRow['props']['voting'];
-		}
 	?>
 		<li class="list">
 		<div class="wk_blogs_link"><a href="<?= $oTitle->getLocalUrl() ?>"><?= BlogTemplateClass::getSubpageText($oTitle) ?></a></div>
@@ -40,11 +36,8 @@ if (!empty($aRows)) {
 		?>
 		<div class="wk_blogs_comments">
 			<ul class="links">
-			<?php $commentTitle = clone $oTitle; $commentTitle->setFragment('#comments'); ?>
+			<?php $commentTitle = clone $oTitle; $commentTitle->setFragment('#WikiaArticleComments'); ?>
 				<li class="blog-comment"><img src="<?= $wgBlankImgUrl ?>" border="0" class="sprite talk" /> <?= $skin->makeLinkObj($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments']))) ?></li>
-				<?php if (!empty($isVoting)) { ?>
-				<li class="wk_star_list"><?= $aRow['votes']?></li>
-				<?php } ?>
 				<li><?= $skin->makeLinkObj($oTitle, wfMsg('blog-readfullpost')) ?></li>
 			</ul>
 		</div>

@@ -41,13 +41,11 @@ function wfContentFeedsInit() {
 	$wgAutoloadClasses['ContentFeeds'] = $dir . 'ContentFeeds.class.php';
 }
 
-	/**
-	 * ajax calls
-	 */
-	//$wgAjaxExportList[] = '';
-
-function wfContentFeedsInitParserHooks( Parser &$parser ) {
-
+/**
+ * @param Parser $parser
+ * @return bool
+ */
+function wfContentFeedsInitParserHooks( Parser $parser ): bool {
 	$parser->setHook( 'mostvisited', 'ContentFeeds::mostVisitedParserHook' );
 	$parser->setHook( 'wikitweets', 'ContentFeeds::wikiTweetsParserHook' );
 	$parser->setHook( 'twitteruser', 'ContentFeeds::userTweetsParserHook' );
@@ -55,8 +53,6 @@ function wfContentFeedsInitParserHooks( Parser &$parser ) {
 	$parser->setHook( 'topuserslist', 'ContentFeeds::topUsersListParserHook' );
 	$parser->setHook( 'highestrated', 'ContentFeeds::highestRatedParserHook' );
 	$parser->setHook( 'recentimages', 'ContentFeeds::dummyRecentImagesParserHook' );
-	// TODO: turned off until it's ready
-	//$parser->setHook( 'firstfewarticles', 'ContentFeeds::firstFewArticlesParserHook' );
 
 	return true;
 }

@@ -46,8 +46,6 @@ class InfoAction extends FormlessAction {
 	}
 
 	public function onView() {
-		global $wgDisableCounters;
-
 		$title = $this->getTitle()->getSubjectPage();
 
 		$pageInfo = self::pageCountInfo( $title );
@@ -79,21 +77,6 @@ class InfoAction extends FormlessAction {
 				Html::rawElement( 'tr', array(),
 					Html::element( 'td', array(), $this->msg( 'pageinfo-watchers' )->text() ) .
 					Html::element( 'td', array( 'colspan' => 2 ), $this->getLanguage()->formatNum( $pageInfo['watchers'] ) )
-				)
-			).
-			( $wgDisableCounters ? '' :
-				Html::rawElement( 'tr', array(),
-					Html::element( 'th', array( 'colspan' => 3 ), $this->msg( 'pageinfo-header-views' )->text() )
-				) .
-				Html::rawElement( 'tr', array(),
-					Html::element( 'td', array(), $this->msg( 'pageinfo-views' )->text() ) .
-					Html::element( 'td', array(), $this->getLanguage()->formatNum( $pageInfo['views'] ) ) .
-					Html::element( 'td', array(), $this->getLanguage()->formatNum( $talkInfo['views'] ) )
-				) .
-				Html::rawElement( 'tr', array(),
-					Html::element( 'td', array(), $this->msg( 'pageinfo-viewsperedit' )->text() ) .
-					Html::element( 'td', array(), $this->getLanguage()->formatNum( sprintf( '%.2f', $pageInfo['edits'] ? $pageInfo['views'] / $pageInfo['edits'] : 0 ) ) ) .
-					Html::element( 'td', array(), $this->getLanguage()->formatNum( sprintf( '%.2f', $talkInfo['edits'] ? $talkInfo['views'] / $talkInfo['edits'] : 0 ) ) )
 				)
 			)
 		);
@@ -134,14 +117,7 @@ class InfoAction extends FormlessAction {
 			__METHOD__
 		);
 
-		$views = (int)$dbr->selectField(
-			'page',
-			'page_counter',
-			array( 'page_id' => $id ),
-			__METHOD__
-		);
-
 		return array( 'watchers' => $watchers, 'edits' => $edits,
-			'authors' => $authors, 'views' => $views );
+			'authors' => $authors );
 	}
 }

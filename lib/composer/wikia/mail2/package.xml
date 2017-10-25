@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Mail2</name>
+ <channel>pear.php.net</channel>
+ <summary>Class that provides multiple interfaces for sending emails</summary>
+ <description>PEAR&apos;s Mail package defines an interface for implementing mailers under the PEAR hierarchy.  It also provides supporting functions useful to multiple mailer backends.  Currently supported backends include: PHP&apos;s native mail() function, sendmail, and SMTP.  This package also provides a RFC822 email address list validation utility class.</description>
+ <lead>
+  <name>Daniel O'Coonnor</name>
+  <user>doconnor</user>
+  <email>clockwerx@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Chuck Hagenbuch</name>
+  <user>chagenbu</user>
+  <email>chuck@horde.org</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Richard Heyes</name>
+  <user>richard</user>
+  <email>richard@phpguru.org</email>
+  <active>yes</active>
+ </developer>
+ <developer>
+  <name>Aleksander Machniak</name>
+  <user>alec</user>
+  <email>alec@alec.pl</email>
+  <active>yes</active>
+ </developer>
+ <date>2015-12-08</date>
+ <time>20:22:28</time>
+ <version>
+  <release>0.1.1</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+ <notes>
+  QA release
+  - Fix bug #20439: Incorrect include path for RFC822
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" name="Mail2/Exception.php" role="php" />
+   <file baseinstalldir="/" name="Mail2/mail.php" role="php" />
+   <file baseinstalldir="/" name="Mail2/mock.php" role="php" />
+   <file baseinstalldir="/" name="Mail2/null.php" role="php" />
+   <file baseinstalldir="/" name="Mail2/RFC822.php" role="php" />
+   <file baseinstalldir="/" name="Mail2/sendmail.php" role="php" />
+   <file baseinstalldir="/" name="Mail2/smtp.php" role="php" />
+   <file baseinstalldir="/" name="Mail2/smtpmx.php" role="php" />
+   <file baseinstalldir="/" name="tests/9137.phpt" role="test" />
+   <file baseinstalldir="/" name="tests/9137_2.phpt" role="test" />
+   <file baseinstalldir="/" name="tests/13659.phpt" role="test" />
+   <file baseinstalldir="/" name="tests/bug17178.phpt" role="test" />
+   <file baseinstalldir="/" name="tests/bug17317.phpt" role="test" />
+   <file baseinstalldir="/" name="tests/bug20281.phpt" role="test" />
+   <file baseinstalldir="/" name="tests/Makefile" role="test" />
+   <file baseinstalldir="/" name="tests/rfc822.phpt" role="test" />
+   <file baseinstalldir="/" name="tests/smtp_error.phpt" role="test" />
+   <file baseinstalldir="/" name="tests/validateQuotedString.phpt" role="test" />
+   <file baseinstalldir="/" name="Mail2.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.4.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.10.0</min>
+   </pearinstaller>
+  </required>
+  <optional>
+   <package>
+    <name>Net_SMTP2</name>
+    <channel>pear.php.net</channel>
+   </package>
+  </optional>
+ </dependencies>
+ <phprelease />
+ <changelog>
+
+  <release>
+   <version>
+    <release>0.1.1</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2015-12-08</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+    QA release
+    - Fix bug #20439: Incorrect include path for RFC822
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.1.0</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2014-06-04</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Request #17888: Reduce peak memory usage when using the smtp/smtpmx backend [alec]
+
+Fixed Bug #18109: New &quot;pipelining&quot; parameter for SMTP backend never used [alec]
+Fixed Bug #17317: Invalid periods in mailbox not marked as invalid [alec]
+Fixed Bug #17388: Deprecated assigning the return value of new by reference [alec]
+Fixed Bug #17866: Non-static method Mail_RFC822::parseAddressList called statically [alec]
+Fixed Bug #17178: Mail_RFC822::parseAddressList does not accept RFC-valid empty-group syntax [alec]
+   </notes>
+  </release>
+
+ </changelog>
+</package>

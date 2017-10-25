@@ -8,5 +8,4 @@ $wgAutoloadClasses['ArchiveWikiForumHooks'] =  $dir . 'ArchiveWikiForumHooks.cla
 
 // Register Hooks
 $wgHooks['getUserPermissionsErrors'][] = 'ArchiveWikiForumHooks::onGetUserPermissionsErrors';
-$wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'ArchiveWikiForumHooks::onPageHeaderIndexAfterActionButtonPrepared';
 $wgHooks['ArticleViewHeader'][] = 'ArchiveWikiForumHooks::onArticleViewHeader';

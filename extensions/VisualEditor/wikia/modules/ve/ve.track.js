@@ -5,6 +5,7 @@
 /* global mw, require */
 
 require( ['wikia.tracker'], function ( tracker ) {
+	/* jshint -W003 */
 	var actions = tracker.ACTIONS,
 		// These are topics used by MediaWiki, consider them reserved. Each topic should be
 		// assigned to a function which will map the data associated with a topic to a format
@@ -58,9 +59,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 				};
 			},
 			'mwtiming.performance.user.saveComplete': function ( data ) {
-				require(['VisualEditorTourExperimentInit'], function (veTourInit) {
-					veTourInit.trackPublish();
-				});
 				return {
 					action: actions.SUCCESS,
 					label: 'publish',
@@ -235,4 +233,5 @@ require( ['wikia.tracker'], function ( tracker ) {
 	ve.track.nameToLabel = nameToLabel;
 	ve.track.normalizeDuration = normalizeDuration;
 	ve.trackSubscribeAll( track );
+	/* jshint +W003 */
 } );

@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/wikia/PartnerFeed/PartnerFeed extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'partner-feed-desc' => 'Partner Feed extension',
 	'partner-feed-achievements-leaderboard' => 'Wikis achievements leaderboard',
 	'partner-feed-earned-badges' => 'Recently earned badges for a specific Wiki',
@@ -17,16 +16,16 @@ $messages['en'] = [
 	'feed-title-recent-badges' => 'Recent badges',
 	'feed-title-recent-images' => 'Recent photos',
 	'feed-title-leaderboard' => 'Achievements leaderboard',
-	'feed-main-title' => 'Fandom partner feed',
+	'feed-main-title' => 'FANDOM partner feed',
 	'all-blog-posts' => 'all categories',
 	'blog-posts-from-listing' => 'from listing: $1',
 	'feed-title-hot-content' => 'Hot content - $1',
 	'feed-title-blogcomments' => 'Comments to $1',
 	'feed-title-recentchanges' => 'Recent changes',
 	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> Blog post $1 does not exist.',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'partner-feed-desc' => '{{desc}}',
 	'partner-feed-hotcontent' => 'Both terms "Hub" and "verticals" have the same meaning in this context. The meaning is "Portals", i.e. the grouping of wikis by their theme. Examples of portals are "Gaming", "Entertainment", "Education", "Music", etc.',
 	'partner-feed-recent-changes' => '{{Identical|Recent changes}}',
@@ -41,9 +40,9 @@ $messages['qqq'] = [
 Parameters:
 * $1 is a blog post title.',
 	'feed-main-title' => 'Missing documentation',
-];
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'partner-feed-achievements-leaderboard' => 'قائمة متصدري الإنجازات الخاصة بالويكيات',
 	'partner-feed-earned-badges' => 'الإنجازات المتحصل عليها حديثا في ويكي محددة',
 	'partner-feed-recent-blog-posts' => 'مشاركات المدونات المؤخرة مرتبطة بترويج',
@@ -64,15 +63,15 @@ $messages['ar'] = [
 	'feed-title-blogcomments' => 'التعليقات على $1',
 	'feed-title-recentchanges' => 'أحدث التغييرات',
 	'partner-feed-error-no-blogpost-found' => '<b>خطأ:</b> مشاركة المدونة $1 غير موجودة.',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'partner-feed-recent-changes' => 'Последни промени',
 	'all-blog-posts' => 'всички категории',
 	'feed-title-recentchanges' => 'Последни промени',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'partner-feed-earned-badges' => 'Badjoù gounezet nevez zo gant ur Wiki difer',
 	'partner-feed-recent-changes' => 'Kemmoù diwezhañ',
 	'partnerfeed' => 'Keveler gwazh',
@@ -85,16 +84,16 @@ $messages['br'] = [
 	'blog-posts-from-listing' => 'eus ar roll : $1',
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
 	'feed-title-recentchanges' => 'Kemmoù diwezhañ',
-];
+);
 
-$messages['ca'] = [
+$messages['ca'] = array(
 	'partner-feed-desc' => 'Extensió de Partner Feed',
 	'partner-feed-achievements-leaderboard' => 'Taula de líders amb més exits',
 	'partner-feed-earned-badges' => 'Recentment va guanyar insígnies per a un determinat Wiki',
 	'partner-feed-recent-blog-posts' => 'Darreres entrades del bloc relacionades amb la promoció',
-	'partner-feed-latest-images' => 'Galeria de les últimes imatges que s\'han pujat',
+	'partner-feed-latest-images' => "Galeria de les últimes imatges que s'han pujat",
 	'partner-feed-hotcontent' => 'Hub / verticals "Hot Contingut com ordenades per nombre de redactors',
-	'partner-feed-recent-blog-comments' => 'Comentaris recents relacionats amb un bloc l\'especificat .',
+	'partner-feed-recent-blog-comments' => "Comentaris recents relacionats amb un bloc l'especificat .",
 	'partner-feed-recent-changes' => 'Canvis Recents',
 	'partnerfeed' => 'Partner feed',
 	'error-no-article' => 'Error: No hi ha "article" parametre passat',
@@ -108,22 +107,22 @@ $messages['ca'] = [
 	'feed-title-hot-content' => 'Contenido Novedós - $1',
 	'feed-title-blogcomments' => 'Comentaris - $1',
 	'feed-title-recentchanges' => 'Canvis Recents',
-	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> L\'entrada de bloc $1 no existeix.',
-];
+	'partner-feed-error-no-blogpost-found' => "<b>Error:</b> L'entrada de bloc $1 no existeix.",
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'partner-feed-recent-changes' => 'Керла нисдарш',
 	'feed-title-recentchanges' => 'Керла нисдарш',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'partner-feed-recent-changes' => 'Poslední změny',
 	'feed-title-recent-images' => 'Poslední obrázky',
 	'all-blog-posts' => 'všechny kategorie',
 	'feed-title-recentchanges' => 'Poslední změny',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'partner-feed-desc' => 'Partner-Feed-Erweiterung',
 	'partner-feed-achievements-leaderboard' => 'Wiki-Rangliste',
 	'partner-feed-earned-badges' => 'Kürzlich verdiente Abzeichen für ein bestimmtes Wiki',
@@ -138,24 +137,24 @@ $messages['de'] = [
 	'feed-title-recent-badges' => 'Letzte Auszeichnungen',
 	'feed-title-recent-images' => 'Letzte Bilder',
 	'feed-title-leaderboard' => 'Rangliste',
-	'feed-main-title' => 'Fandom Partner-Feed',
+	'feed-main-title' => 'FANDOM Partner-Feed',
 	'all-blog-posts' => 'alle Kategorien',
 	'blog-posts-from-listing' => 'von der Liste: $1',
 	'feed-title-hot-content' => 'Angesagt - $1',
 	'feed-title-blogcomments' => 'Kommentare zu $1',
 	'feed-title-recentchanges' => 'Letzte Änderungen',
 	'partner-feed-error-no-blogpost-found' => '<b>Fehler:</b> Der Blogbeitrag $1 ist nicht vorhanden.',
-];
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'partner-feed-recent-changes' => 'Vurnayışê peyêni',
 	'feed-title-recent-images' => 'Vurnayışê resiman',
 	'all-blog-posts' => 'kategoriy pêro',
 	'feed-title-blogcomments' => 'Vatışê - ($1)',
 	'feed-title-recentchanges' => 'Vurnayışê peyêni',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'partner-feed-desc' => 'Extensión de Partner Feed',
 	'partner-feed-achievements-leaderboard' => 'Tablón de líderes del wiki',
 	'partner-feed-earned-badges' => 'Logros recientemente conseguidos para un wiki específico',
@@ -170,29 +169,29 @@ $messages['es'] = [
 	'feed-title-recent-badges' => 'Logros recientes',
 	'feed-title-recent-images' => 'Imágenes recientes',
 	'feed-title-leaderboard' => 'Tablón de líderes del wiki',
-	'feed-main-title' => 'ModalidadesRSS de Fandom',
+	'feed-main-title' => 'ModalidadesRSS de FANDOM',
 	'all-blog-posts' => 'todas las categorías',
 	'blog-posts-from-listing' => 'de la lista: $1',
 	'feed-title-hot-content' => 'Contenido Novedoso - $1',
 	'feed-title-blogcomments' => 'Comentarios de $1',
 	'feed-title-recentchanges' => 'Cambios recientes',
 	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> La entrada de blog $1 no existe.',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'all-blog-posts' => 'kategoria guztiak',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'partner-feed-recent-changes' => 'تغییرات اخیر',
 	'feed-title-blogposts' => 'پست‌های اخیر وبلاگ',
 	'feed-title-recent-badges' => 'نشانهای اخیر',
 	'feed-title-recent-images' => 'تصاویر اخیر',
 	'feed-title-leaderboard' => 'تابلوی رهبری دستاوردها',
 	'feed-title-recentchanges' => 'تغییرات اخیر',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wikien saavutuksien tilastot',
 	'partner-feed-earned-badges' => 'Äskettäin ansaitut merkit tietyssä wikissä',
 	'partner-feed-recent-blog-posts' => 'Uusimmat promootioon liittyvät blogiartikkelit',
@@ -212,9 +211,11 @@ $messages['fi'] = [
 	'feed-title-blogcomments' => 'Kommentit artikkelista $1',
 	'feed-title-recentchanges' => 'Tuoreet muutokset',
 	'partner-feed-error-no-blogpost-found' => '<b>Virhe:</b> Blogiartikkelia $1 ei ole olemassa.',
-];
+	'partner-feed-desc' => 'Partner Feed extension',
+	'partner-feed-hotcontent' => 'Hub / verticals "Hot Content" as ranked by number of editors',
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'partner-feed-desc' => 'Extension de flux partenaire',
 	'partner-feed-achievements-leaderboard' => 'Tableau des challenges des wikis',
 	'partner-feed-earned-badges' => 'Badges récemment gagnés pour un wiki donné',
@@ -229,16 +230,16 @@ $messages['fr'] = [
 	'feed-title-recent-badges' => 'Badges récents',
 	'feed-title-recent-images' => 'Images récentes',
 	'feed-title-leaderboard' => 'Tableau de bord des réalisations',
-	'feed-main-title' => 'Fil de partenaire de Fandom',
+	'feed-main-title' => 'Fil de partenaire de FANDOM',
 	'all-blog-posts' => 'toutes les catégories',
 	'blog-posts-from-listing' => 'depuis la liste : $1',
 	'feed-title-hot-content' => 'Contenu à l’actualité — $1',
 	'feed-title-blogcomments' => 'Commentaires à $1',
 	'feed-title-recentchanges' => 'Modifications récentes',
 	'partner-feed-error-no-blogpost-found' => '<b>Erreur :</b> Le billet $1 n’existe pas.',
-];
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'partner-feed-achievements-leaderboard' => 'Taboleiro de logros dos wikis',
 	'partner-feed-earned-badges' => 'Insignias gañadas recentemente nun wiki específico',
 	'partner-feed-recent-blog-posts' => 'Entradas de blogue recentes relacionadas cunha promoción',
@@ -259,17 +260,17 @@ $messages['gl'] = [
 	'feed-title-blogcomments' => 'Comentario sobre $1',
 	'feed-title-recentchanges' => 'Cambios recentes',
 	'partner-feed-error-no-blogpost-found' => '<b>Erro:</b> A entrada de blogue "$1" non existe.',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'feed-title-blogposts' => 'Legújabb blogbejegyzések',
 	'feed-title-recent-badges' => 'Legújabb jelvények',
 	'feed-title-recent-images' => 'Legújabb képek',
 	'all-blog-posts' => 'összes kategória',
 	'feed-title-recentchanges' => 'Friss változtatások',
-];
+);
 
-$messages['ia'] = [
+$messages['ia'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classamento de successos pro wikis',
 	'partner-feed-earned-badges' => 'Insignias recentemente ganiate pro un wiki specific',
 	'partner-feed-recent-blog-posts' => 'Recente articulos de blog a proposito de un promotion',
@@ -289,27 +290,61 @@ $messages['ia'] = [
 	'feed-title-hot-content' => 'Contento popular - $1',
 	'feed-title-blogcomments' => 'Commentos a $1',
 	'feed-title-recentchanges' => 'Modificationes recente',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
-	'feed-main-title' => 'Feed partner Fandom',
+	'feed-main-title' => 'Feed partner FANDOM',
 	'blog-posts-from-listing' => 'dalla lista: $1',
-];
+	'partner-feed-desc' => 'Partner Feed extension',
+	'partner-feed-earned-badges' => 'Recently earned badges for a specific Wiki',
+	'partner-feed-recent-blog-posts' => 'Recent blog posts related to a promotion',
+	'partner-feed-latest-images' => 'Gallery of the latest images that have been uploaded',
+	'partner-feed-hotcontent' => 'Hub / verticals "Hot Content" as ranked by number of editors',
+	'partner-feed-recent-blog-comments' => 'Recent comments related to specified blog post.',
+	'partner-feed-recent-changes' => 'Recent changes',
+	'partnerfeed' => 'Partner feed',
+	'error-no-article' => 'Error: No "article" param passed',
+	'feed-title-blogposts' => 'Recent blog posts',
+	'feed-title-recent-badges' => 'Recent badges',
+	'feed-title-recent-images' => 'Recent photos',
+	'feed-title-leaderboard' => 'Achievements leaderboard',
+	'all-blog-posts' => 'all categories',
+	'feed-title-hot-content' => 'Hot content - $1',
+	'feed-title-blogcomments' => 'Comments to $1',
+	'feed-title-recentchanges' => 'Recent changes',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> Blog post $1 does not exist.',
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'partner-feed-recent-changes' => '最近の変更',
 	'all-blog-posts' => 'すべてのカテゴリ',
 	'feed-title-recentchanges' => '最近の更新',
 	'partnerfeed' => 'パートナーフィード',
-	'feed-main-title' => 'Fandomパートナーフィード',
-];
+	'feed-main-title' => 'FANDOMパートナーフィード',
+	'partner-feed-desc' => 'Partner Feed extension',
+	'partner-feed-achievements-leaderboard' => 'Wikis achievements leaderboard',
+	'partner-feed-earned-badges' => 'Recently earned badges for a specific Wiki',
+	'partner-feed-recent-blog-posts' => 'Recent blog posts related to a promotion',
+	'partner-feed-latest-images' => 'Gallery of the latest images that have been uploaded',
+	'partner-feed-hotcontent' => 'Hub / verticals "Hot Content" as ranked by number of editors',
+	'partner-feed-recent-blog-comments' => 'Recent comments related to specified blog post.',
+	'error-no-article' => 'Error: No "article" param passed',
+	'feed-title-blogposts' => 'Recent blog posts',
+	'feed-title-recent-badges' => 'Recent badges',
+	'feed-title-recent-images' => 'Recent photos',
+	'feed-title-leaderboard' => 'Achievements leaderboard',
+	'blog-posts-from-listing' => 'from listing: $1',
+	'feed-title-hot-content' => 'Hot content - $1',
+	'feed-title-blogcomments' => 'Comments to $1',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> Blog post $1 does not exist.',
+);
 
-$messages['kn'] = [
+$messages['kn'] = array(
 	'partner-feed-recent-changes' => 'ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳು',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'partner-feed-desc' => '파트너 피드 확장 기능',
 	'partner-feed-achievements-leaderboard' => '위키 도전 과제 리더보드',
 	'partner-feed-earned-badges' => '최근 특정 위키에서 얻은 배지',
@@ -325,23 +360,26 @@ $messages['ko'] = [
 	'feed-main-title' => '위키아 파트너 피드',
 	'feed-title-recentchanges' => '최근 바뀜',
 	'blog-posts-from-listing' => '속한 글 목록: $1',
-	'feed-title-blogcomments' => '\'$1\' 블로그 글에 대한 댓글',
+	'feed-title-blogcomments' => "'$1' 블로그 글에 대한 댓글",
 	'feed-title-hot-content' => '인기 있는 글 - $1',
 	'partner-feed-recent-changes' => '최근 바뀜',
-];
+	'error-no-article' => 'Error: No "article" param passed',
+	'all-blog-posts' => 'all categories',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> Blog post $1 does not exist.',
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'partner-feed-recent-changes' => 'Guherandinên dawî',
 	'feed-title-recent-images' => 'Wêneyên dawî',
 	'feed-title-recentchanges' => 'Guherandinên dawî',
-];
+);
 
-$messages['la'] = [
+$messages['la'] = array(
 	'partner-feed-recent-changes' => 'Nūper mūtāta',
 	'feed-title-recentchanges' => 'Nūper mūtāta',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'partner-feed-latest-images' => 'Galerie vun de rezente Biller déi eropgeluede goufen',
 	'partner-feed-recent-changes' => 'Rezent Ännerungen',
 	'feed-title-recent-badges' => 'Rezent Badger',
@@ -349,15 +387,39 @@ $messages['lb'] = [
 	'all-blog-posts' => 'all Kategorien',
 	'feed-title-blogcomments' => 'Bemierkungen iwwer $1',
 	'feed-title-recentchanges' => 'Rezent Ännerungen',
-];
+);
 
-$messages['lrc'] = [
+$messages['lol'] = array(
+	'partner-feed-desc' => 'crwdns65479:0crwdne65479:0',
+	'partner-feed-achievements-leaderboard' => 'crwdns65480:0crwdne65480:0',
+	'partner-feed-earned-badges' => 'crwdns65481:0crwdne65481:0',
+	'partner-feed-recent-blog-posts' => 'crwdns65482:0crwdne65482:0',
+	'partner-feed-latest-images' => 'crwdns65483:0crwdne65483:0',
+	'partner-feed-hotcontent' => 'crwdns65484:0crwdne65484:0',
+	'partner-feed-recent-blog-comments' => 'crwdns65485:0crwdne65485:0',
+	'partner-feed-recent-changes' => 'crwdns65486:0crwdne65486:0',
+	'partnerfeed' => 'crwdns65487:0crwdne65487:0',
+	'error-no-article' => 'crwdns65488:0crwdne65488:0',
+	'feed-title-blogposts' => 'crwdns65489:0crwdne65489:0',
+	'feed-title-recent-badges' => 'crwdns65490:0crwdne65490:0',
+	'feed-title-recent-images' => 'crwdns65491:0crwdne65491:0',
+	'feed-title-leaderboard' => 'crwdns65492:0crwdne65492:0',
+	'feed-main-title' => 'crwdns66345:0crwdne66345:0',
+	'all-blog-posts' => 'crwdns65494:0crwdne65494:0',
+	'blog-posts-from-listing' => 'crwdns65495:0crwdne65495:0',
+	'feed-title-hot-content' => 'crwdns65496:0crwdne65496:0',
+	'feed-title-blogcomments' => 'crwdns65497:0crwdne65497:0',
+	'feed-title-recentchanges' => 'crwdns65498:0crwdne65498:0',
+	'partner-feed-error-no-blogpost-found' => 'crwdns65499:0crwdne65499:0',
+);
+
+$messages['lrc'] = array(
 	'partner-feed-recent-changes' => 'آلشتیا تازه باو',
 	'feed-title-recent-images' => 'عسکیا تازه باو',
 	'feed-title-recentchanges' => 'آلشتیا تازه باو',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'partner-feed-achievements-leaderboard' => 'Предводници',
 	'partner-feed-earned-badges' => 'Неодамна добиени значки за извесно вики',
 	'partner-feed-recent-blog-posts' => 'Неодамнешни блог-записи поврзани со унапредување',
@@ -378,15 +440,15 @@ $messages['mk'] = [
 	'feed-title-blogcomments' => 'Коментари на $1',
 	'feed-title-recentchanges' => 'Скорешни промени',
 	'partner-feed-error-no-blogpost-found' => '<b>Грешка:</b> Блоговскиот запис $1 не постои.',
-];
+);
 
-$messages['ml'] = [
+$messages['ml'] = array(
 	'partner-feed-recent-changes' => 'സമീപകാല മാറ്റങ്ങൾ',
 	'feed-title-recent-images' => 'സമീപകാല ചിത്രങ്ങൾ',
 	'all-blog-posts' => 'എല്ലാ വർഗ്ഗങ്ങളും',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'partner-feed-desc' => 'Sambungan Partner Feed',
 	'partner-feed-achievements-leaderboard' => 'Papan teraju pencapaian Wiki',
 	'partner-feed-earned-badges' => 'Lencana-lencana yang baru diraih untuk Wiki tertentu',
@@ -408,14 +470,14 @@ $messages['ms'] = [
 	'feed-title-blogcomments' => 'Ulasan pada $1',
 	'feed-title-recentchanges' => 'Perubahan terkini',
 	'partner-feed-error-no-blogpost-found' => '<b>Ralat:</b> Catatan blog $1 tidak wujud.',
-];
+);
 
-$messages['mzn'] = [
+$messages['mzn'] = array(
 	'partner-feed-recent-changes' => 'تازه دگاردسته‌ئون',
 	'feed-title-recentchanges' => 'تازه دگاردسته‌ئون',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wikiens toppliste over utmerkelser',
 	'partner-feed-earned-badges' => 'Nylig tildelte utmerkelser for en bestemt Wiki',
 	'partner-feed-recent-blog-posts' => 'Siste blogginnlegg relatert til en kampanje',
@@ -435,10 +497,10 @@ $messages['nb'] = [
 	'feed-title-hot-content' => 'Hot innhold - $1',
 	'feed-title-blogcomments' => 'Kommentarer til $1',
 	'feed-title-recentchanges' => 'Siste endringer',
-];
+);
 
-$messages['nl'] = [
-	'partner-feed-achievements-leaderboard' => 'Scorebord prestaties voor wiki\'s',
+$messages['nl'] = array(
+	'partner-feed-achievements-leaderboard' => "Scorebord prestaties voor wiki's",
 	'partner-feed-earned-badges' => 'Recent verdiende speldjes voor een specifieke wiki',
 	'partner-feed-recent-blog-posts' => 'Recente blogberichten over aanbiedingen',
 	'partner-feed-latest-images' => 'Galerij van de laatst toegevoegde afbeeldingen',
@@ -458,18 +520,19 @@ $messages['nl'] = [
 	'feed-title-blogcomments' => 'Opmerkingen bij $1',
 	'feed-title-recentchanges' => 'Recente wijzigingen',
 	'partner-feed-error-no-blogpost-found' => '<b>Fout:</b> Blogbericht $1 bestaat niet.',
-];
+	'partner-feed-desc' => 'Partner Feed extension',
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'partner-feed-recent-changes' => 'Darrièrs cambiaments',
 	'partnerfeed' => 'Partenari de flux',
 	'feed-title-blogposts' => 'Darrièrs bilhets',
 	'feed-main-title' => 'Flux de partenari Wikia',
 	'feed-title-blogcomments' => 'Comentaris a $1',
 	'feed-title-recentchanges' => 'Darrièrs cambiaments',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'partner-feed-achievements-leaderboard' => 'Ranking odznaczeń na wiki',
 	'partner-feed-earned-badges' => 'Niedawno przyznane odznaczenia dla określonego typu wiki',
 	'partner-feed-recent-blog-posts' => 'Ostatnie wpisy na blogach związane z promocją',
@@ -483,21 +546,22 @@ $messages['pl'] = [
 	'feed-title-recent-badges' => 'Ostatnie odznaczenia',
 	'feed-title-recent-images' => 'Najnowsze obrazy',
 	'feed-title-leaderboard' => 'Ranking odznaczeń',
-	'feed-main-title' => 'Kanał partnerski Fandomu (Fandom partner feed)',
+	'feed-main-title' => 'Kanał partnerski Fandomu (FANDOM partner feed)',
 	'all-blog-posts' => 'wszystkie kategorie',
 	'blog-posts-from-listing' => 'z wykazu: $1',
 	'feed-title-hot-content' => 'Gorące treści - $1',
 	'feed-title-blogcomments' => 'Komentarze do $1',
 	'feed-title-recentchanges' => 'Ostatnie zmiany',
 	'partner-feed-error-no-blogpost-found' => 'Wpis na blogu $1 nie istnieje.',
-];
+	'partner-feed-desc' => 'Partner Feed extension',
+);
 
-$messages['pms'] = [
+$messages['pms'] = array(
 	'partner-feed-achievements-leaderboard' => 'Tàula dle realisassion dle Wiki',
 	'partner-feed-earned-badges' => 'Distintiv vagnà recentement për na Wiki specifica',
 	'partner-feed-recent-blog-posts' => 'Mëssagi dë scartari recent relativ a na promossion',
-	'partner-feed-latest-images' => 'Galarìa dj\'ùltime figure ch\'a son ëstàite carià',
-	'partner-feed-hotcontent' => 'Sènter ëd contnù ativ classificà për nùmer d\'editor',
+	'partner-feed-latest-images' => "Galarìa dj'ùltime figure ch'a son ëstàite carià",
+	'partner-feed-hotcontent' => "Sènter ëd contnù ativ classificà për nùmer d'editor",
 	'partner-feed-recent-blog-comments' => 'Coment recent colegà al mëssagi dë scartari specificà.',
 	'partner-feed-recent-changes' => 'Ùltime modìfiche',
 	'partnerfeed' => 'Cambrada ëd fluss',
@@ -512,37 +576,15 @@ $messages['pms'] = [
 	'feed-title-hot-content' => 'Contnù càud - $1',
 	'feed-title-blogcomments' => 'Coment a $1',
 	'feed-title-recentchanges' => 'Ùltime modìfiche',
-];
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'partner-feed-recent-changes' => 'وروستي بدلونونه',
 	'feed-title-recent-images' => 'تازه انځورونه',
 	'all-blog-posts' => 'ټولې وېشنيزې',
-];
+);
 
-$messages['pt'] = [
-	'partner-feed-achievements-leaderboard' => 'Liderança de medalhas das wikis',
-	'partner-feed-earned-badges' => 'Medalhas ganhas recentemente numa wiki específica',
-	'partner-feed-recent-blog-posts' => 'Entradas recentes em blogues, relacionadas com uma promoção',
-	'partner-feed-latest-images' => 'Galeria das últimas imagens enviadas',
-	'partner-feed-hotcontent' => '"Pontos Quentes" dos portais, de acordo com o número de editores',
-	'partner-feed-recent-blog-comments' => 'Comentários recentes relacionados com uma entrada de blogue especificada.',
-	'partner-feed-recent-changes' => 'Mudanças recentes',
-	'partnerfeed' => 'Feeds adicionais',
-	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
-	'feed-title-blogposts' => 'Entradas recentes em blogues',
-	'feed-title-recent-badges' => 'Medalhas recentes',
-	'feed-title-recent-images' => 'Imagens recentes',
-	'feed-title-leaderboard' => 'Liderança de medalhas',
-	'feed-main-title' => 'Feed dos parceiros do Fandom',
-	'all-blog-posts' => 'todas as categorias',
-	'blog-posts-from-listing' => 'da listagem: $1',
-	'feed-title-hot-content' => 'Conteúdo popular - $1',
-	'feed-title-blogcomments' => 'Comentários a $1',
-	'feed-title-recentchanges' => 'Mudanças recentes',
-];
-
-$messages['pt-br'] = [
+$messages['pt'] = array(
 	'partner-feed-achievements-leaderboard' => 'Liderança de medalhas das wikis',
 	'partner-feed-earned-badges' => 'Medalhas ganhas recentemente numa wiki específica',
 	'partner-feed-recent-blog-posts' => 'Posts recentes em blogues, relacionadas com uma promoção',
@@ -556,25 +598,26 @@ $messages['pt-br'] = [
 	'feed-title-recent-badges' => 'Condecorações recentes',
 	'feed-title-recent-images' => 'Imagens recentes',
 	'feed-title-leaderboard' => 'Liderança de medalhas',
-	'feed-main-title' => 'Feed de um parceiro da Wikia',
+	'feed-main-title' => 'Feed de um parceiro do FANDOM',
 	'all-blog-posts' => 'todas as categorias',
 	'blog-posts-from-listing' => 'da listagem: $1',
 	'feed-title-hot-content' => 'Conteúdo popular - $1',
 	'feed-title-blogcomments' => 'Comentários em $1',
 	'feed-title-recentchanges' => 'Mudanças recentes',
 	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> O post $1 não existe.',
-];
+	'partner-feed-desc' => 'Partner Feed extension',
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'partner-feed-recent-changes' => 'Cangiaminde recende',
 	'all-blog-posts' => 'tutte le categorije',
 	'blog-posts-from-listing' => 'da elengà: $1',
 	'feed-title-hot-content' => 'Condenute cavede - $1',
 	'feed-title-blogcomments' => 'Commende a $1',
 	'feed-title-recentchanges' => 'Cangiaminde recende',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'partner-feed-achievements-leaderboard' => 'Лидеры по наградам на вики',
 	'partner-feed-earned-badges' => 'Недавно заработанные значки на конкретной вики',
 	'partner-feed-recent-blog-posts' => 'Последние записи в блоге, связанные с рекламой',
@@ -595,15 +638,16 @@ $messages['ru'] = [
 	'feed-title-blogcomments' => 'Комментарии к $1',
 	'feed-title-recentchanges' => 'Свежие правки',
 	'partner-feed-error-no-blogpost-found' => '<b>Ошибка:</b> Блог $1 не существует.',
-];
+	'partner-feed-desc' => 'Partner Feed extension',
+);
 
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'partner-feed-recent-changes' => 'Скорашње измене',
 	'feed-title-recent-badges' => 'Скорашње значке',
 	'feed-title-recent-images' => 'Скорашње слике',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'partner-feed-desc' => 'Tillägg för partnersmatning',
 	'partner-feed-achievements-leaderboard' => 'Wikins topplista för utmärkelser',
 	'partner-feed-earned-badges' => 'Nyligen tjänade emblem för en viss Wiki',
@@ -625,22 +669,22 @@ $messages['sv'] = [
 	'feed-title-blogcomments' => 'Kommentarer till $1',
 	'feed-title-recentchanges' => 'Senaste ändringar',
 	'partner-feed-error-no-blogpost-found' => '<b>Fel:</b> Blogginlägget $1 finns inte.',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'partner-feed-earned-badges' => 'குறிப்பிட்ட விக்கிக்காக அண்மையில் ஈட்டப்பட்ட பதக்கங்கள்',
 	'feed-title-recent-images' => 'அண்மைய படங்கள்',
 	'all-blog-posts' => 'அனைத்து பகுப்புகளும்',
 	'feed-title-recentchanges' => 'அண்மைய மாற்றங்கள்',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'partner-feed-recent-changes' => 'ఇటీవలి మార్పులు',
 	'all-blog-posts' => 'అన్ని వర్గాలు',
 	'feed-title-recentchanges' => 'ఇటీవలి మార్పులు',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'partner-feed-achievements-leaderboard' => 'Pinunong pisara ng mga nakamit na pang mga wiki',
 	'partner-feed-earned-badges' => 'Kamakailang nakamit na mga tsapa para sa isang partikular na Wiki',
 	'partner-feed-recent-blog-posts' => 'Kamakailang mga pagpapaskil na blog kaugnay ng isang patalastas',
@@ -660,19 +704,19 @@ $messages['tl'] = [
 	'feed-title-hot-content' => 'Mainit na nilalaman - $1',
 	'feed-title-blogcomments' => 'Mga puna sa $1',
 	'feed-title-recentchanges' => 'Kamakailang mga pagbabago',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'feed-title-recentchanges' => 'Son değişiklikler',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'partner-feed-achievements-leaderboard' => 'Список нагороджених на вікі',
 	'partner-feed-earned-badges' => 'Нещодавні відзнаки на конкретній Вікі',
-	'partner-feed-recent-blog-posts' => 'Останні записи в блозі пов\'язані з рекламою',
+	'partner-feed-recent-blog-posts' => "Останні записи в блозі пов'язані з рекламою",
 	'partner-feed-latest-images' => 'Останні зображень, що були завантажені на вікі',
 	'partner-feed-hotcontent' => 'Портал / по вертикалі "Hot Content" відсортовано за кількістю редакторів',
-	'partner-feed-recent-blog-comments' => 'Останні коментарі, пов\'язані із зазначеним блогом.',
+	'partner-feed-recent-blog-comments' => "Останні коментарі, пов'язані із зазначеним блогом.",
 	'partner-feed-recent-changes' => 'Нові редагування',
 	'partnerfeed' => 'Партнерська розсилка',
 	'error-no-article' => 'Помилка: ні "статті" з такими параметрами',
@@ -687,9 +731,9 @@ $messages['uk'] = [
 	'feed-title-blogcomments' => 'Коментарі до $1',
 	'feed-title-recentchanges' => 'Нові редагування',
 	'partner-feed-error-no-blogpost-found' => '<b>Помилка:</b> Повідомлення в блозі  $1  не існує.',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wiki bảng dẫn thành lựu',
 	'partner-feed-earned-badges' => 'Huy hiệu vừa đạt được cho một liên kết cụ thể',
 	'partner-feed-recent-blog-posts' => 'Bài viết blog gần đây liên quan đến một quảng cáo',
@@ -710,9 +754,10 @@ $messages['vi'] = [
 	'feed-title-blogcomments' => 'Bình luận cho $1',
 	'feed-title-recentchanges' => 'Thay đổi gần đây',
 	'partner-feed-error-no-blogpost-found' => '<b>Lỗi:</b> Bài đăng blog $1 không tồn tại.',
-];
+	'partner-feed-desc' => 'Partner Feed extension',
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'partner-feed-desc' => '合作伙伴订阅点扩展',
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
@@ -727,34 +772,36 @@ $messages['zh-hans'] = [
 	'feed-title-recent-badges' => '最新徽章',
 	'feed-title-recent-images' => '最近的图片',
 	'feed-title-leaderboard' => '成就排行榜',
-	'feed-main-title' => 'Fandom合作伙伴新闻',
+	'feed-main-title' => 'FANDOM合作伙伴新闻',
 	'all-blog-posts' => '全部分类',
 	'blog-posts-from-listing' => '来自列表：$1',
 	'feed-title-hot-content' => '热点内容 - $1',
 	'feed-title-blogcomments' => '评论 $1',
 	'feed-title-recentchanges' => '最近更改',
 	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章$1不存在。',
-];
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'partner-feed-recent-changes' => '近期變動',
 	'feed-title-recentchanges' => '近期變動',
-	'feed-main-title' => 'Fandom合作夥伴新聞',
+	'feed-main-title' => 'FANDOM合作夥伴新聞',
 	'blog-posts-from-listing' => '來自列表：$1',
 	'partnerfeed' => '相關頁面訂閱',
-];
-
-$messages['zh-hk'] = [
-	'blog-posts-from-listing' => '來自列表：$1',
-	'partnerfeed' => '相關頁面訂閱',
-];
-
-$messages['zh-tw'] = [
-	'blog-posts-from-listing' => '來自列表：$1',
-	'partnerfeed' => '相關頁面訂閱',
-];
-
-$messages['zh'] = [
-	'partnerfeed' => '相关页面订阅',
-];
+	'partner-feed-desc' => 'Partner Feed extension',
+	'partner-feed-achievements-leaderboard' => 'Wikis achievements leaderboard',
+	'partner-feed-earned-badges' => 'Recently earned badges for a specific Wiki',
+	'partner-feed-recent-blog-posts' => 'Recent blog posts related to a promotion',
+	'partner-feed-latest-images' => 'Gallery of the latest images that have been uploaded',
+	'partner-feed-hotcontent' => 'Hub / verticals "Hot Content" as ranked by number of editors',
+	'partner-feed-recent-blog-comments' => 'Recent comments related to specified blog post.',
+	'error-no-article' => 'Error: No "article" param passed',
+	'feed-title-blogposts' => 'Recent blog posts',
+	'feed-title-recent-badges' => 'Recent badges',
+	'feed-title-recent-images' => 'Recent photos',
+	'feed-title-leaderboard' => 'Achievements leaderboard',
+	'all-blog-posts' => 'all categories',
+	'feed-title-hot-content' => 'Hot content - $1',
+	'feed-title-blogcomments' => 'Comments to $1',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> Blog post $1 does not exist.',
+);
 

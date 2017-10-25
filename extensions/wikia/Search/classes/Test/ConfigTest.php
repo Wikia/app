@@ -1,16 +1,24 @@
 <?php
 namespace Wikia\Search\Test;
-use \Wikia\Search\Config, \Solarium_Query_Select, \ReflectionProperty, \ReflectionMethod, \Wikia\Search\Utilities;
+use \Wikia\Search\Config, \Solarium_Query_Select, \ReflectionProperty, \ReflectionMethod;
+use Wikia\Search\MediaWikiService;
+use Wikia\Search\Query\Select;
+
 /**
  * Tests for Config class
  */
 class ConfigTest extends BaseTest {
+	/** @var \PHPUnit_Framework_MockObject_MockBuilder|MediaWikiService $service */
+	private $service;
 
-	public function setUp() {
-		$this->service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
+	/** @var \PHPUnit_Framework_MockObject_MockBuilder|Config $config */
+	private $config;
+
+	protected function setUp() {
+		$this->service = $this->getMockBuilder( MediaWikiService::class )
 		                       ->disableOriginalConstructor();
 		
-		$this->config = $this->getMockBuilder( '\\Wikia\Search\Config' )
+		$this->config = $this->getMockBuilder( Config::class )
 		                     ->disableOriginalConstructor();
 
 		parent::setUp();
@@ -180,7 +188,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07421 ms
-	 * @covers Wikia\Search\Config::articleMatchPassesFilters
+	 * @covers \Wikia\Search\Config::articleMatchPassesFilters
 	 */
 	public function testArticleMatchPassesFiltersImageInVideoFilter() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -223,7 +231,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0731 ms
-	 * @covers Wikia\Search\Config::articleMatchPassesFilters
+	 * @covers \Wikia\Search\Config::articleMatchPassesFilters
 	 */
 	public function testArticleMatchPassesFiltersVideoInImageFilter() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -903,21 +911,21 @@ class ConfigTest extends BaseTest {
 	 * @group Slow
 	 * @slowExecutionTime 0.07311 ms
 	 * @covers \Wikia\Search\Config::getNamespaces
-	 * @todo mock better
+	 * @group Broken
 	 */
-	public function testGetNamespaces() {return;
+	public function testGetNamespaces() {
 		$config = $this->config->setMethods( null )->getMock();
 		$service = $this->config->setMethods( array( 'getDefaultNamespacesFromSearchEngine' ) )->getMock();
 		$this->setService( $config, $service );
 		$config->setQueryNamespace( 123 );
 		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getDefaultNamespacesFromSearchEngine' )
-		    ->will   ( $this->returnValue( array( 0, 14 ) ) )
-	    ;
+			->expects( $this->once() )
+			->method ( 'getDefaultNamespacesFromSearchEngine' )
+			->will   ( $this->returnValue( array( 0, 14 ) ) )
+		;
 		$this->assertEquals(
-				array( 0, 14, 123 ),
-				$config->getNamespaces()
+			array( 0, 14, 123 ),
+			$config->getNamespaces()
 		);
 	}
 	
@@ -952,7 +960,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07579 ms
-	 * @covers Wikia\Search\Config::getWikiId
+	 * @covers \Wikia\Search\Config::getWikiId
 	 */
 	public function testGetWikiIdDefault() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -992,8 +1000,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07413 ms
-	 * @covers Wikia\Search\Config::setWikiId
-	 * @covers Wikia\Search\Config::getWikiId
+	 * @covers \Wikia\Search\Config::setWikiId
+	 * @covers \Wikia\Search\Config::getWikiId
 	 */
 	public function testSetAndGetWikiId() {
 		$config = new Config;
@@ -1016,8 +1024,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07462 ms
-	 * @covers Wikia\Search\Config::getLanguageCode
-	 * @covers Wikia\Search\Config::setLanguageCode
+	 * @covers \Wikia\Search\Config::getLanguageCode
+	 * @covers \Wikia\Search\Config::setLanguageCode
 	 */
 	public function testSetAndGetLanguageCode() {
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
@@ -1070,8 +1078,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0725 ms
-	 * @covers Wikia\Search\Config::setLimit
-	 * @covers Wikia\Search\Config::getLimit
+	 * @covers \Wikia\Search\Config::setLimit
+	 * @covers \Wikia\Search\Config::getLimit
 	 */
 	public function testSetGetLimit() {
 		$config = new Config;
@@ -1108,8 +1116,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07239 ms
-	 * @covers Wikia\Search\Config::setPage
-	 * @covers Wikia\Search\Config::getPage
+	 * @covers \Wikia\Search\Config::setPage
+	 * @covers \Wikia\Search\Config::getPage
 	 */
 	public function testSetGetPage() {
 		$config = new Config;
@@ -1136,8 +1144,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07962 ms
-	 * @covers Wikia\Search\Config::getRank
-	 * @covers Wikia\Search\Config::setRank
+	 * @covers \Wikia\Search\Config::getRank
+	 * @covers \Wikia\Search\Config::setRank
 	 */
 	public function testGetSetRank() {
 		$config = new Config;
@@ -1168,7 +1176,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07653 ms
-	 * @covers Wikia\Search\Config
+	 * @covers \Wikia\Search\Config
 	 */
 	public function testSetGetABTestGroup() {
 		$config = new Config;
@@ -1194,8 +1202,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07502 ms
-	 * @covers Wikia\Search\Config::getTestProfile
-	 * @covers Wikia\Search\Config::initiateTestProfile
+	 * @covers \Wikia\Search\Config::getTestProfile
+	 * @covers \Wikia\Search\Config::initiateTestProfile
 	 */
 	public function testGetTestProfileNotSet() {
 		$config = new Config;
@@ -1213,8 +1221,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07379 ms
-	 * @covers Wikia\Search\Config::getTestProfile
-	 * @covers Wikia\Search\Config::initiateTestProfile
+	 * @covers \Wikia\Search\Config::getTestProfile
+	 * @covers \Wikia\Search\Config::initiateTestProfile
 	 */
 	public function testGetTestProfileExplicitBase() {
 		$config = new Config;
@@ -1230,8 +1238,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07386 ms
-	 * @covers Wikia\Search\Config::getTestProfile
-	 * @covers Wikia\Search\Config::initiateTestProfile
+	 * @covers \Wikia\Search\Config::getTestProfile
+	 * @covers \Wikia\Search\Config::initiateTestProfile
 	 */
 	public function testGetTestProfileWithTestGroup() {
 		$config = new Config;
@@ -1246,8 +1254,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07465 ms
-	 * @covers Wikia\Search\Config::getTestProfile
-	 * @covers Wikia\Search\Config::initiateTestProfile
+	 * @covers \Wikia\Search\Config::getTestProfile
+	 * @covers \Wikia\Search\Config::initiateTestProfile
 	 */
 	public function testGetTestProfileNonexistentTestGroup() {
 		$config = new Config;
@@ -1262,8 +1270,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07421 ms
-	 * @covers Wikia\Search\Config::setStart
-	 * @covers Wikia\Search\Config::getStart
+	 * @covers \Wikia\Search\Config::setStart
+	 * @covers \Wikia\Search\Config::getStart
 	 */
 	public function testSetGetStart() {
 		$start = 12345; // could never be our default start
@@ -1284,8 +1292,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
-	 * @covers Wikia\Search\Config::setMinArticleQuality
-	 * @covers Wikia\Search\Config::getMinArticleQuality
+	 * @covers \Wikia\Search\Config::setMinArticleQuality
+	 * @covers \Wikia\Search\Config::getMinArticleQuality
 	 */
 	public function testGetMinArticleQuality() {
 		$val = 13; // could never be our default start
@@ -1307,8 +1315,8 @@ class ConfigTest extends BaseTest {
 
 
 	/**
-	 * @covers Wikia\Search\Config::setPageId
-	 * @covers Wikia\Search\Config::getPageId
+	 * @covers \Wikia\Search\Config::setPageId
+	 * @covers \Wikia\Search\Config::getPageId
 	 */
 	public function testSetPageId() {
 		$val = 13; // could never be our default start
@@ -1331,8 +1339,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07426 ms
-	 * @covers Wikia\Search\Config::setMinimumMatch
-	 * @covers Wikia\Search\Config::getMinimumMatch
+	 * @covers \Wikia\Search\Config::setMinimumMatch
+	 * @covers \Wikia\Search\Config::getMinimumMatch
 	 */
 	public function testSetGetMm() {
 		$mm = '200%';
@@ -1355,7 +1363,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07702 ms
-	 * @covers Wikia\Search\Config::getLength
+	 * @covers \Wikia\Search\Config::getLength
 	 */
 	public function testGetLengthWithMatch() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -1381,7 +1389,7 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
-	 * @covers Wikia\Search\Config::mustAddMatchedRecords
+	 * @covers \Wikia\Search\Config::mustAddMatchedRecords
 	 */
 	public function testMustAddMatchedRecords() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -1401,7 +1409,7 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\Config::setNamespaces
+	 * @covers \Wikia\Search\Config::setNamespaces
 	 */
 	public function testSetNamespaces() {
 		$config = new Config;
@@ -1421,7 +1429,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07548 ms
-	 * @covers Wikia\Search\Config::getNamespaces
+	 * @covers \Wikia\Search\Config::getNamespaces
 	 */
 	public function testGetNamespacesLazyLoad() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -1463,7 +1471,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07538 ms
-	 * @covers Wikia\Search\Config::getNamespaces
+	 * @covers \Wikia\Search\Config::getNamespaces
 	 */
 	public function testGetNamespacesWithQueryNamespace() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -1497,9 +1505,9 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07537 ms
-	 * @covers Wikia\Search\Config::setRank
-	 * @covers Wikia\Search\Config::getRank
-	 * @covers Wikia\Search\Config::getSort
+	 * @covers \Wikia\Search\Config::setRank
+	 * @covers \Wikia\Search\Config::getRank
+	 * @covers \Wikia\Search\Config::getSort
 	 */
 	public function testSetGetRankGetSort() {
 		$config = new Config;
@@ -1535,7 +1543,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07327 ms
-	 * @covers Wikia\Search\Config::setRequestedFields
+	 * @covers \Wikia\Search\Config::setRequestedFields
 	 */
 	public function testSetRequestedFields() {
 		$config = new Config;
@@ -1554,7 +1562,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07447 ms
-	 * @covers Wikia\Search\Config::setRank
+	 * @covers \Wikia\Search\Config::setRank
 	 */
 	public function testSetRankBadRankName() {
 		$config = new Config;
@@ -1573,8 +1581,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07418 ms
-	 * @covers Wikia\Search\Config::setHub
-	 * @covers Wikia\Search\Config::getHub
+	 * @covers \Wikia\Search\Config::setHub
+	 * @covers \Wikia\Search\Config::getHub
 	 */
 	public function testSetGetHub() {
 		$hub = 'Entertainment';
@@ -1597,8 +1605,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07394 ms
-	 * @covers Wikia\Search\Config::setAdvanced
-	 * @covers Wikia\Search\Config::getAdvanced
+	 * @covers \Wikia\Search\Config::setAdvanced
+	 * @covers \Wikia\Search\Config::getAdvanced
 	 */
 	public function testSetGetAdvanced() {
 		$config = new Config;
@@ -1620,8 +1628,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07453 ms
-	 * @covers Wikia\Search\Config::setError
-	 * @covers Wikia\Search\Config::getError
+	 * @covers \Wikia\Search\Config::setError
+	 * @covers \Wikia\Search\Config::getError
 	 */
 	public function testSetGetError() {
 		$error = $this->getMockBuilder( 'Exception' )
@@ -1646,8 +1654,8 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07416 ms
-	 * @covers Wikia\Search\Config::setSkipBoostFunctions
-	 * @covers Wikia\Search\Config::getSkipBoostFunctions
+	 * @covers \Wikia\Search\Config::setSkipBoostFunctions
+	 * @covers \Wikia\Search\Config::getSkipBoostFunctions
 	 */
 	public function testSetGetSkipboostFunctions() {
 		$config = new Config;
@@ -1669,7 +1677,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07473 ms
-	 * @covers Wikia\Search\Config::setQueryService
+	 * @covers \Wikia\Search\Config::setQueryService
 	 */
 	public function testSetQueryServiceNonExistentClass() {
 		$config = new Config;
@@ -1685,7 +1693,7 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\Config::setQueryService
+	 * @covers \Wikia\Search\Config::setQueryService
 	 */
 	public function testSetQueryService() {
 		$config = new Config;
@@ -1719,32 +1727,22 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0772 ms
-	 * @covers Wikia\Search\Config::bootstrapQueryService
+	 * @covers \Wikia\Search\Config::bootstrapQueryService
 	 */
 	public function testBootstrapQueryServiceDefault() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'getWikiId', 'getService' ] )
 		               ->getMock();
-		
-		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+
+		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
+
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $service ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'EnableWikiaHomePageExt' )
-		    ->will   ( $this->returnValue( false ) )
 		;
 		$this->assertEquals(
 				'Select\\Dismax\\OnWiki',
@@ -1755,32 +1753,22 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0758 ms
-	 * @covers Wikia\Search\Config::bootstrapQueryService
+	 * @covers \Wikia\Search\Config::bootstrapQueryService
 	 */
 	public function testBootstrapQueryServiceVideo() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'getWikiId', 'getService' ] )
 		               ->getMock();
-		
-		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+
+		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
+
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) )
-		;
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $service ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'EnableWikiaHomePageExt' )
-		    ->will   ( $this->returnValue( false ) )
 		;
 		$this->assertEquals(
 				'Select\\Dismax\\Video',
@@ -1791,32 +1779,22 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07578 ms
-	 * @covers Wikia\Search\Config::bootstrapQueryService
+	 * @covers \Wikia\Search\Config::bootstrapQueryService
 	 */
 	public function testBootstrapQueryServiceInterWiki() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'getWikiId', 'getService' ] )
 		               ->getMock();
-		
-		$service = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal' ] );
+
+		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', true );
+
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
 		$config
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiId' )
 		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $service ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'EnableWikiaHomePageExt' )
-		    ->will   ( $this->returnValue( true ) )
 		;
 		$this->assertEquals(
 				'Select\\Dismax\\InterWiki',
@@ -1827,7 +1805,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07476 ms
-	 * @covers Wikia\Search\Config::getQueryService
+	 * @covers \Wikia\Search\Config::getQueryService
 	 */
 	public function testGetQueryService() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
@@ -1854,7 +1832,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07508 ms
-	 * @covers Wikia\Search\Config::getService
+	 * @covers \Wikia\Search\Config::getService
 	 */
 	public function testGetService() {
 		$config = new Config;
@@ -1878,7 +1856,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07596 ms
-	 * @covers Wikia\Search\Config::getQueryFieldsToBoosts
+	 * @covers \Wikia\Search\Config::getQueryFieldsToBoosts
 	 */
 	public function testGetQueryFieldsToBoosts() {
 		$testProfile = $this->getMock( 'Wikia\\Search\\TestProfile\\Base', [ 'getQueryFieldsToBoosts' ] );
@@ -1901,7 +1879,7 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\Config::getQueryFields
+	 * @covers \Wikia\Search\Config::getQueryFields
 	 */
 	public function testGetQueryFields() {
 		$config = $this->getMock( 'Wikia\\Search\\Config', [ 'getQueryFieldsToBoosts' ] );
@@ -1920,7 +1898,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0751 ms
-	 * @covers Wikia\Search\Config::getResults
+	 * @covers \Wikia\Search\Config::getResults
 	 */
 	public function testSetGetResults() {
 		$config = new Config;
@@ -1949,7 +1927,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07594 ms
-	 * @covers Wikia\Search\Config::getResultsFound
+	 * @covers \Wikia\Search\Config::getResultsFound
 	 */
 	public function testGetResultsFound() {
 		$config = new Config;

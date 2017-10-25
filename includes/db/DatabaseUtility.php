@@ -159,7 +159,7 @@ class ResultWrapper implements Iterator {
 	}
 
 	/**
-	 * @return int
+	 * @return stdClass|array|bool
 	 */
 	function current() {
 		if ( is_null( $this->currentRow ) ) {
@@ -176,7 +176,7 @@ class ResultWrapper implements Iterator {
 	}
 
 	/**
-	 * @return int
+	 * @return stdClass|array|bool
 	 */
 	function next() {
 		$this->pos++;

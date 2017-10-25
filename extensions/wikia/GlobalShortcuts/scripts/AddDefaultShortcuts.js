@@ -1,8 +1,8 @@
 /**
  * A module for adding a set of default shortcut keys that are always available
  */
-require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
-	function (GlobalShortcuts, PageActions, mw, loader) {
+require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader', 'wikia.window'],
+	function (GlobalShortcuts, PageActions, mw, loader, win) {
 		'use strict';
 
 		function init() {
@@ -16,6 +16,8 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 			).done(function (res) {
 					mw.messages.set(res.messages);
 					addShortcuts();
+
+					win.wgGlobalShortcutsLoaded = true;
 				});
 		}
 

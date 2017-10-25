@@ -261,7 +261,7 @@ class WikiImporter {
 	 */
 	public function finishImportPage( $title, $origTitle, $revCount, $sRevCount, $pageInfo ) {
 		$args = func_get_args();
-		return wfRunHooks( 'AfterImportPage', $args );
+		return Hooks::run( 'AfterImportPage', $args );
 	}
 
 	/**
@@ -424,7 +424,7 @@ class WikiImporter {
 			$tag = $this->reader->name;
 			$type = $this->reader->nodeType;
 
-			if ( !wfRunHooks( 'ImportHandleToplevelXMLTag', $this ) ) {
+			if ( !Hooks::run( 'ImportHandleToplevelXMLTag', $this ) ) {
 				// Do nothing
 			} elseif ( $tag == 'mediawiki' && $type == XmlReader::END_ELEMENT ) {
 				break;
@@ -483,7 +483,7 @@ class WikiImporter {
 
 			$tag = $this->reader->name;
 
-			if ( !wfRunHooks( 'ImportHandleLogItemXMLTag',
+			if ( !Hooks::run( 'ImportHandleLogItemXMLTag',
 						$this, $logInfo ) ) {
 				// Do nothing
 			} elseif ( in_array( $tag, $normalFields ) ) {
@@ -549,7 +549,7 @@ class WikiImporter {
 			if ( $badTitle ) {
 				// The title is invalid, bail out of this page
 				$skip = true;
-			} elseif ( !wfRunHooks( 'ImportHandlePageXMLTag', array( $this,
+			} elseif ( !Hooks::run( 'ImportHandlePageXMLTag', array( $this,
 						&$pageInfo ) ) ) {
 				// Do nothing
 			} elseif ( in_array( $tag, $normalFields ) ) {
@@ -600,7 +600,7 @@ class WikiImporter {
 
 			$tag = $this->reader->name;
 
-			if ( !wfRunHooks( 'ImportHandleRevisionXMLTag', $this,
+			if ( !Hooks::run( 'ImportHandleRevisionXMLTag', $this,
 						$pageInfo, $revisionInfo ) ) {
 				// Do nothing
 			} elseif ( in_array( $tag, $normalFields ) ) {
@@ -680,7 +680,7 @@ class WikiImporter {
 
 			$tag = $this->reader->name;
 
-			if ( !wfRunHooks( 'ImportHandleUploadXMLTag', $this,
+			if ( !Hooks::run( 'ImportHandleUploadXMLTag', $this,
 						$pageInfo ) ) {
 				// Do nothing
 			} elseif ( in_array( $tag, $normalFields ) ) {

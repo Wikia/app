@@ -35,6 +35,7 @@
 
 <?= $topScripts ?>
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+<?= $recoveryHeadBootstrapCode ?>
 
 <!-- Make IE recognize HTML5 tags. -->
 <!--[if IE]>
@@ -58,22 +59,20 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
+<?= $instartLogic ?>
+<?= $recoveryTopBodyBootstrapCode ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
-<?= $openXBidder ?>
+<?= $a9 ?>
 <?= $prebid ?>
-<?= $rubiconVulcan ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
-<?= $ivw3 ?>
-<?= $ivw2 ?>
 <?= $sourcePoint ?>
 <?= $gfc ?>
 
@@ -104,6 +103,7 @@
 <?= $bottomScripts ?>
 
 <?= $nielsen ?>
+<?= $recoveryBottomBodyBootstrapCode ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>

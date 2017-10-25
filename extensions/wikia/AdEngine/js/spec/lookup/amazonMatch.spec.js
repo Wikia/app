@@ -12,7 +12,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.recoveryHelper,
+			mocks.sourcePoint,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -64,7 +64,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			},
 			track: noop
 		},
-		recoveryHelper: {
+		sourcePoint: {
 			addOnBlockingCallback: noop
 		},
 		document: {
@@ -192,11 +192,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			init(amazonMatch, testCase.input);
 
 			expect(amazonMatch.getSlotParams('TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
-			expect(amazonMatch.getSlotParams('HOME_TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
-			expect(amazonMatch.getSlotParams('HUB_TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
 			expect(amazonMatch.getSlotParams('TOP_RIGHT_BOXAD').amznslots).toEqual(testCase.expected.medrec);
-			expect(amazonMatch.getSlotParams('HOME_TOP_RIGHT_BOXAD').amznslots).toEqual(testCase.expected.medrec);
-			expect(amazonMatch.getSlotParams('HUB_TOP_RIGHT_BOXAD').amznslots).toEqual(testCase.expected.medrec);
 			expect(amazonMatch.getSlotParams('LEFT_SKYSCRAPER_2').amznslots).toEqual(testCase.expected.skyscraper);
 			expect(amazonMatch.getSlotParams('LEFT_SKYSCRAPER_3').amznslots).toEqual(testCase.expected.skyscraper);
 			expect(amazonMatch.getSlotParams('INVISIBLE_SKIN').amznslots).toEqual(undefined);

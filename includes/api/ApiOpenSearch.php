@@ -78,7 +78,7 @@ class ApiOpenSearch extends ApiBase {
 		}
 
 		// Wikia change - begin
-		wfRunHooks('ApiOpenSearchExecute', array($this, $params, &$srchres));
+		Hooks::run('ApiOpenSearchExecute', array($this, $params, &$srchres));
 		// Wikia change - end
 
 		// Set top level elements

@@ -1,0 +1,6 @@
+@mixin community-header-gradient(
+	$header-background-color, $start-position, $end-position
+) {
+	background: linear-gradient(to right, rgba($header-background-color, .5), rgba($header-background-color, .5)),
+		linear-gradient(to left, rgba($header-background-color, 0) $start-position, $header-background-color $end-position);
+}

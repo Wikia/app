@@ -23,29 +23,27 @@ class CreateBlogListingPage extends SpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgTitle;
+		$article = $this->getRequest()->getVal( 'article' );
+		Hooks::run( 'beforeBlogListingForm', [ $this, $article ] );
 
-		wfRunHooks( 'beforeBlogListingForm', array( &$this, $wgRequest->getVal( 'article' ) ) );
+		$out = $this->getOutput();
 
-		if ( !$wgUser->isLoggedIn() ) {
-			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array( wfGetReturntoParam() ) );
+		if ( !$this->getUser()->isLoggedIn() ) {
+			$out->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', [
+				wfGetReturntoParam(),
+			] );
+
 			return;
 		}
 
-		if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
-		}
-
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
+		$this->checkIfUserIsBlocked();
+		$this->checkReadOnly();
 
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogListingPage' );
 
-		$wgOut->setPageTitle( wfMsg( 'create-blog-listing-title' ) );
+		$out->setPageTitle( $this->msg( 'create-blog-listing-title' ) );
 
-		if ( $wgRequest->wasPosted() ) {
+		if ( $this->getRequest()->wasPosted() ) {
 			$this->parseFormData();
 			if ( count( $this->mFormErrors ) > 0 || !empty( $this->mRenderedPreview ) ) {
 				$this->renderForm();
@@ -53,8 +51,8 @@ class CreateBlogListingPage extends SpecialPage {
 				$this->save();
 			}
 		} else {
-			if ( $wgRequest->getVal( 'article' ) != null ) {
-				$this->parseTag( urldecode( $wgRequest->getVal( 'article' ) ) );
+			if ( $article != null ) {
+				$this->parseTag( urldecode( $article ) );
 			}
 			$this->renderForm();
 		}
@@ -204,7 +202,7 @@ class CreateBlogListingPage extends SpecialPage {
 			$aListingCategories = explode( '|', $this->mFormData['listingCategories'] );
 			$aListingAuthors = explode( ',', $this->mFormData['listingAuthors'] );
 
-			wfRunHooks( 'BlogListingSave', array( $this->mFormData['listingTitle'], $aListingCategories, $aListingAuthors ) );
+			Hooks::run( 'BlogListingSave', array( $this->mFormData['listingTitle'], $aListingCategories, $aListingAuthors ) );
 
 			$wgOut->redirect( $this->mPostArticle->getTitle()->getFullUrl() );
 		}

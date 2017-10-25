@@ -43,7 +43,7 @@ class DeleteArticlesByTitle extends Maintenance {
 		}
 
 		global $wgUser;
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 
 		if ( ! file_exists( $file ) ) {

@@ -198,7 +198,7 @@ function wfCreatePageAjaxGetDialog() {
 	);
 
 	$listtype = "short";
-	wfRunHooks( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
+	Hooks::run( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
 
 	$options = $options + $standardOptions;
 	$optionsCount = count( $options );
@@ -235,6 +235,7 @@ function wfCreatePageAjaxGetDialog() {
 			'options' => $options,
 			'type' => $listtype,
 			'wantedPages' => CreatePageHelper::getMostWantedPages(),
+			'wikiTotalPages' => SiteStats::articles()
 		)
 	);
 
@@ -282,7 +283,7 @@ function wfCreatePageAjaxCheckTitle() {
 			}
 			else { // title not exists
 				// macbre: use dedicated hook for this check (change related to release of Phalanx)
-				if ( !wfRunHooks( 'CreatePageTitleCheck', array( $oTitle ) ) ) {
+				if ( !Hooks::run( 'CreatePageTitleCheck', array( $oTitle ) ) ) {
 					$result['result'] = 'error';
 					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
 					$result['error'] = 'error-article-spam';

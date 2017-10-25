@@ -8,7 +8,7 @@ WikiaSearchApp = (function() {
 		this.positionRight = this.searchForm.innerWidth() - this.searchForm.children('input:first-child').outerWidth() + 4;
 		this.searchField = this.searchForm.children('input[placeholder]');
 
-		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
+		// RT #141437 - hide TOP_RIGHT_BOXAD when showing search suggestions
 		this.ads = $("[id$='TOP_RIGHT_BOXAD']");
 
 		if ( !this.searchForm.hasClass('noautocomplete') ) {

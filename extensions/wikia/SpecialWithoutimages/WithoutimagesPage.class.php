@@ -11,29 +11,27 @@ class WithoutimagesPage extends QueryPage {
 	 */
 	function getQueryInfo() {
 		return array(
-			'tables' => array( 'page', 'pagelinks' ),
-			'fields' => array( "'Withoutimages' as type", 'page_namespace as namespace', 'page_title as title', 'count(*) as value' ),
-			'options' => array( 'GROUP BY' => 'page_title, page_namespace' ),
-			'join_conds' => array(
-				'pagelinks' => array( 'JOIN', 'page_title = pl_title AND page_namespace = pl_namespace' )
-			),
-			'conds' => array( 
-				'pl_from > 0',
+			'tables' => [ 'page' ],
+			'fields' => [ "'Withoutimages' as type", 'page_namespace as namespace', 'page_title as title', 'count(*) as value' ],
+			'options' => [ 'GROUP BY' => 'page_title, page_namespace' ],
+			// Note that querycache table contains rows with qc_type equal to MostimagesInContent only when given image
+			// is included in more than one article, that is why the condition is in form of `il_to not in ...`
+			// and then `qc_value >= 20`
+			'conds' => [
+				'page_id > 0',
 				'page_namespace' => MWNamespace::getContentNamespaces(),
 				'page_is_redirect' => 0,
-				'( 
-					( 
-						SELECT i1.il_to 
-						FROM imagelinks i1 
-						WHERE 20 > ANY ( 
-							SELECT count(*) 
-							FROM imagelinks i2 
-							WHERE i1.il_to = i2.il_to 
-						) AND i1.il_from = page_id 
-						LIMIT 1 
-					) IS NULL 
-				)'
-			)
+				"page_id NOT IN (
+				    SELECT DISTINCT il_from
+				    FROM imagelinks
+				    WHERE il_to not in (
+				      SELECT qc_title
+				      FROM querycache
+				      WHERE qc_type = 'MostimagesInContent'
+				        AND qc_value >= 20
+				    )
+				)"
+			]
 		);
 	}
 

@@ -5,12 +5,9 @@
 				<?= wfMsg( 'createpage-dialog-message2' ) ?>
 			</div>
 			<input id="wpCreatePageDialogTitle" name="wpCreatepageDialogTitle" type="text" />
-			<?php // TODO: XW-2380 | remove the condition
-			if ( !wfMessage( 'createpage-dialog-message3' )->isDisabled() ): ?>
-				<div id="CreatePageDialogInputSub">
-					<?= wfMessage( 'createpage-dialog-message3' )->text() ?>
-				</div>
-			<?php endif; ?>
+			<div id="CreatePageDialogInputSub">
+				<?= wfMessage( 'createpage-dialog-message3', $wikiTotalPages )->text() ?>
+			</div>
 			<div id="CreatePageDialogTitleErrorMsg" class="CreatePageError hiddenStructure"></div>
 				<?php if( !$useFormatOnly ): ?>
 				<div id="CreatePageDialogChoose">

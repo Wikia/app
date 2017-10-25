@@ -1,4 +1,5 @@
 <?php
+use Wikia\CommunityHeader\Wordmark;
 
 /**
  * Oasis module for EditPageLayout
@@ -85,8 +86,6 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
-		wfProfileIn( __METHOD__ );
-
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
@@ -120,15 +119,13 @@ class EditPageLayoutController extends WikiaController {
 		}
 
 		// render WikiLogo
-		$response = $this->app->sendRequest( 'WikiHeader', 'Wordmark' );
+		$response = $this->app->sendRequest( 'EditPageLayout', 'wordmark' );
 
 		// move wordmark data
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-		$this->header = !empty( $this->wg->EnableDesignSystem ) ?
-			F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' ) :
-			F::app()->renderView( 'GlobalNavigation', 'index' );
+		$this->header = F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' );
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
@@ -220,9 +217,37 @@ class EditPageLayoutController extends WikiaController {
 
 		$this->hideTitle = $editPage->hideTitle;
 
-		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
+		Hooks::run( 'EditPageLayoutExecute', array( $this ) );
+	}
 
-		wfProfileOut( __METHOD__ );
+	public function wordmark() {
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
+
+		$this->wordmarkText = $settings['wordmark-text'];
+		$this->wordmarkType = $settings['wordmark-type'];
+		$this->wordmarkSize = $settings['wordmark-font-size'];
+		$this->wordmarkFont = $settings['wordmark-font'];
+		$this->wordmarkFontClass = !empty( $settings["wordmark-font"] ) ? "font-{$settings['wordmark-font']}" : '';
+		$this->wordmarkUrl = '';
+		if ( $this->wordmarkType == Wordmark::WORDMARK_TYPE_GRAPHIC ) {
+			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
+			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
+			if ( $imageTitle instanceof Title ) {
+				$attributes = [ ];
+				$file = wfFindFile( $imageTitle );
+				if ( $file instanceof File ) {
+					$attributes [] = 'width="' . $file->width . '"';
+					$attributes [] = 'height="' . $file->height . '"';
+
+					if ( !empty( $attributes ) ) {
+						$this->wordmarkStyle = ' ' . implode( ' ', $attributes ) . ' ';
+					}
+				}
+			}
+		}
+
+		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 	}
 
 	public function addExtraHeaderHtml( $html ) {

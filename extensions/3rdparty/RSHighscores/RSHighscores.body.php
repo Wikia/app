@@ -10,7 +10,7 @@ class RSHiscores {
 	 * @param $parser Parser
 	 * @return bool
 	 */
-	public static function register( &$parser ) {
+	public static function register( Parser $parser ): bool {
 		$parser->setFunctionHook( 'hs', 'RSHiscores::renderHiscores' );
 		return true;
 	}
@@ -113,7 +113,8 @@ class RSHiscores {
 	 * @param int $type Index representing the requested type of data for the given skill.
 	 * @return string
 	 */
-	public static function renderHiscores( &$parser, $hs = 'rs3', $player = '', $skill = -1, $type = 1 ) {
+	public static function renderHiscores( Parser $parser, $hs = 'rs3', $player = '', $skill = -1,
+										   $type = 1 ) {
 		global $wgRSLimit;
 
 		if ( $hs != 'rs3' && $hs != 'osrs' ) {

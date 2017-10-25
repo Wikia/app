@@ -1,3 +1,6 @@
+/**
+ * This file is handling WallNotifications on MonoBook
+ */
 var $window = $(window);
 var WallNotifications = $.createClass(Object, {
 	constructor: function() {

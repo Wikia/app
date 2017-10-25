@@ -225,7 +225,7 @@ class WikiMetrics {
 	/* get languages */
 	private function getLangs() {
 		$this->mTopLanguages = explode(',', wfMsg('awc-metrics-language-top-list'));
-		$this->mLanguages = self::getFixedLanguageNames();
+		$this->mLanguages = WikiaLanguage::getRequestSupportedLanguages();
 		asort($this->mLanguages);
 		return count($this->mLanguages);
 	}
@@ -284,7 +284,7 @@ class WikiMetrics {
 			$startDate = date( 'Y-m-01', strtotime('-3 month') );
 			$endDate = date( 'Y-m-01', strtotime('now') );
 			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $wikiList );
-			if ( empty( $pageviews ) ) {
+			if ( !empty( $pageviews ) ) {
 				foreach ( $pageviews as $wiki_id => $wiki_data ) {
 					#---
 					$pviews = array_reduce (
@@ -664,26 +664,6 @@ class WikiMetrics {
 	}
 
 	/*
-	 * get a list of language names available for wiki request
-	 * (possibly filter some)
-	 *
-	 * @author nef@wikia-inc.com
-	 * @return array
-	 *
-	 * @see Language::getLanguageNames()
-	 * @see RT#11870
-	 */
-	public static function getFixedLanguageNames() {
-		$languages = Language::getLanguageNames();
-
-		$filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
-		foreach ($filter_languages as $key) {
-			unset($languages[$key]);
-		}
-		return $languages;
-	}
-
-	/*
 	 * get a list Wikis where domain contain fragment of string
 	 *
 	 * @author moli@wikia-inc.com
@@ -742,7 +722,7 @@ class WikiMetrics {
 			$endDate = date( 'Y-m-01', strtotime('now') );
 			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->cityIds );
 
-			if ( empty( $pageviews ) ) {
+			if ( !empty( $pageviews ) ) {
 				foreach ( $pageviews as $wiki_id => $wiki_data ) {
 					#---
 					if ( $wiki_data['SUM'] > intval($pageViews) ) continue;

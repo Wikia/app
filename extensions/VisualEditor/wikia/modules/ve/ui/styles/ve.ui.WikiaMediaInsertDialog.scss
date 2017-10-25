@@ -324,17 +324,11 @@ $width-cart: 120px;
 /* Upload - TODO: Move to Widget.scss when Sass work is merged */
 .ve-ui-wikiaUploadButtonWidget {
 	border: 3px dashed mix($color-page, black, 90%);
-	box-sizing: border-box;
 	cursor: pointer;
-	padding: 20px;
-	position: relative;
-	text-align: center;
-	width: 100%;
 
-	> span {
-		display: block;
-		font-size: 1.7em;
-		margin-bottom: 20px;
+	&.ve-ui-wikiaUploadButtonWidgetLogIn {
+		border: none;
+		cursor: default;
 	}
 
 	input[type="file"] {
@@ -347,4 +341,36 @@ $width-cart: 120px;
 		margin-bottom: 15px;
 		width: 47px;
 	}
+}
+
+.ve-ui-wikiaUploadButtonWidget,
+.ve-ui-wikiaVideoInsertDialogLogIn {
+	box-sizing: border-box;
+	padding: 20px;
+	position: relative;
+	text-align: center;
+	width: 100%;
+
+	> span {
+		display: block;
+		font-size: 1.7em;
+		line-height: 1.25em;
+		margin-bottom: 20px;
+	}
+
+	> .oo-ui-icon-video {
+		background: {
+			repeat: no-repeat;
+			size: 32px;
+		}
+		display: inline-block;
+		height: 32px;
+		margin-bottom: 15px;
+		opacity: .7;
+		width: 32px;
+	}
+}
+
+.ve-ui-wikiaRegisterButton {
+	margin-left: 20px;
 }

@@ -23,38 +23,23 @@ class CreateNewWikiController extends WikiaController {
 	const LANG_ALL_AGES_OPT        = 'en';
 
 	public function index() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
+		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
-		$wgSuppressWikiHeader = true;
+		$wgSuppressCommunityHeader = true;
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = false;
 		$wgSuppressToolbar = true;
 
 		// store the fact we're on CNW
 		$this->wg->atCreateNewWikiPage = true;
-
-		if ( !$this->wg->User->isLoggedIn() && !empty( $this->wg->EnableFacebookClientExt ) ) {
-			// required for FB Connect to work
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-		}
-
-		// fbconnected means user has gone through step 2 to login via facebook.
-		// Therefore, we need to reload some values and start at the step after signup/login
-		$fbconnected = $wgRequest->getVal('fbconnected');
-		$fbreturn = $wgRequest->getVal('fbreturn');
-		if((!empty($fbconnected) && $fbconnected === '1') || (!empty($fbreturn) && $fbreturn === '1')) {
-			$this->LoadState();
-			$currentStep = 'DescWiki';
-		} else {
-			$currentStep = '';
-		}
+		$currentStep = '';
 
 		$this->setupVerticalsAndCategories();
 
-		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$languages = wfGetFixedLanguageNames();
+		$this->aTopLanguages = WikiaLanguage::getSupportedLanguages();
+		$languages = WikiaLanguage::getRequestSupportedLanguages();
 		asort( $languages );
 		$this->aLanguages = $languages;
 
@@ -71,7 +56,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
-		
+
 		$this->wg->Out->addJsConfigVars([
 			'wgLangAllAgesOpt' => self::LANG_ALL_AGES_OPT
 		]);
@@ -280,6 +265,18 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
+		//check if description content pass phalanx blocks
+		$description = $params[ 'wDescription' ];
+		if ( !empty( $description ) ) {
+			$blockedKeyword = '';
+			Hooks::run( 'CheckContent', array( $description, &$blockedKeyword ) );
+			if ( !empty( $blockedKeyword ) ) {
+				$this->setContentBlockedByPhalanxErrorResponse( $description, $blockedKeyword );
+				wfProfileOut( __METHOD__ );
+				return;
+			}
+		}
+
 		// check if user created more wikis than we allow per day
 		$numWikis = $this->countCreatedWikis($wgUser->getId());
 		if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() && !$wgUser->isAllowed( 'createwikilimitsexempt' ) ) {
@@ -327,7 +324,8 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::CITY_ID_FIELD, $cityId );
 		$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $cityId );
 
-		$finishCreateUrl = empty( $wgDevelDomains ) ? $finishCreateTitle->getFullURL() : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL() );
+		$fullURL = $finishCreateTitle->getFullURL( [ 'editToken' => $wgUser->getEditToken() ] );
+		$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
 		$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
 
 		$this->info(__METHOD__ . ': completed', [
@@ -358,12 +356,10 @@ class CreateNewWikiController extends WikiaController {
 		$text = $wgRequest->getVal('text','');
 		$blockedKeyword = '';
 
-		wfRunHooks( 'CheckContent', array( $text, &$blockedKeyword ) );
+		Hooks::run( 'CheckContent', array( $text, &$blockedKeyword ) );
 
 		if ( !empty( $blockedKeyword ) ) {
-			$this->info( __METHOD__ . ": keyword blocked by Phalanx '" . $text . "'': " . $blockedKeyword );
-			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage('cnw-badword-header')->text() );
-			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage('cnw-badword-msg', $blockedKeyword)->text() );
+			$this->setContentBlockedByPhalanxErrorResponse( $text, $blockedKeyword );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -457,5 +453,12 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_CREATION_LIMIT );
 		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT )->parse() );
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-wiki-limit-header' )->text());
+	}
+
+	private function setContentBlockedByPhalanxErrorResponse( $description, $blockedKeyword ) {
+		$this->info( __METHOD__ . ": keyword blocked by Phalanx '" . $description . "'': " . $blockedKeyword );
+		$this->response->setCode( 400 );
+		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-badword-msg', $blockedKeyword )->text() );
+		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-badword-header' )->text() );
 	}
 }

@@ -63,11 +63,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	const NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE = 5;
 
-	const DISABLE_FANDOM_STORIES_SEARCH_RESULTS_CACHING = 'wgDisableFandomStoriesSearchResultsCaching';
-	const ENABLE_FANDOM_STORIES_SEARCH_LOGGING = 'wgEnableFandomStoriesSearchLogging';
-	const ENABLE_SEARCH_REQUEST_SHADOWING = 'wgEnableSearchRequestShadowing';
-	const SEARCH_REQUEST_SAMPLING_RATE = 'wgSearchRequestSamplingRate';
-
 	/**
 	 * Responsible for instantiating query services based on config.
 	 *
@@ -516,14 +511,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
 			$title = $article->getTitle();
 			if ( $this->useGoSearch() ) {
-				wfRunHooks( 'SpecialSearchIsgomatch', [ $title, $query ] );
+				Hooks::run( 'SpecialSearchIsgomatch', [ $title, $query ] );
 				$this->setVarnishCacheTime( WikiaResponse::CACHE_DISABLED );
 				$this->response->redirect( $title->getFullUrl() );
 			}
 		} else {
 			$title = Title::newFromText( $query );
 			if ( $title !== null ) {
-				wfRunHooks( 'SpecialSearchNogomatch', [ &$title ] );
+				Hooks::run( 'SpecialSearchNogomatch', [ &$title ] );
 			}
 		}
 
@@ -592,7 +587,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
-			$requestedFields = $searchConfig->getRequestedFields();
 			$searchConfig->setRequestedFields( explode( ',', $request->getVal( 'jsonfields', '' ) ) );
 		}
 
@@ -693,17 +687,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->addRightRailModules( $searchConfig );
 	}
 
-	// ST-78: temporary code to use globals from community central because we can't
-	// deploy config during code freeze
-	protected function getCentralVariableValue( $variableName ) {
-		$variable =
-			WikiFactory::getVarByName( $variableName, WikiFactory::COMMUNITY_CENTRAL,
-				true  // ignore cached value
-			);
-
-		return unserialize( $variable->cv_value );
-	}
-
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
 		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
 
@@ -724,29 +707,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && $hasTerms ) {
 			$query = $searchConfig->getQuery()->getSanitizedQuery();
 
-			// ST-78: temporary code to use globals from community central because we can't
-			// deploy config during code freeze
-			$enableSearchLogging =
-				$this->getCentralVariableValue( self::ENABLE_FANDOM_STORIES_SEARCH_LOGGING );
-			if ( $enableSearchLogging ) {
-				WikiaLogger::instance()->info( __METHOD__ . ' - Querying Fandom Stories', [
-					'query' => $query,
-				] );
-			}
+			WikiaLogger::instance()->info( __METHOD__ . ' - Querying Fandom Stories', [
+				'query' => $query,
+			] );
 
-			$searchCommand = $this->buildSearchCommand( $query );
-
-			// ST-78: temporary code to use globals from community central because we can't
-			// deploy config during code freeze
-			$disableResultsCaching =
-				$this->getCentralVariableValue( self::DISABLE_FANDOM_STORIES_SEARCH_RESULTS_CACHING );
-			if ( !$disableResultsCaching ) {
-				$fandomStories =
-					\WikiaDataAccess::cache( wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY,
-						$query ), \WikiaResponse::CACHE_STANDARD, $searchCommand );
-			} else {
-				$fandomStories = $searchCommand();
-			}
+			$fandomStories = \WikiaDataAccess::cache(
+				wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
+				\WikiaResponse::CACHE_STANDARD,
+				function() use ( $query ) {
+					return ( new \Wikia\Search\Services\ESFandomSearchService() )->query( $query );
+				}
+			);
 
 			if ( !empty( $fandomStories ) ) {
 				if ( count( $fandomStories ) === \Wikia\Search\Services\FandomSearchService::RESULTS_COUNT ) {
@@ -778,39 +749,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( !empty( $topWikiArticles ) ) {
 			$this->setVal( 'topWikiArticles', $topWikiArticles );
 		}
-	}
-
-	protected function buildSearchCommand( $query ) {
-
-		// ST-78: temporary code to use globals from community central because we can't
-		// deploy config during code freeze
-		$enableShadowing = $this->getCentralVariableValue( self::ENABLE_SEARCH_REQUEST_SHADOWING );
-		$samplingRate = $this->getCentralVariableValue( self::SEARCH_REQUEST_SAMPLING_RATE ) ?: 0;
-
-		return function () use (
-			$query,
-			$enableShadowing,
-			$samplingRate
-		) {
-			$searchService =
-				\Wikia\Util\SamplerProxy::createBuilder()
-					->setEnableShadowing( $enableShadowing )
-					->setMethodSamplingRate( $samplingRate )
-					->setOriginalCallable( [
-						new \Wikia\Search\Services\FandomSearchService(),
-						'query',
-					]
-				)
-				->setAlternateCallable(
-					[
-						new \Wikia\Search\Services\ESFandomSearchService(),
-						'query',
-					]
-				)
-				->build();
-
-			return $searchService->query( $query );
-		};
 	}
 
 	/**
@@ -966,7 +904,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 
-		wfRunHooks( 'AdvancedBoxSearchableNamespaces', [ &$searchableNamespaces ] );
+		Hooks::run( 'AdvancedBoxSearchableNamespaces', [ &$searchableNamespaces ] );
 
 		$this->setVal( 'namespaces', $config->getNamespaces() );
 		$this->setVal( 'searchableNamespaces', $searchableNamespaces );

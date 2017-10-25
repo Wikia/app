@@ -368,7 +368,7 @@ abstract class VideoFeedIngester {
 				$this->logger->videoIngested( $msg, $this->pageCategories );
 
 				wfWaitForSlaves();
-				wfRunHooks( 'VideoIngestionComplete', [ $uploadedTitle, $this->pageCategories ] );
+				Hooks::run( 'VideoIngestionComplete', [ $uploadedTitle, $this->pageCategories ] );
 				return 1;
 			}
 		}

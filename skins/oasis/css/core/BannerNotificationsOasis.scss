@@ -4,7 +4,7 @@
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .wikia-grid {
-	.banner-notifications-wrapper {
+	.wds-banner-notification__container {
 		width: 988px;
 
 		&.float {
@@ -22,39 +22,16 @@
 
 /* end temp transistion code */
 
-.modalWrapper .banner-notifications-wrapper {
-	@include box-shadow(0, 0, 0, #000);
-	margin: auto;
-	width: auto;
-
-	.close {
-		display: none;
-	}
-
-	&.float {
-		left: 0;
-		margin: 0;
-		padding: 0;
-		position: absolute;
-		width: 100%;
-	}
-
-	.msg {
-		padding: 8px 10px;
-	}
-}
-
-.modal .banner-notifications-wrapper {
-	width: 100%;
-
-	.close {
-		display: none;
-	}
+.modalWrapper .wds-banner-notification__container {
+	position: relative;
+	// z-index value needs to be higher than for `.wds-community-header`
+	// extensions/wikia/CommunityHeader/styles/index.scss#L20-L20
+	z-index: 6;
 }
 
 // VisualEditor specific notification styling
 .ve-ui-window-body {
-	.banner-notifications-wrapper {
+	.wds-banner-notification__container {
 		box-sizing: border-box;
 		position: absolute;
 		width: 100%;

@@ -13,6 +13,14 @@ class PageShareController extends WikiaController {
 		$requestlang = $this->getVal( 'lang' );
 		$title = $this->getVal( 'title' );
 		$titleObject = Title::newFromText( $title );
+
+		// Fail silently on bad titles to avoid floods of exceptions
+		// from requests to cached pages (PLATFORM-2391)
+		$modalTitle = '';
+		if ( $titleObject instanceof Title ) {
+			$modalTitle = $titleObject->getText();
+		}
+
 		$lang = PageShareHelper::getLangForPageShare( $requestlang );
 
 		$renderedSocialIcons = \MustacheService::getInstance()->render(
@@ -21,7 +29,7 @@ class PageShareController extends WikiaController {
 		);
 
 		$this->setVal( 'socialIcons', $renderedSocialIcons );
-		$this->setVal( 'modalTitle', wfMessage( 'page-share-modal-title' )->params( $titleObject->getText() )->text() );
+		$this->setVal( 'modalTitle', wfMessage( 'page-share-modal-title' )->params( $modalTitle )->text() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 

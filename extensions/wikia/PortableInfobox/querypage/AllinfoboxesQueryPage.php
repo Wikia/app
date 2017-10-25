@@ -64,7 +64,7 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 				->run( $dbw );
 		}
 
-		wfRunHooks( 'AllInfoboxesQueryRecached' );
+		Hooks::run( 'AllInfoboxesQueryRecached' );
 
 		return count( $infoboxes );
 	}
@@ -120,7 +120,7 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 			] ] )
 			->run( $dbw );
 
-		wfRunHooks( 'AllInfoboxesQueryRecached' );
+		Hooks::run( 'AllInfoboxesQueryRecached' );
 	}
 
 	private function hasInfobox( Title $title ) {

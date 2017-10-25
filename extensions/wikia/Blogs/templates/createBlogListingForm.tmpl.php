@@ -12,8 +12,7 @@ CreateBlogListing.checkMatchesCallback = function( respData ) {
 
 CreateBlogListing.checkMatches = function (e) {
 		var listingCategories = $( "#wpCategoryTextarea1" ).val();
-		//var listingAuthors = YD.get( "blogListingAuthors" ).value;
-		$( "#blogListingMatches" ).html('<?php echo Wikia::ImageProgress() ?>');
+		$( "#blogListingMatches" ).html('<img src="' + window.stylepath + '/common/images/ajax.gif" height="16" width="16">');
 		$.get(wgAjaxPath, {action: "ajax", rs: "CreateBlogListingPage::axBlogListingCheckMatches", categories: encodeURIComponent(listingCategories)}, CreateBlogListing.checkMatchesCallback);
 	};
 

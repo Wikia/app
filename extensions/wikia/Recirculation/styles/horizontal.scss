@@ -7,7 +7,8 @@ $recirculation-horizontal-border-color: rgba($color-headline-border, .5);
 .recirculation-horizontal {
 	box-sizing: border-box;
 	clear: both;
-	margin: 30px auto;
+	margin: 30px auto -30px;
+	padding-bottom: 42px;
 	position: relative;
 
 	h3,
@@ -30,7 +31,6 @@ $recirculation-horizontal-border-color: rgba($color-headline-border, .5);
 	}
 
 	.thumbnail {
-		background-color: $color-headline-border;
 		margin-bottom: 5px;
 		overflow: hidden;
 		text-align: center;
@@ -91,21 +91,42 @@ $recirculation-footer-thumbnail-height: 110px;
 
 .recirculation-horizontal.recirculation-footer {
 	h3 {
-		font-size: 21px;
-		line-height: 25px;
+		font-family: "Helvetica Neue", sans-serif;
+		font-size: 20px;
+		font-weight: bold;
+		line-height: 22px;
+		border-top: 1px solid #cccccc;
+		padding-top: 30px;
+	}
+
+	h4 {
+		font-family: "Helvetica Neue", sans-serif;
+		font-size: 16px;
+		font-weight: bold;
 	}
 
 	.items {
-		border-top: $recirculation-horizontal-border-size solid rgba($color-headline-border, .5);
-		padding: 10px;
+		padding: 10px 0;
 	}
 
 	.item {
-		width: $recirculation-footer-thumbnail-width;
+		flex: 1;
+		padding: 0 0.5rem;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&:last-child {
+			padding-right: 0;
+		}
 	}
 
 	.thumbnail {
-		height: $recirculation-footer-thumbnail-height;
-		width: $recirculation-footer-thumbnail-width;
+		width: 100%;
+
+		img {
+			width: 100%;
+		}
 	}
 }

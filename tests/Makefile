@@ -7,11 +7,14 @@ LOGS_PATH=build/logs
 CMD_PHPUNIT=php -v && php -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
 	--configuration=phpunit.xml
 
+# command to run PHPUnit Code Coverage
+CMD_PHPUNIT_COVERAGE=php -v && php -d xdebug.coverage_enable=1 -d opcache.enable=0 run-test.php \
+	--configuration=phpunit.xml
+
 # command to run karma
 CMD_KARMA=../node_modules/karma/bin/karma start \
 	--single-run \
-	--no-auto-watch \
-	--reporters progress,junit,coverage
+	--no-auto-watch
 
 # set up an environment
 export SERVER_DBNAME=firefly
@@ -62,10 +65,11 @@ phpunit-single: prepare
 # runs all tests from given directory or file and produce HTML and console tests coverage result
 phpunit-single-coverage: prepare
 		rm -rf coverage && mkdir -p coverage
-		${CMD_PHPUNIT} \
+		${CMD_PHPUNIT_COVERAGE} \
 				--coverage-html "coverage" \
 				--coverage-text \
 				--exclude-group Broken \
+				--whitelist ${files} \
 				${test}
 
 # runs fast unit tests only
@@ -109,19 +113,8 @@ karma-integration: prepare
 phpunit-coverage: prepare
 	mkdir -p build/coverage
 
-	${CMD_PHPUNIT} ${test} \
+	${CMD_PHPUNIT_COVERAGE} ${test} \
 		--log-junit=${LOGS_PATH}/phpunit-coverage.xml \
 		--exclude-group Broken \
 		--coverage-html build/coverage \
 		--coverage-clover build/coverage.xml
-
-#
-# CODE LINTING
-#
-codelint-js:
-	php ../maintenance/wikia/codelint.php \
-		--mode=js \
-		--dir=../skins/oasis,../skins/wikia,../resources/wikia,../extensions/wikia \
-		--blacklist=/CodeLint/examples/anticode.js,/resources/wikia/libraries/ghostwriter/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/,/tests/ \
-		--format=html \
-		--output=build/jslint.html

@@ -15,8 +15,8 @@ class Permissions {
 	 * @return bool
 	 */
 	public function shouldDisplayEntryPoint( \User $user, \Title $title ) {
-		return $this->userCanChangeType( $user, $title )
-		       && $title->inNamespace( NS_TEMPLATE );
+		return $title->inNamespace( NS_TEMPLATE ) &&
+			   $this->userCanChangeType( $user, $title );
 	}
 
 	/**

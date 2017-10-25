@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.gpt.adElement', [
-	'wikia.document',
-	'wikia.log',
 	'ext.wikia.adEngine.provider.gpt.adSizeConverter',
-	'ext.wikia.adEngine.provider.gpt.adSizeFilter'
-], function (doc, log, adSizeConverter, adSizeFilter) {
+	'ext.wikia.adEngine.provider.gpt.adSizeFilter',
+	'wikia.document',
+	'wikia.log'
+], function (adSizeConverter, adSizeFilter, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adElement';
@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 			this.node.id = this.id;
 		}
 		if (slotTargeting.size) {
-			this.sizes = adSizeConverter.convert(slotTargeting.size);
+			this.sizes = adSizeConverter.toArray(slotTargeting.size);
 			this.sizes = adSizeFilter.filter(slotName, this.sizes);
 			delete slotTargeting.size;
 			this.node.setAttribute('data-gpt-slot-sizes', JSON.stringify(this.sizes));
@@ -66,21 +66,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 	};
 
 	AdElement.prototype.configureSlot = function (slot) {
-		var name,
-			value;
-
-		for (name in this.slotTargeting) {
-			if (this.slotTargeting.hasOwnProperty(name)) {
-				value = this.slotTargeting[name];
-				if (value) {
-					log(['setSlot', 'slot.setTargeting', name, value], 'debug', logGroup);
-					slot.setTargeting(name, value);
-				}
-			}
-		}
-
-		log(['setSlot', slot], 'debug', logGroup);
-		this.node.setAttribute('data-gpt-slot-params', JSON.stringify(this.slotTargeting));
+		return AdElement.configureSlot(slot, this.slotTargeting, this.node);
 	};
 
 	AdElement.prototype.setPageLevelParams = function (pageLevelParams) {
@@ -92,6 +78,35 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		this.node.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
 		this.node.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
 		this.node.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
+	};
+
+	/**
+	 * Configures GPT slot targeting
+	 * @param {object} slot - GPT slot object
+	 * @param {object} targeting - object with targeting properties
+	 * @param {Node} [node] - slot's HTML node
+	 */
+	AdElement.configureSlot = function (slot, targeting, node) {
+		var name,
+			value;
+
+		for (name in targeting) {
+			if (targeting.hasOwnProperty(name)) {
+				value = targeting[name];
+				if (value) {
+					log(['setSlot', 'slot.setTargeting', name, value], 'debug', logGroup);
+					slot.setTargeting(name, value);
+				}
+			}
+		}
+
+		if (!node) {
+			log(['setSlot', 'HTML node not provided, trying to retrieve from slot', slot], 'debug', logGroup);
+			node = doc.getElementById(slot.getSlotElementId());
+		}
+
+		log(['setSlot', slot], 'debug', logGroup);
+		node.setAttribute('data-gpt-slot-params', JSON.stringify(targeting));
 	};
 
 	return AdElement;

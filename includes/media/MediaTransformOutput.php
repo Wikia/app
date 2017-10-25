@@ -346,7 +346,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		$html = $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 
 		//give extensions a chance to modify the markup
-		wfRunHooks( 'ThumbnailImageHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
+		Hooks::run( 'ThumbnailImageHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
 
 		return $html;
 		/**

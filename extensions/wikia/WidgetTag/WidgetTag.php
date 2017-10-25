@@ -29,7 +29,7 @@ $wgExtensionMessagesFiles['WidgetTag'] = __DIR__ . '/WidgetTag.i18n.php';
  * @param Parser $parser
  * @return bool
  */
-function efWidgetTagSetup(Parser $parser) {
+function efWidgetTagSetup( Parser $parser ): bool {
 	global $wgHooks;
 	$parser->setHook( 'widget', 'efWidgetTagRender' );
 	$wgHooks['ParserAfterTidy'][] = 'efWidgetTagReplaceMarkers';
@@ -41,7 +41,7 @@ function efWidgetTagRender( $input, $args, $parser ) {
 	return $widgetTagRenderer->renderTag( $input, $args, $parser );
 }
 
-function efWidgetTagReplaceMarkers(&$parser, &$text) {
+function efWidgetTagReplaceMarkers( Parser $parser, string &$text ): bool {
 	$widgetTagRenderer = WidgetTagRenderer::getInstance();
 	$text = $widgetTagRenderer->replaceMarkers($text);
 	return true;

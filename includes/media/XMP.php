@@ -156,7 +156,7 @@ class XMPReader {
 
 		$data = $this->results;
 
-		wfRunHooks('XMPGetResults', Array(&$data));
+		Hooks::run('XMPGetResults', Array(&$data));
 
 		if ( isset( $data['xmp-special']['AuthorsPosition'] )
 			&& is_string( $data['xmp-special']['AuthorsPosition'] )

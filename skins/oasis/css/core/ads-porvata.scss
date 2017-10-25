@@ -1,0 +1,254 @@
+@import '../../../../extensions/wikia/ArticleVideo/styles/video-shared-variables';
+@import 'ads-mixin';
+
+$wikia-top-ads-index: 2;
+
+$default-progress-bar-color: #b7b7b7;
+$default-progress-bar-current-time-color: #666;
+$outstream-progress-bar-color: #666;
+$outstream-progress-bar-current-time-color: #b7b7b7;
+$video-player-button-size: 24px;
+
+$floating-ad-margin: 20px;
+$floating-ad-index: $wikia-top-ads-index + 10;
+$floating-ad-video-width: 320px;
+$floating-ad-animation-speed: $video-collapse-animation-speed;
+$floating-ad-featured-video-gap: $video-container-width;
+
+$vpaid-z-index: 10;
+$controls-z-index: 11;
+$video-interactive-area-z-index: $vpaid-z-index + 1;
+
+.wikia-ad {
+	.video-overlay {
+		@include absolute-fill();
+	}
+
+	.video-display-wrapper {
+		background: #000;
+		height: 100%;
+		position: relative;
+		width: 100%;
+
+		video, &.vpaid-enabled > div {
+			@include absolute-fill();
+		}
+
+		&.vpaid-enabled {
+			video, > div:last-child {
+				z-index: $vpaid-z-index;
+			}
+		}
+
+		.video-player {
+			background: #000;
+			margin: 0 auto;
+			pointer-events: auto;
+		}
+	}
+
+	.replay-overlay {
+		background: rgba(0,0,0,0.3) url('/extensions/wikia/AdEngine/js/video/player/ui/images/play_button.svg') center/8% no-repeat; /* inline */
+		cursor: pointer;
+		height: 100%;
+		position: absolute;
+		z-index: 1;
+	}
+}
+
+.video-player {
+	position: relative;
+
+	&.video-player-left, &.video-player-right {
+		z-index: $wikia-top-ads-index;
+	}
+
+	&.video-player-right {
+		right: 0;
+	}
+
+	video {
+		left: 0;
+	}
+
+	.progress-bar {
+		background: $default-progress-bar-color;
+		bottom: 0;
+		height: 8px;
+		left: 0;
+		position: absolute;
+		width: 100%;
+		z-index: $controls-z-index;
+	}
+
+	.current-time {
+		@include transition(width, 1s, linear, 0);
+		background: $default-progress-bar-current-time-color;
+		height: 100%;
+		max-width: 100%;
+		width: 0;
+		z-index: $controls-z-index;
+	}
+
+	.pause-overlay {
+		cursor: pointer;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: $controls-z-index;
+	}
+
+	.close-ad {
+		background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/close_button.svg'); /* inline */
+		cursor: pointer;
+		height: $video-player-button-size;
+		margin: 10px 10px 30px 30px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: $video-player-button-size;
+		z-index: $controls-z-index;
+	}
+
+	/* TODO remove .ima-mute-div and all references in next releases (keep .volume-control only) */
+	.ima-mute-div, .volume-control {
+		/* remove Firefox's dotted outline on buttons and links */
+		:focus {outline:none;}
+		::-moz-focus-inner {border:0;}
+
+		bottom: 18px;
+		cursor: pointer;
+		position: absolute;
+		right: 10px;
+		z-index: $controls-z-index;
+
+		.speaker {
+			&.mute {
+				background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_off_button.svg'); /* inline */
+			}
+
+			background-image: url('/extensions/wikia/AdEngine/js/video/player/ui/images/sound_on_button.svg'); /* inline */
+			display: inline-block;
+			height: $video-player-button-size;
+			overflow: hidden;
+			position: relative;
+			width: $video-player-button-size;
+		}
+	}
+}
+
+#INCONTENT_WRAPPER {
+	font-size: 0;
+	line-height: 0;
+	text-align: center;
+
+	#INCONTENT_PLAYER {
+		margin: 0 auto -14px auto;
+
+		&.porvata-outstream {
+			max-width: 640px;
+
+			&::before {
+				color: $color-text;
+				content: attr(data-label);
+				display: block;
+				font-size: 0.625rem;
+				font-weight: 700;
+				line-height: 0.75rem;
+				padding-bottom: 6px;
+				padding-top: 6px;
+				text-align: center;
+				text-transform: uppercase;
+			}
+
+			.video-overlay {
+				background: #000;
+			}
+		}
+	}
+}
+
+/* Outstream */
+
+.porvata-outstream {
+	.video-player {
+		.progress-bar {
+			background: $outstream-progress-bar-color;
+			height: 5px;
+		}
+
+		.current-time {
+			background: $outstream-progress-bar-current-time-color;
+		}
+
+		.ima-mute-div, .volume-control {
+			bottom: 0;
+			right: 0;
+			.speaker {
+				padding: 14px 7px 14px 12px;
+				&.mute {
+					background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_off_button.svg') no-repeat 12px 24px; /* inline */
+				}
+
+				background: url('/extensions/wikia/AdEngine/js/video/player/ui/images/outstream_sound_on_button.svg') no-repeat 12px 24px; /* inline */
+			}
+		}
+	}
+}
+
+/* Floating */
+
+#WikiaArticle.floating, .WikiaTopAds.floating {
+	z-index: $floating-ad-index;
+
+	.wikia-ad {
+		bottom: $wikia-bar-height + $floating-ad-margin;
+		margin-bottom: 0;
+		position: fixed;
+		right: $floating-ad-margin;
+		transition: margin-bottom $floating-ad-animation-speed;
+
+		.video-player, iframe {
+			width: $floating-ad-video-width;
+		}
+
+		.floating-close-button {
+			display: block;
+		}
+	}
+
+	&.with-article-video {
+		.wikia-ad {
+			margin-bottom: $floating-ad-featured-video-gap;
+			transition: margin-bottom $floating-ad-animation-speed;
+		}
+	}
+}
+
+#WikiaArticle.floating {
+	z-index: initial;
+
+	.wikia-ad {
+		width: $floating-ad-video-width;
+		z-index: $floating-ad-index;
+
+		.provider-container {
+			padding-bottom: 0 !important; // has to be !important because o inline style
+			width: $floating-ad-video-width;
+		}
+	}
+}
+
+.floating-close-button {
+	cursor: pointer;
+	display: none;
+	left: 0;
+	position: absolute;
+	top: 26px;
+	z-index: $video-interactive-area-z-index;
+
+	img {
+		padding: 7px;
+	}
+}

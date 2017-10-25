@@ -8,13 +8,30 @@
  */
 
 class VideoPageAdminSpecialController extends WikiaSpecialPageController {
+	/**
+	 * Methods that should only be callable via Nirvana internal request.
+	 * These methods are responsible for rendering PHP partial templates on the page.
+	 */
+	const INTERNAL_ONLY_METHODS = [
+		'featured',
+	    'fan',
+	    'category',
+	];
 
 	public function __construct() {
 		parent::__construct( 'VideoPageAdmin', '', false );
 	}
 
+	/**
+	 * SUS-1999: Limit access to internal templating methods.
+	 * @throws ForbiddenException
+	 */
 	public function init() {
+		$method = $this->request->getVal( 'method' );
 
+		if ( in_array( $method, static::INTERNAL_ONLY_METHODS ) & !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
 	}
 
 	/**
@@ -31,7 +48,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 
 		JSMessages::enqueuePackage( 'VideoPageTool', JSMessages::EXTERNAL );
 
@@ -209,7 +226,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		// add default values if the number of assets is less than number of rows that needed to be shown
-		$defaultValues = array_pop( $helper->getDefaultValuesBySection( $section, 1 ) );
+		$defaultValuesBySection = $helper->getDefaultValuesBySection( $section, 1 );
+		$defaultValues = array_pop( $defaultValuesBySection );
 		for ( $i = count( $videos ) + 1; $i <= $helper->getRequiredRowsMax( $section ); $i++ ) {
 			$videos[$i] = $defaultValues;
 		}
@@ -239,6 +257,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function publish() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$time = $this->getVal( 'date', time() );
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 
@@ -300,6 +320,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function getCalendarInfo() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$errMsg = '';
 		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
@@ -375,6 +397,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videos
 	 */
 	public function featured() {
+		// SUS-1999: Don't let this template be called externally
+		if ( !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
+
 		$this->videos = $this->getVal( 'videos', array() );
 		$this->date = $this->getVal( 'date' );
 		$this->language = $this->getVal( 'language' );
@@ -390,6 +417,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array $categories
 	 */
 	public function category() {
+		// SUS-1999: Don't let this template be called externally
+		if ( !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
+
 		$this->categories = $this->getVal( 'videos', array() );
 		$this->date = $this->getVal( 'date' );
 		$this->language = $this->getVal( 'language' );
@@ -405,6 +437,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videos
 	 */
 	public function fan() {
+		// SUS-1999: Don't let this template be called externally
+		if ( !$this->request->isInternal() ) {
+			throw new ForbiddenException();
+		}
+
 		$videos[] = array(
 			'videoTitle' => 'Video Title',
 			'videoKey' => 'Video_Title',
@@ -428,6 +465,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array video
 	 */
 	public function getFeaturedVideoData() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$errMsg = '';
 		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
@@ -475,6 +514,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array $data [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
 	 */
 	public function getImageData() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$errMsg = '';
 		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
@@ -514,6 +555,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string seeMoreLabel
 	 */
 	public function getVideosByCategory() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
 		$categoryName = $this->getVal( 'categoryName', '' );
 
 		if ( empty( $categoryName ) ) {
@@ -530,6 +573,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		$helper = new VideoPageToolHelper();
+
 
 		$this->result = 'ok';
 		$this->msg = '';

@@ -33,6 +33,9 @@ var Vignette = (function () {
 			urlParameters = this.getParametersFromLegacyUrl(url);
 			url = this.createThumbnailUrl(urlParameters, options);
 		}
+		else if (this.isUUIDOnlyUrl(url)) {
+			url = this.createUUIDBasedThumbnailUrl(url, options);
+		}
 		else if (this.isThumbnailerUrl(url)) {
 			// Accept Vignette URL in order to convert thumbnail to a different mode
 			url = this.updateThumbnailUrl(url, options);
@@ -54,11 +57,16 @@ var Vignette = (function () {
 			if (!options.hasOwnProperty('width')) {
 				throw new Error('Required parameter `width` not specified for method getThumbUrl');
 			}
-			if (!options.hasOwnProperty('height') && options.mode !== Vignette.mode.scaleToWidth && options.mode !== Vignette.mode.windowCrop) {
+			if (!options.hasOwnProperty('height') &&
+				options.mode !== Vignette.mode.scaleToWidth &&
+				options.mode !== Vignette.mode.windowCrop) {
 				throw new Error('Thumbnailer mode `' + options.mode + '` requires height');
 			}
 			if (options.mode === Vignette.mode.windowCrop || options.mode === Vignette.mode.windowCropFixed) {
-				if (!options.hasOwnProperty('xOffset1') || !options.hasOwnProperty('yOffset1') || !options.hasOwnProperty('xOffset2') || !options.hasOwnProperty('yOffset2')) {
+				if (!options.hasOwnProperty('xOffset1') ||
+					!options.hasOwnProperty('yOffset1') ||
+					!options.hasOwnProperty('xOffset2') ||
+					!options.hasOwnProperty('yOffset2')) {
 					throw new Error('Thumbnailer mode `' + options.mode + '` requires x and y offsets');
 				}
 			}
@@ -76,6 +84,19 @@ var Vignette = (function () {
 	Vignette.isThumbnailerUrl = function (url) {
 		if (url === void 0) { url = ''; }
 		return this.imagePathRegExp.test(url);
+	};
+	/**
+	 * Checks if url points to new Vignette
+	 *
+	 * @private
+	 *
+	 * @param {String} url
+	 *
+	 * @return {Boolean}
+	 */
+	Vignette.isUUIDOnlyUrl = function (url) {
+		if (url === void 0) { url = ''; }
+		return this.onlyUUIDRegExp.test(url);
 	};
 	/**
 	 * Checks if url points to legacy image URL
@@ -123,12 +144,12 @@ var Vignette = (function () {
 	 *   - first two segments `http://` are removed;
 	 *   - next segment is the domain name;
 	 *   - next segment is the cachebuster value with `__cb` in front so we use `substr()`
-	 *     to get rid of the prefix;
+	 *	 to get rid of the prefix;
 	 *   - clearLegacyThumbSegments is called which clears the `thumb` and last segment from
-	 *     the URL if it is a thumbnail;
+	 *	 the URL if it is a thumbnail;
 	 *   - the last three segments are the `imagePath` so we splice them from the array;
 	 *   - what is left is the `wikiaBucket`, which is the first and the last element of
-	 *     the array, these get removed from the array;
+	 *	 the array, these get removed from the array;
 	 *   - what is left in `segments` (if any) are the prefix segments so they go to `pathPrefix`;
 	 *
 	 * @private
@@ -164,7 +185,7 @@ var Vignette = (function () {
 	 */
 	Vignette.createThumbnailUrl = function (urlParameters, options) {
 		var url = [
-			'http://vignette.' + urlParameters.domain,
+			'https://vignette.' + urlParameters.domain,
 			urlParameters.wikiaBucket,
 			urlParameters.imagePath,
 			'revision/latest',
@@ -179,21 +200,44 @@ var Vignette = (function () {
 				query.push('frame=' + ~~options.frame);
 			}
 		}
-		if (this.hasWebPSupport) {
-			query.push('format=webp');
-		}
 		if (urlParameters.pathPrefix) {
 			query.push('path-prefix=' + urlParameters.pathPrefix);
 		}
 		return url.join('/') + '?' + query.join('&');
 	};
 	/**
+	 * Constructs complete thumbnailer url for UUID based links
+	 *
+	 * @private
+	 *
+	 * @param {string} baseUrl
+	 * @param {object} options
+	 *
+	 * @return {String}
+	 */
+	Vignette.createUUIDBasedThumbnailUrl = function (baseUrl, options) {
+		var query = [];
+		// Remove everything after UUID
+		baseUrl = baseUrl.split('/').splice(0, 4).join('/');
+		var url = [baseUrl];
+		if (options) {
+			if (options.hasOwnProperty('mode')) {
+				url.push(this.getModeParameters(options));
+			}
+			if (options.hasOwnProperty('frame')) {
+				query.push('frame=' + ~~options.frame);
+			}
+		}
+		return url.join('/') + (query.length > 0 ? '?' : '') + query.join('&');
+	};
+	;
+	/**
 	 * Updates a Vignette URL with the given options. May be used to strip all options
 	 * from a URL and return the full-size image, if no options are passed in.
 	 *
 	 * @private
 	 *
-	 * @param {String} url
+	 * @param {String} currentUrl
 	 * @param {object} options
 	 *
 	 * @returns {String}
@@ -240,8 +284,9 @@ var Vignette = (function () {
 		return modeParameters.join('/');
 	};
 	Vignette.imagePathRegExp = /\/\/vignette(\d|-poz)?\.wikia/;
-	Vignette.domainRegExp = /(wikia-dev.com|[^.]+.nocookie.net)/;
-	Vignette.legacyPathRegExp = /(wikia-dev.com|[^.]+.nocookie.net)\/__cb[\d]+\/.*$/;
+	Vignette.domainRegExp = /(wikia-dev.(pl|us|com)|[^.]+.nocookie.net)/;
+	Vignette.legacyPathRegExp = /(wikia-dev.(pl|us|com)|[^.]+.nocookie.net)\/__cb[\d]+\/.*$/;
+	Vignette.onlyUUIDRegExp = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(|\/)/i;
 	Vignette.mode = {
 		fixedAspectRatio: 'fixed-aspect-ratio',
 		fixedAspectRatioDown: 'fixed-aspect-ratio-down',
@@ -255,18 +300,5 @@ var Vignette = (function () {
 		zoomCrop: 'zoom-crop',
 		zoomCropDown: 'zoom-crop-down'
 	};
-	Vignette.hasWebPSupport = (function () {
-		// Image is not defined in node.js
-		if (typeof Image === 'undefined') {
-			return false;
-		}
-		// @see http://stackoverflow.com/a/5573422
-		var webP = new Image();
-		webP.src = 'data:image/webp;' + 'base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
-		webP.onload = webP.onerror = function () {
-			Vignette.hasWebPSupport = (webP.height === 2);
-		};
-		return false;
-	})();
 	return Vignette;
-})();
+}());

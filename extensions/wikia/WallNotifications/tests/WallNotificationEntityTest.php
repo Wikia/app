@@ -1,24 +1,30 @@
 <?php
 
-/**
- * Class WallNotificationEntityTest
- */
 class WallNotificationEntityTest extends WikiaBaseTest {
+	const A_FANDOM_USER = 'A Fandom user';
+
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../WallNotifications.setup.php';
+		parent::setUp();
+	}
 
 	/**
-	 * @param $params
+	 * Given a revision, verify that wall notification data is properly populated
 	 *
+	 * @see WallNotificationEntity::createFromRev()
+	 * @group Slow
+	 * @slowExecutionTime 0.01071 ms
 	 * @dataProvider loadDataFromRevDataProvider
+	 * @param array $params
 	 */
-	public function testLoadDataFromRev( $params ) {
-		F::app()->wg->Sitename = $params['wgSitename'];
-		F::app()->wg->CityId = $params['wgCityId'];
+	public function testCreateFromRev( array $params ) {
+		$this->setupEnvironmentMocks( $params );
+		$this->setupWallMessageMocks( $params );
+		$revisionMock = $this->getRevisionMock( $params );
 
-		$rev = $this->getRevisionMock( $params );
-		$entity = $this->getEntityMock( $rev, $params );
+		$entity = WallNotificationEntity::createFromRev( $revisionMock );
 
-		$entity->loadDataFromRev( $rev );
-
+		$this->assertInstanceOf( WallNotificationEntity::class, $entity, 'WallNotificationEntity::createFromRev must return instance of WallNotificationEntity if given valid revision' );
 		$this->assertEquals( $entity->id, $params['id'], 'Testing "id" matches' );
 		$this->assertEquals( $entity->data, $params['data'], 'Member "data" matches' );
 		$this->assertEquals( $entity->parentTitleDbKey, $params['parentTitleDbKey'], 'Testing "parentTitleDbKey" matches' );
@@ -27,40 +33,40 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param Revision $rev
 	 * @param array $params
-	 *
-	 * @return PHPUnit_Framework_MockObject_MockObject|WallNotificationEntity
 	 */
-	private function getEntityMock( Revision $rev, array $params ) {
-		$wm = $this->getWallMessageMock( $params );
+	private function setupEnvironmentMocks( array $params ) {
+		$userMock = $this->getMock( User::class, [ 'getName' ] );
+		$userMock->expects( $this->once() )
+			->method( 'getName' )
+			->willReturn( $params['user']['userName'] );
 
-		$entity = $this->getMockBuilder( 'WallNotificationEntity' )
-			->setMethods( [
-				'getUserName',
-				'getWallMessageFromRev',
-			] )
+		$cacheMock = $this->getMockForAbstractClass( BagOStuff::class );
+		$cacheMock->expects( $this->once() )
+			->method( 'set' )
+			->with( WallNotificationEntity::getMemcKey( $params['id'] ), $params['data'] );
+
+		$messageMock = $this->getMockBuilder( Message::class )
 			->disableOriginalConstructor()
+			->setMethods( [ 'escaped' ] )
 			->getMock();
+		$messageMock->expects( $this->any() )
+			->method( 'escaped' )
+			->willReturn( static::A_FANDOM_USER );
 
-		$entity->expects( $this->once() )
-			->method( 'getUserName' )
-			->willReturn( $params['entity']['userName'] );
-		$entity->expects( $this->once() )
-			->method( 'getWallMessageFromRev' )
-			->with( $this->equalTo( $rev ) )
-			->willReturn( $wm );
-
-		return $entity;
+		$this->mockClass( User::class, $userMock, 'newFromID' );
+		$this->mockGlobalVariable( 'wgMemc', $cacheMock );
+		$this->mockGlobalVariable( 'wgCityId', $params['wgCityId'] );
+		$this->mockGlobalVariable( 'wgSitename', $params['wgSitename'] );
+		$this->mockGlobalFunction( 'wfMessage', $messageMock );
 	}
 
-	private function getWallMessageMock( array $params ) {
-		$wallOwner = $this->getWallOwnerMock( $params );
-		$articleTitle = $this->getArticleTitleMock( $params );
-		$title = $this->getTitleMock( $params );
-		$parentWm = $this->getParentWallMessageMock( $params );
+	private function setupWallMessageMocks( array $params ) {
+		$wallOwnerMock = $this->getWallOwnerMock( $params );
+		$articleTitleMock = $this->getArticleTitleMock( $params );
+		$titleMock = $this->getTitleMock( $params );
 
-		$wm = $this->getMockBuilder( 'WallMessage' )
+		$wallMessageMock = $this->getMockBuilder( WallMessage::class )
 			->setMethods( [
 				'getWallOwner',
 				'getArticleTitle',
@@ -72,42 +78,77 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'isEdited',
 				'getLastEditSummary',
 				'getMetaTitle',
+				'load'
 			] )
 			->disableOriginalConstructor()
 			->getMock();
+		$wallMessageCounter = 0;
 
-		$wm->expects( $this->once() )
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
+			->method( 'load' );
+		$wallMessageCounter++;
+
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getWallOwner' )
-			->willReturn( $wallOwner );
-		$wm->expects( $this->once() )
+			->willReturn( $wallOwnerMock );
+		$wallMessageCounter++;
+
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getArticleTitle' )
-			->willReturn( $articleTitle );
-		$wm->expects( $this->once() )
-			->method( 'getTitle' )
-			->willReturn( $title );
-		$wm->expects( $this->once() )
-			->method( 'getTopParentObj' )
-			->willReturn( $parentWm );
-		$wm->expects( $this->once() )
+			->willReturn( $articleTitleMock );
+		$wallMessageCounter++;
+
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getText' )
 			->willReturn( $params['wallMessage']['text'] );
-		$wm->expects( $this->once() )
+		$wallMessageCounter++;
+
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
+			->method( 'getTitle' )
+			->willReturn( $titleMock );
+		$wallMessageCounter++;
+
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getMessagePageUrl' )
 			->willReturn( $params['wallMessage']['messagePageUrl'] );
-		$wm->expects( $this->once() )
+		$wallMessageCounter++;
+
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
 			->method( 'getNotifyeveryone' )
 			->willReturn( $params['wallMessage']['notifyeveryone'] );
-		$wm->expects( $this->once() )
-			->method( 'isEdited' )
-			->willReturn( $params['wallMessage']['isEdited'] );
-		$wm->expects( $this->any() )
-			->method( 'getLastEditSummary' )
-			->willReturn( $params['wallMessage']['lastEditSummary'] );
-		$wm->expects( $this->any() )
-			->method( 'getMetaTitle' )
-			->willReturn( $params['wallMessage']['metaTitle'] );
+		$wallMessageCounter++;
 
-		return $wm;
+		$isEdited = $params['wallMessage']['isEdited'];
+		$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
+			->method( 'isEdited' )
+			->willReturn( $isEdited );
+		$wallMessageCounter++;
+
+		if ( $isEdited ) {
+			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
+				->method( 'getLastEditSummary' )
+				->willReturn( $params['wallMessage']['lastEditSummary'] );
+			$wallMessageCounter++;
+		}
+
+		if ( !empty( $params['parentWallMessage']['id'] ) ) {
+			$parentWallMessageMock = $this->getParentWallMessageMock( $params );
+
+			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
+				->method( 'getTopParentObj' )
+				->willReturn( $parentWallMessageMock );
+		} else {
+			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
+				->method( 'getTopParentObj' )
+				->willReturn( null );
+			$wallMessageCounter++;
+
+			$wallMessageMock->expects( $this->at( $wallMessageCounter ) )
+				->method( 'getMetaTitle' )
+				->willReturn( $params['wallMessage']['metaTitle'] );
+		}
+
+		$this->mockClass( WallMessage::class, $wallMessageMock, 'newFromTitle' );
 	}
 
 	/**
@@ -115,12 +156,13 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 	 *
 	 * @return PHPUnit_Framework_MockObject_MockObject|Revision
 	 */
-	private function getRevisionMock( array $params ) {
+	private function getRevisionMock( array $params ): PHPUnit_Framework_MockObject_MockObject {
 		$rev = $this->getMockBuilder( 'Revision' )
 			->setMethods( [
 				'getId',
 				'getUser',
 				'getTimestamp',
+				'getTitle'
 			] )
 			->disableOriginalConstructor()
 			->getMock();
@@ -134,11 +176,14 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 		$rev->expects( $this->once() )
 			->method( 'getTimestamp' )
 			->willReturn( $params['revision']['timestamp'] );
+		$rev->expects( $this->once() )
+			->method( 'getTitle' )
+			->willReturn( new Title() );
 
 		return $rev;
 	}
 
-	private function getWallOwnerMock( array $params ) {
+	private function getWallOwnerMock( array $params ): PHPUnit_Framework_MockObject_MockObject {
 		$wallOwner = $this->getMockBuilder( 'User' )
 			->setMethods( [
 				'getId',
@@ -157,7 +202,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 		return $wallOwner;
 	}
 
-	private function getArticleTitleMock( array $params ) {
+	private function getArticleTitleMock( array $params ): PHPUnit_Framework_MockObject_MockObject {
 		$articleTitle = $this->getMockBuilder( 'Title' )
 			->setMethods( [
 				'exists',
@@ -188,13 +233,8 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 		return $articleTitle;
 	}
 
-	private function getTitleMock( array $params ) {
-		$title = $this->getMockBuilder( 'Title' )
-			->setMethods( [
-				'getArticleId',
-			] )
-			->disableOriginalConstructor()
-			->getMock();
+	private function getTitleMock( array $params ): PHPUnit_Framework_MockObject_MockObject {
+		$title = $this->getMock( Title::class, [ 'getArticleId' ] );
 
 		$title->expects( $this->once() )
 			->method( 'getArticleId' )
@@ -203,15 +243,11 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 		return $title;
 	}
 
-	private function getParentWallMessageMock( array $params ) {
-		if ( empty( $params['parentWallMessage']['id'] ) ) {
-			return null;
-		}
+	private function getParentWallMessageMock( array $params ): PHPUnit_Framework_MockObject_MockObject {
+		$parentTitleMock = $this->getParentTitleMock( $params );
+		$parentUserMock = $this->getParentUserMock( $params );
 
-		$parentTitle = $this->getParentTitleMock( $params );
-		$parentUser = $this->getParentUserMock( $params );
-
-		$parentWm = $this->getMockBuilder( 'WallMessage' )
+		$parentWallMessageMock = $this->getMockBuilder( 'WallMessage' )
 			->setMethods( [
 				'load', // should do nothing
 				'getTitle',
@@ -221,60 +257,63 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 			] )
 			->disableOriginalConstructor()
 			->getMock();
+		$parentWallMessageCounter = 0;
 
-		$parentWm->expects( $this->once() )
+
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'load' );
-		$parentWm->expects( $this->once() )
+		$parentWallMessageCounter++;
+
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'getTitle' )
-			->willReturn( $parentTitle );
-		$parentWm->expects( $this->any() )
+			->willReturn( $parentTitleMock );
+		$parentWallMessageCounter++;
+
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'getMetaTitle' )
 			->willReturn( $params['parentWallMessage']['metaTitle'] );
-		$parentWm->expects( $this->once() )
+		$parentWallMessageCounter++;
+
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
+			->method( 'getUser' )
+			->willReturn( $parentUserMock );
+		$parentWallMessageCounter++;
+
+		$parentWallMessageMock->expects( $this->at( $parentWallMessageCounter ) )
 			->method( 'getId' )
 			->willReturn( $params['parentWallMessage']['id'] );
-		$parentWm->expects( $this->once() )
-			->method( 'getUser' )
-			->willReturn( $parentUser );
 
-		return $parentWm;
+		return $parentWallMessageMock;
 	}
 
-	private function getParentTitleMock( array $params ) {
-		$parentTitle = $this->getMockBuilder( 'Title' )
-			->setMethods( [
-				'getDBkey',
-			] )
-			->disableOriginalConstructor()
-			->getMock();
+	private function getParentTitleMock( array $params ): PHPUnit_Framework_MockObject_MockObject {
+		$parentTitleMock = $this->getMock( Title::class, [ 'getDBkey' ] );
 
-		$parentTitle->expects( $this->once() )
+		$parentTitleMock->expects( $this->once() )
 			->method( 'getDBkey' )
 			->willReturn( $params['parentTitle']['dbKey'] );
 
-		return $parentTitle;
+		return $parentTitleMock;
 	}
 
-	private function getParentUserMock( array $params ) {
-		$parentTitle = $this->getMockBuilder( 'User' )
-			->setMethods( [
-				'getId',
-				'getName',
-			] )
+	private function getParentUserMock( array $params ): PHPUnit_Framework_MockObject_MockObject {
+		$parentUserMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'getId', 'getName' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$parentTitle->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( $params['parentUser']['id'] );
-		$parentTitle->expects( $this->once() )
+		$parentUserMock->expects( $this->once() )
 			->method( 'getName' )
 			->willReturn( $params['parentUser']['name'] );
 
-		return $parentTitle;
+		$parentUserMock->expects( $this->once() )
+			->method( 'getId' )
+			->willReturn( $params['parentUser']['id'] );
+
+		return $parentUserMock;
 	}
 
-	public function loadDataFromRevDataProvider() {
+	public function loadDataFromRevDataProvider(): array {
 		$anonTopic = [
 			'revision' => [
 				'id' => '5330',
@@ -312,7 +351,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 			],
 			'parentUser' => [
 			],
-			'entity' => [
+			'user' => [
 				'userName' => '65.19.148.1',
 			],
 			'data' => (object) [
@@ -328,7 +367,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'parent_page_id' => '2147',
 				'msg_author_id' => 0,
 				'msg_author_username' => '65.19.148.1',
-				'msg_author_displayname' => 'A Wikia contributor',
+				'msg_author_displayname' => static::A_FANDOM_USER,
 				'wall_username' => 'Garthwebb',
 				'wall_userid' => '2035791',
 				'wall_displayname' => 'Garthwebb',
@@ -388,7 +427,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'id' => '23911114',
 				'name' => 'GarthTest800',
 			],
-			'entity' => [
+			'user' => [
 				'userName' => '65.19.148.1',
 			],
 			'data' => (object) [
@@ -404,7 +443,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'parent_page_id' => '2147',
 				'msg_author_id' => '0',
 				'msg_author_username' => '65.19.148.1',
-				'msg_author_displayname' => 'A Wikia contributor',
+				'msg_author_displayname' => static::A_FANDOM_USER,
 				'wall_username' => 'Garthwebb',
 				'wall_userid' => '2035791',
 				'wall_displayname' => 'Garthwebb',
@@ -463,7 +502,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 			],
 			'parentUser' => [
 			],
-			'entity' => [
+			'user' => [
 				'userName' => 'GarthTest400',
 			],
 			'data' => (object) [
@@ -539,7 +578,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'id' => '0',
 				'name' => '65.19.148.1',
 			],
-			'entity' => [
+			'user' => [
 				'userName' => 'GarthTest400',
 			],
 			'data' => (object) [
@@ -564,7 +603,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 				'thread_title' => "Hey hey I'm anon",
 				'notifyeveryone' => '',
 				'reason' => '',
-				'parent_displayname' => 'A Wikia contributor',
+				'parent_displayname' => static::A_FANDOM_USER,
 				'parent_user_id' => '0',
 				'url' => 'http://garth.garth.wikia-dev.com/wiki/Thread:2726#2',
 			],

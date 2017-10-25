@@ -52,7 +52,7 @@ class GlobalTitle extends Title {
 
 	static protected $cachedObjects = array();
 
-	private static $extraExtensionNamespaces = [];
+	static $extraExtensionNamespaces = [];
 
 	/**
 	 * @desc Static constructor, Create new Title from name of page
@@ -100,8 +100,31 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		// sure hope this redirects for the most part
-		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
+		$mainPageTitle = self::newFromText( 'Mainpage', NS_MEDIAWIKI, $city_id );
+		$mainPageName = str_replace( ' ', '_', $mainPageTitle->getContent() );
+		$namespace = NS_MAIN;
+		// support for non-MAIN namespace pages, based on Title::secureAndSplit method
+		// extracting namespace from article name
+		$prefixRegexp = "/^(.+?)_*:_*(.*)$/S";
+		if ( preg_match( $prefixRegexp, $mainPageName, $matches ) ) {
+			$namespaces = $mainPageTitle->loadNamespaceNames();
+			$namespaceIndex = array_search( $matches[1], $namespaces );
+			if ( $namespaceIndex !== false ) {
+				$namespace = $namespaceIndex;
+				$mainPageName = $matches[2];
+			}
+		}
+
+		$title = self::newFromText( $mainPageName, $namespace, $city_id );
+
+		// Don't give fatal errors if the message is broken
+		if ( !$title->exists() ) {
+			// $title->loadContentLang() works here even if exists() returns false because only mCityId is needed to get it
+			// and this is always set by newFromText method
+			$titleText = wfMessage( 'mainpage' )->inLanguage( $title->loadContLang() )->useDatabase( false )->plain();
+			$title = self::newFromText( $titleText, NS_MAIN, $city_id );
+		}
+
 		return $title;
 	}
 
@@ -182,7 +205,7 @@ class GlobalTitle extends Title {
 	 *  constructor doesnt load anything from database. This is the place
 	 *  for that kind of things
 	 */
-	private function loadAll() {
+	protected function loadAll() {
 		$old = $this->loadFromCache();
 		$this->loadServer();
 		$this->loadArticlePath();
@@ -290,7 +313,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a real URL referring to this title
 	 *
-	 * @param string $query an optional query string
+	 * @param string|array $query an optional query string
 	 * @param string|bool $variant language variant of url (for sr, zh..)
 	 *
 	 * @return string the URL
@@ -663,7 +686,7 @@ class GlobalTitle extends Title {
 				array( 'page' ),
 				array( 'page_id' ),
 				array(
-					'page_title' => $this->mText,
+					'page_title' => $this->mDbkeyform,
 					'page_namespace' => $this->mNamespace
 				),
 				__METHOD__
@@ -704,13 +727,6 @@ class GlobalTitle extends Title {
 		 * get value from city_list.city_url
 		 */
 		$city = WikiFactory::getWikiByID( $this->mCityId );
-
-		/**
-		 * if we got this far and not have a value, ask master
-		 */
-		if ( empty( $city ) ) {
-			$city = WikiFactory::getWikiByID( $this->mCityId, true );
-		}
 
 		if ( $city ) {
 			$server = rtrim( $city->city_url, "/" );
@@ -812,7 +828,7 @@ class GlobalTitle extends Title {
 	 *
 	 * @return Array
 	 */
-	private function loadNamespaceNames() {
+	protected function loadNamespaceNames() {
 		global $wgCanonicalNamespaceNames;
 
 		/**

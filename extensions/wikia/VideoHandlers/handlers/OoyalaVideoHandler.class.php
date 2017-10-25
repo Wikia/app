@@ -10,14 +10,11 @@ class OoyalaVideoHandler extends VideoHandler {
 	protected static $providerHomeUrl = 'http://video.wikia.com/';
 
 	public function getEmbed( $width, array $options = [] ) {
-		$wg = F::app()->wg;
-
 		$autoplay = !empty( $options['autoplay'] );
 		$isAjax = !empty( $options['isAjax'] );
 		$height = $this->getHeight($width);
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax);
-		$ooyalaPlayerId = $wg->OoyalaApiConfig['playerId'];
-		$jsFile = 'http://player.ooyala.com/v3/' . $ooyalaPlayerId . '?platform=html5-priority';
+		$jsFile = self::getOoyalaScriptUrl();
 		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 
 		$html = <<<EOT
@@ -31,6 +28,7 @@ EOT;
 			'jsParams' => array(
 				'playerId' => $playerId,
 				'videoId' => $this->videoId,
+				'dfpContentSourceId' => F::app()->wg->AdDriverDfpOoyalaContentSourceId,
 				'autoPlay' => $autoPlayStr,
 				'title' => $this->title,
 				'jsFile' => array(
@@ -43,6 +41,11 @@ EOT;
 				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js",
 			),
 		);
+	}
+
+	public static function getOoyalaScriptUrl() {
+		return 'http://player.ooyala.com/v3/' . F::app()->wg->OoyalaApiConfig['playerId'] .
+		       '?platform=html5-priority';
 	}
 
 }

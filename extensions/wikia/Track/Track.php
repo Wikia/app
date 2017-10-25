@@ -11,7 +11,7 @@ $wgHooks[ 'MakeGlobalVariablesScript' ][] = 'Track::addGlobalVars';
 $wgHooks[ 'WikiaSkinTopScripts' ][] = 'Track::onWikiaSkinTopScripts';
 
 class Track {
-	const BASE_URL = 'http://a.wikia-beacon.com/__track';
+	const BASE_URL = 'https://beacon.wikia-services.com/__track';
 	const GA_URL = 'https://www.google-analytics.com';
 	const GA_VERSION = 1;
 
@@ -33,7 +33,6 @@ class Track {
 			   'u=' . $wgUser->getID() . $sep .
 			   'a=' . ( is_object( $wgArticle ) ? $wgArticle->getID() : null ) . $sep .
 			   's=' . RequestContext::getMain()->getSkin()->getSkinName() . $sep .
-			   'beacon=' . wfGetBeaconId() .
 			   ( $wgTitle && !is_object( $wgArticle ) ? $sep . 'pg=' . urlencode( $wgTitle->getPrefixedDBkey() ) : '' ) .
 			   ( $wgTitle ? $sep . 'n=' . $wgTitle->getNamespace() : '' ) .
 			   ( !empty( $wgAdServerTest ) ? $sep . 'db_test=1' : '' );
@@ -125,29 +124,12 @@ class Track {
 			$script = '<script>var beacon_id = "ThisIsFake", varnishTime = "' . date( "r" ) . '";</script>';
 
 		} else {
-			$url = Track::getURL( 'view', '', $param );
+			$url = Track::getURL( 'view', '', $param, false );
 
-			$script = <<<SCRIPT1
-<!-- Wikia Beacon Tracking -->
-<noscript><img src="$url&amp;nojs=1" width="1" height="1" border="0" alt="" /></noscript>
-<script>
-(function() {
-	var result = RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})").exec(document.cookie);
-	if(result) {
-		window.beacon_id = result[1];
-	} else {
-		// something went terribly wrong
-		document.write('<img src="http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty" style="position:absolute;top:-1000px" />');
-	}
-
-	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
-	var utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie);
-
-	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;rand=" + (new Date).valueOf() + (window.beacon_id ? "&amp;beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
-	document.write('<'+'script type="text/javascript" src="' + trackUrl + '"><'+'/script>');
-})();
-</script>
-SCRIPT1;
+			$script = ( new Wikia\Template\MustacheEngine )
+				->setPrefix( dirname( __FILE__ ) . '/templates' )
+				->setData(['url' => $url])
+				->render('track.mustache');
 		}
 
 		return $script;
@@ -227,6 +209,11 @@ SCRIPT1;
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+		global $wgCookieDomain, $wgCookiePath;
+
+		$vars['wgCookieDomain'] = $wgCookieDomain;
+		$vars['wgCookiePath'] = $wgCookiePath;
+
 		$scripts .= Track::getViewJS();
 		return true;
 	}

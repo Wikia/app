@@ -4,7 +4,7 @@ namespace Wikia\ContentReview;
 
 use Wikia\ContentReview\Models\ReviewModel;
 
-class ContentReviewStatusesService extends \WikiaService {
+class ContentReviewStatusesService {
 
 	const 	STATUS_NONE = 'none',
 			STATUS_LIVE = 'live',

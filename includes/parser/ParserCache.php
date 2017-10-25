@@ -82,7 +82,7 @@ class ParserCache {
 		// Wikia change - begin
 		// @author macbre - BAC-1227
 		$eTag = false;
-		wfRunHooks( 'ParserCacheGetETag', [ $article, $popts, &$eTag ] );
+		Hooks::run( 'ParserCacheGetETag', [ $article, $popts, &$eTag ] );
 		if ($eTag !== false) {
 			return $eTag;
 		}
@@ -215,7 +215,7 @@ class ParserCache {
 	 */
 	public function save( ParserOutput $parserOutput, Page $article, ParserOptions $popts ) {
 
-		wfRunHooks( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
+		Hooks::run( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
 
 		$expire = $parserOutput->getCacheExpiry();
 

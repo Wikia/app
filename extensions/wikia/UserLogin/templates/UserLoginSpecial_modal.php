@@ -59,10 +59,6 @@
 		'action' => $formPostAction,
 	);
 
-	// $form['isInvalid'] = true;
-	// $form['errorMsg'] = '';
-
 	echo $app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) );
-	echo $app->renderView( 'UserLoginSpecial', 'Providers', array( 'tabindex' => ++$tabIndex ) );
 ?>
 </div>

@@ -321,7 +321,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			);
 		}
 		// Wikia - change begin - @author: wladek
-		wfRunHooks( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
+		Hooks::run( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
 		// Wikia - change end
 		return $styles;
 	}
@@ -463,10 +463,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				return AssetsManager::getInstance()->getSassLocalURL($path,false);
 				break;
 			default:
-				$url = "{$this->remoteBasePath}/$path";;
-
-				// apply domain sharding
-				$url = wfReplaceAssetServer( $url );
+				$url = "{$this->remoteBasePath}/$path";
 
 				return $url;
 		}
@@ -585,7 +582,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			$js .= $contents . "\n";
 		}
 		// Wikia - change begin - @author: wladek
-		wfRunHooks( 'ResourceLoaderFileModuleConcatenateScripts', array( &$js, $this ) );
+		Hooks::run( 'ResourceLoaderFileModuleConcatenateScripts', array( &$js, $this ) );
 		// Wikia - change end
 		return $js;
 	}
@@ -617,7 +614,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				)
 			);
 		}
-		wfRunHooks( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
+		Hooks::run( 'ResourceLoaderFileModuleConcatenateStyles', array( &$styles, $this ) );
 		return $styles;
 	}
 

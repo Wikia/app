@@ -97,7 +97,6 @@ $wgResourceModules['ext.Chat2.ChatWidget'] = [
 		'chat-user-menu-message-wall',
 		'chat-user-menu-talk-page',
 		'chat-user-menu-contribs',
-		'chat-live2',
 		'chat-edit-count',
 		'chat-member-since',
 	],
@@ -164,6 +163,7 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-message-was-too-long',
 		'chat-kick-cant-kick-moderator',
 		'chat-err-connected-from-another-browser',
+		'chat-err-communicating-with-mediawiki',
 		'chat-kick-you-need-permission',
 		'chat-inlinealert-a-made-b-chatmod',
 		// Chat ban modal
@@ -174,6 +174,8 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-ban-modal-button-change-ban',
 		'close',
 		// User menu options
+		'chat-member-since',
+		'chat-edit-count',
 		'chat-user-menu-message-wall',
 		'chat-user-menu-talk-page',
 		'chat-user-menu-contribs',
@@ -189,7 +191,11 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-private-headline',
 		'chat-user-blocked',
 		'chat-user-allow',
+
+		// misc
+		'chat-user-throttled',
 	],
+	'dependencies' => [ 'mediawiki.jqueryMsg' ],
 	'position' => 'top'
 ];
 

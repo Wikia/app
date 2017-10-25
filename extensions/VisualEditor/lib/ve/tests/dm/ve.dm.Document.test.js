@@ -8,9 +8,12 @@ QUnit.module( 've.dm.Document' );
 
 /* Tests */
 
-QUnit.test( 'constructor', 11, function ( assert ) {
+QUnit.test( 'constructor', function ( assert ) {
 	var data, htmlDoc,
 		doc = ve.dm.example.createExampleDocument();
+
+	assert.expect( 11 );
+
 	assert.equalNodeTree( doc.getDocumentNode(), ve.dm.example.tree, 'node tree matches example data' );
 	assert.throws(
 		function () {
@@ -68,13 +71,15 @@ QUnit.test( 'constructor', 11, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'getData', 1, function ( assert ) {
+QUnit.test( 'getData', function ( assert ) {
+	assert.expect( 1 );
 	var doc = ve.dm.example.createExampleDocument(),
 		expectedData = ve.dm.example.preprocessAnnotations( ve.copy( ve.dm.example.data ) );
 	assert.deepEqualWithDomElements( doc.getData(), expectedData.getData() );
 } );
 
-QUnit.test( 'getFullData', 1, function ( assert ) {
+QUnit.test( 'getFullData', function ( assert ) {
+	assert.expect( 1 );
 	var doc = ve.dm.example.createExampleDocument( 'withMeta' );
 	assert.deepEqualWithDomElements( doc.getFullData(), ve.dm.example.withMeta );
 } );
@@ -107,7 +112,7 @@ QUnit.test( 'cloneFromRange', function ( assert ) {
 				expectedData: doc.data.slice( 21, 27 ).concat( doc.data.slice( 5, 21 ) )
 			}
 		];
-	QUnit.expect( 4 * cases.length );
+	assert.expect( 4 * cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		doc = ve.dm.example.createExampleDocument( cases[i].doc );
 		doc2 = doc.cloneFromRange( cases[i].range );
@@ -194,7 +199,7 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 		}
 		expectCount += tests[i].cases.length;
 	}
-	QUnit.expect( expectCount );
+	assert.expect( expectCount );
 } );
 
 QUnit.test( 'getRelativeRange', function ( assert ) {
@@ -386,7 +391,7 @@ QUnit.test( 'getRelativeRange', function ( assert ) {
 			);
 		}
 	}
-	QUnit.expect( expectCount );
+	assert.expect( expectCount );
 } );
 
 QUnit.test( 'getBranchNodeFromOffset', function ( assert ) {
@@ -457,7 +462,7 @@ QUnit.test( 'getBranchNodeFromOffset', function ( assert ) {
 			[5], // 58 - paragraph
 			[] // 59 - document
 		];
-	QUnit.expect( expected.length );
+	assert.expect( expected.length );
 	for ( i = 0; i < expected.length; i++ ) {
 		node = root;
 		for ( j = 0; j < expected[i].length; j++ ) {
@@ -475,7 +480,7 @@ QUnit.test( 'hasSlugAtOffset', function ( assert ) {
 		},
 		doc = ve.dm.example.createExampleDocument( 'alienData' );
 
-	QUnit.expect( doc.data.getLength() + 1 );
+	assert.expect( doc.data.getLength() + 1 );
 
 	for ( i = 0, l = doc.data.getLength(); i <= l; i++ ) {
 		assert.strictEqual( doc.hasSlugAtOffset( i ), !!expected[i], 'hasSlugAtOffset ' + i + ' = ' + !!expected[i] );
@@ -483,7 +488,8 @@ QUnit.test( 'hasSlugAtOffset', function ( assert ) {
 
 } );
 
-QUnit.test( 'getDataFromNode', 3, function ( assert ) {
+QUnit.test( 'getDataFromNode', function ( assert ) {
+	assert.expect( 3 );
 	var doc = ve.dm.example.createExampleDocument(),
 		expectedData = ve.dm.example.preprocessAnnotations( ve.copy( ve.dm.example.data ) );
 	assert.deepEqual(
@@ -503,7 +509,8 @@ QUnit.test( 'getDataFromNode', 3, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'getOuterLength', 1, function ( assert ) {
+QUnit.test( 'getOuterLength', function ( assert ) {
+	assert.expect( 1 );
 	var doc = ve.dm.example.createExampleDocument();
 	assert.strictEqual(
 		doc.getDocumentNode().getOuterLength(),
@@ -512,7 +519,8 @@ QUnit.test( 'getOuterLength', 1, function ( assert ) {
 	);
 } );
 
-QUnit.test( 'rebuildNodes', 2, function ( assert ) {
+QUnit.test( 'rebuildNodes', function ( assert ) {
+	assert.expect( 2 );
 	var tree,
 		doc = ve.dm.example.createExampleDocument(),
 		documentNode = doc.getDocumentNode();
@@ -553,7 +561,7 @@ QUnit.test( 'selectNodes', function ( assert ) {
 		return newItem;
 	}
 
-	QUnit.expect( cases.length );
+	assert.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		doc = cases[i].doc ? ve.dm.example.createExampleDocument( cases[i].doc ) : mainDoc;
 		expectedSelection = cases[i].expected.map( resolveNode );
@@ -770,7 +778,7 @@ QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 				balancedRange: new ve.Range( 0, 4 )
 			}
 		];
-	QUnit.expect( 3 * cases.length );
+	assert.expect( 3 * cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		doc = ve.dm.example.createExampleDocument( cases[i].doc );
 		expectedData = ve.dm.example.preprocessAnnotations( cases[i].expected.slice(), doc.getStore() ).getData();
@@ -798,7 +806,8 @@ QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 	}
 } );
 
-QUnit.test( 'protection against double application of transactions', 1, function ( assert ) {
+QUnit.test( 'protection against double application of transactions', function ( assert ) {
+	assert.expect( 1 );
 	var tx = new ve.dm.Transaction(), testDocument = ve.dm.example.createExampleDocument();
 	tx.pushRetain( 1 );
 	tx.pushReplace( testDocument, 1, 0, ['H', 'e', 'l', 'l', 'o' ] );

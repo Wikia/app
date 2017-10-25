@@ -44,7 +44,7 @@ function egOgmcParserOutputApplyValues( OutputPage $out, ParserOutput $parserOut
 
 	$articleId = $wgTitle->getArticleID();
 	$titleImage = $titleDescription = null;
-	wfRunHooks('OpenGraphMeta:beforeCustomFields', array($articleId, &$titleImage, &$titleDescription));
+	Hooks::run('OpenGraphMeta:beforeCustomFields', array($articleId, &$titleImage, &$titleDescription));
 
 	// Get description from ArticleService
 	if (is_null($titleDescription)) {

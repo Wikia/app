@@ -45,7 +45,7 @@
 							</label>
 
 							<label for="wpPhalanxFormatExact">
-								<input type="checkbox" name="wpPhalanxFormatExact" value="1" <? if ( !empty( $data['exact'] ) ): ?>checked="checked" <? endif; ?>/>
+								<input type="checkbox" name="wpPhalanxFormatExact" value="1" checked="checked" />
 								<?= wfMessage( 'phalanx-format-exact' )->escaped() ?>
 							</label>
 						</div>
@@ -114,6 +114,14 @@
 						<div class="clearfix">
 							<label for="wpPhalanxComment" class="left"><?= wfMessage( 'phalanx-label-comment' )->escaped() ?></label>
 							<input type="text" id="wpPhalanxComment" name="wpPhalanxComment" size="40" value="<?= Sanitizer::encodeAttribute( $data['comment'] ); ?>" />
+						</div>
+						<div class="clearfix">
+							<label for="wpPhalanxLanguages" class="left"><?= wfMessage( 'phalanx-label-lang' )->escaped() ?></label>
+							<select name="wpPhalanxLanguages" id="wpPhalanxLanguages" class="blue">
+								<? foreach ( $languages as $k => $v ) { ?>
+									<option <?= ( $k == $data['lang'] ) ? "selected" : "" ?> value="<?= $k ?>"><?= $v ?></option>
+								<? } ?>
+							</select>
 						</div>
 						<div class="clearfix">
 							<input type="submit" id="wpPhalanxSubmit" name="wpPhalanxSubmit" value="<?= wfMessage( empty( $editMode ) ? 'phalanx-add-block' : 'phalanx-modify-block' )->escaped() ?>" />

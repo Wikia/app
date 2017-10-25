@@ -1,4 +1,5 @@
 /*global define*/
+// TODO remove entire file: https://wikia-inc.atlassian.net/browse/ADEN-5728
 define('ext.wikia.adEngine.adLogicPageViewCounter', [
 	'wikia.cache',
 	'wikia.window'

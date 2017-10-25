@@ -25,11 +25,12 @@ During tests, you can set up the global injector to return mock instances:
 ```php
 use Wikia\DependencyInjection\Injector;
 use Wikia\DependencyInjection\InjectorBuilder;
+use PHPUnit\Framework\TestCase;
 
 /** @var Container */
 private $container;
 
-class MyTest extends PHPUnit_Framework_TestCase {
+class MyTest extends TestCase {
   public function setUp() {
     $this->container =
       (new InjectorBuilder())

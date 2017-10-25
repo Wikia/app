@@ -28,21 +28,29 @@
  */
 class SpecialUserlogout extends UnlistedSpecialPage {
 
+	private $logger;
+
 	function __construct() {
 		parent::__construct( 'Userlogout' );
+		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
 	function execute( $par ) {
-		global $wgUser;		/* wikia change */
+		global $wgUser;        /* wikia change */
 
 		/**
 		 * Some satellite ISPs use broken precaching schemes that log people out straight after
 		 * they're logged in (bug 17790). Luckily, there's a way to detect such requests.
 		 */
-		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], '&amp;' ) !== false ) {
+		if ( isset( $_SERVER['REQUEST_URI'] ) &&
+		     strpos( $_SERVER['REQUEST_URI'], '&amp;' ) !== false
+		) {
 			wfDebug( "Special:Userlogout request {$_SERVER['REQUEST_URI']} looks suspicious, denying.\n" );
-			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ), wfMessage( 'loginerror' ) );
+			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ),
+				wfMessage( 'loginerror' ) );
 		}
+
+		$this->logger->info( 'IRIS-4228 Logout has been called' );
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -59,49 +67,32 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		 *
 		 * Once the old-style global wgUser object is fully deprecated, this line can be removed.
 		*/
-		$wgUser->logout();	 /* wikia change */
+		$wgUser->logout();     /* wikia change */
 
 		// Wikia change
 		// regenerate session ID on user logout to avoid race conditions with
 		// long running requests logging the user back in (@see PLATFORM-1028)
 		wfResetSessionID();
 
+		$injectedHTML = '';
+		Hooks::run( 'UserLogoutComplete', array( &$user, &$injectedHTML, $oldName ) );
+
+		// redirection
+
+		$referer = $this->getRequest()->getHeader('REFERER');
+		$redirectUrl = 'http://www.wikia.com/';
+		if ( isset( $referer ) ) {
+			$parsedReferer = parse_url( $referer );
+			$redirectUrl = $this->getHostname( $parsedReferer );
+			if ( strpos( $parsedReferer['path'], '/d' ) === 0 ) {
+				$redirectUrl = $this->getHostname( $parsedReferer ) . '/d';
+			}
+		}
+
 		$out = $this->getOutput();
+		$out->redirect( $redirectUrl );
 
-		$loginUrl = ( F::app()->wg->EnableNewAuth && F::app()->checkSkin( 'wikiamobile' ) )
-			? ( new UserLoginHelper() )->getNewAuthUrl()
-			: SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
-		$loginLink = '<a href="' . $loginUrl . '">' . wfMessage( 'logouttext-link-text' )->escaped() . '</a>';
-		$out->addHTML( wfMessage( 'logouttext' )->rawParams( $loginLink )->parse() );
-
-		// Hook.
-		$injected_html = '';
-		wfRunHooks( 'UserLogoutComplete', array( &$user, &$injected_html, $oldName ) );
-		$out->addHTML( $injected_html );
-
-		$mReturnTo = $this->getRequest()->getVal( 'returnto' );
-		$mReturnToQuery = $this->getRequest()->getVal( 'returntoquery' );
-
-		$title = Title::newFromText($mReturnTo);
-		if ( !empty($title) ) {
-			$mResolvedReturnTo = strtolower( array_shift( SpecialPageFactory::resolveAlias( $title->getDBKey() ) ) );
-			if ( in_array( $mResolvedReturnTo,array('userlogout','signup','connect') ) ) {
-				$titleObj = Title::newMainPage();
-				$mReturnTo = $titleObj->getText( );
-				$mReturnToQuery = '';
-			}
-		}
-
-		if ( empty( $mReturnTo ) && empty( $mReturnToQuery ) ) {
-			$redirectUrl = $this->getRequest()->getVal( 'redirect' );
-
-			if ( $redirectUrl && $this->isValidRedirectUrl( $redirectUrl ) ) {
-				$out->redirect( $redirectUrl );
-				return;
-			}
-		}
-
-		$out->returnToMain( false, $mReturnTo, $mReturnToQuery );
+		return;
 	}
 
 	/**
@@ -112,6 +103,19 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	 */
 	protected function isValidRedirectUrl( $url ) {
 		$hostname = parse_url( $url, PHP_URL_HOST );
+
 		return preg_match( '/(\.|^)(wikia|fandom)\.com$/', $hostname );
+	}
+
+	/**
+	 * @param $parsed_url
+	 * @return string hostname url
+	 */
+	protected function getHostname( $parsed_url ) {
+		$scheme = isset( $parsed_url['scheme'] ) ? $parsed_url['scheme'] . '://' : '';
+		$host = isset( $parsed_url['host'] ) ? $parsed_url['host'] : '';
+		$port = isset( $parsed_url['port'] ) ? ':' . $parsed_url['port'] : '';
+
+		return "$scheme$host$port";
 	}
 }

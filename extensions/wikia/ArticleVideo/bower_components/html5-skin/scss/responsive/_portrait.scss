@@ -1,0 +1,41 @@
+@media (orientation: portrait) {
+
+  // Video Quality - mobile, fullscreen
+  .oo-mobile-fullscreen.oo-quality-panel {
+    height: 80% !important;
+    width: 100px !important;
+
+    //hide vertical scrollbars
+    .scrollbar-container.vertical {
+      display:none;
+    }
+
+    .oo-quality-screen-content {
+      position: relative;
+      height: 100%;
+      text-align: center;
+      ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        height: 75% !important;
+        white-space: normal;
+
+        li {
+          display: block;
+          margin: 0 0 30px 0 !important;
+          padding: 0;
+          list-style: none;
+
+          &:last-child {
+            margin-bottom: 10px;
+          }
+        }
+
+        li.oo-auto-li {
+          top:4px !important;
+        }
+      }
+    }
+  }
+}

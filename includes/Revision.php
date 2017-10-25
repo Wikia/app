@@ -62,7 +62,7 @@ class Revision implements IDBAccessObject {
 	 * @param $flags Integer Bitfield (optional)
 	 * @return Revision or null
 	 */
-	public static function newFromTitle( $title, $id = 0, $flags = null ) {
+	public static function newFromTitle( $title, $id = 0, $flags = 0 ) {
 		$conds = array(
 			'page_namespace' => $title->getNamespace(),
 			'page_title' 	 => $title->getDBkey()
@@ -70,13 +70,13 @@ class Revision implements IDBAccessObject {
 		if ( $id ) {
 			// Use the specified ID
 			$conds['rev_id'] = $id;
+			return self::newFromConds( $conds, (int)$flags );
 		} else {
 			// Use a join to get the latest revision
 			$conds[] = 'rev_id=page_latest';
-			// Callers assume this will be up-to-date
-			$flags = is_int( $flags ) ? $flags : self::READ_LATEST; // b/c
+			$db = wfGetDB( ( $flags & self::READ_LATEST ) ? DB_MASTER : DB_SLAVE );
+			return self::loadFromConds( $db, $conds, $flags );
 		}
-		return self::newFromConds( $conds, (int)$flags );
 	}
 
 	/**
@@ -286,7 +286,7 @@ class Revision implements IDBAccessObject {
 		if( $res ) {
 			$row = $res->fetchObject();
 			if( $row ) {
-				$ret = new Revision( $row );
+				$ret = new Revision( self::replaceUsernameFieldsWithVariables( $row ) ); // SUS-2779
 				return $ret;
 			}
 		}
@@ -295,20 +295,14 @@ class Revision implements IDBAccessObject {
 	}
 
 	/**
-	 * Return a wrapper for a series of database rows to
-	 * fetch all of a given page's revisions in turn.
-	 * Each row can be fed to the constructor to get objects.
-	 *
-	 * @param $title Title
-	 * @return ResultWrapper
+	 * @param $row
 	 */
-	public static function fetchRevision( $title ) {
-		return self::fetchFromConds(
-			wfGetDB( DB_SLAVE ),
-			array( 'rev_id=page_latest',
-				   'page_namespace' => $title->getNamespace(),
-				   'page_title'     => $title->getDBkey() )
-		);
+	private static function replaceUsernameFieldsWithVariables( $row ) {
+		$userName = User::getUsername( $row->rev_user, $row->rev_user_text );
+		$row->user_name = $userName;
+		$row->rev_user_text = $userName;
+
+		return $row;
 	}
 
 	/**
@@ -322,22 +316,22 @@ class Revision implements IDBAccessObject {
 	 * @return ResultWrapper
 	 */
 	private static function fetchFromConds( $db, $conditions, $flags = 0 ) {
+		// SUS-2779
 		$fields = array_merge(
 			self::selectFields(),
-			self::selectPageFields(),
-			self::selectUserFields()
+			self::selectPageFields()
 		);
 		$options = array( 'LIMIT' => 1 );
 		if ( ( $flags & self::READ_LOCKING ) == self::READ_LOCKING ) {
 			$options[] = 'LOCK IN SHARE MODE';
 		}
 		return $db->select(
-			array( 'revision', 'page', 'user' ),
+			array( 'revision', 'page' ),
 			$fields,
 			$conditions,
 			__METHOD__,
 			$options,
-			array( 'page' => self::pageJoinCond(), 'user' => self::userJoinCond() )
+			array( 'page' => self::pageJoinCond() )
 		);
 	}
 
@@ -620,7 +614,7 @@ class Revision implements IDBAccessObject {
 	 *      Revision::RAW              get the ID regardless of permissions
 	 * @param $user User object to check for, only if FOR_THIS_USER is passed
 	 *              to the $audience parameter
-	 * @return Integer
+	 * @return int
 	 */
 	public function getUser( $audience = self::FOR_PUBLIC, User $user = null ) {
 		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_USER ) ) {
@@ -635,7 +629,7 @@ class Revision implements IDBAccessObject {
 	/**
 	 * Fetch revision's user id without regard for the current user's permissions
 	 *
-	 * @return String
+	 * @return int
 	 */
 	public function getRawUser() {
 		return $this->mUser;
@@ -718,27 +712,6 @@ class Revision implements IDBAccessObject {
 	 */
 	public function isMinor() {
 		return (bool)$this->mMinorEdit;
-	}
-
-	/**
-	 * @return Integer rcid of the unpatrolled row, zero if there isn't one
-	 */
-	public function isUnpatrolled() {
-		if( $this->mUnpatrolled !== null ) {
-			return $this->mUnpatrolled;
-		}
-		$dbr = wfGetDB( DB_SLAVE );
-		$this->mUnpatrolled = $dbr->selectField( 'recentchanges',
-			'rc_id',
-			array( // Add redundant user,timestamp condition so we can use the existing index
-				'rc_user_text'  => $this->getRawUserText(),
-				'rc_timestamp'  => $dbr->timestamp( $this->getTimestamp() ),
-				'rc_this_oldid' => $this->getId(),
-				'rc_patrolled'  => 0
-			),
-			__METHOD__
-		);
-		return (int)$this->mUnpatrolled;
 	}
 
 	/**
@@ -1062,7 +1035,7 @@ class Revision implements IDBAccessObject {
 
 		$this->mId = !is_null( $rev_id ) ? $rev_id : $dbw->insertId();
 
-		wfRunHooks( 'RevisionInsertComplete', array( &$this, $data, $flags ) );
+		Hooks::run( 'RevisionInsertComplete', [ $this, $data, $flags ] );
 
 		wfProfileOut( __METHOD__ );
 		return $this->mId;

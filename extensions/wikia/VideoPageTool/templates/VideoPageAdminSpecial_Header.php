@@ -1,14 +1,15 @@
 <header class="VideoPageToolHeader">
 	<div class="VideoPageToolTitle">
-		<h1><a href="<?= $dashboardHref ?>"><?= wfMessage( 'videopagetool-header-dashboard' )->text() ?></a></h1>
+		<h1><a href="<?= Sanitizer::encodeAttribute( $dashboardHref ); ?>"><?= wfMessage( 'videopagetool-header-dashboard' )
+					->escaped() ?></a></h1>
 		<? if ( !empty( $section ) ): ?>
-			<h2><?= $section ?></h2>
+			<h2><?= htmlspecialchars( $section ); ?></h2>
 		<? endif ?>
 
-		<p class="alternative"><?= $programDate ?></p>
+		<p class="alternative"><?= htmlspecialchars( $programDate ); ?></p>
 
 		<? if ( !empty( $language ) && !empty( $section ) ): ?>
-			<p class="alternative"><?= $language ?> / <?= $section ?></p>
+			<p class="alternative"><?= htmlspecialchars( $language ); ?> / <?= htmlspecialchars( $section ); ?></p>
 		<? endif ?>
 	</div>
 

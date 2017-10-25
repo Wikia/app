@@ -2,15 +2,36 @@
 
 namespace Wikia\Search\Services;
 
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Gateway\ConsulUrlProvider;
+
 class ESFandomSearchService extends AbstractSearchService {
-	const RESULTS_COUNT = 6;
+
+	const LOG_QUERY_MARKER = 'query';
+	const LOG_RESPONSE_MARKER = 'response';
+	const LOG_ERROR_MARKER = 'error';
+
+	const STORIES_TITLE_KEY = 'title';
+	const STORIES_EXCERPT_KEY = 'excerpt';
+	const STORIES_VERTICAL_KEY = 'vertical';
+	const STORIES_IMAGE_URL_KEY = 'image';
+	const STORIES_URL_KEY = 'url';
+	const STORIES_COUNT_MAX = 6;
+	const STORIES_SEARCH_TEMPLATE = 'fandom_stories';
+
+	const MATCHES_ITEM_KEY = '_source';
+	const MATCHES_TITLE_KEY = 'title';
+	const MATCHES_EXCERPT_KEY = 'excerpt';
+	const MATCHES_VERTICAL_KEY = 'vertical';
+	const MATCHES_IMAGE_URL_KEY = 'image_url';
+	const MATCHES_URL_KEY = 'url';
+
 
 	protected function getConsulUrl() {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
-		return ( new \Wikia\Service\Gateway\ConsulUrlProvider(
-			$wgConsulUrl, $wgConsulServiceTag
-		) )->getUrl( 'fandom-search' );
+		return ( new ConsulUrlProvider( $wgConsulUrl,
+			$wgConsulServiceTag ) )->getUrl( 'fandom-search-service' );
 	}
 
 	protected function prepareQuery( string $query ) {
@@ -22,10 +43,10 @@ class ESFandomSearchService extends AbstractSearchService {
 		$consulUrl = $this->getConsulUrl();
 
 		$response = \Http::post(
-			"http://$consulUrl/fandom",
+			"http://$consulUrl/fandom/search",
 			[
 				'noProxy' => true,
-				'postData' => "queryTerms=$query",
+				'postData' => "queryTerms=$query&template=" . ESFandomSearchService::STORIES_SEARCH_TEMPLATE,
 				'headers' => [
 					'Content-Type' => 'application/x-www-form-urlencoded',
 				],
@@ -34,30 +55,30 @@ class ESFandomSearchService extends AbstractSearchService {
 		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );
 			if ( json_last_error() !== JSON_ERROR_NONE ) {
-				\WikiaLogger::instance()->error(
+				WikiaLogger::instance()->error(
 					" Fandom Stories Search: error decoding response",
 					[
-						'query' => $query,
-						'response' => $response,
-						'error' => json_last_error(),
+						ESFandomSearchService::LOG_QUERY_MARKER => $query,
+						ESFandomSearchService::LOG_RESPONSE_MARKER => $response,
+						ESFandomSearchService::LOG_ERROR_MARKER => json_last_error(),
 					]
 				);
 			} else if ( isset( $decodedResponse['hits']['hits'] ) ) {
 				return $decodedResponse['hits']['hits'];
 			} else {
-				\WikiaLogger::instance()->error(
+				WikiaLogger::instance()->error(
 					" Fandom Stories Search: invalid response",
 					[
-						'query' => $query,
-						'response' => $response
+						ESFandomSearchService::LOG_QUERY_MARKER => $query,
+						ESFandomSearchService::LOG_RESPONSE_MARKER => $response
 					]
 				);
 			}
 		} else {
-			\WikiaLogger::instance()->error(
+			WikiaLogger::instance()->error(
 				" Fandom Stories Search: empty response",
 				[
-					'query' => $query,
+					ESFandomSearchService::LOG_QUERY_MARKER => $query,
 				]
 			);
 		}
@@ -69,18 +90,33 @@ class ESFandomSearchService extends AbstractSearchService {
 	protected function consumeResponse( $response ) {
 		$results = [];
 
-		foreach ( $response as $item ) {
-			if ( isset( $item['_source'] ) ) {
-				$source = $item['_source'];
+		foreach ( $response as $match ) {
+			if ( isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY] ) &&
+			     isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY][ESFandomSearchService::MATCHES_TITLE_KEY] ) &&
+			     isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY][ESFandomSearchService::MATCHES_URL_KEY] )
+			) {
+
+				$source = $match[ESFandomSearchService::MATCHES_ITEM_KEY];
 
 				$results[] = [
-					'title' => html_entity_decode( $source['title'] ),
-					'excerpt' => isset( $source['excerpt'] ) ? html_entity_decode( $source['excerpt'] ) : '',
-					'vertical' => html_entity_decode( $source['vertical'] ),
-					'image' => html_entity_decode( $source['image_url'] ),
-					'url' => html_entity_decode( $source['url'] ),
+					ESFandomSearchService::STORIES_TITLE_KEY =>
+						html_entity_decode( $source[ESFandomSearchService::MATCHES_TITLE_KEY] ),
+					ESFandomSearchService::STORIES_EXCERPT_KEY =>
+						isset( $source[ESFandomSearchService::MATCHES_EXCERPT_KEY] )
+						? html_entity_decode( $source[ESFandomSearchService::MATCHES_EXCERPT_KEY] )
+						: '',
+					ESFandomSearchService::STORIES_VERTICAL_KEY =>
+						isset( $source[ESFandomSearchService::MATCHES_VERTICAL_KEY] )
+						? html_entity_decode( $source[ESFandomSearchService::MATCHES_VERTICAL_KEY] )
+						: '',
+					ESFandomSearchService::STORIES_IMAGE_URL_KEY =>
+						isset( $source[ESFandomSearchService::MATCHES_IMAGE_URL_KEY] )
+						? html_entity_decode( $source[ESFandomSearchService::MATCHES_IMAGE_URL_KEY] )
+						: '',
+					ESFandomSearchService::STORIES_URL_KEY =>
+						html_entity_decode( $source[ESFandomSearchService::MATCHES_URL_KEY] ),
 				];
-				if ( count( $results ) >= ESFandomSearchService::RESULTS_COUNT ) {
+				if ( count( $results ) >= ESFandomSearchService::STORIES_COUNT_MAX ) {
 					break;
 				}
 			}

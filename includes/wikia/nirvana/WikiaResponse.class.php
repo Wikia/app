@@ -28,7 +28,7 @@ class WikiaResponse {
 	/**
 	 * Output formats
 	 */
-	const FORMAT_RAW = 'raw';
+	const FORMAT_RAW = 'raw';	// deprecated (PLATFORM-2770)
 	const FORMAT_HTML = 'html';
 	const FORMAT_JSON = 'json';
 	const FORMAT_JSONP = 'jsonp';
@@ -82,6 +82,8 @@ class WikiaResponse {
 	 * @var bool
 	 */
 	protected $isCaching = false;
+
+	protected $varyOnCookie = true;
 
 	/**
 	 * constructor
@@ -266,9 +268,14 @@ class WikiaResponse {
 	}
 
 	public function setFormat( $value ) {
-		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_RAW || $value == self::FORMAT_JSONP ) {
+		$value = strtolower( $value );
+		if ( in_array( $value, [ self::FORMAT_HTML, self::FORMAT_JSON, self::FORMAT_JSONP ] ) ) {
 			$this->format = $value;
 		} else {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'Invalid format passed to WikiaResponse', [
+				'format' => $value,
+				'exception' => new Exception()
+			] );
 			$this->format = self::FORMAT_INVALID;
 		}
 	}
@@ -346,6 +353,10 @@ class WikiaResponse {
 	 */
 	public function isCaching() {
 		return $this->isCaching;
+	}
+
+	public function setVaryOnCookie( $shouldVary = true ) {
+		$this->varyOnCookie = $shouldVary;
 	}
 
 	public function getHeader( $name ) {
@@ -448,17 +459,26 @@ class WikiaResponse {
 
 	public function sendHeaders() {
 		if ( !$this->hasContentType() ) {
-			if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
+			if ( ( $this->getFormat() === WikiaResponse::FORMAT_JSON ) ) {
 				$this->setContentType( 'application/json; charset=utf-8' );
-			} else if ( $this->getFormat() == WikiaResponse::FORMAT_JSONP ) {
+			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_JSONP ) {
 				$this->setContentType( 'text/javascript; charset=utf-8' );
-			} else if ( $this->getFormat() == WikiaResponse::FORMAT_HTML ) {
+			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_HTML ) {
 				$this->setContentType( 'text/html; charset=utf-8' );
+			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_INVALID ) {
+				$this->setContentType( 'application/json; charset=utf-8' );
+				$this->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			}
 		}
 
 		foreach ( $this->getHeaders() as $header ) {
 			$this->sendHeader( ( $header['name'] . ': ' . $header['value'] ), $header['replace']);
+		}
+
+		// Make sure we vary on Cookie by default (MAIN-9527)
+		$output = RequestContext::getMain()->getOutput();
+		if ( $output->getCacheVaryCookies() && $this->varyOnCookie ) {
+			$this->sendHeader( $output->getVaryHeader(), true );
 		}
 
 		if ( !empty( $this->code ) ) {

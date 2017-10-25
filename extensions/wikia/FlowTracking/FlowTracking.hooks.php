@@ -14,7 +14,7 @@ class FlowTrackingHooks {
 	const FLOW_QUERY_PARAM = 'flow';
 
 	public static function onMakeGlobalVariablesScript( &$vars ) {
-		$vars[ 'wgFlowTrackingFlows' ] = [
+		$vars['wgFlowTrackingFlows'] = [
 			'CREATE_PAGE_ARTICLE_REDLINK' => static::CREATE_PAGE_ARTICLE_REDLINK,
 			'CREATE_PAGE_CONTRIBUTE_BUTTON' => static::CREATE_PAGE_CONTRIBUTE_BUTTON,
 			'CREATE_PAGE_CREATE_BOX' => static::CREATE_PAGE_CREATE_BOX,
@@ -48,53 +48,31 @@ class FlowTrackingHooks {
 	 * @return bool
 	 */
 	public static function onArticleInsertComplete( Page $page, User $user, $text, $summary, $minoredit,
-		$watchThis, $sectionAnchor, &$flags, Revision $revision ) {
+		$watchThis, $sectionAnchor, $flags, Revision $revision ) {
 		$title = $revision->getTitle();
 		if ( $title && $title->inNamespace( NS_MAIN ) ) {
 			$request = RequestContext::getMain()->getRequest();
 			$headers = $request->getAllHeaders();
 
 			// transforms "a=1&b=2&c=3" into [ 'a' => 1, 'b' => 2, 'c' => 3 ]
-			if ( isset( $headers[ 'REFERER' ] ) ) {
-				$queryParams = static::getParamsFromUrlQuery( $headers[ 'REFERER' ] );
+			if ( isset( $headers['REFERER'] ) ) {
+				$queryParams = static::getParamsFromUrlQuery( $headers['REFERER'] );
 			} else {
 				Wikia\Logger\WikiaLogger::instance()->warning( 'Flow Tracking - Referer header is not set', [
-					'useragent' => $headers[ 'USER-AGENT' ]
+					'useragent' => $headers['USER-AGENT']
 				] );
 				return true;
 			}
 
-			$flow = $queryParams[ 'flow' ] ?? static::CREATE_PAGE_UNRECOGNIZED_FLOW;
+			$flow = $queryParams['flow'] ?? static::CREATE_PAGE_UNRECOGNIZED_FLOW;
 			Track::event( 'trackingevent', [
 				'ga_action' => 'flow-end',
 				'editor' => static::getEditor( $request->getValues(), $queryParams ),
 				'flowname' => $flow,
-				'useragent' => $headers[ 'USER-AGENT' ]
+				'useragent' => $headers['USER-AGENT']
 			] );
 			Track::eventGA( 'flow-tracking', 'flow-end', $flow );
 		}
-
-		return true;
-	}
-
-	public static function onContributeMenuAfterDropdownItems( &$dropdownItems ) {
-		foreach ( $dropdownItems as $specialPageName => &$item ) {
-			if ( $specialPageName === 'createpage' ) {
-				$item[ 'href' ] = http_build_url(
-					$item[ 'href' ],
-					[ 'query' => 'flow=' . static::CREATE_PAGE_CONTRIBUTE_BUTTON ],
-					HTTP_URL_JOIN_QUERY
-				);
-			}
-		}
-
-		return true;
-	}
-
-	public static function onPageHeaderAfterAddNewPageButton( &$href ) {
-		$href = wfAppendQuery( $href, [
-			'flow' => static::CREATE_PAGE_CONTRIBUTE_BUTTON
-		] );
 
 		return true;
 	}
@@ -104,19 +82,18 @@ class FlowTrackingHooks {
 		return $queryParams;
 	}
 
-	/**
-	 * @param PageHeaderController $header
-	 * @param $actions
-	 * @return bool
-	 */
 	public static function onBeforePrepareActionButtons( $header, &$actions ) {
 		global $wgTitle;
 
 		if ( !$wgTitle->exists() && $wgTitle->inNamespace( NS_MAIN ) ) {
-			$actions[ 'edit' ][ 'href' ] = static::extendUrlWithParam(
-				$actions[ 'edit' ][ 'href' ], static::FLOW_QUERY_PARAM, static::CREATE_PAGE_CREATE_BUTTON );
-			$actions[ 've-edit' ][ 'href' ] = static::extendUrlWithParam(
-				$actions[ 've-edit' ][ 'href' ], static::FLOW_QUERY_PARAM, static::CREATE_PAGE_CREATE_BUTTON );
+			if ( isset( $actions['edit']['href'] ) ) {
+				$actions['edit']['href'] = static::extendUrlWithParam(
+					$actions['edit']['href'], static::FLOW_QUERY_PARAM, static::CREATE_PAGE_CREATE_BUTTON );
+			}
+			if ( isset( $actions['ve-edit']['href'] ) ) {
+				$actions['ve-edit']['href'] = static::extendUrlWithParam(
+					$actions['ve-edit']['href'], static::FLOW_QUERY_PARAM, static::CREATE_PAGE_CREATE_BUTTON );
+			}
 		}
 
 		return true;
@@ -124,7 +101,7 @@ class FlowTrackingHooks {
 
 	private static function extendUrlWithParam( $url, $param, $value ) {
 		$queryParts = static::getParamsFromUrlQuery( $url );
-		$queryParts[ $param ] = $value;
+		$queryParts[$param] = $value;
 
 		return http_build_url( $url, [ 'query' => http_build_query( $queryParts ) ] );
 	}
@@ -132,11 +109,11 @@ class FlowTrackingHooks {
 	private static function getEditor( $requestValues, $queryParams ) {
 		$editor = '';
 
-		if ( isset( $queryParams[ 'veaction' ] ) ) {
+		if ( isset( $queryParams['veaction'] ) ) {
 			$editor = 'visualeditor';
-		} elseif ( !empty( $requestValues[ 'RTEMode' ] ) ) {
-			$editor = 'rte-' . $requestValues[ 'RTEMode' ];
-		} elseif ( !empty( $requestValues[ 'isMediaWikiEditor' ] ) ) {
+		} elseif ( !empty( $requestValues['RTEMode'] ) ) {
+			$editor = 'rte-' . $requestValues['RTEMode'];
+		} elseif ( !empty( $requestValues['isMediaWikiEditor'] ) ) {
 			$editor = 'sourceedit';
 		}
 		return $editor;

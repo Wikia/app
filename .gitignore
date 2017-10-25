@@ -39,3 +39,8 @@ maintenance/.mweval_history
 composer.phar
 
 /messageCache
+
+tests/build
+tests/coverage
+
+/HeadlessChrome_*

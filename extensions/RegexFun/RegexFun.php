@@ -58,11 +58,13 @@ class ExtRegexFun {
 	 * @var string
 	 */
 	const VERSION = '1.1';
-	
+
 	/**
 	 * Sets up parser functions
+	 * @param Parser $parser
+	 * @return bool
 	 */
-	public static function init( Parser &$parser ) {
+	public static function init( Parser $parser ): bool {
 		self::initFunction( $parser, 'regex', SFH_OBJECT_ARGS );
 		self::initFunction( $parser, 'regex_var', SFH_OBJECT_ARGS );
 		self::initFunction( $parser, 'regexquote' );
@@ -70,7 +72,7 @@ class ExtRegexFun {
 		
 		return true;		
 	}	
-	private static function initFunction( Parser &$parser, $name, $flags = 0 ) {		
+	private static function initFunction( Parser $parser, $name, $flags = 0 ) {
 		global $egRegexFunDisabledFunctions;
 		
 		// only register function if not disabled by configuration
@@ -194,16 +196,7 @@ class ExtRegexFun {
 		}
 		return false;
 	}
-	
-	private static function limitHandler( Parser &$parser ) {		
-		// is the limit exceeded for this parsers parse() process?
-		if( self::limitExceeded( $parser ) ) {
-			return false;
-		}		
-		self::increaseRegexCount( $parser );
-		return true;
-	}
-	
+
 	/**
 	 * Returns a valid parser function output that the given pattern is not valid for a regular
 	 * expression. The message can be displayed in the wiki and is wrapped in an error-class span
@@ -228,7 +221,7 @@ class ExtRegexFun {
 	 * Helper function. Validates regex and takes care of security risks in pattern which is why
 	 * the pattern is taken by reference!
 	 */
-	protected static function validateRegexCall( PPFrame &$frame, $subject, &$pattern, &$specialFlags, $resetLastRegex = false ) {
+	protected static function validateRegexCall( PPFrame $frame, $subject, &$pattern, &$specialFlags, $resetLastRegex = false ) {
 		if( $resetLastRegex ) {
 			//reset last matches for the case anything goes wrong
 			self::setLastMatches( $frame , null );
@@ -255,8 +248,7 @@ class ExtRegexFun {
 	 * 
 	 * @return String Result of replacing pattern with replacement in string, or matching text if replacement was omitted
 	 */
-    //public static function pf_regex( Parser &$parser, $subject = '', $pattern = '', $replacement = null, $limit = -1 ) {		
-	public static function pfObj_regex( Parser &$parser, PPFrame $frame, array $args ) {
+    public static function pfObj_regex( Parser $parser, PPFrame $frame, array $args ) {
 		// Get Parameters
 		$subject     = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		$pattern     = isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -316,7 +308,8 @@ class ExtRegexFun {
 	 *                case the string will be expanded after back-refs are inserted. Otherwise string is ok.
 	 * @param string  $subject
 	 * @param int     $limit
-	 * @param Parser  &$parser if 'e' flag should be allowed, a parser object for parsing is required.
+	 * @param Parser  $parser if 'e' flag should be allowed, a parser object for parsing is
+	 * required.
 	 * @param PPFrame $frame which keeps template parameters which should be used in case 'e' flag is set.
 	 * @param array   $allowedSpecialFlags all special flags that should be handled, by default 'e' and 'r'.
 	 */
@@ -325,7 +318,7 @@ class ExtRegexFun {
 			$replacement,
 			$subject,
 			$limit = -1,
-			&$parser = null,
+			$parser = null,
 			$frame = null,
 			array $allowedSpecialFlags = array(
 				self::FLAG_REPLACEMENT_PARSE,
@@ -383,7 +376,7 @@ class ExtRegexFun {
 			// if 'e' flag is set, each replacement has to be parsed after matches are inserted but before replacing!
 			self::$tmpRegexCB = array(
 				'replacement' => $replacement,
-				'parser'      => &$parser,
+				'parser'      => $parser,
 				'frame'       => $frame,
 				'internal'    => isset( $parser->mExtRegexFun['lastMatches'] ) && $parser->mExtRegexFun['lastMatches'] === false
 			);
@@ -452,7 +445,9 @@ class ExtRegexFun {
 	 * 
 	* @return String result of all matching text parts separated by a string
 	*/
-	public static function pf_regexall( &$parser , $subject = '' , $pattern = '' , $separator = ', ' , $offset = 0 , $length = '' ) {
+	public static function pf_regexall(
+		Parser $parser, $subject = '', $pattern = '', $separator = ', ', $offset = 0, $length = ''
+	) {
 		// check whether limit exceeded:
 		if( self::limitExceeded( $parser ) ) {
 			return self::msgLimitExceeded();
@@ -496,7 +491,7 @@ class ExtRegexFun {
 	 * @param $index Integer index of the last match which should be returnd or a string containing $n as indexes to be replaced
 	 * @param $defaultVal Integer default value which will be returned when the result with the given index doesn't exist or is a void string
 	 */
-	public static function pfObj_regex_var( Parser &$parser, PPFrame $frame, array $args ) {		
+	public static function pfObj_regex_var( Parser $parser, PPFrame $frame, array $args ) {
 		$index      = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : 0;
 		$defaultVal = isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
 		
@@ -596,7 +591,7 @@ class ExtRegexFun {
 	 * 
 	 * @return String Returns the quoted string
 	 */
-	public static function pf_regexquote( &$parser, $str = null, $delimiter = '/' ) {		
+	public static function pf_regexquote( $parser, $str = null, $delimiter = '/' ) {
 		if( $str === null ) {
 			return '';
 		}		
@@ -685,14 +680,7 @@ class ExtRegexFun {
 		self::setLastSubject( $frame, $subject );
 	}
 	
-	public static function onParserClearState( &$parser ) {
-		//cleanup to avoid conflicts with job queue or Special:Import
-		/*
-		$parser->mExtRegexFun = array();
-		self::setLastMatches( $parser, null );
-		self::setLastPattern( $parser, '' );
-		self::setLastSubject( $parser, '' );		
-		*/
+	public static function onParserClearState( $parser ) {
 		$parser->mExtRegexFun['counter'] = 0;
 		
 		return true;
@@ -704,7 +692,7 @@ class ExtRegexFun {
 	 * 
 	 * @return boolean
 	 */
-	public static function limitExceeded( Parser &$parser ) {		
+	public static function limitExceeded( Parser $parser ) {
 		global $egRegexFunMaxRegexPerParse;
 		return (
 			$egRegexFunMaxRegexPerParse !== -1
@@ -712,14 +700,14 @@ class ExtRegexFun {
 		);
 	}
 	
-	public static function getLimitCount( Parser &$parser ) {
+	public static function getLimitCount( Parser $parser ) {
 		if( isset( $parser->mExtRegexFun['counter'] ) ) {
 			return $parser->mExtRegexFun['counter'];
 		}
 		return 0;
 	}
 	
-	private static function increaseRegexCount( Parser &$parser ) {
+	private static function increaseRegexCount( Parser $parser ) {
 		$parser->mExtRegexFun['counter']++;		
 	}
 	

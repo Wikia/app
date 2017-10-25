@@ -200,7 +200,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		$html = '';
 
 		//give extensions a chance to modify the markup
-		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
+		Hooks::run( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
 
 		wfProfileOut( __METHOD__ );
 

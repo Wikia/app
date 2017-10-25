@@ -3,8 +3,18 @@
 @import '../bower_components/design-system/dist/scss/wds-variables/index';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
+// Legacy notification styles - copied here from original GlobalNavigation extension
+@import 'GlobalNavigationNotifications';
+
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;
+
+.wds-hidden-svg {
+	height: 0;
+	overflow: hidden;
+	position: absolute;
+	width: 0;
+}
 
 .wds-global-navigation-wrapper {
 	height: $wds-global-navigation-height;
@@ -64,14 +74,6 @@ $global-navigation-z-index: 5000101;
 
 		a {
 			cursor: pointer;
-		}
-
-		a:hover {
-			color: $wds-color-dark-blue-gray;
-		}
-
-		.wds-is-selected a {
-			color: $wds-color-link;
 		}
 	}
 }

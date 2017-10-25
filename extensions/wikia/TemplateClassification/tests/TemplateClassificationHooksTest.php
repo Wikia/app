@@ -21,7 +21,7 @@ class TemplateClassificationHooksTest extends WikiaBaseTest {
 		$hooksMock = $this->getHooksMockForUnusedTemplates();
 		$hooksMock->expects( $this->never() )->method( 'getUnusedTemplatesHandler' );
 
-		$resultsMock = $this->getMock( 'ResultWrapper' );
+		$resultsMock = new FakeResultWrapper( [] );
 
 		$dbMock = $this->getDatabaseMock();
 
@@ -61,7 +61,7 @@ class TemplateClassificationHooksTest extends WikiaBaseTest {
 			->method( 'getUnusedTemplatesHandler' )
 			->willReturn( $handlerMock );
 
-		$results = $this->getMock( 'ResultWrapper' );
+		$results = new FakeResultWrapper( [] );
 
 		$dbMock = $this->getDatabaseMock();
 

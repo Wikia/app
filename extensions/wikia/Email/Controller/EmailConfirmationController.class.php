@@ -129,10 +129,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 	}
 
 	protected function getEmailSpecificFooterMessages() {
-		return [
-			$this->getMessage( 'emailext-emailconfirmation-reminder-footer-1',
-				$this->getTargetUserName() )->parse()
-		];
+		return [];
 	}
 }
 

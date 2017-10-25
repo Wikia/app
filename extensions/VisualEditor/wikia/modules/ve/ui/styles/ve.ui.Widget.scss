@@ -58,3 +58,33 @@
 		border-color: transparent transparent $color-ve-gradient-light;
 	}
 }
+
+.ve-ui-imageField {
+	display: flex;
+
+	.oo-ui-inputWidget {
+		textarea {
+			border-bottom-right-radius: 0;
+			border-right: 0;
+			border-top-right-radius: 0;
+			margin: 0;
+		}
+	}
+
+	.oo-ui-buttonElement.oo-ui-flaggedElement-primary {
+		.oo-ui-buttonElement-button {
+			border-bottom-left-radius: 0;
+			border-left: 0;
+			border-top-left-radius: 0;
+			box-sizing: border-box;
+			font-size: 1em;
+			height: 2.5em;
+			margin: 0;
+			padding: .2em 1.25em;
+		}
+
+		.oo-ui-iconElement-icon {
+			opacity: 1;
+		}
+	}
+}

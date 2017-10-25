@@ -15,8 +15,11 @@ class EmailControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @expectedException \Email\Check
+	 * @expectedExceptionMessage Invalid from address
+	 */
 	function testAssertValidFromAddressInvalidEmail() {
-		$this->setExpectedException( '\Email\Check', 'Invalid from address' );
 		$obj = new EmailController;
 		$obj->assertValidFromAddress( 'invalid email' );
 	}

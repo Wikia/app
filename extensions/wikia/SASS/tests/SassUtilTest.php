@@ -31,15 +31,16 @@ class SassUtilTest extends WikiaBaseTest {
 	 * Returns Language object mock
 	 *
 	 * @param bool|null $isRTL
-	 * @bool Language|null
+	 * @return Language|null|PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function getLanguageMock( $isRTL ) {
 		if ( is_bool( $isRTL ) ) {
-			return $this->mockClassWithMethods( 'Language', ['isRTL' => $isRTL] );
+			return $this->createConfiguredMock( Language::class, [
+				'isRTL' => $isRTL
+			] );
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	public function isRTLProvider() {

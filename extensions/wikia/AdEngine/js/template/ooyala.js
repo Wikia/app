@@ -11,6 +11,11 @@ define('ext.wikia.adEngine.template.ooyala', [
 	function show(params) {
 		var aspectRatio = params.width / params.height,
 			playerId = 'ooyala_' + Math.floor((1 + Math.random()) * 0x10000),
+			vastTargeting = {
+				passback: 'ooyala',
+				pos: params.slotName,
+				src: params.src
+			},
 			vb;
 
 		vb = new VideoBootstrap(params.container, {
@@ -21,11 +26,7 @@ define('ext.wikia.adEngine.template.ooyala', [
 				playerId: playerId,
 				videoId: params.videoId,
 				autoPlay: params.autoPlay || true,
-				tagUrl: params.vastUrl || vastUrlBuilder.build(aspectRatio, {
-					passback: 'ooyala',
-					pos: params.slotName,
-					src: params.src
-				}),
+				tagUrl: params.vastUrl || vastUrlBuilder.build(aspectRatio, vastTargeting),
 				jsFile: [
 					libraryUrl,
 					'extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaAgeGate.js'

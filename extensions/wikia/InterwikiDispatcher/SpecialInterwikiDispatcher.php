@@ -32,7 +32,7 @@ $wgExtensionMessagesFiles['SpecialInterwikiDispatcher'] = dirname(__FILE__) . '/
 $wgExtensionMessagesFiles['SpecialInterwikiDispatcherAliases'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.alias.php';
 
 //Register hook
-$wgHooks['GetFullURL'][] = 'InterwikiDispatcher::getInterWikiaURL';
+$wgHooks['GetFullURL'][] = 'InterwikiDispatcher::getInterWikiaURLHook';
 
 //Register special page
 if (!function_exists('extAddSpecialPage')) {

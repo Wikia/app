@@ -113,7 +113,7 @@ class RawAction extends FormlessAction {
 			$response->header( 'HTTP/1.x 404 Not Found' );
 		}
 
-		if ( !wfRunHooks( 'RawPageViewBeforeOutput', array( &$this, &$text ) ) ) {
+		if ( !Hooks::run( 'RawPageViewBeforeOutput', [ $this, &$text ] ) ) {
 			wfDebug( __METHOD__ . ": RawPageViewBeforeOutput hook broke raw page output.\n" );
 		}
 

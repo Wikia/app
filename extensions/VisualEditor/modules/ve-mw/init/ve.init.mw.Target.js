@@ -136,6 +136,13 @@ OO.inheritClass( ve.init.mw.Target, ve.init.Target );
  */
 
 /**
+ * @event saveErrorReadOnly
+ * Fired when the user tries to save page but the database is locked
+ * @param {Object} editApi
+ * @param {Object} data API response data
+ */
+
+/**
  * @event saveErrorUnknown
  * Fired for any other type of save error
  * @param {Object} editApi
@@ -692,6 +699,8 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 		return;
 	} else if ( data.error && data.error.code === 'pagedeleted' ) {
 		this.emit( 'saveErrorPageDeleted' );
+	} else if ( data.error && data.error.code === 'readonly' ) {
+		this.emit( 'saveErrorReadOnly' );
 	}
 
 	// Handle captcha

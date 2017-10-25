@@ -1,60 +1,21 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2001-2014, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Bastian Feder <php@bastian-feder.de>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause
- * @link       http://www.phpunit.de/
- * @since      File available since Release 3.7.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+namespace PHPUnit\Framework\Constraint;
+
+use PHPUnit\Framework\ExpectationFailedException;
+use SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
  * Asserts whether or not two JSON objects are equal.
- *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Bastian Feder <php@bastian-feder.de>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.7.0
  */
-class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constraint
+class JsonMatches extends Constraint
 {
     /**
      * @var string
@@ -78,22 +39,96 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
      *
      * This method can be overridden to implement the evaluation algorithm.
      *
-     * @param  mixed $other Value or object to evaluate.
+     * @param mixed $other Value or object to evaluate.
+     *
      * @return bool
      */
     protected function matches($other)
     {
-        $decodedOther = json_decode($other);
-        if (json_last_error()) {
+        list($error, $recodedOther) = $this->canonicalizeJson($other);
+        if ($error) {
             return false;
         }
 
-        $decodedValue = json_decode($this->value);
-        if (json_last_error()) {
+        list($error, $recodedValue) = $this->canonicalizeJson($this->value);
+        if ($error) {
             return false;
         }
 
-        return $decodedOther == $decodedValue;
+        return $recodedOther == $recodedValue;
+    }
+
+    /**
+     * Throws an exception for the given compared value and test description
+     *
+     * @param mixed             $other             Evaluated value or object.
+     * @param string            $description       Additional information about the test
+     * @param ComparisonFailure $comparisonFailure
+     *
+     * @throws ExpectationFailedException
+     */
+    protected function fail($other, $description, ComparisonFailure $comparisonFailure = null)
+    {
+        if ($comparisonFailure === null) {
+            list($error) = $this->canonicalizeJson($other);
+            if ($error) {
+                parent::fail($other, $description);
+
+                return;
+            }
+
+            list($error) = $this->canonicalizeJson($this->value);
+            if ($error) {
+                parent::fail($other, $description);
+
+                return;
+            }
+
+            $comparisonFailure = new ComparisonFailure(
+                \json_decode($this->value),
+                \json_decode($other),
+                $other,
+                $this->value,
+                false,
+                'Failed asserting that two json values are equal.'
+            );
+        }
+
+        parent::fail($other, $description, $comparisonFailure);
+    }
+
+    /*
+     * To allow comparison of JSON strings, first process them into a consistent
+     * format so that they can be compared as strings.
+     * @return array ($error, $canonicalized_json)  The $error parameter is used
+     * to indicate an error decoding the json.  This is used to avoid ambiguity
+     * with JSON strings consisting entirely of 'null' or 'false'.
+     */
+    private function canonicalizeJson($json)
+    {
+        $decodedJson = \json_decode($json, true);
+        if (\json_last_error()) {
+            return [true, null];
+        }
+        $this->recursiveSort($decodedJson);
+        $reencodedJson = \json_encode($decodedJson);
+
+        return [false, $reencodedJson];
+    }
+
+    /*
+     * JSON object keys are unordered while PHP array keys are ordered.
+     * Sort all array keys to ensure both the expected and actual values have
+     * their keys in the same order.
+     */
+    private function recursiveSort(&$json)
+    {
+        if (\is_array($json)) {
+            \ksort($json);
+            foreach ($json as $key => &$value) {
+                $this->recursiveSort($value);
+            }
+        }
     }
 
     /**
@@ -103,7 +138,7 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
      */
     public function toString()
     {
-        return sprintf(
+        return \sprintf(
             'matches JSON string "%s"',
             $this->value
         );

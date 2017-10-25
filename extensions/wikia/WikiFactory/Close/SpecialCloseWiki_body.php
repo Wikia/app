@@ -360,7 +360,7 @@ class CloseWikiPage extends SpecialPage {
 		$aHookParams = [
 			'city_id' => $wiki->city_id,
 		];
-		wfRunHooks( 'WikiFactoryWikiClosed', array( $aHookParams ) );
+		Hooks::run( 'WikiFactoryWikiClosed', array( $aHookParams ) );
 		wfProfileOut( __METHOD__ );
 	}
 

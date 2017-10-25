@@ -400,7 +400,7 @@ class WikiFactoryHub extends WikiaModel {
 		// I guess we should look up the name here
 		$verticals = $this->getAllVerticals();
 		$name = $verticals[$vertical_id]['name'];
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, htmlspecialchars( "Vertical changed to $name. $reason" ), $city_id );
 	}
 
 	/**
@@ -444,7 +444,7 @@ class WikiFactoryHub extends WikiaModel {
 			$reason = " ( $reason )";
 		}
 
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, htmlspecialchars( "Categories changed to $message. $reason" ), $city_id );
 	}
 
 	// Add 1 category

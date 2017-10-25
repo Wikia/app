@@ -13,6 +13,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	 * @group Slow
 	 * @slowExecutionTime 0.09747 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::__construct
+	 * @group Broken
 	 */
 	public function testConstruct() {
 		$dc = new Wikia\Search\ResultSet\DependencyContainer();

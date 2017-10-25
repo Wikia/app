@@ -1,4 +1,4 @@
-<!-- Begin recovery -->
+<!-- Begin SourcePoint recovery -->
 <script type="text/javascript">
 	require([
 		"ext.wikia.adEngine.adContext"
@@ -19,13 +19,13 @@
 					document.getElementById('WikiaArticle').style.display = 'none';
 					document.getElementById('WikiaArticleMsg').style.display = 'block';
 					window.addEventListener('load', function () {
-						require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
+						require(['ext.wikia.aRecoveryEngine.adBlockRecovery'], function (adBlockRecovery) {
 							'use strict';
-							helper.track('callback');
+							adBlockRecovery.track('callback');
 						});
 					});
 				} else {
-					window.Wikia.log(['getBootstrap', 'content control disabled - user is logged in', window.wgUserName], 'debug', logGroup);
+					window.Wikia.log(['getBootstrap', 'content control disabled - user is logged in', window.wgUserName], log.levels.debug, logGroup);
 				}
 			};
 		}
@@ -37,8 +37,8 @@
 			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
 
 			window.addEventListener('load', function () {
-				require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
-					helper.verifyContent();
+				require(['ext.wikia.aRecoveryEngine.adBlockRecovery'], function (adBlockRecovery) {
+					adBlockRecovery.verifyContent();
 				});
 			});
 		} else if (context.opts.sourcePointMMS === true) {
@@ -47,8 +47,8 @@
 			window._sp_.mms = window._sp_.mms || {};
 			window._sp_.mms.cmd = window._sp_.mms.cmd || [];
 
-			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/SourcePointMessaging');
-			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/SourcePointMMSClient');
+			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/spmsg');
+			window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/spmmsc');
 
 			window.addEventListener('load', function() {
 				window._sp_.config.mms_domain = mmsDomain;
@@ -69,4 +69,4 @@
 	});
 
 </script>
-<!-- End recovery -->
+<!-- End SourcePoint recovery -->

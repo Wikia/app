@@ -17,7 +17,9 @@
 		var extRegExp = /\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
 			legacyThumbnailerPath = '/images/thumb/',
-			thumbnailerBaseURLRegex = /(.*\/revision\/\w+).*/;
+			// [0-9a-f-]{36} is to match UUIDs like in
+			// https://vignette.wikia.nocookie.net/ff8b7617-46fa-4efb-ac2f-ff98edf04bcf
+			thumbnailerBaseURLRegex = new RegExp('(.*/revision/\\w+|.*/[0-9a-f-]{36}).*');
 
 		/**
 		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
@@ -173,10 +175,10 @@
 		 * Constructs complete thumbnailer url by appending parameters to url
 		 *
 		 * URL before:
-		 * http://vignette2.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest
+		 * http://vignette.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest
 		 *
 		 * URL after:
-		 * http://vignette2.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest/zoom-crop/width/240/height/240
+		 * http://vignette.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest/zoom-crop/width/240/height/240
 		 *
 		 * @private
 		 * @param {String} url

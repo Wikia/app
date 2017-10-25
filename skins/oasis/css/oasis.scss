@@ -2,12 +2,6 @@
 @import '/skins/common/shared.css';
 @import '/skins/wikia/shared.css';
 
-// CSS (needs leading slash and file extension)
-@import '/extensions/wikia/CreatePage/css/CreatePage.css';
-
-// TODO: remove after test ends (XW-2375)
-@import 'extensions/wikia/CreatePage/css/CreatePageTest';
-
 // Layout
 @import 'core/layout';
 @import 'wikiagrid';
@@ -37,8 +31,6 @@
 @import 'core/globalelements';
 @import 'core/page';
 @import 'core/CommentsLikes';
-@import 'core/WikiHeader';
-@import 'core/PageHeader';
 @import 'core/Search';
 @import 'core/article';
 @import 'core/tablepager';
@@ -80,6 +72,7 @@
 @import 'extensions/wikia/VideosModule/styles/VideosModule';
 @import 'extensions/wikia/MediaGallery/styles/MediaGallery'; // relies on bulky foundation mixins
 @import 'extensions/wikia/PageShare/styles/PageShare';
+@import 'extensions/wikia/CreatePage/css/CreatePage';
 
 //Site Optimizations
 @import 'extensions/wikia/Rail/styles/RailElement';

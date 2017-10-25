@@ -117,13 +117,23 @@ class ScribeProducer {
 	 * @static
 	 * @access public
 	 *
-	 * @param WikiPage $oArticle,
-	 * @param User $User
+	 * @param WikiPage $oArticle ,
+	 * @param User $oUser
+	 * @param $text
+	 * @param $summary
+	 * @param $minor
+	 * @param $undef1
+	 * @param $undef2
+	 * @param $flags
+	 * @param Revision $oRevision
+	 * @param Status $status
+	 * @param $baseRevId
+	 * @return bool
+	 * @internal param User $User
 	 *
 	 * @author Piotr Molski (MoLi)
-	 * @return true
 	 */
-	static public function saveComplete( &$oArticle, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, Revision $oRevision, &$status, $baseRevId ) {
+	static public function saveComplete( WikiPage $oArticle, User $oUser, $text, $summary, $minor, $undef1, $undef2, $flags, $oRevision, Status &$status, $baseRevId ): bool {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
@@ -230,81 +240,75 @@ class ScribeProducer {
 	 * @param String $articleId,
 	 *
 	 * @author Piotr Molski (MoLi)
-	 * @return true
+	 * @return bool true
 	 */
-	static public function deleteComplete( &$oArticle, &$oUser, $reason, $articleId ) {
+	static public function deleteComplete( WikiPage $oArticle, User $oUser, $reason, $articleId ): bool {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		$use_api = 0;
-		if ( ( is_object($oArticle) ) && ( $oUser instanceof User ) ) {
-			$pageId = ( !empty($articleId) ) ? $articleId : $oArticle->getID();
-			$logid = 0;
-			if ( $pageId > 0 ) {
-				if ( $use_api == 1 ) {
-					$oTitle = $oArticle->getTitle();
-					$pageName = Title::makeName($oTitle->getNamespace(), $oTitle->getDBkey());
-					$oFauxRequest = new FauxRequest(array(
-						'action' 	=> 'query',
-						'list' 		=> 'logevents',
-						'letype' 	=> 'delete',
-						'letitle'	=> $pageName,
-						'lelimit'	=> 1
-					));
-					$oApi = new ApiMain($oFauxRequest);
-					try {
-						#---
-						$oApi->execute();
-						$aResult = $oApi->GetResultData();
-						if ( isset( $aResult['query']['logevents'] ) && !empty( $aResult['query']['logevents'] ) ) {
-							list ($row) = $aResult['query']['logevents'];
-							if ( isset($row['logid']) ) {
-								$logid = $row['logid'];
-							}
+		$pageId = ( !empty($articleId) ) ? $articleId : $oArticle->getID();
+		$logid = 0;
+		if ( $pageId > 0 ) {
+			if ( $use_api == 1 ) {
+				$oTitle = $oArticle->getTitle();
+				$pageName = Title::makeName($oTitle->getNamespace(), $oTitle->getDBkey());
+				$oFauxRequest = new FauxRequest(array(
+					'action' 	=> 'query',
+					'list' 		=> 'logevents',
+					'letype' 	=> 'delete',
+					'letitle'	=> $pageName,
+					'lelimit'	=> 1
+				));
+				$oApi = new ApiMain($oFauxRequest);
+				try {
+					#---
+					$oApi->execute();
+					$aResult = $oApi->GetResultData();
+					if ( isset( $aResult['query']['logevents'] ) && !empty( $aResult['query']['logevents'] ) ) {
+						list ($row) = $aResult['query']['logevents'];
+						if ( isset($row['logid']) ) {
+							$logid = $row['logid'];
 						}
 					}
-					catch (Exception $e) {
-						Wikia::log( __METHOD__, 'cannot fetch data from logging table via API request', $e->getMessage() );
-					};
-				} else {
-					$table = 'recentchanges';
-					$oTitle = $oArticle->getTitle();
-					$what = array('rc_logid');
-					$cond = array(
-						'rc_title'		=> $oTitle->getDBkey(),
-						'rc_namespace'	=> $oTitle->getNamespace(),
-						'rc_log_action'	=> 'delete',
-						'rc_user' 		=> $oUser->getID()
-					);
-					$options = array(
-						'ORDER BY' => 'rc_id DESC'
-					);
-
-					$dbr = wfGetDB( DB_MASTER );
-					$oRow = $dbr->selectRow( $table, $what, $cond, __METHOD__, $options );
-					if ( $oRow ) {
-						$logid = $oRow->rc_logid;
-					}
 				}
+				catch (Exception $e) {
+					Wikia::log( __METHOD__, 'cannot fetch data from logging table via API request', $e->getMessage() );
+				};
+			} else {
+				$table = 'recentchanges';
+				$oTitle = $oArticle->getTitle();
+				$what = array('rc_logid');
+				$cond = array(
+					'rc_title'		=> $oTitle->getDBkey(),
+					'rc_namespace'	=> $oTitle->getNamespace(),
+					'rc_log_action'	=> 'delete',
+					'rc_user' 		=> $oUser->getID()
+				);
+				$options = array(
+					'ORDER BY' => 'rc_id DESC'
+				);
 
-				if ( $logid > 0 ) {
-					#---
-					$oScribeProducer = new ScribeProducer( 'delete', $pageId, 0, $logid, 0 );
-					if ( is_object( $oScribeProducer ) ) {
-						$oScribeProducer->send_log();
-					}
-				} else {
-					$title = $oArticle->getTitle()->getText();
-					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): log id not found: $title" );
+				$dbr = wfGetDB( DB_MASTER );
+				$oRow = $dbr->selectRow( $table, $what, $cond, __METHOD__, $options );
+				if ( $oRow ) {
+					$logid = $oRow->rc_logid;
+				}
+			}
+
+			if ( $logid > 0 ) {
+				#---
+				$oScribeProducer = new ScribeProducer( 'delete', $pageId, 0, $logid, 0 );
+				if ( is_object( $oScribeProducer ) ) {
+					$oScribeProducer->send_log();
 				}
 			} else {
 				$title = $oArticle->getTitle()->getText();
-				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): page ID is empty: $title" );
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): log id not found: $title" );
 			}
 		} else {
-			$isArticle = is_object($oArticle);
-			$isUser = is_object($oUser);
-			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid user: $isUser, invalid article: $isArticle" );
+			$title = $oArticle->getTitle()->getText();
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): page ID is empty: $title" );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -317,32 +321,29 @@ class ScribeProducer {
 	 * @static
 	 * @access public
 	 *
-	 * @param Title $oTitle,
-	 * @param Revision $oRevision,
+	 * @param Title $oTitle ,
+	 * @param Revision $oRevision ,
 	 *
+	 * @param $archivePageId
+	 * @return bool
 	 * @author Piotr Molski (MoLi)
-	 * @return true
 	 */
-	static public function revisionUndeleted( &$oTitle, $oRevision, $archivePageId ) {
+	static public function revisionUndeleted( Title $oTitle, Revision $oRevision, $archivePageId ): bool {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
-		if ( ( $oTitle instanceof Title ) && ( $oRevision instanceof Revision ) ) {
-			$pageId = $oRevision->getPage();
-			$revId = $oRevision->getId();
-			if ( $revId > 0 && $pageId > 0 ) {
-				$oScribeProducer = new ScribeProducer( 'edit', $pageId, $revId, 0, 0 );
-				if ( is_object( $oScribeProducer ) ) {
-					$oScribeProducer->send_log();
-				}
-			} else {
-				$title = $oTitle->getText();
-				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId) for title: $title, page Id: $pageId, rev Id: $revId" );
+
+		$pageId = $oRevision->getPage();
+		$revId = $oRevision->getId();
+		if ( $revId > 0 && $pageId > 0 ) {
+			$oScribeProducer = new ScribeProducer( 'edit', $pageId, $revId, 0, 0 );
+			if ( is_object( $oScribeProducer ) ) {
+				$oScribeProducer->send_log();
 			}
 		} else {
-			$isTitle = is_object($oTitle);
-			$isRevision = is_object($oRevision);
-			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid title: $isTitle, invalid revision: $isRevision" );
+			$title = $oTitle->getText();
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId) for title: $title, page Id: $pageId, rev Id: $revId" );
 		}
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -353,12 +354,13 @@ class ScribeProducer {
 	 * @static
 	 * @access public
 	 *
-	 * @param Title $oTitle,
+	 * @param Title $oTitle ,
 	 *
+	 * @param bool $is_new
+	 * @return bool
 	 * @author Piotr Molski (MoLi)
-	 * @return true
 	 */
-	static public function articleUndelete( &$oTitle, $is_new = false ) {
+	static public function articleUndelete( Title $oTitle, $is_new = false ): bool {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		if ( $oTitle instanceof Title ) {
@@ -406,63 +408,53 @@ class ScribeProducer {
 	 * @author Piotr Molski (MoLi)
 	 * @return true
 	 */
-	static public function moveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirId = 0 ) {
+	static public function moveComplete( Title $oOldTitle, Title $oNewTitle, User $oUser, $pageId, $redirId = 0	): bool {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
-		if ( $oNewTitle instanceof Title ) {
-			$oRevision = Revision::newFromTitle( $oNewTitle );
-			if ( $oRevision instanceof Revision ) {
-				$revId = $oRevision->getId();
-				if ( empty($pageId) ) {
-					$pageId = $oRevision->getPage();
-				}
-				if ( $revId > 0 && $pageId > 0 ) {
-					$oScribeProducer = new ScribeProducer( 'edit', $pageId, $revId );
-					if ( is_object( $oScribeProducer ) ) {
-						$oScribeProducer->send_log();
-					}
-				} else {
-					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): empty revision or page id: $revId, $pageId" );
+		$oRevision = Revision::newFromTitle( $oNewTitle );
+		if ( $oRevision instanceof Revision ) {
+			$revId = $oRevision->getId();
+			if ( empty($pageId) ) {
+				$pageId = $oRevision->getPage();
+			}
+			if ( $revId > 0 && $pageId > 0 ) {
+				$oScribeProducer = new ScribeProducer( 'edit', $pageId, $revId );
+				if ( is_object( $oScribeProducer ) ) {
+					$oScribeProducer->send_log();
 				}
 			} else {
-				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision for new title" );
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): empty revision or page id: $revId, $pageId" );
 			}
 		} else {
-			$isTitle = is_object($oNewTitle);
-			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid new title: $isTitle" );
+			Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision for new title" );
 		}
 
 		if ( $redirId > 0 ) {
 			# old title as a #Redirect
-			if ( $oOldTitle instanceof Title ) {
-				$oRevision = Revision::newFromTitle( $oOldTitle );
+			$oRevision = Revision::newFromTitle( $oOldTitle );
 
-				if ( !is_object($oRevision) ) {
-					$db = wfGetDB( DB_MASTER );
-					$oRevision = Revision::loadFromPageId( $db, $redirId );
+			if ( !is_object($oRevision) ) {
+				$db = wfGetDB( DB_MASTER );
+				$oRevision = Revision::loadFromPageId( $db, $redirId );
+			}
+
+			if ( $oRevision instanceof Revision ) {
+				$revId = $oRevision->getId();
+				$newPageId = $oRevision->getPage();
+				if ( empty($newPageId) || $newPageId < 0 ) {
+					$newPageId = $oOldTitle->getArticleId();
 				}
-
-				if ( $oRevision instanceof Revision ) {
-					$revId = $oRevision->getId();
-					$newPageId = $oRevision->getPage();
-					if ( empty($newPageId) || $newPageId < 0 ) {
-						$newPageId = $oOldTitle->getArticleId();
-					}
-					if ( $revId > 0 && $newPageId > 0 ) {
-						$oScribeProducer = new ScribeProducer( 'edit', $newPageId, $revId );
-						if ( is_object( $oScribeProducer ) ) {
-							$oScribeProducer->send_log();
-						}
-					} else {
-						Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): empty revision or new page id: $revId, $newPageId" );
+				if ( $revId > 0 && $newPageId > 0 ) {
+					$oScribeProducer = new ScribeProducer( 'edit', $newPageId, $revId );
+					if ( is_object( $oScribeProducer ) ) {
+						$oScribeProducer->send_log();
 					}
 				} else {
-					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision for old title: $redirId" );
+					Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): empty revision or new page id: $revId, $newPageId" );
 				}
 			} else {
-				$isTitle = is_object($oOldTitle);
-				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid old title: $isTitle" );
+				Wikia::log( __METHOD__, "error", "Cannot send log via scribe ($wgCityId): invalid revision for old title: $redirId" );
 			}
 		}
 		wfProfileOut( __METHOD__ );

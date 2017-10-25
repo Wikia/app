@@ -267,7 +267,7 @@ class SkinChooser {
 		$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : $userTheme;
 		$userTheme = $request->getVal( 'usetheme', $userTheme );
 
-		wfRunHooks( 'BeforeSkinLoad', [ &$userSkin, $useskin, $title ] );
+		Hooks::run( 'BeforeSkinLoad', [ &$userSkin, $useskin, $title ] );
 
 		$skin = Skin::newFromKey( $userSkin );
 

@@ -20,7 +20,9 @@
  *
  * @file
  */
-use \Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 class Block {
 	use PermissionsServiceAccessor;
 	/* public*/ var $mReason, $mTimestamp, $mAuto, $mExpiry, $mHideName;
@@ -30,8 +32,7 @@ class Block {
 		$mFromMaster,
 
 		$mBlockEmail,
-		$mDisableUsertalk,
-		$mCreateAccount;
+		$mDisableUsertalk;
 
 	/// @var User|String
 	protected $target;
@@ -86,7 +87,6 @@ class Block {
 		$this->mTimestamp = wfTimestamp( TS_MW, $timestamp );
 		$this->mAuto = $auto;
 		$this->isHardblock( !$anonOnly );
-		$this->prevents( 'createaccount', $createAccount );
 		if ( $expiry == 'infinity' || $expiry == wfGetDB( DB_SLAVE )->getInfinity() ) {
 			$this->mExpiry = 'infinity';
 		} else {
@@ -150,7 +150,6 @@ class Block {
 			&& $this->type == $block->type
 			&& $this->mAuto == $block->mAuto
 			&& $this->isHardblock() == $block->isHardblock()
-			&& $this->prevents( 'createaccount' ) == $block->prevents( 'createaccount' )
 			&& $this->mExpiry == $block->mExpiry
 			&& $this->isAutoblocking() == $block->isAutoblocking()
 			&& $this->mHideName == $block->mHideName
@@ -380,7 +379,6 @@ class Block {
 		$this->isHardblock( !$row->ipb_anon_only );
 		$this->isAutoblocking( $row->ipb_enable_autoblock );
 
-		$this->prevents( 'createaccount', $row->ipb_create_account );
 		$this->prevents( 'sendemail', $row->ipb_block_email );
 		$this->prevents( 'editownusertalk', !$row->ipb_allow_usertalk );
 	}
@@ -495,7 +493,6 @@ class Block {
 			'ipb_timestamp'        => $db->timestamp( $this->mTimestamp ),
 			'ipb_auto'             => $this->mAuto,
 			'ipb_anon_only'        => !$this->isHardblock(),
-			'ipb_create_account'   => $this->prevents( 'createaccount' ),
 			'ipb_enable_autoblock' => $this->isAutoblocking(),
 			'ipb_expiry'           => $expiry,
 			'ipb_range_start'      => $this->getRangeStart(),
@@ -520,7 +517,7 @@ class Block {
 		if ( $this->isAutoblocking() && $this->getType() == self::TYPE_USER ) {
 			wfDebug( "Doing retroactive autoblocks for " . $this->getTarget() . "\n" );
 
-			$continue = wfRunHooks(
+			$continue = Hooks::run(
 				'PerformRetroactiveAutoblock', array( $this, &$blockIds ) );
 
 			if ( $continue ) {
@@ -638,7 +635,7 @@ class Block {
 		}
 
 		# Allow hooks to cancel the autoblock.
-		if ( !wfRunHooks( 'AbortAutoblock', array( $autoblockIP, &$this ) ) ) {
+		if ( !Hooks::run( 'AbortAutoblock', [ $autoblockIP, $this ] ) ) {
 			wfDebug( "Autoblock aborted by hook.\n" );
 			return false;
 		}
@@ -669,7 +666,6 @@ class Block {
 		$timestamp = wfTimestampNow();
 		$autoblock->mTimestamp = $timestamp;
 		$autoblock->mAuto = 1;
-		$autoblock->prevents( 'createaccount', $this->prevents( 'createaccount' ) );
 		# Continue suppressing the name if needed
 		$autoblock->mHideName = $this->mHideName;
 		$autoblock->prevents( 'editownusertalk', $this->prevents( 'editownusertalk' ) );
@@ -878,9 +874,6 @@ class Block {
 				# For now... <evil laugh>
 				return true;
 
-			case 'createaccount':
-				return wfSetVar( $this->mCreateAccount, $x );
-
 			case 'sendemail':
 				return wfSetVar( $this->mBlockEmail, $x );
 
@@ -963,10 +956,16 @@ class Block {
 	 * Purge expired blocks from the ipblocks table
 	 */
 	public static function purgeExpired() {
+		global $wgCityId;
+
 		if ( !wfReadOnly() ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->delete( 'ipblocks',
-				array( 'ipb_expiry < ' . $dbw->addQuotes( $dbw->timestamp() ) ), __METHOD__ );
+			// Wikia change - begin
+			// @see SUS-2147
+			$task = new Wikia\Tasks\Tasks\BlockPurgeExpiredTask();
+			$task->wikiId( $wgCityId );
+			$task->call( 'purgeExpired' );
+			$task->queue();
+			// Wikia change - end
 		}
 	}
 
@@ -1217,16 +1216,6 @@ class Block {
 	 */
 	public function setBlockEmail( $blockEmail ) {
 		$this->mBlockEmail = $blockEmail;
-	}
-
-	/**
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * wikia change for Phalanx
-	 *
-	 * @param $blockEmail boolean
-	 */
-	public function setCreateAccount( $createAccount ) {
-		$this->mCreateAccount = $createAccount;
 	}
 
 	/**

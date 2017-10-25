@@ -585,10 +585,6 @@
 	}
 }
 
-.TOC_hide #toctitle + ul {
-	display: none;
-}
-
 // Needed for article comments lazy loading
 .WikiaArticleComments.loading {
 	background: url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgCdnStylePath */

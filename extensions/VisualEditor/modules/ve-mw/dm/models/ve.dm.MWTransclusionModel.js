@@ -227,6 +227,10 @@
 			return;
 		}
 
+		this.pushFetchRequests( titles, specs, queue );
+	};
+
+	ve.dm.MWTransclusionModel.prototype.pushFetchRequests = function ( titles, specs, queue ) {
 		this.requests.push( this.fetchRequest( titles, specs, queue ) );
 	};
 

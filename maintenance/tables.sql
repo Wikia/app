@@ -63,25 +63,6 @@ CREATE TABLE /*_*/user (
   -- Optional 'real name' to be displayed in credit listings
   user_real_name varchar(255) binary NOT NULL default '',
 
-  -- Password hashes, see User::crypt() and User::comparePasswords()
-  -- in User.php for the algorithm
-  user_password tinyblob NOT NULL,
-
-  -- When using 'mail me a new password', a random
-  -- password is generated and the hash stored here.
-  -- The previous password is left in place until
-  -- someone actually logs in with the new password,
-  -- at which point the hash is moved to user_password
-  -- and the old password is invalidated.
-  user_newpassword tinyblob NOT NULL,
-
-  -- Timestamp of the last time when a new password was
-  -- sent, for throttling and expiring purposes
-  -- Emailed passwords will expire $wgNewPasswordExpiry
-  -- (a week) after being set. If user_newpass_time is NULL
-  -- (eg. created by mail) it doesn't expire.
-  user_newpass_time binary(14),
-
   -- Note: email should be restricted, not public info.
   -- Same with passwords.
   user_email tinytext NOT NULL,
@@ -235,9 +216,6 @@ CREATE TABLE /*_*/page (
   -- can move or edit the page.
   page_restrictions tinyblob NOT NULL,
 
-  -- Number of times this page has been viewed.
-  page_counter bigint unsigned NOT NULL default 0,
-
   -- 1 indicates the article is a redirect.
   page_is_redirect tinyint unsigned NOT NULL default 0,
 
@@ -268,6 +246,9 @@ CREATE UNIQUE INDEX /*i*/name_title ON /*_*/page (page_namespace,page_title);
 CREATE INDEX /*i*/page_random ON /*_*/page (page_random);
 CREATE INDEX /*i*/page_len ON /*_*/page (page_len);
 CREATE INDEX /*i*/page_redirect_namespace_len ON /*_*/page (page_is_redirect, page_namespace, page_len);
+
+-- SUS-1928
+CREATE INDEX /*i*/page_ns_latest_idx ON /*_*/page (page_namespace, page_latest);
 
 --
 -- Every edit of a page creates also a revision row.
@@ -670,9 +651,6 @@ CREATE TABLE /*_*/site_stats (
   -- The single row should contain 1 here.
   ss_row_id int unsigned NOT NULL,
 
-  -- Total number of page views, if hit counters are enabled.
-  ss_total_views bigint unsigned default 0,
-
   -- Total number of edits performed.
   ss_total_edits bigint unsigned default 0,
 
@@ -701,19 +679,6 @@ CREATE TABLE /*_*/site_stats (
 
 -- Pointless index to assuage developer superstitions
 CREATE UNIQUE INDEX /*i*/ss_row_id ON /*_*/site_stats (ss_row_id);
-
-
---
--- Stores an ID for every time any article is visited;
--- depending on $wgHitcounterUpdateFreq, it is
--- periodically cleared and the page_counter column
--- in the page table updated for all the articles
--- that have been visited.)
---
-CREATE TABLE /*_*/hitcounter (
-  hc_id int unsigned NOT NULL
-) ENGINE=HEAP MAX_ROWS=25000;
-
 
 --
 -- The internet is full of jerks, alas. Sometimes it's handy
@@ -778,7 +743,7 @@ CREATE TABLE /*_*/ipblocks (
 
 -- Unique index to support "user already blocked" messages
 -- Any new options which prevent collisions should be included
-CREATE UNIQUE INDEX /*i*/ipb_address ON /*_*/ipblocks (ipb_address(255), ipb_user, ipb_auto, ipb_anon_only);
+CREATE UNIQUE INDEX /*i*/ipb_address_unique ON /*_*/ipblocks (ipb_address(255), ipb_user, ipb_auto);
 
 CREATE INDEX /*i*/ipb_user ON /*_*/ipblocks (ipb_user);
 CREATE INDEX /*i*/ipb_range ON /*_*/ipblocks (ipb_range_start(8), ipb_range_end(8));
@@ -1114,12 +1079,6 @@ CREATE TABLE /*_*/interwiki (
   -- insertion.
   iw_url blob NOT NULL,
 
-  -- The URL of the file api.php
-  iw_api blob NOT NULL,
-
-  -- The name of the database (for a connection to be established with wfGetLB( 'wikiid' ))
-  iw_wikiid varchar(64) NOT NULL,
-
   -- A boolean value indicating whether the wiki is in this project
   -- (used, for example, to detect redirect loops)
   iw_local bool NOT NULL,
@@ -1366,6 +1325,7 @@ CREATE TABLE /*_*/updatelog (
 
 -- A table to track tags for revisions, logs and recent changes.
 CREATE TABLE /*_*/change_tag (
+  ct_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
   -- RCID for the change
   ct_rc_id int NULL,
   -- LOGID for the change
@@ -1383,24 +1343,6 @@ CREATE UNIQUE INDEX /*i*/change_tag_log_tag ON /*_*/change_tag (ct_log_id,ct_tag
 CREATE UNIQUE INDEX /*i*/change_tag_rev_tag ON /*_*/change_tag (ct_rev_id,ct_tag);
 -- Covering index, so we can pull all the info only out of the index.
 CREATE INDEX /*i*/change_tag_tag_id ON /*_*/change_tag (ct_tag,ct_rc_id,ct_rev_id,ct_log_id);
-
-
--- Rollup table to pull a LIST of tags simply without ugly GROUP_CONCAT
--- that only works on MySQL 4.1+
-CREATE TABLE /*_*/tag_summary (
-  -- RCID for the change
-  ts_rc_id int NULL,
-  -- LOGID for the change
-  ts_log_id int NULL,
-  -- REVID for the change
-  ts_rev_id int NULL,
-  -- Comma-separated list of tags
-  ts_tags blob NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/tag_summary_rc_id ON /*_*/tag_summary (ts_rc_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_log_id ON /*_*/tag_summary (ts_log_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_rev_id ON /*_*/tag_summary (ts_rev_id);
 
 
 CREATE TABLE /*_*/valid_tag (

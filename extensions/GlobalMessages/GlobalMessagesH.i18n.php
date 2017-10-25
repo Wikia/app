@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesH extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Hidden category|Hidden categories}}',
 	'hidden-category-category' => 'Hidden categories',
 	'help' => 'Help',
@@ -47,15 +46,15 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'hours' => '{{PLURAL:$1|$1 hour|$1 hours}}',
 	'hijri-calendar-m1' => 'Muharram',
 	'hijri-calendar-m2' => 'Safar',
-	'hijri-calendar-m3' => 'Rabi\' al-awwal',
-	'hijri-calendar-m4' => 'Rabi\' al-thani',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
 	'hijri-calendar-m5' => 'Jumada al-awwal',
 	'hijri-calendar-m6' => 'Jumada al-thani',
 	'hijri-calendar-m7' => 'Rajab',
-	'hijri-calendar-m8' => 'Sha\'aban',
+	'hijri-calendar-m8' => "Sha'aban",
 	'hijri-calendar-m9' => 'Ramadan',
 	'hijri-calendar-m10' => 'Shawwal',
-	'hijri-calendar-m11' => 'Dhu al-Qi\'dah',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
 	'hijri-calendar-m12' => 'Dhu al-Hijjah',
 	'hebrew-calendar-m1' => 'Tishrei',
 	'hebrew-calendar-m2' => 'Cheshvan',
@@ -108,11 +107,11 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'hub-Video_Games' => 'Video Games',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hub-Food_and_Drink' => 'Food and Drink',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'hidden-category-category' => 'Name of the category where hidden categories will be listed.',
 	'help' => 'General text (noun) used in the sidebar (by default).
 
@@ -131,7 +130,7 @@ See also [[MediaWiki:Helppage/{{SUBPAGENAME}}|{{int:helppage}}]] and [[MediaWiki
 	'headline_sample' => 'Sample of headline text.',
 	'headline_tip' => 'This is the text that appears when you hover the mouse over the fifth button from the left on the edit toolbar.',
 	'hr_tip' => 'This is the text that appears when you hover the mouse over the first button on the right on the edit toolbar.',
-	'hiddencategories' => 'This message is shown below the edit form, like you have a section \'\'"Templates used on this page"\'\'.',
+	'hiddencategories' => "This message is shown below the edit form, like you have a section ''\"Templates used on this page\"''.",
 	'histlegend' => 'Text in history page. Refers to {{msg-mw|cur}}, {{msg-mw|last}}, and {{msg-mw|minoreditletter}}.',
 	'history-fieldset-title' => 'Fieldset label in the edit history pages.',
 	'history-show-deleted' => 'CheckBox to show only per [[mw:Manual:RevisionDelete|RevisonDelete]] deleted versions.
@@ -142,11 +141,11 @@ Used in History and [[Special:Contributions]].',
 	'historyempty' => 'Text in page history for empty page revisions
 
 {{Identical|Empty}}',
-	'history-feed-item-nocomment' => 'Title for each revision when viewing the RSS/Atom feed for a page history:
-* \'\'\'$1\'\'\' - user name,
-* \'\'\'$2\'\'\' - date/time,
-* \'\'\'$3\'\'\' - date,
-* \'\'\'$4\'\'\' - time.',
+	'history-feed-item-nocomment' => "Title for each revision when viewing the RSS/Atom feed for a page history:
+* '''$1''' - user name,
+* '''$2''' - date/time,
+* '''$3''' - date,
+* '''$4''' - time.",
 	'history-title' => 'Displayed as page title when you click on the "history" tab. The parameter $1 is the normal page title.',
 	'hist' => 'Short form of "history". Used on [[Special:RecentChanges]], [[Special:Watchlist]], ...',
 	'hide' => 'Option text in [[Special:RecentChanges]], and in [[Special:WhatLinksHere]]
@@ -256,15 +255,15 @@ Name of month in Hebrew calender.',
 {{Identical|Other}}',
 	'htmlform-yes' => 'Used in form, such as with radio buttons, for generic yes / no questions',
 	'hub-Wikia' => 'Missing documentation',
-];
+);
 
-$messages['ab'] = [
+$messages['ab'] = array(
 	'help' => 'Ацхыраара',
 	'history' => 'Аҭоурых',
 	'history_short' => 'Аҭоурых',
-];
+);
 
-$messages['ace'] = [
+$messages['ace'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kawan teusom|Kawan teusom}}',
 	'help' => 'Beunantu',
 	'history' => 'Atra u likot',
@@ -275,7 +274,7 @@ $messages['ace'] = [
 	'headline_tip' => 'Aneuk beunagi tingkat 1',
 	'hr_tip' => 'Garéh data',
 	'hiddencategories' => 'Ôn nyoë nakeuh anggèëta nibak {{PLURAL:$1|1 kawan teusom |$1 kawan teusom}}:',
-	'histlegend' => 'Piléh duwa teuneugön radiô, lheuëh nyan teugön teuneugön \'\'peubandéng\'\' keu peubandéng seunalén. Teugön saboh tanggay keu eu seunalén ôn bak tanggay nyan.<br />(skr) = bida ngön seunalén jinoë, (akhé) = bida ngön seunalén sigohlomjih. \'\'\'b\'\'\' = andam bacut, \'\'\'b\'\'\' = andam bot, → = andam bideuëng, ← = reuningkah keudroë',
+	'histlegend' => "Piléh duwa teuneugön radiô, lheuëh nyan teugön teuneugön ''peubandéng'' keu peubandéng seunalén. Teugön saboh tanggay keu eu seunalén ôn bak tanggay nyan.<br />(skr) = bida ngön seunalén jinoë, (akhé) = bida ngön seunalén sigohlomjih. '''b''' = andam bacut, '''b''' = andam bot, → = andam bideuëng, ← = reuningkah keudroë",
 	'history-fieldset-title' => 'Jeulajah riwayat away',
 	'histfirst' => 'Paléng trép',
 	'histlast' => 'Paléng barô',
@@ -284,9 +283,9 @@ $messages['ace'] = [
 	'hist' => 'riwayat',
 	'hide' => 'Peusom',
 	'historywarning' => 'Ingat: Ôn nyang hawa neusampôh na riwayat:',
-];
+);
 
-$messages['af'] = [
+$messages['af'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Versteekte kategorie|Versteekte kategorië}}',
 	'hidden-category-category' => 'Versteekte kategorieë',
 	'help' => 'Hulp',
@@ -297,7 +296,7 @@ $messages['af'] = [
 	'headline_sample' => 'Opskrif',
 	'headline_tip' => 'Vlak 2-opskrif',
 	'hr_tip' => 'Horisontale streep (selde nodig)',
-	'hiddencategories' => 'Hierdie bladsy is \'n lid van {{PLURAL:$1|1 versteekte kategorie|$1 versteekte kategorië}}:',
+	'hiddencategories' => "Hierdie bladsy is 'n lid van {{PLURAL:$1|1 versteekte kategorie|$1 versteekte kategorië}}:",
 	'histlegend' => 'Byskrif: (huidige) = verskil van huidige weergawe,
 (vorige) = verskil van vorige weergawe, M = klein wysiging',
 	'history-fieldset-title' => 'Blaai deur geskiedenis',
@@ -315,36 +314,36 @@ Dit was moontlik geskrap of geskuif.
 	'history-title' => 'Weergawegeskiedenis van "$1"',
 	'hist' => 'geskiedenis',
 	'hide' => 'versteek',
-	'hookaborted' => 'Die wysiging wat u probeer maak is deur \'n uitbreiding gekanselleer.',
+	'hookaborted' => "Die wysiging wat u probeer maak is deur 'n uitbreiding gekanselleer.",
 	'http-invalid-url' => 'Ongeldige URL: $1',
 	'http-invalid-scheme' => 'URL\'s met die "$1"-skema word nie ondersteun nie',
-	'http-request-error' => '\'n Onbekende fout het tydens die stuur van die versoek voorgekom.',
+	'http-request-error' => "'n Onbekende fout het tydens die stuur van die versoek voorgekom.",
 	'http-read-error' => 'Fout met die lees van HTTP.',
 	'http-timed-out' => 'HTTP-versoek se tyd is verstreke.',
 	'http-curl-error' => 'Fout met die ophaal van URL: $1',
 	'http-host-unreachable' => 'Die URL is nie bereikbaar nie.',
-	'http-bad-status' => 'Daar was \'n probleem tydens die HTTP-versoek: $1 $2',
-	'historywarning' => '\'\'\'Waarskuwing:\'\'\' Die bladsy wat u wil verwyder het \'n geskiedenis met ongeveer $1 {{PLURAL:$1|weergawe|weergawes}}:',
+	'http-bad-status' => "Daar was 'n probleem tydens die HTTP-versoek: $1 $2",
+	'historywarning' => "'''Waarskuwing:''' Die bladsy wat u wil verwyder het 'n geskiedenis met ongeveer $1 {{PLURAL:$1|weergawe|weergawes}}:",
 	'hours' => '{{PLURAL:$1|$1 uur|$1 ure}}',
 	'htmlform-invalid-input' => 'Daar is probleme met van die ingevoerde waardes',
 	'htmlform-select-badoption' => 'Die ingevoerde waarde is ongeldig.',
-	'htmlform-int-invalid' => 'Die ingevoer waarde is nie \'n heeltal nie.',
-	'htmlform-float-invalid' => 'Die waarde wat u ingevoer het is nie \'n getal nie.',
+	'htmlform-int-invalid' => "Die ingevoer waarde is nie 'n heeltal nie.",
+	'htmlform-float-invalid' => "Die waarde wat u ingevoer het is nie 'n getal nie.",
 	'htmlform-int-toolow' => 'Die ingevoerde waarde is laer as die minimum van $1',
 	'htmlform-int-toohigh' => 'Die ingevoerde waarde is groter as die maksimum van $1',
 	'htmlform-required' => 'Hierdie waarde is verpligtend',
 	'htmlform-submit' => 'Dien in',
 	'htmlform-reset' => 'Maak wysigings ongedaan',
 	'htmlform-selectorother-other' => 'Ander',
-];
+);
 
-$messages['ak'] = [
+$messages['ak'] = array(
 	'history' => 'Krataafa abakɔsɛm',
 	'history_short' => 'Abakɔsɛm',
 	'hist' => 'abakɔsɛm',
-];
+);
 
-$messages['aln'] = [
+$messages['aln'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori e msheftë|Kategori të mshefta}}',
 	'hidden-category-category' => 'Kategori të mshefta',
 	'help' => 'Ndihmë',
@@ -356,9 +355,9 @@ $messages['aln'] = [
 	'headline_tip' => 'Kryetitull i nivelit 2',
 	'hr_tip' => 'Vijë horizontale (përdoreni rallë)',
 	'hiddencategories' => 'Kjo faqe bân pjesë në {{PLURAL:$1|1 kategori të msheftë|$1 kategori të mshefta}}:',
-	'histlegend' => 'Përzgjedhja e dallimeve: shêjo kutijat rrethore të verzioneve që do me i krahasue dhe shtyp enter ose butonin në fund.<br />
-Legjenda: \'\'\'({{int:cur}})\'\'\' = dallimi me verzionin aktual,
-\'\'\'({{int:last}})\'\'\' = dallimi me verzionin para këtij, \'\'\'{{int:minoreditletter}}\'\'\' = redaktim i vogël.',
+	'histlegend' => "Përzgjedhja e dallimeve: shêjo kutijat rrethore të verzioneve që do me i krahasue dhe shtyp enter ose butonin në fund.<br />
+Legjenda: '''({{int:cur}})''' = dallimi me verzionin aktual,
+'''({{int:last}})''' = dallimi me verzionin para këtij, '''{{int:minoreditletter}}''' = redaktim i vogël.",
 	'history-fieldset-title' => 'Shfleto historikun',
 	'histfirst' => 'Mâ të hershmet',
 	'histlast' => 'Mâ të freskëtat',
@@ -372,9 +371,9 @@ Legjenda: \'\'\'({{int:cur}})\'\'\' = dallimi me verzionin aktual,
 	'hist' => 'hist',
 	'hide' => 'msheh',
 	'handheld.css' => '/* CSSi i vednosun këtu ka me i prekë shfletuesit mobil (të dorës) në dukje e konfigurueme në $wgHandheldStyle */',
-];
+);
 
-$messages['als'] = [
+$messages['als'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori e msheftë|Kategori të mshefta}}',
 	'hidden-category-category' => 'Kategori të mshefta',
 	'help' => 'Ndihmë',
@@ -386,9 +385,9 @@ $messages['als'] = [
 	'headline_tip' => 'Kryetitull i nivelit 2',
 	'hr_tip' => 'Vijë horizontale (përdoreni rallë)',
 	'hiddencategories' => 'Kjo faqe bân pjesë në {{PLURAL:$1|1 kategori të msheftë|$1 kategori të mshefta}}:',
-	'histlegend' => 'Përzgjedhja e dallimeve: shêjo kutijat rrethore të verzioneve që do me i krahasue dhe shtyp enter ose butonin në fund.<br />
-Legjenda: \'\'\'({{int:cur}})\'\'\' = dallimi me verzionin aktual,
-\'\'\'({{int:last}})\'\'\' = dallimi me verzionin para këtij, \'\'\'{{int:minoreditletter}}\'\'\' = redaktim i vogël.',
+	'histlegend' => "Përzgjedhja e dallimeve: shêjo kutijat rrethore të verzioneve që do me i krahasue dhe shtyp enter ose butonin në fund.<br />
+Legjenda: '''({{int:cur}})''' = dallimi me verzionin aktual,
+'''({{int:last}})''' = dallimi me verzionin para këtij, '''{{int:minoreditletter}}''' = redaktim i vogël.",
 	'history-fieldset-title' => 'Shfleto historikun',
 	'histfirst' => 'Mâ të hershmet',
 	'histlast' => 'Mâ të freskëtat',
@@ -402,9 +401,9 @@ Legjenda: \'\'\'({{int:cur}})\'\'\' = dallimi me verzionin aktual,
 	'hist' => 'hist',
 	'hide' => 'msheh',
 	'handheld.css' => '/* CSSi i vednosun këtu ka me i prekë shfletuesit mobil (të dorës) në dukje e konfigurueme në $wgHandheldStyle */',
-];
+);
 
-$messages['am'] = [
+$messages['am'] = array(
 	'hidden-categories' => '{{PLURAL:$1|የተደበቀ መደብ|የተደበቁ መደቦች}}',
 	'hidden-category-category' => 'የተደበቁ መደቦች',
 	'help' => 'እርዳታ ገጽ',
@@ -414,9 +413,9 @@ $messages['am'] = [
 	'hidetoc' => 'ደብቅ',
 	'headline_sample' => 'ንዑስ ክፍል',
 	'headline_tip' => 'የንዑስ-ክፍል አርዕስት ለመፍጠር',
-	'hr_tip' => 'አድማሳዊ መስመር (በ\'----\') ለመፍጠር',
+	'hr_tip' => "አድማሳዊ መስመር (በ'----') ለመፍጠር",
 	'hiddencategories' => 'ይህ ገጽ በ{{PLURAL:$1|1 የተደበቀ መደብ|$1 የተደበቁ መድቦች}} ውስጥ ይገኛል።',
-	'histlegend' => 'ከ2 እትሞች መካከል ልዩነቶቹን ለመናበብ፦ በ2 ክብ ነገሮች ውስጥ ምልክት አድርገው «የተመረጡትን እትሞች ለማነፃፀር» የሚለውን ተጭነው የዛኔ በቀጥታ ይሄዳሉ።<br /> መግለጫ፦ (ከአሁን) - ከአሁኑ እትም ያለው ልዩነት፤ (ካለፈው) - ቀጥሎ ከቀደመው እትም ያለው ልዩነት፤<br /> «\'\'\'ጥ\'\'\'» ማለት ጥቃቅን ለውጥ ነው።',
+	'histlegend' => "ከ2 እትሞች መካከል ልዩነቶቹን ለመናበብ፦ በ2 ክብ ነገሮች ውስጥ ምልክት አድርገው «የተመረጡትን እትሞች ለማነፃፀር» የሚለውን ተጭነው የዛኔ በቀጥታ ይሄዳሉ።<br /> መግለጫ፦ (ከአሁን) - ከአሁኑ እትም ያለው ልዩነት፤ (ካለፈው) - ቀጥሎ ከቀደመው እትም ያለው ልዩነት፤<br /> «'''ጥ'''» ማለት ጥቃቅን ለውጥ ነው።",
 	'history-fieldset-title' => 'የቀደሙት ዕትሞች ፍለጋ',
 	'histfirst' => 'ቀድመኞች',
 	'histlast' => 'ኋለኞች',
@@ -430,13 +429,13 @@ $messages['am'] = [
 	'hist' => 'ታሪክ',
 	'hide' => 'ይደበቁ',
 	'historywarning' => 'ማስጠንቀቂያ፦ ለዚሁ ገጽ የዕትም ታሪክ ደግሞ ሊጠፋ ነው! :',
-];
+);
 
-$messages['an'] = [
+$messages['an'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoría amagata|Categorías amagatas}}',
 	'hidden-category-category' => 'Categorías amagatas',
 	'help' => 'Aduya',
-	'history' => 'Historial d\'a pachina',
+	'history' => "Historial d'a pachina",
 	'history_short' => 'Historial',
 	'helppage' => 'Help:Aduya',
 	'hidetoc' => 'amagar',
@@ -444,8 +443,8 @@ $messages['an'] = [
 	'headline_tip' => 'Soztítol de livel 2',
 	'hr_tip' => 'Linia horizontal (faiga-ne un emplego amoderau)',
 	'hiddencategories' => 'Ista pachina fa parte de {{PLURAL:$1|1 categoría amagata|$1 categorías amagatas}}:',
-	'histlegend' => 'Selección de diferencias: sinyale as versions a comparar y prete "enter" u o botón d\'o cobaixo.<br />
-Leyenda: \'\'\'({{int:cur}})\'\'\' = esferencias con a versión actual, \'\'\'({{int:last}})\'\'\' = esferencias con a versión anterior, \'\'\'{{int:minoreditletter}}\'\'\' = edición menor',
+	'histlegend' => "Selección de diferencias: sinyale as versions a comparar y prete \"enter\" u o botón d'o cobaixo.<br />
+Leyenda: '''({{int:cur}})''' = esferencias con a versión actual, '''({{int:last}})''' = esferencias con a versión anterior, '''{{int:minoreditletter}}''' = edición menor",
 	'history-fieldset-title' => 'Mirar en o historial',
 	'history-show-deleted' => 'Nomás os borratos',
 	'histfirst' => 'Primeras contrebucions',
@@ -453,39 +452,39 @@ Leyenda: \'\'\'({{int:cur}})\'\'\' = esferencias con a versión actual, \'\'\'({
 	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
 	'historyempty' => '(buedo)',
 	'history-feed-title' => 'Historial de versions',
-	'history-feed-description' => 'Historial de versions d\'ista pachina en o wiki',
+	'history-feed-description' => "Historial de versions d'ista pachina en o wiki",
 	'history-feed-item-nocomment' => '$1 en $2',
-	'history-feed-empty' => 'A pachina demandata no existe.
-Puede que belún l\'haiga borrata d\'o wiki u renombrata.
-Prebe de [[Special:Search|mirar en o wiki]] atras pachinas relevants.',
+	'history-feed-empty' => "A pachina demandata no existe.
+Puede que belún l'haiga borrata d'o wiki u renombrata.
+Prebe de [[Special:Search|mirar en o wiki]] atras pachinas relevants.",
 	'history-title' => 'Historial de versions de "$1"',
 	'hist' => 'hist',
 	'hide' => 'Amagar',
-	'hookaborted' => 'A modificación que ha mirau de fer l\'ha cancelau un hook d\'extensión.',
+	'hookaborted' => "A modificación que ha mirau de fer l'ha cancelau un hook d'extensión.",
 	'http-invalid-url' => 'URL incorrecta: $1',
 	'http-invalid-scheme' => 'As URLs con con prefixo "$1" no son compatibles',
 	'http-request-error' => 'A demanda HTTP ha fallau por una error desconoixida.',
 	'http-read-error' => 'Error de lectura HTTP.',
 	'http-timed-out' => 'A requesta HTTP ha circumducito.',
 	'http-curl-error' => 'Error en recuperar a URL: $1',
-	'http-host-unreachable' => 'No s\'ha puesto acceder t\'a URL.',
+	'http-host-unreachable' => "No s'ha puesto acceder t'a URL.",
 	'http-bad-status' => 'Ha habiu un problema en a requesta HTTP: $1 $2',
-	'historywarning' => '\'\'\'Pare cuenta!:\'\'\' A pachina que ye en momentos de borrar tien un historial de $1 {{PLURAL:$1|versión|versions}}:',
+	'historywarning' => "'''Pare cuenta!:''' A pachina que ye en momentos de borrar tien un historial de $1 {{PLURAL:$1|versión|versions}}:",
 	'handheld.css' => '/* Os estilos CSS colocaus aquí afectarán a os dispositivos mobils basaus en as apariencias configuradas en $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|una hora|$1 horas}}',
-	'htmlform-invalid-input' => 'Bi ha problemas con belún d\'os datos que ha escrito',
+	'htmlform-invalid-input' => "Bi ha problemas con belún d'os datos que ha escrito",
 	'htmlform-select-badoption' => 'A valura especificada no ye una opción conforme.',
 	'htmlform-int-invalid' => 'A valura que especificó no ye un entero.',
 	'htmlform-float-invalid' => 'A valura que ha especificato no ye un entero.',
-	'htmlform-int-toolow' => 'A valura que ha especificato ye por debaixo d\'o menimo de $1',
-	'htmlform-int-toohigh' => 'A valura que ha especificato ye alto d\'o maximo de $1',
+	'htmlform-int-toolow' => "A valura que ha especificato ye por debaixo d'o menimo de $1",
+	'htmlform-int-toohigh' => "A valura que ha especificato ye alto d'o maximo de $1",
 	'htmlform-required' => 'Ista valura ye necesaria',
 	'htmlform-submit' => 'Ninviar',
 	'htmlform-reset' => 'Desfer cambios',
 	'htmlform-selectorother-other' => 'Atros',
-];
+);
 
-$messages['ang'] = [
+$messages['ang'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ȝehȳded flocc|$1 Ȝehȳdede floccas}}',
 	'hidden-category-category' => 'Ȝehȳdede floccas',
 	'help' => 'Help',
@@ -511,9 +510,9 @@ $messages['ang'] = [
 	'htmlform-submit' => 'Forþsendan',
 	'htmlform-reset' => 'Hƿearfas undōn',
 	'htmlform-selectorother-other' => 'Ōðer',
-];
+);
 
-$messages['anp'] = [
+$messages['anp'] = array(
 	'hidden-categories' => '{{PLURAL:$1|छुपैलॊ श्रेणी|छुपैलॊ श्रेणी सीनी}}',
 	'help' => 'सहायता',
 	'history' => 'पन्ना के इतिहास',
@@ -533,9 +532,9 @@ $messages['anp'] = [
 	'history-title' => '"$1" के अवतरण इतिहास',
 	'hist' => 'इतिहास',
 	'hide' => 'छुपाबॊ',
-];
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'hidden-categories' => '{{PLURAL:$1|لا تصنيف مخفيا|تصنيف مخفي|تصنيفان مخفيان|تصنيفات مخفية}}',
 	'hidden-category-category' => 'تصنيفات مخفية',
 	'help' => 'مساعدة',
@@ -574,7 +573,7 @@ $messages['ar'] = [
 	'http-curl-error' => 'فشل جلب المسار: $1',
 	'http-host-unreachable' => 'تعذر الوصول إلى المسار.',
 	'http-bad-status' => 'ثمة مشكلة أثناء طلب HTTP: $1 $2',
-	'historywarning' => '\'\'\'تحذير:\'\'\' للصفحة التي توشك على حذفها تاريخ فيه تقريبا {{PLURAL:$1||مراجعة واحدة|مراجعتين|$1 مراجعات|$1 مراجعة}}:',
+	'historywarning' => "'''تحذير:''' للصفحة التي توشك على حذفها تاريخ فيه تقريبا {{PLURAL:$1||مراجعة واحدة|مراجعتين|$1 مراجعات|$1 مراجعة}}:",
 	'handheld.css' => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على الأجهزة المحمولة بالاعتماد على الواجهة المضبوطة في $wgHandheldStyle */',
 	'hours-abbrev' => '$1س',
 	'hours' => '{{PLURAL:$1||ساعة واحدة|ساعتين|$1 ساعات|$1 ساعة}}',
@@ -631,9 +630,9 @@ $messages['ar'] = [
 	'home' => 'الرئيسية',
 	'helpfaq' => 'مساعدة و أ م غ',
 	'highest_ratings' => 'التقديرات الأعل',
-];
+);
 
-$messages['arc'] = [
+$messages['arc'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ܣܕܪܐ ܛܘܫܝܐ|ܣܕܪ̈ܐ ܛܘܫܝܐ}}',
 	'hidden-category-category' => 'ܣܕܪ̈ܐ ܛܘܫܝ̈ܐ',
 	'help' => 'ܥܘܕܪܢܐ',
@@ -642,9 +641,9 @@ $messages['arc'] = [
 	'helppage' => 'Help:ܚܒܝܫܬ̈ܐ',
 	'hidetoc' => 'ܛܫܝ',
 	'headline_sample' => 'ܨܚܚܐ ܕܦܪܫܓܢܐ ܪܫܝܐ',
-	'histlegend' => 'ܓܒܝܐ ܕܦܪܝܫܘܬܐ: ܓܒܝ ܣܢܕ̈ܘܩܐ ܕܬܢܝܬ̈ܐ ܠܦܘܚܡܐ ܘܕܘܫ \'\'\'Enter\'\'\' ܐܘ \'\'\'ܦܚܘܡ ܒܝܬ ܬܪܝܢ ܬܢܝܬ̈ܐ ܓܒܝܬ̈ܐ\'\'\'.<br />
-ܩܠܝܕܐ: \'\'\'({{int:cur}})\'\'\' = ܦܪܝܫܘܬܐ ܥܡ ܬܢܝܬܐ ܗܫܝܬܐ,
-\'\'\'({{int:last}})\'\'\' = ܦܪܝܫܘܬܐ ܥܡ ܬܢܝܬܐ ܩܕܝܡܬܐ, \'\'\'{{int:minoreditletter}}\'\'\' = ܫܘܚܠܦܐ ܙܥܘܪܐ.',
+	'histlegend' => "ܓܒܝܐ ܕܦܪܝܫܘܬܐ: ܓܒܝ ܣܢܕ̈ܘܩܐ ܕܬܢܝܬ̈ܐ ܠܦܘܚܡܐ ܘܕܘܫ '''Enter''' ܐܘ '''ܦܚܘܡ ܒܝܬ ܬܪܝܢ ܬܢܝܬ̈ܐ ܓܒܝܬ̈ܐ'''.<br />
+ܩܠܝܕܐ: '''({{int:cur}})''' = ܦܪܝܫܘܬܐ ܥܡ ܬܢܝܬܐ ܗܫܝܬܐ,
+'''({{int:last}})''' = ܦܪܝܫܘܬܐ ܥܡ ܬܢܝܬܐ ܩܕܝܡܬܐ, '''{{int:minoreditletter}}''' = ܫܘܚܠܦܐ ܙܥܘܪܐ.",
 	'history-fieldset-title' => 'ܡܦܐܬ ܬܫܥܝܬܐ',
 	'history-show-deleted' => 'ܫܝܦܬ̈ܐ ܒܠܚܘܕ',
 	'histfirst' => 'ܩܕܝܡ ܟܠ',
@@ -661,9 +660,9 @@ $messages['arc'] = [
 	'htmlform-submit' => 'ܫܕܪ',
 	'htmlform-reset' => 'ܠܐ ܥܒܘܕ ܫܘܚܠܦ̈ܐ',
 	'htmlform-selectorother-other' => 'ܐܚܪܢܐ',
-];
+);
 
-$messages['arn'] = [
+$messages['arn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ellkalelu trokiñ wülgiñ}}',
 	'help' => 'Kelluagen',
 	'history' => 'Pünon',
@@ -674,8 +673,8 @@ $messages['arn'] = [
 	'headline_tip' => 'Trürün 2 ñi lonkolelu wirin',
 	'hr_tip' => 'Kakül wif (Pünengelayafuy rumel)',
 	'hiddencategories' => 'Tüfachi wülngiñ koneltuy {{PLURAL:$1 ellkan trokiñ}}:',
-	'histlegend' => 'Kalelu wirin ñi dullin: dullintunge trürümüam malün. Trañmange "kon" Tekla kam miñche foton minche mew.<br />
-Üy: \'\'\'({{int:cur}})\'\'\' = Trürümün doy we malün, \'\'\'({{int:last}})\'\'\' = trürümün rupachi malün, \'\'\'{{int:minoreditletter}}\'\'\' = pichi wirin.',
+	'histlegend' => "Kalelu wirin ñi dullin: dullintunge trürümüam malün. Trañmange \"kon\" Tekla kam miñche foton minche mew.<br />
+Üy: '''({{int:cur}})''' = Trürümün doy we malün, '''({{int:last}})''' = trürümün rupachi malün, '''{{int:minoreditletter}}''' = pichi wirin.",
 	'history-fieldset-title' => 'Kintun pünon mew',
 	'history-show-deleted' => 'Liftungepelu malün müten',
 	'histfirst' => 'Wüne',
@@ -687,9 +686,9 @@ $messages['arn'] = [
 	'hide' => 'Ellkan',
 	'hours-abbrev' => '$1o',
 	'htmlform-selectorother-other' => 'Kakelu',
-];
+);
 
-$messages['ary'] = [
+$messages['ary'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Katégori mĥebya|Katégoryaṫ mĥebyin}}',
 	'hidden-category-category' => 'Katégoryaṫ mĥebyin',
 	'help' => 'Mosaĝada',
@@ -716,10 +715,10 @@ $messages['ary'] = [
 	'hide' => 'Ĥebbi',
 	'hookaborted' => 'taadil li bghiti dirou ojhida mn tamdid lhook',
 	'http-invalid-url' => 'URL makhdamch : $1',
-	'http-request-error' => 'talab HTTP ma njḫ-ĥ b-sbab ċi ĥata\' mjhol.',
-	'http-read-error' => 'khata\' qira\'at HTTP.',
+	'http-request-error' => "talab HTTP ma njḫ-ĥ b-sbab ċi ĥata' mjhol.",
+	'http-read-error' => "khata' qira'at HTTP.",
 	'http-timed-out' => 'salat moddat mohlat talab dyal HTTp.',
-	'http-curl-error' => 'khata\' f jalb lmassar: $1',
+	'http-curl-error' => "khata' f jalb lmassar: $1",
 	'http-host-unreachable' => 'manqdroch nwslo l had lmassar.',
 	'hours-abbrev' => '$1h',
 	'htmlform-invalid-input' => 'kayna chi mochkilat f chi modkhalat dyalk',
@@ -732,9 +731,9 @@ $messages['ary'] = [
 	'htmlform-submit' => 'ṣift',
 	'htmlform-reset' => 'rojoa an taadilat',
 	'htmlform-selectorother-other' => 'okhra',
-];
+);
 
-$messages['arz'] = [
+$messages['arz'] = array(
 	'hidden-categories' => '{{PLURAL:$1|تصنيف مستخبي|تصنيفات مستخبية}}',
 	'hidden-category-category' => 'تصنيفات مستخبية',
 	'help' => 'مساعده',
@@ -772,7 +771,7 @@ $messages['arz'] = [
 	'http-curl-error' => 'حصل غلط و احنا بنجيب الURL : $1',
 	'http-host-unreachable' => 'ما قدرناش نوصل لل URL.',
 	'http-bad-status' => 'HTTP : حصلت مشكله وقت طلب ال $1 $2',
-	'historywarning' => '\'\'\'تحذير:\'\'\' الصفحه اللى ها  تمسحها ليها تاريخ فيه تقريبا $1 {{PLURAL:$1|مراجعة|مراجعة}}:',
+	'historywarning' => "'''تحذير:''' الصفحه اللى ها  تمسحها ليها تاريخ فيه تقريبا $1 {{PLURAL:$1|مراجعة|مراجعة}}:",
 	'handheld.css' => '/* الأنماط المتراصة CSS المعروضة هنا ستؤثر على الأجهزة المحمولة بالاعتماد على الواجهة المضبوطة فى $wgHandheldStyle */',
 	'hours-abbrev' => '$1س',
 	'hijri-calendar-m1' => 'محرم',
@@ -824,9 +823,9 @@ $messages['arz'] = [
 	'htmlform-submit' => 'تقديم',
 	'htmlform-reset' => 'الرجوع فى التغييرات',
 	'htmlform-selectorother-other' => 'تانيين',
-];
+);
 
-$messages['as'] = [
+$messages['as'] = array(
 	'hidden-categories' => '{{PLURAL:$1|নিহিত শ্ৰেণী|নিহিত শ্ৰেণীসমূহ}}',
 	'hidden-category-category' => 'অদৃশ্য শ্ৰেণী সমূহ',
 	'help' => 'সহায়',
@@ -838,9 +837,9 @@ $messages['as'] = [
 	'headline_tip' => 'দ্বিতীয় স্তৰৰ শিৰোনামা',
 	'hr_tip' => 'পথালি ৰেখা (কমকৈ ব্যৱহাৰ কৰিব)',
 	'hiddencategories' => 'এই পৃষ্ঠা {{PLURAL:$1|১-টা নিহিত শ্ৰেণীৰ|$1-টা নিহিত শ্ৰেণীৰ}} সদস্য:',
-	'histlegend' => 'পাৰ্থক্য বাচনী: পাৰ্থক্য চাবলৈ সংকলনবোৰৰ সম্মুখত থকা ৰেডিও বুটামবোৰ বাচনী কৰি এণ্টাৰ টিপক অথবা একেবাৰে তলত দিয়া বুটামতো ক্লীক কৰক <br />
-লিজেণ্ড: \'\'\'({{int:cur}})\'\'\' = বৰ্তমানৰ সংকলনৰ লগত পাৰ্থক্য,
-\'\'\'({{int:last}})\'\'\' = আগৰ সংকলনৰ লগত পাৰ্থক্য, \'\'\'{{int:minoreditletter}}\'\' = অগুৰুত্বপুৰ্ণ সম্পাদনা।',
+	'histlegend' => "পাৰ্থক্য বাচনী: পাৰ্থক্য চাবলৈ সংকলনবোৰৰ সম্মুখত থকা ৰেডিও বুটামবোৰ বাচনী কৰি এণ্টাৰ টিপক অথবা একেবাৰে তলত দিয়া বুটামতো ক্লীক কৰক <br />
+লিজেণ্ড: '''({{int:cur}})''' = বৰ্তমানৰ সংকলনৰ লগত পাৰ্থক্য,
+'''({{int:last}})''' = আগৰ সংকলনৰ লগত পাৰ্থক্য, '''{{int:minoreditletter}}'' = অগুৰুত্বপুৰ্ণ সম্পাদনা।",
 	'history-fieldset-title' => 'ইতিহাসত অনুসন্ধান কৰক',
 	'history-show-deleted' => 'মাথোঁ মচি পেলোৱা',
 	'histfirst' => 'আটাইতকৈ পুৰণি',
@@ -865,7 +864,7 @@ $messages['as'] = [
 	'http-curl-error' => 'URL অনাত ত্ৰুটি হৈছে: $1',
 	'http-host-unreachable' => 'URL পাব পৰা নগ’ল ।',
 	'http-bad-status' => 'HTTP অনুৰোধৰ সময়ত কোনো সমস্যা হৈছে: $1, $2',
-	'historywarning' => '\'\'\'সাবধান:\'\'\' আপুনি বিলোপ কৰিব বিছৰা পৃষ্ঠাখনৰ ইতিহাসত প্ৰায় {{PLURAL:$1|সংস্কৰণ|সংস্কৰণ}} আছে:',
+	'historywarning' => "'''সাবধান:''' আপুনি বিলোপ কৰিব বিছৰা পৃষ্ঠাখনৰ ইতিহাসত প্ৰায় {{PLURAL:$1|সংস্কৰণ|সংস্কৰণ}} আছে:",
 	'hours' => '{{PLURAL:$1|$1 ঘন্টা|$1 ঘন্টা}}',
 	'htmlform-invalid-input' => 'আপোনাৰ কিছুমান ইনপুটৰ লগত সমস্যা হৈছে',
 	'htmlform-select-badoption' => 'আপুনি ধায্য কৰা মান উপযুক্ত বিকল্প নহয়',
@@ -877,9 +876,9 @@ $messages['as'] = [
 	'htmlform-submit' => 'দাখিল কৰক',
 	'htmlform-reset' => 'সাল-সলনি বাতিল কৰক',
 	'htmlform-selectorother-other' => 'অন্য',
-];
+);
 
-$messages['ast'] = [
+$messages['ast'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoría anubría|Categoríes anubríes}}',
 	'hidden-category-category' => 'Categoríes ocultes',
 	'help' => 'Ayuda',
@@ -891,8 +890,8 @@ $messages['ast'] = [
 	'headline_tip' => 'Cabecera de nivel 2',
 	'hr_tip' => 'Llinia horizontal (úsala con moderación)',
 	'hiddencategories' => 'Esta páxina pertenez a {{PLURAL:$1|una categoría anubrida|$1 categoríes anubríes}}:',
-	'histlegend' => 'Seleición de diferencies: marca los botones de les versiones que quies comparar y calca <i>enter</i> o al botón d\'abaxo.<br />
-Lleenda: \'\'\'({{int:cur}})\'\'\' = diferencies cola versión actual, \'\'\'({{int:last}})\'\'\' = diferencies cola versión anterior, \'\'\'{{int:minoreditletter}}\'\'\' = edición menor.',
+	'histlegend' => "Seleición de diferencies: marca los botones de les versiones que quies comparar y calca <i>enter</i> o al botón d'abaxo.<br />
+Lleenda: '''({{int:cur}})''' = diferencies cola versión actual, '''({{int:last}})''' = diferencies cola versión anterior, '''{{int:minoreditletter}}''' = edición menor.",
 	'history-fieldset-title' => 'Navegar pel historial',
 	'history-show-deleted' => 'Sólo desaniciaes',
 	'histfirst' => 'Primera',
@@ -900,7 +899,7 @@ Lleenda: \'\'\'({{int:cur}})\'\'\' = diferencies cola versión actual, \'\'\'({{
 	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
 	'historyempty' => '(balero)',
 	'history-feed-title' => 'Historial de revisiones',
-	'history-feed-description' => 'Historial de revisiones d\'esta páxina na wiki',
+	'history-feed-description' => "Historial de revisiones d'esta páxina na wiki",
 	'history-feed-item-nocomment' => '$1 en $2',
 	'history-feed-empty' => 'La páxina solicitada nun esiste.
 Seique fuera desaniciada de la wiki, o renomada.
@@ -913,32 +912,32 @@ Prueba a [[Special:Search|buscar na wiki]] otres páxines nueves.',
 	'http-invalid-scheme' => 'Les URLs col esquema "$1" nun tienen sofitu.',
 	'http-request-error' => 'La llamada HTTP fallló por un error desconocíu.',
 	'http-read-error' => 'Error de llectura HTTP.',
-	'http-timed-out' => 'La llamada HTTP escosó\'l tiempu.',
+	'http-timed-out' => "La llamada HTTP escosó'l tiempu.",
 	'http-curl-error' => 'Error al baxar la URL: $1',
 	'http-host-unreachable' => 'Nun se pudo acceder a la URL.',
 	'http-bad-status' => 'Hebo un problema demientres la llamada HTTP: $1 $2',
-	'historywarning' => '\'\'\'Avisu:\'\'\'\' La páxina que vas desaniciar tien un historial con aproximadamente $1 {{PLURAL:$1|revisión|revisiones}}:',
+	'historywarning' => "'''Avisu:'''' La páxina que vas desaniciar tien un historial con aproximadamente $1 {{PLURAL:$1|revisión|revisiones}}:",
 	'handheld.css' => '/* Los CSS allugaos equí afeutarán a los preseos portátiles basaos nel aspeutu configuráu en $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 hora|$1 hores}}',
 	'htmlform-invalid-input' => 'Hai problemes con parte de la to entrada',
 	'htmlform-select-badoption' => 'El valor que conseñasti nun ye una opción válida.',
 	'htmlform-int-invalid' => 'El valor que conseñasti nun ye un númberu enteru.',
 	'htmlform-float-invalid' => 'El valor que conseñasti nun ye un númberu.',
-	'htmlform-int-toolow' => 'El valor que conseñasti ye menor que\'l mínimu de $1',
-	'htmlform-int-toohigh' => 'El valor que conseñasti ye mayor que\'l máximu de $1',
+	'htmlform-int-toolow' => "El valor que conseñasti ye menor que'l mínimu de $1",
+	'htmlform-int-toohigh' => "El valor que conseñasti ye mayor que'l máximu de $1",
 	'htmlform-required' => 'Se requier esti valor',
 	'htmlform-submit' => 'Unviar',
 	'htmlform-reset' => 'Desfacer los cambios',
 	'htmlform-selectorother-other' => 'Otros',
-];
+);
 
-$messages['av'] = [
+$messages['av'] = array(
 	'help' => 'Кумек',
 	'history' => 'Хиса-басазул тарих',
 	'hide' => 'Бахчизе',
-];
+);
 
-$messages['avk'] = [
+$messages['avk'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Palsena loma|Palsena loma}}',
 	'hidden-category-category' => 'Palsen lomeem',
 	'help' => 'Pomara',
@@ -967,15 +966,15 @@ Ta ropasusu warzafu bu yo va [[Special:Search|aneyara ko wiki]] yawal.',
 	'hist' => 'izvot',
 	'hide' => 'palsera va',
 	'historywarning' => 'Obral : Telu bu rinon sulatanu va izvot digir :',
-];
+);
 
-$messages['ay'] = [
+$messages['ay'] = array(
 	'help' => 'Yanapaña',
 	'history' => 'Nayra qillqata',
 	'history_short' => 'Nayra qillqata',
-];
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Gizli kateqoriya|Gizli kateqoriyalar}}',
 	'hidden-category-category' => 'Gizli kateqoriyalar',
 	'help' => 'Kömək',
@@ -987,8 +986,8 @@ $messages['az'] = [
 	'headline_tip' => '2. səviyyə başlıq',
 	'hr_tip' => 'Horizontal cizgi',
 	'hiddencategories' => 'Bu səhifə {{PLURAL:$1|1 gizli kateqoriyaya|$1 gizli kateqoriyaya}} aiddir:',
-	'histlegend' => 'Fərqə bax: müqayisə etmək istədiyiniz versiyaların yanındakı dairələri işarələyin və "Enter"ə və ya "müqayisə et" düyməsinə basın.<br />
-Açıqlama: \'\'\'(hh)\'\'\' — hal-hazırkı versiya ilə aradakı fərq, \'\'\'(son)\'\'\' — əvvəlki versiya ilə aradakı fərq, \'\'\'k\'\'\' — kiçik redaktə.',
+	'histlegend' => "Fərqə bax: müqayisə etmək istədiyiniz versiyaların yanındakı dairələri işarələyin və \"Enter\"ə və ya \"müqayisə et\" düyməsinə basın.<br />
+Açıqlama: '''(hh)''' — hal-hazırkı versiya ilə aradakı fərq, '''(son)''' — əvvəlki versiya ilə aradakı fərq, '''k''' — kiçik redaktə.",
 	'history-fieldset-title' => 'Tarixçəni nəzərdən keçir',
 	'history-show-deleted' => 'Yalnız silinənlər',
 	'histfirst' => 'Ən əvvəlki',
@@ -1008,7 +1007,7 @@ Vikidə buna bənzər səhifələri [[Special:Search|axtarmağa]] cəhd edin.',
 	'http-read-error' => 'HTTP oxuma xətası',
 	'http-timed-out' => 'HTTP istəyinin vaxtı bitdi.',
 	'http-host-unreachable' => 'URL-ə çatmaq olmadı.',
-	'historywarning' => '\'\'\'Xəbərdarlıq:\'\'\' Silinəcək səhifənin tarixçəsində qeyd olunmuş $1 {{PLURAL:$1|redaktə|redaktə}} var:',
+	'historywarning' => "'''Xəbərdarlıq:''' Silinəcək səhifənin tarixçəsində qeyd olunmuş $1 {{PLURAL:$1|redaktə|redaktə}} var:",
 	'hours-abbrev' => '$1saat',
 	'htmlform-invalid-input' => 'Girişinizin bir qismilə əlaqədəar problemlər var',
 	'htmlform-select-badoption' => 'İşarə etdiyiniz xüsus keçərli deyil.',
@@ -1020,9 +1019,9 @@ Vikidə buna bənzər səhifələri [[Special:Search|axtarmağa]] cəhd edin.',
 	'htmlform-submit' => 'Təsdiq et',
 	'htmlform-reset' => 'Dəyişiklikləri geri qaytar',
 	'htmlform-selectorother-other' => 'Digər',
-];
+);
 
-$messages['ba'] = [
+$messages['ba'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Йәшерен категория|Йәшерен категориялар}}',
 	'hidden-category-category' => 'Йәшерен категориялар',
 	'help' => 'Белешмә',
@@ -1034,8 +1033,8 @@ $messages['ba'] = [
 	'headline_tip' => '2-се дәрәжәле исем',
 	'hr_tip' => 'Горизонталь һыҙыҡ (бик йыш ҡулланмағыҙ)',
 	'hiddencategories' => 'Был бит $1 {{PLURAL:$1|йәшерен категорияға}} керә:',
-	'histlegend' => 'Айырма һайлау: сағыштырырға теләгән 2 версияны һайлап Enter-ға йәки биттең аҫҡы өлөшөндәге төймәгә баҫығыҙ.<br />
-Аңлатмалар: \'\'\'({{int:cur}})\'\'\' — хәҙерге версиянан айырма, \'\'\'({{int:last}})\'\'\' — алдағы версиянан айырма, \'\'\'{{int:minoreditletter}}\'\'\' — әҙ үҙгәреш яһалған.',
+	'histlegend' => "Айырма һайлау: сағыштырырға теләгән 2 версияны һайлап Enter-ға йәки биттең аҫҡы өлөшөндәге төймәгә баҫығыҙ.<br />
+Аңлатмалар: '''({{int:cur}})''' — хәҙерге версиянан айырма, '''({{int:last}})''' — алдағы версиянан айырма, '''{{int:minoreditletter}}''' — әҙ үҙгәреш яһалған.",
 	'history-fieldset-title' => 'Тарихты ҡарарға',
 	'history-show-deleted' => 'Юйылғандар ғына',
 	'histfirst' => 'Иң иҫке',
@@ -1060,7 +1059,7 @@ $messages['ba'] = [
 	'http-curl-error' => 'URL адрес буйынса мөрәжәғәт итеү хатаһы: $1',
 	'http-host-unreachable' => 'URL адрес буйынса мөрәжәғәт итеү мөмкин түгел.',
 	'http-bad-status' => 'HTTP-һорауҙы эшкәрткән ваҡытта ҡыйынлыҡтар тыуҙы: $1 $2',
-	'historywarning' => '\'\'\'Киҫәтеү:\'\'\' һеҙ юйырға йыйынған биттең тарихында яҡынса $1 {{PLURAL:$1|өлгө}} бар:',
+	'historywarning' => "'''Киҫәтеү:''' һеҙ юйырға йыйынған биттең тарихында яҡынса $1 {{PLURAL:$1|өлгө}} бар:",
 	'hours' => '{{PLURAL:$1|$1 сәғәт|$1 сәғәт}}',
 	'htmlform-invalid-input' => 'Һеҙ кереткән мәғлүмәттең ниндәйҙер өлөшө ҡыйынлыҡтар тыуҙыра',
 	'htmlform-select-badoption' => 'Һеҙ керетҡән мәғәнә дөрөҫ түгел',
@@ -1072,9 +1071,9 @@ $messages['ba'] = [
 	'htmlform-submit' => 'Ебәрергә',
 	'htmlform-reset' => 'Үҙгәртеүҙәрҙе кире алырға',
 	'htmlform-selectorother-other' => 'Башҡа',
-];
+);
 
-$messages['bar'] = [
+$messages['bar'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Vasteckte Kategorie|Vasteckte Kategorien}}',
 	'hidden-category-category' => 'Vasteckte Kategorie',
 	'help' => 'Hüf und Frong?',
@@ -1086,9 +1085,9 @@ $messages['bar'] = [
 	'headline_tip' => 'Ewene-2-Ywerschrift',
 	'hr_tip' => 'Woogrechte Linie (sporsåm vawenden)',
 	'hiddencategories' => 'Dé Seiten is in {{PLURAL:$1|a vasteckde Kategorie|$1 vasteckde Kategorien}} eihsortird:',
-	'histlegend' => 'Zur da Auhzoag voh dé Änderrungen oahfoch dé z\' vagleichenden Versiónen auswön und d\' Schoitflächen „{{int:compareselectedversions}}“ drucken.<br />
+	'histlegend' => "Zur da Auhzoag voh dé Änderrungen oahfoch dé z' vagleichenden Versiónen auswön und d' Schoitflächen „{{int:compareselectedversions}}“ drucken.<br />
 * ({{int:cur}}) = Unterschiad zua da aktuön Versión, ({{int:last}}) = Unterschiad zua da vurhering Versión
-* Uarzeid/Daatum = Versión zua derer Zeid, Benutzernaum/IP-Adress vom Beorweiter, {{int:minoreditletter}} = Kloane Änderrung',
+* Uarzeid/Daatum = Versión zua derer Zeid, Benutzernaum/IP-Adress vom Beorweiter, {{int:minoreditletter}} = Kloane Änderrung",
 	'history-fieldset-title' => 'Suach in da Versiónsgschicht',
 	'history-show-deleted' => 'netter gléschde Versiónen',
 	'histfirst' => 'Öderste',
@@ -1096,20 +1095,20 @@ $messages['bar'] = [
 	'historyempty' => '(laar)',
 	'history-feed-title' => 'Versiónsgschicht',
 	'history-feed-item-nocomment' => '$1 am $3 um $4 Uar',
-	'history-feed-empty' => 'Die angeforderte Seitn gibt\'s net.
+	'history-feed-empty' => "Die angeforderte Seitn gibt's net.
 Vielleicht is sie gelöscht oda verschom worn.
-[[Special:Search|Durchsuachan]] S\' {{SITENAME}} für passende neie Seitn.',
+[[Special:Search|Durchsuachan]] S' {{SITENAME}} für passende neie Seitn.",
 	'history-title' => 'Versiónsgschicht voh „$1“',
 	'hist' => 'Versiónen',
 	'hide' => 'ausblenden',
-	'historywarning' => '\'\'\'Ochtung:\'\'\' Dé Seiten, dé du léschen mecherst, hod a Versiónsgschicht mid epper $1 {{PLURAL:$1|Versión|Versiónen}}:',
+	'historywarning' => "'''Ochtung:''' Dé Seiten, dé du léschen mecherst, hod a Versiónsgschicht mid epper $1 {{PLURAL:$1|Versión|Versiónen}}:",
 	'htmlform-required' => 'Der Wert do werd braucht.',
 	'htmlform-submit' => 'Speichern',
 	'htmlform-reset' => 'Änderrungen ryckgängég mochen',
 	'htmlform-selectorother-other' => 'Åndre',
-];
+);
 
-$messages['bat-smg'] = [
+$messages['bat-smg'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Vasteckte Kategorie|Vasteckte Kategorien}}',
 	'hidden-category-category' => 'Vasteckte Kategorie',
 	'help' => 'Hüf und Frong?',
@@ -1121,9 +1120,9 @@ $messages['bat-smg'] = [
 	'headline_tip' => 'Ewene-2-Ywerschrift',
 	'hr_tip' => 'Woogrechte Linie (sporsåm vawenden)',
 	'hiddencategories' => 'Dé Seiten is in {{PLURAL:$1|a vasteckde Kategorie|$1 vasteckde Kategorien}} eihsortird:',
-	'histlegend' => 'Zur da Auhzoag voh dé Änderrungen oahfoch dé z\' vagleichenden Versiónen auswön und d\' Schoitflächen „{{int:compareselectedversions}}“ drucken.<br />
+	'histlegend' => "Zur da Auhzoag voh dé Änderrungen oahfoch dé z' vagleichenden Versiónen auswön und d' Schoitflächen „{{int:compareselectedversions}}“ drucken.<br />
 * ({{int:cur}}) = Unterschiad zua da aktuön Versión, ({{int:last}}) = Unterschiad zua da vurhering Versión
-* Uarzeid/Daatum = Versión zua derer Zeid, Benutzernaum/IP-Adress vom Beorweiter, {{int:minoreditletter}} = Kloane Änderrung',
+* Uarzeid/Daatum = Versión zua derer Zeid, Benutzernaum/IP-Adress vom Beorweiter, {{int:minoreditletter}} = Kloane Änderrung",
 	'history-fieldset-title' => 'Suach in da Versiónsgschicht',
 	'history-show-deleted' => 'netter gléschde Versiónen',
 	'histfirst' => 'Öderste',
@@ -1131,20 +1130,20 @@ $messages['bat-smg'] = [
 	'historyempty' => '(laar)',
 	'history-feed-title' => 'Versiónsgschicht',
 	'history-feed-item-nocomment' => '$1 am $3 um $4 Uar',
-	'history-feed-empty' => 'Die angeforderte Seitn gibt\'s net.
+	'history-feed-empty' => "Die angeforderte Seitn gibt's net.
 Vielleicht is sie gelöscht oda verschom worn.
-[[Special:Search|Durchsuachan]] S\' {{SITENAME}} für passende neie Seitn.',
+[[Special:Search|Durchsuachan]] S' {{SITENAME}} für passende neie Seitn.",
 	'history-title' => 'Versiónsgschicht voh „$1“',
 	'hist' => 'Versiónen',
 	'hide' => 'ausblenden',
-	'historywarning' => '\'\'\'Ochtung:\'\'\' Dé Seiten, dé du léschen mecherst, hod a Versiónsgschicht mid epper $1 {{PLURAL:$1|Versión|Versiónen}}:',
+	'historywarning' => "'''Ochtung:''' Dé Seiten, dé du léschen mecherst, hod a Versiónsgschicht mid epper $1 {{PLURAL:$1|Versión|Versiónen}}:",
 	'htmlform-required' => 'Der Wert do werd braucht.',
 	'htmlform-submit' => 'Speichern',
 	'htmlform-reset' => 'Änderrungen ryckgängég mochen',
 	'htmlform-selectorother-other' => 'Åndre',
-];
+);
 
-$messages['bcc'] = [
+$messages['bcc'] = array(
 	'hidden-categories' => '{{PLURAL:$1|پناهین دسته|پناهین دسته جات}}',
 	'hidden-category-category' => 'پناهین دسته جات',
 	'help' => 'کمک',
@@ -1212,9 +1211,9 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 	'htmlform-submit' => 'دیم دی',
 	'htmlform-reset' => 'ترینگ تغییرات',
 	'htmlform-selectorother-other' => 'دگه',
-];
+);
 
-$messages['bcl'] = [
+$messages['bcl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Nakatagong kategorya|Mga nakatagong kategorya}}',
 	'hidden-category-category' => 'Mga nakatagong kategorya',
 	'help' => 'Tabang',
@@ -1243,9 +1242,9 @@ Probaran tabì an [[Special:Search|pighahanap sa wiki]] para sa mga pahinang dap
 	'hist' => 'usip',
 	'hide' => 'Tagóon',
 	'historywarning' => 'Patanid: An pahinang paparaon mo igwa nin uusipón:',
-];
+);
 
-$messages['be'] = [
+$messages['be'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Схаваная катэгорыя|Схаваныя катэгорыі}}',
 	'hidden-category-category' => 'Схаваныя катэгорыі',
 	'help' => 'Даведка',
@@ -1282,21 +1281,21 @@ $messages['be'] = [
 	'http-curl-error' => 'Памылка звароту да URL: $1',
 	'http-host-unreachable' => 'Не ўдалося адкрыць URL',
 	'http-bad-status' => 'Пад час апрацоўкі HTTP-запыту выяўлена праблема: $1 $2',
-	'historywarning' => '\'\'\'Увага\'\'\': Старонка, якую вы хочаце сцерці, мае гісторыю прыблізна $1 {{PLURAL:$1|праўкі|правак}}:',
+	'historywarning' => "'''Увага''': Старонка, якую вы хочаце сцерці, мае гісторыю прыблізна $1 {{PLURAL:$1|праўкі|правак}}:",
 	'hours' => '{{PLURAL:$1|$1 гадзіна|$1 гадзіны|$1 гадзін}}',
 	'htmlform-invalid-input' => 'Праблемы з упісаным вамі',
-	'htmlform-select-badoption' => 'Пададзенае значэнне не з\'яўляецца дапушчальным выбарам.',
-	'htmlform-int-invalid' => 'Пададзенае значэнне не з\'яўляецца цэлым лікам.',
-	'htmlform-float-invalid' => 'Пададзенае значэнне не з\'яўляецца лікам.',
+	'htmlform-select-badoption' => "Пададзенае значэнне не з'яўляецца дапушчальным выбарам.",
+	'htmlform-int-invalid' => "Пададзенае значэнне не з'яўляецца цэлым лікам.",
+	'htmlform-float-invalid' => "Пададзенае значэнне не з'яўляецца лікам.",
 	'htmlform-int-toolow' => 'Пададзенае значэнне меншае за мінімум $1',
 	'htmlform-int-toohigh' => 'Пададзенае значэнне большае за максімум $1',
 	'htmlform-required' => 'Гэтае значэнне неабходнае',
 	'htmlform-submit' => 'Падаць',
 	'htmlform-reset' => 'Адкаціць змяненні',
 	'htmlform-selectorother-other' => 'Рознае',
-];
+);
 
-$messages['be-tarask'] = [
+$messages['be-tarask'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Схаваная катэгорыя|Схаваныя катэгорыі}}',
 	'hidden-category-category' => 'Схаваныя катэгорыі',
 	'help' => 'Дапамога',
@@ -1334,7 +1333,7 @@ $messages['be-tarask'] = [
 	'http-curl-error' => 'Памылка выбаркі URL-адрасу: $1',
 	'http-host-unreachable' => 'Немагчыма дасягнуць URL-адрас',
 	'http-bad-status' => 'Адбылася памылка пад час выкананьня HTTP-запыту: $1 $2',
-	'historywarning' => '\'\'\'Папярэджаньне\'\'\': старонка, якую Вы зьбіраецеся выдаліць, мае гісторыю з прыкладна $1 {{PLURAL:$1|вэрсіі|вэрсіяў|вэрсіяў}}:',
+	'historywarning' => "'''Папярэджаньне''': старонка, якую Вы зьбіраецеся выдаліць, мае гісторыю з прыкладна $1 {{PLURAL:$1|вэрсіі|вэрсіяў|вэрсіяў}}:",
 	'hours-abbrev' => '$1 г',
 	'hours' => '$1 {{PLURAL:$1|гадзіна|гадзіны|гадзінаў}}',
 	'htmlform-invalid-input' => 'Узьніклі праблемы з некаторымі з Вашых уваходных зьвестак',
@@ -1347,9 +1346,9 @@ $messages['be-tarask'] = [
 	'htmlform-submit' => 'Захаваць',
 	'htmlform-reset' => 'Адмяніць зьмены',
 	'htmlform-selectorother-other' => 'Іншае',
-];
+);
 
-$messages['be-x-old'] = [
+$messages['be-x-old'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Схаваная катэгорыя|Схаваныя катэгорыі}}',
 	'hidden-category-category' => 'Схаваныя катэгорыі',
 	'help' => 'Дапамога',
@@ -1387,7 +1386,7 @@ $messages['be-x-old'] = [
 	'http-curl-error' => 'Памылка выбаркі URL-адрасу: $1',
 	'http-host-unreachable' => 'Немагчыма дасягнуць URL-адрас',
 	'http-bad-status' => 'Адбылася памылка пад час выкананьня HTTP-запыту: $1 $2',
-	'historywarning' => '\'\'\'Папярэджаньне\'\'\': старонка, якую Вы зьбіраецеся выдаліць, мае гісторыю з прыкладна $1 {{PLURAL:$1|вэрсіі|вэрсіяў|вэрсіяў}}:',
+	'historywarning' => "'''Папярэджаньне''': старонка, якую Вы зьбіраецеся выдаліць, мае гісторыю з прыкладна $1 {{PLURAL:$1|вэрсіі|вэрсіяў|вэрсіяў}}:",
 	'hours-abbrev' => '$1 г',
 	'hours' => '$1 {{PLURAL:$1|гадзіна|гадзіны|гадзінаў}}',
 	'htmlform-invalid-input' => 'Узьніклі праблемы з некаторымі з Вашых уваходных зьвестак',
@@ -1400,9 +1399,9 @@ $messages['be-x-old'] = [
 	'htmlform-submit' => 'Захаваць',
 	'htmlform-reset' => 'Адмяніць зьмены',
 	'htmlform-selectorother-other' => 'Іншае',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Скрита категория|Скрити категории}}',
 	'hidden-category-category' => 'Скрити категории',
 	'help' => 'Помощ',
@@ -1438,7 +1437,7 @@ $messages['bg'] = [
 	'http-curl-error' => 'Грешка при извличането на URL: $1',
 	'http-host-unreachable' => 'Недостъпен URL.',
 	'http-bad-status' => 'Настъпи проблем по време на HTTP заявката: $1 $2',
-	'historywarning' => '\'\'\'Внимание:\'\'\' Страницата, която възнамерявате да изтриете, има история с приблизително $1 {{PLURAL:$1|редакция|редакции}}:',
+	'historywarning' => "'''Внимание:''' Страницата, която възнамерявате да изтриете, има история с приблизително $1 {{PLURAL:$1|редакция|редакции}}:",
 	'hours' => '{{PLURAL:$1|$1 час|$1 часа}}',
 	'htmlform-invalid-input' => 'Има проблеми с част от въведения от вас вход',
 	'htmlform-select-badoption' => 'Посочената от вас стойност не е валидна алтернатива.',
@@ -1450,9 +1449,9 @@ $messages['bg'] = [
 	'htmlform-submit' => 'Изпращане',
 	'htmlform-reset' => 'Отказване на промените',
 	'htmlform-selectorother-other' => 'Друга',
-];
+);
 
-$messages['bh'] = [
+$messages['bh'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Скрита категория|Скрити категории}}',
 	'hidden-category-category' => 'Скрити категории',
 	'help' => 'Помощ',
@@ -1488,7 +1487,7 @@ $messages['bh'] = [
 	'http-curl-error' => 'Грешка при извличането на URL: $1',
 	'http-host-unreachable' => 'Недостъпен URL.',
 	'http-bad-status' => 'Настъпи проблем по време на HTTP заявката: $1 $2',
-	'historywarning' => '\'\'\'Внимание:\'\'\' Страницата, която възнамерявате да изтриете, има история с приблизително $1 {{PLURAL:$1|редакция|редакции}}:',
+	'historywarning' => "'''Внимание:''' Страницата, която възнамерявате да изтриете, има история с приблизително $1 {{PLURAL:$1|редакция|редакции}}:",
 	'hours' => '{{PLURAL:$1|$1 час|$1 часа}}',
 	'htmlform-invalid-input' => 'Има проблеми с част от въведения от вас вход',
 	'htmlform-select-badoption' => 'Посочената от вас стойност не е валидна алтернатива.',
@@ -1500,16 +1499,16 @@ $messages['bh'] = [
 	'htmlform-submit' => 'Изпращане',
 	'htmlform-reset' => 'Отказване на промените',
 	'htmlform-selectorother-other' => 'Друга',
-];
+);
 
-$messages['bho'] = [
+$messages['bho'] = array(
 	'help' => 'मदद',
 	'history' => 'पन्ना के इतिहास',
 	'history_short' => 'इतिहास',
 	'hidetoc' => 'छुपाईं',
 	'headline_sample' => 'शिर्षक पाठ्य',
-	'histlegend' => 'चुनाव अन्तर: तुलना करे खातिर संशोधन के रेडियो बटन पर निशान लगाईं आ enter बटन दबाईं आ चाहे निचला बटन दबाईं।<br />
-Legend: \'\'\'({{int:cur}})\'\'\' = हाल के संशोधन के साथ अंतर, \'\'\'({{int:last}})\'\'\' = पुर्ववर्ती संशोधन के साथ अंतर, \'\'\'{{int:minoreditletter}}\'\'\' = छोट सम्पादन।',
+	'histlegend' => "चुनाव अन्तर: तुलना करे खातिर संशोधन के रेडियो बटन पर निशान लगाईं आ enter बटन दबाईं आ चाहे निचला बटन दबाईं।<br />
+Legend: '''({{int:cur}})''' = हाल के संशोधन के साथ अंतर, '''({{int:last}})''' = पुर्ववर्ती संशोधन के साथ अंतर, '''{{int:minoreditletter}}''' = छोट सम्पादन।",
 	'history-fieldset-title' => 'इतिहास निहारीं',
 	'history-show-deleted' => 'खाली मेटावल',
 	'histfirst' => 'बहुत पहिले के',
@@ -1521,12 +1520,12 @@ Legend: \'\'\'({{int:cur}})\'\'\' = हाल के संशोधन के �
 	'history-feed-item-nocomment' => '$1 $2 पर',
 	'history-feed-empty' => 'अनुरोध करल गईल पन्ना उपलब्ध नईखे। हो सकत बा उ के विकि पर से मिटा दिहल गईल होखे, आ चाहे उ के नाम बदल देवल गईल होखे।
 प्रासंगिक पन्ना के [[Special:Search|विकि पर खोजे के]] कोशिश करत रहीं।',
-	'history-title' => '\'\'$1\'\' के संशोधन इतिहास',
+	'history-title' => "''$1'' के संशोधन इतिहास",
 	'hist' => 'इति',
 	'hide' => 'छुपाँई',
-];
+);
 
-$messages['bjn'] = [
+$messages['bjn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Tumbung tasungkup|Tutumbung tasungkup}}',
 	'hidden-category-category' => 'Tumbung tasungkup',
 	'help' => 'Patulung',
@@ -1538,7 +1537,7 @@ $messages['bjn'] = [
 	'headline_tip' => 'Judul tingkat 2',
 	'hr_tip' => 'Garis horisontal',
 	'hiddencategories' => 'Tungkaran ini adalah angguta matan {{PLURAL:$1|1 tumbung tasungkup|$1 tumbung tasungkup}}:',
-	'histlegend' => 'Pilihan mananding: tandai kutak-kutak radiu ralatan-ralatan nang handak ditanding wan picik enter atawa picikan di bawah.<br />Legend: \'\'\'({{int:cur}})\'\'\' =lainnya awan ralatan pahanyarnya, \'\'\'({{int:last}})\'\'\' = lainnya awan ralatan sabalumnya, \'\'\'{{int:minoreditletter}}\'\'\' = babakan sapalih.',
+	'histlegend' => "Pilihan mananding: tandai kutak-kutak radiu ralatan-ralatan nang handak ditanding wan picik enter atawa picikan di bawah.<br />Legend: '''({{int:cur}})''' =lainnya awan ralatan pahanyarnya, '''({{int:last}})''' = lainnya awan ralatan sabalumnya, '''{{int:minoreditletter}}''' = babakan sapalih.",
 	'history-fieldset-title' => 'Tangadahi halam',
 	'history-show-deleted' => 'Nang dihapus haja',
 	'histfirst' => 'Palawasnya',
@@ -1551,7 +1550,7 @@ $messages['bjn'] = [
 	'history-feed-empty' => 'Tungkaran nang diminta kadada.
 Ini pinanya sudah dihapus matan wiki ini, atawa dingarani lain.
 Cubai [[Special:Search|gagai di wiki ini]] gasan tungkaran hanyar bakarabat.',
-	'history-title' => 'Ralatan halam matan \'\'$1\'\'',
+	'history-title' => "Ralatan halam matan ''$1''",
 	'hist' => 'halam',
 	'hide' => 'Sungkupakan',
 	'hookaborted' => 'Parubahan nang Pian cuba ulah sudah digagalakan ulih unjun ekstensi.',
@@ -1563,7 +1562,7 @@ Cubai [[Special:Search|gagai di wiki ini]] gasan tungkaran hanyar bakarabat.',
 	'http-curl-error' => 'Kasalahan pas maambil URL: $1',
 	'http-host-unreachable' => 'Kada kawa mancapai URL.',
 	'http-bad-status' => 'Ada sabuah masalah pas maminta HTTP: $1 $2',
-	'historywarning' => '\'\'\'Paringatan:\'\'\' Tungkaran nang Pian pasal hagan hapus baisi sabuah halam sakitar $1 {{PLURAL:$1|ralatan|raralatan}}:',
+	'historywarning' => "'''Paringatan:''' Tungkaran nang Pian pasal hagan hapus baisi sabuah halam sakitar $1 {{PLURAL:$1|ralatan|raralatan}}:",
 	'hours' => '{{PLURAL:$1|$1 jam|$1 jam}}',
 	'htmlform-invalid-input' => 'Ada mamasalah awan babarapa masukan Pian',
 	'htmlform-select-badoption' => 'Nilai nang Pian ajuakan kada sah.',
@@ -1575,17 +1574,17 @@ Cubai [[Special:Search|gagai di wiki ini]] gasan tungkaran hanyar bakarabat.',
 	'htmlform-submit' => 'Kirim',
 	'htmlform-reset' => 'Walangi parubahan',
 	'htmlform-selectorother-other' => 'Lain-lain',
-];
+);
 
-$messages['bm'] = [
+$messages['bm'] = array(
 	'help' => 'Dɛmɛ',
 	'history' => 'Nyɛka tariku',
 	'history_short' => 'Tariku',
 	'hidetoc' => 'dogo',
 	'hide' => 'dogo',
-];
+);
 
-$messages['bn'] = [
+$messages['bn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|লুকায়িত বিষয়শ্রেণী|লুকায়িত বিষয়শ্রেণীসমূহ}}',
 	'hidden-category-category' => 'লুকায়িত বিষয়শ্রেণীসমূহ',
 	'help' => 'সাহায্য',
@@ -1619,16 +1618,16 @@ $messages['bn'] = [
 	'http-timed-out' => 'HTTP অনুরোধের সময় পার হয়েছে।',
 	'http-host-unreachable' => 'URL-এ পৌঁছানো যায়নি',
 	'http-bad-status' => 'HTTP অনুরোধের সময় কোন সমস্যা হয়েছে: $1 $2',
-	'historywarning' => '\'\'\'সতর্কীকরণ:\'\'\' এই পাতাটি মুছে ফেলা হবে যার ইতিহাস সংখ্যা প্রায় $1 {{PLURAL:$1|সংশোধন|সংশোধন}}:',
+	'historywarning' => "'''সতর্কীকরণ:''' এই পাতাটি মুছে ফেলা হবে যার ইতিহাস সংখ্যা প্রায় $1 {{PLURAL:$1|সংশোধন|সংশোধন}}:",
 	'hours' => '{{PLURAL:$1|$1 ঘণ্টা|$1 ঘণ্টা}}',
 	'htmlform-invalid-input' => 'আপনার প্রদানকৃত ইনপুটে সমস্যা রয়েছে',
 	'htmlform-required' => 'মান প্রদান করা আবশ্যক।',
 	'htmlform-submit' => 'জমা দাও',
 	'htmlform-reset' => 'পরিবর্তন বাতিল',
 	'htmlform-selectorother-other' => 'অন্য',
-];
+);
 
-$messages['bo'] = [
+$messages['bo'] = array(
 	'hidden-categories' => '|སྦས་བའི་སྡེ་ཚན།|སྦས་བའི་སྡེ་ཚན།}}{{PLURAL:$1',
 	'hidden-category-category' => 'སྦས་བའི་སྡེ་ཚན།',
 	'help' => 'རོགས་རམ།',
@@ -1645,9 +1644,9 @@ $messages['bo'] = [
 	'historyempty' => '༼སྟོང་པ།༽',
 	'hist' => 'ལོ་རྒྱུས།',
 	'hide' => 'སྦས།',
-];
+);
 
-$messages['bpy'] = [
+$messages['bpy'] = array(
 	'hidden-categories' => '{{PLURAL:$1|গুরিসি থাকহান|গুরিসি থাকহানি}}',
 	'hidden-category-category' => 'আরুম করিসি থাকহানি',
 	'help' => 'পাংলাক',
@@ -1682,9 +1681,9 @@ $messages['bpy'] = [
 	'htmlform-submit' => 'জমাদে',
 	'htmlform-reset' => 'পতানিহান আলকর',
 	'htmlform-selectorother-other' => 'আরাক',
-];
+);
 
-$messages['bqi'] = [
+$messages['bqi'] = array(
 	'hidden-categories' => '{{PLURAL:$1|دسته قایم|دسته های قایم}}',
 	'hidden-category-category' => 'دسته های قایم',
 	'help' => 'راهنما',
@@ -1695,9 +1694,9 @@ $messages['bqi'] = [
 	'headline_sample' => 'سرخط متن',
 	'headline_tip' => '2سرخط یکسان',
 	'hr_tip' => 'خط افقی (کم استفاده کنین)',
-	'histlegend' => 'انتخاب متفاوت: علامت بنین رو رادیو جعبه ها زه آن نسخه ها سی مقایسه وامتیاز دادن ویا داخل تکمه های زیر سی مسابقه بوین  .<br />
-\'شرح: (فعلی) = تفاوت با نسخه جاری
-(قبلی) = تفاوت با نسخه قبلی، جز = ویرایش جزئی\',',
+	'histlegend' => "انتخاب متفاوت: علامت بنین رو رادیو جعبه ها زه آن نسخه ها سی مقایسه وامتیاز دادن ویا داخل تکمه های زیر سی مسابقه بوین  .<br />
+'شرح: (فعلی) = تفاوت با نسخه جاری
+(قبلی) = تفاوت با نسخه قبلی، جز = ویرایش جزئی',",
 	'histfirst' => 'کهنه ترین',
 	'histlast' => 'تازه ترین',
 	'history-feed-item-nocomment' => '$1 در $2',
@@ -1705,9 +1704,9 @@ $messages['bqi'] = [
 	'hist' => 'گزارش',
 	'hide' => 'قایم شدن',
 	'historywarning' => 'توجه: آن صفحه ای که ایسا اخوین حذف کنین گزارش تاریخی داره:',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Rummad kuzhet|Rummad kuzhet}}',
 	'hidden-category-category' => 'Rummadoù kuzhet',
 	'help' => 'Skoazell',
@@ -1718,50 +1717,50 @@ $messages['br'] = [
 	'headline_sample' => 'Testenn istitl',
 	'headline_tip' => 'Istitl live 2',
 	'hr_tip' => 'Liamm a-led (arabat implijout re)',
-	'hiddencategories' => '{{PLURAL:$1|1 rummad kuzhet|$1 rummad kuzhet}} m\'emañ rollet ar bajenn-mañ :',
-	'histlegend' => 'Sellet ouzh an diforc\'hioù : lakait un ask adal d\'ar stummoù a fell deoc\'h keñveriañ ha pouezit war kadarnaat pe war ar bouton en traoñ.<br />
-Alc\'hwez : (red) = diforc\'hioù gant ar stumm a-vremañ,
-(diwez) = diforc\'hioù gant ar stumm kent, D = kemm dister',
+	'hiddencategories' => "{{PLURAL:$1|1 rummad kuzhet|$1 rummad kuzhet}} m'emañ rollet ar bajenn-mañ :",
+	'histlegend' => "Sellet ouzh an diforc'hioù : lakait un ask adal d'ar stummoù a fell deoc'h keñveriañ ha pouezit war kadarnaat pe war ar bouton en traoñ.<br />
+Alc'hwez : (red) = diforc'hioù gant ar stumm a-vremañ,
+(diwez) = diforc'hioù gant ar stumm kent, D = kemm dister",
 	'history-fieldset-title' => 'Furchal en istor',
 	'history-show-deleted' => 'Diverket hepken',
 	'histfirst' => 'Kentañ',
 	'histlast' => 'Diwezhañ',
 	'historysize' => '({{PLURAL:$1|$1 okted|$1 okted}})',
 	'historyempty' => '(goullo)',
-	'history-feed-title' => 'Istor ar c\'hemmoù',
-	'history-feed-description' => 'Istor ar c\'hemmoù degaset war ar bajenn-mañ eus ar wiki',
-	'history-feed-item-nocomment' => '$1 d\'an $2',
-	'history-feed-empty' => 'Ar bajenn goulennet n\'eus ket anezhi.
+	'history-feed-title' => "Istor ar c'hemmoù",
+	'history-feed-description' => "Istor ar c'hemmoù degaset war ar bajenn-mañ eus ar wiki",
+	'history-feed-item-nocomment' => "$1 d'an $2",
+	'history-feed-empty' => "Ar bajenn goulennet n'eus ket anezhi.
 Marteze eo bet diverket eus ar wiki, pe adanvet.
-Implijit [[Special:Search|klaskit er wiki]] evit kavout pajennoù all a c\'hallfe klotañ.',
+Implijit [[Special:Search|klaskit er wiki]] evit kavout pajennoù all a c'hallfe klotañ.",
 	'history-title' => 'Istor stummoù disheñvel "$1"',
 	'hist' => 'ist',
 	'hide' => 'kuzhat',
-	'hookaborted' => 'Ar c\'hemm hoc\'h eus klasket degas zo bet harzet gant ur c\'hrog astenn.',
+	'hookaborted' => "Ar c'hemm hoc'h eus klasket degas zo bet harzet gant ur c'hrog astenn.",
 	'http-invalid-url' => 'URL direizh : $1',
 	'http-invalid-scheme' => 'N\'eo ket skoret an URLoù gant ar patrom "$1"',
-	'http-request-error' => 'Ur fazi dianavezet \'zo bet pa veze kaset ar reked.',
+	'http-request-error' => "Ur fazi dianavezet 'zo bet pa veze kaset ar reked.",
 	'http-read-error' => 'Fazi lenn HTTP.',
 	'http-timed-out' => 'Erru eo termen ar reked HTTP.',
 	'http-curl-error' => 'Fazi adtapout an URL : $1',
-	'http-host-unreachable' => 'N\'eus ket bet gallet tizhout an URL.',
+	'http-host-unreachable' => "N'eus ket bet gallet tizhout an URL.",
 	'http-bad-status' => 'Ur gudenn a zo bet e-pad ar reked HTTP : $1 $2',
-	'historywarning' => '\'\'\'Diwallit :\'\'\' Emaoc\'h war-nes diverkañ ur bajenn dezhi un istor gant e-tro {{PLURAL:$1|adweladenn|adweladenn}} :',
+	'historywarning' => "'''Diwallit :''' Emaoc'h war-nes diverkañ ur bajenn dezhi un istor gant e-tro {{PLURAL:$1|adweladenn|adweladenn}} :",
 	'handheld.css' => '/* Talvezout a raio ar CSS lakaet amañ evit an ardivinkoù hezoug diouzh ar gwiskadur kefluniet e $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 eurvezh|$1 eurvezh}}',
-	'htmlform-invalid-input' => 'Kudennoù zo gant talvoudennoù zo merket ganeoc\'h.',
-	'htmlform-select-badoption' => 'Direizh eo an dalvoudenn skrivet ganeoc\'h.',
-	'htmlform-int-invalid' => 'N\'eus ket un niver anterin eus an dalvoudenn skrivet ganeoc\'h.',
-	'htmlform-float-invalid' => 'An dalvoudenn bet lakaet ganeoc\'h n\'eo ket un niver.',
-	'htmlform-int-toolow' => 'Skrivet hoc\'h eus un dalvoudenn zo dindan an niver bihanañ aotreet a $1',
-	'htmlform-int-toohigh' => 'Skrivet hoc\'h eus un dalvoudenn a ya dreist d\'an niver uhelañ aotreet a $1',
+	'htmlform-invalid-input' => "Kudennoù zo gant talvoudennoù zo merket ganeoc'h.",
+	'htmlform-select-badoption' => "Direizh eo an dalvoudenn skrivet ganeoc'h.",
+	'htmlform-int-invalid' => "N'eus ket un niver anterin eus an dalvoudenn skrivet ganeoc'h.",
+	'htmlform-float-invalid' => "An dalvoudenn bet lakaet ganeoc'h n'eo ket un niver.",
+	'htmlform-int-toolow' => "Skrivet hoc'h eus un dalvoudenn zo dindan an niver bihanañ aotreet a $1",
+	'htmlform-int-toohigh' => "Skrivet hoc'h eus un dalvoudenn a ya dreist d'an niver uhelañ aotreet a $1",
 	'htmlform-required' => 'An talvoudenn-mañ a zo ret',
 	'htmlform-submit' => 'Kas',
-	'htmlform-reset' => 'Dizober ar c\'hemmoù',
+	'htmlform-reset' => "Dizober ar c'hemmoù",
 	'htmlform-selectorother-other' => 'Unan all',
-];
+);
 
-$messages['brh'] = [
+$messages['brh'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Aodem á xáot|Aodem á xáot ák}}',
 	'help' => 'Ráhşon',
 	'history' => 'Panna ná lekav',
@@ -1778,9 +1777,9 @@ $messages['brh'] = [
 	'history-title' => '$1 aŧí radbadal ná lekav',
 	'hist' => 'lekav',
 	'hide' => 'aodem kar',
-];
+);
 
-$messages['bs'] = [
+$messages['bs'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Sakrivena kategorija|Sakrivene kategorije}}',
 	'hidden-category-category' => 'Sakrivene kategorije',
 	'help' => 'Pomoć',
@@ -1792,9 +1791,9 @@ $messages['bs'] = [
 	'headline_tip' => 'Podnaslov',
 	'hr_tip' => 'Horizontalna linija (koristite oskudno)',
 	'hiddencategories' => 'Ova stranica pripada u {{PLURAL:$1|$1 skrivenu kategoriju|$1 skrivene kategorije|$1 skrivenih kategorija}}:',
-	'histlegend' => 'Odabir razlika: označite radio dugme verzija koje uspoređujete i pritistnite enter ili dugme na dnu. <br />
-Objašnjenje: \'\'\'(tren)\'\'\' = razlika sa trenutnom verzijom,
-\'\'\'(preth)\'\'\' = razlika sa prethodnom verzijom, \'\'\'m\'\'\' = mala izmjena.',
+	'histlegend' => "Odabir razlika: označite radio dugme verzija koje uspoređujete i pritistnite enter ili dugme na dnu. <br />
+Objašnjenje: '''(tren)''' = razlika sa trenutnom verzijom,
+'''(preth)''' = razlika sa prethodnom verzijom, '''m''' = mala izmjena.",
 	'history-fieldset-title' => 'Pretraga historije',
 	'history-show-deleted' => 'Samo obrisane',
 	'histfirst' => 'Najstarije',
@@ -1819,7 +1818,7 @@ Pokušajte [[Special:Search|pretražiti wiki]] za slične stranice.',
 	'http-curl-error' => 'Greška pri otvaranju URLa: $1',
 	'http-host-unreachable' => 'Ovaj URL nije bilo moguće otvoriti',
 	'http-bad-status' => 'Nastao je problem tokom HTTP zahtjeva: $1 $2',
-	'historywarning' => '\'\'\'Upozorenje\'\'\':  Stranica koju želite da obrišete ima historiju sa otprilike $1 {{PLURAL:$1|revizijom|revizije|revizija}}:',
+	'historywarning' => "'''Upozorenje''':  Stranica koju želite da obrišete ima historiju sa otprilike $1 {{PLURAL:$1|revizijom|revizije|revizija}}:",
 	'handheld.css' => '/* CSS umetnut ovdje uticat će na ručne sprave koji rade na skinu konfigurisanom u $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 sat|$1 sata|$1 sati}}',
 	'hijri-calendar-m1' => 'muharrem',
@@ -1829,10 +1828,10 @@ Pokušajte [[Special:Search|pretražiti wiki]] za slične stranice.',
 	'hijri-calendar-m5' => 'džumadel-ula',
 	'hijri-calendar-m6' => 'džumadel-uhra',
 	'hijri-calendar-m7' => 'redžeb',
-	'hijri-calendar-m8' => 'ša\'ban',
+	'hijri-calendar-m8' => "ša'ban",
 	'hijri-calendar-m9' => 'ramazan',
 	'hijri-calendar-m10' => 'ševval',
-	'hijri-calendar-m11' => 'zul-ka\'de',
+	'hijri-calendar-m11' => "zul-ka'de",
 	'hijri-calendar-m12' => 'zul-hidždže',
 	'hebrew-calendar-m1' => 'Tishrei',
 	'hebrew-calendar-m2' => 'Cheshvan',
@@ -1872,9 +1871,9 @@ Pokušajte [[Special:Search|pretražiti wiki]] za slične stranice.',
 	'htmlform-submit' => 'Pošalji',
 	'htmlform-reset' => 'Vrati izmjene',
 	'htmlform-selectorother-other' => 'Ostalo',
-];
+);
 
-$messages['bug'] = [
+$messages['bug'] = array(
 	'help' => 'Paŋinriŋ',
 	'history' => 'Versi riolo leppaë',
 	'history_short' => 'versi riolo',
@@ -1885,9 +1884,9 @@ $messages['bug'] = [
 	'historyempty' => '(kapa)',
 	'history-feed-item-nocomment' => '$1 ri $2',
 	'hide' => 'Tapok',
-];
+);
 
-$messages['ca'] = [
+$messages['ca'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria oculta|Categories ocultes}}',
 	'hidden-category-category' => 'Categories ocultes',
 	'help' => 'Ajuda',
@@ -1895,13 +1894,13 @@ $messages['ca'] = [
 	'history_short' => 'Historial',
 	'helppage' => 'Help:Ajuda',
 	'hidetoc' => 'amaga',
-	'headline_sample' => 'Text per a l\'encapçalament',
+	'headline_sample' => "Text per a l'encapçalament",
 	'headline_tip' => 'Encapçalat de secció de 2n nivell',
 	'hr_tip' => 'Línia horitzontal (feu-la servir amb moderació)',
 	'hiddencategories' => 'Aquesta pàgina forma part de {{PLURAL:$1|la següent categoria oculta|les següents categories ocultes}}:',
 	'histlegend' => 'Simbologia: (act) = diferència amb la versió actual,
 (prev) = diferència amb la versió anterior, m = modificació menor',
-	'history-fieldset-title' => 'Cerca a l\'historial',
+	'history-fieldset-title' => "Cerca a l'historial",
 	'history-show-deleted' => 'Només esborrats',
 	'histfirst' => 'El primer',
 	'histlast' => 'El darrer',
@@ -1916,16 +1915,16 @@ Intenteu [[Special:Search|cercar al mateix wiki]] per a noves pàgines rellevant
 	'history-title' => 'Historial de versions de «$1»',
 	'hist' => 'hist',
 	'hide' => 'amaga',
-	'hookaborted' => 'La modificació que vau tractar de fer ha estat canceŀlada per un lligam d\'extensió.',
+	'hookaborted' => "La modificació que vau tractar de fer ha estat canceŀlada per un lligam d'extensió.",
 	'http-invalid-url' => 'URL incorrecta: $1',
 	'http-invalid-scheme' => 'Les URLs amb l\'esquema "$1" no són compatibles.',
 	'http-request-error' => 'La petició HTTP ha fallat per un error desconegut.',
 	'http-read-error' => 'Error de lectura HTTP.',
 	'http-timed-out' => 'La petició HTTP ha expirat.',
-	'http-curl-error' => 'Error en recuperar l\'URL: $1',
-	'http-host-unreachable' => 'No s\'ha pogut accedir a l\'URL.',
+	'http-curl-error' => "Error en recuperar l'URL: $1",
+	'http-host-unreachable' => "No s'ha pogut accedir a l'URL.",
 	'http-bad-status' => 'Hi ha hagut un problema durant la petició HTTP: $1 $2',
-	'historywarning' => '\'\'\'Avís:\'\'\' La pàgina que eliminareu té un historial amb aproximadament {{PLURAL:$1|una modificació|$1 modificacions}}:',
+	'historywarning' => "'''Avís:''' La pàgina que eliminareu té un historial amb aproximadament {{PLURAL:$1|una modificació|$1 modificacions}}:",
 	'hours' => '{{PLURAL:$1|$1 hora|$1 hores}}',
 	'htmlform-invalid-input' => 'Hi ha problemes amb alguna de les seves entrades',
 	'htmlform-select-badoption' => 'El valor que heu especificat no és una opció vàlida.',
@@ -1940,14 +1939,14 @@ Intenteu [[Special:Search|cercar al mateix wiki]] per a noves pàgines rellevant
 	'home' => 'pàgina principal',
 	'helpfaq' => 'Ajuda i qüestions més freqüents',
 	'highest_ratings' => 'Amb millor puntuació',
-];
+);
 
-$messages['cbk-zam'] = [
+$messages['cbk-zam'] = array(
 	'help' => 'Ayuda',
 	'history_short' => 'Historia',
-];
+);
 
-$messages['cdo'] = [
+$messages['cdo'] = array(
 	'help' => 'Bŏng-cô',
 	'history' => 'Hiĕk-miêng lĭk-sṳ̄',
 	'history_short' => 'Lĭk-sṳ̄',
@@ -1966,9 +1965,9 @@ Siók-mìng: (dāng) = gâe̤ng dék sĭng bēng-buōng bī-piâng, (sèng) = g�
 	'hist' => 'sṳ̄',
 	'hide' => 'Káung kī',
 	'historywarning' => 'Gīng-gó̤: Nṳ̄ buóh-ái chēng lâi gì hiĕk-miêng ô lĭk-sṳ̄:',
-];
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Къайлаха кадегар|Къайлаха йолу кадегарш}}',
 	'hidden-category-category' => 'Къайлаха йолу кадегарш',
 	'help' => 'Нисвохаам',
@@ -1980,7 +1979,7 @@ $messages['ce'] = [
 	'headline_tip' => 'Корта 2-гlа локхаллийца',
 	'hr_tip' => 'Ана сиз (сих сиха ма леладайша)',
 	'hiddencategories' => 'Хlара агlо чуйогlуш ю оцу $1 {{PLURAL:$1|къайлаха кадегарчу|къайлаха кадегаршчу|къайлаха кадегаршчу}}:',
-	'histlegend' => 'Кхетор: (хlинцлера.) — йолучу башхон къастам; (хьалх.) — хьалхлерачу башхон къастам; \'\'\'ж\'\'\' — жимо бозалца болу хийцам.',
+	'histlegend' => "Кхетор: (хlинцлера.) — йолучу башхон къастам; (хьалх.) — хьалхлерачу башхон къастам; '''ж''' — жимо бозалца болу хийцам.",
 	'history-fieldset-title' => 'Хьажа исцlарерачу',
 	'histfirst' => 'къена',
 	'histlast' => 'хьалхо',
@@ -1990,9 +1989,9 @@ $messages['ce'] = [
 	'hist' => 'исторе',
 	'hide' => 'Къайлаяккха',
 	'handheld.css' => '/* Чуйиллина йолу кхузе CSS хир йу лелош масхьа койнаш чохь, дукхах ерг хатl нисдеш оцу $wgHandheldStyle */',
-];
+);
 
-$messages['ceb'] = [
+$messages['ceb'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Nakatagong kategoriya|Mga nakatagong kategoriya}}',
 	'hidden-category-category' => 'Mga nakatagong kategoriya',
 	'help' => 'Tabang',
@@ -2004,9 +2003,9 @@ $messages['ceb'] = [
 	'headline_tip' => 'Level 2 nga hedlayn',
 	'hr_tip' => 'Pahigda nga linya (palihog usahay ra gamita)',
 	'hiddencategories' => 'Ang kining panid nahiapil sa {{PLURAL:$1|1 ka kategoriya nga nakatago|$1 ka mga kategoriya nga nakatago}}:',
-	'histlegend' => 'Pagpili sa kalainan: markahi ang mga radio box sa mga rebisyon aron makompara dayon tuploka ang enter o ang button sa ibabaw.<br />
-Leyenda: \'\'\'({{int:cur}})\'\'\' = kalainan sa kasamtangang rebisyon,
-\'\'\'({{int:last}})\'\'\' = kalainan sa miaging rebisyon, \'\'\'{{int:minoreditletter}}\'\'\' = menor nga pag-usab.',
+	'histlegend' => "Pagpili sa kalainan: markahi ang mga radio box sa mga rebisyon aron makompara dayon tuploka ang enter o ang button sa ibabaw.<br />
+Leyenda: '''({{int:cur}})''' = kalainan sa kasamtangang rebisyon,
+'''({{int:last}})''' = kalainan sa miaging rebisyon, '''{{int:minoreditletter}}''' = menor nga pag-usab.",
 	'history-fieldset-title' => 'Tan-awa ang kaagi',
 	'histfirst' => 'Kinaunahan',
 	'histlast' => 'Labing bag-o',
@@ -2021,23 +2020,23 @@ Sulayi og [[Special:Search|pagpangita sa wiki]] para sa mga may kalabotang panid
 	'history-title' => 'Kaagi sa rebisyon sa "$1"',
 	'hist' => 'kaagi',
 	'hide' => 'Tagoi',
-];
+);
 
-$messages['ch'] = [
+$messages['ch'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Hinemme na katigoria|Manhinemme na kategoria siha}}',
 	'hidden-category-category' => 'Manhinemme na katigoria siha',
 	'help' => 'Ayuda',
 	'history' => 'Historian påhina',
 	'history_short' => 'Historia',
 	'helppage' => 'Help:Guinaha',
-	'hidetoc' => 'nå\'na\'',
-	'headline_sample' => 'Tinige\' i titulo mo\'na',
-	'headline_tip' => 'Titulon nibet mina\'dos',
-	'hr_tip' => 'Råya ni umadespatta (uho\' fan)',
-	'hiddencategories' => 'Miembron {{PLURAL:$1|1 manå\'na\' na kategoria|$1 na mannå\'na\' na kategoria}} este na påhina:',
-	'histlegend' => 'Seleksion ni diferensia: ayek i kahon rediu siha ni tinilaika ni para un akompara ya yemme\' "enter" pat i batunes gi sanpapa\'.<br />
-Leyendu: (på\'go) = i diferensia yan i rebision på\'go,
-(halacha) = i diferensia yan i tinilaika ma\'pos, M = dikike\' na tinilaika.',
+	'hidetoc' => "nå'na'",
+	'headline_sample' => "Tinige' i titulo mo'na",
+	'headline_tip' => "Titulon nibet mina'dos",
+	'hr_tip' => "Råya ni umadespatta (uho' fan)",
+	'hiddencategories' => "Miembron {{PLURAL:$1|1 manå'na' na kategoria|$1 na mannå'na' na kategoria}} este na påhina:",
+	'histlegend' => "Seleksion ni diferensia: ayek i kahon rediu siha ni tinilaika ni para un akompara ya yemme' \"enter\" pat i batunes gi sanpapa'.<br />
+Leyendu: (på'go) = i diferensia yan i rebision på'go,
+(halacha) = i diferensia yan i tinilaika ma'pos, M = dikike' na tinilaika.",
 	'histfirst' => 'I mas bihu',
 	'histlast' => 'I mas nuebu',
 	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
@@ -2045,22 +2044,22 @@ Leyendu: (på\'go) = i diferensia yan i rebision på\'go,
 	'history-feed-title' => 'Historian tinilaika',
 	'history-feed-description' => 'Historian tinilaika gi este na påhina gi wiki',
 	'history-feed-item-nocomment' => '$1 gi $2',
-	'history-feed-empty' => 'Tåya\' na påhina ni finaisen-mu.
-Buente mana\'suha gi wiki, pat matulaika nå\'an-ña.
-Chagi fan [[Special:Search|manaligao gi wiki]] para i mannuebu na påhina siha ni manaplikao.',
+	'history-feed-empty' => "Tåya' na påhina ni finaisen-mu.
+Buente mana'suha gi wiki, pat matulaika nå'an-ña.
+Chagi fan [[Special:Search|manaligao gi wiki]] para i mannuebu na påhina siha ni manaplikao.",
 	'history-title' => 'Historian tinilaika nu "$1"',
 	'hist' => 'hist',
-	'hide' => 'Nå\'na\'',
-	'historywarning' => 'Adahi: Guåha historia-ña ni påhina na para un na\'suha:',
-];
+	'hide' => "Nå'na'",
+	'historywarning' => "Adahi: Guåha historia-ña ni påhina na para un na'suha:",
+);
 
-$messages['chr'] = [
+$messages['chr'] = array(
 	'help' => 'ᎠᎵᏍᏕᎸᏗ',
 	'history' => 'ᏆᏥ ᎧᏃᎮᏍᎩ',
 	'history_short' => 'ᎧᏃᎮᏍᎩ',
-];
+);
 
-$messages['ckb'] = [
+$messages['ckb'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ھاوپۆلی شاراوە|ھاوپۆلی شاراوە}}',
 	'hidden-category-category' => 'هاوپۆلە شاردراوەکان',
 	'help' => 'یارمەتی',
@@ -2072,8 +2071,8 @@ $messages['ckb'] = [
 	'headline_tip' => 'سەردێڕی ئاست ۲',
 	'hr_tip' => 'هێڵی ئاسۆیی (دەگمەن بەکاری بێنە)',
 	'hiddencategories' => 'ئەم پەڕە ئەندامێکی {{PLURAL:$1|١ ھاوپۆلی شاراوەیە|$1 ھاوپۆلی شاراوەیە}}:',
-	'histlegend' => 'وەشانەکان بۆ ھەڵسەنگاندن دیاری بکە و ئەم دوگمەی خوارەوە لێبدە. <br />
-ڕێنمایی: (\'\'\'ئێستا\'\'\') = جیاوازی لەگەڵ وەشانی ئێستا، (\'\'\'پێشوو\'\'\') =جیاوازی لەگەڵ وەشانی پێشوو، \'\'\'ب\'\'\' = گۆڕانکاریی بچووک.',
+	'histlegend' => "وەشانەکان بۆ ھەڵسەنگاندن دیاری بکە و ئەم دوگمەی خوارەوە لێبدە. <br />
+ڕێنمایی: ('''ئێستا''') = جیاوازی لەگەڵ وەشانی ئێستا، ('''پێشوو''') =جیاوازی لەگەڵ وەشانی پێشوو، '''ب''' = گۆڕانکاریی بچووک.",
 	'history-fieldset-title' => 'گەشتی مێژوو',
 	'histfirst' => 'کۆنترین',
 	'histlast' => 'نوێترین',
@@ -2088,7 +2087,7 @@ $messages['ckb'] = [
 	'history-title' => 'مێژووی پیاچوونەوەکانی «$1»',
 	'hist' => 'مێژوو',
 	'hide' => 'بشارەوە',
-	'historywarning' => '\'\'\'ئاگاداری:\'\'\' ئەم لاپەڕە کە دەتەوێت بیسڕیتەوە پێشتر  $1 {{PLURAL:$1|revision|پێداچوونەوەی }} لەسەر کراوە.',
+	'historywarning' => "'''ئاگاداری:''' ئەم لاپەڕە کە دەتەوێت بیسڕیتەوە پێشتر  $1 {{PLURAL:$1|revision|پێداچوونەوەی }} لەسەر کراوە.",
 	'htmlform-invalid-input' => 'هێندێ کێشە هەیە لە بڕێک لە ناودراوەکانت',
 	'htmlform-select-badoption' => 'ئەو نرخەی دیاریت‌کردووە هەڵبژاردەیەکی گونجاو نیە.',
 	'htmlform-int-invalid' => 'ئەو نرخەی دیاریت‌کردووه ژمارەیەکی تەواو نیە.',
@@ -2098,9 +2097,9 @@ $messages['ckb'] = [
 	'htmlform-submit' => 'ناردن',
 	'htmlform-reset' => 'پووچەڵکردنەوەی دەستکارییەکان',
 	'htmlform-selectorother-other' => 'دیکە',
-];
+);
 
-$messages['co'] = [
+$messages['co'] = array(
 	'help' => 'Aiutu',
 	'history' => 'Cronolugia',
 	'history_short' => 'Cronolugia',
@@ -2111,9 +2110,9 @@ $messages['co'] = [
 	'history-feed-title' => 'Cronolugia di e revisione',
 	'hist' => 'cron',
 	'hide' => 'piattà',
-];
+);
 
-$messages['cps'] = [
+$messages['cps'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Nakatago nga kategorya|Nakatago nga mga kategorya}}',
 	'hidden-category-category' => 'Nakatago nga mga kategorya',
 	'help' => 'Tabang',
@@ -2125,17 +2124,17 @@ $messages['cps'] = [
 	'headline_tip' => 'Lebel 2 pangulong-dinalan',
 	'hr_tip' => 'Gapahigda nga linya (gamiton sang laka)',
 	'hiddencategories' => 'Ang mini nga pahina myembro sang {{PLURAL:$1|1 ka nakatago nga kategorya|$1 ka mga nakatago nga kategorya}}:',
-	'histlegend' => 'Ikumpara ang mga ginpili: markahi ang mga radyo buton sang mga bersyon para makumpara kag pinduton ang "enter" ukon ang buton sa idalum.<br />Pananda: \'\'\'({{int:cur}})\'\'\' = ang ginkala-in niya sa yanda nga rebisyon,
-\'\'\'({{int:last}})\'\'\' = ang ginalain niya sa gapadayun nga rebisyon, \'\'\'{{int:minoreditletter}}\'\'\' = gamay nga pag-ilis.',
+	'histlegend' => "Ikumpara ang mga ginpili: markahi ang mga radyo buton sang mga bersyon para makumpara kag pinduton ang \"enter\" ukon ang buton sa idalum.<br />Pananda: '''({{int:cur}})''' = ang ginkala-in niya sa yanda nga rebisyon,
+'''({{int:last}})''' = ang ginalain niya sa gapadayun nga rebisyon, '''{{int:minoreditletter}}''' = gamay nga pag-ilis.",
 	'history-fieldset-title' => 'Tulutan-awon sa kasaysayan',
 	'histfirst' => 'Pinaka-una',
 	'histlast' => 'Pinakabag-o',
 	'history-title' => 'Kasaysayan sang pagbag-o sang "$1"',
 	'hist' => 'kasaysayan',
 	'hide' => 'Itago',
-];
+);
 
-$messages['crh'] = [
+$messages['crh'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Nakatago nga kategorya|Nakatago nga mga kategorya}}',
 	'hidden-category-category' => 'Nakatago nga mga kategorya',
 	'help' => 'Tabang',
@@ -2147,17 +2146,17 @@ $messages['crh'] = [
 	'headline_tip' => 'Lebel 2 pangulong-dinalan',
 	'hr_tip' => 'Gapahigda nga linya (gamiton sang laka)',
 	'hiddencategories' => 'Ang mini nga pahina myembro sang {{PLURAL:$1|1 ka nakatago nga kategorya|$1 ka mga nakatago nga kategorya}}:',
-	'histlegend' => 'Ikumpara ang mga ginpili: markahi ang mga radyo buton sang mga bersyon para makumpara kag pinduton ang "enter" ukon ang buton sa idalum.<br />Pananda: \'\'\'({{int:cur}})\'\'\' = ang ginkala-in niya sa yanda nga rebisyon,
-\'\'\'({{int:last}})\'\'\' = ang ginalain niya sa gapadayun nga rebisyon, \'\'\'{{int:minoreditletter}}\'\'\' = gamay nga pag-ilis.',
+	'histlegend' => "Ikumpara ang mga ginpili: markahi ang mga radyo buton sang mga bersyon para makumpara kag pinduton ang \"enter\" ukon ang buton sa idalum.<br />Pananda: '''({{int:cur}})''' = ang ginkala-in niya sa yanda nga rebisyon,
+'''({{int:last}})''' = ang ginalain niya sa gapadayun nga rebisyon, '''{{int:minoreditletter}}''' = gamay nga pag-ilis.",
 	'history-fieldset-title' => 'Tulutan-awon sa kasaysayan',
 	'histfirst' => 'Pinaka-una',
 	'histlast' => 'Pinakabag-o',
 	'history-title' => 'Kasaysayan sang pagbag-o sang "$1"',
 	'hist' => 'kasaysayan',
 	'hide' => 'Itago',
-];
+);
 
-$messages['crh-cyrl'] = [
+$messages['crh-cyrl'] = array(
 	'hidden-categories' => 'Гизли {{PLURAL:$1|категория|категориялар}}',
 	'hidden-category-category' => 'Гизли категориялар',
 	'help' => 'Ярдым',
@@ -2169,8 +2168,8 @@ $messages['crh-cyrl'] = [
 	'headline_tip' => '2-нджи севие серлева',
 	'hr_tip' => 'Горизонталь сызыкъ (пек сыкъ къулланманъыз)',
 	'hiddencategories' => 'Бу саифе {{PLURAL:$1|1|$1}} гизли категориягъа менсюптир:',
-	'histlegend' => '(фаркъ) = шимдики алнен арадаки фаркъ,
-(сонъки) = эвельки алнен арадаки фаркъ, \'\'\'к\'\'\' = кичик денъишме',
+	'histlegend' => "(фаркъ) = шимдики алнен арадаки фаркъ,
+(сонъки) = эвельки алнен арадаки фаркъ, '''к''' = кичик денъишме",
 	'history-fieldset-title' => 'Кечмишке бакъув',
 	'history-show-deleted' => 'Тек ёкъ этильгенлер',
 	'histfirst' => 'Энъ эски',
@@ -2186,12 +2185,12 @@ $messages['crh-cyrl'] = [
 	'history-title' => '$1 саифесининъ денъишмелер тарихы',
 	'hist' => 'кечмиш',
 	'hide' => 'гизле',
-	'historywarning' => '\'\'\'Тенби:\'\'\' Сиз ёкъ этмеге истеген саифенъизнинъ къарарнен $1 {{PLURAL:$1|версиялы|версиялы}} кечмиши бардыр:',
+	'historywarning' => "'''Тенби:''' Сиз ёкъ этмеге истеген саифенъизнинъ къарарнен $1 {{PLURAL:$1|версиялы|версиялы}} кечмиши бардыр:",
 	'hours-abbrev' => '$1саат',
 	'htmlform-reset' => 'Денъишикликлерни кери ал',
-];
+);
 
-$messages['crh-latn'] = [
+$messages['crh-latn'] = array(
 	'hidden-categories' => 'Gizli {{PLURAL:$1|kategoriya|kategoriyalar}}',
 	'hidden-category-category' => 'Gizli kategoriyalar',
 	'help' => 'Yardım',
@@ -2203,8 +2202,8 @@ $messages['crh-latn'] = [
 	'headline_tip' => '2-nci seviye serleva',
 	'hr_tip' => 'Gorizontal sızıq (pek sıq qullanmañız)',
 	'hiddencategories' => 'Bu saife {{PLURAL:$1|1|$1}} gizli kategoriyağa mensüptir:',
-	'histlegend' => '(farq) = şimdiki alnen aradaki farq,
-(soñki) = evelki alnen aradaki farq, \'\'\'k\'\'\' = kiçik deñişme',
+	'histlegend' => "(farq) = şimdiki alnen aradaki farq,
+(soñki) = evelki alnen aradaki farq, '''k''' = kiçik deñişme",
 	'history-fieldset-title' => 'Keçmişke baquv',
 	'history-show-deleted' => 'Tek yoq etilgenler',
 	'histfirst' => 'Eñ eski',
@@ -2220,12 +2219,12 @@ Vikide bu saifege oşağan saifelerni [[Special:Search|tapıp baqıñız]].',
 	'history-title' => '"$1" saifesiniñ deñişmeler tarihı',
 	'hist' => 'keçmiş',
 	'hide' => 'gizle',
-	'historywarning' => '\'\'\'Tenbi:\'\'\' Siz yoq etmege istegen saifeñizniñ qararnen $1 {{PLURAL:$1|versiyalı|versiyalı}} keçmişi bardır:',
+	'historywarning' => "'''Tenbi:''' Siz yoq etmege istegen saifeñizniñ qararnen $1 {{PLURAL:$1|versiyalı|versiyalı}} keçmişi bardır:",
 	'hours-abbrev' => '$1saat',
 	'htmlform-reset' => 'Deñişikliklerni keri al',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Skrytá kategorie|Skryté kategorie|Skryté kategorie}}',
 	'hidden-category-category' => 'Skryté kategorie',
 	'help' => 'Nápověda',
@@ -2262,20 +2261,20 @@ Zkuste [[Special:Search|hledání]].',
 	'http-curl-error' => 'Chyba při čtení z URL: $1',
 	'http-host-unreachable' => 'Nepodařilo se kontaktovat URL',
 	'http-bad-status' => 'Při provádění HTTP požadavku nastal problém: $1 $2',
-	'historywarning' => '\'\'\'Varování:\'\'\' Stránka, kterou chcete smazat, má historii se zhruba $1 {{plural:$1|revizí|revizemi}}:',
+	'historywarning' => "'''Varování:''' Stránka, kterou chcete smazat, má historii se zhruba $1 {{plural:$1|revizí|revizemi}}:",
 	'handheld.css' => '/* Zde uvedené CSS bude ovlivňovat přenosná zařízení vycházející ze stylu nastaveného v proměnné $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 hodina|$1 hodiny|$1 hodin}}',
 	'hijri-calendar-m1' => 'muharram',
 	'hijri-calendar-m2' => 'safar',
-	'hijri-calendar-m3' => 'rabí\' al-avval',
-	'hijri-calendar-m4' => 'rabí\'ath-thání',
+	'hijri-calendar-m3' => "rabí' al-avval",
+	'hijri-calendar-m4' => "rabí'ath-thání",
 	'hijri-calendar-m5' => 'džumádá l-úlá',
 	'hijri-calendar-m6' => 'džumádá l-áchira',
 	'hijri-calendar-m7' => 'radžab',
-	'hijri-calendar-m8' => 'ša\'bán',
+	'hijri-calendar-m8' => "ša'bán",
 	'hijri-calendar-m9' => 'ramadán',
 	'hijri-calendar-m10' => 'šauvál',
-	'hijri-calendar-m11' => 'dhú l-ka\'da',
+	'hijri-calendar-m11' => "dhú l-ka'da",
 	'hijri-calendar-m12' => 'dhú l-hidždža',
 	'hebrew-calendar-m1' => 'tišri',
 	'hebrew-calendar-m2' => 'chešvan',
@@ -2315,9 +2314,9 @@ Zkuste [[Special:Search|hledání]].',
 	'htmlform-submit' => 'Odeslat',
 	'htmlform-reset' => 'Vrátit změny',
 	'htmlform-selectorother-other' => 'Jiná hodnota',
-];
+);
 
-$messages['csb'] = [
+$messages['csb'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Zataconô kategòrëja|Zataconé kategòrëje}}',
 	'hidden-category-category' => 'Zataconé kategòrëje',
 	'help' => 'Pòmòc',
@@ -2338,9 +2337,9 @@ $messages['csb'] = [
 	'history-title' => 'Historëjô wersëji dlô "$1"',
 	'hist' => 'hist.',
 	'hide' => 'zatacë',
-];
+);
 
-$messages['cu'] = [
+$messages['cu'] = array(
 	'hidden-categories' => '{{PLURAL:$1|съкрꙑта катигорїꙗ|съкрꙑти катигорїи|съкрꙑтꙑ катигорїѩ}}',
 	'help' => 'помощь',
 	'history' => 'страницѧ їсторїꙗ',
@@ -2356,9 +2355,9 @@ $messages['cu'] = [
 	'history-feed-item-nocomment' => '$1 при $2',
 	'hist' => 'їс҃т',
 	'hide' => 'съкрꙑи',
-];
+);
 
-$messages['cv'] = [
+$messages['cv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Пытарнă категори|Пытарнă категорисем}}',
 	'hidden-category-category' => 'Пытарнă категорисем',
 	'help' => 'Пулăшу',
@@ -2377,9 +2376,9 @@ $messages['cv'] = [
 	'history-feed-description' => 'Ку страницăна викире улаштарнин историйĕ',
 	'hist' => 'истори',
 	'hide' => 'кăтартмалла мар',
-];
+);
 
-$messages['cy'] = [
+$messages['cy'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categori cuddiedig|Categori cuddiedig|Categorïau cuddiedig|Categorïau cuddiedig|Categorïau cuddiedig|Categorïau cuddiedig}}',
 	'hidden-category-category' => 'Categorïau cuddiedig',
 	'help' => 'Cymorth',
@@ -2389,24 +2388,24 @@ $messages['cy'] = [
 	'hidetoc' => 'cuddio',
 	'headline_sample' => 'Testun pennawd',
 	'headline_tip' => 'Pennawd lefel 2',
-	'hr_tip' => 'Llinell lorweddol (peidiwch â\'i gor-ddefnyddio)',
-	'hiddencategories' => 'Mae\'r dudalen hon yn aelod o $1 {{PLURAL:$1|categori|categori|gategori|chategori|chategori|categori}} cuddiedig:',
-	'histlegend' => 'Cymharu dau fersiwn: marciwch y cylchoedd ar y ddau fersiwn i\'w cymharu, yna pwyswch ar \'return\' neu\'r botwm \'Cymharer y fersiynau dewisedig\'.<br />
-Eglurhad: \'\'\'({{int:cur}})\'\'\' = gwahaniaethau rhyngddo a\'r fersiwn cyfredol,
-\'\'\'({{int:last}})\'\'\' = gwahaniaethau rhyngddo a\'r fersiwn cynt, \'\'\'({{int:minoreditletter}})\'\'\' = golygiad bychan',
-	'history-fieldset-title' => 'Chwilio drwy\'r hanes',
+	'hr_tip' => "Llinell lorweddol (peidiwch â'i gor-ddefnyddio)",
+	'hiddencategories' => "Mae'r dudalen hon yn aelod o $1 {{PLURAL:$1|categori|categori|gategori|chategori|chategori|categori}} cuddiedig:",
+	'histlegend' => "Cymharu dau fersiwn: marciwch y cylchoedd ar y ddau fersiwn i'w cymharu, yna pwyswch ar 'return' neu'r botwm 'Cymharer y fersiynau dewisedig'.<br />
+Eglurhad: '''({{int:cur}})''' = gwahaniaethau rhyngddo a'r fersiwn cyfredol,
+'''({{int:last}})''' = gwahaniaethau rhyngddo a'r fersiwn cynt, '''({{int:minoreditletter}})''' = golygiad bychan",
+	'history-fieldset-title' => "Chwilio drwy'r hanes",
 	'history-show-deleted' => 'Y rhai a ddilëwyd yn unig',
 	'histfirst' => 'Cynharaf',
 	'histlast' => 'Diweddaraf',
 	'historysize' => '({{PLURAL:$1|$1 beit|$1 beit|$1 feit|$1 beit|$1 beit|$1 beit}})',
 	'historyempty' => '(gwag)',
 	'history-feed-title' => 'Hanes diwygio',
-	'history-feed-description' => 'Hanes diwygio\'r dudalen hon ar y wici',
+	'history-feed-description' => "Hanes diwygio'r dudalen hon ar y wici",
 	'history-feed-item-nocomment' => '$1 am $2',
-	'history-feed-empty' => 'Nid yw\'r dudalen a ofynwyd amdani\'n bod.
+	'history-feed-empty' => "Nid yw'r dudalen a ofynwyd amdani'n bod.
 Gall fod iddi gael ei dileu neu ei hailenwi.
-Gallwch [[Special:Search|chwilio\'r]] wici am dudalennau eraill perthnasol.',
-	'history-title' => 'Hanes golygu \'$1\'',
+Gallwch [[Special:Search|chwilio'r]] wici am dudalennau eraill perthnasol.",
+	'history-title' => "Hanes golygu '$1'",
 	'hist' => 'hanes',
 	'hide' => 'Cuddio',
 	'hookaborted' => 'Cafodd y darpar newid ei derfynu gan fachyn estyniad.',
@@ -2418,22 +2417,22 @@ Gallwch [[Special:Search|chwilio\'r]] wici am dudalennau eraill perthnasol.',
 	'http-curl-error' => 'Cafwyd gwall wrth nôl yr URL: $1',
 	'http-host-unreachable' => 'Wedi methu cyrraedd yr URL.',
 	'http-bad-status' => 'Cafwyd trafferth yn ystod y cais HTTP: $1 $2',
-	'historywarning' => '\'\'\'Rhybudd:\'\'\' bu tua $1 {{PLURAL:$1|golygiad|golygiad|olygiad|golygiad|golygiad|o olygiadau}} yn hanes y dudalen rydych ar fin ei dileu:',
+	'historywarning' => "'''Rhybudd:''' bu tua $1 {{PLURAL:$1|golygiad|golygiad|olygiad|golygiad|golygiad|o olygiadau}} yn hanes y dudalen rydych ar fin ei dileu:",
 	'hours-abbrev' => '$1a',
 	'hours' => '{{PLURAL:$1|$1 awr}}',
-	'htmlform-invalid-input' => 'Mae problemau gyda pheth o\'ch mewnbwn',
-	'htmlform-select-badoption' => 'Nid yw\'r gwerth a bennwyd gennych yn ddewis dilys.',
-	'htmlform-int-invalid' => 'Nid yw\'r gwerth a bennwyd gennych yn gyfanrif.',
-	'htmlform-float-invalid' => 'Nid yw\'r gwerth a bennwyd gennych yn rif.',
-	'htmlform-int-toolow' => 'Mae\'r gwerth a bennwyd gennych yn llai na\'r isafswm $1',
-	'htmlform-int-toohigh' => 'Mae\'r gwerth a bennwyd gennych yn fwy na\'r uchafswm $1',
-	'htmlform-required' => 'Rhaid llanw\'r blwch hwn',
+	'htmlform-invalid-input' => "Mae problemau gyda pheth o'ch mewnbwn",
+	'htmlform-select-badoption' => "Nid yw'r gwerth a bennwyd gennych yn ddewis dilys.",
+	'htmlform-int-invalid' => "Nid yw'r gwerth a bennwyd gennych yn gyfanrif.",
+	'htmlform-float-invalid' => "Nid yw'r gwerth a bennwyd gennych yn rif.",
+	'htmlform-int-toolow' => "Mae'r gwerth a bennwyd gennych yn llai na'r isafswm $1",
+	'htmlform-int-toohigh' => "Mae'r gwerth a bennwyd gennych yn fwy na'r uchafswm $1",
+	'htmlform-required' => "Rhaid llanw'r blwch hwn",
 	'htmlform-submit' => 'Gosoder',
 	'htmlform-reset' => 'Datod y newidiadau',
 	'htmlform-selectorother-other' => 'Arall',
-];
+);
 
-$messages['da'] = [
+$messages['da'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Skjult kategori|Skjulte kategorier}}',
 	'hidden-category-category' => 'Skjulte kategorier',
 	'help' => 'Hjælp',
@@ -2482,21 +2481,21 @@ version, (forrige) = forskel til den forrige version, M = mindre ændring',
 	'htmlform-submit' => 'Gem',
 	'htmlform-reset' => 'Annuller ændringer',
 	'htmlform-selectorother-other' => 'Anden',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Versteckte Kategorie|Versteckte Kategorien}}',
 	'hidden-category-category' => 'Versteckte Kategorien',
 	'help' => 'Hilfe',
-	'history' => 'Versionen',
+	'history' => 'Versionsgeschichte',
 	'history_short' => 'Versionen',
 	'helppage' => 'Hilfe:Übersicht',
-	'hidetoc' => 'Verbergen',
-	'headline_sample' => 'Ebene-2-Überschrift',
+	'hidetoc' => 'Ausblenden',
+	'headline_sample' => 'Überschriftstext',
 	'headline_tip' => 'Ebene-2-Überschrift',
 	'hr_tip' => 'Horizontale Linie (sparsam verwenden)',
-	'hiddencategories' => 'Diese Seite ist Mitglied von {{PLURAL:$1|1 versteckter Kategorie|$1 versteckten Kategorien}}:',
-	'histlegend' => 'Zur Anzeige der Änderungen einfach die zu vergleichenden Versionen auswählen und die Schaltfläche „{{int:compareselectedversions}}“ klicken.<br />
+	'hiddencategories' => 'Diese Seite gehört {{PLURAL:$1|1 versteckten Kategorie an|$1 versteckten Kategorien an}}:',
+	'histlegend' => 'Um eine bestimmte Version anzusehen, klicke auf das dazugehörige Datum. Mehr Informationen dazu findest du unter [[w:c:de.community:Hilfe:Versionsgeschichte|Hilfe:Versionsgeschichte]]. <br />
 * ({{int:cur}}) = Unterschied zur aktuellen Version, ({{int:last}}) = Unterschied zur vorherigen Version
 * Uhrzeit/Datum = Version zu dieser Zeit, Benutzername/IP-Adresse des Bearbeiters, {{int:minoreditletter}} = Kleine Änderung',
 	'history-fieldset-title' => 'In der Versionsgeschichte suchen',
@@ -2507,22 +2506,22 @@ $messages['de'] = [
 	'historyempty' => '(leer)',
 	'history-feed-title' => 'Versionsgeschichte',
 	'history-feed-description' => 'Versionsgeschichte dieser Seite in {{SITENAME}}',
-	'history-feed-item-nocomment' => '$1 am $3 um $4 Uhr',
+	'history-feed-item-nocomment' => '$1 ($2)',
 	'history-feed-empty' => 'Die angeforderte Seite existiert nicht. Vielleicht wurde sie gelöscht oder verschoben. [[Special:Search|Durchsuche]] {{SITENAME}} nach passenden neuen Seiten.',
 	'history-title' => 'Versionsgeschichte von „$1“',
 	'hist' => 'Versionen',
-	'hide' => 'ausblenden',
-	'hookaborted' => 'Der Versuch, die Änderung durchzuführen, ist aufgrund eines Extension-Hooks fehlgeschlagen',
+	'hide' => 'Ausblenden',
+	'hookaborted' => 'Die von dir vorgesehene Anpassung wurde von einer Erweiterung verhindert.',
 	'http-invalid-url' => 'Ungültige URL: $1',
-	'http-invalid-scheme' => 'URLs mit dem Schema „$1“ werden nicht unterstützt',
+	'http-invalid-scheme' => 'URLs mit dem Präfix „$1“ werden nicht unterstützt.',
 	'http-request-error' => 'Fehler beim Senden der Anfrage.',
 	'http-read-error' => 'HTTP-Lesefehler.',
 	'http-timed-out' => 'Zeitüberschreitung bei der HTTP-Anfrage.',
 	'http-curl-error' => 'Fehler beim Abruf der URL: $1',
 	'http-host-unreachable' => 'URL konnte nicht erreicht werden.',
 	'http-bad-status' => 'Während der HTTP-Anfrage ist ein Fehler aufgetreten: $1 $2',
-	'historywarning' => '\'\'\'Achtung:\'\'\' Die Seite, die du löschen möchtest, hat eine Versionsgeschichte mit ungefähr $1 {{PLURAL:$1|Version|Versionen}}:',
-	'handheld.css' => '/* Das folgende CSS wird für Handheld-Geräte, basierend auf der in $wgHandheldStyle konfigurierten Benutzeroberfläche, geladen. */',
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning"></div>',
+	'handheld.css' => '/* Das folgende CSS wird für mobile Geräte basierend auf der in $wgHandheldStyle konfigurierten Benutzeroberfläche geladen. */',
 	'hours' => '{{PLURAL:$1|$1 Stunde|$1 Stunden}}',
 	'hijri-calendar-m3' => 'Rabiʿ al-auwal',
 	'hijri-calendar-m4' => 'Rabiʿ ath-thani',
@@ -2540,32 +2539,65 @@ $messages['de'] = [
 	'htmlform-int-toolow' => 'Der angegebene Wert ist unter dem Minimum von $1',
 	'htmlform-int-toohigh' => 'Der angegebene Wert ist über dem Maximum von $1',
 	'htmlform-required' => 'Dieser Wert wird benötigt',
-	'htmlform-submit' => 'Speichern',
+	'htmlform-submit' => 'Absenden',
 	'htmlform-reset' => 'Änderungen rückgängig machen',
-	'htmlform-selectorother-other' => 'Andere',
-	'home' => 'Hauptseite',
-	'helpfaq' => 'Hilfe',
+	'htmlform-selectorother-other' => 'Sonstige',
+	'home' => 'Startseite',
+	'helpfaq' => 'Hilfe und häufig gestellte Fragen',
 	'highest_ratings' => 'Am besten bewertet',
 	'hub-Entertainment' => 'Entertainment',
 	'hub-Gaming' => 'Videospiele',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hidebots' => 'Bots ausblenden',
 	'hidesome' => 'Einige verbergen',
 	'hub-Food_and_Drink' => 'Essen und Trinken',
 	'hub-Video_Games' => 'Videospiele',
-	'hubs' => 'Portale',
+	'hubs' => 'Hubs',
 	'htmlform-no' => 'Nein',
 	'htmlform-yes' => 'Ja',
-];
+	'history_copyright' => '-',
+	'hours-abbrev' => '$1h',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m9' => 'Ramadan',
+	'hebrew-calendar-m1' => 'Tishrei',
+	'hebrew-calendar-m2' => 'Cheshvan',
+	'hebrew-calendar-m3' => 'Kislev',
+	'hebrew-calendar-m4' => 'Tevet',
+	'hebrew-calendar-m5' => 'Shevat',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m8' => 'Iyar',
+	'hebrew-calendar-m9' => 'Sivan',
+	'hebrew-calendar-m10' => 'Tamuz',
+	'hebrew-calendar-m11' => 'Av',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m1-gen' => 'Tishrei',
+	'hebrew-calendar-m2-gen' => 'Cheshvan',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Tevet',
+	'hebrew-calendar-m5-gen' => 'Shevat',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m8-gen' => 'Iyar',
+	'hebrew-calendar-m9-gen' => 'Sivan',
+	'hebrew-calendar-m10-gen' => 'Tamuz',
+	'hebrew-calendar-m11-gen' => 'Av',
+	'hebrew-calendar-m12-gen' => 'Elul',
+);
 
-$messages['de-formal'] = [
+$messages['de-formal'] = array(
 	'history-feed-empty' => 'Die angeforderte Seite existiert nicht. Vielleicht wurde sie gelöscht oder verschoben. [[Special:Search|Durchsuchen Sie]] {{SITENAME}} nach passenden neuen Seiten.',
-	'historywarning' => '\'\'\'Achtung:\'\'\' Die Seite, die Sie löschen möchten, hat eine Versionsgeschichte mit etwa $1 {{PLURAL:$1|Version|Versionen}}:',
-];
+	'historywarning' => "'''Achtung:''' Die Seite, die Sie löschen möchten, hat eine Versionsgeschichte mit etwa $1 {{PLURAL:$1|Version|Versionen}}:",
+);
 
-$messages['de-weigsbrag'] = [
+$messages['de-weigsbrag'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Werschdegdes Gadegorä|Werschdegdes Gadegoräes}}',
 	'hidden-category-category' => 'Werschdegdes Gadegorä',
 	'help' => 'Hilw',
@@ -2593,9 +2625,9 @@ $messages['de-weigsbrag'] = [
 	'hide' => 'ausblend',
 	'historywarning' => 'Obagd, dose Seid wo wol lösch, haddar eines Wersionsgeschigd:',
 	'hideresults' => 'Werberg',
-];
+);
 
-$messages['diq'] = [
+$messages['diq'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategoriya nımıtiye|Kategoriyê nımıtey}}',
 	'hidden-category-category' => 'Kategoriyê nımıtey',
 	'help' => 'Peşti',
@@ -2607,9 +2639,9 @@ $messages['diq'] = [
 	'headline_tip' => 'Ket 2 headline',
 	'hr_tip' => 'Çızgiy Horizantoli (use sparingly)',
 	'hiddencategories' => 'Ena pela bınê {{PLURAL:$1|1 hidden category|$1 categoriyan nımne}}:',
-	'histlegend' => 'Ferqê weçinıtış: Qutiya versiyonan isaret bık u dest bı \'\'enter\'\'i ya zi gozaga cêrêne klik bık.<br />
+	'histlegend' => "Ferqê weçinıtış: Qutiya versiyonan isaret bık u dest bı ''enter''i ya zi gozaga cêrêne klik bık.<br />
 Cetwel: (pey) = ferqê versiyonê peni,
-(ver) = ferqê versiyonê verni, Q = vurnayışo qıçkek.',
+(ver) = ferqê versiyonê verni, Q = vurnayışo qıçkek.",
 	'history-fieldset-title' => 'Tarixê browsey',
 	'history-show-deleted' => 'Tenya esterıt',
 	'histfirst' => 'Verênêr',
@@ -2634,7 +2666,7 @@ Seba pelanê muhimanê newan [[Special:Search|cıgeyrayışê wiki de]] bıcereb
 	'http-curl-error' => 'Xetayê URLi: $1',
 	'http-host-unreachable' => 'URL rê niresa.',
 	'http-bad-status' => 'Waştişê tu HTTP yew problem biya: $1 $2',
-	'historywarning' => '\'\'\'Teme:\'\'\' Pela ke şıma esterenê tede yew viyarte be teqriben $1 {{PLURAL:$1|versiyon esto|versiyoni estê}}:',
+	'historywarning' => "'''Teme:''' Pela ke şıma esterenê tede yew viyarte be teqriben $1 {{PLURAL:$1|versiyon esto|versiyoni estê}}:",
 	'htmlform-invalid-input' => 'Inputê ti de tayê ğeletî estê',
 	'htmlform-select-badoption' => 'Ena değer ke ti spesife kerd yew opsiyonê raştî ni yo.',
 	'htmlform-int-invalid' => 'Ena değer ke ti spesife kerd yew reqem ni yo.',
@@ -2645,9 +2677,9 @@ Seba pelanê muhimanê newan [[Special:Search|cıgeyrayışê wiki de]] bıcereb
 	'htmlform-submit' => 'Bişirav',
 	'htmlform-reset' => 'Vurnayişî reyna biyar',
 	'htmlform-selectorother-other' => 'Bin',
-];
+);
 
-$messages['dsb'] = [
+$messages['dsb'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Schowana kategorija|Schowanej kategoriji|Schowane kategorije|Schowanych kategorijow}}',
 	'hidden-category-category' => 'Schowane kategorije',
 	'help' => 'Pomoc',
@@ -2688,7 +2720,7 @@ Snaź jo se z wiki wulašował abo hynac pómjenił.
 	'http-curl-error' => 'Zmólka pśi wótwółowanju URL: $1',
 	'http-host-unreachable' => 'URL njejo był pśistupny.',
 	'http-bad-status' => 'Wob cas HTTP-napšašowanje jo problem był: $1 $2',
-	'historywarning' => '\'\'\'Glědaj:\'\'\' Bok, kótaryž coš wulašowaś, ma historiju z něźi $1 {{PLURAL:$1|wersiju|wersijoma|wersijami|wersijami}}:',
+	'historywarning' => "'''Glědaj:''' Bok, kótaryž coš wulašowaś, ma historiju z něźi $1 {{PLURAL:$1|wersiju|wersijoma|wersijami|wersijami}}:",
 	'hours' => '{{PLURAL:$1|$1 góźinu|$1 góźinoma|$1 góźinami|$1 góźinami}}',
 	'htmlform-invalid-input' => 'Su někotare problemy z twójim zapodaśim',
 	'htmlform-select-badoption' => 'Gódnota, kótaruž sy pódał, njejo płaśiwa opcija.',
@@ -2700,9 +2732,9 @@ Snaź jo se z wiki wulašował abo hynac pómjenił.
 	'htmlform-submit' => 'Wótpósłaś',
 	'htmlform-reset' => 'Změny anulěrowaś',
 	'htmlform-selectorother-other' => 'Druge',
-];
+);
 
-$messages['dtp'] = [
+$messages['dtp'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kalas poinlisok|Ka-kalas poinlisok}}',
 	'hidden-category-category' => 'Ka-kalas poinlisok',
 	'help' => 'Sokodung',
@@ -2714,8 +2746,8 @@ $messages['dtp'] = [
 	'headline_tip' => 'Nuludan-tulu loting ko-2',
 	'hr_tip' => 'Puralan pointibabar (inta-taan do mongoguno)',
 	'hiddencategories' => 'Bolikon diti songkoruhang do {{PLURAL:$1|1 katogori poinlisok|$1 kakatogori poinlisok}}:',
-	'histlegend' => 'Diff selection: tandaai kutak rodiu mantad sinimakan do popibanding on tonsoko sumuang toi bamban id siriba.<br />
-Lijon: \'\'\'({{int:cur}})\'\'\' = kipisuaian borsi kawawagu, \'\'\'({{int:last}})\'\'\' = kopisuaian di sinimakan nokopogulu, \'\'\'{{int:minoreditletter}}\'\'\' = niditan tokoto.',
+	'histlegend' => "Diff selection: tandaai kutak rodiu mantad sinimakan do popibanding on tonsoko sumuang toi bamban id siriba.<br />
+Lijon: '''({{int:cur}})''' = kipisuaian borsi kawawagu, '''({{int:last}})''' = kopisuaian di sinimakan nokopogulu, '''{{int:minoreditletter}}''' = niditan tokoto.",
 	'history-fieldset-title' => 'Pingintaai susuyan',
 	'history-show-deleted' => 'Nopugas no poh',
 	'histfirst' => 'Nokododori',
@@ -2731,9 +2763,9 @@ Umbalai [[Special:Search|mogihum id wiki]] ot bolikon di kikohompiton.',
 	'history-title' => 'Susuyan sinimakan do "$1"',
 	'hist' => 'susui',
 	'hide' => 'Popolisok',
-];
+);
 
-$messages['dv'] = [
+$messages['dv'] = array(
 	'help' => 'އެހީ',
 	'history' => 'ޞަފްޙާގެ ތާރީހު',
 	'history_short' => 'ތާރީހު',
@@ -2741,9 +2773,9 @@ $messages['dv'] = [
 	'hidetoc' => 'ފޮރުއްވާ',
 	'headline_sample' => 'ސުރުހީގެ އިބާރާތް',
 	'hide' => 'ފޮރުވާ',
-];
+);
 
-$messages['dz'] = [
+$messages['dz'] = array(
 	'help' => 'གྲོགས་རམ།',
 	'history' => 'ཤོག་ལེབ་སྤྱོད་ཤུལ།',
 	'history_short' => 'སྤྱོད་ཤུལ།',
@@ -2762,15 +2794,15 @@ $messages['dz'] = [
 	'hist' => 'སྤྱོད་ཤུལ',
 	'hide' => 'སྦ།',
 	'historywarning' => 'ཉེན་བརྡ་: ཁྱོད་ཀྱིས་ བཏོན་བཀོག་ནི་འབད་མི་ཤོག་ལེབ་ནང་སྤྱོད་ཤུལ་འདུག་:',
-];
+);
 
-$messages['ee'] = [
+$messages['ee'] = array(
 	'help' => 'Kpekpeɖeŋu',
 	'history' => 'Axa sia ƒe tata xoxoawo',
 	'history_short' => 'Xoxoawo',
 	'hidetoc' => 'ɣla',
-	'histlegend' => 'Vovo tatia: de dzesi tata siwo ƒe vovototowo wò di be yea kpɔ ɖa eye na tia \'enter\' alo kpe si le eɖome.<br />
-Gɔmeɖeɖe: \'\'\'({{int:cur}})\'\'\' = vovototo tso tata mamlea gbɔ, \'\'\'({{int:last}})\'\'\' = vovototo tso tata si do ŋgɔ gbɔ, \'\'\'{{int:minoreditletter}}\'\'\' = tɔtrɔ sue.',
+	'histlegend' => "Vovo tatia: de dzesi tata siwo ƒe vovototowo wò di be yea kpɔ ɖa eye na tia 'enter' alo kpe si le eɖome.<br />
+Gɔmeɖeɖe: '''({{int:cur}})''' = vovototo tso tata mamlea gbɔ, '''({{int:last}})''' = vovototo tso tata si do ŋgɔ gbɔ, '''{{int:minoreditletter}}''' = tɔtrɔ sue.",
 	'history-show-deleted' => 'Esiwo wotutu ko',
 	'histfirst' => 'Xoxoɔwu',
 	'histlast' => 'Yeyeɛwu',
@@ -2781,9 +2813,9 @@ Zã [[Special:Search|nuwo didi le wiki sia dzi]] kpɔ na axa yeyeawo.',
 	'history-title' => '"$1" ƒe tata xoxoawo',
 	'hist' => 'xoxo',
 	'hide' => 'Ɣla',
-];
+);
 
-$messages['el'] = [
+$messages['el'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Κρυμμένη κατηγορία|Κρυμμένες κατηγορίες}}',
 	'hidden-category-category' => 'Κρυμμένες κατηγορίες',
 	'help' => 'Βοήθεια',
@@ -2795,9 +2827,9 @@ $messages['el'] = [
 	'headline_tip' => 'Δεύτερος τίτλος (επίπεδο 2)',
 	'hr_tip' => 'Οριζόντια γραμμή (να χρησιμοποιείται με μέτρο!)',
 	'hiddencategories' => 'Αυτή η σελίδα είναι μέλος {{PLURAL:$1|μίας κρυμμένης κατηγορίας|$1 κρυμμένων κατηγοριών}}',
-	'histlegend' => 'Σύγκριση διαφορών: σημάνετε τα κουτάκια επιλογής των εκδόσεων που θέλετε να συγκρίνετε και πατήστε το πλήκτρο enter ή κάντε κλικ στο κουμπί στην κάτω μεριά.<br />
-Υπόμνημα: \'\'\'({{int:cur}})\'\'\' = διαφορά από την τρέχουσα έκδοση,
-\'\'\'({{int:last}})\'\'\' = διαφορά από την προηγούμενη έκδοση, \'\'\'{{int:minoreditletter}}\'\'\' = αλλαγή μικρής κλίμακας.',
+	'histlegend' => "Σύγκριση διαφορών: σημάνετε τα κουτάκια επιλογής των εκδόσεων που θέλετε να συγκρίνετε και πατήστε το πλήκτρο enter ή κάντε κλικ στο κουμπί στην κάτω μεριά.<br />
+Υπόμνημα: '''({{int:cur}})''' = διαφορά από την τρέχουσα έκδοση,
+'''({{int:last}})''' = διαφορά από την προηγούμενη έκδοση, '''{{int:minoreditletter}}''' = αλλαγή μικρής κλίμακας.",
 	'history-fieldset-title' => 'Αναζήτηση στο ιστορικό',
 	'history-show-deleted' => 'Διαγραμμένα μόνο',
 	'histfirst' => 'Η πιο παλιά',
@@ -2811,7 +2843,7 @@ $messages['el'] = [
 Μπορεί να έχει διαγραφεί από το wiki, ή να μετονομάστηκε.
 Δοκιμάστε [[Special:Search|να αναζητήσετε στο wiki]] για σχετικές νέες σελίδες.',
 	'history-title' => 'Ιστορικό εκδόσεων για τη σελίδα "$1"',
-	'hist' => '\'ιστορικό\'',
+	'hist' => "'ιστορικό'",
 	'hide' => 'απόκρυψη',
 	'hookaborted' => 'Η τροποποίηση που επιχειρήσατε, ακυρώθηκε από ένα άγκιστρο επέκτασης.',
 	'http-invalid-url' => 'Άκυρη διεύθυνση URL: $1',
@@ -2822,7 +2854,7 @@ $messages['el'] = [
 	'http-curl-error' => 'Σφάλμα κατά τη λήψη του URL: $1',
 	'http-host-unreachable' => 'Το URL δεν ήταν προσβάσιμο.',
 	'http-bad-status' => 'Υπήρξε πρόβλημα κατά τη διάρκεια του αιτήματος HTTP: $1 $2',
-	'historywarning' => '\'\'\'Προσοχή:\'\'\' Η σελίδα που πρόκειται να διαγράψετε έχει ιστορικό με περίπου $1 {{PLURAL:$1|επεξεργασία|επεξεργασίες}}:',
+	'historywarning' => "'''Προσοχή:''' Η σελίδα που πρόκειται να διαγράψετε έχει ιστορικό με περίπου $1 {{PLURAL:$1|επεξεργασία|επεξεργασίες}}:",
 	'handheld.css' => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει συσκευές χειρός βάση του skin ρυθμισμένου στο $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 ώρα|$1 ώρες}}',
 	'htmlform-invalid-input' => 'Υπάρχουν κάποια προβλήματα με μερικές από τις εισροές σας',
@@ -2838,16 +2870,16 @@ $messages['el'] = [
 	'home' => 'Αρχική Σελίδα',
 	'helpfaq' => 'Βοήθεια & Συχνές Ερωτήσεις',
 	'highest_ratings' => 'Υψηλότερη βαθμολογία',
-];
+);
 
-$messages['eml'] = [
+$messages['eml'] = array(
 	'help' => 'Per quî rivê da pôch',
 	'history_short' => 'Stôria',
 	'helppage' => 'Help:Introduzione',
 	'hist' => 'stôria',
-];
+);
 
-$messages['eo'] = [
+$messages['eo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kaŝita kategorio|Kaŝitaj kategorioj}}',
 	'hidden-category-category' => 'Kaŝitaj kategorioj',
 	'help' => 'Helpo',
@@ -2884,7 +2916,7 @@ Provu [[Special:Search|serĉi en la vikio]] por rilataj novaj paĝoj.',
 	'http-curl-error' => 'Eraro venigante URL-on: $1',
 	'http-host-unreachable' => 'URL-o ne estis atingebla.',
 	'http-bad-status' => 'Estis problemo dum la HTTP-peto: $1 $2',
-	'historywarning' => '\'\'\'Averto:\'\'\' La forigota paĝo havas historion kun pli-malpli $1 {{PLURAL:$1|revizio|revizioj}}:',
+	'historywarning' => "'''Averto:''' La forigota paĝo havas historion kun pli-malpli $1 {{PLURAL:$1|revizio|revizioj}}:",
 	'hours' => '{{PLURAL:$1|$1 horo|$1 horoj}}',
 	'htmlform-invalid-input' => 'Estas problemoj kun iom da via enigo',
 	'htmlform-select-badoption' => 'La valoro, kiun vi specifis, ne estas valida.',
@@ -2896,9 +2928,9 @@ Provu [[Special:Search|serĉi en la vikio]] por rilataj novaj paĝoj.',
 	'htmlform-submit' => 'Ek!',
 	'htmlform-reset' => 'Malfari ŝanĝojn',
 	'htmlform-selectorother-other' => 'Alia',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoría escondida|Categorías escondidas}}',
 	'hidden-category-category' => 'Categorías ocultas',
 	'help' => 'Ayuda',
@@ -2910,13 +2942,13 @@ $messages['es'] = [
 	'headline_tip' => 'Encabezado de nivel 2',
 	'hr_tip' => 'Línea horizontal (utilizar con moderación)',
 	'hiddencategories' => 'Esta página es un miembro de {{PLURAL:$1|1 categoría oculta|$1 categorías ocultas}}:',
-	'histlegend' => 'Selección de diferencias: marca los selectores de las versiones a comparar y pulsa \'\'enter\'\' o el botón de abajo.<br />
-Leyenda: (act) = diferencias con la versión actual,
-(prev) = diferencias con la versión previa, M = edición menor',
+	'histlegend' => '<span style="white-space:nowrap;">Tienes que hacer clic en la fecha de revisión listada abajo para verla.</span> <span style="white-space:nowrap;">Para más ayuda, ver [[Ayuda:Historial]].</span><br />
+<span style="white-space:nowrap;">(act) = diferencias con la versión actual,
+(prev) = diferencias con la versión previa,</span> <span style="white-space:nowrap;">m = [[Ayuda:Edición menor|edición menor]], → = sección editada, ← = resumen automático de edición</span>',
 	'history-fieldset-title' => 'Buscar en el historial',
 	'history-show-deleted' => 'Solamente borrado',
 	'histfirst' => 'Primeras',
-	'histlast' => 'Últimas',
+	'histlast' => 'Más recientes',
 	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
 	'historyempty' => '(vacío)',
 	'history-feed-title' => 'Historial de revisiones',
@@ -2928,7 +2960,7 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'history-title' => 'Historial de revisiones para «$1»',
 	'hist' => 'hist',
 	'hide' => 'Ocultar',
-	'hookaborted' => 'La modificación que ha intentado realizar fue cancelada por un adicional de extensión.',
+	'hookaborted' => 'La modificación que intentaste hacer fue cancelada por una extensión.',
 	'http-invalid-url' => 'URL inválida: $1',
 	'http-invalid-scheme' => 'Las URLs con el esquema «$1» no son compatibles.',
 	'http-request-error' => 'La solicitud HTTP falló debido a un error desconocido.',
@@ -2937,12 +2969,12 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'http-curl-error' => 'Error al recuperar el URL: $1',
 	'http-host-unreachable' => 'No fue posible acceder a la URL.',
 	'http-bad-status' => 'Ha habido un problema durante la solicitud HTTP: $1 $2',
-	'historywarning' => '\'\'\'Aviso:\'\'\' La página que estás a punto de borrar tiene un historial de aproximadamente $1 {{PLURAL:$1|revisión|revisiones}}:',
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning"></div>',
 	'handheld.css' => '/* Los estilos CSS colocados aquí afectarán a los dispositivos móviles basados en las pieles configuradas en $wgHandheldStyle */',
 	'hours-abbrev' => '$1h',
 	'hours' => '{{PLURAL:$1|una hora|$1 horas}}',
 	'hub-Entertainment' => 'Entretenimiento',
-	'hub-Gaming' => 'Videojuegos',
+	'hub-Gaming' => 'Video Games',
 	'hub-Lifestyle' => 'Estilo de vida',
 	'htmlform-invalid-input' => 'Hay problemas con alguno de los datos que has ingresado',
 	'htmlform-select-badoption' => 'El valor que especificaste no es una opción válida.',
@@ -2954,17 +2986,62 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'htmlform-submit' => 'Enviar',
 	'htmlform-reset' => 'Deshacer cambios',
 	'htmlform-selectorother-other' => 'Otro',
-	'home' => 'Portada',
+	'home' => 'Inicio',
 	'helpfaq' => 'Ayuda y preguntas frecuentes',
 	'highest_ratings' => 'Lo más votado',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hidebots' => 'Ocultar bots',
-	'hidesome' => 'Ocultar Algo',
+	'hidesome' => 'Ocultar algo',
 	'htmlform-no' => 'No',
 	'htmlform-yes' => 'Sí',
-];
+	'history_copyright' => '-',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
+	'hijri-calendar-m5' => 'Jumada al-awwal',
+	'hijri-calendar-m6' => 'Jumada al-thani',
+	'hijri-calendar-m7' => 'Rajab',
+	'hijri-calendar-m8' => "Sha'aban",
+	'hijri-calendar-m9' => 'Ramadan',
+	'hijri-calendar-m10' => 'Shawwal',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
+	'hijri-calendar-m12' => 'Dhu al-Hijjah',
+	'hebrew-calendar-m1' => 'Tishrei',
+	'hebrew-calendar-m2' => 'Cheshvan',
+	'hebrew-calendar-m3' => 'Kislev',
+	'hebrew-calendar-m4' => 'Tevet',
+	'hebrew-calendar-m5' => 'Shevat',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m8' => 'Iyar',
+	'hebrew-calendar-m9' => 'Sivan',
+	'hebrew-calendar-m10' => 'Tamuz',
+	'hebrew-calendar-m11' => 'Av',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m1-gen' => 'Tishrei',
+	'hebrew-calendar-m2-gen' => 'Cheshvan',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Tevet',
+	'hebrew-calendar-m5-gen' => 'Shevat',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m8-gen' => 'Iyar',
+	'hebrew-calendar-m9-gen' => 'Sivan',
+	'hebrew-calendar-m10-gen' => 'Tamuz',
+	'hebrew-calendar-m11-gen' => 'Av',
+	'hebrew-calendar-m12-gen' => 'Elul',
+	'hubs' => 'Categorías',
+	'hub-Video_Games' => 'Videojuegos',
+	'hub-Videospiele' => 'Videospiele',
+	'hub-Food_and_Drink' => 'Comida y bebida',
+);
 
-$messages['et'] = [
+$messages['et'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Peidetud kategooria|Peidetud kategooriad}}',
 	'hidden-category-category' => 'Peidetud kategooriad',
 	'help' => 'Juhend',
@@ -3003,7 +3080,7 @@ See võib olla vikist kustutatud või ümber nimetatud.
 	'http-curl-error' => 'Tõrge URL-i $1 lugemisel',
 	'http-host-unreachable' => 'Internetiaadress pole kättesaadav.',
 	'http-bad-status' => 'HTTP-päringu ajal ilmnes tõrge: $1 $2',
-	'historywarning' => '\'\'\'Hoiatus:\'\'\' Kustutataval leheküljel on ligikaudu {{PLURAL:$1|ühe redaktsiooniga|$1 redaktsiooniga}} ajalugu:',
+	'historywarning' => "'''Hoiatus:''' Kustutataval leheküljel on ligikaudu {{PLURAL:$1|ühe redaktsiooniga|$1 redaktsiooniga}} ajalugu:",
 	'hours' => '{{PLURAL:$1|üks tund|$1 tundi}}',
 	'htmlform-invalid-input' => 'Osaga sinu sisestatust on probleeme',
 	'htmlform-select-badoption' => 'Antud number ei ole kõlbulik.',
@@ -3015,9 +3092,9 @@ See võib olla vikist kustutatud või ümber nimetatud.
 	'htmlform-submit' => 'Saada',
 	'htmlform-reset' => 'Tühista muudatused',
 	'htmlform-selectorother-other' => 'Muu',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Izkutuko kategoria|Izkutuko kategoriak}}',
 	'hidden-category-category' => 'Kategoria ezkutuak',
 	'help' => 'Laguntza',
@@ -3051,7 +3128,7 @@ Legenda: (orain) = oraingo bertsioarekiko ezberdintasuna,
 	'http-curl-error' => 'Errorea URLa bilatzerakoan: $1',
 	'http-host-unreachable' => 'Ezin da URL-a atzeman.',
 	'http-bad-status' => 'Arazo bat egon da HTTP eskaera bitartean: $1 $2',
-	'historywarning' => '\'\'\'Oharra:\'\'\' Ezabatzera zoazen orrialdeak $1 {{PLURAL:$1|berrikuspen du|berrikuspen ditu}} gutxi gorabehera:',
+	'historywarning' => "'''Oharra:''' Ezabatzera zoazen orrialdeak $1 {{PLURAL:$1|berrikuspen du|berrikuspen ditu}} gutxi gorabehera:",
 	'hours-abbrev' => '$1o',
 	'htmlform-invalid-input' => 'Zure sarrera batzuekin arazoak daude',
 	'htmlform-select-badoption' => 'Zuk zehaztutako balioa ez da baliozko aukera.',
@@ -3063,9 +3140,9 @@ Legenda: (orain) = oraingo bertsioarekiko ezberdintasuna,
 	'htmlform-submit' => 'Bidali',
 	'htmlform-reset' => 'Aldaketak desegin',
 	'htmlform-selectorother-other' => 'Beste bat',
-];
+);
 
-$messages['ext'] = [
+$messages['ext'] = array(
 	'hidden-categories' => '{{PLURAL:$1|categoria açonchá|categorias açonchás}}',
 	'hidden-category-category' => 'Categorias açonchás',
 	'help' => 'Ayua',
@@ -3095,9 +3172,9 @@ Preba [[Special:Search|landeandu]] entri las nuevas páhinas de la güiqui.',
 	'hide' => 'Açonchal',
 	'historywarning' => 'Avisu: La páhina que vas a esborral tieni un estorial:',
 	'hours-abbrev' => '$1o',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ردهٔ پنهان|رده‌های پنهان}}',
 	'hidden-category-category' => 'رده‌های پنهان',
 	'help' => 'راهنما',
@@ -3135,7 +3212,7 @@ $messages['fa'] = [
 	'http-curl-error' => 'خطا در آوردن نشانی اینترنتی: $1',
 	'http-host-unreachable' => 'دسترسی به نشانی اینترنتی ممکن نشد.',
 	'http-bad-status' => 'در حین درخواست اچ‌تی‌تی‌پی خطایی رخ داد: $1 $2',
-	'historywarning' => '\'\'\'هشدار!\'\'\' صفحه‌ای که قصد دارید حذف کنید تاریخچه‌ای با حدود $1 {{PLURAL:$1|نسخه|نسخه}} دارد:',
+	'historywarning' => "'''هشدار!''' صفحه‌ای که قصد دارید حذف کنید تاریخچه‌ای با حدود $1 {{PLURAL:$1|نسخه|نسخه}} دارد:",
 	'hours' => '{{PLURAL: $1|ساعت|ساعت}}',
 	'hijri-calendar-m1' => 'محرّم',
 	'hijri-calendar-m2' => 'صفر',
@@ -3189,14 +3266,14 @@ $messages['fa'] = [
 	'htmlform-selectorother-other' => 'دیگر',
 	'hidebots' => 'نهفتن ربات‌ها',
 	'highest_ratings' => 'بیشترین امتیاز',
-];
+);
 
-$messages['ff'] = [
+$messages['ff'] = array(
 	'help' => 'Ballal',
 	'history_short' => 'Tarik',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Piilotettu luokka|Piilotetut luokat}}',
 	'hidden-category-category' => 'Piilotetut luokat',
 	'help' => 'Ohje',
@@ -3234,7 +3311,7 @@ Kokeile [[Special:Search|hakua]] löytääksesi asiaan liittyviä sivuja.',
 	'http-curl-error' => 'Virhe noudettaessa verkko-osoitetta: $1',
 	'http-host-unreachable' => 'Ei voitu tavoittaa verkko-osoitetta',
 	'http-bad-status' => 'HTTP-pyynnön aikana oli ongelma: $1 $2',
-	'historywarning' => '\'\'\'Varoitus:\'\'\' Sivua, jota olet poistamassa on muokattu noin $1 {{PLURAL:$1|kerta|kertaa}}:',
+	'historywarning' => "'''Varoitus:''' Sivua, jota olet poistamassa on muokattu noin $1 {{PLURAL:$1|kerta|kertaa}}:",
 	'hours' => '{{PLURAL:$1|$1 tunti|$1 tuntia}}',
 	'htmlform-invalid-input' => 'Antamassasi syötteessä on ongelmia',
 	'htmlform-select-badoption' => 'Antamasi arvo ei ole kelvollinen.',
@@ -3251,9 +3328,9 @@ Kokeile [[Special:Search|hakua]] löytääksesi asiaan liittyviä sivuja.',
 	'highest_ratings' => 'Korkeimmat arvosanat',
 	'hidesome' => 'Piilota joitakin',
 	'hubs' => 'Hubit',
-];
+);
 
-$messages['fiu-vro'] = [
+$messages['fiu-vro'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Piilotettu luokka|Piilotetut luokat}}',
 	'hidden-category-category' => 'Piilotetut luokat',
 	'help' => 'Ohje',
@@ -3290,7 +3367,7 @@ Kokeile [[Special:Search|hakua]] löytääksesi asiaan liittyviä sivuja.',
 	'http-curl-error' => 'Virhe noudettaessa verkko-osoitetta: $1',
 	'http-host-unreachable' => 'Ei voitu tavoittaa verkko-osoitetta',
 	'http-bad-status' => 'HTTP-pyynnön aikana oli ongelma: $1 $2',
-	'historywarning' => '\'\'\'Varoitus:\'\'\' Sivua, jota olet poistamassa on muokattu noin $1 {{PLURAL:$1|kerta|kertaa}}:',
+	'historywarning' => "'''Varoitus:''' Sivua, jota olet poistamassa on muokattu noin $1 {{PLURAL:$1|kerta|kertaa}}:",
 	'hours' => '{{PLURAL:$1|$1 tunti|$1 tuntia}}',
 	'htmlform-invalid-input' => 'Antamassasi syötteessä on ongelmia',
 	'htmlform-select-badoption' => 'Antamasi arvo ei ole kelvollinen.',
@@ -3305,14 +3382,14 @@ Kokeile [[Special:Search|hakua]] löytääksesi asiaan liittyviä sivuja.',
 	'home' => 'Etusivu',
 	'helpfaq' => 'Ohje ja UKK',
 	'highest_ratings' => 'Korkeimmat arvosanat',
-];
+);
 
-$messages['fj'] = [
+$messages['fj'] = array(
 	'help' => 'Veivuke',
 	'history_short' => 'Tukuni',
-];
+);
 
-$messages['fo'] = [
+$messages['fo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Hidden category|Fjaldir bólkar}}',
 	'hidden-category-category' => 'Fjaldir bólkar',
 	'help' => 'Hjálp',
@@ -3343,14 +3420,14 @@ Royn [[Special:Search|leiting á wiki]] fyri at síggja viðkomandi níggjar sí
 	'hist' => 'søga',
 	'hide' => 'Fjal',
 	'http-invalid-url' => 'Ógildug URL (internetadressa): $1',
-	'historywarning' => '\'\'\'Ávaring:\'\'\' Síðan, ið tú ert í gongd við at strika, hevur eina søgu við umleið $1 {{PLURAL:$1|broyting|broytingum}}:',
-];
+	'historywarning' => "'''Ávaring:''' Síðan, ið tú ert í gongd við at strika, hevur eina søgu við umleið $1 {{PLURAL:$1|broyting|broytingum}}:",
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Catégorie cachée|Catégories cachées}}',
 	'hidden-category-category' => 'Catégories cachées',
 	'help' => 'Aide',
-	'history' => 'Historique de la page',
+	'history' => 'Historique',
 	'history_short' => 'Historique',
 	'helppage' => 'Aide:Contenu',
 	'hidetoc' => 'masquer',
@@ -3358,11 +3435,14 @@ $messages['fr'] = [
 	'headline_tip' => 'Sous-titre niveau 2',
 	'hr_tip' => 'Ligne horizontale (ne pas en abuser)',
 	'hiddencategories' => '{{PLURAL:$1|Catégorie cachée|Catégories cachées}} dont cette page fait partie :',
-	'histlegend' => 'Légende : ({{int:cur}}) = différence avec la version actuelle, ({{int:last}}) = différence avec la version précédente, <b>{{int:minoreditletter}}</b> = modification mineure',
+	'histlegend' => '<span style="white-space:nowrap;">Pour toutes les versions énumérées ci-dessous, cliquez sur sa date pour la voir.
+</span><span style="white-space:nowrap;">Pour en savoir plus, voir [[w:fr:Aide:Historique|Aide:Historique]].</span>
+<br /> 
+<span style="white-space:nowrap;">(cur) = différence avec la version actuelle, (prev) = différence avec la version précédente,</span> <span style="white-space:nowrap;">m = [[w:fr:Aide:Modification_mineure|modification mineure]], → = section modifier, ← = résumé automatique des modifications</span>',
 	'history-fieldset-title' => 'Naviguer dans l’historique',
 	'history-show-deleted' => 'Masqués seulement',
 	'histfirst' => 'première page',
-	'histlast' => 'dernière page',
+	'histlast' => 'Récentes',
 	'historysize' => '($1 octet{{PLURAL:$1||s}})',
 	'historyempty' => '(vide)',
 	'history-feed-title' => 'Historique des versions',
@@ -3375,7 +3455,7 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'hist' => 'hist',
 	'hide' => 'Masquer',
 	'hookaborted' => 'La modification que vous avez essayé de faire a été arrêtée par un crochet d’une extension.',
-	'http-invalid-url' => 'URL incorrecte : $1',
+	'http-invalid-url' => 'URL invalide : $1',
 	'http-invalid-scheme' => 'Les URLs avec le schéma « $1 » ne sont pas supportées',
 	'http-request-error' => 'Erreur inconnue lors de l’envoi de la requête.',
 	'http-read-error' => 'Erreur de lecture HTTP.',
@@ -3383,7 +3463,7 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'http-curl-error' => 'Erreur lors de la récupération de l’URL : $1',
 	'http-host-unreachable' => 'Impossible d’atteindre l’URL.',
 	'http-bad-status' => 'Il y a eu un problème lors de la requête HTTP : $1 $2',
-	'historywarning' => '\'\'\'Attention :\'\'\' la page que vous êtes sur le point de supprimer a un historique avec environ $1 {{PLURAL:$1|version|versions}} :',
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning"></div>',
 	'handheld.css' => '/* Le CSS placé ici affectera les appareils mobiles en fonction de l\'habillage configuré $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 heure|$1 heures}}',
 	'hijri-calendar-m3' => 'Rabi’ al-awwal',
@@ -3397,24 +3477,65 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'htmlform-int-toolow' => 'La valeur que vous avez spécifiée est plus petite que le minimum de $1',
 	'htmlform-int-toohigh' => 'La valeur que vous avez spécifiée est plus grande que le maximum de $1',
 	'htmlform-required' => 'Cette valeur est requise',
-	'htmlform-submit' => 'Soumettre',
-	'htmlform-reset' => 'Défaire les modifications',
+	'htmlform-submit' => 'Envoyer',
+	'htmlform-reset' => 'Annuler les modifications',
 	'htmlform-selectorother-other' => 'Autre',
 	'home' => 'Accueil',
 	'helpfaq' => 'Aide et FAQ',
 	'highest_ratings' => 'Les mieux notées',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'hidebots' => 'Masquer les robots',
 	'hub-Entertainment' => 'Divertissement',
 	'hub-Gaming' => 'Jeux vidéo',
 	'hub-Lifestyle' => 'Mode de vie',
 	'hub-Video_Games' => 'Jeux vidéo',
-	'hubs' => 'Thèmes',
+	'hubs' => 'Portails',
 	'htmlform-no' => 'Non',
 	'htmlform-yes' => 'Oui',
-];
+	'history_copyright' => '-',
+	'hours-abbrev' => '$1h',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m5' => 'Jumada al-awwal',
+	'hijri-calendar-m6' => 'Jumada al-thani',
+	'hijri-calendar-m7' => 'Rajab',
+	'hijri-calendar-m9' => 'Ramadan',
+	'hijri-calendar-m10' => 'Shawwal',
+	'hijri-calendar-m12' => 'Dhu al-Hijjah',
+	'hebrew-calendar-m1' => 'Tishrei',
+	'hebrew-calendar-m2' => 'Cheshvan',
+	'hebrew-calendar-m3' => 'Kislev',
+	'hebrew-calendar-m4' => 'Tevet',
+	'hebrew-calendar-m5' => 'Shevat',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m8' => 'Iyar',
+	'hebrew-calendar-m9' => 'Sivan',
+	'hebrew-calendar-m10' => 'Tamuz',
+	'hebrew-calendar-m11' => 'Av',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m1-gen' => 'Tishrei',
+	'hebrew-calendar-m2-gen' => 'Cheshvan',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Tevet',
+	'hebrew-calendar-m5-gen' => 'Shevat',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m8-gen' => 'Iyar',
+	'hebrew-calendar-m9-gen' => 'Sivan',
+	'hebrew-calendar-m10-gen' => 'Tamuz',
+	'hebrew-calendar-m11-gen' => 'Av',
+	'hebrew-calendar-m12-gen' => 'Elul',
+	'hidesome' => 'Masquer certains',
+	'hub-Videospiele' => 'Videospiele',
+	'hub-Food_and_Drink' => 'Nourriture et boissons',
+);
 
-$messages['frc'] = [
+$messages['frc'] = array(
 	'help' => 'Aide',
 	'history' => 'Changements',
 	'history_short' => 'Changements',
@@ -3434,9 +3555,9 @@ Clé: (cour.) = différence avec la version courante, (dernier) = différence av
 	'history-feed-empty' => 'La page que vous avez demandé est pas là.
 Ça a peut-être été ôté du wiki, ou renommé.
 Assayez de [[Special:Search|charcher dans le wiki]] pour des nouvelles pages.',
-];
+);
 
-$messages['frp'] = [
+$messages['frp'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Catègorie cachiê|Catègories cachiês}}',
 	'hidden-category-category' => 'Catègories cachiês',
 	'help' => 'Éde',
@@ -3448,8 +3569,8 @@ $messages['frp'] = [
 	'headline_tip' => 'Sot-titro nivél 2',
 	'hr_tip' => 'Legne plana (pas nen abusar)',
 	'hiddencategories' => '{{PLURAL:$1|Catègorie cachiê|Catègories cachiês}} que ceta pâge est avouéc :',
-	'histlegend' => 'Lègenda : \'\'\'({{int:cur}})\'\'\' = difèrence avouéc la vèrsion d’ora,
-\'\'\'({{int:last}})\'\'\' = difèrence avouéc la vèrsion devant, \'\'\'{{int:minoreditletter}}\'\'\' = petiôt changement.',
+	'histlegend' => "Lègenda : '''({{int:cur}})''' = difèrence avouéc la vèrsion d’ora,
+'''({{int:last}})''' = difèrence avouéc la vèrsion devant, '''{{int:minoreditletter}}''' = petiôt changement.",
 	'history-fieldset-title' => 'Navegar dens l’historico',
 	'history-show-deleted' => 'Solament los suprimâs',
 	'histfirst' => 'Tota premiére',
@@ -3474,7 +3595,7 @@ Tâchiéd de [[Special:Search|rechèrchiér sur lo vouiqui]] por trovar des pâg
 	'http-curl-error' => 'Èrror pendent la rècupèracion de l’URL : $1',
 	'http-host-unreachable' => 'URL pas juentâbla.',
 	'http-bad-status' => 'Y at avu un problèmo pendent la requéta HTTP : $1 $2',
-	'historywarning' => '\'\'\'Atencion :\'\'\' la pâge que vos éte prèst a suprimar at un historico que contint a pou prés $1 {{PLURAL:$1|vèrsion|vèrsions}} :',
+	'historywarning' => "'''Atencion :''' la pâge que vos éte prèst a suprimar at un historico que contint a pou prés $1 {{PLURAL:$1|vèrsion|vèrsions}} :",
 	'handheld.css' => '/* Lo code CSS betâ ique afècterat los aparèlys mobilos d’aprés l’habelyâjo configurâ dedens « $wgHandheldStyle ». */',
 	'hours' => '$1 hor{{PLURAL:$1|a|es}}',
 	'hijri-calendar-m1' => 'de mouharrame',
@@ -3527,9 +3648,9 @@ Tâchiéd de [[Special:Search|rechèrchiér sur lo vouiqui]] por trovar des pâg
 	'htmlform-submit' => 'Sometre',
 	'htmlform-reset' => 'Dèfâre los changements',
 	'htmlform-selectorother-other' => 'Ôtro',
-];
+);
 
-$messages['frr'] = [
+$messages['frr'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ferstäägen Kategorii|Ferstäägene Kategoriie}}',
 	'hidden-category-category' => 'Ferstäägene kategoriie',
 	'help' => 'Heelp',
@@ -3558,9 +3679,9 @@ $messages['frr'] = [
 	'hist' => 'färsjoone',
 	'hide' => 'ütbläne',
 	'htmlform-selectorother-other' => 'Oudere',
-];
+);
 
-$messages['fur'] = [
+$messages['fur'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categorie platade|Categoriis platadis}}',
 	'hidden-category-category' => 'Categoriis platadis',
 	'help' => 'Jutori',
@@ -3572,9 +3693,9 @@ $messages['fur'] = [
 	'headline_tip' => 'Titul di nivel 2',
 	'hr_tip' => 'Rie orizontâl (no stâ doprâle masse spes)',
 	'hiddencategories' => 'Cheste pagjine e je {{PLURAL:$1|intune categorie platade|in $1 categoriis platadis}}:',
-	'histlegend' => 'Confront tra lis versions: sielç lis caselis des versions che ti interessin e frache Invio o il boton in bas.
+	'histlegend' => "Confront tra lis versions: sielç lis caselis des versions che ti interessin e frache Invio o il boton in bas.
 
-Leiende: (cur) = difarencis cun la version atuâl, (prec) = difarencis cun la version precedente, \'\'\'p\'\'\' = piçul cambiament',
+Leiende: (cur) = difarencis cun la version atuâl, (prec) = difarencis cun la version precedente, '''p''' = piçul cambiament",
 	'history-fieldset-title' => 'Sgarfe tal storic',
 	'history-show-deleted' => 'Dome chei eliminâts',
 	'histfirst' => 'Prime',
@@ -3587,12 +3708,12 @@ Leiende: (cur) = difarencis cun la version atuâl, (prec) = difarencis cun la ve
 	'history-title' => 'Storic dai cambiaments di "$1"',
 	'hist' => 'stor',
 	'hide' => 'plate',
-	'historywarning' => '\'\'\'Atenzion:\'\'\' La pagjine che tu stâs eliminant e à un storic cun plui o mancul $1 {{PLURAL:$1|revision|revisions}}:',
+	'historywarning' => "'''Atenzion:''' La pagjine che tu stâs eliminant e à un storic cun plui o mancul $1 {{PLURAL:$1|revision|revisions}}:",
 	'htmlform-submit' => 'Invie',
 	'htmlform-selectorother-other' => 'Altris',
-];
+);
 
-$messages['fy'] = [
+$messages['fy'] = array(
 	'hidden-categories' => 'Ferburgen {{PLURAL:$1|kategory|kategoryen}}',
 	'hidden-category-category' => 'Ferburgen kategoryen',
 	'help' => 'Help',
@@ -3605,8 +3726,8 @@ $messages['fy'] = [
 	'hr_tip' => 'Horizontale line (mei ferdrach brûke)',
 	'hiddencategories' => 'Dizze side falt yn de folgjende ferburgen
 {{PLURAL:$1|kategory|kategoryen}}:',
-	'histlegend' => 'Utlis: (no) = ferskil mei de side sa\'t dy no is,
-(doe) = ferskill mei de side sa\'t er doe wie, foar de feroaring, T = Tekstwiziging',
+	'histlegend' => "Utlis: (no) = ferskil mei de side sa't dy no is,
+(doe) = ferskill mei de side sa't er doe wie, foar de feroaring, T = Tekstwiziging",
 	'history-fieldset-title' => 'Troch skiednis blêdzje',
 	'histfirst' => 'Ierst',
 	'histlast' => 'Lêst',
@@ -3621,10 +3742,10 @@ Faaks is dy fuorthelle of omneamd.
 	'history-title' => 'Sideskiednis fan "$1"',
 	'hist' => 'skiednis',
 	'hide' => 'gjin',
-	'historywarning' => 'Warskôging: De side dy\'t jo wiskje wolle hat skiednis:',
-];
+	'historywarning' => "Warskôging: De side dy't jo wiskje wolle hat skiednis:",
+);
 
-$messages['ga'] = [
+$messages['ga'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Catagóir folaithe|Catagóirí folaithe}}',
 	'hidden-category-category' => 'Catagóirí folaithe',
 	'help' => 'Cabhair',
@@ -3648,10 +3769,10 @@ Treoir: (rth) = difríocht ón leagan reatha, (rmh) = difríocht ón leagan roim
 	'history-title' => 'Stair leasú "$1"',
 	'hist' => 'stair',
 	'hide' => 'Folaigh',
-	'historywarning' => '\'\'\'Rabhadh:\'\'\' Tá stair (tuairim is {{PLURAL:$1|leagan amháin|$1 leaganacha}}) ag an leathanach a bhfuil tú ar tí é a scriosadh:',
-];
+	'historywarning' => "'''Rabhadh:''' Tá stair (tuairim is {{PLURAL:$1|leagan amháin|$1 leaganacha}}) ag an leathanach a bhfuil tú ar tí é a scriosadh:",
+);
 
-$messages['gag'] = [
+$messages['gag'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Saklı kategoriyalar|Saklı kategoriyalar}}',
 	'help' => 'Yardım',
 	'history' => 'Sayfanın istoriyası',
@@ -3662,9 +3783,9 @@ $messages['gag'] = [
 	'headline_tip' => '2. düzey başlık',
 	'hr_tip' => 'Gorizontal liniya (çok sık kullanmayın)',
 	'hiddencategories' => 'Bu sayfa {{PLURAL:$1|1 saklı kategoriyaya|$1 saklı kategoriyaya}} baalı:',
-	'histlegend' => 'Fark seçimi: 2 versiyanın angısını isteersiniz karşılaştırmaa, önündeki kutucaa tuşlayıp, enter\'a basın yaki tuşlayın butona angısı sayfanın en altında bulunêr.<br />
+	'histlegend' => "Fark seçimi: 2 versiyanın angısını isteersiniz karşılaştırmaa, önündeki kutucaa tuşlayıp, enter'a basın yaki tuşlayın butona angısı sayfanın en altında bulunêr.<br />
 Nışannar: (bitki) = şindiki versiyalan aradaki fark,
-(ilerki) = bir ilerki versiyalan aradaki fark, K = küçük diişmäk',
+(ilerki) = bir ilerki versiyalan aradaki fark, K = küçük diişmäk",
 	'history-fieldset-title' => 'Geçmişä bak',
 	'histfirst' => 'En eski',
 	'histlast' => 'En eni',
@@ -3676,9 +3797,9 @@ Nışannar: (bitki) = şindiki versiyalan aradaki fark,
 	'hist' => 'geçmiş',
 	'hide' => 'sakla',
 	'historywarning' => 'Bak: O sayfa angısını isteersiniz silmää istoriyası var:',
-];
+);
 
-$messages['gan-hans'] = [
+$messages['gan-hans'] = array(
 	'hidden-categories' => '{{PLURAL:$1|只隐藏分类|只隐藏分类}}',
 	'hidden-category-category' => '弆到𠮶分类',
 	'help' => '帮助',
@@ -3705,10 +3826,10 @@ $messages['gan-hans'] = [
 	'history-title' => '历史版本𠮶 "$1"',
 	'hist' => '历史',
 	'hide' => '弆到',
-	'historywarning' => '\'\'\'警告\'\'\': 倷要删卟𠮶页面含到$1到{{PLURAL:$1|修订|修订}}𠮶历史',
-];
+	'historywarning' => "'''警告''': 倷要删卟𠮶页面含到$1到{{PLURAL:$1|修订|修订}}𠮶历史",
+);
 
-$messages['gan-hant'] = [
+$messages['gan-hant'] = array(
 	'hidden-categories' => '$1隻隱藏分類',
 	'hidden-category-category' => '弆到嗰分類',
 	'help' => '幫助',
@@ -3720,8 +3841,8 @@ $messages['gan-hant'] = [
 	'headline_tip' => '二級標題',
 	'hr_tip' => '橫線 （好生使用）',
 	'hiddencategories' => '箇隻版面係屬於$1隻隱藏類嗰成員：',
-	'histlegend' => '差異選擇：標到伓共樣版本嗰單選鍵，接到捺吖督上嗰鍵對比吖。<br />
-說明：\'\'\'（{{int:cur}}）\'\'\'係跟得眼前版本嗰比較，\'\'\'（{{int:last}}）\'\'\'係跟到先頭修改版本嗰比較，細 = 細修改。',
+	'histlegend' => "差異選擇：標到伓共樣版本嗰單選鍵，接到捺吖督上嗰鍵對比吖。<br />
+說明：'''（{{int:cur}}）'''係跟得眼前版本嗰比較，'''（{{int:last}}）'''係跟到先頭修改版本嗰比較，細 = 細修改。",
 	'history-fieldset-title' => '瀏覽歷史',
 	'history-show-deleted' => '光係刪吥嗰',
 	'histfirst' => '最早嗰版本',
@@ -3735,10 +3856,10 @@ $messages['gan-hant'] = [
 	'history-title' => '歷史版本嗰 "$1"',
 	'hist' => '歷史',
 	'hide' => '弆到',
-	'historywarning' => '\'\'\'警告\'\'\': 倷要刪卟嗰頁面含到$1到{{PLURAL:$1|修訂|修訂}}嗰歷史',
-];
+	'historywarning' => "'''警告''': 倷要刪卟嗰頁面含到$1到{{PLURAL:$1|修訂|修訂}}嗰歷史",
+);
 
-$messages['gd'] = [
+$messages['gd'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Roinn-seòrsa fhalaichte|Roinn-seòrsa fhalaichte|Roinn-seòrsa fhalaichte|Roinn-seòrsa fhalaichte|Roinnean-seòrsa falaichte|Roinn-seòrsa fhalaichte}}',
 	'hidden-category-category' => 'Roinnean falaichte',
 	'help' => 'Cobhair',
@@ -3749,9 +3870,9 @@ $messages['gd'] = [
 	'headline_sample' => 'Teacsa ceann-loidhne',
 	'headline_tip' => 'Ceann-loidhne ìre 2',
 	'hr_tip' => 'Loidhne rèidh (na cleachd ro thric e)',
-	'hiddencategories' => 'Tha an duilleag seo \'na ball de {{PLURAL:$1|1 roinn-seòrsa fhalaichte|$1 roinn-seòrsa fhalaichte|1 roinn-seòrsa fhalaichte|$1 roinn-seòrsa fhalaichte|$1 roinnean-seòrsa falaichte|$1 roinn-seòrsa fhalaichte}}:',
-	'histlegend' => 'Taghadh nan diofar: comharraich bogsaichean rèidio nam mùthaidhean gus coimeas a dhèanamh agus put Enter no am putan gu h-ìosal.<br />
-Mìneachadh: \'\'\'({{int:cur}})\'\'\' = an diofar eadar e \'s am mùthadh as ùire, \'\'\'({{int:last}})\'\'\' = an diofar eadar e \'s am mùthadh roimhe, \'\'\'{{int:minoreditletter}}\'\'\' = deasachadh beag.',
+	'hiddencategories' => "Tha an duilleag seo 'na ball de {{PLURAL:$1|1 roinn-seòrsa fhalaichte|$1 roinn-seòrsa fhalaichte|1 roinn-seòrsa fhalaichte|$1 roinn-seòrsa fhalaichte|$1 roinnean-seòrsa falaichte|$1 roinn-seòrsa fhalaichte}}:",
+	'histlegend' => "Taghadh nan diofar: comharraich bogsaichean rèidio nam mùthaidhean gus coimeas a dhèanamh agus put Enter no am putan gu h-ìosal.<br />
+Mìneachadh: '''({{int:cur}})''' = an diofar eadar e 's am mùthadh as ùire, '''({{int:last}})''' = an diofar eadar e 's am mùthadh roimhe, '''{{int:minoreditletter}}''' = deasachadh beag.",
 	'history-fieldset-title' => 'An eachdraidh brabhsaidh',
 	'history-show-deleted' => 'Na chaidh sguabadh às a-mhàin',
 	'histfirst' => 'As sine',
@@ -3760,9 +3881,9 @@ Mìneachadh: \'\'\'({{int:cur}})\'\'\' = an diofar eadar e \'s am mùthadh as ù
 	'history-title' => 'Eachdraidh nam mùthaidhean de "$1"',
 	'hist' => 'eachd',
 	'hide' => 'Falaich',
-];
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoría oculta|Categorías ocultas}}',
 	'hidden-category-category' => 'Categorías ocultas',
 	'help' => 'Axuda',
@@ -3774,8 +3895,8 @@ $messages['gl'] = [
 	'headline_tip' => 'Cabeceira de nivel 2',
 	'hr_tip' => 'Liña horizontal (úsea con moderación)',
 	'hiddencategories' => 'Esta páxina forma parte {{PLURAL:$1|dunha categoría oculta|de $1 categorías ocultas}}:',
-	'histlegend' => 'Selección de diferenzas: Marque as versións que queira comparar e prema no botón ao final.<br />
-Lenda: \'\'\'({{int:cur}})\'\'\' = diferenza coa versión actual, \'\'\'({{int:last}})\'\'\' = diferenza coa versión precedente, \'\'\'{{int:minoreditletter}}\'\'\' = edición pequena.',
+	'histlegend' => "Selección de diferenzas: Marque as versións que queira comparar e prema no botón ao final.<br />
+Lenda: '''({{int:cur}})''' = diferenza coa versión actual, '''({{int:last}})''' = diferenza coa versión precedente, '''{{int:minoreditletter}}''' = edición pequena.",
 	'history-fieldset-title' => 'Navegar polo historial',
 	'history-show-deleted' => 'Borrados soamente',
 	'histfirst' => 'Primeiras',
@@ -3800,7 +3921,7 @@ Probe a [[Special:Search|buscar no wiki]] para atopar as páxinas relacionadas.'
 	'http-curl-error' => 'Ocorreu un erro ao acceder ao URL: $1',
 	'http-host-unreachable' => 'Non se puido acceder ao URL.',
 	'http-bad-status' => 'Houbo un problema durante a solicitude HTTP: $1 $2',
-	'historywarning' => '\'\'\'Atención:\'\'\' A páxina que está a piques de borrar ten un historial con aproximadamente $1 {{PLURAL:$1|revisión|revisións}}:',
+	'historywarning' => "'''Atención:''' A páxina que está a piques de borrar ten un historial con aproximadamente $1 {{PLURAL:$1|revisión|revisións}}:",
 	'handheld.css' => '/* O CSS que se coloque aquí afectará aos dispositivos móbiles baseados na aparencia configurada en $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 hora|$1 horas}}',
 	'htmlform-invalid-input' => 'Hai algún problema con partes do texto que inseriu',
@@ -3816,13 +3937,13 @@ Probe a [[Special:Search|buscar no wiki]] para atopar as páxinas relacionadas.'
 	'home' => 'Portada',
 	'helpfaq' => 'Axuda e preguntas frecuentes',
 	'highest_ratings' => 'höchste Bewertungen',
-];
+);
 
-$messages['glk'] = [
+$messages['glk'] = array(
 	'history_short' => 'تارئخ',
-];
+);
 
-$messages['gn'] = [
+$messages['gn'] = array(
 	'help' => 'Pytyvõhára',
 	'history' => 'Tembiasakue',
 	'history_short' => 'Tembiasakue',
@@ -3831,9 +3952,9 @@ $messages['gn'] = [
 	'hr_tip' => 'Haipuku oñenóva (eipurúke tekotevẽ javénte)',
 	'historysize' => '($1 bytes)',
 	'hide' => 'toñemi',
-];
+);
 
-$messages['got'] = [
+$messages['got'] = array(
 	'help' => '𐌷𐌹𐌻𐍀𐌰',
 	'history' => '𐌰𐌹𐍂𐌹𐍃 𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍃 𐌰𐌽𐌰 𐍃𐌴𐌹𐌳𐍉',
 	'history_short' => '𐌰𐌹𐍂𐌹𐍃 𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍃',
@@ -3848,9 +3969,9 @@ $messages['got'] = [
 	'history-title' => '𐌰𐍂𐌹𐍃𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍃 𐌰𐍆 "$1"',
 	'hist' => '𐌰𐌹𐍂𐌹𐍃',
 	'hide' => 'Filhan',
-];
+);
 
-$messages['grc'] = [
+$messages['grc'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Κεκρυμμένη Κατηγορία|Κεκρυμμέναι Κατηγορίαι}}',
 	'hidden-category-category' => 'Κεκρυμμέναι κατηγορίαι',
 	'help' => 'Βοήθεια',
@@ -3877,7 +3998,7 @@ $messages['grc'] = [
 	'history-title' => 'Αἱ πρότεραι ἐκδόσεις τῆς δέλτου "$1"',
 	'hist' => 'Προτ.',
 	'hide' => 'Κρύπτειν',
-	'historywarning' => '\'\'\'Προσοχή:\'\'\' Ἡ δέλτος ἥντινα βούλεσαι διαγράψειν ἔχει ἱστορικὸν μετὰ προσεγγιστικῶς $1 {{PLURAL:$1|ἐπιθεωρήσεως|ἐπιθεωρήσεων}}:',
+	'historywarning' => "'''Προσοχή:''' Ἡ δέλτος ἥντινα βούλεσαι διαγράψειν ἔχει ἱστορικὸν μετὰ προσεγγιστικῶς $1 {{PLURAL:$1|ἐπιθεωρήσεως|ἐπιθεωρήσεων}}:",
 	'htmlform-invalid-input' => 'Μέρος τῶν εἰσαγομένων δεδομένων σου προβληματικὸν ἐστίν',
 	'htmlform-select-badoption' => 'Ἡ τιμὴ ἡ καθωρισμένη ὑπὸ ἐσοῦ οὐκ ἔστι ἔγκυρος ἐπιλογή.',
 	'htmlform-int-invalid' => 'Ἡ τιμὴ ἡ καθωρισμένη ὑπὸ ἐσοῦ οὐκ ἔστι ἀκέραιος ἀριθμός.',
@@ -3887,9 +4008,9 @@ $messages['grc'] = [
 	'htmlform-submit' => 'Ὑποβάλλειν',
 	'htmlform-reset' => 'Ἀναστρέφειν μεταβολάς',
 	'htmlform-selectorother-other' => 'Ἄλλον',
-];
+);
 
-$messages['gsw'] = [
+$messages['gsw'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Versteckti Kategori|Versteckti Kategorie}}',
 	'hidden-category-category' => 'Versteckti Kategorie',
 	'help' => 'Hilf',
@@ -3926,7 +4047,7 @@ Erklärig: (aktuell) = Underschid zu jetz,
 	'http-curl-error' => 'Fähler bim Ufsueche vu dr URL: $1',
 	'http-host-unreachable' => 'URL isch nit z verwitsche',
 	'http-bad-status' => 'Bi dr HTTP-Aafrog isch e Fähler ufdrätte: $1 $2',
-	'historywarning' => '\'\'\'Warnig:\'\'\'  Die Syte, wu Du wit lesche, het e Versionsgschicht mit schetzigswyys $1 {{PLURAL:$1|Version|Versione}}:',
+	'historywarning' => "'''Warnig:'''  Die Syte, wu Du wit lesche, het e Versionsgschicht mit schetzigswyys $1 {{PLURAL:$1|Version|Versione}}:",
 	'hours' => '{{PLURAL:$1|1 Stund|$1 Stunde}}',
 	'htmlform-invalid-input' => 'Mit e Teil Yygabe git s Probläm',
 	'htmlform-select-badoption' => 'Dr Wärt, wu aagee hesch, isch kei giltigi Option.',
@@ -3938,9 +4059,9 @@ Erklärig: (aktuell) = Underschid zu jetz,
 	'htmlform-submit' => 'Ibertrage',
 	'htmlform-reset' => 'Änderige ruckgängig mache',
 	'htmlform-selectorother-other' => 'Anderi',
-];
+);
 
-$messages['gu'] = [
+$messages['gu'] = array(
 	'hidden-categories' => '{{PLURAL:$1|છુપી શ્રેણી|છુપી શ્રેણીઓ}}',
 	'hidden-category-category' => 'છુપી શ્રેણીઓ',
 	'help' => 'મદદ',
@@ -3952,8 +4073,8 @@ $messages['gu'] = [
 	'headline_tip' => 'બીજા ક્રમનું મથાળું',
 	'hr_tip' => 'આડી લીટી (શક્ય તેટલો ઓછો ઉપયોગ કરો)',
 	'hiddencategories' => 'આ પાનું {{PLURAL:$1|૧ છુપી શ્રેણી|$1 છુપી શ્રેણીઓ}}નું સભ્ય છે:',
-	'histlegend' => 'વિવિધ પસંદગી:સરખામણી માટે સુધારેલી આવૃતિઓના રેડિયો ખાનાઓ પસંદ કરો અને એન્ટર મારો અથવા નીચે આવેલું બટન દબાવો.<br />
-સમજૂતી:\'\'\'({{int:cur}})\'\'\' = વર્તમાન અને સુધારેલી આવૃતિનો તફાવત, \'\'\'({{int:last}})\'\'\' = પૂર્વવર્તી ફેરફારનો તફાવત, \'\'\'{{int:minoreditletter}}\'\'\' = નાનો ફેરફાર.',
+	'histlegend' => "વિવિધ પસંદગી:સરખામણી માટે સુધારેલી આવૃતિઓના રેડિયો ખાનાઓ પસંદ કરો અને એન્ટર મારો અથવા નીચે આવેલું બટન દબાવો.<br />
+સમજૂતી:'''({{int:cur}})''' = વર્તમાન અને સુધારેલી આવૃતિનો તફાવત, '''({{int:last}})''' = પૂર્વવર્તી ફેરફારનો તફાવત, '''{{int:minoreditletter}}''' = નાનો ફેરફાર.",
 	'history-fieldset-title' => 'ઇતિહાસ ઉખેળો',
 	'history-show-deleted' => 'માત્ર હટાવાયેલા',
 	'histfirst' => 'સૌથી જુનું',
@@ -3978,7 +4099,7 @@ $messages['gu'] = [
 	'http-curl-error' => 'URL: $1 ખેંચી લાવવામાં ત્રુટિ',
 	'http-host-unreachable' => 'URL સુધી ન પહોંચી શકાયું.',
 	'http-bad-status' => 'HTTP અરજી વખતે કોઈ અડચણ આવી : $1 $2',
-	'historywarning' => '\'\'\'ચેતવણી:\'\'\' જે પાનું તમે હટાવવા જઇ રહ્યાં છો તેને આશરે $1 {{PLURAL:$1|પુનરાવર્તન|પુનરાવર્તનો}}નો ઇતિહાસ છે:',
+	'historywarning' => "'''ચેતવણી:''' જે પાનું તમે હટાવવા જઇ રહ્યાં છો તેને આશરે $1 {{PLURAL:$1|પુનરાવર્તન|પુનરાવર્તનો}}નો ઇતિહાસ છે:",
 	'hours' => '{{PLURAL:$1|$1 કલાક|$1 કલાકો}}',
 	'htmlform-invalid-input' => 'તમારા અમુક ઉમેરા માંઅમુક તકલીફ છે',
 	'htmlform-select-badoption' => 'તમે બતાવેલ વિકલ્પ અવૈધ છે',
@@ -3990,9 +4111,9 @@ $messages['gu'] = [
 	'htmlform-submit' => 'જમા કરો',
 	'htmlform-reset' => 'ફેરફાર ઉલટાવો',
 	'htmlform-selectorother-other' => 'અન્ય',
-];
+);
 
-$messages['gv'] = [
+$messages['gv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ronney follit|Ronnaghyn follit}}',
 	'hidden-category-category' => 'Ronnaghyn follit',
 	'help' => 'Cooney',
@@ -4003,10 +4124,10 @@ $messages['gv'] = [
 	'headline_sample' => 'Teks y chione-linney',
 	'headline_tip' => 'Kione-linney corrym 2',
 	'hr_tip' => 'Linney cochruinnagh (ymmyd dy spaarailagh)',
-	'hiddencategories' => 'Ta\'n duillag shoh ayns {{PLURAL:$1|ronney follit|ronney follit|ronney follit|ronnaghyn follit}}',
-	'histlegend' => 'Reih anchaslys: jean reih kiarkil reih ny lhiegganyn by vie lhiat cosoylaghey ad, as crig er "enter", ny er y cramman ec cass y rolley.<br />
-Ogher: \'\'\'({{int:cur}})\'\'\' = anchaslyssyn rish y lhieggan t\'ayn nish,
-\'\'\'({{int:last}})\'\'\' = anchaslyssyn rish y lhieggan roish, \'\'\'{{int:minoreditletter}}\'\'\' = mynchaghlaa',
+	'hiddencategories' => "Ta'n duillag shoh ayns {{PLURAL:$1|ronney follit|ronney follit|ronney follit|ronnaghyn follit}}",
+	'histlegend' => "Reih anchaslys: jean reih kiarkil reih ny lhiegganyn by vie lhiat cosoylaghey ad, as crig er \"enter\", ny er y cramman ec cass y rolley.<br />
+Ogher: '''({{int:cur}})''' = anchaslyssyn rish y lhieggan t'ayn nish,
+'''({{int:last}})''' = anchaslyssyn rish y lhieggan roish, '''{{int:minoreditletter}}''' = mynchaghlaa",
 	'history-fieldset-title' => 'Femblal shennaghys',
 	'histfirst' => 'By hoshee',
 	'histlast' => 'By yerree',
@@ -4018,9 +4139,9 @@ Ogher: \'\'\'({{int:cur}})\'\'\' = anchaslyssyn rish y lhieggan t\'ayn nish,
 	'hist' => 'shen',
 	'hide' => 'Follaghey',
 	'historywarning' => 'Raaue: Ta shennaghys ec y duillag ta shiu er-chee scryssey magh:',
-];
+);
 
-$messages['ha'] = [
+$messages['ha'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ɓoyayyen rukuni|Ɓoyayyun rukunoni}}',
 	'help' => 'Taimako',
 	'history' => 'Tarihin shafi',
@@ -4031,17 +4152,17 @@ $messages['ha'] = [
 	'headline_tip' => 'Kan mataki na 2',
 	'hr_tip' => 'Layin kwance',
 	'hiddencategories' => 'Wannan shafi yana cikin {{PLURAL:$1|ɓoyayyen rukuni 1|ɓoyayyun rukunoni $1}}:',
-	'histlegend' => 'Don nuna bambanci: a shaida zube-zuben da ake so a kwatanta sannan a latsa maɓallin da ke ƙasa.<br />
-Fasali: \'\'\'({{int:cur}})\'\'\' = bambanci da zubi na yanzu, \'\'\'({{int:last}})\'\'\' = bambanci da zubi na baya, \'\'\'{{int:minoreditletter}}\'\'\' = ƙaramin gyara.',
+	'histlegend' => "Don nuna bambanci: a shaida zube-zuben da ake so a kwatanta sannan a latsa maɓallin da ke ƙasa.<br />
+Fasali: '''({{int:cur}})''' = bambanci da zubi na yanzu, '''({{int:last}})''' = bambanci da zubi na baya, '''{{int:minoreditletter}}''' = ƙaramin gyara.",
 	'history-fieldset-title' => 'Shawagi cikin tarihi',
 	'histfirst' => 'Na gaba',
 	'histlast' => 'Na baya',
 	'history-title' => 'Tarihin sauye-sauyen "$1"',
 	'hist' => 'Tarihi',
 	'hide' => 'Ɓoye',
-];
+);
 
-$messages['hak'] = [
+$messages['hak'] = array(
 	'hidden-categories' => '$1-ke Yún-chhòng fûn-lui',
 	'help' => 'Pông-chhu',
 	'history' => 'Vùn-chông li̍t-sṳ́',
@@ -4066,9 +4187,9 @@ $messages['hak'] = [
 	'hist' => 'Li̍t-sṳ́',
 	'hide' => 'Yún-chhòng',
 	'historywarning' => 'Kín-ko: Ngì chiông-yeu chhù-hi ke chông-nui hàm-yû li̍t-sṳ́:',
-];
+);
 
-$messages['haw'] = [
+$messages['haw'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Mahele hūnā|Nā mahele hūnā}}',
 	'hidden-category-category' => 'Nā mahele hūnā',
 	'help' => 'Kōkua',
@@ -4085,9 +4206,9 @@ $messages['haw'] = [
 	'history-feed-item-nocomment' => '$1 ma $2',
 	'hist' => 'loli',
 	'hide' => 'hūnā',
-];
+);
 
-$messages['he'] = [
+$messages['he'] = array(
 	'hidden-categories' => '{{PLURAL:$1|קטגוריה מוסתרת|קטגוריות מוסתרות}}',
 	'hidden-category-category' => 'קטגוריות מוסתרות',
 	'help' => 'עזרה',
@@ -4099,8 +4220,8 @@ $messages['he'] = [
 	'headline_tip' => 'כותרת – דרגה 2',
 	'hr_tip' => 'קו אופקי (השתדלו להימנע משימוש בקו)',
 	'hiddencategories' => 'דף זה כלול ב{{PLURAL:$1|קטגוריה מוסתרת אחת|־$1 קטגוריות מוסתרות}}:',
-	'histlegend' => 'בחירת גרסאות להשוואה: סמנו את תיבות האפשרויות של הגרסאות המיועדות להשוואה, והקישו על Enter או על הכפתור למטה.<br />
-מקרא: \'\'\'({{int:cur}})\'\'\' = השוואה עם הגרסה הנוכחית, \'\'\'({{int:last}})\'\'\' = השוואה עם הגרסה הקודמת, \'\'\'{{int:minoreditletter}}\'\'\' = שינוי משני.',
+	'histlegend' => "בחירת גרסאות להשוואה: סמנו את תיבות האפשרויות של הגרסאות המיועדות להשוואה, והקישו על Enter או על הכפתור למטה.<br />
+מקרא: '''({{int:cur}})''' = השוואה עם הגרסה הנוכחית, '''({{int:last}})''' = השוואה עם הגרסה הקודמת, '''{{int:minoreditletter}}''' = שינוי משני.",
 	'history-fieldset-title' => 'חיפוש בהיסטוריית הדף',
 	'history-show-deleted' => 'רק מחוקות',
 	'histfirst' => 'ראשונות',
@@ -4125,29 +4246,29 @@ $messages['he'] = [
 	'http-curl-error' => 'שגיאה בקבלת כתובת ה־URL‏: $1',
 	'http-host-unreachable' => 'לא ניתן להגיע לכתובת ה־URL.',
 	'http-bad-status' => 'הייתה בעיה בשליחת בקשת ה־HTTP‏: $1 $2',
-	'historywarning' => '\'\'\'אזהרה:\'\'\' לדף שאתם עומדים למחוק יש היסטוריית שינויים של בערך {{PLURAL:$1|גרסה אחת|$1 גרסאות}}:',
+	'historywarning' => "'''אזהרה:''' לדף שאתם עומדים למחוק יש היסטוריית שינויים של בערך {{PLURAL:$1|גרסה אחת|$1 גרסאות}}:",
 	'handheld.css' => '/* הסגנונות הנכתבים כאן ישפיעו על מכשירים ניידים המבוססים על העיצוב שבהגדרה $wgHandheldStyle בלבד */',
 	'hours' => '{{PLURAL:$1|שעה|$1 שעות|שעתיים}}',
 	'hijri-calendar-m1' => 'מוחרם',
 	'hijri-calendar-m2' => 'צפר',
 	'hijri-calendar-m3' => 'רבּיע אל-אוול',
-	'hijri-calendar-m4' => 'רבּיע א-ת\'אני',
-	'hijri-calendar-m5' => 'ג\'ומאדא אל-אוּלא',
-	'hijri-calendar-m6' => 'ג\'ומאדא א-ת\'אניה',
-	'hijri-calendar-m7' => 'רג\'בּ',
+	'hijri-calendar-m4' => "רבּיע א-ת'אני",
+	'hijri-calendar-m5' => "ג'ומאדא אל-אוּלא",
+	'hijri-calendar-m6' => "ג'ומאדא א-ת'אניה",
+	'hijri-calendar-m7' => "רג'בּ",
 	'hijri-calendar-m8' => 'שעבּאן',
 	'hijri-calendar-m9' => 'רמדאן',
 	'hijri-calendar-m10' => 'שוואל',
-	'hijri-calendar-m11' => 'ד\'ו אל-קעדה',
-	'hijri-calendar-m12' => 'ד\'ו אל-חיג\'ה',
+	'hijri-calendar-m11' => "ד'ו אל-קעדה",
+	'hijri-calendar-m12' => "ד'ו אל-חיג'ה",
 	'hebrew-calendar-m1' => 'תשרי',
 	'hebrew-calendar-m2' => 'חשוון',
 	'hebrew-calendar-m3' => 'כסלו',
 	'hebrew-calendar-m4' => 'טבת',
 	'hebrew-calendar-m5' => 'שבט',
 	'hebrew-calendar-m6' => 'אדר',
-	'hebrew-calendar-m6a' => 'אדר א\'',
-	'hebrew-calendar-m6b' => 'אדר ב\'',
+	'hebrew-calendar-m6a' => "אדר א'",
+	'hebrew-calendar-m6b' => "אדר ב'",
 	'hebrew-calendar-m7' => 'ניסן',
 	'hebrew-calendar-m8' => 'אייר',
 	'hebrew-calendar-m9' => 'סיוון',
@@ -4160,8 +4281,8 @@ $messages['he'] = [
 	'hebrew-calendar-m4-gen' => 'בטבת',
 	'hebrew-calendar-m5-gen' => 'בשבט',
 	'hebrew-calendar-m6-gen' => 'באדר',
-	'hebrew-calendar-m6a-gen' => 'באדר א\'',
-	'hebrew-calendar-m6b-gen' => 'באדר ב\'',
+	'hebrew-calendar-m6a-gen' => "באדר א'",
+	'hebrew-calendar-m6b-gen' => "באדר ב'",
 	'hebrew-calendar-m7-gen' => 'בניסן',
 	'hebrew-calendar-m8-gen' => 'באייר',
 	'hebrew-calendar-m9-gen' => 'בסיוון',
@@ -4181,9 +4302,9 @@ $messages['he'] = [
 	'home' => 'עמוד הבית',
 	'helpfaq' => 'עזרה ושאלות נפוצות',
 	'highest_ratings' => 'המוערכים ביותר',
-];
+);
 
-$messages['hi'] = [
+$messages['hi'] = array(
 	'hidden-categories' => '{{PLURAL:$1|छुपाई हुई श्रेणी|छुपाई हुई श्रेणियाँ}}',
 	'hidden-category-category' => 'छुपाई हुई श्रेणियाँ',
 	'help' => 'सहायता',
@@ -4259,9 +4380,9 @@ $messages['hi'] = [
 	'htmlform-submit' => 'जमा करें',
 	'htmlform-reset' => 'बदलाव पुरानी स्थिति पर लाएँ',
 	'htmlform-selectorother-other' => 'अन्य',
-];
+);
 
-$messages['hif'] = [
+$messages['hif'] = array(
 	'hidden-categories' => '{{PLURAL:$1|छुपाई हुई श्रेणी|छुपाई हुई श्रेणियाँ}}',
 	'hidden-category-category' => 'छुपाई हुई श्रेणियाँ',
 	'help' => 'सहायता',
@@ -4337,9 +4458,9 @@ $messages['hif'] = [
 	'htmlform-submit' => 'जमा करें',
 	'htmlform-reset' => 'बदलाव पुरानी स्थिति पर लाएँ',
 	'htmlform-selectorother-other' => 'अन्य',
-];
+);
 
-$messages['hif-latn'] = [
+$messages['hif-latn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Lukawal vibhag|Lukawal vibhag}}',
 	'hidden-category-category' => 'Lukawal vibhag',
 	'help' => 'Madat karo',
@@ -4380,9 +4501,9 @@ Try karo [[Special:Search|wiki me khije ke]] aur nawaa panna ke.',
 	'historywarning' => 'Sawadhan: Jon panna ke aap mitae waala hai ke itihaas hai lagbhag $1 {{PLURAL:$1|badlao|badlao}}:',
 	'htmlform-reset' => 'Badlao ke pahile jaise karo',
 	'htmlform-selectorother-other' => 'Duusra',
-];
+);
 
-$messages['hil'] = [
+$messages['hil'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Tago nga kategorya|Tago nga mga kategorya}}',
 	'hidden-category-category' => 'Nakatago nga mga categorya',
 	'help' => 'Bulig',
@@ -4394,9 +4515,9 @@ $messages['hil'] = [
 	'headline_tip' => 'Lebel 2 pangunang-dinalan',
 	'hr_tip' => 'Gapahigda nga linya (gamiton laka lang)',
 	'hiddencategories' => 'Ini nga pahina ay membro sang {{PLURAL:$1|1 tago nga kategorya|$1 mga tago nga kategorya}}:',
-	'histlegend' => 'Diff pililian: markahan ang mga radyo kahon sa mga ginrebisyon para makompara kag pinduton ang sulod ukon ang pindut sa idalum.<br />
-Legend: \'\'\'({{int:cur}})\'\'\' = ang ginalain niya sa bag-o nga na rebisyon,
-\'\'\'({{int:last}})\'\'\' = ang ginalain niya sa gapadayun nga rebisyon, \'\'\'{{int:minoreditletter}}\'\'\' = menor nga inislan.',
+	'histlegend' => "Diff pililian: markahan ang mga radyo kahon sa mga ginrebisyon para makompara kag pinduton ang sulod ukon ang pindut sa idalum.<br />
+Legend: '''({{int:cur}})''' = ang ginalain niya sa bag-o nga na rebisyon,
+'''({{int:last}})''' = ang ginalain niya sa gapadayun nga rebisyon, '''{{int:minoreditletter}}''' = menor nga inislan.",
 	'history-fieldset-title' => 'Historya sa mga nalantawan',
 	'history-show-deleted' => 'Ginpanas lamang',
 	'histfirst' => 'Pinaka timprano',
@@ -4412,9 +4533,9 @@ Tilawi ang [[Special:Search|searching on the wiki]] para sa mga napamatud-an nga
 	'history-title' => 'Rebisyon sang historya sa "$1"',
 	'hist' => 'hist',
 	'hide' => 'Tago',
-];
+);
 
-$messages['hr'] = [
+$messages['hr'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Skrivena kategorija|Skrivene kategorije|Skrivenih kategorija}}',
 	'hidden-category-category' => 'Skrivene kategorije',
 	'help' => 'Pomoć',
@@ -4452,7 +4573,7 @@ Pokušajte [[Special:Search|pretražiti]] važnije nove stranice na wikiju.',
 	'http-curl-error' => 'Greška pri otvaranju URL-a: $1',
 	'http-host-unreachable' => 'URL nije dostupan.',
 	'http-bad-status' => 'Došlo je do problema tijekom HTTP zahtjeva: $1 $2',
-	'historywarning' => '\'\'\'Upozorenje\'\'\':  Stranica koju želite obrisati ima starije izmjene s približno $1 {{PLURAL:$1|inačicom|inačice|inačica}}:',
+	'historywarning' => "'''Upozorenje''':  Stranica koju želite obrisati ima starije izmjene s približno $1 {{PLURAL:$1|inačicom|inačice|inačica}}:",
 	'hours' => '{{PLURAL:$1|$1 sat|$1 sata|$1 sati}}',
 	'hijri-calendar-m1' => 'muhàrem',
 	'hijri-calendar-m2' => 'sàfer',
@@ -4507,9 +4628,9 @@ Pokušajte [[Special:Search|pretražiti]] važnije nove stranice na wikiju.',
 	'home' => 'Naslovnica',
 	'helpfaq' => 'Pomoć i česta pitanja',
 	'highest_ratings' => 'Najbolje ocijene',
-];
+);
 
-$messages['hsb'] = [
+$messages['hsb'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Schowana kategorija|Schowanej kategoriji|Schowane kategorije|Schowanych kategorijow}}',
 	'hidden-category-category' => 'Schowane kategorije',
 	'help' => 'Pomoc',
@@ -4546,7 +4667,7 @@ Legenda: (akt) = rozdźěl k tuchwilnej wersiji, (posl) = rozdźěl k předchadn
 	'http-curl-error' => 'Zmylk při wołanju URL: $1',
 	'http-host-unreachable' => 'URL njeda so docpěć.',
 	'http-bad-status' => 'Problem je za HTTP-naprašowanje wustupił: $1 $2',
-	'historywarning' => '\'\'\'KEDŹBU:\'\'\' Strona, kotruž chceš wušmórnyć, ma stawizny z přibližnje $1 {{PLURAL:$1|wersiju|wersijomaj|wersijemi|wersijemi}}:',
+	'historywarning' => "'''KEDŹBU:''' Strona, kotruž chceš wušmórnyć, ma stawizny z přibližnje $1 {{PLURAL:$1|wersiju|wersijomaj|wersijemi|wersijemi}}:",
 	'hours' => '{{PLURAL:$1|$1 hodźinu|$1 hodźinomaj|$1 hodźinami|$1 hodźinami}}',
 	'htmlform-invalid-input' => 'Su problemy z twojim zapodaćom',
 	'htmlform-select-badoption' => 'Hódnota, kotruž sy zapodał, płaćiwa opcija njeje.',
@@ -4558,9 +4679,9 @@ Legenda: (akt) = rozdźěl k tuchwilnej wersiji, (posl) = rozdźěl k předchadn
 	'htmlform-submit' => 'Wotpósłać',
 	'htmlform-reset' => 'Změny cofnyć',
 	'htmlform-selectorother-other' => 'Druhe',
-];
+);
 
-$messages['ht'] = [
+$messages['ht'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori kache|Kategori kache yo}}',
 	'hidden-category-category' => 'Kategori ki kache yo',
 	'help' => 'Èd',
@@ -4585,10 +4706,10 @@ Lejand : ({{MediaWiki:Cur}}) = diferans ak vèsyon kounye a, ({{MediaWiki:Last}}
 	'history-title' => 'Istorik pou vèsyon « $1 » yo',
 	'hist' => 'istorik',
 	'hide' => 'Kache',
-	'historywarning' => '\'\'\'Atansyon:\'\'\' paj w ap efase a genyen yon istorik ki genyen $1 {{PLURAL:$1|revizyon|revizyon yo}} ladan l:',
-];
+	'historywarning' => "'''Atansyon:''' paj w ap efase a genyen yon istorik ki genyen $1 {{PLURAL:$1|revizyon|revizyon yo}} ladan l:",
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Rejtett kategória|Rejtett kategóriák}}',
 	'hidden-category-category' => 'Rejtett kategóriák',
 	'help' => 'Segítség',
@@ -4626,7 +4747,7 @@ Próbálkozhatsz a témával kapcsolatos lapok [[Special:Search|keresésével]].
 	'http-curl-error' => 'Hiba történt az URL lekérésekor: $1',
 	'http-host-unreachable' => 'Nem sikerült elérni az URL-t.',
 	'http-bad-status' => 'Probléma történt a HTTP-kérés közben: $1 $2',
-	'historywarning' => '\'\'\'Figyelem:\'\'\' a lapnak, amit törölni készülsz, körülbelül $1 változattal rendelkező laptörténete van:',
+	'historywarning' => "'''Figyelem:''' a lapnak, amit törölni készülsz, körülbelül $1 változattal rendelkező laptörténete van:",
 	'handheld.css' => '/* Az ide elhelyezett CSS hatással lesz azon kézi eszközökre, amelyek $wgHandheldStyle felülettel vannak konfigurálva */',
 	'hours' => '{{PLURAL:$1|egy|$1}} órával',
 	'htmlform-invalid-input' => 'Probléma van az általad megadott értékkel',
@@ -4639,9 +4760,9 @@ Próbálkozhatsz a témával kapcsolatos lapok [[Special:Search|keresésével]].
 	'htmlform-submit' => 'Elküldés',
 	'htmlform-reset' => 'Változtatások visszavonása',
 	'htmlform-selectorother-other' => 'egyéb',
-];
+);
 
-$messages['hy'] = [
+$messages['hy'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Թաքցված կատեգորիա|Թաքցված կատեգորիաներ}}',
 	'hidden-category-category' => 'Թաքցված կատեգորիաներ',
 	'help' => 'Օգնություն',
@@ -4653,9 +4774,9 @@ $messages['hy'] = [
 	'headline_tip' => 'Ենթագլուխ',
 	'hr_tip' => 'Հորիզոնական գիծ (միայն անհրաժեշտության դեպքում)',
 	'hiddencategories' => 'Այս էջը պատկանում է հետևյալ {{PLURAL:$1|1 թաքնված կատեգորիային|$1 թաքնված կատեգորիաներին}}.',
-	'histlegend' => 'Տարբերությունների համեմատում. դրեք նշման կետեր այն տարբերակների կողքին, որոնք ուզում եք համեմատել և սեղմեք ներքևում գտնվող կոճակը։<br />
+	'histlegend' => "Տարբերությունների համեմատում. դրեք նշման կետեր այն տարբերակների կողքին, որոնք ուզում եք համեմատել և սեղմեք ներքևում գտնվող կոճակը։<br />
 Պարզաբանում. (ընթ) = համեմատել ընթացիկ տարբերակի հետ,
-(նախ) = համեմատել նախորդ տարբերակի հետ,<br />\'\'\'չ\'\'\' = չնչին խմբագրում',
+(նախ) = համեմատել նախորդ տարբերակի հետ,<br />'''չ''' = չնչին խմբագրում",
 	'history-fieldset-title' => 'Դիտել պատմությունը',
 	'history-show-deleted' => 'Միայն ջնջված',
 	'histfirst' => 'Առաջին',
@@ -4673,9 +4794,9 @@ $messages['hy'] = [
 	'hide' => 'Թաքցնել',
 	'historywarning' => 'Զգուշացում. էջը, որը դուք պատրաստվում եք ջնջել ունի փոփոխությունների պատմություն։',
 	'hours-abbrev' => '$1 ժ',
-];
+);
 
-$messages['ia'] = [
+$messages['ia'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria celate|Categorias celate}}',
 	'hidden-category-category' => 'Categorias celate',
 	'help' => 'Adjuta',
@@ -4687,9 +4808,9 @@ $messages['ia'] = [
 	'headline_tip' => 'Titulo de nivello 2',
 	'hr_tip' => 'Linea horizontal (usa con moderation)',
 	'hiddencategories' => 'Iste pagina es membro de {{PLURAL:$1|1 categoria|$1 categorias}} celate:',
-	'histlegend' => 'Pro comparar duo versiones: marca lor circulos correspondente, e preme <code>Enter</code> o clicca le button in basso.<br />
-Legenda: \'\'\'({{int:cur}})\'\'\' = comparar con le version actual,
-\'\'\'({{int:last}})\'\'\' = comparar con le version precedente, \'\'\'{{int:minoreditletter}}\'\'\' = modification minor.',
+	'histlegend' => "Pro comparar duo versiones: marca lor circulos correspondente, e preme <code>Enter</code> o clicca le button in basso.<br />
+Legenda: '''({{int:cur}})''' = comparar con le version actual,
+'''({{int:last}})''' = comparar con le version precedente, '''{{int:minoreditletter}}''' = modification minor.",
 	'history-fieldset-title' => 'Examinar historia',
 	'history-show-deleted' => 'Delite solmente',
 	'histfirst' => 'Prime',
@@ -4714,7 +4835,7 @@ Prova [[Special:Search|cercar nove paginas relevante]] in le wiki.',
 	'http-curl-error' => 'Error al obtener datos del URL: $1',
 	'http-host-unreachable' => 'Non poteva acceder al URL',
 	'http-bad-status' => 'Un problema occurreva durante le requesta HTTP: $1 $2',
-	'historywarning' => '\'\'\'Attention:\'\'\' Le pagina que tu vole deler ha un historia de circa $1 {{PLURAL:$1|version|versiones}}:',
+	'historywarning' => "'''Attention:''' Le pagina que tu vole deler ha un historia de circa $1 {{PLURAL:$1|version|versiones}}:",
 	'handheld.css' => '/* Le CSS placiate hic afficera le apparatos mobile basate super le apparentia configurate in $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 hora|$1 horas}}',
 	'htmlform-invalid-input' => 'Il ha problemas con un parte del datos que tu ha entrate',
@@ -4727,9 +4848,9 @@ Prova [[Special:Search|cercar nove paginas relevante]] in le wiki.',
 	'htmlform-submit' => 'Submitter',
 	'htmlform-reset' => 'Disfacer modificationes',
 	'htmlform-selectorother-other' => 'Altere',
-];
+);
 
-$messages['id'] = [
+$messages['id'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori tersembunyi|Kategori tersembunyi}}',
 	'hidden-category-category' => 'Kategori tersembunyi',
 	'help' => 'Bantuan',
@@ -4741,7 +4862,7 @@ $messages['id'] = [
 	'headline_tip' => 'Subbagian tingkat 1',
 	'hr_tip' => 'Garis horisontal',
 	'hiddencategories' => 'Halaman ini adalah anggota dari {{PLURAL:$1|1 kategori tersembunyi|$1 kategori tersembunyi}}:',
-	'histlegend' => 'Pilih dua tombol radio lalu tekan tombol \'\'bandingkan\'\' untuk membandingkan versi. Klik suatu tanggal untuk melihat versi halaman pada tanggal tersebut.<br />(skr) = perbedaan dengan versi sekarang, (akhir) = perbedaan dengan versi sebelumnya, \'\'\'k\'\'\' = suntingan kecil, \'\'\'b\'\'\' = suntingan bot, → = suntingan bagian, ← = ringkasan otomatis',
+	'histlegend' => "Pilih dua tombol radio lalu tekan tombol ''bandingkan'' untuk membandingkan versi. Klik suatu tanggal untuk melihat versi halaman pada tanggal tersebut.<br />(skr) = perbedaan dengan versi sekarang, (akhir) = perbedaan dengan versi sebelumnya, '''k''' = suntingan kecil, '''b''' = suntingan bot, → = suntingan bagian, ← = ringkasan otomatis",
 	'history-fieldset-title' => 'Menjelajah versi terdahulu',
 	'history-show-deleted' => 'Hanya yang dihapus',
 	'histfirst' => 'Terlama',
@@ -4766,7 +4887,7 @@ Coba [[Special:Search|lakukan pencarian di wiki]] untuk halaman baru yang releva
 	'http-curl-error' => 'Kesalahan saat mengambil URL: $1',
 	'http-host-unreachable' => 'Tidak dapat mencapai URL.',
 	'http-bad-status' => 'Ada masalah saat permintaan halaman HTTP: $1 $2',
-	'historywarning' => '\'\'\'Peringatan:\'\'\' Halaman yang akan Anda hapus mempunyai sejarah dengan $1 {{PLURAL:$1|revisi|revisi}}:',
+	'historywarning' => "'''Peringatan:''' Halaman yang akan Anda hapus mempunyai sejarah dengan $1 {{PLURAL:$1|revisi|revisi}}:",
 	'handheld.css' => '/* CSS yang ada di sini akan diterapkan untuk tampilan piranti genggam yang dikonfigurasi di $wgHandheldStyle. */',
 	'hours-abbrev' => '$1j',
 	'hijri-calendar-m1' => 'Muharram',
@@ -4776,7 +4897,7 @@ Coba [[Special:Search|lakukan pencarian di wiki]] untuk halaman baru yang releva
 	'hijri-calendar-m5' => 'Jumadil awal',
 	'hijri-calendar-m6' => 'Jumadil akhir',
 	'hijri-calendar-m7' => 'Rajab',
-	'hijri-calendar-m8' => 'Sya\'ban',
+	'hijri-calendar-m8' => "Sya'ban",
 	'hijri-calendar-m9' => 'Ramadhan',
 	'hijri-calendar-m10' => 'Syawal',
 	'hijri-calendar-m11' => 'Dzulkaidah',
@@ -4815,9 +4936,9 @@ Coba [[Special:Search|lakukan pencarian di wiki]] untuk halaman baru yang releva
 	'htmlform-submit' => 'Kirim',
 	'htmlform-reset' => 'Batalkan perubahan',
 	'htmlform-selectorother-other' => 'Lain-lain',
-];
+);
 
-$messages['ie'] = [
+$messages['ie'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categorie ocultat|Categories ocultat}}',
 	'help' => 'Auxilie',
 	'history' => 'Historie',
@@ -4828,8 +4949,8 @@ $messages['ie'] = [
 	'headline_tip' => 'Division de nivelle 2',
 	'hr_tip' => 'Linea horizontal (use sin excess)',
 	'hiddencategories' => 'Ti págine es un membre de {{PLURAL:$1|1 categorie ocultat|$1 categories ocultat}}:',
-	'histlegend' => 'Diferenties de selection: marca li buxes de radio de li revisiones por comparar e batte "intrar" o li buton in li funde.<br />
-Legende: \'\'\'({{int:cur}})\'\'\' = diferenties che ultim revision, \'\'\'({{int:last}})\'\'\' = diferenties que antecede li revision, \'\'\'{{int:minoreditletter}}\'\'\' = redaction minori.',
+	'histlegend' => "Diferenties de selection: marca li buxes de radio de li revisiones por comparar e batte \"intrar\" o li buton in li funde.<br />
+Legende: '''({{int:cur}})''' = diferenties che ultim revision, '''({{int:last}})''' = diferenties que antecede li revision, '''{{int:minoreditletter}}''' = redaction minori.",
 	'history-fieldset-title' => 'Historie de navigation',
 	'history-show-deleted' => 'Deletet solmen',
 	'histfirst' => 'Plu antiqui',
@@ -4838,9 +4959,9 @@ Legende: \'\'\'({{int:cur}})\'\'\' = diferenties che ultim revision, \'\'\'({{in
 	'history-title' => 'Revision del historie de "$1"',
 	'hist' => 'hist',
 	'hide' => 'Ocultar',
-];
+);
 
-$messages['ig'] = [
+$messages['ig'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ébéonọr zonari|Ébéonọr zonari}}',
 	'hidden-category-category' => 'Ébéanọr zonari a zonari',
 	'help' => 'Inyeáká',
@@ -4852,8 +4973,8 @@ $messages['ig'] = [
 	'headline_tip' => 'Larri 2 ishiahiri',
 	'hr_tip' => 'Áhìrì na ga nà àlà (jí ya nke ntàkírí)',
 	'hiddencategories' => 'Ihü a dị nà nke ótù {{PLURAL:$1|ébéonọr zọnàrì nke 1|ébéonọr zọnàrì nke $1}}:',
-	'histlegend' => 'Mkpátá íche: ká igbé radio nke orüma Í lèmá otụ hámá abụọ ditù nà Í gi tié mkpátá bànyé nà àlà.<br />
-Okwu ụmà: \'\'\'({{int:cur}})\'\'\' = gbánwe na nké orü mbu, \'\'\'({{int:last}})\'\'\' = ihe íchè na nké orü di gbárá mbu, \'\'\'{{int:minoreditletter}}\'\'\' = orü ntà.',
+	'histlegend' => "Mkpátá íche: ká igbé radio nke orüma Í lèmá otụ hámá abụọ ditù nà Í gi tié mkpátá bànyé nà àlà.<br />
+Okwu ụmà: '''({{int:cur}})''' = gbánwe na nké orü mbu, '''({{int:last}})''' = ihe íchè na nké orü di gbárá mbu, '''{{int:minoreditletter}}''' = orü ntà.",
 	'history-fieldset-title' => 'Akíkó mbu maka a garacha I garachara',
 	'history-show-deleted' => 'Nani nke gbakashiala',
 	'histfirst' => 'Nke buzọr',
@@ -4871,13 +4992,13 @@ Okwu ụmà: \'\'\'({{int:cur}})\'\'\' = gbánwe na nké orü mbu, \'\'\'({{int:
 	'htmlform-submit' => 'Dànyé',
 	'htmlform-reset' => 'Emekwàlà gbanwere',
 	'htmlform-selectorother-other' => 'Nke ozor',
-];
+);
 
-$messages['ik'] = [
+$messages['ik'] = array(
 	'helppage' => 'Help:anniqsuiruq',
-];
+);
 
-$messages['ike-cans'] = [
+$messages['ike-cans'] = array(
 	'help' => 'ᖃᔭᓕᑉᐹ',
 	'history_short' => 'ᒪᑉᐱᑕᖅ ᑭᖑᓂᑦᑎᓐᓂ',
 	'hidetoc' => 'ᐃᔨᖅᐳᖅ',
@@ -4885,17 +5006,17 @@ $messages['ike-cans'] = [
 	'history-feed-description' => 'ᑎᑎᕋᖅᑕᐅᒋᐊᕐᖓᕈᑦ ᒪᑉᐱᑕᖅ ᑭᖑᓂᑦᑎᓐᓂ ᐃᑭᐊᖅ ᐅᐃᑭ',
 	'history-title' => 'ᑎᑎᕋᖅᑕᐅᒋᐊᕐᖓᕈᑦ ᒪᑉᐱᑕᖅ ᑭᖑᓂᑦᑎᓐᓂ "$1"',
 	'hide' => 'ᐃᔨᖅᐳᖅ',
-];
+);
 
-$messages['ike-latn'] = [
+$messages['ike-latn'] = array(
 	'help' => 'qajalippaa',
 	'history_short' => 'mappitaq kingunittinni',
 	'history-feed-title' => 'titiraqtaugiarngarut mappitaq kingunittinni',
 	'history-feed-description' => 'titiraqtaugiarngarut mappitaq kingunittinni ikiaq uiki',
 	'history-title' => 'titiraqtaugiarngarut mappitaq kingunittinni "$1"',
-];
+);
 
-$messages['ilo'] = [
+$messages['ilo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Nailemmeng a kategoria|Dagiti nailemmeng a kategoria}}',
 	'hidden-category-category' => 'Dagiti nailemmeng a kategoria',
 	'help' => 'Tulong',
@@ -4907,8 +5028,8 @@ $messages['ilo'] = [
 	'headline_tip' => 'Maika-2 a lessaad ti paulo',
 	'hr_tip' => 'Pakuros a linia (manmano laeng nga aramaten)',
 	'hiddencategories' => 'Daytoy a panid ket kameng ti {{PLURAL:$1|1 nakalemmeng a kategoria|$1 dagiti nakalemmeng a kategoria}}:',
-	'histlegend' => 'Panagpili ti sabali: Markaan dagiti kahon ti radio dagiti panagbaliwan tapno maipada ken pesselen ti serrek wenno ti buton dita baba.<br />
-Sarita: \'\'\'({{int:cur}})\'\'\' = naggidiatan ti kinaudi a panagbaliw, \'\'\'({{int:last}})\'\'\' = naggidiatan ti sarsarunuen a panagbaliw , \'\'\'{{int:minoreditletter}}\'\'\' = bassit a panagbaliw.',
+	'histlegend' => "Panagpili ti sabali: Markaan dagiti kahon ti radio dagiti panagbaliwan tapno maipada ken pesselen ti serrek wenno ti buton dita baba.<br />
+Sarita: '''({{int:cur}})''' = naggidiatan ti kinaudi a panagbaliw, '''({{int:last}})''' = naggidiatan ti sarsarunuen a panagbaliw , '''{{int:minoreditletter}}''' = bassit a panagbaliw.",
 	'history-fieldset-title' => 'Agbasabasa ti pakasaritaan',
 	'history-show-deleted' => 'Naikkat laeng',
 	'histfirst' => 'Kaunaan',
@@ -4933,7 +5054,7 @@ Padasem ti [[Special:Search|agbiruk ditoy a wiki]] kadagiti mapaay a baro a pani
 	'http-curl-error' => 'Biddut ti pinagala ti URL: $1',
 	'http-host-unreachable' => 'Di madanon ti URL',
 	'http-bad-status' => 'Adda pakirut iti agdama a pinagtulod ti HTTP: $1 $2',
-	'historywarning' => '\'\'\'Ballaag: \'\'\' Ti panid a kayatmo nga ikkaten ket addaan iti pakasaritaan nga adda $1 {{PLURAL:$1|binaliwan|dagiti binaliwan}}:',
+	'historywarning' => "'''Ballaag: ''' Ti panid a kayatmo nga ikkaten ket addaan iti pakasaritaan nga adda $1 {{PLURAL:$1|binaliwan|dagiti binaliwan}}:",
 	'hours' => '{{PLURAL:$1|$1 oras$1 oras}}',
 	'htmlform-invalid-input' => 'Adda pakirut kadagiti inkabil mo',
 	'htmlform-select-badoption' => 'Ti kuwenta a nainaganam ket saan a mabalin a pagpilian.',
@@ -4945,9 +5066,9 @@ Padasem ti [[Special:Search|agbiruk ditoy a wiki]] kadagiti mapaay a baro a pani
 	'htmlform-submit' => 'Ited',
 	'htmlform-reset' => 'Ibabawi ti sinukatan',
 	'htmlform-selectorother-other' => 'Sabali',
-];
+);
 
-$messages['inh'] = [
+$messages['inh'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Къайла цатег|Къайла цатегаш}}',
 	'hidden-category-category' => 'Къайла цатегаш',
 	'help' => 'Новкъoстал',
@@ -4959,7 +5080,7 @@ $messages['inh'] = [
 	'headline_tip' => '2-гӀа кертмугӀa лагӀа',
 	'hr_tip' => 'Мухала мугӀ (могаш тайпара къеззига хайраде)',
 	'hiddencategories' => 'Ер оагӀув укх {{PLURAL:$1|къайла цатегаца|къайла цатегашца}} дакъа лоаца:',
-	'histlegend' => 'Кхетам: (хӀанз.) = хӀанза йолачунна бӀаргоагӀувни хьакъоастам ба; (хьалх.) = хьалха хинначунна бӀаргоагӀувни хьакъоастам ба; \'\'\'зӀ\'\'\' = зӀамига хьахувцам ба.',
+	'histlegend' => "Кхетам: (хӀанз.) = хӀанза йолачунна бӀаргоагӀувни хьакъоастам ба; (хьалх.) = хьалха хинначунна бӀаргоагӀувни хьакъоастам ба; '''зӀ''' = зӀамига хьахувцам ба.",
 	'history-fieldset-title' => 'Искара бӀаргтасса',
 	'history-show-deleted' => 'ДӀадаьккхараш мара',
 	'histfirst' => 'къаьнараш',
@@ -4972,9 +5093,9 @@ $messages['inh'] = [
 	'hide' => 'Къайладаккха',
 	'htmlform-submit' => 'ДIадахийта',
 	'htmlform-selectorother-other' => 'Кхыдола',
-];
+);
 
-$messages['io'] = [
+$messages['io'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Celita kategorio|Celita kategorii}}',
 	'hidden-category-category' => 'Celita kategorii',
 	'help' => 'Helpo',
@@ -4986,10 +5107,10 @@ $messages['io'] = [
 	'headline_tip' => 'Titulo di duesma nivelo',
 	'hr_tip' => 'Horizontala lineo (ne trouzez ol)',
 	'hiddencategories' => 'Ca pagino esas membro di {{PLURAL:$1|1 celita kategorio|$1 celita kategorii}}:',
-	'histlegend' => 'Selektado por diferi: markizez la versioni por komparar e lore presez \'Enter\' o la butono infre.<br />
-Surskriburo: \'\'\'({{int:cur}})\'\'\' = diferi kun l\'aktuala versiono,
-\'\'\'({{int:last}})\'\'\' = diferi kun l\'antea versiono,
-\'\'\'{{int:minoreditletter}}\'\'\' = mikra redakto.',
+	'histlegend' => "Selektado por diferi: markizez la versioni por komparar e lore presez 'Enter' o la butono infre.<br />
+Surskriburo: '''({{int:cur}})''' = diferi kun l'aktuala versiono,
+'''({{int:last}})''' = diferi kun l'antea versiono,
+'''{{int:minoreditletter}}''' = mikra redakto.",
 	'histfirst' => 'Maxim anciena',
 	'histlast' => 'Maxim nova',
 	'historysize' => '({{PLURAL:$1|1 bicoko|$1 bicoki}})',
@@ -5001,9 +5122,9 @@ Surskriburo: \'\'\'({{int:cur}})\'\'\' = diferi kun l\'aktuala versiono,
 	'historywarning' => 'Egardez: La pagino, quan vu efaceskas, havas versionaro:',
 	'htmlform-reset' => 'Desfacar chanji',
 	'htmlform-selectorother-other' => 'Altra',
-];
+);
 
-$messages['is'] = [
+$messages['is'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Falinn flokkur|Faldir flokkar}}',
 	'hidden-category-category' => 'Faldir flokkar',
 	'help' => 'Hjálp',
@@ -5042,7 +5163,7 @@ Prófaðu [[Special:Search|að leita á þessari wiki síðu]] að svipuðum sí
 	'http-curl-error' => 'Villa við að sækja vefslóð: $1',
 	'http-host-unreachable' => 'Gat ekki náð í vefslóðina',
 	'http-bad-status' => 'Mistök við HTTP beiðnina: $1 $2',
-	'historywarning' => '\'\'\'Viðvörun:\'\'\' Síðan sem þú ert um það bil að eyða hefur breytingarskrá með $1 {{PLURAL:$1|breytingu|breytingum}}:',
+	'historywarning' => "'''Viðvörun:''' Síðan sem þú ert um það bil að eyða hefur breytingarskrá með $1 {{PLURAL:$1|breytingu|breytingum}}:",
 	'hours' => '{{PLURAL:$1|einn klukkutími|$1 klukkutímar}}',
 	'htmlform-invalid-input' => 'Vandamál við hluta af innleggi þínu',
 	'htmlform-select-badoption' => 'Gildið sem þú tilgreindir er ekki gildur möguleiki.',
@@ -5057,61 +5178,61 @@ Prófaðu [[Special:Search|að leita á þessari wiki síðu]] að svipuðum sí
 	'home' => 'Heim',
 	'helpfaq' => 'Hjálp & Spurt og svarað',
 	'highest_ratings' => 'Háar einkunnir',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria nascosta|Categorie nascoste}}',
 	'hidden-category-category' => 'Categorie nascoste',
 	'help' => 'Aiuto',
-	'history' => 'Versioni precedenti',
+	'history' => 'Cronologia della pagina',
 	'history_short' => 'Cronologia',
 	'helppage' => 'Aiuto:Contenuti',
 	'hidetoc' => 'nascondi',
 	'headline_sample' => 'Intestazione',
 	'headline_tip' => 'Intestazione di 2° livello',
-	'hr_tip' => 'Linea orizzontale (usare con giudizio)',
+	'hr_tip' => 'Linea orizzontale (usare con parsimonia)',
 	'hiddencategories' => 'Questa pagina appartiene a {{PLURAL:$1|una categoria nascosta|$1 categorie nascoste}}:',
-	'histlegend' => 'Confronto tra versioni: selezionare le caselle corrispondenti alle versioni desiderate e premere Invio o il pulsante in basso.
+	'histlegend' => "Selezionare le caselle corrispondenti alle revisioni desiderate e premere Invio o il pulsante in basso per confrontarle. Cliccare sulla data per visualizzare quella revisione. Per ulteriori informazioni, vedere [[w:it:Aiuto:Cronologia|Aiuto:Cronologia]].
 
-Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'({{int:last}})\'\'\' = differenze con la versione precedente, \'\'\'{{int:minoreditletter}}\'\'\' = modifica minore',
-	'history-fieldset-title' => 'Scorri nella cronologia',
-	'history-show-deleted' => 'Solo quelli cancellati',
-	'histfirst' => 'Prima',
-	'histlast' => 'Ultima',
-	'historysize' => '({{PLURAL:$1|1 byte|$1 byte}})',
+Legenda: '''({{int:cur}})''' = differenze con la revisione attuale, '''({{int:last}})''' = differenze con la revisione precedente, '''{{int:minoreditletter}}''' = [[w:it:Aiuto:Modifica minore|modifica minore]]",
+	'history-fieldset-title' => 'Sfoglia la cronologia',
+	'history-show-deleted' => 'Solo revisioni cancellate',
+	'histfirst' => 'Più vecchie',
+	'histlast' => 'Più recenti',
+	'historysize' => '($1 byte)',
 	'historyempty' => '(vuota)',
 	'history-feed-title' => 'Cronologia',
-	'history-feed-description' => 'Cronologia della pagina su questo sito',
+	'history-feed-description' => 'Cronologia della pagina sulla wiki',
 	'history-feed-item-nocomment' => '$1 il $2',
-	'history-feed-empty' => 'La pagina richiesta non esiste; potrebbe essere stata cancellata dal sito o rinominata. Verificare con la [[Special:Search|pagina di ricerca]] se vi sono nuove pagine.',
+	'history-feed-empty' => 'La pagina richiesta non esiste; potrebbe essere stata cancellata dal sito o rinominata. Prova a [[Special:Search|cercare]] se ci sono nuove pagine pertinenti sulla wiki.',
 	'history-title' => 'Cronologia delle modifiche di "$1"',
 	'hist' => 'cron',
-	'hide' => 'nascondi',
-	'hookaborted' => 'La modifica che si è tentato di fare è stata interrotta da un hook di un\'estensione.',
+	'hide' => 'Nascondi',
+	'hookaborted' => "La modifica che hai tentato di fare è stata abortita da un'estensione.",
 	'http-invalid-url' => 'URL non valido: $1',
-	'http-invalid-scheme' => 'URL con il prefisso "$1" non sono supportati.',
+	'http-invalid-scheme' => 'Gli URL con il prefisso "$1" non sono supportati.',
 	'http-request-error' => 'Richiesta HTTP fallita a causa di un errore sconosciuto.',
 	'http-read-error' => 'Errore di lettura HTTP.',
 	'http-timed-out' => 'Richiesta HTTP scaduta.',
-	'http-curl-error' => 'Errore durante il recupero dell\'URL: $1',
+	'http-curl-error' => "Errore durante il recupero dell'URL: $1",
 	'http-host-unreachable' => 'URL non raggiungibile.',
-	'http-bad-status' => 'C\'è stato un problema durante la richiesta HTTP: $1 $2',
-	'historywarning' => '\'\'\'Attenzione:\'\'\' La pagina che stai per cancellare ha una cronologia con approssimativamente $1 {{PLURAL:$1|revisione|revisioni}}:',
+	'http-bad-status' => "C'è stato un problema durante la richiesta HTTP: $1 $2",
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning"></div>',
 	'handheld.css' => '/* Gli stili CSS inseriti qui si applicano ai dispositivi portatili basati sulla skin configurata in $wgHandheldStyle */',
-	'hours' => '{{PLURAL:$1|un\'ora|$1 ore}}',
+	'hours' => "{{PLURAL:$1|un'ora|$1 ore}}",
 	'hebrew-calendar-m10' => 'Tammuz',
 	'hebrew-calendar-m10-gen' => 'Tammuz',
-	'htmlform-invalid-input' => 'Ci sono problemi con l\'input inserito',
-	'htmlform-select-badoption' => 'Il valore specificato non è un\'opzione valida.',
+	'htmlform-invalid-input' => "Ci sono dei problemi con l'input inserito",
+	'htmlform-select-badoption' => "Il valore specificato non è un'opzione valida.",
 	'htmlform-int-invalid' => 'Il valore specificato non è un intero.',
 	'htmlform-float-invalid' => 'Il valore specificato non è un numero.',
 	'htmlform-int-toolow' => 'Il valore specificato è inferiore al minimo di $1',
 	'htmlform-int-toohigh' => 'Il valore specificato è superiore al massimo di $1',
-	'htmlform-required' => 'Questo valore è necessario',
+	'htmlform-required' => 'Questo valore è obbligatorio',
 	'htmlform-submit' => 'Invia',
 	'htmlform-reset' => 'Annulla modifiche',
 	'htmlform-selectorother-other' => 'Altro',
-	'hub-Wikia' => 'Wikia',
+	'hub-Wikia' => 'FANDOM',
 	'highest_ratings' => 'Valutazioni migliori',
 	'hub-Entertainment' => 'Intrattenimento',
 	'hub-Food_and_Drink' => 'Cibo e bevande',
@@ -5120,9 +5241,55 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'(
 	'hub-Video_Games' => 'Videogiochi',
 	'htmlform-no' => 'No',
 	'htmlform-yes' => 'Sì',
-];
+	'history_copyright' => '-',
+	'hours-abbrev' => '$1h',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
+	'hijri-calendar-m5' => 'Jumada al-awwal',
+	'hijri-calendar-m6' => 'Jumada al-thani',
+	'hijri-calendar-m7' => 'Rajab',
+	'hijri-calendar-m8' => "Sha'aban",
+	'hijri-calendar-m9' => 'Ramadan',
+	'hijri-calendar-m10' => 'Shawwal',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
+	'hijri-calendar-m12' => 'Dhu al-Hijjah',
+	'hebrew-calendar-m1' => 'Tishrei',
+	'hebrew-calendar-m2' => 'Cheshvan',
+	'hebrew-calendar-m3' => 'Kislev',
+	'hebrew-calendar-m4' => 'Tevet',
+	'hebrew-calendar-m5' => 'Shevat',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m8' => 'Iyar',
+	'hebrew-calendar-m9' => 'Sivan',
+	'hebrew-calendar-m11' => 'Av',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m1-gen' => 'Tishrei',
+	'hebrew-calendar-m2-gen' => 'Cheshvan',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Tevet',
+	'hebrew-calendar-m5-gen' => 'Shevat',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m8-gen' => 'Iyar',
+	'hebrew-calendar-m9-gen' => 'Sivan',
+	'hebrew-calendar-m11-gen' => 'Av',
+	'hebrew-calendar-m12-gen' => 'Elul',
+	'hidesome' => 'Nascondine alcuni',
+	'hidebots' => 'Nascondi i bot',
+	'hubs' => 'Hubs',
+	'home' => 'Pagina principale',
+	'helpfaq' => 'Aiuto & FAQ',
+	'hub-Videospiele' => 'Videospiele',
+);
 
-$messages['iu'] = [
+$messages['iu'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria nascosta|Categorie nascoste}}',
 	'hidden-category-category' => 'Categorie nascoste',
 	'help' => 'Aiuto',
@@ -5134,9 +5301,9 @@ $messages['iu'] = [
 	'headline_tip' => 'Intestazione di 2° livello',
 	'hr_tip' => 'Linea orizzontale (usare con giudizio)',
 	'hiddencategories' => 'Questa pagina appartiene a {{PLURAL:$1|una categoria nascosta|$1 categorie nascoste}}:',
-	'histlegend' => 'Confronto tra versioni: selezionare le caselle corrispondenti alle versioni desiderate e premere Invio o il pulsante in basso.
+	'histlegend' => "Confronto tra versioni: selezionare le caselle corrispondenti alle versioni desiderate e premere Invio o il pulsante in basso.
 
-Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'({{int:last}})\'\'\' = differenze con la versione precedente, \'\'\'{{int:minoreditletter}}\'\'\' = modifica minore',
+Legenda: '''({{int:cur}})''' = differenze con la versione attuale, '''({{int:last}})''' = differenze con la versione precedente, '''{{int:minoreditletter}}''' = modifica minore",
 	'history-fieldset-title' => 'Scorri nella cronologia',
 	'history-show-deleted' => 'Solo quelli cancellati',
 	'histfirst' => 'Prima',
@@ -5150,22 +5317,22 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'(
 	'history-title' => 'Cronologia delle modifiche di "$1"',
 	'hist' => 'cron',
 	'hide' => 'nascondi',
-	'hookaborted' => 'La modifica che si è tentato di fare è stata interrotta da un hook di un\'estensione.',
+	'hookaborted' => "La modifica che si è tentato di fare è stata interrotta da un hook di un'estensione.",
 	'http-invalid-url' => 'URL non valido: $1',
 	'http-invalid-scheme' => 'URL con il prefisso "$1" non sono supportati.',
 	'http-request-error' => 'Richiesta HTTP fallita a causa di un errore sconosciuto.',
 	'http-read-error' => 'Errore di lettura HTTP.',
 	'http-timed-out' => 'Richiesta HTTP scaduta.',
-	'http-curl-error' => 'Errore durante il recupero dell\'URL: $1',
+	'http-curl-error' => "Errore durante il recupero dell'URL: $1",
 	'http-host-unreachable' => 'URL non raggiungibile.',
-	'http-bad-status' => 'C\'è stato un problema durante la richiesta HTTP: $1 $2',
-	'historywarning' => '\'\'\'Attenzione:\'\'\' La pagina che stai per cancellare ha una cronologia con approssimativamente $1 {{PLURAL:$1|revisione|revisioni}}:',
+	'http-bad-status' => "C'è stato un problema durante la richiesta HTTP: $1 $2",
+	'historywarning' => "'''Attenzione:''' La pagina che stai per cancellare ha una cronologia con approssimativamente $1 {{PLURAL:$1|revisione|revisioni}}:",
 	'handheld.css' => '/* Gli stili CSS inseriti qui si applicano ai dispositivi portatili basati sulla skin configurata in $wgHandheldStyle */',
-	'hours' => '{{PLURAL:$1|un\'ora|$1 ore}}',
+	'hours' => "{{PLURAL:$1|un'ora|$1 ore}}",
 	'hebrew-calendar-m10' => 'Tammuz',
 	'hebrew-calendar-m10-gen' => 'Tammuz',
-	'htmlform-invalid-input' => 'Ci sono problemi con l\'input inserito',
-	'htmlform-select-badoption' => 'Il valore specificato non è un\'opzione valida.',
+	'htmlform-invalid-input' => "Ci sono problemi con l'input inserito",
+	'htmlform-select-badoption' => "Il valore specificato non è un'opzione valida.",
 	'htmlform-int-invalid' => 'Il valore specificato non è un intero.',
 	'htmlform-float-invalid' => 'Il valore specificato non è un numero.',
 	'htmlform-int-toolow' => 'Il valore specificato è inferiore al minimo di $1',
@@ -5174,22 +5341,22 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'(
 	'htmlform-submit' => 'Invia',
 	'htmlform-reset' => 'Annulla modifiche',
 	'htmlform-selectorother-other' => 'Altro',
-];
+);
 
-$messages['ja'] = [
-	'hidden-categories' => '{{PLURAL:$1|隠しカテゴリ}}',
-	'hidden-category-category' => '隠しカテゴリ',
+$messages['ja'] = array(
+	'hidden-categories' => '{PLURAL:$1|Hidden category|Hidden categories}',
+	'hidden-category-category' => '非公開カテゴリ',
 	'help' => 'ヘルプ',
-	'history' => 'ページの履歴',
+	'history' => 'ページ履歴',
 	'history_short' => '履歴',
 	'helppage' => 'ヘルプ:コンテンツ',
-	'hidetoc' => '非表示',
+	'hidetoc' => '非公開にする',
 	'headline_sample' => '見出し文',
 	'headline_tip' => '2段目の見出し',
 	'hr_tip' => '水平線を挿入（利用は控えめに）',
-	'hiddencategories' => 'このページは$1隠しカテゴリに属しています：',
-	'histlegend' => '差分の選択：比較したい版のラジオボタンを選択し、エンターキーを押すか、下部のボタンを押します。<br />
-凡例：\'\'\'({{int:cur}})\'\'\'＝最新版との比較、\'\'\'({{int:last}})\'\'\'＝直前の版との比較、\'\'\'{{int:minoreditletter}}\'\'\'＝細部の編集',
+	'hiddencategories' => 'このページは：{PLURAL:$1|1 hidden category|$1 hidden categories} に属しています。',
+	'histlegend' => '<span style="white-space:nowrap;">下記のリストから、閲覧したい日付をクリックご</span><span style="white-space:nowrap;">ご不明なことは[[Help:Page history|こちら]]で確認</span><br />
+<span style="white-space:nowrap;">(cur) = 最新版との比較, (prev) = 直前の版との比較,</span> <span style="white-space:nowrap;">m = [[Help:Minor edit|minor edit]], → = 細部の編集, ← = 要約の自動編集</span>',
 	'history-fieldset-title' => '履歴の閲覧',
 	'history-show-deleted' => '削除済みのみ',
 	'histfirst' => '最古',
@@ -5197,26 +5364,26 @@ $messages['ja'] = [
 	'historysize' => '$1バイト',
 	'historyempty' => '（空）',
 	'history-feed-title' => '変更履歴',
-	'history-feed-description' => 'このウィキのこのページに関する変更履歴',
+	'history-feed-description' => 'このページに関する変更履歴',
 	'history-feed-item-nocomment' => '$2に$1による',
 	'history-feed-empty' => '要求されたページは存在しません。
-このウィキから既に削除されたか、名前が変更された可能性があります。
-[[Special:Search|このウィキの検索]]で関連する新しいページを探してみてください。',
+このWikiから既に削除されたか、名前が変更された可能性があります。
+[[Special:Search|このWikiの検索]]で関連する新しいページを探してみてください。',
 	'history-title' => '「$1」の変更履歴',
 	'hist' => '履歴',
 	'hide' => '非表示',
-	'hookaborted' => '拡張機能のフックによって、修正が中断されました。',
+	'hookaborted' => '行おうとした変更は拡張機能によって中断されました',
 	'http-invalid-url' => '無効なURL：$1',
 	'http-invalid-scheme' => '"$1"のスキームを含むURLはサポートされていません',
 	'http-request-error' => '不明なエラーによりHTTPリクエストに失敗しました。',
 	'http-read-error' => 'HTTP読み込みエラー。',
 	'http-timed-out' => 'HTTP要求がタイムアウトしました。',
 	'http-curl-error' => '取得に失敗したURL：$1',
-	'http-host-unreachable' => 'URLに到達できません。',
+	'http-host-unreachable' => 'URLを取得できませんでした。',
 	'http-bad-status' => 'HTTP要求中に問題が発生しました：$1$2',
-	'historywarning' => '\'\'\'警告：\'\'\'削除しようとしているページには、約$1版の履歴があります：',
-	'handheld.css' => '/* ここに記述したCSSは$wgHandheldStyleで設定された外装に基づく携帯機器に影響します */',
-	'hours' => '{{PLURAL:$1|$1時間}}',
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning">',
+	'handheld.css' => '/* ここに記述したCSSは$wgHandheldStyleで設定されたスキンに基づく携帯機器に影響します */',
+	'hours' => '{PLURAL:$1|$1 hour|$1 hours}',
 	'hijri-calendar-m1' => 'ムハッラム',
 	'hijri-calendar-m2' => 'サファル',
 	'hijri-calendar-m3' => 'ラビーウ＝ル＝アウワル',
@@ -5264,23 +5431,31 @@ $messages['ja'] = [
 	'htmlform-int-toolow' => '指定された値が$1の最小値未満です',
 	'htmlform-int-toohigh' => '指定された値が$1の最大値を超えています',
 	'htmlform-required' => 'この値は必要です',
-	'htmlform-submit' => '送信',
+	'htmlform-submit' => '登録',
 	'htmlform-reset' => '変更を取り消す',
 	'htmlform-selectorother-other' => 'その他',
-	'hubs' => 'ポータル',
-	'home' => 'メインページ',
+	'hubs' => 'ハブ',
+	'home' => 'ホーム',
 	'helpfaq' => 'ヘルプ & FAQ',
 	'highest_ratings' => '評価の高い記事',
 	'hub-Entertainment' => 'エンターテイメント',
-	'hub-Gaming' => 'ゲーム',
-	'hub-Video_Games' => 'ゲーム',
+	'hub-Gaming' => 'ビデオゲーム
+',
+	'hub-Video_Games' => 'ビデオゲーム
+',
 	'hub-Lifestyle' => 'ライフスタイル',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'htmlform-no' => 'いいえ',
 	'htmlform-yes' => 'はい',
-];
+	'history_copyright' => '-',
+	'hours-abbrev' => '$1時間',
+	'hidesome' => '一部を非表示',
+	'hidebots' => 'ボットを非表示',
+	'hub-Videospiele' => 'Videospiele',
+	'hub-Food_and_Drink' => 'フード＆ドリンク',
+);
 
-$messages['jam'] = [
+$messages['jam'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Idn kiatigari|Idn kiatigaridem}}',
 	'hidden-category-category' => 'Aidwe kiatigari',
 	'help' => 'Elp',
@@ -5292,25 +5467,25 @@ $messages['jam'] = [
 	'headline_tip' => 'Lebl 2 edlain',
 	'hr_tip' => 'Arizantal lain (yuuz spierinli)',
 	'hiddencategories' => 'Dis piej a memb a {{PLURAL:$1|1 idn kiatigari|$1 idn kiatigari}}:',
-	'histlegend' => 'Dif silekshan: maak di riedio bax fi di rivijandem fi kompier ahn lik enta ar di botn a di batom.<br />
-Lejen: \'\'\'({{int:cur}})\'\'\' = difrans wid lietis rivijan, \'\'\'({{int:last}})\'\'\' = difrans wid prisiidn rivijan, \'\'\'{{int:minoreditletter}}\'\'\' = maina edit.',
+	'histlegend' => "Dif silekshan: maak di riedio bax fi di rivijandem fi kompier ahn lik enta ar di botn a di batom.<br />
+Lejen: '''({{int:cur}})''' = difrans wid lietis rivijan, '''({{int:last}})''' = difrans wid prisiidn rivijan, '''{{int:minoreditletter}}''' = maina edit.",
 	'history-fieldset-title' => 'Brouz ischri',
-	'histfirst' => 'Oerli\'is',
+	'histfirst' => "Oerli'is",
 	'histlast' => 'Lietis',
 	'history-title' => 'Rivijan ischri a "$1"',
 	'hist' => 'isch',
 	'hide' => 'Aid',
-];
+);
 
-$messages['jbo'] = [
+$messages['jbo'] = array(
 	'help' => 'sidju ckupau',
 	'history_short' => 'galfi plivei',
 	'hidetoc' => 'toljarco',
 	'hist' => 'galfi plivei',
 	'hide' => 'Toljarco',
-];
+);
 
-$messages['jut'] = [
+$messages['jut'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Skjult klynge|Skjulte klynger}}',
 	'hidden-category-category' => 'Skjulte klynger',
 	'help' => 'Hjælp',
@@ -5330,9 +5505,9 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 	'hist' => 'skigte',
 	'hide' => 'skjul',
 	'historywarning' => 'Advarsel: Æ side du erst ve at slette har en skigte:',
-];
+);
 
-$messages['jv'] = [
+$messages['jv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori sing didelikaké|Kategori sing didelikaké}}',
 	'hidden-category-category' => 'Kategori sing didelikaké',
 	'help' => 'Pitulung',
@@ -5344,7 +5519,7 @@ $messages['jv'] = [
 	'headline_tip' => 'Subbagian tingkat 1',
 	'hr_tip' => 'Garis horisontal',
 	'hiddencategories' => 'Kaca iki sawijining anggota saka {{PLURAL:$1|1 kategori ndelik|$1 kategori-kategori ndelik}}:',
-	'histlegend' => 'Pilihen rong tombol radhio banjur pencèten tombol \'\'bandhingna\'\' kanggo mbandhingaké versi. Klik sawijining tanggal kanggo ndeleng versi kaca ing tanggal iku.<br />(skr) = prabédan karo vèrsi saiki, (akir) = prabédan karo vèrsi sadurungé, \'\'\'s\'\'\' = suntingan sithik, \'\'\'b\'\'\' = suntingan bot, → = suntingan bagian, ← = ringkesan otomatis',
+	'histlegend' => "Pilihen rong tombol radhio banjur pencèten tombol ''bandhingna'' kanggo mbandhingaké versi. Klik sawijining tanggal kanggo ndeleng versi kaca ing tanggal iku.<br />(skr) = prabédan karo vèrsi saiki, (akir) = prabédan karo vèrsi sadurungé, '''s''' = suntingan sithik, '''b''' = suntingan bot, → = suntingan bagian, ← = ringkesan otomatis",
 	'history-fieldset-title' => 'Njlajah sajarah vèrsi sadhurungé',
 	'histfirst' => 'Suwé dhéwé',
 	'histlast' => 'Anyar dhéwé',
@@ -5358,7 +5533,7 @@ $messages['jv'] = [
 	'hist' => 'sajarah',
 	'hide' => 'Delikna',
 	'http-invalid-url' => 'URL ora absah: $1',
-	'historywarning' => '\'\'\'Pènget\'\'\': Kaca sing bakal panjenengan busak ana sajarahé kanthi $1 {{PLURAL:$1|révisi|révisi}}:',
+	'historywarning' => "'''Pènget''': Kaca sing bakal panjenengan busak ana sajarahé kanthi $1 {{PLURAL:$1|révisi|révisi}}:",
 	'htmlform-invalid-input' => 'Ana masalah jroning sawetara input panjenengan',
 	'htmlform-select-badoption' => 'Aji sing panjenengan lebokaké ora absah',
 	'htmlform-int-invalid' => 'Aji sing panjenengan lebokaké dudu angka wutuh (integer).',
@@ -5368,9 +5543,9 @@ $messages['jv'] = [
 	'htmlform-submit' => 'Kirim',
 	'htmlform-reset' => 'Batalna pangowahan',
 	'htmlform-selectorother-other' => 'Liya',
-];
+);
 
-$messages['ka'] = [
+$messages['ka'] = array(
 	'hidden-categories' => 'დამალული {{PLURAL:$1|კატეგორია|კატეგორიები}}',
 	'hidden-category-category' => 'დამალული კატეგორიები',
 	'help' => 'დახმარება',
@@ -5408,7 +5583,7 @@ $messages['ka'] = [
 	'http-curl-error' => 'შეცდომა URL: $1-ის მოთხოვნისას',
 	'http-host-unreachable' => 'URL მიუწვდომელია',
 	'http-bad-status' => 'HTTP მოთხოვნისას აღმოჩენილია შეცდომა - $1 $2',
-	'historywarning' => '\'\'\'ყურადღება:\'\'\' ვერდს, რომლის წაშლასაც აპირებთ, აქვს დიდი ისტორია: ($1)',
+	'historywarning' => "'''ყურადღება:''' ვერდს, რომლის წაშლასაც აპირებთ, აქვს დიდი ისტორია: ($1)",
 	'htmlform-invalid-input' => 'თქვენს მიერ შეყვანილი ინფორმაციის ნაწილმა გამოიწვია პრობლემები',
 	'htmlform-select-badoption' => 'თქვენს მიერ მითითებული მნიშვნელობა მიუღებელია.',
 	'htmlform-int-invalid' => 'თქვენს მიერ მითითებული მნიშვნელობა არ არის მთელი რიცხვი.',
@@ -5418,9 +5593,9 @@ $messages['ka'] = [
 	'htmlform-submit' => 'შენახვა',
 	'htmlform-reset' => 'ცვლილებების გაუქმება',
 	'htmlform-selectorother-other' => 'სხვა',
-];
+);
 
-$messages['kaa'] = [
+$messages['kaa'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Jasırın kategoriya|Jasırın kategoriyalar}}',
 	'hidden-category-category' => 'Jasırın kategoriyalar',
 	'help' => 'Anıqlama',
@@ -5429,28 +5604,28 @@ $messages['kaa'] = [
 	'helppage' => 'Help:Mazmunı',
 	'hidetoc' => 'jasır',
 	'headline_sample' => 'Atama teksti',
-	'headline_tip' => '2-shi da\'rejeli atama',
-	'hr_tip' => 'Gorizont bag\'ıtındag\'ı sızıq (dım ko\'p paydalanban\')',
-	'hiddencategories' => 'Bul bet {{PLURAL:$1|1 jasırın kategoriyasının\'|$1 jasırın kategoriyalarının\'}} ag\'zası:',
-	'histlegend' => 'Tu\'sindirme: salıstırajaq nusqaların\'ızdı saylan\' ha\'mde <Enter> knopkasın yamasa to\'mendegi knopkani basın\'.<br />
-Sha\'rtli belgiler: (ha\'z.) = ha\'zirgi nusqasi menen parqı,
-(aqır.) = aldıng\'ı nusqasi menen parqı, k = kishi o\'zgeris',
+	'headline_tip' => "2-shi da'rejeli atama",
+	'hr_tip' => "Gorizont bag'ıtındag'ı sızıq (dım ko'p paydalanban')",
+	'hiddencategories' => "Bul bet {{PLURAL:$1|1 jasırın kategoriyasının'|$1 jasırın kategoriyalarının'}} ag'zası:",
+	'histlegend' => "Tu'sindirme: salıstırajaq nusqaların'ızdı saylan' ha'mde <Enter> knopkasın yamasa to'mendegi knopkani basın'.<br />
+Sha'rtli belgiler: (ha'z.) = ha'zirgi nusqasi menen parqı,
+(aqır.) = aldıng'ı nusqasi menen parqı, k = kishi o'zgeris",
 	'history-fieldset-title' => 'Tariyxınan izlew',
-	'histfirst' => 'En\' aldıng\'ısı',
-	'histlast' => 'En\' aqırg\'ısı',
+	'histfirst' => "En' aldıng'ısı",
+	'histlast' => "En' aqırg'ısı",
 	'historysize' => '({{PLURAL:$1|1 bayt|$1 bayt}})',
 	'historyempty' => '(bos)',
 	'history-feed-title' => 'Nusqa tariyxı',
-	'history-feed-description' => 'Usı bettin\' wikidegi nusqa tariyxı',
-	'history-feed-item-nocomment' => '$2 waqtındag\'ı $1',
+	'history-feed-description' => "Usı bettin' wikidegi nusqa tariyxı",
+	'history-feed-item-nocomment' => "$2 waqtındag'ı $1",
 	'history-title' => '"$1" betinin\' nusqa tariyxı',
 	'hist' => 'tar.',
 	'hide' => 'jasır',
-	'historywarning' => '\'\'\'Esletpe:\'\'\' Siz o\'shireyin dep atırg\'an betin\'iz shama menen $1 {{PLURAL:$1|nusqanı|nusqanı}} o\'z ishine alg\'an tariyxı bar:',
+	'historywarning' => "'''Esletpe:''' Siz o'shireyin dep atırg'an betin'iz shama menen $1 {{PLURAL:$1|nusqanı|nusqanı}} o'z ishine alg'an tariyxı bar:",
 	'hours-abbrev' => '$1st',
-];
+);
 
-$messages['kab'] = [
+$messages['kab'] = array(
 	'help' => 'Tallat',
 	'history' => 'Amezruy n usebter',
 	'history_short' => 'Amezruy',
@@ -5475,9 +5650,9 @@ Ahat yettumḥa neɣ yettbeddel isem-is.
 	'hist' => 'Amezruy',
 	'hide' => 'Ffer',
 	'historywarning' => 'Aɣtal: Asebter i ara temḥuḍ yesɛa amezruy:',
-];
+);
 
-$messages['kbd'] = [
+$messages['kbd'] = array(
 	'help' => 'Tallat',
 	'history' => 'Amezruy n usebter',
 	'history_short' => 'Amezruy',
@@ -5502,9 +5677,9 @@ Ahat yettumḥa neɣ yettbeddel isem-is.
 	'hist' => 'Amezruy',
 	'hide' => 'Ffer',
 	'historywarning' => 'Aɣtal: Asebter i ara temḥuḍ yesɛa amezruy:',
-];
+);
 
-$messages['kbd-cyrl'] = [
+$messages['kbd-cyrl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Категориэ гъэпшкӀуа|Категориэ гъэпшкӀуахэр}}',
 	'hidden-category-category' => 'Катигориэ гъэпшкӀуахэр',
 	'help' => 'ДэӀэпыкъуэгъуэ',
@@ -5516,7 +5691,7 @@ $messages['kbd-cyrl'] = [
 	'headline_tip' => 'ТІуанэ щхьэгъэ псалъащхьэ',
 	'hr_tip' => 'ЩӀэтхъэгъуэ щӀыхь (куэдрэ къэвмыгъэмэбэп)',
 	'hiddencategories' => 'Мы напэкӀуэцӀыр зхэхьэр $1 {{PLURAL:$1|1 категориэ зэхуэща|$1 категориэ зэхуэщахэр}}:',
-	'histlegend' => 'Гулъытыгъуэ: ({{int:екӀуэкӀ}}) — екӀуэкӀ версиэм зэрыщхьэщыкӀ; ({{int:япэрыт}}) — япэрыт версиэм зэрышъхьэщыкӀ; \'\'\'{{int:цӀыкӀу}}\'\'\' — цӀыкӀу зэхъуэкӀыгъуэ',
+	'histlegend' => "Гулъытыгъуэ: ({{int:екӀуэкӀ}}) — екӀуэкӀ версиэм зэрыщхьэщыкӀ; ({{int:япэрыт}}) — япэрыт версиэм зэрышъхьэщыкӀ; '''{{int:цӀыкӀу}}''' — цӀыкӀу зэхъуэкӀыгъуэ",
 	'history-fieldset-title' => 'Тхыдэм хэплъэн',
 	'history-show-deleted' => 'ТегъэкIыжам фIэкI',
 	'histfirst' => 'жьыдыдэхэр',
@@ -5532,9 +5707,9 @@ $messages['kbd-cyrl'] = [
 	'history-title' => '$1 - зэхъуэкIыныгъэм и тхыдэ',
 	'hist' => 'тхыдэ',
 	'hide' => 'ГъэпшкӀун',
-];
+);
 
-$messages['kg'] = [
+$messages['kg'] = array(
 	'help' => 'Nsadisa',
 	'history' => 'Bansoba ya mukanda',
 	'history_short' => 'Bansoba',
@@ -5542,9 +5717,9 @@ $messages['kg'] = [
 	'histfirst' => 'Ya ntete',
 	'histlast' => 'Ya nsuka',
 	'hist' => 'nsoba',
-];
+);
 
-$messages['khw'] = [
+$messages['khw'] = array(
 	'hidden-categories' => '{{PLURAL:$1|کھوشت زمرہ|کھوشت زمرہ جات}}',
 	'hidden-category-category' => 'کھوشت زمرہ جات',
 	'help' => 'مدد',
@@ -5556,11 +5731,11 @@ $messages['khw'] = [
 	'headline_tip' => 'شہ سرخی درجہ دوم',
 	'hr_tip' => 'تھروسکی لکیر (زیادہ استعمال مو کورے)',
 	'hiddencategories' => 'ھیہ صفحہ {{PLURAL:$1|1 کھوشت زمرے|$1 کھوشت زمرہ جات}}ا شامل شیر:',
-	'histlegend' => 'انتخاب: مختلف نسخان موازنہ کوریکو بچے ، پیامی خانان نشان زد کوری موڑا دیرو بٹنا کلک کورے۔
+	'histlegend' => "انتخاب: مختلف نسخان موازنہ کوریکو بچے ، پیامی خانان نشان زد کوری موڑا دیرو بٹنا کلک کورے۔
 
-\'\'\'علامات:\'\'\'
+'''علامات:'''
 
-(رائج) = موجودہ متنو ساری اخـتلاف، (سابقہ) = گزشتہ متنو ساری اختلاف ، م = معمولی ترمیم۔',
+(رائج) = موجودہ متنو ساری اخـتلاف، (سابقہ) = گزشتہ متنو ساری اختلاف ، م = معمولی ترمیم۔",
 	'history-fieldset-title' => 'تاریخو لوڑے',
 	'history-show-deleted' => 'صرفی حذف شدہ',
 	'histfirst' => 'قدیم ترین',
@@ -5569,9 +5744,9 @@ $messages['khw'] = [
 	'history-title' => 'تاریخچہ "$1"',
 	'hist' => 'تاریخچہ',
 	'hide' => 'مو پشاوے',
-];
+);
 
-$messages['kiu'] = [
+$messages['kiu'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategoriya wedariyaiye|Kategoriyê wedariyaey}}',
 	'hidden-category-category' => 'Kategoriyê wedariyaey',
 	'help' => 'Phoşti',
@@ -5583,9 +5758,9 @@ $messages['kiu'] = [
 	'headline_tip' => 'Serrêza sewiya 2ine',
 	'hr_tip' => 'Xeta ufqiye (zaf megurene)',
 	'hiddencategories' => 'Na pele mensuba {{PLURAL:$1|1 kategoriya nımıtiya|$1 kategoriunê nımıtuna}}:',
-	'histlegend' => 'Ferqê weçinıtene: Qutiya verziyonun serba têversanaene isaret ke u dest be \'\'enter\'\'i ya ki gozaga cêrêne ro ne.<br />
+	'histlegend' => "Ferqê weçinıtene: Qutiya verziyonun serba têversanaene isaret ke u dest be ''enter''i ya ki gozaga cêrêne ro ne.<br />
 Cedwel: (pey) = ferqê verziyonê peyêni,
-(ver) = ferqê verziyonê verêni, Q = vurnaiso qızkek.',
+(ver) = ferqê verziyonê verêni, Q = vurnaiso qızkek.",
 	'history-fieldset-title' => 'Tarixê cıcêraişi',
 	'history-show-deleted' => 'Teyna esterıtey',
 	'histfirst' => 'Verênêr',
@@ -5601,9 +5776,9 @@ Serba pelunê muhimunê newun [[Special:Cıcêre|cıcêraişê wiki de]] bıcere
 	'history-title' => 'Viartê pelga "$1"ine',
 	'hist' => 'ver',
 	'hide' => 'Bınımne',
-];
+);
 
-$messages['kk-arab'] = [
+$messages['kk-arab'] = array(
 	'hidden-categories' => '{{PLURAL:$1|جاسىرىن سانات|جاسىرىن ساناتتار}}',
 	'hidden-category-category' => 'جاسىرىن ساناتتار',
 	'help' => 'انىقتاما',
@@ -5661,9 +5836,9 @@ $messages['kk-arab'] = [
 	'hebrew-calendar-m10-gen' => 'تىموزدىڭ',
 	'hebrew-calendar-m11-gen' => 'ابتىڭ',
 	'hebrew-calendar-m12-gen' => 'ايلولدىڭ',
-];
+);
 
-$messages['kk-cn'] = [
+$messages['kk-cn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|جاسىرىن سانات|جاسىرىن ساناتتار}}',
 	'hidden-category-category' => 'جاسىرىن ساناتتار',
 	'help' => 'انىقتاما',
@@ -5721,9 +5896,9 @@ $messages['kk-cn'] = [
 	'hebrew-calendar-m10-gen' => 'تىموزدىڭ',
 	'hebrew-calendar-m11-gen' => 'ابتىڭ',
 	'hebrew-calendar-m12-gen' => 'ايلولدىڭ',
-];
+);
 
-$messages['kk-cyrl'] = [
+$messages['kk-cyrl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Жасырын санат|Жасырын санаттар}}',
 	'hidden-category-category' => 'Жасырын санаттар',
 	'help' => 'Анықтама',
@@ -5783,9 +5958,9 @@ $messages['kk-cyrl'] = [
 	'hebrew-calendar-m10-gen' => 'тымоздың',
 	'hebrew-calendar-m11-gen' => 'абтың',
 	'hebrew-calendar-m12-gen' => 'айлолдың',
-];
+);
 
-$messages['kk-kz'] = [
+$messages['kk-kz'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Жасырын санат|Жасырын санаттар}}',
 	'hidden-category-category' => 'Жасырын санаттар',
 	'help' => 'Анықтама',
@@ -5845,9 +6020,9 @@ $messages['kk-kz'] = [
 	'hebrew-calendar-m10-gen' => 'тымоздың',
 	'hebrew-calendar-m11-gen' => 'абтың',
 	'hebrew-calendar-m12-gen' => 'айлолдың',
-];
+);
 
-$messages['kk-latn'] = [
+$messages['kk-latn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Jasırın sanat|Jasırın sanattar}}',
 	'hidden-category-category' => 'Jasırın sanattar',
 	'help' => 'Anıqtama',
@@ -5905,9 +6080,9 @@ Osığan qatıstı jaña betterdi [[{{#special:Search}}|bul wïkïden izdewdi]] 
 	'hebrew-calendar-m10-gen' => 'tımozdıñ',
 	'hebrew-calendar-m11-gen' => 'abtıñ',
 	'hebrew-calendar-m12-gen' => 'aýloldıñ',
-];
+);
 
-$messages['kk-tr'] = [
+$messages['kk-tr'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Jasırın sanat|Jasırın sanattar}}',
 	'hidden-category-category' => 'Jasırın sanattar',
 	'help' => 'Anıqtama',
@@ -5965,9 +6140,9 @@ Osığan qatıstı jaña betterdi [[{{#special:Search}}|bul wïkïden izdewdi]] 
 	'hebrew-calendar-m10-gen' => 'tımozdıñ',
 	'hebrew-calendar-m11-gen' => 'abtıñ',
 	'hebrew-calendar-m12-gen' => 'aýloldıñ',
-];
+);
 
-$messages['kl'] = [
+$messages['kl'] = array(
 	'help' => 'Ikiuutit',
 	'history' => 'Oqaluttuassartaa',
 	'history_short' => 'Oqaluttuassartaa',
@@ -5980,9 +6155,9 @@ $messages['kl'] = [
 	'history-title' => '"$1"-p oqaluttuassartaa',
 	'hist' => 'oqalutt',
 	'hide' => 'Assequt',
-];
+);
 
-$messages['km'] = [
+$messages['km'] = array(
 	'hidden-categories' => '{{PLURAL:|ចំណាត់ថ្នាក់ក្រុមមួយដែលត្រូវបានលាក់|ចំណាត់ថ្នាក់ក្រុមចំនួន$1ដែលត្រូវបានលាក់}}',
 	'hidden-category-category' => 'ចំណាត់ថ្នាក់ក្រុមដែលត្រូវបានលាក់',
 	'help' => 'ជំនួយ',
@@ -5994,8 +6169,8 @@ $messages['km'] = [
 	'headline_tip' => 'ចំណងជើងរង​កម្រិត​២',
 	'hr_tip' => 'បន្ទាត់ដេក (មិនសូវប្រើទេ)',
 	'hiddencategories' => 'ទំព័រនេះស្ថិតនៅក្នុង {{PLURAL:$1|ចំណាត់ថ្នាក់ក្រុមដែលត្រូវបានបិទបាំងមួយ|ចំណាត់ថ្នាក់ក្រុមដែលត្រូវបានបិទបាំងចំនួន$1}}:',
-	'histlegend' => 'ជម្រើស៖ សូមគូសក្នុងកូនប្រអប់ពីមុខកំណែដែលអ្នកចង់ប្រៀបធៀប រួចចុចច្នុច enter ឬប៊ូតុងនៅខាងក្រោម។<br />
-\'\'\'ពាក្យតំណាង\'\'\'៖(បច្ចុប្បន្ន) = ភាពខុសគ្នាជាមួយនឹងកំណែបច្ចុប្បន្ន, (ចុងក្រោយ) = ភាពខុសគ្នារវាងកំណែប្រែពីមុន, តិច = កំណែប្រែតិចតួច',
+	'histlegend' => "ជម្រើស៖ សូមគូសក្នុងកូនប្រអប់ពីមុខកំណែដែលអ្នកចង់ប្រៀបធៀប រួចចុចច្នុច enter ឬប៊ូតុងនៅខាងក្រោម។<br />
+'''ពាក្យតំណាង'''៖(បច្ចុប្បន្ន) = ភាពខុសគ្នាជាមួយនឹងកំណែបច្ចុប្បន្ន, (ចុងក្រោយ) = ភាពខុសគ្នារវាងកំណែប្រែពីមុន, តិច = កំណែប្រែតិចតួច",
 	'history-fieldset-title' => 'ស្វែងរកក្នុងប្រវត្តិ',
 	'history-show-deleted' => 'តែទំព័រលុបចោលប៉ុណ្ណោះ',
 	'histfirst' => 'ដំបូងគេ',
@@ -6013,7 +6188,7 @@ $messages['km'] = [
 	'hide' => 'លាក់',
 	'http-invalid-url' => 'URLមិនត្រឹមត្រូវ៖ $1',
 	'http-host-unreachable' => 'មិនអាចទៅកាន់URLបានទេ',
-	'historywarning' => '\'\'\'ប្រយ័ត្ន​៖\'\'\' ទំព័រដែលអ្នកបំរុងនឹងលុប មានប្រវត្តិ​ចំនួនប្រហែល $1 {{PLURAL:$1|កំណែ|កំណែ}}៖',
+	'historywarning' => "'''ប្រយ័ត្ន​៖''' ទំព័រដែលអ្នកបំរុងនឹងលុប មានប្រវត្តិ​ចំនួនប្រហែល $1 {{PLURAL:$1|កំណែ|កំណែ}}៖",
 	'hours-abbrev' => '$1ម៉.',
 	'hours' => '{{PLURAL:$1|$1 ម៉ោង|$1 ម៉ោង}}',
 	'htmlform-invalid-input' => 'មាន​បញ្ហាខ្លះ​​​ជាមួយ​ការ​វាយ​បញ្ចូល​មួយ​ចំនួន​របស់​អ្នក​',
@@ -6026,9 +6201,9 @@ $messages['km'] = [
 	'htmlform-submit' => 'ដាក់ស្នើ',
 	'htmlform-reset' => 'ធ្វើដូចដើមវិញ',
 	'htmlform-selectorother-other' => 'ផ្សេងទៀត',
-];
+);
 
-$messages['kn'] = [
+$messages['kn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ಅಡಗಿಸಲ್ಪಟ್ಟ ವರ್ಗ|ಅಡಗಿಸಲ್ಪಟ್ಟ ವರ್ಗಗಳು}}',
 	'hidden-category-category' => 'ಅಡಗಿಸಲ್ಪಟ್ಟಿರುವ ವರ್ಗಗಳು',
 	'help' => 'ಸಹಾಯ',
@@ -6060,9 +6235,9 @@ $messages['kn'] = [
 	'hide' => 'ಅಡಗಿಸು',
 	'historywarning' => 'ಎಚ್ಚರಿಕೆ: ನೀವು ಅಳಿಸಲು ಹೊರಟಿರುವ ಪುಟಕ್ಕೆ ಸಂಪಾದನೆಯ ಇತಿಹಾಸವಿದೆ:',
 	'htmlform-selectorother-other' => 'ಇತರ',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'hidden-categories' => '{{PLURAL:$1|숨은 분류}}',
 	'hidden-category-category' => '숨은 분류',
 	'help' => '도움말',
@@ -6074,9 +6249,9 @@ $messages['ko'] = [
 	'headline_tip' => '2단계 문단 제목',
 	'hr_tip' => '가로줄(되도록 사용하지 말아 주세요)',
 	'hiddencategories' => '이 문서는 다음 숨은 분류 $1 개에 속해 있습니다:',
-	'histlegend' => '비교하려는 판을 선택한 다음 엔터를 누르거나 아래의 버튼을 누르세요.<br />
-설명: \'\'\'({{int:cur}})\'\'\' = 현재 판과의 차이,
-\'\'\'({{int:last}})\'\'\' = 바로 이전 판과의 차이, \'\'\'{{int:minoreditletter}}\'\'\'= 사소한 편집',
+	'histlegend' => "비교하려는 판을 선택한 다음 엔터를 누르거나 아래의 버튼을 누르세요.<br />
+설명: '''({{int:cur}})''' = 현재 판과의 차이,
+'''({{int:last}})''' = 바로 이전 판과의 차이, '''{{int:minoreditletter}}'''= 사소한 편집",
 	'history-fieldset-title' => '문서의 변경 내력 찾기',
 	'history-show-deleted' => '삭제된 것만',
 	'histfirst' => '초기',
@@ -6101,7 +6276,7 @@ $messages['ko'] = [
 	'http-curl-error' => 'URL 열기 오류: $1',
 	'http-host-unreachable' => 'URL에 접근하지 못했습니다.',
 	'http-bad-status' => 'HTTP 요청 중 오류 발생: $1 $2',
-	'historywarning' => '\'\'\'주의\'\'\': 삭제하려는 문서에 약 $1개의 과거 편집 내역이 있습니다:',
+	'historywarning' => "'''주의''': 삭제하려는 문서에 약 $1개의 과거 편집 내역이 있습니다:",
 	'hours' => '$1시간',
 	'htmlform-invalid-input' => '당신이 입력한 값에 문제가 있습니다.',
 	'htmlform-select-badoption' => '당신이 입력한 값은 올바른 설정이 아닙니다.',
@@ -6119,9 +6294,9 @@ $messages['ko'] = [
 	'hub-Gaming' => '게임',
 	'hub-Lifestyle' => '라이프스타일',
 	'hub-Video_Games' => '게임',
-];
+);
 
-$messages['ko-kp'] = [
+$messages['ko-kp'] = array(
 	'hidden-categories' => '{{PLURAL:$1|숨은 분류}}',
 	'hidden-category-category' => '숨은 분류',
 	'help' => '도움말',
@@ -6133,9 +6308,9 @@ $messages['ko-kp'] = [
 	'headline_tip' => '2단계 문단 제목',
 	'hr_tip' => '가로줄(되도록 사용하지 말아 주세요)',
 	'hiddencategories' => '이 문서는 다음 숨은 분류 $1 개에 속해 있습니다:',
-	'histlegend' => '비교하려는 판을 선택한 다음 엔터를 누르거나 아래의 버튼을 누르세요.<br />
-설명: \'\'\'({{int:cur}})\'\'\' = 현재 판과의 차이,
-\'\'\'({{int:last}})\'\'\' = 바로 이전 판과의 차이, \'\'\'{{int:minoreditletter}}\'\'\'= 사소한 편집',
+	'histlegend' => "비교하려는 판을 선택한 다음 엔터를 누르거나 아래의 버튼을 누르세요.<br />
+설명: '''({{int:cur}})''' = 현재 판과의 차이,
+'''({{int:last}})''' = 바로 이전 판과의 차이, '''{{int:minoreditletter}}'''= 사소한 편집",
 	'history-fieldset-title' => '문서의 변경 내력 찾기',
 	'history-show-deleted' => '삭제된 것만',
 	'histfirst' => '초기',
@@ -6160,7 +6335,7 @@ $messages['ko-kp'] = [
 	'http-curl-error' => 'URL 열기 오류: $1',
 	'http-host-unreachable' => 'URL에 접근하지 못했습니다.',
 	'http-bad-status' => 'HTTP 요청 중 오류 발생: $1 $2',
-	'historywarning' => '\'\'\'주의\'\'\': 삭제하려는 문서에 약 $1개의 과거 편집 내역이 있습니다:',
+	'historywarning' => "'''주의''': 삭제하려는 문서에 약 $1개의 과거 편집 내역이 있습니다:",
 	'hours' => '$1시간',
 	'htmlform-invalid-input' => '당신이 입력한 값에 문제가 있습니다.',
 	'htmlform-select-badoption' => '당신이 입력한 값은 올바른 설정이 아닙니다.',
@@ -6172,9 +6347,9 @@ $messages['ko-kp'] = [
 	'htmlform-submit' => '저장',
 	'htmlform-reset' => '변경한 것을 되돌리기',
 	'htmlform-selectorother-other' => '기타',
-];
+);
 
-$messages['koi'] = [
+$messages['koi'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Сайöвтöм категория|Сайöвтöм категорияэз}}',
 	'hidden-category-category' => 'Сайöвтöм категорияэз',
 	'help' => 'Отсöт',
@@ -6186,7 +6361,7 @@ $messages['koi'] = [
 	'headline_tip' => 'Мöд тшупöта юрним',
 	'hr_tip' => 'Водса визь (видз сiйö шочыника)',
 	'hiddencategories' => 'Этiя листбок пырö $1 {{PLURAL:$1|сайöвтöм категория|сайöвтöм категория|сайöвтöм категорияэз}} коласö:',
-	'histlegend' => 'Вежöртöтаннэз:  \'\'\'({{int:cur}})\'\'\' – мый неöткодьыс öння версиякöт; \'\'\'({{int:last}})\'\'\' – мый неöткодьыс одзжыкся версиякöт,  \'\'\'({{int:minoreditletter}})\'\'\' – невунка вежыштöм.',
+	'histlegend' => "Вежöртöтаннэз:  '''({{int:cur}})''' – мый неöткодьыс öння версиякöт; '''({{int:last}})''' – мый неöткодьыс одзжыкся версиякöт,  '''({{int:minoreditletter}})''' – невунка вежыштöм.",
 	'history-fieldset-title' => 'Видзöтны история',
 	'histfirst' => 'Медважся',
 	'histlast' => 'Неважся',
@@ -6195,9 +6370,9 @@ $messages['koi'] = [
 	'hist' => 'чулалöм',
 	'hide' => 'Сайöвтны',
 	'htmlform-selectorother-other' => 'Мöдiк',
-];
+);
 
-$messages['krc'] = [
+$messages['krc'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Джашырылгъан категория|Джашырылгъан категорияла}}',
 	'hidden-category-category' => 'Джашыртын категорияла',
 	'help' => 'Джардам',
@@ -6209,7 +6384,7 @@ $messages['krc'] = [
 	'headline_tip' => '2-чи дараджалы башлыкъ',
 	'hr_tip' => 'Горизонтал сыз (кёб хайырландырмагъыз)',
 	'hiddencategories' => 'Бу бет $1 {{PLURAL:$1|1 джашырылыннган категориягъа|$1 джашырылыннган категориялагъа}} киреди:',
-	'histlegend' => 'Ангылатыула: \'\'\'({{int:cur}})\'\'\' — бусагъатдагъы версиядан башхалыгъы, \'\'\'({{int:last}})\'\'\' — алдагъы версиядан башхалыгъы; \'\'\'({{int:last}})\'\'\' — гитче тюрлениу',
+	'histlegend' => "Ангылатыула: '''({{int:cur}})''' — бусагъатдагъы версиядан башхалыгъы, '''({{int:last}})''' — алдагъы версиядан башхалыгъы; '''({{int:last}})''' — гитче тюрлениу",
 	'history-fieldset-title' => 'Тарихине къара',
 	'history-show-deleted' => 'Къуру кетерилгенле',
 	'histfirst' => 'Эм эски',
@@ -6234,7 +6409,7 @@ $messages['krc'] = [
 	'http-curl-error' => 'Бу URL-гъа сорууну халаты: $1',
 	'http-host-unreachable' => 'URL-ге джетелмеди',
 	'http-bad-status' => 'HTTP-соруу ишлеген заманында проблема чыкъгъанды: $1 $2',
-	'historywarning' => '\'\'\'Эсгериу:\'\'\' кетериле тургъан бетни $1 {{PLURAL:$1|версиялы|версиялы}} тарихи барды:',
+	'historywarning' => "'''Эсгериу:''' кетериле тургъан бетни $1 {{PLURAL:$1|версиялы|версиялы}} тарихи барды:",
 	'hijri-calendar-m1' => 'Мухаррам',
 	'hijri-calendar-m2' => 'Сафар',
 	'hijri-calendar-m3' => 'Раби-аль-аууаль',
@@ -6277,9 +6452,9 @@ $messages['krc'] = [
 	'htmlform-submit' => 'Джибер',
 	'htmlform-reset' => 'Тюрлендириулени ызына сал',
 	'htmlform-selectorother-other' => 'Башха',
-];
+);
 
-$messages['kri'] = [
+$messages['kri'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Katigori we dem don haid|Katigori-dem we dehm don haid}}',
 	'help' => 'Hep',
 	'history' => 'Pej-im histri',
@@ -6289,31 +6464,31 @@ $messages['kri'] = [
 	'history-fieldset-title' => 'Brawz histri',
 	'hist' => 'hist',
 	'hide' => 'Haid',
-];
+);
 
-$messages['krj'] = [
+$messages['krj'] = array(
 	'help' => 'Bolig',
 	'history' => 'Kasaysayan kang Pahina',
 	'history_short' => 'Kasaysayan',
 	'hidetoc' => 'itago',
 	'hide' => 'Itago',
-];
+);
 
-$messages['ks'] = [
+$messages['ks'] = array(
 	'help' => 'مَدَت',
 	'history_short' => 'توٲریٖخ',
-];
+);
 
-$messages['ks-arab'] = [
+$messages['ks-arab'] = array(
 	'help' => 'مدد',
 	'history_short' => 'توٲریٖخ',
-];
+);
 
-$messages['ks-deva'] = [
+$messages['ks-deva'] = array(
 	'help' => 'मदद',
-];
+);
 
-$messages['ksh'] = [
+$messages['ksh'] = array(
 	'hidden-categories' => 'Verstoche Saachjrupp{{PLURAL:$1||e|e}}',
 	'hidden-category-category' => 'Verstoche Saachjruppe',
 	'help' => 'Hölp',
@@ -6385,9 +6560,9 @@ Dattum+Uhrzigg = don de Version fun dämm Daach un dä Zigg aanzeije.',
 	'htmlform-submit' => 'Lohß Jonn!',
 	'htmlform-reset' => 'Änderunge retuur nämme',
 	'htmlform-selectorother-other' => 'Annder',
-];
+);
 
-$messages['ku'] = [
+$messages['ku'] = array(
 	'hidden-categories' => 'Verstoche Saachjrupp{{PLURAL:$1||e|e}}',
 	'hidden-category-category' => 'Verstoche Saachjruppe',
 	'help' => 'Hölp',
@@ -6459,13 +6634,13 @@ Dattum+Uhrzigg = don de Version fun dämm Daach un dä Zigg aanzeije.',
 	'htmlform-submit' => 'Lohß Jonn!',
 	'htmlform-reset' => 'Änderunge retuur nämme',
 	'htmlform-selectorother-other' => 'Annder',
-];
+);
 
-$messages['ku-arab'] = [
+$messages['ku-arab'] = array(
 	'hidden-category-category' => 'هاوپۆلە شاردراوەکان',
-];
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategoriya veşartî|Kategoriyên veşartî}}',
 	'hidden-category-category' => 'Kategoriyên veşartî',
 	'help' => 'Alîkarî',
@@ -6492,18 +6667,18 @@ $messages['ku-latn'] = [
 	'history-title' => 'Dîroka versyonên "$1"',
 	'hist' => 'dîrok',
 	'hide' => 'veşêre',
-	'historywarning' => '\'\'\'Hişyarî\'\'\': Dîrokeke vê rûpela tu dixwazî jê bibî heye:',
+	'historywarning' => "'''Hişyarî''': Dîrokeke vê rûpela tu dixwazî jê bibî heye:",
 	'htmlform-submit' => 'Tomar bike',
 	'htmlform-reset' => 'Guherandinan vegerîne',
 	'htmlform-selectorother-other' => 'Yên din',
-];
+);
 
-$messages['kv'] = [
+$messages['kv'] = array(
 	'history_short' => 'Важвылӧм',
 	'hide' => 'Дзебны',
-];
+);
 
-$messages['kw'] = [
+$messages['kw'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Class kovys|Class kovys}}',
 	'hidden-category-category' => 'Classys covys',
 	'help' => 'Gweres',
@@ -6514,8 +6689,8 @@ $messages['kw'] = [
 	'headline_sample' => 'Text an titel',
 	'headline_tip' => 'Pednlinen nivel 2',
 	'hiddencategories' => 'Esel a {{PLURAL:$1|1 class covys|$1 class covys}} ew an folen-ma:',
-	'histlegend' => 'Dowisyans an dyffranjow: merkyowgh an kistednow radyo a\'n amendyanjow rag kehevely ha sqwatyowgh \'entra\' po an boton orth goles an folen.<br />
-Alwhedh: \'\'\'({{int:cur}})\'\'\' = dyffrans gen an amendyans diwettha, \'\'\'({{int:last}})\'\'\' = dyffrans gen amendyans kens, \'\'\'{{int:minoreditletter}}\'\'\' = chanj bian.',
+	'histlegend' => "Dowisyans an dyffranjow: merkyowgh an kistednow radyo a'n amendyanjow rag kehevely ha sqwatyowgh 'entra' po an boton orth goles an folen.<br />
+Alwhedh: '''({{int:cur}})''' = dyffrans gen an amendyans diwettha, '''({{int:last}})''' = dyffrans gen amendyans kens, '''{{int:minoreditletter}}''' = chanj bian.",
 	'history-fieldset-title' => 'Peury an istory',
 	'histfirst' => 'An moyha a-varr',
 	'histlast' => 'An diwettha',
@@ -6524,9 +6699,9 @@ Alwhedh: \'\'\'({{int:cur}})\'\'\' = dyffrans gen an amendyans diwettha, \'\'\'(
 	'history-title' => 'Istory an folen "$1"',
 	'hist' => 'ist',
 	'hide' => 'Cudha',
-];
+);
 
-$messages['ky'] = [
+$messages['ky'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Жашырылган категория|Жашырылган категориялар}}',
 	'help' => 'Жардам',
 	'history' => 'Барактын тарыхы',
@@ -6537,8 +6712,8 @@ $messages['ky'] = [
 	'headline_tip' => '2-деңгээлдеги баш аты',
 	'hr_tip' => 'Туурасынын сызык (жыш колдонбоңуз)',
 	'hiddencategories' => 'Бул барак {{PLURAL:$1|1 жашыруун категориянын|$1 жашыруун категориялардын}} мүчөсү:',
-	'histlegend' => 'Айырмалоону тандоо: Салыштырыла турган версияларлын тушундагы тегеректерди белгиле жана "Enter"-ди же астындагы нукуурун бас.<br />
-Түшүндүрүү: \'\'\'({{int:cur}})\'\'\' = соңку версиясынан айырма, \'\'\'({{int:last}})\'\'\' = мурунку версиясынан айырма, \'\'\'{{int:minoreditletter}}\'\'\' = майда оңдоо.',
+	'histlegend' => "Айырмалоону тандоо: Салыштырыла турган версияларлын тушундагы тегеректерди белгиле жана \"Enter\"-ди же астындагы нукуурун бас.<br />
+Түшүндүрүү: '''({{int:cur}})''' = соңку версиясынан айырма, '''({{int:last}})''' = мурунку версиясынан айырма, '''{{int:minoreditletter}}''' = майда оңдоо.",
 	'history-fieldset-title' => 'Тарыхын кара',
 	'history-show-deleted' => 'Өчүрүлгөндөрдү гана',
 	'histfirst' => 'Эң эски',
@@ -6547,9 +6722,9 @@ $messages['ky'] = [
 	'history-title' => '"$1" барактын тарыхына сереп',
 	'hist' => 'тарыхы',
 	'hide' => 'Жашыр',
-];
+);
 
-$messages['la'] = [
+$messages['la'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria celata|Categoriae celatae}}',
 	'hidden-category-category' => 'Categoriae celatae',
 	'help' => 'Adiutatum',
@@ -6561,9 +6736,9 @@ $messages['la'] = [
 	'headline_tip' => 'Linea capitalis scalae 2',
 	'hr_tip' => 'Linea horizontalis (noli saepe uti)',
 	'hiddencategories' => 'Haec pagina ad {{PLURAL:$1|unam categoriam celatam|$1 categorias celatas}} pertinet:',
-	'histlegend' => 'Selige pro dissimilitudine: indica emendationes in botones radiales et "intrare" in claviatura vel "comparatio" imprime ut conferas.<br />
-Titulus: \'\'\'({{int:cur}})\'\'\' = dissimilis ab emendatione novissima,
-\'\'\'({{int:last}})\'\'\' = dissimilis ab emendatione proxima, \'\'\'{{int:minoreditletter}}\'\'\' = recensio minor.',
+	'histlegend' => "Selige pro dissimilitudine: indica emendationes in botones radiales et \"intrare\" in claviatura vel \"comparatio\" imprime ut conferas.<br />
+Titulus: '''({{int:cur}})''' = dissimilis ab emendatione novissima,
+'''({{int:last}})''' = dissimilis ab emendatione proxima, '''{{int:minoreditletter}}''' = recensio minor.",
 	'history-fieldset-title' => 'Quaerere in paginae historia',
 	'histfirst' => 'Veterrimus',
 	'histlast' => 'Novissimus',
@@ -6574,13 +6749,13 @@ Titulus: \'\'\'({{int:cur}})\'\'\' = dissimilis ab emendatione novissima,
 	'history-title' => 'Historia paginae "$1"',
 	'hist' => 'hist',
 	'hide' => 'celare',
-	'historywarning' => '\'\'\'Monitio:\'\'\' Pagina quam delere vis historiam {{PLURAL:$1|unius fere emendationis|$1 fere emendationum}} habet:',
+	'historywarning' => "'''Monitio:''' Pagina quam delere vis historiam {{PLURAL:$1|unius fere emendationis|$1 fere emendationum}} habet:",
 	'htmlform-submit' => 'Submittere',
 	'htmlform-reset' => 'Mutationes abrogare',
 	'htmlform-selectorother-other' => 'Aliud',
-];
+);
 
-$messages['lad'] = [
+$messages['lad'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Katēggoría escondida|Katēggorías escondidas}}',
 	'hidden-category-category' => 'Katēggorías escondidas',
 	'help' => 'Ayudo',
@@ -6592,9 +6767,9 @@ $messages['lad'] = [
 	'headline_tip' => 'Titular de nivel 2',
 	'hr_tip' => 'Liña orizontala (úsala de vez en cuando)',
 	'hiddencategories' => 'Esta hoja es un miembro de {{PLURAL:$1|1 kateggoría escondida|$1 kateggorías escondidas}}:',
-	'histlegend' => 'Selección de diferencias: marca los selectores de las versiones a comparar y pulsa \'\'enter\'\' o el botón de abajo.<br />
+	'histlegend' => "Selección de diferencias: marca los selectores de las versiones a comparar y pulsa ''enter'' o el botón de abajo.<br />
 Leyenda: (act) = diferencias con la versión actual,
-(prev) = diferencias con la versión previa, M = edición menor',
+(prev) = diferencias con la versión previa, M = edición menor",
 	'history-fieldset-title' => 'Buscar en la istoria',
 	'history-show-deleted' => 'Sólamente efassado',
 	'histfirst' => 'Primeras',
@@ -6606,9 +6781,9 @@ Leyenda: (act) = diferencias con la versión actual,
 	'hist' => 'îst',
 	'hide' => 'Esconder',
 	'htmlform-selectorother-other' => 'Otro',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Verstoppt Kategorie|Verstoppt Kategorien}}',
 	'hidden-category-category' => 'Verstoppt Kategorien',
 	'help' => 'Hëllef',
@@ -6620,10 +6795,10 @@ $messages['lb'] = [
 	'headline_tip' => 'Iwwerschrëft vum Niveau 2',
 	'hr_tip' => 'Horizontal Linn (mat Mooss gebrauchen)',
 	'hiddencategories' => 'Dës Säit gehéiert zu {{PLURAL:$1|1 verstoppter Kategorie|$1 verstoppte Kategorien}}:',
-	'histlegend' => 'Fir d\'Ännerungen unzeweisen: Klickt déi zwou Versiounen un, déi solle verglach ginn.<br />
+	'histlegend' => "Fir d'Ännerungen unzeweisen: Klickt déi zwou Versiounen un, déi solle verglach ginn.<br />
 *(aktuell) = Ënnerscheed mat der aktueller Versioun,
 *(lescht) = Ënnerscheed mat der aler Versioun,
-*k = Kleng Ännerung.',
+*k = Kleng Ännerung.",
 	'history-fieldset-title' => 'An de Versioune sichen',
 	'history-show-deleted' => 'nëmmen déi geläschten',
 	'histfirst' => 'Eelsten',
@@ -6639,16 +6814,16 @@ Vläicht gouf se geläscht oder geréckelt.
 	'history-title' => 'Versiounshistorique vun „$1“',
 	'hist' => 'Versiounen',
 	'hide' => 'verstoppen',
-	'hookaborted' => 'D\'Ännerung déi Dir versicht hutt ze maachen ass duerch en \'extension-hook\' ofgebrach ginn.',
+	'hookaborted' => "D'Ännerung déi Dir versicht hutt ze maachen ass duerch en 'extension-hook' ofgebrach ginn.",
 	'http-invalid-url' => 'Net-valabel URL: $1',
 	'http-invalid-scheme' => 'URLe mam Schema "$1" ginn net ënnerstëtzt',
-	'http-request-error' => 'D\'HTTP-Ufro huet wéinst engem onbekannte Feeler net fonctionnéiert.',
+	'http-request-error' => "D'HTTP-Ufro huet wéinst engem onbekannte Feeler net fonctionnéiert.",
 	'http-read-error' => 'HTTP-Feeler beim Liesen.',
 	'http-timed-out' => 'HTTP-Ufro huet ze laang gebraucht (time out).',
 	'http-curl-error' => 'Feeler beim Ofruff vun der URL: $1',
-	'http-host-unreachable' => 'D\'URL konnt net erreecht ginn.',
+	'http-host-unreachable' => "D'URL konnt net erreecht ginn.",
 	'http-bad-status' => 'Et gouf e Problem bäi der HTTP-Ufro: $1 $2',
-	'historywarning' => '\'\'\'Opgepasst:\'\'\' Déi Säit déi Dir läsche wëllt huet en Historique mat ongeféier $1 {{PLURAL:$1|Versioun|Versiounen}}:',
+	'historywarning' => "'''Opgepasst:''' Déi Säit déi Dir läsche wëllt huet en Historique mat ongeféier $1 {{PLURAL:$1|Versioun|Versiounen}}:",
 	'hours' => '{{PLURAL:$1|enger Stonn|$1 Stonnen}}',
 	'htmlform-invalid-input' => 'Et gëtt Problemer mat de Wäerter déi dir aginn hutt.',
 	'htmlform-select-badoption' => 'De Wäert deen Dir aginn hutt ass keng valabel Optioun.',
@@ -6660,14 +6835,14 @@ Vläicht gouf se geläscht oder geréckelt.
 	'htmlform-submit' => 'Späicheren',
 	'htmlform-reset' => 'Ännerungen zrécksetzen',
 	'htmlform-selectorother-other' => 'Anerer',
-];
+);
 
-$messages['lbe'] = [
+$messages['lbe'] = array(
 	'history' => 'Тарих',
 	'history_short' => 'Тарих',
-];
+);
 
-$messages['lez'] = [
+$messages['lez'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Чуьнуьхай категория |Чуьнуьхай категорияр }}',
 	'hidden-category-category' => 'Чуьнуьхай категорияр',
 	'help' => 'Куьмек',
@@ -6689,9 +6864,9 @@ $messages['lez'] = [
 	'history-title' => '$1-ан дегишвилерин тарих',
 	'hist' => 'тарих',
 	'hide' => 'Чуьнуьхун',
-];
+);
 
-$messages['lfn'] = [
+$messages['lfn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria|Categorias}} ascondeda',
 	'hidden-category-category' => 'Categorias ascondeda',
 	'help' => 'Disionario',
@@ -6716,34 +6891,34 @@ $messages['lfn'] = [
 	'hist' => 'isto',
 	'hide' => 'Asconde',
 	'historywarning' => 'Avisa! La paje ce tu intende sutrae, el ave un istoria:',
-];
+);
 
-$messages['lg'] = [
+$messages['lg'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ettuluba erikise|Amatuluba amakise}}',
 	'hidden-category-category' => 'Amatuluba agakisidwa',
 	'help' => 'Nyamba',
-	'history' => 'Ennanda y\'olupapula luno',
+	'history' => "Ennanda y'olupapula luno",
 	'history_short' => 'Ennanda',
 	'helppage' => 'Help:Endagiriro',
 	'hidetoc' => 'kisa endagiriro',
 	'headline_sample' => 'Mutwe omukulu',
-	'headline_tip' => 'Nyiga ku kano okuwandika omutwe ogw\'eddaala ery\'okubiri',
-	'hr_tip' => 'Bw\'onyiga ku kano ofuna olusaze olwawula mu by\'owandika. (Gezaako butakozesa nyingi)',
+	'headline_tip' => "Nyiga ku kano okuwandika omutwe ogw'eddaala ery'okubiri",
+	'hr_tip' => "Bw'onyiga ku kano ofuna olusaze olwawula mu by'owandika. (Gezaako butakozesa nyingi)",
 	'hiddencategories' => 'Olupapula luno lusangibwa mu {{PLURAL:$1|ttuluba erikise limu|matuluba amakise $1}}:',
-	'histlegend' => '\'\'\'Ebyokugerageranizibwa:\'\'\' nyiga obutonnyeze ku likooda zoyagala okugerageranya olyoke onyige eppeesa erya \'Enter\'<br />
+	'histlegend' => "'''Ebyokugerageranizibwa:''' nyiga obutonnyeze ku likooda zoyagala okugerageranya olyoke onyige eppeesa erya 'Enter'<br />
 oba ku gano agali ku lupapula luno.<br />
-\'\'\'Ebigambo:\'\'\' (erw) = enjawulo ku ebiriwo, (eku) = enjawulo ku egikulembera, N = enkyukakyuka entono.',
+'''Ebigambo:''' (erw) = enjawulo ku ebiriwo, (eku) = enjawulo ku egikulembera, N = enkyukakyuka entono.",
 	'history-fieldset-title' => 'Mu nnanda nonamu ebyakolebwa:',
-	'histfirst' => 'Tandikira ku bisinga okuba eby\'edda',
+	'histfirst' => "Tandikira ku bisinga okuba eby'edda",
 	'histlast' => 'Tandikira ku bisinga obupya',
 	'historysize' => '({{PLURAL:$1|bayiti 1|bayiti $1}})',
 	'history-feed-item-nocomment' => 'Bya $1, nga $2',
 	'history-title' => 'Empandika eza "$1"',
 	'hist' => 'ennanda',
 	'hide' => 'Kisa',
-];
+);
 
-$messages['li'] = [
+$messages['li'] = array(
 	'hidden-categories' => 'Verbórge {{PLURAL:$1|categorie|categorië}}',
 	'hidden-category-category' => 'Verbórge categorië',
 	'help' => 'Hölp',
@@ -6765,24 +6940,24 @@ $messages['li'] = [
 	'history-feed-title' => 'Bewerkingseuverzich',
 	'history-feed-description' => 'Bewerkingseuverzich veur dees pazjena op de wiki',
 	'history-feed-item-nocomment' => '$1 op $2',
-	'history-feed-empty' => 'De gevraogde pazjena bestuit neet.
-Wellich is d\'r gewis of vernäömp.
-[[Special:Search|Doorzeuk de wiki]] veur relevante pazjena\'s.',
+	'history-feed-empty' => "De gevraogde pazjena bestuit neet.
+Wellich is d'r gewis of vernäömp.
+[[Special:Search|Doorzeuk de wiki]] veur relevante pazjena's.",
 	'history-title' => 'Gesjiedenis van "$1"',
 	'hist' => 'hist',
 	'hide' => 'Versjtaek',
-	'hookaborted' => 'De wieziging die se perbeers te make is aafgebraoke door \'nen oetbreidingshook.',
+	'hookaborted' => "De wieziging die se perbeers te make is aafgebraoke door 'nen oetbreidingshook.",
 	'http-invalid-url' => 'Ongeldige URL: $1',
 	'http-invalid-scheme' => 'URL\'s mit de ópmaak "$1" waere neet óngersteundj.',
-	'http-request-error' => 'Fout bie \'t verzènje van \'t verzeuk.',
+	'http-request-error' => "Fout bie 't verzènje van 't verzeuk.",
 	'http-read-error' => 'HTTP-laezingsfout.',
 	'http-timed-out' => 'HTTP-verzeuktimeout',
 	'http-curl-error' => 'Óphaolingsfout URL: $1',
 	'http-host-unreachable' => 'Kòs de URL neet bereike',
-	'http-bad-status' => 'd\'r Is e perbleem ópgetraoje bie \'t HTTP-verzeuk: $1 $2',
+	'http-bad-status' => "d'r Is e perbleem ópgetraoje bie 't HTTP-verzeuk: $1 $2",
 	'historywarning' => 'Waorsjoewing: de pazjena die se wils wisse $1 {{PLURAL:$1|versie|versies}}:',
 	'hours' => '{{PLURAL:$1|$1 oer|$1 oer}}',
-	'htmlform-invalid-input' => 'd\'r Zeen perbleme mit inkel ingegaeve waerd',
+	'htmlform-invalid-input' => "d'r Zeen perbleme mit inkel ingegaeve waerd",
 	'htmlform-select-badoption' => 'De ingegaeve waerd is óngeljig.',
 	'htmlform-int-invalid' => 'De ingegaeve waerd is gei gans getal.',
 	'htmlform-float-invalid' => 'De waerd dae se haes ingegaeve is gei getal.',
@@ -6792,9 +6967,9 @@ Wellich is d\'r gewis of vernäömp.
 	'htmlform-submit' => 'Slaon óp',
 	'htmlform-reset' => 'Maak verangeringe óngedaon',
 	'htmlform-selectorother-other' => 'Anges',
-];
+);
 
-$messages['lij'] = [
+$messages['lij'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria ascoza|Categorie ascoze}}',
 	'hidden-category-category' => 'Categorîe ascôse',
 	'help' => 'Agiùtto',
@@ -6805,10 +6980,10 @@ $messages['lij'] = [
 	'headline_sample' => 'Tìtolo',
 	'headline_tip' => 'Tìtolo de 2° livello',
 	'hr_tip' => 'Linnia orissontâ',
-	'hiddencategories' => 'Sta pàgina a l\'é de {{PLURAL:$1|1 categoria ascoza|$1 categorie ascoze}}:',
-	'histlegend' => 'Confronto tra verscioîn: selessionâ e cascette corispondenti a-e verscioîn descideræ e schissâ Inviâ oppûre o pomello lì sotta.
+	'hiddencategories' => "Sta pàgina a l'é de {{PLURAL:$1|1 categoria ascoza|$1 categorie ascoze}}:",
+	'histlegend' => "Confronto tra verscioîn: selessionâ e cascette corispondenti a-e verscioîn descideræ e schissâ Inviâ oppûre o pomello lì sotta.
 
-Leggenda: (corr) = differense co-a verscion corrente, (prec) = differense co-a verscion preçedente, \'\'\'m\'\'\' = modiffica minô',
+Leggenda: (corr) = differense co-a verscion corrente, (prec) = differense co-a verscion preçedente, '''m''' = modiffica minô",
 	'history-fieldset-title' => 'Véddi a stöia',
 	'history-show-deleted' => 'Sôlo scancelæ',
 	'histfirst' => 'Prìmmo',
@@ -6819,10 +6994,10 @@ Leggenda: (corr) = differense co-a verscion corrente, (prec) = differense co-a v
 	'history-title' => 'Stöia de revixoìn de "$1"',
 	'hist' => 'stö',
 	'hide' => 'Ascondi',
-	'historywarning' => 'Attension: A paggina c\'a se sta pe scassâ a g\'ha \'na cronologîa:',
-];
+	'historywarning' => "Attension: A paggina c'a se sta pe scassâ a g'ha 'na cronologîa:",
+);
 
-$messages['liv'] = [
+$messages['liv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Jarā vaŗtõd kategōrij|Jarā vaŗtõd kategōrijõd}}',
 	'help' => 'Opātõks',
 	'history' => 'Kēratõks istōrij',
@@ -6834,8 +7009,8 @@ $messages['liv'] = [
 	'hr_tip' => 'Horizontāli krīpš (kȭlbatõgid bäz tērõmizt)',
 	'hiddencategories' => 'This page is a member of {{PLURAL:$1|1 hidden category|$1 hidden categories}}:
 Se lēḑ um {{PLURAL:$1|īds jarā vaŗtõd kategōrijõs|$1 jarā vaŗtõd kategōrijõs }}:',
-	'histlegend' => 'Pangid merkid versijõd pǟlõ, midā tōtõ līdzinţõ ja glõbžõgid līdzinţimiz knīepkizt. <br />
-Legend: \'\'\'({{int:cur}})\'\'\' = vaiţīd līdzinţõmizõks lǟndz redaktsijõks,, \'\'\'({{int:last}})\'\'\' = vaiţīd līdzinţõmizõks jedmiliz redaktsijõks, \'\'\'{{int:minoreditletter}}\'\'\' = piški mõitõks.',
+	'histlegend' => "Pangid merkid versijõd pǟlõ, midā tōtõ līdzinţõ ja glõbžõgid līdzinţimiz knīepkizt. <br />
+Legend: '''({{int:cur}})''' = vaiţīd līdzinţõmizõks lǟndz redaktsijõks,, '''({{int:last}})''' = vaiţīd līdzinţõmizõks jedmiliz redaktsijõks, '''{{int:minoreditletter}}''' = piški mõitõks.",
 	'history-fieldset-title' => 'Istōrij vaņtlimi',
 	'history-show-deleted' => 'Setku jarā kištāntõd',
 	'histfirst' => 'Ežmizt',
@@ -6844,9 +7019,9 @@ Legend: \'\'\'({{int:cur}})\'\'\' = vaiţīd līdzinţõmizõks lǟndz redaktsij
 	'history-title' => 'Līed "$1" mõitõkst istōrij',
 	'hist' => 'istōrij',
 	'hide' => 'Vaŗ jarā',
-];
+);
 
-$messages['lmo'] = [
+$messages['lmo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categuria scundüda|Categurij scundüü}}',
 	'hidden-category-category' => 'Categurij scundüü',
 	'help' => 'Paginn de jüt',
@@ -6854,22 +7029,22 @@ $messages['lmo'] = [
 	'history_short' => 'Crunulugìa',
 	'helppage' => 'Help:Contegnüü',
 	'hidetoc' => 'scund',
-	'headline_sample' => 'Intestazión de l\'articul',
+	'headline_sample' => "Intestazión de l'articul",
 	'headline_tip' => 'Intestazión de 2° nivel',
 	'hr_tip' => 'Riga urizuntala (duprala cun giüdizi)',
 	'hiddencategories' => 'Quela pagina chì la fa part de {{PLURAL:$1|una categuria|$1 categurij}} scundüü:',
-	'histlegend' => 'Selezion di diferenz: seleziuná i balitt di version de cumpará e pö schisciá \'\'enter\'\' upüra al buton in scima ala tabèlina.<br />
-Spiegazzion di símbul: (cur) = diferenza cun la version curenta, (ültima) = diferenza cun l\'ültima version, M = mudifega piscinína.',
+	'histlegend' => "Selezion di diferenz: seleziuná i balitt di version de cumpará e pö schisciá ''enter'' upüra al buton in scima ala tabèlina.<br />
+Spiegazzion di símbul: (cur) = diferenza cun la version curenta, (ültima) = diferenza cun l'ültima version, M = mudifega piscinína.",
 	'history-fieldset-title' => 'Varda la cronolugia',
 	'histfirst' => 'Püssee vegg',
 	'histlast' => 'Püssee növ',
 	'history-title' => 'Cronolugia di mudifegh de "$1"',
 	'hist' => 'stòria',
 	'hide' => 'Scund',
-	'historywarning' => '\'\'\'Ocio!\'\'\' La pagina che a sii adree a scancelà la gh\'a una stòria cun $1 {{PLURAL:$1|revisión|revisionn}}:',
-];
+	'historywarning' => "'''Ocio!''' La pagina che a sii adree a scancelà la gh'a una stòria cun $1 {{PLURAL:$1|revisión|revisionn}}:",
+);
 
-$messages['ln'] = [
+$messages['ln'] = array(
 	'help' => 'Bosálisi',
 	'history' => 'Mokóló mwa lonkásá',
 	'history_short' => 'Mokóló',
@@ -6884,9 +7059,9 @@ $messages['ln'] = [
 	'hide' => 'kobomba',
 	'htmlform-submit' => 'Kotínda',
 	'htmlform-selectorother-other' => 'Mosúsu',
-];
+);
 
-$messages['lo'] = [
+$messages['lo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ໜວດເຊື່ອງ|ໜວດເຊື່ອງ}}',
 	'hidden-category-category' => 'ບັນດາໜວດເຊື່ອງ',
 	'help' => 'ຊ່ວຍເຫຼືອ',
@@ -6904,9 +7079,9 @@ $messages['lo'] = [
 	'history-title' => 'ປະຫວັດການດັດແກ້ ຂອງ "$1"',
 	'hist' => 'ປະຫວັດ',
 	'hide' => 'ເຊື່ອງ',
-];
+);
 
-$messages['loz'] = [
+$messages['loz'] = array(
 	'help' => 'Likitisize',
 	'history' => 'Bundau petulo',
 	'history_short' => 'Bundau',
@@ -6928,9 +7103,9 @@ Informasi: (bye) = petuho a nca selt,
 	'hist' => 'bundau',
 	'hide' => 'Cwankekile',
 	'historywarning' => 'Petulo, sa afi kulobala, sa bundau di sebelu:',
-];
+);
 
-$messages['lt'] = [
+$messages['lt'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Paslėpta kategorija|Paslėptos kategorijos}}',
 	'hidden-category-category' => 'Paslėptos kategorijos',
 	'help' => 'Pagalba',
@@ -6942,9 +7117,9 @@ $messages['lt'] = [
 	'headline_tip' => 'Antro lygio skyriaus pavadinimas',
 	'hr_tip' => 'Horizontali linija (naudokite taupiai)',
 	'hiddencategories' => 'Šis puslapis priklauso $1 {{PLURAL:$1|paslėptai kategorijai|paslėptoms kategorijoms|paslėptų kategorijų}}:',
-	'histlegend' => 'Skirtumai tarp versijų: pažymėkite lyginamas versijas ir spustelkite \'\'Enter\'\' klavišą arba mygtuką apačioje.<br />
+	'histlegend' => "Skirtumai tarp versijų: pažymėkite lyginamas versijas ir spustelkite ''Enter'' klavišą arba mygtuką apačioje.<br />
 Žymėjimai: (dab) = palyginimas su naujausia versija,
-(pask) = palyginimas su prieš tai buvusia versija, S = smulkus keitimas.',
+(pask) = palyginimas su prieš tai buvusia versija, S = smulkus keitimas.",
 	'history-fieldset-title' => 'Ieškoti istorijoje',
 	'history-show-deleted' => 'Tik ištrinti',
 	'histfirst' => 'Seniausi',
@@ -6969,7 +7144,7 @@ Pamėginkite [[Special:Search|ieškoti projekte]] susijusių naujų puslapių.',
 	'http-curl-error' => 'Klaida siunčiantis URL: $1',
 	'http-host-unreachable' => 'Nepavyko pasiekti URL.',
 	'http-bad-status' => 'Iškilo problemų vykdant HTTP užklausą: $1 $2',
-	'historywarning' => '\'\'\'Dėmesio:\'\'\' Trinamas puslapis turi istoriją su maždaug $1 {{PLURAL:$1|versija|versijomis|versijų}}:',
+	'historywarning' => "'''Dėmesio:''' Trinamas puslapis turi istoriją su maždaug $1 {{PLURAL:$1|versija|versijomis|versijų}}:",
 	'hours' => '{{PLURAL:$1|$1 valandą|$1 valandas|$1 valandų}}',
 	'htmlform-invalid-input' => 'Yra problemų su jūsų įvestimi',
 	'htmlform-select-badoption' => 'Reikšmė, kurią nurodėte, nėra leistina.',
@@ -6981,9 +7156,9 @@ Pamėginkite [[Special:Search|ieškoti projekte]] susijusių naujų puslapių.',
 	'htmlform-submit' => 'Siųsti',
 	'htmlform-reset' => 'Atšaukti pakeitimus',
 	'htmlform-selectorother-other' => 'Kita',
-];
+);
 
-$messages['ltg'] = [
+$messages['ltg'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Nūglobuota kategoreja|Nūglobuotys kategorejis}}',
 	'help' => 'Paleigs',
 	'history' => 'Puslopys viesture',
@@ -7004,9 +7179,9 @@ n = nasvareigs lobuojums.',
 	'history-title' => '"$1" verseju viesture',
 	'hist' => 'viesture',
 	'hide' => 'nūglobuot',
-];
+);
 
-$messages['lv'] = [
+$messages['lv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Slēpta kategorija|Slēptas kategorijas}}',
 	'hidden-category-category' => 'Slēptās kategorijas',
 	'help' => 'Palīdzība',
@@ -7041,7 +7216,7 @@ Mēģiniet [[Special:Search|meklēt]], lai atrastu saistītas lapas!',
 	'http-invalid-url' => 'Nederīgs URL: $1',
 	'http-read-error' => 'HTTP nolasīšanas kļūda.',
 	'http-host-unreachable' => 'URL nevarēja sasniegt.',
-	'historywarning' => '\'\'\'Brīdinājums:\'\'\' Lapai, ko tu gatavojies dzēst, ir vēsture ar aptuveni $1 {{PLURAL:$1|versiju|versijām}}:',
+	'historywarning' => "'''Brīdinājums:''' Lapai, ko tu gatavojies dzēst, ir vēsture ar aptuveni $1 {{PLURAL:$1|versiju|versijām}}:",
 	'hours' => '{{PLURAL:$1|$1 stunda|$1 stundas}}',
 	'htmlform-invalid-input' => 'Ar dažiem datiem no Jūsu ievades ir problēmas',
 	'htmlform-select-badoption' => 'Vērtība, ko Jūs norādījāt, nav derīga.',
@@ -7053,9 +7228,9 @@ Mēģiniet [[Special:Search|meklēt]], lai atrastu saistītas lapas!',
 	'htmlform-submit' => 'Iesniegt',
 	'htmlform-reset' => 'Atcelt izmaiņas',
 	'htmlform-selectorother-other' => 'Citi',
-];
+);
 
-$messages['lzh'] = [
+$messages['lzh'] = array(
 	'hidden-categories' => '$1隱類',
 	'hidden-category-category' => '隱類',
 	'help' => '助',
@@ -7067,8 +7242,8 @@ $messages['lzh'] = [
 	'headline_tip' => '二題',
 	'hr_tip' => '縱線，慎用之',
 	'hiddencategories' => '此頁屬隱類之員有$1：',
-	'histlegend' => '辨異：擇二孔後，按Enter、或點下鈕以辨之。<br />
-釋義：\'\'\'（{{int:cur}}）\'\'\'與今審辨；\'\'\'（{{int:last}}）\'\'\'與前審辨；\'\'\'{{int:minoreditletter}}\'\'\'，校文',
+	'histlegend' => "辨異：擇二孔後，按Enter、或點下鈕以辨之。<br />
+釋義：'''（{{int:cur}}）'''與今審辨；'''（{{int:last}}）'''與前審辨；'''{{int:minoreditletter}}'''，校文",
 	'history-fieldset-title' => '誌覽',
 	'history-show-deleted' => '只刪',
 	'histfirst' => '初',
@@ -7103,11 +7278,11 @@ $messages['lzh'] = [
 	'htmlform-submit' => '呈',
 	'htmlform-reset' => '復',
 	'htmlform-selectorother-other' => '他',
-];
+);
 
-$messages['lzz'] = [
+$messages['lzz'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Şinaxeri kʼatʼegori|Şinaxeri kʼatʼegorepe}}',
-	'hidden-category-category' => 'Şinaxeri k\'at\'egorepe',
+	'hidden-category-category' => "Şinaxeri k'at'egorepe",
 	'help' => 'Meşvela',
 	'history' => 'Butʼkʼaş tarixi',
 	'history_short' => 'Tarixi',
@@ -7126,9 +7301,9 @@ Oxo3ʼonapape: (a3ʼineri) = a3ʼineri versiyoni kʼala na ren farkʼi,
 	'history-title' => '"$1" butʼkʼaşi tarixi',
 	'hist' => 'tarixi',
 	'hide' => 'Doşinaxi',
-];
+);
 
-$messages['mai'] = [
+$messages['mai'] = array(
 	'hidden-categories' => '{{PLURAL:$1|नुकाएल वर्ग|नुकाएल वर्ग }}',
 	'hidden-category-category' => 'नुकाएल संवर्ग सभ',
 	'help' => 'मदति',
@@ -7140,8 +7315,8 @@ $messages['mai'] = [
 	'headline_tip' => 'स्तर 2 मुख्यपंक्ति',
 	'hr_tip' => 'अक्षांशीय पंक्ति (अल्प उपयोग)',
 	'hiddencategories' => 'ई पन्ना सदस्य अछि {{PLURAL:$1|1 नुकाएल संवर्ग|$1 नुकाएल संवर्ग सभ}}:',
-	'histlegend' => 'फाइल तुलना तंत्रांशक चयन: संशोधन तुलनाक रेडियो बक्शाकेँ चिन्हित करू आ एन्टर बटन क्लिक करू वा सभसँ नीचाँक बटन क्लिक करू। <br />
-कहबी: \'\'\'({{int:cur}})\'\'\' = अद्यतन संशोधनसँ अन्तर, \'\'\'({{int:last}})\'\'\' = अद्यतनसँ पहिलुका संशोधनसँ अन्तर, \'\'\'{{int:minoreditletter}}\'\'\' = मामूली सम्पादन।',
+	'histlegend' => "फाइल तुलना तंत्रांशक चयन: संशोधन तुलनाक रेडियो बक्शाकेँ चिन्हित करू आ एन्टर बटन क्लिक करू वा सभसँ नीचाँक बटन क्लिक करू। <br />
+कहबी: '''({{int:cur}})''' = अद्यतन संशोधनसँ अन्तर, '''({{int:last}})''' = अद्यतनसँ पहिलुका संशोधनसँ अन्तर, '''{{int:minoreditletter}}''' = मामूली सम्पादन।",
 	'history-fieldset-title' => 'इतिहास खंघारू',
 	'history-show-deleted' => 'खाली मेटाएल',
 	'histfirst' => 'सभसँ पुरान',
@@ -7166,7 +7341,7 @@ $messages['mai'] = [
 	'http-curl-error' => 'भ्रम निकालैबला सार्वत्रिक विभव संकेत:$1',
 	'http-host-unreachable' => 'सार्वत्रिक विभव संकेत नै पाबि सकल',
 	'http-bad-status' => 'परिसंविद आग्रह काल एकटा समस्या छल: $1 $2',
-	'historywarning' => '\'\'\'चेतौनी:\'\'\' जे पन्ना अहाँ मेटबैबला छी तकर इतिहास अछि लगभग $1 {{PLURAL:$1|revision|revisions}}:',
+	'historywarning' => "'''चेतौनी:''' जे पन्ना अहाँ मेटबैबला छी तकर इतिहास अछि लगभग $1 {{PLURAL:$1|revision|revisions}}:",
 	'hours-abbrev' => '$1h',
 	'hours' => '{{PLURAL:$1|$1 घण्टा|$1 घण्टा}}',
 	'htmlform-invalid-input' => 'अहाँक किछु निवेशनमे किछु समस्या भऽ सकैए।',
@@ -7179,9 +7354,9 @@ $messages['mai'] = [
 	'htmlform-submit' => 'दिअ',
 	'htmlform-reset' => 'परिवर्तन खतम करू',
 	'htmlform-selectorother-other' => 'आन',
-];
+);
 
-$messages['map-bms'] = [
+$messages['map-bms'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori sing diumpetna|Kategori sing diumpetna}}',
 	'hidden-category-category' => 'Kategori sing diumpetna',
 	'help' => 'Rewang',
@@ -7193,7 +7368,7 @@ $messages['map-bms'] = [
 	'headline_tip' => 'Subbagian tingkat 1',
 	'hr_tip' => 'Garis horisontal',
 	'hiddencategories' => 'Kaca kiye kuwe anggota sekang {{PLURAL:$1|1 kategori sing diumpetna|$1 kategori-kategori sing diumpetna}}:',
-	'histlegend' => 'Pilihen rong tombol radhio banjur pencèt tombol \'\'bandhingna\'\' kanggo mbandhingna versi. Klik sawijining tanggal kanggo ndeleng versi kaca nang tanggal kuwe.<br />(sky) = prabédan karo vèrsi sekiye, (akir) = prabédan karo vèrsi sadurungé, \'\'\'c\'\'\' = suntingan cilik, \'\'\'b\'\'\' = suntingan bot, → = suntingan bagiyan, ← = ringkesan otomatis.',
+	'histlegend' => "Pilihen rong tombol radhio banjur pencèt tombol ''bandhingna'' kanggo mbandhingna versi. Klik sawijining tanggal kanggo ndeleng versi kaca nang tanggal kuwe.<br />(sky) = prabédan karo vèrsi sekiye, (akir) = prabédan karo vèrsi sadurungé, '''c''' = suntingan cilik, '''b''' = suntingan bot, → = suntingan bagiyan, ← = ringkesan otomatis.",
 	'history-fieldset-title' => 'Njlajah sajarah vèrsi sadhurungé',
 	'history-show-deleted' => 'Sing dibusak thok',
 	'histfirst' => 'Paling suwe',
@@ -7209,10 +7384,10 @@ Jajal [[Special:Search|goleti nang wiki]] kanggo kaca anyar sing relevan.',
 	'history-title' => 'Sajarah revisi sekang "$1"',
 	'hist' => 'versi',
 	'hide' => 'Umpetna',
-	'historywarning' => '\'\'\'Pènget\'\'\': Kaca sing bakal Rika busek kuwe nduwe sajarahé kanthi $1 {{PLURAL:$1|révisi|révisi}}:',
-];
+	'historywarning' => "'''Pènget''': Kaca sing bakal Rika busek kuwe nduwe sajarahé kanthi $1 {{PLURAL:$1|révisi|révisi}}:",
+);
 
-$messages['mdf'] = [
+$messages['mdf'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Кяшф категорие|Кяшф категориет}}',
 	'hidden-category-category' => 'Кяшф категориет',
 	'help' => 'Лезкс',
@@ -7241,14 +7416,14 @@ $messages['mdf'] = [
 	'history-title' => '"$1"-нь верзиетнень историясна',
 	'hist' => 'ист.',
 	'hide' => 'Кяшемс',
-	'historywarning' => '\'\'\'Инголе мярьгома\'\'\' Тон ёрат нардамс лопа, конань $1 {{PLURAL:$1|верзие|верзиет}}:',
-];
+	'historywarning' => "'''Инголе мярьгома''' Тон ёрат нардамс лопа, конань $1 {{PLURAL:$1|верзие|верзиет}}:",
+);
 
-$messages['mg'] = [
+$messages['mg'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Sokajy misitrika|Sokajy misitrika}} $1',
 	'hidden-category-category' => 'Sokajy misitrika',
 	'help' => 'Fanoroana',
-	'history' => 'Tantaran\'ny pejy',
+	'history' => "Tantaran'ny pejy",
 	'history_short' => 'Tantara',
 	'helppage' => 'Help:Fanoroana',
 	'hidetoc' => 'afeno',
@@ -7256,10 +7431,10 @@ $messages['mg'] = [
 	'headline_tip' => 'Lohatena ambaratonga faha 2',
 	'hr_tip' => 'Tsipika mitsivalana (aza anaranam-po loatra)',
 	'hiddencategories' => '{{PLURAL:$1|anaty sokajy|anaty sokajy}} nasitrika $1 ity pejy ity',
-	'histlegend' => '
-Fifidianana ny votoatiny hampitahaina: mariho eo anilan\'ny versions hampitahaina dia tsindrio ny bokotra Entrée na ny bokotra etsy ambany.<br />
-Tadidio: (ank) = fampitahana amin\'ny votoatin\'ny pejy ankehitriny,
-(farany) = fampitahana amin\'ny version talohan\'ity, M = fanovana madinika',
+	'histlegend' => "
+Fifidianana ny votoatiny hampitahaina: mariho eo anilan'ny versions hampitahaina dia tsindrio ny bokotra Entrée na ny bokotra etsy ambany.<br />
+Tadidio: (ank) = fampitahana amin'ny votoatin'ny pejy ankehitriny,
+(farany) = fampitahana amin'ny version talohan'ity, M = fanovana madinika",
 	'history-fieldset-title' => 'Karohy ny tantara',
 	'history-show-deleted' => 'Voafafa ihany',
 	'histfirst' => 'Ny vao indrindra',
@@ -7267,36 +7442,36 @@ Tadidio: (ank) = fampitahana amin\'ny votoatin\'ny pejy ankehitriny,
 	'historysize' => '($1 {{PLURAL:$1|oktety|oktety}})',
 	'historyempty' => '(tsy misy)',
 	'history-feed-title' => 'Tantara ny fanovàna',
-	'history-feed-description' => 'Tantaran\'ity pejy ity teto amin\'ity wiki ity.',
-	'history-feed-item-nocomment' => '$1 tamin\'ny $2',
-	'history-feed-empty' => 'Tsy misy ny pejy notadiavina.
+	'history-feed-description' => "Tantaran'ity pejy ity teto amin'ity wiki ity.",
+	'history-feed-item-nocomment' => "$1 tamin'ny $2",
+	'history-feed-empty' => "Tsy misy ny pejy notadiavina.
 Mety efa voafafa na voafindra angamba izy.
-Mitadiava amin\'ny \'\'\'[[Special:Search|fiasàna fitadiavina]]\'\'\' mba hitady ny pejy misy fifandraisana.',
-	'history-title' => 'Tantara ny endrik\'i « $1 »',
+Mitadiava amin'ny '''[[Special:Search|fiasàna fitadiavina]]''' mba hitady ny pejy misy fifandraisana.",
+	'history-title' => "Tantara ny endrik'i « $1 »",
 	'hist' => 'tant.',
 	'hide' => 'Afeno',
-	'hookaborted' => 'Najanon\'ny faraingon\'itatra ny fanovana nandramanao natao.',
+	'hookaborted' => "Najanon'ny faraingon'itatra ny fanovana nandramanao natao.",
 	'http-invalid-url' => 'URL diso : $1',
-	'http-invalid-scheme' => 'Tsy zaka ny URL miaraka amin\'ny sema « $1 »',
+	'http-invalid-scheme' => "Tsy zaka ny URL miaraka amin'ny sema « $1 »",
 	'http-request-error' => 'Tsi-fetezana tsy fantam-piaviana teo ampandefasana ilay hataka.',
-	'http-read-error' => 'Tsy fetezana momban\'ny famakiana HTTP.',
+	'http-read-error' => "Tsy fetezana momban'ny famakiana HTTP.",
 	'http-timed-out' => 'Ny fangatahana HTTP dia efa lany daty.',
 	'http-curl-error' => 'Tsi-fetezana teo am-pangalana ny URL : $1',
 	'http-host-unreachable' => 'URL tsy afaka andehanana',
 	'http-bad-status' => 'Nisy tsi-fetezana teo ampandefasana ny hataka HTTP: $1 $2',
-	'historywarning' => '\'\'\'Tandremo :\'\'\' Ny pejy hofafanao io dia manana tantaram-pejy misy famerenana $1{{PLURAL:}}',
-	'htmlform-invalid-input' => 'Nisy olana nitranga tamin\'ny sanda sasany',
+	'historywarning' => "'''Tandremo :''' Ny pejy hofafanao io dia manana tantaram-pejy misy famerenana $1{{PLURAL:}}",
+	'htmlform-invalid-input' => "Nisy olana nitranga tamin'ny sanda sasany",
 	'htmlform-select-badoption' => 'Tsy azo ekena ny sanda nambaranao.',
 	'htmlform-int-invalid' => 'Tsy isa manontolo ny sanda nambaranao.',
 	'htmlform-float-invalid' => 'Tsy isa ny sanda nambaranao.',
-	'htmlform-int-toolow' => 'Ny sanda nambaranao dia kely nohon\'ny fetra iva indrindra $1',
-	'htmlform-int-toohigh' => 'Ny sanda nambaranao dia ngeza nohon\'ny fetra avo indrindra $1',
+	'htmlform-int-toolow' => "Ny sanda nambaranao dia kely nohon'ny fetra iva indrindra $1",
+	'htmlform-int-toohigh' => "Ny sanda nambaranao dia ngeza nohon'ny fetra avo indrindra $1",
 	'htmlform-submit' => 'Alefa',
 	'htmlform-reset' => 'Hanala ny fanovana',
 	'htmlform-selectorother-other' => 'Hafa',
-];
+);
 
-$messages['mhr'] = [
+$messages['mhr'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Шылтыме категорий|Шылтыме категорий-влак}}',
 	'hidden-category-category' => 'Шылтымо категорий-влак',
 	'help' => 'Полшык',
@@ -7308,8 +7483,8 @@ $messages['mhr'] = [
 	'headline_tip' => '2-шо кӱкшытан вуймут',
 	'hr_tip' => 'Тореш (шуэн кучылт)',
 	'hiddencategories' => 'Тиде лаштык $1 {{PLURAL:$1|шылтыме категорийыш|шылтыме категорийыш}} лектеш:',
-	'histlegend' => 'Таҥастарашлаш ӱлнӧ версийым ойырымо полдышым але Enter-ым темдал.<br />
-Умылтарымаш: (кызыт) = кызытсе версий деч ойыртем, (ончычсо) = ончычсо версий деч ойыртем, \'\'\'и\'\'\' = изирак тӧрлатыме.',
+	'histlegend' => "Таҥастарашлаш ӱлнӧ версийым ойырымо полдышым але Enter-ым темдал.<br />
+Умылтарымаш: (кызыт) = кызытсе версий деч ойыртем, (ончычсо) = ончычсо версий деч ойыртем, '''и''' = изирак тӧрлатыме.",
 	'history-fieldset-title' => 'Эртымгорным ончыкташ',
 	'histfirst' => 'Эн тошто',
 	'histlast' => 'Эн у',
@@ -7318,17 +7493,17 @@ $messages['mhr'] = [
 	'hist' => 'эрт.',
 	'hide' => 'шылташ',
 	'historywarning' => 'Тӱтко лий: шӧраш шонымо лаштыкет вашталтыш-влак нерген эртымгорным нумалеш:',
-];
+);
 
-$messages['mi'] = [
+$messages['mi'] = array(
 	'help' => 'Whakamārama',
 	'history' => 'Kōrero Nehe',
 	'history_short' => 'Tuhinga/kaituhi',
 	'hidetoc' => 'hunaia',
 	'hide' => 'Hunaia',
-];
+);
 
-$messages['min'] = [
+$messages['min'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori tapandam|Kategori tapandam}}',
 	'hidden-category-category' => 'Kategori tasambunyi',
 	'help' => 'Bantuan',
@@ -7340,8 +7515,8 @@ $messages['min'] = [
 	'headline_tip' => 'Tingkek 2 tajuk',
 	'hr_tip' => 'Garih horizontal',
 	'hiddencategories' => 'Laman ko marupokan kalompok dari {{PLURAL:$1|1 kategori tapandam|$1 kategori tapandam}}:',
-	'histlegend' => 'Membandingkan pilihan: Tandoi dari revisi yang ingin dibandingkan dengan memilih kotak radionyo dan tekan tombol \'\'Bandingkan revisi pilihan\'\'.<br />
-Legend: \'\'\'({{int:kini}})\'\'\' = perbedaan jo revisi terakhir, \'\'\'({{int:dulu}})\'\'\' = perbedaan jo revisi sabalunnyo, \'\'\'{{int:k}}\'\'\' = suntingan ketek, \'\'\'{{int:b}}\'\'\' = suntingan bot.',
+	'histlegend' => "Membandingkan pilihan: Tandoi dari revisi yang ingin dibandingkan dengan memilih kotak radionyo dan tekan tombol ''Bandingkan revisi pilihan''.<br />
+Legend: '''({{int:kini}})''' = perbedaan jo revisi terakhir, '''({{int:dulu}})''' = perbedaan jo revisi sabalunnyo, '''{{int:k}}''' = suntingan ketek, '''{{int:b}}''' = suntingan bot.",
 	'history-fieldset-title' => 'Telusuri riwayat',
 	'history-show-deleted' => 'Hanyo nan dihapuih',
 	'histfirst' => 'Nan lamo',
@@ -7350,9 +7525,9 @@ Legend: \'\'\'({{int:kini}})\'\'\' = perbedaan jo revisi terakhir, \'\'\'({{int:
 	'history-title' => 'Riwayat revisi dari "$1"',
 	'hist' => 'versi',
 	'hide' => 'Suruakkan',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Скриена категорија|Скриени категории}}',
 	'hidden-category-category' => 'Скриени категории',
 	'help' => 'Помош',
@@ -7364,8 +7539,8 @@ $messages['mk'] = [
 	'headline_tip' => 'Поднаслов',
 	'hr_tip' => 'Хоризонтална линија',
 	'hiddencategories' => 'Оваа страница припаѓа на {{PLURAL:$1|1 скриена категорија|$1 скриени категории}}:',
-	'histlegend' => 'Разлика помеѓу ревизии: означете ги ревизиите кои сакате да ги споредите и притиснете Enter или копчето на дното од страницата.<br />
-Легенда: \'\'\'({{int:cur}})\'\'\' = разлика со последна ревизија, \'\'\'({{int:last}})\'\'\' = разлика со претходна ревизија, \'\'\'{{int:minoreditletter}}\'\'\' = ситна промена.',
+	'histlegend' => "Разлика помеѓу ревизии: означете ги ревизиите кои сакате да ги споредите и притиснете Enter или копчето на дното од страницата.<br />
+Легенда: '''({{int:cur}})''' = разлика со последна ревизија, '''({{int:last}})''' = разлика со претходна ревизија, '''{{int:minoreditletter}}''' = ситна промена.",
 	'history-fieldset-title' => 'Прелистување на историја',
 	'history-show-deleted' => 'Само избришани',
 	'histfirst' => 'Први',
@@ -7390,7 +7565,7 @@ $messages['mk'] = [
 	'http-curl-error' => 'Грешка при добивањето на URL: $1',
 	'http-host-unreachable' => 'Не можев да пристапам до URL-адресата',
 	'http-bad-status' => 'Се појави проблем во текот на обработката на HTTP-барањето: $1 $2',
-	'historywarning' => '\'\'\'Предупредување:\'\'\' Страницата којашто сакате да ја избришете има историја со околу $1 {{PLURAL:$1|ревизија|ревизии}}:',
+	'historywarning' => "'''Предупредување:''' Страницата којашто сакате да ја избришете има историја со околу $1 {{PLURAL:$1|ревизија|ревизии}}:",
 	'handheld.css' => '/* Тука поставениот CSS ќе се применува во рачните уреди со руво прилагодено во $wgHandheldStyle */',
 	'hours-abbrev' => '$1 ч',
 	'hours' => '{{PLURAL:$1|$1 час|$1 часа}}',
@@ -7444,9 +7619,9 @@ $messages['mk'] = [
 	'htmlform-submit' => 'Поднеси',
 	'htmlform-reset' => 'Откажи промени',
 	'htmlform-selectorother-other' => 'Друго',
-];
+);
 
-$messages['ml'] = [
+$messages['ml'] = array(
 	'hidden-categories' => '{{PLURAL:$1|മറഞ്ഞിരിക്കുന്ന വർഗ്ഗം|മറഞ്ഞിരിക്കുന്ന വർഗ്ഗങ്ങൾ}}',
 	'hidden-category-category' => 'മറഞ്ഞിരിക്കുന്ന വർഗ്ഗങ്ങൾ',
 	'help' => 'സഹായം',
@@ -7458,9 +7633,9 @@ $messages['ml'] = [
 	'headline_tip' => 'രണ്ടാംഘട്ട തലക്കെട്ട്',
 	'hr_tip' => 'തിരശ്ചീനരേഖ (മിതമായി മാത്രം ഉപയോഗിക്കുക)',
 	'hiddencategories' => 'ഈ താൾ {{PLURAL:$1|മറഞ്ഞിരിക്കുന്ന ഒരു വർഗ്ഗത്തിൽ|മറഞ്ഞിരിക്കുന്ന $1 വർഗ്ഗങ്ങളിൽ}} അംഗമാണു്‌:',
-	'histlegend' => 'വ്യത്യാസങ്ങൾ ഒത്തുനോക്കാൻ: ഒത്തുനോക്കേണ്ട പതിപ്പുകൾക്കൊപ്പമുള്ള റേഡിയോ ബട്ടൺ തിരഞ്ഞെടുത്ത് \'\'"തിരഞ്ഞെടുത്ത പതിപ്പുകൾ തമ്മിലുള്ള വ്യത്യാസം കാണുക"\'\' എന്ന ബട്ടൺ ഞെക്കുകയോ ENTER കീ അമർത്തുകയോ ചെയ്യുക.<br />
+	'histlegend' => "വ്യത്യാസങ്ങൾ ഒത്തുനോക്കാൻ: ഒത്തുനോക്കേണ്ട പതിപ്പുകൾക്കൊപ്പമുള്ള റേഡിയോ ബട്ടൺ തിരഞ്ഞെടുത്ത് ''\"തിരഞ്ഞെടുത്ത പതിപ്പുകൾ തമ്മിലുള്ള വ്യത്യാസം കാണുക\"'' എന്ന ബട്ടൺ ഞെക്കുകയോ ENTER കീ അമർത്തുകയോ ചെയ്യുക.<br />
 
-സൂചന: (ഇപ്പോൾ) = നിലവിലുള്ള പതിപ്പുമായുള്ള വ്യത്യാസം, (മുമ്പ്) = തൊട്ടുമുൻപത്തെ പതിപ്പുമായുള്ള വ്യത്യാസം, (ചെ.) = ചെറിയ തിരുത്തൽ.',
+സൂചന: (ഇപ്പോൾ) = നിലവിലുള്ള പതിപ്പുമായുള്ള വ്യത്യാസം, (മുമ്പ്) = തൊട്ടുമുൻപത്തെ പതിപ്പുമായുള്ള വ്യത്യാസം, (ചെ.) = ചെറിയ തിരുത്തൽ.",
 	'history-fieldset-title' => 'നാൾവഴി പരിശോധന',
 	'history-show-deleted' => 'മായ്ക്കപ്പെട്ടവ മാത്രം',
 	'histfirst' => 'പഴയവ',
@@ -7485,7 +7660,7 @@ $messages['ml'] = [
 	'http-curl-error' => 'യു.ആർ.എൽ. ശേഖരിക്കുന്നതിൽ പിഴവ്: $1',
 	'http-host-unreachable' => 'യു.ആർ.എൽ.-ല്‍ എത്തിപ്പെടാന്‍ സാധിച്ചില്ല',
 	'http-bad-status' => 'എച്ച്.റ്റി.റ്റി.പി. അഭ്യർത്ഥനാ വേളയിൽ ഒരു പിഴവുണ്ടായി: $1 $2',
-	'historywarning' => '\'\'\'മുന്നറിയിപ്പ്\'\'\': താങ്കൾ മായ്ക്കുവാൻ പോകുന്ന താളിനു ഏകദേശം {{PLURAL:$1|ഒരു നാൾപ്പതിപ്പ്|$1 നാൾപ്പതിപ്പുകൾ}} ഉള്ള നാൾവഴി ഉണ്ട്:',
+	'historywarning' => "'''മുന്നറിയിപ്പ്''': താങ്കൾ മായ്ക്കുവാൻ പോകുന്ന താളിനു ഏകദേശം {{PLURAL:$1|ഒരു നാൾപ്പതിപ്പ്|$1 നാൾപ്പതിപ്പുകൾ}} ഉള്ള നാൾവഴി ഉണ്ട്:",
 	'hours' => '{{PLURAL:$1|ഒരു മണിക്കൂർ|$1 മണിക്കൂർ}}',
 	'htmlform-invalid-input' => 'താങ്കൾ നൽകിയ ചില വിവരങ്ങളിൽ അപാകതകളുണ്ട്',
 	'htmlform-select-badoption' => 'താങ്കൾ നൽകിയ വില ഒരു സ്വീകാര്യമായ ഉപാധിയല്ല.',
@@ -7497,9 +7672,9 @@ $messages['ml'] = [
 	'htmlform-submit' => 'സമർപ്പിക്കുക',
 	'htmlform-reset' => 'മാറ്റങ്ങൾ വേണ്ട',
 	'htmlform-selectorother-other' => 'മറ്റുള്ളവ',
-];
+);
 
-$messages['mn'] = [
+$messages['mn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Нуугдсан ангилал|Нуугдсан ангиллууд}}',
 	'hidden-category-category' => 'Нуугдсан ангиллууд',
 	'help' => 'Тусламж',
@@ -7538,7 +7713,7 @@ $messages['mn'] = [
 	'http-curl-error' => 'Дараах URL-г авчрахад алдаа гарав: $1',
 	'http-host-unreachable' => 'URL-д хүрч чадсангүй.',
 	'http-bad-status' => 'HTTP хандалтын үед асуудал үүсэв: $1 $2',
-	'historywarning' => '\'\'\'Анхаар\'\'\': Таны устгах гэж байгаа хуудас $1 орчим засвар бүхий түүхтэй байна:',
+	'historywarning' => "'''Анхаар''': Таны устгах гэж байгаа хуудас $1 орчим засвар бүхий түүхтэй байна:",
 	'htmlform-invalid-input' => 'Таны оролтын зарим хэсэгт асуудал байна',
 	'htmlform-select-badoption' => 'Таны өгсөн утга хүчинтэй бус байна.',
 	'htmlform-int-invalid' => 'Таны өгсөн утга бүхэл тоо биш байна.',
@@ -7549,9 +7724,9 @@ $messages['mn'] = [
 	'htmlform-submit' => 'Явуулах',
 	'htmlform-reset' => 'Өөрчлөлтүүдийг цуцлах',
 	'htmlform-selectorother-other' => 'Бусад',
-];
+);
 
-$messages['mo'] = [
+$messages['mo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|категорие аскунсэ|категорий аскунсе}}',
 	'help' => 'Ажутор',
 	'history' => 'Историкул паӂиний',
@@ -7568,9 +7743,9 @@ $messages['mo'] = [
 	'history-title' => 'Историкул ревизиилор пентру «$1»',
 	'hist' => 'ист',
 	'hide' => 'аскунде',
-];
+);
 
-$messages['mr'] = [
+$messages['mr'] = array(
 	'hidden-categories' => '{{PLURAL:$1|लपविलेला वर्ग|लपविलेले वर्ग}}',
 	'hidden-category-category' => 'लपविलेले वर्ग',
 	'help' => 'साहाय्य',
@@ -7624,9 +7799,9 @@ $messages['mr'] = [
 	'htmlform-submit' => 'पाठवा',
 	'htmlform-reset' => 'बदल उलटवा',
 	'htmlform-selectorother-other' => 'इतर',
-];
+);
 
-$messages['mrj'] = [
+$messages['mrj'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Шӹлтӹмӹ категори| Шӹлтӹмӹ категоривлӓ}}',
 	'help' => 'Палшык',
 	'history' => 'Истори',
@@ -7637,16 +7812,16 @@ $messages['mrj'] = [
 	'headline_tip' => '2-шы кӱкшӹцӓн тӹнг лӹм',
 	'hr_tip' => 'Горизонталь вола (шӹренжок идӓ кычылт)',
 	'hiddencategories' => 'Ти ӹлӹштӓш $1 {{PLURAL:$1|шӹлтӹмӹ категориш|шӹлтӹмӹ  категоривлӓш|шӹлтӹмӹ категориш пыра}}:',
-	'histlegend' => 'Ынгылдарымашвлӓ: (кӹзӹтшӹ) —кӹзӹтшӹ верси гӹц айыртемӓлтеш ; (анзыл.) — анзылныш верси гӹц айыртемӓлтеш; \'\'\'и\'\'\' — изи вашталтымаш',
+	'histlegend' => "Ынгылдарымашвлӓ: (кӹзӹтшӹ) —кӹзӹтшӹ верси гӹц айыртемӓлтеш ; (анзыл.) — анзылныш верси гӹц айыртемӓлтеш; '''и''' — изи вашталтымаш",
 	'history-fieldset-title' => 'Историм анжалаш',
 	'histfirst' => 'сек тоштывлӓ',
 	'histlast' => 'шукердшӹ агыл',
 	'history-title' => '$1 — вашталтымашвлӓн историштӹ',
 	'hist' => 'истори',
 	'hide' => 'шӹлтӓш',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori tersembunyi|Kategori-kategori tersembunyi}}',
 	'hidden-category-category' => 'Kategori tersembunyi',
 	'help' => 'Bantuan',
@@ -7658,9 +7833,9 @@ $messages['ms'] = [
 	'headline_tip' => 'Tajuk peringkat 2',
 	'hr_tip' => 'Garis melintang (gunakan dengan hemat)',
 	'hiddencategories' => 'Laman ini terdapat dalam $1 kategori tersembunyi:',
-	'histlegend' => 'Pemilihan perbezaan: tandakan butang radio bagi versi-versi yang ingin dibandingkan dan tekan butang \'\'enter\'\' atau butang di bawah.<br />
+	'histlegend' => "Pemilihan perbezaan: tandakan butang radio bagi versi-versi yang ingin dibandingkan dan tekan butang ''enter'' atau butang di bawah.<br />
 Petunjuk: (kini) = perbezaan dengan versi terkini,
-(akhir) = perbezaan dengan versi sebelumnya, K = suntingan kecil.',
+(akhir) = perbezaan dengan versi sebelumnya, K = suntingan kecil.",
 	'history-fieldset-title' => 'Lihat sejarah',
 	'history-show-deleted' => 'Dihapuskan sahaja',
 	'histfirst' => 'Terawal',
@@ -7685,7 +7860,7 @@ Cuba [[Special:Search|cari]] laman lain yang mungkin berkaitan.',
 	'http-curl-error' => 'Ralat mendapatkan URL: $1',
 	'http-host-unreachable' => 'URL tidak dapat dicapai.',
 	'http-bad-status' => 'Berlaku masalah ketika permintaan HTTP: $1 $2',
-	'historywarning' => '\'\'\'Amaran:\'\'\' Laman yang ingin anda hapuskan mengandungi sejarah dengan kira-kira $1 {{PLURAL:$1|semakan|semakan}}:',
+	'historywarning' => "'''Amaran:''' Laman yang ingin anda hapuskan mengandungi sejarah dengan kira-kira $1 {{PLURAL:$1|semakan|semakan}}:",
 	'hours-abbrev' => '$1j',
 	'hours' => '$1 jam',
 	'hijri-calendar-m1' => 'Muharam',
@@ -7710,9 +7885,9 @@ Cuba [[Special:Search|cari]] laman lain yang mungkin berkaitan.',
 	'htmlform-submit' => 'Hantar',
 	'htmlform-reset' => 'Undur perubahan',
 	'htmlform-selectorother-other' => 'Lain-lain',
-];
+);
 
-$messages['mt'] = [
+$messages['mt'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategorija moħbija|Kategoriji moħbija}}',
 	'hidden-category-category' => 'Kategoriji moħbija',
 	'help' => 'Għajnuna',
@@ -7720,13 +7895,13 @@ $messages['mt'] = [
 	'history_short' => 'Kronoloġija',
 	'helppage' => 'Help:Kontenut',
 	'hidetoc' => 'aħbi',
-	'headline_sample' => 'Kliem ta\' l-ewwel vers',
-	'headline_tip' => 'L-ewwel vers ta\' livell 2',
+	'headline_sample' => "Kliem ta' l-ewwel vers",
+	'headline_tip' => "L-ewwel vers ta' livell 2",
 	'hr_tip' => 'Linja mimduda (uża bil-qies)',
-	'hiddencategories' => 'Din il-paġna hija membru ta\' {{PLURAL:$1|1 kategorija moħbija|$1 kategoriji moħbija}}:',
-	'histlegend' => 'Selezzjoni diff: marka l-kaxxi tar-radju tal-verżjonijiet sabiex tagħmel paragun u agħfas enter jew il-buttuna fin-naħħa t\'isfel.<br />
+	'hiddencategories' => "Din il-paġna hija membru ta' {{PLURAL:$1|1 kategorija moħbija|$1 kategoriji moħbija}}:",
+	'histlegend' => "Selezzjoni diff: marka l-kaxxi tar-radju tal-verżjonijiet sabiex tagħmel paragun u agħfas enter jew il-buttuna fin-naħħa t'isfel.<br />
 Leġġenda: (kur) = differenzi bil-verżjoni kurrenti,
-(l-aħħar) = differenzi bil-verżjoni preċedenti, M = modifiki żgħar.',
+(l-aħħar) = differenzi bil-verżjoni preċedenti, M = modifiki żgħar.",
 	'history-fieldset-title' => 'Fittex fil-kronoloġija',
 	'history-show-deleted' => 'Dawk biss imħassra',
 	'histfirst' => 'L-iġded',
@@ -7736,13 +7911,13 @@ Leġġenda: (kur) = differenzi bil-verżjoni kurrenti,
 	'history-feed-title' => 'Kronoloġija',
 	'history-feed-description' => 'Kronoloġija għal din il-paġna fuq dan il-wiki',
 	'history-feed-item-nocomment' => '$1 fil- $2',
-	'history-feed-empty' => 'Il-Paġna rikjesta qas teżisti.
-Jista\' jkun li ġiet imħassra mill-wiki, jew imsemmija mill-ġdid.
-Prova [[Special:Search|fittex fuq il-wiki]] għal paġni relevanti ġodda.',
+	'history-feed-empty' => "Il-Paġna rikjesta qas teżisti.
+Jista' jkun li ġiet imħassra mill-wiki, jew imsemmija mill-ġdid.
+Prova [[Special:Search|fittex fuq il-wiki]] għal paġni relevanti ġodda.",
 	'history-title' => 'Kronoloġija tal-modifiki ta\' "$1"',
 	'hist' => 'kron',
 	'hide' => 'Aħbi',
-	'hookaborted' => 'Il-modifika li ppruvajt tagħmel ġiet imwaqqfa minn \'\'hook\'\' ta\' estensjoni.',
+	'hookaborted' => "Il-modifika li ppruvajt tagħmel ġiet imwaqqfa minn ''hook'' ta' estensjoni.",
 	'http-invalid-url' => 'URL invalida: "$1"',
 	'http-invalid-scheme' => 'URLs bil-press "$1" mhumiex appoġġjati.',
 	'http-request-error' => 'Rikjesta HTTP falliet minħabba żball mhux magħruf.',
@@ -7751,22 +7926,22 @@ Prova [[Special:Search|fittex fuq il-wiki]] għal paġni relevanti ġodda.',
 	'http-curl-error' => 'Żball fil-kisba tal-URL: $1',
 	'http-host-unreachable' => 'Il-URL ma setgħetx tintlaħaq.',
 	'http-bad-status' => 'Kien hemm problema matul ir-rikjesta HTTP: $1 $2',
-	'historywarning' => '\'\'\'Twissija:\'\'\' Il-paġna li se tħassar għandha kronoloġija b\'madwar {{PLURAL:$1|reviżjoni waħda|$1 reviżjoni}}:',
+	'historywarning' => "'''Twissija:''' Il-paġna li se tħassar għandha kronoloġija b'madwar {{PLURAL:$1|reviżjoni waħda|$1 reviżjoni}}:",
 	'hours-abbrev' => '$1S',
 	'hours' => '{{PLURAL:$1|siegħa|$1 sigħat}}',
-	'htmlform-invalid-input' => 'Hemm xi problemi f\'dak li daħħalt',
+	'htmlform-invalid-input' => "Hemm xi problemi f'dak li daħħalt",
 	'htmlform-select-badoption' => 'Il-valur li speċifikajt mhuwiex għażla valida.',
 	'htmlform-int-invalid' => 'Il-valur li speċifikajt mhuwiex sħiħ.',
 	'htmlform-float-invalid' => 'Il-valur li speċifikjat mhuwiex numru.',
-	'htmlform-int-toolow' => 'Il-valur li speċifikajt hu inferjuri għall-minimu ta\' $1',
-	'htmlform-int-toohigh' => 'Il-valur li speċifikjat hu \'l fuq mill-massimu ta\' $1',
+	'htmlform-int-toolow' => "Il-valur li speċifikajt hu inferjuri għall-minimu ta' $1",
+	'htmlform-int-toohigh' => "Il-valur li speċifikjat hu 'l fuq mill-massimu ta' $1",
 	'htmlform-required' => 'Il-valur huwa meħtieġ',
 	'htmlform-submit' => 'Ibgħat',
 	'htmlform-reset' => 'Annulla l-modifiki',
 	'htmlform-selectorother-other' => 'Oħrajn',
-];
+);
 
-$messages['mwl'] = [
+$messages['mwl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Catadorie scundida|Catadories scundidas}}',
 	'hidden-category-category' => 'Catadories scundidas',
 	'help' => 'Ajuda',
@@ -7789,9 +7964,9 @@ Legenda: (atu) = defrénças de la berson atual,
 	'hist' => 'stór',
 	'hide' => 'Scunder',
 	'historywarning' => 'Abiso: La páigina que stás quaije a botar fuora ten un stórico:',
-];
+);
 
-$messages['my'] = [
+$messages['my'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ဝှက်ထားသော ကဏ္ဍ|ဝှက်ထားသော ကဏ္ဍများ}}',
 	'hidden-category-category' => 'ဝှက်ထားသော ကဏ္ဍများ',
 	'help' => 'အ​ကူ​အ​ညီ​',
@@ -7803,8 +7978,8 @@ $messages['my'] = [
 	'headline_tip' => 'အဆင့် ၂ ခေါင်းစီး',
 	'hr_tip' => 'မျဉ်းလဲ (စိစစ်သုံးရန်)',
 	'hiddencategories' => 'ဤစာမျက်နှာသည် {{PLURAL:$1|ဝှက်ထားသော ကဏ္ဍတစ်ခု|ဝှက်ထားသော ကဏ္ဍ $1 ခု}} ၏ အဖွဲ့ဝင် ဖြစ်သည်။',
-	'histlegend' => 'တည်းဖြတ်မူများကို နှိုင်းယှဉ်ရန် radio boxes လေးများကို မှတ်သားပြီးနောက် Enter ရိုက်ချပါ သို့ အောက်ခြေမှ ခလုတ်ကို နှိပ်ပါ။<br />
-Legend: \'\'\'({{int:cur}})\'\'\' = နောက်ဆုံးမူနှင့် ကွဲပြားချက် \'\'\'({{int:last}})\'\'\' = ယင်းရှေ့မူနှင့် ကွဲပြားချက်, \'\'\'{{int:minoreditletter}}\'\'\' = အရေးမကြီးသော ပြုပြင်မှု.',
+	'histlegend' => "တည်းဖြတ်မူများကို နှိုင်းယှဉ်ရန် radio boxes လေးများကို မှတ်သားပြီးနောက် Enter ရိုက်ချပါ သို့ အောက်ခြေမှ ခလုတ်ကို နှိပ်ပါ။<br />
+Legend: '''({{int:cur}})''' = နောက်ဆုံးမူနှင့် ကွဲပြားချက် '''({{int:last}})''' = ယင်းရှေ့မူနှင့် ကွဲပြားချက်, '''{{int:minoreditletter}}''' = အရေးမကြီးသော ပြုပြင်မှု.",
 	'history-fieldset-title' => 'ရာဇဝင်ရှာကြည့်ရန်',
 	'history-show-deleted' => 'ဖျက်ထားသည်များသာ',
 	'histfirst' => '​အစောဆုံး',
@@ -7821,9 +7996,9 @@ Legend: \'\'\'({{int:cur}})\'\'\' = နောက်ဆုံးမူနှင�
 	'htmlform-submit' => 'ထည့်သွင်းရန်',
 	'htmlform-reset' => 'ပြောင်းလဲထားသည်များ မလုပ်တော့ရန်',
 	'htmlform-selectorother-other' => 'အခြား',
-];
+);
 
-$messages['myv'] = [
+$messages['myv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Кекшень категория|Кекшень категорият}}',
 	'hidden-category-category' => 'Кекшень категорият',
 	'help' => 'Лезкс',
@@ -7835,8 +8010,8 @@ $messages['myv'] = [
 	'headline_tip' => 'Омбоце эскельксэнь конякс',
 	'hr_tip' => 'Менель кирьксэнь кикс (тевс нолдыть ванстозь)',
 	'hiddencategories' => 'Те лопась совавтови {{PLURAL:$1|кекшень 1 категорияс|кекшень $1 категорияс}}:',
-	'histlegend' => 'Версиянь кочкамось: тешксты невтезь версиятнень,  али лепштик Enter повнэнть.<br />
-Чарькодевтемат: (молиц.) = редямось молиця версиястонть; (и. молиц.) = редямось икеле молиця версиястонть; \'\'\'а\'\'\' = аволь седе ламо лиякстомтома.',
+	'histlegend' => "Версиянь кочкамось: тешксты невтезь версиятнень,  али лепштик Enter повнэнть.<br />
+Чарькодевтемат: (молиц.) = редямось молиця версиястонть; (и. молиц.) = редямось икеле молиця версиястонть; '''а''' = аволь седе ламо лиякстомтома.",
 	'history-fieldset-title' => 'Ваномс лопанть юронзо-путовксонзо',
 	'history-show-deleted' => 'Ансяк нардазь',
 	'histfirst' => 'Васенце',
@@ -7853,9 +8028,9 @@ $messages['myv'] = [
 	'htmlform-submit' => 'Максомс',
 	'htmlform-reset' => 'Саемс мекев полавтоматнень',
 	'htmlform-selectorother-other' => 'Лия',
-];
+);
 
-$messages['mzn'] = [
+$messages['mzn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|خف رج|خف رجون}}',
 	'hidden-category-category' => 'خف رجون',
 	'help' => 'راهنما',
@@ -7871,18 +8046,18 @@ $messages['mzn'] = [
 	'historyempty' => '(خالی)',
 	'hist' => 'تاریخچه',
 	'hide' => 'فـِرو بوردن',
-];
+);
 
-$messages['na'] = [
+$messages['na'] = array(
 	'help' => 'Ipuok',
 	'history_short' => 'Ekadaedaenigawae',
 	'helppage' => 'Help:Oangan',
 	'hidetoc' => 'ewewin',
 	'hist' => 'eka',
 	'hide' => 'witsit imin gogoro',
-];
+);
 
-$messages['nah'] = [
+$messages['nah'] = array(
 	'hidden-categories' => '{{PLURAL:$1|tlatlàtìlli tlaìxmatkàtlàlilòtl|tlatlàtìltìn tlaìxmatkàtlàlilòmë}}',
 	'hidden-category-category' => 'Tlatlàtìlkàtlaìxmatkàtlàlilòmë',
 	'help' => 'Tēpalēhuiliztli',
@@ -7910,9 +8085,9 @@ Hueliz ōmopolo huiqui nozo ōmozacac.
 	'hist' => 'tlahcuil',
 	'hide' => 'Tiquintlātīz',
 	'htmlform-selectorother-other' => 'Occē',
-];
+);
 
-$messages['nan'] = [
+$messages['nan'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Hidden category|Chhàng khí-lâi ê lūi-pia̍t}}',
 	'hidden-category-category' => 'Chhàng khí--lâi ê lūi piat',
 	'help' => 'Soat-bêng-su',
@@ -7958,18 +8133,18 @@ $messages['nan'] = [
 	'htmlform-int-toohigh' => '你寫的數量超過上大的量 $1。',
 	'htmlform-required' => '這个數量愛寫',
 	'htmlform-selectorother-other' => '其他',
-];
+);
 
-$messages['nap'] = [
+$messages['nap'] = array(
 	'help' => 'Ajùto',
-	'history' => 'Verziune \'e primma',
+	'history' => "Verziune 'e primma",
 	'history_short' => 'Cronologgia',
 	'helppage' => 'Help:Ajùto',
 	'hidetoc' => 'annascunne',
 	'hide' => 'annascunne',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Skjult kategori|Skjulte kategorier}}',
 	'hidden-category-category' => 'Skjulte kategorier',
 	'help' => 'Hjelp',
@@ -7981,8 +8156,8 @@ $messages['nb'] = [
 	'headline_tip' => 'Overskrift, nivå 2',
 	'hr_tip' => 'Horisontal linje (bruk sparsomt)',
 	'hiddencategories' => 'Denne siden er medlem av {{PLURAL:$1|1 skjult kategori|$1 skjulte kategorier}}:',
-	'histlegend' => 'Valg av diff: merk i radioboksene de revisjonene du ønsker å sammenligne og trykk enter eller knappen nederst på siden.<br />
-Forklaring: \'\'\'({{int:cur}})\'\'\' = forskjell fra nåværende revisjon, \'\'\'({{int:last}})\'\'\' = forskjell fra foregående revisjon, \'\'\'{{int:minoreditletter}}\'\'\' = mindre endring.',
+	'histlegend' => "Valg av diff: merk i radioboksene de revisjonene du ønsker å sammenligne og trykk enter eller knappen nederst på siden.<br />
+Forklaring: '''({{int:cur}})''' = forskjell fra nåværende revisjon, '''({{int:last}})''' = forskjell fra foregående revisjon, '''{{int:minoreditletter}}''' = mindre endring.",
 	'history-fieldset-title' => 'Bla i historikken',
 	'history-show-deleted' => 'Kun slettede',
 	'histfirst' => 'Første',
@@ -8048,9 +8223,9 @@ Prøv å [[Special:Search|søke]] etter beslektede sider.',
 	'htmlform-submit' => 'Lagre',
 	'htmlform-reset' => 'Omgjør endringer',
 	'htmlform-selectorother-other' => 'Andre',
-];
+);
 
-$messages['nds'] = [
+$messages['nds'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Verstekene Kategorie|Verstekene Kategorien}}',
 	'hidden-category-category' => 'Verstekene Kategorien',
 	'help' => 'Hülp',
@@ -8062,12 +8237,12 @@ $messages['nds'] = [
 	'headline_tip' => 'Evene 2 Överschrift',
 	'hr_tip' => 'Waagrechte Lien (sporsam bruken)',
 	'hiddencategories' => 'Disse Siet steiht in {{PLURAL:$1|ene verstekene Kategorie|$1 verstekene Kategorien}}:',
-	'histlegend' => 'Ünnerscheed-Utwahl: De Boxen vun de wünschten
-Versionen markeern un \'Enter\' drücken oder den Knoop nerrn klicken/alt-v.<br />
+	'histlegend' => "Ünnerscheed-Utwahl: De Boxen vun de wünschten
+Versionen markeern un 'Enter' drücken oder den Knoop nerrn klicken/alt-v.<br />
 Legende:
 (Aktuell) = Ünnerscheed to de aktuelle Version,
 (Letzte) = Ünnerscheed to de vörige Version,
-L = Lütte Ännern',
+L = Lütte Ännern",
 	'history-fieldset-title' => 'Versionsgeschicht dörkieken',
 	'history-show-deleted' => 'blots löschte Verschonen',
 	'histfirst' => 'Öllste',
@@ -8094,9 +8269,9 @@ Versöök [[Special:Search|dat Söken]] na annere relevante Sieden.',
 	'htmlform-submit' => 'Afspiekern',
 	'htmlform-reset' => 'Ännern trüchsetten',
 	'htmlform-selectorother-other' => 'Annere',
-];
+);
 
-$messages['nds-nl'] = [
+$messages['nds-nl'] = array(
 	'hidden-categories' => 'Verbörgen {{PLURAL:$1|kategorie|kategorieën}}',
 	'hidden-category-category' => 'Verbörgen kategorieën',
 	'help' => 'Hulpe en kontakt',
@@ -8118,11 +8293,11 @@ $messages['nds-nl'] = [
 	'history-feed-title' => 'Wiezigingsoverzichte',
 	'history-feed-description' => 'Wiezigingsoverzichte veur disse pagina op de wiki',
 	'history-feed-item-nocomment' => '$1 op $2',
-	'history-feed-empty' => 'De op-evreugen pagina besteet niet. t Kan ween dat disse pagina vortedaon is of dat t herneumd is. Probeer te [[Special:Search|zeuken]] naor soortgelieke nieje pagina\'s.',
+	'history-feed-empty' => "De op-evreugen pagina besteet niet. t Kan ween dat disse pagina vortedaon is of dat t herneumd is. Probeer te [[Special:Search|zeuken]] naor soortgelieke nieje pagina's.",
 	'history-title' => 'Geschiedenisse van "$1"',
 	'hist' => 'gesch',
 	'hide' => 'verbarg',
-	'hookaborted' => 'De wieziging die\'j proberen deur te voeren bin aofebreuken deur n extra uutbreiding.',
+	'hookaborted' => "De wieziging die'j proberen deur te voeren bin aofebreuken deur n extra uutbreiding.",
 	'http-invalid-url' => 'Ongeldig webadres: $1',
 	'http-invalid-scheme' => 'Webadressen mit de opmaak "$1" wörden niet ondersteund.',
 	'http-request-error' => 'Fout bie t verzenden van t verzeuk.',
@@ -8131,21 +8306,21 @@ $messages['nds-nl'] = [
 	'http-curl-error' => 'Fout bie t ophaolen van t webadres: $1',
 	'http-host-unreachable' => 'Kon webadres niet bereiken.',
 	'http-bad-status' => 'Der is n probleem mit t HTTP-verzeuk: $1 $2',
-	'historywarning' => '\'\'\'Waorschuwing\'\'\': de pagina die\'j vortdoon, hef $1 {{PLURAL:$1|versie|versies}}:',
+	'historywarning' => "'''Waorschuwing''': de pagina die'j vortdoon, hef $1 {{PLURAL:$1|versie|versies}}:",
 	'hours' => '{{PLURAL:$1|$1 ure|$1 uren}}',
 	'htmlform-invalid-input' => 'Der bin problemen mit n paor in-egeven weerden',
 	'htmlform-select-badoption' => 'De in-egeven weerde is ongeldig.',
 	'htmlform-int-invalid' => 'De in-egeven weerde is gien geheel getal.',
-	'htmlform-float-invalid' => 'De weerde die\'j op-egeven hebben is gien getal.',
+	'htmlform-float-invalid' => "De weerde die'j op-egeven hebben is gien getal.",
 	'htmlform-int-toolow' => 'De in-egeven weerde lig onder de minimumweerde van $1',
 	'htmlform-int-toohigh' => 'De in-egeven weerde lig boven de maximumweerde van $1',
 	'htmlform-required' => 'Disse weerde is verplicht',
 	'htmlform-submit' => 'Opslaon',
 	'htmlform-reset' => 'Wiezigingen ongedaonmaken',
 	'htmlform-selectorother-other' => 'Aanders',
-];
+);
 
-$messages['ne'] = [
+$messages['ne'] = array(
 	'hidden-categories' => '{{PLURAL:$1|लुकाइएको श्रेणी|लुकाइएका श्रेणीहरु}}',
 	'hidden-category-category' => 'लुकाइएका श्रेणीहरु',
 	'help' => 'सहयोग',
@@ -8157,8 +8332,8 @@ $messages['ne'] = [
 	'headline_tip' => 'दोस्रो स्तर शीर्षपंक्ति',
 	'hr_tip' => 'क्षितिजिय रेखा (कम प्रयोग गर्नुहोस्)',
 	'hiddencategories' => 'यो पृष्ठ निम्न {{PLURAL:$1|1 लुकाइएको श्रेणी|$1 लुकाइएका श्रेणीहरु}}को सदस्य हो :',
-	'histlegend' => 'अंतर चयन:संशोधनहरुको तुलनाको लागि रेडियो बक्समा क्लिक गरेर एण्टर गर्नुहोस् अथवा तल दिएको बटनमा थिच्नुहोस् <br />
-लिजेंड: (चालू): \'\'\'({{int:cur}})\'\'\' = अवतरणको बीचमा अंतर, \'\'\'({{int:last}})\'\'\' = पहिलाका अवतरणको बीचमा अंतर, \'\'\'{{int:minoreditletter}}\'\'\' = सानो परिवर्तन।',
+	'histlegend' => "अंतर चयन:संशोधनहरुको तुलनाको लागि रेडियो बक्समा क्लिक गरेर एण्टर गर्नुहोस् अथवा तल दिएको बटनमा थिच्नुहोस् <br />
+लिजेंड: (चालू): '''({{int:cur}})''' = अवतरणको बीचमा अंतर, '''({{int:last}})''' = पहिलाका अवतरणको बीचमा अंतर, '''{{int:minoreditletter}}''' = सानो परिवर्तन।",
 	'history-fieldset-title' => 'इतिहासको विचरण गर्ने',
 	'history-show-deleted' => 'मेटिएका मात्र',
 	'histfirst' => 'पहिलो',
@@ -8179,9 +8354,9 @@ $messages['ne'] = [
 	'historywarning' => 'खबरदारी: तपाईंले मेटाउन लाग्नुभएको पृष्ठको इतिहास छ:',
 	'htmlform-reset' => 'परिवर्तनहरू परित्याग गर्नुहोस्',
 	'htmlform-selectorother-other' => 'अन्य',
-];
+);
 
-$messages['new'] = [
+$messages['new'] = array(
 	'hidden-categories' => '{{PLURAL:$1|गुप्त पुचः|गुप्त पुचःतः}}',
 	'hidden-category-category' => 'गुप्त पुचःतः',
 	'help' => 'ग्वहालि',
@@ -8189,19 +8364,19 @@ $messages['new'] = [
 	'history_short' => 'इतिहास',
 	'helppage' => 'Help:धलःपौ',
 	'handheld.css' => '/* थन तःगु CSS नं $wgHandheldStyle आधारित ह्याण्डहेल्ड यन्त्रयात असर याइ */',
-];
+);
 
-$messages['niu'] = [
+$messages['niu'] = array(
 	'help' => 'Lagomatai',
 	'history_short' => 'Liu onoono atu ki tua',
 	'hist' => 'Liu onoono atu ki tua',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'hidden-categories' => 'Verborgen {{PLURAL:$1|categorie|categorieën}}',
 	'hidden-category-category' => 'Verborgen categorieën',
 	'help' => 'Hulp',
-	'history' => 'Paginageschiedenis',
+	'history' => 'paginageschiedenis',
 	'history_short' => 'Geschiedenis',
 	'helppage' => 'Help:Inhoud',
 	'hidetoc' => 'verbergen',
@@ -8209,24 +8384,24 @@ $messages['nl'] = [
 	'headline_tip' => 'Tussenkopje (hoogste niveau)',
 	'hr_tip' => 'Horizontale lijn (gebruik spaarzaam)',
 	'hiddencategories' => 'Deze pagina valt in de volgende verborgen {{PLURAL:$1|categorie|categorieën}}:',
-	'histlegend' => 'Selectie voor verschillen: selecteer de te vergelijken versies en toets ENTER of de knop onderaan.<br />
-Verklaring afkortingen: \'\'\'({{int:cur}})\'\'\' = verschil met huidige versie, \'\'\'({{int:last}})\'\'\' = verschil met voorgaande versie, \'\'\'{{int:minoreditletter}}\'\'\' = kleine wijziging',
+	'histlegend' => "Selectie voor verschillen: selecteer de te vergelijken versies en toets ENTER of de knop onderaan.<br />
+Verklaring afkortingen: '''({{int:cur}})''' = verschil met huidige versie, '''({{int:last}})''' = verschil met voorgaande versie, '''{{int:minoreditletter}}''' = kleine wijziging",
 	'history-fieldset-title' => 'Door geschiedenis bladeren',
 	'history-show-deleted' => 'Alleen verwijderd',
 	'histfirst' => 'Oudste',
-	'histlast' => 'Nieuwste',
+	'histlast' => 'Meest recente',
 	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
 	'historyempty' => '(leeg)',
 	'history-feed-title' => 'Bewerkingsoverzicht',
 	'history-feed-description' => 'Bewerkingsoverzicht voor deze pagina op de wiki',
 	'history-feed-item-nocomment' => '$1 op $3 om $4',
-	'history-feed-empty' => 'De gevraagde pagina bestaat niet.
+	'history-feed-empty' => "De gevraagde pagina bestaat niet.
 Wellicht is die verwijderd of hernoemd.
-[[Special:Search|Doorzoek de wiki]] voor relevante pagina\'s.',
+[[Special:Search|Doorzoek de wiki]] voor relevante pagina's.",
 	'history-title' => 'Geschiedenis van "$1"',
 	'hist' => 'gesch',
-	'hide' => 'verbergen',
-	'hookaborted' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook.',
+	'hide' => 'Hide',
+	'hookaborted' => 'De wijziging die u probeert te maken is afgebroken door een uitbreiding.',
 	'http-invalid-url' => 'Ongeldige URL: $1',
 	'http-invalid-scheme' => 'URL\'s met de opmaak "$1" worden niet ondersteund',
 	'http-request-error' => 'Fout bij het verzenden van het verzoek.',
@@ -8235,7 +8410,7 @@ Wellicht is die verwijderd of hernoemd.
 	'http-curl-error' => 'Fout bij het ophalen van URL: $1',
 	'http-host-unreachable' => 'De URL is niet bereikbaar.',
 	'http-bad-status' => 'Er is een probleem opgetreden bij het HTTP-verzoek: $1 $2',
-	'historywarning' => '\'\'\'Waarschuwing:\'\'\' de pagina die je wilt verwijderen heeft ongeveer $1 {{PLURAL:$1|versie|versies}}:',
+	'historywarning' => "'''Waarschuwing:''' de pagina die je wilt verwijderen heeft ongeveer $1 {{PLURAL:$1|versie|versies}}:",
 	'handheld.css' => '/* CSS die hier wordt geplaatst heeft alleen invloed op handheldapparaten gebaseerd op de skin die is ingesteld in $wgHandheldStyle */',
 	'hours-abbrev' => '$1u',
 	'hours' => '{{PLURAL:$1|$1 uur|$1 uur}}',
@@ -8246,23 +8421,74 @@ Wellicht is die verwijderd of hernoemd.
 	'htmlform-int-toolow' => 'De ingegeven waarde ligt onder de minimumwaarde van $1',
 	'htmlform-int-toohigh' => 'De ingegeven waarde ligt boven de maximumwaarde van $1',
 	'htmlform-required' => 'Deze waarde is verplicht',
-	'htmlform-submit' => 'Opslaan',
+	'htmlform-submit' => 'Submit',
 	'htmlform-reset' => 'Wijzigingen ongedaan maken',
-	'htmlform-selectorother-other' => 'Anders',
-	'home' => 'Hoofdpagina',
+	'htmlform-selectorother-other' => 'Overige',
+	'home' => 'START',
 	'helpfaq' => 'Hulp & veelgestelde vragen',
 	'highest_ratings' => 'Hoogst geranschikt',
-	'htmlform-no' => 'No',
-	'htmlform-yes' => 'Yes',
-];
+	'htmlform-no' => 'Nee',
+	'htmlform-yes' => 'Ja',
+	'history_copyright' => '-',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
+	'hijri-calendar-m5' => 'Jumada al-awwal',
+	'hijri-calendar-m6' => 'Jumada al-thani',
+	'hijri-calendar-m7' => 'Rajab',
+	'hijri-calendar-m8' => "Sha'aban",
+	'hijri-calendar-m9' => 'Ramadan',
+	'hijri-calendar-m10' => 'Shawwal',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
+	'hijri-calendar-m12' => 'Dhu al-Hijjah',
+	'hebrew-calendar-m1' => 'Tishrei',
+	'hebrew-calendar-m2' => 'Cheshvan',
+	'hebrew-calendar-m3' => 'Kislev',
+	'hebrew-calendar-m4' => 'Tevet',
+	'hebrew-calendar-m5' => 'Shevat',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m8' => 'Iyar',
+	'hebrew-calendar-m9' => 'Sivan',
+	'hebrew-calendar-m10' => 'Tamuz',
+	'hebrew-calendar-m11' => 'Av',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m1-gen' => 'Tishrei',
+	'hebrew-calendar-m2-gen' => 'Cheshvan',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Tevet',
+	'hebrew-calendar-m5-gen' => 'Shevat',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m8-gen' => 'Iyar',
+	'hebrew-calendar-m9-gen' => 'Sivan',
+	'hebrew-calendar-m10-gen' => 'Tamuz',
+	'hebrew-calendar-m11-gen' => 'Av',
+	'hebrew-calendar-m12-gen' => 'Elul',
+	'hidesome' => 'Hide Some',
+	'hidebots' => 'Bots verbergen',
+	'hubs' => 'Hubs',
+	'hub-Entertainment' => 'Entertainment',
+	'hub-Gaming' => 'Video Games',
+	'hub-Video_Games' => 'Video Games',
+	'hub-Videospiele' => 'Videospiele',
+	'hub-Lifestyle' => 'Lifestyle',
+	'hub-Wikia' => 'FANDOM',
+	'hub-Food_and_Drink' => 'Food and Drink',
+);
 
-$messages['nl-informal'] = [
+$messages['nl-informal'] = array(
 	'hookaborted' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook.',
-	'historywarning' => '\'\'\'Waarschuwing:\'\'\' de pagina die je wilt verwijderen heeft ongeveer $1 {{PLURAL:$1|versie|versies}}:',
+	'historywarning' => "'''Waarschuwing:''' de pagina die je wilt verwijderen heeft ongeveer $1 {{PLURAL:$1|versie|versies}}:",
 	'htmlform-float-invalid' => 'De waarde die je hebt opgegeven is geen getal.',
-];
+);
 
-$messages['nn'] = [
+$messages['nn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Gøymd kategori|Gøymde kategoriar}}',
 	'hidden-category-category' => 'Gøymde kategoriar',
 	'help' => 'Hjelp',
@@ -8288,7 +8514,7 @@ $messages['nn'] = [
 	'history-title' => 'Historikken til «$1»',
 	'hist' => 'hist',
 	'hide' => 'Gøym',
-	'hookaborted' => 'Endringane du prøvde gjere blei avbrotne av ei \'\'extension hook\'\'.',
+	'hookaborted' => "Endringane du prøvde gjere blei avbrotne av ei ''extension hook''.",
 	'http-invalid-url' => 'Ugyldig URL: $1',
 	'http-invalid-scheme' => 'URL-ar med  «$1»-førestavinga er ikkje støtta.',
 	'http-request-error' => 'HTTP-førespurnaden feila grunna ein ukjend feil.',
@@ -8297,7 +8523,7 @@ $messages['nn'] = [
 	'http-curl-error' => 'Feil under henting av nettadressa: $1',
 	'http-host-unreachable' => 'Kunne ikkje nå nettadressa',
 	'http-bad-status' => 'Det var eit problem under HTTP-førespurnaden: $1 $2',
-	'historywarning' => '\'\'\'Åtvaring:\'\'\' Sida du held på å slette har ein historikk med om lag $1 {{PLURAL:$1|versjon|versjonar}}:',
+	'historywarning' => "'''Åtvaring:''' Sida du held på å slette har ein historikk med om lag $1 {{PLURAL:$1|versjon|versjonar}}:",
 	'handheld.css' => '/* CSS i denne fila vil gjelde alle handheldte innretnigar konfigurert i $wgHandheldStyle */',
 	'htmlform-invalid-input' => 'Det finst problem med innskrivinga di',
 	'htmlform-select-badoption' => 'Verdien du valde er ikkje eit gyldig alternativ.',
@@ -8309,9 +8535,9 @@ $messages['nn'] = [
 	'htmlform-submit' => 'Lagre',
 	'htmlform-reset' => 'Gjer om endringar',
 	'htmlform-selectorother-other' => 'Andre',
-];
+);
 
-$messages['no'] = [
+$messages['no'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Gøymd kategori|Gøymde kategoriar}}',
 	'hidden-category-category' => 'Gøymde kategoriar',
 	'help' => 'Hjelp',
@@ -8337,7 +8563,7 @@ $messages['no'] = [
 	'history-title' => 'Historikken til «$1»',
 	'hist' => 'hist',
 	'hide' => 'Gøym',
-	'hookaborted' => 'Endringane du prøvde gjere blei avbrotne av ei \'\'extension hook\'\'.',
+	'hookaborted' => "Endringane du prøvde gjere blei avbrotne av ei ''extension hook''.",
 	'http-invalid-url' => 'Ugyldig URL: $1',
 	'http-invalid-scheme' => 'URL-ar med  «$1»-førestavinga er ikkje støtta.',
 	'http-request-error' => 'HTTP-førespurnaden feila grunna ein ukjend feil.',
@@ -8346,7 +8572,7 @@ $messages['no'] = [
 	'http-curl-error' => 'Feil under henting av nettadressa: $1',
 	'http-host-unreachable' => 'Kunne ikkje nå nettadressa',
 	'http-bad-status' => 'Det var eit problem under HTTP-førespurnaden: $1 $2',
-	'historywarning' => '\'\'\'Åtvaring:\'\'\' Sida du held på å slette har ein historikk med om lag $1 {{PLURAL:$1|versjon|versjonar}}:',
+	'historywarning' => "'''Åtvaring:''' Sida du held på å slette har ein historikk med om lag $1 {{PLURAL:$1|versjon|versjonar}}:",
 	'handheld.css' => '/* CSS plassert her vil påvirke håndholdte apparater basert på utseendet konfigurert i $wgHandheldStyle */',
 	'htmlform-invalid-input' => 'Det finst problem med innskrivinga di',
 	'htmlform-select-badoption' => 'Verdien du valde er ikkje eit gyldig alternativ.',
@@ -8364,9 +8590,9 @@ $messages['no'] = [
 	'hidebots' => 'Skjul roboter',
 	'hidesome' => 'Skjul noen',
 	'hubs' => 'Hubber',
-];
+);
 
-$messages['nov'] = [
+$messages['nov'] = array(
 	'help' => 'Helpo',
 	'history' => 'Historie del pagine',
 	'history_short' => 'Historie',
@@ -8380,9 +8606,9 @@ Forsan lu ha bli ekarta fro li wiki, o rinomat.
 Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 	'hist' => 'hist',
 	'hide' => 'Kasha',
-];
+);
 
-$messages['nso'] = [
+$messages['nso'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Sehlopha sago huta|Dihlopha tšago huta}}',
 	'help' => 'Thušo',
 	'history' => 'Histori ya letlakala',
@@ -8393,9 +8619,9 @@ $messages['nso'] = [
 	'headline_tip' => 'Hlogotaba ya boemo ba 2',
 	'hr_tip' => 'Mothalo wago ya faase/papamela (šomiša ka hloko)',
 	'hiddencategories' => 'Letlakala le, ke setho sa {{PLURAL:$1|1 sehlopha sago uta|$1 dihlopha tšago uta}}:',
-	'histlegend' => 'Tlhaolo ya diphapano: swaya lepokisi la phetogo go bapetša ke moka o thwanye \'\'enter\'\' tlase-tlase<br />
+	'histlegend' => "Tlhaolo ya diphapano: swaya lepokisi la phetogo go bapetša ke moka o thwanye ''enter'' tlase-tlase<br />
 Nane: (bjale) = phapang le diphetogo tša bjale,
-(mafelelo) = phapang le diphetogo tša pele, M = diphetogo tše nyenyane.',
+(mafelelo) = phapang le diphetogo tša pele, M = diphetogo tše nyenyane.",
 	'history-fieldset-title' => 'Laotša histori',
 	'histfirst' => 'Pelepele',
 	'histlast' => 'Ntshwantshwa',
@@ -8410,9 +8636,9 @@ Leka [[Special:Search|go fetleka wikii]] go humana matlakala a mapsha.',
 	'hist' => 'histori',
 	'hide' => 'Fihla',
 	'historywarning' => 'Temošo: Letlakala leo o lekago go lephumula le nale histori:',
-];
+);
 
-$messages['nv'] = [
+$messages['nv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Naaltsoos biiʼ sinilí (doo yitʼínii)|Naaltsoos biiʼ sinilí (doo yitʼínii)}}',
 	'help' => 'Anáʼálwoʼ',
 	'history' => 'łahgo ályaaígíí',
@@ -8425,13 +8651,13 @@ $messages['nv'] = [
 	'history-title' => 'łahgo ályaaígíí: "$1"',
 	'hist' => 'łgá',
 	'hide' => 'doo yishʼį́ nisin da.',
-];
+);
 
-$messages['ny'] = [
+$messages['ny'] = array(
 	'help' => 'Chithandizo',
-];
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria amagada|Categorias amagadas}}',
 	'hidden-category-category' => 'Categorias amagadas',
 	'help' => 'Ajuda',
@@ -8441,11 +8667,11 @@ $messages['oc'] = [
 	'hidetoc' => 'amagar',
 	'headline_sample' => 'Tèxte de sostítol',
 	'headline_tip' => 'Sostítol nivèl 2',
-	'hr_tip' => 'Linha orizontala (n\'abusetz pas)',
-	'hiddencategories' => '{{PLURAL:$1|Categoria amagada|Categorias amagadas}} qu\'aquesta pagina ne fa partida :',
+	'hr_tip' => "Linha orizontala (n'abusetz pas)",
+	'hiddencategories' => "{{PLURAL:$1|Categoria amagada|Categorias amagadas}} qu'aquesta pagina ne fa partida :",
 	'histlegend' => 'Legenda : ({{MediaWiki:Cur}}) = diferéncia amb la version actuala ,
 ({{MediaWiki:Last}}) = diferéncia amb la version precedenta, <b>m</b> = cambiament menor',
-	'history-fieldset-title' => 'Percórrer l\'istoric',
+	'history-fieldset-title' => "Percórrer l'istoric",
 	'history-show-deleted' => 'Suprimits solament',
 	'histfirst' => 'Primièras contribucions',
 	'histlast' => 'Darrièras contribucions',
@@ -8460,36 +8686,36 @@ Ensajatz de [[Special:Search|recercar sul wiki]] per trobar de paginas en rapòr
 	'history-title' => 'Istoric de las versions de « $1 »',
 	'hist' => 'ist',
 	'hide' => 'amagar',
-	'hookaborted' => 'La modificacion qu\'avètz ensajat de realizar es estada anullada per un croquet d\'extension.',
+	'hookaborted' => "La modificacion qu'avètz ensajat de realizar es estada anullada per un croquet d'extension.",
 	'http-invalid-url' => 'URL incorrècta : $1',
 	'http-invalid-scheme' => 'Las URLs amb l"esquèma « $1 » son pas suportadas',
 	'http-request-error' => 'Error desconeguda al moment del mandadís de la requèsta.',
 	'http-read-error' => 'HTTP Error de lectura.',
 	'http-timed-out' => 'HTTP request timed out.',
-	'http-curl-error' => 'Error al moment de la recuperacion de l\'URL : $1',
-	'http-host-unreachable' => 'Impossible d\'aténher l\'URL',
+	'http-curl-error' => "Error al moment de la recuperacion de l'URL : $1",
+	'http-host-unreachable' => "Impossible d'aténher l'URL",
 	'http-bad-status' => 'I a agut un problèma al moment de la requèsta HTTP : $1 $2',
-	'historywarning' => '\'\'\'Atencion :\'\'\' La pagina que s�tz a mand de suprimir a un istoric que conten aproximadament $1 {{PLURAL:$1|revision|revisions}} :',
+	'historywarning' => "'''Atencion :''' La pagina que s�tz a mand de suprimir a un istoric que conten aproximadament $1 {{PLURAL:$1|revision|revisions}} :",
 	'handheld.css' => '/* Lo CSS plaçat aicí afectarà los aparelhs mobils en foncion de l\'abilhatge configurat $wgHandheldStyle */',
-	'htmlform-invalid-input' => 'De problèmas son arribats amb d\'unas valors',
-	'htmlform-select-badoption' => 'La valor qu\'avètz especificada es pas una opcion valida.',
-	'htmlform-int-invalid' => 'La valor qu\'avètz especificada es pas un nombre entièr.',
-	'htmlform-float-invalid' => 'La valor qu\'avètz especificada es pas un nombre.',
-	'htmlform-int-toolow' => 'La valor qu\'avètz especificada es en dejós del minimum de $1',
-	'htmlform-int-toohigh' => 'La valor qu\'avètz especificada es en dessús del minimum de $1',
+	'htmlform-invalid-input' => "De problèmas son arribats amb d'unas valors",
+	'htmlform-select-badoption' => "La valor qu'avètz especificada es pas una opcion valida.",
+	'htmlform-int-invalid' => "La valor qu'avètz especificada es pas un nombre entièr.",
+	'htmlform-float-invalid' => "La valor qu'avètz especificada es pas un nombre.",
+	'htmlform-int-toolow' => "La valor qu'avètz especificada es en dejós del minimum de $1",
+	'htmlform-int-toohigh' => "La valor qu'avètz especificada es en dessús del minimum de $1",
 	'htmlform-required' => 'Aquesta valor es obligatòria',
 	'htmlform-submit' => 'Sometre',
 	'htmlform-reset' => 'Desfar las modificacions',
 	'htmlform-selectorother-other' => 'Autre',
-];
+);
 
-$messages['om'] = [
+$messages['om'] = array(
 	'help' => 'Qarqarsa',
 	'history' => 'Seena',
 	'history_short' => 'Seena',
-];
+);
 
-$messages['or'] = [
+$messages['or'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Hidden category|ଲୁଚିଥିବା ଶ୍ରେଣୀ}}',
 	'hidden-category-category' => 'ଲୁଚିରହିଥିବା ଶ୍ରେଣୀ',
 	'help' => 'ସହଯୋଗ',
@@ -8501,8 +8727,8 @@ $messages['or'] = [
 	'headline_tip' => '୨କ ଆକାରର ମୂଳଧାଡ଼ି',
 	'hr_tip' => 'ସମାନ୍ତରାଳ ରେଖା (ବେଳେବେଳେ ବ୍ୟବହାର କରିବେ)',
 	'hiddencategories' => 'ଏହି ପୃଷ୍ଠାଟି {{PLURAL:$1|ଲୁଚାଯାଇଥିବା ଶ୍ରେଣୀ|$1ଟି ଲୁଚାଯାଇଥିବା ଶ୍ରେଣୀସମୂହ}} ଭିତରୁ ଗୋଟିଏ:',
-	'histlegend' => 'ଅଲଗା ବଛା:ସଙ୍କଳନ ସବୁର ରେଡ଼ିଓ ବାକ୍ସକୁ ବାଛି ତୁଳନା କରନ୍ତୁ ଓ ଏଣ୍ଟର ଦବାନ୍ତୁ ବା ତଳେ ଥିବା ବଟନ ଦବାନ୍ତୁ ।<br />
-ସାରକଥା: \'\'\'({{int:cur}})\'\'\' = ନଗଦ ସଙ୍କଳନରେ ଥିବା ତଫାତ, \'\'\'({{int:last}})\'\'\' = ଆଗ ସଙ୍କଳନ ଭିତରେ ତଫାତ, \'\'\'{{int:minoreditletter}}\'\'\' = ଟିକେ ବଦଳ ।',
+	'histlegend' => "ଅଲଗା ବଛା:ସଙ୍କଳନ ସବୁର ରେଡ଼ିଓ ବାକ୍ସକୁ ବାଛି ତୁଳନା କରନ୍ତୁ ଓ ଏଣ୍ଟର ଦବାନ୍ତୁ ବା ତଳେ ଥିବା ବଟନ ଦବାନ୍ତୁ ।<br />
+ସାରକଥା: '''({{int:cur}})''' = ନଗଦ ସଙ୍କଳନରେ ଥିବା ତଫାତ, '''({{int:last}})''' = ଆଗ ସଙ୍କଳନ ଭିତରେ ତଫାତ, '''{{int:minoreditletter}}''' = ଟିକେ ବଦଳ ।",
 	'history-fieldset-title' => 'ଇତିହାସ ଖୋଜିବା',
 	'history-show-deleted' => 'କେବଳ ଲିଭାଯାଇଥିବା',
 	'histfirst' => 'ସବୁଠୁ ପୁରୁଣା',
@@ -8527,7 +8753,7 @@ $messages['or'] = [
 	'http-curl-error' => '$1 URL କୁ ପାଇବାରେ ବିଫଳ',
 	'http-host-unreachable' => 'URLଟି ପାଇଲୁ ନାହିଁ ।',
 	'http-bad-status' => 'HTTP ଅନୁରୋଧ ବେଳେ କିଛି ଅସୁବିଧା ହେଲା : $1 $2',
-	'historywarning' => '\'\'\'ଚେତାବନୀ:\'\'\' ଆପଣ ଲିଭାଇବାକୁ ଯାଉଥିବା ଏହି ପୃଷ୍ଠାଟିର ପାଖାପାଖି $1 {{PLURAL:$1|ଟି ସଙ୍କଳନ|ଗୋଟି ସଙ୍କଳନ}} ରହିଅଛି:',
+	'historywarning' => "'''ଚେତାବନୀ:''' ଆପଣ ଲିଭାଇବାକୁ ଯାଉଥିବା ଏହି ପୃଷ୍ଠାଟିର ପାଖାପାଖି $1 {{PLURAL:$1|ଟି ସଙ୍କଳନ|ଗୋଟି ସଙ୍କଳନ}} ରହିଅଛି:",
 	'hours' => '{{PLURAL:$1|$1 ଘଣ୍ଟା|$1 ଘଣ୍ଟା}}',
 	'htmlform-invalid-input' => 'ଆପଣଙ୍କର କେତେକ ନିବେଶରେ ଅସୁବିଧାମାନ ରହିଅଛି',
 	'htmlform-select-badoption' => 'ଆପଣ ଦେଇଥିବା ମୂଲ୍ୟଟି ଏକ ବୈଧ ବିକଳ୍ପ ନୁହେଁ ।',
@@ -8539,9 +8765,9 @@ $messages['or'] = [
 	'htmlform-submit' => 'ଦାଖଲକରିବା',
 	'htmlform-reset' => 'କରାଯାଇଥିବା ବଦଳ ପଛକୁ ଫେରାଇବେ',
 	'htmlform-selectorother-other' => 'ବାକି',
-];
+);
 
-$messages['os'] = [
+$messages['os'] = array(
 	'hidden-categories' => 'Æмбæхст {{PLURAL:$1|категори|категоритæ}}',
 	'hidden-category-category' => 'Æмбæхст категоритæ',
 	'help' => 'Æххуыс',
@@ -8553,8 +8779,8 @@ $messages['os'] = [
 	'headline_tip' => 'Бæрц 2 сæргонд',
 	'hr_tip' => 'Горизонталон хахх (арæх дзы ма пайда кæн)',
 	'hiddencategories' => 'Ацы фарс у {{PLURAL:$1|1 æмбæхст категорийы|$1 æмбæхст категориты}} уæнг:',
-	'histlegend' => 'Æвзарынæн: банысан кæн фæлтæрты радиобокстæ цæмæй цæ иртæсай æмæ стæй ныххæц enter кæнæ бынæй цы ныххæцæн ис, ууыл.<br />
-Легендæ: \'\'\'({{int:cur}})\'\'\' = иртæсæн фæстаг фæлтæримæ, \'\'\'({{int:last}})\'\'\' = иртæсæн разфæлтæримæ, \'\'\'{{int:minoreditletter}}\'\'\' = чысыл ивд.',
+	'histlegend' => "Æвзарынæн: банысан кæн фæлтæрты радиобокстæ цæмæй цæ иртæсай æмæ стæй ныххæц enter кæнæ бынæй цы ныххæцæн ис, ууыл.<br />
+Легендæ: '''({{int:cur}})''' = иртæсæн фæстаг фæлтæримæ, '''({{int:last}})''' = иртæсæн разфæлтæримæ, '''{{int:minoreditletter}}''' = чысыл ивд.",
 	'history-fieldset-title' => 'Истори фенын',
 	'history-show-deleted' => 'Æрмæстдæр хафтытæ',
 	'histfirst' => 'Фыццаг',
@@ -8567,9 +8793,9 @@ $messages['os'] = [
 	'hist' => 'лог',
 	'hide' => 'Айсын',
 	'htmlform-selectorother-other' => 'Æндæр',
-];
+);
 
-$messages['pa'] = [
+$messages['pa'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ਅਲੋਪ ਸ਼੍ਰੇਣੀ|ਅਲੋਪ ਸ਼੍ਰੇਣੀਆ}}',
 	'help' => 'ਮੱਦਦ',
 	'history' => 'ਸਫ਼ਾ ਅਤੀਤ',
@@ -8589,9 +8815,9 @@ $messages['pa'] = [
 	'htmlform-submit' => 'ਭੇਜੋ',
 	'htmlform-reset' => 'ਬਦਲਾਅ ਵਾਪਸ ਲਵੋ',
 	'htmlform-selectorother-other' => 'ਹੋਰ',
-];
+);
 
-$messages['pag'] = [
+$messages['pag'] = array(
 	'help' => 'Tolong',
 	'history' => 'Awaran na sayan bolong',
 	'history_short' => 'awaran na sayan bolong',
@@ -8599,9 +8825,9 @@ $messages['pag'] = [
 	'histfirst' => 'Sankaunaan',
 	'histlast' => 'Sankautetan',
 	'hide' => 'Yamot',
-];
+);
 
-$messages['pam'] = [
+$messages['pam'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Makasalikut a kategoriya|Makasalikut a kategoriya}}',
 	'hidden-category-category' => 'Pakasalikut a categoria',
 	'help' => 'Saup',
@@ -8631,9 +8857,9 @@ Subukan me ing [[Special:Search|searching on the wiki]] para kareng bayung bulun
 	'hist' => 'amlat',
 	'hide' => 'Isalikut',
 	'historywarning' => 'Babala: Maki amlat (history) ya ing bulung a kekang buburan:',
-];
+);
 
-$messages['pap'] = [
+$messages['pap'] = array(
 	'help' => 'Ayudo',
 	'history' => 'Historia di página',
 	'history_short' => 'Historia',
@@ -8644,9 +8870,9 @@ $messages['pap'] = [
 	'histfirst' => 'Promé',
 	'histlast' => 'Último',
 	'hide' => 'Skonde',
-];
+);
 
-$messages['pcd'] = [
+$messages['pcd'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Catégorie muchée|Catégories muchées}}',
 	'hidden-category-category' => 'Catégouries muchées',
 	'help' => 'Aïude',
@@ -8658,18 +8884,18 @@ $messages['pcd'] = [
 	'headline_tip' => 'In-téte nivieu 2',
 	'hr_tip' => 'line orizontale (imploéïer aveuc modérachon)',
 	'hiddencategories' => '{{PLURAL:$1|Catégorie muchée|Catégories muchées}} pou chol pache:',
-	'histlegend' => 'Diff séléccion: buke chés boétes d\'chés canjemints à comparète pi détriquer intrer ou ch\'bouton édsou.<br />
-Léginde : ({{MediaWiki:Cur}}) = différinches aveuc el vérchon à ch\'momint-chi, ({{MediaWiki:Last}}) = différinches aveuc el vérchon édvant, <b>m</b> = tiot canjemint.',
-	'history-fieldset-title' => 'S\'déplacher din l\'historique',
+	'histlegend' => "Diff séléccion: buke chés boétes d'chés canjemints à comparète pi détriquer intrer ou ch'bouton édsou.<br />
+Léginde : ({{MediaWiki:Cur}}) = différinches aveuc el vérchon à ch'momint-chi, ({{MediaWiki:Last}}) = différinches aveuc el vérchon édvant, <b>m</b> = tiot canjemint.",
+	'history-fieldset-title' => "S'déplacher din l'historique",
 	'histfirst' => 'preumières paches',
 	'histlast' => 'Darin',
 	'history-title' => 'Histoère des cangemints éd "$1"',
 	'hist' => 'hist',
 	'hide' => 'Mucher',
-	'htmlform-reset' => 'n\'poin foaire chés canjemints',
-];
+	'htmlform-reset' => "n'poin foaire chés canjemints",
+);
 
-$messages['pdc'] = [
+$messages['pdc'] = array(
 	'help' => 'Hilf',
 	'history' => 'Gschicht',
 	'history_short' => 'Gschicht',
@@ -8685,22 +8911,22 @@ $messages['pdc'] = [
 	'hide' => 'verschwinne losse',
 	'htmlform-reset' => 'Enneringe zerick nemme',
 	'htmlform-selectorother-other' => 'Annere',
-];
+);
 
-$messages['pdt'] = [
-	'hidden-categories' => '{{PLURAL:$1|Fe\'stoakne Kategorie|Fe\'stoakne Kategorien}}',
-	'hidden-category-category' => 'Fe\'stoakne Kategorien',
+$messages['pdt'] = array(
+	'hidden-categories' => "{{PLURAL:$1|Fe'stoakne Kategorie|Fe'stoakne Kategorien}}",
+	'hidden-category-category' => "Fe'stoakne Kategorien",
 	'help' => 'Help',
-	'history' => 'Siedeje\'schijchte',
+	'history' => "Siedeje'schijchte",
 	'history_short' => 'Jeschicht',
 	'helppage' => 'Help:Enhault',
-	'hidetoc' => 'fe\'stäakje',
+	'hidetoc' => "fe'stäakje",
 	'history-feed-item-nocomment' => '$1 omm $2',
 	'hist' => 'Jeschicht',
-	'hide' => 'Fe\'stäakje',
-];
+	'hide' => "Fe'stäakje",
+);
 
-$messages['pfl'] = [
+$messages['pfl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Versteckelte Kadegorie|Versteckelte Kadegorie}}',
 	'help' => 'Hilfe',
 	'history' => 'Gschicht vun de Said',
@@ -8711,42 +8937,42 @@ $messages['pfl'] = [
 	'headline_tip' => 'Iwwerschrift Ewene 2',
 	'hr_tip' => 'Horizontale Linie (sparsam verwenne)',
 	'hiddencategories' => 'Die Said ghert zu {{PLURAL:$1|1 versteckelte Kategorie|$1 versteckelte Kategorie}}:',
-	'histlegend' => 'Du kannscht zwää Versione auswähle un verglaiche.<br />
-Erklärung: \'\'\'({{int:cur}})\'\'\' = Unnerschied zu jetzert,
-\'\'\'({{int:last}})\'\'\' = Unnerschied zu de voriche Version, \'\'\'{{int:minoreditletter}}\'\'\' = klenni Ännerung.',
+	'histlegend' => "Du kannscht zwää Versione auswähle un verglaiche.<br />
+Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
+'''({{int:last}})''' = Unnerschied zu de voriche Version, '''{{int:minoreditletter}}''' = klenni Ännerung.",
 	'history-fieldset-title' => 'In de Versionsgschicht suche',
 	'histfirst' => 'Ältschte',
 	'histlast' => 'Naischte',
 	'history-title' => 'Versionsgschicht vun "$1"',
 	'hist' => 'Gschicht',
 	'hide' => 'versteggeln',
-];
+);
 
-$messages['pih'] = [
+$messages['pih'] = array(
 	'help' => 'Hiiwp',
 	'history_short' => 'Histrei',
 	'helppage' => 'Help:Dem Kontent',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ukryta kategoria|Ukryte kategorie}}',
 	'hidden-category-category' => 'Ukryte kategorie',
 	'help' => 'Pomoc',
-	'history' => 'Historia strony',
-	'history_short' => 'Historia i autorzy',
-	'helppage' => 'Help:Zawartość',
+	'history' => 'Historia zmian',
+	'history_short' => 'Historia',
+	'helppage' => 'Pomoc:Zawartość',
 	'hidetoc' => 'ukryj',
 	'headline_sample' => 'Tekst nagłówka',
 	'headline_tip' => 'Nagłówek 2. poziomu',
 	'hr_tip' => 'Linia pozioma (nie nadużywaj)',
 	'hiddencategories' => 'Ta strona jest w {{PLURAL:$1|jednej ukrytej kategorii|$1 ukrytych kategoriach}}:',
-	'histlegend' => 'Wybór porównania – zaznacz kropeczkami dwie wersje do porównania i wciśnij enter lub przycisk \'\'Porównaj wybrane wersje\'\'.<br />
+	'histlegend' => 'Wybór porównania – zaznacz dwie wersje do porównania i wciśnij enter lub przycisk „porównaj wybrane wersje”.<br />
 Legenda: (bież.) – pokaż zmiany od tej wersji do bieżącej,
 (poprz.) – pokaż zmiany od wersji poprzedzającej, m – mała (drobna) zmiana',
 	'history-fieldset-title' => 'Przeglądaj historię',
 	'history-show-deleted' => 'Tylko usunięte',
 	'histfirst' => 'od początku',
-	'histlast' => 'od końca',
+	'histlast' => 'Najnowsze',
 	'historysize' => '({{PLURAL:$1|1 bajt|$1 bajty|$1 bajtów}})',
 	'historyempty' => '(pusta)',
 	'history-feed-title' => 'Historia wersji',
@@ -8754,11 +8980,11 @@ Legenda: (bież.) – pokaż zmiany od tej wersji do bieżącej,
 	'history-feed-item-nocomment' => '$1 o $2',
 	'history-feed-empty' => 'Wybrana strona nie istnieje.
 Mogła zostać usunięta lub jej nazwa została zmieniona.
-Spróbuj [[Special:Search|poszukać]] tej strony.',
+Spróbuj jej [[Special:Search|poszukać]].',
 	'history-title' => 'Historia edycji „$1”',
 	'hist' => 'hist.',
 	'hide' => 'Ukryj',
-	'hookaborted' => 'Zmiana, którą próbowałeś wykonać została przerwana przez hak rozszerzenia.',
+	'hookaborted' => 'Zmiana, którą próbujesz wykonać, została anulowana przez rozszerzenie.',
 	'http-invalid-url' => 'Niepoprawny adres URL: $1',
 	'http-invalid-scheme' => 'Adresy „$1“ nie są obsługiwane.',
 	'http-request-error' => 'Nieudane żądanie HTTP ze względu na nieznany błąd.',
@@ -8767,7 +8993,7 @@ Spróbuj [[Special:Search|poszukać]] tej strony.',
 	'http-curl-error' => 'Błąd pobierania z adresu $1',
 	'http-host-unreachable' => 'Adres jest nieosiągalny.',
 	'http-bad-status' => 'Wystąpił problem z realizacją żądania HTTP $1 $2',
-	'historywarning' => '\'\'\'Uwaga!\'\'\' Strona, którą chcesz usunąć, ma w przybliżeniu {{PLURAL:$1|starszą wersję|$1 starsze wersje|$1 starszych wersji}}:',
+	'historywarning' => "'''Uwaga!''' Strona, którą chcesz usunąć, ma w przybliżeniu {{PLURAL:$1|starszą wersję|$1 starsze wersje|$1 starszych wersji}}:",
 	'handheld.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd na urządzeniach kieszonkowych skórki ustawionej w zmiennej $wgHandheldStyle */',
 	'hours-abbrev' => '$1&nbsp;godz.',
 	'hours' => '{{PLURAL:$1|$1 godzina|$1 godziny|$1 godzin}}',
@@ -8801,25 +9027,45 @@ Spróbuj [[Special:Search|poszukać]] tej strony.',
 	'htmlform-int-invalid' => 'Podano wartość, która nie jest liczbą całkowitą.',
 	'htmlform-float-invalid' => 'Podana wartość nie jest liczbą.',
 	'htmlform-int-toolow' => 'Podana wartość jest poniżej dopuszczalnego minimum $1',
-	'htmlform-int-toohigh' => 'Podana wartość jest powyżej dopuszczalnego maximum $1',
+	'htmlform-int-toohigh' => 'Podana wartość jest powyżej dopuszczalnego maksimum $1',
 	'htmlform-required' => 'Podanie tej wartości jest wymagane',
-	'htmlform-submit' => 'Zapisz',
+	'htmlform-submit' => 'Prześlij',
 	'htmlform-reset' => 'Cofnij zmiany',
 	'htmlform-selectorother-other' => 'Inne',
 	'home' => 'Strona główna',
 	'helpfaq' => 'Pomoc i FAQ',
 	'highest_ratings' => 'Najwyżej oceniane',
 	'hub-Entertainment' => 'Rozrywka',
-	'hub-Gaming' => 'Gry',
-	'hub-Video_Games' => 'Gry wideo',
+	'hub-Gaming' => 'Gry wideo',
+	'hub-Video_Games' => 'Gry',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Fandom',
-	'hubs' => 'Huby',
+	'hub-Wikia' => 'FANDOM',
+	'hubs' => 'Kategorie',
 	'htmlform-no' => 'Nie',
 	'htmlform-yes' => 'Tak',
-];
+	'history_copyright' => '-',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m9' => 'Ramadan',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m10' => 'Tamuz',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m10-gen' => 'Tamuz',
+	'hebrew-calendar-m12-gen' => 'Elul',
+	'hidesome' => 'Ukryj część',
+	'hidebots' => 'Ukryj boty',
+	'hub-Videospiele' => 'Videospiele',
+	'hub-Food_and_Drink' => 'Żywność i napoje',
+);
 
-$messages['pms'] = [
+$messages['pms'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categorìa stërmà|Categorìe stërmà}}',
 	'hidden-category-category' => 'Categorìe stërmà',
 	'help' => 'Agiut',
@@ -8827,7 +9073,7 @@ $messages['pms'] = [
 	'history_short' => 'Stòria',
 	'helppage' => 'Help:Agiut',
 	'hidetoc' => 'stërma',
-	'headline_sample' => 'Antestassion dl\'artìcol',
+	'headline_sample' => "Antestassion dl'artìcol",
 	'headline_tip' => 'Antestassion dë scond livel',
 	'hr_tip' => 'Riga orisontal (da dovresse nen tròp soèns)',
 	'hiddencategories' => 'Sta pàgina-sì a fa part ëd {{PLURAL:$1|na categorìa|$1 categorìe}} stërmà:',
@@ -8843,36 +9089,36 @@ Legenda: (cor) = diferense con la version corenta,
 	'history-feed-title' => 'Stòria',
 	'history-feed-description' => 'Stòria dla pàgina ansima a sto sit-sì',
 	'history-feed-item-nocomment' => '$1 al $2',
-	'history-feed-empty' => 'La pàgina che a l\'ha ciamà a-i é pa; a podrìa esse stàita scancelà da \'nt ël sit, ò pura tramudà a n\'àutr nòm.
+	'history-feed-empty' => "La pàgina che a l'ha ciamà a-i é pa; a podrìa esse stàita scancelà da 'nt ël sit, ò pura tramudà a n'àutr nòm.
 
-Che a verìfica con la [[Special:Search|pàgina d\'arserca]] se a-i fusso mai dj\'àutre pàgine che a podèisso andeje bin.',
+Che a verìfica con la [[Special:Search|pàgina d'arserca]] se a-i fusso mai dj'àutre pàgine che a podèisso andeje bin.",
 	'history-title' => 'Cronologìa dle modìfiche ëd "$1"',
 	'hist' => 'stòria',
 	'hide' => 'Stërmé',
-	'hookaborted' => 'La modìfica ch\'a l\'ha provà a fé a l\'é stàita blocà dal gancio ëd n\'estension.',
-	'http-invalid-url' => 'Adrëssa dl\'aragnà pa bon-a: $1.',
+	'hookaborted' => "La modìfica ch'a l'ha provà a fé a l'é stàita blocà dal gancio ëd n'estension.",
+	'http-invalid-url' => "Adrëssa dl'aragnà pa bon-a: $1.",
 	'http-invalid-scheme' => 'J\'adrësse dl\'aragnà con ël prefiss "$1" a son pa mantnùe.',
-	'http-request-error' => 'L\'arcesta Http a l\'é falìa për n\'eror pa conossù.',
+	'http-request-error' => "L'arcesta Http a l'é falìa për n'eror pa conossù.",
 	'http-read-error' => 'Eror ëd letura HTTP.',
-	'http-timed-out' => 'L\'arcesta HTTP a l\'ha finì sò temp.',
-	'http-curl-error' => 'Eror an sërcand d\'arcuperé l\'adrëssa dl\'aragnà: $1.',
-	'http-host-unreachable' => 'L\'anliura a rispond pa.',
-	'http-bad-status' => 'A l\'é staje un problema durant l\'arcesta HTTP: $1 $2',
-	'historywarning' => '\'\'\'Avis:\'\'\' La pàgina che a l\'é antramentr che a scancela a l\'ha na stòria con pi o men $1 {{PLURAL:$1|revision|revision}}:',
+	'http-timed-out' => "L'arcesta HTTP a l'ha finì sò temp.",
+	'http-curl-error' => "Eror an sërcand d'arcuperé l'adrëssa dl'aragnà: $1.",
+	'http-host-unreachable' => "L'anliura a rispond pa.",
+	'http-bad-status' => "A l'é staje un problema durant l'arcesta HTTP: $1 $2",
+	'historywarning' => "'''Avis:''' La pàgina che a l'é antramentr che a scancela a l'ha na stòria con pi o men $1 {{PLURAL:$1|revision|revision}}:",
 	'hours' => '{{PLURAL:$1|$1 ora|$1 ore}}',
 	'htmlform-invalid-input' => 'A-i son dij problema con cheidun dij tò input',
-	'htmlform-select-badoption' => 'Ël valor che it l\'has spessificà a l\'é n\'opsion pa vàlida.',
-	'htmlform-int-invalid' => 'Ël valor ch\'it l\'has spessificà a l\'é pa n\'antregh.',
-	'htmlform-float-invalid' => 'Ël valor ch\'it l\'has spessificà a l\'é pa un nùmer.',
-	'htmlform-int-toolow' => 'Ël valor ch\'it l\'has spessificà a l\'é sota al mìnim ëd $1.',
-	'htmlform-int-toohigh' => 'Ël valor ch\'it l\'has spessificà a l\'é dzora dël màssim ëd $1.',
+	'htmlform-select-badoption' => "Ël valor che it l'has spessificà a l'é n'opsion pa vàlida.",
+	'htmlform-int-invalid' => "Ël valor ch'it l'has spessificà a l'é pa n'antregh.",
+	'htmlform-float-invalid' => "Ël valor ch'it l'has spessificà a l'é pa un nùmer.",
+	'htmlform-int-toolow' => "Ël valor ch'it l'has spessificà a l'é sota al mìnim ëd $1.",
+	'htmlform-int-toohigh' => "Ël valor ch'it l'has spessificà a l'é dzora dël màssim ëd $1.",
 	'htmlform-required' => 'A-i é dabzògn ëd cost valor',
 	'htmlform-submit' => 'Spediss',
 	'htmlform-reset' => 'Scansela ij cambiament',
 	'htmlform-selectorother-other' => 'Àutr',
-];
+);
 
-$messages['pnb'] = [
+$messages['pnb'] = array(
 	'hidden-categories' => '{{PLURAL:$1|چھپی گٹھ|چھپی گٹھیاں}}',
 	'hidden-category-category' => 'لکائیاں گٹھاں',
 	'help' => 'مدد',
@@ -8923,9 +9169,9 @@ $messages['pnb'] = [
 	'htmlform-submit' => 'رکھو',
 	'htmlform-reset' => 'تبدیلیاں واپس',
 	'htmlform-selectorother-other' => 'ہور',
-];
+);
 
-$messages['pnt'] = [
+$messages['pnt'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Κρυμμένον κατηγορίαν|Κρυμμένα κατηγορίας}}',
 	'hidden-category-category' => 'Κρυμμέν κατηγορίας',
 	'help' => 'Βοήθειαν',
@@ -8935,28 +9181,28 @@ $messages['pnt'] = [
 	'hidetoc' => 'κρύψον',
 	'headline_sample' => 'Κείμενον τίτλονος',
 	'headline_tip' => 'Δεύτερον τίτλος (επίπεδον 2)',
-	'hr_tip' => 'Οριζόντιον γραμμή (μη θέκ\'ς ατέν πολλά)',
-	'hiddencategories' => 'Αούτο η σελίδαν ανήκ\' σα {{PLURAL:$1|1 κρυμμένον κατηγορία|$1 κρυμμένα κατηγορίας}}:',
+	'hr_tip' => "Οριζόντιον γραμμή (μη θέκ'ς ατέν πολλά)",
+	'hiddencategories' => "Αούτο η σελίδαν ανήκ' σα {{PLURAL:$1|1 κρυμμένον κατηγορία|$1 κρυμμένα κατηγορίας}}:",
 	'histlegend' => 'Σύγκριμα διαφορίων: βαλέστεν τα μορφάς το θέλετε και τερέστεν τα διαφοράσατουν. Για να τερείτε τα διαφοράς, ποισέστεν έναν κλικ σο πεδίον το λεει "Γαρσουλαεύτε...". <br />
 Πληροφορία: (ατωριζνόν) = διαφοράς με τ\' ατωριζνόν τη μορφήν,
 (υστερνόν) = διαφοράς με τ\' υστερνόν τη μορφήν, μ = μικρά διαφοράς.',
 	'history-fieldset-title' => 'Εύρον σο ιστορικόν',
-	'history-show-deleted' => 'Ατά ντ\'ενεσβύαν μαναχόν',
-	'histfirst' => 'Ασ\' όλεα παλαιόν',
-	'histlast' => 'Ασ\' όλεα καινούρ\'',
+	'history-show-deleted' => "Ατά ντ'ενεσβύαν μαναχόν",
+	'histfirst' => "Ασ' όλεα παλαιόν",
+	'histlast' => "Ασ' όλεα καινούρ'",
 	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
 	'historyempty' => '(εύκαιρον)',
 	'history-feed-item-nocomment' => '$1 σο $2',
 	'history-title' => 'Ιστορικόν εκδοσίων για τη σελίδαν "$1"',
 	'hist' => 'ιστ.',
 	'hide' => 'Κρύψον',
-	'historywarning' => 'Ωρία: Η σελίδαν που θα σβήετε έχ\' ιστορικόν:',
+	'historywarning' => "Ωρία: Η σελίδαν που θα σβήετε έχ' ιστορικόν:",
 	'htmlform-submit' => 'Στείλον',
-	'htmlform-reset' => 'Κλώσον τ\'αλλαγάς',
+	'htmlform-reset' => "Κλώσον τ'αλλαγάς",
 	'htmlform-selectorother-other' => 'Άλλον',
-];
+);
 
-$messages['prg'] = [
+$messages['prg'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Klipta kategōrija|Kliptas kategōrijas}}',
 	'hidden-category-category' => 'Kliptas kategōrijas',
 	'help' => 'Pagalba',
@@ -8968,8 +9214,8 @@ $messages['prg'] = [
 	'headline_tip' => 'Āntras līgmenes galwasrīnda',
 	'hr_tip' => 'Uricōntali (tērpaus taupīngi)',
 	'hiddencategories' => 'Šin pāusan ast en {{PLURAL:$1|ainassei kliptan kategōrijan|$1 kliptan kategōrijan}}:',
-	'histlegend' => 'Palīginsnas etrīnksna: pazentlis sen punktans  dwāi wersiōnins per palīginsnan be gnetteis "enter" anga "Palīginais etrīnktans wersiōnins" knuppan. <br />
-Lagendi: \'\'\'({{int:cur}})\'\'\' = šlaitīntan ezze bigāntin wersiōnin, \'\'\'({{int:last}})\'\'\' = šlaitīntan ezze pirzdauman wersiōnin, \'\'\'{{int:minoreditletter}}\'\'\' = malkā tikrinsnā.',
+	'histlegend' => "Palīginsnas etrīnksna: pazentlis sen punktans  dwāi wersiōnins per palīginsnan be gnetteis \"enter\" anga \"Palīginais etrīnktans wersiōnins\" knuppan. <br />
+Lagendi: '''({{int:cur}})''' = šlaitīntan ezze bigāntin wersiōnin, '''({{int:last}})''' = šlaitīntan ezze pirzdauman wersiōnin, '''{{int:minoreditletter}}''' = malkā tikrinsnā.",
 	'history-fieldset-title' => 'Pradirēis istōrijan',
 	'history-show-deleted' => 'Ter āupausintai',
 	'histfirst' => 'Ezze pagaūseņu',
@@ -8985,7 +9231,7 @@ Bandais [[Special:Search|laukītun]] sirzdau nāunans pāusans en wiki',
 	'history-title' => 'Redigīsnas istōrija stesse "$1"',
 	'hist' => 'ist.',
 	'hide' => 'Kliptinais',
-	'historywarning' => '\'\'\'Nōda:\'\'\' Pāusan, kawīdan tū skatta āupausintun, turri {{PLURAL:$1|wūraisin wersiōnin|$1 wūraisins wersiōnins}}:',
+	'historywarning' => "'''Nōda:''' Pāusan, kawīdan tū skatta āupausintun, turri {{PLURAL:$1|wūraisin wersiōnin|$1 wūraisins wersiōnins}}:",
 	'htmlform-invalid-input' => 'Ast prōblamai sen wērtibins enwestans prō tin',
 	'htmlform-select-badoption' => 'Enwesta wērtibi ni ast tikrōmiskan.',
 	'htmlform-int-invalid' => 'Enwesta wērtibi ni ast kaīls gīrbis.',
@@ -8993,9 +9239,9 @@ Bandais [[Special:Search|laukītun]] sirzdau nāunans pāusans en wiki',
 	'htmlform-int-toolow' => 'Enwesta wērtibi ast mazzan nikāi minimum per $1',
 	'htmlform-int-toohigh' => 'Enwesta wērtibi ast aūktaisin nikāi maksimum per $1',
 	'htmlform-selectorother-other' => 'Kitā',
-];
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'hidden-categories' => '{{PLURAL:$1|پټه وېشنيزه|پټې وېشنيزې}}',
 	'hidden-category-category' => 'پټې وېشنيزې',
 	'help' => 'لارښود',
@@ -9027,7 +9273,7 @@ $messages['ps'] = [
 	'http-invalid-url' => 'ناسم URL: $1',
 	'http-read-error' => 'د HTTP د لوستلو ستونزه.',
 	'http-curl-error' => 'د URL د راوستلو تېروتنه: $1',
-	'historywarning' => 'ګواښنه:\'\'\' تاسې چې د کوم مخ د ړنګېدو تکل لری، هغه د نژدې $1 {{PLURAL:$1|بڼې|بڼو}} يو پېښليک لري:',
+	'historywarning' => "ګواښنه:''' تاسې چې د کوم مخ د ړنګېدو تکل لری، هغه د نژدې $1 {{PLURAL:$1|بڼې|بڼو}} يو پېښليک لري:",
 	'hours-abbrev' => '$1ګ',
 	'hours' => '{{PLURAL:$1|$1 ساعت|$1 ساعتونه}}',
 	'htmlform-invalid-input' => 'ستاسې ځينې ورکړېينې ستونزې لري',
@@ -9040,84 +9286,23 @@ $messages['ps'] = [
 	'htmlform-submit' => 'سپارل',
 	'htmlform-reset' => 'بدلونونه ناکړل',
 	'htmlform-selectorother-other' => 'بل',
-];
+);
 
-$messages['pt'] = [
-	'hidden-categories' => '{{PLURAL:$1|Categoria oculta|Categorias ocultas}}',
-	'hidden-category-category' => 'Categorias ocultas',
-	'help' => 'Ajuda',
-	'history' => 'Histórico',
-	'history_short' => 'Histórico',
-	'helppage' => 'Help:Conteúdos',
-	'hidetoc' => 'esconder',
-	'headline_sample' => 'Texto do cabeçalho',
-	'headline_tip' => 'Secção de nível 2',
-	'hr_tip' => 'Linha horizontal (utilize moderadamente)',
-	'hiddencategories' => 'Esta página pertence a {{PLURAL:$1|uma categoria oculta|$1 categorias ocultas}}:',
-	'histlegend' => 'Selecção de diferenças: use os botões de opção para marcar as versões que deseja comparar.
-Pressione \'Enter\' ou clique o botão "{{int:compareselectedversions}}".<br />
-Legenda: \'\'\'({{int:cur}})\'\'\' = diferenças para a versão actual,
-\'\'\'({{int:last}})\'\'\' = diferenças para a versão anterior,
-\'\'\'{{int:minoreditletter}}\'\'\' = edição menor',
-	'history-fieldset-title' => 'Navegar pelo histórico',
-	'history-show-deleted' => 'Somente eliminados',
-	'histfirst' => 'Mais antigas',
-	'histlast' => 'Mais recentes',
-	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
-	'historyempty' => '(vazia)',
-	'history-feed-title' => 'História de revisão',
-	'history-feed-description' => 'Histórico de edições para esta página nesta wiki',
-	'history-feed-item-nocomment' => '$1 em $2',
-	'history-feed-empty' => 'A página solicitada não existe.
-Pode ter sido eliminada da wiki ou o nome sido alterado.
-Tente [[Special:Search|pesquisar na wiki]] novas páginas relevantes.',
-	'history-title' => 'Histórico de edições de "$1"',
-	'hist' => 'hist',
-	'hide' => 'Esconder',
-	'hookaborted' => 'A modificação que pretendia foi abortada pelo hook de uma extensão.',
-	'http-invalid-url' => 'URL inválida: $1',
-	'http-invalid-scheme' => 'URLs iniciadas pelo prefixo "$1" não são aceites.',
-	'http-request-error' => 'O pedido HTTP falhou devido a um erro desconhecido.',
-	'http-read-error' => 'Erro de leitura HTTP.',
-	'http-timed-out' => 'O pedido HTTP expirou.',
-	'http-curl-error' => 'Ocorreu um erro ao aceder à URL: $1',
-	'http-host-unreachable' => 'Não foi possível aceder à URL',
-	'http-bad-status' => 'Ocorreu um problema durante o pedido HTTP: $1 $2',
-	'historywarning' => '\'\'\'Aviso:\'\'\' A página que está prestes a eliminar tem um histórico com aproximadamente $1 {{PLURAL:$1|revisão|revisões}}:',
-	'handheld.css' => '/* Código CSS colocado aqui afectará dispositivos móveis baseados no tema configurado em $wgHandheldStyle */',
-	'hours' => '{{PLURAL:$1|uma hora|$1 horas}}',
-	'htmlform-invalid-input' => 'Existem problemas com alguns dos dados introduzidos',
-	'htmlform-select-badoption' => 'O valor que especificou não é uma opção válida.',
-	'htmlform-int-invalid' => 'O valor que especificou não é um inteiro.',
-	'htmlform-float-invalid' => 'O valor que especificou não é um número.',
-	'htmlform-int-toolow' => 'O valor que especificou é inferior ao mínimo de $1',
-	'htmlform-int-toohigh' => 'O valor que especificou é superior ao máximo de $1',
-	'htmlform-required' => 'Este valor é necessário',
-	'htmlform-submit' => 'Enviar',
-	'htmlform-reset' => 'Desfazer alterações',
-	'htmlform-selectorother-other' => 'Outros',
-	'home' => 'Página principal',
-	'helpfaq' => 'Ajuda e perguntas mais freqüentes',
-	'highest_ratings' => 'Melhores pontuações',
-	'hub-Wikia' => 'Fandom',
-	'htmlform-no' => 'Não',
-	'htmlform-yes' => 'Sim',
-];
-
-$messages['pt-br'] = [
+$messages['pt'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria oculta|Categorias ocultas}}',
 	'hidden-category-category' => 'Categorias ocultas',
 	'help' => 'Ajuda',
 	'history' => 'Histórico da página',
 	'history_short' => 'Histórico',
-	'helppage' => 'Help:Conteúdos',
+	'helppage' => 'Ajuda:Conteúdos',
 	'hidetoc' => 'ocultar',
 	'headline_sample' => 'Conteúdo do cabeçalho',
 	'headline_tip' => 'Seção de nível 2',
 	'hr_tip' => 'Linha horizontal (use de forma moderada)',
 	'hiddencategories' => 'Esta página pertence a {{PLURAL:$1|uma categoria oculta|$1 categorias ocultas}}:',
-	'histlegend' => 'Como selecionar: marque as caixas de seleção das versões que deseja comparar e pressione enter ou clique no botão na parte inferior do formulário.<br />
-Legenda: \'\'\'({{int:cur}})\'\'\' = diferenças em relação a última versão, \'\'\'({{int:last}})\'\'\' = diferenças em relação a versão anterior, \'\'\'{{int:minoreditletter}}\'\'\' = edição menor.',
+	'histlegend' => '<span style="white-space:nowrap;">Para qualquer versão listada abaixo, clique em sua data para visualizá-la</span> <span style="white-space:nowrap;">Para mais ajuda, veja [[Ajuda:Histórico da página]].</span><br />
+<span style="white-space:nowrap;">(cur) = diferenças com a versão atual,
+(prev) = diferências com a versão aneterior,</span> <span style="white-space:nowrap;">m = [[Ajuda:Edição menor|edição menor]], → = seção editada, ← = resumo automático de edição</span>',
 	'history-fieldset-title' => 'Navegar pelo histórico',
 	'history-show-deleted' => 'Apenas as eliminadas',
 	'histfirst' => 'Mais antigas',
@@ -9128,12 +9313,12 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = diferenças em relação a última versão,
 	'history-feed-description' => 'Histórico de revisões para esta página neste wiki',
 	'history-feed-item-nocomment' => '$1 em $2',
 	'history-feed-empty' => 'A página requisitada não existe.
-Poderá ter sido eliminada do wiki ou renomeada.
-Tente [[Special:Search|pesquisar no wiki]] por páginas relevantes.',
+Ela pode ter sido eliminada da wiki ou renomeada.
+Tente [[Special:Pesquisa|pesquisar na wiki]] por páginas relevantes.',
 	'history-title' => 'Histórico de edições de "$1"',
 	'hist' => 'hist',
 	'hide' => 'Ocultar',
-	'hookaborted' => 'A modificação que você tentou realizar foi abortada por uma extensão.',
+	'hookaborted' => 'A modificação que você tentou realizar foi abortada pelo hook de uma extensão.',
 	'http-invalid-url' => 'URL inválida: $1',
 	'http-invalid-scheme' => 'URLs que iniciam com o prefixo "$1" não são aceitas.',
 	'http-request-error' => 'A requisição HTTP falhou devido a um erro desconhecido.',
@@ -9142,7 +9327,8 @@ Tente [[Special:Search|pesquisar no wiki]] por páginas relevantes.',
 	'http-curl-error' => 'Erro ao requisitar a URL: $1',
 	'http-host-unreachable' => 'Não foi possível atingir a URL.',
 	'http-bad-status' => 'Ocorreu um problema durante a requisição HTTP: $1 $2',
-	'historywarning' => '\'\'\'Atenção:\'\'\' A página que você está prestes a eliminar possui um histórico com aproximadamente $1 {{PLURAL:$1|revisão|revisões}}:',
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning"></div>',
+	'handheld.css' => '/* o CSS colocado aqui irá afetar dispositivos móveis baseados na Skin configurada em $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|uma hora|$1 horas}}',
 	'htmlform-invalid-input' => 'Existem problemas com alguns dos dados introduzidos',
 	'htmlform-select-badoption' => 'O valor que você especificou não é uma opção válida.',
@@ -9153,53 +9339,110 @@ Tente [[Special:Search|pesquisar no wiki]] por páginas relevantes.',
 	'htmlform-required' => 'Este valor é necessário',
 	'htmlform-submit' => 'Enviar',
 	'htmlform-reset' => 'Desfazer alterações',
-	'htmlform-selectorother-other' => 'Outros',
-];
+	'htmlform-selectorother-other' => 'Outro',
+	'home' => 'Página inicial',
+	'helpfaq' => 'Ajuda e Perguntas Frequentes',
+	'highest_ratings' => 'Mais votado',
+	'hub-Wikia' => 'FANDOM',
+	'htmlform-no' => 'Não',
+	'htmlform-yes' => 'Sim',
+	'history_copyright' => '-',
+	'hours-abbrev' => '$1h',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
+	'hijri-calendar-m5' => 'Jumada al-awwal',
+	'hijri-calendar-m6' => 'Jumada al-thani',
+	'hijri-calendar-m7' => 'Rajab',
+	'hijri-calendar-m8' => "Sha'aban",
+	'hijri-calendar-m9' => 'Ramadan',
+	'hijri-calendar-m10' => 'Shawwal',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
+	'hijri-calendar-m12' => 'Dhu al-Hijjah',
+	'hebrew-calendar-m1' => 'Tishrei',
+	'hebrew-calendar-m2' => 'Cheshvan',
+	'hebrew-calendar-m3' => 'Kislev',
+	'hebrew-calendar-m4' => 'Tevet',
+	'hebrew-calendar-m5' => 'Shevat',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m8' => 'Iyar',
+	'hebrew-calendar-m9' => 'Sivan',
+	'hebrew-calendar-m10' => 'Tamuz',
+	'hebrew-calendar-m11' => 'Av',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m1-gen' => 'Tishrei',
+	'hebrew-calendar-m2-gen' => 'Cheshvan',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Tevet',
+	'hebrew-calendar-m5-gen' => 'Shevat',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m8-gen' => 'Iyar',
+	'hebrew-calendar-m9-gen' => 'Sivan',
+	'hebrew-calendar-m10-gen' => 'Tamuz',
+	'hebrew-calendar-m11-gen' => 'Av',
+	'hebrew-calendar-m12-gen' => 'Elul',
+	'hidesome' => 'Ocultar algo',
+	'hidebots' => 'Esconder robôs',
+	'hubs' => 'Centrais',
+	'hub-Entertainment' => 'Entretenimento',
+	'hub-Gaming' => 'Vídeo Games',
+	'hub-Video_Games' => 'Vídeo Games',
+	'hub-Videospiele' => 'Videospiele',
+	'hub-Lifestyle' => 'Estilo de vida',
+	'hub-Food_and_Drink' => 'Comida e bebida',
+);
 
-$messages['qu'] = [
+$messages['qu'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Pakasqa katiguriya|Pakasqa katiguriyakuna}}',
 	'hidden-category-category' => 'Pakasqa katiguriyakuna',
 	'help' => 'Yanapa',
-	'history' => 'Wiñay kawsay p\'anqa',
+	'history' => "Wiñay kawsay p'anqa",
 	'history_short' => 'Wiñay kawsay',
 	'helppage' => 'Help:Yanapana',
 	'hidetoc' => 'pakay',
-	'headline_sample' => 'Uma siq\'i qillqa',
-	'headline_tip' => 'Iskay ñiqi hanaq siq\'i qillqa',
-	'hr_tip' => 'Siriq siq\'i (ama nisyutachu llamk\'apuy)',
-	'hiddencategories' => 'Kay p\'anqaqa {{PLURAL:$1|1 pakasqa katiguriya|$1 pakasqa katiguriyakuna}}manmi kapun:',
-	'histlegend' => 'Sut\'ichana: (kunan) = p\'anqap kunan kachkayninwan huk kaykuna,
-(ñawpaq) = ñawpaq kachkasqanwan huk kaykuna, a = aslla hukchasqa',
+	'headline_sample' => "Uma siq'i qillqa",
+	'headline_tip' => "Iskay ñiqi hanaq siq'i qillqa",
+	'hr_tip' => "Siriq siq'i (ama nisyutachu llamk'apuy)",
+	'hiddencategories' => "Kay p'anqaqa {{PLURAL:$1|1 pakasqa katiguriya|$1 pakasqa katiguriyakuna}}manmi kapun:",
+	'histlegend' => "Sut'ichana: (kunan) = p'anqap kunan kachkayninwan huk kaykuna,
+(ñawpaq) = ñawpaq kachkasqanwan huk kaykuna, a = aslla hukchasqa",
 	'history-fieldset-title' => 'Wiñay kawsaypi maskay',
 	'history-show-deleted' => 'Qullusqalla',
 	'histfirst' => 'Ñawpaqkuna',
 	'histlast' => 'Qhipaqkuna',
 	'historysize' => '({{PLURAL:$1|1 byte|$1 byte}})',
-	'historyempty' => '(ch\'usaq)',
+	'historyempty' => "(ch'usaq)",
 	'history-feed-title' => 'Hukchasqakunap wiñay kawsaynin',
-	'history-feed-description' => 'Kay p\'anqata hukchasqakunap wiñay kawsaynin',
+	'history-feed-description' => "Kay p'anqata hukchasqakunap wiñay kawsaynin",
 	'history-feed-item-nocomment' => '$1, $2-pi',
-	'history-feed-empty' => 'Mañakusqayki p\'anqaqa manam kanchu.
+	'history-feed-empty' => "Mañakusqayki p'anqaqa manam kanchu.
 Wikimanta qullusqachá icha astasqachá.
-Musuq chaniyuq p\'anqakunata [[Special:Search|wikipi maskaykachay]].',
+Musuq chaniyuq p'anqakunata [[Special:Search|wikipi maskaykachay]].",
 	'history-title' => '"$1" p\'anqata hukchasqakunap wiñay kawsaynin',
 	'hist' => 'wñka',
 	'hide' => 'pakay',
-	'hookaborted' => 'Wakinchaykachasqaykitaqa mast\'ari ch\'iwinam puchukachirqan.',
+	'hookaborted' => "Wakinchaykachasqaykitaqa mast'ari ch'iwinam puchukachirqan.",
 	'http-invalid-url' => 'URL tiyayqa manam allinchu: $1',
 	'http-invalid-scheme' => '"$1" iskimayuq URL tiyaykunaqa manam q\'imisqachu',
 	'http-request-error' => 'HTTP mañakuyqa manam ayparqanchu mana riqsisqa pantasqarayku:',
 	'http-read-error' => 'HTTP ñawiriy pantasqa.',
-	'http-timed-out' => 'HTTP mañakuypa mit\'anqa lluqsikusqañam.',
+	'http-timed-out' => "HTTP mañakuypa mit'anqa lluqsikusqañam.",
 	'http-curl-error' => 'URL apamuypi pantasqa: $1',
 	'http-host-unreachable' => 'Manam aypanichu URL-ta.',
 	'http-bad-status' => 'HTTP mañakuypi sasachakuymi tukukurqan: $1 $2',
-	'historywarning' => '\'\'\'Paqtataq\'\'\': Kay qulluykachasqayki p\'anqaqa wiñay kawsasqayuqmi, $1 {{PLURAL:$1|musuqchasqayuqchá|musuqchasqayuqchá}}:',
-	'handheld.css' => '/* Churamusqa CSS chantakunaqa makiwan hap\'isqa qarapi tiksisqa $wgHandheldStyle nisqapi allichasqa antakunap llamk\'aynintam hukchanqa */',
+	'historywarning' => "'''Paqtataq''': Kay qulluykachasqayki p'anqaqa wiñay kawsasqayuqmi, $1 {{PLURAL:$1|musuqchasqayuqchá|musuqchasqayuqchá}}:",
+	'handheld.css' => "/* Churamusqa CSS chantakunaqa makiwan hap'isqa qarapi tiksisqa \$wgHandheldStyle nisqapi allichasqa antakunap llamk'aynintam hukchanqa */",
 	'hours' => '{{PLURAL:$1|huk ura|$1 ura}}',
 	'htmlform-invalid-input' => 'Yaykuchisqaykiwanqa sasachakuykunam kachkan',
 	'htmlform-select-badoption' => 'Sapaqchasqayki chaniqa manam allin akllanachu.',
-	'htmlform-int-invalid' => 'Sapaqchasqayki chaniqa manam hunt\'a yupaychu.',
+	'htmlform-int-invalid' => "Sapaqchasqayki chaniqa manam hunt'a yupaychu.",
 	'htmlform-float-invalid' => 'Qusqayki chaniqa manam yupaychu.',
 	'htmlform-int-toolow' => 'Sapaqchasqayki chaniqa pisi saywa kaq $1-manta aswan pisim.',
 	'htmlform-int-toohigh' => 'Sapaqchasqayki chaniqa achka saywa kaq $1-manta aswan achkam.',
@@ -9207,9 +9450,9 @@ Musuq chaniyuq p\'anqakunata [[Special:Search|wikipi maskaykachay]].',
 	'htmlform-submit' => 'Kachay',
 	'htmlform-reset' => 'Hukchasqakunata kutichiy',
 	'htmlform-selectorother-other' => 'Wakin',
-];
+);
 
-$messages['qug'] = [
+$messages['qug'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Pakashka katiguriya|Pakashka katiguriyakuna}}',
 	'hidden-category-category' => 'Pakashka katikuriyakuna',
 	'help' => 'Yanapa',
@@ -9221,8 +9464,8 @@ $messages['qug'] = [
 	'headline_tip' => 'Ishkay-niki hatun uma rimay',
 	'hr_tip' => 'sirik aspi (paykunata ama ashtawan churapay)',
 	'hiddencategories' => 'Kay pankaka {{PLURAL:$1|shuk pakashka samiyachiypimi|$1 pakashka samiyachiykunapimi}} kan:',
-	'histlegend' => 'Shukchiykunata maskankapak, ishkay ñawpa pankakunata akllapay, chay kipa "Enter" teclata uraypi botontapash suchuchipay.<br />
-({{int:cur}}) = ñawpa pankapak kunan pankamanta imashpa shikanmi kan, ({{int:last}})=ashtawan ñawpak pankamanta imashpa shikanmi kan, \'\'\'{{int:minoreditletter}}\'\'\' = uchilla killkay.',
+	'histlegend' => "Shukchiykunata maskankapak, ishkay ñawpa pankakunata akllapay, chay kipa \"Enter\" teclata uraypi botontapash suchuchipay.<br />
+({{int:cur}}) = ñawpa pankapak kunan pankamanta imashpa shikanmi kan, ({{int:last}})=ashtawan ñawpak pankamanta imashpa shikanmi kan, '''{{int:minoreditletter}}''' = uchilla killkay.",
 	'history-fieldset-title' => 'Wiñay kawsaypi maskana',
 	'history-show-deleted' => 'Pichashkalla',
 	'histfirst' => 'Ashtawan ñawpakkuna',
@@ -9231,31 +9474,31 @@ $messages['qug'] = [
 	'history-title' => '"$1" pankapa killkaykunapa wiñay kawsay',
 	'hist' => 'wñka',
 	'hide' => 'Pakana',
-];
+);
 
-$messages['rgn'] = [
+$messages['rgn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categurèja ardupèda|Categurèi ardupèdi}}',
 	'hidden-category-category' => 'Categurèj nascosti',
-	'help' => 'Êt absogn d\'una man?',
-	'history' => 'Stória d\'la pàgina',
+	'help' => "Êt absogn d'una man?",
+	'history' => "Stória d'la pàgina",
 	'history_short' => 'Stória',
 	'helppage' => 'Help:Tòt j argumént',
 	'hidetoc' => 'ardòpa',
 	'headline_sample' => 'Intestaziòn',
-	'headline_tip' => 'Intestaziòn d\'e\' sgond livèl',
-	'hr_tip' => 'Riga urizuntèla (t\'an fèga e\' patàca: t\'an esègera)',
-	'hiddencategories' => 'Sta pàgina què la fa pèrt d\'{{PLURAL:$1|una categureja nascosta|$1 categurej nascosti}}.',
-	'histlegend' => 'Cunfront tra\'l versiòn d\'un artècul: strésa cun e\' maus sora al versiòn ch\'t\'vu te e pu sciàza e\' butòn "Partès" o e\' butòn in bas.<br />
-Lezenda: \'\'\'({{int:cur}})\'\'\' = difarenzi cun la versiòn d\'adès; \'\'\'({{int:last}})\'\'\' = difarenzi cun la versiòn d\'prèma; \'\'m\'\'\' = mudèfica znina',
-	'history-fieldset-title' => 'Guèrda i cambiamént d\'e\' prèm a l\'ultum',
+	'headline_tip' => "Intestaziòn d'e' sgond livèl",
+	'hr_tip' => "Riga urizuntèla (t'an fèga e' patàca: t'an esègera)",
+	'hiddencategories' => "Sta pàgina què la fa pèrt d'{{PLURAL:$1|una categureja nascosta|$1 categurej nascosti}}.",
+	'histlegend' => "Cunfront tra'l versiòn d'un artècul: strésa cun e' maus sora al versiòn ch't'vu te e pu sciàza e' butòn \"Partès\" o e' butòn in bas.<br />
+Lezenda: '''({{int:cur}})''' = difarenzi cun la versiòn d'adès; '''({{int:last}})''' = difarenzi cun la versiòn d'prèma; ''m''' = mudèfica znina",
+	'history-fieldset-title' => "Guèrda i cambiamént d'e' prèm a l'ultum",
 	'histfirst' => 'Piò vecia',
 	'histlast' => 'Piò rezent',
 	'history-title' => 'Elench d\'j cambiamént sora "$1"',
 	'hist' => 'cron',
 	'hide' => 'Ardòpa',
-];
+);
 
-$messages['rif'] = [
+$messages['rif'] = array(
 	'help' => 'Tallalt',
 	'history' => 'Amzruy n Tasna',
 	'history_short' => 'Amezruy',
@@ -9275,9 +9518,9 @@ Tasarut: (cur) = imṣebḍiyen ag tunɣilt n ruxa,
 	'hist' => 'Amezruy',
 	'hide' => 'Snuffar',
 	'historywarning' => 'ɣark: Tasna i txisd atekesd ɣars amzruy :',
-];
+);
 
-$messages['rm'] = [
+$messages['rm'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria zuppentada|Categorias zuppentadas}}',
 	'hidden-category-category' => 'Categorias zuppentadas',
 	'help' => 'Agid',
@@ -9302,33 +9545,33 @@ $messages['rm'] = [
 	'history-feed-title' => 'Cronologia da las versiuns',
 	'history-feed-description' => 'Cronologia da versiuns per questa pagina sin questa vichi',
 	'history-feed-item-nocomment' => '$1 las $2',
-	'history-feed-empty' => 'La pagina dumandada n\'exista betg.
+	'history-feed-empty' => "La pagina dumandada n'exista betg.
 Eventualmain è ella vegnida stizzada u stidada da la wiki.
-Emprova da [[Special:Search|tschertgar]] novas paginas sumegliantas en la wiki.',
+Emprova da [[Special:Search|tschertgar]] novas paginas sumegliantas en la wiki.",
 	'history-title' => 'Cronica da versiuns da "$1"',
 	'hist' => 'ist',
 	'hide' => 'Zuppentar',
 	'http-invalid-url' => 'URL nunvalida: $1',
 	'http-invalid-scheme' => 'URLs dal schema "$1" na vegnan betg sustegnidas.',
-	'http-request-error' => 'La damonda HTTP n\'è betg reussida causa ina errur nunenconuschenta.',
+	'http-request-error' => "La damonda HTTP n'è betg reussida causa ina errur nunenconuschenta.",
 	'http-read-error' => 'Sbagl da leger HTTP.',
 	'http-timed-out' => 'Surpassà il temp durant la dumanda HTTP.',
-	'http-host-unreachable' => 'Betg pussaivel da cuntanscher l\'URL.',
+	'http-host-unreachable' => "Betg pussaivel da cuntanscher l'URL.",
 	'http-bad-status' => 'Durant la dumonda HTTP è ina errur capitada: $1 $2',
-	'historywarning' => '\'\'\'Attenziun:\'\'\' L\'artitgel che ti vuls stizzar ha ina cronologia cun circa {{PLURAL:$1|ina versiun|$1 versiuns}}:',
+	'historywarning' => "'''Attenziun:''' L'artitgel che ti vuls stizzar ha ina cronologia cun circa {{PLURAL:$1|ina versiun|$1 versiuns}}:",
 	'htmlform-invalid-input' => 'I ha dà problems cun intginas da tias endataziuns',
-	'htmlform-select-badoption' => 'La valur inditgada n\'è betg ina opziun valida.',
-	'htmlform-int-invalid' => 'La valur inditgada n\'è betg ina cifra entira (integer).',
-	'htmlform-float-invalid' => 'La valur che ti has inditgà n\'è betg ina cifra.',
+	'htmlform-select-badoption' => "La valur inditgada n'è betg ina opziun valida.",
+	'htmlform-int-invalid' => "La valur inditgada n'è betg ina cifra entira (integer).",
+	'htmlform-float-invalid' => "La valur che ti has inditgà n'è betg ina cifra.",
 	'htmlform-int-toolow' => 'La valur che ti has inditgà è sut il minimum da $1',
 	'htmlform-int-toohigh' => 'La valur che ti has inditgà è sur il maximum da $1',
 	'htmlform-required' => 'Questa valur è necessaria',
 	'htmlform-submit' => 'Trametter',
 	'htmlform-reset' => 'Revocar las midadas',
 	'htmlform-selectorother-other' => 'Auters',
-];
+);
 
-$messages['rmy'] = [
+$messages['rmy'] = array(
 	'help' => 'Zhutipen',
 	'history' => 'Puraneder versiye',
 	'history_short' => 'Puranipen',
@@ -9341,9 +9584,9 @@ $messages['rmy'] = [
 	'hist' => 'puranipen',
 	'hide' => 'garav',
 	'historywarning' => 'Dikh! La patrya so kames to khoses la si la puranipen:',
-];
+);
 
-$messages['ro'] = [
+$messages['ro'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categorie ascunsă|Categorii ascunse}}',
 	'hidden-category-category' => 'Categorii ascunse',
 	'help' => 'Ajutor',
@@ -9381,7 +9624,7 @@ E posibil să fi fost ștearsă sau redenumită.
 	'http-curl-error' => 'Eroare la preluarea adresei URL: $1',
 	'http-host-unreachable' => 'Adresa URL nu a putut fi accesată.',
 	'http-bad-status' => 'A apărut o problemă în timpul solicitării HTTP: $1 $2',
-	'historywarning' => '\'\'\'Atenție:\'\'\' istoricul paginii pe care o ștergeți conține aproximativ $1 {{PLURAL:$1|versiune|versiuni|de versiuni}}:',
+	'historywarning' => "'''Atenție:''' istoricul paginii pe care o ștergeți conține aproximativ $1 {{PLURAL:$1|versiune|versiuni|de versiuni}}:",
 	'hours' => '{{PLURAL:$1|o oră|$1 ore|$1 de ore}}',
 	'htmlform-invalid-input' => 'Există probleme la valorile introduse',
 	'htmlform-select-badoption' => 'Valoarea specificată nu este o opțiune validă.',
@@ -9396,67 +9639,67 @@ E posibil să fi fost ștearsă sau redenumită.
 	'home' => 'Pagina principală',
 	'helpfaq' => 'Ajutor şi întrebări frecvente',
 	'highest_ratings' => 'Сele mai punctate',
-];
+);
 
-$messages['roa-rup'] = [
+$messages['roa-rup'] = array(
 	'help' => 'Agiutor',
 	'history_short' => 'Istoria',
-];
+);
 
-$messages['roa-tara'] = [
+$messages['roa-tara'] = array(
 	'hidden-categories' => '{{PLURAL:$1|categorije scunnute|categorije scunnute}}',
 	'hidden-category-category' => 'Categorije scunnute',
 	'help' => 'Ajute',
-	'history' => 'Storie d\'a pàgene',
+	'history' => "Storie d'a pàgene",
 	'history_short' => 'Cunde',
 	'helppage' => 'Help:Condenute',
 	'hidetoc' => 'scunne',
-	'headline_sample' => 'Teste d\'a Testete',
+	'headline_sample' => "Teste d'a Testete",
 	'headline_tip' => 'Levèlle 2 tèstete',
 	'hr_tip' => 'Linee orizzondele (ausele picche)',
 	'hiddencategories' => 'Sta pàgene jè membre de {{PLURAL:$1|1 categorja|$1 categorije}} scunnute:',
-	'histlegend' => 'Differenze de selezione: signe le radio box de le versiune ca vuè cu combronde e cazze \'\'invio\'\' o \'u buttone ca ste sotte.<br />
-Leggenda: (cur) = differenze cu \'a versiona corrende,
-(last) = differenze ca \'a versione precedende, M = cangiaminde stuédeche.',
-	'history-fieldset-title' => 'Sfogghje \'a storie',
+	'histlegend' => "Differenze de selezione: signe le radio box de le versiune ca vuè cu combronde e cazze ''invio'' o 'u buttone ca ste sotte.<br />
+Leggenda: (cur) = differenze cu 'a versiona corrende,
+(last) = differenze ca 'a versione precedende, M = cangiaminde stuédeche.",
+	'history-fieldset-title' => "Sfogghje 'a storie",
 	'history-show-deleted' => 'Sule le scangellate',
 	'histfirst' => 'Prime',
 	'histlast' => 'Urteme',
 	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
 	'historyempty' => '(vacande)',
 	'history-feed-title' => 'Storie de le revisiune',
-	'history-feed-description' => 'Storie de le revisiune oe sta pàgene sus \'a le Uicchipèdie',
+	'history-feed-description' => "Storie de le revisiune oe sta pàgene sus 'a le Uicchipèdie",
 	'history-feed-item-nocomment' => '$1 a $2',
-	'history-feed-empty' => '\'A vosce ca è cerchete non g\'esiste.
+	'history-feed-empty' => "'A vosce ca è cerchete non g'esiste.
 Pò essere ca ha state scangellete da Uicchi o ha state renomenate..
-Pruève a [[Special:Search|cercò sus a Uicchi]] \'mbrà le vosce cchiù rilevande.',
+Pruève a [[Special:Search|cercò sus a Uicchi]] 'mbrà le vosce cchiù rilevande.",
 	'history-title' => 'Liste de le versiune de "$1"',
 	'hist' => 'cunde',
 	'hide' => 'Scunne',
-	'hookaborted' => '\'U cangiamende ca tu stè pruève a ffà ha state inderrotte da \'nu gange estese.',
+	'hookaborted' => "'U cangiamende ca tu stè pruève a ffà ha state inderrotte da 'nu gange estese.",
 	'http-invalid-url' => 'URL invalide: $1',
 	'http-invalid-scheme' => 'Le URL cu le "$1" scheme non ge sonde supportate.',
-	'http-request-error' => 'Richieste HTTP fallite pe \'n\'errore scanusciute.',
-	'http-read-error' => 'Errore jndr\'à letture de l\' HTTP',
+	'http-request-error' => "Richieste HTTP fallite pe 'n'errore scanusciute.",
+	'http-read-error' => "Errore jndr'à letture de l' HTTP",
 	'http-timed-out' => 'Richieste HTTP fore timbe.',
-	'http-curl-error' => 'Errore analizzanne l\'URL: $1',
-	'http-host-unreachable' => 'Non ge riesche a raggiungere l\'URL',
-	'http-bad-status' => 'Ha state \'nu probbleme duranne \'a richieste HTTP: $1, $2',
-	'historywarning' => '\'\'\'Vide Bbuene:\'\'\' \'a pàgene ca ste scangille tène \'na storie de cangiaminde cu cchiù o mene $1 {{PLURAL:$1|revisione|revisiune}}:',
-	'handheld.css' => '/* \'U CSS ca se iacchie aqquà l\'ausane le dispositive de gestione manuale basate sus a masckere configurate in $wgHandheldStyle */',
+	'http-curl-error' => "Errore analizzanne l'URL: $1",
+	'http-host-unreachable' => "Non ge riesche a raggiungere l'URL",
+	'http-bad-status' => "Ha state 'nu probbleme duranne 'a richieste HTTP: $1, $2",
+	'historywarning' => "'''Vide Bbuene:''' 'a pàgene ca ste scangille tène 'na storie de cangiaminde cu cchiù o mene $1 {{PLURAL:$1|revisione|revisiune}}:",
+	'handheld.css' => "/* 'U CSS ca se iacchie aqquà l'ausane le dispositive de gestione manuale basate sus a masckere configurate in \$wgHandheldStyle */",
 	'hours-abbrev' => '$1h',
 	'hours' => '{{PLURAL: $1|$1ore|$1 ore}}',
 	'hijri-calendar-m1' => 'Muharram',
 	'hijri-calendar-m2' => 'Safar',
-	'hijri-calendar-m3' => 'Rabi\' al-awwal',
-	'hijri-calendar-m4' => 'Rabi\' al-thani',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
 	'hijri-calendar-m5' => 'Jumada al-awwal',
 	'hijri-calendar-m6' => 'Jumada al-thani',
 	'hijri-calendar-m7' => 'Rajab',
-	'hijri-calendar-m8' => 'Sha\'aban',
+	'hijri-calendar-m8' => "Sha'aban",
 	'hijri-calendar-m9' => 'Ramadan',
 	'hijri-calendar-m10' => 'Shawwal',
-	'hijri-calendar-m11' => 'Dhu al-Qi\'dah',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
 	'hijri-calendar-m12' => 'Dhu al-Hijjah',
 	'hebrew-calendar-m1' => 'Tishrei',
 	'hebrew-calendar-m2' => 'Cheshvan',
@@ -9487,101 +9730,101 @@ Pruève a [[Special:Search|cercò sus a Uicchi]] \'mbrà le vosce cchiù rilevan
 	'hebrew-calendar-m11-gen' => 'Av',
 	'hebrew-calendar-m12-gen' => 'Elul',
 	'htmlform-invalid-input' => 'Stonne probbleme cu certe input ca tu è mise',
-	'htmlform-select-badoption' => '\'U valore ca è specificate non g\'è \'n\'opziona valide.',
-	'htmlform-int-invalid' => '\'U valore ca è specificate non g\'è \'n\'indere.',
-	'htmlform-float-invalid' => '\'U valore ca è specificate non g\'è \'nu numere.',
-	'htmlform-int-toolow' => '\'U valore ca è specificate jè sotte a \'u minime de $1',
-	'htmlform-int-toohigh' => '\'U valore ca è specificate jè suverchie a \'u massime de $1',
+	'htmlform-select-badoption' => "'U valore ca è specificate non g'è 'n'opziona valide.",
+	'htmlform-int-invalid' => "'U valore ca è specificate non g'è 'n'indere.",
+	'htmlform-float-invalid' => "'U valore ca è specificate non g'è 'nu numere.",
+	'htmlform-int-toolow' => "'U valore ca è specificate jè sotte a 'u minime de $1",
+	'htmlform-int-toohigh' => "'U valore ca è specificate jè suverchie a 'u massime de $1",
 	'htmlform-required' => 'Stu valore jè richieste',
 	'htmlform-submit' => 'Conferme',
 	'htmlform-reset' => 'Annulle le cangiaminde',
 	'htmlform-selectorother-other' => 'Otre',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Скрытая категория|Скрытые категории}}',
 	'hidden-category-category' => 'Скрытые категории',
 	'help' => 'Справка',
-	'history' => 'история',
-	'history_short' => 'история',
-	'helppage' => 'Help:Содержание',
+	'history' => 'История страницы',
+	'history_short' => 'История',
+	'helppage' => 'Справка:Содержание',
 	'hidetoc' => 'свернуть',
 	'headline_sample' => 'Текст заголовка',
 	'headline_tip' => 'Заголовок 2-го уровня',
 	'hr_tip' => 'Горизонтальная линия (не используйте часто)',
 	'hiddencategories' => 'Эта страница относится к $1 {{PLURAL:$1|скрытой категории|скрытым категориям|скрытым категориям}}:',
-	'histlegend' => 'Выбор версий: отметьте версии страницы, которые вы хотите сравнить, и нажмите \'\'\'{{int:compare-submit}}\'\'\'.<br />
-Пояснения: \'\'\'({{int:cur}})\'\'\' — отличия от текущей версии; \'\'\'({{int:last}})\'\'\' — отличия от предшествующей версии; \'\'\'{{int:minoreditletter}}\'\'\' — незначительные изменения.',
+	'histlegend' => "Выбор версий: отметьте версии страницы, которые вы хотите сравнить, и нажмите '''{{int:compare-submit}}'''.<br />
+Пояснения: '''({{int:cur}})''' — отличия от текущей версии; '''({{int:last}})''' — отличия от предшествующей версии; '''{{int:minoreditletter}}''' — незначительные изменения.",
 	'history-fieldset-title' => 'Просмотреть историю',
 	'history-show-deleted' => 'Только удалённые',
 	'histfirst' => 'старейшие',
-	'histlast' => 'недавние',
+	'histlast' => 'последние',
 	'historysize' => '($1 {{PLURAL:$1|байт|байта|байт}})',
 	'historyempty' => '(пусто)',
 	'history-feed-title' => 'История изменений',
-	'history-feed-description' => 'История изменений этой страницы в вики',
+	'history-feed-description' => 'История изменений страницы на вики',
 	'history-feed-item-nocomment' => '$1 в $2',
 	'history-feed-empty' => 'Запрашиваемой страницы не существует.
-Она могла быть удалена или переименована.
-Попробуйте [[Special:Search|найти в вики]] похожие страницы.',
+Она была удалена или переименована.
+Попробуйте [[Special:Search|найти]] похожие страницы.',
 	'history-title' => '$1 — история изменений',
 	'hist' => 'история',
 	'hide' => 'Скрыть',
-	'hookaborted' => 'Предлагаемое вами изменение было отменено в обработчике расширения.',
-	'http-invalid-url' => 'Ошибочный URL: $1',
+	'hookaborted' => 'Изменение, которые вы пытались сделать, было прервано обработчиком расширения.',
+	'http-invalid-url' => 'Ошибочный адрес: $1',
 	'http-invalid-scheme' => 'Не поддерживаются адреса со схемой «$1»',
 	'http-request-error' => 'Сбой HTTP-запроса из-за неизвестной ошибки.',
 	'http-read-error' => 'Ошибка чтения HTTP.',
 	'http-timed-out' => 'Истекло время ожидания HTTP-запроса.',
-	'http-curl-error' => 'Ошибка обращения к URL: $1',
-	'http-host-unreachable' => 'Невозможно обратиться по указанному URL.',
+	'http-curl-error' => 'Ошибка обращения к адресу: $1',
+	'http-host-unreachable' => 'Невозможно обратиться по указанному адресу.',
 	'http-bad-status' => 'Во время обработки HTTP-запроса обнаружена проблема: $1 $2',
-	'historywarning' => '\'\'\'Внимание:\'\'\' эта страница имеет историю изменений приблизительно из $1 {{PLURAL:$1|версии|версий|версий}}:',
-	'handheld.css' => '/* Размещённый здесь CSS-код будет применяться для мобильных устройств, использующих тему оформления, указанную в $wgHandheldStyle */',
+	'historywarning' => "'''Внимание:''' эта страница имеет историю изменений приблизительно из $1 {{PLURAL:$1|версии|версий|версий}}:",
+	'handheld.css' => '/* Размещённый здесь код CSS будет применяться для мобильных устройств, использующих тему оформления, указанную в $wgHandheldStyle */',
 	'hours-abbrev' => '$1 ч',
 	'hours' => '{{PLURAL:$1|$1 час|$1 часа|$1 часов}}',
-	'hebrew-calendar-m1' => 'Тишрей',
-	'hebrew-calendar-m2' => 'Хешван',
-	'hebrew-calendar-m4' => 'Тевет',
-	'hebrew-calendar-m5' => 'Шват',
-	'hebrew-calendar-m6' => 'Адар',
-	'hebrew-calendar-m6a' => 'Адар I',
-	'hebrew-calendar-m6b' => 'Адар II',
-	'hebrew-calendar-m7' => 'Нисан',
-	'hebrew-calendar-m8' => 'Ияр',
-	'hebrew-calendar-m9' => 'Сиван',
-	'hebrew-calendar-m10' => 'Таммуз',
-	'hebrew-calendar-m11' => 'Ав',
-	'hebrew-calendar-m12' => 'Элул',
-	'hebrew-calendar-m1-gen' => 'Тишрея',
-	'hebrew-calendar-m2-gen' => 'Хешвана',
-	'hebrew-calendar-m3-gen' => 'Кислева',
-	'hebrew-calendar-m4-gen' => 'Тевета',
-	'hebrew-calendar-m5-gen' => 'Швата',
-	'hebrew-calendar-m6-gen' => 'Адара',
-	'hebrew-calendar-m6a-gen' => 'Адара I',
-	'hebrew-calendar-m6b-gen' => 'Адара II',
-	'hebrew-calendar-m7-gen' => 'Нисана',
-	'hebrew-calendar-m8-gen' => 'Ияра',
-	'hebrew-calendar-m9-gen' => 'Сивана',
-	'hebrew-calendar-m10-gen' => 'Таммуза',
-	'hebrew-calendar-m11-gen' => 'Ава',
-	'hebrew-calendar-m12-gen' => 'Элула',
+	'hebrew-calendar-m1' => 'Тишрея',
+	'hebrew-calendar-m2' => 'Хешвана',
+	'hebrew-calendar-m4' => 'Тевета',
+	'hebrew-calendar-m5' => 'Швата',
+	'hebrew-calendar-m6' => 'Адара',
+	'hebrew-calendar-m6a' => 'Адара I',
+	'hebrew-calendar-m6b' => 'Адара II',
+	'hebrew-calendar-m7' => 'Нисана',
+	'hebrew-calendar-m8' => 'Ияра',
+	'hebrew-calendar-m9' => 'Сивана',
+	'hebrew-calendar-m10' => 'Таммуза',
+	'hebrew-calendar-m11' => 'Ава',
+	'hebrew-calendar-m12' => 'Элула',
+	'hebrew-calendar-m1-gen' => 'Тишрей',
+	'hebrew-calendar-m2-gen' => 'Хешван',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Тевет',
+	'hebrew-calendar-m5-gen' => 'Шват',
+	'hebrew-calendar-m6-gen' => 'Адар',
+	'hebrew-calendar-m6a-gen' => 'Адар I',
+	'hebrew-calendar-m6b-gen' => 'Адар II',
+	'hebrew-calendar-m7-gen' => 'Нисан',
+	'hebrew-calendar-m8-gen' => 'Ияр',
+	'hebrew-calendar-m9-gen' => 'Сиван',
+	'hebrew-calendar-m10-gen' => 'Таммуз',
+	'hebrew-calendar-m11-gen' => 'Ав',
+	'hebrew-calendar-m12-gen' => 'Элул',
 	'htmlform-invalid-input' => 'Часть введённых вами данных вызвала проблемы',
 	'htmlform-select-badoption' => 'Указанное вами значение не является допустимым.',
 	'htmlform-int-invalid' => 'Указанное вами значение не является целым числом.',
 	'htmlform-float-invalid' => 'Указанное вами значение не является числом.',
 	'htmlform-int-toolow' => 'Указанное вами значение ниже минимального — $1',
-	'htmlform-int-toohigh' => 'указанное вами значение выше максимального — $1',
+	'htmlform-int-toohigh' => 'Указанное вами значение выше максимального — $1',
 	'htmlform-required' => 'Это значение необходимо',
 	'htmlform-submit' => 'Отправить',
 	'htmlform-reset' => 'Отменить изменения',
-	'htmlform-selectorother-other' => 'Иное',
-	'home' => 'Домой',
-	'helpfaq' => 'Помощь и FAQ',
+	'htmlform-selectorother-other' => 'Другие',
+	'home' => 'Заглавная',
+	'helpfaq' => 'Справка и FAQ',
 	'highest_ratings' => 'Самые высокие рейтинги',
-	'hub-Wikia' => 'Викия',
-	'hub-Entertainment' => 'Entertainment',
+	'hub-Wikia' => 'Фэндом',
+	'hub-Entertainment' => 'Развлечения',
 	'hub-Food_and_Drink' => 'Еда и напитки',
 	'hub-Gaming' => 'Видеоигры',
 	'hub-Lifestyle' => 'Увлечения',
@@ -9589,9 +9832,26 @@ $messages['ru'] = [
 	'hub-Videospiele' => 'Видеоигры',
 	'htmlform-no' => 'Нет',
 	'htmlform-yes' => 'Да',
-];
+	'history_copyright' => '-',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
+	'hijri-calendar-m5' => 'Jumada al-awwal',
+	'hijri-calendar-m6' => 'Jumada al-thani',
+	'hijri-calendar-m7' => 'Rajab',
+	'hijri-calendar-m8' => "Sha'aban",
+	'hijri-calendar-m9' => 'Ramadan',
+	'hijri-calendar-m10' => 'Shawwal',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
+	'hijri-calendar-m12' => 'Dhu al-Hijjah',
+	'hebrew-calendar-m3' => 'Кислева',
+	'hidesome' => 'Скрыть некоторые',
+	'hidebots' => 'Скрыть ботов',
+	'hubs' => 'Хабы',
+);
 
-$messages['rue'] = [
+$messages['rue'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Скрыта катеґорія|Скрыты катеґорії}}',
 	'hidden-category-category' => 'Схованы катеґорії',
 	'help' => 'Поміч',
@@ -9603,8 +9863,8 @@ $messages['rue'] = [
 	'headline_tip' => 'Надпис 2-го рівня',
 	'hr_tip' => 'Горізонтална лінія (хоснуйте єй скупо)',
 	'hiddencategories' => 'Тота сторінка належыть до $1 {{PLURAL:$1|схованa катеґорія|схованы катеґорії|схованых катеґорій}}:',
-	'histlegend' => '(теперь) = роздїлы од актуалной верзії,
-(послїдня) = роздїлы од попереднёй верзії, \'\'\'м\'\'\' = мале едітованя',
+	'histlegend' => "(теперь) = роздїлы од актуалной верзії,
+(послїдня) = роздїлы од попереднёй верзії, '''м''' = мале едітованя",
 	'history-fieldset-title' => 'Перегляднути історію',
 	'history-show-deleted' => 'Лем змазаны',
 	'histfirst' => 'найстаршы',
@@ -9629,7 +9889,7 @@ $messages['rue'] = [
 	'http-curl-error' => 'Хыба при чітаню з URL: $1',
 	'http-host-unreachable' => 'Не подарило ся контакровати URL.',
 	'http-bad-status' => 'Почас HTTP пожадавкы настав проблем: $1 $2',
-	'historywarning' => '\'\'\'Варованя:\'\'\' Сторінка, котру хочете змазати, має історію з приближно $1 {{plural:$1|ревізії|ревізіями}}:',
+	'historywarning' => "'''Варованя:''' Сторінка, котру хочете змазати, має історію з приближно $1 {{plural:$1|ревізії|ревізіями}}:",
 	'hours' => '{{PLURAL:$1|$1 година|$1 годины|$1 годин}}',
 	'htmlform-invalid-input' => 'Дакотры дата заданы вами суть хыбны',
 	'htmlform-select-badoption' => 'Вами зазначена величіна не є доступна можность.',
@@ -9641,19 +9901,19 @@ $messages['rue'] = [
 	'htmlform-submit' => 'Одослати',
 	'htmlform-reset' => 'Вернути зміны',
 	'htmlform-selectorother-other' => 'Інше',
-];
+);
 
-$messages['rup'] = [
+$messages['rup'] = array(
 	'help' => 'Agiutor',
 	'history_short' => 'Istoria',
-];
+);
 
-$messages['ruq'] = [
+$messages['ruq'] = array(
 	'help' => 'Agiutor',
 	'history_short' => 'Istoria',
-];
+);
 
-$messages['ruq-cyrl'] = [
+$messages['ruq-cyrl'] = array(
 	'help' => 'ајутор',
 	'history' => 'Хисториа пажус',
 	'helppage' => 'Help:Ајутор',
@@ -9664,22 +9924,22 @@ $messages['ruq-cyrl'] = [
 	'history-title' => 'Едитаерехисториа пентру "$1"',
 	'hist' => 'хисториа',
 	'hide' => 'аскунде',
-];
+);
 
-$messages['ruq-latn'] = [
+$messages['ruq-latn'] = array(
 	'help' => 'ajutor',
 	'history' => 'Historia pažus',
 	'helppage' => 'Help:Ajutor',
 	'hidetoc' => 'askunde',
-	'headline_sample' => 'Eskrire s\'titlus',
+	'headline_sample' => "Eskrire s'titlus",
 	'headline_tip' => 'Titlu de nivel 2',
 	'hr_tip' => 'Linia orizontala (esnidivale)',
 	'history-title' => 'Editaerehistoria pentru "$1"',
 	'hist' => 'historia',
 	'hide' => 'askunde',
-];
+);
 
-$messages['sa'] = [
+$messages['sa'] = array(
 	'hidden-categories' => '{{PLURAL:$1|निगूढः वर्गः|निगूढाः वर्गाः}}',
 	'hidden-category-category' => 'निगूढाः वर्गाः',
 	'help' => 'साहाय्यम्',
@@ -9711,9 +9971,9 @@ $messages['sa'] = [
 	'htmlform-int-invalid' => 'भवता निर्दिष्टं मौल्यं पूर्णाङ्कः न ।',
 	'htmlform-float-invalid' => 'भवता निर्दिष्टं मौल्यं संख्या न ।',
 	'htmlform-selectorother-other' => 'अन्य',
-];
+);
 
-$messages['sah'] = [
+$messages['sah'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Кистэммит категория|Кистэммит категориялар}}',
 	'hidden-category-category' => 'Кистэммит категориялар',
 	'help' => 'Көмө',
@@ -9725,9 +9985,9 @@ $messages['sah'] = [
 	'headline_tip' => '2-с таһым бас тыла',
 	'hr_tip' => 'Туора сурааһын (наһаа элбэхтик туттума)',
 	'hiddencategories' => 'Бу сирэй кистэммит {{PLURAL:$1|1 категорияҕа|$1 категорияларга}} киирэр:',
-	'histlegend' => 'Барыллары тэҥнииргэ икки радиокнопканы бэлиэтээ. <br />
+	'histlegend' => "Барыллары тэҥнииргэ икки радиокнопканы бэлиэтээ. <br />
 Быһаарыылар: (бил.) = билигин баар барылтан атына,
-(инн.) = инники баар барылтан атына, \'\'\'к.\'\'\' = улахан суолтата суох көннөрүү.',
+(инн.) = инники баар барылтан атына, '''к.''' = улахан суолтата суох көннөрүү.",
 	'history-fieldset-title' => 'Историятын көрүү',
 	'history-show-deleted' => 'Сотуллубуттары эрэ',
 	'histfirst' => 'Эрдэтээҥи',
@@ -9752,7 +10012,7 @@ $messages['sah'] = [
 	'http-curl-error' => 'URL-га тахсыы алҕаһа: $1',
 	'http-host-unreachable' => 'URL-га тахсыы сатаммата.',
 	'http-bad-status' => 'HTTP-ыйытыгы көрүү кэмигэр туох эрэ сатаммата: $1 $2',
-	'historywarning' => '\'\'\'Сэрэтии\'\'\': Сотоору турар сирэйиҥ көрүллүбүт $1 {{PLURAL:$1|соҕотох барыллаах|барыллаах}} устуоруйалаах:',
+	'historywarning' => "'''Сэрэтии''': Сотоору турар сирэйиҥ көрүллүбүт $1 {{PLURAL:$1|соҕотох барыллаах|барыллаах}} устуоруйалаах:",
 	'hours-abbrev' => '$1ч.',
 	'hours' => '{{PLURAL:$1|$1 чаас|$1 чаас}}',
 	'htmlform-invalid-input' => 'Киллэрбит сибидиэнньэҥ сорҕото алҕаһы таһаарда',
@@ -9765,9 +10025,9 @@ $messages['sah'] = [
 	'htmlform-submit' => 'Ыыт',
 	'htmlform-reset' => 'Уларытыыны төннөр',
 	'htmlform-selectorother-other' => 'Атын',
-];
+);
 
-$messages['sc'] = [
+$messages['sc'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria cuada|Categorias cuadas}}',
 	'hidden-category-category' => 'Categorias cuadas',
 	'help' => 'Agiudu',
@@ -9779,9 +10039,9 @@ $messages['sc'] = [
 	'headline_tip' => 'Tìtulu de su de duos livellu',
 	'hr_tip' => 'Lìnia orizontale (de usare cun critèriu)',
 	'hiddencategories' => 'Custa pàgina faghet parte de {{PLURAL:$1|1 categoria cuada|$1 categorias cuadas}}:',
-	'histlegend' => 'Cunfrontu intre versiones: sebera sa casella de sa versione ki boles e carca "Invio" o su butone in bàsciu.<br />
-Cosas de ammentare: \'\'\'({{int:cur}})\'\'\' = diferèntzias cun sa versione currente,
-\'\'\'({{int:last}})\'\'\' = diferèntzias cun sa versione in antis, \'\'\'{{int:minoreditletter}}\'\'\' = acontzu minore.',
+	'histlegend' => "Cunfrontu intre versiones: sebera sa casella de sa versione ki boles e carca \"Invio\" o su butone in bàsciu.<br />
+Cosas de ammentare: '''({{int:cur}})''' = diferèntzias cun sa versione currente,
+'''({{int:last}})''' = diferèntzias cun sa versione in antis, '''{{int:minoreditletter}}''' = acontzu minore.",
 	'history-fieldset-title' => 'Sfògia sa stòria',
 	'history-show-deleted' => 'Petzi borrados',
 	'histfirst' => 'Prima',
@@ -9794,9 +10054,9 @@ Cosas de ammentare: \'\'\'({{int:cur}})\'\'\' = diferèntzias cun sa versione cu
 	'hide' => 'Cua',
 	'hours-abbrev' => '$1h',
 	'htmlform-selectorother-other' => 'Àteru',
-];
+);
 
-$messages['scn'] = [
+$messages['scn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Catigurìa ammucciata|Catigurìi ammuciati}}',
 	'hidden-category-category' => 'Catigurìi ammucciati',
 	'help' => 'Aiutu',
@@ -9808,7 +10068,7 @@ $messages['scn'] = [
 	'headline_tip' => 'Suttantistazzioni',
 	'hr_tip' => 'Lìnia urizzuntali (usari cu giudizziu)',
 	'hiddencategories' => 'Sta pàggina apparteni a {{PLURAL:$1|na catigurìa ammuciata|$1 catigurìi ammuciati}}:',
-	'histlegend' => 'Cunfrontu tra virsioni: silizziunari li caselli currispunnenti ê virsioni addisiati e prèmiri Mannu o lu pulsanti a basciu.<br /> Liggenna: (curr) = diffirenzi cu la virsioni attuali, (pric) = diffirenzi cu la virsioni pricidenti, \'\'\'m\'\'\' = canciamentu nicu',
+	'histlegend' => "Cunfrontu tra virsioni: silizziunari li caselli currispunnenti ê virsioni addisiati e prèmiri Mannu o lu pulsanti a basciu.<br /> Liggenna: (curr) = diffirenzi cu la virsioni attuali, (pric) = diffirenzi cu la virsioni pricidenti, '''m''' = canciamentu nicu",
 	'history-fieldset-title' => 'Scurri ntâ crunuluggìa',
 	'histfirst' => 'Prima',
 	'histlast' => 'Ùrtima',
@@ -9822,18 +10082,18 @@ $messages['scn'] = [
 	'hist' => 'storia',
 	'hide' => 'ammuccia',
 	'historywarning' => 'Accura: La pàggina ca stai pi cancillari havi na cronoluggìa:',
-	'htmlform-invalid-input' => 'Ci su prublema cu l\'input nseritu',
-	'htmlform-select-badoption' => 'Lu valori spicificatu nun è n\'opzioni valida.',
-	'htmlform-int-invalid' => 'Lu valiri spicificatu nun è n\'interu.',
-	'htmlform-float-invalid' => 'Lu valuri c\'hai spicificatu nun è nu nnummuru.',
+	'htmlform-invalid-input' => "Ci su prublema cu l'input nseritu",
+	'htmlform-select-badoption' => "Lu valori spicificatu nun è n'opzioni valida.",
+	'htmlform-int-invalid' => "Lu valiri spicificatu nun è n'interu.",
+	'htmlform-float-invalid' => "Lu valuri c'hai spicificatu nun è nu nnummuru.",
 	'htmlform-int-toolow' => 'Lu valori spicificatu è sutta lu minimu di $1',
 	'htmlform-int-toohigh' => 'Lu valori spicificatu è supra lu minimu di $1',
 	'htmlform-submit' => 'Invia',
 	'htmlform-reset' => 'Annulla canciamenti',
 	'htmlform-selectorother-other' => 'Autri',
-];
+);
 
-$messages['sco'] = [
+$messages['sco'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Hidden categorie|Hidden categories}}',
 	'help' => 'Help',
 	'history' => 'Page history',
@@ -9860,11 +10120,11 @@ Try [[Special:Search|rakin on the wiki]] for new pages ye micht be interestit in
 	'history-title' => 'Revision history of "$1"',
 	'hist' => 'hist',
 	'hide' => 'Hod',
-	'historywarning' => 'Warnin: The page ye\'re aboot tae delete haes a history:',
+	'historywarning' => "Warnin: The page ye're aboot tae delete haes a history:",
 	'htmlform-selectorother-other' => 'Ither',
-];
+);
 
-$messages['sd'] = [
+$messages['sd'] = array(
 	'hidden-category-category' => 'لڪل زمرا',
 	'help' => 'مدد',
 	'history' => 'صفحي جي سوانح',
@@ -9882,9 +10142,9 @@ $messages['sd'] = [
 	'hist' => 'سوانح',
 	'hide' => 'لڪايو',
 	'historywarning' => 'خبردار: جيڪو صفحو توهان ڊاهڻ وارا آهيو، تنهن جي هڪ سوانح آهي:',
-];
+);
 
-$messages['sdc'] = [
+$messages['sdc'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categuria cuadda|Categuri cuaddi}}',
 	'hidden-category-category' => 'Categuri cuaddi',
 	'help' => 'Aggiuddu',
@@ -9896,10 +10156,10 @@ $messages['sdc'] = [
 	'headline_tip' => 'Sottu-intisthazioni',
 	'hr_tip' => 'Lìnia orizontari (usà cun moderazioni)',
 	'hiddencategories' => 'Chistha pagina appartheni a {{PLURAL:$1|una categuria cuadda|$1 categurì cuaddi}}:',
-	'histlegend' => 'Cunfrontu i li versioni: isciubarà li caselli curripundenti a li versioni disizaddi e incalchà Inviu o lu buttoni in giossu.
+	'histlegend' => "Cunfrontu i li versioni: isciubarà li caselli curripundenti a li versioni disizaddi e incalchà Inviu o lu buttoni in giossu.
 
-Ippiegazioni: (curr) = diffarènzi cu la versioni currenti, (priz) = diffarènzi cu la versioni prizzidenti, \'\'\'m\'\'\' = mudìfigga minori, \'\'\'b\'\'\' = mudìfigga d\'un bot, \'\'\'N\'\'\' = pàgina noba',
-	'history-fieldset-title' => 'Ischurri i\' la cronologia',
+Ippiegazioni: (curr) = diffarènzi cu la versioni currenti, (priz) = diffarènzi cu la versioni prizzidenti, '''m''' = mudìfigga minori, '''b''' = mudìfigga d'un bot, '''N''' = pàgina noba",
+	'history-fieldset-title' => "Ischurri i' la cronologia",
 	'histfirst' => 'Primma',
 	'histlast' => 'Ulthima',
 	'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
@@ -9915,9 +10175,9 @@ Ippiegazioni: (curr) = diffarènzi cu la versioni currenti, (priz) = diffarènzi
 	'htmlform-submit' => 'Invia',
 	'htmlform-reset' => 'Annulla mudifigghi',
 	'htmlform-selectorother-other' => 'Althru',
-];
+);
 
-$messages['se'] = [
+$messages['se'] = array(
 	'help' => 'Veahkki',
 	'history' => 'Historjá',
 	'history_short' => 'Historjá',
@@ -9936,9 +10196,9 @@ $messages['se'] = [
 	'hist' => 'historjá',
 	'hide' => 'čiega',
 	'historywarning' => 'Siiddu, man aiggot sihkut, lea rievdaduvvon dávjit go oktii:',
-];
+);
 
-$messages['sei'] = [
+$messages['sei'] = array(
 	'help' => 'Helpom',
 	'history' => 'Historiám páhina',
 	'history_short' => 'Historiám',
@@ -9947,9 +10207,9 @@ $messages['sei'] = [
 	'headline_sample' => 'Text corridor',
 	'headline_tip' => 'Text corridor 2',
 	'hr_tip' => 'I horizont (seperatman)',
-	'histlegend' => 'Seleccionde quiíx: xuniim cui radio zode vercion zode comparar ö click \'enter\' jöx click bazoniiniitöxamde vyu !-cmaa uisan.<br />
+	'histlegend' => "Seleccionde quiíx: xuniim cui radio zode vercion zode comparar ö click 'enter' jöx click bazoniiniitöxamde vyu !-cmaa uisan.<br />
 Informacion: (curt) = quiíxde vercion currentua,
-(hunl) = quiíxde vercion precedatöxuam, b = ticpatlöx bajlöxam.',
+(hunl) = quiíxde vercion precedatöxuam, b = ticpatlöx bajlöxam.",
 	'histfirst' => 'Xepe',
 	'histlast' => 'Cmaa',
 	'historysize' => '($1 bytenám)',
@@ -9960,18 +10220,18 @@ Informacion: (curt) = quiíxde vercion currentua,
 	'history-title' => 'Históriade revicionde "$1"',
 	'hist' => 'histó',
 	'hide' => 'Cíiitám',
-];
+);
 
-$messages['sg'] = [
+$messages['sg'] = array(
 	'hidden-categories' => 'Höndëngö {{PLURAL:$1|fündä|âfündä}}',
 	'hidden-category-category' => 'Âhöndëngö âf¨¨undä',
 	'help' => 'Za mbï',
 	'history' => 'Mbai tî lêmbëtï nî',
 	'history_short' => 'mbai',
 	'helppage' => 'Help:Münä',
-];
+);
 
-$messages['sgs'] = [
+$messages['sgs'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Pakavuota kateguorėjė|Pakavuotas kateguorėjės}}',
 	'hidden-category-category' => 'Pakavuotas kateguorėjės',
 	'help' => 'Pagelba',
@@ -9983,9 +10243,9 @@ $messages['sgs'] = [
 	'headline_tip' => 'Ontra līgė skīrė pavadėnėms',
 	'hr_tip' => 'Guorizuontali linėjė (nenauduokėt ba reikala)',
 	'hiddencategories' => 'Tas poslapis prėklausa $1 {{PLURAL:$1|pakavuotā kateguorėjē|pakavuotoms kateguorėjėms|pakavuotu kateguorėju}}:',
-	'histlegend' => 'Skėrtomā terp versėju: pažīmiekit līginamas versėjės ė spauskėt \'\'Enter\'\' klavėša a mīgtuka apatiuo.<br />
+	'histlegend' => "Skėrtomā terp versėju: pažīmiekit līginamas versėjės ė spauskėt ''Enter'' klavėša a mīgtuka apatiuo.<br />
 Žīmiejimā: (dab) = palīginims so vielibiausė versėjė,
-(pask) = palīginims so priš ta bovosia versėjė, S = mažos pataisims.',
+(pask) = palīginims so priš ta bovosia versėjė, S = mažos pataisims.",
 	'history-fieldset-title' => 'Naršītė istuorėjuo',
 	'history-show-deleted' => 'Tėktās ėštrintė',
 	'histfirst' => 'Seniausė',
@@ -10001,9 +10261,9 @@ Pamiegīkėt [[Special:Search|ėiškoutė pruojektė]] sosėjosiu naujū poslapi
 	'hist' => 'ist',
 	'hide' => 'Kavuotė',
 	'historywarning' => 'Diemesė: Trėnams poslapis tor istuorėjė:',
-];
+);
 
-$messages['sh'] = [
+$messages['sh'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Sakrivena kategorija|Sakrivene kategorije}}',
 	'hidden-category-category' => 'Sakrivene kategorije',
 	'help' => 'Pomoć',
@@ -10015,9 +10275,9 @@ $messages['sh'] = [
 	'headline_tip' => 'Podnaslov',
 	'hr_tip' => 'Horizontalna linija (koristite rijetko)',
 	'hiddencategories' => 'Ova stranica pripada {{PLURAL:$1|1 skrivenoj kategoriji|$1 skrivenim kategorijama}}:',
-	'histlegend' => 'Odabir razlika: označite radio dugme verzija za usporedbu i pritisnite enter ili dugme na dnu.<br />
-Objašnjenje: \'\'\'({{int:cur}})\'\'\' = razlika sa trenutnom verzijom,
-\'\'\'({{int:last}})\'\'\' = razlika sa prethodnom verzijom, \'\'\'{{int:minoreditletter}}\'\'\' = manja izmjena.',
+	'histlegend' => "Odabir razlika: označite radio dugme verzija za usporedbu i pritisnite enter ili dugme na dnu.<br />
+Objašnjenje: '''({{int:cur}})''' = razlika sa trenutnom verzijom,
+'''({{int:last}})''' = razlika sa prethodnom verzijom, '''{{int:minoreditletter}}''' = manja izmjena.",
 	'history-fieldset-title' => 'Pretraga historije',
 	'history-show-deleted' => 'Samo obrisane',
 	'histfirst' => 'Najstarije',
@@ -10042,7 +10302,7 @@ Pokušajte [[Special:Search|pretražiti wiki]] za slične stranice.',
 	'http-curl-error' => 'Greška pri otvaranju URLa: $1',
 	'http-host-unreachable' => 'Ovaj URL nije bilo moguće otvoriti',
 	'http-bad-status' => 'Nastao je problem tokom HTTP zahtjeva: $1 $2',
-	'historywarning' => '\'\'\'Upozorenje\'\'\':  Stranica koju želite da obrišete ima historiju sa otprilike $1 {{PLURAL:$1|revizijom|revizije|revizija}}:',
+	'historywarning' => "'''Upozorenje''':  Stranica koju želite da obrišete ima historiju sa otprilike $1 {{PLURAL:$1|revizijom|revizije|revizija}}:",
 	'hours' => '{{PLURAL:$1|$1 sat|$1 sata|$1 sati}}',
 	'htmlform-invalid-input' => 'Postoje određeni problemi sa Vašim unosom',
 	'htmlform-select-badoption' => 'Vrijednost koju ste unijeli nije valjana opcija.',
@@ -10054,9 +10314,9 @@ Pokušajte [[Special:Search|pretražiti wiki]] za slične stranice.',
 	'htmlform-submit' => 'Unesi',
 	'htmlform-reset' => 'Vrati izmjene',
 	'htmlform-selectorother-other' => 'Ostalo',
-];
+);
 
-$messages['shi'] = [
+$messages['shi'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Taggayt iḥban|Taggayin ḥbanin}}',
 	'hidden-category-category' => 'Taggayyin ḥbanin',
 	'help' => 'Asaws',
@@ -10080,9 +10340,9 @@ $messages['shi'] = [
 	'htmlform-submit' => 'sifd',
 	'htmlform-reset' => 'sglbd tghyirat',
 	'htmlform-selectorother-other' => 'wayya',
-];
+);
 
-$messages['si'] = [
+$messages['si'] = array(
 	'hidden-categories' => '{{PLURAL:$1|සැඟවුනු ප්‍රවර්ගය|සැඟවුනු ප්‍රවර්ග}}',
 	'hidden-category-category' => 'සැඟවුනු ප්‍රවර්ග',
 	'help' => 'උදවු',
@@ -10094,9 +10354,9 @@ $messages['si'] = [
 	'headline_tip' => '2 වන මට්ටමෙහි සිරස්තලය',
 	'hr_tip' => 'තිරස් පේළිය (අවම වශයෙන් භාවිතා කරන්න)',
 	'hiddencategories' => 'මෙම පිටුව, {{PLURAL:$1| එක් සැඟවුණු ප්‍රවර්ගයක| සැඟවුණු ප්‍රවර්ගයන් $1 ක}} අවයවයක් වේ:',
-	'histlegend' => 'වෙනස තේරීම: සැසඳිය යුතු අනුවාදයන්හි  රේඩියෝ බොක්ස් සලකුණු කොට ඉන්පසු එන්ටර් බොත්තම එබීම හෝ පහළින්ම ඇති බොත්තම එබීම කරන්න.<br />
-ආඛ්‍යායිකාව: \'\'\'({{int:cur}})\'\'\' = වත්මන් අනුවාදය හා සමග වෙනස,
-\'\'\'({{int:last}})\'\'\'  = පෙර අනුවාදය හා සමග වෙනස, \'\'\'{{int:minoreditletter}}\'\'\' = සුළු සංස්කරණය.',
+	'histlegend' => "වෙනස තේරීම: සැසඳිය යුතු අනුවාදයන්හි  රේඩියෝ බොක්ස් සලකුණු කොට ඉන්පසු එන්ටර් බොත්තම එබීම හෝ පහළින්ම ඇති බොත්තම එබීම කරන්න.<br />
+ආඛ්‍යායිකාව: '''({{int:cur}})''' = වත්මන් අනුවාදය හා සමග වෙනස,
+'''({{int:last}})'''  = පෙර අනුවාදය හා සමග වෙනස, '''{{int:minoreditletter}}''' = සුළු සංස්කරණය.",
 	'history-fieldset-title' => 'ඉතිහාසය පිරික්සන්න',
 	'history-show-deleted' => 'මැකූ ඒවා පමණී',
 	'histfirst' => 'පැරණිතම',
@@ -10175,9 +10435,9 @@ $messages['si'] = [
 	'htmlform-submit' => 'යොමුකරන්න',
 	'htmlform-reset' => 'වෙනස්කිරීම් අහෝසිකරන්න',
 	'htmlform-selectorother-other' => 'වෙනත්',
-];
+);
 
-$messages['sk'] = [
+$messages['sk'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Skrytá kategória|Skryté kategórie}}',
 	'hidden-category-category' => 'Skryté kategórie',
 	'help' => 'Pomoc',
@@ -10216,7 +10476,7 @@ Skúste [[Special:Search|vyhľadávať na wiki]] relevantné nové stránky.',
 	'http-curl-error' => 'Chyba pri sťahovaní URL: $1',
 	'http-host-unreachable' => 'URL nie je dostupný',
 	'http-bad-status' => 'Počas požiadavky HTTP nastal problém: $1 $2',
-	'historywarning' => '\'\'\'Upozornenie:\'\'\' Stránka, ktorú sa chystáte zmazať má históriu obsahujúcu približne $1 {{PLURAL:$1|revíziu|revízie|revízií}}:',
+	'historywarning' => "'''Upozornenie:''' Stránka, ktorú sa chystáte zmazať má históriu obsahujúcu približne $1 {{PLURAL:$1|revíziu|revízie|revízií}}:",
 	'handheld.css' => '/* Tu umiestnené CSS bude ovplyvňovať prenosné zariadenia vychádzajúceho zo štýlu nastaveného v $wgHandheldStyle */',
 	'hours' => '{{PLURAL:$1|$1 hodina|$1 hodiny|$1 hodín}}',
 	'htmlform-invalid-input' => 'Niekotrý z údajov, ktoré ste zadali je problematický',
@@ -10229,9 +10489,9 @@ Skúste [[Special:Search|vyhľadávať na wiki]] relevantné nové stránky.',
 	'htmlform-submit' => 'Odoslať',
 	'htmlform-reset' => 'Vrátiť zmeny',
 	'htmlform-selectorother-other' => 'Iné',
-];
+);
 
-$messages['sl'] = [
+$messages['sl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Skrita kategorija|Skriti kategoriji|Skrite kategorije}}',
 	'hidden-category-category' => 'Skrite kategorije',
 	'help' => 'Pomoč',
@@ -10243,8 +10503,8 @@ $messages['sl'] = [
 	'headline_tip' => 'Naslovna vrstica druge ravni',
 	'hr_tip' => 'Vodoravna črta (uporabljajte zmerno)',
 	'hiddencategories' => 'Ta stran je v vsebovana v {{PLURAL:$1|1 skriti kategoriji|$1 skritih kategorijah}}:',
-	'histlegend' => 'Izbira primerjave: označite okroglo polje ob redakciji za primerjavo in stisnite enter ali gumb na dnu strani.<br />
-Legenda: \'\'\'({{int:cur}})\'\'\' = primerjava s trenutno redakcijo, \'\'\'({{int:last}})\'\'\' = primerjava s prejšnjo redakcijo, \'\'\'{{int:minoreditletter}}\'\'\' = manjše urejanje.',
+	'histlegend' => "Izbira primerjave: označite okroglo polje ob redakciji za primerjavo in stisnite enter ali gumb na dnu strani.<br />
+Legenda: '''({{int:cur}})''' = primerjava s trenutno redakcijo, '''({{int:last}})''' = primerjava s prejšnjo redakcijo, '''{{int:minoreditletter}}''' = manjše urejanje.",
 	'history-fieldset-title' => 'Zgodovina poizvedovanj',
 	'history-show-deleted' => 'Samo izbrisani',
 	'histfirst' => 'Najstarejše',
@@ -10269,7 +10529,7 @@ Prosimo, poskusite [[Special:Search|poiskati v wikiju]] ustrezajoče nove strani
 	'http-curl-error' => 'Napaka pri doseganju URL: $1',
 	'http-host-unreachable' => 'Ni mogoče doseči URL.',
 	'http-bad-status' => 'Med zahtevo HTTP je prišlo do težave: $1 $2',
-	'historywarning' => '\'\'\'Opozorilo:\'\'\' Stran, ki jo želite izbrisati, ima zgodovino s približno $1 {{PLURAL:$1|redakcijo|redakcijama|redakcijami}}:',
+	'historywarning' => "'''Opozorilo:''' Stran, ki jo želite izbrisati, ima zgodovino s približno $1 {{PLURAL:$1|redakcijo|redakcijama|redakcijami}}:",
 	'hours-abbrev' => '$1 h',
 	'hours' => '$1 {{PLURAL:$1|ura|uri|ure|ur}}',
 	'htmlform-invalid-input' => 'Z delom vašega vnosa so težave',
@@ -10285,9 +10545,9 @@ Prosimo, poskusite [[Special:Search|poiskati v wikiju]] ustrezajoče nove strani
 	'home' => 'Naslovnica',
 	'helpfaq' => 'Pomoč in pogosta vprašanja',
 	'highest_ratings' => 'Najbolje ocenjene',
-];
+);
 
-$messages['sli'] = [
+$messages['sli'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Verstackte Kategorie|Verstackte Kategorien}}',
 	'hidden-category-category' => 'Verstackte Kategorie',
 	'help' => 'Hilfe',
@@ -10314,19 +10574,19 @@ $messages['sli'] = [
 	'history-title' => 'Versionsgeschichte vun „$1“',
 	'hist' => 'Versiona',
 	'hide' => 'ausblenda',
-	'historywarning' => '\'\'\'Ochtiche:\'\'\' De Seite, de du läscha mechtest, hoot anne Versionsgeschichte mit $1 {{PLURAL:$1|Version|Versionen}}:',
+	'historywarning' => "'''Ochtiche:''' De Seite, de du läscha mechtest, hoot anne Versionsgeschichte mit $1 {{PLURAL:$1|Version|Versionen}}:",
 	'htmlform-submit' => 'Ieberträän',
 	'htmlform-reset' => 'Änderunga rickgängig macha',
 	'htmlform-selectorother-other' => 'Ondere',
-];
+);
 
-$messages['sm'] = [
+$messages['sm'] = array(
 	'help' => 'Fesoasoani',
-	'history_short' => 'Tala fa\'asolopito',
-	'hist' => 'Tala fa\'asolopito',
-];
+	'history_short' => "Tala fa'asolopito",
+	'hist' => "Tala fa'asolopito",
+);
 
-$messages['sma'] = [
+$messages['sma'] = array(
 	'help' => 'Viehkie',
 	'history' => 'Histovrije',
 	'history_short' => 'Histovrije',
@@ -10344,14 +10604,14 @@ $messages['sma'] = [
 	'hist' => 'hist',
 	'hide' => 'Gaptjedh',
 	'historywarning' => 'Vaaroehtidh: Bielie datne gïehtele ahte sihkut åtna histovrije:',
-];
+);
 
-$messages['sn'] = [
+$messages['sn'] = array(
 	'help' => 'Rubatsiro',
 	'history_short' => 'Zvemakare',
-];
+);
 
-$messages['so'] = [
+$messages['so'] = array(
 	'hidden-category-category' => 'Qeybaha qarsoon',
 	'help' => 'Caawinaad',
 	'history' => 'Taariikhda bogga',
@@ -10364,9 +10624,9 @@ Waxaa lagayaabaa in laga tir tiray wikigan, ama magacii laga badalay.
 Iskuday in aad [[Special:Search|karaadiso wikigan]] beyjaj laxiira oo cusub.',
 	'hide' => 'Qari',
 	'historywarning' => '<strong>Digniin:</strong> Bogga aad tirtirirabtid wuxuu leeyahay taariikkh hore:',
-];
+);
 
-$messages['sq'] = [
+$messages['sq'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori e fshehur|Kategori të fshehura}}',
 	'hidden-category-category' => 'Kategori të fshehura',
 	'help' => 'Ndihmë',
@@ -10402,8 +10662,8 @@ $messages['sq'] = [
 	'http-curl-error' => 'Gabim gjatë gjetjes së URL-së: $1',
 	'http-host-unreachable' => 'Nuk mund të lidheni me adresën URL.',
 	'http-bad-status' => 'Ndodhi një problem gjatë kërkesës HTTP: $1 $2',
-	'historywarning' => '\'\'\'Kujdes:\'\'\' Kjo faqe të cilën po e grisni ka histori me rreth $1
-{{PLURAL:$1|version|redaktime}}:',
+	'historywarning' => "'''Kujdes:''' Kjo faqe të cilën po e grisni ka histori me rreth $1
+{{PLURAL:$1|version|redaktime}}:",
 	'hours' => '{{PLURAL:$1|$1 orë|$1 orë}}',
 	'htmlform-invalid-input' => 'Ka probleme me disa kontribute tuaja',
 	'htmlform-select-badoption' => 'Vlera që ju e specifikuat nuk është një alternativë e vlefshme.',
@@ -10415,63 +10675,9 @@ $messages['sq'] = [
 	'htmlform-submit' => 'Dërgo',
 	'htmlform-reset' => 'Zhbëj ndryshimin',
 	'htmlform-selectorother-other' => 'Gjitha',
-];
+);
 
-$messages['sr'] = [
-	'hidden-categories' => '{{PLURAL:$1|Kategori e fshehur|Kategori të fshehura}}',
-	'hidden-category-category' => 'Kategori të fshehura',
-	'help' => 'Ndihmë',
-	'history' => 'Historiku i faqes',
-	'history_short' => 'Historiku',
-	'helppage' => 'Help:Përmbajtje',
-	'hidetoc' => 'fshih',
-	'headline_sample' => 'Titulli',
-	'headline_tip' => 'Titull i nivelit 2',
-	'hr_tip' => 'vijë horizontale (përdoreni rallë)',
-	'hiddencategories' => 'Kjo faqe është nën {{PLURAL:$1|një kategori të fshehur|$1 kategori të fshehura}}:',
-	'histlegend' => 'Legjenda: (tani) = ndryshimet me versionin e tanishëm,
-(fund) = ndryshimet me versionin e parardhshëm, V = redaktim i vogël',
-	'history-fieldset-title' => 'Shfleto historikun',
-	'history-show-deleted' => 'Vetëm versionet të grisur',
-	'histfirst' => 'Së pari',
-	'histlast' => 'Së fundmi',
-	'historysize' => '({{PLURAL:$1|1 B|$1 B}})',
-	'historyempty' => '(bosh)',
-	'history-feed-title' => 'Historiku i versioneve',
-	'history-feed-description' => 'Historiku i versioneve për këtë faqe në wiki',
-	'history-feed-item-nocomment' => '$1 tek $2',
-	'history-feed-empty' => 'Faqja që kërkuat nuk ekziston. Ajo mund të jetë grisur nga wiki ose mund të jetë zhvendosur nën një emër tjetër. Mund të provoni ta gjeni duke e [[Special:Search|kërkuar]].',
-	'history-title' => 'Historiku i redaktimeve te "$1"',
-	'hist' => 'hist',
-	'hide' => 'fshih',
-	'hookaborted' => 'Modifikimi që ju provuat ta bëni u ndërpre nga një goditje shtesë.',
-	'http-invalid-url' => 'Adresë URL e pavlefshme: $1',
-	'http-invalid-scheme' => 'Adresat URL me skemën "$1" nuk mbështeten.',
-	'http-request-error' => 'Kërkesa HTTP dështoi për shkak të një gabimi të panjohur.',
-	'http-read-error' => 'Gabim në leximin e HTTP.',
-	'http-timed-out' => 'Kërkesës HTTP i kaloi koha.',
-	'http-curl-error' => 'Gabim gjatë gjetjes së URL-së: $1',
-	'http-host-unreachable' => 'Nuk mund të lidheni me adresën URL.',
-	'http-bad-status' => 'Ndodhi një problem gjatë kërkesës HTTP: $1 $2',
-	'historywarning' => '\'\'\'Kujdes:\'\'\' Kjo faqe të cilën po e grisni ka histori me rreth $1
-{{PLURAL:$1|version|redaktime}}:',
-	'hours' => '{{PLURAL:$1|$1 orë|$1 orë}}',
-	'htmlform-invalid-input' => 'Ka probleme me disa kontribute tuaja',
-	'htmlform-select-badoption' => 'Vlera që ju e specifikuat nuk është një alternativë e vlefshme.',
-	'htmlform-int-invalid' => 'Vlera që ju e specifikuat nuk është numër i plotë.',
-	'htmlform-float-invalid' => 'Vlera që ju e specifikuat nuk është numër.',
-	'htmlform-int-toolow' => 'Vlera që ju e përcaktuat është nën minimumin e $1',
-	'htmlform-int-toohigh' => 'Vlera që ju e përcaktuat është mbi maksimumin e $1',
-	'htmlform-required' => 'Kjo vlerë është e nevojshme',
-	'htmlform-submit' => 'Dërgo',
-	'htmlform-reset' => 'Zhbëj ndryshimin',
-	'htmlform-selectorother-other' => 'Gjitha',
-	'home' => 'Početna strana',
-	'helpfaq' => 'Pomoć i česta pitanja',
-	'highest_ratings' => 'Najbolje ocene',
-];
-
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Сакривена категорија|Сакривене категорије}}',
 	'hidden-category-category' => 'Сакривене категорије',
 	'help' => 'Помоћ',
@@ -10483,9 +10689,9 @@ $messages['sr-ec'] = [
 	'headline_tip' => 'Поднаслов',
 	'hr_tip' => 'Водоравна линија (користити ретко)',
 	'hiddencategories' => 'Ова страница је члан {{PLURAL:$1|једне скривене категорије|$1 скривене категорије|$1 скривених категорија}}:',
-	'histlegend' => 'Избор разлика: изаберите кутијице измена за упоређивање и притисните ентер или дугме на дну.<br />
-Објашњење: \'\'\'({{int:cur}})\'\'\' – разлика с тренутном изменом,
-\'\'\'({{int:last}})\'\'\' – разлика с претходном изменом, \'\'\'{{int:minoreditletter}}\'\'\' – мала измена',
+	'histlegend' => "Избор разлика: изаберите кутијице измена за упоређивање и притисните ентер или дугме на дну.<br />
+Објашњење: '''({{int:cur}})''' – разлика с тренутном изменом,
+'''({{int:last}})''' – разлика с претходном изменом, '''{{int:minoreditletter}}''' – мала измена",
 	'history-fieldset-title' => 'Преглед историје',
 	'history-show-deleted' => 'само обрисано',
 	'histfirst' => 'најстарије',
@@ -10510,7 +10716,7 @@ $messages['sr-ec'] = [
 	'http-curl-error' => 'Грешка при отварању адресе: $1',
 	'http-host-unreachable' => 'Не могу да приступим адреси.',
 	'http-bad-status' => 'Дошло је до проблема током захтева HTTP: $1 $2',
-	'historywarning' => '\'\'\'Упозорење:\'\'\' страница коју желите да обришете има историју с приближно $1 {{PLURAL:$1|изменом|измене|измена}}:',
+	'historywarning' => "'''Упозорење:''' страница коју желите да обришете има историју с приближно $1 {{PLURAL:$1|изменом|измене|измена}}:",
 	'handheld.css' => '/* CSS постављен овде ће утицати на ручне уређаје с темом прилагођеном у $wgHandheldStyle */',
 	'hours-abbrev' => '$1 ч',
 	'hours' => '{{PLURAL:$1|$1 сат|$1 сата|$1 сати}}',
@@ -10564,9 +10770,9 @@ $messages['sr-ec'] = [
 	'htmlform-submit' => 'Пошаљи',
 	'htmlform-reset' => 'Врати измене',
 	'htmlform-selectorother-other' => 'Друго',
-];
+);
 
-$messages['sr-el'] = [
+$messages['sr-el'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Skrivena kategorija|Skrivene kategorije}}',
 	'hidden-category-category' => 'Skrivene kategorije',
 	'help' => 'Pomoć',
@@ -10602,7 +10808,7 @@ Pokušajte [[Special:Search|da pretražite viki]] za relevantne nove stranice.',
 	'http-timed-out' => 'HTTP zahtev je prekoračio vreme za ispunjenje.',
 	'http-curl-error' => 'Greška pri otvaranju URL: $1',
 	'http-host-unreachable' => 'URL je bio nedostupan.',
-	'historywarning' => '\'\'\'Upozorenje:\'\'\' Stranica koju želite da obrišete ima istoriju sa približno $1 {{PLURAL:$1|revizijom|revizija}}:',
+	'historywarning' => "'''Upozorenje:''' Stranica koju želite da obrišete ima istoriju sa približno $1 {{PLURAL:$1|revizijom|revizija}}:",
 	'htmlform-invalid-input' => 'Ima problema sa delom Vašeg unosa',
 	'htmlform-select-badoption' => 'Vrednost koju ste naveli nije ispravna opcija.',
 	'htmlform-int-invalid' => 'Vrednost koji ste naveli nije celi broj.',
@@ -10612,11 +10818,11 @@ Pokušajte [[Special:Search|da pretražite viki]] za relevantne nove stranice.',
 	'htmlform-submit' => 'Pošalji',
 	'htmlform-reset' => 'Vrati izmene',
 	'htmlform-selectorother-other' => 'Drugo',
-];
+);
 
-$messages['srn'] = [
-	'hidden-categories' => '{{PLURAL:$1|a grupu|den grupu}} d\'e kibri',
-	'hidden-category-category' => 'Grupu d\'e kibri',
+$messages['srn'] = array(
+	'hidden-categories' => "{{PLURAL:$1|a grupu|den grupu}} d'e kibri",
+	'hidden-category-category' => "Grupu d'e kibri",
 	'help' => 'Yepi',
 	'history' => 'Historia fu a papira',
 	'history_short' => 'Historia',
@@ -10625,8 +10831,8 @@ $messages['srn'] = [
 	'headline_sample' => 'Pisi ede nen',
 	'headline_tip' => 'Pisi ede nen',
 	'hr_tip' => 'Didon lini (no kebroiki furu)',
-	'histlegend' => 'Teki den difrenti: marki den versi fu san yu wan si den difrenti, dan naki ENTER noso a knopo na ondrosey.<br />
-Den syatu: (disi) = a difrenti nanga a versi disi, (a wan n\'en fesi) = a difrenti nanga a versi na en fesi, p = pikin kenki',
+	'histlegend' => "Teki den difrenti: marki den versi fu san yu wan si den difrenti, dan naki ENTER noso a knopo na ondrosey.<br />
+Den syatu: (disi) = a difrenti nanga a versi disi, (a wan n'en fesi) = a difrenti nanga a versi na en fesi, p = pikin kenki",
 	'histfirst' => 'A moro owru wan',
 	'histlast' => 'A moro nyun wan',
 	'historysize' => '({{PLURAL:$1|wan byte|$1 byte}})',
@@ -10641,23 +10847,23 @@ A kan ben trowe efu dribi.
 	'hist' => 'hist',
 	'hide' => 'kibri',
 	'historywarning' => 'Warskow: a papira di yu wani puru abi wan historia:',
-];
+);
 
-$messages['ss'] = [
+$messages['ss'] = array(
 	'hidden-category-category' => 'Mikhakha lefihliwe',
 	'help' => 'Sita',
 	'history' => 'Umlandvo walelikhasi',
 	'history_short' => 'Umlandvo',
 	'helppage' => 'Help:Lokucuketfwe',
 	'hidetoc' => 'fihla',
-];
+);
 
-$messages['st'] = [
+$messages['st'] = array(
 	'history' => 'Nalane',
 	'history_short' => 'Nalane',
-];
+);
 
-$messages['stq'] = [
+$messages['stq'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ferstatte Kategorie|Ferstatte Kategorien}}',
 	'hidden-category-category' => 'Ferstatte Kategorien',
 	'help' => 'Hälpe',
@@ -10669,9 +10875,9 @@ $messages['stq'] = [
 	'headline_tip' => 'Ieuwene 2 Uurskrift',
 	'hr_tip' => 'Horizontoale Lienje (spoarsoam ferweende)',
 	'hiddencategories' => 'Disse Siede is Meeglid fon {{PLURAL:$1|1 ferstatte Kategorie|$1 ferstatte Kategorien}}:',
-	'histlegend' => 'Diff  Uutwoal: Do Boxen fon do wonskede Versione markierje un \'Enter\' drukke of ap dän Knoop unner klikke.<br />
+	'histlegend' => "Diff  Uutwoal: Do Boxen fon do wonskede Versione markierje un 'Enter' drukke of ap dän Knoop unner klikke.<br />
 Legende: (Aktuäl) = Unnerskeed tou ju aktuälle Version,
-(Lääste) = Unnerskeed tou ju foarige Version, L = Litje Annerenge',
+(Lääste) = Unnerskeed tou ju foarige Version, L = Litje Annerenge",
 	'history-fieldset-title' => 'Säik in ju Versionsgeskichte',
 	'history-show-deleted' => 'bloot läskede Versione',
 	'histfirst' => 'Ooldste',
@@ -10694,7 +10900,7 @@ Legende: (Aktuäl) = Unnerskeed tou ju aktuälle Version,
 	'http-curl-error' => 'Failer bier dän Ouroup fon ju URL: $1',
 	'http-host-unreachable' => 'URL is nit tou beloangjen',
 	'http-bad-status' => 'Unner ju HTTP-Anfroage is n Failer aptreeden: $1 $2',
-	'historywarning' => '\'\'\'Woarskauenge:\'\'\' Ju Siede, ju du läskje moatest, häd ne Versionsgeskichte mäd sowät $1 {{PLURAL:$1|Version|Versione}}:',
+	'historywarning' => "'''Woarskauenge:''' Ju Siede, ju du läskje moatest, häd ne Versionsgeskichte mäd sowät $1 {{PLURAL:$1|Version|Versione}}:",
 	'hours-abbrev' => '$1U',
 	'htmlform-invalid-input' => 'Mäd eenige Iengoawen rakt dät Probleme',
 	'htmlform-select-badoption' => 'Die anroate Wäid is neen gultige Option.',
@@ -10706,9 +10912,9 @@ Legende: (Aktuäl) = Unnerskeed tou ju aktuälle Version,
 	'htmlform-submit' => 'Uurdreege',
 	'htmlform-reset' => 'Annerengen touräächtraale',
 	'htmlform-selectorother-other' => 'Uur',
-];
+);
 
-$messages['su'] = [
+$messages['su'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Kategori nyumput|Kategori nyumput}}',
 	'hidden-category-category' => 'Kategori nu nyarumput',
 	'help' => 'Pitulung',
@@ -10741,7 +10947,7 @@ Cobaan [[Special:Search|sungsi di wiki]] pikeun kaca-kaca nu sarimbag.',
 	'http-invalid-url' => 'URL teu bener: $1',
 	'http-invalid-scheme' => 'URL anu skémana "$1" teu karojong',
 	'http-host-unreachable' => 'URL teu kahontal.',
-	'historywarning' => '\'\'\'Awas:\'\'\' kaca nu rék dihapus mibanda jujutan kira $1  {{PLURAL:$1|révisi|révisi}}:',
+	'historywarning' => "'''Awas:''' kaca nu rék dihapus mibanda jujutan kira $1  {{PLURAL:$1|révisi|révisi}}:",
 	'htmlform-select-badoption' => 'Niléy anu diasupkeun teu bener.',
 	'htmlform-float-invalid' => 'Niléy anu diasupkeun lain angka.',
 	'htmlform-int-toolow' => 'Niléy anu diasupkeun kurang ti $1 anu pangleutikna',
@@ -10749,9 +10955,9 @@ Cobaan [[Special:Search|sungsi di wiki]] pikeun kaca-kaca nu sarimbag.',
 	'htmlform-submit' => 'Kirim',
 	'htmlform-reset' => 'Bolaykeun parobahan',
 	'htmlform-selectorother-other' => 'Lianna',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Dold kategori|Dolda kategorier}}',
 	'hidden-category-category' => 'Dolda kategorier',
 	'help' => 'Hjälp',
@@ -10789,7 +10995,7 @@ Prova att [[Special:Search|söka på wikin]] för relevanta nya sidor.',
 	'http-curl-error' => 'Fel vid hämtning av URL: $1',
 	'http-host-unreachable' => 'URL:en kunde inte nås.',
 	'http-bad-status' => 'Det uppstod ett problem under HTTP-begäran: $1 $2',
-	'historywarning' => '\'\'\'Varning:\'\'\' Sidan du håller på att radera har en historik med ungefär $1 {{PLURAL:$1|version|versioner}}:',
+	'historywarning' => "'''Varning:''' Sidan du håller på att radera har en historik med ungefär $1 {{PLURAL:$1|version|versioner}}:",
 	'hours-abbrev' => '$1t',
 	'hours' => '{{PLURAL:$1|$1 timme|$1 timmar}}',
 	'htmlform-invalid-input' => 'Det finns problem med din inmatning',
@@ -10805,9 +11011,9 @@ Prova att [[Special:Search|söka på wikin]] för relevanta nya sidor.',
 	'home' => 'Huvudsida',
 	'helpfaq' => 'Hjälp och återkommande frågor',
 	'highest_ratings' => 'Högst rankade',
-];
+);
 
-$messages['sw'] = [
+$messages['sw'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Jamii iliofichwa|Jamii zilizofichwa}}',
 	'hidden-category-category' => 'Jamii zilizofichwa',
 	'help' => 'Msaada',
@@ -10819,8 +11025,8 @@ $messages['sw'] = [
 	'headline_tip' => 'Kichwa cha habari, saizi 2',
 	'hr_tip' => 'Mstari wa mlalo (usitumie ovyo)',
 	'hiddencategories' => 'Ukurasa huu uliomo katika jamii $1 {{PLURAL:$1|iliofichwa|zilizofichwa}}:',
-	'histlegend' => 'Chagua tofauti: tia alama katika vitufe redio kulinganisha mapitio, na bonyeza "enter" au kitufe hapo chini.<br />
-Ufunguo: \'\'\'({{int:cur}})\'\'\' = tofauti na toleo la sasa, \'\'\'({{int:last}})\'\'\' = tofauti na pitio lililotangulia, \'\'\'({{int:minoreditletter}})\'\'\' = badiliko dogo.',
+	'histlegend' => "Chagua tofauti: tia alama katika vitufe redio kulinganisha mapitio, na bonyeza \"enter\" au kitufe hapo chini.<br />
+Ufunguo: '''({{int:cur}})''' = tofauti na toleo la sasa, '''({{int:last}})''' = tofauti na pitio lililotangulia, '''({{int:minoreditletter}})''' = badiliko dogo.",
 	'history-fieldset-title' => 'Fungua historia',
 	'history-show-deleted' => 'Zilizofutwa tu',
 	'histfirst' => 'Mwanzoni',
@@ -10843,7 +11049,7 @@ Jaribu [[Special:Search|kutafuta kurasa mpya zinazohusika kwenye wiki]].',
 	'http-curl-error' => 'Hitilafu ya kuleta URL: $1',
 	'http-host-unreachable' => 'KISARA (URL) haikupatikana',
 	'http-bad-status' => 'Kulikuwa na tatizo wakati wa kutekeleza ombi la HTTP: $1 $2',
-	'historywarning' => '\'\'\'Ilani:\'\'\' Ukurasa unaotaka kufuta una historia ya {{PLURAL:$1|pitio|mapitio}} $1 hivi:',
+	'historywarning' => "'''Ilani:''' Ukurasa unaotaka kufuta una historia ya {{PLURAL:$1|pitio|mapitio}} $1 hivi:",
 	'hours' => '{{PLURAL:$1|saa $1|masaa $1}}',
 	'htmlform-invalid-input' => 'Kuna matatizo na baadhi ya maingizo yako',
 	'htmlform-select-badoption' => 'Thamani ulioiandika si chaguo halali.',
@@ -10855,9 +11061,9 @@ Jaribu [[Special:Search|kutafuta kurasa mpya zinazohusika kwenye wiki]].',
 	'htmlform-submit' => 'Wasilisha',
 	'htmlform-reset' => 'Tengua mabadiliko',
 	'htmlform-selectorother-other' => 'Nyingine',
-];
+);
 
-$messages['szl'] = [
+$messages['szl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Schowano katygoryjo|Schowane katygoryje|Schowanych katygoryj}}',
 	'hidden-category-category' => 'Schowane katygoryje',
 	'help' => 'Půmoc',
@@ -10887,9 +11093,9 @@ Možeš tyž [[Special:Search|šnupać]] za tům zajtům.',
 	'hist' => 'gysz.',
 	'hide' => 'Schrůń',
 	'historywarning' => 'Pozor! Ta zajta kerům chceš wyćepnůńć mo historjo:',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'hidden-categories' => '{{PLURAL:$1|மறைக்கப்பட்ட பகுப்பு|மறைக்கப்பட்ட பகுப்புகள்}}',
 	'hidden-category-category' => 'மறைக்கப்பட்ட பகுப்புகள்',
 	'help' => 'உதவி',
@@ -10928,7 +11134,7 @@ $messages['ta'] = [
 	'http-curl-error' => '$1 உரலியை பெறுவதில் பிழை நேரிட்டது',
 	'http-host-unreachable' => 'இணைய முகவரியை (URL) சென்றடைய முடியவில்லை',
 	'http-bad-status' => 'HTTP கோரிக்கையில் பிரச்சினை ஏற்பட்டுள்ளது:$1 $2',
-	'historywarning' => '\'\'\'எச்சரிக்கை:\'\'\' தாங்கள் நீக்கவுள்ள பக்கத்திற்கு சுமார் $1 {{PLURAL:$1|திருத்தம்|திருத்தங்களின்}} வரலாறு உண்டு:',
+	'historywarning' => "'''எச்சரிக்கை:''' தாங்கள் நீக்கவுள்ள பக்கத்திற்கு சுமார் $1 {{PLURAL:$1|திருத்தம்|திருத்தங்களின்}} வரலாறு உண்டு:",
 	'hours' => '{{PLURAL:$1|$1மணி| $1  மணிகள்}}',
 	'htmlform-invalid-input' => 'உங்கள் உள்ளீடுகளில்  சில சிக்கல்கள் உள்ளன',
 	'htmlform-select-badoption' => 'நீங்கள் குறிப்பிட்ட மதிப்பு செல்லத்தக்க விருப்பத்தேர்வு அல்ல.',
@@ -10940,9 +11146,9 @@ $messages['ta'] = [
 	'htmlform-submit' => 'சமர்ப்பி',
 	'htmlform-reset' => 'மாற்றங்களை இல்லாது செய்',
 	'htmlform-selectorother-other' => 'மற்றவை',
-];
+);
 
-$messages['tcy'] = [
+$messages['tcy'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ದೆಂಗಾದ್ ದೀತಿನ ವರ್ಗ|ದೆಂಗಾದ್ ದೀತಿನ ವರ್ಗೊಲು}}',
 	'hidden-category-category' => 'ದೆಂಗಾದ್ ದೀತಿನ ವರ್ಗೊಲು',
 	'help' => 'ಸಹಾಯ',
@@ -10963,9 +11169,9 @@ $messages['tcy'] = [
 	'history-title' => '"$1" ಪುಟೊತ ಆವೃತ್ತಿ ಇತಿಹಾಸ',
 	'hist' => 'ಇತಿಹಾಸ',
 	'hide' => 'ದೆಂಗಾವು',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'hidden-categories' => '{{PLURAL:$1|దాచిన వర్గం|దాచిన వర్గాలు}}',
 	'hidden-category-category' => 'దాచిన వర్గాలు',
 	'help' => 'సహాయం',
@@ -11003,7 +11209,7 @@ $messages['te'] = [
 	'http-curl-error' => 'URLని తేవడంలో పొరపాటు: $1',
 	'http-host-unreachable' => 'URLని చేరలేకపోయాం.',
 	'http-bad-status' => 'HTTP అభ్యర్ధన చేస్తున్నప్పుడు సమస్య ఉంది: $1 $2',
-	'historywarning' => '\'\'\'హెచ్చరిక\'\'\': మీరు తొలగించబోయే పేజీకి సుమారు $1 {{PLURAL:$1|కూర్పుతో|కూర్పులతో}} చరిత్ర ఉంది:',
+	'historywarning' => "'''హెచ్చరిక''': మీరు తొలగించబోయే పేజీకి సుమారు $1 {{PLURAL:$1|కూర్పుతో|కూర్పులతో}} చరిత్ర ఉంది:",
 	'hours' => '{{PLURAL:$1|ఒక గంట|$1 గంటల}}',
 	'htmlform-invalid-input' => 'మీరు ఇచ్చినవాటితో కొన్ని సమస్యలున్నాయి',
 	'htmlform-select-badoption' => 'మీరిచ్చిన విలువ సరైన వికల్పం కాదు.',
@@ -11015,39 +11221,39 @@ $messages['te'] = [
 	'htmlform-submit' => 'దాఖలుచెయ్యి',
 	'htmlform-reset' => 'మార్పులను రద్దుచెయ్యి',
 	'htmlform-selectorother-other' => 'ఇతర',
-];
+);
 
-$messages['tet'] = [
+$messages['tet'] = array(
 	'help' => 'Ajuda',
 	'history' => 'Istória pájina',
 	'history_short' => 'Istória',
 	'helppage' => 'Help:Konteúdu',
 	'hidetoc' => 'subar',
-	'hiddencategories' => 'Pájina ne\'e iha {{PLURAL:$1|kategoria ida-ne\'ebé subar|kategoria $1 sira-ne\'ebé subar}}:',
+	'hiddencategories' => "Pájina ne'e iha {{PLURAL:$1|kategoria ida-ne'ebé subar|kategoria $1 sira-ne'ebé subar}}:",
 	'histfirst' => 'sedu liu hotu',
 	'histlast' => 'Foun liu hotu',
 	'historyempty' => '(mamuk)',
 	'history-feed-item-nocomment' => '$1 iha $2',
 	'hist' => 'istória',
 	'hide' => 'Hamsumik',
-];
+);
 
-$messages['tg'] = [
+$messages['tg'] = array(
 	'help' => 'Ajuda',
 	'history' => 'Istória pájina',
 	'history_short' => 'Istória',
 	'helppage' => 'Help:Konteúdu',
 	'hidetoc' => 'subar',
-	'hiddencategories' => 'Pájina ne\'e iha {{PLURAL:$1|kategoria ida-ne\'ebé subar|kategoria $1 sira-ne\'ebé subar}}:',
+	'hiddencategories' => "Pájina ne'e iha {{PLURAL:$1|kategoria ida-ne'ebé subar|kategoria $1 sira-ne'ebé subar}}:",
 	'histfirst' => 'sedu liu hotu',
 	'histlast' => 'Foun liu hotu',
 	'historyempty' => '(mamuk)',
 	'history-feed-item-nocomment' => '$1 iha $2',
 	'hist' => 'istória',
 	'hide' => 'Hamsumik',
-];
+);
 
-$messages['tg-cyrl'] = [
+$messages['tg-cyrl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Гурӯҳи пинҳон|Гурӯҳҳои пинҳон}}',
 	'hidden-category-category' => 'Гурӯҳҳои пинҳон',
 	'help' => 'Роҳнамо',
@@ -11085,35 +11291,35 @@ $messages['tg-cyrl'] = [
 	'htmlform-submit' => 'Ирсол',
 	'htmlform-reset' => 'Ботили тағйирот',
 	'htmlform-selectorother-other' => 'Дигар',
-];
+);
 
-$messages['tg-latn'] = [
+$messages['tg-latn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Gurūhi pinhon|Gurūhhoi pinhon}}',
 	'hidden-category-category' => 'Gurūhhoi pinhon',
 	'help' => 'Rohnamo',
-	'history' => 'Ta\'rix',
-	'history_short' => 'Ta\'rix',
+	'history' => "Ta'rix",
+	'history_short' => "Ta'rix",
 	'helppage' => 'Help:Mundariça',
 	'hidetoc' => 'Pinhon kardani',
 	'headline_sample' => 'Matni unvon',
 	'headline_tip' => 'Unvoni sathi 2',
 	'hr_tip' => 'Xati ufuqī (sarfakorona istifoda kuned)',
 	'hiddencategories' => 'In sahifa dar {{PLURAL:$1|1 gurūhi pinhon|$1 gurūhhoi pinhon}} qaror dorad:',
-	'histlegend' => 'Intixobi tafovut:quttiji nusxahoro baroi tafovut qajd kuned va tugmai doxil kardan jo tugmai zerro paxş kuned.<br />
-Şarh: (fe\'lī) tafovut bo nusxai fe\'lī
-(qablī) = tafovut bo nusxai fe\'lī, çuz\' = viroişi çuz\'ī',
-	'history-fieldset-title' => 'Mururi ta\'rix',
+	'histlegend' => "Intixobi tafovut:quttiji nusxahoro baroi tafovut qajd kuned va tugmai doxil kardan jo tugmai zerro paxş kuned.<br />
+Şarh: (fe'lī) tafovut bo nusxai fe'lī
+(qablī) = tafovut bo nusxai fe'lī, çuz' = viroişi çuz'ī",
+	'history-fieldset-title' => "Mururi ta'rix",
 	'histfirst' => 'Avvalin',
 	'histlast' => 'Oxirin',
 	'historysize' => '({{PLURAL:$1|1 bajt|$1 bajt}})',
 	'historyempty' => '(xolī)',
-	'history-feed-title' => 'Ta\'rixi viroişho',
-	'history-feed-description' => 'Ta\'rixi viroişhoi in sahifa dar viki',
+	'history-feed-title' => "Ta'rixi viroişho",
+	'history-feed-description' => "Ta'rixi viroişhoi in sahifa dar viki",
 	'history-feed-item-nocomment' => '$1 dar $2',
 	'history-feed-empty' => 'Sahifai darxostşuda vuçud nadorad. Mumkin ast, ki az viki hazf jo nomaş taƣjir doda şuda boşad.
 Sahifahoi çadidī aloqamandro metavoned [[Special:Search|dar viki]] çustuçū kuned.',
 	'history-title' => 'Ta\'rixcai viroişhoi "$1"',
-	'hist' => 'ta\'rix',
+	'hist' => "ta'rix",
 	'hide' => 'Pinhon kardani',
 	'htmlform-invalid-input' => 'Baxşi az vurudi şumo muşkili dorad',
 	'htmlform-select-badoption' => 'Miqdori voridşuda jak guzinai qobili qabul nest.',
@@ -11124,9 +11330,9 @@ Sahifahoi çadidī aloqamandro metavoned [[Special:Search|dar viki]] çustuçū 
 	'htmlform-submit' => 'Irsol',
 	'htmlform-reset' => 'Botili taƣjirot',
 	'htmlform-selectorother-other' => 'Digar',
-];
+);
 
-$messages['th'] = [
+$messages['th'] = array(
 	'hidden-categories' => '{{PLURAL:$1|หมวดหมู่ที่ซ่อนอยู่|หมวดหมู่ที่ซ่อนอยู่}}',
 	'hidden-category-category' => 'หมวดหมู่ที่ซ่อนอยู่',
 	'help' => 'วิธีใช้',
@@ -11174,17 +11380,17 @@ $messages['th'] = [
 	'htmlform-submit' => 'ส่งข้อมูล',
 	'htmlform-reset' => 'ยกเลิกการเปลื่ยนแปลง',
 	'htmlform-selectorother-other' => 'อื่นๆ',
-];
+);
 
-$messages['ti'] = [
+$messages['ti'] = array(
 	'help' => 'ፍንጪ',
 	'history' => 'ናይ ፅሑፍ ታሪኽ',
 	'history_short' => 'ታሪኽ',
 	'historysize' => '($1 {{PLURAL:$1|ባይታት|ባይታት}})',
 	'hist' => 'ታሪኽ',
-];
+);
 
-$messages['tk'] = [
+$messages['tk'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Gizlin kategoriýa|Gizlin kategoriýalar}}',
 	'hidden-category-category' => 'Gizlin kategoriýalar',
 	'help' => 'Ýardam',
@@ -11196,9 +11402,9 @@ $messages['tk'] = [
 	'headline_tip' => '2-nji derejeli at',
 	'hr_tip' => 'Gorizontal liniýa (ýygy-ýygydan ulanmaň)',
 	'hiddencategories' => 'Bu sahypa {{PLURAL:$1|1 gizlin kategoriýa|$1 gizlin kategoriýa}} degişlidir:',
-	'histlegend' => 'Tapawut seljeriş: deňeşdirmek isleýän 2 sany wersiýaňyzy belläp, enter-e ýa-da iň aşaky düwmä basyň.<br />
-Şertli belgiler: \'\'\'({{int:cur}})\'\'\' = häzirki wersiýadan tapawudy,
-\'\'\'({{int:last}})\'\'\' = öňündäki wersiýadan tapawudy, \'\'\'{{int:minoreditletter}}\'\'\' = ujypsyzja özgerdiş.',
+	'histlegend' => "Tapawut seljeriş: deňeşdirmek isleýän 2 sany wersiýaňyzy belläp, enter-e ýa-da iň aşaky düwmä basyň.<br />
+Şertli belgiler: '''({{int:cur}})''' = häzirki wersiýadan tapawudy,
+'''({{int:last}})''' = öňündäki wersiýadan tapawudy, '''{{int:minoreditletter}}''' = ujypsyzja özgerdiş.",
 	'history-fieldset-title' => 'Geçmişe göz aýla',
 	'history-show-deleted' => 'Diňe öçürilenler',
 	'histfirst' => 'Iň irki',
@@ -11223,7 +11429,7 @@ Baglanyşykly täze sahypalar üçin [[Special:Search|wikide gözleg geçirip]] 
 	'http-curl-error' => 'URL äkelmek säwligi: $1',
 	'http-host-unreachable' => 'URL-ä baryp bolmaýar',
 	'http-bad-status' => 'HTTP talaby wagtynda problema döredi: $1 $2',
-	'historywarning' => '\'\'\'Duýduryş:\'\'\' Öçürjek bolup duran sahypaňyzyň takmynan $1 {{PLURAL:$1| wersiýaly|wersiýaly}} geçmişi bar:',
+	'historywarning' => "'''Duýduryş:''' Öçürjek bolup duran sahypaňyzyň takmynan $1 {{PLURAL:$1| wersiýaly|wersiýaly}} geçmişi bar:",
 	'htmlform-invalid-input' => 'Girizen maglumatyňyzyň bir böleginde problema bar',
 	'htmlform-select-badoption' => 'Görkezen bahaňyz dogry opsiýa däl.',
 	'htmlform-int-invalid' => 'Görkezen bahaňyz bitin san däl.',
@@ -11234,9 +11440,9 @@ Baglanyşykly täze sahypalar üçin [[Special:Search|wikide gözleg geçirip]] 
 	'htmlform-submit' => 'Tabşyr',
 	'htmlform-reset' => 'Üýtgeşmeleri yzyna al',
 	'htmlform-selectorother-other' => 'Başga',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Nakatagong kategorya|Mga nakatagong kategorya}}',
 	'hidden-category-category' => 'Mga nakatagong kategorya',
 	'help' => 'Tulong',
@@ -11248,14 +11454,14 @@ $messages['tl'] = [
 	'headline_tip' => 'Paulong antas 2',
 	'hr_tip' => 'Pahalagang na guhit (gamitin nang madalang)',
 	'hiddencategories' => 'Ang pahinang ito ay kasapi sa {{PLURAL:$1|1 nakatagong kategorya|$1 nakatagong kategorya}}:',
-	'histlegend' => 'Ipaghambing ang mga napili: markahan ang mga radyong buton (\'\'radio button\'\') ng mga bersyong ihahambing at pindutin ang \'\'enter\'\' o ang buton sa ilalim.<br />
+	'histlegend' => "Ipaghambing ang mga napili: markahan ang mga radyong buton (''radio button'') ng mga bersyong ihahambing at pindutin ang ''enter'' o ang buton sa ilalim.<br />
 Mga daglat: (kas) = pagkakaiba sa kasalukuyang bersyon,
-(huli) = pagkakaiba sa naunang bersyon, m = maliit na pagbabago.',
+(huli) = pagkakaiba sa naunang bersyon, m = maliit na pagbabago.",
 	'history-fieldset-title' => 'Tumingin-tingin sa kasaysayan',
 	'history-show-deleted' => 'Ibinura lamang',
 	'histfirst' => 'Pinakasinauna',
 	'histlast' => 'Pinakakamakailan',
-	'historysize' => '({{PLURAL:$1|1 \'\'byte\'\'|$1 \'\'byte\'\'}})',
+	'historysize' => "({{PLURAL:$1|1 ''byte''|$1 ''byte''}})",
 	'historyempty' => '(walang laman)',
 	'history-feed-title' => 'Kasaysayan ng pagbabago',
 	'history-feed-description' => 'Kasaysayan ng pagbabago para sa pahinang ito dito sa wiki',
@@ -11275,20 +11481,20 @@ Subukang [[Special:Search|hanapin sa wiki]] para sa mga kaugnay na mga bagong pa
 	'http-curl-error' => 'Kamalian sa pagsalok ng URL: $1',
 	'http-host-unreachable' => 'Hindi marating ang URL.',
 	'http-bad-status' => 'Nagkaroon ng suliranin habang hinihiling ang HTTP na: $1 $2',
-	'historywarning' => '\'\'\'Babala\'\'\': May kasaysayan ang pahinang buburahin mo na tinatayang may $1 {{PLURAL:$1|pagbabago|mga pagbabago}}:',
-	'handheld.css' => '/* Ang CSS na inilagay dito ay makakaapekto sa mga aparatong nahahawakan (\'\'handheld device\'\') batay sa itinakdang pabalat sa \'\'$wgHandheldStyle\'\' */',
+	'historywarning' => "'''Babala''': May kasaysayan ang pahinang buburahin mo na tinatayang may $1 {{PLURAL:$1|pagbabago|mga pagbabago}}:",
+	'handheld.css' => "/* Ang CSS na inilagay dito ay makakaapekto sa mga aparatong nahahawakan (''handheld device'') batay sa itinakdang pabalat sa ''\$wgHandheldStyle'' */",
 	'hours-abbrev' => '$1o',
 	'hijri-calendar-m1' => 'Muharram',
 	'hijri-calendar-m2' => 'Safar',
-	'hijri-calendar-m3' => 'Rabi\' al-awwal',
-	'hijri-calendar-m4' => 'Rabi\' al-thani',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
 	'hijri-calendar-m5' => 'Jumada al-awwal',
 	'hijri-calendar-m6' => 'Jumada al-thani',
 	'hijri-calendar-m7' => 'Rajab',
-	'hijri-calendar-m8' => 'Sha\'aban',
+	'hijri-calendar-m8' => "Sha'aban",
 	'hijri-calendar-m9' => 'Ramadan',
 	'hijri-calendar-m10' => 'Shawwal',
-	'hijri-calendar-m11' => 'Dhu al-Qi\'dah',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
 	'hijri-calendar-m12' => 'Dhu al-Hijjah',
 	'hebrew-calendar-m1' => 'Tishrei',
 	'hebrew-calendar-m2' => 'Cheshvan',
@@ -11314,14 +11520,14 @@ Subukang [[Special:Search|hanapin sa wiki]] para sa mga kaugnay na mga bagong pa
 	'htmlform-submit' => 'Ipasa',
 	'htmlform-reset' => 'Bawiin ang mga pagbabago',
 	'htmlform-selectorother-other' => 'Iba pa',
-];
+);
 
-$messages['tn'] = [
+$messages['tn'] = array(
 	'help' => 'Thuso',
 	'history_short' => 'Ditso',
-];
+);
 
-$messages['to'] = [
+$messages['to'] = array(
 	'hidden-categories' => 'Faʻahinga toi',
 	'hidden-category-category' => 'Ngaahi faʻahinga toi',
 	'help' => 'Tokoni',
@@ -11338,18 +11544,18 @@ $messages['to'] = [
 	'hist' => 'hisi',
 	'hide' => 'Toi',
 	'historywarning' => 'Tokanga: ko e peesi te ke fietāmateʻi, ʻoku ʻi ai haʻane histolia.',
-];
+);
 
-$messages['tokipona'] = [
+$messages['tokipona'] = array(
 	'help' => 'mi sona ala',
 	'history' => 'o lukin e lipu ni pi tenpo pini',
 	'history_short' => 'lipu ni pi tenpo pini',
 	'hidetoc' => 'o lili e poki ni',
 	'histfirst' => 'pini taso',
 	'histlast' => 'sin taso',
-];
+);
 
-$messages['tpi'] = [
+$messages['tpi'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Grup hait|Ol grup hait}}',
 	'hidden-category-category' => 'Ol grup hait',
 	'help' => 'Halivim mi',
@@ -11363,9 +11569,9 @@ $messages['tpi'] = [
 	'hist' => 'olgeta senis',
 	'hide' => 'Haitim',
 	'htmlform-selectorother-other' => 'Narapela',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Gizli kategori|Gizli kategoriler}}',
 	'hidden-category-category' => 'Gizli kategoriler',
 	'help' => 'Yardım',
@@ -11377,8 +11583,8 @@ $messages['tr'] = [
 	'headline_tip' => '2. seviye başlık',
 	'hr_tip' => 'Yatay çizgi (çok sık kullanmayın)',
 	'hiddencategories' => 'Bu sayfa {{PLURAL:$1|1 gizli kategoriye|$1 gizli kategoriye}} mensuptur:',
-	'histlegend' => 'Fark seçimi: karşılaştırmayı istediğiniz 2 sürümün önündeki daireleri işaretleyip, enter\'a ya da sayfanın en altında bulunan düğmeye basın.<br />
-Tanımlar: \'\'\'({{int:cur}})\'\'\' = güncel sürümle aradaki fark, \'\'\'({{int:last}})\'\'\' = bir önceki sürümle aradaki fark, \'\'\'{{int:minoreditletter}}\'\'\' = küçük değişiklik.',
+	'histlegend' => "Fark seçimi: karşılaştırmayı istediğiniz 2 sürümün önündeki daireleri işaretleyip, enter'a ya da sayfanın en altında bulunan düğmeye basın.<br />
+Tanımlar: '''({{int:cur}})''' = güncel sürümle aradaki fark, '''({{int:last}})''' = bir önceki sürümle aradaki fark, '''{{int:minoreditletter}}''' = küçük değişiklik.",
 	'history-fieldset-title' => 'Geçmişe gözat',
 	'history-show-deleted' => 'Sadece silinenler',
 	'histfirst' => 'En eski',
@@ -11387,7 +11593,7 @@ Tanımlar: \'\'\'({{int:cur}})\'\'\' = güncel sürümle aradaki fark, \'\'\'({{
 	'historyempty' => '(boş)',
 	'history-feed-title' => 'Değişiklik geçmişis',
 	'history-feed-description' => 'Viki üzerindeki bu sayfanın değişiklik geçmişi.',
-	'history-feed-item-nocomment' => '$1, $2\'de',
+	'history-feed-item-nocomment' => "$1, $2'de",
 	'history-feed-empty' => 'İstediğiniz sayfa bulunmamaktadır.
 Sayfa vikiden silinmiş ya da ismi değiştirilmiş olabilir.
 Konu ile alakalı diğer sayfaları bulmak için [[Special:Search|vikide arama yapmayı]] deneyin.',
@@ -11401,9 +11607,9 @@ Konu ile alakalı diğer sayfaları bulmak için [[Special:Search|vikide arama y
 	'http-read-error' => 'HTTP okuma hatası.',
 	'http-timed-out' => 'HTTP isteği zaman aşımına uğradı.',
 	'http-curl-error' => 'URL alınırken hata: $1',
-	'http-host-unreachable' => 'URL\'ye ulaşılamıyor.',
+	'http-host-unreachable' => "URL'ye ulaşılamıyor.",
 	'http-bad-status' => 'HTTP isteği sırasında bir sorun oluştu: $1 $2',
-	'historywarning' => '\'\'\'Uyarı:\'\'\' Silmek üzere olduğunuz sayfanın yaklaşık olarak $1 {{PLURAL:$1|sürüme|sürüme}} sahip bir geçmişi var:',
+	'historywarning' => "'''Uyarı:''' Silmek üzere olduğunuz sayfanın yaklaşık olarak $1 {{PLURAL:$1|sürüme|sürüme}} sahip bir geçmişi var:",
 	'hours-abbrev' => '$1s',
 	'hours' => '{{PLURAL:$1|$1 saat|$1 saat}}',
 	'hijri-calendar-m1' => 'Muharrem',
@@ -11414,8 +11620,8 @@ Konu ile alakalı diğer sayfaları bulmak için [[Special:Search|vikide arama y
 	'htmlform-select-badoption' => 'Belirttiğiniz değer geçerli bir seçenek değil.',
 	'htmlform-int-invalid' => 'Belirttiğiniz değer bir tamsayı değil.',
 	'htmlform-float-invalid' => 'Belirttiğiniz değer bir sayı değil.',
-	'htmlform-int-toolow' => 'Belirttiğiniz değer asgari $1\'in altında',
-	'htmlform-int-toohigh' => 'Belirttiğiniz değer azami $1\'in üstünde',
+	'htmlform-int-toolow' => "Belirttiğiniz değer asgari $1'in altında",
+	'htmlform-int-toohigh' => "Belirttiğiniz değer azami $1'in üstünde",
 	'htmlform-required' => 'Bu değer gereklidir',
 	'htmlform-submit' => 'Gönder',
 	'htmlform-reset' => 'Değişiklikleri geri al',
@@ -11423,18 +11629,18 @@ Konu ile alakalı diğer sayfaları bulmak için [[Special:Search|vikide arama y
 	'home' => 'Anasayfa',
 	'helpfaq' => 'Yardım ve SSS',
 	'highest_ratings' => 'En yüksek puanlar',
-];
+);
 
-$messages['ts'] = [
+$messages['ts'] = array(
 	'help' => 'Mpfuno',
 	'history' => 'Matimu yaTluka',
 	'history_short' => 'Matimu',
 	'helppage' => 'Help:Leswinga ndzeni',
 	'hidetoc' => 'Tumbeta',
 	'hide' => 'Tumbeta',
-];
+);
 
-$messages['tt-cyrl'] = [
+$messages['tt-cyrl'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Яшерен төркем|Яшерен төркемнәр}}',
 	'hidden-category-category' => 'Яшерен төркемнәр',
 	'help' => 'Ярдәм',
@@ -11446,7 +11652,7 @@ $messages['tt-cyrl'] = [
 	'headline_tip' => '2 нче дәрәҗәле исем',
 	'hr_tip' => 'Горизонталь сызык (еш кулланмагыз)',
 	'hiddencategories' => 'Бу бит $1 {{PLURAL:$1|яшерен төркемгә}} керә:',
-	'histlegend' => 'Аңлатмалар: \'\'\'({{int:cur}})\'\'\' = хәзерге юрамадан аерымлыклар, \'\'\'({{int:last}})\'\'\' = баягы юрамадан аерымлыклар, \'\'\'{{int:minoreditletter}}\'\'\' = кече үзгәртүләр.',
+	'histlegend' => "Аңлатмалар: '''({{int:cur}})''' = хәзерге юрамадан аерымлыклар, '''({{int:last}})''' = баягы юрамадан аерымлыклар, '''{{int:minoreditletter}}''' = кече үзгәртүләр.",
 	'history-fieldset-title' => 'Тарихын карау',
 	'history-show-deleted' => 'Бары тик бетерү',
 	'histfirst' => 'Элеккеге',
@@ -11463,16 +11669,16 @@ $messages['tt-cyrl'] = [
 	'hist' => 'тарих',
 	'hide' => 'яшер',
 	'http-read-error' => 'HTTP укуда хата.',
-	'historywarning' => '\'\'\'Кисәтү\'\'\': сез бетерергә теләгән биттә үзгәртү тарихы бар, ул $1дән {{PLURAL:$1|юрамалар}}:',
+	'historywarning' => "'''Кисәтү''': сез бетерергә теләгән биттә үзгәртү тарихы бар, ул $1дән {{PLURAL:$1|юрамалар}}:",
 	'hijri-calendar-m1' => 'Мөхәррәм',
 	'hijri-calendar-m7' => 'Раҗәб',
 	'hijri-calendar-m9' => 'Рамазан',
 	'htmlform-submit' => 'Җибәрү',
 	'htmlform-reset' => 'Үзгәртүләрне кире кайтару',
 	'htmlform-selectorother-other' => 'Башка',
-];
+);
 
-$messages['tt-latn'] = [
+$messages['tt-latn'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Yäşeren törkem|Yäşeren törkemnär}}',
 	'hidden-category-category' => 'Yäşeren törkemnär',
 	'help' => 'Yärdäm',
@@ -11484,7 +11690,7 @@ $messages['tt-latn'] = [
 	'headline_tip' => '2 nçe däräcäle isem',
 	'hr_tip' => 'Gorizontal sızıq (yış qullanmağız)',
 	'hiddencategories' => 'Bu bit $1 {{PLURAL:$1|yäşeren törkemgä}} kerä:',
-	'histlegend' => 'Añlatmalar: \'\'\'({{int:cur}})\'\'\' = xäzerge yuramadan ayırımlıqlar, \'\'\'({{int:last}})\'\'\' = bayağı yuramadan ayırımlıqlar, \'\'\'{{int:minoreditletter}}\'\'\' = keçe üzgärtülär.',
+	'histlegend' => "Añlatmalar: '''({{int:cur}})''' = xäzerge yuramadan ayırımlıqlar, '''({{int:last}})''' = bayağı yuramadan ayırımlıqlar, '''{{int:minoreditletter}}''' = keçe üzgärtülär.",
 	'history-fieldset-title' => 'Tarixın qaraw',
 	'history-show-deleted' => 'Barı tik beterü',
 	'histfirst' => 'Elekkege',
@@ -11500,22 +11706,22 @@ Ul beterelgän yäisä bütän urınğa küçerelgän (başqa isem alğan) bulı
 	'history-title' => '$1 biteneñ üzgärtü tarixı',
 	'hist' => 'tarix',
 	'hide' => 'yäşer',
-	'historywarning' => '\'\'\'Kisätü\'\'\': sez beterergä telägän bittä üzgärtü tarixı bar, ul $1dän {{PLURAL:$1|yuramalar}}:',
+	'historywarning' => "'''Kisätü''': sez beterergä telägän bittä üzgärtü tarixı bar, ul $1dän {{PLURAL:$1|yuramalar}}:",
 	'hijri-calendar-m1' => 'Möxärräm',
 	'hijri-calendar-m7' => 'Racäb',
 	'hijri-calendar-m9' => 'Ramazan',
 	'htmlform-submit' => 'Cibärü',
 	'htmlform-reset' => 'Üzgärtülärne kire qaytaru',
 	'htmlform-selectorother-other' => 'Başqa',
-];
+);
 
-$messages['ty'] = [
+$messages['ty'] = array(
 	'help' => 'Tauturu',
 	'history_short' => 'Parau tuatāpapa',
 	'history-feed-title' => 'Parau tuatāpapa',
-];
+);
 
-$messages['tyv'] = [
+$messages['tyv'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Чажыт бөлүк|Чажыт бөлүктер}}',
 	'hidden-category-category' => 'Чажыт бөлүктер',
 	'help' => 'Дуза',
@@ -11534,9 +11740,9 @@ $messages['tyv'] = [
 	'hist' => 'төөгү',
 	'hide' => 'чажырары',
 	'htmlform-submit' => 'Күүcедири',
-];
+);
 
-$messages['udm'] = [
+$messages['udm'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ватэм категория|Ватэм категориос}}',
 	'hidden-category-category' => 'Ватэм категориос',
 	'help' => 'Валэктонъёс',
@@ -11544,9 +11750,9 @@ $messages['udm'] = [
 	'history_short' => 'история',
 	'helppage' => 'Help:Валэктон',
 	'hist' => 'история',
-];
+);
 
-$messages['ug'] = [
+$messages['ug'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ватэм категория|Ватэм категориос}}',
 	'hidden-category-category' => 'Ватэм категориос',
 	'help' => 'Валэктонъёс',
@@ -11554,9 +11760,9 @@ $messages['ug'] = [
 	'history_short' => 'история',
 	'helppage' => 'Help:Валэктон',
 	'hist' => 'история',
-];
+);
 
-$messages['ug-arab'] = [
+$messages['ug-arab'] = array(
 	'hidden-categories' => '{{PLURAL:$1|يوشۇرۇن تۈر|يوشۇرۇن تۈر}}',
 	'hidden-category-category' => 'يوشۇرۇن تۈرلەر',
 	'help' => 'ياردەم',
@@ -11568,10 +11774,10 @@ $messages['ug-arab'] = [
 	'headline_tip' => '2- دەرىجىلىك ماۋزۇ',
 	'hr_tip' => 'توغرىسىغا سىزىق (ئېھتىيات بىلەن ئىشلىتىڭ)',
 	'hiddencategories' => 'بۇ بەت {{PLURAL:$1|1 يوشۇرۇن تۈر|$1 يوشۇرۇن تۈر}} نىڭ ئەزالىرىغا تەۋە:',
-	'histlegend' => 'پەرق تاللاش: سېلىشتۇرىدىغان ئۆزگەرتىلگەن نەشرىنىڭ يەككە تاللاش كۇنۇپكىسىغا بەلگە سېلىپ، ئاستىدىكى كۇنۇپكىنى چېكىپ سېلىشتۇرۇڭ. <br />
-چۈشەندۈرۈش: \'\'\'({{int:cur}})\'\' نۆۋەتتىكى نەشرى بىلەن سېلىشتۇرۇشنى كۆرسىتىدۇ.
- \'\'\'({{int:last}})\'\'\' ئالدىنقى ئۆزگەرتىلگەن نەشرى بىلەن سېلىشتۇرۇشنى كۆرسىتىدۇ.
- \'\'\'{{int:minoreditletter}}\'\'\' ئازراقلا ئۆزگەرتىش.',
+	'histlegend' => "پەرق تاللاش: سېلىشتۇرىدىغان ئۆزگەرتىلگەن نەشرىنىڭ يەككە تاللاش كۇنۇپكىسىغا بەلگە سېلىپ، ئاستىدىكى كۇنۇپكىنى چېكىپ سېلىشتۇرۇڭ. <br />
+چۈشەندۈرۈش: '''({{int:cur}})'' نۆۋەتتىكى نەشرى بىلەن سېلىشتۇرۇشنى كۆرسىتىدۇ.
+ '''({{int:last}})''' ئالدىنقى ئۆزگەرتىلگەن نەشرى بىلەن سېلىشتۇرۇشنى كۆرسىتىدۇ.
+ '''{{int:minoreditletter}}''' ئازراقلا ئۆزگەرتىش.",
 	'history-fieldset-title' => 'كۆز يۈگۈرتۈش تارىخى',
 	'history-show-deleted' => 'ئۆچۈرۈلگەنلا',
 	'histfirst' => 'تۇنجى',
@@ -11596,7 +11802,7 @@ $messages['ug-arab'] = [
 	'http-curl-error' => 'URL ئاجراتقاندا خاتالىق كۆرۈلدى: $1',
 	'http-host-unreachable' => 'URL غا ئۇلىشالمىدى.',
 	'http-bad-status' => 'HTTP ئىلتىماس قىلغاندا مەسىلە كۆرۈلدى: $1 $2',
-	'historywarning' => '\'\'\'ئاگاھلاندۇرۇش:\'\'\' سىز ئۆچۈرمەكچى بولغان بەتتە تەخمىنەن $1 {{PLURAL:$1|تۈزىتىلگەن نەشرى|تۈزىتىلگەن نەشرى}} نەشرىنىڭ تارىخى بار:',
+	'historywarning' => "'''ئاگاھلاندۇرۇش:''' سىز ئۆچۈرمەكچى بولغان بەتتە تەخمىنەن $1 {{PLURAL:$1|تۈزىتىلگەن نەشرى|تۈزىتىلگەن نەشرى}} نەشرىنىڭ تارىخى بار:",
 	'htmlform-invalid-input' => 'كىرگۈزگەن مەزمۇنىڭىزدا مەسىلە بار',
 	'htmlform-select-badoption' => 'سىز بەلگىلىگەن قىممەت ئىناۋەتلىك تاللانما ئەمەس.',
 	'htmlform-int-invalid' => 'سىز بەلگىلىگەن قىممەت پۈتۈن سان ئەمەس.',
@@ -11607,14 +11813,14 @@ $messages['ug-arab'] = [
 	'htmlform-submit' => 'تاپشۇر',
 	'htmlform-reset' => 'ئۆزگەرتىشتىن يېنىۋال',
 	'htmlform-selectorother-other' => 'باشقا',
-];
+);
 
-$messages['ug-latn'] = [
+$messages['ug-latn'] = array(
 	'help' => 'Yardem',
 	'history_short' => 'Tarih',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Прихована категорія|Приховані категорії}}',
 	'hidden-category-category' => 'Приховані категорії',
 	'help' => 'Довідка',
@@ -11626,8 +11832,8 @@ $messages['uk'] = [
 	'headline_tip' => 'Заголовок 2-го рівня',
 	'hr_tip' => 'Горизонтальна лінія (використовуйте скупо)',
 	'hiddencategories' => 'Ця сторінка належить до $1 {{PLURAL:$1|прихованої категорії|прихованих категорій|прихованих категорій}}:',
-	'histlegend' => 'Пояснення: (поточн.) = відмінності від поточної версії,
-(ост.) = відмінності від попередньої версії, \'\'\'м\'\'\' = незначне редагування',
+	'histlegend' => "Пояснення: (поточн.) = відмінності від поточної версії,
+(ост.) = відмінності від попередньої версії, '''м''' = незначне редагування",
 	'history-fieldset-title' => 'Переглянути історію',
 	'history-show-deleted' => 'Тільки вилучені',
 	'histfirst' => 'найстаріші',
@@ -11652,7 +11858,7 @@ $messages['uk'] = [
 	'http-curl-error' => 'Помилка звертання до URL: $1',
 	'http-host-unreachable' => 'Неможливо досягнути вказану URL-адресу.',
 	'http-bad-status' => 'Під час HTTP-запиту виникла проблема: $1 $2',
-	'historywarning' => '\'\'\'Попередження:\'\'\' Сторінка, яку ви збираєтеся вилучити, має історію редагувань з приблизно $1 {{PLURAL:$1|версії|версій}}:',
+	'historywarning' => "'''Попередження:''' Сторінка, яку ви збираєтеся вилучити, має історію редагувань з приблизно $1 {{PLURAL:$1|версії|версій}}:",
 	'handheld.css' => '/* Розміщений тут CSS-код буде використаний для мобільних пристроїв, що використовують тему оформлення налаштовану в $wgHandheldStyle */',
 	'hours-abbrev' => '$1год',
 	'hours' => '{{PLURAL:$1|$1 година|$1 години|$1 годин}}',
@@ -11702,16 +11908,16 @@ $messages['uk'] = [
 	'htmlform-float-invalid' => 'Вказане вами значення не є числом.',
 	'htmlform-int-toolow' => 'Вказане вами значення нижче за мінімальне — $1',
 	'htmlform-int-toohigh' => 'Зазначене вами значення вище за максимальне — $1',
-	'htmlform-required' => 'Це значення обов\'язкове',
+	'htmlform-required' => "Це значення обов'язкове",
 	'htmlform-submit' => 'Відправити',
 	'htmlform-reset' => 'Відкотити зміни',
 	'htmlform-selectorother-other' => 'Інше',
 	'home' => 'Головна сторінка',
 	'helpfaq' => 'Допомога та FAQ',
 	'highest_ratings' => 'Найвище оцінені',
-];
+);
 
-$messages['ur'] = [
+$messages['ur'] = array(
 	'hidden-categories' => '{{PLURAL:$1|پوشیدہ زمرہ|پوشیدہ زمرہ جات}}',
 	'hidden-category-category' => 'پوشیدہ زمرہ جات',
 	'help' => 'معاونت',
@@ -11723,11 +11929,11 @@ $messages['ur'] = [
 	'headline_tip' => 'شہ سرخی درجہ دوم',
 	'hr_tip' => 'اُفقی لکیر (زیادہ استعمال نہ کریں)',
 	'hiddencategories' => 'یہ صفحہ {{PLURAL:$1|1 چُھپے زمرے|$1 چُھپے زمرہ جات}} میں شامل ہے:',
-	'histlegend' => 'انتخاب: مختلف نسخوں کا موازنہ کرنے کیلیے، پیامی خانوں کو نشان زد کر کے نیچے دیے گئے بٹن پر کلک کیجیئے۔
+	'histlegend' => "انتخاب: مختلف نسخوں کا موازنہ کرنے کیلیے، پیامی خانوں کو نشان زد کر کے نیچے دیے گئے بٹن پر کلک کیجیئے۔
 
-\'\'\'علامات:\'\'\'
+'''علامات:'''
 
-(رائج) = موجودہ متن سے اخـتلاف، (سابقہ) = گزشتہ متن سے اختلاف ، م = معمولی ترمیم۔',
+(رائج) = موجودہ متن سے اخـتلاف، (سابقہ) = گزشتہ متن سے اختلاف ، م = معمولی ترمیم۔",
 	'history-fieldset-title' => 'تاریخ ملاحظہ کریں',
 	'history-show-deleted' => 'صرف حذف شدہ',
 	'histfirst' => 'قدیم ترین',
@@ -11744,9 +11950,9 @@ $messages['ur'] = [
 	'hist' => 'تاریخچہ',
 	'hide' => 'چھـپائیں',
 	'historywarning' => 'انتباہ: جو صفحہ آپ حذف کرنے جارہے ہیں اس سے ایک تاریخچہ منسلک ہے۔',
-];
+);
 
-$messages['uz'] = [
+$messages['uz'] = array(
 	'help' => 'Yordam',
 	'history' => 'Sahifa tarixi',
 	'history_short' => 'Tarix',
@@ -11761,21 +11967,21 @@ Bu yerda: (joriy) = hozirgi koʻrinish bilan farq,
 	'history-title' => '"$1"ning tarixi',
 	'hist' => 'tarix',
 	'hide' => 'yashirish',
-];
+);
 
-$messages['val'] = [
+$messages['val'] = array(
 	'help' => 'Ajuda',
 	'history' => 'Historial de canvis',
 	'history_short' => 'Historial',
 	'helppage' => 'Ajuda:Índex',
 	'hidetoc' => 'amaga',
-	'headline_sample' => 'Text per a l\'encapçalament',
+	'headline_sample' => "Text per a l'encapçalament",
 	'headline_tip' => 'Encapçalat de secció de 2n nivell',
 	'hr_tip' => 'Llínia horisontal (useu-la moderadament)',
 	'histlegend' => 'Simbologia: (act) = diferència en la versió actual,
 (prev) = diferència en la versió prèvia, m = edició menor',
 	'histfirst' => 'El primer',
-	'histlast' => 'L\'últim',
+	'histlast' => "L'últim",
 	'history-feed-title' => 'Historial de revisió',
 	'history-feed-description' => 'Historial de revisió per a esta pàgina del wiki',
 	'history-feed-item-nocomment' => '$1 a $2',
@@ -11786,9 +11992,9 @@ Intenta [[Special:Search|buscar al mateix wiki]] per a noves pàgines rellevants
 	'hide' => 'amaga',
 	'historywarning' => 'Avís: La pàgina que vols eliminar té un historial:',
 	'hideresults' => 'Amaga els resultats',
-];
+);
 
-$messages['vec'] = [
+$messages['vec'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Categoria sconta|Categorie sconte}}',
 	'hidden-category-category' => 'Categorie sconte',
 	'help' => 'Ajuto',
@@ -11800,9 +12006,9 @@ $messages['vec'] = [
 	'headline_tip' => 'Intestassion de 2° livèl',
 	'hr_tip' => 'Łinea orizontałe (usare con giudisio)',
 	'hiddencategories' => 'Sta pagina la xe drento a {{PLURAL:$1|na categoria sconta|$1 categorie sconte}}:',
-	'histlegend' => 'Confronto tra version: segna le casèle de le version che te voli confrontar e struca Invio o el boton in fondo.
+	'histlegend' => "Confronto tra version: segna le casèle de le version che te voli confrontar e struca Invio o el boton in fondo.
 
-Legenda: \'\'\'({{int:cur}})\'\'\' = difarense co l\'ultima version, \'\'\'({{int:last}})\'\'\' = difarense co la version subito prima, \'\'\'{{int:minoreditletter}}\'\'\' = canbiamento picenin',
+Legenda: '''({{int:cur}})''' = difarense co l'ultima version, '''({{int:last}})''' = difarense co la version subito prima, '''{{int:minoreditletter}}''' = canbiamento picenin",
 	'history-fieldset-title' => 'Ruma in te la storia',
 	'history-show-deleted' => 'Solo quei scancelà',
 	'histfirst' => 'Prima',
@@ -11813,7 +12019,7 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = difarense co l\'ultima version, \'\'\'({{in
 	'history-feed-description' => 'Cronołogia de ła pàxena su sto sito',
 	'history-feed-item-nocomment' => '$1 el $2',
 	'history-feed-empty' => 'La pàxena richiesta no la esiste; la podarìa èssar stà scancełà dal sito o rinominà. Verifica con la [[Special:Search|pàxena de riserca]] se ghe xè nove pàxene.',
-	'history-title' => 'Storia dei canbiamenti de \'\'$1\'\'',
+	'history-title' => "Storia dei canbiamenti de ''$1''",
 	'hist' => 'stor',
 	'hide' => 'scondi',
 	'hookaborted' => 'La modifica che te voli fare la xe stà interota da un hook de na estension.',
@@ -11822,23 +12028,23 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = difarense co l\'ultima version, \'\'\'({{in
 	'http-request-error' => 'Richiesta HTTP falìa par via de un eror sconossùo.',
 	'http-read-error' => 'Eror de letura HTTP.',
 	'http-timed-out' => 'Richiesta HTTP scadùa.',
-	'http-curl-error' => 'Eror nel recupero de l\'URL: $1',
+	'http-curl-error' => "Eror nel recupero de l'URL: $1",
 	'http-host-unreachable' => 'URL mìa ragiungibile',
 	'http-bad-status' => 'Ghe xe stà un problema durante la richiesta HTTP: $1 $2',
-	'historywarning' => '\'\'\'Ocio:\'\'\' La pàxena che te sì drio scancełar la gà na cronołogia con circa $1 {{PLURAL:$1|revision|revision}}:',
-	'htmlform-invalid-input' => 'Ghe xe problemi con l\'input che te ghè inserìo',
-	'htmlform-select-badoption' => 'El valor che te ghè indicà no\'l xe mia valido.',
-	'htmlform-int-invalid' => 'El valor che te ghè indicà no\'l xe un nùmaro intero.',
-	'htmlform-float-invalid' => 'El valor indicà no\'l xe mia un nùmaro.',
+	'historywarning' => "'''Ocio:''' La pàxena che te sì drio scancełar la gà na cronołogia con circa $1 {{PLURAL:$1|revision|revision}}:",
+	'htmlform-invalid-input' => "Ghe xe problemi con l'input che te ghè inserìo",
+	'htmlform-select-badoption' => "El valor che te ghè indicà no'l xe mia valido.",
+	'htmlform-int-invalid' => "El valor che te ghè indicà no'l xe un nùmaro intero.",
+	'htmlform-float-invalid' => "El valor indicà no'l xe mia un nùmaro.",
 	'htmlform-int-toolow' => 'El valor che te ghè indicà el xe soto al minimo, che xe $1',
 	'htmlform-int-toohigh' => 'El valor che te ghè indicà el xe sora al màssimo, che xe $1',
 	'htmlform-required' => 'Sto vałore xè necesario',
 	'htmlform-submit' => 'Manda',
 	'htmlform-reset' => 'Scancèla modifiche',
 	'htmlform-selectorother-other' => 'Altro',
-];
+);
 
-$messages['vep'] = [
+$messages['vep'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Peittud kategorii|Peittud kategorijad}}',
 	'hidden-category-category' => 'Peittud kategorijad',
 	'help' => 'Abu',
@@ -11849,31 +12055,31 @@ $messages['vep'] = [
 	'headline_sample' => 'Pälkirjutesen tekst',
 	'headline_tip' => 'Toižen pindan pälkirjutez',
 	'hr_tip' => 'Gorizontaline pird (algat kävutagoi paksus)',
-	'hiddencategories' => 'Nece lehtpol\' om {{PLURAL:$1|1 peittud kategorijaspäi|$1 peittud kategorijoišpäi}}:',
-	'histlegend' => 'Valičend: virgakat versijad, miše rindatada niid, i paingat "Mända"-kosketimele alahan.<br />
-Znamoičendad: \'\'\'({{int:cur}})\'\'\' = erod nügüdläižes versijaspäi, \'\'\'({{int:last}})\'\'\' = erod enččes vepsijaspäi, \'\'\'{{int:minoreditletter}}\'\'\' = pen\' toižetuz.',
+	'hiddencategories' => "Nece lehtpol' om {{PLURAL:$1|1 peittud kategorijaspäi|$1 peittud kategorijoišpäi}}:",
+	'histlegend' => "Valičend: virgakat versijad, miše rindatada niid, i paingat \"Mända\"-kosketimele alahan.<br />
+Znamoičendad: '''({{int:cur}})''' = erod nügüdläižes versijaspäi, '''({{int:last}})''' = erod enččes vepsijaspäi, '''{{int:minoreditletter}}''' = pen' toižetuz.",
 	'history-fieldset-title' => 'Lehtelta istorii',
 	'history-show-deleted' => 'Vaiše čutud',
 	'histfirst' => 'Kaikiš vanhembad',
 	'histlast' => 'Tantoižed',
 	'historysize' => '({{PLURAL:$1|1 bait|$1 baitad}})',
-	'historyempty' => '(pall\'az)',
+	'historyempty' => "(pall'az)",
 	'history-feed-title' => 'Toižetusiden istorii',
 	'history-feed-description' => 'Necen lehtpolen toižetusen istorii',
 	'history-feed-item-nocomment' => '$1 aigal $2',
-	'history-feed-empty' => 'Ectud lehtpol\'t ei ole.
+	'history-feed-empty' => "Ectud lehtpol't ei ole.
 Sidä voiži čuta wikispäi vai nimitada udes.
-Naprigat [[Special:Search|ectä wikišpäi]] sättujid lehtpolid.',
+Naprigat [[Special:Search|ectä wikišpäi]] sättujid lehtpolid.",
 	'history-title' => '"$1"-lehtpolen toižetusiden istorii',
 	'hist' => 'istorii',
 	'hide' => 'Peitta',
-	'hookaborted' => 'Ližoiden ümbriradai kel\'di teid tehta nece toižetuz.',
+	'hookaborted' => "Ližoiden ümbriradai kel'di teid tehta nece toižetuz.",
 	'http-invalid-url' => 'Vär URL: $1',
 	'http-invalid-scheme' => 'URLad "$1"-shemanke ei pid\'oitelgoi.',
 	'http-request-error' => 'HTTP-küzelend om satusetoi tundmatoman petusen tagut.',
-	'http-read-error' => 'HTTP\'d lugemižen petuz.',
+	'http-read-error' => "HTTP'd lugemižen petuz.",
 	'http-timed-out' => 'HTTP-he küzelendan aig om lopnus.',
-	'http-curl-error' => 'Petuz URL\'ad ecmäs: $1',
+	'http-curl-error' => "Petuz URL'ad ecmäs: $1",
 	'http-host-unreachable' => 'Ei voi säta sidod URL:anke',
 	'historywarning' => 'Homaikat: lehtpolel, kudamb tö takait čuta, om istorii {{PLURAL:$1|ühtes redakcijaspäi|$1 redakcijoišpäi}}:',
 	'hours-abbrev' => '$1č',
@@ -11890,9 +12096,9 @@ Naprigat [[Special:Search|ectä wikišpäi]] sättujid lehtpolid.',
 	'htmlform-submit' => 'Oigeta',
 	'htmlform-reset' => 'Tühjitada toižetused',
 	'htmlform-selectorother-other' => 'Toine',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Thể loại ẩn|Thể loại ẩn}}',
 	'hidden-category-category' => 'Thể loại ẩn',
 	'help' => 'Trợ giúp',
@@ -11929,7 +12135,7 @@ Chú giải: (hiện) = khác với phiên bản hiện hành,
 	'http-curl-error' => 'Có lỗi khi truy xuất URL: $1',
 	'http-host-unreachable' => 'Không thể truy cập URL',
 	'http-bad-status' => 'Có vấn đề khi yêu cầu HTTP: $1 $2',
-	'historywarning' => '\'\'\'Cảnh báo:\'\'\' Trang bạn sắp xóa đã có lịch sử khoảng $1 {{PLURAL:$1|phiên bản|phiên bản}}:',
+	'historywarning' => "'''Cảnh báo:''' Trang bạn sắp xóa đã có lịch sử khoảng $1 {{PLURAL:$1|phiên bản|phiên bản}}:",
 	'handheld.css' => '/* Mã CSS tại đây sẽ ảnh hưởng đến các thiết bị cầm tay dựa trên hình dạng cấu hình trong $wgHandheldStyle */',
 	'hours-abbrev' => '$1h',
 	'hours' => '$1 giờ',
@@ -11974,14 +12180,14 @@ Chú giải: (hiện) = khác với phiên bản hiện hành,
 	'hub-Entertainment' => 'Giải trí',
 	'hub-Gaming' => 'Trò chơi điện tử',
 	'hub-Lifestyle' => 'Lối sống',
-];
+);
 
-$messages['vls'] = [
+$messages['vls'] = array(
 	'help' => 'Ulpe',
 	'history_short' => 'Geschiedenisse',
-];
+);
 
-$messages['vmf'] = [
+$messages['vmf'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Fârschdegde ghadegorii|Fârschdegde ghadegoriin}}',
 	'help' => 'Hilfe',
 	'history' => 'Wärsjoonsfolche',
@@ -11992,9 +12198,9 @@ $messages['vmf'] = [
 	'headline_tip' => 'Iiwârschrifd 2. ôrdnung',
 	'hr_tip' => 'Horidsondaalâr schdrich (bide schbôôrsam âjsedsâ)',
 	'hiddencategories' => 'Dii sajdn ghäärd dsu {{PLURAL:$1|aanâr fârschdegdn|$1 fârschdegde}} ghadegoriin:',
-	'histlegend' => 'Wääl aus, wasde fär ân undârschiid seen wilsd, un glig dan undn  „{{int:compareselectedversions}}“.<br />
-* \'\'\'({{int:cur}})\'\'\' = undârschiid dsur geechnwärdichn wärsjoon, \'\'\'({{int:last}})\'\'\' = undârschiid dsur foorichn wärsjoon
-* Uurdsajd/Daadum = wärsjoon dsu dära dsajd, \'\'\'{{int:minoreditletter}}\'\'\' = glane ändärung.',
+	'histlegend' => "Wääl aus, wasde fär ân undârschiid seen wilsd, un glig dan undn  „{{int:compareselectedversions}}“.<br />
+* '''({{int:cur}})''' = undârschiid dsur geechnwärdichn wärsjoon, '''({{int:last}})''' = undârschiid dsur foorichn wärsjoon
+* Uurdsajd/Daadum = wärsjoon dsu dära dsajd, '''{{int:minoreditletter}}''' = glane ändärung.",
 	'history-fieldset-title' => 'Suchng in där wärsjoonsfolche',
 	'histfirst' => 'Äldâschde',
 	'histlast' => 'Najsde',
@@ -12002,9 +12208,9 @@ $messages['vmf'] = [
 	'hist' => 'Wärsjoonsfolche',
 	'hide' => 'fârschdegn',
 	'handheld.css' => '/* CSS hiir beâjflusd nôr dii handgerääde, jee nachdeem, welche schelfn in $wgHandheldStyle âjgeschdeld is. */',
-];
+);
 
-$messages['vo'] = [
+$messages['vo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Klad|Klads}} peklänedöl',
 	'hidden-category-category' => 'Klads peklänedöl',
 	'help' => 'Yuf',
@@ -12041,9 +12247,9 @@ Kanol [[Special:Search|sukön]] padis nulik tefik.',
 	'home' => 'Cifapad',
 	'helpfaq' => 'Yuf e säks suvikün',
 	'highest_ratings' => 'Uts labü pünis mödikün',
-];
+);
 
-$messages['vot'] = [
+$messages['vot'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Salautõttu gruppa|Salautõtud gruppad}}',
 	'help' => 'Api',
 	'history' => 'Tšüľľee istori',
@@ -12054,16 +12260,16 @@ $messages['vot'] = [
 	'headline_tip' => 'Zagolofkka',
 	'hr_tip' => 'Gorizontalnoi viiru',
 	'hiddencategories' => 'Kase tšültši kuulub {{PLURAL:$1|vahtiaavaa salautõttuu gruppaa|vahtiaavii salautõttuisõõ gruppoisõõ}}:',
-	'histlegend' => 'Merkid: ({{int:cur}}) = vahõ nütšüizese verzijaa, ({{int:last}}) = vahõ entiizese verzijaa, \'\'\'{{int:minoreditletter}}\'\'\' = peeni muutuz',
+	'histlegend' => "Merkid: ({{int:cur}}) = vahõ nütšüizese verzijaa, ({{int:last}}) = vahõ entiizese verzijaa, '''{{int:minoreditletter}}''' = peeni muutuz",
 	'history-fieldset-title' => 'Ľistvoit muutuzistoria',
 	'histfirst' => 'Kõikkõa varaizõpid',
 	'histlast' => 'Kõikkõa viimõizõpid',
 	'history-title' => 'Tšüľľee $1 muutuzistori',
 	'hist' => 'istori',
 	'hide' => 'Salauta',
-];
+);
 
-$messages['vro'] = [
+$messages['vro'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Käkit katõgooria|Käkidüq katõgooriaq}}',
 	'hidden-category-category' => 'Käkidüq katõgooriaq',
 	'help' => 'Abi',
@@ -12075,9 +12281,9 @@ $messages['vro'] = [
 	'headline_tip' => 'Tõõsõ tasõmõ päälkiri',
 	'hr_tip' => 'Horisontaaljuun',
 	'hiddencategories' => 'Seo leht kuulus {{PLURAL:$1|1 käkitühe katõgooriahe|$1 käkitühe katõgooriahe}}:',
-	'histlegend' => 'Märgiq ärq kujoq, midä tahat kõrvo säädiq ja vaodaq võrdõlõmisnuppi.
+	'histlegend' => "Märgiq ärq kujoq, midä tahat kõrvo säädiq ja vaodaq võrdõlõmisnuppi.
 Seletüs: (viim) = lahkominegiq viimätsest kujost,
-(minev) = lahkominegiq minevädsest kujost, ts = väiku (tsill\'okõnõ) muutminõ',
+(minev) = lahkominegiq minevädsest kujost, ts = väiku (tsill'okõnõ) muutminõ",
 	'history-fieldset-title' => 'Kaeq muutmiisi aoluku',
 	'history-show-deleted' => 'Õnnõ kistutõduq',
 	'histfirst' => 'Edimädseq',
@@ -12092,9 +12298,9 @@ Seletüs: (viim) = lahkominegiq viimätsest kujost,
 	'hist' => 'aol',
 	'hide' => 'Käkitäseq',
 	'historywarning' => 'Hoiatus: Lehel, midä tahat ärq kistutaq, om olõman aolugu:',
-];
+);
 
-$messages['wa'] = [
+$messages['wa'] = array(
 	'help' => 'Aidance',
 	'history' => 'Istwere del pådje',
 	'history_short' => 'Istwere',
@@ -12102,12 +12308,12 @@ $messages['wa'] = [
 	'hidetoc' => 'catchî',
 	'headline_sample' => 'Tecse di tite',
 	'headline_tip' => 'Tite di 2inme livea',
-	'hr_tip' => 'Roye di coûtchî (a n\' nén eployî d\' trop)',
-	'histlegend' => 'Tchoezi les modêyes a comparer: clitchîz so les botons radio des deus modêyes
-ki vos vloz comparer et s\' tchôkîz sol tape «enter» ou clitchîz sol
+	'hr_tip' => "Roye di coûtchî (a n' nén eployî d' trop)",
+	'histlegend' => "Tchoezi les modêyes a comparer: clitchîz so les botons radio des deus modêyes
+ki vos vloz comparer et s' tchôkîz sol tape «enter» ou clitchîz sol
 boton do dzo.<br />
-Ledjinde: (ast.) = diferince avou l\' modêye d\' asteure,
-(dif.) = diferince avou l\' modêye di dvant, M = pitit candjmint d\' rén do tot.',
+Ledjinde: (ast.) = diferince avou l' modêye d' asteure,
+(dif.) = diferince avou l' modêye di dvant, M = pitit candjmint d' rén do tot.",
 	'histfirst' => 'li pus vî',
 	'histlast' => 'li dierin',
 	'historysize' => '({{PLURAL:$1|1 octet|$1 octets}})',
@@ -12116,9 +12322,9 @@ Ledjinde: (ast.) = diferince avou l\' modêye d\' asteure,
 	'hist' => 'ist.',
 	'hide' => 'Muchyî',
 	'historywarning' => 'Asteme: Li pådje ki vos alez disfacer a-st ene istwere:',
-];
+);
 
-$messages['war'] = [
+$messages['war'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Tinago nga kaarangay|Tinago nga mga kaarangay}}',
 	'hidden-category-category' => 'Tinago nga mga kaarangay',
 	'help' => 'Bulig',
@@ -12130,8 +12336,8 @@ $messages['war'] = [
 	'headline_tip' => 'Katupngan 2 nga katukiban',
 	'hr_tip' => 'Patumba nga bagis (hinay-hinay la it paggamit)',
 	'hiddencategories' => 'Ini nga pakli in api han {{PLURAL:$1|1 nakatago nga kaarangay|$1 nakatago nga kaarangay}}:',
-	'histlegend' => 'Kaibhan nga pirilion: Igmarka an mga radyo nga kahon han mga pagbag-o para maikumpara ngan igu-a an \'\'enter\'\' o an piridlitan ha ubos.<br />
-Leyenda: \'\'\'({{int:cur}})\'\'\' = kaibhan ha giuurhii nga pag-bag-o, \'\'\'({{int:last}})\'\'\' = kaibhan ha nahiuna nga pag-bag-o, \'\'\'{{int:minoreditletter}}\'\'\' = gagmay nga pagliwat.',
+	'histlegend' => "Kaibhan nga pirilion: Igmarka an mga radyo nga kahon han mga pagbag-o para maikumpara ngan igu-a an ''enter'' o an piridlitan ha ubos.<br />
+Leyenda: '''({{int:cur}})''' = kaibhan ha giuurhii nga pag-bag-o, '''({{int:last}})''' = kaibhan ha nahiuna nga pag-bag-o, '''{{int:minoreditletter}}''' = gagmay nga pagliwat.",
 	'history-fieldset-title' => 'Kaagi han panngaykay',
 	'history-show-deleted' => 'Ginpara la',
 	'histfirst' => 'Giunhani',
@@ -12140,15 +12346,15 @@ Leyenda: \'\'\'({{int:cur}})\'\'\' = kaibhan ha giuurhii nga pag-bag-o, \'\'\'({
 	'history-feed-title' => 'Kaagi han pagliwat',
 	'history-feed-description' => 'Kaagi han pagliwat para hini nga pakli ha wiki',
 	'history-feed-item-nocomment' => '$1 ha $2',
-	'history-title' => 'Kaagi han pagbag-o han \'\'$1\'\'',
+	'history-title' => "Kaagi han pagbag-o han ''$1''",
 	'hist' => 'kaagi',
 	'hide' => 'Tago-a',
 	'http-host-unreachable' => 'Diri nakakaabot ha URL.',
 	'htmlform-reset' => 'Igbalik an mga pinamalyuan',
 	'htmlform-selectorother-other' => 'iba',
-];
+);
 
-$messages['wo'] = [
+$messages['wo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|wàll bi nëbbu|wàll yi nëbbu}}',
 	'hidden-category-category' => 'Wàll yi nëbbu',
 	'help' => 'Ndimbal',
@@ -12176,9 +12382,9 @@ $messages['wo'] = [
 	'hist' => 'Jaar',
 	'hide' => 'Nëbb',
 	'historywarning' => 'Moytul! xët wi ngay waaja far am na jaar-jaar :',
-];
+);
 
-$messages['wuu'] = [
+$messages['wuu'] = array(
 	'hidden-categories' => '$1隐藏分类',
 	'hidden-category-category' => '隐藏分类',
 	'help' => '帮助',
@@ -12206,9 +12412,9 @@ $messages['wuu'] = [
 	'hist' => '历史',
 	'hide' => '囥脱',
 	'historywarning' => '警告：倷要删脱个该只页面有历史：',
-];
+);
 
-$messages['xal'] = [
+$messages['xal'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Бултулсн әәшл|Бултулсн әәшлүд}}',
 	'hidden-category-category' => 'Бултулсн әәшлүд',
 	'help' => 'Цәәлһлһн',
@@ -12220,7 +12426,7 @@ $messages['xal'] = [
 	'headline_tip' => 'Дү толһа нерн',
 	'hr_tip' => 'Кевтдг татасн (дундин бәәдлтә олзлтн)',
 	'hiddencategories' => 'Эн халх тер $1 {{PLURAL:$1|бултулсн әәшләс|бултулсн әәшлүдәс|бултулсн әәшлүдәс}}:',
-	'histlegend' => 'Тәәлвр: (ода) — одачн янзас йилһән; (урдк) — урдк янзас йилһән; \'\'\'б\'\'\' — баһ сольлһн',
+	'histlegend' => "Тәәлвр: (ода) — одачн янзас йилһән; (урдк) — урдк янзас йилһән; '''б''' — баһ сольлһн",
 	'history-fieldset-title' => 'Тууҗиг хәләх',
 	'histfirst' => 'Эрт',
 	'histlast' => 'Шидрә',
@@ -12230,13 +12436,13 @@ $messages['xal'] = [
 	'hide' => 'бултулх',
 	'htmlform-reset' => 'Сольлһиг уга кех',
 	'htmlform-selectorother-other' => 'Талдан',
-];
+);
 
-$messages['xh'] = [
+$messages['xh'] = array(
 	'help' => 'Uncedo',
-];
+);
 
-$messages['xmf'] = [
+$messages['xmf'] = array(
 	'hidden-categories' => '{{PLURAL:$1|ფულირი კატეგორია|ფულირი კატეგორიეფი}}',
 	'hidden-category-category' => 'ფულირი კატეგორიეფი',
 	'help' => 'მოხვარა',
@@ -12248,8 +12454,8 @@ $messages['xmf'] = [
 	'headline_tip' => 'მაჟირა დონეშ დუდლანდარი',
 	'hr_tip' => 'ჰორიზონტალური ღოზი (ვაგიმირინუათ ბხშირას)',
 	'hiddencategories' => 'თე ხასილა ოკათუ {{PLURAL:$1|1 ტყობინაფილ კატეგორიას|$1 ტყობინაფილ კატეგორიეფს}}:',
-	'histlegend' => 'მეღანკილ: ართიანიშ მიოზიმაფალო კორნებულ ვერსიეფიშ რადიოშ ოჭკორიეფ ქიმიოღანკეთ დო გეუნჭირით მიშულაშ კონჭის, ვარა ქვინჯის რენ თი კონჭის.
-ლეგენდა: \'\'\'კუნტარაფეფ: ({{მიმ.}})\'\'\' = შხვაობა მიმალ ვერსიაწკუმა, \'\'\'({{ეკონია}}) = შხვაობა ოწოხოლენ ვერსიაწკუმა, ჭ = ჭიჭე რედაქტირაფეფ.',
+	'histlegend' => "მეღანკილ: ართიანიშ მიოზიმაფალო კორნებულ ვერსიეფიშ რადიოშ ოჭკორიეფ ქიმიოღანკეთ დო გეუნჭირით მიშულაშ კონჭის, ვარა ქვინჯის რენ თი კონჭის.
+ლეგენდა: '''კუნტარაფეფ: ({{მიმ.}})''' = შხვაობა მიმალ ვერსიაწკუმა, '''({{ეკონია}}) = შხვაობა ოწოხოლენ ვერსიაწკუმა, ჭ = ჭიჭე რედაქტირაფეფ.",
 	'history-fieldset-title' => 'ისტორიაშ გინოჯინა',
 	'history-show-deleted' => 'ხვალე ლასირეფი',
 	'histfirst' => 'პირველი',
@@ -12262,9 +12468,9 @@ $messages['xmf'] = [
 	'history-title' => '"$1"–იშ თირაფეფიშ ისტორია',
 	'hist' => 'ისტ.',
 	'hide' => 'ტყობინაფა',
-];
+);
 
-$messages['yi'] = [
+$messages['yi'] = array(
 	'hidden-categories' => '{{PLURAL:$1|באהאלטענע קאטעגאריע|באהאלטענע קאטעגאריעס}}',
 	'hidden-category-category' => 'באהאלטענע קאטעגאריעס',
 	'help' => 'הילף',
@@ -12276,8 +12482,8 @@ $messages['yi'] = [
 	'headline_tip' => 'קעפּל -2טער שטאפל',
 	'hr_tip' => 'א שטרייך אין די ברייט, (נישט נוצן אפט)',
 	'hiddencategories' => 'דער דאזיגער בלאט געהערט צו {{PLURAL:$1|איין באהאלטענער קאטעגאריע|$1 באהאלטענע קאטעגאריעס}}:',
-	'histlegend' => 'פֿארגלייכן  אויסקלויב: צייכנט די קנעפלעך פֿון די ווערסיעס צו פֿארגלײַכן, און קלאפט  Enter אדער דאס קנעפל \'\'\'{{int:compareselectedversions}}\'\'\'.<br />
-שליסל: \'\'\'({{int:cur}})\'\'\' = אונטערשייד פֿון לויפֿיגער ווערסיע, \'\'\'({{int:last}})\'\'\' = אונטערשייד פֿון פֿריערדיגער ווערסיע, \'\'\'({{int:last}})\'\'\' = מינערדיקע רעדאקטירונג',
+	'histlegend' => "פֿארגלייכן  אויסקלויב: צייכנט די קנעפלעך פֿון די ווערסיעס צו פֿארגלײַכן, און קלאפט  Enter אדער דאס קנעפל '''{{int:compareselectedversions}}'''.<br />
+שליסל: '''({{int:cur}})''' = אונטערשייד פֿון לויפֿיגער ווערסיע, '''({{int:last}})''' = אונטערשייד פֿון פֿריערדיגער ווערסיע, '''({{int:last}})''' = מינערדיקע רעדאקטירונג",
 	'history-fieldset-title' => 'בלעטערט די היסטאריע',
 	'history-show-deleted' => 'נאר אויסגעמעקט',
 	'histfirst' => 'ערשטע',
@@ -12297,8 +12503,8 @@ $messages['yi'] = [
 	'http-read-error' => 'HTTP לייענען גרײַז.',
 	'http-timed-out' => 'HTTP בקשה אויסגעגאַנגען.',
 	'http-curl-error' => 'גרײַז בײַם ברענגען URL: $1',
-	'http-host-unreachable' => 'מ\'קען נישט דערגרייכן דעם URL',
-	'http-bad-status' => 'ס\'איז געווען א פראבלעם ביים HTTP פֿאַרלאַנג: $1 $2',
+	'http-host-unreachable' => "מ'קען נישט דערגרייכן דעם URL",
+	'http-bad-status' => "ס'איז געווען א פראבלעם ביים HTTP פֿאַרלאַנג: $1 $2",
 	'historywarning' => 'אכטונג – איר גייט אויסמעקן א בלאט וואָס האט א היסטאריע מיט $1 {{PLURAL:$1|ווערסיע|ווערסיעס}}:',
 	'hebrew-calendar-m9' => 'סיון',
 	'hebrew-calendar-m1-gen' => 'תשרי',
@@ -12307,8 +12513,8 @@ $messages['yi'] = [
 	'hebrew-calendar-m4-gen' => 'טבת',
 	'hebrew-calendar-m5-gen' => 'שבט',
 	'hebrew-calendar-m6-gen' => 'אדר',
-	'hebrew-calendar-m6a-gen' => 'אדר א\'',
-	'hebrew-calendar-m6b-gen' => 'אדר ב\'',
+	'hebrew-calendar-m6a-gen' => "אדר א'",
+	'hebrew-calendar-m6b-gen' => "אדר ב'",
 	'hebrew-calendar-m7-gen' => 'ניסן',
 	'hebrew-calendar-m8-gen' => 'אייר',
 	'hebrew-calendar-m9-gen' => 'סיון',
@@ -12325,9 +12531,9 @@ $messages['yi'] = [
 	'htmlform-submit' => 'אײַנגעבן',
 	'htmlform-reset' => 'צוריקשטעלן ענדערונגען',
 	'htmlform-selectorother-other' => 'אַנדער',
-];
+);
 
-$messages['yo'] = [
+$messages['yo'] = array(
 	'hidden-categories' => '{{PLURAL:$1|Ẹ̀ka bíbòmọ́lẹ̀|Áwọn ẹ̀ka bíbòmọ́lẹ̀}}',
 	'hidden-category-category' => 'Àwọn ẹ̀ka ìbòmọ́lẹ̀',
 	'help' => 'Ìrànlọ́wọ́',
@@ -12340,8 +12546,8 @@ $messages['yo'] = [
 	'headline_tip' => 'Àkọlé onípele 2',
 	'hr_tip' => 'Ìlà gbọlọjọ (ẹ lọ̀ọ́ pẹ̀lú àkíyèsì)',
 	'hiddencategories' => 'Ojúewé yìí jẹ́ ìkan nínú {{PLURAL:$1|ẹ̀ka bíbòmọ́lẹ̀ 1|àwọn ẹ̀ka bíbòmọ́lẹ̀ $1}}:',
-	'histlegend' => 'Àṣàyàn ìyàtọ̀: ẹ fagi sínú àpótí àwọn átúnyẹ̀wò tí ẹ fẹ́ ṣàfiwè, lẹ́yìn náà ẹ tẹ enter tàbí bọ́tìnì ìsàlẹ̀.<br />
-Àlàyé: \'\'\'({{int:cur}})\'\'\' = ìyàtọ̀ sí àtúnyẹ̀wò tìsinyìí, \'\'\'({{int:last}})\'\'\' = ìyàtọ̀ sí àtúnyẹ̀wò tókọjá, \'\'\'{{int:minoreditletter}}\'\'\' = àtúnṣe kékeré.',
+	'histlegend' => "Àṣàyàn ìyàtọ̀: ẹ fagi sínú àpótí àwọn átúnyẹ̀wò tí ẹ fẹ́ ṣàfiwè, lẹ́yìn náà ẹ tẹ enter tàbí bọ́tìnì ìsàlẹ̀.<br />
+Àlàyé: '''({{int:cur}})''' = ìyàtọ̀ sí àtúnyẹ̀wò tìsinyìí, '''({{int:last}})''' = ìyàtọ̀ sí àtúnyẹ̀wò tókọjá, '''{{int:minoreditletter}}''' = àtúnṣe kékeré.",
 	'history-fieldset-title' => 'Ìṣíwò ìwé ìtàn àtúnṣe',
 	'history-show-deleted' => 'Ajẹ́píparẹ́ níkan',
 	'histfirst' => 'Pípẹ́jùlọ',
@@ -12362,13 +12568,13 @@ $messages['yo'] = [
 	'http-timed-out' => 'Àsìkò ìtọrọ HTTP ti tán.',
 	'http-curl-error' => 'Àsìṣe ìmúwá URL: $1',
 	'http-host-unreachable' => 'Kò le dé ibi URL.',
-	'historywarning' => '\'\'\'Ìkìlọ̀:\'\'\' Ojúewé tí ẹ fẹ́ parẹ́ ní ìtàn pẹ̀lú {{PLURAL:$1|àtúnyẹ̀wò|àwọn àtúnyẹ̀wò}} $1:',
+	'historywarning' => "'''Ìkìlọ̀:''' Ojúewé tí ẹ fẹ́ parẹ́ ní ìtàn pẹ̀lú {{PLURAL:$1|àtúnyẹ̀wò|àwọn àtúnyẹ̀wò}} $1:",
 	'htmlform-submit' => 'Fúnsílẹ̀',
 	'htmlform-reset' => 'Ìdápadà àwọn àtúnṣe',
 	'htmlform-selectorother-other' => 'Òmíràn',
-];
+);
 
-$messages['yue'] = [
+$messages['yue'] = array(
 	'hidden-categories' => '屬於$1隱類',
 	'hidden-category-category' => '隱藏類',
 	'help' => '幫助',
@@ -12380,8 +12586,8 @@ $messages['yue'] = [
 	'headline_tip' => '二級標題',
 	'hr_tip' => '橫線（請小心用）',
 	'hiddencategories' => '呢一版係屬於$1個隱藏類嘅成員:',
-	'histlegend' => '選擇唔同版本：響兩個唔同版本嘅圓框分別撳一下，再撳最底的「比較被選修訂」掣以作比較。<br />
-說明：\'\'\'（{{int:cur}}）\'\'\'= 同最新修訂版本嘅差別，\'\'\'（{{int:last}}）\'\'\'= 同前一個修訂版本嘅差別，\'\'\'{{int:minoreditletter}}\'\'\' = 小修改。',
+	'histlegend' => "選擇唔同版本：響兩個唔同版本嘅圓框分別撳一下，再撳最底的「比較被選修訂」掣以作比較。<br />
+說明：'''（{{int:cur}}）'''= 同最新修訂版本嘅差別，'''（{{int:last}}）'''= 同前一個修訂版本嘅差別，'''{{int:minoreditletter}}''' = 小修改。",
 	'history-fieldset-title' => '瀏覽歷史',
 	'history-show-deleted' => '只顯示刪除咗嘅',
 	'histfirst' => '最早',
@@ -12418,18 +12624,18 @@ $messages['yue'] = [
 	'htmlform-submit' => '遞交',
 	'htmlform-reset' => '復原更改',
 	'htmlform-selectorother-other' => '其他',
-];
+);
 
-$messages['za'] = [
+$messages['za'] = array(
 	'help' => 'Bangcoh',
 	'history' => 'Lizsij',
 	'history_short' => 'Lizsij',
 	'helppage' => 'Help:moegloeg',
 	'hidetoc' => 'cangz',
 	'hide' => 'Cangz',
-];
+);
 
-$messages['zea'] = [
+$messages['zea'] = array(
 	'hidden-categories' => 'Verborhen {{PLURAL:$1|categorie|categorieën}}',
 	'hidden-category-category' => 'Verborhen categorieën',
 	'help' => 'Ulpe',
@@ -12441,9 +12647,9 @@ $messages['zea'] = [
 	'headline_tip' => 'Tussenkopje (oôgste niveau)',
 	'hr_tip' => 'Horizontaele lien (gebruuk spaerzaem)',
 	'hiddencategories' => 'Deêze pagina val in de volhende verborhen {{PLURAL:$1|categorie|categorieën}}:',
-	'histlegend' => 'Selectie voe diff: sillecteer de te verheliek\'n versies en toets ENTER of de knoppe onderan.<br />
-Verklaerieng afkortiengen: (udig) = verschil mie udihe versie, (vorihe) = verschil mie voorhaende versie, k = kleine wiezigieng',
-	'history-fieldset-title' => 'Dò geschiedenisse blaer\'n',
+	'histlegend' => "Selectie voe diff: sillecteer de te verheliek'n versies en toets ENTER of de knoppe onderan.<br />
+Verklaerieng afkortiengen: (udig) = verschil mie udihe versie, (vorihe) = verschil mie voorhaende versie, k = kleine wiezigieng",
+	'history-fieldset-title' => "Dò geschiedenisse blaer'n",
 	'history-show-deleted' => 'Alleên gewist',
 	'histfirst' => 'Oussen',
 	'histlast' => 'Nieuwsen',
@@ -12452,15 +12658,15 @@ Verklaerieng afkortiengen: (udig) = verschil mie udihe versie, (vorihe) = versch
 	'history-feed-title' => 'Bewerkiengsgeschiedenisse',
 	'history-feed-description' => 'Bewerkiengsoverzicht voe deêze pagina op de wiki',
 	'history-feed-item-nocomment' => '$1 op $2',
-	'history-feed-empty' => 'De evrogen pagina besti nie.
+	'history-feed-empty' => "De evrogen pagina besti nie.
 Misschien is een verwiederd of hernoemd.
-[[Special:Search|Deurzoek de wiki]] voe rillevante pagina\'s.',
+[[Special:Search|Deurzoek de wiki]] voe rillevante pagina's.",
 	'history-title' => 'Heschiedenisse van "$1"',
 	'hist' => 'hesch',
 	'hide' => 'Verberge',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'hidden-categories' => '$1个隐藏分类',
 	'hidden-category-category' => '隐藏分类',
 	'help' => '帮助',
@@ -12469,36 +12675,36 @@ $messages['zh-hans'] = [
 	'helppage' => 'Help:目录',
 	'hidetoc' => '隐藏',
 	'headline_sample' => '大标题文字',
-	'headline_tip' => '2级标题文字',
+	'headline_tip' => '第二层标题',
 	'hr_tip' => '水平线 （小心使用）',
 	'hiddencategories' => '本页面属于$1个隐藏分类：',
-	'histlegend' => '差异选择：选出需要对比的版本，按“回车键”或下方的按钮进行对比。<br />
-说明：\'\'\'（{{int:cur}}）\'\'\'=与最后版本之间的差异，\'\'\'（{{int:last}}）\'\'\'=与上一版本之间的差异，\'\'\'{{int:minoreditletter}}\'\'\'=小编辑。',
+	'histlegend' => '<span style="white-space:nowrap;">点击时间查看以下版本。</span> <span style="white-space:nowrap;">需要更多帮助，请查看[[Help:Page history|帮助：页面历史]]。</span><br />
+<span style="white-space:nowrap;">(cur) = 与当前版本之间的差异, (prev) = 与上一版本之间的差异,</span> <span style="white-space:nowrap;">m = [[Help:Minor edit|小编辑]], → = 段落编辑, ← = 自动编辑摘要</span>',
 	'history-fieldset-title' => '浏览历史',
 	'history-show-deleted' => '仅已删除的',
 	'histfirst' => '最早',
-	'histlast' => '最后',
+	'histlast' => '最新',
 	'historysize' => '（$1字节）',
 	'historyempty' => '（空）',
 	'history-feed-title' => '版本历史',
-	'history-feed-description' => '本wiki的该页面的版本历史',
+	'history-feed-description' => '本Wiki页面上的修订历史记录',
 	'history-feed-item-nocomment' => '$2 $1',
 	'history-feed-empty' => '所请求的页面不存在。它可能已被删除或重命名。
 尝试[[Special:Search|搜索本站]]获得相关的新建页面。',
 	'history-title' => '“$1”的版本历史',
 	'hist' => '历史',
 	'hide' => '隐藏',
-	'hookaborted' => '您所尝试的修改被插件钩子舍弃。',
+	'hookaborted' => '你试图进行的修改被一个扩展功能终止。',
 	'http-invalid-url' => '无效URL：$1',
 	'http-invalid-scheme' => '不支持带有“$1”的URL',
-	'http-request-error' => '未知的错误令到HTTP请求失败。',
+	'http-request-error' => '由于未知错误，HTTP 请求失败。',
 	'http-read-error' => 'HTTP读取错误。',
-	'http-timed-out' => 'HTTP请求已过时。',
-	'http-curl-error' => '撷取URL时出错：$1',
-	'http-host-unreachable' => '无法到达URL。',
+	'http-timed-out' => 'HTTP请求超时。',
+	'http-curl-error' => '获取URL时发生错误: $1',
+	'http-host-unreachable' => '无法访问URL。',
 	'http-bad-status' => '进行HTTP请求时出现问题：$1 $2',
-	'historywarning' => '警告：您将要删除的页面有约$1个{{PLURAL:$1|修订|修订}}版本的历史：',
-	'handheld.css' => '/* 此处的 CSS 将影响在 $wgHandheldStyle 设置手提装置面板 */',
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning"></div>',
+	'handheld.css' => '/* 此处的CSS将影响设置于$wgHandheldStyle上的手机页面皮肤 */',
 	'hours' => '$1小时',
 	'htmlform-invalid-input' => '您输入的内容存在问题',
 	'htmlform-select-badoption' => '您指定的值不是有效选项。',
@@ -12510,29 +12716,82 @@ $messages['zh-hans'] = [
 	'htmlform-submit' => '提交',
 	'htmlform-reset' => '撤销更改',
 	'htmlform-selectorother-other' => '其他',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'htmlform-no' => '否',
 	'htmlform-yes' => '是的',
-];
+	'history_copyright' => '-',
+	'hours-abbrev' => '$1小时',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
+	'hijri-calendar-m5' => 'Jumada al-awwal',
+	'hijri-calendar-m6' => 'Jumada al-thani',
+	'hijri-calendar-m7' => 'Rajab',
+	'hijri-calendar-m8' => "Sha'aban",
+	'hijri-calendar-m9' => 'Ramadan',
+	'hijri-calendar-m10' => 'Shawwal',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
+	'hijri-calendar-m12' => 'Dhu al-Hijjah',
+	'hebrew-calendar-m1' => 'Tishrei',
+	'hebrew-calendar-m2' => 'Cheshvan',
+	'hebrew-calendar-m3' => 'Kislev',
+	'hebrew-calendar-m4' => 'Tevet',
+	'hebrew-calendar-m5' => 'Shevat',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m8' => 'Iyar',
+	'hebrew-calendar-m9' => 'Sivan',
+	'hebrew-calendar-m10' => 'Tamuz',
+	'hebrew-calendar-m11' => 'Av',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m1-gen' => 'Tishrei',
+	'hebrew-calendar-m2-gen' => 'Cheshvan',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Tevet',
+	'hebrew-calendar-m5-gen' => 'Shevat',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m8-gen' => 'Iyar',
+	'hebrew-calendar-m9-gen' => 'Sivan',
+	'hebrew-calendar-m10-gen' => 'Tamuz',
+	'hebrew-calendar-m11-gen' => 'Av',
+	'hebrew-calendar-m12-gen' => 'Elul',
+	'hidesome' => '隐藏一部分',
+	'hidebots' => '隐藏机器人',
+	'hubs' => '主题',
+	'home' => '首页',
+	'helpfaq' => '帮助与常见问题',
+	'highest_ratings' => '最高投票',
+	'hub-Entertainment' => '娱乐',
+	'hub-Gaming' => '视频游戏',
+	'hub-Video_Games' => '视频游戏',
+	'hub-Videospiele' => 'Videospiele',
+	'hub-Lifestyle' => '生活',
+	'hub-Food_and_Drink' => '食物和饮料',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'hidden-categories' => '$1個隱藏分類',
 	'hidden-category-category' => '隱藏分類',
-	'help' => '說明',
+	'help' => '幫助',
 	'history' => '頁面歷史',
-	'history_short' => '歷史',
-	'helppage' => 'Help:目錄',
+	'history_short' => '歷史記錄',
+	'helppage' => '幫助:内容',
 	'hidetoc' => '隱藏',
 	'headline_sample' => '大標題文字',
 	'headline_tip' => '2級標題文字',
 	'hr_tip' => '水平線 （小心使用）',
-	'hiddencategories' => '這個頁面是屬於$1個隱藏分類的成員:',
-	'histlegend' => '差異選擇：標記要比較修訂版本的單選按鈕並點擊底部的按鈕進行比較。<br />
-說明：\'\'\'（{{int:cur}}）\'\'\' 指與最新修訂版本比較，\'\'\'（{{int:last}}）\'\'\' 指與前一個修訂修訂版本比較，\'\'\'{{int:minoreditletter}}\'\'\' = 小修改。',
+	'hiddencategories' => '這個頁面屬於$1個隱藏分類：',
+	'histlegend' => '<span style="white-space:nowrap;"> 要查看任何下面列出的版本，請按一下其日期。</span><span style="white-space:nowrap;"> 更多的説明，請參閱 [[Help:Page history|幫助:頁面歷史]].</span><br / > <span style="white-space:nowrap;"> （cur） = 與當前版本的差異，（prep）  = 與前一個版本的差異</span> <span style="white-space:nowrap;"> m = [[Help:Minor edit|小編輯]]，→ = 段落編輯 = 自動編輯摘要</span>',
 	'history-fieldset-title' => '瀏覽歷史',
 	'history-show-deleted' => '僅已刪除的',
 	'histfirst' => '最早版本',
-	'histlast' => '最新版本',
+	'histlast' => '最新',
 	'historysize' => '（$1 位元組）',
 	'historyempty' => '（空）',
 	'history-feed-title' => '修訂歷史',
@@ -12543,70 +12802,88 @@ $messages['zh-hant'] = [
 	'history-title' => '「$1」的修訂歷史',
 	'hist' => '歷史',
 	'hide' => '隱藏',
-	'hookaborted' => '您所嘗試的修改被擴展鈎捨棄。',
+	'hookaborted' => '你試圖進行的修改被一個擴展功能終止。',
 	'http-invalid-url' => '無效的URL：$1',
 	'http-invalid-scheme' => '不支援含有「$1」的URL。',
-	'http-request-error' => '未知的錯誤令到HTTP請求失敗。',
+	'http-request-error' => '未知的錯誤造成HTTP請求失敗。',
 	'http-read-error' => 'HTTP讀取錯誤。',
 	'http-timed-out' => 'HTTP請求已過時。',
-	'http-curl-error' => '擷取URL時出錯：$1',
-	'http-host-unreachable' => '無法到達URL。',
+	'http-curl-error' => '獲取URL時出錯：$1',
+	'http-host-unreachable' => '無法獲得URL。',
 	'http-bad-status' => '進行HTTP請求時出現問題：$1 $2',
-	'historywarning' => '\'\'\'警告: \'\'\'您將要刪除的頁內含有約$1次{{PLURAL:$1|修訂|修訂}}的歷史：',
-	'handheld.css' => '/* 此處的 CSS 將影響在 $wgHandheldStyle 設定手提裝置面板 */',
+	'historywarning' => "'''警告: '''您將要刪除的頁內含有約$1次的{{PLURAL:$1|修訂|修訂}}歷史：",
+	'handheld.css' => '/* 此處的 CSS 將影響在 $wgHandheldStyle 設定的手機版面 */',
 	'hours' => '$1小時',
-	'htmlform-invalid-input' => '您輸入的內容存在問題',
+	'htmlform-invalid-input' => '您輸入的內容有問題',
 	'htmlform-select-badoption' => '您所指定的值不是有效的選項。',
 	'htmlform-int-invalid' => '您所指定的值不是一個整數。',
 	'htmlform-float-invalid' => '您所指定的值不是一個數字。',
 	'htmlform-int-toolow' => '您所指定的值低於最小值$1',
 	'htmlform-int-toohigh' => '您所指定的值高於最大值$1',
-	'htmlform-required' => '此值是必填項',
+	'htmlform-required' => '此數值是必須填寫',
 	'htmlform-submit' => '提交',
 	'htmlform-reset' => '撤銷更改',
 	'htmlform-selectorother-other' => '其他',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'FANDOM',
 	'htmlform-no' => '否',
 	'htmlform-yes' => '是的',
-];
+	'history_copyright' => '-',
+	'hours-abbrev' => '$1小時',
+	'hijri-calendar-m1' => 'Muharram',
+	'hijri-calendar-m2' => 'Safar',
+	'hijri-calendar-m3' => "Rabi' al-awwal",
+	'hijri-calendar-m4' => "Rabi' al-thani",
+	'hijri-calendar-m5' => 'Jumada al-awwal',
+	'hijri-calendar-m6' => 'Jumada al-thani',
+	'hijri-calendar-m7' => 'Rajab',
+	'hijri-calendar-m8' => "Sha'aban",
+	'hijri-calendar-m9' => 'Ramadan',
+	'hijri-calendar-m10' => 'Shawwal',
+	'hijri-calendar-m11' => "Dhu al-Qi'dah",
+	'hijri-calendar-m12' => 'Dhu al-Hijjah',
+	'hebrew-calendar-m1' => 'Tishrei',
+	'hebrew-calendar-m2' => 'Cheshvan',
+	'hebrew-calendar-m3' => 'Kislev',
+	'hebrew-calendar-m4' => 'Tevet',
+	'hebrew-calendar-m5' => 'Shevat',
+	'hebrew-calendar-m6' => 'Adar',
+	'hebrew-calendar-m6a' => 'Adar I',
+	'hebrew-calendar-m6b' => 'Adar II',
+	'hebrew-calendar-m7' => 'Nisan',
+	'hebrew-calendar-m8' => 'Iyar',
+	'hebrew-calendar-m9' => 'Sivan',
+	'hebrew-calendar-m10' => 'Tamuz',
+	'hebrew-calendar-m11' => 'Av',
+	'hebrew-calendar-m12' => 'Elul',
+	'hebrew-calendar-m1-gen' => 'Tishrei',
+	'hebrew-calendar-m2-gen' => 'Cheshvan',
+	'hebrew-calendar-m3-gen' => 'Kislev',
+	'hebrew-calendar-m4-gen' => 'Tevet',
+	'hebrew-calendar-m5-gen' => 'Shevat',
+	'hebrew-calendar-m6-gen' => 'Adar',
+	'hebrew-calendar-m6a-gen' => 'Adar I',
+	'hebrew-calendar-m6b-gen' => 'Adar II',
+	'hebrew-calendar-m7-gen' => 'Nisan',
+	'hebrew-calendar-m8-gen' => 'Iyar',
+	'hebrew-calendar-m9-gen' => 'Sivan',
+	'hebrew-calendar-m10-gen' => 'Tamuz',
+	'hebrew-calendar-m11-gen' => 'Av',
+	'hebrew-calendar-m12-gen' => 'Elul',
+	'hidesome' => '隱藏部分',
+	'hidebots' => '隱藏機器人編輯',
+	'hubs' => '主題',
+	'home' => '首頁',
+	'helpfaq' => '說明與常見問題',
+	'highest_ratings' => '評價最高',
+	'hub-Entertainment' => '娛樂',
+	'hub-Gaming' => '電子遊戲',
+	'hub-Video_Games' => '電子遊戲',
+	'hub-Videospiele' => 'Videospiele',
+	'hub-Lifestyle' => '生活',
+	'hub-Food_and_Drink' => '飲食',
+);
 
-$messages['zh-tw'] = [
-	'help' => '使用說明',
-	'history' => '修訂記錄',
-	'history_short' => '歷史',
-	'hidetoc' => '隱藏',
-	'histlegend' => '差異選擇: 標記要比較版本的單選按鈕並點擊底部的按鈕進行比較。<br />
-說明: (目前) 指與目前版本比較，(先前) 指與前一個修訂版本比較，小 = 細微修改。',
-	'history-feed-title' => '修訂沿革',
-	'history-feed-description' => '本站上此頁的修訂沿革',
-	'history-feed-empty' => '所請求的頁面不存在。它可能已被刪除或重新命名。
-嘗試[[Special:Search|搜尋本站]]獲得相關的新建頁面。',
-	'history-title' => '「$1」的修訂沿革',
-	'hookaborted' => '您所嘗試的修改被擴展鉤捨棄。',
-	'home' => '主頁',
-	'helpfaq' => '幫助與常見問題',
-	'highest_ratings' => '得分最高',
-];
-
-$messages['zh-yue'] = [
-	'help' => '使用說明',
-	'history' => '修訂記錄',
-	'history_short' => '歷史',
-	'hidetoc' => '隱藏',
-	'histlegend' => '差異選擇: 標記要比較版本的單選按鈕並點擊底部的按鈕進行比較。<br />
-說明: (目前) 指與目前版本比較，(先前) 指與前一個修訂版本比較，小 = 細微修改。',
-	'history-feed-title' => '修訂沿革',
-	'history-feed-description' => '本站上此頁的修訂沿革',
-	'history-feed-empty' => '所請求的頁面不存在。它可能已被刪除或重新命名。
-嘗試[[Special:Search|搜尋本站]]獲得相關的新建頁面。',
-	'history-title' => '「$1」的修訂沿革',
-	'hookaborted' => '您所嘗試的修改被擴展鉤捨棄。',
-	'home' => '主頁',
-	'helpfaq' => '幫助與常見問題',
-	'highest_ratings' => '得分最高',
-];
-
-$messages['zu'] = [
+$messages['zu'] = array(
 	'help' => 'Usizo',
 	'history_short' => 'Umlando',
 	'helppage' => 'Help:Isiqikili',
@@ -12615,14 +12892,5 @@ $messages['zu'] = [
 	'histfirst' => 'lokuqala',
 	'histlast' => 'ligcinileyo',
 	'hide' => 'Fihla',
-];
-
-$messages['zh'] = [
-	'history_short' => '历史纪录',
-	'hookaborted' => '您所尝试的修改已经不被扩展功能支持。',
-];
-
-$messages['zh-cn'] = [
-	'history_short' => '沿革',
-];
+);
 

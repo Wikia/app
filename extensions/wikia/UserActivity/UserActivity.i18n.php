@@ -25,7 +25,7 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'user-activity-desc' => 'Zeigt die Aktivität des aktuellen Benutzers im gesamten Wikia-Universum an.',
-	'user-activity-page-description' => 'Auf dieser Seite sind alle Wikia-Communitys aufgeführt, bei denen über dein Benutzerkonto Inhalte beigetragen wurden! Die Wikias werden standardmäßig nach dem neuesten Beitragsdatum sortiert.',
+	'user-activity-page-description' => 'Auf dieser Seite sind alle FANDOM-Communitys aufgeführt, bei denen über dein Benutzerkonto Inhalte beigetragen wurden. Die Wikis werden standardmäßig nach dem neuesten Beitragsdatum sortiert.',
 	'user-activity-table-title' => 'Titel',
 	'user-activity-table-edits' => 'Bearbeitungen',
 	'user-activity-table-lastedit' => 'Zuletzt bearbeitet',

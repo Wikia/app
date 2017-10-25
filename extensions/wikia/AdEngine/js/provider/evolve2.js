@@ -1,29 +1,32 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.utils.eventDispatcher',
-	'wikia.log',
-	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
-], function (adContext, gptHelper, slotTweaker, zoneParams, eventDispatcher, log, openXHelper) {
+	'wikia.log'
+], function (adContext, btfBlocker, gptHelper, slotTweaker, zoneParams, eventDispatcher, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
+		atfSlots = [
+			'INVISIBLE_SKIN',
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD',
+			'EVOLVE_FLUSH'
+		],
 		posTargetingValue,
 		site = 'wikia_intl',
 		slotMap = {
 			EVOLVE_FLUSH:             {flushOnly: true},
-			HOME_TOP_LEADERBOARD:     {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
-			HOME_TOP_RIGHT_BOXAD:     {size: '300x250,300x600', wloc: 'top'},
-			HUB_TOP_LEADERBOARD:      {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
 			INVISIBLE_SKIN:           {size: '1000x1000,1x1', wloc: 'top'},
 			LEFT_SKYSCRAPER_2:        {size: '160x600', wloc: 'middle'},
 			TOP_LEADERBOARD:          {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
 			TOP_RIGHT_BOXAD:          {size: '300x250,300x600', wloc: 'top'},
 
-			MOBILE_TOP_LEADERBOARD:   {size: '320x50,320x100,300x250', wsrc: 'mobile_evolve'},
+			MOBILE_TOP_LEADERBOARD:   {size: '320x50,320x100', wsrc: 'mobile_evolve'},
 			MOBILE_IN_CONTENT:        {size: '300x250', wsrc: 'mobile_evolve'},
 			MOBILE_PREFOOTER:         {size: '300x250', wsrc: 'mobile_evolve'}
 		};
@@ -35,7 +38,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			'1000x1000,1x1': 'a',
 			'160x600': 'b',
 
-			'320x50,320x100,300x250': 'a',
+			'320x50,320x100': 'a',
 			'300x250': 'a'
 		};
 	}
@@ -98,9 +101,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
 		});
-		slot.pre('hop', function() {
-			openXHelper && openXHelper.addOpenXSlot(slot.name);
-		});
 		gptHelper.pushAd(
 			slot,
 			'/4403/ev/' + site + '/' + section + '/' + slot.name,
@@ -114,6 +114,16 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 	}
 
+	function decorateFillInSlot() {
+		if (adContext.getContext().targeting.skin === 'oasis') {
+			return btfBlocker.decorate(fillInSlot, {
+				atfSlots: atfSlots
+			});
+		}
+
+		return fillInSlot;
+	}
+
 	resetPosTargeting();
 	adContext.addCallback(function () {
 		resetPosTargeting();
@@ -122,6 +132,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	return {
 		name: 'Evolve2',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: fillInSlot
+		fillInSlot: decorateFillInSlot()
 	};
 });

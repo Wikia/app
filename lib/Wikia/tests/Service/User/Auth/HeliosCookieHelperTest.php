@@ -2,11 +2,12 @@
 
 namespace Wikia\Service\User\Auth;
 
+use PHPUnit\Framework\TestCase;
 use Wikia\Domain\UserObject;
 use Wikia\HTTP\Response;
 use Wikia\Service\Helios\HeliosClient;
 
-class HeliosCookieHelperTest extends \PHPUnit_Framework_TestCase {
+class HeliosCookieHelperTest extends TestCase {
 
 	const TEST_USER_ID = 12345;
 	const TEST_TOKEN = 'abcdefghijk';
@@ -24,7 +25,7 @@ class HeliosCookieHelperTest extends \PHPUnit_Framework_TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->request = $this->getMock( 'WebRequest', [ 'getCookie', 'getHeader' ] );
+		$this->request = $this->createMock( \WebRequest::class );
 
 		$this->cookieHelper = new HeliosCookieHelper( $this->helios );
 	}

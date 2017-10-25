@@ -1,6 +1,6 @@
 <?php
 
-class ImagesService extends Service {
+class ImagesService {
 	const FILE_DATA_COMMENT_OPION_NAME = 'comment';
 	const FILE_DATA_DESC_OPION_NAME = 'description';
 
@@ -156,8 +156,10 @@ class ImagesService extends Service {
 
 		if ( strpos( $destSize, "px" ) !== false ) {
 			list( $width, $_ ) = explode( "px", $destSize );
-		} else {
+		} else if ( strpos( $destSize, "x" ) !== false ) {
 			list( $width, $height ) = explode( "x", $destSize );
+		} else {
+			$width = intval( $destSize );
 		}
 
 		return [ $width, $height ];

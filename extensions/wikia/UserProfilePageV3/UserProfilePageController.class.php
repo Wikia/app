@@ -24,7 +24,7 @@ class UserProfilePageController extends WikiaController {
 	protected $title = null;
 
 	protected $defaultAvatars = null;
-	protected $defaultAvatarPath = 'http://images.wikia.com/messaging/images/';
+	protected $defaultAvatarPath = 'https://vignette.wikia.nocookie.net/messaging/images/';
 
 	public function __construct() {
 		parent::__construct();
@@ -35,52 +35,13 @@ class UserProfilePageController extends WikiaController {
 
 	/**
 	 * @brief main entry point
-	 *
-	 * @requestParam User $user user object
-	 * @requestParam string $userPageBody original page body
-	 * @requestParam int $wikiId current wiki id
 	 */
 	public function index() {
-		wfProfileIn( __METHOD__ );
-
-		/**
-		 * @var $user User
-		 */
-		$user = $this->getVal( 'user' );
-
-		$pageBody = $this->getVal( 'userPageBody' );
-
-		if ( $this->title instanceof Title ) {
-			$namespace = $this->title->getNamespace();
-			$isSubpage = $this->title->isSubpage();
-		} else {
-			$namespace = $this->wg->NamespaceNumber;
-			$isSubpage = false;
+		if ( !$this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->skipRendering();
 		}
 
-		$useOriginalBody = true;
-
-		if ( $user instanceof User ) {
-			$this->profilePage = new UserProfilePage( $user );
-			if ( $namespace == NS_USER && !$isSubpage ) {
-				// we'll implement interview section later
-				// $this->setVal( 'questions', $this->profilePage->getInterviewQuestions( $wikiId, true ) );
-				$this->setVal( 'stuffSectionBody', $pageBody );
-				$useOriginalBody = false;
-			}
-
-			$this->setVal( 'isUserPageOwner', ( ( $user->getId() == $this->wg->User->getId() ) ? true : false ) );
-		}
-
-		if ( $useOriginalBody ) {
-			$this->response->setBody( $pageBody );
-		}
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileIndex' );
-		}
-
-		wfProfileOut( __METHOD__ );
+		$this->overrideTemplate( 'WikiaMobileIndex' );
 	}
 
 	/**
@@ -97,6 +58,7 @@ class UserProfilePageController extends WikiaController {
 
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js' );
+		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/BioModal.js' );
 
 		$sessionUser = $this->wg->User;
 
@@ -306,7 +268,7 @@ class UserProfilePageController extends WikiaController {
 			];
 		}
 
-		wfRunHooks( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ] );
+		Hooks::run( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ] );
 
 		$actionButton = F::app()->renderView( 'MenuButton', 'Index', $actionButtonArray );
 		$this->setVal( 'actionButton', $actionButton );
@@ -519,7 +481,7 @@ class UserProfilePageController extends WikiaController {
 					Masthead::newFromUser( $user )->removeFile( false );
 
 					// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
-					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file ) );
+					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file, "" ) );
 					$user->saveSettings();
 					break;
 				case 'uploaded':
@@ -841,7 +803,7 @@ class UserProfilePageController extends WikiaController {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function getDefaultAvatars( $thumb = '' ) {
+	public function getDefaultAvatars( $thumb = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		// parse message only once per request
@@ -855,8 +817,8 @@ class UserProfilePageController extends WikiaController {
 
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
-				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->defaultAvatars[] = [ 'name' => $image, 'url' => $this->defaultAvatarPath . $thumb . $hash . $image ];
+				$avatarUrl = Masthead::getDefaultAvatarUrl( $image );
+				$this->defaultAvatars[] = [ 'name' => $image, 'url' => ImagesService::getThumbUrlFromFileUrl($avatarUrl, self::AVATAR_DEFAULT_SIZE) ];
 			}
 		}
 

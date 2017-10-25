@@ -85,22 +85,6 @@ class CommunityPageSpecialHooks {
 	}
 
 	/**
-	 * Add community page entry point to article page right rail module
-	 *
-	 * @param array $railModuleList
-	 * @return bool
-	 */
-	public static function onGetRailModuleList( array &$railModuleList ) {
-		global $wgTitle;
-
-		if ( $wgTitle->inNamespace( NS_MAIN ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
-			$railModuleList[1342] = [ 'CommunityPageEntryPoint', 'Index', null ];
-		}
-
-		return true;
-	}
-
-	/**
 	 * Purge admins list on user rights change
 	 * @param User $user
 	 * @param array $validGroupsToAdd

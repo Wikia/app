@@ -69,10 +69,10 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function constructKibanaUrl( $dayOffset ) {
 		global $wgConsulUrl;
 
-		$esUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, 'query', 'sjc' ) )->getUrl( 'es' );
+		$esUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, 'logs-prod', 'sjc' ) )->getUrl( 'es' );
 		$date = time() - ( $dayOffset * 24 * 60 * 60 );
 
-		return 'http://' . $esUrl . '/logstash-' . date( 'Y.m.d', $date ) . '/_search';
+		return 'http://' . $esUrl . '/logstash-discussion-' . date( 'Y.m.d', $date ) . '/_search';
 	}
 
 	private function getUserByUsername( $userName ) {
@@ -191,7 +191,9 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 							'userUrl' => $this->getTitle()->getLocalURL(
 									[ UserQuery::getKeyName() => $userLogRecord->user->getName() ]
 							),
-							'site' => $userLogRecord->site,
+							'site' => $userLogRecord->site['title'],
+							'siteUrl' => 'http://'.$userLogRecord->site['domain'] . '/d/u/' .
+							             $userLogRecord->user->getId(),
 							'ip' => $userLogRecord->ip,
 							'ipUrl' => $this->getTitle()->getLocalURL(
 								[ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
@@ -300,7 +302,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 					$this->logger->warning( sprintf( 'Site not found: %d', $site ) );
 					continue;
 				} else {
-					$domainCache[$site] = sprintf( '%s (%s)', $cityTitle, $wikiDomain );
+					$domainCache[$site] = ['title' => $cityTitle, 'domain' => $wikiDomain ];
 				}
 			}
 

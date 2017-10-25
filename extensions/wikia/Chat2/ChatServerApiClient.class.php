@@ -33,16 +33,7 @@ class ChatServerApiClient {
 
 		if ( isset( $cityData->cityId ) ) {
 			$cityId = $cityData->cityId;
-		} else {
-			Chat::info( __METHOD__ . ': Method called - no cityId', [
-				'roomId' => $roomId,
-			] );
 		}
-
-		Chat::info( __METHOD__ . ': Method called', [
-			'roomId' => $roomId,
-			'cityId' => $cityId,
-		] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -100,13 +91,9 @@ class ChatServerApiClient {
 		] );
 
 		if ( isset( $roomData->roomId ) ) {
-			$roomId = $roomData->roomId;
-			Chat::info( __METHOD__ . ': Method called', [
-				'roomId' => $roomId,
-			] );
+			$roomId = intval( $roomData->roomId );
 		} else {
 			// FIXME: How should we handle it if there is no roomId?
-			Chat::info( __METHOD__ . ': Method called - no roomId' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -126,8 +113,6 @@ class ChatServerApiClient {
 		wfProfileIn( __METHOD__ );
 
 		$response = null;
-
-		Chat::debug( __METHOD__ . ': Method called ', $params );
 
 		// NOTE: When we fail over, the chat server host doesn't change which backend it points to (since there isn't
 		// even a chat server in the backup datacenter(s)), so if we're in read-only, even though this isn't a write

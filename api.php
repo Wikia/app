@@ -121,7 +121,7 @@ if ( $wgAPIRequestLog ) {
 	wfDebug( "Logged API request to $wgAPIRequestLog\n" );
 }
 
-wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre
+Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre
 
 // Shut down the database.  foo()->bar() syntax is not supported in PHP4: we won't ever actually
 // get here to worry about whether this should be = or =&, but the file has to parse properly.

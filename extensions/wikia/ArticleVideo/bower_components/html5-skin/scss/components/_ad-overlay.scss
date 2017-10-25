@@ -1,0 +1,40 @@
+.oo-ad-overlay {
+  display: table;
+  position: relative;
+  transition: bottom 0.5s, height 0.25s;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  pointer-events: auto;
+
+  .oo-ad-overlay-close-button {
+    display: inline-block;
+    position: absolute;
+    cursor: pointer;
+    height: 28px;
+    width: 28px;
+    top: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.3);
+    border: 0;
+    outline:none;
+  }
+
+  .oo-ad-overlay-close-button.oo-hidden {
+    display: none;
+  }
+
+  .oo-ad-overlay-close-button-icon {
+    position: absolute;
+    font-size: 8px;
+    top: 50%;
+    left: 50%;
+    @include vendor-prefixes(transform, translate(-50%, -50%));
+    color: #ffffff;
+    opacity: 0.6;
+  }
+}
+
+.oo-ad-overlay.oo-hidden {
+  display: none;
+}

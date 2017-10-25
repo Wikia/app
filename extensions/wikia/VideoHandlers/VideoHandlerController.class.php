@@ -58,7 +58,7 @@ class VideoHandlerController extends WikiaController {
 					 * Therefore we have to allow for accessing this API, from ie. file://
 					 */
 					(new CrossOriginResourceSharingHeaderHelper())
-						->setAllowOrigin( [ '*' ] )
+						->setAllowAllOrigins()
 						->setAllowMethod( [ 'GET' ] )
 						->setHeaders($this->response);
 				}
@@ -185,7 +185,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $status->isOK() ) {
 					$oldimage = null;
 					$user = $this->wg->User;
-					wfRunHooks( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
+					Hooks::run( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
 				} else if ( !empty($error) ) {
 					$error = $status->getMessage();
 				}
@@ -194,7 +194,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $title->exists() ) {
 					$article = Article::newFromID( $title->getArticleID() );
 				} else {
-					$botUser = User::newFromName( 'WikiaBot' );
+					$botUser = User::newFromName( Wikia::BOT_USER );
 					$flags = EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT;
 
 					// @FIXME Set $article here after calling addCategoryVideos so that the doDeleteArticle call below works properly

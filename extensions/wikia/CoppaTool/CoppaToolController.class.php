@@ -139,7 +139,6 @@ class CoppaToolController extends WikiaController {
 		}
 
 		$ipAddr = IP::sanitizeIP( $ipAddr );
-		$newIpAddr = '0.0.0.0';
 
 		$wikiIDs = RenameUserHelper::lookupIPActivity( $ipAddr );
 
@@ -148,7 +147,7 @@ class CoppaToolController extends WikiaController {
 			'requestor_name' => $this->wg->User->getName(),
 			'rename_user_id' => 0,
 			'rename_old_name' => $ipAddr,
-			'rename_new_name' => $newIpAddr,
+			'rename_new_name' => NON_ROUTABLE_IPV6,
 			'rename_ip' => true,
 			'notify_renamed' => false,
 			'reason' => wfMessage( 'coppatool-reason' )->plain(),

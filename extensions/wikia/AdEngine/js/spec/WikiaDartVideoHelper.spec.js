@@ -3,7 +3,7 @@ describe('WikiaDartVideoHelper', function () {
 	'use strict';
 
 	var logMock = function(){},
-		locationMock = {origin: 'http://wikia.com'};
+		locationMock = {href: 'http://wikia.com'};
 
 	it('getUrl has all required tag params', function () {
 		var resultUrl, adLogicPageLevelParamsMock = {
@@ -25,7 +25,8 @@ describe('WikiaDartVideoHelper', function () {
 		expect(resultUrl).toMatch('env=vp');
 		expect(resultUrl).toMatch('ad_rule=0');
 		expect(resultUrl).toMatch('unviewed_position_start=1');
-		expect(resultUrl).toMatch('url=' + locationMock.origin);
+		expect(resultUrl).toMatch('url=http%3A%2F%2Fwikia.com');
+		expect(resultUrl).toMatch('description_url=http%3A%2F%2Fwikia.com');
 		expect(resultUrl).toMatch('correlator=');
 	});
 

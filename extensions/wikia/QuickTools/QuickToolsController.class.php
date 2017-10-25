@@ -42,7 +42,6 @@ class QuickToolsController extends WikiaController  {
 			],
 			'Expiry' => $blockLength,
 			'HardBlock' => true,
-			'CreateAccount' => true,
 			'AutoBlock' => true,
 			'DisableEmail' => true,
 			'DisableUTEdit' => false,

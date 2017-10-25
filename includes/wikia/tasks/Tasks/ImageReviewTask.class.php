@@ -8,6 +8,7 @@
 namespace Wikia\Tasks\Tasks;
 
 use \Wikia\Logger\WikiaLogger;
+use WikiaDataAccess;
 
 class ImageReviewTask extends BaseTask {
 
@@ -19,7 +20,12 @@ class ImageReviewTask extends BaseTask {
 		$articlesDeleted = 0;
 
 		foreach ( $pageList as $imageData ) {
-			list( $wikiId, $imageId ) = $imageData;
+			// prevent notices
+			if ( count( $imageData ) == 3 ) {
+				list( $wikiId, $imageId, $revisionId ) = $imageData;
+			} else {
+				list( $wikiId, $imageId ) = $imageData;
+			}
 
 			if ( !\WikiFactory::isPublic( $wikiId ) ) {
 				$this->notice( 'wiki has been disabled', ['wiki_id' => $wikiId] );
@@ -39,38 +45,66 @@ class ImageReviewTask extends BaseTask {
 			}
 
 			$cityLang = \WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
-			$reason = wfMsgExt( 'imagereview-reason', ['language' => $cityLang] );
+			$reason = wfMessage( 'imagereview-reason' )->inLanguage( $cityLang );
 
-			$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
-				' -u ' . escapeshellarg( $userName ) .
-				' --id ' . $imageId;
+			if ( count( $imageData ) == 3 ) {
+				$command =
+					"/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId}'";
 
-			if ( $reason ) {
-				$command .= ' -r ' . escapeshellarg( $reason );
-			}
-			if ( $suppress ) {
-				$command .= ' -s';
-			}
+				$output = wfShellExec( $command, $exitStatus );
 
-			$title = wfShellExec( $command, $exitStatus );
+				if ( $exitStatus !== 0 ) {
+					$this->error( 'article deletion error', [
+						'cityId' => $wikiId,
+						'pageId' => $imageId,
+						'revisionId' => $revisionId,
+						'exit_status' => $exitStatus,
+						'output' => $output,
+					] );
 
-			if ( $exitStatus !== 0 ) {
-				$this->error( 'article deletion error', [
-					'city_url' => $cityUrl,
+					continue;
+				}
+
+				$this->info( 'removed image', [
+					'cityId' => $wikiId,
+					'pageId' => $imageId,
+					'revisionId' => $revisionId,
 					'exit_status' => $exitStatus,
-					'error' => $title,
 				] );
 
-				continue;
+			} else {
+				$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php" .
+					' -u ' . escapeshellarg( $userName ) .
+					' --id ' . $imageId;
+
+				if ( $reason ) {
+					$command .= ' -r ' . escapeshellarg( $reason );
+				}
+				if ( $suppress ) {
+					$command .= ' -s';
+				}
+
+				$title = wfShellExec( $command, $exitStatus );
+
+				if ( $exitStatus !== 0 ) {
+					$this->error( 'article deletion error', [
+						'city_url' => $cityUrl,
+						'exit_status' => $exitStatus,
+						'error' => $title,
+					] );
+
+					continue;
+				}
+
+				$cityPath = \WikiFactory::getVarValueByName( 'wgScript', $wikiId );
+				$escapedTitle = wfEscapeWikiText( $title );
+
+				$this->info( 'removed image', [
+					'link' => "{$cityUrl}{$cityPath}?title={$escapedTitle}",
+					'title' => $escapedTitle,
+				] );
 			}
 
-			$cityPath = \WikiFactory::getVarValueByName( 'wgScript', $wikiId );
-			$escapedTitle = wfEscapeWikiText( $title );
-
-			$this->info( 'removed image', [
-				'link' => "{$cityUrl}{$cityPath}?title={$escapedTitle}",
-				'title' => $escapedTitle,
-			] );
 
 			++$articlesDeleted;
 		}
@@ -83,85 +117,35 @@ class ImageReviewTask extends BaseTask {
 		return $success;
 	}
 
-	public function deleteFromQueue( Array $aDeletionList ) {
-		global $wgExternalDatawareDB;
+	public function update( $pageList ) {
+		foreach ( $pageList as list( $cityId, $pageId, $revisionId ) ) {
+			$key = wfForeignMemcKey( $cityId, 'image-review', $pageId, $revisionId );
 
-		$oDB = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+			WikiaDataAccess::cachePurge( $key );
 
-		foreach ( $aDeletionList as $aRow ) {
-			$aImageData = [
-				'wiki_id' => $aRow['wiki_id'],
-				'page_id' => $aRow['page_id'],
-			];
-
-			$oDB->delete(
-				'image_review',
-				$aImageData,
-				__METHOD__
-			);
-
-			WikiaLogger::instance()->info( 'ImageReviewLog', [
-				'method' => __METHOD__,
-				'message' => 'Image removed from queue',
-				'params' => $aRow,
-			] );
+			// SUS-2650: invalidate file page of reviewed image
+			$task = new ImageReviewTask();
+			$task->call( 'invalidateFilePage', (int) $pageId );
+			$task->wikiId( $cityId );
+			$task->queue();
 		}
 	}
 
-	public function addToQueue() {
-		global $wgExternalDatawareDB;
-		$title = $this->getTitle();
-		$wikiId = $this->getWikiId();
-		$latestRevId = $title->getLatestRevID( \Title::GAID_FOR_UPDATE );
+	/**
+	 * Invalidates provided file page (use page ID) by bumping page_touched entry in `page` table
+	 * and purging CDN cache.
+	 *
+	 * This task is queued when image review status changes to reflect this change on the file page.
+	 *
+	 * @see SUS-2650
+	 *
+	 * @param int $pageId
+	 */
+	public function invalidateFilePage( int $pageId ) {
+		$title = \Title::newFromId( $pageId );
 
-		$imageData = [
-			'wiki_id' => $wikiId,
-			'page_id' => $title->getArticleID(),
-			'revision_id' => $latestRevId,
-			'user_id' => wfLocalFile( $title )->getUser( 'id' ),
-			'last_edited' => \Revision::newFromId( $latestRevId, \Revision::READ_LATEST )->getTimestamp(),
-			'top_200' => $this->isTop200( $wikiId ) ? 1 : 0,
-			'state' => \ImageReviewStatuses::STATE_UNREVIEWED,
-		];
-
-		$dbw = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
-		$result = $dbw->upsert(
-			'image_review',
-			$imageData,
-			[],
-			[
-				'last_edited = values(last_edited)',
-				'revision_id = values(revision_id)',
-				'state = values(state)',
-				'user_id = values(user_id)',
-			],
-			__METHOD__
-		);
-
-		if ( $result ) {
-			$this->info( 'Image Review - Added uploaded file', $imageData );
-		} else {
-			$this->error( 'Image Review - Failed to add uploaded file', $imageData );
-		}
-
-		return $result;
-	}
-
-	private function isTop200( $wikiId ) {
-		global $wgExternalDatawareDB;
-		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
-
-		$result = $dbr->selectRow(
-			'image_review',
-			[ 'top_200' ],
-			[
-				'wiki_id' => $wikiId,
-				'top_200' => 1,
-			],
-			__METHOD__
-		);
-
-		return $result !== false;
+		$title->invalidateCache();
+		$title->purgeSquid();
 	}
 
 	private function sendNotification() {

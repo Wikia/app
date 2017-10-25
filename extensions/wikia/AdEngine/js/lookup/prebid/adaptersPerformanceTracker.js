@@ -1,15 +1,15 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
+	'ext.wikia.adEngine.lookup.prebid.bidHelper',
 	'ext.wikia.adEngine.utils.timeBuckets',
 	'ext.wikia.adEngine.wrappers.prebid'
-], function (adTracker, adaptersRegistry, timeBuckets, prebid) {
+], function (adTracker, adaptersRegistry, bidHelper, timeBuckets, prebid) {
 	'use strict';
 
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
 		emptyResponseMsg = 'EMPTY_RESPONSE',
-		notRespondedMsg = 'NO_RESPONSE',
-		responseErrorCode = 2;
+		notRespondedMsg = 'NO_RESPONSE';
 
 	function setupPerformanceMap(skin) {
 		var biddersPerformanceMap = {},
@@ -80,10 +80,15 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function getParamsFromBidForTracking(bid) {
 		var bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
 
-		if (bid.getStatusCode() === responseErrorCode) {
+		if (bid.getStatusCode() === prebid.errorResponseStatusCode) {
 			return [emptyResponseMsg, bucket].join(';');
 		}
-		return [bid.getSize(), bid.pbMg, bucket].join(';');
+
+		return [
+			bid.getSize(),
+			bidHelper.transformPriceFromBid(bid),
+			bucket
+		].join(';');
 	}
 
 
@@ -92,5 +97,5 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		trackBidderOnLookupEnd: trackBidderOnLookupEnd,
 		trackBidderSlotState: trackBidderSlotState,
 		updatePerformanceMap: updatePerformanceMap
-	}
+	};
 });

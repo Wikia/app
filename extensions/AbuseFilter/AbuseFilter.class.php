@@ -200,7 +200,7 @@ class AbuseFilter {
 		}
 
 		$realValues = self::$builderValues;
-		wfRunHooks( 'AbuseFilter-builder', array( &$realValues ) );
+		Hooks::run( 'AbuseFilter-builder', array( &$realValues ) );
 
 		return $realValues;
 	}
@@ -666,7 +666,7 @@ class AbuseFilter {
 		global $wgUser, $wgTitle;
 
 		/* Wikia change begin: Needed to be able to bypass filters */
-		if ( !wfRunHooks( 'AbuseFilterShouldFilter', array( $wgUser ) ) ) {
+		if ( !Hooks::run( 'AbuseFilterShouldFilter', array( $wgUser ) ) ) {
 			return true;
 		}
 		/* Wikia change end */
@@ -678,7 +678,7 @@ class AbuseFilter {
 		}
 
 		// Add vars from extensions
-		wfRunHooks( 'AbuseFilter-filterAction', array( &$vars, $title ) );
+		Hooks::run( 'AbuseFilter-filterAction', array( $vars, $title ) );
 
 		// Set context
 		$vars->setVar( 'context', 'filter' );
@@ -974,7 +974,6 @@ class AbuseFilter {
 				$block->setBlocker( $filterUser );
 				$block->mReason = wfMsgForContent( 'abusefilter-blockreason', $rule_desc );
 				$block->isHardblock( false );
-				$block->prevents( 'createaccount', true );
 				$block->mExpiry = SpecialBlock::parseExpiryInput( $wgAbuseFilterBlockDuration );
 
 				$block->insert();
@@ -987,7 +986,7 @@ class AbuseFilter {
 				} else {
 					$logParams[] = $wgAbuseFilterBlockDuration;
 				}
-				$logParams[] = 'nocreate, angry-autoblock';
+				$logParams[] = 'angry-autoblock';
 
 				$log = new LogPage( 'block' );
 				$log->addEntry( 'block',
@@ -1002,7 +1001,7 @@ class AbuseFilter {
 			case 'rangeblock':
 				$filterUser = AbuseFilter::getFilterUser();
 
-				$range = IP::sanitizeRange( wfGetIP() . '/16' );
+				$range = static::getIpRangeToBlock();
 
 				// Create a block.
 				$block = new Block;
@@ -1010,7 +1009,6 @@ class AbuseFilter {
 				$block->setBlocker( $filterUser );
 				$block->mReason = wfMsgForContent( 'abusefilter-blockreason', $rule_desc );
 				$block->isHardblock( false );
-				$block->prevents( 'createaccount', true );
 				$block->mExpiry = SpecialBlock::parseExpiryInput( '1 week' );
 
 				$block->insert();
@@ -1019,7 +1017,7 @@ class AbuseFilter {
 				# Prepare log parameters
 				$logParams = array();
 				$logParams[] = 'indefinite';
-				$logParams[] = 'nocreate, angry-autoblock';
+				$logParams[] = 'angry-autoblock';
 
 				$log = new LogPage( 'block' );
 				$log->addEntry( 'block', Title::makeTitle( NS_USER, $range ),
@@ -1104,6 +1102,22 @@ class AbuseFilter {
 		}
 
 		return $display;
+	}
+
+	/**
+	 * Wikia change
+	 * Helper function to determine the IP range to block depending on configured CIDR limits.
+	 * @return string
+	 */
+	protected static function getIpRangeToBlock(): string {
+		global $wgBlockCIDRLimit;
+		$ip = RequestContext::getMain()->getRequest()->getIP();
+
+		if ( IP::isIPv6( $ip ) ) {
+			return IP::sanitizeRange( "$ip/{$wgBlockCIDRLimit['IPv6']}");
+		}
+
+		return IP::sanitizeRange( "$ip/{$wgBlockCIDRLimit['IPv4']}");
 	}
 
 	public static function isThrottled( $throttleId, $types, $title, $rateCount, $ratePeriod ) {
@@ -1486,8 +1500,8 @@ class AbuseFilter {
 
 		$name = Title::makeTitle( $row->rc_namespace, $row->rc_title )->getText();
 		// Add user data if the account was created by a registered user
-		if ( $row->rc_user && $name != $row->rc_user_text ) {
-			$user = User::newFromName( $row->rc_user_text );
+		if ( $row->rc_user && $name != User::whoIs( $row->rc_user ) ) {
+			$user = User::newFromId( $row->rc_user ); // SUS-812
 			$vars->addHolder( self::generateUserVars( $user ) );
 		}
 
@@ -1500,7 +1514,7 @@ class AbuseFilter {
 		$title = Title::makeTitle( $row->rc_namespace, $row->rc_title );
 
 		if ( $row->rc_user ) {
-			$user = User::newFromName( $row->rc_user_text );
+			$user = User::newFromId( $row->rc_user ); // SUS-812
 		} else {
 			$user = new User;
 			$user->setName( $row->rc_user_text );

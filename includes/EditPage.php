@@ -282,7 +282,7 @@ class EditPage {
 	function edit() {
 		global $wgOut, $wgRequest, $wgUser;
 		// Allow extensions to modify/prevent this form or submission
-		if ( !wfRunHooks( 'AlternateEdit', array( $this ) ) ) {
+		if ( !Hooks::run( 'AlternateEdit', array( $this ) ) ) {
 			return;
 		}
 
@@ -376,9 +376,9 @@ class EditPage {
 				return;
 			}
 			if ( !$this->mTitle->getArticleId() )
-				wfRunHooks( 'EditFormPreloadText', array( &$this->textbox1, &$this->mTitle ) );
+				Hooks::run( 'EditFormPreloadText', array( &$this->textbox1, &$this->mTitle ) );
 			else
-				wfRunHooks( 'EditFormInitialText', array( $this ) );
+				Hooks::run( 'EditFormInitialText', array( $this ) );
 		}
 
 		$this->showEditForm();
@@ -409,7 +409,7 @@ class EditPage {
 		$permErrors = wfArrayDiff2( $permErrors, $remove );
 
 		/* Wikia change @author nAndy */
-		wfRunHooks( 'AfterEditPermissionErrors', array( &$permErrors, $this->mTitle, $remove ) );
+		Hooks::run( 'AfterEditPermissionErrors', array( &$permErrors, $this->mTitle, $remove ) );
 		/* End of Wikia change */
 
 		return $permErrors;
@@ -722,7 +722,7 @@ class EditPage {
 			$this->section === 'new' ? 'MediaWiki:addsection-editintro' : '' );
 
 		// Allow extensions to modify form data
-		wfRunHooks( 'EditPage::importFormData', array( &$this, $request ) );
+		Hooks::run( 'EditPage::importFormData', [ $this, $request ] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -874,7 +874,7 @@ class EditPage {
 		}
 
 		# <Wikia>
-		wfRunHooks( 'EditPage::getContent::end', array( &$this, &$text ) );
+		Hooks::run( 'EditPage::getContent::end', [ $this, &$text ] );
 		# </Wikia>
 
 		wfProfileOut( __METHOD__ );
@@ -1027,7 +1027,7 @@ class EditPage {
 				 * extensions a chance to modify URL before a redirect
 				 * @see CE-1596
 				 */
-				wfRunHooks( 'ArticleCreateBeforeRedirect', [ $this->mArticle, &$anchor, &$query ] );
+				Hooks::run( 'ArticleCreateBeforeRedirect', [ $this->mArticle, &$anchor, &$query ] );
 				/**
 				 * Wikia change end
 				 */
@@ -1040,7 +1040,7 @@ class EditPage {
 				$sectionanchor = $resultDetails['sectionanchor'];
 
 				// Give extensions a chance to modify URL query on update
-				wfRunHooks( 'ArticleUpdateBeforeRedirect', array( $this->mArticle, &$sectionanchor, &$extraQuery ) );
+				Hooks::run( 'ArticleUpdateBeforeRedirect', array( $this->mArticle, &$sectionanchor, &$extraQuery ) );
 
 				if ( $resultDetails['redirect'] ) {
 					if ( $extraQuery == '' ) {
@@ -1106,10 +1106,10 @@ class EditPage {
 		wfProfileIn( __METHOD__  );
 		wfProfileIn( __METHOD__ . '-checks' );
 
-		if ( !wfRunHooks( 'EditPage::attemptSave', array( $this ) ) ) {
+		if ( !Hooks::run( 'EditPage::attemptSave', array( $this ) ) ) {
 			wfDebug( "Hook 'EditPage::attemptSave' aborted article saving\n" );
 			$result['hookaborted'] = 'EditPage::attemptSave'; // Wikia change - SUS-1188
-			$status->fatal( 'hookaborted' );
+			$status->fatal( 'hookaborted', 'EditPage::attemptSave' ); // Wikia change - SUS-1189
 			$status->value = self::AS_HOOK_ERROR;
 			wfProfileOut( __METHOD__ . '-checks' );
 			wfProfileOut( __METHOD__  );
@@ -1153,10 +1153,10 @@ class EditPage {
 			wfProfileOut( __METHOD__ );
 			return $status;
 		}
-		if ( !wfRunHooks( 'EditFilter', array( $this, $this->textbox1, $this->section, &$this->hookError, $this->summary ) ) ) {
+		if ( !Hooks::run( 'EditFilter', array( $this, $this->textbox1, $this->section, &$this->hookError, $this->summary ) ) ) {
 			# Error messages etc. could be handled within the hook...
 			$result['hookaborted'] = 'EditFilter'; // Wikia change - SUS-1188
-			$status->fatal( 'hookaborted' );
+			$status->fatal( 'hookaborted', 'EditFilter', $this->hookError ); // Wikia change - SUS-1189
 			$status->value = self::AS_HOOK_ERROR;
 			wfProfileOut( __METHOD__ . '-checks' );
 			wfProfileOut( __METHOD__ );
@@ -1164,7 +1164,7 @@ class EditPage {
 		} elseif ( $this->hookError != '' ) {
 			# ...or the hook could be expecting us to produce an error
 			$result['hookaborted'] = 'EditFilter'; // Wikia change - SUS-1188
-			$status->fatal( 'hookaborted' );
+			$status->fatal( 'hookaborted', 'EditFilter', $this->hookError ); // Wikia change - SUS-1189
 			$status->value = self::AS_HOOK_ERROR_EXPECTED;
 			wfProfileOut( __METHOD__ . '-checks' );
 			wfProfileOut( __METHOD__ );
@@ -1255,17 +1255,17 @@ class EditPage {
 			}
 
 			// Run post-section-merge edit filter
-			if ( !wfRunHooks( 'EditFilterMerged', array( $this, $this->textbox1, &$this->hookError, $this->summary ) ) ) {
+			if ( !Hooks::run( 'EditFilterMerged', array( $this, $this->textbox1, &$this->hookError, $this->summary ) ) ) {
 				# Error messages etc. could be handled within the hook...
 				$result['hookaborted'] = 'EditFilterMerged'; // Wikia change - SUS-1188
-				$status->fatal( 'hookaborted' );
+				$status->fatal( 'hookaborted', 'EditFilterMerged' ); // Wikia change - SUS-1189
 				$status->value = self::AS_HOOK_ERROR;
 				wfProfileOut( __METHOD__ );
 				return $status;
 			} elseif ( $this->hookError != '' ) {
 				# ...or the hook could be expecting us to produce an error
 				$result['hookaborted'] = 'EditFilterMerged'; // Wikia change - SUS-1188
-				$status->fatal( 'hookaborted' );
+				$status->fatal( 'hookaborted', 'EditFilterMerged' ); // Wikia change - SUS-1189
 				$status->value = self::AS_HOOK_ERROR_EXPECTED;
 				wfProfileOut( __METHOD__ );
 				return $status;
@@ -1380,17 +1380,17 @@ class EditPage {
 			}
 
 			// Run post-section-merge edit filter
-			if ( !wfRunHooks( 'EditFilterMerged', array( $this, $text, &$this->hookError, $this->summary ) ) ) {
+			if ( !Hooks::run( 'EditFilterMerged', array( $this, $text, &$this->hookError, $this->summary ) ) ) {
 				# Error messages etc. could be handled within the hook...
 				$result['hookaborted'] = 'EditFilterMerged'; // Wikia change - SUS-1188
-				$status->fatal( 'hookaborted' );
+				$status->fatal( 'hookaborted', 'EditFilterMerged' ); // Wikia change - SUS-1189
 				$status->value = self::AS_HOOK_ERROR;
 				wfProfileOut( __METHOD__ );
 				return $status;
 			} elseif ( $this->hookError != '' ) {
 				# ...or the hook could be expecting us to produce an error
 				$result['hookaborted'] = 'EditFilterMerged'; // Wikia change - SUS-1188
-				$status->fatal( 'hookaborted' );
+				$status->fatal( 'hookaborted', 'EditFilterMerged' ); // Wikia change - SUS-1189
 				$status->value = self::AS_HOOK_ERROR_EXPECTED;
 				wfProfileOut( __METHOD__ );
 				return $status;
@@ -1490,6 +1490,8 @@ class EditPage {
 		$doEditStatus = $this->mArticle->doEdit( $text, $this->summary, $flags );
 
 		if ( $doEditStatus->isOK() ) {
+			// Wikia: SUS-1719 hack - pass revision info back to caller
+			$status->revision = $doEditStatus->value['revision'];
 			$result['redirect'] = Title::newFromRedirect( $text ) !== null;
 			$this->commitWatch();
 			wfProfileOut( __METHOD__ );
@@ -1784,7 +1786,7 @@ class EditPage {
 			$previewOutput = $this->getPreviewText();
 		}
 
-		wfRunHooks( 'EditPage::showEditForm:initial', array( &$this ) );
+		Hooks::run( 'EditPage::showEditForm:initial', [ $this ] );
 
 		$this->setHeaders();
 
@@ -1800,7 +1802,7 @@ class EditPage {
 		}
 
 		// wikia change begin
-		wfRunHooks( 'EditPage::showEditForm:initial2', array( &$this ) ) ;
+		Hooks::run( 'EditPage::showEditForm:initial2', [ $this ] );
 		// wikia change end
 
 		$wgOut->addHTML( $this->editFormTextTop );
@@ -1827,10 +1829,10 @@ class EditPage {
 		/* Wikia change end */
 
 		if ( is_callable( $formCallback ) ) {
-			call_user_func_array( $formCallback, array( &$wgOut ) );
+			call_user_func_array( $formCallback, [ $wgOut ] );
 		}
 
-		wfRunHooks( 'EditPage::showEditForm:fields', array( &$this, &$wgOut ) );
+		Hooks::run( 'EditPage::showEditForm:fields', [ $this, $wgOut ] );
 
 		// Put these up at the top to ensure they aren't lost on early form submission
 		$this->showFormBeforeText();
@@ -1876,14 +1878,14 @@ class EditPage {
 		}
 
 		// wikia change begin
-		wfRunHooks ('EditForm:BeforeDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
+		Hooks::run( 'EditForm:BeforeDisplayingTextbox', [ $this ] );
 		// wikia change end
 
 		$wgOut->addHTML( $this->editFormTextBeforeContent );
 
 		/* Wikia change begin - @author: Marooned */
 		/* add possibility to add visible fields inside <form> but before toolbar - used in CreatePage  */
-		wfRunHooks( 'EditPage::showEditForm:beforeToolbar', array( &$this, &$wgOut ) );
+		Hooks::run( 'EditPage::showEditForm:beforeToolbar', [ $this, &$wgOut ] );
 		/* Wikia change end */
 
 		/* Wikia change begin - @author: kflorence (BugId:40705) */
@@ -1908,13 +1910,13 @@ class EditPage {
 		}
 
 		// wikia change begin
-		wfRunHooks ('EditForm:AfterDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
+		Hooks::run( 'EditForm:AfterDisplayingTextbox', [ $this ] );
 
 		$rows = intval($wgUser->getGlobalPreference( 'rows' ));
 		$cols = intval($wgUser->getGlobalPreference( 'cols' ));
 		$ew = $wgUser->getGlobalPreference( 'editwidth' );
 
-		wfRunHooks( 'EditForm::MultiEdit:Form', array( $rows, $cols, $ew, htmlspecialchars( $this->safeUnicodeOutput( $this->textbox1 ) ) ) );
+		Hooks::run( 'EditForm::MultiEdit:Form', array( $rows, $cols, $ew, htmlspecialchars( $this->safeUnicodeOutput( $this->textbox1 ) ) ) );
 		// wikia change end
 
 		$wgOut->addHTML( $this->editFormTextAfterContent );
@@ -1943,7 +1945,7 @@ class EditPage {
 		# </Wikia>
 
 		# <Wikia>
-		if ( wfRunHooks( 'EditPage::CategoryBox', array( &$this ) ) ) {
+		if ( Hooks::run( 'EditPage::CategoryBox', [ $this ] ) ) {
 			$wgOut->addHTML( Html::rawElement( 'div', array( 'class' => 'hiddencats' ),
 				Linker::formatHiddenCategories( $this->mArticle->getHiddenCategories() ) ) );
 		}
@@ -2077,13 +2079,8 @@ class EditPage {
 					}
 
 					if ( !$revision->isCurrent() ) {
-						/* Wikia change begin - @author: Marooned */
-						/* Add new hook and condition to allow alternate message to be displayed when editing old revision */
-						if ( wfRunHooks( 'EditPage::showEditForm:oldRevisionNotice', array( &$this ) ) ) {
-							$this->mArticle->setOldSubtitle( $revision->getId() );
-							$wgOut->addWikiMsg( 'editingold' );
-						}
-						// Wikia change end
+						$this->mArticle->setOldSubtitle( $revision->getId() );
+						$wgOut->addWikiMsg( 'editingold' );
 					}
 				} elseif ( $this->mTitle->exists() ) {
 					// Something went wrong
@@ -2419,7 +2416,7 @@ HTML
 		}
 		# This hook seems slightly odd here, but makes things more
 		# consistent for extensions.
-		wfRunHooks( 'OutputPageBeforeHTML',array( &$wgOut, &$text ) );
+		Hooks::run( 'OutputPageBeforeHTML',array( &$wgOut, &$text ) );
 		$wgOut->addHTML( $text );
 		if ( $this->mTitle->getNamespace() == NS_CATEGORY ) {
 			$this->mArticle->closeShowCategory();
@@ -2440,7 +2437,7 @@ HTML
 		$newtext = $this->mArticle->replaceSection(
 			$this->section, $this->textbox1, $this->summary, $this->edittime );
 
-		wfRunHooks( 'EditPageGetDiffText', array( $this, &$newtext ) );
+		Hooks::run( 'EditPageGetDiffText', array( $this, &$newtext ) );
 
 		$popts = ParserOptions::newFromUserAndLang( $wgUser, $wgContLang );
 		$newtext = $wgParser->preSaveTransform( $newtext, $this->mTitle, $wgUser, $popts );
@@ -2470,7 +2467,7 @@ HTML
 	 */
 	protected function showTosSummary() {
 		$msg = 'editpage-tos-summary';
-		wfRunHooks( 'EditPageTosSummary', array( $this->mTitle, &$msg ) );
+		Hooks::run( 'EditPageTosSummary', array( $this->mTitle, &$msg ) );
 		if( !wfMessage( $msg )->isDisabled() ) {
 			global $wgOut;
 			$wgOut->addHTML( '<div class="mw-tos-summary">' );
@@ -2510,7 +2507,7 @@ HTML
 				'[[' . wfMsgForContent( 'copyrightpage' ) . ']]' );
 		}
 		// Allow for site and per-namespace customization of contribution/copyright notice.
-		wfRunHooks( 'EditPageCopyrightWarning', array( $this->mTitle, &$copywarnMsg ) );
+		Hooks::run( 'EditPageCopyrightWarning', array( $this->mTitle, &$copywarnMsg ) );
 
 		return "<div id=\"editpage-copywarn\">\n" .
 			call_user_func_array("wfMsgNoTrans", $copywarnMsg) . "\n</div>";
@@ -2529,7 +2526,7 @@ HTML
 			array( 'minor' => $this->minoredit, 'watch' => $this->watchthis ) );
 
 		// wikia change begin, @author eloy
-		wfRunHooks ( 'EditPage::showEditForm:checkboxes', array ( &$this, &$checkboxes ) ) ;
+		Hooks::run( 'EditPage::showEditForm:checkboxes', [ $this, &$checkboxes ] );
 		// wikia change end
 
 		$wgOut->addHTML( "<div class='editCheckboxes'>" . implode( $checkboxes, "\n" ) . "</div>\n" );
@@ -2554,7 +2551,7 @@ HTML
 	 */
 	protected function showConflict() {
 		global $wgOut;
-		if ( wfRunHooks( 'EditPageBeforeConflictDiff', array( &$this, &$wgOut ) ) ) {
+		if ( Hooks::run( 'EditPageBeforeConflictDiff', [ $this, $wgOut ] ) ) {
 			$wgOut->wrapWikiMsg( '<h2>$1</h2>', "yourdiff" );
 
 			$de = new DifferenceEngine( $this->mArticle->getContext() );
@@ -2624,26 +2621,26 @@ HTML
 
 	protected function getLastDelete() {
 		$dbr = wfGetDB( DB_SLAVE );
-		$data = $dbr->selectRow(
-			array( 'logging', 'user' ),
-			array( 'log_type',
-				   'log_action',
-				   'log_timestamp',
-				   'log_user',
-				   'log_namespace',
-				   'log_title',
-				   'log_comment',
-				   'log_params',
-				   'log_deleted',
-				   'user_name' ),
-			array( 'log_namespace' => $this->mTitle->getNamespace(),
-				   'log_title' => $this->mTitle->getDBkey(),
-				   'log_type' => 'delete',
-				   'log_action' => 'delete',
-				   'user_id=log_user' ),
-			__METHOD__,
-			array( 'LIMIT' => 1, 'ORDER BY' => 'log_timestamp DESC' )
-		);
+		$data = $dbr->selectRow( [ 'logging' ], [
+			'log_type',
+			'log_action',
+			'log_timestamp',
+			'log_user',
+			'log_namespace',
+			'log_title',
+			'log_comment',
+			'log_params',
+			'log_deleted',
+		], [
+			'log_namespace' => $this->mTitle->getNamespace(),
+			'log_title' => $this->mTitle->getDBkey(),
+			'log_type' => 'delete',
+			'log_action' => 'delete',
+		], __METHOD__, [
+			'LIMIT' => 1,
+			'ORDER BY' => 'log_timestamp DESC'
+		] );
+
 		// Quick paranoid permission checks...
 		if( is_object( $data ) ) {
 			if( $data->log_deleted & LogPage::DELETED_USER )
@@ -2651,6 +2648,11 @@ HTML
 			if( $data->log_deleted & LogPage::DELETED_COMMENT )
 				$data->log_comment = wfMsgHtml( 'rev-deleted-comment' );
 		}
+
+		// SUS-2779
+		$user = User::newFromId($data->log_user);
+		$data->user_name = $user->getName();
+
 		return $data;
 	}
 
@@ -2660,16 +2662,6 @@ HTML
 	 */
 	function getPreviewText() {
 		wfProfileIn( __METHOD__ );
-		// Wikia change begin
-		global $wgEnableSlowPagesBlacklistExt;
-		if ( !empty( $wgEnableSlowPagesBlacklistExt ) ) {
-			global $wgSlowPagesBlacklist;
-			if ( in_array( $this->mTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
-				wfProfileOut( __METHOD__ );
-				return sprintf( '<div class="previewnote">%s</div>', wfMessage( 'slowpagesblacklist-preview-unavailable' )->plain() );
-			}
-		}
-		// Wikia change end
 		global $wgOut, $wgUser, $wgParser, $wgRawHtml;
 
 		// wikia change begin
@@ -2757,7 +2749,7 @@ HTML
 					$toparse = wfMsgForContent( 'newsectionheaderdefaultlevel', $this->summary ) . "\n\n" . $toparse;
 				}
 
-				wfRunHooks( 'EditPageGetPreviewText', array( $this, &$toparse ) );
+				Hooks::run( 'EditPageGetPreviewText', array( $this, &$toparse ) );
 
 				$parserOptions->enableLimitReport();
 
@@ -2782,7 +2774,7 @@ HTML
 
 		// wikia change begin
 		// BugId:5451
-		wfRunHooks( 'EditPageGetPreviewNote', array( $this, &$note ) );
+		Hooks::run( 'EditPageGetPreviewNote', array( $this, &$note ) );
 		// wikia change end
 
 		$previewhead = "<div class='previewnote'>\n" .
@@ -2979,7 +2971,7 @@ HTML
 
 		$toolbar = '<div id="toolbar"></div>';
 
-		wfRunHooks( 'EditPageBeforeEditToolbar', array( &$toolbar ) );
+		Hooks::run( 'EditPageBeforeEditToolbar', array( &$toolbar ) );
 
 		return $toolbar;
 	}
@@ -3031,7 +3023,9 @@ HTML
 				Xml::expandAttributes( array( 'title' => Linker::titleAttrib( 'watch', 'withaccess' ) ) ) .
 				">{$watchLabel}</label>";
 		}
-		wfRunHooks( 'EditPageBeforeEditChecks', array( &$this, &$checkboxes, &$tabindex ) );
+
+		Hooks::run( 'EditPageBeforeEditChecks', [ $this, &$checkboxes, &$tabindex ] );
+
 		return $checkboxes;
 	}
 
@@ -3081,7 +3075,8 @@ HTML
 		);
 		$buttons['diff'] = Xml::element( 'input', $temp, '' );
 
-		wfRunHooks( 'EditPageBeforeEditButtons', array( &$this, &$buttons, &$tabindex ) );
+		Hooks::run( 'EditPageBeforeEditButtons', [ $this, &$buttons, &$tabindex ] );
+
 		return $buttons;
 	}
 
@@ -3159,7 +3154,9 @@ HTML
 		$wgOut->prepareErrorPage( wfMessage( 'nosuchsectiontitle' ) );
 
 		$res = wfMsgExt( 'nosuchsectiontext', 'parse', $this->section );
-		wfRunHooks( 'EditPageNoSuchSection', array( &$this, &$res ) );
+
+		Hooks::run( 'EditPageNoSuchSection', [ $this, &$res ] );
+
 		$wgOut->addHTML( $res );
 
 		$wgOut->returnToMain( false, $this->mTitle );

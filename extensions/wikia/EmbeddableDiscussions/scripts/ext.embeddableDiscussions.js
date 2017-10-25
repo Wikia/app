@@ -17,11 +17,7 @@ require([
 	});
 
 	function getBaseUrl() {
-		if (mw.config.get('wgDevelEnvironment')) {
-			return 'https://services.wikia-dev.com/discussion';
-		}
-
-		return 'https://services.wikia.com/discussion';
+		return mw.config.get('wgDiscussionsApiUrl');
 	}
 
 	function openModal(link, title) {

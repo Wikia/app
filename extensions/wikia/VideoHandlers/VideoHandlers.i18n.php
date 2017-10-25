@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/wikia/VideoHandlers/VideoHandlers extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'wikia-videohandlers-desc' => 'Handling of videos within MediaWiki file architecture',
 	'videohandler' => 'Video handler',
 	'right-specialvideohandler' => 'Allows access to Special:VideoHandler',
@@ -49,15 +48,15 @@ $messages['en'] = [
 	'videos-initial-upload-edit-summary' => 'created video',
 	'videos-update-edit-summary' => 'updated video',
 	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'wikia-videohandlers-desc' => 'Description of module used for credits page',
 	'videohandler-error-missing-parameter' => 'Says, that a certain parameter is missing in the input data.
 * $1 is the exact name of the missing parameter, as the computer would expect.',
-	'videohandler-video-details' => 'Parameters:
+	'videohandler-video-details' => "Parameters:
 * $1 is a link to the video on its source page, with the label being the original title of the video
-* $2 is a link to the provider\'s homepage (e.g. [http://youtube.com/ youtube.com])',
+* $2 is a link to the provider's homepage (e.g. [http://youtube.com/ youtube.com])",
 	'videohandler-video-views' => 'video views. $1 is number of video views.',
 	'videohandler-remove' => 'Text for button to click to remove a wikia library video from your wiki.',
 	'videohandler-remove-video-modal-title' => 'This is the message to the user confirming they want to remove the video from their wiki.',
@@ -74,7 +73,7 @@ $messages['qqq'] = [
 	'videos-notify' => 'Loading text - wait while video is being added',
 	'videos-something-went-wrong' => 'Error message when a generic problem occurs while adding a video to a wiki',
 	'videos-error-not-logged-in' => 'Error message when a user tries to add a video while not logged in.',
-	'videos-error-no-video-url' => 'Error message when there\'s no video URL provided.',
+	'videos-error-no-video-url' => "Error message when there's no video URL provided.",
 	'videos-error-invalid-video-url' => 'Error message when a user enters an invalid URL.',
 	'videos-error-unknown' => 'Error message when an unknown error occurred',
 	'videos-error-old-type-video' => 'Error message when user tries to add a video of a type that is no longer supported.',
@@ -84,49 +83,49 @@ $messages['qqq'] = [
 	'videos-error-provider-not-supported' => 'Message when video provider is not supported',
 	'videohandler-non-premium' => 'Missing documentation',
 	'videohandler-non-premium-with-links' => 'Missing documentation',
-];
+);
 
-$messages['af'] = [
-	'videohandler-category' => 'Video\'s',
-];
+$messages['af'] = array(
+	'videohandler-category' => "Video's",
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'videohandler-category' => 'Videolar',
-];
+);
 
-$messages['be-tarask'] = [
+$messages['be-tarask'] = array(
 	'videohandler-category' => 'Відэа',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'videohandler-category' => 'Видео',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'videohandler-category' => 'Videoioù',
 	'videos-add-video-ok' => 'Graet',
 	'videos-add-video-label-all' => 'Gwelet pep tra',
-];
+);
 
-$messages['bs'] = [
+$messages['bs'] = array(
 	'videohandler-category' => 'Videa',
-];
+);
 
-$messages['ca'] = [
+$messages['ca'] = array(
 	'videohandler-category' => 'Vídeos',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'videohandler-category' => 'Videa',
-];
+);
 
-$messages['cy'] = [
+$messages['cy'] = array(
 	'videohandler-category' => 'Fideos',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'wikia-videohandlers-desc' => 'Handhabung von Videos innerhalb der MediaWiki-Dateiorganisation',
-	'videohandler' => 'Video-Handler',
+	'videohandler' => 'Video-Steuerung',
 	'prototype-videohandler-extension-desc' => 'Prototyp-Video-Steuerung',
 	'movieclips-videohandler-extension-desc' => 'MovieClips-Video-Steuerung',
 	'screenplay-videohandler-extension-desc' => 'Screenplay-Video-Steuerung',
@@ -134,7 +133,7 @@ $messages['de'] = [
 	'videohandler-error-missing-parameter' => 'Erforderlicher Parameter "$1" fehlt',
 	'videohandler-error-video-no-exist' => 'Video mit diesem Titel existiert nicht',
 	'videohandler-unknown-title' => 'Unbekannter Titel',
-	'videohandler-video-details' => '$1 (zur Verfügung gestellt von: $2)',
+	'videohandler-video-details' => '$1 (Anbieter: $2)',
 	'videohandler-category' => 'Videos',
 	'videohandler-description' => 'Beschreibung',
 	'videos-error-while-loading' => 'Fehler beim Laden von Daten. Überprüfe bitte deine Verbindung und lade die Seite erneut.',
@@ -143,40 +142,40 @@ $messages['de'] = [
 	'videos-add-video-label-all' => 'Alle anzeigen',
 	'videos-add-video' => 'Video hinzufügen',
 	'videos-add-video-to-this-wiki' => 'Ein neues Video zu diesem Wiki hinzufügen',
-	'videohandler-video-views' => '$1 {{PLURAL:$1|Abruf|Abrufe}}',
-	'videohandler-non-premium-with-links' => 'In diesem Wiki sind nur lizenzierte Inhalte aus der [http://video.wikia.com Fandom-Videothek](englisch) zugelassen. Unter [http://video.wikia.com video.wikia.com] kannst du nach Videos suchen.',
-	'videohandler-non-premium' => 'In diesem Wiki sind nur lizenzierte Inhalte aus der Fandom-Videothek (englisch) zugelassen. Unter http://video.wikia.com kannst du nach Videos suchen.',
+	'videohandler-video-views' => '$1 {{PLURAL:$1|Aufruf|Aufrufe}}',
+	'videohandler-non-premium-with-links' => 'In diesem Wiki sind nur lizenzierte Inhalte aus der [http://video.wikia.com Wikia Video-Bibliothek (englisch)] zugelassen. Unter [http://video.wikia.com video.wikia.com] kannst du nach Videos suchen.',
+	'videohandler-non-premium' => 'In diesem Wiki sind nur lizenzierte Inhalte aus der Wikia Video-Bibliothek (englisch) zugelassen. Unter http://video.wikia.com kannst du nach Videos suchen.',
 	'videohandler-remove' => 'Entfernen',
-	'videohandler-remove-video-modal-title' => 'Bist du sicher, dass du dieses Video aus deinem Wiki entfernen willst?',
+	'videohandler-remove-video-modal-title' => 'Bist du sicher, dass du dieses Video aus deinem Wiki entfernen möchtest?',
 	'videohandler-remove-video-modal-ok' => 'Entfernen',
-	'videohandler-remove-video-modal-success' => 'Datei:$1 wurde aus diesem Wiki entfernt',
+	'videohandler-remove-video-modal-success' => 'File:$1 wurde aus diesem Wiki entfernt',
 	'videohandler-remove-video-modal-cancel' => 'Abbrechen',
 	'videohandler-remove-error-unknown' => 'Es tut uns leid. Bei der Löschung ist etwas schief gelaufen.',
-	'videohandler-log-add-description' => 'Videobeschreibung hinzugefügt',
-	'videohandler-log-add-video' => 'Video erstellt',
-	'videos-error-empty-title' => 'Kein Titel angegeben.',
-	'videos-error-blocked-user' => 'Blockierter Benutzer.',
-	'videos-error-readonly' => '"Nur lese"-Modus.',
-	'videos-error-permissions' => 'du kannst dieses Video nicht löschen.',
-	'videohandler-error-restricted-video' => 'Dieses Video beinhaltet Inhalte, die nicht in diesem Wiki angezeigt werden können',
-	'videos-notify' => 'Bitte warte, während dieses Video verarbeitet wird.',
-	'videos-something-went-wrong' => 'Es tut uns Leid, aber etwas ist schiefgegangen beim Hochladen der Datei.',
+	'videohandler-log-add-description' => 'Videobeschreibung hinzufügen',
+	'videohandler-log-add-video' => 'Video wurde erstellt',
+	'videos-error-empty-title' => 'Titel ist leer',
+	'videos-error-blocked-user' => 'Gesperrter Benutzer',
+	'videos-error-readonly' => 'Schreibgeschützter Modus',
+	'videos-error-permissions' => 'Du kannst dieses Video nicht löschen.',
+	'videohandler-error-restricted-video' => 'Dieses Video umfasst eingeschränkte Inhalte, die in diesem Wiki nicht angezeigt werden können.',
+	'videos-notify' => 'Das Video wird bearbeitet, bitte warten...',
+	'videos-something-went-wrong' => 'Es tut uns leid. Beim Hochladen ist etwas schief gelaufen.',
 	'videos-error-not-logged-in' => 'Bitte melde dich zuerst an.',
-	'videos-error-no-video-url' => 'Keine Video-URL angegeben.',
-	'videos-error-invalid-video-url' => 'Bitte gib eine gültige URL von einem unterstützten Provider an.',
-	'videos-error-unknown' => 'Ein unbekannter Fehler ist aufgetreten. Code: $1.',
-	'videos-error-old-type-video' => 'Dieser Video-Typ ist veraltet und wird nicht mehr unterstützt (VideoPage)',
+	'videos-error-no-video-url' => 'Es wurde keine Video-URL angegeben.',
+	'videos-error-invalid-video-url' => 'Gib bitte eine gültige URL eines von uns unterstützten Anbieters an.',
+	'videos-error-unknown' => 'Es ist ein unbekannter Fehler aufgetreten. Fehlercode: $1',
+	'videos-error-old-type-video' => 'Dieses Videoformat wird nicht mehr unterstützt (Video-Seite).',
 	'videos-error-admin-only' => 'Leider können nur die Admins dieses Wikis Videos hinzufügen.',
-	'videos-initial-upload-edit-summary' => 'Video erstellt',
+	'videos-initial-upload-edit-summary' => 'Video wurde erstellt',
 	'videos-update-edit-summary' => 'Video wurde aktualisiert',
 	'videos-error-provider-not-supported' => 'Dieser Videoanbieter wird nicht von uns unterstützt. Hier findest du die Liste der von uns [http://de.community.wikia.com/wiki/Hilfe:Wikia-Video-Erweiterung#Unterstützte_Seiten unterstützten Anbieter].',
-];
+);
 
-$messages['de-formal'] = [
+$messages['de-formal'] = array(
 	'videohandler-category' => 'Videos',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'wikia-videohandlers-desc' => 'Manejo de vídeos dentro de la arquitectura de archivos MediaWiki',
 	'videohandler' => 'Controlador de vídeo',
 	'prototype-videohandler-extension-desc' => 'Controlador de vídeo Prototype',
@@ -194,8 +193,8 @@ $messages['es'] = [
 	'videos-add-video-ok' => 'Añadir',
 	'videos-add-video-label-all' => 'Ver todo',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|vista|vistas}}',
-	'videohandler-non-premium-with-links' => 'Este wiki solo permite agregar contenido bajo licencia de la [http://video.wikia.com videoteca de Fandom]. Por favor dirígete a [http://video.wikia.com video.wikia.com] para buscar videos.',
-	'videohandler-non-premium' => 'Este wiki solo permite agregar contenido bajo licencia de la videoteca de Fandom. Por favor dirígete a http://video.wikia.com para buscar videos.',
+	'videohandler-non-premium-with-links' => 'Esta wikia solo permite agregar contenido bajo licencia de [http://video.wikia.com Wikia Video Library]. Por favor dirígete a [http://video.wikia.com video.wikia.com] para buscar vídeos.',
+	'videohandler-non-premium' => 'Esta wikia solo permite agregar contenido bajo licencia de la videoteca de Wikia. Por favor dirígete a http://video.wikia.com para buscar vídeos.',
 	'videohandler-remove' => 'Eliminar',
 	'videohandler-remove-video-modal-title' => '¿Estás seguro de que quieres eliminar este vídeo de tu wikia?',
 	'videohandler-remove-video-modal-ok' => 'Eliminar',
@@ -209,7 +208,7 @@ $messages['es'] = [
 	'videos-error-readonly' => 'Modo solo de lectura.',
 	'videos-error-permissions' => 'No puedes borrar este vídeo.',
 	'videohandler-error-restricted-video' => 'Este vídeo contiene contenido restringido que no puede mostrarse en esta wikia',
-	'videos-add-video' => 'Añadir video',
+	'videos-add-video' => 'Añadir un vídeo',
 	'videos-add-video-to-this-wiki' => 'Añadir un vídeo a esta wikia',
 	'videos-notify' => 'Por favor espera mientras procesamos este vídeo',
 	'videos-something-went-wrong' => 'Lo sentimos, pero algo salió mal al subir.',
@@ -218,75 +217,75 @@ $messages['es'] = [
 	'videos-error-invalid-video-url' => 'Ingresa una URL válida de un proveedor de contenido respaldado.',
 	'videos-error-unknown' => 'Se produjo un error desconocido. Código: $1.',
 	'videos-error-old-type-video' => 'Los tipos de videos antiguos ya no están respaldados (VideoPage)',
-	'videos-error-admin-only' => 'Lo sentimos, solo los administradores de esta wikia pueden añadir videos',
+	'videos-error-admin-only' => 'Lo sentimos, solo los administradores de esta wikia tienen permiso de añadir vídeos',
 	'videos-initial-upload-edit-summary' => 'vídeo creado',
 	'videos-update-edit-summary' => 'vídeo actualizado',
 	'videos-error-provider-not-supported' => 'Este proveedor de videos no está respaldado. Consulta la lista de [http://comunidad.wikia.com/wiki/Ayuda:Herramienta_de_inclusi%C3%B3n_de_v%C3%ADdeos# sitios aceptados].',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'videohandler-category' => 'Bideoak',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'videohandler-category' => 'ویدیو‌ها',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'videohandler-category' => 'Videot',
 	'videohandler-video-views' => 'katsottu {{PLURAL:$1|kerran|$1 kertaa}}',
 	'videos-add-video' => 'Lisää video',
-];
+);
 
-$messages['fr'] = [
-	'wikia-videohandlers-desc' => 'Gestion des vidéos au sein de l\'architecture de fichiers de MediaWiki',
+$messages['fr'] = array(
+	'wikia-videohandlers-desc' => "Gestion des vidéos au sein de l'architecture de fichiers de MediaWiki",
 	'videohandler' => 'Gestionnaire de vidéos',
 	'prototype-videohandler-extension-desc' => 'Gestionnaire de vidéos de Prototype',
 	'movieclips-videohandler-extension-desc' => 'Gestionnaire de vidéos de MovieClips',
 	'screenplay-videohandler-extension-desc' => 'Gestionnaire de vidéos de ScreenPlay',
 	'youtube-videohandler-extension-desc' => 'Gestionnaire de vidéos de YouTube',
 	'videohandler-error-missing-parameter' => 'Le paramètre « $1 » obligatoire est manquant',
-	'videohandler-error-video-no-exist' => 'La vidéo dont le titre est indiqué n’existe pas',
+	'videohandler-error-video-no-exist' => 'Aucune vidéo n’existe avec ce titre',
 	'videohandler-unknown-title' => 'Titre inconnu',
 	'videohandler-video-details' => '$1 (fournisseur : $2)',
 	'videohandler-category' => 'Vidéos',
 	'videohandler-description' => 'Description',
 	'videos-error-while-loading' => 'Une erreur est survenue lors du chargement des données. Veuillez vérifier votre connexion et rafraîchir la page.',
-	'videos-add-video-label-name' => 'Entrez l\'URL complète, de n\'importe lequel des sites pris en charge.',
+	'videos-add-video-label-name' => "Entrez l'URL complète, de n'importe lequel des sites pris en charge.",
 	'videos-add-video-ok' => 'Ajouter',
 	'videos-add-video-label-all' => 'Tout voir',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|vue|vues}}',
-	'videohandler-non-premium-with-links' => 'Ce wiki n\'accepte que l\'ajout de contenus sous licence de la [http://video.wikia.com vidéothèque de Fandom]. Veuillez vous rendre sur [http://video.wikia.com video.wikia.com] pour rechercher des vidéos.',
-	'videohandler-non-premium' => 'Ce wiki n\'accepte que l\'ajout de contenus sous licence de la vidéothèque de Fandom. Veuillez vous rendre sur http://video.wikia.com pour rechercher des vidéos.',
-	'videohandler-remove' => 'Retirer',
-	'videohandler-remove-video-modal-title' => 'Êtes-vous sûr(e) de vouloir retirer cette vidéo du wiki ?',
-	'videohandler-remove-video-modal-ok' => 'Retirer',
-	'videohandler-remove-video-modal-success' => 'Fichier:$1 a été retiré de ce wiki',
+	'videohandler-non-premium-with-links' => "Ce wikia n'autorise que les contenus sous licence de [http://video.wikia.com la vidéothèque Wikia]. Merci d'aller sur [http://video.wikia.com video.wikia.com] pour rechercher des vidéos.",
+	'videohandler-non-premium' => "Ce wikia n'autorise que les contenus sous licence de la vidéothèque de Wikia. Merci d'aller sur http://video.wikia.com pour rechercher des vidéos.",
+	'videohandler-remove' => 'Supprimer',
+	'videohandler-remove-video-modal-title' => 'Êtes-vous certain de vouloir supprimer cette vidéo de votre wikia ?',
+	'videohandler-remove-video-modal-ok' => 'Supprimer',
+	'videohandler-remove-video-modal-success' => '$1 a été supprimé de votre wikia.',
 	'videohandler-remove-video-modal-cancel' => 'Annuler',
 	'videohandler-remove-error-unknown' => 'Désolés, une erreur a eu lieu lors de la suppression.',
-	'videohandler-log-add-description' => 'description vidéo ajoutée',
-	'videohandler-log-add-video' => 'vidéo ajoutée',
+	'videohandler-log-add-description' => "Ajout d'une description à la vidéo",
+	'videohandler-log-add-video' => 'vidéo créée',
 	'videos-error-empty-title' => 'Titre vide.',
 	'videos-error-blocked-user' => 'Utilisateur bloqué.',
-	'videos-error-readonly' => 'Mode lecture seule.',
-	'videos-error-permissions' => 'vous ne pouvez pas supprimer cette vidéo.',
-	'videohandler-error-restricted-video' => 'Cette vidéo contient du contenu restreint qui ne peut pas être affiché sur ce wiki',
+	'videos-error-readonly' => 'Mode lecture uniquement.',
+	'videos-error-permissions' => 'impossible de supprimer cette vidéo.',
+	'videohandler-error-restricted-video' => "Cette vidéo contient du contenu dont l'accès est restreint et qui ne peut être affiché sur ce wikia.",
 	'videos-add-video' => 'Ajouter une vidéo',
-	'videos-add-video-to-this-wiki' => 'Ajouter une vidéo à ce wiki',
-	'videos-notify' => 'Veuillez patienter tandis que nous traitons cette vidéo',
-	'videos-something-went-wrong' => 'Désolé, l\'importation s\'est mal déroulée.',
-	'videos-error-not-logged-in' => 'Veuillez d\'abord vous connecter.',
-	'videos-error-no-video-url' => 'Aucune URL indiquée pour la vidéo.',
-	'videos-error-invalid-video-url' => 'Veuillez saisir une URL valide d\'un fournisseur de contenu supporté.',
-	'videos-error-unknown' => 'Une erreur inconnue est survenue. Code: $1.',
-	'videos-error-old-type-video' => 'Ancien type de vidéo qui n\'est plus supporté (VideoPage)',
-	'videos-error-admin-only' => 'Désolé, seuls les administrateurs du wiki ont le droit d\'ajouter des vidéos',
-	'videos-initial-upload-edit-summary' => 'vidéo ajoutée',
+	'videos-add-video-to-this-wiki' => 'Ajouter une vidéo à ce wikia',
+	'videos-notify' => 'Merci de patienter pendant que nous traitons cette vidéo.',
+	'videos-something-went-wrong' => 'Désolés, une erreur a eu lieu lors du téléchargement.',
+	'videos-error-not-logged-in' => 'Veuillez vous connecter.',
+	'videos-error-no-video-url' => 'Aucune URL fournie pour la vidéo.',
+	'videos-error-invalid-video-url' => "Veuillez saisir une URL valide provenant d'un fournisseur de contenu pris en charge.",
+	'videos-error-unknown' => "Une erreur inconnue s'est produite. Code : $1.",
+	'videos-error-old-type-video' => 'Ancien format de vidéo non pris en charge (VideoPage).',
+	'videos-error-admin-only' => 'Désolés, seuls les admins de ce wikia peuvent ajouter des vidéos.',
+	'videos-initial-upload-edit-summary' => 'vidéo créée',
 	'videos-update-edit-summary' => 'vidéo téléchargéee',
-	'videos-error-provider-not-supported' => 'Ce fournisseur de vidéo n\'est pas pris en charge. Consultez la liste des [http://communaute.wikia.com/wiki/Aide:Outil_d%27incorporation_de_vid%C3%A9o# fournisseurs pris en charge].',
-];
+	'videos-error-provider-not-supported' => "Ce fournisseur de vidéo n'est pas pris en charge. Consultez la liste des [http://communaute.wikia.com/wiki/Aide:Outil_d%27incorporation_de_vid%C3%A9o# fournisseurs pris en charge].",
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'wikia-videohandlers-desc' => 'Manipulación de vídeos dentro da arquitectura de ficheiros de MediaWiki',
 	'videohandler' => 'Manipulador de vídeos',
 	'prototype-videohandler-extension-desc' => 'Manipulador de vídeos de Prototype',
@@ -303,13 +302,13 @@ $messages['gl'] = [
 	'videos-add-video-label-name' => 'Escriba o enderezo URL completo de calquera dos sitios soportados.',
 	'videos-add-video-ok' => 'Engadir',
 	'videos-add-video-label-all' => 'Ollar todos',
-];
+);
 
-$messages['he'] = [
+$messages['he'] = array(
 	'videohandler-category' => 'סרטוני וידאו',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'videohandler' => 'Videókezelő',
 	'prototype-videohandler-extension-desc' => 'Prototype videókezelő',
 	'movieclips-videohandler-extension-desc' => 'MovieClips videókezelő',
@@ -325,13 +324,13 @@ $messages['hu'] = [
 	'videos-add-video-ok' => 'Hozzáadás',
 	'videos-add-video-label-all' => 'Összes megtekintése',
 	'videos-update-edit-summary' => 'Videó frissítve',
-];
+);
 
-$messages['hy'] = [
+$messages['hy'] = array(
 	'videohandler-category' => 'Տեսանյութեր',
-];
+);
 
-$messages['ia'] = [
+$messages['ia'] = array(
 	'videohandler' => 'Gestor de videos',
 	'prototype-videohandler-extension-desc' => 'Gestor de videos Prototype',
 	'movieclips-videohandler-extension-desc' => 'Gestor de videos MovieClips',
@@ -346,32 +345,32 @@ $messages['ia'] = [
 	'videos-add-video-label-name' => 'Entra le URL complete de un del sitos supportate.',
 	'videos-add-video-ok' => 'Adder',
 	'videos-add-video-label-all' => 'Vider totes',
-];
+);
 
-$messages['id'] = [
+$messages['id'] = array(
 	'videohandler-category' => 'Video',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'videohandler-category' => 'Video',
 	'wikia-videohandlers-desc' => 'Gestione dei video con MediaWikia',
-	'videohandler' => 'Gestore di video',
+	'videohandler' => 'Gestore video',
 	'prototype-videohandler-extension-desc' => 'Gestore video di Prototype',
 	'movieclips-videohandler-extension-desc' => 'Gestore video di MovieClips',
 	'screenplay-videohandler-extension-desc' => 'Gestore video di Screenplay',
 	'youtube-videohandler-extension-desc' => 'Gestore video di YouTube',
-	'videohandler-error-missing-parameter' => 'Manca il parametro richiesto "$1"',
-	'videohandler-error-video-no-exist' => 'Il titolo del video specificato non esiste',
+	'videohandler-error-missing-parameter' => 'Manca il parametro obbligatorio "$1"',
+	'videohandler-error-video-no-exist' => 'Non esiste un video con questo titolo',
 	'videohandler-unknown-title' => 'Titolo sconosciuto',
-	'videohandler-video-details' => '$1 (provider: $2)',
+	'videohandler-video-details' => '$1 (provenienza: $2)',
 	'videohandler-description' => 'Descrizione',
-	'videohandler-video-views' => '$1 {{PLURAL:$1|visualizzazione|visualizzazioni}}',
-	'videohandler-non-premium-with-links' => 'Questa wiki permette di aggiungere solo contenuti autorizzati di [http://video.wikia.com Videoteca Fandom] . Sei pregato di andare qui [http://video.wikia.com video.wikia.com] per selezionare i video.',
-	'videohandler-non-premium' => 'Questa wiki permette di aggiungere solo contenuti autorizzati della Videoteca Fandom . Sei pregato di andare su http://video.wikia.com per selezionare i video.',
+	'videohandler-video-views' => '$1 {{PLURAL:$1|view|views}}',
+	'videohandler-non-premium-with-links' => 'Questa wiki permette di aggiungere solo contenuti autorizzati di [http://video.wikia.com Videoteca Wikia] . Sei pregato di andare qui [http://video.wikia.com video.wikia.com] per selezionare i video.',
+	'videohandler-non-premium' => 'Questa wiki permette di aggiungere solo contenuti autorizzati della Videoteca Wikia . Sei pregato di andare su http://video.wikia.com per selezionare i video.',
 	'videohandler-remove' => 'Rimuovi',
-	'videohandler-remove-video-modal-title' => 'Sei sicuro/a di voler rimuovere questo video dalla wiki?',
+	'videohandler-remove-video-modal-title' => 'Sei sicuro di voler rimuovere questo video dalla tua wiki?',
 	'videohandler-remove-video-modal-ok' => 'Rimuovi',
-	'videohandler-remove-video-modal-success' => 'Il File:$1 è stato rimosso da questa wiki',
+	'videohandler-remove-video-modal-success' => 'File:$1 è stato rimosso da questa wiki',
 	'videohandler-remove-video-modal-cancel' => 'Annulla',
 	'videohandler-remove-error-unknown' => 'Ci dispiace ma qualcosa non ha funzionato con la cancellazione.',
 	'videohandler-log-add-description' => 'Aggiunta descrizione video',
@@ -379,28 +378,28 @@ $messages['it'] = [
 	'videos-error-empty-title' => 'Titolo vuoto.',
 	'videos-error-blocked-user' => 'Utente bloccato.',
 	'videos-error-readonly' => 'Modalità di sola lettura.',
-	'videos-error-permissions' => 'non puoi rimuovere questo video.',
-	'videohandler-error-restricted-video' => 'Questo video contiene materiale riservato che non può essere visualizzato su questa wiki',
-	'videos-add-video' => 'Carica un video',
-	'videos-add-video-to-this-wiki' => 'Carica un video in questa wiki',
-	'videos-add-video-label-name' => 'Inserisci l\'URL completo da uno dei siti supportati.',
+	'videos-error-permissions' => 'non è possibile eliminare questo video.',
+	'videohandler-error-restricted-video' => 'Questo video contiene contenuti riservati che non possono essere visualizzati in questa wiki',
+	'videos-add-video' => 'Aggiungi un video',
+	'videos-add-video-to-this-wiki' => 'Aggiungi un video a questa wiki',
+	'videos-add-video-label-name' => "Inserisci l'URL completo da uno qualsiasi dei siti supportati.",
 	'videos-add-video-label-all' => 'Vedi tutti',
-	'videos-add-video-ok' => 'Carica',
-	'videos-notify' => 'Per favore aspetta mentre processiamo questo video',
-	'videos-something-went-wrong' => 'Ci dispiace, ma qualcosa non ha funzionato durante il caricamento.',
-	'videos-error-not-logged-in' => 'Per favore prima effettua il login.',
-	'videos-error-no-video-url' => 'Non è stato fornito alcun URL del video.',
-	'videos-error-invalid-video-url' => 'Per favore inserisci un URL valido da uno dei siti supportati.',
+	'videos-add-video-ok' => 'Aggiungi',
+	'videos-notify' => 'Si prega di attendere mentre processiamo questo video',
+	'videos-something-went-wrong' => 'Ci dispiace ma qualcosa non ha funzionato nel caricamento.',
+	'videos-error-not-logged-in' => 'Accedi, per favore.',
+	'videos-error-no-video-url' => "L'url del video non è stata fornita.",
+	'videos-error-invalid-video-url' => "Si prega d'inserire un url valido proveniente da provider di contenuti supportati.",
 	'videos-error-unknown' => 'Si è verificato un errore sconosciuto. Codice: $1.',
-	'videos-error-old-type-video' => 'Vecchio tipo di video non più supportato (VideoPage)',
-	'videos-error-while-loading' => 'Si è verificato un errore durante il caricamento dei dati. Per favore controlla la tua connessione e ricarica la pagina.',
+	'videos-error-old-type-video' => 'Tipo di video non più supportato (VideoPage)',
+	'videos-error-while-loading' => 'Si è verificato un errore durante il caricamento dei dati. Controlla la tua connessione e aggiorna la pagina.',
 	'videos-error-admin-only' => 'Solo gli amministratori di questa wiki sono autorizzati ad aggiungere video',
-	'videos-initial-upload-edit-summary' => 'ha inserito un video',
+	'videos-initial-upload-edit-summary' => 'video aggiunto',
 	'videos-update-edit-summary' => 'video aggiornato',
 	'videos-error-provider-not-supported' => 'Questo provider di video non è supportato. Vedi la lista dei [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites provider supportati].',
-];
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'videohandler-category' => '動画',
 	'wikia-videohandlers-desc' => 'MediaWikiファイルのアーキテクチャ内における動画の処理',
 	'videohandler' => '動画ハンドラ',
@@ -414,8 +413,8 @@ $messages['ja'] = [
 	'videohandler-video-details' => '$1（提供元：$2）',
 	'videohandler-description' => '説明',
 	'videohandler-video-views' => '$1回の {{PLURAL:$1|view|views}}',
-	'videohandler-non-premium-with-links' => 'このwikiに追加できるのは、[http://video.wikia.com Fandom動画ライブラリ] 内で使用許諾があるコンテンツのみです。[http://video.wikia.com video.wikia.com] で動画を検索してみてください。',
-	'videohandler-non-premium' => 'このwikiに追加できるのは、Fandom動画ライブラリで使用許諾のあるコンテンツのみです。http://video.wikia.com で動画を検索してみてください。',
+	'videohandler-non-premium-with-links' => 'このウィキアに追加できるのは、[http://video.wikia.com ウィキア動画ライブラリ]内の使用許可のあるコンテンツのみです。[http://video.wikia.com video.wikia.com] から動画を探してください。',
+	'videohandler-non-premium' => 'このウィキアに追加できるのは、ウィキア動画ライブラリ内の使用許可のあるコンテンツのみです。http://video.wikia.com から動画を探してください。',
 	'videohandler-remove' => '削除',
 	'videohandler-remove-video-modal-title' => 'ウィキアからこの動画を削除してもよろしいですか？',
 	'videohandler-remove-video-modal-ok' => '削除',
@@ -431,7 +430,7 @@ $messages['ja'] = [
 	'videohandler-error-restricted-video' => 'この動画には、このウィキアに表示することができない禁止のコンテンツが含まれています',
 	'videos-add-video' => '動画を追加',
 	'videos-add-video-to-this-wiki' => 'このウィキアに動画を追加する',
-	'videos-add-video-label-name' => 'サポートされているサイトの完全なURLを入力してください。',
+	'videos-add-video-label-name' => '対応サイトからの完全なURLを入力してください。',
 	'videos-add-video-label-all' => 'すべて表示',
 	'videos-add-video-ok' => '追加',
 	'videos-notify' => 'この動画の処理が終わるまでしばらくお待ちください',
@@ -446,21 +445,57 @@ $messages['ja'] = [
 	'videos-initial-upload-edit-summary' => '動画を作成しました',
 	'videos-update-edit-summary' => '動画を更新しました',
 	'videos-error-provider-not-supported' => 'この動画の提供元は対応外です。対応サイトのリストについては、[http://ja.community.wikia.com/wiki/ヘルプ:動画埋め込みツール#対応サイト こちら]をご覧ください。',
-];
+);
 
-$messages['ka'] = [
+$messages['ka'] = array(
 	'videohandler-category' => 'ვიდეოები',
-];
+);
 
-$messages['krc'] = [
+$messages['ko'] = array(
+	'videohandler-non-premium' => '이 위키에 위키아 동영상 라이브러리의 저작권이 있는 동영상을 불러와 올릴 수 있습니다. 동영상을 찾아보려면 http://video.wikia.com 사이트를 방문하세요.',
+	'videohandler-non-premium-with-links' => '이 위키에 [http://video.wikia.com 위키아 동영상 라이브러리 (영어)]의 저작권이 있는 동영상을 불러와 올릴 수 있습니다. 동영상을 찾아보려면 [http://video.wikia.com video.wikia.com]을 방문하세요.',
+	'videohandler-category' => '동영상',
+	'videohandler-description' => '설명',
+	'videohandler-error-missing-parameter' => "값이 필수로 들어가야 하는 '$1' 변수가 누락되어 있습니다.",
+	'videohandler-error-restricted-video' => '이 동영상은 부적절한 내용을 포함하고 있어 이 위키에서 볼 수 없도록 차단되었습니다.',
+	'videohandler-error-video-no-exist' => '입력한 이름을 가진 동영상이 없습니다.',
+	'videohandler-remove-video-modal-cancel' => '취소',
+	'videohandler-remove-video-modal-ok' => '삭제',
+	'videohandler-remove-video-modal-success' => 'File:$1 이(가) 이 위키에서 삭제되었습니다.',
+	'videohandler-remove-video-modal-title' => '정말로 이 동영상을 이 위키에서 삭제하시겠습니까?',
+	'videohandler-remove' => '삭제',
+	'videohandler-unknown-title' => '이름 알 수 없음',
+	'videohandler-video-details' => '$1 (제공자: $2)',
+	'videohandler-video-views' => '$1회 조회됨',
+	'videos-add-video-label-all' => '모두 보기',
+	'videos-add-video-label-name' => '지원되는 동영상 사이트에 있는 동영상의 URL을 입력하세요.',
+	'videos-add-video-ok' => '추가',
+	'videos-add-video-to-this-wiki' => '이 위키에 동영상 추가하기',
+	'videos-add-video' => '동영상 추가하기',
+	'videos-error-blocked-user' => '이 위키에서 차단되어 있으므로 동영상을 올릴 수 없습니다.',
+	'videos-error-empty-title' => '동영상의 제목을 입력하세요.',
+	'videos-error-invalid-video-url' => '지원되는 동영상 사이트의 이용 가능한 URL을 입력하십시오.',
+	'videos-error-no-video-url' => '동영상의 URL이 입력되지 않았습니다.',
+	'videos-error-not-logged-in' => '동영상을 추가하기 위해서는 로그인이 필요합니다.',
+	'videos-error-old-type-video' => '오래된 형태의 동영상은 더 이상 지원되지 않습니다. (동영상 이름공간)',
+	'videos-error-permissions' => '이 동영상을 삭제할 수 있는 권한이 없습니다.',
+	'videos-error-readonly' => '현재 읽기 전용 상태입니다. 읽기 전용 상태가 해제된 후 다시 시도하세요.',
+	'videos-error-unknown' => '알 수 없는 오류가 발생했습니다. 오류 코드: $1',
+	'videos-error-while-loading' => '데이터를 불러오는 도중에 오류가 발생했습니다. 인터넷 연결 상태를 확인해보시고 페이지를 새로고침하세요.',
+	'videos-initial-upload-edit-summary' => '새 동영상을 올림',
+	'videos-notify' => '동영상을 처리하는 동안 잠시 기다려 주십시오.',
+	'videos-something-went-wrong' => '동영상을 추가하는 과정에서 오류가 발생했습니다.',
+);
+
+$messages['krc'] = array(
 	'videohandler-category' => 'Видеола',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'videohandler-category' => 'Videoen',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'wikia-videohandlers-desc' => 'Поставување на видеа во рамките на податотечната архитектура на МедијаВики',
 	'videohandler' => 'Поставување на видеа',
 	'prototype-videohandler-extension-desc' => 'Прототипен поставувач на видеа',
@@ -478,9 +513,9 @@ $messages['mk'] = [
 	'videos-add-video-label-name' => 'Внесете ја полната URL-адреса од едно од поддржаните мрежни места.',
 	'videos-add-video-ok' => 'Додај',
 	'videos-add-video-label-all' => 'Прикажи ги сите',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'videohandler' => 'Pengelola video',
 	'prototype-videohandler-extension-desc' => 'Pengelola video prototaip',
 	'movieclips-videohandler-extension-desc' => 'Pengelola video MovieClips',
@@ -496,9 +531,9 @@ $messages['ms'] = [
 	'videos-add-video-label-name' => 'Isikan URL penuh dari mana-mana tapak web yang disokong.',
 	'videos-add-video-ok' => 'Tambahkan',
 	'videos-add-video-label-all' => 'Lihat semua',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'wikia-videohandlers-desc' => 'Behandling av videoer innenfor MediaWikis filarkitektur',
 	'videohandler' => 'Videobehandler',
 	'prototype-videohandler-extension-desc' => 'Prototype-videobehandler',
@@ -515,15 +550,15 @@ $messages['nb'] = [
 	'videos-add-video-label-name' => 'Oppgi en fullstendig URL fra en av de støttede sidene.',
 	'videos-add-video-ok' => 'Legg til',
 	'videos-add-video-label-all' => 'Vis alle',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'videohandler' => 'Videoverwerking',
 	'prototype-videohandler-extension-desc' => 'Prototype videoverwerking',
 	'videohandler-error-missing-parameter' => 'Vereiste parameter "$1" ontbreekt',
 	'videohandler-unknown-title' => 'Onbekende titel',
 	'videohandler-video-details' => '$1 (provider: $2)',
-	'videohandler-category' => 'Video\'s',
+	'videohandler-category' => "Video's",
 	'videohandler-description' => 'Beschrijving',
 	'videos-error-while-loading' => 'Fout is opgetreden tijdens het laden van gegevens. Controleer alstublieft uw verbinding en ververs de pagina.',
 	'videos-add-video-label-name' => 'Geef een volledige URL op van een van de ondersteunde websites.',
@@ -563,13 +598,13 @@ $messages['nl'] = [
 	'videos-initial-upload-edit-summary' => 'created video',
 	'videos-update-edit-summary' => 'updated video',
 	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].',
-];
+);
 
-$messages['pa'] = [
+$messages['pa'] = array(
 	'videohandler-category' => 'ਵਿਡੀਓ',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'wikia-videohandlers-desc' => 'Obsługa filmów wewnątrz systemu plików MediaWiki',
 	'videohandler' => 'Odtwarzacz filmów',
 	'prototype-videohandler-extension-desc' => 'Odtwarzacz filmów Prototype',
@@ -583,51 +618,51 @@ $messages['pl'] = [
 	'videohandler-category' => 'Filmy',
 	'videohandler-description' => 'Opis',
 	'videos-error-while-loading' => 'Wystąpił błąd podczas ładowania danych. Sprawdź ponownie połączenie i odśwież stronę.',
-	'videos-add-video-label-name' => 'Wpisz pełny adres URL z jednej z obsługiwanych witryn.',
+	'videos-add-video-label-name' => 'Wpisz pełny adres URL, z jednej z obsługiwanych witryn.',
 	'videos-add-video-ok' => 'Dodaj',
 	'videos-add-video-label-all' => 'Pokaż wszystko',
-	'videohandler-video-views' => '$1 {{PLURAL:$1|wyświetlenie|wyświetlenia|wyświetleń}}',
-	'videohandler-non-premium-with-links' => 'Ta wiki pozwala dodawać tylko licencjonowane treści z [http://video.wikia.com Wideoteki Fandomu]. Przejdź do [http://video.wikia.com video.wikia.com], aby wyszukać film.',
-	'videohandler-non-premium' => 'Na tej wiki dozwolone jest dodawanie jedynie licencjonowanych treści pochodzących z Wideoteki Fandomu. Przejdź do http://video.wikia.com, aby wyszukać film.',
+	'videohandler-video-views' => '$1 {{PLURAL:$1|odsłona|odsłon}}',
+	'videohandler-non-premium-with-links' => 'Na tej wiki dozwolone jest dodawanie treści pochodzących wyłącznie z [http://video.wikia.com Wikia Video Library] . Przejdź do [http://video.wikia.com video.wikia.com], aby wyszukać film.',
+	'videohandler-non-premium' => 'Na tej wiki dozwolone jest dodawanie licencjonowanych treści pochodzących wyłącznie z Wikia Video Library. Przejdź do http://video.wikia.com, aby wyszukać film.',
 	'videohandler-remove' => 'Usuń',
-	'videohandler-remove-video-modal-title' => 'Czy na pewno chcesz usunąć ten film z Twojej wiki?',
+	'videohandler-remove-video-modal-title' => 'Czy na pewno chcesz usunąć ten plik ze swojej wiki?',
 	'videohandler-remove-video-modal-ok' => 'Usuń',
 	'videohandler-remove-video-modal-success' => 'Plik:$1 został usunięty z tej wiki',
 	'videohandler-remove-video-modal-cancel' => 'Anuluj',
 	'videohandler-remove-error-unknown' => 'Przepraszamy, ale usunięcie pliku nie powiodło się.',
-	'videohandler-log-add-description' => 'Dodanie opisu filmu',
-	'videohandler-log-add-video' => 'dodano film',
-	'videos-error-empty-title' => 'Pusty tytuł.',
-	'videos-error-blocked-user' => 'Zablokowany użytkownik',
-	'videos-error-readonly' => 'Tryb tylko do odczytu',
-	'videos-error-permissions' => 'nie udało się usunąć filmu.',
-	'videohandler-error-restricted-video' => 'Ten film zawiera treści, które nie mogą być wyświetlone na tej wiki.',
+	'videohandler-log-add-description' => 'Dodawanie opisu filmu',
+	'videohandler-log-add-video' => 'utworzono film',
+	'videos-error-empty-title' => 'Brak tytułu.',
+	'videos-error-blocked-user' => 'Zablokowany użytkownik.',
+	'videos-error-readonly' => 'Tryb odczytu.',
+	'videos-error-permissions' => 'nie możesz usunąć tego filmu.',
+	'videohandler-error-restricted-video' => 'Ten film zawiera treści, które nie mogą być wyświetlane na tej wiki',
 	'videos-add-video' => 'Dodaj film',
-	'videos-add-video-to-this-wiki' => 'Dodaj film do wiki',
-	'videos-notify' => 'Trwa przetwarzanie filmu',
-	'videos-something-went-wrong' => 'Wystąpił błąd podczas przesyłania filmu.',
-	'videos-error-not-logged-in' => 'Zaloguj się.',
-	'videos-error-no-video-url' => 'Nie podano adresu URL filmu.',
-	'videos-error-invalid-video-url' => 'Wprowadź poprawy adres URL jednego z obsługiwanych dostawców filmów.',
+	'videos-add-video-to-this-wiki' => 'Dodaj film do tej wiki',
+	'videos-notify' => 'Proszę czekać, film jest przetwarzany',
+	'videos-something-went-wrong' => 'Przepraszamy, ale wgranie pliku nie powiodło się.',
+	'videos-error-not-logged-in' => 'Zaloguj się, aby dodać film.',
+	'videos-error-no-video-url' => 'Nie podano adresu URL.',
+	'videos-error-invalid-video-url' => 'Wprowadź prawidłowy adres URL pochodzący od obsługiwanego dostawcy.',
 	'videos-error-unknown' => 'Wystąpił nieznany błąd. Kod: $1.',
-	'videos-error-old-type-video' => 'Ten typ filmów nie jest już obsługiwany',
+	'videos-error-old-type-video' => 'Filmy starego typu nie są już obsługiwane (VideoPage)',
 	'videos-error-admin-only' => 'Przepraszamy, ale tylko administratorzy tej wiki mogą dodawać filmy',
-	'videos-initial-upload-edit-summary' => 'dodano film',
+	'videos-initial-upload-edit-summary' => 'film został utworzony',
 	'videos-update-edit-summary' => 'film został uaktualniony',
 	'videos-error-provider-not-supported' => 'Ten dostawca filmów nie jest obsługiwany. Zobacz listę [http://spolecznosc.wikia.com/wiki/Pomoc:Video_Embed_Tool obsługiwanych dostawców].',
-];
+);
 
-$messages['pms'] = [
+$messages['pms'] = array(
 	'videohandler-category' => 'Video',
-];
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'videohandler-category' => 'ويډيوګانې',
 	'videos-add-video-ok' => 'ورګډول',
 	'videos-add-video-label-all' => 'ټول کتل',
-];
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'videohandler-category' => 'Vídeos',
 	'wikia-videohandlers-desc' => 'Manipulação de vídeos dentro da arquitetura de arquivo MediaWiki',
 	'videohandler' => 'Manipulador de vídeo',
@@ -641,8 +676,8 @@ $messages['pt'] = [
 	'videohandler-video-details' => '$1 (provedor: $2)',
 	'videohandler-description' => 'Descrição',
 	'videohandler-video-views' => '$1 {{PLURAL:$1|visualização|visualizações}}',
-	'videohandler-non-premium-with-links' => 'Esta wiki permite apenas a adição de conteúdo licenciado da [http://video.wikia.com videoteca do Fandom]. Por favor, vá para [http://video.wikia.com video.wikia.com] para procurar vídeos.',
-	'videohandler-non-premium' => 'Esta wiki permite apenas a adição de conteúdo licenciado da videoteca do Fandom. Por favor, vá para http://video.wikia.com para procurar vídeos.',
+	'videohandler-non-premium-with-links' => 'Esta wikia permite apenas a adição de conteúdo licenciado da [http://video.wikia.com Wikia videoteca]. Por favor, vá para [http://video.wikia.com video.wikia.com] para procurar vídeos.',
+	'videohandler-non-premium' => 'Esta wikia permite apenas a adição de conteúdo licenciado da videoteca da Wikia. Por favor, vá para http://video.wikia.com para procurar vídeos.',
 	'videohandler-remove' => 'Remover',
 	'videohandler-remove-video-modal-title' => 'Tem certeza que deseja remover este vídeo de sua wikia?',
 	'videohandler-remove-video-modal-ok' => 'Remover',
@@ -656,7 +691,7 @@ $messages['pt'] = [
 	'videos-error-readonly' => 'Modo só de leitura.',
 	'videos-error-permissions' => 'Não é possível excluir este vídeo.',
 	'videohandler-error-restricted-video' => 'Este vídeo contém conteúdo restrito que não pode ser exibido nesta wikia',
-	'videos-add-video' => 'Adicione um vídeo',
+	'videos-add-video' => 'Adicionar vídeo',
 	'videos-add-video-to-this-wiki' => 'Adicionar um vídeo a esta wikia',
 	'videos-add-video-label-name' => 'Digite a URL completa, de qualquer um dos sites suportados.',
 	'videos-add-video-label-all' => 'Ver todos',
@@ -673,18 +708,13 @@ $messages['pt'] = [
 	'videos-initial-upload-edit-summary' => 'criou vídeo',
 	'videos-update-edit-summary' => 'atualizou vídeo',
 	'videos-error-provider-not-supported' => 'Este provedor de vídeo não é suportado. Veja nossa lista de [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites suportada provedores].',
-];
+);
 
-$messages['pt-br'] = [
-	'videohandler-category' => 'Vídeos',
-	'videos-add-video' => 'Adicione um vídeo',
-];
-
-$messages['ro'] = [
+$messages['ro'] = array(
 	'videohandler-category' => 'Videoclipuri',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'wikia-videohandlers-desc' => 'Обработка видео с файловой архитектурой MediaWiki',
 	'videohandler' => 'Инструмент обработки видео',
 	'prototype-videohandler-extension-desc' => 'Инструмент обработки видео Prototype',
@@ -701,50 +731,50 @@ $messages['ru'] = [
 	'videos-add-video-label-name' => 'Введите полный URL-адрес от любого из поддерживаемых сайтов.',
 	'videos-add-video-ok' => 'Добавить',
 	'videos-add-video-label-all' => 'Смотреть всё',
-	'videohandler-video-views' => '$1 {{PLURAL:$1|просмотр|просмотра|просмотров}}',
-	'videohandler-non-premium-with-links' => 'На данной вики можно размещать только лицензионный контент из [http://video.wikia.com Видеотеки Фэндома]. Для поиска видео перейдите по ссылке [http://video.wikia.com video.wikia.com].',
-	'videohandler-non-premium' => 'На этой вики можно размещать только лицензионный контент из Видеотеки Фэндома. Для поиска видео перейдите по ссылке http://video.wikia.com.',
+	'videohandler-video-views' => '{{PLURAL:$1|просмотров|просмотров}}: $1',
+	'videohandler-non-premium-with-links' => 'На данной вики можно размещать только лицензионный контент с [http://video.wikia.com Видео библиотеки Викия]. Чтобы искать видео, перейдите по ссылке [http://video.wikia.com video.wikia.com].',
+	'videohandler-non-premium' => 'На данной вики можно размещать только лицензионный контент с Видео библиотеки Викия. Чтобы искать видео, перейдите по ссылке http://video.wikia.com.',
 	'videohandler-remove' => 'Удалить',
-	'videohandler-remove-video-modal-title' => 'Вы уверены, что хотите удалить это видео с вики?',
+	'videohandler-remove-video-modal-title' => 'Вы действительно хотите удалить это видео с вашей вики?',
 	'videohandler-remove-video-modal-ok' => 'Удалить',
-	'videohandler-remove-video-modal-success' => 'File:$1 был удалён с этой вики',
-	'videohandler-remove-video-modal-cancel' => 'Отмена',
+	'videohandler-remove-video-modal-success' => 'File:$1 удален с данной вики ',
+	'videohandler-remove-video-modal-cancel' => 'Отменить',
 	'videohandler-remove-error-unknown' => 'Приносим свои извинения: при удалении файла произошла ошибка.',
-	'videohandler-log-add-description' => 'Добавлено описание видео',
-	'videohandler-log-add-video' => 'видео создано',
+	'videohandler-log-add-description' => 'Добавление описания видео',
+	'videohandler-log-add-video' => 'созданный видеоролик',
 	'videos-error-empty-title' => 'Поле заголовка не заполнено.',
 	'videos-error-blocked-user' => 'Заблокированный участник.                                                                                                                                                                       ',
 	'videos-error-readonly' => 'Режим «только чтение».',
 	'videos-error-permissions' => 'Невозможно удалить это видео.',
-	'videohandler-error-restricted-video' => 'Это видео содержит запрещенные материалы, которые не могут быть показаны на этой вики',
+	'videohandler-error-restricted-video' => 'Данное видео содержит запрещенный контент, который не может быть отображен на этой вики.',
 	'videos-add-video' => 'Добавить видео',
-	'videos-add-video-to-this-wiki' => 'Добавить видео на вики',
-	'videos-notify' => 'Пожалуйста, подождите, пока видео обрабатывается',
-	'videos-something-went-wrong' => 'Сожалеем, но что-то пошло не так во время загрузки.',
-	'videos-error-not-logged-in' => 'Войдите, чтобы продолжить.',
-	'videos-error-no-video-url' => 'По этому URL видео отсутствует.',
-	'videos-error-invalid-video-url' => 'Пожалуйста, введите корректный URL одного из поддерживаемых провайдеров.',
+	'videos-add-video-to-this-wiki' => 'Добавление видео на вики',
+	'videos-notify' => 'Подождите, идет обработка видео.',
+	'videos-something-went-wrong' => 'Приносим свои извинения: при загрузке произошла ошибка.',
+	'videos-error-not-logged-in' => 'Сначала необходимо войти в систему.',
+	'videos-error-no-video-url' => 'Нет URL-адреса видео.',
+	'videos-error-invalid-video-url' => 'Введите действительный URL-адрес на поддерживаемого поставщика контента.',
 	'videos-error-unknown' => 'Произошла неизвестная ошибка. Код: $1.',
 	'videos-error-old-type-video' => 'Старый тип видео больше не поддерживается (VideoPage)',
-	'videos-error-admin-only' => 'Только администраторы вики могут добавлять видео.',
-	'videos-initial-upload-edit-summary' => 'видео создано',
-	'videos-update-edit-summary' => 'видео обновлено',
+	'videos-error-admin-only' => 'К сожалению, только администраторы этой вики могут добавлять видеоролики.',
+	'videos-initial-upload-edit-summary' => 'созданный видеоролик',
+	'videos-update-edit-summary' => 'обновленный видеоролик',
 	'videos-error-provider-not-supported' => 'Этот поставщик видеоконтента не поддерживается. Посмотрите наш список [http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%92%D0%B8%D0%B4%D0%B5%D0%BE поддерживаемых поставщиков].',
-];
+);
 
-$messages['si'] = [
+$messages['si'] = array(
 	'videohandler-category' => 'වීඩියෝ',
-];
+);
 
-$messages['sl'] = [
+$messages['sl'] = array(
 	'videohandler-category' => 'Videoposnetki',
-];
+);
 
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'videohandler-category' => 'Видео-снимци',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'videohandler' => 'Videohanterare',
 	'prototype-videohandler-extension-desc' => 'Videohanterare för Prototype',
 	'movieclips-videohandler-extension-desc' => 'Videohanterare för MovieClips',
@@ -758,14 +788,14 @@ $messages['sv'] = [
 	'videos-add-video-label-name' => 'Ange en fullständig URL från någon av de stödjande sidorna.',
 	'videos-add-video-ok' => 'Lägg till',
 	'videos-add-video-label-all' => 'Se alla',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'videos-add-video-ok' => 'முடிந்தது',
 	'videos-add-video-label-all' => 'எல்லாவற்றையும் பார்க்கவும்',
-];
+);
 
-$messages['tl'] = [
+$messages['tl'] = array(
 	'wikia-videohandlers-desc' => 'Pag-aasikaso ng mga bidyo na nasa loob ng arkitektura ng talaksan ng MediaWiki',
 	'videohandler' => 'Tagahawak ng bidyo',
 	'prototype-videohandler-extension-desc' => 'Prototipong tagahawak ng bidyo',
@@ -782,17 +812,17 @@ $messages['tl'] = [
 	'videos-add-video-label-name' => 'Ipasok ang buong URL, mula sa anuman sa tinatangkilik na mga pook.',
 	'videos-add-video-ok' => 'Idagdag',
 	'videos-add-video-label-all' => 'Tingnan lahat',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'videohandler-category' => 'Videolar',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'videohandler-category' => 'Відео',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'videohandler-category' => '影片（视频）',
 	'wikia-videohandlers-desc' => 'MediaWiki文件架构内的影片（视频）处理',
 	'videohandler' => '影片处理器（或视频处理器）',
@@ -800,27 +830,27 @@ $messages['zh-hans'] = [
 	'movieclips-videohandler-extension-desc' => 'MovieClips影片处理器（或MovieClips视频处理器）',
 	'screenplay-videohandler-extension-desc' => 'Screenplay影片处理器（或Screenplay视频处理器）',
 	'youtube-videohandler-extension-desc' => 'YouTube影片处理器（或YouTube视频处理器）',
-	'videohandler-error-missing-parameter' => '缺少需要的变量 "$1"',
-	'videohandler-error-video-no-exist' => '这个标题的视频不存在',
-	'videohandler-unknown-title' => '未知的标题',
+	'videohandler-error-missing-parameter' => '所需的"$1"参数缺失。',
+	'videohandler-error-video-no-exist' => '按标题指定的影片（视频）不存在。',
+	'videohandler-unknown-title' => '未知标题',
 	'videohandler-video-details' => '$1（提供商：$2）',
-	'videohandler-description' => '叙述',
-	'videohandler-video-views' => '$1次{{PLURAL:$1|浏览|浏览}}',
-	'videohandler-non-premium-with-links' => '此维基只允许添加[http://video.wikia.com Fandom影片（视频）库]中的许可内容。请转到[http://video.wikia.com video.wikia.com]搜索影片（视频）。',
-	'videohandler-non-premium' => '此维基只允许添加Fandom影片（视频）库中的许可内容。请转到http://video.wikia.com搜索影片（视频）。',
+	'videohandler-description' => '描述',
+	'videohandler-video-views' => '$1 {{PLURAL:$1|view|次查看}}',
+	'videohandler-non-premium-with-links' => '此维基只允许添加[http://video.wikia.com Wikia影片（视频）库]中的许可内容。请转到[http://video.wikia.com video.wikia.com]搜索影片（视频）。',
+	'videohandler-non-premium' => '此维基只允许添加Wikia影片（视频）库中的许可内容。请转到http://video.wikia.com搜索影片（视频）。',
 	'videohandler-remove' => '移除',
-	'videohandler-remove-video-modal-title' => '你确定要移除这个视频吗？',
+	'videohandler-remove-video-modal-title' => '确定要从您的维基网站移除此影片（视频）？',
 	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => 'File:$1 已自這個Wiki中移除',
+	'videohandler-remove-video-modal-success' => '文件$1已从此维基中移除。',
 	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-error-unknown' => '非常抱歉，在删除时出了问题。',
-	'videohandler-log-add-description' => '增加视频描述',
-	'videohandler-log-add-video' => '创建视频',
+	'videohandler-remove-error-unknown' => '很抱歉，但删除时出了问题。',
+	'videohandler-log-add-description' => '添加影片（视频）描述',
+	'videohandler-log-add-video' => '影片（视频）已创建',
 	'videos-error-empty-title' => '标题为空。',
 	'videos-error-blocked-user' => '此用户已被屏蔽。',
 	'videos-error-readonly' => '只读模式',
 	'videos-error-permissions' => '无法删除此影片（视频）。',
-	'videohandler-error-restricted-video' => '这个视频有受限制的内容不能在这Wiki上播放。',
+	'videohandler-error-restricted-video' => '此影片（视频）包含不能在此维基上显示的受限内容。',
 	'videos-add-video' => '添加影片（视频）',
 	'videos-add-video-to-this-wiki' => '添加影片（视频）到此维基网站',
 	'videos-add-video-label-name' => '请输入来自任何受支持的网站的完整网址。',
@@ -838,37 +868,37 @@ $messages['zh-hans'] = [
 	'videos-initial-upload-edit-summary' => '视频已创建',
 	'videos-update-edit-summary' => '影片（视频）已更新',
 	'videos-error-provider-not-supported' => '不支持该影片（视频）提供商。请查看我们[http://zh.community.wikia.com/wiki/Help:%E5%BD%B1%E7%89%87%E5%B5%8C%E5%85%A5%E5%B7%A5%E5%85%B7 支持的供应商]列表。',
-];
+);
 
-$messages['zh-tw'] = [
+$messages['zh-hant'] = array(
+	'videohandler-non-premium' => '這個維基只允許添加Wikia影片（視頻）庫中的許可内容。請轉到http://video.wikia.com搜索影片（視頻）。',
+	'videohandler-non-premium-with-links' => '這個維基只允許添加[http://video.wikia.com Wikia影片（視頻）庫]中的許可内容。請轉到[http://video.wikia.com video.wikia.com]搜索影片（視頻）。',
+	'videohandler-category' => '影片（視頻）',
+	'videohandler-description' => '描述',
+	'videohandler-error-missing-parameter' => '所需的“$ 1”參數缺失。',
+	'videohandler-error-restricted-video' => '這個影片（視頻）包含不能在此維基網站上顯示的受限內容。',
+	'videohandler-error-video-no-exist' => '按標題指定的影片（視頻）不存在。',
+	'videohandler-log-add-description' => '添加影片（視頻）描述',
+	'videohandler-log-add-video' => '影片（視頻）已創建',
+	'videohandler-remove-error-unknown' => '很抱歉，但刪除時出了問題。',
+	'videohandler-remove-video-modal-cancel' => '取消',
+	'videohandler-remove-video-modal-ok' => '移除',
+	'videohandler-remove-video-modal-success' => '文件$1已經從這個維基網站中移除。',
+	'videohandler-remove-video-modal-title' => '你確定想要從你的維基網站刪除此影片（視頻）？',
+	'videohandler-remove' => '移除',
+	'videohandler-unknown-title' => '未知標題',
+	'videohandler-video-views' => '$1 {{PLURAL:$1|view|次查看}}',
 	'wikia-videohandlers-desc' => 'MediaWiki文檔體系結構內的影片（視頻）處理',
 	'videohandler' => '影片處理器（或視頻處理器）',
 	'prototype-videohandler-extension-desc' => 'Prototype影片處理器（或Prototype視頻處理器）',
 	'movieclips-videohandler-extension-desc' => 'MovieClips影片處理器（或MovieClips視頻處理器）',
 	'screenplay-videohandler-extension-desc' => 'Screenplay影片處理器（或Screenplay視頻處理器）',
 	'youtube-videohandler-extension-desc' => 'YouTube影片處理器（或YouTube視頻處理器）',
-	'videohandler-error-missing-parameter' => '缺少需要的變量 "$1"',
-	'videohandler-error-video-no-exist' => '這個標題的影片不存在',
-	'videohandler-unknown-title' => '未知的標題',
 	'videohandler-video-details' => '$1（提供商: $2）',
-	'videohandler-category' => '影片',
-	'videohandler-description' => '敘述',
-	'videohandler-video-views' => '$1次{{PLURAL:$1|瀏覽|瀏覽}}',
-	'videohandler-non-premium-with-links' => '這個Wiki只允許增加來自於[http://video.wikia.com Wikia影片圖書館]的授權內容。請至[http://video.wikia.com http://video.wikia.com ]搜尋影片。',
-	'videohandler-non-premium' => '這個Wiki只允許增加來自於Wikia影片圖書館的授權內容。請至http://video.wikia.com 搜尋影片。',
-	'videohandler-remove' => '移除',
-	'videohandler-remove-video-modal-title' => '你確定要移除這個影片嗎？',
-	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => 'File:$1 已從這個Wiki中移除',
-	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-error-unknown' => '非常抱歉，在刪除時出了問題。',
-	'videohandler-log-add-description' => '增加影片描述',
-	'videohandler-log-add-video' => '創建影片',
 	'videos-error-empty-title' => '標題為空。',
 	'videos-error-blocked-user' => '此用戶已被屏蔽。',
 	'videos-error-readonly' => '唯讀模式',
 	'videos-error-permissions' => '無法刪除此影片（視頻）。',
-	'videohandler-error-restricted-video' => '這個影片有受限制的內容不能在這Wiki上播放。',
 	'videos-add-video' => '添加影片（視頻）',
 	'videos-add-video-to-this-wiki' => '添加影片（視頻）到此維基網站',
 	'videos-add-video-label-name' => '請輸入來自任何受支持的網站的完整網址。',
@@ -886,101 +916,5 @@ $messages['zh-tw'] = [
 	'videos-initial-upload-edit-summary' => '影片（視頻）已創建',
 	'videos-update-edit-summary' => '影片（視頻）已更新',
 	'videos-error-provider-not-supported' => '不支援此影片（視頻）供應商。請查看我們查看我们[http://zh.community.wikia.com/wiki/Help:%E5%BD%B1%E7%89%87%E5%B5%8C%E5%85%A5%E5%B7%A5%E5%85%B7 支持的供应商]列表。',
-];
-
-$messages['ko'] = [
-	'videohandler-non-premium' => '이 위키에 위키아 동영상 라이브러리의 저작권이 있는 동영상을 불러와 올릴 수 있습니다. 동영상을 찾아보려면 http://video.wikia.com 사이트를 방문하세요.',
-	'videohandler-non-premium-with-links' => '이 위키에 [http://video.wikia.com 위키아 동영상 라이브러리 (영어)]의 저작권이 있는 동영상을 불러와 올릴 수 있습니다. 동영상을 찾아보려면 [http://video.wikia.com video.wikia.com]을 방문하세요.',
-	'videohandler-category' => '동영상',
-	'videohandler-description' => '설명',
-	'videohandler-error-missing-parameter' => '값이 필수로 들어가야 하는 \'$1\' 변수가 누락되어 있습니다.',
-	'videohandler-error-restricted-video' => '이 동영상은 부적절한 내용을 포함하고 있어 이 위키에서 볼 수 없도록 차단되었습니다.',
-	'videohandler-error-video-no-exist' => '입력한 이름을 가진 동영상이 없습니다.',
-	'videohandler-remove-video-modal-cancel' => '취소',
-	'videohandler-remove-video-modal-ok' => '삭제',
-	'videohandler-remove-video-modal-success' => 'File:$1 이(가) 이 위키에서 삭제되었습니다.',
-	'videohandler-remove-video-modal-title' => '정말로 이 동영상을 이 위키에서 삭제하시겠습니까?',
-	'videohandler-remove' => '삭제',
-	'videohandler-unknown-title' => '이름 알 수 없음',
-	'videohandler-video-details' => '$1 (제공자: $2)',
-	'videohandler-video-views' => '$1회 조회됨',
-	'videos-add-video-label-all' => '모두 보기',
-	'videos-add-video-label-name' => '지원되는 동영상 사이트에 있는 동영상의 URL을 입력하세요.',
-	'videos-add-video-ok' => '추가',
-	'videos-add-video-to-this-wiki' => '이 위키에 동영상 추가하기',
-	'videos-add-video' => '동영상 추가하기',
-	'videos-error-blocked-user' => '이 위키에서 차단되어 있으므로 동영상을 올릴 수 없습니다.',
-	'videos-error-empty-title' => '동영상의 제목을 입력하세요.',
-	'videos-error-invalid-video-url' => '지원되는 동영상 사이트의 이용 가능한 URL을 입력하십시오.',
-	'videos-error-no-video-url' => '동영상의 URL이 입력되지 않았습니다.',
-	'videos-error-not-logged-in' => '동영상을 추가하기 위해서는 로그인이 필요합니다.',
-	'videos-error-old-type-video' => '오래된 형태의 동영상은 더 이상 지원되지 않습니다. (동영상 이름공간)',
-	'videos-error-permissions' => '이 동영상을 삭제할 수 있는 권한이 없습니다.',
-	'videos-error-readonly' => '현재 읽기 전용 상태입니다. 읽기 전용 상태가 해제된 후 다시 시도하세요.',
-	'videos-error-unknown' => '알 수 없는 오류가 발생했습니다. 오류 코드: $1',
-	'videos-error-while-loading' => '데이터를 불러오는 도중에 오류가 발생했습니다. 인터넷 연결 상태를 확인해보시고 페이지를 새로고침하세요.',
-	'videos-initial-upload-edit-summary' => '새 동영상을 올림',
-	'videos-notify' => '동영상을 처리하는 동안 잠시 기다려 주십시오.',
-	'videos-something-went-wrong' => '동영상을 추가하는 과정에서 오류가 발생했습니다.',
-];
-
-$messages['zh'] = [
-	'videohandler-non-premium' => '这个Wiki只允许增加来自于Wikia视频图书馆的授权内容。请至http://video.wikia.com 搜寻视频。',
-	'videohandler-non-premium-with-links' => '這個Wiki只允許增加來自於[http://video.wikia.com Wikia视频圖書館]的授權內容。請至[http://video.wikia.com http://video.wikia.com ]搜尋视频。',
-	'videohandler-description' => '叙述',
-	'videohandler-error-missing-parameter' => '缺少需要的变量 "$1"',
-	'videohandler-error-restricted-video' => '这个视频有受限制的内容不能在这Wiki上播放。',
-	'videohandler-error-video-no-exist' => '这个标题的视频不存在',
-	'videohandler-log-add-description' => '增加视频描述',
-	'videohandler-log-add-video' => '创建视频',
-	'videohandler-remove-error-unknown' => '非常抱歉，在删除时出了问题。',
-	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => 'File:$1 已自這個Wiki中移除',
-	'videohandler-remove-video-modal-title' => '你确定要移除这个视频吗？',
-	'videohandler-remove' => '移除',
-	'videohandler-unknown-title' => '未知的标题',
-	'videohandler-video-views' => '$1次{{PLURAL:$1|浏览|浏览}}',
-	'videos-add-video' => '添加视频',
-];
-
-$messages['zh-hant'] = [
-	'videohandler-non-premium' => '這個wiki只允許添加Fandom影片庫中的許可内容。請進入http://video.wikia.com搜索影片。',
-	'videohandler-non-premium-with-links' => '這個wiki只允許添加[http://video.wikia.com Fandom影片庫]中的許可内容。請進入[http://video.wikia.com video.wikia.com]搜索影片。',
-	'videohandler-category' => '影片',
-	'videohandler-description' => '敘述',
-	'videohandler-error-missing-parameter' => '缺少需要的變量 "$1"',
-	'videohandler-error-restricted-video' => '這個影片有受限制的內容不能在這Wiki上播放。',
-	'videohandler-error-video-no-exist' => '這個標題的影片不存在',
-	'videohandler-log-add-description' => '增加影片描述',
-	'videohandler-log-add-video' => '創建影片',
-	'videohandler-remove-error-unknown' => '非常抱歉，在刪除時出了問題。',
-	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => 'File:$1 已從這個Wiki中移除',
-	'videohandler-remove-video-modal-title' => '你確定要移除這個影片嗎？',
-	'videohandler-remove' => '移除',
-	'videohandler-unknown-title' => '未知的標題',
-	'videohandler-video-views' => '$1次{{PLURAL:$1|瀏覽|瀏覽}}',
-];
-
-$messages['zh-hk'] = [
-	'videohandler-non-premium' => '這個Wiki只允許增加來自於Wikia影片圖書館的授權內容。請至http://video.wikia.com 搜尋影片。',
-	'videohandler-non-premium-with-links' => '這個Wiki只允許增加來自於[http://video.wikia.com Wikia影片圖書館]的授權內容。請至[http://video.wikia.com http://video.wikia.com ]搜尋影片。',
-	'videohandler-category' => '影片',
-	'videohandler-description' => '敘述',
-	'videohandler-error-missing-parameter' => '缺少需要的變量 "$1"',
-	'videohandler-error-restricted-video' => '這個影片有受限制的內容不能在這Wiki上播放。',
-	'videohandler-error-video-no-exist' => '這個標題的影片不存在',
-	'videohandler-log-add-description' => '增加影片描述',
-	'videohandler-log-add-video' => '創建影片',
-	'videohandler-remove-error-unknown' => '非常抱歉，在刪除時出了問題。',
-	'videohandler-remove-video-modal-cancel' => '取消',
-	'videohandler-remove-video-modal-ok' => '移除',
-	'videohandler-remove-video-modal-success' => 'File:$1 已從這個Wiki中移除',
-	'videohandler-remove-video-modal-title' => '你確定要移除這個影片嗎？',
-	'videohandler-remove' => '移除',
-	'videohandler-unknown-title' => '未知的標題',
-	'videohandler-video-views' => '$1次{{PLURAL:$1|瀏覽|瀏覽}}',
-];
+);
 

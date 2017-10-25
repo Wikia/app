@@ -36,11 +36,10 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		parent::__construct( $query, $moduleName, 'rc' );
 	}
 
-	private $fld_comment = false, $fld_parsedcomment = false,
-			$fld_user = false, $fld_userid = false, $fld_useravatar = false,
+	private $fld_comment = false, $fld_parsedcomment = false, $fld_user = false, $fld_userid = false,
 			$fld_flags = false, $fld_timestamp = false, $fld_title = false, $fld_ids = false,
-			$fld_sizes = false, $fld_redirect = false, $fld_patrolled = false,
-			$fld_loginfo = false, $fld_tags = false, $fld_upvotes, $token = array();
+			$fld_sizes = false, $fld_redirect = false, $fld_patrolled = false, $fld_loginfo = false,
+			$fld_tags = false, $token = array();
 
 	private $tokenFunctions;
 
@@ -65,7 +64,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$this->tokenFunctions = array(
 			'patrol' => array( 'ApiQueryRecentChanges', 'getPatrolToken' )
 		);
-		wfRunHooks( 'APIQueryRecentChangesTokens', array( &$this->tokenFunctions ) );
+		Hooks::run( 'APIQueryRecentChangesTokens', array( &$this->tokenFunctions ) );
 		return $this->tokenFunctions;
 	}
 
@@ -101,7 +100,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$this->fld_parsedcomment = isset( $prop['parsedcomment'] );
 		$this->fld_user = isset( $prop['user'] );
 		$this->fld_userid = isset( $prop['userid'] );
-		$this->fld_useravatar = isset( $prop['useravatar'] );
 		$this->fld_flags = isset( $prop['flags'] );
 		$this->fld_timestamp = isset( $prop['timestamp'] );
 		$this->fld_title = isset( $prop['title'] );
@@ -111,7 +109,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$this->fld_patrolled = isset( $prop['patrolled'] );
 		$this->fld_loginfo = isset( $prop['loginfo'] );
 		$this->fld_tags = isset( $prop['tags'] );
-		$this->fld_upvotes = isset( $prop['upvotes'] );
 	}
 
 	public function execute() {
@@ -191,22 +188,30 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 
 		if ( !is_null( $params['user'] ) ) {
-			$this->addWhereFld( 'rc_user_text', $params['user'] );
-			$index['recentchanges'] = 'rc_user_text';
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $params['user'] ) ) {
+				$this->addWhereFld( 'rc_user_text', $params['user'] );
+				$index['recentchanges'] = 'rc_user_text';
+			}
+			else {
+				$this->addWhereFld( 'rc_user', User::idFromName( $params['user'] ) );
+				$index['recentchanges'] = 'rc_user';
+			}
 		}
 
 		if ( !is_null( $params['excludeuser'] ) ) {
 			// We don't use the rc_user_text index here because
 			// * it would require us to sort by rc_user_text before rc_timestamp
 			// * the != condition doesn't throw out too many rows anyway
-			$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
-		}
 
-		//  *** Wikia change (@author ADi) *** /Begin
-		if(!is_null($params['user'])) {
-			$this->addWhereFld('rc_user_text', $this->prepareUsername( $params['user'] ));
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $params['excludeuser'] ) ) {
+				$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
+			}
+			else {
+				$this->addWhere( 'rc_user != ' . User::idFromName( $params['excludeuser'] ) );
+			}
 		}
-		// *** Wikia change (@author ADi) *** /End
 
 		/* Add the fields we're concerned with to our query. */
 		$this->addFields( array(
@@ -246,9 +251,16 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 
 		if ( $this->fld_tags ) {
-			$this->addTables( 'tag_summary' );
-			$this->addJoinConds( array( 'tag_summary' => array( 'LEFT JOIN', array( 'rc_id=ts_rc_id' ) ) ) );
-			$this->addFields( 'ts_tags' );
+			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'rc_id' );
+			$this->addFields( $tsTags );
+		}
+
+		if ( !is_null( $params['tag'] ) ) {
+			$this->addTables( 'change_tag' );
+			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rc_id=ct_rc_id' ) ) ) );
+			$this->addWhereFld( 'ct_tag' , $params['tag'] );
+			global $wgOldChangeTagsIndex;
+			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
 
 		if ( $params['toponly'] || $showRedirects ) {
@@ -261,14 +273,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			}
 		}
 
-		if ( !is_null( $params['tag'] ) ) {
-			$this->addTables( 'change_tag' );
-			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rc_id=ct_rc_id' ) ) ) );
-			$this->addWhereFld( 'ct_tag' , $params['tag'] );
-			global $wgOldChangeTagsIndex;
-			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
-		}
-
 		$this->token = $params['token'];
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );
 		$this->addOption( 'USE INDEX', $index );
@@ -278,7 +282,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$res = $this->select( __METHOD__ );
 
 		$titles = [];
-		$revisionIds = [];
 
 		$result = $this->getResult();
 
@@ -289,8 +292,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rc_timestamp ) );
 				break;
 			}
-
-			$revisionIds[] = $row->rc_this_oldid;
 
 			if ( is_null( $resultPageSet ) ) {
 				/* Extract the data from a single row. */
@@ -310,41 +311,11 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			}
 		}
 
-		if ( $this->fld_upvotes ) {
-			$this->addUpvoteData( $result, $revisionIds );
-		}
-
 		if ( is_null( $resultPageSet ) ) {
 			/* Format the result */
 			$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'rc' );
 		} else {
 			$resultPageSet->populateFromTitles( $titles );
-		}
-	}
-
-	/**
-	 * (Wikia) Validate the 'user' parameter
-	 * @param string $userName user name
-	 * @author ADi
-	 */
-	private function prepareUsername( $userName ) {
-		if( $userName ) {
-			$userName = User::getCanonicalName( $userName, 'valid' );
-			if( $userName === false ) {
-				$this->dieUsage( "User name {$userName} is not valid", 'param_user' );
-			}
-			else {
-				$userId = User::idFromName( $userName );
-				if( empty( $userId ) ) {
-					$this->dieUsage( "User name {$userName} not found", 'param_user' );
-				}
-				else {
-					return $userName;
-				}
-			}
-		}
-		else {
-			$this->dieUsage( 'User parameter may not be empty', 'param_user' );
 		}
 	}
 
@@ -411,15 +382,11 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		if ( $this->fld_user || $this->fld_userid ) {
 
 			if ( $this->fld_user ) {
-				$vals['user'] = $row->rc_user_text;
+				$vals['user'] = User::getUsername( $row->rc_user, $row->rc_user_text );
 			}
 
 			if ( $this->fld_userid ) {
 				$vals['userid'] = $row->rc_user;
-			}
-
-			if ( $this->fld_useravatar ) {
-				$vals['useravatar'] = AvatarService::getAvatarUrl( $row->rc_user_text, AvatarService::AVATAR_SIZE_MEDIUM );
 			}
 
 			if ( !$row->rc_user ) {
@@ -533,23 +500,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 	}
 
-	private function addUpvoteData( ApiResult $result, array $revisionIds ) {
-		global $wgCityId;
-
-		$upvotes = ( new RevisionUpvotesService() )->getRevisionsUpvotes( $wgCityId, $revisionIds );
-		foreach ( $revisionIds as $index => $id ) {
-			$upvote = [];
-			$upvoteCount = 0;
-			$path = [ 'query', $this->getModuleName(), $index ];
-			if ( isset( $upvotes[$id] ) ) {
-				$upvote = $upvotes[$id]['upvotes'];
-				$upvoteCount = $upvotes[$id]['count'];
-			}
-			$result->addValue( $path, 'upvotes', $upvote );
-			$result->addValue( $path, 'upvotescount', $upvoteCount );
-		}
-	}
-
 	public function getCacheMode( $params ) {
 		if ( isset( $params['show'] ) ) {
 			foreach ( $params['show'] as $show ) {
@@ -600,7 +550,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				ApiBase::PARAM_TYPE => array(
 					'user',
 					'userid',
-					'useravatar',
 					'comment',
 					'parsedcomment',
 					'flags',
@@ -612,8 +561,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 					'patrolled',
 					'loginfo',
 					'wikiamode',
-					'upvotes',
-					'tags',
+					'tags'
 				)
 			),
 			'token' => array(
@@ -672,7 +620,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				'Include additional pieces of information',
 				' user           - Adds the user responsible for the edit and tags if they are an IP',
 				' userid         - Adds the user id responsible for the edit',
-				' useravatar     - Adds an avatar of a user responsible for the edit. It requires the user or the userid param to be present.',
 				' comment        - Adds the comment for the edit',
 				' parsedcomment  - Adds the parsed comment for the edit',
 				' flags          - Adds flags for the edit',
@@ -683,7 +630,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				' redirect       - Tags edit if page is a redirect',
 				' patrolled      - Tags edits that have been patrolled',
 				' loginfo        - Adds log information (logid, logtype, etc) to log entries',
-				' upvotes        - Adds data about upvotes for the edit',
 				' tags           - Lists tags for the entry',
 			),
 			'token' => 'Which tokens to obtain for each change',
@@ -695,7 +641,6 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			'limit' => 'How many total changes to return',
 			'tag' => 'Only list changes tagged with this tag',
 			'toponly' => 'Only list changes which are the latest revision',
-			'user' => 'Filter results per user name',
 		);
 	}
 

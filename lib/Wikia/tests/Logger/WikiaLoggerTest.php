@@ -6,18 +6,22 @@
 use Wikia\Logger\WikiaLogger;
 use Wikia\Logger\SyslogHandler;
 use Wikia\Logger\WebProcessor;
+use PHPUnit\Framework\TestCase;
 
-class WikiaLoggerTest extends PHPUnit_Framework_TestCase {
+class WikiaLoggerTest extends TestCase {
 
 	function testInstance() {
 		$logger = WikiaLogger::instance();
-		$this->assertTrue($logger instanceof WikiaLogger);
-		$this->assertTrue($logger->getSyslogHandler() instanceof SyslogHandler);
-		$this->assertTrue($logger->getWebProcessor() instanceof WebProcessor);
+		$this->assertInstanceOf( WikiaLogger::class,$logger );
+		$this->assertInstanceOf( SyslogHandler::class, WikiaLogger::getSyslogHandler('foo-test') );
+		$this->assertInstanceOf( WebProcessor::class, $logger->getWebProcessor() );
 	}
 
 	function testLogger() {
-		$loggerMock = $this->getMock('\Monolog\Logger', [], ['phpunit']);
+		$loggerMock = $this->getMockBuilder( Monolog\Logger::class )
+			->setConstructorArgs( [ 'phpunit' ] )
+			->getMock();
+
 		$loggerMock->expects($this->any())
 			->method('debug')
 			->will($this->returnValue('bar'));
@@ -29,9 +33,15 @@ class WikiaLoggerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testOnError() {
-		$wikiaLoggerMock = $this->getMock('\Wikia\Logger\WikiaLogger', ['getErrorReporting'], [], '', false);
+		$wikiaLoggerMock = $this->getMockBuilder( WikiaLogger::class )
+			->setMethods( [ 'getErrorReporting' ] )
+			->disableOriginalConstructor()
+			->getMock();
 
-		$loggerMock = $this->getMock('\Monolog\Logger', [], ['phpunit']);
+		$loggerMock = $this->getMockBuilder( Monolog\Logger::class )
+			->setConstructorArgs( [ 'phpunit' ] )
+			->getMock();
+
 		$loggerMock->expects($this->atLeastOnce())
 			->method('notice')
 			->will($this->returnValue('bar'));

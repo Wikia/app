@@ -73,13 +73,6 @@
 
 					var $loginModal = loginModal.$element;
 
-					// Init facebook button inside login modal
-					if (window.FacebookLogin) {
-						// SOC-273 remove 'hidden' class even if element isn't in the DOM yet
-						$.loadFacebookSDK();
-						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL);
-					}
-
 					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
 						ajaxLogin: true,
 						modal: loginModal,
@@ -126,11 +119,6 @@
 						self.track({
 							action: clickAction,
 							label: 'sign-up-from-' + origin
-						});
-					}).on('click', '.sso-login-facebook', function () {
-						self.track({
-							action: clickAction,
-							label: 'facebook-connect'
 						});
 					}).on('click', 'input.login-button', function () {
 						self.track({

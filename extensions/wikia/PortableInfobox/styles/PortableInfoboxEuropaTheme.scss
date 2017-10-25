@@ -187,6 +187,33 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 		font-weight: inherit;
 	}
 
+	// need to have both (pi-data-label & pi-smart-data-label) classes in selector to override stacked layout padding (pi-layout-stacked)
+	.pi-data-label {
+		&.pi-smart-data-label {
+			padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
+		}
+	}
+
+	.pi-smart-group-head + .pi-smart-group-body .pi-smart-data-value {
+		padding-top: 0;
+	}
+
+	.pi-smart-data-label,
+	.pi-smart-data-value {
+		border-left: 0;
+		box-sizing: border-box;
+		flex-basis: auto;
+
+		&:nth-child(even) {
+			background-color: $horizontal-group-stripe-background;
+		}
+	}
+
+	.pi-smart-group {
+		border-bottom: 0;
+		text-align: left;
+	}
+
 	.pi-tab-link {
 		border: 0;
 		font-size: $tab-font-size;

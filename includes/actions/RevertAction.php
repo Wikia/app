@@ -114,7 +114,7 @@ class RevertFileAction extends FormAction {
 
 	public function onSuccess() {
 		// Wikia change - Add hook for a successful file revert
-		wfRunHooks( 'FileRevertComplete', [ $this->page ] );
+		Hooks::run( 'FileRevertComplete', [ $this->page ] );
 		// Wikia change - end
 		$timestamp = $this->oldFile->getTimestamp();
 		$this->getOutput()->addHTML( wfMsgExt( 'filerevert-success', 'parse', $this->getTitle()->getText(),

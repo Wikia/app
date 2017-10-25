@@ -47,22 +47,14 @@ class AnalyticsEngine {
 				return new AnalyticsProviderKrux();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
+			case 'A9':
+				return new AnalyticsProviderA9();
 			case 'Nielsen':
 				return new AnalyticsProviderNielsen();
-			case 'OpenXBidder':
-				return new AnalyticsProviderOpenXBidder();
 			case 'Prebid':
 				return new AnalyticsProviderPrebid();
-			case 'RubiconFastlane':
-				return new AnalyticsProviderRubiconFastlane();
-			case 'RubiconVulcan':
-				return new AnalyticsProviderRubiconVulcan();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
-			case 'IVW2':
-				return new AnalyticsProviderIVW2();
-			case 'IVW3':
-				return new AnalyticsProviderIVW3();
 			case 'NetzAthleten':
 				return new AnalyticsProviderNetzAthleten();
 		}

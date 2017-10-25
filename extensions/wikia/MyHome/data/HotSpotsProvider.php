@@ -54,17 +54,17 @@ class HotSpotsProvider {
 		}
 
 		$results2 = array();
-		$res = $dbr->query("select rc1.rc_title, rc2.rc_user_text from recentchanges rc2, recentchanges rc1 where substring_index(rc2.rc_title, '/', 2) = rc1.rc_title and rc1.rc_namespace = 500 and rc2.rc_namespace = 501 and rc1.rc_id >= $rc_id and rc2.rc_id >= $rc_id group by rc2.rc_title");
+		$res = $dbr->query("select rc1.rc_title, rc2.rc_user from recentchanges rc2, recentchanges rc1 where substring_index(rc2.rc_title, '/', 2) = rc1.rc_title and rc1.rc_namespace = 500 and rc2.rc_namespace = 501 and rc1.rc_id >= $rc_id and rc2.rc_id >= $rc_id group by rc2.rc_title");
 		while($row = $dbr->fetchObject($res)) {
 			if(isset($results2[$row->rc_title])) {
-				if(!isset($results2[$row->rc_title][$row->rc_user_text])) {
-					$results2[$row->rc_title][$row->rc_user_text] = 1;
+				if(!isset($results2[$row->rc_title][$row->rc_user])) {
+					$results2[$row->rc_title][$row->rc_user] = 1;
 				} else {
-					$results2[$row->rc_title][$row->rc_user_text]++;
+					$results2[$row->rc_title][$row->rc_user]++;
 				}
 			} else {
 				$results2[$row->rc_title] = array();
-				$results2[$row->rc_title][$row->rc_user_text] = 1;
+				$results2[$row->rc_title][$row->rc_user] = 1;
 			}
 		}
 		$results3 = array();

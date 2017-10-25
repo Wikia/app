@@ -1,7 +1,6 @@
 <?php
 
 class PortableInfoboxHooks {
-	const PARSER_TAG_GALLERY = 'gallery';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		global $wgEnablePortableInfoboxEuropaTheme;
@@ -32,22 +31,16 @@ class PortableInfoboxHooks {
 	}
 
 	/**
-	 * Store information about raw content of all galleries in article to handle images in infoboxes
+	 * Store data of all galleries in article to handle images in infoboxes
 	 *
-	 * @param $name Parser tag name
-	 * @param $marker substitution marker
-	 * @param $content raw tag contents
-	 * @param $attributes
-	 * @param $parser
-	 * @param $frame
-	 *
+	 * @param $marker
+	 * @param WikiaPhotoGallery $gallery
 	 * @return bool
 	 */
-	public static function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
-		if ( $name === self::PARSER_TAG_GALLERY ) {
-			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
+	public static function onAfterParserParseImageGallery( $marker, $gallery ) {
+		if ( $gallery instanceof WikiaPhotoGallery ) {
+			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery($marker, $gallery->getData());
 		}
-
 		return true;
 	}
 
@@ -78,8 +71,7 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onArticleSave( Page &$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor,
-		&$flags, &$status ) {
+	public static function onArticleSave( Page $article, User $user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, Status &$status ): bool {
 		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->delete();
 
 		return true;
@@ -92,7 +84,7 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onArticlePurge( Page &$article ) {
+	public static function onArticlePurge( Page $article ) {
 		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
 
 		return true;
@@ -107,7 +99,7 @@ class PortableInfoboxHooks {
 	 */
 	public static function onBacklinksPurge( Array $articles ) {
 		foreach ( $articles as $title ) {
-			PortableInfoboxDataService::newFromTitle( $title )->purge();
+			PortableInfoboxDataService::newFromTitle( $title )->delete();
 		}
 
 		return true;

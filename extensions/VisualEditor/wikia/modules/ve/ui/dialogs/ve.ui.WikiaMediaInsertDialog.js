@@ -14,6 +14,8 @@
 ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
 	// Parent constructor
 	ve.ui.WikiaMediaInsertDialog.super.call( this, config );
+
+	this.searchInputPlaceholder = ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' );
 };
 
 /* Inheritance */
@@ -77,9 +79,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.getBodyHeight = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	var uploadEvents = {
-		change: 'onUploadChange',
-		upload: 'onUploadSuccess'
-	};
+			change: 'onUploadChange',
+			upload: 'onUploadSuccess'
+		},
+		logInEvents = {
+			logInButtonClicked: 'onLogInButtonClicked',
+			registerButtonClicked: 'onRegisterButtonClicked'
+		};
 
 	// Parent method
 	ve.ui.WikiaMediaInsertDialog.super.prototype.initialize.call( this );
@@ -97,7 +103,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.pages = new OO.ui.BookletLayout( { $: this.$ } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
 		$: this.$,
-		placeholder: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
+		placeholder: this.searchInputPlaceholder
 	} );
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();
@@ -144,6 +150,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		preview: 'onMediaPreview'
 	} );
 	this.upload.connect( this, uploadEvents );
+	this.upload.connect( this, logInEvents );
 	this.queryUpload.connect( this, uploadEvents );
 	this.$policyReadMoreLink.on( 'click', this.onReadMoreLinkClick.bind( this ) );
 	this.dropTarget.on( 'drop', this.onFileDropped.bind( this ) );
@@ -223,10 +230,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
  * @method
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
+	var currentPageName = this.pages.getCurrentPageName();
+
 	this.queryInput.$input.focus();
-	if ( this.pages.getCurrentPageName() === 'main' ) {
+
+	/**
+	 * By default, we hide the query's upload button using CSS.
+	 * After we use hideUpload() or showUpload(), there is an inline style that overrides the CSS rule.
+	 */
+	if ( currentPageName === 'main' || currentPageName === 'videoMain' ) {
 		this.query.hideUpload();
-	} else {
+	} else if ( !mw.user.anonymous() ) {
 		this.query.showUpload();
 	}
 };
@@ -441,7 +455,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.getDefaultPage = function () {
 ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
-			this.pages.setPage( 'main' );
+			this.cartModel.clearItems();
+			this.pages.setPage( this.getDefaultPage() );
 			// If the policy height (which has a max-height property set) is the same as the first child of the policy
 			// then there is no more of the policy to show and the read more link can be hidden.
 			if ( this.$policy.height() === this.$policy.children().first().height() ) {
@@ -487,14 +502,45 @@ ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
 	return this.license.promise;
 };
 
+ve.ui.WikiaMediaInsertDialog.prototype.temporaryToPermanentCallback = function ( cartItem, name ) {
+	cartItem.temporaryFileName = null;
+	cartItem.url = null;
+	cartItem.title = name;
+};
+
 ve.ui.WikiaMediaInsertDialog.prototype.getActionProcess = function ( action ) {
-	if ( action === 'apply' ) {
-		return new OO.ui.Process( function () {
-			this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
-			this.close( { action: action } );
-		}, this );
+	var cartItems = ve.copy( this.cartModel.getItems() ),
+		promises = [],
+		i;
+
+	for ( i = 0; i < cartItems.length; i++ ) {
+		if ( cartItems[i].isTemporary() ) {
+			promises.push(
+				this.convertTemporaryToPermanent( cartItems[i] ).done(
+					this.temporaryToPermanentCallback.bind( this, cartItems[i] )
+				)
+			);
+		}
 	}
-	return ve.ui.WikiaMediaInsertDialog.super.prototype.getActionProcess.call( this, action );
+
+	this.pushPending();
+
+	return new OO.ui.Process( function () {
+		$.when.apply( $, promises ).done( function () {
+			// We need to update model to have permament images.
+			// We're using addItems as it replaces items in model when we operate on the same images
+			this.cartModel.addItems( cartItems );
+
+			if ( action === 'apply' ) {
+				this.insertPermanentMedia( cartItems, this.fragment );
+				this.close( { action: action } );
+			} else if ( action === 'insertImageToPortableInfobox' ) {
+				this.close( { action: action } );
+			} else {
+				this.close();
+			}
+		}.bind( this ) ).always( this.popPending.bind( this ) );
+	}, this );
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
@@ -504,38 +550,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
 			this.queryInput.setValue( '' );
 			this.dropTarget.teardown();
 		}, this );
-};
-
-/**
- * @method
- * @param {ve.dm.WikiaCartItem[]} cartItems Items to add
- * @param {ve.dm.SurfaceFragment} fragment
- */
-ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems, fragment ) {
-	var i, promises = [];
-
-	this.timings.insertStart = ve.now();
-
-	// TODO: consider encapsulating this so it doesn't get created on every function call
-	function temporaryToPermanentCallback( cartItem, name ) {
-		cartItem.temporaryFileName = null;
-		cartItem.url = null;
-		cartItem.title = name;
-	}
-
-	for ( i = 0; i < cartItems.length; i++ ) {
-		if ( cartItems[i].isTemporary() ) {
-			promises.push(
-				this.convertTemporaryToPermanent( cartItems[i] ).done(
-					temporaryToPermanentCallback.bind( this, cartItems[i] )
-				)
-			);
-		}
-	}
-
-	$.when.apply( $, promises ).done( function () {
-		this.insertPermanentMedia( cartItems, fragment );
-	}.bind( this ) );
 };
 
 /**
@@ -755,6 +769,25 @@ ve.ui.WikiaMediaInsertDialog.prototype.onDocumentKeyDown = function ( e ) {
 		return false; // stop propagation
 	}
 	ve.ui.WikiaMediaInsertDialog.super.prototype.onDocumentKeyDown.call( this, e );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onLogInButtonClicked = function () {
+	window.wikiaAuthModal.load( {
+		url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+		onAuthSuccess: this.onLogInSuccess.bind( this )
+	} );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onRegisterButtonClicked = function () {
+	window.wikiaAuthModal.load( {
+		onAuthSuccess: this.onLogInSuccess.bind( this )
+	} );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onLogInSuccess = function () {
+	ve.init.target.onLogInSuccess();
+	this.upload.onLogInSuccess();
+	this.query.onLogInSuccess();
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaMediaInsertDialog );

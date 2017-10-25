@@ -48,7 +48,6 @@ class UpdateDatawarePages extends Maintenance {
 				'page_latest',
 				'page_title',
 				'page_namespace',
-				'count(rev_id) as page_edits',
 				'max(rev_timestamp) as page_last_edited',
 				'rev_user'
 			],
@@ -67,7 +66,6 @@ class UpdateDatawarePages extends Maintenance {
 		/** @var stdClass $row */
 		foreach ( $res as $row ) {
 			$row->page_latest = intval( $row->page_latest );
-			$row->page_edits = intval( $row->page_edits );
 			$row->page_is_redirect = intval( $row->page_is_redirect );
 			$row->page_is_content = intval( in_array( $row->page_namespace, $wgContentNamespaces ) );
 			$row->page_last_edited = $row->page_last_edited ? wfTimestamp( TS_DB, $row->page_last_edited ) : null;
@@ -107,14 +105,11 @@ class UpdateDatawarePages extends Maintenance {
 			'pages',
 			[
 				'page_id',
-				'page_status',
 				'page_latest',
 				'page_title',
-				'page_title_lower',
 				'page_namespace',
 				'page_is_redirect',
 				'page_is_content',
-				'page_edits',
 				'page_last_edited'
 			],
 			[
@@ -207,12 +202,9 @@ class UpdateDatawarePages extends Maintenance {
 				'page_wikia_id' => $wgCityId,
 				'page_id' => $localPage->page_id,
 				'page_namespace' => $localPage->page_namespace,
-				'page_title_lower' => mb_strtolower( $localPage->page_title ),
 				'page_title' => $localPage->page_title,
-				'page_status' => 0,
 				'page_is_content' => $localPage->page_is_content,
 				'page_is_redirect' => $localPage->page_is_redirect,
-				'page_edits' => $localPage->page_edits,
 				'page_latest' => $localPage->page_latest,
 				'page_last_edited' => $localPage->page_last_edited,
 			],

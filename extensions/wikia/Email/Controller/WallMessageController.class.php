@@ -178,7 +178,10 @@ class OwnWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-wallmessage-owned-subject', $this->titleText )->text();
+		return $this->getMessage( 'emailext-wallmessage-owned-subject' )
+			// We should not encode HTML entities in the subject
+			->rawParams( $this->titleText )
+			->text();
 	}
 }
 
@@ -210,7 +213,10 @@ class ReplyWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-wallmessage-reply-subject', $this->titleText )->parse();
+		return $this->getMessage( 'emailext-wallmessage-reply-subject' )
+			// We should not encode HTML entities in the subject
+			->rawParams( $this->titleText )
+			->text();
 	}
 
 	protected function getFooterMessages() {
@@ -263,10 +269,11 @@ class FollowedWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-wallmessage-following-subject',
-			$this->wallUserName,
-			$this->titleText
-		)->text();
+		return $this->getMessage( 'emailext-wallmessage-following-subject' )
+			// We should not encode HTML entities in the subject
+			->rawParams( $this->wallUserName )
+			->rawParams( $this->titleText )
+			->text();
 	}
 
 	protected function getFooterMessages() {

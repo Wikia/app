@@ -1,75 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="bootstrap.php"
-		 backupGlobals="false"
-		 backupStaticAttributes="false"
-		 colors="false"
-		 convertErrorsToExceptions="true"
-		 convertNoticesToExceptions="true"
-		 convertWarningsToExceptions="true"
-		 stopOnFailure="false"
-		 syntaxCheck="true"
-		 processIsolation="false">
-	<testsuite name="Wikia Test Suite">
-		<directory>./unit/</directory>
-	</testsuite>
-	<testsuite name="Wikia Lib Test Suite">
-		<directory>../lib/Wikia/tests/</directory>
-	</testsuite>
-	<testsuite name="Wikia Includes Test Suite">
-		<directory>../includes/wikia/</directory>
-	</testsuite>
-	<testsuite name="Wikia ResourceLoader Test Suite">
-		<directory>../includes/resourceloader/wikia/</directory>
-	</testsuite>
-	<testsuite name="Wikia Extensions Test Suite">
-		<directory>../extensions/wikia/</directory>
-		<exclude>../extensions/wikia/SemanticMediaWiki/</exclude>
-	</testsuite>
-	<testsuite name="Wikia Maintenance Test Suite">
-		<directory>../maintenance/wikia/tests/</directory>
-	</testsuite>
-	<testsuite name="Wikia Search Test Suite">
-		<directory>../extensions/wikia/Search/classes/Test</directory>
-		<directory>../extensions/wikia/GameGuides/tests/GameGuidesModelTest.php</directory>
-		<directory>../extensions/w3rdparty/LyricWiki/tests/ServerTest.php</directory>
-	</testsuite>
-	<testsuite name="LyricFind Test Suite">
-		<directory>../extensions/3rdparty/LyricWiki/LyricFind/tests/</directory>
-	</testsuite>
-	<!-- DO NOT run MW tests. These tests are dropping db tables, including users -->
-	<!--
-	 <testsuite name="MediaWiki Test Suite">
-		<directory>../maintenance/tests/</directory>
-	 </testsuite>
-	 -->
+<phpunit
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
+		bootstrap="bootstrap.php"
+		backupGlobals="false"
+		backupStaticAttributes="false"
+		colors="true"
+		convertErrorsToExceptions="true"
+		convertNoticesToExceptions="true"
+		convertWarningsToExceptions="true"
+		stopOnFailure="false"
+		processIsolation="false">
+	<testsuites>
+		<testsuite name="Wikia Test Suite">
+			<directory>./unit/</directory>
+		</testsuite>
+		<testsuite name="Wikia Lib Test Suite">
+			<directory>../lib/Wikia/tests/</directory>
+		</testsuite>
+		<testsuite name="Wikia Includes Test Suite">
+			<directory>../includes/wikia/</directory>
+		</testsuite>
+		<testsuite name="Wikia ResourceLoader Test Suite">
+			<directory>../includes/resourceloader/wikia/</directory>
+		</testsuite>
+		<testsuite name="Wikia Extensions Test Suite">
+			<directory>../extensions/wikia/</directory>
+			<exclude>../extensions/wikia/SemanticMediaWiki/</exclude>
+		</testsuite>
+		<testsuite name="Wikia Maintenance Test Suite">
+			<directory>../maintenance/wikia/tests/</directory>
+		</testsuite>
+		<testsuite name="Wikia Search Test Suite">
+			<directory>../extensions/wikia/Search/classes/Test</directory>
+			<directory>../extensions/wikia/GameGuides/tests/GameGuidesModelTest.php</directory>
+			<directory>../extensions/w3rdparty/LyricWiki/tests/ServerTest.php</directory>
+		</testsuite>
+		<testsuite name="LyricFind Test Suite">
+			<directory>../extensions/3rdparty/LyricWiki/LyricFind/tests/</directory>
+		</testsuite>
+		<testsuite name="MediaWiki /includes/libs Test Suite">
+			<directory>../includes/libs/tests/</directory>
+		</testsuite>
+	</testsuites>
 	<groups>
 		<exclude>
 			<group>Broken</group>
 			<group>Stub</group>
 		</exclude>
 	</groups>
-	<filter>
-		<!-- Exclude the following from code coverage reports -->
-		<blacklist>
-			<directory>../bin</directory>
-			<directory>../config</directory>
-			<directory>../docs</directory>
-			<directory>../images</directory>
-			<directory>../languages</directory>
-			<directory>../lib/composer</directory>
-			<directory>../lib/vendor</directory>
-			<directory>../maintenance</directory>
-			<directory>../math</directory>
-			<directory>../resources</directory>
-			<directory>../serialized</directory>
-			<directory>../static</directory>
-			<directory>../t</directory>
-			<directory>../tests</directory>
-			<directory suffix=".i18n.php">../extensions</directory>
-			<directory suffix=".alias.php">../extensions</directory>
-			<directory suffix=".aliases.php">../extensions</directory>
-			<directory suffix=".setup.php">../extensions</directory>
-			<directory suffix="_setup.php">../extensions</directory>
-		</blacklist>
-	</filter>
+	<listeners>
+		<listener class="WikiaTestContextPrinter" file="WikiaTestContextPrinter.php" />
+	</listeners>
 </phpunit>

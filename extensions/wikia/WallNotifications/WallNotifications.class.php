@@ -377,7 +377,11 @@ class WallNotifications {
 		}
 
 		// FB:#11089
-		$users[$notifData->wall_userid] = $notifData->wall_userid;
+		// SUS-1712: Users should not be notified about messages a board that is the same as their
+		// user name unless they are explicitly following it
+		if ( $notifData->article_title_ns === NS_USER_WALL ) {
+			$users[$notifData->wall_userid] = $notifData->wall_userid;
+		}
 
 		if ( !empty( $users[$notifData->msg_author_id] ) ) {
 			unset( $users[$notifData->msg_author_id] );

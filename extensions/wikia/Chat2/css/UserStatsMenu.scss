@@ -47,7 +47,6 @@
 
 			li {
 				color: $color-links;
-				cursor: pointer;
 				margin: 0;
 				padding: 5px 10px;
 				line-height: 16px;
@@ -55,6 +54,7 @@
 
 				a {
 					color: $color-links;
+					display: block;
 					&:hover {
 						text-decoration: none;
 					}
@@ -66,6 +66,10 @@
 
 				&:hover {
 					background-color: $color-menu-highlight;
+				}
+
+				&.private {
+					cursor: pointer;
 				}
 
 				svg{

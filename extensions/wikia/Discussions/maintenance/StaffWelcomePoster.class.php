@@ -2,24 +2,8 @@
 
 class StaffWelcomePoster {
 
-	const LANG_TO_STAFF_MAP = [
-		'de' => 24961680,      // ForestFairy
-		'en' => 26339491,      // Mira Laime
-		'es' => 12648798,      // Luchofigo85
-		'fr' => 26442523,      // Hypsoline
-		'it' => 3279487,       // Leviathan_89
-		'ja' => 29395778,      // Kuro0222
-		'ko' => 24883131,      // Miri-Nae
-		'nl' => 4142476,       // Yatalu
-		'pl' => 1117661,       // Nanaki
-		'pt' => 24005296,      // Macherie ana
-		'ru' => 26457441,      // Vlazovskiy
-		'vi' => 26041741,      // KhangND
-		'zh-hans' => 11909873, // Cal-Boy
-		'zh-hant' => 56584     // Ffaarr
-	];
-
-	const MESSAGE_KEY = 'discussions-staff-welcome-post';
+	const TITLE_MESSAGE_KEY = 'discussions-staff-welcome-title';
+	const BODY_MESSAGE_KEY = 'discussions-staff-welcome-post';
 
 	const DEFAULT_LANG = 'en';
 
@@ -36,19 +20,25 @@ class StaffWelcomePoster {
 	public function postMessage( int $siteId, string $language ): bool {
 		$transformedLang = $this->getTransformedLang( $language );
 		$staffId = $this->getStaffFromLang( $transformedLang );
-		$message = $this->getMessage( $transformedLang );
+		$message = $this->getBodyMessage( $transformedLang );
+		$title = $this->getTitleMessage( $transformedLang );
 
-		$success = $this->threadCreator->create( $staffId, $siteId, $message );
+		$success = $this->threadCreator->create( $staffId, $siteId, $message, $title );
 
 		return $success;
 	}
 
 	private function getStaffFromLang( string $language ): int {
-		return self::LANG_TO_STAFF_MAP[$language] ?? self::LANG_TO_STAFF_MAP[self::DEFAULT_LANG];
+		global $wgStaffWelcomePostLanguageToUserId;
+		return $wgStaffWelcomePostLanguageToUserId[$language] ?? $wgStaffWelcomePostLanguageToUserId[self::DEFAULT_LANG];
 	}
 
-	private function getMessage( string $language ): string {
-		return wfMessage( self::MESSAGE_KEY )->inLanguage( $language )->plain();
+	private function getBodyMessage( string $language ): string {
+		return wfMessage( self::BODY_MESSAGE_KEY )->inLanguage( $language )->plain();
+	}
+
+	private function getTitleMessage( string $language ): string {
+		return wfMessage( self::TITLE_MESSAGE_KEY )->inLanguage( $language )->plain();
 	}
 
 	private function getTransformedLang(string $language ): string {

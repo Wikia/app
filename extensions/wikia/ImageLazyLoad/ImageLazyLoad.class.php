@@ -90,14 +90,14 @@ class ImageLazyLoad  {
 
 	}
 
-	public static function onParserClearState( &$parser ) {
+	public static function onParserClearState( Parser $parser ) {
 		if ( !empty( $parser->lazyLoadedImagesCount ) ) {
 			$parser->lazyLoadedImagesCount = 0;
 		}
 		return true;
 	}
 
-	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		global $wgExtensionsPath;
 		if ( self::isEnabled() ) {
 			$out->addHtml( '<noscript><link rel="stylesheet" href="' . $wgExtensionsPath . '/wikia/ImageLazyLoad/css/ImageLazyLoadNoScript.css" /></noscript>' );
@@ -106,34 +106,10 @@ class ImageLazyLoad  {
 	}
 
 	/**
-	 * Add wgEnableWebPSupportStats and wgEnableWebPThumbnails global JS variables
-	 *
-	 * wgEnableWebPSupportStats: report WebP support when enabled
-	 * wgEnableWebPThumbnails: request WebP thumbnails if enabled (and supported by the browser)
-	 *
-	 * @param array $vars JS variables
-	 * @return bool true
-	 */
-	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		global $wgEnableWebPSupportStats, $wgEnableWebPThumbnails;
-
-		if ( self::isEnabled() ) {
-			if ( !empty( $wgEnableWebPSupportStats ) ) {
-				$vars['wgEnableWebPSupportStats'] = true;
-			}
-
-			if ( !empty( $wgEnableWebPThumbnails ) ) {
-				$vars['wgEnableWebPThumbnails'] = true;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * Update thumbnail img attributes when lazy loading
-	 * @param WikiaController $controller
+	 * @param WikiaDispatchableObject $controller
 	 */
-	public static function setLazyLoadingAttribs( WikiaController $controller ) {
+	public static function setLazyLoadingAttribs( WikiaDispatchableObject $controller ) {
 		$controller->onLoad = self::IMG_ONLOAD;
 		$controller->imgClass = array_merge( $controller->imgClass, explode( ' ', self::LAZY_IMAGE_CLASSES ) );
 		$controller->dataSrc = $controller->imgSrc;
@@ -143,7 +119,6 @@ class ImageLazyLoad  {
 	/**
 	 * Check whether or not the image is valid for lazy loading
 	 * @global boolean $wgRTEParserEnabled
-	 * @global type $wgParser
 	 * @param string $imgSrc
 	 * @return boolean
 	 */
@@ -156,7 +131,7 @@ class ImageLazyLoad  {
 				return false;
 			}
 
-			if ( !empty( $wgParser ) ) {
+			if ( !empty( $wgParser ) && $wgParser->mIsMainParse ) {
 				if ( empty( $wgParser->lazyLoadedImagesCount ) ) {
 					$wgParser->lazyLoadedImagesCount = 0;
 				}

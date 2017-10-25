@@ -2,9 +2,13 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 use HtmlHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag;
 use WikiaFileHelper;
 
 class NodeImage extends Node {
+	const GALLERY = 'GALLERY';
+	const TABBER = 'TABBER';
+
 	const ALT_TAG_NAME = 'alt';
 	const CAPTION_TAG_NAME = 'caption';
 	const MEDIA_TYPE_VIDEO = 'VIDEO';
@@ -17,35 +21,14 @@ class NodeImage extends Node {
 		}
 	}
 
-	public static function getGalleryData( $html ) {
-		global $wgArticleAsJson;
-		$data = array();
-		if ( $wgArticleAsJson ) {
-			if ( preg_match( '/data-ref=\'([^\']+)\'/', $html, $out ) ) {
-				$media = \ArticleAsJson::$media[$out[1]];
-				for( $i = 0; $i < count( $media ); $i++ ) {
-					$data[] = array( 'label' => strip_tags( $media[$i]['caption'] ), 'title' => $media[$i]['title'] );
-				}
-			}
-		} else {
-			if ( preg_match( '#\sdata-model="([^"]+)"#', $html, $galleryOut ) ) {
-				$model = json_decode( htmlspecialchars_decode( $galleryOut[1] ), true );
-				for( $i = 0; $i < count( $model ); $i++ ) {
-					$data[] = array( 'label' => strip_tags( $model[$i][ 'caption' ] ), 'title' => $model[$i][ 'title' ] );
-				}
-			}
-			if ( preg_match_all('#data-(video|image)-key="([^"]+)".*?\s<h2>(.*?)<\/h2>#is', $html, $galleryOut ) ) {
-				for( $i = 0; $i < count( $galleryOut[0] ); $i++ ) {
-					$data[] = array( 'label' => $galleryOut[3][$i], 'title' => $galleryOut[2][$i] );
-				}
-			}
-			if ( preg_match_all('#data-(video|image)-key="([^"]+)".*?<div class="lightbox-caption"[^>]*>(.*?)<\/div>#is', $html, $galleryOut ) ) {
-				for( $i = 0; $i < count( $galleryOut[0] ); $i++ ) {
-					$data[] = array( 'label' => $galleryOut[3][$i], 'title' => $galleryOut[2][$i] );
-				}
-			}
-		}
-		return $data;
+	public static function getGalleryData( $marker ) {
+		$galleryData = PortableInfoboxDataBag::getInstance()->getGallery( $marker );
+		return isset( $galleryData['images'] ) ? array_map( function ( $image ) {
+			return [
+				'label' => $image['caption'],
+				'title' => $image['name']
+			];
+		}, $galleryData['images'] ) : [ ];
 	}
 
 	public static function getTabberData( $html ) {
@@ -94,38 +77,33 @@ class NodeImage extends Node {
 	 * @return bool
 	 */
 	private function containsTabberOrGallery( $str ) {
-		// TODO: Consider more robust approach (UNIQ...QINU)
-		$strLower = strtolower( $str );
-		if ( strpos( $strLower, '-tabber-' ) !== false || strpos( $strLower, '-gallery-' ) !== false ) {
-			return true;
-		}
-		return false;
+		return !empty( self::getMarkers( $str, self::TABBER ) ) || !empty( self::getMarkers( $str, self::GALLERY ) );
 	}
 
 	private function getImagesData( $value ) {
 		$data = array();
 		$items = array_merge( $this->getGalleryItems( $value ), $this->getTabberItems( $value ) );
-		for( $i = 0; $i < count( $items ); $i++ ) {
-			$data[] = $this->getImageData( $items[$i]['title'], $items[$i]['label'], $items[$i]['label'] );
+		foreach( $items as $item ) {
+			$data[] = $this->getImageData( $item['title'], $item['label'], $item['label'] );
 		}
 		return $data;
 	}
 
 	private function getGalleryItems( $value ) {
-		$galleryItems = array();
-		$galleryMarkers = self::getMarkers( $value, 'GALLERY' );
-		for ( $i = 0; $i < count ( $galleryMarkers ); $i++ ) {
-			$galleryHtml = $this->getExternalParser()->parseRecursive( $galleryMarkers[$i] );
-			$galleryItems = array_merge( $galleryItems, self::getGalleryData( $galleryHtml ) );
+		$galleryItems = [];
+		$galleryMarkers = self::getMarkers( $value, self::GALLERY );
+		foreach ( $galleryMarkers as $marker ) {
+			$galleryItems = array_merge( $galleryItems, self::getGalleryData( $marker ) );
+
 		}
 		return $galleryItems;
 	}
 
 	private function getTabberItems( $value ) {
 		$tabberItems = array();
-		$tabberMarkers = self::getMarkers( $value, 'TABBER' );
-		for ( $i = 0; $i < count ( $tabberMarkers ); $i++ ) {
-			$tabberHtml = $this->getExternalParser()->parseRecursive( $tabberMarkers[$i] );
+		$tabberMarkers = self::getMarkers( $value, self::TABBER );
+		foreach ( $tabberMarkers as $marker ) {
+			$tabberHtml = $this->getExternalParser()->parseRecursive( $marker );
 			$tabberItems = array_merge( $tabberItems, self::getTabberData( $tabberHtml ) );
 		}
 		return $tabberItems;
@@ -152,7 +130,8 @@ class NodeImage extends Node {
 			'name' => $titleObj ? $titleObj->getText() : '',
 			'key' => $titleObj ? $titleObj->getDBKey() : '',
 			'alt' => $alt,
-			'caption' => $caption,
+			'caption' => \SanitizerBuilder::createFromType( 'image' )
+				->sanitize( [ 'caption' => $caption ] )['caption'],
 			'isVideo' => false
 		];
 
@@ -173,15 +152,15 @@ class NodeImage extends Node {
 		return true;
 	}
 
-	public function getSource() {
-		$sources = $this->extractSourceFromNode( $this->xmlNode );
+	public function getSources() {
+		$sources = $this->extractSourcesFromNode( $this->xmlNode );
 		if ( $this->xmlNode->{self::ALT_TAG_NAME} ) {
 			$sources = array_merge( $sources,
-				$this->extractSourceFromNode( $this->xmlNode->{self::ALT_TAG_NAME} ) );
+				$this->extractSourcesFromNode( $this->xmlNode->{self::ALT_TAG_NAME} ) );
 		}
 		if ( $this->xmlNode->{self::CAPTION_TAG_NAME} ) {
 			$sources = array_merge( $sources,
-				$this->extractSourceFromNode( $this->xmlNode->{self::CAPTION_TAG_NAME} ) );
+				$this->extractSourcesFromNode( $this->xmlNode->{self::CAPTION_TAG_NAME} ) );
 		}
 
 		return array_unique( $sources );

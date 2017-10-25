@@ -24,6 +24,7 @@ module.exports = function (config) {
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/polyfills/bind.js',
+			'resources/wikia/polyfills/promise.js',
 			'resources/mediawiki/mediawiki.js',
 
 			//JSMessages
@@ -48,6 +49,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/browserDetect.js',
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
+			'resources/wikia/modules/domCalculator.js',
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/iframeWriter.js',
 			'resources/wikia/modules/imageServing.js',
@@ -61,8 +63,10 @@ module.exports = function (config) {
 			'resources/wikia/modules/scriptwriter.js',
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
+			'resources/wikia/modules/throttle.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/modules/viewportObserver.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
 
@@ -91,12 +95,16 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/config/*.js',
 			'extensions/wikia/AdEngine/js/context/*.js',
 			'extensions/wikia/AdEngine/js/lookup/**/*.js',
+			'extensions/wikia/AdEngine/js/ml/**/*.js',
 			'extensions/wikia/AdEngine/js/provider/*.js',
 			'extensions/wikia/AdEngine/js/provider/gpt/*.js',
 			'extensions/wikia/AdEngine/js/slot/*.js',
+			'extensions/wikia/AdEngine/js/slot/**/*.js',
 			'extensions/wikia/AdEngine/js/template/*.js',
+			'extensions/wikia/AdEngine/js/tracking/*.js',
 			'extensions/wikia/AdEngine/js/utils/*.js',
-			'extensions/wikia/AdEngine/js/video/*.js',
+			'extensions/wikia/AdEngine/js/video/**/*.js',
+			'extensions/wikia/AdEngine/js/wrappers/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
@@ -107,11 +115,6 @@ module.exports = function (config) {
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
 			'extensions/wikia/PhalanxII/spec/*.spec.js',
-
-			//Wikia HomePage
-			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.mocks.js',
-			'extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
-			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
 
 			/**
 			 * Extension: VideoPageTool
@@ -167,22 +170,10 @@ module.exports = function (config) {
 			'extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js',
 
-			// ImageLazyLoad
-			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
-			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
-			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
-
 			// Thumbnails
 			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
 			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
-
-			// WikiaMaps
-			'extensions/wikia/WikiaMaps/js/WikiaMapsPoiCategories.js',
-			'extensions/wikia/WikiaMaps/js/models/WikiaMapsPoiCategoriesModel.js',
-			'extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-			'extensions/wikia/WikiaMaps/spec/*.spec.js',
 
 			// MediaGalleries
 			'extensions/wikia/MediaGallery/scripts/templates.mustache.js',
@@ -221,6 +212,18 @@ module.exports = function (config) {
 			// Flow Tracking
 			'extensions/wikia/FlowTracking/scripts/createPageTracking.js',
 			'extensions/wikia/FlowTracking/scripts/spec/createPageTracking.spec.js',
+
+			// Article Video
+			'extensions/wikia/ArticleVideo/scripts/*.js',
+			'extensions/wikia/ArticleVideo/scripts/spec/*.spec.js',
+
+			// Tabber
+			'extensions/3rdparty/tabber/tabber.js',
+			'extensions/3rdparty/tabber/spec/tabber.spec.js',
+
+			// Image Lazy Loading
+			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+			'extensions/wikia/ImageLazyLoad/spec/ImgLzy.spec.js'
 		]
 	});
 };

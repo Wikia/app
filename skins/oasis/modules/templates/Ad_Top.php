@@ -3,7 +3,7 @@
 	<div class="WikiaTopAdsInner">
 
 		<?= $app->renderView('Ad', 'Index', [
-			'slotName' => $leaderboardName,
+			'slotName' => 'TOP_LEADERBOARD',
 			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
 		]); ?>
 

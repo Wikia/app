@@ -103,7 +103,8 @@ class UserIdentityBox extends WikiaObject {
 			// data depends on which wiki it is displayed
 			$data['registration'] = $this->userStats['firstContributionTimestamp'];
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
-
+			$data['contributionsURL'] = Skin::makeSpecialUrlSubpage( 'Contributions', $userName );
+			
 			$data = call_user_func( array( $this, $dataType ), $data );
 
 			if ( !( $iEdits || $this->shouldDisplayFullMasthead() ) ) {
@@ -122,7 +123,7 @@ class UserIdentityBox extends WikiaObject {
 		}
 
 		// Sanitize data to prevent XSS (VE-720)
-		$keysToSanitize = [ 'gender', 'location', 'name', 'occupation', 'realName', 'twitter', 'fbPage', 'website' ];
+		$keysToSanitize = [ 'gender', 'location', 'name', 'occupation', 'realName', 'twitter', 'fbPage', 'website', 'bio' ];
 		foreach ( $keysToSanitize as $key ) {
 			if ( !empty( $data[ $key ] ) ) {
 				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ), ENT_QUOTES );
@@ -209,7 +210,7 @@ class UserIdentityBox extends WikiaObject {
 		$memcData = $wgMemc->get( $this->getMemcUserIdentityDataKey() );
 
 		if ( empty( $memcData ) ) {
-			foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis' ) as $key ) {
+			foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis', 'bio' ) as $key ) {
 				if ( $key === 'hideEditsWikis' ) {
 					// hideEditsWikis is a preference, everything else is an attribute
 					$data[$key] = $this->user->getGlobalPreference( $key );
@@ -366,9 +367,8 @@ class UserIdentityBox extends WikiaObject {
 
 		if ( true === $changed ) {
 			$this->user->setGlobalFlag( self::USER_EVER_EDITED_MASTHEAD, true );
-
 			$this->user->saveSettings();
-			$this->saveMemcUserIdentityData( $data );
+			$this->clearMemcUserIdentityData();
 
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -407,7 +407,7 @@ class UserIdentityBox extends WikiaObject {
 		wfProfileIn( __METHOD__ );
 
 		$_ = array();
-		$res = wfRunHooks( 'SpamFilterCheck', array( $spamSubject, null, &$_ ) );
+		$res = Hooks::run( 'SpamFilterCheck', array( $spamSubject, null, &$_ ) );
 
 		wfProfileOut( __METHOD__ );
 		return $res;
@@ -421,7 +421,7 @@ class UserIdentityBox extends WikiaObject {
 	 * @return array
 	 */
 	private function saveMemcUserIdentityData( $data ) {
-		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis' ) as $property ) {
+		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis', 'bio' ) as $property ) {
 			if ( is_object( $data ) && isset( $data->$property ) ) {
 				$memcData[$property] = $data->$property;
 			}
@@ -465,6 +465,10 @@ class UserIdentityBox extends WikiaObject {
 		$this->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData, self::CACHE_TTL );
 
 		return $memcData;
+	}
+
+	private function clearMemcUserIdentityData() {
+		$this->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
 	}
 
 	/**
@@ -512,7 +516,7 @@ class UserIdentityBox extends WikiaObject {
 
 		$result = true;
 
-		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis' ];
+		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis', 'bio' ];
 
 		foreach ( $data as $property => $value ) {
 			if ( in_array( $property, $fieldsToCheck ) && !empty( $value ) ) {
@@ -585,7 +589,11 @@ class UserIdentityBox extends WikiaObject {
 	 * @return array
 	 */
 	public function getTopWikis( $refreshHidden = false ) {
-		return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
+		if ( $this->user->getGlobalPreference( 'hideEditsWikis' ) ) {
+			return [];
+		} else {
+			return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
+		}
 	}
 
 	/**

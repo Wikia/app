@@ -1,6 +1,7 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
+class WikiaApiControllerTest extends TestCase {
 	/**
 	 * @var Boolean
 	 */
@@ -22,14 +23,14 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 	 * @covers WikiaApiController::hideNonCommercialContent
 	 */
 	public function test_hideNonCommercialContent() {
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/api/v1...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
 		$this->assertTrue($controller->hideNonCommercialContent(), "This request should allowed only content".
 											" that may be used commercially");	
 
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/wikia.php?...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
@@ -40,19 +41,19 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 	 * @covers WikiaApiController::getApiVersion
 	 */
 	public function test_getApiVersion() {
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/api/v1...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
 		$this->assertEquals($controller->getApiVersion(), 1);
 
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/wikia.php?...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
 		$this->assertEquals($controller->getApiVersion(), WikiaApiController::API_ENDPOINT_INTERNAL );
 
-		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
+		$requestMock = $this->createMock( WikiaRequest::class );
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/api/test...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
@@ -131,8 +132,9 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			->method( 'serveImages' )
 			->will( $this->returnValue( $serveImages ) );
 
-		$mockResponse = $this->getMockBuilder( 'StdClass' )
-			->setMethods( [ 'setData', 'setCacheValidity' ] )
+		$mockResponse = $this->getMockBuilder( WikiaResponse::class )
+			->setMethods( [ 'setData', 'setCacheValidity', 'getVal' ] )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$mockResponse->expects( $this->once() )
@@ -149,8 +151,9 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			->method( 'getVal' )
 			->will( $this->returnValue( null ) );
 
-		$mockRequest = $this->getMockBuilder( 'StdClass' )
+		$mockRequest = $this->getMockBuilder( WikiaRequest::class )
 			->setMethods( [ 'getVal', 'isInternal' ] )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$mockRequest->expects( $this->any() )
@@ -285,8 +288,9 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			->method( 'serveImages' )
 			->will( $this->returnValue( true ) );
 
-		$mockResponse = $this->getMockBuilder( 'StdClass' )
-			->setMethods( [ 'setData', 'setCacheValidity' ] )
+		$mockResponse = $this->getMockBuilder( WikiaResponse::class )
+			->setMethods( [ 'setData', 'setCacheValidity', 'getVal' ] )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$mockResponse->expects( $this->once() )
@@ -297,8 +301,9 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			->method( 'getVal' )
 			->will( $this->returnValue( null ) );
 
-		$mockRequest = $this->getMockBuilder( 'StdClass' )
+		$mockRequest = $this->getMockBuilder( WikiaRequest::class )
 			->setMethods( [ 'getVal', 'isInternal' ] )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$mockRequest->expects( $this->any() )

@@ -1,303 +1,321 @@
-<?php
-/**
- * Diff
+<?php declare(strict_types=1);
+/*
+ * This file is part of sebastian/diff.
  *
- * Copyright (c) 2001-2013, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    Diff
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Kore Nordmann <mail@kore-nordmann.de>
- * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/diff
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace SebastianBergmann\Diff;
 
+use SebastianBergmann\Diff\Output\DiffOutputBuilderInterface;
+use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
+
 /**
  * Diff implementation.
- *
- * @package    Diff
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Kore Nordmann <mail@kore-nordmann.de>
- * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/diff
  */
-class Differ
+final class Differ
 {
     /**
-     * @var string
+     * @var DiffOutputBuilderInterface
      */
-    private $header;
+    private $outputBuilder;
 
     /**
-     * Constructor
+     * @param DiffOutputBuilderInterface $outputBuilder
      *
-     * @param string $header
+     * @throws InvalidArgumentException
      */
-    public function __construct($header = "--- Original\n+++ New\n")
+    public function __construct($outputBuilder = null)
     {
-        $this->header = $header;
+        if ($outputBuilder instanceof DiffOutputBuilderInterface) {
+            $this->outputBuilder = $outputBuilder;
+        } elseif (null === $outputBuilder) {
+            $this->outputBuilder = new UnifiedDiffOutputBuilder;
+        } elseif (\is_string($outputBuilder)) {
+            // PHPUnit 6.1.4, 6.2.0, 6.2.1, 6.2.2, and 6.2.3 support
+            // @see https://github.com/sebastianbergmann/phpunit/issues/2734#issuecomment-314514056
+            // @deprecated
+            $this->outputBuilder = new UnifiedDiffOutputBuilder($outputBuilder);
+        } else {
+            throw new InvalidArgumentException(
+                \sprintf(
+                    'Expected builder to be an instance of DiffOutputBuilderInterface, <null> or a string, got %s.',
+                    \is_object($outputBuilder) ? 'instance of "' . \get_class($outputBuilder) . '"' : \gettype($outputBuilder) . ' "' . $outputBuilder . '"'
+                )
+            );
+        }
     }
 
     /**
      * Returns the diff between two arrays or strings as string.
      *
-     * @param  array|string $from
-     * @param  array|string $to
+     * @param array|string                            $from
+     * @param array|string                            $to
+     * @param LongestCommonSubsequenceCalculator|null $lcs
+     *
      * @return string
      */
-    public function diff($from, $to)
+    public function diff($from, $to, LongestCommonSubsequenceCalculator $lcs = null): string
     {
-        $buffer = $this->header;
-        $diff   = $this->diffToArray($from,$to);
+        $from = $this->validateDiffInput($from);
+        $to   = $this->validateDiffInput($to);
+        $diff = $this->diffToArray($from, $to, $lcs);
 
-        $inOld = FALSE;
-        $i     = 0;
-        $old   = array();
+        return $this->outputBuilder->getDiff($diff);
+    }
 
-        foreach ($diff as $line) {
-            if ($line[1] ===  0 /* OLD */) {
-                if ($inOld === FALSE) {
-                    $inOld = $i;
-                }
-            }
-
-            else if ($inOld !== FALSE) {
-                if (($i - $inOld) > 5) {
-                    $old[$inOld] = $i - 1;
-                }
-
-                $inOld = FALSE;
-            }
-
-            ++$i;
+    /**
+     * Casts variable to string if it is not a string or array.
+     *
+     * @param mixed $input
+     *
+     * @return string
+     */
+    private function validateDiffInput($input): string
+    {
+        if (!\is_array($input) && !\is_string($input)) {
+            return (string) $input;
         }
 
-        $start = isset($old[0]) ? $old[0] : 0;
-        $end   = count($diff);
-
-        if ($tmp = array_search($end, $old)) {
-            $end = $tmp;
-        }
-
-        $newChunk = TRUE;
-
-        for ($i = $start; $i < $end; $i++) {
-            if (isset($old[$i])) {
-                $buffer  .= "\n";
-                $newChunk = TRUE;
-                $i        = $old[$i];
-            }
-
-            if ($newChunk) {
-                $buffer  .= "@@ @@\n";
-                $newChunk = FALSE;
-            }
-
-            if ($diff[$i][1] === 1 /* ADDED */) {
-                $buffer .= '+' . $diff[$i][0] . "\n";
-            }
-
-            else if ($diff[$i][1] === 2 /* REMOVED */) {
-                $buffer .= '-' . $diff[$i][0] . "\n";
-            }
-
-            else {
-                $buffer .= ' ' . $diff[$i][0] . "\n";
-            }
-        }
-
-        return $buffer;
+        return $input;
     }
 
     /**
      * Returns the diff between two arrays or strings as array.
      *
      * Each array element contains two elements:
-     *   - [0] => string $token
+     *   - [0] => mixed $token
      *   - [1] => 2|1|0
      *
      * - 2: REMOVED: $token was removed from $from
      * - 1: ADDED: $token was added to $from
      * - 0: OLD: $token is not changed in $to
      *
-     * @param  array|string $from
-     * @param  array|string $to
+     * @param array|string                       $from
+     * @param array|string                       $to
+     * @param LongestCommonSubsequenceCalculator $lcs
+     *
      * @return array
      */
-    public function diffToArray($from, $to)
+    public function diffToArray($from, $to, LongestCommonSubsequenceCalculator $lcs = null): array
     {
-        preg_match_all('(\r\n|\r|\n)', $from, $fromMatches);
-        preg_match_all('(\r\n|\r|\n)', $to, $toMatches);
-
-        if (is_string($from)) {
-            $from = preg_split('(\r\n|\r|\n)', $from);
+        if (\is_string($from)) {
+            $from = $this->splitStringByLines($from);
+        } elseif (!\is_array($from)) {
+            throw new \InvalidArgumentException('"from" must be an array or string.');
         }
 
-        if (is_string($to)) {
-            $to = preg_split('(\r\n|\r|\n)', $to);
+        if (\is_string($to)) {
+            $to = $this->splitStringByLines($to);
+        } elseif (!\is_array($to)) {
+            throw new \InvalidArgumentException('"to" must be an array or string.');
         }
 
-        $start      = array();
-        $end        = array();
-        $fromLength = count($from);
-        $toLength   = count($to);
-        $length     = min($fromLength, $toLength);
+        list($from, $to, $start, $end) = self::getArrayDiffParted($from, $to);
 
-        for ($i = 0; $i < $length; ++$i) {
-            if ($from[$i] === $to[$i]) {
-                $start[] = $from[$i];
-                unset($from[$i], $to[$i]);
-            } else {
-                break;
-            }
+        if ($lcs === null) {
+            $lcs = $this->selectLcsImplementation($from, $to);
         }
 
-        $length -= $i;
-
-        for ($i = 1; $i < $length; ++$i) {
-            if ($from[$fromLength - $i] === $to[$toLength - $i]) {
-                array_unshift($end, $from[$fromLength - $i]);
-                unset($from[$fromLength - $i], $to[$toLength - $i]);
-            } else {
-                break;
-            }
-        }
-
-        $common = $this->longestCommonSubsequence(
-          array_values($from), array_values($to)
-        );
-
-        $diff = array();
-
-        if (isset($fromMatches[0]) && $toMatches[0] &&
-            count($fromMatches[0]) === count($toMatches[0]) &&
-            $fromMatches[0] !== $toMatches[0]) {
-            $diff[] = array(
-              '#Warning: Strings contain different line endings!', 0
-            );
-        }
+        $common = $lcs->calculate(\array_values($from), \array_values($to));
+        $diff   = [];
 
         foreach ($start as $token) {
-            $diff[] = array($token, 0 /* OLD */);
+            $diff[] = [$token, 0 /* OLD */];
         }
 
-        reset($from);
-        reset($to);
+        \reset($from);
+        \reset($to);
 
         foreach ($common as $token) {
-            while ((($fromToken = reset($from)) !== $token)) {
-                $diff[] = array(array_shift($from), 2 /* REMOVED */);
+            while (($fromToken = \reset($from)) !== $token) {
+                $diff[] = [\array_shift($from), 2 /* REMOVED */];
             }
 
-            while ((($toToken = reset($to)) !== $token)) {
-                $diff[] = array(array_shift($to), 1 /* ADDED */);
+            while (($toToken = \reset($to)) !== $token) {
+                $diff[] = [\array_shift($to), 1 /* ADDED */];
             }
 
-            $diff[] = array($token, 0 /* OLD */);
+            $diff[] = [$token, 0 /* OLD */];
 
-            array_shift($from);
-            array_shift($to);
+            \array_shift($from);
+            \array_shift($to);
         }
 
-        while (($token = array_shift($from)) !== NULL) {
-            $diff[] = array($token, 2 /* REMOVED */);
+        while (($token = \array_shift($from)) !== null) {
+            $diff[] = [$token, 2 /* REMOVED */];
         }
 
-        while (($token = array_shift($to)) !== NULL) {
-            $diff[] = array($token, 1 /* ADDED */);
+        while (($token = \array_shift($to)) !== null) {
+            $diff[] = [$token, 1 /* ADDED */];
         }
 
         foreach ($end as $token) {
-            $diff[] = array($token, 0 /* OLD */);
+            $diff[] = [$token, 0 /* OLD */];
+        }
+
+        if ($this->detectUnmatchedLineEndings($diff)) {
+            \array_unshift($diff, ["#Warning: Strings contain different line endings!\n", 3]);
         }
 
         return $diff;
     }
 
     /**
-     * Calculates the longest common subsequence of two arrays.
+     * Checks if input is string, if so it will split it line-by-line.
      *
-     * @param  array $from
-     * @param  array $to
+     * @param string $input
+     *
      * @return array
      */
-    private function longestCommonSubsequence(array $from, array $to)
+    private function splitStringByLines(string $input): array
     {
-        $common     = array();
-        $matrix     = array();
-        $fromLength = count($from);
-        $toLength   = count($to);
+        return \preg_split('/(.*\R)/', $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+    }
 
-        for ($i = 0; $i <= $fromLength; ++$i) {
-            $matrix[$i][0] = 0;
+    /**
+     * @param array $from
+     * @param array $to
+     *
+     * @return LongestCommonSubsequenceCalculator
+     */
+    private function selectLcsImplementation(array $from, array $to): LongestCommonSubsequenceCalculator
+    {
+        // We do not want to use the time-efficient implementation if its memory
+        // footprint will probably exceed this value. Note that the footprint
+        // calculation is only an estimation for the matrix and the LCS method
+        // will typically allocate a bit more memory than this.
+        $memoryLimit = 100 * 1024 * 1024;
+
+        if ($this->calculateEstimatedFootprint($from, $to) > $memoryLimit) {
+            return new MemoryEfficientLongestCommonSubsequenceCalculator;
         }
 
-        for ($j = 0; $j <= $toLength; ++$j) {
-            $matrix[0][$j] = 0;
-        }
+        return new TimeEfficientLongestCommonSubsequenceCalculator;
+    }
 
-        for ($i = 1; $i <= $fromLength; ++$i) {
-            for ($j = 1; $j <= $toLength; ++$j) {
-                $matrix[$i][$j] = max(
-                  $matrix[$i-1][$j],
-                  $matrix[$i][$j-1],
-                  $from[$i-1] === $to[$j-1] ? $matrix[$i-1][$j-1] + 1 : 0
-                );
+    /**
+     * Calculates the estimated memory footprint for the DP-based method.
+     *
+     * @param array $from
+     * @param array $to
+     *
+     * @return int|float
+     */
+    private function calculateEstimatedFootprint(array $from, array $to)
+    {
+        $itemSize = PHP_INT_SIZE === 4 ? 76 : 144;
+
+        return $itemSize * \min(\count($from), \count($to)) ** 2;
+    }
+
+    /**
+     * Returns true if line ends don't match in a diff.
+     *
+     * @param array $diff
+     *
+     * @return bool
+     */
+    private function detectUnmatchedLineEndings(array $diff): bool
+    {
+        $newLineBreaks = ['' => true];
+        $oldLineBreaks = ['' => true];
+
+        foreach ($diff as $entry) {
+            if (0 === $entry[1]) { /* OLD */
+                $ln                 = $this->getLinebreak($entry[0]);
+                $oldLineBreaks[$ln] = true;
+                $newLineBreaks[$ln] = true;
+            } elseif (1 === $entry[1]) {  /* ADDED */
+                $newLineBreaks[$this->getLinebreak($entry[0])] = true;
+            } elseif (2 === $entry[1]) {  /* REMOVED */
+                $oldLineBreaks[$this->getLinebreak($entry[0])] = true;
             }
         }
 
-        $i = $fromLength;
-        $j = $toLength;
+        // if either input or output is a single line without breaks than no warning should be raised
+        if (['' => true] === $newLineBreaks || ['' => true] === $oldLineBreaks) {
+            return false;
+        }
 
-        while ($i > 0 && $j > 0) {
-            if ($from[$i-1] === $to[$j-1]) {
-                array_unshift($common, $from[$i-1]);
-                --$i;
-                --$j;
-            }
-
-            else if ($matrix[$i][$j-1] > $matrix[$i-1][$j]) {
-                --$j;
-            }
-
-            else {
-                --$i;
+        // two way compare
+        foreach ($newLineBreaks as $break => $set) {
+            if (!isset($oldLineBreaks[$break])) {
+                return true;
             }
         }
 
-        return $common;
+        foreach ($oldLineBreaks as $break => $set) {
+            if (!isset($newLineBreaks[$break])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getLinebreak($line): string
+    {
+        if (!\is_string($line)) {
+            return '';
+        }
+
+        $lc = \substr($line, -1);
+        if ("\r" === $lc) {
+            return "\r";
+        }
+
+        if ("\n" !== $lc) {
+            return '';
+        }
+
+        if ("\r\n" === \substr($line, -2)) {
+            return "\r\n";
+        }
+
+        return "\n";
+    }
+
+    private static function getArrayDiffParted(array &$from, array &$to): array
+    {
+        $start = [];
+        $end   = [];
+
+        \reset($to);
+
+        foreach ($from as $k => $v) {
+            $toK = \key($to);
+
+            if ($toK === $k && $v === $to[$k]) {
+                $start[$k] = $v;
+
+                unset($from[$k], $to[$k]);
+            } else {
+                break;
+            }
+        }
+
+        \end($from);
+        \end($to);
+
+        do {
+            $fromK = \key($from);
+            $toK   = \key($to);
+
+            if (null === $fromK || null === $toK || \current($from) !== \current($to)) {
+                break;
+            }
+
+            \prev($from);
+            \prev($to);
+
+            $end = [$fromK => $from[$fromK]] + $end;
+            unset($from[$fromK], $to[$toK]);
+        } while (true);
+
+        return [$from, $to, $start, $end];
     }
 }

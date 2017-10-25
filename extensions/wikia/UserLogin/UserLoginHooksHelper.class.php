@@ -23,7 +23,7 @@ class UserLoginHooksHelper {
 	}
 
 	// show request form for Special:ConfirmEmail
-	public static function onConfirmEmailShowRequestForm( EmailConfirmation &$pageObj, &$show ) {
+	public static function onConfirmEmailShowRequestForm( EmailConfirmation $pageObj, bool &$show ): bool {
 		$show = false;
 		if (
 			Sanitizer::validateEmail( $pageObj->getUser()->getEmail() )
@@ -39,7 +39,7 @@ class UserLoginHooksHelper {
 	}
 
 	// set parameters for User::sendConfirmationEmail()
-	public static function onUserSendConfirmationMail( User &$user, &$args, &$priority, &$url, $token, $ip_arg, $type ) {
+	public static function onUserSendConfirmationMail( User $user, &$args, &$priority, &$url, $token, $ip_arg, $type ): bool {
 		if ( $type !== 'reactivateaccount' ) {
 			$priority = 1;  // confirmation emails are higher than default priority of 0
 			$url = $user->wikiaConfirmationTokenUrl( $token );
@@ -151,8 +151,9 @@ class UserLoginHooksHelper {
 	 */
 	public static function getUsersPerEmailFromDB( $sEmail ) {
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_SLAVE );
-		$iCount = $dbw->selectField( 'user',
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$iCount = $dbw->selectField( '`user`',
 			'count(*)',
 			array(
 				'user_email' => $sEmail,

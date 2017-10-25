@@ -1,0 +1,63 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+
+.wds-community-header {
+	@include community-header-theming(
+		$color-community-header,
+		$color-text,
+		$color-links,
+		$color-page,
+		$color-page-border
+	);
+
+	margin: 0 auto;
+
+	// z-index needs to be at least 5 to avoid appearing avatars from avatar_stack component (in community rail module)
+	// above the local nav dropdowns
+	z-index: 5;
+
+	+ .WikiaPage {
+		border-top: 0;
+	}
+
+	// these styles are compatible with the ones for #WikiaPage in 'skins/oasis/css/core/breakpoints-layout';
+	@if ($widthType == 0) {
+		@media #{$breakpoint-small-only} {
+			width: $page-width-small + $padding-width-small * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-small-plus} {
+			width: $page-width-small-plus + $padding-width-small-plus * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-medium-only} {
+			width: $page-width-medium + $padding-width-medium * 2 + $content-border-width * 2;
+		}
+
+		@media #{$breakpoint-large-up} {
+			width: $page-width-large + $padding-width-large * 2 + $content-border-width * 2;
+		}
+	}
+}
+
+.local-navigation-preview {
+	height: auto;
+	// this is max width of local navigation allowed
+	width: 755px;
+
+	// prevent changing font size in local nav preview
+	@media #{$breakpoint-below-small-plus} {
+		.wds-tabs__tab-label {
+			font-size: 12px;
+		}
+	}
+
+	.editpage-sourcewidemode-on {
+		.editpage-wikianavmode #EditPageToolbar:after {
+			height: 25px;
+		}
+	}
+}

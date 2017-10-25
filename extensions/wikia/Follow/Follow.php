@@ -24,7 +24,6 @@ if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
 	$wgHooks['AfterCategoriesUpdate'][] = 'FollowHelper::watchCategories';
 	$wgHooks['BlogListingSave'][] = 'FollowHelper::blogListingBuildRelation';
 	$wgHooks['ArticleSaveComplete'][] = "FollowHelper::watchBlogListing";
-	$wgHooks['CustomUserData'][] = 'FollowHelper::addToUserMenu';
 	$wgHooks['PersonalUrls'][] = 'FollowHelper::addPersonalUrl';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'FollowHelper::jsVars';
 	$wgHooks['AddToUserProfile'][] = 'FollowHelper::renderUserProfile';
@@ -35,8 +34,6 @@ if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
 }
 
 $wgHooks['beforeBlogListingForm'][] = 'FollowHelper::categoryIndexer';
-
-$wgHooks['UserToggles'][] = 'FollowHelper::addExtraToggles';
 
 $wgHooks['WatchlistPreferencesBefore'][] = 'FollowHelper::renderFollowPrefs';
 

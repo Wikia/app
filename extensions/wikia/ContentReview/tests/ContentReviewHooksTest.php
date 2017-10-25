@@ -54,11 +54,27 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider addingImportJSScriptsProvider
 	 */
-	public function testAddingImportJSScripts( $jsEnabled, $importScripts, $bottomScriptsResult ) {
-		$skinMock = $this->getMock( 'Skin' );
+	public function testAddingImportJSScripts( $jsEnabled, $userJsAllowed, $importScripts, $bottomScriptsResult ) {
 		$this->mockGlobalVariable( 'wgUseSiteJs', $jsEnabled );
-		$importJSMock = $this->getMock( 'Wikia\ContentReview\ImportJS', [ 'getImportScripts' ] );
 
+		$outputMock = $this->getMockBuilder( 'Output' )
+			->setMethods( [ 'isUserJsAllowed' ] )
+			->getMock();
+		$outputMock->expects( $this->any() )
+			->method( 'isUserJsAllowed' )
+			->will( $this->returnValue( $userJsAllowed ) );
+
+		$skinMock = $this->getMockBuilder( '\Skin' )
+			->disableOriginalConstructor()
+			->getMock();
+		$skinMock->expects( $this->any() )
+			->method( 'getOutput' )
+			->will( $this->returnValue( $outputMock ) );
+
+
+		$importJSMock = $this->getMockBuilder( 'Wikia\ContentReview\ImportJS' )
+			->setMethods( [ 'getImportScripts' ] )
+			->getMock();
 		$importJSMock->expects( $this->any() )
 			->method( 'getImportScripts' )
 			->will( $this->returnValue( $importScripts ) );
@@ -76,10 +92,24 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 		return [
 			[
 				true,
+				true,
 				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>',
 				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>',
 			],
 			[
+				true,
+				false,
+				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>',
+				''
+			],
+			[
+				false,
+				true,
+				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>',
+				'',
+			],
+			[
+				false,
 				false,
 				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>',
 				'',

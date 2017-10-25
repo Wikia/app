@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	'ext.wikia.adEngine.wrappers.prebid',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.document',
 	'wikia.querystring'
-], function (prebid, doc, QueryString) {
+], function (prebid, instartLogic, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikia',
@@ -37,7 +38,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	}
 
 	function isEnabled() {
-		return getPrice() !== 0;
+		return qs.getVal('wikia_adapter', false) !== false && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {

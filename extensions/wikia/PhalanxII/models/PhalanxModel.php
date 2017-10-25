@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 /**
  * @method PhalanxModel setBlock( $block )
  * @method object getBlock
@@ -9,18 +11,21 @@
  * @method bool getShouldLogInStats
  * @method User getUser
  * @method PhalanxModel setUser( User $user )
+ * @method PhalanxModel setService( PhalanxService $service )
  */
 abstract class PhalanxModel extends WikiaObject {
 	/** @var string $text */
-	public $text = null;
+	protected $text = null;
+
 	/** @var null|object $block Information about the current block that was triggered */
-	public $block = null;
+	protected $block = null;
 
 	/* @var User */
-	public $user = null;
+	protected $user = null;
+
 	/* @var PhalanxService */
 	private $service = null;
-	public $ip = null;
+	protected $ip = null;
 
 	protected $shouldLogInStats = true;
 
@@ -28,7 +33,7 @@ abstract class PhalanxModel extends WikiaObject {
 		parent::__construct();
 
 		$this->user = $this->wg->user;
-		$this->service = new PhalanxService();
+		$this->service = Injector::getInjector()->get( PhalanxService::class );
 		$this->ip = $this->wg->request->getIp();
 	}
 
@@ -92,14 +97,19 @@ abstract class PhalanxModel extends WikiaObject {
 
 	/**
 	 * Skip calls to Phalanx service if this method returns true
+	 * We must skip check if and only if:
+	 * - user has 'phalanxexempt' right (staff/VSTF/helper)
+	 * - this is an internal request (except if it's looking up different user, e.g. user-permissions service)
 	 *
-	 * @return bool
+	 * @return bool whether to skip call to Phalanx service
 	 */
-	public function isOk() {
+	public function isOk(): bool {
+		global $wgUser;
+
 		return (
-			( ( $this->user instanceof User ) && ( $this->user->getName() == $this->wg->User->getName() && $this->wg->User->isAllowed( 'phalanxexempt' ) ) ) ||
-			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) ) ||
-			$this->isWikiaInternalRequest()
+			// SUS-1522: Permit user-permissions service to look up Phalanx blocks for different users
+			( $this->isWikiaInternalRequest() && $this->user->equals( $wgUser ) ) ||
+			$this->user->isAllowed( 'phalanxexempt' )
 		);
 	}
 
@@ -120,20 +130,6 @@ abstract class PhalanxModel extends WikiaObject {
 				break;
 		}
 		return $result;
-	}
-
-	protected function fallback( $method, $type ) {
-		$fallback = "{$method}_{$type}_old";
-		$ret = false;
-		if ( method_exists( $this, $fallback ) ) {
-			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
-				'method' => $method,
-				'exception' => new Exception( 'Phalanx fallback triggered' )
-			] );
-
-			$ret = call_user_func( array( $this, $fallback ) );
-		}
-		return $ret;
 	}
 
 	public function logBlock() {
@@ -159,8 +155,6 @@ abstract class PhalanxModel extends WikiaObject {
 					$this->setBlock( $result )->$method();
 					$ret = false;
 				}
-			} else {
-				$ret = $this->fallback( "match", $type );
 			}
 		}
 
@@ -175,7 +169,7 @@ abstract class PhalanxModel extends WikiaObject {
 			# we have response from Phalanx service - 0/1
 			$ret = $result;
 		} else {
-			$ret = $this->fallback( "check", $type );
+			$ret = true;
 		}
 
 		return $ret;

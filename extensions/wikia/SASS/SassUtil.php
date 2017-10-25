@@ -7,7 +7,7 @@ class SassUtil {
 
 	const DEFAULT_OASIS_THEME = 'oasis';
 	const HEX_REG_EXP = '/#([a-f0-9]{3,6})/i';
-	const THEME_DESIGNER_COLOR_KEYS = array('color-body', 'color-body-middle', 'color-page', 'color-buttons', 'color-links', 'color-header');
+	const THEME_DESIGNER_COLOR_KEYS = array('color-body', 'color-body-middle', 'color-page', 'color-buttons', 'color-links', 'color-community-header', 'color-header');
 
 	/**
 	 * Returns complete set of sass parameters including theme settings set by user
@@ -76,9 +76,10 @@ class SassUtil {
 			$oasisSettings['color-body-middle'] = self::sanitizeColor($settings['color-body-middle']);
 			$oasisSettings['color-page'] = self::sanitizeColor($settings['color-page']);
 			$oasisSettings['color-buttons'] = self::sanitizeColor($settings['color-buttons']);
+			$oasisSettings['color-community-header'] = self::sanitizeColor($settings['color-community-header']);
 			$oasisSettings['color-links'] = self::sanitizeColor($settings['color-links']);
 			$oasisSettings['color-header'] = self::sanitizeColor($settings['color-header']);
-			$oasisSettings["background-image"] = $themeSettings->getBackgroundUrl();
+			$oasisSettings['background-image'] = $themeSettings->getBackgroundUrl();
 
 			// sending width and height of background image to SASS
 			if ( !empty($settings['background-image-width']) && !empty($settings['background-image-height']) ) {
@@ -89,10 +90,21 @@ class SassUtil {
 				// if not cached in theme settings
 				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
 				if ( !empty($bgImage) ) {
+					\Wikia\Logger\WikiaLogger::instance()->warning( 'Theme Designer background dimension not set', [
+						'backgroundImageTimestamp' => $bgImage->getTimestamp()
+					] );
+
 					$settings['background-image-width'] = $oasisSettings['background-image-width'] = $bgImage->getWidth();
 					$settings['background-image-height'] = $oasisSettings['background-image-height'] = $bgImage->getHeight();
 
-					$themeSettings->saveSettings($settings);
+					// SUS-3104: Do not run this in the context of the session user
+					$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+						'wgUser' => User::newFromName( Wikia::BOT_USER, false )
+					] );
+
+					$globalStateWrapper->wrap( function () use ( $themeSettings, $settings ) {
+						$themeSettings->saveSettings( $settings );
+					} );
 				}
 			}
 
@@ -106,8 +118,6 @@ class SassUtil {
 			if(self::isRTL()){
 				$oasisSettings['rtl'] = 'true';
 			}
-
-			wfRunHooks( 'AfterOasisSettingsInitialized', [ &$oasisSettings ] );
 
 			// RT:70673
 			foreach ($oasisSettings as $key => $val) {
@@ -156,6 +166,8 @@ class SassUtil {
 
 	/**
 	 * Get normalized color value (RT #74057)
+	 * @param string $color
+	 * @return string
 	 */
 	public static function sanitizeColor($color) {
 		$color = trim(strtolower($color));

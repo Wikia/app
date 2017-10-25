@@ -398,12 +398,12 @@
 		inlineVideoTrackingTimeout: 0,
 		// @param data - any extra params we want to pass to internal tracking
 		// Don't add willy nilly though... check with Jonathan.
-		track: function (action, label, value, data, method) {
+		track: function (action, label, value, data) {
 			Wikia.Tracker.track({
 				action: action,
 				category: 'lightbox',
 				label: label || '',
-				trackingMethod: method || 'internal',
+				trackingMethod: 'analytics',
 				value: value || 0
 			}, data);
 		},

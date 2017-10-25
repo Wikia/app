@@ -6,13 +6,14 @@ class ChatHooks {
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
 	public static function onGetRailModuleList( &$modules ) {
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
-		// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
-		$pos = F::app()->wg->User->isAnon() ? 1175 : 1286;
-
-		// Above spotlights, below everything else. BugzId: 4597.
-		$modules[$pos] = [ 'ChatRail', 'placeholder', null ];
+		if ( $wgUser->isLoggedIn() ) {
+			// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
+			// Above spotlights, below everything else. BugzId: 4597.
+			$modules[1286] = [ 'ChatRail', 'placeholder', null ];
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -21,18 +22,20 @@ class ChatHooks {
 
 	/**
 	 * Prepare a pre-rendered chat entry point for logged-in users
+	 * @param array $vars
+	 * @param OutputPage $out
+	 * @return bool
 	 */
-	public static function onMakeGlobalVariablesScript( &$vars ) {
-		global $wgUser;
-
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ): bool {
 		$chatUsers = [];
+		$user = $out->getUser();
 
-		if ( $wgUser->isLoggedIn() ) {
+		if ( $user->isLoggedIn() ) {
 			$chatUsers = ChatWidget::getUsersInfo();
 
 			if ( empty( $chatUsers ) ) {
 				// we will need it to attract user to join chat
-				$vars['wgWikiaChatProfileAvatarUrl'] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+				$vars['wgWikiaChatProfileAvatarUrl'] = AvatarService::getAvatarUrl( $user->getName(), ChatRailController::AVATAR_SIZE );
 			}
 		}
 
@@ -66,9 +69,7 @@ class ChatHooks {
 	 * @param Skin $skin
 	 * @return true to continue hook processing
 	 */
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		wfProfileIn( __METHOD__ );
-
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		$specialPages = [
 			'Contributions',
 			'Log',
@@ -83,7 +84,6 @@ class ChatHooks {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -136,7 +136,7 @@ class ChatHooks {
 				}
 			}
 		} elseif ( $logaction === 'chatconnect' && !empty( $paramArray ) ) {
-			$ipLinks = [ ];
+			$ipLinks = [];
 			if ( $wgUser->isAllowed( 'multilookup' ) ) {
 				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );
 				// Need to make the link manually for this as Linker's normaliseSpecialPage

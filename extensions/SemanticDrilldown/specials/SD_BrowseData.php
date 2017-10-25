@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Displays an interface to let the user drill down through all data on
  * the wiki, using categories and custom-defined filters that have
@@ -19,7 +20,7 @@ class SDBrowseData extends IncludableSpecialPage {
 
 	function execute( $query ) {
 		global $wgRequest, $wgOut, $wgTitle;
-		global $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
+		global $sdgScriptPath, $sdgNumResultsPerPage;
 
 		if ( $wgTitle->getNamespace() != NS_SPECIAL ) {
 			global $wgParser;
@@ -149,10 +150,6 @@ class SDBrowseDataPage extends QueryPage {
 		$this->offset = $offset;
 		$this->limit = $limit;
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$categorylinks = $dbr->tableName( 'categorylinks' );
-		$page = $dbr->tableName( 'page' );
-		$cat_ns = NS_CATEGORY;
 		if ( $this->subcategory ) {
 			$actual_cat = str_replace( ' ', '_', $this->subcategory );
 		} else {
@@ -208,14 +205,17 @@ class SDBrowseDataPage extends QueryPage {
 	 * all remaining filters
 	 */
 	function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
-		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
-		$dbr->query( $sql1 );
-		$sql2 = "CREATE INDEX id_index ON semantic_drilldown_values ( id )";
-		$dbr->query( $sql2 );
-		$sql3 = "INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id\n";
-		$sql3 .= $this->getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters );
-		$dbr->query( $sql3 );
+		$databaseConnection = wfGetDB( DB_SLAVE, 'smw' );
+		$temporaryTableManager = new TemporaryTableManager( $databaseConnection );
+
+		$temporaryTableManager->queryWithAutoCommit( 'CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )', __METHOD__ );
+		$temporaryTableManager->queryWithAutoCommit( 'CREATE INDEX id_index ON semantic_drilldown_values ( id )', __METHOD__ );
+
+		$sqlQuery = 'INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id' . PHP_EOL;
+		$sqlQuery .= $this->getSQLFromClause( $category, $subcategory, $subcategories,
+			$applied_filters );
+
+		$temporaryTableManager->queryWithAutoCommit( $sqlQuery, __METHOD__ );
 	}
 
 	/**
@@ -239,8 +239,6 @@ class SDBrowseDataPage extends QueryPage {
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
 	function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
-		global $smwgDefaultStore;
-
 		$dbr = wfGetDB( DB_SLAVE );
 		$smwIDs = $dbr->tableName( SDUtils::getIDsTableName() );
 		$smwCategoryInstances = $dbr->tableName( SDUtils::getCategoryInstancesTableName() );

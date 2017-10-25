@@ -17,23 +17,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					id: '1',
 					siteID: 183423
 				},
-				HOME_TOP_LEADERBOARD: {
-					sizes: [
-						[728, 90],
-						[970, 250]
-					],
-					id: '1',
-					siteID: 183423
-				},
 				TOP_RIGHT_BOXAD: {
-					sizes: [
-						[300, 250],
-						[300, 600]
-					],
-					id: '2',
-					siteID: 183567
-				},
-				HOME_TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]
@@ -88,6 +72,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					],
 					id: '9',
 					siteID: 185049
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					id: '12',
+					siteID: 209250
 				}
 			},
 			mercury: {
@@ -114,6 +106,80 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					id: '11',
 					siteID: 185056
 				}
+			},
+			recovery: {
+				TOP_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					id: '215807',
+					siteID: 183085
+				},
+				TOP_RIGHT_BOXAD: {
+					sizes: [
+						[300, 250],
+						[300, 600]
+					],
+					id: '215808',
+					siteID: 183085
+				},
+				PREFOOTER_LEFT_BOXAD: {
+					sizes: [
+						[300, 250]
+					],
+					id: '215813',
+					siteID: 183085
+				},
+				PREFOOTER_MIDDLE_BOXAD: {
+					sizes: [
+						[300, 250]
+					],
+					id: '215815',
+					siteID: 183085
+				},
+				PREFOOTER_RIGHT_BOXAD: {
+					sizes: [
+						[300, 250]
+					],
+					id: '215814',
+					siteID: 183085
+				},
+				LEFT_SKYSCRAPER_2: {
+					sizes: [
+						[160, 600],
+						[300, 600],
+						[300, 250]
+					],
+					id: '215811',
+					siteID: 183085
+				},
+				LEFT_SKYSCRAPER_3: {
+					sizes: [
+						[160, 600],
+						[300, 600],
+						[300, 250]
+					],
+					id: '215812',
+					siteID: 183085
+				},
+				INCONTENT_BOXAD_1: {
+					sizes: [
+						[160, 600],
+						[300, 600],
+						[300, 250]
+					],
+					id: '215809',
+					siteID: 183085
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					id: '215810',
+					siteID: 183085
+				}
 			}
 		};
 
@@ -121,8 +187,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		return geo.isProperGeo(instantGlobals.wgAdDriverIndexExchangeBidderCountries);
 	}
 
-	function getSlots(skin) {
-		return slotsContext.filterSlotMap(slots[skin]);
+	function getSlots(skin, isRecovering) {
+		var key = isRecovering ? 'recovery' : skin;
+
+		return slotsContext.filterSlotMap(slots[key]);
 	}
 
 	function prepareAdUnit(slotName, config) {

@@ -77,10 +77,10 @@ function lyricTagCss($out)
 	$css = <<<DOC
 .lyricbox
 {
-	padding: 1em 1em 0;
-	border: 1px solid silver;
-	color: black;
-	background-color: #ffffcc;
+	padding: 1em;
+	border: 1px solid #ccc;
+	color: #3a3a3a;
+	background-color: #f8f8f8;
 }
 .lyricsbreak{
 	clear:both;

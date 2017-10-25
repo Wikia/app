@@ -56,7 +56,7 @@ class SimpleCaptcha {
 	 * Insert the captcha prompt into an edit form.
 	 * @param OutputPage $out
 	 */
-	function editCallback( &$out ) {
+	function editCallback( OutputPage $out ) {
 		$out->addWikiText( $this->getMessage( $this->action ) );
 		$out->addHTML( $this->getForm() );
 	}
@@ -73,7 +73,7 @@ class SimpleCaptcha {
 		$text = wfMsg( $name );
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMsg( 'captcha-edit' ) : $text;
+		return wfEmptyMsg( $name ) ? wfMsg( 'captcha-edit' ) : $text;
 	}
 
 	/**
@@ -82,7 +82,7 @@ class SimpleCaptcha {
 	 * @param $form HTMLForm
 	 * @return bool true to keep running callbacks
 	 */
-	function injectEmailUser( &$form ) {
+	function injectEmailUser( HTMLForm $form ): bool {
 		global $wgCaptchaTriggers, $wgOut, $wgUser;
 		if ( $wgCaptchaTriggers['sendemail'] ) {
 			if ( $wgUser->isAllowed( 'skipcaptcha' ) ) {
@@ -104,8 +104,8 @@ class SimpleCaptcha {
 	 * @param QuickTemplate $template
 	 * @return bool true to keep running callbacks
 	 */
-	function injectUserCreate( &$template ) {
-		global $wgCaptchaTriggers, $wgOut, $wgUser;
+	function injectUserCreate( QuickTemplate $template ): bool {
+		global $wgCaptchaTriggers, $wgUser;
 		if ( $wgCaptchaTriggers['createaccount'] ) {
 			if ( $wgUser->isAllowed( 'skipcaptcha' ) ) {
 				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
@@ -113,7 +113,7 @@ class SimpleCaptcha {
 			}
 			/* Wikia change - begin */
 			$message = '';
-			wfRunHooks( 'GetConfirmEditMessage', array( $this, &$message) );
+			Hooks::run( 'GetConfirmEditMessage', array( $this, &$message) );
 			if ( empty($message) ) {
 				$message = $this->getMessage( 'createaccount' );
 			}
@@ -134,7 +134,7 @@ class SimpleCaptcha {
 	 * @param $template QuickTemplate
 	 * @return bool true to keep running callbacks
 	 */
-	function injectUserLogin( &$template ) {
+	function injectUserLogin( QuickTemplate $template ): bool {
 		if ( $this->isBadLoginTriggered() ) {
 			global $wgOut;
 			$template->set( 'header',
@@ -163,7 +163,7 @@ class SimpleCaptcha {
 			if ( !$count ) {
 				$wgMemc->add( $key, 0, $wgCaptchaBadLoginExpiration );
 			}
-			$count = $wgMemc->incr( $key );
+			$wgMemc->incr( $key );
 		}
 		return true;
 	}
@@ -248,7 +248,7 @@ class SimpleCaptcha {
 	 * @param string $section
 	 * @return bool true if the captcha should run
 	 */
-	function shouldCheck( &$editPage, $newtext, $section, $merged = false ) {
+	function shouldCheck( EditPage $editPage, $newtext, $section, $merged = false ) {
 		$this->trigger = '';
 		$title = $editPage->mArticle->getTitle();
 
@@ -305,7 +305,7 @@ class SimpleCaptcha {
 				$newLinks = $this->findLinks( $editPage, $newtext );
 			}
 
-			$unknownLinks = array_filter( $newLinks, array( &$this, 'filterLink' ) );
+			$unknownLinks = array_filter( $newLinks, [ $this, 'filterLink' ] );
 			$addedLinks = array_diff( $unknownLinks, $oldLinks );
 			$numLinks = count( $addedLinks );
 
@@ -474,14 +474,15 @@ class SimpleCaptcha {
 		}
 		
 		#<Wikia>
-		$result = null;                                                                                                                                                                  
-		if( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', array( &$this, &$editPage, $newtext, $section, $merged, &$result ) ) ) {                                                          
+		$result = null;
+		if ( !Hooks::run( 'ConfirmEdit::onConfirmEdit', [ $this, $editPage, $newtext, $section, $merged, &$result ] ) ) {
 			return $result;                                                                                                                                                          
 		}
 		#</Wikia>
                 
 		if ( !$this->doConfirmEdit( $editPage, $newtext, $section, $merged ) ) {
-			$editPage->showEditForm( array( &$this, 'editCallback' ) );
+			$editPage->showEditForm( [ $this, 'editCallback' ] );
+
 			return false;
 		}
 		return true;
@@ -593,7 +594,7 @@ class SimpleCaptcha {
 	 * @param $params array
 	 * @return bool
 	 */
-	public function APIGetAllowedParams( &$module, &$params ) {
+	public function APIGetAllowedParams( ApiBase $module, &$params ): bool {
 		if ( !$module instanceof ApiEditPage ) {
 			return true;
 		}
@@ -604,11 +605,11 @@ class SimpleCaptcha {
 	}
 
 	/**
-	 * @param $module ApiBae
+	 * @param $module ApiBase
 	 * @param $desc array
 	 * @return bool
 	 */
-	public function APIGetParamDescription( &$module, &$desc ) {
+	public function APIGetParamDescription( ApiBase $module, &$desc ): bool {
 		if ( !$module instanceof ApiEditPage ) {
 			return true;
 		}
@@ -715,7 +716,7 @@ class SimpleCaptcha {
 	 * @param string $text
 	 * @return array of strings
 	 */
-	function findLinks( &$editpage, $text ) {
+	function findLinks( EditPage $editpage, $text ): bool {
 		global $wgParser, $wgUser;
 
 		$options = new ParserOptions();

@@ -18,11 +18,13 @@ class PhalanxContentModel extends PhalanxModel {
 	 *
 	 * @return bool
 	 */
-	public function isOk() {
+	public function isOk(): bool {
+		global $wgUser;
+
 		return (
-			$this->wg->User->isAllowed( 'phalanxexempt' ) ||
 			!( $this->title instanceof Title ) ||
-			$this->isWikiaInternalRequest()
+			$this->isWikiaInternalRequest() ||
+			$wgUser->isAllowed( 'phalanxexempt' )
 		);
 	}
 
@@ -71,35 +73,15 @@ class PhalanxContentModel extends PhalanxModel {
 		return $this->setText( $summary )->match( "summary" );
 	}
 
-	public function match_summary_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
-		return ContentBlock::onEditFilter( '', $this->getText(), $this->block );
-	}
-
 	public function match_content( $textbox ) {
 		return $this->setText( $textbox )->match( "content" );
-	}
-
-	public function match_content_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
-		return ContentBlock::onEditFilter( $this->getText(), '', $this->block );
 	}
 
 	public function match_title() {
 		return $this->match( "title" );
 	}
 
-	public function match_title_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
-		return TitleBlock::genericTitleCheck( $this->title, $this->block );
-	}
-
 	public function match_question_title() {
 		return $this->match( "question_title" );
-	}
-
-	public function match_question_title_old() {
-		/* problem with Phalanx service? - use previous version of Phalanx extension - tested */
-		return QuestionTitleBlock::badWordsTest( $this->title, $this->block );
 	}
 }

@@ -1,14 +1,15 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class ArticleAsJsonTest extends WikiaBaseTest {
+class ArticleAsJsonTest extends TestCase {
 
 	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../ArticleAsJson.setup.php';
 		parent::setUp();
+		require_once __DIR__ . '/../ArticleAsJson.class.php';
 	}
 
 	/**
-	 * @dataProvider testUnwrapParsedTextFromParagraphDataProvider
+	 * @dataProvider unwrapParsedTextFromParagraphDataProvider
 	 * @param $text
 	 * @param $expectedOutput
 	 */
@@ -21,7 +22,7 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedOutput, $unwrappedText );
 	}
 
-	public function testUnwrapParsedTextFromParagraphDataProvider() {
+	public function unwrapParsedTextFromParagraphDataProvider() {
 		return [
 			[
 				'text' => '<p>Test</p>',
@@ -43,7 +44,7 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testIsIconImageDataProvider
+	 * @dataProvider isIconImageDataProvider
 	 * @param $details
 	 * @param $expectedOutput
 	 * @param $message info about the test case
@@ -57,7 +58,7 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedOutput, $method->invoke(new ArticleAsJson, $details, $handlerParams), $message);
 	}
 
-	public function testIsIconImageDataProvider() {
+	public function isIconImageDataProvider() {
 		return [
 			[
 				'details' => [
@@ -154,7 +155,7 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testScaleIconSizeDataProvider
+	 * @dataProvider scaleIconSizeDataProvider
 	 * @param $originalHeight
 	 * @param $originalWidth
 	 * @param $expectedOutput
@@ -168,7 +169,7 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedOutput, $output );
 	}
 
-	public function testScaleIconSizeDataProvider() {
+	public function scaleIconSizeDataProvider() {
 		return [
 			[
 				'originalHeight' => 100,

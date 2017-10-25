@@ -42,7 +42,7 @@ class OutputPageParserOutput {
 	 * @param OutputPage $outputPage
 	 * @param ParserOutput $parserOutput
 	 */
-	public function __construct( OutputPage &$outputPage, ParserOutput $parserOutput ) {
+	public function __construct( OutputPage $outputPage, ParserOutput $parserOutput ) {
 		$this->outputPage = $outputPage;
 		$this->parserOutput = $parserOutput;
 	}

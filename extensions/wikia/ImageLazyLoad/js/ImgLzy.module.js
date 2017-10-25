@@ -1,208 +1,100 @@
-/*global syslogReport: true */
+/*global document, window, syslogReport: true */
 /* jshint maxlen: 150 */
 /* Lazy loading for images inside articles (skips wikiamobile)
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
-define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnailer'], function ($, log, w, thumbnailer) {
+define('wikia.ImgLzy', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
-	var ImgLzy,
-		// allow WebP thumbnails for JPG and PNG files only
-		thumbExtCheckRegExp = /\.(jpg|jpeg|jpe|png)(\/)/i;
-
-	function logger(msg) {
-		log(msg, log.levels.info, 'ImgLzy');
-	}
+	var ImgLzy;
 
 	ImgLzy = {
-		cache: [],
-		timestats: 0,
-		browserSupportsWebP: false,
+		// load an image if it is within this many pixels from the edge of the viewport
+		prefetchDistance: 700,
+		loadQueue: [],
 
 		init: function () {
-			var proxy = $.proxy(this.checkAndLoad, this),
+			var proxy = this.onScroll.bind(this),
 				throttled = $.throttle(250, proxy);
 
-			this.$scroller = $('.scroller');
+			this.loadQueue = Array.prototype.slice.call(document.querySelectorAll('img.lzy'));
 
-			this.createCache();
-			this.checkAndLoad();
+			// Perform an initial sweep to load any nearby images
+			this.onScroll();
 
+			// Scan & load images every 250 ms if the user is scrolling
 			$(window).on('scroll', throttled);
-			this.$scroller.on('scroll', throttled);
-			$(document).on('tablesorter_sortComplete', proxy);
 
-			logger('initialized');
+			// If a sortable table is sorted, it might change the order of images in the table
+			document.addEventListener('tablesorter_sortComplete', proxy);
 		},
 
-		relativeTop: function ($el) {
-			return $el.offset().top - $el.parents('.scroller').offset().top;
-		},
-
-		absTop: function ($el) {
-			return $el.offset().top;
-		},
-
-		checkWebPSupport: function () {
-			logger('checking WebP support...');
-
-			// @see http://stackoverflow.com/a/5573422
-			var webP = new Image();
-			webP.src = 'data:image/webp;' +
-				'base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
-			webP.onload = webP.onerror = $.proxy(function () {
-				this.browserSupportsWebP = webP.height === 2;
-
-				logger('has support for WebP: ' + (this.browserSupportsWebP ? 'yes' : 'no'));
-
-				// report WebP support stats to Kibana
-				if (w.wgEnableWebPSupportStats === true && typeof syslogReport === 'function') {
-					syslogReport(log.levels.info, 'webp', {
-						'webp-support': this.browserSupportsWebP ? 'yes' : 'no'
-					});
-				}
-			}, this);
-		},
-
-		// rewrite the URL to request WebP thumbnails (if enabled on this wiki and supported by the browser)
-		rewriteURLForWebP: function (src) {
-			if (w.wgEnableWebPThumbnails === true && this.browserSupportsWebP && thumbExtCheckRegExp.test(src) && thumbnailer.isThumbUrl(src)) {
-				if (thumbnailer.isLegacyThumbnailerUrl(src)) {
-					src = src.replace(/\.[^\./]+$/, '.webp');
-				}
-				else {
-					// remove the existing format parameter
-					src = src.replace(/[\?&]format=\w+/, '');
-
-					// add "format=webp" to Vignette URL
-					src += src.indexOf('?') ? '&' : '?';
-					src += 'format=webp';
-				}
-			}
-			return src;
-		},
-
-		createCache: function () {
-			var self = this;
-
-			self.cache = [];
-			$('img.lzy').each(function () {
-				var $el = $(this),
-					$relativeTo = self.$scroller.find(this),
-					topCalc, top;
-
-				if ($relativeTo.length) {
-					$relativeTo = $relativeTo.parents('.scroller');
-					topCalc = self.relativeTop;
-				} else {
-					$relativeTo = $(window);
-					topCalc = self.absTop;
-				}
-
-				top = topCalc($el);
-				self.cache.push({
-					el: this,
-					$el: $el,
-					topCalc: topCalc,
-					top: top,
-					bottom: $el.height() + top,
-					$parent: $relativeTo
-				});
-			});
-		},
-
-		verifyCache: function () {
-			if (!this.cache.length) {
-				return;
-			}
-			// make sure that position of elements in the cache didn't change
-			var lastIdx = this.cache.length - 1,
-				randIdx = Math.floor(Math.random() * lastIdx),
-				checkIdx = [lastIdx, randIdx],
-				changed = false,
-				i,
-				idx,
-				pos,
-				diff;
-			for (i in checkIdx) {
-				idx = checkIdx[i];
-				if (idx in this.cache) {
-					pos = this.cache[idx].topCalc(this.cache[idx].$el);
-					diff = Math.abs(pos - this.cache[idx].top);
-
-					if (diff > 5) {
-						changed = true;
-						break;
-					}
-				}
-			}
-			if (changed) {
-				this.createCache();
-			}
-		},
-
+		/**
+		 * Manually load an image
+		 * @param {HTMLImageElement} image
+		 */
 		load: function (image) {
 			// this code can only be run from AJAX requests (ie. ImgLzy is registered AFTER DOM ready event
 			// so those are new images in DOM
-			var $img = $(image),
-				dataSrc = $img.data('src');
-			image.onload = '';
+			var dataSrc = image.getAttribute('data-src');
+			image.onload = function () {};
+
 			if (dataSrc) {
-				image.src = this.rewriteURLForWebP(dataSrc);
-			}
-			$img.removeClass('lzy').removeClass('lzyPlcHld');
-		},
-
-		parentVisible: function (item) {
-			if (item.$parent[0] === window) {
-				return true;
+				image.src = dataSrc;
 			}
 
-			var fold = $(window).scrollTop() + $(window).height(),
-				parentTop = item.$parent.offset().top;
-
-			return fold > parentTop;
+			image.classList.remove('lzy', 'lzyPlcHld');
 		},
 
-		checkAndLoad: function () {
-			this.verifyCache();
+		isVisibleInViewport: function (element) {
+			// the element is hidden, nothing to do
+			if (!element.offsetParent) {
+				return false;
+			}
 
-			var onload = function () {
-				this.setAttribute('class', this.getAttribute('class') + ' lzyLoaded');
-			},
-				scrollTop,
-				scrollSpeed,
-				scrollBottom,
-				idx,
-				inViewport,
-				cacheItem,
-				imgSrc;
+			var boundingClientRect = element.getBoundingClientRect();
 
-			for (idx in this.cache) {
-				cacheItem = this.cache[idx];
-				scrollTop = cacheItem.$parent.scrollTop();
-				scrollSpeed = Math.min(scrollTop, 1000) * 3 + 200;
-				scrollBottom = scrollTop + cacheItem.$parent.height() + scrollSpeed;
-				scrollTop = scrollTop - scrollSpeed;
+			// the top of the element must be above the bottom of the viewport or less than N pixels below it
+			// and its bottom must be below the top of the viewport or less than N pixels above it
+			return boundingClientRect.top - this.prefetchDistance < window.innerHeight &&
+				boundingClientRect.bottom + this.prefetchDistance > 0;
+		},
 
-				inViewport = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
-					(scrollTop < cacheItem.bottom && scrollBottom > cacheItem.bottom);
+		/**
+		 * On scroll, process the queue of images that have not yet been loaded,
+		 * and load the ones that are within the viewport.
+		 * After an image has been loaded, it is removed from the queue - otherwise it remains waiting.
+		 */
+		onScroll: function () {
+			var self = this;
 
-				if (inViewport && this.parentVisible(cacheItem)) {
-					cacheItem.$el.addClass('lzyTrns');
-					cacheItem.el.onload = onload;
-					imgSrc = this.rewriteURLForWebP(cacheItem.$el.data('src'));
-					if (imgSrc) {
-						cacheItem.el.src = imgSrc;
-					}
-					// Hack for IE: cached images aren't firing onload
-					if (cacheItem.el.complete) {
-						cacheItem.el.onload();
-					}
-					cacheItem.$el.removeClass('lzy');
-					delete this.cache[idx];
+			this.loadQueue = this.loadQueue.filter(function (image) {
+				// Image is not yet visible in viewport. Keep it in the queue.
+				if (!self.isVisibleInViewport(image)) {
+					return true;
 				}
-			}
+
+				image.onload = self.onImageLoaded;
+
+				var dataSrc = image.getAttribute('data-src');
+				if (dataSrc) {
+					image.src = dataSrc;
+				}
+
+				image.classList.add('lzyTrns');
+				image.classList.remove('lzy');
+
+				// image has been loaded, remove it from the queue
+				return false;
+			});
+		},
+
+		/**
+		 * Callback handler attached to images when loading begins
+		 * Executed in the context of the HTMLImageElement
+		 */
+		onImageLoaded: function () {
+			this.classList.add('lzyLoaded');
 		}
 	};
 

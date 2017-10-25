@@ -6,7 +6,19 @@ describe('Evolve2 Provider targeting', function () {
 		noop = function () {},
 		mocks = {
 			adContext: {
-				addCallback: noop
+				addCallback: noop,
+				getContext: function () {
+					return {
+						targeting: {
+							skin: 'oasis'
+						}
+					};
+				}
+			},
+			btfBlocker: {
+				decorate: function (callback) {
+					return callback;
+				}
 			},
 			eventDispatcher: {
 				dispatch: noop
@@ -25,19 +37,18 @@ describe('Evolve2 Provider targeting', function () {
 				getVertical: function () {
 					return mocks.vertical;
 				}
-			},
-			openXHelper: {}
+			}
 		};
 
 	function getEvolve2Provider() {
 		return modules['ext.wikia.adEngine.provider.evolve2'](
 			mocks.adContext,
+			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.slotTweaker,
 			mocks.zoneParams,
 			mocks.eventDispatcher,
-			mocks.log,
-			mocks.openXHelper
+			mocks.log
 		);
 	}
 
@@ -155,13 +166,6 @@ describe('Evolve2 Provider targeting', function () {
 
 		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
 		expect(adUnitElements[4]).toEqual(expectedSection);
-	});
-
-	it('Should increment pos tageting value for the same size slots', function () {
-		evolve2.fillInSlot(createSlot('TOP_RIGHT_BOXAD'));
-		evolve2.fillInSlot(createSlot('HOME_TOP_RIGHT_BOXAD'));
-
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].pos).toEqual('b');
 	});
 
 	it('Should start 160x600 with b pos and then increment', function () {

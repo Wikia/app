@@ -90,7 +90,7 @@ class UserStatsService extends WikiaModel {
 
 		// first user edit on given wiki
 		if ( $stats['editcount'] === 1 ) {
-			wfRunHooks( 'UserFirstEditOnLocalWiki', [ $this->userId, $this->getWikiId() ] );
+			Hooks::run( 'UserFirstEditOnLocalWiki', [ $this->userId, $this->getWikiId() ] );
 		}
 	}
 

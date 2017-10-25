@@ -1,68 +1,54 @@
 .wds-button {
-	@mixin button-background-color($background-color, $border-color:"") {
-		@if $border-color == "" {
-			$border-color: $background-color;
-		}
-		$active-color: darken($background-color, 20%);
-
-		background-color: $background-color;
-		border-color: $border-color;
-
-		&:focus:not(:disabled),
-		&:hover:not(:disabled),
-		&:active,
-		&.wds-is-active {
-			background-color: $active-color;
-			border-color: $active-color;
-		}
-	}
-
-	$active-color: darken($wds-color-link, 20%);
+	$button-squished-padding-horizontal: 12px;
 	$line-height: 1.3em;
 
-	@include button-background-color($wds-color-link);
+	@include button-theming($wds-color-link, $wds-color-white);
 
-	border: 1px solid;
-	color: $wds-color-white;
-	cursor: pointer;
-	display: inline-block;
+	align-items: center;
+	border-style: solid;
+	border-width: $wds-button-border-width;
+	box-sizing: content-box;
+	cursor: default;
+	display: inline-flex;
 	font-size: $wds-typescale-size-minus-2;
 	font-weight: 600;
+	justify-content: center;
 	letter-spacing: .15px;
 	line-height: $line-height;
+	margin: 0;
+	min-height: $wds-icon-small-size;
 	outline: none;
-	padding: 16px 18px 15px;
-	text-align: center;
+	padding: 14px $wds-button-padding-horizontal;
 	text-decoration: none;
 	text-transform: uppercase;
 	transition-duration: $wds-button-transition-duration;
 	transition-property: background-color, border-color, color;
+	vertical-align: top;
 	-webkit-appearance: none;
 	-webkit-border-radius: 0;
 
-
-	&:disabled,
-	&.wds-is-disabled {
-		cursor: default;
-		opacity: .5;
+	@at-root button#{&}, a#{&} {
+		cursor: pointer;
 	}
 
-	&.wds-is-secondary {
-		background-color: transparent;
-		color: $wds-color-link;
+	&:disabled {
+		@include is-disabled();
+	}
 
-		&:focus:not(:disabled),
-		&:hover:not(:disabled),
-		&:active,
-		&.wds-is-active {
-			background-color: transparent;
-			color: $active-color;
-		}
+	&:focus:not(:disabled),
+	&:hover:not(:disabled),
+	&:active,
+	&.wds-is-active {
+		text-decoration: none;
 	}
 
 	&.wds-is-squished {
 		font-size: $wds-typescale-size-minus-3;
-		padding: 10px 12px 9px;
+		padding: 7px $button-squished-padding-horizontal;
+
+		.wds-dropdown__toggle {
+			height: 13px;
+		}
 	}
 
 	&.wds-is-stretched {
@@ -70,8 +56,7 @@
 	}
 
 	&.wds-is-full-width {
-		box-sizing: border-box;
-		width: 100%;
+		display: flex;
 	}
 
 	&.wds-is-square {
@@ -84,17 +69,28 @@
 	}
 
 	&.wds-is-text {
-		background-color: transparent;
 		border: 0;
-		color: $wds-color-link;
+	}
 
-		&:focus:not(:disabled),
-		&:hover:not(:disabled),
-		&:active,
-		&.wds-is-active {
-			background-color: transparent;
-			color: $active-color;
+	.wds-icon:first-child {
+		align-self: center;
+		pointer-events: none;
+
+		&:not(:only-child) {
+			margin-right: $wds-button-padding-horizontal / 2;
 		}
+	}
+
+	.wds-list {
+		color: $wds-color-black;
+		font-weight: normal;
+		letter-spacing: normal;
+		text-transform: none;
+		text-align: left;
+	}
+
+	.wds-dropdown__content {
+		top: calc(100% + 1px);
 	}
 
 	$social-colors: (
@@ -102,6 +98,7 @@
 		googleplus: $wds-color-social-googleplus,
 		line: $wds-color-social-line,
 		linkedin: $wds-color-social-linkedin,
+		instagram: $wds-color-social-instagram,
 		meneame: $wds-color-social-meneame,
 		nk: $wds-color-social-nk,
 		odnoklassniki: $wds-color-social-odnoklassniki,
@@ -110,12 +107,13 @@
 		twitter: $wds-color-social-twitter,
 		vkontakte: $wds-color-social-vkontakte,
 		wykop: $wds-color-social-wykop,
-		weibo: $wds-color-social-weibo
+		weibo: $wds-color-social-weibo,
+		youtube: $wds-color-social-youtube
 	);
 
 	@each $social-name, $social-color in $social-colors {
 		&.wds-is-#{$social-name}-color {
-			@include button-background-color($social-color);
+			@include button-theming($social-color, $wds-color-white);
 		}
 	}
 }

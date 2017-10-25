@@ -1,4 +1,5 @@
 <?php
+
 class PhalanxModelTest extends WikiaBaseTest {
 	const VALID_USERNAME = 'WikiaTest';
 	const VALID_EMAIL = 'moli@wikia-inc.com';
@@ -27,13 +28,11 @@ class PhalanxModelTest extends WikiaBaseTest {
 
 	private function setUpUser( $userName, $email, $isAnon ) {
 		// User
-		$userMock = $this->mockClassWithMethods( 'User',
-			array(
-				'isAnon'  => $isAnon,
-				'getName' => $userName,
-				'getEmail' => $email
-			)
-		);
+		$userMock = $this->createConfiguredMock( User::class, [
+			'isAnon' => $isAnon,
+			'getName' => $userName,
+			'getEmail' => $email,
+		] );
 
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
@@ -41,24 +40,33 @@ class PhalanxModelTest extends WikiaBaseTest {
 	}
 
 	private function setUpTitle( $title ) {
-		// User
-		$titleMock = $this->mockClassWithMethods( 'Title',
-			array(
-				'newFromText'  => null,
-				'getFullText' => $title,
-				'getPrefixedText' => $title
-			),
-			'newFromText'
-		);
+		$titleMock = $this->createConfiguredMock( Title::class, [
+			'newFromText' => null,
+			'getFullText' => $title,
+			'getPrefixedText' => $title,
+		] );
 
 		$this->mockGlobalVariable( 'wgTitle', $titleMock );
 
 		return $titleMock;
 	}
 
-	private function setUpTest( $block ) {
-		// PhalanxService
-		$this->mockClassWithMethods( 'PhalanxService', array( 'match' => $block, 'setUser' => null, 'setLimit' => null ) );
+	/**
+	 * @param $block
+	 * @return PhalanxService|PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function setUpService( $block ) {
+		$phalanxServiceMock =
+			$this->getMockBuilder( PhalanxService::class )
+				->disableOriginalConstructor()
+				->setMethods( [ 'match' ] )
+				->getMock();
+
+		$phalanxServiceMock->expects( $this->any() )
+			->method( 'match' )
+			->willReturn( $block );
+
+		return $phalanxServiceMock;
 	}
 
 	/* PhalanxUserModel class */
@@ -68,10 +76,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxUserModelMatchUser( $isAnon, $userName, $email, $block, $result, $errorMsg ) {
 		$userMock = $this->setUpUser( $userName, $email, $isAnon );
-		$this->setUpTest( $block );
+		$phalanxServiceMock = $this->setUpService( $block );
 
-		// model
 		$model = new PhalanxUserModel( $userMock );
+		$model->setService( $phalanxServiceMock );
 		$ret = ( int ) $model->match_user();
 
 		$this->assertEquals( $result, $ret );
@@ -84,10 +92,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxUserModelMatchEmail( $isAnon, $userName, $email, $block, $result, $errorMsg ) {
 		$userMock = $this->setUpUser( $userName, $email, $isAnon );
-		$this->setUpTest( $block );
+		$phalanxServiceMock = $this->setUpService( $block );
 
-		// model
 		$model = new PhalanxUserModel( $userMock );
+		$model->setService( $phalanxServiceMock );
 		$ret = ( int ) $model->match_email();
 
 		$this->assertEquals( $result, $ret );
@@ -100,9 +108,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 * @dataProvider phalanxTextModelDataProvider
 	 */
 	public function testPhalanxTextModelWikiCreation( $text, $block, $result ) {
-		$this->setUpTest( $block );
+		$phalanxServiceMock = $this->setUpService( $block );
 
 		$model = new PhalanxTextModel( $text );
+		$model->setService( $phalanxServiceMock );
 		$ret = ( int ) $model->match_wiki_creation();
 
 		$this->assertEquals( $result, $ret );
@@ -117,9 +126,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxContentModelQuestionTitle( $title, $block, $result ) {
 		$titleMock = $this->setUpTitle( $title );
-		$this->setUpTest( $block );
+		$phalanxServiceMock = $this->setUpService( $block );
 
 		$model = new PhalanxContentModel( $titleMock );
+		$model->setService( $phalanxServiceMock );
 		$ret = ( int ) $model->match_question_title();
 
 		$this->assertEquals( $result, $ret );
@@ -134,9 +144,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxContentModelSummary( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
 		$titleMock = $this->setUpTitle( $title );
-		$this->setUpTest( $block_summary );
+		$phalanxServiceMock = $this->setUpService( $block_summary );
 
 		$model = new PhalanxContentModel( $titleMock );
+		$model->setService( $phalanxServiceMock );
 		$ret = ( int ) $model->match_summary( $summary );
 
 		$this->assertEquals( $result_summary, $ret );
@@ -151,9 +162,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxContentModelContent( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
 		$titleMock = $this->setUpTitle( $title );
-		$this->setUpTest( $block_text );
+		$phalanxServiceMock = $this->setUpService( $block_text );
 
 		$model = new PhalanxContentModel( $titleMock );
+		$model->setService( $phalanxServiceMock );
 		$ret = ( int ) $model->match_content( $text );
 
 		$this->assertEquals( $result_text, $ret );
@@ -168,9 +180,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxContentModelTitle( $title, $block, $result ) {
 		$titleMock = $this->setUpTitle( $title );
-		$this->setUpTest( $block );
+		$phalanxServiceMock = $this->setUpService( $block );
 
 		$model = new PhalanxContentModel( $titleMock );
+		$model->setService( $phalanxServiceMock );
 		$ret = ( int ) $model->match_title();
 
 		$this->assertEquals( $result, $ret );
@@ -193,11 +206,75 @@ class PhalanxModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @param bool $isPhalanxExempt whether session user is exempt from Phalanx blocks
+	 * @dataProvider isOkForPhalanxExemptUserDataProvider
+	 */
+	public function testIsOkForPhalanxExemptUser( bool $isPhalanxExempt ) {
+		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
+		$userMock = $this->getMock( User::class, [ 'isAllowed' ] );
+		$userMock->expects( $this->exactly( 3 ) )
+			->method( 'isAllowed' )
+			->with( $this->equalTo( 'phalanxexempt' ) )
+			->willReturn( $isPhalanxExempt );
+
+		$this->mockGlobalVariable( 'wgUser', $userMock );
+
+		$phalanxUserModel = new PhalanxUserModel( $userMock );
+		$res = $phalanxUserModel->isOk();
+		$this->assertEquals( $isPhalanxExempt, $res );
+
+		$phalanxContentModel = new PhalanxContentModel( new Title() );
+		$res = $phalanxContentModel->isOk();
+		$this->assertEquals( $isPhalanxExempt, $res );
+
+		$phalanxTextModel = new PhalanxTextModel( 'To jest test' );
+		$res = $phalanxTextModel->isOk();
+		$this->assertEquals( $isPhalanxExempt, $res );
+	}
+
+	/**
+	 * @param bool $isInternalRequest whether this is internal Wikia request
+	 * @param bool $isSelfCheck whether target user to look up is same as session user
+	 * @dataProvider isOkForInternalRequestDataProvider
+	 */
+	public function testIsOkForInternalRequest( bool $isInternalRequest, bool $isSelfCheck ) {
+		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
+		$userMock = $this->getMock( User::class, [ 'isAllowed', 'getName' ] );
+		$userMock->expects( $this->any() )
+			->method( 'isAllowed' )
+			->with( $this->equalTo( 'phalanxexempt' ) )
+			->willReturn( false );
+
+
+		$userMock->expects( $this->any() )
+				->method( 'getName' )
+				->willReturn( $isSelfCheck ? $this->app->wg->User->getName() : 'TestDifferentUserName' );
+
+		$requestMock = $this->getMock( WebRequest::class, [ 'isWikiaInternalRequest', 'getIp' ] );
+		$requestMock->expects( $this->exactly( 3 ) )
+			->method( 'isWikiaInternalRequest' )
+			->willReturn( $isInternalRequest );
+		$this->mockGlobalVariable( 'wgRequest', $requestMock );
+
+		$phalanxUserModel = new PhalanxUserModel( $userMock );
+		$res = $phalanxUserModel->isOk();
+		$this->assertEquals( $isInternalRequest && $isSelfCheck, $res );
+
+		$phalanxContentModel = new PhalanxContentModel( new Title() );
+		$res = $phalanxContentModel->isOk();
+		$this->assertEquals( $isInternalRequest, $res );
+
+		$phalanxTextModel = new PhalanxTextModel( 'To jest test' );
+		$res = $phalanxTextModel->isOk();
+		$this->assertEquals( $isInternalRequest, $res );
+	}
+
 	public function phalanxNewFromTypeProvider() {
 		return array(
 			array(
 				'type' => Phalanx:: TYPE_TITLE,
-				'content' => $this->getMockWithMethods( 'Title', array( 'getText' => 'foo' ) ),
+				'content' => new Title(),
 				'className' => 'PhalanxContentModel',
 				'methodName' => 'getTitle'
 			),
@@ -209,7 +286,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			),
 			array(
 				'type' => Phalanx::TYPE_USER,
-				'content' => $this->getMockWithMethods( 'User', array( 'getUser' => 'foo' ) ),
+				'content' => new User(),
 				'className' => 'PhalanxUserModel',
 				'methodName' => 'getUser'
 			),
@@ -400,5 +477,20 @@ class PhalanxModelTest extends WikiaBaseTest {
 		];
 
 		return [ $validTitle, $invalidTitle ];
+	}
+
+	public function isOkForPhalanxExemptUserDataProvider(): array {
+		return [
+			'Phalanx exempt user' => [ true ],
+			'Normal user' => [ false ]
+		];
+	}
+
+	public function isOkForInternalRequestDataProvider(): array {
+		return [
+			'Internal request' => [ true, true ],
+			'Internal request looking up different user' => [ true, false ],
+			'External request' => [ false, false ]
+		];
 	}
 }

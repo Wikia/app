@@ -6,8 +6,6 @@
  */
 namespace Wikia\Search;
 
-use Wikia\Search\Result\StaleResultException;
-
 /**
  * Encapsulates MediaWiki functionalities.
  * This will allow us to abstract our behavior away from MediaWiki if we want.
@@ -381,7 +379,26 @@ class MediaWikiService {
 	public function pageIdExists( $pageId ) {
 		try {
 			return $this->getPageFromPageId( $pageId )->exists();
-		} catch ( \Exception $e ) {
+		} catch ( \Throwable $e ) {
+			# catch "Error: Call to a member function exists() on null"
+			return false;
+		}
+	}
+
+	/**
+	 * Determines whether given page can be indexed
+	 *
+	 * @param int $pageId
+	 *
+	 * @return boolean
+	 */
+	public function pageIdCanBeIndexed( $pageId ) {
+		try {
+			return \Wikia\IndexingPipeline\PipelineEventProducer::canIndex(
+				$this->getPageFromPageId( $pageId )->getTitle()
+			);
+		} catch ( \Throwable $e ) {
+			# catch "Error: Call to a member function exists() on null"
 			return false;
 		}
 	}
@@ -466,7 +483,7 @@ class MediaWikiService {
 	 * @return mixed
 	 */
 	public function invokeHook( $hookName, array $args = [] ) {
-		return wfRunHooks( $hookName, $args );
+		return \Hooks::run( $hookName, $args );
 	}
 
 	/**
@@ -563,17 +580,8 @@ class MediaWikiService {
 		$title = $searchEngine->getNearMatch( $term );
 		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
 		if ( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-			try {
-				$page = $this->getPageFromPageId( $articleId );
-				$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this, $term );
-			} catch ( StaleResultException $staleResultException ) {
-				\Wikia\Logger\WikiaLogger::instance()->warning(
-					'SUS-1306 - Invalid article ID',
-					[
-						'exception' => $staleResultException
-					]
-				);
-			}
+			$this->getPageFromPageId( $articleId );
+			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this ,$term);
 		}
 
 		return $articleMatch;
@@ -1014,7 +1022,7 @@ class MediaWikiService {
 	 * @deprecated
 	 */
 	public function registerHook( $event, $class, $method ) {
-		$this->app->registerHook( $event, $class, $method );
+		\Hooks::register( $event, "$class::$method" );
 	}
 
 	/**
@@ -1086,8 +1094,7 @@ class MediaWikiService {
 	 *
 	 * @param int $pageId
 	 *
-	 * @return \Article
-	 * @throws StaleResultException if page id does not belong to a valid article
+	 * @return \Article|null
 	 */
 	protected function getPageFromPageId( $pageId ) {
 
@@ -1098,11 +1105,7 @@ class MediaWikiService {
 		$page = \Article::newFromID( $pageId );
 
 		if ( $page === null ) {
-			throw new StaleResultException(
-				'MediaWikiService::getPageFromPageId $page is null', 0, null, [
-					'page_id' => (string) $pageId
-				]
-			);
+			return null;
 		}
 
 		$redirectTarget = null;
@@ -1211,13 +1214,13 @@ class MediaWikiService {
 	 *
 	 * @param int $pageId
 	 *
-	 * @return \Title
+	 * @return \Title|null
 	 */
 	protected function getTitleFromPageId( $pageId ) {
 
 		if ( !isset( static::$pageIdsToTitles[$pageId] ) ) {
 			$page = $this->getPageFromPageId( $pageId );
-			static::$pageIdsToTitles[$pageId] = $page->getTitle();
+			static::$pageIdsToTitles[$pageId] = $page instanceof \Article ? $page->getTitle() : null;
 		}
 
 		return static::$pageIdsToTitles[$pageId];

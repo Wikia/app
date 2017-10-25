@@ -51,7 +51,7 @@ class MWNamespace {
 	public static function isMovable( $index ) {
 		global $wgAllowImageMoving;
 		$result = !( $index < NS_MAIN || ($index == NS_FILE && !$wgAllowImageMoving)  || $index == NS_CATEGORY );
-		wfRunHooks( 'MWNamespace:isMovable', array( &$result, $index ) );
+		Hooks::run( 'MWNamespace:isMovable', array( &$result, $index ) );
 		return $result;
 	}
 
@@ -198,7 +198,7 @@ class MWNamespace {
 			if ( is_array( $wgExtraNamespaces ) ) {
 				$namespaces += $wgExtraNamespaces;
 			}
-			wfRunHooks( 'CanonicalNamespaces', array( &$namespaces ) );
+			Hooks::run( 'CanonicalNamespaces', array( &$namespaces ) );
 		}
 		return $namespaces;
 	}

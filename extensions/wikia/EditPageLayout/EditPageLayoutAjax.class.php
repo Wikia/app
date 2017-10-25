@@ -6,20 +6,8 @@ class EditPageLayoutAjax {
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
 	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
-		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt;
+		global $wgRequest, $wgTitle, $wgOut;
 		wfProfileIn(__METHOD__);
-
-		if ( !empty( $wgEnableSlowPagesBlacklistExt) ) {
-			global $wgSlowPagesBlacklist;
-			if ( in_array( $wgTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
-				wfProfileOut( __METHOD__ );
-				return [
-					'html' => wfMessage( 'slowpagesblacklist-preview-unavailable' )->plain(),
-					'catbox' => '',
-					'interlanglinks' => ''
-				];
-			}
-		}
 
 		if($wgTitle && class_exists($page)) {
 			$pageObj = new $page();
@@ -42,7 +30,7 @@ class EditPageLayoutAjax {
 						list($html, $catbox, $interlanglinks) = $service->getPreview($wikitext);
 
 						// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
-						wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
+						Hooks::run('OutputPageBeforeHTML', array(&$wgOut, &$html));
 
 						if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 							if ( $type === 'full' ) {
@@ -57,7 +45,7 @@ class EditPageLayoutAjax {
 							}
 
 							// allow extensions to modify preview (BugId:6721)
-							wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
+							Hooks::run('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
 
 							/**
 							 * bugid: 11407

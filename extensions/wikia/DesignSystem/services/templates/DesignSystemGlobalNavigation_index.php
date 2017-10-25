@@ -32,6 +32,7 @@
 						'dropdownRightAligned' => true,
 					]
 				); ?>
+				<?= $app->renderView( 'DesignSystemGlobalNavigationOnSiteNotificationsService', 'index' ); ?>
 				<?= $app->renderView( 'DesignSystemGlobalNavigationWallNotificationsService', 'index' ); ?>
 			<?php elseif ( isset( $model['anon'] ) ): ?>
 				<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'accountNavigation', [ 'model' => $model['anon'] ] ); ?>

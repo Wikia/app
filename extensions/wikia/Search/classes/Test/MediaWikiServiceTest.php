@@ -7,8 +7,6 @@ namespace Wikia\Search\Test;
 use Wikia\Search\MediaWikiService;
 use \ReflectionProperty;
 use \ReflectionMethod;
-use Wikia\Search\Result\StaleResultException;
-
 /**
  * Tests the methods found in \Wikia\Search\MediaWikiService
  * @author relwell
@@ -1116,7 +1114,7 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers \Wikia\Search\MediaWikiService::getFileForPageId
 	 */
 	public function testGetFileForPageId() {
-		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
+		$service = $this->service->setMethods( [ 'getTitleFromPageId', 'getTitleStringFromPageId' ] )->getMock();
 		$mockFile = $this->getMockBuilder( '\File' )
 		                 ->disableOriginalConstructor()
 		                 ->getMock();
@@ -1169,14 +1167,30 @@ class MediaWikiServiceTest extends BaseTest
 	 * @slowExecutionTime 0.14926 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */
-	public function testGetPageFromPageIdThrowsExceptionIfInvalid() {
-		$service = new MediaWikiService();
+	public function testGetPageFromPageIdRetunrsNull() {
+		$this->mockClass( 'Article', null, 'newFromID' );
+		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getPageFromPageId' );
+		$get->setAccessible( true );
 
-		$method = new ReflectionMethod( MediaWikiService::class, 'getPageFromPageId' );
-		$method->setAccessible( true );
+		$this->assertEquals(
+			null,
+			$get->invoke( (new MediaWikiService), $this->pageId ),
+			'\Wikia\Search\MediaWikiService::getPageFromPageId should return null when provided a nonexistent page id'
+		);
+	}
 
-		$this->setExpectedException( StaleResultException::class );
-		$method->invoke( $service, 0 );
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.14926 ms
+	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
+	 */
+	public function testPageIdExistsForNotExistingArticle() {
+		$this->mockClass( 'Article', null, 'newFromID' );
+
+		$this->assertFalse(
+			(new MediaWikiService)->pageIdExists(0),
+			'\Wikia\Search\MediaWikiService::pageIdExists should return false when provided a nonexistent page id'
+		);
 	}
 
 	/**
@@ -2951,17 +2965,19 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13325 ms
-	 * @covers Wikia\Search\MediaWikiService::invokeHook
+	 * @covers \Wikia\Search\MediaWikiService::invokeHook
 	 */
 	public function testInvokeHook() {
-		$service = $this->service->setMethods( null )->getMock();
-		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
+		$service = new MediaWikiService();
+
+		$mockRunHooks = $this->getStaticMethodMock( \Hooks::class, 'run' );
 		$mockRunHooks
 		    ->expects( $this->once() )
-		    ->method ( 'wfRunHooks' )
+		    ->method ( 'run' )
 		    ->with   ( 'onwhatever', [ 'foo', 123 ] )
 		    ->will   ( $this->returnValue( true ) )
 		;
+
 		$this->assertTrue(
 				$service->invokeHook( 'onwhatever', [ 'foo', 123 ] )
 		);

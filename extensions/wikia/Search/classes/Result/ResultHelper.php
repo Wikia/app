@@ -35,7 +35,7 @@ class ResultHelper {
 			$imageFileName =
 				PromoImage::fromPathname( $result['image_s'] )->ensureCityIdIsSet( $result['id'] )->getPathname();
 			$imageURL = ImagesService::getImageSrcByTitle(
-				( new \CityVisualization )->getTargetWikiId( $result['lang_s'] ),
+				( new \WikiaCorporateModel )->getCorporateWikiIdByLang( $result['lang_s'] ),
 				$imageFileName,
 				$imageSizes['width'],
 				$imageSizes['height']

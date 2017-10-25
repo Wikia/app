@@ -35,7 +35,6 @@ describe('Base class for User Ajax Forms', function () {
 		expect(typeof proto.onErrorResponse).toBe('function');
 		expect(typeof proto.onUnconfirmedEmailResponse).toBe('function');
 		expect(typeof proto.errorValidation).toBe('function');
-		expect(typeof proto.mailPassword).toBe('function');
 		expect(typeof proto.reloadPage).toBe('function');
 	});
 

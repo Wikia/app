@@ -53,12 +53,12 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		$out->addStyle( 'wikia/css/IE80Fixes.css', 'screen', 'IE 8' );
 	}
 
-	public function addWikiaVars( &$obj, BaseTemplate &$tpl ) {
+	public function addWikiaVars( Skin $skin, QuickTemplate $tpl ): bool {
 		// ads
 		$this->setupAds( $tpl );
 
 		// setup footer links
-		$tpl->set( 'footerlinks', $this->msg( 'Shared-Monobook-footer-wikia-links' )->parse() );
+		$tpl->set( 'footerlinks', $this->msg( 'shared-Monobook-footer-wikia-links' )->parse() );
 
 		# rt33045
 		$tpl->set( 'contact', '<a href="' . $this->makeUrl( 'Special:Contact' ) . '" title="Contact Wikia">Contact Wikia</a>' );
@@ -106,7 +106,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 		$packages = [ 'monobook_js' ];
 
-		wfRunHooks( 'MonobookSkinAssetGroups', [ &$packages ] );
+		Hooks::run( 'MonobookSkinAssetGroups', [ &$packages ] );
 
 		$srcs = AssetsManager::getInstance()->getURL( $packages );
 
@@ -119,8 +119,9 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	/**
 	 * Setup ads handling
+	 * @param QuickTemplate $tpl
 	 */
-	protected function setupAds( BaseTemplate &$tpl ) {
+	protected function setupAds( QuickTemplate $tpl ) {
 		$tpl->set( 'ads-column', '' );
 		$tpl->set( 'ads_top', '' );
 		$tpl->set( 'ads_topleft', '' );

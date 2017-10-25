@@ -4,60 +4,85 @@
 class ARecoveryModuleTest extends WikiaBaseTest {
 	const BOOTSTRAP_CODE = 'BOOTSTRAP_CODE';
 
-	public function getUser($isLoggedIn ) {
+	public function getUser( $isAnon ) {
 		$stubs = $this->getMockBuilder( User::class )->getMock();
-		$stubs->method( 'isLoggedIn' )
-			->willReturn( $isLoggedIn );
+		$stubs->method( 'isAnon' )
+			->willReturn( $isAnon );
 		return $stubs;
 	}
 
-	public function getData() {
-		// User is logged in, SPRecoveryEnabled, SPMMSEnabled, isDisabled (expected value)
+	public function getDataSP() {
+		// isAnon, SPRecoveryEnabled, isEnabled (expected value)
 		return [
 			// User is not logged in
-			[false, false, false, true],
-			[false, false, true, false],
-			[false, true, false, false],
-			[false, true, true, false],
+			[true, false, false],
+			[true, true, true],
 
 			// User is logged in
-			[true, true, true, true],
-			[true, false, false, true],
+			[false, true, false],
+			[false, false, false]
 		];
 	}
 
 	/**
-	 * @dataProvider getData
+	 * @dataProvider getDataSP
 	 *
-	 * @param $userLoggedIn boolean - current user is loggedIn
-	 * @param $recoveryEnabled boolean - $wgAdDriverEnableSourcePointRecovery
-	 * @param $MMSEnabled boolean - $wgAdDriverEnableSourcePointMMS
-	 * @param $expected boolean - is recovery disabled
+	 * @param $isAnon boolean
+	 * @param $wgAdDriverEnableSourcePointRecovery
+	 * @param $expected boolean - is SourcePoint recovery enabled
 	 */
-	public function testRecoveryDisabled($userLoggedIn, $recoveryEnabled, $MMSEnabled, $expected ) {
-		$this->mockGlobalVariable( 'wgUser', $this->getUser( $userLoggedIn ) );
-		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $recoveryEnabled );
-		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $MMSEnabled );
+	public function testSourcePointRecoveryDisabled( $isAnon, $wgAdDriverEnableSourcePointRecovery, $expected ) {
+		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isAnon ) );
+		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $wgAdDriverEnableSourcePointRecovery );
+		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', true );
 
-		$this->assertEquals( $expected, ARecoveryModule::isDisabled() );
+		$this->assertEquals( $expected, ARecoveryModule::isSourcePointRecoveryEnabled() );
 	}
 
 	/**
-	 * @dataProvider getData
+	 * @dataProvider getDataSP
 	 *
-	 * @param $userLoggedIn
-	 * @param $recoveryEnabled
-	 * @param $MMSEnabled
-	 * @param $isDisabled
+	 * @param $isAnon boolean
+	 * @param $wgAdDriverEnableSourcePointMMS
+	 * @param $expected boolean - is SourcePoint messaging enabled
 	 */
-	public function testSourcePointCode($userLoggedIn, $recoveryEnabled, $MMSEnabled, $isDisabled ) {
-		$this->mockGlobalVariable( 'wgUser', $this->getUser( $userLoggedIn ) );
-		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', $recoveryEnabled );
-		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $MMSEnabled );
+	public function testSourcePointMessagingDisabled( $isAnon, $wgAdDriverEnableSourcePointMMS, $expected ) {
+		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointRecovery', false );
+		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isAnon ) );
+		$this->mockGlobalVariable( 'wgAdDriverEnableSourcePointMMS', $wgAdDriverEnableSourcePointMMS );
+		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', true );
 
-		$this->mockStaticMethod(WikiaApp::class, 'sendRequest', self::BOOTSTRAP_CODE);
+		$this->assertEquals( $expected, ARecoveryModule::isSourcePointMessagingEnabled() );
+	}
 
-		$expectedValue = $isDisabled ? ARecoveryModule::DISABLED_MESSAGE : self::BOOTSTRAP_CODE;
-		$this->assertEquals( $expectedValue , ARecoveryModule::getSourcePointBootstrapCode() );
+	public function getDataPF() {
+		// isAnon, $wgAdDriverEnablePageFairRecovery, isOasis, isEnabled (expected value)
+		return [
+			// User is not logged in
+			[true, false, true, false],
+			[true, true, true, true],
+			[true, null, true, false],
+			[true, true, false, false],
+
+			// User is logged in
+			[false, true, true, false],
+			[false, false, true, false],
+		];
+	}
+
+	/**
+	 * @dataProvider getDataPF
+	 *
+	 * @param $isAnon boolean
+	 * @param $wgAdDriverEnablePageFairRecovery
+	 * @param $isOasis
+	 * @param $expected boolean - is PageFair recovery enabled
+	 */
+	public function testPageFairRecoveryDisabled( $isAnon, $wgAdDriverEnablePageFairRecovery, $isOasis, $expected ) {
+		$this->mockGlobalVariable( 'wgUser', $this->getUser( $isAnon ) );
+		$this->mockGlobalVariable( 'wgAdDriverEnablePageFairRecovery', $wgAdDriverEnablePageFairRecovery );
+		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', $isOasis );
+
+		$this->assertEquals( $expected, ARecoveryModule::isPageFairRecoveryEnabled() );
 	}
 }

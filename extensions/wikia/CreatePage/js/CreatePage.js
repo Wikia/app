@@ -214,7 +214,8 @@ var CreatePage = {
 						onElementClick,
 						name,
 						titleText,
-						inputChangeTracked = false;
+						inputChangeTracked = false,
+						redLinks;
 
 					CreatePage.track( {
 						category: trackingCategory,
@@ -222,7 +223,23 @@ var CreatePage = {
 						label: 'modal'
 					} );
 
-					window.dispatchEvent( new Event('CreatePageModalOpened') );
+					redLinks = createPageModal.$element.find( '.create-page-dialog__proposals .new' );
+
+					if ( redLinks.length ) {
+						CreatePage.track( {
+							category: 'page-create-title-modal',
+							action: Wikia.Tracker.ACTIONS.IMPRESSION,
+							label: 'redlinks'
+						} );
+
+						redLinks.on( 'click', function () {
+							CreatePage.track( {
+								category: 'page-create-title-modal',
+								action: Wikia.Tracker.ACTIONS.CLICK,
+								label: 'redlink'
+							} );
+						} );
+					}
 
 					createPageModal.bind( 'create', function( event ) {
 						event.preventDefault();

@@ -45,7 +45,7 @@ class HistoryAction extends FormlessAction {
 			array( 'page' => $this->getTitle()->getPrefixedText() )
 		);
 
-		wfRunHooks('GetHistoryDescription', array( &$description ) );
+		Hooks::run('GetHistoryDescription', array( &$description ) );
 
 		return $description;
 		/* End of Wikia change */
@@ -75,7 +75,7 @@ class HistoryAction extends FormlessAction {
 
 	/**
 	 * Print the history page for an article.
-	 * @return nothing
+	 * @return void
 	 */
 	function onView() {
 		global $wgScript, $wgUseFileCache, $wgSquidMaxage;
@@ -84,7 +84,7 @@ class HistoryAction extends FormlessAction {
 		$request = $this->getRequest();
 
 		/* Wikia change @author Tomek */
-		if( !wfRunHooks('BeforePageHistory', array( &$this->page ) ) ) {
+		if ( !Hooks::run( 'BeforePageHistory', [ $this->page ] ) ) {
 			return;
 		}
 		/* End of Wikia change */
@@ -179,7 +179,7 @@ class HistoryAction extends FormlessAction {
 			'</fieldset></form>'
 		);
 
-		wfRunHooks( 'PageHistoryBeforeList', array( &$this->page ) );
+		Hooks::run( 'PageHistoryBeforeList', array( &$this->page ) );
 
 		// Create and output the list.
 		$pager = new HistoryPager( $this, $year, $month, $tagFilter, $conds );
@@ -328,6 +328,8 @@ class HistoryPager extends ReverseChronologicalPager {
 	public $lastRow = false, $counter, $historyPage, $buttons, $conds;
 	protected $oldIdChecked;
 	protected $preventClickjacking = false;
+	/** User names associated with the result */
+	private $mUsers = [];
 
 	function __construct( $historyPage, $year = '', $month = '', $tagFilter = '', $conds = array() ) {
 		parent::__construct( $historyPage->getContext() );
@@ -351,27 +353,58 @@ class HistoryPager extends ReverseChronologicalPager {
 	}
 
 	function getQueryInfo() {
-		$queryInfo = array(
-			'tables'  => array( 'revision', 'user' ),
-			'fields'  => array_merge( Revision::selectFields(), Revision::selectUserFields() ),
-			'conds'   => array_merge(
-				array( 'rev_page' => $this->getWikiPage()->getId() ),
-				$this->conds ),
-			'options' => array( 'USE INDEX' => array( 'revision' => 'page_timestamp' ) ),
-			'join_conds' => array(
-				'user'        => Revision::userJoinCond(),
-				'tag_summary' => array( 'LEFT JOIN', 'ts_rev_id=rev_id' ) ),
-		);
-		ChangeTags::modifyDisplayQuery(
-			$queryInfo['tables'],
-			$queryInfo['fields'],
-			$queryInfo['conds'],
-			$queryInfo['join_conds'],
-			$queryInfo['options'],
-			$this->tagFilter
-		);
-		wfRunHooks( 'PageHistoryPager::getQueryInfo', array( &$this, &$queryInfo ) );
+		$queryInfo = [
+			'tables' => [ 'revision' ],
+			'fields' => array_merge( Revision::selectFields() ),
+			'conds' => array_merge( [ 'rev_page' => $this->getWikiPage()->getId() ], $this->conds ),
+			'options' => [
+				'USE INDEX' => [ 'revision' => 'page_timestamp' ]
+			],
+		];
+
+		ChangeTags::modifyDisplayQuery( $queryInfo['tables'], $queryInfo['fields'],
+			$queryInfo['conds'], $queryInfo['join_conds'], $queryInfo['options'],
+			$this->tagFilter );
+
+		Hooks::run( 'PageHistoryPager::getQueryInfo', [ $this, &$queryInfo ] );
+
 		return $queryInfo;
+	}
+
+	/**
+	 * Fetch user names from ExternalSharedDB.
+	 * @see SUS-2990
+	 * @return iterable
+	 */
+	function reallyDoQuery( $offset, $limit, $descending ) {
+		global $wgExternalSharedDB;
+		$res = parent::reallyDoQuery( $offset, $limit, $descending );
+
+		$ids = [];
+		foreach ( $res as $row ) {
+			if ( $row->rev_user ) {
+				$ids[] = $row->rev_user;
+			}
+		}
+
+		// SUS-3103: It might happen that all contributors were anon - check if this was the case
+		if ( !empty( $ids ) ) {
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$users = $dbr->select(
+				'`user`',
+				[ 'user_id', 'user_name' ],
+				[ 'user_id' => array_unique( $ids ) ],
+				__METHOD__
+			);
+
+			foreach ( $users as $row ) {
+				$this->mUsers[$row->user_id] = $row->user_name;
+			}
+		}
+
+		$res->rewind();
+
+		return $res;
 	}
 
 	function getIndexField() {
@@ -379,16 +412,24 @@ class HistoryPager extends ReverseChronologicalPager {
 	}
 
 	function formatRow( $row ) {
+		$row->rev_user_text = $this->mUsers[$row->rev_user] ?? $row->rev_user_text;
+
 		if ( $this->lastRow ) {
 			$latest = ( $this->counter == 1 && $this->mIsFirst );
 			$firstInList = $this->counter == 1;
 			$this->counter++;
-			$s = $this->historyLine( $this->lastRow, $row,
-				$this->getTitle()->getNotificationTimestamp( $this->getUser() ), $latest, $firstInList );
+			$s = $this->historyLine(
+				$this->lastRow,
+				$row,
+				$this->getTitle()->getNotificationTimestamp( $this->getUser() ),
+				$latest,
+				$firstInList
+			);
 		} else {
 			$s = '';
 		}
 		$this->lastRow = $row;
+
 		return $s;
 	}
 
@@ -397,7 +438,7 @@ class HistoryPager extends ReverseChronologicalPager {
 		$this->mResult->seek( 0 );
 		$batch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
-			if( !is_null( $row->user_name ) ) {
+			if( isset( $row->user_name ) ) {
 				$batch->add( NS_USER, $row->user_name );
 				$batch->add( NS_USER_TALK, $row->user_name );
 			} else { # for anons or usernames of imported revisions
@@ -630,7 +671,7 @@ class HistoryPager extends ReverseChronologicalPager {
 			}
 		}
 
-		wfRunHooks( 'PageHistoryToolsList', [ $this, &$row, &$tools ] );
+		Hooks::run( 'PageHistoryToolsList', [ $this, &$row, &$tools ] );
 
 		if ( $tools ) {
 			$s .= ' (' . $lang->pipeList( $tools ) . ')';
@@ -641,7 +682,7 @@ class HistoryPager extends ReverseChronologicalPager {
 		$classes = array_merge( $classes, $newClasses );
 		$s .= " $tagSummary";
 
-		wfRunHooks( 'PageHistoryLineEnding', array( $this, &$row , &$s, &$classes ) );
+		Hooks::run( 'PageHistoryLineEnding', array( $this, &$row , &$s, &$classes ) );
 
 		$attribs = array();
 		if ( $classes ) {

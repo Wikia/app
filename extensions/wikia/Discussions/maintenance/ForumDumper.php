@@ -9,6 +9,7 @@ class ForumDumper {
 	const TABLE_REVISION = 'revision';
 	const TABLE_TEXT = 'text';
 	const TABLE_VOTE = 'page_vote';
+	const TABLE_PAGE_WIKIA_PROPS = 'page_wikia_props';
 
 	const CONTRIBUTOR_TYPE_USER = "user";
 	const CONTRIBUTOR_TYPE_IP = "ip";
@@ -20,12 +21,10 @@ class ForumDumper {
 	// MySQL to fail the insert.
 	const MAX_CONTENT_SIZE = 65520;
 
-	const REGEXP_MATCH_TITLE = '/<ac_metadata.*title="([^"]*)".*>.*<\/ac_metadata>/';
-
 	// A very loose interpretation of markup favoring false positives for markup.  Match
 	// alphanumerics, anything in a basic URL and punctuation.  If any character in the text
 	// doesn't match, assume there is wiki text and parse it.
-	const REGEXP_MATCH_HAS_MARKUP = '/[^a-zA-Z0-9\.\/:\?&%" ]/';
+	const REGEXP_MATCH_HAS_MARKUP = '/[^a-zA-Z0-9\.\/:\?&%"\' ]/';
 
 	const COLUMNS_PAGE = [
 		"page_id",
@@ -47,7 +46,8 @@ class ForumDumper {
 		"sticky_ind",
 		"first_revision_id",
 		"last_revision_id",
-		"comment_timestamp"
+		"comment_timestamp",
+		"display_order",
 	];
 
 	const COLUMNS_REVISION = [
@@ -65,7 +65,7 @@ class ForumDumper {
 		"text_flags",
 		"comment",
 		"raw_content",
-		"content"
+		"content",
 	];
 
 	const COLUMNS_VOTE = [
@@ -74,27 +74,23 @@ class ForumDumper {
 		"timestamp",
 	];
 
+	const FORUM_NAMEPSACES = [
+		NS_WIKIA_FORUM_BOARD,
+		NS_WIKIA_FORUM_BOARD_THREAD,
+	];
+
 	private $pages = [];
 	private $revisions = [];
 	private $votes = [];
 
-	private $dummyTitle;
-	private $parserOptions;
-
-	public function __construct() {
-		$this->dummyTitle = \Title::newFromText( "Dummy" );
-		$this->parserOptions = new \ParserOptions();
-		$this->parserOptions->setEditSection( false );
-	}
-
-	private function getForumNamespaces() {
-		return [
-			NS_WIKIA_FORUM_BOARD,
-			NS_WIKIA_FORUM_BOARD_THREAD
-		];
-	}
-
 	public function addPage( $id, $data ) {
+		// There are cases when the page appears twice; one marked as deleted in comments_index
+		// and one where its not marked deleted in comments_index.  This might represent a move.
+		// If this is the case, prefer the un-deleted version.
+		if ( !empty( $this->pages[$id] ) && $data["deleted_ind"] == 1 ) {
+			return;
+		}
+
 		$this->pages[$id] = $data;
 	}
 
@@ -111,35 +107,50 @@ class ForumDumper {
 			return $this->pages;
 		}
 
+		$display_order = 0;
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )
-			->SELECT_ALL()
+		( new \WikiaSQL() )->SELECT( "page.*, comments_index.*, IF(pp.props is NULL,concat('i:', page.page_id, ';'), pp.props) as idx" )
 			->FROM( self::TABLE_PAGE )
-			->LEFT_JOIN( self::TABLE_COMMENTS )->ON( 'page_id', 'comment_id' )
-			->WHERE( 'page_namespace' )->IN( $this->getForumNamespaces() )
-			->runLoop( $dbh, function ( &$pages, $row ) {
+			->LEFT_JOIN( self::TABLE_COMMENTS )
+			->ON( 'page_id', 'comment_id' )
+			->LEFT_JOIN( self::TABLE_PAGE_WIKIA_PROPS )
+			->AS_( 'pp' )
+			->ON( 'page.page_id', 'pp.page_id' )
+			->AND_( 'propname', WPP_WALL_ORDER_INDEX )
+			->WHERE( 'page_namespace' )
+			->IN( self::FORUM_NAMEPSACES )
+			->ORDER_BY( 'idx' )
+			->runLoop( $dbh, function ( &$pages, $row ) use ( &$display_order ) {
+				// A few of these properties were removed and do not appear on some wikis
+				foreach ( [ 'sticky', 'locked', 'protected' ] as $prop ) {
+					if ( !property_exists( $row, $prop ) ) {
+						$row->$prop = 0;
+					}
+				}
+
 				$this->addPage( $row->page_id, [
-						"page_id" => $row->page_id,
-						"namespace" => $row->page_namespace,
-						"raw_title" => $row->page_title,
-						"is_redirect" => $row->page_is_redirect,
-						"is_new" => $row->page_is_new,
-						"touched" => $row->page_touched,
-						"latest_revision_id" => $row->page_latest,
-						"length" => $row->page_len,
-						"parent_page_id" => $row->parent_page_id,
-						"parent_comment_id" => $row->parent_comment_id,
-						"last_child_comment_id" => $row->last_child_comment_id,
-						"archived_ind" => $row->archived ?: 0,
-						"deleted_ind" => $row->deleted ?: 0,
-						"removed_ind" => $row->removed ?: 0,
-						"locked_ind" => $row->locked ?: 0,
-						"protected_ind" => $row->protected ?: 0,
-						"sticky_ind" => $row->sticky ?: 0,
-						"first_revision_id" => $row->first_rev_id,
-						"last_revision_id" => $row->last_rev_id,
-						"comment_timestamp" => $row->last_touched
-					] );
+					"page_id" => $row->page_id,
+					"namespace" => $row->page_namespace,
+					"raw_title" => $row->page_title,
+					"is_redirect" => $row->page_is_redirect,
+					"is_new" => $row->page_is_new,
+					"touched" => $row->page_touched,
+					"latest_revision_id" => $row->page_latest,
+					"length" => $row->page_len,
+					"parent_page_id" => $row->parent_page_id,
+					"parent_comment_id" => $row->parent_comment_id,
+					"last_child_comment_id" => $row->last_child_comment_id,
+					"archived_ind" => $row->archived ?: 0,
+					"deleted_ind" => $row->deleted ?: 0,
+					"removed_ind" => $row->removed ?: 0,
+					"locked_ind" => $row->locked ?: 0,
+					"protected_ind" => $row->protected ?: 0,
+					"sticky_ind" => $row->sticky ?: 0,
+					"first_revision_id" => $row->first_rev_id,
+					"last_revision_id" => $row->last_rev_id,
+					"comment_timestamp" => $row->last_touched,
+					"display_order" => $display_order ++,
+				] );
 			} );
 
 		return $this->pages;
@@ -149,22 +160,22 @@ class ForumDumper {
 		if ( !empty( $this->revisions ) ) {
 			return $this->revisions;
 		}
-		
+
 		$pageIds = array_keys( $this->getPages() );
 
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )
-			->SELECT_ALL()
+		( new \WikiaSQL() )->SELECT_ALL()
 			->FROM( self::TABLE_REVISION )
-			->JOIN( self::TABLE_TEXT )->ON( 'rev_text_id', 'old_id' )
-			->WHERE( 'rev_page' )->IN( $pageIds )
+			->JOIN( self::TABLE_TEXT )
+			->ON( 'rev_text_id', 'old_id' )
+			->WHERE( 'rev_page' )
+			->IN( $pageIds )
 			->runLoop( $dbh, function ( &$revisions, $row ) {
-				$textId = $row->old_text;
-				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $textId );
+				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
 				$pages = $this->getPages();
 				$curPage = $pages[$row->rev_page];
-				
+
 				$this->addRevision( [
 					"revision_id" => $row->rev_id,
 					"page_id" => $row->rev_page,
@@ -180,7 +191,7 @@ class ForumDumper {
 					"text_flags" => $row->old_flags,
 					"comment" => $row->rev_comment,
 					"raw_content" => $plainText,
-				    "content" => $parsedText
+					"content" => $parsedText,
 				] );
 			} );
 
@@ -188,55 +199,91 @@ class ForumDumper {
 	}
 
 	public function getTextAndTitle( $textId ) {
-		$rawText = $this->getRawText( $textId );
+		$articleComment = \ArticleComment::newFromId( $textId );
+		$articleComment->load();
 
-		// The title is included within the text as an ac_metadata tag
-		$title = $this->getTitle( $rawText );
+		$rawText = $this->getRawText( $articleComment );
+		$title = $articleComment->getMetadata( 'title', '' );
+		$parsedText = $this->getParsedText( $articleComment );
 
-		// Parse the wiki text
-		$parsedText = $this->getParsedText( $rawText );
-
-		// Get a plain text version as well
-		$plainText = strip_tags( $parsedText );
+		if ( empty( $parsedText ) ) {
+			// If there's nothing to parse, use rawText as the default
+			$parsedText = $rawText;
+		} else {
+			// If there is parsed text, use the tag stripped version as rawText so it can
+			// be the plaintext version (otherwise its full of wikitext)
+			$rawText = strip_tags( $parsedText );
+		}
 
 		// Truncate the strings if they are too big
-		if ( strlen($parsedText) > self::MAX_CONTENT_SIZE ) {
+		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
 			$parsedText = substr( $parsedText, 0, self::MAX_CONTENT_SIZE );
 		}
-		if ( strlen($plainText) > self::MAX_CONTENT_SIZE ) {
-			$plainText = substr( $plainText, 0, self::MAX_CONTENT_SIZE );
+		if ( strlen( $rawText ) > self::MAX_CONTENT_SIZE ) {
+			$rawText = substr( $rawText, 0, self::MAX_CONTENT_SIZE );
 		}
 
-		return [ $parsedText, $plainText, $title ];
+		return [ $parsedText, $rawText, $title ];
 	}
 
-	private function getRawText( $textId ) {
-		$text = \ExternalStore::fetchFromURL( $textId );
-		return gzinflate( $text );
+	private function getRawText( \ArticleComment $articleComment ) {
+		$rawText = strip_tags( $articleComment->getRawText() );
+
+		// There are some bogus characters in our data.  Strip them out
+		return filter_var( $rawText, FILTER_UNSAFE_RAW,
+			FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH );
 	}
 
-	private function getParsedText( $wikiText ) {
+	private function getParsedText( \ArticleComment $articleComment ) {
+		$wikiText = $articleComment->getRawText();
+
 		// If this text appears not to have any markup, just return the text as is.
 		if ( !preg_match( self::REGEXP_MATCH_HAS_MARKUP, $wikiText ) ) {
-			return $wikiText;
+			return "";
 		}
 
-		$parserOut = \F::app()->wg->Parser->parse(
-			$wikiText,
-			$this->dummyTitle,
-			$this->parserOptions
-		);
-		return $parserOut->getText();
+		$formattedText = $articleComment->getText();
+		$formattedText = $this->updateLazyImages( $formattedText );
+		$formattedText = $this->removeACMetadata( $formattedText );
+
+		return $formattedText;
 	}
 
-	private function getTitle( $text ) {
-		$title = '';
+	/**
+	 * Matches lazy load image tags and de-lazifies them.  For example, this image tag:
+	 *
+	 *  <img
+	 *     src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"
+	 *     alt="Joker laughing"
+	 *     class="lzy lzyPlcHld "
+	 *     data-image-key="Joker_laughing.gif"
+	 *     data-image-name="Joker laughing.gif"
+	 *     data-src="http://vignette.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
+	 *     width="200"
+	 *     height="154"
+	 *     onload="if(typeof ImgLzy==='object'){ImgLzy.load(this)}"
+	 *  >
+	 *
+	 * would match and update to:
+	 *
+	 *  <img
+	 *     src="http://vignette.wikia.nocookie.net/wonderland-org/images/d/d0/Joker_laughing.gif/revision/latest/scale-to-width-down/200?cb=20150901041046"
+	 *     alt="Joker laughing"
+	 *     width="200"
+	 *     height="154"
+	 *  >
+	 *
+	 * @param $text
+	 *
+	 * @return mixed
+	 */
+	private function updateLazyImages( $text ) {
+		return preg_replace( "/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
+			"$1", $text );
+	}
 
-		if ( preg_match( self::REGEXP_MATCH_TITLE, $text, $matches ) ) {
-			$title = $matches[1];
-		}
-
-		return $title;
+	private function removeACMetadata( $text ) {
+		return preg_replace( "#(<|&lt;)ac_metadata.+/ac_metadata(>|&gt;)#", '', $text );
 	}
 
 	public function getContributorType( $row ) {
@@ -262,21 +309,38 @@ class ForumDumper {
 
 		$pageIds = array_keys( $this->getPages() );
 
-		$dumper = $this;
 		$dbh = wfGetDB( DB_SLAVE );
-		( new \WikiaSQL() )
-			->SELECT_ALL()
+		( new \WikiaSQL() )->SELECT_ALL()
 			->FROM( self::TABLE_VOTE )
-			->WHERE( 'article_id' )->IN( $pageIds )
+			->WHERE( 'article_id' )
+			->IN( $pageIds )
 			->runLoop( $dbh, function ( &$pages, $row ) {
 
 				$this->addVote( [
 					"page_id" => $row->article_id,
 					"user_identifier" => $row->user_id,
-					"timestamp" => $row->time
+					"timestamp" => $row->time,
 				] );
 			} );
 
 		return $this->votes;
 	}
+
+	public function getFollows() {
+		$threadsNamesToIds = $this->getThreadNamesToIds();
+		$finder = new FollowsFinder( wfGetDB( DB_SLAVE ), $threadsNamesToIds );
+
+		return $finder->findFollows();
+	}
+
+	private function getThreadNamesToIds() {
+		$threadsNamesToIds = [];
+		foreach ( $this->getPages() as $id => $page ) {
+			if ( $page["namespace"] == NS_WIKIA_FORUM_BOARD_THREAD ) {
+				$threadsNamesToIds[$page["raw_title"]] = $id;
+			}
+		}
+		return $threadsNamesToIds;
+	}
+
 }

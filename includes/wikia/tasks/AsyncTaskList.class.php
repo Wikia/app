@@ -10,7 +10,9 @@
 namespace Wikia\Tasks;
 
 use PhpAmqpLib\Channel\AMQPChannel;
-use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Connection\AbstractConnection;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Exception\AMQPTimeoutException;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
@@ -18,7 +20,6 @@ use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
-use Wikia\Tasks\Queues\NlpPipelineQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
@@ -32,7 +33,7 @@ class AsyncTaskList {
 	/** which config to grab when figuring out the executor (on the job queue side) */
 	const EXECUTOR_APP_NAME = 'mediawiki';
 
-	/** @var AMQPConnection connection to message broker */
+	/** @var AbstractConnection connection to message broker */
 	protected $connection;
 
 	/** @var Queue the queue this task list will go into */
@@ -91,9 +92,6 @@ class AsyncTaskList {
 				break;
 			case ParsoidPurgePriorityQueue::NAME:
 				$queue = new ParsoidPurgePriorityQueue();
-				break;
-			case NlpPipelineQueue::NAME:
-				$queue = new NlpPipelineQueue();
 				break;
 			case SMWQueue::NAME:
 				$queue = new SMWQueue();
@@ -242,7 +240,7 @@ class AsyncTaskList {
 	 * @return array
 	 */
 	protected function getExecutor() {
-		global $IP, $wgWikiaEnvironment;
+		global $IP, $wgWikiaEnvironment, $wgDevDomain;
 		$executor = [
 			'app' => self::EXECUTOR_APP_NAME,
 		];
@@ -251,8 +249,8 @@ class AsyncTaskList {
 			$host = gethostname();
 			$executionMethod = 'http';
 
-			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host, $matches ) ) {
-				$executionRunner = ["http://tasks.{$matches[1]}.wikia-dev.com/proxy.php"];
+			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
+				$executionRunner = ["http://tasks.{$wgDevDomain}/proxy.php"];
 			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
 				$executionRunner = ["http://{$host}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
@@ -368,7 +366,7 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * @return AMQPConnection connection to message broker
+	 * @return AbstractConnection connection to message broker
 	 * @throws AMQPExceptionInterface
 	 */
 	protected function connection() {
@@ -384,7 +382,7 @@ class AsyncTaskList {
 	 *
 	 * Throws AMQPRuntimeException when task broker is disabled in a cureent environment (PLATFORM-1740)
 	 *
-	 * @return AMQPConnection connection to message broker
+	 * @return AbstractConnection connection to message broker
 	 * @throws AMQPRuntimeException
 	 * @throws AMQPTimeoutException
 	 */
@@ -395,7 +393,7 @@ class AsyncTaskList {
 			throw new AMQPRuntimeException( 'Task broker is disabled' );
 		}
 
-		return new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+		return new AMQPStreamConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
 	}
 
 	/**

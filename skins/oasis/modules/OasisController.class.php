@@ -55,18 +55,18 @@ class OasisController extends WikiaController {
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->amazonMatch = null;
+		$this->a9 = null;
 		$this->gfc = null;
 		$this->nielsen = null;
-		$this->openXBidder = null;
 		$this->prebid = null;
-		$this->rubiconFastlane = null;
-		$this->rubiconVulcan = null;
 		$this->sourcePoint = null;
+		$this->instartLogic = null;
 		$this->dynamicYield = null;
-		$this->ivw2 = null;
-		$this->ivw3 = null;
 		$this->krux = null;
 		$this->netzathleten = null;
+		$this->recoveryHeadBootstrapCode = null;
+		$this->recoveryTopBodyBootstrapCode = null;
+		$this->recoveryBottomBodyBootstrapCode = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -111,10 +111,11 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings,
+		global $wgOut, $wgUser, $wgOasisThemeSettings,
 		$wgWikiaMobileSmartBannerConfig;
 
 		wfProfileIn(__METHOD__);
+		$request = $this->getContext()->getRequest();
 
 		//Add Smart banner for Wikia dedicated App
 		//Or fallback to My Wikia App
@@ -124,16 +125,18 @@ class OasisController extends WikiaController {
 			!empty( $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'] )
 		) {
 			$appId= $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'];
+			// SUS-1808: Encode this URL for IE 11 and below
+			$requestUrl = Sanitizer::encodeAttribute( $request->getFullRequestURL() );
 			$wgOut->addHeadItem(
 				'Wikia App Smart Banner',
-				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $wgRequest->getFullRequestURL())
+				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $requestUrl )
 			);
 		} else {
 			$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
 		}
 
 		/* set the grid if passed in, otherwise, respect the default */
-		$grid = $wgRequest->getVal('wikiagrid', '');
+		$grid = $request->getVal('wikiagrid', '');
 
 		if ( '1' === $grid ) {
 			$this->wg->OasisGrid = true;
@@ -144,19 +147,12 @@ class OasisController extends WikiaController {
 
 		$jsPackages = array();
 		$scssPackages = array();
-		$this->app->runHook(
-			'WikiaAssetsPackages',
-			array(
-				&$wgOut,
-				&$jsPackages,
-				&$scssPackages
-			)
-		);
+		Hooks::run( 'WikiaAssetsPackages', [ $wgOut, &$jsPackages, &$scssPackages ] );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
-		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+		$wikiWelcome = $request->getVal('wiki-welcome');
 
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
@@ -187,7 +183,6 @@ class OasisController extends WikiaController {
 
 		if(Wikia::isMainPage()) {
 			$bodyClasses[] = 'mainpage';
-			$wgOut->addScript( ( new InspectletService( InspectletService::MAIN_PAGE ) )->getInspectletCode() );
 		}
 
 		wfProfileIn(__METHOD__ . ' - skin Operations');
@@ -251,22 +246,22 @@ class OasisController extends WikiaController {
 		$this->loadJs();
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
-		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
+		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->a9 = AnalyticsEngine::track('A9', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->gfc = AnalyticsEngine::track('GoogleFundingChoices', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->rubiconVulcan = AnalyticsEngine::track('RubiconVulcan', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->sourcePoint = ARecoveryModule::getSourcePointBootstrapCode();
+			$this->sourcePoint = ARecoveryBootstrapCode::getSourcePointBootstrapCode();
+			$this->instartLogic = ARecoveryBootstrapCode::getInstartLogicBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->recoveryHeadBootstrapCode = ARecoveryBootstrapCode::getHeadBootstrapCode();
+			$this->recoveryTopBodyBootstrapCode = ARecoveryBootstrapCode::getTopBodyBootstrapCode();
+			$this->recoveryBottomBodyBootstrapCode = ARecoveryBootstrapCode::getBottomBodyBootstrapCode();
 		}
 
 		wfProfileOut(__METHOD__);
@@ -335,7 +330,7 @@ class OasisController extends WikiaController {
 		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
-		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
+		Hooks::run('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
@@ -377,7 +372,7 @@ class OasisController extends WikiaController {
 
 		$jsLoader = '';
 
-		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
+		Hooks::run('OasisSkinAssetGroups', array(&$assetGroups));
 
 		// add groups queued via OasisController::addSkinAssetGroup
 		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);

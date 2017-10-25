@@ -5,11 +5,6 @@ class WallNotificationsExternalController extends WikiaController {
 
 	private $controllerName;
 
-	public function __construct() {
-		parent::__construct();
-		$this->app = F::app();
-	}
-
 	public function init() {
 		if ( ( $this->app->checkSkin( [ 'oasis' ] ) ) ) {
 			$this->controllerName = 'GlobalNavigationWallNotifications';
@@ -21,6 +16,7 @@ class WallNotificationsExternalController extends WikiaController {
 	public function getUpdateCounts() {
 		global $wgUser;
 
+		// check notifications for messages marked with "notify everyone"
 		$wne = new WallNotificationsEveryone();
 		$wne->processQueue( $wgUser->getId() );
 
@@ -99,22 +95,71 @@ class WallNotificationsExternalController extends WikiaController {
 	}
 
 	private function getUpdateWikiInternal( WallNotifications $wn, $wikiId, $isCrossWiki = false ) {
-		global $wgUser;
+		$user = $this->getContext()->getUser();
 
 		if ( $isCrossWiki ) {
-			$all = $wn->getWikiNotifications( $wgUser->getId(), $wikiId, 0 );
+			$all = $wn->getWikiNotifications( $user->getId(), $wikiId, 0 );
 		} else {
-			$all = $wn->getWikiNotifications( $wgUser->getId(), $wikiId, 5, false, true );
+			$all = $wn->getWikiNotifications( $user->getId(), $wikiId, 5, false, true );
 		}
 
-		$this->response->setVal(
-			'html',
-			$this->app->renderView(  $this->controllerName, 'UpdateWiki', [ 'notifications' => $all ] )
-		);
+		$html = '';
+		if ( $user->isLoggedIn() ) {
+			if ( !empty( $all['unread_count'] ) || !empty( $all['read_count'] ) ) {
+				foreach ( $all['unread'] as $unreadNotification ) {
+					$html .= $this->app->renderView( $this->controllerName, 'Notification', [
+						'notify' => $unreadNotification,
+						'unread' => true
+					] );
+				}
+
+				foreach ( $all['read'] as $readNotification ) {
+					$html .= $this->app->renderView( $this->controllerName, 'Notification', [
+						'notify' => $readNotification,
+						'unread' => false
+					] );
+				}
+			} else {
+				$html = $this->app->renderPartial( $this->controllerName, 'empty' );
+			}
+		}
+
+		$this->response->setVal( 'html', $html );
+
 		$this->response->setVal( 'unread', $all[ 'unread_count' ] );
 		$this->response->setVal( 'status', true );
 
 		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+	}
+
+	/**
+	 * Requested by Wall Notifications for cross-wiki notifications
+	 * @see WallNotificationEntity::loadDataFromRevIdOnWiki()
+	 */
+	public function getEntityData() {
+		// SUS-1879: Disable cache - this endpoint is only requested internally
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$revId = $this->request->getInt( 'revId' );
+		$useMasterDB = $this->request->getBool( 'useMasterDB', false );
+
+		$wn = new WallNotificationEntity();
+		if ( !$wn->loadDataFromRevId( $revId, $useMasterDB ) ) {
+			$this->response->setData( [
+				'status' => 'error'
+			] );
+
+			return;
+		}
+
+		$this->response->setData( [
+			'data' => $wn->data,
+			'parentTitleDbKey' => $wn->parentTitleDbKey,
+			'msgText' => $wn->msgText,
+			'threadTitleFull' => $wn->threadTitleFull,
+			'status' => 'ok',
+		] );
 	}
 }

@@ -135,7 +135,7 @@ class AjaxResponse {
 			header ( "Vary: " . $this->mVary );
 		}
 
-		wfRunHooks( 'AjaxResponseSendHeadersAfter' ); # Wikia change
+		Hooks::run( 'AjaxResponseSendHeadersAfter' ); # Wikia change
 	}
 
 	/**

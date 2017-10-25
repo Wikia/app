@@ -2,14 +2,15 @@
 describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	'use strict';
 
-	function noop() {
-	}
+	function noop() {}
 
 	var mocks = {
 		log: noop,
 		context: {
-			opts: {}
+			opts: {},
+			slots: {}
 		},
+		fillInSlot: noop,
 		adContext: {
 			addCallback: noop,
 			getContext: function () {
@@ -17,15 +18,28 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			}
 		},
 		methodCalledInsideFillInSlot: noop,
-		recoveryHelper: {
+		uapContext: {
+			isUapLoaded: function () {
+				return false;
+			},
+			isRoadblockLoaded: function () {
+				return false;
+			}
+		},
+		adBlockDetection: {
 			isBlocking: function () {
 				return false;
 			}
 		},
-		win: {}
+		win: {
+			addEventListener: noop,
+			setTimeout: function (callback) {
+				callback();
+			}
+		}
 	};
 
-	mocks.log.levels = {debug: ''};
+	mocks.log.levels = {info: 'info', debug: 'debug'};
 	beforeEach(function () {
 		mocks.context.opts.delayBtf = true;
 		spyOn(mocks, 'methodCalledInsideFillInSlot');
@@ -34,7 +48,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	function getBtfBlocker() {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
-			mocks.recoveryHelper,
+			mocks.uapContext,
+			mocks.adBlockDetection,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
 			mocks.win
@@ -48,7 +63,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 					'ATF_SLOT'
 				],
 				highlyViewableSlots: [
-					'HIVI_BTF_SLOT'
+					'HIVI_BTF_SLOT',
+					'INVISIBLE_HIGH_IMPACT_2'
 				]
 			},
 			fillInSlot: function (slot) {
@@ -172,5 +188,75 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 
 		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(2);
 		expect(btfSlot.collapse).toHaveBeenCalled();
+	});
+
+	it('Do fill INVISIBLE_HIGH_IMPACT_2 slot when no UAP on page', function () {
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			btfSlot = getFakeSlot('BTF_SLOT'),
+			fakeProvider = getFakeProvider();
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
+		mocks.win.ads.runtime.disableBtf = true;
+		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
+		fillInSlot(getFakeSlot('HIVI_BTF_SLOT'));
+		fillInSlot(btfSlot);
+		fillInSlot(getFakeSlot('INVISIBLE_HIGH_IMPACT_2'));
+		fillInSlot(btfSlot);
+
+		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(3);
+		expect(btfSlot.collapse).toHaveBeenCalled();
+	});
+
+	it('Do not fill INVISIBLE_HIGH_IMPACT_2 slot when UAP on page', function () {
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			btfSlot = getFakeSlot('BTF_SLOT'),
+			fakeProvider = getFakeProvider();
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
+		mocks.win.ads.runtime.disableBtf = true;
+		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
+		spyOn(mocks.uapContext, 'isUapLoaded').and.returnValue(true);
+		fillInSlot(getFakeSlot('HIVI_BTF_SLOT'));
+		fillInSlot(btfSlot);
+		fillInSlot(getFakeSlot('INVISIBLE_HIGH_IMPACT_2'));
+		fillInSlot(btfSlot);
+
+		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(2);
+		expect(btfSlot.collapse).toHaveBeenCalled();
+	});
+
+	it('does not block slots enabled for PAL', function () {
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			fakeProvider = getFakeProvider();
+
+		mocks.context.opts.premiumAdLayoutEnabled = true;
+		mocks.context.slots.premiumAdLayoutSlotsToUnblock = ['BOTTOM_LEADERBOARD'];
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
+		fillInSlot(getFakeSlot('BOTTOM_LEADERBOARD'));
+
+		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(2);
+	});
+
+	it('blocks slots enabled for PAL if BTF is disabled by ATF creative', function () {
+		var fillInSlot,
+			btfBlocker = getBtfBlocker(),
+			fakeProvider = getFakeProvider();
+
+		mocks.context.opts.premiumAdLayoutEnabled = true;
+		mocks.context.slots.premiumAdLayoutSlotsToUnblock = ['BOTTOM_LEADERBOARD'];
+		mocks.win.ads.runtime.disableBtf = true;
+
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		fillInSlot(getFakeSlot('ATF_SLOT'));
+		fillInSlot(getFakeSlot('BOTTOM_LEADERBOARD'));
+
+		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(1);
 	});
 });

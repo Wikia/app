@@ -14,8 +14,28 @@
 
 class LogEventsApiController extends WikiaApiController {
 
+	/** @var LogPage $logPage */
+	private $logPage;
+
+	/**
+	 * @param LogPage $logPage
+	 */
+	public function __construct( LogPage $logPage = null ) {
+		parent::__construct();
+		$this->logPage = $logPage ?? new LogPage();
+	}
+
 	/**
 	 * Add a new entry to logging table
+	 *
+	 * @requestParam string type Log type: one of '', 'block', 'protect', 'rights', 'delete', 'upload', 'move'
+	 * @requestParam string action Log action: one of '', 'block', 'protect', 'rights', 'delete', 'upload', 'move', 'move_redir'
+	 * @requestParam string comment Log comment
+	 * @requestParam integer user_id user ID of user to be logged as action performer
+	 * @requestParam boolean showInRc [optional] whether to show the new log entry in recent changes
+	 * @requestParam string params JSON dict of params which will be passed to i18n functions
+	 *
+	 * @responseParam int id ID of newly created log entry
 	 *
 	 * @throws BadRequestException
 	 */
@@ -35,12 +55,15 @@ class LogEventsApiController extends WikiaApiController {
 		$action = $this->request->getVal( 'action' );
 		$comment = $this->request->getVal( 'comment' );
 		$user_id = $this->request->getVal( 'user_id' );
+		$showInRc = $this->request->getBool( 'showInRc', true );
+
 		$params = json_decode( $this->request->getVal( 'params', '[]' ) );
 		$user = User::newFromId($user_id);
 
 		// exceptions thrown by addEntry() will be handled by Nirvana API dispatcher
-		$entry = new LogPage( $type );
-		$id = $entry->addEntry( $action, $this->wg->Title, $comment, $params, $user );
+		$this->logPage->setType( $type );
+		$this->logPage->setUpdateRecentChanges( $showInRc );
+		$id = $this->logPage->addEntry( $action, $this->wg->Title, $comment, $params, $user );
 
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_CREATED );
 		$this->response->setData( [ 'id' => $id ] );

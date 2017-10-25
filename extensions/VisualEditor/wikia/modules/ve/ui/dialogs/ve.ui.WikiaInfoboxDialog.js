@@ -126,7 +126,6 @@ ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 		for ( key in this.fullParamsList ) {
 			if ( this.fullParamsList.hasOwnProperty( key ) ) {
 				obj = this.fullParamsList[key];
-				//TODO: add displaying different inputs according to type eg.data, image, group element
 				tab.push( this.showDataItem( obj ) );
 			}
 		}

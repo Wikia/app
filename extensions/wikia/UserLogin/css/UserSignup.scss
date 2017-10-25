@@ -5,7 +5,6 @@
 @import 'skins/oasis/css/core/layout';
 @import 'skins/oasis/css/placeholders/bodytext';
 @import '../mixins/submitpane';
-@import '../mixins/divider';
 
 .WikiaSignup {
 	margin: 50px 25px 50px 15px;
@@ -63,21 +62,6 @@
 			}
 		}
 
-		.avatars {
-			float: left;
-			height: 74px;
-			list-style: none;
-			margin: 0;
-			width: 74px;
-		}
-
-		.avatar {
-			border: 1px solid $color-page-border;
-			float: left;
-			margin: 0 5px 5px 0;
-			padding: 0;
-		}
-
 		h2 {
 			border: 0;
 			font-size: 16px;
@@ -89,13 +73,11 @@
 			font-size: 12px;
 			font-weight: bold;
 			line-height: 13px;
-			margin: 0 0 0 80px;
 		}
 
 		p {
 			font-size: 12px;
 			line-height: 16px;
-			margin-left: 80px;
 		}
 
 		@if ($responsive-or-breakpoints-layout-enabled) {
@@ -141,26 +123,12 @@
 				form {
 					width: 332px;
 				}
-
-				.sso-login {
-					margin: 0;
-				}
 			}
 		}
 	}
 
 	.wordmark {
 		@include wordmark;
-	}
-
-	.sso-login {
-		margin: 0 auto;
-		text-align: center;
-		width: 332px;
-
-		.sso-login-divider {
-			@include divider;
-		}
 	}
 
 	.hidden {

@@ -110,7 +110,8 @@ class WAMApiController extends WikiaApiController {
 			[
 				'wam_index' => $wamIndex[ 'wam_index' ],
 				'wam_results_total' => $wamIndex[ 'wam_results_total' ],
-				'wam_index_date' => $wamIndex[ 'wam_index_date' ]
+				'wam_index_date' => $wamIndex[ 'wam_index_date' ],
+				'wam_actual_date' => $options[ 'currentTimestamp' ]
 			],
 			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
 			self::WAM_RESPONSE_CACHE_VALIDITY
@@ -200,19 +201,22 @@ class WAMApiController extends WikiaApiController {
 			$options['currentTimestamp'] = $wamDates['max_date'];
 			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
 		} else {
-			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] < $wamDates['min_date']) {
+			if($options['currentTimestamp'] > $wamDates['max_date']) {
+				$options['currentTimestamp'] = $wamDates['max_date'];
 
-				if ( time() > $options['currentTimestamp'] ) {
-					// SUS-1235: let us know that something is wrong with WAM data
-					// and make sure that the requested date is not in The Future
-					$this->critical( __METHOD__ . " - current timestamp out of range", [
-						'wam_last_entry_date' => wfTimestamp( TS_DB, $wamDates['max_date'] ), // e.g. 2016-11-01 00:00:00
-						'wam_requested_entry_date' => wfTimestamp( TS_DB, $options['currentTimestamp'] ),
-						'exception' => new Exception(),
-					] );
-				}
+				$this->warning( __METHOD__ . " - current timestamp over maximum", [
+					'wam_last_entry_date' => wfTimestamp( TS_DB, $wamDates['max_date'] ), // e.g. 2016-11-01 00:00:00
+					'wam_requested_entry_date' => wfTimestamp( TS_DB, $options['currentTimestamp'] ),
+					'exception' => new Exception(),
+				] );
+			} else if($options['currentTimestamp'] < $wamDates['min_date']) {
+				$options['currentTimestamp'] = $wamDates['min_date'];
 
-				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_date'], $wamDates['max_date']);
+				$this->warning( __METHOD__ . " - current timestamp below minimum", [
+					'wam_first_entry_date' => wfTimestamp( TS_DB, $wamDates['min_date'] ), // e.g. 2016-11-01 00:00:00
+					'wam_requested_entry_date' => wfTimestamp( TS_DB, $options['currentTimestamp'] ),
+					'exception' => new Exception(),
+				] );
 			}
 
 			if(empty($options['previousTimestamp'])) {

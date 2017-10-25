@@ -2,6 +2,7 @@
 
 namespace Wikia\Persistence\User\Attributes;
 
+use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Attributes\Api\UsersAttributesApi;
 use Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse;
@@ -12,7 +13,7 @@ use Wikia\Service\ForbiddenException;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 
-class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
+class AttributePersistenceSwaggerTest extends TestCase {
 
 	protected $userId = 1;
 

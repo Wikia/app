@@ -1,0 +1,8 @@
+.oo-start-screen {
+  z-index: $zindex-start-screen;
+
+  .oo-start-screen-linear-gradient {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%);
+    @include expand;
+  }
+}

@@ -3,6 +3,7 @@
 namespace DMCARequest\Test;
 
 use DMCARequest\ChillingEffectsClient;
+use MWHttpRequest;
 
 class ChillingEffectsClientTest extends \WikiaBaseTest {
 
@@ -15,7 +16,10 @@ class ChillingEffectsClientTest extends \WikiaBaseTest {
 	 * @dataProvider getNoticeIdFromResponseProvider
 	 */
 	public function testGetNoticeIdFromResponse( $locationHeader, $expectedResult ) {
-		$httpRequestMock = $this->getMock( '\MWHttpRequest', [ 'getResponseHeader' ] );
+		$httpRequestMock = $this->getMockBuilder( MWHttpRequest::class )
+			->setMethods( [ 'getResponseHeader' ] )
+			->disableOriginalConstructor()
+			->getMock();
 
 		$httpRequestMock->expects( $this->once() )
 			->method( 'getResponseHeader' )

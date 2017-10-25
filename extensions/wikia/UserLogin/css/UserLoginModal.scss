@@ -1,6 +1,5 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/shared/mixins/transition";
-@import "../mixins/divider";
 
 #blackout_userForceLoginModal {
 	z-index: $zTop + 5000; // Login page must show over other modals - see VID-473
@@ -37,11 +36,5 @@
 	}
 	.general-errors {
 		display: none;
-	}
-	.sso-login {
-		text-align: center;
-		> .sso-login-divider {
-			@include divider;
-		}
 	}
 }

@@ -87,37 +87,19 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgEnableOutboundScreenExt' ],
+				'flags' => [ ],
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [ ],
-				'expectedForceProviders' => null,
-				'expectedSlots' => [ 'exitstitial' => true ]
+				'expectedForceProviders' => null
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => [ 'wgOutboundScreenRedirectDelay' ],
+				'flags' => [ ],
 				'expectedOpts' => [ ],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [ ],
-				'expectedForceProviders' => null,
-				'expectedSlots' => [ 'exitstitialRedirectDelay' => true ]
-			],
-			[
-				'titleMockType' => 'article',
-				'flags' => [ 'wgEnableWikiaHomePageExt' ],
-				'expectedOpts' => [ 'pageType' => 'corporate' ],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsCorporate' => true ]
-			],
-			[
-				'titleMockType' => 'article',
-				'flags' => [ 'wgEnableWikiaHubsV3Ext' ],
-				'expectedOpts' => [ 'pageType' => 'corporate' ],
-				'expectedTargeting' => [
-					'newWikiCategories' => [ 'test' ],
-					'pageIsHub' => true,
-					'wikiIsCorporate' => true
-				]
+				'expectedForceProviders' => null
 			],
 			[
 				'titleMockType' => 'article',
@@ -214,6 +196,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test3' ] ],
 				'categories' => [ 'new' => [ 'test3' ] ]
 			] ),
+
+			array_merge( $defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'hasPortableInfobox' => true ],
+			] ),
 		];
 	}
 
@@ -244,8 +230,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$customDartKvs = 'a=b;c=d';
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
-		$expectedAdEngineResourceURLFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/%s';
-		$expectedPrebidBidderUrl = 'http://i2.john-doe.wikia-dev.com/__am/123/group/-/prebid_prod_js';
+		// mech: using %S for hostname as RL can produce local links when $wgEnableLocalResourceLoaderLinks is set to true
+		$expectedAdEngineResourceURLFormat = '%S/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/%s';
+		$expectedPrebidBidderUrl = 'http://i2.john-doe.wikia-dev.com/__am/123/group/-/pr3b1d_prod_js';
 
 		$assetsManagerMock = $this->getMockBuilder( 'AssetsManager' )
 			->disableOriginalConstructor()
@@ -263,6 +250,19 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expectedTargeting['pageIsArticle'] = true;
 		}
 
+		if ( isset( $expectedTargeting['hasPortableInfobox'] ) && $expectedTargeting['hasPortableInfobox'] === true ) {
+			$wikiaMock = $this->getMockBuilder( 'Wikia' )
+				->disableOriginalConstructor()
+				->setMethods( [ 'getProps' ] )
+				->getMock();
+
+			$wikiaMock->expects( $this->any() )
+				->method( 'getProps' )
+				->willReturn( true );
+
+			$this->mockStaticMethod( 'Wikia', 'getProps', $wikiaMock );
+		}
+
 		// Mock globals
 		$this->mockGlobalVariable( 'wgCityId', $cityId );
 		$this->mockGlobalVariable( 'wgDartCustomKeyValues', $customDartKvs );
@@ -278,10 +278,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
-		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
-		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
-		$this->mockGlobalVariable( 'wgEnableOutboundScreenExt', false );
-		$this->mockGlobalVariable( 'wgOutboundScreenRedirectDelay', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 
@@ -307,10 +303,13 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			->method( 'getWikiVertical' )
 			->willReturn( [ 'short' => $verticals['newVertical'] ] );
 
-		if ( !empty($categories['old']) || !empty($categories['new']) ) {
+		if ( !empty( $categories['old'] ) || !empty( $categories['new'] ) ) {
 			$wikiFactoryHubMock->expects( $this->any() )
 				->method( 'getWikiCategoryNames' )
-				->will( $this->onConsecutiveCalls( $categories['old'], $categories['new'] ) );
+				->will( $this->onConsecutiveCalls(
+						empty( $categories['old'] ) ? [] : $categories['old'],
+						empty( $categories['new'] ) ? [] : $categories['new'] )
+					);
 		} else {
 			$wikiFactoryHubMock->expects( $this->any() )
 				->method( 'getWikiCategoryNames' )
@@ -332,9 +331,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'pageType' => 'all_ads',
 				'showAds' => true,
 				'delayBtf' => true,
-				'sourcePointRecovery' => false,
-				'sourcePointMMS' => false,
-				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com'
+				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
+				'sourcePointRecovery' => true,
+				'pageFairRecovery' => true,
+				'instartLogicRecovery' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
@@ -372,10 +372,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expected['slots'][$var] = $val;
 		}
 
-		if ( $expected['targeting']['pageType'] === 'article' ) {
-			$expected['providers']['taboola'] = true;
-		}
-
 		// Check for SourcePoint URL
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['sourcePointDetectionUrl'] );
 		unset($result['opts']['sourcePointDetectionUrl']);
@@ -384,17 +380,83 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );
 		unset($result['opts']['pageFairDetectionUrl']);
 
-		// Check for PageFair URL
+		// Check for Prebid.js URL
 		$this->assertEquals( $expectedPrebidBidderUrl, $result['opts']['prebidBidderUrl'] );
 		unset($result['opts']['prebidBidderUrl']);
 
-
-		$expected['providers']['rubiconFastlane'] = true;
-
-		// Check Yavli URL format
-		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['yavliUrl'] );
-		unset($result['opts']['yavliUrl']);
-
 		$this->assertEquals( $expected, $result );
+	}
+
+	/**
+	 * @param $expected
+	 * @param $wgEnableArticleFeaturedVideo
+	 * @param $wgArticleVideoFeaturedVideos
+	 * @param $wgArticleVideoFeaturedVideos2
+	 * @param $message
+	 *
+	 * @dataProvider featuredVideoDataProvider
+	 */
+	public function testFeaturedVideoInContext(
+		$expected,
+		$wgEnableArticleFeaturedVideo,
+		$wgArticleVideoFeaturedVideos,
+		$wgArticleVideoFeaturedVideos2,
+		$message
+	) {
+		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', $wgEnableArticleFeaturedVideo );
+		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos', $wgArticleVideoFeaturedVideos );
+		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos2', $wgArticleVideoFeaturedVideos2 );
+		$titleMock = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getPrefixedDBkey' ] )
+			->getMock();
+		$titleMock->method( 'getPrefixedDBkey' )
+			->willReturn( 'test' );
+
+		$adContextService = new AdEngine2ContextService();
+		$result = $adContextService->getContext( $titleMock, 'test' );
+
+		$this->assertEquals(
+			$expected,
+			isset( $result['targeting']['hasFeaturedVideo'] ) && $result['targeting']['hasFeaturedVideo'],
+			$message
+		);
+	}
+
+	public function featuredVideoDataProvider() {
+		return [
+			// hasFeaturedVideo result,
+			// wgEnableArticleFeaturedVideo,
+			// wgArticleVideoFeaturedVideos,
+			// wgArticleVideoFeaturedVideos2,
+			// message
+			[ false, false, [], [], 'hasFeaturedVideo is set when extension disabled' ],
+			[ false, true, [], [], 'hasFeaturedVideo is set when no data available' ],
+			[ false, true, [ 'test' => [] ], [], 'hasFeaturedVideo is set when data missing' ],
+			[ true, true, [
+				'test' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+			]
+			], [], 'hasFeaturedVideo is not set when correct data available' ],
+			[ false, true, [
+				'wrong_article_name' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+				]
+			], [], 'hasFeaturedVideo is set when data missing for title' ],
+			[ false, false, [
+				'test' => [
+					'time' => '0:00',
+					'title' => 'some title',
+					'videoId' => 'aksdjlfkjsdlf',
+					'thumbnailUrl' => 'http://img.com'
+				]
+			], [], 'hasFeaturedVideo is set when data is set but extension is disabled' ],
+		];
 	}
 }

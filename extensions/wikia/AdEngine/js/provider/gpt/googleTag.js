@@ -1,72 +1,81 @@
-/*global define*/
+/*global define, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window'
-], function (googleSlots, adSlot, recovery, doc, log, window) {
+	'wikia.window',
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery')
+], function (googleSlots, adSlot, slotRegistry, doc, log, win, instartLogic) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
-		registeredCallbacks = {},
 		slotQueue = [],
 		pageLevelParams,
 		initialized = false;
 
-	window.googletag = window.googletag || {};
-	window.googletag.cmd = window.googletag.cmd || [];
+	win.googletag = win.googletag || {};
+	win.googletag.cmd = win.googletag.cmd || [];
 
-	function isSlotRegistered(slot, id) {
-		return registeredCallbacks[id] && slot && slot === googleSlots.getSlot(id);
-	}
+	function dispatchEvent(event, methodName) {
+		var slot,
+			slotName = adSlot.getShortSlotName(event.slot.getName());
 
-	function dispatchEvent(event) {
-		var id;
+		log(['dispatchEvent', event], log.levels.info, logGroup);
+		slot = slotRegistry.get(slotName);
 
-		log(['dispatchEvent', event], 'info', logGroup);
-		for (id in registeredCallbacks) {
-			if (registeredCallbacks.hasOwnProperty(id) && isSlotRegistered(event.slot, id)) {
-				log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
-				registeredCallbacks[id](event);
-				return;
-			}
+		if (slot && slot[methodName]) {
+			slot[methodName](event);
+		} else {
+			log(['dispatchEvent', event, 'Slot not registered'], log.levels.error, logGroup);
 		}
-
-		log(['dispatchEvent', event, 'No callback registered for this slot render ended event'], 'error', logGroup);
 	}
 
 	function push(callback) {
-		window.googletag.cmd.push(callback);
+		win.googletag.cmd.push(callback);
 	}
 
 	function enableServices() {
-		log(['enableServices', 'push'], 'info', logGroup);
+		log(['enableServices', 'push'], log.levels.info, logGroup);
 		push(function () {
-			window.googletag.pubads().collapseEmptyDivs();
-			window.googletag.pubads().enableSingleRequest();
-			window.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
-			window.googletag.pubads().addEventListener('slotRenderEnded', dispatchEvent);
+			win.googletag.pubads().collapseEmptyDivs();
+			win.googletag.pubads().enableSingleRequest();
+			win.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
+			win.googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+				dispatchEvent(event, 'renderEnded');
+			});
+			win.googletag.pubads().addEventListener('impressionViewable', function (event) {
+				dispatchEvent(event, 'viewed');
+			});
 
-			window.googletag.enableServices();
+			win.googletag.enableServices();
 
-			log(['enableServices', 'push', 'done'], 'debug', logGroup);
+			log(['enableServices', 'push', 'done'], log.levels.debug, logGroup);
 		});
 	}
 
+	/**
+	 * Load GPT if not loaded only.
+	 *
+	 * @returns {boolean}
+	 */
+	function canGptBeLoaded() {
+		return !win.googletag.apiReady;
+	}
+
 	function init() {
-		log('init', 'debug', logGroup);
+		log('init', log.levels.debug, logGroup);
 
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		if (!window.googletag.apiReady && !recovery.isBlocking()) {
+		if (canGptBeLoaded()) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
-			log('Appending GPT script to head', 'debug', logGroup);
+			log('Appending GPT script to head', log.levels.debug, logGroup);
 			node.parentNode.insertBefore(gads, node);
 		}
 
@@ -75,7 +84,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function isInitialized() {
-		log(['isInitialized', initialized], 'debug', logGroup);
+		log(['isInitialized', initialized], log.levels.debug, logGroup);
 		return initialized;
 	}
 
@@ -89,8 +98,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				if (pageLevelParams.hasOwnProperty(name)) {
 					value = pageLevelParams[name];
 					if (value) {
-						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], 'debug', logGroup);
-						window.googletag.pubads().setTargeting(name, value);
+						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], log.levels.debug, logGroup);
+						win.googletag.pubads().setTargeting(name, value);
 					}
 				}
 			}
@@ -99,20 +108,31 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function flush() {
 		if (!isInitialized()) {
-			log(['flush', 'done', 'No slots to flush'], 'info', logGroup);
+			log(['flush', 'done', 'No slots to flush'], log.levels.info, logGroup);
 			return;
 		}
 
 		push(function () {
-			log(['flush', 'start'], 'info', logGroup);
+			log(['flush', 'start'], log.levels.info, logGroup);
 
-			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
+			log(['flush', 'refresh', slotQueue], log.levels.debug, logGroup);
 			if (slotQueue.length) {
-				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
+				win.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
+
 				slotQueue = [];
 			}
 
-			log(['flush', 'done'], 'info', logGroup);
+			log(['flush', 'done'], log.levels.info, logGroup);
+		});
+	}
+
+	function updateTargetingForBlockedTraffic() {
+		win.googletag.pubads().getSlots().forEach(function(slot) {
+			// slot.clearTargeting described in docs is not applicable in this context
+			if (slot.targeting) {
+				slot.targeting.src = [];
+			}
+			slot.setTargeting('src', 'rec');
 		});
 	}
 
@@ -121,17 +141,16 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			slotId = adElement.getId(),
 			slot = googleSlots.getSlot(slotId);
 
-		log(['addSlot', adElement], 'debug', logGroup);
+		log(['addSlot', adElement], log.levels.debug, logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
-			if (sizes) {
-				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId);
-			} else {
-				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
-			}
-			slot.addService(window.googletag.pubads());
-			window.googletag.display(slotId);
+			slot = sizes ?
+				win.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
+				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
+
+			slot.addService(win.googletag.pubads());
+			win.googletag.display(slotId);
 			googleSlots.addSlot(slot);
 		}
 
@@ -141,13 +160,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		return slot;
 	}
 
-	function registerCallback(id, callback) {
-		log(['registerCallback', id], 'info', logGroup);
-		registeredCallbacks[id] = callback;
+	function refreshSlot(slot) {
+		win.googletag.pubads().refresh([slot]);
 	}
 
 	function onAdLoad(slotName, element, gptEvent, onAdLoadCallback) {
-		log(['onAdLoad', slotName], 'info', logGroup);
+		log(['onAdLoad', slotName], log.levels.info, logGroup);
 		var iframe = adSlot.getIframe(slotName);
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
@@ -162,7 +180,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			return;
 		}
 
-		allSlots = window.googletag.pubads().getSlots();
+		allSlots = win.googletag.pubads().getSlots();
 		// when nothing passed - destroy all slots
 		if (!slotsNames) {
 			slotsToDestroy = allSlots;
@@ -173,7 +191,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				// google returns array
 				// - in our case it has always one element and this element is the one we are interested in
 				if (!slotsPositionTargeting.length) {
-					log(['destroySlots', 'getTargeting doesn\'t return pos', slotsPositionTargeting, slot], 'error', logGroup);
+					log(['destroySlots', 'getTargeting doesn\'t return pos', slotsPositionTargeting, slot], log.levels.error, logGroup);
 				} else {
 					if (slotsNames.indexOf(slotsPositionTargeting[0]) > -1) {
 						slotsToDestroy.push(slot);
@@ -184,35 +202,36 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		if (slotsToDestroy.length) {
 			push(function () {
-				log(['destroySlots', slotsNames, slotsToDestroy], 'debug', logGroup);
-				success = window.googletag.destroySlots(slotsToDestroy);
+				log(['destroySlots', slotsNames, slotsToDestroy], log.levels.debug, logGroup);
+				success = win.googletag.destroySlots(slotsToDestroy);
 
 				if (!success) {
-					log(['destroySlots', slotsNames, slotsToDestroy, 'failed'], 'error', logGroup);
+					log(['destroySlots', slotsNames, slotsToDestroy, 'failed'], log.levels.error, logGroup);
 				}
 
 				googleSlots.removeSlots(slotsToDestroy);
 			});
 		} else {
-			log(['destroySlots', 'no slots returned to destroy', allSlots, slotsNames], 'debug', logGroup);
+			log(['destroySlots', 'no slots returned to destroy', allSlots, slotsNames], log.levels.debug, logGroup);
 		}
 	}
 
 	function updateCorrelator() {
-		push(function() {
-			window.googletag.pubads().updateCorrelator();
+		push(function () {
+			win.googletag.pubads().updateCorrelator();
 		});
 	}
 
 	return {
 		addSlot: addSlot,
 		destroySlots: destroySlots,
+		updateTargetingForBlockedTraffic: updateTargetingForBlockedTraffic,
 		flush: flush,
 		init: init,
 		isInitialized: isInitialized,
 		onAdLoad: onAdLoad,
 		push: push,
-		registerCallback: registerCallback,
+		refreshSlot: refreshSlot,
 		setPageLevelParams: setPageLevelParams,
 		updateCorrelator: updateCorrelator
 	};

@@ -1,115 +1,122 @@
 <?php
-/** Internationalization file for /extensions/wikia/MediaGallery/MediaGallery extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'mediagallery-desc' => 'MediaGallery extension',
 	'mediagallery-show-more' => 'Show More',
 	'mediagallery-show-less' => 'Show Fewer',
 	'mediagallery-add-image-button' => 'Add an image',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'mediagallery-desc' => '{{desc}}',
 	'mediagallery-show-more' => 'Button to expand the gallery, showing more images',
 	'mediagallery-show-less' => 'Button to collapse the gallery, showing fewer images',
 	'mediagallery-add-image-button' => 'Button that allows users to add additional images to the gallery',
-];
+);
 
-$messages['es'] = [
-	'mediagallery-show-more' => 'Mostrar más',
-	'mediagallery-show-less' => 'Mostrar menos',
-	'mediagallery-add-image-button' => 'Añadir imagen',
-];
-
-$messages['de'] = [
+$messages['de'] = array(
 	'mediagallery-show-more' => 'Mehr anzeigen',
 	'mediagallery-show-less' => 'Weniger anzeigen',
 	'mediagallery-add-image-button' => 'Bild hinzufügen',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['fr'] = [
+$messages['es'] = array(
+	'mediagallery-show-more' => 'Mostrar más',
+	'mediagallery-show-less' => 'Mostrar menos',
+	'mediagallery-add-image-button' => 'Añadir imagen',
+	'mediagallery-desc' => 'MediaGallery extension',
+);
+
+$messages['fi'] = array(
+	'mediagallery-desc' => 'MediaGallery extension',
+	'mediagallery-show-more' => 'Show More',
+	'mediagallery-show-less' => 'Show Fewer',
+	'mediagallery-add-image-button' => 'Add an image',
+);
+
+$messages['fr'] = array(
 	'mediagallery-show-more' => 'Afficher plus',
 	'mediagallery-show-less' => 'Afficher moins',
 	'mediagallery-add-image-button' => 'Ajouter une image',
 	'mediagallery-desc' => '&nbsp;',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'mediagallery-show-more' => 'Mostra più',
 	'mediagallery-show-less' => 'Mostra meno',
 	'mediagallery-add-image-button' => 'Inserisci Immagine',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'mediagallery-show-more' => '続き',
 	'mediagallery-show-less' => '折り畳む',
 	'mediagallery-add-image-button' => '画像を追加',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['nl'] = [
+$messages['ko'] = array(
+	'mediagallery-desc' => 'MediaGallery extension',
+	'mediagallery-show-more' => 'Show More',
+	'mediagallery-show-less' => 'Show Fewer',
+	'mediagallery-add-image-button' => 'Add an image',
+);
+
+$messages['lol'] = array(
+	'mediagallery-desc' => 'crwdns65475:0crwdne65475:0',
+	'mediagallery-show-more' => 'crwdns65476:0crwdne65476:0',
+	'mediagallery-show-less' => 'crwdns65477:0crwdne65477:0',
+	'mediagallery-add-image-button' => 'crwdns65478:0crwdne65478:0',
+);
+
+$messages['nl'] = array(
 	'mediagallery-show-more' => 'Meer tonen',
 	'mediagallery-show-less' => 'Minder tonen',
 	'mediagallery-add-image-button' => 'Afbeelding toevoegen',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'mediagallery-show-more' => 'więcej',
 	'mediagallery-show-less' => 'mniej',
 	'mediagallery-add-image-button' => 'Dodaj obraz',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'mediagallery-show-more' => 'Mostrar mais',
 	'mediagallery-show-less' => 'Mostrar menos',
 	'mediagallery-add-image-button' => 'Adicione Imagem',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['pt-br'] = [
-	'mediagallery-show-more' => 'Mostrar mais',
-	'mediagallery-show-less' => 'Mostrar menos',
-	'mediagallery-add-image-button' => 'Adicione Imagem',
-];
-
-$messages['ru'] = [
+$messages['ru'] = array(
 	'mediagallery-show-more' => 'Показать больше',
 	'mediagallery-show-less' => 'Показать меньше',
 	'mediagallery-add-image-button' => 'Добавить фото',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['zh'] = [
-	'mediagallery-show-more' => '显示更多',
-	'mediagallery-show-less' => '收起',
-	'mediagallery-add-image-button' => '添加图片',
-];
-
-$messages['vi'] = [
+$messages['vi'] = array(
 	'mediagallery-add-image-button' => 'Thêm hình ảnh',
 	'mediagallery-show-less' => 'Hiện ít hơn',
 	'mediagallery-show-more' => 'Hiển thị thêm',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'mediagallery-add-image-button' => '添加图片',
 	'mediagallery-show-less' => '收起',
 	'mediagallery-show-more' => '显示更多',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'mediagallery-add-image-button' => '增加圖片',
 	'mediagallery-show-less' => '收起',
 	'mediagallery-show-more' => '顯示更多',
-];
-
-$messages['zh-hk'] = [
-	'mediagallery-add-image-button' => '增加圖片',
-	'mediagallery-show-less' => '收起',
-	'mediagallery-show-more' => '顯示更多',
-];
-
-$messages['zh-tw'] = [
-	'mediagallery-add-image-button' => '增加圖片',
-	'mediagallery-show-less' => '收起',
-	'mediagallery-show-more' => '顯示更多',
-];
+	'mediagallery-desc' => 'MediaGallery extension',
+);
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class WallHistory, it's used by WallHistoryController and ForumController
+ */
 class WallHistory extends WikiaModel {
 
 	/**
@@ -7,25 +10,26 @@ class WallHistory extends WikiaModel {
 	 */
 	const DEFAULT_LAST_POSTS_COUNT = 5;
 
-	var $wikiId;
-	var $page = 1;
-	var $perPage = 100;
+	private $page = 1;
+	private $perPage = 100;
 
-	public function __construct() {
-		parent::__construct();
-	}
-
-	public function getDB( $db = DB_MASTER ) {
-		return wfGetDB( $db );
-	}
-
-	public function add( $type, $feed, $user ) {
+	/**
+	 * Events of message creation, edit, delete and restore are stored in wall_history table.
+	 *
+	 * - Messages deleted using MediaWiki flow are removed from the table.
+	 * - Messages deleted via Wall flow are marked by setting deleted_or_removed to 1 (its used by Forum activity module only)
+	 *
+	 * @param int $type one of WH_* defines
+	 * @param WallNotificationAdminEntity $feed
+	 * @param User $user
+	 */
+	public function add( int $type, $feed, User $user ) {
 
 		switch( $type ) {
 			case WH_EDIT:
 			case WH_NEW:
 				// wall the wall action goes through this point.
-				wfRunHooks( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->title_id ] );
+				Hooks::run( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->title_id ] );
 				$this->addNewOrEdit( $type, $feed, $user );
 			break;
 			case WH_ARCHIVE:
@@ -34,7 +38,7 @@ class WallHistory extends WikiaModel {
 			case WH_REMOVE:
 			case WH_RESTORE:
 				// wall the wall action goes through this point.
-				wfRunHooks( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->message_id ] );
+				Hooks::run( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->message_id ] );
 				$this->addStatChangeAction( $type, $feed );
 			break;
 		}
@@ -42,12 +46,18 @@ class WallHistory extends WikiaModel {
 		WikiaDataAccess::cachePurge( $this->getLastPostsMemcKey() );
 	}
 
-	public function remove( $pageId ) {
+	/**
+	 * When deleting a page from NS_USER_WALL_MESSAGE namespace, remove its entries from wall_history
+	 *
+	 * @param int $pageId
+	 */
+	public function remove( int $pageId ) {
 		$this->getDB( DB_MASTER )->delete(
 			'wall_history',
 			[
 				'parent_comment_id' => ( (int) $pageId )
-			]
+			],
+			__METHOD__
 		);
 	}
 
@@ -77,16 +87,18 @@ class WallHistory extends WikiaModel {
 		$this->getDB( DB_MASTER )->commit();
 	}
 
-	private function addNewOrEdit( $action, $feed, User $user ) {
-		if ( !$feed instanceof WallNotificationEntity ) {
-			return false;
-		}
+	/**
+	 * @param int $action
+	 * @param WallNotificationEntity $feed
+	 * @param User $user
+	 */
+	private function addNewOrEdit( int $action, $feed, User $user ) {
 
 		$data = $feed->data;
 
 		$this->internalAdd(
 			(int) $data->parent_page_id,
-			(int) $user->getID(),
+			(int) $user->getId(),
 			$user->getName(),
 			$feed->isReply(),
 			$data->title_id,
@@ -97,19 +109,19 @@ class WallHistory extends WikiaModel {
 			$data->reason,
 			$data->rev_id
 		);
-		return true;
 	}
 
-	private function addStatChangeAction( $action, $feed ) {
-		if ( !( $feed instanceof WallNotificationAdminEntity ) ) {
-			return false;
-		}
+	/**
+	 * @param int $action
+	 * @param WallNotificationAdminEntity $feed
+	 */
+	private function addStatChangeAction( int $action, $feed ) {
 
 		$data = $feed->data;
-		$title = Title::newFromId( $data->message_id );
+		$title = Title::newFromID( $data->message_id );
 
 		if ( empty( $title ) ) {
-			return false;
+			return;
 		}
 
 		$this->internalAdd(
@@ -135,19 +147,17 @@ class WallHistory extends WikiaModel {
 			],
 			__METHOD__
 		);
-
-		return true;
 	}
-	// make it public for migration script
 
-	public function internalAdd( $parentPageId, $postUserId, $postUserName, $isReply, $commentId, $ns, $parentCommentId, $metatitle, $action, $reason, $revId ) {
+	private function internalAdd( $parentPageId, $postUserId, $postUserName, $isReply, $commentId, $ns, $parentCommentId, $metatitle, $action, $reason, $revId ) {
 		$this->getDB( DB_MASTER )->insert(
 			'wall_history',
 			[
 				'parent_page_id' => $parentPageId,
 				'post_user_id' => $postUserId,
 				'post_ns' => MWNamespace::getSubject( $ns ),
-				'post_user_ip' => ( intval( $postUserId ) === 0 ? $this->ip2long( $postUserName ) : null ),
+				'post_user_ip' => null, // TODO SUS-2257 Mix <mix@fandom.com> Remove after migration.
+				'post_user_ip_bin' => ( intval( $postUserId ) === 0 ? inet_pton( $postUserName ) : null ),
 				'is_reply' => $isReply,
 				'comment_id' => $commentId,
 				'parent_comment_id' => ( $isReply ? $parentCommentId: $commentId ),
@@ -155,19 +165,20 @@ class WallHistory extends WikiaModel {
 				'reason' => empty( $reason ) ? null: $reason,
 				'action' => $action,
 				'revision_id' => $revId
-			]
+			],
+			__METHOD__
 		);
 	}
 
 	/**
-	 * Gets data for Forum Activity Module with a cache layer.
+	 * Gets data for Forum Activity Module with a cache layer (called by ForumController).
 	 *
 	 * @param int $ns    The namespace (this should theoretically work for Forum and Wall)
 	 * @param int $count The number of activities to get
 	 *
 	 * @return array Formatted data that gets passed to the view
 	 */
-	public function  getLastPosts( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
+	public function getLastPosts( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
 		wfProfileIn( __METHOD__ );
 
 		$key = $this->getLastPostsMemcKey();
@@ -199,7 +210,7 @@ class WallHistory extends WikiaModel {
 	 *
 	 * @return array Formatted data that gets passed to the view
 	 */
-	public function  getLastPostsFromDB( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
+	private function getLastPostsFromDB( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
 		wfProfileIn( __METHOD__ );
 
 		$ns    = (int)MWNamespace::getSubject( $ns );
@@ -211,7 +222,7 @@ class WallHistory extends WikiaModel {
 			'SELECT
 				`parent_page_id`,
 				`post_user_id`,
-				`post_user_ip`,
+				`post_user_ip_bin`,
 				`is_reply`,
 				`parent_comment_id`,
 				`comment_id`,
@@ -277,6 +288,15 @@ class WallHistory extends WikiaModel {
 		return $out;
 	}
 
+	/**
+	 * Data provider for WallHistoryController used to render action=history pages for NS_USER_WALL articles
+	 *
+	 * @param $parent_page_id
+	 * @param $sort
+	 * @param int $parent_comment_id
+	 * @param bool $show_replay
+	 * @return array
+	 */
 	public function get( $parent_page_id, $sort, $parent_comment_id = 0, $show_replay = true ) {
 		$sort = ( $sort === 'nf' ) ? 'desc' : 'asc';
 		$where = $this->getWhere( $parent_page_id, $parent_comment_id, $show_replay );
@@ -344,7 +364,7 @@ class WallHistory extends WikiaModel {
 		return ( $this->page - 1 ) * $this->perPage;
 	}
 
-	protected function baseLoadFromDB( $con, $limit, $offset, $sort ) {
+	protected function baseLoadFromDB( $conds, $limit, $offset, $sort ) {
 		$db =  $this->getDB( DB_SLAVE );
 
 		$res = $db->select(
@@ -352,7 +372,7 @@ class WallHistory extends WikiaModel {
 			[
 				'parent_page_id',
 				'post_user_id',
-				'post_user_ip',
+				'post_user_ip_bin',
 				'is_reply',
 				'parent_comment_id',
 				'comment_id',
@@ -362,7 +382,7 @@ class WallHistory extends WikiaModel {
 				'reason',
 				'revision_id'
 			],
-			$con,
+			$conds,
 			__METHOD__,
 			[
 				'LIMIT' => $limit,
@@ -374,10 +394,10 @@ class WallHistory extends WikiaModel {
 		return $res;
 	}
 
-	protected function loadFromDB( $con, $limit, $offset, $sort ) {
+	protected function loadFromDB( $conds, $limit, $offset, $sort ) {
 		$db =  $this->getDB( DB_SLAVE );
 
-		$res = $this->baseLoadFromDB( $con, $limit, $offset, $sort );
+		$res = $this->baseLoadFromDB( $conds, $limit, $offset, $sort );
 
 		$out = [ ];
 		while ( $row = $db->fetchRow( $res ) ) {
@@ -390,12 +410,16 @@ class WallHistory extends WikiaModel {
 		return $out;
 	}
 
-	protected function formatData( $row ) {
-		$user = null;
+	/**
+	 * @param array $row
+	 * @return array|void
+	 */
+	protected function formatData( Array $row ) {
+
 		if ( $row['post_user_id'] > 0 ) {
-			$user = User::newFromID( $row['post_user_id'] );
+			$user = User::newFromId( $row['post_user_id'] );
 		} else {
-			$user = User::newFromName( $this->long2ip( $row['post_user_ip'] ), false );
+			$user = User::newFromName( inet_ntop( $row['post_user_ip_bin'] ), false );
 		}
 
 		$message = WallMessage::newFromId( $row['comment_id'] );
@@ -406,13 +430,13 @@ class WallHistory extends WikiaModel {
 
 		$title = $message->getTitle();
 
-		if ( ( $title instanceof Title ) && ( $message instanceof WallMessage ) ) {
+		if ( $title instanceof Title ) {
 			return [
 				'user' => $user,
 				'event_date' => $row['event_date'],
 				'event_iso' => wfTimestamp( TS_ISO_8601, $row['event_date'] ),
 				'event_mw' => wfTimestamp( TS_MW, $row['event_date'] ),
-				'display_username' => $user->getId() == 0 ? wfMsg( 'oasis-anon-user' ): $user->getName(),
+				'display_username' => $user->isAnon() ? wfMsg( 'oasis-anon-user' ): $user->getName(),
 				'metatitle' => $row['metatitle'],
 				'page_id' => $row['comment_id'],
 				'title' => $title,
@@ -422,17 +446,6 @@ class WallHistory extends WikiaModel {
 				'revision_id' => $row['revision_id'],
 				'wall_message' => $message
 			];
-		} else {
-		// it happened once on devbox when master&slave weren't sync'ed
-			wfDebug( __METHOD__ . ": Seems like master&slave are not sync'ed\n" );
 		}
-	}
-
-	protected function ip2long( $userName ) {
-		return User::isIP( $userName ) ? ip2long( $userName ): null;
-	}
-
-	protected function long2ip( $IP ) {
-		return long2ip( $IP );
 	}
 }

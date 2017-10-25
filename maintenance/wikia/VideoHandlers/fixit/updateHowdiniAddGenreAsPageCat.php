@@ -101,7 +101,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 			$msg = 'Added: '.implode( ', ', $categories );
 
 			if ( !$this->isDryRun() ) {
-				$botUser = User::newFromName( 'WikiaBot' );
+				$botUser = User::newFromName( Wikia::BOT_USER );
 				$status = $article->doEdit( $content, 'Changing categories', EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 			}
 

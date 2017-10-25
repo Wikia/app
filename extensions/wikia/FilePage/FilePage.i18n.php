@@ -1,8 +1,7 @@
 <?php
-/** Internationalization file for /extensions/wikia/FilePage/FilePage extension. */
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'filepage-desc' => 'Modification of the standard MediaWiki file page for video support',
 	'video-page-file-list-header' => 'Appears on these pages',
 	'video-page-global-file-list-header' => 'Appears on these wikis',
@@ -24,9 +23,9 @@ Enter the description here.',
 	'file-page-tab-history' => 'File History',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'See full list',
-];
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'filepage-desc' => '{{desc}}',
 	'video-page-file-list-header' => 'Heading for file list on Video File Page',
 	'video-page-global-file-list-header' => 'Heading for global usage list on Video File Page',
@@ -54,9 +53,9 @@ $messages['qqq'] = [
 	'file-page-tab-metadata' => 'Navigation tab label for the "Metadata" section on a File Page.
 {{Identical|Metadata}}',
 	'file-page-more-links' => 'A link to the full list of pages that have links to the file on this file page',
-];
+);
 
-$messages['ar'] = [
+$messages['ar'] = array(
 	'filepage-desc' => 'تعديل صفحة ملف ميدياويكي القياسية لدعم الفيديو',
 	'video-page-file-list-header' => 'يظهر في هذه الصفحات',
 	'video-page-global-file-list-header' => 'يظهر في هذه الويكيات',
@@ -77,14 +76,15 @@ $messages['ar'] = [
 	'file-page-tab-history' => 'تاريخ الملف',
 	'file-page-tab-metadata' => 'بيانات ميتا',
 	'file-page-more-links' => 'انظر القائمة الكاملة',
-];
+	'video-page-regional-restrictions-viewable' => 'This video is regionally restricted',
+);
 
-$messages['az'] = [
+$messages['az'] = array(
 	'video-page-file-list-pagination' => '$1 və ya $2',
 	'file-page-tab-about' => 'Haqqında',
-];
+);
 
-$messages['bg'] = [
+$messages['bg'] = array(
 	'video-page-description-heading' => 'Описание',
 	'video-page-description-zero-state' => 'Все още няма описание.',
 	'video-page-add-description-link-text' => 'Добавне на описание.',
@@ -92,36 +92,36 @@ $messages['bg'] = [
 Въведете описанието тук.',
 	'video-page-file-list-pagination' => '$1 от $2',
 	'file-page-tab-metadata' => 'Метаданни',
-];
+);
 
-$messages['br'] = [
+$messages['br'] = array(
 	'filepage-desc' => 'Kemmañ ar bajenn restr standard MediaWiki evit ar skor video',
 	'video-page-file-list-header' => 'A zeus war wel war ar pajennoù-mañ',
 	'video-page-global-file-list-header' => 'A zeu war wel war er wikioù-mañ',
 	'video-page-from-provider' => 'Diwar $1',
-	'video-page-expires' => 'd\'an $1 ne vo ket mui mat an endac\'had',
+	'video-page-expires' => "d'an $1 ne vo ket mui mat an endac'had",
 	'video-page-views' => '$1 {{PLURAL:$1|selladenn|selladennoù}}',
-	'video-page-see-more-info' => 'Diskwel muioc\'h a ditouroù',
-	'video-page-see-less-info' => 'Diskwel nebeutoc\'h a ditouroù',
+	'video-page-see-more-info' => "Diskwel muioc'h a ditouroù",
+	'video-page-see-less-info' => "Diskwel nebeutoc'h a ditouroù",
 	'video-page-description-heading' => 'Deskrivadur',
-	'video-page-description-zero-state' => 'N\'eus ket a zeskrivadur c\'hoazh.',
+	'video-page-description-zero-state' => "N'eus ket a zeskrivadur c'hoazh.",
 	'video-page-add-description-link-text' => 'Ouzhpennañ un deskrivadur.',
 	'video-page-default-description-header-and-text' => '==Deskrivadur==
 Skrivit amañ an deskrivadur.',
 	'video-page-file-list-pagination' => '$1 diwar $2',
-	'file-page-replace-button' => 'Erlec\'hiañ',
+	'file-page-replace-button' => "Erlec'hiañ",
 	'file-page-tab-about' => 'Diwar-benn',
 	'file-page-tab-history' => 'Istor a resr',
 	'file-page-tab-metadata' => 'Metaroadennoù',
 	'file-page-more-links' => 'Gwelet ar roll klok',
-];
+);
 
-$messages['bto'] = [
+$messages['bto'] = array(
 	'video-page-from-provider' => 'Galin sa $1',
-];
+);
 
-$messages['ca'] = [
-	'filepage-desc' => 'Modificación de l\'espai MediaWiki de fitxers per a suport de vídeo',
+$messages['ca'] = array(
+	'filepage-desc' => "Modificación de l'espai MediaWiki de fitxers per a suport de vídeo",
 	'video-page-file-list-header' => 'Apareix en aquestes pàgines',
 	'video-page-global-file-list-header' => 'Apareix en aquests wikis',
 	'video-page-from-provider' => 'De $1',
@@ -142,13 +142,13 @@ Introdueix la descripció aquí.',
 	'file-page-tab-history' => 'Historial del fitxer',
 	'file-page-tab-metadata' => 'Metadades',
 	'file-page-more-links' => 'Veure llista completa',
-];
+);
 
-$messages['ce'] = [
+$messages['ce'] = array(
 	'video-page-description-heading' => 'Цуьнах лаьцна',
-];
+);
 
-$messages['cs'] = [
+$messages['cs'] = array(
 	'filepage-desc' => 'Modifikace standardní MediaWiki stránky pro soubory s podporou videa',
 	'video-page-file-list-header' => 'Vyskytuje se na těchto stránkách',
 	'video-page-global-file-list-header' => 'Vyskytuje se na těchto wiki',
@@ -170,14 +170,14 @@ Zadejte popis zde.',
 	'file-page-tab-history' => 'Historie souboru',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Viz celý seznam',
-];
+);
 
-$messages['da'] = [
+$messages['da'] = array(
 	'video-page-description-heading' => 'Beskrivelse',
 	'file-page-replace-button' => 'Erstat',
-];
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'filepage-desc' => 'Abwandlung der Standard-MediaWiki-Dateiseite für die Videounterstützung',
 	'video-page-file-list-header' => 'Wird in diesen Seiten verwendet',
 	'video-page-global-file-list-header' => 'Wird in diesen Wikis verwendet',
@@ -199,13 +199,13 @@ Gib hier eine Beschreibung an.',
 	'file-page-tab-history' => 'Dateiversionen',
 	'file-page-tab-metadata' => 'Meta-Daten',
 	'file-page-more-links' => 'Komplette Liste anzeigen',
-];
+);
 
-$messages['eo'] = [
+$messages['eo'] = array(
 	'video-page-description-heading' => 'Priskribo',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'filepage-desc' => 'Modificación de la página de archivo de MediaWiki para añadir compatibilidad con vídeos',
 	'video-page-file-list-header' => 'Aparece en estas páginas',
 	'video-page-global-file-list-header' => 'Aparece en estos wikis',
@@ -227,16 +227,16 @@ Introduce la descripción aquí.',
 	'file-page-tab-history' => 'Historial del archivo',
 	'file-page-tab-metadata' => 'Metadatos',
 	'file-page-more-links' => 'Ver lista completa',
-];
+);
 
-$messages['et'] = [
+$messages['et'] = array(
 	'video-page-file-list-header' => 'Esineb sellel lehel',
 	'video-page-global-file-list-header' => 'Esineb selles vikis',
 	'video-page-description-heading' => 'Kirjeldus',
 	'file-page-more-links' => 'Vaata täielikku nimekirja',
-];
+);
 
-$messages['eu'] = [
+$messages['eu'] = array(
 	'video-page-see-more-info' => 'Ikusi informazio gehiago',
 	'video-page-see-less-info' => 'Ikusi informazio gutxiago',
 	'video-page-description-heading' => 'Deskribapena',
@@ -245,9 +245,9 @@ $messages['eu'] = [
 	'video-page-default-description-header-and-text' => '==Deskribapena==
 Sar ezazu deskribapena hemen.',
 	'file-page-more-links' => 'Ikusi zerrenda osoa',
-];
+);
 
-$messages['fa'] = [
+$messages['fa'] = array(
 	'video-page-from-provider' => 'از $1',
 	'video-page-see-more-info' => 'نمایش اطلاعات بیشتر',
 	'video-page-see-less-info' => 'نمایش اطلاعات کمتر',
@@ -257,9 +257,9 @@ $messages['fa'] = [
 	'file-page-replace-button' => 'جایگزینی',
 	'file-page-tab-about' => 'درباره',
 	'file-page-tab-metadata' => 'فراداده',
-];
+);
 
-$messages['fi'] = [
+$messages['fi'] = array(
 	'filepage-desc' => 'Normaalin MediaWiki-tiedostosivun muunnos videotukea varten',
 	'video-page-file-list-header' => 'Esiintyy näillä sivuilla',
 	'video-page-global-file-list-header' => 'Esiintyy näissä wikeissä',
@@ -279,9 +279,11 @@ Lisää kuvaus tähän.',
 	'file-page-tab-history' => 'Tiedoston historia',
 	'file-page-tab-metadata' => 'Metatiedot',
 	'file-page-more-links' => 'Katso koko lista',
-];
+	'video-page-regional-restrictions-viewable' => 'This video is regionally restricted',
+	'video-page-regional-restrictions-unviewable' => 'This video is not viewable in your location',
+);
 
-$messages['fo'] = [
+$messages['fo'] = array(
 	'filepage-desc' => 'Broyting av standard MediaWiki fílusíðuni fyri video-hjálp',
 	'video-page-file-list-header' => 'Verður víst á hesum síðum',
 	'video-page-global-file-list-header' => 'Verður víst á hesum wikium',
@@ -301,21 +303,21 @@ Skriva eina frágreiðing her.',
 	'file-page-tab-history' => 'Fílusøgan',
 	'file-page-tab-metadata' => 'Metadáta',
 	'file-page-more-links' => 'Sí allan listan',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'filepage-desc' => 'Modification de la page de fichier standard de MediaWiki pour le support des vidéos',
 	'video-page-file-list-header' => 'Affichée sur ces pages',
 	'video-page-global-file-list-header' => 'Présente sur ces wikis',
 	'video-page-from-provider' => 'De $1',
 	'video-page-expires' => 'Le contenu expire le $1',
-	'video-page-regional-restrictions-viewable' => 'Des restrictions régionales s\'appliquent à cette vidéo',
-	'video-page-regional-restrictions-unviewable' => 'Cette vidéo n\'est pas consultable d\'où vous vous trouvez',
+	'video-page-regional-restrictions-viewable' => "Des restrictions régionales s'appliquent à cette vidéo",
+	'video-page-regional-restrictions-unviewable' => "Cette vidéo n'est pas consultable d'où vous vous trouvez",
 	'video-page-views' => '$1 vues',
-	'video-page-see-more-info' => 'Afficher plus d\'informations',
-	'video-page-see-less-info' => 'Afficher moins d\'informations',
+	'video-page-see-more-info' => "Afficher plus d'informations",
+	'video-page-see-less-info' => "Afficher moins d'informations",
 	'video-page-description-heading' => 'Description',
-	'video-page-description-zero-state' => 'Il n\'y a pas encore de description pour ce fichier.',
+	'video-page-description-zero-state' => "Il n'y a pas encore de description pour ce fichier.",
 	'video-page-add-description-link-text' => 'Ajouter une description.',
 	'video-page-default-description-header-and-text' => '==Description==
 Saisissez la description ici.',
@@ -325,14 +327,14 @@ Saisissez la description ici.',
 	'file-page-tab-history' => 'Historique du fichier',
 	'file-page-tab-metadata' => 'Métadonnées',
 	'file-page-more-links' => 'Afficher la liste',
-];
+);
 
-$messages['fy'] = [
+$messages['fy'] = array(
 	'video-page-description-heading' => 'Beskriuwing',
 	'file-page-tab-about' => 'Oer',
-];
+);
 
-$messages['gl'] = [
+$messages['gl'] = array(
 	'filepage-desc' => 'Modificación da páxina de ficheiro estándar de MediaWiki para o soporte de vídeo',
 	'video-page-file-list-header' => 'Aparece nestas páxinas',
 	'video-page-global-file-list-header' => 'Aparece nestes wikis',
@@ -352,9 +354,9 @@ Insira aquí a descrición.',
 	'file-page-tab-history' => 'Historial do ficheiro',
 	'file-page-tab-metadata' => 'Metadatos',
 	'file-page-more-links' => 'Ollar a lista completa',
-];
+);
 
-$messages['he'] = [
+$messages['he'] = array(
 	'video-page-file-list-header' => 'מופיע בדפים להלן',
 	'video-page-global-file-list-header' => 'מופיע במיזמים להלן',
 	'video-page-from-provider' => 'מתוך $1',
@@ -373,9 +375,9 @@ $messages['he'] = [
 	'file-page-tab-history' => 'היסטוריה',
 	'file-page-tab-metadata' => 'מטא־נתונים',
 	'file-page-more-links' => 'רשימה מלאה',
-];
+);
 
-$messages['hu'] = [
+$messages['hu'] = array(
 	'filepage-desc' => 'A MediaWiki standard fájl-lapjainak módosítása a videók támogatása végett',
 	'video-page-file-list-header' => 'Ezeken a lapokon jelenik meg',
 	'video-page-global-file-list-header' => 'Ezeken a wikiken jelenik meg',
@@ -392,9 +394,9 @@ $messages['hu'] = [
 	'file-page-tab-history' => 'Fájltörténet',
 	'file-page-tab-metadata' => 'Metaadatok',
 	'file-page-more-links' => 'Teljes lista megtekintése',
-];
+);
 
-$messages['id'] = [
+$messages['id'] = array(
 	'filepage-desc' => 'Modifikasi dari halaman berkas MediaWiki standar untuk dukungan video',
 	'video-page-file-list-header' => 'Muncul pada halaman-halaman ini',
 	'video-page-global-file-list-header' => 'Muncul pada wiki ini',
@@ -414,9 +416,9 @@ Masukkan deskripsi di sini.',
 	'file-page-tab-history' => 'Riwayat berkas',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Lihat daftar lengkap',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'filepage-desc' => 'Modifica della pagina file MediaWiki standard per supporto video',
 	'video-page-file-list-header' => 'Appare in queste pagine',
 	'video-page-global-file-list-header' => 'Appare in queste wiki',
@@ -428,7 +430,7 @@ $messages['it'] = [
 	'video-page-see-more-info' => 'Mostra più informazioni',
 	'video-page-see-less-info' => 'Mostra meno informazioni',
 	'video-page-description-heading' => 'Descrizione',
-	'video-page-description-zero-state' => 'Non c\'è ancora alcuna descrizione per questo file.',
+	'video-page-description-zero-state' => "Non c'è ancora alcuna descrizione per questo file.",
 	'video-page-add-description-link-text' => 'Aggiungi una descrizione.',
 	'video-page-default-description-header-and-text' => '==Descrizione==
 Inserisci qui la descrizione.',
@@ -438,9 +440,9 @@ Inserisci qui la descrizione.',
 	'file-page-tab-history' => 'Cronologia del file',
 	'file-page-tab-metadata' => 'Metadati',
 	'file-page-more-links' => 'Vedi lista completa',
-];
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'filepage-desc' => 'MediaWiki標準のファイルページを動画に対応させる',
 	'video-page-file-list-header' => 'このウィキアでの使用状況',
 	'video-page-global-file-list-header' => '全ウィキアでの使用状況',
@@ -462,26 +464,26 @@ $messages['ja'] = [
 	'file-page-tab-history' => 'ファイルの履歴',
 	'file-page-tab-metadata' => 'メタデータ',
 	'file-page-more-links' => '全て見る',
-];
+);
 
-$messages['ka'] = [
+$messages['ka'] = array(
 	'video-page-file-list-header' => 'გამოყენებულია შემდეგ გვერდებში:',
 	'file-page-replace-button' => 'ჩანაცვლება',
 	'file-page-tab-about' => 'ფაილის შესახებ',
 	'file-page-tab-history' => 'ფაილის ისტორია',
 	'file-page-tab-metadata' => 'მეტამონაცემები',
 	'file-page-more-links' => 'იხილე სრული სია',
-];
+);
 
-$messages['kn'] = [
+$messages['kn'] = array(
 	'video-page-description-heading' => 'ವಿವರ',
 	'video-page-file-list-pagination' => '$1 ಇಂದ $2',
 	'file-page-tab-about' => 'ಕುರಿತು',
 	'file-page-tab-history' => 'ಕಡತದ ಇತಿಹಾಸ',
 	'file-page-tab-metadata' => 'ಮೇಲ್ದರ್ಜೆ ಮಾಹಿತಿ',
-];
+);
 
-$messages['ko'] = [
+$messages['ko'] = array(
 	'video-page-file-list-header' => '이 파일을 사용하는 문서',
 	'video-page-global-file-list-header' => '이 파일을 사용하는 위키',
 	'video-page-from-provider' => '$1 제공',
@@ -502,14 +504,14 @@ $messages['ko'] = [
 	'file-page-tab-history' => '파일 역사',
 	'file-page-tab-metadata' => '메타데이터',
 	'file-page-more-links' => '모두 보기',
-];
+);
 
-$messages['ku-latn'] = [
+$messages['ku-latn'] = array(
 	'file-page-tab-about' => 'Derbarê',
 	'file-page-tab-metadata' => 'Daneyên meta',
-];
+);
 
-$messages['lb'] = [
+$messages['lb'] = array(
 	'video-page-from-provider' => 'Vu(n) $1',
 	'video-page-regional-restrictions-viewable' => 'Dëse Video ass nëmme regional limitéiert disponibel',
 	'video-page-regional-restrictions-unviewable' => 'Dëse Videa ka bei Iech net gekuckt ginn',
@@ -518,23 +520,23 @@ $messages['lb'] = [
 	'video-page-description-heading' => 'Beschreiwung',
 	'video-page-description-zero-state' => 'Et ass nach keng Beschreiwung do.',
 	'video-page-add-description-link-text' => 'Eng Beschreiwung derbäisetzen.',
-	'video-page-default-description-header-and-text' => '== Beschreiwung ==
-Gitt d\'Beschreiwung hei an.',
+	'video-page-default-description-header-and-text' => "== Beschreiwung ==
+Gitt d'Beschreiwung hei an.",
 	'video-page-file-list-pagination' => '$1 vu(n) $2',
 	'file-page-replace-button' => 'Ersetzen',
 	'file-page-tab-about' => 'Iwwer',
 	'file-page-more-links' => 'Ganz Lëscht weisen',
-];
+);
 
-$messages['lrc'] = [
+$messages['lrc'] = array(
 	'video-page-from-provider' => 'د $1',
 	'file-page-replace-button' => 'جاگزينشت',
 	'file-page-tab-about' => 'دباره',
 	'file-page-tab-history' => 'ويرگار جانیا',
 	'file-page-tab-metadata' => 'داديا  فره گپ',
-];
+);
 
-$messages['lt'] = [
+$messages['lt'] = array(
 	'video-page-description-heading' => 'Aprašymas',
 	'video-page-description-zero-state' => 'Čia nėra aprašymo kol kas.',
 	'video-page-add-description-link-text' => 'Pridėti aprašymą.',
@@ -546,9 +548,9 @@ $messages['lt'] = [
 	'file-page-tab-history' => 'Failų istorija',
 	'file-page-tab-metadata' => 'Metaduomenys',
 	'file-page-more-links' => 'Žiūrėti visą sąrašą',
-];
+);
 
-$messages['mk'] = [
+$messages['mk'] = array(
 	'filepage-desc' => 'Измена на стандардната податотечна страница за видеоподдршка',
 	'video-page-file-list-header' => 'Се јавува на следниве страници',
 	'video-page-global-file-list-header' => 'Се јавува на следниве викија',
@@ -570,9 +572,9 @@ $messages['mk'] = [
 	'file-page-tab-history' => 'Историја на податотеката',
 	'file-page-tab-metadata' => 'Метаподатоци',
 	'file-page-more-links' => 'Целосен список',
-];
+);
 
-$messages['ms'] = [
+$messages['ms'] = array(
 	'filepage-desc' => 'Pengubahsuaian halaman fail MediaWiki yang piawai untuk menyokong video',
 	'video-page-file-list-header' => 'Muncul di halaman-halaman ini',
 	'video-page-global-file-list-header' => 'Muncul di wiki-wiki ini',
@@ -594,9 +596,9 @@ Berikan keterangan di sini.',
 	'file-page-tab-history' => 'Sejarah Fail',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Lihat senarai penuh',
-];
+);
 
-$messages['nb'] = [
+$messages['nb'] = array(
 	'filepage-desc' => 'Modifisering av standard MediaWiki-filside for videostøtte.',
 	'video-page-file-list-header' => 'Vises på disse sidene',
 	'video-page-global-file-list-header' => 'Vises på disse wikiene',
@@ -616,12 +618,12 @@ Legg inn beskrivelse her.',
 	'file-page-tab-history' => 'Filhistorikk',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Se fullstendig liste',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'filepage-desc' => 'Wijziging van de standaard bestandspagina van MediaWiki voor ondersteuning voor video',
-	'video-page-file-list-header' => 'Gebruikt op deze pagina\'s',
-	'video-page-global-file-list-header' => 'Gebruikt op deze wiki\'s',
+	'video-page-file-list-header' => "Gebruikt op deze pagina's",
+	'video-page-global-file-list-header' => "Gebruikt op deze wiki's",
 	'video-page-from-provider' => 'Van provider $1',
 	'video-page-expires' => 'Inhoud verloopt op $1',
 	'video-page-regional-restrictions-viewable' => 'Deze video heeft een regiobeperking',
@@ -641,17 +643,17 @@ Voeg hier een beschrijving toe.',
 	'file-page-tab-history' => 'Bestandsgeschiedenis',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Volledige lijst bekijken',
-];
+);
 
-$messages['oc'] = [
+$messages['oc'] = array(
 	'filepage-desc' => 'Modificacion de la pagina de fichièr estandard de MediaWiki pel supòrt de las vidèos',
 	'video-page-file-list-header' => 'Apareis sus aquelas paginas',
 	'video-page-global-file-list-header' => 'Apareis sus aqueles wikis',
 	'video-page-from-provider' => 'De $1',
 	'video-page-expires' => 'Lo contengut expira lo $1',
 	'video-page-views' => '$1 {{PLURAL:$1|Vista|Vistas}}',
-	'video-page-see-more-info' => 'Afichar mai d\'informacions',
-	'video-page-see-less-info' => 'Afichar mens d\'informacions',
+	'video-page-see-more-info' => "Afichar mai d'informacions",
+	'video-page-see-less-info' => "Afichar mens d'informacions",
 	'video-page-description-heading' => 'Descripcion',
 	'video-page-description-zero-state' => 'I a pas encara cap de descripcion.',
 	'video-page-add-description-link-text' => 'Apondre una descripcion.',
@@ -663,9 +665,9 @@ Picatz la descripcion aicí.',
 	'file-page-tab-history' => 'Istoric del fichièr',
 	'file-page-tab-metadata' => 'Metadonadas',
 	'file-page-more-links' => 'Afichar la lista',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'filepage-desc' => 'Zmodyfikowana strona pliku dla filmów',
 	'video-page-file-list-header' => 'Wykorzystanie na stronach',
 	'video-page-global-file-list-header' => 'Wykorzystanie na innych wiki',
@@ -687,40 +689,16 @@ Dodaj opis w tym miejscu.',
 	'file-page-tab-history' => 'Historia pliku',
 	'file-page-tab-metadata' => 'Metadane',
 	'file-page-more-links' => 'Zobacz pełną listę',
-];
+);
 
-$messages['ps'] = [
+$messages['ps'] = array(
 	'file-page-tab-about' => 'په اړه',
 	'file-page-tab-history' => 'د دوتنې پېښليک',
 	'file-page-tab-metadata' => 'مېټاډاټا',
 	'file-page-more-links' => 'بشپړ لړليک کتل',
-];
+);
 
-$messages['pt'] = [
-	'filepage-desc' => 'Modificação da página padrão do MediaWiki para suporte de vídeo',
-	'video-page-file-list-header' => 'Aparece nestas páginas',
-	'video-page-global-file-list-header' => 'Aparece nestas wikis',
-	'video-page-from-provider' => 'De $1',
-	'video-page-expires' => 'Conteúdo disponível até $1',
-	'video-page-regional-restrictions-viewable' => 'Este vídeo é restrito regionalmente',
-	'video-page-regional-restrictions-unviewable' => 'Este vídeo não é visível na sua região',
-	'video-page-views' => '$1 {{PLURAL:$1|Visionamento|Visionamentos}}',
-	'video-page-see-more-info' => 'Mostrar mais informações',
-	'video-page-see-less-info' => 'Mostrar menos informações',
-	'video-page-description-heading' => 'Descrição',
-	'video-page-description-zero-state' => 'Ainda não tem descrição.',
-	'video-page-add-description-link-text' => 'Inserir uma descrição.',
-	'video-page-default-description-header-and-text' => '==Descrição==
-Insira a descrição aqui.',
-	'video-page-file-list-pagination' => '$1 de $2',
-	'file-page-replace-button' => 'Substituir',
-	'file-page-tab-about' => 'Sobre',
-	'file-page-tab-history' => 'Histórico do ficheiro',
-	'file-page-tab-metadata' => 'Metadados',
-	'file-page-more-links' => 'Ver lista completa',
-];
-
-$messages['pt-br'] = [
+$messages['pt'] = array(
 	'filepage-desc' => 'Modificação da página do arquivo MediaWiki padrão para suporte de vídeo',
 	'video-page-file-list-header' => 'Aparece nestas páginas',
 	'video-page-global-file-list-header' => 'Aparece nestas wikis',
@@ -742,33 +720,33 @@ Insira a descrição aqui.',
 	'file-page-tab-history' => 'Histórico do arquivo',
 	'file-page-tab-metadata' => 'Metadados',
 	'file-page-more-links' => 'Ver lista completa',
-];
+);
 
-$messages['roa-tara'] = [
-	'filepage-desc' => 'Cangiaminde d\'a pàgene d\'u file standàrd de MediaUicchi pe supportà le video',
+$messages['roa-tara'] = array(
+	'filepage-desc' => "Cangiaminde d'a pàgene d'u file standàrd de MediaUicchi pe supportà le video",
 	'video-page-file-list-header' => 'Iesse sus a aste pàggene',
 	'video-page-global-file-list-header' => 'Iesse sus a ste uicchi',
 	'video-page-from-provider' => 'Da $1',
-	'video-page-expires' => 'Condenute ca scade \'u $1',
+	'video-page-expires' => "Condenute ca scade 'u $1",
 	'video-page-regional-restrictions-viewable' => 'Stu video jè ristrette reggionalmende',
-	'video-page-regional-restrictions-unviewable' => 'Stu video non se pò vedè jndr\'à \'u paese tune',
+	'video-page-regional-restrictions-unviewable' => "Stu video non se pò vedè jndr'à 'u paese tune",
 	'video-page-views' => '$1 {{PLURAL:$1|Viste}}',
-	'video-page-see-more-info' => 'Fà vedè cchiù \'mbormaziune',
-	'video-page-see-less-info' => 'Fà vedè mene \'mbormaziune',
+	'video-page-see-more-info' => "Fà vedè cchiù 'mbormaziune",
+	'video-page-see-less-info' => "Fà vedè mene 'mbormaziune",
 	'video-page-description-heading' => 'Descrizione',
-	'video-page-description-zero-state' => 'Non ge stè angore \'na descrizione.',
-	'video-page-add-description-link-text' => 'Aggiunge \'na descrizione.',
-	'video-page-default-description-header-and-text' => '== Descrizione ==
-Mitte \'a descrizione aqquà.',
+	'video-page-description-zero-state' => "Non ge stè angore 'na descrizione.",
+	'video-page-add-description-link-text' => "Aggiunge 'na descrizione.",
+	'video-page-default-description-header-and-text' => "== Descrizione ==
+Mitte 'a descrizione aqquà.",
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Sostituisce',
 	'file-page-tab-about' => 'Sus a',
 	'file-page-tab-history' => 'Cunde',
 	'file-page-tab-metadata' => 'Metadata',
-	'file-page-more-links' => '\'Ndruche l\'elenghe comblete',
-];
+	'file-page-more-links' => "'Ndruche l'elenghe comblete",
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'filepage-desc' => 'Модификация стандартной файловой страницы MediaWiki для поддержки видео',
 	'video-page-file-list-header' => 'Используется на следующих страницах',
 	'video-page-global-file-list-header' => 'Используется на следующих вики-проектах',
@@ -790,19 +768,19 @@ $messages['ru'] = [
 	'file-page-tab-history' => 'История файла',
 	'file-page-tab-metadata' => 'Метаданные',
 	'file-page-more-links' => 'См. полный список',
-];
+);
 
-$messages['sl'] = [
+$messages['sl'] = array(
 	'video-page-add-description-link-text' => 'Dodajte opis.',
-];
+);
 
-$messages['sr-ec'] = [
+$messages['sr-ec'] = array(
 	'video-page-regional-restrictions-viewable' => 'Ово видео је доступно само у појединим регијама.',
 	'video-page-regional-restrictions-unviewable' => 'Ово видео није доступно у вашој локацији',
 	'video-page-add-description-link-text' => 'Додајте опис',
-];
+);
 
-$messages['sv'] = [
+$messages['sv'] = array(
 	'filepage-desc' => 'Ändring av MediaWikis standardfilsida för videostöd',
 	'video-page-file-list-header' => 'Visas på dessa sidor',
 	'video-page-global-file-list-header' => 'Visas på dessa wikis',
@@ -824,15 +802,15 @@ Ange en beskrivning här.',
 	'file-page-tab-history' => 'Filhistorik',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Se hela listan',
-];
+);
 
-$messages['ta'] = [
+$messages['ta'] = array(
 	'file-page-tab-history' => 'கோப்பு வரலாறு',
 	'file-page-tab-metadata' => 'மேல் நிலைத் தரவு',
 	'file-page-more-links' => 'முழுப் பட்டியலைக் காண்க',
-];
+);
 
-$messages['te'] = [
+$messages['te'] = array(
 	'video-page-file-list-header' => 'ఇది, ఈ పేజీల్లో కనిపిస్తుంది',
 	'video-page-global-file-list-header' => 'ఈ వికీల్లో కనిపిస్తుంది',
 	'video-page-from-provider' => '$1 నుండి',
@@ -851,9 +829,9 @@ $messages['te'] = [
 	'file-page-tab-history' => 'ఫైలు చరిత్ర',
 	'file-page-tab-metadata' => 'మెటాడేటా',
 	'file-page-more-links' => 'పూర్తి జాబితా చూడండి',
-];
+);
 
-$messages['tr'] = [
+$messages['tr'] = array(
 	'filepage-desc' => 'Video desteği için standart MediaWiki dosya sayfasının modifikasyonu',
 	'video-page-file-list-header' => 'Bu sayfalarda görüntülenir',
 	'video-page-global-file-list-header' => 'Bu wiki üzerinde görünür',
@@ -867,15 +845,15 @@ $messages['tr'] = [
 	'video-page-add-description-link-text' => 'Bir açıklama ekleyin.',
 	'video-page-default-description-header-and-text' => '== Açıklama ==
 Açıklamasını buraya girin.',
-	'video-page-file-list-pagination' => '$1, $2\'de',
+	'video-page-file-list-pagination' => "$1, $2'de",
 	'file-page-replace-button' => 'Değiştir',
 	'file-page-tab-about' => 'Hakkında',
 	'file-page-tab-history' => 'Dosya Geçmişi',
 	'file-page-tab-metadata' => 'Metaveri',
 	'file-page-more-links' => 'Tam listesine bakın',
-];
+);
 
-$messages['uk'] = [
+$messages['uk'] = array(
 	'filepage-desc' => 'Модифікація стандартної MediaWiki-сторінки файлу для підтримки відео',
 	'video-page-file-list-header' => 'Використовується на наступних сторінках:',
 	'video-page-global-file-list-header' => 'Використовується на наступних вікі:',
@@ -897,9 +875,9 @@ $messages['uk'] = [
 	'file-page-tab-history' => 'Історія файлу',
 	'file-page-tab-metadata' => 'Метадані',
 	'file-page-more-links' => 'Повний список',
-];
+);
 
-$messages['ur'] = [
+$messages['ur'] = array(
 	'filepage-desc' => 'تبدیلی برائے ویڈیو کی سہولت کے لیے معیاری ویکی میڈیا صفحہ',
 	'video-page-file-list-header' => 'ان صفحات پر ظاہر ہوتا ہے',
 	'video-page-global-file-list-header' => 'ان وکیات پر ظاہر ہوتا ہے',
@@ -916,9 +894,9 @@ $messages['ur'] = [
 	'file-page-tab-history' => 'ملف کی تاریخ',
 	'file-page-tab-metadata' => 'میٹا ڈیٹا',
 	'file-page-more-links' => 'مکمل فہرست دیکھیں',
-];
+);
 
-$messages['vi'] = [
+$messages['vi'] = array(
 	'filepage-desc' => 'Các sửa đổi của tiêu chuẩn MediaWiki tập tin trang để hỗ trợ video',
 	'video-page-file-list-header' => 'Xuất hiện trên các trang này',
 	'video-page-global-file-list-header' => 'Xuất hiện trên các wiki',
@@ -940,9 +918,9 @@ Nhập mô tả ở đây.',
 	'file-page-tab-history' => 'Lịch sử tập tin',
 	'file-page-tab-metadata' => 'Siêu dữ liệu',
 	'file-page-more-links' => 'Xem danh sách đầy đủ',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'filepage-desc' => '为了支持视频而修改标准MediaWiki文件页面',
 	'video-page-file-list-header' => '出现在这些页面上',
 	'video-page-global-file-list-header' => '出现在这些 wiki 上',
@@ -964,9 +942,9 @@ $messages['zh-hans'] = [
 	'file-page-tab-history' => '文件历史',
 	'file-page-tab-metadata' => '元数据',
 	'file-page-more-links' => '查看完整列表',
-];
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'filepage-desc' => '影片支援的標準MediaWiki檔案修改頁面',
 	'video-page-file-list-header' => '出現在這些頁面上',
 	'video-page-global-file-list-header' => '出現在這些wiki上',
@@ -988,10 +966,5 @@ $messages['zh-hant'] = [
 	'file-page-tab-history' => '檔案歷史',
 	'file-page-tab-metadata' => '後設資料',
 	'file-page-more-links' => '查看完整清單',
-];
-
-$messages['zh-hk'] = [
-	'video-page-file-list-header' => '在以下頁面中出現',
-	'file-page-tab-history' => '檔案歷史',
-];
+);
 

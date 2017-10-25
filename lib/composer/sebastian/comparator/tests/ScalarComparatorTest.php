@@ -1,58 +1,24 @@
 <?php
-/**
- * Comparator
+/*
+ * This file is part of the Comparator package.
  *
- * Copyright (c) 2001-2014, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    Comparator
- * @author     Jeff Welch <whatthejeff@gmail.com>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/comparator
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace SebastianBergmann\Comparator;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @coversDefaultClass SebastianBergmann\Comparator\ScalarComparator
- *
- * @package    Comparator
- * @author     Jeff Welch <whatthejeff@gmail.com>
- * @copyright  2001-2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/comparator
+ * @uses SebastianBergmann\Comparator\Comparator
+ * @uses SebastianBergmann\Comparator\Factory
+ * @uses SebastianBergmann\Comparator\ComparisonFailure
  */
-class ScalarComparatorTest extends \PHPUnit_Framework_TestCase
+class ScalarComparatorTest extends TestCase
 {
     private $comparator;
 
@@ -63,79 +29,83 @@ class ScalarComparatorTest extends \PHPUnit_Framework_TestCase
 
     public function acceptsSucceedsProvider()
     {
-        return array(
-          array("string", "string"),
-          array(new ClassWithToString, "string"),
-          array("string", new ClassWithToString),
-          array("string", null),
-          array(false, "string"),
-          array(false, true),
-          array(null, false),
-          array(null, null),
-          array("10", 10),
-          array("", false),
-          array("1", true),
-          array(1, true),
-          array(0, false),
-          array(0.1, "0.1")
-        );
+        return [
+          ['string', 'string'],
+          [new ClassWithToString, 'string'],
+          ['string', new ClassWithToString],
+          ['string', null],
+          [false, 'string'],
+          [false, true],
+          [null, false],
+          [null, null],
+          ['10', 10],
+          ['', false],
+          ['1', true],
+          [1, true],
+          [0, false],
+          [0.1, '0.1']
+        ];
     }
 
     public function acceptsFailsProvider()
     {
-        return array(
-          array(array(), array()),
-          array("string", array()),
-          array(new ClassWithToString, new ClassWithToString),
-          array(false, new ClassWithToString),
-          array(tmpfile(), tmpfile())
-        );
+        return [
+          [[], []],
+          ['string', []],
+          [new ClassWithToString, new ClassWithToString],
+          [false, new ClassWithToString],
+          [tmpfile(), tmpfile()]
+        ];
     }
 
     public function assertEqualsSucceedsProvider()
     {
-        return array(
-          array("string", "string"),
-          array(new ClassWithToString, new ClassWithToString),
-          array("string representation", new ClassWithToString),
-          array(new ClassWithToString, "string representation"),
-          array("string", "STRING", true),
-          array("STRING", "string", true),
-          array("String Representation", new ClassWithToString, true),
-          array(new ClassWithToString, "String Representation", true),
-          array("10", 10),
-          array("", false),
-          array("1", true),
-          array(1, true),
-          array(0, false),
-          array(0.1, "0.1"),
-          array(false, null),
-          array(false, false),
-          array(true, true),
-          array(null, null)
-        );
+        return [
+          ['string', 'string'],
+          [new ClassWithToString, new ClassWithToString],
+          ['string representation', new ClassWithToString],
+          [new ClassWithToString, 'string representation'],
+          ['string', 'STRING', true],
+          ['STRING', 'string', true],
+          ['String Representation', new ClassWithToString, true],
+          [new ClassWithToString, 'String Representation', true],
+          ['10', 10],
+          ['', false],
+          ['1', true],
+          [1, true],
+          [0, false],
+          [0.1, '0.1'],
+          [false, null],
+          [false, false],
+          [true, true],
+          [null, null]
+        ];
     }
 
     public function assertEqualsFailsProvider()
     {
         $stringException = 'Failed asserting that two strings are equal.';
-        $otherException = 'matches expected';
+        $otherException  = 'matches expected';
 
-        return array(
-          array("string", "other string", $stringException),
-          array("string", "STRING", $stringException),
-          array("STRING", "string", $stringException),
-          array("string", "other string", $stringException),
-          array(new ClassWithToString, "does not match", $otherException),
-          array("does not match", new ClassWithToString, $otherException),
-          array("10", 25, $otherException),
-          array("1", false, $otherException),
-          array("", true, $otherException),
-          array(false, true, $otherException),
-          array(true, false, $otherException),
-          array(null, true, $otherException),
-          array(0, true, $otherException)
-        );
+        return [
+          ['string', 'other string', $stringException],
+          ['string', 'STRING', $stringException],
+          ['STRING', 'string', $stringException],
+          ['string', 'other string', $stringException],
+          // https://github.com/sebastianbergmann/phpunit/issues/1023
+          ['9E6666666','9E7777777', $stringException],
+          [new ClassWithToString, 'does not match', $otherException],
+          ['does not match', new ClassWithToString, $otherException],
+          [0, 'Foobar', $otherException],
+          ['Foobar', 0, $otherException],
+          ['10', 25, $otherException],
+          ['1', false, $otherException],
+          ['', true, $otherException],
+          [false, true, $otherException],
+          [true, false, $otherException],
+          [null, true, $otherException],
+          [0, true, $otherException]
+        ];
     }
 
     /**
@@ -170,9 +140,7 @@ class ScalarComparatorTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->comparator->assertEquals($expected, $actual, 0.0, false, $ignoreCase);
-        }
-
-        catch (ComparisonFailure $exception) {
+        } catch (ComparisonFailure $exception) {
         }
 
         $this->assertNull($exception, 'Unexpected ComparisonFailure');
@@ -184,9 +152,9 @@ class ScalarComparatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testAssertEqualsFails($expected, $actual, $message)
     {
-        $this->setExpectedException(
-          'SebastianBergmann\\Comparator\\ComparisonFailure', $message
-        );
+        $this->expectException(ComparisonFailure::class);
+        $this->expectExceptionMessage($message);
+
         $this->comparator->assertEquals($expected, $actual);
     }
 }

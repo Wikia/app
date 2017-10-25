@@ -17,14 +17,16 @@ class AdEngine2ContextService {
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
+			$hasFeaturedVideo = !empty( $wg->EnableArticleFeaturedVideo ) && ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() );
+			// pages with featured video on mercury have no ATF slots
+			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 
 			$sourcePointDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.sp.detection' );
 			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $sourcePointDetectionKey ], 'scripts' );
 
 			$pageFairDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.pf.detection' );
 			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $pageFairDetectionKey ], 'scripts' );
-
-			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'prebid_prod_js', $type );
+			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'pr3b1d_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
 
@@ -35,21 +37,23 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
-			$yavliKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.yavli' );
-			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $yavliKey ], 'scripts' );
 
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
-					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
+					'delayBtf' => $delayBtf,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'pageType' => $adPageTypeService->getPageType(),
 					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'yavliUrl' => $yavliUrl,
+					'sourcePointMMS' => ARecoveryModule::isSourcePointMessagingEnabled(),
+					'sourcePointMMSDomain' => $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com',
+					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
+					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
+					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
 					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
@@ -71,29 +75,18 @@ class AdEngine2ContextService {
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
 					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
+					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
+					'hasFeaturedVideo' => $hasFeaturedVideo
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled(),
-					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
+					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
-					'exitstitial' => $wg->EnableOutboundScreenExt,
-					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
-
-			/**
-			 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
-			 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
-			 * $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverSourcePointRecoveryCountries
-			 */
-			$context['opts']['sourcePointRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnableSourcePointRecovery : false;
-
-			$context['opts']['sourcePointMMS'] = ($skinName === 'oasis' && $context['opts']['sourcePointRecovery'] === false) ? $wg->AdDriverEnableSourcePointMMS : false;
-			$context['opts']['sourcePointMMSDomain'] = $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com';
 
 			return $context;
 		} );

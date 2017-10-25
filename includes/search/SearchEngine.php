@@ -130,7 +130,7 @@ class SearchEngine {
 	public static function getNearMatch( $searchterm ) {
 		$title = self::getNearMatchInternal( $searchterm );
 
-		wfRunHooks( 'SearchGetNearMatchComplete', array( $searchterm, &$title ) );
+		Hooks::run( 'SearchGetNearMatchComplete', array( $searchterm, &$title ) );
 		return $title;
 	}
 
@@ -158,7 +158,7 @@ class SearchEngine {
 		}
 
 		$titleResult = null;
-		if ( !wfRunHooks( 'SearchGetNearMatchBefore', array( $allSearchTerms, &$titleResult ) ) ) {
+		if ( !Hooks::run( 'SearchGetNearMatchBefore', array( $allSearchTerms, &$titleResult ) ) ) {
 			return $titleResult;
 		}
 
@@ -209,7 +209,7 @@ class SearchEngine {
 
 			// Give hooks a chance at better match variants
 			$title = null;
-			if ( !wfRunHooks( 'SearchGetNearMatch', array( $term, &$title ) ) ) {
+			if ( !Hooks::run( 'SearchGetNearMatch', array( $term, &$title ) ) ) {
 				return $title;
 			}
 		}
@@ -293,7 +293,7 @@ class SearchEngine {
 
 		$parsed = $query;
 		if ( strpos( $query, ':' ) === false ) { // nothing to do
-			wfRunHooks( 'SearchEngineReplacePrefixesComplete', array( $this, $query, &$parsed ) );
+			Hooks::run( 'SearchEngineReplacePrefixesComplete', array( $this, $query, &$parsed ) );
 			return $parsed;
 		}
 
@@ -312,7 +312,7 @@ class SearchEngine {
 		if ( trim( $parsed ) == '' )
 			$parsed = $query; // prefix was the whole query
 
-		wfRunHooks( 'SearchEngineReplacePrefixesComplete', array( $this, $query, &$parsed ) );
+		Hooks::run( 'SearchEngineReplacePrefixesComplete', array( $this, $query, &$parsed ) );
 
 		return $parsed;
 	}
@@ -330,7 +330,7 @@ class SearchEngine {
 			}
 		}
 
-		wfRunHooks( 'SearchableNamespaces', array( &$arr ) );
+		Hooks::run( 'SearchableNamespaces', array( &$arr ) );
 		return $arr;
 	}
 
@@ -918,6 +918,10 @@ class SearchNearMatchResultSet extends SearchResultSet {
 class SearchHighlighter {
 	var $mCleanWikitext = true;
 
+	/**
+	 * @warning If you pass false to this constructor, then
+	 *  the caller is responsible for HTML escaping.
+	 */
 	function __construct( $cleanupWikitext = true ) {
 		$this->mCleanWikitext = $cleanupWikitext;
 	}
@@ -1326,6 +1330,11 @@ class SearchHighlighter {
 		$text = preg_replace( "/'''''/", "", $text );
 		$text = preg_replace( "/('''|<\/?[iIuUbB]>)/", "", $text );
 		$text = preg_replace( "/''/", "", $text );
+
+		// Note, the previous /<\/?[^>]+>/ is insufficient
+		// for XSS safety as the HTML tag can span multiple
+		// search results (T144845).
+		$text = Sanitizer::escapeHtmlAllowEntities( $text );
 
 		wfProfileOut( $fname );
 		return $text;

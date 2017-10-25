@@ -707,7 +707,7 @@ class LocalFile extends File {
 		// Wikia change - begin
 		// @author macbre / BAC-1206
 		$urls = array( $this->getURL() );
-		wfRunHooks( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
+		Hooks::run( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
 
 		SquidUpdate::purge( $urls );
 		// Wikia change - end
@@ -725,7 +725,7 @@ class LocalFile extends File {
 		$this->purgeThumbList( $dir, $files );
 
 		// Purge any custom thumbnail caches
-		wfRunHooks( 'LocalFilePurgeThumbnails', array( $this, $archiveName ) );
+		Hooks::run( 'LocalFilePurgeThumbnails', array( $this, $archiveName ) );
 
 		// Purge the squid
 		if ( $wgUseSquid ) {
@@ -758,7 +758,7 @@ class LocalFile extends File {
 		$this->purgeThumbList( $dir, $files );
 
 		// Purge any custom thumbnail caches
-		wfRunHooks( 'LocalFilePurgeThumbnails', array( $this, false ) );
+		Hooks::run( 'LocalFilePurgeThumbnails', array( $this, false ) );
 
 		// Purge the squid
 		if ( $wgUseSquid ) {
@@ -767,7 +767,7 @@ class LocalFile extends File {
 				$urls[] = $this->getThumbUrl( $file );
 			}
 
-			wfRunHooks( 'LocalFilePurgeThumbnailsUrls', [ $this, &$urls ] ); // Wikia change - BAC-1206
+			Hooks::run( 'LocalFilePurgeThumbnailsUrls', [ $this, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 	}
@@ -840,8 +840,14 @@ class LocalFile extends File {
 		$opts['ORDER BY'] = "oi_timestamp $order";
 		$opts['USE INDEX'] = array( 'oldimage' => 'oi_name_timestamp' );
 
-		wfRunHooks( 'LocalFile::getHistory', array( &$this, &$tables, &$fields,
-			&$conds, &$opts, &$join_conds ) );
+		Hooks::run( 'LocalFile::getHistory', [
+			$this,
+			&$tables,
+			&$fields,
+			&$conds,
+			&$opts,
+			&$join_conds,
+		] );
 
 		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $opts, $join_conds );
 		$r = array();
@@ -1127,7 +1133,7 @@ class LocalFile extends File {
 			if (!is_null($nullRevision)) {
 				$nullRevision->insertOn( $dbw );
 
-				wfRunHooks( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
+				Hooks::run( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
 			}
 			else {
@@ -1190,7 +1196,7 @@ class LocalFile extends File {
 		}
 
 		# Hooks, hooks, the magic of hooks...
-		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
+		Hooks::run( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
 		# Invalidate cache for all pages using this file
 		// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
@@ -1890,7 +1896,7 @@ class LocalFileDeleteBatch {
 				$urlRel = str_replace( '%2F', '/', rawurlencode( $srcRel ) );
 				$urls[] = $this->file->repo->getZoneUrl( 'public' ) . '/' . $urlRel;
 			}
-			wfRunHooks( 'LocalFileExecuteUrls', [ $this->file, &$urls ] ); // Wikia change - BAC-1206
+			Hooks::run( 'LocalFileExecuteUrls', [ $this->file, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 

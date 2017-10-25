@@ -1,6 +1,3 @@
-<?
-	$helper = new WallHelper();
-?>
 <? if($unread): ?>
 <li class="unread_notification admin_notification">
 <? else: ?>
@@ -8,8 +5,8 @@
 <? endif; ?>
 	<a href="<?= $url ?>">
 		<div class="notification">
-			<div class="msg-title"><?= $helper->shortenText($title, WallNotificationsController::NOTIFICATION_TITLE_LIMIT) ?></div>
-			<?php echo wfMessage('wall-notifications-notifyeveryone', $authors[0])->text(); ?>
+			<div class="msg-title"><?= $title ?></div>
+			<?= wfMessage( 'wall-notifications-notifyeveryone', $authors[0] )->escaped(); ?>
 			<div class="timeago" title="<?= $iso_timestamp ?>"></div>
 		</div>
 	</a>

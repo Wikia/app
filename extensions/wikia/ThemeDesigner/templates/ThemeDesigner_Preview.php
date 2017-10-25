@@ -1,4 +1,4 @@
-<?= ThemeDesignerHelper::parseText("
+<?= ThemeDesignerHelper::parseText( "
 <infobox <?= $infoboxTheme ?>>
 <title><default>Lorem ipsum</default></title>
 <group>
@@ -48,4 +48,4 @@ Phasellus [[semper enim eu massa]] ornare convallis. Suspendisse quis elit sapie
 
 
 [[Category:Etiam condimentums]]
-") ?>
+" ) ?>

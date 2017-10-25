@@ -9,7 +9,9 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 	 * @param $hrefs hrefs definition in different languages
 	 * @param $expectedResult
 	 */
-	public function testGetHref( $lang, $hrefs, $expectedResult ) {
+	public function testGetHref( $environment, $lang, $hrefs, $expectedResult ) {
+		$this->mockEnvironment( $environment );
+
 		DesignSystemSharedLinks::getInstance()->setHrefs( $hrefs );
 
 		$result = DesignSystemSharedLinks::getInstance()->getHref( 'create-new-wiki', $lang );
@@ -20,6 +22,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 	public function getHrefDataProvider() {
 		return [
 			[
+				WIKIA_ENV_PROD,
 				'pl',
 				[
 					'en' => [
@@ -35,6 +38,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 				'http://www.wikia.pl'
 			],
 			[
+				WIKIA_ENV_PROD,
 				'pl',
 				[
 					'en' => [
@@ -48,6 +52,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 				'http://www.example.com'
 			],
 			[
+				WIKIA_ENV_PROD,
 				'pl',
 				[
 					'en' => [
@@ -61,6 +66,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 				null
 			],
 			[
+				WIKIA_ENV_PROD,
 				'en',
 				[
 					'en' => [
@@ -74,6 +80,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 				'http://www.wikia.com'
 			],
 			[
+				WIKIA_ENV_PROD,
 				'pt',
 				[
 					'en' => [
@@ -89,6 +96,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 				'http://pt-br.wikia.com'
 			],
 			[
+				WIKIA_ENV_PROD,
 				'pt',
 				[
 					'en' => [
@@ -102,6 +110,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 				null
 			],
 			[
+				WIKIA_ENV_PROD,
 				'pt',
 				[
 					'en' => [
@@ -112,6 +121,36 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 					],
 				],
 				null
+			],
+			[
+				WIKIA_ENV_PREVIEW,
+				'en',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://fallout.wikia.com/wiki/test'
+					]
+				],
+				'http://preview.fallout.wikia.com/wiki/test'
+			],
+			[
+				WIKIA_ENV_STAGING,
+				'en',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://fallout.wikia.com/wiki/test'
+					]
+				],
+				'http://fallout.wikia-staging.com/wiki/test'
+			],
+			[
+				WIKIA_ENV_DEV,
+				'en',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://fallout.wikia.com/wiki/test'
+					]
+				],
+				'http://fallout.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki/test'
 			],
 		];
 	}

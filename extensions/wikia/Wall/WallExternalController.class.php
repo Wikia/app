@@ -16,7 +16,12 @@ class WallExternalController extends WikiaController {
 	protected $helper;
 
 	public function init() {
+		global $wgIsValidWallTransaction;
+
 		$this->helper = new WallHelper();
+
+		// SUS-1554: Mark this transaction as a valid one for editing or creating Wall/Forum content
+		$wgIsValidWallTransaction = true;
 	}
 	/*
 	 *
@@ -50,16 +55,23 @@ class WallExternalController extends WikiaController {
 
 		$forum = new Forum();
 
-		//** TitleBatch $titleBatch */
-		$titleBatch = $forum->getTitlesForNamespace( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
+		$boardTitles = $forum->getBoardTitles();
 
-		$this->destinationBoards = [ [ 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ] ];
-		/** @var $title Title */
-		foreach ( $titleBatch->getAll() as $title ) {
+		$this->destinationBoards = [
+			[
+				'value' => '',
+				'content' => wfMessage( 'forum-board-destination-empty' )->escaped()
+			]
+		];
+
+		foreach ( $boardTitles as $title ) {
 			$value = $title->getArticleID();
-			if ( $mainWall->getId() != $value ) {
+			if ( $mainWall->getId() !== $value ) {
 				$wall = Wall::newFromTitle( $title );
-				$this->destinationBoards[$value] = [ 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) ];
+				$this->destinationBoards[$value] = [
+					'value' => $value,
+					'content' => htmlspecialchars( $wall->getTitle()->getText() )
+				];
 			}
 		}
 	}
@@ -95,15 +107,19 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
-		$wall = Wall::newFromId( $destinationId );
-		$thread = WallThread::newFromId( $threadId );
+		$threadTitle = Title::newFromID( $threadId );
 
-		if ( empty( $wall ) ) {
+		// SUS-1777: Only allow moving Forum threads
+		if ( empty( $threadTitle ) || $threadTitle->inNamespace( NS_USER_WALL_MESSAGE ) ) {
 			$this->errormsg = 'unknown';
+			return false;
 		}
 
+		$wall = Wall::newFromId( $destinationId );
 
+		$thread = WallThread::newFromId( $threadId );
 		$thread->move( $wall, $this->wg->User );
+
 		$this->status = 'ok';
 	}
 
@@ -231,8 +247,7 @@ class WallExternalController extends WikiaController {
 		 * BugId:68629 XSS vulnerable. We DO NOT want to have
 		 * any HTML here. Hence the strip_tags call.
 		 */
-		$titleMeta = strip_tags( $this->request->getVal( 'messagetitle', null ) );
-		$titleMeta = substr( $titleMeta, 0, 200 );
+		$titleMeta = static::sanitizeMetaTitle( $this->request->getVal( 'messagetitle' ) );
 
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 
@@ -259,12 +274,27 @@ class WallExternalController extends WikiaController {
 		}
 
 		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $ns );
-		$wallMessage = WallMessage::buildNewMessageAndPost( $body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone );
 
-		if ( $wallMessage === false ) {
-			error_log( 'WALL_NOAC_ON_POST' );
+		try {
+			$wallMessage = ( new WallMessageBuilder() )
+					->setMessageTitle( $titleMeta )
+					->setMessageText( $body )
+					->setMessageAuthor( $this->getContext()->getUser() )
+					->setRelatedTopics( $relatedTopics )
+					->setNotifyEveryone( $notifyEveryone )
+					->setParentPageTitle( $title )
+					->build();
+		} catch ( WallBuilderException $builderException ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'other' );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			return;
+		} catch ( InappropriateContentException $exception) {
+			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'badcontent' );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
 
@@ -281,7 +311,9 @@ class WallExternalController extends WikiaController {
 			return false;
 		}
 
+		$mode = $this->request->getVal( 'mode' );
 		$result = false;
+
 		/**
 		 * @var $mw WallMessage
 		 */
@@ -296,17 +328,28 @@ class WallExternalController extends WikiaController {
 		$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
 		$notify = isset( $formassoc['notify-admin'] ) ? true : false;
 
-		if ( empty( $reason ) && !$this->request->getVal( 'mode' ) == 'rev' ) {
+		if ( empty( $reason ) && !$mode == 'rev' ) {
 			$this->response->setVal( 'status', false );
 			return true;
 		}
 
-		$isDeleteOrRemove = true;
-
-		switch( $this->request->getVal( 'mode' ) ) {
+		/**
+		 * As documented in Wall.js:557
+		 *
+		 * work as delete (mode: rev),
+		 * admin delete (mode:admin),
+		 * remove (mode: remove),
+		 * restore (mode: restore)
+		 *
+		 * Mode name is kept as data-mode attribute in HTML templates
+		 */
+		switch( $mode ) {
 			case 'rev':
+				// removes Wall's page table entry via ArticleComment::doDeleteComment)
 				if ( $mw->canDelete( $this->wg->User ) ) {
 					$result = $mw->delete( wfMessage( 'wall-delete-reason' )->inContentLanguage()->escaped(), true );
+
+					// we just want to set status field in JSON response
 					$this->response->setVal( 'status', $result );
 					return true;
 				} else {
@@ -315,51 +358,48 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'admin':
+				// marks a comment with WPP_WALL_ADMINDELETE entry in page_wikia_props and deleted = 1 in comments_index table
 				if ( $mw->canAdminDelete( $this->wg->User ) ) {
 					$result = $mw->adminDelete( $this->wg->User, $reason, $notify );
-					$this->response->setVal( 'status', $result );
-					$isDeleteOrRemove = true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 
 			case 'fastadmin':
+				// same as above, but does not require reason to be provided
+				// marks a comment with WPP_WALL_ADMINDELETE entry in page_wikia_props
 				if ( $mw->canFastAdminDelete( $this->wg->User ) ) {
-					$result = $mw->fastAdminDelete( $this->wg->User, $reason, $notify );
-					$this->response->setVal( 'status', $result );
-					$isDeleteOrRemove = true;
+					$result = $mw->adminDelete( $this->wg->User );
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 
 			case 'remove':
+				// marks a comment with WPP_WALL_REMOVE entry in page_wikia_props and removed = 1 in comments_index table
 				if ( !$mw->canModerate( $this->wg->User ) ) {
 					$mw->load(); // must do this to allow checking for wall owner/message author - data not loaded otherwise
 				}
 
 				if ( $mw->canRemove( $this->wg->User ) ) {
-					$this->response->setVal( 'status', $result );
 					$result = $mw->remove( $this->wg->User, $reason, $notify );
-
-					$this->response->setVal( 'status', $result );
-					// TODO: log/save data
-					$isDeleteOrRemove = true;
 				} else {
 					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
-		}
 
-		if ( $isDeleteOrRemove ) {
-			$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'messageRemoved', [ 'showundo' => true , 'comment' => $mw ] ) );
-			$mw->getLastActionReason();
-			$mw->purgeSquid();
-			$this->response->setVal( 'deleteInfoBox', 'INFO BOX' );
+			default:
+				throw new BadRequestException( __METHOD__ . ' - unknown mode provided: ' . $mode );
 		}
 
 		$this->response->setVal( 'status', $result );
+
+		if ( $result === true ) {
+			$this->response->setVal('html', $this->app->renderView('WallController', 'messageRemoved', ['showundo' => true, 'comment' => $mw]));
+			$mw->invalidateCache();
+		}
+
 		return true;
 	}
 
@@ -391,13 +431,13 @@ class WallExternalController extends WikiaController {
 			case 'close':
 				if ( $mw->canArchive( $this->wg->User ) ) {
 					$result = $mw->archive( $this->wg->User, $reason );
-					$mw->purgeSquid();
+					$mw->invalidateCache();
 				}
 				break;
 			case 'open':
 				if ( $mw->canReopen( $this->wg->User ) ) {
 					$result = $mw->reopen( $this->wg->User );
-					$mw->purgeSquid();
+					$mw->invalidateCache();
 				}
 				break;
 			default:
@@ -452,7 +492,7 @@ class WallExternalController extends WikiaController {
 
 		) {
 			$mw->restore( $this->wg->User );
-			$mw->purgeSquid();
+			$mw->invalidateCache();
 			$this->response->setVal( 'status', true );
 			return true;
 		}
@@ -482,7 +522,7 @@ class WallExternalController extends WikiaController {
 			}
 
 			$mw->restore( $this->wg->User, $reason );
-			$mw->purgeSquid();
+			$mw->invalidateCache();
 
 			$this->response->setVal( 'buttons', $this->app->renderView( 'WallController', 'messageButtons', [ 'comment' => $mw ] ) );
 			$this->response->setVal( 'status', true );
@@ -583,7 +623,7 @@ class WallExternalController extends WikiaController {
 		$msgid = $this->request->getVal( 'msgid' );
 
 		// XSS vulnerable (MAIN-1412)
-		$newtitle = strip_tags( trim( $this->request->getVal( 'newtitle' ) ) );
+		$newtitle = static::sanitizeMetaTitle( $this->request->getVal( 'newtitle' ) );
 
 		$newbody = $this->getConvertedContent( $this->request->getVal( 'newbody' ) );
 
@@ -605,7 +645,26 @@ class WallExternalController extends WikiaController {
 		$wallMessage->load();
 
 		$wallMessage->setMetaTitle( $newtitle );
-		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User, '', false, true );
+
+		try {
+			$text = ( new WallEditBuilder() )
+					->setMessage( $wallMessage )
+					->setMessageText( $newbody )
+					->setEditor( $this->getContext()->getUser() )
+					->build();
+		} catch ( WallBuilderException $builderException ) {
+			$this->error( $builderException->getMessage(), $builderException->getContext() );
+			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'other' );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			return;
+		} catch ( InappropriateContentException $exception ) {
+			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'badcontent' );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+			return;
+		}
 
 		$this->response->setVal( 'isotime', wfTimestamp( TS_ISO_8601 ) );
 		$this->response->setVal( 'fulltime', $this->wg->Lang->timeanddate( wfTimestamp( TS_MW ) ) );
@@ -661,10 +720,25 @@ class WallExternalController extends WikiaController {
 		/** @var $wallMessage WallMessage */
 		$wallMessage = WallMessage::newFromTitle( $parentTitle );
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
-		$reply = $wallMessage->addNewReply( $body, $this->wg->User );
 
-		if ( $reply === false ) {
+		try {
+			$reply = ( new WallMessageBuilder() )
+					->setMessageAuthor( $this->getContext()->getUser() )
+					->setMessageText( $body )
+					->setParentMessage( $wallMessage )
+					->setParentPageTitle( $wallMessage->getArticleTitle() )
+					->build();
+		} catch ( WallBuilderException $builderException ) {
+			$this->error( $builderException->getMessage(), $builderException->getContext() );
 			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'other' );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+			return;
+		} catch ( InappropriateContentException $exception ) {
+			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'reason', 'badcontent' );
+			$this->response->setVal( 'blockInfo', wfMessage('spamprotectionmatch')->numParams( $exception->getContext()['block'] )->parse() );
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return;
 		}
 
@@ -705,14 +779,6 @@ class WallExternalController extends WikiaController {
 
 	protected function replyToMessageBuildResponse( $context, $reply ) {
 		$context->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', [ 'comment' => $reply, 'isreply' => true ] ) );
-	}
-
-	private function getDisplayName() {
-		$displayname  = $this->wg->User->getName();
-		$displayname2 = '';
-
-		return [ $displayname, $displayname2 ];
-
 	}
 
 	/**
@@ -839,5 +905,14 @@ class WallExternalController extends WikiaController {
 			'status' => 'error',
 			'errormsg' => wfMessage( 'wall-message-no-permission' )->escaped()
 		] );
+	}
+
+	/**
+	 * Sanitize the meta-title of a Wall thread and make it conform to length constraints
+	 * @param $title
+	 * @return bool|string
+	 */
+	protected static function sanitizeMetaTitle( $title ) {
+		return substr( trim( strip_tags( $title ) ), 0, 200 );
 	}
 }

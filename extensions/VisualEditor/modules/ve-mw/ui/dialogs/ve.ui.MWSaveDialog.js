@@ -455,8 +455,6 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.MWSaveDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
-			var pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0;
-
 			// Old messages should not persist
 			this.clearAllMessages();
 			this.swapPanel( 'save' );
@@ -471,16 +469,6 @@ ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 					)
 				);
 			} );
-
-			if ( !pageExists ) {
-				// Review button doesn't make sense when creating new page
-				this.getActions().remove( [ this.getActions().get( { actions: 'review' } )[0] ] );
-
-				// Trigger save action automatically when creating new page
-				this.currentAction = this.getActions().get( { actions: 'save' } )[0];
-				this.executeAction( 'save' );
-				this.getActions().setAbilities( { save: false } );
-			}
 		}, this );
 };
 

@@ -13,7 +13,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeConverter', function () {
 	}
 
 	it('Converts two sizes to array with two elements', function () {
-		var sizes = getModule().convert('300x250,300x600');
+		var sizes = getModule().toArray('300x250,300x600');
 
 		expect(sizes).toEqual([[300, 250], [300, 600]]);
 	});

@@ -30,6 +30,7 @@ class LogPager extends ReverseChronologicalPager {
 	private $types = array(), $performer = '', $title = '', $pattern = '';
 	private $typeCGI = '';
 	public $mLogEventsList;
+	private $usersData = [];
 
 	/**
 	 * Constructor
@@ -230,7 +231,7 @@ class LogPager extends ReverseChronologicalPager {
 		# Add log_search table if there are conditions on it.
 		# This filters the results to only include log rows that have
 		# log_search records with the specified ls_field and ls_value values.
-		if( array_key_exists( 'ls_field', $this->mConds ) ) {
+		if ( array_key_exists( 'ls_field', $this->mConds ) ) {
 			$tables[] = 'log_search';
 			$index['log_search'] = 'ls_field_val';
 			$index['logging'] = 'PRIMARY';
@@ -242,20 +243,7 @@ class LogPager extends ReverseChronologicalPager {
 				# no duplicate log rows. Otherwise, we need to remove the duplicates.
 				$options[] = 'DISTINCT';
 			}
-		# Avoid usage of the wrong index by limiting
-		# the choices of available indexes. This mainly
-		# avoids site-breaking filesorts.
-		} elseif( $this->title || $this->pattern || $this->performer ) {
-			$index['logging'] = array( 'page_time', 'user_time' );
-			if( count($this->types) == 1 ) {
-				$index['logging'][] = 'log_user_type_time';
-			}
-		} elseif( count($this->types) == 1 ) {
-			$index['logging'] = 'type_time';
-		} else {
-			$index['logging'] = 'times';
 		}
-		$options['USE INDEX'] = $index;
 		# Don't show duplicate rows when using log_search
 		$joins['log_search'] = array( 'INNER JOIN', 'ls_log_id=log_id' );
 
@@ -289,11 +277,18 @@ class LogPager extends ReverseChronologicalPager {
 	}
 
 	public function getStartBody() {
+		$userIds = $this->getFieldFromResults($this->mResult, 'log_user');
+		$this->usersData = $this->parseUsersData( $this->getUserData( $userIds ) );
+
 		wfProfileIn( __METHOD__ );
 		# Do a link batch query
 		if( $this->getNumRows() > 0 ) {
 			$lb = new LinkBatch;
 			foreach ( $this->mResult as $row ) {
+
+				// SUS-2779
+				$this->joinUserDataToLogRow($row, $this->usersData);
+
 				$lb->add( $row->log_namespace, $row->log_title );
 				$lb->addObj( Title::makeTitleSafe( NS_USER, $row->user_name ) );
 				$lb->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->user_name ) );
@@ -309,7 +304,68 @@ class LogPager extends ReverseChronologicalPager {
 		return '';
 	}
 
+	/**
+	 * @param $row
+	 * @param $userNames
+	 */
+	private function joinUserDataToLogRow( $row, $userNames ) {
+		$row->user_id = $row->log_user;
+
+		if ( isset( $userNames[$row->user_id] ) ) {
+			$row->user_name = $userNames[$row->user_id]->user_name;
+			$row->user_text = $row->user_name;
+			$row->user_editcount = $userNames[$row->user_id]->user_editcount;
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( "User with id {$row->log_user} was not found" );
+			$row->user_name = 'unknown';
+			$row->user_editcount = 0;
+		}
+
+		$row->log_user_text = $row->user_name;
+	}
+
+	private function getUserData( $userIds ) {
+		global $wgExternalSharedDB;
+
+		if (count($userIds) === 0) {
+			return [];
+		}
+
+		$fields = [ 'user_id', 'user_name', 'user_editcount' ];
+		$conditions = [ 'user_id' => array_unique( $userIds ) ];
+		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		return $db->select( '`user`', $fields, $conditions );
+	}
+
+	private function getFieldFromResults( $res, $fieldName ) {
+		$userIds = [];
+		foreach ( $res as $row ) {
+			if ( isset($row->{ $fieldName }) ) {
+				$userIds[] = $row->{ $fieldName };
+			}
+		}
+
+		return $userIds;
+	}
+
+	/**
+	 * @param $dbResults
+	 * @return array
+	 */
+	private function parseUsersData( $dbResults ): array {
+		$results = [];
+
+		foreach ( $dbResults as $row ) {
+			$results[$row->user_id] = $row;
+		}
+
+		return $results;
+	}
+
 	public function formatRow( $row ) {
+		// SUS-2779
+		$this->joinUserDataToLogRow( $row, $this->usersData );
 		return $this->mLogEventsList->logLine( $row );
 	}
 

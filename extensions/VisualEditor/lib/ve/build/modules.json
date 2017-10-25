@@ -111,6 +111,14 @@
 			"jquery"
 		]
 	},
+	"jquery.client": {
+		"scripts": [
+			"lib/jquery.client/jquery.client.js"
+		],
+		"dependencies": [
+			"jquery"
+		]
+	},
 	"baselibs": {
 		"dependencies": [
 			"jquery",
@@ -118,6 +126,7 @@
 			"oojs-ui",
 			"jquery.i18n",
 			"jquery.uls.data",
+			"jquery.client",
 			"papaparse"
 		]
 	},

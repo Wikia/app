@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Script that prepares XML dumps with the latest revisions of starter wikis
+ * Script that prepares XML and SQL dumps with the latest revisions and *links tables rows of starter wikis
  *
- * Generate XML dumps for all starter wikis and upload them to DFS
+ * Generate XML and SQL dumps for all starter wikis and upload them to DFS
+ *
+ * s3cmd -c /etc/s3cmd/sjc_prod.cfg ls s3://starter/dumps/
  *
  * @see PLATFORM-1305
  *
@@ -11,7 +13,7 @@
  * @ingroup Maintenance
  */
 
-putenv('SERVER_ID=80433'); // run in the context of www.wikia.com (where CreateWiki is enabled)
+putenv( 'SERVER_ID=80433' ); // run in the context of www.wikia.com (where CreateWiki is enabled)
 
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
@@ -21,7 +23,7 @@ class DumpStarters extends Maintenance {
 
 	const DUMP_MIME_TYPE = 'application/bzip2';
 
-	protected $mDescription = 'This script prepares XML dumps with the latest revisions of starter wikis';
+	protected $mDescription = 'This script prepares XML and SQL dumps of starter wikis';
 
 	/**
 	 * The following tables will be used to generate a SQL dump of a starter wiki
@@ -35,21 +37,32 @@ class DumpStarters extends Maintenance {
 	];
 
 	/**
-	 * Generate XML dump of a given starter database and writes it to a given file
+	 * Generate XML dump of a given starter database and write it to a given temporary file
 	 *
 	 * @param string $filename file to write the XML dump to
+	 * @param string $langCode
 	 * @param string $starter
 	 */
-	private function generateContentDump($filename, $starter) {
-		// export only the current revisions
-		$dbr = wfGetDB( DB_SLAVE, [], $starter );
-		$exporter = new WikiExporter( $dbr, WikiExporter::CURRENT, WikiExporter::STREAM, WikiExporter::TEXT );
+	private function generateContentDump( string $filename, string $langCode, string $starter ) {
+		// SUS-458: use a proper content language for a given starter to be able to generate localized namespace names
+		// set wgMetaNamespace to properly generate NS_PROJECT namespace names
+		$contentLanguageWrapper = new Wikia\Util\GlobalStateWrapper( [
+			'wgContLang' => Language::factory( $langCode ),
+			'wgMetaNamespace' => MWNamespace::getCanonicalName( NS_PROJECT )
+		] );
 
-		// write to a stream
-		$exporter->setOutputSink( new DumpBzOutput( $filename ) );
-		$exporter->openStream();
-		$exporter->allPages();
-		$exporter->closeStream();
+		$contentLanguageWrapper->wrap( function() use ( $starter, $filename ) {
+			// export only the current revisions
+			$dbr = wfGetDB( DB_SLAVE, [], $starter );
+			$exporter = new WikiExporter( $dbr, WikiExporter::CURRENT, WikiExporter::STREAM, WikiExporter::TEXT );
+
+			// write to a stream
+			$sink = new DumpBzOutput( $filename );
+			$exporter->setOutputSink( $sink );
+			$exporter->openStream();
+			$exporter->allPages();
+			$exporter->closeStream();
+		} );
 	}
 
 	/**
@@ -61,7 +74,7 @@ class DumpStarters extends Maintenance {
 	 * @param string $starter
 	 * @throws DumpStartersException
 	 */
-	private function generateSqlDump($filename, $starter) {
+	private function generateSqlDump( $filename, $starter ) {
 		// export only the current revisions
 		$dbr = wfGetDB( DB_SLAVE, [], $starter );
 
@@ -69,7 +82,7 @@ class DumpStarters extends Maintenance {
 		$info = $dbr->getLBInfo();
 
 		// dump tables data only
-		$cmd = sprintf("%s --no-create-info --set-gtid-purged=OFF -h%s -u%s -p%s %s %s",
+		$cmd = sprintf( "%s --no-create-info --set-gtid-purged=OFF -h%s -u%s -p%s %s %s",
 			"/usr/bin/mysqldump",
 			$info[ "host"      ],
 			$info[ "user"      ],
@@ -80,12 +93,12 @@ class DumpStarters extends Maintenance {
 
 		$dump = wfShellExec( $cmd, $retVal );
 
-		if ($retVal > 0) {
-			throw new DumpStartersException("Unable to generate a SQL dump of '{$starter}' (using {$info['host']})");
+		if ( $retVal > 0 ) {
+			throw new DumpStartersException( "Unable to generate a SQL dump of '{$starter}' (using {$info['host']})" );
 		}
 
 		// save the compressed SQL dump
-		file_put_contents( $filename, bzcompress($dump, 9) );
+		file_put_contents( $filename, bzcompress( $dump, 9 ) );
 	}
 
 	/**
@@ -98,7 +111,7 @@ class DumpStarters extends Maintenance {
 	 * @throws DumpStartersException
 	 */
 	private function storeDump( $filename, $dest ) {
-		$this->output( sprintf(" \n\t[%s / %.2f kB]", $dest, filesize($filename) / 1024 ) );
+		$this->output( sprintf( " \n\t[%s / %.2f kB]", $dest, filesize( $filename ) / 1024 ) );
 
 		$swift = \Wikia\CreateNewWiki\Starters::getStarterDumpStorage();
 		$res = $swift->store(
@@ -113,7 +126,7 @@ class DumpStarters extends Maintenance {
 		}
 
 		// cleanup
-		unlink($filename);
+		unlink( $filename );
 
 		$this->output( ' uploaded' );
 	}
@@ -128,15 +141,16 @@ class DumpStarters extends Maintenance {
 	/**
 	 * Generate and upload a starter XML dump and SQL dump of "links" table
 	 *
-	 * @param string $starter
+	 * @param string $langCode language code of a given starter
+	 * @param string $starter database name of a given starter
 	 * @throws DumpStartersException
 	 */
-	private function dumpStarter($starter) {
-		$this->output( sprintf("\n%s: preparing a dump of '%s'...", wfTimestamp( TS_DB ), $starter ) );
+	private function dumpStarter( string $langCode, string $starter ) {
+		$this->output( sprintf( "\n%s: preparing a dump of '%s' (%s)...", wfTimestamp( TS_DB ), $starter, $langCode ) );
 
 		// 1. generate content XML dump with only the latest revisions
 		$tmpname = $this->getTempFile();
-		$this->generateContentDump( $tmpname, $starter );
+		$this->generateContentDump( $tmpname, $langCode, $starter );
 		$this->storeDump( $tmpname, \Wikia\CreateNewWiki\Starters::getStarterContentDumpPath( $starter ) );
 
 		// 2. generate SQL dump of "links" tables
@@ -146,13 +160,17 @@ class DumpStarters extends Maintenance {
 	}
 
 	public function execute() {
-		$this->output( sprintf("%s: %s - starting...", wfTimestamp( TS_DB ), __CLASS__ ) );
+		$this->output( sprintf( "%s: %s - starting...", wfTimestamp( TS_DB ), __CLASS__ ) );
 
-		foreach( Wikia\CreateNewWiki\Starters::getAllStarters() as $starter ) {
-			try {
-				$this->dumpStarter($starter);
+		foreach ( Wikia\CreateNewWiki\Starters::getAllStarters() as $langCode => $starter ) {
+			if ( $langCode === '*' ) {
+				$langCode = 'en';
 			}
-			catch (Exception $ex) {
+
+			try {
+				$this->dumpStarter( $langCode, $starter );
+			}
+			catch ( Exception $ex ) {
 				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
 					'exception' => $ex,
 				] );
@@ -160,7 +178,7 @@ class DumpStarters extends Maintenance {
 			}
 		}
 
-		$this->output( "\n" . wfTimestamp( TS_DB ) .": completed!\n");
+		$this->output( "\n" . wfTimestamp( TS_DB ) . ": completed!\n" );
 	}
 
 }

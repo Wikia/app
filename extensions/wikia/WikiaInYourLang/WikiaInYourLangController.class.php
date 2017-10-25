@@ -52,13 +52,14 @@ class WikiaInYourLangController extends WikiaController {
 			$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
 			$this->response->setVal( 'nativeDomain', $sNativeWikiDomain );
 			$oNativeWiki = $this->getNativeWikiByDomain( $sNativeWikiDomain );
-			$this->response->setVal( 'linkAddress', $oNativeWiki->city_url );
 
 			/**
 			 * If a wikia is found - send a response with its url and sitename.
 			 * Send success=false otherwise.
 			 */
 			if ( is_object( $oNativeWiki ) ) {
+				$this->response->setVal( 'linkAddress', $oNativeWiki->city_url );
+
 				/**
 				 * Check for false-positives - see CE-1216
 				 * Per request we should unify dialects like pt and pt-br
@@ -113,7 +114,7 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( isset( $aParsed['host'] ) ) {
 			$sHost = $aParsed['host'];
-			$regExp = "/(sandbox.{3}\.|preview\.|verify\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
+			$regExp = "/((?:sandbox-.+?|preview|verify)\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
 			/**
 			 * preg_match returns similar array as a third parameter:
 			 * [
@@ -240,7 +241,9 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( $sArticleTitle !== false ) {
 			$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
-			list($sArticleTitle, $sArticleAnchor) = explode('#', $sArticleTitle);
+			// `#` is not included in some titles, which breaks string splitting
+			// so we want to make sure there are exactly 2 items in array
+			list($sArticleTitle, $sArticleAnchor) = array_pad( explode( '#', $sArticleTitle, 2 ), 2, '' );
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
 
 			if ( !is_null( $title ) && $title->exists() ) {

@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.window', 'wikia.nirvana'],
-	function($, window, nirvana) {
+	['jquery', 'wikia.window', 'wikia.nirvana', 'wikia.tracker'],
+	function($, window, nirvana, tracker) {
 		'use strict';
 
 		var WallNotifications = {
@@ -42,13 +42,16 @@ require(
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
 				this.$notificationsEntryPoint
-					.on('click', this.proxy(this.updateCounts))
-					.on('click', this.proxy(this.fetchForCurrentWiki))
-					.on('wds-dropdown-open', this.proxy(this.onNotificationsOpen));
+					.on('mouseenter', this.proxy(this.updateCounts))
+					.on('mouseenter', this.proxy(this.fetchForCurrentWiki))
+					.on('mouseenter', this.proxy(this.onNotificationsOpen));
 
 				this.$wallNotifications.add($('#pt-wall-notifications'))
 					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));
 
+				this.$wallNotifications.on('click', 'a', function(ev) {
+					WallNotifications.track('notification');
+				});
 
 				$(window).on('resize', $.throttle(50, function () {
 					WallNotifications.setNotificationsHeight();
@@ -179,6 +182,7 @@ require(
 
 			markAllAsReadAllWikis: function () {
 				this.markAllAsReadRequest('FORCE');
+				this.track('mark-all-as-read');
 				return false;
 			},
 
@@ -211,6 +215,8 @@ require(
 			},
 
 			wikiClick: function (e) {
+				this.track('wiki');
+
 				var wikiEl = $(e.target).closest('.notifications-for-wiki'),
 					wikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
@@ -369,9 +375,19 @@ require(
 			},
 
 			onNotificationsOpen: function () {
-				WallNotifications.$wallNotifications.addClass('show');
-				WallNotifications.setNotificationsHeight();
-			}
+				this.$wallNotifications.addClass('show');
+				this.setNotificationsHeight();
+				this.track('open');
+			},
+
+			track: function (label) {
+				tracker.track({
+					action: 'click',
+					category: 'notifications',
+					label: label,
+					trackingMethod: 'analytics'
+				});
+			},
 		};
 
 		$(function () {

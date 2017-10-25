@@ -7,57 +7,9 @@ define('ext.wikia.recirculation.utils', [
 ], function ($, loader, cache, Mustache) {
 	'use strict';
 
-	// returns a gaussian random function with the given mean and stdev.
-	function gaussian(mean, stdev) {
-		var y2,
-			useLast = false;
-		return function() {
-			var y1;
-			if (useLast) {
-				y1 = y2;
-				useLast = false;
-			} else {
-				var x1, x2, w;
-
-				do {
-					x1 = 2.0 * Math.random() - 1.0;
-					x2 = 2.0 * Math.random() - 1.0;
-					w = x1 * x1 + x2 * x2;
-				} while (w >= 1.0);
-
-				w = Math.sqrt((-2.0 * Math.log(w))/w);
-				y1 = x1 * w;
-				y2 = x2 * w;
-				useLast = true;
-			}
-
-			var retval = mean + stdev * y1;
-			return Math.abs(retval);
-	   };
-	}
-
-	function createResult (item, score) {
-		return {
-			item: item,
-			score: score
-		};
-	}
-
-	function ditherResults(results, epsilon) {
-		var standardDeviation = (epsilon > 1) ? Math.sqrt(Math.log(epsilon)) : Math.exp(1e-10),
-			distribution = gaussian(0, standardDeviation);
-
-		return results.map(createResult)
-			.map(function(result, index) {
-				result.score = Math.log(index + 1) + distribution();
-				return result;
-			}).sort(function(a, b) {
-				return a.score - b.score;
-			}).map(function(result, index) {
-				result.item.index = index;
-				return result.item;
-			});
-	}
+	var fandomHeartSvg = '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M12.77.13L9.44 3.5a.66.66 0 0 1-.94 0L5.16.17a.44.44 0 0 0-.63 0L.24 4.4a.77.77 0 0 0-.24.55V9a.77.77 0 0 0 .23.55l8.37 8.37a.44.44 0 0 0 .63 0L17.6 9.5a.77.77 0 0 0 .23-.5V5a.77.77 0 0 0-.22-.54L13.4.13a.44.44 0 0 0-.63 0zm-2.66 4.94a.22.22 0 0 1 0-.3L12 2.88a1.65 1.65 0 0 1 1.41-.47 1.73 1.73 0 0 1 1 .51l1.91 1.91a.22.22 0 0 1 0 .3L13.39 8a.22.22 0 0 1-.3 0zm1 5.24l-1.8 1.8a.22.22 0 0 1-.3 0l-6-6A1.66 1.66 0 0 1 3 3.73l1.8-1.8a.22.22 0 0 1 .3 0l6 6a1.66 1.66 0 0 1 .01 2.38zm5.37-3.11v1.29a.57.57 0 0 1-.16.4l-6.89 7a.51.51 0 0 1-.38.17.54.54 0 0 1-.4-.17l-.49-.46a.22.22 0 0 1 0-.31l8-8a.22.22 0 0 1 .33.09zm-8.63 6a.75.75 0 0 1-.2.54l-.39.36a.33.33 0 0 1-.45 0L1.56 8.92a.69.69 0 0 1-.21-.49v-1A.39.39 0 0 1 2 7.18l5.57 5.5a.81.81 0 0 1 .28.54z"/>' +
+		'</svg>';
 
 	/**
 	 * Checks if template is cached in LocalStorage and if not loads it by using loader
@@ -65,7 +17,7 @@ define('ext.wikia.recirculation.utils', [
 	 */
 	function loadTemplate(templateName) {
 		var dfd = new $.Deferred(),
-			templateLocation = 'extensions/wikia/Recirculation/templates/client/' + templateName,
+			templateLocation = 'extensions/wikia/Recirculation/templates/' + templateName,
 			cacheKey = 'RecirculationAssets_' + templateLocation,
 			template = cache.getVersioned(cacheKey);
 
@@ -94,7 +46,34 @@ define('ext.wikia.recirculation.utils', [
 		return dfd.promise();
 	}
 
-	function renderTemplate(templateName, data) {
+	/**
+	 * Loads mustache templates
+	 * @returns {$.Deferred}
+	 */
+	function loadTemplates(templatesNames) {
+		var dfd = new $.Deferred(),
+			templatePath = 'extensions/wikia/Recirculation/templates/',
+			templateLocations = templatesNames.map(function (templatesName) {
+				return templatePath + templatesName;
+			});
+
+		loader({
+			type: loader.MULTI,
+			resources: {
+				mustache: templateLocations.join(',')
+			}
+		}).done(function (data) {
+			dfd.resolve(data.mustache);
+		});
+
+		return dfd.promise();
+	}
+
+	function renderTemplate(template, data) {
+		return $(Mustache.render(template, data));
+	}
+
+	function renderTemplateByName(templateName, data) {
 		return loadTemplate(templateName)
 			.then(function(template) {
 				return $(Mustache.render(template, data));
@@ -109,32 +88,6 @@ define('ext.wikia.recirculation.utils', [
 			parts = [label, 'slot-' + slot, source, isVideo];
 
 		return parts.join('=');
-	}
-
-	function addUtmTracking(items, placement) {
-		var params = {
-			utm_source: 'wikia',
-			utm_campaign: 'recirc',
-			utm_medium: placement
-		};
-
-		items = $.map(items, function(item, index) {
-			params.utm_content = index + 1;
-			item.url = item.url + '?' + $.param(params);
-			return item;
-		});
-
-		return items;
-	}
-
-	function afterRailLoads(callback) {
-		var $rail = $('#WikiaRail');
-
-		if ($rail.find('.loading').exists()) {
-			$rail.one('afterLoad.rail', callback);
-		} else {
-			callback();
-		}
 	}
 
 	function waitForRail() {
@@ -153,26 +106,12 @@ define('ext.wikia.recirculation.utils', [
 		return deferred.promise();
 	}
 
-	function sortThumbnails(a, b) {
-		if (a.thumbnail && !b.thumbnail) {
-			return -1;
-		}
-
-		if (!a.thumbnail && b.thumbnail) {
-			return 1;
-		}
-
-		return 0;
-	}
-
 	return {
 		buildLabel: buildLabel,
-		loadTemplate: loadTemplate,
+		loadTemplates: loadTemplates,
 		renderTemplate: renderTemplate,
-		addUtmTracking: addUtmTracking,
-		afterRailLoads: afterRailLoads,
+		renderTemplateByName: renderTemplateByName,
 		waitForRail: waitForRail,
-		ditherResults: ditherResults,
-		sortThumbnails: sortThumbnails
+		fandomHeartSvg: fandomHeartSvg
 	};
 });

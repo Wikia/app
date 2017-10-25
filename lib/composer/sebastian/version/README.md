@@ -4,16 +4,13 @@
 
 ## Installation
 
-### Composer
+You can add this library as a local, per-project dependency to your project using [Composer](https://getcomposer.org/):
 
-Simply add a dependency on `sebastian/version` to your project's `composer.json` file if you use [Composer](http://getcomposer.org/) to manage the dependencies of your project.
+    composer require sebastian/version
 
-### PEAR Installer
+If you only need this library during development, for instance to run your project's test suite, then you should add it as a development-time dependency:
 
-The following two commands (which you may have to run as `root`) are all that is required to install Version using the PEAR Installer:
-
-    pear config-set auto_discover 1
-    pear install pear.phpunit.de/Version
+    composer require --dev sebastian/version
 
 ## Usage
 

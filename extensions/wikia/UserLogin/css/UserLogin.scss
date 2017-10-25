@@ -3,7 +3,6 @@
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/bodytext";
 @import "skins/shared/color";
-@import "../mixins/divider";
 
 $input-width: 230px;
 
@@ -40,19 +39,6 @@ $input-width: 230px;
 			width: $input-width + 18px;
 		}
 	}
-	> .sso-login {
-		margin: 0 auto;
-		text-align: center;
-		width: $input-width;
-		> .sso-login-divider {
-			@include divider;
-			margin-top: 24px;
-			> span {
-				top: -17px;
-				line-height: 30px;
-			}
-		}
-	}
 	.subheading {
 		border-bottom: 0;
 		font-size: 16px;
@@ -67,12 +53,6 @@ $input-width: 230px;
 	}
 	&.UserConfirm {
 		margin-bottom: 200px;
-	}
-}
-
-.WikiaPageHeader {
-	h2 {
-		display: none;
 	}
 }
 

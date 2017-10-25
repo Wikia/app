@@ -14,14 +14,8 @@ define('ext.wikia.adEngine.slotTracker', [
 			interestingEvents: 0
 		},
 		slotTypes = {
-			CORP_TOP_LEADERBOARD:   'leaderboard',
-			CORP_TOP_RIGHT_BOXAD:   'medrec',
-			EXIT_STITIAL_BOXAD_1:   'medrec',
-			HOME_TOP_LEADERBOARD:   'leaderboard',
-			HOME_TOP_RIGHT_BOXAD:   'medrec',
-			HUB_TOP_LEADERBOARD:    'leaderboard',
 			INCONTENT_BOXAD_1:      'medrec',
-			INCONTENT_LEADERBOARD:  'incontent',
+			INCONTENT_PLAYER:       'incontent',
 			INVISIBLE_SKIN:         'pixel',
 			LEFT_SKYSCRAPER_2:      'skyscraper',
 			LEFT_SKYSCRAPER_3:      'skyscraper',
@@ -37,10 +31,8 @@ define('ext.wikia.adEngine.slotTracker', [
 			PREFOOTER_LEFT_BOXAD:   'prefooter',
 			PREFOOTER_MIDDLE_BOXAD: 'prefooter',
 			PREFOOTER_RIGHT_BOXAD:  'prefooter',
-			TOP_BUTTON_WIDE:        'button',
 			TOP_LEADERBOARD:        'leaderboard',
-			TOP_RIGHT_BOXAD:        'medrec',
-			WIKIA_BAR_BOXAD_1:      'wikiabar'
+			TOP_RIGHT_BOXAD:        'medrec'
 		};
 
 	// The filtering function

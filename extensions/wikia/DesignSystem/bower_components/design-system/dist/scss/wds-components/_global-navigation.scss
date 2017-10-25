@@ -10,6 +10,9 @@
 	$search-buttons-transition-duration: 50ms;
 	$search-buttons-transition-delay: $search-transition-duration - $search-buttons-transition-duration;
 
+	// this should be moved to _colors in the future as that color is from the new palette of Fandom colors
+	$new-fandom-logo-color: #00d6d6;
+
 	@mixin visible-search-input {
 		&__search-input {
 			// transitioned property: padding;
@@ -49,22 +52,9 @@
 	}
 
 	&__dropdown-content {
+		border-top: 1px solid $wds-color-light-c4;
 		color: $wds-color-dark-blue-gray;
 		min-width: 190px;
-		top: calc(100% + 1px);
-		z-index: -1;
-	}
-
-	&__dropdown-link {
-		color: $wds-color-dark-blue-gray;
-		text-decoration: none;
-		transition: color $search-transition-duration;
-
-		&:active,
-		&:hover,
-		&.wds-is-active {
-			color: $wds-color-link;
-		}
 	}
 
 	&__content-bar {
@@ -111,7 +101,8 @@
 		}
 
 		&:active,
-		&.wds-is-active {
+		&.wds-is-active,
+		&:hover {
 			background-color: $wds-color-slate-gray;
 			border-color: darken($wds-color-slate-gray, 20%);
 			color: $wds-color-white;
@@ -140,8 +131,16 @@
 		}
 
 		&.wds-is-wds-company-logo-powered-by-wikia {
-			margin: 0 1px 2px 11px;
+			// borders and height set for fandom logo swap in May 2017
+			// horizontal bars are only displayed on desktop global nav
+			border-bottom: 2px solid $new-fandom-logo-color;
+			border-top: 2px solid $new-fandom-logo-color;
+			height: 10px;
+			padding: 1px 0;
+			margin: 0 1px 3px 11px;
 			width: 98px;
+			// hack fix for Safari 9
+			zoom: 1.0000001;
 		}
 
 		&.wds-is-wds-company-logo-wikia-org {
@@ -214,6 +213,21 @@
 		flex: 1 1 auto;
 		height: 28px;
 		transition: border-bottom-color $search-transition-duration;
+
+		// Strenghten selector to hide dropdown's arrow
+		&.wds-dropdown {
+			&::after,
+			&::before {
+				display: none;
+			}
+		}
+
+		// Override default dropdowns behaviour which open on hover
+		&:hover:not(.wds-is-active) {
+			.wds-dropdown__content {
+				display: none;
+			}
+		}
 	}
 
 	&__search-label {
@@ -310,8 +324,13 @@
 	}
 
 	&__search-suggestions {
+		border-top: 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		left: 0;
 		right: 0;
 		top: calc(100% + 1px);
+		transform: none;
 	}
 
 	&__account-menu-caption {
@@ -478,7 +497,7 @@
 		}
 
 		.wds-global-navigation__start-a-wiki-icon {
-			display: block;
+			display: inline;
 		}
 	}
 

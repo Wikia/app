@@ -1,0 +1,27 @@
+.wds-avatar-stack {
+	align-items: center;
+	display: flex;
+	margin: 8px 18px 6px 40px;
+
+	&__avatar {
+		color: $wds-color-light-c4;
+	}
+
+	@for $i from 1 to 6 {
+		.wds-avatar-stack__avatar:nth-child(#{$i}) {
+			position: relative;
+			transform: translate(($i - 1) * - 10px);
+			z-index: 5 - $i;
+		}
+	}
+
+	&__overflow {
+		background-color: $wds-color-white;
+		border: 0;
+		color: $wds-color-light-c6;
+		font-size: $wds-typescale-size-minus-2;
+		padding-left: 6px;
+		transform: translate(-40px);
+		width: auto;
+	}
+}

@@ -70,7 +70,7 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 		function init() {
 			$('#WikiaPage').on(
 				'mousedown keydown',
-				'.banner-notification a, .banner-notification button, .banner-notification .close',
+				'.wds-banner-notification a, .wds-banner-notification button, .wds-banner-notification .close',
 				linkTrack
 			);
 		}
