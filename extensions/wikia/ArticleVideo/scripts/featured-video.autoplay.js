@@ -1,4 +1,4 @@
-define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies', 'wikia.geo', 'wikia.instantGlobals'], function (cookies, geo, instantGlobals) {
+define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies'], function (cookies) {
 
 	var autoplayCookieName = 'featuredVideoAutoplay',
 		autoplayCookieExpireDays = 1209600000; // 14 days in milliseconds

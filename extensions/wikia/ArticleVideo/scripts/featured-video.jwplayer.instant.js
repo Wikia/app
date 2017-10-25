@@ -30,7 +30,6 @@ require([
 	var inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
-		autoplayCookieName = 'featuredVideoAutoplay',
 		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		willAutoplay = featuredVideoAutoplay.isAutoplayEnabled() && inAutoplayCountries,
 		bidParams;
