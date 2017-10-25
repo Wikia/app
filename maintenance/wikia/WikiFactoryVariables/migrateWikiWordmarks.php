@@ -41,7 +41,7 @@ class MigrateWikiWordmarks extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgMedusaHostPrefix;
 		$this->dryRun  = $this->hasOption( 'dry-run' );
 		$this->verbose = $this->hasOption( 'verbose' );
 		$this->keyName = $this->getOption( 'keyName', '' );
@@ -89,19 +89,10 @@ class MigrateWikiWordmarks extends Maintenance {
 
 		$this->output( "Updating {$this->keyName} for " . $wgCityId . PHP_EOL );
 
-		if ( strpos( $keyValue,"http://" ) !== 0 ) {
-			$this->output( "Value doesn't start with 'http://' " . $keyValue .  " - skipping " . PHP_EOL );
+		$keyValue = str_replace( 'http://', 'https://',
+			str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $keyValue ) );
 
-			if ( $fh ) {
-				fclose( $fh );
-			}
-			return false;
-		}
-
-		$replacements = 0;
-		$keyValue = preg_replace( '#^http://#', "https://", $keyValue, 1, $replacements );
-
-		if ( $replacements !== 1 ) {
+		if ( $keyValue == $oldValue ) {
 			$this->output( "Value not changed " . $keyValue . "- skipping" . PHP_EOL );
 
 			if ( $fh ) {
