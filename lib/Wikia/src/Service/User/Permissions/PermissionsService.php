@@ -63,6 +63,8 @@ interface PermissionsService
      */
     public function getPermissions( \User $user );
 
+	public function getUsersInGroups( array $groups ): \UserArray;
+
     /**
      * Returns an array of groups that this user can add and remove
      * @param \User $userPerformingChange

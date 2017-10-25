@@ -156,6 +156,41 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $permissions;
 	}
 
+	public function getUsersInGroups( array $groups ): \UserArray {
+		$localGroups = [];
+		$globalGroups = [];
+
+		foreach ( $groups as $groupName ) {
+			if ( $this->permissionsConfiguration->isGlobalGroup( $groupName ) ) {
+				$globalGroups[] = $groupName;
+				continue;
+			}
+
+			$localGroups[] = $groupName;
+		}
+
+		$userIds = [];
+
+		if ( !empty( $globalGroups) ) {
+			$userIds += $this->loadUsersInGroup( self::getSharedDB(), $globalGroups );
+		}
+
+		if ( !empty( $localGroups ) ) {
+			$userIds += $this->loadUsersInGroup( wfGetDB( DB_SLAVE ), $localGroups );
+		}
+
+		return \UserArray::newFromIDs( $userIds );
+	}
+
+	/**
+	 * @param \DatabaseBase $dbr
+	 * @param array $groups
+	 * @return int[] array of user IDs
+	 */
+	private function loadUsersInGroup( \DatabaseBase $dbr, array $groups ) {
+		return $dbr->selectFieldValues( 'user_groups', 'ug_user', [ 'ug_group' => $groups ] ) ?: [];
+	}
+
 	/**
 	 * This method uses a slave database node to load local user groups.
 	 * Call this method with $fromMaster flag set to update the memcache entry shortly after the groups list is updated.
