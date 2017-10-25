@@ -79,7 +79,7 @@ class MigrateWikiWordmarks extends Maintenance {
 		$oldValue = $keyValue = $settings[$this->keyName];
 
 		if ( empty( $keyValue ) ) {
-			$this->output( "Key is empty - skipping" . PHP_EOL );
+			$this->output( "Key is empty for $wgCityId - skipping" . PHP_EOL );
 
 			if ( $fh ) {
 				fclose( $fh );
