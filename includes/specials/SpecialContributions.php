@@ -552,14 +552,11 @@ class ContribsPager extends ReverseChronologicalPager {
 
 		# Don't include orphaned revisions
 		$join_cond['page'] = Revision::pageJoinCond();
-		# Get the current user name for accounts
-		$join_cond['user'] = Revision::userJoinCond();
 
 		$queryInfo = array(
 			'tables'     => $tables,
 			'fields'     => array_merge(
 				Revision::selectFields(),
-				Revision::selectUserFields(),
 				array( 'page_namespace', 'page_title', 'page_is_new',
 					'page_latest', 'page_is_redirect', 'page_len' )
 			),
@@ -585,7 +582,7 @@ class ContribsPager extends ReverseChronologicalPager {
 	function getUserCond() {
 		$condition = array();
 		$join_conds = array();
-		$tables = array( 'revision', 'page', 'user' );
+		$tables = array( 'revision', 'page' );
 
 		if ( IP::isIPAddress( $this->target ) ) {
 			$condition['rev_user_text'] = $this->target;
