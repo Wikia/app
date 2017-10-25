@@ -1608,3 +1608,16 @@ function wfGetValueExcerpt( $value ) {
 
 	return "[" . implode( ':', $parts ) . "]";
 }
+
+/**
+ * @param string $url the url to convert to protocol relative
+ * @return string
+ */
+function wfProtocolUrlToRelative( $url ) {
+	$pos = strpos( $url, '://' );
+	if ( $pos > 0 ) {
+		$url = substr_replace( $url, '', 0, $pos+1 );
+	}
+
+	return $url;
+}
