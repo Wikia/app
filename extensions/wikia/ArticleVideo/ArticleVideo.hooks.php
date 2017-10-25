@@ -67,8 +67,6 @@ class ArticleVideoHooks {
 	}
 
 	private static function addJWPlayerAssets() {
-		// fixme that causes extra request
-		\Wikia::addAssetsToOutput( 'jwplayer_css' );
 		\Wikia::addAssetsToOutput( 'jwplayer_scss' );
 		\Wikia::addAssetsToOutput( 'jwplayer_js' );
 	}

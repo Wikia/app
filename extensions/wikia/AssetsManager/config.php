@@ -2688,14 +2688,6 @@ $config['article_related_video_js'] = [
 	],
 ];
 
-$config['jwplayer_css'] = [
-	'type' => AssetsManager::TYPE_CSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/node_modules/jwplayer-fandom/dist/index.css',
-	],
-];
-
 $config['jwplayer_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
