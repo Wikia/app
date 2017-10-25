@@ -70,6 +70,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	return function(player, bidParams) {
 		var correlator,
 			featuredVideoElement = document.querySelector('.featured-video'),
+			prerollPositionReached = false,
 			trackingParams = {
 				adProduct: 'featured-video',
 				slotName: featuredVideoSlotName,
@@ -82,7 +83,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				trackingParams.adProduct = 'featured-video';
 			});
 
-			player.on('videoStart', function () {
+			player.on('beforePlay', function () {
+				if (prerollPositionReached) {
+					return;
+				}
 				log('Preroll position reached', log.levels.info, logGroup);
 
 				correlator = Math.round(Math.random() * 10000000000);
@@ -93,6 +97,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 					trackingParams.adProduct = 'featured-video-preroll';
 					player.playAd(buildVastUrl('preroll', videoDepth, correlator, bidParams));
 				}
+				prerollPositionReached = true;
 			});
 
 			player.on('videoMidPoint', function () {
@@ -112,6 +117,9 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				}
 			});
 
+			player.on('complete', function () {
+				prerollPositionReached = false;
+			});
 			player.on('adRequest', function (event) {
 				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'success', event.ima && event.ima.ad);
 			});
