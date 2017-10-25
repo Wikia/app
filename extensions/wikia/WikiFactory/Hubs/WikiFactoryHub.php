@@ -135,8 +135,6 @@ class WikiFactoryHub extends WikiaModel {
 	 *
 	 * @param $city_id
 	 * @return integer category id from city_cat_mapping table
-	 *
-	 * @deprecated Category is now an array, use getCategoryIds( $city_id )
 	 */
 
 	public function getCategoryId( $city_id ) {
@@ -210,37 +208,6 @@ class WikiFactoryHub extends WikiaModel {
 		$vertical["id"] = $vertical_id;
 
 		return $vertical;
-	}
-
-	/**
-	 * getCategoryIds  This is the NEW function to use
-	 *
-	 * get list of (just) category ids for given wiki
-	 *
-	 * @access public
-	 *
-	 * @param $city_id
-	 * @param int $active pass 0 if you want to get deprecated categories
-	 * @return array array of categories (empty if wiki is not in a category)
-	 */
-	public function getCategoryIds( $city_id, $active = 1 ) {
-		if( empty($city_id) ) {
-			return [];
-		}
-
-		// TODO: add caching
-		$categories = (new WikiaSQL())
-			->SELECT( "cat_id" )
-			->FROM( "city_cats" )
-			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
-			->WHERE( "city_id" )->EQUAL_TO( $city_id )
-			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id, "$active" ) )
-			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
-				$result[]= $row->cat_id;
-			});
-
-		return $categories;
 	}
 
 	/**
@@ -481,7 +448,7 @@ class WikiFactoryHub extends WikiaModel {
 			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id ) );
 		}
 
-		$functionNames = [ "getCategoryIds", "getWikiCategories" ];
+		$functionNames = [ "getWikiCategories" ];
 		foreach ($functionNames as $name) {
 			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id, 0 ) );
 			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id, 1 ) );
