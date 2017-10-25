@@ -356,12 +356,6 @@ function fnRedirectOnMove( Title $title, Title $newtitle, User $user, $oldid, $n
 	return true;
 }
 
-$wgAutoloadClasses["WikiaApiQueryPagesyByCategory"]  = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPagesByCategory.php";
-// 1.13 version
-$wgApiQueryListModules["wkpagesincat"] = "WikiaApiQueryPagesyByCategory";
-// 1.14 version
-$wgAPIListModules["wkpagesincat"] = "WikiaApiQueryPagesyByCategory";
-
 $wgAutoloadClasses["WikiaApiQueryMostCategories"]  = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryMostCategories.php";
 // 1.13 version
 $wgApiQueryListModules["wkmostcat"] = "WikiaApiQueryMostCategories";
