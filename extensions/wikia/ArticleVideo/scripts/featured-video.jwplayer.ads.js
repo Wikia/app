@@ -119,7 +119,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 			player.on('complete', function () {
 				prerollPositionReached = false;
-      });
+			});
 			player.on('adRequest', function (event) {
 				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'success', event.ima && event.ima.ad);
 			});
