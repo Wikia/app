@@ -44,22 +44,7 @@ class SpecialContributions extends SpecialPage {
 		$this->opts = array();
 		$request = $this->getRequest();
 
-		if ( $par == 'newbies' ) {
-			$target = 'newbies';
-			$this->opts['contribs'] = 'newbie';
-		} elseif ( $par !== null ) {
-			$target = $par;
-		} else {
-			$target = $request->getVal( 'target' );
-		}
-
-		// check for radiobox
-		if ( $request->getVal( 'contribs' ) == 'newbie' ) {
-			$target = 'newbies';
-			$this->opts['contribs'] = 'newbie';
-		} else {
-			$this->opts['contribs'] = 'user';
-		}
+		$target = $par ?? $request->getVal( 'target' );
 
 		$this->opts['deletedOnly'] = $request->getBool( 'deletedOnly' );
 
@@ -86,15 +71,10 @@ class SpecialContributions extends SpecialPage {
 		}
 		$id = $userObj->getID();
 
-		if ( $this->opts['contribs'] != 'newbie' ) {
-			$target = $nt->getText();
-			$out->addSubtitle( $this->contributionsSub( $userObj ) );
-			$out->setHTMLTitle( $this->msg( 'pagetitle', $this->msg( 'contributions-title', $target )->plain() ) );
-			$this->getSkin()->setRelevantUser( $userObj );
-		} else {
-			$out->addSubtitle( $this->msg( 'sp-contributions-newbies-sub' ) );
-			$out->setHTMLTitle( $this->msg( 'pagetitle', $this->msg( 'sp-contributions-newbies-title' )->plain() ) );
-		}
+		$target = $nt->getText();
+		$out->addSubtitle( $this->contributionsSub( $userObj ) );
+		$out->setHTMLTitle( $this->msg( 'pagetitle', $this->msg( 'contributions-title', $target )->plain() ) );
+		$this->getSkin()->setRelevantUser( $userObj );
 
 		if ( ( $ns = $request->getVal( 'namespace', null ) ) !== null && $ns !== '' ) {
 			$this->opts['namespace'] = intval( $ns );
@@ -167,7 +147,6 @@ class SpecialContributions extends SpecialPage {
 
 			$pager = new ContribsPager( $this->getContext(), array(
 				'target' => $target,
-				'contribs' => $this->opts['contribs'],
 				'namespace' => $this->opts['namespace'],
 				'year' => $this->opts['year'],
 				'month' => $this->opts['month'],
@@ -193,22 +172,18 @@ class SpecialContributions extends SpecialPage {
 			$out->preventClickjacking( $pager->getPreventClickjacking() );
 
 			# Show the appropriate "footer" message - WHOIS tools, etc.
-			if ( $this->opts['contribs'] != 'newbie' ) {
-				$message = 'sp-contributions-footer';
-				if ( IP::isIPAddress( $target ) ) {
-					$message = 'sp-contributions-footer-anon';
-				} else {
-					if ( $userObj->isAnon() ) {
-						// No message for non-existing users
-						return;
-					}
-				}
+			$message = 'sp-contributions-footer';
+			if ( IP::isIPAddress( $target ) ) {
+				$message = 'sp-contributions-footer-anon';
+			} elseif ( $userObj->isAnon() ) {
+				// There is no user account with this name - nothing to display
+				return;
+			}
 
-				if ( !$this->msg( $message, $target )->isDisabled() ) {
-					$out->wrapWikiMsg(
-						"<div class='mw-contributions-footer'>\n$1\n</div>",
-						array( $message, $target ) );
-				}
+			if ( !$this->msg( $message, $target )->isDisabled() ) {
+				$out->wrapWikiMsg(
+					"<div class='mw-contributions-footer'>\n$1\n</div>",
+					array( $message, $target ) );
 			}
 		}
 	}
@@ -376,20 +351,12 @@ class SpecialContributions extends SpecialPage {
 			$this->opts['associated'] = false;
 		}
 
-		if ( !isset( $this->opts['contribs'] ) ) {
-			$this->opts['contribs'] = 'user';
-		}
-
 		if ( !isset( $this->opts['year'] ) ) {
 			$this->opts['year'] = '';
 		}
 
 		if ( !isset( $this->opts['month'] ) ) {
 			$this->opts['month'] = '';
-		}
-
-		if ( $this->opts['contribs'] == 'newbie' ) {
-			$this->opts['target'] = '';
 		}
 
 		if ( !isset( $this->opts['tagfilter'] ) ) {
@@ -422,21 +389,9 @@ class SpecialContributions extends SpecialPage {
 		}
 
 		$targetSelection = Xml::tags( 'td', array( 'colspan' => 2 ),
-			Xml::radioLabel(
-				$this->msg( 'sp-contributions-newbies' )->text(),
-				'contribs',
-				'newbie' ,
-				'newbie',
-				$this->opts['contribs'] == 'newbie',
-				array( 'class' => 'mw-input' )
-			) . '<br />' .
-			Xml::radioLabel(
+		Xml::label(
 				$this->msg( 'sp-contributions-username' )->text(),
-				'contribs',
-				'user',
-				'user',
-				$this->opts['contribs'] == 'user',
-				array( 'class' => 'mw-input' )
+				'target'
 			) . ' ' .
 			Html::input(
 				'target',
@@ -560,7 +515,6 @@ class ContribsPager extends ReverseChronologicalPager {
 		}
 
 		$this->target = isset( $options['target'] ) ? $options['target'] : '';
-		$this->contribs = isset( $options['contribs'] ) ? $options['contribs'] : 'users';
 		$this->namespace = isset( $options['namespace'] ) ? $options['namespace'] : '';
 		$this->tagFilter = isset( $options['tagfilter'] ) ? $options['tagfilter'] : false;
 		$this->nsInvert = isset( $options['nsInvert'] ) ? $options['nsInvert'] : false;
@@ -632,23 +586,15 @@ class ContribsPager extends ReverseChronologicalPager {
 		$condition = array();
 		$join_conds = array();
 		$tables = array( 'revision', 'page', 'user' );
-		if ( $this->contribs == 'newbie' ) {
-			$tables[] = 'user_groups';
-			$max = $this->mDb->selectField( 'user', 'max(user_id)', false, __METHOD__ );
-			$condition[] = 'rev_user >' . (int)( $max - $max / 100 );
-			$condition[] = 'ug_group IS NULL';
-			$index = 'user_timestamp';
-			# @todo FIXME: Other groups may have 'bot' rights
-			$join_conds['user_groups'] = array( 'LEFT JOIN', "ug_user = rev_user AND ug_group = 'bot'" );
+
+		if ( IP::isIPAddress( $this->target ) ) {
+			$condition['rev_user_text'] = $this->target;
+			$index = 'usertext_timestamp';
 		} else {
-			if ( IP::isIPAddress( $this->target ) ) {
-				$condition['rev_user_text'] = $this->target;
-				$index = 'usertext_timestamp';
-			} else {
-				$condition['rev_user'] = User::idFromName( $this->target );
-				$index = 'user_timestamp';
-			}
+			$condition['rev_user'] = User::idFromName( $this->target );
+			$index = 'user_timestamp';
 		}
+
 		if ( $this->deletedOnly ) {
 			$condition[] = "rev_deleted != '0'";
 		}
@@ -702,10 +648,6 @@ class ContribsPager extends ReverseChronologicalPager {
 		$batch = new LinkBatch();
 		# Give some pointers to make (last) links
 		foreach ( $this->mResult as $row ) {
-			if ( $this->contribs === 'newbie' ) { // multiple users
-				$batch->add( NS_USER, $row->user_name );
-				$batch->add( NS_USER_TALK, $row->user_name );
-			}
 			$batch->add( $row->page_namespace, $row->page_title );
 		}
 		$batch->execute();
@@ -831,16 +773,6 @@ class ContribsPager extends ReverseChronologicalPager {
 			$d = '<span class="history-deleted">' . $d . '</span>';
 		}
 
-		# Show user names for /newbies as there may be different users.
-		# Note that we already excluded rows with hidden user names.
-		if ( $this->contribs == 'newbie' ) {
-			$userlink = ' . . ' . Linker::userLink( $rev->getUser(), $rev->getUserText() );
-			$userlink .= ' ' . $this->msg( 'parentheses' )->rawParams(
-				Linker::userTalkLink( $rev->getUser(), $rev->getUserText() ) )->escaped() . ' ';
-		} else {
-			$userlink = '';
-		}
-
 		if ( $rev->getParentId() === 0 ) {
 			$nflag = ChangesList::flag( 'newpage' );
 		} else {
@@ -859,7 +791,7 @@ class ContribsPager extends ReverseChronologicalPager {
 		}
 
 		$diffHistLinks = '(' . $difftext . $this->messages['pipe-separator'] . $histlink . ')';
-		$ret = "{$del}{$d} {$diffHistLinks}{$chardiff}{$nflag}{$mflag} {$link}{$userlink} {$comment} {$topmarktext}";
+		$ret = "{$del}{$d} {$diffHistLinks}{$chardiff}{$nflag}{$mflag} {$link} {$comment} {$topmarktext}";
 
 		# Denote if username is redacted for this edit
 		if ( $rev->isDeleted( Revision::DELETED_USER ) ) {
