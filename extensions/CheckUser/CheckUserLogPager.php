@@ -106,9 +106,14 @@ class CheckUserLogPager extends ReverseChronologicalPager {
 	}
 
 	function selectFields() {
-		return array(
-			'cul_id', 'cul_timestamp', 'cul_user', 'cul_reason', 'cul_type',
-			'cul_target_id', 'cul_target_text', 'user_name'
-		);
+		return [
+			'cul_id',
+			'cul_timestamp',
+			'cul_user',
+			'cul_reason',
+			'cul_type',
+			'cul_target_id',
+			'cul_target_text',
+		];
 	}
 }
