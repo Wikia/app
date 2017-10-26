@@ -865,17 +865,8 @@ $messages['da'] = array(
 $messages['de'] = array(
 	'userrenametool' => 'Umbenennen',
 	'renameuser' => 'Benutzer umbenennen',
-	'userrenametool-warning' => '<strong>Lies dir die folgenden Informationen bitte aufmerksam durch</strong>:<p>Auf FANDOM ermöglichen wir es unseren Benutzern, ihr Benutzerkonto einmal umzubenennen. SDaher solltest du dir ganz sicher sein, dass du, bevor du eine Umbenennung beantragst, den neuen Namen auch wirklich zukünftig auf FANDOM verwenden möchtest. Die Umbennenung kannst du über das nachfolgende Formular beantragen. Sobald das Formular abgeschickt wurde, ist die Umbenennung abgeschlossen und es werden keine weiteren Umbenennungen mehr möglich sein.
-<br /><br />Die Umbennenung deines Benutzerkontos kann nicht durchgeführt werden, wenn der neue Benutzername:
-<ul>
-<li>bereits von einer anderen Person registriert wurde</li>
-<li>beleidigend oder anstößig ist</li>
-<li>bereits gesperrt wurde</li>
-<li>so formuliert ist, dass er den Namen eines anderen FANDOM-Benutzers imitiert</li>
-<li>nicht-alphabetische Zeichen enthält, wie zum Beispiel Farben eines Kartenspiels (Herz, Kreuz etc.) oder Warenzeichen</li>
-<li>mit einem Kleinbuchstaben beginnt</li>
-</ul>
-<br />Sobald du das unten stehende Formular abgeschickt hast, wird dein Benutzerkonto umbenannt. Du kannst dich dann mit deinem neuen Nutzernamen wieder bei FANDOM einloggen. Das bisher verwendete Passwort bleibt bestehen. [[w:c:Help:Rename my account|Hier]] findest du weitere Informationen zur Umbenennung von Benutzernamen.',
+	'userrenametool-warning' => 'Stelle bitte vor der Umbenennung eines Benutzers sicher, dass alle Informationen korrekt sind, und dass der Benutzer weiß, dass es bis zur Fertigstellung einige Zeit dauern kann.
+Siehe [[Special:Stafflog|Mitarbeiterlog]] für Logs.',
 	'userrenametool-desc' => "Erzeugt eine [[Special:UserRenameTool|Spezialseite]] zur Umbenennung eines Benutzers, deren Nutzung das ''renameuser''-Recht erfordert",
 	'userrenametool-old' => 'Bisheriger Benutzername:',
 	'userrenametool-new' => 'Neuer Benutzername:',
@@ -946,7 +937,6 @@ Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
 	'userrenametool-move-log' => 'Seite während der Benutzerkontoumbenennung von „[[User:$1|$1]]“ in „[[User:$2|$2]]“ automatisch verschoben',
 	'right-renameuser' => 'Benutzer umbenennen',
 	'action-renameuser' => 'Benutzer umzubenennen',
-	'userrenametool-error-alreadyrenamed' => 'Dieses Benutzerkonto wurde bereits umbenannt. Wie du auf unserer [[w:c:Help:Rename my account|Hilfeseite zur Umbenennung von Benutzernamen]] nachlesen kannst, ermöglicht FANDOM nicht mehr als eine Umbenennung pro Benutzerkonto. Das bedeutet, dass du dein Benutzerkonto nicht erneut umbenennen kannst.',
 );
 
 $messages['diq'] = array(
@@ -1057,17 +1047,7 @@ Bonvolu retroigi kaj reprovi.',
 $messages['es'] = array(
 	'userrenametool' => 'Cambiar el nombre de un usuario',
 	'renameuser' => 'Cambiar el nombre de usuario',
-	'userrenametool-warning' => '<strong>Por favor lea cuidadosamente la siguiente información</strong>:<p>En FANDOM, permitimos a los usuarios el renombrar su cuenta una vez. Antes de hacer un pedido de renombre, asegúrate que el nuevo nombre es el que realmente quieres usar en FANDOM. Esto se puede hacer a través de forma que aparece abajo. Una vez que la forma sea completada, el renombre será final y no se permitirán otro renombre.
-<br /><br />No puedes renombrar tu cuenta a:
-<ul>
-<li>un nombre de usuario que otra persona ya tiene registrado</li>
-<li>un nombre de usuario ofensivo</li>
-<li>un nombre de usuario bloqueado</li>
-<li>un nombre de usuario que intenta impersonar a un usuario de FANDOM</li>
-<li>un nombre de usuario que contenga caracteres no alfabéticos, por ejemplo, símbolos de cartas</li>
-<li>un nombre de usuario que comienza con un letra en minúscula</li>
-</ul>
-<br />Una vez que hayas enviado esta forma, tu cuenta será renombrada. Luego de ello podrás ingresar a FANDOM usando la nueva cuenta. La contraseña será la misma. Puedes leer más sobre renombres de cuenta [[w:c:Ayuda:Cambiar_tu_nombre_de_usuario|aquí]].',
+	'userrenametool-warning' => 'Antes de renombrar a un usuario, por favor asegúrate de que toda la información es correcta, y garantiza que el usuario conoce que puede llevar algún tiempo para completarse. Puedes ver el registro en el [[Special:Stafflog|registro del Personal]].',
 	'userrenametool-desc' => "Añade una [[Special:UserRenameTool|página especial]] para renombrar a un usuario (necesita el derecho ''renameuser'') y procesa todos los datos relacionados",
 	'userrenametool-old' => 'Nombre actual:',
 	'userrenametool-new' => 'Nuevo nombre de usuario:',
@@ -1139,7 +1119,6 @@ Te notificaremos por correo electrónico cuando se haya completado.',
 	'userrenametool-move-log' => 'Página trasladada automáticamente al renombrar al usuario "[[User:$1|$1]]" a "[[User:$2|$2]]"',
 	'right-renameuser' => 'Renombrar usuarios',
 	'action-renameuser' => 'renombrar usuarios',
-	'userrenametool-error-alreadyrenamed' => 'Esta cuenta ya ha sido renombrada. Como la [[w:c:Ayuda:Cambiar_tu_nombre_de_usuario|página de ayuda de renombre]] lo menciona, FANDOM no permite renombrar una cuenta más de una vez, y esto significa que no puedes renombrar tu cuenta de nuevo.',
 );
 
 $messages['et'] = array(
@@ -1249,17 +1228,8 @@ $messages['fi'] = array(
 	'userrenametool-move-log' => 'Siirretty automaattisesti tunnukselta ”[[User:$1|$1]]” tunnukselle ”[[User:$2|$2]]”',
 	'right-renameuser' => 'Nimetä käyttäjätunnuksia uudelleen',
 	'userrenametool' => "Change a user's name",
-	'userrenametool-warning' => '<strong>Please read the following information carefully</strong>:<p>On FANDOM, we allow users to rename their account once. Before making an account rename request, make sure that the new name is the one you’re sure you’ll want to use on FANDOM. This can be done through the form below. Once the form is completed, the rename will be final and no additional renames will be possible.
-<br /><br />You can not rename your account to:
-<ul>
-<li>a username another person has already registered</li>
-<li>an offensive username</li>
-<li>a blocked username</li>
-<li>a username that attempts to impersonate another FANDOM user</li>
-<li>a username that contains non-alphabetic characters, for example, card suit symbols or trademark signs</li>
-<li>a username that starts with an uncapitalized letter</li>
-</ul>
-<br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[w:c:Help:Rename my account|here]].',
+	'userrenametool-warning' => "<strong>Please read the following information carefully</strong>:<p>Before renaming a user, please make sure <strong>all the information is correct</strong>, and ensure that <strong>the user knows it may take some time to complete</strong>.
+<br />Please be aware that due to some external factors the first part of the process <strong>could result in a blank page</strong>, that doesn't mean the process won't be completed correctly.</p><p>You can track the progress of the process through [[Special:Stafflog|Staff log]], also <strong>the system will send an email to you as the whole rename procedure will be completed</strong>.</p>",
 	'userrenametool-encoded' => 'URL encoded:',
 	'userrenametool-notify-renamed' => 'Send e-mail to renamed user when done',
 	'userrenametool-requested-rename' => 'User $1 requested a rename',
@@ -1301,7 +1271,6 @@ You will be notified via e-mail when it is completed.',
 	'userrenametool-finished-email-body-text' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
 	'userrenametool-finished-email-body-html' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
 	'action-renameuser' => 'rename users',
-	'userrenametool-error-alreadyrenamed' => 'This account has already been renamed . As our [[w:c:Help:Rename my account|account rename help page]] states, FANDOM does not allow more than one rename per account, and this means you can not rename your account again.',
 );
 
 $messages['fo'] = array(
@@ -1311,17 +1280,8 @@ $messages['fo'] = array(
 $messages['fr'] = array(
 	'userrenametool' => 'Changer le nom d’un utilisateur',
 	'renameuser' => 'Renommer l’utilisateur',
-	'userrenametool-warning' => "<strong>Veuillez lire attentivement les informations suivantes</strong> :<p>Les utilisateurs sont autorisés à renommer leur compte une fois sur FANDOM. Avant de demander à ce que le nom de votre compte soit changé, assurez-vous que le nouveau nom choisi est bien celui que vous voudrez utiliser sur FANDOM. Vous trouverez ci-dessous le formulaire de demande. Une fois ce formulaire rempli, le changement de nom sera définitif et le nouveau nom ne pourra plus être modifié.
-<br /><br />Vous ne pouvez pas remplacer votre nom de compte par :
-<ul>
-<li>le nom d'utilisateur d'une autre personne déjà inscrite ;</li>
-<li>un nom d'utilisateur offensant ;</li>
-<li>un nom d'utilisateur bloqué ;</li>
-<li>un nom d'utilisateur cherchant à se faire passer pour un autre utilisateur FANDOM ;</li>
-<li>un nom d'utilisateur comprenant des caractères non alphabétiques, par exemple, des symboles de suite de cartes ou des marques commerciales ;</li>
-<li>un nom d'utilisateur commençant par une lettre minuscule.</li>
-</ul>
-<br />Une fois que vous aurez soumis le formulaire ci-dessous, votre compte sera renommé. Vous pourrez alors vous reconnecter à FANDOM avec votre nouveau nom d'utilisateur. Le mot de passe restera le même. Pour en savoir plus sur les changements de nom de compte, cliquez [[w:c:fr:Aide:Modifier_mon_nom_d%27utilisateur|ici]].",
+	'userrenametool-warning' => 'Avant de renommer un utilisateur, veuillez vous assurer que toutes les informations sont correctes et que l’utilisateur sait que cela peut nécessiter un certain temps.
+Consulter le [[Special:Stafflog|journal du personnel]] pour les historiques.',
 	'userrenametool-desc' => "Ajoute une [[Special:UserRenameTool|page spéciale]] qui permet de renommer un utilisateur (nécessite l’autorisation ''renameuser'') et de traiter toutes les données qui lui sont liées.",
 	'userrenametool-old' => 'Nom actuel de l’utilisateur :',
 	'userrenametool-new' => 'Nouveau nom de l’utilisateur :',
@@ -1392,7 +1352,6 @@ Vous serez informé par e-mail quand cela sera terminé.',
 	'userrenametool-move-log' => 'Page automatiquement déplacée lors du renommage de l’utilisateur « [[User:$1|$1]] » en « [[User:$2|$2]] »',
 	'right-renameuser' => 'Renommer les utilisateurs',
 	'action-renameuser' => 'renommer les utilisateurs',
-	'userrenametool-error-alreadyrenamed' => "Ce compte a déjà été renommé. Comme l'indique la [[w:c:fr:Aide:Modifier_mon_nom_d%27utilisateur|page d'aide sur la modification du nom des comptes]], vous ne pouvez pas changer de nom de compte plus d'une fois sur FANDOM. Vous ne pouvez donc plus renommer votre compte.",
 );
 
 $messages['frp'] = array(
@@ -1920,90 +1879,79 @@ $messages['is'] = array(
 
 $messages['it'] = array(
 	'renameuser' => 'Rinomina utente',
-	'userrenametool-desc' => "Aggiunge una [[Special:Renameuser|pagina speciale]] per rinominare un utente (richiede i diritti di ''renameuser'') e processare tutti i dati relativi",
+	'userrenametool-desc' => "Aggiunge una [[Special:Renameuser|pagina speciale]] per rinominare un utente (richiede i diritti di ''renameuser'')",
 	'userrenametool-old' => 'Nome utente attuale:',
 	'userrenametool-new' => 'Nuovo nome utente:',
-	'userrenametool-reason' => 'Ragione del cambio:',
+	'userrenametool-reason' => 'Motivo del cambio nome:',
 	'userrenametool-move' => 'Rinomina anche la pagina utente, la pagina di discussione e le relative sottopagine',
-	'userrenametool-reserve' => "Impedisci l'utilizzo futuro del vecchio nome utente",
+	'userrenametool-reserve' => "Impedisci l'utilizzo del vecchio nome in futuro",
 	'userrenametool-warnings' => 'Avvisi:',
 	'userrenametool-confirm' => 'Sì, rinomina questo utente',
-	'userrenametool-submit' => 'Cambia nome utente',
-	'userrenametool-errordoesnotexist' => 'L\'utente "<nowiki>$1</nowiki>" non esiste.',
-	'userrenametool-errorexists' => 'L\'utente "<nowiki>$1</nowiki>" esiste già.',
-	'userrenametool-errorinvalid' => 'Il nome utente "<nowiki>$1</nowiki>" non è valido.',
+	'userrenametool-submit' => 'Invia',
+	'userrenametool-errordoesnotexist' => 'L\'utente "<nowiki>$1</nowiki>" non esiste',
+	'userrenametool-errorexists' => 'L\'utente "<nowiki>$1</nowiki>" esiste già',
+	'userrenametool-errorinvalid' => 'Il nome utente "<nowiki>$1</nowiki>" non è valido',
 	'userrenametool-errortoomany' => 'L\'utente "<nowiki>$1</nowiki>" ha $2 {{PLURAL:$2|contributo|contributi}}; rinominare un utente con più di $3 {{PLURAL:$3|contributo|contributi}} può influenzare negativamente le prestazioni del sito.',
 	'userrenametool-error-request' => 'Si è verificato un problema nella ricezione della richiesta. Tornare indietro e riprovare.',
-	'userrenametool-error-same-user' => 'Non è possibile rinominare un utente nel suo stesso nome utente.',
-	'userrenametool-see-list-of-blocks' => 'Vedi la lista dei blocchi qui',
-	'userrenametool-success' => 'L\'utente "$1" è stato rinominato in "$2".',
-	'userrenametool-page-exists' => 'La pagina "$1" esiste già e non può essere sovrascritta automaticamente.',
-	'userrenametool-page-moved' => 'La pagina "$1" è stata spostata a "$2".',
-	'userrenametool-page-unmoved' => 'Impossibile spostare la pagina "$1" a "$2".',
+	'userrenametool-error-same-user' => 'Non è possibile rinominare un utente con lo stesso nome che aveva già.',
+	'userrenametool-see-list-of-blocks' => 'Vedere la lista dei blocchi qui',
+	'userrenametool-success' => 'L\'utente "$1" è stato rinominato come "$2"',
+	'userrenametool-page-exists' => 'La pagina $1 esiste già; impossibile sovrascriverla automaticamente.',
+	'userrenametool-page-moved' => 'La pagina $1 è stata spostata a $2.',
+	'userrenametool-page-unmoved' => 'Impossibile spostare la pagina $1 a $2.',
 	'userrenametool-logpage' => 'Utenti rinominati',
-	'userrenametool-logpagetext' => 'Questo è il registro delle modifiche ai nomi utente.',
-	'userrenametool-logentry' => 'ha rinominato "$1" in "$2"',
-	'userrenametool-log' => 'Che ha {{PLURAL:$1|un contributo|$1 contributi}}.
-Motivo: $2',
-	'userrenametool-move-log' => 'Pagina spostata automaticamente durante la rinominazione dell\'utente "[[User:$1|$1]]" in "[[User:$2|$2]]"',
+	'userrenametool-logpagetext' => 'Di seguito viene presentato il registro delle modifiche ai nomi utente.',
+	'userrenametool-logentry' => 'ha rinominato $1 in "$2"',
+	'userrenametool-log' => 'Che ha {{PLURAL:$1|un contributo|$1 contributi}}. Motivo: $2',
+	'userrenametool-move-log' => 'Pagina spostata automaticamente durante la rinomina dell\'utente "[[User:$1|$1]]" a "[[User:$2|$2]]"',
 	'right-renameuser' => 'Rinomina gli utenti',
-	'userrenametool-confirm-intro' => 'Vuoi davvero fare questo?',
+	'userrenametool-confirm-intro' => 'Vuoi davvero far questo?',
 	'userrenametool-confirm-no' => 'No',
 	'userrenametool-confirm-yes' => 'Sì',
-	'userrenametool-errorblocked' => 'L\'utente "<nowiki>$1</nowiki>" è stato bloccato da "<nowiki>$2</nowiki>" per "$3".',
-	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" non è un nuovo nome utente valido.',
-	'userrenametool' => 'Cambia il nome di un utente',
-	'userrenametool-warning' => "<strong>Per favore, leggi le seguenti informazioni molto attentamente:</strong><p>Su FANDOM consentiamo agli utenti di cambiare il nome del proprio account solamente una volta. Prima di inoltrare la richiesta, assicurati che il nuovo nome sia quello che vuoi utilizzare d'ora in poi su FANDOM. Ciò può essere fatto con il modulo sottostante. Una volta compilato il modulo, la rinominazione sarà completa e non potranno essere più fatte ulteriori richieste di rinominazione.
-<br /><br />Non puoi cambiare il nome utente in:
-<ul>
-<li>un nome utente che un'altra persona ha già registrato</li>
-<li>un nome utente offensivo</li>
-<li>un nome utente bloccato</li>
-<li>un nome utente con l'intento di impersonare un altro utente di FANDOM</li>
-<li>un nome utente che contiene caratteri non alfabetici, ad esempio i semi delle carte o i simboli di copyright</li>
-<li>un nome utente che inizia con una lettera minuscola</li>
-</ul>
-<br />Una volta inviato il modulo sottostante, il tuo account verrà rinominato. Potrai quindi accedere di nuovo a FANDOM usando il tuo nuovo nome utente, la password rimarrà la stessa. Per maggiori informazioni sul cambio di nome utente, leggi [[w:it:Aiuto:Cambiare username|questa pagina]].",
-	'userrenametool-encoded' => 'URL codificato:',
-	'userrenametool-notify-renamed' => "Invia un'email all'utente rinominata una volta fatto",
-	'userrenametool-requested-rename' => 'L\'utente "$1" ha richiesto un cambio nome',
-	'userrenametool-did-not-request-rename' => 'L\'utente "$1" non ha richiesto un cambio nome',
-	'userrenametool-previously-renamed' => 'L\'utente "$1" ha già cambiato nome in passato',
-	'userrenametool-phalanx-matches' => 'Filtri Phalanx corrispondenti a "$1":',
-	'userrenametool-error-antispoof-conflict' => 'Avviso AntiSpoof: esiste già un nome utente simile a "<nowiki>$1</nowiki>".',
-	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof non è installato.',
-	'userrenametool-errorprocessing' => 'Il processo di rinominazione per l\'utente "<nowiki>$1</nowiki>" in "<nowiki>$2</nowiki>" è già in corso.',
-	'userrenametool-errorlocked' => 'L\'utente "<nowiki>$1</nowiki>" è bloccato.',
-	'userrenametool-errorbot' => 'L\'utente "<nowiki>$1</nowiki>" è un bot.',
-	'userrenametool-error-extension-abort' => 'Un estensione ha impedito il processo di rinomina.',
-	'userrenametool-error-cannot-rename-account' => 'La rinominazione del nome utente nel database globale condiviso è fallita.',
-	'userrenametool-error-cannot-create-block' => 'Creazione del blocco Phalanx fallita.',
-	'userrenametool-error-cannot-rename-unexpected' => 'Si è verificato un errore imprevisto, controlla i registri o riprova.',
-	'userrenametool-error-invalid-ip' => 'Indirizzi IP forniti non validi.',
-	'userrenametool-warnings-characters' => 'Il nuovo nome utente contiene caratteri non consentiti!',
-	'userrenametool-warnings-maxlength' => 'La lunghezza del nuovo nome utente non può superare i 255 caratteri!',
-	'userrenametool-warning-phalanx-block' => 'La frase "$1" è bloccata globalmente da Phalanx. $2.',
-	'userrenametool-warn-repeat' => 'Attenzione! L\'utente "<nowiki>$1</nowiki>" è già stato rinominato in "<nowiki>$2</nowiki>".
-Continua il processo solamente se hai bisogno di aggiornare qualche informazione.',
-	'userrenametool-warn-table-missing' => 'La tabella "<nowiki>$2</nowiki>" non esiste nel database "<nowiki>$1</nowiki>."',
-	'userrenametool-info-started' => '$1 ha iniziato a rinominare: "$2" in "$3" (registri: $4).
-Ragione: "$5".',
-	'userrenametool-info-finished' => '$1 ha completato la rinominazione: "$2" in "$3" (registri: $4).
-Ragione: "$5".',
-	'userrenametool-info-failed' => '$1 ha FALLITO a rinominare: "$2" in "$3" (registri: $4).
-Ragione: "$5".',
-	'userrenametool-info-wiki-finished' => '$1 ha rinominato "$2" in "$3" su $4.
-Ragione: "$5".',
-	'userrenametool-info-wiki-finished-problems' => '$1 ha rinominato "$2" in "$3" su $4 con degli errori.
-Ragione: "$5".',
-	'userrenametool-info-in-progress' => 'Processo di rinominazione in corso.
-Il resto sarà effettuato in background.
-Sarai notificato via email una volta che sarà completato.',
-	'userrenametool-finished-email-subject' => 'Il processo di rinominazione per [$1] è stato completato',
-	'userrenametool-finished-email-body-text' => 'Il processo di spostamento per "<nowiki>$1</nowiki>" a "<nowiki>$2</nowiki>" è stato completato.',
-	'userrenametool-finished-email-body-html' => 'Il processo di spostamento per "<nowiki>$1</nowiki>" a "<nowiki>$2</nowiki>" è stato completato.',
-	'action-renameuser' => 'rinomina gli utenti',
-	'userrenametool-error-alreadyrenamed' => "Questo account è già stato rinominato in passato. Come affermato sulla [[w:it:Aiuto:Cambiare username|nostra pagina d'aiuto]], FANDOM non consente il cambio di nome più di una volta per account, pertanto non puoi più rinominare il tuo account.",
+	'userrenametool-errorblocked' => "L'utente <nowiki>$1</nowiki> è stato bloccato da <nowiki>$2</nowiki> per $3.",
+	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" non è un nuovo username valido.',
+	'userrenametool' => 'Cambia lo username di un utente',
+	'userrenametool-warning' => "<strong>Please read the following information carefully</strong>:<p>Before renaming a user, please make sure <strong>all the information is correct</strong>, and ensure that <strong>the user knows it may take some time to complete</strong>.
+<br />Please be aware that due to some external factors the first part of the process <strong>could result in a blank page</strong>, that doesn't mean the process won't be completed correctly.</p><p>You can track the progress of the process through [[Special:Stafflog|Staff log]], also <strong>the system will send an email to you as the whole rename procedure will be completed</strong>.</p>",
+	'userrenametool-encoded' => 'URL encoded:',
+	'userrenametool-notify-renamed' => 'Send e-mail to renamed user when done',
+	'userrenametool-requested-rename' => 'User $1 requested a rename',
+	'userrenametool-did-not-request-rename' => 'User $1 did not request a rename',
+	'userrenametool-previously-renamed' => 'User $1 has already had a rename',
+	'userrenametool-phalanx-matches' => 'Phalanx filters matching $1:',
+	'userrenametool-error-antispoof-conflict' => 'AntiSpoof warning - there is already a username similar to "<nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof is not installed.',
+	'userrenametool-errorprocessing' => 'The rename process for user <nowiki>$1</nowiki> to <nowiki>$2</nowiki> is already in progress.',
+	'userrenametool-errorlocked' => 'User <nowiki>$1</nowiki> is blocked.',
+	'userrenametool-errorbot' => 'User <nowiki>$1</nowiki> is a bot.',
+	'userrenametool-error-extension-abort' => 'An extension prevented the rename process.',
+	'userrenametool-error-cannot-rename-account' => 'Renaming the user account on the shared global database failed.',
+	'userrenametool-error-cannot-create-block' => 'Creation of Phalanx block failed.',
+	'userrenametool-error-cannot-rename-unexpected' => 'Unexpected error occurred, check logs or try again.',
+	'userrenametool-error-invalid-ip' => 'Invalid IP addresses provided.',
+	'userrenametool-warnings-characters' => 'New username contains illegal characters!',
+	'userrenametool-warnings-maxlength' => "New username's length cannot exceed 255 characters!",
+	'userrenametool-warning-phalanx-block' => 'Phrase "$1" is globally blocked by Phalanx. $2.',
+	'userrenametool-warn-repeat' => 'Attention! The user "<nowiki>$1</nowiki>" has already been renamed to "<nowiki>$2</nowiki>".
+Continue processing only if you need to update some missing information.',
+	'userrenametool-warn-table-missing' => 'Table "<nowiki>$2</nowiki>" does not exist in database "<nowiki>$1</nowiki>."',
+	'userrenametool-info-started' => '$1 started to rename: $2 to $3 (logs: $4).
+Reason: "$5".',
+	'userrenametool-info-finished' => '$1 completed rename: $2 to $3 (logs: $4).
+Reason: "$5".',
+	'userrenametool-info-failed' => '$1 FAILED rename: $2 to $3 (logs: $4).
+Reason: "$5".',
+	'userrenametool-info-wiki-finished' => '$1 renamed $2 to $3 on $4.
+Reason: "$5".',
+	'userrenametool-info-wiki-finished-problems' => '$1 renamed $2 to $3 on $4 with errors.
+Reason: "$5".',
+	'userrenametool-info-in-progress' => 'Rename process is in progress.
+The rest will be done in background.
+You will be notified via e-mail when it is completed.',
+	'userrenametool-finished-email-subject' => 'User rename process completed for [$1]',
+	'userrenametool-finished-email-body-text' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
+	'userrenametool-finished-email-body-html' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
+	'action-renameuser' => 'rename users',
 );
 
 $messages['ja'] = array(
@@ -2040,17 +1988,8 @@ $messages['ja'] = array(
 理由: $2',
 	'userrenametool-move-log' => '名前の変更と共に "[[User:$1|$1]]" を "[[User:$2|$2]]" へ自動的に移動しました。',
 	'right-renameuser' => '利用者名変更',
-	'userrenametool-warning' => '<strong>次の情報をよくお読みください</strong>。<p>FANDOMでは、アカウント名を変更できるのは1回のみとなっています。アカウント名の変更リクエストを送信する前に、新しい名前がFANDOMで使用したいものであることをよくご確認ください。名前の変更をリクエストするには、下のフォームをご利用ください。フォームを送信すると名前の変更が確定され、それ以上名前を変更することはできなくなります。
-<br /><br />次のアカウント名は使用できません。
-<ul>
-<li>別のユーザーによってすでに登録されているユーザー名</li>
-<li>不適切なユーザー名</li>
-<li>ブロックされているユーザー名</li>
-<li>別のFANDOMユーザーへのなりすましとなるユーザー名</li>
-<li>アルファベット以外の文字（トランプのマークや登録商標マークなど）を含むユーザー名</li>
-<li>小文字で始まるユーザー名</li>
-</ul>
-<br />下のフォームを送信すると、アカウント名が変更されます。その後は、新しいユーザー名を使用してFANDOMにログインできます。パスワードは変更されません。アカウント名の変更について詳しくは、[[w:c:ja:ヘルプ:ユーザー名を変更する|こちら]]をご覧ください。',
+	'userrenametool-warning' => "<strong>Please read the following information carefully</strong>:<p>Before renaming a user, please make sure <strong>all the information is correct</strong>, and ensure that <strong>the user knows it may take some time to complete</strong>.
+<br />Please be aware that due to some external factors the first part of the process <strong>could result in a blank page</strong>, that doesn't mean the process won't be completed correctly.</p><p>You can track the progress of the process through [[Special:Stafflog|Staff log]], also <strong>the system will send an email to you as the whole rename procedure will be completed</strong>.</p>",
 	'userrenametool-encoded' => 'URL encoded:',
 	'userrenametool-requested-rename' => 'User $1 requested a rename',
 	'userrenametool-did-not-request-rename' => 'User $1 did not request a rename',
@@ -2091,7 +2030,6 @@ You will be notified via e-mail when it is completed.',
 	'userrenametool-finished-email-body-text' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
 	'userrenametool-finished-email-body-html' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
 	'action-renameuser' => 'rename users',
-	'userrenametool-error-alreadyrenamed' => 'このアカウントの名前はすでに変更されています。 [[w:c:ja:ヘルプ:ユーザー名を変更する|アカウント名の変更に関するヘルプページ]]に記載されているように、FANDOMでは、1つのアカウントで名前を変更できるのは1回のみとなっているため、このアカウント名をもう一度変更することはできません。',
 );
 
 $messages['jut'] = array(
@@ -2308,17 +2246,8 @@ $messages['ko'] = array(
 	'userrenametool-move-log' => '"[[User:$1|$1]]" 사용자를 "[[User:$2|$2]]" 사용자로 바꾸면서 문서를 자동으로 옮겼습니다',
 	'right-renameuser' => '사용자 이름 바꾸기',
 	'userrenametool' => "Change a user's name",
-	'userrenametool-warning' => '<strong>Please read the following information carefully</strong>:<p>On FANDOM, we allow users to rename their account once. Before making an account rename request, make sure that the new name is the one you’re sure you’ll want to use on FANDOM. This can be done through the form below. Once the form is completed, the rename will be final and no additional renames will be possible.
-<br /><br />You can not rename your account to:
-<ul>
-<li>a username another person has already registered</li>
-<li>an offensive username</li>
-<li>a blocked username</li>
-<li>a username that attempts to impersonate another FANDOM user</li>
-<li>a username that contains non-alphabetic characters, for example, card suit symbols or trademark signs</li>
-<li>a username that starts with an uncapitalized letter</li>
-</ul>
-<br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[w:c:Help:Rename my account|here]].',
+	'userrenametool-warning' => "<strong>Please read the following information carefully</strong>:<p>Before renaming a user, please make sure <strong>all the information is correct</strong>, and ensure that <strong>the user knows it may take some time to complete</strong>.
+<br />Please be aware that due to some external factors the first part of the process <strong>could result in a blank page</strong>, that doesn't mean the process won't be completed correctly.</p><p>You can track the progress of the process through [[Special:Stafflog|Staff log]], also <strong>the system will send an email to you as the whole rename procedure will be completed</strong>.</p>",
 	'userrenametool-encoded' => 'URL encoded:',
 	'userrenametool-notify-renamed' => 'Send e-mail to renamed user when done',
 	'userrenametool-requested-rename' => 'User $1 requested a rename',
@@ -2359,7 +2288,6 @@ You will be notified via e-mail when it is completed.',
 	'userrenametool-finished-email-body-text' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
 	'userrenametool-finished-email-body-html' => 'The move process for "<nowiki>$1</nowiki>" to "<nowiki>$2</nowiki>" has been completed.',
 	'action-renameuser' => 'rename users',
-	'userrenametool-error-alreadyrenamed' => 'This account has already been renamed . As our [[w:c:Help:Rename my account|account rename help page]] states, FANDOM does not allow more than one rename per account, and this means you can not rename your account again.',
 );
 
 $messages['ksh'] = array(
@@ -2512,7 +2440,7 @@ $messages['li'] = array(
 $messages['lol'] = array(
 	'userrenametool' => 'crwdns65736:0crwdne65736:0',
 	'renameuser' => 'crwdns65737:0crwdne65737:0',
-	'userrenametool-warning' => 'crwdns72309:0crwdne72309:0',
+	'userrenametool-warning' => 'crwdns65738:0crwdne65738:0',
 	'userrenametool-desc' => 'crwdns65739:0crwdne65739:0',
 	'userrenametool-old' => 'crwdns65740:0crwdne65740:0',
 	'userrenametool-new' => 'crwdns65741:0crwdne65741:0',
@@ -2575,7 +2503,6 @@ $messages['lol'] = array(
 	'userrenametool-move-log' => 'crwdns65798:0crwdne65798:0',
 	'right-renameuser' => 'crwdns65799:0crwdne65799:0',
 	'action-renameuser' => 'crwdns65800:0crwdne65800:0',
-	'userrenametool-error-alreadyrenamed' => 'crwdns72310:0crwdne72310:0',
 );
 
 $messages['lt'] = array(
@@ -2993,17 +2920,8 @@ $messages['ne'] = array(
 $messages['nl'] = array(
 	'userrenametool' => 'Gebruikersnaam wijzigen',
 	'renameuser' => 'Gebruiker hernoemen',
-	'userrenametool-warning' => '<strong>Please read the following information carefully</strong>:<p>On FANDOM, we allow users to rename their account once. Before making an account rename request, make sure that the new name is the one you’re sure you’ll want to use on FANDOM. This can be done through the form below. Once the form is completed, the rename will be final and no additional renames will be possible.
-<br /><br />You can not rename your account to:
-<ul>
-<li>a username another person has already registered</li>
-<li>an offensive username</li>
-<li>a blocked username</li>
-<li>a username that attempts to impersonate another FANDOM user</li>
-<li>a username that contains non-alphabetic characters, for example, card suit symbols or trademark signs</li>
-<li>a username that starts with an uncapitalized letter</li>
-</ul>
-<br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[w:c:Help:Rename my account|here]].',
+	'userrenametool-warning' => 'Zorg ervoor dat alle informatie correct is voordat u een gebruiker hernoemt en zorg dat de gebruiker weet dat het wat tijd kost om alles door te voeren.
+Zie ook het [[Special:Stafflog|Staflogboek]].',
 	'userrenametool-desc' => "Voegt een [[Special:UserRenameTool|speciale pagina]] toe om een gebruiker te hernoemen (u hebt hiervoor het recht ''renameuser'' nodig)",
 	'userrenametool-old' => 'Huidige gebruikersnaam:',
 	'userrenametool-new' => 'Nieuwe gebruikersnaam:',
@@ -3074,7 +2992,6 @@ Je wordt per e-mail op de hoogte gesteld als het proces is afgerond.',
 	'userrenametool-move-log' => 'Pagina automatisch verplaatst bij het hernoemen van gebruiker "[[User:$1|$1]]" naar "[[User:$2|$2]]"',
 	'right-renameuser' => 'Gebruikers hernoemen',
 	'action-renameuser' => 'gebruikers te hernoemen',
-	'userrenametool-error-alreadyrenamed' => 'This account has already been renamed . As our [[w:c:Help:Rename my account|account rename help page]] states, FANDOM does not allow more than one rename per account, and this means you can not rename your account again.',
 );
 
 $messages['nl-informal'] = array(
@@ -3186,17 +3103,8 @@ $messages['pfl'] = array(
 $messages['pl'] = array(
 	'userrenametool' => 'Zmień nazwę użytkownika',
 	'renameuser' => 'Zmiana nazwy użytkownika',
-	'userrenametool-warning' => '<strong>Zapoznaj się dokładnie z informacjami poniżej</strong>:<p>FANDOM daje użytkownikom możliwość jednokrotnej zmiany nazwy. Przed przesłaniem prośby o zmianę nazwy konta, upewnij się, że nowa nazwa jest tą, z której chcesz korzystać w FANDOMie. Możesz tego dokonać wypełniając formularz poniżej. Po przesłaniu formularza, zmiana nazwy konta będzie ostateczna, a kolejne zmiany nazwy nie będą możliwe.
-<br /><br />Nie możesz zmienić nazwy konta na:
-<ul>
-<li>nazwę użytkownika zarejestrowaną wcześniej przez inną osobę</li>
-<li>nazwę użytkownika, która jest obraźliwa</li>
-<li>nazwę zablokowanego użytkownika</li>
-<li>nazwę użytkownika, która próbuje upodobnić się do nazwy innego użytkownika FANDOMu</li>
-<li>nazwę użytkownika, która zawiera znaki spoza alfabetu, na przykład symbole kart lub znaków towarowych</li>
-<li>nazwę użytkownika, która nie zaczyna się z wielkiej litery</li>
-</ul>
-<br />Po przesłaniu formularza poniżej, nazwa konta zostanie zmieniona. Możesz ponownie zalogować się do FANDOMu korzystając z nowej nazwy użytkownika. Twoje hasło pozostanie niezmienione. Możesz też dokładnie zapoznać się z informacjami na temat zmiany nazwy konta [[w:c:Help:Changing_your_username|tutaj]].',
+	'userrenametool-warning' => 'Przed zmianą nazwy użytkownika, upewnij się że wszystkie informacje są poprawne i że użytkownik wie, że może to trochę potrwać.
+Zobacz [[Special:Stafflog|Staff log]] aby sprawdzić logi.',
 	'userrenametool-desc' => "Dodaje [[Special:UserRenameTool|stronę specjalną]] służącą do zmiany nazwy użytkownika. (wymaga posiadania uprawnień ''renameuser'')",
 	'userrenametool-old' => 'Obecna nazwa użytkownika:',
 	'userrenametool-new' => 'Nowa nazwa użytkownika:',
@@ -3269,7 +3177,6 @@ Powód: $2',
 	'userrenametool-move-log' => 'Automatyczne przeniesienie stron użytkownika po zmianie nazwy konta z „[[User:$1|$1]]” na „[[User:$2|$2]]”',
 	'right-renameuser' => 'Zmiana nazw kont użytkowników',
 	'action-renameuser' => 'zmiana nazwy użytkownika',
-	'userrenametool-error-alreadyrenamed' => 'Nazwa tego konta została już zmieniona. Zgodnie z informacją zawartą na [[w:c:Help:Rename my account|stronie pomocy zmiany nazwy]], FANDOM nie umożliwia więcej niż jednokrotnej zmiany nazwy dla danego konta, co oznacza, że nie możesz ponownie zmienić nazwy konta.',
 );
 
 $messages['pms'] = array(
@@ -3364,16 +3271,8 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'userrenametool' => 'Alterar o nome de um usuário',
 	'renameuser' => 'Renomear usuário',
-	'userrenametool-warning' => '<strong>Por favor, leia cuidadosamente as informações a seguir</strong>: <p>no FANDOM, permitimos que os usuários renomeiem sua conta uma vez. Antes de fazer uma solicitação para renomear uma conta, certifique-se de que o novo nome é o que você tem certeza que vai querer usar no FANDOM. Isso pode ser feito através do formulário abaixo. Uma vez que o formulário for preenchido, a renomeação será final e não será possível fazer outra.
-< br /><br />Você não pode renomear sua conta usando:
-<ul>
-<li>um nome de usuário já registrado por outra pessoa</li>
-<li>um nome de usuário ofensivo</li>
-<li>um nome de usuário bloqueado</li>
-<li>um nome de usuário que tenta representar outro usuário do FANDOM</li> <li>um nome de usuário que contém caracteres não-alfabéticos, por exemplo, naipes de cartas ou símbolos de marcas registradas</li>
-<li>um nome de usuário que começa com letra minúscula</li>
-</ul>
-<br />Uma vez que tenha enviado o formulário abaixo, sua conta será renomeada. Você pode então entrar no FANDOM usando seu nome de usuário novo. A senha permanecerá a mesma. Você pode ler mais sobre renomeação de contas [[w:c:Help:Renomeie minha conta|aqui]].',
+	'userrenametool-warning' => 'Antes de alterar o nome de um utilizador, certifique-se de que todas as informações estão correctas e que o utilizador sabe que o processo pode demorar algum tempo.
+Pode ver os registos no [[Special:Stafflog|Registo da equipa]].',
 	'userrenametool-desc' => "Adiciona uma [[Special:Renameuser|página especial]] para renomear um usuário (requer privilégio ''renameuser'')",
 	'userrenametool-old' => 'Nome de usuário atual:',
 	'userrenametool-new' => 'Novo nome de usuário:',
@@ -3445,7 +3344,6 @@ Quando este terminar, receberá uma notificação por e-mail.',
 	'userrenametool-warnings-maxlength' => "New username's length cannot exceed 255 characters!",
 	'userrenametool-warning-phalanx-block' => 'Phrase "$1" is globally blocked by Phalanx. $2.',
 	'userrenametool-see-list-of-blocks' => 'See the list of blocks here',
-	'userrenametool-error-alreadyrenamed' => 'Esta conta já foi renomeada. Como nossa [[w:c:Help:Renomeie minha conta | página de ajuda para renomear conta]] afirma, o FANDOM não permite que contas sejam renomeadas mais uma vez; isso significa que você não pode renomear sua conta novamente.',
 );
 
 $messages['qu'] = array(
@@ -3534,17 +3432,8 @@ Mutive: $2',
 $messages['ru'] = array(
 	'userrenametool' => 'Изменить имя пользователя',
 	'renameuser' => 'Переименовать участника',
-	'userrenametool-warning' => '<strong>Please read the following information carefully</strong>:<p>On FANDOM, we allow users to rename their account once. Before making an account rename request, make sure that the new name is the one you’re sure you’ll want to use on FANDOM. This can be done through the form below. Once the form is completed, the rename will be final and no additional renames will be possible.
-<br /><br />You can not rename your account to:
-<ul>
-<li>a username another person has already registered</li>
-<li>an offensive username</li>
-<li>a blocked username</li>
-<li>a username that attempts to impersonate another FANDOM user</li>
-<li>a username that contains non-alphabetic characters, for example, card suit symbols or trademark signs</li>
-<li>a username that starts with an uncapitalized letter</li>
-</ul>
-<br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[w:c:Help:Rename my account|here]].',
+	'userrenametool-warning' => 'Прежде чем переименовывать участника, убедитесь что вся информация верна, и сообщите об этом участнику, может потребоваться некоторое время для завершения.
+Смотрите [[Special:Stafflog|журнал сотрудника]] чтобы получить логи.',
 	'userrenametool-desc' => "Добавляет [[Special:UserRenameTool|специальную страницу]] переименования участника (необходимы права ''renameuser'') и обработки всех связанных данных",
 	'userrenametool-old' => 'Имя в настоящий момент:',
 	'userrenametool-new' => 'Новое имя:',
@@ -3615,7 +3504,6 @@ $messages['ru'] = array(
 	'userrenametool-move-log' => 'Автоматически в связи с переименованием учётной записи «[[User:$1|$1]]» в «[[User:$2|$2]]»',
 	'right-renameuser' => 'переименование участников',
 	'action-renameuser' => 'переименование участников',
-	'userrenametool-error-alreadyrenamed' => 'This account has already been renamed . As our [[w:c:Help:Rename my account|account rename help page]] states, FANDOM does not allow more than one rename per account, and this means you can not rename your account again.',
 );
 
 $messages['rue'] = array(
@@ -4328,17 +4216,8 @@ $messages['vep'] = array(
 $messages['vi'] = array(
 	'userrenametool' => 'Thay đổi tên của người dùng',
 	'renameuser' => 'Đổi tên thành viên',
-	'userrenametool-warning' => '<strong>Please read the following information carefully</strong>:<p>On FANDOM, we allow users to rename their account once. Before making an account rename request, make sure that the new name is the one you’re sure you’ll want to use on FANDOM. This can be done through the form below. Once the form is completed, the rename will be final and no additional renames will be possible.
-<br /><br />You can not rename your account to:
-<ul>
-<li>a username another person has already registered</li>
-<li>an offensive username</li>
-<li>a blocked username</li>
-<li>a username that attempts to impersonate another FANDOM user</li>
-<li>a username that contains non-alphabetic characters, for example, card suit symbols or trademark signs</li>
-<li>a username that starts with an uncapitalized letter</li>
-</ul>
-<br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[w:c:Help:Rename my account|here]].',
+	'userrenametool-warning' => 'Trước khi đổi tên người dùng, hãy chắc chắn rằng tất cả các thông tin là chính xác, và đảm bảo người dùng biết nó có thể mất một thời gian để hoàn thành.
+Xem [[Special:Stafflog|Staff log]]',
 	'userrenametool-desc' => "Đổi tên thành viên (cần có quyền ''renameuser'')",
 	'userrenametool-old' => 'Tên hiệu hiện nay:',
 	'userrenametool-new' => 'Tên hiệu mới:',
@@ -4409,7 +4288,6 @@ Bạn sẽ được thông báo qua thư điện tử khi nó được hoàn th�
 	'userrenametool-move-log' => 'Đã tự động di chuyển trang khi đổi tên thành viên “[[User:$1|$1]]” thành “[[User:$2|$2]]”',
 	'right-renameuser' => 'Đổi tên thành viên',
 	'action-renameuser' => 'đổi tên người dùng',
-	'userrenametool-error-alreadyrenamed' => 'This account has already been renamed . As our [[w:c:Help:Rename my account|account rename help page]] states, FANDOM does not allow more than one rename per account, and this means you can not rename your account again.',
 );
 
 $messages['vo'] = array(
@@ -4539,17 +4417,7 @@ $messages['yue'] = array(
 $messages['zh-hans'] = array(
 	'userrenametool' => '更改一个用户的名称',
 	'renameuser' => '用户重命名',
-	'userrenametool-warning' => '<strong>请仔细阅读以下提示：</strong>:<p>在FANDOM上，我们只允许用户对用户名称重新命名一次。在您提交重命名请求之前，请确保这是您在FANDOM上希望使用的新的用户名。您可以使用以下表格完成这个请求。一旦您提交了申请，用户名称将不可再次更改，您也将无法再次对用户名重新命名。
-<br /><br />如果您的重命名请求被拒绝，可能是由于：
-<ul>
-<li>其他用户已经使用了这个名称</li>
-<li>不合适的用户名</li>
-<li>被封禁的用户名</li>
-<li>试图冒充其他FANDOM用户</li>
-<li>用户名包含非字母格式，比如特殊符号或者版权标志等</li>
-<li>用户名首字母非大写</li>
-</ul>
-<br />一旦提交这个表格，您将完成重命名请求。您之后就可以在FANDOM上使用新的用户名。密码将保持不变。您可以单击这里了解更多有关[[w:c:Help:Rename my account|重命名帮助讯息]]。',
+	'userrenametool-warning' => '<strong>请仔细阅读下面的信息</strong>：<p>在重命名用户前，请确信<strong>所有信息正确</strong>，并确保<strong>用户已了解这需要一段时间完成</strong>。<br />请务必注意由于外部因素，第一步<strong>可能返回一个空白页面</strong>，这并不意味着这个过程无法正确完成。</p><p>您可通过[[Special:Stafflog|职员日志]]跟踪过程进展，同样<strong>系统将在重命名过程将完成的时候发送邮件</strong>。</p>',
 	'userrenametool-desc' => '添加一个[[Special:UserRenameTool|特殊页面]]以重命名用户（需要“renameuser”权限）并处理所有相关的数据',
 	'userrenametool-old' => '当前用户名：',
 	'userrenametool-new' => '新用户名：',
@@ -4620,7 +4488,6 @@ $messages['zh-hans'] = array(
 	'userrenametool-move-log' => '当由"[[User:$1|$1]]"重命名作"[[User:$2|$2]]"时已经自动移动用户页',
 	'right-renameuser' => '重新命名用户',
 	'action-renameuser' => '重命名用户',
-	'userrenametool-error-alreadyrenamed' => '这个帐户之前已经重命名过。正如我们[[w:c:Help:Rename my account|重命名帮助页]]所述，FANDOM只允许用户对帐户重命名一次，之后您将无法再次对帐户重新命名。',
 );
 
 $messages['zh-hant'] = array(
@@ -4694,19 +4561,9 @@ $messages['zh-hant'] = array(
 	'userrenametool-move-log' => '當由"[[User:$1|$1]]"重新命名為"[[User:$2|$2]]"時已經自動移動使用者頁面',
 	'right-renameuser' => '重新命名使用者',
 	'action-renameuser' => '重新命名使用者',
-	'userrenametool-warning' => '<strong>請仔細閱讀以下提示：</strong>:<p>在FANDOM上，我們只允許用戶對帳戶重新命名一次。在您提交重命名請求之前，請確保這是您在FANDOM上希望使用的新的用戶名。您可以使用以下表單完成這個請求。一旦您提交了申請，用戶名稱將不可再次更改，您也將無法再次對帳戶重新命名。
-<br /><br />如果您的重命名請求被拒絕，可能是由於：
-<ul>
-<li>其他用戶已經使用了這個名稱</li>
-<li>不合適的用戶名</li>
-<li>被封禁的用戶名</li>
-<li>試圖冒充其他FANDOM用戶</li>
-<li>用戶名包含非字母格式，比如特殊符號或者版權標誌等</li>
-<li>用戶名首字母非大寫</li>
-</ul>
-<br />一旦提交這個表單，您將完成此次重命名請求。您之後就可以在FANDOM上使用新的用戶名。密碼將保持不變。您可以按這裡瞭解更多有關[[w:c:Help:Rename my account|重命名幫助訊息]]。',
+	'userrenametool-warning' => "<strong>Please read the following information carefully</strong>:<p>Before renaming a user, please make sure <strong>all the information is correct</strong>, and ensure that <strong>the user knows it may take some time to complete</strong>.
+<br />Please be aware that due to some external factors the first part of the process <strong>could result in a blank page</strong>, that doesn't mean the process won't be completed correctly.</p><p>You can track the progress of the process through [[Special:Stafflog|Staff log]], also <strong>the system will send an email to you as the whole rename procedure will be completed</strong>.</p>",
 	'userrenametool-phalanx-matches' => 'Phalanx filters matching $1:',
 	'userrenametool-warning-phalanx-block' => 'Phrase "$1" is globally blocked by Phalanx. $2.',
-	'userrenametool-error-alreadyrenamed' => '這個帳戶之前已經提交過重命名申請。正如我們[[w:c:Help:Rename my account|重命名幫助頁]]所述，FANDOM只允許用戶對帳戶重命名一次，之後您將無法再次對帳戶重新命名。',
 );
 

@@ -156,37 +156,6 @@ $messages['fr'] = array(
 	'page-header-action-button-add-new-image' => 'Ajouter une image',
 );
 
-$messages['id'] = array(
-	'page-header-counter-videos' => '{{FORMATNUM:$1}} ({PLURAL:$1|video|video})',
-	'page-header-counter-images' => '{{FORMATNUM:$1}} {{PLURAL:$1|gambar|gambar}}',
-	'page-header-counter-blog-posts' => '{{FORMATNUM:$1}} {{PLURAL:$1|kirim|kiriman})',
-	'page-header-counter-forum-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|panel|panel})',
-	'page-header-counter-forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|aktif|aktif}}',
-	'page-header-categories-in' => 'dalam',
-	'page-header-categories-more-separator' => ', ',
-	'page-header-categories-more' => 'dan {{FORMATNUM:$1}} lagi',
-	'page-header-action-button-talk' => 'Bicara {{FORMATNUM:$1}}',
-	'page-header-action-button-add-topic' => 'Menambahkan topik',
-	'page-header-action-button-viewsource' => 'Lihat sumber',
-	'page-header-action-button-edit-mobile-main-page' => 'Sunting halaman utama mobile',
-	'page-header-action-button-edit' => 'Sunting',
-	'page-header-action-button-add-new-image' => 'Menambahkan gambar baru',
-	'page-header-title-prefix-preview' => 'Preview: $1',
-	'page-header-title-prefix-changes' => 'Perubahan: $1',
-	'page-header-title-prefix-history' => 'Riwayat: $1',
-	'page-header-subtitle-back-to-template' => 'Kembali ke templat',
-	'page-header-subtitle-back-to-mediawiki' => 'Kembali ke halaman MediaWiki',
-	'page-header-subtitle-back-to-category' => 'Kembali ke Kategori',
-	'page-header-subtitle-back-to-file' => 'Kembali ke Berkas',
-	'page-header-subtitle-back-to-article' => 'Kembali ke halaman',
-	'page-header-subtitle-mediawiki' => 'Halaman MediaWiki',
-	'page-header-subtitle-template' => 'Halaman templat',
-	'page-header-subtitle-special' => 'Halaman istimewa',
-	'page-header-subtitle-category' => 'Halaman Kategori',
-	'page-header-subtitle-forum' => 'Halaman forum',
-	'page-header-subtitle-blog-category' => 'Kiriman blog',
-);
-
 $messages['it'] = array(
 	'page-header-counter-videos' => '{{FORMATNUM:$1}} video',
 	'page-header-counter-images' => '{{FORMATNUM:$1}} {{PLURAL:$1|immagine|immagini}}',
