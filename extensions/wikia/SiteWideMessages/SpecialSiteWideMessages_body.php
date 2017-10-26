@@ -520,11 +520,11 @@ class SiteWideMessages extends SpecialPage {
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 			// SUS-3111
-			if ($mRecipientName === MSG_RECIPIENT_ANON) {
+			if ( $mRecipientName === MSG_RECIPIENT_ANON ) {
 				// the message is for anons
 				$recipientUserId = 0;
 			}
-			else if ($mSendModeUsers === 'USER') {
+			elseif ( $mSendModeUsers === 'USER' ) {
 				// the message is for a specific user
 				$recipientUserId = User::idFromName( $mRecipientName );
 			}
