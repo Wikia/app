@@ -1272,7 +1272,7 @@ class WikiFactory {
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return "$protocol://" . $server . static::getExternalHostName() . '.' .
+				return "$protocol://" . $server . '.' . static::getExternalHostName() .
 				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
 				return "$protocol://" . $server . '.' . $wgDevDomain . $address;
