@@ -300,6 +300,13 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
+
+	/**
+	 * @param User $mSender
+	 * @param $mText
+	 * @param $formData
+	 * @return array
+	 */
 	private function sendMessage( $mSender, $mText, $formData ) {
 		global $wgExternalSharedDB, $wgSpecialsDB, $wgUser;
 		$result = array('msgId' => null, 'errMsg' => null);
@@ -511,6 +518,21 @@ class SiteWideMessages extends SpecialPage {
 			$mText = $wgParser->preSaveTransform($mText, $title, $wgUser, $options);
 
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+			// SUS-3111
+			if ($mRecipientName === MSG_RECIPIENT_ANON) {
+				// the message is for anons
+				$recipientUserId = 0;
+			}
+			else if ($mSendModeUsers === 'USER') {
+				// the message is for a specific user
+				$recipientUserId = User::idFromName( $mRecipientName );
+			}
+			else {
+				// msg_recipient_user_id will be set to NULL when given message is directed to all users
+				$recipientUserId = 'NULL';
+			}
+
 			$dbResult = (boolean)$DB->Query (
 				  'INSERT INTO ' . MSG_TEXT_DB
 				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_recipient_user_id, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang, msg_cluster_id)'
@@ -520,7 +542,7 @@ class SiteWideMessages extends SpecialPage {
 				. ($sendToAll ? MSG_MODE_ALL : MSG_MODE_SELECTED) . ', '
 				. $DB->AddQuotes($mExpire) . ', '
 				. $DB->AddQuotes($mRecipientName) . ', '
-				. ( User::idFromName($mRecipientName) ?: 'NULL' ) . ', ' # SUS-3111
+				. $recipientUserId . ', ' # SUS-3111
 				. $DB->AddQuotes($mGroupName) . ', '
 				. $DB->AddQuotes($mWikiName) . ', '
 				. $DB->AddQuotes($mHubId) . ' , '
