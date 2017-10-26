@@ -38,6 +38,9 @@ require([
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
 		});
+
+		win.dispatchEvent(new Event('wikia.jwplayer.instanceReady'));
+
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoMoatTracking(playerInstance);
 
