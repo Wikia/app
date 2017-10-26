@@ -1,6 +1,6 @@
 
-foo();
-
+//foo();
+debugger;
 
 function foo(){
 if(window.mw.msg('rte-ck-unlink') == '<rte-ck-unlink>'){

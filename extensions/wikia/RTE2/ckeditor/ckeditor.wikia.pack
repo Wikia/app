@@ -202,6 +202,7 @@ packages :
 					//experimental!
 					'themes/wikia/theme.js'
 					'skins/kama/skin.js'
+					
 					//language files
 					'lang/lang.js'			
 					'plugins/lang.js'

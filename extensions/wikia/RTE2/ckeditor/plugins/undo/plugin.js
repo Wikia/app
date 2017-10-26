@@ -100,7 +100,7 @@
 
 			// Disable undo manager when in read-only mode.
 			editor.on( 'readOnly', toggleUndoManager );
-
+			debugger;
 			if ( editor.ui.addButton ) {
 				editor.ui.addButton( 'Undo', {
 					label: editor.lang.undo.undo,

@@ -439,6 +439,7 @@
 			// As we'll be adding plugin specific entries that could come
 			// from different language code files, we need a copy of lang,
 			// not a direct reference to it.
+			debugger;
 			editor.lang = CKEDITOR.tools.prototypedCopy( lang );
 
 			/**
