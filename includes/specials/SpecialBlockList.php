@@ -211,6 +211,7 @@ class BlockListPager extends TablePager {
 	protected $conds;
 	protected $page;
 
+	/** @var array map of user IDs to user names */
 	protected $userNames = [];
 
 	/**
@@ -434,7 +435,7 @@ class BlockListPager extends TablePager {
 
 		// SUS-3108: Use username lookup to fetch user names
 		$this->userNames = User::whoAre( $userIds );
-		foreach ( $this->userNames as $userId => $userName ) {
+		foreach ( $this->userNames as $userName ) {
 			$lbName = str_replace( ' ', '_', $userName );
 
 			$lb->add( NS_USER, $lbName );
