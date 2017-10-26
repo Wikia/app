@@ -8,6 +8,10 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		},
 		isPlayerPaused = false;
 
+	/**
+	 * returns default state for video/ad
+	 * @return {{wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}}
+	 */
 	function getDefaultState() {
 		return {
 			wasFirstQuartileTriggered: false,
@@ -20,6 +24,10 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		}
 	}
 
+	/**
+	 * retruns new state for ad and video
+	 * @return {{ad: {wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}, video: {wasFirstQuartileTriggered: boolean, wasMidPointTriggered: boolean, wasThirdQuartileTriggered: boolean, progress: {durationWatched: number, percentWatched: number}}}}
+	 */
 	function getNewState() {
 		return {
 			ad: getDefaultState(),
@@ -27,6 +35,11 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		}
 	}
 
+	/**
+	 * triggers video/ad time-based events
+	 * @param prefix
+	 * @param data
+	 */
 	function handleTime(prefix, data) {
 		var positionFloor = Math.floor(data.position),
 			percentPlayed = Math.floor(positionFloor * 100 / data.duration);
@@ -59,19 +72,19 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 		}
 	}
 
-	logger.info('jwplayer before ready');
+	logger.info('before ready');
 	playerInstance.once('ready', function () {
-		logger.info('jwplayer player ready');
+		logger.info('player ready');
 		var relatedPlugin = playerInstance.getPlugin('related');
 
 		relatedPlugin.on('open', function () {
-			logger.info('jwplayer related plugin open');
+			logger.info('related plugin open');
 			playerInstance.trigger('relatedVideoImpression');
 			state[prefixes.video] = getDefaultState();
 		});
 
 		relatedPlugin.on('play', function (data) {
-			logger.info('jwplayer related plugin play');
+			logger.info('related plugin play');
 			depth++;
 
 			playerInstance.trigger('relatedVideoPlay', {
@@ -86,7 +99,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	playerInstance.on('play', function (data) {
 		if (isPlayerPaused) {
 			playerInstance.trigger('videoResumed');
-			logger.info('jwplayer videoResumed triggered');
+			logger.info('videoResumed triggered');
 		}
 
 		isPlayerPaused = false;
@@ -99,11 +112,11 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	playerInstance.on('firstFrame', function () {
 		if (depth === 0) {
 			playerInstance.trigger('playerStart', { auto: willAutoplay });
-			logger.info('jwplayer playerStart triggered');
+			logger.info('playerStart triggered');
 		}
 
 		playerInstance.trigger('videoStart');
-		logger.info('jwplayer videoStart triggered');
+		logger.info('videoStart triggered');
 	});
 
 	playerInstance.on('mute', function () {

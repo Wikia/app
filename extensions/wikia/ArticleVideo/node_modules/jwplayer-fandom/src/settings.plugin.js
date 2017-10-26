@@ -63,7 +63,9 @@ wikiaJWPlayerSettingsPlugin.prototype.hide = function () {
  * shows back the entire plugin (adds button back)
  */
 wikiaJWPlayerSettingsPlugin.prototype.show = function () {
-	this.addButton();
+	if(!this.player.getContainer().querySelector('[button=wikiaSettings]')) {
+		this.addButton();
+	}
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.showQualityLevelsList = function () {
@@ -93,6 +95,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 
 	settingsList.classList.add('wikia-jw-settings__list');
 	settingsList.appendChild(this.createQualityButton());
+
 	if (this.config.showToggle) {
 		settingsList.appendChild(this.createAutoplayToggle());
 	}
@@ -114,12 +117,13 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	var autoplayToggle = document.createElement('li'),
 		toggleInput = document.createElement('input'),
 		toggleLabel = document.createElement('label'),
-		toggleID = 'featuredVideoAutoplayToggle',
-		playerInstance = this.player;
+		playerInstance = this.player,
+		toggleID = playerInstance.getContainer().id + '-videoAutoplayToggle';
 
 	toggleInput.setAttribute('type', 'checkbox');
 	toggleInput.setAttribute('id', toggleID);
 	toggleInput.classList.add('wds-toggle__input');
+
 	if (this.config.autoplay) {
 		toggleInput.setAttribute('checked', '');
 	}
@@ -159,11 +163,13 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 			shouldShowSettingsButton = !isQualityListEmpty || this.config.showToggle;
 
 		this.wikiaSettingsElement.classList.toggle(isQualityListEmptyClass, isQualityListEmpty);
+
 		if (shouldShowSettingsButton) {
 			this.show();
 		} else {
 			this.hide();
 		}
+
 		this.updateQualityLevelsList(qualityLevelsList, data.levels, isActiveClass, backButton);
 	}.bind(this));
 
@@ -178,6 +184,7 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (qualit
 	while (qualityLevelsList.childElementCount > 1) {
 		qualityLevelsList.removeChild(qualityLevelsList.firstChild);
 	}
+
 	newLevels.forEach(function (level, index) {
 		var qualityLevelItem = document.createElement('li');
 
@@ -189,6 +196,7 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (qualit
 		if (playerInstance.getCurrentQuality() === index) {
 			qualityLevelItem.classList.add(isActiveClass);
 		}
+
 		qualityLevelItem.appendChild(document.createTextNode(level.label));
 		qualityLevelsList.insertBefore(qualityLevelItem, backButton);
 	}, this);

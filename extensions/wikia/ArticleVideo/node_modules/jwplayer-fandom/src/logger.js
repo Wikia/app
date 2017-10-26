@@ -2,8 +2,21 @@ function wikiaJWPlayerLogger(options) {
 	var servicesDomain = options.servicesDomain || 'services.wikia.com',
 		loggerPath = '/event-logger/error',
 		loggerUrl = 'https://' + servicesDomain + loggerPath,
-		prefix = 'JWPlayer';
+		prefix = 'JWPlayer',
+		logLevels = {
+			info: 1,
+			warn: 2,
+			error: 3,
+			off: 4
+		},
+		logLevel = options.logLevel ? logLevels[options.logLevel] : logLevels['error'];
 
+	/**
+	 * logs errors to event-logger service
+	 *
+	 * @param name
+	 * @param description
+	 */
 	function logErrorToService(name, description) {
 		var request = new XMLHttpRequest(),
 			data = {
@@ -20,19 +33,31 @@ function wikiaJWPlayerLogger(options) {
 		request.send(JSON.stringify(data));
 	}
 
+
 	function info(name, description) {
-		console.info(prefix, name, description);
+		if (logLevel <= logLevels['info']) {
+			console.info(prefix, name, description);
+		}
 	}
 
 	function warn(name, description) {
-		console.warn(prefix, name, description);
+		if (logLevel <= logLevels['warn']) {
+			console.warn(prefix, name, description);
+		}
 	}
 
 	function error(name, description) {
-		console.error(prefix, name, description);
-		logErrorToService(name, description);
+		if (logLevel <= logLevels['error']) {
+			console.error(prefix, name, description);
+			logErrorToService(name, description);
+		}
 	}
 
+	/**
+	 * subscribes to jwplayer errors
+	 *
+	 * @param playerInstance
+	 */
 	function subscribeToPlayerErrors(playerInstance) {
 		playerInstance.on('setupError', function (err) {
 			error('setupError', err);

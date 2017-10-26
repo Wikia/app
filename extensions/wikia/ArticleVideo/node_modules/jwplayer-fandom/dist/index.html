@@ -14,6 +14,8 @@
 	wikiaJWPlayer('player', {
 		// adding this object enables tracking
 		tracking: {
+			// GA category
+			category: 'featured-video',
 			// pass track function, data argument structure in tracking.js in track function
 			track: function (data) {
 				console.log('track', data);
@@ -100,7 +102,11 @@
 				"duration": 159,
 				"originalName": "020217_Harry Potter_FINAL_no watermark.mp4"
 			}]
-		}
+		},
+		// logging level, default is error, available values: 'info', 'warn', 'error', 'off'
+		logLevel: 'info'
+	}, function (playerInstance) {
+		// callback with jwplayer instance as an argument
 	});
 </script>
 </body>

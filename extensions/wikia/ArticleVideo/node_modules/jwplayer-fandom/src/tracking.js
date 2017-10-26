@@ -1,7 +1,7 @@
-function wikiaJWPlayerTracking(playerInstance, willAutoplay, providedGACategory, tracker) {
+function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	//This will replace 'trackingevent' in internal tracker url path
 	var eventName = 'videoplayerevent',
-		gaCategory = providedGACategory || 'featured-video';
+		gaCategory = tracker.category || 'featured-video';
 
 	function updateVideoCustomDimensions(currentVideo) {
 		tracker.setCustomDimension(34, currentVideo.mediaid);
