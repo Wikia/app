@@ -21,6 +21,12 @@
 		}
 	}
 
+	// resets default styles
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
 
 	.jw-controlbar .jw-icon-inline.jw-text {
 		margin-top: -4px;

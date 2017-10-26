@@ -84,7 +84,9 @@ Id of DOM element where the player should be placed
     playlist: array
   },
   // logging level, default is error, available values: 'info', 'warn', 'error', 'off'
-  logLevel: string
+  logLevel: string,
+  // services domain, required by logging errors to event-logger service, default: 'services.wikia.com'
+  servicesDomian: string
 }
 ```
 
@@ -93,6 +95,10 @@ Function executed when the player instance object is ready. JWPlayer instance ob
 
 ### Example
 Example usage in index.html
+
+### Logging
+By default we log all jwplayer errors through our service `event-logger`
+You can browse logs in Kibana in `logstash-event-logger-*`
 
 ## Contributing
 * Clone repo

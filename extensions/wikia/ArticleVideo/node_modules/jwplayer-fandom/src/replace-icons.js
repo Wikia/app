@@ -7,11 +7,14 @@
  * @param {string} iconHtml
  */
 function replaceJWIconWithCustom(icon, iconHtml) {
-	icon.innerHTML = iconHtml;
+	// some icons are not present on smaller devices
+	if (icon) {
+		icon.innerHTML = iconHtml;
 
-	// JW icons have viewBox=0,0,240,240 so we need to override it,
-	// otherwise our icons would be too small
-	icon.setAttribute('viewBox', '0 0 24 24');
+		// JW icons have viewBox=0,0,240,240 so we need to override it,
+		// otherwise our icons would be too small
+		icon.setAttribute('viewBox', '0 0 24 24');
+	}
 }
 
 /**
@@ -19,15 +22,23 @@ function replaceJWIconWithCustom(icon, iconHtml) {
  */
 function replaceIcons(videoPlayerElement) {
 	var controlBar = videoPlayerElement.querySelector('.jw-controlbar');
+	var iconList = [
+		{ selector: '.jw-svg-icon-play', iconName: 'play' },
+		{ selector: '.jw-svg-icon-pause', iconName: 'pause' },
+		{ selector: '.jw-svg-icon-fullscreen-on', iconName: 'fullScreenOn' },
+		{ selector: '.jw-svg-icon-fullscreen-off', iconName: 'fullScreenOff' },
+		{ selector: '.jw-svg-icon-settings', iconName: 'settings' },
+		{ selector: '.jw-svg-icon-volume-0', iconName: 'volumeOff' },
+		{ selector: '.jw-svg-icon-volume-50', iconName: 'volumeOn' },
+		{ selector: '.jw-svg-icon-volume-100', iconName: 'volumeOn' }
+	];
 
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-play'), wikiaJWPlayerIcons.play);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-pause'), wikiaJWPlayerIcons.pause);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-fullscreen-on'), wikiaJWPlayerIcons.fullScreenOn);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-fullscreen-off'), wikiaJWPlayerIcons.fullScreenOff);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-settings'), wikiaJWPlayerIcons.settings);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-volume-0'), wikiaJWPlayerIcons.volumeOff);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-volume-50'), wikiaJWPlayerIcons.volumeOn);
-	replaceJWIconWithCustom(controlBar.querySelector('.jw-svg-icon-volume-100'), wikiaJWPlayerIcons.volumeOn);
+	iconList.forEach(function (iconData) {
+		replaceJWIconWithCustom(
+			controlBar.querySelector(iconData.selector),
+			wikiaJWPlayerIcons[iconData.iconName]
+		);
+	});
 }
 
 function wikiaJWPlayerReplaceIcons(playerInstance) {
