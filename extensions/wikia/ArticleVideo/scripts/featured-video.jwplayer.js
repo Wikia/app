@@ -33,8 +33,9 @@ require([
 	if (playerInstance) {
 		run();
 	} else {
-		$(win).one('wikia.jwplayer.instanceReady', function (event, instance) {
-			playerInstance = instance;
+		win.addEventListener('wikia.jwplayer.instanceReady', function (event) {
+			playerInstance = event.detail;
+			win.removeEventListener('wikia.jwplayer.instanceReady', arguments.callee);
 			run();
 		});
 	}
