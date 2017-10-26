@@ -677,4 +677,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-26 11:27:23
+-- Dump completed on 2017-10-26 13:34:32
