@@ -9,7 +9,7 @@ if ( window.wgStagingEnvironment ) {
 				href,
 				hostname;
 			for ( ; i < links.length; i++ ) {
-				href = links[i].getAttribute('href');
+				href = links[i].href;
 				hostname = links[i].hostname;
 				if ( href && hostname && !hostname.endsWith( stagingEnvName + '.wikia.com' ) && hostname.endsWith( '.wikia.com' ) ) {
 					links[i].hostname = hostname.replace( '.wikia.com', '.' + stagingEnvName + '.wikia.com' );
