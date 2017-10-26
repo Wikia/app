@@ -405,11 +405,29 @@ class AFComputedVariable {
 			'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) ),
 		], __METHOD__, [ 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 10 ] );
 
+		return $this->getUsernamesFromResults( $res );
+	}
+
+	private function getUsernamesFromResults( ResultWrapper $res ): array {
+		$names = User::whoAre( $this->getUsersIds( $res ) );
+		$res->rewind();
 		$users = [];
 		foreach ( $res as $row ) {
-			$users[] = User::getUsername( $row->rev_user, $row->rev_user_text );
+			$users[] = $row->rev_user ? $names[$row->rev_user] : $row->rev_user_text;
 		}
 
 		return $users;
+	}
+
+	private function getUsersIds( ResultWrapper $res ): array {
+		$ids = [];
+
+		foreach ( $res as $row ) {
+			if ( $row->rev_user ) {
+				$ids[] = $row->rev_user;
+			}
+		}
+
+		return $ids;
 	}
 }
