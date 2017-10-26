@@ -1,6 +1,5 @@
 (function($, window, undefined) {
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
-		
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
