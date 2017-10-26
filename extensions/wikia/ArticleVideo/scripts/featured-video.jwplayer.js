@@ -28,10 +28,12 @@ require([
 		});
 	}
 
+	// `wikia.articleVideo.featuredVideo.jwplayer.instance` module is defined asynchronously
+	// so when it's not yet available we listen for custom event to get player instance object
 	if (playerInstance) {
 		run();
 	} else {
-		win.addEventListener('wikia.jwplayer.instanceReady', function (instance) {
+		$(win).one('wikia.jwplayer.instanceReady', function (event, instance) {
 			playerInstance = instance;
 			run();
 		});

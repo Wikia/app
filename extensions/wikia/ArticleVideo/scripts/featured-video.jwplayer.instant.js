@@ -39,7 +39,7 @@ require([
 			return playerInstance;
 		});
 
-		win.dispatchEvent(new Event('wikia.jwplayer.instanceReady'));
+		$(win).trigger('wikia.jwplayer.instanceReady', playerInstance);
 
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoMoatTracking(playerInstance);
