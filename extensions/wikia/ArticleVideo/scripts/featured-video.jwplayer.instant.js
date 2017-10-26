@@ -1,4 +1,5 @@
 require([
+	'wikia.window',
 	'ext.wikia.adEngine.adContext',
 	'wikia.articleVideo.featuredVideo.jwplayer.instance',
 	'wikia.articleVideo.featuredVideo.data',
@@ -8,9 +9,11 @@ require([
 	'wikia.articleVideo.featuredVideo.tracking',
 	'wikia.articleVideo.featuredVideo.jwplayer.icons',
 	'wikia.articleVideo.featuredVideo.events',
+	'wikia.articleVideo.featuredVideo.jwplayer.logger',
 	'wikia.articleVideo.featuredVideo.jwplayer.plugin.settings',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
+	win,
 	adContext,
 	playerInstance,
 	videoDetails,
@@ -20,6 +23,7 @@ require([
 	featuredVideoTracking,
 	playerIcons,
 	featuredVideoEvents,
+	logger,
 	wikiaJWSettings,
 	a9
 ) {
@@ -55,7 +59,7 @@ require([
 	}
 
 	function setupPlayer(bidParams) {
-		console.info('jwplayer setupPlayer');
+		logger.info('jwplayer setupPlayer');
 		wikiaJWSettings();
 		playerInstance.setup({
 			advertising: {
@@ -78,8 +82,9 @@ require([
 			}
 
 		});
-		console.info('jwplayer after setup');
+		logger.info('jwplayer after setup');
 
+		logger.subscribeToPlayerErrors(playerInstance);
 		featuredVideoAds(playerInstance, bidParams);
 		featuredVideoEvents(playerInstance, willAutoplay);
 		featuredVideoTracking(playerInstance, willAutoplay);
@@ -102,4 +107,21 @@ require([
 	} else {
 		setupPlayer();
 	}
+
+	// XW-4157 PageFair causes pausing the video, as a workaround we play video again when it's paused
+	win.addEventListener('wikia.blocking', function () {
+		if (playerInstance) {
+			if (playerInstance.getState() === 'paused') {
+				playerInstance.play();
+			} else {
+				playerInstance.once('pause', function (event) {
+					// when video is paused because of PageFair pauseReason is undefined,
+					// otherwise it's set to `interaction` when paused by user or `external` when paused by pause() function
+					if (!event.pauseReason) {
+						playerInstance.play();
+					}
+				});
+			}
+		}
+	});
 });

@@ -2,9 +2,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.articleVideo.featuredVideo.adsTracking',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, adsTracking, log) {
+], function (adContext, vastUrlBuilder, megaAdUnitBuilder, vastDebugger, adsTracking, log) {
 
 	var aspectRatio = 640 / 480,
 		featuredVideoPassback = 'jwplayer',
@@ -68,6 +69,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 	return function(player, bidParams) {
 		var correlator,
+			featuredVideoElement = document.querySelector('.featured-video'),
+			prerollPositionReached = false,
 			trackingParams = {
 				adProduct: 'featured-video',
 				slotName: featuredVideoSlotName,
@@ -80,7 +83,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				trackingParams.adProduct = 'featured-video';
 			});
 
-			player.on('videoStart', function () {
+			player.on('beforePlay', function () {
+				if (prerollPositionReached) {
+					return;
+				}
 				log('Preroll position reached', log.levels.info, logGroup);
 
 				correlator = Math.round(Math.random() * 10000000000);
@@ -91,6 +97,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 					trackingParams.adProduct = 'featured-video-preroll';
 					player.playAd(buildVastUrl('preroll', videoDepth, correlator, bidParams));
 				}
+				prerollPositionReached = true;
 			});
 
 			player.on('videoMidPoint', function () {
@@ -108,6 +115,16 @@ define('wikia.articleVideo.featuredVideo.ads', [
 					trackingParams.adProduct = 'featured-video-postroll';
 					player.playAd(buildVastUrl('postroll', videoDepth, correlator));
 				}
+			});
+
+			player.on('complete', function () {
+				prerollPositionReached = false;
+			});
+			player.on('adRequest', function (event) {
+				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'success', event.ima && event.ima.ad);
+			});
+			player.on('adError', function (event) {
+				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'error', event.ima && event.ima.ad);
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';

@@ -1,4 +1,8 @@
-define('wikia.articleVideo.featuredVideo.events', function () {
+define('wikia.articleVideo.featuredVideo.events', [
+	'wikia.articleVideo.featuredVideo.jwplayer.logger'
+], function (
+	logger
+) {
 	var state = getNewState(),
 		wasAlreadyUnmuted = false,
 		depth = 0,
@@ -63,19 +67,19 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 	return function (providedPlayerInstance, willAutoplay) {
 		playerInstance = providedPlayerInstance;
 
-		console.info('jwplayer before ready');
+		logger.info('jwplayer before ready');
 		playerInstance.once('ready', function () {
-			console.info('jwplayer player ready');
+			logger.info('jwplayer player ready');
 			var relatedPlugin = playerInstance.getPlugin('related');
 
 			relatedPlugin.on('open', function () {
-				console.info('jwplayer related plugin open');
+				logger.info('jwplayer related plugin open');
 				playerInstance.trigger('relatedVideoImpression');
 				state[prefixes.video] = getDefaultState();
 			});
 
 			relatedPlugin.on('play', function (data) {
-				console.info('jwplayer related plugin play');
+				logger.info('jwplayer related plugin play');
 				depth++;
 
 				playerInstance.trigger('relatedVideoPlay', {
@@ -87,10 +91,10 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 			});
 		});
 
-		playerInstance.on('play', function (data) {
+		playerInstance.on('play', function () {
 			if (isPlayerPaused) {
 				playerInstance.trigger('videoResumed');
-				console.info('jwplayer videoResumed tiggered');
+				logger.info('jwplayer videoResumed triggered');
 			}
 
 			isPlayerPaused = false;
@@ -103,11 +107,11 @@ define('wikia.articleVideo.featuredVideo.events', function () {
 		playerInstance.on('firstFrame', function () {
 			if (depth === 0) {
 				playerInstance.trigger('playerStart', { auto: willAutoplay });
-				console.info('jwplayer playerStart tiggered');
+				logger.info('jwplayer playerStart triggered');
 			}
 
 			playerInstance.trigger('videoStart');
-			console.info('jwplayer videoStart tiggered');
+			logger.info('jwplayer videoStart triggered');
 		});
 
 		playerInstance.on('mute', function () {

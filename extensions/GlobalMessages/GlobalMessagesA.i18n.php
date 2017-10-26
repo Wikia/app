@@ -6440,9 +6440,7 @@ Einige IP-Adressen wechseln dynamisch und können von mehreren Nutzern belegt we
 	'activeusers-hidesysops' => 'Administratoren ausblenden',
 	'activeusers-noresult' => 'Keine Benutzer gefunden.',
 	'addwatch' => 'Zur Beobachtungsliste hinzufügen',
-	'addedwatchtext' => "Die Seite „$1“ wurde zu Deiner [[{{ns:special}}:Watchlist|Beobachtungsliste]] hinzugefügt. <br />
-Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werden dort gelistet und die Seite wird in der [[{{ns:special}}:Recentchanges|Liste der letzten Änderungen]] in '''Fettschrift''' angezeigt. 
-Wenn Du die Seite wieder von der Beobachtungsliste entfernen möchtest, klicke auf der jeweiligen Seite auf „Nicht beobachten“.",
+	'addedwatchtext' => 'Die Seite „[[$1]]“ wurde zu deiner [[{{ns:special}}:Watchlist|Beobachtungsliste]] hinzugefügt.',
 	'actioncomplete' => 'Aktion beendet',
 	'actionfailed' => 'Aktion fehlgeschlagen',
 	'alreadyrolled' => "Das Zurücksetzen der Änderungen von [[{{ns:user}}:$2|$2]] <span style='font-size: smaller'>([[{{ns:user_talk}}:$2|Diskussion]], [[{{ns:special}}:Contributions/$2|Beiträge]])</span> am Artikel [[:$1]] war nicht erfolgreich, da in der Zwischenzeit bereits ein anderer Benutzer 

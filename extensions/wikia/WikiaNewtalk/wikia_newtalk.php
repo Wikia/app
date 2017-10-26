@@ -28,7 +28,7 @@ function wfBuildNewtalkWhereCondition( User $user, $includeWikiId = false ) : ar
 	$wikiCondition = $includeWikiId ? [ 'sn_wiki' => wfWikiID() ] : [];
 
 	if ( $user->isAnon() ) {
-		return array_merge( $wikiCondition, [ 'sn_user_ip' => $user->getName() ] );
+		return array_merge( $wikiCondition, [ 'sn_anon_ip' => inet_pton( $user->getName() ) ] );
 	}
 	else {
 		return array_merge( $wikiCondition, [ 'sn_user_id' => $user->getID() ] );
@@ -77,11 +77,11 @@ function wfSetWikiaNewtalk( WikiPage $article ): bool {
         /**
 		 * then insert
 		 */
-		$dbw->insert(
-            "shared_newtalks",
-            wfBuildNewtalkWhereCondition( $other, true ),
-            __METHOD__
-        );
+	    $dbw->insert(
+		    "shared_newtalks",
+		    wfBuildNewtalkWhereCondition( $other, true ),
+		    __METHOD__
+	    );
         $dbw->commit();
 		$wgMemc->delete( wfWikiaNewTalkMemcKey( $other ) );
 	}

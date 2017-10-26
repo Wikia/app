@@ -67,8 +67,7 @@ class WikiFactoryLoader {
 	 * @return WikiFactoryLoader object
 	 */
 	public function  __construct( $id = null, $server_name = false ) {
-		global $wgDBname, $wgDevelEnvironment, $wgDevelDomains;
-		global $wgWikiFactoryDomains, $wgExternalSharedDB;
+		global $wgDevelEnvironment, $wgWikiFactoryDomains;
 
 		$this->mCommandLine = false;
 
@@ -121,7 +120,7 @@ class WikiFactoryLoader {
 		$this->mDebug = false;
 		$this->mOldServerName = false;
 		$this->mAlternativeDomainUsed = false;
-		$this->mDBname = !empty( $wgExternalSharedDB ) ? $wgExternalSharedDB : "wikicities";
+		$this->mDBname = WikiFactory::db;
 		$this->mDomain = array();
 		$this->mVariables = array();
 		$this->mIsWikiaActive = 0;
@@ -392,9 +391,8 @@ class WikiFactoryLoader {
 
 		/**
 		 * save default var values for Special:WikiFactory
-		 * @todo this should be smarter...
 		 */
-		if ( $this->mWikiID == 177 ) {
+		if ( $this->mWikiID == Wikia::COMMUNITY_WIKI_ID ) {
 			$this->mSaveDefaults = true;
 		}
 
