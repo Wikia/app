@@ -25,6 +25,16 @@ class SpecialMultiLookup extends FormSpecialPage {
 		$form->setMethod( 'get' );
 	}
 
+	public function execute( $par ) {
+		// Support passing IP address as target parameter
+		$target = $this->getRequest()->getVal( 'target' );
+		if ( $target && !$this->getRequest()->getCheck( 'wptarget' ) ) {
+			$this->getRequest()->setVal( 'wptarget', $target );
+		}
+
+		parent::execute( $par );
+	}
+
 	/**
 	 * Process the form on submission.
 	 * @param  $data array
