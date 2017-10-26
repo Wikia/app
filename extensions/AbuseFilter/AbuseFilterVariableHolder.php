@@ -413,7 +413,8 @@ class AFComputedVariable {
 		$res->rewind();
 		$users = [];
 		foreach ( $res as $row ) {
-			$users[] = $row->rev_user ? $names[$row->rev_user] : $row->rev_user_text;
+			$users[] = $row->rev_user && isset( $names[$row->rev_user] ) ?
+				$names[$row->rev_user] : $row->rev_user_text;
 		}
 
 		return $users;
