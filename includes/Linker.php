@@ -180,10 +180,12 @@ class Linker {
 		// method call for the rest of this request
 		static $linkCache = array();
 		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $target->getFragment(), $target->getInterwiki(), $html, $customAttribs, $query, $options ) );
+		// SUS-3114: Support GlobalTitle links, else they are incorrectly cached
+		$wikiId = $target instanceof GlobalTitle ? $target->getCityId() : $GLOBALS['wgCityId'];
 
-		if ( array_key_exists($key, $linkCache) ) {
+		if ( isset( $linkCache[$wikiId][$key] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $linkCache[$key];
+			return $linkCache[$wikiId][$key];
 		}
 		/* Wikia change - end */
 
@@ -248,7 +250,7 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: garth */
-		$linkCache[$key] = $ret;
+		$linkCache[$wikiId][$key] = $ret;
 		/* Wikia change - end */
 
 		wfProfileOut( __METHOD__ );
