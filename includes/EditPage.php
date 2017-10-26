@@ -2641,17 +2641,22 @@ HTML
 			'ORDER BY' => 'log_timestamp DESC'
 		] );
 
-		// Quick paranoid permission checks...
-		if( is_object( $data ) ) {
-			if( $data->log_deleted & LogPage::DELETED_USER )
-				$data->user_name = wfMsgHtml( 'rev-deleted-user' );
-			if( $data->log_deleted & LogPage::DELETED_COMMENT )
-				$data->log_comment = wfMsgHtml( 'rev-deleted-comment' );
+		if ( !$data ) {
+			return false;
 		}
 
-		// SUS-2779
-		$user = User::newFromId($data->log_user);
-		$data->user_name = $user->getName();
+		// Quick paranoid permission checks...
+		if ( $data->log_deleted & LogPage::DELETED_USER ) {
+			$data->user_name = wfMessage( 'rev-deleted-user' )->escaped();
+		} else {
+			// SUS-2779: use username lookup
+			$user = User::newFromId( $data->log_user );
+			$data->user_name = $user->getName();
+		}
+
+		if ( $data->log_deleted & LogPage::DELETED_COMMENT ) {
+			$data->log_comment = wfMessage( 'rev-deleted-comment' )->escaped();
+		}
 
 		return $data;
 	}
