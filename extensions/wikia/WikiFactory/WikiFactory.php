@@ -1263,11 +1263,11 @@ class WikiFactory {
 		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return "$protocol://" . $server . 'preview.' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://" . $server . '.preview' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
-				return "$protocol://" . $server . 'verify.' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
-				return "$protocol://" . $server . 'stable.' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
