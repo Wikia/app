@@ -379,12 +379,12 @@ class DPLForum {
 
 				$first_user = '';
 				if ( isset( $row->first_user ) || isset( $row->first_user_text ) ) {
-					$firstUser = is_int( $row->first_user ) ? $row->first_user : 0;
+					$firstUser = is_numeric( $row->first_user ) ? $row->first_user : 0;
 					$firstUserText = is_string( $row->first_user_text ) ? $row->first_user_text : '';
 					$first_user = User::getUsername( $firstUser, $firstUserText );
 				}
 
-				$revUser = is_int( $row->rev_user ) ? $row->rev_user : 0;
+				$revUser = is_numeric( $row->rev_user ) ? $row->rev_user : 0;
 				$revUserText = is_string( $row->rev_user_text ) ? $row->rev_user_text : '';
 				$userName = User::getUsername( $revUser, $revUserText );
 
@@ -403,7 +403,7 @@ class DPLForum {
 		} else {
 			$output .= $sStartItem;
 			if ( $row = $dbr->fetchObject( $res ) ) {
-				$revUser = is_int( $row->rev_user ) ? $row->rev_user : 0;
+				$revUser = is_numeric( $row->rev_user ) ? $row->rev_user : 0;
 				$revUserText = is_string( $row->rev_user_text ) ? $row->rev_user_text : '';
 				$userName = User::getUsername( $revUser, $revUserText );
 
