@@ -47,7 +47,6 @@ class ScribeEventProducer {
 		$this->setGeoCountry( $geo->country );
 		$this->setGeoContinent( $geo->continent );
 		$this->setHostname( wfHostname() );
-		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
@@ -346,10 +345,6 @@ class ScribeEventProducer {
 
 	public function setArchive ( $archive ) {
 		$this->mParams['archive'] = intval( $archive );
-	}
-
-	public function setBeaconId ( $beacon_id ) {
-		$this->mParams['beaconId'] = $beacon_id;
 	}
 
 	public function setLanguage( $lang_code = '' ) {
