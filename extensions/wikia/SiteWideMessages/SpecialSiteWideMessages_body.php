@@ -513,13 +513,14 @@ class SiteWideMessages extends SpecialPage {
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbResult = (boolean)$DB->Query (
 				  'INSERT INTO ' . MSG_TEXT_DB
-				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang, msg_cluster_id)'
+				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_recipient_user_id, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang, msg_cluster_id)'
 				. ' VALUES ('
 				. $DB->AddQuotes($mSender->GetID()). ', '
 				. $DB->AddQuotes($mText) . ', '
 				. ($sendToAll ? MSG_MODE_ALL : MSG_MODE_SELECTED) . ', '
 				. $DB->AddQuotes($mExpire) . ', '
 				. $DB->AddQuotes($mRecipientName) . ', '
+				. ( User::idFromName($mRecipientName) ?: 'NULL' ) . ', ' # SUS-3111
 				. $DB->AddQuotes($mGroupName) . ', '
 				. $DB->AddQuotes($mWikiName) . ', '
 				. $DB->AddQuotes($mHubId) . ' , '
@@ -973,7 +974,7 @@ class SiteWideMessages extends SpecialPage {
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$dbResult = $DB->Query (
-			  'SELECT msg_id, user_name, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_name, msg_group_name, msg_wiki_name'
+			  'SELECT msg_id, user_name, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_name, msg_recipient_user_id, msg_group_name, msg_wiki_name'
 			. ' FROM ' . MSG_TEXT_DB
 			. ' LEFT JOIN user ON msg_sender_id = user_id'
 			. ' ORDER BY msg_id DESC'
@@ -990,7 +991,8 @@ class SiteWideMessages extends SpecialPage {
 			$messages[$i]['msg_removed'] = $oMsg->msg_removed;
 			$messages[$i]['msg_expire'] = $oMsg->msg_expire;
 			$messages[$i]['msg_date'] = $oMsg->msg_date;
-			$messages[$i]['msg_recipient_name'] = $oMsg->msg_recipient_name;
+			$messages[$i]['msg_recipient_user_id'] = $oMsg->msg_recipient_user_id; # SUS-3111
+			$messages[$i]['msg_recipient_name'] = User::getUsername( $oMsg->msg_recipient_user_id, $oMsg->msg_recipient_name); # SUS-3111
 			$messages[$i]['msg_group_name'] = $oMsg->msg_group_name;
 			$messages[$i]['msg_wiki_name'] = $oMsg->msg_wiki_name;
 			$i++;
