@@ -42,7 +42,7 @@ class SpecialRenameuser extends SpecialPage {
 
 		// Get the request data
 		$request = $this->getRequest();
-		$userRenameInput = new RenameUserFormInput($request, $this->getUser());
+		$userRenameInput = new RenameUserFormInput( $request, $this->getUser() );
 
 		$errors = [];
 		$info = [];
@@ -88,7 +88,7 @@ class SpecialRenameuser extends SpecialPage {
 
 	private function parseMessages( array $messageNames ) {
 		return array_map(function ($label) {
-			return $this->msg( $label )->inContentLanguage()->escaped();
+			return $this->msg( $label )->inContentLanguage();
 		}, $messageNames);
 	}
 }
