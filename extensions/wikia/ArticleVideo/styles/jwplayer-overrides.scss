@@ -49,10 +49,10 @@
 	&.jw-flag-user-inactive.jw-state-buffering {
 		&.jw-flag-ads-vpaid-controls:not(:hover):not(.jw-flag-media-audio):not(.jw-flag-audio-player):not(.jw-flag-casting) {
 			.jw-controlbar {
-				visibility: hidden;
-				pointer-events: none;
 				opacity: 0;
+				pointer-events: none;
 				transition-delay: 0s, 250ms;
+				visibility: hidden;
 			}
 
 			.jw-controls-backdrop {
