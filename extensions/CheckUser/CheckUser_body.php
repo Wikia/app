@@ -917,7 +917,7 @@ class CheckUser extends SpecialPage {
 		$ret = $dbr->select(
 			'cu_changes',
 			[
-				'cuc_user_text', 'cuc_timestamp', 'cuc_user', 'cuc_ip', 'cuc_agent', 'cuc_xff'
+				'cuc_timestamp', 'cuc_user', 'cuc_ip', 'cuc_agent', 'cuc_xff'
 			],
 			[ $ip_conds, $time_conds ],
 			__METHOD__,
@@ -934,6 +934,8 @@ class CheckUser extends SpecialPage {
 		} else {
 			global $wgAuth;
 			foreach ( $ret as $row ) {
+				$row->cuc_user_text = User::getUsername( $row->cuc_user, $row->cuc_ip ); // SUS-3080
+
 				if ( !array_key_exists( $row->cuc_user_text, $users_edits ) ) {
 					$users_last[$row->cuc_user_text] = $row->cuc_timestamp;
 					$users_edits[$row->cuc_user_text] = 0;
@@ -1144,6 +1146,9 @@ class CheckUser extends SpecialPage {
 		$line .= $this->getLinksFromRow( $row );
 		# Show date
 		$line .= ' . . ' . $wgLang->time( wfTimestamp( TS_MW, $row->cuc_timestamp ), true, true ) . ' . . ';
+
+		$row->cuc_user_text = User::getUsername( $row->cuc_user, $row->cuc_ip ); // SUS-3080
+
 		# Userlinks
 		$line .= $this->sk->userLink( $row->cuc_user, $row->cuc_user_text );
 		$line .= $this->sk->userToolLinks( $row->cuc_user, $row->cuc_user_text );
