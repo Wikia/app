@@ -1,9 +1,9 @@
 /**
- * Module for getting information from "lookup" services such as Amazon Match
+ * Module for getting information from "lookup" services such as Amazon A9
  *
  * It exposes only a single method called extendSlotTargeting that given a slot name and
  * slot targeting object will consult the lookup services and update the slot targeting object
- * with the targeting information from them (e.g. amznslots from Amazon).
+ * with the targeting information from them (e.g. amznbid from A9).
  *
  * This module also causes the lookup services to track their state when they are consulted
  * (but only once).
@@ -12,21 +12,15 @@
 define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
-	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.a9')
-], function (log, prebid, amazonMatch, a9) {
+], function (log, prebid, a9) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		bidders = [
-			amazonMatch,
 			a9,
 			prebid
 		],
 		bidIndex = {
-			amazon: {
-				pos: 2,
-				char: 'A'
-			},
 			a9: {
 				pos: 2,
 				char: '9'

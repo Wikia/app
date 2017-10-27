@@ -238,14 +238,6 @@ $config['adengine2_top_js'] = [
 	],
 ];
 
-$config['adengine2_amazon_match_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
-	],
-];
-
 $config['adengine2_a9_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -832,7 +824,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
-		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/a9.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
