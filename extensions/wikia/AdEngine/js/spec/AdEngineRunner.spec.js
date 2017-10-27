@@ -4,7 +4,6 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	function noop() {
 	}
 
-	// TODO tests
 	function runCallback(callback) {
 		callback();
 	}

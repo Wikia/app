@@ -2,7 +2,6 @@
 describe('Method ext.wikia.adEngine.lookup.services', function () {
 	'use strict';
 
-	// TODO tests
 	var mocks;
 
 	function noop() {
