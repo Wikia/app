@@ -678,6 +678,10 @@
 	.editarea,
 	.editpage-editarea {
 			visibility: hidden;
+			.loading-indicator{
+				//Kacper Olek bugfix
+				visibility: visible;
+			}
 
 			&.visible {
 				visibility: visible;
