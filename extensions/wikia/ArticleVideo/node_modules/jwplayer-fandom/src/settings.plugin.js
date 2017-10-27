@@ -143,6 +143,11 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	return autoplayToggle;
 };
 
+wikiaJWPlayerSettingsPlugin.prototype.isNotSmallPlayer = function () {
+	var classList = this.player.getContainer().classList;
+	return !(classList.contains('jw-breakpoint-1') || classList.contains('jw-breakpoint-2'));
+};
+
 wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 	var qualityLevelsList = document.createElement('ul'),
 		backButton = document.createElement('li'),
@@ -160,7 +165,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 	playerInstance.on('levels', function (data) {
 		// in Safari in data.levels array there is one element with label = '0'
 		var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0'),
-			shouldShowSettingsButton = !isQualityListEmpty || this.config.showToggle;
+			shouldShowSettingsButton = (!isQualityListEmpty || this.config.showToggle) && this.isNotSmallPlayer();
 
 		this.wikiaSettingsElement.classList.toggle(isQualityListEmptyClass, isQualityListEmpty);
 
