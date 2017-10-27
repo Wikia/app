@@ -32,7 +32,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 
 	public function testGetCurrentStagingHostSandbox()
 	{
-		$this->assertEquals('teststagging.muppet.wikia.com',
+		$this->assertEquals('muppet.teststagging.wikia.com',
 			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'teststagging'));
 	}
 
