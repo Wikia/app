@@ -42,20 +42,21 @@
 		}
 	}
 
-	&:hover {
+	&:not(:hover) {
 		&.jw-flag-ads-vpaid,
 		&.jw-flag-autostart,
 		&.jw-flag-user-inactive.jw-state-playing,
 		&.jw-flag-user-inactive.jw-state-buffering {
 			&.jw-flag-ads-vpaid-controls:not(.jw-flag-media-audio):not(.jw-flag-audio-player):not(.jw-flag-casting) {
 				.jw-controlbar {
-					visibility: visible;
-					pointer-events: all;
-					opacity: 1;
+					visibility: hidden;
+					pointer-events: none;
+					opacity: 0;
+					transition-delay: 0s, 250ms;
 				}
 
 				.jw-controls-backdrop {
-					opacity: 1;
+					opacity: 0;
 				}
 			}
 		}
