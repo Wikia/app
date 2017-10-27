@@ -25,14 +25,14 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		}
 
 		function calculateMoatTrackingFlag(params) {
-			var sampling = params.moatTracking || 0;
+			var sampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
 
 			if (typeof params.moatTracking === 'boolean') {
 				return params.moatTracking;
 			}
 
-			if (params.moatTracking === 'useInstantGlobal') {
-				sampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling;
+			if (!adContext.get('opts.porvataMoatTrackingEnabled')) {
+				return false;
 			}
 
 			if (sampling === 100) {
@@ -40,8 +40,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			}
 
 			if (sampling > 0) {
-				return sampler.sample('moatVideoTracking',  sampling, 100) &&
-					adContext.get('opts.porvataMoatTrackingEnabled');
+				return sampler.sample('moat_video_tracking',  sampling, 100);
 			}
 
 			return false;
