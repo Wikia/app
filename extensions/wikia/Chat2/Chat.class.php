@@ -243,7 +243,7 @@ class Chat {
 				'cuc_title' => 'Chat',
 				'cuc_minor' => 0,
 				'cuc_user' => $wg->User->getID(),
-				'cuc_user_text' => $wg->User->getName(),
+				// 'cuc_user_text' => $wg->User->getName(), // SUS-3080 - this column is redundant
 				'cuc_actiontext' => wfMessage( 'chat-checkuser-join-action' )->inContentLanguage()->text(),
 				'cuc_comment' => '',
 				'cuc_this_oldid' => 0,
