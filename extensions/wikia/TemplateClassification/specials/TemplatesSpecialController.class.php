@@ -224,17 +224,13 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 
 		if ( $revision instanceof Revision ) {
 			$data['timestamp'] = $this->wg->Lang->date( $revision->getTimestamp() );
+			
+			// SUS-3119: Determine user name of registered users based on user ID
+			$userId = $revision->getUser();
+			$userName = User::getUsername( $userId, $revision->getUserText() );
 
-			$user = $revision->getUserText();
-
-			if ( $revision->getUser() ) {
-				$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
-			} else {
-				$userpage = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
-			}
-
-			$data['username'] = $user;
-			$data['userpage'] = $userpage;
+			$data['username'] = $userName;
+			$data['userpage'] = Linker::userLink( $userId, $userName );
 		}
 
 		return $data;
