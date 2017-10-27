@@ -65,6 +65,7 @@ require([
 			advertising: {
 				autoplayadsmuted: willAutoplay,
 				client: 'googima',
+				vpaidmode: 'enabled',
 				vpaidcontrols: true
 			},
 			autostart: willAutoplay && !document.hidden,
