@@ -1189,7 +1189,7 @@ class WikiFactory {
 		}
 
 		if ( in_array( $host, $wgStagingList ) ) {
-			return $host . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
+			return ( $dbName ? $dbName : 'www' ) . '.' . $host . static::WIKIA_TOP_DOMAIN;
 		}
 
 		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host ) ) {
