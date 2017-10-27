@@ -42,86 +42,118 @@ class SpecialRenameuser extends SpecialPage {
 
 		// Get the request data
 		$request = $this->getRequest();
-		$oldUsername = $this->getUser()->getName();
-		$newUsername = $request->getText( 'newusername' );
-		$reason = $request->getText( 'reason' );
-		$token = $this->getUser()->getEditToken();
-		$confirmAction = false;
+		$userRenameInput = new UserRenameInput($request, $this->getUser());
 
-		if ( $request->wasPosted() && $request->getInt( 'confirmaction' ) ) {
-			$confirmAction = true;
-		}
-
-		$warnings = [];
 		$errors = [];
 		$info = [];
+		$warnings = [];
 
-		if ( $this->validRenameRequest( $request ) ) {
-			$process = new RenameUserProcess( $this->getUser()->getName(), $newUsername, $confirmAction, $reason );
-			$status = $process->run();
-			$warnings = $process->getWarnings();
-			$errors = $process->getErrors();
-			if ( $status ) {
-				$info[] = $this->msg( 'userrenametool-info-in-progress' )->inContentLanguage()->escaped();
+		if ( $request->wasPosted() ) {
+			$validationErrors = $this->parseMessages( $userRenameInput->validateInputVariables() );
+			$errors = array_merge( $validationErrors, $errors);
+
+			if ( empty( $errors ) ) {
+				$process = $userRenameInput->createRenameUserProcess();
+				$status = $process->run();
+				$warnings = $process->getWarnings();
+				$errors = $process->getErrors();
+
+				if ( $status ) {
+					$info[] = $this->msg( 'userrenametool-info-in-progress' )
+							->inContentLanguage()->escaped();
+				}
 			}
 		}
 
 		$showConfirm = ( empty( $errors ) && empty( $info ) );
 
-		// note: errors and info beyond this point are non-blocking
-
-		if ( $this->getUser()->getGlobalFlag( 'wasRenamed', 0 ) ) {
-			$errors[] = $this->msg( 'userrenametool-error-alreadyrenamed' );
-		}
-
 		$template = new EasyTemplate( __DIR__ . '/templates/' );
-		$template->set_vars(
-			[
-				"submitUrl"     	=> $this->getTitle()->getLocalURL(),
-				"oldusername"   	=> $oldUsername,
-				"oldusername_hsc"	=> htmlspecialchars( $oldUsername ),
-				"newusername"   	=> $newUsername,
-				"newusername_hsc"	=> htmlspecialchars( $newUsername ),
-				"reason"        	=> $reason,
-				"move_allowed"  	=> $this->getUser()->isAllowed( 'move' ),
-				"confirmaction" 	=> $confirmAction,
-				"warnings"      	=> $warnings,
-				"errors"        	=> $errors,
-				"infos"         	=> $info,
-				"show_confirm"  	=> $showConfirm,
-				"token"         	=> $token
-			]
-		);
+		$template->set_vars( array_merge( $userRenameInput->getFallbackData(), [
+				"submitUrl" => $this->getTitle()->getLocalURL(),
+				"warnings" => $warnings,
+				"errors" => $errors,
+				"infos" => $info,
+				"show_confirm" => $showConfirm,
+			] ) );
 
-		$text = $template->render( "rename-form" );
-		$out->addHTML( $text );
+		$out->addHTML( $template->render( "rename-form" ) );
 
 		return;
-	}
-
-	private function validRenameRequest( WebRequest $request ) {
-		if ( !$request->wasPosted() ) {
-			return false;
-		}
-
-		$token = $request->getText( 'token' );
-		if ( $token === '' ) {
-			return false;
-		}
-
-		if ( !$this->isUsernameRepeatedCorrectly( $request ) ) {
-			return false;
-		}
-
-		return $this->getUser()->matchEditToken( $token );
-	}
-
-	private function isUsernameRepeatedCorrectly( WebRequest $request ): bool {
-		return $request->getText( 'newusername' ) === $request->getText( 'newusernamerepeat' );
 	}
 
 	private function addJSFiles() {
 		$this->getOutput()->addScript( Html::linkedScript( AssetsManager::getInstance()
 			->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' ) ) );
 	}
+
+	private function parseMessages( array $messageNames ) {
+		return array_map(function ($label) {
+			return $this->msg( $label )->inContentLanguage()->escaped();
+		}, $messageNames);
+	}
+}
+
+class UserRenameInput {
+	private $newUsername;
+	private $repeatUsername;
+	private $reason;
+	private $user;
+	private $token;
+	private $isConfirmed;
+
+	public function __construct( WebRequest $request, User $user ) {
+		$this->newUsername = $request->getText( 'newusername' );
+		$this->repeatUsername = $request->getText( 'newusernamerepeat' );
+		$this->reason = $request->getText( 'reason' );
+		$this->user = $user;
+		$this->token = $request->getText( 'token' );
+		$this->isConfirmed = $request->wasPosted() && $request->getInt( 'confirm_action' );
+
+		if (!$request->wasPosted()) {
+			$this->token = $user->getEditToken();
+		}
+	}
+
+	public function validateInputVariables() {
+		$errorList = [];
+
+		if ( $this->token === '' ) {
+			$errorList[] = 'userrenametool-error-token_not_exists';
+		}
+
+		if ( $this->newUsername !== $this->repeatUsername ) {
+			$errorList[] = 'userrenametool-error-not-repeated_correctly';
+		}
+
+		if ( !$this->user->matchEditToken( $this->token ) ) {
+			$errorList[] = 'userrenametool-error-token_not_matched';
+		}
+
+		if ( $this->user->getGlobalFlag( 'wasRenamed', 0 ) ) {
+			$errorList[] = 'userrenametool-error-alreadyrenamed';
+		}
+
+		return $errorList;
+	}
+
+	public function createRenameUserProcess() : RenameUserProcess {
+		return new RenameUserProcess( $this->user->getName(), $this->newUsername,
+			$this->isConfirmed,
+			$this->reason );
+	}
+
+	public function getFallbackData() {
+		return [
+			"oldusername"   	=> $this->user->getName(),
+			"oldusername_hsc"	=> htmlspecialchars( $this->user->getName() ),
+			"newusername"   	=> $this->newUsername,
+			"newusername_hsc"	=> htmlspecialchars( $this->newUsername ),
+			"newusername_repeat_hsc" => $this->repeatUsername,
+			"reason"        	=> $this->reason,
+			"move_allowed"  	=> $this->user->isAllowed( 'move' ),
+			"confirm_action" 	=> $this->isConfirmed,
+			"token"         	=> $this->token
+		];
+	}
+
 }
