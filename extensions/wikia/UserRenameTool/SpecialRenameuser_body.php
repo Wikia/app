@@ -48,12 +48,14 @@ class SpecialRenameuser extends SpecialPage {
 		$errors = [];
 		$info = [];
 		$warnings = [];
+		$showConfirm = false;
+		$showForm = true;
 
 		if ( $request->wasPosted() ) {
 			$validationErrors = $this->parseMessages( $userRenameInput->validateInputVariables() );
 			$errors = array_merge( $validationErrors, $errors );
 
-			if ( empty( $errors ) ) {
+			if ( empty( $errors ) && $userRenameInput->isRenameConfirmed() ) {
 				$process = $userRenameInput->createRenameUserProcess();
 				$status = $process->run();
 				$warnings = $process->getWarnings();
@@ -63,11 +65,12 @@ class SpecialRenameuser extends SpecialPage {
 					$info[] =
 						$this->msg( 'userrenametool-info-in-progress' )
 							->inContentLanguage()->escaped();
+					$showForm = false;
 				}
 			}
-		}
 
-		$showConfirm = ( empty( $errors ) && empty( $info ) );
+			$showConfirm = ( empty( $errors ) && empty( $info ) );
+		}
 
 		$template = new EasyTemplate( __DIR__ . '/templates/' );
 		$template->set_vars( array_merge( $userRenameInput->getFallbackData(), [
@@ -76,6 +79,7 @@ class SpecialRenameuser extends SpecialPage {
 			"errors" => $errors,
 			"infos" => $info,
 			"show_confirm" => $showConfirm,
+			"show_form" => $showForm,
 		] ) );
 
 		$out->addHTML( $template->render( "rename-form" ) );
