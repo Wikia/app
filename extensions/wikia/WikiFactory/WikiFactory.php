@@ -1185,7 +1185,7 @@ class WikiFactory {
 		}
 
 		if ( preg_match( '/^(demo-[a-z0-9]+)-[s|r][0-9]+$/i', $host, $m ) ) {
-			return $m[ 1 ] . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
+			return ( $dbName ? $dbName : 'www' )  . '.' . $m[ 1 ] . static::WIKIA_TOP_DOMAIN;
 		}
 
 		if ( in_array( $host, $wgStagingList ) ) {
