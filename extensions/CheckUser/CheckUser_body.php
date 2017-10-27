@@ -625,7 +625,7 @@ class CheckUser extends SpecialPage {
 		$ret = $dbr->select(
 			'cu_changes',
 			[
-				'cuc_namespace', 'cuc_title', 'cuc_user', 'cuc_user_text', 'cuc_comment', 'cuc_actiontext',
+				'cuc_namespace', 'cuc_title', 'cuc_user', 'cuc_comment', 'cuc_actiontext',
 				'cuc_timestamp', 'cuc_minor', 'cuc_page_id', 'cuc_type', 'cuc_this_oldid',
 				'cuc_last_oldid', 'cuc_ip', 'cuc_xff', 'cuc_agent'
 			],
@@ -646,7 +646,7 @@ class CheckUser extends SpecialPage {
 			# Try to optimize this query
 			$lb = new LinkBatch;
 			foreach ( $ret as $row ) {
-				$userText = str_replace( ' ', '_', $row->cuc_user_text );
+				$userText = User::getUsername( $row->cuc_user, $row->cuc_ip ); // SUS-3080
 				$lb->add( $row->cuc_namespace, $row->cuc_title );
 				$lb->add( NS_USER, $userText );
 				$lb->add( NS_USER_TALK, $userText );
