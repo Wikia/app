@@ -90,25 +90,25 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'demo-sony-s1',
 				'muppet',
 				'',
-				'demo-sony.muppet.wikia.com'
+				'muppet.demo-sony.wikia.com'
 			],
 			[
 				'demo-sony-s2',
 				'muppet',
 				'',
-				'demo-sony.muppet.wikia.com'
+				'muppet.demo-sony.wikia.com'
 			],
 			[
 				'preview',
 				'muppet',
 				'',
-				'preview.muppet.wikia.com'
+				'muppet.preview.wikia.com'
 			],
 			[
 				'verify',
 				'muppet',
 				'',
-				'verify.muppet.wikia.com',
+				'muppet.verify.wikia.com',
 			],
 			[
 				'dev-test',
@@ -120,7 +120,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'sandbox-s3',
 				'muppet',
 				'',
-				'sandbox-s3.muppet.wikia.com'
+				'muppet.sandbox-s3.wikia.com'
 			]
 		];
 	}
@@ -131,19 +131,19 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com',
-				'expected' => 'http://preview.muppet.wikia.com'
+				'expected' => 'http://muppet.preview.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_VERIFY,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
-				'expected' => 'http://verify.muppet.wikia.com/wiki/Muppet'
+				'expected' => 'http://muppet.verify.wikia.com/wiki/Muppet'
 			],
 			[
 				'env' => WIKIA_ENV_STABLE,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
-				'expected' => 'http://stable.muppet.wikia.com/wiki/Muppet'
+				'expected' => 'http://muppet.stable.wikia.com/wiki/Muppet'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
@@ -155,13 +155,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_SANDBOX,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/Vehicles_in_GTA_III',
-				'expected' => 'http://sandbox-s1.gta.wikia.com/Vehicles_in_GTA_III'
+				'expected' => 'http://gta.sandbox-s1.wikia.com/Vehicles_in_GTA_III'
 			],
 			[
 				'env' => WIKIA_ENV_VERIFY,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
-				'expected' => 'http://verify.gta.wikia.com/wiki/test/test/test'
+				'expected' => 'http://gta.verify.wikia.com/wiki/test/test/test'
 			],
 			[
 				'env' => WIKIA_ENV_STAGING,
@@ -186,13 +186,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => WIKIA_ENV_PREVIEW,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://preview.gta.wikia.com'
+				'expected' => 'http://gta.preview.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://preview.gta.wikia.com'
+				'expected' => 'http://gta.preview.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
@@ -216,13 +216,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_STABLE,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://stable.gta.wikia.com'
+				'expected' => 'http://gta.stable.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_STABLE,
 				'forcedEnv' => null,
-				'url' => 'http://stable.gta.wikia.com/wiki/test',
-				'expected' => 'http://stable.gta.wikia.com/wiki/test'
+				'url' => 'http://gta.stable.wikia.com/wiki/test',
+				'expected' => 'http://gta.stable.wikia.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
@@ -246,7 +246,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => null,
 				'url' => 'https://fallout.wikia.com/wiki/test',
-				'expected' => 'https://preview.fallout.wikia.com/wiki/test'
+				'expected' => 'https://fallout.preview.wikia.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
