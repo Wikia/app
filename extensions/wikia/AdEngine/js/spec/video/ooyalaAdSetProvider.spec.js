@@ -23,6 +23,11 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 					return mocks.defaultContext;
 				}
 			},
+			srcProvider: {
+				get: function () {
+					return 'gpt';
+				}
+			},
 			vastUrlBuilder: {
 				build: function () {
 					return FAKE_VAST_URL;
@@ -37,6 +42,7 @@ describe('ext.wikia.adEngine.video.ooyalaAdSetProvider', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.ooyalaAdSetProvider'](
+			mocks.srcProvider,
 			mocks.megaAdUnitBuilder,
 			mocks.adContext,
 			mocks.vastUrlBuilder

@@ -4,11 +4,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
+	'ext.wikia.adEngine.slot.service.srcProvider',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery')
-], function (googleSlots, adSlot, slotRegistry, doc, log, win, instartLogic) {
+	'wikia.window'
+], function (googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -127,12 +127,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function updateTargetingForBlockedTraffic() {
-		win.googletag.pubads().getSlots().forEach(function(slot) {
+		win.googletag.pubads().getSlots().forEach(function (slot) {
 			// slot.clearTargeting described in docs is not applicable in this context
 			if (slot.targeting) {
 				slot.targeting.src = [];
 			}
-			slot.setTargeting('src', 'rec');
+			slot.setTargeting('src', srcProvider.getRecoverySrc());
 		});
 	}
 
