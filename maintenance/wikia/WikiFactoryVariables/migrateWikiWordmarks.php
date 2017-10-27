@@ -99,7 +99,7 @@ class MigrateWikiWordmarks extends Maintenance {
 		$settings[$this->keyName] = $keyValue;
 		$this->debug("Setting " . $this->keyName . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
 		if ( $fh ) {
-			fwrite( $fh, sprintf("%d, \"%s\", \"%s\"\n", $wgCityId, wfReplaceImageServer($oldValue, time()), wfReplaceImageServer($keyValue, time())));
+			fwrite( $fh, sprintf("%d, \"%s\", \"%s\", \"%s\", \"%s\"\n", $wgCityId, $oldValue, wfReplaceImageServer($oldValue, time()), $keyValue, wfReplaceImageServer($keyValue, time())));
 		}
 
 		if ( !$this->dryRun ) {
