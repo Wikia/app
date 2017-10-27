@@ -44,15 +44,6 @@ function getLiftIgniterGlobalContext() {
 
 $p("init", "l9ehhrb6mtv75bp2", {
     config: {
-        sdk: {
-            queryServer: "//query.petametrics.com",
-        },
-        activity: {
-            activityServer: "//query.petametrics.com"
-        },
-        inventory: {
-            inventoryServer: "//query.petametrics.com"
-        },
         globalCtx: getLiftIgniterGlobalContext()
     }
 });
