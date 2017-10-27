@@ -37,6 +37,7 @@ class SpecialRenameuser extends SpecialPage {
 
 		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$out->readOnlyPage();
+
 			return;
 		}
 
@@ -50,7 +51,7 @@ class SpecialRenameuser extends SpecialPage {
 
 		if ( $request->wasPosted() ) {
 			$validationErrors = $this->parseMessages( $userRenameInput->validateInputVariables() );
-			$errors = array_merge( $validationErrors, $errors);
+			$errors = array_merge( $validationErrors, $errors );
 
 			if ( empty( $errors ) ) {
 				$process = $userRenameInput->createRenameUserProcess();
@@ -59,7 +60,8 @@ class SpecialRenameuser extends SpecialPage {
 				$errors = $process->getErrors();
 
 				if ( $status ) {
-					$info[] = $this->msg( 'userrenametool-info-in-progress' )
+					$info[] =
+						$this->msg( 'userrenametool-info-in-progress' )
 							->inContentLanguage()->escaped();
 				}
 			}
@@ -69,12 +71,12 @@ class SpecialRenameuser extends SpecialPage {
 
 		$template = new EasyTemplate( __DIR__ . '/templates/' );
 		$template->set_vars( array_merge( $userRenameInput->getFallbackData(), [
-				"submitUrl" => $this->getTitle()->getLocalURL(),
-				"warnings" => $warnings,
-				"errors" => $errors,
-				"infos" => $info,
-				"show_confirm" => $showConfirm,
-			] ) );
+			"submitUrl" => $this->getTitle()->getLocalURL(),
+			"warnings" => $warnings,
+			"errors" => $errors,
+			"infos" => $info,
+			"show_confirm" => $showConfirm,
+		] ) );
 
 		$out->addHTML( $template->render( "rename-form" ) );
 
@@ -87,8 +89,8 @@ class SpecialRenameuser extends SpecialPage {
 	}
 
 	private function parseMessages( array $messageNames ) {
-		return array_map(function ($label) {
+		return array_map( function ( $label ) {
 			return $this->msg( $label )->inContentLanguage();
-		}, $messageNames);
+		}, $messageNames );
 	}
 }

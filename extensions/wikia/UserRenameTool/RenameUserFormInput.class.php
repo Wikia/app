@@ -16,7 +16,7 @@ class RenameUserFormInput {
 		$this->token = $request->getText( 'token' );
 		$this->isConfirmed = $request->wasPosted() && $request->getInt( 'confirm_action' );
 
-		if (!$request->wasPosted()) {
+		if ( !$request->wasPosted() ) {
 			$this->token = $user->getEditToken();
 		}
 	}
@@ -43,23 +43,22 @@ class RenameUserFormInput {
 		return $errorList;
 	}
 
-	public function createRenameUserProcess() : RenameUserProcess {
+	public function createRenameUserProcess(): RenameUserProcess {
 		return new RenameUserProcess( $this->user->getName(), $this->newUsername,
-			$this->isConfirmed,
-			$this->reason );
+			$this->isConfirmed, $this->reason );
 	}
 
 	public function getFallbackData() {
 		return [
-			"oldusername"   	=> $this->user->getName(),
-			"oldusername_hsc"	=> htmlspecialchars( $this->user->getName() ),
-			"newusername"   	=> $this->newUsername,
-			"newusername_hsc"	=> htmlspecialchars( $this->newUsername ),
+			"oldusername" => $this->user->getName(),
+			"oldusername_hsc" => htmlspecialchars( $this->user->getName() ),
+			"newusername" => $this->newUsername,
+			"newusername_hsc" => htmlspecialchars( $this->newUsername ),
 			"newusername_repeat_hsc" => $this->repeatUsername,
-			"reason"        	=> $this->reason,
-			"move_allowed"  	=> $this->user->isAllowed( 'move' ),
-			"confirm_action" 	=> $this->isConfirmed,
-			"token"         	=> $this->token
+			"reason" => $this->reason,
+			"move_allowed" => $this->user->isAllowed( 'move' ),
+			"confirm_action" => $this->isConfirmed,
+			"token" => $this->token,
 		];
 	}
 
