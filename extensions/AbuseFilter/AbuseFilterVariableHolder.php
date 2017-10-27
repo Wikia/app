@@ -417,6 +417,8 @@ class AFComputedVariable {
 				$names[$row->rev_user] : $row->rev_user_text;
 		}
 
+		$res->rewind();
+
 		return $users;
 	}
 
