@@ -284,15 +284,11 @@ class ApiQueryRevisions extends ApiQueryBase {
 				$isAnon = IP::isIPAddress( $params['user'] );
 				$userId = User::idFromName( $params['user'] );
 
-				if ( empty( $userId ) && !$isAnon ) {
+				if ( !$userId && !$isAnon ) {
 					$this->dieUsage( 'nonexistent user', 'baduser' );
-				}
-
-				if ( $userId ) {
+				} elseif ( $userId ) {
 					$this->addWhereFld( 'rev_user', $userId );
-				}
-
-				if ( $isAnon ) {
+				} elseif ( $isAnon ) {
 					$this->addWhereFld( 'rev_user_text', $params['user'] );
 				}
 			} elseif ( !is_null( $params['excludeuser'] ) ) {
@@ -300,15 +296,11 @@ class ApiQueryRevisions extends ApiQueryBase {
 				$isAnon = IP::isIPAddress( $params['excludeuser'] );
 				$userId = User::idFromName( $params['excludeuser'] );
 
-				if ( empty( $userId ) && !$isAnon ) {
+				if ( !$userId && !$isAnon ) {
 					$this->dieUsage( 'nonexistent user', 'baduser' );
-				}
-
-				if ( $userId ) {
+				} elseif ( $userId ) {
 					$this->addWhere( 'rev_user != ' . $db->addQuotes( $userId ) );
-				}
-
-				if ( $isAnon ) {
+				} elseif ( $isAnon ) {
 					$this->addWhere( 'rev_user_text != ' . $db->addQuotes( $params['excludeuser'] ) );
 				}
 			}
