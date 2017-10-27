@@ -492,8 +492,14 @@ class NewPagesPager extends ReverseChronologicalPager {
 
 		# $wgEnableNewpagesUserFilter - temp WMF hack
 		if( $wgEnableNewpagesUserFilter && $user ) {
-			$conds['rc_user_text'] = $user->getText();
-			$rcIndexes = 'rc_user_text';
+			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+			if ( IP::isIPAddress( $user->getText() ) ) {
+				$conds['rc_user_text'] = $user->getText();
+				$rcIndexes = 'rc_user_text';
+			}
+			else {
+				$conds['rc_user'] = User::idFromName( $user->getText() );
+			}
 		# If anons cannot make new pages, don't "exclude logged in users"!
 		} elseif( $wgGroupPermissions['*']['createpage'] && $this->opts->getValue( 'hideliu' ) ) {
 			$conds['rc_user'] = 0;
@@ -556,8 +562,10 @@ class NewPagesPager extends ReverseChronologicalPager {
 		# Do a batch existence check on pages
 		$linkBatch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
-			$linkBatch->add( NS_USER, $row->rc_user_text );
-			$linkBatch->add( NS_USER_TALK, $row->rc_user_text );
+			$userName = User::getUsername( $row->rc_user, $row->rc_user_text ); // SUS-812
+
+			$linkBatch->add( NS_USER, $userName );
+			$linkBatch->add( NS_USER_TALK, $userName );
 			$linkBatch->add( $row->rc_namespace, $row->rc_title );
 		}
 		$linkBatch->execute();

@@ -47,7 +47,6 @@ class ScribeEventProducer {
 		$this->setGeoCountry( $geo->country );
 		$this->setGeoContinent( $geo->continent );
 		$this->setHostname( wfHostname() );
-		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
@@ -348,10 +347,6 @@ class ScribeEventProducer {
 		$this->mParams['archive'] = intval( $archive );
 	}
 
-	public function setBeaconId ( $beacon_id ) {
-		$this->mParams['beaconId'] = $beacon_id;
-	}
-
 	public function setLanguage( $lang_code = '' ) {
 		if ( empty( $lang_code ) ) {
 			$lang_code = $this->app->wg->LanguageCode;
@@ -372,11 +367,6 @@ class ScribeEventProducer {
 
 	}
 
-	/**
-	 * Sends a unified ImageReviewLog message
-	 * @param  string $sLogMessage  A log message
-	 * @return void
-	 */
 	private function logSendScribeMessage() {
 		WikiaLogger::instance()->info( 'SendScribeMessage', [
 			'method' => __METHOD__,

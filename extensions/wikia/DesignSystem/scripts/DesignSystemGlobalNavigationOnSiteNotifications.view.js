@@ -12,7 +12,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 
 		var isHiddenClass = 'wds-is-hidden',
 			almostBottom = 100,
-			avatarPlaceholder = 'http://static.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
+			avatarPlaceholder = 'https://vignette.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/50';
 
 		function View() {
 			this.onLoadMore = new Event(this);

@@ -129,7 +129,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 		}
 	}
 
-	QUnit.expect( expect );
+	assert.expect( expect );
 
 	for ( imageType in images ) {
 		// Create the node

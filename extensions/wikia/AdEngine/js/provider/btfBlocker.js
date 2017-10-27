@@ -18,7 +18,12 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads.runtime.unblockHighlyViewableSlots = false;
 
 	function unblock(slotName) {
+		log(['unblocking', slotName], log.levels.info, logGroup);
 		unblockedSlots.push(slotName);
+	}
+
+	function isBTFDisabledByCreative() {
+		return win.ads.runtime.disableBtf;
 	}
 
 	function decorate(fillInSlot, config) {
@@ -27,7 +32,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			pendingAtfSlots = []; // ATF slots pending for response
 
 		// Update state on each pv on Mercury
-		adContext.addCallback(function() {
+		adContext.addCallback(function () {
 			btfQueue = [];
 			btfQueueStarted = false;
 			pendingAtfSlots = [];
@@ -48,7 +53,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 
 			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
-				if (context.slots.premiumAdLayoutSlotsToUnblock.indexOf(slot.name) !== -1) {
+				if (unblockedSlots.indexOf(slot.name) > -1) {
 					log(['PAL enabled, filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
 					return;
@@ -59,7 +64,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 					config.highlyViewableSlots.map(unblock);
 				}
 
-				if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
+				if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
 					log(['Filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
 					return;
@@ -71,13 +76,14 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		function startBtfQueue() {
 			var context = adContext.getContext();
+
 			log('startBtfQueue', log.levels.info.debug, logGroup);
 
 			if (btfQueueStarted) {
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled) {
+			if (context.opts.premiumAdLayoutEnabled && !isBTFDisabledByCreative()) {
 				win.ads.runtime.disableBtf = true;
 				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}

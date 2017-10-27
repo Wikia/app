@@ -5515,6 +5515,11 @@ $wgDBtestuser = ''; //db user that has permission to create and drop the test da
 $wgDBtestpassword = '';
 
 /**
+ * When enabled, RL will output links without the server part.
+ */
+$wgEnableLocalResourceLoaderLinks = false;
+
+/**
  * For really cool vim folding this needs to be at the end:
  * vim: foldmarker=@{,@} foldmethod=marker
  * @}

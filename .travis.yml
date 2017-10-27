@@ -1,32 +1,22 @@
 dist: trusty
 sudo: false
+addons:
+  chrome: stable
 language: node_js
 node_js:
-  - 6
-before_install: 
-  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
-  - npm install grunt-cli
-  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
-  - npm install grunt-cli
+  - "node" # this installs the latest version of node
+env:
+- TEST_DIR=.
+- TEST_DIR=extensions/VisualEditor/
+- TEST_DIR=extensions/VisualEditor/lib/ve/
 install:
-  - cd $TRAVIS_BUILD_DIR/
+  - cd $TRAVIS_BUILD_DIR/$TEST_DIR
   - npm install
-  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
-  - npm install
-  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
-  - npm install
-before_script: 
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
-  - grunt build
-  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
-  - grunt build
 script:
-  - cd $TRAVIS_BUILD_DIR/
+  - cd $TRAVIS_BUILD_DIR/$TEST_DIR
   - npm test
-  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
-  - npm test
-  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
-  - npm test
+cache:
+  directories:
+    - node_modules
+    - extensions/VisualEditor/node_modules
+    - extensions/VisualEditor/lib/ve/node_modules

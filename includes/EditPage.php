@@ -2621,33 +2621,43 @@ HTML
 
 	protected function getLastDelete() {
 		$dbr = wfGetDB( DB_SLAVE );
-		$data = $dbr->selectRow(
-			array( 'logging', 'user' ),
-			array( 'log_type',
-				   'log_action',
-				   'log_timestamp',
-				   'log_user',
-				   'log_namespace',
-				   'log_title',
-				   'log_comment',
-				   'log_params',
-				   'log_deleted',
-				   'user_name' ),
-			array( 'log_namespace' => $this->mTitle->getNamespace(),
-				   'log_title' => $this->mTitle->getDBkey(),
-				   'log_type' => 'delete',
-				   'log_action' => 'delete',
-				   'user_id=log_user' ),
-			__METHOD__,
-			array( 'LIMIT' => 1, 'ORDER BY' => 'log_timestamp DESC' )
-		);
-		// Quick paranoid permission checks...
-		if( is_object( $data ) ) {
-			if( $data->log_deleted & LogPage::DELETED_USER )
-				$data->user_name = wfMsgHtml( 'rev-deleted-user' );
-			if( $data->log_deleted & LogPage::DELETED_COMMENT )
-				$data->log_comment = wfMsgHtml( 'rev-deleted-comment' );
+		$data = $dbr->selectRow( [ 'logging' ], [
+			'log_type',
+			'log_action',
+			'log_timestamp',
+			'log_user',
+			'log_namespace',
+			'log_title',
+			'log_comment',
+			'log_params',
+			'log_deleted',
+		], [
+			'log_namespace' => $this->mTitle->getNamespace(),
+			'log_title' => $this->mTitle->getDBkey(),
+			'log_type' => 'delete',
+			'log_action' => 'delete',
+		], __METHOD__, [
+			'LIMIT' => 1,
+			'ORDER BY' => 'log_timestamp DESC'
+		] );
+
+		if ( !$data ) {
+			return false;
 		}
+
+		// Quick paranoid permission checks...
+		if ( $data->log_deleted & LogPage::DELETED_USER ) {
+			$data->user_name = wfMessage( 'rev-deleted-user' )->escaped();
+		} else {
+			// SUS-2779: use username lookup
+			$user = User::newFromId( $data->log_user );
+			$data->user_name = $user->getName();
+		}
+
+		if ( $data->log_deleted & LogPage::DELETED_COMMENT ) {
+			$data->log_comment = wfMessage( 'rev-deleted-comment' )->escaped();
+		}
+
 		return $data;
 	}
 

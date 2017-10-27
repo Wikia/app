@@ -328,6 +328,8 @@ class HistoryPager extends ReverseChronologicalPager {
 	public $lastRow = false, $counter, $historyPage, $buttons, $conds;
 	protected $oldIdChecked;
 	protected $preventClickjacking = false;
+	/** User names associated with the result */
+	private $mUsers = [];
 
 	function __construct( $historyPage, $year = '', $month = '', $tagFilter = '', $conds = array() ) {
 		parent::__construct( $historyPage->getContext() );
@@ -352,14 +354,11 @@ class HistoryPager extends ReverseChronologicalPager {
 
 	function getQueryInfo() {
 		$queryInfo = [
-			'tables' => [ 'revision', 'user' ],
-			'fields' => array_merge( Revision::selectFields(), Revision::selectUserFields() ),
+			'tables' => [ 'revision' ],
+			'fields' => array_merge( Revision::selectFields() ),
 			'conds' => array_merge( [ 'rev_page' => $this->getWikiPage()->getId() ], $this->conds ),
 			'options' => [
 				'USE INDEX' => [ 'revision' => 'page_timestamp' ]
-			],
-			'join_conds' => [
-				'user' => Revision::userJoinCond(),
 			],
 		];
 
@@ -372,21 +371,65 @@ class HistoryPager extends ReverseChronologicalPager {
 		return $queryInfo;
 	}
 
+	/**
+	 * Fetch user names from ExternalSharedDB.
+	 * @see SUS-2990
+	 * @return iterable
+	 */
+	function reallyDoQuery( $offset, $limit, $descending ) {
+		global $wgExternalSharedDB;
+		$res = parent::reallyDoQuery( $offset, $limit, $descending );
+
+		$ids = [];
+		foreach ( $res as $row ) {
+			if ( $row->rev_user ) {
+				$ids[] = $row->rev_user;
+			}
+		}
+
+		// SUS-3103: It might happen that all contributors were anon - check if this was the case
+		if ( !empty( $ids ) ) {
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$users = $dbr->select(
+				'`user`',
+				[ 'user_id', 'user_name' ],
+				[ 'user_id' => array_unique( $ids ) ],
+				__METHOD__
+			);
+
+			foreach ( $users as $row ) {
+				$this->mUsers[$row->user_id] = $row->user_name;
+			}
+		}
+
+		$res->rewind();
+
+		return $res;
+	}
+
 	function getIndexField() {
 		return 'rev_timestamp';
 	}
 
 	function formatRow( $row ) {
+		$row->rev_user_text = $this->mUsers[$row->rev_user] ?? $row->rev_user_text;
+
 		if ( $this->lastRow ) {
 			$latest = ( $this->counter == 1 && $this->mIsFirst );
 			$firstInList = $this->counter == 1;
 			$this->counter++;
-			$s = $this->historyLine( $this->lastRow, $row,
-				$this->getTitle()->getNotificationTimestamp( $this->getUser() ), $latest, $firstInList );
+			$s = $this->historyLine(
+				$this->lastRow,
+				$row,
+				$this->getTitle()->getNotificationTimestamp( $this->getUser() ),
+				$latest,
+				$firstInList
+			);
 		} else {
 			$s = '';
 		}
 		$this->lastRow = $row;
+
 		return $s;
 	}
 
@@ -395,7 +438,7 @@ class HistoryPager extends ReverseChronologicalPager {
 		$this->mResult->seek( 0 );
 		$batch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
-			if( !is_null( $row->user_name ) ) {
+			if( isset( $row->user_name ) ) {
 				$batch->add( NS_USER, $row->user_name );
 				$batch->add( NS_USER_TALK, $row->user_name );
 			} else { # for anons or usernames of imported revisions

@@ -8,10 +8,9 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.openx',
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
-	'ext.wikia.adEngine.lookup.prebid.adapters.veles',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'wikia.window'
-], function(aol, appnexus, appnexusAst, audienceNetwork, indexExchange, openx, rubicon, rubiconDisplay, wikia, veles, win) {
+], function(aol, appnexus, appnexusAst, audienceNetwork, indexExchange, openx, rubicon, rubiconDisplay, wikia, win) {
 	'use strict';
 
 	var adapters = [
@@ -25,8 +24,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 			rubiconDisplay
 		],
 		customAdapters = [
-			wikia,
-			veles
+			wikia
 		];
 
 	function getAdapters() {

@@ -15,10 +15,16 @@ function licenseSelectorCheck() {
 
 function wgUploadSetup() {
 	// Disable URL box if the URL copy upload source type is not selected
-	var e = document.getElementById( 'wpSourceTypeURL' );
-	if( e ) {
-		if( !e.checked ) {
-			var ein = document.getElementById( 'wpUploadFileURL' );
+	for ( var i = 0; i < wgMaxUploadFiles; i++ ) {
+		var e = document.getElementById( 'wpSourceTypeurl' + i );
+		if( e ) {
+			if( !e.checked ) {
+				var ein = document.getElementById( 'wpUploadFileURL' + i );
+			}
+			else {
+				var ein = document.getElementById( 'wpUploadFile' + i );
+			}
+
 			if( ein ) {
 				ein.setAttribute( 'disabled', 'disabled' );
 			}
@@ -39,9 +45,11 @@ function wgUploadSetup() {
 	}
 
 	// Toggle source type
-	var sourceTypeCheckboxes = document.getElementsByName( 'wpSourceType' );
-	for ( var i = 0; i < sourceTypeCheckboxes.length; i++ ) {
-		sourceTypeCheckboxes[i].onchange = toggleUploadInputs;
+	for ( var i = 0; i < wgMaxUploadFiles; i++ ) {
+		var sourceTypeCheckboxes = document.getElementsByName( 'wpSourceType' + i );
+		for ( var j = 0; j < sourceTypeCheckboxes.length; j++ ) {
+			sourceTypeCheckboxes[j].onchange = toggleUploadInputs;
+		}
 	}
 
 	// AJAX wpDestFile warnings
@@ -49,7 +57,7 @@ function wgUploadSetup() {
 	if ( wgAjaxUploadDestCheck && htmlFormSource ) {
 		// Insert an event handler that fetches upload warnings when wpDestFile
 		// has been changed
-		for ( i = 0; i < wgMaxUploadFiles; i++ ) {
+		for ( var i = 0; i < wgMaxUploadFiles; i++ ) {
 			document.getElementById( 'wpDestFile' + i ).onchange = function( e ) {
 				wgUploadWarningObj.checkNow( this.value );
 			};
@@ -102,14 +110,14 @@ function toggleUploadInputs() {
 	// Iterate over all rows with UploadSourceField
 	var rows;
 	if ( document.getElementsByClassName ) {
-		rows = document.getElementsByClassName( 'mw-htmlform-field-UploadSourceField' );
+		rows = document.getElementsByClassName( 'mw-htmlform-field-MultipleUploadSourceField' );
 	} else {
 		// Older browsers don't support getElementsByClassName
-		rows = new Array();
+		rows = [];
 
 		var allRows = document.getElementsByTagName( 'tr' );
 		for ( var i = 0; i < allRows.length; i++ ) {
-			if ( allRows[i].className == 'mw-htmlform-field-UploadSourceField' ) {
+			if ( allRows[i].className == 'mw-htmlform-field-MultipleUploadSourceField' ) {
 				rows.push( allRows[i] );
 			}
 		}
@@ -121,7 +129,7 @@ function toggleUploadInputs() {
 		// Check if this row is selected
 		var isChecked = true; // Default true in case wpSourceType is not found
 		for ( var j = 0; j < inputs.length; j++ ) {
-			if ( inputs[j].name == 'wpSourceType' ) {
+			if ( inputs[j].name.indexOf( 'wpSourceType' ) == 0 ) {
 				isChecked = inputs[j].checked;
 			}
 		}
@@ -192,10 +200,9 @@ var wgUploadWarningObj = {
 		// anonymous callback. fileName is copied so that multiple overlapping
 		// AJAX requests can be supported.
 		var obj = this;
-		var fileName = this.nameToCheck;
 		sajax_do_call( 'SpecialUpload::ajaxGetExistsWarning', [this.nameToCheck],
 			function( result ) {
-				obj.processResult( result, fileName );
+				obj.processResult( result, obj.fileName );
 			}
 		);
 	},
@@ -233,9 +240,6 @@ function fillDestFilename( id ) {
 	if ( !wgUploadAutoFill ) {
 		return;
 	}
-	if ( !document.getElementById ) {
-		return;
-	}
 	// Remove any previously flagged errors
 	var e = document.getElementById( 'mw-upload-permitted' );
 	if( e ) {
@@ -255,16 +259,16 @@ function fillDestFilename( id ) {
 	if ( slash == -1 && backslash == -1 ) {
 		fname = path;
 	} else if ( slash > backslash ) {
-		fname = path.substring( slash + 1, 10000 );
+		fname = path.substring( slash + 1 );
 	} else {
-		fname = path.substring( backslash + 1, 10000 );
+		fname = path.substring( backslash + 1 );
 	}
 
 	// Clear the filename if it does not have a valid extension.
 	// URLs are less likely to have a useful extension, so don't include them in the
 	// extension check.
 	current = id.replace( /[^0-9]/g, '' );
-	if( wgFileExtensions && id != 'wpUploadFileURL' ) {
+	if( wgFileExtensions && id.indexOf( 'wpUploadFileURL' ) != 0 ) {
 		var found = false;
 		if( fname.lastIndexOf( '.' ) != -1 ) {
 			var ext = fname.substr( fname.lastIndexOf( '.' ) + 1 );
@@ -301,7 +305,8 @@ function fillDestFilename( id ) {
 
 	// Capitalise first letter and replace spaces by underscores
 	// FIXME: $wgCapitalizedNamespaces
-	fname = fname.charAt( 0 ).toUpperCase().concat( fname.substring( 1, 10000 ) ).replace( / /g, '_' );
+	fname = fname.charAt( 0 ).toUpperCase() + fname.substring( 1 );
+	fname = fname.replace( / /g, '_' );
 
 	// Output result
 	var destFile = document.getElementById( 'wpDestFile' + current );
@@ -312,10 +317,6 @@ function fillDestFilename( id ) {
 }
 
 function toggleFilenameFiller() {
-	if( !document.getElementById ) {
-		return;
-	}
-	var upfield = document.getElementById( 'wpUploadFile' );
 	var destName = document.getElementById( 'wpDestFile' ).value;
 	if ( destName == '' || destName == ' ' ) {
 		wgUploadAutoFill = true;
@@ -388,23 +389,22 @@ addOnloadHook( wgUploadSetup );
  * This is not a critical component, just a user convenience.  Remove if necessary.
  */
 $(function() {
-	(function($) {
-		var inputs = $('#mw-upload-form input[type=file]'),
-			submit = $('#mw-upload-form input[name=wpUpload]'),
-			empty = true;
-		submit.attr('disabled', 'true');
-		inputs.on('change.multiupload', function(e) {
-			if(empty) {
-				inputs.each(function(i) {
-					if($(this).val()) {
-						empty = false;
-					}
-				});
-				if(!empty) {
-					submit.removeAttr('disabled');
-					inputs.off('.multiupload');
+	var $inputs = $('#mw-upload-form tr.mw-htmlform-field-MultipleUploadSourceField input');
+	var $submit = $('#mw-upload-form input[name=wpUpload]');
+	var empty = true;
+	$submit.attr('disabled', 'true');
+	$inputs.on('change.multiupload', function(e) {
+		if(empty) {
+			$inputs.each(function(i) {
+				if($(this).val()) {
+					empty = false;
+					return false; //break
 				}
+			});
+			if(!empty) {
+				$submit.removeAttr('disabled');
+				$inputs.off('.multiupload');
 			}
-		})
-	})(jQuery);
+		}
+	});
 });

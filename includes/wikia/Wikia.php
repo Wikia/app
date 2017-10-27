@@ -31,8 +31,6 @@ $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 $wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
 $wgHooks['getUserPermissionsErrors'] [] = 'Wikia::canEditInterfaceWhitelistErrors';
 
-# changes in recentchanges (MultiLookup)
-$wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
@@ -1094,59 +1092,6 @@ class Wikia {
 	}
 
 	/**
-	 * recentChangesSave -- hook
-	 * Send information to the backend script, when new record was added to the recentchanges table
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param RecentChange $oRC
-	 *
-	 * @author Piotr Molski (MoLi)
-	 * @return bool true
-	 */
-	static public function recentChangesSave( $oRC ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport, $wgRequest;
-
-		if ( empty( $wgEnableScribeReport ) ) {
-			return true;
-		}
-
-		if ( !is_object( $oRC ) ) {
-			return true;
-		}
-
-		$rc_ip = $oRC->getAttribute( 'rc_ip' );
-		if ( is_null( $rc_ip ) ) {
-			return true;
-		}
-
-		if ( !User::isIP( $rc_ip ) ) {
-			return true;
-		}
-
-		$params = array(
-			'dbname'	=> $wgDBname,
-			'wiki_id'	=> $wgCityId,
-			'ip'		=> $rc_ip
-		);
-
-		try {
-			$message = array(
-				'method' => 'ipActivity',
-				'params' => $params
-			);
-			$data = json_encode( $message );
-			WScribeClient::singleton('trigger')->send($data);
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Purge Common and Wikia and User css/js when those files are edited
 	 * Uses $wgOut->makeResourceLoaderLink which was protected, but has lots of logic we don't want to duplicate
 	 * This was rewritten from scratch as part of BAC-895
@@ -2019,11 +1964,15 @@ class Wikia {
 	/**
 	 * Hook for storing historical log of email changes
 	 * Depends on the central user_email_log table defined in the EditAccount extension
+	 *
+	 * @param User $user
+	 * @param $new_email
+	 * @param $old_email
 	 * @return bool
 	 */
 	public static function logEmailChanges($user, $new_email, $old_email) {
 		global $wgExternalSharedDB, $wgUser, $wgRequest;
-		if ( $wgExternalSharedDB && isset( $new_email ) && isset( $old_email ) ) {
+		if ( isset( $new_email ) && isset( $old_email ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->insert(
 				'user_email_log',

@@ -24,7 +24,7 @@ class UserProfilePageController extends WikiaController {
 	protected $title = null;
 
 	protected $defaultAvatars = null;
-	protected $defaultAvatarPath = 'http://images.wikia.com/messaging/images/';
+	protected $defaultAvatarPath = 'https://vignette.wikia.nocookie.net/messaging/images/';
 
 	public function __construct() {
 		parent::__construct();
@@ -481,7 +481,7 @@ class UserProfilePageController extends WikiaController {
 					Masthead::newFromUser( $user )->removeFile( false );
 
 					// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
-					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file ) );
+					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file, "" ) );
 					$user->saveSettings();
 					break;
 				case 'uploaded':
@@ -803,7 +803,7 @@ class UserProfilePageController extends WikiaController {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function getDefaultAvatars( $thumb = '' ) {
+	public function getDefaultAvatars( $thumb = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		// parse message only once per request
@@ -817,8 +817,8 @@ class UserProfilePageController extends WikiaController {
 
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
-				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->defaultAvatars[] = [ 'name' => $image, 'url' => $this->defaultAvatarPath . $thumb . $hash . $image ];
+				$avatarUrl = Masthead::getDefaultAvatarUrl( $image );
+				$this->defaultAvatars[] = [ 'name' => $image, 'url' => ImagesService::getThumbUrlFromFileUrl($avatarUrl, self::AVATAR_DEFAULT_SIZE) ];
 			}
 		}
 

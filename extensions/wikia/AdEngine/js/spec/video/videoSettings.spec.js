@@ -1,13 +1,14 @@
-/*global describe, it, expect, modules, spyOn*/
+/*global beforeEach, describe, it, expect, modules, spyOn*/
 describe('ext.wikia.adEngine.video.videoSettings', function () {
 	'use strict';
 
 	var mocks = {
-		geo: {
-			isProperGeo: function () {
+		adContext: {
+			get: function () {
 				return true;
 			}
 		},
+		instantGlobals: {},
 		resolvedState: {
 			isResolvedState: function () { return false; }
 		},
@@ -32,12 +33,17 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 	function getSettings(params) {
 		params = params || {};
 		return modules['ext.wikia.adEngine.video.videoSettings'](
+			mocks.adContext,
 			mocks.resolvedState,
 			mocks.sampler,
-			mocks.geo,
+			mocks.instantGlobals,
 			mocks.win
 		).create(params);
 	}
+
+	beforeEach(function () {
+		mocks.instantGlobals.wgAdDriverPorvataMoatTrackingSampling = 100;
+	});
 
 	it('Should be not auto play without autoplay parameter', function () {
 		var videoSettings = getSettings();
@@ -140,6 +146,28 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		expect(mocks.sampler.sample).not.toHaveBeenCalled();
 	});
 
+	it('Should enable tracking based on instant global sampling (100%)', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		var videoSettings = getSettings({
+			moatTracking: 'useInstantGlobal'
+		});
+
+		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
+		expect(mocks.sampler.sample).not.toHaveBeenCalled();
+	});
+
+	it('Should enable tracking based on instant global sampling (50%) and sampler', function () {
+		spyOn(mocks.sampler, 'sample').and.returnValue(true);
+
+		mocks.instantGlobals.wgAdDriverPorvataMoatTrackingSampling = 50;
+		getSettings({
+			moatTracking: 'useInstantGlobal'
+		});
+
+		expect(mocks.sampler.sample).toHaveBeenCalled();
+	});
+
 	it('Should disable tracking when param is boolean (false)', function () {
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
 
@@ -156,20 +184,6 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 
 		var videoSettings = getSettings({
 			moatTracking: 100
-		});
-
-		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
-		expect(mocks.sampler.sample).not.toHaveBeenCalled();
-	});
-
-	it('Should enable tracking when param.bid is integer (100)', function () {
-		spyOn(mocks.sampler, 'sample').and.returnValue(true);
-
-		var videoSettings = getSettings({
-			bid: {
-				moatTracking: 100
-			},
-			moatTracking: 1
 		});
 
 		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();

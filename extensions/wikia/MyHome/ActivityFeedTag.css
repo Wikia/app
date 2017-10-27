@@ -60,7 +60,7 @@ td.activityfeed-details-label {
 }
 
 .myhome-feed-loading .myhome-feed-more {
-	background: transparent url(http://images.wikia.com/common/skins/common/progress-wheel.gif?20091023) no-repeat 50% 50%;
+	background: transparent url(https://images.wikia.nocookie.net/common/skins/common/progress-wheel.gif?20091023) no-repeat 50% 50%;
 }
 
 .myhome-feed-loading .myhome-feed-more a {
@@ -89,7 +89,7 @@ td.activityfeed-details-label {
 }
 
 .myhome-video-play {
-	background: transparent url(http://images.wikia.com/common/extensions/wikia/MyHome/images/play.png?20091023) no-repeat 50% 50%;
+	background: transparent url(https://images.wikia.nocookie.net/common/extensions/wikia/MyHome/images/play.png?20091023) no-repeat 50% 50%;
 	left: 0;
 	height: 160px;
 	position: absolute;

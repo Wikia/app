@@ -79,7 +79,6 @@ class User implements JsonSerializable {
 	 * Traits extending the class
 	 */
 	use PowerUserTrait;
-	use GlobalUserDataTrait;
 	use AuthServiceAccessor;
 	# WIKIA CHANGE END
 
@@ -119,7 +118,6 @@ class User implements JsonSerializable {
 		'mEmailTokenExpires',
 		'mRegistration',
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
-		'mEditCount',
 		// user_groups table
 		'mGroups',
 		// user_properties table
@@ -131,7 +129,7 @@ class User implements JsonSerializable {
 	var $mId, $mName, $mRealName,
 		$mEmail, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
-		$mCookiePassword, $mEditCount, $mAllowUsertalk;
+		$mCookiePassword, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
 
@@ -407,9 +405,11 @@ class User implements JsonSerializable {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$key = $this->getCacheKey();
+
+		// Wikia
 		global $wgMemc;
-		$wgMemc->set( $key, $data );
+		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
+		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG ); // SUS-2945
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
@@ -418,8 +418,12 @@ class User implements JsonSerializable {
 		return self::getCacheKeyById( $this->mId );
 	}
 
-	private static function getCacheKeyById( $id ) {
+	private static function getCacheKeyById( int $id ) : string {
 		return wfMemcKey( 'user', 'id', $id );
+	}
+
+	private static function getCacheKeyByName( string $name ) : string {
+		return wfSharedMemcKey( 'user', 'name', $name );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -482,8 +486,10 @@ class User implements JsonSerializable {
 	 * @return User object, or null
 	 */
 	public static function newFromConfirmationCode( $code ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'user', 'user_id', array(
+		global $wgExternalSharedDB;
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$id = $dbr->selectField( "`user`", 'user_id', array(
 			'user_email_token' => md5( $code ),
 			'user_email_token_expires > ' . $dbr->addQuotes( $dbr->timestamp() ),
 		) );
@@ -586,6 +592,41 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 *
+	 * @param $ids Array User IDs
+	 * @return Array User ID to User name mapping
+	 */
+	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
+		global $wgExternalSharedDB;
+
+		$ids = array_unique( $ids, SORT_NUMERIC );
+
+		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
+		$res = $sdb->select(
+			'`user`',
+			[ 'user_id', 'user_name' ],
+			[ 'user_id' => $ids ],
+			__METHOD__
+		);
+
+		// Pre-fill the returned array with empty strings
+		// so that missing users are not skipped.
+		// It makes further iterating over the array
+		// and handling anons and missing users a little
+		// bit easier.
+		$users = array_fill_keys( $ids, '' );
+
+		// Add the name used to indicate anonymous users.
+		$users[0] = wfMessage( 'oasis-anon-user' )->escaped();
+
+		foreach ( $res as $row ) {
+			$users[ $row->user_id ] = (string) $row->user_name;
+		}
+
+		return $users;
+	}
+
+	/**
 	 * Get the real name of a user given their user ID
 	 *
 	 * @param $id Int User ID
@@ -608,13 +649,30 @@ class User implements JsonSerializable {
 			return null;
 		}
 
-		if ( isset( self::$idCacheByName[$name] ) ) {
-			return self::$idCacheByName[$name];
+		// SUS-2980: This is an anon, they won't have a DB entry - stop here.
+		if ( IP::isIPAddress( $name ) ) {
+			return null;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
+		if ( isset( self::$idCacheByName[$name] ) ) {
+			return (int) self::$idCacheByName[$name];
+		}
 
+		// SUS-2945 | this method makes ~32mm queries every day
+		// worth caching given the fact that (user ID, user name) pairs do not change very often
+		global $wgMemc;
+
+		$key = self::getCacheKeyByName( $name );
+		$cachedId = $wgMemc->get( $key );
+
+		if ( is_numeric( $cachedId ) ) {
+			return (int) self::$idCacheByName[$name] = $cachedId;
+		}
+
+		// not in cache, query the database
+		global $wgExternalSharedDB; // SUS-2945 - let's use wikicities.user instead of per-cluster copy
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$s = $dbr->selectRow( '`user`', array( 'user_id' ), array( 'user_name' => $nt->getText() ), __METHOD__ );
 		if ( $s === false ) {
 			$user_name = $nt->getText();
 			Hooks::run( 'UserNameLoadFromId', array( $user_name, &$s ) );
@@ -623,7 +681,10 @@ class User implements JsonSerializable {
 		if ( $s === false ) {
 			$result = null;
 		} else {
-			$result = $s->user_id;
+			$result = (int) $s->user_id;
+
+			// SUS-2945 - only store when there's a match
+			$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
 		}
 
 		self::$idCacheByName[$name] = $result;
@@ -938,58 +999,6 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Count the number of edits of a user
-	 * @todo It should not be static and some day should be merged as proper member function / deprecated -- domas
-	 *
-	 * @param $uid Int User ID to check
-	 * @return Int the user's edit count
-	 */
-	public static function edits( $uid ) {
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
-		// check if the user_editcount field has been initialized
-		$field = $dbr->selectField(
-			'user', 'user_editcount',
-			array( 'user_id' => $uid ),
-			__METHOD__
-		);
-
-		if( $field === null ) { // it has not been initialized. do so.
-			$dbw = wfGetDB( DB_MASTER );
-			$count = $dbr->selectField(
-				'revision', 'count(*)',
-				array( 'rev_user' => $uid ),
-				__METHOD__
-			);
-
-			// Wikia change - begin
-			try {
-				$dbw->update(
-					'user',
-					[ 'user_editcount' => $count ],
-					[ 'user_id' => $uid ],
-					__METHOD__
-				);
-			} catch ( DBQueryError $dbQueryError ) {
-				// Wikia change
-				// SUS-1221: Some of these UPDATE queries are failing
-				// If this happens let's log exception details to try to identify root cause
-				Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1221 - User::edits failed', [
-					'exception' => $dbQueryError,
-					'userId' => $uid,
-					'editCount' => $count
-				] );
-			}
-			// Wikia change - end
-
-		} else {
-			$count = $field;
-		}
-		wfProfileOut( __METHOD__ );
-		return $count;
-	}
-
-	/**
 	 * Return a random password.
 	 *
 	 * @return String new random password
@@ -1123,7 +1132,6 @@ class User implements JsonSerializable {
 			# Initialise user table data
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
-			$this->getEditCount(); // revalidation for nulls
 			return true;
 		} else {
 			# Invalid user_id
@@ -1162,12 +1170,6 @@ class User implements JsonSerializable {
 			$this->mId = intval( $row->user_id );
 			$this->mFrom = 'id';
 			$this->setItemLoaded( 'id' );
-		} else {
-			$all = false;
-		}
-
-		if ( isset( $row->user_editcount ) ) {
-			$this->mEditCount = $row->user_editcount;
 		} else {
 			$all = false;
 		}
@@ -2014,6 +2016,7 @@ class User implements JsonSerializable {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( $this->getCacheKey() );
+			$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
 			$this->userPreferences()->deleteFromCache( $this->getId() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
@@ -2797,40 +2800,18 @@ class User implements JsonSerializable {
 
 	/**
 	 * Get the user's edit count.
-	 * @return Int
-	 */
-	public function getEditCount() {
-		if( $this->getId() ) {
-			if ( !isset( $this->mEditCount ) ) {
-				/* Populate the count, if it has not been populated yet */
-				$this->mEditCount = User::edits( $this->mId );
-			}
-			return $this->mEditCount;
-		} else {
-			/* nil */
-			return null;
-		}
-	}
-
-	/**
-	 * Wikia. Get number of edits localized for wiki,
-	 *
 	 * NOTE: UserStatsService:getEditCountWiki function retrieves User object inside
 	 * due to this fact localized editcount shouldn't be a field of User class
 	 * to avoid infinite loop
-	 *
-	 * @autor Kamil Koterba
-	 * @since Feb 2013
 	 * @return Int
 	 */
-	public function getEditCountLocal() {
-		if( $this->getId() ) {
-
+	public function getEditCount() {
+		if ( $this->getId() ) {
 			$userStatsService = new UserStatsService( $this->mId );
 			return $userStatsService->getEditCountWiki();
-
 		}
-		return null;
+
+		return 0;
 	}
 
 	/**
@@ -3194,6 +3175,7 @@ class User implements JsonSerializable {
 	 * @todo Only rarely do all these fields need to be set!
 	 */
 	public function saveSettings() {
+		global $wgExternalSharedDB;
 		$this->load();
 		if ( wfReadOnly() ) {
 			return;
@@ -3206,8 +3188,8 @@ class User implements JsonSerializable {
 
 		Hooks::run( 'BeforeUserSaveSettings', array( $this ) );
 
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->update( 'user',
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+		$dbw->update( '`user`',
 			array( /* SET */
 				'user_name' => $this->mName,
 				'user_real_name' => $this->mRealName,
@@ -4044,40 +4026,18 @@ class User implements JsonSerializable {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
-		global $wgEnableEditCountLocal;
-		if( !$this->isAnon() ) {
-			// wikia change, load always from first cluster when we use
-			// shared users database
-			// @author Lucas Garczewski (tor)
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbw = wfGetDB( DB_MASTER );
-			}
-
-			$dbw->update( '`user`',
-				array( 'user_editcount=user_editcount+1' ),
-				array( 'user_id' => $this->getId() ),
-				__METHOD__ );
-			$dbw->commit();
-
+		if ( !$this->isAnon() ) {
 			/**
 			 * Wikia change
 			 * Update editcount for wiki
 			 * @since Feb 2013
 			 * @author Kamil Koterba
 			 */
-			if ( !empty($wgEnableEditCountLocal) ) {
-				$userStatsService = new UserStatsService( $this->getId() );
-				$userStatsService->increaseEditsCount();
-			}
-			/* end of change */
 
+			$userStatsService = new UserStatsService( $this->getId() );
+			$userStatsService->increaseEditsCount();
+			/* end of change */
 		}
-		// edit count in user cache too
-		$this->invalidateCache();
 	}
 
 	/**
@@ -4150,16 +4110,10 @@ class User implements JsonSerializable {
 		} else {
 			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
 			// Load from database
-			// wikia change, load always from first cluster when we use
 			// shared users database
 			// @author Krzysztof Krzyżaniak (eloy)
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbr = wfGetDB( DB_SLAVE );
-			}
+			global $wgExternalSharedDB;
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 			$res = $dbr->select(
 				'user_properties',
@@ -4200,19 +4154,11 @@ class User implements JsonSerializable {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange;
-
-		$extuser = ExternalUser::newFromUser( $this );
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB;
-		if( isset( $wgSharedDB ) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		}
-		else {
-			$dbw = wfGetDB( DB_MASTER );
-		}
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
 		$insertRows = $deletePrefs = [];
 
@@ -4232,17 +4178,6 @@ class User implements JsonSerializable {
 			} elseif ($this->isDefaultOption($key, $value)) {
 				$deletePrefs[] = $key;
 			}
-			# </Wikia>
-			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
-				switch ( $wgAllowPrefChange[$key] ) {
-					case 'local':
-					case 'message':
-						break;
-					case 'semiglobal':
-					case 'global':
-						$extuser->setPref( $key, $value );
-				}
-			}
 		}
 
 		// user has default set, so clear any other entries from db
@@ -4255,10 +4190,6 @@ class User implements JsonSerializable {
 		}
 
 		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK, __METHOD__);
-
-		if ( $extuser ) {
-			$extuser->updateUser();
-		}
 	}
 
 	/**

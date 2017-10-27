@@ -11,7 +11,6 @@ require([
 	'wikia.articleVideo.trackingQueue',
 	'wikia.articleVideo.ooyalaService',
 	require.optional('ext.wikia.adEngine.lookup.a9'),
-	require.optional('ext.wikia.adEngine.video.player.ooyala.ooyalaTracker'),
 	require.optional('ext.wikia.adEngine.video.ooyalaAdSetProvider')
 ], function (
 	window,
@@ -26,7 +25,6 @@ require([
 	TrackingQueue,
 	ooyalaService,
 	a9,
-	playerTracker,
 	ooyalaAdSetProvider
 ) {
 
@@ -45,14 +43,14 @@ require([
 			collapsingDisabled = false,
 			playTime = -1,
 			percentagePlayTime = -1,
-			playerTrackerParams = {
-				adProduct: 'featured-video-preroll',
-				slotName: 'FEATURED'
-			},
-			trackingQueue = new TrackingQueue({
+			trackingOptions = {
 				category: 'article-video',
-				trackingMethod: 'analytics'
-			}),
+				trackingMethod: 'analytics',
+				eventName: 'videoplayerevent',
+				player: 'ooyala',
+				videoId: window.wgFeaturedVideoData.videoId
+			},
+			trackingQueue = new TrackingQueue(trackingOptions),
 			track = trackingQueue.track.bind(trackingQueue),
 			collapsedVideoSize = {
 				width: 300,
@@ -85,12 +83,16 @@ require([
 					}
 				},
 				options = {
-					pcode: window.wgOoyalaParams.ooyalaPCode,
-					playerBrandingId: window.wgOoyalaParams.ooyalaPlayerBrandingId,
-					videoId: videoId,
+					adTrackingParams: {
+						adProduct: 'featured-video-preroll',
+						slotName: 'FEATURED'
+					},
 					autoplay: autoplayOnLoad,
 					inlineSkinConfig: inlineSkinConfig,
-					recommendedLabel: recommendedLabel
+					pcode: window.wgOoyalaParams.ooyalaPCode,
+					playerBrandingId: window.wgOoyalaParams.ooyalaPlayerBrandingId,
+					recommendedLabel: recommendedLabel,
+					videoId: videoId
 				};
 
 			if (ooyalaAdSetProvider.canShowAds()) {
@@ -110,7 +112,7 @@ require([
 				}
 
 			} else {
-				playerTrackerParams.adProduct = 'featured-video-no-preroll';
+				options.adTrackingParams.adProduct = 'featured-video-no-preroll';
 				initPlayerWithTracking(options, onCreate);
 			}
 
@@ -118,10 +120,6 @@ require([
 		}
 
 		function initPlayerWithTracking(options, onCreate) {
-			if (playerTracker) {
-				playerTracker.track(playerTrackerParams, 'init');
-			}
-
 			ooyalaVideoController = OoyalaPlayer.initHTML5Player(ooyalaVideoElementId, options, onCreate);
 		}
 
@@ -256,6 +254,8 @@ require([
 			window.guaSetCustomDimension(34, videoId);
 			window.guaSetCustomDimension(35, videoTitle);
 			window.guaSetCustomDimension(36, videoLabels);
+
+			trackingOptions.videoId = videoId;
 		}
 
 		updateVideoCustomDimensions(videoId, videoTitle, videoLabels);
@@ -263,10 +263,6 @@ require([
 
 		initVideo(function (player) {
 			$video.addClass('ready-to-play');
-
-			if (playerTracker) {
-				playerTracker.register(player, playerTrackerParams);
-			}
 
 			player.mb.subscribe(window.OO.EVENTS.INITIAL_PLAY, 'featured-video', function () {
 				initialPlayTriggered = true;
@@ -360,7 +356,7 @@ require([
 				}
 
 				if (secondsPlayed >= 5 && !videoFeedbackBox && player.getState() === window.OO.STATE.PLAYING) {
-					videoFeedbackBox = new VideoFeedbackBox();
+					videoFeedbackBox = new VideoFeedbackBox('#article-video .video-feedback');
 					videoFeedbackBox.init();
 				}
 			});

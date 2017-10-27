@@ -1,14 +1,13 @@
 <?php
 
 class CheckUserLogPager extends ReverseChronologicalPager {
-	var $searchConds, $specialPage, $y, $m;
+	private $searchConds, $specialPage;
+
+	/** @var array map of user IDs to user names */
+	private $userNames = [];
 
 	function __construct( $specialPage, $searchConds, $y, $m ) {
 		parent::__construct();
-		/*
-		$this->messages = array_map( 'wfMsg',
-			array( 'comma-separator', 'checkuser-log-userips', 'checkuser-log-ipedits', 'checkuser-log-ipusers',
-			'checkuser-log-ipedits-xff', 'checkuser-log-ipusers-xff' ) );*/
 
 		$this->getDateCond( $y, $m );
 		$this->searchConds = $searchConds ? $searchConds : array();
@@ -26,11 +25,16 @@ class CheckUserLogPager extends ReverseChronologicalPager {
 			$comment = $skin->commentBlock( $row->cul_reason );
 		}
 
-		$user = $skin->userLink( $row->cul_user, $row->user_name );
+		if ( isset( $this->userNames[$row->cul_user] ) ) {
+			$user = $skin->userLink( $row->cul_user, $this->userNames[$row->cul_user] );
+		}
 
-		if ( $row->cul_type == 'userips' || $row->cul_type == 'useredits' ) {
-			$target = $skin->userLink( $row->cul_target_id, $row->cul_target_text ) .
-				$skin->userToolLinks( $row->cul_target_id, $row->cul_target_text );
+		// SUS-3115: When getting user's IPs, or user's edits in CU, the target is an user and is// logged as such
+		if ( ( $row->cul_type == 'userips' || $row->cul_type == 'useredits' ) &&
+			 isset( $this->userNames[$row->cul_target_id] )
+		) {
+			$target = $skin->userLink( $row->cul_target_id, $this->userNames[$row->cul_target_id] );
+			$target .= $skin->userToolLinks( $row->cul_target_id, $this->userNames[$row->cul_target_id] );
 		} else {
 			$target = $row->cul_target_text;
 		}
@@ -45,6 +49,28 @@ class CheckUserLogPager extends ReverseChronologicalPager {
 			) .
 			$comment .
 			'</li>';
+	}
+
+	/**
+	 * SUS-3115: Load user names for user IDs contained in the result set
+	 * @param ResultWrapper $result
+	 */
+	protected function preprocessResults( $result ) {
+		$userIds = [];
+
+		foreach ( $result as $row ) {
+			if ( $row->cul_user > 0 ) {
+				$userIds[] = $row->cul_user;
+			}
+
+			if ( $row->cul_target_id > 0 ) {
+				$userIds[] = $row->cul_target_id;
+			}
+		}
+
+		$result->rewind();
+		
+		$this->userNames = User::whoAre( $userIds );
 	}
 
 	function getStartBody() {
@@ -68,12 +94,11 @@ class CheckUserLogPager extends ReverseChronologicalPager {
 	}
 
 	function getQueryInfo() {
-		$this->searchConds[] = 'user_id = cul_user';
-		return array(
-			'tables' => array( 'cu_log', 'user' ),
+		return [
+			'tables' => [ 'cu_log' ],
 			'fields' => $this->selectFields(),
-			'conds'  => $this->searchConds
-		);
+			'conds' => $this->searchConds,
+		];
 	}
 
 	function getIndexField() {
@@ -81,9 +106,14 @@ class CheckUserLogPager extends ReverseChronologicalPager {
 	}
 
 	function selectFields() {
-		return array(
-			'cul_id', 'cul_timestamp', 'cul_user', 'cul_reason', 'cul_type',
-			'cul_target_id', 'cul_target_text', 'user_name'
-		);
+		return [
+			'cul_id',
+			'cul_timestamp',
+			'cul_user',
+			'cul_reason',
+			'cul_type',
+			'cul_target_id',
+			'cul_target_text',
+		];
 	}
 }

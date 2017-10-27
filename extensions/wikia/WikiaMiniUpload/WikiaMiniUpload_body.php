@@ -429,6 +429,7 @@ class WikiaMiniUpload {
 	 * @return bool|String
 	 */
 	function insertImage() {
+		/* @var WebRequest $wgRequest */
 		global $wgRequest, $wgUser, $wgContLang;
 
 		$this->assertValidRequest();

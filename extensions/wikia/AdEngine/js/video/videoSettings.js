@@ -1,13 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoSettings', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.utils.sampler',
-	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.window'
-], function (resolvedState, sampler, geo, win) {
+], function (adContext, resolvedState, sampler, instantGlobals, win) {
 	'use strict';
-
-	var moatTrackingCountries = [ 'AU', 'CA', 'DE', 'UK', 'US' ];
 
 	function create(params) {
 		var state = {
@@ -32,13 +31,17 @@ define('ext.wikia.adEngine.video.videoSettings', [
 				return params.moatTracking;
 			}
 
-			if ((params.bid && params.bid.moatTracking === 100) || sampling === 100) {
+			if (params.moatTracking === 'useInstantGlobal') {
+				sampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling;
+			}
+
+			if (sampling === 100) {
 				return true;
 			}
 
 			if (sampling > 0) {
 				return sampler.sample('moatVideoTracking',  sampling, 100) &&
-					geo.isProperGeo(moatTrackingCountries);
+					adContext.get('opts.porvataMoatTrackingEnabled');
 			}
 
 			return false;

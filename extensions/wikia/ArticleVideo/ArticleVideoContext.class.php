@@ -49,13 +49,27 @@ class ArticleVideoContext {
 		$wg = F::app()->wg;
 
 		if ( self::isFeaturedVideoEmbedded( $title ) ) {
-			$api = OoyalaBacklotApiService::getInstance();
-
 			$videoData = self::getFeaturedVideos()[$title];
-			$videoData['title'] = $api->getTitle( $videoData['videoId'] );
-			$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
-			$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
+
+			if ( self::isJWPlayer( $videoData ) ) {
+				$details =
+					json_decode( Http::get( 'https://cdn.jwplayer.com/v2/media/' .
+					                        $videoData['mediaId'], 1 ), true );
+				if ( !empty( $details ) ) {
+					$videoData = array_merge( $videoData, $details );
+					$videoData['duration'] =
+						WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				}
+			} else {
+				$api = OoyalaBacklotApiService::getInstance();
+
+				$videoData['title'] = $api->getTitle( $videoData['videoId'] );
+				$videoData['labels'] = $api->getLabels( $videoData['videoId'] );
+				$videoData['duration'] = $api->getDuration( $videoData['videoId'] );
+			}
+
 			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
+			$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
 			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
 
 			return $videoData;
@@ -65,7 +79,14 @@ class ArticleVideoContext {
 	}
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
+		if ( self::isJWPlayer( $featuredVideo ) ) {
+			return isset( $featuredVideo['mediaId'] );
+		}
 		return isset( $featuredVideo['videoId'], $featuredVideo['thumbnailUrl'] );
+	}
+
+	public static function isJWPlayer( $featuredVideo ) {
+		return isset( $featuredVideo['player'] ) && $featuredVideo['player'] === 'jwplayer';
 	}
 
 	/**

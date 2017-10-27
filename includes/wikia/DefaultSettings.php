@@ -234,7 +234,6 @@ $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/Fa
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
 $wgHooks          [ 'LoadExtensionSchemaUpdates'      ][] = 'WikiaUpdater::update';
 $wgAutoloadClasses[ 'WikiaDataAccess'                 ] = "$IP/includes/wikia/WikiaDataAccess.class.php";
-$wgAutoloadClasses[ 'ImageReviewStatuses'             ] = "$IP/extensions/wikia/ImageReview/ImageReviewStatuses.class.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesController'   ] = "$IP/includes/wikia/WikiaUserPropertiesController.class.php";
 $wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/cache/TitleBatch.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesHandlerBase'  ] = "$IP/includes/wikia/models/WikiaUserPropertiesHandlerBase.class.php";
@@ -414,7 +413,6 @@ $wgAutoloadClasses['UserAllowedRequirementTrait'] = $IP . '/includes/wikia/trait
 $wgAutoloadClasses['UserAllowedRequirementThrowsErrorTrait'] = $IP . '/includes/wikia/traits/UserAllowedRequirementTrait.php';
 $wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/IncludeMessagesTrait.php';
 $wgAutoloadClasses['PowerUserTrait'] = $IP . '/includes/wikia/traits/PowerUserTrait.php';
-$wgAutoloadClasses['GlobalUserDataTrait'] = $IP . '/includes/wikia/traits/GlobalUserDataTrait.php';
 $wgAutoloadClasses['TitleTrait'] = $IP . '/includes/wikia/traits/TitleTrait.php';
 
 // Profiler classes
@@ -491,18 +489,14 @@ include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
 $wgAutoloadClasses[ "WikiaApiQuery"                 ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuery.php";
 $wgAutoloadClasses[ "WikiaApiQueryDomains"          ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
 $wgAutoloadClasses[ "WikiaApiQueryPopularPages"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
-$wgAutoloadClasses[ "WikiaApiQueryMostAccessPages"  ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryMostAccessPages.php";
-$wgAutoloadClasses[ "WikiaApiQueryLastEditPages"    ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditPages.php";
-$wgAutoloadClasses[ "WikiaApiQueryTopEditUsers"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryTopEditUsers.php";
-$wgAutoloadClasses[ "WikiaApiQueryMostVisitedPages" ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryMostVisitedPages.php";
 $wgAutoloadClasses[ "WikiaApiQuerySiteInfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
 $wgAutoloadClasses[ "WikiaApiQueryPageinfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/CreateNewWiki/WikiaApiCreatorReminderEmail.php";
 $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
-$wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
 $wgAutoloadClasses[ "ApiLicenses"                   ] = "$IP/includes/wikia/api/ApiLicenses.php";
+$wgAutoloadClasses['ApiQueryUserGroupMembers'] = "$IP/includes/api/wikia/ApiQueryUserGroupMembers.php";
 
 /**
  * validators
@@ -545,11 +539,7 @@ $wgAutoloadClasses['GlobalVarConfig'] = $IP . '/includes/config/GlobalVarConfig.
 global $wgAPIListModules;
 $wgAPIListModules[ "wkdomains"    ] = "WikiaApiQueryDomains";
 $wgAPIListModules[ "wkpoppages"   ] = "WikiaApiQueryPopularPages";
-$wgAPIListModules[ "wkaccessart"  ] = "WikiaApiQueryMostAccessPages";
-$wgAPIListModules[ "wkeditpage"   ] = "WikiaApiQueryLastEditPages";
-$wgAPIListModules[ "wkedituser"   ] = "WikiaApiQueryTopEditUsers";
-$wgAPIListModules[ "wkmostvisit"  ] = "WikiaApiQueryMostVisitedPages";
-
+$wgAPIListModules['groupmembers'] = 'ApiQueryUserGroupMembers';
 
 /**
  * registered API methods
@@ -567,7 +557,6 @@ global $wgAjaxExportList;
  */
 global $wgAPIPropModules;
 $wgAPIPropModules[ "info"         ] = "WikiaApiQueryPageinfo";
-$wgAPIPropModules[ "wklasteditors"] = "WikiaApiQueryLastEditors";
 
 /**
  * reqistered API modules
@@ -686,7 +675,6 @@ $wgExtensionsPath = false; /// defaults to "{$wgScriptPath}/extensions"
 /**
  * Auxiliary variables for CreateWikiTask
  */
-$wgHubCreationVariables = array();
 $wgLangCreationVariables = array();
 
 /**
@@ -703,9 +691,9 @@ require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /**
  * @name wgExternalSharedDB
- * use it when you have $wgSharedDB on an external cluster
+ * All wikis use shared database to fetch user data
  */
-$wgExternalSharedDB = false;
+$wgExternalSharedDB = 'wikicities';
 
 /**
  * @name wgDumpsDisabledWikis
@@ -1907,8 +1895,9 @@ include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
-/**
- * SUS-2164: Include Facebook extensions - enabled globally
- */
+// SUS-2164: Include Facebook extensions - enabled globally
 require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
 require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
+
+// SUS-2956: Include MultiLookup extension
+require_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
