@@ -64,7 +64,8 @@ require([
 		playerInstance.setup({
 			advertising: {
 				autoplayadsmuted: willAutoplay,
-				client: 'googima'
+				client: 'googima',
+				vpaidcontrols: true
 			},
 			autostart: willAutoplay && !document.hidden,
 			description: videoDetails.description,
