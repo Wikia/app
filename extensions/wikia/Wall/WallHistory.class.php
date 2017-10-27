@@ -156,7 +156,6 @@ class WallHistory extends WikiaModel {
 				'parent_page_id' => $parentPageId,
 				'post_user_id' => $postUserId,
 				'post_ns' => MWNamespace::getSubject( $ns ),
-				'post_user_ip' => null, // TODO SUS-2257 Mix <mix@fandom.com> Remove after migration.
 				'post_user_ip_bin' => ( intval( $postUserId ) === 0 ? inet_pton( $postUserName ) : null ),
 				'is_reply' => $isReply,
 				'comment_id' => $commentId,
