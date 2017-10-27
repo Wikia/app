@@ -145,7 +145,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 wikiaJWPlayerSettingsPlugin.prototype.isNotSmallPlayer = function () {
 	var classList = this.player.getContainer().classList;
-	return !(classList.contains('jw-breakpoint-1') || classList.contains('jw-breakpoint-2'));
+	return !(classList.contains('jw-breakpoint-0') || classList.contains('jw-breakpoint-1') || classList.contains('jw-breakpoint-2'));
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
