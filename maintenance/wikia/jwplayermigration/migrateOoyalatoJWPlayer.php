@@ -32,8 +32,8 @@ class MigrateOoyalaVideos extends Maintenance {
 		$this->dryRun = $this->hasOption( 'dry-run' );
 		$this->output( "Start \n" );
 
-		//$this->doUpdate( 1689, 'wgArticleVideoFeaturedVideos' );
-		//$this->doUpdate( 1749, 'wgArticleVideoFeaturedVideos2' );
+		$this->doUpdate( 1689, 'wgArticleVideoFeaturedVideos' );
+		$this->doUpdate( 1749, 'wgArticleVideoFeaturedVideos2' );
 	}
 
 	private function doUpdate( $varId, $varName ) {
