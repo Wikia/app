@@ -1,0 +1,78 @@
+@import '../wds-variables/colors';
+
+.wds-toggle {
+	&__input {
+		display: none;
+	}
+
+	&__label {
+		cursor: pointer;
+		font-size: $wds-typescale-size-base;
+		padding: 7px 5px 7px 52px;
+		position: relative;
+
+		&:empty {
+			padding-left: 45px;
+		}
+
+		&::before, &::after {
+			content: '';
+			margin: 0;
+			outline: 0;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			transition: transform, background-color;
+			transition-duration: .3s;
+			transition-timing-function: ease
+		}
+
+		&::before {
+			background-color: $wds-color-light-c5;
+			border-radius: 8px;
+			height: 14px;
+			left: 6px;
+			width: 34px;
+		}
+
+		&::after {
+			@include square(20px);
+
+			background-color: $wds-color-light-c2;
+			border-radius: 50%;
+			box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .14), 0 2px 2px 0 rgba(0, 0, 0, .098), 0 1px 5px 0 rgba(0, 0, 0, .084);
+			left: 5px;
+		}
+
+		.wds-toggle__input:checked + &::before {
+			background-color: lighten($wds-color-link, 30%);
+		}
+
+		.wds-toggle__input:checked + &::after {
+			background-color: $wds-color-link;
+			transform: translate(80%, -50%);
+		}
+
+		.wds-toggle__input:disabled + & {
+			color: $wds-color-light-c4;
+
+			&::before {
+				background-color: lighten($wds-color-light-c5, 20%);
+			}
+
+			&::after {
+				background-color: lighten($wds-color-light-c2, 20%);
+			}
+		}
+
+		.wds-toggle__input:disabled:checked + & {
+			&::before {
+				background-color: lighten($wds-color-link, 40%);
+			}
+
+			&::after {
+				background-color: lighten($wds-color-link, 20%);
+			}
+		}
+	}
+}

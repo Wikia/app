@@ -178,4 +178,20 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].rv).toEqual('2');
 	});
+
+	it('Pass correct testSrc as a param', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
+
+		getProvider({testSrc: 'abc'}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].testSrc).toEqual('abc');
+	});
+
+	it('Pass empty testSrc value for undefined', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
+
+		getProvider().fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].testSrc).toBeUndefined();
+	});
 });
