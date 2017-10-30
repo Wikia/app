@@ -99,22 +99,31 @@ class MercuryApiArticleHandler {
 		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getPrefixedDBkey() );
 
 		if ( !empty( $featuredVideo ) ) {
-			return [
+			$featuredVideoData = [
 				'type' => 'video',
 				'context' => 'featured-video',
-				'url' => $featuredVideo['thumbnailUrl'],
-				'provider' => 'ooyala-v4',
 				'embed' => [
-					'provider' => 'ooyala-v4',
 					'jsParams' => [
 						'dfpContentSourceId' => F::app()->wg->AdDriverDfpOoyalaContentSourceId,
-						'videoId' => $featuredVideo['videoId']
-					]
+					],
 				],
 				'title' => $featuredVideo['title'],
 				'duration' => $featuredVideo['duration'],
-				'labels' => $featuredVideo['labels']
 			];
+			if ( isset( $featuredVideo['player'] ) && $featuredVideo['player'] === 'jwplayer' ) {
+				$featuredVideoData['provider'] = 'jwplayer';
+				$featuredVideoData['embed']['provider'] = 'jwplayer';
+				$featuredVideoData['ember']['jsParams']['videoId'] = $featuredVideo['mediaId'];
+				$featuredVideoData['tags'] = $featuredVideo['playlist'][0]['tags'];
+			} else {
+				$featuredVideoData['url'] = $featuredVideo['thumbnailUrl'];
+				$featuredVideoData['provider'] = 'ooyala-v4';
+				$featuredVideoData['embed']['provider'] = 'ooyala-v4';
+				$featuredVideoData['ember']['jsParams']['videoId'] = $featuredVideo['videoId'];
+				$featuredVideoData['labels'] = $featuredVideo['labels'];
+			}
+
+			return $featuredVideoData;
 		}
 
 		return [];
