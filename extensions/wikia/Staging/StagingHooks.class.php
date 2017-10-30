@@ -28,8 +28,10 @@ class StagingHooks {
 			$stagingEnvName = $_SERVER['HTTP_X_STAGING'];
 			$parts = parse_url( $redirect );
 
-			if ( strpos( $parts['host'], '.wikia.com' ) !== false && strpos( $parts['host'], $stagingEnvName . '.wikia.com' ) === false ) {
-				$url['host'] = str_replace( '.wikia.com', '.' . $stagingEnvName . '.wikia.com', $parts['host'] );
+			if ( strpos( $parts['host'], '.wikia.com' ) !== false
+				&& strpos( $parts['host'], $stagingEnvName . '.wikia.com' ) === false
+			) {
+				$parts['host'] = str_replace( '.wikia.com', '.' . $stagingEnvName . '.wikia.com', $parts['host'] );
 				$redirect = http_build_url( '', $parts );
 			}
 		}
