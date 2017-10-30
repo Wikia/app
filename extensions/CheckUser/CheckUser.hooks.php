@@ -39,7 +39,7 @@ class CheckUserHooks {
 			'cuc_title'      => $rc_title,
 			'cuc_minor'      => $rc_minor,
 			'cuc_user'       => $rc_user,
-			'cuc_user_text'  => $rc_user_text,
+			// 'cuc_user_text'  => $user->isAnon() ? $rc_user_text : '', // SUS-3080 - this column is redundant
 			'cuc_actiontext' => $actionText,
 			'cuc_comment'    => $rc_comment,
 			'cuc_this_oldid' => $rc_this_oldid,
@@ -81,7 +81,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(),// SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( 'checkuser-reset-action', $account->getName() ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -126,7 +126,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $userFrom->getId(),
-			'cuc_user_text'  => $userFrom->getName(),
+			// 'cuc_user_text'  => $userFrom->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( 'checkuser-email-action', $hash ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -189,7 +189,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( $actiontext ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -235,7 +235,7 @@ class CheckUserHooks {
 			'cuc_title'      => $data['title'], // may be ''
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => $data['action'],
 			'cuc_comment'    => $data['comment'],
 			'cuc_this_oldid' => 0,

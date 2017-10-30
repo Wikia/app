@@ -12,6 +12,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			opts: {}
 		},
 		adContext: {
+			get: noop,
 			getContext: function () {
 				return mocks.context;
 			}

@@ -51,7 +51,7 @@ class LoginForm extends SpecialPage {
 	private $mLoaded = false;
 	var $mMarketingOptIn, $mRegistrationCountry;
 	var $wpBirthYear, $wpBirthMonth, $wpBirthDay, $wpMsgPrefix;
-	var $wpUserLoginExt, $wpUserBirthDay;
+	var $wpUserBirthDay;
 
 	/**
 	 * @var ExternalUser_Wikia
@@ -145,7 +145,6 @@ class LoginForm extends SpecialPage {
 		$wgAuth->setDomain( $this->mDomain );
 
 		$this->wpMsgPrefix = 'userlogin-error-';
-		$this->wpUserLoginExt = true;
 
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
@@ -260,8 +259,6 @@ class LoginForm extends SpecialPage {
 	 * clear code after 1.19 merge (MoLi)
 	 */
 	private function wikiaInternalCheck() {
-		global $wgExternalSharedDB;
-
 		$out = $this->getOutput();
 
 		//new registration - start [Marooned [at] wikia-inc.com]
@@ -281,25 +278,6 @@ class LoginForm extends SpecialPage {
 				$out->returnToMain( true );
 			}
 			return false;
-		}
-
-		// check if username is in user_temp table (when new user login is disabled)
-		if ( empty( $this->wpUserLoginExt ) && !empty( $wgExternalSharedDB ) ) {
-			$username = User::getCanonicalName( $this->mUsername, 'valid' );
-			if ( $username != false ) {
-				$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-				$row = $db->selectRow(
-					array( 'user_temp' ),
-					array( 'user_name' ),
-					array( 'user_name' => $username ),
-					__METHOD__
-				);
-
-				if ( $row ) {
-					$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userexists' )->text(), 'error', 'username' );
-					return false;
-				}
-			}
 		}
 
 		return true;
