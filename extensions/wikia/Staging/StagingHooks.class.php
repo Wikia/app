@@ -30,6 +30,7 @@ class StagingHooks {
 
 			if ( strpos( $parts['host'], '.wikia.com' ) !== false
 				&& strpos( $parts['host'], $stagingEnvName . '.wikia.com' ) === false
+				&& $parts['host'] !== 'fandom.wikia.com'
 			) {
 				$parts['host'] = str_replace( '.wikia.com', '.' . $stagingEnvName . '.wikia.com', $parts['host'] );
 				$redirect = http_build_url( '', $parts );
