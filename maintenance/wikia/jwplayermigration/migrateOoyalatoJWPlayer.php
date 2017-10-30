@@ -52,7 +52,9 @@ class MigrateOoyalaVideos extends Maintenance {
 				$this->output( 'Working on page: ' . $pageName . "\n" );
 
 				// If videoId exists in csv add mediaId and player to the var
-				if ( key_exists( 'videoId', $config ) && key_exists( $config['videoId'], $this->map ) ) {
+				if ( key_exists( 'videoId', $config ) && key_exists( $config['videoId'], $this->map ) &&
+					key_exists( 'player', $config ) && $config['player'] !== 'jwplayer'
+				) {
 					$this->output( ' updated ' . $config['videoId'] . ' to ' . $this->map[$config['videoId']] . "\n" );
 					$config['mediaId'] = $this->map[$config['videoId']];
 					$config['player'] = 'jwplayer';
