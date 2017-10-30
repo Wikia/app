@@ -114,42 +114,6 @@ class Answer {
 		}
 	}
 
-	function getOriginalAuthor(){
-		global $wgMemc;
-
-		$page_title_id = $this->title->getArticleID();
-
-		$key = wfMemcKey('answer_author', $page_title_id, 3);
-		$data = $wgMemc->get( $key );
-
-		$author = array();
-		if (empty($data)) {
-			wfDebug( "loading author for question {$page_title_id} from db\n" );
-			$dbr =& wfGetDB( DB_SLAVE );
-
-			$params['ORDER BY'] = "rev_id  ASC";
-			$params['LIMIT'] = 1;
-			$s = $dbr->selectRow( 'revision',
-					array( 'rev_user','rev_user_text', 'rev_timestamp' ),
-					array( 'rev_page' =>  $page_title_id )
-					, __METHOD__,
-					$params
-			);
-
-			$avatarImg = AvatarService::renderAvatar($s->rev_user_text, 30);
-
-			$user_title = Title::makeTitle(NS_USER,$s->rev_user_text);
-
-			$author = array( "user_id" => $s->rev_user, "user_name" => $s->rev_user_text, "title" => $user_title, "avatar" => $avatarImg, "ts" => $s->rev_timestamp );
-
-			$wgMemc->set( $key, $author, 60 * 60 );
-		}else{
-			wfDebug( "loading author for question for page {$page_title_id} from cache\n" );
-			$author = $data;
-		}
-		return $author;
-	}
-
 	public function getContributors() {
 		return AttributionCache::getInstance()->getArticleContribs($this->title);
 	}

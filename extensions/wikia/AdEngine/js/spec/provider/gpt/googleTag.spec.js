@@ -43,6 +43,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			slotRegistry: {
 				get: noop
 			},
+			srcProvider: {},
 			window: {
 				googletag: {
 					cmd: {
@@ -97,6 +98,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			mocks.googleSlots,
 			mocks.adSlot,
 			mocks.slotRegistry,
+			mocks.srcProvider,
 			document,
 			mocks.log,
 			mocks.window

@@ -30,6 +30,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 		moatVideoTracker: {
 			init: noop()
 		},
+		vastDebugger: {},
 		videoSettings: {
 			getParams: function() {
 				return {
@@ -80,6 +81,7 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', funct
 		return modules['ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory'](
 			mocks.imaSetup,
 			mocks.moatVideoTracker,
+			mocks.vastDebugger,
 			mocks.document,
 			mocks.log,
 			mocks.win

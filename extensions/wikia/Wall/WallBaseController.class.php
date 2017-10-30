@@ -507,7 +507,7 @@ class WallBaseController extends WikiaService {
 
 				$wallOwner = $wallMessage->getWallOwner()->getName();
 
-				$wallName = wfMessage( 'wall-message-elseswall', $wallOwner )->parse();
+				$wallName = wfMessage( 'wall-message-elseswall', $wallOwner )->text();
 			}
 
 			$wallUrl = $wallMessage->getWallUrl();

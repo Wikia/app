@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.video.player.ui.dynamicReveal', [
 		if (params.isDynamic) {
 			slot = doc.getElementById(params.slotName);
 
-			video.addEventListener('start', function () {
+			video.addEventListener('loaded', function () {
 				if (!slotExpanded) {
 					slotTweaker.expand(params.slotName);
 					slotExpanded = true;

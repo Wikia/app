@@ -10,7 +10,6 @@ class WallHistoryFinder {
 		'comment_id',
 		'deleted_or_removed',
 		'event_date',
-		'reason',
 		'action',
 		'is_reply',
 		'post_user_id',

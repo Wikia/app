@@ -40,6 +40,10 @@ class WikiaUpdater {
 			# indexes
 			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql', true ),
 
+			# indexes drop
+			array( 'dropIndex', 'ach_user_badges', 'id',  $dir . 'patch-ach-user-badges-drop-id.sql', true ), // SUS-3097
+			array( 'dropIndex', 'ach_user_badges', 'notified_id',  $dir . 'patch-ach-user-badges-drop-notified_id.sql', true ), // SUS-3097
+
 			# functions
 			array( 'WikiaUpdater::do_page_vote_unique_update' ),
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
@@ -64,6 +68,8 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_transcache_update' ),
 			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
+			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
+			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {

@@ -592,6 +592,45 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 *
+	 * @param $ids Array User IDs
+	 * @return Array User ID to User name mapping
+	 */
+	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
+		global $wgExternalSharedDB;
+
+		if ( $ids == [] ) {
+			return [];
+		}
+
+		$ids = array_unique( $ids, SORT_NUMERIC );
+
+		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
+		$res = $sdb->select(
+			'`user`',
+			[ 'user_id', 'user_name' ],
+			[ 'user_id' => $ids ],
+			__METHOD__
+		);
+
+		// Pre-fill the returned array with empty strings
+		// so that missing users are not skipped.
+		// It makes further iterating over the array
+		// and handling anons and missing users a little
+		// bit easier.
+		$users = array_fill_keys( $ids, '' );
+
+		// Add the name used to indicate anonymous users.
+		$users[0] = wfMessage( 'oasis-anon-user' )->escaped();
+
+		foreach ( $res as $row ) {
+			$users[ $row->user_id ] = (string) $row->user_name;
+		}
+
+		return $users;
+	}
+
+	/**
 	 * Get the real name of a user given their user ID
 	 *
 	 * @param $id Int User ID
@@ -1097,7 +1136,6 @@ class User implements JsonSerializable {
 			# Initialise user table data
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
-			$this->getEditCount(); // revalidation for nulls
 			return true;
 		} else {
 			# Invalid user_id

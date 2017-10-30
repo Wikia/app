@@ -1,0 +1,92 @@
+@import 'video-shared-variables';
+
+.featured-video {
+	padding-top: 56.25%; // we want to have 16:9 ratio div size
+	position: relative;
+	width: 100%;
+
+	&__player-container {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transform: translate3d(0, 0, 0); // hack for iOS for changing position to fixed while scrolling
+		z-index: 2; // this is set to 2 because it has to be larger than z-index of `.WikiaArticle` which is set to 1
+	}
+
+	&.is-collapsed-ready &__player-container {
+		left: auto;
+		position: fixed;
+		top: auto;
+	}
+
+	&.is-collapsed {
+		.featured-video {
+			&__player-container {
+				bottom: 45px !important;
+				left: auto;
+				position: fixed;
+				right: 20px !important;
+				top: auto;
+				transition: right $video-collapse-animation-speed, bottom $video-collapse-animation-speed, width $video-collapse-animation-speed;
+				width: $video-container-width !important;
+			}
+
+			&__details {
+				display: block;
+			}
+
+			&__close {
+				cursor: pointer;
+				display: block;
+			}
+		}
+	}
+
+	&__details {
+		background-color: #000;
+		display: none;
+		font-weight: bold;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+		padding: $video-details-horizontal-padding $video-details-vertical-padding;
+
+		> div {
+			max-width: $video-container-width - 2 * $video-details-vertical-padding;
+		}
+	}
+
+	&__title {
+		color: #ccc;
+		font-size: 14px;
+	}
+
+	&__label {
+		color: #999;
+		font-size: 12px;
+		opacity: 0.5;
+		text-transform: uppercase;
+	}
+
+	&__time {
+		&:before {
+			content: '\2022'; // bullet (•)
+			padding: 0 2px;
+		}
+	}
+
+	&__close {
+		display: none;
+		fill: #fff;
+		left: 0;
+		padding: 7px;
+		position: absolute;
+		top: 0;
+		z-index: 1;
+	}
+
+	&__wrapper.is-removed {
+		display: none;
+	}
+}

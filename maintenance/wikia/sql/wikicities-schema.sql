@@ -381,6 +381,7 @@ CREATE TABLE `messages_text` (
   `msg_expire` datetime DEFAULT NULL,
   `msg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `msg_recipient_name` varchar(255) DEFAULT NULL,
+  `msg_recipient_user_id` int(5) unsigned DEFAULT NULL,
   `msg_group_name` varchar(255) DEFAULT NULL,
   `msg_wiki_name` varchar(255) DEFAULT NULL,
   `msg_hub_id` int(9) DEFAULT NULL,
@@ -485,11 +486,13 @@ DROP TABLE IF EXISTS `shared_newtalks`;
 CREATE TABLE `shared_newtalks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sn_user_id` int(5) unsigned DEFAULT NULL,
-  `sn_user_ip` varchar(255) DEFAULT '',
+  `sn_anon_ip` varbinary(16) DEFAULT NULL,
   `sn_wiki` varchar(31) DEFAULT NULL,
   `sn_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `sn_user_id_sn_user_ip_sn_wiki_idx` (`sn_user_id`,`sn_user_ip`,`sn_wiki`)
+  KEY `idx_user_ip_wiki` (`sn_wiki`),
+  KEY `idx_user_id_wiki` (`sn_user_id`,`sn_wiki`),
+  KEY `idx_anon_ip_wiki` (`sn_anon_ip`,`sn_wiki`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -674,4 +677,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-16 14:47:41
+-- Dump completed on 2017-10-26 13:34:32

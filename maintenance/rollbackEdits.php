@@ -77,16 +77,26 @@ class RollbackEdits extends Maintenance {
 
 	/**
 	 * Get all pages that should be rolled back for a given user
-	 * @param $user String a name to check against rev_user_text
+	 * @param $username String a name to check against rev_user_text
 	 * @return array
 	 */
-	private function getRollbackTitles( $user ) {
+	private function getRollbackTitles( $username ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$titles = array();
+		$titles = [];
+		$conditions = [ 'page_latest = rev_id' ];
+
+		// SUS-807
+		$userId = User::idFromName( $username );
+		if ( $userId ) {
+			$conditions['rev_user'] = $userId;
+		} else {
+			$conditions['rev_user_text'] = $username;
+		}
+
 		$results = $dbr->select(
-			array( 'page', 'revision' ),
-			array( 'page_namespace', 'page_title' ),
-			array( 'page_latest = rev_id', 'rev_user_text' => $user ),
+			[ 'page', 'revision' ],
+			[ 'page_namespace', 'page_title' ],
+			$conditions,
 			__METHOD__
 		);
 		foreach ( $results as $row ) {
