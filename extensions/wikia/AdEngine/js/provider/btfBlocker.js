@@ -22,13 +22,17 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		unblockedSlots.push(slotName);
 	}
 
+	function isBTFDisabledByCreative() {
+		return win.ads.runtime.disableBtf;
+	}
+
 	function decorate(fillInSlot, config) {
 		var btfQueue = [],
 			btfQueueStarted = false,
 			pendingAtfSlots = []; // ATF slots pending for response
 
 		// Update state on each pv on Mercury
-		adContext.addCallback(function() {
+		adContext.addCallback(function () {
 			btfQueue = [];
 			btfQueueStarted = false;
 			pendingAtfSlots = [];
@@ -60,7 +64,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 					config.highlyViewableSlots.map(unblock);
 				}
 
-				if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
+				if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
 					log(['Filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
 					return;
@@ -71,8 +75,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function startBtfQueue() {
-			var context = adContext.getContext(),
-				roadblockBlocksBtf = uapContext.isRoadblockLoaded() && win.ads.runtime.disableBtf;
+			var context = adContext.getContext();
 
 			log('startBtfQueue', log.levels.info.debug, logGroup);
 
@@ -80,7 +83,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled && !roadblockBlocksBtf) {
+			if (context.opts.premiumAdLayoutEnabled && !isBTFDisabledByCreative()) {
 				win.ads.runtime.disableBtf = true;
 				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}

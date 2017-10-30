@@ -211,6 +211,9 @@ class BlockListPager extends TablePager {
 	protected $conds;
 	protected $page;
 
+	/** @var array map of user IDs to user names */
+	protected $userNames = [];
+
 	/**
 	 * @param $page SpecialPage
 	 * @param $conds Array
@@ -319,11 +322,9 @@ class BlockListPager extends TablePager {
 				break;
 
 			case 'ipb_by':
-				if ( isset( $row->by_user_name ) ) {
-					$formatted = Linker::userLink( $value, $row->by_user_name );
-					$formatted .= Linker::userToolLinks( $value, $row->by_user_name );
-				} else {
-					$formatted = htmlspecialchars( \User::getUsername( $row->ipb_by, $row->ipb_by_text ) ); // foreign user?
+				if ( isset( $this->userNames[$row->ipb_by] ) ) {
+					$formatted = Linker::userLink( $value, $this->userNames[$row->ipb_by] );
+					$formatted .= Linker::userToolLinks( $value, $this->userNames[$row->ipb_by] );
 				}
 				break;
 
@@ -361,14 +362,13 @@ class BlockListPager extends TablePager {
 
 	function getQueryInfo() {
 		$info = array(
-			'tables' => array( 'ipblocks', 'user' ),
+			'tables' => array( 'ipblocks' ),
 			'fields' => array(
 				'ipb_id',
 				'ipb_address',
 				'ipb_user',
 				'ipb_by',
 				'ipb_by_text',
-				'user_name AS by_user_name',
 				'ipb_reason',
 				'ipb_timestamp',
 				'ipb_auto',
@@ -382,7 +382,6 @@ class BlockListPager extends TablePager {
 				'ipb_allow_usertalk',
 			),
 			'conds' => $this->conds,
-			'join_conds' => array( 'user' => array( 'LEFT JOIN', 'user_id = ipb_by' ) )
 		);
 
 		# Is the user allowed to see hidden blocks?
@@ -419,10 +418,11 @@ class BlockListPager extends TablePager {
 		$lb = new LinkBatch;
 		$lb->setCaller( __METHOD__ );
 
-		$userids = array();
+		$userIds = [];
 
 		foreach ( $result as $row ) {
-			$userids[] = $row->ipb_by;
+			// SUS-3108: We know that this field is > 0, as blocks cannot be made by anons
+			$userIds[] = $row->ipb_by;
 
 			# Usernames and titles are in fact related by a simple substitution of space -> underscore
 			# The last few lines of Title::secureAndSplit() tell the story.
@@ -431,12 +431,16 @@ class BlockListPager extends TablePager {
 			$lb->add( NS_USER_TALK, $name );
 		}
 
-		$ua = UserArray::newFromIDs( $userids );
-		foreach( $ua as $user ){
-			$name = str_replace( ' ', '_', $user->getName() );
-			$lb->add( NS_USER, $name );
-			$lb->add( NS_USER_TALK, $name );
-		} 
+		$result->rewind();
+
+		// SUS-3108: Use username lookup to fetch user names
+		$this->userNames = User::whoAre( $userIds );
+		foreach ( $this->userNames as $userName ) {
+			$lbName = str_replace( ' ', '_', $userName );
+
+			$lb->add( NS_USER, $lbName );
+			$lb->add( NS_USER_TALK, $lbName );
+		}
 
 		$lb->execute();
 		wfProfileOut( __METHOD__ );

@@ -6,19 +6,19 @@ form.highlightform {
 form.highlightform * {
 	position: relative;
 }
-#highlightform li { 
+#highlightform li {
 	list-style-image:none;
 	list-style-position:outside;
 	list-style-type:none;
 }
 div.formhighlight {
-	background: #dbe7ff;	
+	background: #dbe7ff;
 	position: absolute;
 	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;	
+	-webkit-border-radius: 10px;
 }
 .formblock {
-	overflow: hidden;	
+	overflow: hidden;
 	padding: 10px 0;
 	position: relative;
 	width: 100%;
@@ -27,7 +27,7 @@ div.formhighlight {
 	-webkit-border-radius: 10px;
 }
 .formblock ul {
-	overflow: hidden;	
+	overflow: hidden;
 	padding: 10px 0;
 }
 .formblock .label {
@@ -37,28 +37,28 @@ div.formhighlight {
 }
 .label label {
 	display: block;
-	padding-left: 15px;	
+	padding-left: 15px;
 	font-size: 9pt;
 }
 .label label.required {
-	background: url(http://images.wikia.com/common/skins/common/required.png) 5px .3em no-repeat;	
+	background: url(https://images.wikia.nocookie.net/common/skins/common/required.png) 5px .3em no-repeat;
 }
 .formblock .data1 {
 	float: left;
 	padding-left: 10px;
-	width: 350px;	
+	width: 350px;
 }
 .formblock .data1 input {
-	width: 200px;	
+	width: 200px;
 }
 .formblock .data1 select {
-	width: 250px;	
+	width: 250px;
 }
 #highlightform .formblock ul.col2 .data1 {
 	float: none;
 	margin-left: 175px;
 	padding-right: 15px;
-	width: auto;	
+	width: auto;
 }
 #highlightform .formblock li.data2 {
 	margin-left: 520px;
@@ -69,7 +69,7 @@ div.formhighlight {
 	width: auto !important;
 }
 .selected {
-	background: #dbe7ff;	
+	background: #dbe7ff;
 }
 .note {
 	color: #666;
@@ -87,7 +87,7 @@ div.formhighlight {
 
 .legend {
 	margin-bottom: 5px;
-	text-align: right;	
+	text-align: right;
 }
 
 /*** ERROR HANDLING***/
@@ -100,10 +100,10 @@ div.error {
 form div.error {
 	font-family: sans-serif;
 	font-size: x-small;
-	margin: 10px 10px 0 0;	
+	margin: 10px 10px 0 0;
 }
 label.error {
-	color: #C00;	
+	color: #C00;
 }
 input.error, select.error {
 	border: 1px solid #C00;

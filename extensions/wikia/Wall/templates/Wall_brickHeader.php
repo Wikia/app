@@ -2,9 +2,11 @@
 	<? $total = count( $path ) - 1 ?>
 	<? foreach ( $path as $index => $val ): ?>
 		<? if ( !empty( $val['url'] ) ): ?>
-			<a href="<?= $val['url'] ?>" title="<?= $val['title'] ?>"><?= $val['title'] ?></a>
+			<a href="<?= $val['url'] ?>" title="<?= Sanitizer::encodeAttribute( $val['title'] ); ?>">
+				<?= htmlspecialchars( $val['title'] ); ?>
+			</a>
 		<? else: ?>
-			<?= $val['title'] ?>
+			<?= htmlspecialchars( $val['title'] ); ?>
 		<? endif; ?>
 		<? if ( $index < $total ): ?>
 			<span class="separator">&gt;</span>

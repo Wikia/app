@@ -140,14 +140,11 @@ class WikiFactory {
 	 * @return string - table name with database
 	 */
 	static public function table( $table, $column = false ) {
-		global $wgExternalSharedDB;
-
-		$database = !empty( $wgExternalSharedDB ) ? $wgExternalSharedDB : static::db;
-		if ( $column ) {
-			return sprintf("`%s`.`%s`.`%s`", $database, $table, $column );
+		if ( is_string( $column ) ) {
+			return sprintf("`%s`.`%s`.`%s`", self::db, $table, $column );
 		}
 		else {
-			return sprintf("`%s`.`%s`", $database, $table );
+			return sprintf("`%s`.`%s`", self::db, $table );
 		}
 	}
 
@@ -1263,19 +1260,19 @@ class WikiFactory {
 		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://preview." . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
-				return 'http://verify.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://verify." . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
-				return 'http://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://stable." . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return 'http://' . static::getExternalHostName() . '.' . $server .
+				return "$protocol://" . static::getExternalHostName() . '.' . $server .
 				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return 'http://' . $server . '.' . $wgDevDomain . $address;
+				return "$protocol://" . $server . '.' . $wgDevDomain . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );

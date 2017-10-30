@@ -26,18 +26,37 @@ class RevDel_RevisionList extends RevDel_List {
 	public function doQuery( $db ) {
 		$ids = array_map( 'intval', $this->ids );
 		$live = $db->select(
-			array( 'revision', 'page', 'user' ),
-			array_merge( Revision::selectFields(), Revision::selectUserFields() ),
+			array( 'revision', 'page' ),
+			Revision::selectFields(),
 			array(
 				'rev_page' => $this->title->getArticleID(),
 				'rev_id'   => $ids,
 			),
 			__METHOD__,
 			array( 'ORDER BY' => 'rev_id DESC' ),
-			array(
-				'page' => Revision::pageJoinCond(),
-				'user' => Revision::userJoinCond() )
+			array( 'page' => Revision::pageJoinCond() )
 		);
+
+		// SUS-3108: Use user name lookup to get revision authors
+		$userIds = [];
+		foreach ( $live as $row ) {
+			if ( $row->rev_user > 0 ) {
+				$userIds[] = $row->rev_user;
+			}
+		}
+
+		$live->rewind();
+
+		$userNameMapping = User::whoAre( $userIds );
+		foreach ( $live as $row ) {
+			if ( $row->rev_user > 0 && isset( $userNameMapping[$row->rev_user] ) ) {
+				$row->rev_user_text = $userNameMapping[$row->rev_user];
+			}
+		}
+
+		$live->rewind();
+
+		// SUS-3108 change end
 
 		if ( $live->numRows() >= count( $ids ) ) {
 			// All requested revisions are live, keeps things simple!

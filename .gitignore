@@ -42,3 +42,5 @@ composer.phar
 
 tests/build
 tests/coverage
+
+/HeadlessChrome_*

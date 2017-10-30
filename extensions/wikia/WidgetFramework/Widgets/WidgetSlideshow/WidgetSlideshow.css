@@ -1,11 +1,11 @@
-.WidgetSlideshowImages {  
+.WidgetSlideshowImages {
 	position: relative;
 	overflow: hidden;
 	height:   120px;
 	margin: 3px;
 	list-style: none;
 }
-    
+
 .WidgetSlideshowImages li {
 	position:absolute;
 	top: 0;
@@ -17,13 +17,13 @@
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 }
-    
+
 .WidgetSlideshowImages li a {
 	width: 100%;
 	height: 100%;
 	display: block;
 }
-   
+
 .WidgetSlideshowControls
 {
 	float: right;
@@ -44,25 +44,25 @@
 	text-indent: -99px;
 	overflow: hidden;
 }
-	
+
 .WidgetSlideshowControlPrev
 {
-	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_prev.png);
+	background-image: url(https://images.wikia.nocookie.net/common/skins/common/widgets/icons/widget_slideshow_prev.png);
 }
-	
+
 .WidgetSlideshowControlNext
 {
-	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_next.png);
+	background-image: url(https://images.wikia.nocookie.net/common/skins/common/widgets/icons/widget_slideshow_next.png);
 }
-	
+
 .WidgetSlideshowControlPause
 {
-	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_pause.png);
+	background-image: url(https://images.wikia.nocookie.net/common/skins/common/widgets/icons/widget_slideshow_pause.png);
 }
-	
+
 .WidgetSlideshowControlPlay
 {
-	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_play.png);
+	background-image: url(https://images.wikia.nocookie.net/common/skins/common/widgets/icons/widget_slideshow_play.png);
 }
 
 .WidgetSlideshowControls .blocked {

@@ -12,7 +12,7 @@ CREATE TABLE /*$wgDBprefix*/cu_changes (
 
   -- user.user_id
   cuc_user INTEGER NOT NULL DEFAULT 0,
-  cuc_user_text VARCHAR(255) NOT NULL DEFAULT '',
+  -- cuc_user_text VARCHAR(255) NOT NULL DEFAULT '', -- SUS-3080 - this column is redundant (use either cuc_user or cuc_ip)
 
   -- Edit summary
   cuc_actiontext varchar(255) binary NOT NULL default '',

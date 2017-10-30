@@ -1,0 +1,74 @@
+.jwplayer {
+	.jw-button-container {
+		.jw-icon-rewind,
+		.jw-icon-next,
+		.jw-settings-sharing,
+		.jw-related-btn {
+			display: none;
+		}
+	}
+
+	// resets wikia button styling
+	button {
+		background-image: initial;
+		border-radius: initial;
+		height: initial;
+		text-decoration: initial;
+		white-space: initial;
+
+		&:hover {
+			background-color: initial;
+		}
+	}
+
+
+	.jw-controlbar .jw-icon-inline.jw-text {
+		margin-top: -4px;
+	}
+
+	&.jw-flag-small-player .jw-title-primary {
+		display: none;
+	}
+
+	&.jw-reset, .jw-reset {
+		font-family: inherit;
+	}
+
+	// this is temporary because there was a bug in jwplayer dashboard where we couldn't disable casting
+	// these styles can be removed after jwplayer fix their defect
+	&.jw-flag-cast-available {
+		.jw-icon-cast, .jw-icon-airplay {
+			display: none !important;
+		}
+	}
+
+	// hides controls on vpaid ads when player is not hovered
+	&.jw-flag-ads-vpaid,
+	&.jw-flag-autostart,
+	&.jw-flag-user-inactive.jw-state-playing,
+	&.jw-flag-user-inactive.jw-state-buffering {
+		&.jw-flag-ads-vpaid-controls:not(:hover):not(.jw-flag-media-audio):not(.jw-flag-audio-player):not(.jw-flag-casting) {
+			.jw-controlbar {
+				opacity: 0;
+				pointer-events: none;
+				transition-delay: 0s, 250ms;
+				visibility: hidden;
+			}
+
+			.jw-controls-backdrop {
+				opacity: 0;
+			}
+		}
+	}
+}
+
+// if both .is-collapsed & is-collapsed-ready are added it means animation is in progress and we do not want to show title and controls
+.featured-video.is-collapsed.is-collapsed-ready {
+	.jw-title {
+		display: none;
+	}
+
+	.jw-controls > div {
+		display: none;
+	}
+}
