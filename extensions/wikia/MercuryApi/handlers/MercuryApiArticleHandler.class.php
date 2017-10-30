@@ -115,6 +115,7 @@ class MercuryApiArticleHandler {
 				$featuredVideoData['embed']['provider'] = 'jwplayer';
 				$featuredVideoData['ember']['jsParams']['videoId'] = $featuredVideo['mediaId'];
 				$featuredVideoData['tags'] = $featuredVideo['playlist'][0]['tags'];
+				$featuredVideoData['playlist'] = $featuredVideo['playlist'];
 			} else {
 				$featuredVideoData['url'] = $featuredVideo['thumbnailUrl'];
 				$featuredVideoData['provider'] = 'ooyala-v4';
