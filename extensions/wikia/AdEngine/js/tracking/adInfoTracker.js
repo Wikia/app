@@ -63,6 +63,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_10': transformBidderPrice('appnexusAst'),
 			'bidder_11': transformBidderPrice('rubicon_display'),
 			'bidder_12': transformBidderPrice('a9'),
+			'bidder_13': transformBidderPrice('onemobile'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
 			'creative_id': creative.creativeId || '',
