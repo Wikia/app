@@ -4,7 +4,7 @@
  * Add JWPlayer mediaId to wgFeaturedVideo
  *
  */
-require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 class MigrateOoyalaVideos extends Maintenance {
 
@@ -32,8 +32,8 @@ class MigrateOoyalaVideos extends Maintenance {
 		$this->dryRun = $this->hasOption( 'dry-run' );
 		$this->output( "Start \n" );
 
-		$this->doUpdate( 1689, 'wgArticleVideoFeaturedVideos' );
-		$this->doUpdate( 1749, 'wgArticleVideoFeaturedVideos2' );
+		//$this->doUpdate( 1689, 'wgArticleVideoFeaturedVideos' );
+		//$this->doUpdate( 1749, 'wgArticleVideoFeaturedVideos2' );
 	}
 
 	private function doUpdate( $varId, $varName ) {
@@ -66,7 +66,7 @@ class MigrateOoyalaVideos extends Maintenance {
 				//uncomment to do update
 				// WikiFactory::setVarById($varId,  $wikiId, $videoConfig , 'Automatic migration of Ooyala videos to JWPlayer');
 			} catch ( Exception $exception ) {
-				$this->output( 'Exception!!!!!!!!!!!' );
+				$this->output( 'Exception: ' . $exception->getMessage() );
 			}
 
 			break;
