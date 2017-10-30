@@ -2696,7 +2696,6 @@ $config['jwplayer_scss'] = [
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss',
 		'//extensions/wikia/ArticleVideo/styles/jwplayer-overrides.scss',
-		'//extensions/wikia/ArticleVideo/styles/wikia-jw-settings.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss'
 	],
