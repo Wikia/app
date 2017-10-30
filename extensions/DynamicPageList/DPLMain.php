@@ -2832,7 +2832,7 @@ class DPLMain {
 								case 'user':
 									// SUS-807
 									$username = User::getUsername( $row->rev_user, $row->rev_user_text );
-									$aHeadings[ $username ] = isset( $aHeadings[ $username ] ) ? $aHeadings[ $username ] + 1 : 1;							if($row->rev_user == 0) { //anonymous user
+									$aHeadings[ $username ] = isset( $aHeadings[ $username ] ) ? $aHeadings[ $username ] + 1 : 1;
 									$dplArticle->mParentHLink = '[[User:' . $username . '|' . $username . ']]';
 									break;
 							}
