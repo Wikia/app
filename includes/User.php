@@ -3233,7 +3233,10 @@ class User implements JsonSerializable {
 	public function idForName( $fromMaster = false ) {
 		global $wgExternalSharedDB;
 		$s = trim( $this->getName() );
-		if ( $s === '' ) return 0;
+
+		if ( empty($s) ) {
+			return 0;
+		}
 
 		$dbMode = ( $fromMaster ) ? DB_MASTER : DB_SLAVE;
 		$dbr = wfGetDB( $dbMode, [], $wgExternalSharedDB );
