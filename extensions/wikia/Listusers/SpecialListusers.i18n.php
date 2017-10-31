@@ -304,10 +304,10 @@ $messages['ja'] = array(
 	'listusers-nonegroup' => 'なし',
 	'listusersrecordspager' => '<strong>$3</strong>件中<strong>$1</strong>から<strong>$2</strong>を表示',
 	'listusers-desc' => 'Special list users',
-	'listusersblock' => 'ブロック',
-	'listusersrights' => '権限',
-	'listusers-select-all' => 'すべて選択',
-	'listusers-deselect-all' => 'すべて解除',
+	'listusersblock' => 'Block',
+	'listusersrights' => 'Rights',
+	'listusers-select-all' => 'Select all',
+	'listusers-deselect-all' => 'Deselect all',
 );
 
 $messages['ko'] = array(
