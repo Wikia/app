@@ -11,8 +11,19 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'wikia.window'
-], function(aol, appnexus, appnexusAst, audienceNetwork, indexExchange, onemobile, openx, rubicon, rubiconDisplay,
-			wikia, win) {
+], function(
+	aol,
+	appnexus,
+	appnexusAst,
+	audienceNetwork,
+	indexExchange,
+	onemobile,
+	openx,
+	rubicon,
+	rubiconDisplay,
+	wikia,
+	win
+) {
 	'use strict';
 
 	var adapters = [
