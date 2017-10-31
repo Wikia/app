@@ -496,6 +496,7 @@ $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
 $wgAutoloadClasses[ "ApiLicenses"                   ] = "$IP/includes/wikia/api/ApiLicenses.php";
+$wgAutoloadClasses['ApiQueryUserGroupMembers'] = "$IP/includes/api/wikia/ApiQueryUserGroupMembers.php";
 
 /**
  * validators
@@ -538,7 +539,7 @@ $wgAutoloadClasses['GlobalVarConfig'] = $IP . '/includes/config/GlobalVarConfig.
 global $wgAPIListModules;
 $wgAPIListModules[ "wkdomains"    ] = "WikiaApiQueryDomains";
 $wgAPIListModules[ "wkpoppages"   ] = "WikiaApiQueryPopularPages";
-
+$wgAPIListModules['groupmembers'] = 'ApiQueryUserGroupMembers';
 
 /**
  * registered API methods
@@ -1140,6 +1141,12 @@ $wgNielsenApid = 'FIXME';
  * Enables NetzAthleten provider
  */
 $wgEnableNetzAthleten = true;
+
+/**
+ * @name $wgAdDriverIsTestWiki
+ * Enables test targeting parameters for wiki.
+ */
+$wgAdDriverIsAdTestWiki = false;
 
 /**
  * @name $wgAdDriverNetzAthletenCountries

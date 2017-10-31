@@ -117,9 +117,7 @@ CREATE TABLE `phalanx_stats` (
   `ps_referrer` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`ps_id`),
   KEY `wiki_id` (`ps_wiki_id`,`ps_timestamp`),
-  KEY `blocker_id` (`ps_blocker_id`,`ps_timestamp`),
-  KEY `ps_timestamp` (`ps_timestamp`),
-  KEY `ps_blocker_id` (`ps_blocker_id`)
+  KEY `blocker_id` (`ps_blocker_id`,`ps_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -134,4 +132,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-24 14:37:28
+-- Dump completed on 2017-10-26 13:34:31

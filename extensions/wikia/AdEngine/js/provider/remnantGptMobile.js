@@ -20,6 +20,7 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 		{
 			getAdUnitBuilder: function () {
 				return adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder;
-			}
+			},
+			testSrc: 'test-remnant'
 		});
 });

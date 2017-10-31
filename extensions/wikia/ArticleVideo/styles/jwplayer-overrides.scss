@@ -41,6 +41,25 @@
 			display: none !important;
 		}
 	}
+
+	// hides controls on vpaid ads when player is not hovered
+	&.jw-flag-ads-vpaid,
+	&.jw-flag-autostart,
+	&.jw-flag-user-inactive.jw-state-playing,
+	&.jw-flag-user-inactive.jw-state-buffering {
+		&.jw-flag-ads-vpaid-controls:not(:hover):not(.jw-flag-media-audio):not(.jw-flag-audio-player):not(.jw-flag-casting) {
+			.jw-controlbar {
+				opacity: 0;
+				pointer-events: none;
+				transition-delay: 0s, 250ms;
+				visibility: hidden;
+			}
+
+			.jw-controls-backdrop {
+				opacity: 0;
+			}
+		}
+	}
 }
 
 // if both .is-collapsed & is-collapsed-ready are added it means animation is in progress and we do not want to show title and controls

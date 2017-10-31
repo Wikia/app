@@ -96,9 +96,9 @@ function getEventsRecords($wikia = 0, $limit = 100) {
 	return $records;
 }
 
-function _user_is_bot($user_text) {
+function _user_is_bot($user_id) {
 	$user_is_bot = false;
-	$oUser = User::newFromName($user_text);
+	$oUser = User::newFromId($user_id);
 	if ( $oUser instanceof User ) {
 		$user_is_bot = $oUser->isAllowed( 'bot' );
 	}
@@ -154,23 +154,22 @@ function loadFromDB($dbname, $page_id, $rev_id) {
 	$fields[] = " date_format(rev_timestamp, '%Y-%m-%d %H:%i:%s') as ts ";
 
 	$oRow = $db->selectRow(
-		array('revision', 'page'),
+		[ 'revision', 'page' ],
 		$fields,
-		array(
-			"rev_page = page_id",
+		[
+			'rev_page = page_id',
 			'page_id' => $page_id,
 			'rev_id' => $rev_id,
-		),
+		],
 		__METHOD__
 	);
 
 	if ( empty($oRow) ) {
-		$fields = array(
+		$fields = [
 			'ar_namespace as page_namespace',
 			'ar_title as page_title',
 			'ar_comment as rev_comment',
 			'ar_user as rev_user',
-			'ar_user_text as rev_user_text',
 			'ar_timestamp as rev_timestamp',
 			'ar_minor_edit as rev_minor_edit',
 			'ar_rev_id as rev_id',
@@ -181,7 +180,7 @@ function loadFromDB($dbname, $page_id, $rev_id) {
 			'ar_deleted as rev_deleted',
 			'0 as rev_parent_id',
 			'date_format(ar_timestamp, \'%Y-%m-%d %H:%i:%s\') as ts'
-		);
+		];
 
 		$conditions = array(
 			'ar_page_id'	=> $page_id ,
@@ -218,7 +217,7 @@ function compareEventRecordWithRevision($dbname, $oRow, $debug) {
 				$wgTitle = $oRevision->getTitle();
 			}
 			$content = $oRevision->getText( Revision::FOR_THIS_USER );
-			$is_bot = _user_is_bot($data->rev_user_text);
+			$is_bot = _user_is_bot($data->rev_user);
 			$is_content = _revision_is_content();
 			$is_redirect = _revision_is_redirect($content);
 			$size = intval($oRevision->getSize());

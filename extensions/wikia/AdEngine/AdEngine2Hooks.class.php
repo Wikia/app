@@ -108,6 +108,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
 		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
 		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 
 		return true;
 	}
