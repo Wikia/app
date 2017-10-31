@@ -12243,323 +12243,179 @@ Per favor confirma que tu realmente vole recrear iste pagina.",
 );
 
 $messages['id'] = array(
-	'category_header' => '<span style="font-size: 80%;">Pages in category "$1"</span>',
-	'category-media-header' => '<span style="font-size: 80%;">Media in category "$1"</span>',
-	'category-empty' => "''This category currently contains no pages or media.''",
-	'category-subcat-count' => '{{PLURAL:$2|This category has only the following subcategory.|This category has the following {{PLURAL:$1|subcategory|$1 subcategories}}, out of $2 total.}}',
-	'category-subcat-count-limited' => 'This category has the following {{PLURAL:$1|subcategory|$1 subcategories}}.',
-	'category-article-count' => '{{PLURAL:$2|This category contains only the following page.|The following {{PLURAL:$1|page is|$1 pages are}} in this category, out of $2 total.}}',
-	'category-article-count-limited' => 'The following {{PLURAL:$1|page is|$1 pages are}} in the current category.',
-	'category-file-count' => '{{PLURAL:$2|This category contains only the following file.|The following {{PLURAL:$1|file is|$1 files are}} in this category, out of $2 total.}}',
-	'category-file-count-limited' => 'The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
-	'cancel' => 'Cancel',
-	'create' => 'Create',
-	'copyright' => 'Content is available under $1.',
+	'category_header' => 'Halaman dalam kategori "$1"',
+	'category-media-header' => 'Media dalam kategori "$1"',
+	'category-empty' => "''Saat ini, tidak terdapat halaman ataupun media dalam kategori ini.''",
+	'category-subcat-count' => '{{PLURAL:$2|Kategori ini hanya memiliki satu subkategori berikut.|Kategori ini memiliki {{PLURAL:$1|subkategori|$1 subkategori}} berikut, dari total $2.}}',
+	'category-subcat-count-limited' => 'Kategori ini memiliki {{PLURAL:$1|subkategori|$1 subkategori}} berikut.',
+	'category-article-count' => '{{PLURAL:$2|Kategori ini hanya memiliki satu halaman berikut.|Kategori ini memiliki {{PLURAL:$1|halaman|$1 halaman}}, dari total $2.}}',
+	'category-article-count-limited' => 'Kategori ini memiliki {{PLURAL:$1|satu halaman|$1 halaman}} berikut.',
+	'category-file-count' => '{{PLURAL:$2|Kategori ini hanya memiliki satu berkas berikut.|Kategori ini memiliki {{PLURAL:$1|berkas|$1 berkas}} berikut, dari total $2.}}',
+	'category-file-count-limited' => 'Kategori ini memiliki {{PLURAL:$1|berkas|$1 berkas}} berikut.',
+	'cancel' => 'Batalkan',
+	'create' => 'Buat',
+	'copyright' => 'Seluruh teks tersedia sesuai dengan $1.',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-	'currentevents' => 'Current events',
-	'currentevents-url' => 'Project:Current events',
-	'collapsible-collapse' => 'Collapse',
-	'collapsible-expand' => 'Expand',
-	'cannotdelete' => 'The page or file "$1" could not be deleted.
-It may have already been deleted by someone else.',
-	'cannotdelete-title' => 'Cannot delete page "$1"',
-	'cascadeprotected' => 'This page has been protected from editing, because it is included in the following {{PLURAL:$1|page, which is|pages, which are}} protected with the "cascading" option turned on:
+	'currentevents' => 'Peristiwa terkini',
+	'currentevents-url' => 'Project:Peristiwa terkini',
+	'collapsible-collapse' => 'Ciutkan',
+	'collapsible-expand' => 'Kembangkan',
+	'cannotdelete' => 'Halaman atau berkas "$1" tidak dapat dihapus.
+Mungkin telah dihapus oleh orang lain.',
+	'cannotdelete-title' => 'Tidak dapat menghapus halaman "$1"',
+	'cascadeprotected' => 'Halaman ini telah dilindungi dari penyuntingan karena disertakan di {{PLURAL:$1|halaman|halaman-halaman}} berikut yang telah dilindungi dengan opsi "runtun":
 $2',
-	'customcssprotected' => "You do not have permission to edit this CSS page, because it contains another user's personal settings.",
-	'customjsprotected' => "You do not have permission to edit this JavaScript page, because it contains another user's personal settings.",
-	'createaccount' => 'Create account',
-	'createaccountmail' => 'By e-mail',
-	'createaccountreason' => 'Reason:',
-	'createaccounterror' => 'Could not create account: $1',
-	'cannotchangeemail' => 'Account e-mail addresses cannot be changed on this wiki.',
-	'createaccount-title' => 'Account creation for {{SITENAME}}',
-	'createaccount-text' => 'Hello,
+	'customcssprotected' => 'Anda tidak memiliki izin untuk menyunting halaman CSS ini, karena berisi pengaturan pribadi pengguna lain.',
+	'customjsprotected' => 'Anda tidak memiliki izin untuk menyunting halaman JavaScript ini, karena berisi pengaturan pribadi pengguna lain.',
+	'createaccount' => 'Buat akun baru',
+	'createaccountmail' => 'melalui surel',
+	'createaccountreason' => 'Alasan:',
+	'createaccounterror' => 'Tidak dapat membuat akun: $1',
+	'cannotchangeemail' => 'Alamat surel akun tidak dapat diubah di wiki ini.',
+	'createaccount-title' => 'Pembuatan akun untuk {{SITENAME}}',
+	'createaccount-text' => 'Seseorang telah membuat sebuah akun untuk alamat surel Anda di {{SITENAME}} ($4) dengan nama "$2" dan kata sandi "$3". Anda dianjurkan untuk masuk log dan mengganti kata sandi Anda sekarang.
 
-An account has been created for you created on {{SITENAME}} with the username "$2" and password "$3". 
+Anda dapat mengabaikan pesan ini jika akun ini dibuat karena suatu kesalahan.',
+	'changeemail' => 'Ubah alamat surel',
+	'changeemail-header' => 'Ubah alamat surel akun',
+	'changeemail-text' => 'Selesaikan formulir ini untuk mengubah alamat surel Anda. Anda perlu memasukkan sandi untuk mengkonfirmasi perubahan ini.',
+	'changeemail-no-info' => 'Anda harus masuk log untuk mengakses halaman ini secara langsung.',
+	'changeemail-oldemail' => 'Alamat surel saat ini:',
+	'changeemail-newemail' => 'Alamat surel baru:',
+	'changeemail-none' => '(tidak ada)',
+	'changeemail-submit' => 'Ubah surel',
+	'changeemail-cancel' => 'Batalkan',
+	'confirmedittext' => 'Anda harus mengkonfirmasikan dulu alamat surel Anda sebelum menyunting halaman.
+Harap masukkan dan validasikan alamat surel Anda melalui [[Special:Preferences|halaman preferensi pengguna]] Anda.',
+	'clearyourcache' => "'''Catatan:''' Setelah menyimpan, Anda mungkin harus memotong tembolok peramban Anda untuk melihat perubahan.
+* '''Firefox / Safari:''' Tahan ''Shift'' sambil mengeklik ''Reload'', atau tekan ''Ctrl-F5'' atau ''Ctrl-R'' (''⌘-R'' di Mac)
+* '''Google Chrome:''' Tekan ''Ctrl-Shift-R'' (''⌘-Shift-R'' di Mac)
+* '''Internet Explorer:''' Tahan ''Ctrl'' sambl mengeklik ''Refresh'', atau tekan ''Ctrl-F5''
+* '''Konqueror:''' Klik ''Reload'' atau tekan ''F5''
+* '''Opera:''' Bersihkan tembolok di ''Tools → Preferences''",
+	'copyrightwarning' => "Perhatikan bahwa semua kontribusi terhadap {{SITENAME}} dianggap dilisensikan sesuai dengan $2 (lihat $1 untuk informasi lebih lanjut). Jika Anda tidak ingin tulisan Anda disunting dan disebarkan ke halaman web yang lain, jangan kirimkan ke sini.<br />Anda juga berjanji bahwa ini adalah hasil karya Anda sendiri, atau disalin dari sumber milik umum atau sumber bebas yang lain. '''JANGAN KIRIMKAN KARYA YANG DILINDUNGI HAK CIPTA TANPA IZIN!'''",
+	'copyrightwarning2' => "Perhatikan bahwa semua kontribusi terhadap {{SITENAME}} dapat disunting, diubah, atau dihapus oleh penyumbang lainnya. Jika Anda tidak ingin tulisan Anda disunting orang lain, jangan kirimkan ke sini.<br />Anda juga berjanji bahwa ini adalah hasil karya Anda sendiri, atau disalin dari sumber milik umum atau sumber bebas yang lain (lihat $1 untuk informasi lebih lanjut). '''JANGAN KIRIMKAN KARYA YANG DILINDUNGI HAK CIPTA TANPA IZIN!'''",
+	'cascadeprotectedwarning' => "'''PERINGATAN:''' Halaman ini sedang dilindungi sehingga hanya pengguna dengan hak akses pengurus saja yang dapat menyuntingnya karena disertakan dalam {{PLURAL:$1|halaman|halaman-halaman}} berikut yang telah dilindungi dengan opsi 'perlindungan runtun':",
+	'cantcreateaccounttitle' => 'Akun tak dapat dibuat',
+	'cantcreateaccount-text' => "Pembuatan akun dari alamat IP ini (<strong>$1</strong>) telah diblokir oleh [[User:$3|$3]].
 
-Please log in at $4
-
-If you do not need this account, you can ignore this message or contact community@wikia.com with any questions.
-
-- Wikia Community Support
-
-___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
-	'changeemail' => 'Change e-mail address',
-	'changeemail-header' => 'Change account e-mail address',
-	'changeemail-text' => 'Complete this form to change your e-mail address. You will need to enter your password to confirm this change.',
-	'changeemail-no-info' => 'You must be logged in to access this page directly.',
-	'changeemail-oldemail' => 'Current e-mail address:',
-	'changeemail-newemail' => 'New e-mail address:',
-	'changeemail-none' => '(none)',
-	'changeemail-submit' => 'Change e-mail',
-	'changeemail-cancel' => 'Cancel',
-	'confirmedittext' => 'You must confirm your e-mail address before editing pages.
-Please set and validate your e-mail address through your [[Special:Preferences|user preferences]].',
-	'clearyourcache' => "'''Note:''' After saving, you may have to [[Help:Bypass your cache|bypass your browser's cache]] to see the changes.
-* '''Chrome''' - Windows: Hold the ''Ctrl'' key and press the ''F5'' key. OS X: Hold both the ''⌘ Cmd'' and ''⇧ Shift'' keys and press the ''R'' key.
-* '''Safari''' - Hold down the ''⇧ Shift'' key and click the ''Reload'' toolbar button.
-* '''Firefox''' - Windows: Hold the ''Ctrl'' key, and press ''F5''. OS X: Hold the ''⌘ Cmd'' and ''⇧ Shift'' keys, and then press ''R''.
-* '''Internet Explorer''' - Hold the ''Ctrl'' key, and press ''F5'' (or click the ''Refresh'' button).",
-	'copyrightwarning' => 'Semua kontribusi {{SITENAME}} akan dianggap dirilis dibawah $2 (lihat $1 untuk lebih detail)<br/>',
-	'copyrightwarning2' => "Harap diketahui semua kontribusi untuk {{SITENAME}} dapat di sunting, di ubah, atau dihapus oleh kontributor lain. 
-Jika anda tidak ingin tulisan anda di edit tanpa ada ketahui, kalau begitu jangan kiriman kesini.<br />
-Anda juga berjanji kepada kami kalau anda yang nemulisnya sendiri, menyalin dari domain public atau sumber yang bebas atau sama. (lihat $1 untuk detailnya.)
-'''Jangan mengirimkan hasil karya orang lain tanpa hak cipta!'''",
-	'cascadeprotectedwarning' => "'''Warning:''' This page has been protected so that only users with administrator privileges can edit it, because it is included in the following cascade-protected {{PLURAL:$1|page|pages}}:",
-	'cantcreateaccounttitle' => 'Cannot create account',
-	'cantcreateaccount-text' => "Account creation from this IP address ('''$1''') has been blocked by [[User:$3|$3]].
-
-The reason given by $3 is ''$2''",
-	'currentrev' => 'Latest revision',
-	'currentrev-asof' => 'Latest revision as of $1',
-	'currentrevisionlink' => 'Latest revision',
-	'cur' => 'cur',
-	'compareselectedversions' => 'Compare selected revisions',
-	'changepassword' => 'Change password',
-	'columns' => 'Columns:',
-	'copyuploaddisabled' => 'Upload by URL disabled.',
-	'categories' => 'Categories list',
-	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
-	'categoriesfrom' => 'Display categories starting at:',
-	'changed' => 'changed',
-	'created' => 'created',
-	'confirm' => 'Confirm',
-	'confirmdeletetext' => 'You are about to delete a page along with all of its history. See also [[Help:Deletion]].',
-	'cantrollback' => 'Cannot revert edit;
-last contributor is only author of this page.',
-	'cannotundelete' => 'Undelete failed;
-someone else may have undeleted the page first.',
-	'contributions' => 'Kontribusi',
+Alasan yang diberikan oleh $3 adalah ''$2''",
+	'currentrev' => 'Revisi terkini',
+	'currentrev-asof' => 'Revisi terkini pada $1',
+	'currentrevisionlink' => 'Revisi terkini',
+	'cur' => 'skr',
+	'compareselectedversions' => 'Bandingkan versi terpilih',
+	'changepassword' => 'Ganti kata sandi',
+	'columns' => 'Kolom:',
+	'copyuploaddisabled' => 'Pengunggahan dengan URL dimatikan.',
+	'categories' => 'Kategori',
+	'categoriespagetext' => '{{PLURAL:$1|Kategori berikut|Kategori-kategori berikut}} memiliki isi halaman atau media.
+[[Special:UnusedCategories|Kategori yang tak digunakan]] tidak ditampilkan di sini.
+Lihat pula [[Special:WantedCategories|kategori yang diinginkan]].',
+	'categoriesfrom' => 'Tampilkan kategori-kategori dimulai dengan:',
+	'changed' => 'diubah',
+	'created' => 'dibuat',
+	'confirm' => 'Konfirmasi',
+	'confirmdeletetext' => 'Anda akan menghapus halaman atau berkas ini secara permanen berikut semua sejarahnya dari basis data. Pastikan bahwa Anda memang ingin melakukannya, mengetahui segala akibatnya, dan apa yang Anda lakukan ini adalah sejalan dengan [[{{MediaWiki:Policy-url}}|kebijakan {{SITENAME}}]].',
+	'cantrollback' => 'Tidak dapat mengembalikan suntingan;
+kontributor terakhir adalah satu-satunya penulis halaman ini.',
+	'cannotundelete' => 'Pembatalan penghapusan gagal; mungkin ada orang lain yang telah terlebih dahulu melakukan pembatalan.',
+	'contributions' => 'Kontribusi pengguna',
 	'contributions-title' => 'Kontribusi pengguna untuk $1',
-	'contribsub2' => 'For $1 ($2)',
-	'createaccountblock' => 'account creation blocked',
-	'change-blocklink' => 'change block',
+	'contribsub2' => 'Untuk $1 ($2)',
+	'createaccountblock' => 'pembuatan akun diblokir',
+	'change-blocklink' => 'ubah blokir',
 	'contribslink' => 'kontrib',
-	'cant-block-while-blocked' => 'You cannot block other users while you are blocked.',
-	'cant-see-hidden-user' => "The user you are trying to block has already been blocked and hidden.
-Since you do not have the hideuser right, you cannot see or edit the user's block.",
-	'cant-move-user-page' => 'You do not have permission to move user pages (apart from subpages).',
-	'cant-move-to-user-page' => 'You do not have permission to move a page to a user page (except to a user subpage).',
-	'cantmove-titleprotected' => 'You cannot move a page to this location, because the new title has been protected from creation',
-	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/',
-	'common.js' => '/* Any JavaScript here will be loaded for all users on every page load. */',
-	'creditspage' => 'Page credits',
-	'confirmemail' => 'Confirm email address',
-	'confirmemail_noemail' => 'You do not have a valid email address set in your [[Special:Preferences|user preferences]].',
-	'confirmemail_text' => '{{SITENAME}} requires that you validate your email address before using email features.
-Activate the button below to send a confirmation mail to your address.
-The mail will include a link containing a code;
-load the link in your browser to confirm that your email address is valid.',
-	'confirmemail_pending' => 'A confirmation code has already been emailed to you;
-if you recently created your account, you may wish to wait a few minutes for it to arrive before trying to request a new code.',
-	'confirmemail_send' => 'Mail a confirmation code',
-	'confirmemail_sent' => 'Confirmation email sent.',
-	'confirmemail_oncreate' => "A confirmation code was sent to your e-mail address.
-This code is not required to log in, but you will need to provide it before enabling any e-mail-based features in the wiki. If you do not receive the email, remember to check your spam and junk mail folders. Please allow (or ''whitelist'') emails from community@wikia.com to be received.",
-	'confirmemail_sendfailed' => '{{SITENAME}} could not send your confirmation mail.
-Please check your email address for invalid characters.
+	'cant-block-while-blocked' => 'Anda tidak dapat memblokir pengguna lain ketika Anda sendiri sedang diblokir.',
+	'cant-see-hidden-user' => 'Pengguna yang anda coba blokir telah di blokir dan di sembunyikan. Selama anda tidak memiliki hak sembunyikan pengguna, anda tidak dapat melihat atau menyunting pemblokiran pengguna ini.',
+	'cant-move-user-page' => 'Anda tidak memiliki hak akses untuk memindahkan halaman pengguna (terpisah dari subhalaman).',
+	'cant-move-to-user-page' => 'Anda tidak memiliki hak akses untuk memindahkan halaman ke suatu halaman pengguna (kecuali ke subhalaman pengguna).',
+	'cantmove-titleprotected' => 'Anda tidak dapat memindahkan halaman ke lokasi ini, karena judul tujuan sedang dilindungi dari pembuatan',
+	'common.css' => '/* CSS yang ada di sini akan diterapkan untuk semua kulit. */',
+	'common.js' => '/* JavaScript yang ada di sini akan diterapkan untuk semua kulit. */',
+	'creditspage' => 'Penghargaan halaman',
+	'confirmemail' => 'Konfirmasi alamat surel',
+	'confirmemail_noemail' => 'Anda tidak memberikan alamat surel yang sah di [[Special:Preferences|preferensi pengguna]] Anda.',
+	'confirmemail_text' => '{{SITENAME}} mengharuskan Anda untuk melakukan konfirmasi atas alamat surel Anda sebelum fitur-fitur surel dapat digunakan.
+Tekan tombol di bawah ini untuk mengirimi Anda sebuah surel yang berisi kode konfirmasi yang berupa sebuah alamat internet.
+Salin alamat tersebut ke penjelajah web Anda dan buka alamat tersebut untuk melakukan konfirmasi sehingga menginformasikan bahwa alamat surel Anda valid.',
+	'confirmemail_pending' => 'Suatu kode konfirmasi telah dikirimkan kepada Anda; jika Anda baru saja membuat akun Anda, silakan tunggu beberapa menit untuk surat tersebut tiba sebelum mencoba untuk meminta satu kode baru.',
+	'confirmemail_send' => 'Kirim kode konfirmasi',
+	'confirmemail_sent' => 'Surel berisi kode konfirmasi telah dikirim.',
+	'confirmemail_oncreate' => 'Suatu kode konfirmasi telah dikirimkan ke alamat surel Anda. Kode ini tidak dibutuhkan untuk masuk log, tapi dibutuhkan sebelum menggunakan semua fitur yang menggunakan surel di wiki ini.',
+	'confirmemail_sendfailed' => '{{SITENAME}} tidak berhasil mengirimkan surat konfirmasi Anda.
+Harap cek kemungkinan karakter ilegal pada alamat surel.
 
-Mailer returned: $1',
-	'confirmemail_invalid' => '<center>Thanks for confirming your email, but your confirmation code has expired or is invalid.<br/>
-You will need to receive a new code to confirm your account.
+Aplikasi pengiriman surel menginformasikan: $1',
+	'confirmemail_invalid' => 'Kode konfirmasi salah. Kode tersebut mungkin sudah kedaluwarsa.',
+	'confirmemail_needlogin' => 'Anda harus melakukan $1 untuk mengkonfirmasikan alamat surel Anda.',
+	'confirmemail_success' => 'Alamat surel Anda telah dikonfirmasi.
+Sekarang Anda dapat [[Special:UserLogin|masuk log]] dan mulai menggunakan wiki.',
+	'confirmemail_loggedin' => 'Alamat surel Anda telah dikonfirmasi.',
+	'confirmemail_error' => 'Terjadi kesalahan sewaktu menyimpan konfirmasi Anda.',
+	'confirmemail_subject' => 'Konfirmasi alamat surel {{SITENAME}}',
+	'confirmemail_body' => 'Seseorang, mungkin Anda, dari alamat IP $1, telah mendaftarkan akun "$2" dengan alamat surel ini di {{SITENAME}}.
 
-<span class="wikia-button big">[[Special:ConfirmEmail|<span>Request new code via email</span>]]</span></center>  
-<br>',
-	'confirmemail_needlogin' => 'You need to $1 to confirm your email address.',
-	'confirmemail_success' => 'Your email address has been confirmed.
-You may now [[Special:UserLogin|log in]] and enjoy the wiki.',
-	'confirmemail_loggedin' => "'''Your e-mail address has now been confirmed.'''
-
-Welcome!
-
-With thousands of communities on Wikia, there are many ways to have fun here. 
-
-Spend some time getting to know Wikia by [[w:c:help:Help:Contents|visiting our help wiki]], reading interesting and cool pages, writing content on your favorite subjects, or meeting other members of the community.
-
-The Wikia Community Team",
-	'confirmemail_error' => 'Something went wrong saving your confirmation.',
-	'confirmemail_subject' => 'Please confirm your Wikia account',
-	'confirmemail_body' => "Hi $2,
-
-Thanks for registering on Wikia!
-
-Please take a minute to activate your new account: $3
-
-Ready to get started?
-
-Look at all of the recent activity of the community you just joined! Start contributing by leaving comments or editing pages.
-
-Watch the Wikia video at http://wikia.com/go and start exploring some of our favorite wikis in Gaming, Entertainment, and Lifestyles.
-
-Meet the Wikia community, learn about what's happening, and find help - all at Community Central.
-
-Have fun!
-
-- Wikia Community Support
-
-
-___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences",
-	'confirmemail_body_changed' => 'Someone, probably you, from IP address $1,
-has changed the email address of the account "$2" to this address on {{SITENAME}}.
-
-To confirm that this account really does belong to you and reactivate
-email features on {{SITENAME}}, open this link in your browser:
+Untuk mengonfirmasikan bahwa akun ini benar dimiliki oleh Anda sekaligus mengaktifkan fitur surel di {{SITENAME}}, ikuti pranala berikut pada penjelajah web Anda:
 
 $3
 
-If the account does *not* belong to you, follow this link
-to cancel the email address confirmation:
+Jika Anda merasa *tidak pernah* mendaftar, jangan ikuti pranala di atas.
+Klik pada pranala ini untuk membatalkan konfirmasi alamat surel:
 
 $5
 
-This confirmation code will expire at $4.',
-	'confirmemail_body_set' => 'Someone, probably you, from IP address $1,
-has set the email address of the account "$2" to this address on {{SITENAME}}.
+Kode konfirmasi ini akan kedaluwarsa pada $4.',
+	'confirmemail_body_changed' => 'Seseorang, mungkin Anda, dari alamat IP $1,
+telah mengubah surel dari akun "$2" pada alamat ini di {{SITENAME}}.
 
-To confirm that this account really does belong to you and reactivate
-email features on {{SITENAME}}, open this link in your browser:
+Untuk mengkonfirmasi bahwa akun ini adalah benar milik Anda sekaligus mengaktifkan
+kembali fitur surel pada {{SITENAME}}, ikuti pranala berikut pada browser Anda:
 
 $3
 
-If the account does *not* belong to you, follow this link
-to cancel the email address confirmation:
+Jika akun ini *bukan* milik Anda, ikuti pranala berikut
+untuk membatalkan konfirmasi alamat surel:
 
 $5
 
-This confirmation code will expire at $4.',
-	'confirmemail_invalidated' => 'Email address confirmation canceled',
-	'confirmrecreate' => "User [[User:$1|$1]] ([[User talk:$1|talk]]) deleted this article after you started editing it, with a reason of:
+Kode konfirmasi ini akan kedaluwarsa pada $4.',
+	'confirmemail_body_set' => 'Seseorang, mungkin Anda, dari alamat IP $1,
+telah mengubah surel dari akun "$2" pada alamat ini di {{SITENAME}}.
+
+Untuk mengonfirmasi bahwa akun ini adalah milik Anda sekaligus mengaktifkan
+kembali fitur surel pada {{SITENAME}}, ikuti pranala berikut pada browser Anda:
+
+$3
+
+Jika akun ini *bukan* milik Anda, ikuti pranala berikut
+untuk membatalkan konfirmasi alamat surel:
+
+$5
+
+Kode konfirmasi ini akan kedaluwarsa pada $4.',
+	'confirmemail_invalidated' => 'Konfirmasi alamat surel dibatalkan',
+	'confirmrecreate' => "Pengguna [[User:$1|$1]] ([[User talk:$1|bicara]]) telah menghapus halaman selagi Anda mulai melakukan penyuntingan dengan alasan:
 : ''$2''
-Please confirm that you really want to recreate this article.",
-	'confirmrecreate-noreason' => 'User [[User:$1|$1]] ([[User talk:$1|talk]]) deleted this page after you started editing.  Please confirm that you really want to recreate this page.',
-	'confirm_purge_button' => 'Yes, I am not a robot',
-	'confirm-purge-top' => 'Would you like to clear the cache for this page?',
-	'confirm-purge-bottom' => "Clearing a page's cache helps ensure the latest version will appear.",
+Silakan konfirmasi jika Anda ingin membuat ulang halaman ini.",
+	'confirmrecreate-noreason' => 'Pengguna [[User:$1|$1]] ([[User talk:$1|bicara]]) telah menghapus halaman ini setelah Anda mulai menyunting. Harap konfirmasikan bahwa Anda ingin membuat ulang halaman ini.',
+	'confirm_purge_button' => 'OK',
+	'confirm-purge-top' => 'Hapus singgahan halaman ini?',
+	'confirm-purge-bottom' => 'Membersihkan halaman akan sekaligus menghapus singgahan dan menampilkan versi halaman terkini.',
 	'confirm-watch-button' => 'OK',
-	'confirm-watch-top' => 'Add this page to your watchlist?',
+	'confirm-watch-top' => 'Tambahkan halaman ini ke daftar pantauan Anda?',
 	'confirm-unwatch-button' => 'OK',
-	'confirm-unwatch-top' => 'Remove this page from your watchlist?',
-	'comparepages' => 'Compare pages',
-	'compare-selector' => 'Compare page revisions',
-	'compare-page1' => 'Page 1',
-	'compare-page2' => 'Page 2',
-	'compare-rev1' => 'Revision 1',
-	'compare-rev2' => 'Revision 2',
-	'compare-submit' => 'Compare',
-	'compare-invalid-title' => 'The title you specified is invalid.',
-	'compare-title-not-exists' => 'The title you specified does not exist.',
-	'compare-revision-not-exists' => 'The revision you specified does not exist.',
-	'categories-summary' => '',
-	'comma-separator' => ',&#32;',
-	'colon-separator' => ':&#32;',
-	'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
-** http://harrypotter.wikia.com/|Harry Potter Wiki
-**http://twilightsaga.wikia.com/|Twilight Saga Wiki
-**http://lyrics.wikia.com/|Lyric Wiki
-**http://percyjackson.wikia.com/|Percy Jackson Wiki
-**http://yugioh.wikia.com/|Yugioh Wiki
-* http://gaming.wikia.com|Gaming
-** http://wowwiki.com|World of Warcraft Wiki
-** http://borderlands.wikia.com|Borderlands Wiki
-** http://fallout.wikia.com|Fallout Wiki
-** http://callofduty.wikia.com|Call of Duty Wiki
-** http://dragonage.wikia.com|Dragon Age Wiki
-* http://community.wikia.com/wiki/Hub:Lifestyle|Lifestyle
-** http://recipes.wikia.com|Recipes Wiki
-** http://genealogy.wikia.com|Genealogy Wiki
-** http://diy.wikia.com|Do it Yourself Wiki
-** http://vintagepatterns.wikia.com|Vintage Dress Patterns
-* http://answers.wikia.com|Q&amp;A
-** http://answers.wikia.com|Wikianswers
-** http://xbox.answers.wikia.com|Xbox Answers
-** http://anime.answers.wikia.com|Anime Answers
-** http://lego.answers.wikia.com|Lego Answers
-* http://community.wikia.com|Community
-** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
-** http://help.wikia.com|Help|no-icon
-** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
-	'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Half-god, half-teen... all hero!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
-*http://recipes.wikia.com/|Recipes Wiki|Find your favorite recipe! From sweet treats to three course meals, Recipes Wiki has it all.|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
-*http://godofwar.wikia.com/|God of War Wiki|This is Spaaarta. Blades of Chaos... need we say more?|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
-*http://answers.wikia.com/wiki/Who_is_the_world%27s_richest_woman|Wikianswers|Show what you know and help answer the world's questions|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
-	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
-* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
-* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
-	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
-* Hiring|Jobs
-* Special:Contact|Contact
-* Advertising|Advertising
-* Press|Press
-* http://community.wikia.com/wiki/Help:Contents|Help',
-	'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
-* Privacy_Policy|Privacy Policy
-* http://recipes.wikia.com/|Recipes
-* http://green.wikia.com/|Green
-* http://starwars.wikia.com/|Star Wars
-* http://solarcooking.wikia.com/|Solar Cooking',
-	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
-* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
-* http://fr.wikia.com/Wikia|Français
-* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
-* http://pl.wikia.com/wiki/Wikia_Polska|Polski
-* Languages|More...',
-	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
-	'corporatepage-create-button' => 'Create a wiki',
-	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
-	'corporatepage-more-link' => 'More Links',
-	'corporatepage-in-the-know' => 'In the Know',
-	'corporatepage-wikia-international' => 'Wikia International',
-	'corporatepage-find-a-wiki' => 'Find a Wiki',
-	'corporatepage-from' => 'from',
-	'corporatepage-hide' => 'Hide Page',
-	'corporatepage-wikia-editors' => 'editors',
-	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
-	'corporatepage-update-fqr' => 'updated hourly',
-	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
-	'corporatepage-go-to-wiki' => 'Go to $1',
-	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
-<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
-<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
-<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
-<p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
-	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
-	'corporatepage-watchlist' => 'Watchlist',
-	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
-	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
-<h2>Collaborate with people who love what you love.</h2></div>
-<h2>Get started today!</h2>',
-	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
-	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
-	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
-	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
-	'corporatepage-company-info-headline' => 'Company Information',
-	'corporatepage-pages-added' => 'pages created in the last hour',
-	'corporatepage-edits-made' => 'edits made today',
-	'corporatepage-words-added' => 'words added in the last week',
-	'custom_info' => 'Custom themes can be built by selecting "Custom" above and then editing ',
-	'contris' => 'Kontribusi',
-	'createwiki' => 'Create a new wiki',
-	'createwikipagetitle' => 'Create a new wiki',
-	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
-	'createwikititle' => 'Title for the wiki',
-	'createwikiname' => 'Name for the wiki',
-	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
-	'createwikidesc' => 'Description of the wiki',
-	'createwikiaddtnl' => 'Additional Information',
-	'createwikimailsub' => 'Request for a new Wikia',
-	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
-	'createwikilang' => 'Default language for this wiki',
-	'create_an_account' => 'Sign up',
-	'createpage' => 'Create a new page',
-	'choose_reason' => 'Choose reason',
-	'community' => 'Community',
-	'contris_s' => 'Kontribusi',
-	'cockpit_hide' => 'Hide cockpit',
-	'create-account-new' => 'Create your FANDOM Account',
+	'confirm-unwatch-top' => 'Hapus halaman ini dari daftar pantauan Anda?',
+	'comparepages' => 'Bandingkan halaman',
+	'compare-selector' => 'Bandingkan revisi halaman',
+	'compare-page1' => 'Halaman 1',
+	'compare-page2' => 'Halaman 2',
+	'compare-rev1' => 'Revisi 1',
+	'compare-rev2' => 'Revisi 2',
+	'compare-submit' => 'Bandingkan',
+	'compare-invalid-title' => 'Judul yang Anda berikan tidak sah.',
+	'compare-title-not-exists' => 'Judul yang Anda minta tidak ada.',
+	'compare-revision-not-exists' => 'Revisi yang Anda minta tidak ada.',
 );
 
 $messages['ie'] = array(
