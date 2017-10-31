@@ -40,6 +40,31 @@ class MigrateWikiWordmarks extends Maintenance {
 		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
 	}
 
+	public function getWordmarkUrl( $wordmarkUrl ) {
+		global $wgCityId;
+
+		$wgUploadPath = WikiFactory::getVarValueByName(
+			'wgUploadPath',
+			$wgCityId
+		);
+
+		if ( !VignetteRequest::isVignetteUrl( $wordmarkUrl ) ) {
+			$wordmarkPath = explode( '/images/', $wordmarkUrl )[0];
+
+			if ( !empty( $wordmarkPath ) ) {
+				$wordmarkUrl = str_replace(
+					$wordmarkPath . '/images',
+					$wgUploadPath,
+					$wordmarkUrl
+				);
+			}
+
+			$wordmarkUrl = wfReplaceImageServer( $wordmarkUrl, SassUtil::getCacheBuster() );
+		}
+
+		return $wordmarkUrl;
+	}
+
 	public function execute() {
 		global $wgCityId, $wgMedusaHostPrefix;
 		$this->dryRun  = $this->hasOption( 'dry-run' );
@@ -72,6 +97,11 @@ class MigrateWikiWordmarks extends Maintenance {
 		$settings = $themeSettings->getSettings();
 
 		$oldValue = $keyValue = $settings[$this->keyName];
+		if ( $this->keyName == "wordmark-image-url" ) {
+			$oldFinalValue = $themeSettings->getWordmarkUrl();
+		} else {
+			$oldFinalValue = wfReplaceImageServer( $oldValue, time() );
+		}
 
 		if ( empty( $keyValue ) ) {
 			$this->output( "Key is empty for $wgCityId - skipping" . PHP_EOL );
@@ -97,9 +127,14 @@ class MigrateWikiWordmarks extends Maintenance {
 		}
 
 		$settings[$this->keyName] = $keyValue;
+		if ( $this->keyName == "wordmark-image-url" ) {
+			$newFinalValue = $this->getWordmarkUrl( $keyValue );
+		} else {
+			$newFinalValue = wfReplaceImageServer( $keyValue, time() );
+		}
 		$this->debug("Setting " . $this->keyName . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
 		if ( $fh ) {
-			fwrite( $fh, sprintf("%d, \"%s\", \"%s\", \"%s\", \"%s\"\n", $wgCityId, $oldValue, wfReplaceImageServer($oldValue, time()), $keyValue, wfReplaceImageServer($keyValue, time())));
+			fwrite( $fh, sprintf("%d, \"%s\", \"%s\", \"%s\", \"%s\"\n", $wgCityId, $oldValue, $oldFinalValue, $keyValue, $newFinalValue));
 		}
 
 		if ( !$this->dryRun ) {
