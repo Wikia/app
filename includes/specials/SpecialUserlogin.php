@@ -506,7 +506,6 @@ class LoginForm extends SpecialPage {
 		$wgAuth->initUser( $u, $autocreate );
 
 		if ( is_object( $this->mExtUser ) ) {
-			$this->mExtUser->linkToLocal( $u->getId() );
 			$email = $this->mExtUser->getPref( 'emailaddress' );
 			if ( $email && !$this->mEmail ) {
 				$u->setEmail( $email );
