@@ -22,7 +22,8 @@ describe('adaptersRegistry', function () {
             mocks.adapters.appnexusAst,
             mocks.adapters.audienceNetwork,
             mocks.adapters.indexExchange,
-            mocks.adapters.openx,
+			mocks.adapters.onemobile,
+			mocks.adapters.openx,
             mocks.adapters.rubicon,
             mocks.adapters.rubiconDisplay,
             mocks.adapters.wikia,
@@ -39,7 +40,8 @@ describe('adaptersRegistry', function () {
                 audienceNetwork: new AdapterMock('audienceNetwork', true),
                 fastlane: new AdapterMock('rubiconDisplay', true),
                 indexExchange: new AdapterMock('indexExchange', true),
-                openx: new AdapterMock('openx', true),
+				onemobile: new AdapterMock('onemobile', true),
+				openx: new AdapterMock('openx', true),
                 rubicon: new AdapterMock('rubicon', true),
                 wikia: new AdapterMock('wikia', true)
             },
@@ -61,7 +63,8 @@ describe('adaptersRegistry', function () {
                 mocks.adapters.appnexusAst,
                 mocks.adapters.audienceNetwork,
                 mocks.adapters.indexExchange,
-                mocks.adapters.openx,
+				mocks.adapters.onemobile,
+				mocks.adapters.openx,
                 mocks.adapters.rubicon,
                 mocks.adapters.rubiconDisplay
             ];
