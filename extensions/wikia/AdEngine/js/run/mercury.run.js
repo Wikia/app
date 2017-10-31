@@ -1,7 +1,6 @@
 /*global require*/
 require([
 	'ext.wikia.adEngine.slot.service.stateMonitor',
-	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -14,7 +13,6 @@ require([
 	'wikia.window'
 ], function (
 	slotStateMonitor,
-	amazon,
 	a9,
 	prebid,
 	customAdsLoader,
@@ -45,12 +43,6 @@ require([
 	mercuryListener.onLoad(function () {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
-		}
-
-		// TODO ADEN-5756 remove 'if' after A9 full roll out
-		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile) &&
-			!geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
-			amazon.call();
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
