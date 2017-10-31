@@ -55,16 +55,6 @@ class CreateNewWikiTask extends BaseTask {
 			}
 		}
 
-		if ( !$this->founder || $this->founder->isAnon() ) {
-			global $wgExternalAuthType;
-			if ( $wgExternalAuthType ) {
-				$extUser = \ExternalUser::newFromName( $params['founderName'] );
-				if ( is_object( $extUser ) ) {
-					$extUser->linkToLocal( $extUser->getId() );
-				}
-			}
-		}
-
 		$this->wikiName = isset( $params['sitename'] ) ? $params['sitename'] : \WikiFactory::getVarValueByName( 'wgSitename', $params['city_id'], true );
 		$this->wikiLang = isset( $params['language'] ) ? $params['language'] : \WikiFactory::getVarValueByName( 'wgLanguageCode', $params['city_id'] );
 
