@@ -114,7 +114,7 @@ Blogs.submit = function( event ) {
 		oForm = $( event.target.parentNode.parentNode  );
 		Blogs.submit.controlButton(false,$(event.target));
 		var postData = oForm.serialize() + "&action=ajax&rs=BlogComment::axPost&article=" + wgArticleId ;
-		$.getJSON(wgServer + wgScript, postData , Blogs.callback);
+		$.getJSON(wgScript, postData , Blogs.callback);
 		return false;
 	}
 };
@@ -146,7 +146,7 @@ Blogs.save = function( event ) {
 	if (oForm.length > 0) {
 		document.body.style.cursor = "wait";
 		var textfield = $( "#blog-comm-textfield-" + id );
-		$.postJSON(wgServer + wgScript + "?action=ajax&rs=BlogComment::axSave&article=" + wgArticleId + "&id=" + id , oForm.serialize(), Blogs.callback);
+		$.postJSON(wgScript + "?action=ajax&rs=BlogComment::axSave&article=" + wgArticleId + "&id=" + id , oForm.serialize(), Blogs.callback);
 		return false;
 	}
 	return true;
@@ -155,14 +155,14 @@ Blogs.save = function( event ) {
 Blogs.toggle = function( event ) {
 	var commentID =$(event.target).attr('id');
 	document.body.style.cursor = "wait";
-	$.getJSON( wgServer + wgScript + "?action=ajax&rs=BlogComment::axToggle&id=" + commentID + "&article=" + wgArticleId, Blogs.callback.toggle );
+	$.getJSON( wgScript + "?action=ajax&rs=BlogComment::axToggle&id=" + commentID + "&article=" + wgArticleId, Blogs.callback.toggle );
 	return false;
 };
 
 Blogs.edit = function( event ) {
 	var commentID = $(event.target).attr('id');
 	document.body.style.cursor = "wait";
-	$.getJSON( wgServer + wgScript + "?action=ajax&rs=BlogComment::axEdit&id=" + commentID + "&article=" + wgArticleId, Blogs.callback.edit );
+	$.getJSON( wgScript + "?action=ajax&rs=BlogComment::axEdit&id=" + commentID + "&article=" + wgArticleId, Blogs.callback.edit );
 	return false;
 };
 
