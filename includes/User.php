@@ -3231,11 +3231,14 @@ class User implements JsonSerializable {
 	 * @return Int
 	 */
 	public function idForName( $fromMaster = false ) {
+		global $wgExternalSharedDB;
 		$s = trim( $this->getName() );
 		if ( $s === '' ) return 0;
 
-		$dbr = ( $fromMaster ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'user', 'user_id', array( 'user_name' => $s ), __METHOD__ );
+		$dbMode = ( $fromMaster ) ? DB_MASTER : DB_SLAVE;
+		$dbr = wfGetDB( $dbMode, [], $wgExternalSharedDB );
+
+		$id = $dbr->selectField( '`user`', 'user_id', array( 'user_name' => $s ), __METHOD__ );
 		if ( $id === false ) {
 			$id = 0;
 		}
