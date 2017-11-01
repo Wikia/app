@@ -869,6 +869,7 @@ class RenameUserProcess {
 			$args = array_slice( $args, 1 );
 			$text = vsprintf( $text, $args );
 		}
+
 		foreach ( $this->mLogDestinations as $destinationEntry ) {
 			$logDestination = $destinationEntry[0];
 
@@ -1006,7 +1007,6 @@ class RenameUserProcess {
 			'mPhalanxBlockId' => 'phalanx_block_id',
 			'mReason' => 'reason',
 			'mLogTask' => 'local_task',
-			'mRenameIP' => 'rename_ip',
 		);
 
 		foreach ( $mapping as $property => $key ) {
@@ -1042,10 +1042,8 @@ class RenameUserProcess {
 	 * @return bool
 	 */
 	public function renameUser( array $params ) {
-		$renameIP = !empty( $params['rename_ip'] );
-
 		$process = RenameUserProcess::newFromData( $params );
-		$process->setLogDestination( \RenameUserProcess::LOG_BATCH_TASK, $this );
+		$process->setLogDestination( self::LOG_STANDARD );
 		$process->setRequestorUser();
 
 		$noErrors = true;
@@ -1066,21 +1064,13 @@ class RenameUserProcess {
 		// clean up pre-process setup
 		$process->cleanup();
 
-		$this->notifyUser(
-			\User::newFromId( $params['requestor_id'] ),
-			$params['rename_old_name'],
-			$params['rename_new_name']
-		);
+		// mark user as renamed
+		$renamedUser = \User::newFromId( $params['rename_user_id'] );
+		\RenameUserHelper::blockUserRenaming( $renamedUser );
+		$renamedUser->saveSettings();
 
-		if ( !$renameIP ) {
-			// mark user as renamed
-			$renamedUser = \User::newFromName( $params['rename_new_name'] );
-			$renamedUser->setGlobalFlag( 'wasRenamed', true );
-			$renamedUser->saveSettings();
-
-			// send e-mail to the user that rename process has finished
-			$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
-		}
+		// send e-mail to the user that rename process has finished
+		$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
 
 		if ( $noErrors ) {
 			$this->staffLog(
@@ -1138,6 +1128,7 @@ class RenameUserProcess {
 	 * @param string $newUsername
 	 */
 	protected function notifyUser( $user, $oldUsername, $newUsername ) {
+		var_dump($user->getEmail());
 		if ( $user->getEmail() != null ) {
 			F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', [
 				'targetUser' => $user,

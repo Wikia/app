@@ -36,9 +36,9 @@ class RenameUserFormInput {
 			$errorList[] = 'userrenametool-error-token_not_matched';
 		}
 
-			if ( !$this->isUserAbleToChangeUsername() ) {
-				$errorList[] = 'userrenametool-error-alreadyrenamed';
-			}
+		if ( \RenameUserHelper::canUserChangeUsername( $this->user ) ) {
+			$errorList[] = 'userrenametool-error-alreadyrenamed';
+		}
 
 		return $errorList;
 	}
@@ -60,10 +60,6 @@ class RenameUserFormInput {
 			"confirm_action" => $this->isRenameConfirmed(),
 			"token" => $this->token,
 		];
-	}
-
-	private function isUserAbleToChangeUsername(): bool {
-		return !$this->user->getGlobalFlag( 'wasRenamed', 0 );
 	}
 
 	public function isRenameConfirmed(): bool {

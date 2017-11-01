@@ -31,19 +31,29 @@ class SpecialRenameuser extends SpecialPage {
 
 		$this->setHeaders();
 		$this->checkPermissions();
-
-		$out = $this->getOutput();
 		$this->addJSFiles();
 
 		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
-			$out->readOnlyPage();
+			$this->getOutput()->readOnlyPage();
 
 			return;
 		}
 
+		$user = $this->getUser();
+
+		if ( \RenameUserHelper::canUserChangeUsername( $user ) ) {
+			$this->renderForm( $user );
+		} else {
+			$this->renderRejection();
+		}
+
+		return;
+	}
+
+	private function renderForm( $user ) {
 		// Get the request data
 		$request = $this->getRequest();
-		$userRenameInput = new RenameUserFormInput( $request, $this->getUser() );
+		$userRenameInput = new RenameUserFormInput( $request, $user );
 
 		$errors = [];
 		$info = [];
@@ -82,9 +92,12 @@ class SpecialRenameuser extends SpecialPage {
 			"show_form" => $showForm,
 		] ) );
 
-		$out->addHTML( $template->render( "rename-form" ) );
+		$this->getOutput()->addHTML( $template->render( "rename-form" ) );
+	}
 
-		return;
+	private function renderRejection() {
+		$template = new EasyTemplate( __DIR__ . '/templates/' );
+		$this->getOutput()->addHTML( $template->render( "rename-disallowed" ) );
 	}
 
 	private function addJSFiles() {

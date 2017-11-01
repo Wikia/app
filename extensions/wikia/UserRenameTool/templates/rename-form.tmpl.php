@@ -28,15 +28,6 @@
                     <? if ( $show_confirm ): ?><input type="hidden" name="newusernamerepeat" value="<?= $newusername_repeat_hsc; ?>"/><? endif ?>
 				</td>
 			</tr>
-			<tr>
-				<td class='mw-label'>
-					<label for='reason'><?= wfMessage( 'userrenametool-reason' )->inContentLanguage()->escaped(); ?></label>
-				</td>
-				<td class='mw-input'>
-					<input type="text" name="reason" size="60" tabindex="3" value="<?= $reason ?>"<?= $inputLock ?>/>
-					<? if ( $show_confirm ): ?><input type="hidden" name="reason" value="<?= $reason ?>"/><? endif ?>
-				</td>
-			</tr>
 			<? if ( $warnings ): ?>
 				<tr>
 					<td class='mw-label'><?= wfMessage( 'userrenametool-warnings' )->inContentLanguage()->escaped(); ?></td>
@@ -55,8 +46,11 @@
 
                 <? if ( $show_confirm ): ?>
                     <tr>
-                        <td><input type="hidden" name="confirm_action" value="1"/>&nbsp;</td>
+                        <td class='mw-label'>
+							<strong><?= wfMessage( 'userrenametool-confirm-intro' )->inContentLanguage()->escaped(); ?></strong>
+						</td>
                         <td class='mw-submit'>
+							<input type="hidden" name="confirm_action" value="1"/>
                             <input id="submit" type="submit" name="submit" tabindex="4" value="<?= wfMessage( 'userrenametool-confirm-yes' )->inContentLanguage()->escaped(); ?>"/>
                             <input id="cancel" type="button" name="cancel" tabindex="5" value="<?= wfMessage( 'userrenametool-confirm-no' )->inContentLanguage()->escaped(); ?>" onclick="window.location.href='<?=$wgTitle->getFullURL();?>';"/>
                         </td>

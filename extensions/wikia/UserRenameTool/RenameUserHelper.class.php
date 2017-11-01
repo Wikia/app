@@ -12,6 +12,7 @@ use Wikia\DependencyInjection\Injector;
 class RenameUserHelper {
 
 	const CLUSTER_DEFAULT = '';
+	const USER_ALREADY_RENAMED_FLAG = 'wasRenamed';
 
 	/**
 	 * @author Federico "Lox" Lucignano
@@ -185,6 +186,14 @@ class RenameUserHelper {
 
 		wfProfileOut( __METHOD__ );
 		return $warning;
+	}
+
+	public static function canUserChangeUsername( User $user ): bool {
+		return !$user->getGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, false );
+	}
+
+	public static function blockUserRenaming( User $user ) {
+		return $user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, true );
 	}
 
 }
