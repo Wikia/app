@@ -1,5 +1,5 @@
 debugger;
-CKEDITOR.lang[ window.wgUserLanguage ] = {
+/*CKEDITOR.lang[ window.wgUserLanguage ] = {
 //Debug Only
 	common: {
 		keyboard: {
@@ -18,3 +18,6 @@ CKEDITOR.lang[ window.wgUserLanguage ] = {
 
 
 }
+*/
+
+//CKEDITOR.lang[window.wgUserLanguage] = { }

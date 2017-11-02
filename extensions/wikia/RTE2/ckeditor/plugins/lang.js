@@ -1,5 +1,5 @@
 
-//foo();
+foo();
 debugger;
 
 function foo(){
