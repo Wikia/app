@@ -48,6 +48,25 @@ $wgAutoloadClasses['RenameUserProcess'] = dirname( __FILE__ ) . '/RenameUserProc
 $wgAutoloadClasses['RenameUserLogFormatter'] = dirname( __FILE__ ) . '/RenameUserLogFormatter.class.php';
 $wgAutoloadClasses['UserRenameTask'] = dirname( __FILE__ ) . '/UserRenameTask.class.php';
 
+// Resource Loader modules
+$userRenameResourceTemplate = array(
+	'localBasePath' => __DIR__ . '/modules',
+	'remoteExtPath' => 'wikia/UserRenameTool/modules'
+);
+$wgResourceModules['ext.userRename.modal'] = $userRenameResourceTemplate + array(
+	'scripts' => 'ext.userRename.modal.js',
+	'dependencies' => array(
+		'mediawiki.user',
+		'mediawiki.util'
+	),
+	'messages' => array(
+		'renameuser',
+		'userrenametool-confirm-intro',
+		'userrenametool-confirm-yes',
+		'userrenametool-confirm-no'
+	)
+);
+
 // constants
 // define('ENV_DEVBOX', true);//TODO: used for some debug switches, comment out as soon as the code hits production!
 define( 'USERRENAME_ROWS_PER_LOOP', 500 );

@@ -10,12 +10,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * user accounts
  */
 class SpecialRenameuser extends SpecialPage {
+	private $app;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		parent::__construct( 'UserRenameTool', 'renameuser', true );
+		$this->app = F::app();
 	}
 
 	/**
@@ -32,6 +34,7 @@ class SpecialRenameuser extends SpecialPage {
 		$this->setHeaders();
 		$this->checkPermissions();
 		$this->addJSFiles();
+		$this->addModule("ext.userRename.modal");
 
 		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$this->getOutput()->readOnlyPage();
@@ -103,6 +106,10 @@ class SpecialRenameuser extends SpecialPage {
 	private function addJSFiles() {
 		$this->getOutput()->addScript( Html::linkedScript( AssetsManager::getInstance()
 			->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' ) ) );
+	}
+
+	private function addModule( $name ) {
+		$this->app->wg->Out->addModules( $name );
 	}
 
 	private function parseMessages( array $messageNames ) {
