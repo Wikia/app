@@ -2,6 +2,8 @@
 
 namespace Wikia\Service\User\ExternalAuth;
 
+use User;
+
 class GoogleService {
 	/** @var ExternalAuthApiFactory $externalAuthApiFactory */
 	private $externalAuthApiFactory;

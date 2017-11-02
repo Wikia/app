@@ -13,7 +13,6 @@ $wgAutoloadClasses['FacebookPreferencesModuleService'] = __DIR__ . '/FacebookPre
 $wgAutoloadClasses['FacebookPreferencesHooks'] = __DIR__ . '/FacebookPreferencesHooks.php';
 
 $wgHooks['GetPreferences'][] = 'FacebookPreferencesHooks::onGetPreferences';
-$wgHooks['CloseAccount'][] = 'FacebookPreferencesHooks::onCloseAccount';
 
 $wgResourceModules['ext.wikia.facebookPreferences'] = [
 	'scripts' => [
