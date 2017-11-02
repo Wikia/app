@@ -28,21 +28,6 @@
 		}
 	}
 
-	// resets default styles
-	ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	.jw-controlbar .jw-icon-inline.jw-text {
-		margin-top: -4px;
-	}
-
-	&.jw-flag-small-player .jw-title-primary {
-		display: none;
-	}
-
 	&.jw-reset, .jw-reset {
 		font-family: inherit;
 	}
@@ -77,5 +62,22 @@
 	.jw-controlbar {
 		// background relies on player's id selector so it's impossible to set it for every case
 		background: linear-gradient(0, #000, transparent)!important;
+	}
+
+	.jw-svg-icon {
+		height: 18px;
+		width: 18px;
+	}
+
+	.jw-button-container {
+		padding: 0;
+	}
+
+	.jw-text-elapsed, .jw-text-countdown, .jw-text-duration {
+		font-weight: bold;
+	}
+
+	.jw-rail, .jw-buffer, .jw-progress {
+		border-radius: 2px;
 	}
 }

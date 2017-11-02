@@ -51,7 +51,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	function setupPlayer(elementId, options, logger) {
 		var playerInstance = jwplayer(elementId),
 			videoId = options.videoDetails.playlist[0].mediaid,
-			willAutoplay = options.autoplay.enabled,
+			willAutoplay = options.autoplay,
 			playerSetup = {
 				advertising: {
 					autoplayadsmuted: willAutoplay,
@@ -63,14 +63,18 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
 				mute: willAutoplay,
 				playlist: options.videoDetails.playlist,
-				title: options.videoDetails.title,
-				plugins: {
-					wikiaSettings: {
-						showToggle: options.autoplay.showToggle,
-						autoplay: options.autoplay.enabled
-					}
+				title: options.videoDetails.title
+			};
+
+		if (options.settings) {
+			playerSetup.plugins = {
+				wikiaSettings: {
+					showToggle: options.settings.showToggle,
+					showQuality: options.settings.showQuality,
+					autoplay: options.autoplay
 				}
 			};
+		}
 
 		if (options.related) {
 			playerSetup.related = {
@@ -93,16 +97,16 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			playerInstance = setupPlayer(elementId, options, logger);
 
 		wikiaJWPlayerReplaceIcons(playerInstance);
-		wikiaJWPlayerEvents(playerInstance, options.autoplay.enabled, logger);
+		wikiaJWPlayerEvents(playerInstance, options.autoplay, logger);
 		if (options.related) {
 			wikiaJWPlayerRelatedVideoSound(playerInstance);
 		}
 
 		if (options.tracking) {
-			wikiaJWPlayerTracking(playerInstance, options.autoplay.enabled, options.tracking);
+			wikiaJWPlayerTracking(playerInstance, options.autoplay, options.tracking);
 		}
 
-		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay.enabled);
+		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay);
 
 		if (callback) {
 			callback(playerInstance);

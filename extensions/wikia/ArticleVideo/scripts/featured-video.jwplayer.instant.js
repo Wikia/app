@@ -75,9 +75,10 @@ require([
 				setCustomDimension: win.guaSetCustomDimension,
 				comscore: !win.wgDevelEnvironment
 			},
-			autoplay: {
+			autoplay: willAutoplay,
+			settings: {
 				showToggle: true,
-				enabled: willAutoplay,
+				showQuality: true
 			},
 			related: {
 				time: 3,
