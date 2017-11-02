@@ -123,7 +123,7 @@ class ListusersData {
 			'O'  . $orderby
 		);
 
-		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata-v2", md5( implode(', ', $subMemkey) ) );
+		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata-v3", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
 		if ( empty($cached) ) {
@@ -133,7 +133,7 @@ class ListusersData {
 			/* initial conditions for SQL query */
 			$where = [
 					'wiki_id' => $this->mCityId,
-					"user_name != ''",
+					"user_name != ''", # TODO: SUS-3205
 					'user_is_closed' => 0
 			];
 
@@ -167,7 +167,7 @@ class ListusersData {
 
 			/* filter: user name */
 			if ( !empty( $this->mUserName ) ) {
-				$where[] = " user_name >= ". $dbs->addQuotes( $this->mUserName );
+				$where[] = " user_name >= ". $dbs->addQuotes( $this->mUserName ); # TODO: SUS-3205
 			}
 
 			/* filter: number of edits */
@@ -191,10 +191,9 @@ class ListusersData {
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
-					array( $this->mTable . ' as e1 ' . ( ($this->mUseKey) ? 'use key('.$this->mUseKey.')' : '' ) ),
+					array( $this->mTable . ( ($this->mUseKey) ? ' use key('.$this->mUseKey.')' : '' ) ),
 					array(
-						'e1.user_id',
-						'user_name',
+						'user_id',
 						'cnt_groups',
 						'all_groups',
 						'edits',
@@ -216,7 +215,7 @@ class ListusersData {
 				$data['data'] = array();
 				while ( $oRow = $dbs->fetchObject( $oRes ) ) {
 					// SUS-2772: don't do a DB query for every row
-					$oUser = User::newFromRow( $oRow );
+					$oUser = User::newFromId( $oRow->user_id );
 
 					/* groups */
 					$groups = explode(";", $oRow->all_groups);
@@ -472,7 +471,7 @@ class ListusersData {
 				array(
 					"wiki_id"        => $this->mCityId,
 					"user_id"        => $user_id,
-					"user_name"  	 => $user->getName(),
+					"user_name"  	 => $user->getName(), # TODO: SUS-3205
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
 					"last_revision"  => intval($lastrev),
