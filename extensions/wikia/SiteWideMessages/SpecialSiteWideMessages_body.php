@@ -1463,10 +1463,10 @@ class SiteWideMessagesPager extends TablePager {
 		if ( !$this->mFieldNames ) {
 			$this->mFieldNames = array();
 			$this->mFieldNames['msg_id']             = wfMsg('swm-list-table-id');
-			$this->mFieldNames['msg_sender']         = wfMsg('swm-list-table-sender');
+			$this->mFieldNames['msg_sender_id']      = wfMsg('swm-list-table-sender');
 			$this->mFieldNames['msg_wiki_name']      = wfMsg('swm-list-table-wiki');
 			$this->mFieldNames['msg_hub_id']         = wfMsg( 'swm-list-table-hub' );
-			$this->mFieldNames['msg_recipient_name'] = wfMsg('swm-list-table-recipient');
+			$this->mFieldNames['msg_recipient_id']   = wfMsg('swm-list-table-recipient');
 			$this->mFieldNames['msg_group_name']     = wfMsg('swm-list-table-group');
 			$this->mFieldNames['msg_expire']         = wfMsg('swm-list-table-expire');
 			$this->mFieldNames['msg_removed']        = wfMsg('swm-list-table-removed');
