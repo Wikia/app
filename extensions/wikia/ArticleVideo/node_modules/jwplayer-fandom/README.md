@@ -83,8 +83,12 @@ Id of DOM element where the player should be placed
     // pass playlist returned by jwplayer API (https://cdn.jwplayer.com/v2/media/{mediaId})
     playlist: array
   },
-  // logging level, default is error, available values: 'info', 'warn', 'error', 'off'
-  logLevel: string,
+  logger: {
+    // logging level, default is error, available values: 'info', 'warn', 'error', 'off'
+    logLevel: string,
+    // client name (will be passed into logging service) e.g. 'oasis', 'mobile-wiki'
+    clientName: string
+  },
   // services domain, required by logging errors to event-logger service, default: 'services.wikia.com'
   servicesDomian: string
 }

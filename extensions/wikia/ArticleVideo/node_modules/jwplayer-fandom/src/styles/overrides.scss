@@ -1,5 +1,6 @@
 .jwplayer {
-	.jw-button-container {
+	.jw-button-container,
+	.jw-display-container {
 		.jw-icon-rewind,
 		.jw-icon-next,
 		.jw-settings-sharing,
@@ -65,5 +66,10 @@
 				opacity: 0;
 			}
 		}
+	}
+
+	.jw-controlbar {
+		// background relies on player's id selector so it's impossible to set it for every case
+		background: linear-gradient(0, #000, transparent)!important;
 	}
 }

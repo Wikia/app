@@ -9,7 +9,9 @@ function wikiaJWPlayerLogger(options) {
 			error: 3,
 			off: 4
 		},
-		logLevel = options.logLevel ? logLevels[options.logLevel] : logLevels['error'];
+		loggerOptions = options.logger || {},
+		logLevel = loggerOptions.logLevel ? logLevels[loggerOptions.logLevel] : logLevels['error'],
+		clientName = loggerOptions.clientName;
 
 	/**
 	 * logs errors to event-logger service
@@ -25,6 +27,10 @@ function wikiaJWPlayerLogger(options) {
 
 		if (description) {
 			data.description = typeof description === 'string' ? description : JSON.stringify(description);
+		}
+
+		if (clientName) {
+			data.client = clientName;
 		}
 
 		request.open('POST', loggerUrl, true);
