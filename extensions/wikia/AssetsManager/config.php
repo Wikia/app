@@ -936,6 +936,13 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_js',
+
+		// JWPlayer specific
+		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads-tracking.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-plugin.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
 	],
 ];
 
