@@ -749,9 +749,11 @@ class WikiRecommendations {
 
 	private static function getThumbnailUrl( $url ) {
 		try {
-			return VignetteRequest::fromUrl( $url )->zoomCrop()->width( self::THUMBNAIL_WIDTH )->height(
-				floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO )
-			)->url();
+			return VignetteRequest::fromUrl( $url )
+				->zoomCrop()
+				->width( self::THUMBNAIL_WIDTH )
+				->height( floor( self::THUMBNAIL_WIDTH / self::THUMBNAIL_RATIO ) )
+				->url();
 		} catch ( Exception $exception ) {
 			\Wikia\Logger\WikiaLogger::instance()->warning(
 				"Invalid thumbnail url provided for explore-wikis module inside mixed content footer",
