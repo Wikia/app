@@ -362,8 +362,6 @@ class SyncSwiftImagesBetweeenDC extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgExternalSharedDB;
-
 		// force migration of wikis with read-only mode
 		if (wfReadOnly()) {
 			global $wgReadOnly;

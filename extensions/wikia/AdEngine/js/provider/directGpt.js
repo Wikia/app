@@ -82,7 +82,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'INCONTENT_BOXAD_1',
 				'INCONTENT_PLAYER',
 				'INVISIBLE_HIGH_IMPACT_2'
-			]
+			],
+			testSrc: 'test'
 		}
 	);
 });

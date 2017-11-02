@@ -27,7 +27,7 @@ class CdnRewriteFilter extends Filter {
 
 			// TODO: refactor?
 			while($wasChanged) {
-				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n]*?)([, ]url[^\n]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$this->cdnUrl.'\\2\\3\\4', $contents);
+				$changedCss = preg_replace("/([\(][\"']?)(\/[^\/][^\n]*?)([, ]url[^\n]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$this->cdnUrl.'\\2\\3\\4', $contents);
 				if($changedCss != $contents) {
 					$wasChanged = true;
 					$contents = $changedCss;
@@ -36,7 +36,7 @@ class CdnRewriteFilter extends Filter {
 				}
 			}
 
-			$contents = preg_replace("/([\(][\"']?)(\/[^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$this->cdnUrl.'\\2', $contents);
+			$contents = preg_replace("/([\(][\"']?)(\/[^\/][^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$this->cdnUrl.'\\2', $contents);
 		}
 
 		wfProfileOut(__METHOD__);

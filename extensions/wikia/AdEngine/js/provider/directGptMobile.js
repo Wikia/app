@@ -25,7 +25,8 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			},
 			atfSlots: [
 				'MOBILE_TOP_LEADERBOARD'
-			]
+			],
+			testSrc: 'test'
 		}
 	);
 });

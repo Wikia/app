@@ -259,7 +259,7 @@ class RTE {
 			'maxage' => $wgSquidMaxage,
 		));
 
-		$vars['RTESiteCss'] = $wgServer . Skin::makeNSUrl( ( F::app()->checkSkin( 'oasis' ) ) ? 'Wikia.css' : 'Common.css', $query, NS_MEDIAWIKI );
+		$vars['RTESiteCss'] = Skin::makeNSUrl( ( F::app()->checkSkin( 'oasis' ) ) ? 'Wikia.css' : 'Common.css', $query, NS_MEDIAWIKI );
 
 		// domain and path for cookies
 		global $wgCookieDomain, $wgCookiePath;

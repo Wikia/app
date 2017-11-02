@@ -149,9 +149,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 	it('Should enable tracking based on instant global sampling (100%)', function () {
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
 
-		var videoSettings = getSettings({
-			moatTracking: 'useInstantGlobal'
-		});
+		var videoSettings = getSettings();
 
 		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
 		expect(mocks.sampler.sample).not.toHaveBeenCalled();
@@ -161,9 +159,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
 
 		mocks.instantGlobals.wgAdDriverPorvataMoatTrackingSampling = 50;
-		getSettings({
-			moatTracking: 'useInstantGlobal'
-		});
+		getSettings();
 
 		expect(mocks.sampler.sample).toHaveBeenCalled();
 	});
@@ -179,33 +175,10 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 		expect(mocks.sampler.sample).not.toHaveBeenCalled();
 	});
 
-	it('Should enable tracking when param is integer (100)', function () {
-		spyOn(mocks.sampler, 'sample').and.returnValue(true);
-
-		var videoSettings = getSettings({
-			moatTracking: 100
-		});
-
-		expect(videoSettings.isMoatTrackingEnabled()).toBeTruthy();
-		expect(mocks.sampler.sample).not.toHaveBeenCalled();
-	});
-
-	it('Should use sampling when param is integer lower than 100', function () {
-		spyOn(mocks.sampler, 'sample').and.returnValue(true);
-
-		getSettings({
-			moatTracking: 50
-		});
-
-		expect(mocks.sampler.sample).toHaveBeenCalled();
-	});
-
 	it('Should be able to disable moat tracking on runtime', function () {
 		spyOn(mocks.sampler, 'sample').and.returnValue(true);
 
-		var videoSettings = getSettings({
-			moatTracking: 100
-		});
+		var videoSettings = getSettings();
 		videoSettings.setMoatTracking(false);
 
 		expect(videoSettings.isMoatTrackingEnabled()).toBeFalsy();

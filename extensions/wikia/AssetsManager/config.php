@@ -215,6 +215,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/service/kiloAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
+		'//extensions/wikia/AdEngine/js/slot/service/srcProvider.js',
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
@@ -234,14 +235,6 @@ $config['adengine2_top_js'] = [
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/promise.js',
-	],
-];
-
-$config['adengine2_amazon_match_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 	],
 ];
 
@@ -271,6 +264,7 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/onemobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubiconDisplay.js',
@@ -831,7 +825,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
-		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/a9.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
@@ -856,6 +849,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/megaAdUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
+		'//extensions/wikia/AdEngine/js/slot/service/srcProvider.js',
 		'//extensions/wikia/AdEngine/js/slot/service/stateMonitor.js',
 		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
@@ -2694,7 +2688,6 @@ $config['jwplayer_scss'] = [
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss',
 		'//extensions/wikia/ArticleVideo/styles/jwplayer-overrides.scss',
-		'//extensions/wikia/ArticleVideo/styles/wikia-jw-settings.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss'
 	],

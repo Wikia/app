@@ -264,7 +264,7 @@
 				var input = elem.hide().next('input').show();
 
 				input.autocomplete({
-					serviceUrl: window.wgServer + window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+					serviceUrl: window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: function (value, data, event) {
 						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
 							// slashes can't be urlencoded because they break routing

@@ -496,6 +496,7 @@ $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
 $wgAutoloadClasses[ "ApiLicenses"                   ] = "$IP/includes/wikia/api/ApiLicenses.php";
+$wgAutoloadClasses['ApiQueryUserGroupMembers'] = "$IP/includes/api/wikia/ApiQueryUserGroupMembers.php";
 
 /**
  * validators
@@ -538,7 +539,7 @@ $wgAutoloadClasses['GlobalVarConfig'] = $IP . '/includes/config/GlobalVarConfig.
 global $wgAPIListModules;
 $wgAPIListModules[ "wkdomains"    ] = "WikiaApiQueryDomains";
 $wgAPIListModules[ "wkpoppages"   ] = "WikiaApiQueryPopularPages";
-
+$wgAPIListModules['groupmembers'] = 'ApiQueryUserGroupMembers';
 
 /**
  * registered API methods
@@ -690,9 +691,9 @@ require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /**
  * @name wgExternalSharedDB
- * use it when you have $wgSharedDB on an external cluster
+ * All wikis use shared database to fetch user data
  */
-$wgExternalSharedDB = false;
+$wgExternalSharedDB = 'wikicities';
 
 /**
  * @name wgDumpsDisabledWikis
@@ -1142,6 +1143,12 @@ $wgNielsenApid = 'FIXME';
 $wgEnableNetzAthleten = true;
 
 /**
+ * @name $wgAdDriverIsTestWiki
+ * Enables test targeting parameters for wiki.
+ */
+$wgAdDriverIsAdTestWiki = false;
+
+/**
  * @name $wgAdDriverNetzAthletenCountries
  * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1153,26 +1160,6 @@ $wgAdDriverNetzAthletenCountries = null;
  * Defines content source id sent in VAST url
  */
 $wgAdDriverDfpOoyalaContentSourceId = '2458214';
-
-/**
- * @name $wgEnableAmazonMatch
- * Enables AmazonMatch new integration (id=3115)
- */
-$wgEnableAmazonMatch = true;
-
-/**
- * @name $wgAmazonMatchCountries
- * Enables AmazonMatch new integration (id=3115) in these countries (given wgEnableAmazonMatch is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAmazonMatchCountries = null;
-
-/**
- * @name $wgAmazonMatchCountriesMobile
- * Enables AmazonMatch on mobile in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAmazonMatchCountriesMobile = null;
 
 /**
  * @name wgAdDriverA9VideoBidderCountries
@@ -1243,6 +1230,13 @@ $wgAdDriverPrebidBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAolBidderCountries = null;
+
+/**
+ * @name $wgAdDriverAolOneMobileBidderCountries
+ * List of countries where onemobile bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAolOneMobileBidderCountries = null;
 
 /**
  * @name $wgAdDriverAppNexusBidderCountries

@@ -120,7 +120,7 @@
 
 			// Bartek - for RT #43217
 			if (typeof WikiaEnableAutoPageCreate != 'undefined') {
-				RTE.config.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css'); // local path needs to be used here
+				RTE.config.contentsCss.push(wgScriptPath + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css'); // local path needs to be used here
 			}
 
 			var contentsCss = '',
@@ -448,7 +448,7 @@ CKEDITOR.getUrl = function( resource ) {
 		RTE.log('language "' + lang + '" requested');
 
 		// fetch JSON with language definition from backend
-		var url = window.wgServer + '/wikia.php?controller=RTE&method=i18n&uselang=' + lang +
+		var url = window.wgScriptPath + '/wikia.php?controller=RTE&method=i18n&uselang=' + lang +
 			'&cb=' + window.wgJSMessagesCB;
 
 		return url;
