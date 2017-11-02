@@ -35,7 +35,7 @@ class FacebookServiceTest extends TestCase {
 			->willReturn( static::TEST_USER_ID );
 
 		$this->facebookApiFactoryMock->expects( $this->any() )
-			->method( 'getApi' )
+			->method( 'getFacebookApi' )
 			->willReturn( $this->apiMock );
 
 		$this->facebookService = new FacebookService( $this->facebookApiFactoryMock );
