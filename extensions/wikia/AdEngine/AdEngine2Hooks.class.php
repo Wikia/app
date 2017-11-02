@@ -35,6 +35,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAdMixCountries';
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
 		$vars[] = 'wgAdDriverAolBidderCountries';
+		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';

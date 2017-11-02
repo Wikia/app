@@ -1232,6 +1232,13 @@ $wgAdDriverPrebidBidderCountries = null;
 $wgAdDriverAolBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAolOneMobileBidderCountries
+ * List of countries where onemobile bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAolOneMobileBidderCountries = null;
+
+/**
  * @name $wgAdDriverAppNexusBidderCountries
  * List of countries where appnexus bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
