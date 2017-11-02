@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\ExternalAuth\FacebookService;
 
 class FacebookPreferencesHooks {
 	public static function onGetPreferences( User $user, array &$preferences ): bool {
