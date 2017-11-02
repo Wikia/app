@@ -29,7 +29,7 @@ class ExternalAuthApiFactory {
 	}
 
 
-	public function getGoogleApi( int $userId = 0 ): FacebookApi {
+	public function getGoogleApi( int $userId = 0 ): GoogleApi {
 		if ( $userId === 0 ) {
 			return $this->apiProvider->getApi( static::EXTERNAL_AUTH_SERVICE, GoogleApi::class );
 		}
