@@ -1162,26 +1162,6 @@ $wgAdDriverNetzAthletenCountries = null;
 $wgAdDriverDfpOoyalaContentSourceId = '2458214';
 
 /**
- * @name $wgEnableAmazonMatch
- * Enables AmazonMatch new integration (id=3115)
- */
-$wgEnableAmazonMatch = true;
-
-/**
- * @name $wgAmazonMatchCountries
- * Enables AmazonMatch new integration (id=3115) in these countries (given wgEnableAmazonMatch is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAmazonMatchCountries = null;
-
-/**
- * @name $wgAmazonMatchCountriesMobile
- * Enables AmazonMatch on mobile in these countries
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAmazonMatchCountriesMobile = null;
-
-/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled
@@ -1250,6 +1230,13 @@ $wgAdDriverPrebidBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAolBidderCountries = null;
+
+/**
+ * @name $wgAdDriverAolOneMobileBidderCountries
+ * List of countries where onemobile bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAolOneMobileBidderCountries = null;
 
 /**
  * @name $wgAdDriverAppNexusBidderCountries

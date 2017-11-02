@@ -3227,7 +3227,8 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Add a user to the database, return the user object
+
+* Add a user to the database, return the user object
 	 *
 	 * @param $name String Username to add
 	 * @param $params Array of Strings Non-default parameters to save to the database as user_* fields:

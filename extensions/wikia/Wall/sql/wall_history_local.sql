@@ -1,7 +1,6 @@
 CREATE TABLE wall_history (
 	parent_page_id INT(8) UNSIGNED,
 	post_user_id INT(10) UNSIGNED,
-	post_user_ip INT UNSIGNED,
 	post_user_ip_bin VARBINARY(16) DEFAULT NULL,
 	is_reply tinyint(1),
 	action tinyint(3),

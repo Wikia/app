@@ -1,7 +1,7 @@
 @import '../../node_modules/design-system/dist/scss/wds-variables/index';
 
 .wikia-jw-settings {
-	background-color: rgba(26, 26, 26, 0.8);
+	background-color: $wds-color-black;
 	border-radius: 4px;
 	bottom: 60px;
 	display: none;
@@ -9,7 +9,7 @@
 	padding: 12px;
 	pointer-events: auto;
 	position: absolute;
-	right: 60px;
+	right: 12px;
 
 	&__list {
 		color: #fff;

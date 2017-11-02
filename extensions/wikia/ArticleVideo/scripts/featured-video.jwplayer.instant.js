@@ -88,6 +88,9 @@ require([
 				description: videoDetails.description,
 				title: videoDetails.title,
 				playlist: videoDetails.playlist
+			},
+			logger: {
+				clientName: 'oasis'
 			}
 		}, onPlayerReady);
 	}

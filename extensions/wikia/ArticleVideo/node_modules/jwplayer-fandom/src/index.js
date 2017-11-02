@@ -94,6 +94,9 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		wikiaJWPlayerReplaceIcons(playerInstance);
 		wikiaJWPlayerEvents(playerInstance, options.autoplay.enabled, logger);
+		if (options.related) {
+			wikiaJWPlayerRelatedVideoSound(playerInstance);
+		}
 
 		if (options.tracking) {
 			wikiaJWPlayerTracking(playerInstance, options.autoplay.enabled, options.tracking);

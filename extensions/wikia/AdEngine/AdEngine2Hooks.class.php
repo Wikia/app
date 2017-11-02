@@ -4,7 +4,6 @@
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
-	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_A9 = 'adengine2_a9_js';
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
@@ -36,6 +35,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAdMixCountries';
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
 		$vars[] = 'wgAdDriverAolBidderCountries';
+		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
@@ -83,8 +83,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
-		$vars[] = 'wgAmazonMatchCountries';
-		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgPorvataVastLoggerConfig';
 
 		/**
@@ -105,11 +103,21 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
+		// shared variables with communities
+		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+
+		// news&stories variables only
 		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
 		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
 		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
-		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
+		$vars[] = 'wgAdDriverF2SingleSrcKeyValueCountries';
+		$vars[] = 'wgAdDriverF2SrcKeyValueCountries';
+		$vars[] = 'wgAdDriverF2PlayAdsOnNextFVCountries';
+		$vars[] = 'wgAdDriverF2PlayAdsOnNextFVFrequency';
+		$vars[] = 'wgAdDriverF2FVMidrollCountries';
+		$vars[] = 'wgAdDriverF2FVPostrollCountries';
 
 		return true;
 	}
@@ -175,10 +183,6 @@ class AdEngine2Hooks {
 
 		// Tracking should be available very early, so we can track how lookup calls perform
 		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TOP;
-
-		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
-		}
 
 		if ( AnalyticsProviderA9::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_A9;

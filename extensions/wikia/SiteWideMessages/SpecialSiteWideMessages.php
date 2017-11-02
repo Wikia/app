@@ -176,13 +176,3 @@ function SiteWideMessagesPublicStatusChange($city_public, $city_id, $reason = ''
 	}
 	return true;
 }
-
-$wgHooks['UserRename::Global'][] = "SiteWideMessagesUserRenameGlobal";
-
-function SiteWideMessagesUserRenameGlobal( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
-	$tasks[] = array(
-		'table' => 'messages_text',
-		'username_column' => 'msg_recipient_name',
-	);
-	return true;
-}

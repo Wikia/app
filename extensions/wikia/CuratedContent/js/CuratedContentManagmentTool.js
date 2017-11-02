@@ -1,4 +1,4 @@
-/* global mw, wgServer, wgScript */
+/* global mw, wgScript */
 /* jshint maxlen: false */
 /* jshint loopfunc: false */
 /* jshint camelcase: false */
@@ -50,7 +50,7 @@ require(
 
 				setup = function (elem) {
 					(elem || $ul.find('.item-input')).autocomplete({
-						serviceUrl: wgServer + wgScript,
+						serviceUrl: wgScript,
 						params: {
 							action: 'ajax',
 							rs: 'getLinkSuggest',
