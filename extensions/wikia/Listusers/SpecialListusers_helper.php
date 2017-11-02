@@ -200,8 +200,8 @@ class ListusersData {
 						'user_is_blocked',
 						'last_revision',
 						'editdate',
-						'ifnull(e1.last_revision, 0) as max_rev',
-						'ifnull(unix_timestamp(e1.editdate), 0) as ts_edit'
+						'ifnull(last_revision, 0) as max_rev',
+						'ifnull(unix_timestamp(editdate), 0) as ts_edit'
 					),
 					$where,
 					__METHOD__,
