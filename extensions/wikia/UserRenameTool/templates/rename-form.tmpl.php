@@ -13,7 +13,7 @@
 					<label for='newusername'><?= wfMessage( 'userrenametool-new' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" name="newusername" size="20" tabindex="2" value="<?= $newusername_hsc; ?>"/>
+					<input type="text" name="newUsername" size="20" tabindex="2" value="<?= $newUsername; ?>"/>
 					<span id="newUsernameEncoded"><?= wfMessage( 'userrenametool-encoded' )->escaped(); ?> <strong></strong></span>
 				</td>
 			</tr>
@@ -22,7 +22,23 @@
 					<label for='newusernamerepeat'><?= wfMessage( 'userrenametool-new-repeat' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" name="newusernamerepeat" size="20" tabindex="2" value="<?= $newusername_repeat_hsc; ?>"/>
+					<input type="text" name="newUsernameRepeat" size="20" tabindex="2" value="<?= $newUsernameRepeat; ?>"/>
+				</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>
+					<label for="password"><?= wfMessage( 'userrenametool-password' )->inContentLanguage()->escaped(); ?></label>
+				</td>
+				<td class='mw-input'>
+					<input type="password" name="password" size="20" tabindex="2" value=""/>
+				</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>
+					<label for="understand"><?= wfMessage( 'userrenametool-understand' )->inContentLanguage()->escaped(); ?></label>
+				</td>
+				<td class='mw-input'>
+					<input type="checkbox" name="understandConsequences" size="20" tabindex="2" value="true"/>
 				</td>
 			</tr>
 			<? if ( $warnings ): ?>
