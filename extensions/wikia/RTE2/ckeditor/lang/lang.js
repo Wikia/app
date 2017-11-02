@@ -20,4 +20,4 @@ debugger;
 }
 */
 
-//CKEDITOR.lang[window.wgUserLanguage] = { }
+CKEDITOR.lang[window.wgUserLanguage] = { }
