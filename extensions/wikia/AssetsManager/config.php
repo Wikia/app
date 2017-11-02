@@ -491,6 +491,7 @@ $config['oasis_nojquery_shared_js'] = [
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/Tracking.js',
+        '//skins/oasis/js/connectionType.js',
 
 		'//skins/shared/scripts/onScroll.js',
 
