@@ -18,8 +18,8 @@ class FacebookServiceTest extends TestCase {
 	/** @var FacebookApi|PHPUnit_Framework_MockObject_MockObject $apiMock */
 	private $apiMock;
 
-	/** @var ExternalAuthApiFactory|PHPUnit_Framework_MockObject_MockObject $facebookApiFactoryMock */
-	private $facebookApiFactoryMock;
+	/** @var ExternalAuthApiFactory|PHPUnit_Framework_MockObject_MockObject $apiFactoryMock */
+	private $apiFactoryMock;
 
 	/** @var FacebookService $facebookService */
 	private $facebookService;
@@ -28,17 +28,17 @@ class FacebookServiceTest extends TestCase {
 		parent::setUp();
 		$this->userMock = $this->createMock( User::class );
 		$this->apiMock = $this->createMock( FacebookApi::class );
-		$this->facebookApiFactoryMock = $this->createMock( ExternalAuthApiFactory::class );
+		$this->apiFactoryMock = $this->createMock( ExternalAuthApiFactory::class );
 
 		$this->userMock->expects( $this->any() )
 			->method( 'getId' )
 			->willReturn( static::TEST_USER_ID );
 
-		$this->facebookApiFactoryMock->expects( $this->any() )
+		$this->apiFactoryMock->expects( $this->any() )
 			->method( 'getFacebookApi' )
 			->willReturn( $this->apiMock );
 
-		$this->facebookService = new FacebookService( $this->facebookApiFactoryMock );
+		$this->facebookService = new FacebookService( $this->apiFactoryMock );
 	}
 
 	public function testUnlinkAccountUsesWikiaUserId() {
