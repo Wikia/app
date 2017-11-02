@@ -535,13 +535,12 @@ class SiteWideMessages extends SpecialPage {
 
 			$dbResult = (boolean)$DB->Query (
 				  'INSERT INTO ' . MSG_TEXT_DB
-				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_recipient_user_id, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang, msg_cluster_id)'
+				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_user_id, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang, msg_cluster_id)'
 				. ' VALUES ('
 				. $DB->AddQuotes($mSender->GetID()). ', '
 				. $DB->AddQuotes($mText) . ', '
 				. ($sendToAll ? MSG_MODE_ALL : MSG_MODE_SELECTED) . ', '
 				. $DB->AddQuotes($mExpire) . ', '
-				. $DB->AddQuotes($mRecipientName) . ', '
 				. $recipientUserId . ', ' # SUS-3111
 				. $DB->AddQuotes($mGroupName) . ', '
 				. $DB->AddQuotes($mWikiName) . ', '
@@ -996,7 +995,7 @@ class SiteWideMessages extends SpecialPage {
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$dbResult = $DB->Query (
-			  'SELECT msg_id, user_name, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_name, msg_recipient_user_id, msg_group_name, msg_wiki_name'
+			  'SELECT msg_id, user_name, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_user_id, msg_group_name, msg_wiki_name'
 			. ' FROM ' . MSG_TEXT_DB
 			. ' LEFT JOIN user ON msg_sender_id = user_id'
 			. ' ORDER BY msg_id DESC'
@@ -1292,7 +1291,7 @@ class SiteWideMessages extends SpecialPage {
 				' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)' .
 				' WHERE msg_mode = ' . MSG_MODE_SELECTED .
 				' AND msg_recipient_id = 0' .
-				' AND msg_recipient_name = ' . $dbr->addQuotes( MSG_RECIPIENT_ANON ) .
+				' AND msg_recipient_user_id = 0' . # message is for all anons
 				' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')' .
 				' AND (msg_expire IS NULL OR msg_expire > ' . $dbr->addQuotes( date( 'Y-m-d H:i:s' ) ) . ')' .
 				' AND msg_removed = ' . MSG_REMOVED_NO .
@@ -1567,7 +1566,7 @@ class SiteWideMessagesPager extends TablePager {
 	function getQueryInfo() {
 		return array(
 			'tables' => MSG_TEXT_DB . ' LEFT JOIN user ON msg_sender_id = user_id',
-			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_recipient_name', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
+			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
 		);
 	}
 
