@@ -2,7 +2,6 @@
     'use strict';
 
     window.Wikia = window.Wikia || {};
-
     var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
     Wikia.getConnectionType = function () {
