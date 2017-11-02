@@ -1466,7 +1466,7 @@ class SiteWideMessagesPager extends TablePager {
 			$this->mFieldNames['msg_sender_id']      = wfMsg('swm-list-table-sender');
 			$this->mFieldNames['msg_wiki_name']      = wfMsg('swm-list-table-wiki');
 			$this->mFieldNames['msg_hub_id']         = wfMsg( 'swm-list-table-hub' );
-			$this->mFieldNames['msg_recipient_id']   = wfMsg('swm-list-table-recipient');
+			$this->mFieldNames['msg_recipient_user_id'] = wfMsg('swm-list-table-recipient');
 			$this->mFieldNames['msg_group_name']     = wfMsg('swm-list-table-group');
 			$this->mFieldNames['msg_expire']         = wfMsg('swm-list-table-expire');
 			$this->mFieldNames['msg_removed']        = wfMsg('swm-list-table-removed');
@@ -1501,7 +1501,7 @@ class SiteWideMessagesPager extends TablePager {
 				$sRetval = htmlspecialchars( User::whoIs( $value ) );
 				break;
 
-			case 'msg_recipient_id':
+			case 'msg_recipient_user_id':
 				if ( is_null( $value ) ) {
 					$sRetval = '<i>' . wfMsg('swm-label-mode-users-all') . '</i>';
 				}
@@ -1580,7 +1580,7 @@ class SiteWideMessagesPager extends TablePager {
 	function getQueryInfo() {
 		return array(
 			'tables' => MSG_TEXT_DB,
-			'fields' => array('msg_id', 'msg_sender_id', 'msg_recipient_id', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
+			'fields' => array('msg_id', 'msg_sender_id', 'msg_recipient_user_id', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
 		);
 	}
 
