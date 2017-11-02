@@ -1480,7 +1480,7 @@ class SiteWideMessagesPager extends TablePager {
 
 	#--- isFieldSortable-----------------------------------------------------
 	function isFieldSortable( $field ) {
-		static $sortable = array( 'msg_id', 'msg_sender', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_recipient_name', 'msg_text', 'msg_lang', 'msg_hub_id' );
+		static $sortable = array( 'msg_id', 'msg_sender', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_text', 'msg_lang', 'msg_hub_id' );
 		return in_array( $field, $sortable );
 	}
 
