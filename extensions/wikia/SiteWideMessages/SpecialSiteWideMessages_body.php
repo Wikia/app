@@ -1580,7 +1580,7 @@ class SiteWideMessagesPager extends TablePager {
 	function getQueryInfo() {
 		return array(
 			'tables' => MSG_TEXT_DB,
-			'fields' => array('msg_id', 'msg_sender_id', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
+			'fields' => array('msg_id', 'msg_sender_id', 'msg_recipient_id', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
 		);
 	}
 
