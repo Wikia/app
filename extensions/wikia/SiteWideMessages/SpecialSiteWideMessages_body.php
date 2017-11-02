@@ -1480,13 +1480,13 @@ class SiteWideMessagesPager extends TablePager {
 
 	#--- isFieldSortable-----------------------------------------------------
 	function isFieldSortable( $field ) {
-		static $sortable = array( 'msg_id', 'msg_sender', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_text', 'msg_lang', 'msg_hub_id' );
+		static $sortable = array( 'msg_id', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_text', 'msg_lang', 'msg_hub_id' );
 		return in_array( $field, $sortable );
 	}
 
 	#--- formatValue --------------------------------------------------------
 	function formatValue( $field, $value ) {
-		global $wgStylePath, $wgTitle;
+		global $wgTitle;
 
 		switch ($field) {
 			case 'msg_expire':
@@ -1497,10 +1497,20 @@ class SiteWideMessagesPager extends TablePager {
 				$sRetval = $value ? wfMsg('swm-yes') : wfMsg('swm-no');
 				break;
 
-			case 'msg_recipient_name':
-				$sRetval = $value ?
-					( $value === MSG_RECIPIENT_ANON ? ('<i>' . wfMsg( 'swm-label-mode-users-anon' ) . '</i>') : htmlspecialchars( $value ) ) :
-					( '<i>' . wfMsg('swm-label-mode-users-all') . '</i>' );
+			case 'msg_sender_id':
+				$sRetval = htmlspecialchars( User::whoIs( $value ) );
+				break;
+
+			case 'msg_recipient_id':
+				if ( is_null( $value ) ) {
+					$sRetval = '<i>' . wfMsg('swm-label-mode-users-all') . '</i>';
+				}
+				elseif ( $value === 0 ) {
+					$sRetval = '<i>' . wfMsg( 'swm-label-mode-users-anon' ) . '</i>';
+				}
+				else {
+					$sRetval = htmlspecialchars( User::whoIs( $value ) );
+				}
 				break;
 
 			case 'msg_wiki_name':
@@ -1569,8 +1579,8 @@ class SiteWideMessagesPager extends TablePager {
 	#--- getQueryInfo -------------------------------------------------------
 	function getQueryInfo() {
 		return array(
-			'tables' => MSG_TEXT_DB . ' LEFT JOIN user ON msg_sender_id = user_id',
-			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
+			'tables' => MSG_TEXT_DB,
+			'fields' => array('msg_id', 'msg_sender_id', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
 		);
 	}
 
