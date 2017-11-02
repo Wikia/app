@@ -1040,11 +1040,16 @@ class SiteWideMessages extends SpecialPage {
 		return $dbResult;
 	}
 
-	//Static functions (used in hooks)
+	/**
+	 * Static functions (used in hooks)
+	 *
+	 * @param User $user
+	 * @param bool $filter_seen
+	 * @return array
+	 */
 	static function getAllUserMessagesId($user, $filter_seen = true) {
-		global $wgCityId, $wgLanguageCode;
-		global $wgExternalSharedDB ;
-		$localCityId = isset($wgCityId) ? $wgCityId : 0;
+		global $wgCityId, $wgExternalSharedDB;
+		$localCityId = $wgCityId;
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		//step 1 of 3: get all active messages sent to *all*
@@ -1079,7 +1084,7 @@ class SiteWideMessages extends SpecialPage {
 				  'SELECT msg_id AS id'
 				. ' FROM ' . MSG_STATUS_DB
 				. ' WHERE msg_id IN (' . implode(',', array_keys($tmpMsg)) . ')'
-				. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
+				. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->getId())
 				. ' AND msg_status IN (' . join(',', $status) . ')'
 				. ';'
 				, __METHOD__
@@ -1104,7 +1109,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' FROM ' . MSG_TEXT_DB
 			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
-			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
+			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->getId())
 			. ' AND msg_status IN (' . join(',', $status) . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
@@ -1125,13 +1130,12 @@ class SiteWideMessages extends SpecialPage {
 		//sort from newer to older
 		krsort($tmpMsg);
 
-		$messages = array();
 		$IDs = array();
 		foreach ($tmpMsg as $tmpMsgId => $tmpMsgData) {
 			$IDs['id'][] = $tmpMsgId;
 			$IDs['wiki'][] = $tmpMsgData['wiki_id'];
 		}
-		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID={$user->GetID()}, result=" . ($dbResult ? 'true':'false') . "\n");
+		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID={$user->getId()}, result=" . ($dbResult ? 'true':'false') . "\n");
 
 		return $IDs;
 	}
