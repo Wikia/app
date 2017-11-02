@@ -7,7 +7,7 @@
         Wikia.Tracker.track({
             action: Wikia.Tracker.ACTIONS.VIEW,
             category: 'connection-type',
-            label: Wikia.getConnectionType(),
+            label: connection.effectiveType,
             trackingMethod: 'analytics'
         });
     }
