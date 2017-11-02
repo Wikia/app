@@ -75,7 +75,7 @@ function RTEAjax() {
 	wfProfileOut(__METHOD__);
 	return $ret;
 }
-
+/*
 $wgResourceModules['ext.wikia.RTE2'] = array(
 	'messages' => array(
 		'rte-ck-bucket-textAppearance',
@@ -657,3 +657,4 @@ $wgResourceModules['ext.wikia.RTE2'] = array(
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/PhalanxII'	
 	);
+*/

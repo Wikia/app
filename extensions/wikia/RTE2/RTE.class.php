@@ -127,7 +127,7 @@ class RTE {
 		// add RTE css file
 		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/RTE2/css/RTE.scss'));
 		//Kacper Olek - handling for ckeditor wikia extensions language
-		$wgOut->addModules('ext.wikia.RTE2');
+//		$wgOut->addModules('ext.wikia.RTE2');
 		// parse wikitext of edited page and add extra fields to editform
 		$wgHooks['EditPage::showEditForm:fields'][] = 'RTE::init2';
 

@@ -205,7 +205,7 @@ packages :
 					
 					//language files
 					//'lang/lang.js'			
-					//'plugins/lang.js'
+					'plugins/lang.js'
 					
 				]
 		}
