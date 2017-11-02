@@ -3228,14 +3228,18 @@ class User implements JsonSerializable {
 
 	/**
 	 * If only this user's username is known, and it exists, return the user ID.
+	 *
+	 * @param boolean $fromMaster
 	 * @return Int
 	 */
 	public function idForName( $fromMaster = false ) {
 		$s = trim( $this->getName() );
 		if ( $s === '' ) return 0;
 
-		$dbr = ( $fromMaster ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'user', 'user_id', array( 'user_name' => $s ), __METHOD__ );
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( $fromMaster ? DB_MASTER : DB_SLAVE, [], $wgExternalSharedDB );
+
+		$id = $dbr->selectField( '`user`', 'user_id', array( 'user_name' => $s ), __METHOD__ );
 		if ( $id === false ) {
 			$id = 0;
 		}
