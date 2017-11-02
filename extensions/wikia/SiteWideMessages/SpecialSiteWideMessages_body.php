@@ -1013,7 +1013,7 @@ class SiteWideMessages extends SpecialPage {
 			$messages[$i]['msg_expire'] = $oMsg->msg_expire;
 			$messages[$i]['msg_date'] = $oMsg->msg_date;
 			$messages[$i]['msg_recipient_user_id'] = $oMsg->msg_recipient_user_id; # SUS-3111
-			$messages[$i]['msg_recipient_name'] = User::getUsername( $oMsg->msg_recipient_user_id, $oMsg->msg_recipient_name); # SUS-3111
+			$messages[$i]['msg_recipient_name'] = ( $oMsg->msg_recipient_user_id > 0 ) ? User::whoIs( $oMsg->msg_recipient_user_id ) : false; # SUS-3111
 			$messages[$i]['msg_group_name'] = $oMsg->msg_group_name;
 			$messages[$i]['msg_wiki_name'] = $oMsg->msg_wiki_name;
 			$i++;
