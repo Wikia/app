@@ -69,7 +69,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (options.settings) {
 			playerSetup.plugins = {
 				wikiaSettings: {
-					showToggle: options.settings.showToggle,
+					showAutoplayToggle: options.settings.showAutoplayToggle,
 					showQuality: options.settings.showQuality,
 					autoplay: options.autoplay
 				}

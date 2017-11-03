@@ -77,7 +77,7 @@ require([
 			},
 			autoplay: willAutoplay,
 			settings: {
-				showToggle: true,
+				showAutoplayToggle: true,
 				showQuality: true
 			},
 			related: {
