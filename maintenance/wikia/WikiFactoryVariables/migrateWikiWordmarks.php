@@ -96,6 +96,14 @@ class MigrateWikiWordmarks extends Maintenance {
 
 		$settings = $themeSettings->getSettings();
 
+		if ( !array_key_exists( $this->keyName, $settings ) ) {
+			$this->output("Key does not exists for $wgCityId - skipping" . PHP_EOL);
+			if ( $fh ) {
+				fclose( $fh );
+			}
+			return false;
+		}
+
 		$oldValue = $keyValue = $settings[$this->keyName];
 		if ( $this->keyName == "wordmark-image-url" ) {
 			$oldFinalValue = $themeSettings->getWordmarkUrl();
