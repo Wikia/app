@@ -1,1 +1,1 @@
-<p><?= wfMessage( 'userrenametool-error-alreadyrenamed' )->inContentLanguage()->escaped(); ?></p>
+<p><?= wfMessage( 'userrenametool-error-alreadyrenamed' )->inContentLanguage()->parse(); ?></p>

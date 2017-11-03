@@ -11,7 +11,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class SpecialRenameuser extends SpecialPage {
 	private $app;
-	private $password;
 
 	/**
 	 * Constructor
@@ -56,23 +55,23 @@ class SpecialRenameuser extends SpecialPage {
 		$errorList = [];
 
 		if ( $data['token'] === '' ) {
-			$errorList[] = 'userrenametool-error-token_not_exists';
+			$errorList[] = 'userrenametool-error-token-not-exists';
 		}
 
 		if ( $data['newUsername'] !== $data['newUsernameRepeat'] ) {
-			$errorList[] = 'userrenametool-error-not-repeated_correctly';
+			$errorList[] = 'userrenametool-error-not-repeated-correctly';
 		}
 
 		if ( $data['understandConsequences'] !== 'true' ) {
-			$errorList[] = 'userrenametool-error-not-understand';
+			$errorList[] = 'userrenametool-error-consequences';
 		}
 
 		if ( !$user->matchEditToken( $data['token'] ) ) {
-			$errorList[] = 'userrenametool-error-token_not_matched';
+			$errorList[] = 'userrenametool-error-token-not-match';
 		}
 
 		if ( !$user->checkPassword( $data['password'] )->success() ) {
-			$errorList[] = 'userrenametool-error-password_not_matched';
+			$errorList[] = 'userrenametool-error-password-not-match';
 		}
 
 		if ( !\RenameUserHelper::canUserChangeUsername( $user ) ) {

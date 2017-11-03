@@ -28,18 +28,17 @@
 			</tr>
 			<tr>
 				<td class='mw-label'>
-					<label for="password"><?= wfMessage( 'userrenametool-password' )->inContentLanguage()->escaped(); ?></label>
+					<label for="password"><?= wfMessage( 'userrenametool-current-password' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
 					<input type="password" id="password" name="password" size="20" tabindex="2" value="<?= $password; ?>"/>
 				</td>
 			</tr>
 			<tr>
-				<td class='mw-label'>
-					<label for="understand-consequences"><?= wfMessage( 'userrenametool-understand' )->inContentLanguage()->escaped(); ?></label>
-				</td>
+				<td class='mw-label'>&nbsp;</td>
 				<td class='mw-input'>
 					<input type="checkbox" id="understand-consequences" name="understandConsequences" size="20" tabindex="2" value="true"<?= $understandConsequences === 'true' ? ' checked' : ''; ?>/>
+					<label for="understand-consequences"><?= wfMessage( 'userrenametool-understand-consequences' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 			</tr>
 			<? if ( $warnings ): ?>
