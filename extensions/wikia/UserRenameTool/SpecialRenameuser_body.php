@@ -42,6 +42,13 @@ class SpecialRenameuser extends SpecialPage {
 
 		$user = $this->getUser();
 
+		// TODO: remove after QA tests
+		if ( static::shouldUnlock() ) {
+			$user->setGlobalFlag( 'wasRenamed', false );
+			$user->saveSettings();
+		}
+		// TODO: end
+
 		if ( \RenameUserHelper::canUserChangeUsername( $user ) ) {
 			$this->renderForm( $user );
 		} else {
@@ -84,6 +91,14 @@ class SpecialRenameuser extends SpecialPage {
 
 		return $errorList;
 	}
+
+	// TODO: remove after QA tests
+	public static function shouldUnlock( ) {
+		global $wgStagingEnvironment, $wgDevelEnvironment;
+		parse_str( parse_url( $_SERVER[ 'REQUEST_URI' ], PHP_URL_QUERY ), $queryParams );
+		return isset( $queryParams[ 'unlock' ] ) && ( $wgStagingEnvironment || $wgDevelEnvironment );
+	}
+	// TODO: end
 
 	private function renderForm( $user ) {
 		$this->addModule('ext.userRename.modal');
