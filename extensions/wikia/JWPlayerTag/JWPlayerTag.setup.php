@@ -14,4 +14,4 @@ $wgAutoloadClasses['JWPlayerTagController'] =  __DIR__ . '/JWPlayerTagController
 $wgHooks['ParserFirstCallInit'][] = 'JWPlayerTagController::onParserFirstCallInit';
 
 // i18n
-//$wgExtensionMessagesFiles['ApesterTag'] = __DIR__ . '/ApesterTag.i18n.php';
+$wgExtensionMessagesFiles['JWPlayerTag'] = __DIR__ . '/JWPlayerTag.i18n.php';
