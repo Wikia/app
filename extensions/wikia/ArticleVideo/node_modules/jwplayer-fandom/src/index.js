@@ -46,6 +46,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * setups player
 	 * @param elementId
 	 * @param options
+	 * @param logger
 	 * @return {*}
 	 */
 	function setupPlayer(elementId, options, logger) {
@@ -61,7 +62,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				autostart: willAutoplay && !document.hidden,
 				description: options.videoDetails.description,
 				image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
-				mute: willAutoplay,
+				mute: options.mute,
 				playlist: options.videoDetails.playlist,
 				title: options.videoDetails.title
 			};
