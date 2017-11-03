@@ -8,7 +8,7 @@ $wgExtensionCredits['parserhook'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JWPlayerTag',
 ];
 
-$wgAutoloadClasses['JwPlayerTagController'] =  __DIR__ . '/JWPlayerTagController.class.php';
+$wgAutoloadClasses['JWPlayerTagController'] =  __DIR__ . '/JWPlayerTagController.class.php';
 
 // Hooks
 $wgHooks['ParserFirstCallInit'][] = 'JWPlayerTagController::onParserFirstCallInit';

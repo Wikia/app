@@ -38,11 +38,11 @@ class JWPlayerTagController extends WikiaController {
 	}
 
 	private function validateArgs( $args ): bool {
-		return array_key_exists( self::DATA_MEDIA_ID_ATTR, $args );
+		return array_key_exists( 'media-id', $args );
 	}
 
 	private function getAttributes( $args ): array {
-		$mediaId = $args[self::DATA_MEDIA_ID_ATTR];
+		$mediaId = $args['media-id'];
 
 		$attributes = [
 			'class' => 'jwplayer-container',
