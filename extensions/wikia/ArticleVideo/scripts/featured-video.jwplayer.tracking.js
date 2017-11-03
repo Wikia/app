@@ -32,7 +32,7 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 		}
 
 		var img = document.createElement('img');
-		img.src = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
+		img.src = (document.location.protocol === 'https:' ? 'https://sb' : 'http://b') + '.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
 		img.id = scriptId;
 		document.body.appendChild(img);
 	}
@@ -188,9 +188,9 @@ define('wikia.articleVideo.featuredVideo.tracking', ['wikia.tracker'], function 
 			});
 		});
 
-		playerInstance.on('autoplayToggle', function (autoplay) {
+		playerInstance.on('autoplayToggle', function (data) {
 			track({
-				label: 'autoplay-' + (autoplay ? 'enabled' : 'disabled')
+				label: 'autoplay-' + (data.enabled ? 'enabled' : 'disabled')
 			});
 		});
 	}

@@ -215,29 +215,6 @@ class Indexer {
 	}
 
 	/**
-	 * Deletes all documents containing one of the provided wiki IDs
-	 * Used in the handle-closed-wikis maintenance script
-	 * Careful, this will alter our index!
-	 *
-	 * @param  array $wids
-	 *
-	 * @return \Solarium_Result_Update|null
-	 */
-	public function deleteManyWikiDocs( $wids ) {
-		$updateHandler = $this->getClient()->createUpdate();
-		foreach ( $wids as $wid ) {
-			$query = Utilities::valueForField( 'wid', $wid );
-			$updateHandler->addDeleteQuery( $query );
-		}
-		$updateHandler->addCommit();
-		try {
-			return $this->getClient()->update( $updateHandler );
-		} catch ( \Exception $e ) {
-			$this->getLogger()->log( __METHOD__, 'Delete: ' . $query, $e );
-		}
-	}
-
-	/**
 	 * Given a set of page IDs, deletes by query
 	 *
 	 * @param  array $documentIds

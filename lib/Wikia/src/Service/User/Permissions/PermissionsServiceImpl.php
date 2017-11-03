@@ -157,6 +157,75 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	/**
+	 * @param array $groups
+	 * @return array map of user IDs to user groups
+	 */
+	public function getUsersInGroups( array $groups ): array {
+		global $wgMemc;
+		$cacheKey = self::buildUserGroupMembersCacheKey( $groups );
+		$cachedValue = $wgMemc->get( $cacheKey);
+
+		if ( is_array( $cachedValue ) ) {
+			return $cachedValue;
+		}
+
+		$localGroups = [];
+		$globalGroups = [];
+
+		foreach ( $groups as $groupName ) {
+			if ( $this->permissionsConfiguration->isGlobalGroup( $groupName ) ) {
+				$globalGroups[] = $groupName;
+				continue;
+			}
+
+			$localGroups[] = $groupName;
+		}
+
+		$groupMembers = [];
+
+		if ( !empty( $globalGroups) ) {
+			$globalGroupMembers = $this->loadUsersInGroup( self::getSharedDB(), $globalGroups );
+			foreach ( $globalGroupMembers as $userId => $userGroups ) {
+				$groupMembers[$userId] = $userGroups;
+			}
+		}
+
+		if ( !empty( $localGroups ) ) {
+			$localGroupMembers = $this->loadUsersInGroup( wfGetDB( DB_SLAVE ), $localGroups );
+			foreach ( $localGroupMembers as $userId => $userGroups ) {
+				$groupMembers[$userId] = $groupMembers[$userId] ?? [];
+				$groupMembers[$userId] = array_merge( $groupMembers[$userId], $userGroups );
+			}
+		}
+
+		$wgMemc->set( $cacheKey, $groupMembers, 86400 );
+
+		return $groupMembers;
+	}
+
+	private static function buildUserGroupMembersCacheKey( array $groups ) {
+		return wfMemcKey( 'user-group-members', implode( ':', $groups ) );
+	}
+
+	/**
+	 * @param \DatabaseBase $dbr
+	 * @param array $groups
+	 * @return array map of user IDs to user groups
+	 */
+	private function loadUsersInGroup( \DatabaseBase $dbr, array $groups ) {
+		$res = $dbr->select( 'user_groups', [ 'ug_user', 'ug_group' ], [ 'ug_group' => $groups ], __METHOD__ );
+
+		$userMapping = [];
+
+		foreach ( $res as $row ) {
+			$userMapping[$row->ug_user] = $userMapping[$row->ug_user] ?? [];
+			$userMapping[$row->ug_user][] = $row->ug_group;
+		}
+
+		return $userMapping;
+	}
+
+	/**
 	 * This method uses a slave database node to load local user groups.
 	 * Call this method with $fromMaster flag set to update the memcache entry shortly after the groups list is updated.
 	 * @see SUS-2564
@@ -313,6 +382,10 @@ class PermissionsServiceImpl implements PermissionsService {
 			$userToChange->invalidateCache(); // it calls $this->invalidateCache( $userToChange ); internally
 		}
 
+		// SUS-3109: Purge user group members cache
+		global $wgMemc;
+		$wgMemc->delete( self::buildUserGroupMembersCacheKey( $groupList ) );
+
 		return $result;
 	}
 
@@ -368,6 +441,11 @@ class PermissionsServiceImpl implements PermissionsService {
 		} finally {
 			$userToChange->invalidateCache(); // it calls $this->invalidateCache( $userToChange );
 		}
+
+		// SUS-3109: Purge user group members cache
+		global $wgMemc;
+		$wgMemc->delete( self::buildUserGroupMembersCacheKey( $groupList ) );
+
 		return $result;
 	}
 

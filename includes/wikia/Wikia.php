@@ -1964,11 +1964,15 @@ class Wikia {
 	/**
 	 * Hook for storing historical log of email changes
 	 * Depends on the central user_email_log table defined in the EditAccount extension
+	 *
+	 * @param User $user
+	 * @param $new_email
+	 * @param $old_email
 	 * @return bool
 	 */
 	public static function logEmailChanges($user, $new_email, $old_email) {
 		global $wgExternalSharedDB, $wgUser, $wgRequest;
-		if ( $wgExternalSharedDB && isset( $new_email ) && isset( $old_email ) ) {
+		if ( isset( $new_email ) && isset( $old_email ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->insert(
 				'user_email_log',

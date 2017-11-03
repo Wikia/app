@@ -4547,17 +4547,17 @@
     },
     {
         "name": "phpunit/phpunit",
-        "version": "6.4.2",
-        "version_normalized": "6.4.2.0",
+        "version": "6.4.3",
+        "version_normalized": "6.4.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "ae6e2e062ff55263c7b04374c190aca45872b26a"
+            "reference": "06b28548fd2b4a20c3cd6e247dc86331a7d4db13"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ae6e2e062ff55263c7b04374c190aca45872b26a",
-            "reference": "ae6e2e062ff55263c7b04374c190aca45872b26a",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/06b28548fd2b4a20c3cd6e247dc86331a7d4db13",
+            "reference": "06b28548fd2b4a20c3cd6e247dc86331a7d4db13",
             "shasum": ""
         },
         "require": {
@@ -4596,7 +4596,7 @@
             "ext-xdebug": "*",
             "phpunit/php-invoker": "^1.1"
         },
-        "time": "2017-10-15T06:16:19+00:00",
+        "time": "2017-10-16T13:18:59+00:00",
         "bin": [
             "phpunit"
         ],

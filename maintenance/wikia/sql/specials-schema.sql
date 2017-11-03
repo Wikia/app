@@ -59,10 +59,7 @@ CREATE TABLE `events_local_users` (
   `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
-  KEY `user_edits` (`user_id`,`edits`,`wiki_id`),
-  KEY `user_id` (`user_id`),
-  KEY `edits` (`edits`),
-  KEY `wiki_id` (`wiki_id`)
+  KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
@@ -120,9 +117,7 @@ CREATE TABLE `phalanx_stats` (
   `ps_referrer` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`ps_id`),
   KEY `wiki_id` (`ps_wiki_id`,`ps_timestamp`),
-  KEY `blocker_id` (`ps_blocker_id`,`ps_timestamp`),
-  KEY `ps_timestamp` (`ps_timestamp`),
-  KEY `ps_blocker_id` (`ps_blocker_id`)
+  KEY `blocker_id` (`ps_blocker_id`,`ps_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -137,4 +132,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-16 14:47:40
+-- Dump completed on 2017-10-26 13:34:31

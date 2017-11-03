@@ -599,6 +599,10 @@ class User implements JsonSerializable {
 	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
 		global $wgExternalSharedDB;
 
+		if ( $ids == [] ) {
+			return [];
+		}
+
 		$ids = array_unique( $ids, SORT_NUMERIC );
 
 		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
@@ -1132,7 +1136,6 @@ class User implements JsonSerializable {
 			# Initialise user table data
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
-			$this->getEditCount(); // revalidation for nulls
 			return true;
 		} else {
 			# Invalid user_id

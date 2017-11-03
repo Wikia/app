@@ -1287,11 +1287,22 @@ class WikiRevision {
 			$pageId = $page->getId();
 			$created = false;
 
-			$prior = $dbw->selectField( 'revision', '1',
-				array( 'rev_page' => $pageId,
-					'rev_timestamp' => $dbw->timestamp( $this->timestamp ),
-					'rev_user_text' => $userText,
-					'rev_comment'   => $this->getComment() ),
+			$where = [
+				'rev_page' => $pageId,
+				'rev_timestamp' => $dbw->timestamp( $this->timestamp ),
+				'rev_comment'   => $this->getComment()
+			];
+
+			if ( $userId > 0 ) {
+				$where['rev_user'] = $userId;
+			} else {
+				$where['rev_user_text'] = $userText;
+			}
+
+				$prior = $dbw->selectField(
+				'revision',
+				'1',
+				$where,
 				__METHOD__
 			);
 			if( $prior ) {
