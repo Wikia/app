@@ -138,8 +138,8 @@ class MysqlUpdater extends DatabaseUpdater {
 			// 1.15
 			array( 'doUniquePlTlIl' ),
 			array( 'addTable', 'change_tag',                        'patch-change_tag.sql' ),
-			array( 'addTable', 'tag_summary',                       'patch-change_tag.sql' ),
-			array( 'addTable', 'valid_tag',                         'patch-change_tag.sql' ),
+			#array( 'addTable', 'tag_summary',                       'patch-change_tag.sql' ), # SUS-3066
+			#array( 'addTable', 'valid_tag',                         'patch-change_tag.sql' ), # SUS-3066
 
 			// 1.16
 			array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
