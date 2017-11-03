@@ -110,10 +110,12 @@ class SpecialRenameuser extends SpecialPage {
 		$showForm = true;
 		$request = $this->getRequest();
 		$requestData = $this->getData();
+		$cannonicalUsername = '';
 		$isConfirmed = $requestData['isConfirmed'] === 'true';
 
 		if ( $request->wasPosted() ) {
 			$errors = $this->parseMessages( static::validateData( $requestData, $user ) );
+			$cannonicalUsername = \User::getCanonicalName( $requestData['newUsername'] );
 
 			if ( empty( $errors ) && $isConfirmed ) {
 				$oldUsername = $user->getName();
@@ -140,6 +142,7 @@ class SpecialRenameuser extends SpecialPage {
 			[
 				'submitUrl' => $this->getTitle()->getLocalURL(),
 				'token' => $user->getEditToken(),
+				'cannonicalUsername' => $cannonicalUsername,
 				'showConfirm' => $showConfirm,
 				'showForm' => $showForm,
 				'warnings' => $warnings,

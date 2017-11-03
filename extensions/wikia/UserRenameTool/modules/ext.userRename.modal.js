@@ -1,18 +1,22 @@
 (function ($, mw) {
 	var confirmationModal = {
 		init: function () {
+			this.onSubmit = this.onSubmit.bind(this);
+			this.onChange = this.onChange.bind(this);
+			this.onOk = this.onOk.bind(this);
+
 			this.$form = $('#renameuser');
 			this.$isConfirmed = this.$form.find('input[name=isConfirmed]');
 
 			if (this.$form.data('showConfirm')) {
 				this.bindEvents();
-				this.disableInputs();
 				this.$form.trigger('submit');
 			}
 		},
 
 		bindEvents: function () {
-			this.$form.on('submit', this.onSubmit.bind(this));
+			this.$form.on('submit', this.onSubmit);
+			this.$form.on('change', this.onChange);
 		},
 
 		onOk: function () {
@@ -20,12 +24,12 @@
 			this.$form.trigger('submit');
 		},
 
-		isConfirmed: function () {
-			return this.$isConfirmed.val() === 'true';
+		onChange: function () {
+			this.$form.off('submit', this.onSubmit);
 		},
 
-		disableInputs: function () {
-			this.$form.find('input').not(':input[type=submit]').attr('readonly', true);
+		isConfirmed: function () {
+			return this.$isConfirmed.val() === 'true';
 		},
 
 		onSubmit: function (event) {
@@ -35,9 +39,12 @@
 
 			event.preventDefault();
 			$.confirm({
-				onOk: this.onOk.bind(this),
+				onOk: this.onOk,
 				title: mw.message('renameuser').escaped(),
-				content: mw.message('userrenametool-confirm-intro').escaped(),
+				content: mw.message(
+					'userrenametool-confirm-intro',
+					this.$form.data('cannonicalUsername')
+				).plain(),
 				okMsg: mw.message('userrenametool-confirm').escaped(),
 				cancelMsg: mw.message('userrenametool-confirm-no').escaped()
 			});

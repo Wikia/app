@@ -55,11 +55,12 @@ $userRenameResourceTemplate = array(
 $wgResourceModules['ext.userRename.modal'] = $userRenameResourceTemplate + array(
 	'scripts' => 'ext.userRename.modal.js',
 	'dependencies' => array(
-		'mediawiki.user',
 		'mediawiki.util'
 	),
 	'messages' => array(
 		'renameuser',
+		'userrenametool-errorinvalid',
+		'userrenametool-new',
 		'userrenametool-confirm',
 		'userrenametool-confirm-intro',
 		'userrenametool-confirm-yes',
