@@ -26,8 +26,7 @@ class JWPlayerTagController extends WikiaController {
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ): string {
 		if ( !$this->validateArgs( $args ) ) {
-			// ToDo change to jwplayer message
-			return '<strong class="error">' . wfMessage( 'apester-tag-could-not-render' )->parse() . '</strong>';
+			return '<strong class="error">' . wfMessage( 'jwplayer-tag-could-not-render' )->parse() . '</strong>';
 		}
 
 		$script = JSSnippets::addToStack( [
