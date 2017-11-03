@@ -3,6 +3,7 @@
 use Swagger\Client\ExternalAuth\Models\LinkedFacebookAccount;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
+use Wikia\Service\User\ExternalAuth\FacebookService;
 use Wikia\Util\Assert;
 
 class FacebookPreferencesModuleService extends WikiaService {
