@@ -58,6 +58,10 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-token-not-exists';
 		}
 
+		if ( $data['newUsername'] === '' ) {
+			$errorList[] = 'userrenametool-error-no-username';
+		}
+
 		if ( $data['newUsername'] !== $data['newUsernameRepeat'] ) {
 			$errorList[] = 'userrenametool-error-not-repeated-correctly';
 		}
@@ -94,7 +98,7 @@ class SpecialRenameuser extends SpecialPage {
 		$isConfirmed = $requestData['isConfirmed'] === 'true';
 
 		if ( $request->wasPosted() ) {
-			$errors = $this->parseMessages( self::validateData( $requestData, $user ) );
+			$errors = $this->parseMessages( static::validateData( $requestData, $user ) );
 
 			if ( empty( $errors ) && $isConfirmed ) {
 				$oldUsername = $user->getName();

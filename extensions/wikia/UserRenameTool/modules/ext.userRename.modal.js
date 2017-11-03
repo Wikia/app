@@ -38,7 +38,7 @@
 				onOk: this.onOk.bind(this),
 				title: mw.message('renameuser').escaped(),
 				content: mw.message('userrenametool-confirm-intro').escaped(),
-				okMsg: mw.message('userrenametool-confirm-yes').escaped(),
+				okMsg: mw.message('userrenametool-confirm').escaped(),
 				cancelMsg: mw.message('userrenametool-confirm-no').escaped()
 			});
 		}

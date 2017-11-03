@@ -15,7 +15,7 @@
 					<label for='new-username'><?= wfMessage( 'userrenametool-new' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" id="new-username" name="newUsername" size="20" tabindex="2" value="<?= $newUsername; ?>"/>
+					<input type="text" id="new-username" name="newUsername" size="30" tabindex="2" value="<?= $newUsername; ?>"/>
 				</td>
 			</tr>
 			<tr>
@@ -23,7 +23,7 @@
 					<label for='new-username-repeat'><?= wfMessage( 'userrenametool-new-repeat' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" id="new-username-repeat" name="newUsernameRepeat" size="20" tabindex="2" value="<?= $newUsernameRepeat; ?>"/>
+					<input type="text" id="new-username-repeat" name="newUsernameRepeat" size="30" tabindex="2" value="<?= $newUsernameRepeat; ?>"/>
 				</td>
 			</tr>
 			<tr>
@@ -31,13 +31,13 @@
 					<label for="password"><?= wfMessage( 'userrenametool-current-password' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="password" id="password" name="password" size="20" tabindex="2" value="<?= $password; ?>"/>
+					<input type="password" id="password" name="password" size="30" tabindex="2" value="<?= $password; ?>"/>
 				</td>
 			</tr>
 			<tr>
 				<td class='mw-label'>&nbsp;</td>
 				<td class='mw-input'>
-					<input type="checkbox" id="understand-consequences" name="understandConsequences" size="20" tabindex="2" value="true"<?= $understandConsequences === 'true' ? ' checked' : ''; ?>/>
+					<input type="checkbox" id="understand-consequences" name="understandConsequences" size="30" tabindex="2" value="true"<?= $understandConsequences === 'true' ? ' checked' : ''; ?>/>
 					<label for="understand-consequences"><?= wfMessage( 'userrenametool-understand-consequences' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 			</tr>

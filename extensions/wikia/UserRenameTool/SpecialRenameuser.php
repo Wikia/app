@@ -42,7 +42,6 @@ $wgExtensionMessagesFiles['UserRenameToolAliases'] = $dir . 'SpecialRenameuser.a
 
 // classes
 $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/SpecialRenameuser_body.php';
-$wgAutoloadClasses['RenameUserFormInput'] = dirname( __FILE__ ) . '/RenameUserFormInput.class.php';
 $wgAutoloadClasses['RenameUserHelper'] = dirname( __FILE__ ) . '/RenameUserHelper.class.php';
 $wgAutoloadClasses['RenameUserProcess'] = dirname( __FILE__ ) . '/RenameUserProcess.class.php';
 $wgAutoloadClasses['RenameUserLogFormatter'] = dirname( __FILE__ ) . '/RenameUserLogFormatter.class.php';
@@ -61,6 +60,7 @@ $wgResourceModules['ext.userRename.modal'] = $userRenameResourceTemplate + array
 	),
 	'messages' => array(
 		'renameuser',
+		'userrenametool-confirm',
 		'userrenametool-confirm-intro',
 		'userrenametool-confirm-yes',
 		'userrenametool-confirm-no'
