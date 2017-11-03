@@ -992,22 +992,23 @@ class SiteWideMessages extends SpecialPage {
 
 	private function getAllMessagesInfo() {
 		global $wgExternalSharedDB;
-		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-		$dbResult = $DB->Query (
-			  'SELECT msg_id, user_name, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_user_id, msg_group_name, msg_wiki_name'
-			. ' FROM ' . MSG_TEXT_DB
-			. ' LEFT JOIN user ON msg_sender_id = user_id'
-			. ' ORDER BY msg_id DESC'
-			. ';'
-			, __METHOD__
+		$rows = $dbr->select(
+			MSG_TEXT_DB,
+			'msg_id, msg_sender_id, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_user_id, msg_group_name, msg_wiki_name',
+			[],
+			__METHOD__,
+			[
+				'ORDER BY' => 'msg_id DESC'
+			]
 		);
 
 		$messages = array();
 		$i = 0;
-		while ($oMsg = $DB->FetchObject($dbResult)) {
+		while ($oMsg = $dbr->FetchObject($rows)) {
 			$messages[$i]['msg_id'] = $oMsg->msg_id;
-			$messages[$i]['msg_sender'] = $oMsg->user_name;
+			$messages[$i]['msg_sender'] = User::whoIs( $oMsg->msg_sender_id ); # SUS-3111
 			$messages[$i]['msg_text'] = htmlspecialchars($oMsg->msg_text);
 			$messages[$i]['msg_removed'] = $oMsg->msg_removed;
 			$messages[$i]['msg_expire'] = $oMsg->msg_expire;
@@ -1018,9 +1019,7 @@ class SiteWideMessages extends SpecialPage {
 			$messages[$i]['msg_wiki_name'] = $oMsg->msg_wiki_name;
 			$i++;
 		}
-		if ($dbResult !== false) {
-			$DB->FreeResult($dbResult);
-		}
+
 		return $messages;
 	}
 
