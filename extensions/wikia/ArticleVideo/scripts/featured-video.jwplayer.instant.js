@@ -84,7 +84,7 @@ require([
 				showAutoplayToggle: true,
 				showQuality: true
 			},
-			mute: isFromRecirculation() ? false : true,
+			mute: isFromRecirculation() ? false : willAutoplay,
 			related: {
 				time: 3,
 				playlistId: recommendedPlaylist,
