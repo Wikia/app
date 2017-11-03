@@ -13,6 +13,7 @@ class RenameUserHelper {
 
 	const CLUSTER_DEFAULT = '';
 	const USER_ALREADY_RENAMED_FLAG = 'wasRenamed';
+	const MAX_USERNAME_LENGTH = 50;
 
 	/**
 	 * @author Federico "Lox" Lucignano

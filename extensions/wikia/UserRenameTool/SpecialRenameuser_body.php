@@ -60,17 +60,26 @@ class SpecialRenameuser extends SpecialPage {
 
 	public static function validateData( array $data, User $user ) {
 		$errorList = [];
+		$newUsername = $data['newUsername'];
 
 		if ( $data['token'] === '' ) {
 			$errorList[] = 'userrenametool-error-token-not-exists';
 		}
 
-		if ( $data['newUsername'] === '' ) {
+		if ( $newUsername === '' ) {
 			$errorList[] = 'userrenametool-error-no-username';
 		}
 
-		if ( $data['newUsername'] !== $data['newUsernameRepeat'] ) {
+		if ( $newUsername !== $data['newUsernameRepeat'] ) {
 			$errorList[] = 'userrenametool-error-not-repeated-correctly';
+		}
+
+		if ( !ctype_alnum( $newUsername ) ) {
+			$errorList[] = 'userrenametool-error-non-alphanumeric';
+		}
+
+		if ( strlen( $newUsername ) > \RenameUserHelper::MAX_USERNAME_LENGTH ) {
+			$errorList[] = 'userrenametool-error-too-long';
 		}
 
 		if ( $data['understandConsequences'] !== 'true' ) {
@@ -143,6 +152,7 @@ class SpecialRenameuser extends SpecialPage {
 				'submitUrl' => $this->getTitle()->getLocalURL(),
 				'token' => $user->getEditToken(),
 				'cannonicalUsername' => $cannonicalUsername,
+				'maxUsernameLength' => \RenameUserHelper::MAX_USERNAME_LENGTH,
 				'showConfirm' => $showConfirm,
 				'showForm' => $showForm,
 				'warnings' => $warnings,

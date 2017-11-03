@@ -15,7 +15,7 @@
 					<label for='new-username'><?= wfMessage( 'userrenametool-new' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" id="new-username" name="newUsername" size="30" tabindex="2" value="<?= $newUsername; ?>"/>
+					<input type="text" id="new-username" name="newUsername" size="30" tabindex="2" maxlength="<?= $maxUsernameLength; ?>" value="<?= $newUsername; ?>"/>
 				</td>
 			</tr>
 			<tr>
@@ -23,7 +23,7 @@
 					<label for='new-username-repeat'><?= wfMessage( 'userrenametool-new-repeat' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" id="new-username-repeat" name="newUsernameRepeat" size="30" tabindex="2" value="<?= $newUsernameRepeat; ?>"/>
+					<input type="text" id="new-username-repeat" name="newUsernameRepeat" size="30" tabindex="2" maxlength="<?= $maxUsernameLength; ?>" value="<?= $newUsernameRepeat; ?>"/>
 				</td>
 			</tr>
 			<tr>
