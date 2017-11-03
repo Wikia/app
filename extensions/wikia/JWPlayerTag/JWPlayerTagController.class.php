@@ -31,7 +31,8 @@ class JWPlayerTagController extends WikiaController {
 		}
 
 		$script = JSSnippets::addToStack( [
-			'jwplayer_tag_js'
+			'jwplayer_tag_js',
+			'jwplayer_tag_css'
 		] );
 
 		return $script . Html::element( 'div', $this->getAttributes( $args ) );
@@ -45,7 +46,7 @@ class JWPlayerTagController extends WikiaController {
 		$mediaId = $args['media-id'];
 
 		$attributes = [
-			'class' => 'jwplayer-container',
+			'class' => 'jwplayer-container jw-player-in-article-video',
 			self::DATA_MEDIA_ID_ATTR => $mediaId,
 			'id' => self::ELEMENT_ID_PREFIX . $mediaId
 		];

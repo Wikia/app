@@ -2753,3 +2753,12 @@ $config['jwplayer_tag_js'] = [
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
 	],
 ];
+
+$config['jwplayer_tag_css'] = [
+	'type' => AssetsManager::TYPE_CSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/index.css',
+	],
+];
+
