@@ -39,16 +39,12 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 			[ false, true, [], [], 'Featured video set when data is empty' ],
 			[ false, true, [ 'test' => [ 'wrong' => 'data' ] ], [], 'Featured video set when data is wrong' ],
 			[ false, true, [ 'test_wrong_title' => [
-				'time' => '0:01',
-				'title' => 'some title',
-				'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-				'thumbnailUrl' => 'http://img.com/test.jpg'
+				'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+				'player' => 'jwplayer'
 			] ],  [], 'Featured video set when data is correct but wrong title' ],
 			[ true, true, [ 'test' => [
-				'time' => '0:01',
-				'title' => 'some title',
-				'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-				'thumbnailUrl' => 'http://img.com/test.jpg'
+				'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+				'player' => 'jwplayer'
 			] ], [], 'Featured video not set when data is correct' ],
 		];
 	}
@@ -103,22 +99,16 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 			],
 			[
 				['test_wrong_title' => [
-					'time' => '0:02',
-					'title' => 'some title2',
-					'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-					'thumbnailUrl' => 'http://img.com/test.jpg'
+					'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+					'player' => 'jwplayer'
 				]],
 				['test_wrong_title' => [
-					'time' => '0:01',
-					'title' => 'some title1',
-					'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-					'thumbnailUrl' => 'http://img.com/test.jpg'
+					'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+					'player' => 'jwplayer'
 				]],
 				['test_wrong_title' => [
-					'time' => '0:02',
-					'title' => 'some title2',
-					'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-					'thumbnailUrl' => 'http://img.com/test.jpg'
+					'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+					'player' => 'jwplayer'
 				]],
 				'Will leave only unique items in the set'
 			]
