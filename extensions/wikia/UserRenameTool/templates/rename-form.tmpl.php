@@ -1,28 +1,29 @@
 <?php
-    global $wgTitle;
+	global $wgTitle;
 ?>
 
-<form method='post' action='<?= $submitUrl; ?>' id='renameuser'>
+<form method='post' action='<?= $submitUrl; ?>' id='renameuser' data-show-confirm="<?= $showConfirm; ?>">
 	<input type="hidden" name="token" value="<?= $token; ?>"/>
+	<input type="hidden" name="isConfirmed" value="<?= $isConfirmed; ?>"/>
 	<fieldset>
 		<legend><?= wfMessage( 'renameuser' )->inContentLanguage()->escaped(); ?></legend>
 		<p><?= wfMessage( 'userrenametool-warning' )->inContentLanguage()->parse(); ?></p>
+		<? if ( $showForm ): ?> 
 		<table id='mw-renameuser-table'>
 			<tr>
 				<td class='mw-label'>
-					<label for='newusername'><?= wfMessage( 'userrenametool-new' )->inContentLanguage()->escaped(); ?></label>
+					<label for='new-username'><?= wfMessage( 'userrenametool-new' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" name="newUsername" size="20" tabindex="2" value="<?= $newUsername; ?>"/>
-					<span id="newUsernameEncoded"><?= wfMessage( 'userrenametool-encoded' )->escaped(); ?> <strong></strong></span>
+					<input type="text" id="new-username" name="newUsername" size="20" tabindex="2" value="<?= $newUsername; ?>"/>
 				</td>
 			</tr>
 			<tr>
 				<td class='mw-label'>
-					<label for='newusernamerepeat'><?= wfMessage( 'userrenametool-new-repeat' )->inContentLanguage()->escaped(); ?></label>
+					<label for='new-username-repeat'><?= wfMessage( 'userrenametool-new-repeat' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" name="newUsernameRepeat" size="20" tabindex="2" value="<?= $newUsernameRepeat; ?>"/>
+					<input type="text" id="new-username-repeat" name="newUsernameRepeat" size="20" tabindex="2" value="<?= $newUsernameRepeat; ?>"/>
 				</td>
 			</tr>
 			<tr>
@@ -30,15 +31,15 @@
 					<label for="password"><?= wfMessage( 'userrenametool-password' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="password" name="password" size="20" tabindex="2" value=""/>
+					<input type="password" id="password" name="password" size="20" tabindex="2" value="<?= $password; ?>"/>
 				</td>
 			</tr>
 			<tr>
 				<td class='mw-label'>
-					<label for="understand"><?= wfMessage( 'userrenametool-understand' )->inContentLanguage()->escaped(); ?></label>
+					<label for="understand-consequences"><?= wfMessage( 'userrenametool-understand' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="checkbox" name="understandConsequences" size="20" tabindex="2" value="true"/>
+					<input type="checkbox" id="understand-consequences" name="understandConsequences" size="20" tabindex="2" value="true"<?= $understandConsequences === 'true' ? ' checked' : ''; ?>/>
 				</td>
 			</tr>
 			<? if ( $warnings ): ?>
@@ -71,6 +72,7 @@
 				</td>
 			</tr>
 		</table>
+		<? endif; ?> 
 	</fieldset>
 </form>
 

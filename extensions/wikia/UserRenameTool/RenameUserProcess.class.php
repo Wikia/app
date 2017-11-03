@@ -1128,7 +1128,6 @@ class RenameUserProcess {
 	 * @param string $newUsername
 	 */
 	protected function notifyUser( $user, $oldUsername, $newUsername ) {
-		var_dump($user->getEmail());
 		if ( $user->getEmail() != null ) {
 			F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', [
 				'targetUser' => $user,

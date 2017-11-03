@@ -11,12 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class SpecialRenameuser extends SpecialPage {
 	private $app;
-	private $newUsername;
-	private $repeatUsername;
-	private $reason;
-	private $user;
-	private $token;
-	private $isConfirmed;
+	private $password;
 
 	/**
 	 * Constructor
@@ -51,92 +46,13 @@ class SpecialRenameuser extends SpecialPage {
 		if ( \RenameUserHelper::canUserChangeUsername( $user ) ) {
 			$this->renderForm( $user );
 		} else {
-			$this->renderRejection();
+			$this->renderDisallow();
 		}
 
 		return;
 	}
 
-	private function renderForm( $user ) {
-		// Get the request data
-		$this->addModule("ext.userRename.modal");
-
-		$errors = [];
-		$info = [];
-		$warnings = [];
-		$showConfirm = false;
-		$showForm = true;
-		$request = $this->getRequest();
-		$requestData = $this->getData();
-
-		if ( $request->wasPosted() ) {
-			$errors = $this->parseMessages( self::validateData( $requestData, $user ) );
-
-			if ( empty( $errors ) ) {
-				$oldUsername = $user->getName();
-				$newUsername = $requestData['newUsername'];
-				$process = new RenameUserProcess( $oldUsername, $newUsername, true, "" );
-				$status = $process->run();
-				$warnings = $process->getWarnings();
-				$errors = $process->getErrors();
-
-				if ( $status ) {
-					$info[] =
-						$this->msg( 'userrenametool-info-in-progress' )
-							->inContentLanguage()->escaped();
-					$showForm = false;
-				}
-			}
-
-			$showConfirm = ( empty( $errors ) && empty( $info ) );
-		}
-
-		// unset password for security reasons
-		unset($requestData['password']);
-
-		$template = new EasyTemplate( __DIR__ . '/templates/' );
-		$template->set_vars( array_merge(
-			array_map('htmlspecialchars', $requestData),
-			[
-				"submitUrl" => $this->getTitle()->getLocalURL(),
-				"token" => $user->getEditToken(),
-				"warnings" => $warnings,
-				"errors" => $errors,
-				"infos" => $info
-			]
-		) );
-
-		$this->getOutput()->addHTML( $template->render( "rename-form" ) );
-	}
-
-	private function renderRejection() {
-		$template = new EasyTemplate( __DIR__ . '/templates/' );
-		$this->getOutput()->addHTML( $template->render( "rename-disallowed" ) );
-	}
-
-	private function addModule( $name ) {
-		$this->app->wg->Out->addModules( $name );
-	}
-
-	private function parseMessages( array $messageNames ) {
-		return array_map( function ( $label ) {
-			return $this->msg( $label )->inContentLanguage();
-		}, $messageNames );
-	}
-
-	private function getData() {
-		$fields = ['newUsername', 'newUsernameRepeat', 'password', 'understandConsequences', 'token'];
-		$data = [];
-		$request = $this->getRequest();
-
-		foreach ( $fields as $field ) {
-			$data[$field] = $request->getText( $field );
-		}
-
-		return $data;
-	}
-
-	private static function validateData( array $data, User $user ) {
+	public static function validateData( array $data, User $user ) {
 		$errorList = [];
 
 		if ( $data['token'] === '' ) {
@@ -164,5 +80,83 @@ class SpecialRenameuser extends SpecialPage {
 		}
 
 		return $errorList;
+	}
+
+	private function renderForm( $user ) {
+		$this->addModule('ext.userRename.modal');
+
+		$errors = [];
+		$infos = [];
+		$warnings = [];
+		$showConfirm = false;
+		$showForm = true;
+		$request = $this->getRequest();
+		$requestData = $this->getData();
+		$isConfirmed = $requestData['isConfirmed'] === 'true';
+
+		if ( $request->wasPosted() ) {
+			$errors = $this->parseMessages( self::validateData( $requestData, $user ) );
+
+			if ( empty( $errors ) && $isConfirmed ) {
+				$oldUsername = $user->getName();
+				$newUsername = $requestData['newUsername'];
+				$process = new RenameUserProcess( $oldUsername, $newUsername, true, '' );
+				$status = $process->run();
+				$warnings = $process->getWarnings();
+				$errors = $process->getErrors();
+
+				if ( $status ) {
+					$infos[] =
+						$this->msg( 'userrenametool-info-in-progress' )
+							->inContentLanguage()->escaped();
+					$showForm = false;
+				}
+			}
+
+			$showConfirm = ( !$isConfirmed && empty( $errors ) && empty( $info ) );
+		}
+
+		$template = new EasyTemplate( __DIR__ . '/templates/' );
+		$template->set_vars( array_merge(
+			array_map('htmlspecialchars', $requestData),
+			[
+				'submitUrl' => $this->getTitle()->getLocalURL(),
+				'token' => $user->getEditToken(),
+				'showConfirm' => $showConfirm,
+				'showForm' => $showForm,
+				'warnings' => $warnings,
+				'errors' => $errors,
+				'infos' => $infos
+			]
+		) );
+
+		$this->getOutput()->addHTML( $template->render( 'rename-form' ) );
+	}
+
+	private function renderDisallow() {
+		$template = new EasyTemplate( __DIR__ . '/templates/' );
+		$this->getOutput()->addHTML( $template->render( 'rename-disallowed' ) );
+	}
+
+	private function addModule( $name ) {
+		$this->app->wg->Out->addModules( $name );
+	}
+
+	private function parseMessages( array $messageNames ) {
+		return array_map( function ( $label ) {
+			return $this->msg( $label )->inContentLanguage();
+		}, $messageNames );
+	}
+
+	private function getData() {
+		$fields = [ 'newUsername', 'newUsernameRepeat', 'password', 'understandConsequences', 'token', 'isConfirmed' ];
+		$data = [];
+		$request = $this->getRequest();
+
+		foreach ( $fields as $field ) {
+			$data[ $field ] = $request->getText( $field );
+		}
+
+		return $data;
 	}
 }

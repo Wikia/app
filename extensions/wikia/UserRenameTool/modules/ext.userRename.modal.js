@@ -1,9 +1,14 @@
 (function ($, mw) {
 	var confirmationModal = {
 		init: function () {
-			this.accepted = false;
 			this.$form = $('#renameuser');
-			this.bindEvents();
+			this.$isConfirmed = this.$form.find('input[name=isConfirmed]');
+
+			if (this.$form.data('showConfirm')) {
+				this.bindEvents();
+				this.disableInputs();
+				this.$form.trigger('submit');
+			}
 		},
 
 		bindEvents: function () {
@@ -11,11 +16,20 @@
 		},
 
 		onOk: function () {
-			this.$form.trigger('submit', {accepted: true});
+			this.$isConfirmed.val('true');
+			this.$form.trigger('submit');
 		},
 
-		onSubmit: function (event, params) {
-			if (params && params.accepted) {
+		isConfirmed: function () {
+			return this.$isConfirmed.val() === 'true';
+		},
+
+		disableInputs: function () {
+			this.$form.find('input').not(':input[type=submit]').attr('readonly', true);
+		},
+
+		onSubmit: function (event) {
+			if (this.isConfirmed()) {
 				return;
 			}
 
