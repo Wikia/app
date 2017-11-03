@@ -31,7 +31,7 @@ class JWPlayerTagController extends WikiaController {
 		}
 
 		$script = JSSnippets::addToStack( [
-
+			'jwplayer_tag_js'
 		] );
 
 		return $script . Html::element( 'div', $this->getAttributes( $args ) );

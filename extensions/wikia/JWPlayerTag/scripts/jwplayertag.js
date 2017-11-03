@@ -1,1 +1,1 @@
-var x = {};
+console.log('I was loaded');
