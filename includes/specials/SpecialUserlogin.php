@@ -374,10 +374,8 @@ class LoginForm extends SpecialPage {
 
 		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
 
-		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) ) {
-			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userexists' )->text(), 'error', 'username' );
-			return false;
-		} elseif ( 0 != $u->idForName() ) {
+
+		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) || 0 != $u->getId() ) {
 			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userexists' )->text(), 'error', 'username' );
 			return false;
 		}

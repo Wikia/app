@@ -8,9 +8,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'wikia.log'
 ], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
 	var aspectRatio = 640 / 480,
+		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoPassback = 'jwplayer',
 		featuredVideoSlotName = 'FEATURED',
-		featuredVideoSource = srcProvider.get('gpt', {testSrc: 'test'}),
+		featuredVideoSource,
 		logGroup = 'wikia.articleVideo.featuredVideo.ads';
 
 	function calculateRV(depth) {
@@ -69,14 +70,17 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 	return function(player, bidParams) {
 		var correlator,
-			featuredVideoElement = document.querySelector('.featured-video'),
+			featuredVideoElement = player && player.getContainer && player.getContainer(),
+			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
 			prerollPositionReached = false,
 			trackingParams = {
 				adProduct: 'featured-video',
-				slotName: featuredVideoSlotName,
-				src: featuredVideoSource
+				slotName: featuredVideoSlotName
 			},
 			videoDepth = 0;
+
+		featuredVideoSource = srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER');
+		trackingParams.src = featuredVideoSource;
 
 		if (adContext.get('opts.showAds')) {
 			player.on('adBlock', function () {
@@ -121,10 +125,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				prerollPositionReached = false;
 			});
 			player.on('adRequest', function (event) {
-				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'success', event.ima && event.ima.ad);
+				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'success', event.ima && event.ima.ad);
 			});
 			player.on('adError', function (event) {
-				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'error', event.ima && event.ima.ad);
+				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';

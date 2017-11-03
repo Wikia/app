@@ -3227,22 +3227,6 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * If only this user's username is known, and it exists, return the user ID.
-	 * @return Int
-	 */
-	public function idForName( $fromMaster = false ) {
-		$s = trim( $this->getName() );
-		if ( $s === '' ) return 0;
-
-		$dbr = ( $fromMaster ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'user', 'user_id', array( 'user_name' => $s ), __METHOD__ );
-		if ( $id === false ) {
-			$id = 0;
-		}
-		return $id;
-	}
-
-	/**
 	 * Add a user to the database, return the user object
 	 *
 	 * @param $name String Username to add

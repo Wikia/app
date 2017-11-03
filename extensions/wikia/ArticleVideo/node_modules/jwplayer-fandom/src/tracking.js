@@ -17,8 +17,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	 * We need to track it at each video playback
 	 */
 	function trackComscoreVideoMetrix() {
-		//Do not track to comscore on dev env
-		if (tracker.comscore) {
+		if (!tracker.comscore) {
 			return;
 		}
 

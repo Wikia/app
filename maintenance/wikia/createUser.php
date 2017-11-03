@@ -35,7 +35,7 @@ $user = User::newFromName( $username );
 if ( !is_object( $user ) ) {
 	echo( "invalid username.\n" );
 	die( 1 );
-} elseif ( 0 != $user->idForName() ) {
+} elseif ( 0 != $user->getId() ) {
 	echo( "account exists.\n" );
 	die( 1 );
 }

@@ -1,10 +1,16 @@
 .jwplayer {
-	.jw-button-container,
-	.jw-display-container {
+	.jw-button-container {
 		.jw-icon-rewind,
 		.jw-icon-next,
 		.jw-settings-sharing,
 		.jw-related-btn {
+			display: none;
+		}
+	}
+
+	.jw-display-container {
+		.jw-display-icon-rewind,
+		.jw-display-icon-next {
 			display: none;
 		}
 	}
