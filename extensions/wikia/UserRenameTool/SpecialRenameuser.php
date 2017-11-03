@@ -52,8 +52,8 @@ $userRenameResourceTemplate = array(
 	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'wikia/UserRenameTool/modules'
 );
-$wgResourceModules['ext.userRename.modal'] = $userRenameResourceTemplate + array(
-	'scripts' => 'ext.userRename.modal.js',
+$wgResourceModules['ext.renameuser.modal'] = $userRenameResourceTemplate + array(
+	'scripts' => 'ext.renameuser.modal.js',
 	'dependencies' => array(
 		'mediawiki.util'
 	),

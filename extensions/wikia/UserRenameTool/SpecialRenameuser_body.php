@@ -10,14 +10,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * user accounts
  */
 class SpecialRenameuser extends SpecialPage {
-	private $app;
-
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		parent::__construct( 'UserRenameTool', 'renameuser', true );
-		$this->app = F::app();
 	}
 
 	/**
@@ -70,7 +67,7 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-no-username';
 		}
 
-		if ( $newUsername !== $data['newUsernameRepeat'] ) {
+		if ( $newUsername !== $data['newUsernameRepeat' ] ) {
 			$errorList[] = 'userrenametool-error-not-repeated-correctly';
 		}
 
@@ -104,22 +101,21 @@ class SpecialRenameuser extends SpecialPage {
 	// TODO: remove after QA tests
 	public static function shouldUnlock( ) {
 		global $wgStagingEnvironment, $wgDevelEnvironment;
-		parse_str( parse_url( $_SERVER[ 'REQUEST_URI' ], PHP_URL_QUERY ), $queryParams );
-		return isset( $queryParams[ 'unlock' ] ) && ( $wgStagingEnvironment || $wgDevelEnvironment );
+		parse_str( parse_url( $_SERVER['REQUEST_URI'], PHP_URL_QUERY ), $queryParams );
+		return isset( $queryParams['unlock'] ) && ( $wgStagingEnvironment || $wgDevelEnvironment );
 	}
 	// TODO: end
 
 	private function renderForm( $user ) {
-		$this->addModule('ext.userRename.modal');
-
 		$errors = [];
 		$infos = [];
 		$warnings = [];
 		$showConfirm = false;
 		$showForm = true;
+		$cannonicalUsername = '';
+		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$requestData = $this->getData();
-		$cannonicalUsername = '';
 		$isConfirmed = $requestData['isConfirmed'] === 'true';
 
 		if ( $request->wasPosted() ) {
@@ -129,7 +125,7 @@ class SpecialRenameuser extends SpecialPage {
 			if ( empty( $errors ) && $isConfirmed ) {
 				$oldUsername = $user->getName();
 				$newUsername = $requestData['newUsername'];
-				$process = new RenameUserProcess( $oldUsername, $newUsername, true, '' );
+				$process = new RenameUserProcess( $oldUsername, $newUsername, true );
 				$status = $process->run();
 				$warnings = $process->getWarnings();
 				$errors = $process->getErrors();
@@ -147,13 +143,11 @@ class SpecialRenameuser extends SpecialPage {
 
 		$template = new EasyTemplate( __DIR__ . '/templates/' );
 		$template->set_vars( array_merge(
-			array_map('htmlspecialchars', $requestData),
+			array_map( 'htmlspecialchars', $requestData ),
 			[
 				'submitUrl' => $this->getTitle()->getLocalURL(),
 				'token' => $user->getEditToken(),
-				'cannonicalUsername' => $cannonicalUsername,
 				'maxUsernameLength' => \RenameUserHelper::MAX_USERNAME_LENGTH,
-				'showConfirm' => $showConfirm,
 				'showForm' => $showForm,
 				'warnings' => $warnings,
 				'errors' => $errors,
@@ -161,16 +155,19 @@ class SpecialRenameuser extends SpecialPage {
 			]
 		) );
 
-		$this->getOutput()->addHTML( $template->render( 'rename-form' ) );
+		$out->addModules( 'ext.renameuser.modal' );
+		$out->addJsConfigVars( [
+			'renameUser' => [
+				'showConfirm' => $showConfirm,
+				'cannonicalUsername' => $cannonicalUsername
+			]
+		] );
+		$out->addHTML( $template->render( 'rename-form' ) );
 	}
 
 	private function renderDisallow() {
 		$template = new EasyTemplate( __DIR__ . '/templates/' );
 		$this->getOutput()->addHTML( $template->render( 'rename-disallowed' ) );
-	}
-
-	private function addModule( $name ) {
-		$this->app->wg->Out->addModules( $name );
 	}
 
 	private function parseMessages( array $messageNames ) {
@@ -180,12 +177,12 @@ class SpecialRenameuser extends SpecialPage {
 	}
 
 	private function getData() {
-		$fields = [ 'newUsername', 'newUsernameRepeat', 'password', 'understandConsequences', 'token', 'isConfirmed' ];
+		$fields = ['newUsername', 'newUsernameRepeat', 'password', 'understandConsequences', 'token', 'isConfirmed'];
 		$data = [];
 		$request = $this->getRequest();
 
 		foreach ( $fields as $field ) {
-			$data[ $field ] = $request->getText( $field );
+			$data[$field] = $request->getText( $field );
 		}
 
 		return $data;

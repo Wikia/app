@@ -2,7 +2,7 @@
 	global $wgTitle;
 ?>
 
-<form method='post' action='<?= $submitUrl; ?>' id='renameuser' data-show-confirm="<?= $showConfirm; ?>" data-cannonical-username="<?= $cannonicalUsername; ?>">
+<form method='post' action='<?= $submitUrl; ?>' id='renameuser'>
 	<input type="hidden" name="token" value="<?= $token; ?>"/>
 	<input type="hidden" name="isConfirmed" value="<?= $isConfirmed; ?>"/>
 	<fieldset>

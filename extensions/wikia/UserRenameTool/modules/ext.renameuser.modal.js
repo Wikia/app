@@ -5,10 +5,11 @@
 			this.onChange = this.onChange.bind(this);
 			this.onOk = this.onOk.bind(this);
 
+			this.config = mw.config.get('renameUser') || {};
 			this.$form = $('#renameuser');
 			this.$isConfirmed = this.$form.find('input[name=isConfirmed]');
 
-			if (this.$form.data('showConfirm')) {
+			if (this.config.showConfirm) {
 				this.bindEvents();
 				this.$form.trigger('submit');
 			}
@@ -43,7 +44,7 @@
 				title: mw.message('renameuser').escaped(),
 				content: mw.message(
 					'userrenametool-confirm-intro',
-					this.$form.data('cannonicalUsername')
+					this.config.cannonicalUsername
 				).plain(),
 				okMsg: mw.message('userrenametool-confirm').escaped(),
 				cancelMsg: mw.message('userrenametool-confirm-no').escaped()
