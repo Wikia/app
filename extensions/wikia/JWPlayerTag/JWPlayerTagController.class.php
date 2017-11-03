@@ -7,6 +7,7 @@ class JWPlayerTagController extends WikiaController {
 	const SCRIPT_SRC = 'http://static.apester.com/js/sdk/v2.0/apester-javascript-sdk.min.js';
 
 	const DATA_MEDIA_ID_ATTR = 'data-media-id';
+	const ELEMENT_ID_PREFIX = 'jwPlayerTag';
 	const HEIGHT_ATTR = 'height';
 
 	private $wikiaTagBuilderHelper;
@@ -25,10 +26,13 @@ class JWPlayerTagController extends WikiaController {
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ): string {
 		if ( !$this->validateArgs( $args ) ) {
+			// ToDo change to jwplayer message
 			return '<strong class="error">' . wfMessage( 'apester-tag-could-not-render' )->parse() . '</strong>';
 		}
 
-		$script = JSSnippets::addToStack( self::SCRIPT_SRC );
+		$script = JSSnippets::addToStack( [
+
+		] );
 
 		return $script . Html::element( 'div', $this->getAttributes( $args ) );
 	}
@@ -38,15 +42,13 @@ class JWPlayerTagController extends WikiaController {
 	}
 
 	private function getAttributes( $args ): array {
-		$attributes = [
-			'class' => 'apester-media',
-			self::DATA_MEDIA_ID_ATTR => $args[self::DATA_MEDIA_ID_ATTR],
-			self::HEIGHT_ATTR => $args[self::HEIGHT_ATTR] ?? '540'
-		];
+		$mediaId = $args[self::DATA_MEDIA_ID_ATTR];
 
-		if ( $this->wikiaTagBuilderHelper->isMobileSkin() ) {
-			$attributes['data-wikia-widget'] = self::PARSER_TAG_NAME;
-		}
+		$attributes = [
+			'class' => 'jwplayer-container',
+			self::DATA_MEDIA_ID_ATTR => $mediaId,
+			'id' => self::ELEMENT_ID_PREFIX . $mediaId
+		];
 
 		return $attributes;
 	}

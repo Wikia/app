@@ -2744,3 +2744,12 @@ $config['page_header_scss'] = [
 		'//extensions/wikia/PageHeader/styles/index.scss',
 	],
 ];
+
+$config['jwplayer_tag_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
+	],
+];
