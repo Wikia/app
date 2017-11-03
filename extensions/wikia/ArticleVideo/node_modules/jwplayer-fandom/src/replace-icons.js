@@ -12,7 +12,7 @@ function wikiaJWPlayerReplaceIcons(playerInstance) {
 	function replaceJWIconWithCustom(icon, iconHtml) {
 		// some icons are not present on smaller devices
 		if (icon) {
-			var newIcon = parser.parseFromString(iconHtml, "image/svg+xml").documentElement;
+			var newIcon = parser.parseFromString(iconHtml, 'image/svg+xml').documentElement;
 			newIcon.setAttribute('class', icon.getAttribute('class'));
 			icon.parentNode.replaceChild(newIcon, icon);
 		}
