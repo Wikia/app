@@ -3,12 +3,10 @@
 class JWPlayerTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'jwplayer';
-
-	const SCRIPT_SRC = 'http://static.apester.com/js/sdk/v2.0/apester-javascript-sdk.min.js';
-
 	const DATA_MEDIA_ID_ATTR = 'data-media-id';
 	const ELEMENT_ID_PREFIX = 'jwPlayerTag';
-	const HEIGHT_ATTR = 'height';
+	const WIDTH_ATTR = 'height';
+	const STYLE_ATTR = 'height';
 
 	private $wikiaTagBuilderHelper;
 
@@ -57,14 +55,14 @@ class JWPlayerTagController extends WikiaController {
 	}
 
 	private function getWrapperAttributes( $args ): array {
-		$width = array_key_exists('width', $args) ? $args['width'] : null;
+		$width = array_key_exists(self::WIDTH_ATTR, $args) ? $args[self::WIDTH_ATTR] : null;
 
 		$attributes = [
 			'class' => 'jw-player-in-article-video'
 		];
 
 		if (!empty($width) && intval($width) > 0) {
-			$attributes['style'] = 'width:' . $width . 'px;';
+			$attributes[self::STYLE_ATTR] = 'width:' . $width . 'px;';
 		}
 
 		return $attributes;
