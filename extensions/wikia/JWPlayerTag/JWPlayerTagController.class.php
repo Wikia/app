@@ -55,7 +55,7 @@ class JWPlayerTagController extends WikiaController {
 	}
 
 	private function getWrapperAttributes( $args ): array {
-		$width = array_key_exists(self::WIDTH_ATTR, $args) ? $args[self::WIDTH_ATTR] : null;
+		$width = array_key_exists( self::WIDTH_ATTR, $args ) ? $args[self::WIDTH_ATTR] : null;
 
 		$attributes = [
 			'class' => 'jw-player-in-article-video'
