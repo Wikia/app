@@ -126,9 +126,11 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				prerollPositionReached = false;
 			});
 			player.on('adRequest', function (event) {
+				console.log('adRequest', event.tag);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'success', event.ima && event.ima.ad);
 			});
 			player.on('adError', function (event) {
+				console.log('adError', event.tag);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
 			});
 			player.on('play', function() {
