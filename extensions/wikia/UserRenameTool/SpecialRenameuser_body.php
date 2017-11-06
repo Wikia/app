@@ -80,6 +80,10 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-not-repeated-correctly';
 		}
 
+		if ( !\User::isValidUserName( $newUsername ) ) {
+			$errorList[] = 'userrenametool-error-non-alphanumeric';
+		}
+
 		if ( strlen( $newUsername ) > \RenameUserHelper::MAX_USERNAME_LENGTH ) {
 			$errorList[] = 'userrenametool-error-too-long';
 		}
@@ -123,7 +127,7 @@ class SpecialRenameuser extends SpecialPage {
 		$request = $this->getRequest();
 		$requestData = $this->getData();
 		$newUsername = $requestData['newUsername'];
-		$isConfirmed = $requestData['isConfirmed'] === 'true';
+		$isConfirmed = ( $requestData['isConfirmed'] === 'true' );
 
 		if ( !$oldUsername ) {
 			$oldUsername = $requestorUser->getName();
@@ -159,7 +163,8 @@ class SpecialRenameuser extends SpecialPage {
 				'token' => $requestorUser->getEditToken(),
 				'maxUsernameLength' => \RenameUserHelper::MAX_USERNAME_LENGTH,
 				'showForm' => $showForm,
-				'oldUsername' => $selfRename ? null : $oldUsername,
+				'oldUsername' => $oldUsername,
+				'selfRename' => $selfRename,
 				'errors' => array_merge( $errors, $warnings ),
 				'infos' => $infos
 			]
@@ -195,6 +200,9 @@ class SpecialRenameuser extends SpecialPage {
 		foreach ( $fields as $field ) {
 			$data[$field] = $request->getText( $field );
 		}
+
+		$data['newUsername'] = ucfirst( $data['newUsername'] );
+		$data['newUsernameRepeat'] = ucfirst( $data['newUsernameRepeat'] );
 
 		return $data;
 	}

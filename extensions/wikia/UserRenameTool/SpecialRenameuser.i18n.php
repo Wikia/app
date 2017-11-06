@@ -82,7 +82,7 @@ Reason: "$5".',
 The rest will be done in background.
 You will be notified via e-mail when it is completed.',
 	'userrenametool-success' => 'The user "$1" has been renamed to "$2".',
-	'userrenametool-confirm-intro' => '"<nowiki>$1</nowiki>" will be renamed to "<b><nowiki>$2</nowiki></b>". Do you really want to do this?',
+	'userrenametool-confirm-intro' => '<p>"<b><nowiki>$1</nowiki></b>" will be renamed to "<b><nowiki>$2</nowiki></b>".</p><p>Do you really want to do this?</p>',
 	'userrenametool-confirm-yes' => 'Yes',
 	'userrenametool-confirm-no' => 'No',
 	'userrenametool-page-exists' => 'The page $1 already exists and cannot be automatically overwritten.',

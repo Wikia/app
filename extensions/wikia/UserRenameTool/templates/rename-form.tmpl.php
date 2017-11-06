@@ -10,16 +10,14 @@
 		<p><?= wfMessage( 'userrenametool-warning' )->inContentLanguage()->parse(); ?></p>
 		<? if ( $showForm ): ?> 
 		<table id='mw-renameuser-table'>
-			<? if ( $oldUsername ): ?>
-				<tr>
-					<td class='mw-label'>
-						<label for='old-username'><?= wfMessage( 'userrenametool-old' )->inContentLanguage()->escaped(); ?></label>
-					</td>
-					<td class='mw-input'>
-						<input type="text" id="old-username" name="oldUsername" size="30" tabindex="2" disabled maxlength="<?= $maxUsernameLength; ?>" value="<?= $oldUsername; ?>"/>
-					</td>
-				</tr>
-			<? endif; ?>
+			<tr>
+				<td class='mw-label'>
+					<label for='old-username'><?= wfMessage( 'userrenametool-old' )->inContentLanguage()->escaped(); ?></label>
+				</td>
+				<td class='mw-input'>
+					<input type="text" id="old-username" name="oldUsername" size="30" tabindex="2" disabled maxlength="<?= $maxUsernameLength; ?>" value="<?= $oldUsername; ?>"/>
+				</td>
+			</tr>
 			<tr>
 				<td class='mw-label'>
 					<label for='new-username'><?= wfMessage( 'userrenametool-new' )->inContentLanguage()->escaped(); ?></label>
@@ -36,7 +34,7 @@
 					<input type="text" id="new-username-repeat" name="newUsernameRepeat" size="30" tabindex="2" maxlength="<?= $maxUsernameLength; ?>" value="<?= $newUsernameRepeat; ?>"/>
 				</td>
 			</tr>
-			<? if ( !$oldUsername ) : ?>
+			<? if ( $selfRename ): ?>
 				<tr>
 					<td class='mw-label'>
 						<label for="password"><?= wfMessage( 'userrenametool-current-password' )->inContentLanguage()->escaped(); ?></label>
