@@ -67,6 +67,7 @@ require([
 	}
 
 	function setupPlayer() {
+		jwplayer().on('all', function (e, d) { console.log(e); if (d) console.log(d); });
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
