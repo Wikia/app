@@ -34,21 +34,38 @@ class JWPlayerTagController extends WikiaController {
 			'jwplayer_tag_css'
 		] );
 
-		return $script . Html::element( 'div', $this->getAttributes( $args ) );
+		return $script
+			. Html::openElement( 'div', $this->getWrapperAttributes( $args ) )
+			. Html::element( 'div', $this->getPlayerAttributes( $args ) )
+			. Html::closeElement( 'div' );
 	}
 
 	private function validateArgs( $args ): bool {
 		return array_key_exists( 'media-id', $args );
 	}
 
-	private function getAttributes( $args ): array {
+	private function getPlayerAttributes( $args ): array {
 		$mediaId = $args['media-id'];
 
 		$attributes = [
-			'class' => 'jwplayer-container jw-player-in-article-video',
+			'class' => 'jwplayer-container',
 			self::DATA_MEDIA_ID_ATTR => $mediaId,
 			'id' => self::ELEMENT_ID_PREFIX . $mediaId
 		];
+
+		return $attributes;
+	}
+
+	private function getWrapperAttributes( $args ): array {
+		$width = array_key_exists('width', $args) ? $args['width'] : null;
+
+		$attributes = [
+			'class' => 'jw-player-in-article-video'
+		];
+
+		if (!empty($width) && intval($width) > 0) {
+			$attributes['style'] = 'width:' . $width . 'px;';
+		}
 
 		return $attributes;
 	}

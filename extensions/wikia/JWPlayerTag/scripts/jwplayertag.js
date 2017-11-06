@@ -1,9 +1,9 @@
 require(['jquery'], function ($) {
-	var parserTagClassName = 'jw-player-in-article-video',
+	var parserTagSelector = '.jw-player-in-article-video .jwplayer-container',
 		jwVideoDataUrl = 'https://cdn.jwplayer.com/v2/media/';
 
 	function init() {
-		var parserTags = document.getElementsByClassName(parserTagClassName);
+		var parserTags = document.querySelectorAll(parserTagSelector);
 
 		Array.prototype.slice.call(parserTags).forEach(function (each) {
 			if (window.WikiaJWPlayer) {
