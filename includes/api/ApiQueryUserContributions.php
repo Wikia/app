@@ -152,11 +152,11 @@ class ApiQueryContributions extends ApiQueryBase {
 			$userIdList = $this->getDB()->makeList( $userIds );
 			$ipList = $this->getDB()->makeList( $ips );
 
-			$this->addWhere( "(rev_user IN ($userIdList) OR rev_user_text IN ($ipList))" );
+			$this->addWhere( "(rev_user IN ($userIdList) OR (rev_user = 0 AND rev_user_text IN ($ipList)))" );
 		} elseif ( empty( $userIds ) ) {
 			$ipList = $this->getDB()->makeList( $ips );
 
-			$this->addWhere( "rev_user_text IN ($ipList)" );
+			$this->addWhere( "rev_user = 0 AND rev_user_text IN ($ipList)" );
 		} elseif ( empty( $ips ) ) {
 			$userIdList = $this->getDB()->makeList( $userIds );
 
