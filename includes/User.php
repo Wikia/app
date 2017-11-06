@@ -592,15 +592,29 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * Return user ID to user name mapping
 	 *
-	 * @param $ids Array User IDs
-	 * @return Array User ID to User name mapping
+	 * Please note that this method is NOT cached!
+	 *
+	 * @param array $ids User IDs
+	 * @param int $source DB_SLAVE / DB_MASTER
+	 * @return array User ID to User name mapping
 	 */
-	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
+	public static function whoAre( Array $ids, $source = DB_SLAVE ): array {
 		global $wgExternalSharedDB;
 
 		if ( $ids == [] ) {
 			return [];
+		}
+		elseif ( count( $ids ) === 1 ) {
+			// SUS-3219 - fall back to well-cached User::whoIs when we want to resolve a single user ID
+			$userId = $ids[0];
+
+			return [
+				// Add the name used to indicate anonymous users.
+				0 => wfMessage( 'oasis-anon-user' )->escaped(),
+				$userId => self::whoIs( $userId )
+			];
 		}
 
 		$ids = array_unique( $ids, SORT_NUMERIC );
