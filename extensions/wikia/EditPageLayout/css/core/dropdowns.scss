@@ -16,7 +16,7 @@
 	}
 
 	// Rich combo, module buttons
-	.cke_rcombo, .cke_panelbutton, .cke_modulebutton {
+	.cke_combo, .cke_panelbutton, .cke_modulebutton {
 		&.cke_opened {
 			a {
 				position: relative;
@@ -27,7 +27,6 @@
 			background-color: $color-epl-button;
 			border: solid 1px $color-epl-button-border;
 			border-radius: 4px;
-			color: $color-text;
 			cursor: default;
 			display: inline-block;
 			float: left;
@@ -38,10 +37,11 @@
 			span {
 				vertical-align: middle;
 			}
-			.cke_text {
+			.cke_combo_text {
 				display: inline-block;
 				height: 26px;
 				line-height: 26px;
+				color: $color-text;
 				margin: 0 7px;
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -65,7 +65,7 @@
 		}
 
 		// open button (up/down arrow)
-		.cke_openbutton {
+		.cke_combo_open {
 			display: inline-block;
 			width: 0;
 			height: 0;

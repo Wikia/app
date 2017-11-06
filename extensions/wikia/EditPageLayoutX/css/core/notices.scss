@@ -1,0 +1,53 @@
+.editpage-notices {
+	background-color: $color-epl-notices-background;
+	border: 1px solid $color-epl-notices-border;
+	border-top: none;
+	color: $color-epl-notices-color;
+	cursor: pointer;
+	display: block;
+	left: 50px;
+	padding: 2px 8px;
+	position: absolute;
+	right: 50px;
+	top: -1px;
+	z-index: 110;
+
+	display: none;
+
+	li {
+		display: block;
+		border-top: 1px solid $color-epl-notices-border;
+		padding: 2px 20px;
+		line-height: 18px;
+		
+		min-height: 18px;
+		/*RestoreEdit: make the short notices boxes adapt to the content*/
+		/*
+		height: 18px;
+		overflow: hidden;
+		white-space: nowrap;
+		-o-text-overflow: ellipsis;
+		text-overflow: ellipsis;
+		*/
+
+		&:first-child {
+			border-top-width: 0;
+		}
+	}
+
+	> .splotch {
+		@include splotch;
+		position: absolute;
+		top: 6px;
+	}
+}
+
+/* needs to catch also elements in .modalWrapper, the only common denominator is body */
+.notice-action{
+	color: $color-links;
+	cursor: pointer;
+	
+	&:hover{
+		text-decoration: underline;
+	}
+}

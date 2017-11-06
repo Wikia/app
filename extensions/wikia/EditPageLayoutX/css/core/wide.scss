@@ -1,0 +1,281 @@
+@import "skins/oasis/css/core/layout";
+
+.editpage-visualwidemode {
+	.EditPageRail {
+		position: absolute;
+		top: 0;
+		right: 0;
+		.buttons{
+			.wikia-menu-button, .control-button{
+				margin-top: 0;
+			}
+		}
+		.module {
+			border-left: 0px;
+			@include clear-box-shadow;
+		}
+		.module_content {
+			background-color: transparent;
+			background-image: none;
+			padding-bottom: 10px;
+		}
+	}
+	.EditPageMain {
+		width: $width-outside;
+	}
+	.EditPageToolbar {
+		padding-right: 15px + $width-rail-epl  - 10;
+		.cke_toolbar_expand {
+			> a {
+				right: 20px + $width-rail-epl  - 10;
+			}
+		}
+	}
+}
+
+.editpage-sourcewidemode.mode-source {
+	.EditPageEditorWrapper {
+		padding-right: 10px;
+	}
+
+	/* vertical bar with an arrow to show/hide the rail */
+	.editpage-widemode-trigger {
+		border-left: 1px solid $color-page-border;
+		bottom: 0;
+		cursor: pointer;
+		display: block;
+		position: absolute;
+		right: $width-rail-epl;
+		top: 0;
+		width: 10px;
+		z-index: 1;
+
+		.arrow {
+			border: 0 solid transparent;
+			border-left-color: $color-text;
+			border-width: 4px 0 4px 4px;
+			height: 0;
+			left: 50%;
+			margin-left: -2px;
+			margin-top: -4px;
+			position: absolute;
+			top: 50%;
+			width: 0;
+		}
+	}
+
+	/* vertical bar styling when right rail is hidden */
+	&.editpage-sourcewidemode-on {
+		.editpage-widemode-trigger {
+			left: auto;
+			right: 0px;
+			.arrow {
+				border-width: 4px 4px 4px 0;
+				border-left-color: transparent;
+				border-right-color: $color-text;
+			}
+		}
+		.rail-auto-height {
+			display: none;
+		}
+		label[for="wpSummary"] {
+			display: none;
+		}
+	}
+
+	/* right rail adjustments */
+	&.editpage-sourcewidemode-on {
+		.EditPageRail {
+			@include clear-box-shadow;
+			background-color: transparent;
+			border-left: 0;
+			height: 39px !important; /* bugid: 9207 */
+			position: absolute;
+			top: 0;
+			right: 0;
+			.module {
+				@include clear-box-shadow;
+				display: none;
+				border-left: 0px;
+			}
+			.module_content {
+				background-color: transparent;
+				background-image: none;
+			}
+		}
+		.EditPageMain {
+			width: $width-outside;// - 10;
+		}
+		.EditPageToolbar {
+			margin-right: -6px;
+			padding-right: 15px + $width-rail-epl  - 10;
+		}
+		.cke_toolbar_expand {
+			> a {
+				right: auto;
+			}
+		}
+	}
+
+	&.editpage-sourcewidemode-on {
+		.cke_toolbar_source {
+			width: 410px;
+		}
+		.EditPageRail {
+			width: auto;
+			.module_page_controls {
+				// resetting module styling - start
+				display: block;
+				margin-left: 0;
+				// resetting module styling - end
+
+				.module_content {
+					padding-top: 0;
+					position: relative;
+
+					.preview_box {
+						border-left: 1px solid $color-page-border;
+						border-right: 1px solid $color-page-border;
+						float: left;
+						height: 39px;
+						margin-right: 8px;
+						padding-left: 8px;
+
+						h3 {
+							float: left;
+							font-size: 12px;
+							margin-top: 12px;
+							padding: 0;
+						}
+
+						.preview_icon {
+							border: 0;
+							height: auto;
+							margin: 0 8px;
+							width: auto;
+
+							p {
+								display: none;
+							}
+
+							svg {
+								margin-bottom: 0;
+							}
+						}
+
+						.preview_mobile {
+							padding-top: 8px;
+
+							svg {
+								height: 24px;
+								width: 16px;
+							}
+						}
+
+						.preview_desktop {
+							padding-top: 10px;
+
+							svg {
+								height: 20px;
+								width: 24px;
+							}
+						}
+					}
+
+					.preview_box, .buttons,
+					.wpSummaryFields {
+						float: left;
+					}
+
+					#wpSummaryLabel {
+						clear: none;
+						float: left;
+					}
+
+					#wpSummary {
+						height: 20px;
+						margin-top: 8px;
+						padding: 3px 5px;
+						width: 210px;
+					}
+
+					.checkboxes {
+						float: right;
+						margin: 0 8px;
+
+						label {
+							margin-bottom: 0;
+						}
+
+						label:only-child {
+							display: inline-block;
+							margin-top: 10px;
+
+							input {
+								vertical-align: top;
+							}
+						}
+
+						span {
+							display: inline-block;
+							line-height: 1;
+							width: 60px;
+							word-wrap: break-word;
+						}
+					}
+
+					.diff-link {
+						font-size: 10px;
+						line-height: 1;
+						margin: 10px 10px 0 0;
+						width: 55px;
+					}
+				}
+
+				// checkboxes
+				label {
+					text-align: left;
+				}
+			}
+		}
+	}
+}
+
+#EditPage.toolbar-expanded {
+	.preview_box {
+		border: 0;
+		clear: both;
+	}
+
+	.preview-header {
+		margin-top: 8px;
+	}
+
+	.preview_mobile {
+		padding-top: 3px;
+	}
+
+	.preview_desktop {
+		padding-top: 5px;
+	}
+
+	.diff-link {
+		margin-top: 5px;
+	}
+
+	#wpSave {
+		margin-top: 3px;
+	}
+}
+
+/* CreateBlogPost specific fixes (BugId:9852) */
+.mw-special-CreateBlogPage .editpage-sourcewidemode.mode-source {
+	 .EditPageRail .module_page_controls {
+		.wpIsCommentingEnabled {
+			top: 2px;
+		}
+		.wpMinoredit {
+			top: 18px;
+		}
+	}
+}

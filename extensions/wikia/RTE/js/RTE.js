@@ -1,6 +1,6 @@
 (function($, window, undefined) {
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
-
+	
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
@@ -442,6 +442,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 	// catch requests for /lang/xx.js
 	if (CKEDITOR.langRegExp.test(resource)) {
+		
 		var matches = resource.match(CKEDITOR.langRegExp);
 		var lang = matches[1];
 

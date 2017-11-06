@@ -1,0 +1,11 @@
+@mixin button-icon-resize-square( $width, $height ) {
+	height: $height;
+	width: $width;
+	margin: floor(( 26px - $height ) / 2)  floor(( 26px - $width ) / 2);
+}
+
+@mixin button-icon-resize( $width, $height ) {
+	height: $height;
+	width: $width;
+	margin: floor(( 26px - $height ) / 2) 5px;
+}

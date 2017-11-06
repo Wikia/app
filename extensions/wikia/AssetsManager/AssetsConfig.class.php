@@ -21,12 +21,20 @@ class AssetsConfig {
 	}
 
 	public static function getRTEAssets() {
-		global $IP;
-		$path = "extensions/wikia/RTE";
-		$files = array(
-			// CK core entry point
-			$path . '/ckeditor/_source/core/ckeditor_base.js',
-		);
+		global $IP, $wgRTEVersion;
+
+		if ( $wgRTEVersion == 2) {
+			$path = "extensions/wikia/RTE2";
+            		$files = [ $path . '/ckeditor/ckeditor.js' ];
+
+		} else if ( $wgRTEVersion == 3 ) {
+			$path = "extensions/wikia/RTE3";
+           		 $files = [ $path . '/ckeditor/ckeditor.js' ];
+		} else {
+			$path = "extensions/wikia/RTE";
+           		$files = [ $path . '/ckeditor/_source/core/ckeditor_base.js' ];
+		}
+
 
 		$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
 		$input = substr( $input, strpos( $input, 'files :' ) + 7 );
@@ -39,7 +47,6 @@ class AssetsConfig {
 				$files[] = $path . '/ckeditor/' . $name;
 			}
 		}
-
 		return $files;
 	}
 

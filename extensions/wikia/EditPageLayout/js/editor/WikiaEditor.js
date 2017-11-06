@@ -1,4 +1,5 @@
 (function(window,$){
+	
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
 		slice = [].slice;
 
@@ -93,6 +94,7 @@
 
 	// Returns the currently active instance
 	WE.getInstance = function(instanceId) {
+		
 		return WE.instances[instanceId || WE.instanceId];
 	};
 
@@ -214,6 +216,7 @@
 
 		initPlugins: function() {
 			// Get the loading order
+
 			var order = [];
 			var loaded = {};
 			function queuePlugin(name){
@@ -406,6 +409,7 @@
 		},
 
 		beforeInit: function() {
+			
 			this.editor.ui = this;
 			var self = this;
 			$('body').click(function(ev){
@@ -414,6 +418,7 @@
 		},
 
 		init: function() {
+			
 			var chk = function() {
 				if (!this.initDomCalled) return;
 				if (this.uiReadyFired) return;
@@ -665,6 +670,7 @@
 		AUTO_SHOW_ATTRIBUTE: 'data-space-autoshow',
 
 		beforeInit: function() {
+			
 			this.editor.on('uiReady',this.proxy(this.renderToolbars));
 			this.toolbars = {};
 		},
@@ -915,7 +921,6 @@
 
 		// wikiaEditor is now available as this.editor
 		initEditor: function() {
-
 			// Set up listeners on proxied ck events
 			this.editor.on('ck-mode', this.proxy(this.modeChanged));
 			this.editor.on('ck-modeSwitch', this.proxy(this.beforeModeChange));
@@ -945,7 +950,6 @@
 
 		// ckeditor instance is now available
 		ckInstanceCreated: function(ck) {
-
 			// Store a reference to the CKE instance in wikiaEditor
 			this.editor.ck = ck;
 
@@ -970,12 +974,15 @@
 		// in source mode, this is CKE generated textarea
 		getEditbox: function() {
 			return $(this.editor.ck.mode == 'wysiwyg' ?
-				this.editor.ck.document.getBody().$ : this.editor.ck.textarea.$);
+				this.editor.ck.document.getBody().$ : this.editor.ck.container.$);
 		},
 
 		getEditboxWrapper: function() {
-			return $(this.editor.ck.getThemeSpace('contents').$);
-		},
+			//kacper olek edit, rte update
+			//return $(this.editor.ck.getThemeSpace('contents').$);
+			return $(this.editor.ck.ui.space('contents').$);
+	
+	},
 
 		// Returns the original editor element that CKE has replaced
 		getEditorElement: function() {
@@ -1006,7 +1013,9 @@
 		},
 
 		themeLoaded: function() {
-			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.getThemeSpace('contents').$));
+		this.editor.fire('editboxReady', this.editor, $(this.editor.ck.ui.space('contents').$));
+		
+		//this.editor.fire('editboxReady', this.editor, $(this.editor.ck.getThemeSpace( 'contents' ).$));
 		},
 
 		editorFocus: function() {
@@ -1069,6 +1078,7 @@
 		stateProxiedCommands: {},
 
 		beforeInit: function() {
+			
 			this.editor.ui.addExternalProvider(this);
 			this.editor.on('ck-themeLoaded',this.ckReady,this);
 			this.editor.on('uiBuildClickHandler',this.buildWysiwygClickHandler,this);
@@ -1077,6 +1087,7 @@
 		},
 
 		modeChanged: function( editor, mode ) {
+			
 			// show/hide appropriate buttons
 			for (var name in this.modeAwareCommands) {
 				var command = this.editor.ck.getCommand(name);
@@ -1097,11 +1108,13 @@
 		},
 
 		proxyAllCommandsState: function() {
+			
 			for (var commandName in this.stateProxiedCommands)
 				this.proxyCommandState( commandName );
 		},
 
 		proxyCommandState: function( commandName ) {
+			
 			var command = this.editor.ck.getCommand(commandName),
 				state = command && command.state,
 				elements = this.stateProxiedCommands[commandName];
@@ -1112,21 +1125,22 @@
 					el = $('#'+id);
 				if (el) {
 					el = el.parent(); // workaround stupid HTML markup
-					el.removeClass('cke_on cke_off cke_disabled');
+					el.removeClass('cke_button_on cke_button_off cke_button_disabled');
 					if (this.editor.ck.mode == 'wysiwyg') {
-						el.addClass('cke_' + (
+						el.addClass('cke_button_' + (
 							state == CKEDITOR.TRISTATE_ON ? 'on' :
 							state == CKEDITOR.TRISTATE_DISABLED ? 'disabled' :
 							'off')
 						);
 					} else {
-						el.addClass('cke_off');
+						el.addClass('cke_button_off');
 					}
 				}
 			}
 		},
 
 		elementCreated: function( editor, element, data ) {
+			
 			if (element.ckcommand) {
 				var commandName = element.ckcommand;
 				// auto state by ck command
@@ -1145,19 +1159,22 @@
 		},
 
 		ckReady: function() {
+			
 			this.ready = true;
 			this.editor.fire('uiExternalProviderReady',this.editor);
 		},
 
 		buildWysiwygClickHandler: function( editor, button ) {
+			
 			button.clickwysiwyg = function() {
 				this.editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
 			};
 		},
 
 		createElement: function( name ) {
+			
 			var ck = this.editor.ck, ui = this.editor.ck.ui, item;
-			if (ui._.items[name] && (item = ui.create(name)) ) {
+			if (ui.items[name] && (item = ui.create(name)) ) {
 				var output = [];
 				item.render(ck, output);
 				if (item.command) {
