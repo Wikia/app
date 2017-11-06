@@ -35,7 +35,10 @@ require([
 		bidParams;
 
 	function onPlayerReady(playerInstance) {
-		jwplayer().on('all', function (e, d) { console.log(e); if (d) console.log(d); });
+		jwplayer().on(‘adError’,function(e){console.log(e.message+' -- ’+e.tag);});
+jwplayer().on(‘adRequest’,function(e){console.log(‘Just requested an ad: ’+e.tag);});
+jwplayer().on(‘adImpression’,function(e){console.log(‘Ad impression! ’+e.tag);});
+jwplayer().on(‘adStarted’,function(e){console.log(‘Ad started! ’+e.tag);});
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
 		});
