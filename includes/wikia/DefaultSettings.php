@@ -1881,6 +1881,19 @@ $wgEnableReviveSpotlights = true;
 $wgReviveSpotlightsCountries = null;
 
 /**
+ * @name $wgDisableImprovedGenderSupport
+ *
+ * Allow to disable "improved" gender support included in MW 1.18
+ * Setting this to FALSE will display user/user talk namespaces according to the user's gender as
+ * set in preferences, for languages which support it
+ *
+ * @see https://www.mediawiki.org/wiki/MediaWiki_1.18#Better_gender_support
+ * @see https://wikia-inc.atlassian.net/browse/SUS-3131
+ * @see Title::getNsText()
+ */
+$wgDisableImprovedGenderSupport = true;
+
+/**
  * Enable SourcePoint recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
