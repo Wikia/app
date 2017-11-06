@@ -82,7 +82,8 @@ require([
 			autoplay: willAutoplay,
 			settings: {
 				showAutoplayToggle: true,
-				showQuality: true
+				showQuality: true,
+				showCaptionsToggle: true
 			},
 			mute: isFromRecirculation() ? false : willAutoplay,
 			related: {
