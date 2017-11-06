@@ -237,9 +237,14 @@ class ApiQueryContributions extends ApiQueryBase {
 		}
 
 		if ( isset( $this->params['tag'] ) ) {
+			// SUS-3140: Optimize tag condition
+			// JOINing on tag will allow the query planner to use change_tag_rev_tag index
+			$tag = $this->getDB()->addQuotes( $this->params['tag'] );
+
 			$this->addTables( 'change_tag' );
-			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rev_id=ct_rev_id' ) ) ) );
-			$this->addWhereFld( 'ct_tag', $this->params['tag'] );
+			$this->addJoinConds( [
+				'change_tag' => [ 'LEFT JOIN', [ "ct_tag = $tag AND rev_id=ct_rev_id" ] ]
+			] );
 		}
 
 		if ( $this->params['toponly'] ) {
