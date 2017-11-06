@@ -99,6 +99,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 				if (shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
+					window.playAdFlag = true;
 					player.playAd(buildVastUrl('preroll', videoDepth, correlator, bidParams));
 				}
 				prerollPositionReached = true;
@@ -130,6 +131,9 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			player.on('adError', function (event) {
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
 			});
+			player.on('play', function() {
+				console.log('-- playAdFlag:', window.playAdFlag);
+			})
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
 		}
