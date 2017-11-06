@@ -827,7 +827,10 @@ class Title {
 			$username = $pagename;
 		}
 
-		if ( $wgContLang->needsGenderDistinction() &&
+		// SUS-3131: Allow to disable "improved" gender support (included since MW 1.18)
+		global $wgDisableImprovedGenderSupport;
+
+		if ( !$wgDisableImprovedGenderSupport && $wgContLang->needsGenderDistinction() &&
 				MWNamespace::hasGenderDistinction( $this->mNamespace ) ) {
 			$gender = GenderCache::singleton()->getGenderOf( $username, __METHOD__ );
 			return $wgContLang->getGenderNsText( $this->mNamespace, $gender );
