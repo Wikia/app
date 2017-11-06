@@ -35,7 +35,7 @@ wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
-	var settingsIcon = domParser.parseFromString(wikiaJWPlayerIcons.settings, "image/svg+xml").documentElement;
+	var settingsIcon = this.createSVG(wikiaJWPlayerIcons.settings);
 	settingsIcon.classList.add('jw-svg-icon');
 	settingsIcon.classList.add('jw-svg-icon-wikia-settings');
 
@@ -132,11 +132,15 @@ wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 	return settingsList;
 };
 
+wikiaJWPlayerSettingsPlugin.prototype.createSVG = function (svgHtml) {
+	return domParser.parseFromString(svgHtml, 'image/svg+xml').documentElement;
+};
+
 wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	var qualityButton = document.createElement('li');
 
 	qualityButton.classList.add('wikia-jw-settings__quality-button');
-	var rightArrowIcon = domParser.parseFromString(wikiaJWPlayerIcons.back, "image/svg+xml").documentElement;
+	var rightArrowIcon = this.createSVG(wikiaJWPlayerIcons.back);
 	rightArrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
 	qualityButton.innerHTML = 'Video Quality' + rightArrowIcon.outerHTML;
 	qualityButton.addEventListener('click', this.showQualityLevelsList.bind(this));
@@ -178,7 +182,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 	var playerInstance = this.player,
-		backIcon = domParser.parseFromString(wikiaJWPlayerIcons.back, "image/svg+xml").documentElement;
+		backIcon = this.createSVG(wikiaJWPlayerIcons.back);
 
 	backIcon.classList.add('wikia-jw-settings__back-icon');
 
