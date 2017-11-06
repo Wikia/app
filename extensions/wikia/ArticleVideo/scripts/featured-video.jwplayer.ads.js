@@ -70,7 +70,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 	return function(player, bidParams) {
 		var correlator,
-			featuredVideoElement = document.querySelector('.featured-video'),
+			featuredVideoElement = player && player.getContainer && player.getContainer(),
+			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
 			prerollPositionReached = false,
 			trackingParams = {
 				adProduct: 'featured-video',
@@ -124,10 +125,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				prerollPositionReached = false;
 			});
 			player.on('adRequest', function (event) {
-				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'success', event.ima && event.ima.ad);
+				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'success', event.ima && event.ima.ad);
 			});
 			player.on('adError', function (event) {
-				vastDebugger.setVastAttributes(featuredVideoElement, event.tag, 'error', event.ima && event.ima.ad);
+				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';

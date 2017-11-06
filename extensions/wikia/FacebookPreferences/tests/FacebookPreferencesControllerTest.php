@@ -1,6 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
+use Wikia\Service\User\ExternalAuth\FacebookService;
 
 class FacebookPreferencesControllerTest extends TestCase {
 	/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */
