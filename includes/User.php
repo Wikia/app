@@ -606,7 +606,7 @@ class User implements JsonSerializable {
 		if ( $ids == [] ) {
 			return [];
 		}
-		else if ( count( $ids ) === 1 ) {
+		elseif ( count( $ids ) === 1 ) {
 			// SUS-3219 - fall back to well-cached User::whoIs when we want to resolve a single user ID
 			$userId = $ids[0];
 
