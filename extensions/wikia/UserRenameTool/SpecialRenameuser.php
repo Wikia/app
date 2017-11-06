@@ -59,7 +59,6 @@ $wgResourceModules['ext.renameuser.modal'] = $userRenameResourceTemplate + array
 	),
 	'messages' => array(
 		'renameuser',
-		'userrenametool-errorinvalid',
 		'userrenametool-new',
 		'userrenametool-confirm',
 		'userrenametool-confirm-intro',

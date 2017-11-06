@@ -31,23 +31,32 @@ class SpecialRenameuser extends SpecialPage {
 		$this->setHeaders();
 		$this->checkPermissions();
 
+		$username = \User::isValidUsername( $par ) ? $par : null;
+		$requestorUser = $this->getUser();
+
+		if ( !$requestorUser->isAllowed( 'renameuser' ) ) {
+			throw new PermissionsError( 'renameuser' );
+		}
+
+		if ( $username && !$requestorUser->isAllowed( 'renameanotheruser' ) ) {
+			throw new PermissionsError( 'renameanotheruser' );
+		}
+
 		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$this->getOutput()->readOnlyPage();
 
 			return;
 		}
 
-		$user = $this->getUser();
-
 		// TODO: remove after QA tests
-		if ( static::shouldUnlock() ) {
+		if ( self::shouldUnlock() ) {
 			$user->setGlobalFlag( 'wasRenamed', false );
 			$user->saveSettings();
 		}
 		// TODO: end
 
-		if ( \RenameUserHelper::canUserChangeUsername( $user ) ) {
-			$this->renderForm( $user );
+		if ( \RenameUserHelper::canUserChangeUsername( $requestorUser ) ) {
+			$this->renderForm( $requestorUser, $username );
 		} else {
 			$this->renderDisallow();
 		}
@@ -55,7 +64,7 @@ class SpecialRenameuser extends SpecialPage {
 		return;
 	}
 
-	public static function validateData( array $data, User $user ) {
+	public static function validateData( array $data, User $user, bool $selfRename = true ) {
 		$errorList = [];
 		$newUsername = $data['newUsername'];
 
@@ -71,10 +80,6 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-not-repeated-correctly';
 		}
 
-		if ( !ctype_alnum( $newUsername ) ) {
-			$errorList[] = 'userrenametool-error-non-alphanumeric';
-		}
-
 		if ( strlen( $newUsername ) > \RenameUserHelper::MAX_USERNAME_LENGTH ) {
 			$errorList[] = 'userrenametool-error-too-long';
 		}
@@ -87,7 +92,7 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-token-not-match';
 		}
 
-		if ( !$user->checkPassword( $data['password'] )->success() ) {
+		if ( $selfRename && !$user->checkPassword( $data['password'] )->success() ) {
 			$errorList[] = 'userrenametool-error-password-not-match';
 		}
 
@@ -106,25 +111,30 @@ class SpecialRenameuser extends SpecialPage {
 	}
 	// TODO: end
 
-	private function renderForm( $user ) {
+	private function renderForm( User $requestorUser, $oldUsername = null ) {
 		$errors = [];
 		$infos = [];
 		$warnings = [];
 		$showConfirm = false;
 		$showForm = true;
-		$cannonicalUsername = '';
+		$selfRename = false;
+		$cannonicalNewUsername = '';
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$requestData = $this->getData();
+		$newUsername = $requestData['newUsername'];
 		$isConfirmed = $requestData['isConfirmed'] === 'true';
 
+		if ( !$oldUsername ) {
+			$oldUsername = $requestorUser->getName();
+			$selfRename = true;
+		}
+
 		if ( $request->wasPosted() ) {
-			$errors = $this->parseMessages( static::validateData( $requestData, $user ) );
-			$cannonicalUsername = \User::getCanonicalName( $requestData['newUsername'] );
+			$errors = $this->parseMessages( self::validateData( $requestData, $requestorUser, $selfRename ) );
+			$cannonicalNewUsername = \User::getCanonicalName( $newUsername, 'creatable' );
 
 			if ( empty( $errors ) && $isConfirmed ) {
-				$oldUsername = $user->getName();
-				$newUsername = $requestData['newUsername'];
 				$process = new RenameUserProcess( $oldUsername, $newUsername, true );
 				$status = $process->run();
 				$warnings = $process->getWarnings();
@@ -146,11 +156,11 @@ class SpecialRenameuser extends SpecialPage {
 			array_map( 'htmlspecialchars', $requestData ),
 			[
 				'submitUrl' => $this->getTitle()->getLocalURL(),
-				'token' => $user->getEditToken(),
+				'token' => $requestorUser->getEditToken(),
 				'maxUsernameLength' => \RenameUserHelper::MAX_USERNAME_LENGTH,
 				'showForm' => $showForm,
-				'warnings' => $warnings,
-				'errors' => $errors,
+				'oldUsername' => $selfRename ? null : $oldUsername,
+				'errors' => array_merge( $errors, $warnings ),
 				'infos' => $infos
 			]
 		) );
@@ -159,7 +169,8 @@ class SpecialRenameuser extends SpecialPage {
 		$out->addJsConfigVars( [
 			'renameUser' => [
 				'showConfirm' => $showConfirm,
-				'cannonicalUsername' => $cannonicalUsername
+				'oldUsername' => $oldUsername,
+				'newUsername' => $cannonicalNewUsername
 			]
 		] );
 		$out->addHTML( $template->render( 'rename-form' ) );

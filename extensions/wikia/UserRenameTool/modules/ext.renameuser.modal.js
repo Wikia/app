@@ -44,7 +44,8 @@
 				title: mw.message('renameuser').escaped(),
 				content: mw.message(
 					'userrenametool-confirm-intro',
-					this.config.cannonicalUsername
+					this.config.oldUsername,
+					this.config.newUsername
 				).plain(),
 				okMsg: mw.message('userrenametool-confirm').escaped(),
 				cancelMsg: mw.message('userrenametool-confirm-no').escaped()

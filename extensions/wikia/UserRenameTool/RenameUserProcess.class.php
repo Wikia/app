@@ -1066,8 +1066,11 @@ class RenameUserProcess {
 
 		// mark user as renamed
 		$renamedUser = \User::newFromId( $params['rename_user_id'] );
-		\RenameUserHelper::blockUserRenaming( $renamedUser );
-		$renamedUser->saveSettings();
+
+		if ( !User::newFromId( $params['requestor_id'] )->isAllowed('renameanotheruser') ) {
+			\RenameUserHelper::blockUserRenaming( $renamedUser );
+			$renamedUser->saveSettings();
+		}
 
 		// send e-mail to the user that rename process has finished
 		$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );

@@ -190,7 +190,7 @@ class RenameUserHelper {
 	}
 
 	public static function canUserChangeUsername( User $user ): bool {
-		return !$user->getGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, false );
+		return !$user->getGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, false ) || $user->isAllowed( 'renameanotheruser' );
 	}
 
 	public static function blockUserRenaming( User $user ) {
