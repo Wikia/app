@@ -34,6 +34,10 @@ require([
 		willAutoplay = featuredVideoAutoplay.isAutoplayEnabled() && inAutoplayCountries,
 		bidParams;
 
+	function isFromRecirculation() {
+		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
+	}
+
 	function onPlayerReady(playerInstance) {
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
@@ -80,6 +84,7 @@ require([
 				showAutoplayToggle: true,
 				showQuality: true
 			},
+			mute: isFromRecirculation() ? false : willAutoplay,
 			related: {
 				time: 3,
 				playlistId: recommendedPlaylist,
