@@ -59,11 +59,8 @@ class ApiQueryContributions extends ApiQueryBase {
 		// TODO: if the query is going only against the revision table, should this be done?
 		$this->selectNamedDB( 'contributions', DB_SLAVE, 'contributions' );
 
-		if ( !isset( $this->params['user'] ) ) {
-			$this->dieUsage( 'User parameter may not be empty.', 'param_user' );
-		}
-		$this->prepareUsername( $this->params['user'] );
-		$this->prepareQuery();
+		list( $userIds, $ips ) = $this->prepareUsername( $this->params['user'] );
+		$this->prepareQuery( $userIds, $ips );
 
 		// Do the actual query.
 		$res = $this->select( __METHOD__ );
@@ -91,36 +88,54 @@ class ApiQueryContributions extends ApiQueryBase {
 	}
 
 	/**
-	 * Validate the 'user' parameter
-	 * and save user name in $this->username,
-	 * $this->userId and $this->userIp
-	 *
-	 * @param $user string
+	 * Convert a list of user names and IP addresses to look up into a list of user IDs and IPs
+	 * @param string[] $user
+	 * @return array
 	 */
 	private function prepareUsername( $user ) {
-		if ( !is_null( $user ) && $user !== '' ) {
-			// anon
-			if ( User::isIP( $user ) ) {
-				$this->userIp = $user;
-				$this->username = $user;
-			} else {
-				$name = User::getCanonicalName( $user, 'valid' );
+		global $wgExternalSharedDB;
+		$userIds = [];
+		$ips = [];
 
-				if ( $name === false ) {
-					$this->dieUsage( "User name {$user} is not valid", 'param_user' );
-				} else {
-					// logged in user
-					$this->username = $name;
-					$this->userId = User::idFromName( $name );
-				}
+		$userNames = [];
+
+		foreach ( $user as $entry ) {
+			if ( IP::isIPAddress( $entry ) ) {
+				$ips[] = $entry;
+				continue;
 			}
+
+			if ( User::getCanonicalName( $entry ) ) {
+				$userNames[] = $entry;
+				continue;
+			}
+
+			$this->dieUsage( "User name $entry is not valid", 'param_user' );
 		}
+
+		if ( !empty( $userNames ) ) {
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$userIds = $dbr->selectFieldValues(
+				'`user`',
+				'user_id',
+				[ 'user_name' => array_unique( $userNames ) ],
+				__METHOD__ );
+		}
+
+
+		if ( empty( $userIds ) && empty( $ips ) ) {
+			$this->dieUsage( "No valid user names provided", 'param_user' );
+		}
+
+		return [ $userIds, array_unique( $ips ) ];
 	}
 
 	/**
 	 * Prepares the query and returns the limit of rows requested
+	 * @param int[] $userIds
+	 * @param string[] $ips
 	 */
-	private function prepareQuery() {
+	private function prepareQuery( array $userIds, array $ips ) {
 		// We're after the revision table, and the corresponding page
 		// row for anything we retrieve. We may also need the
 		// recentchanges row and/or tag summary row.
@@ -131,19 +146,22 @@ class ApiQueryContributions extends ApiQueryBase {
 		if ( !$user->isAllowed( 'hideuser' ) ) {
 			$this->addWhere( $this->getDB()->bitAnd( 'rev_deleted', Revision::DELETED_USER ) . ' = 0' );
 		}
-		// We only want pages by the specified user...
-		// SUS-807
-		// fon anons, search it by IP stored in rev_user_text
-		$columnName = 'rev_user_text';
-		$valueToFind = $this->username;
 
-		// if username is a name of logged in user, search it by id
-		if ( isset( $this->userId ) ) {
-			$columnName = 'rev_user';
-			$valueToFind = $this->userId;
+		// SUS-3140: different field needs to be queried for user IDs and anon IPs
+		if ( !empty( $userIds ) && !empty( $ips ) ) {
+			$userIdList = $this->getDB()->makeList( $userIds );
+			$ipList = $this->getDB()->makeList( $ips );
+
+			$this->addWhere( "(rev_user IN ($userIdList) OR (rev_user = 0 AND rev_user_text IN ($ipList)))" );
+		} elseif ( empty( $userIds ) ) {
+			$ipList = $this->getDB()->makeList( $ips );
+
+			$this->addWhere( "rev_user = 0 AND rev_user_text IN ($ipList)" );
+		} elseif ( empty( $ips ) ) {
+			$userIdList = $this->getDB()->makeList( $userIds );
+
+			$this->addWhere( "rev_user IN ($userIdList)" );
 		}
-
-		$this->addWhereFld($columnName, $valueToFind);
 
 		// ... and in the specified timeframe.
 		$this->addTimestampWhereRange( 'rev_timestamp',
@@ -164,7 +182,6 @@ class ApiQueryContributions extends ApiQueryBase {
 			$this->addWhereIf( 'rc_patrolled != 0', isset( $show['patrolled'] ) );
 		}
 		$this->addOption( 'LIMIT', $this->params['limit'] + 1 );
-		$index = array( 'revision' => 'usertext_timestamp' );
 
 		// Mandatory fields: timestamp allows request continuation
 		// ns+title checks if the user has access rights for this page
@@ -186,7 +203,6 @@ class ApiQueryContributions extends ApiQueryBase {
 
 			// Use a redundant join condition on both
 			// timestamp and ID so we can use the timestamp index
-			$index['recentchanges'] = 'rc_user_text';
 			if ( isset( $show['patrolled'] ) || isset( $show['!patrolled'] ) ) {
 				// Put the tables in the right order for
 				// STRAIGHT_JOIN
@@ -221,18 +237,20 @@ class ApiQueryContributions extends ApiQueryBase {
 		}
 
 		if ( isset( $this->params['tag'] ) ) {
+			// SUS-3140: Optimize tag condition
+			// JOINing on tag will allow the query planner to use change_tag_rev_tag index
+			$tag = $this->getDB()->addQuotes( $this->params['tag'] );
+
 			$this->addTables( 'change_tag' );
-			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rev_id=ct_rev_id' ) ) ) );
-			$this->addWhereFld( 'ct_tag', $this->params['tag'] );
-			global $wgOldChangeTagsIndex;
-			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
+			$this->addJoinConds( [
+				'change_tag' => [ 'INNER JOIN', [ "ct_tag = $tag AND rev_id=ct_rev_id" ] ]
+			] );
 		}
 
 		if ( $this->params['toponly'] ) {
 			$this->addWhere( 'rev_id = page_latest' );
 		}
 
-		$this->addOption( 'USE INDEX', $index );
 		/* Wikia change begin - @author: Marooned */
 		/* Add revision parent id to make diff link in MyHome and to see if current revision was the first one */
 		$this->addFieldsIf('rev_parent_id', $this->fld_wikiamode);
@@ -344,7 +362,8 @@ class ApiQueryContributions extends ApiQueryBase {
 				ApiBase::PARAM_TYPE => 'timestamp'
 			),
 			'user' => array(
-				ApiBase::PARAM_ISMULTI => true
+				ApiBase::PARAM_ISMULTI => true,
+				ApiBase::PARAM_REQUIRED => true,
 			),
 			'dir' => array(
 				ApiBase::PARAM_DFLT => 'older',
@@ -422,7 +441,6 @@ class ApiQueryContributions extends ApiQueryBase {
 
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
-			array( 'code' => 'param_user', 'info' => 'User parameter may not be empty.' ),
 			array( 'code' => 'param_user', 'info' => 'User name user is not valid' ),
 			array( 'show' ),
 			array( 'code' => 'permissiondenied', 'info' => 'You need the patrol right to request the patrolled flag' ),
