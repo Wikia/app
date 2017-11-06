@@ -87,7 +87,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				trackingParams.adProduct = 'featured-video';
 			});
 
-			player.on('beforePlay', function () {
+			player.on('----beforePlay', function () {
 				if (prerollPositionReached) {
 					return;
 				}
