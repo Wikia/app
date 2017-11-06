@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.tracking.pageLayout',  [
 			data.push('pos_top=' + getTopPosition(topPositionSelectors[slotName]));
 		}
 
-		return data.join(',');
+		return data.join(';');
 	}
 
 	return {
