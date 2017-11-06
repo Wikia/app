@@ -34,7 +34,7 @@ class SeriesEntitySearchServiceTest extends BaseTest {
 
 	public function mock_getLocalEnvURL($arg1, $arg2)
 	{
-        return preg_replace('/https?:\/\/[^\/]+/', 'http://newhost', $arg1, 1);
+		return preg_replace('/https?:\/\/[^\/]+/', 'http://newhost', $arg1, 1);
 	}
 
 	private function getSolariumMock() {
