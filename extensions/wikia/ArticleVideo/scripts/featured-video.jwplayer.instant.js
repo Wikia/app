@@ -35,6 +35,7 @@ require([
 		bidParams;
 
 	function onPlayerReady(playerInstance) {
+		jwplayer().on('all', function (e, d) { console.log(e); if (d) console.log(d); });
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
 		});
@@ -67,7 +68,6 @@ require([
 	}
 
 	function setupPlayer() {
-		jwplayer().on('all', function (e, d) { console.log(e); if (d) console.log(d); });
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
