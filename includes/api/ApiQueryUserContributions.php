@@ -243,7 +243,7 @@ class ApiQueryContributions extends ApiQueryBase {
 
 			$this->addTables( 'change_tag' );
 			$this->addJoinConds( [
-				'change_tag' => [ 'LEFT JOIN', [ "ct_tag = $tag AND rev_id=ct_rev_id" ] ]
+				'change_tag' => [ 'INNER JOIN', [ "ct_tag = $tag AND rev_id=ct_rev_id" ] ]
 			] );
 		}
 
