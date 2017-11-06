@@ -637,8 +637,8 @@ class User implements JsonSerializable {
 	 * @return String|false The corresponding user's real name
 	 */
 	public static function whoIsReal( $id ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		return $dbr->selectField( 'user', 'user_real_name', array( 'user_id' => $id ), __METHOD__ );
+		// Wikia change - @see SUS-1015
+		return self::newFromId( $id )->getRealName();
 	}
 
 	/**
