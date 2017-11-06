@@ -182,7 +182,6 @@ class ApiQueryContributions extends ApiQueryBase {
 			$this->addWhereIf( 'rc_patrolled != 0', isset( $show['patrolled'] ) );
 		}
 		$this->addOption( 'LIMIT', $this->params['limit'] + 1 );
-		$index = array( 'revision' => 'usertext_timestamp' );
 
 		// Mandatory fields: timestamp allows request continuation
 		// ns+title checks if the user has access rights for this page
@@ -204,7 +203,6 @@ class ApiQueryContributions extends ApiQueryBase {
 
 			// Use a redundant join condition on both
 			// timestamp and ID so we can use the timestamp index
-			$index['recentchanges'] = 'rc_user_text';
 			if ( isset( $show['patrolled'] ) || isset( $show['!patrolled'] ) ) {
 				// Put the tables in the right order for
 				// STRAIGHT_JOIN
@@ -242,15 +240,12 @@ class ApiQueryContributions extends ApiQueryBase {
 			$this->addTables( 'change_tag' );
 			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rev_id=ct_rev_id' ) ) ) );
 			$this->addWhereFld( 'ct_tag', $this->params['tag'] );
-			global $wgOldChangeTagsIndex;
-			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
 
 		if ( $this->params['toponly'] ) {
 			$this->addWhere( 'rev_id = page_latest' );
 		}
 
-		$this->addOption( 'USE INDEX', $index );
 		/* Wikia change begin - @author: Marooned */
 		/* Add revision parent id to make diff link in MyHome and to see if current revision was the first one */
 		$this->addFieldsIf('rev_parent_id', $this->fld_wikiamode);
