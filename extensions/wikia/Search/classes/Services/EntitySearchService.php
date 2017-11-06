@@ -232,7 +232,7 @@ class EntitySearchService extends AbstractSearchService {
 	}
 
 	public function replaceHostUrl( $url ) {
-	    return WikiFactory::getLocalEnvURL( $url );
+		return WikiFactory::getLocalEnvURL( $url );
 	}
 
 }
