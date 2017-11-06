@@ -92,7 +92,8 @@ class ArticleVideoContext {
 
 		if ( !empty( $wg->enableArticleRelatedVideo ) && !empty( $relatedVideos ) ) {
 			foreach ( $relatedVideos as $videoData ) {
-				if ( isset( $videoData['articles'], $videoData['videoId'] ) &&
+				if (
+					isset( $videoData['articles'], $videoData['videoId'] ) &&
 					in_array( $title, $videoData['articles'] )
 				) {
 					return $videoData;
