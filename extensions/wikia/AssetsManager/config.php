@@ -138,6 +138,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
+		'//extensions/wikia/AdEngine/js/build/ad-engine.utils.js',
 	],
 ];
 
@@ -2704,6 +2705,7 @@ $config['jwplayer_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/build/ad-engine.js',
 		'//extensions/wikia/ArticleVideo/scripts/which-transition-event.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.on-scroll.js',

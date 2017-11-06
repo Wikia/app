@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfab', [
+	'ad-engine.utils',
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.video.uapVideo',
@@ -7,7 +8,7 @@ define('ext.wikia.adEngine.template.bfab', [
 	'wikia.log',
 	'wikia.document',
 	require.optional('ext.wikia.aRecoveryEngine.tweaker')
-], function (resolvedState, slotTweaker, uapVideo, VideoSettings, log, doc, recoveryTweaker) {
+], function (adEngineUtils, resolvedState, slotTweaker, uapVideo, VideoSettings, log, doc, recoveryTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.bfab';
@@ -21,25 +22,28 @@ define('ext.wikia.adEngine.template.bfab', [
 	 * @param {object} [params.videoTriggerElement] - DOM element which triggers video (button or background)
 	 */
 	function show(params) {
-		var slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD'),
-			videoSettings = VideoSettings.create(params);
+		adEngineUtils.initializeSlot(params);
 
-		slot.classList.add('bfab-template');
-		resolvedState.setImage(videoSettings);
 
-		slotTweaker.makeResponsive(slot.id, params.aspectRatio);
-
-		slotTweaker.onReady(slot.id, function (iframe) {
-			if (recoveryTweaker && recoveryTweaker.isTweakable()) {
-				recoveryTweaker.tweakSlot(slot.id, iframe);
-			}
-
-			if (uapVideo.isEnabled(params)) {
-				uapVideo.loadVideoAd(videoSettings);
-			}
-		});
-
-		log('show', 'info', logGroup);
+		// var slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD'),
+		// 	videoSettings = VideoSettings.create(params);
+		//
+		// slot.classList.add('bfab-template');
+		// resolvedState.setImage(videoSettings);
+		//
+		// slotTweaker.makeResponsive(slot.id, params.aspectRatio);
+		//
+		// slotTweaker.onReady(slot.id, function (iframe) {
+		// 	if (recoveryTweaker && recoveryTweaker.isTweakable()) {
+		// 		recoveryTweaker.tweakSlot(slot.id, iframe);
+		// 	}
+		//
+		// 	if (uapVideo.isEnabled(params)) {
+		// 		uapVideo.loadVideoAd(videoSettings);
+		// 	}
+		// });
+		//
+		// log('show', 'info', logGroup);
 	}
 
 	return {
