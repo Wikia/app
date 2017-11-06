@@ -16,7 +16,7 @@ class JWPlayerTagController extends WikiaController {
 		$this->wikiaTagBuilderHelper = new WikiaTagBuilderHelper();
 	}
 
-	public static function onParserFirstCallInit( Parser $parser ) {
+	public static function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderTag' ] );
 
 		return true;
@@ -61,7 +61,7 @@ class JWPlayerTagController extends WikiaController {
 			'class' => 'jw-player-in-article-video'
 		];
 
-		if (!empty($width) && intval($width) > 0) {
+		if ( !empty( $width ) && intval( $width ) > 0 ) {
 			$attributes[self::STYLE_ATTR] = 'width:' . $width . 'px;';
 		}
 

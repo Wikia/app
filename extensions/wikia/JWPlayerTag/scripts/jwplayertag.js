@@ -6,6 +6,8 @@ require(['jquery'], function ($) {
 		var parserTags = document.querySelectorAll(parserTagSelector);
 
 		Array.prototype.slice.call(parserTags).forEach(function (each) {
+			// We check this to avoid errors in places where we don't load JW
+			// e.g. Monobook
 			if (window.WikiaJWPlayer) {
 				setupPlayer(each);
 			}
