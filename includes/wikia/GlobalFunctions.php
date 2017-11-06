@@ -1361,28 +1361,6 @@ function wfGetBeaconId() {
 }
 
 /**
- * Allow to find what staging machine we are on
- *
- * @author Tomasz Odrobny <tomek@wikia-inc.com>
- */
-function getHostPrefix() {
-	global $wgStagingList, $wgServer;
-	static $cache;
-	if ( !empty( $cache ) ) {
-		return $cache;
-	}
-	$hosts = $wgStagingList;
-	foreach ( $hosts as $host ) {
-		$prefix = 'http://' . $host . '.';
-		if ( strpos( $wgServer, $prefix )  !== false ) {
-			$cache = $host;
-			return  $host;
-		}
-	}
-	return null;
-}
-
-/**
  * Defines error handler to log backtrace for PHP (catchable) fatal errors
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>
