@@ -50,8 +50,8 @@ class SpecialRenameuser extends SpecialPage {
 
 		// TODO: remove after QA tests
 		if ( self::shouldUnlock() ) {
-			$user->setGlobalFlag( 'wasRenamed', false );
-			$user->saveSettings();
+			$requestorUser->setGlobalFlag( 'wasRenamed', false );
+			$requestorUser->saveSettings();
 		}
 		// TODO: end
 
@@ -118,7 +118,7 @@ class SpecialRenameuser extends SpecialPage {
 		$showConfirm = false;
 		$showForm = true;
 		$selfRename = false;
-		$cannonicalNewUsername = '';
+		$canonicalNewUsername = '';
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$requestData = $this->getData();
@@ -132,7 +132,7 @@ class SpecialRenameuser extends SpecialPage {
 
 		if ( $request->wasPosted() ) {
 			$errors = $this->parseMessages( self::validateData( $requestData, $requestorUser, $selfRename ) );
-			$cannonicalNewUsername = \User::getCanonicalName( $newUsername, 'creatable' );
+			$canonicalNewUsername = \User::getCanonicalName( $newUsername, 'creatable' );
 
 			if ( empty( $errors ) && $isConfirmed ) {
 				$process = new RenameUserProcess( $oldUsername, $newUsername, true );
@@ -170,7 +170,7 @@ class SpecialRenameuser extends SpecialPage {
 			'renameUser' => [
 				'showConfirm' => $showConfirm,
 				'oldUsername' => $oldUsername,
-				'newUsername' => $cannonicalNewUsername
+				'newUsername' => $canonicalNewUsername
 			]
 		] );
 		$out->addHTML( $template->render( 'rename-form' ) );
