@@ -28,7 +28,6 @@ require(['jquery'], function ($) {
 	function setupPlayer(videoParserTagElement) {
 		fetchJWVideoData(videoParserTagElement.getAttribute('data-media-id'))
 			.then(function (jwVideoData) {
-				console.log(jwVideoData);
 				window.wikiaJWPlayer(
 					videoParserTagElement.id,
 					getPlayerSetup(jwVideoData)
