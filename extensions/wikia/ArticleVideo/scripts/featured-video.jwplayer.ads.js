@@ -64,7 +64,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
 
 		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
-		console.log(vastUrlBuilder.build(aspectRatio, slotParams, options);
+		console.log(vastUrlBuilder.build(aspectRatio, slotParams, options));
 		return vastUrlBuilder.build(aspectRatio, slotParams, options);
 	}
 
