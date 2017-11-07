@@ -62,15 +62,11 @@ define('ext.wikia.adEngine.video.player.porvata', [
 
 				return porvataPlayerFactory.create(videoSettings, ima);
 			}).then(function (video) {
-				var viewportHook = params.container;
+				var viewportHook = videoSettings.getViewportHook();
 
 				video.wasInViewport = false;
 				log(['porvata video player created', video], log.levels.debug, logGroup);
 				tracker.register(video, params);
-
-				if (params.viewportHookSelector) {
-					viewportHook = doc.querySelector(params.viewportHookSelector) || viewportHook;
-				}
 
 				function shouldResume(isVisible) {
 					// Don't resume when video was paused manually
