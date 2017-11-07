@@ -608,7 +608,7 @@ class WikiService extends WikiaModel {
 		$ret = null;
 
 		if ( !empty( $domain ) ) {
-			$ret = str_replace( 'http://', '',  $domain );
+			$ret = preg_replace('!^https?://!', '', $domain);
 		}
 
 		return $ret;
