@@ -42,12 +42,13 @@ class MigrateOoyalaVideos extends Maintenance {
 
 		$this->output( 'Found ' . count( $wikisWithVar ) . "wikis with " . $varName . " config\n" );
 
+
 		// Iterate over all wikis that have the var set
 		foreach ( $wikisWithVar as $wikiId => $wiki ) {
 			$this->output( 'Working on wikiId: ' . $wikiId . '; name: ' . $wiki['t'] . "\n" );
 			$videoConfig = WikiFactory::getVarValueByName( $varName, $wikiId );
 			$this->output( 'Found ' . count( $videoConfig ) . " pages with Featured Video\n" );
-
+			$counter = 0;
 			foreach ( $videoConfig as $pageName => &$config ) {
 				$this->output( 'Working on page: ' . $pageName . "\n" );
 
@@ -58,18 +59,22 @@ class MigrateOoyalaVideos extends Maintenance {
 					$this->output( ' updated ' . $config['videoId'] . ' to ' . $this->map[$config['videoId']] . "\n" );
 					$config['mediaId'] = $this->map[$config['videoId']];
 					$config['player'] = 'jwplayer';
+					$counter++;
 				}
 			}
 
 
 			try {
 				//uncomment to do update
-				// WikiFactory::setVarById($varId,  $wikiId, $videoConfig , 'Automatic migration of Ooyala videos to JWPlayer');
+				if ( $counter > 0 ) {
+					// WikiFactory::setVarById( $varId,  $wikiId, $videoConfig , 'Automatic migration of Ooyala videos to JWPlayer' );
+
+				} else {
+					$this->output( "No changes for wikiId:" . $wikiId );
+				}
 			} catch ( Exception $exception ) {
 				$this->output( 'Exception: ' . $exception->getMessage() );
 			}
-
-			break;
 		}
 	}
 }
