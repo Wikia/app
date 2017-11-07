@@ -123,7 +123,7 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 				return $matches[0];
 			}
 
-			$url = 'http://www.youtube.com/watch?v=' . $ytid;
+			$url = 'https://www.youtube.com/watch?v=' . $ytid;
 
 			$videoService = new VideoService();
 			$videoFileUploader = new VideoFileUploader();

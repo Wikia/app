@@ -304,7 +304,7 @@ class UpgradeYoutube extends Maintenance {
 				if ( preg_match('/^http:\/\//', $ytid) ) {
 					$url = trim($ytid);
 				} else {
-					$url = 'http://www.youtube.com/watch?v='.trim($ytid);
+					$url = 'https://www.youtube.com/watch?v='.trim($ytid);
 				}
 
 				$videoService = new VideoService();
