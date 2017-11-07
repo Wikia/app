@@ -17,6 +17,7 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.player.on('levels', this.onQualityLevelsChange.bind(this));
 
 	document.addEventListener('click', this.documentClickHandler);
+	document.addEventListener('touchend', this.documentClickHandler);
 }
 
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {

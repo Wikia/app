@@ -1,6 +1,8 @@
 @import '../wds-variables/colors';
 
 .wds-toggle {
+	$wds-toggle-background-color: #7fdbdc;
+
 	&__input {
 		display: none;
 	}
@@ -45,11 +47,11 @@
 		}
 
 		.wds-toggle__input:checked + &::before {
-			background-color: lighten($wds-color-link, 30%);
+			background-color: $wds-toggle-background-color;
 		}
 
 		.wds-toggle__input:checked + &::after {
-			background-color: $wds-color-link;
+			background-color: $wds-fandom-color-aqua;
 			transform: translate(80%, -50%);
 		}
 
@@ -67,11 +69,11 @@
 
 		.wds-toggle__input:disabled:checked + & {
 			&::before {
-				background-color: lighten($wds-color-link, 40%);
+				background-color: lighten($wds-toggle-background-color, 20%);
 			}
 
 			&::after {
-				background-color: lighten($wds-color-link, 20%);
+				background-color: lighten($wds-fandom-color-aqua, 20%);
 			}
 		}
 	}
