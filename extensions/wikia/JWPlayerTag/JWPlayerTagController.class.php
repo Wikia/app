@@ -5,7 +5,7 @@ class JWPlayerTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'jwplayer';
 	const DATA_MEDIA_ID_ATTR = 'data-media-id';
 	const ELEMENT_ID_PREFIX = 'jwPlayerTag';
-	const WIDTH_ATTR = 'height';
+	const WIDTH_ATTR = 'width';
 	const STYLE_ATTR = 'style';
 
 	public static function onParserFirstCallInit( Parser $parser ): bool {
