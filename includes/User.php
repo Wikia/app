@@ -604,7 +604,10 @@ class User implements JsonSerializable {
 		if ( $ids == [] ) {
 			return [];
 		}
-		elseif ( count( $ids ) === 1 ) {
+
+		$ids = array_unique( $ids, SORT_NUMERIC );
+
+		if ( count( $ids ) === 1 ) {
 			// SUS-3219 - fall back to well-cached User::whoIs when we want to resolve a single user ID
 			$userId = $ids[0];
 
@@ -614,8 +617,6 @@ class User implements JsonSerializable {
 				$userId => self::whoIs( $userId )
 			];
 		}
-
-		$ids = array_unique( $ids, SORT_NUMERIC );
 
 		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
 		$res = $sdb->select(
