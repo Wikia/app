@@ -37,8 +37,6 @@ $wgHooks['beforeBlogListingForm'][] = 'FollowHelper::categoryIndexer';
 
 $wgHooks['WatchlistPreferencesBefore'][] = 'FollowHelper::renderFollowPrefs';
 
-$wgHooks['UserRename::Local'][] = "FollowUserRenameLocal";
-
 function FollowUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
 	$tasks[] = array(
 		'table' => 'blog_listing_relation',

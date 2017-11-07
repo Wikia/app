@@ -453,8 +453,14 @@ class RenameUserProcess {
 
 		// Analyze status
 		if ( !$status ) {
-			$this->addMainLog(
+			$this->staffLog(
 				'fail',
+				[
+					'requestor_name' => $this->mRequestorName,
+					'rename_old_name' => $this->mOldUsername,
+					'rename_new_name' => $this->mNewUsername,
+					'reason' => $this->mReason
+				],
 				RenameUserLogFormatter::fail(
 					$this->mRequestorName,
 					$this->mOldUsername,
@@ -569,268 +575,6 @@ class RenameUserProcess {
 	}
 
 	/**
-	 * Processes specific local wiki database and makes all needed changes
-	 *
-	 * Important: should only be run within maintenance script (bound to specified wiki)
-	 *
-	 * @throws DBError
-	 */
-	public function updateLocal() {
-		global $wgCityId, $wgUser;
-
-		$wgOldUser = $wgUser;
-		$wgUser = User::newFromName( Wikia::USER );
-
-		$cityDb = WikiFactory::IDtoDB( $wgCityId );
-		$this->addLog( "Processing wiki database: {$cityDb}." );
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin();
-		$tasks = self::$mLocalDefaults;
-
-		$hookName = 'UserRename::Local';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ) );
-
-		/* Move user pages */
-		$this->addLog( "Moving user pages." );
-		try {
-			$oldTitle = Title::makeTitle( NS_USER, $this->mOldUsername );
-			$newTitle = Title::makeTitle( NS_USER, $this->mNewUsername );
-
-			// Determine all namespaces which need processing
-			$allowedNamespaces = array( NS_USER, NS_USER_TALK );
-			// Blogs extension
-			if ( defined( 'NS_BLOG_ARTICLE' ) ) {
-				$allowedNamespaces = array_merge( $allowedNamespaces, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
-			}
-			// NY User profile
-			if ( defined( 'NS_USER_WIKI' ) ) {
-				$allowedNamespaces = array_merge(
-					$allowedNamespaces,
-					[
-						NS_USER_WIKI,
-						201 // NS_USER_WIKI_TALK
-					]
-				);
-			}
-
-			if ( defined( 'NS_USER_WALL' ) ) {
-				$allowedNamespaces = array_merge( $allowedNamespaces, array( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) );
-			}
-
-			$oldKey = $oldTitle->getDBkey();
-			$like = $dbw->buildLike( sprintf( "%s/", $oldKey ), $dbw->anyString() );
-			$pages = $dbw->select(
-				'page',
-				array( 'page_namespace', 'page_title' ),
-				array(
-					'page_namespace' => $allowedNamespaces,
-//					'page_namespace IN (' . NS_USER . ',' . NS_USER_TALK . ')',
-					'(page_title ' . $like . ' OR page_title = ' . $dbw->addQuotes( $oldKey ) . ')'
-				),
-				__METHOD__
-			);
-			$this->addLog( "SQL: " . $dbw->lastQuery() );
-
-			while ( $row = $dbw->fetchObject( $pages ) ) {
-				$oldPage = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
-				$newPage = Title::makeTitleSafe( $row->page_namespace, preg_replace( '!^[^/]+!', $newTitle->getDBkey(), $row->page_title ) );
-
-				// Do not autodelete or anything, title must not exist
-				// Info: The other case is when renaming is repeated - no action should be taken
-				if ( $newPage->exists() && !$oldPage->isValidMoveTarget( $newPage ) ) {
-					$this->addLog( "Updating wiki \"{$cityDb}\": User page " . $newPage->getText() . " already exists, moving cancelled." );
-					$this->addWarning( wfMessage( 'userrenametool-page-exists', $newPage->getText() )->inContentLanguage()->text() );
-				}
-				else {
-					$this->addLog( "Moving page " . $oldPage->getText() . " in namespace {$row->page_namespace} to " . $newTitle->getText() );
-					$success = $oldPage->moveTo( $newPage, false,  wfMessage( 'userrenametool-move-log', $oldTitle->getText(), $newTitle->getText() )->inContentLanguage()->text() );
-
-					if ( $success === true ) {
-						$this->addLog( "Updating wiki \"{$cityDb}\": User page " . $oldPage->getText() . " moved to " . $newPage->getText() . '.' );
-					} else {
-						$this->addLog( "Updating wiki \"{$cityDb}\": User page " . $oldPage->getText() . " could not be moved to " . $newPage->getText() . '.' );
-						$this->addWarning( wfMessage( 'userrenametool-page-unmoved', array( $oldPage->getText(), $newPage->getText() ) )->inContentLanguage()->text() );
-					}
-				}
-			}
-			$dbw->freeResult( $pages );
-		} catch ( DBError $e ) {
-			// re-throw DB related exceptions instead of silently ignoring them (@see PLATFORM-775)
-			throw $e;
-		} catch ( Exception $e ) {
-			$this->addLog( "Exception while moving pages: " . $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine() );
-		}
-		/* End of move user pages */
-
-		foreach ( $tasks as $task ) {
-			$this->addLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
-			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
-		}
-
-		/* Reset local editcount */
-		$this->resetEditCountWiki();
-
-		$hookName = 'UserRename::AfterLocal';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ) );
-
-		$dbw->commit();
-
-		// Save entry in local Special:Log
-		// Important: assuming that run inside the maintenance script
-		$this->addLocalLog( wfMessage( 'userrenametool-success', $this->mOldUsername, $this->mNewUsername )->inContentLanguage()->text() );
-
-		$this->addLog( "Finished updating wiki database: {$cityDb}" );
-
-		$this->addMainLog( "log", RenameUserLogFormatter::wiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
-			!empty( $this->warnings ) || !empty( $this->errors ) ) );
-
-		$this->addLog( "Invalidate user data on local Wiki ({$wgCityId}): {$this->mOldUsername}" );
-		$this->invalidateUser( $this->mOldUsername );
-
-		$this->addLog( "Invalidate user data on local Wiki ({$wgCityId}): {$this->mNewUsername}" );
-		$this->invalidateUser( $this->mNewUsername );
-
-		$wgUser = $wgOldUser;
-	}
-
-	/**
-	 * Processes specific local wiki database and makes all needed changes for an IP address
-	 *
-	 * Important: should only be run within maintenace script (bound to specified wiki)
-	 */
-	public function updateLocalIP() {
-		global $wgCityId, $wgUser;
-
-		if ( $this->mUserId !== 0 || !IP::isIPAddress( $this->mOldUsername ) || !IP::isIPAddress( $this->mNewUsername ) ) {
-			$this->addError( wfMessage( 'userrenametool-error-invalid-ip' )->escaped() );
-			return;
-		}
-
-		$wgOldUser = $wgUser;
-		$wgUser = User::newFromName( Wikia::USER );
-
-		$cityDb = WikiFactory::IDtoDB( $wgCityId );
-		$this->addLog( "Processing wiki database: {$cityDb}." );
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin();
-		$tasks = self::$mLocalIpDefaults;
-
-		$hookName = 'UserRename::LocalIP';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
-
-		foreach ( $tasks as $task ) {
-			$this->addLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
-			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
-		}
-
-		$hookName = 'UserRename::AfterLocalIP';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
-
-		$dbw->commit();
-
-		$this->addLog( "Finished updating wiki database: {$cityDb}" );
-
-		$this->addMainLog( "log", RenameUserLogFormatter::wiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
-			!empty( $this->warnings ) || !empty( $this->errors ) ) );
-
-		$wgUser = $wgOldUser;
-	}
-
-	/**
-	 * @author: Władysław Bodzek
-	 * Really performs a rename task specified in arguments
-	 *
-	 * @param DatabaseBase $dbw Database to operate on
-	 * @param string $table Table name
-	 * @param int $uid User ID
-	 * @param string $oldusername Old username
-	 * @param string $newusername New username
-	 * @param array $extra Extra options (currently: userid_column, username_column, conds)
-	 *
-	 * @return bool
-	 */
-	public function renameInTable( $dbw, $table, $uid, $oldusername, $newusername, $extra ) {
-
-
-		$dbName = $dbw->getDBname();
-		$this->addLog( "Processing {$dbName}.{$table}.{$extra['username_column']}." );
-
-		try {
-			if ( !$dbw->tableExists( $table ) ) {
-				$this->addLog( "Table \"$table\" does not exist in database {$dbName}" );
-				$this->addWarning( wfMessage( 'userrenametool-warn-table-missing', $dbName, $table )->inContentLanguage()->text() );
-
-				return false;
-			}
-
-			$values = array(
-				$extra['username_column'] => $newusername,
-			);
-
-			$conds = array(
-				$extra['username_column'] => $oldusername,
-			);
-
-			if ( !empty( $extra['userid_column'] ) ) {
-				$conds[$extra['userid_column']] = $uid;
-			}
-
-			if ( !empty( $extra['conds'] ) ) {
-				$conds = array_merge( $extra['conds'], $conds );
-			}
-
-			$opts = array(
-				'LIMIT' => self::MAX_ROWS_PER_QUERY,
-			);
-
-			$affectedRows = 1;
-
-			while ( $affectedRows > 0 ) {
-				$dbw->update( $table, $values, $conds, __CLASS__ . '::' . __METHOD__, $opts );
-				$affectedRows = $dbw->affectedRows();
-				$this->addLog( "SQL: " . $dbw->lastQuery() );
-				$dbw->commit();
-				$this->addLog( "In {$dbName}.{$table}.{$extra['username_column']} {$affectedRows} row(s) was(were) updated." );
-				sleep( USERRENAME_LOOP_PAUSE );
-			}
-		} catch ( Exception $e ) {
-			$this->addLog( "Exception in renameInTable(): " . $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine() );
-		}
-
-		$this->addLog( "Finished processing {$dbName}.{$table}.{$extra['username_column']}." );
-
-		return true;
-	}
-
-	/**
-	 * Reset local editcount for renamed user and fake user
-	 * @author Kamil Koterba
-	 * @since Feb 2014
-	 */
-	private function resetEditCountWiki() {
-		// Renamed user
-		$uss = new UserStatsService( $this->mUserId );
-		$uss->calculateEditCountWiki();
-
-		// FakeUser
-		if ( $this->mFakeUserId != 0 ) {
-			$uss = new UserStatsService( $this->mFakeUserId );
-			$uss->calculateEditCountWiki();
-		} else {
-			// use OldUsername if FakeUser isn't set
-			$oldUser = User::newFromName( $this->mOldUsername );
-			$uss = new UserStatsService( $oldUser->getId() );
-			$uss->calculateEditCountWiki();
-		}
-	}
-
-	/**
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 * Performs action for cleaning up temporary data at the very end of a process
 	 */
@@ -853,8 +597,6 @@ class RenameUserProcess {
 		if ( isset( $this->mLogTask ) ) {
 			$tasks[] = $this->mLogTask->getID();
 		}
-
-		$this->addMainLog( "finish", RenameUserLogFormatter::finish( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks ) );
 	}
 
 	/**
@@ -887,24 +629,6 @@ class RenameUserProcess {
 					wfDebugLog( __CLASS__, $text );
 			}
 		}
-	}
-
-	/**
-	 * Logs the message to main user-visible log
-	 *
-	 * @param string $action
-	 * @param $text string Log message
-	 */
-	public function addMainLog( $action, $text ) {
-		StaffLogger::log(
-			'renameuser',
-			$action,
-			$this->mRequestorId,
-			$this->mRequestorName,
-			$this->mUserId,
-			$this->mNewUsername,
-			$text
-		);
 	}
 
 	/**
@@ -954,44 +678,6 @@ class RenameUserProcess {
 
 	public function getInternalLog() {
 		return $this->mInternalLog;
-	}
-
-	/**
-	* Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
-	*
-	* @author Michał Roszka (Mix) <michal@wikia-inc.com>
-	* @static
-	* @access public
-	* @return string
-	*/
-	static public function checkDatabaseLayout() {
-		$oDB = wfGetDB( DB_SLAVE );
-		$sOut = '';
-
-		foreach ( self::$mLocalDefaults as $aEntry ) {
-			// table.userid_column
-			if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
-				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
-			}
-			// table.username_column
-			if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
-				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-			}
-			// table.[columns in conditions]
-			if ( isset( $aEntry['conds'] ) ) {
-				foreach ( $aEntry['conds'] as $key => $value ) {
-					if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
-						$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-					}
-				}
-			}
-		}
-
-		if ( empty( $sOut ) ) {
-			$sOut = 'There are no missing columns in the current database layout';
-		}
-
-		return trim( $sOut );
 	}
 
 	static public function newFromData( $data ) {
@@ -1056,8 +742,7 @@ class RenameUserProcess {
 				$params['requestor_name'],
 				$params['rename_old_name'],
 				$params['rename_new_name'],
-				$params['reason'],
-				[ '' ]
+				$params['reason']
 			)
 		);
 
@@ -1074,32 +759,16 @@ class RenameUserProcess {
 
 		// send e-mail to the user that rename process has finished
 		$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
-
-		if ( $noErrors ) {
-			$this->staffLog(
-				'finish',
-				$params,
-				\RenameUserLogFormatter::finish(
-					$params['requestor_name'],
-					$params['rename_old_name'],
-					$params['rename_new_name'],
-					$params['reason'],
-					[ ]
-				)
-			);
-		} else {
-			$this->staffLog(
-				'fail',
-				$params,
-				\RenameUserLogFormatter::fail(
-					$params['requestor_name'],
-					$params['rename_old_name'],
-					$params['rename_new_name'],
-					$params['reason'],
-					[ ]
-				)
-			);
-		}
+		$this->staffLog(
+			$noErrors ? 'finish' : 'fail',
+			$params,
+			\RenameUserLogFormatter::finish(
+				$params['requestor_name'],
+				$params['rename_old_name'],
+				$params['rename_new_name'],
+				$params['reason']
+			)
+		);
 
 		return $noErrors;
 	}
@@ -1141,30 +810,5 @@ class RenameUserProcess {
 		} else {
 			$this->addWarning( "no email address set for user ({$oldUsername} => {$newUsername})");
 		}
-	}
-
-
-	/* Static utility functions */
-
-	/**
-	 * Sanitizes entered old username
-	 *
-	 * @param $username string
-	 * @return string
-	 */
-	static public function createOldUserTitle( $username ) {
-		return Title::makeTitle( NS_USER, trim( str_replace( '_', ' ', $username ) ) );
-	}
-
-	/**
-	 * Sanitizes entered new username
-	 *
-	 * @param $username string
-	 * @return string
-	 */
-	static public function createNewUserTitle( $username ) {
-		global $wgContLang;
-		// Force uppercase of newusername, otherwise wikis with wgCapitalLinks=false can create lc usernames
-		return Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $username ) );
 	}
 }
