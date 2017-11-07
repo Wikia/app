@@ -1,5 +1,5 @@
 require(['jquery'], function ($) {
-	var parserTagSelector = '.jw-player-in-article-video .jwplayer-container',
+	var parserTagSelector = '.jwplayer-in-article-video .jwplayer-container',
 		jwVideoDataUrl = 'https://cdn.jwplayer.com/v2/media/';
 
 	function init() {

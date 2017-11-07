@@ -6,15 +6,7 @@ class JWPlayerTagController extends WikiaController {
 	const DATA_MEDIA_ID_ATTR = 'data-media-id';
 	const ELEMENT_ID_PREFIX = 'jwPlayerTag';
 	const WIDTH_ATTR = 'height';
-	const STYLE_ATTR = 'height';
-
-	private $wikiaTagBuilderHelper;
-
-	public function __construct() {
-		parent::__construct();
-
-		$this->wikiaTagBuilderHelper = new WikiaTagBuilderHelper();
-	}
+	const STYLE_ATTR = 'style';
 
 	public static function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderTag' ] );
@@ -32,10 +24,10 @@ class JWPlayerTagController extends WikiaController {
 			'jwplayer_tag_css'
 		] );
 
-		return $script
-			. Html::openElement( 'div', $this->getWrapperAttributes( $args ) )
-			. Html::element( 'div', $this->getPlayerAttributes( $args ) )
-			. Html::closeElement( 'div' );
+		return $script .
+			Html::openElement( 'div', $this->getWrapperAttributes( $args ) ) .
+			Html::element( 'div', $this->getPlayerAttributes( $args ) ) .
+			Html::closeElement( 'div' );
 	}
 
 	private function validateArgs( $args ): bool {
@@ -58,7 +50,8 @@ class JWPlayerTagController extends WikiaController {
 		$width = array_key_exists( self::WIDTH_ATTR, $args ) ? $args[self::WIDTH_ATTR] : null;
 
 		$attributes = [
-			'class' => 'jw-player-in-article-video'
+			'class' => 'jwplayer-in-article-video',
+			'data-component' => 'JWPlayer'
 		];
 
 		if ( !empty( $width ) && intval( $width ) > 0 ) {
