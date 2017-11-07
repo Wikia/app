@@ -33,7 +33,7 @@ class UrlGeneratorTest extends TestCase {
 			(new UrlGenerator($config))->scaleToWidth(200, true)->url());
 
 		$this->assertEquals(
-			'http:s//images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/window-crop-fixed/width/200/height/100/x-offset/10/y-offset/0/window-width/200/window-height/100?cb=12345',
+			'https://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/window-crop-fixed/width/200/height/100/x-offset/10/y-offset/0/window-width/200/window-height/100?cb=12345',
 			(new UrlGenerator($config))->windowCropFixed()->width(200)->height(100)->xOffset(10)->windowWidth(200)->windowHeight(100)->url());
 
 		$this->assertEquals(
