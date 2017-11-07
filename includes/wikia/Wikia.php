@@ -1526,12 +1526,7 @@ class Wikia {
 		}
 	}
 
-	/**
-	 * @param $user User
-	 */
-	public static function invalidateUser( $user, $disabled = false, $keepEmail = true, $ajax = false ) {
-		global $wgExternalAuthType;
-
+	public static function invalidateUser( User $user, $disabled = false, $keepEmail = true, $ajax = false ) {
 		if ( $disabled ) {
 			$userEmail = $user->getEmail();
 			// Optionally keep email in user property
@@ -1552,11 +1547,6 @@ class Wikia {
 				$wgRequest->setVal('action', 'ajax');
 			}
 			$user->saveSettings();
-		}
-		$id = $user->getId();
-		// delete the record from all the secondary clusters
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
 

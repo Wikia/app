@@ -46,10 +46,6 @@ $user->setEmail( $email );
 $user->setPassword( $password, false );
 $user->confirmEmail();
 UserLoginHelper::removeNotConfirmedFlag( $user ); // this calls saveSettings();
-if ( !ExternalUser_Wikia::addUser( $user, $password, $email, $username ) ) {
-	echo "error creating external user\n";
-	die( 1 );
-}
 
 # Increment site_stats.ss_users
 $ssu = new SiteStatsUpdate( 0, 0, 0, 0, 1 );

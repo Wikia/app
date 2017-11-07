@@ -3299,7 +3299,11 @@ class User implements JsonSerializable {
 	 */
 	public function addToDatabase() {
 		$this->load();
-		$dbw = wfGetDB( DB_MASTER );
+
+		// wikia change
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+
 		$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 		$dbw->insert( 'user',
 			array(
@@ -3312,6 +3316,7 @@ class User implements JsonSerializable {
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
 				'user_birthdate' => $this->mBirthDate, // Wikia. Added to reflect our user table layout.
 				'user_editcount' => 0,
+				'user_options' => '', // Wikia. Field 'user_options' doesn't have a default value
 			), __METHOD__
 		);
 		$this->mId = $dbw->insertId();
