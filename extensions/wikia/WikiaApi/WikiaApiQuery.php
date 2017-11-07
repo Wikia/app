@@ -18,7 +18,7 @@ define ('WIKIA_API_QUERY_MIN_OFFSET',	0);
 define ('WIKIA_API_QUERY_CTIME',	5 * 60 * 3);
 define ('WIKIA_API_QUERY_MIN_CTIME',	5);
 
-define ('WIKIA_API_QUERY_DBNAME',	(isset($wgDBname))?$wgDBname:(isset($wgSharedDB))?$wgSharedDB:"");
+define ('WIKIA_API_QUERY_DBNAME',	$wgDBname);
 
 define ('COOKIE_EXPR',	15552000);
 
