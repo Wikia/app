@@ -723,6 +723,15 @@ $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see 
 $wgPortabilityDB = 'portability_db';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
+/**
+ * $wgSharedTables may be customized with a list of tables to share in the shared
+ * datbase. However it is advised to limit what tables you do share as many of
+ * MediaWiki's tables may have side effects if you try to share them.
+ *
+ * Wikia change: wikicities.user table is accessed be connecting to $wgExternalSharedDB explicitly.
+ */
+$wgSharedTables = [];
+
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
 
 /**
@@ -1002,18 +1011,6 @@ $wgMemCachedClass = 'MemCachedClientforWiki';
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
  */
 $wgLibMemCachedOptions = array();
-
-/**
- * 'user_properties' table is not shared on our platform
- */
-if( in_array( 'user_properties', $wgSharedTables ) ) {
-	foreach( $wgSharedTables as $key => $value ) {
-		if( $value == 'user_properties' ) {
-			unset( $wgSharedTables[ $key ] );
-			break;
-		}
-	}
-}
 
 /**
  * Media
