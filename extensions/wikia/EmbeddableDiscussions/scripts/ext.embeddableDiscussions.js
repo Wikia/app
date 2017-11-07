@@ -87,7 +87,7 @@ require([
 				firstPostId: thread.firstPostId,
 				index: i,
 				link: '/d/p/' + thread.id,
-				shareUrl: 'http://' + window.location.hostname + '/d/p/' + thread.id,
+				shareUrl: window.location.protocol + '://' + window.location.hostname + '/d/p/' + thread.id,
 				upvoteUrl: upvoteUrl + thread.firstPostId,
 				title: thread.title,
 				upvoteCount: thread.upvoteCount,
