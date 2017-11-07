@@ -158,18 +158,6 @@ class EditPageLayoutAjax {
 		if ($wgUser->isLoggedIn()) {
 			$wgUser->setGlobalPreference($name, $value);
 			$wgUser->saveSettings();
-
-			// commit changes to local db
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->commit();
-
-			// commit changes to shared db
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-				$dbw->commit();
-			}
-
 			return true;
 		} else {
 			return false;
