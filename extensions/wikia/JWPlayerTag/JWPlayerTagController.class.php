@@ -23,7 +23,7 @@ class JWPlayerTagController extends WikiaController {
 			return '<strong class="error">' . wfMessage( 'jwplayer-tag-could-not-render' )->parse() . '</strong>';
 		}
 
-		if (ArticleVideoContext::isFeaturedVideoEmbedded( RequestContext::getMain()->getTitle() )) {
+		if (ArticleVideoContext::isFeaturedVideoEmbedded( RequestContext::getMain()->getTitle()->getPrefixedDBkey() )) {
 			$script = JSSnippets::addToStack( [
 				'/extensions/wikia/JWPlayerTag/scripts/jwplayertag.js'
 			] );

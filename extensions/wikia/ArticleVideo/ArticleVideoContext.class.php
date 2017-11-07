@@ -5,10 +5,11 @@ class ArticleVideoContext {
 	/**
 	 * Checks if featured video is embedded on given article
 	 *
-	 * @param  string $title Prefixed article title (see: Title::getPrefixedDBkey)
+	 * @param  string $previxedDbKey Prefixed article title (see: Title::getPrefixedDBkey)
+	 *
 	 * @return bool
 	 */
-	public static function isFeaturedVideoEmbedded( $title ) {
+	public static function isFeaturedVideoEmbedded( string $previxedDbKey ) {
 		$wg = F::app()->wg;
 
 		if (!$wg->enableArticleFeaturedVideo) {
@@ -17,8 +18,8 @@ class ArticleVideoContext {
 
 		$featuredVideos = self::getFeaturedVideos();
 
-		return isset( $featuredVideos[$title] ) &&
-			self::isFeaturedVideosValid( $featuredVideos[$title] ) &&
+		return isset( $featuredVideos[$previxedDbKey] ) &&
+			self::isFeaturedVideosValid( $featuredVideos[$previxedDbKey] ) &&
 			// Prevents to show video on ?action=history etc.
 			!WikiaPageType::isActionPage();
 	}
@@ -42,14 +43,15 @@ class ArticleVideoContext {
 	/**
 	 * Gets video id and labels for featured video
 	 *
-	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
+	 * @param string $prefixedDbKey Prefixed article title (see: Title::getPrefixedDBkey)
+	 *
 	 * @return array
 	 */
-	public static function getFeaturedVideoData( $title ) {
+	public static function getFeaturedVideoData( string $prefixedDbKey ) {
 		$wg = F::app()->wg;
 
-		if ( self::isFeaturedVideoEmbedded( $title ) ) {
-			$videoData = self::getFeaturedVideos()[$title];
+		if ( self::isFeaturedVideoEmbedded( $prefixedDbKey ) ) {
+			$videoData = self::getFeaturedVideos()[$prefixedDbKey];
 
 			if ( self::isJWPlayer( $videoData ) ) {
 				$details =
