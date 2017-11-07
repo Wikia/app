@@ -3299,7 +3299,11 @@ class User implements JsonSerializable {
 	 */
 	public function addToDatabase() {
 		$this->load();
-		$dbw = wfGetDB( DB_MASTER );
+
+		// wikia change
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+
 		$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 		$dbw->insert( 'user',
 			array(
