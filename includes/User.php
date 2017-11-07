@@ -324,7 +324,7 @@ class User implements JsonSerializable {
 	 * @return Bool false if the ID does not exist, true otherwise
 	 */
 	public function loadFromId() {
-		global $wgMemc, $wgSharedDB; # Wikia
+		global $wgMemc;
 		if ( $this->mId == 0 ) {
 			$this->loadDefaults();
 			return false;
@@ -338,29 +338,27 @@ class User implements JsonSerializable {
 			$data = false;
 		}
 
-		$isExpired = false;
-		if( !empty( $wgSharedDB ) ) {
-			# Wikia
-			/*
-			 * This code is responsible for re-invalidate user object data from database
-			 * instead of memcache if user preferences had been changed on another wiki
-			 */
-			$isExpired = true;
-			if(!empty($data)) {
-				$_key = self::getUserTouchedKey( $this->mId );
-				$_touched = $wgMemc->get( $_key );
-				if( empty( $_touched ) ) {
-					$wgMemc->set( $_key, $data['mTouched'] );
-					wfDebug( "Shared user: miss on shared user_touched\n" );
-				} else if( $_touched <= $data['mTouched'] ) {
-					$isExpired = false;
-				}
-				else {
-					wfDebug( "Shared user: invalidating local user cache due to shared user_touched\n" );
-				}
+		# Wikia
+		/*
+		 * This code is responsible for re-invalidate user object data from database
+		 * instead of memcache if user preferences had been changed on another wiki
+		 */
+		$isExpired = true;
+		if(!empty($data)) {
+			$_key = self::getUserTouchedKey( $this->mId );
+			$_touched = $wgMemc->get( $_key );
+			if( empty( $_touched ) ) {
+				$wgMemc->set( $_key, $data['mTouched'] );
+				wfDebug( "Shared user: miss on shared user_touched\n" );
+			} else if( $_touched <= $data['mTouched'] ) {
+				$isExpired = false;
 			}
-			# /Wikia
+			else {
+				wfDebug( "Shared user: invalidating local user cache due to shared user_touched\n" );
+			}
 		}
+		# /Wikia
+
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "User: cache miss for user {$this->mId}\n" );
 			# Load from DB
@@ -2032,17 +2030,16 @@ class User implements JsonSerializable {
 	private function clearSharedCache() {
 		$this->load();
 		if( $this->mId ) {
-			global $wgMemc, $wgSharedDB; # Wikia
+			global $wgMemc;
 			$wgMemc->delete( $this->getCacheKey() );
 			$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
 			$this->userPreferences()->deleteFromCache( $this->getId() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
-			if( !empty( $wgSharedDB ) ) {
-				$memckey = self::getUserTouchedKey( $this->mId );
-				$wgMemc->set( $memckey, $this->mTouched );
-				wfDebug( "Shared user: updating shared user_touched\n" );
-			}
+
+			$memckey = self::getUserTouchedKey( $this->mId );
+			$wgMemc->set( $memckey, $this->mTouched );
+			wfDebug( "Shared user: updating shared user_touched\n" );
 		}
 	}
 
