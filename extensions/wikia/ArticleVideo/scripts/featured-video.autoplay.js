@@ -3,7 +3,7 @@ define('wikia.articleVideo.featuredVideo.autoplay', ['wikia.cookies'], function 
 	var autoplayCookieName = 'featuredVideoAutoplay',
 		autoplayCookieExpireDays = 1209600000; // 14 days in milliseconds
 
-		function toggleAutoplay(enableAutoplay) {
+	function toggleAutoplay(enableAutoplay) {
 		if (enableAutoplay === undefined) {
 			enableAutoplay = !isAutoplayEnabled();
 		}
