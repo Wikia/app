@@ -57,16 +57,12 @@ $wgResourceModules['ext.siteWideMessages.anon'] = array(
  *
  */
 function SiteWideMessagesInit() {
-	global $wgSharedDB, $wgDontWantShared;
-	//Include files ONLY when SharedDB is defined and desired.
-	if (isset($wgSharedDB) && empty($wgDontWantShared)) {
-		global $wgHooks;
-		$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
-		$wgHooks['SiteNoticeAfter'][] = 'SiteWideMessagesSiteNoticeAfter';
+	global $wgHooks;
+	$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
+	$wgHooks['SiteNoticeAfter'][] = 'SiteWideMessagesSiteNoticeAfter';
 
-		// macbre: notifications for Oasis
-		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SiteWideMessagesAddNotifications';
-	}
+	// macbre: notifications for Oasis
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SiteWideMessagesAddNotifications';
 }
 
 /**
