@@ -54,7 +54,7 @@ class MigrateOoyalaVideos extends Maintenance {
 
 				// If videoId exists in csv add mediaId and player to the var
 				if ( key_exists( 'videoId', $config ) && key_exists( $config['videoId'], $this->map ) &&
-					key_exists( 'player', $config ) && $config['player'] !== 'jwplayer'
+					((key_exists( 'player', $config ) && $config['player'] !== 'jwplayer') || !key_exists( 'player', $config ))
 				) {
 					$this->output( ' updated ' . $config['videoId'] . ' to ' . $this->map[$config['videoId']] . "\n" );
 					$config['mediaId'] = $this->map[$config['videoId']];
@@ -67,8 +67,7 @@ class MigrateOoyalaVideos extends Maintenance {
 			try {
 				//uncomment to do update
 				if ( $counter > 0 ) {
-					// WikiFactory::setVarById( $varId,  $wikiId, $videoConfig , 'Automatic migration of Ooyala videos to JWPlayer' );
-
+					WikiFactory::setVarById( $varId,  $wikiId, $videoConfig , 'Automatic migration of Ooyala videos to JWPlayer' );
 				} else {
 					$this->output( "No changes for wikiId:" . $wikiId );
 				}
