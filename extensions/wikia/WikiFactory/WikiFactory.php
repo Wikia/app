@@ -1166,36 +1166,6 @@ class WikiFactory {
 		return isset( $oRow->city_dbname ) ? $oRow->city_dbname : false;
 	}
 
-
-	/**
-	 * Convert given host to current environment (devbox or sandbox).
-	 * @param string $dbName
-	 * @param string $default if on main wikia
-	 * @param string $host for testing
-	 * @return string changed host or $default
-	 */
-	public static function getCurrentStagingHost( $dbName='', $default='', $host = null) {
-		global $wgStagingList, $wgDevDomain;
-
-		if ( $host === null ) {
-			$host = gethostname();
-		}
-
-		if ( preg_match( '/^(demo-[a-z0-9]+)-[s|r][0-9]+$/i', $host, $m ) ) {
-			return ( $dbName ? $dbName : 'www' )  . '.' . $m[ 1 ] . static::WIKIA_TOP_DOMAIN;
-		}
-
-		if ( in_array( $host, $wgStagingList ) ) {
-			return ( $dbName ? $dbName : 'www' ) . '.' . $host . static::WIKIA_TOP_DOMAIN;
-		}
-
-		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host ) ) {
-			return "{$dbName}.{$wgDevDomain}";
-		}
-
-		return $default;
-	}
-
 	/**
 	 * getLocalEnvURL
 	 *

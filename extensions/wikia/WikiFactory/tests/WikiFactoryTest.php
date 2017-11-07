@@ -3,18 +3,10 @@
 class WikiFactoryTest extends WikiaBaseTest {
 
 	private $serverName = null;
-	/**
-	 * Only for holding original values
-	 * @var array
-	 */
-	private $org_StagingList;
 
 	public function setUp() {
 		parent::setUp();
 
-		global $wgStagingList;
-		$this->org_StagingList = $wgStagingList;
-		$wgStagingList = ['teststagging'];
 		if ( isset($_SERVER['SERVER_NAME'] ) ) {
 			$this->serverName = $_SERVER['SERVER_NAME'];
 		}
@@ -23,23 +15,9 @@ class WikiFactoryTest extends WikiaBaseTest {
 	public function tearDown() {
 		parent::tearDown();
 
-		global $wgStagingList;
-		$wgStagingList = $this->org_StagingList;
 		if ( !empty($this->serverName) ) {
 			$_SERVER['SERVER_NAME'] = $this->serverName;
 		}
-	}
-
-	public function testGetCurrentStagingHostSandbox()
-	{
-		$this->assertEquals('muppet.teststagging.wikia.com',
-			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'teststagging'));
-	}
-
-	public function testGetCurrentStagingHostDevbox() {
-		$this->mockGlobalVariable( 'wgDevDomain', 'mydevbox.wikia-dev.com' );
-		$this->assertEquals('muppet.mydevbox.wikia-dev.com',
-			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'dev-mydevbox'));
 	}
 
 	/**
@@ -52,77 +30,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider getCurrentStagingHostDataProvider
-	 */
-	public function testGetCurrentStagingHost($host, $dbName, $devDomain, $expHost) {
-		$default = 'defaulthost';
-		$this->mockGlobalVariable('wgStagingList', ['preview',
-			'verify',
-			'sandbox-s1',
-			'sandbox-s2',
-			'sandbox-s3',
-			'sandbox-s4',
-			'sandbox-s5',
-			'sandbox-sony',
-			'externaltest',
-			'sandbox-qa01',
-			'sandbox-qa02',
-			'sandbox-qa03',
-			'sandbox-qa04',
-			'demo-sony',
-		] );
-		$this->mockGlobalVariable( 'wgDevDomain', $devDomain );
-
-		$this->assertEquals($expHost, WikiFactory::getCurrentStagingHost($dbName, $default, $host));
-	}
-
-	/**
 	 * @dataProvider prepareUrlToParseDataProvider
 	 */
 	public function testPrepareUrlToParse( $url, $expected ) {
 		$url = WikiFactory::prepareUrlToParse( $url );
 		$this->assertEquals( $expected, $url );
-	}
-
-	public function getCurrentStagingHostDataProvider() {
-		return [
-			[
-				'demo-sony-s1',
-				'muppet',
-				'',
-				'muppet.demo-sony.wikia.com'
-			],
-			[
-				'demo-sony-s2',
-				'muppet',
-				'',
-				'muppet.demo-sony.wikia.com'
-			],
-			[
-				'preview',
-				'muppet',
-				'',
-				'muppet.preview.wikia.com'
-			],
-			[
-				'verify',
-				'muppet',
-				'',
-				'muppet.verify.wikia.com',
-			],
-			[
-				'dev-test',
-				'muppet',
-				'test.wikia-dev.com',
-				'muppet.test.wikia-dev.com',
-			],
-			[
-				'sandbox-s3',
-				'muppet',
-				'',
-				'muppet.sandbox-s3.wikia.com'
-			]
-		];
 	}
 
 	public function getLocalEnvURLDataProvider() {
