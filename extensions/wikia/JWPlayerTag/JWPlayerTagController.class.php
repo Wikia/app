@@ -49,7 +49,6 @@ class JWPlayerTagController extends WikiaController {
 
 		$attributes = [
 			'class' => 'jwplayer-container',
-			self::DATA_MEDIA_ID_ATTR => $mediaId,
 			'id' => self::ELEMENT_ID_PREFIX . $mediaId
 		];
 
@@ -61,7 +60,8 @@ class JWPlayerTagController extends WikiaController {
 
 		$attributes = [
 			'class' => 'jwplayer-in-article-video',
-			'data-component' => 'jwplayer-embed'
+			'data-component' => 'jwplayer-embed',
+			self::DATA_MEDIA_ID_ATTR => $args['media-id']
 		];
 
 		if ( !empty( $width ) && intval( $width ) > 0 ) {
