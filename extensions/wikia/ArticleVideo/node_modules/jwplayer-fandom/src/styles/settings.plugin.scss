@@ -41,16 +41,17 @@
 		li {
 			cursor: pointer;
 			font-size: 12px;
-			padding: 4px;
+			letter-spacing: .01rem;
+			padding: 4px 0 6px;
 
 			&.is-active {
-				color: $wds-color-link;
+				color: $wds-fandom-color-aqua;
 				font-weight: bold;
 			}
 
 			&.wikia-jw-settings__back {
 				align-items: center;
-				border-top: solid 1px $wds-color-faint-gray;
+				border-top: solid 1px $wds-color-medium-gray;
 				display: flex;
 				margin-top: 5px;
 				padding-top: 11px;
@@ -90,6 +91,7 @@
 
 	&__back-icon {
 		fill: currentColor;
+		margin-right: 3px;
 		transform: rotate(-270deg);
 	}
 

@@ -1,3 +1,5 @@
+@import '../../node_modules/design-system/dist/scss/wds-variables/index';
+
 .jwplayer {
 	.jw-button-container {
 		.jw-icon-rewind,
@@ -61,7 +63,12 @@
 
 	.jw-controlbar {
 		// background relies on player's id selector so it's impossible to set it for every case
-		background: linear-gradient(0, #000, transparent)!important;
+		background: linear-gradient(0, #000, transparent) !important;
+	}
+
+	.jw-text-elapsed, .jw-text-countdown, .jw-text-duration {
+		// text color relies on player's id selector so it's impossible to set it for every case
+		color: $wds-color-faint-gray !important;
 	}
 
 	.jw-svg-icon {
@@ -75,9 +82,20 @@
 
 	.jw-text-elapsed, .jw-text-countdown, .jw-text-duration {
 		font-weight: bold;
+		letter-spacing: .02rem
 	}
 
 	.jw-rail, .jw-buffer, .jw-progress {
 		border-radius: 2px;
+	}
+
+	.jw-icon-volume {
+		// space between volume button and timestamp
+		margin-right: .5rem;
+	}
+
+	&.jw-flag-small-player:not(.jw-flag-audio-player):not(.jw-flag-ads) .jw-icon-volume {
+		// we don't want to have larger space when it's small player and there is only volume button visible
+		margin-right: 0;
 	}
 }
