@@ -154,7 +154,6 @@ class GlobalWatchlistBot {
 		if (\F::app()->wg->ExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromId( $userID );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$user = $mExtUser->getLocalUser();
 			} else {
 				$user = null;

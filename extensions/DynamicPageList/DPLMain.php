@@ -2181,8 +2181,8 @@ class DPLMain {
 				$userArray = self::getWhereStatementForUsername( $sCreatedBy, $dbr );
 				if ( sizeof( $userArray ) > 0 ) {
 					$sSqlCreationRevisionTable = $sRevisionTable . ' AS creation_rev, ';
-					$whereStatement = isset( $userArray[ 'rev_user' ] ) ?
-						$userArray[ 'rev_user' ] . ' = creation_rev.rev_user_text' :
+					$whereStatement = isset( $userArray[ 'user_text' ] ) ?
+						$userArray[ 'user_text' ] . ' = creation_rev.rev_user_text' :
 						$userArray[ 'user_id' ] . ' = creation_rev.rev_user';
 					$sSqlCond_page_rev .= ' AND ' . $whereStatement
 						. ' AND creation_rev.rev_page = page_id'
@@ -2194,8 +2194,8 @@ class DPLMain {
 				$userArray = self::getWhereStatementForUsername( $sNotCreatedBy, $dbr );
 				if ( sizeof( $userArray ) > 0 ) {
 					$sSqlNoCreationRevisionTable = $sRevisionTable . ' AS no_creation_rev, ';
-					$whereStatement = isset( $userArray[ 'rev_user' ] ) ?
-						$userArray[ 'rev_user' ] . ' != creation_rev.rev_user_text' :
+					$whereStatement = isset( $userArray[ 'user_text' ] ) ?
+						$userArray[ 'user_text' ] . ' != creation_rev.rev_user_text' :
 						$userArray[ 'user_id' ] . ' != creation_rev.rev_user';
 					$sSqlCond_page_rev .= ' AND ' . $whereStatement
 						. ' AND no_creation_rev.rev_page = page_id'
@@ -2208,8 +2208,8 @@ class DPLMain {
 				$userArray = self::getWhereStatementForUsername( $sModifiedBy, $dbr );
 				if ( sizeof( $userArray ) > 0 ) {
 					$sSqlChangeRevisionTable = $sRevisionTable . ' AS change_rev, ';
-					$whereStatement = isset( $userArray[ 'rev_user' ] ) ?
-						$userArray[ 'rev_user' ] . ' = creation_rev.rev_user_text' :
+					$whereStatement = isset( $userArray[ 'user_text' ] ) ?
+						$userArray[ 'user_text' ] . ' = creation_rev.rev_user_text' :
 						$userArray[ 'user_id' ] . ' = creation_rev.rev_user';
 					$sSqlCond_page_rev .= ' AND ' . $whereStatement
 						. ' AND change_rev.rev_page = page_id';
@@ -2219,8 +2219,8 @@ class DPLMain {
 			if ( $sNotModifiedBy != "" ) {
 				$userArray = self::getWhereStatementForUsername( $sNotModifiedBy, $dbr );
 				if ( sizeof( $userArray ) > 0 ) {
-					$whereStatement = isset( $userArray[ 'rev_user' ] ) ?
-						$userArray[ 'rev_user' ] . ' = ' . $sRevisionTable . 'rev_user_text' :
+					$whereStatement = isset( $userArray[ 'user_text' ] ) ?
+						$userArray[ 'user_text' ] . ' = ' . $sRevisionTable . 'rev_user_text' :
 						$userArray[ 'user_id' ] . ' = ' . $sRevisionTable . 'rev_user';
 					$sSqlCond_page_rev .= ' AND NOT EXISTS (SELECT 1 FROM ' . $sRevisionTable
 						. ' WHERE ' . $sRevisionTable . '.rev_page=page_id AND '
@@ -2231,8 +2231,8 @@ class DPLMain {
 			if ( $sLastModifiedBy != "" ) {
 				$userArray = self::getWhereStatementForUsername( $sLastModifiedBy, $dbr );
 				if ( sizeof( $userArray ) > 0 ) {
-					$nameOrIdEquals = isset( $userArray[ 'rev_user' ] ) ?
-						$userArray[ 'rev_user' ] . ' = (SELECT rev_user_text' :
+					$nameOrIdEquals = isset( $userArray[ 'user_text' ] ) ?
+						$userArray[ 'user_text' ] . ' = (SELECT rev_user_text' :
 						$userArray[ 'user_id' ] . ' = (SELECT rev_user';
 					$sSqlCond_page_rev .= ' AND ' . $nameOrIdEquals
 						. ' FROM ' . $sRevisionTable
@@ -2244,8 +2244,8 @@ class DPLMain {
 			if ( $sNotLastModifiedBy != "" ) {
 				$userArray = self::getWhereStatementForUsername( $sNotLastModifiedBy, $dbr );
 				if ( sizeof( $userArray ) > 0 ) {
-					$nameOrIdNotEqual = isset( $userArray[ 'rev_user' ] ) ?
-						$userArray[ 'rev_user' ] . ' != (SELECT rev_user_text' :
+					$nameOrIdNotEqual = isset( $userArray[ 'user_text' ] ) ?
+						$userArray[ 'user_text' ] . ' != (SELECT rev_user_text' :
 						$userArray[ 'user_id' ] . ' != (SELECT rev_user';
 					$sSqlCond_page_rev .= ' AND ' . $nameOrIdNotEqual
 						. ' FROM ' . $sRevisionTable
@@ -3248,6 +3248,21 @@ class DPLMain {
 			$key=intval(preg_replace('/.*#/','',$skey[$a]));
 			$articles[$a] = $cArticles[$key];
 		}
+	}
+
+
+	// SUS-807
+	private static function getWhereStatementForUsername( $username, DatabaseBase $dbr ) {
+		$res = [];
+		if ( User::isIP( $username ) ) {
+			$res[ 'user_text' ] = $dbr->addQuotes( $username );
+		} else {
+			$userId = User::idFromName( $username );
+			if ( $userId > 0 ) {
+				$res[ 'user_id' ] = $userId;
+			}
+		}
+		return $res;
 	}
 
 	private static function getMemcacheKey( $dplCacheId ) {

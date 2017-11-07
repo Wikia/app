@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.instantGlobals',
+	'wikia.document',
 	'wikia.window'
-], function (adContext, resolvedState, sampler, instantGlobals, win) {
+], function (adContext, resolvedState, sampler, instantGlobals, doc, win) {
 	'use strict';
 
 	function create(params) {
@@ -14,6 +15,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			moatTracking: false,
 			resolvedState: false,
 			splitLayout: false,
+			viewportHook: null,
 			withUiControls: false
 		};
 
@@ -46,11 +48,22 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			return false;
 		}
 
+		function setupViewportHook(params) {
+			var viewportHook = params.container;
+
+			if (params.viewportHookSelector) {
+				viewportHook = doc.querySelector(params.viewportHookSelector) || viewportHook;
+			}
+
+			return viewportHook;
+		}
+
 		function init() {
 			state.resolvedState = resolvedState.isResolvedState();
 			state.autoPlay = calculateAutoPlayFlag(params);
 			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
 			state.moatTracking = calculateMoatTrackingFlag(params);
+			state.viewportHook = setupViewportHook(params);
 			state.withUiControls = Boolean(params.hasUiControls);
 		}
 
@@ -59,6 +72,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		return {
 			getParams: function () {
 				return params;
+			},
+			getViewportHook: function () {
+				return state.viewportHook;
 			},
 			/**
 			 * Returns VPAID mode from IMA:

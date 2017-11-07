@@ -1504,7 +1504,6 @@ class Wikia {
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromName( $user_name );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( $bUserObject );
 			}
 		}
@@ -1522,7 +1521,6 @@ class Wikia {
 		if ( $wgExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromId( $user->mId );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( false );
 			}
 		}

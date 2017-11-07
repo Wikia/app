@@ -8,6 +8,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 				return true;
 			}
 		},
+		doc: {},
 		instantGlobals: {},
 		resolvedState: {
 			isResolvedState: function () { return false; }
@@ -37,6 +38,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			mocks.resolvedState,
 			mocks.sampler,
 			mocks.instantGlobals,
+			mocks.doc,
 			mocks.win
 		).create(params);
 	}

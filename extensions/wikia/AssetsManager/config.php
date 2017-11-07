@@ -107,6 +107,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoTracker.js',
+		'//extensions/wikia/AdEngine/js/tracking/pageLayout.js',
 		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
@@ -490,6 +491,7 @@ $config['oasis_nojquery_shared_js'] = [
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/Tracking.js',
+		'//skins/oasis/js/connectionType.js',
 
 		'//skins/shared/scripts/onScroll.js',
 
@@ -853,6 +855,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoTracker.js',
+		'//extensions/wikia/AdEngine/js/tracking/pageLayout.js',
 		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
