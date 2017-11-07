@@ -8,12 +8,8 @@ class JWPlayerTagController extends WikiaController {
 	const WIDTH_ATTR = 'width';
 	const STYLE_ATTR = 'style';
 
-	private $wikiaTagBuilderHelper;
-
 	public function __construct() {
 		parent::__construct();
-
-		$this->wikiaTagBuilderHelper = new WikiaTagBuilderHelper();
 	}
 
 	public static function onParserFirstCallInit( Parser $parser ): bool {
