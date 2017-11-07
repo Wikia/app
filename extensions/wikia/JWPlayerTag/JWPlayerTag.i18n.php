@@ -7,6 +7,6 @@ $messages['en'] = [
 ];
 
 $messages['qqq'] = [
-	'jwplayer--tag-desc' => '{{desc}}',
+	'jwplayer-tag-desc' => '{{desc}}',
 	'jwplayer-tag-could-not-render' => 'Error message shown when the JWPlayer tag validation failed.',
 ];
