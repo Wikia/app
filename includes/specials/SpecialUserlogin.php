@@ -54,11 +54,6 @@ class LoginForm extends SpecialPage {
 	var $wpUserBirthDay;
 
 	/**
-	 * @var ExternalUser_Wikia
-	 */
-	private $mExtUser = null;
-
-	/**
 	 * @ var WebRequest
 	 */
 	protected $mOverrideRequest = null; // Wikia change - used in UserLoginForm
@@ -491,13 +486,6 @@ class LoginForm extends SpecialPage {
 
 		$wgAuth->initUser( $u, $autocreate );
 
-		if ( is_object( $this->mExtUser ) ) {
-			$email = $this->mExtUser->getPref( 'emailaddress' );
-			if ( $email && !$this->mEmail ) {
-				$u->setEmail( $email );
-			}
-		}
-
 		$u->setGlobalAttribute( 'registrationCountry', $this->mRegistrationCountry );
 		$u->setGlobalPreference( 'skinoverwrite', 1 );
 		$u->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
@@ -743,28 +731,17 @@ class LoginForm extends SpecialPage {
 			return self::CREATE_BLOCKED;
 		}
 
-		/**
-		 * If the external authentication plugin allows it, automatically cre-
-		 * ate a new account for users that are externally defined but have not
-		 * yet logged in.
-		 */
-		if ( $this->mExtUser ) {
-			if ( !$this->mExtUser->authenticate( $this->mPassword ) ) {
-				return self::WRONG_PLUGIN_PASS;
-			}
-		} else {
-			# Old AuthPlugin.
-			if ( !$wgAuth->autoCreate() ) {
-				return self::NOT_EXISTS;
-			}
-			if ( !$wgAuth->userExists( $user->getName() ) ) {
-				wfDebug( __METHOD__ . ": user does not exist\n" );
-				return self::NOT_EXISTS;
-			}
-			if ( !$wgAuth->authenticate( $user->getName(), $this->mPassword ) ) {
-				wfDebug( __METHOD__ . ": \$wgAuth->authenticate() returned false, aborting\n" );
-				return self::WRONG_PLUGIN_PASS;
-			}
+		# Old AuthPlugin.
+		if ( !$wgAuth->autoCreate() ) {
+			return self::NOT_EXISTS;
+		}
+		if ( !$wgAuth->userExists( $user->getName() ) ) {
+			wfDebug( __METHOD__ . ": user does not exist\n" );
+			return self::NOT_EXISTS;
+		}
+		if ( !$wgAuth->authenticate( $user->getName(), $this->mPassword ) ) {
+			wfDebug( __METHOD__ . ": \$wgAuth->authenticate() returned false, aborting\n" );
+			return self::WRONG_PLUGIN_PASS;
 		}
 
 		$abortError = '';
