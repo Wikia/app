@@ -54,7 +54,6 @@ class GameGuidesModel{
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
 					$wikiDomain = preg_replace( '!^https?://!', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ));
-
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 					$wordmarkUrl = $wikiThemeSettings[ 'wordmark-image-url' ];
 					$wordmarkType = $wikiThemeSettings[ 'wordmark-type' ];

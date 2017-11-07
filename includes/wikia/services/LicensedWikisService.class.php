@@ -33,7 +33,7 @@ class LicensedWikisService extends WikiaModel {
 			$wikiList[ $wikiId ] = array(
 				"id" => $wikiId,
 				"url" => $val['u'],
-				"host" => parse_url($val['u'])['host'],
+				"host" => parse_url( $val[ 'u' ] )[ 'host' ],
 				"db" => $val['d']
 			);
 		}
