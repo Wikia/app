@@ -58,7 +58,7 @@ class ResourceLoaderHooks {
 		// Determine the shared domain name
 		$isProduction = empty($wgDevelEnvironment) && empty($wgStagingEnvironment);
 		if ( $isProduction ) {
-			$host = 'http://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
+			$host = 'https://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
 		} else {
 			$host = $wgCdnRootUrl;
 		}
