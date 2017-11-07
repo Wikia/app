@@ -61,7 +61,7 @@ class JWPlayerTagController extends WikiaController {
 
 		$attributes = [
 			'class' => 'jwplayer-in-article-video',
-			'data-component' => 'JWPlayer'
+			'data-component' => 'jwplayer-embed'
 		];
 
 		if ( !empty( $width ) && intval( $width ) > 0 ) {
