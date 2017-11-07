@@ -3873,7 +3873,7 @@ class User implements JsonSerializable {
 		global $wgEnableNewAuthModal;
 
 		if ( $wgEnableNewAuthModal ) {
-			return WikiFactory::getLocalEnvURL( "http://www.wikia.com/confirm-email?token=$token" );
+			return WikiFactory::getLocalEnvURL( "https://www.wikia.com/confirm-email?token=$token" );
 		}
 
 		// Hack to bypass localization of 'Special:'
