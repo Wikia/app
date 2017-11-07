@@ -93,13 +93,10 @@ class ApiQueryContributions extends ApiQueryBase {
 	 * @return array
 	 */
 	private function prepareUsername( $user ) {
-		global $wgExternalSharedDB;
-		$userIds = [];
 		$ips = [];
-
 		$userNames = [];
 
-		foreach ( $user as $entry ) {
+		foreach ( array_unique( $user ) as $entry ) {
 			if ( IP::isIPAddress( $entry ) ) {
 				$ips[] = $entry;
 				continue;
@@ -113,21 +110,39 @@ class ApiQueryContributions extends ApiQueryBase {
 			$this->dieUsage( "User name $entry is not valid", 'param_user' );
 		}
 
-		if ( !empty( $userNames ) ) {
-			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-			$userIds = $dbr->selectFieldValues(
-				'`user`',
-				'user_id',
-				[ 'user_name' => array_unique( $userNames ) ],
-				__METHOD__ );
-		}
-
+		$userIds = $this->resolveUserNames( $userNames );
 
 		if ( empty( $userIds ) && empty( $ips ) ) {
 			$this->dieUsage( "No valid user names provided", 'param_user' );
 		}
 
-		return [ $userIds, array_unique( $ips ) ];
+		return [ $userIds, $ips ];
+	}
+
+	/**
+	 * Resolve a set of user names to their corresponding user IDs
+	 * @param string[] $userNames
+	 * @return int[] user IDs
+	 */
+	private function resolveUserNames( array $userNames ): array {
+		global $wgExternalSharedDB;
+
+		if ( empty( $userNames ) ) {
+			return [];
+		}
+
+		// Leverage cache if only one user name was provided (most common scenario)
+		if ( count( $userNames ) === 1 ) {
+			$userId = User::idFromName( $userNames[0] );
+			return $userId ? [ $userId ] : [];
+		}
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		return $dbr->selectFieldValues(
+			'`user`',
+			'user_id',
+			[ 'user_name' => array_unique( $userNames ) ],
+			__METHOD__ );
 	}
 
 	/**
