@@ -480,18 +480,9 @@ class LoginForm extends SpecialPage {
 	 * @private
 	 */
 	function initUser( User &$u, $autocreate ) {
-		global $wgAuth, $wgExternalAuthType;
+		global $wgAuth;
 
-		if ( $wgExternalAuthType ) {
-			if ( ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
-				$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
-			} else {
-				// Terminate on failure.
-				return false;
-			}
-		} else {
-			$u->addToDatabase();
-		}
+		$u->addToDatabase();
 
 		if ( $wgAuth->allowPasswordChange() ) {
 			$u->setPassword( $this->mPassword );
