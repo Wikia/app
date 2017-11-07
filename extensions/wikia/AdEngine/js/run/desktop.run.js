@@ -1,6 +1,7 @@
 /*global require*/
 /*jshint camelcase:false*/
 require([
+	'ad-engine.bridge',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',
@@ -18,6 +19,7 @@ require([
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window'
 ], function (
+	adEngineBridge,
 	adContext,
 	adEngineRunner,
 	pageLevelParams,
@@ -51,7 +53,7 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = customAdsLoader.loadCustomAd;
+	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {

@@ -1,12 +1,12 @@
 const path = require('path');
 
 module.exports = {
-	entry: path.resolve(__dirname, 'src', 'ad-engine.utils.js'),
+	entry: path.resolve(__dirname, 'src', 'ad-engine.bridge.js'),
 	output: {
 		path: path.resolve(__dirname, 'js/build'),
-		filename: 'ad-engine.utils.js',
+		filename: 'ad-engine.bridge.js',
 		libraryTarget: 'amd',
-		library: 'ad-engine.utils'
+		library: 'ad-engine.bridge'
 	},
 	resolve: {
 		extensions: ['.js']
