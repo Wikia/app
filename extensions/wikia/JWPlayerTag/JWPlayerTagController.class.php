@@ -8,6 +8,14 @@ class JWPlayerTagController extends WikiaController {
 	const WIDTH_ATTR = 'width';
 	const STYLE_ATTR = 'style';
 
+	private $wikiaTagBuilderHelper;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->wikiaTagBuilderHelper = new WikiaTagBuilderHelper();
+	}
+
 	public static function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderTag' ] );
 
@@ -19,10 +27,16 @@ class JWPlayerTagController extends WikiaController {
 			return '<strong class="error">' . wfMessage( 'jwplayer-tag-could-not-render' )->parse() . '</strong>';
 		}
 
-		$script = JSSnippets::addToStack( [
-			'jwplayer_tag_js',
-			'jwplayer_tag_css'
-		] );
+		if (ArticleVideoContext::isFeaturedVideoEmbedded( RequestContext::getMain()->getTitle() )) {
+			$script = JSSnippets::addToStack( [
+				'/extensions/wikia/JWPlayerTag/scripts/jwplayertag.js'
+			] );
+		} else {
+			$script = JSSnippets::addToStack( [
+				'jwplayer_tag_js',
+				'jwplayer_tag_css'
+			] );
+		}
 
 		return $script .
 			Html::openElement( 'div', $this->getWrapperAttributes( $args ) ) .
