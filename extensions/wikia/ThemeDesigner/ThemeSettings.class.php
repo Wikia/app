@@ -190,15 +190,15 @@ class ThemeSettings {
 		}
 
 		if ( !empty( $settings['wordmark-font'] ) ) {
-			$settings['wordmark-font'] = htmlspecialchars( $settings['wordmark-font'], ENT_QUOTES );
+			$settings['wordmark-font'] = $this->escapeInput( $settings['wordmark-font'] );
 		}
 
 		if ( !empty( $settings['wordmark-font-size'] ) ) {
-			$settings['wordmark-font-size'] = htmlspecialchars( $settings['wordmark-font-size'], ENT_QUOTES );
+			$settings['wordmark-font-size'] = $this->escapeInput( $settings['wordmark-font-size'] );
 		}
 
 		if ( !empty( $settings['wordmark-type'] ) ) {
-			$settings['wordmark-type'] = htmlspecialchars( $settings['wordmark-type'], ENT_QUOTES );
+			$settings['wordmark-type'] = $this->escapeInput( $settings['wordmark-type'] );
 		}
 
 		// SUS-2942: validate user-provided opacity value
@@ -208,16 +208,14 @@ class ThemeSettings {
 
 		// Verify wordmark length ( CONN-116 )
 		if ( !empty( $settings['wordmark-text'] ) ) {
-			$settings['wordmark-text'] = htmlspecialchars( trim( $settings['wordmark-text'] ), ENT_QUOTES );
+			$settings['wordmark-text'] = $this->escapeInput( trim( $settings['wordmark-text'] ) );
 		}
 
 		if ( empty( $settings['wordmark-text'] ) ) {
 			// Do not save wordmark if its empty.
 			unset( $settings['wordmark-text'] );
-		} else {
-			if ( mb_strlen( $settings['wordmark-text'] ) > 50 ) {
-				$settings['wordmark-text'] = mb_substr( $settings['wordmark-text'], 0, 50 );
-			}
+		} elseif ( mb_strlen( $settings['wordmark-text'] ) > 50 ) {
+			$settings['wordmark-text'] = mb_substr( $settings['wordmark-text'], 0, 50 );
 		}
 
 		// #140758 - Jakub
@@ -230,6 +228,15 @@ class ThemeSettings {
 		}
 
 		$this->themeSettingsPersistence->saveSettings( $settings );
+	}
+
+	/**
+	 * Return escaped version of provided text, while avoiding double escaping it
+	 * @param string $text
+	 * @return string
+	 */
+	private function escapeInput( string $text ) {
+		return htmlspecialchars( Sanitizer::decodeCharReferences( $text ), ENT_QUOTES );
 	}
 
 	/**
