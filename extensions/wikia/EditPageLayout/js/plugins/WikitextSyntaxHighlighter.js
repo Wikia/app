@@ -112,7 +112,6 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function highlightSyntax () {
-		debugger;
 		var startTime, endTime, diffTime,
 			fragment;
 		wpTextbox1.value = CKEDITOR.instances.wpTextbox1.getData();

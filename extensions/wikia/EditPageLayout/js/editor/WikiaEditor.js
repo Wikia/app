@@ -942,7 +942,6 @@
 
 		afterLoadingStatus: function() {
 			this.editor.markAsReady();
-
 			// Loading is done, editor container can be visible again
 			// And typing can be re-enabled (BugId:23061)
 			$(this.editor.ck.container.$).addClass('visible').unbind('keydown.preventTyping');
@@ -974,7 +973,7 @@
 		// in source mode, this is CKE generated textarea
 		getEditbox: function() {
 			return $(this.editor.ck.mode == 'wysiwyg' ?
-				this.editor.ck.document.getBody().$ : this.editor.ck.container.$);
+				this.editor.ck.document.getBody().$ : CKEDITOR.instances.wpTextbox1.editable().$);
 		},
 
 		getEditboxWrapper: function() {
@@ -990,7 +989,6 @@
 		},
 
 		beforeModeChange: function() {
-
 			// Hide the editor container while we switch modes
 			$(this.editor.ck.container.$).removeClass('visible')
 
