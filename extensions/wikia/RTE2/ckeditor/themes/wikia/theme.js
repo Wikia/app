@@ -15,8 +15,8 @@ CKEDITOR.editor.prototype.getThemeSpace = function( spaceName )
 		};
 
 	var editorId = CKEDITOR.instances.wpTextbox1.id;
-	var space = this._[ spacePrefix ] ||
-		( this._[ spacePrefix ] = CKEDITOR.document.getById( getSpaceId(this.name, editorId) ) );
+	var space = this._[ editorId ] ||
+		( this._[ editorId ] = CKEDITOR.document.getById( getSpaceId(this.name, editorId) ) );
 	return space;
 };
 
