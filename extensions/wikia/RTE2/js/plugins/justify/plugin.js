@@ -243,22 +243,22 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			editor.ui.addButton( 'JustifyLeft',
 				{
-					label : window.mw.msg('rte-ck-justify-left'),//editor.lang.justify.left,
+					label : editor.lang.justify.left,
 					command : 'justifyleft'
 				} );
 			editor.ui.addButton( 'JustifyCenter',
 				{
-					label : window.mw.msg('rte-ck-justify-center'),//editor.lang.justify.center,
+					label : editor.lang.justify.center,
 					command : 'justifycenter'
 				} );
 			editor.ui.addButton( 'JustifyRight',
 				{
-					label : window.mw.msg('rte-ck-justify-right'),//editor.lang.justify.right,
+					label : editor.lang.justify.right,
 					command : 'justifyright'
 				} );
 			editor.ui.addButton( 'JustifyBlock',
 				{
-					label : window.mw.msg('rte-ck-justify-block'),//editor.lang.justify.block,
+					label : editor.lang.justify.block,
 					command : 'justifyblock'
 				} );
 
@@ -269,7 +269,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			editor.on( 'dirChanged', onDirChanged );
 		},
 
-//		requires : [ 'domiterator' ]  -- it's in the core now
+//		requires : [ 'domiterator' ]
 	});
 })();
 

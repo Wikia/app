@@ -44,7 +44,6 @@
 		 * function: the language code and the loaded language entries.
 		 */
 		load: function( languageCode, defaultLanguage, callback ) {
-			
 			// If no languageCode - fallback to browser or default.
 			// If languageCode - fallback to no-localized version or default.
 			if ( !languageCode || !CKEDITOR.lang.languages[ languageCode ] )

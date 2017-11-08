@@ -461,7 +461,7 @@ CKEDITOR.dom.element.prototype.hasAttributes = function() {
 }
 
 // catch requests for language JS files
-CKEDITOR.langRegExp = /lang\/([\w\-]+).js/;
+CKEDITOR.langRegExp = /^lang\/([\w\-]+).js$/;
 
 // load CK files from _source subdirectory
 CKEDITOR.getUrl = function( resource ) {
@@ -471,7 +471,7 @@ CKEDITOR.getUrl = function( resource ) {
 		var matches = resource.match(CKEDITOR.langRegExp);
 		var lang = matches[1];
 
-		RTE.log('language "' + lang + '" requested');
+		RTE.log('language "' + lang + " " + resource + '" requested');
 
 		// fetch JSON with language definition from backend
 		var url = window.wgServer + '/wikia.php?controller=RTE&method=i18n&uselang=' + lang +

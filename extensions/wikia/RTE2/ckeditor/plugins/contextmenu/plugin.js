@@ -28,7 +28,6 @@ CKEDITOR.plugins.add( 'contextmenu', {
 			 * @param {CKEDITOR.editor} editor
 			 */
 			$: function( editor ) {
-				debugger;
 				this.base.call( this, editor, {
 					panel: {
 						className: 'cke_menu_panel',

@@ -1,22 +1,22 @@
 CKEDITOR.editor.prototype.getThemeSpace = function( spaceName )
 {
 	var elementId = WikiaEditor.instanceId,
-		getSpaceId = function(editorName, spaceName) {
+		getSpaceId = function(editorName, editorId) {
 			switch (spaceName) {
 				case 'tabs':
 					return elementId + 'Tabs';
 				case 'toolbar':
 					return elementId + 'Toolbar';
 				case 'contents':
-					return spacePrefix + '_' + editorName;
+					return editorId + "_contents";
 				case 'rail':
 					return elementId + 'Rail';
 			}
 		};
 
-	var spacePrefix = 'cke_' + spaceName;
+	var editorId = CKEDITOR.instances.wpTextbox1.id;
 	var space = this._[ spacePrefix ] ||
-		( this._[ spacePrefix ] = CKEDITOR.document.getById( getSpaceId(this.name, spaceName) ) );
+		( this._[ spacePrefix ] = CKEDITOR.document.getById( getSpaceId(this.name, editorId) ) );
 	return space;
 };
 

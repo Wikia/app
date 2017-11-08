@@ -7,7 +7,7 @@ CKEDITOR.dialog.add('rte-comment', function(editor)
 {
 	// return dialog structure definition
 	return {
-		title: window.mw.msg('rte-ck-commentEditor-title'),//editor.lang.commentEditor.title,
+		title: editor.lang.commentEditor.title,
 		resizable: CKEDITOR.DIALOG_RESIZE_NONE,
 		minWidth: 400,
 		minHeight: 150,

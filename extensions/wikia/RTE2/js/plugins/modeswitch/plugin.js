@@ -32,13 +32,12 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		editor.on('mode', $.proxy(this.updateTooltips, this));
 		editor.on('mode', $.proxy(this.mode, this));
 		editor.on('modeSwitch', $.proxy(this.modeSwitch, this));
-		editor.on('dataReady', $.proxy(this.dataReady, this),null,null,100);
+		editor.on('dataReady', $.proxy(this.dataReady, this));
 		editor.on('wysiwygModeReady', $.proxy(this.wysiwygModeReady, this));
 		editor.on('sourceModeReady', $.proxy(this.sourceModeReady, this));
 	},
 
 	modeSwitch: function(ev) {
-		debugger;
 		var editor = ev.editor,
 			wikiaEditor = WikiaEditor.getInstance(editor.name),
 			content = editor.getData();
@@ -73,16 +72,14 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 					editor.setMode('source');
 					editor.setData(data.wikitext, function() {
-						
-						this.editable().$.scrollTop = 0;
-						this.editable().$.setSelectionRange(0,0);
+						editor.textarea.$.scrollTop = 0;
+						editor.textarea.$.setSelectionRange(0, 0);
 					});
 				});
 				break;
 
 			case 'source':
 				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
-					debugger;
 					if (!data) {
 						onError();
 						return;
@@ -134,6 +131,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	dataReady: function(ev) {
 		var editor = ev.editor;
+
 		if (editor.mode == 'wysiwyg') {
 			editor.fire('wysiwygModeReady');
 
@@ -183,15 +181,15 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	updateTooltips: function(ev) {
 		var mode = ev.editor.mode,
-			sourceTabLabel 	= window.mw.msg('rte-ck-modeSwitch-toSource' + 	(mode == 'source'  ? '' : 'Tooltip')); //this.messages['toSource' + (mode == 'source' ? '' : 'Tooltip')],
-			wysiwygTabLabel = window.mw.msg('rte-ck-modeSwitch-toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')); //this.messages['toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')];
+			sourceTabLabel = this.messages['toSource' + (mode == 'source' ? '' : 'Tooltip')],
+			wysiwygTabLabel = this.messages['toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')];
 
 		this.getSwitchTab(ev.editor, 'ModeSource').attr('title', sourceTabLabel);
 		this.getSwitchTab(ev.editor, 'ModeWysiwyg').attr('title', wysiwygTabLabel);
 	},
 
 	// get jQuery object for mode switching tab
-	getSwitchTab: function(editor, commandName) {	
+	getSwitchTab: function(editor, commandName) {
 		var nodeId = editor.getCommand(commandName).uiItems[0]._.id;
 		return $('#' + nodeId);
 	},
@@ -219,13 +217,13 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		});
 
 		editor.ui.addButton( 'ModeSource', {
-			label : window.mw.msg('rte-ck-modeSwitch-toSource'),//this.messages.toSource,
+			label : this.messages.toSource,
 			hasIcon: editor.config.isMiniEditor,
 			command : 'ModeSource'
 		});
 
 		editor.ui.addButton( 'ModeWysiwyg', {
-			label : window.mw.msg('rte-ck-modeSwitch-toWysiwyg'),//this.messages.toWysiwyg,
+			label : this.messages.toWysiwyg,
 			hasIcon: editor.config.isMiniEditor,
 			command : 'ModeWysiwyg'
 		});
