@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+
 class RenameUserProcess {
 	const EMAIL_CONTROLLER = \Email\Controller\UserNameChangeController::class;
 
@@ -9,52 +11,8 @@ class RenameUserProcess {
 
 	const MAX_ROWS_PER_QUERY = 500;
 
-	const LOG_STANDARD = 'standard';
-	const LOG_BATCH_TASK = 'task';
-	const LOG_OUTPUT = 'output';
-
-	/**
-	 * Stores the predefined tasks to do for every local wiki database.
-	 * Here should be mentioned all core tables not connected to any extension.
-	 *
-	 * @var $mLocalDefaults array
-	 */
-	static private $mLocalDefaults = array(
-		# Core MW tables
-		array( 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ),
-		array( 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ),
-		array( 'table' => 'image', 'userid_column' => 'img_user', 'username_column' => 'img_user_text' ),
-		array( 'table' => 'ipblocks', 'userid_column' => 'ipb_by', 'username_column' => 'ipb_by_text' ),
-		array( 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ),
-		array( 'table' => 'logging', 'userid_column' => null, 'username_column' => 'log_title',
-			'conds' => array(
-				'log_namespace' => NS_USER,
-			) ),
-		array( 'table' => 'oldimage', 'userid_column' => 'oi_user', 'username_column' => 'oi_user_text' ),
-		array( 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ),
-		array( 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ),
-		# disable in 1.19 array( 'table' => 'text', 'userid_column' => 'old_user', 'username_column' => 'old_user_text' ),
-		array( 'table' => 'user_newtalk', 'userid_column' => null, 'username_column' => 'user_ip' ),
-		# Core 1.16 tables
-		array( 'table' => 'logging', 'userid_column' => 'log_user', 'username_column' => 'log_user_text' ),
-
-		# Template entry
-//		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
-	);
-
-	/**
-	 * Stores the predefined tasks to do for every local wiki database for IP addresses.
-	 * Here should be mentioned all core tables not connected to any extension.
-	 *
-	 * @var $mLocalIpDefaults array
-	 */
-	static private $mLocalIpDefaults = [
-		[ 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ],
-		[ 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ],
-		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ],
-		[ 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ],
-		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ],
-	];
+	const USER_ALREADY_RENAMED_FLAG = 'wasRenamed';
+	const MAX_USERNAME_LENGTH = 50;
 
 	private $mRequestData = null;
 	private $mActionConfirmed = false;
@@ -72,20 +30,6 @@ class RenameUserProcess {
 	private $mWarnings = array();
 
 	private $mInternalLog = '';
-
-	private $mLogDestinations = array(
-		array( self::LOG_STANDARD, null ),
-	);
-	/**
-	 *
-	 * @var BatchTask
-	 */
-	private $mLogTask = null;
-
-	/**
-	 * @var string
-	 */
-	private $mUserRenameTaskId = null;
 
 	/**
 	 * Creates new rename user process
@@ -144,31 +88,6 @@ class RenameUserProcess {
 		return $this->mPhalanxBlockId;
 	}
 
-	public function getUserRenameTaskId() {
-		return $this->mUserRenameTaskId;
-	}
-
-	/**
-	 * Sets destination for all the logs
-	 *
-	 * @param $destination string/enum One of RenameUserProcess::LOG_* constant
-	 * @param $task BatchTask (Optional) BatchTask to send logs to
-	 */
-	public function setLogDestination( $destination, $task = null ) {
-		$this->mLogDestinations = array();
-		$this->addLogDestination( $destination, $task );
-	}
-
-	/**
-	 * Adds another log destination
-	 *
-	 * @param $destination string/enum One of RenameUserProcess::LOG_* constant
-	 * @param $task BatchTask (Optional) BatchTask to send logs to
-	 */
-	public function addLogDestination( $destination, $task = null ) {
-		$this->mLogDestinations[] = array( $destination, $task );
-	}
-
 	/**
 	 * Saves passed error for future retrieval
 	 *
@@ -185,10 +104,6 @@ class RenameUserProcess {
 	 */
 	public function addWarning( $msg ) {
 		$this->mWarnings[] = $msg;
-	}
-
-	protected function getUserTableName( $database ) {
-		return "`{$database}`.`user`";
 	}
 
 	protected function renameAccount() {
@@ -260,12 +175,12 @@ class RenameUserProcess {
 
 		// Phalanx test
 
-		$warning = RenameUserHelper::testBlock( $oun );
+		$warning = self::testBlock( $oun );
 		if ( !empty( $warning ) ) {
 			$this->addWarning( $warning );
 		}
 
-		$warning = RenameUserHelper::testBlock( $nun );
+		$warning = self::testBlock( $nun );
 		if ( !empty( $warning ) ) {
 			$this->addWarning( $warning );
 		}
@@ -429,45 +344,53 @@ class RenameUserProcess {
 	 * @return bool True if the process succeded
 	 */
 	public function run() {
-		// Make sure the process will not be stopped in the middle
-		set_time_limit( 3600 ); // 1h
-		ignore_user_abort( true );
-		ini_set( "max_execution_time", 3600 ); // 1h
-
 		if ( !$this->setup() ) {
 			return false;
 		}
 
-		// Execute the worker
-		$status = false;
+		$noErrors = true;
+
+		// ComSup wants the StaffLogger to keep track of renames...
+		$this->addMainLog(
+			'start',
+			\RenameUserLogFormatter::start(
+				$this->mRequestorName,
+				$this->mOldUsername,
+				$this->mNewUsername,
+				$this->mReason
+			)
+		);
 
 		try {
-			$status = $this->doRun();
+			$noErrors = $this->doRun();
 		} catch ( Exception $e ) {
 			$this->addLog( $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine() );
 			$this->addError( wfMessage( 'userrenametool-error-cannot-rename-unexpected' )->inContentLanguage()->text() );
+			$noErrors = false;
 		}
 
-		// Analyze status
-		if ( !$status ) {
-			$this->staffLog(
-				'fail',
-				[
-					'requestor_name' => $this->mRequestorName,
-					'rename_old_name' => $this->mOldUsername,
-					'rename_new_name' => $this->mNewUsername,
-					'reason' => $this->mReason
-				],
-				RenameUserLogFormatter::fail(
-					$this->mRequestorName,
-					$this->mOldUsername,
-					$this->mNewUsername,
-					$this->mReason
-				)
-			);
-		}
+		if ( $noErrors ) {
+			$this->notifyUser( \User::newFromId( $this->mUserId ), $this->mOldUsername, $this->mNewUsername );
 
-		return $status;
+			if ( $this->mRequestorId !== $this->mUserId ) {
+				$this->notifyUser( \User::newFromId( $this->mRequestorId ), $this->mOldUsername, $this->mNewUsername );
+			}
+		}
+		// send e-mail to the user that rename process has finished
+
+		$finalMessage = $noErrors ? 'finish' : 'fail';
+		
+		$this->addMainLog(
+			$finalMessage,
+			\RenameUserLogFormatter::$finalMessage(
+				$this->mRequestorName,
+				$this->mOldUsername,
+				$this->mNewUsername,
+				$this->mReason
+			)
+		);
+
+		return $noErrors;
 	}
 
 	/**
@@ -487,11 +410,6 @@ class RenameUserProcess {
 			$this->addError( wfMessage( 'userrenametool-error-extension-abort' )->inContentLanguage()->text() );
 			return false;
 		}
-
-		// enumerate IDs for wikis the user has been active in
-		$this->addLog( "Searching for user activity on wikis." );
-		$wikiIDs = RenameUserHelper::lookupRegisteredUserActivity( $this->mUserId );
-		$this->addLog( "Found " . count( $wikiIDs ) . " wikis: " . implode( ', ', $wikiIDs ) );
 
 		$hookName = 'UserRename::BeforeAccountRename';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
@@ -544,26 +462,7 @@ class RenameUserProcess {
 		}
 
 		$this->invalidateUser( $this->mOldUsername );
-
-		$callParams = array(
-			'requestor_id' => $this->mRequestorId,
-			'requestor_name' => $this->mRequestorName,
-			'rename_user_id' => $this->mUserId,
-			'rename_old_name' => $this->mOldUsername,
-			'rename_new_name' => $this->mNewUsername,
-			'rename_fake_user_id' => $this->mFakeUserId,
-			'phalanx_block_id' => $this->mPhalanxBlockId,
-			'reason' => $this->mReason
-		);
-
-		return $this->renameUser($callParams);
-	}
-
-	/**
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
-	 * Performs action for cleaning up temporary data at the very end of a process
-	 */
-	public function cleanup() {
+		
 		if ( $this->mFakeUserId ) {
 			$this->addLog( "Cleaning up process data in user option renameData for ID {$this->mFakeUserId}" );
 
@@ -572,16 +471,16 @@ class RenameUserProcess {
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}
+		
+		// mark user as renamed
+		$renamedUser = \User::newFromId( $this->mUserId );
 
-		// TODO: Add a hook
-		$hookName = 'UserRename::Cleanup';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
-
-		$tasks = [];
-		if ( isset( $this->mLogTask ) ) {
-			$tasks[] = $this->mLogTask->getID();
+		if ( !User::newFromId( $this->mRequestorId )->isAllowed('renameanotheruser') ) {
+			self::blockUserRenaming( $renamedUser );
+			$renamedUser->saveSettings();
 		}
+
+		return empty( $this->getErrors() );
 	}
 
 	/**
@@ -597,23 +496,7 @@ class RenameUserProcess {
 			$text = vsprintf( $text, $args );
 		}
 
-		foreach ( $this->mLogDestinations as $destinationEntry ) {
-			$logDestination = $destinationEntry[0];
-
-			/** @var BatchTask $logTask */
-			$logTask = $destinationEntry[1];
-			switch ( $logDestination ) {
-				case self::LOG_BATCH_TASK:
-					$logTask->log( $text );
-					break;
-				case self::LOG_OUTPUT:
-					echo $text . "\n";
-					break;
-//				case self::LOG_STANDARD:
-				default:
-					wfDebugLog( __CLASS__, $text );
-			}
-		}
+		wfDebugLog( __CLASS__, $text );
 	}
 
 	/**
@@ -624,25 +507,6 @@ class RenameUserProcess {
 	public function addLocalLog( $text ) {
 		$log = new LogPage( 'renameuser' );
 		$log->addEntry( 'renameuser', Title::newFromText( $this->mOldUsername, NS_USER ), $text, array(), User::newFromId( $this->mRequestorId ) );
-	}
-
-	public function setRequestorUser() {
-		global $wgUser;
-		$oldUser = $wgUser;
-
-		$this->addLog( "Checking for need to overwrite requestor user (id={$this->mRequestorId} name={$this->mRequestorName})" );
-
-		$userId = $wgUser->getId();
-		if ( empty( $userId ) && !empty( $this->mRequestorId ) ) {
-			$this->addLog( "Checking if requestor exists" );
-			$newUser = User::newFromId( $this->mRequestorId );
-			if ( !empty( $newUser ) ) {
-				$this->addLog( "Overwriting requestor user" );
-				$wgUser = $newUser;
-			}
-		}
-
-		return $oldUser;
 	}
 
 	public function invalidateUser( $user ) {
@@ -665,114 +529,20 @@ class RenameUserProcess {
 		return $this->mInternalLog;
 	}
 
-	static public function newFromData( $data ) {
-		$o = new RenameUserProcess( $data['rename_old_name'], $data['rename_new_name'], '', true );
-
-		$mapping = array(
-			'mUserId' => 'rename_user_id',
-			'mOldUsername' => 'rename_old_name',
-			'mNewUsername' => 'rename_new_name',
-			'mFakeUserId' => 'rename_fake_user_id',
-			'mRequestorId' => 'requestor_id',
-			'mRequestorName' => 'requestor_name',
-			'mPhalanxBlockId' => 'phalanx_block_id',
-			'mReason' => 'reason',
-			'mLogTask' => 'local_task',
-		);
-
-		foreach ( $mapping as $property => $key ) {
-			if ( array_key_exists( $key, $data ) ) {
-				$o->$property = $data[$key];
-			}
-		}
-
-		// Quick hack to recover requestor name from its id
-		if ( !empty( $o->mRequestorId ) && empty( $o->mRequestorName ) ) {
-			$requestor = User::newFromId( $o->mRequestorId );
-			$o->mRequestorName = $requestor->getName();
-		}
-
-		$o->addLog( "newFromData(): Requestor id={$o->mRequestorId} name={$o->mRequestorName}" );
-
-		return $o;
-	}
-
-
 	/**
-	 * Marshal & execute the RenameUserProcess functions to rename a user
+	 * Logs the message to main user-visible log
 	 *
-	 * @param array $params
-	 *		requestor_id => ID of the user requesting this rename action
-	 *		requestor_name => Name of the user requesting this rename action
-	 *		rename_user_id => ID of the user to rename
-	 *		rename_old_name => Current username of the user to rename
-	 *		rename_new_name => New username for the user to rename
-	 *		reason => Reason for requesting username change
-	 *		rename_fake_user_id => Repeated rename process special case (TODO: Don't know what this is)
-	 *		phalanx_block_id => Phalanx login block ID
-	 * @return bool
+	 * @param string $action
+	 * @param $text string Log message
 	 */
-	public function renameUser( array $params ) {
-		$process = RenameUserProcess::newFromData( $params );
-		$process->setLogDestination( self::LOG_STANDARD );
-		$process->setRequestorUser();
-
-		$noErrors = true;
-
-		// ComSup wants the StaffLogger to keep track of renames...
-		$this->staffLog(
-			'start',
-			$params,
-			\RenameUserLogFormatter::start(
-				$params['requestor_name'],
-				$params['rename_old_name'],
-				$params['rename_new_name'],
-				$params['reason']
-			)
-		);
-
-		// clean up pre-process setup
-		$process->cleanup();
-
-		// mark user as renamed
-		$renamedUser = \User::newFromId( $params['rename_user_id'] );
-
-		if ( !User::newFromId( $params['requestor_id'] )->isAllowed('renameanotheruser') ) {
-			\RenameUserHelper::blockUserRenaming( $renamedUser );
-			$renamedUser->saveSettings();
-		}
-
-		// send e-mail to the user that rename process has finished
-		$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
-		$this->staffLog(
-			$noErrors ? 'finish' : 'fail',
-			$params,
-			\RenameUserLogFormatter::finish(
-				$params['requestor_name'],
-				$params['rename_old_name'],
-				$params['rename_new_name'],
-				$params['reason']
-			)
-		);
-
-		return $noErrors;
-	}
-
-	/**
-	 * Curry the StaffLogger function
-	 *
-	 * @param string $action Which action to log ('start', 'complete', 'fail', 'log')
-	 * @param array $params The params given to `#renameUser`
-	 * @param string $text The text to log
-	 */
-	protected function staffLog( $action, array $params, $text ) {
-		\StaffLogger::log(
+	public function addMainLog( $action, $text ) {
+		StaffLogger::log(
 			'renameuser',
 			$action,
-			$params['requestor_id'],
-			$params['requestor_name'],
-			$params['rename_user_id'],
-			$params['rename_new_name'],
+			$this->mRequestorId,
+			$this->mRequestorName,
+			$this->mUserId,
+			$this->mNewUsername,
 			$text
 		);
 	}
@@ -795,5 +565,55 @@ class RenameUserProcess {
 		} else {
 			$this->addWarning( "no email address set for user ({$oldUsername} => {$newUsername})");
 		}
+	}
+
+	/**
+	 * testBlock
+	 *
+	 * performs a test of all available phalanx filters and returns warning message if there are any
+	 * @author Kamil Koterba <kamil@wikia-inc.com>
+	 *
+	 * @param $text String to match
+	 * @return String with HTML to display via AJAX
+	 */
+	public static function testBlock( $text ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( !class_exists( 'PhalanxService' ) ) {
+			wfProfileOut( __METHOD__ );
+			return '';
+		}
+
+		$service = Injector::getInjector()->get( PhalanxService::class );
+
+		$blockFound = false;
+
+		foreach ( Phalanx::getSupportedTypeNames() as $blockType ) {
+			$res = $service->match( $blockType, $text );
+
+			if ( !empty( $res ) ) {
+				$blockFound = true;
+				break;
+			}
+
+		}
+
+		$warning = '';
+		if ( $blockFound ) {
+			$phalanxTestTitle = SpecialPage::getTitleFor( 'Phalanx', 'test' );
+			$linkToTest = Linker::link( $phalanxTestTitle, wfMessage( 'userrenametool-see-list-of-blocks' )->escaped(), [], [ 'wpBlockText' => $text ] );
+			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text )->rawParams( $linkToTest )->escaped();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $warning;
+	}
+
+	public static function canUserChangeUsername( User $user ): bool {
+		return !$user->getGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, false ) || $user->isAllowed( 'renameanotheruser' );
+	}
+
+	public static function blockUserRenaming( User $user ) {
+		return $user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, true );
 	}
 }

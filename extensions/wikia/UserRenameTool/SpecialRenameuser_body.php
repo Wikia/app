@@ -55,7 +55,7 @@ class SpecialRenameuser extends SpecialPage {
 		}
 		// TODO: end
 
-		if ( \RenameUserHelper::canUserChangeUsername( $requestorUser ) ) {
+		if ( \RenameUserProcess::canUserChangeUsername( $requestorUser ) ) {
 			$this->renderForm( $requestorUser, $username );
 		} else {
 			$this->renderDisallow();
@@ -84,7 +84,7 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-non-alphanumeric';
 		}
 
-		if ( strlen( $newUsername ) > \RenameUserHelper::MAX_USERNAME_LENGTH ) {
+		if ( strlen( $newUsername ) > \RenameUserProcess::MAX_USERNAME_LENGTH ) {
 			$errorList[] = 'userrenametool-error-too-long';
 		}
 
@@ -100,7 +100,7 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-password-not-match';
 		}
 
-		if ( !\RenameUserHelper::canUserChangeUsername( $user ) ) {
+		if ( !\RenameUserProcess::canUserChangeUsername( $user ) ) {
 			$errorList[] = 'userrenametool-error-alreadyrenamed';
 		}
 
@@ -161,7 +161,7 @@ class SpecialRenameuser extends SpecialPage {
 			[
 				'submitUrl' => $this->getTitle()->getLocalURL(),
 				'token' => $requestorUser->getEditToken(),
-				'maxUsernameLength' => \RenameUserHelper::MAX_USERNAME_LENGTH,
+				'maxUsernameLength' => \RenameUserProcess::MAX_USERNAME_LENGTH,
 				'showForm' => $showForm,
 				'oldUsername' => $oldUsername,
 				'selfRename' => $selfRename,

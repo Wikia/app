@@ -78,27 +78,23 @@ if (!empty($options['global-task-id']) && is_numeric($options['global-task-id'])
 
 require_once("$IP/extensions/wikia/UserRenameTool/SpecialRenameuser.php");
 
-$process = RenameUserProcess::newFromData($processData);
-$process->setLogDestination(RenameUserProcess::LOG_OUTPUT);
+$process = RenameIPProcess::newFromData($processData);
+$process->setLogDestination(RenameIPProcess::LOG_OUTPUT);
 
 if($taskId) {
 	$runningTask = UserRenameLocalTask::newFromID($taskId);
 
 	if(defined('ENV_DEVBOX')){
-		$process->addLogDestination(RenameUserProcess::LOG_BATCH_TASK, $runningTask);
+		$process->addLogDestination(RenameIPProcess::LOG_BATCH_TASK, $runningTask);
 	}
 	else{
-		$process->setLogDestination(RenameUserProcess::LOG_BATCH_TASK, $runningTask);
+		$process->setLogDestination(RenameIPProcess::LOG_BATCH_TASK, $runningTask);
 	}
 }
 $process->setRequestorUser();
 
 try {
-	if ( isset( $options['rename-ip-address'] ) ) {
-		$process->updateLocalIP();
-	} else {
-		$process->updateLocal();
-	}
+	$process->updateLocalIP();
 	$errors = $process->getErrors();
 } catch (Exception $e) {
 	$errors = $process->getErrors();

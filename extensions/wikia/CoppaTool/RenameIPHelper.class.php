@@ -9,11 +9,9 @@ use Wikia\DependencyInjection\Injector;
  * @copyright (C) 2010, Wikia Inc.
  * @licence GNU General Public Licence 3.0 or later
  */
-class RenameUserHelper {
+class RenameIPHelper {
 
 	const CLUSTER_DEFAULT = '';
-	const USER_ALREADY_RENAMED_FLAG = 'wasRenamed';
-	const MAX_USERNAME_LENGTH = 50;
 
 	/**
 	 * @author Federico "Lox" Lucignano
@@ -187,14 +185,6 @@ class RenameUserHelper {
 
 		wfProfileOut( __METHOD__ );
 		return $warning;
-	}
-
-	public static function canUserChangeUsername( User $user ): bool {
-		return !$user->getGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, false ) || $user->isAllowed( 'renameanotheruser' );
-	}
-
-	public static function blockUserRenaming( User $user ) {
-		return $user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, true );
 	}
 
 }
