@@ -5,7 +5,7 @@ use Wikia\DependencyInjection\Injector;
 /**
  * @author: Federico "Lox" Lucignano
  *
- * A helper class for the User rename tool
+ * A helper class for the IP rename tool
  * @copyright (C) 2010, Wikia Inc.
  * @licence GNU General Public Licence 3.0 or later
  */
@@ -179,8 +179,8 @@ class RenameIPHelper {
 		$warning = '';
 		if ( $blockFound ) {
 			$phalanxTestTitle = SpecialPage::getTitleFor( 'Phalanx', 'test' );
-			$linkToTest = Linker::link( $phalanxTestTitle, wfMessage( 'userrenametool-see-list-of-blocks' )->escaped(), [], [ 'wpBlockText' => $text ] );
-			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text )->rawParams( $linkToTest )->escaped();
+			$linkToTest = Linker::link( $phalanxTestTitle, wfMessage( 'coppatool-see-list-of-blocks' )->escaped(), [], [ 'wpBlockText' => $text ] );
+			$warning = wfMessage( 'coppatool-warning-phalanx-block', $text )->rawParams( $linkToTest )->escaped();
 		}
 
 		wfProfileOut( __METHOD__ );

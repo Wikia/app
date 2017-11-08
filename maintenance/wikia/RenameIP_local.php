@@ -5,7 +5,7 @@
  *
  * @author: Władysław Bodzek <wladek@wikia-inc.com>
  *
- * @usage: SERVER_ID=177 php RenameUser_local.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
+ * @usage: SERVER_ID=177 php RenameIP_local.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
  */
 
 ini_set( "include_path", dirname(__FILE__)."/../" );
@@ -13,12 +13,10 @@ ini_set( "include_path", dirname(__FILE__)."/../" );
 $options = array('help');
 
 $optionsWithArgs = array(
-	'rename-user-id',
-	'rename-old-name',
-	'rename-new-name',
-	'rename-old-name-enc',
-	'rename-new-name-enc',
-	'rename-fake-user-id',
+	'old-ip',
+	'new-ip',
+	'old-ip-enc',
+	'new-ip-enc',
 	'phalanx-block-id',
 	'task-id',
 	'requestor-id',
@@ -30,20 +28,20 @@ require_once( 'commandLine.inc' );
 global $IP, $wgCityId;
 
 if( isset( $options['help'] ) && $options['help'] ) {
-	echo( "Usage: SERVER_ID=target_cityId php RenameUser_local.php --rename-user-id {int} --rename-old-name {string} --rename-new-name {string} --requestor-id {int} [--phalanx-block-id {int}] [--task-id {int}] [--reason {string}] --conf {path} --aconf {path}\n\n" );
+	echo( "Usage: SERVER_ID=target_cityId php RenameIP_local.php --rename-old-ip {string} --rename-new-ip {string} --requestor-id {int} [--phalanx-block-id {int}] [--task-id {int}] [--reason {string}] --conf {path} --aconf {path}\n\n" );
 	exit( 0 );
 }
 
 // BAC-602: decode user names if they were encoded in the first place
-if ( !empty( $options['rename-old-name-enc'] ) ) {
-	$options['rename-old-name'] = rawurldecode($options['rename-old-name-enc']);
+if ( !empty( $options['old-ip-enc'] ) ) {
+	$options['old-ip'] = rawurldecode($options['old-ip-enc']);
 }
-if ( !empty( $options['rename-new-name-enc'] ) ) {
-	$options['rename-new-name'] = rawurldecode($options['rename-new-name-enc']);
+if ( !empty( $options['new-ip-enc'] ) ) {
+	$options['new-ip'] = rawurldecode($options['new-ip-enc']);
 }
 
-if ( !isset( $options['rename-user-id'] ) || !is_numeric( $options['rename-user-id'] ) || empty($options['rename-old-name']) || empty($options['rename-new-name']) ) {
-	echo( "Not enough arguments or invalid values. Required are: --rename-user-id, --rename-old-name, --rename-new-name");
+if ( empty($options['old-ip']) || empty($options['new-ip']) ) {
+	echo( "Not enough arguments or invalid values. Required are: --old-ip, --new-ip");
 	exit( 0 );
 }
 
@@ -52,17 +50,9 @@ echo("Process for wiki with ID {$wgCityId} started.");
 $taskId = (!empty($options['taskid'])) ? (int)$options['taskid'] : null;
 
 $processData = array(
-	'rename_user_id' => (int)$options['rename-user-id'],
-	'rename_old_name' => (string)$options['rename-old-name'],
-	'rename_new_name' => (string)$options['rename-new-name'],
+	'old_ip' => (string)$options['old-ip'],
+	'new_ip' => (string)$options['new-ip'],
 );
-
-if ( isset( $options['rename-ip-address'] ) ) {
-	$processData['rename_ip'] = true;
-}
-
-if (!empty($options['rename-fake-user-id']) && is_numeric($options['rename-fake-user-id']))
-	$processData['rename_fake_user_id'] = (int)$options['rename-fake-user-id'];
 
 if (!empty($options['requestor-id']) && is_numeric($options['requestor-id']))
 	$processData['requestor_id'] = (int)$options['requestor-id'];
@@ -76,13 +66,13 @@ if (!empty($options['reason']))
 if (!empty($options['global-task-id']) && is_numeric($options['global-task-id']))
 	$processData['global_task_id'] = (int)$options['global-task-id'];
 
-require_once("$IP/extensions/wikia/UserRenameTool/SpecialRenameuser.php");
+require_once("$IP/extensions/wikia/CoppaTool/CoppaTool.setup.php");
 
 $process = RenameIPProcess::newFromData($processData);
 $process->setLogDestination(RenameIPProcess::LOG_OUTPUT);
 
 if($taskId) {
-	$runningTask = UserRenameLocalTask::newFromID($taskId);
+	$runningTask = RenameIPLocalTask::newFromID($taskId);
 
 	if(defined('ENV_DEVBOX')){
 		$process->addLogDestination(RenameIPProcess::LOG_BATCH_TASK, $runningTask);
@@ -98,7 +88,7 @@ try {
 	$errors = $process->getErrors();
 } catch (Exception $e) {
 	$errors = $process->getErrors();
-	$errors[] = "Exception in updateLocal(): ".$e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine();
+	$errors[] = "Exception in updateLocalIP(): ".$e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine();
 }
 
 if(!empty($errors)){

@@ -146,10 +146,8 @@ class CoppaToolController extends WikiaController {
 			'requestor_id' => $this->wg->User->getID(),
 			'requestor_name' => $this->wg->User->getName(),
 			'rename_user_id' => 0,
-			'rename_old_name' => $ipAddr,
-			'rename_new_name' => NON_ROUTABLE_IPV6,
-			'rename_ip' => true,
-			'notify_renamed' => false,
+			'old_ip' => $ipAddr,
+			'new_ip' => NON_ROUTABLE_IPV6,
 			'reason' => wfMessage( 'coppatool-reason' )->plain(),
 		];
 		$task = ( new RenameIPTask() )

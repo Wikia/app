@@ -18,6 +18,10 @@ $wgExtensionCredits['specialpage'][] = [
 
 $wgAutoloadClasses['CoppaToolSpecialController'] =  __DIR__ . '/CoppaToolSpecialController.class.php';
 $wgAutoloadClasses['CoppaToolController'] =  __DIR__ . '/CoppaToolController.class.php';
+$wgAutoloadClasses['RenameIPProcess'] =  __DIR__ . '/RenameIPProcess.class.php';
+$wgAutoloadClasses['RenameIPTask'] =  __DIR__ . '/RenameIPTask.class.php';
+$wgAutoloadClasses['RenameIPHelper'] =  __DIR__ . '/RenameIPHelper.class.php';
+$wgAutoloadClasses['RenameIPLogFormatter'] =  __DIR__ . '/RenameIPLogFormatter.class.php';
 
 $wgExtensionMessagesFiles['CoppaTool'] = __DIR__ . '/CoppaTool.i18n.php' ;
 

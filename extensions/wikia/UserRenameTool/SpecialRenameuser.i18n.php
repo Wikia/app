@@ -44,6 +44,7 @@ $messages['en'] = array(
 	'userrenametool-error-antispoof-conflict' => 'AntiSpoof warning - there is already a username similar to "<nowiki>$1</nowiki>".',
 	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof is not installed.',
 	'userrenametool-error-no-username' => 'This username is blank.',
+	'userrenametool-error-email-not-confirmed' => 'Please confirm your email firstly.',
 	'userrenametool-errordoesnotexist' => 'The user "<nowiki>$1</nowiki>" does not exist.',
 	'userrenametool-errorexists' => 'The user "<nowiki>$1</nowiki>" already exists.',
 	'userrenametool-errorinvalid' => '"<nowiki>$1</nowiki>" is not a valid username.',
@@ -68,16 +69,9 @@ Please go back and try again.',
 	'userrenametool-warn-repeat' => 'Attention! The user "<nowiki>$1</nowiki>" has already been renamed to "<nowiki>$2</nowiki>".
 Continue processing only if you need to update some missing information.',
 	'userrenametool-warn-table-missing' => 'Table "<nowiki>$2</nowiki>" does not exist in database "<nowiki>$1</nowiki>."',
-	'userrenametool-info-started' => '$1 started to rename: $2 to $3 (logs: $4).
-Reason: "$5".',
-	'userrenametool-info-finished' => '$1 completed rename: $2 to $3 (logs: $4).
-Reason: "$5".',
-	'userrenametool-info-failed' => '$1 FAILED rename: $2 to $3 (logs: $4).
-Reason: "$5".',
-	'userrenametool-info-wiki-finished' => '$1 renamed $2 to $3 on $4.
-Reason: "$5".',
-	'userrenametool-info-wiki-finished-problems' => '$1 renamed $2 to $3 on $4 with errors.
-Reason: "$5".',
+	'userrenametool-info-started' => '$1 started to rename: $2 to $3.',
+	'userrenametool-info-finished' => '$1 completed rename: $2 to $3.',
+	'userrenametool-info-failed' => '$1 FAILED rename: $2 to $3.',
 	'userrenametool-info-in-progress' => 'Rename process is in progress.
 The rest will be done in background.
 You will be notified via e-mail when it is completed.',

@@ -12,7 +12,6 @@ class RenameUserProcess {
 	const MAX_ROWS_PER_QUERY = 500;
 
 	const USER_ALREADY_RENAMED_FLAG = 'wasRenamed';
-	const MAX_USERNAME_LENGTH = 50;
 
 	private $mRequestData = null;
 	private $mActionConfirmed = false;
@@ -615,7 +614,7 @@ class RenameUserProcess {
 		return !$user->getGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, false ) || $user->isAllowed( 'renameanotheruser' );
 	}
 
-	public static function blockUserRenaming( User $user ) {
-		return $user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, true );
+	public static function blockUserRenaming( User $user, bool $flag = true ) {
+		return $user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, $flag );
 	}
 }

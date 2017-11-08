@@ -31,14 +31,16 @@ class SpecialRenameuser extends SpecialPage {
 		$this->setHeaders();
 		$this->checkPermissions();
 
-		$username = \User::isValidUsername( $par ) ? $par : null;
+		$usernameParam = $this->getRequest()->getText( 'username' );
+		$username = \User::isValidUsername( $usernameParam ) ? $usernameParam : null;
 		$requestorUser = $this->getUser();
+		$canRenameAnotherUser = $requestorUser->isAllowed( 'renameanotheruser' );
 
-		if ( !$requestorUser->isAllowed( 'renameuser' ) ) {
+		if ( $requestorUser->isAnon() || !$requestorUser->isAllowed( 'renameuser' ) ) {
 			throw new PermissionsError( 'renameuser' );
 		}
 
-		if ( $username && !$requestorUser->isAllowed( 'renameanotheruser' ) ) {
+		if ( $username && !$canRenameAnotherUser ) {
 			throw new PermissionsError( 'renameanotheruser' );
 		}
 
@@ -49,11 +51,11 @@ class SpecialRenameuser extends SpecialPage {
 		}
 
 		// TODO: remove after QA tests
-		if ( self::shouldUnlock() ) {
-			$requestorUser->setGlobalFlag( 'wasRenamed', false );
-			$requestorUser->saveSettings();
+		if ( $username && $this->getRequest()->getVal( 'unlock' ) !== null ) {
+			$user = \User::newFromName( $username );
+			\RenameUserProcess::blockUserRenaming( $user, false );
+			$user->saveSettings();
 		}
-		// TODO: end
 
 		if ( \RenameUserProcess::canUserChangeUsername( $requestorUser ) ) {
 			$this->renderForm( $requestorUser, $username );
@@ -65,6 +67,8 @@ class SpecialRenameuser extends SpecialPage {
 	}
 
 	public static function validateData( array $data, User $user, bool $selfRename = true ) {
+		global $wgMaxNameChars;
+
 		$errorList = [];
 		$newUsername = $data['newUsername'];
 
@@ -84,7 +88,7 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-non-alphanumeric';
 		}
 
-		if ( strlen( $newUsername ) > \RenameUserProcess::MAX_USERNAME_LENGTH ) {
+		if ( mb_strlen( $newUsername ) > $wgMaxNameChars ) {
 			$errorList[] = 'userrenametool-error-too-long';
 		}
 
@@ -100,6 +104,10 @@ class SpecialRenameuser extends SpecialPage {
 			$errorList[] = 'userrenametool-error-password-not-match';
 		}
 
+		if ( $selfRename && !$user->isEmailConfirmed() ) {
+			$errorList[] = 'userrenametool-error-email-not-confirmed';
+		}
+
 		if ( !\RenameUserProcess::canUserChangeUsername( $user ) ) {
 			$errorList[] = 'userrenametool-error-alreadyrenamed';
 		}
@@ -107,15 +115,9 @@ class SpecialRenameuser extends SpecialPage {
 		return $errorList;
 	}
 
-	// TODO: remove after QA tests
-	public static function shouldUnlock( ) {
-		global $wgStagingEnvironment, $wgDevelEnvironment;
-		parse_str( parse_url( $_SERVER['REQUEST_URI'], PHP_URL_QUERY ), $queryParams );
-		return isset( $queryParams['unlock'] ) && ( $wgStagingEnvironment || $wgDevelEnvironment );
-	}
-	// TODO: end
-
 	private function renderForm( User $requestorUser, $oldUsername = null ) {
+		global $wgMaxNameChars;
+
 		$errors = [];
 		$infos = [];
 		$warnings = [];
@@ -161,7 +163,7 @@ class SpecialRenameuser extends SpecialPage {
 			[
 				'submitUrl' => $this->getTitle()->getLocalURL(),
 				'token' => $requestorUser->getEditToken(),
-				'maxUsernameLength' => \RenameUserProcess::MAX_USERNAME_LENGTH,
+				'maxUsernameLength' => $wgMaxNameChars,
 				'showForm' => $showForm,
 				'oldUsername' => $oldUsername,
 				'selfRename' => $selfRename,

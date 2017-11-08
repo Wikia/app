@@ -35,6 +35,20 @@ $messages['en'] = array(
 	'coppatool-tokenerror' => 'Invalid token provided.',
 	'coppatool-invalid-ip' => 'Invalid IP address provided.',
 	'coppatool-invalid-user' => 'Invalid user provided.',
+	'coppatool-see-list-of-blocks' => 'See the list of blocks here',	
+	'coppatool-warning-phalanx-block' => 'Phrase "$1" is globally blocked by Phalanx. $2.',
+	'coppatool-info-started' => '$1 started to rename: $2 to $3 (logs: $4).
+Reason: "$5".',
+	'coppatool-info-finished' => '$1 completed rename: $2 to $3 (logs: $4).
+Reason: "$5".',
+	'coppatool-info-failed' => '$1 FAILED rename: $2 to $3 (logs: $4).
+Reason: "$5".',
+	'coppatool-info-wiki-finished' => '$1 renamed $2 to $3 on $4.
+Reason: "$5".',
+	'coppatool-info-wiki-finished-problems' => '$1 renamed $2 to $3 on $4 with errors.
+Reason: "$5".',
+	'coppatool-error-invalid-ip' => 'Invalid IP addresses provided.',
+	'coppatool-warn-table-missing' => 'Table "<nowiki>$2</nowiki>" does not exist in database "<nowiki>$1</nowiki>."',
 );
 
 /**
