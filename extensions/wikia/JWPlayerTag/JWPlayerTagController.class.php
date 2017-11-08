@@ -3,11 +3,16 @@
 class JWPlayerTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'jwplayer';
-	const DATA_MEDIA_ID_ATTR = 'data-media-id';
-	const DATA_ATTRS = 'data-attrs';
+
 	const ELEMENT_ID_PREFIX = 'jwPlayerTag';
-	const WIDTH_ATTR = 'width';
+
+	const CLASS_ATTR = 'class';
+	const COMPONENT_ATTR = 'data-component';
+	const DATA_ATTRS = 'data-attrs';
+	const DATA_MEDIA_ID_ATTR = 'data-media-id';
+	const ID_ATTR = 'id';
 	const STYLE_ATTR = 'style';
+	const WIDTH_ATTR = 'width';
 
 	public function __construct() {
 		parent::__construct();
@@ -49,9 +54,10 @@ class JWPlayerTagController extends WikiaController {
 		$mediaId = $args['media-id'];
 
 		$attributes = [
-			'class' => 'jwplayer-container',
+			self::CLASS_ATTR => 'jwplayer-container',
+			self::ID_ATTR => self::ELEMENT_ID_PREFIX . $mediaId,
 			self::DATA_MEDIA_ID_ATTR => $mediaId,
-			'id' => self::ELEMENT_ID_PREFIX . $mediaId
+			self::STYLE_ATTR => 'background-color:black; padding-top:56.25%;'
 		];
 
 		return $attributes;
@@ -61,10 +67,10 @@ class JWPlayerTagController extends WikiaController {
 		$width = array_key_exists( self::WIDTH_ATTR, $args ) ? $args[self::WIDTH_ATTR] : null;
 
 		$attributes = [
-			'class' => 'jwplayer-in-article-video',
-			'data-component' => 'jwplayer-embed',
+			self::CLASS_ATTR => 'jwplayer-in-article-video',
+			self::COMPONENT_ATTR => 'jwplayer-embed',
 			self::DATA_MEDIA_ID_ATTR => $args['media-id'],
-			self::DATA_ATTRS => json_encode(['media-id' => $args['media-id']])
+			self::DATA_ATTRS => json_encode( ['media-id' => $args['media-id']] )
 		];
 
 		if ( !empty( $width ) && intval( $width ) > 0 ) {
