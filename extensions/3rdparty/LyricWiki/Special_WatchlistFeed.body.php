@@ -241,7 +241,7 @@ class WatchlistFeed extends SpecialPage
 		$feed->outHeader();
 		$watchlist->prepare();
 		while ( $obj = $watchlist->getItem() ) {
-			$userIp = inet_ntop( $row->rc_ip_bin );
+			$userIp = inet_ntop( $obj->rc_ip_bin );
 			$title = Title::makeTitle( $obj->rc_namespace, $obj->rc_title );
 			$talkpage = $title->getTalkPage();
 
