@@ -597,7 +597,7 @@ abstract class DatabaseUpdater {
 		$activeUsers = $this->db->selectField( 'site_stats', 'ss_active_users', false, __METHOD__ );
 		if ( $activeUsers == -1 ) {
 			$activeUsers = $this->db->selectField( 'recentchanges',
-				'COUNT( DISTINCT rc_user_text )',
+				'COUNT( DISTINCT rc_user )',
 				array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers'" ), __METHOD__
 			);
 			$this->db->update( 'site_stats',

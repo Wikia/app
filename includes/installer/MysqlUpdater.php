@@ -81,7 +81,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'filearchive',                         'patch-filearchive.sql' ),
 			array( 'addField', 'ipblocks',        'ipb_anon_only',    'patch-ipb_anon_only.sql' ),
 			array( 'addIndex', 'recentchanges',   'rc_ns_usertext',   'patch-recentchanges-utindex.sql' ),
-			array( 'addIndex', 'recentchanges',   'rc_user_text',     'patch-rc_user_text-index.sql' ),
 
 			// 1.9
 			array( 'addTable', 'redirect',                           'patch-redirect.sql' ),
