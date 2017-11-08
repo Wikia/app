@@ -338,7 +338,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			}
 		} else {
 			// Anon user
-			$editorName = $oRecentChange->getAttribute( 'rc_user_text' );
+			$editorName = inet_ntop( $oRecentChange->getAttribute( 'rc_ip_bin' ) );
 			$editor = $currentUser->getName() == $editorName ? $currentUser : User::newFromName( $editorName, false );
 		}
 
