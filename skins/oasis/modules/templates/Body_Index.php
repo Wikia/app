@@ -79,10 +79,6 @@
 					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
 				<? endif; ?>
 
-				<? if ( $wg->enableArticleRelatedVideo ) : ?>
-					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
-				<? endif; ?>
-
 				<? if ( $subtitle != '' && $headerModuleName === 'UserPagesHeader' ) : ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<? endif; ?>
