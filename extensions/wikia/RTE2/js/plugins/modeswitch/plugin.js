@@ -27,7 +27,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 				ev.editor.getCommand('ModeSource').enable();
 			}
 		}, this));
-		debugger;
 		// update switching tabs tooltips
 		editor.on('mode', $.proxy(this.updateTooltips, this));
 		editor.on('mode', $.proxy(this.mode, this));
@@ -72,8 +71,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 					editor.setMode('source');
 					editor.setData(data.wikitext, function() {
-						editor.textarea.$.scrollTop = 0;
-						editor.textarea.$.setSelectionRange(0, 0);
+						editor.editable().$.scrollTop = 0;
+						editor.editable().$.setSelectionRange(0, 0);
 					});
 				});
 				break;
@@ -131,7 +130,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	dataReady: function(ev) {
 		var editor = ev.editor;
-debugger;
 		if (editor.mode == 'wysiwyg') {
 			editor.fire('wysiwygModeReady');
 
