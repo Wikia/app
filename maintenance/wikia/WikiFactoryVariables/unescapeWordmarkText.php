@@ -35,6 +35,18 @@ class MigrateWikiWordmarks extends Maintenance {
 		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
 	}
 
+	private function unescape( $value ) {
+		$cnt = 0;
+		do {
+			$cnt++;
+			$old_value = $value;
+			$value = Sanitizer::decodeCharReferences( $value );
+			$value = htmlspecialchars_decode( $value, ENT_QUOTES );
+		} while ( $value !== $old_value || $cnt >= 10 );
+
+		return $value;
+	}
+
 	public function execute() {
 		global $wgCityId, $wgMedusaHostPrefix;
 		$this->dryRun  = $this->hasOption( 'dry-run' );
@@ -75,10 +87,9 @@ class MigrateWikiWordmarks extends Maintenance {
 
 		$this->output( "Updating " . self::KEY_NAME. " for " . $wgCityId . PHP_EOL );
 
-		$keyValue = str_replace( '&amp;amp;', '&amp;', $keyValue );
-		$keyValue = str_replace( '&amp;#', '&#', $keyValue );
+		$keyValue = $this->unescape( $keyValue );
 
-		if ( $keyValue == $oldValue ) {
+		if ( $keyValue == Sanitizer::decodeCharReferences( $oldValue ) ) {
 			$this->output( "Value not changed '" . $keyValue . "' - skipping" . PHP_EOL );
 
 			if ( $fh ) {
@@ -87,7 +98,6 @@ class MigrateWikiWordmarks extends Maintenance {
 			return false;
 		}
 
-		$keyValue = Sanitizer::decodeCharReferences( $keyValue );
 		$settings[self::KEY_NAME] = $keyValue;
 		$this->debug("Setting " . self::KEY_NAME . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
 		if ( $fh ) {
