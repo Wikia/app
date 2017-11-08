@@ -464,7 +464,9 @@ class RenameUserProcess {
 		try {
 			$status = $this->doRun();
 		} catch ( Exception $e ) {
-			$this->addLog( $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine() );
+			\Wikia\Logger\WikiaLogger::instance()->error( "Rename process failed", [
+				'exception' => $e
+			] );
 			$this->addError( wfMessage( 'userrenametool-error-cannot-rename-unexpected' )->inContentLanguage()->text() );
 		}
 
@@ -535,7 +537,7 @@ class RenameUserProcess {
 				return false;
 			}
 
-			$fakeUser->setEmail( null );
+			$fakeUser->setEmail( '' );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
 			$fakeUser->addToDatabase();
