@@ -1,6 +1,7 @@
 export default {
 	adUnitId: '/5441/wka.life/_project43//{custom.namespace}/gpt/{slotName}',
 	custom: {
+		group: 'life',
 		namespace: 'article'
 	},
 	events: {
@@ -29,12 +30,12 @@ export default {
 		}
 	},
 	vast: {
-		adUnitId: '/5441/wka1a.{group}/{src}/desktop/oasis-fv-article/_project43-life'
+		adUnitId: '5441/wka.{custom.group}/_project43//{custom.namespace}/{src}/{pos}'
 	},
 	targeting: {
 		outstream: 'none',
 		s1: '_project43',
-		uap: 'none'
+		uap: '365341572'
 	},
 	state: {
 		adStack: window.adsQueue || [],

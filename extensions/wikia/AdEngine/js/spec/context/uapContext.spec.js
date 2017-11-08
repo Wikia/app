@@ -6,6 +6,9 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 	}
 
 	var mocks = {
+		adEngineBridge: {
+			setUapId: noop
+		},
 		eventDispatcher: {
 			dispatch: noop
 		},
@@ -14,6 +17,7 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 
 	function getContext() {
 		return modules['ext.wikia.adEngine.context.uapContext'](
+			mocks.adEngineBridge,
 			mocks.eventDispatcher,
 			mocks.log
 		);
