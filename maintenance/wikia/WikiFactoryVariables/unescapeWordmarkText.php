@@ -48,7 +48,7 @@ class MigrateWikiWordmarks extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId, $wgMedusaHostPrefix;
+		global $wgCityId;
 		$this->dryRun  = $this->hasOption( 'dry-run' );
 		$this->verbose = $this->hasOption( 'verbose' );
 		$fileName = $this->getOption( 'file', false );
