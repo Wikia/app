@@ -1342,7 +1342,6 @@
 				aria = [];
 
 
-			debugger;
 			if ( special & CKEDITOR.CTRL ) {
 				display.push( isMac ? '⌘' : lang[ CTRL ] );
 				aria.push( isMac ? lang[ CMD ] : lang[ CTRL ] );

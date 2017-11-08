@@ -6,6 +6,7 @@ function flatten($data, $index,&$langContainer,$currentLanguage,$i){
 			flatten($entry,$index . '-' . $key,$langContainer,$currentLanguage,$i);
 		}
 		else {
+			
 			$langContainer[$i][$currentLanguage][ "$index".'-'.$key ] = $entry;
 		}
 	}	
@@ -37,7 +38,7 @@ foreach($desiredPluginNames as $pluginName){
 			array_push($languages,array($currentLanguage => array()));
 			array_push($langCodes,$currentLanguage);
 			$data = json_decode(shell_exec("node script.js $file"));
-			flatten($data,"rte-ck",$languages,$currentLanguage,$i);
+			flatten($data,"rte-ck-"."$pluginName",$languages,$currentLanguage,$i);
 		}
 		if($init === True){
 			foreach($languages as $key => $value){			
@@ -82,7 +83,7 @@ foreach($desiredPluginNames as $pluginName){
 
 }
 
-$desiredPluginNames = array("toolbar","basicstyles","contextmenu","button","clipboard","fakeobjects","format","indent","list","pastetext","removeformat","sourcearea","undo","table");
+$desiredPluginNames = array("toolbar","basicstyles","contextmenu","button","clipboard","fakeobjects","format","indent","list","pastetext","removeformat","sourcearea","undo","table","contextmenu","link","justify");
 
 
 
