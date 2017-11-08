@@ -1,26 +1,23 @@
-<div class="featured-video-wrapper">
-	<div id="article-video" class="article-video">
-		<img class="video-thumbnail"
-			 src="<?= Sanitizer::encodeAttribute( $videoDetails['thumbnailUrl'] ); ?>">
-		<div class="video-container">
-			<div class="video-placeholder">
-				<img class="video-thumbnail"
-					 src="<?= Sanitizer::encodeAttribute( $videoDetails['thumbnailUrl'] ); ?>">
-				<img src="<?= $closeIconUrl; ?>" class="close">
-				<svg class="spinner">
-					<circle cx="24" cy="24" r="22"></circle>
-				</svg>
-			</div>
-			<div id="ooyala-article-video" class="ooyala-article-video"></div>
-			<div class="video-details">
-				<div class="video-label"><?= wfMessage( 'articlevideo-watch' )->escaped() ?>
-					<span class="video-time"><?= $videoDetails['duration'] ?></span>
+<div class="featured-video__wrapper">
+	<div class="featured-video">
+		<div class="featured-video__player-container">
+			<div id="featured-video__player" class="featured-video__player"></div>
+			<div class="featured-video__details">
+				<div class="featured-video__label"><?= wfMessage( 'articlevideo-watch' )->escaped() ?>
+					<span class="featured-video__time"><?= $videoDetails['duration'] ?></span>
 				</div>
-				<div class="video-title"><?= htmlspecialchars( $videoDetails['title'] ) ?></div>
-				<?= $app->renderPartial( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
+				<div
+					class="featured-video__title"><?= htmlspecialchars( $videoDetails['title'] ) ?></div>
 			</div>
-			<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>
+			<?= DesignSystemHelper::renderSvg( 'wds-icons-cross-tiny', 'wds-icon wds-icon-tiny featured-video__close' ) ?>
 		</div>
+		<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>
+		<script>
+			define('wikia.articleVideo.featuredVideo.data', function() {
+				return <?= json_encode($videoDetails); ?>;
+			})
+		</script>
+		<script><?= $jwPlayerScript ?></script>
 	</div>
 	<?= $app->renderPartial( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
 </div>

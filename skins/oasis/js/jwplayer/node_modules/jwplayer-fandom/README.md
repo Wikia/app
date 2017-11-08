@@ -59,13 +59,17 @@ Id of DOM element where the player should be placed
     // set to true if you want to enable comscore tracking
     comscore: boolean
   },
-  autoplay: {
+  // set to true if you want video to autostart
+  autoplay: boolean,
+  // if settings is not defined or all show* properties are set to false, settings icon doesn't appear
+  settings: {
     // set to true when you want to give user option to enable/disable autoplay
     // autoplay toggle appears in settings menu which sends event `autoplayToggle` on click
     // application should listen on this event and set cookie for enabling/disabling autoplay for user
-    showToggle: true,
-    // set to true if you want video to autostart
-    enabled: true,
+    showAutoplayToggle: boolean,
+    // set to true when you want to give user option to change quality of the video
+    // show quality option doesn't appear in Safari and mobile browsers even if the option is set to true
+    showQuality: boolean,
   },
   related: {
     // countdown time to autoplay next video

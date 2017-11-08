@@ -107,7 +107,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoTracker.js',
-		'//extensions/wikia/AdEngine/js/tracking/pageLayout.js',
 		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
@@ -388,7 +387,6 @@ $config['oasis_jquery'] = [
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//resources/wikia/polyfills/array.js',
-		'//resources/wikia/polyfills/dom.js',
 
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
@@ -856,7 +854,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoTracker.js',
-		'//extensions/wikia/AdEngine/js/tracking/pageLayout.js',
 		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',

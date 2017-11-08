@@ -472,19 +472,6 @@ class UserIdentityBox extends WikiaObject {
 	}
 
 	/**
-	 * Gets DB object
-	 *
-	 * @return array
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	private function getDb( $type = DB_SLAVE ) {
-		global $wgSharedDB;
-
-		return wfGetDB( $type, array(), $wgSharedDB );
-	}
-
-	/**
 	 * Gets user group and additionaly sets other user's data (blocked, founder)
 	 *
 	 * @param array $data reference to user data array

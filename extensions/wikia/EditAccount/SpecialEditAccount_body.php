@@ -465,15 +465,8 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true
 	 */
 	function clearUnsubscribe() {
-		global $wgExternalAuthType;
 		$this->mUser->setGlobalPreference( 'unsubscribed', null );
 		$this->mUser->saveSettings();
-
-		// delete the record from all the secondary clusters
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			$userId = $this->mUser->getId();
-			ExternalUser_Wikia::removeFromSecondaryClusters( $userId );
-		}
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-unsub', $this->mUser->mName );
 

@@ -604,7 +604,10 @@ class User implements JsonSerializable {
 		if ( $ids == [] ) {
 			return [];
 		}
-		elseif ( count( $ids ) === 1 ) {
+
+		$ids = array_unique( $ids, SORT_NUMERIC );
+
+		if ( count( $ids ) === 1 ) {
 			// SUS-3219 - fall back to well-cached User::whoIs when we want to resolve a single user ID
 			$userId = $ids[0];
 
@@ -614,8 +617,6 @@ class User implements JsonSerializable {
 				$userId => self::whoIs( $userId )
 			];
 		}
-
-		$ids = array_unique( $ids, SORT_NUMERIC );
 
 		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
 		$res = $sdb->select(
@@ -3298,7 +3299,11 @@ class User implements JsonSerializable {
 	 */
 	public function addToDatabase() {
 		$this->load();
-		$dbw = wfGetDB( DB_MASTER );
+
+		// wikia change
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+
 		$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 		$dbw->insert( 'user',
 			array(
@@ -3311,6 +3316,7 @@ class User implements JsonSerializable {
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
 				'user_birthdate' => $this->mBirthDate, // Wikia. Added to reflect our user table layout.
 				'user_editcount' => 0,
+				'user_options' => '', // Wikia. Field 'user_options' doesn't have a default value
 			), __METHOD__
 		);
 		$this->mId = $dbw->insertId();

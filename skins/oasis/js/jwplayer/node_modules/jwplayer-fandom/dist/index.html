@@ -28,12 +28,18 @@
 			// set to true if you want to enable comscore tracking
 			comscore: false
 		},
-		autoplay: {
+		// set to true if you want video to autostart
+		autoplay: true,
+		// set to true if you want to have video initially muted
+		mute: true,
+		settings: {
 			// set to true when you want to give user option to enable/disable autoplay
 			// autoplay toggle appears in settings menu which sends event `autoplayToggle` on click
-			showToggle: true,
-			// set to true if you want video to autostart
-			enabled: true,
+			showAutoplayToggle: true,
+			// set to true when you want to give user option to change quality of the video
+			// show quality option doesn't appear in Safari and mobile browsers even if the option is set to true
+			// these browsers have native HLS support
+			showQuality: true
 		},
 		related: {
 			// countdown time to autoplay next video
