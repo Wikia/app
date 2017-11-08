@@ -1017,7 +1017,7 @@ CREATE TABLE /*_*/recentchanges (
   rc_ip varbinary(40) NOT NULL default '',
 
   -- SUS-3079: IP address the edit was made from, in binary format
-  rc_ip_bin VARBINARY(16) NULL DEFAULT NULL,
+  rc_ip_bin VARBINARY(16) NOT NULL DEFAULT '',
 
   -- Text length in characters before
   -- and after the edit
