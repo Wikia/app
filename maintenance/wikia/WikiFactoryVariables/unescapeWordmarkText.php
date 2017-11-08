@@ -7,7 +7,7 @@
 * 	# this will process wordmark-text for wiki with ID 119:
 * 	migrateWikiWordmarks --dry-run --wiki 119 --verbose
 *   # or
-*   /usr/wikia/backend/bin/run_maintenance '--script=wikia/WikiFactoryVariables/unescapeWordmarkText.php --dry-run --verbose' --id=119
+*   /usr/wikia/backend/bin/run_maintenance '--script=wikia/WikiFactoryVariables/unescapeWordmarkText.php --dry-run' --id=119
 */
 
 ini_set( 'display_errors', 'stderr' );
@@ -23,7 +23,6 @@ use \Wikia\Logger\WikiaLogger;
 class MigrateWikiWordmarks extends Maintenance {
 
 	protected $dryRun  = false;
-	protected $verbose = false;
 	const KEY_NAME = 'wordmark-text';
 	const WIKI_FACTORY_VARIABLE = "wgOasisThemeSettings";
 
@@ -31,7 +30,6 @@ class MigrateWikiWordmarks extends Maintenance {
 		parent::__construct();
 		$this->mDescription = "Unescapes wordmark-text variable in wgOasisThemeSettings";
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
-		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
 	}
 
@@ -50,8 +48,8 @@ class MigrateWikiWordmarks extends Maintenance {
 	public function execute() {
 		global $wgCityId;
 		$this->dryRun  = $this->hasOption( 'dry-run' );
-		$this->verbose = $this->hasOption( 'verbose' );
 		$fileName = $this->getOption( 'file', false );
+		$wgUser = User::newFromName( Wikia::BOT_USER, false );
 
 		$themeSettings = new ThemeSettings( $wgCityId );
 
@@ -99,14 +97,14 @@ class MigrateWikiWordmarks extends Maintenance {
 		}
 
 		$settings[self::KEY_NAME] = $keyValue;
-		$this->debug("Setting " . self::KEY_NAME . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
+		$this->output("Setting " . self::KEY_NAME . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
 		if ( $fh ) {
 			fwrite( $fh, sprintf("%d, \"%s\", \"%s\"\n", $wgCityId, $oldValue, $keyValue));
 		}
 
 		if ( !$this->dryRun ) {
 			$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
-				'wgUser' => User::newFromName( Wikia::BOT_USER, false )
+				'wgUser' => $wgUser
 			] );
 
 			$globalStateWrapper->wrap( function () use ( $themeSettings, $settings ) {
@@ -119,16 +117,6 @@ class MigrateWikiWordmarks extends Maintenance {
 		}
 
 		$this->output(" ... DONE." . PHP_EOL );
-	}
-
-	/**
-	 * Print the message if verbose is enabled
-	 * @param $msg
-	 */
-	protected function debug( $msg ) {
-		if ( $this->verbose ) {
-			$this->output( $msg );
-		}
 	}
 
 }
