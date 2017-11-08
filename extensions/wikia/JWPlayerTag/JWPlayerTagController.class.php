@@ -50,6 +50,7 @@ class JWPlayerTagController extends WikiaController {
 
 		$attributes = [
 			'class' => 'jwplayer-container',
+			self::DATA_MEDIA_ID_ATTR => $mediaId,
 			'id' => self::ELEMENT_ID_PREFIX . $mediaId
 		];
 
