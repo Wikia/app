@@ -43,6 +43,9 @@ class WikiaUpdater {
 			# indexes drop
 			array( 'dropIndex', 'ach_user_badges', 'id',  $dir . 'patch-ach-user-badges-drop-id.sql', true ), // SUS-3097
 			array( 'dropIndex', 'ach_user_badges', 'notified_id',  $dir . 'patch-ach-user-badges-drop-notified_id.sql', true ), // SUS-3097
+			array( 'dropIndex', 'ach_custom_badges', 'id',  $dir . 'patch-ach_custom_badges-drop-id.sql', true ), // SUS-3098
+			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
+			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
 
 			# functions
 			array( 'WikiaUpdater::do_page_vote_unique_update' ),
@@ -66,6 +69,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'hidden' ), // SUS-2401
 			array( 'WikiaUpdater::do_clean_math_table' ),
 			array( 'WikiaUpdater::do_transcache_update' ),
+			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
 			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
@@ -178,6 +182,47 @@ class WikiaUpdater {
 		else {
 			$updater->output( "... transcache table is up-to-date.\n" );
 		}
+	}
+
+	/**
+	 * @author Mix <mix@fandom.com>
+	 */
+	public static function do_wall_history_ipv6_update( DatabaseUpdater $updater ) {
+		$db = $updater->getDB();
+		$table = 'wall_history';
+		$old_column = 'post_user_ip';
+		$new_column = 'post_user_ip_bin';
+
+		$updater->output( sprintf( "starting %s...\n", __METHOD__ ) );
+
+		if ( ! $db->tableExists( $table ) ) {
+			$updater->output( "$table does not exist, skipping $table update.\n" );
+			return false;
+		}
+
+		if ( ! $db->fieldInfo( $table, $old_column ) ) {
+			$updater->output( "$table has already been migrated, skipping the update.\n" );
+			return false;
+		}
+
+		if ( ! $db->fieldInfo( $table, $new_column ) ) {
+			$updater->output( "adding $new_column in $table...\n" );
+			$db->query( sprintf( 'ALTER TABLE %s ADD COLUMN %s VARBINARY(16) DEFAULT NULL AFTER %s', $table, $new_column, $old_column), __METHOD__ );
+		} else {
+			$updater->output( "$new_column already exists in $table but it is OK...\n" );
+		}
+
+		$updater->output( "migrating data from $old_column to $new_column...\n" );
+		$db->query(
+			sprintf( 'UPDATE %s SET %s = INET6_ATON(INET_NTOA(%s)) WHERE %s IS NULL AND %s IS NOT NULL;',
+				$table, $new_column, $old_column, $new_column, $old_column),
+			__METHOD__
+		);
+
+		$updater->output( "dropping $old_column in $table...\n" );
+		$db->query( sprintf( 'ALTER TABLE %s DROP COLUMN %s', $table, $old_column ), __METHOD__ );
+
+		$updater->output( "done.\n" );
 	}
 
 	/**

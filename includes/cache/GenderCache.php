@@ -116,6 +116,9 @@ class GenderCache {
 			if ( isset( $this->cache[$name] ) ) {
 				// Skip users whose gender setting we already know
 				unset( $users[$index] );
+			} elseif ( !User::isValidUserName( $name ) ) {
+				// SUS-3215 - do not perform queries for IP addresses
+				unset( $users[$index] );
 			} else {
 				$users[$index] = $name;
 				// For existing users, this value will be overwritten by the correct value

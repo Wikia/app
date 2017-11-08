@@ -1,6 +1,6 @@
 <?php
 class StaffLogger {
-	static public function log($type, $action, $userId, $userName, $userdstId, $userNamedst, $comment = "") {
+	static public function log(string $type, string $action, int $userId, string $userName, int $userdstId, string $userNamedst, $comment = "") {
 		global $wgSitename,$wgCityId,$wgExternalDatawareDB;
 		$dbw =  wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		$now = wfTimestampNow();
@@ -70,7 +70,7 @@ class StaffLogger {
 			$reason
 		)->inLanguage( 'en' )->text();
 		// sadly, $type and $action have 10-character limit, hence 'wikifactor' and 'pubstatus'.
-		self::log( 'wikifactor', 'pubstatus', $wgUser->getID(), $wgUser->getName(), '', '',  $comment );
+		self::log( 'wikifactor', 'pubstatus', $wgUser->getID(), $wgUser->getName(), 0, '',  $comment );
 		return true;
 	}
 }

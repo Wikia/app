@@ -122,7 +122,8 @@ define('ext.wikia.adEngine.video.player.porvata', [
 					if (!viewportListener) {
 						viewportListener = viewportObserver.addListener(viewportHook, inViewportCallback);
 					}
-
+				});
+				video.addEventListener('loaded', function () {
 					tryEnablingFloating(video, inViewportCallback);
 				});
 				video.addEventListener('resume', function () {

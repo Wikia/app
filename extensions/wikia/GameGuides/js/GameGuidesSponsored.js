@@ -23,7 +23,7 @@ $(function () {
 			setup = function ( elem ) {
 				(elem || $ul.find( '.video-name' )
 					).autocomplete( {
-					serviceUrl: window.wgServer + window.wgScript,
+					serviceUrl: window.wgScript,
 					params: {
 						action: 'ajax',
 						rs: 'getLinkSuggest',

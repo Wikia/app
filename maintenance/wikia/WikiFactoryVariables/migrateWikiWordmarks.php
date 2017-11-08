@@ -37,15 +37,40 @@ class MigrateWikiWordmarks extends Maintenance {
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 		$this->addOption( 'keyName', 'Key in WikiFactory variable which should be migrated to https', true, true, 'k' );
-		$this->addOption( 'reason', 'Reason to provide when setting a variable', false, true );
+		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
+	}
+
+	public function getWordmarkUrl( $wordmarkUrl ) {
+		global $wgCityId;
+
+		$wgUploadPath = WikiFactory::getVarValueByName(
+			'wgUploadPath',
+			$wgCityId
+		);
+
+		if ( !VignetteRequest::isVignetteUrl( $wordmarkUrl ) ) {
+			$wordmarkPath = explode( '/images/', $wordmarkUrl )[0];
+
+			if ( !empty( $wordmarkPath ) ) {
+				$wordmarkUrl = str_replace(
+					$wordmarkPath . '/images',
+					$wgUploadPath,
+					$wordmarkUrl
+				);
+			}
+
+			$wordmarkUrl = wfReplaceImageServer( $wordmarkUrl, SassUtil::getCacheBuster() );
+		}
+
+		return $wordmarkUrl;
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgMedusaHostPrefix;
 		$this->dryRun  = $this->hasOption( 'dry-run' );
 		$this->verbose = $this->hasOption( 'verbose' );
 		$this->keyName = $this->getOption( 'keyName', '' );
-		$reason        = $this->getOption( 'reason' );
+		$fileName = $this->getOption( 'file', false );
 
 		if ( empty( $this->keyName ) ) {
 			$this->error( "Error: Empty key name." . PHP_EOL );
@@ -58,66 +83,83 @@ class MigrateWikiWordmarks extends Maintenance {
 			return false;
 		}
 
-		$this->output( "Variable: " . self::WIKI_FACTORY_VARIABLE . " (Id: $varData[cv_id])" . PHP_EOL );
-		$this->debug( "Variable data: " . json_encode( $varData ) . PHP_EOL );
+		$themeSettings = new ThemeSettings( $wgCityId );
 
-		$wg = F::app()->wg;
-		$wg->User = User::newFromName( Wikia::BOT_USER );
-		$wg->User->load();
+		$fh = false;
+		if ( $fileName ) {
+			$fh = fopen( $fileName, "a" );
+			if ( !$fh ) {
+				$this->error( "Could not open file '$fileName' for write!'" . PHP_EOL );
+				return false;
+			}
+		}
 
+		$settings = $themeSettings->getSettings();
 
-		$this->output( "Updating {$this->keyName} in " . self::WIKI_FACTORY_VARIABLE . PHP_EOL );
-		$prevValue = unserialize($varData['cv_value']);
-		$keyValue = $prevValue[$this->keyName];
+		if ( !array_key_exists( $this->keyName, $settings ) ) {
+			$this->output("Key does not exists for $wgCityId - skipping" . PHP_EOL);
+			if ( $fh ) {
+				fclose( $fh );
+			}
+			return false;
+		}
+
+		$oldValue = $keyValue = $settings[$this->keyName];
+		if ( $this->keyName == "wordmark-image-url" ) {
+			$oldFinalValue = $themeSettings->getWordmarkUrl();
+		} else {
+			$oldFinalValue = wfReplaceImageServer( $oldValue, time() );
+		}
 
 		if ( empty( $keyValue ) ) {
-			$this->output( "Key is empty - skipping" . PHP_EOL );
-			return false;
-		}
+			$this->output( "Key is empty for $wgCityId - skipping" . PHP_EOL );
 
-		if ( strpos( $keyValue,"http://" ) !== 0 ) {
-			$this->output( "Value doesn't start with 'http://' " . $keyValue .  " - skipping " . PHP_EOL );
-			return false;
-		}
-
-		$replacements = 0;
-		$keyValue = preg_replace( '#^http://#', "https://", $keyValue, 1, $replacements );
-
-		if ( $replacements !== 1 ) {
-			$this->output( "Value not changed " . $keyValue . "- skipping" . PHP_EOL );
-			return false;
-		}
-
-		$newValue = array_filter(array_unique(array_merge($prevValue, [ $this->keyName => $keyValue ])));
-		$this->debug("Setting " . self::WIKI_FACTORY_VARIABLE . " to " . var_export( $newValue, true ) . PHP_EOL );
-		$status = $this->setVariable( $wgCityId, $newValue, $reason );
-
-		if ( $this->dryRun || $status ) {
-			$this->output(" ... DONE." . PHP_EOL );
-		} else {
-			$this->output( " ... FAILED." . PHP_EOL );
-		}
-	}
-
-	/**
-	 * Set the variable
-	 * @param integer $wikiId
-	 * @param mixed $varValue
-	 * @param string $reason
-	 * @return boolean
-	 */
-	protected function setVariable( $wikiId, $varValue, $reason ) {
-		$status = false;
-		if ( !$this->dryRun ) {
-			$status = WikiFactory::setVarByName( self::WIKI_FACTORY_VARIABLE, $wikiId, $varValue, $reason );
-			if ( $status ) {
-				WikiFactory::clearCache( $wikiId );
+			if ( $fh ) {
+				fclose( $fh );
 			}
-		} else {
-			$this->output( "Dry run, not changing variable." . PHP_EOL );
+			return false;
 		}
 
-		return $status;
+		$this->output( "Updating {$this->keyName} for " . $wgCityId . PHP_EOL );
+
+		$keyValue = str_replace( 'http://', 'https://',
+			str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $keyValue ) );
+
+		if ( $keyValue == $oldValue ) {
+			$this->output( "Value not changed " . $keyValue . "- skipping" . PHP_EOL );
+
+			if ( $fh ) {
+				fclose( $fh );
+			}
+			return false;
+		}
+
+		$settings[$this->keyName] = $keyValue;
+		if ( $this->keyName == "wordmark-image-url" ) {
+			$newFinalValue = $this->getWordmarkUrl( $keyValue );
+		} else {
+			$newFinalValue = wfReplaceImageServer( $keyValue, time() );
+		}
+		$this->debug("Setting " . $this->keyName . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
+		if ( $fh ) {
+			fwrite( $fh, sprintf("%d, \"%s\", \"%s\", \"%s\", \"%s\"\n", $wgCityId, $oldValue, $oldFinalValue, $keyValue, $newFinalValue));
+		}
+
+		if ( !$this->dryRun ) {
+			$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+				'wgUser' => User::newFromName( Wikia::BOT_USER, false )
+			] );
+
+			$globalStateWrapper->wrap( function () use ( $themeSettings, $settings ) {
+				$themeSettings->saveSettings( $settings );
+			} );
+		}
+
+		if ( $fh ) {
+			fclose( $fh );
+		}
+
+		$this->output(" ... DONE." . PHP_EOL );
 	}
 
 	/**

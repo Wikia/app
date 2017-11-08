@@ -9,6 +9,13 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	const CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE = 'Bad request. Template type %s is not valid.';
 	const CLASSIFY_TEMPLATE_EXCEPTION_CODE = 400;
 
+	/** @var Logger $logger */
+	private $logger;
+
+	public function __construct() {
+		$this->logger = new Logger();
+	}
+
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
 	 *
@@ -42,6 +49,11 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		self::TEMPLATE_INFOBOX,
 		self::TEMPLATE_CUSTOM_INFOBOX,
 	];
+
+	public function setContext( IContextSource $context ) {
+		parent::setContext( $context );
+		$this->logger->setContext( $context );
+	}
 
 	/**
 	 * Fallback to the Unclassified string if a received type is not supported by
@@ -105,7 +117,7 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 
 		parent::classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider );
 
-		( new Logger() )->logClassificationChange( $pageId, $templateType, $oldType );
+		$this->logger->logClassificationChange( $pageId, $templateType, $oldType );
 
 		$title = Title::newFromID( $pageId );
 		if ( $title instanceof Title ) {

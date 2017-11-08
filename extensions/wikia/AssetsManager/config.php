@@ -238,14 +238,6 @@ $config['adengine2_top_js'] = [
 	],
 ];
 
-$config['adengine2_amazon_match_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
-	],
-];
-
 $config['adengine2_a9_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
@@ -272,6 +264,7 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/onemobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubiconDisplay.js',
@@ -394,7 +387,6 @@ $config['oasis_jquery'] = [
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//resources/wikia/polyfills/array.js',
-		'//resources/wikia/polyfills/dom.js',
 
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
@@ -498,6 +490,7 @@ $config['oasis_nojquery_shared_js'] = [
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/Tracking.js',
+		'//skins/oasis/js/connectionType.js',
 
 		'//skins/shared/scripts/onScroll.js',
 
@@ -832,7 +825,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
-		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/a9.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
@@ -945,6 +937,13 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_js',
+
+		// JWPlayer specific
+		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads-tracking.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-plugin.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
 	],
 ];
 
@@ -2696,7 +2695,6 @@ $config['jwplayer_scss'] = [
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/styles/jwplayer.scss',
 		'//extensions/wikia/ArticleVideo/styles/jwplayer-overrides.scss',
-		'//extensions/wikia/ArticleVideo/styles/wikia-jw-settings.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-feedback.scss',
 		'//extensions/wikia/ArticleVideo/styles/video-attribution.scss'
 	],

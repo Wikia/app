@@ -51,6 +51,7 @@ class Hooks {
 		if ( empty( $typeNew )
 			 || $typeNew === \TemplateClassificationService::NOT_AVAILABLE
 			 || $typeNew === $typeCurrent
+			 || $user->isAnon()
 		) {
 			return true;
 		}

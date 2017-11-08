@@ -3,6 +3,7 @@
 use Swagger\Client\ApiException;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
+use Wikia\Service\User\ExternalAuth\FacebookService;
 
 class FacebookPreferencesController extends WikiaController {
 	use Loggable;

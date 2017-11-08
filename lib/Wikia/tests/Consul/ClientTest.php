@@ -10,6 +10,7 @@ class ConsulClientTest extends WikiaBaseTest {
 	function testIsConsulAddress() {
 		$this->assertTrue( Client::isConsulAddress( 'slave.db-smw.service.consul' ) );
 		$this->assertTrue( Client::isConsulAddress( 'master.db-a.service.consul' ) );
+		$this->assertTrue( Client::isConsulAddress( 'geo-db-sharedb-master.query.consul' ) );
 
 		$this->assertFalse( Client::isConsulAddress( 'statsdb-s9' ) );
 	}
