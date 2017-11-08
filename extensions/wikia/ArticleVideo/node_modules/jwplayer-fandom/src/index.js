@@ -104,6 +104,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		}
 
 		if (options.tracking) {
+			options.tracking.pixel = options.videoDetails.playlist[0].pixel;
 			wikiaJWPlayerTracking(playerInstance, options.autoplay, options.tracking);
 		}
 
