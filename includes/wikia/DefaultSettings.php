@@ -1041,6 +1041,12 @@ $wgResourceLoaderAssetsSkinMapping = [
 $wgArticleCountMethod = "any";
 
 /**
+ * @name $wgEnableResourceLoaderRewrites
+ * enable rewriting of Resource Loader links on nocookie domain
+ */
+$wgEnableResourceLoaderRewrites = true;
+
+/**
  * Javascript minifier used by ResourceLoader
  * @var false|callback
  */
