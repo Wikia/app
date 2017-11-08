@@ -532,31 +532,27 @@ class Block {
 	 * blocked by this Block. This will use the recentchanges table.
 	 *
 	 * @param Block $block
-	 * @param Array &$blockIds
-	 * @return Array: block IDs of retroactive autoblocks made
+	 * @param int[] &$blockIds
 	 */
 	protected static function defaultRetroactiveAutoblock( Block $block, array &$blockIds ) {
+		// SUS-3079: Target is not a registered user, there is nothing to autoblock
+		if ( !( $block->getTarget() instanceof User ) ) {
+			return;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$options = array( 'ORDER BY' => 'rc_timestamp DESC' );
-		$conds = array( 'rc_user_text' => (string)$block->getTarget() );
+		$options = [ 'ORDER BY' => 'rc_timestamp DESC' ];
+		$conds = [ 'rc_user' => $block->getTarget()->getId() ];
 
 		// Just the last IP used.
-		$options['LIMIT'] = 1;
+		$ip = $dbr->selectField( 'recentchanges', 'rc_ip_bin', $conds, __METHOD__, $options );
 
-		$res = $dbr->select( 'recentchanges', array( 'rc_ip' ), $conds,
-			__METHOD__ ,  $options );
+		$userIp = inet_ntop( $ip );
+		$autoBlockId = $block->doAutoblock( $userIp );
 
-		if ( !$dbr->numRows( $res ) ) {
-			# No results, don't autoblock anything
-			wfDebug( "No IP found to retroactively autoblock\n" );
-		} else {
-			foreach ( $res as $row ) {
-				if ( $row->rc_ip ) {
-					$id = $block->doAutoblock( $row->rc_ip );
-					if ( $id ) $blockIds[] = $id;
-				}
-			}
+		if ( $autoBlockId ) {
+			$blockIds[] = $autoBlockId;
 		}
 	}
 

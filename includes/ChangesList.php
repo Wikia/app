@@ -359,12 +359,13 @@ class ChangesList extends ContextSource {
 	 */
 	public function insertUserRelatedLinks( &$s, &$rc ) {
 		if( $this->isDeleted( $rc, Revision::DELETED_USER ) ) {
-			$s .= ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
-		} else {
-			$s .= $this->getLanguage()->getDirMark() . Linker::userLink( $rc->mAttribs['rc_user'],
-				$rc->mAttribs['rc_user_text'] );
-			$s .= Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+			$s .= ' <span class="history-deleted">' . $this->msg( 'rev-deleted-user' )->escaped() . '</span>';
+			return;
 		}
+
+		$s .= $this->getLanguage()->getDirMark();
+		$s .= Linker::userLink( $rc->mAttribs['rc_user'], $rc->getUserIp() );
+		$s .= Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->getUserIp() );
 	}
 
 	/**
@@ -488,13 +489,13 @@ class ChangesList extends ContextSource {
 				$rev = new Revision( array(
 					'id'        => $rc->mAttribs['rc_this_oldid'],
 					'user'      => $rc->mAttribs['rc_user'],
-					'user_text' => $rc->mAttribs['rc_user_text'],
+					'user_text' => $rc->getUserIp(),
 					'deleted'   => $rc->mAttribs['rc_deleted']
 				) );
 				$rev->setTitle( $page );
 
 				/** Start of Wikia change @author nAndy */
-				$rollbackLink = Linker::generateRollback( $rev, $this->getContext() );
+				$rollbackLink = Linker::generateRollback( $rev );
 				Hooks::run( 'ChangesListInsertRollback', array($this, &$s, &$rollbackLink, $rc) );
 
 				$s .= ' '.$rollbackLink;
@@ -787,6 +788,12 @@ class EnhancedChangesList extends ChangesList {
 		return $ret;
 	}
 
+	/**
+	 * @param RCCacheEntry|RecentChange $rc
+	 * @param $unpatrolled
+	 * @param $counter
+	 * @return array|bool|Object
+	 */
 	public function lineLinksCache($rc, $unpatrolled, $counter) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
@@ -795,8 +802,8 @@ class EnhancedChangesList extends ChangesList {
 		$out = $wgMemc->get($memcKey);
 		if(!empty($out)) {
 			// wikia change start (BAC-492)
-			$out['usertalklink'] = $this->isDeleted($rc, Revision::DELETED_USER) ?
-				null : Linker::userToolLinks($rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text']);
+			$out['usertalklink'] = $this->isDeleted( $rc, Revision::DELETED_USER ) ?
+				null : Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->getUserIp() );
 			// wikia change end
 			wfProfileOut( __METHOD__ );
 			return $out;
@@ -808,8 +815,8 @@ class EnhancedChangesList extends ChangesList {
 			$out['userlink'] = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
 			$out['usertalklink'] = null;
 		} else {
-			$out['userlink'] = Linker::userLink( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
-			$out['usertalklink'] = Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+			$out['userlink'] = Linker::userLink( $rc->mAttribs['rc_user'], $rc->getUserIp() );
+			$out['usertalklink'] = Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->getUserIp() );
 		}
 		
 		$out['clink'] = Linker::linkKnown( $rc->getTitle() );

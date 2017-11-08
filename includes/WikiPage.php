@@ -2337,6 +2337,7 @@ class WikiPage extends Page implements IDBAccessObject {
 	 *
 	 * @param $resultDetails Array: contains result-specific array of additional values
 	 * @param $guser User The user performing the rollback
+	 * @return array
 	 */
 	public function commitRollback( $fromP, $summary, $bot, &$resultDetails, User $guser ) {
 		global $wgUseRCPatrol, $wgContLang;
@@ -2397,14 +2398,20 @@ class WikiPage extends Page implements IDBAccessObject {
 			$set['rc_patrolled'] = 1;
 		}
 
-		if ( count( $set ) ) {
-			$dbw->update( 'recentchanges', $set,
-				array( /* WHERE */
-					'rc_cur_id' => $current->getPage(),
-					'rc_user_text' => $current->getUserText(),
-					"rc_timestamp > '{$s->rev_timestamp}'",
-				), __METHOD__
-			);
+		if ( !empty( $set ) ) {
+			$whereCondition = [
+				'rc_cur_id' => $current->getPage(),
+				"rc_timestamp > '{$s->rev_timestamp}'",
+			];
+
+			// SUS-3079: query based on user ID for registered users and IP address for anons
+			if ( $current->getUser() ) {
+				$whereCondition['rc_user'] = $current->getUser();
+			} else {
+				$whereCondition['rc_ip_bin'] = inet_pton( $current->getUserText() );
+			}
+
+			$dbw->update( 'recentchanges', $set, $whereCondition, __METHOD__ );
 		}
 
 		# Generate the edit summary if necessary
