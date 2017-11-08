@@ -14,10 +14,6 @@ class JWPlayerTagController extends WikiaController {
 	const STYLE_ATTR = 'style';
 	const WIDTH_ATTR = 'width';
 
-	public function __construct() {
-		parent::__construct();
-	}
-
 	public static function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderTag' ] );
 
@@ -53,14 +49,12 @@ class JWPlayerTagController extends WikiaController {
 	private function getPlayerAttributes( $args ): array {
 		$mediaId = $args['media-id'];
 
-		$attributes = [
+		return [
 			self::CLASS_ATTR => 'jwplayer-container',
 			self::ID_ATTR => self::ELEMENT_ID_PREFIX . $mediaId,
 			self::DATA_MEDIA_ID_ATTR => $mediaId,
 			self::STYLE_ATTR => 'background-color:black; padding-top:56.25%;'
 		];
-
-		return $attributes;
 	}
 
 	private function getWrapperAttributes( $args ): array {
