@@ -142,16 +142,18 @@ class AbuseFilterHooks {
 		return $filter_result == '' || $filter_result === true;
 	}
 
-	public static function onRecentChangeSave( $recentChange ) {
+	public static function onRecentChangeSave( RecentChange $recentChange ) {
 		$title = Title::makeTitle(
 			$recentChange->mAttribs['rc_namespace'],
 			$recentChange->mAttribs['rc_title']
 		);
 		$action = $recentChange->mAttribs['rc_log_type'] ?
 			$recentChange->mAttribs['rc_log_type'] : 'edit';
-		$actionID = implode( '-', array(
-				$title->getPrefixedText(), $recentChange->mAttribs['rc_user_text'], $action
-			) );
+		$actionID = implode( '-', [
+			$title->getPrefixedText(),
+			$recentChange->mAttribs['rc_user'] ?: $recentChange->mAttribs['rc_ip_bin'],
+			$action,
+		] );
 
 		if ( !empty( AbuseFilter::$tagsToSet[$actionID] )
 			&& count( $tags = AbuseFilter::$tagsToSet[$actionID] ) )
