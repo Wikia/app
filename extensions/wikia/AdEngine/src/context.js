@@ -21,7 +21,7 @@ export default {
 		}
 	},
 	vast: {
-		adUnitId: '{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{pos}',
+		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{pos}',
 	},
 	targeting: {
 		outstream: 'none',

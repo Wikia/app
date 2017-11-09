@@ -17,10 +17,6 @@ Context.extend(config);
 TemplateService.register(BigFancyAdBelow);
 SlotService.add(blbSlot);
 
-function setUapId(uapId) {
-	UniversalAdPackage.setUapId(uapId);
-}
-
 function loadCustomAd(callback) {
 	return (params) => {
 		try {
@@ -38,6 +34,6 @@ function updatePageLevelTargeting(params) {
 
 export {
 	loadCustomAd,
-	setUapId,
 	updatePageLevelTargeting,
+	UniversalAdPackage
 };
