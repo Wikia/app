@@ -1042,7 +1042,7 @@ CREATE INDEX /*i*/rc_namespace_title ON /*_*/recentchanges (rc_namespace, rc_tit
 CREATE INDEX /*i*/rc_cur_id ON /*_*/recentchanges (rc_cur_id);
 CREATE INDEX /*i*/new_name_timestamp ON /*_*/recentchanges (rc_new,rc_namespace,rc_timestamp);
 CREATE INDEX /*i*/rc_ip ON /*_*/recentchanges (rc_ip);
-CREATE INDEX /*i*/rc_ip_bin ON /*_*/recentchanges (rc_ip_bin);
+CREATE INDEX /*i*/rc_ip_bin ON /*_*/recentchanges (rc_ip_bin, rc_timestamp);
 CREATE INDEX /*i*/rc_ns_usertext ON /*_*/recentchanges (rc_namespace, rc_user_text);
 CREATE INDEX /*i*/rc_user_text ON /*_*/recentchanges (rc_user_text, rc_timestamp);
 
