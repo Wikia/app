@@ -297,9 +297,9 @@ function embedYouTube( $input, $argv, $parser ) {
 function embedYouTube_url2gvid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/^http?:\/\/video\.google\.com\/videoplay\?docid=([^&]+)(&hl=.+)?$/', $url, $preg ) ) {
+	if ( preg_match( '/^https?:\/\/video\.google\.com\/videoplay\?docid=([^&]+)(&hl=.+)?$/', $url, $preg ) ) {
 		$id = $preg[1];
-	} elseif ( preg_match( '/^http?:\/\/video\.google\.com\/googleplayer\.swf\?docId=(.+)$/', $url, $preg ) ) {
+	} elseif ( preg_match( '/^https?:\/\/video\.google\.com\/googleplayer\.swf\?docId=(.+)$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
