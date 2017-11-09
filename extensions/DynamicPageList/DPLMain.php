@@ -2183,37 +2183,37 @@ class DPLMain {
 				->tableSet( $dplTableSet );
 
 			if ( $sCreatedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sCreatedBy, $dbr );
+				$userArray = self::getWhereStatementForUsername( $sCreatedBy );
 				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
 					->buildCreatedByQuerySegment( $userArray );
 			}
 
 			if ( $sNotCreatedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sNotCreatedBy, $dbr );
+				$userArray = self::getWhereStatementForUsername( $sNotCreatedBy );
 				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
 					->buildNotCreatedByQuerySegment( $userArray );
 			}
 
 			if ( $sModifiedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sModifiedBy, $dbr );
+				$userArray = self::getWhereStatementForUsername( $sModifiedBy );
 				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
 					->buildModifiedByQuerySegment( $userArray );
 			}
 
 			if ( $sNotModifiedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sNotModifiedBy, $dbr );
+				$userArray = self::getWhereStatementForUsername( $sNotModifiedBy );
 				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
 					->buildNotModifiedByQuerySegment( $userArray );
 			}
 
 			if ( $sLastModifiedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sLastModifiedBy, $dbr );
+				$userArray = self::getWhereStatementForUsername( $sLastModifiedBy );
 				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
 					->buildLastModifiedByQuerySegment( $userArray );
 			}
 
 			if ( $sNotLastModifiedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sNotLastModifiedBy, $dbr );
+				$userArray = self::getWhereStatementForUsername( $sNotLastModifiedBy );
 				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
 					->buildNotLastModifiedByQuerySegment( $userArray );
 			}
@@ -3222,18 +3222,23 @@ class DPLMain {
 	}
 
 
-	// SUS-807
-	private static function getWhereStatementForUsername( $username, DatabaseBase $dbr ) {
-		$res = [];
-		if ( User::isIP( $username ) ) {
-			$res[ 'user_text' ] = $dbr->addQuotes( $username );
-		} else {
-			$userId = User::idFromName( $username );
-			if ( $userId > 0 ) {
-				$res[ 'user_id' ] = $userId;
-			}
+	/**
+	 * SUS-807: Get user name or user ID to use in lookup
+	 * It is the responsibility of callers to escape the output
+	 * @param $userName
+	 * @return array
+	 */
+	private static function getWhereStatementForUsername( $userName ) {
+		if ( User::isIP( $userName ) ) {
+			return [ 'user_text' => $userName ];
 		}
-		return $res;
+
+		$userId = User::idFromName( $userName );
+		if ( $userId > 0 ) {
+			return [ 'user_id' => $userId ];
+		}
+
+		return [];
 	}
 
 	private static function getMemcacheKey( $dplCacheId ) {
