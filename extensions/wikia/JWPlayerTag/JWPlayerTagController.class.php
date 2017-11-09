@@ -62,7 +62,7 @@ class JWPlayerTagController extends WikiaController {
 
 		$attributes = [
 			self::CLASS_ATTR => 'jwplayer-in-article-video',
-			self::COMPONENT_ATTR => 'jwplayer-embed',
+			self::COMPONENT_ATTR => 'jwplayer-tag',
 			self::DATA_ATTRS => json_encode( ['media-id' => $args['media-id']] )
 		];
 
