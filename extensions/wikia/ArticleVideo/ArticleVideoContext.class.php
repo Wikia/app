@@ -9,7 +9,7 @@ class ArticleVideoContext {
 	 *
 	 * @return bool
 	 */
-	public static function isFeaturedVideoEmbedded( string $previxedDbKey ) {
+	public static function isFeaturedVideoEmbedded( string $prefixedDbKey ) {
 		$wg = F::app()->wg;
 
 		if ( !$wg->enableArticleFeaturedVideo ) {
@@ -18,8 +18,8 @@ class ArticleVideoContext {
 
 		$featuredVideos = self::getFeaturedVideos();
 
-		return isset( $featuredVideos[$previxedDbKey] ) &&
-			self::isFeaturedVideosValid( $featuredVideos[$previxedDbKey] ) &&
+		return isset( $featuredVideos[$prefixedDbKey] ) &&
+			self::isFeaturedVideosValid( $featuredVideos[$prefixedDbKey] ) &&
 			// Prevents to show video on ?action=history etc.
 			!WikiaPageType::isActionPage();
 	}

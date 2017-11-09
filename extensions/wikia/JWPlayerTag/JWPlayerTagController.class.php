@@ -14,10 +14,19 @@ class JWPlayerTagController extends WikiaController {
 	const STYLE_ATTR = 'style';
 	const WIDTH_ATTR = 'width';
 
+	private static $elementIdCount = 1;
+
 	public static function onParserFirstCallInit( Parser $parser ): bool {
 		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderTag' ] );
 
 		return true;
+	}
+
+	public static function getElementId() {
+		$elementId = self::ELEMENT_ID_PREFIX . self::$elementIdCount;
+		self::$elementIdCount++;
+
+		return $elementId;
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ): string {
@@ -25,7 +34,9 @@ class JWPlayerTagController extends WikiaController {
 			return '<strong class="error">' . wfMessage( 'jwplayer-tag-could-not-render' )->parse() . '</strong>';
 		}
 
-		if (ArticleVideoContext::isFeaturedVideoEmbedded( RequestContext::getMain()->getTitle()->getPrefixedDBkey() )) {
+		if ( ArticleVideoContext::isFeaturedVideoEmbedded(
+			RequestContext::getMain()->getTitle()->getPrefixedDBkey()
+		) ) {
 			$script = JSSnippets::addToStack( [
 				'/extensions/wikia/JWPlayerTag/scripts/jwplayertag.js'
 			] );
@@ -36,9 +47,11 @@ class JWPlayerTagController extends WikiaController {
 			] );
 		}
 
+		$elementId = self::getElementId();
+
 		return $script .
-			Html::openElement( 'div', $this->getWrapperAttributes( $args ) ) .
-			Html::element( 'div', $this->getPlayerAttributes( $args ) ) .
+			Html::openElement( 'div', $this->getWrapperAttributes( $args, $elementId ) ) .
+			Html::element( 'div', $this->getPlayerAttributes( $args, $elementId ) ) .
 			Html::closeElement( 'div' );
 	}
 
@@ -46,28 +59,31 @@ class JWPlayerTagController extends WikiaController {
 		return array_key_exists( 'media-id', $args );
 	}
 
-	private function getPlayerAttributes( $args ): array {
+	private function getPlayerAttributes( $args, $elementId ): array {
 		$mediaId = $args['media-id'];
 
 		return [
 			self::CLASS_ATTR => 'jwplayer-container',
-			self::ID_ATTR => self::ELEMENT_ID_PREFIX . $mediaId . rand(0, 1000),
+			self::ID_ATTR => $elementId,
 			self::DATA_MEDIA_ID_ATTR => $mediaId,
 			self::STYLE_ATTR => 'background-color:black; padding-top:56.25%;'
 		];
 	}
 
-	private function getWrapperAttributes( $args ): array {
+	private function getWrapperAttributes( $args, $elementId ): array {
 		$width = array_key_exists( self::WIDTH_ATTR, $args ) ? $args[self::WIDTH_ATTR] : null;
 
 		$attributes = [
 			self::CLASS_ATTR => 'jwplayer-in-article-video',
 			self::COMPONENT_ATTR => 'jwplayer-tag',
-			self::DATA_ATTRS => json_encode( ['media-id' => $args['media-id']] )
+			self::DATA_ATTRS => json_encode( [
+				'media-id' => $args['media-id'],
+				'element-id' => $elementId,
+			] )
 		];
 
 		if ( !empty( $width ) && intval( $width ) > 0 ) {
-			$attributes[self::STYLE_ATTR] = 'width:' . $width . 'px;';
+			$attributes[self::STYLE_ATTR] = 'width:' . htmlspecialchars($width) . 'px;';
 		}
 
 		return $attributes;
