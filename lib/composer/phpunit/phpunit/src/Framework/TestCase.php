@@ -629,7 +629,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      * Information for expected exception class, expected exception message, and
      * expected exception code are retrieved from a given Exception object.
      */
-    public function expectExceptionObject(Exception $exception)
+    public function expectExceptionObject(\Exception $exception)
     {
         $this->expectException(\get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
@@ -2117,7 +2117,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     /**
      * Performs assertions shared by all tests of a test case.
      *
-     * This method is called before the execution of a test ends
+     * This method is called after the execution of a test ends
      * and before tearDown() is called.
      */
     protected function assertPostConditions()
