@@ -51,7 +51,7 @@
 			ck.on( 'dialogOk', this.proxy( this.onCkDialogOk ) );
 			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
 			ck.on( 'panelClick', this.proxy( this.onCkPanelClick ) );
-			ck.on( 'panelShow', this.proxy( this.onCkPanelShow ) );
+			ck.on( 'panelShowWE', this.proxy( this.onCkPanelShow ) );
 		},
 
 		onCkButtonClick: function( event ) {

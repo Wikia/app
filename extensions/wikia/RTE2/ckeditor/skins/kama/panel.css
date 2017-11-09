@@ -50,7 +50,7 @@ panel contents and color panels check menu.css and colorpanel.css.
 	border: 1px solid #8f8f73;
 	background-color: #fff;
 
-	width: 120px;
+	width: 200px;
 	height: 100px;
 
 	overflow: hidden;
@@ -194,6 +194,7 @@ is its visual representation:
 /* The title of the entire panel which is visible on top of the list. */
 .cke_panel_grouptitle
 {
+	display: none !important;
 	font-size: 11px;
 	font-family: 'Microsoft Sans Serif' , Tahoma, Arial, Verdana, Sans-Serif;
 	font-weight: bold;

@@ -329,7 +329,7 @@
 							requiredContent: 'table[border]',
 							// Avoid setting border which will then disappear.
 							'default': editor.filter.check( 'table[border]' ) ? 1 : 0,
-							label: "Grubosc",//editor.lang.table.border,
+							label: editor.lang.table.border,
 							controlStyle: 'width:3em',
 							validate: CKEDITOR.dialog.validate.number( editor.lang.table.invalidBorder ),
 							setup: function( selectedTable ) {
