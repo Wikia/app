@@ -20,6 +20,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\User\ExternalAuth\FacebookService;
+use Wikia\Service\User\ExternalAuth\GoogleService;
 
 class EditAccount extends SpecialPage {
 	/** @var User */
@@ -436,6 +438,14 @@ class EditAccount extends SpecialPage {
 			// All clear!
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
 
+			/** @var FacebookService $facebookService */
+			$facebookService = Injector::getInjector()->get( FacebookService::class );
+			$facebookService->unlinkAccount( $user );
+
+			/** @var GoogleService $googleService */
+			$googleService = Injector::getInjector()->get( GoogleService::class );
+			$googleService->unlinkAccount( $user );
+
 			/** @var HeliosClient $heliosClient */
 			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
 			$heliosClient->forceLogout($user->getId());
@@ -455,15 +465,8 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true
 	 */
 	function clearUnsubscribe() {
-		global $wgExternalAuthType;
 		$this->mUser->setGlobalPreference( 'unsubscribed', null );
 		$this->mUser->saveSettings();
-
-		// delete the record from all the secondary clusters
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			$userId = $this->mUser->getId();
-			ExternalUser_Wikia::removeFromSecondaryClusters( $userId );
-		}
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-unsub', $this->mUser->mName );
 

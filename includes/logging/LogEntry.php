@@ -417,6 +417,12 @@ class ManualLogEntry extends LogEntryBase {
 		# Truncate for whole multibyte characters.
 		$comment = $wgContLang->truncate( $this->getComment(), 255 );
 
+		// SUS-3222: All log entries should be attributed to registered users
+		if ( $this->getPerformer()->isAnon() ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( 'SUS-3222 - Anon user log entry' );
+		}
+
 		$data = array(
 			'log_id' => $id,
 			'log_type' => $this->getType(),

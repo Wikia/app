@@ -6,7 +6,7 @@ use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Swagger\ApiProvider;
 
-class TemplateClassificationService {
+class TemplateClassificationService extends ContextSource {
 
 	const SERVICE_NAME = 'template-classification-storage';
 

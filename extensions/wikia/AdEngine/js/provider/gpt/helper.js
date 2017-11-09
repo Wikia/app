@@ -131,6 +131,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 			slotTargetingData.outstream = slotTargeting.getOutstreamData() || 'none';
+			if (adContext.get('targeting.skin') === 'oasis') {
+				slotTargetingData.rail = doc.body.scrollWidth <= 1023 ? '0' : '1';
+			}
 
 			abId = slotTargeting.getAbTestId(slotTargetingData);
 			if (abId) {

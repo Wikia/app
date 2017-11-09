@@ -1,27 +1,47 @@
+var isActiveClass = 'is-active',
+	domParser = new DOMParser();
+
 function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.player = player;
-	this.wikiaSettingsElement = div;
+	this.container = div;
+	this.wikiaSettingsElement = document.createElement('div');
 	this.buttonID = 'wikiaSettings';
 	this.config = config;
 	this.documentClickHandler = this.documentClickHandler.bind(this);
 
+	this.container.classList.add('wikia-jw-settings__plugin');
+	this.wikiaSettingsElement.classList.add('wikia-jw-settings');
 	this.addSettingsContent(this.wikiaSettingsElement);
+	this.container.appendChild(this.wikiaSettingsElement);
+
+	this.player.on('levels', this.onQualityLevelsChange.bind(this));
 
 	document.addEventListener('click', this.documentClickHandler);
+	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
+	document.addEventListener('touchend', this.documentClickHandler);
 }
+
+wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
+	var button = this.player.getContainer().querySelector('[button=' + this.buttonID + ']');
+	return button === element ||
+		button.contains(element) ||
+		this.wikiaSettingsElement === element ||
+		this.wikiaSettingsElement.contains(element);
+};
 
 wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 	// check if user didn't click the settings menu or settings button and if settings menu is open
-	if (!event.target.closest('.wikia-jw-settings, .wikia-jw-settings-button') && this.wikiaSettingsElement.style.display) {
+	if (!this.isSettingsMenuOrSettingsButton(event.target) && this.container.style.display) {
 		this.close();
 	}
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
-	var settingsIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon' +
-			' jw-svg-icon-wikia-settings" viewBox="0 0 24 24">' + wikiaJWPlayerIcons.settings + '</svg>';
+	var settingsIcon = this.createSVG(wikiaJWPlayerIcons.settings);
+	settingsIcon.classList.add('jw-svg-icon');
+	settingsIcon.classList.add('jw-svg-icon-wikia-settings');
 
-	this.player.addButton(settingsIcon, 'Settings', function () {
+	this.player.addButton(settingsIcon.outerHTML, 'Settings', function () {
 		if (!this.wikiaSettingsElement.style.display) {
 			this.open();
 		} else {
@@ -39,7 +59,7 @@ wikiaJWPlayerSettingsPlugin.prototype.removeButton = function () {
  */
 wikiaJWPlayerSettingsPlugin.prototype.close = function () {
 	this.showSettingsList();
-	this.wikiaSettingsElement.style.display = null;
+	this.container.style.display = null;
 	this.player.getContainer().classList.remove('wikia-jw-settings-open');
 };
 
@@ -47,7 +67,7 @@ wikiaJWPlayerSettingsPlugin.prototype.close = function () {
  * opens settings menu
  */
 wikiaJWPlayerSettingsPlugin.prototype.open = function () {
-	this.wikiaSettingsElement.style.display = 'block';
+	this.container.style.display = 'block';
 	this.player.getContainer().classList.add('wikia-jw-settings-open');
 };
 
@@ -63,29 +83,36 @@ wikiaJWPlayerSettingsPlugin.prototype.hide = function () {
  * shows back the entire plugin (adds button back)
  */
 wikiaJWPlayerSettingsPlugin.prototype.show = function () {
-	if(!this.player.getContainer().querySelector('[button=wikiaSettings]')) {
+	if (!this.player.getContainer().querySelector('[button=' + this.buttonID + ']')) {
 		this.addButton();
 	}
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.showQualityLevelsList = function () {
 	this.settingsList.style.display = 'none';
-	this.qualityLevelsList.style.display = 'block';
+	if (this.qualityLevelsList) {
+		this.qualityLevelsList.style.display = 'block';
+	}
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.showSettingsList = function () {
 	this.settingsList.style.display = 'block';
-	this.qualityLevelsList.style.display = 'none';
+	if (this.qualityLevelsList) {
+		this.qualityLevelsList.style.display = 'none';
+	}
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addSettingsContent = function (div) {
 	div.classList.add('wikia-jw-settings');
-	div.classList.remove('jw-reset', 'jw-plugin');
+	div.classList.remove('jw-reset');
+	div.classList.remove('jw-plugin');
 	this.settingsList = this.createSettingsListElement();
-	this.qualityLevelsList = this.createQualityLevelsList();
-
 	div.appendChild(this.settingsList);
-	div.appendChild(this.qualityLevelsList);
+
+	if (this.config.showQuality) {
+		this.createQualityLevelsList();
+		div.appendChild(this.qualityLevelsList);
+	}
 
 	return div;
 };
@@ -94,20 +121,30 @@ wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 	var settingsList = document.createElement('ul');
 
 	settingsList.classList.add('wikia-jw-settings__list');
-	settingsList.appendChild(this.createQualityButton());
+	settingsList.classList.add('wds-list');
 
-	if (this.config.showToggle) {
+	if (this.config.showQuality) {
+		settingsList.appendChild(this.createQualityButton());
+	}
+
+	if (this.config.showAutoplayToggle) {
 		settingsList.appendChild(this.createAutoplayToggle());
 	}
 
 	return settingsList;
 };
 
+wikiaJWPlayerSettingsPlugin.prototype.createSVG = function (svgHtml) {
+	return domParser.parseFromString(svgHtml, 'image/svg+xml').documentElement;
+};
+
 wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	var qualityButton = document.createElement('li');
 
 	qualityButton.classList.add('wikia-jw-settings__quality-button');
-	qualityButton.innerHTML = wikiaJWPlayerIcons.quality + ' Video Quality';
+	var rightArrowIcon = this.createSVG(wikiaJWPlayerIcons.back);
+	rightArrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
+	qualityButton.innerHTML = 'Video Quality' + rightArrowIcon.outerHTML;
 	qualityButton.addEventListener('click', this.showQualityLevelsList.bind(this));
 
 	return qualityButton;
@@ -119,6 +156,8 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 		toggleLabel = document.createElement('label'),
 		playerInstance = this.player,
 		toggleID = playerInstance.getContainer().id + '-videoAutoplayToggle';
+
+	autoplayToggle.classList.add('wikia-jw-settings__autoplay-toggle');
 
 	toggleInput.setAttribute('type', 'checkbox');
 	toggleInput.setAttribute('id', toggleID);
@@ -143,51 +182,53 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	return autoplayToggle;
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.isNotSmallPlayer = function () {
-	var classList = this.player.getContainer().classList;
-	return !(classList.contains('jw-breakpoint-0') || classList.contains('jw-breakpoint-1') || classList.contains('jw-breakpoint-2'));
+wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
+	var playerInstance = this.player,
+		backIcon = this.createSVG(wikiaJWPlayerIcons.back);
+
+	backIcon.classList.add('wikia-jw-settings__back-icon');
+
+	this.backButton = document.createElement('li');
+	this.qualityLevelsList = document.createElement('ul');
+
+	this.qualityLevelsList.classList.add('wikia-jw-settings__quality-levels');
+	this.qualityLevelsList.classList.add('wds-list');
+	this.backButton.classList.add('wikia-jw-settings__back');
+	this.backButton.innerHTML = backIcon.outerHTML + ' Back';
+	this.backButton.addEventListener('click', this.showSettingsList.bind(this));
+	this.qualityLevelsList.appendChild(this.backButton);
+
+	playerInstance.on('levelsChanged', this.updateCurrentQuality.bind(this));
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
-	var qualityLevelsList = document.createElement('ul'),
-		backButton = document.createElement('li'),
-		playerInstance = this.player,
-		isActiveClass = 'is-active',
+wikiaJWPlayerSettingsPlugin.prototype.onQualityLevelsChange = function (data) {
+	// in Safari in data.levels array there is one element with label = '0'
+	var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0'),
+		shouldShowSettingsButton = (!isQualityListEmpty && this.config.showQuality) || this.config.showAutoplayToggle,
 		isQualityListEmptyClass = 'is-quality-list-empty';
 
-	qualityLevelsList.classList.add('wikia-jw-settings__quality-levels');
-	backButton.classList.add('wikia-jw-settings__back');
-	backButton.innerHTML = '<svg class="wikia-jw-settings__back-icon" width="18" height="18"' +
-		' viewBox="0 0 18 18">' + wikiaJWPlayerIcons.back + '</svg> Back';
-	backButton.addEventListener('click', this.showSettingsList.bind(this));
-	qualityLevelsList.appendChild(backButton);
+	if (isQualityListEmpty) {
+		this.wikiaSettingsElement.classList.add(isQualityListEmptyClass)
+	} else {
+		this.wikiaSettingsElement.classList.remove(isQualityListEmptyClass)
+	}
 
-	playerInstance.on('levels', function (data) {
-		// in Safari in data.levels array there is one element with label = '0'
-		var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0'),
-			shouldShowSettingsButton = (!isQualityListEmpty || this.config.showToggle) && this.isNotSmallPlayer();
+	if (shouldShowSettingsButton) {
+		this.show();
+	} else {
+		this.hide();
+	}
 
-		this.wikiaSettingsElement.classList.toggle(isQualityListEmptyClass, isQualityListEmpty);
-
-		if (shouldShowSettingsButton) {
-			this.show();
-		} else {
-			this.hide();
-		}
-
-		this.updateQualityLevelsList(qualityLevelsList, data.levels, isActiveClass, backButton);
-	}.bind(this));
-
-	playerInstance.on('levelsChanged', this.updateCurrentQuality.bind(this, qualityLevelsList, isActiveClass));
-
-	return qualityLevelsList;
+	if (this.qualityLevelsList) {
+		this.updateQualityLevelsList(data.levels);
+	}
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (qualityLevelsList, newLevels, isActiveClass, backButton) {
+wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLevels) {
 	var playerInstance = this.player;
 
-	while (qualityLevelsList.childElementCount > 1) {
-		qualityLevelsList.removeChild(qualityLevelsList.firstChild);
+	while (this.qualityLevelsList.childElementCount > 1) {
+		this.qualityLevelsList.removeChild(this.qualityLevelsList.firstChild);
 	}
 
 	newLevels.forEach(function (level, index) {
@@ -203,18 +244,19 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (qualit
 		}
 
 		qualityLevelItem.appendChild(document.createTextNode(level.label));
-		qualityLevelsList.insertBefore(qualityLevelItem, backButton);
+		this.qualityLevelsList.insertBefore(qualityLevelItem, this.backButton);
 	}, this);
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (qualityLevelsList, isActiveClass, data) {
-	qualityLevelsList.childNodes.forEach(function (node, index) {
-		if (data.currentQuality === index) {
+wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (data) {
+	for (var i = 0; i < this.qualityLevelsList.childNodes.length; i++) {
+		var node = this.qualityLevelsList.childNodes[i];
+		if (data.currentQuality === i) {
 			node.classList.add(isActiveClass);
 		} else {
 			node.classList.remove(isActiveClass);
 		}
-	});
+	}
 };
 
 wikiaJWPlayerSettingsPlugin.register = function () {

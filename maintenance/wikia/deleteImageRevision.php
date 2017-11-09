@@ -19,6 +19,11 @@ class DeleteImageRevision extends Maintenance {
 
 
 	public function execute() {
+		global $wgUser;
+
+		// SUS-3222: Delete as official bot
+		$wgUser = User::newFromName( Wikia::BOT_USER, false );
+
 		$pageId = intval( $this->getOption( self::PAGE_ID_OPTION ) );
 		$revisionId = intval( $this->getOption( self::REVISION_ID_OPTION ) );
 		$reason = wfMessage( 'imagereview-reason' )->inContentLanguage()->plain();

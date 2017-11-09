@@ -324,7 +324,7 @@ class User implements JsonSerializable {
 	 * @return Bool false if the ID does not exist, true otherwise
 	 */
 	public function loadFromId() {
-		global $wgMemc, $wgSharedDB; # Wikia
+		global $wgMemc;
 		if ( $this->mId == 0 ) {
 			$this->loadDefaults();
 			return false;
@@ -338,29 +338,27 @@ class User implements JsonSerializable {
 			$data = false;
 		}
 
-		$isExpired = false;
-		if( !empty( $wgSharedDB ) ) {
-			# Wikia
-			/*
-			 * This code is responsible for re-invalidate user object data from database
-			 * instead of memcache if user preferences had been changed on another wiki
-			 */
-			$isExpired = true;
-			if(!empty($data)) {
-				$_key = self::getUserTouchedKey( $this->mId );
-				$_touched = $wgMemc->get( $_key );
-				if( empty( $_touched ) ) {
-					$wgMemc->set( $_key, $data['mTouched'] );
-					wfDebug( "Shared user: miss on shared user_touched\n" );
-				} else if( $_touched <= $data['mTouched'] ) {
-					$isExpired = false;
-				}
-				else {
-					wfDebug( "Shared user: invalidating local user cache due to shared user_touched\n" );
-				}
+		# Wikia
+		/*
+		 * This code is responsible for re-invalidate user object data from database
+		 * instead of memcache if user preferences had been changed on another wiki
+		 */
+		$isExpired = true;
+		if(!empty($data)) {
+			$_key = self::getUserTouchedKey( $this->mId );
+			$_touched = $wgMemc->get( $_key );
+			if( empty( $_touched ) ) {
+				$wgMemc->set( $_key, $data['mTouched'] );
+				wfDebug( "Shared user: miss on shared user_touched\n" );
+			} else if( $_touched <= $data['mTouched'] ) {
+				$isExpired = false;
 			}
-			# /Wikia
+			else {
+				wfDebug( "Shared user: invalidating local user cache due to shared user_touched\n" );
+			}
 		}
+		# /Wikia
+
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "User: cache miss for user {$this->mId}\n" );
 			# Load from DB
@@ -592,11 +590,15 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * Return user ID to user name mapping
 	 *
-	 * @param $ids Array User IDs
-	 * @return Array User ID to User name mapping
+	 * Please note that this method is NOT cached!
+	 *
+	 * @param array $ids User IDs
+	 * @param int $source DB_SLAVE / DB_MASTER
+	 * @return array User ID to User name mapping
 	 */
-	public static function whoAre( Array $ids, $source = DB_SLAVE ): Array {
+	public static function whoAre( Array $ids, $source = DB_SLAVE ): array {
 		global $wgExternalSharedDB;
 
 		if ( $ids == [] ) {
@@ -604,6 +606,17 @@ class User implements JsonSerializable {
 		}
 
 		$ids = array_unique( $ids, SORT_NUMERIC );
+
+		if ( count( $ids ) === 1 ) {
+			// SUS-3219 - fall back to well-cached User::whoIs when we want to resolve a single user ID
+			$userId = $ids[0];
+
+			return [
+				// Add the name used to indicate anonymous users.
+				0 => wfMessage( 'oasis-anon-user' )->escaped(),
+				$userId => self::whoIs( $userId )
+			];
+		}
 
 		$sdb = wfGetDB( $source, [], $wgExternalSharedDB );
 		$res = $sdb->select(
@@ -637,8 +650,8 @@ class User implements JsonSerializable {
 	 * @return String|false The corresponding user's real name
 	 */
 	public static function whoIsReal( $id ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		return $dbr->selectField( 'user', 'user_real_name', array( 'user_id' => $id ), __METHOD__ );
+		// Wikia change - @see SUS-1015
+		return self::newFromId( $id )->getRealName();
 	}
 
 	/**
@@ -2018,17 +2031,16 @@ class User implements JsonSerializable {
 	private function clearSharedCache() {
 		$this->load();
 		if( $this->mId ) {
-			global $wgMemc, $wgSharedDB; # Wikia
+			global $wgMemc;
 			$wgMemc->delete( $this->getCacheKey() );
 			$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
 			$this->userPreferences()->deleteFromCache( $this->getId() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
-			if( !empty( $wgSharedDB ) ) {
-				$memckey = self::getUserTouchedKey( $this->mId );
-				$wgMemc->set( $memckey, $this->mTouched );
-				wfDebug( "Shared user: updating shared user_touched\n" );
-			}
+
+			$memckey = self::getUserTouchedKey( $this->mId );
+			$wgMemc->set( $memckey, $this->mTouched );
+			wfDebug( "Shared user: updating shared user_touched\n" );
 		}
 	}
 
@@ -3227,22 +3239,6 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * If only this user's username is known, and it exists, return the user ID.
-	 * @return Int
-	 */
-	public function idForName( $fromMaster = false ) {
-		$s = trim( $this->getName() );
-		if ( $s === '' ) return 0;
-
-		$dbr = ( $fromMaster ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'user', 'user_id', array( 'user_name' => $s ), __METHOD__ );
-		if ( $id === false ) {
-			$id = 0;
-		}
-		return $id;
-	}
-
-	/**
 	 * Add a user to the database, return the user object
 	 *
 	 * @param $name String Username to add
@@ -3303,7 +3299,11 @@ class User implements JsonSerializable {
 	 */
 	public function addToDatabase() {
 		$this->load();
-		$dbw = wfGetDB( DB_MASTER );
+
+		// wikia change
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+
 		$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 		$dbw->insert( 'user',
 			array(
@@ -3316,6 +3316,7 @@ class User implements JsonSerializable {
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
 				'user_birthdate' => $this->mBirthDate, // Wikia. Added to reflect our user table layout.
 				'user_editcount' => 0,
+				'user_options' => '', // Wikia. Field 'user_options' doesn't have a default value
 			), __METHOD__
 		);
 		$this->mId = $dbw->insertId();

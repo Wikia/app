@@ -181,4 +181,28 @@ class ThemeSettingsTest extends TestCase {
 
 		$this->assertEquals( 'ghostwhite', $themeSettings['color-community-header'] );
 	}
+
+	public function testSettingsAreEscaped() {
+		$settings = [
+			'wordmark-text' => '<div>test</div>',
+		];
+
+		$this->themeSettingsPersistence->expects( $this->once() )
+			->method( 'saveSettings' )
+			->with( new ArraySubset( [ 'wordmark-text' => '&lt;div&gt;test&lt;/div&gt;'] ) );
+
+		$this->themeSettings->saveSettings( $settings );
+	}
+
+	public function testSettingsAreNotEscapedTwice() {
+		$settings = [
+			'wordmark-text' => '&lt;div&gt;test&lt;/div&gt;',
+		];
+
+		$this->themeSettingsPersistence->expects( $this->once() )
+			->method( 'saveSettings' )
+			->with( new ArraySubset( [ 'wordmark-text' => '&lt;div&gt;test&lt;/div&gt;'] ) );
+
+		$this->themeSettings->saveSettings( $settings );
+	}
 }

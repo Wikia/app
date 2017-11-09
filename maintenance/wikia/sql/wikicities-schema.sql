@@ -380,7 +380,6 @@ CREATE TABLE `messages_text` (
   `msg_removed` tinyint(4) NOT NULL DEFAULT '0',
   `msg_expire` datetime DEFAULT NULL,
   `msg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `msg_recipient_name` varchar(255) DEFAULT NULL,
   `msg_recipient_user_id` int(5) unsigned DEFAULT NULL,
   `msg_group_name` varchar(255) DEFAULT NULL,
   `msg_wiki_name` varchar(255) DEFAULT NULL,

@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
 					size: [320, 50],
-					pos: 'wikia_mw_pre_footer_hb'
+					pos: 'wikia_mw_top_leaderboard_hb'
 				},
 				MOBILE_IN_CONTENT: {
 					size: [300, 250],
@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 				},
 				MOBILE_PREFOOTER: {
 					size: [300, 250],
-					pos: 'wikia_mw_top_leaderboard_hb'
+					pos: 'wikia_mw_pre_footer_hb'
 				}
 			}
 		};

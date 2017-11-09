@@ -9,7 +9,19 @@ class TemplateBulkClassificationTask extends BaseTask {
 	public function classifyTemplates( $templates, $templateType, $userId, $category ) {
 		$wikiId = $this->getWikiId();
 
+		$user = \User::newFromId( $userId );
+		if ( !$user ) {
+			$this->error( 'Template Bulk Classification - Invalid user', [
+				'userId' => $userId
+			] );
+			return;
+		}
+
+		$context = new \DerivativeContext( \RequestContext::getMain() );
+		$context->setUser( $user );
+
 		$utcs = new \UserTemplateClassificationService();
+		$utcs->setContext( $context );
 		$errors = $utcs->classifyMultipleTemplates( $wikiId, $templates, $templateType, $userId );
 
 		$this->logResults( $wikiId, $templates, $templateType, $userId, $category, $errors );

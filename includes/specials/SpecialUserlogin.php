@@ -54,11 +54,6 @@ class LoginForm extends SpecialPage {
 	var $wpUserBirthDay;
 
 	/**
-	 * @var ExternalUser_Wikia
-	 */
-	private $mExtUser = null;
-
-	/**
 	 * @ var WebRequest
 	 */
 	protected $mOverrideRequest = null; // Wikia change - used in UserLoginForm
@@ -372,12 +367,7 @@ class LoginForm extends SpecialPage {
 			return false;
 		}
 
-		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
-
-		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) ) {
-			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userexists' )->text(), 'error', 'username' );
-			return false;
-		} elseif ( 0 != $u->idForName() ) {
+		if ( 0 != $u->getId() ) {
 			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userexists' )->text(), 'error', 'username' );
 			return false;
 		}
@@ -482,18 +472,9 @@ class LoginForm extends SpecialPage {
 	 * @private
 	 */
 	function initUser( User &$u, $autocreate ) {
-		global $wgAuth, $wgExternalAuthType;
+		global $wgAuth;
 
-		if ( $wgExternalAuthType ) {
-			if ( ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
-				$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
-			} else {
-				// Terminate on failure.
-				return false;
-			}
-		} else {
-			$u->addToDatabase();
-		}
+		$u->addToDatabase();
 
 		if ( $wgAuth->allowPasswordChange() ) {
 			$u->setPassword( $this->mPassword );
@@ -504,14 +485,6 @@ class LoginForm extends SpecialPage {
 		$u->setToken();
 
 		$wgAuth->initUser( $u, $autocreate );
-
-		if ( is_object( $this->mExtUser ) ) {
-			$this->mExtUser->linkToLocal( $u->getId() );
-			$email = $this->mExtUser->getPref( 'emailaddress' );
-			if ( $email && !$this->mEmail ) {
-				$u->setEmail( $email );
-			}
-		}
 
 		$u->setGlobalAttribute( 'registrationCountry', $this->mRegistrationCountry );
 		$u->setGlobalPreference( 'skinoverwrite', 1 );
@@ -758,28 +731,17 @@ class LoginForm extends SpecialPage {
 			return self::CREATE_BLOCKED;
 		}
 
-		/**
-		 * If the external authentication plugin allows it, automatically cre-
-		 * ate a new account for users that are externally defined but have not
-		 * yet logged in.
-		 */
-		if ( $this->mExtUser ) {
-			if ( !$this->mExtUser->authenticate( $this->mPassword ) ) {
-				return self::WRONG_PLUGIN_PASS;
-			}
-		} else {
-			# Old AuthPlugin.
-			if ( !$wgAuth->autoCreate() ) {
-				return self::NOT_EXISTS;
-			}
-			if ( !$wgAuth->userExists( $user->getName() ) ) {
-				wfDebug( __METHOD__ . ": user does not exist\n" );
-				return self::NOT_EXISTS;
-			}
-			if ( !$wgAuth->authenticate( $user->getName(), $this->mPassword ) ) {
-				wfDebug( __METHOD__ . ": \$wgAuth->authenticate() returned false, aborting\n" );
-				return self::WRONG_PLUGIN_PASS;
-			}
+		# Old AuthPlugin.
+		if ( !$wgAuth->autoCreate() ) {
+			return self::NOT_EXISTS;
+		}
+		if ( !$wgAuth->userExists( $user->getName() ) ) {
+			wfDebug( __METHOD__ . ": user does not exist\n" );
+			return self::NOT_EXISTS;
+		}
+		if ( !$wgAuth->authenticate( $user->getName(), $this->mPassword ) ) {
+			wfDebug( __METHOD__ . ": \$wgAuth->authenticate() returned false, aborting\n" );
+			return self::WRONG_PLUGIN_PASS;
 		}
 
 		$abortError = '';
