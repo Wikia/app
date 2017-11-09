@@ -82,8 +82,7 @@
 	}
 }
 
-.cke_skin_wikia {
-	.cke_panel.cke_rcombopanel {
+	.cke_panel.cke_combopanel {
 		@include box-shadow(0, 0, 8px, $color-page-border);
 		@include gradient-module;
 		border: solid 1px $color-epl-button-border;
@@ -94,4 +93,4 @@
 			overflow: hidden;
 		}
 	}
-}
+

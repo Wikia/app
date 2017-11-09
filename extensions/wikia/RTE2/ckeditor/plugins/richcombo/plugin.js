@@ -236,10 +236,11 @@ CKEDITOR.plugins.add( 'richcombo', {
 				if ( this._.panel )
 					return;
 
+				debugger;
 				//Not Working
-				if (editor.config.richcomboCss != '' ) {
-					this._.panelDefinition.css = [editor.config.richcomboCss];
-				}
+			//	if (editor.config.richcomboCss != '' ) {
+			//		this._.panelDefinition.css = [editor.config.richcomboCss];
+			//	}
 
 				var panelDefinition = this._.panelDefinition,
 					panelBlockDefinition = this._.panelDefinition.block,
@@ -250,6 +251,9 @@ CKEDITOR.plugins.add( 'richcombo', {
 					me = this;
 
 				panel.onShow = function() {
+					//CK UPDATE
+					editor.fire('panelShowWE', {panel: this, me: me});
+
 					this.element.addClass( namedPanelCls );
 
 					me.setState( CKEDITOR.TRISTATE_ON );
