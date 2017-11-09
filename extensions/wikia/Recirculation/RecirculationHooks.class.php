@@ -144,8 +144,7 @@ class RecirculationHooks {
 			}
 		);
 
-		return current(array_filter( $metaDataFromService, function ( $item ) use ( $cityId, $articleId ) {
-			/** @var Item $item */
+		return current(array_filter( $metaDataFromService, function ( Item $item ) use ( $cityId, $articleId ) {
 			if ( $item->getProduct() === $cityId && $item->getId() === $articleId ) {
 				return $item;
 			}
