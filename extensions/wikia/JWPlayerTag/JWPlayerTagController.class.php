@@ -83,7 +83,7 @@ class JWPlayerTagController extends WikiaController {
 		];
 
 		if ( !empty( $width ) && is_numeric( $width ) ) {
-			$attributes[self::STYLE_ATTR] = 'width:' . htmlspecialchars($width) . 'px;';
+			$attributes[self::STYLE_ATTR] = 'width:' . $width . 'px;';
 		}
 
 		return $attributes;
