@@ -54,6 +54,7 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+	adEngineBridge.updatePageLevelTargeting(pageLevelParams.getPageLevelParams());
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {

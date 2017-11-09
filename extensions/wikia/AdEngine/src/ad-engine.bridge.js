@@ -32,7 +32,12 @@ function loadCustomAd(callback) {
 	};
 }
 
+function updatePageLevelTargeting(params) {
+	Object.keys(params).forEach((key) => Context.set(`targeting.${key}`, params[key]));
+}
+
 export {
 	loadCustomAd,
-	setUapId
+	setUapId,
+	updatePageLevelTargeting,
 };

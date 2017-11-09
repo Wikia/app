@@ -1,18 +1,9 @@
 export default {
-	adUnitId: '/5441/wka.life/_project43//{custom.namespace}/gpt/{slotName}',
+	adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{slotName}',
 	custom: {
-		group: 'life',
-		namespace: 'article'
+		dfpId: '5441',
 	},
-	events: {
-		pushOnScroll: {
-			ids: [
-				'gpt-incontent-boxad',
-				'gpt-bottom-leaderboard'
-			],
-			threshold: 100
-		}
-	},
+	events: {},
 	slots: {
 		'bottom-leaderboard': {
 			disabled: true,
@@ -30,12 +21,12 @@ export default {
 		}
 	},
 	vast: {
-		adUnitId: '5441/wka.{custom.group}/_project43//{custom.namespace}/{src}/{pos}'
+		adUnitId: '{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{pos}',
 	},
 	targeting: {
 		outstream: 'none',
-		s1: '_project43',
-		uap: '365341572'
+		s1: '',
+		uap: 'none'
 	},
 	state: {
 		adStack: window.adsQueue || [],
