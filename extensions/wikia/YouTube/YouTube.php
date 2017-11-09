@@ -335,7 +335,7 @@ function embedGoogleVideo( $input, $argv, $parser ) {
 function embedYouTube_url2aovid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/http?:\/\/www\.archive\.org\/download\/(.+)\.flv$/', $url, $preg ) ) {
+	if ( preg_match( '/https?:\/\/www\.archive\.org\/download\/(.+)\.flv$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
