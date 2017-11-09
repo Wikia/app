@@ -417,10 +417,14 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	 * @param string $fname
 	 * @return bool
 	 */
-	function fieldExists( $table, $field, $fname = 'DatabaseBase::fieldExists' ) {
+	function fieldExists( $table, $field, $fname = __METHOD__ ) {
 		// This handles escaping and optionally resolving the table
 		$tableName = $this->tableName( $table );
-		$res = $this->query( "DESCRIBE $tableName", __METHOD__ );
+		$res = $this->query( "DESCRIBE $tableName", __METHOD__, true );
+
+		if ( !$res ) {
+			return false;
+		}
 
 		foreach ( $res as $row ) {
 			if ( $row->Field === $field ) {
