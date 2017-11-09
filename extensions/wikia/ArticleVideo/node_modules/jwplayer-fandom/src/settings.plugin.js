@@ -41,7 +41,7 @@ wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
 	settingsIcon.classList.add('jw-svg-icon');
 	settingsIcon.classList.add('jw-svg-icon-wikia-settings');
 
-	this.player.addButton(settingsIcon.outerHTML, 'Settings', function () {
+	this.player.addButton(settingsIcon.outerHTML, this.config.i18n.settings, function () {
 		if (!this.wikiaSettingsElement.style.display) {
 			this.open();
 		} else {
@@ -144,7 +144,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 	qualityButton.classList.add('wikia-jw-settings__quality-button');
 	var rightArrowIcon = this.createSVG(wikiaJWPlayerIcons.back);
 	rightArrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
-	qualityButton.innerHTML = 'Video Quality' + rightArrowIcon.outerHTML;
+	qualityButton.innerHTML = this.config.i18n.videoQuality + rightArrowIcon.outerHTML;
 	qualityButton.addEventListener('click', this.showQualityLevelsList.bind(this));
 
 	return qualityButton;
@@ -169,7 +169,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 	toggleLabel.setAttribute('for', toggleID);
 	toggleLabel.classList.add('wds-toggle__label');
-	toggleLabel.appendChild(document.createTextNode("Autoplay Videos"));
+	toggleLabel.appendChild(document.createTextNode(this.config.i18n.autoplayVideos));
 	toggleLabel.addEventListener('click', function (event) {
 		playerInstance.trigger('autoplayToggle', {
 			enabled: !event.target.previousSibling.checked
@@ -194,7 +194,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 	this.qualityLevelsList.classList.add('wikia-jw-settings__quality-levels');
 	this.qualityLevelsList.classList.add('wds-list');
 	this.backButton.classList.add('wikia-jw-settings__back');
-	this.backButton.innerHTML = backIcon.outerHTML + ' Back';
+	this.backButton.innerHTML = backIcon.outerHTML + ' ' + this.config.i18n.back;
 	this.backButton.addEventListener('click', this.showSettingsList.bind(this));
 	this.qualityLevelsList.appendChild(this.backButton);
 

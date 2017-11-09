@@ -97,7 +97,8 @@ require([
 			},
 			logger: {
 				clientName: 'oasis'
-			}
+			},
+			lang: win.wgUserLanguage
 		}, onPlayerReady);
 	}
 
