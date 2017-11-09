@@ -248,7 +248,7 @@ class SpecialNuke extends SpecialPage {
 		foreach ( $result as $row ) {
 			$pages[] = array(
 				Title::makeTitle( $row->rc_namespace, $row->rc_title ),
-				$username === '' ? User::getUsername( $row->rc_user, inet_ntop( $row->rc_ip_bin ) ) : false // SUS-812
+				$username === '' ? User::getUsername( $row->rc_user, RecentChange::extractUserIpFromRow( $row ) ) : false // SUS-812
 			);
 		}
 

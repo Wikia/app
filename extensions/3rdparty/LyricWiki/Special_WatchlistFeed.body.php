@@ -241,7 +241,7 @@ class WatchlistFeed extends SpecialPage
 		$feed->outHeader();
 		$watchlist->prepare();
 		while ( $obj = $watchlist->getItem() ) {
-			$userIp = inet_ntop( $obj->rc_ip_bin );
+			$userIp = RecentChange::extractUserIpFromRow( $obj );
 			$title = Title::makeTitle( $obj->rc_namespace, $obj->rc_title );
 			$talkpage = $title->getTalkPage();
 
@@ -424,7 +424,7 @@ class Watchlist{
 		// Do link batch query - NOTE: I don't know what this section does or wheter it's needed - SWC 20081127
 		$linkBatch = new LinkBatch;
 		while ( $row = $this->mDbr->fetchObject( $this->mChanges ) ) {
-			$userIp = inet_ntop( $row->rc_ip_bin );
+			$userIp = RecentChange::extractUserIpFromRow( $row );
 			$userNameUnderscored = str_replace( ' ', '_', User::getUsername( $row->rc_user, $userIp ) ); // SUS-812
 			if ( $row->rc_user != 0 ) {
 				$linkBatch->add( NS_USER, $userNameUnderscored );

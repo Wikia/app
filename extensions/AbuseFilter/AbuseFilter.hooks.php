@@ -151,7 +151,7 @@ class AbuseFilterHooks {
 			$recentChange->mAttribs['rc_log_type'] : 'edit';
 		$actionID = implode( '-', [
 			$title->getPrefixedText(),
-			$recentChange->mAttribs['rc_user'] ?: $recentChange->mAttribs['rc_ip_bin'],
+			$recentChange->mAttribs['rc_user'] ?: $recentChange->getUserIp(),
 			$action,
 		] );
 

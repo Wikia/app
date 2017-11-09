@@ -1516,8 +1516,8 @@ class AbuseFilter {
 		if ( $row->rc_user ) {
 			$user = User::newFromId( $row->rc_user ); // SUS-812
 		} else {
-			$ip = inet_ntop( $row->rc_ip_bin );
-			$user = User::newFromName( $ip, false );
+			$userIp = RecentChange::extractUserIpFromRow( $row );
+			$user = User::newFromName( $userIp, false );
 		}
 
 		$vars->addHolder( self::generateUserVars( $user ) );
@@ -1548,8 +1548,8 @@ class AbuseFilter {
 		if ( $row->rc_user ) {
 			$user = User::newFromId( $row->rc_user );
 		} else {
-			$ip = inet_ntop( $row->rc_ip_bin );
-			$user = User::newFromName( $ip, false );
+			$userIp = RecentChange::extractUserIpFromRow( $row );
+			$user = User::newFromName( $userIp, false );
 		}
 
 		$params = explode( "\n", trim( $row->rc_params ) );

@@ -350,7 +350,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 
 	protected function feedItemAuthor( $row ) {
 		// SUS-3079: Use user name lookup to determine author
-		return User::getUsername( $row->rc_user, inet_ntop( $row->rc_ip_bin ) );
+		return User::getUsername( $row->rc_user, RecentChange::extractUserIpFromRow( $row ) );
 	}
 
 	protected function feedItemDesc( $row ) {
@@ -462,7 +462,9 @@ class NewPagesPager extends ReverseChronologicalPager {
 		$linkBatch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
 			$userId = $row->rc_user;
-			$userName = User::getUsername( $userId, inet_ntop( $row->rc_ip_bin ) ); // SUS-812
+			$userIp = RecentChange::extractUserIpFromRow( $row );
+
+			$userName = User::getUsername( $userId, $userIp ); // SUS-812
 
 			$linkBatch->add( NS_USER, $userName );
 			$linkBatch->add( NS_USER_TALK, $userName );
@@ -494,7 +496,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 			'comment' => $result->rc_comment,
 			'deleted' => $result->rc_deleted,
 			// SUS-3079: Use user name lookup here
-			'user_text' => $this->userNames[$result->rc_user] ?? inet_ntop( $result->rc_ip_bin ),
+			'user_text' => $this->userNames[$result->rc_user] ?? RecentChange::extractUserIpFromRow( $result ),
 			'user' => $result->rc_user,
 		);
 		$rev = new Revision( $row );

@@ -270,7 +270,7 @@ class RCDatabaseLogEntry extends DatabaseLogEntry {
 			return User::newFromId( $this->row->rc_user );
 		}
 
-		$userText = inet_ntop( $this->row->rc_ip_bin );
+		$userText = RecentChange::extractUserIpFromRow( $this->row );
 		// SUS-3079: this is an IP, don't validate the username
 		return User::newFromName( $userText, false );
 	}

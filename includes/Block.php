@@ -546,9 +546,13 @@ class Block {
 		$conds = [ 'rc_user' => $block->getTarget()->getId() ];
 
 		// Just the last IP used.
-		$ip = $dbr->selectField( 'recentchanges', 'rc_ip_bin', $conds, __METHOD__, $options );
+		$row = $dbr->selectRow( 'recentchanges', 'rc_ip_bin', $conds, __METHOD__, $options );
 
-		$userIp = inet_ntop( $ip );
+		if ( !$row ) {
+			return;
+		}
+
+		$userIp = RecentChange::extractUserIpFromRow( $row );
 		$autoBlockId = $block->doAutoblock( $userIp );
 
 		if ( $autoBlockId ) {

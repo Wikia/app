@@ -270,7 +270,8 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 		if ( $this->fld_user || $this->fld_userid ) {
 
 			if ( $this->fld_user ) {
-				$vals['user'] = User::getUsername( $row->rc_user, inet_ntop( $row->rc_ip_bin ) );
+				$userIp = RecentChange::extractUserIpFromRow( $row );
+				$vals['user'] = User::getUsername( $row->rc_user, $row );
 			}
 
 			if ( $this->fld_userid ) {

@@ -761,9 +761,18 @@ class RecentChange {
 
 	/**
 	 * SUS-3079: Get the IP address associated with this Recent Changes entry
-	 * @return bool|string
+	 * @return string
 	 */
 	public function getUserIp() {
-		return inet_ntop( $this->mAttribs['rc_ip_bin'] );
+		return IP::sanitizeIP( inet_ntop( $this->mAttribs['rc_ip_bin'] ) );
+	}
+
+	/**
+	 * SUS-3079: Get the IP address associated with this Recent Changes database row
+	 * @param object $row database row from Recent Changes table
+	 * @return string
+	 */
+	public static function extractUserIpFromRow( $row ) {
+		return IP::sanitizeIP( inet_ntop( $row->rc_ip_bin ) );
 	}
 }

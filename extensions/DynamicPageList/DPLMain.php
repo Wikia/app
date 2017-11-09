@@ -2790,7 +2790,7 @@ class DPLMain {
                 }
                 // CONTRIBUTION, CONTRIBUTOR
                 if($bAddContribution) {
-					$userIp = inet_ntop( $row->contributor );
+					$userIp = IP::sanitizeIP( inet_ntop( $row->contributor ) );
                     $dplArticle->mContribution = $row->contribution;
                     $dplArticle->mContributor  = User::getUsername( $row->contributor_id, $userIp ); // SUS-812
                     $dplArticle->mContrib      = substr('*****************',0,round(log($row->contribution)));
