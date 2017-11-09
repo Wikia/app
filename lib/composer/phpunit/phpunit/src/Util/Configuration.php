@@ -225,7 +225,18 @@ class Configuration
 
         if ($tmp->length == 0) {
             return [
-                'whitelist' => []
+                'whitelist' => [
+                    'addUncoveredFilesFromWhitelist'     => $addUncoveredFilesFromWhitelist,
+                    'processUncoveredFilesFromWhitelist' => $processUncoveredFilesFromWhitelist,
+                    'include'                            => [
+                        'directory' => [],
+                        'file'      => []
+                    ],
+                    'exclude' => [
+                        'directory' => [],
+                        'file'      => []
+                    ]
+                ]
             ];
         }
 
@@ -532,14 +543,17 @@ class Configuration
             switch ($array) {
                 case 'var':
                     $target = &$GLOBALS;
+
                     break;
 
                 case 'server':
                     $target = &$_SERVER;
+
                     break;
 
                 default:
                     $target = &$GLOBALS['_' . \strtoupper($array)];
+
                     break;
             }
 
