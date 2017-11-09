@@ -17,10 +17,12 @@ class DplTableSet {
 	}
 
 	public function addTableAlias( string $tableName, string $tableAlias ) {
-		$quotedTableName = $this->databaseConnection->tableName( $tableName );
-		$quotedTableAlias = $this->databaseConnection->addQuotes( $tableAlias );
+		if ( !isset( $this->tableMap[$tableAlias] ) ) {
+			$quotedTableName = $this->databaseConnection->tableName( $tableName );
+			$quotedTableAlias = $this->databaseConnection->addQuotes( $tableAlias );
 
-		$this->tableMap[$tableAlias] = "$quotedTableName AS $quotedTableAlias";
+			$this->tableMap[$tableAlias] = "$quotedTableName AS $quotedTableAlias";
+		}
 	}
 
 	public function getTables(): string {

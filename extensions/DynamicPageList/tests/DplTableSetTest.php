@@ -82,4 +82,46 @@ class DplTableSetTest extends TestCase {
 			$this->dplTableSet->getTables()
 		);
 	}
+
+	public function testTableAliasIsNotAddedIfTableWithSameNameIsSet() {
+		$tables = [ 'revision', 'page' ];
+		$aliasTables = [
+			'revision' => 'my_rev',
+			'foo_bar' => 'page'
+		];
+
+		foreach ( $tables as $tableName ) {
+			$this->dplTableSet->addTable( $tableName );
+		}
+
+		foreach ( $aliasTables as $tableName => $alias ) {
+			$this->dplTableSet->addTableAlias( $tableName, $alias );
+		}
+
+		$this->assertEquals(
+			'revision, page, revision AS my_rev',
+			$this->dplTableSet->getTables()
+		);
+	}
+
+	public function testTableIsNotAddedIfTableWithSomeAliasIsSet() {
+		$aliasTables = [
+			'revision' => 'my_rev',
+			'foo_bar' => 'page'
+		];
+		$tables = [ 'revision', 'page' ];
+
+		foreach ( $aliasTables as $tableName => $alias ) {
+			$this->dplTableSet->addTableAlias( $tableName, $alias );
+		}
+
+		foreach ( $tables as $tableName ) {
+			$this->dplTableSet->addTable( $tableName );
+		}
+
+		$this->assertEquals(
+			'revision AS my_rev, foo_bar AS page, revision',
+			$this->dplTableSet->getTables()
+		);
+	}
 }
