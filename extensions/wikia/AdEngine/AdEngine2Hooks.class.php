@@ -107,17 +107,20 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 
-		// news&stories variables only
-		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
+		// TODO: Remove after src=[gpt,ns] is finished
 		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
 		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
+		// TODO: Remove after ADEN-6155
+		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
+
+		// news&stories variables only
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
-		$vars[] = 'wgAdDriverF2SingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverF2SrcKeyValueCountries';
-		$vars[] = 'wgAdDriverF2PlayAdsOnNextFVCountries';
-		$vars[] = 'wgAdDriverF2PlayAdsOnNextFVFrequency';
-		$vars[] = 'wgAdDriverF2FVMidrollCountries';
-		$vars[] = 'wgAdDriverF2FVPostrollCountries';
+		$vars[] = 'wgAdDriverF2MidrollCountries';
+		$vars[] = 'wgAdDriverF2MoatTrackingVideoAdCountries';
+		$vars[] = 'wgAdDriverF2MoatTrackingVideoAdSampling';
+		$vars[] = 'wgAdDriverF2PlayAdsOnNextVideoCountries';
+		$vars[] = 'wgAdDriverF2PlayAdsOnNextVideoFrequency';
+		$vars[] = 'wgAdDriverF2PostrollCountries';
 
 		return true;
 	}
