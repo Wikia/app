@@ -24,8 +24,7 @@ class RecirculationHooks {
 
 		// Use a different position depending on whether the user is logged in
 		// This is based off of the logic from the VideosModule extension
-		$app = F::App();
-		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
+		$pos = RequestContext::getMain()->getUser()->isAnon() ? 1305 : 1285;
 
 		$modules[$pos] = [ 'Recirculation', 'container', [ 'containerId' => 'recirculation-rail' ] ];
 
@@ -81,13 +80,9 @@ class RecirculationHooks {
 		$showableNamespaces = array_merge( $wg->ContentNamespaces, self::getNoIndexNamespaces() );
 		$isInShowableNamespaces = $title->exists() && $title->inNamespaces( $showableNamespaces );
 
-		if ( $isInShowableNamespaces && !WikiaPageType::isActionPage() &&
-			!WikiaPageType::isCorporatePage()
-		) {
-			return true;
-		} else {
-			return false;
-		}
+		return $isInShowableNamespaces &&
+			!WikiaPageType::isActionPage() &&
+			!WikiaPageType::isCorporatePage();
 	}
 
 	/**
