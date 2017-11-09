@@ -815,8 +815,12 @@ class EnhancedChangesList extends ChangesList {
 			$out['userlink'] = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
 			$out['usertalklink'] = null;
 		} else {
-			$out['userlink'] = Linker::userLink( $rc->mAttribs['rc_user'], $rc->getUserIp() );
-			$out['usertalklink'] = Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->getUserIp() );
+			// SUS-812: use user name lookup to render user links
+			$userId = $rc->mAttribs['rc_user'];
+			$userName = User::getUsername( $userId, $rc->getUserIp() );
+
+			$out['userlink'] = Linker::userLink( $userId, $userName );
+			$out['usertalklink'] = Linker::userToolLinks( $userId, $userName );
 		}
 		
 		$out['clink'] = Linker::linkKnown( $rc->getTitle() );

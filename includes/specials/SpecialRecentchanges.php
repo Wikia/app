@@ -371,11 +371,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		}
 
 		if( $opts['hidemyself'] ) {
-			if( $this->getUser()->getId() ) {
-				$conds[] = 'rc_user != ' . $dbr->addQuotes( $this->getUser()->getId() );
-			} else {
-				$conds[] = 'rc_user_text != ' . $dbr->addQuotes( $this->getUser()->getName() );
-			}
+			$conds[] = 'rc_user != ' . $dbr->addQuotes( $this->getUser()->getId() );
 		}
 
 		# Namespace filtering
