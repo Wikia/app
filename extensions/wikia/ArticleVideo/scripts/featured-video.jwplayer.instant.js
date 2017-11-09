@@ -98,7 +98,7 @@ require([
 			logger: {
 				clientName: 'oasis'
 			},
-			lang: win.wgUserLanguage
+			lang: videoDetails.lang
 		}, onPlayerReady);
 	}
 

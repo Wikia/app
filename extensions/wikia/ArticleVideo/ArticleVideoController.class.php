@@ -2,6 +2,8 @@
 
 class ArticleVideoController extends WikiaController {
 	public function featured() {
+		global $wgLang;
+
 		$requestContext = $this->getContext();
 		$title = $requestContext->getTitle()->getPrefixedDBkey();
 
@@ -9,6 +11,8 @@ class ArticleVideoController extends WikiaController {
 
 		if ( !empty( $featuredVideoData ) ) {
 			$requestContext->getOutput()->addModules( 'ext.ArticleVideo' );
+
+			$featuredVideoData['lang'] = $wgLang->getCode();
 
 			$this->setVal( 'videoDetails', $featuredVideoData );
 
