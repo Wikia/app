@@ -4,7 +4,7 @@ require(['jquery'], function ($) {
 
 	function init() {
 		var parserTags = document.querySelectorAll(parserTagSelector);
-
+debugger;
 		Array.prototype.slice.call(parserTags).forEach(function (each) {
 			// We check this to avoid errors in places where we don't load JW
 			// e.g. Monobook
