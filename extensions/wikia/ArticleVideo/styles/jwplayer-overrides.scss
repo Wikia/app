@@ -1,0 +1,13 @@
+.featured-video.is-collapsed {
+	// do not show title when video is collapsed
+	.jw-title {
+		display: none;
+	}
+
+	// if both .is-collapsed & is-collapsed-ready are added it means animation is in progress and we do not want to show controls
+	&.is-collapsed-ready {
+		.jw-controls > div {
+			display: none;
+		}
+	}
+}

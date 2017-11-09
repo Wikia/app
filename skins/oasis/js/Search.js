@@ -44,7 +44,7 @@ WikiaSearchApp = (function() {
 				$.loadJQueryAutocomplete()
 			).then($.proxy(function() {
 				this.searchField.autocomplete({
-					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+					serviceUrl: wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: $.proxy(function(value, data, event) {
 						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
 						// slashes can't be urlencoded because they break routing

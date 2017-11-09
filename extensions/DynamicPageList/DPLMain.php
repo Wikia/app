@@ -1822,9 +1822,6 @@ class DPLMain {
         $sTemplateLinksTable = $dbr->tableName( 'templatelinks' );
         $sSqlPageLinksTable = '';
         $sSqlExternalLinksTable = '';
-        $sSqlCreationRevisionTable = '';
-        $sSqlNoCreationRevisionTable = '';
-        $sSqlChangeRevisionTable = '';
         $sSqlCond_page_pl = '';
         $sSqlCond_page_el = '';
         $sSqlCond_page_tpl = '';
@@ -2162,48 +2159,61 @@ class DPLMain {
             }
         }
 
+			/**
+			 * Recent changes
+			 **/
 
-        // recent changes  =============================
+			if ( $bAddContribution ) {
+				$sSqlRCTable = $sRCTable . ' AS rc, ';
+				$sSqlSelPage .= ', SUM( ABS( rc.rc_new_len - rc.rc_old_len ) ) AS contribution, rc.rc_user_text AS contributor, rc.rc_user AS contributor_id'; // SUS-812
+				$sSqlWhere   .= ' AND page.page_id=rc.rc_cur_id';
+				if ($sSqlGroupBy != '') $sSqlGroupBy .= ', ';
+				$sSqlGroupBy .= 'rc.rc_cur_id';
+			}
 
-        if ( $bAddContribution ) {
-            $sSqlRCTable = $sRCTable . ' AS rc, ';
-            $sSqlSelPage .= ', SUM( ABS( rc.rc_new_len - rc.rc_old_len ) ) AS contribution, rc.rc_user_text AS contributor, rc.rc_user AS contributor_id'; // SUS-812
-            $sSqlWhere   .= ' AND page.page_id=rc.rc_cur_id';
-            if ($sSqlGroupBy != '') $sSqlGroupBy .= ', ';
-            $sSqlGroupBy .= 'rc.rc_cur_id';
-        }
+			/**
+			 * Revisions
+			 **/
 
-        // Revisions ==================================
-        if ( $sCreatedBy != "" ) {
-			$sSqlCreationRevisionTable = $sRevisionTable . ' AS creation_rev, ';
-			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sCreatedBy) . ' = creation_rev.rev_user_text'
-								.' AND creation_rev.rev_page = page_id'
-								.' AND creation_rev.rev_parent_id = 0';
-		}
-		if ( $sNotCreatedBy != "" ) {
-			$sSqlNoCreationRevisionTable = $sRevisionTable . ' AS no_creation_rev, ';
-			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sNotCreatedBy) . ' != no_creation_rev.rev_user_text'
-								.' AND no_creation_rev.rev_page = page_id'
-								.' AND no_creation_rev.rev_parent_id = 0';
-		}
-		if ( $sModifiedBy != "" ) {
-			$sSqlChangeRevisionTable = $sRevisionTable . ' AS change_rev, ';
-			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sModifiedBy) . ' = change_rev.rev_user_text'
-								.' AND change_rev.rev_page = page_id';
-		}
-		if ( $sNotModifiedBy != "" ) {
-			$sSqlCond_page_rev .= ' AND NOT EXISTS (SELECT 1 FROM '.$sRevisionTable
-								.' WHERE '.$sRevisionTable.'.rev_page=page_id AND '.
-								$sRevisionTable.'.rev_user_text = ' . $dbr->addQuotes($sNotModifiedBy) . ' LIMIT 1)';
-		}
-        if ( $sLastModifiedBy != "" ) {
-            $sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sLastModifiedBy) . ' = (SELECT rev_user_text FROM '.$sRevisionTable
-                                .' WHERE '.$sRevisionTable.'.rev_page=page_id ORDER BY '.$sRevisionTable.'.rev_timestamp DESC LIMIT 1)';
-        }
-        if ( $sNotLastModifiedBy != "" ) {
-            $sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sNotLastModifiedBy) . ' != (SELECT rev_user_text FROM '.$sRevisionTable
-                                .' WHERE '.$sRevisionTable.'.rev_page=page_id ORDER BY '.$sRevisionTable.'.rev_timestamp DESC LIMIT 1)';
-        }
+			$dplTableSet = new DplTableSet( $dbr );
+			$dplRevisionQuerySegmentBuilder = ( new DplRevisionQuerySegmentBuilder( $dbr ) )
+				->tableSet( $dplTableSet );
+
+			if ( $sCreatedBy != "" ) {
+				$userArray = self::getWhereStatementForUsername( $sCreatedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildCreatedByQuerySegment( $userArray );
+			}
+
+			if ( $sNotCreatedBy != "" ) {
+				$userArray = self::getWhereStatementForUsername( $sNotCreatedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildNotCreatedByQuerySegment( $userArray );
+			}
+
+			if ( $sModifiedBy != "" ) {
+				$userArray = self::getWhereStatementForUsername( $sModifiedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildModifiedByQuerySegment( $userArray );
+			}
+
+			if ( $sNotModifiedBy != "" ) {
+				$userArray = self::getWhereStatementForUsername( $sNotModifiedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildNotModifiedByQuerySegment( $userArray );
+			}
+
+			if ( $sLastModifiedBy != "" ) {
+				$userArray = self::getWhereStatementForUsername( $sLastModifiedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildLastModifiedByQuerySegment( $userArray );
+			}
+
+			if ( $sNotLastModifiedBy != "" ) {
+				$userArray = self::getWhereStatementForUsername( $sNotLastModifiedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildNotLastModifiedByQuerySegment( $userArray );
+			}
 
         if ($bAddAuthor && $sSqlRevisionTable =='') {
             $sSqlRevisionTable = $sRevisionTable . ' AS rev, ';
@@ -2262,20 +2272,27 @@ class DPLMain {
         }
 
         // SELECT ... FROM
-        if ($acceptOpenReferences)
-                 // SELECT ... FROM
-        	if (count($aImageContainer)>0) {
-	        	$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . 'ic.il_to, ' . $sSqlSelPage . "ic.il_to AS sortkey" . ' FROM ' . $sImageLinksTable . ' AS ic';
-        	}
-        	else {
-	        	$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . 'pl_namespace, pl_title' . $sSqlSelPage . $sSqlSortkey . ' FROM ' . $sPageLinksTable;
-        	}
-        else
+        if ($acceptOpenReferences) {
+			// SELECT ... FROM
+			if ( count( $aImageContainer ) > 0 ) {
+				$sSqlSelectFrom =
+					"SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . 'ic.il_to, ' .
+					$sSqlSelPage . "ic.il_to AS sortkey" . ' FROM ' . $sImageLinksTable . ' AS ic';
+			} else {
+				$sSqlSelectFrom =
+					"SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to .
+					'pl_namespace, pl_title' . $sSqlSelPage . $sSqlSortkey . ' FROM ' .
+					$sPageLinksTable;
+			}
+		} else {
+        	$dplRevisionQueryTables = " {$dplTableSet->getTables()} ";
 			$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . $sPageTable.'.page_namespace AS page_namespace,'.
             					$sPageTable.'.page_title AS page_title,'.$sPageTable.'.page_id AS page_id' . $sSqlSelPage . $sSqlSortkey .
                                 $sSqlPage_size . $sSqlPage_touched . $sSqlRev_user .
                                 $sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp .
-                                ' FROM ' . $sSqlRevisionTable . $sSqlCreationRevisionTable . $sSqlNoCreationRevisionTable . $sSqlChangeRevisionTable . $sSqlRCTable . $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
+                                ' FROM ' . $sSqlRevisionTable . $dplRevisionQueryTables . $sSqlRCTable .
+							  $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
+        }
 
         // JOIN ...
         if($sSqlClHeadTable != '' || $sSqlClTableForGC != '') {
@@ -2469,58 +2486,58 @@ class DPLMain {
 			}
 		}
 
-        // GROUP BY ...
-        if ($sSqlGroupBy!='') {
-            $sSqlWhere .= ' GROUP BY '.$sSqlGroupBy . ' ';
-        }
+			// GROUP BY ...
+			if ($sSqlGroupBy!='') {
+					$sSqlWhere .= ' GROUP BY '.$sSqlGroupBy . ' ';
+			}
 
-        // ORDER BY ...
-        if ($aOrderMethods[0]!='' && $aOrderMethods[0]!='none') {
-            $sSqlWhere .= ' ORDER BY ';
-            foreach($aOrderMethods as $i => $sOrderMethod) {
+			// ORDER BY ...
+			if ($aOrderMethods[0]!='' && $aOrderMethods[0]!='none') {
+				$sSqlWhere .= ' ORDER BY ';
+				foreach($aOrderMethods as $i => $sOrderMethod) {
 
-                if($i > 0) $sSqlWhere .= ', ';
+					if($i > 0) $sSqlWhere .= ', ';
 
-                switch ($sOrderMethod) {
-                    case 'category':
-                        $sSqlWhere .= 'cl_head.cl_to';
-                        break;
-                    case 'categoryadd':
-                        $sSqlWhere .= 'cl0.cl_timestamp';
-                        break;
-                    case 'size':
-                        $sSqlWhere .= 'page_len';
-                        break;
-                    case 'firstedit':
-                        $sSqlWhere .= 'rev_timestamp';
-                        break;
-                    case 'lastedit':
-						// extension:intersection used to sort by page_touched although the field is called 'lastedit'
-						if (ExtDynamicPageList::$behavingLikeIntersection) 	$sSqlWhere .= 'page_touched';
-						else 												$sSqlWhere .= 'rev_timestamp';
-                        break;
-                    case 'pagetouched':
-                        $sSqlWhere .= 'page_touched';
-                        break;
-                    case 'sortkey':
-                    case 'title':
-                    case 'pagesel':
-                        $sSqlWhere .= 'sortkey';
-                        break;
-                    case 'titlewithoutnamespace':
-						if ($acceptOpenReferences)	$sSqlWhere .= "pl_title";
-						else 						$sSqlWhere .= "page_title";
-                        break;
-                    case 'user':
-                        // rev_user_text can discriminate anonymous users (e.g. based on IP), rev_user cannot (=' 0' for all)
-                        $sSqlWhere .= 'rev_user_text';
-                        break;
-					default:
-                }
-            }
-            if ($sOrder == 'descending')  	$sSqlWhere .= ' DESC';
-            else			                $sSqlWhere .= ' ASC';
-        }
+					switch ($sOrderMethod) {
+						case 'category':
+							$sSqlWhere .= 'cl_head.cl_to';
+							break;
+						case 'categoryadd':
+							$sSqlWhere .= 'cl0.cl_timestamp';
+							break;
+						case 'size':
+							$sSqlWhere .= 'page_len';
+							break;
+						case 'firstedit':
+							$sSqlWhere .= 'rev_timestamp';
+							break;
+						case 'lastedit':
+							// extension:intersection used to sort by page_touched although the field is called 'lastedit'
+							if (ExtDynamicPageList::$behavingLikeIntersection) 	$sSqlWhere .= 'page_touched';
+							else 												$sSqlWhere .= 'rev_timestamp';
+							break;
+						case 'pagetouched':
+							$sSqlWhere .= 'page_touched';
+							break;
+						case 'sortkey':
+						case 'title':
+						case 'pagesel':
+							$sSqlWhere .= 'sortkey';
+							break;
+						case 'titlewithoutnamespace':
+							if ($acceptOpenReferences)	$sSqlWhere .= "pl_title";
+							else 						$sSqlWhere .= "page_title";
+							break;
+						case 'user':
+							// rev_user_text can discriminate anonymous users (e.g. based on IP), rev_user cannot (=' 0' for all)
+							// SUS-807
+							$sSqlWhere .= 'rev_user, rev_user_text';
+							break;
+						default:
+					}
+				}
+				$sSqlWhere .= ($sOrder == 'descending') ? ' DESC' : ' ASC';
+			}
 
         if ($sAllRevisionsSince!='' || $sAllRevisionsBefore!='') {
 			if ($aOrderMethods[0]=='' || $aOrderMethods[0]=='none') $sSqlWhere .= ' ORDER BY ';
@@ -2715,24 +2732,25 @@ class DPLMain {
                 }
             }
 
-            if ($bGoalIsPages) {
-                //REVISION SPECIFIED
-                if( $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince !='') {
-                    $dplArticle->mRevision = $row->rev_id;
-                    $dplArticle->mUser = $row->rev_user_text;
-                    $dplArticle->mDate = $row->rev_timestamp;
-                }
+					if ($bGoalIsPages) {
+						//REVISION SPECIFIED
+						if( $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince !='') {
+							$dplArticle->mRevision = $row->rev_id;
+							// SUS-807
+							$dplArticle->mUser = User::getUsername( $row->rev_user, $row->rev_user_text );
+							$dplArticle->mDate = $row->rev_timestamp;
+						}
 
-                //SHOW "PAGE_TOUCHED" DATE, "FIRSTCATEGORYDATE" OR (FIRST/LAST) EDIT DATE
-                if($bAddPageTouchedDate) 								$dplArticle->mDate = $row->page_touched;
-                elseif ($bAddFirstCategoryDate)							$dplArticle->mDate = $row->cl_timestamp;
-                elseif ($bAddEditDate && isset($row->rev_timestamp))	$dplArticle->mDate = $row->rev_timestamp;
-                elseif ($bAddEditDate && isset($row->page_touched))		$dplArticle->mDate = $row->page_touched;
+						//SHOW "PAGE_TOUCHED" DATE, "FIRSTCATEGORYDATE" OR (FIRST/LAST) EDIT DATE
+						if($bAddPageTouchedDate) 	$dplArticle->mDate = $row->page_touched;
+						elseif ($bAddFirstCategoryDate)	$dplArticle->mDate = $row->cl_timestamp;
+						elseif ($bAddEditDate && isset($row->rev_timestamp))	$dplArticle->mDate = $row->rev_timestamp;
+						elseif ($bAddEditDate && isset($row->page_touched))	$dplArticle->mDate = $row->page_touched;
 
-				// time zone adjustment
-                if ($dplArticle->mDate!='') {
-					$dplArticle->mDate= $wgLang->userAdjust($dplArticle->mDate);
-				}
+						// time zone adjustment
+						if ($dplArticle->mDate!='') {
+							$dplArticle->mDate= $wgLang->userAdjust($dplArticle->mDate);
+						}
 
                 if ($dplArticle->mDate!='' && $sUserDateFormat!='') {
 					// we apply the userdateformat
@@ -2746,52 +2764,52 @@ class DPLMain {
                 }
 
 
-                //USER/AUTHOR(S)
-                // because we are going to do a recursive parse at the end of the output phase
-                // we have to generate wiki syntax for linking to a user´s homepage
-                if($bAddUser || $bAddAuthor || $bAddLastEditor || $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince != '') {
-                    $dplArticle->mUserLink  = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
-                    $dplArticle->mUser = $row->rev_user_text;
-                    $dplArticle->mComment = $row->rev_comment;
-                }
+						//USER/AUTHOR(S)
+						// because we are going to do a recursive parse at the end of the output phase
+						// we have to generate wiki syntax for linking to a user´s homepage
+						if ( $bAddUser || $bAddAuthor || $bAddLastEditor || $sLastRevisionBefore . $sAllRevisionsBefore . $sFirstRevisionSince . $sAllRevisionsSince != '' ) {
+							// SUS-807
+							$username = User::getUsername( $row->rev_user, $row->rev_user_text );
 
-                //CATEGORY LINKS FROM CURRENT PAGE
-                if($bAddCategories && $bGoalIsPages && ($row->cats != '')) {
-                    $artCatNames = explode(' | ', $row->cats);
-                    foreach($artCatNames as $artCatName) {
-                        $dplArticle->mCategoryLinks[] = '[[:Category:'.$artCatName.'|'.str_replace('_',' ',$artCatName).']]';
-                        $dplArticle->mCategoryTexts[] = str_replace('_',' ',$artCatName);
-                    }
-                }
-                // PARENT HEADING (category of the page, editor (user) of the page, etc. Depends on ordermethod param)
-                if($sHListMode != 'none') {
-                    switch($aOrderMethods[0]) {
-                        case 'category':
-                            //count one more page in this heading
-                            $aHeadings[$row->cl_to] = isset($aHeadings[$row->cl_to]) ? $aHeadings[$row->cl_to] + 1 : 1;
-                            if($row->cl_to == '') {
-                                //uncategorized page (used if ordermethod=category,...)
-                                $dplArticle->mParentHLink = '[[:Special:Uncategorizedpages|'.wfMsg('uncategorizedpages').']]';
-                            } else {
-                                $dplArticle->mParentHLink = '[[:Category:'.$row->cl_to.'|'.str_replace('_',' ',$row->cl_to).']]';
-                            }
-                            break;
-                        case 'user':
-                            $aHeadings[$row->rev_user_text] = isset($aHeadings[$row->rev_user_text]) ? $aHeadings[$row->rev_user_text] + 1 : 1;
-                            if($row->rev_user == 0) { //anonymous user
-                                $dplArticle->mParentHLink = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
+							$dplArticle->mUserLink = '[[User:' . $username . '|' . $username . ']]';
+							$dplArticle->mUser = $username;
+							$dplArticle->mComment = $row->rev_comment;
+						}
 
-                            } else {
-                                $dplArticle->mParentHLink = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
-                            }
-                            break;
-                    }
-                }
-            }
+						//CATEGORY LINKS FROM CURRENT PAGE
+						if($bAddCategories && $bGoalIsPages && ($row->cats != '')) {
+							$artCatNames = explode(' | ', $row->cats);
+							foreach($artCatNames as $artCatName) {
+								$dplArticle->mCategoryLinks[] = '[[:Category:'.$artCatName.'|'.str_replace('_',' ',$artCatName).']]';
+								$dplArticle->mCategoryTexts[] = str_replace('_',' ',$artCatName);
+							}
+						}
+						// PARENT HEADING (category of the page, editor (user) of the page, etc. Depends on ordermethod param)
+						if($sHListMode != 'none') {
+							switch($aOrderMethods[0]) {
+								case 'category':
+									//count one more page in this heading
+									$aHeadings[$row->cl_to] = isset($aHeadings[$row->cl_to]) ? $aHeadings[$row->cl_to] + 1 : 1;
+									if($row->cl_to == '') {
+										//uncategorized page (used if ordermethod=category,...)
+										$dplArticle->mParentHLink = '[[:Special:Uncategorizedpages|'.wfMsg('uncategorizedpages').']]';
+									} else {
+										$dplArticle->mParentHLink = '[[:Category:'.$row->cl_to.'|'.str_replace('_',' ',$row->cl_to).']]';
+									}
+									break;
+								case 'user':
+									// SUS-807
+									$username = User::getUsername( $row->rev_user, $row->rev_user_text );
+									$aHeadings[ $username ] = isset( $aHeadings[ $username ] ) ? $aHeadings[ $username ] + 1 : 1;
+									$dplArticle->mParentHLink = '[[User:' . $username . '|' . $username . ']]';
+									break;
+							}
+						}
+					}
 
-            $aArticles[] = $dplArticle;
-        }
-        $dbr->freeResult( $res );
+					$aArticles[] = $dplArticle;
+				}
+			$dbr->freeResult( $res );
 		$rowcount = -1;
 		if ( $sSqlCalcFoundRows != '') {
 			$res = $dbr->query('SELECT FOUND_ROWS() AS rowcount');
@@ -3198,6 +3216,26 @@ class DPLMain {
 			$key=intval(preg_replace('/.*#/','',$skey[$a]));
 			$articles[$a] = $cArticles[$key];
 		}
+	}
+
+
+	/**
+	 * SUS-807: Get user name or user ID to use in lookup
+	 * It is the responsibility of callers to escape the output
+	 * @param $userName
+	 * @return array
+	 */
+	private static function getWhereStatementForUsername( $userName ) {
+		if ( User::isIP( $userName ) ) {
+			return [ 'user_text' => $userName ];
+		}
+
+		$userId = User::idFromName( $userName );
+		if ( $userId > 0 ) {
+			return [ 'user_id' => $userId ];
+		}
+
+		return [];
 	}
 
 	private static function getMemcacheKey( $dplCacheId ) {

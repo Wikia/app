@@ -631,10 +631,13 @@ class ApiMain extends ApiBase {
 	/**
 	 * Check the max lag if necessary
 	 * @param $module ApiBase object: Api module being used
-	 * @param $params Array an array containing the request parameters.
+	 * @param $params array an array containing the request parameters.
 	 * @return boolean True on success, false should exit immediately
 	 */
 	protected function checkMaxLag( $module, $params ) {
+		# Wikia change - SUS-3221 | Consul health checks make sure that we only have healthy slaves serving traffic
+		return true;
+		/**
 		if ( $module->shouldCheckMaxlag() && isset( $params['maxlag'] ) ) {
 			// Check for maxlag
 			global $wgShowHostnames;
@@ -655,6 +658,7 @@ class ApiMain extends ApiBase {
 			}
 		}
 		return true;
+		**/
 	}
 
 	/**

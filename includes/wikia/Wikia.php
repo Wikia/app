@@ -35,10 +35,6 @@ $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurg
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
-# User hooks
-$wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
-$wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
-
 # Swift file backend
 $wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
 $wgHooks['BeforeRenderTimeline']     [] = "Wikia::onBeforeRenderTimeline";
@@ -1494,42 +1490,6 @@ class Wikia {
 		return $isValid;
 	}
 
-	/*
-	 * @param $user_name String
-	 * @param $s ResultWrapper
-	 * @param $bUserObject boolean Return instance of User if true; StdClass (row) otherwise.
-	 */
-	public static function onUserNameLoadFromId( $user_name, &$s, $bUserObject = false ) {
-		global $wgExternalAuthType;
-		if ( $wgExternalAuthType ) {
-			$mExtUser = ExternalUser::newFromName( $user_name );
-			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() );
-				$s = $mExtUser->getLocalUser( $bUserObject );
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param $user User
-	 * @param $s ResultWrapper
-	 */
-	public static function onUserLoadFromDatabase( $user, &$s ) {
-		/* wikia change */
-		global $wgExternalAuthType;
-		if ( $wgExternalAuthType ) {
-			$mExtUser = ExternalUser::newFromId( $user->mId );
-			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() );
-				$s = $mExtUser->getLocalUser( false );
-			}
-		}
-
-		return true;
-	}
-
 	/**
 	 * @desc Adds assets to OutputPage depending on asset type
 	 *
@@ -1566,12 +1526,7 @@ class Wikia {
 		}
 	}
 
-	/**
-	 * @param $user User
-	 */
-	public static function invalidateUser( $user, $disabled = false, $keepEmail = true, $ajax = false ) {
-		global $wgExternalAuthType;
-
+	public static function invalidateUser( User $user, $disabled = false, $keepEmail = true, $ajax = false ) {
 		if ( $disabled ) {
 			$userEmail = $user->getEmail();
 			// Optionally keep email in user property
@@ -1592,11 +1547,6 @@ class Wikia {
 				$wgRequest->setVal('action', 'ajax');
 			}
 			$user->saveSettings();
-		}
-		$id = $user->getId();
-		// delete the record from all the secondary clusters
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
 
@@ -1964,11 +1914,15 @@ class Wikia {
 	/**
 	 * Hook for storing historical log of email changes
 	 * Depends on the central user_email_log table defined in the EditAccount extension
+	 *
+	 * @param User $user
+	 * @param $new_email
+	 * @param $old_email
 	 * @return bool
 	 */
 	public static function logEmailChanges($user, $new_email, $old_email) {
 		global $wgExternalSharedDB, $wgUser, $wgRequest;
-		if ( $wgExternalSharedDB && isset( $new_email ) && isset( $old_email ) ) {
+		if ( isset( $new_email ) && isset( $old_email ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->insert(
 				'user_email_log',

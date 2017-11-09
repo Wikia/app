@@ -207,9 +207,9 @@ class UserTest extends WikiaBaseTest {
 		$this->assertEquals( 'NameFromUserTable', User::getUsername( 123, 'notFromUserTableName' ) );
 	}
 
-	public function testGetUsernameShouldReturnDefaultValueIfUserIsNotFound() {
+	public function testGetUsernameShouldReturnFalseIfUserIsNotFound() {
 		$this->mockStaticMethod( 'User', 'whoIs', false );
-		$this->assertEquals( 'someName', User::getUsername( 123, 'someName' ) );
+		$this->assertEquals( false, User::getUsername( 123, 'someName' ) );
 	}
 
 	public function testNewFromTokenAuthorizationGranted() {

@@ -92,6 +92,12 @@ class LogPage {
 		$dbw = wfGetDB( DB_MASTER );
 		$log_id = $dbw->nextSequenceValue( 'logging_log_id_seq' );
 
+		// SUS-3222: All log entries should be attributed to registered users
+		if ( $this->doer->isAnon() ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( 'SUS-3222 - Anon user log entry' );
+		}
+
 		$this->timestamp = $now = wfTimestampNow();
 		$data = array(
 			'log_id' => $log_id,

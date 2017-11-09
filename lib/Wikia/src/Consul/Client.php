@@ -10,12 +10,13 @@
 namespace Wikia\Consul;
 
 use SensioLabs\Consul\ServiceFactory;
+use Wikia\Logger\Loggable;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Assert;
 
 class Client {
 
-	use \Wikia\Logger\Loggable;
+	use Loggable;
 
 	protected $logger;
 
@@ -74,10 +75,10 @@ class Client {
 	 * Example: Wikia\Consul\Catalog::isConsulAddress( 'slave.db-smw.service.consul' )
 	 *
 	 * @param $address
-	 * @preturn bool true if the given address is a consul one
+	 * @return bool true if the given address is a consul one
 	 */
 	static function isConsulAddress( $address ) {
-		return endsWith( $address, '.service.consul' );
+		return endsWith( $address, '.consul' );
 	}
 
 	/**

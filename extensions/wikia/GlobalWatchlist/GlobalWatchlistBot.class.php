@@ -127,7 +127,7 @@ class GlobalWatchlistBot {
 	 * @return bool
 	 */
 	public function shouldNotSendDigest( $userID, $sendLogging = false ) {
-		$user = $this->getUserObject( $userID );
+		$user = User::newFromId ( $userID );
 		try {
 			$this->checkIfValidUser( $user );
 			$this->checkIfEmailUnSubscribed( $user );
@@ -143,27 +143,6 @@ class GlobalWatchlistBot {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * @param int $userID
-	 * @return null|User
-	 */
-	private function getUserObject( $userID ) {
-
-		if (\F::app()->wg->ExternalAuthType ) {
-			$mExtUser = ExternalUser::newFromId( $userID );
-			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$mExtUser->linkToLocal( $mExtUser->getId() );
-				$user = $mExtUser->getLocalUser();
-			} else {
-				$user = null;
-			}
-		} else {
-			$user = User::newFromId ( $userID );
-		}
-
-		return $user;
 	}
 
 	/**

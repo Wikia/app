@@ -67,7 +67,6 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $amazonMatch ?>
 <?= $a9 ?>
 <?= $prebid ?>
 <?= $krux ?>

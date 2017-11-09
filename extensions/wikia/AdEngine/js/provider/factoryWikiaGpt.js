@@ -27,6 +27,16 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 	}
 
+	function rewriteExtras(slotName, extra) {
+		return {
+			testSrc: extra.testSrc,
+			sraEnabled: extra.sraEnabled,
+			isInstartLogicRecoverable: extra.isInstartLogicRecoverable ? extra.isInstartLogicRecoverable(slotName) : false,
+			isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slotName) : false,
+			isSourcePointRecoverable: extra.isSourcePointRecoverable ? extra.isSourcePointRecoverable(slotName) : false
+		};
+	}
+
 	/**
 	 * Creates GPT provider based on given params
 	 *
@@ -96,12 +106,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				slotRegistry.storeScrollY(slot.name);
 			}
 
-			gptHelper.pushAd(slot, slotPath, slotTargeting, {
-				sraEnabled: extra.sraEnabled,
-				isInstartLogicRecoverable: extra.isInstartLogicRecoverable ? extra.isInstartLogicRecoverable(slot.name) : false,
-				isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slot.name) : false,
-				isSourcePointRecoverable: extra.isSourcePointRecoverable ? extra.isSourcePointRecoverable(slot.name) : false
-			});
+			gptHelper.pushAd(slot, slotPath, slotTargeting, rewriteExtras(slot.name, extra));
 			log(['fillInSlot', slot.name, providerName, 'done'], 'debug', logGroup);
 		}
 

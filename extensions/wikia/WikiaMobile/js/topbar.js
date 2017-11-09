@@ -146,7 +146,7 @@ function (
 				function () {
 					require(['autocomplete'], function (sug) {
 						sug({
-							url: w.wgServer + '/api.php?action=opensearch',
+							url: w.wgScriptPath + '/api.php?action=opensearch',
 							input: searchInput,
 							list: searchSug,
 							clear: d.getElementById('wkClear')

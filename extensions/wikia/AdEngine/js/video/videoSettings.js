@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.utils.sampler',
+	'wikia.instantGlobals',
 	'wikia.window'
-], function (adContext, resolvedState, sampler, win) {
+], function (adContext, resolvedState, sampler, instantGlobals, win) {
 	'use strict';
 
 	function create(params) {
@@ -24,19 +25,22 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		}
 
 		function calculateMoatTrackingFlag(params) {
-			var sampling = params.moatTracking || 0;
+			var sampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
 
 			if (typeof params.moatTracking === 'boolean') {
 				return params.moatTracking;
 			}
 
-			if ((params.bid && params.bid.moatTracking === 100) || sampling === 100) {
+			if (!adContext.get('opts.porvataMoatTrackingEnabled')) {
+				return false;
+			}
+
+			if (sampling === 100) {
 				return true;
 			}
 
 			if (sampling > 0) {
-				return sampler.sample('moatVideoTracking',  sampling, 100) &&
-					adContext.get('opts.porvataMoatTrackingEnabled');
+				return sampler.sample('moat_video_tracking',  sampling, 100);
 			}
 
 			return false;

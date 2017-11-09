@@ -12,7 +12,7 @@ div.WidgetBookmark,
 
 .WidgetBookmark .WidgetBookmarkMenu a.addBookmark {
 	cursor: pointer;
-	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_bookmark_add.png);
+	background-image: url(https://images.wikia.nocookie.net/common/skins/common/widgets/icons/widget_bookmark_add.png);
 	display: block;
 	width: 16px;
 	height: 16px;

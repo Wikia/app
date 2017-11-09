@@ -2035,58 +2035,142 @@ $messages['hu'] = array(
 
 $messages['id'] = array(
 	'forum-forum-title' => 'Forum',
-	'forum-specialpage-board-lastpostby' => 'Postingan terakhir oleh',
+	'forum-specialpage-board-lastpostby' => 'Terakhir dikirim oleh',
 	'forum-specialpage-policies-edit' => 'Sunting',
-	'forum-specialpage-policies' => 'Kebijakan Forum / FAQ',
-	'forum-policies-and-faq' => "==Kebijakan forum==
-Sebelum berkontribusi ke Forum {{SITENAME}}, harap diingat beberapa praktek terbaik untuk dilakukan:
+	'forum-specialpage-policies' => 'Forum kebijakan/FAQ',
+	'forum-policies-and-faq' => "==Kebijakan Forum==
+Sebelum berkontribusi di forum {{SITENAME}}, harap di ingat beberapa hal yang harus di praktikkan sebelum melakukan.
 
-'''Bersikap baik dan memperlakukan orang dengan hormat.'''
-:Orang-orang dari seluruh dunia membaca dan mengedit di wiki ini dan forumnya. Seperti proyek kolaborasi lainnya, tidak semua orang akan setuju sepanjang waktu. Jauhkan diskusi sipil dan berpikiran terbuka tentang perbedaan pendapat. Kita semua di sini karena kita mencintai topik yang sama.
+'''Bersikaplah baik dan memperlakukan orang lain lebih hormat'''
+:Semua orang di seluruh dunia membaca dan menyunting wiki ini dan forumnya. Seperti proyek kolaborasi lainnya, tidak semua orang akan setuju setiap saat. Harap menjaga diskusi dengan sopan dan terbuka dalam beberapa tentang perbedaan pendapat. Kita semua disini menyukai topik yang sama. 
 
-'''Cobalah untuk menemukan diskusi yang ada pertama, tapi jangan takut untuk memulai lembaran baru.'''
-:Silakan luangkan waktu menyaring melalui papan forum {{SITENAME}} untuk melihat apakah diskusi sudah ada tentang sesuatu yang Anda ingin bicarakan. Jika Anda tidak dapat menemukan apa yang Anda cari, melompatlah dan memulai diskusi baru!
+'''Cobalah mencari diskusi yang sudah ada terlebih dahulu, tetapi jangan takut untuk memulai diskusi yang baru'''
+:Diharapkan untuk meluangkan waktu untuk melihat-lihat di papan forum {{SITENAME}} untuk melihat diskusi tentang pertanyaanmu terlebih dahulu, Jika anda tidak menemukan diskusi yang anda cari, silahkan memulai diskusi yang baru!
 
-'''Minta bantuan.'''
-:Menemukan sesuatu yang tidak benar? Atau apakah Anda memiliki pertanyaan? MMintalah bantuan di sini di forum! Jika Anda membutuhkan bantuan dari staf Wikia, silakan menuju pada [[w:c:community|Pusat Komunitas]] atau melalui [[Special:Contact]].
+'''Minta bantuan'''
+:Jika anda melihat sesuatu yang sesuatu yang aneh? Atau anda punya pertanyaan? Tanya saja untuk bantuan di forum! Jika Anda membutuhkan bantuan dari Staf FANDOM, tolong kontak kami di [[w:c:community|Community Central]] atau melalui [[Special:Contact]].
 
-'''Selamat bersenang-senang!'''
-:Komunitas {{SITENAME}} senang untuk memiliki Anda di sini. Kami berharap dapat melihat Anda di sekitar seperti yang kita bahas pada topik ini kita semua saling mencintai.
+'''Selamat menikmati!'''
+:{{SITENAME}} sangat bahagia dengan kehadiran anda disini. Kami sangat jika anda ada disekeliling saat kita bersama mendiskusikan topik yang kita sukai.
 
 ==Forum FAQ==
-'''Bagaimana saya tetap di atas diskusi yang menarik bagi saya?'''
-:Dengan akun pengguna Wikia, Anda dapat mengikuti percakapan tertentu dan kemudian menerima pesan pemberitahuan (baik di tempat atau melalui surel) saat diskusi memiliki lebih banyak aktivitas. Pastikan untuk [[Special:UserSignup|mendaftar akun Wikia]] jika Anda belum memilikinya.
+'''Bagaimana saya tetap ada di diskusi yang saya sukai?'''
+:Dengan sebuah akun pengguna FANDOM, anda bisa mengikuti percakapan yang spesifik dan menerima pesan pemberitahuan (kemungkinan di website atau melalui email) disaat ada diskusi yang sedang aktif. Anda harus mendaftar [[Special:UserSignup|mendaftar untuk akun fandom]] jika anda belum mendaftar.
 
-'''Bagaimana cara menghapus vandalisme?'''
-:Jika Anda melihat beberapa spam atau vandalisme pada lembar diskusi, bawa tetikus Anda ke teks yang bermasalah. Anda akan melihat \"Lebih\" tombol yang muncul. Di dalam menu \"Lebih\", Anda akan menemukan \"Hapus\". Ini akan memungkinkan Anda untuk menghapus vandalisme dan lebih disarankan menginformasikan admin.
+'''Bagaimana saya menghapus vandalisme?'''
+:Jika anda melihat beberapa spam atau vandalisme di panel diskusi, arahkan mouse anda ke halaman yang anda lihat sedang terjadi. Anda akan melihat sebuah button \"Lagi\" akan muncul. Didalam menu \"lagi\", anda akan menemukan kata \"Hapus\". Ini akan membuat anda bisa menghapus vandalisme dan juga memberitahukan kepada admin.
 
-'''Apa itu Pujian?'''
-:Jika Anda menemukan diskusi tertentu atau ingin membalas menarik, dipikirkan dengan baik, atau menghibur Anda dapat menunjukkan penghargaan langsung dengan memberikan Pujian. Mereka dapat membantu dalam situasi pemungutan suara juga.
+'''Apakah itu Pujian?\"
+:Jika anda menemukan diskusi atau jawaban tertentu yang dikira anda menarik, yang sangat mendetail anda bisa memberikan pujian langsung dengan memberikan pujian. Pujian juga membantu dalam suasana undian suara, juga.
 
-'''Apa itu Topik?'''
-:Topik memungkinkan Anda untuk menghubungkan diskusi forum dengan artikel wiki. Ini cara lain untuk menjaga Forum terorganisir dan membantu orang menemukan diskusi yang menarik. Sebagai contoh, sebuah lembar dengan lebel \"Lord Voldemort\" akan muncul di bagian bawah artikel \"Lord Voldemort\".",
-	'forum-board-topics' => 'Topik-topik',
+'''Apakah itu Topik?'''
+:Topik akan memberikan anda untuk mengaitkan forum diskusi dengan artikel wiki. Itu adalah cara yang terbaik agar Forum tetap terorganisasi dan membantu orang lain menemukan diskusi yang menarik. Contohnya, sebuah forum yang di tag \"Lord Voldemort\" akan muncul dibawah kategori artikelnya.",
+	'forum-board-topics' => 'Topik',
 	'forum-board-thread-follow' => 'Ikuti',
 	'forum-board-thread-following' => 'Mengikuti',
-	'forum-board-thread-kudos' => '$1 Kudos',
-	'forum-board-new-message-heading' => 'Mulai Diskusi',
-	'forum-no-board-selection-error' => '← Silakan pilih dinding untuk posting ke',
-	'forum-thread-reply-placeholder' => 'Kirimkan balasan',
-	'forum-thread-reply-post' => 'Balas',
-	'forum-sorting-option-newest-replies' => 'Balasan Terbaru',
-	'forum-sorting-option-popular-threads' => 'Paling Populer',
-	'forum-sorting-option-most-replies' => 'Paling Aktif dalam 7 Hari',
-	'forum-sorting-option-newest-threads' => 'Lembar Terbaru',
-	'forum-sorting-option-oldest-threads' => 'Lembar Terlama',
+	'forum-board-thread-kudos' => '$1 Pujian',
+	'forum-board-new-message-heading' => 'Memulai diskusi',
+	'forum-no-board-selection-error' => 'Pilih papan diskusi untuk mengirimkan ke',
+	'forum-thread-reply-placeholder' => 'Kirim balasan',
+	'forum-thread-reply-post' => 'Balasan',
+	'forum-sorting-option-newest-replies' => 'Balasan yang paling baru',
+	'forum-sorting-option-popular-threads' => 'Paling populer',
+	'forum-sorting-option-most-replies' => 'Paling aktif dalam 7 hari',
+	'forum-sorting-option-newest-threads' => 'Diskusi Terbaru',
+	'forum-sorting-option-oldest-threads' => 'Diskusi Terlama',
 	'forum-discussion-post' => 'Kirim',
-	'forum-discussion-highlight' => 'Sorot diskusi ini',
-	'forum-discussion-placeholder-title' => 'Apa yang Anda ingin bicarakan?',
-	'forum-discussion-placeholder-message' => 'Mengirim pesan baru ke dinding $1',
+	'forum-discussion-highlight' => 'Menyorotkan diskusi ini',
+	'forum-discussion-placeholder-title' => 'Apa yang anda ingin bicarakan tentang?',
+	'forum-discussion-placeholder-message' => 'Mengirimkan pesan baru ke panel $1',
 	'forum-discussion-placeholder-message-short' => 'Kirim pesan baru',
 	'forum-activity-module-heading' => 'Aktivitas Forum',
-	'forum-related-module-heading' => 'Lembar Terkait',
-	'forum-related-discussion-new-post-button' => 'Mulai Diskusi',
-	'forum-related-discussion-new-post-tooltip' => 'Mulai diskusi baru tentang $1',
+	'forum-related-module-heading' => 'Diskusi Terkait',
+	'forum-related-discussion-new-post-button' => 'Memulai diskusi',
+	'forum-related-discussion-new-post-tooltip' => 'Memulai diskusi baru tentang $1',
+	'forum-desc' => 'FANDOM ekstensi Special:Forum',
+	'forum-disabled-desc' => 'FANDOM ekstensi Special:Forum; terputus',
+	'forum-active-threads' => '$1 {{PLURAL:$1|Diskusi Aktif|Diskusi Aktif}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Diskusi Aktif|Diskusi Aktif}} tentang: '''[[$2]]'''",
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Diskusi<br/>di forum ini|Panel diskusi<br/>di forum ini}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Aktif<br />Diskusi|Aktif<br />Diskusi}}</span>',
+	'forum-specialpage-heading' => 'Forum',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-halamanistimewa-blurb-heading Anda bisa menyuntingnya<span>',
+	'forum-specialpage-blurb' => '',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|panel diskusi|Panel diskusi}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|Kirim|Kiriman}}',
+	'forum-board-title' => '$1 panel diskusi',
+	'forum-board-topic-title' => 'Diskusi tentang $1',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|Pesan|Pesan}}',
+	'forum-thread-deleted-return-to' => 'Kembali ke panel $1',
+	'forum-notification-user1-reply-to-your' => '$1 telah menjawab diskusi anda di panel $3',
+	'forum-notification-user2-reply-to-your' => '$1 dan $2 telah menjawab diskusi anda di panel diskusi',
+	'forum-notification-user3-reply-to-your' => '$1 dan yang lainnya menjawab diskusi anda di panel $3',
+	'forum-notification-user1-reply-to-someone' => '$1 telah menjawab diskusi di panel $3',
+	'forum-notification-user2-reply-to-someone' => '$1 dan $2 telah menjawab di panel $3',
+	'forum-notification-user3-reply-to-someone' => '$1 dan yang lain telah menjawab di panel $3',
+	'forum-notification-newmsg-on-followed-wall' => '$1 telah meninggalkan pesan baru di panel $2',
+	'forum-wiki-activity-msg' => 'pada $1',
+	'forum-wiki-activity-msg-name' => 'panel $1',
+	'forum-activity-module-posted' => '$1 telah mengirimkan balasan $2',
+	'forum-activity-module-started' => '$1 telah memulai diskusi $2',
+	'forum-contributions-line' => '[[$1|$2]] pada [[$3|panel $4]]',
+	'forum-recentchanges-new-message' => 'pada [[$1|panel $2]]',
+	'forum-recentchanges-edit' => 'pesan yang disunting',
+	'forum-recentchanges-removed-thread' => 'menghapus diskusi "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-removed-reply' => 'menghapus balasan dari "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-restored-thread' => 'diskusi telah di pulihkan "[[$1|$2]]" pada [[$3|Panel $4]]',
+	'forum-recentchanges-restored-reply' => 'balasan telah dipulihkan pada "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-deleted-thread' => 'menghapus diskusi "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-deleted-reply' => 'menghapus balasan dari "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-deleted-reply-title' => 'Kiriman',
+	'forum-recentchanges-namespace-selector-message-wall' => 'Panel Forum',
+	'forum-recentchanges-thread-group' => '$1 pada [[$2|Panel $3]]',
+	'forum-recentchanges-history-link' => 'riwayat panel',
+	'forum-recentchanges-thread-history-link' => 'riwayat diskusi',
+	'forum-recentchanges-closed-thread' => 'diskusi ditutup "[[$1|$2]]" dari [[$3|$4]]',
+	'forum-recentchanges-reopened-thread' => 'diskusi dibuka lagi "[[$1|$2]]" dari [[$3|$4]]',
+	'forum-board-history-title' => 'riwayat panel',
+	'forum-specialpage-oldforum-link' => 'Arsip forum lama',
+	'forum-admin-page-breadcrumb' => 'Panel Manajemen Pengurus',
+	'forum-admin-create-new-board-label' => 'Membuat Panel Baru',
+	'forum-admin-create-new-board-modal-heading' => 'Membuat panel baru',
+	'forum-admin-create-new-board-title' => 'Judul Panel',
+	'forum-admin-create-new-board-description' => 'Deskripsi Panel',
+	'forum-admin-edit-board-modal-heading' => 'Menyunting Panel: $1',
+	'forum-admin-edit-board-title' => 'Judul Panel',
+	'forum-admin-edit-board-description' => 'Deskripsi Panel',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Hapus Panel: $1',
+	'forum-admin-delete-board-title' => 'Harap konfirmasikan nama panel yang ingin anda hapus:',
+	'forum-admin-merge-board-warning' => 'Diskusi panel di forum akan digabung dengan panel yang sudah ada.',
+	'forum-admin-merge-board-destination' => 'Pilih panel untuk digabungkan ke:',
+	'forum-admin-delete-and-merge-button-label' => 'Hapus dan Gabungkan',
+	'forum-admin-link-label' => 'Mengelola Panel',
+	'forum-autoboard-title-1' => 'Diskusi Umum',
+	'forum-autoboard-body-1' => 'Panel ini untuk percakapan umum tentang wiki.',
+	'forum-autoboard-title-2' => 'Berita dan Pengumuman',
+	'forum-autoboard-body-2' => 'Berita terbaru dan informasi!',
+	'forum-autoboard-title-3' => 'Baru pada $1',
+	'forum-autoboard-body-3' => 'Ingin berbagi sesuatu yang telah di kirim di wiki ini, atau mengucapkan selamat kepada seseorang dengan kontribusinya yang luar biasa? Inilah tempatnya!',
+	'forum-autoboard-title-4' => 'Pertanyaan dan Jawaban',
+	'forum-autoboard-body-4' => 'Punya pertanyaan tentang wiki, atau topik? Ajukan pertanyaan anda disini!',
+	'forum-autoboard-title-5' => 'Minat dan Permainan',
+	'forum-autoboard-body-5' => 'Panel ini adalah untuk percakapan diluar topik -- sebuah tempat untuk berkumpul dengan teman-teman anda $1.',
+	'forum-board-destination-empty' => '(Silahkan pilih panel)',
+	'forum-board-title-validation-invalid' => 'Nama panel berisi karakter yang tidak valid',
+	'forum-board-title-validation-length' => 'Nama Panel harus minimal 4 karakter',
+	'forum-board-title-validation-exists' => 'Sebuah panel dengan nama yang sama sudah ada',
+	'forum-board-validation-count' => 'Jumlah maksimum panel adalah $1',
+	'forum-board-description-validation-length' => 'Silahkan menulis deskripsi untuk panel ini',
+	'forum-board-id-validation-missing' => 'Panel id telah menghilang',
+	'forum-board-no-board-warning' => 'Tidak ada panel forum dengan nama judul tersebut. Silahkan coba lagi atau cek daftar Panel Forum.',
+	'forum-related-discussion-heading' => 'Diskusi tentang $1',
+	'forum-related-discussion-total-replies' => 'pesan $1',
+	'forum-related-discussion-see-more' => 'Lihat diskusi selengkapnya',
+	'forum-confirmation-board-deleted' => '"$1" telah dihapus.',
+	'forum-token-mismatch' => 'Ups! token tidak sesuai',
+	'right-forumadmin' => 'Pengurus memiliki askes ke forum',
+	'right-forumoldedit' => 'Dapt menyunting arsip forum, yang lama',
+	'right-boardedit' => 'Menyunting informasi panel Forum',
 );
 
 $messages['it'] = array(

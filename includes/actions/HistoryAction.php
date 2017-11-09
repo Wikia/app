@@ -374,9 +374,8 @@ class HistoryPager extends ReverseChronologicalPager {
 	/**
 	 * Fetch user names from ExternalSharedDB.
 	 * @see SUS-2990
-	 * @return array
+	 * @return iterable
 	 */
-
 	function reallyDoQuery( $offset, $limit, $descending ) {
 		global $wgExternalSharedDB;
 		$res = parent::reallyDoQuery( $offset, $limit, $descending );
@@ -388,16 +387,19 @@ class HistoryPager extends ReverseChronologicalPager {
 			}
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$users = $dbr->select(
-			'`user`',
-			[ 'user_id', 'user_name' ],
-			[ 'user_id' => array_unique( $ids ) ],
-			__METHOD__
-		);
+		// SUS-3103: It might happen that all contributors were anon - check if this was the case
+		if ( !empty( $ids ) ) {
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$users = $dbr->select(
+				'`user`',
+				[ 'user_id', 'user_name' ],
+				[ 'user_id' => array_unique( $ids ) ],
+				__METHOD__
+			);
 
-		foreach ( $users as $row ) {
-			$this->mUsers[$row->user_id] = $row->user_name;
+			foreach ( $users as $row ) {
+				$this->mUsers[$row->user_id] = $row->user_name;
+			}
 		}
 
 		$res->rewind();
@@ -410,7 +412,7 @@ class HistoryPager extends ReverseChronologicalPager {
 	}
 
 	function formatRow( $row ) {
-		$row->user_name = $this->mUsers[$row->rev_user];
+		$row->rev_user_text = $this->mUsers[$row->rev_user] ?? $row->rev_user_text;
 
 		if ( $this->lastRow ) {
 			$latest = ( $this->counter == 1 && $this->mIsFirst );
@@ -435,14 +437,21 @@ class HistoryPager extends ReverseChronologicalPager {
 		# Do a link batch query
 		$this->mResult->seek( 0 );
 		$batch = new LinkBatch();
+
+		// SUS-807
+		$ids = [];
 		foreach ( $this->mResult as $row ) {
-			if( isset( $row->user_name ) ) {
-				$batch->add( NS_USER, $row->user_name );
-				$batch->add( NS_USER_TALK, $row->user_name );
-			} else { # for anons or usernames of imported revisions
-				$batch->add( NS_USER, $row->rev_user_text );
-				$batch->add( NS_USER_TALK, $row->rev_user_text );
-			}
+			$ids[] = $row->rev_user;
+		}
+
+		$userNames = User::whoAre( $ids );
+
+		foreach ( $this->mResult as $row ) {
+			$userName = $row->rev_user && isset($userNames[$row->rev_user]) ?
+				$userNames[$row->rev_user] :
+				$row->rev_user_text;
+			$batch->add( NS_USER, $userName );
+			$batch->add( NS_USER_TALK, $userName );
 		}
 		$batch->execute();
 		$this->mResult->seek( 0 );

@@ -16,10 +16,7 @@ CREATE TABLE `city_used_tags` (
   `ct_namespace` int(8) unsigned NOT NULL,
   `ct_kind` varchar(50) NOT NULL DEFAULT '',
   `ct_timestamp` varchar(14) NOT NULL DEFAULT '19700101000000',
-  PRIMARY KEY (`ct_wikia_id`,`ct_page_id`,`ct_namespace`,`ct_kind`),
-  KEY `ct_wikia_id` (`ct_wikia_id`),
-  KEY `ct_page_id` (`ct_page_id`,`ct_namespace`),
-  KEY `ct_timestamp` (`ct_timestamp`)
+  PRIMARY KEY (`ct_wikia_id`,`ct_page_id`,`ct_namespace`,`ct_kind`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -47,21 +44,14 @@ CREATE TABLE `events` (
   `event_type` tinyint(2) unsigned NOT NULL DEFAULT '1',
   `event_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `media_type` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `rev_date` date NOT NULL DEFAULT '0000-00-00',
-  `beacon_id` varchar(32) NOT NULL DEFAULT '',
+  `__rev_date` date NOT NULL DEFAULT '0000-00-00',
+  `__beacon_id` varchar(32) NOT NULL DEFAULT '',
   `ip_bin` varbinary(16) DEFAULT NULL,
   PRIMARY KEY (`wiki_id`,`page_id`,`rev_id`,`log_id`,`rev_timestamp`),
   KEY `event_date_idx` (`event_date`),
-  KEY `page_ns_idx` (`page_ns`),
-  KEY `rev_timestamp_idx` (`rev_timestamp`),
-  KEY `user_id_idx` (`user_id`),
-  KEY `wiki_cat_id_idx` (`wiki_cat_id`),
-  KEY `wiki_id_idx` (`wiki_id`),
-  KEY `wiki_lang_id_idx` (`wiki_lang_id`),
   KEY `for_editcount_idx` (`user_id`,`page_ns`,`event_type`),
   KEY `for_admin_dashboard_idx` (`wiki_id`,`event_date`),
-  KEY `for_wikia_api_last_editors_idx` (`wiki_id`,`rev_timestamp`),
-  KEY `for_lookup_contribs_idx` (`wiki_id`,`user_id`)
+  KEY `for_wikia_api_last_editors_idx` (`wiki_id`,`rev_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 (PARTITION ev2002 VALUES LESS THAN (2002) ENGINE = InnoDB,
  PARTITION ev2003 VALUES LESS THAN (2003) ENGINE = InnoDB,
@@ -79,4 +69,4 @@ CREATE TABLE `events` (
  PARTITION ev9999 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
 
 
--- Dump completed on 2017-10-16 14:47:40
+-- Dump completed on 2017-10-26 13:34:31

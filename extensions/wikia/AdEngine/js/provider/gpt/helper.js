@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.provider.gpt.targeting',
 	'ext.wikia.adEngine.slot.service.passbackHandler',
+	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
@@ -32,6 +33,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	googleSlots,
 	gptTargeting,
 	passbackHandler,
+	srcProvider,
 	slotTargeting,
 	adBlockDetection,
 	adBlockRecovery,
@@ -56,6 +58,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		return hiddenSlots.indexOf(slotName) !== -1;
 	}
 
+	function isRecoverableByIL() {
+		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
+	}
+
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
@@ -74,9 +80,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		var element,
 			isBlocking = adBlockDetection.isBlocking(),
 			isRecoveryEnabled = adBlockRecovery.isEnabled(),
-			adIsRecoverable = extra.isPageFairRecoverable ||
-				extra.isSourcePointRecoverable ||
-				extra.isInstartLogicRecoverable,
+			adIsRecoverable = extra.isPageFairRecoverable || extra.isInstartLogicRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
 			slotName = slot.name,
@@ -112,28 +116,24 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.addSlot(element);
 		}
 
-		function shouldSetSrcPremium() {
-			return adContext.getContext().opts.premiumOnly;
-		}
-
 		function setAdditionalTargeting(slotTargetingData) {
 			var abId;
 
-			if (shouldSetSrcPremium()) {
-				slotTargetingData.src = 'premium';
-			} else if (adShouldBeRecovered) {
-				slotTargetingData.src = 'rec';
+			if (isRecoverableByIL()) {
+				slotTargetingData.requestSource = 'instartLogic';
 			}
 
-			if (instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking()) {
-				slotTargetingData.src = 'rec';
-				slotTargetingData.requestSource = 'instartLogic';
+			if (slotTargetingData.src) {
+				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
 			}
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 			slotTargetingData.outstream = slotTargeting.getOutstreamData() || 'none';
+			if (adContext.get('targeting.skin') === 'oasis') {
+				slotTargetingData.rail = doc.body.scrollWidth <= 1023 ? '0' : '1';
+			}
 
 			abId = slotTargeting.getAbTestId(slotTargetingData);
 			if (abId) {
