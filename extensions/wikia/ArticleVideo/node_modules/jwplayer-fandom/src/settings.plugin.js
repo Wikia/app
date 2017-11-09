@@ -285,7 +285,7 @@ wikiaJWPlayerSettingsPlugin.prototype.addCaptionListener = function () {
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
 	this.captionsToggle = createToggle({
 			id: this.player.getContainer().id + '-videoCaptionsToggle',
-			label: 'Captions',
+			label: this.config.i18n.captions,
 			checked: this.config.captions.enabled
 		});
 
