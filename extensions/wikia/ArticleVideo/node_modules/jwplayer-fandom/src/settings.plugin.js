@@ -160,7 +160,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	var autoplayToggle = createToggle({
 			id: this.player.getContainer().id + '-videoAutoplayToggle',
-			label: 'Autoplay Videos',
+			label: this.config.i18n.autoplayVideos,
 			checked: this.config.autoplay
 		});
 
