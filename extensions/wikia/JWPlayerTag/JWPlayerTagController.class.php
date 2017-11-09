@@ -51,7 +51,7 @@ class JWPlayerTagController extends WikiaController {
 
 		return [
 			self::CLASS_ATTR => 'jwplayer-container',
-			self::ID_ATTR => self::ELEMENT_ID_PREFIX . $mediaId,
+			self::ID_ATTR => self::ELEMENT_ID_PREFIX . $mediaId . rand(0, 1000),
 			self::DATA_MEDIA_ID_ATTR => $mediaId,
 			self::STYLE_ATTR => 'background-color:black; padding-top:56.25%;'
 		];
