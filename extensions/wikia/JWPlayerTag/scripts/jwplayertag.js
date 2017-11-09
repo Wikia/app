@@ -1,4 +1,4 @@
-require(['jquery'], function ($) {
+require(['jquery', 'wikia.tracker'], function ($, tracker) {
 	var parserTagSelector = '.jwplayer-in-article-video .jwplayer-container',
 		jwVideoDataUrl = 'https://cdn.jwplayer.com/v2/media/';
 
@@ -17,6 +17,12 @@ require(['jquery'], function ($) {
 	function getPlayerSetup(jwVideoData) {
 		return {
 			autoplay: false,
+			tracking: {
+				category: 'in-article-video',
+				track: function (data) {
+					tracker.track(data);
+				},
+			},
 			videoDetails: {
 				description: jwVideoData.description,
 				title: jwVideoData.title,
