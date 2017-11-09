@@ -1,5 +1,6 @@
 <?php
 
+use \Swagger\Client\Liftigniter\Metadata\Models\Item;
 /**
  * Class RecirculationHooks
  */
@@ -81,7 +82,7 @@ class RecirculationHooks {
 		$isInShowableNamespaces = $title->exists() && $title->inNamespaces( $showableNamespaces );
 
 		if ( $isInShowableNamespaces && !WikiaPageType::isActionPage() &&
-		     !WikiaPageType::isCorporatePage()
+			!WikiaPageType::isCorporatePage()
 		) {
 			return true;
 		} else {
@@ -128,15 +129,42 @@ class RecirculationHooks {
 	}
 
 	/**
+	 * @param String $cityId
+	 * @param String $articleId
+	 * @return null|Item
+	 */
+	private static function getMetaDataForArticle( String $cityId, String $articleId ) {
+		$metaDataFromService = WikiaDataAccess::cache(
+			'liftigniter-metadata',
+			WikiaResponse::CACHE_VERY_SHORT,
+			function() {
+				$metaDataService = new LiftigniterMetadataService();
+
+				return $metaDataService->getLiMetadata();
+			}
+		);
+
+		return current(array_filter( $metaDataFromService, function ( $item ) use ( $cityId, $articleId ) {
+			/** @var Item $item */
+			if ( $item->getProduct() === $cityId && $item->getId() === $articleId ) {
+				return $item;
+			}
+
+			return null;
+		}));
+	}
+
+	/**
 	 * @return array
 	 */
 	private static function getMetaData() {
 		global $wgLanguageCode, $wgCityId, $wgEnableArticleFeaturedVideo;
+
 		$title = RequestContext::getMain()->getTitle();
 		$articleId = $title->getArticleID();
-		$metaDataService = new LiftigniterMetadataService();
-		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
-		$shouldNoIndex = self::shoudlNoIndex( $metaDataFromService );
+
+		$metaDataFromService = self::getMetaDataForArticle( $wgCityId, $articleId );
+		$shouldNoIndex = self::shouldNoIndex( $metaDataFromService );
 		$metaData = [];
 		$metaData['language'] = $wgLanguageCode;
 
@@ -174,17 +202,17 @@ class RecirculationHooks {
 	}
 
 	/**
-	 * @param $metaDataFromService is actual Data returned by Liftigniter Metadata Service
+	 * @param Item $metaDataFromService is actual Data returned by Liftigniter Metadata Service
 	 *
 	 * @return bool
 	 */
-	private static function shoudlNoIndex( $metaDataFromService ) {
+	private static function shouldNoIndex( $metaDataFromService ) {
 		global $wgDisableShowInRecirculation;
 
 		return self::isPrivateOrNotProduction() ||
-		       ( ( self::isNoIndexNamespace() || $wgDisableShowInRecirculation ) &&
-		         empty( $metaDataFromService ) ) ||
-		       RequestContext::getMain()->getRequest()->getVal( 'redirect' ) === 'no';
+			( ( self::isNoIndexNamespace() || $wgDisableShowInRecirculation ) &&
+				empty( $metaDataFromService ) ) ||
+			RequestContext::getMain()->getRequest()->getVal( 'redirect' ) === 'no';
 	}
 
 	/**
