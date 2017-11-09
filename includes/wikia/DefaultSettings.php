@@ -228,7 +228,6 @@ $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/se
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
 $wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wikia/LibmemcachedBagOStuff.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
-$wgAutoloadClasses[ "ExternalUser_Wikia"              ] = "$IP/includes/wikia/ExternalUser_Wikia.php";
 $wgAutoloadClasses[ 'AutomaticWikiAdoptionGatherData' ] = "$IP/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php";
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
@@ -1040,6 +1039,12 @@ $wgResourceLoaderAssetsSkinMapping = [
  * core mediawiki feature variable
  */
 $wgArticleCountMethod = "any";
+
+/**
+ * @name $wgEnableResourceLoaderRewrites
+ * enable rewriting of Resource Loader links on nocookie domain
+ */
+$wgEnableResourceLoaderRewrites = true;
 
 /**
  * Javascript minifier used by ResourceLoader
