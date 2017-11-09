@@ -120,6 +120,15 @@ Example usage in index.html
 By default we log all jwplayer errors through our service `event-logger`
 You can browse logs in Kibana in `logstash-event-logger-*`
 
+### Custom tracking pixel
+When there is `pixel` property set in the first element of (videoDetails) playlist array, an `img`
+element with this pixel will be created. The pixel property can be set in JWPlayer Dashboard as 
+custom parameter. And it will be returned in `https://cdn.jwplayer.com/v2/media/{mediaId}` 
+response in playlist item object.
+ 
+For all next (related) videos played tracking pixel will be sent automatically if an url was set
+in video custom parameter in jwplayer dashboard.
+
 ## Contributing
 * Clone repo
 * run `npm install`
