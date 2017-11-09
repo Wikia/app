@@ -2294,7 +2294,8 @@ class DPLMain {
                                 $sSqlPage_size . $sSqlPage_touched . $sSqlRev_user .
                                 $sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp .
                                 ' FROM ' . $sSqlRevisionTable . $dplRevisionQueryTables . $sSqlRCTable .
-							  $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;}
+							  $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
+        }
 
         // JOIN ...
         if($sSqlClHeadTable != '' || $sSqlClTableForGC != '') {

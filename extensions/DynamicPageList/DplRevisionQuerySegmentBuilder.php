@@ -123,11 +123,9 @@ class DplRevisionQuerySegmentBuilder {
 			$whereStatement = "$revisionTable.rev_user = $userId";
 		}
 
-		$sqlQuerySegment = <<<SQL
+		return <<<SQL
  AND NOT EXISTS (SELECT 1 FROM $revisionTable WHERE $revisionTable.rev_page=page_id AND $whereStatement LIMIT 1)
 SQL;
-
-		return $sqlQuerySegment;
 	}
 
 	/**
@@ -150,11 +148,9 @@ SQL;
 			$userField = 'rev_user';
 		}
 
-		$sqlQuerySegment = <<<SQL
+		return <<<SQL
  AND (SELECT $userField FROM $revisionTable WHERE $revisionTable.rev_page=page_id ORDER BY $revisionTable.rev_timestamp DESC LIMIT 1) = $userNameOrId
 SQL;
-
-		return $sqlQuerySegment;
 	}
 
 	/**
@@ -177,10 +173,8 @@ SQL;
 			$userField = 'rev_user';
 		}
 
-		$sqlQuerySegment = <<<SQL
+		return <<<SQL
  AND (SELECT $userField FROM $revisionTable WHERE $revisionTable.rev_page=page_id ORDER BY $revisionTable.rev_timestamp DESC LIMIT 1) != $userNameOrId
 SQL;
-
-		return $sqlQuerySegment;
 	}
 }
