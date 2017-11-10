@@ -31,12 +31,15 @@ require([
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
-		isAutoplayEnabled = featuredVideoCookieService.getAutoplay() !== '0',
-		willAutoplay = isAutoplayEnabled && inAutoplayCountries,
+		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
 		bidParams;
 
 	function isFromRecirculation() {
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
+	}
+
+	function isAutoplayEnabled() {
+		return featuredVideoCookieService.getAutoplay() !== '0';
 	}
 
 	function onPlayerReady(playerInstance) {
@@ -85,7 +88,7 @@ require([
 				comscore: !win.wgDevelEnvironment
 			},
 			autoplay: willAutoplay,
-			selectedCaptions: featuredVideoCookieService.getCaptions(),
+			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
 				showAutoplayToggle: true,
 				showQuality: true,
