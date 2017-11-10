@@ -38,7 +38,7 @@ module.exports = [{
 		// TODO: remove me I'm hack for webpack scss build
 		// Together with .js it breaks js modules, for this setup it needs to generate some file
 		path: destinationPath,
-		filename: 'ingore_me.scss',
+		filename: 'ignore_me.scss'
 	},
 	module: {
 		rules: [
