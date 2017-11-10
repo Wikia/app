@@ -361,9 +361,14 @@ class ChangesList extends ContextSource {
 		if( $this->isDeleted( $rc, Revision::DELETED_USER ) ) {
 			$s .= ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
 		} else {
-			$s .= $this->getLanguage()->getDirMark() . Linker::userLink( $rc->mAttribs['rc_user'],
-				$rc->mAttribs['rc_user_text'] );
-			$s .= Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+			# Wikia change - SUS-3241
+			# use either rc_user or rc_user_text for handling logged-in / anon entries in recentchanges table
+			$userId = (int) $rc->getAttribute('rc_user');
+			$userName = (string) User::getUsername( $userId, $rc->getAttribute( 'rc_user_text' ) );
+
+			$s .= $this->getLanguage()->getDirMark() . Linker::userLink( $userId, $userName );
+			$s .= Linker::userToolLinks( $userId, $userName );
+			# Wikia change - end
 		}
 	}
 
@@ -787,6 +792,12 @@ class EnhancedChangesList extends ChangesList {
 		return $ret;
 	}
 
+	/**
+	 * @param RecentChange $rc
+	 * @param $unpatrolled
+	 * @param $counter
+	 * @return array|bool|Object
+	 */
 	public function lineLinksCache($rc, $unpatrolled, $counter) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
@@ -808,8 +819,14 @@ class EnhancedChangesList extends ChangesList {
 			$out['userlink'] = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
 			$out['usertalklink'] = null;
 		} else {
-			$out['userlink'] = Linker::userLink( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
-			$out['usertalklink'] = Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+			# Wikia change - SUS-3241
+			# use either rc_user or rc_user_text for handling logged-in / anon entries in recentchanges table
+			$userId = (int) $rc->getAttribute('rc_user');
+			$userName = (string) User::getUsername( $userId, $rc->getAttribute( 'rc_user_text' ) );
+
+			$out['userlink'] = Linker::userLink( $userId, $userName );
+			$out['usertalklink'] = Linker::userToolLinks( $userId, $userName );
+			# Wikia change - end
 		}
 		
 		$out['clink'] = Linker::linkKnown( $rc->getTitle() );
