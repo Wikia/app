@@ -107,7 +107,7 @@ class ItemsInternalApi
      *
      * 
      *
-     * @return \Swagger\Client\Liftigniter\Metadata\Models\Item
+     * @return \Swagger\Client\Liftigniter\Metadata\Models\Item[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getAll()
@@ -121,7 +121,7 @@ class ItemsInternalApi
      *
      * 
      *
-     * @return Array of \Swagger\Client\Liftigniter\Metadata\Models\Item, HTTP status code, HTTP response headers (array of strings)
+     * @return Array of \Swagger\Client\Liftigniter\Metadata\Models\Item[], HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getAllWithHttpInfo()
