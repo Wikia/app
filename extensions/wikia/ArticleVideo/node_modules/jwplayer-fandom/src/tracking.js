@@ -207,7 +207,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 
 	playerInstance.on('captionsSelected', function (data) {
 		track({
-			label: 'language-selected-' + data.selectedLang
+			label: 'language-selected-' + data.selectedLang.toLowerCase()
 		});
 	});
 }

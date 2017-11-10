@@ -74,7 +74,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 					showQuality: options.settings.showQuality,
 					showCaptions: options.settings.showCaptions,
 					autoplay: options.autoplay,
-					selectedCaptions: options.selectedCaptions
+					selectedCaptionsLanguage: options.selectedCaptionsLanguage
 				}
 			};
 		}
