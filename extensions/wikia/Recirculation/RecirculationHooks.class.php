@@ -131,7 +131,7 @@ class RecirculationHooks {
 	private static function getMetaDataForArticle( String $cityId, String $articleId ) {
 		$metaDataFromService = WikiaDataAccess::cache(
 			'liftigniter-metadata',
-			WikiaResponse::CACHE_VERY_SHORT,
+			WikiaResponse::CACHE_SHORT,
 			function() {
 				$metaDataService = new LiftigniterMetadataService();
 
