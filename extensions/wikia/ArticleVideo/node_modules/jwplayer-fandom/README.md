@@ -63,13 +63,8 @@ Id of DOM element where the player should be placed
   autoplay: boolean,
   // set to true if you want video to be initiallty muted
   mute: boolean,
-  captions: {
 	// set to true if you want video to have captions by default
-	enabled: boolean,
-	// custom CSS for captions, not all properties are available
-	// see: https://developer.jwplayer.com/jw-player/docs/developer-guide/customization/configuration-reference/#captions
-	styles: object
-  },
+  captions: boolean,
   // if settings is not defined or all show* properties are set to false, settings icon doesn't appear
   settings: {
     // set to true when you want to give user option to enable/disable autoplay
@@ -81,7 +76,7 @@ Id of DOM element where the player should be placed
     showQuality: boolean,
 	// set to true when you want to show captions toggle
 	// captions toggle appears in settings menu, sends event `captionsSelected` on click
-	showCaptionsToggle: boolean
+	showCaptions: boolean
   },
   related: {
     // countdown time to autoplay next video

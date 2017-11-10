@@ -204,4 +204,10 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			label: 'autoplay-' + (data.enabled ? 'enabled' : 'disabled')
 		});
 	});
+
+	playerInstance.on('captionsSelected', function (data) {
+		track({
+			label: 'language-selected-' + data.selectedLang
+		});
+	});
 }
