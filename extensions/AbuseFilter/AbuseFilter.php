@@ -78,6 +78,7 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = 'AbuseFilterHooks::onLoadExtensionSch
 $wgHooks['ContributionsToolLinks'][] = 'AbuseFilterHooks::onContributionsToolLinks';
 $wgHooks['UploadVerification'][] = 'AbuseFilterHooks::onUploadVerification';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AbuseFilterHooks::onMakeGlobalVariablesScript';
+$wgHooks['RenameIP::LocalIP'][] = 'AbuseFilterHooks::onUserRenameLocalIP';
 
 $wgLogTypes[] = 'abusefilter';
 $wgLogNames['abusefilter']          = 'abusefilter-log-name';

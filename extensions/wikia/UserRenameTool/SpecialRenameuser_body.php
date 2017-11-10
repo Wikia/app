@@ -31,7 +31,7 @@ class SpecialRenameuser extends SpecialPage {
 		$this->setHeaders();
 		$this->checkPermissions();
 
-		$usernameParam = $this->getRequest()->getText( 'username' );
+		$usernameParam = $this->getRequest()->getText( 'username', $par );
 		$username = \User::isValidUsername( $usernameParam ) ? $usernameParam : null;
 		$requestorUser = $this->getUser();
 		$canRenameAnotherUser = $requestorUser->isAllowed( 'renameanotheruser' );

@@ -324,7 +324,7 @@ class RenameIPProcess {
 	 */
 	public function addMainLog( $action, $text ) {
 		StaffLogger::log(
-			'renameuser',
+			'coppatool',
 			$action,
 			$this->mRequestorId,
 			$this->mRequestorName,
@@ -340,8 +340,8 @@ class RenameIPProcess {
 	 * @param $text string Log message
 	 */
 	public function addLocalLog( $text ) {
-		$log = new LogPage( 'renameuser' );
-		$log->addEntry( 'renameuser', Title::newFromText( $this->mOldIPAddress, NS_USER ), $text, array(), User::newFromId( $this->mRequestorId ) );
+		$log = new LogPage( 'coppatool' );
+		$log->addEntry( 'coppatool', Title::newFromText( $this->mOldIPAddress, NS_USER ), $text, array(), User::newFromId( $this->mRequestorId ) );
 	}
 
 	public function setRequestorUser() {
@@ -361,6 +361,20 @@ class RenameIPProcess {
 		}
 
 		return $oldUser;
+	}
+
+		/**
+	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 * Performs action for cleaning up temporary data at the very end of a process
+	 */
+	public function cleanup() {
+		$hookName = 'UserRename::Cleanup';
+		$this->addLog( "Broadcasting hook: {$hookName}" );
+		Hooks::run( $hookName, array( $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mOldIPAddress, $this->mNewIPAddress ) );
+		$tasks = [];
+		if ( isset( $this->mLogTask ) ) {
+			$tasks[] = $this->mLogTask->getID();
+		}
 	}
 
 	public function addInternalLog( $text ) {

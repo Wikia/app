@@ -159,10 +159,11 @@ class RenameIPTask extends BaseTask {
 	 */
 	protected function staffLog( $action, array $params, $text ) {
 		\StaffLogger::log(
-			'renameuser',
+			'coppatool',
 			$action,
 			$params['requestor_id'],
 			$params['requestor_name'],
+			0,
 			$params['new_ip'],
 			$text
 		);

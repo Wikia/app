@@ -20,6 +20,11 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 				return 'Foo 50';
 			}
 		},
+		pageLayout: {
+			getSerializedData: function () {
+				return 'xyz=012';
+			}
+		},
 		window: {
 			document: {
 				body: {
@@ -35,6 +40,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		return modules['ext.wikia.adEngine.tracking.adInfoTracker'](
 			mocks.adTracker,
 			mocks.slotRegistry,
+			mocks.pageLayout,
 			mocks.browserDetect,
 			mocks.log,
 			mocks.window
@@ -90,6 +96,15 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		expect(trackedData.kv_rv).toBe('2');
 		expect(trackedData.kv_wsi).toBe('ofa1');
 		expect(trackedData.kv_abi).toBe('50_1');
+	});
+
+	it('track data with page layout', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.page_layout).toBe('xyz=012');
 	});
 
 	it('track data with creative details', function () {
