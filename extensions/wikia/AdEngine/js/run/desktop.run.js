@@ -53,8 +53,12 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
-	adEngineBridge.updatePageLevelTargeting(pageLevelParams.getPageLevelParams());
+	if (adContext.get('opts.isAdEngine3Enabled')) {
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+		adEngineBridge.updatePageLevelTargeting(pageLevelParams.getPageLevelParams());
+	} else {
+		win.loadCustomAd = customAdsLoader.loadCustomAd;
+	}
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
