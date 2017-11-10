@@ -17,17 +17,18 @@ class LiftigniterMetadataService {
 	 * @param $cityId
 	 * @param $pageId
 	 *
-	 * @return null|Item
+	 * @return null|Item[]
 	 */
-	public function getLiMetadataForArticle( $cityId, $pageId ) {
+	public function getLiMetadata() {
 		$api = $this->getItemsInternalApiClient();
 		$api->getApiClient()
 			->getConfig()
 			->setApiKey(self::INTERNAL_REQUEST_HEADER, '1' );
 
 		$item = null;
+
 		try {
-			list($response, $code) = $api->getItemWithHttpInfo( $cityId, $pageId );
+			list($response, $code) = $api->getAllWithHttpInfo();
 
 			if ( $code == 200 ) {
 				$item = $response;
@@ -35,8 +36,6 @@ class LiftigniterMetadataService {
 		} catch ( ApiException $apiException ) {
 			WikiaLogger::instance()->debug( 'could not fetch data from liftigniter-metadata service', [
 				'exception' => $apiException,
-				'wiki_id' => intval( $cityId ),
-				'page_id' => intval( $pageId ),
 				'status_code' => intval( $apiException->getCode() )
 			] );
 		}
