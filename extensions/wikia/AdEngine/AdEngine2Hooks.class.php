@@ -104,6 +104,12 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
 		// shared variables with communities
+		$vars[] = 'wgAdDriverFVMidrollCountries';
+		$vars[] = 'wgAdDriverFVPostrollCountries';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
+		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 
@@ -115,12 +121,6 @@ class AdEngine2Hooks {
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
-		$vars[] = 'wgAdDriverF2MidrollCountries';
-		$vars[] = 'wgAdDriverF2MoatTrackingVideoAdCountries';
-		$vars[] = 'wgAdDriverF2MoatTrackingVideoAdSampling';
-		$vars[] = 'wgAdDriverF2PlayAdsOnNextVideoCountries';
-		$vars[] = 'wgAdDriverF2PlayAdsOnNextVideoFrequency';
-		$vars[] = 'wgAdDriverF2PostrollCountries';
 
 		return true;
 	}
