@@ -138,7 +138,7 @@ class MercuryApi {
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-			'enableFandomAppSmartBanner' => $enableFAsmartBannerCommunity && !empty( $wgEnableFandomAppSmartBanner ),
+			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
