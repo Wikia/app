@@ -802,7 +802,7 @@ class EnhancedChangesList extends ChangesList {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
 
-		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter);
+		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter, 'v2');
 		$out = $wgMemc->get($memcKey);
 		if(!empty($out)) {
 			// wikia change start (BAC-492)
