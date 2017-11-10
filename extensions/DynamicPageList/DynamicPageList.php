@@ -59,25 +59,28 @@ if( !defined( 'MEDIAWIKI' ) ) {
     die( 'This is not a valid entry point to MediaWiki.' );
 }
 
-$wgExtensionFunctions[]        = array( 'ExtDynamicPageList', 'setupDPL' );
-$wgHooks['LanguageGetMagic'][] = 'ExtDynamicPageList__languageGetMagic';
+$GLOBALS['wgExtensionFunctions'][] = [ 'ExtDynamicPageList', 'setupDPL' ];
+$GLOBALS['wgHooks']['LanguageGetMagic'][] = 'ExtDynamicPageList__languageGetMagic';
 
-$wgExtensionMessagesFiles['DynamicPageList'] =  dirname( __FILE__ ) . '/DynamicPageList.i18n.php';
+$GLOBALS['wgExtensionMessagesFiles']['DynamicPageList'] = __DIR__ . '/DynamicPageList.i18n.php';
 
-$DPLVersion = '2.3.0';
+$GLOBALS['DPLVersion'] = '2.3.0';
 
-$wgExtensionCredits['parserhook'][] = array(
-	'path' 				=> __FILE__,
-	'name' 				=> 'DynamicPageList (third party)',
-	'author' 			=>  '[http://de.wikipedia.org/wiki/Benutzer:Algorithmix Gero Scholz]',
-	'url' 				=> 'https://www.mediawiki.org/wiki/Extension:DynamicPageList_(third-party)',
-	'descriptionmsg' 	=> 'dpl-desc',
-  	'version' 			=> $DPLVersion
-  );
+$GLOBALS['wgExtensionCredits']['parserhook'][] = [
+	'path' => __FILE__,
+	'name' => 'DynamicPageList (third party)',
+	'author' => '[http://de.wikipedia.org/wiki/Benutzer:Algorithmix Gero Scholz]',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:DynamicPageList_(third-party)',
+	'descriptionmsg' => 'dpl-desc',
+	'version' => $GLOBALS['DPLVersion'],
+];
+
+$GLOBALS['wgAutoloadClasses']['DplRevisionQuerySegmentBuilder'] = __DIR__ . '/DplRevisionQuerySegmentBuilder.php';
+$GLOBALS['wgAutoloadClasses']['DplTableSet'] = __DIR__ . '/DplTableSet.php';
 
 require_once( 'DPLSetup.php' );
 
-ExtDynamicPageList::$DPLVersion = $DPLVersion;
+ExtDynamicPageList::$DPLVersion = $GLOBALS['DPLVersion'];
 
 // use full functionality by default
 ExtDynamicPageList::setFunctionalRichness(4);

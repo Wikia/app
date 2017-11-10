@@ -64,7 +64,12 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				image: '//content.jwplatform.com/thumbs/' + videoId + '-640.jpg',
 				mute: options.mute,
 				playlist: options.videoDetails.playlist,
-				title: options.videoDetails.title
+				title: options.videoDetails.title,
+				captions: {
+					backgroundColor: '#1a1a1a',
+					backgroundOpacity: 50,
+					fontSize: 16
+				}
 			};
 
 		if (options.settings) {
@@ -72,7 +77,9 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				wikiaSettings: {
 					showAutoplayToggle: options.settings.showAutoplayToggle,
 					showQuality: options.settings.showQuality,
-					autoplay: options.autoplay
+					showCaptionsToggle: options.settings.showCaptionsToggle,
+					autoplay: options.autoplay,
+					captions: options.captions
 				}
 			};
 		}
@@ -104,6 +111,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		}
 
 		if (options.tracking) {
+			options.tracking.pixel = options.videoDetails.playlist[0].pixel;
 			wikiaJWPlayerTracking(playerInstance, options.autoplay, options.tracking);
 		}
 

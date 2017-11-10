@@ -557,7 +557,7 @@ class UserIdentityBox extends WikiaObject {
 			$this->user->setGlobalAttribute( $option, null );
 		}
 
-		$this->user->setRealName( null );
+		$this->user->setRealName( '' );
 
 		// Delete both the avatar from the user's attributes (above),
 		// as well as from disk.

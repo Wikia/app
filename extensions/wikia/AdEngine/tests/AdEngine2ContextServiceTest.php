@@ -435,26 +435,20 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			[ false, true, [ 'test' => [] ], [], 'hasFeaturedVideo is set when data missing' ],
 			[ true, true, [
 				'test' => [
-					'time' => '0:00',
-					'title' => 'some title',
-					'videoId' => 'aksdjlfkjsdlf',
-					'thumbnailUrl' => 'http://img.com'
+					'mediaId' => 'aksdjlfkjsdlf',
+					'player' => 'jwplayer'
 			]
 			], [], 'hasFeaturedVideo is not set when correct data available' ],
 			[ false, true, [
 				'wrong_article_name' => [
-					'time' => '0:00',
-					'title' => 'some title',
-					'videoId' => 'aksdjlfkjsdlf',
-					'thumbnailUrl' => 'http://img.com'
+					'mediaId' => 'aksdjlfkjsdlf',
+					'player' => 'jwplayer'
 				]
 			], [], 'hasFeaturedVideo is set when data missing for title' ],
 			[ false, false, [
 				'test' => [
-					'time' => '0:00',
-					'title' => 'some title',
-					'videoId' => 'aksdjlfkjsdlf',
-					'thumbnailUrl' => 'http://img.com'
+					'mediaId' => 'aksdjlfkjsdlf',
+					'player' => 'jwplayer'
 				]
 			], [], 'hasFeaturedVideo is set when data is set but extension is disabled' ],
 		];
