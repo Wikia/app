@@ -150,10 +150,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		});
 	}
 
-	beforeEach(function () {
-		mocks.context.opts.overridePrefootersSizes = false;
-	});
-
 	it('directGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			BOTTOM_LEADERBOARD: '728x90',
@@ -161,22 +157,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
-			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD: '300x250',
 			TOP_LEADERBOARD: '3x3,728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
-		};
-
-		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
-	});
-
-	it('directGpt: Push ad with overridden prefooters slot sizes', function () {
-		mocks.context.opts.overridePrefootersSizes = true;
-		var expectedSizes = {
-			PREFOOTER_LEFT_BOXAD: '300x250,468x60,728x90',
-			PREFOOTER_RIGHT_BOXAD: null
 		};
 
 		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
@@ -189,22 +171,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
-			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD: '300x250',
 			TOP_LEADERBOARD: '3x3,728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
-		};
-
-		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);
-	});
-
-	it('remnantGpt: Push ad with overridden prefooters slot sizes', function () {
-		mocks.context.opts.overridePrefootersSizes = true;
-		var expectedSizes = {
-			PREFOOTER_LEFT_BOXAD: '300x250,468x60,728x90',
-			PREFOOTER_RIGHT_BOXAD: null
 		};
 
 		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);

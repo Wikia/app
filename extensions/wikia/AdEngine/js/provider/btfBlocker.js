@@ -45,14 +45,12 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		win.addEventListener('wikia.blocking', startBtfQueue);
 
 		function processBtfSlot(slot) {
-			var context = adContext.getContext();
-
 			if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
 				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
+			if (!uapContext.isUapLoaded()) {
 				if (unblockedSlots.indexOf(slot.name) > -1) {
 					log(['PAL enabled, filling slot', slot.name], log.levels.info, logGroup);
 					fillInSlot(slot);
@@ -83,7 +81,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled && !isBTFDisabledByCreative()) {
+			if (!isBTFDisabledByCreative()) {
 				win.ads.runtime.disableBtf = true;
 				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}

@@ -71,7 +71,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
 		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeTruthy();
-		expect(context.isApplicable('PREFOOTER_MIDDLE_BOXAD')).toBeFalsy();
 		expect(context.isApplicable('INCONTENT_PLAYER')).toBeTruthy();
 	});
 
@@ -81,7 +80,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeTruthy();
 		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeTruthy();
-		expect(context.isApplicable('PREFOOTER_MIDDLE_BOXAD')).toBeTruthy();
 		expect(context.isApplicable('INCONTENT_PLAYER')).toBeFalsy();
 	});
 
@@ -114,20 +112,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		});
 	});
 
-	it('enable prefooter based context opt', function () {
-		mocks.context.opts.overridePrefootersSizes = false;
-		var context = getContext();
-
-		expect(context.isApplicable('PREFOOTER_RIGHT_BOXAD')).toBeTruthy();
-	});
-
-	it('disable prefooter based context opt', function () {
-		mocks.context.opts.overridePrefootersSizes = true;
-		var context = getContext();
-
-		expect(context.isApplicable('PREFOOTER_RIGHT_BOXAD')).toBeFalsy();
-	});
-
 	it('disable INCONTENT_PLAYER by vide frequency capping', function () {
 		mocks.videoFrequencyMonitor.canLaunchVideo = false;
 		var context = getContext();
@@ -140,14 +124,13 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 			slotMap = {
 				TOP_LEADERBOARD: 1,
 				TOP_RIGHT_BOXAD: 2,
-				PREFOOTER_LEFT_BOXAD: 3,
-				PREFOOTER_MIDDLE_BOXAD: 4
+				BOTTOM_LEADERBOARD: 9
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			TOP_LEADERBOARD: 1,
 			TOP_RIGHT_BOXAD: 2,
-			PREFOOTER_LEFT_BOXAD: 3
+			BOTTOM_LEADERBOARD: 9
 		});
 	});
 
@@ -157,15 +140,13 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 			slotMap = {
 				TOP_LEADERBOARD: 1,
 				TOP_RIGHT_BOXAD: 2,
-				PREFOOTER_LEFT_BOXAD: 3,
-				PREFOOTER_MIDDLE_BOXAD: 4
+				BOTTOM_LEADERBOARD: 9
 			};
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			TOP_LEADERBOARD: 1,
 			TOP_RIGHT_BOXAD: 2,
-			PREFOOTER_LEFT_BOXAD: 3,
-			PREFOOTER_MIDDLE_BOXAD: 4
+			BOTTOM_LEADERBOARD: 9
 		});
 	});
 
@@ -175,33 +156,7 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 		expect(context.filterSlotMap()).toEqual({});
 	});
 
-	it('filter slot map for premium ad layout (article page)', function () {
-		mocks.context.opts.premiumAdLayoutEnabled = true;
-		mocks.instantGlobals['wgAdDriverHighImpact2SlotCountries'] = ['XX'];
-
-		var context = getContext(),
-			slotMap = {
-				TOP_LEADERBOARD: 1,
-				TOP_RIGHT_BOXAD: 2,
-				PREFOOTER_LEFT_BOXAD: 3,
-				PREFOOTER_MIDDLE_BOXAD: 4,
-				PREFOOTER_RIGHT_BOXAD: 5,
-				LEFT_SKYSCRAPER_2: 6,
-				LEFT_SKYSCRAPER_3: 7,
-				INVISIBLE_HIGH_IMPACT_2: 8,
-				BOTTOM_LEADERBOARD: 9
-			};
-
-		expect(context.filterSlotMap(slotMap)).toEqual({
-			TOP_LEADERBOARD: 1,
-			TOP_RIGHT_BOXAD: 2,
-			INVISIBLE_HIGH_IMPACT_2: 8,
-			BOTTOM_LEADERBOARD: 9
-		});
-	});
-
-	it('filter slot map for premium ad layout (featured video page)', function () {
-		mocks.context.opts.premiumAdLayoutEnabled = true;
+	it('filter slot map fbased on status (featured video page)', function () {
 		mocks.context.targeting.hasFeaturedVideo = true;
 		mocks.instantGlobals['wgAdDriverHighImpact2SlotCountries'] = ['XX'];
 
@@ -209,11 +164,6 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 			slotMap = {
 				TOP_LEADERBOARD: 1,
 				TOP_RIGHT_BOXAD: 2,
-				PREFOOTER_LEFT_BOXAD: 3,
-				PREFOOTER_MIDDLE_BOXAD: 4,
-				PREFOOTER_RIGHT_BOXAD: 5,
-				LEFT_SKYSCRAPER_2: 6,
-				LEFT_SKYSCRAPER_3: 7,
 				INVISIBLE_HIGH_IMPACT_2: 8,
 				BOTTOM_LEADERBOARD: 9
 			};

@@ -8,30 +8,6 @@ class RecirculationHooks {
 	const DATE_FORMAT = 'Y-m-d H:i:s';
 
 	/**
-	 * Insert Recirculation to the right rail
-	 *
-	 * @param array $modules
-	 *
-	 * @return bool
-	 */
-	public static function onGetRailModuleList( &$modules ) {
-		// Check if we're on a page where we want to show a recirculation module.
-		// If we're not, stop right here.
-		if ( !static::isCorrectPageType() ) {
-			return true;
-		}
-
-		// Use a different position depending on whether the user is logged in
-		// This is based off of the logic from the VideosModule extension
-		$app = F::App();
-		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
-
-		$modules[$pos] = [ 'Recirculation', 'container', [ 'containerId' => 'recirculation-rail' ] ];
-
-		return true;
-	}
-
-	/**
 	 * @param OutputPage $out
 	 * @param Skin $skin
 	 *

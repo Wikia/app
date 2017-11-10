@@ -1396,21 +1396,6 @@ $wgAdDriverKikimoraTrackingCountries = [];
 $wgAdDriverSrcPremiumCountries = [];
 
 /**
- * @name $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries
- * Enables Premium Ad Layout site and zoneIds for Rubicon Fastlane bidder
- * is present on that page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
-
-/**
- * @name $wgAdDriverPremiumAdLayoutAppNexusTagsCountries
- * Enables Premium Ad Layout site and placementIds for AppNexus bidder.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPremiumAdLayoutAppNexusTagsCountries = [];
-
-/**
  * @name $wgAdDriverKILOCountries
  * Enables transitional to MEGA way of building adUnits (for GPT provider, NOT ONLY REMNANT).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

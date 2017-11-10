@@ -8,13 +8,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 
 	var mocks = {
 		adContext: {
-			getContext: function () {
-				return {
-					opts: {
-						overridePrefootersSizes: mocks.overridePrefootersSizes
-					}
-				};
-			}
+			getContext: noop
 		},
 		abTest: {
 			getGroup: noop
@@ -38,7 +32,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		},
 		getDocumentWidth: noop,
 		getContentWidth: noop,
-		overridePrefootersSizes: false,
 		log: noop,
 		win: {
 			ads: {
@@ -123,49 +116,5 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			sizesOut = [[1, 1]];
 
 		expect(getModule().filter('INVISIBLE_SKIN', sizesIn)).toEqual(sizesOut);
-	});
-
-	it('Returns sizes unmodified for PREFOOTER_LEFT_BOXAD for large screens' +
-		' when override prefooters feature disabled', function () {
-		spyOn(mocks, 'getContentWidth').and.returnValue(2000);
-		mocks.overridePrefootersSizes = false;
-
-		var sizesIn = [[728, 90], [468, 60], [300, 250]],
-			sizesOut = [[728, 90], [468, 60], [300, 250]];
-
-		expect(getModule().filter('PREFOOTER_LEFT_BOXAD', sizesIn)).toEqual(sizesOut);
-	});
-
-	it('Returns sizes unmodified for PREFOOTER_LEFT_BOXAD for large screens' +
-		' when override prefooters feature enabled', function () {
-		spyOn(mocks, 'getContentWidth').and.returnValue(2000);
-		mocks.overridePrefootersSizes = true;
-
-		var sizesIn = [[728, 90], [468, 60], [300, 250]],
-			sizesOut = [[728, 90], [468, 60], [300, 250]];
-
-		expect(getModule().filter('PREFOOTER_LEFT_BOXAD', sizesIn)).toEqual(sizesOut);
-	});
-
-	it('Returns sizes unmodified for PREFOOTER_LEFT_BOXAD for small screens' +
-		' when override prefooters feature disabled', function () {
-		spyOn(mocks, 'getContentWidth').and.returnValue(1000);
-		mocks.overridePrefootersSizes = false;
-
-		var sizesIn = [[728, 90], [468, 60], [300, 250]],
-			sizesOut = [[728, 90], [468, 60], [300, 250]];
-
-		expect(getModule().filter('PREFOOTER_LEFT_BOXAD', sizesIn)).toEqual(sizesOut);
-	});
-
-	it('Filter 728x90 size for PREFOOTER_LEFT_BOXAD for small screens' +
-		' when override prefooters feature enabled', function () {
-		spyOn(mocks, 'getContentWidth').and.returnValue(1000);
-		mocks.overridePrefootersSizes = true;
-
-		var sizesIn = [[728, 90], [468, 60], [300, 250]],
-			sizesOut = [[468, 60], [300, 250]];
-
-		expect(getModule().filter('PREFOOTER_LEFT_BOXAD', sizesIn)).toEqual(sizesOut);
 	});
 });
