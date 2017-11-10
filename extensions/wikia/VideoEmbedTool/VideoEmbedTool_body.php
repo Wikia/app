@@ -9,9 +9,7 @@ class VideoEmbedTool {
 	use Wikia\Logger\Loggable;
 
 	function loadMain( $error = false ) {
-		global $wgUser;
-
-		$showAddVideoBtn = $wgUser->isAllowed( 'videoupload' );
+		$showAddVideoBtn = RequestContext::getMain()->getUser()->isAllowed( 'videoupload' );
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ).'/templates/' );
 		$tmpl->set_vars( array(
