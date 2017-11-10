@@ -156,15 +156,15 @@ class ItemsInternalApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\Liftigniter\Metadata\Models\Item',
+                '\Swagger\Client\Liftigniter\Metadata\Models\Item[]',
                 '/internal/items'
             );
 
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Liftigniter\Metadata\Models\Item', $httpHeader), $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Liftigniter\Metadata\Models\Item[]', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Liftigniter\Metadata\Models\Item', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Liftigniter\Metadata\Models\Item[]', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
