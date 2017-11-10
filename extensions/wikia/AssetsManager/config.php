@@ -92,6 +92,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfaaDesktop.js',
+		'//extensions/wikia/AdEngine/js/template/bfab.js',
 		'//extensions/wikia/AdEngine/js/template/floatingRail.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
