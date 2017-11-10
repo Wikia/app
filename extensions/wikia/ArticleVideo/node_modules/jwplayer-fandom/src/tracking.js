@@ -149,13 +149,6 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		});
 	});
 
-	playerInstance.on('videoSecondsPlayed', function (data) {
-		track({
-			label: 'played-seconds-' + data.value,
-			action: 'view'
-		});
-	});
-
 	playerInstance.on('videoPercentPlayed', function (data) {
 		track({
 			label: 'played-percentage-' + data.value,
