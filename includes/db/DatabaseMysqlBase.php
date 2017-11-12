@@ -410,6 +410,32 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	}
 
 	/**
+	 * SUS-3239: Determines if a field exists in a given table, using a DESCRIBE query.
+	 *
+	 * @param String $table
+	 * @param String $field
+	 * @param string $fname
+	 * @return bool
+	 */
+	function fieldExists( $table, $field, $fname = __METHOD__ ) {
+		// This handles escaping and optionally resolving the table
+		$tableName = $this->tableName( $table );
+		$res = $this->query( "DESCRIBE $tableName", __METHOD__, true );
+
+		if ( !$res ) {
+			return false;
+		}
+
+		foreach ( $res as $row ) {
+			if ( $row->Field === $field ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * @param $table string
 	 * @param $field string
 	 * @return bool|MySQLField
