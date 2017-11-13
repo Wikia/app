@@ -23,7 +23,7 @@ class Listusers extends SpecialRedirectToSpecial {
 	const DEF_GROUP_NAME	= 'all';
 	const DEF_EDITS		= 5;
 	const DEF_LIMIT		= 30;
-	const DEF_ORDER		= 'username:asc';
+	const DEF_ORDER		= 'dtedit:desc';
 
 	/**
 	 * constructor

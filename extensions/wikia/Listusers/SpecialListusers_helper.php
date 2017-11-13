@@ -18,7 +18,7 @@ class ListusersData {
 	private $mGroups;
 	private $mFilterGroup;
 	private $mUserId;
-	private $mEdits;
+	private $mEditsThreshold;
 	private $mLimit;
 	private $mOffset;
 	private $mOrder;
@@ -51,7 +51,7 @@ class ListusersData {
 	 * Used by integration tests only!
 	 */
 	function load() {
-		$this->setEdits();
+		$this->setEditsThreshold();
 		$this->setLimit();
 		$this->setOffset();
 		$this->setOrder();
@@ -60,7 +60,7 @@ class ListusersData {
 
 	function setFilterGroup ( $group = array() ) { $this->mFilterGroup = $group; }
 	function setUserId	    ( int $user_id ) { $this->mUserId = $user_id; }
-	function setEdits    	( $edits = Listusers::DEF_EDITS ) { $this->mEdits = $edits; }
+	function setEditsThreshold ( $edits = Listusers::DEF_EDITS ) { $this->mEditsThreshold = $edits; }
 	function setLimit    	( $limit = Listusers::DEF_LIMIT ) { $this->mLimit = $limit; }
 	function setOffset   	( $offset = 0 ) { $this->mOffset = $offset; }
 	function setOrder    	( $orders = array() ) {
@@ -110,7 +110,7 @@ class ListusersData {
 		$subMemkey = array(
 			'G'  . implode(",", is_array($this->mFilterGroup) ? $this->mFilterGroup : array()),
 			'U'  . $this->mUserId,
-			'C'  . $this->mEdits,
+			'E'  . $this->mEditsThreshold,
 			'O'  . $this->mOffset,
 			'L'  . $this->mLimit,
 			'O'  . $orderby
@@ -164,8 +164,8 @@ class ListusersData {
 			}
 
 			/* filter: number of edits */
-			if ( !empty( $this->mEdits ) ) {
-				$where[] = " edits >= ". intval( $this->mEdits );
+			if ( !empty( $this->mEditsThreshold ) ) {
+				$where[] = " edits >= ". intval( $this->mEditsThreshold );
 			}
 
 			/* number of records */

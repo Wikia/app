@@ -27,7 +27,7 @@ class ListusersAjax {
 		$limit		= $request->getVal('limit');
 		$offset		= $request->getVal('offset');
 		$loop		= $request->getVal('loop');
-		$order		= $request->getVal('order');
+		$orders     = explode("|", $request->getVal('order') );
 
 		// FIXME: SUS-3207 - temporarily support searching via user name
 		if ( $request->getVal( 'username' ) ) {
@@ -54,10 +54,9 @@ class ListusersAjax {
 				$filterGroups = explode(',', trim($groups));
 				$data->setFilterGroup ( $filterGroups );
 				$data->setUserId ( $user_id );
-				$data->setEdits ( $edits );
+				$data->setEditsThreshold( $edits );
 				$data->setLimit ( $limit );
 				$data->setOffset( $offset );
-				$orders = explode("|", $order);
 				$data->setOrder( $orders );
 				$records = $data->loadData();
 			}
