@@ -33,22 +33,21 @@ class PhalanxBlockTestPager extends PhalanxPager {
 	/**
 	 * Formats a single search result (block data) for output
 	 * Input data is from Phalanx service, and needs to be converted to use the same keys as Phalanx table
-	 * @param stdClass $row Block data as returned by Phalanx service
+	 * @param PhalanxBlockInfo $row Block data as returned by Phalanx service
 	 * @return string Formatted HTML output
 	 */
-	public function formatRow( $row ): string {
+	public function formatRow( $row ) {
 		$newRow = [
-			'p_regex' => $row->regex,
-			'p_expires' => $row->expires,
-			'p_timestamp' => $row->timestamp,
-			'p_text' => $row->text,
-			'p_reason' => $row->reason,
-			'p_exact' => $row->exact,
-			'p_case' => $row->caseSensitive,
-			'p_id' => $row->id,
-			'p_language' => $row->language,
-			'p_author_id' => $row->authorId,
-			'p_type' => $row->type
+			'p_regex' => $row->isRegex(),
+			'p_expires' => $row->getExpires(),
+			'p_timestamp' => $row->getTimestamp(),
+			'p_text' => $row->getText(),
+			'p_reason' => $row->getReason(),
+			'p_exact' => $row->isExact(),
+			'p_case' => $row->isCaseSensitive(),
+			'p_id' => $row->getId(),
+			'p_author_id' => $row->getAuthorId(),
+			'p_type' => $row->getType()
 		];
 
 		return parent::formatRow( (object) $newRow );
