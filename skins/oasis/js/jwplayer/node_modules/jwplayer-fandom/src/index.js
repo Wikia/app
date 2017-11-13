@@ -130,6 +130,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay);
 
+		wikiaJWPlayerAllowControllOnTouchDevices(playerInstance);
+
 		if (callback) {
 			callback(playerInstance);
 		}

@@ -24,10 +24,10 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
 	var button = this.getSettingsButtonElement();
 
-	return button === element ||
+	return button && (button === element ||
 		button.contains(element) ||
 		this.wikiaSettingsElement === element ||
-		this.wikiaSettingsElement.contains(element);
+		this.wikiaSettingsElement.contains(element));
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {

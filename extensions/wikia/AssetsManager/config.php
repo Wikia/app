@@ -107,6 +107,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoTracker.js',
+		'//extensions/wikia/AdEngine/js/tracking/pageLayout.js',
 		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
@@ -854,6 +855,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoTracker.js',
+		'//extensions/wikia/AdEngine/js/tracking/pageLayout.js',
 		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
@@ -2744,3 +2746,21 @@ $config['page_header_scss'] = [
 		'//extensions/wikia/PageHeader/styles/index.scss',
 	],
 ];
+
+$config['jwplayer_tag_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
+	],
+];
+
+$config['jwplayer_tag_css'] = [
+	'type' => AssetsManager::TYPE_CSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/index.css',
+	],
+];
+
