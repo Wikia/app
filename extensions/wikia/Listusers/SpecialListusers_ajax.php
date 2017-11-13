@@ -49,7 +49,7 @@ class ListusersAjax {
 		if ( is_object($wgUser) ) {
 
 			$records = array();
-			$data = new ListusersData($wgCityId, 0);
+			$data = new ListusersData($wgCityId);
 			if ( is_object($data) ) {
 				$filterGroups = explode(',', trim($groups));
 				$data->setFilterGroup ( $filterGroups );

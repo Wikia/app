@@ -27,7 +27,7 @@ class ListusersData {
 	var $mDBh;
 	var $mTable;
 
-	function __construct( $city_id, $load = 1 ) {
+	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
 		$this->mCityId = $city_id;
 		$this->mDBh = $wgSpecialsDB;
@@ -45,11 +45,11 @@ class ListusersData {
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
 
-		if ( $load == 1 ) {
-			$this->load();
-		}
 	}
 
+	/**
+	 * Used by integration tests only!
+	 */
 	function load() {
 		$this->setEdits();
 		$this->setLimit();
