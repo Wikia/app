@@ -4,6 +4,10 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		gaCategory = tracker.category || 'featured-video';
 
 	function updateVideoCustomDimensions(currentVideo) {
+		if (typeof tracker.setCustomDimension !== 'function') {
+			return;
+		}
+
 		tracker.setCustomDimension(34, currentVideo.mediaid);
 		tracker.setCustomDimension(35, currentVideo.title);
 		tracker.setCustomDimension(36, currentVideo.tags);
@@ -73,7 +77,9 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		tracker.track(trackingData);
 	}
 
-	tracker.setCustomDimension(37, willAutoplay ? 'Yes' : 'No');
+	if (typeof tracker.setCustomDimension === 'function') {
+		tracker.setCustomDimension(37, willAutoplay ? 'Yes' : 'No');
+	}
 
 	playerInstance.once('ready', function () {
 		updateVideoCustomDimensions(
@@ -140,13 +146,6 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	playerInstance.on('firstUnmute', function () {
 		track({
 			label: 'unmuted'
-		});
-	});
-
-	playerInstance.on('videoSecondsPlayed', function (data) {
-		track({
-			label: 'played-seconds-' + data.value,
-			action: 'view'
 		});
 	});
 
