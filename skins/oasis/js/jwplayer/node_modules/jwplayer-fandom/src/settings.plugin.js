@@ -15,6 +15,7 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.container.appendChild(this.wikiaSettingsElement);
 
 	this.player.on('levels', this.onQualityLevelsChange.bind(this));
+	this.player.on('captionsList', this.onCaptionsChange.bind(this));
 
 	document.addEventListener('click', this.documentClickHandler);
 	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
@@ -30,6 +31,10 @@ wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function 
 		this.wikiaSettingsElement.contains(element));
 };
 
+wikiaJWPlayerSettingsPlugin.prototype.getSettingsButtonElement = function () {
+	return this.player.getContainer().querySelector('[button=' + this.buttonID + ']');
+};
+
 wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 	// check if user didn't click the settings menu or settings button and if settings menu is open
 	if (!this.isSettingsMenuOrSettingsButton(event.target) && this.container.style.display) {
@@ -38,7 +43,7 @@ wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
-	var settingsIcon = this.createSVG(wikiaJWPlayerIcons.settings);
+	var settingsIcon = createSVG(wikiaJWPlayerIcons.settings);
 	settingsIcon.classList.add('jw-svg-icon');
 	settingsIcon.classList.add('jw-svg-icon-wikia-settings');
 
@@ -68,7 +73,7 @@ wikiaJWPlayerSettingsPlugin.prototype.close = function () {
  * opens settings menu
  */
 wikiaJWPlayerSettingsPlugin.prototype.open = function () {
-	this.container.style.display = 'block';
+	showElement(this.container);
 	this.player.getContainer().classList.add('wikia-jw-settings-open');
 };
 
@@ -89,18 +94,10 @@ wikiaJWPlayerSettingsPlugin.prototype.show = function () {
 	}
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.showQualityLevelsList = function () {
-	this.settingsList.style.display = 'none';
-	if (this.qualityLevelsList) {
-		this.qualityLevelsList.style.display = 'block';
-	}
-};
-
 wikiaJWPlayerSettingsPlugin.prototype.showSettingsList = function () {
-	this.settingsList.style.display = 'block';
-	if (this.qualityLevelsList) {
-		this.qualityLevelsList.style.display = 'none';
-	}
+	showElement(this.settingsList);
+	hideElement(this.qualityLevelsList);
+	hideElement(this.captionsList);
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addSettingsContent = function (div) {
@@ -115,17 +112,25 @@ wikiaJWPlayerSettingsPlugin.prototype.addSettingsContent = function (div) {
 		div.appendChild(this.qualityLevelsList);
 	}
 
+	if (this.config.showCaptions) {
+		this.createCaptionsList();
+		div.appendChild(this.captionsList);
+	}
+
 	return div;
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 	var settingsList = document.createElement('ul');
 
-	settingsList.classList.add('wikia-jw-settings__list');
-	settingsList.classList.add('wds-list');
+	settingsList.className = 'wikia-jw-settings__list wds-list';
 
 	if (this.config.showQuality) {
 		settingsList.appendChild(this.createQualityButton());
+	}
+
+	if (this.config.showCaptions) {
+		settingsList.appendChild(this.createCaptionsButton());
 	}
 
 	if (this.config.showAutoplayToggle) {
@@ -133,30 +138,24 @@ wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 		this.show();
 	}
 
-	if (this.config.showCaptionsToggle) {
-		settingsList.appendChild(this.createCaptionsButton());
-		this.addCaptionListener();
-	}
-
 	return settingsList;
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.createSVG = function (svgHtml) {
-	return domParser.parseFromString(svgHtml, 'image/svg+xml').documentElement;
+wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
+	var backElement = document.createElement('li'),
+		submenuWrapper = document.createElement('ul');
+
+	backElement.className = 'wikia-jw-settings__back';
+	backElement.innerHTML = createArrowIcon('left').outerHTML + ' ' + this.config.i18n.back;
+	backElement.addEventListener('click', this.showSettingsList.bind(this));
+
+	submenuWrapper.className = 'wikia-jw-settings__submenu wds-list';
+	submenuWrapper.appendChild(backElement);
+
+	return submenuWrapper;
 };
 
-wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
-	var rightArrowIcon = this.createSVG(wikiaJWPlayerIcons.back);
-	var qualityButton = document.createElement('li');
-
-	rightArrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
-	qualityButton.classList.add('wikia-jw-settings__quality-button');
-	qualityButton.innerHTML = this.config.i18n.videoQuality + rightArrowIcon.outerHTML;
-	qualityButton.addEventListener('click', this.showQualityLevelsList.bind(this));
-
-	return qualityButton;
-};
-
+// autoplay button specific methods
 wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	var autoplayToggle = createToggle({
 			id: this.player.getContainer().id + '-videoAutoplayToggle',
@@ -164,7 +163,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 			checked: this.config.autoplay
 		});
 
-	this.getLabelElement(autoplayToggle)
+	autoplayToggle.querySelector('label')
 		.addEventListener('click', function (event) {
 			this.player.trigger('autoplayToggle', {
 				enabled: !event.target.previousSibling.checked
@@ -173,24 +172,26 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 	return autoplayToggle;
 };
+// end autoplay
+
+// quality button specific methods
+wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
+	var qualityElement = document.createElement('li');
+
+	qualityElement.className = 'wikia-jw-settings__quality-button';
+	qualityElement.innerHTML = this.config.i18n.videoQuality + createArrowIcon('right').outerHTML;
+	qualityElement.addEventListener('click', function () {
+		hideElement(this.settingsList);
+		showElement(this.qualityLevelsList);
+	}.bind(this));
+
+	return qualityElement;
+};
 
 wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
-	var playerInstance = this.player,
-		backIcon = this.createSVG(wikiaJWPlayerIcons.back);
+	this.qualityLevelsList = this.createSubmenuWrapper();
 
-	backIcon.classList.add('wikia-jw-settings__back-icon');
-
-	this.backButton = document.createElement('li');
-	this.qualityLevelsList = document.createElement('ul');
-
-	this.qualityLevelsList.classList.add('wikia-jw-settings__quality-levels');
-	this.qualityLevelsList.classList.add('wds-list');
-	this.backButton.classList.add('wikia-jw-settings__back');
-	this.backButton.innerHTML = backIcon.outerHTML + ' ' + this.config.i18n.back;
-	this.backButton.addEventListener('click', this.showSettingsList.bind(this));
-	this.qualityLevelsList.appendChild(this.backButton);
-
-	playerInstance.on('levelsChanged', this.updateCurrentQuality.bind(this));
+	this.player.on('levelsChanged', this.updateCurrentQuality.bind(this));
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.onQualityLevelsChange = function (data) {
@@ -215,26 +216,22 @@ wikiaJWPlayerSettingsPlugin.prototype.onQualityLevelsChange = function (data) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLevels) {
-	var playerInstance = this.player;
-
-	while (this.qualityLevelsList.childElementCount > 1) {
-		this.qualityLevelsList.removeChild(this.qualityLevelsList.firstChild);
-	}
+	clearListElement(this.qualityLevelsList);
 
 	newLevels.forEach(function (level, index) {
 		var qualityLevelItem = document.createElement('li');
 
 		qualityLevelItem.addEventListener('click', function () {
-			playerInstance.setCurrentQuality(index);
+			this.player.setCurrentQuality(index);
 			this.close();
 		}.bind(this));
 
-		if (playerInstance.getCurrentQuality() === index) {
+		if (this.player.getCurrentQuality() === index) {
 			qualityLevelItem.classList.add(isActiveClass);
 		}
 
 		qualityLevelItem.appendChild(document.createTextNode(level.label));
-		this.qualityLevelsList.insertBefore(qualityLevelItem, this.backButton);
+		this.qualityLevelsList.insertBefore(qualityLevelItem, this.qualityLevelsList.lastElementChild);
 	}, this);
 };
 
@@ -248,64 +245,72 @@ wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (data) {
 		}
 	}
 };
+// end quality
 
-wikiaJWPlayerSettingsPlugin.prototype.addCaptionListener = function () {
-	var clickHandler = this.captionsClickHandler.bind(this);
+// captions button specific methods
+wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
+	var emptyCaptionsClass = 'are-captions-empty',
+		suitableCaptionsTrack = this.getSuitableCaptionsIndex(
+			this.config.selectedCaptionsLanguage || this.captionLangMap[this.getUserLang()],
+			event.tracks
+		);
 
-	this.player.on('captionsList', function (event) {
-		// tracks always include "off" item
-		if (event.tracks.length > 1) {
-			this.currentlySelectedCaptions = this.getSuitableCaptionsIndex(
-				this.captionLangMap[this.getUserLang()],
-				event.tracks
-			);
+	clearListElement(this.captionsList);
 
-			this.getLabelElement(this.captionsToggle)
-				.addEventListener('click', clickHandler);
+	// tracks always include "off" item
+	if (this.captionsList && event.tracks.length > 1) {
+		event.tracks.forEach(this.createCaptionsListItem, this);
 
-			this.wikiaSettingsElement.classList.remove('are-captions-empty');
-			this.show();
+		this.wikiaSettingsElement.classList.remove(emptyCaptionsClass);
+		this.show();
 
-			if (this.config.captions.enabled) {
-				this.player.setCurrentCaptions(this.currentlySelectedCaptions);
-			}
-
-			if (this.config.captions.styles && Object.keys(this.config.captions.styles).length) {
-				this.player.setCaptions(this.config.captions.styles);
-			}
+		// 'false' is used specifically to turn captions off
+		if (this.config.selectedCaptionsLanguage !== false && suitableCaptionsTrack !== -1) {
+			this.player.setCurrentCaptions(suitableCaptionsTrack);
 		} else {
-			this.getLabelElement(this.captionsToggle)
-				.removeEventListener('click', clickHandler);
-
-			this.wikiaSettingsElement.classList.add('are-captions-empty');
+			// "off" track is always the first one
+			this.player.setCurrentCaptions(0);
 		}
+	} else {
+		this.wikiaSettingsElement.classList.add(emptyCaptionsClass);
+	}
+};
+
+wikiaJWPlayerSettingsPlugin.prototype.createCaptionsList = function () {
+	this.captionsList = this.createSubmenuWrapper();
+
+	this.player.on('captionsChanged', this.updateCurrentCaptions.bind(this))
+};
+
+wikiaJWPlayerSettingsPlugin.prototype.createCaptionsListItem = function (track, index) {
+	var captionItem = document.createElement('li'),
+		normalizedLabel = track.label === 'Off' ? 'No captions' : track.label;
+
+	captionItem.dataset.track = index;
+	captionItem.addEventListener('click', function () {
+		this.player.setCurrentCaptions(index);
+		this.close();
+		this.player.trigger('captionsSelected', {
+			selectedLang: track.label
+		});
 	}.bind(this));
+
+	captionItem.appendChild(document.createTextNode(normalizedLabel));
+	this.captionsList.insertBefore(captionItem, this.captionsList.firstElementChild);
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
-	this.captionsToggle = createToggle({
-			id: this.player.getContainer().id + '-videoCaptionsToggle',
-			label: this.config.i18n.captions,
-			checked: this.config.captions.enabled
-		});
+	var captionsButton = document.createElement('li');
 
-	this.captionsToggle.classList.add('wikia-jw-settings__captions-button');
+	captionsButton.className = 'wikia-jw-settings__captions-button';
+	captionsButton.innerHTML = this.config.i18n.captions + createArrowIcon('right').outerHTML;
 
-	return this.captionsToggle;
-};
+	captionsButton.addEventListener('click', function () {
+		hideElement(this.settingsList);
+		showElement(this.captionsList);
+	}.bind(this));
 
-wikiaJWPlayerSettingsPlugin.prototype.captionsClickHandler = function () {
-	var nextSelectedTrack = this.areCaptionsOff(this.player.getCurrentCaptions()) ? this.currentlySelectedCaptions : 0;
-
-	this.player.setCurrentCaptions(nextSelectedTrack);
-	this.player.trigger('captionsSelected', {
-		enabled: nextSelectedTrack
-	});
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.areCaptionsOff = function(captionIndex) {
-	// "off" always has first position in tracks array
-	return captionIndex === 0;
+	return captionsButton;
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.getUserLang = function() {
@@ -321,53 +326,28 @@ wikiaJWPlayerSettingsPlugin.prototype.getSuitableCaptionsIndex = function(userLa
 		.indexOf(userLang);
 };
 
+wikiaJWPlayerSettingsPlugin.prototype.updateCurrentCaptions = function (data) {
+	for (var i = 0; i < this.captionsList.childNodes.length; i++) {
+		this.captionsList.childNodes[i].classList.remove(isActiveClass);
+	}
+
+	this.captionsList.querySelector('[data-track="' + data.track + '"]').classList.add(isActiveClass);
+};
+
 wikiaJWPlayerSettingsPlugin.prototype.captionLangMap = {
 	en: 'English',
-	pl: 'Polski',
-	fr: 'Français',
-	de: 'Deutsch',
-	it: 'Italiano',
-	ja: '日本語',
-	pt: 'Português',
-	ru: 'Русский язык',
-	es: 'Español',
-	zh: '中文'
+	pl: 'Polish',
+	fr: 'French',
+	de: 'German',
+	it: 'Italian',
+	ja: 'Japanese',
+	pt: 'Portuguese',
+	ru: 'Russian',
+	es: 'Spanish',
+	zh: 'Chinese'
 };
-
-wikiaJWPlayerSettingsPlugin.prototype.getLabelElement = function (wrapper) {
-	return wrapper.querySelector('label');
-};
-
-wikiaJWPlayerSettingsPlugin.prototype.getSettingsButtonElement = function () {
-	return this.player.getContainer().querySelector('[button=' + this.buttonID + ']');
-};
+// end captions
 
 wikiaJWPlayerSettingsPlugin.register = function () {
 	jwplayer().registerPlugin('wikiaSettings', '8.0.0', wikiaJWPlayerSettingsPlugin);
 };
-
-function createToggle(params) {
-	var toggleWrapper = document.createElement('li'),
-		toggleInput = document.createElement('input'),
-		toggleLabel = document.createElement('label');
-
-	toggleWrapper.className = 'wikia-jw-settings__toggle';
-
-	toggleInput.setAttribute('type', 'checkbox');
-	toggleInput.setAttribute('id', params.id);
-	toggleInput.className = 'wds-toggle__input';
-
-	if (params.checked) {
-		toggleInput.checked = true;
-	}
-
-	toggleLabel.setAttribute('for', params.id);
-	toggleLabel.className = 'wds-toggle__label';
-	toggleLabel.appendChild(document.createTextNode(params.label));
-
-	toggleWrapper.appendChild(toggleInput);
-	toggleWrapper.appendChild(toggleLabel);
-
-	return toggleWrapper;
-}
-

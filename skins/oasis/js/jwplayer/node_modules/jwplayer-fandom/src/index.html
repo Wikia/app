@@ -32,13 +32,9 @@
 		autoplay: true,
 		// set to true if you want to have video initially muted
 		mute: true,
-		captions: {
-			// set to true if you want video to have captions by default
-			enabled: true,
-			// custom CSS for captions, not all properties are available
-			// see: https://developer.jwplayer.com/jw-player/docs/developer-guide/customization/configuration-reference/#captions
-			styles: null
-		},
+		// set language for captions, must map captions' label, defaults to user browser language
+		// set to 'false' to turn them off completely
+		selectedCaptionsLanguage: 'English',
 		settings: {
 			// set to true when you want to give user option to enable/disable autoplay
 			// autoplay toggle appears in settings menu which sends event `autoplayToggle` on click
@@ -47,9 +43,9 @@
 			// show quality option doesn't appear in Safari and mobile browsers even if the option is set to true
 			// these browsers have native HLS support
 			showQuality: true,
-			// set to true when you want to show captions toggle
-			// captions toggle appears in settings menu, sends event `captionsSelected` on click
-			showCaptionsToggle: true
+			// set to true when you want to show captions list button
+			// captions button appears in settings menu, sends event `captionsSelected` on click
+			showCaptions: true
 		},
 		related: {
 			// countdown time to autoplay next video
