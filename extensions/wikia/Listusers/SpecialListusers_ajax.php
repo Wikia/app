@@ -141,6 +141,10 @@ class ListusersAjax {
 	}
 
 	/**
+	 * Return a list of user names that match a given prefix and were active on a current wiki
+	 *
+	 * Example: http://sandbox-s6.poznan.wikia.com/index.php?action=ajax&rs=ListusersAjax::axSuggestUsers&query=Mac
+	 *
 	 * @return AjaxResponse
 	 * @see SUS-3207
 	 */
@@ -163,14 +167,16 @@ class ListusersAjax {
 			$query
 		];
 
-		// now, perform the filtering to generate the list of user name suggestions
-		// basically emulate case-insensitive LIKE 'foo%' in PHP
-		$resp[] = array_filter(
-			$user_names,
-			function($user_name) use ($query) {
-				return startsWith($user_name, $query, false);
-			}
-		);
+		if ( $query !== '' ) {
+			// now, perform the filtering to generate the list of user name suggestions
+			// basically emulate case-insensitive LIKE 'foo%' in PHP
+			$resp[] = array_values(array_filter(
+				$user_names,
+				function ($user_name) use ($query) {
+					return startsWith($user_name, $query, false);
+				}
+			));
+		}
 
 		$response = new AjaxResponse( json_encode($resp) );
 		$response->setContentType( 'application/json; charset=utf-8' );
