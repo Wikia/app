@@ -27,7 +27,7 @@ class ListusersData {
 	private $mDBh;
 
 	const TABLE = 'events_local_users';
-	const CACHE_VERSION = 'v4';
+	const CACHE_VERSION = 'v5';
 
 	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
@@ -103,7 +103,6 @@ class ListusersData {
 		/* initial values for result */
 		$data = array(
 			'cnt'	=> 0,
-			'sColumns' => implode(",", array_keys($this->mOrderOptions)),
 			'data' 	=> array()
 		);
 

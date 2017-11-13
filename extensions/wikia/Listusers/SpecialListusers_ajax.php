@@ -65,7 +65,6 @@ class ListusersAjax {
 			if ( !empty( $records ) && is_array( $records ) ) {
 				$result['iTotalRecords'] = intval( $limit );
 				$result['iTotalDisplayRecords'] = intval($records['cnt']);
-				$result['sColumns'] = $records['sColumns'];
 				$rows = array();
 				if ( isset($records['data'] ) ) {
 					foreach ( $records['data'] as $user_id => $data ) {
@@ -101,6 +100,7 @@ class ListusersAjax {
 					}
 				}
 				$result['aaData'] = $rows;
+				$result['sColumns'] =  join(',', ['username', 'groups', 'revcnt', 'dtedit']);
 			}
 		}
 
