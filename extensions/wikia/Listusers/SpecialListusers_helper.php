@@ -27,6 +27,7 @@ class ListusersData {
 	private $mDBh;
 
 	const TABLE = 'events_local_users';
+	const CACHE_VERSION = 'v4';
 
 	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
@@ -93,15 +94,10 @@ class ListusersData {
 		}
 	}
 
-	function getFilterGroup () { return $this->mFilterGroup; }
 	function getGroups   	() { return $this->mGroups; }
-	function getEdits    	() { return $this->mEdits; }
-	function getLimit    	() { return $this->mLimit; }
-	function getOffset   	() { return $this->mOffset; }
-	function getOrder    	() { return $this->mOrder; }
 
 	public function loadData() {
-		global $wgMemc, $wgLang, $wgUser, $wgDBname;
+		global $wgMemc, $wgLang, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		/* initial values for result */
@@ -121,7 +117,7 @@ class ListusersData {
 			'O'  . $orderby
 		);
 
-		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata-v3", md5( implode(', ', $subMemkey) ) );
+		$memkey = wfForeignMemcKey( $this->mCityId, __CLASS__, self::CACHE_VERSION, md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
 		if ( empty($cached) ) {
