@@ -2,13 +2,21 @@
 
 describe('Portable Infobox', function () {
 	describe('collapsible sections', function () {
-		var portableInfoboxHtml = '<section class="pi-item pi-group pi-border-color pi-collapse"><h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Bugged</h2>\n' +
-			'\n' +
-			'<div class="pi-item pi-data pi-item-spacing pi-border-color">\n' +
-			'\t\n' +
-			'\t<div class="pi-data-value pi-font"><figure class="article-thumb tleft show-info-icon" style="width: 250px"> \t<a href="/wiki/User:PanSola" class="image image-thumbnail link-internal" title="User:PanSola"><img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" alt="Wookieepedia" class="thumbimage lzy lzyPlcHld " data-image-key="Wookieepedia.png" data-image-name="Wookieepedia.png" data-src="https://vignette.wikia.nocookie.net/infobox/images/b/b1/Wookieepedia.png/revision/latest?cb=20160107195313" width="250" height="65" onload="if(typeof ImgLzy===\'object\'){ImgLzy.load(this)}"><noscript>&lt;img src="https://vignette.wikia.nocookie.net/infobox/images/b/b1/Wookieepedia.png/revision/latest?cb=20160107195313" \t alt="Wookieepedia"  \tclass="thumbimage " \t \tdata-image-key="Wookieepedia.png" \tdata-image-name="Wookieepedia.png" \t \t width="250"  \t height="65"  \t \t \t \t&gt;</noscript></a>  \t<figcaption> \t\t \t\t\t<a href="/wiki/File:Wookieepedia.png" class="sprite info-icon"></a> \t\t \t\t \t\t \t</figcaption> </figure></div>\n' +
-			'</div>\n' +
-			'</section>',
+		var portableInfoboxHtml = `
+		<section class="pi-item pi-group pi-border-color pi-collapse">
+			<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Bugged</h2>
+			<div class="pi-item pi-data pi-item-spacing pi-border-color">
+				<div class="pi-data-value pi-font">
+					<figure class="article-thumb tleft show-info-icon" style="width: 250px">
+						<a href="/wiki/User:PanSola" class="image image-thumbnail link-internal" title="User:PanSola">
+							<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" alt="Wookieepedia" class="thumbimage lzy lzyPlcHld " data-image-key="Wookieepedia.png" data-image-name="Wookieepedia.png" data-src="https://vignette.wikia.nocookie.net/infobox/images/b/b1/Wookieepedia.png/revision/latest?cb=20160107195313" width="250" height="65" onload="if(typeof ImgLzy==='object'){ImgLzy.load(this)}">
+							<noscript>&lt;img src="https://vignette.wikia.nocookie.net/infobox/images/b/b1/Wookieepedia.png/revision/latest?cb=20160107195313" 	 alt="Wookieepedia"  	class="thumbimage " 	 	data-image-key="Wookieepedia.png" 	data-image-name="Wookieepedia.png" 	 	 width="250"  	 height="65"  	 	 	 	&gt;</noscript></a>
+							<figcaption><a href="/wiki/File:Wookieepedia.png" class="sprite info-icon"></a></figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+		`,
 			div = document.createElement('div');
 
 		beforeEach(function () {
