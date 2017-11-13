@@ -41,7 +41,7 @@ class Listusers extends SpecialRedirectToSpecial {
 	 * show form
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $wgCityId;
+		global $wgOut, $wgCityId;
 
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -73,9 +73,9 @@ class Listusers extends SpecialRedirectToSpecial {
 		$wgOut->setPageTitle( wfMessage( 'listuserstitle' )->text() );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		$target = $wgRequest->getVal( 'target' );
+		$target = $this->getRequest()->getVal( 'target' );
 		if ( empty( $target ) ) {
-			$target = $wgRequest->getVal( 'group' );
+			$target = $this->getRequest()->getVal( 'group' );
 		}
 
 		if ( !empty( $target ) ) {
@@ -127,7 +127,6 @@ class Listusers extends SpecialRedirectToSpecial {
 		$oTmpl->set_vars( array(
 			"error"			=> $error,
 			"action"		=> $this->mAction,
-			"obj"			=> $this, // TODO: report this reference
 			"wgContLang"		=> $wgContLang,
 			"wgExtensionsPath"	=> $wgExtensionsPath,
 			"wgStylePath"		=> $wgStylePath,
@@ -136,6 +135,8 @@ class Listusers extends SpecialRedirectToSpecial {
 			"wgUser"		=> $wgUser,
 			"title"			=> self::TITLE,
 			'groups'        => $this->mData->getGroups(),
+			'filtered_group' => $this->mData->getFilterGroup(),
+			'contribs'      => $this->mContribs,
 		));
 		$wgOut->addHTML( $oTmpl->render( "main-form" ) );
 		wfProfileOut( __METHOD__ );

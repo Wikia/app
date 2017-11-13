@@ -140,7 +140,9 @@ $( function () {
 	toolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5" value="<?=$defUser?>"></span>';
 	toolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listuserscontributed' )->escaped() ?></span>';
 	toolbar += '<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" >';
-	<? foreach ( $obj->mContribs as $val => $text ) { ?>
+	<?php
+    /* @var array $contribs */
+    foreach ( $contribs as $val => $text ) { ?>
 		toolbar += '<option <?= ( $val == $defContrib ) ? "selected=\'selected\'" : "" ?> value="<?= $val ?>"><?= $text ?></option>';
 	<? } ?>
 	toolbar += '</select></span>';
@@ -191,9 +193,10 @@ $( function () {
 			$groupLink = "";
 			$link = $wgContLang->ucfirst( $group['name'] );
 		}
-		
+
 		$checked = '';
-		if ( count( $obj->mDefGroups ) === 0 || in_array( $groupName, $obj->mDefGroups ) ) {
+		/* @var array $filtered_group */
+		if ( count( $filtered_group ) === 0 || in_array( $groupName, $filtered_group ) ) {
 			$checked = 'checked="checked"';
 		}
 ?>

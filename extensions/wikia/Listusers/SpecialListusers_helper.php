@@ -56,6 +56,8 @@ class ListusersData {
 	}
 
 	function setFilterGroup ( $group = array() ) { $this->mFilterGroup = $group; }
+	function getFilterGroup () { return $this->mFilterGroup; }
+
 	function setUserId	    ( int $user_id ) { $this->mUserId = $user_id; }
 	function setEditsThreshold ( $edits = Listusers::DEF_EDITS ) { $this->mEditsThreshold = $edits; }
 	function setLimit    	( $limit = Listusers::DEF_LIMIT ) { $this->mLimit = $limit; }
