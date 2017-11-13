@@ -279,7 +279,7 @@ class TestRunner extends BaseTestRunner
                 }
 
                 $this->printer = new $printerClass(
-                    isset($arguments['stderr']) ? 'php://stderr' : null,
+                    (isset($arguments['stderr']) && $arguments['stderr'] === true) ? 'php://stderr' : null,
                     $arguments['verbose'],
                     $arguments['colors'],
                     $arguments['debug'],
@@ -461,7 +461,7 @@ class TestRunner extends BaseTestRunner
             if (isset($arguments['configuration'])) {
                 $filterConfiguration = $arguments['configuration']->getFilterConfiguration();
 
-                if (empty($filterConfiguration['whitelist'])) {
+                if (empty($filterConfiguration['whitelist']) && !isset($arguments['whitelist'])) {
                     $this->writeMessage('Error', 'No whitelist is configured, no code coverage will be generated.');
 
                     $codeCoverageReports = 0;

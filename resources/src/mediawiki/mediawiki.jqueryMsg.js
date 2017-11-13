@@ -124,7 +124,7 @@
 				return parser.parse( key, argsArray );
 			} catch ( e ) {
 				fallback = parser.settings.messages.get( key );
-				mw.log.warn( 'mediawiki.jqueryMsg: ' + key + ': ' + e.message );
+				console.log( 'mediawiki.jqueryMsg: ' + key + ': ' + e.message );
 				return $( '<span>' ).text( fallback );
 			}
 		};

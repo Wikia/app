@@ -39,7 +39,7 @@ class CheckUserHooks {
 			'cuc_title'      => $rc_title,
 			'cuc_minor'      => $rc_minor,
 			'cuc_user'       => $rc_user,
-			'cuc_user_text'  => $rc_user_text,
+			// 'cuc_user_text'  => $user->isAnon() ? $rc_user_text : '', // SUS-3080 - this column is redundant
 			'cuc_actiontext' => $actionText,
 			'cuc_comment'    => $rc_comment,
 			'cuc_this_oldid' => $rc_this_oldid,
@@ -81,7 +81,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(),// SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( 'checkuser-reset-action', $account->getName() ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -126,7 +126,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $userFrom->getId(),
-			'cuc_user_text'  => $userFrom->getName(),
+			// 'cuc_user_text'  => $userFrom->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( 'checkuser-email-action', $hash ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -174,15 +174,12 @@ class CheckUserHooks {
 	 * @return bool
 	 */
 	protected static function logUserAccountCreation( User $user, $actiontext ) {
+		/** @var WebRequest $wgRequest */
 		global $wgRequest;
 
 		// Get IP
-		$ip = wfGetIP();
-		// Get XFF header
-		$xff = $wgRequest->getHeader( 'X-Forwarded-For' );
-		list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
-		// Get agent
-		$agent = $wgRequest->getHeader( 'User-Agent' );
+		$ip = $wgRequest->getIP();
+
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 		$rcRow = array(
@@ -192,7 +189,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( $actiontext ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -201,9 +198,9 @@ class CheckUserHooks {
 			'cuc_timestamp'  => $dbw->timestamp( wfTimestampNow() ),
 			'cuc_ip'         => IP::sanitizeIP( $ip ),
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-			'cuc_xff'        => !$isSquidOnly ? $xff : '',
-			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
+			'cuc_xff'        => '',
+			'cuc_xff_hex'    => null,
+			'cuc_agent'      => ''
 		);
 		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 
@@ -238,7 +235,7 @@ class CheckUserHooks {
 			'cuc_title'      => $data['title'], // may be ''
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => $data['action'],
 			'cuc_comment'    => $data['comment'],
 			'cuc_this_oldid' => 0,

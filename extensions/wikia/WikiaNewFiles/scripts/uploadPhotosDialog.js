@@ -68,6 +68,9 @@ var UploadPhotos = {
 				UploadPhotos.wpLicense = $('#wpLicense');
 				UploadPhotos.wpLicenseTarget = $('#mw-license-preview');
 
+				var editToken = mw.user.tokens.get('editToken');
+				UploadPhotos.d.find('#upload-photos-token').val(editToken);
+
 				// event handlers
 				UploadPhotos.filepath.change(UploadPhotos.filePathSet);
 				UploadPhotos.destfile.blur(UploadPhotos.destFileSet);

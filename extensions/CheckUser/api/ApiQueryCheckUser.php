@@ -45,7 +45,7 @@ class ApiQueryCheckUser extends ApiQueryBase {
 				}
 
 				$this->addFields( array( 'cuc_timestamp', 'cuc_ip', 'cuc_xff' ) );
-				$this->addWhereFld( 'cuc_user_text', $target );
+				$this->addWhereFld( 'cuc_user', $user_id ); // SUS-2944
 				$res = $this->select( __METHOD__ );
 				$result = $this->getResult();
 
@@ -95,12 +95,12 @@ class ApiQueryCheckUser extends ApiQueryBase {
 					if ( !$user_id ) {
 						$this->dieUsage( 'Target user does not exists', 'nosuchuser' );
 					}
-					$this->addWhereFld( 'cuc_user_text', $target );
+					$this->addWhereFld( 'cuc_user', $user_id ); // SUS-2944
 					$log_type = array( 'useredits', 'user' );
 				}
 
 				$this->addFields( array( 
-					'cuc_namespace', 'cuc_title', 'cuc_user_text', 'cuc_actiontext',
+					'cuc_namespace', 'cuc_title', 'cuc_user', 'cuc_actiontext',
 					'cuc_comment', 'cuc_minor', 'cuc_timestamp', 'cuc_ip', 'cuc_xff', 'cuc_agent' 
 				) );
 
@@ -113,7 +113,7 @@ class ApiQueryCheckUser extends ApiQueryBase {
 						'timestamp' => wfTimestamp( TS_ISO_8601, $row->cuc_timestamp ),
 						'ns'        => intval( $row->cuc_namespace ),
 						'title'     => $row->cuc_title,
-						'user'      => $row->cuc_user_text,
+						'user'      => User::getUsername( $row->cuc_user, $row->cuc_ip ), // SUS-2944 / SUS-3080
 						'ip'        => $row->cuc_ip,
 						'agent'     => $row->cuc_agent,
 					);
@@ -152,14 +152,14 @@ class ApiQueryCheckUser extends ApiQueryBase {
 				}
 
 				$this->addFields( array( 
-					'cuc_user_text', 'cuc_timestamp', 'cuc_ip', 'cuc_agent' ) );
+					'cuc_user', 'cuc_timestamp', 'cuc_ip', 'cuc_agent' ) );
 
 				$res = $this->select( __METHOD__ );
 				$result = $this->getResult();
 
 				$users = array();
 				foreach ( $res as $row ) {
-					$user = $row->cuc_user_text;
+					$user = User::getUsername( $row->cuc_user, $row->cuc_ip ); // SUS-2944, SUS-3080
 					$ip = $row->cuc_ip;
 					$agent = $row->cuc_agent;
 

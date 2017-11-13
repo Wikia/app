@@ -1,8 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
+	'ext.wikia.adEngine.slot.service.srcProvider',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.video.vastUrlBuilder')
-], function (adContext, vastUrlBuilder) {
+], function (srcProvider, megaAdUnitBuilder, adContext, vastUrlBuilder) {
 	'use strict';
 
 	var FEATURED_VIDEO_RATIO = 640 / 480,
@@ -28,21 +30,29 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 			}
 		};
 
-	function generateSet(ad, rv, correlator, videoInfo) {
+	function generateSet(ad, rv, correlator, videoInfo, bidParams) {
 		videoInfo = videoInfo || {};
+		var slotParams = bidParams || {};
+
+		slotParams.pos = 'FEATURED';
+		slotParams.src = srcProvider.get('gpt', {testSrc: 'test'});
+		slotParams.rv = rv;
+
+		var options = {
+			vpos: ad.vpos,
+			correlator: correlator,
+			contentSourceId: videoInfo.contentSourceId,
+			videoId: videoInfo.videoId
+		};
+
+		if (adContext.get('opts.megaAdUnitBuilderEnabled')) {
+			options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
+		}
+
 		return {
 			position_type: ad.position_type,
 			position: ad.position,
-			tag_url: vastUrlBuilder.build(FEATURED_VIDEO_RATIO, {
-				pos: 'FEATURED',
-				src: 'premium',
-				rv: rv
-			}, {
-				vpos: ad.vpos,
-				correlator: correlator,
-				contentSourceId: videoInfo.contentSourceId,
-				videoId: videoInfo.videoId
-			})
+			tag_url: vastUrlBuilder.build(FEATURED_VIDEO_RATIO, slotParams, options)
 		};
 	}
 
@@ -55,11 +65,11 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 	}
 
 	function canShowAds() {
-		return adContext && adContext.getContext() && adContext.getContext().opts.showAds && vastUrlBuilder;
+		return adContext && adContext.get('opts.showAds') && vastUrlBuilder;
 	}
 
 	function canShowNextVideoAds() {
-		return canShowAds() && adContext.getContext().opts.replayAdsForFV;
+		return canShowAds() && adContext.get('opts.replayAdsForFV');
 	}
 
 	function isVideoDepthValid(videoDepth) {
@@ -72,27 +82,28 @@ define('ext.wikia.adEngine.video.ooyalaAdSetProvider', [
 		return !isReplay || (isReplay && cappingAllowsToShowNextVideo(videoDepth, adsFrequency));
 	}
 
-	function get(videoDepth, correlator, videoInfo) {
+	function get(videoDepth, correlator, videoInfo, bidParams) {
 		if (!canShowAds() || !isVideoDepthValid(videoDepth)) {
 			return [];
 		}
 
 		videoDepth = videoDepth || 1;
 		correlator = correlator || Math.round(Math.random() * 10000000000);
+		bidParams = videoDepth === 1 ? bidParams : {};
 
 		var adSet = [],
-			adsFrequency = adContext.getContext().opts.fvAdsFrequency,
+			adsFrequency = adContext.get('opts.fvAdsFrequency'),
 			rv = calculateRV(videoDepth, adsFrequency);
 
 		if (canAdBePlayed(videoDepth, adsFrequency)) {
-			adSet.push(generateSet(AD.PREROLL, rv, correlator, videoInfo));
+			adSet.push(generateSet(AD.PREROLL, rv, correlator, videoInfo, bidParams));
 		}
 
-		if (adContext.getContext().opts.isFVMidrollEnabled && canAdBePlayed(videoDepth, adsFrequency)) {
+		if (adContext.get('opts.isFVMidrollEnabled') && canAdBePlayed(videoDepth, adsFrequency)) {
 			adSet.push(generateSet(AD.MIDROLL, rv, correlator, videoInfo));
 		}
 
-		if (adContext.getContext().opts.isFVPostrollEnabled && canAdBePlayed(videoDepth, adsFrequency)) {
+		if (adContext.get('opts.isFVPostrollEnabled') && canAdBePlayed(videoDepth, adsFrequency)) {
 			adSet.push(generateSet(AD.POSTROLL, rv, correlator, videoInfo));
 		}
 

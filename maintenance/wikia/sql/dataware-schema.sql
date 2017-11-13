@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-archive-slave.query.consul    Database: dataware
 -- ------------------------------------------------------
--- Server version	5.6.24-72.2-log
+-- Server version	5.7.18-15-log
 
 
 --
@@ -177,62 +177,6 @@ DROP TABLE IF EXISTS `ignored_users`;
 CREATE TABLE `ignored_users` (
   `user_id` int(5) unsigned NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `image_review`
---
-
-DROP TABLE IF EXISTS `image_review`;
-CREATE TABLE `image_review` (
-  `wiki_id` int(11) NOT NULL,
-  `page_id` int(11) NOT NULL,
-  `revision_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `reviewer_id` int(11) DEFAULT NULL,
-  `state` int(11) NOT NULL DEFAULT '0',
-  `priority` int(11) NOT NULL DEFAULT '0',
-  `flags` int(11) NOT NULL DEFAULT '0',
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `review_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `review_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `top_200` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`wiki_id`,`page_id`),
-  KEY `query_idx2` (`state`,`review_end`,`review_start`),
-  KEY `last_edited_priority` (`last_edited`,`priority`),
-  KEY `review_by_edit_prio` (`reviewer_id`,`review_start`,`priority`,`last_edited`),
-  KEY `image_list` (`wiki_id`,`top_200`),
-  KEY `image_list2` (`state`,`top_200`,`last_edited`,`priority`),
-  KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `image_review_stats`
---
-
-DROP TABLE IF EXISTS `image_review_stats`;
-CREATE TABLE `image_review_stats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reviewer_id` int(11) NOT NULL,
-  `wiki_id` int(11) NOT NULL,
-  `page_id` int(11) NOT NULL,
-  `review_state` int(11) NOT NULL DEFAULT '0',
-  `review_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `image_idx` (`wiki_id`,`page_id`),
-  KEY `state_date_idx` (`reviewer_id`,`review_state`,`review_end`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `image_review_wikis`
---
-
-DROP TABLE IF EXISTS `image_review_wikis`;
-CREATE TABLE `image_review_wikis` (
-  `wiki_id` int(11) NOT NULL,
-  `top200` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`wiki_id`),
-  KEY `top200` (`top200`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -521,4 +465,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-07-06  8:12:51
+-- Dump completed on 2017-10-26 13:34:30

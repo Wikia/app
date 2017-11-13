@@ -1,6 +1,12 @@
 <?php
 
 class ThemeSettings {
+	const IMAGES = [
+		'background',
+		'community-header-background',
+		'favicon',
+		'wordmark'
+	];
 
 	const WikiFactorySettings = 'wgOasisThemeSettings';
 
@@ -22,7 +28,11 @@ class ThemeSettings {
 	const FaviconImageName = 'Favicon.ico';
 
 	private $cityId;
+
 	private $defaultSettings;
+
+	/** @var ThemeSettingsPersistence $themeSettingsPersistence */
+	private $themeSettingsPersistence;
 
 	function __construct( $cityId = null ) {
 		global $wgCityId, $wgOasisThemes;
@@ -58,6 +68,7 @@ class ThemeSettings {
 		// colors
 		$this->defaultSettings = $wgOasisThemes[$themeName];
 		$this->defaultSettings['theme'] = $themeName;
+		$this->defaultSettings['color-body-middle'] = $this->defaultSettings['color-body'];
 
 		// wordmark
 		$this->defaultSettings['wordmark-text'] = $wgSitename;
@@ -68,16 +79,11 @@ class ThemeSettings {
 		$this->defaultSettings['wordmark-image-name'] = '';
 		$this->defaultSettings['wordmark-type'] = "text";
 
-		// main page banner
-		$this->defaultSettings['banner-image-url'] = '';
-		$this->defaultSettings['banner-image-name'] = '';
-
 		// background
 		$this->defaultSettings['background-image'] = '';
 		$this->defaultSettings['background-image-height'] = null;
 		$this->defaultSettings['background-image-name'] = '';
 		$this->defaultSettings['background-image-width'] = null;
-		$this->defaultSettings['background-image-revision'] = false; // what is this?
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
 		$this->defaultSettings['background-dynamic'] = true;
@@ -85,49 +91,45 @@ class ThemeSettings {
 		//community header background
 		$this->defaultSettings['community-header-background-image'] = '';
 		$this->defaultSettings['community-header-background-image-name'] = '';
+
+		//favicon
+		$this->defaultSettings['favicon-image-name'] = '';
+
+		$this->themeSettingsPersistence = new ThemeSettingsPersistence( $this );
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCityId() {
+		return $this->cityId;
 	}
 
 	public function getSettings() {
-		$settings = $this->defaultSettings;
-		$wikiFactorySettings = WikiFactory::getVarValueByName(
-			self::WikiFactorySettings,
-			$this->cityId
-		);
+		$wikiFactorySettings = $this->themeSettingsPersistence->getSettings();
 
-		if ( !empty( $wikiFactorySettings ) ) {
-			$settings = array_merge( $settings, $wikiFactorySettings );
-			$colorKeys = [ "color-body", "color-page", "color-community-header", "color-buttons", "color-links", "color-header" ];
+		if ( empty( $wikiFactorySettings ) ) {
+			return $this->defaultSettings;
+		}
 
-			// if user didn't define community header background color, but defined buttons color, we use buttons color
-			// as default for community header background
-			if (
-				!isset( $wikiFactorySettings["color-community-header"] ) &&
-				isset( $wikiFactorySettings["color-buttons"]
-				)
-			) {
-				$settings["color-community-header"] = $settings["color-buttons"];
+		$settings = array_merge( $this->defaultSettings, $wikiFactorySettings );
+
+		// if user didn't define community header background color, but defined buttons color, we use buttons color
+		// as default for community header background
+		if (
+			!isset( $wikiFactorySettings["color-community-header"] ) &&
+			isset( $wikiFactorySettings["color-buttons"]
+			)
+		) {
+			$settings["color-community-header"] = $settings["color-buttons"];
+		}
+
+		// if any of the user set colors are invalid, use default
+		foreach ( ThemeDesignerHelper::getColorVars() as $colorKey => $defaultValue ) {
+			if ( !ThemeDesignerHelper::isValidColor( $settings[$colorKey] ) ) {
+				$settings = $this->defaultSettings;
+				break;
 			}
-
-			// if any of the user set colors are invalid, use default
-			foreach ( $colorKeys as $colorKey ) {
-				if ( !ThemeDesignerHelper::isValidColor( $settings[$colorKey] ) ) {
-					$settings = $this->defaultSettings;
-					break;
-				}
-			}
-
-		}
-		// special check for color-body-middle
-		if ( !isset( $settings['color-body-middle'] ) || !ThemeDesignerHelper::isValidColor( $settings["color-body-middle"] ) ) {
-			$settings["color-body-middle"] = $settings["color-body"];
-		}
-
-		// add variables that might not be saved already in WF
-		if ( !isset( $settings['background-fixed'] ) ) {
-			$settings['background-fixed'] = false;
-		}
-		if ( !isset( $settings['page-opacity'] ) ) {
-			$settings['page-opacity'] = 100;
 		}
 
 		return $settings;
@@ -179,139 +181,41 @@ class ThemeSettings {
 		return $history;
 	}
 
-	private function saveImage(
-		array &$settings,
-		string $name,
-		string $title,
-		array $previewThumbnailDimensions = [],
-		bool $setDimensions = false,
-		callable $callback = null
-	) {
-		if ( isset( $settings["{$name}-name"] ) && strpos( $settings["{$name}-name"], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings["{$name}-name"], NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
-			$file = new LocalFile( Title::newFromText( $title, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temp_file->getPath(), '', '' );
-			$temp_file->delete( '' );
-
-			// For legacy reasons wordmark-image has other convention than the rest
-			if ( $name === 'wordmark-image' ) {
-				$settings['wordmark-image-url'] = $file->getURL();
-			} else {
-				$settings["{$name}"] = $file->getURL();
-			}
-			$settings["{$name}-name"] = $file->getName();
-
-			if ( $setDimensions ) {
-				$settings["${name}-height"] = $file->getHeight();
-				$settings["${name}-width"] = $file->getWidth();
-			}
-
-			if ( !empty( $previewThumbnailDimensions ) ) {
-				$imageServing = new ImageServing(
-					null,
-					$previewThumbnailDimensions['width'],
-					[
-						'w' => $previewThumbnailDimensions['width'],
-						'h' => $previewThumbnailDimensions['height']
-					]
-				);
-				$settings["user-{$name}"] = $file->getURL();
-				$settings["user-{$name}-thumb"] = wfReplaceImageServer(
-					$file->getThumbUrl(
-						$imageServing->getCut(
-							$file->getWidth(),
-							$file->getHeight(),
-							'origin'
-						) . '-' . $file->getName()
-					)
-				);
-			}
-
-			if ( is_callable( $callback ) ) {
-				$callback();
-			}
-
-			$file->repo->forceMaster();
-			$history = $file->getHistory( 1 );
-
-			if ( count( $history ) == 1 ) {
-				return [ 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() ];
+	public function saveSettings( $settings ) {
+		// SUS-2942: unset unknown properties
+		foreach ( $settings as $key => $value ) {
+			if ( !array_key_exists( $key, $this->defaultSettings ) ) {
+				unset( $settings[$key] );
 			}
 		}
 
-		return null;
-	}
+		if ( !empty( $settings['wordmark-font'] ) ) {
+			$settings['wordmark-font'] = $this->escapeInput( $settings['wordmark-font'] );
+		}
 
-	public function saveSettings( $settings ) {
-		global $wgUser;
+		if ( !empty( $settings['wordmark-font-size'] ) ) {
+			$settings['wordmark-font-size'] = $this->escapeInput( $settings['wordmark-font-size'] );
+		}
+
+		if ( !empty( $settings['wordmark-type'] ) ) {
+			$settings['wordmark-type'] = $this->escapeInput( $settings['wordmark-type'] );
+		}
+
+		// SUS-2942: validate user-provided opacity value
+		if ( !empty( $settings['page-opacity'] ) ) {
+			$settings['page-opacity'] = max( intval( $settings['page-opacity'] ), 50 );
+		}
 
 		// Verify wordmark length ( CONN-116 )
 		if ( !empty( $settings['wordmark-text'] ) ) {
-			$settings['wordmark-text'] = trim( $settings['wordmark-text'] );
+			$settings['wordmark-text'] = $this->escapeInput( trim( $settings['wordmark-text'] ) );
 		}
 
 		if ( empty( $settings['wordmark-text'] ) ) {
 			// Do not save wordmark if its empty.
 			unset( $settings['wordmark-text'] );
-		} else {
-			if ( mb_strlen( $settings['wordmark-text'] ) > 50 ) {
-				$settings['wordmark-text'] = mb_substr( $settings['wordmark-text'], 0, 50 );
-			}
-		}
-
-		$oldBackgroundFile = $this->saveImage(
-			$settings,
-			'background-image',
-			self::BackgroundImageName,
-			[
-				'width' => 120,
-				'height' => 65
-			],
-			true
-		);
-
-		$oldCommunityHeaderFile = $this->saveImage(
-			$settings,
-			'community-header-background-image',
-			self::CommunityHeaderBackgroundImageName,
-			[
-				'width' => 120,
-				'height' => 33
-			]
-		);
-
-		$oldWordmarkFile = $this->saveImage(
-			$settings,
-			'wordmark-image',
-			self::WordmarkImageName
-		);
-
-		$oldFaviconFile = $this->saveImage(
-			$settings,
-			'favicon-image',
-			self::FaviconImageName,
-			[],
-			false,
-			function () {
-				Wikia::invalidateFavicon();
-			}
-		);
-
-		$reason = wfMessage( 'themedesigner-reason', $wgUser->getName() )->escaped();
-
-		// update history
-		$wikiFactoryHistory = WikiFactory::getVarValueByName(
-			self::WikiFactoryHistory,
-			$this->cityId
-		);
-
-		if ( !empty( $wikiFactoryHistory ) ) {
-			$history = $wikiFactoryHistory;
-			$lastItem = end( $history );
-			$revisionId = intval( $lastItem['revision'] ) + 1;
-		} else {
-			$history = [];
-			$revisionId = 1;
+		} elseif ( mb_strlen( $settings['wordmark-text'] ) > 50 ) {
+			$settings['wordmark-text'] = mb_substr( $settings['wordmark-text'], 0, 50 );
 		}
 
 		// #140758 - Jakub
@@ -323,48 +227,16 @@ class ThemeSettings {
 			}
 		}
 
-		// update WF variable with current theme settings
-		WikiFactory::setVarByName( self::WikiFactorySettings, $this->cityId, $settings, $reason );
+		$this->themeSettingsPersistence->saveSettings( $settings );
+	}
 
-		// add entry
-		$history[] = [
-			'settings' => $settings,
-			'author' => $wgUser->getName(),
-			'timestamp' => wfTimestampNow(),
-			'revision' => $revisionId,
-		];
-
-		// limit history size to last 10 changes
-		$history = array_slice( $history, -self::HistoryItemsLimit );
-
-		if ( count( $history ) > 1 ) {
-			for ( $i = 0; $i < count( $history ) - 1; $i++ ) {
-				if ( isset( $oldFaviconFile ) && isset( $history[$i]['settings']['favicon-image-name'] ) ) {
-					if ( $history[$i]['settings']['favicon-image-name'] == self::FaviconImageName ) {
-						$history[$i]['settings']['favicon-image-name'] = $oldFaviconFile['name'];
-						$history[$i]['settings']['favicon-image-url'] = $oldFaviconFile['url'];
-					}
-				}
-				if ( isset( $oldWordmarkFile ) && isset( $history[$i]['settings']['wordmark-image-name'] ) ) {
-					if ( $history[$i]['settings']['wordmark-image-name'] == self::WordmarkImageName ) {
-						$history[$i]['settings']['wordmark-image-name'] = $oldWordmarkFile['name'];
-						$history[$i]['settings']['wordmark-image-url'] = $oldWordmarkFile['url'];
-					}
-				}
-				if ( isset( $oldBackgroundFile ) && isset( $history[$i]['settings']['background-image-name'] ) ) {
-					if ( $history[$i]['settings']['background-image-name'] == self::BackgroundImageName ) {
-						$history[$i]['settings']['background-image-name'] = $oldBackgroundFile['name'];
-					}
-				}
-				if ( isset( $oldCommunityHeaderFile ) && isset( $history[$i]['settings']['community-header-background-image-name'] ) ) {
-					if ( $history[$i]['settings']['community-header-background-image-name'] == self::CommunityHeaderBackgroundImageName ) {
-						$history[$i]['settings']['community-header-background-image-name'] = $oldCommunityHeaderFile['name'];
-					}
-				}
-			}
-		}
-
-		WikiFactory::setVarByName( self::WikiFactoryHistory, $this->cityId, $history, $reason );
+	/**
+	 * Return escaped version of provided text, while avoiding double escaping it
+	 * @param string $text
+	 * @return string
+	 */
+	private function escapeInput( string $text ) {
+		return htmlspecialchars( Sanitizer::decodeCharReferences( $text ), ENT_QUOTES );
 	}
 
 	/**

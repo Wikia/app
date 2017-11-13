@@ -30,7 +30,7 @@ class HAWelcomeTaskHooks {
 		WikiPage $page, User $user, $editContent, $editSummary, $isMinorEdit, $watchThis,
 		$sectionAnchor, $editFlags, $revisionObject, Status $statusObject, $baseRevisionId
 	): bool {
-		global $wgCityId, $wgCommandLineMode, $wgMemc, $wgUser;
+		global $wgCityId, $wgCommandLineMode, $wgMemc;
 
 		// means we're dealing with a null edit (no content change) and therefore we don't have to welcome anybody
 		if ( is_null( $revisionObject ) ) {
@@ -44,11 +44,16 @@ class HAWelcomeTaskHooks {
 			return true;
 		}
 
+		// SUS-2709: No need to welcome anon users
+		if ( $user->isAnon() ) {
+			return true;
+		}
+
 		$dispatcher = new HAWelcomeTaskHookDispatcher();
 		$dispatcher->setRevisionObject( $revisionObject )
 			->setCityId( $wgCityId )
 			->setMemcacheClient( $wgMemc )
-			->setCurrentUser( $wgUser );
+			->setCurrentUser( $user );
 
 		return $dispatcher->dispatch();
 	}

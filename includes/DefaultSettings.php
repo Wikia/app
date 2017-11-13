@@ -5285,7 +5285,7 @@ $wgAjaxLicensePreview = true;
  *
  */
 $wgCrossSiteAJAXdomains = [
-	"internal.vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
+	"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
 ];
 
 /**
@@ -5513,6 +5513,11 @@ $wgSeleniumTestConfigs = array();
 $wgSeleniumConfigFile = null;
 $wgDBtestuser = ''; //db user that has permission to create and drop the test databases only
 $wgDBtestpassword = '';
+
+/**
+ * When enabled, RL will output links without the server part.
+ */
+$wgEnableLocalResourceLoaderLinks = false;
 
 /**
  * For really cool vim folding this needs to be at the end:

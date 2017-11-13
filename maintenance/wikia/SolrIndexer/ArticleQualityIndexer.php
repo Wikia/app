@@ -115,7 +115,7 @@ class ArticleQualityIndexer extends Maintenance {
 	}
 
 	protected function getIP( $prod ) {
-		return $prod ? $this->domain : $this->ips[rand(0,count($this->ips)-1)];
+		return $prod ? $this->domain : IP::sanitizeIP( $this->ips[rand(0,count($this->ips)-1)] );
 	}
 
 	protected function setInSolr( $data ) {

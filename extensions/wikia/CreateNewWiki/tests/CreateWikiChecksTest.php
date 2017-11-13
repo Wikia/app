@@ -70,6 +70,7 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 			array( '012345678901234567890123456789012345678901234567890', 'pl', false, 'autocreatewiki-name-too-long' ),
 			array( 'def', 'pl', false, 'autocreatewiki-violate-policy' ),
 			array( 'zzz', 'en', false, 'autocreatewiki-violate-policy' ),
+			array( 'asd', 'fakelang', false, 'autocreatewiki-violate-policy' ),
 		);
 	}
 

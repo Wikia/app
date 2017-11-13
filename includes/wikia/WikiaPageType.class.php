@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Util\Assert;
-
 /**
  * Utility class to check types of currently rendered page
  */
@@ -228,31 +226,21 @@ class WikiaPageType {
 	/**
 	 * Check if page is Wikia hub page, for example http://www.wikia.com/Video_games
 	 *
-	 * @param int|null $wikiId
-	 * @return bool
+	 * @return false
+	 * @deprecated
 	 */
-	public static function isWikiaHub( $wikiId = null ) {
-		global $wgCityId;
-
-		return WikiFactory::getVarValueByName( 'wgEnableWikiaHubsV3Ext', $wikiId ?? $wgCityId );
+	public static function isWikiaHub() {
+		return false;
 	}
 
 	/**
 	 * Check if current page is Wikia hub main page ( for hubs v3 )
 	 *
-	 * @param Title|null $title optional title to perform a check for (instead of wgTitle as it's not always set - see SUS-11)
-	 * @return bool
-	 * @throws \Wikia\Util\AssertionException
+	 * @return false
+	 * @deprecated
 	 */
-	public static function isWikiaHubMain( $title = null ) {
-		$title = $title ?: self::getTitle();
-
-		Assert::true( $title instanceof Title, __METHOD__ ); // SUS-11
-
-		$mainPageName = self::getMainPageName();
-		$isMainPage = ( strcasecmp( $mainPageName, $title->getText() ) === 0 ) && $title->getNamespace() === NS_MAIN;
-
-		return ( self::isWikiaHub() && $isMainPage );
+	public static function isWikiaHubMain() {
+		return false;
 	}
 
 	/**
@@ -263,24 +251,15 @@ class WikiaPageType {
 	}
 
 	/**
-	 * Check if current page is home page
+	 * Check if current wiki is a corporate one
 	 *
-	 * @param int|null $wikiId
+	 * DesignSystemGlobalNavigationModel class passes the wiki ID here
+	 *
+	 * @param $cityId int|null defaults to the current wiki ID
 	 * @return bool
 	 */
-	public static function isWikiaHomePage( $wikiId = null ) {
+	public static function isCorporatePage($cityId = null) {
 		global $wgCityId;
-
-		return WikiFactory::getVarValueByName( 'wgEnableWikiaHomePageExt', $wikiId ?? $wgCityId );
-	}
-
-	/**
-	 * Check if current page is corporate page
-	 *
-	 * @param int|null $wikiId
-	 * @return bool
-	 */
-	public static function isCorporatePage( $wikiId = null ) {
-		return self::isWikiaHub( $wikiId ) || self::isWikiaHomePage( $wikiId );
+		return ( new WikiaCorporateModel )->isCorporateWiki( $cityId ?: $wgCityId );
 	}
 }

@@ -138,8 +138,8 @@ class MysqlUpdater extends DatabaseUpdater {
 			// 1.15
 			array( 'doUniquePlTlIl' ),
 			array( 'addTable', 'change_tag',                        'patch-change_tag.sql' ),
-			array( 'addTable', 'tag_summary',                       'patch-change_tag.sql' ),
-			array( 'addTable', 'valid_tag',                         'patch-change_tag.sql' ),
+			#array( 'addTable', 'tag_summary',                       'patch-change_tag.sql' ), # SUS-3066
+			#array( 'addTable', 'valid_tag',                         'patch-change_tag.sql' ), # SUS-3066
 
 			// 1.16
 			array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
@@ -196,6 +196,10 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'dropTable', 'hitcounter' ),
 			array( 'dropField', 'site_stats', 'ss_total_views', 'patch-drop-ss_total_views.sql' ),
 			array( 'dropField', 'page', 'page_counter', 'patch-drop-page_counter.sql' ),
+
+			// 1.28 / SUS-2741
+			[ 'addField', 'change_tag', 'ct_id', 'patch-change_tag-ct_id.sql' ],
+			[ 'addField', 'tag_summary', 'ts_id', 'patch-tag_summary-ts_id.sql' ],
 		);
 	}
 

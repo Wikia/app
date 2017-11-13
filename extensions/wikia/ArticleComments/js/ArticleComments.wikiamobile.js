@@ -27,8 +27,7 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 		loadPrev = d.getElementById( 'commPrev' ),
 		totalPages = floor( wkArtCom.getAttribute( 'data-pages' ) ),
 		currentPage = 1,
-		ajaxUrl = window.wgServer +
-			'/index.php?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&useskin=' +
+		ajaxUrl = window.wgScriptPath + '/index.php?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&useskin=' +
 			window.skin +
 			'&article=' +
 			window.wgArticleId,

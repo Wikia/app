@@ -119,12 +119,16 @@ class MercuryApi {
 		global $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-		       $wgEnableDiscussionsImageUpload, $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
-		       $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
+		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgEnableFandomAppSmartBanner;
+
+		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
 			'cacheBuster' => (int) $wgCacheBuster,
+			'cdnRootUrl' => $wgCdnRootUrl,
 			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
@@ -134,6 +138,7 @@ class MercuryApi {
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
+			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
@@ -149,6 +154,7 @@ class MercuryApi {
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
+			'discussionColorOverride' => SassUtil::sanitizeColor($wgDiscussionColorOverride),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'comscore' => [

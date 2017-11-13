@@ -96,28 +96,31 @@ class InfoAction extends FormlessAction {
 		$watchers = (int)$dbr->selectField(
 			'watchlist',
 			'COUNT(*)',
-			array(
+			[
 				'wl_title'     => $title->getDBkey(),
 				'wl_namespace' => $title->getNamespace()
-			),
+			],
 			__METHOD__
 		);
 
 		$edits = (int)$dbr->selectField(
 			'revision',
 			'COUNT(rev_page)',
-			array( 'rev_page' => $id ),
+			[ 'rev_page' => $id ],
 			__METHOD__
 		);
 
 		$authors = (int)$dbr->selectField(
 			'revision',
-			'COUNT(DISTINCT rev_user_text)',
-			array( 'rev_page' => $id ),
+			'COUNT(DISTINCT rev_user, rev_user_text)',
+			[ 'rev_page' => $id ],
 			__METHOD__
 		);
 
-		return array( 'watchers' => $watchers, 'edits' => $edits,
-			'authors' => $authors );
+		return [
+			'watchers' => $watchers,
+			'edits' => $edits,
+			'authors' => $authors
+		];
 	}
 }

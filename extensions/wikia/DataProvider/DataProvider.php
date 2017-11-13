@@ -106,7 +106,6 @@ class DataProvider {
 		$links['most_popular'] = 'GetMostPopularArticles';
 		$links['most_visited'] = 'GetMostVisitedArticles';
 		$links['newly_changed'] = 'GetNewlyChangedArticles';
-		$links['highest_ratings'] = 'GetTopVotedArticles';
 		$links['community'] = 'GetTopFiveUsers';
 
 		if ( isset ( $_COOKIE['topfive'] ) && isset ( $links[$_COOKIE['topfive']] ) ) {
@@ -219,49 +218,6 @@ class DataProvider {
 
 		wfProfileOut( __METHOD__ );
 		return $links;
-	}
-
-
-	/**
-	 * Return array of top voted articles
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 * @return array
-	 */
-	final public static function GetTopVotedArticles( $limit = 7 ) {
-		wfProfileIn( __METHOD__ );
-		global $wgMemc;
-
-		$memckey = wfMemcKey( "TopVoted", $limit );
-		$results = $wgMemc->get( $memckey );
-
-		if ( !is_array( $results ) ) {
-
-			$oApi = new ApiMain( new FauxRequest( array( "action" => "query", "list" => "wkvoteart", "wklimit" => $limit * 2, "wktopvoted" => 1 ) ) );
-			$oApi->execute();
-			$aResult = &$oApi->GetResultData();
-
-			$results = array();
-
-			if ( count( $aResult['query']['wkvoteart'] ) > 0 ) {
-				foreach ( $aResult['query']['wkvoteart'] as $key => $val ) {
-					$title = Title::newFromID( $key );
-
-					if ( is_object( $title ) ) {
-						$article['url'] = $title->getLocalUrl();
-						$article['text'] = $title->getPrefixedText();
-						$results[] = $article;
-					}
-				}
-			}
-
-			self::removeAdultPages( $results );
-
-			$results = array_slice( $results, 0, $limit );
-			$wgMemc->set( $memckey, $results, 60 * 60 );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $results;
 	}
 
 	/**

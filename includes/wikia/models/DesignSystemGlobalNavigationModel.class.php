@@ -39,7 +39,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-create-wiki-link-start-wikia'
 					],
-					'href' => $this->getHref( 'create-new-wiki' ),
+					'href' => $this->getHref( 'create-new-wiki', true ),
 					'tracking_label' => 'start-a-wiki',
 				]
 			]
@@ -104,15 +104,24 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getHref( $hrefKey ) {
-		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+	private function getHref( $hrefKey, $protocolRelative = false ) {
+		$url = DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+		if ( $protocolRelative ) {
+			$url = wfProtocolUrlToRelative( $url );
+		}
+		return $url;
 	}
 
-	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
+	private function getPageUrl( $pageTitle, $namespace, $query = '', $protocolRelative = false ) {
 		$wikiId = $this->product === static::PRODUCT_WIKIS ?
 			$this->productInstanceId :
 			WikiFactory::COMMUNITY_CENTRAL;
-		return GlobalTitle::newFromText( $pageTitle, $namespace, $wikiId )->getFullURL( $query );
+		$url =  GlobalTitle::newFromText( $pageTitle, $namespace, $wikiId )->getFullURL( $query );
+		if ( $protocolRelative ) {
+			$url = wfProtocolUrlToRelative( $url );
+		}
+
+		return $url;
 	}
 
 	private function getSearchData() {
@@ -150,11 +159,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		} else {
 			// Regular wikis
 			$search['results']['param-name'] = 'query';
-			$search['results']['url'] = $this->getPageUrl( 'Search', NS_SPECIAL );
+			$search['results']['url'] = $this->getPageUrl( 'Search', NS_SPECIAL, '', true );
 			$search['placeholder-active']['key'] = 'global-navigation-search-placeholder-in-wiki';
 
+			$suggestionsUrl = WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json';
 			$search['suggestions'] = [
-				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
+				'url' => wfProtocolUrlToRelative( $suggestionsUrl ),
 				'param-name' => 'query',
 				'tracking_label' => 'search-suggestion',
 			];
@@ -392,7 +402,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getCorporatePageSearchUrl() {
-		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, WikiService::WIKIAGLOBAL_CITY_ID )->getFullURL();
+		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
+		return wfProtocolUrlToRelative( $url );
 	}
 
 	private function getCommunityCentralLink() {

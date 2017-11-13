@@ -45,8 +45,10 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 	public function getDocumentationUrl(){
 		// TODO: Ideally, we should create documentation for the extension on MediaWiki.org, then instead of this function, we should use a static member var (string) for the URL.
-		global $wgServer;
-		return $wgServer."/api.php";
+		//global $wgServer;
+		//return $wgServer."/api.php";
+		//As long as there is no documentation made by FANDOM
+		return 'https://www.mediawiki.org/wiki/Extension:CategoryIntersection';
 	}
 
 	/**

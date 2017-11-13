@@ -1230,17 +1230,16 @@ class ExtDynamicPageList {
         }
 
 		if ( !defined( "MW_UPDATER" ) ) {
-		// make sure page "Template:Extension DPL" exists
-        $title = Title::newFromText('Template:Extension DPL');
-		global $wgUser;
-		if (!$title->exists() && $wgUser->isAllowed('edit')) {
-			$article = new Article($title);
-			$article->doEdit( "<noinclude>This page was automatically created. It serves as an anchor page for ".
-							  "all '''[[Special:WhatLinksHere/Template:Extension_DPL|invocations]]''' ".
-							  "of [http://mediawiki.org/wiki/Extension:DynamicPageList Extension:DynamicPageList (DPL)].</noinclude>",
-							  $title, EDIT_NEW | EDIT_FORCE_BOT );
-			die(header('Location: '.Title::newFromText('Template:Extension DPL')->getFullURL()));
-		}
+			// make sure page "Template:Extension DPL" exists
+			$user = User::newFromName( Wikia::BOT_USER );
+			$title = Title::newFromText( 'Template:Extension DPL' );
+			if ( !$title->exists() ) {
+				$article = new Article( $title );
+				$article->doEdit( "<noinclude>This page was automatically created. It serves as an anchor page for ".
+								  "all '''[[Special:WhatLinksHere/Template:Extension DPL|invocations]]''' ".
+								  "of [[mw:Extension:DynamicPageList|Extension:DynamicPageList (DPL)]].</noinclude>",
+								  $title, EDIT_NEW | EDIT_FORCE_BOT, false, $user );
+			}
 		}
         require_once( 'DPLVariables.php' );
 	}

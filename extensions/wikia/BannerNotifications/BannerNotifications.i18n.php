@@ -47,15 +47,15 @@ $messages['cs'] = array(
 $messages['de'] = array(
 	'bannernotifications-desc' => 'Zeigt Systembenachrichtigungen für Ereignisse wie AJAX-Ausfälle.',
 	'bannernotifications-general-ajax-failure' => 'Der Browser konnte keine Verbindung mit FANDOM herstellen. Bitte versuche es später erneut.',
-	'bannernotifications-not-confirmed-email' => 'Oh nein! Deine E-Mail-Adresse wurde noch nicht bestätigt. Die Bestätigungsnachricht sollte in deinem Postfach angekommen sein. Du hast sie nicht erhalten? [[Special:ConfirmEmail|Klicke hier und wir schicken sie dir noch einmal zu.]] Wenn du deine E-Mail-Adresse ändern musst, kannst du das in deinen [[Special:Preferences#mw-prefsection-emailv2|Einstellungen]] tun.',
-	'bannernotifications-no-email' => 'Oh nein! Wir haben deine E-Mail-Adresse nicht. In deinen [[Special:Preferences#mw-prefsection-emailv2|Einstellungen]] kannst du deine E-Mail-Adresse eintragen.',
+	'bannernotifications-not-confirmed-email' => 'Deine E-Mail-Adresse wurde nicht bestätigt. Die Bestätigungsnachricht sollte in deinem Postfach angekommen sein. [[Special:ConfirmEmail|Klicke hier]], wenn wir sie dir noch einmal zuschicken sollen. Wenn du deine E-Mail-Adresse ändern musst, kannst du das in deinen [[Special:Preferences#mw-prefsection-emailv2|Einstellungen]] tun.',
+	'bannernotifications-no-email' => 'Dein Konto enthält keine bestätigte E-Mail-Adresse. In deinen [[Special:Preferences#mw-prefsection-emailv2|Einstellungen]] kannst du deine E-Mail-Adresse eintragen.',
 );
 
 $messages['es'] = array(
 	'bannernotifications-desc' => 'Muestra las notificaciones del sistema para eventos tales como fallas de AJAX',
 	'bannernotifications-general-ajax-failure' => 'El buscador no pudo conectarse a FANDOM. Inténtalo más tarde.',
-	'bannernotifications-not-confirmed-email' => '¡Oh, no! Aún no se ha confirmado tu dirección de correo electrónico. Debes tener un mensaje de confirmación en tu bandeja de entrada. ¿No te llegó? [[{{#Special:ConfirmEmail}}|Haz clic aquí y te enviaremos uno nuevo.]] Si necesitas cambiar tu dirección, dirígete a tu [[Special:Preferences#mw-prefsection-emailv2|página de preferencias]].',
-	'bannernotifications-no-email' => '¡Oh no! Parece que no tenemos tu dirección de correo electrónico. Para configurar tu correo electrónico, dirígete a tu [[Special:Preferences#mw-prefsection-emailv2|página de preferencias]].',
+	'bannernotifications-not-confirmed-email' => 'Tu correo electrónico no ha sido confirmado. Debería de haber un correo electrónico de confirmación en tu buzón. Si necesitas que te enviemos uno nuevo, [[Special:ConfirmEmail|haz clic aquí]]. Si necesitas cambiar tu correo electrónico, dirígete a la [[Special:Preferences#mw-prefsection-emailv2|página de preferencias]].',
+	'bannernotifications-no-email' => 'Tu cuenta no tiene una dirección de correo electrónico confirmada. Por favor configura tu correo electrónico en la [[Special:Preferences#mw-prefsection-emailv2|página de preferencias]].',
 );
 
 $messages['fi'] = array(
@@ -71,8 +71,8 @@ $messages['fo'] = array(
 $messages['fr'] = array(
 	'bannernotifications-desc' => 'Affiche des notifications système pour des événements tels que les échecs AJAX.',
 	'bannernotifications-general-ajax-failure' => 'Le navigateur n’a pas pu se connecter à FANDOM. Veuillez réessayer plus tard.',
-	'bannernotifications-not-confirmed-email' => "Votre adresse e-mail n'a pas encore été confirmée. Vous devriez avoir un message de confirmation dans votre boîte de messagerie. Vous ne l'avez pas reçu ? [[Special:ConfirmEmail|Cliquez ici pour en avoir un nouveau.]] Pour changer d'adresse e-mail, allez à la [[Special:Preferences#mw-prefsection-emailv2|page Préférences]].",
-	'bannernotifications-no-email' => "Apparemment vous n'avez pas encore fourni d'adresse e-mail. Pour enregistrer votre e-mail, veuillez aller dans vos [[Special:Preferences#mw-prefsection-emailv2|Préférences]].",
+	'bannernotifications-not-confirmed-email' => "Votre adresse e-mail n'a pas été confirmée. Vous devriez avoir reçu un message de confirmation dans votre boîte de messagerie. Pour en recevoir un nouveau, [[Special:ConfirmEmail|cliquez ici]]. Vous pouvez modifier votre adresse e-mail à la page [[Special:Preferences#mw-prefsection-emailv2|Préférences]] si nécessaire.",
+	'bannernotifications-no-email' => "Aucune adresse e-mail confirmée n'est associée à votre compte. Veuillez définir votre adresse e-mail à la page [[Special:Preferences#mw-prefsection-emailv2|Préférences]].",
 );
 
 $messages['gl'] = array(
@@ -103,15 +103,15 @@ $messages['id'] = array(
 $messages['it'] = array(
 	'bannernotifications-desc' => 'Visualizza le notifiche di sistema per eventi quali guasti AJAX',
 	'bannernotifications-general-ajax-failure' => 'Il browser non è riuscito a connettersi a FANDOM. Riprovare più tardi.',
-	'bannernotifications-not-confirmed-email' => "Oh no! Il tuo indirizzo email non è stato ancora confermato. Avresti dovuto ricevere un messaggio di conferma nella tua casella di posta. Non l'hai ricevuto? [[Special:ConfirmEmail|Clicca qui e te ne invieremo un altro]]. Se devi cambiare il tuo indirizzo, visita la pagina delle tue [[Special:Preferences#mw-prefsection-emailv2|preferenze]].",
-	'bannernotifications-no-email' => 'Oh no! A quanto pare non abbiamo un tuo indirizzo email. Per impostare la tua email, vai nelle tue [[Special:Preferences#mw-prefsection-emailv2|preferenze]].',
+	'bannernotifications-not-confirmed-email' => 'Il tuo indirizzo email non è stato ancora confermato. Dovrebbe esserci un messaggio per la conferma nella tua casella di posta. Se vuoi ricevere nuovamente il messaggio, [[Special:ConfirmEmail|clicca qui]] per favore. Se hai bisogno di cambiare la tua email, vai nella [[Special:Preferences#mw-prefsection-emailv2|pagina delle tue preferenze]].',
+	'bannernotifications-no-email' => 'Il tuo account non ha un indirizzo email confermato. Per favore, imposta il tuo indirizzo email nella [[Special:Preferences#mw-prefsection-emailv2|pagina delle tue preferenze]].',
 );
 
 $messages['ja'] = array(
 	'bannernotifications-desc' => 'AJAXエラーなどのイベントに関するシステム通知を表示します',
 	'bannernotifications-general-ajax-failure' => 'FANDOMに接続できませんでした。しばらくしてから再度お試しください。',
-	'bannernotifications-not-confirmed-email' => 'メールアドレスの認証が完了していないようです。受信トレイの確認メールをチェックしてみてください。確認メールが見つからない場合は、[[特別:ConfirmEmail|ここをクリック]]すると新しい確認メールが送信されます。メールアドレスを変更する必要がある場合は、[[特別:Preferences#mw-prefsection-emailv2|「個人設定」ページ]]にアクセスしてください。',
-	'bannernotifications-no-email' => 'メールアドレスが設定されていないようです。メールアドレスを設定するには、[[特別:Preferences#mw-prefsection-emailv2|「個人設定」ページ]]にアクセスしてください。',
+	'bannernotifications-not-confirmed-email' => 'メールアドレスの認証が完了されていません。受信トレイの確認メールをチェックしてみてください。再送信が必要な場合は [[Special:ConfirmEmail|こちらをクリック]]してください。メールアドレスを変更されたい場合は[[Special:Preferences#mw-prefsection-emailv2|個人設定ページ]]にアクセスしてください。',
+	'bannernotifications-no-email' => 'メールアドレスの認証が完了されていません。[[Special:Preferences#mw-prefsection-emailv2|個人設定ページ]]にてメールアドレスの設定を行ってください。',
 );
 
 $messages['mk'] = array(
@@ -132,8 +132,8 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'bannernotifications-desc' => 'Geeft systeemberichten weer voor gebeurtenissen zoals AJAX-fouten',
 	'bannernotifications-general-ajax-failure' => 'De browser kon geen verbinding maken met de Wikia. Probeer het later nog opnieuw.',
-	'bannernotifications-not-confirmed-email' => "Oh no! Your email address has not yet been confirmed. You should have a confirmation message in your inbox. Didn't get it? [[Special:ConfirmEmail|Click here and we'll send a new one.]] If you need to change your address, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
-	'bannernotifications-no-email' => "Oh no! Looks like we don't have an email address for you. To set your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
+	'bannernotifications-not-confirmed-email' => "Your email address hasn't been confirmed. There should be a confirmation message in your inbox. If you need us to send a new one, please [[Special:ConfirmEmail|click here]]. If you need to change your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
+	'bannernotifications-no-email' => 'Your account does not have a confirmed email address. Please set up your email on your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].',
 );
 
 $messages['oc'] = array(
@@ -144,8 +144,8 @@ $messages['oc'] = array(
 $messages['pl'] = array(
 	'bannernotifications-desc' => 'Wyświetla komunikaty systemowe dla zdarzeń takich jak błędy AJAX',
 	'bannernotifications-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z portalem FANDOM. Spróbuj ponownie później.',
-	'bannernotifications-not-confirmed-email' => 'O nie! Twój adres e-mail nie został jeszcze potwierdzony. E-mail pozwalający potwierdzić rejestrację powinien być w twojej skrzynce odbiorczej. Nie ma go tam? [[Special:ConfirmEmail|Kliknij tutaj, a wyślemy go ponownie.]] Jeśli chciałbyś zmienić adres, przejdź do [[Special:Preferences#mw-prefsection-emailv2|strony z preferencjami]].',
-	'bannernotifications-no-email' => 'O nie! Wygląda na to, że nie mamy twojego adresu e-mail. Aby ustawić swój adres e-mail przejdź do [[Special:Preferences#mw-prefsection-emailv2|strony z preferencjami]].',
+	'bannernotifications-not-confirmed-email' => 'Twój adres e-mail nie został jeszcze potwierdzony. Wiadomość potwierdzająca rejestrację powinna być w twojej skrzynce odbiorczej. Jeśli potrzebujesz, abyśmy wysłali go ponownie, [[Special:ConfirmEmail|kliknij tutaj]]. Jeśli chcesz zmienić adres e-mail, przejdź do [[Special:Preferences#mw-prefsection-emailv2|strony z preferencjami]].',
+	'bannernotifications-no-email' => 'Twoje konto nie ma potwierdzonego adresu e-mail. Podaj swój adres e-mail na swojej [[Special:Preferences#mw-prefsection-emailv2|stronie preferencji]].',
 );
 
 $messages['pms'] = array(
@@ -156,8 +156,8 @@ $messages['pms'] = array(
 $messages['pt'] = array(
 	'bannernotifications-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
 	'bannernotifications-general-ajax-failure' => 'O navegador não pode se conectar ao FANDOM. Tente novamente mais tarde.',
-	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Não recebeu? [[Special:ConfirmEmail|Clique aqui e enviaremos um novo.]] Se você precisar alterar o seu endereço, visite sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
-	'bannernotifications-no-email' => 'Aparentemente não temos um endereço de e-mail para você. Para definir o seu e-mail, acesse sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
+	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Se precisar que enviemos outra, por favor [[Special:ConfirmEmail|clique aqui e enviaremos novamente.]] Se você precisar alterar o seu e-mail, visite sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
+	'bannernotifications-no-email' => 'Sua conta não possui um endereço de e-mail confirmado. Por favor configure seu e-mail em sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
 );
 
 $messages['roa-tara'] = array(
@@ -167,9 +167,9 @@ $messages['roa-tara'] = array(
 
 $messages['ru'] = array(
 	'bannernotifications-desc' => 'Отображает системные уведомления для события, таких как сбои AJAX',
-	'bannernotifications-general-ajax-failure' => 'Браузер не смог подключиться к Фэндому. Попробуйте ещё раз позже.',
-	'bannernotifications-not-confirmed-email' => 'Адрес вашей электронной почты ещё не подтверждён. Вы уже должны были получить сообщение о подтверждении на почту. Не получили? — [[Special:ConfirmEmail|Тогда нажмите здесь, и мы вышлем вам новое]]. Если вы хотите сменить адрес вашей электронной почты, перейдите в соответствующий раздел [[Special:Preferences#mw-prefsection-emailv2|личных настроек]].',
-	'bannernotifications-no-email' => 'Вы не указали адрес электронной почты. Перейдите на страницу [[Special:Preferences#mw-prefsection-emailv2|личных настроек]], чтобы это сделать.',
+	'bannernotifications-general-ajax-failure' => 'Браузер не смог подключиться к ФЭНДОМУ. Попробуйте ещё раз позже.',
+	'bannernotifications-not-confirmed-email' => 'Адрес вашей электронной почты ещё не подтверждён. Вы должны были получить сообщение о подтверждении на почту. Не получили? [[Служебная:ConfirmEmail|Нажмите здесь]], и мы вышлем вам новое письмо. Если вы хотите изменить адрес электронной почты, перейдите в соответствующий раздел [[Служебная:Preferences#mw-prefsection-emailv2|личных настроек]].',
+	'bannernotifications-no-email' => 'У вашей учётной записи не подтверждён адрес электронной почты. Пожалуйста, укажите адрес электронной почты на странице [[Special:Preferences#mw-prefsection-emailv2|личных настроек]].',
 );
 
 $messages['sv'] = array(
@@ -211,14 +211,14 @@ $messages['xw-3171'] = array(
 $messages['zh-hans'] = array(
 	'bannernotifications-desc' => '显示一些如AJAX失败类似事件的系统通知',
 	'bannernotifications-general-ajax-failure' => '浏览器无法连接到FANDOM。请稍后再试。',
-	'bannernotifications-not-confirmed-email' => '您的电子邮件地址尚未得到验证。您的收件箱里应该已经收到了一封确认邮件。没有收到？[[Special:ConfirmEmail|单击此处，我们会重新发送一封邮件]]。如需更改您的邮件地址，请前往[[Special:Preferences#mw-prefsection-emailv2|个人设定]]页面。',
-	'bannernotifications-no-email' => '哎呀！很抱歉，我们没有您的电子邮件地址。请点击[[Special:Preferences#mw-prefsection-emailv2|用户设定]]设置您的电子邮箱。',
+	'bannernotifications-not-confirmed-email' => '您的电子邮件地址尚未得到验证。您的收件箱里应该已经收到了一封确认邮件。如果您需要我们重新发送一封，请[[Special:ConfirmEmail|单击此处]]。如需更改您的邮件地址，请前往[[Special:Preferences#mw-prefsection-emailv2|个人设定]]页面。',
+	'bannernotifications-no-email' => '您的帐户没有确认电子邮件地址。请在 [[Special:Preferences#mw-prefsection-emailv2|个人设定]]中设置您的电子邮件地址。',
 );
 
 $messages['zh-hant'] = array(
 	'bannernotifications-general-ajax-failure' => '瀏覽器無法連接到FANDOM。請稍後再試。',
 	'bannernotifications-desc' => '顯示一個如AJAX失敗類似事件的系統通知',
-	'bannernotifications-not-confirmed-email' => '你的電子郵件地址尚未獲得到認證。你的收件匣中應該已經收到了認證訊息。沒有收到？[[Special:ConfirmEmail|按一下此處，我們會重新發送一個郵件]]。如需更改地址，請至[[Special:Preferences#mw-prefsection-emailv2|個人設定頁面]]。',
-	'bannernotifications-no-email' => '哎呀！很抱歉，我們沒有您的電子郵件地址。請點擊[[Special:Preferences#mw-prefsection-emailv2|用戶設定]]設置您的電子郵箱。',
+	'bannernotifications-not-confirmed-email' => '您的電子郵件地址尚未獲得到認證。您的收件匣中應該已經收到了認證訊息。如果您需要我們重新發送一個郵件，請[[Special:ConfirmEmail|按一下此處]]。如需更改郵件地址，請至[[Special:Preferences#mw-prefsection-emailv2|個人設定頁面]]。',
+	'bannernotifications-no-email' => '您的帳戶沒有已認證的電子郵件地址。請在[[Special:Preferences#mw-prefsection-emailv2|個人設定頁面]]設置您的電子郵件。',
 );
 

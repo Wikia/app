@@ -180,10 +180,12 @@ class Linker {
 		// method call for the rest of this request
 		static $linkCache = array();
 		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $target->getFragment(), $target->getInterwiki(), $html, $customAttribs, $query, $options ) );
+		// SUS-3114: Support GlobalTitle links, else they are incorrectly cached
+		$wikiId = $target instanceof GlobalTitle ? $target->getCityId() : $GLOBALS['wgCityId'];
 
-		if ( array_key_exists($key, $linkCache) ) {
+		if ( isset( $linkCache[$wikiId][$key] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $linkCache[$key];
+			return $linkCache[$wikiId][$key];
 		}
 		/* Wikia change - end */
 
@@ -248,7 +250,7 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: garth */
-		$linkCache[$key] = $ret;
+		$linkCache[$wikiId][$key] = $ret;
 		/* Wikia change - end */
 
 		wfProfileOut( __METHOD__ );
@@ -1072,7 +1074,7 @@ class Linker {
 	 * Make user link (or user contributions for unregistered users)
 	 * @param $userId   Integer: user id in database.
 	 * @param $userName String: user name in database.
-	 * @param $altUserName String: text to display instead of the user name (optional)
+	 * @param $altUserName string|bool text to display instead of the user name (optional)
 	 * @return String: HTML fragment
 	 * @since 1.19 Method exists for a long time. $displayText was added in 1.19.
 	 */
@@ -1117,7 +1119,8 @@ class Linker {
 			// check if the user has an edit
 			$attribs = array();
 			if ( $redContribsWhenNoEdits ) {
-				$count = !is_null( $edits ) ? $edits : User::edits( $userId );
+				$user = User::newFromId( $userId );
+				$count = !is_null( $edits ) || !$user ? $edits : $user->getEditCount();
 				if ( $count == 0 ) {
 					$attribs['class'] = 'new';
 				}

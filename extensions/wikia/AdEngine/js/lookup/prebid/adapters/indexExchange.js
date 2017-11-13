@@ -1,10 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (slotsContext, instartLogic, geo, instantGlobals) {
+], function (slotsContext, geo, instantGlobals) {
 	'use strict';
 
 	var bidderName = 'indexExchange',
@@ -107,15 +106,52 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					id: '11',
 					siteID: 185056
 				}
+			},
+			recovery: {
+				TOP_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					id: '1',
+					siteID: 215807
+				},
+				TOP_RIGHT_BOXAD: {
+					sizes: [
+						[300, 250],
+						[300, 600]
+					],
+					id: '2',
+					siteID: 215808
+				},
+				INCONTENT_BOXAD_1: {
+					sizes: [
+						[160, 600],
+						[300, 600],
+						[300, 250]
+					],
+					id: '9',
+					siteID: 215809
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90],
+						[970, 250]
+					],
+					id: '12',
+					siteID: 215810
+				}
 			}
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverIndexExchangeBidderCountries) && !instartLogic.isBlocking();
+		return geo.isProperGeo(instantGlobals.wgAdDriverIndexExchangeBidderCountries);
 	}
 
-	function getSlots(skin) {
-		return slotsContext.filterSlotMap(slots[skin]);
+	function getSlots(skin, isRecovering) {
+		var key = isRecovering ? 'recovery' : skin;
+
+		return slotsContext.filterSlotMap(slots[key]);
 	}
 
 	function prepareAdUnit(slotName, config) {

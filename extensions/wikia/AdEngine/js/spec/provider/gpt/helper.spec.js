@@ -19,6 +19,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			},
 			adContext: {
 				addCallback: noop,
+				get: noop,
 				getContext: function () {
 					return mocks.context;
 				}
@@ -39,10 +40,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				isEnabled: noop,
 				addMarker: noop
 			},
-			sourcePoint: {
-				recoverSlots: noop,
-				isEnabled: noop
-			},
 			slotTweaker: {
 				show: noop,
 				hide: noop,
@@ -61,8 +58,13 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				getUapId: noop
 			},
 			passbackHandler: {
-				get: function() {
+				get: function () {
 					return 'unknown';
+				}
+			},
+			srcProvider: {
+				get: function () {
+					return 'gpt';
 				}
 			},
 			slotTargetingHelper: {
@@ -85,8 +87,27 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				flush: noop,
 				setPageLevelParams: noop
 			},
+			googleSlots: {
+				getSlotByName: function () {
+					return {};
+				}
+			},
+			gptTargeting: {
+				getSlotLevelTargeting: function () {
+					return {};
+				}
+			},
+			doc: {
+				getElementById: function () {
+					return {
+						getAttribute: function () {
+							return '{uap: "none"}';
+						}
+					};
+				}
+			},
 			geo: {
-				isProperGeo: function() {
+				isProperGeo: function () {
 					return false;
 				}
 			},
@@ -103,18 +124,21 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,
+			mocks.googleSlots,
+			mocks.gptTargeting,
 			mocks.passbackHandler,
+			mocks.srcProvider,
 			mocks.slotTargetingHelper,
-			mocks.sourcePoint,
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
+			mocks.doc,
 			mocks.geo,
 			{},
 			mocks.log,
 			undefined,
-			undefined,
 			mocks.sraHelper,
+			undefined,
 			mocks.pageFair
 		);
 	}
@@ -234,7 +258,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {
 			sraEnabled: true,
-			isSourcePointRecoverable: false
+			isPageFairRecoverable: false
 		});
 
 		expect(mocks.googleTag.push).not.toHaveBeenCalled();
@@ -255,137 +279,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {
 			sraEnabled: true,
-			isSourcePointRecoverable: true
+			isPageFairRecoverable: true
 		});
 
 		expect(mocks.googleTag.push).toHaveBeenCalled();
 		expect(mocks.googleTag.flush).toHaveBeenCalled();
-	});
-
-	it('Do not change src to rec if ad is not recoverable', function () {
-		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
-				isSourcePointRecoverable: false
-			});
-		};
-
-		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		spyOn(mocks.adBlockRecovery, 'isEnabled');
-
-		mocks.adBlockDetection.isBlocking.and.returnValue(true);
-		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
-
-		pushAd();
-		expect(mocks.slotTargetingData.src).not.toBeDefined();
-	});
-
-	it('Change src to rec if ad is recoverable', function () {
-		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
-				isSourcePointRecoverable: true
-			});
-		};
-
-		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		spyOn(mocks.adBlockRecovery, 'isEnabled');
-
-		mocks.adBlockDetection.isBlocking.and.returnValue(true);
-		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
-
-		pushAd();
-		expect(mocks.slotTargetingData.src).toBe('rec');
-	});
-
-	it('Should not set src=rec if SourcePoint is on, isSourcePointRecoverable but adblock is off', function () {
-		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
-				isSourcePointRecoverable: true
-			});
-		};
-
-		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		spyOn(mocks.adBlockRecovery, 'isEnabled');
-
-		mocks.adBlockDetection.isBlocking.and.returnValue(false);
-		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
-
-		pushAd();
-		expect(mocks.slotTargetingData.src).not.toBe('rec');
-	});
-
-	it('Should set src=rec if PageFair is on, adblock is on and isPageFairRecoverable', function () {
-		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
-				isPageFairRecoverable: true
-			});
-		};
-
-		spyOn(mocks.pageFair, 'isEnabled');
-
-		mocks.pageFair.isEnabled.and.returnValue(true);
-
-		pushAd();
-		expect(mocks.slotTargetingData.src).toBe('rec');
-	});
-
-	it('Should not set src=rec if PageFair is on, isPageFairRecoverable but adblock is off', function () {
-		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
-				isPageFairRecoverable: true
-			});
-		};
-
-		spyOn(mocks.pageFair, 'isEnabled');
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-
-		mocks.adBlockDetection.isBlocking.and.returnValue(false);
-		mocks.pageFair.isEnabled.and.returnValue(true);
-
-		pushAd();
-		expect(mocks.slotTargetingData.src).not.toBe('rec');
-	});
-
-	it('Set src=premium if article is premium only', function () {
-		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
-		};
-
-		mocks.context.opts.premiumOnly = true;
-
-		pushAd();
-		expect(mocks.slotTargetingData.src).toBe('premium');
-	});
-
-	it('Don\'t set src-premium if article isn\'t premium', function () {
-		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
-		};
-
-		mocks.context.opts.premiumOnly = false;
-
-		pushAd();
-		expect(mocks.slotTargetingData.src).not.toBe('premium');
-	});
-
-	it('Don\'t change src to rec if on the page is premium video - we don\'t want to recover ads in that case', function () {
-		var pushAd = function () {
-			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {
-				isSourcePointRecoverable: true
-			});
-		};
-
-		spyOn(mocks, 'slotTargetingData');
-		spyOn(mocks.adBlockDetection, 'isBlocking');
-		spyOn(mocks.adBlockRecovery, 'isEnabled');
-
-		mocks.context.opts.premiumOnly = true;
-		mocks.adBlockDetection.isBlocking.and.returnValue(true);
-		mocks.adBlockRecovery.isEnabled.and.returnValue(true);
-
-		pushAd();
-		expect(mocks.slotTargetingData.src).toBe('premium');
 	});
 });

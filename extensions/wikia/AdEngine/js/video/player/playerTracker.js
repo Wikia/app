@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'position': params.slotName || emptyValue.string,
 				'event_name': eventName,
 				'ad_error_code': errorCode || emptyValue.int,
-				'content_type': contentType || emptyValue.string,
+				'content_type': params.contentType || contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
 				'price': emptyValue.price,
@@ -59,21 +59,19 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'additional_2': floatingState
 			};
 
-		if (bidHelper && params.bid && params.adProduct === 'rubicon') {
-			trackingData['vast_id'] = [
-				params.bid.rubiconAdvertiserId || emptyValue.string,
-				params.bid.rubiconAdId || emptyValue.string
-			].join(':');
-			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-		}
+		if (bidHelper && params.bid) {
+			if (params.bid.bidderCode === 'rubicon') {
+				trackingData['vast_id'] = [
+					params.bid.rubiconAdvertiserId || emptyValue.string,
+					params.bid.rubiconAdId || emptyValue.string
+				].join(':');
+				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+			}
 
-		if (bidHelper && params.bid && params.adProduct === 'appnexusAst') {
-			trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
-			trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-		}
-
-		if (bidHelper && params.bid && params.adProduct === 'veles') {
-			trackingData['vast_id'] = params.bid.vastId || emptyValue.string;
+			if (params.bid.bidderCode === 'appnexusAst') {
+				trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
+				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+			}
 		}
 
 		return trackingData;

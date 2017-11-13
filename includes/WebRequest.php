@@ -1093,6 +1093,10 @@ HTML;
 		}
 
 		wfDebug( "IP: $ip\n" );
+		# Wikia change begin: Mix <mix@fandom.com>
+		# SUS-2005: unify system's internal format for IP (with IPv6 in mind)
+		$ip = IP::sanitizeIP( $ip );
+		# Wikia change end
 		$this->ip = $ip;
 		return $ip;
 	}
@@ -1103,7 +1107,7 @@ HTML;
 	 * @return void
 	 */
 	public function setIP( $ip ) {
-		$this->ip = $ip;
+		$this->ip = IP::sanitizeIP( $ip );
 	}
 	/* Wikia change end */
 

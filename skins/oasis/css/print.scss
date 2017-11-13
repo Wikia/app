@@ -10,10 +10,29 @@ html,
 	background: #fff;
 }
 
+.noprint,
+.wikia-ad,
+#globalNavigation,
+.wds-global-navigation-wrapper,
+.wds-community-header,
+.wds-global-footer,
+.page-header__contribution,
+.page-header__categories,
+#WikiaArticleFooter,
 #WikiaRail,
+#WikiaBar,
 #WikiaFooter,
-#WikiaSearch {
-	display: none;
+#WikiaSearch,
+#WikiaTopAds {
+	display: none !important;
+}
+
+.WikiaArticle .printfooter {
+	display: block !important;
+}
+
+.WikiaPageContentWrapper {
+	display: block !important;
 }
 
 #WikiaPage {
@@ -26,11 +45,14 @@ html,
 
 #WikiaMainContent {
 	float: none;
-	width: auto;
+	width: auto !important;
 }
 
 #WikiaArticle {
-	min-height: 1px;
+	min-height: 1px !important;
+	height: auto !important;
+	overflow: visible !important;
+
 	.thumbinner div {
 		background: #fff;
 		border: none;

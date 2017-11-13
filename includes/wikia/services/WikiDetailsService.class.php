@@ -113,16 +113,14 @@ class WikiDetailsService extends WikiService {
 	 * @param string $imageName
 	 * @param string $lang
 	 * @param int $wikiId
-	 * @return GlobalFile|null
+	 * @return GlobalFile
 	 */
 	protected function findGlobalFileImage( $imageName, $lang, $wikiId ) {
 		//try to find image on lang specific corporate wiki
-		$f = null;
-		$visualizationModel = new CityVisualization();
-		$cityList = $visualizationModel->getVisualizationWikisData();
+		$cityId = ( new WikiaCorporateModel )->getCorporateWikiIdByLang( $lang );
 
-		if ( isset( $cityList[ $lang ] ) ) {
-			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ][ 'wikiId' ] );
+		if ( $cityId !== false ) {
+			$f = GlobalFile::newFromText( $imageName, $cityId );
 		} else {
 			//if image wasn't found, try to find it on wiki itself
 			$promoImage = ( new PromoImage( PromoImage::MAIN ) )->setCityId( $wikiId );

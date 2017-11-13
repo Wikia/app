@@ -546,14 +546,25 @@ class WallMessage {
 		return $wallOwnerName;
 	}
 
+	private function getTitleBaseText( Title $title ): string {
+		$titleText = $title->getText();
+		$slashPosition = strpos( $titleText, '/' );
+
+		if ( $slashPosition === false ) {
+			return $titleText;
+		}
+
+		return substr( $titleText, 0, $slashPosition );
+	}
+
 	public function getWallOwner() {
 		if ( $this->title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
-			$ownerUserName = $this->title->getBaseText();
+			$ownerUserName = $this->getTitleBaseText( $this->title );
 			return User::newFromName( $ownerUserName, false );
 		}
 
 		// horribile visu: Forum threads treat board name as user!
-		$boardName = $this->getArticleTitle()->getBaseText();
+		$boardName = $this->getTitleBaseText( $this->getArticleTitle() );
 		return User::newFromName( $boardName, false );
 	}
 
@@ -570,7 +581,7 @@ class WallMessage {
 		// Wall Threads always belong to the user wall they were posted on
 		// No need to check comments index here
 		if ( $title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
-			$parentPageText = $title->getBaseText();
+			$parentPageText = $this->getTitleBaseText( $title );
 
 			return Title::makeTitle( NS_USER_WALL, $parentPageText );
 		}
@@ -656,7 +667,7 @@ class WallMessage {
 
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty( $postFix ) ? "" : ( '#' . $postFix );
-		$title = Title::newFromText( $id, NS_USER_WALL_MESSAGE );
+		$title = Title::makeTitle( NS_USER_WALL_MESSAGE, $id );
 
 		$this->messagePageUrl = [ ];
 

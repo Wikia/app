@@ -469,7 +469,7 @@ Wenn du lieber eine E-Mail schicken möchtest, kontaktiere uns unter [mailto:com
 	'specialcontact-ccheader' => 'Dies ist eine Kopie der Nachricht, die an den FANDOM-Support geschickt wurde',
 	'specialcontact-submitcomplete' => "Danke für deine Nachricht an FANDOM. Wir lesen alle Nachrichten, die uns hier geschickt werden. Wir tun unser Bestes, um innerhalb von 2-3 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
 
-Vergiss nicht: Du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, im [[w:c:community:Special:Forum|Community-Forum]] Fragen stellen oder den [[w:c:community:Blog:Fandom_Deutschland_News|FANDOM-Blog]] lesen!",
+Vergiss nicht: Du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, im [[w:c:de.community:Special:Forum|Community-Forum]] Fragen stellen oder den [[w:c:de.community:Blog:News|FANDOM-Blog]] lesen!",
 	'specialcontact-seclink-security' => 'Ich glaube, ich habe ein Sicherheitsproblem entdeckt',
 	'specialcontact-seclink-dmca-request' => 'Ich habe eine Urheberrechtsbeschwerde',
 	'specialcontact-sectitle-security' => 'Bericht über Sicherheitsproblem',
@@ -2531,7 +2531,7 @@ $messages['pt'] = array(
 	'specialcontact-seclink-rename-account' => 'Renomeie a minha conta',
 	'specialcontact-seclink-blocked' => 'Minha conta está bloqueada',
 	'specialcontact-secheader-editing' => 'Participando do FANDOM',
-	'specialcontact-seclink-using-fandom' => 'Como utilizo o FANDOM?',
+	'specialcontact-seclink-using-fandom' => 'Como eu utilizo o FANDOM?',
 	'specialcontact-seclink-feedback' => 'Eu quero dar a minha opinião',
 	'specialcontact-seclink-bug' => 'Encontrei um bug',
 	'specialcontact-seclink-bad-ad' => 'Eu vi um anúncio sem funcionar ou inapropriado',
@@ -2557,7 +2557,7 @@ $messages['pt'] = array(
 	'specialcontact-sectitle-design' => 'Design da comunidade',
 	'specialcontact-sectitle-features' => 'Recursos do FANDOM',
 	'specialcontact-sectitle-close-wiki' => 'Fechar esta wiki',
-	'specialcontact-intro-content-issue' => 'O conteúdo desta wiki é criado pela comunidade aqui e gerenciado pelo [[Special:ListAdmins/sysop|administrador local]], não pelo FANDOM. Se você deseja discutir este conteúdo, é melhor primeiro contatar o [[Special:ListAdmins|administrador da wiki aqui]].
+	'specialcontact-intro-content-issue' => 'O conteúdo desta wiki é criado pela comunidade aqui e gerenciado pelos [[Special:ListAdmins/sysop|administradores locais]], não pelo FANDOM. Se você deseja discutir este conteúdo, é melhor primeiro contatar os [[Special:ListAdmins|administradores da wiki aqui]].
 
 Se você acha que o conteúdo viola nossos [http://pt-br.wikia.com/wiki/Termos_de_Uso Termos de uso], você pode contatar o staff do FANDOM diretamente [[Special:Contact/general|aqui]].',
 	'specialcontact-intro-content-issue-mobile' => 'O conteúdo desta wiki é criado pela comunidade e não pelos administradores do FANDOM. Se você deseja discutir este conteúdo, é melhor primeiro contatar os administradores das wikis.
@@ -2591,7 +2591,7 @@ Se você decidiu que deseja desativar sua conta definitivamente, por favor, este
 Entretanto, este processo não remove suas contribuições de uma determinada wiki, já que essas contribuições pertencem à comunidade como um todo.
 
 Se você precisar de mais alguma informação sobre desativação de contas, visite nossa [[w:c:comunidade:Ajuda:Fechando_uma_conta|página de ajuda sobre desativação de sua conta]]. Para confirmar e desativar sua conta, por favor preencha o formulário abaixo.',
-	'specialcontact-intro-rename-account' => 'A alteração de seu nome de usuário é possível no FANDOM, mas apenas uma vez, então certifique-se bem antes de enviar uma solicitação. Este processo não pode ser revertido, e uma vez que nós mudamos seu nome de usuário, não podemos mudar novamente. Por favor certifique-se você leu totalmente esta página de ajuda antes de enviar um pedido: http://comunidade.wikia.com/Ajuda:Renomear_minha_conta
+	'specialcontact-intro-rename-account' => 'A alteração de seu nome de usuário é possível no FANDOM, mas apenas uma vez, então certifique-se bem antes de enviar uma solicitação. Este processo não pode ser revertido e uma vez que nós mudamos seu nome de usuário, não podemos mudar novamente. Por favor certifique-se você leu totalmente esta página de ajuda antes de enviar um pedido: http://comunidade.wikia.com/Ajuda:Renomear_minha_conta
 
 Depois de ler a página de ajuda e estar seguro sobre a grafia de seu novo nome de usuário, por favor, envie uma solicitação abaixo. Uma vez que seu nome de usuário for alterado, você receberá um e-mail de confirmação. Você pode então fazer login com seu novo nome, usando sua senha antiga.
 
@@ -2701,7 +2701,7 @@ Se você preferir usar e-mail regular ou tem vários anexos, você pode contatar
 	'specialcontact-mailsub' => 'Suporte do FANDOM',
 	'specialcontact-mailsubcc' => 'Cópia da mensagem enviada para o FANDOM',
 	'specialcontact-ccheader' => 'Esta é uma cópia da sua mensagem que foi enviada para o suporte do FANDOM',
-	'specialcontact-submitcomplete' => 'Obrigado por contatar o FANDOM. Nós recebemos e analisamos todas as mensagens enviadas aqui. Nós faremos o melhor para responder dentro de 2-3 dias, mas por favor, seja paciente enquanto revemos todas as mensagens.
+	'specialcontact-submitcomplete' => 'Obrigado por contatar o FANDOM. Nós recebemos e analisamos todas as mensagens enviadas aqui. Nós faremos o melhor para responder dentro de 2-3 dias úteis, mas por favor, seja paciente enquanto revemos todas as mensagens.
 
 Lembre-se, você também pode encontrar ajuda no [[w:c:comunidade:Especial:Forum|Fórum da Comunidade]] e nas [[w:c:comunidade:Ajuda:Conteúdos|Páginas de ajuda]]. Fique atualizado com as últimas notícias do FANDOM no [[w:c:comunidade:Categoria:Notícias_da_Comunidade|Blog do staff]].
 Boas edições!',

@@ -15,17 +15,7 @@ CREATE UNIQUE INDEX /*i*/change_tag_rev_tag ON /*_*/change_tag (ct_rev_id,ct_tag
 CREATE INDEX /*i*/change_tag_tag_id ON /*_*/change_tag (ct_tag,ct_rc_id,ct_rev_id,ct_log_id);
 
 -- Rollup table to pull a LIST of tags simply without ugly GROUP_CONCAT that only works on MySQL 4.1+
-CREATE TABLE /*_*/tag_summary (
-	ts_rc_id int NULL,
-	ts_log_id int NULL,
-	ts_rev_id int NULL,
-	ts_tags BLOB NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/tag_summary_rc_id ON /*_*/tag_summary (ts_rc_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_log_id ON /*_*/tag_summary (ts_log_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_rev_id ON /*_*/tag_summary (ts_rev_id);
-
+-- Wikia: tag_summary table was removed as a part of SUS-3066
 
 CREATE TABLE /*_*/valid_tag (
 	vt_tag varchar(255) NOT NULL PRIMARY KEY

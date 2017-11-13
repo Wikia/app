@@ -118,27 +118,22 @@ class DatabaseLogEntry extends LogEntryBase {
 	 * @return array
 	 */
 	public static function getSelectQueryData() {
-		$tables = array( 'logging', 'user' );
-		$fields = array(
+		// SUS-2779
+		$tables = [ 'logging' ];
+		$fields = [
 			'log_id', 'log_type', 'log_action', 'log_timestamp',
 			'log_user', 'log_user_text',
 			'log_namespace', 'log_title', // unused log_page
-			'log_comment', 'log_params', 'log_deleted',
-			'user_id', 'user_name', 'user_editcount',
-		);
+			'log_comment', 'log_params', 'log_deleted'
+		];
 
-		$joins = array(
-			// IP's don't have an entry in user table
-			'user' => array( 'LEFT JOIN', 'log_user=user_id' ),
-		);
-
-		return array(
+		return [
 			'tables' => $tables,
 			'fields' => $fields,
-			'conds'  => array(),
-			'options' => array(),
-			'join_conds' => $joins,
-		);
+			'conds'  => [],
+			'options' => [],
+			'join_conds' => []
+		];
 	}
 
 	/**
@@ -421,6 +416,12 @@ class ManualLogEntry extends LogEntryBase {
 
 		# Truncate for whole multibyte characters.
 		$comment = $wgContLang->truncate( $this->getComment(), 255 );
+
+		// SUS-3222: All log entries should be attributed to registered users
+		if ( $this->getPerformer()->isAnon() ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( 'SUS-3222 - Anon user log entry' );
+		}
 
 		$data = array(
 			'log_id' => $id,

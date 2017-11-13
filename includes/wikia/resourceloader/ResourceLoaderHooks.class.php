@@ -232,6 +232,7 @@ class ResourceLoaderHooks {
 	}
 
 	public static function onAlternateResourceLoaderURL( &$loadScript, &$query, &$url, $modules ) {
+		global $wgEnableLocalResourceLoaderLinks;
 		$resourceLoaderInstance = self::getResourceLoaderInstance();
 
 		$source = false;
@@ -269,17 +270,13 @@ class ResourceLoaderHooks {
 
 			$params = urlencode(http_build_query($loadQuery));
 			$url = $loadScript . "$params/$modules";
-			$url = wfExpandUrl( $url, PROTO_RELATIVE );
-
-			// apply domain sharding
-			$url = wfReplaceAssetServer( $url );
 		} else {
 			// just a copy&paste from ResourceLoader::makeLoaderURL :-(
-			$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
+			$url = wfAppendQuery( $loadScript, $query ) . '&*';
 		}
-
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
+		if ( !$wgEnableLocalResourceLoaderLinks ) {
+			$url = wfExpandUrl( $url, PROTO_RELATIVE );
+		}
 
 		return false;
 	}

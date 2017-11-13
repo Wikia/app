@@ -140,14 +140,11 @@ class WikiFactory {
 	 * @return string - table name with database
 	 */
 	static public function table( $table, $column = false ) {
-		global $wgExternalSharedDB;
-
-		$database = !empty( $wgExternalSharedDB ) ? $wgExternalSharedDB : static::db;
-		if ( $column ) {
-			return sprintf("`%s`.`%s`.`%s`", $database, $table, $column );
+		if ( is_string( $column ) ) {
+			return sprintf("`%s`.`%s`.`%s`", self::db, $table, $column );
 		}
 		else {
-			return sprintf("`%s`.`%s`", $database, $table );
+			return sprintf("`%s`.`%s`", self::db, $table );
 		}
 	}
 
@@ -332,7 +329,7 @@ class WikiFactory {
 			$sLogMessage .= "(reason: {$reason})";
 		}
 
-		static::log( static::LOG_DOMAIN, $sLogMessage,  $city_id );
+		static::log( static::LOG_DOMAIN, htmlspecialchars( $sLogMessage ),  $city_id );
 		$dbw->commit();
 
 		/**
@@ -382,7 +379,7 @@ class WikiFactory {
 			$sLogMessage .= "(reason: {$reason})";
 		}
 
-		static::log( static::LOG_DOMAIN, $sLogMessage, $city_id );
+		static::log( static::LOG_DOMAIN, htmlspecialchars( $sLogMessage ), $city_id );
 		$dbw->commit();
 
 		static::clearDomainCache( $city_id );
@@ -659,10 +656,10 @@ class WikiFactory {
 				static::log(
 					static::LOG_VARIABLE,
 					sprintf($message,
-						$variable->cv_name,
-						var_export( unserialize( $variable->cv_value ), true ),
-						var_export( $value, true ),
-						$reason_extra
+						htmlspecialchars( $variable->cv_name ),
+						htmlspecialchars( var_export( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), true ) ),
+						htmlspecialchars( var_export( $value, true ) ),
+						htmlspecialchars( $reason_extra )
 					),
 					$city_id,
 					$cv_variable_id
@@ -679,9 +676,9 @@ class WikiFactory {
 				static::log(
 					static::LOG_VARIABLE,
 					sprintf($message,
-						$variable->cv_name,
-						var_export( $value, true ),
-						$reason_extra
+						htmlspecialchars( $variable->cv_name ),
+						htmlspecialchars( var_export( $value, true ) ),
+						htmlspecialchars( $reason_extra )
 					),
 					$city_id,
 					$cv_variable_id
@@ -1063,7 +1060,7 @@ class WikiFactory {
 			if ( is_null( $value ) ) {
 				$variable = static::loadVariableFromDB( false, $cv_name, $city_id, $master );
 				$value = isset( $variable->cv_value )
-					? static::substVariables( unserialize( $variable->cv_value ), $city_id )
+					? static::substVariables( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), $city_id )
 					: null;
 			}
 
@@ -1263,19 +1260,19 @@ class WikiFactory {
 		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://preview." . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
-				return 'http://verify.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://verify." . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
-				return 'http://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://stable." . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return 'http://' . static::getExternalHostName() . '.' . $server .
+				return "$protocol://" . static::getExternalHostName() . '.' . $server .
 				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return 'http://' . $server . '.' . $wgDevDomain . $address;
+				return "$protocol://" . $server . '.' . $wgDevDomain . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
@@ -1306,12 +1303,17 @@ class WikiFactory {
 	 *
 	 * @param integer $id: wiki id in city_list
 	 * @param bool $master
-	 * @return mixed: database row with wiki params
+	 * @return object|false: database row with wiki params
 	 */
 	static public function getWikiByID( $id, $master = false ) {
 
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		// SUS-2983 | do not make queries when provided city_id will not return any row
+		if ( empty( $id ) ) {
 			return false;
 		}
 
@@ -1967,7 +1969,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		static::log( static::LOG_STATUS, $sLogMessage, $city_id );
+		static::log( static::LOG_STATUS, htmlspecialchars( $sLogMessage ), $city_id );
 
 		wfProfileOut( __METHOD__ );
 
@@ -2651,7 +2653,7 @@ class WikiFactory {
 			if ( !empty( $reason ) ) {
 				$reason = " (reason: {$reason})";
 			}
-			static::log( static::LOG_STATUS, sprintf("Binary flags %s removed from city_flags.%s", decbin( $city_flags ), $reason ), $city_id );
+			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s removed from city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -2703,7 +2705,7 @@ class WikiFactory {
 			if ( !empty( $reason ) ) {
 				$reason = " (reason: {$reason})";
 			}
-			static::log( static::LOG_STATUS, sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ), $city_id );
+			static::log( static::LOG_STATUS, htmlspecialchars( sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ) ), $city_id );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -2756,9 +2758,9 @@ class WikiFactory {
 	 * @deprecated
 	 */
 
-	static public function getCategory ( $city_id ) {
+	static public function getCategory ( int $city_id ) {
 		// return deprecated category list
-		$categories = static::getCategories( $city_id, true );
+		$categories = self::getCategories( $city_id, true );
 		return !empty($categories) ? $categories[0] : 0;
 	}
 
@@ -2766,13 +2768,12 @@ class WikiFactory {
 	/**
 	 * get new category id and name for $city_id
 	 *
-	 * @param integer	$city_id		wikia identifier in city_list
-	 *
+	 * @param int	$city_id		wikia identifier in city_list
+	 * @param bool $deprecated
 	 * @return array of stdClass ($row->cat_id $row->cat_name) or empty array
 	 *
 	 */
-
-	static public function getCategories( $city_id, $deprecated = false ) {
+	static private function getCategories( int $city_id, $deprecated = false ) {
 		global $wgRunningUnitTests, $wgNoDBUnits;
 
 		$aCategories = [];
@@ -2803,7 +2804,7 @@ class WikiFactory {
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
 		$cached = $oMemc->get($memkey);
 
-		if ( empty($cached) ) {
+		if ( !is_array($cached) ) {
 			$dbr = static::db( DB_SLAVE );
 
 			$oRes = $dbr->select(
@@ -2818,10 +2819,11 @@ class WikiFactory {
 				$aOptions
 			);
 
+			$aCategories = [];
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$aCategories[] = $oRow;
 			}
-			$oMemc->set($memkey, $aCategories, 60*60*24);
+			$oMemc->set( $memkey, $aCategories, WikiaResponse::CACHE_LONG );
 		} else {
 			$aCategories = $cached;
 		}
@@ -2912,7 +2914,7 @@ class WikiFactory {
 			$cv_description = "(unknown)";
 		}
 
-		$cv_name = trim(trim($cv_name), '$');
+		$cv_name = htmlspecialchars( trim( trim( $cv_name ), '$' ) );
 		$cv_variable_group = trim($cv_variable_group);
 		$dbw->begin();
 		try {
@@ -2972,7 +2974,7 @@ class WikiFactory {
 			$cv_description = "(unknown)";
 		}
 
-		$cv_name = trim($cv_name);
+		$cv_name = htmlspecialchars( trim( $cv_name ) );
 		$cv_variable_group = trim($cv_variable_group);
 		$dbw->begin();
 		try {
@@ -3429,7 +3431,7 @@ class WikiFactory {
 		if ( !isset( $variable->cv_value ) ) {
 			return "";
 		}
-		$value = static::parseValue( unserialize( $variable->cv_value ), $variable->cv_variable_type );
+		$value = static::parseValue( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), $variable->cv_variable_type );
 		return htmlspecialchars( $value );
 	}
 

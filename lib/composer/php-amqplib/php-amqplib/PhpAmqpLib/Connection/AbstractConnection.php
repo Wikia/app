@@ -215,6 +215,11 @@ class AbstractConnection extends AbstractChannel
 
                 $host = $this->x_open($this->vhost, '', $this->insist);
                 if (!$host) {
+                    //Reconnected
+                    if ($this->io instanceof StreamIO)
+                    {
+                        $this->getIO()->reenableHeartbeat();
+                    }
                     return null; // we weren't redirected
                 }
 
@@ -593,7 +598,7 @@ class AbstractConnection extends AbstractChannel
      * Fetches a channel object identified by the numeric channel_id, or
      * create that object if it doesn't already exist.
      *
-     * @param string $channel_id
+     * @param int $channel_id
      * @return AMQPChannel
      */
     public function channel($channel_id = null)
@@ -624,7 +629,7 @@ class AbstractConnection extends AbstractChannel
             $this->io->disableHeartbeat();
         }
 
-        if (!$this->protocolWriter || !$this->isConnected()) {
+        if (empty($this->protocolWriter) || !$this->isConnected()) {
             return null;
         }
 

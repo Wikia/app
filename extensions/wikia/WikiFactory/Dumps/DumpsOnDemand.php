@@ -62,7 +62,7 @@ class DumpsOnDemand {
 		));
 
 		// The Community Central's value of the wgDumpRequestBlacklist variable contains an array of users who are not allowed to request dumps with this special page.
-		$aDumpRequestBlacklist = (array) unserialize( WikiFactory::getVarByName( 'wgDumpRequestBlacklist', WikiFactory::COMMUNITY_CENTRAL )->cv_value );
+		$aDumpRequestBlacklist = (array) unserialize( WikiFactory::getVarByName( 'wgDumpRequestBlacklist', WikiFactory::COMMUNITY_CENTRAL )->cv_value, [ 'allowed_classes' => false ] );
 
 		$bIsAllowed = $user->isAllowed( 'dumpsondemand' ) && !in_array( $user->getName(), $aDumpRequestBlacklist );
 		$tmpl->set( 'bIsAllowed', $bIsAllowed );
@@ -131,13 +131,13 @@ class DumpsOnDemand {
 				return null;
 			}
 
-			$aData = array(
+			$aData = [
 				'dump_wiki_id'	  => $iCityId,
 				'dump_wiki_dbname'  => $oWiki->city_dbname,
 				'dump_wiki_url'	 => $oWiki->city_url,
-				'dump_user_name'	=> $wgUser->getName(),
+				'dump_user_id' => $wgUser->getId(),
 				'dump_requested'	=> wfTimestampNow()
-			);
+			];
 
 			if ( $bHidden ) {
 				$aData['dump_hidden'] = 'Y';

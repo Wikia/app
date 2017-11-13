@@ -119,7 +119,6 @@ class ImageLazyLoad  {
 	/**
 	 * Check whether or not the image is valid for lazy loading
 	 * @global boolean $wgRTEParserEnabled
-	 * @global type $wgParser
 	 * @param string $imgSrc
 	 * @return boolean
 	 */
@@ -132,7 +131,7 @@ class ImageLazyLoad  {
 				return false;
 			}
 
-			if ( !empty( $wgParser ) ) {
+			if ( !empty( $wgParser ) && $wgParser->mIsMainParse ) {
 				if ( empty( $wgParser->lazyLoadedImagesCount ) ) {
 					$wgParser->lazyLoadedImagesCount = 0;
 				}

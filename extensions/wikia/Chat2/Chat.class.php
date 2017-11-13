@@ -42,7 +42,6 @@ class Chat {
 	 * @return null|string
 	 */
 	public static function getSessionKey() {
-		self::info( __METHOD__ . ': Method called' );
 		$wg = F::app()->wg;
 
 		if ( !$wg->User->isLoggedIn() ) {
@@ -69,13 +68,6 @@ class Chat {
 	 * @return true|string Returns true on success, returns an error message as a string on failure.
 	 */
 	public static function banUser( $subjectUserName, User $adminUser, $time, $reason ) {
-		self::info( __METHOD__ . ': Method called', [
-			'subject_user_name' => $subjectUserName,
-			'admin_user' => $adminUser->getId(),
-			'time' => $time,
-			'reason' => $reason,
-		] );
-
 		if ( $adminUser->isBlocked() ) {
 			return wfMessage( 'actionthrottled' )->text();
 		}
@@ -112,14 +104,6 @@ class Chat {
 			$subjectChatUser->unban();
 		}
 
-		self::info( __METHOD__ . ': Method called', [
-			'subject_user' => $subjectUser->getId(),
-			'admin_user' => $adminUser->getId(),
-			'time' => $time,
-			'reason' => $reason,
-			'action' => $action,
-		] );
-
 		Chat::addLogEntry(
 			$subjectUser,
 			$adminUser,
@@ -142,12 +126,6 @@ class Chat {
 	 * @throws DBUnexpectedError
 	 */
 	public static function blockPrivate( $subjectUserName, $requestingUser, $dir = self::PRIVATE_BLOCK_ADD ) {
-		self::info( __METHOD__ . ': Method called', [
-			'subjectUserName' => $subjectUserName,
-			'dir' => $dir,
-			'requestingUser' => $requestingUser,
-		] );
-
 		$subjectUser = User::newFromName( $subjectUserName );
 
 		if ( !empty( $subjectUser ) && !$subjectUser->isAnon() && !$requestingUser->isAnon() ) {
@@ -188,8 +166,6 @@ class Chat {
 	 * @return array
 	 */
 	public static function getPrivateBlocks() {
-		self::info( __METHOD__ . ': Method called' );
-
 		$chatUser = ChatUser::newCurrent();
 
 		$blockedChatUsers = $chatUser->getBlockedUsers();
@@ -208,7 +184,7 @@ class Chat {
 	 *
 	 * @param User $user
 	 * @param User $doer
-	 * @param Array $attr An array with parameters passed to LogPage::addEntry() according
+	 * @param array $attr An array with parameters passed to LogPage::addEntry() according
 	 *                    to description there these are parameters passed later to wfMsg.* functions
 	 * @param String $type
 	 * @param String|null $reason comment added to log
@@ -267,7 +243,7 @@ class Chat {
 				'cuc_title' => 'Chat',
 				'cuc_minor' => 0,
 				'cuc_user' => $wg->User->getID(),
-				'cuc_user_text' => $wg->User->getName(),
+				// 'cuc_user_text' => $wg->User->getName(), // SUS-3080 - this column is redundant
 				'cuc_actiontext' => wfMessage( 'chat-checkuser-join-action' )->inContentLanguage()->text(),
 				'cuc_comment' => '',
 				'cuc_this_oldid' => 0,
@@ -301,15 +277,6 @@ class Chat {
 	 * @return bool
 	 */
 	public static function canChat( User $subjectUser ) {
-		global $wgUser;
-
-		if ( !$subjectUser->equals($wgUser) ) {
-			self::info( __METHOD__ . ': Method called for arbitrary user', [
-				'wgUserName' => $wgUser->getName(),
-				'subjectUserName' => $subjectUser->getName(),
-			] );
-		}
-
 		$chatUser = new ChatUser( $subjectUser );
 
 		if ( $chatUser->isBanned() ||
@@ -384,13 +351,4 @@ class Chat {
 		// CONN-436: Invalidate Varnish cache for ChatRail:GetUsers
 		ChatRailController::purgeMethod( 'GetUsers', [ 'format' => 'json' ] );
 	}
-
-	public static function info( $message, Array $params = [ ] ) {
-		\Wikia\Logger\WikiaLogger::instance()->info( 'CHAT: ' . $message, $params );
-	}
-
-	public static function debug( $message, Array $params = [ ] ) {
-		\Wikia\Logger\WikiaLogger::instance()->debug( 'CHAT: ' . $message, $params );
-	}
-
 }

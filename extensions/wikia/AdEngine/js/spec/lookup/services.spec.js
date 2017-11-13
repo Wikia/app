@@ -9,18 +9,11 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	}
 
 	mocks = {
-		amazon: {
+		a9: {
 			trackState: noop,
 			wasCalled: noop,
 			getSlotParams: noop,
-			getName: function () { return 'amazon'; },
-			hasResponse: function () { return true; }
-		},
-		fastlane: {
-			trackState: noop,
-			wasCalled: noop,
-			getSlotParams: noop,
-			getName: function() { return 'rubicon_fastlane'; },
+			getName: function () { return 'a9'; },
 			hasResponse: function () { return true; }
 		},
 		log: noop,
@@ -35,48 +28,36 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		window: {}
 	};
 
-	it('extends slot targeting for Amazon', function () {
+	it('extends slot targeting for A9', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 				mocks.log,
 				undefined,
-				mocks.amazon
+				mocks.a9
 			),
-			slotTargetingMock = {a: 'b'},
+			slotTargetingMock = {
+				a: 'b'
+			},
 			expectedSlotTargeting = {
 				a: 'b',
-				amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5'],
-				bid: 'xxAxx'
+				amznbid: 'bid',
+				amzniid: 'iid',
+				amznsz: 'sz',
+				amznp: 'p',
+				bid: 'xx9xx'
 			};
 
-		spyOn(mocks.amazon, 'trackState');
-		spyOn(mocks.amazon, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.amazon, 'getSlotParams').and.returnValue({amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']});
+		spyOn(mocks.a9, 'trackState');
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.a9, 'getSlotParams').and.returnValue({
+			amznbid: 'bid',
+			amzniid: 'iid',
+			amznsz: 'sz',
+			amznp: 'p'
+		});
 
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'RemnantGpt');
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
-		expect(mocks.amazon.trackState).toHaveBeenCalled();
-	});
-
-	it('extends slot targeting for RubiconFastlane', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-			mocks.log,
-			undefined,
-			mocks.fastlane
-			),
-			slotTargetingMock = {a: 'b'},
-			expectedSlotTargeting = {
-				a: 'b',
-				flslots: ['fa1s', 'fa2s', 'fa3s'],
-				bid: 'Rxxxx'
-			};
-
-		spyOn(mocks.fastlane, 'trackState');
-		spyOn(mocks.fastlane, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.fastlane, 'getSlotParams').and.returnValue({flslots: ['fa1s', 'fa2s', 'fa3s']});
-
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
-		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
-		expect(mocks.fastlane.trackState).toHaveBeenCalled();
+		expect(mocks.a9.trackState).toHaveBeenCalled();
 	});
 
 	it('extends slot targeting for Prebid.js', function () {
@@ -98,30 +79,6 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
 		expect(mocks.prebid.trackState).toHaveBeenCalled();
-	});
-
-	it('correctly mark all bid slots', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-			mocks.log,
-			mocks.prebid,
-			mocks.amazon,
-			mocks.fastlane
-			),
-			slotTargetingMock = {a: 'b'},
-			expectedSlotTargeting = {
-				a: 'b',
-				slots: ['va1s', 'va2s', 'va3s'],
-				bid: 'RxAxP'
-			},
-			testedProviders = [mocks.amazon, mocks.prebid, mocks.fastlane];
-
-		testedProviders.forEach(function(provider) {
-			spyOn(provider, 'wasCalled').and.returnValue(true);
-			spyOn(provider, 'getSlotParams').and.returnValue({slots: ['va1s', 'va2s', 'va3s']});
-		});
-
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
-		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
 	});
 
 });

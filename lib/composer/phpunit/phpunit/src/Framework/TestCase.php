@@ -40,6 +40,8 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
 use SebastianBergmann;
+use SebastianBergmann\Comparator\Comparator;
+use SebastianBergmann\Comparator\Factory as ComparatorFactory;
 use SebastianBergmann\GlobalState\Snapshot;
 use SebastianBergmann\GlobalState\Restorer;
 use SebastianBergmann\GlobalState\Blacklist;
@@ -182,14 +184,14 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      *
      * @var string
      */
-    private $expectedExceptionMessage = '';
+    private $expectedExceptionMessage;
 
     /**
      * The regex pattern to validate the expected Exception message.
      *
      * @var string
      */
-    private $expectedExceptionMessageRegExp = '';
+    private $expectedExceptionMessageRegExp;
 
     /**
      * The code of the expected Exception.
@@ -206,7 +208,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     private $name;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $dependencies = [];
 
@@ -324,6 +326,11 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      * @var bool
      */
     private $doesNotPerformAssertions = false;
+
+    /**
+     * @var Comparator[]
+     */
+    private $customComparators = [];
 
     /**
      * Constructs a test case with the given name.
@@ -504,7 +511,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
             throw new Exception;
         }
 
-        if (\is_string($expectedRegex) || \is_null($expectedRegex)) {
+        if (\is_string($expectedRegex) || null === $expectedRegex) {
             $this->outputExpectedRegex = $expectedRegex;
         }
     }
@@ -518,7 +525,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
             throw new Exception;
         }
 
-        if (\is_string($expectedString) || \is_null($expectedString)) {
+        if (\is_string($expectedString) || null === $expectedString) {
             $this->outputExpectedString = $expectedString;
         }
     }
@@ -582,10 +589,6 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      */
     public function expectExceptionCode($code)
     {
-        if (!$this->expectedException) {
-            $this->expectedException = \Exception::class;
-        }
-
         if (!\is_int($code) && !\is_string($code)) {
             throw InvalidArgumentHelper::factory(1, 'integer or string');
         }
@@ -600,10 +603,6 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      */
     public function expectExceptionMessage($message)
     {
-        if (!$this->expectedException) {
-            $this->expectedException = \Exception::class;
-        }
-
         if (!\is_string($message)) {
             throw InvalidArgumentHelper::factory(1, 'string');
         }
@@ -623,6 +622,18 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         }
 
         $this->expectedExceptionMessageRegExp = $messageRegExp;
+    }
+
+    /**
+     * Sets up an expectation for an exception to be raised by the code under test.
+     * Information for expected exception class, expected exception message, and
+     * expected exception code are retrieved from a given Exception object.
+     */
+    public function expectExceptionObject(\Exception $exception)
+    {
+        $this->expectException(\get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
+        $this->expectExceptionCode($exception->getCode());
     }
 
     /**
@@ -745,7 +756,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      *
      * @param TestResult $result
      *
-     * @return TestResult
+     * @return TestResult|null
      *
      * @throws Exception
      */
@@ -883,7 +894,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
             $result->run($this);
         }
 
-        if ($this->useErrorHandler !== null) {
+        if (isset($oldErrorHandlerSetting)) {
             $result->convertErrorsToExceptions($oldErrorHandlerSetting);
         }
 
@@ -1002,18 +1013,9 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         }
 
         $this->restoreGlobalState();
-
-        // Clean up INI settings.
-        foreach ($this->iniSettings as $varName => $oldValue) {
-            \ini_set($varName, $oldValue);
-        }
-
-        $this->iniSettings = [];
-
-        // Clean up locale settings.
-        foreach ($this->locale as $category => $locale) {
-            \setlocale($category, $locale);
-        }
+        $this->unregisterCustomComparators();
+        $this->cleanupIniSettings();
+        $this->cleanupLocaleSettings();
 
         // Perform assertion on output.
         if (!isset($e)) {
@@ -1067,49 +1069,33 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
 
         try {
             $testResult = $method->invokeArgs($this, $testArguments);
-        } catch (Throwable $_e) {
-            $e = $_e;
+        } catch (Throwable $t) {
+            $exception = $t;
         }
 
-        if (isset($e)) {
-            $checkException = false;
-
-            if (!($e instanceof SkippedTestError) && \is_string($this->expectedException)) {
-                $checkException = true;
-
-                if ($e instanceof Exception) {
-                    $checkException = false;
-                }
-
-                $reflector = new ReflectionClass($this->expectedException);
-
-                if ($this->expectedException === 'PHPUnit\Framework\Exception' ||
-                    $this->expectedException === '\PHPUnit\Framework\Exception' ||
-                    $reflector->isSubclassOf('PHPUnit\Framework\Exception')) {
-                    $checkException = true;
-                }
-            }
-
-            if ($checkException) {
-                $this->assertThat(
-                    $e,
-                    new ExceptionConstraint(
-                        $this->expectedException
-                    )
-                );
-
-                if (!empty($this->expectedExceptionMessage)) {
+        if (isset($exception)) {
+            if ($this->checkExceptionExpectations($exception)) {
+                if ($this->expectedException !== null) {
                     $this->assertThat(
-                        $e,
+                        $exception,
+                        new ExceptionConstraint(
+                            $this->expectedException
+                        )
+                    );
+                }
+
+                if ($this->expectedExceptionMessage !== null) {
+                    $this->assertThat(
+                        $exception,
                         new ExceptionMessage(
                             $this->expectedExceptionMessage
                         )
                     );
                 }
 
-                if (!empty($this->expectedExceptionMessageRegExp)) {
+                if ($this->expectedExceptionMessageRegExp !== null) {
                     $this->assertThat(
-                        $e,
+                        $exception,
                         new ExceptionMessageRegularExpression(
                             $this->expectedExceptionMessageRegExp
                         )
@@ -1118,7 +1104,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
 
                 if ($this->expectedExceptionCode !== null) {
                     $this->assertThat(
-                        $e,
+                        $exception,
                         new ExceptionCode(
                             $this->expectedExceptionCode
                         )
@@ -1128,7 +1114,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
                 return;
             }
 
-            throw $e;
+            throw $exception;
         }
 
         if ($this->expectedException !== null) {
@@ -1136,6 +1122,33 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
                 null,
                 new ExceptionConstraint(
                     $this->expectedException
+                )
+            );
+        } elseif ($this->expectedExceptionMessage !== null) {
+            $this->numAssertions++;
+
+            throw new AssertionFailedError(
+                \sprintf(
+                    'Failed asserting that exception with message "%s" is thrown',
+                    $this->expectedExceptionMessage
+                )
+            );
+        } elseif ($this->expectedExceptionMessageRegExp !== null) {
+            $this->numAssertions++;
+
+            throw new AssertionFailedError(
+                \sprintf(
+                    'Failed asserting that exception with message matching "%s" is thrown',
+                    $this->expectedExceptionMessageRegExp
+                )
+            );
+        } elseif ($this->expectedExceptionCode !== null) {
+            $this->numAssertions++;
+
+            throw new AssertionFailedError(
+                \sprintf(
+                    'Failed asserting that exception with code "%s" is thrown',
+                    $this->expectedExceptionCode
                 )
             );
         }
@@ -1192,7 +1205,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     /**
      * Sets the dependencies of a TestCase.
      *
-     * @param array $dependencies
+     * @param string[] $dependencies
      */
     public function setDependencies(array $dependencies)
     {
@@ -1234,7 +1247,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      */
     public function setBackupGlobals($backupGlobals)
     {
-        if (\is_null($this->backupGlobals) && \is_bool($backupGlobals)) {
+        if (null === $this->backupGlobals && \is_bool($backupGlobals)) {
             $this->backupGlobals = $backupGlobals;
         }
     }
@@ -1246,7 +1259,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      */
     public function setBackupStaticAttributes($backupStaticAttributes)
     {
-        if (\is_null($this->backupStaticAttributes) &&
+        if (null === $this->backupStaticAttributes &&
             \is_bool($backupStaticAttributes)) {
             $this->backupStaticAttributes = $backupStaticAttributes;
         }
@@ -1422,8 +1435,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
             throw new Exception;
         }
 
-        $category = $args[0];
-        $locale   = $args[1];
+        list($category, $locale) = $args;
 
         $categories = [
             LC_ALL, LC_COLLATE, LC_CTYPE, LC_MONETARY, LC_NUMERIC, LC_TIME
@@ -1457,7 +1469,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     /**
      * Returns a builder object to create mock objects using a fluent interface.
      *
-     * @param string $className
+     * @param string|string[] $className
      *
      * @return PHPUnit_Framework_MockObject_MockBuilder
      */
@@ -1509,8 +1521,8 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     /**
      * Returns a partial test double for the specified class.
      *
-     * @param string $originalClassName
-     * @param array  $methods
+     * @param string   $originalClassName
+     * @param string[] $methods
      *
      * @return PHPUnit_Framework_MockObject_MockObject
      *
@@ -1940,6 +1952,13 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         return \is_string($this->dataName) ? $this->dataName : '';
     }
 
+    public function registerComparator(Comparator $comparator)
+    {
+        ComparatorFactory::getInstance()->register($comparator);
+
+        $this->customComparators[] = $comparator;
+    }
+
     /**
      * Gets the data set description of a TestCase.
      *
@@ -1947,7 +1966,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      *
      * @return string
      */
-    protected function getDataSetAsString($includeData = true)
+    public function getDataSetAsString($includeData = true)
     {
         $buffer = '';
 
@@ -2098,7 +2117,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     /**
      * Performs assertions shared by all tests of a test case.
      *
-     * This method is called before the execution of a test ends
+     * This method is called after the execution of a test ends
      * and before tearDown() is called.
      */
     protected function assertPostConditions()
@@ -2382,7 +2401,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
 
     /**
      * @param array $testArguments
-     * @param array $originalTestArguments
+     * @param array $visited
      */
     private function registerMockObjectsFromTestArguments(array $testArguments, array &$visited = [])
     {
@@ -2442,5 +2461,59 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         }
 
         return false;
+    }
+
+    private function unregisterCustomComparators()
+    {
+        $factory = ComparatorFactory::getInstance();
+
+        foreach ($this->customComparators as $comparator) {
+            $factory->unregister($comparator);
+        }
+
+        $this->customComparators = [];
+    }
+
+    private function cleanupIniSettings()
+    {
+        foreach ($this->iniSettings as $varName => $oldValue) {
+            \ini_set($varName, $oldValue);
+        }
+
+        $this->iniSettings = [];
+    }
+
+    private function cleanupLocaleSettings()
+    {
+        foreach ($this->locale as $category => $locale) {
+            \setlocale($category, $locale);
+        }
+
+        $this->locale = [];
+    }
+
+    private function checkExceptionExpectations(Throwable $throwable): bool
+    {
+        $result = false;
+
+        if ($this->expectedException !== null || $this->expectedExceptionCode !== null || $this->expectedExceptionMessage !== null || $this->expectedExceptionMessageRegExp !== null) {
+            $result = true;
+        }
+
+        if ($throwable instanceof Exception) {
+            $result = false;
+        }
+
+        if (\is_string($this->expectedException)) {
+            $reflector = new ReflectionClass($this->expectedException);
+
+            if ($this->expectedException === 'PHPUnit\Framework\Exception' ||
+                $this->expectedException === '\PHPUnit\Framework\Exception' ||
+                $reflector->isSubclassOf('PHPUnit\Framework\Exception')) {
+                $result = true;
+            }
+        }
+
+        return $result;
     }
 }

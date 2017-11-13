@@ -1,16 +1,21 @@
 <?php
 
+use \Swagger\Client\Liftigniter\Metadata\Models\Item;
 /**
  * Class RecirculationHooks
  */
 class RecirculationHooks {
 
+	const DATE_FORMAT = 'Y-m-d H:i:s';
+
 	/**
 	 * Insert Recirculation to the right rail
+	 *
 	 * @param array $modules
+	 *
 	 * @return bool
 	 */
-	static public function onGetRailModuleList( &$modules ) {
+	public static function onGetRailModuleList( &$modules ) {
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
 		if ( !static::isCorrectPageType() ) {
@@ -19,14 +24,19 @@ class RecirculationHooks {
 
 		// Use a different position depending on whether the user is logged in
 		// This is based off of the logic from the VideosModule extension
-		$app = F::App();
-		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
+		$pos = RequestContext::getMain()->getUser()->isAnon() ? 1305 : 1285;
 
-		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'recirculation-rail'] );
+		$modules[$pos] = [ 'Recirculation', 'container', [ 'containerId' => 'recirculation-rail' ] ];
 
 		return true;
 	}
 
+	/**
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 *
+	 * @return bool
+	 */
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
@@ -48,11 +58,10 @@ class RecirculationHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		global $wgNoExternals;
 
-		if ( empty( $wgNoExternals ) ) {
-			$jsAssets[] = 'recirculation_liftigniter_tracker';
-		}
-
 		if ( static::isCorrectPageType() ) {
+			if ( empty( $wgNoExternals ) ) {
+				$jsAssets[] = 'recirculation_liftigniter_tracker';
+			}
 			$jsAssets[] = 'recirculation_js';
 		}
 
@@ -62,25 +71,27 @@ class RecirculationHooks {
 	/**
 	 * Return whether we're on one of the pages where we want to show the Recirculation widgets,
 	 * specifically File pages, Article pages, and Main pages
+	 *
 	 * @return bool
 	 */
-	static public function isCorrectPageType() {
+	public static function isCorrectPageType() {
 		$wg = F::app()->wg;
+		$title = RequestContext::getMain()->getTitle();
+		$showableNamespaces = array_merge( $wg->ContentNamespaces, self::getNoIndexNamespaces() );
+		$isInShowableNamespaces = $title->exists() && $title->inNamespaces( $showableNamespaces );
 
-		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
-
-		if ( $wg->Title->exists()
-				&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
-				&& $wg->request->getVal( 'action', 'view' ) === 'view'
-				&& $wg->request->getVal( 'diff' ) === null
-		) {
-			return true;
-		} else {
-			return false;
-		}
+		return $isInShowableNamespaces &&
+			!WikiaPageType::isActionPage() &&
+			!WikiaPageType::isCorporatePage();
 	}
 
-	static public function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
+	/**
+	 * @param $cityId
+	 * @param bool $ignoreWgEnableRecirculationDiscussions
+	 *
+	 * @return bool
+	 */
+	public static function canShowDiscussions( $cityId, $ignoreWgEnableRecirculationDiscussions = false ) {
 		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
 
 		if ( !empty( $discussionsAlias ) ) {
@@ -88,10 +99,11 @@ class RecirculationHooks {
 		}
 
 		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
-		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
+		$recirculationDiscussionsEnabled =
+			WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
 
-		if ( !empty( $discussionsEnabled ) && ( $ignoreWgEnableRecirculationDiscussions ||
-		                                        !empty( $recirculationDiscussionsEnabled ) )
+		if ( !empty( $discussionsEnabled ) &&
+			( $ignoreWgEnableRecirculationDiscussions || !empty( $recirculationDiscussionsEnabled ) )
 		) {
 			return true;
 		} else {
@@ -99,55 +111,132 @@ class RecirculationHooks {
 		}
 	}
 
-	private static function getLiftIgniterMetadataFromSiteAttributeService() {
-		return WikiaDataAccess::cache(
-			wfMemcKey( 'site-attribute-liftigniterMetadata' ),
-			3600,
-			function () {
-				global $wgCityId;
-
-				$rawData = ( new SiteAttributeService() )
-					->getAttribute( $wgCityId, 'liftigniterMetadata' );
-
-				if ( !empty( $rawData ) ) {
-					$decodedData = json_decode( $rawData, true );
-
-					if ( !empty( $decodedData ) ) {
-						return $decodedData;
-					}
-				}
-
-				return [];
-			}
-		);
-	}
-
+	/**
+	 * @param OutputPage $outputPage
+	 */
 	private static function addLiftIgniterMetadata( OutputPage $outputPage ) {
-		global $wgDevelEnvironment, $wgLanguageCode, $wgStagingEnvironment;
-
-		$context = RequestContext::getMain();
-		$title = $context->getTitle();
-		$metaData = [];
-
-		if ( $title->isMainPage() ) {
-			$siteAttributeData = self::getLiftIgniterMetadataFromSiteAttributeService();
-		}
-
-		$metaData['language'] = $wgLanguageCode;
-		$isProduction = empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment );
-
-		if ( !$isProduction || $title->inNamespace( NS_FILE ) ) {
-			$metaData['noIndex'] = 'true';
-		}
-
-		if ( !empty( $siteAttributeData ) ) {
-			$metaData = array_merge( $siteAttributeData, $metaData );
-		}
-
+		$metaData = self::getMetaData();
 		$metaDataJson = json_encode( $metaData );
 
 		$outputPage->addScript(
 			"<script id=\"liftigniter-metadata\" type=\"application/json\">${metaDataJson}</script>"
 		);
 	}
+
+	/**
+	 * @param String $cityId
+	 * @param String $articleId
+	 * @return null|Item
+	 */
+	private static function getMetaDataForArticle( String $cityId, String $articleId ) {
+		$metaDataFromService = WikiaDataAccess::cache(
+			'liftigniter-metadata',
+			WikiaResponse::CACHE_SHORT,
+			function() {
+				$metaDataService = new LiftigniterMetadataService();
+
+				return $metaDataService->getLiMetadata();
+			}
+		);
+
+		return current(array_filter( $metaDataFromService, function ( Item $item ) use ( $cityId, $articleId ) {
+			if ( $item->getProduct() === $cityId && $item->getId() === $articleId ) {
+				return $item;
+			}
+
+			return null;
+		}));
+	}
+
+	/**
+	 * @return array
+	 */
+	private static function getMetaData() {
+		global $wgLanguageCode, $wgCityId, $wgEnableArticleFeaturedVideo;
+
+		$title = RequestContext::getMain()->getTitle();
+		$articleId = $title->getArticleID();
+
+		$metaDataFromService = self::getMetaDataForArticle( $wgCityId, $articleId );
+		$shouldNoIndex = self::shouldNoIndex( $metaDataFromService );
+		$metaData = [];
+		$metaData['language'] = $wgLanguageCode;
+
+		if ( !empty( $metaDataFromService ) ) {
+			$metaData['guaranteed_impression'] = $metaDataFromService->getGuaranteedNumber();
+			$metaData['start_date'] = $metaDataFromService->getDateFrom()->format( self::DATE_FORMAT );
+			$metaData['end_date'] = $metaDataFromService->getDateTo()->format( self::DATE_FORMAT );
+			if ( !empty( $metaDataFromService->getGeos() ) ) {
+				$metaData['geolocation'] = $metaDataFromService->getGeos();
+			}
+		}
+
+		if ( $shouldNoIndex ) {
+			$metaData['noIndex'] = 'true';
+		}
+
+		if ( !empty( $wgEnableArticleFeaturedVideo ) &&
+			ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
+		) {
+			$metaData['type'] = 'video';
+		}
+
+		return $metaData;
+	}
+
+	/**
+	 * @return bool
+	 */
+	private static function isProduction() {
+		global $wgDevelEnvironment, $wgStagingEnvironment, $wgWikiaEnvironment;
+
+		return empty( $wgDevelEnvironment ) &&
+			empty( $wgStagingEnvironment ) &&
+			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
+	}
+
+	/**
+	 * @param Item $metaDataFromService is actual Data returned by Liftigniter Metadata Service
+	 *
+	 * @return bool
+	 */
+	private static function shouldNoIndex( $metaDataFromService ) {
+		global $wgDisableShowInRecirculation;
+
+		return self::isPrivateOrNotProduction() ||
+			( ( self::isNoIndexNamespace() || $wgDisableShowInRecirculation ) &&
+				empty( $metaDataFromService ) ) ||
+			RequestContext::getMain()->getRequest()->getVal( 'redirect' ) === 'no';
+	}
+
+	/**
+	 * @return bool
+	 */
+	private static function isPrivateOrNotProduction() {
+		global $wgCityId, $wgIsPrivateWiki;
+
+		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
+
+		return !self::isProduction() || $isPrivateWiki;
+	}
+
+	/**
+	 * @return bool
+	 */
+	private static function isNoIndexNamespace() {
+		return RequestContext::getMain()->getTitle()->inNamespaces( self::getNoIndexNamespaces() );
+	}
+
+	/**
+	 * @return array
+	 */
+	private static function getNoIndexNamespaces() {
+		$noIndexNamespaces = [ NS_FILE ];
+		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
+			$noIndexNamespaces[] = NS_BLOG_ARTICLE;
+		}
+
+		return $noIndexNamespaces;
+	}
+
 }

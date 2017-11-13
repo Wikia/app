@@ -35,7 +35,9 @@
 			<? if ( $themeSettings['wordmark-type'] == 'graphic' ) { ?>
 			<img height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
 			<? } else { ?>
-			<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
+			<span class="font-<?= $themeSettings['wordmark-font'] ?>">
+				<?= $themeSettings['wordmark-text'] ?>
+			</span>
 			<? } ?>
 			</a>
 		</h1>

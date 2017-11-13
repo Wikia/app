@@ -507,7 +507,7 @@ class WallBaseController extends WikiaService {
 
 				$wallOwner = $wallMessage->getWallOwner()->getName();
 
-				$wallName = wfMessage( 'wall-message-elseswall', $wallOwner )->parse();
+				$wallName = wfMessage( 'wall-message-elseswall', $wallOwner )->text();
 			}
 
 			$wallUrl = $wallMessage->getWallUrl();
@@ -557,18 +557,19 @@ class WallBaseController extends WikiaService {
 	}
 
 	public function newMessage() {
-		$wall_username = $this->helper->getUser()->getName();
+		$user = $this->helper->getUser();
+		$wallUsername = $user->getName();
 
 		// only use realname if user made edits (use logic from masthead)
-		$userStatsService = new UserStatsService( $this->helper->getUser()->getID() );
+		$userStatsService = new UserStatsService( $user->getID() );
 		$userStats = $userStatsService->getStats();
 		if ( empty( $userStats[ 'editcount' ] ) || $userStats[ 'editcount' ] == 0 ) {
-			$wall_username = $this->helper->getUser()->getName();
+			$wallUsername = $user->getName();
 		}
 
 		$username = $this->wg->User->getName();
 		$this->response->setVal( 'username', $username );
-		$this->response->setVal( 'wall_username', $wall_username );
+		$this->response->setVal( 'wall_username', $wallUsername );
 
 		Hooks::run( 'WallNewMessage', [ $this->wg->Title, &$this->response ] );
 
@@ -578,13 +579,13 @@ class WallBaseController extends WikiaService {
 
 		$wall_message = $this->response->getVal( 'wall_message' );
 		if ( empty( $wall_message ) ) {
-			$wall_message = User::isIP( $wall_username ) ? wfMessage( 'wall-placeholder-message-anon' )->escaped() : wfMessage( 'wall-placeholder-message', $wall_username )->escaped();
+			$wall_message = User::isIP( $wallUsername ) ? wfMessage( 'wall-placeholder-message-anon' )->escaped() : wfMessage( 'wall-placeholder-message', $wallUsername )->escaped();
 			$this->response->setVal( 'wall_message', $wall_message );
 		}
 
 		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) );
 
-		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
+		$this->checkAndSetUserBlockedStatus( $user );
 	}
 
 	/** @param User $wallOwner */

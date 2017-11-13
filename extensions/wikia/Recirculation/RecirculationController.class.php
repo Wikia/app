@@ -17,8 +17,6 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function discussions() {
-		global $wgLanguageCode;
-
 		$showZeroState = false;
 		$cityId = $this->request->getVal( 'cityId', null );
 		$limit = $this->request->getVal( 'limit', 5 );
@@ -49,10 +47,7 @@ class RecirculationController extends WikiaController {
 				$postObjects[] = $post->jsonSerialize();
 			}
 
-			if ($wgLanguageCode === 'en') {
-				//This is temporary to render new discusions card on en wikis (templates in php and mustache have the same name)
-				$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
-			}
+			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 			$this->response->setData( [
 				'title' => wfMessage( 'recirculation-discussion-title' )
@@ -76,7 +71,7 @@ class RecirculationController extends WikiaController {
 		global $wgSitename, $wgCityId, $wgLanguageCode;
 
 		// Language code check is temporary to supress MCF for old discussions on non-en wikis;
-		if ( !RecirculationHooks::isCorrectPageType() || $wgLanguageCode !== 'en' ) {
+		if ( !RecirculationHooks::isCorrectPageType() ) {
 			$this->skipRendering();
 
 			return;
@@ -87,12 +82,26 @@ class RecirculationController extends WikiaController {
 		$topWikiArticles = $this->getTopWikiArticles();
 		$numberOfWikiArticles = 8;
 		$numberOfNSArticles = 9;
+		// we do not show n&s articles on non-english wikis
+		if ( $wgLanguageCode !== 'en' ) {
+			$numberOfWikiArticles = 11;
+			$numberOfNSArticles = 0;
+		}
+
 		if ( !$canShowDiscussions ) {
 			$numberOfWikiArticles ++;
-			$numberOfNSArticles ++;
+			if ( $wgLanguageCode === 'en' ) {
+				$numberOfNSArticles ++;
+			} else {
+				$numberOfWikiArticles ++;
+			}
 		}
 		if ( empty( $topWikiArticles ) ) {
-			$numberOfNSArticles ++;
+			if ( $wgLanguageCode === 'en' ) {
+				$numberOfNSArticles ++;
+			} else {
+				$numberOfWikiArticles ++;
+			}
 		}
 
 		$this->response->setVal( 'communityHeaderBackground',
@@ -106,6 +115,10 @@ class RecirculationController extends WikiaController {
 		$this->response->setVal( 'numberOfNSArticles', $numberOfNSArticles );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
+		if ( $wgLanguageCode !== 'en' ) {
+			$this->response->getView()->setTemplatePath( __DIR__ .
+			                                             '/templates/RecirculationController_FooterInternaltional.php' );
+		}
 	}
 
 	private function getTopWikiArticles() {

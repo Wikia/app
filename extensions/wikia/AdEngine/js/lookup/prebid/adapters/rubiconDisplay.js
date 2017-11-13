@@ -92,7 +92,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 					zoneId: 87671
 				},
 				MOBILE_IN_CONTENT: {
-					sizes: [[300, 250], [320, 480]],
+					sizes: [[300, 250]],
 					position: 'btf',
 					siteId: 23565,
 					zoneId: 87671

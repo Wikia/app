@@ -115,14 +115,6 @@ class FilePageTabbed extends WikiaFilePage {
 	}
 
 	/**
-	 * Render related pages section at the bottom of a file page
-	 */
-	protected function imageFooter() {
-		$out = $this->getContext()->getOutput();
-		$out->addHTML( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
-	}
-
-	/**
 	 * imageListing override. We're using "appears in these..." section instead
 	 */
 	protected function imageListing() {

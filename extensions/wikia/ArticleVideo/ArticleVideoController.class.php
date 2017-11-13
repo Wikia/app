@@ -1,30 +1,42 @@
 <?php
 
 class ArticleVideoController extends WikiaController {
+
+	private function fallbackLanguage( $lang ) {
+		switch ( $lang ) {
+			case 'zh-hant':
+			case 'zh-tw':
+				return 'zh';
+			case 'pt-br':
+				return 'pt';
+			default:
+				return $lang;
+		}
+	}
+
 	public function featured() {
-		$requestContext = RequestContext::getMain();
+		$requestContext = $this->getContext();
 		$title = $requestContext->getTitle()->getPrefixedDBkey();
+		$lang = $requestContext->getLanguage()->getCode();
 
 		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
 
 		if ( !empty( $featuredVideoData ) ) {
 			$requestContext->getOutput()->addModules( 'ext.ArticleVideo' );
 
-			// TODO: replace it with DS icon when it's ready (XW-2824)
-			$this->setVal( 'closeIconUrl', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
+			$featuredVideoData['lang'] = $this->fallbackLanguage( $lang );
+
 			$this->setVal( 'videoDetails', $featuredVideoData );
-		} else {
-			$this->skipRendering();
-		}
-	}
 
-	public function related() {
-		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
+			$jwPlayerScript =
+				$requestContext->getOutput()->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
+					new \ResourceLoaderContext( new \ResourceLoader(), $requestContext->getRequest() )
+				);
 
-		$relatedVideo = ArticleVideoContext::getRelatedVideoData( $title );
-
-		if ( !empty( $relatedVideo ) ) {
-			$this->setVal( 'relatedVideo', $relatedVideo );
+			$this->setVal(
+				'jwPlayerScript',
+				\JavaScriptMinifier::minify( $jwPlayerScript )
+			);
 		} else {
 			$this->skipRendering();
 		}

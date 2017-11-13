@@ -174,6 +174,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adProduct: 'rubicon',
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
+				bidderCode: 'rubicon',
 				rubiconAdId: '56bar',
 				rubiconAdvertiserId: 'foo89',
 				cpm: 123
@@ -189,6 +190,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			adProduct: 'appnexusAst',
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
+				bidderCode: 'appnexusAst',
 				creative_id: '87765',
 				cpm: 1.20
 			}
@@ -216,18 +218,5 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('wsi')).toEqual('MR-remnant');
-	});
-
-	it('Track veles vast id and content type', function () {
-		tracker.track({
-			adProduct: 'veles',
-			slotName: 'TOP_LEADERBOARD',
-			bid: {
-				vastId: 'GDFP:123'
-			}
-		}, 'fooPlayer', 'barEvent', undefined, 'application/javascript');
-
-		expect(getTrackedValue('vast_id')).toEqual('GDFP:123');
-		expect(getTrackedValue('content_type')).toEqual('application/javascript');
 	});
 });

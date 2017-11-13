@@ -1,7 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.gpt.targeting', [
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'wikia.window'
-], function (win) {
+], function (googleSlots, win) {
 	'use strict';
 
 	function getPageLevelTargetingValue(key) {
@@ -16,7 +17,32 @@ define('ext.wikia.adEngine.provider.gpt.targeting', [
 			pubads.getTargeting(key);
 	}
 
+	function getSlotLevelTargetingValue(slotName, key) {
+		var gptSlot = googleSlots.getSlotByName(slotName);
+
+		if (gptSlot) {
+			return gptSlot.getTargeting(key)[0];
+		}
+	}
+
+	function getSlotLevelTargeting(slotName) {
+		var gptSlot = googleSlots.getSlotByName(slotName),
+			targeting = {},
+			keys;
+
+		if (gptSlot) {
+			keys = gptSlot.getTargetingKeys();
+			keys.forEach(function (key) {
+				targeting[key] = gptSlot.getTargeting(key)[0];
+			});
+		}
+
+		return targeting;
+	}
+
 	return {
-		getPageLevelTargetingValue: getPageLevelTargetingValue
+		getPageLevelTargetingValue: getPageLevelTargetingValue,
+		getSlotLevelTargetingValue: getSlotLevelTargetingValue,
+		getSlotLevelTargeting: getSlotLevelTargeting
 	};
 });

@@ -793,7 +793,8 @@
 				controller: 'ThemeDesigner',
 				method: 'SaveSettings',
 				data: {
-					settings: ThemeDesigner.settings
+					settings: ThemeDesigner.settings,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: function () {
 					// BugId:1349

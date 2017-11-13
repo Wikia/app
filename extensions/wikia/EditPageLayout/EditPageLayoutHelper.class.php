@@ -21,6 +21,9 @@ class EditPageLayoutHelper {
 
 	static private $instance;
 
+	/** SUS-1885: languages where syntax highlighting is disabled due to Ace Editor incompatibility */
+	const SYNTAX_HIGHLIGHT_DISABLED_LANGUAGES = [ 'zh' ];
+
 	private function __construct() {
 		$this->app = F::app();
 		$this->out = $this->app->wg->Out;
@@ -201,10 +204,15 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting, $wgUser;
+		global $wgEnableEditorSyntaxHighlighting, $wgLanguageCode;
 
+		if ( !$wgEnableEditorSyntaxHighlighting ||
+			 in_array( $wgLanguageCode, static::SYNTAX_HIGHLIGHT_DISABLED_LANGUAGES ) ) {
+			return false;
+		}
+
+		global $wgUser;
 		return self::isCodePage( $articleTitle )
-			&& $wgEnableEditorSyntaxHighlighting
 			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 

@@ -54,7 +54,8 @@ class AdEngine2ContextService {
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
 					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
-					'prebidBidderUrl' => $prebidBidderUrl
+					'prebidBidderUrl' => $prebidBidderUrl,
+					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
@@ -80,8 +81,7 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder,
-					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled()
+					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,

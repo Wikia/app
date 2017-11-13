@@ -92,16 +92,33 @@ class GenderCache {
 
 	/**
 	 * Preloads genders for given list of users.
-	 * @param $users List|String: usernames
+	 * @param $users array|String: userNames
 	 * @param $caller String: the calling method
 	 */
 	public function doQuery( $users, $caller = '' ) {
 		$default = $this->getDefault();
 
-		foreach ( (array) $users as $index => $value ) {
+		// SUS-2779
+		$users = $this->filterListOfUsers($users, $default);
+
+		if ( count( $users ) === 0 ) {
+			return;
+		}
+
+		// Wikia change - SUS-2979
+		foreach ( $this->getGenderOfUsersFromDB($users, $caller) as $user_name => $value ) {
+			$this->cache[$user_name] = $value ?: $default;
+		}
+	}
+
+	private function filterListOfUsers( $users, $default ) {
+		foreach ( (array)$users as $index => $value ) {
 			$name = strtr( $value, '_', ' ' );
 			if ( isset( $this->cache[$name] ) ) {
 				// Skip users whose gender setting we already know
+				unset( $users[$index] );
+			} elseif ( !User::isValidUserName( $name ) ) {
+				// SUS-3215 - do not perform queries for IP addresses
 				unset( $users[$index] );
 			} else {
 				$users[$index] = $name;
@@ -110,26 +127,48 @@ class GenderCache {
 			}
 		}
 
-		if ( count( $users ) === 0 ) {
-			return;
+		return $users;
+	}
+
+	/**
+	 * @param $userNames
+	 * @param $caller
+	 * @return array user_name => gender hash
+	 */
+	private function getGenderOfUsersFromDB( $userNames, $caller ): array {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+		// Wikia change - SUS-2979
+		if ( is_string( $userNames ) ) {
+			$userNames = [ $userNames ];
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$table = array( 'user', 'user_properties' );
-		$fields = array( 'user_name', 'up_value' );
-		$conds = array( 'user_name' => $users );
-		$joins = array( 'user_properties' =>
-			array( 'LEFT JOIN', array( 'user_id = up_user', 'up_property' => 'gender' ) ) );
+		// map user IDs to user names
+		// in 97% of cases this method is called with a single user name provided
+		// use heavily cached User::idFromName to get it
+		$userIdsToNames = [];
+		foreach($userNames as $userName) {
+			$userIdsToNames[User::idFromName( $userName )] = $userName;
+		}
+
+		$table = 'user_properties';
+		$fields = [ 'up_user', 'up_value' ];
+		$conds = [ 'up_user' => array_keys( $userIdsToNames ), 'up_property' => 'gender' ];
 
 		$comment = __METHOD__;
 		if ( strval( $caller ) !== '' ) {
 			$comment .= "/$caller";
 		}
-		$res = $dbr->select( $table, $fields, $conds, $comment, $joins, $joins );
 
-		foreach ( $res as $row ) {
-			$this->cache[$row->user_name] = $row->up_value ? $row->up_value : $default;
+		$ret = [];
+		$res = $dbr->select( $table, $fields, $conds, $comment );
+
+		foreach( $res as $row ) {
+			// map user IDs back to user names
+			$ret[ $userIdsToNames[$row->up_user] ] = $row->up_value;
 		}
-	}
 
+		return $ret;
+	}
 }

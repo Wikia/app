@@ -80,13 +80,6 @@ class Category {
 		# and should not be kept, and 2) we *probably* don't have to scan many
 		# rows to obtain the correct figure, so let's risk a one-time recount.
 		if ( $this->mPages < 0 || $this->mSubcats < 0 || $this->mFiles < 0 ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'SUS-1782 - Negative count in category table', [
-				'categoryTitle' => $this->mName,
-				'totalCount' => $this->mPages,
-				'subCategoryCount' => $this->mSubcats,
-				'filesCount' => $this->mFiles,
-			] );
-
 			// SUS-1782: Schedule a background task to update the bogus data
 			$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
 			$task->call( 'refreshCounts', $this->mName );
@@ -222,7 +215,7 @@ class Category {
 	 * @param $limit integer
 	 * @param $offset string
 	 * //Wikia Change - Jakub Olek - PHP Lint Helpers
-	 * @return Title[] object for category members.
+	 * @return TitleArray object for category members.
 	 * //Wikia Change End
 	 */
 	public function getMembers( $limit = false, $offset = '' ) {
@@ -257,5 +250,24 @@ class Category {
 			return false;
 		}
 		return $this-> { $key } ;
+	}
+
+	/**
+	 * Refresh the counts for this category synchronously.
+	 *
+	 * @return bool True on success, false on failure
+	 *
+	 * @deprecated Please use an async task instead
+	 * @see https://github.com/Wikia/app/pull/12600/files
+	 */
+	public function refreshCounts() {
+		if ( wfReadOnly() ) {
+			return false;
+		}
+
+		$task = new \Wikia\Tasks\Tasks\RefreshCategoryCountsTask();
+		$task->refreshCounts( $this->mName );
+
+		return true;
 	}
 }

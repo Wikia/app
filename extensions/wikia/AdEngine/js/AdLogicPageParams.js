@@ -116,7 +116,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		hostnameMatch = refHostname === loc.hostname;
 
-		if (hostnameMatch && ref.indexOf('search=') > -1) {
+		if (hostnameMatch && (ref.indexOf('search=') > -1 || ref.indexOf('query=') > -1)) {
 			return 'wiki_search';
 		}
 		if (hostnameMatch) {
@@ -125,7 +125,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		hostnameMatch = wikiDomainsRegex.test(refHostname);
 
-		if (hostnameMatch && ref.indexOf('search=') > -1) {
+		if (hostnameMatch && (ref.indexOf('search=') > -1 || ref.indexOf('query=') > -1 || ref.indexOf('s=') > -1)) {
 			return 'wikia_search';
 		}
 

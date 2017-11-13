@@ -73,7 +73,7 @@ class Categories {
 		foreach ( $categoryNames as $categoryName ) {
 			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
 
-			if ( CategoryHelper::getCategoryType( $categoryName ) === 'hidden' ) {
+			if ( empty( $categoryTitle ) || CategoryHelper::getCategoryType( $categoryName ) === 'hidden' ) {
 				continue;
 			}
 

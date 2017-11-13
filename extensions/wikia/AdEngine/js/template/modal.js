@@ -11,8 +11,7 @@ define('ext.wikia.adEngine.template.modal', [
 ], function (adSlot, adDetect, modalHandlerFactory, doc, log, iframeWriter, throttle, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.modal',
-		modalHandler = modalHandlerFactory.create();
+	var logGroup = 'ext.wikia.adEngine.template.modal';
 
 	/**
 	 * Show the modal ad
@@ -43,7 +42,8 @@ define('ext.wikia.adEngine.template.modal', [
 					height: params.height
 				}
 			},
-			lightboxParams = modalHandler.getExpansionModel(),
+			modalHandler = modalHandlerFactory.create(),
+			lightboxParams,
 			slot;
 
 		if (modalHandler === null) {
@@ -84,6 +84,7 @@ define('ext.wikia.adEngine.template.modal', [
 			}
 		}
 
+		lightboxParams = modalHandler.getExpansionModel();
 		adIframe.style.maxWidth = 'none';
 		adContainer.appendChild(adIframe);
 

@@ -1,4 +1,5 @@
 @mixin sticky() {
+	position: static;
 	position: -webkit-sticky;
 	position: sticky;
 }

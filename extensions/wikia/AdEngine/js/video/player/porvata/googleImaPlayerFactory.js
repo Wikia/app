@@ -2,10 +2,11 @@
 define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'ext.wikia.adEngine.video.player.porvata.googleImaSetup',
 	'ext.wikia.adEngine.video.player.porvata.moatVideoTracker',
+	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (imaSetup, moatVideoTracker, doc, log, win) {
+], function (imaSetup, moatVideoTracker, vastDebugger, doc, log, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
 
@@ -18,13 +19,21 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	}
 
 	function create(adDisplayContainer, adsLoader, videoSettings) {
-		var params = videoSettings.getParams(),
+		var adRequest,
+			params = videoSettings.getParams(),
 			isAdsManagerLoaded = false,
 			status = '',
 			videoElement = getVideoElement(),
 			adsManager,
 			mobileVideoAd = params.container.querySelector('video'),
 			eventListeners = {};
+
+		function setVastAttributes(status) {
+			var currentAd = adsManager && adsManager.getCurrentAd && adsManager.getCurrentAd(),
+				playerElement = params.container.querySelector('.video-player');
+
+			vastDebugger.setVastAttributes(playerElement, adRequest.adTagUrl, status, currentAd);
+		}
 
 		function adsManagerLoadedCallback(adsManagerLoadedEvent) {
 			adsManager = adsManagerLoadedEvent.getAdsManager(videoElement, imaSetup.getRenderingSettings(params));
@@ -40,7 +49,15 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				);
 			}
 
+			dispatchEvent('wikiaAdsManagerLoaded');
 			log('AdsManager loaded', log.levels.debug, logGroup);
+
+			adsManager.addEventListener(win.google.ima.AdEvent.Type.LOADED, function () {
+				setVastAttributes('success');
+			});
+			adsManager.addEventListener(win.google.ima.AdErrorEvent.Type.AD_ERROR, function () {
+				setVastAttributes('error');
+			});
 		}
 
 		function addEventListener(eventName, callback) {
@@ -84,8 +101,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 		function setAutoPlay(value) {
 			// mobileVideoAd DOM element is present on mobile only
 			if (mobileVideoAd) {
-				mobileVideoAd.autoplay = value;
 				mobileVideoAd.muted = value;
+				mobileVideoAd.autoplay = value;
 			}
 		}
 
@@ -122,7 +139,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 				adsManager.destroy();
 			}
 			adsLoader.contentComplete();
-			adsLoader.requestAds(imaSetup.createRequest(reloadParams || params));
+			adRequest = imaSetup.createRequest(reloadParams || params);
+			adsLoader.requestAds(adRequest);
 
 			log('IMA player reloaded', log.levels.debug, logGroup);
 		}
@@ -160,6 +178,10 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			return adsManager;
 		}
 
+		if (mobileVideoAd) {
+			params.container.classList.add('mobile-porvata');
+		}
+
 		adsLoader.addEventListener(
 			win.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
 			adsManagerLoadedCallback,
@@ -172,9 +194,12 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			if (typeof event.getError === 'function' && event.getError().getErrorCode() === emptyVastErrorCode) {
 				dispatchEvent('wikiaEmptyAd');
 			}
+
+			setVastAttributes('error');
 		});
 
-		adsLoader.requestAds(imaSetup.createRequest(params));
+		adRequest = imaSetup.createRequest(params);
+		adsLoader.requestAds(adRequest);
 
 		if (videoSettings.isAutoPlay()) {
 			setAutoPlay(true);

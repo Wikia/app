@@ -23,7 +23,16 @@ define('ext.wikia.adEngine.provider.directGpt', [
 ) {
 	'use strict';
 
-	var context = adContext.getContext();
+	var context = adContext.getContext(),
+		sraEnabled = !context.opts.disableSra,
+		atfSlots = [
+			'TOP_LEADERBOARD',
+			'GPT_FLUSH'
+		];
+
+	if (sraEnabled) {
+		atfSlots.push('TOP_RIGHT_BOXAD', 'INVISIBLE_SKIN');
+	}
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGpt',
@@ -54,7 +63,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'}
 		},
 		{
-			beforeSuccess: function (slotName) {
+			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
 				if (!uapContext.isBfaaLoaded()) {
 					slotTweaker.removeTopButtonIfNeeded(slotName);
@@ -64,13 +73,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
-			sraEnabled: true,
-			atfSlots: [
-				'INVISIBLE_SKIN',
-				'TOP_LEADERBOARD',
-				'TOP_RIGHT_BOXAD',
-				'GPT_FLUSH'
-			],
+			sraEnabled: sraEnabled,
+			atfSlots: atfSlots,
 			getAdUnitBuilder: function () {
 				return context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},
@@ -78,7 +82,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'INCONTENT_BOXAD_1',
 				'INCONTENT_PLAYER',
 				'INVISIBLE_HIGH_IMPACT_2'
-			]
+			],
+			testSrc: 'test'
 		}
 	);
 });

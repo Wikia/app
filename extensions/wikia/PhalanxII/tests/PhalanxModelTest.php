@@ -1,4 +1,5 @@
 <?php
+
 class PhalanxModelTest extends WikiaBaseTest {
 	const VALID_USERNAME = 'WikiaTest';
 	const VALID_EMAIL = 'moli@wikia-inc.com';
@@ -57,6 +58,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 	private function setUpService( $block ) {
 		$phalanxServiceMock =
 			$this->getMockBuilder( PhalanxService::class )
+				->disableOriginalConstructor()
 				->setMethods( [ 'match' ] )
 				->getMock();
 

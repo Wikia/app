@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\DependencyInjection\Injector;
+
 /**
  * @author: Federico "Lox" Lucignano
  *
@@ -159,7 +162,7 @@ class RenameUserHelper {
 			return '';
 		}
 
-		$service = new PhalanxService();
+		$service = Injector::getInjector()->get( PhalanxService::class );
 
 		$blockFound = false;
 

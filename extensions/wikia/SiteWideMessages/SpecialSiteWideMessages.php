@@ -57,16 +57,12 @@ $wgResourceModules['ext.siteWideMessages.anon'] = array(
  *
  */
 function SiteWideMessagesInit() {
-	global $wgSharedDB, $wgDontWantShared;
-	//Include files ONLY when SharedDB is defined and desired.
-	if (isset($wgSharedDB) && empty($wgDontWantShared)) {
-		global $wgHooks;
-		$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
-		$wgHooks['SiteNoticeAfter'][] = 'SiteWideMessagesSiteNoticeAfter';
+	global $wgHooks;
+	$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
+	$wgHooks['SiteNoticeAfter'][] = 'SiteWideMessagesSiteNoticeAfter';
 
-		// macbre: notifications for Oasis
-		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SiteWideMessagesAddNotifications';
-	}
+	// macbre: notifications for Oasis
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SiteWideMessagesAddNotifications';
 }
 
 /**
@@ -174,15 +170,5 @@ function SiteWideMessagesPublicStatusChange($city_public, $city_id, $reason = ''
 	if ($city_public == 0 || $city_public == 2) {
 		SiteWideMessages::deleteMessagesOnWiki($city_id);
 	}
-	return true;
-}
-
-$wgHooks['UserRename::Global'][] = "SiteWideMessagesUserRenameGlobal";
-
-function SiteWideMessagesUserRenameGlobal( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
-	$tasks[] = array(
-		'table' => 'messages_text',
-		'username_column' => 'msg_recipient_name',
-	);
 	return true;
 }

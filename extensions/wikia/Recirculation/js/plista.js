@@ -8,7 +8,7 @@ define('ext.wikia.recirculation.plista', ['jquery'], function ($) {
 	}
 
 	function fetchPlista() {
-		return $.getJSON('http://farm.plista.com/recommendation/?publickey=845c651d11cf72a0f766713f&widgetname=api' +
+		return $.getJSON('https://farm.plista.com/recommendation/?publickey=845c651d11cf72a0f766713f&widgetname=api' +
 			'&count=1&adcount=1&image[width]=320&image[height]=180'
 		)
 			.then(function (data) {

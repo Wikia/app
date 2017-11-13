@@ -1,7 +1,5 @@
 <?php
 
-use SMW\ApplicationFactory;
-
 /**
  * Displays an interface to let the user drill down through all data on
  * the wiki, using categories and custom-defined filters that have
@@ -22,7 +20,7 @@ class SDBrowseData extends IncludableSpecialPage {
 
 	function execute( $query ) {
 		global $wgRequest, $wgOut, $wgTitle;
-		global $sdgScriptPath, $sdgContLang, $sdgNumResultsPerPage;
+		global $sdgScriptPath, $sdgNumResultsPerPage;
 
 		if ( $wgTitle->getNamespace() != NS_SPECIAL ) {
 			global $wgParser;
@@ -207,20 +205,17 @@ class SDBrowseDataPage extends QueryPage {
 	 * all remaining filters
 	 */
 	function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
-		$applicationFactory = ApplicationFactory::getInstance();
+		$databaseConnection = wfGetDB( DB_SLAVE, 'smw' );
+		$temporaryTableManager = new TemporaryTableManager( $databaseConnection );
 
-		$mwCollaboratorFactory = $applicationFactory->newMwCollaboratorFactory();
-		$queryEngineDatabaseConnectionProvider = $mwCollaboratorFactory->newQueryEngineDatabaseConnectionProvider();
+		$temporaryTableManager->queryWithAutoCommit( 'CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )', __METHOD__ );
+		$temporaryTableManager->queryWithAutoCommit( 'CREATE INDEX id_index ON semantic_drilldown_values ( id )', __METHOD__ );
 
-		$databaseConnection = $queryEngineDatabaseConnectionProvider->getConnection();
+		$sqlQuery = 'INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id' . PHP_EOL;
+		$sqlQuery .= $this->getSQLFromClause( $category, $subcategory, $subcategories,
+			$applied_filters );
 
-		$databaseConnection->queryWithAutoCommit( 'CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )', __METHOD__ );
-		$databaseConnection->queryWithAutoCommit( 'CREATE INDEX id_index ON semantic_drilldown_values ( id )', __METHOD__ );
-		$databaseConnection->queryWithAutoCommit( 'INSERT INTO semantic_drilldown_values SELECT ids.smw_id AS id\n', __METHOD__ );
-
-		$sqlQuery = $this->getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters );
-
-		$databaseConnection->queryWithAutoCommit( $sqlQuery, __METHOD__ );
+		$temporaryTableManager->queryWithAutoCommit( $sqlQuery, __METHOD__ );
 	}
 
 	/**

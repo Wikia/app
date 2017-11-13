@@ -463,9 +463,15 @@ class ForumHooksHelper {
 	 * @return bool always true to continue hook processing
 	 */
 	static public function onArticleDeleteComplete( Page $page, User $user, string $reason, int $id ): bool {
-		if ( $page->getTitle()->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+		$pageTitle = $page->getTitle();
+
+		if ( $pageTitle->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
 			$wallHistory = new WallHistory();
 			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
+
+			// SUS-2757: After the main transaction is closed, delete watchlist entries for thread
+			$threadWatchlistDeleteUpdate = new ThreadWatchlistDeleteUpdate( $pageTitle );
+			DeferredUpdates::addUpdate( $threadWatchlistDeleteUpdate );
 		}
 
 		return true;

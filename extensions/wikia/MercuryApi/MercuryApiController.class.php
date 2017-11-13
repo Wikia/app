@@ -191,6 +191,11 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
+		(new CrossOriginResourceSharingHeaderHelper())
+		  ->allowWhitelistedOrigins()
+		  ->setAllowMethod( [ 'GET' ] )
+		  ->setHeaders($this->response);
+
 		$wikiVariables = $this->prepareWikiVariables();
 
 		$this->response->setVal( 'data', $wikiVariables );

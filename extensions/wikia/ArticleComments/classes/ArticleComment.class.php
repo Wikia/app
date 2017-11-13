@@ -535,7 +535,7 @@ class ArticleComment {
 	}
 
 	public function getData( $master = false ) {
-		global $wgUser, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
+		global $wgUser, $wgBlankImgUrl, $wgMemc;
 
 		$title = $this->getTitle();
 		$commentId = $title->getArticleId();
@@ -636,10 +636,6 @@ class ArticleComment {
 			'title' => $title->getText(),
 			'isStaff' => $isStaff,
 		];
-
-		if ( !empty( $wgArticleCommentsEnableVoting ) ) {
-			$comment['votes'] = $this->getVotesCount();
-		}
 
 		$wgMemc->set( $articleDataKey, $comment, self::AN_HOUR );
 
@@ -1513,68 +1509,6 @@ class ArticleComment {
 			$this->mProps = BlogArticle::getProps( $this->mTitle->getArticleID() );
 		}
 		return $this->mProps;
-	}
-
-	// Voting functions
-
-	public function getVotesCount() {
-		$pageId = $this->mTitle->getArticleId();
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'query',
-			'list' => 'wkvoteart',
-			'wkpage' => $pageId,
-			'wkuservote' => 0,
-			'wktimestamps' => 1
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-		$oApi->execute();
-		$aResult = $oApi->getResultData();
-
-		if ( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
-			return $aResult['query']['wkvoteart'][$pageId]['votescount'];
-		} else {
-			return 0;
-		}
-	}
-
-	public function vote() {
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'insert',
-			'list' => 'wkvoteart',
-			'wkpage' => $this->mTitle->getArticleId(),
-			'wkvote' => 3
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-
-		$oApi->execute();
-
-		$aResult = $oApi->getResultData();
-
-		$success = !empty( $aResult );
-
-		return $success;
-	}
-
-	public function userCanVote() {
-		$pageId = $this->mTitle->getArticleId();
-
-		$oFauxRequest = new FauxRequest( [
-			'action' => 'query',
-			'list' => 'wkvoteart',
-			'wkpage' => $pageId,
-			'wkuservote' => 1
-		] );
-		$oApi = new ApiMain( $oFauxRequest );
-		$oApi->execute();
-		$aResult = $oApi->GetResultData();
-
-		if ( isset( $aResult['query']['wkvoteart'][$pageId]['uservote'] ) ) {
-			$result = false;
-		} else {
-			$result = true;
-		}
-
-		return $result;
 	}
 
 	public function getTopParent() {

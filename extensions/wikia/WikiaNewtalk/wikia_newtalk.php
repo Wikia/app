@@ -15,6 +15,27 @@ function wfWikiaNewTalkMemcKey( User $user ) {
 }
 
 /**
+ * Return a WHERE condition that will match either entries for an anon (by IP address) or a user account (by user ID).
+ *
+ * Wiki ID (e.g. "muppet") will be included if $includeWikiId argument is set to true.
+ *
+ * @see SUS-3076
+ * @param User $user
+ * @param boolean $includeWikiId
+ * @return array
+ */
+function wfBuildNewtalkWhereCondition( User $user, $includeWikiId = false ) : array {
+	$wikiCondition = $includeWikiId ? [ 'sn_wiki' => wfWikiID() ] : [];
+
+	if ( $user->isAnon() ) {
+		return array_merge( $wikiCondition, [ 'sn_anon_ip' => inet_pton( $user->getName() ) ] );
+	}
+	else {
+		return array_merge( $wikiCondition, [ 'sn_user_id' => $user->getID() ] );
+	}
+}
+
+/**
  * wfSetWikiaNewtalk
  *
  * Hook, set new wikia shared message
@@ -25,7 +46,7 @@ function wfWikiaNewTalkMemcKey( User $user ) {
  *
  * @param WikiPage $article: edited article
  *
- * @return false: don't go to next hook
+ * @return bool: don't go to next hook
  */
 function wfSetWikiaNewtalk( WikiPage $article ): bool {
 	global $wgMemc, $wgExternalSharedDB;
@@ -50,25 +71,17 @@ function wfSetWikiaNewtalk( WikiPage $article ): bool {
 		 */
 		$dbw->delete(
             "shared_newtalks",
-            array(
-                'sn_wiki' => wfWikiID(),
-                'sn_user_id' => $other->getID(),
-                'sn_user_ip' => $other->getName()
-    		),
+            wfBuildNewtalkWhereCondition( $other, true ),
             __METHOD__
         );
         /**
 		 * then insert
 		 */
-		$dbw->insert(
-            "shared_newtalks",
-            array(
-                'sn_wiki' => wfWikiID(),
-                'sn_user_id' => $other->getID(),
-                'sn_user_ip' => $other->getName()
-            ),
-            __METHOD__
-        );
+	    $dbw->insert(
+		    "shared_newtalks",
+		    wfBuildNewtalkWhereCondition( $other, true ),
+		    __METHOD__
+	    );
         $dbw->commit();
 		$wgMemc->delete( wfWikiaNewTalkMemcKey( $other ) );
 	}
@@ -106,10 +119,7 @@ function wfGetWikiaNewtalk( User $user, &$talks ) {
 		$sth = $dbr->select(
 			array( "shared_newtalks" ),
 			array( "sn_wiki" ),
-			array(
-				"sn_user_id" => $user->getID(),
-				"sn_user_ip" => $user->getName()
-			),
+			wfBuildNewtalkWhereCondition( $user ),
 			__METHOD__,
 			array( "LIMIT" => 255 )
 		);
@@ -130,6 +140,7 @@ function wfGetWikiaNewtalk( User $user, &$talks ) {
 				__METHOD__
 			);
 			while( $row = $dbr->fetchObject( $sth ) ) {
+				// TODO: use GlobalTitle
 				$link = $row->city_url . 'index.php?title=User_talk:' . urlencode($user->getTitleKey());
 				$wiki = empty( $row->city_title ) ? $row->city_dbname : $row->city_title;
 				$wikia_talks[ $row->city_id ] = array( 'wiki' => $wiki, 'link' => $link );
@@ -167,23 +178,10 @@ function wfClearWikiaNewtalk( User $user ) {
 	$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 	$dbw->delete(
         "shared_newtalks",
-        array(
-            'sn_wiki' => wfWikiID(),
-            'sn_user_id' => $user->getID(),
-            'sn_user_ip' => $user->getName()
-        ),
+        wfBuildNewtalkWhereCondition( $user, true ),
         __METHOD__
     );
 	$wgMemc->delete( wfWikiaNewTalkMemcKey( $user ) );
-	return true;
-}
-
-function WikiaNewtalkUserRenameGlobal( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
-	$tasks[] = array(
-		'table' => 'shared_newtalks',
-		'username_column' => 'sn_user_ip',
-		'userid_column' => 'sn_user_id',
-	);
 	return true;
 }
 
@@ -199,15 +197,14 @@ function wfDismissWikiaNewtalks() {
 	$result = false;
 
 	// this request should be posted
+	/* @var WebRequest $wgRequest */
 	if ($wgRequest->wasPosted()) {
 		// shared messages
 		Hooks::run( 'DismissWikiaNewtalks', array( $wgUser ) );
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbw->delete(
 			'shared_newtalks',
-			array(
-				'sn_user_id' => $wgUser->getID(),
-			),
+			wfBuildNewtalkWhereCondition( $wgUser ),
 			__METHOD__
 		);
 		$dbw->commit();
@@ -233,11 +230,6 @@ function wfDismissWikiaNewtalks() {
 /**
  * register Hooks
  */
-if( !empty( $wgExternalSharedDB ) ) {
-	global $wgHooks;
-	$wgHooks['UserRetrieveNewTalks'][] = 'wfGetWikiaNewtalk';
-	$wgHooks['ArticleEditUpdateNewTalk'][] = 'wfSetWikiaNewtalk';
-	$wgHooks['UserClearNewTalkNotification'][] = 'wfClearWikiaNewtalk';
-
-	$wgHooks['UserRename::Global'][] = "WikiaNewtalkUserRenameGlobal";
-}
+$wgHooks['UserRetrieveNewTalks'][] = 'wfGetWikiaNewtalk';
+$wgHooks['ArticleEditUpdateNewTalk'][] = 'wfSetWikiaNewtalk';
+$wgHooks['UserClearNewTalkNotification'][] = 'wfClearWikiaNewtalk';

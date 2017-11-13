@@ -43,16 +43,8 @@ class SendGridPostbackController extends WikiaApiController {
 		}
 
 		foreach ( $events as $event ) {
-			$eventType = $this->safeGet( $event, 'event' );
-
 			// Log to logstash/kibana
 			WikiaLogger::instance()->info( 'SendgridPostback', $event );
-
-			// On bounce, invalidate the users email to force them to re-verify it
-			if ( $eventType == 'bounce' ) {
-				// SOC-1435 : For now don't invalidate email on bounce
-				# $this->handleBounce( $event );
-			}
 
 			$this->response->setVal( 'response', 'Postback processed' );
 		}
@@ -87,26 +79,6 @@ class SendGridPostbackController extends WikiaApiController {
 		}
 
 		return $events;
-	}
-
-	protected function handleBounce( Array $event ) {
-		$dbType = $this->wg->SharedDB ? $this->wg->ExternalSharedDB : null;
-		$dbr = wfGetDB( DB_SLAVE, [], $dbType );
-
-		$res = $dbr->select(
-			[ 'user' ],
-			[ 'user_id' ],
-			[ 'user_email' => $this->safeGet( $event, 'email' ) ],
-			__METHOD__
-		);
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$user = User::newFromId( $row->user_id );
-			if ( !$user ) {
-				continue;
-			}
-			$user->invalidateEmail();
-			$user->saveSettings();
-		}
 	}
 
 	public function safeGet( $arr, $key, $default = null ) {

@@ -37,7 +37,6 @@ class ListusersData {
 			'username'	=> array( 'user_name %s' ),
 			'groups' 	=> array( 'all_groups %s', 'cnt_groups %s'),
 			'revcnt' 	=> array( 'edits %s' ),
-			'loggedin' 	=> array( 'ts %s' ),
 			'dtedit' 	=> array( 'editdate %s' )
 		);
 
@@ -45,7 +44,6 @@ class ListusersData {
 			'username'	=> 'wiki_user_name_edits',
 			'groups' 	=> '',
 			'revcnt' 	=> 'wiki_edits_by_user',
-			'loggedin' 	=> '',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
 
@@ -125,7 +123,7 @@ class ListusersData {
 			'O'  . $orderby
 		);
 
-		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
+		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata-v3", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
 		if ( empty($cached) ) {
@@ -135,7 +133,7 @@ class ListusersData {
 			/* initial conditions for SQL query */
 			$where = [
 					'wiki_id' => $this->mCityId,
-					"user_name != ''",
+					"user_name != ''", # TODO: SUS-3205
 					'user_is_closed' => 0
 			];
 
@@ -169,7 +167,7 @@ class ListusersData {
 
 			/* filter: user name */
 			if ( !empty( $this->mUserName ) ) {
-				$where[] = " user_name >= ". $dbs->addQuotes( $this->mUserName );
+				$where[] = " user_name >= ". $dbs->addQuotes( $this->mUserName ); # TODO: SUS-3205
 			}
 
 			/* filter: number of edits */
@@ -193,20 +191,17 @@ class ListusersData {
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
-					array( $this->mTable . ' as e1 ' . ( ($this->mUseKey) ? 'use key('.$this->mUseKey.')' : '' ) , 'user_login_history_summary as ul1' ),
+					array( $this->mTable . ( ($this->mUseKey) ? ' use key('.$this->mUseKey.')' : '' ) ),
 					array(
-						'e1.user_id',
-						'user_name',
+						'user_id',
 						'cnt_groups',
 						'all_groups',
 						'edits',
 						'user_is_blocked',
 						'last_revision',
 						'editdate',
-						'ul1.ulh_timestamp as ts',
-						'ifnull(unix_timestamp(ul1.ulh_timestamp), 0) as ts',
-						'ifnull(e1.last_revision, 0) as max_rev',
-						'ifnull(unix_timestamp(e1.editdate), 0) as ts_edit'
+						'ifnull(last_revision, 0) as max_rev',
+						'ifnull(unix_timestamp(editdate), 0) as ts_edit'
 					),
 					$where,
 					__METHOD__,
@@ -214,29 +209,13 @@ class ListusersData {
 						'ORDER BY'	=> $orderby,
 						'LIMIT'		=> $this->mLimit,
 						'OFFSET'	=> intval($this->mOffset)
-					),
-					array(
-						'user_login_history_summary as ul1' => array(
-							'LEFT JOIN',
-							'ul1.user_id = e1.user_id'
-						)
 					)
 				);
 
 				$data['data'] = array();
 				while ( $oRow = $dbs->fetchObject( $oRes ) ) {
-					/* user exists */
-					$oUser = User::newFromName($oRow->user_name);
-
-					# check by ID id, if user not found
-					if ( !( $oUser instanceof User ) || $oUser->getId() === 0 ) {
-						$oUser = User::newFromId( $oRow->user_id );
-
-						if ( !$oUser->loadFromId() ) {
-							// User doesn't exist
-							continue;
-						}
-					}
+					// SUS-2772: don't do a DB query for every row
+					$oUser = User::newFromId( $oRow->user_id );
 
 					/* groups */
 					$groups = explode(";", $oRow->all_groups);
@@ -299,7 +278,6 @@ class ListusersData {
 						'links'				=> "(" . implode( ") &#183; (", $links ) . ")",
 						'last_edit_page' 	=> null,
 						'last_edit_diff'	=> null,
-						'last_login'		=> ( !empty($oRow->ts) ) ? $wgLang->timeanddate( $oRow->ts, true ) : "",
 						'last_edit_ts'		=> ( !empty($oRow->ts_edit) ) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : ""
 					);
 
@@ -469,7 +447,7 @@ class ListusersData {
 
 		$dbw = wfGetDB( DB_MASTER, array(), $this->mDBh );
 		if ( empty($oRow) ) {
-			$edits = User::edits($user_id);
+			$edits = $user->getEditCount();
 
 			$dbr = wfGetDB( DB_SLAVE );
 			$revRow = $dbr->selectRow(
@@ -493,7 +471,7 @@ class ListusersData {
 				array(
 					"wiki_id"        => $this->mCityId,
 					"user_id"        => $user_id,
-					"user_name"  	 => $user->getName(),
+					"user_name"  	 => $user->getName(), # TODO: SUS-3205
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
 					"last_revision"  => intval($lastrev),

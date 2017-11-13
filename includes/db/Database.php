@@ -202,8 +202,8 @@ interface DatabaseType {
  */
 abstract class DatabaseBase implements DatabaseType {
 
-	// @const log 1% of queries
-	const QUERY_SAMPLE_RATE = 0.01;
+	// @const log 5% of queries (increased from 1% in SUS-2974)
+	const QUERY_SAMPLE_RATE = 0.05;
 
 	// @const log queries that took more than 15 seconds
 	const SLOW_QUERY_LOG_THRESHOLD = 15;
@@ -2074,6 +2074,38 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
+	 * Build a concatenation list to feed into a SQL query
+	 * @param array $stringList list of raw SQL expressions; caller is responsible for any quoting
+	 * @return String
+	 */
+	public function buildConcat( $stringList ) {
+		return 'CONCAT(' . implode( ',', $stringList ) . ')';
+	}
+
+	/**
+	 * Build a GROUP_CONCAT or equivalent statement for a query.
+	 *
+	 * This is useful for combining a field for several rows into a single string.
+	 * NULL values will not appear in the output, duplicated values will appear,
+	 * and the resulting delimiter-separated values have no defined sort order.
+	 * Code using the results may need to use the PHP unique() or sort() methods.
+	 *
+	 * @param string $delim Glue to bind the results together
+	 * @param string|array $table Table name
+	 * @param string $field Field name
+	 * @param string|array $conds Conditions
+	 * @param string|array $join_conds Join conditions
+	 * @return String SQL text
+	 * @since 1.23
+	 */
+	public function buildGroupConcatField(
+		$delim, $table, $field, $conds = '', $join_conds = array()
+	) {
+		$fld = "GROUP_CONCAT($field SEPARATOR " . $this->addQuotes( $delim ) . ')';
+		return '(' . $this->selectSQLText( $table, $fld, $conds, null, array(), $join_conds ) . ')';
+	}
+
+	/**
 	 * Change the current database
 	 *
 	 * @todo Explain what exactly will fail if this is not overridden.
@@ -2169,6 +2201,12 @@ abstract class DatabaseBase implements DatabaseType {
 		 && in_array( $table, $wgSharedTables ) ) { # A shared table is selected
 			$database = $wgSharedDB;
 			$prefix   = isset( $wgSharedPrefix ) ? $wgSharedPrefix : $prefix;
+
+			// SUS-3063 | Log all cases where Database::tableName returns wikicities_cX.user
+			WikiaLogger::instance()->warning( __METHOD__ . '::addSharedPrefix', [
+				'table_name' => $table,
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, DatabaseMysqlBase::class, DatabaseMysqli::class ]  ),
+			] );
 		}
 
 		# Quote the $database and $table and apply the prefix if not quoted.
@@ -3566,15 +3604,6 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * Build a concatenation list to feed into a SQL query
-	 * @param $stringList Array: list of raw SQL expressions; caller is responsible for any quoting
-	 * @return String
-	 */
-	function buildConcat( $stringList ) {
-		return 'CONCAT(' . implode( ',', $stringList ) . ')';
-	}
-
-	/**
 	 * Acquire a named lock
 	 *
 	 * Abstracted from Filestore::lock() so child classes can implement for
@@ -3730,6 +3759,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $sql the query
 	 * @param ResultWrapper|mysqli_result|bool $ret database results
 	 * @param string $fname the name of the function that made this query
+	 * @param float $elapsedTime time (in seconds) it took the query to complete
 	 * @param bool $isMaster is this against the master
 	 * @return void
 	 */
@@ -3774,12 +3804,14 @@ abstract class DatabaseBase implements DatabaseType {
 			'exception'   => new Exception(), // log the backtrace
 		];
 
+		/* @var WebRequest $wgRequest */
 		if ( $wgRequest && $wgRequest->getVal( 'action' ) == 'delete' ) {
 			$this->getWikiaLogger()->info( "SQL (action=delete) {$sql}", $context );
 		}
 
+		// SUS-2974 | send SQL logs to a separate ES index 'mediawiki-sql'
 		if ( $this->getSampler()->shouldSample() ) {
-			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
+			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
 		if ( $this->isWriteQuery($sql) &&

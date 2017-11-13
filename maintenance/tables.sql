@@ -11,10 +11,6 @@
 -- superior resiliency against crashes and ability to read
 -- during writes (and write during reads!)
 --
--- Only the 'searchindex' table requires MyISAM due to the
--- requirement for fulltext index support, which is missing
--- from InnoDB.
---
 --
 -- The MySQL table backend for MediaWiki currently uses
 -- 14-character BINARY or VARBINARY fields to store timestamps.
@@ -1020,6 +1016,9 @@ CREATE TABLE /*_*/recentchanges (
   -- $wgPutIPinRC option is enabled.
   rc_ip varbinary(40) NOT NULL default '',
 
+  -- SUS-3079: IP address the edit was made from, in binary format
+  rc_ip_bin VARBINARY(16) NOT NULL DEFAULT '',
+
   -- Text length in characters before
   -- and after the edit
   rc_old_len int,
@@ -1043,6 +1042,7 @@ CREATE INDEX /*i*/rc_namespace_title ON /*_*/recentchanges (rc_namespace, rc_tit
 CREATE INDEX /*i*/rc_cur_id ON /*_*/recentchanges (rc_cur_id);
 CREATE INDEX /*i*/new_name_timestamp ON /*_*/recentchanges (rc_new,rc_namespace,rc_timestamp);
 CREATE INDEX /*i*/rc_ip ON /*_*/recentchanges (rc_ip);
+CREATE INDEX /*i*/rc_ip_bin ON /*_*/recentchanges (rc_ip_bin, rc_timestamp);
 CREATE INDEX /*i*/rc_ns_usertext ON /*_*/recentchanges (rc_namespace, rc_user_text);
 CREATE INDEX /*i*/rc_user_text ON /*_*/recentchanges (rc_user_text, rc_timestamp);
 
@@ -1325,6 +1325,7 @@ CREATE TABLE /*_*/updatelog (
 
 -- A table to track tags for revisions, logs and recent changes.
 CREATE TABLE /*_*/change_tag (
+  ct_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
   -- RCID for the change
   ct_rc_id int NULL,
   -- LOGID for the change
@@ -1342,24 +1343,6 @@ CREATE UNIQUE INDEX /*i*/change_tag_log_tag ON /*_*/change_tag (ct_log_id,ct_tag
 CREATE UNIQUE INDEX /*i*/change_tag_rev_tag ON /*_*/change_tag (ct_rev_id,ct_tag);
 -- Covering index, so we can pull all the info only out of the index.
 CREATE INDEX /*i*/change_tag_tag_id ON /*_*/change_tag (ct_tag,ct_rc_id,ct_rev_id,ct_log_id);
-
-
--- Rollup table to pull a LIST of tags simply without ugly GROUP_CONCAT
--- that only works on MySQL 4.1+
-CREATE TABLE /*_*/tag_summary (
-  -- RCID for the change
-  ts_rc_id int NULL,
-  -- LOGID for the change
-  ts_log_id int NULL,
-  -- REVID for the change
-  ts_rev_id int NULL,
-  -- Comma-separated list of tags
-  ts_tags blob NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/tag_summary_rc_id ON /*_*/tag_summary (ts_rc_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_log_id ON /*_*/tag_summary (ts_log_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_rev_id ON /*_*/tag_summary (ts_rev_id);
 
 
 CREATE TABLE /*_*/valid_tag (

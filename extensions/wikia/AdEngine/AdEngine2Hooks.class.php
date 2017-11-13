@@ -4,12 +4,10 @@
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
-	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_A9 = 'adengine2_a9_js';
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_pr3b1d_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_TOP = 'adengine2_top_js';
 
 	/**
@@ -37,18 +35,22 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAdMixCountries';
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
 		$vars[] = 'wgAdDriverAolBidderCountries';
+		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
+		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
+		$vars[] = 'wgAdDriverDisableSraCountries';
 		$vars[] = 'wgAdDriverEvolve2Countries';
+		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
+		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
-		$vars[] = 'wgAdDriverHiViLeaderboardRabbitCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverIndexExchangeBidderCountries';
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
@@ -69,25 +71,18 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries';
 		$vars[] = 'wgAdDriverPremiumAdLayoutAppNexusTagsCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneMercuryFixCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
-		$vars[] = 'wgAdDriverVelesBidderCountries';
-		$vars[] = 'wgAdDriverVelesBidderConfig';
-		$vars[] = 'wgAdDriverVelesVastLoggerCountries';
-		$vars[] = 'wgAmazonMatchCountries';
-		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgPorvataVastLoggerConfig';
 
 		/**
@@ -96,6 +91,36 @@ class AdEngine2Hooks {
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
+
+		return true;
+	}
+
+	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
+		// shared variables with communities
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
+		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverVideoMidrollCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
+		$vars[] = 'wgAdDriverVideoPostrollCountries';
+
+		// TODO: Remove after src=[gpt,ns] is finished
+		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
+		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
+		// TODO: Remove after ADEN-6155
+		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
+
+		// news&stories variables only
+		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
 
 		return true;
 	}
@@ -162,20 +187,12 @@ class AdEngine2Hooks {
 		// Tracking should be available very early, so we can track how lookup calls perform
 		$jsAssets[] = static::ASSET_GROUP_ADENGINE_TOP;
 
-		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
-		}
-
 		if ( AnalyticsProviderA9::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_A9;
 		}
 
 		if ( AnalyticsProviderPrebid::isEnabled() ) {
 			$jsAssets[] = static::ASSET_GROUP_ADENGINE_PREBID;
-		}
-
-		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
-			$jsAssets[] = static::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
 		}
 
 		return true;

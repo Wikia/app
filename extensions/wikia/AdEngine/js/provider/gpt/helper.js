@@ -7,18 +7,21 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
+	'ext.wikia.adEngine.provider.gpt.targeting',
 	'ext.wikia.adEngine.slot.service.passbackHandler',
+	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.ml.hivi.leaderboard'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
@@ -27,18 +30,21 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adDetect,
 	AdElement,
 	googleTag,
+	googleSlots,
+	gptTargeting,
 	passbackHandler,
+	srcProvider,
 	slotTargeting,
-	sourcePoint,
 	adBlockDetection,
 	adBlockRecovery,
 	slotTweaker,
+	doc,
 	geo,
 	instantGlobals,
 	log,
 	win,
-	hiviLeaderboard,
 	sraHelper,
+	instartLogic,
 	pageFair
 ) {
 	'use strict';
@@ -50,6 +56,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;
+	}
+
+	function isRecoverableByIL() {
+		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
 	}
 
 	/**
@@ -70,9 +80,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		var element,
 			isBlocking = adBlockDetection.isBlocking(),
 			isRecoveryEnabled = adBlockRecovery.isEnabled(),
-			adIsRecoverable = extra.isPageFairRecoverable ||
-				extra.isSourcePointRecoverable ||
-				extra.isInstartLogicRecoverable,
+			adIsRecoverable = extra.isPageFairRecoverable || extra.isInstartLogicRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
 			slotName = slot.name,
@@ -108,34 +116,28 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.addSlot(element);
 		}
 
-		function shouldSetSrcPremium() {
-			return adContext.getContext().opts.premiumOnly;
-		}
-
 		function setAdditionalTargeting(slotTargetingData) {
 			var abId;
 
-			if (shouldSetSrcPremium()) {
-				slotTargetingData.src = 'premium';
-			} else if (adShouldBeRecovered) {
-				slotTargetingData.src = 'rec';
+			if (isRecoverableByIL()) {
+				slotTargetingData.requestSource = 'instartLogic';
+			}
+
+			if (slotTargetingData.src) {
+				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
 			}
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 			slotTargetingData.outstream = slotTargeting.getOutstreamData() || 'none';
+			if (adContext.get('targeting.skin') === 'oasis') {
+				slotTargetingData.rail = doc.body.scrollWidth <= 1023 ? '0' : '1';
+			}
 
 			abId = slotTargeting.getAbTestId(slotTargetingData);
 			if (abId) {
 				slotTargetingData.abi = abId;
-			}
-
-			if (hiviLeaderboard && slotName === 'TOP_LEADERBOARD') {
-				slotTargetingData.hivi = [];
-				hiviLeaderboard.getValue().forEach(function (value) {
-					slotTargetingData.hivi.push(value);
-				});
 			}
 
 			if (
@@ -189,15 +191,19 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
-	function refreshSlot(slot) {
-		log(['Refresh slot', slot.name, slot], log.levels.debug, logGroup);
-		refreshTargetingData(slot);
-		googleTag.refreshSlot(slot);
-	}
+	function refreshSlot(slotName) {
+		var slot = googleSlots.getSlotByName(slotName),
+			targeting;
 
-	function refreshTargetingData(slot) {
-		slot.setTargeting('uap', uapContext.getUapId().toString());
-		return slot;
+		if (slot) {
+			log(['Refresh slot', slotName, slot], log.levels.debug, logGroup);
+			targeting = gptTargeting.getSlotLevelTargeting(slotName);
+			targeting.uap = uapContext.getUapId().toString();
+			AdElement.configureSlot(slot, targeting);
+			googleTag.refreshSlot(slot);
+		} else {
+			log(['Refresh slot', slotName, 'does not exist'], log.levels.debug, logGroup);
+		}
 	}
 
 	adContext.addCallback(function () {

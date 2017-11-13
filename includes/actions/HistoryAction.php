@@ -328,6 +328,8 @@ class HistoryPager extends ReverseChronologicalPager {
 	public $lastRow = false, $counter, $historyPage, $buttons, $conds;
 	protected $oldIdChecked;
 	protected $preventClickjacking = false;
+	/** User names associated with the result */
+	private $mUsers = [];
 
 	function __construct( $historyPage, $year = '', $month = '', $tagFilter = '', $conds = array() ) {
 		parent::__construct( $historyPage->getContext() );
@@ -351,28 +353,58 @@ class HistoryPager extends ReverseChronologicalPager {
 	}
 
 	function getQueryInfo() {
-		$queryInfo = array(
-			'tables'  => array( 'revision', 'user' ),
-			'fields'  => array_merge( Revision::selectFields(), Revision::selectUserFields() ),
-			'conds'   => array_merge(
-				array( 'rev_page' => $this->getWikiPage()->getId() ),
-				$this->conds ),
-			'options' => array( 'USE INDEX' => array( 'revision' => 'page_timestamp' ) ),
-			'join_conds' => array(
-				'user'        => Revision::userJoinCond(),
-				'tag_summary' => array( 'LEFT JOIN', 'ts_rev_id=rev_id' ) ),
-		);
-		ChangeTags::modifyDisplayQuery(
-			$queryInfo['tables'],
-			$queryInfo['fields'],
-			$queryInfo['conds'],
-			$queryInfo['join_conds'],
-			$queryInfo['options'],
-			$this->tagFilter
-		);
+		$queryInfo = [
+			'tables' => [ 'revision' ],
+			'fields' => array_merge( Revision::selectFields() ),
+			'conds' => array_merge( [ 'rev_page' => $this->getWikiPage()->getId() ], $this->conds ),
+			'options' => [
+				'USE INDEX' => [ 'revision' => 'page_timestamp' ]
+			],
+		];
+
+		ChangeTags::modifyDisplayQuery( $queryInfo['tables'], $queryInfo['fields'],
+			$queryInfo['conds'], $queryInfo['join_conds'], $queryInfo['options'],
+			$this->tagFilter );
+
 		Hooks::run( 'PageHistoryPager::getQueryInfo', [ $this, &$queryInfo ] );
 
 		return $queryInfo;
+	}
+
+	/**
+	 * Fetch user names from ExternalSharedDB.
+	 * @see SUS-2990
+	 * @return iterable
+	 */
+	function reallyDoQuery( $offset, $limit, $descending ) {
+		global $wgExternalSharedDB;
+		$res = parent::reallyDoQuery( $offset, $limit, $descending );
+
+		$ids = [];
+		foreach ( $res as $row ) {
+			if ( $row->rev_user ) {
+				$ids[] = $row->rev_user;
+			}
+		}
+
+		// SUS-3103: It might happen that all contributors were anon - check if this was the case
+		if ( !empty( $ids ) ) {
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$users = $dbr->select(
+				'`user`',
+				[ 'user_id', 'user_name' ],
+				[ 'user_id' => array_unique( $ids ) ],
+				__METHOD__
+			);
+
+			foreach ( $users as $row ) {
+				$this->mUsers[$row->user_id] = $row->user_name;
+			}
+		}
+
+		$res->rewind();
+
+		return $res;
 	}
 
 	function getIndexField() {
@@ -380,16 +412,24 @@ class HistoryPager extends ReverseChronologicalPager {
 	}
 
 	function formatRow( $row ) {
+		$row->rev_user_text = $this->mUsers[$row->rev_user] ?? $row->rev_user_text;
+
 		if ( $this->lastRow ) {
 			$latest = ( $this->counter == 1 && $this->mIsFirst );
 			$firstInList = $this->counter == 1;
 			$this->counter++;
-			$s = $this->historyLine( $this->lastRow, $row,
-				$this->getTitle()->getNotificationTimestamp( $this->getUser() ), $latest, $firstInList );
+			$s = $this->historyLine(
+				$this->lastRow,
+				$row,
+				$this->getTitle()->getNotificationTimestamp( $this->getUser() ),
+				$latest,
+				$firstInList
+			);
 		} else {
 			$s = '';
 		}
 		$this->lastRow = $row;
+
 		return $s;
 	}
 
@@ -397,14 +437,21 @@ class HistoryPager extends ReverseChronologicalPager {
 		# Do a link batch query
 		$this->mResult->seek( 0 );
 		$batch = new LinkBatch();
+
+		// SUS-807
+		$ids = [];
 		foreach ( $this->mResult as $row ) {
-			if( !is_null( $row->user_name ) ) {
-				$batch->add( NS_USER, $row->user_name );
-				$batch->add( NS_USER_TALK, $row->user_name );
-			} else { # for anons or usernames of imported revisions
-				$batch->add( NS_USER, $row->rev_user_text );
-				$batch->add( NS_USER_TALK, $row->rev_user_text );
-			}
+			$ids[] = $row->rev_user;
+		}
+
+		$userNames = User::whoAre( $ids );
+
+		foreach ( $this->mResult as $row ) {
+			$userName = $row->rev_user && isset($userNames[$row->rev_user]) ?
+				$userNames[$row->rev_user] :
+				$row->rev_user_text;
+			$batch->add( NS_USER, $userName );
+			$batch->add( NS_USER_TALK, $userName );
 		}
 		$batch->execute();
 		$this->mResult->seek( 0 );

@@ -1082,7 +1082,7 @@ ___________________________________________<br>
 	'forum-board-validation-count' => 'Du kannst maximal $1 Foren anlegen.',
 	'forum-board-description-validation-length' => 'Bitte gib eine Beschreibung für dieses Forum an.',
 	'forum-board-id-validation-missing' => 'Die Foren-ID fehlt',
-	'forum-board-no-board-warning' => 'Wir konnten leider kein Forum mit diesem Titel finden. Bitte wähle eines aus dieser Liste.',
+	'forum-board-no-board-warning' => 'Es gibt kein Forum mit diesem Titel. Versuche es bitte noch einmal oder sieh dir diese Liste der existierenden Foren an.',
 	'forum-related-discussion-heading' => 'Diskussionen über $1',
 	'forum-related-discussion-new-post-button' => 'Eine Diskussion beginnen',
 	'forum-related-discussion-new-post-tooltip' => 'Eine Diskussion über „$1“ beginnen',
@@ -1398,7 +1398,7 @@ ___________________________________________<br>
 	'forum-board-validation-count' => 'El número máximo de subforos es $1',
 	'forum-board-description-validation-length' => 'Por favor escribe una descripción para esta subforo',
 	'forum-board-id-validation-missing' => 'El id del subforo no existe',
-	'forum-board-no-board-warning' => 'No pudimos encontrar un subforo con ese título. Aquí está la lista de subforos.',
+	'forum-board-no-board-warning' => 'No existe ningún subforo con ese título. Por favor, intenta de nuevo o revisa la lista de subforos.',
 	'forum-related-discussion-heading' => 'Hilos del foro sobre $1',
 	'forum-related-discussion-new-post-button' => 'Comienza un tema',
 	'forum-related-discussion-new-post-tooltip' => 'Comienza un tema acerca de $1',
@@ -1797,7 +1797,7 @@ ___________________________________________
 	'forum-board-validation-count' => 'Le nombre maximum de sous-forums est $1',
 	'forum-board-description-validation-length' => 'Veuillez écrire une description pour ce sous-forum',
 	'forum-board-id-validation-missing' => "Il manque l'id du sous-forum",
-	'forum-board-no-board-warning' => "Nous n'avons pas pu trouver un sous-forum avec ce titre. Voici la liste des sous-forums.",
+	'forum-board-no-board-warning' => "Aucun sous-forum portant ce titre n'existe. Veuillez réessayer ou consulter cette liste de sous-forums.",
 	'forum-related-discussion-heading' => 'Discussions à propos de « $1 »',
 	'forum-related-discussion-new-post-button' => 'Démarrer une discussion',
 	'forum-related-discussion-new-post-tooltip' => 'Démarrer une nouvelle discussion à propos de « $1 »',
@@ -2035,58 +2035,142 @@ $messages['hu'] = array(
 
 $messages['id'] = array(
 	'forum-forum-title' => 'Forum',
-	'forum-specialpage-board-lastpostby' => 'Postingan terakhir oleh',
+	'forum-specialpage-board-lastpostby' => 'Terakhir dikirim oleh',
 	'forum-specialpage-policies-edit' => 'Sunting',
-	'forum-specialpage-policies' => 'Kebijakan Forum / FAQ',
-	'forum-policies-and-faq' => "==Kebijakan forum==
-Sebelum berkontribusi ke Forum {{SITENAME}}, harap diingat beberapa praktek terbaik untuk dilakukan:
+	'forum-specialpage-policies' => 'Forum kebijakan/FAQ',
+	'forum-policies-and-faq' => "==Kebijakan Forum==
+Sebelum berkontribusi di forum {{SITENAME}}, harap di ingat beberapa hal yang harus di praktikkan sebelum melakukan.
 
-'''Bersikap baik dan memperlakukan orang dengan hormat.'''
-:Orang-orang dari seluruh dunia membaca dan mengedit di wiki ini dan forumnya. Seperti proyek kolaborasi lainnya, tidak semua orang akan setuju sepanjang waktu. Jauhkan diskusi sipil dan berpikiran terbuka tentang perbedaan pendapat. Kita semua di sini karena kita mencintai topik yang sama.
+'''Bersikaplah baik dan memperlakukan orang lain lebih hormat'''
+:Semua orang di seluruh dunia membaca dan menyunting wiki ini dan forumnya. Seperti proyek kolaborasi lainnya, tidak semua orang akan setuju setiap saat. Harap menjaga diskusi dengan sopan dan terbuka dalam beberapa tentang perbedaan pendapat. Kita semua disini menyukai topik yang sama. 
 
-'''Cobalah untuk menemukan diskusi yang ada pertama, tapi jangan takut untuk memulai lembaran baru.'''
-:Silakan luangkan waktu menyaring melalui papan forum {{SITENAME}} untuk melihat apakah diskusi sudah ada tentang sesuatu yang Anda ingin bicarakan. Jika Anda tidak dapat menemukan apa yang Anda cari, melompatlah dan memulai diskusi baru!
+'''Cobalah mencari diskusi yang sudah ada terlebih dahulu, tetapi jangan takut untuk memulai diskusi yang baru'''
+:Diharapkan untuk meluangkan waktu untuk melihat-lihat di papan forum {{SITENAME}} untuk melihat diskusi tentang pertanyaanmu terlebih dahulu, Jika anda tidak menemukan diskusi yang anda cari, silahkan memulai diskusi yang baru!
 
-'''Minta bantuan.'''
-:Menemukan sesuatu yang tidak benar? Atau apakah Anda memiliki pertanyaan? MMintalah bantuan di sini di forum! Jika Anda membutuhkan bantuan dari staf Wikia, silakan menuju pada [[w:c:community|Pusat Komunitas]] atau melalui [[Special:Contact]].
+'''Minta bantuan'''
+:Jika anda melihat sesuatu yang sesuatu yang aneh? Atau anda punya pertanyaan? Tanya saja untuk bantuan di forum! Jika Anda membutuhkan bantuan dari Staf FANDOM, tolong kontak kami di [[w:c:community|Community Central]] atau melalui [[Special:Contact]].
 
-'''Selamat bersenang-senang!'''
-:Komunitas {{SITENAME}} senang untuk memiliki Anda di sini. Kami berharap dapat melihat Anda di sekitar seperti yang kita bahas pada topik ini kita semua saling mencintai.
+'''Selamat menikmati!'''
+:{{SITENAME}} sangat bahagia dengan kehadiran anda disini. Kami sangat jika anda ada disekeliling saat kita bersama mendiskusikan topik yang kita sukai.
 
 ==Forum FAQ==
-'''Bagaimana saya tetap di atas diskusi yang menarik bagi saya?'''
-:Dengan akun pengguna Wikia, Anda dapat mengikuti percakapan tertentu dan kemudian menerima pesan pemberitahuan (baik di tempat atau melalui surel) saat diskusi memiliki lebih banyak aktivitas. Pastikan untuk [[Special:UserSignup|mendaftar akun Wikia]] jika Anda belum memilikinya.
+'''Bagaimana saya tetap ada di diskusi yang saya sukai?'''
+:Dengan sebuah akun pengguna FANDOM, anda bisa mengikuti percakapan yang spesifik dan menerima pesan pemberitahuan (kemungkinan di website atau melalui email) disaat ada diskusi yang sedang aktif. Anda harus mendaftar [[Special:UserSignup|mendaftar untuk akun fandom]] jika anda belum mendaftar.
 
-'''Bagaimana cara menghapus vandalisme?'''
-:Jika Anda melihat beberapa spam atau vandalisme pada lembar diskusi, bawa tetikus Anda ke teks yang bermasalah. Anda akan melihat \"Lebih\" tombol yang muncul. Di dalam menu \"Lebih\", Anda akan menemukan \"Hapus\". Ini akan memungkinkan Anda untuk menghapus vandalisme dan lebih disarankan menginformasikan admin.
+'''Bagaimana saya menghapus vandalisme?'''
+:Jika anda melihat beberapa spam atau vandalisme di panel diskusi, arahkan mouse anda ke halaman yang anda lihat sedang terjadi. Anda akan melihat sebuah button \"Lagi\" akan muncul. Didalam menu \"lagi\", anda akan menemukan kata \"Hapus\". Ini akan membuat anda bisa menghapus vandalisme dan juga memberitahukan kepada admin.
 
-'''Apa itu Pujian?'''
-:Jika Anda menemukan diskusi tertentu atau ingin membalas menarik, dipikirkan dengan baik, atau menghibur Anda dapat menunjukkan penghargaan langsung dengan memberikan Pujian. Mereka dapat membantu dalam situasi pemungutan suara juga.
+'''Apakah itu Pujian?\"
+:Jika anda menemukan diskusi atau jawaban tertentu yang dikira anda menarik, yang sangat mendetail anda bisa memberikan pujian langsung dengan memberikan pujian. Pujian juga membantu dalam suasana undian suara, juga.
 
-'''Apa itu Topik?'''
-:Topik memungkinkan Anda untuk menghubungkan diskusi forum dengan artikel wiki. Ini cara lain untuk menjaga Forum terorganisir dan membantu orang menemukan diskusi yang menarik. Sebagai contoh, sebuah lembar dengan lebel \"Lord Voldemort\" akan muncul di bagian bawah artikel \"Lord Voldemort\".",
-	'forum-board-topics' => 'Topik-topik',
+'''Apakah itu Topik?'''
+:Topik akan memberikan anda untuk mengaitkan forum diskusi dengan artikel wiki. Itu adalah cara yang terbaik agar Forum tetap terorganisasi dan membantu orang lain menemukan diskusi yang menarik. Contohnya, sebuah forum yang di tag \"Lord Voldemort\" akan muncul dibawah kategori artikelnya.",
+	'forum-board-topics' => 'Topik',
 	'forum-board-thread-follow' => 'Ikuti',
 	'forum-board-thread-following' => 'Mengikuti',
-	'forum-board-thread-kudos' => '$1 Kudos',
-	'forum-board-new-message-heading' => 'Mulai Diskusi',
-	'forum-no-board-selection-error' => '← Silakan pilih dinding untuk posting ke',
-	'forum-thread-reply-placeholder' => 'Kirimkan balasan',
-	'forum-thread-reply-post' => 'Balas',
-	'forum-sorting-option-newest-replies' => 'Balasan Terbaru',
-	'forum-sorting-option-popular-threads' => 'Paling Populer',
-	'forum-sorting-option-most-replies' => 'Paling Aktif dalam 7 Hari',
-	'forum-sorting-option-newest-threads' => 'Lembar Terbaru',
-	'forum-sorting-option-oldest-threads' => 'Lembar Terlama',
+	'forum-board-thread-kudos' => '$1 Pujian',
+	'forum-board-new-message-heading' => 'Memulai diskusi',
+	'forum-no-board-selection-error' => 'Pilih papan diskusi untuk mengirimkan ke',
+	'forum-thread-reply-placeholder' => 'Kirim balasan',
+	'forum-thread-reply-post' => 'Balasan',
+	'forum-sorting-option-newest-replies' => 'Balasan yang paling baru',
+	'forum-sorting-option-popular-threads' => 'Paling populer',
+	'forum-sorting-option-most-replies' => 'Paling aktif dalam 7 hari',
+	'forum-sorting-option-newest-threads' => 'Diskusi Terbaru',
+	'forum-sorting-option-oldest-threads' => 'Diskusi Terlama',
 	'forum-discussion-post' => 'Kirim',
-	'forum-discussion-highlight' => 'Sorot diskusi ini',
-	'forum-discussion-placeholder-title' => 'Apa yang Anda ingin bicarakan?',
-	'forum-discussion-placeholder-message' => 'Mengirim pesan baru ke dinding $1',
+	'forum-discussion-highlight' => 'Menyorotkan diskusi ini',
+	'forum-discussion-placeholder-title' => 'Apa yang anda ingin bicarakan tentang?',
+	'forum-discussion-placeholder-message' => 'Mengirimkan pesan baru ke panel $1',
 	'forum-discussion-placeholder-message-short' => 'Kirim pesan baru',
 	'forum-activity-module-heading' => 'Aktivitas Forum',
-	'forum-related-module-heading' => 'Lembar Terkait',
-	'forum-related-discussion-new-post-button' => 'Mulai Diskusi',
-	'forum-related-discussion-new-post-tooltip' => 'Mulai diskusi baru tentang $1',
+	'forum-related-module-heading' => 'Diskusi Terkait',
+	'forum-related-discussion-new-post-button' => 'Memulai diskusi',
+	'forum-related-discussion-new-post-tooltip' => 'Memulai diskusi baru tentang $1',
+	'forum-desc' => 'FANDOM ekstensi Special:Forum',
+	'forum-disabled-desc' => 'FANDOM ekstensi Special:Forum; terputus',
+	'forum-active-threads' => '$1 {{PLURAL:$1|Diskusi Aktif|Diskusi Aktif}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Diskusi Aktif|Diskusi Aktif}} tentang: '''[[$2]]'''",
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Diskusi<br/>di forum ini|Panel diskusi<br/>di forum ini}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Aktif<br />Diskusi|Aktif<br />Diskusi}}</span>',
+	'forum-specialpage-heading' => 'Forum',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-halamanistimewa-blurb-heading Anda bisa menyuntingnya<span>',
+	'forum-specialpage-blurb' => '',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|panel diskusi|Panel diskusi}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|Kirim|Kiriman}}',
+	'forum-board-title' => '$1 panel diskusi',
+	'forum-board-topic-title' => 'Diskusi tentang $1',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|Pesan|Pesan}}',
+	'forum-thread-deleted-return-to' => 'Kembali ke panel $1',
+	'forum-notification-user1-reply-to-your' => '$1 telah menjawab diskusi anda di panel $3',
+	'forum-notification-user2-reply-to-your' => '$1 dan $2 telah menjawab diskusi anda di panel diskusi',
+	'forum-notification-user3-reply-to-your' => '$1 dan yang lainnya menjawab diskusi anda di panel $3',
+	'forum-notification-user1-reply-to-someone' => '$1 telah menjawab diskusi di panel $3',
+	'forum-notification-user2-reply-to-someone' => '$1 dan $2 telah menjawab di panel $3',
+	'forum-notification-user3-reply-to-someone' => '$1 dan yang lain telah menjawab di panel $3',
+	'forum-notification-newmsg-on-followed-wall' => '$1 telah meninggalkan pesan baru di panel $2',
+	'forum-wiki-activity-msg' => 'pada $1',
+	'forum-wiki-activity-msg-name' => 'panel $1',
+	'forum-activity-module-posted' => '$1 telah mengirimkan balasan $2',
+	'forum-activity-module-started' => '$1 telah memulai diskusi $2',
+	'forum-contributions-line' => '[[$1|$2]] pada [[$3|panel $4]]',
+	'forum-recentchanges-new-message' => 'pada [[$1|panel $2]]',
+	'forum-recentchanges-edit' => 'pesan yang disunting',
+	'forum-recentchanges-removed-thread' => 'menghapus diskusi "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-removed-reply' => 'menghapus balasan dari "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-restored-thread' => 'diskusi telah di pulihkan "[[$1|$2]]" pada [[$3|Panel $4]]',
+	'forum-recentchanges-restored-reply' => 'balasan telah dipulihkan pada "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-deleted-thread' => 'menghapus diskusi "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-deleted-reply' => 'menghapus balasan dari "[[$1|$2]]" dari [[$3|Panel $4]]',
+	'forum-recentchanges-deleted-reply-title' => 'Kiriman',
+	'forum-recentchanges-namespace-selector-message-wall' => 'Panel Forum',
+	'forum-recentchanges-thread-group' => '$1 pada [[$2|Panel $3]]',
+	'forum-recentchanges-history-link' => 'riwayat panel',
+	'forum-recentchanges-thread-history-link' => 'riwayat diskusi',
+	'forum-recentchanges-closed-thread' => 'diskusi ditutup "[[$1|$2]]" dari [[$3|$4]]',
+	'forum-recentchanges-reopened-thread' => 'diskusi dibuka lagi "[[$1|$2]]" dari [[$3|$4]]',
+	'forum-board-history-title' => 'riwayat panel',
+	'forum-specialpage-oldforum-link' => 'Arsip forum lama',
+	'forum-admin-page-breadcrumb' => 'Panel Manajemen Pengurus',
+	'forum-admin-create-new-board-label' => 'Membuat Panel Baru',
+	'forum-admin-create-new-board-modal-heading' => 'Membuat panel baru',
+	'forum-admin-create-new-board-title' => 'Judul Panel',
+	'forum-admin-create-new-board-description' => 'Deskripsi Panel',
+	'forum-admin-edit-board-modal-heading' => 'Menyunting Panel: $1',
+	'forum-admin-edit-board-title' => 'Judul Panel',
+	'forum-admin-edit-board-description' => 'Deskripsi Panel',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Hapus Panel: $1',
+	'forum-admin-delete-board-title' => 'Harap konfirmasikan nama panel yang ingin anda hapus:',
+	'forum-admin-merge-board-warning' => 'Diskusi panel di forum akan digabung dengan panel yang sudah ada.',
+	'forum-admin-merge-board-destination' => 'Pilih panel untuk digabungkan ke:',
+	'forum-admin-delete-and-merge-button-label' => 'Hapus dan Gabungkan',
+	'forum-admin-link-label' => 'Mengelola Panel',
+	'forum-autoboard-title-1' => 'Diskusi Umum',
+	'forum-autoboard-body-1' => 'Panel ini untuk percakapan umum tentang wiki.',
+	'forum-autoboard-title-2' => 'Berita dan Pengumuman',
+	'forum-autoboard-body-2' => 'Berita terbaru dan informasi!',
+	'forum-autoboard-title-3' => 'Baru pada $1',
+	'forum-autoboard-body-3' => 'Ingin berbagi sesuatu yang telah di kirim di wiki ini, atau mengucapkan selamat kepada seseorang dengan kontribusinya yang luar biasa? Inilah tempatnya!',
+	'forum-autoboard-title-4' => 'Pertanyaan dan Jawaban',
+	'forum-autoboard-body-4' => 'Punya pertanyaan tentang wiki, atau topik? Ajukan pertanyaan anda disini!',
+	'forum-autoboard-title-5' => 'Minat dan Permainan',
+	'forum-autoboard-body-5' => 'Panel ini adalah untuk percakapan diluar topik -- sebuah tempat untuk berkumpul dengan teman-teman anda $1.',
+	'forum-board-destination-empty' => '(Silahkan pilih panel)',
+	'forum-board-title-validation-invalid' => 'Nama panel berisi karakter yang tidak valid',
+	'forum-board-title-validation-length' => 'Nama Panel harus minimal 4 karakter',
+	'forum-board-title-validation-exists' => 'Sebuah panel dengan nama yang sama sudah ada',
+	'forum-board-validation-count' => 'Jumlah maksimum panel adalah $1',
+	'forum-board-description-validation-length' => 'Silahkan menulis deskripsi untuk panel ini',
+	'forum-board-id-validation-missing' => 'Panel id telah menghilang',
+	'forum-board-no-board-warning' => 'Tidak ada panel forum dengan nama judul tersebut. Silahkan coba lagi atau cek daftar Panel Forum.',
+	'forum-related-discussion-heading' => 'Diskusi tentang $1',
+	'forum-related-discussion-total-replies' => 'pesan $1',
+	'forum-related-discussion-see-more' => 'Lihat diskusi selengkapnya',
+	'forum-confirmation-board-deleted' => '"$1" telah dihapus.',
+	'forum-token-mismatch' => 'Ups! token tidak sesuai',
+	'right-forumadmin' => 'Pengurus memiliki askes ke forum',
+	'right-forumoldedit' => 'Dapt menyunting arsip forum, yang lama',
+	'right-boardedit' => 'Menyunting informasi panel Forum',
 );
 
 $messages['it'] = array(
@@ -2153,7 +2237,7 @@ Prima di contribuire ai Forum di {{SITENAME}}, tieni a mente alcune buone pratic
 	'forum-board-history-title' => 'cronologia del sottoforum',
 	'forum-board-id-validation-missing' => 'Il sottoforum non esiste',
 	'forum-board-new-message-heading' => 'Inizia una discussione',
-	'forum-board-no-board-warning' => 'Non è stato possibile trovare un sottoforum con questo titolo. Ecco una lista dei sottoforum esistenti.',
+	'forum-board-no-board-warning' => 'Non esiste nessun sottoforum con quel titolo. Per favore, riprova o controlla questa lista di sottoforum.',
 	'forum-board-thread-follow' => 'Segui',
 	'forum-board-thread-following' => 'Seguita',
 	'forum-board-thread-kudos' => '$1 Kudos',
@@ -2387,7 +2471,7 @@ ___________________________________________<br />
 	'forum-board-validation-count' => '掲示板の最大数は $1 です',
 	'forum-board-description-validation-length' => 'この掲示板についての説明を入力してください',
 	'forum-board-id-validation-missing' => '掲示板のIDが見つかりません',
-	'forum-board-no-board-warning' => '指定された名称の掲示板は見つかりませんでした。掲示板の一覧を表示します。',
+	'forum-board-no-board-warning' => '指定されたタイトルのボードは見つかりませんでした。もう一度お試しになるか、フォーラムのボード一覧をご確認ください。',
 	'forum-related-discussion-heading' => '$1 に関連するスレッド',
 	'forum-related-discussion-new-post-button' => 'スレッドを作成',
 	'forum-related-discussion-new-post-tooltip' => '$1 に関するスレッドを作成',
@@ -2720,7 +2804,7 @@ $messages['lol'] = array(
 	'forum-board-validation-count' => 'crwdns63356:0crwdne63356:0',
 	'forum-board-description-validation-length' => 'crwdns63357:0crwdne63357:0',
 	'forum-board-id-validation-missing' => 'crwdns63358:0crwdne63358:0',
-	'forum-board-no-board-warning' => 'crwdns63359:0crwdne63359:0',
+	'forum-board-no-board-warning' => 'crwdns71013:0crwdne71013:0',
 	'forum-related-discussion-heading' => 'crwdns63360:0crwdne63360:0',
 	'forum-related-discussion-new-post-button' => 'crwdns63361:0crwdne63361:0',
 	'forum-related-discussion-new-post-tooltip' => 'crwdns63362:0crwdne63362:0',
@@ -3328,7 +3412,7 @@ ___________________________________________<br>
 	'forum-board-validation-count' => 'Maksymalna liczba subforów to $1',
 	'forum-board-description-validation-length' => 'Wprowadź opis tego subforum',
 	'forum-board-id-validation-missing' => 'Nie odnaleziono ID subforum',
-	'forum-board-no-board-warning' => 'Nie odnaleziono subforum o tym tytule. Oto lista dostępnych.',
+	'forum-board-no-board-warning' => 'Nie odnaleziono subforum o tym tytule. Spróbuj ponownie albo przejrzyj listę dostępnych subforów.',
 	'forum-related-discussion-heading' => 'Dyskusje o artykule $1',
 	'forum-related-discussion-new-post-button' => 'Rozpocznij dyskusję',
 	'forum-related-discussion-new-post-tooltip' => 'Rozpocznij nową dyskusję o $1',
@@ -3508,7 +3592,7 @@ ___________________________________________<br />
 	'forum-board-validation-count' => 'O número máximo de painéis é $1.',
 	'forum-board-description-validation-length' => 'Escreva uma descrição para este painel',
 	'forum-board-id-validation-missing' => 'O id do painel está indisponível.',
-	'forum-board-no-board-warning' => 'Não pudemos encontrar um painel com esse título. Aqui está uma lista de painéis no fórum.',
+	'forum-board-no-board-warning' => 'Não há nenhum fórum com esse título. Por favor, tente novamente ou confira esta lista de fóruns.',
 	'forum-related-discussion-heading' => 'Discussões sobre $1',
 	'forum-related-discussion-new-post-button' => 'Iniciar uma Discussão',
 	'forum-related-discussion-new-post-tooltip' => 'Iniciar uma nova discussão sobre $1',
@@ -3525,8 +3609,8 @@ ___________________________________________<br />
 );
 
 $messages['ru'] = array(
-	'forum-desc' => 'Вікі Спеціальна: Розширення форуму',
-	'forum-disabled-desc' => 'Вікі Спеціальна: Розширення форуму; інвалідів',
+	'forum-desc' => 'Расширение Special:Forum',
+	'forum-disabled-desc' => 'Расширение Special:Forum отключено',
 	'forum-forum-title' => 'Форум',
 	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|активное обсуждение|активных обсуждения|активных обсуждений}}',
 	'forum-active-threads-on-topic' => '{{FORMATNUM:$1}} {{PLURAL:$1|активное обсуждение|активных обсуждения|активных обсуждений}} о $2',
@@ -3572,7 +3656,7 @@ $messages['ru'] = array(
 	'forum-board-thread-follow' => 'Следить',
 	'forum-board-thread-following' => 'Отслеживание',
 	'forum-board-thread-kudos' => '$1 "Мне нравится"',
-	'forum-board-thread-replies' => '$1 ответов',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|ответ|ответа|ответов}}',
 	'forum-board-new-message-heading' => 'Создать тему',
 	'forum-no-board-selection-error' => '← Пожалуйста, выберите главную тему',
 	'forum-thread-reply-placeholder' => 'Оставить ответ',
@@ -3584,17 +3668,17 @@ $messages['ru'] = array(
 	'forum-sorting-option-newest-threads' => 'Новые темы',
 	'forum-sorting-option-oldest-threads' => 'Старые темы',
 	'forum-discussion-post' => 'Опубликовать',
-	'forum-discussion-highlight' => 'Уведомить об этой теме',
+	'forum-discussion-highlight' => 'Сообщить всем об этой теме',
 	'forum-discussion-placeholder-title' => 'Что вы хотите обсудить?',
 	'forum-discussion-placeholder-message' => 'Оставить сообщение в главной теме: $1',
 	'forum-discussion-placeholder-message-short' => 'Оставить новое сообщение',
-	'forum-notification-user1-reply-to-your' => '$1 ответил в вашей теме в $3',
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|ответил|ответила}} в вашей теме в $3',
 	'forum-notification-user2-reply-to-your' => '$1 и $2 ответили в вашей теме в $3',
 	'forum-notification-user3-reply-to-your' => '$1 и другие ответили в вашей теме в $3',
-	'forum-notification-user1-reply-to-someone' => '$1 ответил в главной теме $3',
+	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|ответил|ответила}} в главной теме $3',
 	'forum-notification-user2-reply-to-someone' => '$1 и $2 ответили на главной теме $3',
 	'forum-notification-user3-reply-to-someone' => '$1 и другие ответили в главной теме $3',
-	'forum-notification-newmsg-on-followed-wall' => '$1 оставил новое сообщение на главной теме $2',
+	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|оставил|оставила}} новое сообщение на главной теме $2',
 	'forum-mail-notification-new-someone' => '$AUTHOR_NAME создал новую тему на $WIKI в разделе $BOARDNAME.',
 	'forum-mail-notification-new-your' => '$AUTHOR_NAME создал новую тему на $WIKI в разделе $BOARDNAME.',
 	'forum-mail-notification-reply-your' => '$AUTHOR_NAME ответил на $WIKI в разделе $BOARDNAME.',
@@ -3675,7 +3759,7 @@ ___________________________________________<br>
 	'forum-autoboard-title-3' => 'Новое для $1',
 	'forum-autoboard-body-3' => 'Хотите поделиться чем-нибудь, что можно опубликовать на вики, или просто поздравить участников за отличную статью?',
 	'forum-autoboard-title-4' => 'Вопросы и ответы',
-	'forum-autoboard-body-4' => 'Есть вопросы о вики или статьях? Задай свой вопрос здесь!',
+	'forum-autoboard-body-4' => 'Есть вопросы о вики или статьях? Задай их здесь!',
 	'forum-autoboard-title-5' => 'Общение',
 	'forum-autoboard-body-5' => 'Эта тема предназначена для любых разговоров - отличное место, чтобы просто поболтать с друзьями из $1.',
 	'forum-board-destination-empty' => '(Выберите гл. тему)',
@@ -3685,7 +3769,7 @@ ___________________________________________<br>
 	'forum-board-validation-count' => 'Количество гл. тем не может быть больше $1',
 	'forum-board-description-validation-length' => 'Пожалуйста, дайте описание этой главной теме',
 	'forum-board-id-validation-missing' => 'Отсутствует идентификатор раздела',
-	'forum-board-no-board-warning' => 'Главная тема с таким названием не найдена. Вот список гл. тем на форуме.',
+	'forum-board-no-board-warning' => 'Главной темы с таким названием нет. Повторите попытку или просмотрите список тем форума.',
 	'forum-related-discussion-heading' => 'Обсуждение статьи «$1»',
 	'forum-related-discussion-new-post-button' => 'Начать обсуждение',
 	'forum-related-discussion-new-post-tooltip' => 'Начать обсуждение статьи «$1»',
@@ -3694,9 +3778,9 @@ ___________________________________________<br>
 	'forum-confirmation-board-deleted' => '"$1" была удалена.',
 	'forum-token-mismatch' => 'Символ не соответствует',
 	'forum-specialpage-blurb' => '',
-	'right-forumadmin' => 'Has admin access to the forums',
-	'right-forumoldedit' => 'Can edit the old, archived forums',
-	'right-boardedit' => 'Edit Forum board information',
+	'right-forumadmin' => 'Имеет доступ статуса администратора на форуме',
+	'right-forumoldedit' => 'Может редактировать архивы старого форума',
+	'right-boardedit' => 'Редактирование главных тем форума',
 );
 
 $messages['sr-ec'] = array(
@@ -4701,7 +4785,7 @@ ___________________________________________<br />
 	'forum-board-validation-count' => '板块最多可以有$1个',
 	'forum-board-description-validation-length' => '请写下此板块的描述',
 	'forum-board-id-validation-missing' => '板块ID丢失',
-	'forum-board-no-board-warning' => '我们找不到那个标题的板块。这里是论坛板块列表。',
+	'forum-board-no-board-warning' => '这个标题的论坛版块不存在。请再试一次或查看论坛版块列表。',
 	'forum-related-discussion-heading' => '关于$1的讨论',
 	'forum-related-discussion-new-post-button' => '开始讨论',
 	'forum-related-discussion-new-post-tooltip' => '开始讨论$1',
@@ -4849,7 +4933,7 @@ $messages['zh-hant'] = array(
 	'forum-board-validation-count' => '討論板的上限數量是 $1',
 	'forum-board-description-validation-length' => '請寫此討論板的描述',
 	'forum-board-id-validation-missing' => '討論板 ID 消失',
-	'forum-board-no-board-warning' => '我們無法找到該標題的討論板。這是論壇上討論板的清單。',
+	'forum-board-no-board-warning' => '這個標題的論壇板面不存在。 請再試一次或查看論壇板面清單。',
 	'forum-related-discussion-heading' => '關於 $1 的討論',
 	'forum-related-discussion-new-post-button' => '發起討論',
 	'forum-related-discussion-new-post-tooltip' => '發起關於 $1 的討論',

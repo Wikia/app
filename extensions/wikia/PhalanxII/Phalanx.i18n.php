@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'phalanx-type-email' => 'email',
 	'phalanx-type-question-title' => 'question title',
 	'phalanx-type-recent-questions' => 'recent questions',
+	'phalanx-type-device' => 'device',
 	'phalanx-type-wiki-creation' => 'SITENAME',
 	'phalanx-add-block' => 'Add filter',
 	'phalanx-modify-block' => 'Modify filter',
@@ -24,6 +25,7 @@ $messages['en'] = array(
 	'phalanx-expires-infinite' => 'Never expires',
 	'phalanx-expiries-select' => 'No change',
 	'phalanx-label-type' => 'Type:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Type of block...',
 	'phalanx-view-blocker' => 'Search by filter text:',
 	'phalanx-view-blocks' => 'Search filters',
@@ -83,6 +85,7 @@ It does not prevent those pages from being created.
 
 Note: works only on Answers-type wiks.',
 	'phalanx-help-type-email' => 'This filter prevents account creation using a blocked email address.',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing across the entire FANDOM network due to vandalism or other disruption by you or by someone who shares your IP address.
 If you believe this is in error, please [[Special:Contact|contact FANDOM]].',
 	'phalanx-user-block-reason-exact' => 'This username or IP address is prevented from editing across the entire FANDOM network due to vandalism or other disruption.
@@ -109,6 +112,7 @@ Please [[Special:Contact|contact FANDOM]] about the problem.<br />The blocker al
 	'phalanx-stats-table-exact' => 'Exact',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Case',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Reason (public)',
 	'phalanx-stats-table-comment' => 'Comment (private)',
@@ -148,6 +152,7 @@ $messages['qqq'] = array(
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-type' => '{{Identical|Type}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
+	'phalanx-stats-table-language' => '{{Identical|Language}}',
 	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
 	'action-phalanx' => '{{doc-action|phalanx}}',
@@ -167,10 +172,13 @@ $messages['qqq'] = array(
 	'phalanx-user-block-withreason-similar' => 'Missing documentation',
 	'phalanx-required-filter' => 'Error message for filter field',
 	'phalanx-required-type' => 'Error message for type checkboxes',
+	'phalanx-type-device' => 'Label for filter type checkbox',
+	'phalanx-help-type-device' => 'Info tooltip shown to user when hovering over the label',
 );
 
 $messages['ar'] = array(
 	'phalanx-label-reason' => 'السبب:',
+	'phalanx-label-lang' => 'اللغة:',
 	'phalanx-stats-table-reason' => 'السبب',
 );
 
@@ -178,8 +186,10 @@ $messages['az'] = array(
 	'phalanx-type-user' => 'istifadəçi',
 	'phalanx-label-reason' => 'Səbəb:',
 	'phalanx-label-type' => 'Tipi:',
+	'phalanx-label-lang' => 'Dil:',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-stats-table-type' => 'Tipi',
+	'phalanx-stats-table-language' => 'Dil',
 	'phalanx-stats-table-text' => 'Mətn',
 	'phalanx-stats-table-reason' => 'Səbəb',
 	'phalanx-stats-table-wiki-name' => 'Viki adı',
@@ -188,6 +198,8 @@ $messages['az'] = array(
 
 $messages['bg'] = array(
 	'phalanx-label-reason' => 'Причина:',
+	'phalanx-label-lang' => 'Език:',
+	'phalanx-stats-table-language' => 'Език',
 	'phalanx-stats-table-reason' => 'Причина',
 );
 
@@ -198,6 +210,7 @@ $messages['br'] = array(
 	'phalanx-label-reason' => 'Abeg :',
 	'phalanx-label-expiry' => 'Termen :',
 	'phalanx-label-type' => 'Seurt :',
+	'phalanx-label-lang' => 'Yezh :',
 	'phalanx-format-exact' => 'rik',
 	'phalanx-test-submit' => 'Amprouiñ',
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
@@ -207,6 +220,7 @@ $messages['br'] = array(
 	'phalanx-stats-table-id' => 'Stankañ an ID',
 	'phalanx-stats-table-type' => 'Seurt',
 	'phalanx-stats-table-create' => 'Krouet',
+	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
 	'phalanx-stats-table-wiki-name' => 'Anv ar wiki',
@@ -225,6 +239,7 @@ $messages['cs'] = array(
 	'phalanx-label-reason' => 'Důvod:',
 	'phalanx-label-expiry' => 'Čas vypršení:',
 	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Jazyk:',
 	'phalanx-view-type' => 'Typ bloku...',
 	'phalanx-view-blocks' => 'Vyhledávací filtry',
 	'phalanx-test-submit' => 'Test',
@@ -236,6 +251,7 @@ $messages['cs'] = array(
 	'phalanx-stats-table-create' => 'Vytvořeno',
 	'phalanx-stats-table-expire' => 'Vyprší',
 	'phalanx-stats-table-exact' => 'Přesný',
+	'phalanx-stats-table-language' => 'Jazyk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Důvod',
 	'phalanx-stats-table-wiki-id' => 'ID wiki',
@@ -261,6 +277,7 @@ $messages['de'] = array(
 	'phalanx-label-reason' => 'Grund:',
 	'phalanx-label-expiry' => 'Sperrdauer:',
 	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Art der Sperre...',
 	'phalanx-view-blocker' => 'Suche nach Filtertext:',
 	'phalanx-view-blocks' => 'Suchfilter',
@@ -273,7 +290,7 @@ $messages['de'] = array(
 	'phalanx-tab-main' => 'Filter verwalten',
 	'phalanx-tab-secondary' => 'Filter testen',
 	'phalanx-block-success' => 'Die Sperre wurde erfolgreich hinzugefügt',
-	'phalanx-block-failure' => 'Es gab einen Fehler beim Hinzufügen der Sperre',
+	'phalanx-block-failure' => 'Beim Hinzufügen der Sperre ist ein Fehler aufgetreten.',
 	'phalanx-modify-success' => 'Die Sperre wurde erfolgreich geändert',
 	'phalanx-modify-failure' => 'Es gab einen Fehler beim Ändern der Sperre',
 	'phalanx-modify-warning' => 'Du bearbeitest die Sperre mit der ID #$1.
@@ -327,6 +344,7 @@ Nimm bitte [[Spezial:Kontakt|Kontakt mit FANDOM]] auf, um dieses Problem zu lös
 	'phalanx-stats-table-exact' => 'Genau',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Groß-/Kleinschreibung',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Grund',
 	'phalanx-stats-row' => "$4 wurde '''$2''' auf '''$3''' von Filtertyp '''$1''' geblockt",
@@ -379,6 +397,8 @@ Nachdem ein Filter entfernt wurde, kann auf ihn und alle verknüpften Aktionen v
 	'phalanx-section-type-questions' => 'Fragen',
 	'phalanx-required-filter' => '*Dies ist ein Pflichtfeld',
 	'phalanx-required-type' => '*Es muss mindestens ein Kontrollkästchen ausgewählt sein',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['de-formal'] = array(
@@ -397,6 +417,7 @@ $messages['diq'] = array(
 	'phalanx-test-submit' => 'Test',
 	'phalanx-stats-table-type' => 'Babet',
 	'phalanx-stats-table-create' => 'Vıraziya',
+	'phalanx-stats-table-language' => 'Zıwan',
 	'phalanx-stats-table-text' => 'nuşte',
 	'phalanx-stats-table-reason' => 'Sebeb',
 	'phalanx-stats-table-wiki-id' => 'Wiki ID',
@@ -422,6 +443,7 @@ $messages['es'] = array(
 	'phalanx-label-reason' => 'Motivo (público):',
 	'phalanx-label-expiry' => 'Expira:',
 	'phalanx-label-type' => 'Tipo:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Tipo de bloqueo...',
 	'phalanx-view-blocker' => 'Buscar por texto de filtro:',
 	'phalanx-view-blocks' => 'Buscar filtros',
@@ -434,7 +456,7 @@ $messages['es'] = array(
 	'phalanx-tab-main' => 'Administrar filtros',
 	'phalanx-tab-secondary' => 'Probar filtros',
 	'phalanx-block-success' => 'El bloqueo fue añadido satisfactoriamente.',
-	'phalanx-block-failure' => 'Ha ocurrido un error mientras se añadía el bloqueo.',
+	'phalanx-block-failure' => 'Ha ocurrido un error mientras se añadía el bloqueo',
 	'phalanx-modify-success' => 'El bloqueo fue modificado satisfactoriamente.',
 	'phalanx-modify-failure' => 'A ocurrido un error para modificar el bloqueo.',
 	'phalanx-modify-warning' => 'Estás editando el bloqueo ID #$1.
@@ -490,6 +512,7 @@ Por favor [[Especial:Contactar|contáctate con FANDOM]] para hablar sobre este p
 	'phalanx-stats-table-exact' => 'Exacto',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Sensible',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Texto',
 	'phalanx-stats-table-reason' => 'Motivo',
 	'phalanx-stats-row' => "a las $4, el filtro '''$1''' bloqueó a '''$2''' en $3",
@@ -542,6 +565,8 @@ Después de ser borrado, el filtro y todas sus acciones no serán accesibles des
 	'phalanx-modify-block' => 'Modificar filtro',
 	'phalanx-required-filter' => '*Este campo es requerido',
 	'phalanx-required-type' => '* Al menos una de las casillas de verificación es requerida',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['fi'] = array(
@@ -560,6 +585,7 @@ $messages['fi'] = array(
 	'phalanx-label-reason' => 'Syy:',
 	'phalanx-label-expiry' => 'Kesto:',
 	'phalanx-label-type' => 'Tyyppi:',
+	'phalanx-label-lang' => 'Kieli:',
 	'phalanx-view-type' => 'Eston tyyppi...',
 	'phalanx-view-blocks' => 'Hakusuodattimet',
 	'phalanx-view-id' => 'Hae suodatinta tunnisteella:',
@@ -586,6 +612,7 @@ Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wi
 	'phalanx-stats-table-user' => 'Lisääjä',
 	'phalanx-stats-table-type' => 'Tyyppi',
 	'phalanx-stats-table-create' => 'Luotu',
+	'phalanx-stats-table-language' => 'Kieli',
 	'phalanx-stats-table-text' => 'Teksti',
 	'phalanx-stats-table-reason' => 'Syy',
 	'phalanx-stats-table-wiki-id' => 'Wikin tunniste',
@@ -611,6 +638,7 @@ $messages['fr'] = array(
 	'phalanx-label-reason' => 'Motif (public) :',
 	'phalanx-label-expiry' => 'Expiration :',
 	'phalanx-label-type' => 'Type :',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Type de blocage...',
 	'phalanx-view-blocker' => 'Rechercher par filtrage de texte :',
 	'phalanx-view-blocks' => 'Filtres de recherche',
@@ -623,7 +651,7 @@ $messages['fr'] = array(
 	'phalanx-tab-main' => 'Gérer les filtres',
 	'phalanx-tab-secondary' => 'Tester les filtres',
 	'phalanx-block-success' => 'Le blocage a été ajouté avec succès',
-	'phalanx-block-failure' => 'Une erreur est survenue durant l’ajout du blocage',
+	'phalanx-block-failure' => "Un problème est survenu lors de l'ajout du blocage.",
 	'phalanx-modify-success' => 'Le blocage a été modifié avec succès',
 	'phalanx-modify-failure' => 'Une erreur est survenue durant la modification du blocage',
 	'phalanx-modify-warning' => 'Vous éditez le bloc d\'identifiant #$1.
@@ -674,6 +702,7 @@ Veuillez [[Special:Contact|contacter FANDOM]] à ce sujet.<br />La personne resp
 	'phalanx-stats-table-exact' => 'Exact',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Casse',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Texte',
 	'phalanx-stats-table-reason' => 'Motif (public)',
 	'phalanx-stats-row' => "Le $4, le filtre '''$1''' a bloqué '''$2''' sur $3",
@@ -726,6 +755,8 @@ Après retrait, un filtre et toutes les actions associées ne seront plus access
 	'phalanx-section-type-questions' => 'Questions',
 	'phalanx-required-filter' => '*Champ obligatoire',
 	'phalanx-required-type' => '*Au moins une case à cocher obligatoire',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['gl'] = array(
@@ -746,6 +777,7 @@ $messages['gl'] = array(
 	'phalanx-label-reason' => 'Motivo:',
 	'phalanx-label-expiry' => 'Duración:',
 	'phalanx-label-type' => 'Tipo:',
+	'phalanx-label-lang' => 'Lingua:',
 	'phalanx-view-type' => 'Tipo de bloqueo...',
 	'phalanx-view-blocker' => 'Procurar por texto de filtro:',
 	'phalanx-view-blocks' => 'Procurar nos filtros',
@@ -815,6 +847,7 @@ Se pensa que se trata dun erro, [[Special:Contact|póñase en contacto con Wikia
 	'phalanx-stats-table-exact' => 'Exacto',
 	'phalanx-stats-table-regex' => 'Expresión regular',
 	'phalanx-stats-table-case' => 'Maiúscula/minúscula',
+	'phalanx-stats-table-language' => 'Lingua',
 	'phalanx-stats-table-text' => 'Texto',
 	'phalanx-stats-table-reason' => 'Motivo',
 	'phalanx-stats-row' => "ás $4, o filtro do tipo '''$1''' bloqueou a '''$2''' en $3",
@@ -856,6 +889,7 @@ $messages['hu'] = array(
 	'phalanx-label-reason' => 'Ok:',
 	'phalanx-label-expiry' => 'Lejárat:',
 	'phalanx-label-type' => 'Típus:',
+	'phalanx-label-lang' => 'Nyelv:',
 	'phalanx-view-type' => 'Blokk típusa...',
 	'phalanx-view-blocker' => 'Keresés szűrt szöveg alapján:',
 	'phalanx-view-blocks' => 'Szűrők keresése',
@@ -927,6 +961,7 @@ A letiltó személy az alábbi indoklást adta: $1',
 	'phalanx-stats-table-exact' => 'Pontos',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Eset',
+	'phalanx-stats-table-language' => 'Nyelv',
 	'phalanx-stats-table-text' => 'Szöveg',
 	'phalanx-stats-table-reason' => 'Ok',
 	'phalanx-stats-row' => "a(z) '''$1''' típusú szűrő $4-kor blokkolta $2-t a(z) $3-n",
@@ -968,6 +1003,7 @@ $messages['ia'] = array(
 	'phalanx-label-reason' => 'Motivo:',
 	'phalanx-label-expiry' => 'Expiration:',
 	'phalanx-label-type' => 'Typo:',
+	'phalanx-label-lang' => 'Lingua:',
 	'phalanx-view-type' => 'Typo de blocada...',
 	'phalanx-view-blocker' => 'Cercar per texto de filtro:',
 	'phalanx-view-blocks' => 'Cercar in filtros',
@@ -1037,6 +1073,7 @@ Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.<br />
 	'phalanx-stats-table-exact' => 'Exacte',
 	'phalanx-stats-table-regex' => 'Expression regular',
 	'phalanx-stats-table-case' => 'Litteras',
+	'phalanx-stats-table-language' => 'Lingua',
 	'phalanx-stats-table-text' => 'Texto',
 	'phalanx-stats-table-reason' => 'Motivo',
 	'phalanx-stats-row' => "a $4, le typo de filtro ''$1''' blocava '''$2''' in $3",
@@ -1072,6 +1109,7 @@ $messages['is'] = array(
 	'phalanx-label-reason' => 'Ástæða:',
 	'phalanx-label-expiry' => 'Rennur út:',
 	'phalanx-label-type' => 'Gerð:',
+	'phalanx-label-lang' => 'Tungumál:',
 	'phalanx-view-type' => 'Gerð banns...',
 	'phalanx-view-id-submit' => 'Sækja síu',
 	'phalanx-format-regex' => 'regluleg segð',
@@ -1152,7 +1190,7 @@ Per favore, [[Special:Contact|contatta FANDOM]] in merito al problema.',
 	'phalanx-bulkmode' => 'Modalità in blocco',
 	'phalanx-singlemode' => 'Modalità singola',
 	'phalanx-block-success' => 'Il blocco è stato aggiunto con successo',
-	'phalanx-block-failure' => "Errore durante l'aggiunta del blocco",
+	'phalanx-block-failure' => "Si è verificato un problema con l'aggiunta del blocco.",
 	'phalanx-modify-success' => 'Il blocco è stato modificato con successo',
 	'phalanx-modify-failure' => 'Errore durante la modifica del blocco',
 	'phalanx-modify-warning' => 'Si sta modificando il blocco di ID #$1.
@@ -1232,6 +1270,10 @@ Nota: funziona solo su wiki-risposte.',
 	'phalanx-section-type-questions' => 'Domande',
 	'phalanx-required-filter' => '*Questo campo è obbligatorio',
 	'phalanx-required-type' => '*Occorre selezionare almeno una delle caselle di controllo',
+	'phalanx-type-device' => 'device',
+	'phalanx-label-lang' => 'Language:',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-stats-table-language' => 'Language',
 );
 
 $messages['ja'] = array(
@@ -1243,6 +1285,7 @@ $messages['ja'] = array(
 	'phalanx-label-filter' => 'フィルター:',
 	'phalanx-label-reason' => '理由:',
 	'phalanx-label-type' => '種類:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-format-text' => 'プレーンテキスト',
 	'phalanx-format-regex' => '正規表現',
 	'phalanx-format-case' => '大文字・小文字を区別',
@@ -1255,6 +1298,7 @@ $messages['ja'] = array(
 	'phalanx-stats-block-notfound' => 'ブロック ID が見つかりません',
 	'phalanx-stats-table-id' => 'ブロック ID',
 	'phalanx-stats-table-regex' => '正規表現',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'テキスト',
 	'phalanx-stats-table-reason' => '理由',
 	'phalanx-stats-table-wiki-id' => 'ウィキ ID',
@@ -1307,7 +1351,7 @@ $messages['ja'] = array(
 	'phalanx-bulkmode' => '一括モード',
 	'phalanx-singlemode' => '単一モード',
 	'phalanx-block-success' => 'ブロックを追加しました',
-	'phalanx-block-failure' => 'ブロックの追加中にエラーが発生しました',
+	'phalanx-block-failure' => 'ブロックの追加で問題が発生しました。',
 	'phalanx-modify-success' => 'ブロックを変更しました',
 	'phalanx-modify-failure' => 'ブロックの変更中にエラーが発生しました',
 	'phalanx-modify-warning' => 'ブロックID#$1を編集しています。
@@ -1369,6 +1413,8 @@ $messages['ja'] = array(
 	'phalanx-section-type-questions' => '質問',
 	'phalanx-required-filter' => '*この項目は必須です',
 	'phalanx-required-type' => '*1つ以上のチェックボックスを選択する必要があります',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['km'] = array(
@@ -1385,6 +1431,7 @@ $messages['km'] = array(
 	'phalanx-label-reason' => 'មូលហេតុ៖',
 	'phalanx-label-expiry' => 'រយៈពេលផុតកំណត់៖',
 	'phalanx-label-type' => 'ប្រភេទ​៖',
+	'phalanx-label-lang' => 'ភាសា៖',
 	'phalanx-view-type' => 'ប្រភេទការរាំងខ្ទប់...',
 	'phalanx-view-blocker' => 'ស្វែងរកដោយអត្ថបទតំរង៖',
 	'phalanx-view-blocks' => 'ស្វែងរកតំរង',
@@ -1410,14 +1457,18 @@ $messages['km'] = array(
 
 $messages['ko'] = array(
 	'phalanx-label-type' => '유형:',
+	'phalanx-label-lang' => '언어:',
+	'phalanx-stats-table-language' => '언어',
 );
 
 $messages['lb'] = array(
 	'phalanx-type-user' => 'Benotzer',
 	'phalanx-label-filter' => 'Filter:',
 	'phalanx-label-reason' => 'Grond:',
+	'phalanx-label-lang' => 'Sprooch:',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-stats-table-type' => 'Typ',
+	'phalanx-stats-table-language' => 'Sprooch',
 	'phalanx-stats-table-text' => 'Text:',
 	'phalanx-stats-table-reason' => 'Grond',
 	'phalanx-stats-table-wiki-name' => 'Numm vun der Wiki',
@@ -1441,6 +1492,7 @@ $messages['mk'] = array(
 	'phalanx-label-reason' => 'Причина:',
 	'phalanx-label-expiry' => 'Истекува:',
 	'phalanx-label-type' => 'Тип:',
+	'phalanx-label-lang' => 'Јазик:',
 	'phalanx-view-type' => 'Тип на блок...',
 	'phalanx-view-blocker' => 'Пребарај по филтриран текст:',
 	'phalanx-view-blocks' => 'Пребарај филтри',
@@ -1510,6 +1562,7 @@ $messages['mk'] = array(
 	'phalanx-stats-table-exact' => 'Точно',
 	'phalanx-stats-table-regex' => 'Рег. израз',
 	'phalanx-stats-table-case' => 'Регистар',
+	'phalanx-stats-table-language' => 'Јазик',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Причина',
 	'phalanx-stats-row' => "во $4, филтерот од типот '''$1''' го блокирал корисникот '''$2''' на $3",
@@ -1543,9 +1596,11 @@ $messages['ml'] = array(
 	'phalanx-label-reason' => 'കാരണം:',
 	'phalanx-label-expiry' => 'കാലാവധി:',
 	'phalanx-label-type' => 'തരം:',
+	'phalanx-label-lang' => 'ഭാഷ:',
 	'phalanx-stats-table-type' => 'തരം',
 	'phalanx-stats-table-create' => 'സൃഷ്ടിച്ചത്',
 	'phalanx-stats-table-expire' => 'കാലാവധി',
+	'phalanx-stats-table-language' => 'ഭാഷ',
 	'phalanx-stats-table-text' => 'എഴുത്ത്',
 	'phalanx-stats-table-reason' => 'കാരണം',
 	'phalanx-stats-table-wiki-id' => 'വിക്കി ഐ.ഡി.',
@@ -1572,6 +1627,7 @@ $messages['ms'] = array(
 	'phalanx-label-reason' => 'Sebab:',
 	'phalanx-label-expiry' => 'Tamat:',
 	'phalanx-label-type' => 'Jenis:',
+	'phalanx-label-lang' => 'Bahasa:',
 	'phalanx-view-type' => 'Jenis sekatan...',
 	'phalanx-view-blocker' => 'Cari mengikut teks penapis:',
 	'phalanx-view-blocks' => 'Cari penapis',
@@ -1640,6 +1696,7 @@ Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga m
 	'phalanx-stats-table-exact' => 'Tepat',
 	'phalanx-stats-table-regex' => 'Ungkapan nalar',
 	'phalanx-stats-table-case' => 'Kes',
+	'phalanx-stats-table-language' => 'Bahasa',
 	'phalanx-stats-table-text' => 'Teks',
 	'phalanx-stats-table-reason' => 'Sebab',
 	'phalanx-stats-row' => "di $4, penapis jenis '''$1''' menyekat '''$2''' pada $3",
@@ -1681,6 +1738,7 @@ $messages['nb'] = array(
 	'phalanx-label-reason' => 'Årsak:',
 	'phalanx-label-expiry' => 'Utløpstid:',
 	'phalanx-label-type' => 'Type:',
+	'phalanx-label-lang' => 'Språk:',
 	'phalanx-view-type' => 'Blokkeringstype...',
 	'phalanx-view-blocker' => 'Søk etter filtrert tekst:',
 	'phalanx-view-blocks' => 'Søkefilter',
@@ -1750,6 +1808,7 @@ Vennligst [[Special:Contact|kontakt Wikia]] om problemet.<br />Blokkereren la i 
 	'phalanx-stats-table-exact' => 'Nøyaktig',
 	'phalanx-stats-table-regex' => 'Regulært uttrykk',
 	'phalanx-stats-table-case' => 'Sak',
+	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Tekst',
 	'phalanx-stats-table-reason' => 'Årsak',
 	'phalanx-stats-row' => "på $4, filtertype '''$1''' blokkerte '''$2''' på $3",
@@ -1791,6 +1850,7 @@ $messages['nl'] = array(
 	'phalanx-label-reason' => 'Reden:',
 	'phalanx-label-expiry' => 'Vervalt:',
 	'phalanx-label-type' => 'Type:',
+	'phalanx-label-lang' => 'Taal:',
 	'phalanx-view-type' => 'Type blokkade...',
 	'phalanx-view-blocker' => 'Zoeken op filtertekst:',
 	'phalanx-view-blocks' => 'Filters doorzoeken',
@@ -1860,6 +1920,7 @@ Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] 
 	'phalanx-stats-table-exact' => 'Precies',
 	'phalanx-stats-table-regex' => 'Reguliere expressie',
 	'phalanx-stats-table-case' => 'Hoofd- of kleine letters',
+	'phalanx-stats-table-language' => 'Taal',
 	'phalanx-stats-table-text' => 'Tekst',
 	'phalanx-stats-table-reason' => 'Reden',
 	'phalanx-stats-row' => "om $4 heeft filtertype '''$1''' '''$2''' geblokkeerd op $3",
@@ -1936,6 +1997,7 @@ $messages['pl'] = array(
 	'phalanx-expires-infinite' => 'nigdy',
 	'phalanx-expiries-select' => 'Bez zmian',
 	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Typ blokady...',
 	'phalanx-view-blocker' => 'Szukaj według filtru tekstu:',
 	'phalanx-view-blocks' => 'Filtry wyszukiwania',
@@ -1952,7 +2014,7 @@ $messages['pl'] = array(
 	'phalanx-validate-regexp-invalid' => 'Regex jest niepoprawny',
 	'phalanx-unblock-failure' => 'Wystąpił błąd podczas usuwania blokady',
 	'phalanx-block-success' => 'Pomyślnie dodano blokadę',
-	'phalanx-block-failure' => 'Wystąpił błąd podczas dodawania blokady',
+	'phalanx-block-failure' => 'Wystąpił problem z dodaniem blokady',
 	'phalanx-modify-success' => 'Blokada została pomyślnie zmodyfikowana',
 	'phalanx-modify-failure' => 'Wystąpił błąd podczas modyfikowania blokady',
 	'phalanx-modify-warning' => 'Edytujesz blokadę o ID #$1.
@@ -2015,6 +2077,7 @@ Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z 
 	'phalanx-stats-table-exact' => 'Dokładna',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Wielkość liter',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Tekst',
 	'phalanx-stats-table-reason' => 'Powód (publiczny)',
 	'phalanx-stats-table-comment' => 'Komentarz (prywatny)',
@@ -2052,6 +2115,8 @@ Jeżeli uważasz, że nastąpiła pomyłka, [[Special:Contact|skontaktuj się z 
 	'phalanx-email-block-new-account' => 'Nie możemy w tej chwili zakończyć rejestracji.',
 	'phalanx-required-filter' => 'To pole jest wymagane',
 	'phalanx-required-type' => 'Musisz zaznaczyć przynajmniej jedno pole',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['pms'] = array(
@@ -2072,6 +2137,7 @@ $messages['pms'] = array(
 	'phalanx-label-reason' => 'Rason:',
 	'phalanx-label-expiry' => 'Fin:',
 	'phalanx-label-type' => 'Sòrt:',
+	'phalanx-label-lang' => 'Lenga:',
 	'phalanx-view-type' => 'Sòrt ëd blòch...',
 	'phalanx-view-blocker' => 'Serca con test ëd filtr:',
 	'phalanx-view-blocks' => "Filtr d'arserca",
@@ -2141,6 +2207,7 @@ Për piasì [[Special:Contact|contata Wikia]] për parlé dël problema.<br />Ë
 	'phalanx-stats-table-exact' => 'Precis',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'Cas',
+	'phalanx-stats-table-language' => 'Lenga',
 	'phalanx-stats-table-text' => 'Test',
 	'phalanx-stats-table-reason' => 'Rason',
 	'phalanx-stats-row' => "a $4, filtr sòrt '''$1''' blocà '''$2''' ai $3",
@@ -2174,9 +2241,11 @@ $messages['ps'] = array(
 	'phalanx-label-filter' => 'چاڼګر:',
 	'phalanx-label-reason' => 'سبب:',
 	'phalanx-label-type' => 'ډول:',
+	'phalanx-label-lang' => 'ژبه:',
 	'phalanx-test-submit' => 'آزمېښت',
 	'phalanx-test-results-legend' => 'آزمېښت پايلې',
 	'phalanx-stats-table-create' => 'جوړ شو',
+	'phalanx-stats-table-language' => 'ژبه',
 	'phalanx-stats-table-text' => 'متن',
 	'phalanx-stats-table-reason' => 'سبب',
 	'phalanx-stats-table-wiki-id' => 'ويکي پېژند',
@@ -2200,6 +2269,7 @@ $messages['pt'] = array(
 	'phalanx-label-reason' => 'Motivo:',
 	'phalanx-label-expiry' => 'Expiração:',
 	'phalanx-label-type' => 'Tipo:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Tipo de bloqueio...',
 	'phalanx-view-blocker' => 'Pesquisa por texto de filtro:',
 	'phalanx-view-blocks' => 'Pesquisar filtros',
@@ -2212,7 +2282,7 @@ $messages['pt'] = array(
 	'phalanx-tab-main' => 'Administrar filtros',
 	'phalanx-tab-secondary' => 'Testar filtros',
 	'phalanx-block-success' => 'O bloqueio foi adicionado com sucesso',
-	'phalanx-block-failure' => 'Ocorreu um erro durante a adição do bloqueio',
+	'phalanx-block-failure' => 'Houve um problema com a adição do bloqueio',
 	'phalanx-modify-success' => 'O bloqueio foi modificado com sucesso',
 	'phalanx-modify-failure' => 'Ocorreu um erro durante a alteração do bloqueio',
 	'phalanx-modify-warning' => 'Você está editando o bloqueio ID #$1. Clique em "{{int:phalanx-edit-block}}" para salvar as alterações!',
@@ -2265,6 +2335,7 @@ Por favor, [[Especial:Contact|entre em contato com o FANDOM]] sobre este problem
 	'phalanx-stats-table-exact' => 'Exato',
 	'phalanx-stats-table-regex' => 'Expressão regular',
 	'phalanx-stats-table-case' => 'Caso',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Texto',
 	'phalanx-stats-table-reason' => 'Motivo',
 	'phalanx-stats-row' => "em $4, o filtro tipo '''$1''' bloqueou '''$2''' em $3",
@@ -2283,6 +2354,7 @@ Por favor, [[Especial:Contact|entre em contato com o FANDOM]] sobre este problem
 	'right-phalanxexempt' => 'Isento de regras Phalanx',
 	'phalanx-sp-contributions-blocked-globally' => 'Este usuário está atualmente bloqueado na rede do FANDOM.',
 	'phalanx-type-email' => 'e-mail',
+	'phalanx-type-device' => 'device',
 	'phalanx-modify-block' => 'Modificar o filtro',
 	'phalanx-label-comment' => 'Comentário (privado):',
 	'phalanx-expires' => 'Expira em $1',
@@ -2304,6 +2376,7 @@ Por favor, [[Especial:Contact|entre em contato com o FANDOM]] sobre este problem
 
 Depois de ser removido, um filtro e todas as ações ligadas a ele não estarão mais acessíveis; a criação e exclusão de filtros é permanentemente registrada em [[$1 | página especial de log]].',
 	'phalanx-help-type-email' => 'Este filtro impede a criação de contas usando endereços de e-mail bloqueados.',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 	'phalanx-email-block-new-account' => 'Não podemos completar seu registro neste momento.',
 	'phalanx-stats-table-comment' => 'Comentário (privado)',
 	'phalanx-stats-not-implemented' => 'Este recurso ainda não foi implementado',
@@ -2339,6 +2412,7 @@ $messages['ru'] = array(
 	'phalanx-label-reason' => 'Причина (видна всем):',
 	'phalanx-label-expiry' => 'Срок действия:',
 	'phalanx-label-type' => 'Тип:',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-view-type' => 'Тип блокировки...',
 	'phalanx-view-blocker' => 'Поиск по фильтру для текста:',
 	'phalanx-view-blocks' => 'Поиск фильтров',
@@ -2383,19 +2457,19 @@ $messages['ru'] = array(
 
 Примечание: работает только на вики для ответов.',
 	'phalanx-help-type-email' => 'Этот фильтр предотвращает создание учётной записи с использованием заблокированного электронного адреса.',
-	'phalanx-user-block-reason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
-	'phalanx-user-block-reason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
-	'phalanx-user-block-reason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].',
+	'phalanx-user-block-reason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
+	'phalanx-user-block-reason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
+	'phalanx-user-block-reason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМАа из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].',
 	'phalanx-user-block-new-account' => 'Это имя пользователя не доступно для регистрации. Пожалуйста, выберите другое.',
-	'phalanx-user-block-withreason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
-	'phalanx-user-block-withreason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
-	'phalanx-user-block-withreason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве Фэндома из-за вандализма или другого нарушения. 
-Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|поддержкой Фэндома]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-ip' => 'Участнику с этим IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения, совершённого вами или другим пользователем с этим IP-адресом. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-exact' => 'Участнику с этим именем или IP-адресом запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
+	'phalanx-user-block-withreason-similar' => 'Участнику с этим именем запрещено редактировать на всём пространстве ФЭНДОМА из-за вандализма или другого нарушения. 
+Если вы считаете, что это ошибка, свяжитесь с [[Служебная:Contact|сотрудниками ФЭНДОМА]].<br />Причина блокировки: $1.',
 	'phalanx-title-move-summary' => 'Причина, по которой вы добавляете эту фразу для блокировки.',
 	'phalanx-content-spam-summary' => 'Текст, найденный в описании изменений.',
 	'phalanx-stats-title' => 'Статистика Phalanx',
@@ -2408,6 +2482,7 @@ $messages['ru'] = array(
 	'phalanx-stats-table-exact' => 'Строго',
 	'phalanx-stats-table-regex' => 'Regex',
 	'phalanx-stats-table-case' => 'В случае',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Причина (видна всем)',
 	'phalanx-stats-row' => "в $4, тип фильтра '''$1''' заблокировал(а) '''$2''' на $3",
@@ -2429,7 +2504,7 @@ $messages['ru'] = array(
 	'right-phalanx' => 'Можно управлять глобальными блокировками и спам-фильтрами',
 	'right-phalanxexempt' => 'Освобождено от правил Phalanx',
 	'right-phalanxemailblock' => 'Можно просматривать и управлять блокировками по электронному адресу',
-	'phalanx-sp-contributions-blocked-globally' => 'В настоящее время этот участник заблокирован на всём пространстве Фэндома.',
+	'phalanx-sp-contributions-blocked-globally' => 'В настоящее время этот участник заблокирован на всём пространстве ФЭНДОМА.',
 	'phalanx-modify-block' => 'Изменить фильтр',
 	'phalanx-label-comment' => 'Комментарий (скрытый):',
 	'phalanx-expires' => 'Истекает $1',
@@ -2460,11 +2535,14 @@ $messages['ru'] = array(
 	'phalanx-section-type-questions' => 'Вопросы',
 	'phalanx-required-filter' => '* Это поле является обязательным',
 	'phalanx-required-type' => '* Требуется по крайней мере одна галочка',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['saz'] = array(
 	'phalanx-type-user' => 'ꢮꢮ꣄ꢬꢸꢥꢵꢬ꣄',
 	'phalanx-label-filter' => 'ꢏꢜ꣄ꢗꢶ',
+	'phalanx-stats-table-language' => 'ꢩꢵꢰꣁ',
 );
 
 $messages['sr-ec'] = array(
@@ -2478,12 +2556,14 @@ $messages['sr-ec'] = array(
 	'phalanx-label-filter' => 'Филтер:',
 	'phalanx-label-expiry' => 'Истек:',
 	'phalanx-label-type' => 'Врста:',
+	'phalanx-label-lang' => 'Језик:',
 	'phalanx-view-type' => 'Врста забране...',
 	'phalanx-view-blocks' => 'Претражи филтере',
 	'phalanx-format-text' => 'чист текст',
 	'phalanx-link-modify' => 'измени',
 	'phalanx-stats-table-user' => 'Додао:',
 	'phalanx-stats-table-type' => 'Врста',
+	'phalanx-stats-table-language' => 'Језик',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Разлог',
 );
@@ -2506,6 +2586,7 @@ $messages['sv'] = array(
 	'phalanx-label-reason' => 'Orsak:',
 	'phalanx-label-expiry' => 'Varaktighet:',
 	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Språk:',
 	'phalanx-view-type' => 'Typ av blockering...',
 	'phalanx-view-blocker' => 'Sök med textfilter:',
 	'phalanx-view-blocks' => 'Sökfilter',
@@ -2574,6 +2655,7 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 	'phalanx-stats-table-exact' => 'Exakt',
 	'phalanx-stats-table-regex' => 'Reguljärt uttryck',
 	'phalanx-stats-table-case' => 'Händelse',
+	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Anledning',
 	'phalanx-stats-row' => "på $4, filtertyp '''$1''' blockerade '''$2''' den $3",
@@ -2605,9 +2687,11 @@ $messages['te'] = array(
 	'phalanx-type-recent-questions' => 'ఇటీవలి ప్రశ్నలు',
 	'phalanx-label-reason' => 'కారణం:',
 	'phalanx-label-type' => 'రకం:',
+	'phalanx-label-lang' => 'భాష:',
 	'phalanx-test-results-legend' => 'పరీక్షా ఫలితాలు',
 	'phalanx-link-stats' => 'గణాంకాలు',
 	'phalanx-stats-table-type' => 'రకం',
+	'phalanx-stats-table-language' => 'భాష',
 	'phalanx-stats-table-text' => 'పాఠ్యం',
 	'phalanx-stats-table-reason' => 'కారణం',
 	'phalanx-stats-table-wiki-name' => 'వికీ పేరు',
@@ -2631,6 +2715,7 @@ $messages['tl'] = array(
 	'phalanx-label-reason' => 'Dahilan:',
 	'phalanx-label-expiry' => 'Katapusan:',
 	'phalanx-label-type' => 'Uri:',
+	'phalanx-label-lang' => 'Wika:',
 	'phalanx-view-type' => 'Magmakinilya ng pagharang...',
 	'phalanx-view-blocker' => 'Maghanap sa pamamagitan ng teksto ng pagsala:',
 	'phalanx-view-blocks' => 'Maghanap sa mga pansala',
@@ -2695,6 +2780,7 @@ Paki [[Special:Contact|makipag-ugnayan sa Wikia]] hinggil sa suliranin.<br />Ang
 	'phalanx-stats-table-exact' => 'Lapat na lapat',
 	'phalanx-stats-table-regex' => 'Pangkaraniwang pagsasaad',
 	'phalanx-stats-table-case' => 'Sukat ng titik',
+	'phalanx-stats-table-language' => 'Wika',
 	'phalanx-stats-table-text' => 'Teksto',
 	'phalanx-stats-table-reason' => 'Dahilan',
 	'phalanx-stats-row' => "sa ganap na $4, uri ng pansalang '''$1''' hinadlangan ang '''$2''' noong $3",
@@ -2740,6 +2826,7 @@ $messages['uk'] = array(
 	'phalanx-label-reason' => 'Причина:',
 	'phalanx-label-expiry' => 'Термін дії:',
 	'phalanx-label-type' => 'Тип:',
+	'phalanx-label-lang' => 'Мова:',
 	'phalanx-view-type' => 'Тип блоку...',
 	'phalanx-view-blocker' => 'Шукати за фільтром для тексту:',
 	'phalanx-view-blocks' => 'Пошукові фільтри',
@@ -2777,6 +2864,7 @@ $messages['uk'] = array(
 	'phalanx-stats-table-expire' => 'Закінчується',
 	'phalanx-stats-table-exact' => 'Точно',
 	'phalanx-stats-table-case' => 'У разі',
+	'phalanx-stats-table-language' => 'Мова',
 	'phalanx-stats-table-text' => 'Текст',
 	'phalanx-stats-table-reason' => 'Причина',
 );
@@ -2930,9 +3018,11 @@ $messages['zh-hans'] = array(
 	'phalanx-label-reason' => '原因（公开）：',
 	'phalanx-label-expiry' => '截止日期：',
 	'phalanx-label-type' => '类型：',
+	'phalanx-label-lang' => 'Language:',
 	'phalanx-stats-table-type' => '类型',
 	'phalanx-stats-table-create' => '以创造',
 	'phalanx-stats-table-expire' => '到期',
+	'phalanx-stats-table-language' => 'Language',
 	'phalanx-stats-table-text' => '文字',
 	'phalanx-stats-table-reason' => '原因',
 	'phalanx-stats-table-wiki-id' => '维基 ID',
@@ -2988,7 +3078,7 @@ $messages['zh-hans'] = array(
 	'phalanx-bulkmode' => '批量模式',
 	'phalanx-singlemode' => '单一模式',
 	'phalanx-block-success' => '已成功添加封禁',
-	'phalanx-block-failure' => '添加封禁过程出错',
+	'phalanx-block-failure' => '添加封禁时出错',
 	'phalanx-modify-success' => '已成功修改封禁',
 	'phalanx-modify-failure' => '修改封禁过程出错',
 	'phalanx-modify-warning' => '您正在编辑封禁ID#$1。
@@ -3061,6 +3151,8 @@ $messages['zh-hans'] = array(
 	'phalanx-section-type-questions' => '问题',
 	'phalanx-required-filter' => '*此区域不能为空',
 	'phalanx-required-type' => '*至少需要选择一个复选框',
+	'phalanx-type-device' => 'device',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
 );
 
 $messages['zh-hant'] = array(
@@ -3121,7 +3213,7 @@ $messages['zh-hant'] = array(
 	'phalanx-bulkmode' => '批量模式',
 	'phalanx-singlemode' => '單一模式',
 	'phalanx-block-success' => '已成功添加封禁',
-	'phalanx-block-failure' => '添加封禁時出錯',
+	'phalanx-block-failure' => '添加封禁時發生錯誤',
 	'phalanx-modify-success' => '已成功修改封禁',
 	'phalanx-modify-failure' => '修改封禁時出錯',
 	'phalanx-modify-warning' => '您正在編輯封禁ID#$1。
@@ -3202,5 +3294,9 @@ $messages['zh-hant'] = array(
 	'phalanx-section-type-questions' => '問題',
 	'phalanx-required-filter' => '*此欄位不能為空',
 	'phalanx-required-type' => '*至少需要選擇一個方框',
+	'phalanx-type-device' => 'device',
+	'phalanx-label-lang' => 'Language:',
+	'phalanx-help-type-device' => 'This filter blocks an user if their mobile device ID matches its value.',
+	'phalanx-stats-table-language' => 'Language',
 );
 

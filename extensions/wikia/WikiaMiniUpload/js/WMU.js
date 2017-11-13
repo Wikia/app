@@ -932,7 +932,7 @@ function WMU_insertPlaceholder( box ) {
 	WMU_box_filled.push(box);
 	var to_update = $( '#WikiaImagePlaceholder' + box );
 	to_update.html($( '#ImageUploadCode' ).html());
-	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
+	$.post(wgScript + '?title=' + wgPageName  +'&action=purge');
 }
 
 function WMU_insertImage(type) {
@@ -1255,7 +1255,13 @@ function WMU_switchScreen(to) {
 		WMU_loadMain();
 	}
 	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $('#ImageUploadName').length) {
-		$.get('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $('#ImageUploadMWname').val() + '&tempid=' + $( '#ImageUploadTempid' ).val());
+		$.get(wgScriptPath + '/index.php', {
+		    action: 'ajax',
+		    rs: 'WMU',
+		    method: 'clean',
+		    mwname: $('#ImageUploadMWname').val(),
+		    tempid: $( '#ImageUploadTempid' ).val()
+		});
 	}
 
 	// macbre: move back button on Oasis

@@ -115,7 +115,11 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		global $wgVisualEditorNamespaces;
+		
 		$vars['wgVisualEditorPreferred'] = (
+			// SUS-1442: No need to check user preferences or call Phalanx if VE isn't available
+			$out->getTitle()->inNamespaces( $wgVisualEditorNamespaces ) &&
 			self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL &&
 			!$out->getUser()->isBlockedFrom( $out->getTitle(), true )
 		);

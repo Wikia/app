@@ -85,6 +85,11 @@ class ConfigureWikiFactory extends Task {
 		return $wikiFactoryVariables;
 	}
 
+	/**
+	 * @param \DatabaseBase $sharedDBW
+	 * @param $wikiFactoryVariables
+	 * @return array
+	 */
 	public function getVariablesFromDB( $sharedDBW, $wikiFactoryVariables ) {
 		wfProfileIn( __METHOD__ );
 
@@ -107,6 +112,12 @@ class ConfigureWikiFactory extends Task {
 		return $wikiFactoryVarsFromDB;
 	}
 
+	/**
+	 * @param \DatabaseBase $sharedDBW
+	 * @param $cityId
+	 * @param $wikiFactoryVariablesFromDB
+	 * @param $wikiFactoryVariables
+	 */
 	private function setVariables( $sharedDBW, $cityId, $wikiFactoryVariablesFromDB, $wikiFactoryVariables ) {
 		wfProfileIn( __METHOD__ );
 		foreach ( $wikiFactoryVariables as $variable => $value ) {

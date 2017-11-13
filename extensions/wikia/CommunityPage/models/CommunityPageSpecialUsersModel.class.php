@@ -325,7 +325,7 @@ class CommunityPageSpecialUsersModel {
 	 * @return bool
 	 */
 	private function showMember( User $user ) {
-		return !( $user->isAnon() || $user->isBlocked() || in_array( $user->getId(), $this->getBotIds() ) );
+		return !( $user->isAnon() || $user->isBlocked( true /* use slave DB */, false /* don't log Phalanx Stats */ ) || in_array( $user->getId(), $this->getBotIds() ) );
 	}
 
 	/**
@@ -504,7 +504,7 @@ class CommunityPageSpecialUsersModel {
 	private function prepareUserData( $userId, $lastRevision ) {
 		$user = User::newFromId( $userId );
 
-		if ( !$user->isBlocked() ) {
+		if ( !$user->isBlocked( true /* use slave DB */, false /* don't log Phalanx Stats */ ) ) {
 			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 

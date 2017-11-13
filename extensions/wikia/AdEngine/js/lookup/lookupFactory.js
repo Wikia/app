@@ -1,12 +1,13 @@
-/*global define*/
+/*global define Promise*/
 define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
+	'wikia.promise',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener) {
+], function (adContext, adTracker, adBlockDetection, lazyQueue, log, Promise, mercuryListener) {
 	'use strict';
 
 	function create(module) {
@@ -122,6 +123,16 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			});
 		}
 
+		function waitForResponse(milisToTimeout) {
+			return Promise.createWithTimeout(function (resolve) {
+				if (hasResponse()) {
+					resolve();
+				} else {
+					addResponseListener(resolve);
+				}
+			}, milisToTimeout);
+		}
+
 		resetState();
 
 		if (mercuryListener) {
@@ -137,7 +148,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			hasResponse: hasResponse,
 			isSlotSupported: isSlotSupported,
 			trackState: trackState,
-			wasCalled: wasCalled
+			wasCalled: wasCalled,
+			waitForResponse: waitForResponse
 		};
 	}
 

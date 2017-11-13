@@ -14,6 +14,9 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass SebastianBergmann\Comparator\Factory
+ * @uses SebastianBergmann\Comparator\Comparator
+ * @uses SebastianBergmann\Comparator\Factory
+ * @uses SebastianBergmann\Comparator\ComparisonFailure
  */
 class FactoryTest extends TestCase
 {
@@ -112,5 +115,11 @@ class FactoryTest extends TestCase
         $actual   = $factory->getComparatorFor($a, $b);
 
         $this->assertInstanceOf($expected, $actual);
+    }
+
+    public function testIsSingleton()
+    {
+        $f = Factory::getInstance();
+        $this->assertSame($f, Factory::getInstance());
     }
 }

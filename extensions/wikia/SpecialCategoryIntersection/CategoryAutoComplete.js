@@ -38,7 +38,7 @@ CategoryAutoComplete = {
 		$.loadJQueryAutocomplete(function() {
 			CategoryAutoComplete.searchFields.each(function(){
 				$(this).autocomplete({
-					serviceUrl: wgServer + wgScriptPath + "/api.php" + '?action=opensearch',
+					serviceUrl: wgScriptPath + "/api.php" + '?action=opensearch',
 					appendTo: $(this).parent('.autoCompleteWrapper'),
 					deferRequestBy: 250,
 					maxHeight: 1000,

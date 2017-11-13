@@ -150,6 +150,11 @@ class TaskContext {
 		$this->wikiDBW = $dbw;
 	}
 
+	/**
+	 * Return a connection to "wikicities" shared database
+	 *
+	 * @return \DatabaseBase
+	 */
 	public function getSharedDBW() {
 		return $this->sharedDBW;
 	}

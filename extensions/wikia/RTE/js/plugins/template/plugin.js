@@ -415,7 +415,7 @@ RTE.templateEditor = {
 				$('#templateEditorTemplateName').html(templateName);
 
 				// URL to template source
-				var viewHref = window.wgServer + window.wgArticlePath.replace(/\$1/, encodeURI(info.title.replace(/ /g, '_')));
+				var viewHref = window.wgArticlePath.replace(/\$1/, encodeURI(info.title.replace(/ /g, '_')));
 				$('#templateEditorViewLink').attr('href', viewHref);
 
 				// render list of parameters and their values

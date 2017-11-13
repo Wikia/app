@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 	function getWinningVideoBidBySlotName(slotName, allowedBidders) {
 		var bids;
 
-		if (!win.pbjs) {
+		if (!win.pbjs || !win.pbjs.getBidResponsesForAdUnitCode) {
 			return null;
 		}
 
