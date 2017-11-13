@@ -113,22 +113,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.a9Video = geo.isProperGeo(instantGlobals.wgAdDriverA9VideoBidderCountries);
 	}
 
-	function enableAdMixExperiment(context) {
-		context.slots.premiumAdLayoutSlotsToUnblock = [
-			'TOP_RIGHT_BOXAD',
-			'INVISIBLE_HIGH_IMPACT_2',
-			'INCONTENT_BOXAD_1',
-			'BOTTOM_LEADERBOARD'
-		];
-
-		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo &&
-			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
-
-		if (!context.targeting.hasFeaturedVideo) {
-			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
-		}
-	}
-
 	function referrerIsSonySite() {
 		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
 	}
@@ -225,7 +209,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.porvataMoatTrackingEnabled =
 			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
 
-		enableAdMixExperiment(context);
+		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
 
 		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);

@@ -1,12 +1,11 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win) {
+], function (adContext, uapContext, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -50,40 +49,25 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			if (!uapContext.isUapLoaded()) {
-				if (unblockedSlots.indexOf(slot.name) > -1) {
-					log(['PAL enabled, filling slot', slot.name], log.levels.info, logGroup);
-					fillInSlot(slot);
-					return;
-				}
-			} else {
-				if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-					log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
-					config.highlyViewableSlots.map(unblock);
-				}
+			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+				log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
+				config.highlyViewableSlots.map(unblock);
+			}
 
-				if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
-					log(['Filling slot', slot.name], log.levels.info, logGroup);
-					fillInSlot(slot);
-					return;
-				}
+			if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
+				log(['Filling slot', slot.name], log.levels.info, logGroup);
+				fillInSlot(slot);
+				return;
 			}
 
 			slot.collapse({adType: 'blocked'});
 		}
 
 		function startBtfQueue() {
-			var context = adContext.getContext();
-
 			log('startBtfQueue', log.levels.info.debug, logGroup);
 
 			if (btfQueueStarted) {
 				return;
-			}
-
-			if (!isBTFDisabledByCreative()) {
-				win.ads.runtime.disableBtf = true;
-				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}
 
 			lazyQueue.makeQueue(btfQueue, processBtfSlot);

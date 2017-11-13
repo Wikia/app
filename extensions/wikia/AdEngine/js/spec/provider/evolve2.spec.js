@@ -153,12 +153,4 @@ describe('Evolve2 Provider targeting', function () {
 		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
 		expect(adUnitElements[4]).toEqual(expectedSection);
 	});
-
-	it('Should start 160x600 with b pos and then increment', function () {
-		evolve2.fillInSlot(createSlot('TOP_LEADERBOARD'));
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].pos).toEqual('b');
-
-		evolve2.fillInSlot(createSlot('TOP_LEADERBOARD'));
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].pos).toEqual('c');
-	});
 });

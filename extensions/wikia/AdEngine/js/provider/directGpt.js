@@ -76,7 +76,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
 				'INCONTENT_PLAYER',
-				'INVISIBLE_HIGH_IMPACT_2'
+				'INVISIBLE_HIGH_IMPACT_2',
+				'TOP_RIGHT_BOXAD'
 			],
 			testSrc: 'test'
 		}

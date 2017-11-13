@@ -74,7 +74,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
-			mocks.adContext,
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
@@ -152,7 +151,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('directGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
-			BOTTOM_LEADERBOARD: '728x90',
+			BOTTOM_LEADERBOARD: '728x90,970x250',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
@@ -166,7 +165,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('remnantGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
-			BOTTOM_LEADERBOARD: '728x90',
+			BOTTOM_LEADERBOARD: '728x90,970x250',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',

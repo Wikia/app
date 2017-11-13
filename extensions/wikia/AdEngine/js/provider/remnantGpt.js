@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 		'RemnantGpt',
 		'remnant',
 		{
-			BOTTOM_LEADERBOARD: {size: '728x90', loc: 'footer'},
+			BOTTOM_LEADERBOARD: {size: '728x90,970x250', loc: 'footer'},
 			INCONTENT_BOXAD_1: {size: '120x600,160x600,300x250,300x600', loc: 'hivi'},
 			INCONTENT_PLAYER: {size: '1x1', loc: 'middle'},
 			INVISIBLE_HIGH_IMPACT_2: {loc: 'hivi'},
