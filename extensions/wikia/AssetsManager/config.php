@@ -267,6 +267,7 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/onemobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/pubmatic.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubiconDisplay.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
