@@ -375,7 +375,7 @@ class ListusersData {
 		}
 	}
 
-	/*
+	/**
 	 * update user groups (hook)
 	 *
 	 * @access public
@@ -383,15 +383,16 @@ class ListusersData {
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
 	 * @param       User    $user object
-	 * @param		Array   $addgroups - add group(s)
-	 * @param		Array   $removegroup - remove group(s)
+	 * @param		array   $addgroup - add group(s)
+	 * @param		array   $removegroup - remove group(s)
+	 * @return void
 	 */
 	public function updateUserGroups( $user, $addgroup = array(), $removegroup = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$user instanceof User ) {
 			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		$user_id = $user->getID();
@@ -467,11 +468,11 @@ class ListusersData {
 
 			$dbw->replace(
 				$this->mTable,
-				array( 'wiki_id', 'user_id', 'user_name' ),
+				array( 'wiki_id', 'user_id' ),
 				array(
 					"wiki_id"        => $this->mCityId,
 					"user_id"        => $user_id,
-					"user_name"  	 => $user->getName(), # TODO: SUS-3205
+					"user_name"  	 => '', # TODO: SUS-3204 - insert either user ID or user name
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
 					"last_revision"  => intval($lastrev),
@@ -494,6 +495,5 @@ class ListusersData {
 			);
 		}
 		wfProfileOut( __METHOD__ );
-		return true;
 	}
 }
