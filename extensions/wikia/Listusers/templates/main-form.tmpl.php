@@ -1,4 +1,4 @@
-<script type="text/javascript" charset="utf-8">
+<script>
 $( function () {
 
 	function __makeParamValue() {
@@ -16,8 +16,9 @@ $( function () {
 		return target;
 	}
 
-	var baseurl = wgScript + "?action=ajax&rs=ListusersAjax::axShowUsers";
+	var baseurl = window.wgScript + "?action=ajax&rs=ListusersAjax::axShowUsers";
 
+	// @see https://datatables.net/reference/option/ (jquery.dataTables.min.js v1.8.2)
 	var oTable = $( '#lu-table' ).dataTable( {
 		"oLanguage": {
 			"sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' )->escaped() ?>",
@@ -61,29 +62,17 @@ $( function () {
 				sortingCols = 0,
 				_tmp = [],
 				columns = [],
-				sortColumns = [],
-				sortOrder = [],
-				iColumns = 0;
+				i;
 
 			for ( i in aoData ) {
+			    $.log(aoData[i], 'listusers');
+
 				switch ( aoData[i].name ) {
-					case 'iDisplayLength':
-						limit = aoData[i].value;
-						break;
-					case 'iDisplayStart':
-						offset = aoData[i].value;
-						break;
 					case 'sEcho':
 						loop = aoData[i].value;
 						break;
 					case 'sColumns':
 						columns = aoData[i].value.split( ',' );
-						break;
-					case 'iColumns':
-						iColumns = aoData[i].value;
-						break;
-					case 'iSortingCols':
-						sortingCols = aoData[i].value;
 						break;
 				}
 
@@ -104,7 +93,7 @@ $( function () {
 
 			$.ajax( {
 				"dataType": 'json',
-				"type": "POST",
+				"type": "GET",
 				"url": sSource,
 				"data": [
 					{
@@ -125,9 +114,6 @@ $( function () {
 					}, {
 						'name': 'loop',
 						'value': loop
-					}, {
-						'name': 'numOrder',
-						'value': sortingCols
 					}, {
 						'name': 'order',
 						'value': order
