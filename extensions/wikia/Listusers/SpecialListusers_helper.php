@@ -16,7 +16,7 @@ class ListusersData {
 	var $mCityId;
 	var $mGroups;
 	var $mFilterGroup;
-	var $mUserName;
+	private $mUserId;
 	var $mEdits;
 	var $mLimit;
 	var $mOffset;
@@ -59,7 +59,7 @@ class ListusersData {
 	}
 
 	function setFilterGroup ( $group = array() ) { $this->mFilterGroup = $group; }
-	function setUserName	( $username = '' ) { $this->mUserName = $username; }
+	function setUserId	    ( int $user_id ) { $this->mUserId = $user_id; }
 	function setEdits    	( $edits = Listusers::DEF_EDITS ) { $this->mEdits = $edits; }
 	function setLimit    	( $limit = Listusers::DEF_LIMIT ) { $this->mLimit = $limit; }
 	function setOffset   	( $offset = 0 ) { $this->mOffset = $offset; }
@@ -96,7 +96,6 @@ class ListusersData {
 
 	function getFilterGroup () { return $this->mFilterGroup; }
 	function getGroups   	() { return $this->mGroups; }
-	function getUserName	() { return $this->mUserName; }
 	function getEdits    	() { return $this->mEdits; }
 	function getLimit    	() { return $this->mLimit; }
 	function getOffset   	() { return $this->mOffset; }
@@ -116,7 +115,7 @@ class ListusersData {
 		$orderby = implode(",", $this->mOrder);
 		$subMemkey = array(
 			'G'  . implode(",", is_array($this->mFilterGroup) ? $this->mFilterGroup : array()),
-			'U'  . $this->mUserName,
+			'U'  . $this->mUserId,
 			'C'  . $this->mEdits,
 			'O'  . $this->mOffset,
 			'L'  . $this->mLimit,
@@ -165,9 +164,9 @@ class ListusersData {
 				}
 			}
 
-			/* filter: user name */
-			if ( !empty( $this->mUserName ) ) {
-				$where[] = " user_name >= ". $dbs->addQuotes( $this->mUserName ); # TODO: SUS-3207
+			/* filter: user ID  */
+			if ( !empty( $this->mUserId ) ) {
+				$where[] = " user_id = ". intval( $this->mUserId );
 			}
 
 			/* filter: number of edits */

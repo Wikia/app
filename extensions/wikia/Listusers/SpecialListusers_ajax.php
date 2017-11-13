@@ -14,20 +14,25 @@ class ListusersAjax {
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
-	 * @param       Array   $list
 	 */
 	public static function axShowUsers ( ) {
-		global $wgRequest, $wgUser, $wgCityId;
-
+		global $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
-		$groups 	= $wgRequest->getVal('groups');
-		$username 	= $wgRequest->getVal('username');
-		$edits 		= $wgRequest->getVal('edits');
-		$limit		= $wgRequest->getVal('limit');
-		$offset		= $wgRequest->getVal('offset');
-		$loop		= $wgRequest->getVal('loop');
-		$order		= $wgRequest->getVal('order');
+		$request = RequestContext::getMain()->getRequest();
+
+		$groups 	= $request->getVal('groups');
+		$user_id  	= $request->getInt('userid');
+		$edits 		= $request->getVal('edits');
+		$limit		= $request->getVal('limit');
+		$offset		= $request->getVal('offset');
+		$loop		= $request->getVal('loop');
+		$order		= $request->getVal('order');
+
+		// FIXME: SUS-3207 - temporarily support searching via user name
+		if ( $request->getVal( 'username' ) ) {
+			$user_id = User::idFromName( $request->getVal( 'username' ) );
+		}
 
 		if ( !isset($edits) ) {
 			$edits = Listusers::DEF_EDITS;
@@ -48,7 +53,7 @@ class ListusersAjax {
 			if ( is_object($data) ) {
 				$filterGroups = explode(',', trim($groups));
 				$data->setFilterGroup ( $filterGroups );
-				$data->setUserName ( $username );
+				$data->setUserId ( $user_id );
 				$data->setEdits ( $edits );
 				$data->setLimit ( $limit );
 				$data->setOffset( $offset );
