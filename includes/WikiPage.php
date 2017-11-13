@@ -2399,9 +2399,10 @@ class WikiPage extends Page implements IDBAccessObject {
 		}
 
 		if ( !empty( $set ) ) {
+			$revTimestamp = $dbw->addQuotes( $s->rev_timestamp );
 			$whereCondition = [
 				'rc_cur_id' => $current->getPage(),
-				"rc_timestamp > '{$s->rev_timestamp}'",
+				"rc_timestamp > $revTimestamp",
 			];
 
 			// SUS-3079: query based on user ID for registered users and IP address for anons
