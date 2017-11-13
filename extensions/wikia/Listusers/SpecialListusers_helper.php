@@ -34,14 +34,12 @@ class ListusersData {
 		$this->mTable = 'events_local_users';
 
 		$this->mOrderOptions = array(
-			'username'	=> array( 'user_name %s' ),
 			'groups' 	=> array( 'all_groups %s', 'cnt_groups %s'),
 			'revcnt' 	=> array( 'edits %s' ),
 			'dtedit' 	=> array( 'editdate %s' )
 		);
 
 		$this->mUseKeyOptions = array(
-			'username'	=> 'wiki_user_name_edits',
 			'groups' 	=> '',
 			'revcnt' 	=> 'wiki_edits_by_user',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
@@ -89,8 +87,10 @@ class ListusersData {
 				}
 			}
 		}
+
+		// SUS-3207 - order by number of edits (descending) by default
 		if ( empty( $this->mOrder ) ) {
-			$this->mOrder[] = 'user_name ASC';
+			$this->mOrder[] = 'edits DESC';
 		}
 	}
 
@@ -133,7 +133,7 @@ class ListusersData {
 			/* initial conditions for SQL query */
 			$where = [
 					'wiki_id' => $this->mCityId,
-					"user_name != ''", # TODO: SUS-3205
+					"user_id > 0",
 					'user_is_closed' => 0
 			];
 
@@ -167,7 +167,7 @@ class ListusersData {
 
 			/* filter: user name */
 			if ( !empty( $this->mUserName ) ) {
-				$where[] = " user_name >= ". $dbs->addQuotes( $this->mUserName ); # TODO: SUS-3205
+				$where[] = " user_name >= ". $dbs->addQuotes( $this->mUserName ); # TODO: SUS-3207
 			}
 
 			/* filter: number of edits */
