@@ -24,15 +24,14 @@ class ListusersData {
 	private $mOrder;
 	private $mOrderOptions;
 	private $mUseKey;
-
 	private $mDBh;
-	private $mTable;
+
+	const TABLE = 'events_local_users';
 
 	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
 		$this->mCityId = $city_id;
 		$this->mDBh = $wgSpecialsDB;
-		$this->mTable = 'events_local_users';
 
 		$this->mOrderOptions = array(
 			'groups' 	=> array( 'all_groups %s', 'cnt_groups %s'),
@@ -45,7 +44,6 @@ class ListusersData {
 			'revcnt' 	=> 'wiki_edits_by_user',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
-
 	}
 
 	/**
@@ -176,22 +174,19 @@ class ListusersData {
 			}
 
 			/* number of records */
-			$oRow = $dbs->selectRow(
-				$this->mTable,
-				array( 'count(0) as cnt' ),
+			$data['cnt'] = (int) $dbs->selectField(
+				self::TABLE,
+				'count(*)',
 				$where,
-				__METHOD__
+				__METHOD__ . '::count'
 			);
-			if ( is_object($oRow) ) {
-				$data['cnt'] = $oRow->cnt;
-			}
 
 			if ( $data['cnt'] > 0 ) {
 				$userIsBlocked = $wgUser->isBlocked( true, false );
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
-					array( $this->mTable . ( ($this->mUseKey) ? ' use key('.$this->mUseKey.')' : '' ) ),
+					array( self::TABLE . ( ($this->mUseKey) ? ' use key('.$this->mUseKey.')' : '' ) ),
 					array(
 						'user_id',
 						'cnt_groups',
@@ -403,7 +398,7 @@ class ListusersData {
 		);
 
 		$oRow = $dbr->selectRow(
-			array( $this->mTable ),
+			array( self::TABLE ),
 			array( "all_groups" ),
 			$where,
 			__METHOD__
@@ -467,7 +462,7 @@ class ListusersData {
 			}
 
 			$dbw->replace(
-				$this->mTable,
+				self::TABLE,
 				array( 'wiki_id', 'user_id' ),
 				array(
 					"wiki_id"        => $this->mCityId,
@@ -484,7 +479,7 @@ class ListusersData {
 			);
 		} else {
 			$dbw->update(
-				$this->mTable,
+				self::TABLE,
 				array(
 					"cnt_groups"	=> $elements,
 					"single_group"	=> $singlegroup,
