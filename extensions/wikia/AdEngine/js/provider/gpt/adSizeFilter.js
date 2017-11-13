@@ -1,22 +1,15 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.abTest',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window',
-	require.optional('wikia.breakpointsLayout')
-], function (adContext, abTest, doc, log, win, breakpointsLayout) {
+	'wikia.window'
+], function (adContext, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
 		context = adContext.getContext(),
 		minSkinWidth = 1240;
-
-	function isLargeBreakpoints() {
-		return breakpointsLayout &&
-			doc.getElementById('WikiaPageBackground').offsetWidth >= breakpointsLayout.getLargeContentWidth();
-	}
 
 	function getNewSizes(sizes, maxWidth, fallbackSizes) {
 		var goodSizes = (sizes || []).filter(function(size) {
