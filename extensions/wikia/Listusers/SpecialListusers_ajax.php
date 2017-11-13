@@ -110,4 +110,72 @@ class ListusersAjax {
 
 		return $response;
 	}
+
+	/**
+	 * Get the list of IDs of users that were active on a given wiki.
+	 *
+	 * Results are cached for a short period (5 minutes).
+	 *
+	 * @param int $cityId
+	 * @return int[]
+	 * @see SUS-3207
+	 */
+	private static function getWikiUsers( int $cityId ) {
+		return WikiaDataAccess::cache(
+			wfSharedMemcKey(__METHOD__, $cityId),
+			WikiaResponse::CACHE_VERY_SHORT,
+			function() use ($cityId) {
+				global $wgSpecialsDB;
+
+				$dbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
+				return $dbr->selectFieldValues(
+					ListusersData::TABLE,
+					'user_id',
+					[
+						'wiki_id' => $cityId,
+					],
+					__METHOD__
+				);
+			}
+		);
+	}
+
+	/**
+	 * @return AjaxResponse
+	 * @see SUS-3207
+	 */
+	public static function axSuggestUsers() {
+		global $wgExternalSharedDB, $wgCityId;
+
+		// get the list of user names from accounts that were active on a wiki
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$user_names = $dbr->selectFieldValues(
+			'user',
+			'user_name',
+			[
+				'user_id' => self::getWikiUsers( $wgCityId ),
+			],
+			__METHOD__
+		);
+
+		$query = RequestContext::getMain()->getRequest()->getText('query');
+		$resp = [
+			$query
+		];
+
+		// now, perform the filtering to generate the list of user name suggestions
+		// basically emulate case-insensitive LIKE 'foo%' in PHP
+		$resp[] = array_filter(
+			$user_names,
+			function($user_name) use ($query) {
+				return startsWith($user_name, $query, false);
+			}
+		);
+
+		$response = new AjaxResponse( json_encode($resp) );
+		$response->setContentType( 'application/json; charset=utf-8' );
+		$response->setCacheDuration( WikiaResponse::CACHE_SHORT );
+
+		return $response;
+	}
 }

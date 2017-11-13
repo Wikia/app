@@ -38,6 +38,7 @@ $wgAutoloadClasses['ListusersHooks'] = __DIR__ . '/SpecialListusers_hooks.php';
 
 $wgHooks['SpecialPage_initList'][] = 'ListusersHooks::ActiveUsers';
 $wgAjaxExportList[] = 'ListusersAjax::axShowUsers';
+$wgAjaxExportList[] = 'ListusersAjax::axSuggestUsers';
 
 // This tries to write to a database that the devboxes don't have write-permission for.
 if( empty( $wgDevelEnvironment ) ){
