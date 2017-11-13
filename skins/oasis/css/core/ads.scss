@@ -180,16 +180,6 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
-/** Skyscrapers **/
-@media #{$breakpoint-small-plus-up} {
-	#WikiaRail.left-skyscraper-3-present {
-		padding-bottom: 610px;
-	}
-	#WikiaRail.small-left-skyscraper-3-present {
-		padding-bottom: 260px;
-	}
-}
-
 #BOTTOM_LEADERBOARD {
 	&.bfab-template {
 		@include transition(height, $uap-video-animation-duration, ease, 0);

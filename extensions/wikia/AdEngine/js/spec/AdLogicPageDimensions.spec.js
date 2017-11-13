@@ -66,9 +66,8 @@ describe('AdLogicPageDimensions', function () {
 
 	var oneColumnResponsive = 'screen and (max-width: 1023px)',
 		noTopButton = 'screen and (max-width: 1063px)',
-		noMiddlePrefooter = 'screen and (max-width: 1083px)',
-		width800 = [oneColumnResponsive, noTopButton, noMiddlePrefooter],
-		width1024 = [noTopButton, noTopButton, noMiddlePrefooter],
+		width800 = [oneColumnResponsive, noTopButton],
+		width1024 = [noTopButton, noTopButton],
 		width2000 = [];
 
 	it('checks if screen is too narrow for a slot', function () {

@@ -27,7 +27,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
 			noTopButton: 'screen and (max-width: 1063px)',
-			noMiddlePrefooter: 'screen and (max-width: 1083px)'
 		},
 		mediaQueriesMet,
 		matchMedia;

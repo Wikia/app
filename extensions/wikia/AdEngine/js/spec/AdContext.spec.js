@@ -772,51 +772,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.audienceNetwork).toBeTruthy();
 	});
 
-	it('disable overriding leaderboard sizes for mercury', function () {
-		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['JP']};
-		mocks.win = {
-			ads: {
-				context: {
-					targeting: {
-						skin: 'mercury'
-					}
-				}
-			}
-		};
-
-		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
-	});
-
-	it('disable overriding leaderboard sizes by country', function () {
-		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['ZZ']};
-		mocks.win = {
-			ads: {
-				context: {
-					targeting: {
-						skin: 'oasis'
-					}
-				}
-			}
-		};
-
-		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
-	});
-
-	it('enable overriding leaderboard sizes', function () {
-		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['JP']};
-		mocks.win = {
-			ads: {
-				context: {
-					targeting: {
-						skin: 'oasis'
-					}
-				}
-			}
-		};
-
-		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
-	});
-
 	[
 		{
 			wgCountry: ['CURRENT_COUNTRY'],
@@ -880,7 +835,6 @@ describe('AdContext', function () {
 	it('Should enable MEGA ad unit builder only for featured video pages', function () {
 		mocks.instantGlobals = {
 			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
-			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
 		};
 
 		var context = {
@@ -961,7 +915,6 @@ describe('AdContext', function () {
 	it('Should disable MEGA on non-FV mobile page', function () {
 		mocks.instantGlobals = {
 			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
-			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
 		};
 
 		var context = {
@@ -979,7 +932,6 @@ describe('AdContext', function () {
 	it('Should enable MEGA on FV mobile page', function () {
 		mocks.instantGlobals = {
 			wgAdDriverMegaAdUnitBuilderForFVCountries: ['CURRENT_COUNTRY'],
-			wgAdDriverAdMixCountries: ['CURRENT_COUNTRY']
 		};
 
 		var context = {
