@@ -557,13 +557,15 @@ class WallBaseController extends WikiaService {
 	}
 
 	public function newMessage() {
-		$wall_username = $this->helper->getUser()->getName();
+		$user = $this->helper->getUser();
+
+		$wall_username = $user->getName();
 
 		// only use realname if user made edits (use logic from masthead)
-		$userStatsService = new UserStatsService( $this->helper->getUser()->getID() );
+		$userStatsService = new UserStatsService( $user->getID() );
 		$userStats = $userStatsService->getStats();
 		if ( empty( $userStats[ 'editcount' ] ) || $userStats[ 'editcount' ] == 0 ) {
-			$wall_username = $this->helper->getUser()->getName();
+			$wall_username = $user->getName();
 		}
 
 		$username = $this->wg->User->getName();
@@ -584,7 +586,7 @@ class WallBaseController extends WikiaService {
 
 		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) );
 
-		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
+		$this->checkAndSetUserBlockedStatus( $user );
 	}
 
 	/** @param User $wallOwner */
