@@ -618,16 +618,10 @@ define('wikia.vet', [
 				resultCaption: $('#VET-carousel-wrapper > p.results strong'),
 				backToSuggestions: $('#VET-carousel-wrapper > a.back-link'),
 				closePreviewBtn: $('#VET-preview-close'),
-				positionOptions: $('#VideoEmbedLayoutRow'),
-				searchDropDown: $('#VET-search-dropdown')
+				positionOptions: $('#VideoEmbedLayoutRow')
 			};
 
-			// set search type to local if premium disabled
-			if (this.cachedSelectors.searchDropDown.attr('data-selected') === 'local') {
-				this.searchCachedStuff.searchType = 'local';
-			} else {
-				this.searchCachedStuff.searchType = 'premium';
-			}
+			this.searchCachedStuff.searchType = 'local';
 
 			// attach handlers - add video button
 			this.cachedSelectors.carousel.on('click', 'li > a', function (event) {
@@ -754,7 +748,7 @@ define('wikia.vet', [
 			// attach handler - submit display options tab
 			$videoEmbedDetails.on('submit', '#VET-display-options', function (event) {
 				event.preventDefault();
-				insertFinalVideo(event, 'details');
+				insertFinalVideo(event);
 			});
 			$videoEmbedDetails.on('submit', '#VET-display-options-update', function (event) {
 				event.preventDefault();
@@ -764,26 +758,6 @@ define('wikia.vet', [
 				});
 
 				doEditVideo();
-			});
-
-			// create dropdown for search filters
-			this.cachedSelectors.searchDropDown.wikiaDropdown({
-				onChange: function (e, $target) {
-					var currSort = this.$selectedItemsList.text(),
-						newSort = $target.text(),
-						sort;
-
-					if (currSort !== newSort) {
-						sort = $target.data('sort');
-						tracking({
-							label: 'dropdown-search-filter-' + sort
-						});
-						self.searchCachedStuff.searchType = sort;
-						self.searchCachedStuff.currentKeywords = '';
-						self.cachedSelectors.closePreviewBtn.click();
-						$('#VET-search-submit').click();
-					}
-				}
 			});
 
 			$('#vet-see-all').on('click', function () {
