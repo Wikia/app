@@ -241,6 +241,7 @@ $wgAutoloadClasses[ 'WikiDataSource'                  ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'CurlMultiClient'                 ] = "$IP/includes/wikia/CurlMultiClient.php";
 $wgAutoloadClasses[ 'DateFormatHelper'                ] = "$IP/includes/wikia/DateFormatHelper.php";
 $wgAutoloadClasses[ 'CategoryHelper'                  ] = "$IP/includes/wikia/helpers/CategoryHelper.class.php";
+$wgAutoloadClasses[ 'AuthPageRedirectHelper'          ] = "$IP/includes/wikia/helpers/AuthPageRedirectHelper.class.php";
 $wgAutoloadClasses[ 'WikiaTagBuilderHelper'           ] = "$IP/includes/wikia/helpers/WikiaTagBuilderHelper.class.php";
 $wgAutoloadClasses[ 'WikiaIFrameTagBuilderHelper'     ] = "$IP/includes/wikia/helpers/WikiaIFrameTagBuilderHelper.class.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Driver'     ] = "$IP/includes/wikia/measurements/Drivers.php";

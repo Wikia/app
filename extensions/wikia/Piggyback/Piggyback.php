@@ -8,8 +8,6 @@ EOT;
 	exit( 1 );
 }
 
-
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Piggyback',
 	'author' => 'Tomasz Odrobny',
@@ -22,8 +20,6 @@ $dir = dirname(__FILE__) . '/';
 
 
 $wgAutoloadClasses['Piggyback'] = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
-$wgAutoloadClasses['PBLoginForm']  = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
-$wgAutoloadClasses['PBHooks']  = $dir . 'Piggyback_body.php';
 
 $wgExtensionMessagesFiles['Piggyback'] = $dir . 'Piggyback.i18n.php';
 $wgExtensionMessagesFiles['PiggybackAliases'] = $dir . 'Piggyback.alias.php';
@@ -33,24 +29,6 @@ $wgSpecialPages['Piggyback'] = 'Piggyback'; # Let MediaWiki know about your new 
 $wgSpecialPageGroups['Piggyback'] = 'users';
 $wgLogRestrictions['piggyback'] = 'piggyback';
 $wgLogTypes[] = 'piggyback';
-
-$wgHooks['LoginFormAuthenticateModifyRetval'][] = 'PBHooks::onLoginFormAuthenticateModifyRetval';
-$wgHooks['UserSetCookies'][] = 'PBHooks::onUserSetCookies';
-
-/*
- * event for logout (back to parent user)
- */
-
-$wgHooks['UserLogoutComplete'][] = 'PiggybackGoToParent';
-function PiggybackGoToParent( $user, $injected_html, $oldName ) {
-	global $wgRequest;
-	if( PBLoginForm::isPiggyback() ) {
-		$loginForm = new PBLoginForm( $wgRequest );
-		$loginForm->goToParent( $oldName );
-		Hooks::run( 'PiggybackLogOut', array( $user, User::newFromName( $oldName ) ) );
-	}
-	return true;
-}
 
 $wgHooks['ContributionsToolLinks'][] = 'efPiggybackAddToolLinks';
 function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
