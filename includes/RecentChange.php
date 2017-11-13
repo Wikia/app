@@ -764,6 +764,10 @@ class RecentChange {
 	 * @return string
 	 */
 	public function getUserIp() {
+		if ( empty( $this->mAttribs['rc_ip_bin'] ) ) {
+			return NON_ROUTABLE_IPV4;
+		}
+
 		return IP::sanitizeIP( inet_ntop( $this->mAttribs['rc_ip_bin'] ) );
 	}
 
@@ -773,6 +777,10 @@ class RecentChange {
 	 * @return string
 	 */
 	public static function extractUserIpFromRow( $row ) {
+		if ( empty( $row->rc_ip_bin ) ) {
+			return NON_ROUTABLE_IPV4;
+		}
+
 		return IP::sanitizeIP( inet_ntop( $row->rc_ip_bin ) );
 	}
 }
