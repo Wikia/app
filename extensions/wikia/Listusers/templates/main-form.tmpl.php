@@ -70,11 +70,20 @@ $( function () {
 			    $().log(aoData[i], 'listusers');
 
 				switch ( aoData[i].name ) {
+                    case 'iDisplayLength':
+                        limit = aoData[i].value;
+                        break;
+                    case 'iDisplayStart':
+                        offset = aoData[i].value;
+                        break;
 					case 'sEcho':
 						loop = aoData[i].value;
 						break;
 					case 'sColumns':
 						columns = aoData[i].value.split( ',' );
+						break;
+					case 'iSortingCols':
+						sortingCols = aoData[i].value;
 						break;
 				}
 
