@@ -17,13 +17,13 @@ Context.extend(config);
 TemplateService.register(BigFancyAdBelow);
 SlotService.add(blbSlot);
 
-function loadCustomAd(callback) {
+function loadCustomAd(fallback) {
 	return (params) => {
 		try {
 			const slot = SlotService.getBySlotName(params.slotName);
 			TemplateService.init(params.type, slot, params);
 		} catch (e) {
-			callback(params);
+			fallback(params);
 		}
 	};
 }
