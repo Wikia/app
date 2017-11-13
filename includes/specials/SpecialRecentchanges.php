@@ -214,6 +214,8 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		// wikia change end
 		if( $feedFormat ) {
 			list( $changesFeed, $formatter ) = $this->getFeedObject( $feedFormat );
+			/* @var ChangesFeed $changesFeed */
+			/* @var ChannelFeed $formatter */
 			$changesFeed->execute( $formatter, $rows, $lastmod, $opts );
 		} else {
 			$this->webOutput( $rows, $opts );
