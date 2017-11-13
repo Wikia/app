@@ -107,7 +107,8 @@ require([
 			},
 			logger: {
 				clientName: 'oasis'
-			}
+			},
+			lang: videoDetails.lang
 		}, onPlayerReady);
 	}
 
