@@ -53,11 +53,20 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		var playerInstance = jwplayer(elementId),
 			videoId = options.videoDetails.playlist[0].mediaid,
 			willAutoplay = options.autoplay,
+			lang = options.lang || 'en',
+			// IMA supports two-letter ISO 639-1 code
+			langForAds = lang.substr(0, 2),
+			i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'],
 			playerSetup = {
 				advertising: {
 					autoplayadsmuted: willAutoplay,
 					client: 'googima',
-					vpaidcontrols: true
+					vpaidcontrols: true,
+					admessage: i18n.admessage,
+					cuetext: i18n.cuetext,
+					skipmessage: i18n.skipmessage,
+					skiptext: i18n.skiptext,
+					setLocale: langForAds
 				},
 				autostart: willAutoplay && !document.hidden,
 				description: options.videoDetails.description,
@@ -65,6 +74,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				mute: options.mute,
 				playlist: options.videoDetails.playlist,
 				title: options.videoDetails.title,
+				localization: i18n,
 				captions: {
 					backgroundColor: '#1a1a1a',
 					backgroundOpacity: 50,
@@ -79,7 +89,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 					showQuality: options.settings.showQuality,
 					showCaptionsToggle: options.settings.showCaptionsToggle,
 					autoplay: options.autoplay,
-					captions: options.captions
+					captions: options.captions,
+					i18n: i18n
 				}
 			};
 		}
@@ -88,7 +99,8 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			playerSetup.related = {
 				autoplaytimer: options.related.time || 3,
 				file: '//cdn.jwplayer.com/v2/playlists/' + options.related.playlistId + '?related_media_id=' + videoId,
-				oncomplete: options.related.autoplay ? 'autoplay' : 'show'
+				oncomplete: options.related.autoplay ? 'autoplay' : 'show',
+				autoplaymessage: i18n.nextUpInSeconds
 			};
 		}
 
@@ -106,6 +118,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		wikiaJWPlayerReplaceIcons(playerInstance);
 		wikiaJWPlayerEvents(playerInstance, options.autoplay, logger);
+
 		if (options.related) {
 			wikiaJWPlayerRelatedVideoSound(playerInstance);
 		}

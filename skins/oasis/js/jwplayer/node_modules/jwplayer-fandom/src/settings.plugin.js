@@ -42,7 +42,7 @@ wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
 	settingsIcon.classList.add('jw-svg-icon');
 	settingsIcon.classList.add('jw-svg-icon-wikia-settings');
 
-	this.player.addButton(settingsIcon.outerHTML, 'Settings', function () {
+	this.player.addButton(settingsIcon.outerHTML, this.config.i18n.settings, function () {
 		if (!this.wikiaSettingsElement.style.display) {
 			this.open();
 		} else {
@@ -151,7 +151,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 
 	rightArrowIcon.classList.add('wikia-jw-settings__right-arrow-icon');
 	qualityButton.classList.add('wikia-jw-settings__quality-button');
-	qualityButton.innerHTML = 'Video Quality' + rightArrowIcon.outerHTML;
+	qualityButton.innerHTML = this.config.i18n.videoQuality + rightArrowIcon.outerHTML;
 	qualityButton.addEventListener('click', this.showQualityLevelsList.bind(this));
 
 	return qualityButton;
@@ -160,7 +160,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
 wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 	var autoplayToggle = createToggle({
 			id: this.player.getContainer().id + '-videoAutoplayToggle',
-			label: 'Autoplay Videos',
+			label: this.config.i18n.autoplayVideos,
 			checked: this.config.autoplay
 		});
 
@@ -186,7 +186,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 	this.qualityLevelsList.classList.add('wikia-jw-settings__quality-levels');
 	this.qualityLevelsList.classList.add('wds-list');
 	this.backButton.classList.add('wikia-jw-settings__back');
-	this.backButton.innerHTML = backIcon.outerHTML + ' Back';
+	this.backButton.innerHTML = backIcon.outerHTML + ' ' + this.config.i18n.back;
 	this.backButton.addEventListener('click', this.showSettingsList.bind(this));
 	this.qualityLevelsList.appendChild(this.backButton);
 
@@ -285,7 +285,7 @@ wikiaJWPlayerSettingsPlugin.prototype.addCaptionListener = function () {
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
 	this.captionsToggle = createToggle({
 			id: this.player.getContainer().id + '-videoCaptionsToggle',
-			label: 'Captions',
+			label: this.config.i18n.captions,
 			checked: this.config.captions.enabled
 		});
 
