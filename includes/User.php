@@ -672,7 +672,8 @@ class User implements JsonSerializable {
 		}
 
 		if ( isset( self::$idCacheByName[$name] ) ) {
-			return (int) self::$idCacheByName[$name];
+			// SUS-2981 - return NULL when a user is not found
+			return ( (int) self::$idCacheByName[$name] ) ?: null;
 		}
 
 		// SUS-2945 | this method makes ~32mm queries every day
@@ -683,7 +684,8 @@ class User implements JsonSerializable {
 		$cachedId = $wgMemc->get( $key );
 
 		if ( is_numeric( $cachedId ) ) {
-			return (int) self::$idCacheByName[$name] = $cachedId;
+			// SUS-2981 - return NULL when a user is not found
+			return ( (int) self::$idCacheByName[$name] = $cachedId ) ?: null;
 		}
 
 		// not in cache, query the database
@@ -696,13 +698,14 @@ class User implements JsonSerializable {
 		}
 
 		if ( $s === false ) {
-			$result = null;
+			// SUS-2981 - set cached value to zero when a user is not found, setting a memcache entry to NULL makes no sense
+			$result = 0;
 		} else {
-			$result = (int) $s->user_id;
-
-			// SUS-2945 - only store when there's a match
-			$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
+			$result = (int)$s->user_id;
 		}
+
+		// SUS-2981 - cache even when a given user is not found (set cache entry to 0)
+		$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
 
 		self::$idCacheByName[$name] = $result;
 
@@ -710,7 +713,7 @@ class User implements JsonSerializable {
 			self::$idCacheByName = array();
 		}
 
-		return $result;
+		return $result ?: null;
 	}
 
 	/**
@@ -4615,25 +4618,13 @@ class User implements JsonSerializable {
 	 * @return string
 	 */
 	public static function getUsername( int $userId, string $name ) : string {
-		if ( !empty( $userId ) ) {
-			$dbName = static::whoIs( $userId );
-
-			// we currently have 500k mismatches logged every 24h
-			// cache added in User::whoIs should improve the situation here as we'll use the shared user storage
-			// instead of per-cluster copy
-			if( $dbName !== $name ) {
-				WikiaLogger::instance()->warning( "Default name different than lookup", [
-					"user_id" => $userId,
-					// SUS-2008, always log username_db as string
-					"username_db" => $dbName ?: '',
-					"username_default" => $name,
-				] );
-			}
-
-			return $dbName ?: $name;
-		}
-		// this covers anons ($userId = 0), just fall back to the second method argument
-		return $name;
+		return ( $userId > 0 )
+			?
+			// logged-in - get the username by user ID
+			static::whoIs( $userId )
+			:
+			// anons - return the second argument - an IP address
+			$name;
 	}
 
 	/**

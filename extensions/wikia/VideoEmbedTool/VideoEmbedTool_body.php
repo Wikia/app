@@ -9,14 +9,11 @@ class VideoEmbedTool {
 	use Wikia\Logger\Loggable;
 
 	function loadMain( $error = false ) {
-		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch, $wgUser;
-
-		$showAddVideoBtn = $wgUser->isAllowed( 'videoupload' );
+		$showAddVideoBtn = RequestContext::getMain()->getUser()->isAllowed( 'videoupload' );
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ).'/templates/' );
 		$tmpl->set_vars( array(
 			'error'  => $error,
-			'vet_premium_videos_search_enabled' => ( $wgContLanguageCode == 'en' ) || $wgVETNonEnglishPremiumSearch,
 			'showAddVideoBtn' => $showAddVideoBtn
 		) );
 

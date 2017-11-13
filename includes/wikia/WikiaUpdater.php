@@ -36,6 +36,7 @@ class WikiaUpdater {
 			# fields
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
 			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
+			array( 'addField', 'recentchanges', 'rc_ip_bin',$dir . 'patch-rc_ip_bin.sql', true ), // SUS-3079
 
 			# indexes
 			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql', true ),

@@ -358,14 +358,19 @@ class ChangesList extends ContextSource {
 	 * @param &$rc RecentChange
 	 */
 	public function insertUserRelatedLinks( &$s, &$rc ) {
-		if( $this->isDeleted( $rc, Revision::DELETED_USER ) ) {
+		if ( $this->isDeleted( $rc, Revision::DELETED_USER ) ) {
 			$s .= ' <span class="history-deleted">' . $this->msg( 'rev-deleted-user' )->escaped() . '</span>';
 			return;
 		}
 
+		# Wikia change - SUS-3241
+		# use either rc_user or rc_ip_bin for handling logged-in / anon entries in recentchanges table
+		$userId = (int) $rc->getAttribute('rc_user');
+		$userName = (string) User::getUsername( $userId, $rc->getUserIp() );
+
 		$s .= $this->getLanguage()->getDirMark();
-		$s .= Linker::userLink( $rc->mAttribs['rc_user'], $rc->getUserIp() );
-		$s .= Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->getUserIp() );
+		$s .= Linker::userLink( $userId, $userName );
+		$s .= Linker::userToolLinks( $userId, $userName );
 	}
 
 	/**
@@ -789,7 +794,7 @@ class EnhancedChangesList extends ChangesList {
 	}
 
 	/**
-	 * @param RCCacheEntry|RecentChange $rc
+	 * @param RecentChange $rc
 	 * @param $unpatrolled
 	 * @param $counter
 	 * @return array|bool|Object
@@ -798,7 +803,7 @@ class EnhancedChangesList extends ChangesList {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
 
-		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter);
+		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter, 'v2');
 		$out = $wgMemc->get($memcKey);
 		if(!empty($out)) {
 			// wikia change start (BAC-492)
@@ -815,12 +820,14 @@ class EnhancedChangesList extends ChangesList {
 			$out['userlink'] = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
 			$out['usertalklink'] = null;
 		} else {
-			// SUS-812: use user name lookup to render user links
-			$userId = $rc->mAttribs['rc_user'];
-			$userName = User::getUsername( $userId, $rc->getUserIp() );
+			# Wikia change - SUS-3241
+			# use either rc_user or rc_ip_bin for handling logged-in / anon entries in recentchanges table
+			$userId = (int) $rc->getAttribute('rc_user');
+			$userName = (string) User::getUsername( $userId, $rc->getUserIp() );
 
 			$out['userlink'] = Linker::userLink( $userId, $userName );
 			$out['usertalklink'] = Linker::userToolLinks( $userId, $userName );
+			# Wikia change - end
 		}
 		
 		$out['clink'] = Linker::linkKnown( $rc->getTitle() );

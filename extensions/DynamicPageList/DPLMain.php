@@ -1822,9 +1822,6 @@ class DPLMain {
         $sTemplateLinksTable = $dbr->tableName( 'templatelinks' );
         $sSqlPageLinksTable = '';
         $sSqlExternalLinksTable = '';
-        $sSqlCreationRevisionTable = '';
-        $sSqlNoCreationRevisionTable = '';
-        $sSqlChangeRevisionTable = '';
         $sSqlCond_page_pl = '';
         $sSqlCond_page_el = '';
         $sSqlCond_page_tpl = '';
@@ -2177,81 +2174,45 @@ class DPLMain {
 			/**
 			 * Revisions
 			 **/
+
+			$dplTableSet = new DplTableSet( $dbr );
+			$dplRevisionQuerySegmentBuilder = ( new DplRevisionQuerySegmentBuilder( $dbr ) )
+				->tableSet( $dplTableSet );
+
 			if ( $sCreatedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sCreatedBy, $dbr );
-				if ( sizeof( $userArray ) > 0 ) {
-					$sSqlCreationRevisionTable = $sRevisionTable . ' AS creation_rev, ';
-					$whereStatement = isset( $userArray[ 'user_text' ] ) ?
-						$userArray[ 'user_text' ] . ' = creation_rev.rev_user_text' :
-						$userArray[ 'user_id' ] . ' = creation_rev.rev_user';
-					$sSqlCond_page_rev .= ' AND ' . $whereStatement
-						. ' AND creation_rev.rev_page = page_id'
-						. ' AND creation_rev.rev_parent_id = 0';
-				}
+				$userArray = self::getWhereStatementForUsername( $sCreatedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildCreatedByQuerySegment( $userArray );
 			}
 
 			if ( $sNotCreatedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sNotCreatedBy, $dbr );
-				if ( sizeof( $userArray ) > 0 ) {
-					$sSqlNoCreationRevisionTable = $sRevisionTable . ' AS no_creation_rev, ';
-					$whereStatement = isset( $userArray[ 'user_text' ] ) ?
-						$userArray[ 'user_text' ] . ' != creation_rev.rev_user_text' :
-						$userArray[ 'user_id' ] . ' != creation_rev.rev_user';
-					$sSqlCond_page_rev .= ' AND ' . $whereStatement
-						. ' AND no_creation_rev.rev_page = page_id'
-						. ' AND no_creation_rev.rev_parent_id = 0';
-				}
-
+				$userArray = self::getWhereStatementForUsername( $sNotCreatedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildNotCreatedByQuerySegment( $userArray );
 			}
 
 			if ( $sModifiedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sModifiedBy, $dbr );
-				if ( sizeof( $userArray ) > 0 ) {
-					$sSqlChangeRevisionTable = $sRevisionTable . ' AS change_rev, ';
-					$whereStatement = isset( $userArray[ 'user_text' ] ) ?
-						$userArray[ 'user_text' ] . ' = creation_rev.rev_user_text' :
-						$userArray[ 'user_id' ] . ' = creation_rev.rev_user';
-					$sSqlCond_page_rev .= ' AND ' . $whereStatement
-						. ' AND change_rev.rev_page = page_id';
-				}
+				$userArray = self::getWhereStatementForUsername( $sModifiedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildModifiedByQuerySegment( $userArray );
 			}
 
 			if ( $sNotModifiedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sNotModifiedBy, $dbr );
-				if ( sizeof( $userArray ) > 0 ) {
-					$whereStatement = isset( $userArray[ 'user_text' ] ) ?
-						$userArray[ 'user_text' ] . ' = ' . $sRevisionTable . 'rev_user_text' :
-						$userArray[ 'user_id' ] . ' = ' . $sRevisionTable . 'rev_user';
-					$sSqlCond_page_rev .= ' AND NOT EXISTS (SELECT 1 FROM ' . $sRevisionTable
-						. ' WHERE ' . $sRevisionTable . '.rev_page=page_id AND '
-						. $whereStatement . ' LIMIT 1)';
-				}
+				$userArray = self::getWhereStatementForUsername( $sNotModifiedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildNotModifiedByQuerySegment( $userArray );
 			}
 
 			if ( $sLastModifiedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sLastModifiedBy, $dbr );
-				if ( sizeof( $userArray ) > 0 ) {
-					$nameOrIdEquals = isset( $userArray[ 'user_text' ] ) ?
-						$userArray[ 'user_text' ] . ' = (SELECT rev_user_text' :
-						$userArray[ 'user_id' ] . ' = (SELECT rev_user';
-					$sSqlCond_page_rev .= ' AND ' . $nameOrIdEquals
-						. ' FROM ' . $sRevisionTable
-						. ' WHERE ' . $sRevisionTable . '.rev_page=page_id ORDER BY '
-						. $sRevisionTable . '.rev_timestamp DESC LIMIT 1)';
-				}
+				$userArray = self::getWhereStatementForUsername( $sLastModifiedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildLastModifiedByQuerySegment( $userArray );
 			}
 
 			if ( $sNotLastModifiedBy != "" ) {
-				$userArray = self::getWhereStatementForUsername( $sNotLastModifiedBy, $dbr );
-				if ( sizeof( $userArray ) > 0 ) {
-					$nameOrIdNotEqual = isset( $userArray[ 'user_text' ] ) ?
-						$userArray[ 'user_text' ] . ' != (SELECT rev_user_text' :
-						$userArray[ 'user_id' ] . ' != (SELECT rev_user';
-					$sSqlCond_page_rev .= ' AND ' . $nameOrIdNotEqual
-						. ' FROM ' . $sRevisionTable
-						. ' WHERE ' . $sRevisionTable . '.rev_page=page_id ORDER BY '
-						. $sRevisionTable . '.rev_timestamp DESC LIMIT 1)';
-				}
+				$userArray = self::getWhereStatementForUsername( $sNotLastModifiedBy );
+				$sSqlCond_page_rev .= $dplRevisionQuerySegmentBuilder
+					->buildNotLastModifiedByQuerySegment( $userArray );
 			}
 
         if ($bAddAuthor && $sSqlRevisionTable =='') {
@@ -2311,20 +2272,27 @@ class DPLMain {
         }
 
         // SELECT ... FROM
-        if ($acceptOpenReferences)
-                 // SELECT ... FROM
-        	if (count($aImageContainer)>0) {
-	        	$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . 'ic.il_to, ' . $sSqlSelPage . "ic.il_to AS sortkey" . ' FROM ' . $sImageLinksTable . ' AS ic';
-        	}
-        	else {
-	        	$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . 'pl_namespace, pl_title' . $sSqlSelPage . $sSqlSortkey . ' FROM ' . $sPageLinksTable;
-        	}
-        else
+        if ($acceptOpenReferences) {
+			// SELECT ... FROM
+			if ( count( $aImageContainer ) > 0 ) {
+				$sSqlSelectFrom =
+					"SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . 'ic.il_to, ' .
+					$sSqlSelPage . "ic.il_to AS sortkey" . ' FROM ' . $sImageLinksTable . ' AS ic';
+			} else {
+				$sSqlSelectFrom =
+					"SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to .
+					'pl_namespace, pl_title' . $sSqlSelPage . $sSqlSortkey . ' FROM ' .
+					$sPageLinksTable;
+			}
+		} else {
+        	$dplRevisionQueryTables = " {$dplTableSet->getTables()} ";
 			$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . $sPageTable.'.page_namespace AS page_namespace,'.
             					$sPageTable.'.page_title AS page_title,'.$sPageTable.'.page_id AS page_id' . $sSqlSelPage . $sSqlSortkey .
                                 $sSqlPage_size . $sSqlPage_touched . $sSqlRev_user .
                                 $sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp .
-                                ' FROM ' . $sSqlRevisionTable . $sSqlCreationRevisionTable . $sSqlNoCreationRevisionTable . $sSqlChangeRevisionTable . $sSqlRCTable . $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
+                                ' FROM ' . $sSqlRevisionTable . $dplRevisionQueryTables . $sSqlRCTable .
+							  $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
+        }
 
         // JOIN ...
         if($sSqlClHeadTable != '' || $sSqlClTableForGC != '') {
@@ -3252,18 +3220,23 @@ class DPLMain {
 	}
 
 
-	// SUS-807
-	private static function getWhereStatementForUsername( $username, DatabaseBase $dbr ) {
-		$res = [];
-		if ( User::isIP( $username ) ) {
-			$res[ 'user_text' ] = $dbr->addQuotes( $username );
-		} else {
-			$userId = User::idFromName( $username );
-			if ( $userId > 0 ) {
-				$res[ 'user_id' ] = $userId;
-			}
+	/**
+	 * SUS-807: Get user name or user ID to use in lookup
+	 * It is the responsibility of callers to escape the output
+	 * @param $userName
+	 * @return array
+	 */
+	private static function getWhereStatementForUsername( $userName ) {
+		if ( User::isIP( $userName ) ) {
+			return [ 'user_text' => $userName ];
 		}
-		return $res;
+
+		$userId = User::idFromName( $userName );
+		if ( $userId > 0 ) {
+			return [ 'user_id' => $userId ];
+		}
+
+		return [];
 	}
 
 	private static function getMemcacheKey( $dplCacheId ) {
