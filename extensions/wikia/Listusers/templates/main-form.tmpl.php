@@ -65,7 +65,7 @@ $( function () {
 				i;
 
 			for ( i in aoData ) {
-			    $.log(aoData[i], 'listusers');
+			    $().log(aoData[i], 'listusers');
 
 				switch ( aoData[i].name ) {
 					case 'sEcho':
@@ -208,7 +208,7 @@ $( function () {
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lu-table">
 	<thead>
 		<tr>
-			<th><?= wfMessage( 'listusers-username' )->escaped() ?></th>
+			<th class="no-sort"><?= wfMessage( 'listusers-username' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusers-groups' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusersrev-cnt' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusers-edited' )->escaped() ?></th>
@@ -221,7 +221,7 @@ $( function () {
 	</tbody>
 	<tfoot>
 		<tr>
-			<th><?= wfMessage( 'listusers-username' )->escaped() ?></th>
+			<th class="no-sort"><?= wfMessage( 'listusers-username' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusers-groups' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusersrev-cnt' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusers-edited' )->escaped() ?></th>
