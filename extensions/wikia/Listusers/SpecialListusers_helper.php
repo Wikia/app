@@ -47,9 +47,6 @@ class ListusersData {
 		);
 	}
 
-	/**
-	 * Used by integration tests only!
-	 */
 	function load() {
 		$this->setEditsThreshold();
 		$this->setLimit();

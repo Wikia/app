@@ -172,13 +172,13 @@ $( function () {
 <div>
 <form method="post" action="<?= $action ?>" id="lu-form">
 <? $found = 0; ?>
-<? if ( !empty( $obj->mGroups ) && ( !empty( $obj->mGroups ) ) ) { ?>
+<? if ( !empty( $groups ) ) { ?>
 <fieldset class="lu_fieldset">
 <legend><?= wfMessage( 'listusers-groups' )->escaped() ?></legend>
 	<table><tr>
 <?
 	$i = 0;
-	foreach ( $obj->mGroups as $groupName => $group ) {
+	foreach ( $groups as $groupName => $group ) {
 		if ( $i > 0 && $i % 4 == 0 ) { ?> </tr><tr> <? }
 
 		$found += ( isset($group['cnt'] ) ) ? intval( $group['cnt'] ) : 0;

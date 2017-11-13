@@ -11,9 +11,10 @@ class Listusers extends SpecialRedirectToSpecial {
 	var $mAction;
 	var $mTitle;
 	var $mDefGroups;
-	var $mGroups;
 	var $mFilterStart;
 	var $mContribs;
+
+	/* @var ListusersData $mData */
 	var $mData;
 
 	var $mDefContrib = null;
@@ -97,10 +98,9 @@ class Listusers extends SpecialRedirectToSpecial {
 
 		$this->mDefContrib = is_null( $this->mDefContrib ) ? self::DEF_EDITS : $this->mDefContrib;
 
-		/* listusersHelper */
 		$this->mData = new ListusersData( $this->mCityId );
+		$this->mData->load();
 		$this->mData->setFilterGroup( $this->mDefGroups );
-		$this->mGroups = $this->mData->getGroups();
 
 		/**
 		 * show form
@@ -127,14 +127,15 @@ class Listusers extends SpecialRedirectToSpecial {
 		$oTmpl->set_vars( array(
 			"error"			=> $error,
 			"action"		=> $this->mAction,
-			"obj"			=> $this,
+			"obj"			=> $this, // TODO: report this reference
 			"wgContLang"		=> $wgContLang,
 			"wgExtensionsPath"	=> $wgExtensionsPath,
 			"wgStylePath"		=> $wgStylePath,
 			"defContrib"		=> $this->mDefContrib,
 			"defUser"		=> $this->mUserStart,
 			"wgUser"		=> $wgUser,
-			"title"			=> self::TITLE
+			"title"			=> self::TITLE,
+			'groups'        => $this->mData->getGroups(),
 		));
 		$wgOut->addHTML( $oTmpl->render( "main-form" ) );
 		wfProfileOut( __METHOD__ );
