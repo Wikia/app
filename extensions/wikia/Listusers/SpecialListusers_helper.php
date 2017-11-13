@@ -13,19 +13,20 @@ use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 class ListusersData {
 	use PermissionsServiceAccessor;
-	var $mCityId;
-	var $mGroups;
-	var $mFilterGroup;
-	private $mUserId;
-	var $mEdits;
-	var $mLimit;
-	var $mOffset;
-	var $mOrder;
-	var $mOrderOptions;
-	var $mUseKey;
 
-	var $mDBh;
-	var $mTable;
+	private $mCityId;
+	private $mGroups;
+	private $mFilterGroup;
+	private $mUserId;
+	private $mEdits;
+	private $mLimit;
+	private $mOffset;
+	private $mOrder;
+	private $mOrderOptions;
+	private $mUseKey;
+
+	private $mDBh;
+	private $mTable;
 
 	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
