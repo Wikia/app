@@ -748,7 +748,7 @@ define('wikia.vet', [
 			// attach handler - submit display options tab
 			$videoEmbedDetails.on('submit', '#VET-display-options', function (event) {
 				event.preventDefault();
-				insertFinalVideo(event, 'details');
+				insertFinalVideo(event);
 			});
 			$videoEmbedDetails.on('submit', '#VET-display-options-update', function (event) {
 				event.preventDefault();
