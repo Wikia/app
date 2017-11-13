@@ -13,16 +13,26 @@ let blbSlot = {
 	getId: () => 'BOTTOM_LEADERBOARD'
 };
 
+let supportedTemplates = [ BigFancyAdBelow ];
+
 Context.extend(config);
-TemplateService.register(BigFancyAdBelow);
+
+supportedTemplates.forEach((template) => {
+	TemplateService.register(template);
+});
+
 SlotService.add(blbSlot);
+
+function getSupportedTemplateNames() {
+	return supportedTemplates.map((template) => template.getName());
+}
 
 function loadCustomAd(fallback) {
 	return (params) => {
-		try {
+		if (getSupportedTemplateNames().includes(params.type)) {
 			const slot = SlotService.getBySlotName(params.slotName);
 			TemplateService.init(params.type, slot, params);
-		} catch (e) {
+		} else {
 			fallback(params);
 		}
 	};
