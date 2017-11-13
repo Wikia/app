@@ -4,9 +4,7 @@
  * @package MediaWiki
  * @subpackage SpecialPage
  * @author Piotr Molski <moli@wikia.com>
- * @version: $Id$
  */
-
 class ListusersAjax {
 
 	/**
@@ -14,6 +12,8 @@ class ListusersAjax {
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
+	 *
+	 * @return AjaxResponse
 	 */
 	public static function axShowUsers ( ) {
 		global $wgUser, $wgCityId;
@@ -105,6 +105,10 @@ class ListusersAjax {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return json_encode($result);
+
+		$response = new AjaxResponse( json_encode($result) );
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		return $response;
 	}
 }
