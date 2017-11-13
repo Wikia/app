@@ -20,13 +20,6 @@ define('ext.wikia.adEngine.slotTracker', [
 			MOBILE_IN_CONTENT:      'mobile_content',
 			MOBILE_PREFOOTER:       'mobile_prefooter',
 			MOBILE_TOP_LEADERBOARD: 'mobile_leaderboard',
-			// TODO do we support them?
-			MODAL_INTERSTITIAL:     'interstitial',
-			MODAL_INTERSTITIAL_1:   'interstitial',
-			MODAL_INTERSTITIAL_2:   'interstitial',
-			MODAL_INTERSTITIAL_3:   'interstitial',
-			MODAL_INTERSTITIAL_4:   'interstitial',
-			MODAL_INTERSTITIAL_5:   'interstitial',
 			TOP_LEADERBOARD:        'leaderboard',
 			TOP_RIGHT_BOXAD:        'medrec'
 		};
