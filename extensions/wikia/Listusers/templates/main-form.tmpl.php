@@ -60,6 +60,8 @@ $( function () {
 				loop = 1,
 				order = '',
 				sortingCols = 0,
+				sortColumns = [],
+				sortOrder = [],
 				_tmp = [],
 				columns = [],
 				i;
