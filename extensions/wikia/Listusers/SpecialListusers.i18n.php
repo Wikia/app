@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'listuserscount' => '<strong>$1</strong> users',
 	'listusersdetails' => 'Show',
 	'listusersnogroup' => 'No group',
+	'listuserbyname' => 'Find by a user name:',
 	'listusersallusers' => 'all users',
 	'listuserscontributed' => 'Contributed: ',
 	'listusers-1contribution' => '1 time or more',
@@ -486,6 +487,7 @@ $messages['pl'] = array(
 	'listusersblock' => 'Block',
 	'listusers-blocked' => 'Blocked',
 	'listusers-nonegroup' => 'none',
+	'listuserbyname' => 'Znajdź wg nazwy użytkownika:',
 );
 
 $messages['pt'] = array(

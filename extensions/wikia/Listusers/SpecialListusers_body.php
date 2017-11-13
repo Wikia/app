@@ -18,7 +18,7 @@ class Listusers extends SpecialRedirectToSpecial {
 	var $mData;
 
 	var $mDefContrib = null;
-	var $mUserStart = '';
+	var $searchByUser = '';
 
 	const TITLE		= 'Listusers';
 	const DEF_GROUP_NAME	= 'all';
@@ -85,7 +85,7 @@ class Listusers extends SpecialRedirectToSpecial {
 				$this->mDefGroups = array( $target );
 			}
 		} elseif ( !empty( $subpage ) ) {
-			@list ( $subpage, $this->mDefContrib, $this->mUserStart ) = explode( "/", $subpage );
+			@list ( $subpage, $this->mDefContrib, $this->searchByUser ) = explode( "/", $subpage );
 			if ( !in_array( $this->mDefContrib, array_keys( $this->mContribs ) ) ) {
 				$this->mDefContrib = null;
 			}
@@ -131,7 +131,7 @@ class Listusers extends SpecialRedirectToSpecial {
 			"wgExtensionsPath"	=> $wgExtensionsPath,
 			"wgStylePath"		=> $wgStylePath,
 			"defContrib"		=> $this->mDefContrib,
-			"defUser"		=> $this->mUserStart,
+			"searchByUser"		=> $this->searchByUser,
 			"wgUser"		=> $wgUser,
 			"title"			=> self::TITLE,
 			'groups'        => $this->mData->getGroups(),

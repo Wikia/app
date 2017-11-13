@@ -136,8 +136,8 @@ $( function () {
 	} );
 
 	var toolbar = '<div class="lu_filter">';
-	toolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listusersstartingtext' )->escaped() ?></span>';
-	toolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5" value="<?=$defUser?>"></span>';
+	toolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listuserbyname' )->escaped() ?></span>';
+	toolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="25" value="<?=$searchByUser?>"></span>';
 	toolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listuserscontributed' )->escaped() ?></span>';
 	toolbar += '<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" >';
 	<?php
