@@ -173,3 +173,8 @@
 			}
 		}
 	}
+
+	// ui-autocomplete-input ui-autocomplete-loading
+	input.ui-autocomplete-loading {
+		background: url('/skins/common/images/ajax.gif') no-repeat right center;
+	}
