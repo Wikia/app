@@ -682,7 +682,8 @@ class User implements JsonSerializable {
 		$key = self::getCacheKeyByName( $name );
 		$cachedId = $wgMemc->get( $key );
 
-		if ( is_numeric( $cachedId ) ) {
+		// temporary patch to invalidate bad cache entries
+		if ( intval( $cachedId ) > 0 ) {
 			return (int) self::$idCacheByName[$name] = $cachedId;
 		}
 
