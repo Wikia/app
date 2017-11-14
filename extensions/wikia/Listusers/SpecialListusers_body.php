@@ -108,38 +108,34 @@ class Listusers extends SpecialRedirectToSpecial {
 		$this->showForm();
 	}
 
-	/*
+	/**
 	 * HTML form
 	 *
 	 * @access public
 	 *
 	 * show form
 	 */
-	function showForm ( $error = "" ) {
-		global $wgOut, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgStylePath, $wgUser;
+	private function showForm () {
+		global $wgContLang, $wgExtensionsPath, $wgStylePath;
 
-		wfProfileIn( __METHOD__ );
+		// load CSS and JS assets
+		$this->getOutput()->addModules('ext.wikia.ListUsers');
 
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n" );
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Listusers/css/table.scss' ) );
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl = new EasyTemplate( __DIR__ . "/templates/" );
 		$oTmpl->set_vars( array(
-			"error"			=> $error,
 			"action"		=> $this->mAction,
 			"wgContLang"		=> $wgContLang,
 			"wgExtensionsPath"	=> $wgExtensionsPath,
 			"wgStylePath"		=> $wgStylePath,
 			"defContrib"		=> $this->mDefContrib,
 			"searchByUser"		=> $this->searchByUser,
-			"wgUser"		=> $wgUser,
+			"wgUser"		=> $this->getUser(),
 			"title"			=> self::TITLE,
 			'groups'        => $this->mData->getGroups(),
 			'filtered_group' => $this->mData->getFilterGroup(),
 			'contribs'      => $this->mContribs,
 		));
-		$wgOut->addHTML( $oTmpl->render( "main-form" ) );
-		wfProfileOut( __METHOD__ );
+		$this->getOutput()->addHTML( $oTmpl->render( "main-form" ) );
 	}
 }
 

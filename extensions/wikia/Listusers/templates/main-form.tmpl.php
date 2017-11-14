@@ -170,7 +170,6 @@ $( function () {
 
 </script>
 
-<p class="error"><?= $error ?></p>
 <div>
 <form method="post" action="<?= $action ?>" id="lu-form">
 <? $found = 0; ?>

@@ -60,3 +60,17 @@ $wgSpecialPages['Listhelpers'] = 'SpecialListHelpers';
 
 // Only add Listusers to Special:SpecialPages
 $wgSpecialPageGroups['Listusers'] = 'users';
+
+// Resources Loader module
+$wgResourceModules['ext.wikia.ListUsers'] = [
+	'styles' => [
+		'css/table.scss'
+	],
+	'dependencies' => [
+		// SUS-3207 - for user names auto-suggest feature
+		'jquery.autocomplete',
+		'jquery.dataTables',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Listusers'
+];
