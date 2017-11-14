@@ -112,10 +112,10 @@ $( function () {
 						'value': groups
 					}, {
 						'name': 'username',
-						'value': ( $( '#lu_search' ).exists() ) ? $( '#lu_search' ).val() : '<?= addslashes( $defUser ) ?>'
+						'value': ( $( '#lu_search' ).exists() ) ? $( '#lu_search' ).val() : '<?= addslashes( $searchByUser ) ?>'
 					}, {
 						'name': 'edits',
-						'value' : ( $( '#lu_contributed' ).exists() ) ? $( '#lu_contributed' ).val() : <?= intval( $defContrib ) ?>
+						'value' : ( $( '#lu_contributed' ).exists() ) ? $( '#lu_contributed' ).val() : <?= intval( $searchByUser ) ?>
 					}, {
 						'name': 'limit',
 						'value' : limit
