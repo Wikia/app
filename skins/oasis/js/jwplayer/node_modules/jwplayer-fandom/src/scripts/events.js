@@ -1,4 +1,4 @@
-function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
+export default function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 	var state = getNewState(),
 		wasAlreadyUnmuted = false,
 		depth = 0,

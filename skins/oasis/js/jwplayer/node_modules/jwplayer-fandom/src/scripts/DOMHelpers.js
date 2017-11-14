@@ -1,5 +1,9 @@
-function createToggle(params) {
-	var toggleWrapper = document.createElement('li'),
+import wikiaJWPlayerIcons from './icons';
+
+const domParser = new DOMParser();
+
+export function createToggle(params) {
+	const toggleWrapper = document.createElement('li'),
 		toggleInput = document.createElement('input'),
 		toggleLabel = document.createElement('label');
 
@@ -29,8 +33,8 @@ function createToggle(params) {
  * @param {String} direction
  * @returns {HTMLElement}
  */
-function createArrowIcon(direction) {
-	var arrowIcon = createSVG(wikiaJWPlayerIcons.back);
+export function createArrowIcon(direction) {
+	const arrowIcon = createSVG(wikiaJWPlayerIcons.back);
 
 	if (direction === 'left') {
 		arrowIcon.classList.add('wikia-jw-settings__back-icon');
@@ -41,7 +45,7 @@ function createArrowIcon(direction) {
 	return arrowIcon;
 }
 
-function clearListElement(element) {
+export function clearListElement(element) {
 	if (element) {
 		while (element.childElementCount > 1) {
 			element.removeChild(element.firstChild);
@@ -49,17 +53,17 @@ function clearListElement(element) {
 	}
 }
 
-function createSVG(svgHtml) {
+export function createSVG(svgHtml) {
 	return domParser.parseFromString(svgHtml, 'image/svg+xml').documentElement;
 }
 
-function showElement(element) {
+export function showElement(element) {
 	if (element) {
 		element.style.display = 'block';
 	}
 }
 
-function hideElement(element) {
+export function hideElement(element) {
 	if (element) {
 		element.style.display = 'none';
 	}

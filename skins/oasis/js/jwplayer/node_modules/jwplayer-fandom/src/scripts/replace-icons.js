@@ -1,6 +1,7 @@
-function wikiaJWPlayerReplaceIcons(playerInstance) {
-	var parser = new DOMParser();
+import wikiaJWPlayerIcons from './icons';
+import { createSVG } from "./DOMHelpers";
 
+export default function wikiaJWPlayerReplaceIcons(playerInstance) {
 	/**
 	 * Replaces inner markup of JW SVG's with SVG from Design System
 	 * We cannot override the whole SVG as this makes the player misbehave
@@ -12,7 +13,8 @@ function wikiaJWPlayerReplaceIcons(playerInstance) {
 	function replaceJWIconWithCustom(icon, iconHtml) {
 		// some icons are not present on smaller devices
 		if (icon) {
-			var newIcon = parser.parseFromString(iconHtml, 'image/svg+xml').documentElement;
+			const newIcon = createSVG(iconHtml);
+
 			newIcon.setAttribute('class', icon.getAttribute('class'));
 			icon.parentNode.replaceChild(newIcon, icon);
 		}

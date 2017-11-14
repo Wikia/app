@@ -1,7 +1,9 @@
-var isActiveClass = 'is-active',
-	domParser = new DOMParser();
+import wikiaJWPlayerIcons from './icons';
+import { createSVG, hideElement, showElement, createArrowIcon, createToggle, clearListElement } from "./DOMHelpers";
 
-function wikiaJWPlayerSettingsPlugin(player, config, div) {
+const isActiveClass = 'is-active';
+
+export default function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.player = player;
 	this.container = div;
 	this.wikiaSettingsElement = document.createElement('div');
@@ -23,7 +25,7 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 }
 
 wikiaJWPlayerSettingsPlugin.prototype.isSettingsMenuOrSettingsButton = function (element) {
-	var button = this.getSettingsButtonElement();
+	const button = this.getSettingsButtonElement();
 
 	return button && (button === element ||
 		button.contains(element) ||
@@ -43,7 +45,7 @@ wikiaJWPlayerSettingsPlugin.prototype.documentClickHandler = function (event) {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
-	var settingsIcon = createSVG(wikiaJWPlayerIcons.settings);
+	const settingsIcon = createSVG(wikiaJWPlayerIcons.settings);
 	settingsIcon.classList.add('jw-svg-icon');
 	settingsIcon.classList.add('jw-svg-icon-wikia-settings');
 
@@ -157,11 +159,11 @@ wikiaJWPlayerSettingsPlugin.prototype.createSubmenuWrapper = function () {
 
 // autoplay button specific methods
 wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
-	var autoplayToggle = createToggle({
-			id: this.player.getContainer().id + '-videoAutoplayToggle',
-			label: this.config.i18n.autoplayVideos,
-			checked: this.config.autoplay
-		});
+	const autoplayToggle = createToggle({
+		id: this.player.getContainer().id + '-videoAutoplayToggle',
+		label: this.config.i18n.autoplayVideos,
+		checked: this.config.autoplay
+	});
 
 	autoplayToggle.querySelector('label')
 		.addEventListener('click', function (event) {
@@ -176,7 +178,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createAutoplayToggle = function () {
 
 // quality button specific methods
 wikiaJWPlayerSettingsPlugin.prototype.createQualityButton = function () {
-	var qualityElement = document.createElement('li');
+	const qualityElement = document.createElement('li');
 
 	qualityElement.className = 'wikia-jw-settings__quality-button';
 	qualityElement.innerHTML = this.config.i18n.videoQuality + createArrowIcon('right').outerHTML;
@@ -196,7 +198,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createQualityLevelsList = function () {
 
 wikiaJWPlayerSettingsPlugin.prototype.onQualityLevelsChange = function (data) {
 	// in Safari in data.levels array there is one element with label = '0'
-	var isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0'),
+	const isQualityListEmpty = !data.levels.length || (data.levels.length === 1 && data.levels[0].label === '0'),
 		shouldShowSettingsButton = (!isQualityListEmpty && this.config.showQuality) || this.config.showAutoplayToggle,
 		isQualityListEmptyClass = 'is-quality-list-empty';
 
@@ -219,7 +221,7 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLev
 	clearListElement(this.qualityLevelsList);
 
 	newLevels.forEach(function (level, index) {
-		var qualityLevelItem = document.createElement('li');
+		const qualityLevelItem = document.createElement('li');
 
 		qualityLevelItem.addEventListener('click', function () {
 			this.player.setCurrentQuality(index);
@@ -236,8 +238,9 @@ wikiaJWPlayerSettingsPlugin.prototype.updateQualityLevelsList = function (newLev
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (data) {
-	for (var i = 0; i < this.qualityLevelsList.childNodes.length; i++) {
-		var node = this.qualityLevelsList.childNodes[i];
+	for (let i = 0; i < this.qualityLevelsList.childNodes.length; i++) {
+		const node = this.qualityLevelsList.childNodes[i];
+
 		if (data.currentQuality === i) {
 			node.classList.add(isActiveClass);
 		} else {
@@ -249,7 +252,7 @@ wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (data) {
 
 // captions button specific methods
 wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
-	var emptyCaptionsClass = 'are-captions-empty',
+	const emptyCaptionsClass = 'are-captions-empty',
 		suitableCaptionsTrack = this.getSuitableCaptionsIndex(
 			this.config.selectedCaptionsLanguage || this.captionLangMap[this.getUserLang()],
 			event.tracks
@@ -283,7 +286,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsList = function () {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsListItem = function (track, index) {
-	var captionItem = document.createElement('li'),
+	const captionItem = document.createElement('li'),
 		normalizedLabel = track.label === 'Off' ? 'No captions' : track.label;
 
 	captionItem.dataset.track = index;
@@ -300,7 +303,7 @@ wikiaJWPlayerSettingsPlugin.prototype.createCaptionsListItem = function (track, 
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.createCaptionsButton = function () {
-	var captionsButton = document.createElement('li');
+	const captionsButton = document.createElement('li');
 
 	captionsButton.className = 'wikia-jw-settings__captions-button';
 	captionsButton.innerHTML = this.config.i18n.captions + createArrowIcon('right').outerHTML;
@@ -327,7 +330,7 @@ wikiaJWPlayerSettingsPlugin.prototype.getSuitableCaptionsIndex = function(userLa
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.updateCurrentCaptions = function (data) {
-	for (var i = 0; i < this.captionsList.childNodes.length; i++) {
+	for (let i = 0; i < this.captionsList.childNodes.length; i++) {
 		this.captionsList.childNodes[i].classList.remove(isActiveClass);
 	}
 

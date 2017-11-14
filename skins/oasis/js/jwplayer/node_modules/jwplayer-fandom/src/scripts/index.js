@@ -1,4 +1,14 @@
-var loadCallbacks = [];
+import wikiaJWPlayerEvents from './events';
+import wikiaJWPlayerReplaceIcons from './replace-icons';
+import wikiaJWPlayerRelatedVideoSound from './sound';
+import wikiaJWPlayerTracking from './tracking';
+import wikiaJWPlayerHandleTabNotActive from './tab-active';
+import wikiaJWPlayerLogger from './logger';
+import wikiaJWPlayerSettingsPlugin from './settings.plugin';
+import wikiaJWPlayerAllowControllOnTouchDevices from './allow-control-on-touch';
+import wikiaJWPlayeri18n from './../locales/i18n';
+
+const loadCallbacks = [];
 
 window.wikiaJWPlayer = function (elementId, options, callback) {
 
@@ -8,7 +18,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @param playerURL
 	 */
 	function createScriptTag(elementId, playerURL) {
-		var script = document.createElement('script'),
+		const script = document.createElement('script'),
 			playerElement = document.getElementById(elementId);
 
 		script.onload = function () {
@@ -50,7 +60,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @return {*}
 	 */
 	function setupPlayer(elementId, options, logger) {
-		var playerInstance = jwplayer(elementId),
+		const playerInstance = jwplayer(elementId),
 			videoId = options.videoDetails.playlist[0].mediaid,
 			willAutoplay = options.autoplay,
 			lang = options.lang || 'en',
@@ -108,7 +118,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	}
 
 	loadJWPlayerScript(elementId, options.playerURL, function () {
-		var logger = wikiaJWPlayerLogger(options),
+		const logger = wikiaJWPlayerLogger(options),
 			playerInstance = setupPlayer(elementId, options, logger);
 
 		wikiaJWPlayerReplaceIcons(playerInstance);

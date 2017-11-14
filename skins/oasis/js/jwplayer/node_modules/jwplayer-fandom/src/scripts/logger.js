@@ -1,4 +1,4 @@
-function wikiaJWPlayerLogger(options) {
+export default function wikiaJWPlayerLogger(options) {
 	var servicesDomain = options.servicesDomain || 'services.wikia.com',
 		loggerPath = '/event-logger/error',
 		loggerUrl = 'https://' + servicesDomain + loggerPath,
