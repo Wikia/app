@@ -159,7 +159,7 @@ class ListusersAjax {
 		// get the list of user IDs that are active on a wiki
 		$wikiUsers = self::getWikiUsers( $wgCityId );
 
-		if ( !empty( $wikiUsers ) ) {
+		if ( !empty( $wikiUsers ) && $query !== '' ) {
 			// get the list of user names from accounts that were active on a wiki
 			$dbr = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 			$user_names = $dbr->selectFieldValues(
@@ -167,29 +167,21 @@ class ListusersAjax {
 				'user_name',
 				[
 					'user_id' => $wikiUsers,
+					sprintf('user_name %s', $dbr->buildLike($query, $dbr->anyString() ) ),
 				],
-				__METHOD__
+				__METHOD__,
+				[
+					'LIMIT' => 50,
+					'ORDER BY' => 'user_name'
+				]
 			);
 
-			if ($query !== '') {
-				// now, perform the filtering to generate the list of user name suggestions
-				// basically emulate case-insensitive LIKE 'foo%' in PHP
-				$users = array_values(array_filter(
-					$user_names,
-					function ($user_name) use ($query) {
-						return startsWith($user_name, $query, false);
-					}
-				));
-
-				// sort and limit the response to 50 items
-				sort($users);
-				$resp[] = array_slice($users, 0, 50);
-			}
+			$resp[] = $user_names;
 		}
 
 		$response = new AjaxResponse( json_encode($resp) );
 		$response->setContentType( 'application/json; charset=utf-8' );
-		$response->setCacheDuration( WikiaResponse::CACHE_SHORT );
+		$response->setCacheDuration( WikiaResponse::CACHE_VERY_SHORT );
 
 		return $response;
 	}
