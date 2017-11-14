@@ -1,4 +1,4 @@
-(function() {
+require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
     function __makeParamValue() {
         var f = document.getElementById('lu-form'),
             target = "",
@@ -14,10 +14,7 @@
         return target;
     }
 
-    function log(msg) {
-        $().log(msg, 'listusers');
-    }
-
+    // set up data table
     // @see https://datatables.net/reference/option/ (jquery.dataTables.min.js v1.8.2)
     var oTable = $('#lu-table').dataTable({
         "oLanguage": listUsersLanguage,
@@ -127,4 +124,20 @@
     });
 
     $( 'div.dttoolbar' ).html( listUserToolbar );
-}());
+
+    // set up auto-suggest for user names
+    // @see http://api.jqueryui.com/autocomplete/
+    $('#lu_search').autocomplete({
+        source: function( request, response ) {
+            $.getJSON(
+                window.wgScript + "?action=ajax&rs=ListusersAjax::axSuggestUsers",
+                {
+                    'query': request.term
+                },
+                function(data) {
+                    response(data[1]);
+                }
+            );
+        }
+    });
+});

@@ -71,7 +71,7 @@ $wgResourceModules['ext.wikia.ListUsers'] = [
 	],
 	'dependencies' => [
 		// SUS-3207 - for user names auto-suggest feature
-		'jquery.autocomplete',
+		'jquery.ui.autocomplete',
 		'jquery.dataTables',
 	],
 	'localBasePath' => __DIR__,
