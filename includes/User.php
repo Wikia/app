@@ -1790,6 +1790,16 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * SUS-3250: Just set the user ID, without any side-effects
+	 * @see User::setId() for bad design
+	 * @param $userId
+	 */
+	public function setUserId( $userId ) {
+		$this->mId = $userId;
+		$this->setItemLoaded( 'id' );
+	}
+
+	/**
 	 * Get the user name, or the IP of an anonymous user
 	 * @return String User's name or IP address
 	 */
