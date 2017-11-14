@@ -151,31 +151,36 @@ class ListusersAjax {
 	public static function axSuggestUsers() {
 		global $wgExternalSharedDB, $wgCityId;
 
-		// get the list of user names from accounts that were active on a wiki
-		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$user_names = $dbr->selectFieldValues(
-			'user',
-			'user_name',
-			[
-				'user_id' => self::getWikiUsers( $wgCityId ),
-			],
-			__METHOD__
-		);
-
 		$query = RequestContext::getMain()->getRequest()->getText('query');
 		$resp = [
 			$query
 		];
 
-		if ( $query !== '' ) {
-			// now, perform the filtering to generate the list of user name suggestions
-			// basically emulate case-insensitive LIKE 'foo%' in PHP
-			$resp[] = array_values(array_filter(
-				$user_names,
-				function ($user_name) use ($query) {
-					return startsWith($user_name, $query, false);
-				}
-			));
+		// get the list of user IDs that are active on a wiki
+		$wikiUsers = self::getWikiUsers( $wgCityId );
+
+		if ( !empty( $wikiUsers ) ) {
+			// get the list of user names from accounts that were active on a wiki
+			$dbr = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+			$user_names = $dbr->selectFieldValues(
+				'user',
+				'user_name',
+				[
+					'user_id' => $wikiUsers,
+				],
+				__METHOD__
+			);
+
+			if ($query !== '') {
+				// now, perform the filtering to generate the list of user name suggestions
+				// basically emulate case-insensitive LIKE 'foo%' in PHP
+				$resp[] = array_values(array_filter(
+					$user_names,
+					function ($user_name) use ($query) {
+						return startsWith($user_name, $query, false);
+					}
+				));
+			}
 		}
 
 		$response = new AjaxResponse( json_encode($resp) );
