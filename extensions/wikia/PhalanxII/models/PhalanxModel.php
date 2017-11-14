@@ -130,6 +130,11 @@ abstract class PhalanxModel extends WikiaObject {
 		return $result;
 	}
 
+	/**
+	 * Perform a match request against Phalanx with the given content and type
+	 * @param $type
+	 * @return bool true if content is valid, false if it triggers some filter
+	 */
 	public function match( $type ) {
 		if ( $this->isOk() ) {
 			return true;
@@ -151,7 +156,7 @@ abstract class PhalanxModel extends WikiaObject {
 			$phalanxBlockList = $this->service->doMatch( $phalanxMatchParams );
 			$this->block = array_shift( $phalanxBlockList );
 
-			return !empty( $this->block );
+			return empty( $this->block );
 		} catch ( PhalanxServiceException $phalanxServiceException ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Phalanx service failed' );
 			return true;
