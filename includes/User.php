@@ -1796,6 +1796,9 @@ class User implements JsonSerializable {
 	 */
 	public function setUserId( $userId ) {
 		$this->mId = $userId;
+
+		// make sure user will be loaded from user id
+		$this->mFrom = 'id';
 		$this->setItemLoaded( 'id' );
 	}
 
