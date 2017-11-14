@@ -58,7 +58,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 	private function setUpService( $block ) {
 		$phalanxServiceMock = $this->getMockForAbstractClass( PhalanxService::class );
 
-		if ( !$block ) {
+		if ( $block ) {
 			$phalanxServiceMock->expects( $this->any() )
 				->method( 'doMatch' )
 				->willReturn( [ new PhalanxBlockInfo() ] );
