@@ -16,7 +16,7 @@ class ListusersAjax {
 	 * @return AjaxResponse
 	 */
 	public static function axShowUsers ( ) {
-		global $wgUser, $wgCityId;
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		$request = RequestContext::getMain()->getRequest();
@@ -45,61 +45,58 @@ class ListusersAjax {
 			'aaData' => array()
 		);
 
-		if ( is_object($wgUser) ) {
+		$records = array();
+		$data = new ListusersData($wgCityId);
+		if ( is_object($data) ) {
+			$filterGroups = explode(',', trim($groups));
+			$data->setFilterGroup ( $filterGroups );
+			$data->setUserId ( $user_id );
+			$data->setEditsThreshold( $edits );
+			$data->setLimit ( $limit );
+			$data->setOffset( $offset );
+			$data->setOrder( $orders );
+			$records = $data->loadData();
+		}
 
-			$records = array();
-			$data = new ListusersData($wgCityId);
-			if ( is_object($data) ) {
-				$filterGroups = explode(',', trim($groups));
-				$data->setFilterGroup ( $filterGroups );
-				$data->setUserId ( $user_id );
-				$data->setEditsThreshold( $edits );
-				$data->setLimit ( $limit );
-				$data->setOffset( $offset );
-				$data->setOrder( $orders );
-				$records = $data->loadData();
-			}
+		if ( !empty( $records ) && is_array( $records ) ) {
+			$result['iTotalRecords'] = intval( $limit );
+			$result['iTotalDisplayRecords'] = intval($records['cnt']);
+			$rows = array();
+			if ( isset($records['data'] ) ) {
+				foreach ( $records['data'] as $user_id => $data ) {
+					$username  = Xml::openElement('div', array( 'class' => ( $data['blcked'] ) ? 'listusers_blockeduser' : '' ) );
+					$username .= Xml::tags( 'span', array( 'style' => 'font-size:90%;font-weight:bold;padding-left:5px;' ), $data['user_link'] );
+					$username .= "<br />";
+					$username .= Xml::tags( 'span', array( 'style' => 'font-size:77%; padding-left:5px;' ), $data['links'] );
+					$username .= Xml::closeElement('div');
 
-			if ( !empty( $records ) && is_array( $records ) ) {
-				$result['iTotalRecords'] = intval( $limit );
-				$result['iTotalDisplayRecords'] = intval($records['cnt']);
-				$rows = array();
-				if ( isset($records['data'] ) ) {
-					foreach ( $records['data'] as $user_id => $data ) {
-						$username  = Xml::openElement('div', array( 'class' => ( $data['blcked'] ) ? 'listusers_blockeduser' : '' ) );
-						$username .= Xml::tags( 'span', array( 'style' => 'font-size:90%;font-weight:bold;padding-left:5px;' ), $data['user_link'] );
-						$username .= "<br />";
-						$username .= Xml::tags( 'span', array( 'style' => 'font-size:77%; padding-left:5px;' ), $data['links'] );
-						$username .= Xml::closeElement('div');
+					$groups = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['groups'] ) : $data['groups'];
+					$edits = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['rev_cnt'] ) : $data['rev_cnt'];
 
-						$groups = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['groups'] ) : $data['groups'];
-						$edits = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['rev_cnt'] ) : $data['rev_cnt'];
-
-						$last_edited  = "-";
-						if ( $data['last_edit_ts'] && $data['last_edit_page'] ) {
-							$last_edited  = Xml::openElement( 'div' );
-							$last_edited .= Xml::tags( 'span',
-								array( 'style' => 'font-size:90%;' ),
-								Xml::element('a', array( 'href' => $data['last_edit_page'] ), $data['last_edit_ts'] )
-							);
-							$last_edited .= Xml::tags( 'span',
-								array( 'style' => 'font-size:77%; padding-left:8px;' ),
-								Xml::element('a', array( 'href' => $data['last_edit_diff'] ), wfMsg('diff') )
-							);
-							$last_edited .= Xml::closeElement('div');
-						}
-
-						$rows[] = array(
-							$username, //User name
-							$groups, //Groups
-							$edits,//Revisions (edits)
-							$last_edited//Last edited
+					$last_edited  = "-";
+					if ( $data['last_edit_ts'] && $data['last_edit_page'] ) {
+						$last_edited  = Xml::openElement( 'div' );
+						$last_edited .= Xml::tags( 'span',
+							array( 'style' => 'font-size:90%;' ),
+							Xml::element('a', array( 'href' => $data['last_edit_page'] ), $data['last_edit_ts'] )
 						);
+						$last_edited .= Xml::tags( 'span',
+							array( 'style' => 'font-size:77%; padding-left:8px;' ),
+							Xml::element('a', array( 'href' => $data['last_edit_diff'] ), wfMsg('diff') )
+						);
+						$last_edited .= Xml::closeElement('div');
 					}
+
+					$rows[] = array(
+						$username, //User name
+						$groups, //Groups
+						$edits,//Revisions (edits)
+						$last_edited//Last edited
+					);
 				}
-				$result['aaData'] = $rows;
-				$result['sColumns'] =  join(',', ['username', 'groups', 'revcnt', 'dtedit']);
 			}
+			$result['aaData'] = $rows;
+			$result['sColumns'] =  join(',', ['username', 'groups', 'revcnt', 'dtedit']);
 		}
 
 		wfProfileOut( __METHOD__ );

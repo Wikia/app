@@ -41,10 +41,10 @@ class Listusers extends SpecialRedirectToSpecial {
 	 * show form
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgCityId;
+		global $wgCityId;
 
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+			$this->getOutput()->readOnlyPage();
 			return;
 		}
 
@@ -70,9 +70,10 @@ class Listusers extends SpecialRedirectToSpecial {
 		/**
 		 * initial output
 		 */
-		$wgOut->setPageTitle( wfMessage( 'listuserstitle' )->text() );
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
-		$wgOut->setArticleRelated( false );
+		$this->getOutput()->setPageTitle( wfMessage( 'listuserstitle' )->text() );
+		$this->getOutput()->setRobotpolicy( 'noindex,nofollow' );
+		$this->getOutput()->setArticleRelated( false );
+
 		$target = $this->getRequest()->getVal( 'target' );
 		if ( empty( $target ) ) {
 			$target = $this->getRequest()->getVal( 'group' );
