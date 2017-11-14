@@ -174,12 +174,16 @@ class ListusersAjax {
 			if ($query !== '') {
 				// now, perform the filtering to generate the list of user name suggestions
 				// basically emulate case-insensitive LIKE 'foo%' in PHP
-				$resp[] = array_values(array_filter(
+				$users = array_values(array_filter(
 					$user_names,
 					function ($user_name) use ($query) {
 						return startsWith($user_name, $query, false);
 					}
 				));
+
+				// sort and limit the response to 50 items
+				sort($users);
+				$resp[] = array_slice($users, 0, 50);
 			}
 		}
 
