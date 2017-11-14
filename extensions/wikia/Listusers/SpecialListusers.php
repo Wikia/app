@@ -63,6 +63,9 @@ $wgSpecialPageGroups['Listusers'] = 'users';
 
 // Resources Loader module
 $wgResourceModules['ext.wikia.ListUsers'] = [
+	'scripts' => [
+		'js/table.js'
+	],
 	'styles' => [
 		'css/table.scss'
 	],

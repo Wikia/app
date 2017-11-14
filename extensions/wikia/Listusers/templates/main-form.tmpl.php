@@ -1,157 +1,37 @@
 <script>
+// to be consumed by js/tables.js script
+var listUsersLanguage = {
+    "sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' )->escaped() ?>",
+    "sZeroRecords": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
+    "sEmptyTable": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
+    "sInfo": "<?= wfMessage('listusersrecordspager', '_START_', '_END_', '_TOTAL_')->parse() ?>",
+    "sInfoEmpty": "<?= wfMessage( 'listusersrecordspager','0', '0', '0' )->parse() ?>",
+    "sInfoFiltered": "",
+    "sSearch": "<?= wfMessage( 'search' )->escaped() ?>",
+    "sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?= wfMessage( 'livepreview-loading' )->escaped() ?>",
+    "oPaginate" : {
+        "sFirst": "<?= wfMessage( 'table_pager_first' )->escaped() ?>",
+        "sPrevious": "<?= wfMessage( 'table_pager_prev' )->escaped() ?>",
+        "sNext": "<?= wfMessage( 'table_pager_next' )->escaped() ?>",
+        "sLast": "<?= wfMessage( 'table_pager_last' )->escaped() ?>"
+    }
+};
+
+
+var listUserToolbar = '<div class="lu_filter">';
+listUserToolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listuserbyname' )->escaped() ?></span>';
+listUserToolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="25" value="<?=$searchByUser?>"></span>';
+listUserToolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listuserscontributed' )->escaped() ?></span>';
+listUserToolbar += '<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" >';
+<?php
+/* @var array $contribs */
+foreach ( $contribs as $val => $text ) { ?>
+    listUserToolbar += '<option <?= ( $val == $defContrib ) ? "selected=\'selected\'" : "" ?> value="<?= $val ?>"><?= $text ?></option>';
+<? } ?>
+listUserToolbar += '</select></span>';
+listUserToolbar += '<span class="lu_filter"><input type="button" value="<?= wfMessage( 'listusersdetails' )->escaped() ?>" id="lu-showusers"></span></div>';
+
 $( function () {
-
-	function __makeParamValue() {
-		var f = document.getElementById( 'lu-form' ),
-			target = "",
-			i;
-
-		if ( f.lu_target && f.lu_target.length > 0 ) {
-			for ( i = 0; i < f.lu_target.length; i++ ) {
-				if ( f.lu_target[i].checked ) {
-					target += f.lu_target[i].value + ",";
-				}
-			}
-		}
-		return target;
-	}
-
-	var baseurl = window.wgScript + "?action=ajax&rs=ListusersAjax::axShowUsers";
-
-	// @see https://datatables.net/reference/option/ (jquery.dataTables.min.js v1.8.2)
-	var oTable = $( '#lu-table' ).dataTable( {
-		"oLanguage": {
-			"sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' )->escaped() ?>",
-			"sZeroRecords": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
-			"sEmptyTable": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
-			"sInfo": "<?= wfMessage('listusersrecordspager', '_START_', '_END_', '_TOTAL_')->parse() ?>",
-			"sInfoEmpty": "<?= wfMessage( 'listusersrecordspager','0', '0', '0' )->parse() ?>",
-			"sInfoFiltered": "",
-			"sSearch": "<?= wfMessage( 'search' )->escaped() ?>",
-			"sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?= wfMessage( 'livepreview-loading' )->escaped() ?>",
-			"oPaginate" : {
-				"sFirst": "<?= wfMessage( 'table_pager_first' )->escaped() ?>",
-				"sPrevious": "<?= wfMessage( 'table_pager_prev' )->escaped() ?>",
-				"sNext": "<?= wfMessage( 'table_pager_next' )->escaped() ?>",
-				"sLast": "<?= wfMessage( 'table_pager_last' )->escaped() ?>"
-			}
-		},
-		"sCookiePrefix" : "<?= $title ?>-wikia",
-		"aLengthMenu": [[10, 25, 50], [10, 25, 50]],
-		"sDom": '<"dttoolbar"><"top"flip>rt<"bottom"p><"clear">',
-		"aoColumns": [
-			{ "sName": "username" },
-			{ "sName": "groups" },
-			{ "sName": "revcnt" },
-			{ "sName": "dtedit" }
-		],
-		"bProcessing": true,
-		"bServerSide": true,
-		"bFilter" : false,
-		"sPaginationType": "full_numbers",
-		"sAjaxSource": baseurl,
-		/*"fnInitComplete" : function ( oInstance, oSettings, json ) {
-			// make CSS buttons
-		},*/
-		"fnServerData": function ( sSource, aoData, fnCallback ) {
-			var limit = 30,
-				offset = 0,
-				groups = __makeParamValue(),
-				loop = 1,
-				order = '',
-				sortingCols = 0,
-				sortColumns = [],
-				sortOrder = [],
-				_tmp = [],
-				columns = [],
-				i;
-
-			for ( i in aoData ) {
-			    $().log(aoData[i], 'listusers');
-
-				switch ( aoData[i].name ) {
-                    case 'iDisplayLength':
-                        limit = aoData[i].value;
-                        break;
-                    case 'iDisplayStart':
-                        offset = aoData[i].value;
-                        break;
-					case 'sEcho':
-						loop = aoData[i].value;
-						break;
-					case 'sColumns':
-						columns = aoData[i].value.split( ',' );
-						break;
-					case 'iSortingCols':
-						sortingCols = aoData[i].value;
-						break;
-				}
-
-				if ( aoData[i].name.indexOf( 'iSortCol_', 0 ) !== -1 )
-					sortColumns.push( aoData[i].value );
-
-				if ( aoData[i].name.indexOf( 'sSortDir_', 0 ) !== -1 )
-					sortOrder.push( aoData[i].value );
-			}
-
-			if ( sortingCols > 0 ) {
-				for ( i = 0; i < sortingCols; i++ ) {
-					var info = columns[sortColumns[i]] + ":" + sortOrder[i];
-					_tmp.push(info);
-				}
-				order = _tmp.join( '|' );
-			}
-
-			$.ajax( {
-				"dataType": 'json',
-				"type": "GET",
-				"url": sSource,
-				"data": [
-					{
-						'name': 'groups',
-						'value': groups
-					}, {
-						'name': 'username',
-						'value': ( $( '#lu_search' ).exists() ) ? $( '#lu_search' ).val() : '<?= addslashes( $searchByUser ) ?>'
-					}, {
-						'name': 'edits',
-						'value' : ( $( '#lu_contributed' ).exists() ) ? $( '#lu_contributed' ).val() : <?= intval( $searchByUser ) ?>
-					}, {
-						'name': 'limit',
-						'value' : limit
-					}, {
-						'name': 'offset',
-						'value' : offset
-					}, {
-						'name': 'loop',
-						'value': loop
-					}, {
-						'name': 'order',
-						'value': order
-					}
-				],
-				"success": fnCallback
-			} );
-		}
-	} );
-
-	var toolbar = '<div class="lu_filter">';
-	toolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listuserbyname' )->escaped() ?></span>';
-	toolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="25" value="<?=$searchByUser?>"></span>';
-	toolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listuserscontributed' )->escaped() ?></span>';
-	toolbar += '<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" >';
-	<?php
-    /* @var array $contribs */
-    foreach ( $contribs as $val => $text ) { ?>
-		toolbar += '<option <?= ( $val == $defContrib ) ? "selected=\'selected\'" : "" ?> value="<?= $val ?>"><?= $text ?></option>';
-	<? } ?>
-	toolbar += '</select></span>';
-	toolbar += '<span class="lu_filter"><input type="button" value="<?= wfMessage( 'listusersdetails' )->escaped() ?>" id="lu-showusers"></span></div>';
-
-	$( 'div.dttoolbar' ).html( toolbar );
-	$( '#lu-showusers' ).click( function () {
-		oTable.fnDraw();
-	} );
 	$( '#lu-select-all' ).click( function () {
 		var $this = $( this ),
 			$checkbox = $( '.lu_target' );

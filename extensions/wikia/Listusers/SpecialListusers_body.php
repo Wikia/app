@@ -121,6 +121,13 @@ class Listusers extends SpecialRedirectToSpecial {
 		// load CSS and JS assets
 		$this->getOutput()->addModules('ext.wikia.ListUsers');
 
+		// make these values available in JS code via mw.config
+		// e.g. mw.config.get('listUsers').defContrib
+		$this->getOutput()->addJsConfigVars('listUsers', [
+			'defContrib' => $this->mDefContrib,
+			'searchByUser' => $this->searchByUser,
+		]);
+
 		$oTmpl = new EasyTemplate( __DIR__ . "/templates/" );
 		$oTmpl->set_vars( array(
 			"action"		=> $this->mAction,
@@ -130,7 +137,6 @@ class Listusers extends SpecialRedirectToSpecial {
 			"defContrib"		=> $this->mDefContrib,
 			"searchByUser"		=> $this->searchByUser,
 			"wgUser"		=> $this->getUser(),
-			"title"			=> self::TITLE,
 			'groups'        => $this->mData->getGroups(),
 			'filtered_group' => $this->mData->getFilterGroup(),
 			'contribs'      => $this->mContribs,
