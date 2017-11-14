@@ -672,8 +672,7 @@ class User implements JsonSerializable {
 		}
 
 		if ( isset( self::$idCacheByName[$name] ) ) {
-			// SUS-2981 - return NULL when a user is not found
-			return ( (int) self::$idCacheByName[$name] ) ?: null;
+			return (int) self::$idCacheByName[$name];
 		}
 
 		// SUS-2945 | this method makes ~32mm queries every day
@@ -684,8 +683,7 @@ class User implements JsonSerializable {
 		$cachedId = $wgMemc->get( $key );
 
 		if ( is_numeric( $cachedId ) ) {
-			// SUS-2981 - return NULL when a user is not found
-			return ( (int) self::$idCacheByName[$name] = $cachedId ) ?: null;
+			return (int) self::$idCacheByName[$name] = $cachedId;
 		}
 
 		// not in cache, query the database
@@ -698,14 +696,13 @@ class User implements JsonSerializable {
 		}
 
 		if ( $s === false ) {
-			// SUS-2981 - set cached value to zero when a user is not found, setting a memcache entry to NULL makes no sense
-			$result = 0;
+			$result = null;
 		} else {
-			$result = (int)$s->user_id;
-		}
+			$result = (int) $s->user_id;
 
-		// SUS-2981 - cache even when a given user is not found (set cache entry to 0)
-		$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
+			// SUS-2945 - only store when there's a match
+			$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
+		}
 
 		self::$idCacheByName[$name] = $result;
 
@@ -713,7 +710,7 @@ class User implements JsonSerializable {
 			self::$idCacheByName = array();
 		}
 
-		return $result ?: null;
+		return $result;
 	}
 
 	/**
