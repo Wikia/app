@@ -7,18 +7,16 @@
  */
 
 class Listusers extends SpecialRedirectToSpecial {
-	var $mCityId;
-	var $mAction;
-	var $mTitle;
-	var $mDefGroups;
-	var $mFilterStart;
-	var $mContribs;
+	private $mAction;
+	private $mTitle;
+	private $mDefGroups;
+	private $mContribs;
 
 	/* @var ListusersData $mData */
-	var $mData;
+	private $mData;
 
-	var $mDefContrib = null;
-	var $searchByUser = '';
+	private $mDefContrib = null;
+	private $searchByUser = '';
 
 	const TITLE		= 'Listusers';
 	const DEF_GROUP_NAME	= 'all';
@@ -51,7 +49,6 @@ class Listusers extends SpecialRedirectToSpecial {
 		/**
 		 * defaults
 		 */
-		$this->mCityId = $wgCityId;
 		// VOLDEV-47
 		// remove default highlighted groups (all are now highlighted)
 		$this->mDefGroups = array();
@@ -99,7 +96,7 @@ class Listusers extends SpecialRedirectToSpecial {
 
 		$this->mDefContrib = is_null( $this->mDefContrib ) ? self::DEF_EDITS : $this->mDefContrib;
 
-		$this->mData = new ListusersData( $this->mCityId );
+		$this->mData = new ListusersData( $wgCityId );
 		$this->mData->load();
 		$this->mData->setFilterGroup( $this->mDefGroups );
 
