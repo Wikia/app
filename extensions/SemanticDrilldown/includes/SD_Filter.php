@@ -164,8 +164,9 @@ class SDFilter {
 			} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
 				$this->property_type = 'date';
 			} else {
-				// This should hopefully never get called.
-				print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
+				\Wikia\Logger\WikiaLogger::instance()->warning( 'SUS-3246 - Unsupported semantic property type', [
+					'property_type' => $typeValue
+				] );
 			}
 		}
 
@@ -182,6 +183,10 @@ class SDFilter {
 	 */
 	public function loadDBStructureInformation() {
 		global $smwgDefaultStore;
+
+		\Wikia\Logger\WikiaLogger::instance()->info( 'SUS-3246 - Loading property information', [
+			'property_type' => $this->property_type
+		] );
 
 		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
 			if ( $this->property_type === 'page' ) {
