@@ -425,46 +425,6 @@ class DataProvider {
 		return $results;
 	}
 
-	/**
-	 * Return array of top content
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 * @return array
-	 */
-	final private static function
-	GetTopContentQuery( &$results, $query, $limit, $exists_table = "" ) {
-		wfProfileIn( __METHOD__ );
-
-		$dbr = &wfGetDB( DB_SLAVE );
-
-		/* check if table exists */
-		if ( !empty( $exists_table ) ) {
-			if ( $dbr->tableExists( $exists_table ) === false ) {
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-		}
-		/* check query */
-		if ( !empty( $query ) ) {
-			$res = $dbr->query( $dbr->limitResult( $query, $limit * 2, 0 ) );
-
-			while ( $row = $dbr->fetchObject( $res ) ) {
-				$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
-
-				if ( is_object( $title ) ) {
-					if ( wfMsg( "mainpage" ) != $title->getText() ) {
-						$article['url'] = $title->getLocalUrl();
-						$article['text'] = $title->getPrefixedText();
-						$results[] = $article;
-					}
-				}
-			}
-			$dbr->freeResult( $res );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
 	/*
 	 * Return array of user's messages
 	 * Author: Piotr Molski (moli at wikia.com)
