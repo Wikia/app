@@ -119,11 +119,11 @@ require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
         }
     });
 
+    $( 'div.dttoolbar' ).html( listUserToolbar );
+
     $('#lu-showusers').click(function () {
         oTable.fnDraw();
     });
-
-    $( 'div.dttoolbar' ).html( listUserToolbar );
 
     // set up auto-suggest for user names
     // @see http://api.jqueryui.com/autocomplete/
@@ -138,6 +138,13 @@ require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
                     response(data[1]);
                 }
             );
+        },
+        select: function( event, ui ) {
+            // update text field value
+            $(this).val(ui.item.value);
+
+            // update the table when a user is selected
+            oTable.fnDraw();
         }
     });
 });
