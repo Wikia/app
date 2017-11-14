@@ -29,7 +29,6 @@ class ListusersAjax {
 		$loop		= $request->getVal('loop');
 		$orders     = explode("|", $request->getVal('order') );
 
-		// FIXME: SUS-3207 - temporarily support searching via user name
 		if ( $request->getVal( 'username' ) ) {
 			$user_id = User::idFromName( $request->getVal( 'username' ) );
 		}
