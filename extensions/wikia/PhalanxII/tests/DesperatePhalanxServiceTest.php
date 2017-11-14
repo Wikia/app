@@ -5,8 +5,8 @@ use PHPUnit\Framework\TestCase;
 class DesperatePhalanxServiceTest extends TestCase {
 	const REGEX = 'test regex';
 
-	/** @var PhalanxService|PHPUnit_Framework_MockObject_MockObject $phalanxMatchServiceMock */
-	private $phalanxMatchServiceMock;
+	/** @var PhalanxService|PHPUnit_Framework_MockObject_MockObject $phalanxServiceMock */
+	private $phalanxServiceMock;
 
 	/** @var PhalanxMatchParams $phalanxParams */
 	private $phalanxParams;
@@ -18,18 +18,16 @@ class DesperatePhalanxServiceTest extends TestCase {
 		parent::setUp();
 		require_once __DIR__ . '/../Phalanx_setup.php';
 
-		$this->phalanxMatchServiceMock =
-			$this->getMockForAbstractClass( PhalanxService::class );
-
+		$this->phalanxServiceMock = $this->getMockForAbstractClass( PhalanxService::class );
 		$this->phalanxParams = new PhalanxMatchParams();
 
-		$this->desperatePhalanxService = new DesperatePhalanxService( $this->phalanxMatchServiceMock );
+		$this->desperatePhalanxService = new DesperatePhalanxService( $this->phalanxServiceMock );
 	}
 
 	public function testWillRetryMatchGivenTimesIfRequestsFailBeforeThrowingException() {
 		$this->expectException( PhalanxServiceException::class );
 
-		$this->phalanxMatchServiceMock->expects( $this->exactly( DesperatePhalanxService::RETRY_COUNT ) )
+		$this->phalanxServiceMock->expects( $this->exactly( DesperatePhalanxService::RETRY_COUNT ) )
 			->method( 'doMatch' )
 			->with( $this->phalanxParams )
 			->willThrowException( new PhalanxServiceException() );
@@ -38,12 +36,12 @@ class DesperatePhalanxServiceTest extends TestCase {
 	}
 
 	public function testStopsRetryingWhenMatchRequestSucceeds() {
-		$this->phalanxMatchServiceMock->expects( $this->at( 0 ) )
+		$this->phalanxServiceMock->expects( $this->at( 0 ) )
 			->method( 'doMatch' )
 			->with( $this->phalanxParams )
 			->willThrowException( new PhalanxServiceException() );
 
-		$this->phalanxMatchServiceMock->expects( $this->at( 1 ) )
+		$this->phalanxServiceMock->expects( $this->at( 1 ) )
 			->method( 'doMatch' )
 			->with( $this->phalanxParams )
 			->willReturn( [ new PhalanxBlockInfo() ] );
@@ -55,7 +53,7 @@ class DesperatePhalanxServiceTest extends TestCase {
 	public function testWillRetryRegexValidationGivenTimesIfRequestsFailBeforeThrowingException() {
 		$this->expectException( PhalanxServiceException::class );
 
-		$this->phalanxMatchServiceMock->expects( $this->exactly( DesperatePhalanxService::RETRY_COUNT ) )
+		$this->phalanxServiceMock->expects( $this->exactly( DesperatePhalanxService::RETRY_COUNT ) )
 			->method( 'doRegexValidation' )
 			->with( static::REGEX )
 			->willThrowException( new PhalanxServiceException() );
@@ -64,12 +62,12 @@ class DesperatePhalanxServiceTest extends TestCase {
 	}
 
 	public function testStopsRetryingWhenRegexValidationRequestSucceeds() {
-		$this->phalanxMatchServiceMock->expects( $this->at( 0 ) )
+		$this->phalanxServiceMock->expects( $this->at( 0 ) )
 			->method( 'doRegexValidation' )
 			->with( static::REGEX  )
 			->willThrowException( new PhalanxServiceException() );
 
-		$this->phalanxMatchServiceMock->expects( $this->at( 1 ) )
+		$this->phalanxServiceMock->expects( $this->at( 1 ) )
 			->method( 'doRegexValidation' )
 			->with( static::REGEX  )
 			->willReturn( true );
@@ -80,12 +78,12 @@ class DesperatePhalanxServiceTest extends TestCase {
 	public function testStopsRetryingWhenRegexValidationRequestCompletesWithValidationFailure() {
 		$this->expectException( RegexValidationException::class );
 
-		$this->phalanxMatchServiceMock->expects( $this->at( 0 ) )
+		$this->phalanxServiceMock->expects( $this->at( 0 ) )
 			->method( 'doRegexValidation' )
 			->with( static::REGEX  )
 			->willThrowException( new PhalanxServiceException() );
 
-		$this->phalanxMatchServiceMock->expects( $this->at( 1 ) )
+		$this->phalanxServiceMock->expects( $this->at( 1 ) )
 			->method( 'doRegexValidation' )
 			->with( static::REGEX  )
 			->willThrowException( new RegexValidationException() );
