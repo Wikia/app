@@ -1746,7 +1746,7 @@ class Linker {
 
 		/* Wikia change begin - @author: Macbre */
 		$skin = RequestContext::getMain()->getSkin();
-		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) );
+		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $fallbackAnchor, &$ret ) );
 		/* Wikia change end */
 
 		return $ret;
