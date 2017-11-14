@@ -98,4 +98,30 @@
 		// we don't want to have larger space when it's small player and there is only volume button visible
 		margin-right: 0;
 	}
+
+	// all !important rules are here to override JWPlayer inline styles
+	.jw-text-track-cue {
+		background-color: rgba(0, 0, 0, 0.6);
+		font-size: 16px;
+		line-height: 24px;
+		padding: 6px;
+		top: -20px!important;
+	}
+
+    .jw-text-track-container {
+      margin-left: 30px !important;
+      margin-right: 30px !important;
+    }
+
+	.jw-flag-small-player {
+		.jw-text-track-cue {
+			font-size: 14px;
+			top: 0!important;
+		}
+
+		.jw-text-track-container {
+			margin-left: 10px!important;
+			margin-right: 10px!important;
+		}
+	}
 }
