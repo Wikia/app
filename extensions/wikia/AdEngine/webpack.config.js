@@ -15,7 +15,12 @@ module.exports = [{
 		library: 'ad-engine.bridge'
 	},
 	resolve: {
-		extensions: ['.js']
+		modules: ['./', './node_modules'],
+		extensions: ['.js', '.scss'],
+		alias: {
+			'ad-engine': path.join(__dirname, 'node_modules/ad-engine'),
+			'ad-products': path.join(__dirname, 'node_modules/ad-products'),
+		}
 	},
 	module: {
 		rules: [

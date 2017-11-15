@@ -19,7 +19,6 @@
     "watch": "webpack -p -w"
   },
   "dependencies": {
-    "ad-engine": "git+ssh://git@github.com:Wikia/ad-engine.git#v5.2.0",
-    "ad-products": "git+ssh://git@github.com:Wikia/ad-products.git#v1.6.0"
+    "ad-products": "git+ssh://git@github.com:Wikia/ad-products.git#v1.0.7"
   }
 }
