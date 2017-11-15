@@ -337,7 +337,8 @@ CKEDITOR.replaceClass = 'ckeditor';
 		if ( mode == CKEDITOR.ELEMENT_MODE_REPLACE ) {
 			// Do not replace the textarea right now, just hide it. The effective
 			// replacement will be done later in the editor creation lifecycle.
-			element.setStyle( 'visibility', 'hidden' );
+			//Kacper Olek ArticleComment bugfix
+			//element.setStyle( 'visibility', 'hidden' );
 
 			// #8031 Remember if textarea was required and remove the attribute.
 			editor._.required = element.hasAttribute( 'required' );

@@ -52,8 +52,8 @@ Special outer level classes used in this file:
 	display: block;
 
 	/* Rounded borders. */
-	border-radius: 0px;
-	border: 1px solid black;
+	border-radius: 5px;
+/*	border: 1px solid black;*/
 
 	/* Spacing between the outer and the inner boundaries. */
 	padding: 0px;
