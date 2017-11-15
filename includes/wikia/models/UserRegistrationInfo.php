@@ -5,6 +5,8 @@ class UserRegistrationInfo implements JsonSerializable {
 	private $registrationDomain;
 	/** @var string $userName */
 	private $userName;
+	/** @var int $userId */
+	private $userId;
 	/** @var int $wikiId */
 	private $wikiId;
 	/** @var string $clientIp */
@@ -52,6 +54,13 @@ class UserRegistrationInfo implements JsonSerializable {
 	/**
 	 * @return int
 	 */
+	public function getUserId() {
+		return $this->userId;
+	}
+
+	/**
+	 * @return int
+	 */
 	public function getWikiId() {
 		return $this->wikiId;
 	}
@@ -75,5 +84,14 @@ class UserRegistrationInfo implements JsonSerializable {
 	 */
 	public function isEmailConfirmed() {
 		return $this->emailConfirmed;
+	}
+
+	public function toUser(): User {
+		$user = User::newFromName( $this->userName, false /* already validated */ );
+
+		// it is not possible to use User::setId() because of bad design - it clears instance cache
+		$user->setUserId( $this->userId );
+
+		return $user;
 	}
 }

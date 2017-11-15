@@ -36,6 +36,7 @@ class WikiaUpdater {
 			# fields
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
 			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
+			array( 'addField', 'recentchanges', 'rc_ip_bin',$dir . 'patch-rc_ip_bin.sql', true ), // SUS-3079
 
 			# indexes
 			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql', true ),
@@ -43,6 +44,9 @@ class WikiaUpdater {
 			# indexes drop
 			array( 'dropIndex', 'ach_user_badges', 'id',  $dir . 'patch-ach-user-badges-drop-id.sql', true ), // SUS-3097
 			array( 'dropIndex', 'ach_user_badges', 'notified_id',  $dir . 'patch-ach-user-badges-drop-notified_id.sql', true ), // SUS-3097
+			array( 'dropIndex', 'ach_custom_badges', 'id',  $dir . 'patch-ach_custom_badges-drop-id.sql', true ), // SUS-3098
+			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
+			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
 
 			# functions
 			array( 'WikiaUpdater::do_page_vote_unique_update' ),

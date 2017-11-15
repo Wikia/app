@@ -101,7 +101,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 
 	});
 
-	it('doesn\'t change src to rec if on premium pages - we don\'t want to recover ads in that case', function () {
+	it('change src to rec if on premium pages', function () {
 		var extra = {
 			isPageFairRecoverable: true
 		};
@@ -110,7 +110,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
 		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
 
-		expect(getModule().get('asd', extra)).toBe('premium');
+		expect(getModule().get('asd', extra)).toBe('rec');
 	});
 
 	it('overrides src=rec for test wiki', function () {

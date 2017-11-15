@@ -741,6 +741,7 @@ class WikiRecommendations {
 				return 'zh';
 			case 'be':
 			case 'kk':
+			case 'uk':
 				return 'ru';
 			default:
 				return $language;

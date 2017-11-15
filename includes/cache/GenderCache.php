@@ -105,8 +105,9 @@ class GenderCache {
 			return;
 		}
 
-		foreach ( $this->getGenderOfUsersFromDB($users, $caller) as $row ) {
-			$this->cache[$row->user_name] = $row->up_value ? $row->up_value : $default;
+		// Wikia change - SUS-2979
+		foreach ( $this->getGenderOfUsersFromDB($users, $caller) as $user_name => $value ) {
+			$this->cache[$user_name] = $value ?: $default;
 		}
 	}
 
@@ -115,6 +116,9 @@ class GenderCache {
 			$name = strtr( $value, '_', ' ' );
 			if ( isset( $this->cache[$name] ) ) {
 				// Skip users whose gender setting we already know
+				unset( $users[$index] );
+			} elseif ( !User::isValidUserName( $name ) ) {
+				// SUS-3215 - do not perform queries for IP addresses
 				unset( $users[$index] );
 			} else {
 				$users[$index] = $name;
@@ -129,26 +133,42 @@ class GenderCache {
 	/**
 	 * @param $userNames
 	 * @param $caller
-	 * @return ResultWrapper
+	 * @return array user_name => gender hash
 	 */
-	private function getGenderOfUsersFromDB( $userNames, $caller ): ResultWrapper {
+	private function getGenderOfUsersFromDB( $userNames, $caller ): array {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		$table = [ '`user`', 'user_properties' ];
-		$fields = [ 'user_name', 'up_value' ];
-		$conds = [ 'user_name' => $userNames ];
-		$joins = [
-			'user_properties' => [
-				'LEFT JOIN', [ 'user_id = up_user', 'up_property' => 'gender' ],
-			],
-		];
+		// Wikia change - SUS-2979
+		if ( is_string( $userNames ) ) {
+			$userNames = [ $userNames ];
+		}
+
+		// map user IDs to user names
+		// in 97% of cases this method is called with a single user name provided
+		// use heavily cached User::idFromName to get it
+		$userIdsToNames = [];
+		foreach($userNames as $userName) {
+			$userIdsToNames[User::idFromName( $userName )] = $userName;
+		}
+
+		$table = 'user_properties';
+		$fields = [ 'up_user', 'up_value' ];
+		$conds = [ 'up_user' => array_keys( $userIdsToNames ), 'up_property' => 'gender' ];
 
 		$comment = __METHOD__;
 		if ( strval( $caller ) !== '' ) {
 			$comment .= "/$caller";
 		}
 
-		return $dbr->select( $table, $fields, $conds, $comment, $joins, $joins );
+		$ret = [];
+		$res = $dbr->select( $table, $fields, $conds, $comment );
+
+		foreach( $res as $row ) {
+			// map user IDs back to user names
+			$ret[ $userIdsToNames[$row->up_user] ] = $row->up_value;
+		}
+
+		return $ret;
 	}
 }

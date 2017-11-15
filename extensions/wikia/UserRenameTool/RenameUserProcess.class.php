@@ -464,7 +464,9 @@ class RenameUserProcess {
 		try {
 			$status = $this->doRun();
 		} catch ( Exception $e ) {
-			$this->addLog( $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine() );
+			\Wikia\Logger\WikiaLogger::instance()->error( "Rename process failed", [
+				'exception' => $e
+			] );
 			$this->addError( wfMessage( 'userrenametool-error-cannot-rename-unexpected' )->inContentLanguage()->text() );
 		}
 
@@ -511,11 +513,6 @@ class RenameUserProcess {
 		$this->addLog( "Broadcasting hook: {$hookName}" );
 		Hooks::run( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
 
-		// delete the record from all the secondary clusters
-		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
-		}
-
 		// rename the user on the shared cluster
 		if ( !$this->renameAccount() ) {
 			$this->addLog( "Failed to rename the user on the primary cluster. Report the problem to the engineers." );
@@ -533,8 +530,6 @@ class RenameUserProcess {
 		$fakeUser = null;
 
 		if ( empty( $this->mFakeUserId ) ) {
-			global $wgExternalAuthType;
-
 			$fakeUser = User::newFromName( $this->mOldUsername, 'creatable' );
 
 			if ( !is_object( $fakeUser ) ) {
@@ -542,15 +537,10 @@ class RenameUserProcess {
 				return false;
 			}
 
-			$fakeUser->setEmail( null );
+			$fakeUser->setEmail( '' );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
-
-			if ( $wgExternalAuthType ) {
-				ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
-			} else {
-				$fakeUser->addToDatabase();
-			}
+			$fakeUser->addToDatabase();
 
 			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
 			$fakeUser->setGlobalFlag( 'disabled', 1 );

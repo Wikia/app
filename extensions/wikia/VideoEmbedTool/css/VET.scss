@@ -300,24 +300,6 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 	}
 }
-.VET-search-filter {
-	padding-top: 4px;
-	width:320px;
-	float:right;
-	.VET-search-dropdown {
-	    margin-right:39px;
-	    float:right;
-	    width:180px;
-	    .dropdown {
-    		width: 215px;
-    	}
-    }
-    label.dropdown-label {
-    	float:right;
-    	margin-right:10px;
-    	font-weight: bold;
-    }
-}
 
 
 // Second screen - embed details

@@ -12,7 +12,6 @@ define('ext.wikia.adEngine.template.porvata', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.prebid.adapters.veles'),
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
 	require.optional('ext.wikia.adEngine.wrappers.prebid')
 ], function (
@@ -28,7 +27,6 @@ define('ext.wikia.adEngine.template.porvata', [
 	doc,
 	log,
 	win,
-	veles,
 	mercuryListener,
 	prebid
 ) {

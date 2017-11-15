@@ -45,7 +45,6 @@ CREATE TABLE IF NOT EXISTS `ach_custom_badges` (
 	`badge_tracking_url` VARCHAR(255) DEFAULT NULL,
 	`hover_tracking_url` VARCHAR(255) DEFAULT NULL,
 	`click_tracking_url` VARCHAR(255) DEFAULT NULL,
-	KEY `id` (`id`),
 	KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

@@ -39,16 +39,12 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 			[ false, true, [], [], 'Featured video set when data is empty' ],
 			[ false, true, [ 'test' => [ 'wrong' => 'data' ] ], [], 'Featured video set when data is wrong' ],
 			[ false, true, [ 'test_wrong_title' => [
-				'time' => '0:01',
-				'title' => 'some title',
-				'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-				'thumbnailUrl' => 'http://img.com/test.jpg'
+				'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+				'player' => 'jwplayer'
 			] ],  [], 'Featured video set when data is correct but wrong title' ],
 			[ true, true, [ 'test' => [
-				'time' => '0:01',
-				'title' => 'some title',
-				'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-				'thumbnailUrl' => 'http://img.com/test.jpg'
+				'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+				'player' => 'jwplayer'
 			] ], [], 'Featured video not set when data is correct' ],
 		];
 	}
@@ -103,90 +99,19 @@ class ArticleVideoContextTest extends WikiaBaseTest {
 			],
 			[
 				['test_wrong_title' => [
-					'time' => '0:02',
-					'title' => 'some title2',
-					'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-					'thumbnailUrl' => 'http://img.com/test.jpg'
+					'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+					'player' => 'jwplayer'
 				]],
 				['test_wrong_title' => [
-					'time' => '0:01',
-					'title' => 'some title1',
-					'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-					'thumbnailUrl' => 'http://img.com/test.jpg'
+					'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+					'player' => 'jwplayer'
 				]],
 				['test_wrong_title' => [
-					'time' => '0:02',
-					'title' => 'some title2',
-					'videoId' => 'alsdkflkasjdkfjaslkdfjl',
-					'thumbnailUrl' => 'http://img.com/test.jpg'
+					'mediaId' => 'alsdkflkasjdkfjaslkdfjl',
+					'player' => 'jwplayer'
 				]],
 				'Will leave only unique items in the set'
 			]
-		];
-	}
-
-	/**
-	 * @dataProvider relatedVideoProvider
-	 * @param $expected
-	 * @param $wgEnableArticleRelatedVideo
-	 * @param $wgArticleVideoRelatedVideos
-	 * @param $wgArticleVideoRelatedVideos2
-	 * @param $message
-	 */
-	public function testGetRelatedVideos(
-		$expected,
-		$wgEnableArticleRelatedVideo,
-		$wgArticleVideoRelatedVideos,
-		$wgArticleVideoRelatedVideos2,
-		$message
-	) {
-		$this->mockGlobalVariable( 'wgEnableArticleRelatedVideo', $wgEnableArticleRelatedVideo );
-		$this->mockGlobalVariable( 'wgArticleVideoRelatedVideos', $wgArticleVideoRelatedVideos );
-		$this->mockGlobalVariable( 'wgArticleVideoRelatedVideos2', $wgArticleVideoRelatedVideos2 );
-
-		$result = ArticleVideoContext::getRelatedVideoData( 'test' );
-
-		$this->assertEquals( $expected, $result, $message );
-	}
-
-	// expected, wgEnableArticleRelatedVideo, wgArticleVideoRelatedVideos, message
-	public function relatedVideoProvider() {
-		return [
-			[ [], false, null, 'Related video set when extension is disabled' ],
-			[ [], true, null, 'Related video set when no data available' ],
-			[ [], true, [ 'asdf' => [] ], 'Related video set when wrong data provided' ],
-			[ [
-				'articles' => [
-					0 => 'Newton_Scamander',
-					1 => 'test',
-					2 => 'List_of_spells',
-					3 => 'Harry_Potter_and_the_Chamber_of_Secrets_(film)',
-					4 => 'Malfoy_Manor',
-				],
-				'videoId' => 'JsNTB4OTE6kFhAUbLF1CkYcA5SYDN5Vc',
-			], true, [ 0 => [
-				'articles' => [
-					0 => 'Newton_Scamander',
-					1 => 'test',
-					2 => 'List_of_spells',
-					3 => 'Harry_Potter_and_the_Chamber_of_Secrets_(film)',
-					4 => 'Malfoy_Manor',
-				],
-				'videoId' => 'JsNTB4OTE6kFhAUbLF1CkYcA5SYDN5Vc',
-			],
-			], 'Related video not set when correct data provided' ],
-			[ [], true, [ 0 => [
-				'articles' => [
-					0 => 'test',
-				]
-			],
-			], 'Related video set when video data missing' ],
-			[ [], true, [ 0 => [
-				'articles' => [
-					0 => 'different_article',
-				]
-			],
-			], 'Related video set when article missing' ],
 		];
 	}
 }

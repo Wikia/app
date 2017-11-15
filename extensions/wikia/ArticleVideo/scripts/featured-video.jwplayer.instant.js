@@ -8,7 +8,7 @@ require([
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.moatTracking',
-	'wikia.articleVideo.featuredVideo.autoplay',
+	'wikia.articleVideo.featuredVideo.cookies',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
 	win,
@@ -20,7 +20,7 @@ require([
 	videoDetails,
 	featuredVideoAds,
 	featuredVideoMoatTracking,
-	featuredVideoAutoplay,
+	featuredVideoCookieService,
 	a9
 ) {
 	if (!videoDetails) {
@@ -31,8 +31,16 @@ require([
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
-		willAutoplay = featuredVideoAutoplay.isAutoplayEnabled() && inAutoplayCountries,
+		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
 		bidParams;
+
+	function isFromRecirculation() {
+		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
+	}
+
+	function isAutoplayEnabled() {
+		return featuredVideoCookieService.getAutoplay() !== '0';
+	}
 
 	function onPlayerReady(playerInstance) {
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
@@ -45,7 +53,11 @@ require([
 		featuredVideoMoatTracking(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
-			featuredVideoAutoplay.toggleAutoplay(data.enabled);
+			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
+		});
+
+		playerInstance.on('captionsSelected', function (data) {
+			featuredVideoCookieService.setCaptions(data.selectedLang);
 		});
 
 		// XW-4157 PageFair causes pausing the video, as a workaround we play video again when it's paused
@@ -75,10 +87,14 @@ require([
 				setCustomDimension: win.guaSetCustomDimension,
 				comscore: !win.wgDevelEnvironment
 			},
-			autoplay: {
-				showToggle: true,
-				enabled: willAutoplay,
+			autoplay: willAutoplay,
+			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
+			settings: {
+				showAutoplayToggle: true,
+				showQuality: true,
+				showCaptions: true
 			},
+			mute: isFromRecirculation() ? false : willAutoplay,
 			related: {
 				time: 3,
 				playlistId: recommendedPlaylist,
@@ -91,7 +107,8 @@ require([
 			},
 			logger: {
 				clientName: 'oasis'
-			}
+			},
+			lang: videoDetails.lang
 		}, onPlayerReady);
 	}
 
