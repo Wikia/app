@@ -1,5 +1,5 @@
 /*global define Promise*/
-define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
+define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.slot.service.viewabilityHandler',
@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.slot.premiumFloatingMedrec', [
 	win
 ) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.slot.premiumFloatingMedrec';
+	var logGroup = 'ext.wikia.adEngine.slot.floatingMedrec';
 
 	function init() {
 		var adSlot = doc.createElement('div'),

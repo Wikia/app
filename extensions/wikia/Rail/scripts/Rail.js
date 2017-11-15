@@ -82,14 +82,14 @@ $(function () {
 					require([
 						'wikia.window',
 						require.optional('ext.wikia.adEngine.adContext'),
-						require.optional('ext.wikia.adEngine.slot.premiumFloatingMedrec'),
-					], function (win, adContext, premiumFloatingMedrec) {
+						require.optional('ext.wikia.adEngine.slot.floatingMedrec'),
+					], function (win, adContext, floatingMedrec) {
 						if (!adContext) {
 							return;
 						}
 
-						if (premiumFloatingMedrec) {
-							win.wgAfterContentAndJS.push(premiumFloatingMedrec.init);
+						if (floatingMedrec) {
+							win.wgAfterContentAndJS.push(floatingMedrec.init);
 						}
 					});
 
