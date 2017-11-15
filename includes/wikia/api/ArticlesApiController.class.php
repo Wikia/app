@@ -686,7 +686,7 @@ class ArticlesApiController extends WikiaApiController {
 					];
 
 					if (
-						($namespace == NS_BLOG_ARTICLE && $this->wg->EnableBlogArticles) ||
+						(defined( 'NS_BLOG_ARTICLE' ) && $namespace == NS_BLOG_ARTICLE && $this->wg->EnableBlogArticles) ||
 						$this->wg->EnableArticleCommentsExt
 					) {
 						$collection[$id]['comments'] = ArticleCommentList::newFromTitle( $t )->getCountAllNested();
@@ -1333,3 +1333,5 @@ class ArticlesApiController extends WikiaApiController {
 		}
 	}
 }
+
+
