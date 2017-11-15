@@ -73,6 +73,11 @@ CKEDITOR.keystrokeHandler = function( editor ) {
 			}
 		};
 
+	var onKeyUp = function( event )
+	{
+		this._.editor.fire( 'keyUp' , { keyCode: event.data.getKeystroke() } );
+	};
+
 	CKEDITOR.keystrokeHandler.prototype = {
 		/**
 		 * Attaches this keystroke handle to a DOM object. Keystrokes typed
@@ -83,6 +88,7 @@ CKEDITOR.keystrokeHandler = function( editor ) {
 		attach: function( domObject ) {
 			// For most browsers, it is enough to listen to the keydown event
 			// only.
+			domObject.on( 'keyup', onKeyUp, this );
 			domObject.on( 'keydown', onKeyDown, this );
 
 			// Some browsers instead, don't cancel key events in the keydown, but in the
