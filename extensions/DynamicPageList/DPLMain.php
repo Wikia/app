@@ -2675,7 +2675,15 @@ class DPLMain {
             //PAGE LINK
             $sTitleText = $title->getText();
             if ($bShowNamespace) $sTitleText = $title->getPrefixedText();
-            if ($aReplaceInTitle[0]!='') $sTitleText = preg_replace($aReplaceInTitle[0],$aReplaceInTitle[1],$sTitleText);
+
+            // SUS-3231: avoid PHP notice
+			if ( count( $aReplaceInTitle ) === 2 ) {
+				list( $textToReplace, $replacement ) = $aReplaceInTitle;
+
+				if ( !empty( $textToReplace ) && !empty( $replacement ) ) {
+					$sTitleText = preg_replace( $textToReplace, $replacement, $sTitleText );
+				}
+			}
 
             //chop off title if "too long"
 			if( isset($iTitleMaxLen) && (strlen($sTitleText) > $iTitleMaxLen) )  $sTitleText = substr($sTitleText, 0, $iTitleMaxLen) . '...';
