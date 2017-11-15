@@ -98,12 +98,44 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		expect(zoneParams.getHostnamePrefix()).toBe('externaltest');
 	});
 
+	it('Hostname and domain for fallout.externaltest.wikia.com', function () {
+		setUpLocation('fallout.externaltest.wikia.com');
+		var zoneParams = getModule();
+
+		expect(zoneParams.getDomain()).toBe('wikiacom');
+		expect(zoneParams.getHostnamePrefix()).toBe('externaltest');
+	});
+
 	it('Hostname and domain for showcase.gta.wikia.com', function () {
 		setUpLocation('showcase.gta.wikia.com');
 		var zoneParams = getModule();
 
 		expect(zoneParams.getDomain()).toBe('wikiacom');
 		expect(zoneParams.getHostnamePrefix()).toBe('showcase');
+	});
+
+	it('Hostname and domain for gta.showcase.wikia.com', function () {
+		setUpLocation('gta.showcase.wikia.com');
+		var zoneParams = getModule();
+
+		expect(zoneParams.getDomain()).toBe('wikiacom');
+		expect(zoneParams.getHostnamePrefix()).toBe('showcase');
+	});
+
+	it('Hostname and domain for sandbox-adeng05.gta.wikia.com', function () {
+		setUpLocation('sandbox-adeng05.gta.wikia.com');
+		var zoneParams = getModule();
+
+		expect(zoneParams.getDomain()).toBe('wikiacom');
+		expect(zoneParams.getHostnamePrefix()).toBe('sandbox-adeng05');
+	});
+
+	it('Hostname and domain for gta.sandbox-adeng05.wikia.com', function () {
+		setUpLocation('gta.sandbox-adeng05.wikia.com');
+		var zoneParams = getModule();
+
+		expect(zoneParams.getDomain()).toBe('wikiacom');
+		expect(zoneParams.getHostnamePrefix()).toBe('sandbox-adeng05');
 	});
 
 	it('Simple base params', function () {
