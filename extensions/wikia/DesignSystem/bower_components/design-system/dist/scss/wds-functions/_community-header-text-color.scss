@@ -1,6 +1,6 @@
 @function community-header-text-color($header-background-color) {
 	$text-color: $wds-color-white;
-	@if lightness($header-background-color) > 49 {
+	@if lightness($header-background-color) > 55 {
 		$text-color: $wds-color-black;
 	}
 	@return $text-color;
