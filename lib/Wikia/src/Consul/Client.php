@@ -72,13 +72,23 @@ class Client {
 	}
 
 	/**
-	 * Example: Wikia\Consul\Catalog::isConsulAddress( 'slave.db-smw.service.consul' )
+	 * Example: Wikia\Consul\Client::isConsulAddress( 'slave.db-smw.service.consul' )
 	 *
 	 * @param $address
 	 * @return bool true if the given address is a consul one
 	 */
 	static function isConsulAddress( $address ) {
 		return endsWith( $address, '.consul' );
+	}
+
+	/**
+	 * Example: Wikia\Consul\Client::isConsulQuery( 'geo-db-g-slave.query.consul' )
+	 *
+	 * @param $address
+	 * @return bool true if the given address is a consul query
+	 */
+	static function isConsulQuery( $address ) {
+		return endsWith( $address, '.query.consul' );
 	}
 
 	/**

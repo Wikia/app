@@ -14,4 +14,13 @@ class ConsulClientTest extends WikiaBaseTest {
 
 		$this->assertFalse( Client::isConsulAddress( 'statsdb-s9' ) );
 	}
+
+	function testIsConsulQuery() {
+		$this->assertTrue( Client::isConsulQuery( 'geo-db-sharedb-master.query.consul' ) );
+		$this->assertTrue( Client::isConsulQuery( 'geo-db-g-slave.query.consul' ) );
+
+		$this->assertFalse( Client::isConsulQuery( 'slave.db-smw.service.consul' ) );
+		$this->assertFalse( Client::isConsulQuery( 'master.db-a.service.consul' ) );
+		$this->assertFalse( Client::isConsulQuery( 'statsdb-s9' ) );
+	}
 }
