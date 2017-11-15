@@ -22,7 +22,7 @@ require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
         "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
         "sDom": '<"dttoolbar"><"top"flip>rt<"bottom"p><"clear">',
         "aoColumns": [
-            {"sName": "username"},
+            {"sName": "username", "bSortable": false},
             {"sName": "groups"},
             {"sName": "revcnt"},
             {"sName": "dtedit"}

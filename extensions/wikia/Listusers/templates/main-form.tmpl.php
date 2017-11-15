@@ -100,7 +100,7 @@ $( function () {
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lu-table">
 	<thead>
 		<tr>
-			<th class="no-sort"><?= wfMessage( 'listusers-username' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusers-username' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusers-groups' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusersrev-cnt' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusers-edited' )->escaped() ?></th>
@@ -113,7 +113,7 @@ $( function () {
 	</tbody>
 	<tfoot>
 		<tr>
-			<th class="no-sort"><?= wfMessage( 'listusers-username' )->escaped() ?></th>
+			<th><?= wfMessage( 'listusers-username' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusers-groups' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusersrev-cnt' )->escaped() ?></th>
 			<th><?= wfMessage( 'listusers-edited' )->escaped() ?></th>
