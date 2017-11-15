@@ -8,7 +8,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 	'wikia.window'
 ], function (imaSetup, moatVideoTracker, vastDebugger, doc, log, win) {
 	'use strict';
-	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory';
+	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory',
+		imaViewMode = {};
 
 	function getVideoElement() {
 		var videoElement = doc.createElement('video');
@@ -27,6 +28,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			adsManager,
 			mobileVideoAd = params.container.querySelector('video'),
 			eventListeners = {};
+
+		imaViewMode = win.google.ima.ViewMode;
 
 		function setVastAttributes(status) {
 			var currentAd = adsManager && adsManager.getCurrentAd && adsManager.getCurrentAd(),
@@ -145,14 +148,20 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			log('IMA player reloaded', log.levels.debug, logGroup);
 		}
 
-		function resize(width, height) {
-			var roundedWidth = Math.round(width),
-				roundedHeight = Math.round(height);
+		function resize(viewMode, width, height) {
+			if (viewMode === imaViewMode.FULLSCREEN) {
+				width = win.innerWidth;
+				height = win.innerHeight;
+			} else {
+				viewMode = imaViewMode.NORMAL;
+				width = Math.round(width);
+				height = Math.round(height);
+			}
 
 			if (adsManager) {
-				adsManager.resize(roundedWidth, roundedHeight, win.google.ima.ViewMode.NORMAL);
+				adsManager.resize(width, height, viewMode);
 
-				log(['IMA player resized', roundedWidth, roundedHeight], log.levels.debug, logGroup);
+				log(['IMA player resized', viewMode, width, height], log.levels.debug, logGroup);
 			}
 		}
 
@@ -219,7 +228,8 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			reload: reload,
 			removeEventListener: removeEventListener,
 			resize: resize,
-			setAutoPlay: setAutoPlay
+			setAutoPlay: setAutoPlay,
+			viewMode: imaViewMode
 		};
 	}
 

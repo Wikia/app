@@ -2,6 +2,7 @@
 @import 'ads-mixin';
 
 $wikia-top-ads-index: 2;
+$wikia-fullscreen-ads-index: 9999;
 
 $default-progress-bar-color: #b7b7b7;
 $default-progress-bar-current-time-color: #666;
@@ -67,6 +68,13 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		right: 0;
 	}
 
+	&.video-player-fullscreen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: $wikia-fullscreen-ads-index;
+	}
+
 	video {
 		left: 0;
 	}
@@ -107,6 +115,17 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		position: absolute;
 		right: 0;
 		top: 0;
+		width: $video-player-button-size;
+		z-index: $controls-z-index;
+	}
+
+	.toggle-fullscreen {
+		font-size: $video-player-button-size;
+		cursor: pointer;
+		height: $video-player-button-size;
+		position: absolute;
+		right: $video-player-button-size + 10px;
+		bottom: 18px;
 		width: $video-player-button-size;
 		z-index: $controls-z-index;
 	}

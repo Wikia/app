@@ -8,21 +8,24 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
-			'toggleAnimation'
+			'toggleAnimation',
+			'toggleFullscreen'
 		],
 		defaultLayout = [
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
 			'closeButton',
-			'toggleAnimation'
+			'toggleAnimation',
+			'toggleFullscreen'
 		],
 		splitLayout = [
 			'progressBar',
 			'pauseOverlay',
 			'volumeControl',
 			'toggleVideo',
-			'replayOverlay'
+			'replayOverlay',
+			'toggleFullscreen'
 		],
 		clickToPlaySplitLayout = [
 			'progressBar',
@@ -30,7 +33,8 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 			'volumeControl',
 			'toggleVideo',
 			'replayOverlay',
-			'closeButton'
+			'closeButton',
+			'toggleFullscreen'
 		],
 		outstreamIncontent = [
 			'dynamicReveal',
