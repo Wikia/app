@@ -62,8 +62,7 @@ class Client {
 	/**
 	 * Returns IP addresses (with ports) of given service healthy nodes
 	 *
-	 * $catalog->getNodes( 'db-a', 'slave' )
-	 * $catalog->getNodes( 'chat-private', 'prod' )
+	 * $catalog->getNodesFromConsulQuery( 'geo-db-dev-db-slave' )
 	 *
 	 * $ curl 'http://127.0.0.1:8500/v1/query/geo-db-a-slave/execute?pretty=&passing='
 	 *
