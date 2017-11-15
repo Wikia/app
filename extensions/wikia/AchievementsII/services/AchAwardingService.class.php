@@ -14,17 +14,17 @@ class AchAwardingService {
 	var $mNewBadges = array();
 	var $mCounters;
 	var $mUserCountersService;
-	private $mCityId;
+	/** @var string $dbName */
+	private $dbName;
 
 	private static $mDone = false;
 
-	public function __construct( $city_id = null ) {
-		if ( is_null( $city_id ) ) {
-			global $wgCityId;
-			$this->mCityId = $wgCityId;
-		} else {
-			$this->mCityId = $city_id;
-		}
+	/**
+	 * @param string|null $dbName optional DB name override to use instead of local wiki
+	 */
+	public function __construct( $dbName = null ) {
+		global $wgDBname;
+		$this->dbName = $dbName ?? $wgDBname;
 	}
 
 	public function migration( $user_id )  {
@@ -44,8 +44,6 @@ class AchAwardingService {
 	public function awardCustomNotInTrackBadge( $user, $badge_type_id ) {
 		wfProfileIn( __METHOD__ );
 
-		global $wgExternalSharedDB;
-
 		$achConfig = AchConfig::getInstance();
 		if ( !$achConfig->shouldShow( $badge_type_id ) ) {
 			wfProfileOut( __METHOD__ );
@@ -58,7 +56,7 @@ class AchAwardingService {
 
 			$where = array( 'badge_type_id' => $badge_type_id, 'user_id' => $this->mUser->getId() );
 
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, [], $this->dbName );
 
 			$badge = $dbr->selectField(
 				'ach_user_badges',
@@ -249,9 +247,8 @@ class AchAwardingService {
 				}
 			}
 
-			global $wgExternalSharedDB;
 			$where = array( 'user_id' => $this->mUser->getId(), 'score' => $score );
-			$dbw = wfGetDB( DB_MASTER );
+			$dbw = wfGetDB( DB_MASTER, [], $this->dbName );
 			$dbw->replace( 'ach_user_score', null, $where, __METHOD__ );
 			$dbw->commit();
 		}
@@ -263,7 +260,7 @@ class AchAwardingService {
 		wfProfileIn( __METHOD__ );
 
 		if ( count( $this->mNewBadges ) > 0 ) {
-			$dbw = wfGetDB( DB_MASTER );
+			$dbw = wfGetDB( DB_MASTER, [], $this->dbName );
 
 			// Doing replace instead of insert prevents dupes in case of slave lag or other errors
 			foreach ( $this->mNewBadges as $key => $val ) {
@@ -530,7 +527,7 @@ class AchAwardingService {
 		// BADGE_LUCKYEDIT
 		if ( $this->mRevision->getId() % 1000 == 0 ) {
 			$where = array( 'badge_type_id' => BADGE_LUCKYEDIT );
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, [], $this->dbName );
 
 			$maxLap = $dbr->selectField(
 				'ach_user_badges',
@@ -686,7 +683,7 @@ class AchAwardingService {
 		wfProfileIn( __METHOD__ );
 
 		$where = array( 'user_id' => $this->mUser->getId() );
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, [], $this->dbName );
 
 		$res = $dbr->select(
 			'ach_user_badges',
