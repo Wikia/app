@@ -92,11 +92,6 @@ class RailController extends WikiaController {
 			}
 		} );
 
-		$railLazyContent .= Html::element( 'div', [
-			'id' => 'WikiaAdInContentPlaceHolder',
-			'class' => 'rail-sticky-module'
-		] );
-
 		$this->railLazyContent = $railLazyContent;
 
 		$assetManager = AssetsManager::getInstance();
