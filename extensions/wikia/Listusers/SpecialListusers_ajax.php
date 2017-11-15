@@ -145,9 +145,13 @@ class ListusersAjax {
 	 * @see SUS-3207
 	 */
 	public static function axSuggestUsers() {
-		global $wgExternalSharedDB, $wgCityId;
+		global $wgExternalSharedDB, $wgCityId, $wgContLang;
 
 		$query = RequestContext::getMain()->getRequest()->getText('query');
+
+		// uppercase the first letter
+		$query = $wgContLang->ucfirst( $query );
+
 		$resp = [
 			$query
 		];
