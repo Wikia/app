@@ -71,6 +71,7 @@ class ImportStarter extends Maintenance {
 	 *
 	 * @param resource $contentDumpStream stream with XML dump
 	 * @param resource $sqlDumpStream stream with SQL tables dump
+	 * @throws CreateWikiException
 	 */
 	private function importDump($contentDumpStream, $sqlDumpStream) {
 		$pagesCnt = 0;
