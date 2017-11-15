@@ -50,8 +50,7 @@ $( function () {
 
 </script>
 
-<div>
-<form method="post" action="<?= $action ?>" id="lu-form">
+<form id="lu-form">
 <? $found = 0; ?>
 <? if ( !empty( $groups ) ) { ?>
 <fieldset class="lu_fieldset">
@@ -96,8 +95,8 @@ $( function () {
 	</table>
 </fieldset>
 <? } ?>
-</form>
-</div>
+
+
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lu-table">
 	<thead>
 		<tr>
@@ -121,3 +120,5 @@ $( function () {
 		</tr>
 	</tfoot>
 </table>
+
+</form>

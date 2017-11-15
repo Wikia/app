@@ -147,4 +147,10 @@ require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
             oTable.fnDraw();
         }
     });
+
+	// pressing enter in username field should refresh the list
+	$('#lu-form').submit(function(ev) {
+	    ev.preventDefault();
+	    oTable.fnDraw();
+    });
 });
