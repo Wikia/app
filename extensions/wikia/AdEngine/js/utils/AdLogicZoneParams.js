@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 
 	function getHostnamePrefix() {
 		var lhost = hostname.toLowerCase(),
-			match = /(^|\.)(showcase|externaltest|sandbox-[^\.]+)\./.exec(lhost);
+			match = /(^|\.)(showcase|externaltest|preview|verify|stable|sandbox-[^\.]+)\./.exec(lhost);
 
 		if (match && match.length > 2) {
 			return match[2];
