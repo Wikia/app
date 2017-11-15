@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 			return match[2];
 		}
 
-		var	pieces = lhost.split('.');
+		var pieces = lhost.split('.');
 
 		if (pieces.length) {
 			return pieces[0];
