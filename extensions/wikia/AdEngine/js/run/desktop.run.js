@@ -12,6 +12,7 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.slot.service.actionHandler',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
@@ -30,6 +31,7 @@ require([
 	messageListener,
 	pageFairDetection,
 	actionHandler,
+	slotRegistry,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
@@ -54,6 +56,7 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	if (adContext.get('opts.isAdEngine3Enabled')) {
+		adEngineBridge.init(slotRegistry);
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 		adEngineBridge.updatePageLevelTargeting(pageLevelParams.getPageLevelParams());
 	} else {

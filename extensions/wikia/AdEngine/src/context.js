@@ -5,7 +5,7 @@ export default {
 	},
 	events: {},
 	slots: {
-		'bottom-leaderboard': {
+		'BOTTOM_LEADERBOARD': {
 			disabled: true,
 			slotName: 'BOTTOM_LEADERBOARD',
 			sizes: [
