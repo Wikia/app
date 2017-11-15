@@ -45,20 +45,18 @@ class ListusersAjax {
 			'aaData' => array()
 		);
 
-		$records = array();
 		$data = new ListusersData($wgCityId);
-		if ( is_object($data) ) {
-			$filterGroups = explode(',', trim($groups));
-			$data->setFilterGroup ( $filterGroups );
-			$data->setUserId ( $user_id );
-			$data->setEditsThreshold( $edits );
-			$data->setLimit ( $limit );
-			$data->setOffset( $offset );
-			$data->setOrder( $orders );
-			$records = $data->loadData();
-		}
 
-		if ( !empty( $records ) && is_array( $records ) ) {
+		$filterGroups = explode(',', trim($groups));
+		$data->setFilterGroup ( $filterGroups );
+		$data->setUserId ( $user_id );
+		$data->setEditsThreshold( $edits );
+		$data->setLimit ( $limit );
+		$data->setOffset( $offset );
+		$data->setOrder( $orders );
+		$records = $data->loadData();
+
+		if ( !empty( $records ) ) {
 			$result['iTotalRecords'] = intval( $limit );
 			$result['iTotalDisplayRecords'] = intval($records['cnt']);
 			$rows = array();
