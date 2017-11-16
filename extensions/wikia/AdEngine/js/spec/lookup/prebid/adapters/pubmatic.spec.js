@@ -58,7 +58,10 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 				[728, 90],
 				[970, 250]
 			],
-			id: 123
+			ids: [
+				'/5441/TOP_LEADERBOARD_728x90@728x90',
+				'/5441/TOP_LEADERBOARD_970x250@970x250'
+			]
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
 			sizes: [[728, 90], [970, 250]],
@@ -66,7 +69,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 				{
 					bidder: 'pubmatic',
 					params: {
-						adSlot: 123,
+						adSlot: '/5441/TOP_LEADERBOARD_728x90@728x90',
+						publisherId: 156260
+					}
+				},
+				{
+					bidder: 'pubmatic',
+					params: {
+						adSlot: '/5441/TOP_LEADERBOARD_970x250@970x250',
 						publisherId: 156260
 					}
 				}
