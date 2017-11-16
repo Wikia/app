@@ -2281,7 +2281,7 @@ class DPLMain {
 			} else {
 				$sSqlSelectFrom =
 					"SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to .
-					'pl_namespace, pl_title' . $sSqlSelPage . $sSqlSortkey . ' FROM ' .
+					'pl_namespace, pl_title' . 	$sSqlSelPage . $sSqlSortkey . ' FROM ' .
 					$sPageLinksTable;
 			}
 		} else {
@@ -2290,7 +2290,7 @@ class DPLMain {
             					$sPageTable.'.page_title AS page_title,'.$sPageTable.'.page_id AS page_id' . $sSqlSelPage . $sSqlSortkey .
                                 $sSqlPage_size . $sSqlPage_touched . $sSqlRev_user .
                                 $sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp .
-                                ' FROM ' . $sSqlRevisionTable . $dplRevisionQueryTables . $sSqlRCTable .
+                                ' FROM ' . $sSqlRevisionTable . $dplRevisionQueryTables . ',' . $sSqlRCTable .
 							  $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
         }
 
