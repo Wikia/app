@@ -48,29 +48,23 @@ class MigrateOoyalaVideos extends Maintenance {
 			$this->output( 'Working on wikiId: ' . $wikiId . '; name: ' . $wiki['t'] . "\n" );
 			$videoConfig = WikiFactory::getVarValueByName( $varName, $wikiId );
 			$this->output( 'Found ' . count( $videoConfig ) . " pages with Featured Video\n" );
-			$counter = 0;
+
 			foreach ( $videoConfig as $pageName => &$config ) {
 				$this->output( 'Working on page: ' . $pageName . "\n" );
 
-				// If videoId exists in csv add mediaId and player to the var
-				if ( key_exists( 'videoId', $config ) && key_exists( $config['videoId'], $this->map ) &&
-					((key_exists( 'player', $config ) && $config['player'] !== 'jwplayer') || !key_exists( 'player', $config ))
-				) {
-					$this->output( ' updated ' . $config['videoId'] . ' to ' . $this->map[$config['videoId']] . "\n" );
-					$config['mediaId'] = $this->map[$config['videoId']];
-					$config['player'] = 'jwplayer';
-					$counter++;
+				unset( $config['videoId'] );
+				unset( $config['thumbnailUrl'] );
+				unset( $config['time'] );
+				unset( $config['player'] );
+				unset( $config['title'] );
+
+				if ( empty( $config ) ) {
+					unset( $videoConfig[$pageName] );
 				}
 			}
 
-
 			try {
-				//uncomment to do update
-				if ( $counter > 0 ) {
-					WikiFactory::setVarById( $varId,  $wikiId, $videoConfig , 'Automatic migration of Ooyala videos to JWPlayer' );
-				} else {
-					$this->output( "No changes for wikiId:" . $wikiId );
-				}
+				WikiFactory::setVarById( $varId, $wikiId, $videoConfig, 'Automatic migration of Ooyala videos to JWPlayer' );
 			} catch ( Exception $exception ) {
 				$this->output( 'Exception: ' . $exception->getMessage() );
 			}
