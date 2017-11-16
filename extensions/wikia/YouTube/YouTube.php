@@ -123,7 +123,7 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 				return $matches[0];
 			}
 
-			$url = 'http://www.youtube.com/watch?v=' . $ytid;
+			$url = 'https://www.youtube.com/watch?v=' . $ytid;
 
 			$videoService = new VideoService();
 			$videoFileUploader = new VideoFileUploader();
@@ -225,9 +225,9 @@ function wfYouTube( Parser $parser ): bool {
 function embedYouTube_url2ytid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/^http:\/\/www\.youtube\.com\/watch\?v=(.+)$/', $url, $preg ) ) {
+	if ( preg_match( '/^https?:\/\/www\.youtube\.com\/watch\?v=(.+)$/', $url, $preg ) ) {
 		$id = $preg[1];
-	} elseif ( preg_match( '/^http:\/\/www\.youtube\.com\/v\/([^&]+)(&autoplay=[0-1])?$/', $url, $preg ) ) {
+	} elseif ( preg_match( '/^https?:\/\/www\.youtube\.com\/v\/([^&]+)(&autoplay=[0-1])?$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
@@ -297,9 +297,9 @@ function embedYouTube( $input, $argv, $parser ) {
 function embedYouTube_url2gvid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/^http:\/\/video\.google\.com\/videoplay\?docid=([^&]+)(&hl=.+)?$/', $url, $preg ) ) {
+	if ( preg_match( '/^https?:\/\/video\.google\.com\/videoplay\?docid=([^&]+)(&hl=.+)?$/', $url, $preg ) ) {
 		$id = $preg[1];
-	} elseif ( preg_match( '/^http:\/\/video\.google\.com\/googleplayer\.swf\?docId=(.+)$/', $url, $preg ) ) {
+	} elseif ( preg_match( '/^https?:\/\/video\.google\.com\/googleplayer\.swf\?docId=(.+)$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
@@ -335,7 +335,7 @@ function embedGoogleVideo( $input, $argv, $parser ) {
 function embedYouTube_url2aovid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/http:\/\/www\.archive\.org\/download\/(.+)\.flv$/', $url, $preg ) ) {
+	if ( preg_match( '/https?:\/\/www\.archive\.org\/download\/(.+)\.flv$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
