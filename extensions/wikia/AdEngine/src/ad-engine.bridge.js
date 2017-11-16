@@ -15,7 +15,7 @@ supportedTemplates.forEach((template) => {
 function init(slotRegistry) {
 	SlotService.getBySlotName = (id) => {
 		if (id) {
-			let slot = slotRegistry.get(id, 'DirectGpt');
+			let slot = slotRegistry.get(id);
 			return unifySlotInterface(slot);
 		}
 	};
