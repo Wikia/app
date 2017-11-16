@@ -87,7 +87,7 @@ require([
 				firstPostId: thread.firstPostId,
 				index: i,
 				link: '/d/p/' + thread.id,
-				shareUrl: window.location.protocol + '://' + window.location.hostname + '/d/p/' + thread.id,
+				shareUrl: window.location.protocol + '//' + window.location.hostname + '/d/p/' + thread.id,
 				upvoteUrl: upvoteUrl + thread.firstPostId,
 				title: thread.title,
 				upvoteCount: thread.upvoteCount,
@@ -262,8 +262,7 @@ require([
 				if (hasUpvoted) {
 					$svg.attr('class', 'embeddable-discussions-upvote-icon');
 					event.currentTarget.setAttribute('data-hasUpvoted', '0');
-				}
-				else {
+				} else {
 					$svg.attr('class', 'embeddable-discussions-upvote-icon-active');
 					event.currentTarget.setAttribute('data-hasUpvoted', '1');
 				}
