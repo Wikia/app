@@ -34,7 +34,7 @@ class CheckUserHooks {
 		}
 
 		// SUS-3257: Make sure the text fits into the database
-		$actionTextTrim = substr( $actionText, 0, static::ACTION_TEXT_MAX_LENGTH );
+		$actionTextTrim = mb_substr( $actionText, 0, static::ACTION_TEXT_MAX_LENGTH );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
