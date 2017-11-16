@@ -121,6 +121,7 @@ class AdEngine2Hooks {
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
+		$vars[] = 'wgAdDriverF2MEGAVideosCountries';
 
 		return true;
 	}
