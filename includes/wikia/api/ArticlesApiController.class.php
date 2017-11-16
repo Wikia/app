@@ -1333,5 +1333,3 @@ class ArticlesApiController extends WikiaApiController {
 		}
 	}
 }
-
-
