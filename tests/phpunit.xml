@@ -45,6 +45,9 @@
 		<testsuite name="DPL Extension Test Suite">
 			<directory>../extensions/DynamicPageList/tests/</directory>
 		</testsuite>
+		<testsuite name="Semantic Drilldown Test Suite">
+			<directory>../extensions/SemanticDrilldown/tests/</directory>
+		</testsuite>
 	</testsuites>
 	<groups>
 		<exclude>

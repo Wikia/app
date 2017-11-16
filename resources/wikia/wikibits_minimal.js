@@ -31,7 +31,7 @@
 		url = window.forceReviewedContent(url);
 
 		if( typeof server == "string" ) {
-			if( server.indexOf( '://' ) == -1 ) {url = 'http://' + server + '.wikia.com' + url;}
+			if( server.indexOf( '://' ) == -1 && !server.startsWith( '//' ) ) {url = 'http://' + server + '.wikia.com' + url;}
 			else {url = server + url;}
 		}
 		return (type == 'js') ? mw.loader.load(url) : mw.loader.load(url , 'text/css');

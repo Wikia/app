@@ -10,7 +10,7 @@ class ContentWarningController extends WikiaController {
 	 * render index template
 	 */
 	public function index() {
-		$domain = str_replace('http://', '', $this->wg->Server );
+		$domain = preg_replace( '!^https?://!', '', $this->wg->Server );
 		$this->body = wfMsgExt( 'content-warning-body', array('parse'), $domain );
 
 		$userLang = $this->wg->Lang->getCode();

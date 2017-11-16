@@ -27,8 +27,8 @@ class ListUsersIntegrationTest extends TestCase {
 	 * SUS-1478: Verify that all global groups are loaded identically for different wikis
 	 */
 	public function testGlobalGroupsAreLoadedAndMatch() {
-		$firstWikiData = new ListusersData( static::AION_WIKI_ID, 0 /* don't load */ );
-		$centralWikiData = new ListusersData( static::CENTRAL_WIKI_ID, 0 /* don't load */ );
+		$firstWikiData = new ListusersData( static::AION_WIKI_ID );
+		$centralWikiData = new ListusersData( static::CENTRAL_WIKI_ID );
 
 		$firstWikiData->load();
 		$centralWikiData->load();

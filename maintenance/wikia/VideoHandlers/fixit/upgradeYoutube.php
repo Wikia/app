@@ -301,10 +301,10 @@ class UpgradeYoutube extends Maintenance {
 					return $matches[0];
 				}
 
-				if ( preg_match('/^http:\/\//', $ytid) ) {
+				if ( preg_match('/^https?:\/\//', $ytid) ) {
 					$url = trim($ytid);
 				} else {
-					$url = 'http://www.youtube.com/watch?v='.trim($ytid);
+					$url = 'https://www.youtube.com/watch?v='.trim($ytid);
 				}
 
 				$videoService = new VideoService();

@@ -414,7 +414,7 @@ class LanguageConverter {
 					}
 					$attr = $attrs[$attrName];
 					// Don't convert URLs
-					if ( !strpos( $attr, '://' ) ) {
+					if ( strpos( $attr, '://' ) === false && strpos( $attr, '//' ) !== 0 ) {
 						$attr = $this->translate( $attr, $toVariant );
 					}
 
