@@ -58,6 +58,12 @@ $mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
 	display: none;
 }
 
+.mcf-mosaic {
+	@include flexbox();
+	@include flex-direction(row);
+	@include justify-content(space-between);
+
+}
 // tag name to override styles
 h1.mcf-header {
 	-moz-osx-font-smoothing: grayscale;
@@ -75,6 +81,19 @@ h1.mcf-header {
 
 	&:last-child {
 		margin-bottom: 0;
+	}
+}
+
+.mcf-column {
+	@include flexbox();
+	@include flex-direction(column);
+
+	> div {
+		margin-bottom: 12px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 }
 
