@@ -13,47 +13,42 @@ use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 class ListusersData {
 	use PermissionsServiceAccessor;
-	var $mCityId;
-	var $mGroups;
-	var $mFilterGroup;
-	var $mUserName;
-	var $mEdits;
-	var $mLimit;
-	var $mOffset;
-	var $mOrder;
-	var $mOrderOptions;
-	var $mUseKey;
 
-	var $mDBh;
-	var $mTable;
+	private $mCityId;
+	private $mGroups;
+	private $mFilterGroup;
+	private $mUserId;
+	private $mEditsThreshold;
+	private $mLimit;
+	private $mOffset;
+	private $mOrder;
+	private $mOrderOptions;
+	private $mUseKey;
+	private $mDBh;
 
-	function __construct( $city_id, $load = 1 ) {
+	const TABLE = 'events_local_users';
+	const CACHE_VERSION = 'v5';
+
+	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
 		$this->mCityId = $city_id;
 		$this->mDBh = $wgSpecialsDB;
-		$this->mTable = 'events_local_users';
 
 		$this->mOrderOptions = array(
-			'username'	=> array( 'user_name %s' ),
 			'groups' 	=> array( 'all_groups %s', 'cnt_groups %s'),
 			'revcnt' 	=> array( 'edits %s' ),
 			'dtedit' 	=> array( 'editdate %s' )
 		);
 
 		$this->mUseKeyOptions = array(
-			'username'	=> 'wiki_user_name_edits',
 			'groups' 	=> '',
 			'revcnt' 	=> 'wiki_edits_by_user',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
-
-		if ( $load == 1 ) {
-			$this->load();
-		}
 	}
 
 	function load() {
-		$this->setEdits();
+		$this->setEditsThreshold();
 		$this->setLimit();
 		$this->setOffset();
 		$this->setOrder();
@@ -61,8 +56,10 @@ class ListusersData {
 	}
 
 	function setFilterGroup ( $group = array() ) { $this->mFilterGroup = $group; }
-	function setUserName	( $username = '' ) { $this->mUserName = $username; }
-	function setEdits    	( $edits = Listusers::DEF_EDITS ) { $this->mEdits = $edits; }
+	function getFilterGroup () { return $this->mFilterGroup; }
+
+	function setUserId	    ( int $user_id ) { $this->mUserId = $user_id; }
+	function setEditsThreshold ( $edits = Listusers::DEF_EDITS ) { $this->mEditsThreshold = $edits; }
 	function setLimit    	( $limit = Listusers::DEF_LIMIT ) { $this->mLimit = $limit; }
 	function setOffset   	( $offset = 0 ) { $this->mOffset = $offset; }
 	function setOrder    	( $orders = array() ) {
@@ -89,41 +86,36 @@ class ListusersData {
 				}
 			}
 		}
+
+		// SUS-3207 - order by number of edits (descending) by default
 		if ( empty( $this->mOrder ) ) {
-			$this->mOrder[] = 'user_name ASC';
+			$this->mOrder[] = 'edits DESC';
 		}
 	}
 
-	function getFilterGroup () { return $this->mFilterGroup; }
 	function getGroups   	() { return $this->mGroups; }
-	function getUserName	() { return $this->mUserName; }
-	function getEdits    	() { return $this->mEdits; }
-	function getLimit    	() { return $this->mLimit; }
-	function getOffset   	() { return $this->mOffset; }
-	function getOrder    	() { return $this->mOrder; }
 
 	public function loadData() {
-		global $wgMemc, $wgLang, $wgUser, $wgDBname;
+		global $wgMemc, $wgLang, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		/* initial values for result */
 		$data = array(
 			'cnt'	=> 0,
-			'sColumns' => implode(",", array_keys($this->mOrderOptions)),
 			'data' 	=> array()
 		);
 
 		$orderby = implode(",", $this->mOrder);
 		$subMemkey = array(
 			'G'  . implode(",", is_array($this->mFilterGroup) ? $this->mFilterGroup : array()),
-			'U'  . $this->mUserName,
-			'C'  . $this->mEdits,
+			'U'  . $this->mUserId,
+			'E'  . $this->mEditsThreshold,
 			'O'  . $this->mOffset,
 			'L'  . $this->mLimit,
 			'O'  . $orderby
 		);
 
-		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata-v3", md5( implode(', ', $subMemkey) ) );
+		$memkey = wfForeignMemcKey( $this->mCityId, __CLASS__, self::CACHE_VERSION, md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
 		if ( empty($cached) ) {
@@ -133,7 +125,7 @@ class ListusersData {
 			/* initial conditions for SQL query */
 			$where = [
 					'wiki_id' => $this->mCityId,
-					"user_name != ''", # TODO: SUS-3205
+					"user_id > 0",
 					'user_is_closed' => 0
 			];
 
@@ -165,33 +157,30 @@ class ListusersData {
 				}
 			}
 
-			/* filter: user name */
-			if ( !empty( $this->mUserName ) ) {
-				$where[] = " user_name >= ". $dbs->addQuotes( $this->mUserName ); # TODO: SUS-3205
+			/* filter: user ID  */
+			if ( !empty( $this->mUserId ) ) {
+				$where[] = " user_id = ". intval( $this->mUserId );
 			}
 
 			/* filter: number of edits */
-			if ( !empty( $this->mEdits ) ) {
-				$where[] = " edits >= ". intval( $this->mEdits );
+			if ( !empty( $this->mEditsThreshold ) ) {
+				$where[] = " edits >= ". intval( $this->mEditsThreshold );
 			}
 
 			/* number of records */
-			$oRow = $dbs->selectRow(
-				$this->mTable,
-				array( 'count(0) as cnt' ),
+			$data['cnt'] = (int) $dbs->selectField(
+				self::TABLE,
+				'count(*)',
 				$where,
-				__METHOD__
+				__METHOD__ . '::count'
 			);
-			if ( is_object($oRow) ) {
-				$data['cnt'] = $oRow->cnt;
-			}
 
 			if ( $data['cnt'] > 0 ) {
 				$userIsBlocked = $wgUser->isBlocked( true, false );
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
-					array( $this->mTable . ( ($this->mUseKey) ? ' use key('.$this->mUseKey.')' : '' ) ),
+					array( self::TABLE . ( ($this->mUseKey) ? ' use key('.$this->mUseKey.')' : '' ) ),
 					array(
 						'user_id',
 						'cnt_groups',
@@ -375,7 +364,7 @@ class ListusersData {
 		}
 	}
 
-	/*
+	/**
 	 * update user groups (hook)
 	 *
 	 * @access public
@@ -383,15 +372,16 @@ class ListusersData {
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
 	 * @param       User    $user object
-	 * @param		Array   $addgroups - add group(s)
-	 * @param		Array   $removegroup - remove group(s)
+	 * @param		array   $addgroup - add group(s)
+	 * @param		array   $removegroup - remove group(s)
+	 * @return void
 	 */
 	public function updateUserGroups( $user, $addgroup = array(), $removegroup = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$user instanceof User ) {
 			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		$user_id = $user->getID();
@@ -402,7 +392,7 @@ class ListusersData {
 		);
 
 		$oRow = $dbr->selectRow(
-			array( $this->mTable ),
+			array( self::TABLE ),
 			array( "all_groups" ),
 			$where,
 			__METHOD__
@@ -466,12 +456,12 @@ class ListusersData {
 			}
 
 			$dbw->replace(
-				$this->mTable,
-				array( 'wiki_id', 'user_id', 'user_name' ),
+				self::TABLE,
+				array( 'wiki_id', 'user_id' ),
 				array(
 					"wiki_id"        => $this->mCityId,
 					"user_id"        => $user_id,
-					"user_name"  	 => $user->getName(), # TODO: SUS-3205
+					"user_name"  	 => '', # TODO: SUS-3204 - insert either user ID or user name
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
 					"last_revision"  => intval($lastrev),
@@ -483,7 +473,7 @@ class ListusersData {
 			);
 		} else {
 			$dbw->update(
-				$this->mTable,
+				self::TABLE,
 				array(
 					"cnt_groups"	=> $elements,
 					"single_group"	=> $singlegroup,
@@ -494,6 +484,5 @@ class ListusersData {
 			);
 		}
 		wfProfileOut( __METHOD__ );
-		return true;
 	}
 }
