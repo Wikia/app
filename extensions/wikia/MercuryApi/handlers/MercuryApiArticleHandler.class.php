@@ -32,8 +32,7 @@ class MercuryApiArticleHandler {
 	 */
 	public static function getArticleDetails( Article $article ) {
 		$articleId = $article->getID();
-		$articleDetails = F::app()->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )->getData(
-			)['items'][$articleId];
+		$articleDetails = F::app()->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )->getData()['items'][$articleId];
 
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
 		$articleDetails['description'] = htmlspecialchars( self::getArticleDescription( $article ) );
@@ -99,23 +98,21 @@ class MercuryApiArticleHandler {
 		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getPrefixedDBkey() );
 
 		if ( !empty( $featuredVideo ) ) {
-			$featuredVideoData = [
+			return [
 				'type' => 'video',
+				'provider' => 'jwplayer',
 				'context' => 'featured-video',
 				'embed' => [
 					'jsParams' => [
 						'dfpContentSourceId' => F::app()->wg->AdDriverDfpOoyalaContentSourceId,
+						'videoId' => $featuredVideo['mediaId'],
+						'playlist' => $featuredVideo['playlist'],
+						'recommendedVideoPlaylist' => $featuredVideo['recommendedVideoPlaylist']
+
 					],
+					'provider' => 'jwplayer'
 				]
 			];
-
-			$featuredVideoData['provider'] = 'jwplayer';
-			$featuredVideoData['embed']['provider'] = 'jwplayer';
-			$featuredVideoData['embed']['jsParams']['videoId'] = $featuredVideo['mediaId'];
-			$featuredVideoData['embed']['jsParams']['playlist'] = $featuredVideo['playlist'];
-			$featuredVideoData['embed']['jsParams']['recommendedVideoPlaylist'] = $featuredVideo['recommendedVideoPlaylist'];
-
-			return $featuredVideoData;
 		}
 
 		return [];
