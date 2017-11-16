@@ -22,7 +22,7 @@ class DplTableSetTest extends TestCase {
 			->willReturnArgument( 0 );
 
 		$this->databaseConnectionMock->expects( $this->any() )
-			->method( 'addQuotes' )
+			->method( 'addIdentifierQuotes' )
 			->willReturnArgument( 0 );
 	}
 
