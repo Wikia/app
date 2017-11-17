@@ -283,7 +283,7 @@ class VideoFileUploader {
 
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {
-			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
+			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::getLegacyThumbnailUrl() );
 			$this->scheduleJob( $delayIndex );
 		}
 
