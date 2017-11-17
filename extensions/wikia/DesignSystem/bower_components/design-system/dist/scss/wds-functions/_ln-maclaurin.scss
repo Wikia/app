@@ -1,3 +1,0 @@
-@function ln-maclaurin($x, $n) {
-	@return (pow(-1, $n + 1) / $n) * (pow($x - 1, $n));
-}
