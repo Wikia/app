@@ -2,7 +2,7 @@
 
 class VimeoApiWrapper extends ApiWrapper {
 
-	protected static $API_URL = 'http://vimeo.com/api/v2/video/$1.json';
+	protected static $API_URL = 'https://vimeo.com/api/v2/video/$1.json';
 	protected static $CACHE_KEY = 'Vimeoapi';
 	protected static $aspectRatio = 1.7777778;
 

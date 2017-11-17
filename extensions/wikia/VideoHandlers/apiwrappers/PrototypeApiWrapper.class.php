@@ -20,7 +20,7 @@ class PrototypeApiWrapper extends ApiWrapper{
 	}
 
 	function getThumbnailUrl( ){
-		return 'http://img.youtube.com/vi/FRKUuSnEDkU/0.jpg';
+		return 'https://img.youtube.com/vi/FRKUuSnEDkU/0.jpg';
 	}
 	
 	protected function getInterfaceObject() {

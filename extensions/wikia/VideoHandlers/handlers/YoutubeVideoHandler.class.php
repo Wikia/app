@@ -3,9 +3,9 @@
 class YoutubeVideoHandler extends VideoHandler {
 
 	protected $apiName = 'YoutubeApiWrapper';
-	protected static $urlTemplate = 'http://www.youtube.com/embed/$1';
-	protected static $providerDetailUrlTemplate = 'http://www.youtube.com/watch?v=$1';
-	protected static $providerHomeUrl = 'http://www.youtube.com/';
+	protected static $urlTemplate = 'https://www.youtube.com/embed/$1';
+	protected static $providerDetailUrlTemplate = 'https://www.youtube.com/watch?v=$1';
+	protected static $providerHomeUrl = 'https://www.youtube.com/';
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "1";
 

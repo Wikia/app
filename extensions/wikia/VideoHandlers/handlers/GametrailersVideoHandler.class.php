@@ -2,9 +2,9 @@
 
 class GametrailersVideoHandler extends VideoHandler {
 	protected $apiName = 'GametrailersApiWrapper';
-	protected static $urlTemplate = 'http://media.mtvnservices.com/mgid:moses:video:gametrailers.com:$1';
-	protected static $providerDetailUrlTemplate = 'http://www.gametrailers.com/video/play/$1';
-	protected static $providerHomeUrl = 'http://www.gametrailers.com/';
+	protected static $urlTemplate = 'https://media.mtvnservices.com/mgid:moses:video:gametrailers.com:$1';
+	protected static $providerDetailUrlTemplate = 'https://www.gametrailers.com/video/play/$1';
+	protected static $providerHomeUrl = 'https://www.gametrailers.com/';
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "true";
 

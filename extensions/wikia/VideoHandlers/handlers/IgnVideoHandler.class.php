@@ -4,9 +4,9 @@ class IgnVideoHandler extends VideoHandler {
 
 	protected $apiName = 'IgnApiWrapper';
 	protected static $urlTemplate = '';
-	protected static $providerDetailUrlTemplate = 'http://www.ign.com/watch?v=$1';
-	protected static $providerPlayerUrl = 'http://widgets.ign.com/video/embed/content.html';
-	protected static $providerHomeUrl = 'http://www.ign.com/';
+	protected static $providerDetailUrlTemplate = 'https://www.ign.com/watch?v=$1';
+	protected static $providerPlayerUrl = 'https://widgets.ign.com/video/embed/content.html';
+	protected static $providerHomeUrl = 'https://www.ign.com/';
 	protected static $autoplayParam = 'autoplay';
 	protected static $autoplayValue = 'true';
 	protected static $playerVersion = '4';
