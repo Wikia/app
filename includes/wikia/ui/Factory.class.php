@@ -163,8 +163,8 @@ class Factory {
 	 * @return int cache version
 	 */
 	public function getCacheVersion() {
-		global $wgCacheBuster;
-		return $wgCacheBuster;
+		global $wgStyleVersion;
+		return $wgStyleVersion;
 	}
 
 	/**
