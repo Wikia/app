@@ -187,7 +187,7 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 	 * @return array
 	 */
 	public static function detectProtocolAndStdPort() {
-		return ( $_SERVER['HTTP_FASTLY_SSL'] == '1' || ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) ) ? array( 'https', 443 ) : array( 'http', 80 );
+		return ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) || ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) ) ? array( 'https', 443 ) : array( 'http', 80 );
 	}
 
 	/**
