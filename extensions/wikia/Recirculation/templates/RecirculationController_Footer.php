@@ -1,4 +1,4 @@
-<div id="mixed-content-footer" data-number-of-wiki-articles="<?= $numberOfWikiArticles ?>"
+<div id="mixed-content-footer" class="mcf-en" data-number-of-wiki-articles="<?= $numberOfWikiArticles ?>"
      data-number-of-ns-articles="<?= $numberOfNSArticles ?>">
 	<div class="mcf-content">
 		<h1 class="mcf-header"><?= wfMessage( 'recirculation-impact-footer-title' )->inContentLanguage()->escaped() ?>
@@ -31,8 +31,8 @@
 				<div class="mcf-card-wiki-placeholder" data-tracking="card-13"></div>
 				<div class="mcf-card-ns-placeholder" data-tracking="card-16"></div>
 				<div class="mcf-card-wiki-placeholder" data-tracking="card-19"></div>
-
 			</div>
+
 			<div class="mcf-column">
 				<div class="mcf-card-ns-placeholder" data-tracking="card-2"></div>
 				<div class="mcf-card-ns-placeholder" data-tracking="card-5"></div>
@@ -51,6 +51,7 @@
 					]
 				); ?>
 			</div>
+
 			<div class="mcf-column">
 				<div class="mcf-card-wiki-placeholder" data-tracking="card-3"></div>
 				<div class="mcf-card-wiki-placeholder" data-tracking="card-6"></div>

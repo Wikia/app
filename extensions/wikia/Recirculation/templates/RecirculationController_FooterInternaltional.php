@@ -1,4 +1,4 @@
-<div id="mixed-content-footer" data-number-of-wiki-articles="<?= $numberOfWikiArticles ?>">
+<div id="mixed-content-footer" class="mcf-international" data-number-of-wiki-articles="<?= $numberOfWikiArticles ?>">
 	<div class="mcf-content">
 		<h1 class="mcf-header"><?= wfMessage( 'recirculation-impact-footer-title' )
 				->inContentLanguage()
