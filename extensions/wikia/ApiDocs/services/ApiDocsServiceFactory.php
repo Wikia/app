@@ -28,7 +28,7 @@ class ApiDocsServiceFactory {
 				function( $x ) { return self::API_DOC_PATH . $x; } ,
 				$pathPrefix
 			);
-			return new CachingApiDocsService( $docsService, \F::app()->wg->CacheBuster . $pathPrefix );	
+			return new CachingApiDocsService( $docsService, \F::app()->wg->StyleVersion . $pathPrefix );	
 		} else {
 			throw new \NotFoundApiException( 'Unrecognized entrypoint ' . $request->getScriptUrl() );
 		}
