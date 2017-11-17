@@ -58,8 +58,8 @@ class LicensedWikisServiceTest extends WikiaBaseTest {
 
 	public function wfDataProvider() {
 		return [
-			[ 159, "http://foo-url.com/", "foo title", "foodbname" ],
-			[ 180, "http://foo-url.com", "foo title2", "foodbd" ],
+			[ 159, "http://foo-url.com/", "foo title", "foodbname", "foo-url.com" ],
+			[ 180, "http://foo-url.com", "foo title2", "foodbd", "foo-url.com" ],
 		];
 	}
 
@@ -68,7 +68,7 @@ class LicensedWikisServiceTest extends WikiaBaseTest {
 	 * @slowExecutionTime 0.02678 ms
 	 * @dataProvider wfDataProvider
 	 */
-	public function testGetWikisWithVar( $wikiId, $url, $wikiTitle, $dbName) {
+	public function testGetWikisWithVar( $wikiId, $url, $wikiTitle, $dbName, $host) {
 
 		$licensedWikisService = $this->getMock('LicensedWikisService', ['getCommercialUseNotAllowedWikis']);
 
@@ -82,7 +82,7 @@ class LicensedWikisServiceTest extends WikiaBaseTest {
 		$result = $method->invoke( $licensedWikisService );
 
 		$this->assertEquals( $wikiId, $result[ $wikiId ]['id'] );
-		$this->assertEquals( rtrim( ltrim( $url, "http://" ), "/"), $result[ $wikiId ]['host'] );
+		$this->assertEquals( $host, $result[ $wikiId ]['host'] );
 		$this->assertEquals( $url, $result[ $wikiId ]['url'] );
 		$this->assertEquals( $dbName, $result[ $wikiId ]['db'] );
 		$this->assertNotEquals( $wikiId, $result[ $wikiId ]['id']*2 );

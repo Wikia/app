@@ -133,7 +133,7 @@ function WidgetProblemReports($id, $params) {
 	    'href'  => $baseUrl.'/'.$problem['id'],
 	    'title' => '#'.$problem['id'].' - '.wfMsg('pr_table_date_submitted'). ': ' . $date,
 	    'name' => wfShortenText($problem['title'], 25 ) . ' ['.$problemTypes[$problem['type']].
-		($apiParams['wkshowall'] == 1 ? ' | '.str_replace(array('http://', '.wikia.com', '.wikia-inc.com'), '', $problem['server']) : '').']'
+		($apiParams['wkshowall'] == 1 ? ' | '.str_replace(array('http://', 'https://', '.wikia.com', '.wikia-inc.com'), '', $problem['server']) : '').']'
 	);
     }
 

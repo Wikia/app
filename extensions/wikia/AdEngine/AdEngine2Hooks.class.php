@@ -104,20 +104,24 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
 		// shared variables with communities
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverVideoMidrollCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
+		$vars[] = 'wgAdDriverVideoPostrollCountries';
 
-		// news&stories variables only
-		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
+		// TODO: Remove after src=[gpt,ns] is finished
 		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
 		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
+		// TODO: Remove after ADEN-6155
+		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
+
+		// news&stories variables only
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
-		$vars[] = 'wgAdDriverF2SingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverF2SrcKeyValueCountries';
-		$vars[] = 'wgAdDriverF2PlayAdsOnNextFVCountries';
-		$vars[] = 'wgAdDriverF2PlayAdsOnNextFVFrequency';
-		$vars[] = 'wgAdDriverF2FVMidrollCountries';
-		$vars[] = 'wgAdDriverF2FVPostrollCountries';
+		$vars[] = 'wgAdDriverF2MEGAVideosCountries';
 
 		return true;
 	}
