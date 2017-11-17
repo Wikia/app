@@ -4,7 +4,7 @@
 		<div id="top-right-boxad-wrapper">
 	<?php endif; ?>
 	<!-- BEGIN SLOTNAME: <?= htmlspecialchars( $slotName ) ?> -->
-	<div id="<?= htmlspecialchars( $slotName ) ?>" class="wikia-ad gpt-ad noprint default-height">
+	<div id="<?= htmlspecialchars( $slotName ) ?>" class="wikia-ad noprint default-height">
 	<? if ($includeLabel): ?>
 		<label class="wikia-ad-label"><?= wfMessage( 'adengine-advertisement' )->escaped() ?></label>
 	<? endif; ?>
