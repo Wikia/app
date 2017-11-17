@@ -27,10 +27,10 @@
 					<div class="mcf-card-ns-placeholder" data-tracking="card-4"></div>
 					<div class="mcf-card-wiki-placeholder" data-tracking="card-7"></div>
 				<? endif; ?>
-				<div class="mcf-card-ns-placeholder" data-tracking="card-10"></div>
+				<div class="mcf-card-ns-placeholder mcf-card-tall" data-tracking="card-10"></div>
 				<div class="mcf-card-wiki-placeholder" data-tracking="card-13"></div>
 				<div class="mcf-card-ns-placeholder" data-tracking="card-16"></div>
-				<div class="mcf-card-wiki-placeholder" data-tracking="card-19"></div>
+				<div class="mcf-card-wiki-placeholder mcf-card-tall" data-tracking="card-19"></div>
 			</div>
 
 			<div class="mcf-column">
@@ -54,10 +54,10 @@
 
 			<div class="mcf-column">
 				<div class="mcf-card-wiki-placeholder" data-tracking="card-3"></div>
-				<div class="mcf-card-wiki-placeholder" data-tracking="card-6"></div>
+				<div class="mcf-card-wiki-placeholder mcf-card-tall" data-tracking="card-6"></div>
 				<div class="mcf-card-wiki-placeholder" data-tracking="card-9"></div>
 				<div class="mcf-card-ns-placeholder" data-tracking="card-12"></div>
-				<div class="mcf-card-wiki-placeholder" data-tracking="card-15"></div>
+				<div class="mcf-card-wiki-placeholder mcf-card-tall" data-tracking="card-15"></div>
 				<div class="mcf-card-ns-placeholder" data-tracking="card-18"></div>
 				<div class="mcf-card-ns-placeholder" data-tracking="card-21"></div>
 			</div>

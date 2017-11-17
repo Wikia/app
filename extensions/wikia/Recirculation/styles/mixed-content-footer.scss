@@ -137,40 +137,35 @@ h1.mcf-header {
 	}
 }
 
-.mcf-en .mcf-card {
-	&[data-tracking*="card-6"],
-	&[data-tracking*="card-10"],
-	&[data-tracking*="card-15"],
-	&[data-tracking*="card-19"] {
-		height: $mcf-card-tall-height-xl;
+.mcf-card-tall {
+	height: $mcf-card-tall-height-xl;
 
-		@media #{$wds-breakpoint-xxl-up} {
-			height: $mcf-card-tall-height-xxl;
-		}
-
-		@media #{$wds-breakpoint-l-only} {
-			height: $mcf-card-tall-height-l;
-		}
-
-		@media #{$wds-breakpoint-m-down} {
-			height: $mcf-card-tall-height-m;
-		}
+	@media #{$wds-breakpoint-xxl-up} {
+		height: $mcf-card-tall-height-xxl;
 	}
 
-	&.mcf-card-related-wikis {
-		height: $mcf-explore-wiki-tall-height-xl;
+	@media #{$wds-breakpoint-l-only} {
+		height: $mcf-card-tall-height-l;
+	}
 
-		@media #{$wds-breakpoint-xxl-up} {
-			height: $mcf-explore-wiki-tall-height-xxl;
-		}
+	@media #{$wds-breakpoint-m-down} {
+		height: $mcf-card-tall-height-m;
+	}
+}
 
-		@media #{$wds-breakpoint-l-only} {
-			height: $mcf-explore-wiki-tall-height-l;
-		}
+.mcf-en .mcf-card-related-wikis {
+	height: $mcf-explore-wiki-tall-height-xl;
 
-		@media #{$wds-breakpoint-m-down} {
-			height: $mcf-explore-wiki-tall-height-m;
-		}
+	@media #{$wds-breakpoint-xxl-up} {
+		height: $mcf-explore-wiki-tall-height-xxl;
+	}
+
+	@media #{$wds-breakpoint-l-only} {
+		height: $mcf-explore-wiki-tall-height-l;
+	}
+
+	@media #{$wds-breakpoint-m-down} {
+		height: $mcf-explore-wiki-tall-height-m;
 	}
 }
 
@@ -233,7 +228,6 @@ h1.mcf-header {
 		}
 	}
 }
-
 
 .mcf-card-article {
 	@include justify-content(flex-end);
@@ -333,7 +327,7 @@ h1.mcf-header {
 		line-height: 1.17;
 		letter-spacing: .3px;
 	}
-	
+
 	&__link {
 		position: relative;
 	}
@@ -585,7 +579,7 @@ h1.mcf-header {
 		}
 
 		a {
-			color:  $wds-color-faint-gray;
+			color: $wds-color-faint-gray;
 			text-decoration: none;
 			width: 100%;
 		}
@@ -657,7 +651,7 @@ h1.mcf-header {
 		display: flex;
 		flex-direction: column;
 		height: 163px;
-		margin:18px auto;
+		margin: 18px auto;
 		width: 298px;
 
 		@media #{$wds-breakpoint-xxl-up} {
