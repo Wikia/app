@@ -1166,36 +1166,6 @@ class WikiFactory {
 		return isset( $oRow->city_dbname ) ? $oRow->city_dbname : false;
 	}
 
-
-	/**
-	 * Convert given host to current environment (devbox or sandbox).
-	 * @param string $dbName
-	 * @param string $default if on main wikia
-	 * @param string $host for testing
-	 * @return string changed host or $default
-	 */
-	public static function getCurrentStagingHost( $dbName='', $default='', $host = null) {
-		global $wgStagingList, $wgDevDomain;
-
-		if ( $host === null ) {
-			$host = gethostname();
-		}
-
-		if ( preg_match( '/^(demo-[a-z0-9]+)-[s|r][0-9]+$/i', $host, $m ) ) {
-			return $m[ 1 ] . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
-		}
-
-		if ( in_array( $host, $wgStagingList ) ) {
-			return $host . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
-		}
-
-		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host ) ) {
-			return "{$dbName}.{$wgDevDomain}";
-		}
-
-		return $default;
-	}
-
 	/**
 	 * getLocalEnvURL
 	 *
@@ -1227,7 +1197,8 @@ class WikiFactory {
 		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
 		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
 		if ( preg_match( $regexp, $url, $groups ) === 0 ||
-		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0
+		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0 ||
+		     $groups[2] === 'fandom.wikia.com'
 		) {
 			// on fail at least return original url
 			return $url;
@@ -1241,7 +1212,7 @@ class WikiFactory {
 		}
 
 		// strip env-specific pre- and suffixes for staging environment
-		$server = preg_replace( '/^(stable|preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
+		$server = preg_replace( '/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.wikia\.com/', '.wikia.com', $server );
 		if ( !empty( $wgDevDomain ) ) {
 			$server = str_replace( ".{$wgDevDomain}", '', $server );
 		}
@@ -1260,16 +1231,16 @@ class WikiFactory {
 		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return "$protocol://preview." . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://" . $server . '.preview' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
-				return "$protocol://verify." . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
-				return "$protocol://stable." . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol://" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return "$protocol://" . static::getExternalHostName() . '.' . $server .
+				return "$protocol://" . $server . '.' . static::getExternalHostName() .
 				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
 				return "$protocol://" . $server . '.' . $wgDevDomain . $address;
