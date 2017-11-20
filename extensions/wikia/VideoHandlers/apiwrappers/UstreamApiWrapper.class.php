@@ -2,8 +2,9 @@
 
 class UstreamApiWrapper extends ApiWrapper {
 
-	protected static $API_URL = 'https://api.ustream.tv/json/video/$1/getInfo';
-	protected static $WATCH_URL = 'https://www.ustream.tv/recorded/$1';
+	// HTTPS-note - https://ustream.tv redirects to http
+	protected static $API_URL = 'http://api.ustream.tv/json/video/$1/getInfo';
+	protected static $WATCH_URL = 'http://www.ustream.tv/recorded/$1';
 	protected static $CACHE_KEY = 'ustreamapi';
 	protected static $aspectRatio = 1.7777778;
 
