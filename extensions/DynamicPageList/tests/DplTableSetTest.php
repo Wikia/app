@@ -33,7 +33,7 @@ class DplTableSetTest extends TestCase {
 			$this->dplTableSet->addTable( $tableName );
 		}
 
-		$this->assertEquals( 'revision, page, user', $this->dplTableSet->getTables() );
+		$this->assertEquals( 'revision, page, user,', $this->dplTableSet->getTables() );
 	}
 
 	public function testAddTableDoesNotDuplicateTables() {
@@ -43,7 +43,7 @@ class DplTableSetTest extends TestCase {
 			$this->dplTableSet->addTable( $tableName );
 		}
 
-		$this->assertEquals( 'revision, page', $this->dplTableSet->getTables() );
+		$this->assertEquals( 'revision, page,', $this->dplTableSet->getTables() );
 	}
 
 	public function testAddTableAlias() {
@@ -57,7 +57,7 @@ class DplTableSetTest extends TestCase {
 		}
 
 		$this->assertEquals(
-			'revision AS my_rev, page AS my_page',
+			'revision AS my_rev, page AS my_page,',
 			$this->dplTableSet->getTables()
 		);
 	}
@@ -78,7 +78,7 @@ class DplTableSetTest extends TestCase {
 		}
 
 		$this->assertEquals(
-			'revision, page, revision AS my_rev, page AS my_page',
+			'revision, page, revision AS my_rev, page AS my_page,',
 			$this->dplTableSet->getTables()
 		);
 	}
@@ -99,7 +99,7 @@ class DplTableSetTest extends TestCase {
 		}
 
 		$this->assertEquals(
-			'revision, page, revision AS my_rev',
+			'revision, page, revision AS my_rev,',
 			$this->dplTableSet->getTables()
 		);
 	}
@@ -120,8 +120,12 @@ class DplTableSetTest extends TestCase {
 		}
 
 		$this->assertEquals(
-			'revision AS my_rev, foo_bar AS page, revision',
+			'revision AS my_rev, foo_bar AS page, revision,',
 			$this->dplTableSet->getTables()
 		);
+	}
+
+	public function testNoTablesProducesEmptyStatement() {
+		$this->assertEmpty( $this->dplTableSet->getTables() );
 	}
 }
