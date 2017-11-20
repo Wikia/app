@@ -500,7 +500,11 @@ abstract class DatabaseUpdater {
 	 * @param $fullpath Boolean: Whether to treat $patch path as a relative or not
 	 */
 	protected function dropIndex( $table, $index, $patch, $fullpath = false ) {
-		if ( $this->db->indexExists( $table, $index, __METHOD__ ) ) {
+		# Wikia - prevent "SHOW INDEX FROM" from reporting DB error when a table does not exist
+		if ( !$this->db->tableExists( $table, __METHOD__ ) ) {
+			$this->output( "...$table table doesn't exist.\n" );
+		}
+		elseif ( $this->db->indexExists( $table, $index, __METHOD__ ) ) {
 			$this->output( "Dropping $index index from table $table... " );
 			$this->applyPatch( $patch, $fullpath );
 			$this->output( "done.\n" );
