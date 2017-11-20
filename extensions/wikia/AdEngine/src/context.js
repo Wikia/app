@@ -1,9 +1,7 @@
 export default {
 	adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{slotName}',
 	custom: {
-		adLayout: 'asd', // TODO: add dynamically
 		dfpId: '5441',
-
 	},
 	events: {},
 	slots: {
