@@ -111,7 +111,7 @@ function print_pre( $param, $return = 0 )
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
-	global $wgWikiaNocookieDomain, $wgMedusaHostPrefix;
+	global $wgWikiaNocookieDomain, $wgMedusaHostPrefix, $wgResourceBasePath;
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
 	if ( substr( strtolower( $url ), -4 ) != '.ogg' ) {
@@ -122,7 +122,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			if ( $timestamp == "" ) {
 				$matches = array();
 				// @TODO: consider using wgStyleVersion
-				if ( 0 < preg_match( "/\/__cb([0-9]+)/i", $wg->CdnStylePath, $matches ) ) {
+				if ( 0 < preg_match( "/\/__cb([0-9]+)/i", $wgResourceBasePath, $matches ) ) {
 					$timestamp = $matches[1];
 				} else {
 					// This results in no caching of the image.  Bad bad bad, but the best way to fail.
@@ -131,7 +131,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 				}
 			}
 
-			// NOTE: This should be the only use of the cache-buster which does not use $wg->CdnStylePath.
+			// NOTE: This should be the only use of the cache-buster which does not use $wgResourceBasePath
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
