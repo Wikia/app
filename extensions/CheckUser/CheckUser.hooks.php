@@ -1,5 +1,7 @@
 <?php
 class CheckUserHooks {
+	const ACTION_TEXT_MAX_LENGTH = 255;
+
 	/**
 	 * Hook function for RecentChange_save
 	 * Saves user data into the cu_changes table
@@ -31,6 +33,9 @@ class CheckUserHooks {
 			$actionText = '';
 		}
 
+		// SUS-3257: Make sure the text fits into the database
+		$actionTextTrim = mb_substr( $actionText, 0, static::ACTION_TEXT_MAX_LENGTH );
+
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 		$rcRow = array(
@@ -40,7 +45,7 @@ class CheckUserHooks {
 			'cuc_minor'      => $rc_minor,
 			'cuc_user'       => $rc_user,
 			// 'cuc_user_text'  => $user->isAnon() ? $rc_user_text : '', // SUS-3080 - this column is redundant
-			'cuc_actiontext' => $actionText,
+			'cuc_actiontext' => $actionTextTrim,
 			'cuc_comment'    => $rc_comment,
 			'cuc_this_oldid' => $rc_this_oldid,
 			'cuc_last_oldid' => $rc_last_oldid,

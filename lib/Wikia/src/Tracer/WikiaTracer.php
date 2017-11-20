@@ -3,6 +3,7 @@
 namespace Wikia\Tracer;
 
 use Wikia\Logger\ContextSource;
+use Wikia\Logger\LogstashFormatter;
 
 class WikiaTracer {
 
@@ -179,7 +180,7 @@ class WikiaTracer {
 		// add some context for maintenance scripts
 		if ( defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
 			if ( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
-				$context['maintenance_file'] = realpath( $_SERVER['SCRIPT_FILENAME'] );
+				$context['maintenance_file'] = LogstashFormatter::normalizePath( realpath( $_SERVER['SCRIPT_FILENAME'] ) );
 			}
 
 			if ( !empty( $maintClass ) ) {

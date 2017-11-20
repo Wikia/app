@@ -167,8 +167,9 @@ class Http {
 
 		// Extract host part
 		$matches = array();
-		if ( preg_match( '!^http://([\w.-]+)[/:].*$!', $url, $matches ) ) {
-			$host = $matches[1];
+		// this is https-ready but the caller function doesn't support https proxies yet.
+		if ( preg_match( '!^(https?)?://([\w.-]+)[/:].*$!', $url, $matches ) ) {
+			$host = $matches[2];
 			// Split up dotwise
 			$domainParts = explode( '.', $host );
 			// Check if this domain or any superdomain is listed in $wgConf as a local virtual host

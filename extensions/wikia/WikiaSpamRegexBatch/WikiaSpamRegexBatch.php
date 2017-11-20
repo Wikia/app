@@ -90,7 +90,7 @@ class WikiaSpamRegexBatch extends SpamRegexBatch{
 		foreach ($this->files as $fileName) {
 			if (preg_match('/^DB: ([\w-]*) (.*)$/', $fileName, $matches)) {
 				$text = self::getArticleText($matches[1], $matches[2]);
-			} elseif (preg_match('/^http:\/\//', $fileName)) {
+			} elseif (preg_match('/^https?:\/\//', $fileName)) {
 				$text = self::getHttpText($fileName);
 			} else {
 				$text = file_get_contents($fileName);

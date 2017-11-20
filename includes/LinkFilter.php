@@ -32,7 +32,7 @@ class LinkFilter {
 	 * @return String: regex pattern, for preg_match()
 	 */
 	private static function makeRegex( $filterEntry ) {
-		$regex = '!http://';
+		$regex = '!https?://';
 		if ( substr( $filterEntry, 0, 2 ) == '*.' ) {
 			$regex .= '(?:[A-Za-z0-9.-]+\.|)';
 			$filterEntry = substr( $filterEntry, 2 );

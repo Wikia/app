@@ -108,21 +108,12 @@ class MercuryApiArticleHandler {
 					],
 				]
 			];
-			if ( isset( $featuredVideo['player'] ) && $featuredVideo['player'] === 'jwplayer' ) {
-				$featuredVideoData['provider'] = 'jwplayer';
-				$featuredVideoData['embed']['provider'] = 'jwplayer';
-				$featuredVideoData['embed']['jsParams']['videoId'] = $featuredVideo['mediaId'];
-				$featuredVideoData['embed']['jsParams']['playlist'] = $featuredVideo['playlist'];
-				$featuredVideoData['embed']['jsParams']['recommendedVideoPlaylist'] = $featuredVideo['recommendedVideoPlaylist'];
-			} else {
-				$featuredVideoData['url'] = $featuredVideo['thumbnailUrl'];
-				$featuredVideoData['provider'] = 'ooyala-v4';
-				$featuredVideoData['embed']['provider'] = 'ooyala-v4';
-				$featuredVideoData['embed']['jsParams']['videoId'] = $featuredVideo['videoId'];
-				$featuredVideoData['labels'] = $featuredVideo['labels'];
-				$featuredVideoData['title'] = $featuredVideo['title'];
-				$featuredVideoData['duration'] = $featuredVideo['duration'];
-			}
+
+			$featuredVideoData['provider'] = 'jwplayer';
+			$featuredVideoData['embed']['provider'] = 'jwplayer';
+			$featuredVideoData['embed']['jsParams']['videoId'] = $featuredVideo['mediaId'];
+			$featuredVideoData['embed']['jsParams']['playlist'] = $featuredVideo['playlist'];
+			$featuredVideoData['embed']['jsParams']['recommendedVideoPlaylist'] = $featuredVideo['recommendedVideoPlaylist'];
 
 			return $featuredVideoData;
 		}

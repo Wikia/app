@@ -101,7 +101,7 @@ for ( $id=1; $id <= $maxID; $id++ ) {
 						print "\nFound spam in [[$titleText]]\n";
 					} else {
 						print "\nCleaning up links to {$matches[0]} in [[$titleText]]\n";
-						$match = str_replace('http://', '', $matches[0] );
+						$match = preg_replace( '!^https?://!', '', $matches[0] );
 						cleanupArticle( $revision, $regexes, $match );
 					}
 				}
