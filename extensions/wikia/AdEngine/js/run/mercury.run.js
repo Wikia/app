@@ -1,5 +1,7 @@
 /*global require*/
 require([
+	'ad-engine.bridge',
+	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -7,11 +9,14 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.service.actionHandler',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
+	adEngineBridge,
+	pageLevelParams,
 	slotStateMonitor,
 	a9,
 	prebid,
@@ -19,6 +24,7 @@ require([
 	messageListener,
 	mercuryListener,
 	actionHandler,
+	slotRegistry,
 	adInfoListener,
 	geo,
 	instantGlobals,
@@ -28,7 +34,13 @@ require([
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = customAdsLoader.loadCustomAd;
+	if (geo.isProperGeo(instantGlobals.wgAdDriverAdEngine3Countries)) {
+		adEngineBridge.init(slotRegistry);
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+		adEngineBridge.updatePageLevelTargeting(pageLevelParams.getPageLevelParams());
+	} else {
+		win.loadCustomAd = customAdsLoader.loadCustomAd;
+	}
 
 	function callBiddersOnConsecutivePageView() {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
