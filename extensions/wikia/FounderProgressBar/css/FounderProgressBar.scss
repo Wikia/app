@@ -263,7 +263,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 					margin-left: 20px;
 				}
 				.lock {
-					background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgCdnStylePath */
+					background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgResourceBasePath */
 					background-repeat: no-repeat;
 					background-position: -650px 0;	
 					height: 17px;
@@ -302,7 +302,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 				color: $color-alternate-text;
 			}
 			.activity-checkmark {
-				background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgCdnStylePath */
+				background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgResourceBasePath */
 				background-repeat: no-repeat;
 				background-position: -663px 0;	
 				height: 12px;
