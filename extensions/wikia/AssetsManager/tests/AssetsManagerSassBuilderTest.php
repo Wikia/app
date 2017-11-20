@@ -32,7 +32,7 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 		// test URLs rewriting
 		$this->assertContains('sprite.png', $builder->getContent());
 		$this->assertContains("{$this->cdn}/skins/shared/images/sprite.png", $builder->getContent());
-		$this->assertNotContains('/* $wgCdnStylePath */', $builder->getContent());
+		$this->assertNotContains('/* $wgResourceBasePath */', $builder->getContent());
 
 		// test base64 encoding
 		$this->assertNotContains('blank.gif', $builder->getContent());
