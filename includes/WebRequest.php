@@ -171,7 +171,9 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 			}
 			$host = $parts[0];
 			if ( $parts[1] === false ) {
-				if ( isset( $_SERVER['SERVER_PORT'] ) ) {
+				if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
+					$port = 443;
+				} elseif ( isset( $_SERVER['SERVER_PORT'] ) ) {
 					$port = $_SERVER['SERVER_PORT'];
 				} // else leave it as $stdPort
 			} else {
