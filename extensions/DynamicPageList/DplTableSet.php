@@ -26,6 +26,10 @@ class DplTableSet {
 	}
 
 	public function getTables(): string {
-		return implode( ', ', $this->tableMap );
+		if ( empty( $this->tableMap ) ) {
+			return '';
+		}
+
+		return implode( ', ', $this->tableMap ) . ',';
 	}
 }
