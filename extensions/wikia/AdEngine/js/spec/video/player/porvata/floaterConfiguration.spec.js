@@ -1,9 +1,7 @@
 describe('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', function () {
 	'use strict';
 
-	var WIDTH = 100,
-		HEIGHT = 100,
-		mocks = {
+	var mocks = {
 			win: {}
 		};
 
@@ -19,20 +17,20 @@ describe('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', functio
 		expect(actual).toBeFalsy();
 	});
 
-	it('floater should be disabled when "enableLeaderboardFloating" configuration is set to false', function () {
+	it('floater should be disabled when "enableInContentFloating" configuration is set to false', function () {
 		var module = getModule(),
 			params = {
-				enableLeaderboardFloating: false
+				enableInContentFloating: false
 			},
 			actual = module.canFloat(params);
 
 		expect(actual).toBeFalsy();
 	});
 
-	it('floater should be disabled when "enableLeaderboardFloating" configuration is set to true, but TOP_RIGHT_BOXAX is asking', function () {
+	it('floater should be disabled when "enableInContentFloating" configuration is set to true, but TOP_RIGHT_BOXAX is asking', function () {
 		var module = getModule(),
 			params = {
-				enableLeaderboardFloating: true,
+				enableInContentFloating: true,
 				slotName: 'TOP_RIGHT_BOXAD'
 			},
 			actual = module.canFloat(params);
@@ -40,11 +38,11 @@ describe('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', functio
 		expect(actual).toBeFalsy();
 	});
 
-	it('floater should be enabled when "enableLeaderboardFloating" configuration is set to true and TOP_LEADERBOARD is asking', function () {
+	it('floater should be enabled when "enableInContentFloating" configuration is set to true and INCONTENT_PLAYER is asking', function () {
 		var module = getModule(),
 			params = {
-				enableLeaderboardFloating: true,
-				slotName: 'TOP_LEADERBOARD'
+				enableInContentFloating: true,
+				slotName: 'INCONTENT_PLAYER'
 			},
 			actual = module.canFloat(params);
 

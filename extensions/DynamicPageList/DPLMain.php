@@ -2281,7 +2281,7 @@ class DPLMain {
 			} else {
 				$sSqlSelectFrom =
 					"SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to .
-					'pl_namespace, pl_title' . $sSqlSelPage . $sSqlSortkey . ' FROM ' .
+					'pl_namespace, pl_title' . 	$sSqlSelPage . $sSqlSortkey . ' FROM ' .
 					$sPageLinksTable;
 			}
 		} else {

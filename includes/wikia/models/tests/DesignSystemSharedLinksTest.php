@@ -16,7 +16,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 
 		$result = DesignSystemSharedLinks::getInstance()->getHref( 'create-new-wiki', $lang );
 
-		$this->assertEquals( $result, $expectedResult );
+		$this->assertEquals( $expectedResult, $result );
 	}
 
 	public function getHrefDataProvider() {
@@ -130,7 +130,7 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 						'create-new-wiki' => 'http://fallout.wikia.com/wiki/test'
 					]
 				],
-				'http://preview.fallout.wikia.com/wiki/test'
+				'http://fallout.preview.wikia.com/wiki/test'
 			],
 			[
 				WIKIA_ENV_STAGING,

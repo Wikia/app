@@ -1,7 +1,7 @@
 // scrollable list with shadow
 @mixin scrollable-list($max-height, $color-background: $wds-color-white) {
 	$color-shadow: rgba($wds-color-black, .12);
-	@if luminance($color-background) < .3 {
+	@if lightness($color-background) < 49 {
 		$color-shadow: rgba($wds-color-white, .4);
 	}
 

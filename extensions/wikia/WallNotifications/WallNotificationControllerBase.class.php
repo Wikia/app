@@ -123,7 +123,7 @@ abstract class WallNotificationControllerBase extends WikiaService {
 		$oldestEntity = end( $notify[ 'grouped' ] );
 		$url = empty( $oldestEntity->data->url ) ? '' : $oldestEntity->data->url;
 		$title = $this->shortenTitle( $data->thread_title ?? '' );
-		$this->response->setVal( 'url', $this->fixNotificationURL( $url ) );
+		$this->response->setVal( 'url', WikiFactory::getLocalEnvURL( $url ) );
 		$this->response->setVal( 'authors', array_reverse( $authors ) );
 		$this->response->setVal( 'title', $title );
 		$this->response->setVal( 'iso_timestamp', wfTimestamp( TS_ISO_8601, $data->timestamp ) );
@@ -169,7 +169,7 @@ abstract class WallNotificationControllerBase extends WikiaService {
 			}
 		}
 
-		$this->response->setVal( 'url', $this->fixNotificationURL( $data->url ) );
+		$this->response->setVal( 'url', WikiFactory::getLocalEnvURL( $data->url ) );
 		$this->response->setVal( 'msg', $msg );
 		$this->response->setVal( 'authors', $authors );
 		$this->response->setVal( 'iso_timestamp', wfTimestamp( TS_ISO_8601, $data->timestamp ) );
@@ -224,29 +224,6 @@ abstract class WallNotificationControllerBase extends WikiaService {
 		}
 		$msg = wfMessage( $msgid, $params )->text();
 		return $msg;
-	}
-
-	protected function fixNotificationURL( $url ) {
-		global $wgStagingList;
-		$hostOn = getHostPrefix();
-
-		$hosts = $wgStagingList;
-		foreach ( $hosts as $host ) {
-			$prefix = 'http://' . $host . '.';
-			if ( strpos( $url, $prefix ) !== false ) {
-				if ( empty( $hostOn ) ) {
-					return str_replace( $prefix, 'http://', $url );
-				} else {
-					return str_replace( $prefix, 'http://' . $hostOn . '.', $url );
-				}
-			}
-		}
-
-		if ( !empty( $hostOn ) ) {
-			return str_replace( 'http://', 'http://' . $hostOn . '.', $url );
-		}
-
-		return $url;
 	}
 
 	/**
