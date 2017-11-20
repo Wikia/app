@@ -30,5 +30,5 @@ $basePath: "/extensions/VisualEditor";
 		$vendorPath: "/wikia/modules/ve/ui/styles/images/icons/";
 	}
 
-	background-image: url($basePath + $vendorPath + $name + $white + ".svg"); /* $wgCdnStylePath */
+	background-image: url($basePath + $vendorPath + $name + $white + ".svg"); /* $wgResourceBasePath */
 }
