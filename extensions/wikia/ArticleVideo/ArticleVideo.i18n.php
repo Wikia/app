@@ -38,7 +38,7 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'articlevideo-watch' => 'ウォッチ',
+	'articlevideo-watch' => '再生時間',
 	'articlevideo-feedback-question' => 'この動画はいかがでしたか？',
 	'articlevideo-attribution-from' => '作成：',
 );
