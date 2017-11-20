@@ -700,6 +700,9 @@ class WikiFactoryLoader {
 						$tValue = 'http://'.$stagingServer;
 						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
+					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
+						$tValue = str_replace( 'http://', 'https://', $tValue);
+					}
 				}
 
 				try {
