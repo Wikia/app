@@ -118,7 +118,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 		$url = str_replace( 'http://', 'https://',
 			str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $url ) );
 		if ( strlen( $url ) > 8 && substr ( $url, 0, 8 ) == "https://" ) {
-			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
+			// If there is no timestamp, use the cache-busting number from wgResourceBasePath.
 			if ( $timestamp == "" ) {
 				$matches = array();
 				// @TODO: consider using wgStyleVersion
@@ -126,7 +126,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 					$timestamp = $matches[1];
 				} else {
 					// This results in no caching of the image.  Bad bad bad, but the best way to fail.
-					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to " . __METHOD__ . " without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the '{$url}' image won't be cacheable!" );
+					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to " . __METHOD__ . " without a timestamp and we could not parse a fallback cache-busting number out of wgResourceBasePath.  This means the '{$url}' image won't be cacheable!" );
 					$timestamp = rand( 0, 1000 );
 				}
 			}
