@@ -31,7 +31,7 @@
 	}
 
 	.cke_contents {
-		background: #ddd url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
+		background: #ddd url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgResourceBasePath */
 		overflow: hidden;
 		position: relative;
 	}
@@ -199,7 +199,7 @@
 }
 
 .RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
-	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 	height: 30px;
 }
 
@@ -211,7 +211,7 @@
 }
 
 .RTEPlaceholderPreviewTitleBar span {
-	background: transparent url(/skins/shared/images/sprite.png) no-repeat -1146px -81px; /* $wgCdnStylePath */
+	background: transparent url(/skins/shared/images/sprite.png) no-repeat -1146px -81px; /* $wgResourceBasePath */
 	cursor: pointer;
 	height: 12px;
 	position: absolute;
@@ -318,7 +318,7 @@
 			height: 16px;
 		}
 		.link-type-note .link-icon {
-			background: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png) left top no-repeat; /* $wgCdnStylePath */
+			background: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png) left top no-repeat; /* $wgResourceBasePath */
 			height: 16px;
 			margin-right: 3px;
 			width: 16px;
@@ -348,7 +348,7 @@
 // dialog loading indicator
 .wikiaEditorLoading {
 	.cke_dialog_body {
-		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 
 		* {
 			visibility: hidden !important;
@@ -356,7 +356,7 @@
 	}
 
 	.loading {
-		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
+		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgResourceBasePath */
 	}
 }
 
