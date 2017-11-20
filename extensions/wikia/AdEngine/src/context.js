@@ -2,7 +2,6 @@ export default {
 	adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{slotName}',
 	custom: {
 		adLayout: 'asd', // TODO: add dynamically
-		device: 'desktop', // TODO: add dynamically
 		dfpId: '5441',
 
 	},
@@ -21,10 +20,8 @@ export default {
 			],
 			defaultSizes: [[2, 2]],
 			targeting: {
-				src: 'test', // TODO
-				pos: 'BOTTOM_LEADERBOARD', // TODO
-				loc: 'footer',
-				uap: '356383452' // TODO
+				pos: 'BOTTOM_LEADERBOARD',
+				loc: 'footer'
 			}
 		}
 	},
@@ -34,9 +31,7 @@ export default {
 	},
 	targeting: {
 		outstream: 'none',
-		s1: '',
 		uap: 'none',
-		skin: 'oasis' // TODO: add dynamically
 	},
 	state: {
 		adStack: window.adsQueue || [],

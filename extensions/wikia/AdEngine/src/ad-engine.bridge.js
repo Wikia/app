@@ -1,10 +1,11 @@
-import  Context from 'ad-engine/src/services/context-service';
+import Context from 'ad-engine/src/services/context-service';
 import SlotService from 'ad-engine/src/services/slot-service';
 import TemplateService from 'ad-engine/src/services/template-service';
 import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-below';
 import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-ad-package';
+import StringBuilder from 'ad-engine/src/utils/string-builder';
 import config from './context';
-import StringBuilder from "ad-engine/src/utils/string-builder";
+import Client from "ad-engine/src/utils/client";
 
 Context.extend(config);
 let supportedTemplates = [ BigFancyAdBelow ];
@@ -13,14 +14,12 @@ supportedTemplates.forEach((template) => {
 	TemplateService.register(template);
 });
 
-function buildVastAdUnit(slotName) {
-	return StringBuilder.build(
-		Context.get(`vast.adUnitId`),
-		Object.assign({}, Context.get('targeting'), Context.get(`slots.${slotName}`))
-	);
+function init(slotRegistry, pageLevelTargeting, skin) {
+	overrideSlotService(slotRegistry);
+	updatePageLevelTargeting(pageLevelTargeting, skin);
 }
 
-function init(slotRegistry) {
+function overrideSlotService(slotRegistry) {
 	SlotService.getBySlotName = (id) => {
 		if (id) {
 			let slot = slotRegistry.get(id);
@@ -30,26 +29,32 @@ function init(slotRegistry) {
 }
 
 function unifySlotInterface(slot) {
+	const slotContext = Context.get(`slots.${slot.name}`) || {targeting: {}};
 	slot.getSlotName = () => slot.name;
 	slot.default = {
 		getSlotName: () => slot.name
 	};
 	slot.getId = () => slot.name;
-	slot.config = Context.get(`slot.${slot.name}`) || {targeting: {}};
+	slot.config = slotContext;
 	slot.getVideoAdUnit = () => buildVastAdUnit(slot.name);
-	slot.getTargeting = () => Context.get(`slots.${slot.name}.targeting`) || {};
+	slot.getTargeting = () => slotContext.targeting;
 	return slot;
 }
 
-function getSupportedTemplateNames() {
-	return supportedTemplates.map((template) => template.getName());
+function buildVastAdUnit(slotName) {
+	return StringBuilder.build(
+		Context.get(`vast.adUnitId`),
+		Object.assign({}, Context.get('targeting'), Context.get(`slots.${slotName}`))
+	);
 }
+
 
 function loadCustomAd(fallback) {
 	return (params) => {
 		if (getSupportedTemplateNames().includes(params.type)) {
 			const slot = SlotService.getBySlotName(params.slotName);
-			document.getElementById(params.slotName).classList.add('gpt-ad');
+			slot.container.parentNode.classList.add('gpt-ad');
+			Context.set(`slots.${params.slotName}.targeting.src`, params.src);
 			TemplateService.init(params.type, slot, params);
 		} else {
 			fallback(params);
@@ -57,13 +62,28 @@ function loadCustomAd(fallback) {
 	};
 }
 
-function updatePageLevelTargeting(params) {
+function getSupportedTemplateNames() {
+	return supportedTemplates.map((template) => template.getName());
+}
+
+function updatePageLevelTargeting(params, skin) {
+	Context.set('custom.device', Client.getDeviceType());
+	Context.set('targeting.skin', skin);
 	Object.keys(params).forEach((key) => Context.set(`targeting.${key}`, params[key]));
+}
+
+function setUapId(id) {
+	Context.set('targeting.uap', id);
+	UniversalAdPackage.setUapId(id);
+}
+
+function setType(type) {
+	UniversalAdPackage.setType(type);
 }
 
 export {
 	init,
 	loadCustomAd,
-	UniversalAdPackage,
-	updatePageLevelTargeting
+	setUapId,
+	setType
 };
