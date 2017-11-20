@@ -554,7 +554,7 @@ class WallHelper {
 	}
 
 	/**
-	 * @param RecentChange $rc or a row from revison table
+	 * @param RCCacheEntry $rc or a row from revison table
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
 	 * @return array|bool
 	 */

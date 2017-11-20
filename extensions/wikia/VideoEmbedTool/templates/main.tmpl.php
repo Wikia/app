@@ -32,32 +32,6 @@
 			<input type="text" class="VET-search-field" id="VET-search-field" name="VET-search-field" placeholder="<?= wfMsg( 'vet-search-placeholder' ) ?>" />
 			<input type="submit" id="VET-search-submit" class="wikia-button VET-search-submit" value="<?= wfMsg( 'vet-search-label' ) ?>" />
 		</div>
-		<div class="VET-search-filter">
-
-			<div class="WikiaDropdown MultiSelect VET-search-dropdown" id="VET-search-dropdown" data-selected="<?php echo($vet_premium_videos_search_enabled) ? 'premium' : 'local';  ?>"> <? // <- VET.js takes value from here ?>
-				<div class="selected-items">
-					<?php if ($vet_premium_videos_search_enabled) : ?>
-						<span class="selected-items-list" data-sort="premium"><?=wfMsg( 'vet-video-wiki' ) ?></span>
-					<?php else : ?>
-						<span class="selected-items-list" data-sort="local"><?=wfMsg( 'vet-thiswiki' ) ?></span>
-					<?php endif; ?>
-					<img class="arrow" src="<?=wfBlankImgUrl();?>" />
-				</div>
-				<div class="dropdown">
-					<ul class="dropdown-list">
-						<?php if ($vet_premium_videos_search_enabled) : ?>
-							<li class="dropdown-item">
-								<label data-sort="premium"><?=wfMsg( 'vet-video-wiki' ) ?></label>
-							</li>
-						<?php endif; ?>
-						<li class="dropdown-item">
-							<label data-sort="local"><?=wfMsg( 'vet-thiswiki' ) ?></label>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<label class="dropdown-label"><?=wfMsg( 'vet-search-filter-caption' )?></label>
-		</div>
 	</form>
 	<div id="VET-carousel-wrapper" class="VET-carousel-wrapper">
 		<p class="results suggestions-results show"><strong><?= wfMsg( 'vet-suggestions' ) ?></strong></p>

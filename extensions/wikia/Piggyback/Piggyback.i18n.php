@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'piggybac-desc' => 'Allows logging on as another user',
+	'piggyback-desc' => 'Allows logging on as another user',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Other username:',
 	'piggyback-nosuchuser' => 'There is no user by the name "$1".

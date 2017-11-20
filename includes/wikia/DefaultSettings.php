@@ -1275,6 +1275,13 @@ $wgAdDriverIndexExchangeBidderCountries = null;
 $wgAdDriverOpenXPrebidBidderCountries = null;
 
 /**
+ * @name $wgAdDriverPubMaticBidderCountries
+ * List of countries where PubMatic prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPubMaticBidderCountries = null;
+
+/**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
  * Supported values 1/4pv, 2/5min
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

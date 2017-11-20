@@ -270,7 +270,7 @@ abstract class BaseBlacklist {
 			$matches = array();
 			if ( preg_match( '/^DB: ([\w-]*) (.*)$/', $fileName, $matches ) ) {
 				$text = $this->getArticleText( $matches[1], $matches[2] );
-			} elseif ( preg_match( '/^http:\/\//', $fileName ) ) {
+			} elseif ( preg_match( '/^https?:\/\//', $fileName ) ) {
 				$text = $this->getHttpText( $fileName );
 			} else {
 				$text = file_get_contents( $fileName );

@@ -62,12 +62,12 @@ class WikiFactory {
 	];
 
 	# city_flags
-	const FLAG_CREATE_DB_DUMP        = 1;
-	const FLAG_CREATE_IMAGE_ARCHIVE  = 2;
-	const FLAG_DELETE_DB_IMAGES      = 4;
-	const FLAG_FREE_WIKI_URL         = 8;
-	const FLAG_HIDE_DB_IMAGES        = 16;
-	const FLAG_REDIRECT              = 32;
+	const FLAG_CREATE_DB_DUMP        = 1; // prepare a database dump and send it to Amazon's s3
+	const FLAG_CREATE_IMAGE_ARCHIVE  = 2; // prepare DFS bucket dump and send it to Amazon's s3
+	const FLAG_DELETE_DB_IMAGES      = 4; // remove DFS bucket
+	const FLAG_FREE_WIKI_URL         = 8; // removes wiki database and WikiFactory settings
+	const FLAG_HIDE_DB_IMAGES        = 16;  // images and DB dumps will be hidden on s3
+	const FLAG_REDIRECT              = 32;  // this wiki is a redirect - do not remove
 	const FLAG_ADOPTABLE             = 64;  //used by AutomaticWikiAdoption
 	const FLAG_ADOPT_MAIL_FIRST      = 128; //used by AutomaticWikiAdoption
 	const FLAG_ADOPT_MAIL_SECOND     = 256; //used by AutomaticWikiAdoption

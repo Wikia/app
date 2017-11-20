@@ -58,14 +58,15 @@ class ResourceLoaderHooks {
 		// Determine the shared domain name
 		$isProduction = empty($wgDevelEnvironment) && empty($wgStagingEnvironment);
 		if ( $isProduction ) {
-			$host = 'http://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
+			// Adding https here doesn't change anything, as $wgEnableResourceLoaderRewrites is enabled
+			// everywhere so this gets replaced with $wgCdnRootUrl anyway.
+			$host = 'https://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
 		} else {
 			$host = $wgCdnRootUrl;
 		}
 
 		// Feed RL with the "common" source
 		$scriptUri = "$host{$wgScriptPath}/load{$wgScriptExtension}";
-		$apiUri = "$host{$wgScriptPath}/api{$wgScriptExtension}";
 		$sources['common'] = array(
 			'loadScript' => $scriptUri,
 			'apiScript' => $sources['local']['apiScript'],
@@ -74,13 +75,13 @@ class ResourceLoaderHooks {
 		if ( !empty( $wgEnableResourceLoaderRewrites ) ) {
 			// rewrite local source
 			$url = $sources['local']['loadScript'];
-			$url = str_replace("/load{$wgScriptExtension}","/__load/-/",$url);
+			$url = str_replace( "/load{$wgScriptExtension}", "/__load/-/", $url );
 			$sources['local']['loadScript'] = $url;
 			// rewrite common source
 			$url = $sources['common']['loadScript'];
-			$url = str_replace("/load{$wgScriptExtension}","/__load/-/",$url);
+			$url = str_replace( "/load{$wgScriptExtension}", "/__load/-/", $url );
 			if ( $isProduction ) {
-				$url = str_replace($host,$wgCdnRootUrl,$url);
+				$url = str_replace( $host, $wgCdnRootUrl, $url );
 			}
 			$sources['common']['loadScript'] = $url;
 		}
