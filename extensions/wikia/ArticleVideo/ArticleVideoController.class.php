@@ -4,9 +4,10 @@ class ArticleVideoController extends WikiaController {
 
 	private function fallbackLanguage( $lang ) {
 		switch ( $lang ) {
-			case 'zh-hant':
-			case 'zh-tw':
+			case 'zh-hans':
 				return 'zh';
+			case 'zh-tw':
+				return 'zh-hant';
 			case 'pt-br':
 				return 'pt';
 			default:
