@@ -341,7 +341,8 @@ class CheckUserHooks {
 	 * blocked by this Block.
 	 *
 	 * @param Block $block
-	 * @param Array &$blockIds
+	 * @param int[] &$blockIds
+	 * @return array|bool
 	 */
 	public static function doRetroactiveAutoblock( Block $block, array &$blockIds ) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -370,35 +371,5 @@ class CheckUserHooks {
 		}
 
 		return false; // autoblock handled
-	}
-
-	/**
-	 * Register tables that need to be updated when a user is renamed
-	 *
-	 * @param DatabaseBase $dbw
-	 * @param int $userId
-	 * @param string $oldUsername
-	 * @param string $newUsername
-	 * @param UserRenameProcess $process
-	 * @param int $wgCityId
-	 * @param array $tasks
-	 * @return bool
-	 */
-	public static function onUserRenameLocal( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
-		$tasks[] = array(
-			'table' => 'cu_log',
-			'userid_column' => 'cul_user',
-			'username_column' => 'cul_user_text',
-		);
-		$tasks[] = array(
-			'table' => 'cu_log',
-			'userid_column' => 'cul_target_id',
-			'username_column' => 'cul_target_text',
-			'conds' => array(
-				'cul_type' => array( 'useredits', 'userips' ),
-			),
-		);
-
-		return true;
 	}
 }
