@@ -6,7 +6,10 @@ use PHPUnit\DbUnit\TestCaseTrait;
  * Class WikiaDatabaseTest serves as an abstract base class for database integration tests
  */
 abstract class WikiaDatabaseTest extends WikiaBaseTest {
-	use TestCaseTrait;
+	use TestCaseTrait {
+		setUp as protected databaseSetUp;
+		tearDown as protected databaseTearDown;
+	}
 
 	/** @var InMemorySqliteDatabase $db */
 	private static $db = null;
@@ -33,6 +36,12 @@ abstract class WikiaDatabaseTest extends WikiaBaseTest {
 		self::$db->commit();
 	}
 
+	protected function setUp() {
+		parent::setUp();
+
+		$this->databaseSetUp();
+	}
+
 	/**
 	 * Returns the list of schema files which will be used to initialize the in-memory database
 	 * @return string[]
@@ -57,6 +66,11 @@ abstract class WikiaDatabaseTest extends WikiaBaseTest {
 		}
 
 		return $this->conn;
+	}
+
+	protected function tearDown() {
+		parent::tearDown();
+		$this->databaseTearDown();
 	}
 
 	/**
