@@ -30,8 +30,6 @@ $messages['en'] = array(
 	'swm-label-mode-users-active' => 'Active users',
 	'swm-label-mode-users-group' => 'Users belonging to the group',
 	'swm-label-mode-users-group-hint' => '<i>Pick a group from drop down or write name by hand to overwrite drop down selection.</i>',
-	'swm-label-mode-users-poweruser' => 'Power users of a type',
-	'swm-label-mode-users-poweruser-hint' => 'Pick types of power users from a list. The message will be sent to All Wikias.',
 	'swm-label-mode-users-user' => 'Selected user',
 	'swm-label-mode-users-user-hint' => '<i>This option ignores selection in group "Wikis".</i>',
 	'swm-label-mode-users-user-multi' => 'List of users',
@@ -129,8 +127,6 @@ $messages['qqq'] = array(
 Referred to in:
 *{{msg-wikia|Swm-label-mode-users-anon-hint}}',
 	'swm-label-mode-wikis-wiki-multi-hint' => 'Message explaining the format of the list of wikis.',
-	'swm-label-mode-users-poweruser' => 'A label to a list of checkboxes with types of power users to choose from',
-	'swm-label-mode-users-poweruser-hint' => 'A hint that suggests picking one or more of the power users types. Also an info that it works only for the All Wikias option.',
 	'swm-label-mode-users-user-hint' => 'Refers to option:
 *{{msg-wikia|Swm-label-recipient-wikis}}',
 	'swm-label-mode-users-anon' => '{{Identical|Anonymous user}}',

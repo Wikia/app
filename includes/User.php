@@ -75,10 +75,6 @@ class User implements JsonSerializable {
 
 	# WIKIA CHANGE BEGIN
 	# adamk@wikia-inc.com
-	/**
-	 * Traits extending the class
-	 */
-	use PowerUserTrait;
 	use AuthServiceAccessor;
 	# WIKIA CHANGE END
 
