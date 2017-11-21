@@ -1,13 +1,15 @@
+import Client from 'ad-engine/src/utils/client';
 import Context from 'ad-engine/src/services/context-service';
+import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
 import SlotService from 'ad-engine/src/services/slot-service';
 import TemplateService from 'ad-engine/src/services/template-service';
 import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-below';
 import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-ad-package';
 import StringBuilder from 'ad-engine/src/utils/string-builder';
 import config from './context';
-import Client from "ad-engine/src/utils/client";
 
 Context.extend(config);
+ScrollListener.init();
 let supportedTemplates = [ BigFancyAdBelow ];
 
 supportedTemplates.forEach((template) => {
@@ -47,7 +49,6 @@ function buildVastAdUnit(slotName) {
 		Object.assign({}, Context.get('targeting'), Context.get(`slots.${slotName}`))
 	);
 }
-
 
 function loadCustomAd(fallback) {
 	return (params) => {
