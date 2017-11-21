@@ -2,7 +2,7 @@
 // @autosprite-start
 @mixin sprite-MiniEditor-base() {
 	background-color: transparent;
-	background-image: url('/extensions/wikia/MiniEditor/images/sprite-MiniEditor.png'); /* wgCdnStylePath */
+	background-image: url('/extensions/wikia/MiniEditor/images/sprite-MiniEditor.png'); /* wgResourceBasePath */
 	background-repeat: no-repeat;
 }
 @mixin sprite-MiniEditor($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {

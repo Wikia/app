@@ -791,12 +791,12 @@ $wgNoExternals = false;
  * this path will NOT have that in it so that CSS and other static
  * files can use a correct local path (such as "/skins/common/blank.gif")
  * which would be a completely functioning local path (which will be prepended
- * in the CSS combiner with wgCdnStylePath).  The advantages of this are two-fold:
- * 1) if the combiner fails to prepend the wgCdnStylePath, the link will still work,
- * 2) the combiner WON'T prepend the wgCdnStylePath on development machines so that
+ * in the CSS combiner with wgResourceBasePath).  The advantages of this are two-fold:
+ * 1) if the combiner fails to prepend the wgResourceBasePath, the link will still work,
+ * 2) the combiner WON'T prepend the wgResourceBasePath on development machines so that
  * the local resource is used (makes testing easier).
  */
-$wgCdnStylePath = '';
+$wgResourceBasePath = '';
 
 /**
  * Transpaent 1x1 GIF URI-encoded (BugId:9975)

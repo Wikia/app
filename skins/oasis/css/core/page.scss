@@ -111,7 +111,7 @@
 		padding: 0;
 	}
 	.loading {
-		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 		height: 48px;
 		margin: 10px;
 		padding-top: 10px;
@@ -322,7 +322,7 @@
 }
 
 .wikiaThrobber {
-	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page; /* $wgCdnStylePath */
+	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page; /* $wgResourceBasePath */
 	height: 100%;
 	left: 0;
 	opacity: .75;

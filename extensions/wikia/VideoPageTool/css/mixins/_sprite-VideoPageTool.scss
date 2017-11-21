@@ -2,7 +2,7 @@
 // @autosprite-start
 @mixin sprite-VideoPageTool-base() {
 	background-color: transparent;
-	background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool.png'); /* wgCdnStylePath */
+	background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool.png'); /* wgResourceBasePath */
 	background-repeat: no-repeat;
 }
 @mixin sprite-VideoPageTool-base-embed() {

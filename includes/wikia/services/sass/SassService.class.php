@@ -290,13 +290,13 @@ class SassService {
 	 * @return array Array of filter objects
 	 */
 	protected function getFilterObjects() {
-		$IP = $this->app->getGlobal('IP');
+		global $IP, $wgResourceBasePath;
 		$filters = array();
 		if ( $this->filters & self::FILTER_IMPORT_CSS ) {
 			$filters[] = new CssImportsFilter($IP);
 		}
 		if ( $this->filters & self::FILTER_CDN_REWRITE ) {
-			$filters[] = new CdnRewriteFilter($this->app->wg->CdnStylePath);
+			$filters[] = new CdnRewriteFilter($wgResourceBasePath);
 		}
 		if ( $this->filters & self::FILTER_BASE64 ) {
 			$filters[] = new InlineImageFilter($IP);
