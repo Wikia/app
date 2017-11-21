@@ -466,7 +466,6 @@ class ListusersData {
 				array(
 					"wiki_id"        => $this->mCityId,
 					"user_id"        => $user_id,
-					"user_name"  	 => '', # TODO: SUS-3204 - insert either user ID or user name
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
 					"last_revision"  => intval($lastrev),
