@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.context.uapContext', [
 		uapTypes = ['uap', 'vuap'];
 
 	function setUapId(uap) {
-		adEngineBridge.UniversalAdPackage.setUapId(uap);
+		adEngineBridge.setUapId(uap);
 		context.uapId = uap;
 	}
 
@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.context.uapContext', [
 	}
 
 	function setType(type) {
-		adEngineBridge.UniversalAdPackage.setType(type);
+		adEngineBridge.setType(type);
 		context.type = type;
 	}
 

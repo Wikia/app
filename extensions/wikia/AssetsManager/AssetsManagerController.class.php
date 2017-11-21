@@ -223,7 +223,7 @@ class AssetsManagerController extends WikiaController {
 	}
 
 	/**
-	 * Returns the current style version (cache buster) in a Nirvana's response.
+	 * Returns the current style version in a Nirvana's response.
 	 *
 	 * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
 	 */

@@ -7,6 +7,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
 	'ext.wikia.adEngine.lookup.prebid.adapters.openx',
 	'ext.wikia.adEngine.lookup.prebid.adapters.onemobile',
+	'ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
@@ -19,6 +20,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	indexExchange,
 	onemobile,
 	openx,
+	pubmatic,
 	rubicon,
 	rubiconDisplay,
 	wikia,
@@ -34,6 +36,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 			indexExchange,
 			onemobile,
 			openx,
+			pubmatic,
 			rubicon,
 			rubiconDisplay
 		],

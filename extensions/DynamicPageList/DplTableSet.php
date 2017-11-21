@@ -19,13 +19,17 @@ class DplTableSet {
 	public function addTableAlias( string $tableName, string $tableAlias ) {
 		if ( !isset( $this->tableMap[$tableAlias] ) ) {
 			$quotedTableName = $this->databaseConnection->tableName( $tableName );
-			$quotedTableAlias = $this->databaseConnection->addQuotes( $tableAlias );
+			$quotedTableAlias = $this->databaseConnection->addIdentifierQuotes( $tableAlias );
 
 			$this->tableMap[$tableAlias] = "$quotedTableName AS $quotedTableAlias";
 		}
 	}
 
 	public function getTables(): string {
-		return implode( ', ', $this->tableMap );
+		if ( empty( $this->tableMap ) ) {
+			return '';
+		}
+
+		return implode( ', ', $this->tableMap ) . ',';
 	}
 }

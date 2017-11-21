@@ -184,10 +184,6 @@ class SDFilter {
 	public function loadDBStructureInformation() {
 		global $smwgDefaultStore;
 
-		\Wikia\Logger\WikiaLogger::instance()->info( 'SUS-3246 - Loading property information', [
-			'property_type' => $this->property_type
-		] );
-
 		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
 			if ( $this->property_type === 'page' ) {
 				$this->db_table_name = 'smw_di_wikipage';

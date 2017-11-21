@@ -232,15 +232,7 @@ class EntitySearchService extends AbstractSearchService {
 	}
 
 	public function replaceHostUrl( $url ) {
-		global $wgStagingEnvironment, $wgDevelEnvironment;
-		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			return preg_replace_callback( self::WIKIA_URL_REGEXP, [ $this, 'replaceHost' ], $url );
-		}
-
-		return $url;
+		return WikiFactory::getLocalEnvURL( $url );
 	}
 
-	protected function replaceHost( $details ) {
-		return $details[1] . WikiFactory::getCurrentStagingHost( $details[4], $details[3] );
-	}
 }

@@ -120,7 +120,7 @@ $color-page-shadow: #333;
 // Buttons
 $color-button-highlight: lighten($color-buttons, 10%);
 $color-button-text: $color-white;
-@if lightness($color-buttons) > 55 {
+@if lightness($color-buttons) > 49 {
 	$color-button-text: $color-black;
 }
 $color-secondary-button-highlight: mix($color-page, $color-white, 94%);

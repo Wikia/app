@@ -56,9 +56,8 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	if (adContext.get('opts.isAdEngine3Enabled')) {
-		adEngineBridge.init(slotRegistry);
+		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), 'oasis');
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
-		adEngineBridge.updatePageLevelTargeting(pageLevelParams.getPageLevelParams());
 	} else {
 		win.loadCustomAd = customAdsLoader.loadCustomAd;
 	}

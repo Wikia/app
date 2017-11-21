@@ -114,17 +114,17 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( isset( $aParsed['host'] ) ) {
 			$sHost = $aParsed['host'];
-			$regExp = "/((?:sandbox-.+?|preview|verify)\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
+			$sHost = preg_replace( '/\.((?:sandbox-.+?|preview|verify)\.)?wikia\.com/i', '.wikia.com', $sHost );
+			$regExp = '/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i';
 			/**
 			 * preg_match returns similar array as a third parameter:
 			 * [
 			 *  0 => sandbox-s3.zh.example.wikia.com,
-			 *  1 => (sandbox-s3. | preview. | verify. | empty)
-			 *  2 => (zh. | empty),
-			 *  3 => (zh | empty),
-			 *  4 => example.
-			 *  5 => ( wikia | adamk)
-			 *  6 => (com | wikia-dev.com)
+			 *  1 => (zh. | empty),
+			 *  2 => (zh | empty),
+			 *  3 => example.
+			 *  4 => ( wikia | adamk)
+			 *  5 => (com | wikia-dev.com)
 			 * ]
 			 * [4] is a domain without the language prefix
 			 * @var Array
@@ -136,7 +136,7 @@ class WikiaInYourLangController extends WikiaController {
 			 * This allows the extension to work on devboxes
 			 */
 			if ( $iMatchesCount == 1 ) {
-				$sWikiDomain = $aMatches[4] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
+				$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
 			}
 		}
 
