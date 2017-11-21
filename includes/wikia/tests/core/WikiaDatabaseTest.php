@@ -1,15 +1,13 @@
 <?php
 use PHPUnit\DbUnit\Database\Connection;
+use PHPUnit\DbUnit\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
 
 /**
  * Class WikiaDatabaseTest serves as an abstract base class for database integration tests
  */
-abstract class WikiaDatabaseTest extends WikiaBaseTest {
-	use TestCaseTrait {
-		setUp as protected databaseSetUp;
-		tearDown as protected databaseTearDown;
-	}
+abstract class WikiaDatabaseTest extends TestCase {
+	use TestCaseTrait;
 
 	/** @var InMemorySqliteDatabase $db */
 	private static $db = null;
@@ -29,17 +27,15 @@ abstract class WikiaDatabaseTest extends WikiaBaseTest {
 			'connection' => self::$db
 		] ) );
 
+		// init core MW schema
+		$schemaFile = self::$db->getSchemaPath();
+		self::$db->sourceFile( $schemaFile );
+
 		foreach ( static::getSchemaFiles() as $schemaFile ) {
 			self::$db->sourceFile( $schemaFile );
 		}
 
 		self::$db->commit();
-	}
-
-	protected function setUp() {
-		parent::setUp();
-
-		$this->databaseSetUp();
 	}
 
 	/**
@@ -66,11 +62,6 @@ abstract class WikiaDatabaseTest extends WikiaBaseTest {
 		}
 
 		return $this->conn;
-	}
-
-	protected function tearDown() {
-		parent::tearDown();
-		$this->databaseTearDown();
 	}
 
 	/**
