@@ -295,7 +295,7 @@ class WikiFactoryLoader {
 					);
 
 				if( isset( $oRow->city_id ) )  {
-					preg_match( "/http[s]*\:\/\/(.+)$/", $oRow->city_url, $matches );
+					preg_match( "/https?\:\/\/(.+)$/", $oRow->city_url, $matches );
 					$host = rtrim( $matches[1],  "/" );
 
 					$this->mCityID = $oRow->city_id;
@@ -342,7 +342,7 @@ class WikiFactoryLoader {
 				);
 				if( isset( $oRow->city_id ) &&  $oRow->city_id > 0 ) {
 					$oRow->city_domain = strtolower( $oRow->city_domain );
-					preg_match( "/http[s]*\:\/\/(.+)$/", $oRow->city_url, $matches );
+					preg_match( "/https?\:\/\/(.+)$/", $oRow->city_url, $matches );
 					$host = rtrim( $matches[1],  "/" );
 
 					if( $oRow->city_domain == $this->mServerName && $this->mServerName ) {

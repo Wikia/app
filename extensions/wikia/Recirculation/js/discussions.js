@@ -24,7 +24,7 @@ define('ext.wikia.recirculation.discussions', [
 				if ($WikiaArticleFooter.length) {
 					$WikiaArticleFooter.before($response);
 				} else {
-					$('#WikiaArticleBottomAd').before($response);
+					$('#WikiaMainContentContainer').append($response);
 				}
 
 				tracker.trackImpression('discussions');

@@ -100,19 +100,6 @@
 	padding: 10px;
 }
 
-#WikiaArticleBottomAd {
-	@include clearfix;
-	margin: 50px 10px 35px;
-}
-
-/* temp transition code until grid is fully rolled out, remove and integrate after transition */
-.WikiaPage.WikiaGrid #WikiaArticleBottomAd {
-	clear: both;
-	margin: 0;
-}
-
-/* end temp transistion code */
-
 .wikia-rail-inner {
 	width: 100%;
 }
@@ -124,7 +111,7 @@
 		padding: 0;
 	}
 	.loading {
-		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 		height: 48px;
 		margin: 10px;
 		padding-top: 10px;
@@ -335,7 +322,7 @@
 }
 
 .wikiaThrobber {
-	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page; /* $wgCdnStylePath */
+	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page; /* $wgResourceBasePath */
 	height: 100%;
 	left: 0;
 	opacity: .75;

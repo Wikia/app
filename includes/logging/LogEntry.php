@@ -403,12 +403,10 @@ class ManualLogEntry extends LogEntryBase {
 	/**
 	 * Inserts the entry into the logging table.
 	 * @return int If of the log entry
+	 * @throws MWException if the log entry would be attributed to anonymous user
 	 */
 	public function insert() {
 		global $wgContLang;
-
-		$dbw = wfGetDB( DB_MASTER );
-		$id = $dbw->nextSequenceValue( 'logging_log_id_seq' );
 
 		if ( $this->timestamp === null ) {
 			$this->timestamp = wfTimestampNow();
@@ -419,23 +417,30 @@ class ManualLogEntry extends LogEntryBase {
 
 		// SUS-3222: All log entries should be attributed to registered users
 		if ( $this->getPerformer()->isAnon() ) {
+			$mwException = new MWException( 'Log entries must be attributed to registered users' );
+
 			\Wikia\Logger\WikiaLogger::instance()
-				->warning( 'SUS-3222 - Anon user log entry' );
+				->warning( 'SUS-3222 - Anon user log entry', [ 'exception' => $mwException ] );
+
+			throw $mwException;
 		}
 
-		$data = array(
+		$dbw = wfGetDB( DB_MASTER );
+		$id = $dbw->nextSequenceValue( 'logging_log_id_seq' );
+
+		$data = [
 			'log_id' => $id,
 			'log_type' => $this->getType(),
 			'log_action' => $this->getSubtype(),
 			'log_timestamp' => $dbw->timestamp( $this->getTimestamp() ),
 			'log_user' => $this->getPerformer()->getId(),
-			'log_user_text' => $this->getPerformer()->getName(),
 			'log_namespace' => $this->getTarget()->getNamespace(),
 			'log_title' => $this->getTarget()->getDBkey(),
 			'log_page' => $this->getTarget()->getArticleId(),
 			'log_comment' => $comment,
-			'log_params' => serialize( (array) $this->getParameters() ),
-		);
+			'log_params' => serialize( (array)$this->getParameters() ),
+		];
+
 		$dbw->insert( 'logging', $data, __METHOD__ );
 		$this->id = !is_null( $id ) ? $id : $dbw->insertId();
 		return $this->id;

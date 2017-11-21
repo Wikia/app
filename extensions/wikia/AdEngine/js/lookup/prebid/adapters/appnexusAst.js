@@ -11,9 +11,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		debugPlacementId = '5768085',
 		slots = {
 			oasis: {
-				TOP_LEADERBOARD: {
-					placementId: '11543171'
-				},
 				INCONTENT_PLAYER: {
 					placementId: '11543172'
 				}

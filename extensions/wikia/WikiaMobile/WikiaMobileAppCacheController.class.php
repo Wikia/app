@@ -21,7 +21,7 @@ class WikiaMobileAppCacheController extends WikiaController {
 			$files = array_unshift( $files, AssetsManager::getInstance()->getSassCommonURL( 'skins/wikiamobile/css/main.scss' ) );
 		}
 		
-		$this->cacheVersion = $this->wg->CacheBuster;//$this->wg->StyleVersion;
+		$this->cacheVersion = $this->wg->StyleVersion;
 		$this->cacheFiles = str_replace( '//', '/', preg_replace( '/\?cb=[0-9]+/', '', implode( "\n", $files ) ) );
 		$this->freshFiles = '*';
 	}

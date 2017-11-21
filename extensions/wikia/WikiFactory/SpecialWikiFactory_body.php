@@ -1035,7 +1035,7 @@ class ChangeLogPager extends TablePager {
 		global $wgWikiaBaseDomain;
 		switch ($field) {
 			case "city_url":
-				preg_match("/http:\/\/([\w\.\-]+)\//", $value, $matches );
+				preg_match("/https?:\/\/([\w\.\-]+)\//", $value, $matches );
 				$sRetval = str_ireplace(".".$wgWikiaBaseDomain, "", $matches[1]);
 				return $sRetval;
 				break;

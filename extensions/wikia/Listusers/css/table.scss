@@ -89,23 +89,23 @@
 	}
 
 	.sorting_asc {
-		background: url('/extensions/wikia/Listusers/images/sort_asc.png') no-repeat center right; /* $wgCdnStylePath */
+		background: url('/extensions/wikia/Listusers/images/sort_asc.png') no-repeat center right; /* $wgResourceBasePath */
 	}
 
 	.sorting_desc {
-		background: url('/extensions/wikia/Listusers/images/sort_desc.png') no-repeat center right; /* $wgCdnStylePath */
+		background: url('/extensions/wikia/Listusers/images/sort_desc.png') no-repeat center right; /* $wgResourceBasePath */
 	}
 
 	.sorting {
-		background: url('/extensions/wikia/Listusers/images/sort_both.png') no-repeat center right; /* $wgCdnStylePath */
+		background: url('/extensions/wikia/Listusers/images/sort_both.png') no-repeat center right; /* $wgResourceBasePath */
 	}
 
 	.sorting_asc_disabled {
-		background: url('/extensions/wikia/Listusers/images/sort_asc_disabled.png') no-repeat center right; /* $wgCdnStylePath */
+		background: url('/extensions/wikia/Listusers/images/sort_asc_disabled.png') no-repeat center right; /* $wgResourceBasePath */
 	}
 
 	.sorting_desc_disabled {
-		background: url('/extensions/wikia/Listusers/images/sort_desc_disabled.png') no-repeat center right; /* $wgCdnStylePath */
+		background: url('/extensions/wikia/Listusers/images/sort_desc_disabled.png') no-repeat center right; /* $wgResourceBasePath */
 	}
 
 	table.TablePager td.sorting_1 {
@@ -168,4 +168,9 @@
 				background-color: $lightened-color-page5;
 			}
 		}
+	}
+
+	// ui-autocomplete-input ui-autocomplete-loading
+	input.ui-autocomplete-loading {
+		background: url('/skins/common/images/ajax.gif') no-repeat right center;
 	}

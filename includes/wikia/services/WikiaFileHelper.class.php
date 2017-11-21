@@ -561,7 +561,7 @@ class WikiaFileHelper {
 	 *
 	 * @param Title|string $title
 	 * @param bool $force
-	 * @return File|null $file
+	 * @return File|WikiaLocalFileShared|null $file
 	 */
 	public static function getVideoFileFromTitle( &$title, $force = false ) {
 		$file = self::getFileFromTitle( $title, $force );

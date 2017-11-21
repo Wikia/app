@@ -286,7 +286,7 @@
 	// FIXME: anyone still using gopher?
 	a.external, a[href^='gopher://'] {
 		&:after {
-			background-image: url('/skins/shared/images/sprite.png');	/* $wgCdnStylePath */
+			background-image: url('/skins/shared/images/sprite.png');	/* $wgResourceBasePath */
 			background-position: -1198px 0;
 			background-repeat: no-repeat;
 			content: '';
@@ -587,7 +587,7 @@
 
 // Needed for article comments lazy loading
 .WikiaArticleComments.loading {
-	background: url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgCdnStylePath */
+	background: url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgResourceBasePath */
 	border-top: 1px solid $color-page;
 	height: 16px;
 	margin: 10px;

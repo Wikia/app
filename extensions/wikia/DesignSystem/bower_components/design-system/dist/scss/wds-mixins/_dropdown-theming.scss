@@ -6,7 +6,7 @@
 	@if $is-dark-theme {
 		$dropdown-background-color: mix($color-page, #fff, 90%);
 	}
-	@if luminance($color-page) > .9 {
+	@if lightness($color-page) > 90 {
 		$dropdown-background-color: $wds-color-white;
 	}
 

@@ -1,7 +1,7 @@
 // @autosprite-start
 @mixin sprite-edit-page-base() {
 	background-color: transparent;
-	background-image: url('/extensions/wikia/EditPageLayout/images/sprite-edit-page.png'); /* wgCdnStylePath */
+	background-image: url('/extensions/wikia/EditPageLayout/images/sprite-edit-page.png'); /* wgResourceBasePath */
 	background-repeat: no-repeat;
 }
 @mixin sprite-edit-page($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {

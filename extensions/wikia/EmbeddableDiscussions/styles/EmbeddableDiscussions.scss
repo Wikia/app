@@ -27,14 +27,14 @@ $discussion-deleted-actions-opacity: .5;
 $upvote-icon-activated-color: #e3bd00;
 
 $overlay-color: #fff;
-@if luminance($color-page) > 0.3 {
+@if lightness($color-page) > 49 {
 	$overlay-color: #000;
 }
 
 $overlay-large-value: 25%;
 $overlay-small-value: 15%;
 
-@if luminance($color-page) > 0.1 {
+@if lightness($color-page) > 10 {
 	$overlay-large-value: 6%;
 	$overlay-small-value: 3%;
 }

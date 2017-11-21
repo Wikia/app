@@ -720,7 +720,7 @@ if (skin != 'monaco' && skin != 'oasis') {
 window.importScriptPage = function( page, server ) {
 	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/javascript';
 	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1 ) url = 'http://' + server + '.wikia.com' + url;
+		if( server.indexOf( '://' ) == -1  && !server.startsWith( '//' ) ) url = 'http://' + server + '.wikia.com' + url;
 		else url = server + url;
 	}
 	return importScriptURI(url);
@@ -729,7 +729,7 @@ window.importScriptPage = function( page, server ) {
 window.importStylesheetPage= function( page, server ) {
 	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/css';
 	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1 ) url = 'http://' + server + '.wikia.com' + url;
+		if( server.indexOf( '://' ) == -1 && !server.startsWith( '//' ) ) url = 'http://' + server + '.wikia.com' + url;
 		else url = server + url;
 	}
 	return importStylesheetURI(url);

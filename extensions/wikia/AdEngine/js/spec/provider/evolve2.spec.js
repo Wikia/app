@@ -99,20 +99,6 @@ describe('Evolve2 Provider targeting', function () {
 
 	it('Should push ad to helper with proper targeting', function () {
 		var expectedTargeting = {
-			size: '160x600',
-			pos: 'b',
-			wloc: 'middle',
-			wpos: 'LEFT_SKYSCRAPER_2',
-			wsrc: 'evolve'
-		};
-
-		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
-
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(expectedTargeting);
-	});
-
-	it('Should push ad to helper with proper targeting', function () {
-		var expectedTargeting = {
 			size: '300x250',
 			pos: 'a',
 			wpos: 'MOBILE_IN_CONTENT',
@@ -129,7 +115,7 @@ describe('Evolve2 Provider targeting', function () {
 			expectedSection = 'tv';
 
 		mocks.vertical = 'tv';
-		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
+		evolve2.fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
 		expect(adUnitElements[4]).toEqual(expectedSection);
@@ -140,7 +126,7 @@ describe('Evolve2 Provider targeting', function () {
 			expectedSection = 'movies';
 
 		mocks.vertical = 'movies';
-		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
+		evolve2.fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
 		expect(adUnitElements[4]).toEqual(expectedSection);
@@ -151,7 +137,7 @@ describe('Evolve2 Provider targeting', function () {
 			expectedSection = 'gaming';
 
 		mocks.mappedVertical = 'gaming';
-		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
+		evolve2.fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
 		expect(adUnitElements[4]).toEqual(expectedSection);
@@ -162,17 +148,9 @@ describe('Evolve2 Provider targeting', function () {
 			expectedSection = 'entertainment';
 
 		mocks.mappedVertical = 'ent';
-		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
+		evolve2.fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
 		expect(adUnitElements[4]).toEqual(expectedSection);
-	});
-
-	it('Should start 160x600 with b pos and then increment', function () {
-		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].pos).toEqual('b');
-
-		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].pos).toEqual('c');
 	});
 });

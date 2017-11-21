@@ -31,11 +31,15 @@ require([
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
-		willAutoplay = featuredVideoCookieService.isAutoplayEnabled() && inAutoplayCountries,
+		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
 		bidParams;
 
 	function isFromRecirculation() {
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
+	}
+
+	function isAutoplayEnabled() {
+		return featuredVideoCookieService.getAutoplay() !== '0';
 	}
 
 	function onPlayerReady(playerInstance) {
@@ -49,11 +53,11 @@ require([
 		featuredVideoMoatTracking(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
-			featuredVideoCookieService.toggleAutoplay(data.enabled);
+			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
 		});
 
 		playerInstance.on('captionsSelected', function (data) {
-			featuredVideoCookieService.toggleCaptions(data.enabled);
+			featuredVideoCookieService.setCaptions(data.selectedLang);
 		});
 
 		// XW-4157 PageFair causes pausing the video, as a workaround we play video again when it's paused
@@ -84,13 +88,11 @@ require([
 				comscore: !win.wgDevelEnvironment
 			},
 			autoplay: willAutoplay,
-			captions: {
-				enabled: featuredVideoCookieService.areCaptionsEnabled()
-			},
+			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
 				showAutoplayToggle: true,
 				showQuality: true,
-				showCaptionsToggle: true
+				showCaptions: true
 			},
 			mute: isFromRecirculation() ? false : willAutoplay,
 			related: {

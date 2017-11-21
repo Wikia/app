@@ -14,26 +14,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 				other: '9412994'
 			},
 			oasis: {
-				ent: {
-					atf: '9412983',
-					btf: '9412986',
-					hivi: '9412989'
-				},
-				gaming: {
-					atf: '9412984',
-					btf: '9412987',
-					hivi: '9412990'
-				},
-				life: {
-					atf: '9412985',
-					btf: '9412988',
-					hivi: '9412991'
-				},
-				other: {
-					atf: '9412985',
-					btf: '9412988',
-					hivi: '9412991'
-				},
 				recovery: {
 					atf: '11823778',
 					btf: '11823724',
@@ -50,12 +30,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 
 	function getPlacement(skin, position, isRecovering) {
 		var context = adContext.getContext(),
-			vertical = context.targeting.mappedVerticalName,
+			vertical = skin === 'oasis' ? 'pal' : context.targeting.mappedVerticalName,
 			skinVertical;
-
-		if (context.opts.premiumAdLayoutAppNexusTagsEnabled) {
-			vertical = 'pal';
-		}
 
 		if (isRecovering) {
 			vertical = 'recovery';
