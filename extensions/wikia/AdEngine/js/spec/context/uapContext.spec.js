@@ -7,10 +7,8 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 
 	var mocks = {
 		adEngineBridge: {
-			UniversalAdPackage: {
-				setType: noop,
-				setUapId: noop
-			}
+			setType: noop,
+			setUapId: noop
 		},
 		eventDispatcher: {
 			dispatch: noop
