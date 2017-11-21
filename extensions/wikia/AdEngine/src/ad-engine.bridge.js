@@ -16,9 +16,9 @@ supportedTemplates.forEach((template) => {
 	TemplateService.register(template);
 });
 
-function init(slotRegistry, pageLevelTargeting, skin) {
+function init(slotRegistry, pageLevelTargeting, legacyContext, skin) {
 	overrideSlotService(slotRegistry);
-	updatePageLevelTargeting(pageLevelTargeting, skin);
+	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 }
 
 function overrideSlotService(slotRegistry) {
@@ -67,9 +67,12 @@ function getSupportedTemplateNames() {
 	return supportedTemplates.map((template) => template.getName());
 }
 
-function updatePageLevelTargeting(params, skin) {
+function updatePageLevelTargeting(legacyContext, params, skin) {
 	Context.set('custom.device', Client.getDeviceType());
 	Context.set('targeting.skin', skin);
+	Context.set('options.video.moatTracking.enabled', legacyContext.get('opts.porvataMoatTrackingEnabled'));
+	Context.set('options.video.moatTracking.sampling', legacyContext.get('opts.porvataMoatTrackingSampling'));
+
 	Object.keys(params).forEach((key) => Context.set(`targeting.${key}`, params[key]));
 }
 

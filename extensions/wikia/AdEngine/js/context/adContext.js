@@ -257,6 +257,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.porvataMoatTrackingEnabled =
 			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
 
+		context.opts.porvataMoatTrackingSampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
+
 		enableAdMixExperiment(context);
 
 		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
