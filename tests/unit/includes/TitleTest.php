@@ -1,12 +1,6 @@
 <?php
 
 class TitleTest extends WikiaDatabaseTest {
-	protected static function getSchemaFiles() {
-		return [
-			wfGetDB( DB_SLAVE )->getSchemaPath()
-		];
-	}
-
 	public function testNewFromId() {
 		$title = Title::newFromID( 1 );
 
@@ -16,8 +10,6 @@ class TitleTest extends WikiaDatabaseTest {
 	}
 
 	protected function getDataSet() {
-		global $IP;
-
-		return $this->createFlatXMLDataSet( "$IP/tests/fixtures/TitleTest.xml" );
+		return $this->createFlatXMLDataSet( __DIR__ . "/../../fixtures/TitleTest.xml" );
 	}
 }
