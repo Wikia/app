@@ -592,10 +592,6 @@ class RenameUserProcess {
 		$dbw->begin();
 		$tasks = self::$mGlobalDefaults;
 
-		$hookName = 'UserRename::Global';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ) );
-
 		foreach ( $tasks as $task ) {
 			$this->addLog( "Updating {$task['table']}.{$task['username_column']}." );
 			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
@@ -628,10 +624,6 @@ class RenameUserProcess {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$tasks = self::$mLocalDefaults;
-
-		$hookName = 'UserRename::Local';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ) );
 
 		/* Move user pages */
 		$this->addLog( "Moving user pages." );
@@ -762,16 +754,12 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::LocalIP';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+		Hooks::run( $hookName, [ &$tasks ] );
 
 		foreach ( $tasks as $task ) {
 			$this->addLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
 			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
 		}
-
-		$hookName = 'UserRename::AfterLocalIP';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
 
 		$dbw->commit();
 
