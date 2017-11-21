@@ -484,4 +484,28 @@ class ListusersData {
 		}
 		wfProfileOut( __METHOD__ );
 	}
+
+	/**
+	 * Fills specials.events_local_users table with entries for a given wiki. This one will
+	 * replace an old Perl backend script - /usr/wikia/backend/bin/scribe/events_local_users.pl
+	 *
+	 * Used by CreateNewWikiTask class
+	 *
+	 * @see SUS-3264
+	 * @param int $cityId
+	 */
+	public static function populateEventsLocalUsers( int $cityId ) {
+		$listUsers = new \ListusersData( $cityId );
+		$res = wfGetDB(DB_SLAVE)->select(
+			'revision',
+			'DISTINCT(rev_user) as user_id',
+			[],
+			__METHOD__
+		);
+
+		foreach($res as $row) {
+			$user = \User::newFromId( $row->user_id );
+			$listUsers->updateUserGroups( $user, $user->getGroups() );
+		}
+	}
 }
