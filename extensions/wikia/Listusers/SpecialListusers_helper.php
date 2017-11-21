@@ -381,13 +381,8 @@ class ListusersData {
 	 * @param		array   $removegroup - remove group(s)
 	 * @return void
 	 */
-	public function updateUserGroups( $user, $addgroup = array(), $removegroup = array() ) {
+	public function updateUserGroups( User $user, $addgroup = array(), $removegroup = array() ) {
 		wfProfileIn( __METHOD__ );
-
-		if ( !$user instanceof User ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
 
 		$user_id = $user->getID();
 		$dbr = wfGetDB(DB_SLAVE, array(), $this->mDBh);
