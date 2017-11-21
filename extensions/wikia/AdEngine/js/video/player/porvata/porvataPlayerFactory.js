@@ -105,25 +105,23 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			resize: function (newWidth, newHeight) {
 				width = newWidth;
 				height = newHeight;
-
-				if (params.isFullscreen) {
-					ima.resize(ima.viewMode.FULLSCREEN);
-				} else {
-					ima.resize(ima.viewMode.NORMAL, width, height);
-				}
+				ima.resize(width, height);
 			},
 			toggleFullscreen: function () {
-				if (params.isFullscreen) {
-					ima.resize(ima.viewMode.NORMAL, width, height);
+				var isFullscreen = ima.toggleFullscreen();
+
+				if (isFullscreen) {
 					this.container.classList.add(videoFullscreenClassName);
-					doc.documentElement.classList.remove(stopScrollingClassName);
-				} else {
-					ima.resize(ima.viewMode.FULLSCREEN);
-					this.container.classList.remove(videoFullscreenClassName);
 					doc.documentElement.classList.add(stopScrollingClassName);
+				} else {
+					this.container.classList.remove(videoFullscreenClassName);
+					doc.documentElement.classList.remove(stopScrollingClassName);
 				}
 
-				params.isFullscreen = !params.isFullscreen;
+				ima.resize(width, height);
+				params.isFullscreen = isFullscreen;
+
+				return isFullscreen;
 			},
 			resume: function () {
 				ima.getAdsManager().resume();

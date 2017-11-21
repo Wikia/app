@@ -315,6 +315,7 @@ $config['adengine2_video_ui_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/ui/dynamicReveal.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/mouseEvents.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/pauseOverlay.js',
+		'//extensions/wikia/AdEngine/js/video/player/ui/panel.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/progressBar.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/replayOverlay.js',
 		'//extensions/wikia/AdEngine/js/video/player/ui/toggleAnimation.js',

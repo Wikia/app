@@ -27,6 +27,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			videoElement = getVideoElement(),
 			adsManager,
 			mobileVideoAd = params.container.querySelector('video'),
+			isFullscreen = false,
 			eventListeners = {};
 
 		imaViewMode = win.google.ima.ViewMode;
@@ -148,8 +149,11 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			log('IMA player reloaded', log.levels.debug, logGroup);
 		}
 
-		function resize(viewMode, width, height) {
-			if (viewMode === imaViewMode.FULLSCREEN) {
+		function resize(width, height) {
+			var viewMode;
+
+			if (isFullscreen) {
+				viewMode = imaViewMode.FULLSCREEN;
 				width = win.innerWidth;
 				height = win.innerHeight;
 			} else {
@@ -163,6 +167,11 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 
 				log(['IMA player resized', viewMode, width, height], log.levels.debug, logGroup);
 			}
+		}
+
+		function toggleFullscreen() {
+			isFullscreen = !isFullscreen;
+			return isFullscreen;
 		}
 
 		function dispatchEvent(eventName) {
@@ -229,7 +238,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaPlayerFactory', [
 			removeEventListener: removeEventListener,
 			resize: resize,
 			setAutoPlay: setAutoPlay,
-			viewMode: imaViewMode
+			toggleFullscreen: toggleFullscreen
 		};
 	}
 

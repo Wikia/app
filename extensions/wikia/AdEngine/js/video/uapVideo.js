@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		return porvata.inject(videoSettings)
 			.then(function (video) {
-				video.container.style.position = 'absolute';
+				video.container.style.position = 'relative';
 				if (mercuryListener) {
 					mercuryListener.onPageChange(function () {
 						video.destroy();
@@ -72,6 +72,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 				});
 
 				if (splitLayoutVideoPosition) {
+					video.container.style.position = 'absolute';
 					video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
 				}
 

@@ -9,6 +9,7 @@ $default-progress-bar-current-time-color: #666;
 $outstream-progress-bar-color: #666;
 $outstream-progress-bar-current-time-color: #b7b7b7;
 $video-player-button-size: 24px;
+$video-player-button-color: #b7b7b7;
 
 $floating-ad-margin: 20px;
 $floating-ad-index: $wikia-top-ads-index + 10;
@@ -59,9 +60,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 .video-player {
 	position: relative;
-	display: flex;
-	align-items: flex-end;
-	justify-content: flex-end;
 
 	&.video-player-left, &.video-player-right {
 		z-index: $wikia-top-ads-index;
@@ -72,7 +70,7 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 	}
 
 	&.video-player-fullscreen {
-		position: fixed;
+		position: fixed !important;
 		top: 0;
 		left: 0;
 		z-index: $wikia-fullscreen-ads-z-index;
@@ -80,6 +78,14 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 	video {
 		left: 0;
+	}
+
+	.bottom-panel {
+		position: absolute;
+		bottom: 10px;
+		right: 5px;
+		text-align: right;
+		z-index: $controls-z-index;
 	}
 
 	.progress-bar {
@@ -124,16 +130,34 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 	.toggle-fullscreen,
 	.volume-control {
-		margin: 0 10px 18px 0;
+		vertical-align: top;
+		display: inline-block;
+		margin: 10px 5px;
 	}
 
 	.toggle-fullscreen {
 		font-size: $video-player-button-size;
 		cursor: pointer;
+		overflow: hidden;
+		opacity: 0.75;
+		fill: $video-player-button-color;
 		height: $video-player-button-size;
 		width: $video-player-button-size;
 		z-index: $controls-z-index;
-		order: 0;
+
+		.fullscreen-off-icon {
+			display: none;
+		}
+
+		&.fullscreen-on {
+			.fullscreen-off-icon {
+				display: unset;
+			}
+
+			.fullscreen-on-icon {
+				display: none;
+			}
+		}
 	}
 
 	/* TODO remove .ima-mute-div and all references in next releases (keep .volume-control only) */
@@ -144,7 +168,6 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 
 		cursor: pointer;
 		z-index: $controls-z-index;
-		order: 1;
 
 		.speaker {
 			&.mute {
