@@ -8,25 +8,34 @@ $mcf-padding-vertical: 12px;
 $mcf-footer-margin: 30px;
 // size proportion of mixed content footer card
 $mcf-proportion: 292/334;
+$mcf-proportion-explore-wikis-tall: 376/334;
 
 $mcf-width-xxl: $page-width-large;
 $mcf-card-width-xxl: ($mcf-width-xxl - 2 * $mcf-padding-horizontal)/3;
 $mcf-card-height-xxl: $mcf-proportion * $mcf-card-width-xxl;
+$mcf-card-tall-height-xxl: $mcf-card-width-xxl;
+$mcf-explore-wiki-tall-height-xxl: $mcf-proportion-explore-wikis-tall * $mcf-card-width-xxl;
 $mcf-discussion-height-xxl: $mcf-card-height-xxl * 2 + $mcf-padding-vertical;
 
 $mcf-width-xl: $page-width-medium;
 $mcf-card-width-xl: ($mcf-width-xl - 2 * $mcf-padding-horizontal)/3;
 $mcf-card-height-xl: $mcf-proportion * $mcf-card-width-xl;
+$mcf-card-tall-height-xl: $mcf-card-width-xl;
+$mcf-explore-wiki-tall-height-xl: $mcf-proportion-explore-wikis-tall * $mcf-card-width-xl;
 $mcf-discussion-height-xl: $mcf-card-height-xl * 2 + $mcf-padding-vertical;
 
 $mcf-width-l: $page-width-small-plus;
 $mcf-card-width-l: ($mcf-width-l - 2 * $mcf-padding-horizontal)/3;
 $mcf-card-height-l: $mcf-proportion * $mcf-card-width-l;
+$mcf-card-tall-height-l: $mcf-card-width-l;
+$mcf-explore-wiki-tall-height-l: $mcf-proportion-explore-wikis-tall * $mcf-card-width-l;
 $mcf-discussion-height-l: $mcf-card-height-l * 2 + $mcf-padding-vertical;
 
 $mcf-width-m: $page-width-small;
 $mcf-card-width-m: ($mcf-width-m - 2 * $mcf-padding-horizontal)/3;
 $mcf-card-height-m: $mcf-proportion * $mcf-card-width-m;
+$mcf-card-tall-height-m: $mcf-card-width-m;
+$mcf-explore-wiki-tall-height-m: $mcf-proportion-explore-wikis-tall * $mcf-card-width-m;
 $mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
 
 #mixed-content-footer {
@@ -58,6 +67,12 @@ $mcf-discussion-height-m: $mcf-card-height-m * 2 + $mcf-padding-vertical;
 	display: none;
 }
 
+.mcf-mosaic {
+	@include flexbox();
+	@include flex-direction(row);
+	@include justify-content(space-between);
+}
+
 // tag name to override styles
 h1.mcf-header {
 	-moz-osx-font-smoothing: grayscale;
@@ -68,29 +83,16 @@ h1.mcf-header {
 	margin-bottom: 18px;
 }
 
-.mcf-row {
+.mcf-column {
 	@include flexbox();
-	@include justify-content(space-between);
-	margin-bottom: 12px;
+	@include flex-direction(column);
 
-	&:last-child {
-		margin-bottom: 0;
-	}
-}
+	> div {
+		margin-bottom: 12px;
 
-.mcf-col {
-	width: 2 * $mcf-card-width-xl + $mcf-padding-horizontal;
-
-	@media #{$wds-breakpoint-xxl-up} {
-		width: 2 * $mcf-card-width-xxl + $mcf-padding-horizontal;
-	}
-
-	@media #{$wds-breakpoint-l-only} {
-		width: 2 * $mcf-card-width-l + $mcf-padding-horizontal;
-	}
-
-	@media #{$wds-breakpoint-m-down} {
-		width: 2 * $mcf-card-width-m + $mcf-padding-horizontal;
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 }
 
@@ -132,6 +134,38 @@ h1.mcf-header {
 	@media #{$wds-breakpoint-m-down} {
 		width: $mcf-card-width-m;
 		height: $mcf-card-height-m;
+	}
+}
+
+.mcf-card-tall {
+	height: $mcf-card-tall-height-xl;
+
+	@media #{$wds-breakpoint-xxl-up} {
+		height: $mcf-card-tall-height-xxl;
+	}
+
+	@media #{$wds-breakpoint-l-only} {
+		height: $mcf-card-tall-height-l;
+	}
+
+	@media #{$wds-breakpoint-m-down} {
+		height: $mcf-card-tall-height-m;
+	}
+}
+
+.mcf-en .mcf-card-related-wikis {
+	height: $mcf-explore-wiki-tall-height-xl;
+
+	@media #{$wds-breakpoint-xxl-up} {
+		height: $mcf-explore-wiki-tall-height-xxl;
+	}
+
+	@media #{$wds-breakpoint-l-only} {
+		height: $mcf-explore-wiki-tall-height-l;
+	}
+
+	@media #{$wds-breakpoint-m-down} {
+		height: $mcf-explore-wiki-tall-height-m;
 	}
 }
 
@@ -194,7 +228,6 @@ h1.mcf-header {
 		}
 	}
 }
-
 
 .mcf-card-article {
 	@include justify-content(flex-end);
@@ -294,7 +327,7 @@ h1.mcf-header {
 		line-height: 1.17;
 		letter-spacing: .3px;
 	}
-	
+
 	&__link {
 		position: relative;
 	}
@@ -546,7 +579,7 @@ h1.mcf-header {
 		}
 
 		a {
-			color:  $wds-color-faint-gray;
+			color: $wds-color-faint-gray;
 			text-decoration: none;
 			width: 100%;
 		}
@@ -618,7 +651,7 @@ h1.mcf-header {
 		display: flex;
 		flex-direction: column;
 		height: 163px;
-		margin:18px auto;
+		margin: 18px auto;
 		width: 298px;
 
 		@media #{$wds-breakpoint-xxl-up} {
