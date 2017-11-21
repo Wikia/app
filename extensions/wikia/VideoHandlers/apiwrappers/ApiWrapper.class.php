@@ -930,8 +930,8 @@ abstract class LegacyVideoApiWrapper extends PseudoApiWrapper {
 	}
 
 	public static function getLegacyThumbnailUrl() {
-		global $wgCdnStylePath;
-		return $wgCdnStylePath . self::$THUMBNAIL_PATH;
+		global $wgResourceBasePath;
+		return $wgResourceBasePath . self::$THUMBNAIL_PATH;
 	}
 
 }
