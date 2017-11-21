@@ -11,8 +11,6 @@ define('ext.wikia.aRecoveryEngine.pageFair.recovery', [
 		recoverableSlots = [
 			'TOP_LEADERBOARD',
 			'TOP_RIGHT_BOXAD',
-			'LEFT_SKYSCRAPER_2',
-			'LEFT_SKYSCRAPER_3',
 			'BOTTOM_LEADERBOARD'
 		];
 

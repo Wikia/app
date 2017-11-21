@@ -1289,13 +1289,6 @@ $wgAdDriverPubMaticBidderCountries = null;
 $wgAdDriverOutstreamVideoFrequencyCapping = null;
 
 /**
- * @name $wgAdDriverOverridePrefootersCountries
- * Enables overriding prefooters sizes on Oasis in these countries.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOverridePrefootersCountries = null;
-
-/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
@@ -1401,21 +1394,6 @@ $wgAdDriverKikimoraTrackingCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSrcPremiumCountries = [];
-
-/**
- * @name $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries
- * Enables Premium Ad Layout site and zoneIds for Rubicon Fastlane bidder
- * is present on that page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
-
-/**
- * @name $wgAdDriverPremiumAdLayoutAppNexusTagsCountries
- * Enables Premium Ad Layout site and placementIds for AppNexus bidder.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPremiumAdLayoutAppNexusTagsCountries = [];
 
 /**
  * @name $wgAdDriverKILOCountries

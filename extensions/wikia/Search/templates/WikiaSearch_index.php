@@ -108,7 +108,6 @@
 				<?php if ( !empty( $topWikiArticles ) ) : ?>
 					<?= F::app()->renderView( 'WikiaSearch', 'topWikiArticles', [ 'pages' => $topWikiArticles ] ); ?>
 				<?php endif ?>
-				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2', 'pageTypes' => ['search']] ); ?>
 				<div id="WikiaAdInContentPlaceHolder" class="rail-sticky-module"></div>
 			</div>
 	</form>

@@ -1,6 +1,5 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
@@ -8,7 +7,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
 ], function (
-	adContext,
 	btfBlocker,
 	gptHelper,
 	defaultAdUnitBuilder,
@@ -17,15 +15,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	lookups
 ) {
 	'use strict';
-
-	function overrideSizes(slotMap) {
-		var context = adContext.getContext();
-
-		if (context.opts.overridePrefootersSizes) {
-			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
-			delete slotMap.PREFOOTER_RIGHT_BOXAD;
-		}
-	}
 
 	function rewriteExtras(slotName, extra) {
 		return {
@@ -56,8 +45,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 */
 	function createProvider(logGroup, providerName, src, slotMap, extra) {
 		extra = extra || {};
-
-		overrideSizes(slotMap);
 
 		function canHandleSlot(slotName) {
 			log(['canHandleSlot', slotName], 'debug', logGroup);
