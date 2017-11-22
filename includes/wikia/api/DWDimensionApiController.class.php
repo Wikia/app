@@ -10,7 +10,7 @@ class DWDimensionApiController extends WikiaApiController {
 	}
 
 	public function getWikiDomains() {
-        $db = $this->getSharedDbSlave();
+		$db = $this->getSharedDbSlave();
 
 		$limit = $db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) );
 		$afterDomain = $db->strencode( $this->getRequest()->getVal( 'after_domain', static::AFTER_DOMAIN ) );
