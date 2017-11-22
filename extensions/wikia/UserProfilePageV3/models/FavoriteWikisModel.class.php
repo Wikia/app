@@ -238,13 +238,14 @@ class FavoriteWikisModel extends WikiaModel {
 		return $mastheadEditsWikis;
 	}
 
+	/**
+	 * @return array
+	 */
 	private function getEditsWikis() {
 		global $wgMemc;
 
 		$mastheadEditsWikis = $wgMemc->get( $this->getMemcMastheadEditsWikisKey() );
-		$mastheadEditsWikis = is_array( $mastheadEditsWikis ) ? $mastheadEditsWikis : [];
-
-		return $mastheadEditsWikis;
+		return is_array( $mastheadEditsWikis ) ? $mastheadEditsWikis : [];
 	}
 
 	/**
