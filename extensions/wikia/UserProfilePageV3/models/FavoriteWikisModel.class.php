@@ -69,13 +69,14 @@ class FavoriteWikisModel extends WikiaModel {
 			'rollup_wiki_user_events',
 			[
 				'wiki_id',
-				'edits',
+				'SUM(created + edits) AS edits',
 			],
 			$where,
 			__METHOD__,
 			[
 				'LIMIT' => $limit,
-				'ORDER BY' => 'edits'
+				'ORDER BY' => 'edits DESC',
+				'GROUP BY' => 'wiki_id'
 			]
 		);
 
@@ -92,16 +93,20 @@ class FavoriteWikisModel extends WikiaModel {
 		return $wikis;
 	}
 
+	/**
+	 * @param object $row
+	 * @return array|false
+	 */
 	private function getTopWikiDataFromRow( $row ) {
-		$wikiId = $row->wiki_id;
+		$wikiId = (int) $row->wiki_id;
 		$wikiTitle = GlobalTitle::newFromText( $this->user->getName(), NS_USER_TALK, $wikiId );
+		$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 
-		if ( empty( $wikiTitle ) ) {
+		if ( empty( $wikiTitle ) || empty ($wikiName ) ) {
 			return false;
 		}
 
-		$editCount = $row->edits;
-		$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+		$editCount = (int) $row->edits;
 		$wikiUrl = $wikiTitle->getFullUrl();
 
 		return [
