@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'unsubscribe' => 'Unsubscribe',
-	'unsubscribe-desc' => 'Single email unbsubscribe point',
+	'unsubscribe-desc' => 'Single email unsubscribe point',
 	'unsubscribe-badaccess' => 'Sorry, this page cannot be used directly. Please follow the link from your e-mail.',
 	'unsubscribe-badtoken' => 'Sorry, there was a problem with the security token.',
 	'unsubscribe-bademail' => 'Sorry, there was a problem with the e-mail.',
