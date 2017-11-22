@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Special page]] for sponsorship related metrics',
+	'sponsorship-dashboard-desc' => '[[Special:SponsorshipDashboard|Special page]] for sponsorship related metrics',
 	'sponsorship-dashboard-serie-A' => 'Total registered editors in current month (all namespaces)',
 	'sponsorship-dashboard-serie-B' => 'Total registered editors in current month (content namespaces)',
 	'sponsorship-dashboard-serie-C' => 'Number of registered editors who edited more than 5 times in current month (content namespaces)',
