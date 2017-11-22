@@ -50,7 +50,7 @@ class FavoriteWikisModel extends WikiaModel {
 
 		$dbr = wfGetDB(DB_SLAVE, [], $wgDWStatsDB );
 		$where = [
-			'period_id' => 2, // weekly roll-ups
+			'period_id' => DataMartService::PERIOD_ID_WEEKLY,
 			'time_id >= NOW() - INTERVAL 90 DAY', // process only recent 90 days
 			'user_id' => $this->user->getId(),
 		];
