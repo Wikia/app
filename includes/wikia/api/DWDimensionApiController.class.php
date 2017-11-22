@@ -10,14 +10,15 @@ class DWDimensionApiController extends WikiaApiController {
 	}
 
 	public function getWikiDomains() {
-		$limit = $this->getRequest()->getVal( 'limit', static::LIMIT );
-		$afterDomain = $this->getRequest()->getVal( 'after_domain', static::AFTER_DOMAIN );
+        $db = $this->getSharedDbSlave();
 
-		$db = $this->getSharedDbSlave();
+		$limit = $db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) );
+		$afterDomain = $db->strencode( $this->getRequest()->getVal( 'after_domain', static::AFTER_DOMAIN ) );
+
 		$dbResult = $db->select(
 			[ 'city_domains' ],
 			[ 'city_id', 'city_domain' ],
-			isset( $afterDomain ) ? [ 'city_domain > '.$afterDomain ] : [ ],
+			isset( $afterDomain ) ? [ 'city_domain > "'.$afterDomain.'"' ] : [ ],
 			__METHOD__,
 			[
 				'ORDER BY' => 'city_domain',
