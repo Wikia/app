@@ -11,10 +11,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 		context: {
 			targeting: {
 				mappedVerticalName: ''
-			},
-			opts: {
-				premiumAdLayoutEnabled: true,
-				premiumAdLayoutAppNexusTagsEnabled: false
 			}
 		},
 		log: function() {}
@@ -22,74 +18,51 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 		{
 			vertical: 'life',
 			skin: 'mercury',
-			expected: 'string',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
-			vertical: 'life',
 			skin: 'oasis',
 			pos: 'atf',
-			expected: 'string',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
 			vertical: 'ent',
 			skin: 'mercury',
-			expected: 'string',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
 			vertical: 'other',
 			skin: 'mercury',
-			expected: 'string',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
-			vertical: 'gaming',
 			skin: 'oasis',
 			pos: 'atf',
-			expected: 'string',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
-			vertical: 'gaming',
 			skin: 'oasis',
 			pos: 'btf',
-			expected: 'string',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
-			vertical: 'ent',
 			skin: 'oasis',
 			pos: 'btf',
 			isRecovering: false,
-			expected: 'string',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
-			vertical: 'ent',
 			skin: 'oasis',
 			pos: 'atf',
 			isRecovering: true,
-			expected: 'string',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
-			vertical: 'life',
 			skin: 'oasis',
 			pos: 'hivi',
 			isRecovering: true,
-			expected: 'string',
-			ANpalEnabled: false
-		}, {
-			vertical: 'NOT EXISTING',
-			skin: 'oasis',
-			pos: 'btf',
-			expected: 'undefined',
-			ANpalEnabled: false
+			expected: 'string'
 		}, {
 			skin: 'oasis',
 			pos: 'atf',
-			expected: 'string',
-			ANpalEnabled: true
+			expected: 'string'
 		}
 	];
 
-	function getModule(vertical, ANpalEnabled) {
+	function getModule(vertical) {
 		mocks.context.targeting.mappedVerticalName = vertical;
-		mocks.context.opts.premiumAdLayoutAppNexusTagsEnabled = ANpalEnabled;
 
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'](
 			mocks.adContext,
@@ -100,12 +73,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 	testCases.forEach(function (testCase) {
 		var testCaseName = [
 				testCase.skin,
-				testCase.ANpalEnabled ? 'PAL' : 'non-PAL',
-				testCase.ANpalEnabled ? 'no-vertical' : testCase.vertical
-			];
+				testCase.vertical ? testCase.vertical : 'no-vertical'
+		];
 
 		it('returns expected placementId for ' + testCaseName.join(':'), function () {
-			var appNexusPlacements = getModule(testCase.vertical, testCase.ANpalEnabled),
+			var appNexusPlacements = getModule(testCase.vertical),
 				resultType = typeof appNexusPlacements.getPlacement(testCase.skin, testCase.pos, testCase.isRecovering);
 
 			expect(resultType).toEqual(testCase.expected);

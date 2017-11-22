@@ -99,7 +99,7 @@ img.border {
 
 /* caption indicator */
 img.withCaption {
-	background-image: url('/extensions/wikia/RTE/images/imageCaption.png');/* $wgCdnStylePath */
+	background-image: url('/extensions/wikia/RTE/images/imageCaption.png');/* $wgResourceBasePath */
 	background-repeat: no-repeat;
 	padding-bottom: 25px;
 }
@@ -115,7 +115,7 @@ img.withCaption {
  *  placeholders
  */
 img.placeholder {
-	background-image: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png);/* $wgResourceBasePath */
 	background-position: 0 -1294px;
 	height: 16px !important;
 	margin: 0 3px 3px 3px;
@@ -139,35 +139,35 @@ img.media-placeholder {
 }
 
 img.image-placeholder {
-	background-image: url(/extensions/wikia/RTE/images/imagePlaceholder.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/images/imagePlaceholder.png);/* $wgResourceBasePath */
 }
 
 img.video-placeholder {
-	background-image: url(/extensions/wikia/RTE/images/videoPlaceholder.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/images/videoPlaceholder.png);/* $wgResourceBasePath */
 }
 
 /* Language customization */
 .lang-en img.image-placeholder {
-	background-image: url(/extensions/wikia/RTE/images/imagePlaceholderEn.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/images/imagePlaceholderEn.png);/* $wgResourceBasePath */
 }
 .lang-en img.video-placeholder {
-	background-image: url(/extensions/wikia/RTE/images/videoPlaceholderEn.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/images/videoPlaceholderEn.png);/* $wgResourceBasePath */
 }
 
 
 /* Wikia Image Gallery placeholders */
 img.image-gallery {
-	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/gallery-placeholder.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/gallery-placeholder.png);/* $wgResourceBasePath */
 	display: block;
 }
 
 img.image-gallery-slider {
-	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slider-placeholder.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slider-placeholder.png);/* $wgResourceBasePath */
 	display: inline;
 }
 
 img.image-slideshow {
-	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-placeholder.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-placeholder.png);/* $wgResourceBasePath */
 
 	&.alignLeft {
 		float: left;

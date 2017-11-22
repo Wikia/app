@@ -11,8 +11,6 @@ define('ext.wikia.aRecoveryEngine.sourcePoint.recovery', [
 		recoverableSlots = [
 			'TOP_LEADERBOARD',
 			'TOP_RIGHT_BOXAD',
-			'LEFT_SKYSCRAPER_2',
-			'LEFT_SKYSCRAPER_3',
 			'INCONTENT_BOXAD_1',
 			'BOTTOM_LEADERBOARD',
 			'GPT_FLUSH'

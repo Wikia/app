@@ -14,11 +14,6 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 		enabledSlots = {
 			TOP_LEADERBOARD: true,
 			TOP_RIGHT_BOXAD: true,
-			PREFOOTER_LEFT_BOXAD: true,
-			PREFOOTER_MIDDLE_BOXAD: true,
-			PREFOOTER_RIGHT_BOXAD: true,
-			LEFT_SKYSCRAPER_2: true,
-			LEFT_SKYSCRAPER_3: true,
 			INCONTENT_BOXAD_1: true,
 			INCONTENT_PLAYER: true,
 			BOTTOM_LEADERBOARD: true,
