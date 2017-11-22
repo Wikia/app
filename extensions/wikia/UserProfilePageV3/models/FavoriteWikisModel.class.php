@@ -291,7 +291,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 *
 	 * @param Integer $wikiId
 	 *
-	 * @return array
+	 * @return bool
 	 */
 	public function hideWiki( $wikiId ) {
 		global $wgExternalSharedDB, $wgMemc;
