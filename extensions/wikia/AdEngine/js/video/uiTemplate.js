@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 			'progressBar',
 			'pauseOverlay',
 			'toggleAnimation',
-			createBottomPanel(['toggleFullscreen', 'volumeControl'])
+			createBottomPanel(['volumeControl'])
 		],
 		defaultLayout = [
 			'progressBar',
@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.video.player.uiTemplate', [
 			'toggleVideo',
 			'replayOverlay',
 			'closeButton',
-			createBottomPanel(['toggleFullscreen', 'volumeControl'])
+			createBottomPanel(['volumeControl'])
 		],
 		outstreamIncontent = [
 			'dynamicReveal',

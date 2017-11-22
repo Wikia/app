@@ -13,13 +13,37 @@ define('ext.wikia.adEngine.video.player.ui.toggleFullscreen', [
 			on: '<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.5 22H23v-7h-3v4h-4v3h5.5zM23 3.5V9h-3V5h-4V2h7v1.5zm-22 17V15h3v4h4v3H1v-1.5zM2.5 2H1v7h3V5h4V2H2.5z" fill-rule="evenodd"/></svg>'
 		};
 
-	function add(video, params) {
+	function nativeFullscreenOnElement(element) {
+		function enter() {
+			if (element.webkitRequestFullscreen) {
+				element.webkitRequestFullscreen();
+			} else {
+				element.requestFullscreen();
+			}
+		}
+
+		function exit() {
+			if (doc.webkitExitFullscreen) {
+				doc.webkitExitFullscreen();
+			} else {
+				doc.exitFullscreen();
+			}
+		}
+
+		return {
+			enter: enter,
+			exit: exit
+		};
+	}
+
+	function add(video, params, panel) {
 		var parser = new win.DOMParser(),
 			icons = {
 				off: parser.parseFromString(svgIcons.off, 'image/svg+xml').documentElement,
 				on: parser.parseFromString(svgIcons.on, 'image/svg+xml').documentElement
 			},
-			toggleFullscreenButton = doc.createElement('div');
+			toggleFullscreenButton = doc.createElement('div'),
+			container = panel ? panel.getContainer() : video.container;
 
 		icons.off.classList.add('fullscreen-off-icon');
 		icons.on.classList.add('fullscreen-on-icon');
@@ -27,11 +51,14 @@ define('ext.wikia.adEngine.video.player.ui.toggleFullscreen', [
 		toggleFullscreenButton.appendChild(icons.off);
 		toggleFullscreenButton.appendChild(icons.on);
 		toggleFullscreenButton.addEventListener('click', function (event) {
-			var isFullscreen = video.toggleFullscreen();
+			var isFullscreen = video.toggleFullscreen(),
+				nativeFullscreen = nativeFullscreenOnElement(video.container);
 
 			if (isFullscreen) {
+				nativeFullscreen.enter();
 				toggleFullscreenButton.classList.add(fullscreenOnClassName);
 			} else {
+				nativeFullscreen.exit();
 				toggleFullscreenButton.classList.remove(fullscreenOnClassName);
 			}
 
@@ -39,7 +66,7 @@ define('ext.wikia.adEngine.video.player.ui.toggleFullscreen', [
 			log(['toggleFullscreen', log.levels.debug, logGroup]);
 		});
 
-		(params.panelContainer || video.container).appendChild(toggleFullscreenButton);
+		container.appendChild(toggleFullscreenButton);
 	}
 
 	return {

@@ -24,20 +24,21 @@ define('ext.wikia.adEngine.video.player.ui.panel', [
 			return className;
 		};
 
-		this.add = function (video, params) {
-			if (!params) {
-				params = {};
-			}
+		this.getContainer = function () {
+			return panelContainer;
+		}
 
-			params.panelContainer = panelContainer;
+		this.add = function (video, params, panel) {
 			require(uiElements, function () {
-				Array.prototype.forEach.call(arguments, function (uiElement) {
-					uiElement.add(video, params);
-				});
+				var container = panel ? panel.getContainer() : video.container;
 
-				video.container.appendChild(panelContainer);
+				Array.prototype.forEach.call(arguments, function (uiElement) {
+					uiElement.add(video, params, this);
+				}.bind(this));
+
+				container.appendChild(panelContainer);
 				log(['add', arguments, video], 'debug', logGroup);
-			});
+			}.bind(this));
 		};
 	}
 
