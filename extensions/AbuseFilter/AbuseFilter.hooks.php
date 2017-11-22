@@ -210,6 +210,7 @@ class AbuseFilterHooks {
 			$updater->addExtensionUpdate( array( 'addField', 'abuse_filter', 'af_global', "$dir/db_patches/patch-global_filters.sql", true ) );
 			if ( $updater->getDB()->getType() == 'mysql' ) {
 				$updater->addExtensionUpdate( array( 'addIndex', 'abuse_filter_log', 'filter_timestamp', "$dir/db_patches/patch-fix-indexes.sql", true ) );
+				$updater->addExtensionUpdate( array( 'modifyField', 'abuse_filter_log', 'afl_namespace', "$dir/db_patches/patch-afl-namespace_int.sql", true ) );
 			} else {
 				$updater->addExtensionUpdate( array( 'addIndex', 'abuse_filter_log', 'afl_filter_timestamp', "$dir/db_patches/patch-fix-indexes.sqlite.sql", true ) );
 			}
