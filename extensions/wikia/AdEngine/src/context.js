@@ -29,8 +29,8 @@ export default {
 			slotGroup: 'PF',
 			sizes: [
 				{
-					viewportSize: [728, 0],
-					sizes: [[728, 90]]
+					viewportSize: [0, 0],
+					sizes: [[320, 480]]
 				}
 			],
 			defaultSizes: [[2, 2]],
