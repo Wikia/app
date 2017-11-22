@@ -265,6 +265,7 @@ class ArticleComment {
 
 		// get user that created this comment
 		$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
+		$this->mUser->setName( $this->mFirstRevision->getUserText() );
 
 		$this->isRevisionLoaded = true;
 		return true;
