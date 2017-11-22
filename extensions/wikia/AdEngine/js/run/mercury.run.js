@@ -1,6 +1,7 @@
 /*global require*/
 require([
 	'ad-engine.bridge',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
@@ -16,6 +17,7 @@ require([
 	'wikia.window'
 ], function (
 	adEngineBridge,
+	adContext,
 	pageLevelParams,
 	slotStateMonitor,
 	a9,
@@ -35,7 +37,10 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	if (geo.isProperGeo(instantGlobals.wgAdDriverAdEngine3Countries)) {
-		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), 'mercury')
+		adContext.addCallback(function () {
+			adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), 'mercury')
+		});
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 	} else {
 		win.loadCustomAd = customAdsLoader.loadCustomAd;
 	}

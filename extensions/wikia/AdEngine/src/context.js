@@ -21,6 +21,23 @@ export default {
 				pos: 'BOTTOM_LEADERBOARD',
 				loc: 'footer'
 			}
+		},
+		'MOBILE_BOTTOM_LEADERBOARD': {
+			disabled: true,
+			slotName: 'MOBILE_BOTTOM_LEADERBOARD',
+			lowerSlotName: 'mobile_bottom_leaderboard',
+			slotGroup: 'PF',
+			sizes: [
+				{
+					viewportSize: [728, 0],
+					sizes: [[728, 90]]
+				}
+			],
+			defaultSizes: [[2, 2]],
+			targeting: {
+				pos: 'MOBILE_BOTTOM_LEADERBOARD',
+				loc: 'footer'
+			}
 		}
 	},
 	vast: {
