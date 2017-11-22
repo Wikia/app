@@ -70,16 +70,16 @@ constants :
 packages :
 	[
 		{
-			output : 'ckeditor.js',
+			output : //'ckeditor.js',
 			wrap : true,
 			files :
 				[
 
 				//order matters!
 
-				'ckeditor.js'
-				'config.js'
-				'core/loader.js'
+				//'ckeditor.js'
+				//'config.js'
+				//'core/loader.js'
 				'core/event.js'
 				'core/editor_basic.js'
 				'core/env.js'
@@ -134,53 +134,44 @@ packages :
 				'core/dom/rangelist.js'
 				'core/skin.js'
 				'core/_bootstrap.js'			
+				'styles.js'
 
 				
 				
 				'../js/RTE.js'
 				'../js/jquery.editor.js'
-				'lang/en.js'			
-				'plugins/toolbar/plugin.js'
 				'plugins/indent/plugin.js'
 				'plugins/wysiwygarea/plugin.js'
 				'plugins/button/plugin.js'
 				'plugins/indentblock/plugin.js'
 				'plugins/basicstyles/plugin.js'
-				'plugins/basicstyles/lang/en.js'
-				'plugins/toolbar/lang/en.js'
-				'plugins/indent/lang/en.js'
-				'plugins/button/lang/en.js'
 				'plugins/clipboard/plugin.js'
-				'plugins/clipboard/lang/en.js'
 				'plugins/indentlist/plugin.js'
 				'plugins/list/plugin.js'
-				'plugins/list/lang/en.js'			
 				'plugins/panel/plugin.js'
 				'plugins/listblock/plugin.js'	
 				'plugins/floatpanel/plugin.js'
 				'plugins/richcombo/plugin.js'	
 				'plugins/format/plugin.js'
-				'plugins/format/lang/en.js'
-				'plugins/justify/plugin.js'
-				'plugins/justify/lang/en.js'
+
+				//'plugins/justify/plugin.js' - rte-justify now
 				'plugins/undo/plugin.js'
-				'plugins/undo/lang/en.js'
 				'plugins/menu/plugin.js'
+				'plugins/fakeobjects/plugin.js'
 				'plugins/contextmenu/plugin.js'
-				'plugins/contextmenu/lang/en.js'
 				'plugins/enterkey/plugin.js'
 				'plugins/tab/plugin.js'
 				'plugins/dialogui/plugin.js'
 				'plugins/dialog/plugin.js'
 				'plugins/table/plugin.js'				
-				'plugins/table/lang/en.js'
 				'plugins/tabletools/plugin.js'
 				'plugins/removeformat/plugin.js'
-				'plugins/removeformat/lang/en.js'
 				'plugins/pastetext/plugin.js'
-				'plugins/pastetext/lang/en.js'
 				'plugins/sourcearea/plugin.js'
-				'plugins/sourcearea/lang/en.js'	
+
+				'plugins/toolbar/plugin.js'
+				'plugins/notification/plugin.js'
+
 
 				//wikia plugins below
 				'../js/plugins/accesskey/plugin.js'
@@ -190,7 +181,7 @@ packages :
 				'../js/plugins/dragdrop/plugin.js'
 				'../js/plugins/entities/plugin.js'
 				'../js/plugins/gallery/plugin.js'
-				//'../js/plugins/justify/plugin.js' for now lets use native ckeditor 4.7 justify plugin :)
+				'../js/plugins/justify/plugin.js' 
 				'../js/plugins/link/plugin.js'
 				'../js/plugins/link/dialogs/link.js'
 				'../js/plugins/linksuggest/plugin.js'
@@ -207,28 +198,12 @@ packages :
 				'../js/plugins/toolbar/plugin.js'
 				'../js/plugins/tools/plugin.js'
 
-				//'plugins/fakeobjects/plugin.js'
-				//'plugins/fakeobjects/lang/en.js'
-				//'plugins/link/plugin.js'
-				//'plugins/link/lang/en.js'	
-				//'plugins/link/dialogs/link.js'
-				//'../js/plugins/placeholder/plugin.js'
-				//'../js/plugins/template/plugin.js'
-				//'../js/plugins/template/dialogs/template.js'
-				//'../js/plugins/toolbar/plugin.js'
-				//'../js/plugins/linksuggest/plugin.js',
-				//'../js/plugins/media/plugin.js',
-				//'../js/plugins/modeswitch/plugin.js',
-				//'../js/plugins/overlay/plugin.js',
-				//'../js/plugins/paste/plugin.js',
-				//'../js/plugins/placeholder/plugin.js',
-				//'../js/plugins/signature/plugin.js',
-				//'../js/plugins/spellchecker/plugin.js',
-				//'../js/plugins/template/plugin.js',
-				//'../js/plugins/template/dialogs/template.js',
-				//'../js/plugins/temporary-save/plugin.js',
-				//'../js/plugins/tools/plugin.js',
-		
+
+					//experimental!
+					'themes/wikia/theme.js'
+					'skins/kama/skin.js'
+					
+					
 				]
 		}
 

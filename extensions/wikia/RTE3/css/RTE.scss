@@ -289,8 +289,7 @@
 	}
 }
 
-.cke_skin_wikia {
-	&.linkEditorDialog {
+.linkEditorDialog {
 		.cke_dialog {
 			width: 500px;
 		}
@@ -318,7 +317,7 @@
 			height: 16px;
 		}
 		.link-type-note .link-icon {
-			background: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png) left top no-repeat; /* $wgCdnStylePath */
+			background: url(/extensions/wikia/RTE3/ckeditor/skins/kama/icons.png) left top no-repeat; /* $wgCdnStylePath */
 			height: 16px;
 			margin-right: 3px;
 			width: 16px;
@@ -329,7 +328,7 @@
 		.link-type-note .link-icon.link-no {
 			background-position: left -542px;
 		}
-	}
+	
 
 	// dropdown lists
 	.cke_panel.cke_format_panel,
@@ -342,8 +341,8 @@
 	.cke_template_panel {
 		height: 155px !important;
 		width: 220px !important;
-	}
-}
+}}
+
 
 // dialog loading indicator
 .wikiaEditorLoading {
@@ -678,12 +677,15 @@
 .client-js {
 	.editarea,
 	.editpage-editarea {
-		.cke_skin_wikia {
-			visibility: hidden;
+			visibility: visible;
+			.loading-indicator{
+				//Kacper Olek bugfix
+				visibility: visible;
+			}
 
 			&.visible {
 				visibility: visible;
 			}
 		}
 	}
-}
+

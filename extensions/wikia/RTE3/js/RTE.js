@@ -1,10 +1,9 @@
 (function($, window, undefined) {
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
-	
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
-
+		
 		// configuration
 		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 		config: {
@@ -17,10 +16,10 @@
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss],
+			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE3/css/content.scss'), window.RTESiteCss],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
-			customConfig: '',
+			customConfig: '',//'config.js' to add additional statements
 			dialog_backgroundCoverColor: '#000',
 			dialog_backgroundCoverOpacity: 0.8,
 			disableDragDrop: false,
@@ -29,31 +28,46 @@
 			format_tags: 'p;h2;h3;h4;h5;pre',
 			height: 400, // default height when "auto resizing" is not applied
 			indentOffset: 24, // match WikiaArticle styles (BugId:25379)
+			allowedContent: true,
 			language: window.wgUserLanguage,
 			plugins:
 				'basicstyles,' +
 				'button,' +
 				'clipboard,' +
-				'contextmenu,' +
+				'contextmenu,' +	
 				'dialog,' +
 				'enterkey,' +
 				'format,' +
-				'htmldataprocessor,' +
+				//htmldataprocessor
 				'indent,' +
-				'keystrokes,' +
+				//keystrokes
 				'list,' +
 				'pastetext,' +
-				'removeformat,' +
+				'removeformat,' +//not used anywhere though
 				'sourcearea,' +
 				'tab,' +
 				'table,' +
 				'tabletools,' +
 				'undo,' +
-				'wysiwygarea',
+				'wysiwygarea,' +
+					
+				'notification,' +
+				'toolbar,' +
+//				'dialogui,' +
+//				'panel,' +
+//				'listblock,' +
+//				'floatpanel,' +
+//				'richcombo,' +
+				'indentblock',
+//				'indentlist,' +
+//				'menu,' +
+//				'justify',
+//				'fakeobjects,' +
 
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
-			extraPlugins:
+		extraPlugins:
+		 
 				'rte-accesskey,' +
 				'rte-comment,' +
 				'rte-dialog,' +
@@ -76,11 +90,14 @@
 				'rte-tools',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
+			toolbarCanCollapse: false,
 			resize_enabled: false,
-			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
-			skin: 'wikia',
+			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE3/css/richcombo.scss'),
+			skin: 'kama',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
-			theme: 'wikia'
+	//			theme: 'wikia'
+//		removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...
+			
 		},
 
 		// Unique editor instance Id, set on modeswitch
@@ -160,6 +177,7 @@
 		},
 
 		initCk: function(editor) {
+					
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}
@@ -210,10 +228,11 @@
 		// final setup of editor's instance
 		onEditorReady: function(event) {
 			var editor = event.editor,
-				instanceId = editor.instanceId;
+			instanceId = editor.instanceId;
 
 			// base colors: use color / background-color from .color1 CSS class
 			RTE.tools.getThemeColors();
+			//No more theme
 
 			// remove HTML indentation
 			editor.dataProcessor.writer.indentationChars = '';
@@ -224,10 +243,10 @@
 				if (editor.mode == 'wysiwyg') {
 					editor.fire('saveSnapshot');
 				}
-
+			
 				editor.fire('modeSwitch');
 			}
-
+	
 			// ok, we're done!
 			RTE.loaded.push(editor);
 
@@ -242,12 +261,13 @@
 			$(window).trigger('rteready', editor);
 			GlobalTriggers.fire('rteready', editor);
 
+	
 			// preload format dropdown (BugId:4592)
-			var formatDropdown = editor.ui.create('Format');
+			/*var formatDropdown = editor.ui.create('Format');
 			if (formatDropdown) {
 				formatDropdown.createPanel(editor);
 			}
-
+			*/
 			// send custom event "submit" when edit page is being saved (BugId:2947)
 			var editform = $(editor.element.$.form).bind('submit', $.proxy(function() {
 				editor.fire('submit', {form: editform}, editor);
@@ -354,6 +374,12 @@ CKEDITOR.on('instanceCreated', function(event) {
 
 // editor is loaded
 CKEDITOR.on('instanceReady', RTE.onEditorReady);
+//Kacper Olek
+//CKEDITOR.on('instanceReady', function() {
+//WikiaEditor.instances.wpTextbox1.plugins.ckeditor.themeLoaded();
+//WikiaEditor.instances.wpTextbox1.plugins['ui-ckeditor'].ckReady();
+//console.trace('Editor Ready!');
+//});
 
 //
 // CKEDITOR.dtd fixes
@@ -435,18 +461,17 @@ CKEDITOR.dom.element.prototype.hasAttributes = function() {
 }
 
 // catch requests for language JS files
-CKEDITOR.langRegExp = /lang\/([\w\-]+).js/;
+CKEDITOR.langRegExp = /^lang\/([\w\-]+).js$/;
 
 // load CK files from _source subdirectory
 CKEDITOR.getUrl = function( resource ) {
 
 	// catch requests for /lang/xx.js
 	if (CKEDITOR.langRegExp.test(resource)) {
-		debugger;
 		var matches = resource.match(CKEDITOR.langRegExp);
 		var lang = matches[1];
 
-		RTE.log('language "' + lang + '" requested');
+		RTE.log('language "' + lang + " " + resource + '" requested');
 
 		// fetch JSON with language definition from backend
 		var url = window.wgServer + '/wikia.php?controller=RTE&method=i18n&uselang=' + lang +
@@ -454,22 +479,18 @@ CKEDITOR.getUrl = function( resource ) {
 
 		return url;
 	}
-
+		
 	// If this is not a full or absolute path.
 	if ( resource.indexOf('://') == -1 && resource.indexOf( '/' ) !== 0 ) {
-		// Wikia: add _source subdirectory
-		if ( resource.indexOf('_source') == -1 ) {
-			resource = '_source/' + resource;
-		}
+		// Wikia: remove _source adder
 
 		resource = this.basePath + resource;
 	}
-
 	// Add the timestamp, except for directories.
 	if ( this.timestamp && resource.charAt( resource.length - 1 ) != '/' ) {
 		resource += ( resource.indexOf( '?' ) >= 0 ? '&' : '?' ) + this.timestamp;
 	}
-
+//	console.log( resource );	
 	return resource;
 }
 
@@ -486,24 +507,25 @@ CKEDITOR.editor.prototype.switchMode = function(mode) {
 
 // modify parent node of button
 CKEDITOR.dom.element.prototype.setState = function( state ) {
-	var node = this.getParent();
-
+	//var node = this.getParent();
+	//Kacper Olek
+	var node = this;
 	switch ( state )
 	{
 		case CKEDITOR.TRISTATE_ON :
-			node.addClass( 'cke_on' );
-			node.removeClass( 'cke_off' );
-			node.removeClass( 'cke_disabled' );
+			node.addClass( 'cke_button_on' );
+			node.removeClass( 'cke_button_off' );
+			node.removeClass( 'cke_button_disabled' );
 			break;
 		case CKEDITOR.TRISTATE_DISABLED :
-			node.addClass( 'cke_disabled' );
-			node.removeClass( 'cke_off' );
-			node.removeClass( 'cke_on' );
+			node.addClass( 'cke_button_disabled' );
+			node.removeClass( 'cke_button_off' );
+			node.removeClass( 'cke_button_on' );
 			break;
 		default :
-			node.addClass( 'cke_off' );
-			node.removeClass( 'cke_on' );
-			node.removeClass( 'cke_disabled' );
+			node.addClass( 'cke_button_off' );
+			node.removeClass( 'cke_button_on' );
+			node.removeClass( 'cke_button_disabled' );
 			break;
 	}
 };

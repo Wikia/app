@@ -399,7 +399,7 @@ class RTEReverseParser {
 			$out = '';
 
 			wfDebug(__METHOD__ . ": triggering hook for '{$node->nodeName}' custom placeholder\n");
-			Hooks::run('RTEcustomHandleTag', array($node, &$out));
+			wfRunHooks('RTEcustomHandleTag', array($node, &$out));
 
 			if($out != '') {
 				wfProfileOut(__METHOD__);

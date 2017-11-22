@@ -27,12 +27,11 @@ CKEDITOR.plugins.add('rte-modeswitch',
 				ev.editor.getCommand('ModeSource').enable();
 			}
 		}, this));
-
 		// update switching tabs tooltips
 		editor.on('mode', $.proxy(this.updateTooltips, this));
 		editor.on('mode', $.proxy(this.mode, this));
 		editor.on('modeSwitch', $.proxy(this.modeSwitch, this));
-		editor.on('dataReady', $.proxy(this.dataReady, this));
+		editor.on('dataReady', $.proxy(this.dataReady, this),null,null,100);
 		editor.on('wysiwygModeReady', $.proxy(this.wysiwygModeReady, this));
 		editor.on('sourceModeReady', $.proxy(this.sourceModeReady, this));
 	},
@@ -72,8 +71,8 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 					editor.setMode('source');
 					editor.setData(data.wikitext, function() {
-						editor.textarea.$.scrollTop = 0;
-						editor.textarea.$.setSelectionRange(0, 0);
+						editor.editable().$.scrollTop = 0;
+						editor.editable().$.setSelectionRange(0, 0);
 					});
 				});
 				break;
@@ -131,7 +130,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	dataReady: function(ev) {
 		var editor = ev.editor;
-
 		if (editor.mode == 'wysiwyg') {
 			editor.fire('wysiwygModeReady');
 
@@ -190,7 +188,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	// get jQuery object for mode switching tab
 	getSwitchTab: function(editor, commandName) {
-		debugger;
 		var nodeId = editor.getCommand(commandName).uiItems[0]._.id;
 		return $('#' + nodeId);
 	},

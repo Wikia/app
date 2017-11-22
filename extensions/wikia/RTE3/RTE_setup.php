@@ -75,3 +75,4 @@ function RTEAjax() {
 	wfProfileOut(__METHOD__);
 	return $ret;
 }
+

@@ -19,7 +19,7 @@ class RTEMagicWord {
 		return true;
 	}
 
-	public static function remove(&$parser, &$text, &$strip_state) {
+	public static function remove($parser, &$text, &$strip_state) {
 		MagicWord::get('MAG_NOWYSIWYG')->matchAndRemove($text);
 		return true;
 	}
