@@ -423,6 +423,12 @@ class BlockListPager extends TablePager {
 			// SUS-3108: We know that this field is > 0, as blocks cannot be made by anons
 			$userIds[] = $row->ipb_by;
 
+			// SUS-805: User name lookup for registered block targets
+			if ( $row->ipb_user ) {
+				$userIds[] = $row->ipb_user;
+				continue;
+			}
+
 			# Usernames and titles are in fact related by a simple substitution of space -> underscore
 			# The last few lines of Title::secureAndSplit() tell the story.
 			$name = str_replace( ' ', '_', $row->ipb_address );

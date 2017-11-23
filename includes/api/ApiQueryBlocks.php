@@ -154,7 +154,8 @@ class ApiQueryBlocks extends ApiQueryBase {
 				$block['id'] = $row->ipb_id;
 			}
 			if ( $fld_user && !$row->ipb_auto ) {
-				$block['user'] = $row->ipb_address;
+				// SUS-805 User name lookup for block target
+				$block['user'] = User::getUsername( $row->ipb_user, $row->ipb_address );
 			}
 			if ( $fld_userid && !$row->ipb_auto ) {
 				$block['userid'] = $row->ipb_user;

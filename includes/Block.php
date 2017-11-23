@@ -204,12 +204,18 @@ class Block {
 	 *     3) An autoblock on the given IP
 	 * @param $vagueTarget User|String also search for blocks affecting this target.  Doesn't
 	 *     make any sense to use TYPE_AUTO / TYPE_ID here. Leave blank to skip IP lookups.
-	 * @return Bool whether a relevant block was found
+	 * @return bool whether a relevant block was found
+	 * @throws MWException
 	 */
 	protected function newLoad( $vagueTarget = null ) {
 		$db = wfGetDB( $this->mFromMaster ? DB_MASTER : DB_SLAVE );
 
-		if( $this->type !== null ){
+
+		if ( $this->type === Block::TYPE_USER ) {
+			$conds = [
+				'ipb_user' => $this->target->getId()
+			];
+		} elseif ( $this->type !== null ) {
 			$conds = array(
 				'ipb_address' => array( (string)$this->target ),
 			);
@@ -223,8 +229,8 @@ class Block {
 			list( $target, $type ) = self::parseTarget( $vagueTarget );
 			switch( $type ) {
 				case self::TYPE_USER:
-					# Slightly wierd, but who are we to argue?
-					$conds['ipb_address'][] = (string)$target;
+					// SUS-805: Query blocks by user ID for registered users
+					$conds['ipb_user'][] = $target->getId();
 					break;
 
 				case self::TYPE_IP:
@@ -355,7 +361,12 @@ class Block {
 	 * @param $row ResultWrapper: a row from the ipblocks table
 	 */
 	protected function initFromRow( $row ) {
-		$this->setTarget( $row->ipb_address );
+		// SUS-805: Use user name lookup for registered users
+		if ( $row->ipb_user ) {
+			$this->setTarget( User::newFromId( $row->ipb_user ) );
+		} else {
+			$this->setTarget( $row->ipb_address );
+		}
 		$this->setBlocker( User::newFromID( $row->ipb_by ) );
 
 		$this->mReason = $row->ipb_reason;
