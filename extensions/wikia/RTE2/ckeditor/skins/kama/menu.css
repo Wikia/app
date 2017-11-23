@@ -100,7 +100,7 @@ Special outer level classes used in this file:
 .cke_menuitem .cke_button_icon
 {
 	
-	background-image: url('/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png'); /* wgCdnStylePath */
+	background-image: url('/extensions/wikia/RTE2/ckeditor/skins/kama/icons.png'); /* wgCdnStylePath */
 	background-position: 100px;
 	background-repeat:no-repeat;
 	background-color: transparent;
