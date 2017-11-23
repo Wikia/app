@@ -201,7 +201,7 @@ packages :
 
 					//experimental!
 					'themes/wikia/theme.js'
-					'skins/kama/skin.js'
+					'skins/wikia/skin.js'
 					
 					
 				]

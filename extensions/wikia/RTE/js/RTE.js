@@ -80,7 +80,7 @@
 			toolbarCanCollapse: false,
 			resize_enabled: false,
 			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
-			skin: 'kama',
+			skin: 'wikia',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
 		},
 
