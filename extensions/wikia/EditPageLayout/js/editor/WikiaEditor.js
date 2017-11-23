@@ -1082,7 +1082,7 @@
 			this.editor.on('mode',this.modeChanged,this);
 		},
 
-		modeChanged: function( editor, mode ) {	
+		modeChanged: function( editor, mode ) {
 			// show/hide appropriate buttons
 			for (var name in this.modeAwareCommands) {
 				var command = this.editor.ck.getCommand(name);
@@ -1102,7 +1102,7 @@
 			this.proxyAllCommandsState();
 		},
 
-		proxyAllCommandsState: function() {	
+		proxyAllCommandsState: function() {
 			for (var commandName in this.stateProxiedCommands)
 				this.proxyCommandState( commandName );
 		},

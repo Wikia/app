@@ -151,7 +151,7 @@
 
 		// handle keypressing on "Minor edit" checkbox
 		onMinorEditKeypress: function (ev) {
-				if (ev.keyCode == 13 /* enter */) {
+			if (ev.keyCode == 13 /* enter */) {
 				ev.preventDefault();
 				return;
 			}

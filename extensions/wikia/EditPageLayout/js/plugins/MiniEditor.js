@@ -75,6 +75,7 @@
 		},
 
 		editorActivated: function(event) {	
+		
 			$(window).on('beforeunload.PreventLeaveBeforeSave', function (e) {
 				if (this.editor.getContent().length) {
 					return $.msg('wikia-editor-leaveconfirm-message');
@@ -163,7 +164,7 @@
 		},
 
 		editorFocus: function() {
-				if (this.editor.instanceId != WikiaEditor.instanceId) {
+			if (this.editor.instanceId != WikiaEditor.instanceId) {
 				this.editor.setAsActiveInstance();
 			}
 
