@@ -38,32 +38,19 @@
 				'dialog,' +
 				'enterkey,' +
 				'format,' +
-				//htmldataprocessor
 				'indent,' +
-				//keystrokes
 				'list,' +
 				'pastetext,' +
-				'removeformat,' +//not used anywhere though
+				'removeformat,' +
 				'sourcearea,' +
 				'tab,' +
 				'table,' +
 				'tabletools,' +
 				'undo,' +
 				'wysiwygarea,' +
-					
 				'notification,' +
 				'toolbar,' +
-//				'dialogui,' +
-//				'panel,' +
-//				'listblock,' +
-//				'floatpanel,' +
-//				'richcombo,' +
 				'indentblock',
-//				'indentlist,' +
-//				'menu,' +
-//				'justify',
-//				'fakeobjects,' +
-
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 		extraPlugins:
@@ -95,9 +82,6 @@
 			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
 			skin: 'kama',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
-	//			theme: 'wikia'
-//		removePlugins: 'toolbar,notification,clipboard,pastetext', //temporary, till toolbar dependancies are fixed...
-			
 		},
 
 		// Unique editor instance Id, set on modeswitch
@@ -374,12 +358,6 @@ CKEDITOR.on('instanceCreated', function(event) {
 
 // editor is loaded
 CKEDITOR.on('instanceReady', RTE.onEditorReady);
-//Kacper Olek
-//CKEDITOR.on('instanceReady', function() {
-//WikiaEditor.instances.wpTextbox1.plugins.ckeditor.themeLoaded();
-//WikiaEditor.instances.wpTextbox1.plugins['ui-ckeditor'].ckReady();
-//console.trace('Editor Ready!');
-//});
 
 //
 // CKEDITOR.dtd fixes
@@ -507,8 +485,7 @@ CKEDITOR.editor.prototype.switchMode = function(mode) {
 
 // modify parent node of button
 CKEDITOR.dom.element.prototype.setState = function( state ) {
-	//var node = this.getParent();
-	//Kacper Olek
+
 	var node = this;
 	switch ( state )
 	{

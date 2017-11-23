@@ -240,7 +240,7 @@
 								// Create the basic toolbar object.
 								toolbarId = CKEDITOR.tools.getNextId();
 								toolbarObj = { id: toolbarId, items: [] };
-								//Kacper Olek lang.toolbar.toolbarGroups -> lang.toolbarGroups
+
 								toolbarName = row.name && ( editor.lang.toolbar.toolbarGroups[ row.name ] || row.name );
 
 								// Output the toolbar opener.
