@@ -941,7 +941,6 @@
 		},
 
 		afterLoadingStatus: function() {
-			debugger;
 			this.editor.markAsReady();
 			// Loading is done, editor container can be visible again
 			// And typing can be re-enabled (BugId:23061)
@@ -990,7 +989,6 @@
 		},
 
 		beforeModeChange: function() {
-			debugger;
 			// Hide the editor container while we switch modes
 			$(this.editor.ck.container.$).removeClass('visible')
 

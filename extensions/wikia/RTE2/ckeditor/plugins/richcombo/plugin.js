@@ -235,8 +235,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 			createPanel: function( editor ) {
 				if ( this._.panel )
 					return;
-
-				debugger;
 				//Not Working
 			//	if (editor.config.richcomboCss != '' ) {
 			//		this._.panelDefinition.css = [editor.config.richcomboCss];
