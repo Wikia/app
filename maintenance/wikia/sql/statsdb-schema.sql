@@ -8357,8 +8357,7 @@ CREATE TABLE `rollup_wiki_user_events` (
   `deletes` int(10) unsigned DEFAULT NULL,
   `undeletes` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`time_id`,`period_id`,`wiki_id`,`user_id`),
-  KEY `time_id` (`time_id`,`period_id`,`user_id`,`wiki_id`),
-  KEY `wiki_period_time` (`wiki_id`,`period_id`,`time_id`)
+  KEY `period_user_time` (`period_id`,`user_id`,`time_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 (PARTITION p0 VALUES LESS THAN ('1970-01-01') ENGINE = InnoDB,
  PARTITION p20150101 VALUES LESS THAN ('2015-01-02') ENGINE = InnoDB,
@@ -10450,4 +10449,4 @@ CREATE TABLE `test_dimension_wiki_local_namespaces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-11-20 11:50:30
+-- Dump completed on 2017-11-23  8:42:38
