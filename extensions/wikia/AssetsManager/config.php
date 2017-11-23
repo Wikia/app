@@ -137,6 +137,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
+		'//extensions/wikia/AdEngine/js/build/ad-engine.bridge.js',
 	],
 ];
 
@@ -936,6 +937,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
+		'//extensions/wikia/AdEngine/js/build/ad-engine.bridge.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_js',
 

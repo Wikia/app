@@ -1,6 +1,7 @@
 /*global require*/
 /*jshint camelcase:false*/
 require([
+	'ad-engine.bridge',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',
@@ -11,6 +12,7 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.slot.service.actionHandler',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
@@ -18,6 +20,7 @@ require([
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window'
 ], function (
+	adEngineBridge,
 	adContext,
 	adEngineRunner,
 	pageLevelParams,
@@ -28,6 +31,7 @@ require([
 	messageListener,
 	pageFairDetection,
 	actionHandler,
+	slotRegistry,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
@@ -51,7 +55,12 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = customAdsLoader.loadCustomAd;
+	if (adContext.get('opts.isAdEngine3Enabled')) {
+		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, 'oasis');
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+	} else {
+		win.loadCustomAd = customAdsLoader.loadCustomAd;
+	}
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {

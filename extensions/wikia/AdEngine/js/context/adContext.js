@@ -151,6 +151,8 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.delayEngine = true;
 		}
 
+		context.opts.isAdEngine3Enabled = geo.isProperGeo(instantGlobals.wgAdDriverAdEngine3Countries);
+
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
@@ -208,6 +210,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
 		context.opts.porvataMoatTrackingEnabled =
 			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
+		context.opts.porvataMoatTrackingSampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
 
 		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
