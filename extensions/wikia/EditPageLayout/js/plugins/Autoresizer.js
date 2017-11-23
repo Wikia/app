@@ -109,8 +109,7 @@
 			return dimensions;
 		},
 
-		resize: function() {
-				
+		resize: function() {	
 			switch(this.mode) {
 				// resize editor area
 				case 'editarea':

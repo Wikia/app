@@ -25,7 +25,7 @@
 		},
 
 		extraStateChanged: function( editor, name, state ) {
-					var states = editor.states;
+			var states = editor.states;
 
 			if (state == states.INITIALIZING) {
 				if (!this.extraStates[name]) {
@@ -43,7 +43,7 @@
 		},
 
 		stateChanged: function( editor, state ) {
-					var states = editor.states, value = false;
+			var states = editor.states, value = false;
 
 			if (state == states.INITIALIZING) {
 				value = 'loading';

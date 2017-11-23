@@ -98,7 +98,7 @@
 		},
 
 		loadState: function( initial ) {
-					var wide = $.storage.get(this.storageEntry) == true;
+			var wide = $.storage.get(this.storageEntry) == true;
 			this.editor.log('widescreen::load() - wide = '+(wide?'true':'false'));
 			if (initial) {
 				if (typeof this.editor.config.wideInSourceInitial != 'undefined') {
@@ -171,7 +171,7 @@
 	WE.plugins.widemodemanager = $.createClass(WE.plugin,{
 
 		beforeInit: function() {
-					var config = this.editor.config;
+			var config = this.editor.config;
 			if (!config.wideModeDisabled) {
 				if (config.toolbars && (!config.toolbars.rail || config.toolbars.rail.length == 0) ) {
 					this.editor.log('choosing wide mode plugin: mainpage');

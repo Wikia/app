@@ -42,7 +42,7 @@
 		},
 
 		stateChanged: function( editor, state ) {
-					var states = this.editor.states;
+			var states = this.editor.states;
 
 			this.pollStylesheetsTimer.stop();
 			if ((state == states.INITIALIZING && this.editor.mode == 'wysiwyg') || state == states.LOADING_VISUAL) {

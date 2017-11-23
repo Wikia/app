@@ -46,7 +46,7 @@
 		},
 
 		onStateChange: function(editor, state) {
-					var states = editor.states;
+			var states = editor.states;
 
 			switch (state) {
 				// page is being saved

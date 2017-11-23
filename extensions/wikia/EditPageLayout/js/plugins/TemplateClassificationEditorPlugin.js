@@ -12,7 +12,7 @@
 		WE.plugins.templateclassificationeditorplugin = $.createClass(WE.plugin, {
 
 			init: function () {
-						this.editor.on('save', this.proxy(this.forceType));
+				this.editor.on('save', this.proxy(this.forceType));
 				require(['TemplateClassificationModalForce'], function forceTemplateClassificationModal(tcForce) {
 					templateClassificationForceModal = tcForce;
 				});

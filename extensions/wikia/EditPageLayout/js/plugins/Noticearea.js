@@ -156,7 +156,7 @@
 		},
 
 		isNoticeMainPageEduNote: function(notice) {
-				var hash = notice.attr(this.dataAttr),
+			var hash = notice.attr(this.dataAttr),
 				result = false;
 
 			if( hash && window.mainPageEduNoteHash && hash == window.mainPageEduNoteHash ) {
