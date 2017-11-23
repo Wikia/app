@@ -156,7 +156,7 @@
 		},
 
 		isNoticeMainPageEduNote: function(notice) {
-					var hash = notice.attr(this.dataAttr),
+				var hash = notice.attr(this.dataAttr),
 				result = false;
 
 			if( hash && window.mainPageEduNoteHash && hash == window.mainPageEduNoteHash ) {
@@ -199,7 +199,7 @@
 		},
 
 		onDismissMainPageNotice: function(response) {
-					if( response.result && response.result.success != true ) {
+				if( response.result && response.result.success != true ) {
 				$().log('Noticearea error: wrong during dissmissing main page edu note');
 
 				if( response.result.error ) {

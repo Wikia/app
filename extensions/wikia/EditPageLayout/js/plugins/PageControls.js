@@ -139,7 +139,7 @@
 
 		// handle keypressing in "Edit summary" field
 		onSummaryKeypress: function (ev) {
-					if (ev.keyCode == 13 /* enter */) {
+			if (ev.keyCode == 13 /* enter */) {
 				this.editor.track({
 					action: Wikia.Tracker.ACTIONS.SUBMIT,
 					label: 'summary-enter'
@@ -151,7 +151,7 @@
 
 		// handle keypressing on "Minor edit" checkbox
 		onMinorEditKeypress: function (ev) {
-					if (ev.keyCode == 13 /* enter */) {
+				if (ev.keyCode == 13 /* enter */) {
 				ev.preventDefault();
 				return;
 			}
@@ -212,7 +212,7 @@
 
 		// return true if any of the required fields has no value
 		checkForEmptyFields: function (fields) {
-					var emptyRequiredFields = fields.find('label > *[data-required="1"]'), emptyCounter = 0;
+			var emptyRequiredFields = fields.find('label > *[data-required="1"]'), emptyCounter = 0;
 
 			emptyRequiredFields.each(function () {
 				if ($(this).val() == '') {

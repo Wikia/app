@@ -74,8 +74,7 @@
 			this.editorResize();
 		},
 
-		editorActivated: function(event) {
-		
+		editorActivated: function(event) {	
 			$(window).on('beforeunload.PreventLeaveBeforeSave', function (e) {
 				if (this.editor.getContent().length) {
 					return $.msg('wikia-editor-leaveconfirm-message');
@@ -105,7 +104,7 @@
 		},
 
 		editorKeyUp: function() {
-					this.editorToggleButtonsDisabled();
+			this.editorToggleButtonsDisabled();
 
 			if ( this.editor.ck != undefined ) {
 				this.editorResize();
@@ -164,7 +163,7 @@
 		},
 
 		editorFocus: function() {
-					if (this.editor.instanceId != WikiaEditor.instanceId) {
+				if (this.editor.instanceId != WikiaEditor.instanceId) {
 				this.editor.setAsActiveInstance();
 			}
 
