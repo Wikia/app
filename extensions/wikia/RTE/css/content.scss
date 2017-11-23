@@ -99,7 +99,7 @@ img.border {
 
 /* caption indicator */
 img.withCaption {
-	background-image: url('/extensions/wikia/RTE2/images/imageCaption.png');/* $wgCdnStylePath */
+	background-image: url('/extensions/wikia/RTE/images/imageCaption.png');/* $wgCdnStylePath */
 	background-repeat: no-repeat;
 	padding-bottom: 25px;
 }
@@ -115,7 +115,7 @@ img.withCaption {
  *  placeholders
  */
 img.placeholder {
-	background-image: url(/extensions/wikia/RTE2/ckeditor/skins/kama/icons.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/ckeditor/skins/kama/icons.png);/* $wgCdnStylePath */
 	background-position: 0 -1294px;
 	height: 16px !important;
 	margin: 0 3px 3px 3px;
@@ -139,19 +139,19 @@ img.media-placeholder {
 }
 
 img.image-placeholder {
-	background-image: url(/extensions/wikia/RTE2/images/imagePlaceholder.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/images/imagePlaceholder.png);/* $wgCdnStylePath */
 }
 
 img.video-placeholder {
-	background-image: url(/extensions/wikia/RTE2/images/videoPlaceholder.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/images/videoPlaceholder.png);/* $wgCdnStylePath */
 }
 
 /* Language customization */
 .lang-en img.image-placeholder {
-	background-image: url(/extensions/wikia/RTE2/images/imagePlaceholderEn.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/images/imagePlaceholderEn.png);/* $wgCdnStylePath */
 }
 .lang-en img.video-placeholder {
-	background-image: url(/extensions/wikia/RTE2/images/videoPlaceholderEn.png);/* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/RTE/images/videoPlaceholderEn.png);/* $wgCdnStylePath */
 }
 
 

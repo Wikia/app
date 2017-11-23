@@ -16,7 +16,7 @@
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE2/css/content.scss'), window.RTESiteCss],
+			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',//'config.js' to add additional statements
@@ -92,7 +92,7 @@
 			//readOnly: true,
 			toolbarCanCollapse: false,
 			resize_enabled: false,
-			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE2/css/richcombo.scss'),
+			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
 			skin: 'kama',
 			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
 	//			theme: 'wikia'

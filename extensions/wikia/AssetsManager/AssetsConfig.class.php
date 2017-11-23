@@ -24,7 +24,7 @@ class AssetsConfig {
 		global $IP, $wgRTEVersion;
 
 		if ( $wgRTEVersion == 2) {
-			$path = "extensions/wikia/RTE2";
+			$path = "extensions/wikia/RTE";
             		$files = [ $path . '/ckeditor/ckeditor.js' ];
 
 		} else if ( $wgRTEVersion == 3 ) {

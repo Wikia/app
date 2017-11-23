@@ -125,7 +125,7 @@ class RTE {
 		// scripts loaded by edit page layout
 
 		// add RTE css file
-		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/RTE2/css/RTE.scss'));
+		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/RTE/css/RTE.scss'));
 		//Kacper Olek - handling for ckeditor wikia extensions language
 //		$wgOut->addModules('ext.wikia.RTE2');
 		// parse wikitext of edited page and add extra fields to editform
@@ -244,9 +244,9 @@ class RTE {
 
 		// local path to RTE (used to apply htc fixes for IE)
 		// this MUST point to local domain
-		$vars['RTELocalPath'] = $wgServer . '/extensions/wikia/RTE2';
+		$vars['RTELocalPath'] = $wgServer . '/extensions/wikia/RTE';
 
-		$vars['CKEDITOR_BASEPATH'] = $wgExtensionsPath . '/wikia/RTE2/ckeditor/';
+		$vars['CKEDITOR_BASEPATH'] = $wgExtensionsPath . '/wikia/RTE/ckeditor/';
 
 		// link to raw version of MediaWiki:Common.css
 		global $wgSquidMaxage;
@@ -670,7 +670,7 @@ HTML
 	static function onEditingPreferencesBefore( $user, &$preferences ): bool  {
 		// add JS to hide certain switches when wysiwyg is enabled
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE2/js/RTE.preferences.js\"></script>" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
 		return true;
 	}
 
