@@ -65,7 +65,7 @@ class ApiQueryBlocks extends ApiQueryBase {
 
 		$this->addFieldsIf ( 'ipb_id', $fld_id );
 		$this->addFieldsIf( array( 'ipb_address', 'ipb_user' ), $fld_user || $fld_userid );
-		$this->addFieldsIf( [ 'ipb_by', 'ipb_by_text' ], $fld_by );
+		$this->addFieldsIf( 'ipb_by', $fld_by );
 		$this->addFieldsIf( 'ipb_by', $fld_byid );
 		$this->addFieldsIf( 'ipb_timestamp', $fld_timestamp );
 		$this->addFieldsIf( 'ipb_expiry', $fld_expiry );
@@ -160,7 +160,9 @@ class ApiQueryBlocks extends ApiQueryBase {
 				$block['userid'] = $row->ipb_user;
 			}
 			if ( $fld_by ) {
-				$block['by'] = \User::getUsername( $row->ipb_by, $row->ipb_by_text );
+				// SUS-805: The block author will always be a registered user
+				$blockAuthor = User::newFromId( $row->ipb_by );
+				$block['by'] = $blockAuthor->getName();
 			}
 			if ( $fld_byid ) {
 				$block['byid'] = $row->ipb_by;

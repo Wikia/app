@@ -356,11 +356,7 @@ class Block {
 	 */
 	protected function initFromRow( $row ) {
 		$this->setTarget( $row->ipb_address );
-		if ( $row->ipb_by ) { // local user
-			$this->setBlocker( User::newFromID( $row->ipb_by ) );
-		} else { // foreign user
-			$this->setBlocker( $row->ipb_by_text );
-		}
+		$this->setBlocker( User::newFromID( $row->ipb_by ) );
 
 		$this->mReason = $row->ipb_reason;
 		$this->mTimestamp = wfTimestamp( TS_MW, $row->ipb_timestamp );
@@ -488,7 +484,6 @@ class Block {
 			'ipb_address'          => (string)$this->target,
 			'ipb_user'             => $this->target instanceof User ? $this->target->getID() : 0,
 			'ipb_by'               => $this->getBy(),
-			'ipb_by_text'          => $this->getByName(),
 			'ipb_reason'           => $this->mReason,
 			'ipb_timestamp'        => $db->timestamp( $this->mTimestamp ),
 			'ipb_auto'             => $this->mAuto,

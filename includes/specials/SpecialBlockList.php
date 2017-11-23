@@ -368,7 +368,6 @@ class BlockListPager extends TablePager {
 				'ipb_address',
 				'ipb_user',
 				'ipb_by',
-				'ipb_by_text',
 				'ipb_reason',
 				'ipb_timestamp',
 				'ipb_auto',
