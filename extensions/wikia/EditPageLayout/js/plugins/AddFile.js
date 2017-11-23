@@ -4,7 +4,7 @@ var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 WE.plugins.addfile = $.createClass(WE.plugin, {
 
-	init: function() {	
+	init: function() {
 		if(window.wgEditPageAddFileType) {
 			var message = '';
 			if(this.editor.mode == 'wysiwyg') {
