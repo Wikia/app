@@ -232,13 +232,13 @@ class RenameIPProcess {
 	 *
 	 * @param DatabaseBase $dbw Database to operate on
 	 * @param string $table Table name
-	 * @param string $oldusername Old IP
-	 * @param string $newusername New IP
+	 * @param string $oldIP Old IP
+	 * @param string $newIP New IP
 	 * @param array $extra Extra options (currently: userid_column, username_column, conds)
 	 *
 	 * @return bool
 	 */
-	public function renameInTable( $dbw, $table, $oldIP, $newIP, $extra ) {
+	public function renameInTable( DatabaseBase $dbw, $table, $oldIP, $newIP, $extra ) {
 		$dbName = $dbw->getDBname();
 		$this->addLog( "Processing {$dbName}.{$table}.{$extra['username_column']}." );
 
@@ -269,12 +269,12 @@ class RenameIPProcess {
 			$affectedRows = 1;
 
 			while ( $affectedRows > 0 ) {
-				$dbw->update( $table, $values, $conds, __CLASS__ . '::' . __METHOD__, $opts );
+				$dbw->update( $table, $values, $conds, __METHOD__, $opts );
 				$affectedRows = $dbw->affectedRows();
 				$this->addLog( "SQL: " . $dbw->lastQuery() );
 				$dbw->commit();
 				$this->addLog( "In {$dbName}.{$table}.{$extra['username_column']} {$affectedRows} row(s) was(were) updated." );
-				sleep( RENAMEIP_LOOP_PAUSE );
+				wfWaitForSlaves( $dbw->getDBname() );
 			}
 		} catch ( Exception $e ) {
 			$this->addLog( "Exception in renameInTable(): " . $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine() );
