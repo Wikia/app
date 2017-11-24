@@ -403,15 +403,6 @@ class RenameUserProcess {
 		$this->addLog( "User rename global task start." . ( ( !empty( $this->mFakeUserId ) ) ? ' Process is being repeated.' : null ) );
 		$this->addLog( "Renaming user {$this->mOldUsername} (ID {$this->mUserId}) to {$this->mNewUsername}" );
 
-		$hookName = 'RenameUser::Abort';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		// Give other affected extensions a chance to validate or abort
-		if ( !Hooks::run( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername, &$this->mErrors ) ) ) {
-			$this->addLog( "Aborting procedure as requested by hook." );
-			$this->addError( wfMessage( 'userrenametool-error-extension-abort' )->inContentLanguage()->text() );
-			return false;
-		}
-
 		$hookName = 'UserRename::BeforeAccountRename';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
 		Hooks::run( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
