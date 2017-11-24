@@ -53,7 +53,7 @@ class WallEditBuilder extends WallBuilder {
 		// Purge URLs for Wall/Board page etc., catch up with slaves
 		$this->message->invalidateCache();
 
-		WallHelper::sendNotification( $comment->mLastRevision, RC_EDIT );
+		WallHelper::sendNotification( $comment->mLastRevision, RC_EDIT, $this->editor );
 
 		$this->articleComment = $comment;
 		return $this;
