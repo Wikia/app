@@ -89,6 +89,10 @@ try {
 } catch (Exception $e) {
 	$errors = $process->getErrors();
 	$errors[] = "Exception in updateLocalIP(): ".$e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine();
+
+	\Wikia\Logger\WikiaLogger::instance()->error( 'updateLocalIP', [
+		'exception' => $e
+	] );
 }
 
 if(!empty($errors)){
