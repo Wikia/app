@@ -403,10 +403,6 @@ class RenameUserProcess {
 		$this->addLog( "User rename global task start." . ( ( !empty( $this->mFakeUserId ) ) ? ' Process is being repeated.' : null ) );
 		$this->addLog( "Renaming user {$this->mOldUsername} (ID {$this->mUserId}) to {$this->mNewUsername}" );
 
-		$hookName = 'UserRename::BeforeAccountRename';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
-
 		// rename the user on the shared cluster
 		if ( !$this->renameAccount() ) {
 			$this->addLog( "Failed to rename the user on the primary cluster. Report the problem to the engineers." );
