@@ -49,7 +49,7 @@
 
 .bx-wrapper .bx-loading {
 	min-height: 50px;
-	background: url(/resources/wikia/libraries/jquery/bxslider/images/bx_loader.gif) center center no-repeat #fff; /* $wgCdnStylePath */
+	background: url(/resources/wikia/libraries/jquery/bxslider/images/bx_loader.gif) center center no-repeat #fff; /* $wgResourceBasePath */
 	height: 100%;
 	width: 100%;
 	position: absolute;

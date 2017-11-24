@@ -80,11 +80,9 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/bottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
-		'//extensions/wikia/AdEngine/js/slot/premiumFloatingMedrec.js',
 		'//extensions/wikia/AdEngine/js/slot/highImpact.js',
 		'//extensions/wikia/AdEngine/js/slot/inContent.js',
 		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
-		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
@@ -139,6 +137,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
+		'//extensions/wikia/AdEngine/js/build/ad-engine.bridge.js',
 	],
 ];
 
@@ -267,6 +266,7 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/onemobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/openx.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/pubmatic.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubiconDisplay.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
@@ -937,6 +937,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
+		'//extensions/wikia/AdEngine/js/build/ad-engine.bridge.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_js',
 

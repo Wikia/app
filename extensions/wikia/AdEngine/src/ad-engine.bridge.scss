@@ -1,0 +1,10 @@
+@import '~ad-products/src/styles/styles.scss';
+
+.gpt-ad.bfab-template {
+  // TODO: remove me, I'm quick fix for default max-width in ad-products repository
+  max-width: none !important;
+}
+
+.gpt-ad.slot-responsive > div.replay-overlay {
+  position: absolute !important;
+}

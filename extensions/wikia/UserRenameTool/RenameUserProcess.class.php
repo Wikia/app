@@ -463,7 +463,6 @@ class RenameUserProcess {
 		}
 
 		$this->invalidateUser( $this->mOldUsername );
-		
 		if ( $this->mFakeUserId ) {
 			$this->addLog( "Cleaning up process data in user option renameData for ID {$this->mFakeUserId}" );
 

@@ -2,7 +2,7 @@
 
 @mixin button-theming($color-primary, $color-primary-text, $color-secondary: "") {
 	$color-primary-active: lighten($color-primary, 20%);
-	@if luminance($color-primary) > .3 {
+	@if lightness($color-primary) > 49 {
 		$color-primary-active: darken($color-primary, 20%);
 	}
 
@@ -11,7 +11,7 @@
 	}
 
 	$color-secondary-active: lighten($color-secondary, 20%);
-	@if luminance($color-secondary) > .3 {
+	@if lightness($color-secondary) > 49 {
 		$color-secondary-active: darken($color-secondary, 20%);
 	}
 

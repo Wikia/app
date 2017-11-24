@@ -1,11 +1,9 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/transform';
 @import 'skins/shared/mixins/flexbox';
 
 $recirculation-thumbnail-margin: 6px;
 $recirculation-thumbnail-size: 20px;
 
-// TODO ADEN-5481 remove unused styles after premiumAdLayout rollout
 .WikiaRail .premium-recirculation-rail {
 
 	.recirculation-sponsored-footer {
@@ -21,10 +19,10 @@ $recirculation-thumbnail-size: 20px;
 		margin: 0 6px 16px;
 
 		&.is-video .image-thumbnail::after {
-			bottom: 12px;
-			height: 48px;
-			right: 12px;
-			width: 48px;
+			bottom: $recirculation-thumbnail-margin;
+			height: $recirculation-thumbnail-size;
+			right: $recirculation-thumbnail-margin;
+			width: $recirculation-thumbnail-size;
 		}
 	}
 
@@ -33,42 +31,19 @@ $recirculation-thumbnail-size: 20px;
 	}
 
 	.content {
-		font-size: 14px;
-		line-height: 1.25;
-		margin-top: 6px;
+		font-size: 12px;
+		margin-left: 12px;
+		margin-top: 3px;
 	}
 
 	a {
 		@include flexbox();
-		@include flex-direction(column);
 		@include align-items(flex-start);
 		color: $color-text;
 
 		&:hover {
 			color: $color-links;
 			text-decoration: none;
-		}
-	}
-}
-
-.rail-sticky-module {
-	.premium-recirculation-rail {
-		.item.is-video .image-thumbnail::after {
-			bottom: $recirculation-thumbnail-margin;
-			height: $recirculation-thumbnail-size;
-			right: $recirculation-thumbnail-margin;
-			width: $recirculation-thumbnail-size;
-		}
-
-		.content {
-			font-size: 12px;
-			line-height: inherit;
-			margin-left: 12px;
-			margin-top: 3px;
-		}
-
-		a {
-			@include flex-direction(row);
 		}
 	}
 }

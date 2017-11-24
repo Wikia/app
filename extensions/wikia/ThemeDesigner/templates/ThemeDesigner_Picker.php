@@ -14,75 +14,75 @@
 		<ul class="swatches">
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/pattern_dots_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/pattern_dots.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/pattern_dots.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/pattern_flower_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/pattern_flower.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/pattern_flower.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/pattern_steel_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/pattern_steel.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/pattern_steel.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/pattern_straightdots_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/pattern_straightdots.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/pattern_straightdots.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/opulence_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/opulence.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/opulence.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/oasis_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/oasis.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/oasis.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/babygirl_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/babygirl.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/babygirl.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/carbon_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/carbon.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/carbon.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/rockgarden_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/rockgarden.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/rockgarden.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/creamsicle_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/creamsicle.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/creamsicle.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/plated_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/plated.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/plated.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/police_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/police.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/police.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/aliencrate_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/aliencrate.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/aliencrate.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/sapphire_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/sapphire.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/sapphire.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/sky_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/sky.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/sky.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/moonlight_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/moonlight.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/moonlight.jpg">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/beach_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/beach.png">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/beach.png">
 			</li>
 			<li>
 				<img src="<?= $wg->ExtensionsPath ?>/wikia/ThemeDesigner/images/dragstrip_swatch.jpg"
-					 data-image="<?= $wg->CdnStylePath ?>/skins/oasis/images/themes/dragstrip.jpg">
+					 data-image="<?= $wg->ResourceBasePath ?>/skins/oasis/images/themes/dragstrip.jpg">
 			</li>
 			<li class="no-image">
 				<?= wfMessage( 'themedesigner-dont-use-a-background' )->escaped() ?>

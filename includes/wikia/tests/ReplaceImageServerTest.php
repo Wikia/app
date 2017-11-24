@@ -12,7 +12,7 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
+		$this->mockGlobalVariable('wgResourceBasePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
 		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
 	}
 
@@ -37,7 +37,7 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 				'timestamp' => '20110917091718',
 				'expected' => 'https://images.wikia.nocookie.net/__cb20110917091718/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
 			],
-			// no timestamp provided, use cache buster value from wgCdnStylePath (i.e. wgStyleVersion)
+			// no timestamp provided, use cache buster value from wgResourceBasePath (i.e. wgStyleVersion)
 			[
 				'url' => 'http://images.wikia.com/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
 				'timestamp' => false,
@@ -77,7 +77,7 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 				'timestamp' => '20110917091718',
 				'expected' => 'https://images.hakarl.wikia-dev.com/__cb20110917091718/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
 			],
-			// no timestamp provided, use cache buster value from wgCdnStylePath (i.e. wgStyleVersion)
+			// no timestamp provided, use cache buster value from wgResourceBasePath (i.e. wgStyleVersion)
 			[
 				'url' => 'http://images.wikia.com/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
 				'timestamp' => false,

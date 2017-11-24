@@ -46,7 +46,7 @@ CREATE TABLE abuse_filter_log (
     afl_actions    TEXT         NOT NULL,
     afl_var_dump   TEXT         NOT NULL,
     afl_timestamp  TIMESTAMPTZ  NOT NULL,
-    afl_namespace  SMALLINT     NOT NULL,
+    afl_namespace  INTEGER      NOT NULL,
     afl_title      TEXT         NOT NULL,
 	afl_wiki       TEXT             NULL,
 	afl_deleted    SMALLINT         NULL

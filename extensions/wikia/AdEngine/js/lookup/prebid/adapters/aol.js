@@ -24,41 +24,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 					network: network,
 					alias: '4431473',
 					sizeId: '170'
-				},
-				PREFOOTER_LEFT_BOXAD: {
-					size: [300, 250],
-					placement: '4431479',
-					network: network,
-					alias: '4431479',
-					sizeId: '170'
-				},
-				PREFOOTER_MIDDLE_BOXAD: {
-					size: [300, 250],
-					placement: '4431480',
-					network: network,
-					alias: '4431480',
-					sizeId: '170'
-				},
-				PREFOOTER_RIGHT_BOXAD: {
-					size: [300, 250],
-					placement: '4431478',
-					network: network,
-					alias: '4431478',
-					sizeId: '170'
-				},
-				LEFT_SKYSCRAPER_2: {
-					size: [160, 600],
-					placement: '4431477',
-					network: network,
-					alias: '4431477',
-					sizeId: '154'
-				},
-				LEFT_SKYSCRAPER_3: {
-					size: [300, 600],
-					placement: '4431475',
-					network: network,
-					alias: '4431475',
-					sizeId: '529'
 				}
 				// TODO: fill with proper numbers https://wikia-inc.atlassian.net/browse/ADEN-5517
 				// BOTTOM_LEADERBOARD: {

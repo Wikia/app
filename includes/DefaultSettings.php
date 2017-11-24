@@ -149,7 +149,6 @@ $wgLoadScript = false;
  * The URL path of the skins directory. Will default to "{$wgScriptPath}/skins" in Setup.php
  */
 $wgStylePath = false;
-$wgStyleSheetPath = &$wgStylePath;
 
 /**
  * The URL path of the skins directory. Should not point to an external domain.
