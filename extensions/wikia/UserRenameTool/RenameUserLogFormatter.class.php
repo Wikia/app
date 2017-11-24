@@ -18,12 +18,11 @@ class RenameUserLogFormatter {
 	}
 
 	static private function log( $type, $requestor, $oldUsername, $newUsername ) {
-		$text = wfMessage( $type,
+		return wfMessage( $type,
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername )
 		)->inContentLanguage()->text();
-		return $text;
 	}
 
 	static public function start( $requestor, $oldUsername, $newUsername ) {
