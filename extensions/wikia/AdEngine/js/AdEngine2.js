@@ -157,7 +157,9 @@ define('ext.wikia.adEngine.adEngine', [
 					},
 					renderEnded: function () {
 						log(['renderEnded', provider.name, slotName], log.levels.debug, logGroup);
-						slot.container.setAttribute('data-slot-result', 'loading');
+						if (!slot.container.getAttribute('data-slot-result')) {
+							slot.container.setAttribute('data-slot-result', 'loading');
+						}
 					},
 					viewed: function () {
 						log(['viewed', provider.name, slotName], log.levels.debug, logGroup);

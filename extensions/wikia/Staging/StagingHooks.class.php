@@ -26,10 +26,14 @@ class StagingHooks {
 	static public function onBeforePageRedirect( $out, &$redirect, &$code ) {
 		if ( !empty( $_SERVER['HTTP_X_STAGING'] ) ) {
 			$stagingEnvName = $_SERVER['HTTP_X_STAGING'];
-			$stagingUrlPart = '://' . $stagingEnvName . '.';
+			$parts = parse_url( $redirect );
 
-			if ( strpos( $redirect, 'wikia.com' ) !== false && strpos( $redirect, $stagingUrlPart ) === false ) {
-				$redirect = str_replace( '://', $stagingUrlPart, $redirect );
+			if ( strpos( $parts['host'], '.wikia.com' ) !== false
+				&& strpos( $parts['host'], $stagingEnvName . '.wikia.com' ) === false
+				&& $parts['host'] !== 'fandom.wikia.com'
+			) {
+				$parts['host'] = str_replace( '.wikia.com', '.' . $stagingEnvName . '.wikia.com', $parts['host'] );
+				$redirect = http_build_url( '', $parts );
 			}
 		}
 

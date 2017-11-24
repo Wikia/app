@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.context.uapContext', [
+	'ad-engine.bridge',
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.log'
-], function (eventDispatcher, log) {
+], function (adEngineBridge, eventDispatcher, log) {
 	'use strict';
 
 	var context = {},
@@ -11,6 +12,7 @@ define('ext.wikia.adEngine.context.uapContext', [
 		uapTypes = ['uap', 'vuap'];
 
 	function setUapId(uap) {
+		adEngineBridge.setUapId(uap);
 		context.uapId = uap;
 	}
 
@@ -19,6 +21,7 @@ define('ext.wikia.adEngine.context.uapContext', [
 	}
 
 	function setType(type) {
+		adEngineBridge.setType(type);
 		context.type = type;
 	}
 

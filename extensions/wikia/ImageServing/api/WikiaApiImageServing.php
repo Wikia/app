@@ -23,7 +23,7 @@ class WikiaApiImageServing extends ApiBase {
 	 * See functions below for expected URL params
 	 */
 	public function execute() {
-		global $wgRequest, $wgCacheBuster;
+		global $wgRequest, $wgStyleVersion;
 		wfProfileIn(__METHOD__);
 
 		extract( $this->extractRequestParams() );
@@ -53,7 +53,7 @@ class WikiaApiImageServing extends ApiBase {
 				$imgTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 				$imgFile = wfFindFile($imgTitle);
 				if(!empty($imgFile)){
-					$imageUrl = wfReplaceImageServer( $imgFile->getFullUrl(), $wgCacheBuster );
+					$imageUrl = wfReplaceImageServer( $imgFile->getFullUrl(), $wgStyleVersion );
 				}
 			}
 

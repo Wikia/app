@@ -42,11 +42,6 @@
 				Lightbox.current.thumbs = [];
 				Lightbox.current.thumbTypesAdded = [];
 				Lightbox.to = LightboxLoader.cache.to;
-				// Reset Ad Flags
-				Lightbox.ads.adMediaProgress = [];
-				Lightbox.ads.adMediaShown = 0;
-				Lightbox.ads.adMediaShownSinceLastAd = 0;
-				Lightbox.ads.adIsShowing = false;
 				// Re-show box ad
 				LightboxLoader.pageAds.css('visibility', 'visible');
 				// Reset tracking

@@ -20,68 +20,29 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'top'},
 					position: 'atf',
-					siteId: 41686,
-					zoneId: 175094,
-					palZoneId: 704672
+					siteId: 148804,
+					zoneId: 704672
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600]],
 					targeting: {loc: 'top'},
 					position: 'atf',
-					siteId: 41686,
-					zoneId: 175094,
-					palZoneId: 704672
-				},
-				LEFT_SKYSCRAPER_2: {
-					sizes: [[160, 600], [300, 600], [300, 250]],
-					targeting: {loc: 'middle'},
-					position: 'btf',
-					siteId: 41686,
-					zoneId: 194452
-				},
-				LEFT_SKYSCRAPER_3: {
-					sizes: [[160, 600], [300, 600], [300, 250]],
-					targeting: {loc: 'footer'},
-					position: 'btf',
-					siteId: 41686,
-					zoneId: 194452
+					siteId: 148804,
+					zoneId: 704672
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [[160, 600], [300, 600], [300, 250]],
 					targeting: {loc: 'hivi'},
 					position: 'btf',
-					siteId: 83830,
-					zoneId: 395614,
-					palZoneId: 704676
+					siteId: 148804,
+					zoneId: 704676
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'footer'},
 					position: 'btf',
-					siteId: 41686,
-					zoneId: 194452,
-					palZoneId: 704674
-				},
-				PREFOOTER_LEFT_BOXAD: {
-					sizes: [[300, 250]],
-					targeting: {loc: 'footer'},
-					position: 'btf',
-					siteId: 41686,
-					zoneId: 194452
-				},
-				PREFOOTER_MIDDLE_BOXAD: {
-					sizes: [[300, 250]],
-					targeting: {loc: 'footer'},
-					position: 'btf',
-					siteId: 41686,
-					zoneId: 194452
-				},
-				PREFOOTER_RIGHT_BOXAD: {
-					sizes: [[300, 250]],
-					targeting: {loc: 'footer'},
-					position: 'btf',
-					siteId: 41686,
-					zoneId: 194452
+					siteId: 148804,
+					zoneId: 704674
 				}
 			},
 			mercury: {
@@ -146,11 +107,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 			keywords: ['rp.fastlane'],
 			inventory: targeting
 		};
-
-		if (getAdContext().opts.premiumAdLayoutRubiconFastlaneTagsEnabled && config.palZoneId) {
-			bidParams.siteId = 148804;
-			bidParams.zoneId = config.palZoneId;
-		}
 
 		adUnit = {
 			code: slotName,

@@ -10,19 +10,19 @@
 	.color {
 		display: none;
 		.swatches {
-			background: url(/extensions/wikia/ThemeDesigner/images/color_shadow.png) bottom center no-repeat; /* $wgCdnStylePath */
+			background: url(/extensions/wikia/ThemeDesigner/images/color_shadow.png) bottom center no-repeat; /* $wgResourceBasePath */
 		}
 	}
 	.image, .community-header {
 		display: none;
 		.swatches {
-			background: url(/extensions/wikia/ThemeDesigner/images/image_shadow.png) bottom center no-repeat; /* $wgCdnStylePath */
+			background: url(/extensions/wikia/ThemeDesigner/images/image_shadow.png) bottom center no-repeat; /* $wgResourceBasePath */
 			li, img {
 				height: 50px;
 				width: 60px;
 			}
 			.no-image {
-				background: #EEE url(/extensions/wikia/ThemeDesigner/images/void_button.png) 50% 27px no-repeat; /* $wgCdnStylePath */
+				background: #EEE url(/extensions/wikia/ThemeDesigner/images/void_button.png) 50% 27px no-repeat; /* $wgResourceBasePath */
 				font-size: 9px;
 				text-align: center;
 			}

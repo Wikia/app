@@ -51,10 +51,22 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
 	}
 
 	/**
+	 * Remove the $IP-prefix (/usr/wikia/slot1/NNN/src) to make backtrace entries a bit smaller
+	 *
+	 * @see SUS-2974
+	 * @param string $path
+	 * @return string
+	 */
+	public static function normalizePath( string $path ) : string {
+		global $IP;
+		return str_replace( $IP, '', $path );
+	}
+
+	/**
 	 * @param Exception}Throwable $e
 	 * @return array
 	 */
-	protected function normalizeException($e) {
+	public function normalizeException($e) {
 		if (!$e instanceof Exception && !$e instanceof \Throwable) {
 			throw new \InvalidArgumentException('Exception/Throwable expected, got '.gettype($e).' / '.get_class($e));
 		}
@@ -63,13 +75,13 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
 			'class' => get_class($e),
 			'message' => $e->getMessage(),
 			'code' => $e->getCode(),
-			'file' => $e->getFile().':'.$e->getLine(),
+			'file' => self::normalizePath( $e->getFile() ).':'.$e->getLine(),
 		);
 
 		$trace = $e->getTrace();
 		foreach ($trace as $frame) {
 			if (isset($frame['file'])) {
-				$data['trace'][] = $frame['file'].':'.$frame['line'];
+				$data['trace'][] = self::normalizePath( $frame['file'] ).':'.$frame['line'];
 			} else {
 				// prevent huge json blobs from preventing message parsing (because of split message) and flooding file logs
 				if (isset($frame['args'])) {

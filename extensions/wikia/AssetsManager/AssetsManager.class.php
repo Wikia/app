@@ -46,8 +46,8 @@ class AssetsManager {
 	 */
 	public static function getInstance() {
 		if( self::$mInstance == false ) {
-			global $wgCdnStylePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
-			self::$mInstance = new AssetsManager($wgCdnStylePath, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
+			global $wgResourceBasePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
+			self::$mInstance = new AssetsManager($wgResourceBasePath, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
 		}
 		return self::$mInstance;
 	}
@@ -771,7 +771,6 @@ class AssetsManager {
 				$map = [
 					[ $wgExtensionsPath, 'extensions/' ],
 					[ $wgStylePath, 'skins/' ],
-					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
 					[ $wgResourceBasePath . '/resources', 'resources/' ],
 				];
 			}

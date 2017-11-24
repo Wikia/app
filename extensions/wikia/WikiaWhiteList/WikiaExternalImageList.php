@@ -53,9 +53,9 @@ function wfExtImagesWhiteListSetup() {
 }
 
 function wfExtImagesWhiteListParse($text) {
-	if (preg_match('#http://(.*?).(jpg|jpeg|png|gif)#i', $text, $captures)) {
+	if (preg_match('#https?://(.*?).(jpg|jpeg|png|gif)#i', $text, $captures)) {
 	    $lhref = $captures[0];
-	    if (preg_match('#^\s*http://[^\/\s]#', $lhref)) {
+	    if (preg_match('#^\s*https?://[^\/\s]#', $lhref)) {
 	        //---
 	        $lparsed = parse_url($lhref);
 	        $lschema = (!empty($lparsed['scheme'])) ? $lparsed['scheme'] : "http";
@@ -94,7 +94,7 @@ function wfExtImagesWhiteListParse($text) {
 }
 
 function wfExtImageLinksToImage(&$str) {
-    return preg_replace_callback('#http://(.*?).(jpg|jpeg|png|gif)#i', create_function('$matches', 'return wfExtImagesWhiteListParse($matches[0]);'), $str);
+    return preg_replace_callback('#https?://(.*?).(jpg|jpeg|png|gif)#i', create_function('$matches', 'return wfExtImagesWhiteListParse($matches[0]);'), $str);
 }
 
 #----

@@ -15,7 +15,7 @@ $places-column-width: 300px;
 			width: $places-column-width - 80;
 		}
 		ul {
-			list-style-image: url('/extensions/wikia/Places/images/places_marker.png'); /* $wgCdnStylePath */
+			list-style-image: url('/extensions/wikia/Places/images/places_marker.png'); /* $wgResourceBasePath */
 			height: 384px;
 			margin: 5px 0;
 			overflow: auto;

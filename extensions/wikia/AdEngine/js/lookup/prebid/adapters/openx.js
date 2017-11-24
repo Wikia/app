@@ -25,22 +25,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 					],
 					unit: 538735691
 				},
-				LEFT_SKYSCRAPER_2: {
-					sizes: [
-						[160, 600],
-						[300, 600],
-						[300, 250]
-					],
-					unit: 538735695
-				},
-				LEFT_SKYSCRAPER_3: {
-					sizes: [
-						[160, 600],
-						[300, 600],
-						[300, 250]
-					],
-					unit: 538735696
-				},
 				INCONTENT_BOXAD_1: {
 					sizes: [
 						[300, 250],
@@ -48,24 +32,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 						[160, 600]
 					],
 					unit: 538735697
-				},
-				PREFOOTER_LEFT_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					unit: 538735692
-				},
-				PREFOOTER_MIDDLE_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					unit: 538735693
-				},
-				PREFOOTER_RIGHT_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					unit: 538735694
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [

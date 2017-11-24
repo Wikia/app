@@ -166,9 +166,7 @@ class SpecialWhatLinksHere extends SpecialPage {
 			'(rd_interwiki is NULL) or (rd_interwiki = \'\')'
 		)));
 
-		// hook by Wikia, Bartek Lapinski 30.03.2009, for videos and stuff
-		// should be deprecated (1.19 merge by MoLi)
-		Hooks::run( 'SpecialWhatlinkshere::beforeImageQuery', array( &$hideimages, &$plConds, &$tlConds, &$ilConds ) );
+		Hooks::run( 'SpecialWhatLinksHere::beforeQuery', [ &$plConds ] );
 
 		if( $fetchlinks ) {
 			$options['ORDER BY'] = 'pl_from';

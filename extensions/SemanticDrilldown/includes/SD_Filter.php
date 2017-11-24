@@ -164,8 +164,9 @@ class SDFilter {
 			} elseif ( $typeValue == $datatypeLabels['_dat'] ) {
 				$this->property_type = 'date';
 			} else {
-				// This should hopefully never get called.
-				print "Error! Unsupported property type ($typeValue) for filter {$this->name}.";
+				\Wikia\Logger\WikiaLogger::instance()->warning( 'SUS-3246 - Unsupported semantic property type', [
+					'property_type' => $typeValue
+				] );
 			}
 		}
 

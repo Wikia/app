@@ -73,7 +73,7 @@
 
 			&::after {
 				background: {
-					image: url('/extensions/wikia/Recirculation/images/playhead.svg'); /* $wgCdnStylePath */
+					image: url('/extensions/wikia/Recirculation/images/playhead.svg'); /* $wgResourceBasePath */
 					position: center center;
 					repeat: no-repeat;
 					size: cover;
@@ -92,7 +92,7 @@
 
 	.placeholder-thumbnail {
 		background-color: $color-article-thumb-background;
-		background-image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgCdnStylePath */
+		background-image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgResourceBasePath */
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: contain;
