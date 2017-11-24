@@ -111,6 +111,12 @@ class ApiQueryUsers extends ApiQueryBase {
 			}
 		}
 
+		// SUS-3282: Do not query for user_id = 0
+		$validUserIds = array_filter( $ids );
+		if ( empty( $validUserIds ) && empty( $goodNames ) ) {
+			$this->dieUsage( 'You must specify at least one valid user name or ID to query for', 400 );
+		}
+
 		$result = $this->getResult();
 
 		/* Wikia change begin - SUS-2989 */
