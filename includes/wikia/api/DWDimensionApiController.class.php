@@ -2,6 +2,7 @@
 
 class DWDimensionApiController extends WikiaApiController {
 	const LIMIT = 100;
+	const LIMIT_MAX = 20000;
 
 	const WIKI_DOMAINS_AFTER_DOMAIN = null;
 
@@ -15,7 +16,7 @@ class DWDimensionApiController extends WikiaApiController {
 	public function getWikiDomains() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = $db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) );
+		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
 		$afterDomain = $db->strencode( $this->getRequest()->getVal( 'after_domain', static::WIKI_DOMAINS_AFTER_DOMAIN ) );
 
 		$dbResult = $db->select(
@@ -46,7 +47,7 @@ class DWDimensionApiController extends WikiaApiController {
 	public function getWikis() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = $db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) );
+		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
 		$query = str_replace( '$city_id', $afterWikiId, DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY);
