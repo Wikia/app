@@ -71,6 +71,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_clean_math_table' ),
 			array( 'WikiaUpdater::do_transcache_update' ),
 			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
+			array( 'WikiaUpdater::doLoggingTableUserCleanup' ), // SUS-3222
 			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
@@ -224,6 +225,42 @@ class WikiaUpdater {
 		$db->query( sprintf( 'ALTER TABLE %s DROP COLUMN %s', $table, $old_column ), __METHOD__ );
 
 		$updater->output( "done.\n" );
+	}
+
+	public static function doLoggingTableUserCleanup( DatabaseUpdater $databaseUpdater ) {
+		$databaseConnection = $databaseUpdater->getDB();
+
+		if ( !$databaseConnection->fieldExists( 'logging', 'log_user_text', __METHOD__ ) ) {
+			$databaseUpdater->output( "logging.log_user_text column does not exist.\n" );
+			return;
+		}
+
+		$databaseUpdater->output( 'Migrating legacy chat ban log entries... ' );
+
+		// Attribute old chat ban log entries to FANDOMbot
+		$databaseConnection->update(
+			'logging',
+			[ 'log_user' => 32794352 ],
+			[
+				'log_user' => 0,
+				'log_type' => 'chatban'
+			],
+			__METHOD__
+		);
+
+		$databaseUpdater->output( "done.\n" );
+		$databaseUpdater->output( 'Deleting log entries attributed to anons... ' );
+
+		$databaseConnection->delete( 'logging', [ 'log_user' => 0 ], __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+		$databaseUpdater->output( 'Dropping logging.log_user_text column... ' );
+
+		$databaseConnection->query( 'ALTER TABLE logging DROP COLUMN log_user_text', __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+
+		wfWaitForSlaves();
 	}
 
 	/**
