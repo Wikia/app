@@ -347,16 +347,13 @@ class RenameUserProcess {
 			return false;
 		}
 
-		$noErrors = true;
-
 		// ComSup wants the StaffLogger to keep track of renames...
 		$this->addMainLog(
 			'start',
 			\RenameUserLogFormatter::start(
 				$this->mRequestorName,
 				$this->mOldUsername,
-				$this->mNewUsername,
-				$this->mReason
+				$this->mNewUsername
 			)
 		);
 
