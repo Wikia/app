@@ -39,8 +39,9 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 		}
 	}
 
-	function add(video) {
-		var volumeControl = createVolumeControl();
+	function add(video, params, panel) {
+		var volumeControl = createVolumeControl(),
+			container = panel ? panel.getContainer() : video.container;
 
 		video.addEventListener('wikiaVolumeChange', function () {
 			updateCurrentState(video, volumeControl);
@@ -57,7 +58,7 @@ define('ext.wikia.adEngine.video.player.ui.volumeControl', [
 			e.preventDefault();
 		});
 
-		video.container.appendChild(volumeControl);
+		container.appendChild(volumeControl);
 	}
 
 	return {

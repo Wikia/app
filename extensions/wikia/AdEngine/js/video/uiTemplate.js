@@ -1,47 +1,51 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.uiTemplate', [
+	'ext.wikia.adEngine.video.player.ui.panel',
 	'wikia.log'
-], function (log) {
+], function (Panel, log) {
 	'use strict';
 
-	var autoPlayLayout = [
+	var createBottomPanel = function (uiElements) {
+			return new Panel('bottom-panel', uiElements);
+		},
+		autoPlayLayout = [
 			'progressBar',
 			'pauseOverlay',
-			'volumeControl',
-			'toggleAnimation'
+			'toggleAnimation',
+			createBottomPanel(['volumeControl'])
 		],
 		defaultLayout = [
 			'progressBar',
 			'pauseOverlay',
-			'volumeControl',
 			'closeButton',
-			'toggleAnimation'
+			'toggleAnimation',
+			createBottomPanel(['volumeControl'])
 		],
 		splitLayout = [
 			'progressBar',
 			'pauseOverlay',
-			'volumeControl',
 			'toggleVideo',
-			'replayOverlay'
+			'replayOverlay',
+			createBottomPanel(['volumeControl'])
 		],
 		clickToPlaySplitLayout = [
 			'progressBar',
 			'pauseOverlay',
-			'volumeControl',
 			'toggleVideo',
 			'replayOverlay',
-			'closeButton'
+			'closeButton',
+			createBottomPanel(['volumeControl'])
 		],
 		outstreamIncontent = [
 			'dynamicReveal',
 			'mouseEvents',
 			'progressBar',
-			'volumeControl'
+			createBottomPanel(['volumeControl'])
 		],
 		outstreamLeaderboard = [
 			'mouseEvents',
 			'progressBar',
-			'volumeControl'
+			createBottomPanel(['volumeControl'])
 		],
 		logGroup = 'ext.wikia.adEngine.video.player.uiTemplate';
 

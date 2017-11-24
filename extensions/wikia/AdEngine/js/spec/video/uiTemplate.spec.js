@@ -12,13 +12,16 @@ describe('ext.wikia.adEngine.video.player.uiTemplate', function () {
 			videoSettings: {
 				isAutoPlay: noop,
 				isSplitLayout: noop
+			},
+			Panel: function () {
+				this.add = noop;
 			}
 		};
 
 	mocks.log.levels = { debug: 1 };
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.uiTemplate'](mocks.log);
+		return modules['ext.wikia.adEngine.video.player.uiTemplate'](mocks.Panel, mocks.log);
 	}
 
 	beforeEach(function () {

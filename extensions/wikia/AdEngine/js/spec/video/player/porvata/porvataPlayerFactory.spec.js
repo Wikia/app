@@ -25,6 +25,14 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 			show: noop,
 			hide: noop
 		},
+		doc: {
+			documentElement: {
+				classList: {
+					add: noop,
+					remove: noop
+				}
+			}
+		},
 		videoSettings: {
 			getParams: function () {
 				return {
@@ -57,7 +65,7 @@ describe('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', functio
 	logMock.levels = {};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory'](mocks.domElementTweaker, logMock);
+		return modules['ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory'](mocks.domElementTweaker, mocks.doc, logMock);
 	}
 
 	it('player created with all properties', function () {

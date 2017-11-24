@@ -1,13 +1,16 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 	'ext.wikia.adEngine.domElementTweaker',
+	'wikia.document',
 	'wikia.log'
-], function (DOMElementTweaker, log) {
+], function (DOMElementTweaker, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory',
 		autoPlayClassName = 'autoplay',
 		defaultAspectRatio = 320 / 240,
-		videoPlayerClassName = 'video-player';
+		videoPlayerClassName = 'video-player',
+		videoFullscreenClassName = 'video-player-fullscreen',
+		stopScrollingClassName = 'stop-scrolling';
 
 	function prepareVideoAdContainer(videoAdContainer, videoSettings) {
 		DOMElementTweaker.hide(videoAdContainer);
@@ -102,8 +105,23 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			resize: function (newWidth, newHeight) {
 				width = newWidth;
 				height = newHeight;
+				ima.resize(width, height);
+			},
+			toggleFullscreen: function () {
+				var isFullscreen = ima.toggleFullscreen();
+
+				if (isFullscreen) {
+					this.container.classList.add(videoFullscreenClassName);
+					doc.documentElement.classList.add(stopScrollingClassName);
+				} else {
+					this.container.classList.remove(videoFullscreenClassName);
+					doc.documentElement.classList.remove(stopScrollingClassName);
+				}
 
 				ima.resize(width, height);
+				params.isFullscreen = isFullscreen;
+
+				return isFullscreen;
 			},
 			resume: function () {
 				ima.getAdsManager().resume();

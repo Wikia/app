@@ -2,12 +2,14 @@
 @import 'ads-mixin';
 
 $wikia-top-ads-index: 2;
+$wikia-fullscreen-ads-z-index: 9999;
 
 $default-progress-bar-color: #b7b7b7;
 $default-progress-bar-current-time-color: #666;
 $outstream-progress-bar-color: #666;
 $outstream-progress-bar-current-time-color: #b7b7b7;
 $video-player-button-size: 24px;
+$video-player-button-color: #b7b7b7;
 
 $floating-ad-margin: 20px;
 $floating-ad-index: $wikia-top-ads-index + 10;
@@ -67,8 +69,23 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		right: 0;
 	}
 
+	&.video-player-fullscreen {
+		position: fixed !important;
+		top: 0;
+		left: 0;
+		z-index: $wikia-fullscreen-ads-z-index;
+	}
+
 	video {
 		left: 0;
+	}
+
+	.bottom-panel {
+		position: absolute;
+		bottom: 10px;
+		right: 5px;
+		text-align: right;
+		z-index: $controls-z-index;
 	}
 
 	.progress-bar {
@@ -111,16 +128,45 @@ $video-interactive-area-z-index: $vpaid-z-index + 1;
 		z-index: $controls-z-index;
 	}
 
+	.toggle-fullscreen,
+	.volume-control {
+		vertical-align: top;
+		display: inline-block;
+		margin: 10px 5px;
+	}
+
+	.toggle-fullscreen {
+		font-size: $video-player-button-size;
+		cursor: pointer;
+		overflow: hidden;
+		opacity: 0.75;
+		fill: $video-player-button-color;
+		height: $video-player-button-size;
+		width: $video-player-button-size;
+		z-index: $controls-z-index;
+
+		.fullscreen-off-icon {
+			display: none;
+		}
+
+		&.fullscreen-on {
+			.fullscreen-off-icon {
+				display: unset;
+			}
+
+			.fullscreen-on-icon {
+				display: none;
+			}
+		}
+	}
+
 	/* TODO remove .ima-mute-div and all references in next releases (keep .volume-control only) */
 	.ima-mute-div, .volume-control {
 		/* remove Firefox's dotted outline on buttons and links */
 		:focus {outline:none;}
 		::-moz-focus-inner {border:0;}
 
-		bottom: 18px;
 		cursor: pointer;
-		position: absolute;
-		right: 10px;
 		z-index: $controls-z-index;
 
 		.speaker {
