@@ -172,7 +172,6 @@ packages :
 				'plugins/toolbar/plugin.js'
 				'plugins/notification/plugin.js'
 
-
 				//wikia plugins below
 				'../js/plugins/accesskey/plugin.js'
 				'../js/plugins/comment/plugin.js'	

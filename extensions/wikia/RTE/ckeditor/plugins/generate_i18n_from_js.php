@@ -18,7 +18,6 @@ $merged = array();
 $init = True;
 
 foreach($desiredPluginNames as $pluginName){
-		echo "Processing plugin: " . $pluginName . "\n";
 		$languages = array();
 		$langCodes = array();
 		$filePath = trim("./".$pluginName."/lang/".shell_exec("cd ".$pluginName."/lang/"));
@@ -83,7 +82,7 @@ foreach($desiredPluginNames as $pluginName){
 
 }
 
-$desiredPluginNames = array("toolbar","basicstyles","contextmenu","button","clipboard","fakeobjects","format","indent","list","pastetext","removeformat","sourcearea","undo","table","contextmenu","link","justify");
+$desiredPluginNames = array("toolbar","basicstyles","contextmenu","button","clipboard","fakeobjects","format","indent","list","pastetext","removeformat","sourcearea","undo","table","contextmenu","link","justify","notification");
 
 
 

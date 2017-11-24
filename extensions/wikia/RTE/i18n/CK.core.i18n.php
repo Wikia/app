@@ -785,6 +785,7 @@ $messages['az'] = array (
   'rte-ck-justify-center' => 'Mərkəz',
   'rte-ck-justify-left' => 'Soldan düzləndir',
   'rte-ck-justify-right' => 'Sağdan düzləndir',
+  'rte-ck-notification-closed' => 'Xəbərdarlıq pəncərəsi bağlanıb',
 );
 $messages['bg'] = array (
   'rte-ck-editor' => 'Текстов редактор за форматиран текст',
@@ -1831,6 +1832,7 @@ $messages['ca'] = array (
   'rte-ck-justify-center' => 'Centrat',
   'rte-ck-justify-left' => 'Alinea a l\'esquerra',
   'rte-ck-justify-right' => 'Alinea a la dreta',
+  'rte-ck-notification-closed' => 'Notificació tancada.',
 );
 $messages['cs'] = array (
   'rte-ck-editor' => 'Textový editor',
@@ -2093,6 +2095,7 @@ $messages['cs'] = array (
   'rte-ck-justify-center' => 'Zarovnat na střed',
   'rte-ck-justify-left' => 'Zarovnat vlevo',
   'rte-ck-justify-right' => 'Zarovnat vpravo',
+  'rte-ck-notification-closed' => 'Oznámení zavřeno.',
 );
 $messages['cy'] = array (
   'rte-ck-editor' => 'Golygydd Testun Cyfoethog',
@@ -2616,6 +2619,7 @@ $messages['da'] = array (
   'rte-ck-justify-center' => 'Centreret',
   'rte-ck-justify-left' => 'Venstrestillet',
   'rte-ck-justify-right' => 'Højrestillet',
+  'rte-ck-notification-closed' => 'Notefikation lukket.',
 );
 $messages['de-ch'] = array (
   'rte-ck-editor' => 'WYSIWYG-Editor',
@@ -2878,6 +2882,7 @@ $messages['de-ch'] = array (
   'rte-ck-justify-center' => 'Zentriert',
   'rte-ck-justify-left' => 'Linksbündig',
   'rte-ck-justify-right' => 'Rechtsbündig',
+  'rte-ck-notification-closed' => 'Benachrichtigung geschlossen.',
 );
 $messages['de'] = array (
   'rte-ck-editor' => 'WYSIWYG-Editor',
@@ -3140,6 +3145,7 @@ $messages['de'] = array (
   'rte-ck-justify-center' => 'Zentriert',
   'rte-ck-justify-left' => 'Linksbündig',
   'rte-ck-justify-right' => 'Rechtsbündig',
+  'rte-ck-notification-closed' => 'Benachrichtigung geschlossen.',
 );
 $messages['el'] = array (
   'rte-ck-editor' => 'Επεξεργαστής Πλούσιου Κειμένου',
@@ -4448,6 +4454,7 @@ $messages['en'] = array (
   'rte-ck-justify-center' => 'Center',
   'rte-ck-justify-left' => 'Align Left',
   'rte-ck-justify-right' => 'Align Right',
+  'rte-ck-notification-closed' => 'Notification closed.',
 );
 $messages['eo'] = array (
   'rte-ck-editor' => 'RiĉTeksta Redaktilo',
@@ -4710,6 +4717,7 @@ $messages['eo'] = array (
   'rte-ck-justify-center' => 'Centrigi',
   'rte-ck-justify-left' => 'Ĝisrandigi maldekstren',
   'rte-ck-justify-right' => 'Ĝisrandigi dekstren',
+  'rte-ck-notification-closed' => 'Sciigo fermita',
 );
 $messages['es'] = array (
   'rte-ck-editor' => 'Editor de texto enriquecido',
@@ -4976,6 +4984,7 @@ Por favor use el teclado (Ctrl/Cmd+X).',
   'rte-ck-justify-center' => 'Centrar',
   'rte-ck-justify-left' => 'Alinear a Izquierda',
   'rte-ck-justify-right' => 'Alinear a Derecha',
+  'rte-ck-notification-closed' => 'Notificación cerrada.',
 );
 $messages['es-mx'] = array (
   'rte-ck-toolbar-toolbarCollapse' => 'Colapsar barra de herramientas',
@@ -5578,6 +5587,7 @@ $messages['eu'] = array (
   'rte-ck-justify-center' => 'Erdian',
   'rte-ck-justify-left' => 'Lerrokatu ezkerrean',
   'rte-ck-justify-right' => 'Lerrokatu eskuinean',
+  'rte-ck-notification-closed' => 'Jakinarazpena itxita.',
 );
 $messages['fa'] = array (
   'rte-ck-editor' => 'ویرایش‌گر متن غنی',
@@ -6886,6 +6896,7 @@ $messages['fr'] = array (
   'rte-ck-justify-center' => 'Centrer',
   'rte-ck-justify-left' => 'Aligner à gauche',
   'rte-ck-justify-right' => 'Aligner à droite',
+  'rte-ck-notification-closed' => 'Notification fermée.',
 );
 $messages['gl'] = array (
   'rte-ck-editor' => 'Editor de texto mellorado',
@@ -7150,6 +7161,7 @@ Confirma que quere pechar o diálogo?',
   'rte-ck-justify-center' => 'Centrado',
   'rte-ck-justify-left' => 'Aliñar á esquerda',
   'rte-ck-justify-right' => 'Aliñar á dereita',
+  'rte-ck-notification-closed' => 'Notificación pechada.',
 );
 $messages['gu'] = array (
   'rte-ck-editor' => 'રીચ ટેક્ષ્ત્ એડીટર',
@@ -8196,6 +8208,7 @@ $messages['hr'] = array (
   'rte-ck-justify-center' => 'Središnje poravnanje',
   'rte-ck-justify-left' => 'Lijevo poravnanje',
   'rte-ck-justify-right' => 'Desno poravnanje',
+  'rte-ck-notification-closed' => 'Obavijest zatvorena.',
 );
 $messages['hu'] = array (
   'rte-ck-editor' => 'HTML szerkesztő',
@@ -8458,6 +8471,7 @@ $messages['hu'] = array (
   'rte-ck-justify-center' => 'Középre',
   'rte-ck-justify-left' => 'Balra',
   'rte-ck-justify-right' => 'Jobbra',
+  'rte-ck-notification-closed' => 'Értesítés bezárva.',
 );
 $messages['id'] = array (
   'rte-ck-editor' => 'Rich Text Editor',
@@ -8720,6 +8734,7 @@ $messages['id'] = array (
   'rte-ck-justify-center' => 'Pusat',
   'rte-ck-justify-left' => 'Align Left',
   'rte-ck-justify-right' => 'Align Right',
+  'rte-ck-notification-closed' => 'Pemberitahuan ditutup',
 );
 $messages['is'] = array (
   'rte-ck-editor' => 'Rich Text Editor',
@@ -9243,6 +9258,7 @@ $messages['it'] = array (
   'rte-ck-justify-center' => 'Centra',
   'rte-ck-justify-left' => 'Allinea a sinistra',
   'rte-ck-justify-right' => 'Allinea a destra',
+  'rte-ck-notification-closed' => 'Notifica chiusa.',
 );
 $messages['ja'] = array (
   'rte-ck-editor' => 'リッチテキストエディタ',
@@ -9505,6 +9521,7 @@ $messages['ja'] = array (
   'rte-ck-justify-center' => '中央揃え',
   'rte-ck-justify-left' => '左揃え',
   'rte-ck-justify-right' => '右揃え',
+  'rte-ck-notification-closed' => '通知を閉じました。',
 );
 $messages['ka'] = array (
   'rte-ck-editor' => 'ტექსტის რედაქტორი',
@@ -10028,6 +10045,7 @@ $messages['km'] = array (
   'rte-ck-justify-center' => 'កណ្ដាល',
   'rte-ck-justify-left' => 'តម្រឹម​ឆ្វេង',
   'rte-ck-justify-right' => 'តម្រឹម​ស្ដាំ',
+  'rte-ck-notification-closed' => 'បាន​បិទ​ការ​ផ្ដល់​ដំណឹង។',
 );
 $messages['ko'] = array (
   'rte-ck-editor' => '리치 텍스트 편집기',
@@ -10290,6 +10308,7 @@ $messages['ko'] = array (
   'rte-ck-justify-center' => '가운데 정렬',
   'rte-ck-justify-left' => '왼쪽 정렬',
   'rte-ck-justify-right' => '오른쪽 정렬',
+  'rte-ck-notification-closed' => '알림이 닫힘.',
 );
 $messages['ku'] = array (
   'rte-ck-editor' => 'سەرنووسەی دەقی تەواو',
@@ -10552,6 +10571,7 @@ $messages['ku'] = array (
   'rte-ck-justify-center' => 'ناوەڕاست',
   'rte-ck-justify-left' => 'بەهێڵ کردنی چەپ',
   'rte-ck-justify-right' => 'بەهێڵ کردنی ڕاست',
+  'rte-ck-notification-closed' => 'ئاگادارکەرەوەکە داخرا.',
 );
 $messages['lt'] = array (
   'rte-ck-editor' => 'Pilnas redaktorius',
@@ -12120,6 +12140,7 @@ $messages['nb'] = array (
   'rte-ck-justify-center' => 'Midtstill',
   'rte-ck-justify-left' => 'Venstrejuster',
   'rte-ck-justify-right' => 'Høyrejuster',
+  'rte-ck-notification-closed' => 'Varsling lukket.',
 );
 $messages['nl'] = array (
   'rte-ck-editor' => 'Tekstverwerker',
@@ -12382,6 +12403,7 @@ $messages['nl'] = array (
   'rte-ck-justify-center' => 'Centreren',
   'rte-ck-justify-left' => 'Links uitlijnen',
   'rte-ck-justify-right' => 'Rechts uitlijnen',
+  'rte-ck-notification-closed' => 'Melding gesloten.',
 );
 $messages['no'] = array (
   'rte-ck-editor' => 'Rikteksteditor',
@@ -12906,6 +12928,7 @@ $messages['oc'] = array (
   'rte-ck-justify-center' => 'Centrar',
   'rte-ck-justify-left' => 'Alinhar a esquèrra',
   'rte-ck-justify-right' => 'Alinhar a dreita',
+  'rte-ck-notification-closed' => 'Notificacion tampada.',
 );
 $messages['pl'] = array (
   'rte-ck-editor' => 'Edytor tekstu sformatowanego',
@@ -13168,6 +13191,7 @@ $messages['pl'] = array (
   'rte-ck-justify-center' => 'Wyśrodkuj',
   'rte-ck-justify-left' => 'Wyrównaj do lewej',
   'rte-ck-justify-right' => 'Wyrównaj do prawej',
+  'rte-ck-notification-closed' => 'Powiadomienie zostało zamknięte.',
 );
 $messages['pt-br'] = array (
   'rte-ck-editor' => 'Editor de Rich Text',
@@ -13430,6 +13454,7 @@ $messages['pt-br'] = array (
   'rte-ck-justify-center' => 'Centralizar',
   'rte-ck-justify-left' => 'Alinhar Esquerda',
   'rte-ck-justify-right' => 'Alinhar Direita',
+  'rte-ck-notification-closed' => 'Notificação fechada.',
 );
 $messages['pt'] = array (
   'rte-ck-editor' => 'Editor de texto enriquecido',
@@ -13692,6 +13717,7 @@ $messages['pt'] = array (
   'rte-ck-justify-center' => 'Alinhar ao centro',
   'rte-ck-justify-left' => 'Alinhar à esquerda',
   'rte-ck-justify-right' => 'Alinhar à direita',
+  'rte-ck-notification-closed' => 'Notificação encerrada.',
 );
 $messages['ro'] = array (
   'rte-ck-editor' => 'Rich Text Editor',
@@ -14216,6 +14242,7 @@ $messages['ru'] = array (
   'rte-ck-justify-center' => 'По центру',
   'rte-ck-justify-left' => 'По левому краю',
   'rte-ck-justify-right' => 'По правому краю',
+  'rte-ck-notification-closed' => 'Уведомление закрыто',
 );
 $messages['si'] = array (
   'rte-ck-editor' => 'පොහොසත් වචන සංස්කරණ',
@@ -14739,6 +14766,7 @@ $messages['sk'] = array (
   'rte-ck-justify-center' => 'Zarovnať na stred',
   'rte-ck-justify-left' => 'Zarovnať vľavo',
   'rte-ck-justify-right' => 'Zarovnať vpravo',
+  'rte-ck-notification-closed' => 'Notifikácia zatvorená.',
 );
 $messages['sl'] = array (
   'rte-ck-editor' => 'Urejevalnik obogatenega besedila',
@@ -16047,6 +16075,7 @@ $messages['sv'] = array (
   'rte-ck-justify-center' => 'Centrera',
   'rte-ck-justify-left' => 'Vänsterjustera',
   'rte-ck-justify-right' => 'Högerjustera',
+  'rte-ck-notification-closed' => 'Notifiering stängd.',
 );
 $messages['th'] = array (
   'rte-ck-editor' => 'Rich Text Editor',
@@ -16570,6 +16599,7 @@ $messages['tr'] = array (
   'rte-ck-justify-center' => 'Ortalanmış',
   'rte-ck-justify-left' => 'Sola Dayalı',
   'rte-ck-justify-right' => 'Sağa Dayalı',
+  'rte-ck-notification-closed' => 'Uyarılar kapatıldı.',
 );
 $messages['tt'] = array (
   'rte-ck-editor' => 'Форматлаулы текст өлкәсе',
@@ -17094,6 +17124,7 @@ $messages['ug'] = array (
   'rte-ck-justify-center' => 'ئوتتۇرىغا توغرىلا',
   'rte-ck-justify-left' => 'سولغا توغرىلا',
   'rte-ck-justify-right' => 'ئوڭغا توغرىلا',
+  'rte-ck-notification-closed' => 'ئوقتۇرۇش تاقالدى.',
 );
 $messages['uk'] = array (
   'rte-ck-editor' => 'Текстовий редактор',
@@ -17356,6 +17387,7 @@ $messages['uk'] = array (
   'rte-ck-justify-center' => 'По центру',
   'rte-ck-justify-left' => 'По лівому краю',
   'rte-ck-justify-right' => 'По правому краю',
+  'rte-ck-notification-closed' => 'Сповіщення закрито.',
 );
 $messages['vi'] = array (
   'rte-ck-editor' => 'Bộ soạn thảo văn bản có định dạng',
@@ -17880,6 +17912,7 @@ $messages['zh-cn'] = array (
   'rte-ck-justify-center' => '居中',
   'rte-ck-justify-left' => '左对齐',
   'rte-ck-justify-right' => '右对齐',
+  'rte-ck-notification-closed' => '通知已关闭',
 );
 $messages['zh'] = array (
   'rte-ck-editor' => 'RTF 編輯器',
@@ -18142,4 +18175,5 @@ $messages['zh'] = array (
   'rte-ck-justify-center' => '置中',
   'rte-ck-justify-left' => '靠左對齊',
   'rte-ck-justify-right' => '靠右對齊',
+  'rte-ck-notification-closed' => '通知已關閉。',
 );
