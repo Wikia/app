@@ -2,29 +2,34 @@ import Client from 'ad-engine/src/utils/client';
 import Context from 'ad-engine/src/services/context-service';
 import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
 import SlotService from 'ad-engine/src/services/slot-service';
+import SlotTweaker from 'ad-engine/src/services/slot-tweaker';
+import StringBuilder from 'ad-engine/src/utils/string-builder';
 import TemplateService from 'ad-engine/src/services/template-service';
+import BigFancyAdAbove from 'ad-products/src/modules/templates/uap/big-fancy-ad-above';
 import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-below';
 import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-ad-package';
-import StringBuilder from 'ad-engine/src/utils/string-builder';
 import config from './context';
+import updateNavbar from './navbar-updater';
 
 Context.extend(config);
-ScrollListener.init();
-let supportedTemplates = [ BigFancyAdBelow ];
+let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
 
 supportedTemplates.forEach((template) => {
 	TemplateService.register(template);
 });
 
 function init(slotRegistry, pageLevelTargeting, legacyContext, skin) {
+	ScrollListener.addCallback(updateNavbar);
+	ScrollListener.init();
+
 	overrideSlotService(slotRegistry);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 }
 
 function overrideSlotService(slotRegistry) {
 	SlotService.getBySlotName = (id) => {
-		if (id) {
-			let slot = slotRegistry.get(id);
+		let slot = slotRegistry.get(id);
+		if (id && slot) {
 			return unifySlotInterface(slot);
 		}
 	};
@@ -57,6 +62,7 @@ function loadCustomAd(fallback) {
 			slot.container.parentNode.classList.add('gpt-ad');
 			Context.set(`slots.${params.slotName}.targeting.src`, params.src);
 			TemplateService.init(params.type, slot, params);
+			SlotTweaker.onReady(slot).then(updateNavbar);
 		} else {
 			fallback(params);
 		}

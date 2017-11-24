@@ -5,6 +5,23 @@ export default {
 	},
 	events: {},
 	slots: {
+		'TOP_LEADERBOARD': {
+			disabled: false,
+			slotName: 'TOP_LEADERBOARD',
+			lowerSlotName: 'top_leaderboard',
+			slotGroup: 'LB',
+			sizes: [
+				{
+					viewportSize: [728, 0],
+					sizes: [[728, 90]]
+				}
+			],
+			defaultSizes: [[2, 2]],
+			targeting: {
+				pos: 'TOP_LEADERBOARD',
+				loc: 'top'
+			}
+		},
 		'BOTTOM_LEADERBOARD': {
 			disabled: true,
 			slotName: 'BOTTOM_LEADERBOARD',
