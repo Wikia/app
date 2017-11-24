@@ -50,14 +50,13 @@ class RenameIPLogFormatter {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMessage( 'coppatool-info-started',
+		return wfMessage( 'coppatool-info-started',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldIPAddress, true ),
 			self::getCommunityUser( $newIPAddress ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
 		)->inContentLanguage()->text();
-		return $text;
 	}
 
 	static public function finish( $requestor, $oldIPAddress, $newIPAddress, $reason, $tasks = [ ] ) {
@@ -65,14 +64,13 @@ class RenameIPLogFormatter {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMessage( 'coppatool-info-finished',
+		return wfMessage( 'coppatool-info-finished',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldIPAddress, true ),
 			self::getCommunityUser( $newIPAddress ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
 		)->inContentLanguage()->text();
-		return $text;
 	}
 
 	static public function fail( $requestor, $oldIPAddress, $newIPAddress, $reason, $tasks = [ ] ) {
@@ -80,18 +78,17 @@ class RenameIPLogFormatter {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMessage( 'coppatool-info-failed',
+		return wfMessage( 'coppatool-info-failed',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldIPAddress, true ),
 			self::getCommunityUser( $newIPAddress ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
 		)->inContentLanguage()->text();
-		return $text;
 	}
 
 	static public function wiki( $requestor, $oldIPAddress, $newIPAddress, $cityId, $reason, $problems = false ) {
-		$text = wfMessage(
+		return wfMessage(
 			$problems ? 'coppatool-info-wiki-finished-problems' : 'coppatool-info-wiki-finished',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldIPAddress, true ),
@@ -99,6 +96,5 @@ class RenameIPLogFormatter {
 			self::getCityLink( $cityId ),
 			$reason
 		)->inContentLanguage()->text();
-		return $text;
 	}
 }
