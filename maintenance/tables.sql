@@ -970,7 +970,6 @@ CREATE TABLE /*_*/recentchanges (
 
   -- As in revision
   rc_user int unsigned NOT NULL default 0,
-  rc_user_text varchar(255) binary NOT NULL,
 
   -- When pages are renamed, their RC entries do _not_ change.
   rc_namespace int NOT NULL default 0,
@@ -1012,10 +1011,6 @@ CREATE TABLE /*_*/recentchanges (
   -- A value of 1 indicates the page has been reviewed.
   rc_patrolled tinyint unsigned NOT NULL default 0,
 
-  -- Recorded IP address the edit was made from, if the
-  -- $wgPutIPinRC option is enabled.
-  rc_ip varbinary(40) NOT NULL default '',
-
   -- SUS-3079: IP address the edit was made from, in binary format
   rc_ip_bin VARBINARY(16) NOT NULL DEFAULT '',
 
@@ -1041,10 +1036,7 @@ CREATE INDEX /*i*/rc_timestamp ON /*_*/recentchanges (rc_timestamp);
 CREATE INDEX /*i*/rc_namespace_title ON /*_*/recentchanges (rc_namespace, rc_title);
 CREATE INDEX /*i*/rc_cur_id ON /*_*/recentchanges (rc_cur_id);
 CREATE INDEX /*i*/new_name_timestamp ON /*_*/recentchanges (rc_new,rc_namespace,rc_timestamp);
-CREATE INDEX /*i*/rc_ip ON /*_*/recentchanges (rc_ip);
 CREATE INDEX /*i*/rc_ip_bin ON /*_*/recentchanges (rc_ip_bin, rc_timestamp);
-CREATE INDEX /*i*/rc_ns_usertext ON /*_*/recentchanges (rc_namespace, rc_user_text);
-CREATE INDEX /*i*/rc_user_text ON /*_*/recentchanges (rc_user_text, rc_timestamp);
 
 
 CREATE TABLE /*_*/watchlist (
