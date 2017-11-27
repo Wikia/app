@@ -101,8 +101,7 @@ class Track {
 	private static function getGATrackingIds() {
 		global $wgDevelEnvironment, $wgStagingEnvironment;
 
-		$tids = [ ];
-		$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
+		$tids = [ $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1' ];
 
 		return $tids;
 	}
