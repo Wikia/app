@@ -99,19 +99,9 @@ class Track {
 	}
 
 	private static function getGATrackingIds() {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgIsGASpecialWiki, $wgUser;
+		global $wgDevelEnvironment, $wgStagingEnvironment;
 
-		$tids = [ ];
-		// 10% sampling for general account
-		if ( mt_rand( 0, 9 ) === 0 ) {
-			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
-		}
-		if ( $wgIsGASpecialWiki ) {
-			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32132943-2' : 'UA-32132943-1';
-		}
-		if ( !$wgUser->isAnon() ) {
-			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32132943-8' : 'UA-32132943-7';
-		}
+		$tids = [ $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1' ];
 
 		return $tids;
 	}
