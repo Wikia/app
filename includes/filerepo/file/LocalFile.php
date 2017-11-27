@@ -1047,7 +1047,7 @@ class LocalFile extends File {
 				'img_timestamp'   => $timestamp,
 				'img_description' => $comment,
 				'img_user'        => $user->getId(),
-				'img_user_text'   => $user->getName(),
+				'img_user_text'   => $user->isAnon() ? $user->getName() : '', // SUS-3086
 				'img_metadata'    => $this->metadata,
 				'img_sha1'        => $this->sha1
 			),
@@ -1102,7 +1102,7 @@ class LocalFile extends File {
 					'img_timestamp'   => $timestamp,
 					'img_description' => $comment,
 					'img_user'        => $user->getId(),
-					'img_user_text'   => $user->getName(),
+					'img_user_text'   => $user->isAnon() ? $user->getName() : '', // SUS-3086
 					'img_metadata'    => $this->metadata,
 					'img_sha1'        => $this->sha1
 				),
