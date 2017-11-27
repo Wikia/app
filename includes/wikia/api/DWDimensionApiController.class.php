@@ -52,11 +52,16 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$result = [];
 		while ($row = $db->fetchObject($dbResult)) {
-			$result[] = [
-				'wiki_id' => $row->cv_city_id,
-				'tag' => null,
-				'value' => $row->cv_value
-			];
+			#extract from list like "s:199:\"sex=m;sex=f;age=under18;age=13-17;age=18-24;age=25-34;age=18-34;\";"
+			preg_match_all("/([^;= ]+)=([^;= ]+)/", unserialize( $row->cv_value ), $r);
+
+			for ($i = 0; $i < count( $r[1] ); $i++) {
+				$result[] = [
+					'wiki_id' => $row->cv_city_id,
+					'tag' => $r[ 1 ][ $i ],
+					'value' => $r[ 2 ][ $i ]
+				];
+			}
 		}
 
 		$this->setResponseData(
