@@ -30,7 +30,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'categorylinks',                     'patch-categorylinks.sql' ),
 			array( 'doOldLinksUpdate' ),
 			array( 'doFixAncientImagelinks' ),
-			array( 'addField', 'recentchanges', 'rc_ip',            'patch-rc_ip.sql' ),
 
 			// 1.4
 			array( 'addIndex', 'image',         'PRIMARY',          'patch-image_name_primary.sql' ),
@@ -80,7 +79,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'querycache_info',                     'patch-querycacheinfo.sql' ),
 			array( 'addTable', 'filearchive',                         'patch-filearchive.sql' ),
 			array( 'addField', 'ipblocks',        'ipb_anon_only',    'patch-ipb_anon_only.sql' ),
-			array( 'addIndex', 'recentchanges',   'rc_ns_usertext',   'patch-recentchanges-utindex.sql' ),
 
 			// 1.9
 			array( 'addTable', 'redirect',                           'patch-redirect.sql' ),
@@ -143,7 +141,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			// 1.16
 			array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
 			array( 'addTable', 'log_search',                        'patch-log_search.sql' ),
-			array( 'addField', 'logging',       'log_user_text',    'patch-log_user_text.sql' ),
 			array( 'doLogSearchPopulation' ),
 			array( 'addTable', 'l10n_cache',                        'patch-l10n_cache.sql' ),
 			array( 'addTable', 'external_user',                     'patch-external_user.sql' ),

@@ -72,6 +72,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_transcache_update' ),
 			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
 			array( 'WikiaUpdater::doLoggingTableUserCleanup' ), // SUS-3222
+			array( 'WikiaUpdater::migrateRecentChangesIpData' ), // SUS-3079
 			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
@@ -261,6 +262,41 @@ class WikiaUpdater {
 		$databaseUpdater->output( "done.\n" );
 
 		wfWaitForSlaves();
+	}
+
+	public static function migrateRecentChangesIpData( DatabaseUpdater $databaseUpdater ) {
+		$databaseConnection = $databaseUpdater->getDB();
+
+		if ( !$databaseConnection->fieldExists( 'recentchanges', 'rc_ip', __METHOD__ ) ) {
+			$databaseUpdater->output( "recentchanges.rc_ip column already migrated.\n" );
+			return;
+		}
+
+		$patchDir = static::get_patch_dir();
+
+		$databaseUpdater->output( 'Migrating rc_ip column to VARBINARY(16) rc_ip_bin... ' );
+		$databaseConnection->sourceFile( $patchDir . 'patch-populate-rc_ip_bin.sql' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ip index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_ip' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_user_text index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_user_text' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ns_usertext index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_ns_usertext' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ip column... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_ip' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_user_text column... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_user_text' );
+		$databaseUpdater->output( "done.\n" );
 	}
 
 	/**
