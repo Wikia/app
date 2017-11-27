@@ -102,10 +102,7 @@ class Track {
 		global $wgDevelEnvironment, $wgStagingEnvironment;
 
 		$tids = [ ];
-		// 10% sampling for general account
-		if ( mt_rand( 0, 9 ) === 0 ) {
-			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
-		}
+		$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
 
 		return $tids;
 	}
