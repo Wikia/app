@@ -131,12 +131,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
 	});
 
-	it('Build VAST URL with regular ad unit for premium ad layout and without correct video pos name', function () {
-		var vastUrl = getModule().build(1, mocks.slotParams);
-
-		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
-	});
-
 	it('Build VAST URL with regular ad unit for regular ad layout and with correct video pos name', function () {
 		var vastUrl = getModule().build(1, mocks.slotParams, {}, 'featured');
 

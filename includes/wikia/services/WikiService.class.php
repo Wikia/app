@@ -311,16 +311,18 @@ class WikiService extends WikiaModel {
 		return array_slice( $topEditors, 0, $limit, true );
 	}
 
-	public function isBotGroup($groups) {
-		$isBot = false;
+	/**
+	 * @param string $groups
+	 * @return bool
+	 */
+	private function isBotGroup($groups) {
 		$groups = explode(';', $groups);
 		foreach (self::$botGroups as $botGroup) {
 			if (in_array($botGroup, $groups)) {
-				$isBot = true;
-				break;
+				return true;
 			}
 		}
-		return $isBot;
+		return false;
 	}
 
 	/**
@@ -608,7 +610,7 @@ class WikiService extends WikiaModel {
 		$ret = null;
 
 		if ( !empty( $domain ) ) {
-			$ret = str_replace( 'http://', '',  $domain );
+			$ret = preg_replace( '!^https?://!', '', $domain );
 		}
 
 		return $ret;

@@ -2,7 +2,7 @@
 
 .skin-oasis .sprite {
 	background-color: transparent;
-	background-image: url(/skins/shared/images/sprite.png); /* $wgCdnStylePath */
+	background-image: url(/skins/shared/images/sprite.png); /* $wgResourceBasePath */
 	background-repeat: no-repeat;
 
 	//Activity Feed
@@ -260,7 +260,7 @@
 		width: 10px;
 	}
 	&.progress {
-		background-image: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */
+		background-image: url(/skins/common/images/ajax.gif); /* $wgResourceBasePath */
 	}
 
 	// Video
@@ -286,7 +286,7 @@
 //Category Select
 .sprite-small {
 	background-color: transparent;
-	background-image: url(/skins/shared/images/sprite.png); /* $wgCdnStylePath */
+	background-image: url(/skins/shared/images/sprite.png); /* $wgResourceBasePath */
 	background-repeat: no-repeat;
 	height: 12px;
 	width: 12px;

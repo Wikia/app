@@ -1148,9 +1148,6 @@ CREATE TABLE /*_*/logging (
   -- The user who performed this action; key to user_id
   log_user int unsigned NOT NULL default 0,
 
-  -- Name of the user who performed this action
-  log_user_text varchar(255) binary NOT NULL default '',
-
   -- Key to the page affected. Where a user is the target,
   -- this will point to the user page.
   log_namespace int NOT NULL default 0,

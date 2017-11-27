@@ -840,6 +840,14 @@ class RevDel_LogItem extends RevDel_Item {
 		return 'log_user_text';
 	}
 
+	/**
+	 * SUS-3081: use user name lookup
+	 * @return string
+	 */
+	public function getAuthorName() {
+		return User::getUsername( $this->getAuthorId(), '' );
+	}
+
 	public function canView() {
 		return LogEventsList::userCan( $this->row, Revision::DELETED_RESTRICTED, $this->list->getUser() );
 	}

@@ -11,18 +11,17 @@ $wgExtensionCredits['specialpage'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialDiscussions',
 ];
 
-$dir = dirname( __FILE__ ) . '/';
-
 // load classes
-$wgAutoloadClasses['SpecialDiscussionsController'] = $dir . 'controllers/SpecialDiscussionsController.class.php';
-$wgAutoloadClasses['EnableDiscussionsController'] = $dir . 'controllers/EnableDiscussionsController.class.php';
-$wgAutoloadClasses['DiscussionsVarToggler'] = $dir . 'DiscussionsVarToggler.class.php';
-$wgAutoloadClasses['DiscussionsVarTogglerException'] = $dir . 'DiscussionsVarToggler.class.php';
-$wgAutoloadClasses['ThreadCreator'] = $dir . 'api/ThreadCreator.class.php';
-$wgAutoloadClasses['DiscussionsActivator'] = $dir . 'api/DiscussionsActivator.class.php';
-$wgAutoloadClasses['DiscussionsActivity'] = $dir . 'api/DiscussionsActivity.class.php';
-$wgAutoloadClasses['LegacyRedirect'] = $dir . 'api/LegacyRedirect.class.php';
-$wgAutoloadClasses['StaffWelcomePoster'] = $dir . 'maintenance/StaffWelcomePoster.class.php';
+$wgAutoloadClasses['SpecialDiscussionsController'] = __DIR__ . '/controllers/SpecialDiscussionsController.class.php';
+$wgAutoloadClasses['EnableDiscussionsController'] = __DIR__ . '/controllers/EnableDiscussionsController.class.php';
+$wgAutoloadClasses['DiscussionsVarToggler'] = __DIR__ . '/DiscussionsVarToggler.class.php';
+$wgAutoloadClasses['DiscussionsVarTogglerException'] = __DIR__ . '/DiscussionsVarToggler.class.php';
+$wgAutoloadClasses['ThreadCreator'] = __DIR__ . '/api/ThreadCreator.class.php';
+$wgAutoloadClasses['DiscussionsActivator'] = __DIR__ . '/api/DiscussionsActivator.class.php';
+$wgAutoloadClasses['DiscussionsActivity'] = __DIR__ . '/api/DiscussionsActivity.class.php';
+$wgAutoloadClasses['LegacyRedirect'] = __DIR__ . '/api/LegacyRedirect.class.php';
+$wgAutoloadClasses['StaffWelcomePoster'] = __DIR__ . '/maintenance/StaffWelcomePoster.class.php';
+$wgAutoloadClasses['DiscussionsHooksHelper'] = __DIR__ . '/DiscussionsHooksHelper.php';
 
 // register special page
 $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
@@ -30,13 +29,17 @@ $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 // This will cause /wiki/Special:Forum to redirect to Discussions when Discussions
 // is enabled and Forums are disabled.
 if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
-	$wgAutoloadClasses['SpecialForumRedirectController'] = $dir . 'controllers/SpecialForumRedirectController.class.php';
+	$wgAutoloadClasses['SpecialForumRedirectController'] = __DIR__ . '/controllers/SpecialForumRedirectController.class.php';
 	$wgHooks['ArticleViewHeader'][] = 'SpecialForumRedirectController::onArticleViewHeader';
 	$wgHooks['BeforePageHistory'][] = 'SpecialForumRedirectController::onBeforePageHistory';
 	$wgSpecialPages['Forum'] = 'SpecialForumRedirectController';
 
+	// IRIS-5184: Exclude outgoing links in Forum content from Special:WhatLinksHere and Special:WantedPages
+	$wgHooks['SpecialWhatLinksHere::beforeQuery'][] = 'DiscussionsHooksHelper::onSpecialWhatLinksHereBeforeQuery';
+	$wgHooks['WantedPages::getQueryInfo'][] = 'DiscussionsHooksHelper::onWantedPagesGetQueryInfo';
+
 	// Make sure we recognize the Forum namespaces so we can redirect them if requested
-	$wgExtensionNamespacesFiles['Discussions'] = $dir . '../Forum/Forum.namespaces.php';
+	$wgExtensionNamespacesFiles['Discussions'] = __DIR__ . '/../Forum/Forum.namespaces.php';
 	wfLoadExtensionNamespaces( 'Forum', [
 		NS_WIKIA_FORUM_BOARD,
 		NS_WIKIA_FORUM_BOARD_THREAD,
@@ -51,8 +54,8 @@ if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
 }
 
 // message files
-$wgExtensionMessagesFiles['SpecialDiscussions'] = $dir . 'i18n/SpecialDiscussions.i18n.php';
-$wgExtensionMessagesFiles['StaffWelcomePost'] = $dir . 'i18n/StaffWelcomePost.i18n.php';
+$wgExtensionMessagesFiles['SpecialDiscussions'] = __DIR__ . '/i18n/SpecialDiscussions.i18n.php';
+$wgExtensionMessagesFiles['StaffWelcomePost'] = __DIR__ . '/i18n/StaffWelcomePost.i18n.php';
 
 // permissions
 $wgAvailableRights[] = 'specialdiscussions';
@@ -62,18 +65,4 @@ $wgGroupPermissions['vstf']['specialdiscussions'] = false;
 $wgGroupPermissions['helper']['specialdiscussions'] = true;
 $wgGroupPermissions['staff']['specialdiscussions'] = true;
 
-
-$wgHooks['WikiaSkinTopScripts'][] = 'addDiscussionJsVariable';
-
-/**
- * @param array $vars JS variables to be added at the bottom of the page
- * @param $scripts
- *
- * @return bool return true - it's a hook
- */
-function addDiscussionJsVariable(Array &$vars, &$scripts) {
-	$vars['wgDiscussionsApiUrl'] = F::app()->wg->DiscussionsApiUrl;
-
-	return true;
-}
-
+$wgHooks['WikiaSkinTopScripts'][] = 'DiscussionsHooksHelper::addDiscussionJsVariable';

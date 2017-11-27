@@ -404,8 +404,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 	protected function getGAUrlFromCityId() {
 
 		$url = WikiFactory::getWikiByID( $this->getCityId() )->city_url;
-		$hostname = str_replace( 'http://', '', $url );
-		$hostname = str_replace( '/', '', $hostname );
+		$hostname = parse_url( $url )[ 'host' ];
 
 		return $hostname;
 	}

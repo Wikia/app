@@ -1,7 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
-	'wikia.window'
-], function (win) {
+define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [], function () {
 	'use strict';
 
 	var slotsConfiguration = {
@@ -46,45 +44,6 @@ define('ext.wikia.adEngine.video.player.porvata.floaterConfiguration', [
 			},
 			onDetach: function (floatingContext) {
 				floatingContext.elements.providerContainer.style.height = floatingContext.getHeight() + 'px';
-			}
-		},
-		'TOP_LEADERBOARD': {
-			enableKeyword: 'enableLeaderboardFloating',
-			container: 'WikiaTopAds',
-			configure: function (floatingContext) {
-				var elements = floatingContext.elements;
-
-				elements.viewport = elements.adContainer;
-				floatingContext.forceDoNotFloat();
-			},
-			floatLater: function (callback) {
-				var floatingContext = this,
-					video = this.elements.video;
-
-				if (this.isOutsideOfViewport()) {
-					floatingContext.fireEvent('start');
-				}
-
-				video.addEventListener('loaded', function () {
-					floatingContext.floatAgain();
-					if (floatingContext.isOutsideOfViewport()) {
-						callback(floatingContext);
-					}
-				});
-			},
-			onAttach: function (floatingContext) {
-				var elements = floatingContext.elements;
-
-				elements.viewport.style.removeProperty('height');
-				elements.iframe.style.removeProperty('height');
-			},
-			onBeforeDetach: function (floatingContext) {
-				var viewport = floatingContext.elements.viewport;
-
-				viewport.style.height = win.getComputedStyle(viewport).height;
-			},
-			onDetach: function (floatingContext) {
-				floatingContext.elements.iframe.style.height = floatingContext.getHeight() + 'px';
 			}
 		}
 	};

@@ -3,8 +3,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "cpmono" {
 	@font-face {
 		font-family: 'CPMono_v07Bold';
-		src: url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.woff') format('woff'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.svg#webfont8SZ0NIeo') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.woff') format('woff'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/cpmono/CPMono_v07_Bold-webfont.svg#webfont8SZ0NIeo') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -14,8 +14,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "fontin" {
 	@font-face {
 		font-family: 'FontinSansBold';
-		src: url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.woff') format('woff'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.svg#webfontaOEEV2k6') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.woff') format('woff'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/fontin/fontin_sans_b_45b-webfont.svg#webfontaOEEV2k6') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -25,8 +25,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "garton" {
 	@font-face {
 		font-family: 'GartonMedium';
-		src: url('/skins/oasis/fonts/garton/garto16-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/garton/garto16-webfont.woff') format('woff'), url('/skins/oasis/fonts/garton/garto16-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/garton/garto16-webfont.svg#webfont9jUXe5iO') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/garton/garto16-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/garton/garto16-webfont.woff') format('woff'), url('/skins/oasis/fonts/garton/garto16-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/garton/garto16-webfont.svg#webfont9jUXe5iO') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -36,8 +36,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "idolwild" {
 	@font-face {
 		font-family: 'IdolwildRegular';
-		src: url('/skins/oasis/fonts/idolwild/idolwild-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.woff') format('woff'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.svg#webfont2KYBVKLT') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/idolwild/idolwild-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.woff') format('woff'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/idolwild/idolwild-webfont.svg#webfont2KYBVKLT') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -47,8 +47,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "imfell" {
 	@font-face {
 		font-family: 'IMFELLDWPicaPRORegular';
-		src: url('/skins/oasis/fonts/imfell/fepirm27c-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/imfell/fepirm27c-webfont.woff') format('woff'), url('/skins/oasis/fonts/imfell/fepirm27c-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/imfell/fepirm27c-webfont.svg#webfontkY4YPcYZ') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/imfell/fepirm27c-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/imfell/fepirm27c-webfont.woff') format('woff'), url('/skins/oasis/fonts/imfell/fepirm27c-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/imfell/fepirm27c-webfont.svg#webfontkY4YPcYZ') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -58,8 +58,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "josefin" {
 	@font-face {
 		font-family: 'JosefinSansStdLight';
-		src: url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.woff') format('woff'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.svg#webfontmMSjIQwC') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.woff') format('woff'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/josefin/JosefinSansStd-Light-webfont.svg#webfontmMSjIQwC') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -69,8 +69,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "megalopolis" {
 	@font-face {
 		font-family: 'MEgalopolisExtraRegular';
-		src: url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.woff') format('woff'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.svg#webfont0XV5Gd7h') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.woff') format('woff'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/megalopolis/megalopolisextra-webfont.svg#webfont0XV5Gd7h') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -80,8 +80,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "orbitron" {
 	@font-face {
 		font-family: 'OrbitronMedium';
-		src: url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.woff') format('woff'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.svg#webfont5FiGFJOa') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.woff') format('woff'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/orbitron/orbitron-medium-webfont.svg#webfont5FiGFJOa') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -91,8 +91,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "pixiefont" {
 	@font-face {
 		font-family: 'PixieFontRegular';
-		src: url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.woff') format('woff'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.svg#webfont78rOR6Do') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.woff') format('woff'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/pixiefont/PixieFont-webfont.svg#webfont78rOR6Do') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -102,8 +102,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "prociono" {
 	@font-face {
 		font-family: 'ProcionoRegular';
-		src: url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.woff') format('woff'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.svg#webfontnTm7Rj2p') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.woff') format('woff'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/prociono/Prociono-Regular-webfont.svg#webfontnTm7Rj2p') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -113,8 +113,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "tangerine" {
 	@font-face {
 		font-family: 'TangerineRegular';
-		src: url('/skins/oasis/fonts/tangerine/Tangerine_Regular-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/tangerine/Tangerine_Regular-webfont.woff') format('woff'), url('/skins/oasis/fonts/tangerine/Tangerine_Regular-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/tangerine/Tangerine_Regular-webfont.svg#webfonthdkJyIIt') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/tangerine/Tangerine_Regular-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/tangerine/Tangerine_Regular-webfont.woff') format('woff'), url('/skins/oasis/fonts/tangerine/Tangerine_Regular-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/tangerine/Tangerine_Regular-webfont.svg#webfonthdkJyIIt') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -124,8 +124,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "titillium" {
 	@font-face {
 		font-family: 'TitilliumText22LRegular';
-		src: url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.woff') format('woff'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.svg#webfontCVZ9BHQN') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.woff') format('woff'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/titillium/TitilliumText22L003-webfont.svg#webfontCVZ9BHQN') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -135,8 +135,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "veggieburger" {
 	@font-face {
 		font-family: 'VeggieburgerBold';
-		src: url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.woff') format('woff'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.svg#webfont2sUWj2TL') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.woff') format('woff'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/veggieburger/VeggiBol-webfont.svg#webfont2sUWj2TL') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}
@@ -146,8 +146,8 @@ $wordmark-font: get_command_line_param("wordmark-font", "default");
 @if $wordmark-font == "yanone" {
 	@font-face {
 		font-family: 'YanoneKaffeesatzRegular';
-		src: url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.eot'); /* $wgCdnStylePath */
-		src: local('☺'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.woff') format('woff'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.svg#webfontlKPF1zIT') format('svg'); /* $wgCdnStylePath */
+		src: url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.eot'); /* $wgResourceBasePath */
+		src: local('☺'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.woff') format('woff'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.ttf') format('truetype'), url('/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.svg#webfontlKPF1zIT') format('svg'); /* $wgResourceBasePath */
 		font-weight: normal;
 		font-style: normal;
 	}

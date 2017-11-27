@@ -280,7 +280,7 @@ class OasisController extends WikiaController {
 				$map = array(
 					array( $this->app->wg->ExtensionsPath, 'extensions/' ),
 					array( $this->app->wg->StylePath, 'skins/' ),
-					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
+					// $wgResourceBasePath = $wgResourceBasePath (there's no /resources in it)
 					array( $this->app->wg->ResourceBasePath . '/resources', 'resources/' ),
 				);
 			}

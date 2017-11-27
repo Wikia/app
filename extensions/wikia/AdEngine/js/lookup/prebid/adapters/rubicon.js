@@ -14,10 +14,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 		rubiconSiteId = 55412,
 		slots = {
 			oasis: {
-				TOP_LEADERBOARD: {
-					zoneId: 519058,
-					position: 'atf'
-				},
 				INCONTENT_PLAYER: {
 					zoneId: 260296,
 					position: 'btf'

@@ -31,7 +31,7 @@ body {
 		font-size: 13px;
 	}
 	.form-questionmark {
-		background: url(/extensions/wikia/ThemeDesigner/images/question-light.png); /* $wgCdnStylePath */
+		background: url(/extensions/wikia/ThemeDesigner/images/question-light.png); /* $wgResourceBasePath */
 		height: 12px;
 		width: 12px;
 		display: inline-block;
@@ -139,7 +139,7 @@ body {
 						margin-right: 3px;
 						vertical-align: middle;
 						img {
-							background: url(/extensions/wikia/ThemeDesigner/images/icon-return.png) top left transparent no-repeat; /* $wgCdnStylePath */
+							background: url(/extensions/wikia/ThemeDesigner/images/icon-return.png) top left transparent no-repeat; /* $wgResourceBasePath */
 							height: 12px;
 							left: 3px;
 							position: relative;

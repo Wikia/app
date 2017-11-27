@@ -1,5 +1,5 @@
 #!/bin/bash
-DATABASES='dataware specials stats swift_sync wikicities'
+DATABASES='dataware specials stats statsdb swift_sync wikicities'
 
 for DATABASE in $DATABASES
 do

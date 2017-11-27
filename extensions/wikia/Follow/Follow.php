@@ -36,17 +36,3 @@ if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
 $wgHooks['beforeBlogListingForm'][] = 'FollowHelper::categoryIndexer';
 
 $wgHooks['WatchlistPreferencesBefore'][] = 'FollowHelper::renderFollowPrefs';
-
-$wgHooks['UserRename::Local'][] = "FollowUserRenameLocal";
-
-function FollowUserRenameLocal( $dbw, $uid, $oldusername, $newusername, $process, $cityId, &$tasks ) {
-	$tasks[] = array(
-		'table' => 'blog_listing_relation',
-		'userid_column' => null,
-		'username_column' => 'blr_relation',
-		'conds' => array(
-			'blr_type' => 'user',
-		)
-	);
-	return true;
-}

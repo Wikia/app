@@ -90,7 +90,7 @@
 			}
 
 			.loading-throbber {
-				background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+				background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 				height: 16px;
 				width: 16px;
 			}

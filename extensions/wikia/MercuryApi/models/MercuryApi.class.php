@@ -116,7 +116,7 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
+		global $wgStyleVersion, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
 		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
 		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
@@ -127,7 +127,7 @@ class MercuryApi {
 
 		return [
 			'appleTouchIcon' => Wikia::getWikiLogoMetadata(),
-			'cacheBuster' => (int) $wgCacheBuster,
+			'cacheBuster' => (int) $wgStyleVersion,
 			'cdnRootUrl' => $wgCdnRootUrl,
 			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,

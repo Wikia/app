@@ -9,7 +9,7 @@ $dir = dirname( __FILE__ ) . '/';
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'DiscussionsLog',
 	'author' => 'Wikia',
-	'descriptionmsg' => 'discussions-log-desc',
+	'descriptionmsg' => 'discussionslog-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialDiscussionsLog',
 ];
 

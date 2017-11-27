@@ -27,7 +27,6 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		var context = adContext.getContext(),
 			isHome = context.targeting.pageType === 'home',
 			isOasis = context.targeting.skin === 'oasis',
-			isPremiumAdLayoutEnabled = context.opts.premiumAdLayoutEnabled,
 			isIncontentEnabled =
 				!isHome &&
 				isOasis &&
@@ -38,20 +37,13 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		// those slots exists on all pages
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
+		setStatus('BOTTOM_LEADERBOARD', true);
 
-		setStatus('PREFOOTER_MIDDLE_BOXAD', !isPremiumAdLayoutEnabled && isHome);
-		setStatus('LEFT_SKYSCRAPER_2', !isPremiumAdLayoutEnabled && !isHome);
-		setStatus('LEFT_SKYSCRAPER_3', !isPremiumAdLayoutEnabled && !isHome);
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
 		setStatus('INVISIBLE_HIGH_IMPACT_2', !context.targeting.hasFeaturedVideo && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
-		setStatus('PREFOOTER_RIGHT_BOXAD', !isPremiumAdLayoutEnabled && !context.opts.overridePrefootersSizes);
-		setStatus('PREFOOTER_LEFT_BOXAD', !isPremiumAdLayoutEnabled);
 
 		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
-		// BLB can be used also as a part of UAP, but UAP is not looking at the slot status
-		// so we can safely set it to false (for non premium) and don't wait for uap response
-		setStatus('BOTTOM_LEADERBOARD', isPremiumAdLayoutEnabled);
 
 		log(['Slots:', slots], log.levels.info, logGroup);
 	}

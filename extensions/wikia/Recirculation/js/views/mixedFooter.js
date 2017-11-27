@@ -60,6 +60,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 
 				newsAndStoriesItem.trackingLabels = $this.data('tracking') + ',' + type;
 				newsAndStoriesItem.liType = 'ns';
+				newsAndStoriesItem.classes = $this[0].className.replace('mcf-card-ns-placeholder', '');
 
 				$this.replaceWith(utils.renderTemplate(template, newsAndStoriesItem));
 			}
@@ -81,6 +82,7 @@ define('ext.wikia.recirculation.views.mixedFooter', [
 				}
 
 				wikiArticle.trackingLabels = $this.data('tracking') + ',wiki-article';
+				wikiArticle.classes = $this[0].className.replace('mcf-card-wiki-placeholder', '');
 				wikiArticle.liType = 'wiki';
 				if (wikiArticle.type === 'video') {
 					wikiArticle.video = true;
