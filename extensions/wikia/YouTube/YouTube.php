@@ -206,7 +206,6 @@ function wfYouTube( Parser $parser ): bool {
 		return true;
 	}
 	$parser->setHook( 'youtube', 'embedYouTube' );
-	$parser->setHook( 'gvideo',  'embedGoogleVideo' );
 	$parser->setHook( 'aovideo', 'embedArchiveOrgVideo' );
 	$parser->setHook( 'aoaudio', 'embedArchiveOrgAudio' );
 	$parser->setHook( 'wegame', 'embedWeGame' );
@@ -289,44 +288,6 @@ function embedYouTube( $input, $argv, $parser ) {
 	if ( !empty( $ytid ) ) {
 		$url = "https://www.youtube.com/v/{$ytid}&enablejsapi=1&version=2&playerapiid={$ytid}"; // it's not mistake, there should be &, not ?
 		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\" id=\"YT_{$ytid}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/><param name=\"allowScriptAccess\" value=\"always\"/></object>";
-	}
-}
-
-function embedYouTube_url2gvid( $url ) {
-	$id = $url;
-
-	if ( preg_match( '/^https?:\/\/video\.google\.com\/videoplay\?docid=([^&]+)(&hl=.+)?$/', $url, $preg ) ) {
-		$id = $preg[1];
-	} elseif ( preg_match( '/^https?:\/\/video\.google\.com\/googleplayer\.swf\?docId=(.+)$/', $url, $preg ) ) {
-		$id = $preg[1];
-	}
-
-	preg_match( '/([0-9-]+)/', $id, $preg );
-	$id = $preg[1];
-
-	return $id;
-}
-
-function embedGoogleVideo( $input, $argv, $parser ) {
-	$gvid   = '';
-	$width  = $width_max  = 400;
-	$height = $height_max = 326;
-
-	if ( !empty( $argv['gvid'] ) ) {
-		$gvid = embedYouTube_url2gvid( $argv['gvid'] );
-	} elseif ( !empty( $input ) ) {
-		$gvid = embedYouTube_url2gvid( $input );
-	}
-	if ( !empty( $argv['width'] ) && settype( $argv['width'], 'integer' ) && ( $width_max >= $argv['width'] ) ) {
-		$width = $argv['width'];
-	}
-	if ( !empty( $argv['height'] ) && settype( $argv['height'], 'integer' ) && ( $height_max >= $argv['height'] ) ) {
-		$height = $argv['height'];
-	}
-
-	if ( !empty( $gvid ) ) {
-		$url = "https://video.google.com/googleplayer.swf?docId={$gvid}";
-		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/></object>";
 	}
 }
 
