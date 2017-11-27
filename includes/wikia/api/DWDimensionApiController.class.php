@@ -8,40 +8,11 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const WIKIS_AFTER_WIKI_ID = -1;
 
+	const DART_TAG_VARIABLE_ID = 938;
+
 	private function getSharedDbSlave() {
 		global $wgExternalSharedDB;
 		return wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-	}
-
-	public function getWikiDomains() {
-		$db = $this->getSharedDbSlave();
-
-		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
-		$afterDomain = $db->strencode( $this->getRequest()->getVal( 'after_domain', static::WIKI_DOMAINS_AFTER_DOMAIN ) );
-
-		$dbResult = $db->select(
-			[ 'city_domains' ],
-			[ 'city_id', 'city_domain' ],
-			isset( $afterDomain ) ? [ 'city_domain > "'.$afterDomain.'"' ] : [ ],
-			__METHOD__,
-			[
-				'ORDER BY' => 'city_domain',
-				'LIMIT' => $limit
-			]
-		);
-		$result = [];
-		while ($row = $db->fetchObject($dbResult)) {
-			$result[] = [
-				'city_id' => $row->city_id,
-				'city_domain' => $row->city_domain
-			];
-		}
-
-		$this->setResponseData(
-			$result,
-			null,
-			WikiaResponse::CACHE_DISABLED
-		);
 	}
 
 	private function getVerticalName( $allVerticals, $verticalId ) {
@@ -56,6 +27,43 @@ class DWDimensionApiController extends WikiaApiController {
 			return $allCategories[ $categoryId ][ 'name' ];
 		}
 		return null;
+	}
+
+	public function getWikiDartTags() {
+		$db = $this->getSharedDbSlave();
+
+		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
+
+		$where = [ 'cv_variable_id = '.static::DART_TAG_VARIABLE_ID ];
+		if ( isset( $afterWikiId ) ) {
+			array_push( $where, 'cv_city_id > "'.$afterWikiId.'"' );
+		}
+		$dbResult = $db->select(
+			[ 'city_variables' ],
+			[ 'cv_city_id', 'cv_value' ],
+			$where,
+			__METHOD__,
+			[
+				'ORDER BY' => 'cv_city_id',
+				'LIMIT' => $limit
+			]
+		);
+
+		$result = [];
+		while ($row = $db->fetchObject($dbResult)) {
+			$result[] = [
+				'wiki_id' => $row->cv_city_id,
+				'tag' => null,
+				'value' => $row->cv_value
+			];
+		}
+
+		$this->setResponseData(
+			$result,
+			null,
+			WikiaResponse::CACHE_DISABLED
+		);
 	}
 
 	public function getWikis() {
