@@ -2165,7 +2165,7 @@ class DPLMain {
 
 			if ( $bAddContribution ) {
 				$sSqlRCTable = $sRCTable . ' AS rc, ';
-				$sSqlSelPage .= ', SUM( ABS( rc.rc_new_len - rc.rc_old_len ) ) AS contribution, rc.rc_user_text AS contributor, rc.rc_user AS contributor_id'; // SUS-812
+				$sSqlSelPage .= ', SUM( ABS( rc.rc_new_len - rc.rc_old_len ) ) AS contribution, rc.rc_ip_bin AS contributor, rc.rc_user AS contributor_id'; // SUS-812
 				$sSqlWhere   .= ' AND page.page_id=rc.rc_cur_id';
 				if ($sSqlGroupBy != '') $sSqlGroupBy .= ', ';
 				$sSqlGroupBy .= 'rc.rc_cur_id';
@@ -2766,8 +2766,9 @@ class DPLMain {
                 }
                 // CONTRIBUTION, CONTRIBUTOR
                 if($bAddContribution) {
+					$userIp = IP::sanitizeIP( inet_ntop( $row->contributor ) );
                     $dplArticle->mContribution = $row->contribution;
-                    $dplArticle->mContributor  = User::getUsername( $row->contributor_id, $row->contributor ); // SUS-812
+                    $dplArticle->mContributor  = User::getUsername( $row->contributor_id, $userIp ); // SUS-812
                     $dplArticle->mContrib      = substr('*****************',0,round(log($row->contribution)));
                 }
 
