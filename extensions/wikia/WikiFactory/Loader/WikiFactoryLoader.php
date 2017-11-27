@@ -200,6 +200,11 @@ class WikiFactoryLoader {
 		$this->mDBhandler = wfGetDB( $type, array(), $this->mDBname );
 		$this->debug( "connecting to {$this->mDBname} via LoadBalancer" );
 
+		Wikia\Util\Assert::true(
+			$this->mDBhandler instanceof DatabaseBase && $this->mDBhandler->isOpen(),
+			__METHOD__
+		);
+
 		return $this->mDBhandler;
 	}
 
