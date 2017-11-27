@@ -537,15 +537,18 @@ class LocalFile extends File {
 	 * Returns ID or name of user who uploaded the file
 	 *
 	 * @param $type string 'text' or 'id'
+	 * @return string|null
 	 */
 	function getUser( $type = 'text' ) {
 		$this->load();
 
 		if ( $type == 'text' ) {
-			return $this->user_text;
+			return User::getUsername((int) $this->user, (string) $this->user_text); // SUS-808
 		} elseif ( $type == 'id' ) {
 			return $this->user;
 		}
+
+		return null;
 	}
 
 	/**
