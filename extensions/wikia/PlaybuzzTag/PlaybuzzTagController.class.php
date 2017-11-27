@@ -2,7 +2,7 @@
 
 class PlaybuzzTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'playbuzz';
-	const PLAYBUZZ_SCRIPT_SRC = 'http://cdn.playbuzz.com/widget/feed.js';
+	const PLAYBUZZ_SCRIPT_SRC = 'https://cdn.playbuzz.com/widget/feed.js';
 
 	const DATA_ITEM_ATTR = 'data-item';
 	const DATA_COMMENTS_ATTR = 'data-comments';
