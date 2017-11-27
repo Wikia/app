@@ -98,11 +98,9 @@ class CreateNewWikiTask extends BaseTask {
 			\WikiFactory::clearCache( $wgCityId );
 		}
 
-		$dbname = \WikiFactory::IDtoDB( $wgCityId );
-		$founder = $this->founder->getId();
-		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} --user={$founder} " );
-		$output = wfShellExec( $cmd, $exitStatus );
-		$this->info( 'run events_local_users.pl', ['exitStatus' => $exitStatus, 'output' => $output] );
+		// SUS-3264 | set up events_local_users entries directly, instead of calling backend script
+		$this->info( "Setting up events_local_users table entries" );
+		\ListusersData::populateEventsLocalUsers( $wgCityId );
 
 		$wgMemc = wfGetMainCache();
 		$wgMemc->delete( \WikiFactory::getVarsKey( $wgCityId ) );

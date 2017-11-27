@@ -22,7 +22,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgDevBoxImageServerOverride', false);
 
 		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
-		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
+		$this->mockGlobalVariable('wgResourceBasePath', sprintf('https://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
 	}
 
 	private function getSelectRowMock() {

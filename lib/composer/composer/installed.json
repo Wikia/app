@@ -4547,17 +4547,17 @@
     },
     {
         "name": "phpunit/phpunit",
-        "version": "6.4.3",
-        "version_normalized": "6.4.3.0",
+        "version": "6.4.4",
+        "version_normalized": "6.4.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "06b28548fd2b4a20c3cd6e247dc86331a7d4db13"
+            "reference": "562f7dc75d46510a4ed5d16189ae57fbe45a9932"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/06b28548fd2b4a20c3cd6e247dc86331a7d4db13",
-            "reference": "06b28548fd2b4a20c3cd6e247dc86331a7d4db13",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/562f7dc75d46510a4ed5d16189ae57fbe45a9932",
+            "reference": "562f7dc75d46510a4ed5d16189ae57fbe45a9932",
             "shasum": ""
         },
         "require": {
@@ -4596,7 +4596,7 @@
             "ext-xdebug": "*",
             "phpunit/php-invoker": "^1.1"
         },
-        "time": "2017-10-16T13:18:59+00:00",
+        "time": "2017-11-08T11:26:09+00:00",
         "bin": [
             "phpunit"
         ],
@@ -4627,6 +4627,117 @@
         "homepage": "https://phpunit.de/",
         "keywords": [
             "phpunit",
+            "testing",
+            "xunit"
+        ]
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "v3.3.13",
+        "version_normalized": "3.3.13.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "0938408c4faa518d95230deabb5f595bf0de31b9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/0938408c4faa518d95230deabb5f595bf0de31b9",
+            "reference": "0938408c4faa518d95230deabb5f595bf0de31b9",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8"
+        },
+        "require-dev": {
+            "symfony/console": "~2.8|~3.0"
+        },
+        "suggest": {
+            "symfony/console": "For validating YAML files using the lint command"
+        },
+        "time": "2017-11-10T18:26:04+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "phpunit/dbunit",
+        "version": "3.0.2",
+        "version_normalized": "3.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/dbunit.git",
+            "reference": "403350339b6aca748ee0067d027d85621992e21f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/dbunit/zipball/403350339b6aca748ee0067d027d85621992e21f",
+            "reference": "403350339b6aca748ee0067d027d85621992e21f",
+            "shasum": ""
+        },
+        "require": {
+            "ext-pdo": "*",
+            "ext-simplexml": "*",
+            "php": "^7.0",
+            "phpunit/phpunit": "^6.0",
+            "symfony/yaml": "^3.0 || ^4.0"
+        },
+        "time": "2017-11-18T17:40:34+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de",
+                "role": "lead"
+            }
+        ],
+        "description": "PHPUnit extension for database interaction testing",
+        "homepage": "https://github.com/sebastianbergmann/dbunit/",
+        "keywords": [
+            "database",
             "testing",
             "xunit"
         ]

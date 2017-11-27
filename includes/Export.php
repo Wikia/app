@@ -385,16 +385,8 @@ class WikiExporter {
 				}
 				# Wikia change end
 
-				// SUS-807
-				$userIds = [];
-				foreach ($result as $row) {
-					$userIds[] = $row->rev_user;
-				}
-
-				$userNames = User::whoAre( $userIds );
-
 				# Output dump results
-				$this->outputPageStream( $result, $userNames );
+				$this->outputPageStream( $result );
 
 				if ( $this->buffer == WikiExporter::STREAM ) {
 					$this->db->bufferResults( $prev );
@@ -482,17 +474,14 @@ class WikiExporter {
 	 * separate database connection not managed by LoadBalancer; some
 	 * blob storage types will make queries to pull source data.
 	 *
-	 * @param ResultWrapper $resultset
-	 * @param $userNames
+	 * @param ResultWrapper|Generator $resultSet
 	 */
-	protected function outputPageStream( $resultset, $userNames ) {
+	protected function outputPageStream( $resultSet ) {
 		$last = null;
-		foreach ( $resultset as $row ) {
-			// SUS-807
-			if ( $row->rev_user && isset( $userNames[$row->rev_user] ) ) {
-				$row->rev_user_text = $userNames[$row->rev_user];
-			}
-
+		foreach ( $resultSet as $row ) {
+			// SUS-807: use user name lookup here
+			$row->rev_user_text = User::getUsername( $row->rev_user, $row->rev_user_text );
+			
 			if ( $last === null ||
 				$last->page_namespace != $row->page_namespace ||
 				$last->page_title != $row->page_title ) {

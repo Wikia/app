@@ -381,7 +381,7 @@ class SpriteService {
 		$contents .= <<<EOF
 @mixin sprite-{$name}-base() {
 	background-color: transparent;
-	background-image: url('{$spriteUrl}'); /* wgCdnStylePath */
+	background-image: url('{$spriteUrl}'); /* wgResourceBasePath */
 	background-repeat: no-repeat;
 }
 

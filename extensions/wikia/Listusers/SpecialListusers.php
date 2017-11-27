@@ -38,11 +38,9 @@ $wgAutoloadClasses['ListusersHooks'] = __DIR__ . '/SpecialListusers_hooks.php';
 
 $wgHooks['SpecialPage_initList'][] = 'ListusersHooks::ActiveUsers';
 $wgAjaxExportList[] = 'ListusersAjax::axShowUsers';
+$wgAjaxExportList[] = 'ListusersAjax::axSuggestUsers';
 
-// This tries to write to a database that the devboxes don't have write-permission for.
-if( empty( $wgDevelEnvironment ) ){
-	$wgHooks['UserRights'][] = 'ListusersHooks::updateUserRights';
-}
+$wgHooks['UserRights'][] = 'ListusersHooks::updateUserRights';
 
 /**
  * Special pages
@@ -59,3 +57,20 @@ $wgSpecialPages['Listhelpers'] = 'SpecialListHelpers';
 
 // Only add Listusers to Special:SpecialPages
 $wgSpecialPageGroups['Listusers'] = 'users';
+
+// Resources Loader module
+$wgResourceModules['ext.wikia.ListUsers'] = [
+	'scripts' => [
+		'js/table.js'
+	],
+	'styles' => [
+		'css/table.scss'
+	],
+	'dependencies' => [
+		// SUS-3207 - for user names auto-suggest feature
+		'jquery.ui.autocomplete',
+		'jquery.dataTables',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Listusers'
+];

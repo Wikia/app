@@ -1,23 +1,15 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.abTest',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window',
-	require.optional('wikia.breakpointsLayout')
-], function (adContext, abTest, doc, log, win, breakpointsLayout) {
+	'wikia.window'
+], function (adContext, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
 		context = adContext.getContext(),
-		maxAdSize = 704,
 		minSkinWidth = 1240;
-
-	function isLargeBreakpoints() {
-		return breakpointsLayout &&
-			doc.getElementById('WikiaPageBackground').offsetWidth >= breakpointsLayout.getLargeContentWidth();
-	}
 
 	function getNewSizes(sizes, maxWidth, fallbackSizes) {
 		var goodSizes = (sizes || []).filter(function(size) {
@@ -56,8 +48,6 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function filterSizes(slotName, slotSizes) {
-		var isPremiumLayout = context.opts.premiumAdLayoutEnabled,
-			footerSize;
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
 		removeUAPForFeaturedVideoPages(slotName, slotSizes);
@@ -67,15 +57,9 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
 			case slotName === 'INVISIBLE_SKIN':
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
-			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
-				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
-			case slotName === 'BOTTOM_LEADERBOARD' && isPremiumLayout:
-				footerSize = doc.getElementById('WikiaFooter').offsetWidth;
-				return getNewSizes([[970, 250], [728, 90]], footerSize, [[728, 90]]);
 			case slotName === 'BOTTOM_LEADERBOARD':
-				footerSize = doc.getElementById('WikiaFooter').offsetWidth;
-				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
-			case slotName === 'INCONTENT_BOXAD_1' && isPremiumLayout && context.targeting.hasFeaturedVideo:
+				return getNewSizes(slotSizes, doc.getElementById('WikiaFooter').offsetWidth, [[728, 90]]);
+			case slotName === 'INCONTENT_BOXAD_1' && context.targeting.hasFeaturedVideo:
 				return [[300, 250]];
 			default:
 				return slotSizes;

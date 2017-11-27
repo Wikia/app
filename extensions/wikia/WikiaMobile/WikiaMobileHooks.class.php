@@ -163,13 +163,13 @@ class WikiaMobileHooks {
 
 		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
 			//retrieve section index from mw:editsection tag
-			preg_match( '#section="(.*?)"#', $link, $matches );
+			$section = preg_match( '#section="(.*?)"#', $link, $matches ) ? $matches[1] : '';
 			if ( $wgArticleAsJson || F::app()->wg->User->isAnon() ) {
 				$link = '';
 			}
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
-			$ret = "<h{$level} id='{$anchor}' section='{$matches[1]}' {$attribs}{$text}{$link}</h{$level}>";
+			$ret = "<h{$level} id='{$anchor}' section='{$section}' {$attribs}{$text}{$link}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );

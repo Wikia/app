@@ -659,7 +659,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		padding: 0;
 
 		&.loading {
-			background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+			background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 		}
 	}
 

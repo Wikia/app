@@ -204,7 +204,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		width: $thumb-size-width;
 		height: $thumb-size-height;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgCdnStylePath */
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgResourceBasePath */
 		background-repeat: no-repeat;
 		background-position: center;
 	}
@@ -321,7 +321,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		width: $thumb-size-width;
 		height: $thumb-size-height;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgCdnStylePath */
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgResourceBasePath */
 		background-repeat: no-repeat;
 		background-position: center;
 	}

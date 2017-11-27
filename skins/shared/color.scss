@@ -16,7 +16,7 @@ $color-buttons: get_command_line_param('color-buttons', $color-links-default); /
 $color-community-header: get_command_line_param('color-community-header', $color-buttons); // default: blue as for buttons
 $color-links: get_command_line_param('color-links', $color-links-default); // default: blue
 $color-header: get_command_line_param('color-header', $color-header-default);
-$background-image: get_command_line_param('background-image', 'https://images.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png'); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
+$background-image: get_command_line_param('background-image', '/skins/oasis/images/themes/oasis.png'); /* wgResourceBasePath */
 $page-opacity: get_command_line_param('page-opacity', 100) / 100;	// default: 1
 
 
@@ -120,7 +120,7 @@ $color-page-shadow: #333;
 // Buttons
 $color-button-highlight: lighten($color-buttons, 10%);
 $color-button-text: $color-white;
-@if lightness($color-buttons) > 55 {
+@if lightness($color-buttons) > 49 {
 	$color-button-text: $color-black;
 }
 $color-secondary-button-highlight: mix($color-page, $color-white, 94%);

@@ -32,8 +32,8 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
-		$vars[] = 'wgAdDriverAdMixCountries';
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
+		$vars[] = 'wgAdDriverAdEngine3Countries';
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
@@ -67,16 +67,13 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
-		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
-		$vars[] = 'wgAdDriverPremiumAdLayoutCountries';
-		$vars[] = 'wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries';
-		$vars[] = 'wgAdDriverPremiumAdLayoutAppNexusTagsCountries';
+		$vars[] = 'wgAdDriverPubMaticBidderCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
@@ -104,20 +101,23 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
 		// shared variables with communities
+		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
+		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverVideoMidrollCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
+		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
+		$vars[] = 'wgAdDriverVideoPostrollCountries';
 
-		// news&stories variables only
-		$vars[] = 'wgAdDriverInstartLogicF2RecoveryCountries';
+		// TODO: Remove after src=[gpt,ns] is finished
 		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
 		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
+
+		// news&stories variables only
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
-		$vars[] = 'wgAdDriverF2SingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverF2SrcKeyValueCountries';
-		$vars[] = 'wgAdDriverF2PlayAdsOnNextFVCountries';
-		$vars[] = 'wgAdDriverF2PlayAdsOnNextFVFrequency';
-		$vars[] = 'wgAdDriverF2FVMidrollCountries';
-		$vars[] = 'wgAdDriverF2FVPostrollCountries';
+		$vars[] = 'wgAdDriverF2MEGAVideosCountries';
 
 		return true;
 	}

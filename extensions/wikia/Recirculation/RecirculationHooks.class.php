@@ -1,35 +1,12 @@
 <?php
 
+use \Swagger\Client\Liftigniter\Metadata\Models\Item;
 /**
  * Class RecirculationHooks
  */
 class RecirculationHooks {
 
 	const DATE_FORMAT = 'Y-m-d H:i:s';
-
-	/**
-	 * Insert Recirculation to the right rail
-	 *
-	 * @param array $modules
-	 *
-	 * @return bool
-	 */
-	public static function onGetRailModuleList( &$modules ) {
-		// Check if we're on a page where we want to show a recirculation module.
-		// If we're not, stop right here.
-		if ( !static::isCorrectPageType() ) {
-			return true;
-		}
-
-		// Use a different position depending on whether the user is logged in
-		// This is based off of the logic from the VideosModule extension
-		$app = F::App();
-		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
-
-		$modules[$pos] = [ 'Recirculation', 'container', [ 'containerId' => 'recirculation-rail' ] ];
-
-		return true;
-	}
 
 	/**
 	 * @param OutputPage $out
@@ -80,13 +57,9 @@ class RecirculationHooks {
 		$showableNamespaces = array_merge( $wg->ContentNamespaces, self::getNoIndexNamespaces() );
 		$isInShowableNamespaces = $title->exists() && $title->inNamespaces( $showableNamespaces );
 
-		if ( $isInShowableNamespaces && !WikiaPageType::isActionPage() &&
-		     !WikiaPageType::isCorporatePage()
-		) {
-			return true;
-		} else {
-			return false;
-		}
+		return $isInShowableNamespaces &&
+			!WikiaPageType::isActionPage() &&
+			!WikiaPageType::isCorporatePage();
 	}
 
 	/**
@@ -128,15 +101,41 @@ class RecirculationHooks {
 	}
 
 	/**
+	 * @param String $cityId
+	 * @param String $articleId
+	 * @return null|Item
+	 */
+	private static function getMetaDataForArticle( String $cityId, String $articleId ) {
+		$metaDataFromService = WikiaDataAccess::cache(
+			'liftigniter-metadata',
+			WikiaResponse::CACHE_SHORT,
+			function() {
+				$metaDataService = new LiftigniterMetadataService();
+
+				return $metaDataService->getLiMetadata();
+			}
+		);
+
+		return current(array_filter( $metaDataFromService, function ( Item $item ) use ( $cityId, $articleId ) {
+			if ( $item->getProduct() === $cityId && $item->getId() === $articleId ) {
+				return $item;
+			}
+
+			return null;
+		}));
+	}
+
+	/**
 	 * @return array
 	 */
 	private static function getMetaData() {
 		global $wgLanguageCode, $wgCityId, $wgEnableArticleFeaturedVideo;
+
 		$title = RequestContext::getMain()->getTitle();
 		$articleId = $title->getArticleID();
-		$metaDataService = new LiftigniterMetadataService();
-		$metaDataFromService = $metaDataService->getLiMetadataForArticle( $wgCityId, $articleId );
-		$shouldNoIndex = self::shoudlNoIndex( $metaDataFromService );
+
+		$metaDataFromService = self::getMetaDataForArticle( $wgCityId, $articleId );
+		$shouldNoIndex = self::shouldNoIndex( $metaDataFromService );
 		$metaData = [];
 		$metaData['language'] = $wgLanguageCode;
 
@@ -174,17 +173,17 @@ class RecirculationHooks {
 	}
 
 	/**
-	 * @param $metaDataFromService is actual Data returned by Liftigniter Metadata Service
+	 * @param Item $metaDataFromService is actual Data returned by Liftigniter Metadata Service
 	 *
 	 * @return bool
 	 */
-	private static function shoudlNoIndex( $metaDataFromService ) {
+	private static function shouldNoIndex( $metaDataFromService ) {
 		global $wgDisableShowInRecirculation;
 
 		return self::isPrivateOrNotProduction() ||
-		       ( ( self::isNoIndexNamespace() || $wgDisableShowInRecirculation ) &&
-		         empty( $metaDataFromService ) ) ||
-		       RequestContext::getMain()->getRequest()->getVal( 'redirect' ) === 'no';
+			( ( self::isNoIndexNamespace() || $wgDisableShowInRecirculation ) &&
+				empty( $metaDataFromService ) ) ||
+			RequestContext::getMain()->getRequest()->getVal( 'redirect' ) === 'no';
 	}
 
 	/**

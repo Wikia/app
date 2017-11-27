@@ -165,26 +165,27 @@ EOT
 			}
 
 			// Check for disabled accounts where we kept the email
-			$dRows = $dbr->select(
-				[ '`user`', 'user_properties' ],
-				[ 'user_name' ],
+			$userIds = $dbr->selectFieldValues(
+				'user_properties',
+				'up_user',
 				[
-					'user_id = up_user',
 					'up_property' => 'disabled-user-email',
 					'up_value' => $target,
 				],
 				__METHOD__
 			);
 
-			/** @var stdClass $row */
-			foreach ( $dRows as $row ) {
+			foreach ( User::whoAre( $userIds ) as $user_id => $user_name ) {
+				// User::whoAre return an entry for anons (under '0' key), skip it here
+				if ( $user_id === 0 ) continue;
+
 				if ( $loop === 0 ) {
-					$userTarget = $oRow->user_name;
+					$userTarget = $user_name;
 				}
-				if ( !empty( $emailUser ) && ( $emailUser == $row->user_name ) ) {
+				if ( !empty( $emailUser ) && ( $emailUser == $user_name ) ) {
 					$userTarget = $emailUser;
 				}
-				$aUsers[] = $row->user_name;
+				$aUsers[] = $user_name;
 				$loop++;
 			}
 

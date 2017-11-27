@@ -80,16 +80,7 @@ class RailController extends WikiaController {
 
 		krsort( $railModules );
 
-		// TODO ADEN-5481 remove after experiment is done
-		$isPremiumAdLayoutEnabled = $this->request->getBool( 'isPremiumAdLayoutEnabled', false );
-
-		if ( $isPremiumAdLayoutEnabled ) {
-			// copied from RecirculationHooks::onGetRailModuleList
-			$recirculationModulePosition = $context->getUser()->isAnon() ? 1305 : 1285;
-			unset( $railModules[$recirculationModulePosition] );
-
-			array_push( $railModules, [ 'Rail', 'stickyModule', [] ] );
-		}
+		array_push( $railModules, [ 'Rail', 'stickyModule', [] ] );
 
 		$wrapper->wrap( function () use ( $railModules, &$railLazyContent ) {
 			foreach ( $railModules as $railModule ) {
@@ -100,14 +91,6 @@ class RailController extends WikiaController {
 				);
 			}
 		} );
-
-		// ad mix experiment uses a wrapper to group recirculation and ad placeholder
-		if ( !$isPremiumAdLayoutEnabled ) {
-			$railLazyContent .= Html::element( 'div', [
-				'id' => 'WikiaAdInContentPlaceHolder',
-				'class' => 'rail-sticky-module'
-			] );
-		}
 
 		$this->railLazyContent = $railLazyContent;
 

@@ -131,7 +131,8 @@ class ImageLazyLoad  {
 				return false;
 			}
 
-			if ( !empty( $wgParser ) && $wgParser->mIsMainParse ) {
+			// Use empty as wgParser is wrapped with StubObject so the object may not be initized yet.
+			if ( !empty( $wgParser ) && !empty( $wgParser->mIsMainParse ) ) {
 				if ( empty( $wgParser->lazyLoadedImagesCount ) ) {
 					$wgParser->lazyLoadedImagesCount = 0;
 				}

@@ -7,23 +7,22 @@
  */
 
 class Listusers extends SpecialRedirectToSpecial {
-	var $mCityId;
-	var $mAction;
-	var $mTitle;
-	var $mDefGroups;
-	var $mGroups;
-	var $mFilterStart;
-	var $mContribs;
-	var $mData;
+	private $mAction;
+	private $mTitle;
+	private $mDefGroups;
+	private $mContribs;
 
-	var $mDefContrib = null;
-	var $mUserStart = '';
+	/* @var ListusersData $mData */
+	private $mData;
+
+	private $mDefContrib = null;
+	private $searchByUser = '';
 
 	const TITLE		= 'Listusers';
 	const DEF_GROUP_NAME	= 'all';
 	const DEF_EDITS		= 5;
 	const DEF_LIMIT		= 30;
-	const DEF_ORDER		= 'username:asc';
+	const DEF_ORDER		= 'dtedit:desc';
 
 	/**
 	 * constructor
@@ -40,17 +39,16 @@ class Listusers extends SpecialRedirectToSpecial {
 	 * show form
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $wgCityId;
+		global $wgCityId;
 
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+			$this->getOutput()->readOnlyPage();
 			return;
 		}
 
 		/**
 		 * defaults
 		 */
-		$this->mCityId = $wgCityId;
 		// VOLDEV-47
 		// remove default highlighted groups (all are now highlighted)
 		$this->mDefGroups = array();
@@ -69,12 +67,13 @@ class Listusers extends SpecialRedirectToSpecial {
 		/**
 		 * initial output
 		 */
-		$wgOut->setPageTitle( wfMessage( 'listuserstitle' )->text() );
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
-		$wgOut->setArticleRelated( false );
-		$target = $wgRequest->getVal( 'target' );
+		$this->getOutput()->setPageTitle( wfMessage( 'listuserstitle' )->text() );
+		$this->getOutput()->setRobotpolicy( 'noindex,nofollow' );
+		$this->getOutput()->setArticleRelated( false );
+
+		$target = $this->getRequest()->getVal( 'target' );
 		if ( empty( $target ) ) {
-			$target = $wgRequest->getVal( 'group' );
+			$target = $this->getRequest()->getVal( 'group' );
 		}
 
 		if ( !empty( $target ) ) {
@@ -84,7 +83,7 @@ class Listusers extends SpecialRedirectToSpecial {
 				$this->mDefGroups = array( $target );
 			}
 		} elseif ( !empty( $subpage ) ) {
-			@list ( $subpage, $this->mDefContrib, $this->mUserStart ) = explode( "/", $subpage );
+			@list ( $subpage, $this->mDefContrib, $this->searchByUser ) = explode( "/", $subpage );
 			if ( !in_array( $this->mDefContrib, array_keys( $this->mContribs ) ) ) {
 				$this->mDefContrib = null;
 			}
@@ -97,10 +96,9 @@ class Listusers extends SpecialRedirectToSpecial {
 
 		$this->mDefContrib = is_null( $this->mDefContrib ) ? self::DEF_EDITS : $this->mDefContrib;
 
-		/* listusersHelper */
-		$this->mData = new ListusersData( $this->mCityId );
+		$this->mData = new ListusersData( $wgCityId );
+		$this->mData->load();
 		$this->mData->setFilterGroup( $this->mDefGroups );
-		$this->mGroups = $this->mData->getGroups();
 
 		/**
 		 * show form
@@ -108,36 +106,40 @@ class Listusers extends SpecialRedirectToSpecial {
 		$this->showForm();
 	}
 
-	/*
+	/**
 	 * HTML form
 	 *
 	 * @access public
 	 *
 	 * show form
 	 */
-	function showForm ( $error = "" ) {
-		global $wgOut, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgStylePath, $wgUser;
+	private function showForm () {
+		global $wgContLang, $wgExtensionsPath, $wgStylePath;
 
-		wfProfileIn( __METHOD__ );
+		// load CSS and JS assets
+		$this->getOutput()->addModules('ext.wikia.ListUsers');
 
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n" );
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Listusers/css/table.scss' ) );
+		// make these values available in JS code via mw.config
+		// e.g. mw.config.get('listUsers').defContrib
+		$this->getOutput()->addJsConfigVars('listUsers', [
+			'defContrib' => $this->mDefContrib,
+			'searchByUser' => $this->searchByUser,
+		]);
 
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl = new EasyTemplate( __DIR__ . "/templates/" );
 		$oTmpl->set_vars( array(
-			"error"			=> $error,
 			"action"		=> $this->mAction,
-			"obj"			=> $this,
 			"wgContLang"		=> $wgContLang,
 			"wgExtensionsPath"	=> $wgExtensionsPath,
 			"wgStylePath"		=> $wgStylePath,
 			"defContrib"		=> $this->mDefContrib,
-			"defUser"		=> $this->mUserStart,
-			"wgUser"		=> $wgUser,
-			"title"			=> self::TITLE
+			"searchByUser"		=> $this->searchByUser,
+			"wgUser"		=> $this->getUser(),
+			'groups'        => $this->mData->getGroups(),
+			'filtered_group' => $this->mData->getFilterGroup(),
+			'contribs'      => $this->mContribs,
 		));
-		$wgOut->addHTML( $oTmpl->render( "main-form" ) );
-		wfProfileOut( __METHOD__ );
+		$this->getOutput()->addHTML( $oTmpl->render( "main-form" ) );
 	}
 }
 

@@ -839,6 +839,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool Whether $sql is SQL for TEMPORARY table operation
 	 */
 	protected function registerTempTableOperation( $sql ) {
+		// SUS-3246: Trim the SQL query to avoid manually crafted queries not matching
+		$sql = ltrim( $sql );
+
 		if ( preg_match(
 			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
 			$sql,

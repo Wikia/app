@@ -279,7 +279,7 @@ body {
 			}
 
 			.loading-throbber {
-				background: $color-page url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgCdnStylePath */
+				background: $color-page url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgResourceBasePath */
 				height: 16px;
 				width: 16px;
 			}
