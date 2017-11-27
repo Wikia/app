@@ -297,6 +297,8 @@ class WikiaUpdater {
 		$databaseUpdater->output( 'Dropping rc_user_text column... ' );
 		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_user_text' );
 		$databaseUpdater->output( "done.\n" );
+		
+		wfWaitForSlaves();
 	}
 
 	/**
