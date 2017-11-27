@@ -1,0 +1,86 @@
+page:
+  -
+    page_id: 885
+    page_namespace: 1
+    page_title: Talk:Bellatriks_Lestrange/@comment-188.146.144.183-20170705164745
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 1932
+    page_len: 0
+  -
+    page_id: 890
+    page_namespace: 1
+    page_title: Talk:Bellatriks_Lestrange/@comment-188.146.144.183-20170605164745
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 2040
+    page_len: 0
+  -
+    page_id: 1040
+    page_namespace: 1
+    page_title: Talk:Bellatriks_Lestrange/@comment-TestUser-20170605164745
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 2060
+    page_len: 0
+revision:
+  - # revision by anon
+    rev_id: 1932
+    rev_page: 885
+    rev_text_id: 250
+    rev_comment: ''
+    rev_user: 0
+    rev_user_text: 188.146.144.183
+  - # two revisions of anon's comment edited by user
+    rev_id: 2040
+    rev_page: 890
+    rev_parent_id: 2039
+    rev_text_id: 340
+    rev_comment: ''
+    rev_user: 56371
+    rev_user_text: ''
+  -
+    rev_id: 2039
+    rev_page: 890
+    rev_text_id: 339
+    rev_comment: ''
+    rev_user: 0
+    rev_user_text: 188.146.144.183
+  - # revision by user
+    rev_id: 2060
+    rev_page: 1040
+    rev_text_id: 600
+    rev_comment: ''
+    rev_user: 56371
+    rev_user_text: ''
+text:
+  -
+    old_id: 250
+    old_text: Lorem ipsum
+    old_flags: ''
+  -
+    old_id: 340
+    old_text: Abcd
+    old_flags: ''
+  -
+    old_id: 339
+    old_text: Asdf
+    old_flags: ''
+  -
+    old_id: 600
+    old_text: UserComment
+    old_flags: ''
+user:
+  -
+    user_id: 56371
+    user_name: 'TestUser'
+    user_real_name: ''
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
