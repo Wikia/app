@@ -118,7 +118,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'protected_titles',                  'patch-protected_titles.sql' ),
 
 			// 1.13
-			array( 'addField', 'ipblocks',      'ipb_by_text',      'patch-ipb_by_text.sql' ),
 			array( 'addTable', 'page_props',                        'patch-page_props.sql' ),
 			array( 'addTable', 'updatelog',                         'patch-updatelog.sql' ),
 			array( 'addTable', 'category',                          'patch-category.sql' ),
