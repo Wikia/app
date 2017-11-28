@@ -257,13 +257,14 @@ class RCDatabaseLogEntry extends DatabaseLogEntry {
 	}
 
 	public function getPerformer() {
-		if ( $this->row->rc_user ) {
-			return User::newFromId( $this->row->rc_user );
+		$userId = (int) $this->row->rc_user;
+		if ( $userId !== 0 ) {
+			return User::newFromId( $userId );
+		} else {
+			$userText = $this->row->rc_user_text;
+			// Might be an IP, don't validate the username
+			return User::newFromName( $userText, false );
 		}
-
-		$userText = RecentChange::extractUserIpFromRow( $this->row );
-		// SUS-3079: this is an IP, don't validate the username
-		return User::newFromName( $userText, false );
 	}
 
 	public function getTarget() {
