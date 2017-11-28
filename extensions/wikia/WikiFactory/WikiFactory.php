@@ -3435,15 +3435,16 @@ class WikiFactory {
 	/**
 	 * Returns value of a given variable for all wikis
 	 *
-	 * @param $variableId String Id of variable to get
+	 * @param $variableName String Name of variable to get
 	 * @param $limit String Limit of rows
 	 * @param $afterWikiId String get value for wikis with id greater than this value. Optional, used for pagination.
 	 * @return array list of wiki ids and variable values
 	 */
-	static public function getVariableForAllWikis( $variableId, $limit, $afterWikiId = null ) {
+	static public function getVariableForAllWikis( $variableName, $limit, $afterWikiId = null ) {
 
 		$db = static::db( DB_SLAVE );
 
+		$variableId = static::getVarIdByName( $variableName );
 		$where = [ 'cv_variable_id = '.$variableId ];
 		if ( isset( $afterWikiId ) ) {
 			array_push( $where, 'cv_city_id > '.$afterWikiId );

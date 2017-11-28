@@ -8,7 +8,7 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const WIKIS_AFTER_WIKI_ID = -1;
 
-	const DART_TAG_VARIABLE_ID = 938;
+	const DART_TAG_VARIABLE_NAME = 'wgDartCustomKeyValues';
 
 	private function getSharedDbSlave() {
 		global $wgExternalSharedDB;
@@ -21,7 +21,7 @@ class DWDimensionApiController extends WikiaApiController {
 		$limit = min($db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
-		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_ID, $limit, $afterWikiId );
+		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_NAME, $limit, $afterWikiId );
 
 		$result = [];
 		foreach ($variables as $variable) {
