@@ -18,8 +18,8 @@ class DWDimensionApiController extends WikiaApiController {
 	public function getWikiDartTags() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min($db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
-		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
+		$limit = min($db->strencode( $this->getRequest()->getInt( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$afterWikiId = $db->strencode( $this->getRequest()->getInt( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
 		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_NAME, $limit, $afterWikiId );
 
