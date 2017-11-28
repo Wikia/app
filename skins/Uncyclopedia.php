@@ -19,8 +19,6 @@ if( !defined( 'MEDIAWIKI' ) )
  * @ingroup Skins
  */
 
-require_once("skins/MonoBook.php");
-
 class SkinUncyclopedia extends SkinMonoBook {
 	/**
 	 * Using monobook.

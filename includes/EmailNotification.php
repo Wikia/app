@@ -689,7 +689,7 @@ class EmailNotification {
 		// different namespaces.  To decide if this is an article, just make sure
 		// its not a blog.
 		return (
-			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
+			( class_exists( 'ArticleComment') && $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
 			( defined( 'NS_BLOG_ARTICLE' ) && !$this->title->inNamespace( NS_BLOG_ARTICLE ) )
 		);
 	}

@@ -149,10 +149,17 @@ class MustacheService {
 		// so pre-process them before sending to renderer
 		$data = $this->parseData($data);
 
-		// PHP extension is used for Mustache rendering
-		// @see https://github.com/jbboehr/php-mustache
-		$mustache = new Mustache();
-		return $mustache->render($template,$data,$partials);
+		if ( class_exists( 'Mustache' ) ) {
+			// PHP extension is used for Mustache rendering
+			// @see https://github.com/jbboehr/php-mustache
+			$mustache = new Mustache();
+
+			return $mustache->render( $template, $data, $partials );
+		}
+
+		$mustacheEngine = new Mustache_Engine();
+		$mustacheEngine->setPartials( $partials );
+		return $mustacheEngine->render( $template, $data );
 	}
 
 	/**

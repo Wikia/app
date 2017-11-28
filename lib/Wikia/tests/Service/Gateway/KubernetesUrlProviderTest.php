@@ -7,6 +7,11 @@ use PHPUnit\Framework\TestCase;
 
 class KubernetesUrlProviderTest extends TestCase {
 
+	protected function setUp() {
+		parent::setUp();
+		$this->markTestSkipped();
+	}
+
 	/**
 	 * @dataProvider provideEnvironmentDatacenterAndServiceName
 	 *

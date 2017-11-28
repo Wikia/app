@@ -1,22 +1,13 @@
 dist: trusty
 sudo: false
-addons:
-  chrome: stable
-language: node_js
-node_js:
-  - "node" # this installs the latest version of node
-env:
-- TEST_DIR=.
-- TEST_DIR=extensions/VisualEditor/
-- TEST_DIR=extensions/VisualEditor/lib/ve/
+language: php
+php: 7.0
 install:
-  - cd $TRAVIS_BUILD_DIR/$TEST_DIR
-  - npm install
+  - pecl channel-update pecl.php.net
+  - pecl install uopz
+  - composer require mustache/mustache
+  - rm LocalSettings.php
+  - mysql -e 'create database its_a_mw;'
+  - php maintenance/install.php --dbtype mysql --dbuser root --dbname its_a_mw --dbpath $(pwd) --pass nyan --server http://localhost TravisWiki admin
 script:
-  - cd $TRAVIS_BUILD_DIR/$TEST_DIR
-  - npm test
-cache:
-  directories:
-    - node_modules
-    - extensions/VisualEditor/node_modules
-    - extensions/VisualEditor/lib/ve/node_modules
+  - cd tests && ./php-all

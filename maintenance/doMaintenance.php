@@ -75,9 +75,8 @@ require_once( "$IP/StartProfiler.php" );
 if ( !defined( 'MW_COMPILED' ) ) {
 	require_once( "$IP/includes/Defines.php" );
 }
-# Wikia change - comment out the next line since we include DefaultSettings.php
-# in LocalSettings.php
-#require_once( MWInit::compiledPath( 'includes/DefaultSettings.php' ) );
+
+require_once( MWInit::compiledPath( 'includes/DefaultSettings.php' ) );
 
 if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	# Use a callback function to configure MediaWiki
@@ -96,19 +95,6 @@ if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	require( $maintenance->loadSettings() );
 }
 
-// Wikia change - begin - attach sink to the profiler (copied from WebStart.php)
-if ( $wgProfiler instanceof Profiler ) {
-	if ( empty($wgProfilerSendViaScribe) ) {
-		$sink = new ProfilerDataUdpSink();
-	} else {
-		$sink = new ProfilerDataScribeSink();
-	}
-	$wgProfiler->addSink( $sink );
-}
-Transaction::setEntryPoint(Transaction::ENTRY_POINT_MAINTENANCE);
-Transaction::setAttribute(Transaction::PARAM_MAINTENANCE_SCRIPT, $maintClass);
-// Wikia change - end
-
 if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&
 	is_readable( "$IP/AdminSettings.php" ) )
 {
@@ -117,6 +103,20 @@ if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&
 $maintenance->finalSetup();
 // Some last includes
 require_once( MWInit::compiledPath( 'includes/Setup.php' ) );
+
+// Wikia change - begin - attach sink to the profiler (copied from WebStart.php)
+if ( isset( $wgProfiler ) && $wgProfiler instanceof Profiler ) {
+	if ( empty($wgProfilerSendViaScribe) ) {
+		$sink = new ProfilerDataUdpSink();
+	} else {
+		$sink = new ProfilerDataScribeSink();
+	}
+	$wgProfiler->addSink( $sink );
+}
+
+Transaction::setEntryPoint( Transaction::ENTRY_POINT_MAINTENANCE );
+Transaction::setAttribute( Transaction::PARAM_MAINTENANCE_SCRIPT, $maintClass );
+// Wikia change - end
 
 // Much much faster startup than creating a title object
 $wgTitle = null;

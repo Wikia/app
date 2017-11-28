@@ -8,6 +8,11 @@ use PHPUnit\Framework\TestCase;
  */
 class WikiaControllerTest extends TestCase {
 
+	protected function setUp() {
+		parent::setUp();
+		$this->markTestSkipped( 'This test is slow in container' );
+	}
+
 	public function generatingHelpDataProvider() {
 		return array(
 			array( 'json', '{' ),

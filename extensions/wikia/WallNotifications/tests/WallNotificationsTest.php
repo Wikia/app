@@ -1,11 +1,5 @@
 <?php
 
-class testWallNotifications extends WallNotifications {
-	public function addNotificationToData(&$data, $userId, $wikiId, $notificationData) {
-		parent::addNotificationToData($data, $userId, $wikiId, $notificationData);
-	}
-}
-
 class WallNotificationsTest extends WikiaBaseTest {
 
 	const ENTITY_KEY_102 = '404_102';
@@ -352,9 +346,13 @@ class WallNotificationsTest extends WikiaBaseTest {
 	 * @param $dataF
 	 */
 	public function testAddNotificationToData($userId, $wikiId, $notificationData, $dataS, $dataF) {
-		$wn = new testWallNotifications();
+		$wn = new WallNotifications();
 
-		$wn->addNotificationToData($dataS, $userId, $wikiId, $notificationData);
+		$reflAddNotificationToData =
+			new ReflectionMethod( WallNotifications::class, 'addNotificationToData' );
+		$reflAddNotificationToData->setAccessible( true );
+
+		$reflAddNotificationToData->invoke( $wn, $dataS, $userId, $wikiId, $notificationData );
 
 		$this->assertEquals($dataS, $dataF);
 	}

@@ -1898,3 +1898,7 @@ require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension
 require_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
+
+require_once "$IP/extensions/wikia/Email/Email.setup.php";
+
+\Wikia\DependencyInjection\InjectorInitializer::init();

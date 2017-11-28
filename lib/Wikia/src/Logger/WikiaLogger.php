@@ -195,7 +195,8 @@ class WikiaLogger implements LoggerInterface {
 		// SUS-2966 | We do not want debug logs to be reported on production (info level will be the lowest logged)
 		// $level is the minimum logging level at which this handler will be triggered
 		global $wgWikiaEnvironment;
-		$level = ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) ? Logger::INFO : Logger::DEBUG;
+		$level = ( defined( 'WIKIA_ENV_PROD' ) && $wgWikiaEnvironment === WIKIA_ENV_PROD )
+			? Logger::INFO : Logger::DEBUG;
 
 		// SUS-2974 | all logs from WikiaLogger will have 'program' and 'appname' set to provided $ident value
 		return new SyslogHandler($ident, LOG_USER /* $facility */, $level);

@@ -5283,9 +5283,12 @@ $wgAjaxLicensePreview = true;
  );
  *
  */
-$wgCrossSiteAJAXdomains = [
-	"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
-];
+
+if ( isset( $wgWikiaBaseDomain ) ) {
+	$wgCrossSiteAJAXdomains = [
+		"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
+	];
+}
 
 /**
  * Domains that should not be allowed to make AJAX requests,

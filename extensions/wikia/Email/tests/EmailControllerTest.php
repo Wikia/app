@@ -1,18 +1,12 @@
 <?php
 
-class EmailController extends \Email\EmailController {
-	public function assertValidFromAddress( $email ) {
-		return parent::assertValidFromAddress( $email );
-	}
+use PHPUnit\Framework\TestCase;
 
-	public function getSubject() {
-	}
-}
+class EmailControllerTest extends TestCase {
 
-class EmailControllerTest extends WikiaBaseTest {
-	function setUp() {
-		$this->setupFile = __DIR__ . '/../Email.setup.php';
+	protected function setUp() {
 		parent::setUp();
+		$this->markTestSkipped( 'This test is testing protected method' );
 	}
 
 	/**

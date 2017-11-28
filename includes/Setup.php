@@ -29,6 +29,8 @@ if ( !isset( $wgVersion ) ) {
 	die( 1 );
 }
 
+require_once( "$IP/includes/GlobalFunctions.php" );
+
 // Set various default paths sensibly...
 if ( $wgScript === false ) $wgScript = "$wgScriptPath/index$wgScriptExtension";
 if ( $wgLoadScript === false ) $wgLoadScript = "$wgScriptPath/load$wgScriptExtension";
@@ -386,7 +388,6 @@ if ( !defined( 'MW_COMPILED' ) ) {
 
 	wfProfileIn( $fname . '-includes' );
 	require_once( "$IP/includes/normal/UtfNormalUtil.php" );
-	require_once( "$IP/includes/GlobalFunctions.php" );
 	require_once( "$IP/includes/ProxyTools.php" );
 	require_once( "$IP/includes/ImageFunctions.php" );
 	require_once( "$IP/includes/normal/UtfNormalDefines.php" );
