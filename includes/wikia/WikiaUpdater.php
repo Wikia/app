@@ -295,10 +295,6 @@ class WikiaUpdater {
 		$databaseUpdater->output( 'Dropping rc_ip column... ' );
 		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_ip' );
 		$databaseUpdater->output( "done.\n" );
-
-		$databaseUpdater->output( 'Dropping rc_user_text column... ' );
-		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_user_text' );
-		$databaseUpdater->output( "done.\n" );
 		
 		wfWaitForSlaves();
 	}
