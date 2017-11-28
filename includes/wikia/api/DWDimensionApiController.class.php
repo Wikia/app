@@ -15,20 +15,6 @@ class DWDimensionApiController extends WikiaApiController {
 		return wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 	}
 
-	private function getVerticalName( $allVerticals, $verticalId ) {
-		if ( isset( $allVerticals[ $verticalId ] ) ) {
-			return $allVerticals[ $verticalId ][ 'name' ];
-		}
-		return null;
-	}
-
-	private function getCategoryName( $allCategories, $categoryId ) {
-		if ( isset( $allCategories[ $categoryId ] ) ) {
-			return $allCategories[ $categoryId ][ 'name' ];
-		}
-		return null;
-	}
-
 	public function getWikiDartTags() {
 		$db = $this->getSharedDbSlave();
 
@@ -56,6 +42,20 @@ class DWDimensionApiController extends WikiaApiController {
 			null,
 			WikiaResponse::CACHE_DISABLED
 		);
+	}
+
+	private function getVerticalName( $allVerticals, $verticalId ) {
+		if ( isset( $allVerticals[ $verticalId ] ) ) {
+			return $allVerticals[ $verticalId ][ 'name' ];
+		}
+		return null;
+	}
+
+	private function getCategoryName( $allCategories, $categoryId ) {
+		if ( isset( $allCategories[ $categoryId ] ) ) {
+			return $allCategories[ $categoryId ][ 'name' ];
+		}
+		return null;
 	}
 
 	public function getWikis() {
