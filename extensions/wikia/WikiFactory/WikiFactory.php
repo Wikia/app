@@ -3436,11 +3436,11 @@ class WikiFactory {
 	 * Returns value of a given variable for all wikis
 	 *
 	 * @param $variableId String Id of variable to get
-	 * @param $afterWikiId String get value for wikis with id greater than this value. Used for pagination.
 	 * @param $limit String Limit of rows
+	 * @param $afterWikiId String get value for wikis with id greater than this value. Optional, used for pagination.
 	 * @return array list of wiki ids and variable values
 	 */
-	static public function getVariableForAllWikis( $variableId, $afterWikiId, $limit ) {
+	static public function getVariableForAllWikis( $variableId, $limit, $afterWikiId = null ) {
 
 		$db = static::db( DB_SLAVE );
 

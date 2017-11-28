@@ -29,55 +29,13 @@ class DWDimensionApiController extends WikiaApiController {
 		return null;
 	}
 
-	/**
-	 * Returns value of a given variable for all wikis
-	 *
-	 * @param $variableId String Id of variable to get
-	 * @param $afterWikiId String get value for wikis with id greater than this value. Used for pagination.
-	 * @param $limit String Limit of rows
-	 * @return array list of wiki ids and variable values
-	 */
-	private function getVariableForAllWikis( $db, $variableId, $afterWikiId, $limit ) {
-
-
-		$where = [ 'cv_variable_id = '.static::DART_TAG_VARIABLE_ID ];
-		if ( isset( $afterWikiId ) ) {
-			array_push( $where, 'cv_city_id > "'.$afterWikiId.'"' );
-		}
-		$dbResult = $db->select(
-			[ 'city_variables' ],
-			[ 'cv_city_id', 'cv_value' ],
-			$where,
-			__METHOD__,
-			[
-				'ORDER BY' => 'cv_city_id',
-				'LIMIT' => $limit
-			]
-		);
-
-		$result = [];
-		while ($row = $db->fetchObject($dbResult)) {
-			#extract from list like "s:199:\"sex=m;sex=f;age=under18;age=13-17;age=18-24;age=25-34;age=18-34;\";"
-			preg_match_all("/([^;= ]+)=([^;= ]+)/", unserialize( $row->cv_value ), $r);
-
-			for ($i = 0; $i < count( $r[1] ); $i++) {
-				$result[] = [
-					'wiki_id' => $row->cv_city_id,
-					'tag' => $r[ 1 ][ $i ],
-					'value' => $r[ 2 ][ $i ]
-				];
-			}
-		}
-		return $result;
-	}
-
 	public function getWikiDartTags() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$limit = min($db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
-		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_ID, $afterWikiId, $limit );
+		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_ID, $limit, $afterWikiId );
 
 		$result = [];
 		foreach ($variables as $variable) {
