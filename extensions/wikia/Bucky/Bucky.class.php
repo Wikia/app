@@ -6,7 +6,7 @@
 class Bucky {
 
 	const DEFAULT_SAMPLING = 1; // percentage
-	const BASE_URL = '//speed.wikia.net/__rum';
+	const BASE_URL = 'https://speed.nocookie.net/__rum';
 
 	/**
 	 * Adds wgWeppyConfig global JS variable

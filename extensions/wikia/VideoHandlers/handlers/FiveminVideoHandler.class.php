@@ -3,9 +3,9 @@
 class FiveminVideoHandler extends VideoHandler {
 
 	protected $apiName = 'FiveminApiWrapper';
-	protected static $urlTemplate = 'http://www.5min.com/Embeded/$1';
-	protected static $providerDetailUrlTemplate = 'http://www.5min.com/Video/$1';
-	protected static $providerHomeUrl = 'http://www.5min.com/';
+	protected static $urlTemplate = 'https://www.5min.com/Embeded/$1';
+	protected static $providerDetailUrlTemplate = 'https://www.5min.com/Video/$1';
+	protected static $providerHomeUrl = 'https://www.5min.com/';
 	protected static $autoplayParam = "autostart";
 	protected static $autoplayValue = "true";
 

@@ -178,7 +178,7 @@ class NavigationModel extends WikiaModel {
 		if ( isset( $element['text'] ) ) {
 			$next = [
 				'text' => $element['text'],
-				'href' => $element['href']
+				'href' => Sanitizer::encodeAttribute($element['href'])
 			];
 
 			if ( !empty( $children ) ) {
