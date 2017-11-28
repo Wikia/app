@@ -137,8 +137,8 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		foreach( $wikis as $wiki) {
 			$sub_result = [];
-			//try {
-				$db->query("USE ".$wiki[ 'dbname' ].";",__METHOD__);
+			try {
+				$db->query("USE `".$wiki[ 'dbname' ]."`;",__METHOD__);
 
 				$rows = $db->query("select video_title from video_info",
 					__METHOD__
@@ -152,8 +152,8 @@ class DWDimensionApiController extends WikiaApiController {
 				}
 				$db->freeResult( $rows );
 
-			//} catch (DBQueryError $e) {
-			//}
+			} catch (DBQueryError $e) {
+			}
 			$result[] = [
 				'wiki_id' => $wiki[ 'wiki_id' ],
 				'dbname' => $wiki[ 'dbname' ],
