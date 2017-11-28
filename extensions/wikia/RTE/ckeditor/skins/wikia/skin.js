@@ -81,6 +81,13 @@ CKEDITOR.skin.ua_dialog = 'ie,iequirks,ie7,ie8';
 //
 // The "$color" placeholder can be used in the returned string. It'll be
 // replaced with the desired color.
+
+//Wikia start - disabling chameleon feature
+
+CKEDITOR.skin.chameleon = function() {
+    return '';
+};
+//Wikia - end
 /*CKEDITOR.skin.chameleon = function( editor, part ) {
 	var css;
 
