@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\DependencyInjection\Injector;
+use Wikia\Tasks\Tasks\RenameUserPagesTask;
 
 class RenameUserProcess {
 	const EMAIL_CONTROLLER = \Email\Controller\UserNameChangeController::class;
@@ -462,6 +463,16 @@ class RenameUserProcess {
 		if ( !User::newFromId( $this->mRequestorId )->isAllowed('renameanotheruser') ) {
 			self::blockUserRenaming( $renamedUser );
 			$renamedUser->saveSettings();
+		}
+
+		// SUS-3120 Schedule background task to rename local user pages, blogs, Walls...
+		$task = new RenameUserPagesTask();
+		$task->call( 'renameLocalPages', $this->mOldUsername, $this->mNewUsername );
+
+		$targetCommunityIds = RenameUserPagesTask::getTargetCommunities( $this->mOldUsername );
+
+		foreach ( $targetCommunityIds as $wikiId ) {
+			$task->wikiId( $wikiId )->queue();
 		}
 
 		return empty( $this->getErrors() );
