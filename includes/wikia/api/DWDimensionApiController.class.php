@@ -29,11 +29,16 @@ class DWDimensionApiController extends WikiaApiController {
 		return null;
 	}
 
-	public function getWikiDartTags() {
-		$db = $this->getSharedDbSlave();
+	/**
+	 * Returns value of a given variable for all wikis
+	 *
+	 * @param $variableId String Id of variable to get
+	 * @param $afterWikiId String get value for wikis with id greater than this value. Used for pagination.
+	 * @param $limit String Limit of rows
+	 * @return array list of wiki ids and variable values
+	 */
+	private function getVariableForAllWikis( $db, $variableId, $afterWikiId, $limit ) {
 
-		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
-		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
 		$where = [ 'cv_variable_id = '.static::DART_TAG_VARIABLE_ID ];
 		if ( isset( $afterWikiId ) ) {
@@ -58,6 +63,30 @@ class DWDimensionApiController extends WikiaApiController {
 			for ($i = 0; $i < count( $r[1] ); $i++) {
 				$result[] = [
 					'wiki_id' => $row->cv_city_id,
+					'tag' => $r[ 1 ][ $i ],
+					'value' => $r[ 2 ][ $i ]
+				];
+			}
+		}
+		return $result;
+	}
+
+	public function getWikiDartTags() {
+		$db = $this->getSharedDbSlave();
+
+		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
+
+		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_ID, $afterWikiId, $limit );
+
+		$result = [];
+		foreach ($variables as $variable) {
+			#extract from list like "s:199:\"sex=m;sex=f;age=under18;age=13-17;age=18-24;age=25-34;age=18-34;\";"
+			preg_match_all("/([^;= ]+)=([^;= ]+)/", $variable[ 'value' ], $r);
+
+			for ($i = 0; $i < count( $r[1] ); $i++) {
+				$result[] = [
+					'wiki_id' => $variable[ 'city_id' ],
 					'tag' => $r[ 1 ][ $i ],
 					'value' => $r[ 2 ][ $i ]
 				];
@@ -109,6 +138,7 @@ class DWDimensionApiController extends WikiaApiController {
 				'deleted' => $row->deleted
 			];
 		}
+		$db->freeResult( $dbResult );
 
 		$this->setResponseData(
 			$result,

@@ -3432,4 +3432,40 @@ class WikiFactory {
 		return var_export( $value, true );
 	}
 
+	/**
+	 * Returns value of a given variable for all wikis
+	 *
+	 * @param $variableId String Id of variable to get
+	 * @param $afterWikiId String get value for wikis with id greater than this value. Used for pagination.
+	 * @param $limit String Limit of rows
+	 * @return array list of wiki ids and variable values
+	 */
+	static public function getVariableForAllWikis( $variableId, $afterWikiId, $limit ) {
+
+		$db = static::db( DB_SLAVE );
+
+		$where = [ 'cv_variable_id = '.$variableId ];
+		if ( isset( $afterWikiId ) ) {
+			array_push( $where, 'cv_city_id > '.$afterWikiId );
+		}
+		$dbResult = $db->select(
+			[ 'city_variables' ],
+			[ 'cv_city_id', 'cv_value' ],
+			$where,
+			__METHOD__,
+			[
+				'ORDER BY' => 'cv_city_id',
+				'LIMIT' => $limit
+			]
+		);
+
+		$result = [];
+		while ($row = $db->fetchObject( $dbResult ) ) {
+			$result[] = [
+				'city_id' => $row->cv_city_id,
+				'value' => unserialize( $row->cv_value, [ 'allowed_classes' => false ] ) ];
+		}
+		$db->freeResult( $dbResult );
+		return $result;
+	}
 };
