@@ -42,7 +42,7 @@
  * @todo document functions and variables
  */
 class RecentChange {
-	var $mAttribs = array(), $mExtra = array();
+	var $mAttribs = [ 'rc_user_text' => '' ], $mExtra = array();
 
 	/**
 	 * @var Title

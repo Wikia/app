@@ -296,8 +296,8 @@ class WikiaUpdater {
 		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_ip' );
 		$databaseUpdater->output( "done.\n" );
 
-		$databaseUpdater->output( 'Dropping rc_user_text column... ' );
-		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_user_text' );
+		$databaseUpdater->output( 'Adding default value for rc_user_text column... ' );
+		$databaseConnection->query( 'alter table recentchanges modify column rc_user_text varchar(255) binary not null default \'\'' );
 		$databaseUpdater->output( "done.\n" );
 		
 		wfWaitForSlaves();
