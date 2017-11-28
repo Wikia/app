@@ -967,6 +967,8 @@ CREATE TABLE /*_*/recentchanges (
 
   -- As in revision
   rc_user int unsigned NOT NULL default 0,
+  -- SUS-3079: Placeholder empty value until migration
+  rc_user_text VARCHAR(255) BINARY NOT NULL DEFAULT '',
 
   -- When pages are renamed, their RC entries do _not_ change.
   rc_namespace int NOT NULL default 0,
