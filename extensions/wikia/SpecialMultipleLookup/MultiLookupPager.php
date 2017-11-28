@@ -14,7 +14,7 @@ class MultiLookupPager extends TablePager {
 		global $wgSpecialsDB;
 		parent::__construct( $context );
 
-		$this->target = IP::sanitizeIP( $target );
+		$this->target = inet_pton( $target );
 		$this->mDb = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 		$this->formatter = new MultiLookupRowFormatter( $context );
 	}
@@ -36,7 +36,7 @@ class MultiLookupPager extends TablePager {
 			'tables' => [ 'multilookup' ],
 			'fields' => '*',
 			'conds' => [
-				'ml_ip_bin' => inet_pton( $this->target )
+				'ml_ip_bin' => $this->target
 			],
 		];
 	}
@@ -65,26 +65,24 @@ class MultiLookupPager extends TablePager {
 	 * @return string[] array of user names and IP addresses
 	 */
 	private function getWikiUsers( $dbName ) {
-		$cacheKey = wfSharedMemcKey( 'multilookup', $this->target, $dbName );
+		$userIp = inet_ntop( $this->target );
+		$cacheKey = wfSharedMemcKey( 'multilookup', $userIp, $dbName );
 
-		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName ) {
+		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $userIp ) {
 			$dbr = wfGetDB( DB_SLAVE, [], $dbName );
 
 			$res = $dbr->select(
 				[ 'recentchanges' ],
-				[
-					'rc_user_text as user_name',
-					'rc_user as user_id',
-				],
-				[ 'rc_ip' => $this->target ],
+				[ 'rc_user as user_id' ],
+				[ 'rc_ip_bin' => $this->target ],
 				__METHOD__,
 				[ 'DISTINCT' ]
 			);
 
 			$users = [];
 			foreach ( $res as $user ) {
-				// SUS-812: use username lookup - user ID for registered users, rc_user_text for anons
-				$userName = User::getUsername( $user->user_id, $user->user_name );
+				// SUS-812: use username lookup - user ID for registered users, IP address for anons
+				$userName = User::getUsername( $user->user_id, $userIp );
 
 				$users[] = $userName;
 			}
