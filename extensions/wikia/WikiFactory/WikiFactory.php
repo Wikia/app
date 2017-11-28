@@ -1194,7 +1194,7 @@ class WikiFactory {
 		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain;
 
 		// first - normalize URL
-		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
+		$regexp = '/^(https?:)?\/\/([^\/]+)\/?(.*)?$/';
 		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
 		if ( preg_match( $regexp, $url, $groups ) === 0 ||
 		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0 ||
@@ -1231,19 +1231,19 @@ class WikiFactory {
 		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return "$protocol://" . $server . '.preview' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.preview' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
-				return "$protocol://" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
-				return "$protocol://" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
-				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
+				return sprintf( '%s//%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return "$protocol://" . $server . '.' . static::getExternalHostName() .
+				return "$protocol//" . $server . '.' . static::getExternalHostName() .
 				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return "$protocol://" . $server . '.' . $wgDevDomain . $address;
+				return "$protocol//" . $server . '.' . $wgDevDomain . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
