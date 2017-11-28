@@ -17,7 +17,7 @@ class ApiQueryFirstContributions extends ApiQueryBase {
 
 		$this->addFields( 'rc_this_oldid as id' );
 		$this->addFields( 'rc_timestamp as timestamp' );
-		$this->addFields( 'rc_user_text as author' );
+		$this->addFields( 'rc_ip_bin as author_ip' );
 		$this->addFields( 'rc_user_id as author_id' );
 
 		// only list edit or new article creation
@@ -31,7 +31,7 @@ class ApiQueryFirstContributions extends ApiQueryBase {
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );
 
 		/*
-		 SELECT rc_this_oldid as id, rc_timestamp as timestamp, rc_user_text as author
+		 SELECT rc_this_oldid as id, rc_timestamp as timestamp, rc_ip_bin AS author_ip
 		 FROM recentchanges
 		 WHERE rc_type < 2 AND rc_bot = 0
 		 GROUP BY rc_user
@@ -57,10 +57,11 @@ class ApiQueryFirstContributions extends ApiQueryBase {
 				break;
 			}
 
+			$authorIp = RecentChange::extractUserIpFromRow( $row );
 			$editInfo = [
 				'id' => $row->id,
 				'date' => wfTimestamp( TS_ISO_8601, $row->timestamp ),
-				'username' => User::getUsername( $row->author_id, $row->author ),
+				'username' => User::getUsername( $row->author_id, $authorIp ),
 			];
 
 			$fit = $result->addValue( [ 'query', $this->getModuleName() ], null, $editInfo );
