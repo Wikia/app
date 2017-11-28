@@ -104,4 +104,71 @@ class DWDimensionApiController extends WikiaApiController {
 			WikiaResponse::CACHE_DISABLED
 		);
 	}
+
+	private function getDbSlave( $dbname ) {
+		return wfGetDB( DB_SLAVE, array(), $dbname );
+	}
+
+
+	public function getTest() {
+		$db = $this->getSharedDbSlave();
+
+		$limit = min($db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
+
+		$rows = $db->select(
+			[ "city_list" ],
+			[ "city_id", "city_dbname" ],
+			[ "city_id > ".$afterWikiId ],
+			__METHOD__,
+			[
+				'ORDER BY' => 'city_id',
+				'LIMIT' => $limit
+			]
+		);
+
+		$wikis = [];
+		foreach( $rows as $row ) {
+			$wikis[] = [ 'wiki_id' => $row->city_id, 'dbname' => $row->city_dbname ];
+		}
+		$db->freeResult( $rows );
+		$db->close();
+
+		$result = [];
+		foreach( $wikis as $wiki) {
+			try {
+				$db = $this->getDbSlave( $wiki[ 'dbname' ] );
+
+				$rows = $db->select(
+					[ "imagelinks" ],
+					[ "il_from" ],
+					[ ],
+					__METHOD__
+				);
+
+				foreach( $rows as $row ) {
+					$result[] = [
+						'wiki_id' => $wiki[ 'wiki_id' ],
+						'dbname' => $wiki[ 'dbname' ],
+						'il_from' => $row->il_from
+					];
+				}
+				$db->freeResult( $rows );
+				$db->close();
+
+			} catch (DBConnectionError $e) {
+				$result[] = [
+					'wiki_id' => $wiki[ 'wiki_id' ],
+					'dbname' => $wiki[ 'dbname' ],
+					'il_from' => 'No DB!!!!!!!!!!!!!'
+				];
+			}
+		}
+
+		$this->setResponseData(
+			$result,
+			null,
+			WikiaResponse::CACHE_DISABLED
+		);
+	}
 }
