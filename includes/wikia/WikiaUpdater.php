@@ -296,8 +296,8 @@ class WikiaUpdater {
 		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_ip' );
 		$databaseUpdater->output( "done.\n" );
 
-		$databaseUpdater->output( 'Dropping rc_user_text column... ' );
-		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_user_text' );
+		$databaseUpdater->output( 'Adding default empty value to rc_user_text column... ' );
+		$databaseConnection->sourceFile( $patchDir . 'patch-rc_user_text-default.sql' );
 		$databaseUpdater->output( "done.\n" );
 		
 		wfWaitForSlaves();

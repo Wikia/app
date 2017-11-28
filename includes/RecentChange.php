@@ -181,6 +181,9 @@ class RecentChange {
 		$this->mAttribs['rc_cur_time'] = $dbw->timestamp($this->mAttribs['rc_cur_time']);
 		$this->mAttribs['rc_id'] = $dbw->nextSequenceValue( 'recentchanges_rc_id_seq' );
 
+		// SUS-3079: Assign placeholder rc_user_text value until migration
+		$this->mAttribs['rc_user_text'] = '';
+
 		## If we are using foreign keys, an entry of 0 for the page_id will fail, so use NULL
 		if( $dbw->cascadingDeletes() and $this->mAttribs['rc_cur_id']==0 ) {
 			unset( $this->mAttribs['rc_cur_id'] );
