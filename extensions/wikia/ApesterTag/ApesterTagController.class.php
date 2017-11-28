@@ -4,7 +4,7 @@ class ApesterTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'apester';
 
-	const SCRIPT_SRC = 'http://static.apester.com/js/sdk/v2.0/apester-javascript-sdk.min.js';
+	const SCRIPT_SRC = 'https://static.apester.com/js/sdk/v2.0/apester-javascript-sdk.min.js';
 
 	const DATA_MEDIA_ID_ATTR = 'data-media-id';
 	const HEIGHT_ATTR = 'height';

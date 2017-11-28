@@ -1335,7 +1335,7 @@ class CheckUser extends SpecialPage {
 				'cul_id' => $cul_id,
 				'cul_timestamp' => $dbw->timestamp(),
 				'cul_user' => $wgUser->getID(),
-				'cul_user_text' => $wgUser->getName(),
+				'cul_user_text' => $wgUser->isAnon() ? $wgUser->getName() : '', // SUS-3083
 				'cul_reason' => $reason,
 				'cul_type' => $logType,
 				'cul_target_id' => $targetID,
@@ -1347,4 +1347,3 @@ class CheckUser extends SpecialPage {
 		return true;
 	}
 }
-

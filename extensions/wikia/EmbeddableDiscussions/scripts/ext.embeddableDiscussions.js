@@ -246,12 +246,6 @@ require([
 	}
 
 	$(function () {
-		// Track impression
-		track({
-			action: tracker.ACTIONS.IMPRESSION,
-			label: 'embeddable-discussions-loaded',
-		});
-
 		$('.embeddable-discussions-module').on('click', '.upvote', function (event) {
 			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
 				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',

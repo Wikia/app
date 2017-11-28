@@ -42,8 +42,6 @@ define('ext.wikia.recirculation.views.premiumRail', [
 
 	function setupTracking() {
 		return function ($html) {
-			tracker.trackImpression('rail');
-
 			$html.on('mousedown', 'a', function () {
 				tracker.trackClick(utils.buildLabel(this, 'rail'));
 			});
