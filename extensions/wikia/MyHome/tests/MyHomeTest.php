@@ -12,7 +12,7 @@ class MyHomeTest extends WikiaBaseTest {
 		}
 	}
 
-	private function doEdit($edit) {
+	function doEdit($edit) {
 		// create "fake" EditPage
 		$editor = (object) array(
 			'textbox1' => isset($edit['text']) ? $edit['text'] : '',
@@ -56,7 +56,6 @@ class MyHomeTest extends WikiaBaseTest {
 	 * @group UsingDB
 	 */
 	function testNewPageCreation() {
-		$this->markTestSkipped( 'This test is not an unit test' );
 		// set content of new article
 		global $wgParser;
 
@@ -78,7 +77,6 @@ class MyHomeTest extends WikiaBaseTest {
 	}
 
 	function testEditFromViewMode() {
-		$this->markTestSkipped( 'This test is not an unit test' );
 		Wikia::setVar('EditFromViewMode', true);
 
 		$edit = array();
@@ -98,7 +96,6 @@ class MyHomeTest extends WikiaBaseTest {
 	}
 
 	function testSectionEditWithComment() {
-		$this->markTestSkipped( 'This test is not an unit test' );
 		$edit = array(
 			'text' => "== foo ==\n",
 			'section' => 1,
@@ -117,7 +114,6 @@ class MyHomeTest extends WikiaBaseTest {
 	}
 
 	function testSectionEditWithDefaultComment() {
-		$this->markTestSkipped( 'This test is not an unit test' );
 		$edit = array(
 			'text' => "=== foo bar ===\n",
 			'section' => 1,
@@ -135,7 +131,6 @@ class MyHomeTest extends WikiaBaseTest {
 	}
 
 	function testRollback() {
-		$this->markTestSkipped( 'This test is not an unit test' );
 		$rollbackRevId = rand();
 		Wikia::setVar('RollbackedRevId', $rollbackRevId);
 
@@ -156,7 +151,6 @@ class MyHomeTest extends WikiaBaseTest {
 	}
 
 	function testAutosummaryType() {
-		$this->markTestSkipped( 'This test is not an unit test' );
 		Wikia::setVar('AutoSummaryType', 'autosumm-replace');
 
 		$edit = array();
