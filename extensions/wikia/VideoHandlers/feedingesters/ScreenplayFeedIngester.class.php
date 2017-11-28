@@ -6,7 +6,7 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
-	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&date_added_end=$5&bitrateID=$6';
+	protected static $FEED_URL = 'https://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&date_added_end=$5&bitrateID=$6';
 
 	protected static $FORMAT_ID_THUMBNAIL = 9;
 	protected static $FORMAT_ID_VIDEO = 20;

@@ -3,6 +3,7 @@
 class MovieclipsApiWrapper extends ApiWrapper {
 	
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_XML;
+	// HTTPS-note: api.movieclips.com doesn't seem to work over https
 	protected static $API_URL = 'http://api.movieclips.com/v2/videos/$1';
 	protected static $CACHE_KEY = 'movieclipsapi';
 	protected static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';

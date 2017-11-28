@@ -2,6 +2,7 @@
 
 class GametrailersVideoHandler extends VideoHandler {
 	protected $apiName = 'GametrailersApiWrapper';
+	// HTTPS-note - www.gametrailers.com does not yet support HTTPS, to handle in (PLATFORM-3284)
 	protected static $urlTemplate = 'http://media.mtvnservices.com/mgid:moses:video:gametrailers.com:$1';
 	protected static $providerDetailUrlTemplate = 'http://www.gametrailers.com/video/play/$1';
 	protected static $providerHomeUrl = 'http://www.gametrailers.com/';
