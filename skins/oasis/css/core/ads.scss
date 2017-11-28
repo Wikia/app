@@ -115,6 +115,27 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	.wds-community-header {
 		margin-top: 20px;
 	}
+
+	&.bfaa-sticky {
+		.wds-global-navigation {
+			position: fixed;
+			top: 0;
+			transform: translate3d(0, 0, 0); // GPU acceleration
+			backface-visibility: hidden;
+		}
+
+		.WikiaTopAdsInner {
+			position: fixed;
+			top: 0;
+			width: 100%;
+			left: 0;
+			padding: 0;
+			background: white;
+			transform: translate3d(0, 0, 0); // GPU acceleration
+			backface-visibility: hidden;
+			z-index: $global-navigation-and-sitewide-messages-index;
+		}
+	}
 }
 
 .bfab-template {

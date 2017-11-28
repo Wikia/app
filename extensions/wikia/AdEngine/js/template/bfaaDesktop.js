@@ -6,8 +6,10 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.video.uapVideo',
 	'ext.wikia.adEngine.video.videoSettings',
+	'ext.wikia.adEngine.utils.mutation',
 	'wikia.document',
 	'wikia.log',
 	'wikia.throttle',
@@ -20,8 +22,10 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	helper,
 	resolvedState,
 	slotTweaker,
+	slotRegistry,
 	uapVideo,
 	VideoSettings,
+	mutation,
 	doc,
 	log,
 	throttle,
@@ -34,6 +38,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
+		isPinned = false,
 		slotContainer,
 		unblockedSlots = [
 			'BOTTOM_LEADERBOARD',
@@ -47,14 +52,17 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		log(['updateNavBar', height, position], log.levels.info, logGroup);
 
 		if (doc.body.offsetWidth <= breakPointWidthNotSupported || position <= height) {
+			isPinned = true;
 			nav.classList.add('bfaa-pinned');
 		} else {
+			isPinned = false;
 			nav.classList.remove('bfaa-pinned');
 		}
 	}
 
 	function runOnReady(iframe, params, videoSettings) {
-		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
+		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER'),
+			slot = slotRegistry.get(params.slotName);
 
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
@@ -80,6 +88,96 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		if (uapVideo.isEnabled(params)) {
 			uapVideo.loadVideoAd(videoSettings);
+		}
+
+		if (params.sticky && resolvedState.isResolvedState()) {
+			handleStickiness(slot);
+		}
+	}
+
+	function stick() {
+		var innerWrapper = wrapper.querySelector('.WikiaTopAdsInner'),
+			adHeight = innerWrapper.offsetHeight,
+			stickyClassName = 'bfaa-sticky',
+			animationDurationInSeconds = 1;
+
+		function apply() {
+			page.classList.add(stickyClassName);
+			nav.style.top = (isPinned ? (adHeight - win.scrollY) : 0) + 'px';
+			wrapper.style.height = adHeight + 'px';
+			innerWrapper.style.top = (isPinned ? -win.scrollY : -adHeight) + 'px';
+
+			setTimeout(function () {
+				mutation.assign(nav.style, {
+					top: adHeight + 'px',
+					transition: 'top ' + animationDurationInSeconds + 's'
+				});
+				mutation.assign(innerWrapper.style, {
+					top: 0,
+					transition: 'top ' + animationDurationInSeconds + 's'
+				});
+			}, 0);
+
+			log(['stick.apply'], log.levels.info, logGroup);
+		}
+
+        function revert() {
+            nav.style.top = (isPinned ? (adHeight - win.scrollY) : 0) + 'px';
+			innerWrapper.style.top = (isPinned ? -win.scrollY : -adHeight) + 'px';
+
+            setTimeout(function () {
+				page.classList.remove(stickyClassName);
+				mutation.assign(nav.style, {
+					top: '',
+					transition: ''
+				});
+				mutation.assign(innerWrapper.style, {
+					top: '',
+					transition: ''
+				});
+				wrapper.style.height = '';
+			}, animationDurationInSeconds * 1000);
+
+			log(['stick.revert'], log.levels.info, logGroup);
+		};
+
+		return {
+			apply: apply,
+			revert: revert
+		};
+	}
+
+	function handleStickiness(slot) {
+		var stickiness = stick();
+
+		function onViewed() {
+			var revertTimeout = setTimeout(onRevertTimeout, 10000);
+
+			function onRevertTimeout() {
+				clearTimeout(revertTimeout);
+				win.removeEventListener('scroll', onRevertTimeout);
+				stickiness.revert();
+			}
+
+			win.addEventListener('scroll', onRevertTimeout);
+
+			if (isPinned) {
+				onRevertTimeout();
+			}
+		}
+
+		function checkViewability() {
+			if (!slot.isViewed) {
+				stickiness.apply();
+				slot.post('viewed', onViewed);
+			}
+		}
+
+		if (top.document.hidden) {
+			// let's start ticking from the moment when browser tab is active
+			win.addEventListener('visibilitychange', checkViewability, {once: true});
+		} else {
+			checkViewability();
 		}
 	}
 
