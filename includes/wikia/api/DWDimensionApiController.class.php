@@ -136,6 +136,7 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$result = [];
 		foreach( $wikis as $wiki) {
+			$sub_result = [];
 			try {
 				$db = $this->getDbSlave( $wiki[ 'dbname' ] );
 
@@ -147,7 +148,7 @@ class DWDimensionApiController extends WikiaApiController {
 				);
 
 				foreach( $rows as $row ) {
-					$result[] = [
+					$sub_result[] = [
 						'wiki_id' => $wiki[ 'wiki_id' ],
 						'dbname' => $wiki[ 'dbname' ],
 						'il_from' => $row->il_from
@@ -157,12 +158,12 @@ class DWDimensionApiController extends WikiaApiController {
 				$db->close();
 
 			} catch (DBConnectionError $e) {
-				$result[] = [
-					'wiki_id' => $wiki[ 'wiki_id' ],
-					'dbname' => $wiki[ 'dbname' ],
-					'il_from' => 'No DB!!!!!!!!!!!!!'
-				];
 			}
+			$result[] = [
+				'wiki_id' => $wiki[ 'wiki_id' ],
+				'dbname' => $wiki[ 'dbname' ],
+				'il_from' => $sub_result
+			];
 		}
 
 		$this->setResponseData(
