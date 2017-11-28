@@ -582,6 +582,7 @@ $messages['de'] = array(
 	'editaccount-success-logout' => 'Successfully logged out user $1.',
 	'editaccount-error-logout' => 'A problem occurred when logging out user. Try again or contact the Tech Team.',
 	'editaccount-fan-contributor-exists' => 'User is in the fan contributor program.',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['de-formal'] = array(
@@ -701,6 +702,7 @@ $messages['es'] = array(
 	'editaccount-success-logout' => 'Successfully logged out user $1.',
 	'editaccount-error-logout' => 'A problem occurred when logging out user. Try again or contact the Tech Team.',
 	'editaccount-fan-contributor-exists' => 'User is in the fan contributor program.',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['eu'] = array(
@@ -925,6 +927,7 @@ $messages['fr'] = array(
 	'editaccount-success-logout' => 'Successfully logged out user $1.',
 	'editaccount-error-logout' => 'A problem occurred when logging out user. Try again or contact the Tech Team.',
 	'editaccount-fan-contributor-exists' => 'User is in the fan contributor program.',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['fy'] = array(
@@ -1292,6 +1295,7 @@ $messages['it'] = array(
 	'editaccount-error-clearclosurerequest' => 'Error: The account is either closed already or not scheduled for closure.',
 	'editaccount-success-clearclosurerequest' => 'Closure request cleared for $1.',
 	'editaccount-fan-contributor-exists' => 'User is in the fan contributor program.',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['ja'] = array(
@@ -1373,6 +1377,7 @@ $messages['ja'] = array(
 	'editaccount-log-entry-realname' => 'ユーザー$2の本名を変更',
 	'editaccount-log-entry-close' => 'アカウント$2を無効化',
 	'editaccount-fan-contributor-exists' => 'このユーザーはファンコントリビューター・プログラムに追加済みです。',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['ka'] = array(
@@ -2063,6 +2068,7 @@ $messages['pl'] = array(
 	'editaccount-success-logout' => 'Successfully logged out user $1.',
 	'editaccount-error-logout' => 'A problem occurred when logging out user. Try again or contact the Tech Team.',
 	'editaccount-fan-contributor-exists' => 'User is in the fan contributor program.',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['pms'] = array(
@@ -2234,6 +2240,7 @@ $messages['pt'] = array(
 	'editaccount-error-clearclosurerequest' => 'Erro: a conta já está fechada ou não está programada para encerramento.',
 	'editaccount-success-clearclosurerequest' => 'Solicitação de encerramento apagada para $1.',
 	'editaccount-fan-contributor-exists' => 'User is in the fan contributor program.',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['ro'] = array(
@@ -2341,6 +2348,7 @@ $messages['ru'] = array(
 	'editaccount-success-logout' => 'Successfully logged out user $1.',
 	'editaccount-error-logout' => 'A problem occurred when logging out user. Try again or contact the Tech Team.',
 	'editaccount-fan-contributor-exists' => 'User is in the fan contributor program.',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['sa'] = array(
@@ -2958,6 +2966,7 @@ $messages['zh-hans'] = array(
 	'editaccount-success-logout' => '已成功注销用户$1。',
 	'editaccount-error-logout' => '注销用户时发生问题。重试或联系我们的技术团队。',
 	'editaccount-fan-contributor-exists' => '用户已存在于粉丝贡献者招募项目中。',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
 $messages['zh-hant'] = array(
@@ -3039,5 +3048,6 @@ $messages['zh-hant'] = array(
 	'right-editaccount' => '編輯其他使用者訊息',
 	'action-editaccount' => '編輯其他使用者訊息',
 	'editaccount-fan-contributor-exists' => '使用者已存在於粉絲貢獻者招募計劃中。',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 );
 
