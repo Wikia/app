@@ -264,8 +264,14 @@ class ArticleComment {
 		}
 
 		// get user that created this comment
-		$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
-		$this->mUser->setName( $this->mFirstRevision->getUserText() );
+		$authorId = $this->mFirstRevision->getUser();
+
+		// SUS-3363: Use user name lookup or IP address
+		if ( $authorId ) {
+			$this->mUser = User::newFromId( $authorId );
+		} else {
+			$this->mUser = User::newFromName( $this->mFirstRevision->getUserText(), false );
+		}
 
 		$this->isRevisionLoaded = true;
 		return true;

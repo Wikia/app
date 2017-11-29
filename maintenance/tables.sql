@@ -693,9 +693,6 @@ CREATE TABLE /*_*/ipblocks (
   -- User ID who made the block.
   ipb_by int unsigned NOT NULL default 0,
 
-  -- User name of blocker
-  ipb_by_text varchar(255) binary NOT NULL default '',
-
   -- Text comment made by blocker.
   ipb_reason tinyblob NOT NULL,
 
@@ -1147,9 +1144,6 @@ CREATE TABLE /*_*/logging (
 
   -- The user who performed this action; key to user_id
   log_user int unsigned NOT NULL default 0,
-
-  -- Name of the user who performed this action
-  log_user_text varchar(255) binary NOT NULL default '',
 
   -- Key to the page affected. Where a user is the target,
   -- this will point to the user page.

@@ -3,10 +3,10 @@
 class VimeoVideoHandler extends VideoHandler {
 
 	protected $apiName = 'VimeoApiWrapper';
-	protected $googleSitemapCustomVideoUrl = 'http://vimeo.com/moogaloop.swf?clip_id=$1';
-	protected static $urlTemplate = 'http://player.vimeo.com/video/$1';
-	protected static $providerDetailUrlTemplate = 'http://vimeo.com/$1';
-	protected static $providerHomeUrl = 'http://vimeo.com/';
+	protected $googleSitemapCustomVideoUrl = 'https://vimeo.com/moogaloop.swf?clip_id=$1';
+	protected static $urlTemplate = 'https://player.vimeo.com/video/$1';
+	protected static $providerDetailUrlTemplate = 'https://vimeo.com/$1';
+	protected static $providerHomeUrl = 'https://vimeo.com/';
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "1";
 
