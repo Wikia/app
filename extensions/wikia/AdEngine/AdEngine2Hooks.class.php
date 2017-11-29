@@ -34,6 +34,8 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
 		$vars[] = 'wgAdDriverAdEngine3Countries';
+		// TODO: Use this variable in mercury.run.js after ADEN-6216
+		$vars[] = 'wgAdDriverAdProductsCountries';
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
