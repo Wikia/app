@@ -38,7 +38,7 @@ require([
 	// Custom ads (skins, footer, etc)
 	if (geo.isProperGeo(instantGlobals.wgAdDriverAdEngine3Countries)) {
 		adContext.addCallback(function () {
-			adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), 'mercury')
+			adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, 'mercury');
 		});
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 	} else {
