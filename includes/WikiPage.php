@@ -2373,10 +2373,9 @@ class WikiPage extends Page implements IDBAccessObject {
 		$s = $dbw->selectRow( 'revision',
 			array( 'rev_id', 'rev_timestamp', 'rev_deleted' ),
 			array( 'rev_page' => $current->getPage(),
-				"rev_user != {$user} OR rev_user_text != {$user_text}"
+				"rev_user != {$user} OR (rev_user = 0 AND rev_user_text != {$user_text})"
 			), __METHOD__,
-			array( 'USE INDEX' => 'page_timestamp',
-				'ORDER BY' => 'rev_timestamp DESC' )
+			array( 'ORDER BY' => 'rev_timestamp DESC' )
 			);
 		if ( $s === false ) {
 			# No one else ever edited this page
