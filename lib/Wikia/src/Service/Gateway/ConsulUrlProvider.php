@@ -65,6 +65,8 @@ class ConsulUrlProvider implements UrlProvider {
 		}
 
 		$index = mt_rand(0, count($this->cache[$serviceName]) - 1);
+
+		WikiaLogger::instance()->info( "Url provider", [ 'provider_url' => $this->cache[$serviceName][$index] ] );
 		return $this->cache[$serviceName][$index];
 	}
 

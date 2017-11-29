@@ -23,7 +23,6 @@ class InjectorInitializer {
 				->addModule(new AttributesModule())
 				->addModule(new PermissionsModule())
 				->addModule(new AuthModule())
-				->addModule(new ConsulUrlProviderModule())
 				->addModule(new KubernetesUrlProviderModule())
 				->addModule(new ApiProviderModule())
 				->addModule(new ConfigurationModule())
