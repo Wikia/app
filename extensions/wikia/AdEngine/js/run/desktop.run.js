@@ -56,7 +56,7 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	if (adContext.get('opts.isAdEngine3Enabled')) {
-		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), 'oasis');
+		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, 'oasis');
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 	} else {
 		win.loadCustomAd = customAdsLoader.loadCustomAd;
@@ -91,7 +91,6 @@ require([
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
-	'ext.wikia.adEngine.slot.skyScraper3',
 	'wikia.document',
 	'wikia.window'
 ], function (
@@ -100,25 +99,15 @@ require([
 	bottomLeaderboard,
 	highImpact,
 	inContent,
-	skyScraper3,
 	doc,
 	win
 ) {
 	'use strict';
-	var context = adContext.getContext(),
-		premiumSlots = context.slots.premiumAdLayoutSlotsToUnblock;
 
 	function initDesktopSlots() {
 		highImpact.init();
-		skyScraper3.init();
 		inContent.init('INCONTENT_PLAYER');
-	}
-
-	win.addEventListener('wikia.uap', bottomLeaderboard.init);
-
-	if (context.opts.premiumAdLayoutEnabled && premiumSlots.indexOf('BOTTOM_LEADERBOARD') >= 0) {
-		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
-		win.addEventListener('wikia.blocking', bottomLeaderboard.init);
+		bottomLeaderboard.init();
 	}
 
 	if (doc.readyState === 'complete') {

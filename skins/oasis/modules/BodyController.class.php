@@ -247,7 +247,6 @@ class BodyController extends WikiaController {
 		}
 
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
-		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
 
 		Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 

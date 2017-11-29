@@ -38,10 +38,6 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 				adUnit: '/5441/wka2a.LB/top_leaderboard/tablet/oasis-home/_godofwar-gaming'
 			},
 			{
-				slotName: 'LEFT_SKYSCRAPER_2',
-				adUnit: '/5441/wka2a.SKY/left_skyscraper_2/tablet/oasis-home/_godofwar-gaming'
-			},
-			{
 				slotName: 'INVISIBLE_HIGH_IMPACT_2',
 				adUnit: '/5441/wka2a.PX/invisible_high_impact_2/tablet/oasis-home/_godofwar-gaming'
 			},

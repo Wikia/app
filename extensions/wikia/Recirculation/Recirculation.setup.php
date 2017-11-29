@@ -21,7 +21,6 @@ $wgAutoloadClasses['RecirculationContent'] =  __DIR__ . '/RecirculationContent.p
 $wgAutoloadClasses['WikiRecommendations'] =  __DIR__ . '/WikiRecommendations.class.php';
 
 // Hooks
-$wgHooks['GetRailModuleList'][] = 'RecirculationHooks::onGetRailModuleList';
 $wgHooks['OasisSkinAssetGroups'][] = 'RecirculationHooks::onOasisSkinAssetGroups';
 $wgHooks['BeforePageDisplay'][] = 'RecirculationHooks::onBeforePageDisplay';
 

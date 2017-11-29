@@ -201,7 +201,7 @@ $color-highlight-column: rgba($color-page, 0);
 						position: relative;
 						width: 50px;
 						.icon {
-							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgCdnStylePath
+							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgResourceBasePath
 							background-repeat: no-repeat;
 							display: block;
 							height: 50px;

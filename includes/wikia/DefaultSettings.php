@@ -90,8 +90,10 @@ $wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/nirvana/WikiaView.class
 $wgAutoloadClasses['WikiaSkin'] = $IP . '/includes/wikia/nirvana/WikiaSkin.class.php';
 $wgAutoloadClasses['WikiaSkinTemplate'] = $IP . '/includes/wikia/nirvana/WikiaSkinTemplate.class.php';
 $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAccessRules.class.php';
+
 // unit tests related classes
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
+$wgAutoloadClasses['WikiaDatabaseTest'] = $IP . '/includes/wikia/tests/core/WikiaDatabaseTest.php';
 $wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
 $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
@@ -791,12 +793,12 @@ $wgNoExternals = false;
  * this path will NOT have that in it so that CSS and other static
  * files can use a correct local path (such as "/skins/common/blank.gif")
  * which would be a completely functioning local path (which will be prepended
- * in the CSS combiner with wgCdnStylePath).  The advantages of this are two-fold:
- * 1) if the combiner fails to prepend the wgCdnStylePath, the link will still work,
- * 2) the combiner WON'T prepend the wgCdnStylePath on development machines so that
+ * in the CSS combiner with wgResourceBasePath).  The advantages of this are two-fold:
+ * 1) if the combiner fails to prepend the wgResourceBasePath, the link will still work,
+ * 2) the combiner WON'T prepend the wgResourceBasePath on development machines so that
  * the local resource is used (makes testing easier).
  */
-$wgCdnStylePath = '';
+$wgResourceBasePath = '';
 
 /**
  * Transpaent 1x1 GIF URI-encoded (BugId:9975)
@@ -1289,13 +1291,6 @@ $wgAdDriverPubMaticBidderCountries = null;
 $wgAdDriverOutstreamVideoFrequencyCapping = null;
 
 /**
- * @name $wgAdDriverOverridePrefootersCountries
- * Enables overriding prefooters sizes on Oasis in these countries.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOverridePrefootersCountries = null;
-
-/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
@@ -1401,21 +1396,6 @@ $wgAdDriverKikimoraTrackingCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSrcPremiumCountries = [];
-
-/**
- * @name $wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries
- * Enables Premium Ad Layout site and zoneIds for Rubicon Fastlane bidder
- * is present on that page.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries = [];
-
-/**
- * @name $wgAdDriverPremiumAdLayoutAppNexusTagsCountries
- * Enables Premium Ad Layout site and placementIds for AppNexus bidder.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPremiumAdLayoutAppNexusTagsCountries = [];
 
 /**
  * @name $wgAdDriverKILOCountries

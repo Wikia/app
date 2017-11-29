@@ -15,6 +15,7 @@ return array(
     'ValueParsers\\' => array($vendorDir . '/data-values/interfaces/src/ValueParsers', $vendorDir . '/data-values/common/src/ValueParsers'),
     'ValueFormatters\\' => array($vendorDir . '/data-values/interfaces/src/ValueFormatters', $vendorDir . '/data-values/common/src/ValueFormatters'),
     'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Serializers\\' => array($vendorDir . '/serialization/serialization/src/Serializers'),
     'SensioLabs\\Consul\\' => array($vendorDir . '/sensiolabs/consul-php-sdk/Consul'),
     'SMW\\Scribunto\\' => array($baseDir . '/extensions/SemanticScribunto/src'),

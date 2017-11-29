@@ -55,6 +55,13 @@ export default {
 	options: {
 		customAdLoader: {
 			globalMethodName: 'loadCustomAd'
+		},
+		video: {
+			moatTracking: {
+				enabled: false,
+				partnerCode: 'wikiaimajsint377461931603',
+				sampling: 0
+			}
 		}
 	}
 };
