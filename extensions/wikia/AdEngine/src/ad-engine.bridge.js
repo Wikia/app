@@ -14,24 +14,33 @@ import updateNavbar from './navbar-updater';
 Context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
 
-supportedTemplates.forEach((template) => {
-	TemplateService.register(template);
+TemplateService.register(BigFancyAdAbove, {
+	slotsToEnable: [
+		'BOTTOM_LEADERBOARD',
+		'INCONTENT_BOXAD_1',
+	]
 });
+TemplateService.register(BigFancyAdBelow);
 
-function init(slotRegistry, pageLevelTargeting, legacyContext, skin) {
+function init(slotRegistry, pageLevelTargeting, legacyContext, legacyBtfBlocker, skin) {
 	ScrollListener.addCallback(updateNavbar);
 	ScrollListener.init();
 
-	overrideSlotService(slotRegistry);
+	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 }
 
-function overrideSlotService(slotRegistry) {
+function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 	SlotService.getBySlotName = (id) => {
 		let slot = slotRegistry.get(id);
 		if (id && slot) {
 			return unifySlotInterface(slot);
 		}
+	};
+
+	SlotService.legacyEnabled = SlotService.enable;
+	SlotService.enable = (slotName) => {
+		legacyBtfBlocker.unblock(slotName);
 	};
 }
 
@@ -82,18 +91,9 @@ function updatePageLevelTargeting(legacyContext, params, skin) {
 	Object.keys(params).forEach((key) => Context.set(`targeting.${key}`, params[key]));
 }
 
-function setUapId(id) {
-	Context.set('targeting.uap', id);
-	UniversalAdPackage.setUapId(id);
-}
-
-function setType(type) {
-	UniversalAdPackage.setType(type);
-}
-
 export {
 	init,
 	loadCustomAd,
-	setUapId,
-	setType
+	Context,
+	UniversalAdPackage
 };
