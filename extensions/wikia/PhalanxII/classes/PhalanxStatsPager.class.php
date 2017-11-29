@@ -9,7 +9,7 @@ class PhalanxStatsPager extends PhalanxPager {
 	public function __construct( int $id ) {
 		parent::__construct();
 
-		$this->id = (int) $id;
+		$this->id = $id;
 		$this->mDb = $this->getDatabase( DB_SLAVE );
 
 		if ( !empty( $this->pInx ) ) {
