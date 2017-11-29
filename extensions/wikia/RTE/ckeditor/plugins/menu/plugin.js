@@ -160,7 +160,7 @@ CKEDITOR.plugins.add( 'menu', {
 			this._.level = definition.level || 1;
 
 			var panelDefinition = CKEDITOR.tools.extend( {}, definition.panel, {
-				css: [ CKEDITOR.skin.getPath( 'editor' ) ],
+				css: [ editor.config.richcomboCss ],
 				level: this._.level - 1,
 				block: {}
 			} );

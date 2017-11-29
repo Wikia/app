@@ -14,39 +14,49 @@ To make it easier to maintain, instead of including all styles here, we import
 other files.
 */
 
+@import "reset";
+@import "mainui";
+@import "panel";
+@import "toolbar";
+@import "menu";
+//@import "richcombo";
+@import "presets";
+@import "notification";
+@import "icons";
+
 /* "Reset" styles, necessary to avoid the editor UI being broken by external CSS. */
-@import  url("reset.css");
+/*@import  url("reset.css");*/
 
 /* Styles the main interface structure (holding box). */
-@import  url("mainui.css");
+/*@import  url("mainui.css");*/
 
 /* Styles all "panels", which are the floating elements that appear when
    opening toolbar combos, menu buttons, context menus, etc. */
-@import  url("panel.css");
+/*@import  url("panel.css");*/
 
 /* Styles the color panel displayed by the color buttons. */
 /*@import  url("colorpanel.css");*/
 
 /* Styles to toolbar. */
-@import  url("toolbar.css");
+/*@import  url("toolbar.css");*/
 
 /* Styles menus, which are lists of selectable items (context menu, menu button). */
-@import  url("menu.css");
+/*@import  url("menu.css");*/
 
 /* Styles toolbar combos. */
-@import  url("richcombo.css");
+/*@import  url("richcombo.css");*/
 
 /* Styles the elements path bar, available at the bottom of the editor UI.*/
 /*@import  url("elementspath.css");*/
 
 /* Contains hard-coded presets for "configurable-like" options of the UI
    (e.g. display labels on specific buttons) */
-@import  url("presets.css");
+/*@import  url("presets.css");*/
 
 /* Styles for notifications. */
-@import  url("notification.css");
+/*@import  url("notification.css");*/
 
-@import  url("icons.css");
+/*@import  url("icons.css");*/
 /* Important!
    To avoid showing the editor UI while its styles are still not available, the
    editor creates it with visibility:hidden. Here, we restore the UI visibility. */

@@ -159,7 +159,7 @@
 				}
 			}
 		}
-		return CKEDITOR.getUrl( getConfigPath() + part + '.css' );
+		return $.getSassCommonURL( 'extensions/wikia/RTE/ckeditor/skins/wikia/' + part + '.scss' );
 	}
 
 	function loadCss( part, callback ) {
