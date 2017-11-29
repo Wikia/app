@@ -53,7 +53,7 @@ class TwitchtvApiWrapper extends ApiWrapper {
 	}
 
 	public function getThumbnailUrl() {
-		$thumb = LegacyVideoApiWrapper::$THUMBNAIL_URL;
+		$thumb = LegacyVideoApiWrapper::getLegacyThumbnailUrl();
 
 		$url = str_replace( '$2', 'streams', static::$API_URL );
 		$url = str_replace( '$1', $this->videoId, $url );

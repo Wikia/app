@@ -1020,7 +1020,7 @@ class Revision implements IDBAccessObject {
 				'rev_comment'    => $this->mComment,
 				'rev_minor_edit' => $this->mMinorEdit ? 1 : 0,
 				'rev_user'       => $this->mUser,
-				'rev_user_text'  => $this->mUserText,
+				'rev_user_text'  => $this->getRawUser() === 0 ? $this->mUserText : '', // SUS-3078
 				'rev_timestamp'  => $dbw->timestamp( $this->mTimestamp ),
 				'rev_deleted'    => $this->mDeleted,
 				'rev_len'        => $this->mSize,

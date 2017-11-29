@@ -1,5 +1,7 @@
 <?php
 use PHPUnit\DbUnit\Database\Connection;
+use PHPUnit\DbUnit\DataSet\IDataSet;
+use PHPUnit\DbUnit\DataSet\YamlDataSet;
 use PHPUnit\DbUnit\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
 
@@ -7,12 +9,19 @@ use PHPUnit\DbUnit\TestCaseTrait;
  * Class WikiaDatabaseTest serves as an abstract base class for database integration tests
  */
 abstract class WikiaDatabaseTest extends TestCase {
-	use TestCaseTrait;
+	use TestCaseTrait {
+		setUp as protected databaseSetUp;
+		tearDown as protected databaseTearDown;
+	}
+
+	const GLOBAL_DB_VARS = [ 'wgExternalSharedDB', 'wgSpecialsDB' ];
 
 	/** @var InMemorySqliteDatabase $db */
 	private static $db = null;
 	/** @var Connection $conn */
 	private $conn = null;
+
+	private $globalVariableValues = [];
 
 	/**
 	 * Initializes the in-memory database with the specified schema files,
@@ -30,20 +39,17 @@ abstract class WikiaDatabaseTest extends TestCase {
 		// init core MW schema
 		$schemaFile = self::$db->getSchemaPath();
 		self::$db->sourceFile( $schemaFile );
-
-		foreach ( static::getSchemaFiles() as $schemaFile ) {
-			self::$db->sourceFile( $schemaFile );
-		}
-
-		self::$db->commit();
 	}
 
-	/**
-	 * Returns the list of schema files which will be used to initialize the in-memory database
-	 * @return string[]
-	 */
-	protected static function getSchemaFiles() {
-		return [];
+	protected function setUp() {
+		// override external databases to use the in-memory DB
+		foreach ( static::GLOBAL_DB_VARS as $globalName ) {
+			$this->globalVariableValues[$globalName] = $GLOBALS[$globalName];
+			$GLOBALS[$globalName] = false;
+		}
+
+		// schema is ready, let DbUnit populate the DB with fixtures
+		$this->databaseSetUp();
 	}
 
 	/**
@@ -64,11 +70,23 @@ abstract class WikiaDatabaseTest extends TestCase {
 		return $this->conn;
 	}
 
+	protected function tearDown() {
+		foreach ( static::GLOBAL_DB_VARS as $globalName ) {
+			 $GLOBALS[$globalName] = $this->globalVariableValues[$globalName];
+		}
+
+		$this->databaseTearDown();
+	}
+
 	/**
 	 * Destroy the load balancer set up for the in-memory DB to not affect other tests
 	 */
 	public static function tearDownAfterClass() {
 		parent::tearDownAfterClass();
 		LBFactory::destroyInstance();
+	}
+
+	protected function createYamlDataSet( string $fileName ): IDataSet {
+		return new YamlDataSet( $fileName );
 	}
 }
