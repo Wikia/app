@@ -372,9 +372,7 @@ class SpecialWatchlist extends SpecialPage {
 		/* Do link batch query */
 		$linkBatch = new LinkBatch;
 		foreach ( $res as $row ) {
-			$userIp = RecentChange::extractUserIpFromRow( $row );
-			$userNameUnderscored = str_replace( ' ', '_', User::getUsername( $row->rc_user, $userIp )
-			); // SUS-812
+			$userNameUnderscored = str_replace( ' ', '_', User::getUsername( $row->rc_user, $row->rc_user_text ) ); // SUS-812
 			if ( $row->rc_user != 0 ) {
 				$linkBatch->add( NS_USER, $userNameUnderscored );
 			}

@@ -25,11 +25,11 @@ class ApiQueryMultiLookup extends ApiQueryBase {
 			$this->dieUsage( 'Invalid IP', 'brokenip', 400 );
 		}
 
-		$ipAddress = inet_pton( $params['target'] );
+		$ipAddress = IP::sanitizeIP( $params['target'] );
 
 		$this->addTables( 'multilookup' );
 		$this->addFields( '*' );
-		$this->addWhereFld( 'ml_ip_bin', $ipAddress );
+		$this->addWhereFld( 'ml_ip_bin', inet_pton( $ipAddress ) );
 
 		if ( !empty( $params['offset'] ) ) {
 			$ts = $this->getDB()->timestamp( $params['offset'] );
@@ -76,24 +76,26 @@ class ApiQueryMultiLookup extends ApiQueryBase {
 	}
 
 	private function getActivityOnWiki( $dbName, $ipAddress ) {
-		$userIp = inet_ntop( $ipAddress );
-		$cacheKey = wfSharedMemcKey( 'multilookup', $userIp, $dbName );
+		$cacheKey = wfSharedMemcKey( 'multilookup', $ipAddress, $dbName );
 
-		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $ipAddress, $userIp ) {
+		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $ipAddress ) {
 			$dbr = wfGetDB( DB_SLAVE, [], $dbName );
 
 			$res = $dbr->select(
 				[ 'recentchanges' ],
-				[ 'rc_user as user_id' ],
-				[ 'rc_ip_bin' => $ipAddress ],
+				[
+					'rc_user_text as user_name',
+					'rc_user as user_id',
+				],
+				[ 'rc_ip' => $ipAddress ],
 				__METHOD__,
 				[ 'DISTINCT' ]
 			);
 
 			$users = [];
 			foreach ( $res as $user ) {
-				// SUS-812: use username lookup - user ID for registered users, IP address for anons
-				$userName = User::getUsername( $user->user_id, $userIp );
+				// SUS-812: use username lookup - user ID for registered users, rc_user_text for anons
+				$userName = User::getUsername( $user->user_id, $user->user_name );
 
 				$users[] = $userName;
 			}

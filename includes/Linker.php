@@ -1798,15 +1798,11 @@ class Linker {
 	public static function buildRollbackLink( $rev ) {
 		global $wgRequest, $wgUser;
 		$title = $rev->getTitle();
-		// SUS-812: use user name lookup to determine link target
-		$userName = User::getUsername( $rev->getUser(), $rev->getUserText() );
-
-		$query = [
+		$query = array(
 			'action' => 'rollback',
-			'from' => $userName,
-			'token' => $wgUser->getEditToken( [ $title->getPrefixedText(), $userName ] ),
-		];
-
+			'from' => $rev->getUserText(),
+			'token' => $wgUser->getEditToken( [ $title->getPrefixedText(), $rev->getUserText() ] ),
+		);
 		if ( $wgRequest->getBool( 'bot' ) ) {
 			$query['bot'] = '1';
 			$query['hidediff'] = '1'; // bug 15999

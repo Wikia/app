@@ -156,6 +156,7 @@ $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiContr
 $wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgAutoloadClasses['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDimensionApiController.class.php";
+$wgAutoloadClasses['DWDimensionApiControllerSQL'] = "{$IP}/includes/wikia/api/DWDimensionApiControllerSQL.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgAutoloadClasses['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";

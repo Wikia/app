@@ -2337,7 +2337,6 @@ class WikiPage extends Page implements IDBAccessObject {
 	 *
 	 * @param $resultDetails Array: contains result-specific array of additional values
 	 * @param $guser User The user performing the rollback
-	 * @return array
 	 */
 	public function commitRollback( $fromP, $summary, $bot, &$resultDetails, User $guser ) {
 		global $wgUseRCPatrol, $wgContLang;
@@ -2374,10 +2373,9 @@ class WikiPage extends Page implements IDBAccessObject {
 		$s = $dbw->selectRow( 'revision',
 			array( 'rev_id', 'rev_timestamp', 'rev_deleted' ),
 			array( 'rev_page' => $current->getPage(),
-				"rev_user != {$user} OR rev_user_text != {$user_text}"
+				"rev_user != {$user} OR (rev_user = 0 AND rev_user_text != {$user_text})"
 			), __METHOD__,
-			array( 'USE INDEX' => 'page_timestamp',
-				'ORDER BY' => 'rev_timestamp DESC' )
+			array( 'ORDER BY' => 'rev_timestamp DESC' )
 			);
 		if ( $s === false ) {
 			# No one else ever edited this page
@@ -2398,21 +2396,14 @@ class WikiPage extends Page implements IDBAccessObject {
 			$set['rc_patrolled'] = 1;
 		}
 
-		if ( !empty( $set ) ) {
-			$revTimestamp = $dbw->addQuotes( $s->rev_timestamp );
-			$whereCondition = [
-				'rc_cur_id' => $current->getPage(),
-				"rc_timestamp > $revTimestamp",
-			];
-
-			// SUS-3079: query based on user ID for registered users and IP address for anons
-			if ( $current->getUser() ) {
-				$whereCondition['rc_user'] = $current->getUser();
-			} else {
-				$whereCondition['rc_ip_bin'] = inet_pton( $current->getUserText() );
-			}
-
-			$dbw->update( 'recentchanges', $set, $whereCondition, __METHOD__ );
+		if ( count( $set ) ) {
+			$dbw->update( 'recentchanges', $set,
+				array( /* WHERE */
+					'rc_cur_id' => $current->getPage(),
+					'rc_user_text' => $current->getUserText(),
+					"rc_timestamp > '{$s->rev_timestamp}'",
+				), __METHOD__
+			);
 		}
 
 		# Generate the edit summary if necessary

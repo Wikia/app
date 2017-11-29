@@ -173,7 +173,7 @@ class WallMessageBuilder extends WallBuilder {
 	 */
 	public function notifyIfNeeded(): WallMessageBuilder {
 		if ( $this->notify ) {
-			WallHelper::sendNotification( $this->newRevision );
+			WallHelper::sendNotification( $this->newRevision, RC_NEW, $this->messageAuthor );
 		}
 
 		return $this;
