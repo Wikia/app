@@ -101,7 +101,12 @@ class UpdateSpecialPages extends Maintenance {
 				if ( $queryPage->isExpensive() ) {
 					$t1 = explode( ' ', microtime() );
 					# Do the query
-					$num = $queryPage->recache( $limit === null ? $wgQueryCacheLimit : $limit );
+					try {
+						// SUS-3448: Do not be silent about database errors, report them
+						$queryCacheLimit = $limit === null ? $wgQueryCacheLimit : $limit;
+						$num = $queryPage->recache( $queryCacheLimit, false );
+					} catch ( DBError $dbError ) {}
+
 					$t2 = explode( ' ', microtime() );
 					if ( $num === false ) {
 						$this->output( "FAILED: database error\n" );
