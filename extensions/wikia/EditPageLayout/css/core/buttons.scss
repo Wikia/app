@@ -296,9 +296,15 @@
 }
 
 .EditPageTabs {
-	.cke_button {
+	.cke_button__modewysiwyg {
 		.cke_button_label {
 			color: $color-text;
 		}
 	}
+	.cke_button__modesource {
+		.cke_button_label {
+			color: $color-text;
+		}
+	}
+
 }

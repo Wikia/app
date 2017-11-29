@@ -146,8 +146,7 @@
 			}
 		}
 
-		.cke_button {
-			> a {
+		a.cke_button {
 				background-color: $color-MiniEditor-button;
 				border: solid 1px $color-MiniEditor-button-border;
 				border-radius: 4px;
@@ -171,20 +170,6 @@
 				}
 				.cke_button_label{
 					display: none;
-				}
-
-
-				// format source mode
-				&.cke_button_bold .cke_icon {
-					@include sprite-MiniEditor('bold-' + $sprite-theme, 16px, 16px);	
-				}
-
-				&.cke_button_italic .cke_icon {
-					@include sprite-MiniEditor('italic-' + $sprite-theme, 16px, 16px);
-				}
-
-				&.cke_button_link .cke_icon {
-					@include sprite-MiniEditor('link-' + $sprite-theme, 16px, 16px);
 				}
 
 	
@@ -230,11 +215,47 @@
 
 				}
 				
-
-				
 			}
-		
+			.cke_button {
 
+
+				// format source mode
+				&.cke_button_bold .cke_icon {
+					@include sprite-MiniEditor('bold-' + $sprite-theme, 16px, 16px);	
+				}
+
+				&.cke_button_italic .cke_icon {
+					@include sprite-MiniEditor('italic-' + $sprite-theme, 16px, 16px);
+				}
+
+				&.cke_button_link .cke_icon {
+					@include sprite-MiniEditor('link-' + $sprite-theme, 16px, 16px);
+				}
+
+				> a {
+
+				background-color: $color-MiniEditor-button;
+				border: solid 1px $color-MiniEditor-button-border;
+				border-radius: 4px;
+				cursor: pointer;
+				display: inline-block;
+				float: left;
+				height: 20px;
+				margin-right: 5px;
+				outline: none; // webkit
+				width: 20px;
+
+
+				}		
+			
+				.cke_icon {
+					@include sprite-MiniEditor-base;
+					display: inline-block;
+					height: 16px;
+					margin: 2px;
+					width: 16px;
+
+				}
 
 
 			// insert
