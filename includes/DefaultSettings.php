@@ -5516,7 +5516,7 @@ $wgDBtestpassword = '';
 /**
  * When enabled, RL will output links without the server part.
  */
-$wgEnableLocalResourceLoaderLinks = false;
+$wgEnableLocalResourceLoaderLinks = true;
 
 /**
  * For really cool vim folding this needs to be at the end:
