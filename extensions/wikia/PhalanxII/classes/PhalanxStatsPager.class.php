@@ -3,10 +3,13 @@ class PhalanxStatsPager extends PhalanxPager {
 	public $qCond = 'ps_blocker_id';
 	public $pInx = 'blockId';
 
-	public function __construct( $id ) {
+	protected $id;
+	public $mDb;
+
+	public function __construct( int $id ) {
 		parent::__construct();
 
-		$this->id = (int) $id;
+		$this->id = $id;
 		$this->mDb = $this->getDatabase( DB_SLAVE );
 
 		if ( !empty( $this->pInx ) ) {
@@ -47,8 +50,10 @@ class PhalanxStatsPager extends PhalanxPager {
 	function formatRow( $row ) {
 		$blocker = $row->ps_blocker_hit ?: $row->ps_blocker_type;
 		$type = implode( ', ', Phalanx::getTypeNames( $blocker ) );
-		$username = $row->ps_blocked_user;
 		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
+
+		// SUS-3443: we either store (user ID, "") or (0, IP address) pair
+		$username = User::getUsername( (int) $row->ps_blocked_user_id, $row->ps_blocked_user );
 
 		$url = $row->ps_referrer ?: '';
 		if ( empty( $url ) ) {
