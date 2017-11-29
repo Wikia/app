@@ -1,4 +1,4 @@
- <?php
+<?php
 
 class ArticleVideoHooks {
 	public static function onBeforePageDisplay( \OutputPage $out/*, \Skin $skin*/ ) {

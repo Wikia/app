@@ -1,9 +1,9 @@
 <div itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 	<h2>Video: <span itemprop="<?= htmlspecialchars( $videoMetaData['name'] ) ?>">Title</span></h2>
-	<meta itemprop="duration" content="T1M33S" />
-	<meta itemprop="thumbnailUrl" content="<?= htmlspecialchars( $videoMetaData['thumbnailUrl'] ) ?>" />
-	<meta itemprop="contentURL" content="<?= htmlspecialchars( $videoMetaData['contentUrl'] ) ?>" />
-	<meta itemprop="uploadDate" content="<?= htmlspecialchars( $videoMetaData['uploadDate'] ) ?>" />
+	<meta itemprop="duration" content="<?= htmlspecialchars( $videoMetaData['duration'] ) ?>"/>
+	<meta itemprop="thumbnailUrl" content="<?= htmlspecialchars( $videoMetaData['thumbnailUrl'] ) ?>"/>
+	<meta itemprop="contentURL" content="<?= htmlspecialchars( $videoMetaData['contentUrl'] ) ?>"/>
+	<meta itemprop="uploadDate" content="<?= htmlspecialchars( $videoMetaData['uploadDate'] ) ?>"/>
 	<div class="featured-video__wrapper">
 		<div class="featured-video">
 			<div class="featured-video__player-container">
@@ -14,12 +14,15 @@
 					</div>
 					<div class="featured-video__title"><?= htmlspecialchars( $videoDetails['title'] ) ?></div>
 				</div>
-				<?= DesignSystemHelper::renderSvg( 'wds-icons-cross-tiny', 'wds-icon wds-icon-tiny featured-video__close' ) ?>
+				<?= DesignSystemHelper::renderSvg(
+					'wds-icons-cross-tiny',
+					'wds-icon wds-icon-tiny featured-video__close'
+				) ?>
 			</div>
 			<?= $app->renderPartial( 'ArticleVideo', 'feedback' ) ?>
 			<script>
-				define('wikia.articleVideo.featuredVideo.data', function() {
-					return <?= json_encode($videoDetails); ?>;
+				define('wikia.articleVideo.featuredVideo.data', function () {
+					return <?= json_encode( $videoDetails ); ?>;
 				})
 			</script>
 			<script><?= $jwPlayerScript ?></script>
