@@ -283,8 +283,9 @@ class WikiDetailsService extends WikiService {
 	private function getDiscussionStats( $id ) {
 		global $wgWikiaEnvironment, $wgWikiaDatacenter;
 
-		$consulUrl = ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )->getUrl( 'discussion' );
-		$response = Http::get( "http://$consulUrl/$id/forums/$id?limit=1", 'default', [ 'noProxy' => true ] );
+		$discussionsServiceUrl = ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )
+			->getUrl( 'discussion' );
+		$response = Http::get( "http://$discussionsServiceUrl/$id/forums/$id?limit=1", 'default', [ 'noProxy' => true ] );
 		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );
 			if ( isset( $decodedResponse['threadCount'] ) && json_last_error() === JSON_ERROR_NONE ) {
