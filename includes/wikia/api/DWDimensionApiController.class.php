@@ -138,7 +138,7 @@ class DWDimensionApiController extends WikiaApiController {
 	}
 
 	private function getWikiConnection( $cluster, $dbname ) {
-		if (!isset( $connections[ $cluster ] ) ) {
+		if ( !isset( $connections[ $cluster ] ) ) {
 			$connections[ $cluster ] = $db = wfGetDB( DB_SLAVE, array(), 'wikicities_'.$cluster);
 		}
 		$connection = $connections[ $cluster ];
@@ -150,7 +150,7 @@ class DWDimensionApiController extends WikiaApiController {
 	private function getWikiDbNames() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min($db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
 		$rows = $db->select(
@@ -183,14 +183,8 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$result = [];
 		foreach( $wikis as $wiki) {
-			$sub_result = [];
-			try {
-				$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
-
-				$sub_result = call_user_func( $dataGatherer, $db );
-
-			} catch (DBQueryError $e) {
-			}
+			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
+			$sub_result = call_user_func( $dataGatherer, $db );
 			$result[] = [
 				'wiki_id' => $wiki[ 'wiki_id' ],
 				'data' => $sub_result

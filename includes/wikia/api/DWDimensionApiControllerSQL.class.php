@@ -33,7 +33,7 @@ class DWDimensionApiControllerSQL {
       LIMIT $limit';
 
 	const DIMENSION_WIKI_EMBEDS = '
-		select
+		SELECT
 			il.il_from AS article_id,
 			v.video_title,
 			v.added_at,
