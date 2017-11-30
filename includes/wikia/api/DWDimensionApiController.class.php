@@ -137,6 +137,69 @@ class DWDimensionApiController extends WikiaApiController {
 		return $result;
 	}
 
+	public function getWikiImages() {
+		$this->getDataPerWiki( array( $this, 'getWikiImagesData' ) );
+	}
+
+	private function getWikiImagesData( $db ) {
+		$rows = $db->query(DWDimensionApiControllerSQL::DIMENSION_WIKI_IMAGES, __METHOD__ );
+		$result = [];
+		while ($row = $db->fetchObject($rows)) {
+			$result[] = [
+				'name' => $row->image_name,
+				'user_id' => $row->user_id,
+				'minor_mime' => $row->minor_mime,
+				'media_type' => $row->media_type,
+				'created_at' => $row->created_at
+			];
+		}
+		$db->freeResult( $rows );
+
+		return $result;
+	}
+
+	public function getWikiInfo() {
+		$this->getDataPerWiki( array( $this, 'getWikiInfoData' ) );
+	}
+
+	private function getWikiInfoData( $db ) {
+		$rows = $db->query(DWDimensionApiControllerSQL::DIMENSION_WIKI_INFO, __METHOD__ );
+		$result = [];
+		while ($row = $db->fetchObject($rows)) {
+			$result[] = [
+				'total_edits' => $row->total_edits,
+				'good_articles' => $row->good_articles,
+				'total_pages' => $row->total_pages,
+				'users' => $row->users,
+				'active_users' => $row->active_users,
+				'admins' => $row->admins,
+				'images' => $row->images,
+				'updated_at' => $row->updated_at
+			];
+		}
+		$db->freeResult( $rows );
+
+		return $result;
+	}
+
+	public function getWikiUserGroups() {
+		$this->getDataPerWiki( array( $this, 'getWikiUserGroupsData' ) );
+	}
+
+	private function getWikiUserGroupsData( $db ) {
+		$rows = $db->query(DWDimensionApiControllerSQL::DIMENSION_WIKI_USER_GROUPS, __METHOD__ );
+		$result = [];
+		while ($row = $db->fetchObject($rows)) {
+			$result[] = [
+				'user_id' => $row->user_id,
+				'user_group' => $row->user_group
+			];
+		}
+		$db->freeResult( $rows );
+
+		return $result;
+	}
+
 	private function getWikiConnection( $cluster, $dbname ) {
 		if ( !isset( $connections[ $cluster ] ) ) {
 			$connections[ $cluster ] = $db = wfGetDB( DB_SLAVE, array(), 'wikicities_'.$cluster);
