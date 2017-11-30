@@ -68,11 +68,44 @@ class ArticleVideoContext {
 			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 			$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
 			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
+			$videoData['metadata'] = self::getVideoMetaData( $videoData );
 
 			return $videoData;
 		}
 
 		return [];
+	}
+
+	private static function getVideoMetaData( $videoDetails ) {
+		$playlistItem = $videoDetails['playlist'][0];
+
+		return [
+			'name' => $videoDetails['title'],
+			'thumbnailUrl' => $playlistItem['image'],
+			'uploadDate' => date( 'c', $playlistItem['pubdate'] ),
+			'duration' => self::getIsoTime( $videoDetails['duration'] ),
+			'description' => $videoDetails['description'],
+			'contentUrl' => self::getVideoContentUrl( $playlistItem['sources'] )
+		];
+	}
+
+	private static function getVideoContentUrl( $sources ) {
+		return $sources[count( $sources ) - 1]['file'];
+	}
+
+	private static function getIsoTime( $colonDelimitedTime ) {
+		$segments = explode( ':', $colonDelimitedTime );
+		$isoTime = '';
+
+		if ( count( $segments ) > 2 ) {
+			$isoTime = 'H' . $segments[0] . 'M' . $segments[1] . 'S' . $segments[2];
+		} else if ( count( $segments ) > 1 ) {
+			$isoTime = 'M' . $segments[0] . 'S' . $segments[1];
+		} else if ( count( $segments ) > 0 ) {
+			$isoTime = 'S' . $segments[0];
+		}
+
+		return $isoTime;
 	}
 
 	private static function isFeaturedVideosValid( $featuredVideo ) {
@@ -92,10 +125,8 @@ class ArticleVideoContext {
 
 		if ( !empty( $wg->enableArticleRelatedVideo ) && !empty( $relatedVideos ) ) {
 			foreach ( $relatedVideos as $videoData ) {
-				if (
-					isset( $videoData['articles'], $videoData['videoId'] ) &&
-					in_array( $title, $videoData['articles'] )
-				) {
+				if ( isset( $videoData['articles'], $videoData['videoId'] ) &&
+					in_array( $title, $videoData['articles'] ) ) {
 					return $videoData;
 				}
 			}

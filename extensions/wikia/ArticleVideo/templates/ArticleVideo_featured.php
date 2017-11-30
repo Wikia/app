@@ -1,9 +1,10 @@
 <div itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-	<h2>Video: <span itemprop="<?= htmlspecialchars( $videoMetaData['name'] ) ?>">Title</span></h2>
-	<meta itemprop="duration" content="<?= htmlspecialchars( $videoMetaData['duration'] ) ?>"/>
-	<meta itemprop="thumbnailUrl" content="<?= htmlspecialchars( $videoMetaData['thumbnailUrl'] ) ?>"/>
-	<meta itemprop="contentURL" content="<?= htmlspecialchars( $videoMetaData['contentUrl'] ) ?>"/>
-	<meta itemprop="uploadDate" content="<?= htmlspecialchars( $videoMetaData['uploadDate'] ) ?>"/>
+	<meta itemprop="name" content="<?= htmlspecialchars( $videoDetails['metadata']['name'] ) ?>" />
+	<meta itemprop="duration" content="<?= htmlspecialchars( $videoDetails['metadata']['duration'] ) ?>"/>
+	<meta itemprop="description" content="<?= htmlspecialchars( $videoDetails['metadata']['description'] ) ?>"/>
+	<meta itemprop="thumbnailUrl" content="<?= htmlspecialchars( $videoDetails['metadata']['thumbnailUrl'] ) ?>"/>
+	<meta itemprop="contentURL" content="<?= htmlspecialchars( $videoDetails['metadata']['contentUrl'] ) ?>"/>
+	<meta itemprop="uploadDate" content="<?= htmlspecialchars( $videoDetails['metadata']['uploadDate'] ) ?>"/>
 	<div class="featured-video__wrapper">
 		<div class="featured-video">
 			<div class="featured-video__player-container">
@@ -29,5 +30,4 @@
 		</div>
 		<?= $app->renderPartial( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
 	</div>
-	<span itemprop="description"><?= htmlspecialchars( $videoMetaData['description'] ) ?></span>
 </div>
