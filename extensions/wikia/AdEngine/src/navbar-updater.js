@@ -12,8 +12,7 @@ function updateNavbar() {
 
 function isElementInViewport(element) {
 	let position = window.scrollY || window.pageYOffset;
-
-	return document.body.offsetWidth <= position <= element.clientHeight;
+	return position <= element.clientHeight;
 }
 
 export default updateNavbar;
