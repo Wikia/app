@@ -14,25 +14,6 @@ class RenameIPProcess {
 
 	const RENAMEIP_LOOP_PAUSE = 5;
 
-	// Define what needs changing in core MW tables
-	/*
-	 * Task definition format:
-	 *	 'table' => (string) table name
-	 *   'userid_column' => (string) column name with user ID or null if none
-	 *   'username_column' => (string) column name with user name
-	 *   'conds' => (array) additional conditions for the query
-	 */
-	/**
-	 * Stores the predefined tasks to do for global (wikicities) database.
-	 * Here should be mentioned all core tables not connected to any extension.
-	 *
-	 * @var $mGlobalDefaults array
-	 */
-	static private $mGlobalDefaults = array(
-		// user table is processed separately
-//		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
-	);
-
 	/**
 	 * Stores the predefined tasks to do for every local wiki database for IP addresses.
 	 * Here should be mentioned all core tables not connected to any extension.
@@ -53,7 +34,6 @@ class RenameIPProcess {
 	private $mOldIPAddress = '';
 	private $mNewIPAddress = '';
 	private $mUserId = 0;
-	private $mFakeUserId = 0;
 	private $mPhalanxBlockId = 0;
 	private $mRequestorId = 0;
 	private $mRequestorName = '';

@@ -1,6 +1,5 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
 use Wikia\Tasks\Tasks\RenameUserPagesTask;
 
 class RenameUserProcess {
@@ -579,12 +578,14 @@ class RenameUserProcess {
 			return '';
 		}
 
-		$service = Injector::getInjector()->get( PhalanxService::class );
+		$phalanxMatchParams = PhalanxMatchParams::withGlobalDefaults()->content( $text );
+		$phalanxService = PhalanxServiceFactory::getServiceInstance();
 
 		$blockFound = false;
 
 		foreach ( Phalanx::getSupportedTypeNames() as $blockType ) {
-			$res = $service->match( $blockType, $text );
+			$phalanxMatchParams->type( $blockType );
+			$res = $phalanxService->doMatch( $phalanxMatchParams );
 
 			if ( !empty( $res ) ) {
 				$blockFound = true;
