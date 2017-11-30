@@ -8,6 +8,10 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const WIKIS_AFTER_WIKI_ID = -1;
 
+	const ARTICLES_AFTER_ARTICLE_ID = -1;
+
+	const ARTICLE_LAST_EDITED = '1970-01-01';
+
 	const DART_TAG_VARIABLE_NAME = 'wgDartCustomKeyValues';
 
 	private function getSharedDbSlave() {
@@ -104,4 +108,48 @@ class DWDimensionApiController extends WikiaApiController {
 			WikiaResponse::CACHE_DISABLED
 		);
 	}
+
+    private function getDataWareDbSlave() {
+        global $wgExternalDatawareDB;
+        return wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+    }
+
+    public function getAllArticles() {
+
+        $db = $this->getDataWareDbSlave();
+
+        $limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ),
+            static::LIMIT_MAX);
+        $afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id',
+            static::WIKIS_AFTER_WIKI_ID ) );
+        $afterArticleId = $db->strencode( $this->getRequest()->getVal( 'after_article_id',
+            static::ARTICLES_AFTER_ARTICLE_ID ) );
+        $article_last_edited = $db->strencode( $this->getRequest()->getVal( 'article_last_edited',
+            static::ARTICLE_LAST_EDITED ) );
+
+        $query = str_replace( '$wiki_id', $afterWikiId,
+            DWDimensionApiControllerSQL::DIMENSION_WIKI_ARTICLES_QUERY);
+        $query = str_replace( '$article_id', $afterArticleId, $query);
+        $query = str_replace( '$last_edited', $article_last_edited, $query);
+        $query = str_replace( '$limit', $limit, $query);
+
+        $dbResult = $db->query($query,__METHOD__);
+        $result = [];
+        while ($row = $db->fetchObject($dbResult)) {
+            $result[] = [
+                'wiki_id' => $row->wiki_id,
+                'namespace_id' => $row->namespace_id,
+                'article_id' => $row->article_id,
+                'title' => $row->title,
+                'is_redirect' => $row->is_redirect,
+            ];
+        }
+        $db->freeResult( $dbResult );
+
+        $this->setResponseData(
+            $result,
+            null,
+            WikiaResponse::CACHE_DISABLED
+        );
+    }
 }

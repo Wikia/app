@@ -31,4 +31,21 @@ class DWDimensionApiControllerSQL {
       WHERE city.city_id > $city_id
       ORDER BY city.city_id      
       LIMIT $limit';
+
+    const DIMENSION_WIKI_ARTICLES_QUERY = '
+        SELECT
+            page_wikia_id AS wiki_id,
+            page_namespace AS namespace_id,
+            page_id AS article_id,
+            page_title AS title,
+            page_is_redirect AS is_redirect
+        FROM 
+            pages
+        WHERE
+            ((page_wikia_id = $wiki_id AND page_id > $article_id) OR 
+            (page_wikia_id > $wiki_id)) AND 
+            DATE(page_last_edited) >= DATE(\'$last_edited\')
+        ORDER BY
+            page_wikia_id, page_id
+        LIMIT $limit';
 }
