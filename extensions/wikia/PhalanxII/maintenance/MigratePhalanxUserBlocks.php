@@ -154,19 +154,10 @@ class MigratePhalanxUserBlocks extends Maintenance {
 		$this->output( 'Reloading Phalanx data ... ' );
 		if ( $this->dryRun ) {
 			$this->output( "skipped (dry run)\n" );
-			return true;
+			return;
 		}
 
-		$service = Injector::getInjector()->get( PhalanxService::class );
-		$res = $service->reload();
-
-		if ( $res ) {
-			$this->output( "success!\n" );
-			return true;
-		}
-
-		$this->output( "failed!\n" );
-		return false;
+		PhalanxHooks::notifyPhalanxService( [] );
 	}
 
 	private function isClosed( User $user ) {

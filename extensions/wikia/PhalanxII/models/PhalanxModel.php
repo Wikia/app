@@ -1,12 +1,10 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-
 /**
- * @method PhalanxModel setBlock( $block )
- * @method object getBlock
+ * @method PhalanxModel setBlock( PhalanxBlockInfo $block )
+ * @method PhalanxBlockInfo getBlock
  * @method PhalanxModel setText( string $text )
- * @method string getText
+ * @method getText
  * @method PhalanxModel setShouldLogInStats( bool $shouldLogInStats )
  * @method bool getShouldLogInStats
  * @method User getUser
@@ -17,7 +15,7 @@ abstract class PhalanxModel extends WikiaObject {
 	/** @var string $text */
 	protected $text = null;
 
-	/** @var null|object $block Information about the current block that was triggered */
+	/** @var null|PhalanxBlockInfo $block Information about the current block that was triggered */
 	protected $block = null;
 
 	/* @var User */
@@ -33,7 +31,7 @@ abstract class PhalanxModel extends WikiaObject {
 		parent::__construct();
 
 		$this->user = $this->wg->user;
-		$this->service = Injector::getInjector()->get( PhalanxService::class );
+		$this->service = PhalanxServiceFactory::getServiceInstance();
 		$this->ip = $this->wg->request->getIp();
 	}
 
@@ -132,47 +130,37 @@ abstract class PhalanxModel extends WikiaObject {
 		return $result;
 	}
 
-	public function logBlock() {
-		$txt = $this->getText();
-		wfDebug( __METHOD__ . ":" . __LINE__ . ": Block '#{$this->block->id}' blocked '{" . ( ( is_array( $txt ) ) ? implode( ",", $txt ) : $txt ) . "}'.\n", true );
-	}
+	/**
+	 * Perform a match request against Phalanx with the given content and type
+	 * @param $type
+	 * @return bool true if content is valid, false if it triggers some filter
+	 */
+	public function match( $type ) {
+		if ( $this->isOk() ) {
+			return true;
+		}
 
-	public function match( $type, $method = 'logBlock' ) {
-		$ret = true;
+		$phalanxMatchParams = PhalanxMatchParams::withGlobalDefaults()
+			->content( $this->getText() )
+			->type( $type );
 
-		if ( !$this->isOk() ) {
-			$content = $this->getText();
+		if ( $this->getShouldLogInStats() && $this->user instanceof User ) {
+			$phalanxMatchParams->userName( $this->user->getName() );
 
-			# send request to service
-			$result = $this->service
-				->setLimit( 1 )
-				->setUser( ( $this->getShouldLogInStats() && $this->user instanceof User ) ? $this->user : null )
-				->match( $type, $content );
-
-			if ( $result !== false ) {
-				# we have response from Phalanx service - check block
-				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {
-					$this->setBlock( $result )->$method();
-					$ret = false;
-				}
+			if ( $this->user->isLoggedIn() ) {
+				$phalanxMatchParams->userId( $this->user->getId() );
 			}
 		}
 
-		return $ret;
-	}
+		try {
+			$phalanxBlockList = $this->service->doMatch( $phalanxMatchParams );
+			$this->block = array_shift( $phalanxBlockList );
 
-	public function check( $type ) {
-		# send request to service
-		$result = $this->service->check( $type, $this->getText() );
-
-		if ( $result !== false ) {
-			# we have response from Phalanx service - 0/1
-			$ret = $result;
-		} else {
-			$ret = true;
+			return empty( $this->block );
+		} catch ( PhalanxServiceException $phalanxServiceException ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Phalanx service failed' );
+			return true;
 		}
-
-		return $ret;
 	}
 
 	/**

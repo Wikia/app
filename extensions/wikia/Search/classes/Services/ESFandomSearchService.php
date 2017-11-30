@@ -3,7 +3,7 @@
 namespace Wikia\Search\Services;
 
 use Wikia\Logger\WikiaLogger;
-use Wikia\Service\Gateway\ConsulUrlProvider;
+use Wikia\Service\Gateway\KubernetesUrlProvider;
 
 class ESFandomSearchService extends AbstractSearchService {
 
@@ -27,11 +27,11 @@ class ESFandomSearchService extends AbstractSearchService {
 	const MATCHES_URL_KEY = 'url';
 
 
-	protected function getConsulUrl() {
-		global $wgConsulServiceTag, $wgConsulUrl;
+	protected function getFandomSearchServiceUrl() {
+		global $wgWikiaEnvironment, $wgWikiaDatacenter;
 
-		return ( new ConsulUrlProvider( $wgConsulUrl,
-			$wgConsulServiceTag ) )->getUrl( 'fandom-search-service' );
+		return ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )
+			->getUrl( 'fandom-search-service' );
 	}
 
 	protected function prepareQuery( string $query ) {
@@ -40,10 +40,10 @@ class ESFandomSearchService extends AbstractSearchService {
 
 	protected function select( $query ) {
 
-		$consulUrl = $this->getConsulUrl();
+		$serviceUrl = $this->getFandomSearchServiceUrl();
 
 		$response = \Http::post(
-			"http://$consulUrl/fandom/search",
+			"http://$serviceUrl/fandom/search",
 			[
 				'noProxy' => true,
 				'postData' => "queryTerms=$query&template=" . ESFandomSearchService::STORIES_SEARCH_TEMPLATE,
@@ -63,16 +63,18 @@ class ESFandomSearchService extends AbstractSearchService {
 						ESFandomSearchService::LOG_ERROR_MARKER => json_last_error(),
 					]
 				);
-			} else if ( isset( $decodedResponse['hits']['hits'] ) ) {
-				return $decodedResponse['hits']['hits'];
 			} else {
-				WikiaLogger::instance()->error(
-					" Fandom Stories Search: invalid response",
-					[
-						ESFandomSearchService::LOG_QUERY_MARKER => $query,
-						ESFandomSearchService::LOG_RESPONSE_MARKER => $response
-					]
-				);
+				if ( isset( $decodedResponse['hits']['hits'] ) ) {
+					return $decodedResponse['hits']['hits'];
+				} else {
+					WikiaLogger::instance()->error(
+						" Fandom Stories Search: invalid response",
+						[
+							ESFandomSearchService::LOG_QUERY_MARKER => $query,
+							ESFandomSearchService::LOG_RESPONSE_MARKER => $response
+						]
+					);
+				}
 			}
 		} else {
 			WikiaLogger::instance()->error(
@@ -92,8 +94,8 @@ class ESFandomSearchService extends AbstractSearchService {
 
 		foreach ( $response as $match ) {
 			if ( isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY] ) &&
-			     isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY][ESFandomSearchService::MATCHES_TITLE_KEY] ) &&
-			     isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY][ESFandomSearchService::MATCHES_URL_KEY] )
+				isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY][ESFandomSearchService::MATCHES_TITLE_KEY] ) &&
+				isset( $match[ESFandomSearchService::MATCHES_ITEM_KEY][ESFandomSearchService::MATCHES_URL_KEY] )
 			) {
 
 				$source = $match[ESFandomSearchService::MATCHES_ITEM_KEY];
@@ -103,16 +105,16 @@ class ESFandomSearchService extends AbstractSearchService {
 						html_entity_decode( $source[ESFandomSearchService::MATCHES_TITLE_KEY] ),
 					ESFandomSearchService::STORIES_EXCERPT_KEY =>
 						isset( $source[ESFandomSearchService::MATCHES_EXCERPT_KEY] )
-						? html_entity_decode( $source[ESFandomSearchService::MATCHES_EXCERPT_KEY] )
-						: '',
+							? html_entity_decode( $source[ESFandomSearchService::MATCHES_EXCERPT_KEY] )
+							: '',
 					ESFandomSearchService::STORIES_VERTICAL_KEY =>
 						isset( $source[ESFandomSearchService::MATCHES_VERTICAL_KEY] )
-						? html_entity_decode( $source[ESFandomSearchService::MATCHES_VERTICAL_KEY] )
-						: '',
+							? html_entity_decode( $source[ESFandomSearchService::MATCHES_VERTICAL_KEY] )
+							: '',
 					ESFandomSearchService::STORIES_IMAGE_URL_KEY =>
 						isset( $source[ESFandomSearchService::MATCHES_IMAGE_URL_KEY] )
-						? html_entity_decode( $source[ESFandomSearchService::MATCHES_IMAGE_URL_KEY] )
-						: '',
+							? html_entity_decode( $source[ESFandomSearchService::MATCHES_IMAGE_URL_KEY] )
+							: '',
 					ESFandomSearchService::STORIES_URL_KEY =>
 						html_entity_decode( $source[ESFandomSearchService::MATCHES_URL_KEY] ),
 				];

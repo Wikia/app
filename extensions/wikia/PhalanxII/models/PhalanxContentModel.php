@@ -38,18 +38,17 @@ class PhalanxContentModel extends PhalanxModel {
 		$this->wg->Out->setArticleRelated( false );
 		$this->wg->Out->addHTML( Html::openElement( 'div', [ 'id' => 'spamprotected_summary' ] ) );
 		$this->wg->Out->addWikiMsg( 'spamprotectiontext' );
-		$this->wg->Out->addHTML( Html::element( 'p', [], wfMessage( 'phalanx-stats-table-id' )->text() . " #{$this->block->id}" ) );
-		$this->wg->Out->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$this->block->text}</nowiki>" );
+		$this->wg->Out->addHTML( Html::element( 'p', [], wfMessage( 'phalanx-stats-table-id' )->text() . " #{$this->block->getId()}" ) );
+		$this->wg->Out->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$this->block->getText()}</nowiki>" );
 
 		// SUS-1090: Only indicate that the edit summary was blocked if it was indeed a summary block
-		if ( $this->block->type === Phalanx::TYPE_SUMMARY ) {
+		if ( $this->block->getType() === Phalanx::TYPE_SUMMARY ) {
 			$this->wg->Out->addWikiMsg( 'phalanx-content-spam-summary' );
 		}
 
 		// SUS-1090: Use page title, not destination page
 		$this->wg->Out->returnToMain( false, $this->wg->Title );
 		$this->wg->Out->addHTML( Html::closeElement( 'div' ) );
-		$this->logBlock();
 	}
 
 	public function getBlockMessage() {
@@ -59,14 +58,12 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 
 	public function contentBlock() {
-		$msg = "{$this->block->text} (Block #{$this->block->id})";
-		$this->logBlock();
+		$msg = "{$this->block->getText()} (Block #{$this->block->getId()})";
 		return $msg;
 	}
 
 	public function textBlock() {
-		$this->logBlock();
-		return $this->block->text;
+		return $this->block->getText();
 	}
 
 	public function match_summary( $summary ) {
