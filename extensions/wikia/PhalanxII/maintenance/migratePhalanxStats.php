@@ -35,14 +35,14 @@ do {
 	$affectedRows = $db->affectedRows();
 
 	foreach($res as $row) {
-		$user = User::newFromName($res->ps_blocked_user);
+		$user = User::newFromName($row->ps_blocked_user);
 
 		$db->update(
 			'phalanx_stats',
 			[
-				'ps_blocked_user_id' => $user->getId(),
+				'ps_blocked_user_id' => $user ? $user->getId() : 0,
 				// keep an IP address for anon entries, empty string for users
-				'ps_blocked_user' => $user->isAnon() ? $user->getName() : '',
+				'ps_blocked_user' => $user && $user->isLoggedIn() ? '' : $row->ps_blocked_user,
 			],
 			[
 				'ps_id' => $row->ps_id
