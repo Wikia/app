@@ -56,15 +56,13 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 * @return PhalanxService|PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function setUpService( $block ) {
-		$phalanxServiceMock =
-			$this->getMockBuilder( PhalanxService::class )
-				->disableOriginalConstructor()
-				->setMethods( [ 'match' ] )
-				->getMock();
+		$phalanxServiceMock = $this->getMockForAbstractClass( PhalanxService::class );
 
-		$phalanxServiceMock->expects( $this->any() )
-			->method( 'match' )
-			->willReturn( $block );
+		if ( $block ) {
+			$phalanxServiceMock->expects( $this->any() )
+				->method( 'doMatch' )
+				->willReturn( [ new PhalanxBlockInfo() ] );
+		}
 
 		return $phalanxServiceMock;
 	}
@@ -317,7 +315,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'isAnon' => true,
 			'getName' => self::INVALID_USERNAME,
 			'email' => self::INVALID_EMAIL,
-			'block' => (object) [
+			'block' => [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_USERNAME,
@@ -336,7 +334,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'isAnon' => true,
 			'getName' => self::INVALID_USERNAME,
 			'email' => self::INVALID_EMAIL,
-			'block' => (object) [
+			'block' => [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_EMAIL,
@@ -374,7 +372,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 		/* invalid text */
 		$invalidWiki = [
 			'title' => self::INVALID_WIKIA_NAME,
-			'block' => (object) [
+			'block' => [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_WIKIA_NAME,
@@ -385,13 +383,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'authorId' => 184532,
 			],
 			'result' => 0,
-		];
-
-		/* empty text */
-		$invalidWiki = [
-			'text' => '',
-			'block' => 0,
-			'result' => 1,
 		];
 
 		return [ $validWiki, $invalidWiki ];
@@ -414,7 +405,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'title' => self::VALID_TITLE,
 			'textbox' => self::INVALID_CONTENT,
 			'summary' => self::VALID_SUMMARY,
-			'block_text' => (object)[
+			'block_text' => [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_CONTENT,
@@ -435,7 +426,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'textbox' => self::VALID_CONTENT,
 			'summary' => self::INVALID_SUMMARY,
 			'block_text' => 0,
-			'block_summary' => (object) [
+			'block_summary' => [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_SUMMARY,
@@ -463,7 +454,7 @@ class PhalanxModelTest extends WikiaBaseTest {
 		/* invalid title */
 		$invalidTitle = [
 			'title'		=> self::INVALID_TITLE,
-			'block'     => (object) [
+			'block'     => [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_TITLE,

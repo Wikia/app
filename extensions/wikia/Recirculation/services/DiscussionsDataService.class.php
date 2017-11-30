@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Service\Gateway\ConsulUrlProvider;
+use Wikia\Service\Gateway\KubernetesUrlProvider;
 
 class DiscussionsDataService {
 	const DISCUSSIONS_API_SORT_KEY_TRENDING = 'trending';
@@ -110,10 +110,10 @@ class DiscussionsDataService {
 	}
 
 	private function getDiscussionsApiUrl() {
-		global $wgConsulServiceTag, $wgConsulUrl;
+		global $wgWikiaEnvironment, $wgWikiaDatacenter;
 
-		return "http://" . ( new ConsulUrlProvider( $wgConsulUrl,
-			$wgConsulServiceTag ) )->getUrl( 'discussion' );
+		return "http://" . ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )
+				->getUrl( 'discussion' );
 	}
 
 	private function buildPost( $rawPost, $index ) {
@@ -131,7 +131,7 @@ class DiscussionsDataService {
 		return new RecirculationContent( [
 			'url' => $this->server . '/d/p/' . $rawPost['id'],
 			'index' => $index,
-			'title' =>  $postTitle,
+			'title' => $postTitle,
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
 			'source' => 'discussions',

@@ -1,12 +1,10 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
 use \Wikia\Logger\WikiaLogger;
+use Wikia\Rabbit\ConnectionBase;
 
-class PhalanxHooks extends WikiaObject {
-	function __construct() {
-		parent::__construct();
-	}
+class PhalanxHooks {
+	const ROUTING_KEY = 'onUpdate';
 
 	/**
 	 * Add a link to central:Special:Phalanx from Special:Contributions/USERNAME
@@ -43,8 +41,9 @@ class PhalanxHooks extends WikiaObject {
 	 * @param $text string content to check for spam
 	 * @param $typeId int block type (see Phalanx::TYPE_* constants)
 	 * @param $blockData array array to be provided with matching block details (pass as a reference)
-	 * @return boolean spam check result
+	 * @return bool spam check result
 	 *
+	 * @throws WikiaException
 	 * @author macbre
 	 */
 	static public function onSpamFilterCheck( $text, $typeId, &$blockData ) {
@@ -68,12 +67,6 @@ class PhalanxHooks extends WikiaObject {
 		// get type ID -> type mapping
 		$types = Phalanx::getSupportedTypeNames();
 		$ret = $model->match( $types[$typeId] );
-
-		// pass matching block details
-		if ( $ret === false ) {
-			$blockData = (array) $model->getBlock();
-			wfDebug( __METHOD__ . ": spam check blocked '{$text}'\n" );
-		}
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -156,9 +149,7 @@ class PhalanxHooks extends WikiaObject {
 		}
 
 		if ( !empty( $blockIds ) ) {
-			$service = Injector::getInjector()->get( PhalanxService::class );
-			$service->reload( $blockIds );
-
+			static::notifyPhalanxService( $blockIds );
 			return true;
 		}
 
@@ -186,14 +177,19 @@ class PhalanxHooks extends WikiaObject {
 
 		$id = $phalanx->delete();
 		if ( $id ) {
-			$service = Injector::getInjector()->get( PhalanxService::class );
-			$service->reload( [ $id ] );
-
+			static::notifyPhalanxService( [ $id ] );
 			return true;
 		}
 
 		wfProfileOut( __METHOD__ );
 		return false;
+	}
+
+	public static function notifyPhalanxService( array $changedBlockIds ) {
+		global $wgPhalanxQueue;
+
+		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
+		$rabbitConnection->publish( self::ROUTING_KEY, implode( ",", $changedBlockIds ) );
 	}
 
 	/**
