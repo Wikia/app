@@ -4,59 +4,7 @@ export default {
 		dfpId: '5441',
 	},
 	events: {},
-	slots: {
-		'TOP_LEADERBOARD': {
-			disabled: false,
-			slotName: 'TOP_LEADERBOARD',
-			lowerSlotName: 'top_leaderboard',
-			slotGroup: 'LB',
-			sizes: [
-				{
-					viewportSize: [728, 0],
-					sizes: [[728, 90]]
-				}
-			],
-			defaultSizes: [[2, 2]],
-			targeting: {
-				pos: 'TOP_LEADERBOARD',
-				loc: 'top'
-			}
-		},
-		'BOTTOM_LEADERBOARD': {
-			disabled: true,
-			slotName: 'BOTTOM_LEADERBOARD',
-			lowerSlotName: 'bottom_leaderboard',
-			slotGroup: 'PF',
-			sizes: [
-				{
-					viewportSize: [728, 0],
-					sizes: [[728, 90]]
-				}
-			],
-			defaultSizes: [[2, 2]],
-			targeting: {
-				pos: 'BOTTOM_LEADERBOARD',
-				loc: 'footer'
-			}
-		},
-		'MOBILE_BOTTOM_LEADERBOARD': {
-			disabled: true,
-			slotName: 'MOBILE_BOTTOM_LEADERBOARD',
-			lowerSlotName: 'mobile_bottom_leaderboard',
-			slotGroup: 'PF',
-			sizes: [
-				{
-					viewportSize: [0, 0],
-					sizes: [[320, 480]]
-				}
-			],
-			defaultSizes: [[2, 2]],
-			targeting: {
-				pos: 'MOBILE_BOTTOM_LEADERBOARD',
-				loc: 'footer'
-			}
-		}
-	},
+	slots: {},
 	vast: {
 		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{slotName}',
 		megaAdUnitId: '/{custom.dfpId}/{src}.{slotConfig.slotGroup}/{slotConfig.lowerSlotName}/{custom.device}/{targeting.skin}-{targeting.s2}/{targeting.s1}-{targeting.s0}'

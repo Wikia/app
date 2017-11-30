@@ -10,6 +10,7 @@ import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-
 import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-ad-package';
 import config from './context';
 import updateNavbar from './navbar-updater';
+import slotConfig from './slots';
 
 Context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
@@ -25,6 +26,8 @@ TemplateService.register(BigFancyAdBelow);
 function init(slotRegistry, pageLevelTargeting, legacyContext, legacyBtfBlocker, skin) {
 	ScrollListener.addCallback(updateNavbar);
 	ScrollListener.init();
+
+	Context.extend({slots: slotConfig[skin]});
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);

@@ -57,7 +57,7 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	if (adContext.get('opts.isAdEngine3Enabled')) {
+	if (adContext.get('opts.isAdProductsBridgeEnabled')) {
 		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, btfBlocker, 'oasis');
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 	} else {

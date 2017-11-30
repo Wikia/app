@@ -1,4 +1,3 @@
-const breakPointWidthNotSupported = 767;
 const navBarStickClass = 'bfaa-pinned';
 const navBarElement = document.getElementById('globalNavigation');
 const TLBElement = document.getElementById('TOP_LEADERBOARD');
@@ -14,7 +13,7 @@ function updateNavbar() {
 function isElementInViewport(element) {
 	let position = window.scrollY || window.pageYOffset;
 
-	return document.body.offsetWidth <= breakPointWidthNotSupported || position <= element.clientHeight;
+	return document.body.offsetWidth <= position <= element.clientHeight;
 }
 
 export default updateNavbar;
