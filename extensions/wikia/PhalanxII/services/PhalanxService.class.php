@@ -1,6 +1,5 @@
 <?php
 
-use Wikia\Service\Gateway\ConsulUrlProvider;
 use Wikia\Rabbit\ConnectionBase;
 use Wikia\Service\Gateway\KubernetesUrlProvider;
 use Wikia\Service\Gateway\UrlProvider;
@@ -58,7 +57,7 @@ class PhalanxService {
 		$key = lcfirst( substr( $name, 3 ) );
 
 		$result = null;
-		switch( $method ) {
+		switch ( $method ) {
 			case 'get':
 				if ( isset( $this->$key ) ) {
 					$result = $this->$key;
@@ -167,21 +166,20 @@ class PhalanxService {
 			$requestTime = microtime( true );
 			$response = Http::get( $url, 'default', $options );
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
-		}
-		/**
+		} /**
 		 * for any other we're sending POST
 		 */
 		else {
 			global $wgCityId, $wgLanguageCode;
 
 			// Specify wiki ID parameter, for Phalanx Stats logging
-			$parameters[ 'wiki' ] = $wgCityId;
+			$parameters['wiki'] = $wgCityId;
 
 			// SUS-2759: pass on content language code to the service
-			$parameters[ 'lang' ] = $wgLanguageCode;
+			$parameters['lang'] = $wgLanguageCode;
 
 			if ( ( $action == "match" || $action == "check" ) && !empty( $this->user ) ) {
-				$parameters[ 'user' ][] = $this->user->getName();
+				$parameters['user'][] = $this->user->getName();
 			}
 
 			if ( $action == "match" && $this->limit != 1 ) {
@@ -198,7 +196,7 @@ class PhalanxService {
 					} else {
 						$postData[] = urlencode( $key ) . '=' . urlencode( $values );
 					}
-					$loggerPostParams[ $key ] = substr(
+					$loggerPostParams[$key] = substr(
 						json_encode( $values ),
 						0,
 						self::PHALANX_LOG_PARAM_LENGTH_LIMIT
@@ -268,11 +266,10 @@ class PhalanxService {
 					$ret = json_decode( $response );
 					if ( !is_array( $ret ) ) {
 						$res = false;
-					}
-					else {
+					} else {
 						if ( count( $ret ) > 0 && $this->limit != 0 ) {
 							if ( $this->limit == 1 ) {
-							  $res = $ret[0];
+								$res = $ret[0];
 							} else {
 								$res = array_slice( $ret, 0, $this->limit );
 							}
@@ -308,4 +305,4 @@ class PhalanxService {
 
 		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
 	}
-};
+}

@@ -170,16 +170,6 @@ CREATE TABLE `global_watchlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `ignored_users`
---
-
-DROP TABLE IF EXISTS `ignored_users`;
-CREATE TABLE `ignored_users` (
-  `user_id` int(5) unsigned NOT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `pages`
 --
 
@@ -465,4 +455,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-10-26 13:34:30
+-- Dump completed on 2017-11-29  8:33:17
