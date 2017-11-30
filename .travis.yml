@@ -3,15 +3,8 @@ sudo: false
 language: php
 php: 7.0
 install:
-  - git clone git://github.com/jbboehr/libmustache.git --recursive
-  - cd libmustache
-  - autoreconf -fiv
-  - ./configure --prefix=$HOME/build
-  - make
-  - make install
-  - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/build"
   - pecl channel-update pecl.php.net
-  - pecl install mustache uopz
+  - pecl install uopz
   - rm LocalSettings.php
   - mysql -e 'create database its_a_mw;'
   - php maintenance/install.php --dbtype mysql --dbuser root --dbname its_a_mw --dbpath $(pwd) --pass nyan --server http://localhost TravisWiki admin
