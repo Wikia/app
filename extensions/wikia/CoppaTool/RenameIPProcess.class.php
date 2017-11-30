@@ -34,7 +34,6 @@ class RenameIPProcess {
 	private $mOldIPAddress = '';
 	private $mNewIPAddress = '';
 	private $mUserId = 0;
-	private $mFakeUserId = 0;
 	private $mPhalanxBlockId = 0;
 	private $mRequestorId = 0;
 	private $mRequestorName = '';
