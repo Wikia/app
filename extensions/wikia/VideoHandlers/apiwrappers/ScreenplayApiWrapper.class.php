@@ -18,8 +18,8 @@ class ScreenplayApiWrapper extends IngestionApiWrapper {
 
 	protected static $CACHE_KEY = 'screenplayapi';
 	protected static $aspectRatio = 1.7777778;
-	protected static $THUMBNAIL_URL_TEMPLATE = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=$1&bitrateid=$2&vendorid=$3&type=$4';
-	protected static $ASSET_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&eclipid=$4';
+	protected static $THUMBNAIL_URL_TEMPLATE = 'https://www.totaleclips.com/Player/Bounce.aspx?eclipid=$1&bitrateid=$2&vendorid=$3&type=$4';
+	protected static $ASSET_URL = 'https://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&eclipid=$4';
 
 	public function getDescription() {
 		return '';	//  no description from provider

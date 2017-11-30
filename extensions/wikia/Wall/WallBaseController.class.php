@@ -44,44 +44,41 @@ class WallBaseController extends WikiaService {
 
 	public function thread() {
 		wfProfileIn( __METHOD__ );
+		
+		$context = $this->getContext();
 
 		$this->addAsset();
 
 		$id = $this->request->getVal( 'id', null );
 
+		$wallThread = WallThread::newFromId( $id );
+		$wallThread->loadIfCached();
+		
+		$threadMainMsg = $wallThread->getThreadMainMsg();
 
-		$wallthread = WallThread::newFromId( $id );
-		$wallthread->loadIfCached();
-
-		$threads = [ $id => $wallthread ];
-
-		$this->response->setVal('threads', $threads);
-		$this->response->setVal('title', $this->wg->Title);
-
+		$this->response->setVal( 'thread', $wallThread );
+		$this->response->setVal( 'threadMainMsg', $threadMainMsg );
 
 		$this->response->setVal( 'showNewMessage', false );
 		$this->response->setVal( 'type', 'Thread' );
 		$this->response->setVal( 'condenseMessage', false );
 
-		if ( count( $threads ) > 0 ) {
-			$wn = new WallNotifications();
-			foreach ( $threads as $key => $val ) {
-				$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
-				break;
-			}
+		$user = $context->getUser();
+		// SUS-3281: Only mark wall notifications as read for logged in user
+		if ( $user->isLoggedIn() ) {
+			global $wgCityId;
+			( new WallNotifications() )->markRead( $user->getId(), $wgCityId, $id );
 		}
 
 		$this->response->setVal( 'renderUserTalkArchiveAnchor', false );
 		$this->response->setVal( 'greeting', '' );
-
-		$title = Title::newFromId( $id );
-		if ( !empty( $title ) && $title->exists() && in_array( MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS ) ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$wallMessage->load();
-			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
+		
+		if ( $threadMainMsg ) {
+			$threadMainMsg->load();
+			$context->getOutput()->setPageTitle( $threadMainMsg->getMetaTitle() );
 		}
 
-		// TODO: keep the varnish cache and do purging on post
+		// TODO: keep the varnish cache and do purging on post (+1)
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 
 		wfProfileOut( __METHOD__ );
@@ -376,15 +373,21 @@ class WallBaseController extends WikiaService {
 
 	protected function getWallMessage() {
 		$comment = $this->request->getVal( 'comment' );
-		if ( ( $comment instanceof ArticleComment ) ) {
+
+		if ( $comment instanceof ArticleComment ) {
 			$wallMessage = WallMessage::newFromArticleComment( $comment );
-		} else {
-			$wallMessage = $comment;
-		}
-		if ( $wallMessage instanceof WallMessage ) {
 			$wallMessage->load();
+
 			return $wallMessage;
 		}
+
+		if ( $comment instanceof WallMessage ) {
+			$comment->load();
+
+			return $comment;
+		}
+
+		return $comment;
 	}
 
 	public function getWallForIndexPage( $title ) {

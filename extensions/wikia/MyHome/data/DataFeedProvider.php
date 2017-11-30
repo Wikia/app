@@ -279,7 +279,7 @@ class DataFeedProvider {
 			$item['title'] = $parts['title'];
 			$item['url'] = $title->getLocalURL();
 		} elseif ( defined( 'NS_BLOG_ARTICLE_TALK' ) && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists( 'ArticleComment' ) ) {
-			$subpageTitle = Title::newFromText( $title->getBaseText(), NS_BLOG_ARTICLE_TALK );
+			$subpageTitle = Title::newFromText( $title->getParentText(), NS_BLOG_ARTICLE_TALK );
 			/*
 			* Unfortunately $subpageTitle->getSubpageText() don't grab the blog article title text for subcomments.
 			* So considering blog structure reasonable way to get it, is to grab second title text part from full title text.
@@ -290,7 +290,7 @@ class DataFeedProvider {
 		} elseif ( defined( 'NS_BLOG_LISTING' ) && $res['ns'] == NS_BLOG_LISTING ) {
 			if ( $this->proxyType == self::WATCHLIST_FEED ) {
 				$item['title'] = $res['title'];
-				$item['url'] = Title::newFromText( $title->getBaseText(), NS_BLOG_ARTICLE )->getLocalURL();
+				$item['url'] = Title::newFromText( $title->getParentText(), NS_BLOG_ARTICLE )->getLocalURL();
 			}
 		} elseif (
 			!empty( $wgWallNS ) &&

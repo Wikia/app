@@ -57,7 +57,7 @@ function wfMakeXboxCard( $contents, $attributes, $parser ) {
 	else
 	{
 		$xbox_id_e = rawurlencode($xbox_id); #we use raw version because microsoft no longer accepts spaces as +, MUST be %20
-		$out .= "<iframe src=\"http://gamercard.xbox.com/{$xbox_id_e}.card\" scrolling=\"no\" frameBorder=\"0\" height=\"140\" width=\"204\">{$xbox_id}</iframe>";
+		$out .= "<iframe src=\"https://gamercard.xbox.com/{$xbox_id_e}.card\" scrolling=\"no\" frameBorder=\"0\" height=\"140\" width=\"204\">{$xbox_id}</iframe>";
 	}
 
 	$out .= "</div>\n";

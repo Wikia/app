@@ -1318,6 +1318,26 @@ class Title {
 	}
 
 	/**
+	 * Cut off the last subpage text
+	 * @return string
+	 */
+	public function getParentText() {
+		$text = $this->getText();
+
+		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
+			return $text;
+		}
+
+		$lastSlashPosition = mb_strrpos( $text, '/' );
+
+		if ( $lastSlashPosition === false ) {
+			return $text;
+		}
+
+		return mb_substr( $text, 0, $lastSlashPosition );
+	}
+
+	/**
 	 * Get the lowest-level subpage name, i.e. the rightmost part after any slashes
 	 *
 	 * @return String Subpage name

@@ -17,6 +17,8 @@ class SyntaxHighlightTest extends WikiaBaseTest {
 		$this->setupFile = __DIR__ . '/../SyntaxHighlight.setup.php';
 		parent::setUp();
 
+		Hooks::register( 'ParserFirstCallInit', 'SyntaxHighlightHooks::onParserFirstCallInit' );
+
 		$this->title = new Title();
 		$this->opts = new ParserOptions();
 		$this->parser = new Parser();

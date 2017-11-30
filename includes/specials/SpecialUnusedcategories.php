@@ -40,8 +40,7 @@ class UnusedCategoriesPage extends QueryPage {
 		return array (
 			'tables' => array ( 'page', 'categorylinks' ),
 			'fields' => array ( 'page_namespace AS namespace',
-					'page_title AS title',
-					'page_title AS value' ),
+					'page_title AS title' ),
 			'conds' => array ( 'cl_from IS NULL',
 					'page_namespace' => NS_CATEGORY,
 					'page_is_redirect' => 0 ),

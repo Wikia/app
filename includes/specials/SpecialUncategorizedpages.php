@@ -48,7 +48,7 @@ class UncategorizedPagesPage extends PageQueryPage {
 			'tables' => array ( 'page', 'categorylinks' ),
 			'fields' => array ( 'page_namespace AS namespace',
 					'page_title AS title',
-					'page_title AS value' ),
+				),
 			// default for page_namespace is all content namespaces (if requestedNamespace is false)
 			// otherwise, page_namespace is requestedNamespace
 			'conds' => array ( 'cl_from IS NULL',

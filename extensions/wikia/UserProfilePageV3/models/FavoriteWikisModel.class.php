@@ -13,7 +13,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 */
 	const MAX_FAV_WIKIS = 4;
 
-	const CACHE_VERSION = '2';
+	const CACHE_VERSION = '3';
 
 	// 3600 == 60 * 60 == 1 hr
 	const SAVED_WIKIS_TTL = 3600;
@@ -50,7 +50,7 @@ class FavoriteWikisModel extends WikiaModel {
 
 		$dbr = wfGetDB(DB_SLAVE, [], $wgDWStatsDB );
 		$where = [
-			'period_id' => DataMartService::PERIOD_ID_WEEKLY,
+			'period_id' => DataMartService::PERIOD_ID_MONTHLY,
 			'time_id >= NOW() - INTERVAL 90 DAY', // process only recent 90 days
 			'user_id' => $this->user->getId(),
 		];
