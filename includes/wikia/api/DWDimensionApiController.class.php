@@ -67,18 +67,18 @@ class DWDimensionApiController extends WikiaApiController {
 	public function getWikis() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$limit = min( $db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX );
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
-		$query = str_replace( '$city_id', $afterWikiId, DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY);
+		$query = str_replace( '$city_id', $afterWikiId, DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
 		$query = str_replace( '$limit', $limit, $query);
 
 		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
 		$allCategories = WikiFactoryHub::getInstance()->getAllCategories();
 
-		$dbResult = $db->query($query,__METHOD__);
+		$dbResult = $db->query( $query,__METHOD__);
 		$result = [];
-		while ($row = $db->fetchObject($dbResult)) {
+		while ( $row = $db->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'wiki_id' => $row->wiki_id,
 				'dbname' => $row->dbname,
@@ -116,9 +116,9 @@ class DWDimensionApiController extends WikiaApiController {
 	}
 
 	private function getWikiEmbedsData( $db ) {
-		$rows = $db->query(DWDimensionApiControllerSQL::DIMENSION_WIKI_EMBEDS, __METHOD__ );
+		$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_EMBEDS, __METHOD__ );
 		$result = [];
-		while ($row = $db->fetchObject($rows)) {
+		while ( $row = $db->fetchObject( $rows ) ) {
 			$result[] = [
 				'article_id' => $row->article_id,
 				'video_title' => $row->video_title,
@@ -142,9 +142,9 @@ class DWDimensionApiController extends WikiaApiController {
 	}
 
 	private function getWikiImagesData( $db ) {
-		$rows = $db->query(DWDimensionApiControllerSQL::DIMENSION_WIKI_IMAGES, __METHOD__ );
+		$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_IMAGES, __METHOD__ );
 		$result = [];
-		while ($row = $db->fetchObject($rows)) {
+		while ( $row = $db->fetchObject( $rows ) ) {
 			$result[] = [
 				'name' => $row->image_name,
 				'user_id' => $row->user_id,
@@ -163,9 +163,9 @@ class DWDimensionApiController extends WikiaApiController {
 	}
 
 	private function getWikiInfoData( $db ) {
-		$rows = $db->query(DWDimensionApiControllerSQL::DIMENSION_WIKI_INFO, __METHOD__ );
+		$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_INFO, __METHOD__ );
 		$result = [];
-		while ($row = $db->fetchObject($rows)) {
+		while ( $row = $db->fetchObject( $rows ) ) {
 			$result[] = [
 				'total_edits' => $row->total_edits,
 				'good_articles' => $row->good_articles,
@@ -187,9 +187,9 @@ class DWDimensionApiController extends WikiaApiController {
 	}
 
 	private function getWikiUserGroupsData( $db ) {
-		$rows = $db->query(DWDimensionApiControllerSQL::DIMENSION_WIKI_USER_GROUPS, __METHOD__ );
+		$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_USER_GROUPS, __METHOD__ );
 		$result = [];
-		while ($row = $db->fetchObject($rows)) {
+		while ( $row = $db->fetchObject( $rows ) ) {
 			$result[] = [
 				'user_id' => $row->user_id,
 				'user_group' => $row->user_group
@@ -205,7 +205,8 @@ class DWDimensionApiController extends WikiaApiController {
 			$connections[ $cluster ] = $db = wfGetDB( DB_SLAVE, array(), 'wikicities_'.$cluster);
 		}
 		$connection = $connections[ $cluster ];
-		$connection->query("USE `".$dbname."`;",__METHOD__);
+		$dbname = $db->strencode( $dbname );
+		$connection->query("USE `".$dbname."`",__METHOD__);
 
 		return $connection;
 	}
@@ -213,7 +214,7 @@ class DWDimensionApiController extends WikiaApiController {
 	private function getWikiDbNames() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX );
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
 		$rows = $db->select(
