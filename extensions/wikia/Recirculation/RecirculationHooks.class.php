@@ -132,20 +132,24 @@ class RecirculationHooks {
 		$metaDataFromService = WikiaDataAccess::cache(
 			'liftigniter-metadata',
 			WikiaResponse::CACHE_SHORT,
-			function() {
+			function () {
 				$metaDataService = new LiftigniterMetadataService();
 
 				return $metaDataService->getLiMetadata();
 			}
 		);
 
-		return current(array_filter( $metaDataFromService, function ( Item $item ) use ( $cityId, $articleId ) {
-			if ( $item->getProduct() === $cityId && $item->getId() === $articleId ) {
-				return $item;
-			}
+		if ( is_array( $metaDataFromService ) ) {
+			return current( array_filter( $metaDataFromService, function ( Item $item ) use ( $cityId, $articleId ) {
+				if ( $item->getProduct() === $cityId && $item->getId() === $articleId ) {
+					return $item;
+				}
 
+				return null;
+			} ) );
+		} else {
 			return null;
-		}));
+		}
 	}
 
 	/**
