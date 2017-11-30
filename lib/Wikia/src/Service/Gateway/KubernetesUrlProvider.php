@@ -1,7 +1,9 @@
 <?php
+
 namespace Wikia\Service\Gateway;
 
 use InvalidArgumentException;
+use Wikia\Logger\WikiaLogger;
 
 class KubernetesUrlProvider implements UrlProvider {
 	const URL_PROVIDER_WIKIA_ENVIRONMENT = 'url_provider_wikia_environment';
@@ -44,6 +46,8 @@ class KubernetesUrlProvider implements UrlProvider {
 	}
 
 	public function getUrl( $serviceName ) {
-		return sprintf( static::K8S_URL, $this->env, $this->dc, $serviceName );
+		$url = sprintf( static::K8S_URL, $this->env, $this->dc, $serviceName );
+		WikiaLogger::instance()->info( "Url provider", [ 'provider_url' => $url ] );
+		return $url;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Service\Gateway\ConsulUrlProvider;
+use Wikia\Service\Gateway\KubernetesUrlProvider;
 
 class DiscussionsThreadModel {
 	const SORT_TRENDING = 'trending';
@@ -22,15 +22,15 @@ class DiscussionsThreadModel {
 	}
 
 	private function getDiscussionsApiUrl() {
-		global $wgConsulServiceTag, $wgConsulUrl;
+		global $wgWikiaEnvironment, $wgWikiaDatacenter;
 
-		return 'http://'.( new ConsulUrlProvider( $wgConsulUrl,
-			$wgConsulServiceTag ) )->getUrl( 'discussion' );
+		return 'http://' . ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )
+				->getUrl( 'discussion' );
 	}
 
 	private function getCategoryRequestUrl() {
 		return $this->getDiscussionsApiUrl() .
-		       "/$this->cityId/forums?responseGroup=small&viewableOnly=true";
+			"/$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
 	/**
@@ -43,7 +43,7 @@ class DiscussionsThreadModel {
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_VERY_SHORT,
-			function() {
+			function () {
 				return $this->apiRequest( $this->getCategoryRequestUrl() );
 			}
 		);
@@ -82,7 +82,7 @@ class DiscussionsThreadModel {
 
 		if ( !empty( $categoryIds ) ) {
 			$allCategoryIds = explode( ',', $categoryIds );
-			$categoryKey = array_reduce( $allCategoryIds, function( $carry, $item ) {
+			$categoryKey = array_reduce( $allCategoryIds, function ( $carry, $item ) {
 				return $carry . '&forumId=' . $item;
 			} );
 		}
@@ -105,10 +105,10 @@ class DiscussionsThreadModel {
 		if ( !empty( $categoryIds ) ) {
 			$categoryData = $this->getCategoryNames( $categoryIds );
 
-			if ( count ( $categoryData ) === 0 ) {
+			if ( count( $categoryData ) === 0 ) {
 				// No valid categories specified, show error message
 				$invalidCategory = true;
-			} elseif ( count ( $categoryData ) === 1 ) {
+			} elseif ( count( $categoryData ) === 1 ) {
 				// A single category specified, use its name
 				$categoryName = $categoryData[0]['name'];
 				$discussionsUrl = "/d/f?sort=$sortKey&catId=$categoryIds";
