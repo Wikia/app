@@ -45,7 +45,7 @@ class RenameUserPagesTask extends BaseTask {
 			'page_title = '. $dbr->addQuotes( $oldUserName ) . " OR page_title $subPagesLikeQuery"
 		], __METHOD__ );
 
-		$robot = User::newFromName( Wikia::BOT_USER );
+		$robot = $GLOBALS['wgUser'] = User::newFromName( Wikia::BOT_USER );
 
 		foreach ( $resultSet as $row ) {
 			$title = Title::newFromRow( $row );
