@@ -235,7 +235,11 @@ CKEDITOR.plugins.add( 'richcombo', {
 			createPanel: function( editor ) {
 				if ( this._.panel )
 					return;
-				debugger;
+				//Not Working
+			//	if (editor.config.richcomboCss != '' ) {
+			//		this._.panelDefinition.css = [editor.config.richcomboCss];
+			//	}
+
 				var panelDefinition = this._.panelDefinition,
 					panelBlockDefinition = this._.panelDefinition.block,
 					panelParentElement = panelDefinition.parent || CKEDITOR.document.getBody(),
