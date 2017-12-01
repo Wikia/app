@@ -32,7 +32,6 @@ class DWDimensionApiControllerSQL {
       ORDER BY city.city_id      
       LIMIT $limit';
 
-<<<<<<< HEAD
     const DIMENSION_WIKI_ARTICLES_QUERY = '
         SELECT
             page_wikia_id AS wiki_id,
@@ -49,7 +48,7 @@ class DWDimensionApiControllerSQL {
         ORDER BY
             page_wikia_id, page_id
         LIMIT $limit';
-=======
+
 	const DIMENSION_WIKI_EMBEDS = '
 		SELECT
 			il.il_from AS article_id,
@@ -92,5 +91,4 @@ class DWDimensionApiControllerSQL {
 			ug_user  AS user_id,
 			ug_group AS user_group
 		FROM user_groups';
->>>>>>> dev
 }
