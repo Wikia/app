@@ -261,7 +261,7 @@
 	.RTEPollButton.cke_button_big .cke_icon {
 		@include sprite-edit-page('poll', 48px, 32px);
 	}
-	.cke_button__table_icon {
+	.cke_button_icon.cke_button__table_icon {
 		@include sprite-edit-page('table', 48px, 32px);
 	}
 	.module_templates .cke_button_big .cke_icon {
