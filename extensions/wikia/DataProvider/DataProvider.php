@@ -396,7 +396,7 @@ class DataProvider {
 			global $wgCityId;
 
 			// SUS-3248 | use WikiService::getTopEditors
-			$usersAndEdits = (new WikiService)->getTopEditors( $wgCityId, self::TOP_USERS_MAX_LIMIT, true );
+			$usersAndEdits = (new WikiService)->getTopEditors( $wgCityId, self::TOP_USERS_MAX_LIMIT );
 
 			$results = [];
 			foreach ( $usersAndEdits as $userId => $editsCount ) {
