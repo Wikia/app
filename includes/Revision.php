@@ -664,7 +664,7 @@ class Revision implements IDBAccessObject {
 	 * @return String
 	 */
 	public function getRawUserText() {
-		if ( $this->mUserText === null ) {
+		if ( $this->mUserText === null || $this->mUserText === '' /* SUS-3459 */ ) {
 			$this->mUserText = User::whoIs( $this->mUser ); // load on demand
 			if ( $this->mUserText === false ) {
 				# This shouldn't happen, but it can if the wiki was recovered
