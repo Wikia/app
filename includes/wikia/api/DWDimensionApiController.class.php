@@ -130,13 +130,13 @@ class DWDimensionApiController extends WikiaApiController {
             static::WIKIS_AFTER_WIKI_ID ) );
         $afterArticleId = $db->strencode( $this->getRequest()->getVal( 'after_article_id',
             static::ARTICLES_AFTER_ARTICLE_ID ) );
-        $article_last_edited = $db->strencode( $this->getRequest()->getVal( 'article_last_edited',
+        $last_edited = $db->strencode( $this->getRequest()->getVal( 'last_edited',
             static::ARTICLE_LAST_EDITED ) );
 
         $query = str_replace( '$wiki_id', $afterWikiId,
             DWDimensionApiControllerSQL::DIMENSION_WIKI_ARTICLES_QUERY);
         $query = str_replace( '$article_id', $afterArticleId, $query);
-        $query = str_replace( '$last_edited', $article_last_edited, $query);
+        $query = str_replace( '$last_edited', $last_edited, $query);
         $query = str_replace( '$limit', $limit, $query);
 
         $dbResult = $db->query($query,__METHOD__);
@@ -151,7 +151,6 @@ class DWDimensionApiController extends WikiaApiController {
             ];
         }
         $db->freeResult( $dbResult );
-
         $this->setResponseData(
             $result,
             null,
