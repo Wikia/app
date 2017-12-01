@@ -25,8 +25,7 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 
 		// Format the data with the phalanx-stats-row-per-wiki key and wrap it in an <li> tag
 		$html = Html::openElement( 'li' );
-		$html .= $this->msg(
-			'phalanx-stats-row-per-wiki',
+		$html .= $this->msg( 'phalanx-stats-row-per-wiki' )->rawParams(
 			$type, $userName, $phalanxUrl, $timestamp, $statsUrl, $url
 		)->parse();
 		$html .= Html::closeElement( 'li' );
@@ -35,16 +34,15 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 	}
 
 	private function buildPhalanxUrl( int $blockId ) {
-		return Linker::linkKnown(
-			$this->mTitle, $blockId, "id=$blockId"
-		);
+		return Linker::linkKnown( $this->mTitle, $blockId, [], [ 'blockId' => $blockId ] );
 	}
 
 	private function buildStatsUrl( int $blockId ) {
 		return Linker::linkKnown(
 			$this->mTitleStats,
 			$this->msg( 'phalanx-link-stats' )->escaped(),
-			'blockId=' . $blockId
+			[],
+			[ 'blockId' => $blockId ]
 		);
 	}
 
