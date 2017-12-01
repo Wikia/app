@@ -237,7 +237,7 @@ class WikisApiController extends WikiaApiController {
 				//get data providers
 				$wikiObj = WikiFactory::getWikiByID( $wikiId );
 				$wikiStats = $service->getSiteStats( $wikiId );
-				$topUsers = $service->getTopEditors( $wikiId, static::DEFAULT_TOP_EDITORS_NUMBER, true );
+				$topUsers = $service->getTopEditors( $wikiId, static::DEFAULT_TOP_EDITORS_NUMBER );
 
 				$wikiInfo = array(
 					'id' => (int) $wikiId,
