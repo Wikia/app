@@ -300,7 +300,7 @@ class WikiService extends WikiaModel {
 					)
 				);
 
-				foreach($result as $row) {
+				foreach( $result as $row ) {
 					if ( User::newFromId( $row->user_id )->isBot() === false ) {
 						$topEditors[$row->user_id] = intval( $row->edits );
 					}
