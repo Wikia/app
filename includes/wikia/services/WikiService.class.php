@@ -15,7 +15,7 @@ class WikiService extends WikiaModel {
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
-	const TOPUSER_LIMIT = 150;
+	const TOPUSER_LIMIT = 10;
 
 	const CACHE_VERSION = '5';
 	const MAX_WIKI_RESULTS = 300;
