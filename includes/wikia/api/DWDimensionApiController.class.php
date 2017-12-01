@@ -10,9 +10,15 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const DART_TAG_VARIABLE_NAME = 'wgDartCustomKeyValues';
 
+	private $connections = [];
+
+	private function getDbSlave( $dbname ) {
+		return wfGetDB( DB_SLAVE, array(), $dbname );
+	}
+
 	private function getSharedDbSlave() {
 		global $wgExternalSharedDB;
-		return wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		return $this->getDbSlave( $wgExternalSharedDB );
 	}
 
 	public function getWikiDartTags() {
@@ -61,18 +67,18 @@ class DWDimensionApiController extends WikiaApiController {
 	public function getWikis() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min($db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$limit = min( $db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ), static::LIMIT_MAX );
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
 
-		$query = str_replace( '$city_id', $afterWikiId, DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY);
+		$query = str_replace( '$city_id', $afterWikiId, DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
 		$query = str_replace( '$limit', $limit, $query);
 
 		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
 		$allCategories = WikiFactoryHub::getInstance()->getAllCategories();
 
-		$dbResult = $db->query($query,__METHOD__);
+		$dbResult = $db->query( $query,__METHOD__);
 		$result = [];
-		while ($row = $db->fetchObject($dbResult)) {
+		while ( $row = $db->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'wiki_id' => $row->wiki_id,
 				'dbname' => $row->dbname,
@@ -97,6 +103,160 @@ class DWDimensionApiController extends WikiaApiController {
 			];
 		}
 		$db->freeResult( $dbResult );
+
+		$this->setResponseData(
+			$result,
+			null,
+			WikiaResponse::CACHE_DISABLED
+		);
+	}
+
+	public function getWikiEmbeds() {
+		$this->getDataPerWiki( array( $this, 'getWikiEmbedsData' ) );
+	}
+
+	private function getWikiEmbedsData( $db ) {
+		$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_EMBEDS, __METHOD__ );
+		$result = [];
+		while ( $row = $db->fetchObject( $rows ) ) {
+			$result[] = [
+				'article_id' => $row->article_id,
+				'video_title' => $row->video_title,
+				'added_at' => $row->added_at,
+				'added_by' => $row->added_by,
+				'duration' => $row->duration,
+				'premium' => $row->premium,
+				'hdfile' => $row->hdfile,
+				'removed' => $row->removed,
+				'views_30day' => $row->views_30day,
+				'views_total' => $row->views_total
+			];
+		}
+		$db->freeResult( $rows );
+
+		return $result;
+	}
+
+	public function getWikiImages() {
+		$this->getDataPerWiki( array( $this, 'getWikiImagesData' ) );
+	}
+
+	private function getWikiImagesData( $db ) {
+		$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_IMAGES, __METHOD__ );
+		$result = [];
+		while ( $row = $db->fetchObject( $rows ) ) {
+			$result[] = [
+				'name' => $row->image_name,
+				'user_id' => $row->user_id,
+				'minor_mime' => $row->minor_mime,
+				'media_type' => $row->media_type,
+				'created_at' => $row->created_at
+			];
+		}
+		$db->freeResult( $rows );
+
+		return $result;
+	}
+
+	public function getWikiInfo() {
+		$this->getDataPerWiki( array( $this, 'getWikiInfoData' ) );
+	}
+
+	private function getWikiInfoData( $db ) {
+		$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_INFO, __METHOD__ );
+		$result = [];
+		while ( $row = $db->fetchObject( $rows ) ) {
+			$result[] = [
+				'total_edits' => $row->total_edits,
+				'good_articles' => $row->good_articles,
+				'total_pages' => $row->total_pages,
+				'users' => $row->users,
+				'active_users' => $row->active_users,
+				'admins' => $row->admins,
+				'images' => $row->images,
+				'updated_at' => $row->updated_at
+			];
+		}
+		$db->freeResult( $rows );
+
+		return $result;
+	}
+
+	public function getWikiUserGroups() {
+		$this->getDataPerWiki( array( $this, 'getWikiUserGroupsData' ) );
+	}
+
+	private function getWikiUserGroupsData( $db ) {
+		$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_USER_GROUPS, __METHOD__ );
+		$result = [];
+		while ( $row = $db->fetchObject( $rows ) ) {
+			$result[] = [
+				'user_id' => $row->user_id,
+				'user_group' => $row->user_group
+			];
+		}
+		$db->freeResult( $rows );
+
+		return $result;
+	}
+
+	private function getWikiConnection( $cluster, $dbname ) {
+		if ( !isset( $connections[ $cluster ] ) ) {
+			$connections[ $cluster ] = $db = wfGetDB( DB_SLAVE, array(), 'wikicities_'.$cluster);
+		}
+		$connection = $connections[ $cluster ];
+		$dbname = $db->strencode( $dbname );
+		$connection->query("USE `".$dbname."`",__METHOD__);
+
+		return $connection;
+	}
+
+	private function getWikiDbNames() {
+		$db = $this->getSharedDbSlave();
+
+		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX );
+		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
+
+		$rows = $db->select(
+			[ "city_list" ],
+			[ "city_id", "city_cluster", "city_dbname" ],
+			[ "city_id > ".$afterWikiId ],
+			__METHOD__,
+			[
+				'ORDER BY' => 'city_id',
+				'LIMIT' => $limit
+			]
+		);
+
+		$wikis = [];
+		foreach( $rows as $row ) {
+			$wikis[] = [
+				'wiki_id' => $row->city_id,
+				'cluster' => $row->city_cluster,
+				'dbname' => $row->city_dbname ];
+		}
+		$db->freeResult( $rows );
+		$db->close();
+
+		return $wikis;
+	}
+
+	private function getDataPerWiki( callable $dataGatherer ) {
+
+		$wikis = $this->getWikiDbNames();
+
+		$result = [];
+		foreach( $wikis as $wiki) {
+			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
+			$sub_result = call_user_func( $dataGatherer, $db );
+			$result[] = [
+				'wiki_id' => $wiki[ 'wiki_id' ],
+				'data' => $sub_result
+			];
+		}
+		foreach( $this->connections as $connection ) {
+			$connection->close();
+		}
 
 		$this->setResponseData(
 			$result,

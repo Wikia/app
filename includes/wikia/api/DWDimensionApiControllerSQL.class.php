@@ -31,4 +31,47 @@ class DWDimensionApiControllerSQL {
       WHERE city.city_id > $city_id
       ORDER BY city.city_id      
       LIMIT $limit';
+
+	const DIMENSION_WIKI_EMBEDS = '
+		SELECT
+			il.il_from AS article_id,
+			v.video_title,
+			v.added_at,
+			v.added_by,
+			v.duration,
+			v.premium,
+			v.hdfile,
+			v.removed,
+			v.views_30day,
+			v.views_total
+		FROM imagelinks il
+		JOIN video_info v
+		ON v.video_title = il.il_to';
+
+	const DIMENSION_WIKI_IMAGES = '
+		SELECT
+			img_name       AS image_name,
+			img_user       AS user_id,
+			img_minor_mime AS minor_mime,
+			img_media_type AS media_type,
+			STR_TO_DATE(img_timestamp, \'%Y%m%d%H%i%S\') AS created_at
+		FROM image';
+
+	const DIMENSION_WIKI_INFO = '
+		SELECT
+			ss_total_edits   AS total_edits,
+			ss_good_articles AS good_articles,
+			ss_total_pages   AS total_pages,
+			ss_users         AS users,
+			ss_active_users  AS active_users,
+			ss_admins        AS admins,
+			ss_images        AS images,
+			NOW()            AS updated_at
+		FROM site_stats';
+
+	const DIMENSION_WIKI_USER_GROUPS = '
+		SELECT
+			ug_user  AS user_id,
+			ug_group AS user_group
+		FROM user_groups';
 }
